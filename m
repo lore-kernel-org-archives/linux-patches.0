@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C330822AE68;
-	Tue, 29 Apr 2025 17:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F67250C0C;
+	Tue, 29 Apr 2025 17:51:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949076; cv=none; b=IKaomOY3lICT/Ncg8Of8TxGNWVp9gyejkgQNLGQTBbTAMb2ndM6k6GxhvDSpWD0nr8Wl9P5Den72wOgbiAEQ0hm1nd841bCXuiLIB6xbOEjz1AYhPsP6ACU+B67UBj3uijb1hQVNe34Xsgs+aeh04Tm+BPdcndPXpSkOhd/kuPY=
+	t=1745949082; cv=none; b=dwOmaApUuoSCCM4g1eILjf59LhYiMMI3NEg1ralk357jsQwffT/kvrQC8cKmiJIllnazWR26bm/luvX9ZfjmqGG+UqJqc9Nw7hbJi8+facDQ7yum05WsTD4f2rzjyaVKCZwDQEKSEFKSSosjSjw9DBE2IeIOO4ETBFgkuVBmCrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949076; c=relaxed/simple;
-	bh=WFKsM7X9JptR81SXSjnjuBNskVPtehD3psalXCEHB4A=;
+	s=arc-20240116; t=1745949082; c=relaxed/simple;
+	bh=BRtTpcMxtj5yQqDpShx4Ivizs46iQsDY956vh2BoQeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tisqnADl5kL1piyoiMjkaE8/eq7Jmc/2oZm3BrFvrWpE8P+8ZcGCdz2qR7K7rhC4W/NiRbZZyE4O9h2QnBi0vpCB3wdsWYgJqdnFa3NPT3PTxQvYTvqbXo+zHb0U0XV+ts/5KnLktMccgllK676JiQGMWuOzNuiPUlD19iDT+Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q3LRpF8p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AKk5sNCuIxpUiEtFhQIOcVcdRcYOYDNmii+ge0WMj+/OZaUNfLdtIHDFMH8NtswxcS1Ze7/vDjwBjrn5cqw+2+KY0ivzdZsTREzoki8RZy/4x0Wq7/urZNgPeNxAvty03G81FW4yRw+IVuIMlppP0d8DWI0YmCZmFR5uQ9yxAlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPfLbih3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q3LRpF8p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 438D3C4CEE3;
-	Tue, 29 Apr 2025 17:51:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPfLbih3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF747C4CEE3;
+	Tue, 29 Apr 2025 17:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949076;
-	bh=WFKsM7X9JptR81SXSjnjuBNskVPtehD3psalXCEHB4A=;
+	s=korg; t=1745949082;
+	bh=BRtTpcMxtj5yQqDpShx4Ivizs46iQsDY956vh2BoQeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q3LRpF8pe9Xplo18pcjNkoVQD+JofLSVy9aHRbtHp/ZO0XnvnuS9q2tw1hy1FodMw
-	 FK6ICQLMv05nVVXW5fbKWOrLkFyk0nQH3Jhd8WRUukgUEf5grh6sCEys/63z8M9RBW
-	 ZwN4BZhzsvVd+ifngFsbOSSDhi7ShPmgQldlXDic=
+	b=wPfLbih3Q8bmyd14J1spktxMT3lQwPeXbgVvS/bYraUPjLmyjq44L9XOuqqB9utsQ
+	 2+Izh4gAXhw9B4iTNL0lxz1Buv0TxYkIC5O/oAglk2ncJMzND5SWSqDJCJ/4r/Mn46
+	 MT3yVFIl2ONbc+6XETu3DVLw36cD+py3jvEy/13Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Xiangyu Chen <xiangyu.chen@windriver.com>,
+	Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Shradha Gupta <shradhagupta@linux.microsoft.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 5.15 207/373] bnxt_re: avoid shift undefined behavior in bnxt_qplib_alloc_init_hwq
-Date: Tue, 29 Apr 2025 18:41:24 +0200
-Message-ID: <20250429161131.679112340@linuxfoundation.org>
+Subject: [PATCH 5.15 208/373] net: mana: Fix error handling in mana_create_txq/rxqs NAPI cleanup
+Date: Tue, 29 Apr 2025 18:41:25 +0200
+Message-ID: <20250429161131.719160747@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -53,122 +53,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Schmidt <mschmidt@redhat.com>
+From: Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>
 
-commit 78cfd17142ef70599d6409cbd709d94b3da58659 upstream.
+[ Upstream commit b6ecc662037694488bfff7c9fd21c405df8411f2 ]
 
-Undefined behavior is triggered when bnxt_qplib_alloc_init_hwq is called
-with hwq_attr->aux_depth != 0 and hwq_attr->aux_stride == 0.
-In that case, "roundup_pow_of_two(hwq_attr->aux_stride)" gets called.
-roundup_pow_of_two is documented as undefined for 0.
+Currently napi_disable() gets called during rxq and txq cleanup,
+even before napi is enabled and hrtimer is initialized. It causes
+kernel panic.
 
-Fix it in the one caller that had this combination.
+? page_fault_oops+0x136/0x2b0
+  ? page_counter_cancel+0x2e/0x80
+  ? do_user_addr_fault+0x2f2/0x640
+  ? refill_obj_stock+0xc4/0x110
+  ? exc_page_fault+0x71/0x160
+  ? asm_exc_page_fault+0x27/0x30
+  ? __mmdrop+0x10/0x180
+  ? __mmdrop+0xec/0x180
+  ? hrtimer_active+0xd/0x50
+  hrtimer_try_to_cancel+0x2c/0xf0
+  hrtimer_cancel+0x15/0x30
+  napi_disable+0x65/0x90
+  mana_destroy_rxq+0x4c/0x2f0
+  mana_create_rxq.isra.0+0x56c/0x6d0
+  ? mana_uncfg_vport+0x50/0x50
+  mana_alloc_queues+0x21b/0x320
+  ? skb_dequeue+0x5f/0x80
 
-The undefined behavior was detected by UBSAN:
-  UBSAN: shift-out-of-bounds in ./include/linux/log2.h:57:13
-  shift exponent 64 is too large for 64-bit type 'long unsigned int'
-  CPU: 24 PID: 1075 Comm: (udev-worker) Not tainted 6.9.0-rc6+ #4
-  Hardware name: Abacus electric, s.r.o. - servis@abacus.cz Super Server/H12SSW-iN, BIOS 2.7 10/25/2023
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x5d/0x80
-   ubsan_epilogue+0x5/0x30
-   __ubsan_handle_shift_out_of_bounds.cold+0x61/0xec
-   __roundup_pow_of_two+0x25/0x35 [bnxt_re]
-   bnxt_qplib_alloc_init_hwq+0xa1/0x470 [bnxt_re]
-   bnxt_qplib_create_qp+0x19e/0x840 [bnxt_re]
-   bnxt_re_create_qp+0x9b1/0xcd0 [bnxt_re]
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? __kmalloc+0x1b6/0x4f0
-   ? create_qp.part.0+0x128/0x1c0 [ib_core]
-   ? __pfx_bnxt_re_create_qp+0x10/0x10 [bnxt_re]
-   create_qp.part.0+0x128/0x1c0 [ib_core]
-   ib_create_qp_kernel+0x50/0xd0 [ib_core]
-   create_mad_qp+0x8e/0xe0 [ib_core]
-   ? __pfx_qp_event_handler+0x10/0x10 [ib_core]
-   ib_mad_init_device+0x2be/0x680 [ib_core]
-   add_client_context+0x10d/0x1a0 [ib_core]
-   enable_device_and_get+0xe0/0x1d0 [ib_core]
-   ib_register_device+0x53c/0x630 [ib_core]
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   bnxt_re_probe+0xbd8/0xe50 [bnxt_re]
-   ? __pfx_bnxt_re_probe+0x10/0x10 [bnxt_re]
-   auxiliary_bus_probe+0x49/0x80
-   ? driver_sysfs_add+0x57/0xc0
-   really_probe+0xde/0x340
-   ? pm_runtime_barrier+0x54/0x90
-   ? __pfx___driver_attach+0x10/0x10
-   __driver_probe_device+0x78/0x110
-   driver_probe_device+0x1f/0xa0
-   __driver_attach+0xba/0x1c0
-   bus_for_each_dev+0x8f/0xe0
-   bus_add_driver+0x146/0x220
-   driver_register+0x72/0xd0
-   __auxiliary_driver_register+0x6e/0xd0
-   ? __pfx_bnxt_re_mod_init+0x10/0x10 [bnxt_re]
-   bnxt_re_mod_init+0x3e/0xff0 [bnxt_re]
-   ? __pfx_bnxt_re_mod_init+0x10/0x10 [bnxt_re]
-   do_one_initcall+0x5b/0x310
-   do_init_module+0x90/0x250
-   init_module_from_file+0x86/0xc0
-   idempotent_init_module+0x121/0x2b0
-   __x64_sys_finit_module+0x5e/0xb0
-   do_syscall_64+0x82/0x160
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? syscall_exit_to_user_mode_prepare+0x149/0x170
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? syscall_exit_to_user_mode+0x75/0x230
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? do_syscall_64+0x8e/0x160
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? __count_memcg_events+0x69/0x100
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? count_memcg_events.constprop.0+0x1a/0x30
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? handle_mm_fault+0x1f0/0x300
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? do_user_addr_fault+0x34e/0x640
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  RIP: 0033:0x7f4e5132821d
-  Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d e3 db 0c 00 f7 d8 64 89 01 48
-  RSP: 002b:00007ffca9c906a8 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
-  RAX: ffffffffffffffda RBX: 0000563ec8a8f130 RCX: 00007f4e5132821d
-  RDX: 0000000000000000 RSI: 00007f4e518fa07d RDI: 000000000000003b
-  RBP: 00007ffca9c90760 R08: 00007f4e513f6b20 R09: 00007ffca9c906f0
-  R10: 0000563ec8a8faa0 R11: 0000000000000246 R12: 00007f4e518fa07d
-  R13: 0000000000020000 R14: 0000563ec8409e90 R15: 0000563ec8a8fa60
-   </TASK>
-  ---[ end trace ]---
-
-Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
-Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
-Link: https://lore.kernel.org/r/20240507103929.30003-1-mschmidt@redhat.com
-Acked-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[Harshit: backport to 5.15.y, this is a clean cherrypick from 6.1.y
-commit ]
+Cc: stable@vger.kernel.org
+Fixes: e1b5683ff62e ("net: mana: Move NAPI from EQ to CQ")
+Signed-off-by: Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>
+Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
+Reviewed-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+(cherry picked from commit b6ecc662037694488bfff7c9fd21c405df8411f2)
+[Harshit: conflicts resolved due to missing commit: ed5356b53f07 ("net:
+mana: Add XDP support") and commit: d356abb95b98 ("net: mana: Add
+counter for XDP_TX") in 5.15.y]
 Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_fp.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/microsoft/mana/mana.h    |    2 ++
+ drivers/net/ethernet/microsoft/mana/mana_en.c |   21 +++++++++++++--------
+ 2 files changed, 15 insertions(+), 8 deletions(-)
 
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-@@ -1013,7 +1013,8 @@ int bnxt_qplib_create_qp(struct bnxt_qpl
- 	hwq_attr.stride = sizeof(struct sq_sge);
- 	hwq_attr.depth = bnxt_qplib_get_depth(sq);
- 	hwq_attr.aux_stride = psn_sz;
--	hwq_attr.aux_depth = bnxt_qplib_set_sq_size(sq, qp->wqe_mode);
-+	hwq_attr.aux_depth = psn_sz ? bnxt_qplib_set_sq_size(sq, qp->wqe_mode)
-+				    : 0;
- 	hwq_attr.type = HWQ_TYPE_QUEUE;
- 	rc = bnxt_qplib_alloc_init_hwq(&sq->hwq, &hwq_attr);
- 	if (rc)
+--- a/drivers/net/ethernet/microsoft/mana/mana.h
++++ b/drivers/net/ethernet/microsoft/mana/mana.h
+@@ -76,6 +76,8 @@ struct mana_txq {
+ 
+ 	atomic_t pending_sends;
+ 
++	bool napi_initialized;
++
+ 	struct mana_stats stats;
+ };
+ 
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -1154,10 +1154,12 @@ static void mana_destroy_txq(struct mana
+ 
+ 	for (i = 0; i < apc->num_queues; i++) {
+ 		napi = &apc->tx_qp[i].tx_cq.napi;
+-		napi_synchronize(napi);
+-		napi_disable(napi);
+-		netif_napi_del(napi);
+-
++		if (apc->tx_qp[i].txq.napi_initialized) {
++			napi_synchronize(napi);
++			napi_disable(napi);
++			netif_napi_del(napi);
++			apc->tx_qp[i].txq.napi_initialized = false;
++		}
+ 		mana_destroy_wq_obj(apc, GDMA_SQ, apc->tx_qp[i].tx_object);
+ 
+ 		mana_deinit_cq(apc, &apc->tx_qp[i].tx_cq);
+@@ -1213,6 +1215,7 @@ static int mana_create_txq(struct mana_p
+ 		txq->ndev = net;
+ 		txq->net_txq = netdev_get_tx_queue(net, i);
+ 		txq->vp_offset = apc->tx_vp_offset;
++		txq->napi_initialized = false;
+ 		skb_queue_head_init(&txq->pending_skbs);
+ 
+ 		memset(&spec, 0, sizeof(spec));
+@@ -1277,6 +1280,7 @@ static int mana_create_txq(struct mana_p
+ 
+ 		netif_tx_napi_add(net, &cq->napi, mana_poll, NAPI_POLL_WEIGHT);
+ 		napi_enable(&cq->napi);
++		txq->napi_initialized = true;
+ 
+ 		mana_gd_ring_cq(cq->gdma_cq, SET_ARM_BIT);
+ 	}
+@@ -1288,7 +1292,7 @@ out:
+ }
+ 
+ static void mana_destroy_rxq(struct mana_port_context *apc,
+-			     struct mana_rxq *rxq, bool validate_state)
++			     struct mana_rxq *rxq, bool napi_initialized)
+ 
+ {
+ 	struct gdma_context *gc = apc->ac->gdma_dev->gdma_context;
+@@ -1302,12 +1306,13 @@ static void mana_destroy_rxq(struct mana
+ 
+ 	napi = &rxq->rx_cq.napi;
+ 
+-	if (validate_state)
++	if (napi_initialized) {
+ 		napi_synchronize(napi);
+ 
+-	napi_disable(napi);
+-	netif_napi_del(napi);
++		napi_disable(napi);
+ 
++		netif_napi_del(napi);
++	}
+ 	mana_destroy_wq_obj(apc, GDMA_RQ, rxq->rxobj);
+ 
+ 	mana_deinit_cq(apc, &rxq->rx_cq);
 
 
