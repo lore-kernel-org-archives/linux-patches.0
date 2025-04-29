@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35231FE468;
-	Tue, 29 Apr 2025 17:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E004282C60;
+	Tue, 29 Apr 2025 17:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946317; cv=none; b=WEKQg3G1U/PtlsHv08e16O6T2Y+avDDegSP9aL04grAUHLxlvmvvoY+BkM+2/uMY+mroa6lbxP2BDKtWm4TOCSFbgzK2Vgpv+Z84aSstXBItDbWAureoYKnoGxsDfe/SMSUJXg2hAIfNRn0VqQK1wfbrw4LeODRHugfi9b9TQ0I=
+	t=1745946320; cv=none; b=qPqQzOpw5h0tzNjGfRaCl8qcWyIqciVddvmNzQOaxCqWWX+/mLHOq/fxjlNrKLwBgQakTnJA1NK+sYkOmaAiT3/Zn2TkslCdKWYfwEtzo9Iimh5SQmMoIO8WphWhVaVGn6j0Z45wwWYslYG/jHOx+MMzEXTpl9jBUUahLQpTyLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946317; c=relaxed/simple;
-	bh=DP+5ObCn55GgYXwxrzHcEwEPGMEDOIHPtWgQ1Mbi4Rg=;
+	s=arc-20240116; t=1745946320; c=relaxed/simple;
+	bh=vr3aZq58ofh0Ec/0tI083IwPgarnRiDmLB3MiRtHISc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j+aGILUCAQ+5d56LM1o3snWcJT/ROMWrDF9qqzoXakhTk6L9dMbqgeriy6mWkwKQ5vJIEUhjBDMCpDi+IRW5Oz7vJDJEptlXBCqB/LZpvVcna4tJfnpf0FPf6eTHTDP/650vvQyPyhEsbfRFEjbgTp9SPh9Xa4wQnJwP9L1p5XE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qe6vsQiv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fPqvyzXBWv1V9o1R2WLOcKtYosHW3E2IehWdIMSShIcMyUwNYqQafcPg5vRinj1oT+yVvfTlgGQy+ABRoa/2aUGQTfczJw5thMeqE12o/Ecqv45RzlQv/BKFFbu0DecEc2NVJX50mAmj1HG3Y5pCd7C6MessJjTKnBH1DDdKvlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jtV6hpJw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qe6vsQiv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BB7C4CEE9;
-	Tue, 29 Apr 2025 17:05:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jtV6hpJw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A23C4CEE3;
+	Tue, 29 Apr 2025 17:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946316;
-	bh=DP+5ObCn55GgYXwxrzHcEwEPGMEDOIHPtWgQ1Mbi4Rg=;
+	s=korg; t=1745946319;
+	bh=vr3aZq58ofh0Ec/0tI083IwPgarnRiDmLB3MiRtHISc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qe6vsQivV6nYDkc+98yxAc/F28f2nn7To21vR/rA+PPTZKQ0iyPhDBl4kzkzIzJ9O
-	 x9Fm5a0IY4TmFIdeUZRSLotuPGKBolmkcpbd4VdJfuHQGxnkyyTS+6R4706ehtxIR3
-	 5/ktbYZTckBnz0vChM5i5h00RcCuZ8eXdIOnCwwo=
+	b=jtV6hpJwk/0b0HIjOjw8J1YszdRSCNAm7atyoGkUl29l0ewtW6zOzuHO3/g3anBb+
+	 bMiPduSrWZO9MRtXV5zseYXOqoRIz7XP9m7IhoS3XS467DErp6V0U9iiip51YbMOz9
+	 jFcZFUQ449nH8pz5M9mRccAEYRfQXspvrbAlqc/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	kernel test robot <lkp@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Jon Mason <jdmason@kudzu.us>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 227/311] riscv: tracing: Fix __write_overflow_field in ftrace_partial_regs()
-Date: Tue, 29 Apr 2025 18:41:04 +0200
-Message-ID: <20250429161130.333346626@linuxfoundation.org>
+Subject: [PATCH 6.14 228/311] ntb: reduce stack usage in idt_scan_mws
+Date: Tue, 29 Apr 2025 18:41:05 +0200
+Message-ID: <20250429161130.373028836@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -51,74 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charlie Jenkins <charlie@rivosinc.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit bba547810c66434475d8800b3411c59ef71eafe9 ]
+[ Upstream commit aff12700b8dd7422bfe2277696e192af4df9de8f ]
 
-The size of &regs->a0 is unknown, causing the error:
+idt_scan_mws() puts a large fixed-size array on the stack and copies
+it into a smaller dynamically allocated array at the end. On 32-bit
+targets, the fixed size can easily exceed the warning limit for
+possible stack overflow:
 
-../include/linux/fortify-string.h:571:25: warning: call to
-'__write_overflow_field' declared with attribute warning: detected write
-beyond size of field (1st parameter); maybe use struct_group()?
-[-Wattribute-warning]
+drivers/ntb/hw/idt/ntb_hw_idt.c:1041:27: error: stack frame size (1032) exceeds limit (1024) in 'idt_scan_mws' [-Werror,-Wframe-larger-than]
 
-Fix this by wrapping the required registers in pt_regs with
-struct_group() and reference the group when doing the offending
-memcpy().
+Change it to instead just always use dynamic allocation for the
+array from the start. It's too big for the stack, but not actually
+all that much for a permanent allocation.
 
-Signed-off-by: Charlie Jenkins <charlie@rivosinc.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Tested-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20250224-fix_ftrace_partial_regs-v1-1-54b906417e86@rivosinc.com
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/all/202205111109.PiKTruEj-lkp@intel.com/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/ftrace.h |  2 +-
- arch/riscv/include/asm/ptrace.h | 18 ++++++++++--------
- 2 files changed, 11 insertions(+), 9 deletions(-)
+ drivers/ntb/hw/idt/ntb_hw_idt.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/arch/riscv/include/asm/ftrace.h b/arch/riscv/include/asm/ftrace.h
-index 2636ee00ccf0f..9704a73e515a5 100644
---- a/arch/riscv/include/asm/ftrace.h
-+++ b/arch/riscv/include/asm/ftrace.h
-@@ -207,7 +207,7 @@ ftrace_partial_regs(const struct ftrace_regs *fregs, struct pt_regs *regs)
+diff --git a/drivers/ntb/hw/idt/ntb_hw_idt.c b/drivers/ntb/hw/idt/ntb_hw_idt.c
+index 544d8a4d2af59..f27df8d7f3b97 100644
+--- a/drivers/ntb/hw/idt/ntb_hw_idt.c
++++ b/drivers/ntb/hw/idt/ntb_hw_idt.c
+@@ -1041,7 +1041,7 @@ static inline char *idt_get_mw_name(enum idt_mw_type mw_type)
+ static struct idt_mw_cfg *idt_scan_mws(struct idt_ntb_dev *ndev, int port,
+ 				       unsigned char *mw_cnt)
  {
- 	struct __arch_ftrace_regs *afregs = arch_ftrace_regs(fregs);
+-	struct idt_mw_cfg mws[IDT_MAX_NR_MWS], *ret_mws;
++	struct idt_mw_cfg *mws;
+ 	const struct idt_ntb_bar *bars;
+ 	enum idt_mw_type mw_type;
+ 	unsigned char widx, bidx, en_cnt;
+@@ -1049,6 +1049,11 @@ static struct idt_mw_cfg *idt_scan_mws(struct idt_ntb_dev *ndev, int port,
+ 	int aprt_size;
+ 	u32 data;
  
--	memcpy(&regs->a0, afregs->args, sizeof(afregs->args));
-+	memcpy(&regs->a_regs, afregs->args, sizeof(afregs->args));
- 	regs->epc = afregs->epc;
- 	regs->ra = afregs->ra;
- 	regs->sp = afregs->sp;
-diff --git a/arch/riscv/include/asm/ptrace.h b/arch/riscv/include/asm/ptrace.h
-index b5b0adcc85c18..2910231977cb7 100644
---- a/arch/riscv/include/asm/ptrace.h
-+++ b/arch/riscv/include/asm/ptrace.h
-@@ -23,14 +23,16 @@ struct pt_regs {
- 	unsigned long t2;
- 	unsigned long s0;
- 	unsigned long s1;
--	unsigned long a0;
--	unsigned long a1;
--	unsigned long a2;
--	unsigned long a3;
--	unsigned long a4;
--	unsigned long a5;
--	unsigned long a6;
--	unsigned long a7;
-+	struct_group(a_regs,
-+		unsigned long a0;
-+		unsigned long a1;
-+		unsigned long a2;
-+		unsigned long a3;
-+		unsigned long a4;
-+		unsigned long a5;
-+		unsigned long a6;
-+		unsigned long a7;
-+	);
- 	unsigned long s2;
- 	unsigned long s3;
- 	unsigned long s4;
++	mws = devm_kcalloc(&ndev->ntb.pdev->dev, IDT_MAX_NR_MWS,
++			   sizeof(*mws), GFP_KERNEL);
++	if (!mws)
++		return ERR_PTR(-ENOMEM);
++
+ 	/* Retrieve the array of the BARs registers */
+ 	bars = portdata_tbl[port].bars;
+ 
+@@ -1103,16 +1108,7 @@ static struct idt_mw_cfg *idt_scan_mws(struct idt_ntb_dev *ndev, int port,
+ 		}
+ 	}
+ 
+-	/* Allocate memory for memory window descriptors */
+-	ret_mws = devm_kcalloc(&ndev->ntb.pdev->dev, *mw_cnt, sizeof(*ret_mws),
+-			       GFP_KERNEL);
+-	if (!ret_mws)
+-		return ERR_PTR(-ENOMEM);
+-
+-	/* Copy the info of detected memory windows */
+-	memcpy(ret_mws, mws, (*mw_cnt)*sizeof(*ret_mws));
+-
+-	return ret_mws;
++	return mws;
+ }
+ 
+ /*
 -- 
 2.39.5
 
