@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C622517AB;
-	Tue, 29 Apr 2025 17:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF35725332F;
+	Tue, 29 Apr 2025 17:35:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948148; cv=none; b=jg1r6wtc5FMRHC0YJDZIMPMqx7IrUyMqawo2wDudL42LPU0Et3aYvjtrQjNTIVxYGtvJFq7XweNhQPmnHUFcVmhpyjiUUHeMPQZaqSVVfa5hX23bB8CSq8erdMPFSJ3IH9k9nZw6DJ3Kc1IeZUKw5zxUh8fxr+27/VMaGKh2lts=
+	t=1745948150; cv=none; b=KxzH3b3EsEW3hUDoun6kMrTMg9oOlEz3yZ1TwS5gvXxnG1sw1MawSObnn3oSonLa3KvMeWqgUha5zRmTklhbxTbXrS62zViGSjo8hF09PjpuEOfleSmKPADcEwQvru3Hr1gp9fs/Q2BFr79FBYnW67Lgkjo0pFD6Gl0TXwov7GE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948148; c=relaxed/simple;
-	bh=YNBDzpudBfRj2Z1aXnyU5inghbV1P202A04Z0MEFl90=;
+	s=arc-20240116; t=1745948150; c=relaxed/simple;
+	bh=3lwPLco8gHH872bJ6p/M7+tYIL0YNswN3E2guOzCyPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KblbEa63U58lN5fyk19wxZBt6egqET3IIn+m3lVkzU55Oc3u2ykYwo4NfMOZiKLYiDFD82ehP4vwdACkAhEoX6cYWJ86JO672Id/0YYsaMRWlsDV2BHqEzCBrijIFDLBcOtzcC7maCroXnWUVRj6P4oich2Sw7ep8PSQV4Uv7nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKRg8Hgm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j8FuMCOkIlGxrAnCGw6/TzLJMyHiXAIW7YDhCW484TIEEVDB8+M5FHzefYBkkqj0oh8HN9rGWuVkvfaX9HYlV2PaK42Z84qz9ae0+BMXxUTYokoyrXzMJrzOETbyKglmuB7qv64LfkUof0Qec7PxKy/08uUCi0rk8jWftLlv2IU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qD0eWFIo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKRg8Hgm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D0BC4CEEE;
-	Tue, 29 Apr 2025 17:35:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qD0eWFIo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6240AC4CEE3;
+	Tue, 29 Apr 2025 17:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948147;
-	bh=YNBDzpudBfRj2Z1aXnyU5inghbV1P202A04Z0MEFl90=;
+	s=korg; t=1745948150;
+	bh=3lwPLco8gHH872bJ6p/M7+tYIL0YNswN3E2guOzCyPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fKRg8HgmXtHR033BZxKvGyDYHrgCWwDb2jaiux1D0UbwuFuFXLd4ubEfZJg+S63RZ
-	 Ji+GpgyGrZ4zYVXj0msxHY54Pk6GKw072paZpIY7R+Qwi4m5rLJJbk7W2jU+DWfNff
-	 xHAf/yCblBR3YgQ4DeEA0AZwEgwlK35OAJlp2bAk=
+	b=qD0eWFIo524UChH4pJMZWr4jIuf4iZOpqJwcTATUFqY6rmyFuxzWxIrnuySlN653K
+	 NB/25m1mVofvMdXMLXtbg4Ib7yoZpAj1rsXsBOZIOksCPZGOyAN21CciLNQcM/+kTs
+	 T0pDWSP6rLUtthK9hYG66D2GL+LWZLqoKqLEEhtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+e37dd1dfc814b10caa55@syzkaller.appspotmail.com
-Subject: [PATCH 6.12 172/280] fs/ntfs3: Fix WARNING in ntfs_extend_initialized_size
-Date: Tue, 29 Apr 2025 18:41:53 +0200
-Message-ID: <20250429161122.151267068@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Ferry Toth <fntoth@gmail.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 173/280] usb: dwc3: gadget: Refactor loop to avoid NULL endpoints
+Date: Tue, 29 Apr 2025 18:41:54 +0200
+Message-ID: <20250429161122.191133795@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -52,43 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit ff355926445897cc9fdea3b00611e514232c213c ]
+[ Upstream commit eafba0205426091354f050381c32ad1567c35844 ]
 
-Syzbot reported a WARNING in ntfs_extend_initialized_size.
-The data type of in->i_valid and to is u64 in ntfs_file_mmap().
-If their values are greater than LLONG_MAX, overflow will occur because
-the data types of the parameters valid and new_valid corresponding to
-the function ntfs_extend_initialized_size() are loff_t.
+Prepare the gadget driver to handle the reserved endpoints that will be
+not allocated at the initialisation time.
 
-Before calling ntfs_extend_initialized_size() in the ntfs_file_mmap(),
-the "ni->i_valid < to" has been determined, so the same WARN_ON determination
-is not required in ntfs_extend_initialized_size().
-Just execute the ntfs_extend_initialized_size() in ntfs_extend() to make
-a WARN_ON check.
+While at it, add a warning where the NULL endpoint should never happen.
 
-Reported-and-tested-by: syzbot+e37dd1dfc814b10caa55@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e37dd1dfc814b10caa55
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Tested-by: Ferry Toth <fntoth@gmail.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20250212193116.2487289-3-andriy.shevchenko@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/dwc3/gadget.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index 4ca1fff826fd0..748c4be912db5 100644
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -428,6 +428,7 @@ static int ntfs_extend(struct inode *inode, loff_t pos, size_t count,
- 	}
+diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
+index 12446495af87c..e72bac650981d 100644
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -548,6 +548,7 @@ static int dwc3_gadget_set_xfer_resource(struct dwc3_ep *dep)
+ int dwc3_gadget_start_config(struct dwc3 *dwc, unsigned int resource_index)
+ {
+ 	struct dwc3_gadget_ep_cmd_params params;
++	struct dwc3_ep		*dep;
+ 	u32			cmd;
+ 	int			i;
+ 	int			ret;
+@@ -564,8 +565,13 @@ int dwc3_gadget_start_config(struct dwc3 *dwc, unsigned int resource_index)
+ 		return ret;
  
- 	if (extend_init && !is_compressed(ni)) {
-+		WARN_ON(ni->i_valid >= pos);
- 		err = ntfs_extend_initialized_size(file, ni, ni->i_valid, pos);
- 		if (err)
- 			goto out;
+ 	/* Reset resource allocation flags */
+-	for (i = resource_index; i < dwc->num_eps && dwc->eps[i]; i++)
+-		dwc->eps[i]->flags &= ~DWC3_EP_RESOURCE_ALLOCATED;
++	for (i = resource_index; i < dwc->num_eps; i++) {
++		dep = dwc->eps[i];
++		if (!dep)
++			continue;
++
++		dep->flags &= ~DWC3_EP_RESOURCE_ALLOCATED;
++	}
+ 
+ 	return 0;
+ }
+@@ -752,9 +758,11 @@ void dwc3_gadget_clear_tx_fifos(struct dwc3 *dwc)
+ 
+ 	dwc->last_fifo_depth = fifo_depth;
+ 	/* Clear existing TXFIFO for all IN eps except ep0 */
+-	for (num = 3; num < min_t(int, dwc->num_eps, DWC3_ENDPOINTS_NUM);
+-	     num += 2) {
++	for (num = 3; num < min_t(int, dwc->num_eps, DWC3_ENDPOINTS_NUM); num += 2) {
+ 		dep = dwc->eps[num];
++		if (!dep)
++			continue;
++
+ 		/* Don't change TXFRAMNUM on usb31 version */
+ 		size = DWC3_IP_IS(DWC3) ? 0 :
+ 			dwc3_readl(dwc->regs, DWC3_GTXFIFOSIZ(num >> 1)) &
+@@ -3670,6 +3678,8 @@ static bool dwc3_gadget_endpoint_trbs_complete(struct dwc3_ep *dep,
+ 
+ 		for (i = 0; i < DWC3_ENDPOINTS_NUM; i++) {
+ 			dep = dwc->eps[i];
++			if (!dep)
++				continue;
+ 
+ 			if (!(dep->flags & DWC3_EP_ENABLED))
+ 				continue;
+@@ -3858,6 +3868,10 @@ static void dwc3_endpoint_interrupt(struct dwc3 *dwc,
+ 	u8			epnum = event->endpoint_number;
+ 
+ 	dep = dwc->eps[epnum];
++	if (!dep) {
++		dev_warn(dwc->dev, "spurious event, endpoint %u is not allocated\n", epnum);
++		return;
++	}
+ 
+ 	if (!(dep->flags & DWC3_EP_ENABLED)) {
+ 		if ((epnum > 1) && !(dep->flags & DWC3_EP_TRANSFER_STARTED))
 -- 
 2.39.5
 
