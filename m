@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2C8240611;
-	Tue, 29 Apr 2025 18:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9172240611;
+	Tue, 29 Apr 2025 18:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950612; cv=none; b=LHaKeyAUSErBUPIJr9TPRouvbBjbEP9J1xyZ2F5onMAsebrkfSwvBpgRm1jj/p40RFZSjTkPugLzID2SfZrbyskTNKBNxGAP2VvYdObVJI9B7u8kqAqnZWOFdXGgY/nDieqMgx5bGZ/NAL6Qte/jTa97fBQY+Kj3t/Hu5W4vBg0=
+	t=1745950614; cv=none; b=Z951ssSAJA/XW5J9KdEumcowXLwX2Mts1XzyXYmv+gYQBzQf9XsCHs5LYTWFMZpdYf7ILVfyih8Fzph4QKm+y3+zioGt84SrFrMt3p7lHhezdC1hdeCw25rInFAbBtp/B8DZDdeR7gyC8m2t8LOfrKPl0XW8RdXlYfXR8MbFcYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950612; c=relaxed/simple;
-	bh=EB4H8ZFqtrGGXM18LBxZLDYaP4eDz0Y8yIlXK0hbs8U=;
+	s=arc-20240116; t=1745950614; c=relaxed/simple;
+	bh=J5R48IU8fuxmOAx9EAoUzKk3CfgqSALa4vT8IrBgiis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Te2zNP30Pnyjr6sBpy3g+OeZPSA4xxCWzDKv0Il8hSOBnJeXbD7NWoeFpUJVruyfzuYzxxyZoXeRhpXIN811SRKdSGXWcP/2zA6drgf9ZNwQtjyf2dmdhup3iyQwhKuPQRS443SxYRu96FKycDCsGm7wFK336lOs6MrbwoYEpGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJB/obPn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U6FcRvBHxTXV4smYWH9O+k+gO9mfTpBXsmCRIYTA0fRVYkKKnYug6qobulLDcDNlcOGvZjoeDYiPtY4NdyNSLqQL8Txqrx0whQw0eCuj/FOci0hn3yveteP19TWAQLlqdtygvXM52184AWn4L5ayV0Boe3vfhCPvr+nHyIHvU54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jjRIxBXv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJB/obPn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A553BC4CEE3;
-	Tue, 29 Apr 2025 18:16:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jjRIxBXv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 542C9C4CEE3;
+	Tue, 29 Apr 2025 18:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950612;
-	bh=EB4H8ZFqtrGGXM18LBxZLDYaP4eDz0Y8yIlXK0hbs8U=;
+	s=korg; t=1745950614;
+	bh=J5R48IU8fuxmOAx9EAoUzKk3CfgqSALa4vT8IrBgiis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cJB/obPn8qMyTzOw6BRk5GpevDNKaWfvJCrOd1eKu2+pkcJWrfPQ6QVSGEWwcLoSu
-	 n+ybNE+DF0LE3GgzZQM1SsfrWI8ueXLAQaLWVE8gcHZAGAqi31yx2VgphqLhLml+a7
-	 yAPq6bLje5AQQuQ+s1RqlpsQLcgAikPGLFx7+EWU=
+	b=jjRIxBXvCpkLUGV6hrMXz89SN/eLQ+Kn5wTk10qZPXQuNVYMKnEfwy2XG6GSn/QCS
+	 8B5t8wGzUqfhTTTybzQIJQVJLq5sLDIBH9eX4z3/hjlVUsKOM7H7ZSKoMzYLqyqcOg
+	 70kCWi6RkFfpKKLiaPx7eRoKGX9s1VewHIZf5p4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Stockmann <lukas.stockmann@siemens.com>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	syzbot+903a2ad71fb3f1e47cf5@syzkaller.appspotmail.com,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 150/204] rtc: pcf85063: do a SW reset if POR failed
-Date: Tue, 29 Apr 2025 18:43:58 +0200
-Message-ID: <20250429161105.558978872@linuxfoundation.org>
+Subject: [PATCH 6.6 151/204] io_uring: always do atomic put from iowq
+Date: Tue, 29 Apr 2025 18:43:59 +0200
+Message-ID: <20250429161105.598450712@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,76 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Stockmann <lukas.stockmann@siemens.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit 2b7cbd98495f6ee4cd6422fe77828a19e9edf87f ]
+[ Upstream commit 390513642ee6763c7ada07f0a1470474986e6c1c ]
 
-Power-on Reset has a documented issue in PCF85063, refer to its datasheet,
-section "Software reset":
+io_uring always switches requests to atomic refcounting for iowq
+execution before there is any parallilism by setting REQ_F_REFCOUNT,
+and the flag is not cleared until the request completes. That should be
+fine as long as the compiler doesn't make up a non existing value for
+the flags, however KCSAN still complains when the request owner changes
+oter flag bits:
 
-"There is a low probability that some devices will have corruption of the
-registers after the automatic power-on reset if the device is powered up
-with a residual VDD level. It is required that the VDD starts at zero volts
-at power up or upon power cycling to ensure that there is no corruption of
-the registers. If this is not possible, a reset must be initiated after
-power-up (i.e. when power is stable) with the software reset command"
+BUG: KCSAN: data-race in io_req_task_cancel / io_wq_free_work
+...
+read to 0xffff888117207448 of 8 bytes by task 3871 on cpu 0:
+ req_ref_put_and_test io_uring/refs.h:22 [inline]
 
-Trigger SW reset if there is an indication that POR has failed.
+Skip REQ_F_REFCOUNT checks for iowq, we know it's set.
 
-Link: https://www.nxp.com/docs/en/data-sheet/PCF85063A.pdf
-Signed-off-by: Lukas Stockmann <lukas.stockmann@siemens.com>
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://lore.kernel.org/r/20250120093451.30778-1-alexander.sverdlin@siemens.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Reported-by: syzbot+903a2ad71fb3f1e47cf5@syzkaller.appspotmail.com
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/d880bc27fb8c3209b54641be4ff6ac02b0e5789a.1743679736.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf85063.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ io_uring/io_uring.c | 2 +-
+ io_uring/refs.h     | 7 +++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-pcf85063.c b/drivers/rtc/rtc-pcf85063.c
-index 905986c616559..73848f764559b 100644
---- a/drivers/rtc/rtc-pcf85063.c
-+++ b/drivers/rtc/rtc-pcf85063.c
-@@ -35,6 +35,7 @@
- #define PCF85063_REG_CTRL1_CAP_SEL	BIT(0)
- #define PCF85063_REG_CTRL1_STOP		BIT(5)
- #define PCF85063_REG_CTRL1_EXT_TEST	BIT(7)
-+#define PCF85063_REG_CTRL1_SWR		0x58
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 9883fd16cde44..3ce93418e0151 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1917,7 +1917,7 @@ struct io_wq_work *io_wq_free_work(struct io_wq_work *work)
+ 	struct io_kiocb *req = container_of(work, struct io_kiocb, work);
+ 	struct io_kiocb *nxt = NULL;
  
- #define PCF85063_REG_CTRL2		0x01
- #define PCF85063_CTRL2_AF		BIT(6)
-@@ -589,7 +590,7 @@ static int pcf85063_probe(struct i2c_client *client)
+-	if (req_ref_put_and_test(req)) {
++	if (req_ref_put_and_test_atomic(req)) {
+ 		if (req->flags & IO_REQ_LINK_FLAGS)
+ 			nxt = io_req_find_next(req);
+ 		io_free_req(req);
+diff --git a/io_uring/refs.h b/io_uring/refs.h
+index 1336de3f2a30a..21a379b0f22d6 100644
+--- a/io_uring/refs.h
++++ b/io_uring/refs.h
+@@ -17,6 +17,13 @@ static inline bool req_ref_inc_not_zero(struct io_kiocb *req)
+ 	return atomic_inc_not_zero(&req->refs);
+ }
  
- 	i2c_set_clientdata(client, pcf85063);
- 
--	err = regmap_read(pcf85063->regmap, PCF85063_REG_CTRL1, &tmp);
-+	err = regmap_read(pcf85063->regmap, PCF85063_REG_SC, &tmp);
- 	if (err) {
- 		dev_err(&client->dev, "RTC chip is not present\n");
- 		return err;
-@@ -599,6 +600,22 @@ static int pcf85063_probe(struct i2c_client *client)
- 	if (IS_ERR(pcf85063->rtc))
- 		return PTR_ERR(pcf85063->rtc);
- 
-+	/*
-+	 * If a Power loss is detected, SW reset the device.
-+	 * From PCF85063A datasheet:
-+	 * There is a low probability that some devices will have corruption
-+	 * of the registers after the automatic power-on reset...
-+	 */
-+	if (tmp & PCF85063_REG_SC_OS) {
-+		dev_warn(&client->dev,
-+			 "POR issue detected, sending a SW reset\n");
-+		err = regmap_write(pcf85063->regmap, PCF85063_REG_CTRL1,
-+				   PCF85063_REG_CTRL1_SWR);
-+		if (err < 0)
-+			dev_warn(&client->dev,
-+				 "SW reset failed, trying to continue\n");
-+	}
++static inline bool req_ref_put_and_test_atomic(struct io_kiocb *req)
++{
++	WARN_ON_ONCE(!(data_race(req->flags) & REQ_F_REFCOUNT));
++	WARN_ON_ONCE(req_ref_zero_or_close_to_overflow(req));
++	return atomic_dec_and_test(&req->refs);
++}
 +
- 	err = pcf85063_load_capacitance(pcf85063, client->dev.of_node,
- 					config->force_cap_7000 ? 7000 : 0);
- 	if (err < 0)
+ static inline bool req_ref_put_and_test(struct io_kiocb *req)
+ {
+ 	if (likely(!(req->flags & REQ_F_REFCOUNT)))
 -- 
 2.39.5
 
