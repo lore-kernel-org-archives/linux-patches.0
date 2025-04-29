@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBEE251791;
-	Tue, 29 Apr 2025 17:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A37D23F405;
+	Tue, 29 Apr 2025 17:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947060; cv=none; b=ZYl95TT5tWri3++xsv5aD7tRBoXitFISgyk7A5vboJ+JpI6kbCwkiIFFZtXHScAcmeNjohBYozREM+0FOtjkCvf9qSpwFfGs1icEnc7X8EfKZwYObQOUNAFCfPpOzRQSvwpdsU+1TFgbVgcdGOKSRekO5TGXYNivoF0/ePJ/Kd8=
+	t=1745947063; cv=none; b=OPY+CoH7yvmNy374WhgrsQXbb3978F4Ht5c6DkKrtJI+XiRDcGzwBchbjnxzcF0QU4RXp8+SLsJ3/hIUsqUbSDLm7mDvR9HQhDJmddyaP2FzVuY3lefDxOXIqLyVhIH/3hnbPNhm6p23P9u+TgW/Iw3iJkP3hwNhcWiiKQGzwUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947060; c=relaxed/simple;
-	bh=RkqjY7VNQaa2eD4GsZMBceRMykMKJUgnVhXDyUG8Vzs=;
+	s=arc-20240116; t=1745947063; c=relaxed/simple;
+	bh=JG0lGrz+i2oFMSkEiiFlbEjA08gJi83v8KWmGI/f9So=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PlcAvBx7c6w6TfUIGJKDXqFRPs1dKe6cesEm9JRLmgkduSjLwqOr6lYIzNLunoxeHN+lZS51siVFa3RjWdiPBv+2bTbSrakp/Mx0gnsgIlKyo2oJKXdUR8kiuRFmLKTASh6yJ7XNGEtCKJNOYtTU0ZIs6fEmWudH7Ev1ST0qauE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wO8eEGPw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nmB1IKLzK+WkbSAugKFXxmGQPbNw4R2589cdNfWD6LxioCq/jmVhD/5aSLGwTW9YwiPW5qSARbI+zi56+WUU9rbagREV019gJl4q9msupBOg7c/HF4iExyplbP8nnBZngGAMwrGmZlAbeZyMtraMnnJjvGtA7WB9geiJJTftWXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xtZ74xOC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wO8eEGPw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2023C4CEE3;
-	Tue, 29 Apr 2025 17:17:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtZ74xOC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EDA5C4CEE3;
+	Tue, 29 Apr 2025 17:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947060;
-	bh=RkqjY7VNQaa2eD4GsZMBceRMykMKJUgnVhXDyUG8Vzs=;
+	s=korg; t=1745947063;
+	bh=JG0lGrz+i2oFMSkEiiFlbEjA08gJi83v8KWmGI/f9So=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wO8eEGPwXY7a+Z82bKgbbZXLkJxLN6SHEqqG4yx6NxipfAMIEqbhcSYIIChPUzZtg
-	 TTskviBp/NB6cv/NQ84qns1MwdsNoX90oLqoPlq+7d6wpikngly08nYptBXH8CkPYD
-	 71GZeEOb/TSOSCbm6hrqwl7+++YzP3um1uoHlfF8=
+	b=xtZ74xOCeSzIWzSSwFl1P9wfHXMwWYLnp0MAH6iGI0m10gYvm0w7c8SKQYS/iBJYr
+	 ZO4kcY2QVW0zCLeVenaS6b5GrTDB1SlDDxIYROQxI/je2IUd7lTUGdL0+F4huLqE8i
+	 2VrSjC9kNmP0rB2lEYN3VTpRqvgYPJKvvVXuL6mE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.10 158/286] drm/amd/display: Stop amdgpu_dm initialize when link nums greater than max_links
-Date: Tue, 29 Apr 2025 18:41:02 +0200
-Message-ID: <20250429161114.385496731@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Andrii Nakryiko <andrii.nakryiko@gmail.com>,
+	Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 132/286] tracing: Fix filter string testing
+Date: Tue, 29 Apr 2025 18:40:36 +0200
+Message-ID: <20250429161113.298794695@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -55,60 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hersen Wu <hersenxs.wu@amd.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit cf8b16857db702ceb8d52f9219a4613363e2b1cf upstream.
+commit a8c5b0ed89a3f2c81c6ae0b041394e6eea0e7024 upstream.
 
-[Why]
-Coverity report OVERRUN warning. There are
-only max_links elements within dc->links. link
-count could up to AMDGPU_DM_MAX_DISPLAY_INDEX 31.
+The filter string testing uses strncpy_from_kernel/user_nofault() to
+retrieve the string to test the filter against. The if() statement was
+incorrect as it considered 0 as a fault, when it is only negative that it
+faulted.
 
-[How]
-Make sure link count less than max_links.
+Running the following commands:
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[Minor conflict resolved due to code context change. And the macro MAX_LINKS
- is introduced by Commit 60df5628144b ("drm/amd/display: handle invalid
- connector indices") after 6.10. So here we still use the original array
- length MAX_PIPES * 2]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
+  # cd /sys/kernel/tracing
+  # echo "filename.ustring ~ \"/proc*\"" > events/syscalls/sys_enter_openat/filter
+  # echo 1 > events/syscalls/sys_enter_openat/enable
+  # ls /proc/$$/maps
+  # cat trace
+
+Would produce nothing, but with the fix it will produce something like:
+
+      ls-1192    [007] .....  8169.828333: sys_openat(dfd: ffffffffffffff9c, filename: 7efc18359904, flags: 80000, mode: 0)
+
+Link: https://lore.kernel.org/all/CAEf4BzbVPQ=BjWztmEwBPRKHUwNfKBkS3kce-Rzka6zvbQeVpg@mail.gmail.com/
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/20250417183003.505835fb@gandalf.local.home
+Fixes: 77360f9bbc7e5 ("tracing: Add test for user space strings when filtering on string pointers")
+Reported-by: Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Reported-by: Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ kernel/trace/trace_events_filter.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3397,17 +3397,17 @@ static int amdgpu_dm_initialize_drm_devi
- 			goto fail;
- 		}
+--- a/kernel/trace/trace_events_filter.c
++++ b/kernel/trace/trace_events_filter.c
+@@ -676,7 +676,7 @@ static __always_inline char *test_string
+ 	kstr = ubuf->buffer;
  
-+	if (link_cnt > (MAX_PIPES * 2)) {
-+		DRM_ERROR(
-+			"KMS: Cannot support more than %d display indexes\n",
-+				MAX_PIPES * 2);
-+		goto fail;
-+	}
-+
- 	/* loops over all connectors on the board */
- 	for (i = 0; i < link_cnt; i++) {
- 		struct dc_link *link = NULL;
+ 	/* For safety, do not trust the string pointer */
+-	if (!strncpy_from_kernel_nofault(kstr, str, USTRING_BUF_SIZE))
++	if (strncpy_from_kernel_nofault(kstr, str, USTRING_BUF_SIZE) < 0)
+ 		return NULL;
+ 	return kstr;
+ }
+@@ -695,7 +695,7 @@ static __always_inline char *test_ustrin
  
--		if (i > AMDGPU_DM_MAX_DISPLAY_INDEX) {
--			DRM_ERROR(
--				"KMS: Cannot support more than %d display indexes\n",
--					AMDGPU_DM_MAX_DISPLAY_INDEX);
--			continue;
--		}
--
- 		aconnector = kzalloc(sizeof(*aconnector), GFP_KERNEL);
- 		if (!aconnector)
- 			goto fail;
+ 	/* user space address? */
+ 	ustr = (char __user *)str;
+-	if (!strncpy_from_user_nofault(kstr, ustr, USTRING_BUF_SIZE))
++	if (strncpy_from_user_nofault(kstr, ustr, USTRING_BUF_SIZE) < 0)
+ 		return NULL;
+ 
+ 	return kstr;
 
 
