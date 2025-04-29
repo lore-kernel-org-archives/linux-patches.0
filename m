@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA332B2DA;
-	Tue, 29 Apr 2025 17:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117E722AE68;
+	Tue, 29 Apr 2025 17:53:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949206; cv=none; b=sf5rDfqqXBsAV+F6NWBA626OxVVdKmVmmafNOztX4g1s0I/Ej6QNybhUwV8Kl9dp/4T8isZp1D0fiZ/ABCZAIAJjAotXnCWHjR8lTBrzQ75frHXIbMgfGjHnOeBExQFGGhyqwsXBeP0Kd2SM/leResAEAi+bhBzN6D2hMuRfc0o=
+	t=1745949209; cv=none; b=BfjxFKwRCJkXtEFwLYUKDwMXBgyU8mcsrMIKGr7FVOowy/r5CZa8z5+QD4DG/vuQSCKog+pUJnHk3PNW6z6d1rQ37y6wOXeEieJaFZCxN0WmbnEJBlEIauo3oOZDWoe/rjYsMdn8B0Zgx7C0C5Dbgmh+MLkCIqSvxxmUBLSMJR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949206; c=relaxed/simple;
-	bh=YD8QE4jOl3opLJn0LVtjay7vPBPjLHjFdlD0yvubQSg=;
+	s=arc-20240116; t=1745949209; c=relaxed/simple;
+	bh=bqCMHSxsSQjJ2cZ5dFmUdd0Q1tOiFL9zd1KJqkQxm6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LI4SzdnAoQNi7Z866VxOxdgKjAoCIH4y76wIaWT3cfqLmhOLMGN5bvb9Ztzmi9iCJg8e1vucPSgBKdnsIDui222ifBc4XCFiQgDvKbIcu6YxSY1UzXFOqrtp8LHW5iGBss+/Z8bnuw79TE0e5tAmbwA0C2NAcCJJPbuQ4Vv9i1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAh6hHoP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e98J0B64hOPcNjkerHaVahFuOGnTwjzKqqdh580ZuifHPDZ2eebLoIccoPlN4xyYvyo2q6JGrKeuAm2Z3REmZl6sjPNlNAzQBbFrBBmWvC1b+Haw81lGRI0rNj5lzVury8Kzx59biB7Ou4WBAJYJ4lxMWMhGuAtiieNN8gx2e+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QgzVAfcK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAh6hHoP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA90C4CEE3;
-	Tue, 29 Apr 2025 17:53:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QgzVAfcK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84AACC4CEE3;
+	Tue, 29 Apr 2025 17:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949206;
-	bh=YD8QE4jOl3opLJn0LVtjay7vPBPjLHjFdlD0yvubQSg=;
+	s=korg; t=1745949208;
+	bh=bqCMHSxsSQjJ2cZ5dFmUdd0Q1tOiFL9zd1KJqkQxm6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PAh6hHoPi0fZ+5JHP8zZM/Hd465UsWrwJyPhs1Xpj59wVfqZJeESgO+nY2eHDaPdC
-	 3zAv4zgBkcJewmKvMVx2Dp8O6lYDVsJN2SrMOG/ezBqRIIvUwFTMOGnXWpax/EP6mg
-	 AQ94Y1YVhO8Bj5lQsnLkOa8Rorj2acDQMRauJBqE=
+	b=QgzVAfcKR6PMBZClOmYB6bBaKtriPX4tosR8rBGanHfFLynKiRhUgLd7aupb3ZWPe
+	 3P/qYGDcif4YBXdFfXS0GUl1k4AudDQowV0GPR4Zmetjo7EJvua4s1HE+DlXUH4rQR
+	 3T3f8b6kVoxcERgq70IFUKq3dmms6YWvpkdFy89Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WangYuli <wangyuli@uniontech.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 5.15 218/373] nvmet-fc: Remove unused functions
-Date: Tue, 29 Apr 2025 18:41:35 +0200
-Message-ID: <20250429161132.123443886@linuxfoundation.org>
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Joe Thornber <thornber@redhat.com>,
+	Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
+Subject: [PATCH 5.15 245/373] dm cache: fix flushing uninitialized delayed_work on cache_ctr error
+Date: Tue, 29 Apr 2025 18:42:02 +0200
+Message-ID: <20250429161133.204361732@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -52,64 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Ming-Hung Tsai <mtsai@redhat.com>
 
-commit 1b304c006b0fb4f0517a8c4ba8c46e88f48a069c upstream.
+commit 135496c208ba26fd68cdef10b64ed7a91ac9a7ff upstream.
 
-The functions nvmet_fc_iodnum() and nvmet_fc_fodnum() are currently
-unutilized.
+An unexpected WARN_ON from flush_work() may occur when cache creation
+fails, caused by destroying the uninitialized delayed_work waker in the
+error path of cache_create(). For example, the warning appears on the
+superblock checksum error.
 
-Following commit c53432030d86 ("nvme-fabrics: Add target support for FC
-transport"), which introduced these two functions, they have not been
-used at all in practice.
+Reproduce steps:
 
-Remove them to resolve the compiler warnings.
+dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
+dmsetup create cdata --table "0 65536 linear /dev/sdc 8192"
+dmsetup create corig --table "0 524288 linear /dev/sdc 262144"
+dd if=/dev/urandom of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
+dmsetup create cache --table "0 524288 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
 
-Fix follow errors with clang-19 when W=1e:
-  drivers/nvme/target/fc.c:177:1: error: unused function 'nvmet_fc_iodnum' [-Werror,-Wunused-function]
-    177 | nvmet_fc_iodnum(struct nvmet_fc_ls_iod *iodptr)
-        | ^~~~~~~~~~~~~~~
-  drivers/nvme/target/fc.c:183:1: error: unused function 'nvmet_fc_fodnum' [-Werror,-Wunused-function]
-    183 | nvmet_fc_fodnum(struct nvmet_fc_fcp_iod *fodptr)
-        | ^~~~~~~~~~~~~~~
-  2 errors generated.
-  make[8]: *** [scripts/Makefile.build:207: drivers/nvme/target/fc.o] Error 1
-  make[7]: *** [scripts/Makefile.build:465: drivers/nvme/target] Error 2
-  make[6]: *** [scripts/Makefile.build:465: drivers/nvme] Error 2
-  make[6]: *** Waiting for unfinished jobs....
+Kernel logs:
 
-Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+(snip)
+WARNING: CPU: 0 PID: 84 at kernel/workqueue.c:4178 __flush_work+0x5d4/0x890
+
+Fix by pulling out the cancel_delayed_work_sync() from the constructor's
+error path. This patch doesn't affect the use-after-free fix for
+concurrent dm_resume and dm_destroy (commit 6a459d8edbdb ("dm cache: Fix
+UAF in destroy()")) as cache_dtr is not changed.
+
+Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
+Fixes: 6a459d8edbdb ("dm cache: Fix UAF in destroy()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Acked-by: Joe Thornber <thornber@redhat.com>
+Signed-off-by: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fc.c |   14 --------------
- 1 file changed, 14 deletions(-)
+ drivers/md/dm-cache-target.c |   24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -173,20 +173,6 @@ struct nvmet_fc_tgt_assoc {
- 	struct rcu_head			rcu;
- };
+--- a/drivers/md/dm-cache-target.c
++++ b/drivers/md/dm-cache-target.c
+@@ -1890,16 +1890,13 @@ static void check_migrations(struct work
+  * This function gets called on the error paths of the constructor, so we
+  * have to cope with a partially initialised struct.
+  */
+-static void destroy(struct cache *cache)
++static void __destroy(struct cache *cache)
+ {
+-	unsigned i;
+-
+ 	mempool_exit(&cache->migration_pool);
  
+ 	if (cache->prison)
+ 		dm_bio_prison_destroy_v2(cache->prison);
+ 
+-	cancel_delayed_work_sync(&cache->waker);
+ 	if (cache->wq)
+ 		destroy_workqueue(cache->wq);
+ 
+@@ -1927,13 +1924,22 @@ static void destroy(struct cache *cache)
+ 	if (cache->policy)
+ 		dm_cache_policy_destroy(cache->policy);
+ 
++	bioset_exit(&cache->bs);
++
++	kfree(cache);
++}
++
++static void destroy(struct cache *cache)
++{
++	unsigned int i;
++
++	cancel_delayed_work_sync(&cache->waker);
++
+ 	for (i = 0; i < cache->nr_ctr_args ; i++)
+ 		kfree(cache->ctr_args[i]);
+ 	kfree(cache->ctr_args);
+ 
+-	bioset_exit(&cache->bs);
 -
--static inline int
--nvmet_fc_iodnum(struct nvmet_fc_ls_iod *iodptr)
--{
--	return (iodptr - iodptr->tgtport->iod);
--}
--
--static inline int
--nvmet_fc_fodnum(struct nvmet_fc_fcp_iod *fodptr)
--{
--	return (fodptr - fodptr->queue->fod);
--}
--
--
- /*
-  * Association and Connection IDs:
-  *
+-	kfree(cache);
++	__destroy(cache);
+ }
+ 
+ static void cache_dtr(struct dm_target *ti)
+@@ -2546,7 +2552,7 @@ static int cache_create(struct cache_arg
+ 	*result = cache;
+ 	return 0;
+ bad:
+-	destroy(cache);
++	__destroy(cache);
+ 	return r;
+ }
+ 
+@@ -2597,7 +2603,7 @@ static int cache_ctr(struct dm_target *t
+ 
+ 	r = copy_ctr_args(cache, argc - 3, (const char **)argv + 3);
+ 	if (r) {
+-		destroy(cache);
++		__destroy(cache);
+ 		goto out;
+ 	}
+ 
 
 
