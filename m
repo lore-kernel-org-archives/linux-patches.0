@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410FC24A06A;
-	Tue, 29 Apr 2025 17:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519881FE468;
+	Tue, 29 Apr 2025 17:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946298; cv=none; b=R3FK7AHujpAl0OO3gPvT9yLUzS/QAduscj6qqCXS0jVwBryoYtl7F8bY0kiSEMHL1KdsTQTOMPRbmZPEb1RLLIw1FZzgSdaI+RgeiPjxWiy12vbxm5U83tcW1L5HKZzqa4ZdE4eBsGeY/kvONK5beKWk9AZwm34cAdAteAIPEoI=
+	t=1745946301; cv=none; b=STqeh6poz4/pzFRZBf+30XY5Wrmq3whctLeA6uMVB1dzXj6MEfzU+4UnGvoTUaUyHuXJ/04Q94+UKNN7/gDZ15pbyGDv7xu/ETZO61E8sOFKkVoABh4iqrEBmpESWOM03yThJ2xaizeBS8OpH7M+dBBAT8EJZT8RaACfPNWfxfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946298; c=relaxed/simple;
-	bh=UBK8FsxVoePSP0WKteXtFu4TvppBt5nrZImkMinv5YA=;
+	s=arc-20240116; t=1745946301; c=relaxed/simple;
+	bh=Ok+cYwS3Y++nGIcmqPWJSNKb8d5/vu92rVtz3wioRec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V9o/GcD6YYfdWmi+IKPof+R0m8RVFwE/peB72x3RcZY9+SMSSGs6vUO1e/loX09+BuyizgaHa0u82GqM3hXhJMJjRN8k6Az+vB+2a79AgqrxK2xnSQcI9W2XJrUGS1gyhyLm9tBy623hPdhFdIj+vcc2uyRW3tYBKQ6ZwW2a68I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJdnQ5Xd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JGxoJTYgpSg6pHvLoc0VkzdIysO6n3OUWQKcsqzMs/r9LiK15irjv6pxomHBAI96C6I1wI58c5nYrD7vKU7EGxIA43xHQu67vwnh3JMZfbgR1oBxmB6x6LvgmSIQyBgzKdCUFWHq/u/5WEZMXwae3miL/5osiVuzsgRJiN6kPPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbUAmaZS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJdnQ5Xd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC985C4CEE3;
-	Tue, 29 Apr 2025 17:04:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbUAmaZS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8DB0C4CEE3;
+	Tue, 29 Apr 2025 17:05:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946298;
-	bh=UBK8FsxVoePSP0WKteXtFu4TvppBt5nrZImkMinv5YA=;
+	s=korg; t=1745946301;
+	bh=Ok+cYwS3Y++nGIcmqPWJSNKb8d5/vu92rVtz3wioRec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJdnQ5XdF096yUWqP6HzMi7aAnhZfDm12q97LVVvLk4Thz64I0tYy6OsFua+c2AUr
-	 FLgzeoEyLNxTjSqfiPdYOc4aaaMm/7S5pntbShbpbKUXe7UaRyiAMs2pq+rMHGgdfv
-	 XM/E1o+ezyr07nhfwihBZvV2lQ4N93FpKqlCgJn0=
+	b=TbUAmaZS/9Y/3QWAac3Rh7wFxwdIcyrks4wa6iX26txeXJkxQrEhEPa6cT6MD0uvR
+	 1yr8eqBKD5GdAgOxRlNeB0pM/xZLLW7R0VgM5SvzjzRxRujjgF9lESHEfuA+94z2Q+
+	 jpZv5Z8g8XDtxgV7hwtlQhpi7AsleYY9jQ6zpM/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Mastykin <mastichi@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Michal Pecio <michal.pecio@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 180/311] pinctrl: mcp23s08: Get rid of spurious level interrupts
-Date: Tue, 29 Apr 2025 18:40:17 +0200
-Message-ID: <20250429161128.397274459@linuxfoundation.org>
+Subject: [PATCH 6.14 214/311] usb: xhci: Avoid Stop Endpoint retry loop if the endpoint seems Running
+Date: Tue, 29 Apr 2025 18:40:51 +0200
+Message-ID: <20250429161129.762446884@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -51,86 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Mastykin <mastichi@gmail.com>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-[ Upstream commit 7b0671b97f0872d6950ccc925e210cb3f67721bf ]
+[ Upstream commit 28a76fcc4c85dd39633fb96edb643c91820133e3 ]
 
-irq_mask()/irq_unmask() are not called for nested interrupts. So level
-interrupts are never masked, chip's interrupt output is not cleared on
-INTCAP or GPIO read, the irq handler is uselessly called again. Nested
-irq handler is not called again, because interrupt reason is cleared by
-its first call.
-/proc/interrupts shows that number of chip's irqs is greater than
-number of nested irqs.
+Nothing prevents a broken HC from claiming that an endpoint is Running
+and repeatedly rejecting Stop Endpoint with Context State Error.
 
-This patch adds masking and unmasking level interrupts inside irq handler.
+Avoid infinite retries and give back cancelled TDs.
 
-Signed-off-by: Dmitry Mastykin <mastichi@gmail.com>
-Link: https://lore.kernel.org/20250122120504.1279790-1-mastichi@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+No such cases known so far, but HCs have bugs.
+
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250311154551.4035726-4-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-mcp23s08.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ drivers/usb/host/xhci-ring.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-mcp23s08.c b/drivers/pinctrl/pinctrl-mcp23s08.c
-index b96e6368a9568..4d1f41488017e 100644
---- a/drivers/pinctrl/pinctrl-mcp23s08.c
-+++ b/drivers/pinctrl/pinctrl-mcp23s08.c
-@@ -382,6 +382,7 @@ static irqreturn_t mcp23s08_irq(int irq, void *data)
- {
- 	struct mcp23s08 *mcp = data;
- 	int intcap, intcon, intf, i, gpio, gpio_orig, intcap_mask, defval, gpinten;
-+	bool need_unmask = false;
- 	unsigned long int enabled_interrupts;
- 	unsigned int child_irq;
- 	bool intf_set, intcap_changed, gpio_bit_changed,
-@@ -396,9 +397,6 @@ static irqreturn_t mcp23s08_irq(int irq, void *data)
- 		goto unlock;
- 	}
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 6b20072424f0c..3a284c68e37a0 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -1198,16 +1198,19 @@ static void xhci_handle_cmd_stop_ep(struct xhci_hcd *xhci, int slot_id,
+ 			 * Stopped state, but it will soon change to Running.
+ 			 *
+ 			 * Assume this bug on unexpected Stop Endpoint failures.
+-			 * Keep retrying until the EP starts and stops again, on
+-			 * chips where this is known to help. Wait for 100ms.
++			 * Keep retrying until the EP starts and stops again.
+ 			 */
+-			if (time_is_before_jiffies(ep->stop_time + msecs_to_jiffies(100)))
+-				break;
+ 			fallthrough;
+ 		case EP_STATE_RUNNING:
+ 			/* Race, HW handled stop ep cmd before ep was running */
+ 			xhci_dbg(xhci, "Stop ep completion ctx error, ctx_state %d\n",
+ 					GET_EP_CTX_STATE(ep_ctx));
++			/*
++			 * Don't retry forever if we guessed wrong or a defective HC never starts
++			 * the EP or says 'Running' but fails the command. We must give back TDs.
++			 */
++			if (time_is_before_jiffies(ep->stop_time + msecs_to_jiffies(100)))
++				break;
  
--	if (mcp_read(mcp, MCP_INTCAP, &intcap))
--		goto unlock;
--
- 	if (mcp_read(mcp, MCP_INTCON, &intcon))
- 		goto unlock;
- 
-@@ -408,6 +406,16 @@ static irqreturn_t mcp23s08_irq(int irq, void *data)
- 	if (mcp_read(mcp, MCP_DEFVAL, &defval))
- 		goto unlock;
- 
-+	/* Mask level interrupts to avoid their immediate reactivation after clearing */
-+	if (intcon) {
-+		need_unmask = true;
-+		if (mcp_write(mcp, MCP_GPINTEN, gpinten & ~intcon))
-+			goto unlock;
-+	}
-+
-+	if (mcp_read(mcp, MCP_INTCAP, &intcap))
-+		goto unlock;
-+
- 	/* This clears the interrupt(configurable on S18) */
- 	if (mcp_read(mcp, MCP_GPIO, &gpio))
- 		goto unlock;
-@@ -470,9 +478,18 @@ static irqreturn_t mcp23s08_irq(int irq, void *data)
- 		}
- 	}
- 
-+	if (need_unmask) {
-+		mutex_lock(&mcp->lock);
-+		goto unlock;
-+	}
-+
- 	return IRQ_HANDLED;
- 
- unlock:
-+	if (need_unmask)
-+		if (mcp_write(mcp, MCP_GPINTEN, gpinten))
-+			dev_err(mcp->chip.parent, "can't unmask GPINTEN\n");
-+
- 	mutex_unlock(&mcp->lock);
- 	return IRQ_HANDLED;
- }
+ 			command = xhci_alloc_command(xhci, false, GFP_ATOMIC);
+ 			if (!command) {
 -- 
 2.39.5
 
