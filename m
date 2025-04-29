@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009DD243964;
-	Tue, 29 Apr 2025 18:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453402AE96;
+	Tue, 29 Apr 2025 18:04:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949888; cv=none; b=Z42rhH4ZeQ+0WEdCyyKbcUML8e2DecGW5nW0WFsa7JD2gaMctq1BLygrCiByEYTBmmfzG73VPRrBbMo//sa3joUclINx7pLiZCM9LY58f/aN1ZWfR1yMFhUTUOYsvgs8ClWh2H65i+FzjREkuo/Z6FJVkcXviEEBSPs5vrqs0eI=
+	t=1745949891; cv=none; b=jlvXODWK4+m4VC8AuSFiYWDriUmTWy6dPXUDq+osDmL7IWG7LwFHlCSrE/SP6RjfES8F/1tB1pnRbkdRSJ5Wp4HzZBDx11LEgOSYQzbWW70WN/f5S56jY8cCdp1fAMP3mZnj01afxsCwPY/xpdFc8gqrd4Wm+eSrwGqZpNOBH4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949888; c=relaxed/simple;
-	bh=OmyuvChdLpN/7ZyBLCH4znl1KW/n2H4bCy7z3xvfunQ=;
+	s=arc-20240116; t=1745949891; c=relaxed/simple;
+	bh=Ipai51g7IyPyaZusXK5fQqwUq8LFc/w2DNauzjHeYaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tCil/xpdLReT7FgnmdijPC7WnfLOq3vJf3pDTbP0r4vjSzSiqtnCIicKsRDwjYSkAsRs1XOWMjdJO84WZGYMlk3Oy/LFZ9D6TFiN5cMmLIPD/ThXrKOnztDDSfb/MlfpiM3hST4stwpI2RGNrw1zFVfiHAyD/A16/6GMHSH1DOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hsof58ZK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bHK3bArI/gpQh87/pm2zt5qhAz4aUVJWk2XUewH4N+CmYu9lh9zfzmyLN4uPL1udln4onS+Wdbxmy/mnJGsSWYS++IVOH00+76cCjNAzIDkwij7nCPKTbMjk0czYmrEvs6H7lVC3IbEph2dTgyK3FynAkFdwKBkRs5lb2/ZiQAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oZssgSE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hsof58ZK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61492C4CEE3;
-	Tue, 29 Apr 2025 18:04:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oZssgSE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4EDFC4CEE3;
+	Tue, 29 Apr 2025 18:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949887;
-	bh=OmyuvChdLpN/7ZyBLCH4znl1KW/n2H4bCy7z3xvfunQ=;
+	s=korg; t=1745949891;
+	bh=Ipai51g7IyPyaZusXK5fQqwUq8LFc/w2DNauzjHeYaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hsof58ZKKNtVZP+mXp7SdDEFXoSpcmU/8pT6x6ytROJT1ssEa5Ii/Tl3tnXNeNsbd
-	 ILse7oTxvxJcCjySLXUc0QGiDty60Nugi+BXfH/kelliGFAyMZPUrGvp3ltnLPj2J1
-	 Ai5GuVVBbuEvzkqHxD38H9ph4TfCwcyUoUEmYQAA=
+	b=0oZssgSEsscrECWk9mGlpeiBLFaZy/gJYVmle2AtVOk2NUYenckaEEPIk316z6Z7x
+	 DwNmAhf3tCXWvHib0jTYiYdm/NG1Cz4aCCn4pgZrWar09d+brADJ8XlARTudUGUZP/
+	 Aw90WgtElg4//xjpjUbypk9QgmCOrFy+5Hbj/aq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Frode Isaksen <frode@meta.com>,
 	stable <stable@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Mingcong Bai <baimingcong@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 087/167] USB: OHCI: Add quirk for LS7A OHCI controller (rev 0x02)
-Date: Tue, 29 Apr 2025 18:43:15 +0200
-Message-ID: <20250429161055.272847347@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.1 088/167] usb: dwc3: gadget: check that event count does not exceed event buffer length
+Date: Tue, 29 Apr 2025 18:43:16 +0200
+Message-ID: <20250429161055.314454903@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -53,67 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Frode Isaksen <frode@meta.com>
 
-commit bcb60d438547355b8f9ad48645909139b64d3482 upstream.
+commit 63ccd26cd1f6600421795f6ca3e625076be06c9f upstream.
 
-The OHCI controller (rev 0x02) under LS7A PCI host has a hardware flaw.
-MMIO register with offset 0x60/0x64 is treated as legacy PS2-compatible
-keyboard/mouse interface, which confuse the OHCI controller. Since OHCI
-only use a 4KB BAR resource indeed, the LS7A OHCI controller's 32KB BAR
-is wrapped around (the second 4KB BAR space is the same as the first 4KB
-internally). So we can add an 4KB offset (0x1000) to the OHCI registers
-(from the PCI BAR resource) as a quirk.
+The event count is read from register DWC3_GEVNTCOUNT.
+There is a check for the count being zero, but not for exceeding the
+event buffer length.
+Check that event count does not exceed event buffer length,
+avoiding an out-of-bounds access when memcpy'ing the event.
+Crash log:
+Unable to handle kernel paging request at virtual address ffffffc0129be000
+pc : __memcpy+0x114/0x180
+lr : dwc3_check_event_buf+0xec/0x348
+x3 : 0000000000000030 x2 : 000000000000dfc4
+x1 : ffffffc0129be000 x0 : ffffff87aad60080
+Call trace:
+__memcpy+0x114/0x180
+dwc3_interrupt+0x24/0x34
 
+Signed-off-by: Frode Isaksen <frode@meta.com>
+Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
 Cc: stable <stable@kernel.org>
-Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Tested-by: Mingcong Bai <baimingcong@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Link: https://lore.kernel.org/r/20250328040059.3672979-1-chenhuacai@loongson.cn
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20250403072907.448524-1-fisaksen@baylibre.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ohci-pci.c |   23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/usb/dwc3/gadget.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/usb/host/ohci-pci.c
-+++ b/drivers/usb/host/ohci-pci.c
-@@ -165,6 +165,25 @@ static int ohci_quirk_amd700(struct usb_
- 	return 0;
- }
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -4409,6 +4409,12 @@ static irqreturn_t dwc3_check_event_buf(
+ 	if (!count)
+ 		return IRQ_NONE;
  
-+static int ohci_quirk_loongson(struct usb_hcd *hcd)
-+{
-+	struct pci_dev *pdev = to_pci_dev(hcd->self.controller);
++	if (count > evt->length) {
++		dev_err_ratelimited(dwc->dev, "invalid count(%u) > evt->length(%u)\n",
++			count, evt->length);
++		return IRQ_NONE;
++	}
 +
-+	/*
-+	 * Loongson's LS7A OHCI controller (rev 0x02) has a
-+	 * flaw. MMIO register with offset 0x60/64 is treated
-+	 * as legacy PS2-compatible keyboard/mouse interface.
-+	 * Since OHCI only use 4KB BAR resource, LS7A OHCI's
-+	 * 32KB BAR is wrapped around (the 2nd 4KB BAR space
-+	 * is the same as the 1st 4KB internally). So add 4KB
-+	 * offset (0x1000) to the OHCI registers as a quirk.
-+	 */
-+	if (pdev->revision == 0x2)
-+		hcd->regs += SZ_4K;	/* SZ_4K = 0x1000 */
-+
-+	return 0;
-+}
-+
- static int ohci_quirk_qemu(struct usb_hcd *hcd)
- {
- 	struct ohci_hcd *ohci = hcd_to_ohci(hcd);
-@@ -225,6 +244,10 @@ static const struct pci_device_id ohci_p
- 		.driver_data = (unsigned long)ohci_quirk_amd700,
- 	},
- 	{
-+		PCI_DEVICE(PCI_VENDOR_ID_LOONGSON, 0x7a24),
-+		.driver_data = (unsigned long)ohci_quirk_loongson,
-+	},
-+	{
- 		.vendor		= PCI_VENDOR_ID_APPLE,
- 		.device		= 0x003f,
- 		.subvendor	= PCI_SUBVENDOR_ID_REDHAT_QUMRANET,
+ 	evt->count = count;
+ 	evt->flags |= DWC3_EVENT_PENDING;
+ 
 
 
