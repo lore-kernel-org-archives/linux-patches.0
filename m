@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FDE24C08D;
-	Tue, 29 Apr 2025 16:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17EAC24C08D;
+	Tue, 29 Apr 2025 16:59:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945954; cv=none; b=SqfgMFPRT4edml7mOq+6Ux6arZi9ZVR/5OzGDwfPgA4h28Ad23X6zhGShzKzcc7um/X8vMoW1UP56ada//T7RKFNyRIWYhYUuA+DelqA2VgUilPr8k8crJrb4HwqZL2q/PMzyyDfxZjqJ2T9fM8m3+U0Q1etRmjtNXes9/cK+Xg=
+	t=1745945957; cv=none; b=set9DHU0wRzly73fDzQPKCWITeIhjui/nmYDSgYU3gNc+tVEfr1DOlIT/ObfEyWzf3HBCDxlSEa71VuuJUxL6XxbAmDsQ16eunPryrJljNdynUiYsG4acXsG+u76hkTfyW7jOeE20hGqy9oAR0BnP/ZMAJkk4IF5xDpHbConA4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945954; c=relaxed/simple;
-	bh=d005Owtr5lJfWKpXALtVLnlyYH6ML3eHfQI473gCfCs=;
+	s=arc-20240116; t=1745945957; c=relaxed/simple;
+	bh=ojQc09bG/VpPlGROwXOxLvTsQSRONLyAfFIS99M4P/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lWalS1uUL2VLlCpE73uDuYFGRCxV/nQM12YVCDtk54L+mSfSOJzAlR65v61k1WTHxvNbVJsi6ibpxepubBo0MUMYZGeK1SvHQqAhTmAJDwlPeUVty13wjSJ/ez4SDpsnXQtPLJXK9seD0thUXvcA464LhrTyJO+IIxhxdNYyxmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0a+fe99u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=igcNhKi18TbtLO2SmnIXhn4gVr+QWeuYuTCEtaAp6ZzRemwH3WudXJXqVbJWQ1g3W8UM9cxKw6BO3zNW0gvtvjIeHVINTgfUxqHGCrz24tYBsQz5Zzj4uq+40dkKRzPYFmUpxn7g+FYc6DVSTP0AR5tg1DqcKLx1c8CZQpymN+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=albouxV2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0a+fe99u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22D6C4CEE3;
-	Tue, 29 Apr 2025 16:59:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="albouxV2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B8A2C4CEE3;
+	Tue, 29 Apr 2025 16:59:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945954;
-	bh=d005Owtr5lJfWKpXALtVLnlyYH6ML3eHfQI473gCfCs=;
+	s=korg; t=1745945957;
+	bh=ojQc09bG/VpPlGROwXOxLvTsQSRONLyAfFIS99M4P/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0a+fe99uhdNiZOJ/C3iaz4QCc9ASJ3Jx5gLO9SVfaDgdUieDUcSKA6H5nMxK3FY50
-	 RVI8fd58DFCbLmpB6O0l/4v1czfOymfNAQSHIV1hpgDkGgLC2OD+ymQYVK52fKD/Gh
-	 D0ZGJaAW20nIu09mOpGxE2Wr+M8l3OX/nrs9T01g=
+	b=albouxV2Yge3ZtuJmjiRYFfhoNJKE45gc99WtqX7aEwDu4fGr5MnU2IU21vmyIl0X
+	 puvYyF1GLfIZ+D3exa8GsqTR8nsfQElW9R4/DM17dLkPX7OPyAjIREROwfOxir80UC
+	 9jhIFM7Q0PqzeyMLfJbvNiq2dEOl7iwc6U9mkRuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Jon Hunter <jonathanh@nvidia.com>
-Subject: [PATCH 6.14 105/311] net: stmmac: address non-LPI resume failures properly
-Date: Tue, 29 Apr 2025 18:39:02 +0200
-Message-ID: <20250429161125.336689742@linuxfoundation.org>
+Subject: [PATCH 6.14 106/311] net: stmmac: socfpga: remove phy_resume() call
+Date: Tue, 29 Apr 2025 18:39:03 +0200
+Message-ID: <20250429161125.381677836@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -53,74 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-commit ef43e5132895ad59b45e38855d32e966bb7434d9 upstream.
+commit 366aeeba79088003307f0f12bb3575fb083cc72a upstream.
 
-The Synopsys Designware GMAC core databook requires all clocks to be
-active in order to complete software reset, which we perform during
-resume.
-
-However, IEEE 802.3 allows a PHY to stop its clocks when placed in
-low-power mode, which happens when the system is suspended and WoL
-is not enabled.
-
-As an attempt to work around this, commit 36d18b5664ef ("net: stmmac:
-start phylink instance before stmmac_hw_setup()") started phylink
-early, but this has the side effect that the mac_link_up() method may
-be called before or during the initialisation of GMAC hardware.
-
-We also have the socfpga glue driver directly calling phy_resume()
-also as an attempt to work around this.
-
-In a previous commit, phylink_prepare_resume() has been introduced
-to give MAC drivers a way to ensure that the PHY is resumed prior to
-their initialisation of their MAC hardware. This commit adds the call,
-and moves the phylink_resume() call back to where it should be before
-the aforementioned commit.
+As the previous commit addressed DWGMAC resuming with a PHY in
+suspended state, there is now no need for socfpga to work around
+this. Remove this code.
 
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/E1tvO6a-008Vjh-FG@rmk-PC.armlinux.org.uk
+Link: https://patch.msgid.link/E1tvO6f-008Vjn-J1@rmk-PC.armlinux.org.uk
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Cc: Jon Hunter <jonathanh@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |   19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c |   18 ------------------
+ 1 file changed, 18 deletions(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -7907,12 +7907,12 @@ int stmmac_resume(struct device *dev)
- 	}
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
+@@ -523,24 +523,6 @@ static int socfpga_dwmac_resume(struct d
  
- 	rtnl_lock();
--	phylink_resume(priv->phylink);
--	if (device_may_wakeup(priv->device) && !priv->plat->pmt)
--		phylink_speed_up(priv->phylink);
--	rtnl_unlock();
+ 	dwmac_priv->ops->set_phy_mode(priv->plat->bsp_priv);
  
--	rtnl_lock();
-+	/* Prepare the PHY to resume, ensuring that its clocks which are
-+	 * necessary for the MAC DMA reset to complete are running
-+	 */
-+	phylink_prepare_resume(priv->phylink);
-+
- 	mutex_lock(&priv->lock);
- 
- 	stmmac_reset_queues_param(priv);
-@@ -7930,6 +7930,15 @@ int stmmac_resume(struct device *dev)
- 	stmmac_enable_all_dma_irq(priv);
- 
- 	mutex_unlock(&priv->lock);
-+
-+	/* phylink_resume() must be called after the hardware has been
-+	 * initialised because it may bring the link up immediately in a
-+	 * workqueue thread, which will race with initialisation.
-+	 */
-+	phylink_resume(priv->phylink);
-+	if (device_may_wakeup(priv->device) && !priv->plat->pmt)
-+		phylink_speed_up(priv->phylink);
-+
- 	rtnl_unlock();
- 
- 	netif_device_attach(ndev);
+-	/* Before the enet controller is suspended, the phy is suspended.
+-	 * This causes the phy clock to be gated. The enet controller is
+-	 * resumed before the phy, so the clock is still gated "off" when
+-	 * the enet controller is resumed. This code makes sure the phy
+-	 * is "resumed" before reinitializing the enet controller since
+-	 * the enet controller depends on an active phy clock to complete
+-	 * a DMA reset. A DMA reset will "time out" if executed
+-	 * with no phy clock input on the Synopsys enet controller.
+-	 * Verified through Synopsys Case #8000711656.
+-	 *
+-	 * Note that the phy clock is also gated when the phy is isolated.
+-	 * Phy "suspend" and "isolate" controls are located in phy basic
+-	 * control register 0, and can be modified by the phy driver
+-	 * framework.
+-	 */
+-	if (ndev->phydev)
+-		phy_resume(ndev->phydev);
+-
+ 	return stmmac_resume(dev);
+ }
+ #endif /* CONFIG_PM_SLEEP */
 
 
