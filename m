@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886FA27453;
-	Tue, 29 Apr 2025 17:14:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B60221DA7;
+	Tue, 29 Apr 2025 17:14:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946890; cv=none; b=iTtT63qx5fP+I0hUfCIudoJMFXRFASQepzYdmmjXsXCheN1YqJPZaggtb+lg3FbMj+0DSmTuPgsasPxRDPchuqB10xcS58GmQItzvpALKfRknL91dMRkK4d71B+M52Z6V1oojMygbZUIZKuHxLX4+YQe6CRl5uYPU+V+V5DmRr4=
+	t=1745946893; cv=none; b=MilZde4qd5n+k7tTf2HTcb0PVdHI/Q38lAs2aFJ83MkbgaxsNglBPVbiRACoSVOmt7FN6IYd+Ene/jgjUsyh/fQe5Ayn4SSH0Q/sCF4E7Fp7lAapj03SKi0t/CoaFXK7EL0h5s5/UTfVQPwzass5pyqUf6kDQ2ZWep4JrZOrSLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946890; c=relaxed/simple;
-	bh=y9XMNRsdd8V3ww4ZGKxwx13AcCyJR8OEg+zU9BABrSs=;
+	s=arc-20240116; t=1745946893; c=relaxed/simple;
+	bh=IriIdFnnHwXQEhEJago4HWG5UmrK6Cu/lQIEXwne+Is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CK0ECGSB49152tuJ00MiwKI/hCF/NPXyl/NcpI+Icu4qHsp+wsONwlHoGgexDax+FOLcTkgYKOAOiI7sJYwUmbp2xmEC6Ere2mPHJSfnBJV5lr4I/T9mzij1x8WH/0SPcw8QHCAU44+iD1qOWL9ZwbuNaappBCRit1ylt1CZiJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdJ/P9G/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kRpXH4JfbUGRL2ZtjE7iMmflLx12SDGiCK1EUBwI3RcNTZ4mr5KzPKyO7uEtup0+uafHoVepOK+6gvJkeXPdevMKHt4VZlav5soTgx4XMM6AU9JFtuFjrW6s1Bt8k+810kliAsfHuZ4Aqhtq6lS866HkzgPU36YM8iM9kki+qpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BvNUW5wt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdJ/P9G/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02075C4CEE3;
-	Tue, 29 Apr 2025 17:14:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BvNUW5wt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13722C4CEE3;
+	Tue, 29 Apr 2025 17:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946890;
-	bh=y9XMNRsdd8V3ww4ZGKxwx13AcCyJR8OEg+zU9BABrSs=;
+	s=korg; t=1745946893;
+	bh=IriIdFnnHwXQEhEJago4HWG5UmrK6Cu/lQIEXwne+Is=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mdJ/P9G/JHNqQaivzJTTNYG/Z+ordUuAcENy8A8XQf1eCzzO7GrNIovcdzkF0f4yV
-	 p9joO2W0sJNE1h3wyM87kqL3iW3PzfHFVP8VK2g4KZHJx925wMfKBvsB6ro7K9K3Nv
-	 Wv6BvsiH21vzeRmH+8Pnn9mea4LvU4zfNq5mnGXI=
+	b=BvNUW5wtJVz+31ytiynD4BcwJxpQ44O8YyBdEhxHviIw0enBXFMDTWB1kSc2gJF+x
+	 pfAFCNtTmMBrnea7y/I5iVfLp33hmQNTRY2hocMauvkdBHCrvOawUccA+JTnqBBBj4
+	 vVy+KnCp/HnhkgWqT1k+F8ZPtx23QxREyJRQ+4B0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 072/286] ASoC: qdsp6: q6asm-dai: fix q6asm_dai_compr_set_params error path
-Date: Tue, 29 Apr 2025 18:39:36 +0200
-Message-ID: <20250429161110.816790632@linuxfoundation.org>
+	Murad Masimov <m.masimov@mt-integration.ru>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 5.10 063/286] media: streamzap: prevent processing IR data on URB failure
+Date: Tue, 29 Apr 2025 18:39:27 +0200
+Message-ID: <20250429161110.438488893@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -53,110 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-commit 7eccc86e90f04a0d758d16c08627a620ac59604d upstream.
+commit 549f6d348167fb2f7800ed7c8d4bce9630c74498 upstream.
 
-In case of attempts to compress playback something, for instance,
-when audio routing is not set up correctly, the audio DSP is left in
-inconsistent state because we are not doing the correct things in
-the error path of q6asm_dai_compr_set_params().
+If streamzap_callback() receives an urb with any non-critical error
+status, i.e. any error code other than -ECONNRESET, -ENOENT or -ESHUTDOWN,
+it will try to process IR data, ignoring a possible transfer failure.
 
-So, when routing is not set up and compress playback is attempted
-the following errors are present (simplified log):
+Make streamzap_callback() process IR data only when urb->status is 0.
+Move processing logic to a separate function to make code cleaner and
+more similar to the URB completion handlers in other RC drivers.
 
-q6routing routing: Routing not setup for MultiMedia-1 Session
-q6asm-dai dais: Stream reg failed ret:-22
-q6asm-dai dais: ASoC error (-22): at snd_soc_component_compr_set_params()
-on 17300000.remoteproc:glink-edge:apr:service@7:dais
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-After setting the correct routing the compress playback will always fail:
-
-q6asm-dai dais: cmd = 0x10db3 returned error = 0x9
-q6asm-dai dais: DSP returned error[9]
-q6asm-dai dais: q6asm_open_write failed
-q6asm-dai dais: ASoC error (-22): at snd_soc_component_compr_set_params()
-on 17300000.remoteproc:glink-edge:apr:service@7:dais
-
-0x9 here means "Operation is already processed". The CMD_OPEN here was
-sent the second time hence DSP responds that it was already done.
-
-Turns out the CMD_CLOSE should be sent after the q6asm_open_write()
-succeeded but something failed after that, for instance, routing
-setup.
-
-Fix this by slightly reworking the error path in
-q6asm_dai_compr_set_params().
-
-Tested on QRB5165 RB5 and SDM845 RB3 boards.
-
+Fixes: 19770693c354 ("V4L/DVB: staging/lirc: add lirc_streamzap driver")
 Cc: stable@vger.kernel.org
-Fixes: 5b39363e54cc ("ASoC: q6asm-dai: prepare set params to accept profile change")
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://patch.msgid.link/20250327154650.337404-1-alexey.klimov@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6asm-dai.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/media/rc/streamzap.c |   68 ++++++++++++++++++++++++-------------------
+ 1 file changed, 38 insertions(+), 30 deletions(-)
 
---- a/sound/soc/qcom/qdsp6/q6asm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
-@@ -916,9 +916,7 @@ static int q6asm_dai_compr_set_params(st
- 
- 		if (ret < 0) {
- 			dev_err(dev, "q6asm_open_write failed\n");
--			q6asm_audio_client_free(prtd->audio_client);
--			prtd->audio_client = NULL;
--			return ret;
-+			goto open_err;
- 		}
- 	}
- 
-@@ -927,7 +925,7 @@ static int q6asm_dai_compr_set_params(st
- 			      prtd->session_id, dir);
- 	if (ret) {
- 		dev_err(dev, "Stream reg failed ret:%d\n", ret);
--		return ret;
-+		goto q6_err;
- 	}
- 
- 	ret = __q6asm_dai_compr_set_codec_params(component, stream,
-@@ -935,7 +933,7 @@ static int q6asm_dai_compr_set_params(st
- 						 prtd->stream_id);
- 	if (ret) {
- 		dev_err(dev, "codec param setup failed ret:%d\n", ret);
--		return ret;
-+		goto q6_err;
- 	}
- 
- 	ret = q6asm_map_memory_regions(dir, prtd->audio_client, prtd->phys,
-@@ -944,12 +942,21 @@ static int q6asm_dai_compr_set_params(st
- 
- 	if (ret < 0) {
- 		dev_err(dev, "Buffer Mapping failed ret:%d\n", ret);
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto q6_err;
- 	}
- 
- 	prtd->state = Q6ASM_STREAM_RUNNING;
- 
- 	return 0;
-+
-+q6_err:
-+	q6asm_cmd(prtd->audio_client, prtd->stream_id, CMD_CLOSE);
-+
-+open_err:
-+	q6asm_audio_client_free(prtd->audio_client);
-+	prtd->audio_client = NULL;
-+	return ret;
+--- a/drivers/media/rc/streamzap.c
++++ b/drivers/media/rc/streamzap.c
+@@ -179,39 +179,10 @@ static void sz_push_half_space(struct st
+ 	sz_push_full_space(sz, value & SZ_SPACE_MASK);
  }
  
- static int q6asm_dai_compr_set_metadata(struct snd_soc_component *component,
+-/*
+- * streamzap_callback - usb IRQ handler callback
+- *
+- * This procedure is invoked on reception of data from
+- * the usb remote.
+- */
+-static void streamzap_callback(struct urb *urb)
++static void sz_process_ir_data(struct streamzap_ir *sz, int len)
+ {
+-	struct streamzap_ir *sz;
+ 	unsigned int i;
+-	int len;
+-
+-	if (!urb)
+-		return;
+-
+-	sz = urb->context;
+-	len = urb->actual_length;
+-
+-	switch (urb->status) {
+-	case -ECONNRESET:
+-	case -ENOENT:
+-	case -ESHUTDOWN:
+-		/*
+-		 * this urb is terminated, clean up.
+-		 * sz might already be invalid at this point
+-		 */
+-		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
+-		return;
+-	default:
+-		break;
+-	}
+ 
+-	dev_dbg(sz->dev, "%s: received urb, len %d\n", __func__, len);
+ 	for (i = 0; i < len; i++) {
+ 		dev_dbg(sz->dev, "sz->buf_in[%d]: %x\n",
+ 			i, (unsigned char)sz->buf_in[i]);
+@@ -264,6 +235,43 @@ static void streamzap_callback(struct ur
+ 	}
+ 
+ 	ir_raw_event_handle(sz->rdev);
++}
++
++/*
++ * streamzap_callback - usb IRQ handler callback
++ *
++ * This procedure is invoked on reception of data from
++ * the usb remote.
++ */
++static void streamzap_callback(struct urb *urb)
++{
++	struct streamzap_ir *sz;
++	int len;
++
++	if (!urb)
++		return;
++
++	sz = urb->context;
++	len = urb->actual_length;
++
++	switch (urb->status) {
++	case 0:
++		dev_dbg(sz->dev, "%s: received urb, len %d\n", __func__, len);
++		sz_process_ir_data(sz, len);
++		break;
++	case -ECONNRESET:
++	case -ENOENT:
++	case -ESHUTDOWN:
++		/*
++		 * this urb is terminated, clean up.
++		 * sz might already be invalid at this point
++		 */
++		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
++		return;
++	default:
++		break;
++	}
++
+ 	usb_submit_urb(urb, GFP_ATOMIC);
+ 
+ 	return;
 
 
