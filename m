@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424EE221DA7;
-	Tue, 29 Apr 2025 17:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B045538FB0;
+	Tue, 29 Apr 2025 17:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946798; cv=none; b=B1XIwrFAHRE8F/zzJrLh8No9jjLTzYL+k3vv5wMtEPbozjvgS0NSwzhfdqM3802QjfMxVXWc0xR+ZGanYStRPe8fZz0X8M9DhWh+KKbPRegt2DmF2ZhsOjDy3dLCUa0SscZxXzNJwB4JqM7p6pGUyH5wxeiMNSr8ehoYQVtilVQ=
+	t=1745946801; cv=none; b=jIciZCudByXH2dZGJFClFWZsAt4XVAkrBGQigKiXQtRj8v701N9GIFE/XAY9IHR3T6CnmzwbwH4/LNHlcIAIOOrLIW5Ri5Q78zcfqKpWcghJ5jBKDwt5J0/KHKa8MRODvfaWIKOmng1hwahXs+bGM5vjqP07JInYzyW60e/+fUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946798; c=relaxed/simple;
-	bh=GVpPct+XhAMkE0sDtFwhQGAdca7Y9qvOB2hfrURyVEM=;
+	s=arc-20240116; t=1745946801; c=relaxed/simple;
+	bh=pNdIv1Hx7vKcgVJHLzU7+KeNpwQQU/IA1oHbJ7DPxho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ADma0U6SodXMxMIBnQIH8zmrIdBcxAY/JHAD4wtYHTHbMb/69+gcbW3b1zvU2V2XygCr4AkPOHI5+JriFLgq23nu2koVc4dRMgsQr5H33p79DRkgoK4NO1KXaeFnx3EOn/Ru5gZys5FvGorQ1jr7YfkYmFiSi1Y9wuSAVB0OODE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TWVG7PLM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iN48shSyBAE6HNZTt2f3yEFnu8Wwdq0dpp8HzpqwzfQ6Mt9wkErzNf5weZqnyI67r6cBSU/Q3gmxujmNUaFCFxAaOThJek7jokM2L1aERds8i7yfTY07HlDpMje/k0taB5NoetHXUoinQaoXzUqnyl1SjQ/H5rviUSIXnWvfEwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQAuwt2Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TWVG7PLM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C5AC4CEE3;
-	Tue, 29 Apr 2025 17:13:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQAuwt2Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FABC4CEE3;
+	Tue, 29 Apr 2025 17:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946798;
-	bh=GVpPct+XhAMkE0sDtFwhQGAdca7Y9qvOB2hfrURyVEM=;
+	s=korg; t=1745946801;
+	bh=pNdIv1Hx7vKcgVJHLzU7+KeNpwQQU/IA1oHbJ7DPxho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TWVG7PLMeIFMqGV2inRD59l/f2Mh3ugOqQUwFoIsUol2H6SfFTxeqMz2SYeMOUe6x
-	 /J4T/t5RnjG3Pdv+/u04V152ko5CpvUonv5eAAq8162S1EsVblo9hCAjdKMGUqSmjY
-	 vdsusqSdU1ucPeGlIAQIJIduSHdIn6nL96NtG60M=
+	b=KQAuwt2QynnQNzmBtkqw43JYLygtJsBOSbDz0l9sit1qnZj12JYg1U6h2xvTZzOjW
+	 8hxUk0w6Ewt+uNLqq0UlDnXBfOVUNrhnLzs+d1cjrIT1ckTjxndoxkRjwBjV/+XOLc
+	 5cByPbmZRYM6N0E6O6oHcZURw0GG7DQboF6wiDr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Sadovnikov <a.sadovnikov@ispras.ru>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.10 073/286] ext4: fix off-by-one error in do_split
-Date: Tue, 29 Apr 2025 18:39:37 +0200
-Message-ID: <20250429161110.857227826@linuxfoundation.org>
+	Cong Meng <cong.meng@oracle.com>,
+	Si-Wei Liu <si-wei.liu@oracle.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>
+Subject: [PATCH 5.10 074/286] vdpa/mlx5: Fix oversized null mkey longer than 32bit
+Date: Tue, 29 Apr 2025 18:39:38 +0200
+Message-ID: <20250429161110.896651226@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -45,88 +48,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Artem Sadovnikov <a.sadovnikov@ispras.ru>
+From: Si-Wei Liu <si-wei.liu@oracle.com>
 
-commit 94824ac9a8aaf2fb3c54b4bdde842db80ffa555d upstream.
+commit a6097e0a54a5c24f8d577ffecbc35289ae281c2e upstream.
 
-Syzkaller detected a use-after-free issue in ext4_insert_dentry that was
-caused by out-of-bounds access due to incorrect splitting in do_split.
+create_user_mr() has correct code to count the number of null keys
+used to fill in a hole for the memory map. However, fill_indir()
+does not follow the same to cap the range up to the 1GB limit
+correspondingly. Fill in more null keys for the gaps in between,
+so that null keys are correctly populated.
 
-BUG: KASAN: use-after-free in ext4_insert_dentry+0x36a/0x6d0 fs/ext4/namei.c:2109
-Write of size 251 at addr ffff888074572f14 by task syz-executor335/5847
-
-CPU: 0 UID: 0 PID: 5847 Comm: syz-executor335 Not tainted 6.12.0-rc6-syzkaller-00318-ga9cda7c0ffed #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/30/2024
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:377 [inline]
- print_report+0x169/0x550 mm/kasan/report.c:488
- kasan_report+0x143/0x180 mm/kasan/report.c:601
- kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
- __asan_memcpy+0x40/0x70 mm/kasan/shadow.c:106
- ext4_insert_dentry+0x36a/0x6d0 fs/ext4/namei.c:2109
- add_dirent_to_buf+0x3d9/0x750 fs/ext4/namei.c:2154
- make_indexed_dir+0xf98/0x1600 fs/ext4/namei.c:2351
- ext4_add_entry+0x222a/0x25d0 fs/ext4/namei.c:2455
- ext4_add_nondir+0x8d/0x290 fs/ext4/namei.c:2796
- ext4_symlink+0x920/0xb50 fs/ext4/namei.c:3431
- vfs_symlink+0x137/0x2e0 fs/namei.c:4615
- do_symlinkat+0x222/0x3a0 fs/namei.c:4641
- __do_sys_symlink fs/namei.c:4662 [inline]
- __se_sys_symlink fs/namei.c:4660 [inline]
- __x64_sys_symlink+0x7a/0x90 fs/namei.c:4660
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
-
-The following loop is located right above 'if' statement.
-
-for (i = count-1; i >= 0; i--) {
-	/* is more than half of this entry in 2nd half of the block? */
-	if (size + map[i].size/2 > blocksize/2)
-		break;
-	size += map[i].size;
-	move++;
-}
-
-'i' in this case could go down to -1, in which case sum of active entries
-wouldn't exceed half the block size, but previous behaviour would also do
-split in half if sum would exceed at the very last block, which in case of
-having too many long name files in a single block could lead to
-out-of-bounds access and following use-after-free.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
+Fixes: 94abbccdf291 ("vdpa/mlx5: Add shared memory registration code")
 Cc: stable@vger.kernel.org
-Fixes: 5872331b3d91 ("ext4: fix potential negative array index in do_split()")
-Signed-off-by: Artem Sadovnikov <a.sadovnikov@ispras.ru>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250404082804.2567-3-a.sadovnikov@ispras.ru
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reported-by: Cong Meng <cong.meng@oracle.com>
+Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Message-Id: <20250220193732.521462-2-dtatulea@nvidia.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/vdpa/mlx5/core/mr.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -1930,7 +1930,7 @@ static struct ext4_dir_entry_2 *do_split
- 	 * split it in half by count; each resulting block will have at least
- 	 * half the space free.
- 	 */
--	if (i > 0)
-+	if (i >= 0)
- 		split = count - move;
- 	else
- 		split = count/2;
+--- a/drivers/vdpa/mlx5/core/mr.c
++++ b/drivers/vdpa/mlx5/core/mr.c
+@@ -165,9 +165,12 @@ again:
+ 			klm->bcount = cpu_to_be32(klm_bcount(dmr->end - dmr->start));
+ 			preve = dmr->end;
+ 		} else {
++			u64 bcount = min_t(u64, dmr->start - preve, MAX_KLM_SIZE);
++
+ 			klm->key = cpu_to_be32(mvdev->res.null_mkey);
+-			klm->bcount = cpu_to_be32(klm_bcount(dmr->start - preve));
+-			preve = dmr->start;
++			klm->bcount = cpu_to_be32(klm_bcount(bcount));
++			preve += bcount;
++
+ 			goto again;
+ 		}
+ 	}
 
 
