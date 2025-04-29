@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFFC242D94;
-	Tue, 29 Apr 2025 17:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3456624A07D;
+	Tue, 29 Apr 2025 17:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947518; cv=none; b=YXovCHRr/aIHLI1cDxDum+hoLgAuHhZ4HXHm+eevfcDF4kiY4aZ5pp3mhF6ziYdlbX0aKYKRMvEAeO4+w7yMTUoMM1KIFt5Rep8sbaUkHt8sYduyn4owY7UiCdQeeoq0xeLfhCl32OVc95k5cui4PtvX23mx73nUGQJHiRwxB84=
+	t=1745947521; cv=none; b=Ig0XV03XZzzx7Db5uIBA8EZTtrFBOrSheEMGN+Lyw4S4Tjwy3odwJJPFN2D5ZS+8pDIiiWfzgZlBBc4L9Nuhvg4xB6WiqKTsjT/cmKt2krA0/4h5yFfw5j/iPKqF/dLA9xVO50ee1Yh2pW4lPi72kPl8clNu/EWgeJDUBf2N3e8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947518; c=relaxed/simple;
-	bh=x6TKW57JOqacvPuZGsuKKDMgfG+zTnJF0w5/iU7FRio=;
+	s=arc-20240116; t=1745947521; c=relaxed/simple;
+	bh=4ldphUXRr9kIfu+WEqbBLKyTgqoQ2rGDav7VPt75wX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KF8wQXAY1u7dDg2+Zf0cwGhxzIsiWsCjsL3R3fVX8bTop8yhzr2sCDV7qYgrqwuR1mRRGTSVn3r4q0l0cMa9kVO/FOMUka4D3+f7MhoaHrQ39Yx1spwLC5+MqYLiiFNP1B05PGQpEqrLn75NvvV/oS9qUQWBhwvlXubg6n7wwdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3zDbfsJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=L/w77dQXhGQdXPjrkhc1VP7Nr8bllVBMTtXVbp220R4sl8TDnRxr2Z49LPCfdA2Q0YJlOo5Tv7PqMxc/oFaAzQVSm1s+tLk+g7xFDtU567SojFvZQ9oQyl7176MubUYfLna5zJ4i7ocRvDr1kOBreNUfkNEW5wC9T9bmX4dJxpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9/F+wWw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3zDbfsJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C007EC4CEF2;
-	Tue, 29 Apr 2025 17:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9/F+wWw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90507C4CEE3;
+	Tue, 29 Apr 2025 17:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947518;
-	bh=x6TKW57JOqacvPuZGsuKKDMgfG+zTnJF0w5/iU7FRio=;
+	s=korg; t=1745947521;
+	bh=4ldphUXRr9kIfu+WEqbBLKyTgqoQ2rGDav7VPt75wX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i3zDbfsJfrQEvotxG8BSuv8tuZKt2wdp02jSxzsNFDr9y4K5sImvIMRqS2Z3Ebs5a
-	 MuBL6jwoYKwK+0ox6u1ybeJAvVfFx+2OgBmMUSDb5BMUByDtW6piBJTCAbGBZdS+8P
-	 Uxib3olpZKJrNOcTCTwrRDHHhqvBzAqho940EG2s=
+	b=Y9/F+wWwGTOBUmjzi0ZGjJut8mGu5rKXIrrB+rW18EJ7GIuTzDaJ6y3DmjZju9xOf
+	 2W31p2TLdTKv6O5K9J4mcRZmVht2uZjgK+BlVJyz0TumyAto07lFmSSyirJnbXcWq/
+	 g7UT3H8lv3QcIyjlNlfQDl/Xtjk8BKK1cXAYTajE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 020/280] net: dsa: mv88e6xxx: fix VTU methods for 6320 family
-Date: Tue, 29 Apr 2025 18:39:21 +0200
-Message-ID: <20250429161115.921350352@linuxfoundation.org>
+Subject: [PATCH 6.12 021/280] iio: adc: ad7768-1: Move setting of val a bit later to avoid unnecessary return value check
+Date: Tue, 29 Apr 2025 18:39:22 +0200
+Message-ID: <20250429161115.962267533@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -53,50 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit f9a457722cf5e3534be5ffab549d6b49737fca72 ]
+[ Upstream commit 0af1c801a15225304a6328258efbf2bee245c654 ]
 
-The VTU registers of the 6320 family use the 6352 semantics, not 6185.
-Fix it.
+The data used is all in local variables so there is no advantage
+in setting *val = ret with the direct mode claim held.
+Move it later to after error check.
 
-Fixes: b8fee9571063 ("net: dsa: mv88e6xxx: add VLAN Get Next support")
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.15.x
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250317173250.28780-2-kabel@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20250217141630.897334-13-jic23@kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 8236644f5ecb ("iio: adc: ad7768-1: Fix conversion result sign")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/adc/ad7768-1.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index df1df60154121..28967a338aa94 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -5210,8 +5210,8 @@ static const struct mv88e6xxx_ops mv88e6320_ops = {
- 	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
- 	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
--	.vtu_getnext = mv88e6185_g1_vtu_getnext,
--	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
-+	.vtu_getnext = mv88e6352_g1_vtu_getnext,
-+	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
- 	.gpio_ops = &mv88e6352_gpio_ops,
- 	.avb_ops = &mv88e6352_avb_ops,
- 	.ptp_ops = &mv88e6352_ptp_ops,
-@@ -5259,8 +5259,8 @@ static const struct mv88e6xxx_ops mv88e6321_ops = {
- 	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
- 	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
--	.vtu_getnext = mv88e6185_g1_vtu_getnext,
--	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
-+	.vtu_getnext = mv88e6352_g1_vtu_getnext,
-+	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
- 	.gpio_ops = &mv88e6352_gpio_ops,
- 	.avb_ops = &mv88e6352_avb_ops,
- 	.ptp_ops = &mv88e6352_ptp_ops,
+diff --git a/drivers/iio/adc/ad7768-1.c b/drivers/iio/adc/ad7768-1.c
+index 6f8816483f1a0..c78243a68b6e0 100644
+--- a/drivers/iio/adc/ad7768-1.c
++++ b/drivers/iio/adc/ad7768-1.c
+@@ -370,12 +370,11 @@ static int ad7768_read_raw(struct iio_dev *indio_dev,
+ 			return ret;
+ 
+ 		ret = ad7768_scan_direct(indio_dev);
+-		if (ret >= 0)
+-			*val = ret;
+ 
+ 		iio_device_release_direct_mode(indio_dev);
+ 		if (ret < 0)
+ 			return ret;
++		*val = ret;
+ 
+ 		return IIO_VAL_INT;
+ 
 -- 
 2.39.5
 
