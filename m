@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09A3252284;
-	Tue, 29 Apr 2025 17:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35222528ED;
+	Tue, 29 Apr 2025 17:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949259; cv=none; b=bmRXiwfd6rWOhfF6SFeubQM92KJIulsdWyPTdb0uWSxcBHX/90jlEPRniME8iJK56QGpfr+7M+UeTDGjiHyXCPBS2nw0HQeRALPU/R5uMUJSI9C6ajNe5RhmjT4ytIq3cAHxDh28Ax3OSZCHKyuAOsil4Afe4FFClBHv9JxOvYA=
+	t=1745949263; cv=none; b=i/PWVbzl9CcN34AYwREvfJkhVNuBuTdvo2hRqjHVaV5JcI9CcPwhlV36/pS1F/reE/yaBwq86GZa8tkqVSAawn9JsWw9CHAlriYU5snACMPennPiF9PiRZQ5q6VI/Rz2NbdxvDNdg/+KxF/D3mh037dD7boaVZbJo7mhGsMN/sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949259; c=relaxed/simple;
-	bh=WLu0JB7rktqTnSp9UwUOF0UV4Ij93iI6L8bOX+cC2NQ=;
+	s=arc-20240116; t=1745949263; c=relaxed/simple;
+	bh=Sb6FUcSB6uMYVz+O1p94Zd1lceY/lJCl/3Dgw/p63Mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q3y45udCT3dQBKUxQo4mfiVVugV36d4jw//SLYq/Q5aLV3xTd08DLfs6baR4FBYwbHrhTQ7nzEURQ7zxLbQpYftIrq42QuEpDGORjU+z5mLSoyGdOBJSR4ecXFVD56CdX+3ToW7dhZhhhNcfbW+chVszRoE/CJIMRXS9nZFnGSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JrErbGDo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mja6bufRJ33V3o0BAKeye1WOkcmnWyRAMqsUeZCARtAzeBQbEn7xrxRw4hxwGkiTxXoOLmbuKCAhblbPppsdW6N84f2rnxkJVRB1iJQVPFpZx6hrJhCImAJIFR50DdZVStr5hEvprRuzRjM+qfRl8B97bLDKC/wZ+MkIeATC2TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R1sNUj5W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrErbGDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC18C4CEE3;
-	Tue, 29 Apr 2025 17:54:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R1sNUj5W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522F7C4CEE3;
+	Tue, 29 Apr 2025 17:54:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949259;
-	bh=WLu0JB7rktqTnSp9UwUOF0UV4Ij93iI6L8bOX+cC2NQ=;
+	s=korg; t=1745949262;
+	bh=Sb6FUcSB6uMYVz+O1p94Zd1lceY/lJCl/3Dgw/p63Mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JrErbGDoYrw8JGolNGJdbVxHnMY8yFAHRS2EwGHeckMnoqLjaG7DM6i9qKgvBP72z
-	 GdtDSWOSuFJQtgWi5u3o7HOC8MzbBU8hKPvXZg8ZCK3GUmnAds04h4m17Xm6B181AU
-	 q+PpEu+/TjUBlKy12vJkPDDUAkMuXR3xmjS7o1Ug=
+	b=R1sNUj5WQ0aivCT0tVZt4QYHH+ED9s5YFMiwB0+j7f+DW+mfavXVZw4EiQarvQKh8
+	 v7xeli8Y6xM3XozMQLvDbagzKrWaj4u2SjeIX+Zlp9en8sTk5jvlJHYw+vm50XKt0p
+	 Qjy4tPGI2IHLWZabY3FDZiWckvap3jSZPv47ViZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+	Sylwester Nawrocki <snawrocki@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 262/373] net: dsa: mv88e6xxx: fix VTU methods for 6320 family
-Date: Tue, 29 Apr 2025 18:42:19 +0200
-Message-ID: <20250429161133.895858861@linuxfoundation.org>
+Subject: [PATCH 5.15 263/373] soc: samsung: exynos-chipid: avoid soc_device_to_device()
+Date: Tue, 29 Apr 2025 18:42:20 +0200
+Message-ID: <20250429161133.938560620@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -46,57 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 
-[ Upstream commit f9a457722cf5e3534be5ffab549d6b49737fca72 ]
+[ Upstream commit d1141886c8d72ad77920e6e4b617d366e6e3ee8a ]
 
-The VTU registers of the 6320 family use the 6352 semantics, not 6185.
-Fix it.
+soc_device_to_device() seems to be discouraged [1] so remove it in favor
+of printing info message with platform device.  This will only change
+the prefix in the info message from "soc soc0: " to "exynos-chipid
+10000000.chipid:".
 
-Fixes: b8fee9571063 ("net: dsa: mv88e6xxx: add VLAN Get Next support")
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.15.x
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250317173250.28780-2-kabel@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[1] https://lore.kernel.org/lkml/20191111052741.GB3176397@kroah.com/
+
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Reviewed-by: Sylwester Nawrocki <snawrocki@kernel.org>
+Tested-by: Sylwester Nawrocki <snawrocki@kernel.org>
+Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+Tested-by: Alim Akhtar <alim.akhtar@samsung.com>
+Link: https://lore.kernel.org/r/20210919093114.35987-2-krzysztof.kozlowski@canonical.com
+Stable-dep-of: c8222ef6cf29 ("soc: samsung: exynos-chipid: Add NULL pointer check in exynos_chipid_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/soc/samsung/exynos-chipid.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 524743393a678..9f7ff54894d4b 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -4621,8 +4621,8 @@ static const struct mv88e6xxx_ops mv88e6320_ops = {
- 	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
- 	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
--	.vtu_getnext = mv88e6185_g1_vtu_getnext,
--	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
-+	.vtu_getnext = mv88e6352_g1_vtu_getnext,
-+	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
- 	.gpio_ops = &mv88e6352_gpio_ops,
- 	.avb_ops = &mv88e6352_avb_ops,
- 	.ptp_ops = &mv88e6352_ptp_ops,
-@@ -4667,8 +4667,8 @@ static const struct mv88e6xxx_ops mv88e6321_ops = {
- 	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
- 	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
--	.vtu_getnext = mv88e6185_g1_vtu_getnext,
--	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
-+	.vtu_getnext = mv88e6352_g1_vtu_getnext,
-+	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
- 	.gpio_ops = &mv88e6352_gpio_ops,
- 	.avb_ops = &mv88e6352_avb_ops,
- 	.ptp_ops = &mv88e6352_ptp_ops,
+diff --git a/drivers/soc/samsung/exynos-chipid.c b/drivers/soc/samsung/exynos-chipid.c
+index 5c1d0f97f7664..dcd9a08ce7065 100644
+--- a/drivers/soc/samsung/exynos-chipid.c
++++ b/drivers/soc/samsung/exynos-chipid.c
+@@ -104,8 +104,7 @@ static int exynos_chipid_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, soc_dev);
+ 
+-	dev_info(soc_device_to_device(soc_dev),
+-		 "Exynos: CPU[%s] PRO_ID[0x%x] REV[0x%x] Detected\n",
++	dev_info(&pdev->dev, "Exynos: CPU[%s] PRO_ID[0x%x] REV[0x%x] Detected\n",
+ 		 soc_dev_attr->soc_id, product_id, revision);
+ 
+ 	return 0;
 -- 
 2.39.5
 
