@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9D024336D;
-	Tue, 29 Apr 2025 16:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB7824BC04;
+	Tue, 29 Apr 2025 16:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945458; cv=none; b=Ll8LLG7ZMcurdflHfSA/JK1Wdz6PVtjlF4SjH6Y2OYUCVPE/QdNyjFdsiK5AWE2NNitBhDSc6QfqMcf/3b2btu5S2YAi9e63W5t8qDEVTqv2ep01nDqMjVwOBlsGHOUthrkDzG4s++y5BMSgF+a/Jte23JbgpPMU4cedeF0qI9E=
+	t=1745945462; cv=none; b=El5d8bfBX+fE978nSIeUtdlwqZlDsEu3u5hb7AzCUOpgG+bMG2IC6ZItDHTLlKeEXi30R3B1OdL2ws4qhsziHPK5xSZd3LxrK7YOhVBv0zdlYEDf//dKAHKk/DiBrE8VaUPNMHrbLt5nVvBuyZeS4+x3mLFVYZns895HJcW3SLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945458; c=relaxed/simple;
-	bh=JTePPXD9feMuxt1PFjKBuvPrkagdRZNlFAUAfSggF/s=;
+	s=arc-20240116; t=1745945462; c=relaxed/simple;
+	bh=bjoWJADaGYXpo0g/WL0wsjm0bUmIzwftRaVFijIKZEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T+V5SmmwvvaaSJQwhpvwkbbRa1BmcP4GK/AKG0FdKYrwOCHaS4FKeDBkXECtggu1nAhK/lgSiXJ51TWry1cyCJxDPICKDyf1eZ+gynQNCcqLkWHKT/zI1aj/gSn6J6wQ0NEY3GdN9zzRsaC5vxToUXlzU/W18FjUv0addYm87Qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hijAbVVt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dxEb7fP141sO9YM2l3zFaAKtdSAjO07jfs/u5jhOUxE+J0HLKTX8HQpvY3mOWgLqMYCcbc8nRR5hjbddmAXSD2pvPfEKZoy4d8TrnrtW9ZP6P9qwmucxggmP9dKBgU2ElWI9RDdijzbG98hx3Dw1YCUnPd8gQCdsDWQaAnHCfiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HAO/tout; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hijAbVVt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E667C4CEE9;
-	Tue, 29 Apr 2025 16:50:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HAO/tout"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77B89C4CEE3;
+	Tue, 29 Apr 2025 16:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945458;
-	bh=JTePPXD9feMuxt1PFjKBuvPrkagdRZNlFAUAfSggF/s=;
+	s=korg; t=1745945461;
+	bh=bjoWJADaGYXpo0g/WL0wsjm0bUmIzwftRaVFijIKZEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hijAbVVt42yLxgOME6pK48ug4Q5/PdiinrzhnLkwbwyrlx5H6bs8xMP6hSLHaEeNP
-	 uI8/b2kzqFyeIt92A6FsEDlmzpvV858Ypo0QrZyPpH2NtgLyqdg3F9Mrt4PaEichTS
-	 iml2KDX3HyU7koxvw/2q5enU1J5bAiI0T135am8A=
+	b=HAO/toutbmw/qUeZac1Uz0fpSQwaRefbHKk+1ilJOuuS9ebbpE00hEI16ftYit+o0
+	 XzDabC74DkQHhCnZzNeZfm7Ywlliv2qyqFnb6oZ3Wp8CtdBNFV8IUJYwUohOQlwi+f
+	 Ze0zBkUvYv2RfXnq7SeI6YqkynazO5xpBofqU550=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 089/179] Bluetooth: hci_event: Fix sending MGMT_EV_DEVICE_FOUND for invalid address
-Date: Tue, 29 Apr 2025 18:40:30 +0200
-Message-ID: <20250429161053.003416838@linuxfoundation.org>
+Subject: [PATCH 5.4 090/179] Bluetooth: btrtl: Prevent potential NULL dereference
+Date: Tue, 29 Apr 2025 18:40:31 +0200
+Message-ID: <20250429161053.046181346@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -50,47 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit eb73b5a9157221f405b4fe32751da84ee46b7a25 ]
+[ Upstream commit 324dddea321078a6eeb535c2bff5257be74c9799 ]
 
-This fixes sending MGMT_EV_DEVICE_FOUND for invalid address
-(00:00:00:00:00:00) which is a regression introduced by
-a2ec905d1e16 ("Bluetooth: fix kernel oops in store_pending_adv_report")
-since in the attempt to skip storing data for extended advertisement it
-actually made the code to skip the entire if statement supposed to send
-MGMT_EV_DEVICE_FOUND without attempting to use the last_addr_adv which
-is garanteed to be invalid for extended advertisement since we never
-store anything on it.
+The btrtl_initialize() function checks that rtl_load_file() either
+had an error or it loaded a zero length file.  However, if it loaded
+a zero length file then the error code is not set correctly.  It
+results in an error pointer vs NULL bug, followed by a NULL pointer
+dereference.  This was detected by Smatch:
 
-Link: https://github.com/bluez/bluez/issues/1157
-Link: https://github.com/bluez/bluez/issues/1149#issuecomment-2767215658
-Fixes: a2ec905d1e16 ("Bluetooth: fix kernel oops in store_pending_adv_report")
+drivers/bluetooth/btrtl.c:592 btrtl_initialize() warn: passing zero to 'ERR_PTR'
+
+Fixes: 26503ad25de8 ("Bluetooth: btrtl: split the device initialization into smaller parts")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btrtl.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index c00872f0dd2bb..33b025a52b83a 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -5489,11 +5489,12 @@ static void process_adv_report(struct hci_dev *hdev, u8 type, bdaddr_t *bdaddr,
- 	 * event or send an immediate device found event if the data
- 	 * should not be stored for later.
- 	 */
--	if (!ext_adv &&	!has_pending_adv_report(hdev)) {
-+	if (!has_pending_adv_report(hdev)) {
- 		/* If the report will trigger a SCAN_REQ store it for
- 		 * later merging.
- 		 */
--		if (type == LE_ADV_IND || type == LE_ADV_SCAN_IND) {
-+		if (!ext_adv && (type == LE_ADV_IND ||
-+				 type == LE_ADV_SCAN_IND)) {
- 			store_pending_adv_report(hdev, bdaddr, bdaddr_type,
- 						 rssi, flags, data, len);
- 			return;
+diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
+index 0dfaf90a31b06..bdee7d2d88309 100644
+--- a/drivers/bluetooth/btrtl.c
++++ b/drivers/bluetooth/btrtl.c
+@@ -605,6 +605,8 @@ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
+ 			rtl_dev_err(hdev, "mandatory config file %s not found",
+ 				    btrtl_dev->ic_info->cfg_name);
+ 			ret = btrtl_dev->cfg_len;
++			if (!ret)
++				ret = -EINVAL;
+ 			goto err_free;
+ 		}
+ 	}
 -- 
 2.39.5
 
