@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499A5C148;
-	Tue, 29 Apr 2025 17:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A80C148;
+	Tue, 29 Apr 2025 17:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948773; cv=none; b=kBlIWUXOizFPptl+NZmX27/KK/KMqfRmnpx0IKlc/NV/xnmcB40y6udXHgK3ZUD6kr6rs/fwnpoxgtwtqWWuzl1Ws+7RR7z3roQiWEY9NkMAmStoeCJQPv+VN7qtXMUe6NO7p+t/fh9jlmieRGmAilq3vBwI1ax1w/+CUGZHLvA=
+	t=1745948776; cv=none; b=R3tB441N8mz9O5zHxHkl+Zc+G/qjzP9Ry7D9gMdcQGMFBMi/sgx12YCb9KAGmuyHeUu0fmtA05efRzz711GPpHWFyOC9hSZ+Phs8zIMjVRBwvPa7GkL1WC5T5oj6FmOfvR1Ytg7lJLWZGGOCqbK/GkffvoEKknRBZAYfb2amBS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948773; c=relaxed/simple;
-	bh=6Ho1E3gyhDy6Br/JoGTwYOxa8YWX3kAO+qeab3HJMEk=;
+	s=arc-20240116; t=1745948776; c=relaxed/simple;
+	bh=f12l8Ne9f8y+qHqctQBokTxLhI5j+HOmK1L3sYvmdVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EeElHHf2+uh70P3Nfmh9a1UJTtkki1ngB2gQ4rXDVS7Pna5HShiVj+N1cjkqhTEFgkYxjOH22hsyiPS73v09NCVqoneOhwwa/le3rW+jRe9QnvREPG1sctboo4k/zAqc4YN234Lw2PG6LnIrXJyY6zfqSaUxYjvG9JHmQNpf674=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oB4cu+gv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J9o/eIdYe3l7khHe6vD/CXn05/p37Aik7abktx/6pnO4owPp5o5aSw6q6yF3GicvoIvqf5nmhZMa52U+dMzkB81ukobsi3qbAIAAPijEMnln0QiJvPnSLne++r/vWdtl3bKZAdFa1WvJFp3/kt3fF8q67dM/CojOdphL7muvVg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=05VXVRrm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oB4cu+gv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2141C4CEE3;
-	Tue, 29 Apr 2025 17:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="05VXVRrm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9023FC4CEE3;
+	Tue, 29 Apr 2025 17:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948773;
-	bh=6Ho1E3gyhDy6Br/JoGTwYOxa8YWX3kAO+qeab3HJMEk=;
+	s=korg; t=1745948775;
+	bh=f12l8Ne9f8y+qHqctQBokTxLhI5j+HOmK1L3sYvmdVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oB4cu+gvQjbLGZhIr3F2qMqA8ZvGBaSFl9CKDUkdUJyFLoZFgJKdEylMIejafgm+r
-	 UvxniMDwb7T56YnPqXUxb7CxlhL+wCqb8JW4ZtBTQuAuFneifnHRi+sqPgy7Iis9Me
-	 ZF8PVqmr8CTtKS9b4IHfGtWNOJwNFF3L7OPGiT1E=
+	b=05VXVRrmPTLYKpEK/EMAlijFpNL6K2WVL9u+mwKi6umRhNqbA22fbDGBIBsJQj1wV
+	 BzBwYIY18JVPIWz6+byVMVvqW1Na122UPnIZbc7yBMVglJEjBgActcUn2ttj0twkl+
+	 TOYUaD3xbdkbX9b+37Ec5C1p9MVLCXnJNpODw3eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.15 090/373] jbd2: remove wrong sb->s_sequence check
-Date: Tue, 29 Apr 2025 18:39:27 +0200
-Message-ID: <20250429161126.863469953@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jon Mason <jdmason@kudzu.us>
+Subject: [PATCH 5.15 108/373] ntb: use 64-bit arithmetic for the MSI doorbell mask
+Date: Tue, 29 Apr 2025 18:39:45 +0200
+Message-ID: <20250429161127.616156610@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,34 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit e6eff39dd0fe4190c6146069cc16d160e71d1148 upstream.
+commit fd5625fc86922f36bedee5846fefd647b7e72751 upstream.
 
-Journal emptiness is not determined by sb->s_sequence == 0 but rather by
-sb->s_start == 0 (which is set a few lines above). Furthermore 0 is a
-valid transaction ID so the check can spuriously trigger. Remove the
-invalid WARN_ON.
+msi_db_mask is of type 'u64', still the standard 'int' arithmetic is
+performed to compute its value.
 
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20250206094657.20865-3-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+While most of the ntb_hw drivers actually don't utilize the higher 32
+bits of the doorbell mask now, this may be the case for Switchtec - see
+switchtec_ntb_init_db().
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE static
+analysis tool.
+
+Fixes: 2b0569b3b7e6 ("NTB: Add MSI interrupt support to ntb_transport")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/journal.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/ntb/ntb_transport.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/jbd2/journal.c
-+++ b/fs/jbd2/journal.c
-@@ -1701,7 +1701,6 @@ int jbd2_journal_update_sb_log_tail(jour
- 
- 	/* Log is no longer empty */
- 	write_lock(&journal->j_state_lock);
--	WARN_ON(!sb->s_sequence);
- 	journal->j_flags &= ~JBD2_FLUSHED;
- 	write_unlock(&journal->j_state_lock);
+--- a/drivers/ntb/ntb_transport.c
++++ b/drivers/ntb/ntb_transport.c
+@@ -1338,7 +1338,7 @@ static int ntb_transport_probe(struct nt
+ 	qp_count = ilog2(qp_bitmap);
+ 	if (nt->use_msi) {
+ 		qp_count -= 1;
+-		nt->msi_db_mask = 1 << qp_count;
++		nt->msi_db_mask = BIT_ULL(qp_count);
+ 		ntb_db_clear_mask(ndev, nt->msi_db_mask);
+ 	}
  
 
 
