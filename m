@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF715C148;
-	Tue, 29 Apr 2025 17:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1ECC148;
+	Tue, 29 Apr 2025 17:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948914; cv=none; b=qwK15hEKqOjpDATPACqsxw4NN69U6KFIU0uVRMjRjpvXuMheFpsJMqpMGI6k/bBA74A2mO0DD8xD8SeHhQBkbPuMUyNEt9Vn+V0gbWCanylRJq2pFAujm8HHaCEne5I4RN0NQdYVEQ1XeNipYXB/RxVt1G8nJQGaNH/rt878NJQ=
+	t=1745948916; cv=none; b=WH5j6oKo5UZJAS+Ms67jOrB11qvM7I37jE743QmiiHt+3hJ2XjSoxOiiDN+LXm1247rCNWaheoYfh8r8godwkcrNTiMfmRYMyqZb1E9XgUjtcyzb1BrlSsLOVc9Q8zqSdq7W8/16q4PRD3jvYqyhSMm1X0Cs1evvQSZahz8Cicc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948914; c=relaxed/simple;
-	bh=dj+U1j+SMDq6GBmLWCjKRKCRrlQVlC0z5/rgVHGj2lU=;
+	s=arc-20240116; t=1745948916; c=relaxed/simple;
+	bh=W44X0iwujwBhbpfdB1Q1pRqIoq8Jf3L+/H12n/lh6NA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ISiZ2NQQv3zppbzrZvftg2wyAhcKnCRzKOdbFQv/Il65G9OO6rAuk91QYYSV/8fWqurVfYSCivV6r0AFxEO6z0oQ5aTZ4LGUOzxb8wOZmQ7b6acRGaAIOjj3/+00W3LPOm20XeXcsdrZad8e5p2W7q77JkP5SOx96v3rYXkfCls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B33yJrk8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Vm/QNYjNwTWM5dzS23oy7HV0L9DjkLYwrAeouTHLs+zRxhPg2kV93/DJy7uq29BM04OhYW/+Eio21rmyI7cME01Esjs0O6kn6/tYpvXeYCSEhmWRo7Y6zN3zdNgn25TFD3fXkvV+wsGZC4qISNsrrQU18H0oFPpV8Rrn6bVZXA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=daP8g8La; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B33yJrk8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71889C4CEE3;
-	Tue, 29 Apr 2025 17:48:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="daP8g8La"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A281C4CEE3;
+	Tue, 29 Apr 2025 17:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948913;
-	bh=dj+U1j+SMDq6GBmLWCjKRKCRrlQVlC0z5/rgVHGj2lU=;
+	s=korg; t=1745948916;
+	bh=W44X0iwujwBhbpfdB1Q1pRqIoq8Jf3L+/H12n/lh6NA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B33yJrk89p4uhmupf7X4nRo2f6rwfpySQQfXODIiQMjC4/Ozjfew5l/vgte8G6ErN
-	 8ZYvpe0ZDfrzMAh+F5bEBS4VgqpQ5B9a0S7eEHTzHiRQSIeqaNz7E++47N28csbkGG
-	 bmFlCG8ldyyfEFcA29XX/R6y9QL0fOLGm35GAkuw=
+	b=daP8g8La7fcocGK55rd17UvlePdttQE1ZnPwr3W/VHFRknjFJoEv8RyaXhYmst5/T
+	 35nBCwL76uuv2n1k9htf6DJH3N8xNQJA7orn559yHEGOOkCswJjAuvpQW9FwomxsAH
+	 w9y1/02iQcJWrXdomxZ+spA/ijoAdVZAkOyeglZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Calvin Walton <calvin.walton@kepstin.ca>,
-	Johannes Kimmel <kernel@bareminimum.eu>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 162/373] btrfs: correctly escape subvol in btrfs_show_options()
-Date: Tue, 29 Apr 2025 18:40:39 +0200
-Message-ID: <20250429161129.803245155@linuxfoundation.org>
+	Sean Anderson <sean.anderson@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?Horia=20Geant=C4=83?= <horia.geanta@nxp.com>
+Subject: [PATCH 5.15 163/373] crypto: caam/qi - Fix drv_ctx refcount bug
+Date: Tue, 29 Apr 2025 18:40:40 +0200
+Message-ID: <20250429161129.844905332@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -45,47 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Kimmel <kernel@bareminimum.eu>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit dc08c58696f8555e4a802f1f23c894a330d80ab7 upstream.
+commit b7b39df7e710b0068356e4c696af07aa10e2cd3d upstream.
 
-Currently, displaying the btrfs subvol mount option doesn't escape ','.
-This makes parsing /proc/self/mounts and /proc/self/mountinfo
-ambiguous for subvolume names that contain commas. The text after the
-comma could be mistaken for another option (think "subvol=foo,ro", where
-ro is actually part of the subvolumes name).
+Ensure refcount is raised before request is enqueued since it could
+be dequeued before the call returns.
 
-Replace the manual escape characters list with a call to
-seq_show_option(). Thanks to Calvin Walton for suggesting this approach.
-
-Fixes: c8d3fe028f64 ("Btrfs: show subvol= and subvolid= in /proc/mounts")
-CC: stable@vger.kernel.org # 5.4+
-Suggested-by: Calvin Walton <calvin.walton@kepstin.ca>
-Signed-off-by: Johannes Kimmel <kernel@bareminimum.eu>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: Sean Anderson <sean.anderson@linux.dev>
+Cc: <stable@vger.kernel.org>
+Fixes: 11144416a755 ("crypto: caam/qi - optimize frame queue cleanup")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Horia Geantă <horia.geanta@nxp.com>
+Tested-by: Sean Anderson <sean.anderson@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/super.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/crypto/caam/qi.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -1559,8 +1559,7 @@ static int btrfs_show_options(struct seq
- 	subvol_name = btrfs_get_subvol_name_from_objectid(info,
- 			BTRFS_I(d_inode(dentry))->root->root_key.objectid);
- 	if (!IS_ERR(subvol_name)) {
--		seq_puts(seq, ",subvol=");
--		seq_escape(seq, subvol_name, " \t\n\\");
-+		seq_show_option(seq, "subvol", subvol_name);
- 		kfree(subvol_name);
- 	}
- 	return 0;
+--- a/drivers/crypto/caam/qi.c
++++ b/drivers/crypto/caam/qi.c
+@@ -115,12 +115,12 @@ int caam_qi_enqueue(struct device *qidev
+ 	qm_fd_addr_set64(&fd, addr);
+ 
+ 	do {
++		refcount_inc(&req->drv_ctx->refcnt);
+ 		ret = qman_enqueue(req->drv_ctx->req_fq, &fd);
+-		if (likely(!ret)) {
+-			refcount_inc(&req->drv_ctx->refcnt);
++		if (likely(!ret))
+ 			return 0;
+-		}
+ 
++		refcount_dec(&req->drv_ctx->refcnt);
+ 		if (ret != -EBUSY)
+ 			break;
+ 		num_retries++;
 
 
