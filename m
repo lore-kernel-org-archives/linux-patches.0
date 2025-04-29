@@ -1,523 +1,79 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77272175A5
-	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 05:01:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E86220D4E2;
+	Tue, 29 Apr 2025 05:26:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745902869; cv=none; b=iJ6H//e9mtOW8GU7S2Dtfe8y3cayqsOi1Q9t61JmfYbSAz2qtHy7Cdow9TUPlO8d5Kd1AYqApmSGN4IsjswuLJbiLpFKI59548IX3MV5K0hoXk4xN2g28x77BcsBba3Iqcdi79hAMeN3BmMZ54p/RSGY46IXROMbSJKOK/cYCuA=
+	t=1745904366; cv=none; b=Fk+7exSJCiWrHeqYWwNCzgoIMe7neW5wT5qi+j1AdFR3JHOSo9g6Ls0b7TAD6je1dupb5jl66Nc0ldg9FwoIh4LYPImUUnUtv056E2ThW+L96/smjWCdXv9bic/hO1SnFRHtuLdQkC0xIipDnUnFqxiTy+2JraodDb/h3AbcXP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745902869; c=relaxed/simple;
-	bh=e7LE0XFwgQp2PdvXX50SvA6GIx4Mgzxu+xNfO2kB0z8=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DTcD+TIFN+IjNADYX/j2IgKtsY824UMfGAkmsm3b1201zrfl/flvL1J1e+m4pUm8gXvizYRbBMpDc8lkscQmFaUXPHaN+75omhdVcreZ7H9wTcehscmghY4MWk+GylmQ/k6nvmTWV3LhOJK6XeiW46a4Vgs5MhOzpNQWqah0yB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=i/BoDRwZ; arc=none smtp.client-ip=209.85.222.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1745904366; c=relaxed/simple;
+	bh=4MUBUkoGJl4Bv5nfEzeKWaFYA0vnWu4Vn3SkigflzUk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ddAMIxLSadeICqkB3U3wbLczXIY9LdeSD+iokiC+isITZAuXAKxBjoAiDmMlOATfhHh/yaHGp+UQ6KEe/pP90TDmB/kxcbVa/JpvMn5K8B8IkNbYM8LlvCxo5M6u2BZqQzdddqEnw0FlZTh7e2+lC5gQkhThisQimsks0NRu5s8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSpWPQH6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="i/BoDRwZ"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7c5e39d1db2so338482185a.3
-        for <patches@lists.linux.dev>; Mon, 28 Apr 2025 22:01:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1745902865; x=1746507665; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
-         :from:references:in-reply-to:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+g54+s9aZuGswPXEDEk5jdyNkLdOH4muLufHQ2pgK3U=;
-        b=i/BoDRwZJlgAGCKgEtHPEwOxWLNoIbd210zlgVxWzNhAVXbB6GittKRsH47nBb93nB
-         IdZ/ZekWwpz9SZujtNIZIJrobozqvYFjf6qSMr5Hobh+vPPoHWm8DNTc1dkgljw4YIXR
-         YWvW1O5T7rBbel/c7AvZz79hja/klz1l7d8U4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745902865; x=1746507665;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
-         :from:references:in-reply-to:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=+g54+s9aZuGswPXEDEk5jdyNkLdOH4muLufHQ2pgK3U=;
-        b=oJuXceXBEMnQHA8V5+/0ryqOWOJzrfRzGCDSUcz2SG1RhpUkXnYfX05emwZdfAqHyw
-         Xn7fH1lnRRV+jcdkP0L/RWFZxXkxfnrxMV1nST5Okim+Hr3VjLh0Wwa4y5545iyTkH7j
-         5bydRxppMI9SlWyfuCLVOqrKE4aGXTPbt+8yxaoamwM1srlSVmcpz1nnxhVhzT25HdrG
-         ewpbt75tRm9WC6FMu2r4lxbtzCf5MjntjCUHr70PxBo6mtjE+5vCIlZzyzgHUD6siTDF
-         /Tjfpfql85er9YzVM00DUrHFrB816rbi4fLzy5vXtm51MVgyuFAGwAXkyuLPRvWofvpF
-         YDjw==
-X-Forwarded-Encrypted: i=1; AJvYcCUi6cBTZSPyxC52sRWvtalgVb5GI0kdJ6hovT5j4m798hQ1F8pgmLfgQHLHnBZEvMwmwKaObtsG@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz4fh1rjMjNNZqmUDTWsYILbdn5EDtAQ4vAO9uqKiY9QxDIMzwl
-	DnuSdknB6cunrGdESztErbcqz5mHjAxJ5ZaHuhnmkoqwGHd0rjf2hLIrfxzJspTiGg+cVFSu4zI
-	Y3Mu5ImAAennwAWZW3Al5ZMHYkabrK+H8tcZK
-X-Gm-Gg: ASbGncshd5xIzTmaUPZ6mgxjMvxUqyAeulKKa7tXRZ4iLIEDG/t46rL3OWMEq72EMCa
-	2b/x8H3O2MYahmF9FFQkE0QutarzasYGPPVak9M6spRw7fHPp1/1CMAHehaMzpJvCH56p9oE4PR
-	ErQ87ZXWtYI5gPqh3osjGQWQ8h1vhqBsTsK0dpkWPzKL5LrxJBPQ==
-X-Google-Smtp-Source: AGHT+IH/cTIgZbTtJX+LijPUr/ABJvzBkHBUqPo5poUjvMA9PYLyZr9S87/2WDOWapFTxha4Uwo7L/uO7K4HxcaTHrQ=
-X-Received: by 2002:a05:620a:8289:b0:7c7:b5f7:31a5 with SMTP id
- af79cd13be357-7cabddd8292mr309549485a.53.1745902865349; Mon, 28 Apr 2025
- 22:01:05 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 28 Apr 2025 22:01:04 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 28 Apr 2025 22:01:04 -0700
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSpWPQH6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8517C4CEE3;
+	Tue, 29 Apr 2025 05:26:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1745904365;
+	bh=4MUBUkoGJl4Bv5nfEzeKWaFYA0vnWu4Vn3SkigflzUk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BSpWPQH6o5cG2ChcPFT+OsrrYUU+oIFjr5s8tA/ta6yM9Dm9kwVtu53tAxmPQIdHi
+	 gYvf0VaWNdoruDgt7J2+LO4Wd98+gBMfHuIxQ6t1Sii2pvIVltZhOAlhH6H101wxs1
+	 4sqvx6hRfP4Tcj8M+I43olzb3IV4EgrOujMvHSj4=
+Date: Tue, 29 Apr 2025 07:26:02 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: "Ren, Jianqi (Jacky) (CN)" <Jianqi.Ren.CN@windriver.com>
+Cc: "stable@vger.kernel.org" <stable@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"jhs@mojatatu.com" <jhs@mojatatu.com>,
+	"xiyou.wangcong@gmail.com" <xiyou.wangcong@gmail.com>,
+	"jiri@resnulli.us" <jiri@resnulli.us>,
+	"davem@davemloft.net" <davem@davemloft.net>,
+	"kuba@kernel.org" <kuba@kernel.org>,
+	"pabeni@redhat.com" <pabeni@redhat.com>,
+	"netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+	"michal.swiatkowski@linux.intel.com" <michal.swiatkowski@linux.intel.com>,
+	"He, Zhe" <Zhe.He@windriver.com>
+Subject: Re: [PATCH 6.1.y v2] net/sched: act_mirred: don't override retval if
+ we already lost the skb
+Message-ID: <2025042928-vessel-mulled-fbf3@gregkh>
+References: <20250428080103.4158144-1-jianqi.ren.cn@windriver.com>
+ <2025042844-pavestone-fringe-1478@gregkh>
+ <IA1PR11MB61703A24C42BAA887F5263ACBB802@IA1PR11MB6170.namprd11.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20250422121837.GA734359-robh@kernel.org>
-References: <20250416000208.3568635-1-swboyd@chromium.org> <20250416000208.3568635-6-swboyd@chromium.org>
- <20250422121837.GA734359-robh@kernel.org>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.12.dev8+g17a99a841c4b
-Date: Mon, 28 Apr 2025 22:01:04 -0700
-X-Gm-Features: ATxdqUGHE-hg0TKzzfW0b6WqCXJ5hFex9LRGyJsjzIPGPl6nCb3NX33AuvfAxeg
-Message-ID: <CAE-0n51Zk83EBv-QKjB57zKDs5RqugDzMQ1rR2Ux8=p1AVUPJw@mail.gmail.com>
-Subject: Re: [PATCH 5/7] dt-bindings: usb: google,cros-ec-typec: Add ports for
- DP altmode
-To: Rob Herring <robh@kernel.org>
-Cc: Tzung-Bi Shih <tzungbi@kernel.org>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, Conor Dooley <conor+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Lee Jones <lee@kernel.org>, 
-	Benson Leung <bleung@chromium.org>, Guenter Roeck <groeck@chromium.org>, 
-	chrome-platform@lists.linux.dev, Pin-yen Lin <treapking@chromium.org>, 
-	Abhishek Pandit-Subedi <abhishekpandit@chromium.org>, =?UTF-8?Q?=C5=81ukasz_Bartosik?= <ukaszb@chromium.org>, 
-	Jameson Thies <jthies@google.com>, Andrei Kuchynski <akuchynski@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <IA1PR11MB61703A24C42BAA887F5263ACBB802@IA1PR11MB6170.namprd11.prod.outlook.com>
 
-Quoting Rob Herring (2025-04-22 05:18:37)
-> On Tue, Apr 15, 2025 at 05:02:05PM -0700, Stephen Boyd wrote:
-> > Add a DT graph binding to google,cros-ec-typec so that it can combine
-> > DisplayPort (DP) and USB SuperSpeed (SS) data into a USB type-c endpoin=
-t
-> > that is connected to the usb-c-connector node's SS endpoint. Allow ther=
-e
-> > to be multiple 'typec' nodes underneath the EC node so that one DT grap=
-h
-> > exists per DP bridge. The EC is actually controlling TCPCs and redriver=
-s
-> > that combine the DP and USB signals together so this more accurately
-> > reflects the hardware design without introducing yet another DT node
-> > underneath the EC for USB type-c "stuff".
-> >
-> > If the type-c ports are being shared between a single DP controller the=
-n
-> > the ports need to know about each other and determine a policy to drive
-> > DP to one type-c port or the other. If the type-c ports each have their
-> > own dedicated DP controller then they're able to operate independently
-> > and enter/exit DP altmode independently as well. We can't connect the D=
-P
-> > controller's endpoint to one usb-c-connector port@1 endpoint and the US=
-B
-> > controller's endpoint to another usb-c-connector port@1 endpoint either
-> > because the DP muxing case would have DP connected to two
-> > usb-c-connector endpoints which the graph binding doesn't support.
-> >
-> > Therefore, one typec node is required per the capabilities of the type-=
-c
-> > port(s) being managed. Add a port to the DisplayPort altmode as well, s=
-o
-> > that we can show the connection between the DP controller and the DP
-> > altmode. This lets us indicate which type-c ports the DP controller is
-> > wired to. For example, if DP was connected to ports 0 and 2, while port
-> > 1 was connected to another DP controller we wouldn't be able to
-> > implement that without having some other DT property to indicate which
-> > output ports are connected to the DP endpoint.
-> >
-> > Furthermore, this supports ChromeOS designs like Corsola where a DP
-> > controller/PHY is split with two lanes going to one connector and the
-> > other two lanes going to another connector. In this case, we wouldn't
-> > have the graph binding under the cros-ec-typec node, but we would have
-> > the graph binding in the DP altmode directly connected to the DP
-> > controller's two output endpoints.
-> >
-> > Cc: Rob Herring (Arm) <robh@kernel.org>
-> > Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> > Cc: Conor Dooley <conor+dt@kernel.org>
-> > Acked-by: Lee Jones <lee@kernel.org>
-> > Cc: Benson Leung <bleung@chromium.org>
-> > Cc: Guenter Roeck <groeck@chromium.org>
-> > Cc: Tzung-Bi Shih <tzungbi@kernel.org>
-> > Cc: <devicetree@vger.kernel.org>
-> > Cc: <chrome-platform@lists.linux.dev>
-> > Cc: Pin-yen Lin <treapking@chromium.org>
-> > Cc: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-> > Cc: =C5=81ukasz Bartosik <ukaszb@chromium.org>
-> > Cc: Jameson Thies <jthies@google.com>
-> > Cc: Andrei Kuchynski <akuchynski@chromium.org>
-> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> > ---
-> >  .../bindings/connector/usb-connector.yaml     |   6 +
-> >  .../bindings/mfd/google,cros-ec.yaml          |   7 +-
-> >  .../bindings/usb/google,cros-ec-typec.yaml    | 165 ++++++++++++++++++
-> >  3 files changed, 175 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/connector/usb-connector.=
-yaml b/Documentation/devicetree/bindings/connector/usb-connector.yaml
-> > index 11e40d225b9f..e3d60997c03e 100644
-> > --- a/Documentation/devicetree/bindings/connector/usb-connector.yaml
-> > +++ b/Documentation/devicetree/bindings/connector/usb-connector.yaml
-> > @@ -179,6 +179,12 @@ properties:
-> >              $ref: /schemas/types.yaml#/definitions/uint32
-> >              description: VDO returned by Discover Modes USB PD command=
-.
-> >
-> > +          port:
-> > +            $ref: /schemas/graph.yaml#/properties/port
-> > +            description: OF graph bindings modeling a data bus to the
-> > +              DisplayPort altmode from the DisplayPort controller. Use=
-d when
-> > +              the altmode switch is part of the port manager.
-> > +
->
-> Why can't this connection be another endpoint on port@1 as that is the
-> port for the SS signals.
+A: http://en.wikipedia.org/wiki/Top_post
+Q: Were do I find info about this thing called top-posting?
+A: Because it messes up the order in which people normally read text.
+Q: Why is top-posting such a bad thing?
+A: Top-posting.
+Q: What is the most annoying thing in e-mail?
 
-It can be. I mentioned this in the cover letter but I understand if you
-didn't read it. :)
+A: No.
+Q: Should I include quotations after my reply?
 
-I put it here in the displayport node because I wanted to represent that
-this is the graph endpoint for displayport altmode. Otherwise, I'll have
-to represent that with an endpoint in the usb-c-connector/port@1 node
-that represents the SuperSpeed lanes, or do even more.
 
->
-> >    port:
-> >      $ref: /schemas/graph.yaml#/properties/port
-> >      description: OF graph bindings modeling a data bus to the connecto=
-r, e.g.
-> > diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml =
-b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> > index ac89696fa649..63d506e88abb 100644
-> > --- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> > +++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> > @@ -98,9 +98,6 @@ properties:
-> >
-> >    gpio-controller: true
-> >
-> > -  typec:
-> > -    $ref: /schemas/usb/google,cros-ec-typec.yaml#
-> > -
-> >    ec-pwm:
-> >      $ref: /schemas/pwm/google,cros-ec-pwm.yaml#
-> >      deprecated: true
-> > @@ -163,6 +160,10 @@ patternProperties:
-> >      type: object
-> >      $ref: /schemas/extcon/extcon-usbc-cros-ec.yaml#
-> >
-> > +  "^typec(-[0-9])*$":
-> > +    type: object
-> > +    $ref: /schemas/usb/google,cros-ec-typec.yaml#
-> > +
-> >  required:
-> >    - compatible
-> >
-> > diff --git a/Documentation/devicetree/bindings/usb/google,cros-ec-typec=
-.yaml b/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
-> > index 3272d0e01f7e..611345bbe884 100644
-> > --- a/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
-> > +++ b/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
-> > @@ -26,6 +26,55 @@ properties:
-> >    '#size-cells':
-> >      const: 0
-> >
-> > +  mux-gpios:
-> > +    description: GPIOs indicating which way the DisplayPort mux is ste=
-ered
-> > +    minItems: 1
-> > +    maxItems: 3
-> > +
-> > +  no-hpd:
-> > +    description: Indicates this device doesn't signal HPD for DisplayP=
-ort
-> > +    type: boolean
-> > +
-> > +  ports:
-> > +    $ref: /schemas/graph.yaml#/properties/ports
-> > +
-> > +    properties:
-> > +      port@0:
-> > +        $ref: /schemas/graph.yaml#/properties/port
-> > +        description:
-> > +          Port for DisplayPort (DP) data
-> > +
-> > +        properties:
-> > +          endpoint@0:
-> > +            $ref: /schemas/graph.yaml#/properties/endpoint
-> > +            description: Input DP port
-> > +
-> > +        patternProperties:
-> > +          '^endpoint@[1-8]$':
-> > +            $ref: /schemas/graph.yaml#/properties/endpoint
-> > +            description: Output to the usb-c connector's DP altmode
->
-> This is odd. Generally (or always?) a port is 1 direction.
+http://daringfireball.net/2007/07/on_top
 
-I was thinking about the case where PCIe is wired here as well for
-thunderbolt altmode. If all the "DP stuff" is in one port then I can
-pick the port@0 and follow endpoints from there. We don't have the PCIe
-case on DT systems so it probably doesn't matter. If we had that case we
-would probably add another endpoint to the usb-c-connector/port@1 to
-represent that connection to the PCIe phy/controller anyway because I
-suspect we wouldn't be able to steer the PCIe links physically. This
-also helps to represent the analog mux we have on Trogdor that steers
-the DP lanes to one or the other usb-c-connector.
+On Tue, Apr 29, 2025 at 02:07:54AM +0000, Ren, Jianqi (Jacky) (CN) wrote:
+> Hello,
+> I have already dropped the first v2 patch for incorrect comments(Maybe you missed the dropping email). This v2 patch is just I want to send. Thanks!
 
->
-> Other bindings IIRC have 3 ports in the device doing the muxing: 1
-> output for connector port@1, 1 USB SS input, and 1 DP input.
->
+You can not send two different "v2" patches, that defeats the purpose of
+versioning them entirely :)
 
-I'm trying to represent the altmode muxing that happens with hardware
-that the EC controls (i.e. not on the AP/Linux) along with describing
-the connection between the usb-c-connector and the USB/DP controllers.
-Basically 2 DP lanes and 2 USB SS lanes go into a muxing chip that the
-EC controls and the output of that chip is 4 lanes of USB SS lanes that
-go straight to the usb-c-connector with the proper orientation for the
-pin configuration. Depending on the altmode that the EC enters on the
-usb-c-connector, the 2 DP lanes pass through the EC to the connector, or
-they're terminated at the muxing chip. If we controlled it from the
-kernel the binding would look very much like the other bindings that
-have 3 ports like you mention, 1 USB SS input and 1 DP input and a
-single output for the usb-c-connector/port@1.
+thanks,
 
-On some ARM chromebooks (e.g. Corsola), we have a DP transmitter that
-wires 2 DP lanes to one usb-c-connector and 2 DP lanes to another
-usb-c-connector. The graph is sort of like
-
- port0: AP DSI -> IT6505 DP_ML0/1 -> EC TCPC0 -> usb-c-connector@0
- port1: AP DSI -> IT6505 DP_ML2/3 -> EC TCPC1 -> usb-c-connector@1
-
-where IT6505 can have two outputs in the graph, for either DP_ML0/1 or
-DP_ML2/3. I imagine the graph for that device looks like this:
-
- ports {
-   port@0 { // DSI input
-   };
-   port@1 { // DP output
-     dp_ml01: endpoint@0 { // DP_ML0/1
-       data-lanes =3D <0 1>;
-     };
-     dp_ml23: endpoint@1 {
-       data-lanes =3D <2 3>;
-     };
-   };
- };
-
-and the usb-c-connector accepts the DP endpoint:
-
- usb-c-connector@0 {
-   altmodes {
-     displayport {
-       ports { endpoint { remote-endpoint =3D <&dp_ml01>; }; };
-     };
- };
- usb-c-connector@1 {
-   altmodes {
-     displayport {
-       ports { endpoint { remote-endpoint =3D <&dp_ml23>; }; };
-     };
- };
-
-On other ARM chromebooks (e.g. Trogdor) we have a DP transmitter that we
-steer through an EC controlled analog mux. That looks like this:
-
- port0: AP DP -> EC mux -> EC TCPC0 -> usb-c-connector@0
- port1: AP DP -> EC mux -> EC TCPC1 -> usb-c-connector@1
-
-where the AP DP binding looks like a single port
-
- port { ap_dp: endpoint { remote-endpoint =3D <&ec_dp>; };};
-
-and the EC binding accepts that single port as input
-
- ports {
-   port@0 {
-     ec_dp: endpoint@0 {
-       remote-endpoint =3D <&ap_dp>;
-     };
-     ec_dp0: endpoint@1 {
-       remote-endpoint =3D <&dp_c0>;
-     };
-     ec_dp1: endpoint@2 {
-       remote-endpoint =3D <&dp_c1>;
-     };
-   };
- };
-
-and finally the connector takes an output endpoint from the DP "port"
-into the altmode node.
-
- usb-c-connector@0 {
-   altmodes {
-     displayport {
-       ports { dp_c0: endpoint { remote-endpoint =3D <&ec_dp0>; }; };
-     };
- };
- usb-c-connector@1 {
-   altmodes {
-     displayport {
-       ports { dp_c1: endpoint { remote-endpoint =3D <&ec_dp1>; }; };
-     };
- };
-
-I was thinking of making a drm_bridge for each usb-c-connector node and
-for each DP input node in the EC typec node, then hotplugging the bridge
-chain from the EC typec driver when the EC indicates the usb-c-connector
-is in DP altmode. When we have a chip like IT6505 that means we make two
-drm_bridges in the IT6505 driver, two in the EC typec driver, and one
-for each usb-c-connector node (usually two). When we steer two DP lanes
-with the EC, we have two drm_bridges in the EC typec driver and one for
-each usb-c-connector node. The hotplug portion of the bridge chain only
-goes to the EC in the latter case while it extends up to the IT6505 chip
-in the former.
-
-If we add endpoints for each altmode into the usb-c-connector/port@1
-node then it may work without adding the intermediate EC graph, but I
-worry about the Trogdor case. We could number the endpoints in the
-connector like this:
-
-usb-c-connector/port@1
-   endpoint@0 =3D=3D USB SS (USB3)
-   endpoint@1 =3D=3D DP lanes (DisplayPort)
-   endpoint@2 =3D=3D TBT links (Thunderbolt)
-
-but the DP controller only has one output port for the 2 DP lanes on
-Trogdor, so we really need the graph binding in the EC just so that we
-can have two graph output ports to connect to each usb-c-connector's
-SuperSpeed port without changing the DP controller's binding.
-
-TL;DR: I'm hesitant to add another endpoint into the usb-c-connector
-graph's port@1 to handle alternate modes. It doesn't reflect reality. At
-the same time, it looks verbose to describe the EC controlled TCPCs and
-the mux. Ugh.
-
-Now that I've written this all (thanks for reading!) I wonder if I
-should bite the bullet and describe the TCPCs the EC controls as part of
-the graph binding. If we did that it may be verbose but it would reflect
-reality. Similarly, we can describe the EC mux on Trogdor as a single DP
-input port. Maybe a graph binding like this would work in all cases:
-
- ec-typec {
-   ports {
-     port@0 { // DP mux input (only on Trogdor)
-       endpoint {};
-     };
-     port@1 { // TCPC0
-       endpoint@0 { // DP input (empty on Trogdor?)
-       };
-       endpoint@1 { // USB SS input
-       };
-       endpoint@2 { // PCIe input
-       };
-     };
-     port@2 { // TCPC1
-       endpoint@0 { // DP input (empty on Trogdor?)
-       };
-       endpoint@1 { // USB SS input
-       };
-     };
-     // output starts at 9 =3D 1 + 8 possible connectors
-     port@9 { // TCPC0 output
-       endpoint { }; // To usb-c-connector@0/port@1
-     };
-     port@10 { // TCPC1 output
-       endpoint { }; // To usb-c-connector@1/port@1
-     };
-   };
- };
-
-or I need to make a whole new node for the DP mux that the EC controls
-because the graph is getting gnarly:
-
- dp-mux { // Only on Trogdor
-   mux-gpios =3D <&ec 42 GPIO_ACTIVE_HIGH>>;
-   ports {
-     port@0 { // DP input
-     };
-     port@1 {
-       mux_output0: endpoint { };
-     };
-     port@2 {
-       mux_output1: endpoint { };
-     };
-   };
- };
-
- ec-typec {
-   ports {
-     port@0 { // TCPC0
-       endpoint@0 { // DP input
-         remote-endpoint =3D <&mux_output0> or <&dp_ml01>;
-       };
-       endpoint@1 { // USB SS input
-       };
-     };
-     port@1 { // TCPC1
-       endpoint@0 { // DP input
-         remote-endpoint =3D <&mux_output1> or <&dp_ml23>;
-       };
-       endpoint@1 { // USB SS input
-       };
-     };
-     port@8 { // TCPC0 output
-       endpoint { }; // To usb-c-connector@0/port@1
-     };
-     port@9 { // TCPC1 output
-       endpoint { }; // To usb-c-connector@1/port@1
-     };
-   };
-   usb-c-connector@0 { };
-   usb-c-connector@1 { };
- };
-
-Any binding that relies on having multiple DP input endpoints in the
-same ports node will require the ability to register more than one
-drm_bridge for the same parent node. I haven't checked to see if that's
-possible with the hotplug bridge patches. If it isn't, then we'll
-possibly want to describe each TCPC as a different node as well so that
-a drm_bridge can be associated with a graph node parent device.
-
- tcpc0 {
-   ports {
-     port@0 { // DP input
-       endpoint {
-         remote-endpoint =3D <&mux_output0> or <&dp_ml01>;
-       };
-     };
-     port@1 { // USB SS input
-       endpoint {
-       };
-     };
-     port@2 { // USB type-c output
-       endpoint { }; // To usb-c-connector@0/port@1
-     };
-   };
- };
-
- tcpc1 {
-   ports {
-     port@0 { // DP input
-       endpoint {
-         remote-endpoint =3D <&mux_output1> or <&dp_ml23>;
-       };
-     };
-     port@1 { // USB SS input
-       endpoint {
-       };
-     };
-     port@2 { // USB type-c output
-       endpoint { }; // To usb-c-connector@1/port@1
-     };
-   };
- };
-
- ec-typec {
-   usb-c-connector@0 { };
-   usb-c-connector@1 { };
- };
-
-In this last example, a drm_bridge is made for each tcpc,
-usb-c-connector, and mux node. Any direction you can provide? Maybe this
-last one is the best approach that doesn't suffer from trying to cram
-everything into the typec node.
+greg k-h
