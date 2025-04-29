@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C4B7E110;
-	Tue, 29 Apr 2025 17:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49DB322A81D;
+	Tue, 29 Apr 2025 17:01:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946102; cv=none; b=UQ/DPfLvojpYIooWgKNAvE01AvHqGRqWUMkFl+hIiuLio8yOkos+20LDXGZwxHTA+3OhxIn/hwBL3/exHXoEMOL3CBJlmmrec906cQnU2W2LLTUtaPGm2HOVlWCBNpoIV3N+kXu/sHYV1QYM8cAJ+HiA1x58fBSgGu4d419xY9M=
+	t=1745946105; cv=none; b=FO28i30H4yFXDCNSb8ImXAwleL1IJwNqo0gRVeuofRJL2KEAgOTywZoZbOYp9jo7QDurAyFSjWHtAqJc2Ztxb/SK7LCC72I7IgJ5uVk7BDEfQGxkE9rspU+VsUJGFQ9zr+bS9m71n7uP/spsoa/Vt87ORZ/Vu+MJDsFYaJ+eLco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946102; c=relaxed/simple;
-	bh=pYdr3lBozU0H6i3zJasZMv+dNslUFrVvo1tet2WUH9k=;
+	s=arc-20240116; t=1745946105; c=relaxed/simple;
+	bh=Wa1yKznHluu1jvYERo5wPpc8yMalO3xMHiFm15CGAQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hx6VRtbzSSte5/ASh0c8RQzrXAVLgLcheXqMtimw++d9SIE6xH4eXnQ5B+Wc3V2LL5c3+xbbBfbpCuSCb1Z9MH5YzfNyTC8f0Y7kffa0Q4GPzjy6S+J2Y6XBosFBu8ZgRBxuEuc73rsRtab06X7C4GMvs6COe9jMx+6VPICKick=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vN5ztzm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EOxMIVyFlirqJyRQJk69bWOJrAQfO7ZSgXDPWPRs0LTz4QofhkAZSkbZ4sIMZ30ClviRQRzAFMZ7QvZKTphFJ7ZAMXcw3C0YCJINmMl4UScOPBJQJGekkoZEPNgzIHKbGJa48yvCPNXExwDTpXGuoCCvmMJXy8D3TEqAGS4bb3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/QoXLy6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vN5ztzm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38233C4CEE3;
-	Tue, 29 Apr 2025 17:01:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/QoXLy6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D203AC4CEE3;
+	Tue, 29 Apr 2025 17:01:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946102;
-	bh=pYdr3lBozU0H6i3zJasZMv+dNslUFrVvo1tet2WUH9k=;
+	s=korg; t=1745946105;
+	bh=Wa1yKznHluu1jvYERo5wPpc8yMalO3xMHiFm15CGAQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1vN5ztzm3nVGoltDMd1ZmFoRurOET5MENJo2JaRD4aZRP3BpAgbTjoRklTF6diXZG
-	 dPjJLUof9er/GmPFI1+oyIi6h+g+ZaCneWZV6Xf0Xz/TtCsVNk8+pgLpo3cmJQCzvn
-	 mu3CbQp1X+HXkV0yMGRoCx+jL8CWYiC478tAn5Ho=
+	b=r/QoXLy63G4k2J4dShD2UyNRtu46Wp2cpoYQmEgVP8a6c+k4Q6HTD9rFmMUvVdTtD
+	 JU0XDDPpCYueU7DsfDcoF03zFSGfILR65IWQ8aWbWJH1fMBAMMPi0SeI79IoPNoFgy
+	 L93REctlKzmtTiKOhiuyf3i0Ac/AjvzLVzy59O+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fiona Klute <fiona.klute@gmx.de>,
-	kernel-list@raspberrypi.com,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.14 115/311] net: phy: microchip: force IRQ polling mode for lan88xx
-Date: Tue, 29 Apr 2025 18:39:12 +0200
-Message-ID: <20250429161125.752058597@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Rengarajan S <rengarajan.s@microchip.com>
+Subject: [PATCH 6.14 149/311] misc: microchip: pci1xxxx: Fix Kernel panic during IRQ handler registration
+Date: Tue, 29 Apr 2025 18:39:46 +0200
+Message-ID: <20250429161127.143442151@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -52,106 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fiona Klute <fiona.klute@gmx.de>
+From: Rengarajan S <rengarajan.s@microchip.com>
 
-commit 30a41ed32d3088cd0d682a13d7f30b23baed7e93 upstream.
+commit 18eb77c75ed01439f96ae5c0f33461eb5134b907 upstream.
 
-With lan88xx based devices the lan78xx driver can get stuck in an
-interrupt loop while bringing the device up, flooding the kernel log
-with messages like the following:
+Resolve kernel panic while accessing IRQ handler associated with the
+generated IRQ. This is done by acquiring the spinlock and storing the
+current interrupt state before handling the interrupt request using
+generic_handle_irq.
 
-lan78xx 2-3:1.0 enp1s0u3: kevent 4 may have been dropped
+A previous fix patch was submitted where 'generic_handle_irq' was
+replaced with 'handle_nested_irq'. However, this change also causes
+the kernel panic where after determining which GPIO triggered the
+interrupt and attempting to call handle_nested_irq with the mapped
+IRQ number, leads to a failure in locating the registered handler.
 
-Removing interrupt support from the lan88xx PHY driver forces the
-driver to use polling instead, which avoids the problem.
-
-The issue has been observed with Raspberry Pi devices at least since
-4.14 (see [1], bug report for their downstream kernel), as well as
-with Nvidia devices [2] in 2020, where disabling interrupts was the
-vendor-suggested workaround (together with the claim that phylib
-changes in 4.9 made the interrupt handling in lan78xx incompatible).
-
-Iperf reports well over 900Mbits/sec per direction with client in
---dualtest mode, so there does not seem to be a significant impact on
-throughput (lan88xx device connected via switch to the peer).
-
-[1] https://github.com/raspberrypi/linux/issues/2447
-[2] https://forums.developer.nvidia.com/t/jetson-xavier-and-lan7800-problem/142134/11
-
-Link: https://lore.kernel.org/0901d90d-3f20-4a10-b680-9c978e04ddda@lunn.ch
-Fixes: 792aec47d59d ("add microchip LAN88xx phy driver")
-Signed-off-by: Fiona Klute <fiona.klute@gmx.de>
-Cc: kernel-list@raspberrypi.com
-Cc: stable@vger.kernel.org
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250416102413.30654-1-fiona.klute@gmx.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 194f9f94a516 ("misc: microchip: pci1xxxx: Resolve kernel panic during GPIO IRQ handling")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Rengarajan S <rengarajan.s@microchip.com>
+Link: https://lore.kernel.org/r/20250313170856.20868-2-rengarajan.s@microchip.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/microchip.c |   46 ++------------------------------------------
- 1 file changed, 3 insertions(+), 43 deletions(-)
+ drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gpio.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/net/phy/microchip.c
-+++ b/drivers/net/phy/microchip.c
-@@ -37,47 +37,6 @@ static int lan88xx_write_page(struct phy
- 	return __phy_write(phydev, LAN88XX_EXT_PAGE_ACCESS, page);
- }
- 
--static int lan88xx_phy_config_intr(struct phy_device *phydev)
--{
--	int rc;
--
--	if (phydev->interrupts == PHY_INTERRUPT_ENABLED) {
--		/* unmask all source and clear them before enable */
--		rc = phy_write(phydev, LAN88XX_INT_MASK, 0x7FFF);
--		rc = phy_read(phydev, LAN88XX_INT_STS);
--		rc = phy_write(phydev, LAN88XX_INT_MASK,
--			       LAN88XX_INT_MASK_MDINTPIN_EN_ |
--			       LAN88XX_INT_MASK_LINK_CHANGE_);
--	} else {
--		rc = phy_write(phydev, LAN88XX_INT_MASK, 0);
--		if (rc)
--			return rc;
--
--		/* Ack interrupts after they have been disabled */
--		rc = phy_read(phydev, LAN88XX_INT_STS);
--	}
--
--	return rc < 0 ? rc : 0;
--}
--
--static irqreturn_t lan88xx_handle_interrupt(struct phy_device *phydev)
--{
--	int irq_status;
--
--	irq_status = phy_read(phydev, LAN88XX_INT_STS);
--	if (irq_status < 0) {
--		phy_error(phydev);
--		return IRQ_NONE;
--	}
--
--	if (!(irq_status & LAN88XX_INT_STS_LINK_CHANGE_))
--		return IRQ_NONE;
--
--	phy_trigger_machine(phydev);
--
--	return IRQ_HANDLED;
--}
--
- static int lan88xx_suspend(struct phy_device *phydev)
- {
- 	struct lan88xx_priv *priv = phydev->priv;
-@@ -528,8 +487,9 @@ static struct phy_driver microchip_phy_d
- 	.config_aneg	= lan88xx_config_aneg,
- 	.link_change_notify = lan88xx_link_change_notify,
- 
--	.config_intr	= lan88xx_phy_config_intr,
--	.handle_interrupt = lan88xx_handle_interrupt,
-+	/* Interrupt handling is broken, do not define related
-+	 * functions to force polling.
-+	 */
- 
- 	.suspend	= lan88xx_suspend,
- 	.resume		= genphy_resume,
+--- a/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gpio.c
++++ b/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gpio.c
+@@ -37,6 +37,7 @@
+ struct pci1xxxx_gpio {
+ 	struct auxiliary_device *aux_dev;
+ 	void __iomem *reg_base;
++	raw_spinlock_t wa_lock;
+ 	struct gpio_chip gpio;
+ 	spinlock_t lock;
+ 	int irq_base;
+@@ -257,6 +258,7 @@ static irqreturn_t pci1xxxx_gpio_irq_han
+ 	struct pci1xxxx_gpio *priv = dev_id;
+ 	struct gpio_chip *gc =  &priv->gpio;
+ 	unsigned long int_status = 0;
++	unsigned long wa_flags;
+ 	unsigned long flags;
+ 	u8 pincount;
+ 	int bit;
+@@ -280,7 +282,9 @@ static irqreturn_t pci1xxxx_gpio_irq_han
+ 			writel(BIT(bit), priv->reg_base + INTR_STATUS_OFFSET(gpiobank));
+ 			spin_unlock_irqrestore(&priv->lock, flags);
+ 			irq = irq_find_mapping(gc->irq.domain, (bit + (gpiobank * 32)));
+-			handle_nested_irq(irq);
++			raw_spin_lock_irqsave(&priv->wa_lock, wa_flags);
++			generic_handle_irq(irq);
++			raw_spin_unlock_irqrestore(&priv->wa_lock, wa_flags);
+ 		}
+ 	}
+ 	spin_lock_irqsave(&priv->lock, flags);
 
 
