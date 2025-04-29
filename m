@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB740253F31;
-	Tue, 29 Apr 2025 17:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F152517A4;
+	Tue, 29 Apr 2025 17:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947375; cv=none; b=QLezRNbdJyHBmskLMGIPWgAe9wFO5c1df1CDTmXh1Wfckq/CjM5GxmfUagWIyYa1lf0d0vr4JV8gatdQ4pycZavHcqheqJJEBaInXJ+D6VPgNWUHDnHc89mH6SNgg3aRLIB/WxueuSCjaZM4OuKkXhYp/yvAN2/d3+Z+MLlcxKw=
+	t=1745947378; cv=none; b=t5jIoNV+KfApN1oc/K4IE4HTd/+FnAEG12bNrbbq8HWX4s23ghDTE1wxmoWkznzOAQ34jXZCphMBZJMwjhnf0f0Nh870Vnx8N09rC+uN6YNSR+iVibvyJhckT6Mca3XGW+htOdPMwQ5eNNjwAkqnu7pCkVhzWOO4J9DY0qZ4tgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947375; c=relaxed/simple;
-	bh=0jLidGhWp4drxHMu7Kg5YGRBKsJL9VR5jIISR+/AUpo=;
+	s=arc-20240116; t=1745947378; c=relaxed/simple;
+	bh=5ah1r9Xdz4+YxdMAzdHLiG5FBJYHBaOx7buk7D8MwyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=saGw1moQ5ZELbY20h1qiKapXzV93/KT2NtbnACJNBgoei+rT6h049ra5aQQLYDTmihfulUxuWU444VVbzYuTYYxYrw0CGyB0IkIuvrCdQ1C5J8lA6rP2PhPlClojo4NiBT/YRjI9oxrFAQOmZsV8WeWGHrW7051TOytdL3B9HRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sx+ZH7q7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s40WI9Z6aWhmEpSrLwun/+iRzHTJytDAp1RnGtue97Leycx0OaoS/f9hgALRSW7F4KqPnLbwZDjjR1b64rXlc0CyfxNS7UQqeRflrd5PIF1KKJaMCDmw7XPckwWmYE3Kq1ZiF5EfNf5XBgQ3c9/mAv4M+etcFJDJlGcKbHo0aOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/r4kI83; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sx+ZH7q7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A1DC4CEE3;
-	Tue, 29 Apr 2025 17:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/r4kI83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A082C4CEE3;
+	Tue, 29 Apr 2025 17:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947374;
-	bh=0jLidGhWp4drxHMu7Kg5YGRBKsJL9VR5jIISR+/AUpo=;
+	s=korg; t=1745947377;
+	bh=5ah1r9Xdz4+YxdMAzdHLiG5FBJYHBaOx7buk7D8MwyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sx+ZH7q7xdiKWdtAlqT2lFu3/VcrWGA7kN4Mb3YQMoJx5MoZg6aOmIPlOnWLqZAzS
-	 0RnLlWDGB58xdKGpOpEgZ1IHCrjClMEDdQR/T0s6MLCZN+Y1qnGVbHA1xwSSaG8f6+
-	 9XKeSgEFryB2DydfKmyp2bhP9Bm4Wjc8zpNhl8Gg=
+	b=z/r4kI837sW1LfKC6yCHYXJSjeBFd7h9vF1I2qm2VCfjbx1oJTQbFBLrjf8Fm+CAE
+	 UBN8itOa7WGFVjj6OgyMKbQ39tlWSfVVcv7+ORXF/sjw6AIPnjcz0T4kHjL6jGGokD
+	 rOlFaQh8ar28gRQRs1wHIsZDNCFN3ckgrzHSUl9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 230/286] dma/contiguous: avoid warning about unused size_bytes
-Date: Tue, 29 Apr 2025 18:42:14 +0200
-Message-ID: <20250429161117.398311921@linuxfoundation.org>
+Subject: [PATCH 5.10 231/286] cpufreq: scpi: Fix null-ptr-deref in scpi_cpufreq_get_rate()
+Date: Tue, 29 Apr 2025 18:42:15 +0200
+Message-ID: <20250429161117.437394094@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -51,40 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit d7b98ae5221007d3f202746903d4c21c7caf7ea9 ]
+[ Upstream commit 73b24dc731731edf762f9454552cb3a5b7224949 ]
 
-When building with W=1, this variable is unused for configs with
-CONFIG_CMA_SIZE_SEL_PERCENTAGE=y:
+cpufreq_cpu_get_raw() can return NULL when the target CPU is not present
+in the policy->cpus mask. scpi_cpufreq_get_rate() does not check for
+this case, which results in a NULL pointer dereference.
 
-kernel/dma/contiguous.c:67:26: error: 'size_bytes' defined but not used [-Werror=unused-const-variable=]
-
-Change this to a macro to avoid the warning.
-
-Fixes: c64be2bb1c6e ("drivers: add Contiguous Memory Allocator")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20250409151557.3890443-1-arnd@kernel.org
+Fixes: 343a8d17fa8d ("cpufreq: scpi: remove arm_big_little dependency")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Acked-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/contiguous.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/cpufreq/scpi-cpufreq.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/dma/contiguous.c b/kernel/dma/contiguous.c
-index 16b95ff12e4df..3a4e094e4b1fb 100644
---- a/kernel/dma/contiguous.c
-+++ b/kernel/dma/contiguous.c
-@@ -69,8 +69,7 @@ struct cma *dma_contiguous_default_area;
-  * Users, who want to set the size of global CMA area for their system
-  * should use cma= kernel parameter.
-  */
--static const phys_addr_t size_bytes __initconst =
--	(phys_addr_t)CMA_SIZE_MBYTES * SZ_1M;
-+#define size_bytes ((phys_addr_t)CMA_SIZE_MBYTES * SZ_1M)
- static phys_addr_t  size_cmdline __initdata = -1;
- static phys_addr_t base_cmdline __initdata;
- static phys_addr_t limit_cmdline __initdata;
+diff --git a/drivers/cpufreq/scpi-cpufreq.c b/drivers/cpufreq/scpi-cpufreq.c
+index c79cdf1be7803..f990de8c6ed03 100644
+--- a/drivers/cpufreq/scpi-cpufreq.c
++++ b/drivers/cpufreq/scpi-cpufreq.c
+@@ -37,9 +37,16 @@ static struct scpi_ops *scpi_ops;
+ 
+ static unsigned int scpi_cpufreq_get_rate(unsigned int cpu)
+ {
+-	struct cpufreq_policy *policy = cpufreq_cpu_get_raw(cpu);
+-	struct scpi_data *priv = policy->driver_data;
+-	unsigned long rate = clk_get_rate(priv->clk);
++	struct cpufreq_policy *policy;
++	struct scpi_data *priv;
++	unsigned long rate;
++
++	policy = cpufreq_cpu_get_raw(cpu);
++	if (unlikely(!policy))
++		return 0;
++
++	priv = policy->driver_data;
++	rate = clk_get_rate(priv->clk);
+ 
+ 	return rate / 1000;
+ }
 -- 
 2.39.5
 
