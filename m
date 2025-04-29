@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEDE7E110;
-	Tue, 29 Apr 2025 17:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B087382C60;
+	Tue, 29 Apr 2025 17:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946073; cv=none; b=cCrhA/iseXhnrh8aDsxoHgQ2lqh2FNZiVSn2cuo8z8+y6vTDapmbdI+XxqKmNcJMa5gblJa56Kqc8n8x1AyQGrM+UJ7dUMeQ0w3OselQ7OOstfXt+rWetl99o/XgBQ4BJ6/QXM0nPbozoze0gTNlS531rdB+mdLGBzxlXzQJRCI=
+	t=1745946076; cv=none; b=gbLdBA9bvLwc62OBtyu0pAWOLTl74lIPQB6pgkfVxj1k4e4qINIs1DfJm+JyIj59AOQ5OBcCptBfqBKimtTRJAMXbt+4gM/JLED6drKcxg/srvux0N0HiXObqPdMeEupzDT4eOOK3rVSG75iNpzMBEzEoZqHlFLRNX6pT1Fs6Eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946073; c=relaxed/simple;
-	bh=PsnABcpbRq+AH44q4SWYhLyNhP7FNLizAKmWFXgtrhs=;
+	s=arc-20240116; t=1745946076; c=relaxed/simple;
+	bh=dxdJB+hQTlzNq2qG+YyS+AnegeHW8rtyF/3Jkmfx++k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qfqGSz1MckSNQSj3kow/SvrUN4rgliYoBZ1o7sGDYM545/FT8ZLAjOH+mgvn6JkQAqjTuLzJz7oTzzM/dhywxQwyorKJwFIEbWkLNepjn+/y7dUm4yA50vmnlno83A4lo8YW8llsDodAjpe+d0i6CsbL0xRQqP+/y5LhTgTz1go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hpz2+TaC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g3/PxxYJGS4m8Tnn9T9ZYo7f73u+gzpPNzPnSeBtgXiv8v1DZEiPOTXbGlNmtYiAphaX5ti4E2DQDnXQS5hv4zuGMTMQ3ZUCu54aq/Z74up/nWjOmAcvtcTaY+KcHD4Aane4kHzl+qTGtIQL+Z0IazOQeEaZztrPLlOns8qKPbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5O07jtQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hpz2+TaC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E85BC4CEE3;
-	Tue, 29 Apr 2025 17:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5O07jtQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D22C4CEE9;
+	Tue, 29 Apr 2025 17:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946073;
-	bh=PsnABcpbRq+AH44q4SWYhLyNhP7FNLizAKmWFXgtrhs=;
+	s=korg; t=1745946076;
+	bh=dxdJB+hQTlzNq2qG+YyS+AnegeHW8rtyF/3Jkmfx++k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hpz2+TaCJDMsawUAIsPqlP1j1qla2YsiuyGd5NRC5JXR9bS3psj55iQHrCAx7Ix4M
-	 9ZkAAvJ1MJUVdxPam/oTW+XYjT1i7N60Qy63tQ8Gm1PjMVcwN++N1XnprRFS8TIwCJ
-	 EHhcYBIK9iBk/Sn/C7Y504wpYaM3gs6dGcWNPIXM=
+	b=q5O07jtQZFacUCTr3nHN2usk/x0FcTvZDCe/aPfCKSbKsEdaNFdZH9AiurBu7O1T1
+	 gaWQ3kHY7S41t2CNZhb9RswuzLemwnzcEjcXgRFzXrahqGLUnKKu6lHM5Md9ODAO/Q
+	 cdAn0OSlMeBqCiZLsPGeZi/Wk0GCVitS3atYRqGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benno Lossin <benno.lossin@proton.me>,
-	Christian Schrefl <chrisi.schrefl@gmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.14 118/311] rust: firmware: Use `ffi::c_char` type in `FwFunc`
-Date: Tue, 29 Apr 2025 18:39:15 +0200
-Message-ID: <20250429161125.873585868@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.14 145/311] KVM: x86: Explicitly treat routing entry type changes as changes
+Date: Tue, 29 Apr 2025 18:39:42 +0200
+Message-ID: <20250429161126.974219164@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -52,114 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Schrefl <chrisi.schrefl@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 53bd97801632c940767f4c8407c2cbdeb56b40e7 upstream.
+commit bcda70c56f3e718465cab2aad260cf34183ce1ce upstream.
 
-The `FwFunc` struct contains an function with a char pointer argument,
-for which a `*const u8` pointer was used. This is not really the
-"proper" type for this, so use a `*const kernel::ffi::c_char` pointer
-instead.
+Explicitly treat type differences as GSI routing changes, as comparing MSI
+data between two entries could get a false negative, e.g. if userspace
+changed the type but left the type-specific data as-is.
 
-This has no real functionality changes, since now `kernel::ffi::c_char`
-(which bindgen uses for `char`) is now a type alias to `u8` anyways,
-but before commit 1bae8729e50a ("rust: map `long` to `isize` and `char`
-to `u8`") the concrete type of `kernel::ffi::c_char` depended on the
-architecture (However all supported architectures at the time mapped to
-`i8`).
-
-This caused problems on the v6.13 tag when building for 32 bit arm (with
-my patches), since back then `*const i8` was used in the function
-argument and the function that bindgen generated used
-`*const core::ffi::c_char` which Rust mapped to `*const u8` on 32 bit
-arm. The stable v6.13.y branch does not have this issue since commit
-1bae8729e50a ("rust: map `long` to `isize` and `char` to `u8`") was
-backported.
-
-This caused the following build error:
-```
-error[E0308]: mismatched types
-  --> rust/kernel/firmware.rs:20:4
-   |
-20 |         Self(bindings::request_firmware)
-   |         ---- ^^^^^^^^^^^^^^^^^^^^^^^^^^ expected fn pointer, found fn item
-   |         |
-   |         arguments to this function are incorrect
-   |
-   = note: expected fn pointer `unsafe extern "C" fn(_, *const i8, _) -> _`
-                 found fn item `unsafe extern "C" fn(_, *const u8, _) -> _ {request_firmware}`
-note: tuple struct defined here
-  --> rust/kernel/firmware.rs:14:8
-   |
-14 | struct FwFunc(
-   |        ^^^^^^
-
-error[E0308]: mismatched types
-  --> rust/kernel/firmware.rs:24:14
-   |
-24 |         Self(bindings::firmware_request_nowarn)
-   |         ---- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected fn pointer, found fn item
-   |         |
-   |         arguments to this function are incorrect
-   |
-   = note: expected fn pointer `unsafe extern "C" fn(_, *const i8, _) -> _`
-                 found fn item `unsafe extern "C" fn(_, *const u8, _) -> _ {firmware_request_nowarn}`
-note: tuple struct defined here
-  --> rust/kernel/firmware.rs:14:8
-   |
-14 | struct FwFunc(
-   |        ^^^^^^
-
-error[E0308]: mismatched types
-  --> rust/kernel/firmware.rs:64:45
-   |
-64 |         let ret = unsafe { func.0(pfw as _, name.as_char_ptr(), dev.as_raw()) };
-   |                            ------           ^^^^^^^^^^^^^^^^^^ expected `*const i8`, found `*const u8`
-   |                            |
-   |                            arguments to this function are incorrect
-   |
-   = note: expected raw pointer `*const i8`
-              found raw pointer `*const u8`
-
-error: aborting due to 3 previous errors
-```
-
-Fixes: de6582833db0 ("rust: add firmware abstractions")
+Fixes: 515a0c79e796 ("kvm: irqfd: avoid update unmodified entries of the routing")
 Cc: stable@vger.kernel.org
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
-Signed-off-by: Christian Schrefl <chrisi.schrefl@gmail.com>
-Acked-by: Miguel Ojeda <ojeda@kernel.org>
-Link: https://lore.kernel.org/r/20250413-rust_arm_fix_fw_abstaction-v3-1-8dd7c0bbcd47@gmail.com
-[ Add firmware prefix to commit subject. - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20250404193923.1413163-4-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/firmware.rs |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/x86/kvm/x86.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/rust/kernel/firmware.rs
-+++ b/rust/kernel/firmware.rs
-@@ -4,7 +4,7 @@
- //!
- //! C header: [`include/linux/firmware.h`](srctree/include/linux/firmware.h)
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -13611,7 +13611,8 @@ int kvm_arch_update_irqfd_routing(struct
+ bool kvm_arch_irqfd_route_changed(struct kvm_kernel_irq_routing_entry *old,
+ 				  struct kvm_kernel_irq_routing_entry *new)
+ {
+-	if (new->type != KVM_IRQ_ROUTING_MSI)
++	if (old->type != KVM_IRQ_ROUTING_MSI ||
++	    new->type != KVM_IRQ_ROUTING_MSI)
+ 		return true;
  
--use crate::{bindings, device::Device, error::Error, error::Result, str::CStr};
-+use crate::{bindings, device::Device, error::Error, error::Result, ffi, str::CStr};
- use core::ptr::NonNull;
- 
- /// # Invariants
-@@ -12,7 +12,11 @@ use core::ptr::NonNull;
- /// One of the following: `bindings::request_firmware`, `bindings::firmware_request_nowarn`,
- /// `bindings::firmware_request_platform`, `bindings::request_firmware_direct`.
- struct FwFunc(
--    unsafe extern "C" fn(*mut *const bindings::firmware, *const u8, *mut bindings::device) -> i32,
-+    unsafe extern "C" fn(
-+        *mut *const bindings::firmware,
-+        *const ffi::c_char,
-+        *mut bindings::device,
-+    ) -> i32,
- );
- 
- impl FwFunc {
+ 	return !!memcmp(&old->msi, &new->msi, sizeof(new->msi));
 
 
