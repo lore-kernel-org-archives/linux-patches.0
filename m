@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC65253334;
-	Tue, 29 Apr 2025 18:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2AE155A4E;
+	Tue, 29 Apr 2025 18:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950618; cv=none; b=rceUD+v6pyp4YY9Xt+sAxgS/NTqW8gRoSpnkf5V0uREIZF0bfz0yApuBgSCb9z2Y4OIPTTk77uTAYBFbPYLZ8x78TbWcswV5uvTme8XDYYwTRx9xIXqFTmBrNi6un6MyzFIo57ve/SG31e35dPgfPl4oBcGRoVwo7pm1oxjhz+U=
+	t=1745950622; cv=none; b=jafGydWz4PxoqPamOxlg/4JE6lUrszbmqIWaS/amQpGwU0v/PqEITBJaX+p2s/Xg2ee5Kji95HsyVLnqWKwOI+hrtmq6IAsquT1Kg84wrXi+IDKrxMwWuo+yiOSd2hUP3qsHxKW+xE3a6KD9ZbH5r0Vr63iezY1AyQThEPv0n2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950618; c=relaxed/simple;
-	bh=zJOCUCcMDayc2RYoepOeO1eOzyaBT8qac+nb7vSVsnE=;
+	s=arc-20240116; t=1745950622; c=relaxed/simple;
+	bh=WsJLiDjIBelLMhbmqcXpof/AfiS8WJKjmV6Nl3grcbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CJmRYE6nDXyLEMD/RqsnoLtpFiMl+/SvozBUN5a9FKgBpB65luI0y7CLfuUfrsXeX2ryA9qx3rWmD7XPro7+gy9m8HRfId79RiM3kihA6duRSxDXXAQH191IYpQ8lwJeOhMsgLpl44U2fw13B0pkvA1F+lZ8MrrUt3IyPmN1rHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjjAD6Fo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BCAhZNYqJk9vI1SUBLab9RceiZB7BwIs5q4lMGxnv9id4emhSH3coqM+kTuPeWu8mHQG72hjLpUXZ/6OmzFWxCrujldELL5YBStBP2uo7dgpMrKvfI1cJHniUTi6S0pDWM/wtB2fEAWW1Rta29qD1znA4DoG0+ArX293dxm/uNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHjUN3wc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjjAD6Fo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9425FC4CEE3;
-	Tue, 29 Apr 2025 18:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHjUN3wc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966B2C4CEE3;
+	Tue, 29 Apr 2025 18:17:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950618;
-	bh=zJOCUCcMDayc2RYoepOeO1eOzyaBT8qac+nb7vSVsnE=;
+	s=korg; t=1745950622;
+	bh=WsJLiDjIBelLMhbmqcXpof/AfiS8WJKjmV6Nl3grcbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OjjAD6FoCdYIb06bdnWixnheCFcZ2Hytxm2XoQWPZCUK3tflN9mR4lupvtj+Bb5oF
-	 0rhcLWna7DzgOAlY3KFutjn+5MSBUnl+bz+kw0w3YM+2CNQrj4Gof2ofFg8H/2fBhy
-	 rXWZ9LDXfRlQfxrf061qYBPbAFuyHXEgRKIA8Ms0=
+	b=FHjUN3wclWe/bUPNutY3JK8fjQdwXPzUfuPmfnBxbiSNZ218DLcCOyRVu20WrsY/4
+	 Zdl+MuFs7jjbz+DYgox22KUoED+LxMWHjBj/8hSijEm0nxD0p9GWFAYeew3HhVRgJp
+	 kWYzGsWV9Wvqg8fgYijdpmsac77IWIvTG01QiRzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Michael Mueller <mimu@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 152/204] sched/isolation: Make CONFIG_CPU_ISOLATION depend on CONFIG_SMP
-Date: Tue, 29 Apr 2025 18:44:00 +0200
-Message-ID: <20250429161105.638813566@linuxfoundation.org>
+Subject: [PATCH 6.6 153/204] KVM: s390: Dont use %pK through tracepoints
+Date: Tue, 29 Apr 2025 18:44:01 +0200
+Message-ID: <20250429161105.679371479@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -46,50 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 975776841e689dd8ba36df9fa72ac3eca3c2957a ]
+[ Upstream commit 6c9567e0850be2f0f94ab64fa6512413fd1a1eb1 ]
 
-kernel/sched/isolation.c obviously makes no sense without CONFIG_SMP, but
-the Kconfig entry we have right now:
+Restricted pointers ("%pK") are not meant to be used through TP_format().
+It can unintentionally expose security sensitive, raw pointer values.
 
-	config CPU_ISOLATION
-		bool "CPU isolation"
-		depends on SMP || COMPILE_TEST
+Use regular pointer formatting instead.
 
-allows the creation of pointless .config's which cause
-build failures.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20250330134955.GA7910@redhat.com
-
-Closes: https://lore.kernel.org/oe-kbuild-all/202503260646.lrUqD3j5-lkp@intel.com/
+Link: https://lore.kernel.org/lkml/20250113171731-dc10e3c1-da64-4af0-b767-7c7070468023@linutronix.de/
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Reviewed-by: Michael Mueller <mimu@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250217-restricted-pointers-s390-v1-1-0e4ace75d8aa@linutronix.de
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+Message-ID: <20250217-restricted-pointers-s390-v1-1-0e4ace75d8aa@linutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/kvm/trace-s390.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/init/Kconfig b/init/Kconfig
-index 1105cb53f391a..8b630143c720f 100644
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -689,7 +689,7 @@ endmenu # "CPU/Task time and stats accounting"
+diff --git a/arch/s390/kvm/trace-s390.h b/arch/s390/kvm/trace-s390.h
+index 6f0209d45164f..9c5f546a2e1a3 100644
+--- a/arch/s390/kvm/trace-s390.h
++++ b/arch/s390/kvm/trace-s390.h
+@@ -56,7 +56,7 @@ TRACE_EVENT(kvm_s390_create_vcpu,
+ 		    __entry->sie_block = sie_block;
+ 		    ),
  
- config CPU_ISOLATION
- 	bool "CPU isolation"
--	depends on SMP || COMPILE_TEST
-+	depends on SMP
- 	default y
- 	help
- 	  Make sure that CPUs running critical tasks are not disturbed by
+-	    TP_printk("create cpu %d at 0x%pK, sie block at 0x%pK",
++	    TP_printk("create cpu %d at 0x%p, sie block at 0x%p",
+ 		      __entry->id, __entry->vcpu, __entry->sie_block)
+ 	);
+ 
+@@ -255,7 +255,7 @@ TRACE_EVENT(kvm_s390_enable_css,
+ 		    __entry->kvm = kvm;
+ 		    ),
+ 
+-	    TP_printk("enabling channel I/O support (kvm @ %pK)\n",
++	    TP_printk("enabling channel I/O support (kvm @ %p)\n",
+ 		      __entry->kvm)
+ 	);
+ 
 -- 
 2.39.5
 
