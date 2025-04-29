@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0774D1917E3;
-	Tue, 29 Apr 2025 17:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C77A1917E3;
+	Tue, 29 Apr 2025 17:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948479; cv=none; b=YGXihiBYuergoiXS7i0JoHWPJi3vhp6UXaOGjfr4W8ciLoy48RhpDiCl5C811XHAaYMCmZd5xQvFQoesEaLrZ+pRKXfs6zBu4scZXRNTJBEZLnyHUyuIwTP+gjSGGev5uwKkwnJrIOlGzkTug1hBt5FK2PlrXJfUgtqJ9VRuZHs=
+	t=1745948482; cv=none; b=Vgr8KffPkyEkqwkW0vmTmKwP57v66nu45xbyxUvYc8PFvPXQN8DYR1rh0Jgj7J5GgF/fngUqrUFPscvLFN2/SA6A9hoDZvRqWd0s889mJ3y6aXWpm6ELpEG2RqY2h5RnVze+7VBrGxDijjQpUa5giZKiolswlspsr6RuEYtJqrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948479; c=relaxed/simple;
-	bh=gEegFWm8O/nXVTyKtbqSQkcVl3bRrPqsT831fIcCwpo=;
+	s=arc-20240116; t=1745948482; c=relaxed/simple;
+	bh=XA+DIS2XCPPdh3KLx0qE35R4jSy0vBJCyDyhsp3waEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gNJ4z57eXO06C/qxJkO567LTF7scQlR0dhL6QCLVUIKzKDUix09/9Bf5xQnHBn77bskbqArVEmV/R50lxKwo5WmqxSkeYXbKlIwb4ZYMzptWKstANzK9FIMdhoma7ybjBacAu0Oexo73SYGG797eyi+pUOr063Lx3MlNJCoyTPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jTgxYACE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NkE1UAFbPV3qWZDS4KDzmSdHZknLMj3EKBjE1aBAPiFVgTC73xpnIrzshm17+1Z9fuML4uAZInEfQNnU8qIgWQkKWVq41BII55HKgCB4jMCwUHPaUE16JW2bfwky9GFaT+ckTBLxXUbfaKyfk9zyKYeT7Njz6Cn3LVrshJT7FWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFbUcKIr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jTgxYACE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8945AC4CEE3;
-	Tue, 29 Apr 2025 17:41:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFbUcKIr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C93C4CEE3;
+	Tue, 29 Apr 2025 17:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948478;
-	bh=gEegFWm8O/nXVTyKtbqSQkcVl3bRrPqsT831fIcCwpo=;
+	s=korg; t=1745948482;
+	bh=XA+DIS2XCPPdh3KLx0qE35R4jSy0vBJCyDyhsp3waEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jTgxYACE8lfUKB2rzZ2AW0+jeTQFI3C6xR/i6aki1DgCatJHITe99hqsk4RoVf1x4
-	 44xKx7BGY6titLVhf9OvYmCABK1HFGHBLGYeDPYeur+yP2cbzX8q0jlAteU8K5nYHq
-	 PWfYz+q+eihmwsGNtYUlhR7rUgQ9VlGyOyiUlhmM=
+	b=dFbUcKIrgg31TztJxev8lhiZP98dypeY7IvYtRw5rwxzMGfq37tclYpENQxvEn50F
+	 uw83Sq7jPz15Vd3MHRM1D5hEAPv8YUTGGlz4K2IqYoNzqb+3sCTtckgL9gMXe3DVC9
+	 ZbDGWjrWqHgOJQgV4bG1ZJBdVLRnyod/P5DPxkVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Mikityanskiy <maxtram95@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 020/373] ALSA: hda: intel: Fix Optimus when GPU has no sound
-Date: Tue, 29 Apr 2025 18:38:17 +0200
-Message-ID: <20250429161123.963932347@linuxfoundation.org>
+Subject: [PATCH 5.15 021/373] ASoC: fsl_audmix: register card device depends on dais property
+Date: Tue, 29 Apr 2025 18:38:18 +0200
+Message-ID: <20250429161124.005182825@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,64 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxim Mikityanskiy <maxtram95@gmail.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 2b360ba9a4936486380bc30d1eabceb40a714d98 ]
+[ Upstream commit 294a60e5e9830045c161181286d44ce669f88833 ]
 
-quirk_nvidia_hda() forcefully enables HDA controller on all NVIDIA GPUs,
-because some buggy BIOSes leave it disabled. However, some dual-GPU
-laptops do not have a functional HDA controller in DGPU, and BIOS
-disables it on purpose. After quirk_nvidia_hda() reenables this dummy
-HDA controller, attempting to probe it fails at azx_first_init(), which
-is too late to cancel the probe, as it happens in azx_probe_continue().
+In order to make the audmix device linked by audio graph card, make
+'dais' property to be optional.
 
-The sna_hda_intel driver calls azx_free() and stops the chip, however,
-it stays probed, and from the runtime PM point of view, the device
-remains active (it was set as active by the PCI subsystem on probe). It
-prevents vga_switcheroo from turning off the DGPU, because
-pci_create_device_link() syncs power management for video and audio
-devices.
+If 'dais' property exists, then register the imx-audmix card driver.
+otherwise, it should be linked by audio graph card.
 
-Affected devices should be added to driver_denylist to prevent them from
-probing early. This patch helps identify such devices by printing a
-warning, and also forces the device to the suspended state to allow
-vga_switcheroo turn off DGPU.
-
-Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
-Link: https://patch.msgid.link/20250208214602.39607-2-maxtram95@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20250226100508.2352568-5-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ sound/soc/fsl/fsl_audmix.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index 16c7fbb84276a..5f0e7765b8bd6 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -1365,8 +1365,21 @@ static void azx_free(struct azx *chip)
- 	if (use_vga_switcheroo(hda)) {
- 		if (chip->disabled && hda->probe_continued)
- 			snd_hda_unlock_devices(&chip->bus);
--		if (hda->vga_switcheroo_registered)
-+		if (hda->vga_switcheroo_registered) {
- 			vga_switcheroo_unregister_client(chip->pci);
-+
-+			/* Some GPUs don't have sound, and azx_first_init fails,
-+			 * leaving the device probed but non-functional. As long
-+			 * as it's probed, the PCI subsystem keeps its runtime
-+			 * PM status as active. Force it to suspended (as we
-+			 * actually stop the chip) to allow GPU to suspend via
-+			 * vga_switcheroo, and print a warning.
-+			 */
-+			dev_warn(&pci->dev, "GPU sound probed, but not operational: please add a quirk to driver_denylist\n");
-+			pm_runtime_disable(&pci->dev);
-+			pm_runtime_set_suspended(&pci->dev);
-+			pm_runtime_enable(&pci->dev);
+diff --git a/sound/soc/fsl/fsl_audmix.c b/sound/soc/fsl/fsl_audmix.c
+index f931288e256ca..9c46b25cc6541 100644
+--- a/sound/soc/fsl/fsl_audmix.c
++++ b/sound/soc/fsl/fsl_audmix.c
+@@ -500,11 +500,17 @@ static int fsl_audmix_probe(struct platform_device *pdev)
+ 		goto err_disable_pm;
+ 	}
+ 
+-	priv->pdev = platform_device_register_data(dev, "imx-audmix", 0, NULL, 0);
+-	if (IS_ERR(priv->pdev)) {
+-		ret = PTR_ERR(priv->pdev);
+-		dev_err(dev, "failed to register platform: %d\n", ret);
+-		goto err_disable_pm;
++	/*
++	 * If dais property exist, then register the imx-audmix card driver.
++	 * otherwise, it should be linked by audio graph card.
++	 */
++	if (of_find_property(pdev->dev.of_node, "dais", NULL)) {
++		priv->pdev = platform_device_register_data(dev, "imx-audmix", 0, NULL, 0);
++		if (IS_ERR(priv->pdev)) {
++			ret = PTR_ERR(priv->pdev);
++			dev_err(dev, "failed to register platform: %d\n", ret);
++			goto err_disable_pm;
 +		}
  	}
  
- 	if (bus->chip_init) {
+ 	return 0;
 -- 
 2.39.5
 
