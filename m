@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C001B2472BC;
-	Tue, 29 Apr 2025 16:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B16244668;
+	Tue, 29 Apr 2025 16:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945140; cv=none; b=qr+ixa2uiWBI8LzNktjyYfWaUn+Lq18O06nhVMzZN0oxmxjhoO0ux8Q+oE0E+C1ssoN3CQ2Jvx6UPQw+q0BTvAP2F33KiNF8PhlS+okWayBVFDTba1nYqGxPc0M0lwQM+ecXbgEfQBW1A5TJ3l+shm8uRqif8MlpZcvxR5i7wdE=
+	t=1745945143; cv=none; b=H2zgEU9WTn+PYSXxHscT5ztXG9YVoqWPG/BJAeNCGejghJ3R/J+Ft5Japki1lNb0j0m2hXdkTmBlxoVS6QHrBd1aUY4yptyPuNEQ1yyeJlDpmnhJc8sbe/jANjFWVcmJVsjrvHex74w8gq3wcSLSEpFI3zE5ua0brz5DqAT8smI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945140; c=relaxed/simple;
-	bh=Y6ge5ZTWNb7gk7aZUpHbimcvzG24Lbp+6Orpe6/QV+0=;
+	s=arc-20240116; t=1745945143; c=relaxed/simple;
+	bh=R6yIhyZBR+aNznR4+fWgHZ9jn/PK06myxcxcgmwTNZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P1VPW0xDG4E2+PPL3KfnG2hC/S0v7gp5OokqHCb/kWnEwUbPUJsP+sSvsVZ9gB1P2coKeIr7tpqFEszO68khrtzY8SJ9uOMz3bfMSrCMGmuRdJHTOmL95w9sRybczvBuiNx41x9qVtzLJsK6rhESQIosEnw/Y8SNgRLHOgiseVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jk/orcUU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yo5Mp8wxaDz9+f5+GU0IfiFBkrnmK3gC7gxudNsUYXDtJxUIM84g+VMdUewZkpxoVE1Nz92b2JAsG7FY3beE8s8iDUIjP5JeXBgv1Kmp78Wgv31Ri/G1YvOO+cMdKGw6JdbrBQKg1jfTJaPFuwMRc8pHk9vqlmbafkLIoQwR47I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AgAJvSvK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jk/orcUU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B911EC4CEE3;
-	Tue, 29 Apr 2025 16:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgAJvSvK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A875EC4CEE3;
+	Tue, 29 Apr 2025 16:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945140;
-	bh=Y6ge5ZTWNb7gk7aZUpHbimcvzG24Lbp+6Orpe6/QV+0=;
+	s=korg; t=1745945143;
+	bh=R6yIhyZBR+aNznR4+fWgHZ9jn/PK06myxcxcgmwTNZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jk/orcUU3CF3pZSlYTkeUZDgehGSMkBUQhiVz66dE0K7BcWA1dMJ1EH7V8foavMRk
-	 Tg05kYQ6J41v1OFYC87J6AxjrMYvKmpOTShH0/RrTgjIy0Ic5vBL04SCfL8q489xxC
-	 cH96hdDdejJfQX9W85CWq6kmkVVjgI4St0m3iDW4=
+	b=AgAJvSvKZP1OT5adioLED3zf5rjGX6KDN6FhZtzuJEsLMsENxEWSWZnKHGE87Ewbt
+	 MIxV5DT3FIz3KM9aNd7fPY7T/VD54Bld1XLAdQqGf7SjzF8h+6djYeQSE7fDcpMVPt
+	 bx6h3OUFrHbx3d5H0GlNmjuA+3QxbFuWzmQa4fzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricard Wanderlof <ricard2013@butoba.net>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 015/179] ALSA: usb-audio: Fix CME quirk for UF series keyboards
-Date: Tue, 29 Apr 2025 18:39:16 +0200
-Message-ID: <20250429161050.020574796@linuxfoundation.org>
+Subject: [PATCH 5.4 016/179] page_pool: avoid infinite loop to schedule delayed worker
+Date: Tue, 29 Apr 2025 18:39:17 +0200
+Message-ID: <20250429161050.066904931@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -51,121 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricard Wanderlof <ricard2013@butoba.net>
+From: Jason Xing <kerneljasonxing@gmail.com>
 
-[ Upstream commit c2820405ba55a38932aa2177f026b70064296663 ]
+[ Upstream commit 43130d02baa137033c25297aaae95fd0edc41654 ]
 
-Fix quirk for CME master keyboards so it not only handles
-sysex but also song position pointer, MIDI timing clock, start
-and stop messages, and active sensing. All of these can be
-output by the CME UF series master keyboards.
+We noticed the kworker in page_pool_release_retry() was waken
+up repeatedly and infinitely in production because of the
+buggy driver causing the inflight less than 0 and warning
+us in page_pool_inflight()[1].
 
-Tested with a CME UF6 in a desktop Linux environment as
-well as on the Zynthian Raspberry Pi based platform.
+Since the inflight value goes negative, it means we should
+not expect the whole page_pool to get back to work normally.
 
-Signed-off-by: Ricard Wanderlof <ricard2013@butoba.net>
-Link: https://patch.msgid.link/20250313-cme-fix-v1-1-d404889e4de8@butoba.net
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This patch mitigates the adverse effect by not rescheduling
+the kworker when detecting the inflight negative in
+page_pool_release_retry().
+
+[1]
+[Mon Feb 10 20:36:11 2025] ------------[ cut here ]------------
+[Mon Feb 10 20:36:11 2025] Negative(-51446) inflight packet-pages
+...
+[Mon Feb 10 20:36:11 2025] Call Trace:
+[Mon Feb 10 20:36:11 2025]  page_pool_release_retry+0x23/0x70
+[Mon Feb 10 20:36:11 2025]  process_one_work+0x1b1/0x370
+[Mon Feb 10 20:36:11 2025]  worker_thread+0x37/0x3a0
+[Mon Feb 10 20:36:11 2025]  kthread+0x11a/0x140
+[Mon Feb 10 20:36:11 2025]  ? process_one_work+0x370/0x370
+[Mon Feb 10 20:36:11 2025]  ? __kthread_cancel_work+0x40/0x40
+[Mon Feb 10 20:36:11 2025]  ret_from_fork+0x35/0x40
+[Mon Feb 10 20:36:11 2025] ---[ end trace ebffe800f33e7e34 ]---
+Note: before this patch, the above calltrace would flood the
+dmesg due to repeated reschedule of release_dw kworker.
+
+Signed-off-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/20250214064250.85987-1-kerneljasonxing@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/midi.c | 80 ++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 74 insertions(+), 6 deletions(-)
+ net/core/page_pool.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/midi.c b/sound/usb/midi.c
-index f175c537353a0..2dded1f2ca05e 100644
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -505,16 +505,84 @@ static void ch345_broken_sysex_input(struct snd_usb_midi_in_endpoint *ep,
+diff --git a/net/core/page_pool.c b/net/core/page_pool.c
+index 335f68eaaa05c..dbe0489e46035 100644
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -387,7 +387,13 @@ static void page_pool_release_retry(struct work_struct *wq)
+ 	int inflight;
  
- /*
-  * CME protocol: like the standard protocol, but SysEx commands are sent as a
-- * single USB packet preceded by a 0x0F byte.
-+ * single USB packet preceded by a 0x0F byte, as are system realtime
-+ * messages and MIDI Active Sensing.
-+ * Also, multiple messages can be sent in the same packet.
-  */
- static void snd_usbmidi_cme_input(struct snd_usb_midi_in_endpoint *ep,
- 				  uint8_t *buffer, int buffer_length)
- {
--	if (buffer_length < 2 || (buffer[0] & 0x0f) != 0x0f)
--		snd_usbmidi_standard_input(ep, buffer, buffer_length);
--	else
--		snd_usbmidi_input_data(ep, buffer[0] >> 4,
--				       &buffer[1], buffer_length - 1);
-+	int remaining = buffer_length;
-+
-+	/*
-+	 * CME send sysex, song position pointer, system realtime
-+	 * and active sensing using CIN 0x0f, which in the standard
-+	 * is only intended for single byte unparsed data.
-+	 * So we need to interpret these here before sending them on.
-+	 * By default, we assume single byte data, which is true
-+	 * for system realtime (midi clock, start, stop and continue)
-+	 * and active sensing, and handle the other (known) cases
-+	 * separately.
-+	 * In contrast to the standard, CME does not split sysex
-+	 * into multiple 4-byte packets, but lumps everything together
-+	 * into one. In addition, CME can string multiple messages
-+	 * together in the same packet; pressing the Record button
-+	 * on an UF6 sends a sysex message directly followed
-+	 * by a song position pointer in the same packet.
-+	 * For it to have any reasonable meaning, a sysex message
-+	 * needs to be at least 3 bytes in length (0xf0, id, 0xf7),
-+	 * corresponding to a packet size of 4 bytes, and the ones sent
-+	 * by CME devices are 6 or 7 bytes, making the packet fragments
-+	 * 7 or 8 bytes long (six or seven bytes plus preceding CN+CIN byte).
-+	 * For the other types, the packet size is always 4 bytes,
-+	 * as per the standard, with the data size being 3 for SPP
-+	 * and 1 for the others.
-+	 * Thus all packet fragments are at least 4 bytes long, so we can
-+	 * skip anything that is shorter; this also conveniantly skips
-+	 * packets with size 0, which CME devices continuously send when
-+	 * they have nothing better to do.
-+	 * Another quirk is that sometimes multiple messages are sent
-+	 * in the same packet. This has been observed for midi clock
-+	 * and active sensing i.e. 0x0f 0xf8 0x00 0x00 0x0f 0xfe 0x00 0x00,
-+	 * but also multiple note ons/offs, and control change together
-+	 * with MIDI clock. Similarly, some sysex messages are followed by
-+	 * the song position pointer in the same packet, and occasionally
-+	 * additionally by a midi clock or active sensing.
-+	 * We handle this by looping over all data and parsing it along the way.
+ 	inflight = page_pool_release(pool);
+-	if (!inflight)
++	/* In rare cases, a driver bug may cause inflight to go negative.
++	 * Don't reschedule release if inflight is 0 or negative.
++	 * - If 0, the page_pool has been destroyed
++	 * - if negative, we will never recover
++	 * in both cases no reschedule is necessary.
 +	 */
-+	while (remaining >= 4) {
-+		int source_length = 4; /* default */
-+
-+		if ((buffer[0] & 0x0f) == 0x0f) {
-+			int data_length = 1; /* default */
-+
-+			if (buffer[1] == 0xf0) {
-+				/* Sysex: Find EOX and send on whole message. */
-+				/* To kick off the search, skip the first
-+				 * two bytes (CN+CIN and SYSEX (0xf0).
-+				 */
-+				uint8_t *tmp_buf = buffer + 2;
-+				int tmp_length = remaining - 2;
-+
-+				while (tmp_length > 1 && *tmp_buf != 0xf7) {
-+					tmp_buf++;
-+					tmp_length--;
-+				}
-+				data_length = tmp_buf - buffer;
-+				source_length = data_length + 1;
-+			} else if (buffer[1] == 0xf2) {
-+				/* Three byte song position pointer */
-+				data_length = 3;
-+			}
-+			snd_usbmidi_input_data(ep, buffer[0] >> 4,
-+					       &buffer[1], data_length);
-+		} else {
-+			/* normal channel events */
-+			snd_usbmidi_standard_input(ep, buffer, source_length);
-+		}
-+		buffer += source_length;
-+		remaining -= source_length;
-+	}
- }
++	if (inflight <= 0)
+ 		return;
  
- /*
+ 	/* Periodic warning */
 -- 
 2.39.5
 
