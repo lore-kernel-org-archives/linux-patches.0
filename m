@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D9B239072;
-	Tue, 29 Apr 2025 17:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23FF2472B9;
+	Tue, 29 Apr 2025 17:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949071; cv=none; b=Zdt92SNK1hv25sJvfKEsA9kNtwS6XccWoAt5gtRCudUbgeItKtPsf1YPJgUPZGihmiG3C0Tgi7yB7G05e6mDrjePe0vki6bcvxRTDYiEH77kl2eYUY3dXleVusjMvB1e/COmID7qUnf/r/pp0Js8kmttRjrTXh3B5H/C+7danKs=
+	t=1745949074; cv=none; b=SCxUcZ67JiO2J1D7lYQcD0k6BpnzhgzQNCjV1+WEt7j25eY8obcB/4J8Sxn/SewBOlm0o6pjz5h0U+txzzdfHKaeKILOah176UnUV2K/e14IJNx8ZF37qLW+JAAwcJ4nhRjejr0aKl04mHkuL3Tue5kj6i/zEqv1Npsy7bdbn/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949071; c=relaxed/simple;
-	bh=PNqyWHymR0wOZ0k/qOzZbhgusK+lKCykqF9ltot5UlU=;
+	s=arc-20240116; t=1745949074; c=relaxed/simple;
+	bh=/gMo7YWm+7G4QqVktOch7ytkdK7VIpLhpqRSlTG+F3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cl/1U1abCtrd8KrWlNYSMc2VxHyZGFFAVapeKoofyyWEmmzfDXZliDhzdw6rMkGDS9ZOxm86fe4GDo45KFPmZJWI3MIeRByDFtmjPHzP+BtLXGsPif7Jmf83MVJKALUJIXRNXP2DbdRzQVfvYSRW0JjtG6RNG/UkpzWCReOpIX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZOUgZBA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Iegw86tJVG3w3ZnPtEWEnCxPHNOv08bdMTX8K6NoLtrWglo31zcaMhDcE8FyP1byboRnsEQtUNH5GYj0pRy4RctaBgtoxW8EzCs15fOvfw14HNrPE6fA2pgpTRoPoXSi2Dbb/Us8Td8sC/6L3xG1fh+9NSSdqpzkuoeGBIx04fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opazBSvC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZOUgZBA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7125DC4CEE3;
-	Tue, 29 Apr 2025 17:51:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opazBSvC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63804C4CEE3;
+	Tue, 29 Apr 2025 17:51:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949070;
-	bh=PNqyWHymR0wOZ0k/qOzZbhgusK+lKCykqF9ltot5UlU=;
+	s=korg; t=1745949073;
+	bh=/gMo7YWm+7G4QqVktOch7ytkdK7VIpLhpqRSlTG+F3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZZOUgZBAC4AguIt1yBZGzjfRm6uIkwhdRtdqHMM2MUKamgkRnfuQf9bGhnkOOmPQ0
-	 Rhzh6jU7Xu/8zJXW3NM8vX0g+x/u4vjgK55PLtSUIKLMoCbTL9phE6bYe/Bk8BNEK8
-	 GhUumxPQsTU1DgJs1O9VQTtIA+2na3VhRTlGL2Bw=
+	b=opazBSvCZjM2iCzJcAsp5UzGS3CgZiZApZ2UsawZSKzU9Ug+BUpdiMxaYneks6gUh
+	 3IfYHjxthaa6J1/S0lm8n/mA+d5lqg2bNqxxF249ObBW9RxyovXEGjxb1wophOZ23n
+	 ZOuhTkXfXJSUfDqXFjqGy7QsoyIhqN7Xjv/zft9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	=?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <courmisch@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 5.15 205/373] filemap: Fix bounds checking in filemap_read()
-Date: Tue, 29 Apr 2025 18:41:22 +0200
-Message-ID: <20250429161131.597706216@linuxfoundation.org>
+Subject: [PATCH 5.15 206/373] phonet/pep: fix racy skb_queue_empty() use
+Date: Tue, 29 Apr 2025 18:41:23 +0200
+Message-ID: <20250429161131.638270468@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -46,48 +46,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Rémi Denis-Courmont <courmisch@gmail.com>
 
-[ Upstream commit ace149e0830c380ddfce7e466fe860ca502fe4ee ]
+[ Upstream commit 7d2a894d7f487dcb894df023e9d3014cf5b93fe5 ]
 
-If the caller supplies an iocb->ki_pos value that is close to the
-filesystem upper limit, and an iterator with a count that causes us to
-overflow that limit, then filemap_read() enters an infinite loop.
+The receive queues are protected by their respective spin-lock, not
+the socket lock. This could lead to skb_peek() unexpectedly
+returning NULL or a pointer to an already dequeued socket buffer.
 
-This behaviour was discovered when testing xfstests generic/525 with the
-"localio" optimisation for loopback NFS mounts.
-
-Reported-by: Mike Snitzer <snitzer@kernel.org>
-Fixes: c2a9737f45e2 ("vfs,mm: fix a dead loop in truncate_inode_pages_range()")
-Tested-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-(cherry picked from commit ace149e0830c380ddfce7e466fe860ca502fe4ee)
-[Harshit: Minor conflict resolved due to missing commit: 25d6a23e8d28
-("filemap: Convert filemap_get_read_batch() to use a folio_batch") in
-5.15.y]
+Fixes: 9641458d3ec4 ("Phonet: Pipe End Point for Phonet Pipes protocol")
+Signed-off-by: Rémi Denis-Courmont <courmisch@gmail.com>
+Link: https://lore.kernel.org/r/20240218081214.4806-2-remi@remlab.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[Harshit: backport to 5.15.y, clean cherrypick from 6.1.y commit]
 Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/filemap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/phonet/pep.c |   41 ++++++++++++++++++++++++++++++++---------
+ 1 file changed, 32 insertions(+), 9 deletions(-)
 
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -2617,7 +2617,7 @@ ssize_t filemap_read(struct kiocb *iocb,
- 	if (unlikely(!iov_iter_count(iter)))
- 		return 0;
+--- a/net/phonet/pep.c
++++ b/net/phonet/pep.c
+@@ -916,6 +916,37 @@ static int pep_sock_enable(struct sock *
+ 	return 0;
+ }
  
--	iov_iter_truncate(iter, inode->i_sb->s_maxbytes);
-+	iov_iter_truncate(iter, inode->i_sb->s_maxbytes - iocb->ki_pos);
- 	pagevec_init(&pvec);
++static unsigned int pep_first_packet_length(struct sock *sk)
++{
++	struct pep_sock *pn = pep_sk(sk);
++	struct sk_buff_head *q;
++	struct sk_buff *skb;
++	unsigned int len = 0;
++	bool found = false;
++
++	if (sock_flag(sk, SOCK_URGINLINE)) {
++		q = &pn->ctrlreq_queue;
++		spin_lock_bh(&q->lock);
++		skb = skb_peek(q);
++		if (skb) {
++			len = skb->len;
++			found = true;
++		}
++		spin_unlock_bh(&q->lock);
++	}
++
++	if (likely(!found)) {
++		q = &sk->sk_receive_queue;
++		spin_lock_bh(&q->lock);
++		skb = skb_peek(q);
++		if (skb)
++			len = skb->len;
++		spin_unlock_bh(&q->lock);
++	}
++
++	return len;
++}
++
+ static int pep_ioctl(struct sock *sk, int cmd, unsigned long arg)
+ {
+ 	struct pep_sock *pn = pep_sk(sk);
+@@ -929,15 +960,7 @@ static int pep_ioctl(struct sock *sk, in
+ 			break;
+ 		}
  
- 	do {
+-		lock_sock(sk);
+-		if (sock_flag(sk, SOCK_URGINLINE) &&
+-		    !skb_queue_empty(&pn->ctrlreq_queue))
+-			answ = skb_peek(&pn->ctrlreq_queue)->len;
+-		else if (!skb_queue_empty(&sk->sk_receive_queue))
+-			answ = skb_peek(&sk->sk_receive_queue)->len;
+-		else
+-			answ = 0;
+-		release_sock(sk);
++		answ = pep_first_packet_length(sk);
+ 		ret = put_user(answ, (int __user *)arg);
+ 		break;
+ 
 
 
