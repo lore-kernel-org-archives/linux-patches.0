@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A382517BE;
-	Tue, 29 Apr 2025 17:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92D421ABDB;
+	Tue, 29 Apr 2025 17:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947591; cv=none; b=t1pfv3foK7+rAxnJPxIpWdf6uO8MzsRVIVdXgmF9xXQit+AfGu3PPl6feNEqmrHg1Za1kDR8CbyDidhyvhPX2mn4BdsnxdwWcJwm8pji/t4/tp63p+2wll/UqHZrVcaIHuKCqgY/9/vKiCdsC+1J9VT5IeXIQpK1If8y7SrSaAQ=
+	t=1745947594; cv=none; b=sWWqDGuHKj3t4coCSgH9/3pH04l2jhB4xhg+OOYDI432Z+++QQ9l3qUzhTafNy6jEom+MVomDk/WXnwgxrqikjQbBGBPncstyFW17yx4yuQ9ok18k2wkYV6nwJuX2rTg/mySc00idbDWUNJGNlW5sQLScZD94lRIZkd2fuccWyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947591; c=relaxed/simple;
-	bh=7GOPtIgRHNfkCDsBtf+mY0OmAxHKKW31Vrsa9nqP2AA=;
+	s=arc-20240116; t=1745947594; c=relaxed/simple;
+	bh=6dw+ADfUYdche8BEgm/fSptyp44UDnsvFpjyuMaVIlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j5d1u4QbMjl+/WIyMyoVXR12oo90+iopMVdkO8RLqaPI6L/+FSuVczv9zCbZvR+yZS8/kAMxByt3bhjNZZkKTYlYPxEbzJQaDoR+lC2+Ke+37b2bND+fJKPNB40y3wS1+h0+oF44Hk4vT1L+Jq3wEOAuwef07Fg0lA9K8IlrMtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whCXxPc8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cr+fblsbCWzoITP+f8KEaDmOM6JAI3qxrrr7tn8l822xDHgaVFPwYTKfLZQJV5EHEt8CkuC8kceFjk6sVEdYO0XXKWKPTKbSUkgveTUOM4qyZYFT7Ku7auh6qUoDoMtM5gIO7bdldAJ6jbcjST/Qc6xlalB6pOw3EpOnAClgBPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MqIUVgU6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whCXxPc8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCBD4C4CEE3;
-	Tue, 29 Apr 2025 17:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MqIUVgU6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C850FC4CEEA;
+	Tue, 29 Apr 2025 17:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947591;
-	bh=7GOPtIgRHNfkCDsBtf+mY0OmAxHKKW31Vrsa9nqP2AA=;
+	s=korg; t=1745947594;
+	bh=6dw+ADfUYdche8BEgm/fSptyp44UDnsvFpjyuMaVIlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=whCXxPc8XgIlvOiKhEJ3JHS3bUcbALTmJ2KP3v0KLS+3HTfwFF5jES1Zy8vKj4ymZ
-	 dE5fluGmGAdcM31Z0MNCbYH0Ftt4rIZMTGfTeFAyp+rfC3IRU2Ww7tf2bJmaoHtYWI
-	 EVTN2rlGL21Jkn7cLGcApUH0FTJzgPUcH+sCnI78=
+	b=MqIUVgU6Q4hGDS2YGepG7WHOhKKHZHJHK88Bd6UdbbTk1V06nKBBeD1oGHQ2hnSJL
+	 vi/Gq5+btN15+yjKnD+RMOnbJuyThLDbiUi3r7x/Vy9DhHuFcbG8IctMtsnz4r+JuC
+	 ZHIczFdaKBXIaEZHRb0tBY2TGmWqBxHFNVkZ3dX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 015/280] media: ov08x40: Move ov08x40_identify_module() function up
-Date: Tue, 29 Apr 2025 18:39:16 +0200
-Message-ID: <20250429161115.705483103@linuxfoundation.org>
+Subject: [PATCH 6.12 006/280] mmc: sdhci-msm: fix dev reference leaked through of_qcom_ice_get
+Date: Tue, 29 Apr 2025 18:39:07 +0200
+Message-ID: <20250429161115.274250672@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -53,96 +55,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-[ Upstream commit 7a39639e448f070cbe37317ac922886b6080ff43 ]
+[ Upstream commit cbef7442fba510b7eb229dcc9f39d3dde4a159a4 ]
 
-Move the ov08x40_identify_module() function to above ov08x40_set_stream()
-this is a preparation patch for adding a missing ov08x40_identify_module()
-call to ov08x40_set_stream().
+The driver leaks the device reference taken with
+of_find_device_by_node(). Fix the leak by using devm_of_qcom_ice_get().
 
-No functional changes, just moving code around.
-
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Stable-dep-of: ebf185efadb7 ("media: ov08x40: Add missing ov08x40_identify_module() call on stream-start")
+Fixes: c7eed31e235c ("mmc: sdhci-msm: Switch to the new ICE API")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20250117-qcom-ice-fix-dev-leak-v2-2-1ffa5b6884cb@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov08x40.c | 52 ++++++++++++++++++-------------------
- 1 file changed, 26 insertions(+), 26 deletions(-)
+ drivers/mmc/host/sdhci-msm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/ov08x40.c b/drivers/media/i2c/ov08x40.c
-index 67b86dabc67eb..8b9c70dd70b88 100644
---- a/drivers/media/i2c/ov08x40.c
-+++ b/drivers/media/i2c/ov08x40.c
-@@ -1869,6 +1869,32 @@ static int ov08x40_stop_streaming(struct ov08x40 *ov08x)
- 				 OV08X40_REG_VALUE_08BIT, OV08X40_MODE_STANDBY);
- }
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index 945d08531de37..82808cc373f68 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -1866,7 +1866,7 @@ static int sdhci_msm_ice_init(struct sdhci_msm_host *msm_host,
+ 	if (!(cqhci_readl(cq_host, CQHCI_CAP) & CQHCI_CAP_CS))
+ 		return 0;
  
-+/* Verify chip ID */
-+static int ov08x40_identify_module(struct ov08x40 *ov08x)
-+{
-+	struct i2c_client *client = v4l2_get_subdevdata(&ov08x->sd);
-+	int ret;
-+	u32 val;
-+
-+	if (ov08x->identified)
-+		return 0;
-+
-+	ret = ov08x40_read_reg(ov08x, OV08X40_REG_CHIP_ID,
-+			       OV08X40_REG_VALUE_24BIT, &val);
-+	if (ret)
-+		return ret;
-+
-+	if (val != OV08X40_CHIP_ID) {
-+		dev_err(&client->dev, "chip id mismatch: %x!=%x\n",
-+			OV08X40_CHIP_ID, val);
-+		return -ENXIO;
-+	}
-+
-+	ov08x->identified = true;
-+
-+	return 0;
-+}
-+
- static int ov08x40_set_stream(struct v4l2_subdev *sd, int enable)
- {
- 	struct ov08x40 *ov08x = to_ov08x40(sd);
-@@ -1906,32 +1932,6 @@ static int ov08x40_set_stream(struct v4l2_subdev *sd, int enable)
- 	return ret;
- }
- 
--/* Verify chip ID */
--static int ov08x40_identify_module(struct ov08x40 *ov08x)
--{
--	struct i2c_client *client = v4l2_get_subdevdata(&ov08x->sd);
--	int ret;
--	u32 val;
--
--	if (ov08x->identified)
--		return 0;
--
--	ret = ov08x40_read_reg(ov08x, OV08X40_REG_CHIP_ID,
--			       OV08X40_REG_VALUE_24BIT, &val);
--	if (ret)
--		return ret;
--
--	if (val != OV08X40_CHIP_ID) {
--		dev_err(&client->dev, "chip id mismatch: %x!=%x\n",
--			OV08X40_CHIP_ID, val);
--		return -ENXIO;
--	}
--
--	ov08x->identified = true;
--
--	return 0;
--}
--
- static const struct v4l2_subdev_video_ops ov08x40_video_ops = {
- 	.s_stream = ov08x40_set_stream,
- };
+-	ice = of_qcom_ice_get(dev);
++	ice = devm_of_qcom_ice_get(dev);
+ 	if (ice == ERR_PTR(-EOPNOTSUPP)) {
+ 		dev_warn(dev, "Disabling inline encryption support\n");
+ 		ice = NULL;
 -- 
 2.39.5
 
