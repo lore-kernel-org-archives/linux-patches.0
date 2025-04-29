@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7422517A8;
-	Tue, 29 Apr 2025 17:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AE982C60;
+	Tue, 29 Apr 2025 17:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948126; cv=none; b=LHDqj80koC5aWjBNGi8GWyi0H1vKXOUsVO2I4Xck08LxC3JlqkQaO6Yj7yQCVlr3AHdavU5xaDUBVbAj93lHZQUPtIr9w413ZdIXkjKkvmd4UzLOmdHbyJvN2sM22P7LdmRf9W5p20WAh3voi+AuDc9wvXD5QjrO7JCsX/mULyw=
+	t=1745948129; cv=none; b=FA9IXMKiaX06qxILl0zo+leWzps/Ru9Lk+ETo4L0zJAdN6UmsOoFhcw7AG3r3prgNl7vBz7LCgEuRkvzGZUkcUvvu/sAClhx87mckTlhKI12m72Zv/5hQOKVXzdJ71hWxE//PLZJ30jRtd8HCoUxMh9QqHXxCnvmJQXz87jpJOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948126; c=relaxed/simple;
-	bh=H2k1bU6PpIDes/rquxx0KMw4jGo+iXvH2DUWfNPNEhk=;
+	s=arc-20240116; t=1745948129; c=relaxed/simple;
+	bh=56XMdbGbOiBFQgnCBaJ22C/zw2Qw4+3ZoXeSjX1ItLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W7CU1NwxbcARjSVkkm9HnZI0BHjDbE49EpmVaMQd/1obqcYavvx33m+k69OJA9PcAikTKeBP23ZZLJKR50CgLVVFbWJttvSfAkZcy+Ox9OmgvfCFF43waVDV0uDRIn25d9qVQ0XOEMpy9ts6mWFuK+gTTf2g1bfLUE5IcbuoRj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GQ20uB87; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nJuGjNFue3c90n/SVtiV8+rbJkK9p9q6V53zgSItUD0YSDZXBP4k2RUGzWXMH93vA4Z3v/V1t65RbAZ0lE2jA61cX8LwM6aLn6/RGB512iBf8CDOS+s3FWFE05FM8ctxV7BtGP4sD1u6Kz1hzXoyrbrk9xyriag9NcvfEX+I/Ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+GEVqok; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GQ20uB87"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 848CFC4CEE3;
-	Tue, 29 Apr 2025 17:35:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+GEVqok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7ADC4CEE3;
+	Tue, 29 Apr 2025 17:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948126;
-	bh=H2k1bU6PpIDes/rquxx0KMw4jGo+iXvH2DUWfNPNEhk=;
+	s=korg; t=1745948129;
+	bh=56XMdbGbOiBFQgnCBaJ22C/zw2Qw4+3ZoXeSjX1ItLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GQ20uB87IOD+tHDkn18Z9/jFVkS8XGXZwEpDfeyCyXuSkG53C1F59QuPs7gc23FSt
-	 x2MugAdoOq6Xje897jFmTq/T+ZnZGjkDEJdzA/Mw/Yzj1nePSdO94kDDeMzGGRP850
-	 kKeeFldZshpwswLUB0cQSWcnAPOl/edgHaJGLoAI=
+	b=r+GEVqokBRHLSwV4mGMG+w0JGXamW5hTIc3/Z5mlwditfI0IVgKbSSX3QQ0IQcSyZ
+	 W85TIKz/LDJe4YPbSu07XS2zu04h7+h2VNf8uQPqFVx95XtN1wsym1g1yXPPiJf3/Y
+	 zv/zOuCSS71qELB9jdZ80UvwQCUgEEzaMKneNuUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@mailbox.org>,
+	Lukas Stockmann <lukas.stockmann@siemens.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 170/280] usb: host: max3421-hcd: Add missing spi_device_id table
-Date: Tue, 29 Apr 2025 18:41:51 +0200
-Message-ID: <20250429161122.072796944@linuxfoundation.org>
+Subject: [PATCH 6.12 197/280] rtc: pcf85063: do a SW reset if POR failed
+Date: Tue, 29 Apr 2025 18:42:18 +0200
+Message-ID: <20250429161123.183515583@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -50,49 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@mailbox.org>
+From: Lukas Stockmann <lukas.stockmann@siemens.com>
 
-[ Upstream commit 41d5e3806cf589f658f92c75195095df0b66f66a ]
+[ Upstream commit 2b7cbd98495f6ee4cd6422fe77828a19e9edf87f ]
 
-"maxim,max3421" DT compatible is missing its SPI device ID entry, not
-allowing module autoloading and leading to the following message:
- "SPI driver max3421-hcd has no spi_device_id for maxim,max3421"
+Power-on Reset has a documented issue in PCF85063, refer to its datasheet,
+section "Software reset":
 
-Fix this by adding the spi_device_id table.
+"There is a low probability that some devices will have corruption of the
+registers after the automatic power-on reset if the device is powered up
+with a residual VDD level. It is required that the VDD starts at zero volts
+at power up or upon power cycling to ensure that there is no corruption of
+the registers. If this is not possible, a reset must be initiated after
+power-up (i.e. when power is stable) with the software reset command"
 
-Signed-off-by: Alexander Stein <alexander.stein@mailbox.org>
-Link: https://lore.kernel.org/r/20250128195114.56321-1-alexander.stein@mailbox.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Trigger SW reset if there is an indication that POR has failed.
+
+Link: https://www.nxp.com/docs/en/data-sheet/PCF85063A.pdf
+Signed-off-by: Lukas Stockmann <lukas.stockmann@siemens.com>
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://lore.kernel.org/r/20250120093451.30778-1-alexander.sverdlin@siemens.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/max3421-hcd.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/rtc/rtc-pcf85063.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/max3421-hcd.c b/drivers/usb/host/max3421-hcd.c
-index 0881fdd1823e0..dcf31a592f5d1 100644
---- a/drivers/usb/host/max3421-hcd.c
-+++ b/drivers/usb/host/max3421-hcd.c
-@@ -1946,6 +1946,12 @@ max3421_remove(struct spi_device *spi)
- 	usb_put_hcd(hcd);
- }
+diff --git a/drivers/rtc/rtc-pcf85063.c b/drivers/rtc/rtc-pcf85063.c
+index 905986c616559..73848f764559b 100644
+--- a/drivers/rtc/rtc-pcf85063.c
++++ b/drivers/rtc/rtc-pcf85063.c
+@@ -35,6 +35,7 @@
+ #define PCF85063_REG_CTRL1_CAP_SEL	BIT(0)
+ #define PCF85063_REG_CTRL1_STOP		BIT(5)
+ #define PCF85063_REG_CTRL1_EXT_TEST	BIT(7)
++#define PCF85063_REG_CTRL1_SWR		0x58
  
-+static const struct spi_device_id max3421_spi_ids[] = {
-+	{ "max3421" },
-+	{ },
-+};
-+MODULE_DEVICE_TABLE(spi, max3421_spi_ids);
+ #define PCF85063_REG_CTRL2		0x01
+ #define PCF85063_CTRL2_AF		BIT(6)
+@@ -589,7 +590,7 @@ static int pcf85063_probe(struct i2c_client *client)
+ 
+ 	i2c_set_clientdata(client, pcf85063);
+ 
+-	err = regmap_read(pcf85063->regmap, PCF85063_REG_CTRL1, &tmp);
++	err = regmap_read(pcf85063->regmap, PCF85063_REG_SC, &tmp);
+ 	if (err) {
+ 		dev_err(&client->dev, "RTC chip is not present\n");
+ 		return err;
+@@ -599,6 +600,22 @@ static int pcf85063_probe(struct i2c_client *client)
+ 	if (IS_ERR(pcf85063->rtc))
+ 		return PTR_ERR(pcf85063->rtc);
+ 
++	/*
++	 * If a Power loss is detected, SW reset the device.
++	 * From PCF85063A datasheet:
++	 * There is a low probability that some devices will have corruption
++	 * of the registers after the automatic power-on reset...
++	 */
++	if (tmp & PCF85063_REG_SC_OS) {
++		dev_warn(&client->dev,
++			 "POR issue detected, sending a SW reset\n");
++		err = regmap_write(pcf85063->regmap, PCF85063_REG_CTRL1,
++				   PCF85063_REG_CTRL1_SWR);
++		if (err < 0)
++			dev_warn(&client->dev,
++				 "SW reset failed, trying to continue\n");
++	}
 +
- static const struct of_device_id max3421_of_match_table[] = {
- 	{ .compatible = "maxim,max3421", },
- 	{},
-@@ -1955,6 +1961,7 @@ MODULE_DEVICE_TABLE(of, max3421_of_match_table);
- static struct spi_driver max3421_driver = {
- 	.probe		= max3421_probe,
- 	.remove		= max3421_remove,
-+	.id_table	= max3421_spi_ids,
- 	.driver		= {
- 		.name	= "max3421-hcd",
- 		.of_match_table = max3421_of_match_table,
+ 	err = pcf85063_load_capacitance(pcf85063, client->dev.of_node,
+ 					config->force_cap_7000 ? 7000 : 0);
+ 	if (err < 0)
 -- 
 2.39.5
 
