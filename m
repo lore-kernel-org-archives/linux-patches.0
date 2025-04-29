@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED7A1DC988;
-	Tue, 29 Apr 2025 17:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5285A2AE96;
+	Tue, 29 Apr 2025 17:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949566; cv=none; b=EbaO51jXy930OZAvw+060Ptev6SJ4rSnOI7iWYQpqnjgeh9Jwzw0UOW5RQ8n9xl0inqjIHg9hXjKcbdBZu/yggDO4EX9O+FGS3vHAtVEFKq2MixFTkfPU7Ip45V4YEAd2or5JtO99ySfH4Sg+9dj+QCTCr0baMWCveaTOA6ckss=
+	t=1745949570; cv=none; b=vC/egTDi6d7Av2RW1v0xSCWTmfa9eMqmUscpSxWctRNqc5rO/ONbwkX1xJIkPgDx7w4C0o9bzPO2cqhuAhIOsl3ClYwZhs0rnk/pBkHGOUo5s7IEL0UKv5aXH/WSKFjbUalTW2Be/0CBijWn+B1zs0Fa8dRs6FVDnnF8oIOjd/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949566; c=relaxed/simple;
-	bh=J9FtD8wsYr34ndBpHAKBi2URwW7ALliz/DNK1qZlUPA=;
+	s=arc-20240116; t=1745949570; c=relaxed/simple;
+	bh=12YoUSXXcSJJdk6bVEwXkVWtp9KU1ajXAybskaF+dDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EZiJLa8SLhRE68pXRi37WStK8IpcnGAa54eagx3JVR3S8mZFQ//DhOoX5HwvAKuYL8cNGNq52FufJcsysTfbHOYT4aMxJvRtVOuAvJDSJkJh0ki5elPQprqoPuJG0ZNRGcjo73raXpuDeHxqzEGgIXOK7Q5EefxCZjeCmjNsyvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zgk7M0Zh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fzkdQbkgtwONBspMDMCPTCGyGZ6PSnEkpAV3Txowron3hZuYqhhr2egfkdiCyY13Co3hjw8q+oy+gswoI4vZPw8MempR9tAFsVXRWOHW52+MCZw0h0xE8S68W2T16jYhZBg+ABCfXzvoSfADmzSuOfdfXIeRLN1KYeHM8Sw5t6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWxU9w8+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zgk7M0Zh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F0C1C4CEE3;
-	Tue, 29 Apr 2025 17:59:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWxU9w8+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52BCAC4CEE3;
+	Tue, 29 Apr 2025 17:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949566;
-	bh=J9FtD8wsYr34ndBpHAKBi2URwW7ALliz/DNK1qZlUPA=;
+	s=korg; t=1745949569;
+	bh=12YoUSXXcSJJdk6bVEwXkVWtp9KU1ajXAybskaF+dDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zgk7M0ZhBOi/OCatKq6qd6pw5b3bCITT0XVORBolo+ft/Q4WxOleGRJbR6FiJLpOZ
-	 L3YQrbQ53A3q4asoqwoNFbgMnO1PLs+XtwubGl43fKMNFEdbqxdfMrrqKyppCTQuHT
-	 Nssr1kjX1H+dtn+2vqUm4pyZEqBWy8qUZlDoCerw=
+	b=LWxU9w8+kGpJX6SaasTvzLfx98/M5Brq225GZ9sX0xJDS6VmfgxLQFkB9FeZMF355
+	 Frp33JiPPeK3t37GXviMKKvA7IiIvfc1hnW3/5t2q41Th7Uj/yl9Rdg3j0DPPt8kgt
+	 PQDEGvynTQqW6ENTmMqhWGw+LRiRFtzunA6MRU38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandra Merla <cmerla@redhat.com>,
-	David Hildenbrand <david@redhat.com>,
-	Thomas Huth <thuth@redhat.com>,
-	Cornelia Huck <cohuck@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 5.15 360/373] s390/virtio_ccw: Dont allocate/assign airqs for non-existing queues
-Date: Tue, 29 Apr 2025 18:43:57 +0200
-Message-ID: <20250429161137.940769631@linuxfoundation.org>
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Manas Ghandat <ghandatmanas@gmail.com>,
+	syzbot+ccb458b6679845ee0bae@syzkaller.appspotmail.com,
+	Aditya Dutt <duttaditya18@gmail.com>
+Subject: [PATCH 5.15 361/373] jfs: define xtree root and page independently
+Date: Tue, 29 Apr 2025 18:43:58 +0200
+Message-ID: <20250429161137.979814374@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -55,141 +52,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Dave Kleikamp <dave.kleikamp@oracle.com>
 
-commit 2ccd42b959aaf490333dbd3b9b102eaf295c036a upstream.
+commit a779ed754e52d582b8c0e17959df063108bd0656 upstream.
 
-If we finds a vq without a name in our input array in
-virtio_ccw_find_vqs(), we treat it as "non-existing" and set the vq pointer
-to NULL; we will not call virtio_ccw_setup_vq() to allocate/setup a vq.
+In order to make array bounds checking sane, provide a separate
+definition of the in-inode xtree root and the external xtree page.
 
-Consequently, we create only a queue if it actually exists (name != NULL)
-and assign an incremental queue index to each such existing queue.
-
-However, in virtio_ccw_register_adapter_ind()->get_airq_indicator() we
-will not ignore these "non-existing queues", but instead assign an airq
-indicator to them.
-
-Besides never releasing them in virtio_ccw_drop_indicators() (because
-there is no virtqueue), the bigger issue seems to be that there will be a
-disagreement between the device and the Linux guest about the airq
-indicator to be used for notifying a queue, because the indicator bit
-for adapter I/O interrupt is derived from the queue index.
-
-The virtio spec states under "Setting Up Two-Stage Queue Indicators":
-
-	... indicator contains the guest address of an area wherein the
-	indicators for the devices are contained, starting at bit_nr, one
-	bit per virtqueue of the device.
-
-And further in "Notification via Adapter I/O Interrupts":
-
-	For notifying the driver of virtqueue buffers, the device sets the
-	bit in the guest-provided indicator area at the corresponding
-	offset.
-
-For example, QEMU uses in virtio_ccw_notify() the queue index (passed as
-"vector") to select the relevant indicator bit. If a queue does not exist,
-it does not have a corresponding indicator bit assigned, because it
-effectively doesn't have a queue index.
-
-Using a virtio-balloon-ccw device under QEMU with free-page-hinting
-disabled ("free-page-hint=off") but free-page-reporting enabled
-("free-page-reporting=on") will result in free page reporting
-not working as expected: in the virtio_balloon driver, we'll be stuck
-forever in virtballoon_free_page_report()->wait_event(), because the
-waitqueue will not be woken up as the notification from the device is
-lost: it would use the wrong indicator bit.
-
-Free page reporting stops working and we get splats (when configured to
-detect hung wqs) like:
-
- INFO: task kworker/1:3:463 blocked for more than 61 seconds.
-       Not tainted 6.14.0 #4
- "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
- task:kworker/1:3 [...]
- Workqueue: events page_reporting_process
- Call Trace:
-  [<000002f404e6dfb2>] __schedule+0x402/0x1640
-  [<000002f404e6f22e>] schedule+0x3e/0xe0
-  [<000002f3846a88fa>] virtballoon_free_page_report+0xaa/0x110 [virtio_balloon]
-  [<000002f40435c8a4>] page_reporting_process+0x2e4/0x740
-  [<000002f403fd3ee2>] process_one_work+0x1c2/0x400
-  [<000002f403fd4b96>] worker_thread+0x296/0x420
-  [<000002f403fe10b4>] kthread+0x124/0x290
-  [<000002f403f4e0dc>] __ret_from_fork+0x3c/0x60
-  [<000002f404e77272>] ret_from_fork+0xa/0x38
-
-There was recently a discussion [1] whether the "holes" should be
-treated differently again, effectively assigning also non-existing
-queues a queue index: that should also fix the issue, but requires other
-workarounds to not break existing setups.
-
-Let's fix it without affecting existing setups for now by properly ignoring
-the non-existing queues, so the indicator bits will match the queue
-indexes.
-
-[1] https://lore.kernel.org/all/cover.1720611677.git.mst@redhat.com/
-
-Fixes: a229989d975e ("virtio: don't allocate vqs when names[i] = NULL")
-Reported-by: Chandra Merla <cmerla@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250402203621.940090-1-david@redhat.com
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Tested-by: Manas Ghandat <ghandatmanas@gmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=ccb458b6679845ee0bae
+Reported-by: syzbot+ccb458b6679845ee0bae@syzkaller.appspotmail.com
+Signed-off-by: Aditya Dutt <duttaditya18@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/virtio/virtio_ccw.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ fs/jfs/jfs_dinode.h |    2 +-
+ fs/jfs/jfs_imap.c   |    6 +++---
+ fs/jfs/jfs_incore.h |    2 +-
+ fs/jfs/jfs_txnmgr.c |    4 ++--
+ fs/jfs/jfs_xtree.c  |    4 ++--
+ fs/jfs/jfs_xtree.h  |   37 +++++++++++++++++++++++--------------
+ 6 files changed, 32 insertions(+), 23 deletions(-)
 
---- a/drivers/s390/virtio/virtio_ccw.c
-+++ b/drivers/s390/virtio/virtio_ccw.c
-@@ -261,11 +261,17 @@ static struct airq_info *new_airq_info(i
- static unsigned long get_airq_indicator(struct virtqueue *vqs[], int nvqs,
- 					u64 *first, void **airq_info)
- {
--	int i, j;
-+	int i, j, queue_idx, highest_queue_idx = -1;
- 	struct airq_info *info;
- 	unsigned long indicator_addr = 0;
- 	unsigned long bit, flags;
+--- a/fs/jfs/jfs_dinode.h
++++ b/fs/jfs/jfs_dinode.h
+@@ -96,7 +96,7 @@ struct dinode {
+ #define di_gengen	u._file._u1._imap._gengen
  
-+	/* Array entries without an actual queue pointer must be ignored. */
-+	for (i = 0; i < nvqs; i++) {
-+		if (vqs[i])
-+			highest_queue_idx++;
-+	}
-+
- 	for (i = 0; i < MAX_AIRQ_AREAS && !indicator_addr; i++) {
- 		mutex_lock(&airq_areas_lock);
- 		if (!airq_areas[i])
-@@ -275,7 +281,7 @@ static unsigned long get_airq_indicator(
- 		if (!info)
- 			return 0;
- 		write_lock_irqsave(&info->lock, flags);
--		bit = airq_iv_alloc(info->aiv, nvqs);
-+		bit = airq_iv_alloc(info->aiv, highest_queue_idx + 1);
- 		if (bit == -1UL) {
- 			/* Not enough vacancies. */
- 			write_unlock_irqrestore(&info->lock, flags);
-@@ -284,8 +290,10 @@ static unsigned long get_airq_indicator(
- 		*first = bit;
- 		*airq_info = info;
- 		indicator_addr = (unsigned long)info->aiv->vector;
--		for (j = 0; j < nvqs; j++) {
--			airq_iv_set_ptr(info->aiv, bit + j,
-+		for (j = 0, queue_idx = 0; j < nvqs; j++) {
-+			if (!vqs[j])
-+				continue;
-+			airq_iv_set_ptr(info->aiv, bit + queue_idx++,
- 					(unsigned long)vqs[j]);
+ 			union {
+-				xtpage_t _xtroot;
++				xtroot_t _xtroot;
+ 				struct {
+ 					u8 unused[16];	/* 16: */
+ 					dxd_t _dxd;	/* 16: */
+--- a/fs/jfs/jfs_imap.c
++++ b/fs/jfs/jfs_imap.c
+@@ -673,7 +673,7 @@ int diWrite(tid_t tid, struct inode *ip)
+ 		 * This is the special xtree inside the directory for storing
+ 		 * the directory table
+ 		 */
+-		xtpage_t *p, *xp;
++		xtroot_t *p, *xp;
+ 		xad_t *xad;
+ 
+ 		jfs_ip->xtlid = 0;
+@@ -687,7 +687,7 @@ int diWrite(tid_t tid, struct inode *ip)
+ 		 * copy xtree root from inode to dinode:
+ 		 */
+ 		p = &jfs_ip->i_xtroot;
+-		xp = (xtpage_t *) &dp->di_dirtable;
++		xp = (xtroot_t *) &dp->di_dirtable;
+ 		lv = ilinelock->lv;
+ 		for (n = 0; n < ilinelock->index; n++, lv++) {
+ 			memcpy(&xp->xad[lv->offset], &p->xad[lv->offset],
+@@ -716,7 +716,7 @@ int diWrite(tid_t tid, struct inode *ip)
+ 	 *	regular file: 16 byte (XAD slot) granularity
+ 	 */
+ 	if (type & tlckXTREE) {
+-		xtpage_t *p, *xp;
++		xtroot_t *p, *xp;
+ 		xad_t *xad;
+ 
+ 		/*
+--- a/fs/jfs/jfs_incore.h
++++ b/fs/jfs/jfs_incore.h
+@@ -66,7 +66,7 @@ struct jfs_inode_info {
+ 	lid_t	xtlid;		/* lid of xtree lock on directory */
+ 	union {
+ 		struct {
+-			xtpage_t _xtroot;	/* 288: xtree root */
++			xtroot_t _xtroot;	/* 288: xtree root */
+ 			struct inomap *_imap;	/* 4: inode map header	*/
+ 		} file;
+ 		struct {
+--- a/fs/jfs/jfs_txnmgr.c
++++ b/fs/jfs/jfs_txnmgr.c
+@@ -783,7 +783,7 @@ struct tlock *txLock(tid_t tid, struct i
+ 			if (mp->xflag & COMMIT_PAGE)
+ 				p = (xtpage_t *) mp->data;
+ 			else
+-				p = &jfs_ip->i_xtroot;
++				p = (xtpage_t *) &jfs_ip->i_xtroot;
+ 			xtlck->lwm.offset =
+ 			    le16_to_cpu(p->header.nextindex);
  		}
- 		write_unlock_irqrestore(&info->lock, flags);
+@@ -1710,7 +1710,7 @@ static void xtLog(struct jfs_log * log,
+ 
+ 	if (tlck->type & tlckBTROOT) {
+ 		lrd->log.redopage.type |= cpu_to_le16(LOG_BTROOT);
+-		p = &JFS_IP(ip)->i_xtroot;
++		p = (xtpage_t *) &JFS_IP(ip)->i_xtroot;
+ 		if (S_ISDIR(ip->i_mode))
+ 			lrd->log.redopage.type |=
+ 			    cpu_to_le16(LOG_DIR_XTREE);
+--- a/fs/jfs/jfs_xtree.c
++++ b/fs/jfs/jfs_xtree.c
+@@ -1224,7 +1224,7 @@ xtSplitRoot(tid_t tid,
+ 	struct xtlock *xtlck;
+ 	int rc;
+ 
+-	sp = &JFS_IP(ip)->i_xtroot;
++	sp = (xtpage_t *) &JFS_IP(ip)->i_xtroot;
+ 
+ 	INCREMENT(xtStat.split);
+ 
+@@ -3059,7 +3059,7 @@ static int xtRelink(tid_t tid, struct in
+  */
+ void xtInitRoot(tid_t tid, struct inode *ip)
+ {
+-	xtpage_t *p;
++	xtroot_t *p;
+ 
+ 	/*
+ 	 * acquire a transaction lock on the root
+--- a/fs/jfs/jfs_xtree.h
++++ b/fs/jfs/jfs_xtree.h
+@@ -65,24 +65,33 @@ struct xadlist {
+ #define XTPAGEMAXSLOT	256
+ #define XTENTRYSTART	2
+ 
++struct xtheader {
++	__le64 next;	/* 8: */
++	__le64 prev;	/* 8: */
++
++	u8 flag;	/* 1: */
++	u8 rsrvd1;	/* 1: */
++	__le16 nextindex;	/* 2: next index = number of entries */
++	__le16 maxentry;	/* 2: max number of entries */
++	__le16 rsrvd2;	/* 2: */
++
++	pxd_t self;	/* 8: self */
++};
++
+ /*
+- *	xtree page:
++ *	xtree root (in inode):
+  */
+ typedef union {
+-	struct xtheader {
+-		__le64 next;	/* 8: */
+-		__le64 prev;	/* 8: */
+-
+-		u8 flag;	/* 1: */
+-		u8 rsrvd1;	/* 1: */
+-		__le16 nextindex;	/* 2: next index = number of entries */
+-		__le16 maxentry;	/* 2: max number of entries */
+-		__le16 rsrvd2;	/* 2: */
+-
+-		pxd_t self;	/* 8: self */
+-	} header;		/* (32) */
+-
++	struct xtheader header;
+ 	xad_t xad[XTROOTMAXSLOT];	/* 16 * maxentry: xad array */
++} xtroot_t;
++
++/*
++ *	xtree page:
++ */
++typedef union {
++	struct xtheader header;
++	xad_t xad[XTPAGEMAXSLOT];	/* 16 * maxentry: xad array */
+ } xtpage_t;
+ 
+ /*
 
 
