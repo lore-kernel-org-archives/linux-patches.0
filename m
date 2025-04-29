@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3705B78F58;
-	Tue, 29 Apr 2025 17:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F63B18BBBB;
+	Tue, 29 Apr 2025 17:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947648; cv=none; b=KuZrYjCQxLxCe/Fo8fgDOngt4Tf+T602YSSyD3jGlONGHvQLkJJRO7mIg6FXKvVsStnjb4bMbGCYV9ebS71112fQ3oD7yPQDcT+K+G6XFkE4CEuzjWCC1KW91MbIuxe+Pk48MoqJA7X/20v9+zdatM2gYVyxP8CjK+/hqYdpSbA=
+	t=1745947651; cv=none; b=BYl3icYkeZsfOyo2yHtCzyNP1G7befAakqiyaEwE/FJIPLbzqj7Zds9lT7++RO+zyJA7aATD1rcdrkdl9zOhSvS58M/dO2hkh2mAMmY/u3yG9XUmFwww2PDhJQAgRWrd1h9We90JjSLXUZhLXN26hryjP8fscAUPlviLkCjBltA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947648; c=relaxed/simple;
-	bh=mNBine2AIkH/maHmHQDca4Pn2cZmjOZwC/YA4KYTTc0=;
+	s=arc-20240116; t=1745947651; c=relaxed/simple;
+	bh=2Simo2xzMJrDcWae+1kBbD124NP9eJ/8Ndi8bgYAKA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BVDjM+rbko75O2kf1kc+XivyypjZV36HOFyrTx8Tb2qtIphGxJLm818Bl8hgtyNYi02+u16D8I7ZCcyZHTY1Z9/mHgOQJxkiJVE0Wt/0pZqc4lSGy//nfQPZTzPAuiFjeNm6xC5FmaP0OuRpxpA+3RnlAMxcMuLctGx5OBxvP88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kve8f+y5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WWFEuiN7G4kW9QV4J3OypWd4qTzx+/UmsPfSbvT0aALhK8HUZ+Nyd19IBM6iOWkiqaYmEFUJEWwndvFLephNtAmKAodTkhCp8QvCEYinDHj7eMTla/TwluLxhp8VsBDunNBT0WDejE0QEcziJDEBRl7qVPVop5b2LCwnOQAyiv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvhxUZAu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kve8f+y5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD19CC4CEE3;
-	Tue, 29 Apr 2025 17:27:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvhxUZAu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCBCC4CEE3;
+	Tue, 29 Apr 2025 17:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947648;
-	bh=mNBine2AIkH/maHmHQDca4Pn2cZmjOZwC/YA4KYTTc0=;
+	s=korg; t=1745947651;
+	bh=2Simo2xzMJrDcWae+1kBbD124NP9eJ/8Ndi8bgYAKA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kve8f+y5+k0pDj9GqZ6l9xDinFYND5kIWnHi+smRMuQ6jvpQm3eeOaZi9WHAxxSlL
-	 7HSnGUCazqAXvai2L6NvGLPQ8kSr4uVgsjS2hkyxJJ8VilyH6fcwIMt93RXjsPhN4b
-	 CVY0CFEvorGNEgEIh5SoV1VAu6f3F3lzda6Ogq84=
+	b=lvhxUZAuZO6sWWC2PvZUrIkSBFH3SzxQAc7Esv+7uuOVCoFMuvjzeU9j/b1HBriTH
+	 rUkENgMkg1IE0gEYs/SsDvEE/IOJ0HzQ9TQcfQjyyh7c4WQkK6kQEjVr71828+gtcl
+	 mkvGhC6vL698jk0NHgn3qeGNN5Fz0RmRs9nkczW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"T.J. Mercier" <tjmercier@google.com>,
-	Waiman Long <longman@redhat.com>,
-	Kamalesh Babulal <kamalesh.babulal@oracle.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 062/280] cgroup/cpuset-v1: Add missing support for cpuset_v2_mode
-Date: Tue, 29 Apr 2025 18:40:03 +0200
-Message-ID: <20250429161117.654144047@linuxfoundation.org>
+Subject: [PATCH 6.12 063/280] vhost-scsi: Add better resource allocation failure handling
+Date: Tue, 29 Apr 2025 18:40:04 +0200
+Message-ID: <20250429161117.693239480@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -48,107 +46,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: T.J. Mercier <tjmercier@google.com>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit 1bf67c8fdbda21fadd564a12dbe2b13c1ea5eda7 ]
+[ Upstream commit 3ca51662f8186b569b8fb282242c20ccbb3993c2 ]
 
-Android has mounted the v1 cpuset controller using filesystem type
-"cpuset" (not "cgroup") since 2015 [1], and depends on the resulting
-behavior where the controller name is not added as a prefix for cgroupfs
-files. [2]
+If we can't allocate mem to map in data for a request or can't find
+a tag for a command, we currently drop the command. This leads to the
+error handler running to clean it up. Instead of dropping the command
+this has us return an error telling the initiator that it queued more
+commands than we can handle. The initiator will then reduce how many
+commands it will send us and retry later.
 
-Later, a problem was discovered where cpu hotplug onlining did not
-affect the cpuset/cpus files, which Android carried an out-of-tree patch
-to address for a while. An attempt was made to upstream this patch, but
-the recommendation was to use the "cpuset_v2_mode" mount option
-instead. [3]
-
-An effort was made to do so, but this fails with "cgroup: Unknown
-parameter 'cpuset_v2_mode'" because commit e1cba4b85daa ("cgroup: Add
-mount flag to enable cpuset to use v2 behavior in v1 cgroup") did not
-update the special cased cpuset_mount(), and only the cgroup (v1)
-filesystem type was updated.
-
-Add parameter parsing to the cpuset filesystem type so that
-cpuset_v2_mode works like the cgroup filesystem type:
-
-$ mkdir /dev/cpuset
-$ mount -t cpuset -ocpuset_v2_mode none /dev/cpuset
-$ mount|grep cpuset
-none on /dev/cpuset type cgroup (rw,relatime,cpuset,noprefix,cpuset_v2_mode,release_agent=/sbin/cpuset_release_agent)
-
-[1] https://cs.android.com/android/_/android/platform/system/core/+/b769c8d24fd7be96f8968aa4c80b669525b930d3
-[2] https://cs.android.com/android/platform/superproject/main/+/main:system/core/libprocessgroup/setup/cgroup_map_write.cpp;drc=2dac5d89a0f024a2d0cc46a80ba4ee13472f1681;l=192
-[3] https://lore.kernel.org/lkml/f795f8be-a184-408a-0b5a-553d26061385@redhat.com/T/
-
-Fixes: e1cba4b85daa ("cgroup: Add mount flag to enable cpuset to use v2 behavior in v1 cgroup")
-Signed-off-by: T.J. Mercier <tjmercier@google.com>
-Acked-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Kamalesh Babulal <kamalesh.babulal@oracle.com>
-Acked-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Message-Id: <20241203191705.19431-4-michael.christie@oracle.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+Stable-dep-of: b18268713547 ("vhost-scsi: Fix vhost_scsi_send_bad_target()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cgroup.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ drivers/vhost/scsi.c | 28 +++++++++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index 4378f3eff25d2..e63d6f3b00470 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -2339,9 +2339,37 @@ static struct file_system_type cgroup2_fs_type = {
- };
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index 7aeff435c1d87..ad7fa5bc0f5fc 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -630,7 +630,7 @@ vhost_scsi_get_cmd(struct vhost_virtqueue *vq, struct vhost_scsi_tpg *tpg,
  
- #ifdef CONFIG_CPUSETS_V1
-+enum cpuset_param {
-+	Opt_cpuset_v2_mode,
-+};
-+
-+static const struct fs_parameter_spec cpuset_fs_parameters[] = {
-+	fsparam_flag  ("cpuset_v2_mode", Opt_cpuset_v2_mode),
-+	{}
-+};
-+
-+static int cpuset_parse_param(struct fs_context *fc, struct fs_parameter *param)
+ 	tag = sbitmap_get(&svq->scsi_tags);
+ 	if (tag < 0) {
+-		pr_err("Unable to obtain tag for vhost_scsi_cmd\n");
++		pr_warn_once("Guest sent too many cmds. Returning TASK_SET_FULL.\n");
+ 		return ERR_PTR(-ENOMEM);
+ 	}
+ 
+@@ -929,6 +929,24 @@ static void vhost_scsi_target_queue_cmd(struct vhost_scsi_cmd *cmd)
+ 	target_submit(se_cmd);
+ }
+ 
++static void
++vhost_scsi_send_status(struct vhost_scsi *vs, struct vhost_virtqueue *vq,
++		       int head, unsigned int out, u8 status)
 +{
-+	struct cgroup_fs_context *ctx = cgroup_fc2context(fc);
-+	struct fs_parse_result result;
-+	int opt;
++	struct virtio_scsi_cmd_resp __user *resp;
++	struct virtio_scsi_cmd_resp rsp;
++	int ret;
 +
-+	opt = fs_parse(fc, cpuset_fs_parameters, param, &result);
-+	if (opt < 0)
-+		return opt;
-+
-+	switch (opt) {
-+	case Opt_cpuset_v2_mode:
-+		ctx->flags |= CGRP_ROOT_CPUSET_V2_MODE;
-+		return 0;
-+	}
-+	return -EINVAL;
++	memset(&rsp, 0, sizeof(rsp));
++	rsp.status = status;
++	resp = vq->iov[out].iov_base;
++	ret = __copy_to_user(resp, &rsp, sizeof(rsp));
++	if (!ret)
++		vhost_add_used_and_signal(&vs->dev, vq, head, 0);
++	else
++		pr_err("Faulted on virtio_scsi_cmd_resp\n");
 +}
 +
- static const struct fs_context_operations cpuset_fs_context_ops = {
- 	.get_tree	= cgroup1_get_tree,
- 	.free		= cgroup_fs_context_free,
-+	.parse_param	= cpuset_parse_param,
- };
- 
- /*
-@@ -2378,6 +2406,7 @@ static int cpuset_init_fs_context(struct fs_context *fc)
- static struct file_system_type cpuset_fs_type = {
- 	.name			= "cpuset",
- 	.init_fs_context	= cpuset_init_fs_context,
-+	.parameters		= cpuset_fs_parameters,
- 	.fs_flags		= FS_USERNS_MOUNT,
- };
- #endif
+ static void
+ vhost_scsi_send_bad_target(struct vhost_scsi *vs,
+ 			   struct vhost_virtqueue *vq,
+@@ -1216,8 +1234,8 @@ vhost_scsi_handle_vq(struct vhost_scsi *vs, struct vhost_virtqueue *vq)
+ 					 exp_data_len + prot_bytes,
+ 					 data_direction);
+ 		if (IS_ERR(cmd)) {
+-			vq_err(vq, "vhost_scsi_get_cmd failed %ld\n",
+-			       PTR_ERR(cmd));
++			ret = PTR_ERR(cmd);
++			vq_err(vq, "vhost_scsi_get_tag failed %dd\n", ret);
+ 			goto err;
+ 		}
+ 		cmd->tvc_vhost = vs;
+@@ -1254,11 +1272,15 @@ vhost_scsi_handle_vq(struct vhost_scsi *vs, struct vhost_virtqueue *vq)
+ 		 * EINVAL: Invalid response buffer, drop the request
+ 		 * EIO:    Respond with bad target
+ 		 * EAGAIN: Pending request
++		 * ENOMEM: Could not allocate resources for request
+ 		 */
+ 		if (ret == -ENXIO)
+ 			break;
+ 		else if (ret == -EIO)
+ 			vhost_scsi_send_bad_target(vs, vq, vc.head, vc.out);
++		else if (ret == -ENOMEM)
++			vhost_scsi_send_status(vs, vq, vc.head, vc.out,
++					       SAM_STAT_TASK_SET_FULL);
+ 	} while (likely(!vhost_exceeds_weight(vq, ++c, 0)));
+ out:
+ 	mutex_unlock(&vq->mutex);
 -- 
 2.39.5
 
