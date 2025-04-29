@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC38482C60;
-	Tue, 29 Apr 2025 17:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCAC82C60;
+	Tue, 29 Apr 2025 17:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948108; cv=none; b=ZM/7Df2nqiYRqn5BlFo2PEttK4g14YuG1z3NRL5PITc2FMBXKKipCBq+7HNrUf3xTElw6EPwBfWDypoeqDTS6Nc/i8S6cAIBk9voqQeBb1VsOD7PZSNbXXl8vLiZX44PwdQG/xK2Xb0veuwyp2+izn04Jmt8ULVsWjCzNe61Ddg=
+	t=1745948112; cv=none; b=ODwwnOUkF5WYu4Eg6q7VRYstLr8k+ExwMqAsFOvk36XTR8hN/R45DpiVI4NNu8msggfoV8mfTgpQJoduvmVJ5hnTRScOnIQKXsatXhRAiz01cyTQKXnawZNSmAiT8P+2NZWjQEPB0UNLYO/m/ONazhF156fXv4lQ82hWgCbmb/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948108; c=relaxed/simple;
-	bh=UoF3IImy8zpRULCgt3+JcfHOCuwhRAGT8iU7ESKi764=;
+	s=arc-20240116; t=1745948112; c=relaxed/simple;
+	bh=KQO0KRi5YvSe3AXskTM4+jq3o2+k+TaMmZ+spq+oNYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UDDloWGcdXVKlpmmajCuy5iuBSwcRW23bu2n1wmaxjGiwfbpRIdGyCCG7yHtJ5U9LvOQQvjRMJUz5xCl3l62klyHmnnFWxt4x30ooOpEWdR3DVrHmLkon9+1PnQ+rC531bZhdV83cybGpK1bK9Nettr2UFuo7DVqMX2qThFWKqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZI/huq0u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eyc2CffIwzGudlE0KmJhA+0OMmS0IDC2KnEDFLdqbZvwgp0fWqbhk8dSZ20tcbtV1z9ayxRTr8Trs5RIn33QhMpLKN4e8cP1l4TTPwBYWHRnrOze47stQQzv1P0ZKyqMbpG+dPG7bigioPeOzNhgHW34XYKZSXuwIdC7MdlQ6CM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/VVatIM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZI/huq0u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42F26C4CEE3;
-	Tue, 29 Apr 2025 17:35:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/VVatIM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9CEC4CEE3;
+	Tue, 29 Apr 2025 17:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948108;
-	bh=UoF3IImy8zpRULCgt3+JcfHOCuwhRAGT8iU7ESKi764=;
+	s=korg; t=1745948112;
+	bh=KQO0KRi5YvSe3AXskTM4+jq3o2+k+TaMmZ+spq+oNYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZI/huq0udijosaC2ILMvvVHOdCi8AibwNLceuuQs6P1r3jywdgrWSbftrKyOVAEp+
-	 xHgY7y1R0ingR6he1fo8MD8Xj1d/7G6RPUXMHYVQJXxdU/KFaNJO+2IIldzMCUF+AS
-	 eWM05e/Phtrt507sbb2cb1nEzPyBH7RdSbl3DCAY=
+	b=y/VVatIM2U9B0hMVrvaOh6tjZO+qlzqwYDXVoN2Iz3TwSv/eIydOGN53Vj+S+xhko
+	 MlmoOn7Wo723l2+FD4GtFA9tuzrSPttEO6RQnFALT8xZJtixE6aq7ad7ntYNSHi+TU
+	 9+AIzFEZ+uKqJ2W0dZDWI9oD1FIdXo85w9pwRKW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	kernel test robot <lkp@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Jon Mason <jdmason@kudzu.us>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 192/280] qibfs: fix _another_ leak
-Date: Tue, 29 Apr 2025 18:42:13 +0200
-Message-ID: <20250429161122.959776436@linuxfoundation.org>
+Subject: [PATCH 6.12 193/280] ntb: reduce stack usage in idt_scan_mws
+Date: Tue, 29 Apr 2025 18:42:14 +0200
+Message-ID: <20250429161123.000152740@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -50,34 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit bdb43af4fdb39f844ede401bdb1258f67a580a27 ]
+[ Upstream commit aff12700b8dd7422bfe2277696e192af4df9de8f ]
 
-failure to allocate inode => leaked dentry...
+idt_scan_mws() puts a large fixed-size array on the stack and copies
+it into a smaller dynamically allocated array at the end. On 32-bit
+targets, the fixed size can easily exceed the warning limit for
+possible stack overflow:
 
-this one had been there since the initial merge; to be fair,
-if we are that far OOM, the odds of failing at that particular
-allocation are low...
+drivers/ntb/hw/idt/ntb_hw_idt.c:1041:27: error: stack frame size (1032) exceeds limit (1024) in 'idt_scan_mws' [-Werror,-Wframe-larger-than]
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Change it to instead just always use dynamic allocation for the
+array from the start. It's too big for the stack, but not actually
+all that much for a permanent allocation.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/all/202205111109.PiKTruEj-lkp@intel.com/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/qib/qib_fs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/ntb/hw/idt/ntb_hw_idt.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/infiniband/hw/qib/qib_fs.c b/drivers/infiniband/hw/qib/qib_fs.c
-index b27791029fa93..b9f4a2937c3ac 100644
---- a/drivers/infiniband/hw/qib/qib_fs.c
-+++ b/drivers/infiniband/hw/qib/qib_fs.c
-@@ -55,6 +55,7 @@ static int qibfs_mknod(struct inode *dir, struct dentry *dentry,
- 	struct inode *inode = new_inode(dir->i_sb);
+diff --git a/drivers/ntb/hw/idt/ntb_hw_idt.c b/drivers/ntb/hw/idt/ntb_hw_idt.c
+index 6fc9dfe824747..419de7038570d 100644
+--- a/drivers/ntb/hw/idt/ntb_hw_idt.c
++++ b/drivers/ntb/hw/idt/ntb_hw_idt.c
+@@ -1041,7 +1041,7 @@ static inline char *idt_get_mw_name(enum idt_mw_type mw_type)
+ static struct idt_mw_cfg *idt_scan_mws(struct idt_ntb_dev *ndev, int port,
+ 				       unsigned char *mw_cnt)
+ {
+-	struct idt_mw_cfg mws[IDT_MAX_NR_MWS], *ret_mws;
++	struct idt_mw_cfg *mws;
+ 	const struct idt_ntb_bar *bars;
+ 	enum idt_mw_type mw_type;
+ 	unsigned char widx, bidx, en_cnt;
+@@ -1049,6 +1049,11 @@ static struct idt_mw_cfg *idt_scan_mws(struct idt_ntb_dev *ndev, int port,
+ 	int aprt_size;
+ 	u32 data;
  
- 	if (!inode) {
-+		dput(dentry);
- 		error = -EPERM;
- 		goto bail;
++	mws = devm_kcalloc(&ndev->ntb.pdev->dev, IDT_MAX_NR_MWS,
++			   sizeof(*mws), GFP_KERNEL);
++	if (!mws)
++		return ERR_PTR(-ENOMEM);
++
+ 	/* Retrieve the array of the BARs registers */
+ 	bars = portdata_tbl[port].bars;
+ 
+@@ -1103,16 +1108,7 @@ static struct idt_mw_cfg *idt_scan_mws(struct idt_ntb_dev *ndev, int port,
+ 		}
  	}
+ 
+-	/* Allocate memory for memory window descriptors */
+-	ret_mws = devm_kcalloc(&ndev->ntb.pdev->dev, *mw_cnt, sizeof(*ret_mws),
+-			       GFP_KERNEL);
+-	if (!ret_mws)
+-		return ERR_PTR(-ENOMEM);
+-
+-	/* Copy the info of detected memory windows */
+-	memcpy(ret_mws, mws, (*mw_cnt)*sizeof(*ret_mws));
+-
+-	return ret_mws;
++	return mws;
+ }
+ 
+ /*
 -- 
 2.39.5
 
