@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0C9248883;
-	Tue, 29 Apr 2025 17:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E98243364;
+	Tue, 29 Apr 2025 17:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949137; cv=none; b=SKntXlcT7mbj3wEAg1KFSMOJvSsYGelyYGEh785ZIuMwPiguqBpMdghY1axBqWnlrnzQM+cqAxK78Ymb9lmkqaPbAQ6hwKVjPlS/XbLx19Oqenaxj339rF9RGHV7te1C4nSRf8g1RpDO6nL7w3BCbrynZ2LMW2PhXQVYBm2m4bI=
+	t=1745949141; cv=none; b=Af57DYFeM70QXIVWcnESSaFBGxhGo/Lur2jIk1FN2Vxx7IcnfzDzdrszUmw237IKXEnxrjtYfDP3C4J4x6ddDWE08sfni/iT+tpMxFpfgAv39ORnDC613f7FdbQDHPJv03R4s8h9zq7OFDO1UK0ONncGM/8+ysTFrSnXGF8Yv9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949137; c=relaxed/simple;
-	bh=04/OrJdav82mg0yReRB9rkgHcWvK0/pPwvYHl3oMVpg=;
+	s=arc-20240116; t=1745949141; c=relaxed/simple;
+	bh=uDQ0F3Dair9U8TST7jnRXOnk4wJ1QYBpWtP95A/5aDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j6U1Fe9jcEYWcotkWZoUYuil4bYY+vPeroz2wsMYgbeR/OpNxXihiXWvZw1CQ+ltL20NEefyKhBpDmWEhPyNYVFuGjlCEmDeLrBPyL6DJ82Ij8yHnvBiAzVX8aSH0DD9sjAtsJZn5R5dqyCILsbiTzcIFevv/ZcA0XxlCMCBdy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRNUFd+v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i7yw2Y2jYhdLclpUo9JNkGdTE5JWHDHjYjPPEy4Oo0pxpFuGqq9zgZExiFY8ka5kvO6siYk5g2jiFZgtyxOR63196Qfs6w3zsSmcK2Q3/OsEN+JpzYejDewS/uMVsOR2lhKrYlyrFp7RodWDVmqTb9Jen9ebTdvpicwRq4vlYkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O5M8Lf8c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRNUFd+v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F96C4CEE3;
-	Tue, 29 Apr 2025 17:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O5M8Lf8c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0D6C4CEE3;
+	Tue, 29 Apr 2025 17:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949137;
-	bh=04/OrJdav82mg0yReRB9rkgHcWvK0/pPwvYHl3oMVpg=;
+	s=korg; t=1745949140;
+	bh=uDQ0F3Dair9U8TST7jnRXOnk4wJ1QYBpWtP95A/5aDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qRNUFd+v6/uOY2THgTngcacVGjk1Ul3ItMxwy/lDt+VOVSOPma3aKIfTg/DxrRGdv
-	 6RHcZ/ee9NIGtTO4sU/B9vDkT1KJpj0SSWGguxibFxlgPJ/4iDNhx7KFk4wbjxNTlY
-	 GQ2yKHjxYN263SMphmAlx4naMmcswA1XWaeHYNec=
+	b=O5M8Lf8c+1OmmqOeZnlVJSShErw61Soz0P8Xh5OoZD+VZ/EzxYcj23PlHIQ2EMeJl
+	 dD0QrZv0hTE+k/jB2ZlME7cVlAXHbPLF8ZyW8E/XKI5Tg5UMh9KF4oB6wuou3J77zA
+	 0RltnxR4CBbeWuln8i94Oi7uHzubdCGcg86TqLKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Talpey <tom@talpey.com>,
-	Jianhong Yin <jiyin@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Steve French <stfrench@microsoft.com>,
 	Jianqi Ren <jianqi.ren.cn@windriver.com>,
 	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.15 225/373] smb: client: fix NULL ptr deref in crypto_aead_setkey()
-Date: Tue, 29 Apr 2025 18:41:42 +0200
-Message-ID: <20250429161132.402780777@linuxfoundation.org>
+Subject: [PATCH 5.15 226/373] smb/server: fix potential null-ptr-deref of lease_ctx_info in smb2_open()
+Date: Tue, 29 Apr 2025 18:41:43 +0200
+Message-ID: <20250429161132.444308683@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -54,127 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-commit 4bdec0d1f658f7c98749bd2c5a486e6cfa8565d2 upstream.
+commit 4e8771a3666c8f216eefd6bd2fd50121c6c437db upstream.
 
-Neither SMB3.0 or SMB3.02 supports encryption negotiate context, so
-when SMB2_GLOBAL_CAP_ENCRYPTION flag is set in the negotiate response,
-the client uses AES-128-CCM as the default cipher.  See MS-SMB2
-3.3.5.4.
+null-ptr-deref will occur when (req_op_level == SMB2_OPLOCK_LEVEL_LEASE)
+and parse_lease_state() return NULL.
 
-Commit b0abcd65ec54 ("smb: client: fix UAF in async decryption") added
-a @server->cipher_type check to conditionally call
-smb3_crypto_aead_allocate(), but that check would always be false as
-@server->cipher_type is unset for SMB3.02.
+Fix this by check if 'lease_ctx_info' is NULL.
 
-Fix the following KASAN splat by setting @server->cipher_type for
-SMB3.02 as well.
+Additionally, remove the redundant parentheses in
+parse_durable_handle_context().
 
-mount.cifs //srv/share /mnt -o vers=3.02,seal,...
-
-BUG: KASAN: null-ptr-deref in crypto_aead_setkey+0x2c/0x130
-Read of size 8 at addr 0000000000000020 by task mount.cifs/1095
-CPU: 1 UID: 0 PID: 1095 Comm: mount.cifs Not tainted 6.12.0 #1
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-3.fc41
-04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x5d/0x80
- ? crypto_aead_setkey+0x2c/0x130
- kasan_report+0xda/0x110
- ? crypto_aead_setkey+0x2c/0x130
- crypto_aead_setkey+0x2c/0x130
- crypt_message+0x258/0xec0 [cifs]
- ? __asan_memset+0x23/0x50
- ? __pfx_crypt_message+0x10/0x10 [cifs]
- ? mark_lock+0xb0/0x6a0
- ? hlock_class+0x32/0xb0
- ? mark_lock+0xb0/0x6a0
- smb3_init_transform_rq+0x352/0x3f0 [cifs]
- ? lock_acquire.part.0+0xf4/0x2a0
- smb_send_rqst+0x144/0x230 [cifs]
- ? __pfx_smb_send_rqst+0x10/0x10 [cifs]
- ? hlock_class+0x32/0xb0
- ? smb2_setup_request+0x225/0x3a0 [cifs]
- ? __pfx_cifs_compound_last_callback+0x10/0x10 [cifs]
- compound_send_recv+0x59b/0x1140 [cifs]
- ? __pfx_compound_send_recv+0x10/0x10 [cifs]
- ? __create_object+0x5e/0x90
- ? hlock_class+0x32/0xb0
- ? do_raw_spin_unlock+0x9a/0xf0
- cifs_send_recv+0x23/0x30 [cifs]
- SMB2_tcon+0x3ec/0xb30 [cifs]
- ? __pfx_SMB2_tcon+0x10/0x10 [cifs]
- ? lock_acquire.part.0+0xf4/0x2a0
- ? __pfx_lock_release+0x10/0x10
- ? do_raw_spin_trylock+0xc6/0x120
- ? lock_acquire+0x3f/0x90
- ? _get_xid+0x16/0xd0 [cifs]
- ? __pfx_SMB2_tcon+0x10/0x10 [cifs]
- ? cifs_get_smb_ses+0xcdd/0x10a0 [cifs]
- cifs_get_smb_ses+0xcdd/0x10a0 [cifs]
- ? __pfx_cifs_get_smb_ses+0x10/0x10 [cifs]
- ? cifs_get_tcp_session+0xaa0/0xca0 [cifs]
- cifs_mount_get_session+0x8a/0x210 [cifs]
- dfs_mount_share+0x1b0/0x11d0 [cifs]
- ? __pfx___lock_acquire+0x10/0x10
- ? __pfx_dfs_mount_share+0x10/0x10 [cifs]
- ? lock_acquire.part.0+0xf4/0x2a0
- ? find_held_lock+0x8a/0xa0
- ? hlock_class+0x32/0xb0
- ? lock_release+0x203/0x5d0
- cifs_mount+0xb3/0x3d0 [cifs]
- ? do_raw_spin_trylock+0xc6/0x120
- ? __pfx_cifs_mount+0x10/0x10 [cifs]
- ? lock_acquire+0x3f/0x90
- ? find_nls+0x16/0xa0
- ? smb3_update_mnt_flags+0x372/0x3b0 [cifs]
- cifs_smb3_do_mount+0x1e2/0xc80 [cifs]
- ? __pfx_vfs_parse_fs_string+0x10/0x10
- ? __pfx_cifs_smb3_do_mount+0x10/0x10 [cifs]
- smb3_get_tree+0x1bf/0x330 [cifs]
- vfs_get_tree+0x4a/0x160
- path_mount+0x3c1/0xfb0
- ? kasan_quarantine_put+0xc7/0x1d0
- ? __pfx_path_mount+0x10/0x10
- ? kmem_cache_free+0x118/0x3e0
- ? user_path_at+0x74/0xa0
- __x64_sys_mount+0x1a6/0x1e0
- ? __pfx___x64_sys_mount+0x10/0x10
- ? mark_held_locks+0x1a/0x90
- do_syscall_64+0xbb/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Cc: Tom Talpey <tom@talpey.com>
-Reported-by: Jianhong Yin <jiyin@redhat.com>
-Cc: stable@vger.kernel.org # v6.12
-Fixes: b0abcd65ec54 ("smb: client: fix UAF in async decryption")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: Steve French <stfrench@microsoft.com>
-[Commit b0abcd65ec54 ("smb: client: fix UAF in async decryption")
-fixes CVE-2024-50047 but brings NULL-pointer dereferebce. So
-commit 4bdec0d1f658 ("smb: client: fix NULL ptr deref in crypto_aead_setkey()")
-should be backported too.]
+[ Drop the parentheses clean-up since the parentheses was introduced by
+  c8efcc786146 ("ksmbd: add support for durable handles v1/v2") in v6.9
+  Minor context change fixed ]
 Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/smb2pdu.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ksmbd/oplock.c  |    2 +-
+ fs/ksmbd/smb2pdu.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/cifs/smb2pdu.c
-+++ b/fs/cifs/smb2pdu.c
-@@ -1028,7 +1028,9 @@ SMB2_negotiate(const unsigned int xid, s
- 	 * SMB3.0 supports only 1 cipher and doesn't have a encryption neg context
- 	 * Set the cipher type manually.
- 	 */
--	if (server->dialect == SMB30_PROT_ID && (server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
-+	if ((server->dialect == SMB30_PROT_ID ||
-+	     server->dialect == SMB302_PROT_ID) &&
-+	    (server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
- 		server->cipher_type = SMB2_ENCRYPTION_AES128_CCM;
- 
- 	security_blob = smb2_get_data_area_len(&blob_offset, &blob_length,
+--- a/fs/ksmbd/oplock.c
++++ b/fs/ksmbd/oplock.c
+@@ -1498,7 +1498,7 @@ void create_lease_buf(u8 *rbuf, struct l
+  * @open_req:	buffer containing smb2 file open(create) request
+  * @is_dir:	whether leasing file is directory
+  *
+- * Return:  oplock state, -ENOENT if create lease context not found
++ * Return: allocated lease context object on success, otherwise NULL
+  */
+ struct lease_ctx_info *parse_lease_state(void *open_req, bool is_dir)
+ {
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -3230,7 +3230,7 @@ int smb2_open(struct ksmbd_work *work)
+ 			goto err_out1;
+ 		}
+ 	} else {
+-		if (req_op_level == SMB2_OPLOCK_LEVEL_LEASE) {
++		if (req_op_level == SMB2_OPLOCK_LEVEL_LEASE && lc) {
+ 			/*
+ 			 * Compare parent lease using parent key. If there is no
+ 			 * a lease that has same parent key, Send lease break
 
 
