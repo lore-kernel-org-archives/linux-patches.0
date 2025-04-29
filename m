@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C65240611;
-	Tue, 29 Apr 2025 18:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EC2254B0E;
+	Tue, 29 Apr 2025 18:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950756; cv=none; b=f5mezaIieCHOYjPilWQ3MuSNVYbRUUX70GySCmSbTLoI+FlifAuP6YYvtnQlPa4yp5cH+V0I+b2dxCwW57wRpNK71kKdqRMQzHIZ7lT0EP2R7xI9HfHkStfLIURrqUmH2rHFCubElOQ27zAi7Gmz3EMlk6kAZkgh6VeQU5E2Dpg=
+	t=1745950760; cv=none; b=SAY/Mi+0FcIa0mt/rrCOQTT10U1VcjSc4qW/3YdmQOF0Iexgh2pzoAzL4T47JE1cdBPPaxSl5ZMxnQT8vmrRCMAYw7ZzbHQr6PHvvP/l7xO72AKZf4Epg4Vbcv5TAEtbUoHWzXFEHgu7+jVj9ehjscs4hGp6LUgG5WY1r6Dx6WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950756; c=relaxed/simple;
-	bh=AvmAVe+PPoVMFRSvbv/d92BmKVF9eF9TNQrPNZZawDk=;
+	s=arc-20240116; t=1745950760; c=relaxed/simple;
+	bh=W1PSbjRX385k4I3J7TGdMZNsgQjIkOp52ZhvW+YgQBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ujaD77+KyMXD5TzA90WX/8bNEmCCg6lPwByH6CeMA0l9POgtEb/9UBwZOftSJqQi0W2ICwcrwlgUGVR6Ka6DIBkmUu0d2vSD0SR4g2xJv+KrivDH0YVPR2KH7wcBcZ5de+/AyyRlTerK7GvWQqvjICHwjyuH9GPhUK5ZhpdsgSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/OlJrTb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZyyLvklIh53l4+BHKTw57YQRjYxvQSS/epAppwMLbjaUC26wEJ47uH9cVSZWgkS5vkQElsxUsdxCNJFBObRHGM7nraO6OeCoccL0JcmNL0N5HaotfKegXU6TJnUAPsIWk837EPb36bb1emB7+/IzBofqTWSvbE8sNC01eaGexxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EEfJP9BS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/OlJrTb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F00C4CEEE;
-	Tue, 29 Apr 2025 18:19:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEfJP9BS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DCDC4CEE3;
+	Tue, 29 Apr 2025 18:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950756;
-	bh=AvmAVe+PPoVMFRSvbv/d92BmKVF9eF9TNQrPNZZawDk=;
+	s=korg; t=1745950759;
+	bh=W1PSbjRX385k4I3J7TGdMZNsgQjIkOp52ZhvW+YgQBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q/OlJrTb3k2DtdRP7zwI/i63E7L8X5zMlhvZHytQH3lxTKl/rjYSA/LpLl+5u73Sr
-	 qnI3MiKIa84HCGnykE6YsoNvxiwQx5im45a2+3A3JwF5MaKYJpQX80JQfN+Bb2J18s
-	 3epenvLsdwIW8gfabKFuI9J0nbKpelG/WYbaIk7Y=
+	b=EEfJP9BSPttqJK6LOk2OJEMUQxjtR83aDBYcWq8CLqheopsXXhStZsDIVi57HxrQb
+	 y5OLr8DW8Du55f/OgJgSsa87LfGVUdPWhocsHmf3VYzjIKUli/WKQGyHQH+YXra1JG
+	 HcTP/GYoLGjxMLeF976zCbcPHxwh2eIOR6ih2Uk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Yi Lai <yi1.lai@intel.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 165/204] gpiolib: of: Move Atmel HSMCI quirk up out of the regulator comment
-Date: Tue, 29 Apr 2025 18:44:13 +0200
-Message-ID: <20250429161106.156392660@linuxfoundation.org>
+Subject: [PATCH 6.6 166/204] selftests/mincore: Allow read-ahead pages to reach the end of the file
+Date: Tue, 29 Apr 2025 18:44:14 +0200
+Message-ID: <20250429161106.195509222@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -51,47 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit b8c7a1ac884cc267d1031f8de07f1a689a69fbab ]
+[ Upstream commit 197c1eaa7ba633a482ed7588eea6fd4aa57e08d4 ]
 
-The regulator comment in of_gpio_set_polarity_by_property()
-made on top of a couple of the cases, while Atmel HSMCI quirk
-is not related to that. Make it clear by moving Atmel HSMCI
-quirk up out of the scope of the regulator comment.
+When running the mincore_selftest on a system with an XFS file system, it
+failed the "check_file_mmap" test case due to the read-ahead pages reaching
+the end of the file. The failure log is as below:
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20250402122058.1517393-3-andriy.shevchenko@linux.intel.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+   RUN           global.check_file_mmap ...
+  mincore_selftest.c:264:check_file_mmap:Expected i (1024) < vec_size (1024)
+  mincore_selftest.c:265:check_file_mmap:Read-ahead pages reached the end of the file
+  check_file_mmap: Test failed
+           FAIL  global.check_file_mmap
+
+This is because the read-ahead window size of the XFS file system on this
+machine is 4 MB, which is larger than the size from the #PF address to the
+end of the file. As a result, all the pages for this file are populated.
+
+  blockdev --getra /dev/nvme0n1p5
+    8192
+  blockdev --getbsz /dev/nvme0n1p5
+    512
+
+This issue can be fixed by extending the current FILE_SIZE 4MB to a larger
+number, but it will still fail if the read-ahead window size of the file
+system is larger enough. Additionally, in the real world, read-ahead pages
+reaching the end of the file can happen and is an expected behavior.
+Therefore, allowing read-ahead pages to reach the end of the file is a
+better choice for the "check_file_mmap" test case.
+
+Link: https://lore.kernel.org/r/20250311080940.21413-1-qiuxu.zhuo@intel.com
+Reported-by: Yi Lai <yi1.lai@intel.com>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-of.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/mincore/mincore_selftest.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
-index cec9e8f29bbdf..a0a2a0f75bba4 100644
---- a/drivers/gpio/gpiolib-of.c
-+++ b/drivers/gpio/gpiolib-of.c
-@@ -247,6 +247,9 @@ static void of_gpio_set_polarity_by_property(const struct device_node *np,
- 		{ "fsl,imx8qm-fec",  "phy-reset-gpios", "phy-reset-active-high" },
- 		{ "fsl,s32v234-fec", "phy-reset-gpios", "phy-reset-active-high" },
- #endif
-+#if IS_ENABLED(CONFIG_MMC_ATMELMCI)
-+		{ "atmel,hsmci",       "cd-gpios",     "cd-inverted" },
-+#endif
- #if IS_ENABLED(CONFIG_PCI_IMX6)
- 		{ "fsl,imx6q-pcie",  "reset-gpio", "reset-gpio-active-high" },
- 		{ "fsl,imx6sx-pcie", "reset-gpio", "reset-gpio-active-high" },
-@@ -272,9 +275,6 @@ static void of_gpio_set_polarity_by_property(const struct device_node *np,
- #if IS_ENABLED(CONFIG_REGULATOR_GPIO)
- 		{ "regulator-gpio",    "enable-gpio",  "enable-active-high" },
- 		{ "regulator-gpio",    "enable-gpios", "enable-active-high" },
--#endif
--#if IS_ENABLED(CONFIG_MMC_ATMELMCI)
--		{ "atmel,hsmci",       "cd-gpios",     "cd-inverted" },
- #endif
- 	};
- 	unsigned int i;
+diff --git a/tools/testing/selftests/mincore/mincore_selftest.c b/tools/testing/selftests/mincore/mincore_selftest.c
+index e949a43a61450..efabfcbe0b498 100644
+--- a/tools/testing/selftests/mincore/mincore_selftest.c
++++ b/tools/testing/selftests/mincore/mincore_selftest.c
+@@ -261,9 +261,6 @@ TEST(check_file_mmap)
+ 		TH_LOG("No read-ahead pages found in memory");
+ 	}
+ 
+-	EXPECT_LT(i, vec_size) {
+-		TH_LOG("Read-ahead pages reached the end of the file");
+-	}
+ 	/*
+ 	 * End of the readahead window. The rest of the pages shouldn't
+ 	 * be in memory.
 -- 
 2.39.5
 
