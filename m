@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FAE421ABC1;
-	Tue, 29 Apr 2025 17:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7424221DA7;
+	Tue, 29 Apr 2025 17:47:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948852; cv=none; b=sRHVH+Jy6lryM1HATuL/0M2nP775U2Qd7wS5cECGa8XH+W+t+AmsnaB1xMXEkQ61wD8B6nSGY/uSa17aNLrH19pnSYEmCxf1/8dJNcsGnBw6eIraGzgNAMornhF1OYRbwULN7NEWAB/xp6w1gQD66t7khF0X+0iFoCpxGVgJYt8=
+	t=1745948854; cv=none; b=VyFGkmxHRnfD6lU7lbl9aaK8hJ2hmop9MS2pdJ5gAQLGhKZ+Fn25egFTMwOdDdmoFd9m5IjPt8XyEV82cuEkqDizNZ2hEqPv7RExKOEyOfDcGF7HrV2FZlqM+Q0XY4e7NKg4O2knnweWM0PCGHl3wVU+XRTZjYtCBWvI7QrCZws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948852; c=relaxed/simple;
-	bh=IudNP2nH8Mv6aRYABH4cp/MN3uRlLOpn0ut7PTDgsb8=;
+	s=arc-20240116; t=1745948854; c=relaxed/simple;
+	bh=gm0DBgfve22zdTraMYcf6ZMZDGwwklbLN9D0BRKNP60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q7nSjlTt+VuYuK0wFCa6Bqn0dhPX9Wy7MubSrDcEFqk0YD62S9gLR5BKjTXugdzNZWg8nQz+bu2zQooTBC4fwExbFAB082/YugCrI5sB1JXapNUEuQqeiwukFRuxc2vavj8g455VGIAoDda1S1uwM5shrfK/xu6zVT8Q4eCfQCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NC6xTV0r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TFlxiq6zwdrytuuI+uw3FYoVswwoTSdEBC1dnXOjp2JePvkjJR8ovrU94hdl6udc+2AiaEGJ1UWLHFTDzwuussqJF/7bPK+Zu+ReH0pfwPUD4Nu5c2H2fLyUtYVFDTFw6MPQ7epG3dibtEZlopFHS1yRVMKr22VSkcNnql5lXXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzIWLtN+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NC6xTV0r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5E98C4CEE3;
-	Tue, 29 Apr 2025 17:47:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzIWLtN+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38AFAC4CEE3;
+	Tue, 29 Apr 2025 17:47:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948852;
-	bh=IudNP2nH8Mv6aRYABH4cp/MN3uRlLOpn0ut7PTDgsb8=;
+	s=korg; t=1745948854;
+	bh=gm0DBgfve22zdTraMYcf6ZMZDGwwklbLN9D0BRKNP60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NC6xTV0rHpL1I2UR+dIRamQPAyWAu6HdEsiAtWa1yHo/AM0fknKNvXVpg175QKsTo
-	 nXeyviyXS+/okj9mJBxhWQMkcePnv5DTN4pWFSbO5qTIn5kxiS0avA7X7DhMS+ENwS
-	 QjZtWBYAtmwPVrf+3ReYdIvBQTWxg4PG23ivKBqE=
+	b=WzIWLtN+SKADmvumnyo+TUF56YdL+h5waad8V/blce+JoREhXZv6BLvV82BwURlmW
+	 Jov8zckC/BHEinxYUF+DHsE2A9Z9f0LILLT2jDGFHBwFvHnk5UjpVhCo+QBUIWTQxb
+	 9eEt9B6EfJMa4NqXz7j4frIkqsfci/8hqrUpm2ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
+	John Garry <john.garry@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 138/373] Bluetooth: l2cap: Check encryption key size on incoming connection
-Date: Tue, 29 Apr 2025 18:40:15 +0200
-Message-ID: <20250429161128.846591292@linuxfoundation.org>
+Subject: [PATCH 5.15 121/373] scsi: hisi_sas: Pass abort structure for internal abort
+Date: Tue, 29 Apr 2025 18:39:58 +0200
+Message-ID: <20250429161128.151820584@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -45,83 +46,111 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frédéric Danis <frederic.danis@collabora.com>
+From: John Garry <john.garry@huawei.com>
 
-[ Upstream commit 522e9ed157e3c21b4dd623c79967f72c21e45b78 ]
+[ Upstream commit 08c61b5d902b70180b517e9f2616ad70b7a98dcf ]
 
-This is required for passing GAP/SEC/SEM/BI-04-C PTS test case:
-  Security Mode 4 Level 4, Responder - Invalid Encryption Key Size
-  - 128 bit
+To help factor out code in future, it's useful to know if we're executing
+an internal abort, so pass a pointer to the structure. The idea is that a
+NULL pointer means not an internal abort.
 
-This tests the security key with size from 1 to 15 bytes while the
-Security Mode 4 Level 4 requests 16 bytes key size.
-
-Currently PTS fails with the following logs:
-- expected:Connection Response:
-    Code: [3 (0x03)] Code
-    Identifier: (lt)WildCard: Exists(gt)
-    Length: [8 (0x0008)]
-    Destination CID: (lt)WildCard: Exists(gt)
-    Source CID: [64 (0x0040)]
-    Result: [3 (0x0003)] Connection refused - Security block
-    Status: (lt)WildCard: Exists(gt),
-but received:Connection Response:
-    Code: [3 (0x03)] Code
-    Identifier: [1 (0x01)]
-    Length: [8 (0x0008)]
-    Destination CID: [64 (0x0040)]
-    Source CID: [64 (0x0040)]
-    Result: [0 (0x0000)] Connection Successful
-    Status: [0 (0x0000)] No further information available
-
-And HCI logs:
-< HCI Command: Read Encrypti.. (0x05|0x0008) plen 2
-        Handle: 14 Address: 00:1B:DC:F2:24:10 (Vencer Co., Ltd.)
-> HCI Event: Command Complete (0x0e) plen 7
-      Read Encryption Key Size (0x05|0x0008) ncmd 1
-        Status: Success (0x00)
-        Handle: 14 Address: 00:1B:DC:F2:24:10 (Vencer Co., Ltd.)
-        Key size: 7
-> ACL Data RX: Handle 14 flags 0x02 dlen 12
-      L2CAP: Connection Request (0x02) ident 1 len 4
-        PSM: 4097 (0x1001)
-        Source CID: 64
-< ACL Data TX: Handle 14 flags 0x00 dlen 16
-      L2CAP: Connection Response (0x03) ident 1 len 8
-        Destination CID: 64
-        Source CID: 64
-        Result: Connection successful (0x0000)
-        Status: No further information available (0x0000)
-
-Fixes: 288c06973daa ("Bluetooth: Enforce key size of 16 bytes on FIPS level")
-Signed-off-by: Frédéric Danis <frederic.danis@collabora.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://lore.kernel.org/r/1639579061-179473-4-git-send-email-john.garry@huawei.com
+Reviewed-by: Xiang Chen <chenxiang66@hisilicon.com>
+Signed-off-by: John Garry <john.garry@huawei.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 8aa580cd9284 ("scsi: hisi_sas: Enable force phy when SATA disk directly connected")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/hisi_sas/hisi_sas.h      |  5 +++++
+ drivers/scsi/hisi_sas/hisi_sas_main.c | 21 ++++++++++++---------
+ 2 files changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 2d451009a6477..d34e161a30b37 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4162,7 +4162,8 @@ static struct l2cap_chan *l2cap_connect(struct l2cap_conn *conn,
+diff --git a/drivers/scsi/hisi_sas/hisi_sas.h b/drivers/scsi/hisi_sas/hisi_sas.h
+index 57be32ba0109f..39da9f1645135 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas.h
++++ b/drivers/scsi/hisi_sas/hisi_sas.h
+@@ -134,6 +134,11 @@ struct hisi_sas_rst {
+ 	bool done;
+ };
  
- 	/* Check if the ACL is secure enough (if not SDP) */
- 	if (psm != cpu_to_le16(L2CAP_PSM_SDP) &&
--	    !hci_conn_check_link_mode(conn->hcon)) {
-+	    (!hci_conn_check_link_mode(conn->hcon) ||
-+	    !l2cap_check_enc_key_size(conn->hcon))) {
- 		conn->disc_reason = HCI_ERROR_AUTH_FAILURE;
- 		result = L2CAP_CR_SEC_BLOCK;
- 		goto response;
++struct hisi_sas_internal_abort {
++	unsigned int flag;
++	unsigned int tag;
++};
++
+ #define HISI_SAS_RST_WORK_INIT(r, c) \
+ 	{	.hisi_hba = hisi_hba, \
+ 		.completion = &c, \
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
+index ff6b6868cd955..321e6fae03adc 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_main.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
+@@ -273,11 +273,11 @@ static void hisi_sas_task_prep_ata(struct hisi_hba *hisi_hba,
+ }
+ 
+ static void hisi_sas_task_prep_abort(struct hisi_hba *hisi_hba,
+-		struct hisi_sas_slot *slot,
+-		int device_id, int abort_flag, int tag_to_abort)
++		struct hisi_sas_internal_abort *abort,
++		struct hisi_sas_slot *slot, int device_id)
+ {
+ 	hisi_hba->hw->prep_abort(hisi_hba, slot,
+-			device_id, abort_flag, tag_to_abort);
++			device_id, abort->flag, abort->tag);
+ }
+ 
+ static void hisi_sas_dma_unmap(struct hisi_hba *hisi_hba,
+@@ -1968,8 +1968,9 @@ static int hisi_sas_query_task(struct sas_task *task)
+ 
+ static int
+ hisi_sas_internal_abort_task_exec(struct hisi_hba *hisi_hba, int device_id,
+-				  struct sas_task *task, int abort_flag,
+-				  int task_tag, struct hisi_sas_dq *dq)
++				  struct hisi_sas_internal_abort *abort,
++				  struct sas_task *task,
++				  struct hisi_sas_dq *dq)
+ {
+ 	struct domain_device *device = task->dev;
+ 	struct hisi_sas_device *sas_dev = device->lldd_dev;
+@@ -2026,8 +2027,7 @@ hisi_sas_internal_abort_task_exec(struct hisi_hba *hisi_hba, int device_id,
+ 	memset(hisi_sas_status_buf_addr_mem(slot), 0,
+ 	       sizeof(struct hisi_sas_err_record));
+ 
+-	hisi_sas_task_prep_abort(hisi_hba, slot, device_id,
+-				      abort_flag, task_tag);
++	hisi_sas_task_prep_abort(hisi_hba, abort, slot, device_id);
+ 
+ 	spin_lock_irqsave(&task->task_state_lock, flags);
+ 	task->task_state_flags |= SAS_TASK_AT_INITIATOR;
+@@ -2065,9 +2065,12 @@ _hisi_sas_internal_task_abort(struct hisi_hba *hisi_hba,
+ {
+ 	struct sas_task *task;
+ 	struct hisi_sas_device *sas_dev = device->lldd_dev;
++	struct hisi_sas_internal_abort abort = {
++		.flag = abort_flag,
++		.tag = tag,
++	};
+ 	struct device *dev = hisi_hba->dev;
+ 	int res;
+-
+ 	/*
+ 	 * The interface is not realized means this HW don't support internal
+ 	 * abort, or don't need to do internal abort. Then here, we return
+@@ -2092,7 +2095,7 @@ _hisi_sas_internal_task_abort(struct hisi_hba *hisi_hba,
+ 	add_timer(&task->slow_task->timer);
+ 
+ 	res = hisi_sas_internal_abort_task_exec(hisi_hba, sas_dev->device_id,
+-						task, abort_flag, tag, dq);
++						&abort, task, dq);
+ 	if (res) {
+ 		del_timer(&task->slow_task->timer);
+ 		dev_err(dev, "internal task abort: executing internal task failed: %d\n",
 -- 
 2.39.5
 
