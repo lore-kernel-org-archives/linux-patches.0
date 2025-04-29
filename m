@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39782AE96;
-	Tue, 29 Apr 2025 18:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5B23FFD;
+	Tue, 29 Apr 2025 18:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949667; cv=none; b=TWUupXjJPYSQwo4kZGKY2C61GDCYjS9MKLEEUsImP1IGNTK4maB/ZPymfPvhFW2prnB1kDv+w8236EuYujk9USu6kFFdD9UNh+cTD87y29Qz+56k/ncP/0ZuIzd8UxPLNYVqOBNZ+VG5Qet/KU4CwKt8qoG1wlL8SHTfbFiRCB8=
+	t=1745949670; cv=none; b=XshIUQkZPNHSB5gpt6Us4mno/bmLtVCo42a63mWiKVxL2Aup84LZifbgpUwB95TeMQtIFVBe9djzNqb0PAuO0PNqQ5TKvbLiYEIPnLHBQXIDFT8UQxRHD2bzx53G1alUYzu23JGT7a+rf9C3LQGwE6q7fAv8eHFXPwbrGk+Kjng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949667; c=relaxed/simple;
-	bh=jGReTYhowotH2cFWIuhuqtDe1cZZPBqkxgPR3Ah4HDo=;
+	s=arc-20240116; t=1745949670; c=relaxed/simple;
+	bh=9Q7lRSuaS8ZOrYguDir/LAjYPGBPDF5ZMHjIAaHNX4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VuqVdmJIrZn+9H6j8JZ1Bqrv/09cn0+G4pcKnBjygErF3YGXXQnLDn87K4Csj3n6glyx+Xgd90SqdaeVNjR+MYtAAy3GEwcmkEn3xSJDojwb6L+6IxCGhojAxwJQBJ7uEFuIz1LQxA2xzCZLZhO3bsSSFVknZhGesFJa+M9fbWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fo6L9zjr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZF7yxx028wd5O9Y6iAvBLYXHdV47bexvhtwNhVQB4EolxsZ4ajfX5q6HCWxozuBYLrNi5VoEzIGWfi5WHFq3wNfel47DYcQriZqDqBs3iwy/U9IETqUFJ2MW2kxJnfft8pwWoot9LXusa5AT/+48s9ATFoNKcPctZZ0W3xcuywg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxe5TObT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fo6L9zjr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658C2C4CEE3;
-	Tue, 29 Apr 2025 18:01:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxe5TObT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DACC4CEE3;
+	Tue, 29 Apr 2025 18:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949666;
-	bh=jGReTYhowotH2cFWIuhuqtDe1cZZPBqkxgPR3Ah4HDo=;
+	s=korg; t=1745949669;
+	bh=9Q7lRSuaS8ZOrYguDir/LAjYPGBPDF5ZMHjIAaHNX4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fo6L9zjrOKfLKkTfEfDFU1BLyXKEDpClzpudcD8x7/tA8OGqF9BPGlyb6g/P+gWX6
-	 9+79+N/PNidG+t6Y1Hv+/2gPBDOeR0SQlqDGu3vfsXqQ9M0WnI4QwC0+O3weGaHneC
-	 HmO4hWnniIzc1nfjgpEcuwR+1CZpCBGcban4t0Ig=
+	b=sxe5TObTVFxh2yqa8OCorqWz1JZDryPkCmzBhn3I3Dw/OUs7T1g4Aij/pw6vjWFp2
+	 j6aEZM9j92Ws6TEMs2yhaEJAPOYJKMjhK7jBkJ4+xEKUhS+1nZqhAy0IOxy+fKRraM
+	 zAACkUBCkgcldV5hVjCMuQrHFD/sD6awgGZWIyU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Marcelo Schmitt <marcelo.schmitt@analog.com>,
-	Sergiu Cuciurean <sergiu.cuciurean@analog.com>,
-	Jonathan Santos <Jonathan.Santos@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/167] iio: adc: ad7768-1: Fix conversion result sign
-Date: Tue, 29 Apr 2025 18:42:06 +0200
-Message-ID: <20250429161052.489233323@linuxfoundation.org>
+Subject: [PATCH 6.1 019/167] backlight: led_bl: Convert to platform remove callback returning void
+Date: Tue, 29 Apr 2025 18:42:07 +0200
+Message-ID: <20250429161052.529803476@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -49,59 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergiu Cuciurean <sergiu.cuciurean@analog.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 8236644f5ecb180e80ad92d691c22bc509b747bb ]
+[ Upstream commit c4c4fa57fd3cc00020152baa169337521f90b2ad ]
 
-The ad7768-1 ADC output code is two's complement, meaning that the voltage
-conversion result is a signed value.. Since the value is a 24 bit one,
-stored in a 32 bit variable, the sign should be extended in order to get
-the correct representation.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is (mostly) ignored
+and this typically results in resource leaks. To improve here there is a
+quest to make the remove callback return void. In the first step of this
+quest all drivers are converted to .remove_new() which already returns
+void.
 
-Also the channel description has been updated to signed representation,
-to match the ADC specifications.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-Fixes: a5f8c7da3dbe ("iio: adc: Add AD7768-1 ADC basic support")
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
-Signed-off-by: Sergiu Cuciurean <sergiu.cuciurean@analog.com>
-Signed-off-by: Jonathan Santos <Jonathan.Santos@analog.com>
-Cc: <Stable@vger.kernel.org>
-Link: https://patch.msgid.link/505994d3b71c2aa38ba714d909a68e021f12124c.1741268122.git.Jonathan.Santos@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20230308073945.2336302-7-u.kleine-koenig@pengutronix.de
+Stable-dep-of: 276822a00db3 ("backlight: led_bl: Hold led_access lock when calling led_sysfs_disable()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7768-1.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/video/backlight/led_bl.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iio/adc/ad7768-1.c b/drivers/iio/adc/ad7768-1.c
-index 19d604f5701d6..74b0c85944bd6 100644
---- a/drivers/iio/adc/ad7768-1.c
-+++ b/drivers/iio/adc/ad7768-1.c
-@@ -142,7 +142,7 @@ static const struct iio_chan_spec ad7768_channels[] = {
- 		.channel = 0,
- 		.scan_index = 0,
- 		.scan_type = {
--			.sign = 'u',
-+			.sign = 's',
- 			.realbits = 24,
- 			.storagebits = 32,
- 			.shift = 8,
-@@ -374,7 +374,7 @@ static int ad7768_read_raw(struct iio_dev *indio_dev,
- 		iio_device_release_direct_mode(indio_dev);
- 		if (ret < 0)
- 			return ret;
--		*val = ret;
-+		*val = sign_extend32(ret, chan->scan_type.realbits - 1);
+diff --git a/drivers/video/backlight/led_bl.c b/drivers/video/backlight/led_bl.c
+index f54d256e2d548..a1b6a2ad73a07 100644
+--- a/drivers/video/backlight/led_bl.c
++++ b/drivers/video/backlight/led_bl.c
+@@ -217,7 +217,7 @@ static int led_bl_probe(struct platform_device *pdev)
+ 	return 0;
+ }
  
- 		return IIO_VAL_INT;
+-static int led_bl_remove(struct platform_device *pdev)
++static void led_bl_remove(struct platform_device *pdev)
+ {
+ 	struct led_bl_data *priv = platform_get_drvdata(pdev);
+ 	struct backlight_device *bl = priv->bl_dev;
+@@ -228,8 +228,6 @@ static int led_bl_remove(struct platform_device *pdev)
+ 	led_bl_power_off(priv);
+ 	for (i = 0; i < priv->nb_leds; i++)
+ 		led_sysfs_enable(priv->leds[i]);
+-
+-	return 0;
+ }
  
+ static const struct of_device_id led_bl_of_match[] = {
+@@ -245,7 +243,7 @@ static struct platform_driver led_bl_driver = {
+ 		.of_match_table	= of_match_ptr(led_bl_of_match),
+ 	},
+ 	.probe		= led_bl_probe,
+-	.remove		= led_bl_remove,
++	.remove_new	= led_bl_remove,
+ };
+ 
+ module_platform_driver(led_bl_driver);
 -- 
 2.39.5
 
