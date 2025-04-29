@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF45024C08D;
-	Tue, 29 Apr 2025 17:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9376F24C08D;
+	Tue, 29 Apr 2025 17:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947426; cv=none; b=W81/qAfiEXcFr9j4gDyihObX/iU84U/4Pnu+oonpQ3C7yrjKBwfnLlO+HNI7PT7OCMGTdm8Iq9+JJ1JZbFiK3RFoPE8if3WH4xnYjpMxcjJnYZKCWvugyyAS6VsQdu7Fq/8AKajZB2cJxI+8DBzVfqKaP9+O6BgQzC4CcAPb/NY=
+	t=1745947428; cv=none; b=K++uSlOX65+4Nj0tmk39eTb1I2lfVjyPN8N1ZHmeCm91mfg5BjluFcPHHTGpY1VQb/MjLq29YCS2z5YUlnmOvYFhleLvexicSQLgBgssM/Yu/amTL6O23l3v+mhs437tnK5i5DZ+fl5VExb2cECrbbjvRTpGBv2XU/3l7ADrPoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947426; c=relaxed/simple;
-	bh=MjgHRV3NmArNBwT5D8/rUHg46jGHgt8uRI95kMEc5TA=;
+	s=arc-20240116; t=1745947428; c=relaxed/simple;
+	bh=Wfb8rRFluUXF757kun7w+kGUbl+nCI7XpjyGQSOp5Ek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BzT+DO9EjcDAjEPoQ8A+PT0Yxy/0fDyZbngEnOd4QqOwm8d7fqx+0XdmTWDj4ipVjdixyA355JmB6snC7t+VutW+gjN4iwsjVFQrXr0mZ9YzLovpgtK8cy3ka/NrbFeEfzGvoLVXQA5br8WkONVp2X+1Y9HN0uTEKCZGRqXYPws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFfP++fH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oya2A/fqvGDPKIsjbee7QFxiXgNMETpfd6tjWw5miKnbRYflOy6nJQc1pMtMzduQUwshfiukU07efJPw+9FsP3OsnhS9Z8Ol+AY1F8+PL9/e1ZYErPG0im1c/JNsJFstFSmKeUAICm6GBonaq2lwa+UlQXBzFD8sq18CdJCX25U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XbxrFevR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFfP++fH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA22C4CEE3;
-	Tue, 29 Apr 2025 17:23:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XbxrFevR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050E1C4CEE3;
+	Tue, 29 Apr 2025 17:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947425;
-	bh=MjgHRV3NmArNBwT5D8/rUHg46jGHgt8uRI95kMEc5TA=;
+	s=korg; t=1745947428;
+	bh=Wfb8rRFluUXF757kun7w+kGUbl+nCI7XpjyGQSOp5Ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nFfP++fHmhy8xICKj2jF4jq7X8xesHHYeFNAAuugyP+XEeCwZWUMMfKeST40h2xC1
-	 fYZtCSJZlJyy6p2lrydfaEbGKMpIDc15CI0ZmrVKhOUUDrTkzsl0BOBEpwhLY5jB7j
-	 ruRLUQcJuIvuySyy0cbaGrtqGLuP+1O1KCi0I0F8=
+	b=XbxrFevRmDzwtrSJBQqS5NdZsv8EkaNfpgQuyh3tufs6u741QtJ6J5IJZJttUh77l
+	 Xiev+CBSKlPCHoMtXB7P25zei/FPvt6Vc8mjoX1RgZtp5zC+2SN1X352eP5dW+MDIo
+	 tMKaHS/LKRqTPX9W8NCkdDj/BtYu3aTB0tVe7NW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandra Merla <cmerla@redhat.com>,
-	David Hildenbrand <david@redhat.com>,
-	Thomas Huth <thuth@redhat.com>,
-	Cornelia Huck <cohuck@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 5.10 277/286] s390/virtio_ccw: Dont allocate/assign airqs for non-existing queues
-Date: Tue, 29 Apr 2025 18:43:01 +0200
-Message-ID: <20250429161119.308731517@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 260/286] objtool, ASoC: codecs: wcd934x: Remove potential undefined behavior in wcd934x_slim_irq_handler()
+Date: Tue, 29 Apr 2025 18:42:44 +0200
+Message-ID: <20250429161118.613372283@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -55,141 +58,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-commit 2ccd42b959aaf490333dbd3b9b102eaf295c036a upstream.
+[ Upstream commit 060aed9c0093b341480770457093449771cf1496 ]
 
-If we finds a vq without a name in our input array in
-virtio_ccw_find_vqs(), we treat it as "non-existing" and set the vq pointer
-to NULL; we will not call virtio_ccw_setup_vq() to allocate/setup a vq.
+If 'port_id' is negative, the shift counts in wcd934x_slim_irq_handler()
+also become negative, resulting in undefined behavior due to shift out
+of bounds.
 
-Consequently, we create only a queue if it actually exists (name != NULL)
-and assign an incremental queue index to each such existing queue.
+If I'm reading the code correctly, that appears to be not possible, but
+with KCOV enabled, Clang's range analysis isn't always able to determine
+that and generates undefined behavior.
 
-However, in virtio_ccw_register_adapter_ind()->get_airq_indicator() we
-will not ignore these "non-existing queues", but instead assign an airq
-indicator to them.
+As a result the code generation isn't optimal, and undefined behavior
+should be avoided regardless.  Improve code generation and remove the
+undefined behavior by converting the signed variables to unsigned.
 
-Besides never releasing them in virtio_ccw_drop_indicators() (because
-there is no virtqueue), the bigger issue seems to be that there will be a
-disagreement between the device and the Linux guest about the airq
-indicator to be used for notifying a queue, because the indicator bit
-for adapter I/O interrupt is derived from the queue index.
+Fixes the following warning with UBSAN:
 
-The virtio spec states under "Setting Up Two-Stage Queue Indicators":
+  sound/soc/codecs/snd-soc-wcd934x.o: warning: objtool: .text.wcd934x_slim_irq_handler: unexpected end of section
 
-	... indicator contains the guest address of an area wherein the
-	indicators for the devices are contained, starting at bit_nr, one
-	bit per virtqueue of the device.
-
-And further in "Notification via Adapter I/O Interrupts":
-
-	For notifying the driver of virtqueue buffers, the device sets the
-	bit in the guest-provided indicator area at the corresponding
-	offset.
-
-For example, QEMU uses in virtio_ccw_notify() the queue index (passed as
-"vector") to select the relevant indicator bit. If a queue does not exist,
-it does not have a corresponding indicator bit assigned, because it
-effectively doesn't have a queue index.
-
-Using a virtio-balloon-ccw device under QEMU with free-page-hinting
-disabled ("free-page-hint=off") but free-page-reporting enabled
-("free-page-reporting=on") will result in free page reporting
-not working as expected: in the virtio_balloon driver, we'll be stuck
-forever in virtballoon_free_page_report()->wait_event(), because the
-waitqueue will not be woken up as the notification from the device is
-lost: it would use the wrong indicator bit.
-
-Free page reporting stops working and we get splats (when configured to
-detect hung wqs) like:
-
- INFO: task kworker/1:3:463 blocked for more than 61 seconds.
-       Not tainted 6.14.0 #4
- "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
- task:kworker/1:3 [...]
- Workqueue: events page_reporting_process
- Call Trace:
-  [<000002f404e6dfb2>] __schedule+0x402/0x1640
-  [<000002f404e6f22e>] schedule+0x3e/0xe0
-  [<000002f3846a88fa>] virtballoon_free_page_report+0xaa/0x110 [virtio_balloon]
-  [<000002f40435c8a4>] page_reporting_process+0x2e4/0x740
-  [<000002f403fd3ee2>] process_one_work+0x1c2/0x400
-  [<000002f403fd4b96>] worker_thread+0x296/0x420
-  [<000002f403fe10b4>] kthread+0x124/0x290
-  [<000002f403f4e0dc>] __ret_from_fork+0x3c/0x60
-  [<000002f404e77272>] ret_from_fork+0xa/0x38
-
-There was recently a discussion [1] whether the "holes" should be
-treated differently again, effectively assigning also non-existing
-queues a queue index: that should also fix the issue, but requires other
-workarounds to not break existing setups.
-
-Let's fix it without affecting existing setups for now by properly ignoring
-the non-existing queues, so the indicator bits will match the queue
-indexes.
-
-[1] https://lore.kernel.org/all/cover.1720611677.git.mst@redhat.com/
-
-Fixes: a229989d975e ("virtio: don't allocate vqs when names[i] = NULL")
-Reported-by: Chandra Merla <cmerla@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250402203621.940090-1-david@redhat.com
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Mark Brown <broonie@kernel.org>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Liam Girdwood <lgirdwood@gmail.com>
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/7e863839ec7301bf9c0f429a03873d44e484c31c.1742852847.git.jpoimboe@kernel.org
+Closes: https://lore.kernel.org/oe-kbuild-all/202503180044.oH9gyPeg-lkp@intel.com/
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/virtio/virtio_ccw.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ sound/soc/codecs/wcd934x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/s390/virtio/virtio_ccw.c
-+++ b/drivers/s390/virtio/virtio_ccw.c
-@@ -261,11 +261,17 @@ static struct airq_info *new_airq_info(i
- static unsigned long get_airq_indicator(struct virtqueue *vqs[], int nvqs,
- 					u64 *first, void **airq_info)
+diff --git a/sound/soc/codecs/wcd934x.c b/sound/soc/codecs/wcd934x.c
+index 104751ac6cd14..8580f5e95ccf6 100644
+--- a/sound/soc/codecs/wcd934x.c
++++ b/sound/soc/codecs/wcd934x.c
+@@ -2188,7 +2188,7 @@ static irqreturn_t wcd934x_slim_irq_handler(int irq, void *data)
  {
--	int i, j;
-+	int i, j, queue_idx, highest_queue_idx = -1;
- 	struct airq_info *info;
- 	unsigned long indicator_addr = 0;
- 	unsigned long bit, flags;
- 
-+	/* Array entries without an actual queue pointer must be ignored. */
-+	for (i = 0; i < nvqs; i++) {
-+		if (vqs[i])
-+			highest_queue_idx++;
-+	}
-+
- 	for (i = 0; i < MAX_AIRQ_AREAS && !indicator_addr; i++) {
- 		mutex_lock(&airq_areas_lock);
- 		if (!airq_areas[i])
-@@ -275,7 +281,7 @@ static unsigned long get_airq_indicator(
- 		if (!info)
- 			return 0;
- 		write_lock_irqsave(&info->lock, flags);
--		bit = airq_iv_alloc(info->aiv, nvqs);
-+		bit = airq_iv_alloc(info->aiv, highest_queue_idx + 1);
- 		if (bit == -1UL) {
- 			/* Not enough vacancies. */
- 			write_unlock_irqrestore(&info->lock, flags);
-@@ -284,8 +290,10 @@ static unsigned long get_airq_indicator(
- 		*first = bit;
- 		*airq_info = info;
- 		indicator_addr = (unsigned long)info->aiv->vector;
--		for (j = 0; j < nvqs; j++) {
--			airq_iv_set_ptr(info->aiv, bit + j,
-+		for (j = 0, queue_idx = 0; j < nvqs; j++) {
-+			if (!vqs[j])
-+				continue;
-+			airq_iv_set_ptr(info->aiv, bit + queue_idx++,
- 					(unsigned long)vqs[j]);
- 		}
- 		write_unlock_irqrestore(&info->lock, flags);
+ 	struct wcd934x_codec *wcd = data;
+ 	unsigned long status = 0;
+-	int i, j, port_id;
++	unsigned int i, j, port_id;
+ 	unsigned int val, int_val = 0;
+ 	irqreturn_t ret = IRQ_NONE;
+ 	bool tx;
+-- 
+2.39.5
+
 
 
