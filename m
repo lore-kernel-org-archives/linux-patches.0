@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B18253327;
-	Tue, 29 Apr 2025 18:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9EE254AFB;
+	Tue, 29 Apr 2025 18:10:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950251; cv=none; b=VnEv5cCXNn4v8xDTqhMgNX3UiOXbSvKtsYLcO3uj5kYdP8Tq0zf8LDjAYdGQG19uJNBPJrNo0mShq6H6CcVPD7hLGtRztuFcWqMtDAAVwowKrelD2M7OdtPuEzf95tkGBCQ0s3Zz8Habi8JbIMKdD+QnusX67qEH0nas/SX+vyI=
+	t=1745950255; cv=none; b=XNmKoj5+Q+u6GUSAzaEcPA0TP5O3X/cUkJZaOBF7JQD8cGTJwVS8z33M4v0+bhlwdpdFaDcdMTpwR05AX0yJlI7lEwX4XP3nAEvNYfeZHswzU0DdpdBTvrjX4IJGdsLG3AFhaF8+WU3owJWF7XwvadRplgAtjkse/oCbFYHmRr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950251; c=relaxed/simple;
-	bh=JDj46NtJoyIZUPHr0RN0x2Rv7Tzz4eroNXsJIhvPujY=;
+	s=arc-20240116; t=1745950255; c=relaxed/simple;
+	bh=CyF5M40BxhfziimjL8KiWgpLtaYIaO4p8N/F03xijn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rPDhc80JrbIaS/GNevC/CeBsa9+C51vEYmux3MNxGDqgmGh2jqBUjMTPMuCUqIrf9J09+3mKyenfT8sfZt+8Dmrs5iSdnwqay7rR49NtT7cxeWU1RB8IqWgZTbjjE33VUVXLOUOqA4YDlAVXiEajWMUyMelaFVQzes4jLQsU32k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4lH0emp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cdEk8/mcos99SmGT8+DUW5Hggfh/6ZRf6CeUChpTcz4P5B+Ed6VvvdHpeU8sudBp367Yz7pbkR7EOrd5q74Rru79cSrJh7PCcx6zL8/r7OPLEeyrTJQ/Qfz79gbcJvnWVc0QItwGJdYdBTBYPEpX2UmfUzS1+2H3dEKs+Z8djKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8+olgE1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4lH0emp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6CCC4CEE3;
-	Tue, 29 Apr 2025 18:10:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8+olgE1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC91C4CEE3;
+	Tue, 29 Apr 2025 18:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950250;
-	bh=JDj46NtJoyIZUPHr0RN0x2Rv7Tzz4eroNXsJIhvPujY=;
+	s=korg; t=1745950255;
+	bh=CyF5M40BxhfziimjL8KiWgpLtaYIaO4p8N/F03xijn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z4lH0emp4nSJThsTwyva2u5hVei1W5p4wKCgT56xTBRQKGCjikJ4KESo88Hj4/2Ij
-	 dP/EvrjnWBL9XfC3x6+uFV89naNLx1dnMxjNajtPojxrRShlo2nkQSfa7KjzA3qiS7
-	 pzTIx6GH6EgriXPD3Udh0o48gGL1gFv2g/6Ohkyw=
+	b=V8+olgE1xhR7x+qKIek5KS2NzvuJrLi00BpkehGazM13p69J5ycfOa0u78vmRchWK
+	 KhG4p424gTgBD4wFrZsuoUa1FiKHhZllUY1Nz4nRiv7zbo7ekbHQxaz9sCHDa6t59g
+	 oluhSXTyXpRpTncp2mNTcZZo+4sbk71zgFwGeeJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Libo Chen <libo.chen@oracle.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Umang Jain <umang.jain@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 007/204] tracing: Verify event formats that have "%*p.."
-Date: Tue, 29 Apr 2025 18:41:35 +0200
-Message-ID: <20250429161059.706248900@linuxfoundation.org>
+Subject: [PATCH 6.6 008/204] media: subdev: Fix use of sd->enabled_streams in call_s_stream()
+Date: Tue, 29 Apr 2025 18:41:36 +0200
+Message-ID: <20250429161059.744952586@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -53,91 +54,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit ea8d7647f9ddf1f81e2027ed305299797299aa03 ]
+[ Upstream commit 1d7804281df3f09f0a109d00406e859a00bae7ae ]
 
-The trace event verifier checks the formats of trace events to make sure
-that they do not point at memory that is not in the trace event itself or
-in data that will never be freed. If an event references data that was
-allocated when the event triggered and that same data is freed before the
-event is read, then the kernel can crash by reading freed memory.
+call_s_stream() uses sd->enabled_streams to track whether streaming has
+already been enabled. However,
+v4l2_subdev_enable/disable_streams_fallback(), which was the original
+user of this field, already uses it, and
+v4l2_subdev_enable/disable_streams_fallback() will call call_s_stream().
 
-The verifier runs at boot up (or module load) and scans the print formats
-of the events and checks their arguments to make sure that dereferenced
-pointers are safe. If the format uses "%*p.." the verifier will ignore it,
-and that could be dangerous. Cover this case as well.
+This leads to a conflict as both functions set the field. Afaics, both
+functions set the field to the same value, so it won't cause a runtime
+bug, but it's still wrong and if we, e.g., change how
+v4l2_subdev_enable/disable_streams_fallback() operates we might easily
+cause bugs.
 
-Also add to the sample code a use case of "%*pbl".
+Fix this by adding a new field, 's_stream_enabled', for
+call_s_stream().
 
-Link: https://lore.kernel.org/all/bcba4d76-2c3f-4d11-baf0-02905db953dd@oracle.com/
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: 5013f454a352c ("tracing: Add check of trace event print fmts for dereferencing pointers")
-Link: https://lore.kernel.org/20250327195311.2d89ec66@gandalf.local.home
-Reported-by: Libo Chen <libo.chen@oracle.com>
-Reviewed-by: Libo Chen <libo.chen@oracle.com>
-Tested-by: Libo Chen <libo.chen@oracle.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Umang Jain <umang.jain@ideasonboard.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Tested-by: Umang Jain <umang.jain@ideasonboard.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: 36cef585e2a3 ("media: vimc: skip .s_stream() for stopped entities")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events.c                | 7 +++++++
- samples/trace_events/trace-events-sample.h | 8 ++++++--
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ drivers/media/v4l2-core/v4l2-subdev.c | 8 ++------
+ include/media/v4l2-subdev.h           | 3 +++
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-index 1a936978c2b1a..5f74e9f9c8a73 100644
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -470,6 +470,7 @@ static void test_event_printk(struct trace_event_call *call)
- 			case '%':
- 				continue;
- 			case 'p':
-+ do_pointer:
- 				/* Find dereferencing fields */
- 				switch (fmt[i + 1]) {
- 				case 'B': case 'R': case 'r':
-@@ -498,6 +499,12 @@ static void test_event_printk(struct trace_event_call *call)
- 						continue;
- 					if (fmt[i + j] == '*') {
- 						star = true;
-+						/* Handle %*pbl case */
-+						if (!j && fmt[i + 1] == 'p') {
-+							arg++;
-+							i++;
-+							goto do_pointer;
-+						}
- 						continue;
- 					}
- 					if ((fmt[i + j] == 's')) {
-diff --git a/samples/trace_events/trace-events-sample.h b/samples/trace_events/trace-events-sample.h
-index 24ec968d481fb..06be777b3b14b 100644
---- a/samples/trace_events/trace-events-sample.h
-+++ b/samples/trace_events/trace-events-sample.h
-@@ -317,7 +317,8 @@ TRACE_EVENT(foo_bar,
- 		__assign_cpumask(cpum, cpumask_bits(mask));
- 	),
+diff --git a/drivers/media/v4l2-core/v4l2-subdev.c b/drivers/media/v4l2-core/v4l2-subdev.c
+index a32ef739eb449..8bfbe9d5fe3c4 100644
+--- a/drivers/media/v4l2-core/v4l2-subdev.c
++++ b/drivers/media/v4l2-core/v4l2-subdev.c
+@@ -363,12 +363,8 @@ static int call_s_stream(struct v4l2_subdev *sd, int enable)
+ 	 * The .s_stream() operation must never be called to start or stop an
+ 	 * already started or stopped subdev. Catch offenders but don't return
+ 	 * an error yet to avoid regressions.
+-	 *
+-	 * As .s_stream() is mutually exclusive with the .enable_streams() and
+-	 * .disable_streams() operation, we can use the enabled_streams field
+-	 * to store the subdev streaming state.
+ 	 */
+-	if (WARN_ON(!!sd->enabled_streams == !!enable))
++	if (WARN_ON(sd->s_stream_enabled == !!enable))
+ 		return 0;
  
--	TP_printk("foo %s %d %s %s %s %s %s %s (%s) (%s) %s", __entry->foo, __entry->bar,
-+	TP_printk("foo %s %d %s %s %s %s %s %s (%s) (%s) %s [%d] %*pbl",
-+		  __entry->foo, __entry->bar,
+ 	ret = sd->ops->video->s_stream(sd, enable);
+@@ -379,7 +375,7 @@ static int call_s_stream(struct v4l2_subdev *sd, int enable)
+ 	}
  
- /*
-  * Notice here the use of some helper functions. This includes:
-@@ -368,7 +369,10 @@ TRACE_EVENT(foo_bar,
+ 	if (!ret) {
+-		sd->enabled_streams = enable ? BIT(0) : 0;
++		sd->s_stream_enabled = enable;
  
- 		  __get_str(str), __get_str(lstr),
- 		  __get_bitmask(cpus), __get_cpumask(cpum),
--		  __get_str(vstr))
-+		  __get_str(vstr),
-+		  __get_dynamic_array_len(cpus),
-+		  __get_dynamic_array_len(cpus),
-+		  __get_dynamic_array(cpus))
- );
+ #if IS_REACHABLE(CONFIG_LEDS_CLASS)
+ 		if (!IS_ERR_OR_NULL(sd->privacy_led)) {
+diff --git a/include/media/v4l2-subdev.h b/include/media/v4l2-subdev.h
+index ab2a7ef61d420..ee570dfbd791d 100644
+--- a/include/media/v4l2-subdev.h
++++ b/include/media/v4l2-subdev.h
+@@ -1042,6 +1042,8 @@ struct v4l2_subdev_platform_data {
+  *		     v4l2_subdev_enable_streams() and
+  *		     v4l2_subdev_disable_streams() helper functions for fallback
+  *		     cases.
++ * @s_stream_enabled: Tracks whether streaming has been enabled with s_stream.
++ *                    This is only for call_s_stream() internal use.
+  *
+  * Each instance of a subdev driver should create this struct, either
+  * stand-alone or embedded in a larger struct.
+@@ -1090,6 +1092,7 @@ struct v4l2_subdev {
+ 	 */
+ 	struct v4l2_subdev_state *active_state;
+ 	u64 enabled_streams;
++	bool s_stream_enabled;
+ };
  
- /*
+ 
 -- 
 2.39.5
 
