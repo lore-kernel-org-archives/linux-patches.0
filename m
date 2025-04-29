@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773162522AB;
-	Tue, 29 Apr 2025 18:03:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96CCB40C03;
+	Tue, 29 Apr 2025 18:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949815; cv=none; b=lhR75xBnj8cVfyibZYdVG24dRAHYRJX/lB8n5pOuasQt5XFZlRVJQ7Cob56seD8UOai21WeBbnOZYfaTbkmIn3tNadMCD4a+MMMD7QQaArzCzQGlAmQCYvGpWQmQsvLr6sJEMak9ZH+kmUWy+yT8Lz79Ddq0IeogndiNEW1xfUE=
+	t=1745949818; cv=none; b=nZTKw+oiOr1HtnMb7nOpgp36LwDfHqI1NjSpQ8TakfzmpLnIN3WGOF3xyECBC/37B8JhHpmRGN7uUTxFnNcku6i3WGVuwvL7gAes4csuNkyhELtPKHv6Fl9Te1L+5hTfl9Ilp8xfYhyq/6k3gsG56F2gW5EkeMKZAtr6lX/cCLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949815; c=relaxed/simple;
-	bh=0d0oDCnh6C2QHnYVFlETYS8X05J20Zgu+tfDwG5BZCE=;
+	s=arc-20240116; t=1745949818; c=relaxed/simple;
+	bh=giQDdAkBVN9QLMbcbB3Jlg0jhIn2sLYl/d62HMZdeAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yqml/j4M3RA6hFHOunU+sGJPbwWg9Me6hbBfVoO/LPHd8gctLhEuVNbfXADpgKeKnF87BG1lUwyKbJwy08oeFHeXPUGe1AYTJh0exe8LlVsFH/QgiWCHf9dzn54KVEPmpYvA30Zqmi/5sVglU1hhL8OvabHt6VM7UCJ5ONb+6I8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EuKYhdg8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hYDOIrurqHmkgxN0uzgA6W52qLvyQT7WM8EnZ+V/6U7+FcJnGRSaiXti2JzcCsoXZS8h1zvpOYeW8/lRxrA6rRQnaiCTWfi11nKyUkkezqey+vl9n32/QlB6B0LTG3sLgx9M/4yjDS4rO09njuhrWs7em1U04pUvhoiEOT12F3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0YcOInf+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EuKYhdg8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0FDC4CEE3;
-	Tue, 29 Apr 2025 18:03:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0YcOInf+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 122E9C4CEE3;
+	Tue, 29 Apr 2025 18:03:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949815;
-	bh=0d0oDCnh6C2QHnYVFlETYS8X05J20Zgu+tfDwG5BZCE=;
+	s=korg; t=1745949818;
+	bh=giQDdAkBVN9QLMbcbB3Jlg0jhIn2sLYl/d62HMZdeAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EuKYhdg8GBxq9OY7z4jZbVYDeXmVJdWbWttBpsqaRiXktdZoYxzYjbEe6lUWklSLf
-	 41RrdYHexUP8Dvx2eBKoYb7yGItNFd4bWB3gSqPcDOCZdAchwMdgyb/n3wzKykCYp8
-	 qM8Rd7Gs4WqQAiVfO7KW/itimD0jw7IBKz3ZWWbY=
+	b=0YcOInf+/pavI3mQONE+yr0HfajHyfly1rv1FrKVS3FMtcjly+tQvm8TJ7963ZoGf
+	 /JKoJYTms6NmDOt2Uqdzr3wldY3AU22Ra611Hy8BJY8MO08Apo/FypvZdEvvdt20lq
+	 7xf+3bLo4diF+OTUZddv6zifwBH+TFDthZ3g7/DU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erpeng Xu <xuerpeng@uniontech.com>,
-	Yuli Wang <wangyuli@uniontech.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 058/167] LoongArch: Select ARCH_USE_MEMTEST
-Date: Tue, 29 Apr 2025 18:42:46 +0200
-Message-ID: <20250429161054.112558635@linuxfoundation.org>
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Roman Li <Roman.Li@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Mark Broadworth <mark.broadworth@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 067/167] drm/amd/display: Force full update in gpu reset
+Date: Tue, 29 Apr 2025 18:42:55 +0200
+Message-ID: <20250429161054.484882294@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -52,40 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuli Wang <wangyuli@uniontech.com>
+From: Roman Li <Roman.Li@amd.com>
 
-[ Upstream commit fb8e9f59d6f292c3d9fea6c155c22ea5fc3053ab ]
+commit 67fe574651c73fe5cc176e35f28f2ec1ba498d14 upstream.
 
-As of commit dce44566192e ("mm/memtest: add ARCH_USE_MEMTEST"),
-architectures must select ARCH_USE_MEMTESET to enable CONFIG_MEMTEST.
+[Why]
+While system undergoing gpu reset always do full update
+to sync the dc state before and after reset.
 
-Commit 628c3bb40e9a ("LoongArch: Add boot and setup routines") added
-support for early_memtest but did not select ARCH_USE_MEMTESET.
+[How]
+Return true in should_reset_plane() if gpu reset detected
 
-Fixes: 628c3bb40e9a ("LoongArch: Add boot and setup routines")
-Tested-by: Erpeng Xu <xuerpeng@uniontech.com>
-Tested-by: Yuli Wang <wangyuli@uniontech.com>
-Signed-off-by: Yuli Wang <wangyuli@uniontech.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Roman Li <Roman.Li@amd.com>
+Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Tested-by: Mark Broadworth <mark.broadworth@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 2ba8619b9a378ad218ad6c2e2ccaee8f531e08de)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/loongarch/Kconfig b/arch/loongarch/Kconfig
-index 0166d357069d9..6c55d85b1c767 100644
---- a/arch/loongarch/Kconfig
-+++ b/arch/loongarch/Kconfig
-@@ -51,6 +51,7 @@ config LOONGARCH
- 	select ARCH_SUPPORTS_NUMA_BALANCING
- 	select ARCH_USE_BUILTIN_BSWAP
- 	select ARCH_USE_CMPXCHG_LOCKREF
-+	select ARCH_USE_MEMTEST
- 	select ARCH_USE_QUEUED_RWLOCKS
- 	select ARCH_USE_QUEUED_SPINLOCKS
- 	select ARCH_WANT_DEFAULT_TOPDOWN_MMAP_LAYOUT
--- 
-2.39.5
-
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -9358,6 +9358,9 @@ static bool should_reset_plane(struct dr
+ 	if (adev->ip_versions[DCE_HWIP][0] < IP_VERSION(3, 2, 0) && state->allow_modeset)
+ 		return true;
+ 
++	if (amdgpu_in_reset(adev) && state->allow_modeset)
++		return true;
++
+ 	/* Exit early if we know that we're adding or removing the plane. */
+ 	if (old_plane_state->crtc != new_plane_state->crtc)
+ 		return true;
 
 
