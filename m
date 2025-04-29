@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AF0242D73;
-	Tue, 29 Apr 2025 17:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F539221DA7;
+	Tue, 29 Apr 2025 17:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948828; cv=none; b=hMPzqMR2GtMzQY/CIbbmkcvKVzu298rl1Jq5z6xZa3Ea8owm/AX0f7lURRWA4mFD5wWQFP+R4cNGyu/QVOQPXMo6vwraEjYKlBf1oKA6S41jDBGGeQKoN8IruXSnEdF2fLOgkFtayIagrKDZapSfXRpHQDXSKctKZMUg4CExW1M=
+	t=1745948831; cv=none; b=nEpLkBcR/rZJxPpmg4+5kxmRhi0Mc+ZoPXAYRQUrPJtpNjym9XkG9DGKdv15TQkJNstdbtHwtfq4OvWVnPB7lEvqaZwCDl3sWvFLH49+wCRyCrUXRX4nCLDHHSm5yonJPmNXRy3BrrNayrSreS381Lcr6KsAYILeICj6RqIjSx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948828; c=relaxed/simple;
-	bh=RkBPhf3qohUOjb/1vj9dkuTehsIwupBcF2OgIVx6emc=;
+	s=arc-20240116; t=1745948831; c=relaxed/simple;
+	bh=QjJe3PCLPRiBtmMBmU1KE3MTtGewLXlKUxPHfLyYerw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CiW99vykF8EkGLWV1Ey+6750DxrEQHzDIzAuTeMdyOFiV1k7uPpZ0iPKkjz7olOmuTn917cV62GmMJYz3H3PMecPVRmuTLhitD3geOWgUrpAe5GozwdPur0gTL3eJRJQ0vpq6LeStPzOoRvpkpRL+BsN5/UxUDpY/LolxjrLE0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/pzl7/f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SjVaBZ+jCfNDSBPlXFqTcs+mou0GKRJ9i40VUhVpZQosuF5f1tbU93CgoCdc+chJtxXjd0w+1Fcqv9mpRxXKk6igkKeIw5S8au1dlShWmVU6jZ2oYaqvwKzkVMGtPd0QSE2Z5xvPmoV1m4Isgv7e4N01Pt79sXevK5Df04KwqJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i1eI+VPv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/pzl7/f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D22C4CEE3;
-	Tue, 29 Apr 2025 17:47:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i1eI+VPv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D098C4CEE3;
+	Tue, 29 Apr 2025 17:47:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948828;
-	bh=RkBPhf3qohUOjb/1vj9dkuTehsIwupBcF2OgIVx6emc=;
+	s=korg; t=1745948830;
+	bh=QjJe3PCLPRiBtmMBmU1KE3MTtGewLXlKUxPHfLyYerw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/pzl7/fycXMLPPVbBnciFOwDeT5vXeaNyQTeCvQQtEghF6XspEBMI3GBGh6gpLNN
-	 RaBaFkdaGbGIC/5jrT/i1Aq1/JPYqaexlrXdGLWDFhHfFb0SsaAHPpZ1bkTGm6tefV
-	 pfMEBo/LK8ehyzQCTfOpY5wwLZzGYBgBgK4AA9uI=
+	b=i1eI+VPvci4K5ib/enip5w0seKrb6DjJ78he1uVgsYdVZ/+zrQ4ZqM8DlXGu4D2Wn
+	 jaig6/66JKOX0S2rWcXICKo22A3U7RCB249wvGjuqUISpzpLa6TgNgG/9OYU1KTMD6
+	 xWGIgMo1gr5zTgK1QfU1WcmvbhizBl9iTsEzCWD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Michael Nemanov <michael.nemanov@ti.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 129/373] wifi: mac80211: Purge vif txq in ieee80211_do_stop()
-Date: Tue, 29 Apr 2025 18:40:06 +0200
-Message-ID: <20250429161128.476484757@linuxfoundation.org>
+Subject: [PATCH 5.15 130/373] wifi: wl1251: fix memory leak in wl1251_tx_work
+Date: Tue, 29 Apr 2025 18:40:07 +0200
+Message-ID: <20250429161128.516026947@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,115 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-[ Upstream commit 378677eb8f44621ecc9ce659f7af61e5baa94d81 ]
+[ Upstream commit a0f0dc96de03ffeefc2a177b7f8acde565cb77f4 ]
 
-After ieee80211_do_stop() SKB from vif's txq could still be processed.
-Indeed another concurrent vif schedule_and_wake_txq call could cause
-those packets to be dequeued (see ieee80211_handle_wake_tx_queue())
-without checking the sdata current state.
+The skb dequeued from tx_queue is lost when wl1251_ps_elp_wakeup fails
+with a -ETIMEDOUT error. Fix that by queueing the skb back to tx_queue.
 
-Because vif.drv_priv is now cleared in this function, this could lead to
-driver crash.
-
-For example in ath12k, ahvif is store in vif.drv_priv. Thus if
-ath12k_mac_op_tx() is called after ieee80211_do_stop(), ahvif->ah can be
-NULL, leading the ath12k_warn(ahvif->ah,...) call in this function to
-trigger the NULL deref below.
-
-  Unable to handle kernel paging request at virtual address dfffffc000000001
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  batman_adv: bat0: Interface deactivated: brbh1337
-  Mem abort info:
-    ESR = 0x0000000096000004
-    EC = 0x25: DABT (current EL), IL = 32 bits
-    SET = 0, FnV = 0
-    EA = 0, S1PTW = 0
-    FSC = 0x04: level 0 translation fault
-  Data abort info:
-    ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-    CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-    GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-  [dfffffc000000001] address between user and kernel address ranges
-  Internal error: Oops: 0000000096000004 [#1] SMP
-  CPU: 1 UID: 0 PID: 978 Comm: lbd Not tainted 6.13.0-g633f875b8f1e #114
-  Hardware name: HW (DT)
-  pstate: 10000005 (nzcV daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-  pc : ath12k_mac_op_tx+0x6cc/0x29b8 [ath12k]
-  lr : ath12k_mac_op_tx+0x174/0x29b8 [ath12k]
-  sp : ffffffc086ace450
-  x29: ffffffc086ace450 x28: 0000000000000000 x27: 1ffffff810d59ca4
-  x26: ffffff801d05f7c0 x25: 0000000000000000 x24: 000000004000001e
-  x23: ffffff8009ce4926 x22: ffffff801f9c0800 x21: ffffff801d05f7f0
-  x20: ffffff8034a19f40 x19: 0000000000000000 x18: ffffff801f9c0958
-  x17: ffffff800bc0a504 x16: dfffffc000000000 x15: ffffffc086ace4f8
-  x14: ffffff801d05f83c x13: 0000000000000000 x12: ffffffb003a0bf03
-  x11: 0000000000000000 x10: ffffffb003a0bf02 x9 : ffffff8034a19f40
-  x8 : ffffff801d05f818 x7 : 1ffffff0069433dc x6 : ffffff8034a19ee0
-  x5 : ffffff801d05f7f0 x4 : 0000000000000000 x3 : 0000000000000001
-  x2 : 0000000000000000 x1 : dfffffc000000000 x0 : 0000000000000008
-  Call trace:
-   ath12k_mac_op_tx+0x6cc/0x29b8 [ath12k] (P)
-   ieee80211_handle_wake_tx_queue+0x16c/0x260
-   ieee80211_queue_skb+0xeec/0x1d20
-   ieee80211_tx+0x200/0x2c8
-   ieee80211_xmit+0x22c/0x338
-   __ieee80211_subif_start_xmit+0x7e8/0xc60
-   ieee80211_subif_start_xmit+0xc4/0xee0
-   __ieee80211_subif_start_xmit_8023.isra.0+0x854/0x17a0
-   ieee80211_subif_start_xmit_8023+0x124/0x488
-   dev_hard_start_xmit+0x160/0x5a8
-   __dev_queue_xmit+0x6f8/0x3120
-   br_dev_queue_push_xmit+0x120/0x4a8
-   __br_forward+0xe4/0x2b0
-   deliver_clone+0x5c/0xd0
-   br_flood+0x398/0x580
-   br_dev_xmit+0x454/0x9f8
-   dev_hard_start_xmit+0x160/0x5a8
-   __dev_queue_xmit+0x6f8/0x3120
-   ip6_finish_output2+0xc28/0x1b60
-   __ip6_finish_output+0x38c/0x638
-   ip6_output+0x1b4/0x338
-   ip6_local_out+0x7c/0xa8
-   ip6_send_skb+0x7c/0x1b0
-   ip6_push_pending_frames+0x94/0xd0
-   rawv6_sendmsg+0x1a98/0x2898
-   inet_sendmsg+0x94/0xe0
-   __sys_sendto+0x1e4/0x308
-   __arm64_sys_sendto+0xc4/0x140
-   do_el0_svc+0x110/0x280
-   el0_svc+0x20/0x60
-   el0t_64_sync_handler+0x104/0x138
-   el0t_64_sync+0x154/0x158
-
-To avoid that, empty vif's txq at ieee80211_do_stop() so no packet could
-be dequeued after ieee80211_do_stop() (new packets cannot be queued
-because SDATA_STATE_RUNNING is cleared at this point).
-
-Fixes: ba8c3d6f16a1 ("mac80211: add an intermediate software queue implementation")
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Link: https://patch.msgid.link/ff7849e268562456274213c0476e09481a48f489.1742833382.git.repk@triplefau.lt
+Fixes: c5483b719363 ("wl12xx: check if elp wakeup failed")
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Reviewed-by: Michael Nemanov <michael.nemanov@ti.com>
+Link: https://patch.msgid.link/20250330104532.44935-1-abdun.nihaal@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/iface.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/ti/wl1251/tx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
-index e362a08af2873..e437bcadf4a27 100644
---- a/net/mac80211/iface.c
-+++ b/net/mac80211/iface.c
-@@ -585,6 +585,9 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
- 	if (sdata->vif.type == NL80211_IFTYPE_AP_VLAN)
- 		ieee80211_txq_remove_vlan(local, sdata);
+diff --git a/drivers/net/wireless/ti/wl1251/tx.c b/drivers/net/wireless/ti/wl1251/tx.c
+index 98cd39619d579..5771f61392efb 100644
+--- a/drivers/net/wireless/ti/wl1251/tx.c
++++ b/drivers/net/wireless/ti/wl1251/tx.c
+@@ -342,8 +342,10 @@ void wl1251_tx_work(struct work_struct *work)
+ 	while ((skb = skb_dequeue(&wl->tx_queue))) {
+ 		if (!woken_up) {
+ 			ret = wl1251_ps_elp_wakeup(wl);
+-			if (ret < 0)
++			if (ret < 0) {
++				skb_queue_head(&wl->tx_queue, skb);
+ 				goto out;
++			}
+ 			woken_up = true;
+ 		}
  
-+	if (sdata->vif.txq)
-+		ieee80211_txq_purge(sdata->local, to_txq_info(sdata->vif.txq));
-+
- 	sdata->bss = NULL;
- 
- 	if (local->open_count == 0)
 -- 
 2.39.5
 
