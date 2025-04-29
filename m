@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613BD2517AF;
-	Tue, 29 Apr 2025 17:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3ED2512D9;
+	Tue, 29 Apr 2025 17:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946918; cv=none; b=r+WhoIS8jQwBqeFwgQ7zjAe7MCNl6aQdsQS1JI9O76Y+c3cJMsuG96bpMOSrLnPmE/IpykarcZEiJfToHT4+fGuuw4iCuSk8BFLfEiBxxp/Ndb1fh28Rn5JJ1isqXgBH0AJWL5kGkvpCh6/sdgjuydJzbsCs0mGNqpLHoeElviU=
+	t=1745946921; cv=none; b=YHLg4WCsMAgRIsdlQ9Vx+vxa5upGihR3Ljsfm+pD/s9FX7mlaQlawd5tGjeu+Iqvy4N8ARUe6vX0iYA3uMTfdeWCP2vz0wrcNbmgut+3HLF7BefGnWqdTZ/PzGZjO5GvOnPqJrb9FkiY1IpRZQcr9Wn9CqKRr2AeobqPcvBnHjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946918; c=relaxed/simple;
-	bh=sIkPlYtV5I/n6zj5OJrXDKljUFOADv0I2H4c1ELmbjM=;
+	s=arc-20240116; t=1745946921; c=relaxed/simple;
+	bh=i86p1qkfyzGZGH6sBGvtEdpgo02Zu0d/stv+q0/1t6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fDjf6mqQkyFYlQKEHkYXfjDKhCnQr5wLR48IkqSv9Va7sBkZitmFFLxd9zFZgwKxtcQtenEP3Tc84aJ65TwU3POq+rqsiPsbBQr3ET7b9D5VzyQKCl6iHuF8BCqBsG8bGyJ/AttSRH24kSJWiD+pNUDBpnGnE8Dgk+P/16qw198=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lA7A2qKo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LBHJVdPbIFKfrnxn+sfxyXlGmuvJ49XpwqXH6uVXSnwH6Avzf+NUulGCKCeShXXTHmrXbEyYhxKL/0ZZs6M/PY94axALxH6GRq5hEEPu9Ztq9uAePlpfAc64T7/mLXBIZpplLReG49xRxzhnbCj8kJpEZ4yQs1ONEHFPmE8qL40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rb7kX2oL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lA7A2qKo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0E3C4CEE3;
-	Tue, 29 Apr 2025 17:15:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rb7kX2oL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11A0C4CEEE;
+	Tue, 29 Apr 2025 17:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946918;
-	bh=sIkPlYtV5I/n6zj5OJrXDKljUFOADv0I2H4c1ELmbjM=;
+	s=korg; t=1745946921;
+	bh=i86p1qkfyzGZGH6sBGvtEdpgo02Zu0d/stv+q0/1t6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lA7A2qKouH3hD2m7+BJGVvArOSi+fvT7Fh3u2ecudkUSeX2u4kEiF/Us5ZjCz7WJi
-	 vSSFlSsp5mKxu+d/Z/C1ifdcUZWjBlFfC2jECW2J5uR0L6h1DxTUhQnZWc0xVJhnQ+
-	 DTwvQQYSr2SxVEDFrBUHBUWDfnX+ZFWvQcMaFVII=
+	b=Rb7kX2oLT2K4tzskyx9ftyV/KCuxM+iPG0+WlOEv2PO6muxgXeP/Ke4Q65kmQG6E2
+	 V+04EKADDJPP6qE2Hl7e2wY43sVALN9OK+7xzA9ZQJje4CO0dtSBGhzFCNA4l39bAz
+	 3Uy2Z33Jxbo8dkmlCRyAfsebJyehPromFR6Akj5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bert Karwatzki <spasswolf@web.de>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Christopher S M Hall <christopher.s.hall@intel.com>,
+	Corinna Vinschen <vinschen@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 112/286] Revert "wifi: mac80211: Update skbs control block key in ieee80211_tx_dequeue()"
-Date: Tue, 29 Apr 2025 18:40:16 +0200
-Message-ID: <20250429161112.467286378@linuxfoundation.org>
+Subject: [PATCH 5.10 113/286] igc: handle the IGC_PTP_ENABLED flag correctly
+Date: Tue, 29 Apr 2025 18:40:17 +0200
+Message-ID: <20250429161112.507496413@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -51,38 +55,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Christopher S M Hall <christopher.s.hall@intel.com>
 
-[ Upstream commit 0937cb5f345c79d702b4d0d744e2a2529b551cb2 ]
+[ Upstream commit 26a3910afd111f7c1a96dace6dc02f3225063896 ]
 
-This reverts commit a104042e2bf6528199adb6ca901efe7b60c2c27f.
+All functions in igc_ptp.c called from igc_main.c should check the
+IGC_PTP_ENABLED flag. Adding check for this flag to stop and reset
+functions.
 
-Since the original bug seems to have been around for years,
-but a new issue was report with the fix, revert the fix for
-now. We have a couple of weeks to figure it out for this
-release, if needed.
-
-Reported-by: Bert Karwatzki <spasswolf@web.de>
-Closes: https://lore.kernel.org/linux-wireless/20250410215527.3001-1-spasswolf@web.de
-Fixes: a104042e2bf6 ("wifi: mac80211: Update skb's control block key in ieee80211_tx_dequeue()")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 5f2958052c58 ("igc: Add basic skeleton for PTP")
+Signed-off-by: Christopher S M Hall <christopher.s.hall@intel.com>
+Reviewed-by: Corinna Vinschen <vinschen@redhat.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/intel/igc/igc_ptp.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 5615575595efb..0d6d12fc3c07e 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -3691,7 +3691,6 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
- 	 * The key can be removed while the packet was queued, so need to call
- 	 * this here to get the current key.
- 	 */
--	info->control.hw_key = NULL;
- 	r = ieee80211_tx_h_select_key(&tx);
- 	if (r != TX_CONTINUE) {
- 		ieee80211_free_txskb(&local->hw, skb);
+diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
+index 25b238c6a675c..d99f597a83be5 100644
+--- a/drivers/net/ethernet/intel/igc/igc_ptp.c
++++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
+@@ -578,8 +578,12 @@ void igc_ptp_suspend(struct igc_adapter *adapter)
+  **/
+ void igc_ptp_stop(struct igc_adapter *adapter)
+ {
++	if (!(adapter->ptp_flags & IGC_PTP_ENABLED))
++		return;
++
+ 	igc_ptp_suspend(adapter);
+ 
++	adapter->ptp_flags &= ~IGC_PTP_ENABLED;
+ 	if (adapter->ptp_clock) {
+ 		ptp_clock_unregister(adapter->ptp_clock);
+ 		netdev_info(adapter->netdev, "PHC removed\n");
+@@ -598,6 +602,9 @@ void igc_ptp_reset(struct igc_adapter *adapter)
+ 	struct igc_hw *hw = &adapter->hw;
+ 	unsigned long flags;
+ 
++	if (!(adapter->ptp_flags & IGC_PTP_ENABLED))
++		return;
++
+ 	/* reset the tstamp_config */
+ 	igc_ptp_set_timestamp_mode(adapter, &adapter->tstamp_config);
+ 
 -- 
 2.39.5
 
