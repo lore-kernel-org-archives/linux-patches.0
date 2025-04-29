@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB584238C21;
-	Tue, 29 Apr 2025 17:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B823482C60;
+	Tue, 29 Apr 2025 17:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948008; cv=none; b=cEwj7X6IJueCN0Zd8UpbLiDESXVqXaFkodTx2dddeCZblsl80XarwhStopJt63LMr97B29beKmMZNHXxfRLAPpbWhJYD2T3K+rvaopCUpt5vTFJk/BduWPPbGAKjiMOGOqd7uBkTu6ve2KVvHorRIrGZO02VZxjgJaqrniOBleg=
+	t=1745948011; cv=none; b=NEWRekcZmr0mFK0j7vxmpGlm3xFKot6qQq/oRowKdjGw7pMgHNgMZYsnhvItQ+3bwLkkavIWleypo/Y56sRI/XWg5uyonqWRUYgK8JogfWz0RFmlwMLm0Eryrv8m4UIrIdScQMGtR/5DclTJ+JSX5XV7vKsZhnvITM06oqhkI+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948008; c=relaxed/simple;
-	bh=vBuJejzMUjFM3bTjk0/hQYlT43+oC7l/0zR0YoOG+zI=;
+	s=arc-20240116; t=1745948011; c=relaxed/simple;
+	bh=LLTJ8PpbUiw6abML2TjdVj2tsqsxR0wep9bgKUkmNqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SrNuGIqXHzQeTt5TWIq+pQvkDiGtf+TfwuYTJxIl4WMxNtBqXymemcYn5hkfKGal39o+zmSfKG2fDNK1YcNaoz4yCUVMU9yihu5YAvmOPjEW9MHGaUeHRV3fWD6QfF3DqlE03ALxbe5MsmPaBGkJTAffc8ec9/EHExA+u1c4Uus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eUXuElJc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZXdkxutbWLNTDs0zBvZF0KK1UbYG3wfMuoyGfs/2E6U7a/DK8Nok5q3x+xq7l/ny6ssJX2BfC3UelWdA9euAvUcVU6YDrrSkToHBhDCiTZ2h0sX5R5p5m2AS8mn8X76fAPcqFOfPg3Yip9ri/vSi5T+0zgdrGm6osAMNekSM4Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wR9lL7M/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eUXuElJc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F96FC4CEE3;
-	Tue, 29 Apr 2025 17:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wR9lL7M/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F0CC4CEE3;
+	Tue, 29 Apr 2025 17:33:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948007;
-	bh=vBuJejzMUjFM3bTjk0/hQYlT43+oC7l/0zR0YoOG+zI=;
+	s=korg; t=1745948011;
+	bh=LLTJ8PpbUiw6abML2TjdVj2tsqsxR0wep9bgKUkmNqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eUXuElJcZWeLfWH1Fz4GeLujWXcXfth43urt6UORWQL7qcCT1bx0pyTpzZTACnBwG
-	 Su6ATBCMP8otqQ30iKZeCFHnr105nJhmYXO7Zki7dWq8CV3PXViCXrRtMvr3qYmCPQ
-	 71NXVHnWtPWSfUr/ROMfsoXtT5MPaBi/fPNQ0ZtE=
+	b=wR9lL7M/MXJuKFELOVc4o9HPUeaPk9c3qHK+kjEsY4UyQ0H3l7whqNBSwuTmBh9vX
+	 nPTs9lLH/0b7v/HJaLL7eYDehJYIpN+hUEdfHpvmUfOtYsUlP73ifWWAI9mmR58O92
+	 USJCt7rmcWpDG9qE4vsm2+H0S+SijPg2HLmMJ76w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 166/280] bpf: Only fails the busy counter check in bpf_cgrp_storage_get if it creates storage
-Date: Tue, 29 Apr 2025 18:41:47 +0200
-Message-ID: <20250429161121.902623754@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ralph Siemsen <ralph.siemsen@linaro.org>,
+	Peter Chen <peter.chen@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Subject: [PATCH 6.12 138/280] usb: cdns3: Fix deadlock when using NCM gadget
+Date: Tue, 29 Apr 2025 18:41:19 +0200
+Message-ID: <20250429161120.774217600@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -51,90 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: Ralph Siemsen <ralph.siemsen@linaro.org>
 
-[ Upstream commit f4edc66e48a694b3e6d164cc71f059de542dfaec ]
+commit a1059896f2bfdcebcdc7153c3be2307ea319501f upstream.
 
-The current cgrp storage has a percpu counter, bpf_cgrp_storage_busy,
-to detect potential deadlock at a spin_lock that the local storage
-acquires during new storage creation.
+The cdns3 driver has the same NCM deadlock as fixed in cdnsp by commit
+58f2fcb3a845 ("usb: cdnsp: Fix deadlock issue during using NCM gadget").
 
-There are false positives. It turns out to be too noisy in
-production. For example, a bpf prog may be doing a
-bpf_cgrp_storage_get on map_a. An IRQ comes in and triggers
-another bpf_cgrp_storage_get on a different map_b. It will then
-trigger the false positive deadlock check in the percpu counter.
-On top of that, both are doing lookup only and no need to create
-new storage, so practically it does not need to acquire
-the spin_lock.
+Under PREEMPT_RT the deadlock can be readily triggered by heavy network
+traffic, for example using "iperf --bidir" over NCM ethernet link.
 
-The bpf_task_storage_get already has a strategy to minimize this
-false positive by only failing if the bpf_task_storage_get needs
-to create a new storage and the percpu counter is busy. Creating
-a new storage is the only time it must acquire the spin_lock.
+The deadlock occurs because the threaded interrupt handler gets
+preempted by a softirq, but both are protected by the same spinlock.
+Prevent deadlock by disabling softirq during threaded irq handler.
 
-This patch borrows the same idea. Unlike task storage that
-has a separate variant for tracing (_recur) and non-tracing, this
-patch stays with one bpf_cgrp_storage_get helper to keep it simple
-for now in light of the upcoming res_spin_lock.
-
-The variable could potentially use a better name noTbusy instead
-of nobusy. This patch follows the same naming in
-bpf_task_storage_get for now.
-
-I have tested it by temporarily adding noinline to
-the cgroup_storage_lookup(), traced it by fentry, and the fentry
-program succeeded in calling bpf_cgrp_storage_get().
-
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://lore.kernel.org/r/20250318182759.3676094-1-martin.lau@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable <stable@kernel.org>
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Signed-off-by: Ralph Siemsen <ralph.siemsen@linaro.org>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/r/20250318-rfs-cdns3-deadlock-v2-1-bfd9cfcee732@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/bpf_cgrp_storage.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/usb/cdns3/cdns3-gadget.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/bpf/bpf_cgrp_storage.c b/kernel/bpf/bpf_cgrp_storage.c
-index 6547fb7ac0dcb..129a51b1da1b1 100644
---- a/kernel/bpf/bpf_cgrp_storage.c
-+++ b/kernel/bpf/bpf_cgrp_storage.c
-@@ -162,6 +162,7 @@ BPF_CALL_5(bpf_cgrp_storage_get, struct bpf_map *, map, struct cgroup *, cgroup,
- 	   void *, value, u64, flags, gfp_t, gfp_flags)
- {
- 	struct bpf_local_storage_data *sdata;
-+	bool nobusy;
+--- a/drivers/usb/cdns3/cdns3-gadget.c
++++ b/drivers/usb/cdns3/cdns3-gadget.c
+@@ -1963,6 +1963,7 @@ static irqreturn_t cdns3_device_thread_i
+ 	unsigned int bit;
+ 	unsigned long reg;
  
- 	WARN_ON_ONCE(!bpf_rcu_lock_held());
- 	if (flags & ~(BPF_LOCAL_STORAGE_GET_F_CREATE))
-@@ -170,21 +171,21 @@ BPF_CALL_5(bpf_cgrp_storage_get, struct bpf_map *, map, struct cgroup *, cgroup,
- 	if (!cgroup)
- 		return (unsigned long)NULL;
++	local_bh_disable();
+ 	spin_lock_irqsave(&priv_dev->lock, flags);
  
--	if (!bpf_cgrp_storage_trylock())
--		return (unsigned long)NULL;
-+	nobusy = bpf_cgrp_storage_trylock();
+ 	reg = readl(&priv_dev->regs->usb_ists);
+@@ -2004,6 +2005,7 @@ static irqreturn_t cdns3_device_thread_i
+ irqend:
+ 	writel(~0, &priv_dev->regs->ep_ien);
+ 	spin_unlock_irqrestore(&priv_dev->lock, flags);
++	local_bh_enable();
  
--	sdata = cgroup_storage_lookup(cgroup, map, true);
-+	sdata = cgroup_storage_lookup(cgroup, map, nobusy);
- 	if (sdata)
- 		goto unlock;
- 
- 	/* only allocate new storage, when the cgroup is refcounted */
- 	if (!percpu_ref_is_dying(&cgroup->self.refcnt) &&
--	    (flags & BPF_LOCAL_STORAGE_GET_F_CREATE))
-+	    (flags & BPF_LOCAL_STORAGE_GET_F_CREATE) && nobusy)
- 		sdata = bpf_local_storage_update(cgroup, (struct bpf_local_storage_map *)map,
- 						 value, BPF_NOEXIST, gfp_flags);
- 
- unlock:
--	bpf_cgrp_storage_unlock();
-+	if (nobusy)
-+		bpf_cgrp_storage_unlock();
- 	return IS_ERR_OR_NULL(sdata) ? (unsigned long)NULL : (unsigned long)sdata->data;
+ 	return ret;
  }
- 
--- 
-2.39.5
-
 
 
