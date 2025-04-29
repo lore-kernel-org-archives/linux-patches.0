@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EAFA1A5BBB;
-	Tue, 29 Apr 2025 18:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D2F21ABC6;
+	Tue, 29 Apr 2025 18:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950062; cv=none; b=IPtLOgh/1OH6GuqOpCTD3hlblMXnK0Zp375GhRRjamrqR9V0oWrOMxFVup69gkW9hLU06/BOuGEJzpPDZ3NaVaImRv3HPH3CaPIsbQcnjIZZgFO21qV4jHu4+wv9TLzNhwIFDqc6shHEY4B03K797UEOFjd1gPfurjk65djtx7Q=
+	t=1745950066; cv=none; b=d03GEPntVwcjFQU268DdbJAjqfm0tfnUEcSWHg645k/BVu9VH/WJ+Vv2/k1ei/XLqrHX+mnIrC52bZUcc7xP5cwLUxhvyCGSUO2kttE2tKNm34hxIvXSxZ7KOum+6Cq2YFRg8mm56HOLiA+dvOmnuBNGF07ZfFLoxuDeb1E29/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950062; c=relaxed/simple;
-	bh=nO3L2PydrM0enigGStsefidPSefGt6MY0Fwk4limnck=;
+	s=arc-20240116; t=1745950066; c=relaxed/simple;
+	bh=GV1LXYANz3mUn0u2Mo3wZDz/YTJ8su5dJW8pgHLaHj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r7rAFQNuZvRJjNoalTwGnEKDG2IRyTcVXuiXkeIIlrDQQCifAgZKLUny60KFHTrdqUUQOaNrGqQ4Wi9YLQYII7RN/jCALGnBmcVDIgpO9TNRC2pD/ZSPFauKwgO87DjLNxB3kZBCCc+As4AsyCjnSUEAs1Perxxj68+D1NFvGhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qLD9cuGM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KqbOmZM1Tm9qEFCJCXA0P4ptCeUQE7m+0D2Vp5hTITTT16KPE+y1DfIQMJX0E8HKrihqSHGS8MW02W/v5RZRWNd9heRB+193lXcJTuQtVHB1kwjjI/uujDuGZuUEaJA65N1YfKNXwTUSJINb2Abvejr8YF6eAC4g1IYAVDIIeZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hNgYbnVv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qLD9cuGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DEF5C4CEE3;
-	Tue, 29 Apr 2025 18:07:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hNgYbnVv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1E7C4CEE3;
+	Tue, 29 Apr 2025 18:07:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950062;
-	bh=nO3L2PydrM0enigGStsefidPSefGt6MY0Fwk4limnck=;
+	s=korg; t=1745950065;
+	bh=GV1LXYANz3mUn0u2Mo3wZDz/YTJ8su5dJW8pgHLaHj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qLD9cuGMDd4y9Ep6wpJgY5Hja5//ufE+xvqhSwMI2UHvskEsHtPGzuWWdsXtz23zK
-	 2sqalOiiA4ZuF7o0oZUgH2m0rdeG0mip+T1LTnDBY/obaelEvX0gRj2OsMUaIqbqhf
-	 UZzgyV//beNTtITEd7uW+8js1Ae/LjxrpIwWZttU=
+	b=hNgYbnVvvjkz5p9wSeepZXKrIncHp57tC4uwkvkPLaapQbf0XPilrifvSPeOyKs2Q
+	 g+AsMY2hosQeQRnB/ni6j8Ep6xw0iepcgkHphM6DhsqtkwIRvX0WaQ+X66B8rua7tH
+	 0hsGhRfi7PGEgfbyj48pANn/5KpxkfsaRvb0mS+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunlong Xing <yunlong.xing@unisoc.com>,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Breno Leitao <leitao@debian.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 144/167] loop: aio inherit the ioprio of original request
-Date: Tue, 29 Apr 2025 18:44:12 +0200
-Message-ID: <20250429161057.555341330@linuxfoundation.org>
+Subject: [PATCH 6.1 145/167] spi: tegra210-quad: use WARN_ON_ONCE instead of WARN_ON for timeouts
+Date: Tue, 29 Apr 2025 18:44:13 +0200
+Message-ID: <20250429161057.594470713@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -53,37 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunlong Xing <yunlong.xing@unisoc.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 1fdb8188c3d505452b40cdb365b1bb32be533a8e ]
+[ Upstream commit 41c721fc093938745d116c3a21326a0ee03bb491 ]
 
-Set cmd->iocb.ki_ioprio to the ioprio of loop device's request.
-The purpose is to inherit the original request ioprio in the aio
-flow.
+Some machines with tegra_qspi_combined_seq_xfer hardware issues generate
+excessive kernel warnings, severely polluting the logs:
 
-Signed-off-by: Yunlong Xing <yunlong.xing@unisoc.com>
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20250414030159.501180-1-yunlong.xing@unisoc.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+    dmesg | grep -i "WARNING:.*tegra_qspi_transfer_one_message" | wc -l
+    94451
+
+This patch replaces WARN_ON with WARN_ON_ONCE for timeout conditions to
+reduce log spam. The subsequent error message still prints on each
+occurrence, providing sufficient information about the failure, while
+the stack trace is only needed once for debugging purposes.
+
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20250401-tegra-v2-1-126c293ec047@debian.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/loop.c | 2 +-
+ drivers/spi/spi-tegra210-quad.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index 1c356bda9dfa8..e3e5d533a7eca 100644
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -441,7 +441,7 @@ static int lo_rw_aio(struct loop_device *lo, struct loop_cmd *cmd,
- 	cmd->iocb.ki_filp = file;
- 	cmd->iocb.ki_complete = lo_rw_aio_complete;
- 	cmd->iocb.ki_flags = IOCB_DIRECT;
--	cmd->iocb.ki_ioprio = IOPRIO_PRIO_VALUE(IOPRIO_CLASS_NONE, 0);
-+	cmd->iocb.ki_ioprio = req_get_ioprio(rq);
+diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
+index 5ac5cb885552b..97f3a4d3c31a9 100644
+--- a/drivers/spi/spi-tegra210-quad.c
++++ b/drivers/spi/spi-tegra210-quad.c
+@@ -1110,7 +1110,7 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
+ 					(&tqspi->xfer_completion,
+ 					QSPI_DMA_TIMEOUT);
  
- 	if (rw == ITER_SOURCE)
- 		ret = call_write_iter(file, &cmd->iocb, &iter);
+-			if (WARN_ON(ret == 0)) {
++			if (WARN_ON_ONCE(ret == 0)) {
+ 				dev_err(tqspi->dev, "QSPI Transfer failed with timeout: %d\n",
+ 					ret);
+ 				if (tqspi->is_curr_dma_xfer &&
 -- 
 2.39.5
 
