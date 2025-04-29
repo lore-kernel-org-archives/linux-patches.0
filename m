@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFEF253334;
-	Tue, 29 Apr 2025 17:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2371325332D;
+	Tue, 29 Apr 2025 17:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949333; cv=none; b=hP6amRTdfxEdyxSrkeEyOQfXCOdN2sSQkYRISVePN7P6xR4b5WHQWLUE5k/ixNoa7bxTyUSm+m4PTth9lAWWasEnCRERQr4pBK7WkscOW1jpKg2SDXK7qPcAfKWItroHf52YZJiDvv/mF6cUPIU8z3IKVuwcWbFD8whJGQLRKak=
+	t=1745949336; cv=none; b=Ov5ax2AmEZ9TxDL0vZSb/sZT3nbFY427KXLtmhoRwbMWeE2epADk2DzawmE8rKkKPjw6RZ+XpPLjtrFXSz1s5v45n17DatoX7U2ZOXa4s5p2p1SFkvDWgLrJ54h7w/Fi9D3Z6PCcKO75XuoUU4G/SQi9AxtrXP3v9FruDN0grBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949333; c=relaxed/simple;
-	bh=n7pB6EHK60zlGNN+U6nehAk1V1mL8PjWaL5rBv/as/c=;
+	s=arc-20240116; t=1745949336; c=relaxed/simple;
+	bh=4HNIH3FI1knwA4tP+iPLttXPim2mU7qUVEZbtDzbQa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pOsBgzi/zCw8bZW5csNejNiA8gXfQpbE92m6HdUQIBzZrk2rdFhXPVEO83nduChH1q+UGmn6DhNj5vNB2eIFue+8856mWgJUWWorn7uMxgmFsj4ZpBp5+ck8TzOn7yG41+KOlnxFHtBg93GtfPfBRHodIx0zDDfckkZmGlqNIEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8IfjrFa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MViPMP0IfdpcwrFjBsSUiz7dJqllcm1LbnLrfOApmFfyAo6rwIkpSxC5y1j1xlXEqisuy2od3FyxA0gdx6gDI13Duii8CHkxq53OC02oBF4vHijviZusV6ba12a2nY4AOK+1CS4m61XYwgE5S7HplUvUkK5hRYIDAPlHT2jA0dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyHsK5Xh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8IfjrFa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF71C4CEE3;
-	Tue, 29 Apr 2025 17:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyHsK5Xh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8755DC4CEE3;
+	Tue, 29 Apr 2025 17:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949333;
-	bh=n7pB6EHK60zlGNN+U6nehAk1V1mL8PjWaL5rBv/as/c=;
+	s=korg; t=1745949336;
+	bh=4HNIH3FI1knwA4tP+iPLttXPim2mU7qUVEZbtDzbQa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s8IfjrFawHI0eBY90a8RxyUZxMpkBUyPIF70Onz0qqdcxd9vK44i580+2P8OwbBFf
-	 uUA42Yzs13nZVQwWBb/i7Jtjh0gnmXC1igY1ODFUssCEqj0k6kjtcN9yqI/k7sOvo2
-	 lVDSI+l1Vo0LDoAhxRnsHhbHLYRQ4Y2pqHD2XhVw=
+	b=jyHsK5XhOrQrj5soh8lMBPk7WHW9YhMjUR36AztEaRCyg6Rbgw1uQ5zs+GiQTMQ1E
+	 Na963pezD0IPvK4VMjw0cN4ranxnzgrPUj4VqFtuKMfqjLp4JuRlhO3gzw6O0t7qun
+	 F4Gh3p2QbcQqEU6t+1RyBceE3iUHtoODYXAksl1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 256/373] media: streamzap: no need for usb pid/vid in device name
-Date: Tue, 29 Apr 2025 18:42:13 +0200
-Message-ID: <20250429161133.655447044@linuxfoundation.org>
+	Oleg Nesterov <oleg@redhat.com>,
+	Dylan Hatch <dylanbhatch@google.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	David Sauerwein <dssauerw@amazon.de>
+Subject: [PATCH 5.15 247/373] fs/proc: do_task_stat: use sig->stats_lock to gather the threads/children stats
+Date: Tue, 29 Apr 2025 18:42:04 +0200
+Message-ID: <20250429161133.283702860@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,50 +54,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 7a25e6849ad73de5aa01d62da43071bc02b8530c ]
+commit 7601df8031fd67310af891897ef6cc0df4209305 upstream.
 
-The usb pid/vid can be found elsewhere, the idVendor/idProduct usb sysfs
-files for example.
+lock_task_sighand() can trigger a hard lockup.  If NR_CPUS threads call
+do_task_stat() at the same time and the process has NR_THREADS, it will
+spin with irqs disabled O(NR_CPUS * NR_THREADS) time.
 
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Stable-dep-of: f656cfbc7a29 ("media: streamzap: fix race between device disconnection and urb callback")
+Change do_task_stat() to use sig->stats_lock to gather the statistics
+outside of ->siglock protected section, in the likely case this code will
+run lockless.
+
+Link: https://lkml.kernel.org/r/20240123153357.GA21857@redhat.com
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Dylan Hatch <dylanbhatch@google.com>
+Cc: Eric W. Biederman <ebiederm@xmission.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: David Sauerwein <dssauerw@amazon.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/streamzap.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ fs/proc/array.c |   53 +++++++++++++++++++++++++++++------------------------
+ 1 file changed, 29 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/media/rc/streamzap.c b/drivers/media/rc/streamzap.c
-index 938fbc569f505..9ef6260d2dfd2 100644
---- a/drivers/media/rc/streamzap.c
-+++ b/drivers/media/rc/streamzap.c
-@@ -88,7 +88,6 @@ struct streamzap_ir {
- 	ktime_t			signal_start;
- 	bool			timeout_enabled;
+--- a/fs/proc/array.c
++++ b/fs/proc/array.c
+@@ -462,12 +462,12 @@ static int do_task_stat(struct seq_file
+ 	int permitted;
+ 	struct mm_struct *mm;
+ 	unsigned long long start_time;
+-	unsigned long cmin_flt = 0, cmaj_flt = 0;
+-	unsigned long  min_flt = 0,  maj_flt = 0;
+-	u64 cutime, cstime, utime, stime;
+-	u64 cgtime, gtime;
++	unsigned long cmin_flt, cmaj_flt, min_flt, maj_flt;
++	u64 cutime, cstime, cgtime, utime, stime, gtime;
+ 	unsigned long rsslim = 0;
+ 	unsigned long flags;
++	struct signal_struct *sig = task->signal;
++	unsigned int seq = 1;
  
--	char			name[128];
- 	char			phys[64];
- };
+ 	state = *get_task_state(task);
+ 	vsize = eip = esp = 0;
+@@ -495,12 +495,8 @@ static int do_task_stat(struct seq_file
  
-@@ -285,13 +284,10 @@ static struct rc_dev *streamzap_init_rc_dev(struct streamzap_ir *sz)
- 		goto out;
- 	}
+ 	sigemptyset(&sigign);
+ 	sigemptyset(&sigcatch);
+-	cutime = cstime = 0;
+-	cgtime = gtime = 0;
  
--	snprintf(sz->name, sizeof(sz->name), "Streamzap PC Remote Infrared Receiver (%04x:%04x)",
--		 le16_to_cpu(sz->usbdev->descriptor.idVendor),
--		 le16_to_cpu(sz->usbdev->descriptor.idProduct));
- 	usb_make_path(sz->usbdev, sz->phys, sizeof(sz->phys));
- 	strlcat(sz->phys, "/input0", sizeof(sz->phys));
+ 	if (lock_task_sighand(task, &flags)) {
+-		struct signal_struct *sig = task->signal;
+-
+ 		if (sig->tty) {
+ 			struct pid *pgrp = tty_get_pgrp(sig->tty);
+ 			tty_pgrp = pid_nr_ns(pgrp, ns);
+@@ -511,36 +507,45 @@ static int do_task_stat(struct seq_file
+ 		num_threads = get_nr_threads(task);
+ 		collect_sigign_sigcatch(task, &sigign, &sigcatch);
  
--	rdev->device_name = sz->name;
-+	rdev->device_name = "Streamzap PC Remote Infrared Receiver";
- 	rdev->input_phys = sz->phys;
- 	usb_to_input_id(sz->usbdev, &rdev->input_id);
- 	rdev->dev.parent = dev;
--- 
-2.39.5
-
++		rsslim = READ_ONCE(sig->rlim[RLIMIT_RSS].rlim_cur);
++
++		sid = task_session_nr_ns(task, ns);
++		ppid = task_tgid_nr_ns(task->real_parent, ns);
++		pgid = task_pgrp_nr_ns(task, ns);
++
++		unlock_task_sighand(task, &flags);
++	}
++
++	if (permitted && (!whole || num_threads < 2))
++		wchan = !task_is_running(task);
++
++	do {
++		seq++; /* 2 on the 1st/lockless path, otherwise odd */
++		flags = read_seqbegin_or_lock_irqsave(&sig->stats_lock, &seq);
++
+ 		cmin_flt = sig->cmin_flt;
+ 		cmaj_flt = sig->cmaj_flt;
+ 		cutime = sig->cutime;
+ 		cstime = sig->cstime;
+ 		cgtime = sig->cgtime;
+-		rsslim = READ_ONCE(sig->rlim[RLIMIT_RSS].rlim_cur);
+ 
+-		/* add up live thread stats at the group level */
+ 		if (whole) {
+ 			struct task_struct *t = task;
++
++			min_flt = sig->min_flt;
++			maj_flt = sig->maj_flt;
++			gtime = sig->gtime;
++
++			rcu_read_lock();
+ 			do {
+ 				min_flt += t->min_flt;
+ 				maj_flt += t->maj_flt;
+ 				gtime += task_gtime(t);
+ 			} while_each_thread(task, t);
+-
+-			min_flt += sig->min_flt;
+-			maj_flt += sig->maj_flt;
+-			gtime += sig->gtime;
++			rcu_read_unlock();
+ 		}
+-
+-		sid = task_session_nr_ns(task, ns);
+-		ppid = task_tgid_nr_ns(task->real_parent, ns);
+-		pgid = task_pgrp_nr_ns(task, ns);
+-
+-		unlock_task_sighand(task, &flags);
+-	}
+-
+-	if (permitted && (!whole || num_threads < 2))
+-		wchan = !task_is_running(task);
++	} while (need_seqretry(&sig->stats_lock, seq));
++	done_seqretry_irqrestore(&sig->stats_lock, seq, flags);
+ 
+ 	if (whole) {
+ 		thread_group_cputime_adjusted(task, &utime, &stime);
 
 
