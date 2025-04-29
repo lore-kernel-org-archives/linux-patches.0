@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54943245007;
-	Tue, 29 Apr 2025 17:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF5F245007;
+	Tue, 29 Apr 2025 17:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947335; cv=none; b=o3lwBnY78Iiz9C0kXJcW3Pq8ADeeZ2nz5gtJwzn2CXiI91HQc5kfxYkUS5bRW4eiLMbXTAuP6ew85EsOLemYtFiWqu3pM66nPCcG2NjYP5iumTQMKDTpnYm5NOb4TNdMPRYDaHHoT7ZdVY+ICqPI0mdNa6YLvL5YYlIlFqZCkXM=
+	t=1745947338; cv=none; b=LD88wcOGBZpNu3LPAxvoFPGR99N9gpnbY6rzae/sKkH+5HDDi581nIPTknfN/pIfgc/JH6QTDomfGDx+wtPVdXsABVXm9CJLq32hazdT/eeGSg7qJOqMfnx5oACQuaQBbu/NrE5uu0sa55tmX9DYGdbHD/sau+1vNySCfvMbWBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947335; c=relaxed/simple;
-	bh=PyhcafT2aeN8peGpOob+ooSIsnWn46ZcjLD3M/Z0N64=;
+	s=arc-20240116; t=1745947338; c=relaxed/simple;
+	bh=KE3js3AIHj8QeuqLux10Sex/EPhZy/nwgW88blMNauU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cltxh1qmEgbLkrQmNjGHQuglDibba110Cw+VgH4E5dFRf76Ofq8P/eWg7pwhZjjTItpMoGR2J4+8zeV4dU5tVXdkjE3ZRwvuZXGmaLP7/7jqhb6RV/Cbf7kZ6ty2m6xJ6PAq6bggTkO7vbmSibm8AvZh5ID6ygkrBngCmGNQBFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MVzNZZ/J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lxuk4s+c/YyZxjjrfCpYRdLo2WPMXm+XNzj/PBhaCRn67QopksGJk9pnAVS8VOWP3FkSUiPzidnbVwVYQdXKzzCGoBE4uW62fPlhOFaAyAPB2bVcDJ95C9wfvDjrDqwMkRlPqK7mA+7H6+pNjTdw+Qw9KIoyBCa/TmoWayfh+Mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNNGdrGu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MVzNZZ/J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1969C4CEE3;
-	Tue, 29 Apr 2025 17:22:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNNGdrGu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2FF7C4CEE9;
+	Tue, 29 Apr 2025 17:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947335;
-	bh=PyhcafT2aeN8peGpOob+ooSIsnWn46ZcjLD3M/Z0N64=;
+	s=korg; t=1745947338;
+	bh=KE3js3AIHj8QeuqLux10Sex/EPhZy/nwgW88blMNauU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MVzNZZ/J86BUTk5B4UupE6iUYSwdz8Vg2ZPcUzMKDO+6E0hHvIiFkskSOZ0FYBAji
-	 1EWPkUAdeawhNUMFUavU4VCMO79EEBMMKC4ynMZoarNmXvD5V2fS9BK6rvEVNnLLnt
-	 kcuomSnn4A2ciUEADJ0VVzRLzsgyYNdhIUerdIvQ=
+	b=lNNGdrGu538GOjflibM6HiCdyj7CSBCdjpMv66sQjoZj/3Yr9bxw7JJY8yQCXzvPi
+	 N5AfFWiOD+U7DlNQDHrHMBANvZwTRowPRV6ATxXVTAzjpTJEU90+aoxS7ZC2YTEGFW
+	 Dd011MYnOYqA3aUn98bwkjJo+wVwilnNIfNJR22Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ralph Siemsen <ralph.siemsen@linaro.org>,
-	Peter Chen <peter.chen@kernel.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Subject: [PATCH 5.10 247/286] usb: cdns3: Fix deadlock when using NCM gadget
-Date: Tue, 29 Apr 2025 18:42:31 +0200
-Message-ID: <20250429161118.089752730@linuxfoundation.org>
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Mingcong Bai <baimingcong@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 5.10 248/286] USB: OHCI: Add quirk for LS7A OHCI controller (rev 0x02)
+Date: Tue, 29 Apr 2025 18:42:32 +0200
+Message-ID: <20250429161118.129506098@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -52,48 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralph Siemsen <ralph.siemsen@linaro.org>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit a1059896f2bfdcebcdc7153c3be2307ea319501f upstream.
+commit bcb60d438547355b8f9ad48645909139b64d3482 upstream.
 
-The cdns3 driver has the same NCM deadlock as fixed in cdnsp by commit
-58f2fcb3a845 ("usb: cdnsp: Fix deadlock issue during using NCM gadget").
-
-Under PREEMPT_RT the deadlock can be readily triggered by heavy network
-traffic, for example using "iperf --bidir" over NCM ethernet link.
-
-The deadlock occurs because the threaded interrupt handler gets
-preempted by a softirq, but both are protected by the same spinlock.
-Prevent deadlock by disabling softirq during threaded irq handler.
+The OHCI controller (rev 0x02) under LS7A PCI host has a hardware flaw.
+MMIO register with offset 0x60/0x64 is treated as legacy PS2-compatible
+keyboard/mouse interface, which confuse the OHCI controller. Since OHCI
+only use a 4KB BAR resource indeed, the LS7A OHCI controller's 32KB BAR
+is wrapped around (the second 4KB BAR space is the same as the first 4KB
+internally). So we can add an 4KB offset (0x1000) to the OHCI registers
+(from the PCI BAR resource) as a quirk.
 
 Cc: stable <stable@kernel.org>
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
-Signed-off-by: Ralph Siemsen <ralph.siemsen@linaro.org>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20250318-rfs-cdns3-deadlock-v2-1-bfd9cfcee732@linaro.org
+Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Tested-by: Mingcong Bai <baimingcong@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Link: https://lore.kernel.org/r/20250328040059.3672979-1-chenhuacai@loongson.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/gadget.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/host/ohci-pci.c |   23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
---- a/drivers/usb/cdns3/gadget.c
-+++ b/drivers/usb/cdns3/gadget.c
-@@ -1961,6 +1961,7 @@ static irqreturn_t cdns3_device_thread_i
- 	unsigned int bit;
- 	unsigned long reg;
- 
-+	local_bh_disable();
- 	spin_lock_irqsave(&priv_dev->lock, flags);
- 
- 	reg = readl(&priv_dev->regs->usb_ists);
-@@ -2002,6 +2003,7 @@ static irqreturn_t cdns3_device_thread_i
- irqend:
- 	writel(~0, &priv_dev->regs->ep_ien);
- 	spin_unlock_irqrestore(&priv_dev->lock, flags);
-+	local_bh_enable();
- 
- 	return ret;
+--- a/drivers/usb/host/ohci-pci.c
++++ b/drivers/usb/host/ohci-pci.c
+@@ -165,6 +165,25 @@ static int ohci_quirk_amd700(struct usb_
+ 	return 0;
  }
+ 
++static int ohci_quirk_loongson(struct usb_hcd *hcd)
++{
++	struct pci_dev *pdev = to_pci_dev(hcd->self.controller);
++
++	/*
++	 * Loongson's LS7A OHCI controller (rev 0x02) has a
++	 * flaw. MMIO register with offset 0x60/64 is treated
++	 * as legacy PS2-compatible keyboard/mouse interface.
++	 * Since OHCI only use 4KB BAR resource, LS7A OHCI's
++	 * 32KB BAR is wrapped around (the 2nd 4KB BAR space
++	 * is the same as the 1st 4KB internally). So add 4KB
++	 * offset (0x1000) to the OHCI registers as a quirk.
++	 */
++	if (pdev->revision == 0x2)
++		hcd->regs += SZ_4K;	/* SZ_4K = 0x1000 */
++
++	return 0;
++}
++
+ static int ohci_quirk_qemu(struct usb_hcd *hcd)
+ {
+ 	struct ohci_hcd *ohci = hcd_to_ohci(hcd);
+@@ -225,6 +244,10 @@ static const struct pci_device_id ohci_p
+ 		.driver_data = (unsigned long)ohci_quirk_amd700,
+ 	},
+ 	{
++		PCI_DEVICE(PCI_VENDOR_ID_LOONGSON, 0x7a24),
++		.driver_data = (unsigned long)ohci_quirk_loongson,
++	},
++	{
+ 		.vendor		= PCI_VENDOR_ID_APPLE,
+ 		.device		= 0x003f,
+ 		.subvendor	= PCI_SUBVENDOR_ID_REDHAT_QUMRANET,
 
 
