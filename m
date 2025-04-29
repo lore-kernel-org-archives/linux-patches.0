@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3CF08F77;
-	Tue, 29 Apr 2025 18:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B3C3FFD;
+	Tue, 29 Apr 2025 18:00:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949611; cv=none; b=OomKM3iqTfajw3coUriDihyWVLyuUe+jnfVts4z35c2D395ZLFIliadefxktSGRDAOYpcMykHmoGB8MtWMqC1QGbQHQ8e+N+mJIvbz25TVztdKY7lbYKwIIhp3Iv7hg8zMSPS+TxK86ouLcofCHDrQbx+zZsWCG0JMwq16NoExU=
+	t=1745949614; cv=none; b=cgkxZKzzIPy5JziB3A/X4XzmzgIYDkEO8LdWEyIUSYCTzq62N9EUL6ax5yVQ6YM6gurd8JgRVa9mm5GZhxWyeC9LnWXQgk6pIIy8DNOm+XkfBurRfnKjgok7B5Ei9NAgOZkEROvdMD0uZDSICGGbwHtuj+BvED8PpOCo5kGLbk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949611; c=relaxed/simple;
-	bh=kiUGcCc4RnpgsZJYsVK1GzxW50DHRUDwjo5EB5agD/8=;
+	s=arc-20240116; t=1745949614; c=relaxed/simple;
+	bh=Qc9kSb1FQHxbwIDfMnenj8ki59a4aTq3ho15MkJkzyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TFHUOSugAbHTIGncetU5DJNVi5edRXU6Mg/4aq0gci282mJByG9iZf5fw3XRzxfk3Kjvn23CFIuRTYiQX+TThIdHtvkRK+xgdvz+OGHlVtlsIPGHr4csYa/X952de89NM53PUdT/ytcM4dS0ZISNxYbUMTe0A7mVNcKY8Wqhdro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNxxXmQZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CyF8izLmEIPSX/DHCpTGmsH7AF/vZX1U0RWqj4sPmxXYqYpf/X10xzbLdrijhfTXeaTqwiDeqMSFgKmnNVy72gEzgdQskrhG+vwDuZn5oHJYpjq2o9z+hbFvhYJqLZHHVAGEBEFfX131F+OKnk0wmtwuCTTtaNzQ2bHA8gfJk5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ry7Xx1Lm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNxxXmQZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48973C4CEE3;
-	Tue, 29 Apr 2025 18:00:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ry7Xx1Lm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 740ADC4CEE3;
+	Tue, 29 Apr 2025 18:00:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949610;
-	bh=kiUGcCc4RnpgsZJYsVK1GzxW50DHRUDwjo5EB5agD/8=;
+	s=korg; t=1745949613;
+	bh=Qc9kSb1FQHxbwIDfMnenj8ki59a4aTq3ho15MkJkzyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fNxxXmQZZQbKK7f5/8Tiewl7cWge/fEQ4zZYU1rBdP4nHz/LkfoCqrTGZ4VK3s9HZ
-	 AcwOhe4uhmW+/oCYXMeG1FRlP/fut9yL52z3R6AlCoEaNfO7raMTTeHsmSig8WtWLF
-	 ESUOEBvFeuPuU4G1rAZwHchHoJIvDeGXF2BW7PX4=
+	b=ry7Xx1LmAI0UoESBXoGq8XCLhxeihTVThcB8n1rXO/xfZU+iGmuLVf3ADyX992/SJ
+	 HPQVm5HOI2ifiVvhcLHiLptHZtrWGHEPmMrn/h3tjYLO8glERNRLhsio+JYuauNE3S
+	 xftn7ikYMMtXdKWEbcNZf8aMWLXdFKgjhHiPccI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 346/373] nvme: re-read ANA log page after ns scan completes
-Date: Tue, 29 Apr 2025 18:43:43 +0200
-Message-ID: <20250429161137.365698527@linuxfoundation.org>
+	Ross Lagerwall <ross.lagerwall@citrix.com>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 5.15 373/373] PCI: Release resource invalidated by coalescing
+Date: Tue, 29 Apr 2025 18:44:10 +0200
+Message-ID: <20250429161138.475585812@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -52,47 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Reinecke <hare@kernel.org>
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
 
-[ Upstream commit 62baf70c327444338c34703c71aa8cc8e4189bd6 ]
+commit e54223275ba1bc6f704a6bab015fcd2ae4f72572 upstream.
 
-When scanning for new namespaces we might have missed an ANA AEN.
+When contiguous windows are coalesced by pci_register_host_bridge(), the
+second resource is expanded to include the first, and the first is
+invalidated and consequently not added to the bus. However, it remains in
+the resource hierarchy.  For example, these windows:
 
-The NVMe base spec (NVMe Base Specification v2.1, Figure 151 'Asynchonous
-Event Information - Notice': Asymmetric Namespace Access Change) states:
+  fec00000-fec7ffff : PCI Bus 0000:00
+  fec80000-fecbffff : PCI Bus 0000:00
 
-  A controller shall not send this even if an Attached Namespace
-  Attribute Changed asynchronous event [...] is sent for the same event.
+are coalesced into this, where the first resource remains in the tree with
+start/end zeroed out:
 
-so we need to re-read the ANA log page after we rescanned the namespace
-list to update the ANA states of the new namespaces.
+  00000000-00000000 : PCI Bus 0000:00
+  fec00000-fecbffff : PCI Bus 0000:00
 
-Signed-off-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In some cases (e.g. the Xen scratch region), this causes future calls to
+allocate_resource() to choose an inappropriate location which the caller
+cannot handle.
+
+Fix by releasing the zeroed-out resource and removing it from the resource
+hierarchy.
+
+[bhelgaas: commit log]
+Fixes: 7c3855c423b1 ("PCI: Coalesce host bridge contiguous apertures")
+Link: https://lore.kernel.org/r/20230525153248.712779-1-ross.lagerwall@citrix.com
+Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org	# v5.16+
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/pci/probe.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 85d965fe8838c..68d4546dda3bb 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4225,6 +4225,11 @@ static void nvme_scan_work(struct work_struct *work)
- 	/* Requeue if we have missed AENs */
- 	if (test_bit(NVME_AER_NOTICE_NS_CHANGED, &ctrl->events))
- 		nvme_queue_scan(ctrl);
-+#ifdef CONFIG_NVME_MULTIPATH
-+	else
-+		/* Re-read the ANA log page to not miss updates */
-+		queue_work(nvme_wq, &ctrl->ana_work);
-+#endif
- }
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -999,8 +999,10 @@ static int pci_register_host_bridge(stru
+ 	resource_list_for_each_entry_safe(window, n, &resources) {
+ 		offset = window->offset;
+ 		res = window->res;
+-		if (!res->flags && !res->start && !res->end)
++		if (!res->flags && !res->start && !res->end) {
++			release_resource(res);
+ 			continue;
++		}
  
- /*
--- 
-2.39.5
-
+ 		list_move_tail(&window->node, &bridge->windows);
+ 
 
 
