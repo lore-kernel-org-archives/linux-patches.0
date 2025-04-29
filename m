@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356A2244679;
-	Tue, 29 Apr 2025 16:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487F324336D;
+	Tue, 29 Apr 2025 16:48:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945335; cv=none; b=TI8NRSsX9DYjqz1HVFgkJXiE1d533wcoWI9Y6b2RuqOlHclafIKPKx75ZJ9WXM2ZuluAKA6Foem0pX8xA7fgk2TEjzH1tox3aUq8dUpaKkqAScZlxWh2hl0BqFLMceMNQeePRskCmM188F1s3XaAYI97IBGx/cHOP9In+q5jKmM=
+	t=1745945338; cv=none; b=D5x4AL7P5mS9N4p7w9caJtDaWzARwuUQpSgmOGWOvD4fGewXgvGFRBEzSfD3YURa6pdC8X8fo5DyfzHfv+vfnqAz9fbKL1u9VwWgzFu/pB6RXzkgskadmgWLEyHfMalIA3pEe5h/2lznxeXWqXuHGshT+sUMYbQCo29tuedLs8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945335; c=relaxed/simple;
-	bh=8Z6SxilebrmauUxcwKsU0vEUUEPeCNUj8Tn2wSrOGvg=;
+	s=arc-20240116; t=1745945338; c=relaxed/simple;
+	bh=4CyNbHeMJ7/xvP+O6ASsBqpR4Mzudp2g1Cxs8Myz9KE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G4WzhD0YpGWWrHyO0I4NqI746acGc+BxHJrhsrueT5OurBN/Od9v9duvvciy2OB/PWnNiHT//GxfmPmo6DYKPWxCwRQOmf1kJ89XYPYDXEeAy+z3epOktad+HBTRNx546gz/5nI+3OfWU8FdGJppjx5cb3EsXmAV7UAF8F7zWHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DoNQxbou; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qVQMeUcArGIy3N5roLX0nlomzr0V5BYcZ+dv+NVQwWwg3TQ3pDuykZP9Ea1jf7JoM7Blew5DLKPWpl0O0i9uHokM9C59WTVPG0iwOS+K5Nk0hFd2519m8Np/MiLt3/cgUcXPH+4hlVNjik++gHCidNA8dq6nT+Kw7VJYbiR7r/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJSu0Ajp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DoNQxbou"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35459C4CEE3;
-	Tue, 29 Apr 2025 16:48:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJSu0Ajp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB23C4CEE3;
+	Tue, 29 Apr 2025 16:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945334;
-	bh=8Z6SxilebrmauUxcwKsU0vEUUEPeCNUj8Tn2wSrOGvg=;
+	s=korg; t=1745945338;
+	bh=4CyNbHeMJ7/xvP+O6ASsBqpR4Mzudp2g1Cxs8Myz9KE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DoNQxbouCqVO1zuyioXkzAPDNJWfVPyuj/6aeYJ7N4JrASRjhHXJtT1XiaecBWvIY
-	 m1rv38ip9x7gikhgYEXMxqG8EG4qA13dgSUxkIYtGdKiCvDIduMQ8Oz7WDl2UMAtVT
-	 YXntiW2nQDHBu1FcyJBf0XLSbaiXBwvfUBlbYIDY=
+	b=jJSu0AjpmmpZJg1edj54juToWusBtP0JBqOe656CjwXy3iBVc/FBPvjfTeR7rdQeD
+	 +4qAWv+nISvZ2J1riky/5KYrLaJmh9hnJVQ88V7XejuIwCM46NIq8PA7h/5NX0wnm2
+	 wZP8E3g8ndJoNNRRY9NqODX6v7KBcul/oNPWLYOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 5.4 077/179] of/irq: Fix device node refcount leakages in of_irq_init()
-Date: Tue, 29 Apr 2025 18:40:18 +0200
-Message-ID: <20250429161052.528026267@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 5.4 078/179] PCI: Fix reference leak in pci_alloc_child_bus()
+Date: Tue, 29 Apr 2025 18:40:19 +0200
+Message-ID: <20250429161052.569480035@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -44,59 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 708124d9e6e7ac5ebf927830760679136b23fdf0 upstream.
+commit 1f2768b6a3ee77a295106e3a5d68458064923ede upstream.
 
-of_irq_init() will leak interrupt controller device node refcounts
-in two places as explained below:
+If device_register(&child->dev) fails, call put_device() to explicitly
+release child->dev, per the comment at device_register().
 
-1) Leak refcounts of both @desc->dev and @desc->interrupt_parent when
-   suffers @desc->irq_init_cb() failure.
-2) Leak refcount of @desc->interrupt_parent when cleans up list
-   @intc_desc_list in the end.
+Found by code review.
 
-Refcounts of both @desc->dev and @desc->interrupt_parent were got in
-the first loop, but of_irq_init() does not put them before kfree(@desc)
-in places mentioned above, so causes refcount leakages.
-
-Fix by putting refcounts involved before kfree(@desc).
-
-Fixes: 8363ccb917c6 ("of/irq: add missing of_node_put")
-Fixes: c71a54b08201 ("of/irq: introduce of_irq_init")
+Link: https://lore.kernel.org/r/20250202062357.872971-1-make24@iscas.ac.cn
+Fixes: 4f535093cf8f ("PCI: Put pci_dev in device tree as early as possible")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20250209-of_irq_fix-v2-7-93e3a2659aa7@quicinc.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/irq.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pci/probe.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/of/irq.c
-+++ b/drivers/of/irq.c
-@@ -555,6 +555,8 @@ void __init of_irq_init(const struct of_
- 						desc->interrupt_parent);
- 			if (ret) {
- 				of_node_clear_flag(desc->dev, OF_POPULATED);
-+				of_node_put(desc->interrupt_parent);
-+				of_node_put(desc->dev);
- 				kfree(desc);
- 				continue;
- 			}
-@@ -585,6 +587,7 @@ void __init of_irq_init(const struct of_
- err:
- 	list_for_each_entry_safe(desc, temp_desc, &intc_desc_list, list) {
- 		list_del(&desc->list);
-+		of_node_put(desc->interrupt_parent);
- 		of_node_put(desc->dev);
- 		kfree(desc);
- 	}
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -1041,7 +1041,10 @@ static struct pci_bus *pci_alloc_child_b
+ add_dev:
+ 	pci_set_bus_msi_domain(child);
+ 	ret = device_register(&child->dev);
+-	WARN_ON(ret < 0);
++	if (WARN_ON(ret < 0)) {
++		put_device(&child->dev);
++		return NULL;
++	}
+ 
+ 	pcibios_add_bus(child);
+ 
 
 
