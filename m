@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA2924503E;
-	Tue, 29 Apr 2025 17:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329B478F58;
+	Tue, 29 Apr 2025 17:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947728; cv=none; b=at9lhB73uDv2NHcn8tSHA15Rkx3P5PKOA+SMq4NHRef1HB2H18fgBOq/S4RwiRxBgT5W9Pc2HbAC3cJBPZbMU2q8iMnmfWIBOB/lxfIO3HMJK2X2FAxp9/mhDbnJ6gAIZtJhuedgQkpdndyWuj8NdlaZAnGxFkFkCQPlDdLrfF4=
+	t=1745947733; cv=none; b=SE0mGrZ854KYWYb+y0Yd35+mj77jAZF+yD7aBntPcHrFfM5AbC0vz92vwsUC4JlBy/2B2inxHZTCzfh0ik1AkDzdbsFzva74m/psm4R0op7I874fzxTl3nfTvdIts1MonzRN9yUV0ex5jaOobO+UqME3P7smn285xkkOPHQlddU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947728; c=relaxed/simple;
-	bh=yjTCV7PVfF+4EsFXN6ADst08EqydfgE2FyrqyMKXXeI=;
+	s=arc-20240116; t=1745947733; c=relaxed/simple;
+	bh=gcno3SQAkTN1zwbLvLIx9huY+K9S6ZxHrm/PGGiJzjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oJVZaqUVINpO9BMzf4uAdMLrsaZmnF0+ESV2l43wTydf0MjzCmhtk87njQxaS8eHUccVqW2eUWAN5ss5134QxJwGjbUZhxnG6e2s1pI+y6H0oSiWiN5v1Ea1NhigA3DR1GdJrTkfuqqAFrI6s3kcBFeRmLWABhc/OrN8P/44nuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6GyaRST; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=REipOGMKW7Wip69Fq7CedLTEVPHL7crVRDSPIQXk8EuaA9d0/a+0AIK6nNlg0EO4NdwFeeywVE8RbU6olKjFZPOISn3BoNRwXZsMvvVkHbJGbfB31rckEtBSduFu8GiVutxqe8VZA3NrjnYjuFOngwX5T+ITW+DYvuV874wCpLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iEqLUWJl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6GyaRST"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E484C4CEE9;
-	Tue, 29 Apr 2025 17:28:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iEqLUWJl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E6ACC4CEE9;
+	Tue, 29 Apr 2025 17:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947728;
-	bh=yjTCV7PVfF+4EsFXN6ADst08EqydfgE2FyrqyMKXXeI=;
+	s=korg; t=1745947732;
+	bh=gcno3SQAkTN1zwbLvLIx9huY+K9S6ZxHrm/PGGiJzjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i6GyaRSThaAzRKzxeZQsS7QaRLKQkBtHLFv27lFPmJvp2gB1a2rhvzAC5NZRHdreS
-	 EteOLdpGkfgzJJk/GCcvMq+6Y8OgNjnfLeQfplaR2Kcuq/J/JfjixyHJ9mkdB/H+xB
-	 m6XEYAxOkl/kbMdwbcMfP+sO2OUPgRr+cPYA8dOs=
+	b=iEqLUWJlhUg7r9+P4p/0pS/XtBue8b2UM/N9lwbwm7ONERJFRS4r/LkHSB4yuto4y
+	 bSRofvRBWsChKqeBvwuUZ8ZyjmxJCSK+aGQtqr8R0DzplZwCJK2TU5zcwJrjbLtNi+
+	 R0clGpSv9LczSa/xZTMbIZe/cs7Pd9Q/VDXDF5rM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Gengkun <luogengkun@huaweicloud.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Jiri Olsa <jolsa@redhat.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Hao Guan <hao.guan@siflower.com.cn>,
+	Qingfang Deng <qingfang.deng@siflower.com.cn>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 088/280] perf/x86: Fix non-sampling (counting) events on certain x86 platforms
-Date: Tue, 29 Apr 2025 18:40:29 +0200
-Message-ID: <20250429161118.711565947@linuxfoundation.org>
+Subject: [PATCH 6.12 071/280] net: phy: leds: fix memory leak
+Date: Tue, 29 Apr 2025 18:40:12 +0200
+Message-ID: <20250429161118.012654747@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -59,60 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luo Gengkun <luogengkun@huaweicloud.com>
+From: Qingfang Deng <qingfang.deng@siflower.com.cn>
 
-[ Upstream commit 1a97fea9db9e9b9c4839d4232dde9f505ff5b4cc ]
+[ Upstream commit b7f0ee992adf601aa00c252418266177eb7ac2bc ]
 
-Perf doesn't work at perf stat for hardware events on certain x86 platforms:
+A network restart test on a router led to an out-of-memory condition,
+which was traced to a memory leak in the PHY LED trigger code.
 
- $perf stat -- sleep 1
- Performance counter stats for 'sleep 1':
-             16.44 msec task-clock                       #    0.016 CPUs utilized
-                 2      context-switches                 #  121.691 /sec
-                 0      cpu-migrations                   #    0.000 /sec
-                54      page-faults                      #    3.286 K/sec
-   <not supported>	cycles
-   <not supported>	instructions
-   <not supported>	branches
-   <not supported>	branch-misses
+The root cause is misuse of the devm API. The registration function
+(phy_led_triggers_register) is called from phy_attach_direct, not
+phy_probe, and the unregister function (phy_led_triggers_unregister)
+is called from phy_detach, not phy_remove. This means the register and
+unregister functions can be called multiple times for the same PHY
+device, but devm-allocated memory is not freed until the driver is
+unbound.
 
-The reason is that the check in x86_pmu_hw_config() for sampling events is
-unexpectedly applied to counting events as well.
+This also prevents kmemleak from detecting the leak, as the devm API
+internally stores the allocated pointer.
 
-It should only impact x86 platforms with limit_period used for non-PEBS
-events. For Intel platforms, it should only impact some older platforms,
-e.g., HSW, BDW and NHM.
+Fix this by replacing devm_kzalloc/devm_kcalloc with standard
+kzalloc/kcalloc, and add the corresponding kfree calls in the unregister
+path.
 
-Fixes: 88ec7eedbbd2 ("perf/x86: Fix low freqency setting issue")
-Signed-off-by: Luo Gengkun <luogengkun@huaweicloud.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Jiri Olsa <jolsa@redhat.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Link: https://lore.kernel.org/r/20250423064724.3716211-1-luogengkun@huaweicloud.com
+Fixes: 3928ee6485a3 ("net: phy: leds: Add support for "link" trigger")
+Fixes: 2e0bc452f472 ("net: phy: leds: add support for led triggers on phy link state change")
+Signed-off-by: Hao Guan <hao.guan@siflower.com.cn>
+Signed-off-by: Qingfang Deng <qingfang.deng@siflower.com.cn>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250417032557.2929427-1-dqfext@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/phy_led_triggers.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
-index 0d33c85da4535..d737d53d03aa9 100644
---- a/arch/x86/events/core.c
-+++ b/arch/x86/events/core.c
-@@ -628,7 +628,7 @@ int x86_pmu_hw_config(struct perf_event *event)
- 	if (event->attr.type == event->pmu->type)
- 		event->hw.config |= x86_pmu_get_event_config(event);
+diff --git a/drivers/net/phy/phy_led_triggers.c b/drivers/net/phy/phy_led_triggers.c
+index f550576eb9dae..6f9d8da76c4df 100644
+--- a/drivers/net/phy/phy_led_triggers.c
++++ b/drivers/net/phy/phy_led_triggers.c
+@@ -91,9 +91,8 @@ int phy_led_triggers_register(struct phy_device *phy)
+ 	if (!phy->phy_num_led_triggers)
+ 		return 0;
  
--	if (!event->attr.freq && x86_pmu.limit_period) {
-+	if (is_sampling_event(event) && !event->attr.freq && x86_pmu.limit_period) {
- 		s64 left = event->attr.sample_period;
- 		x86_pmu.limit_period(event, &left);
- 		if (left > event->attr.sample_period)
+-	phy->led_link_trigger = devm_kzalloc(&phy->mdio.dev,
+-					     sizeof(*phy->led_link_trigger),
+-					     GFP_KERNEL);
++	phy->led_link_trigger = kzalloc(sizeof(*phy->led_link_trigger),
++					GFP_KERNEL);
+ 	if (!phy->led_link_trigger) {
+ 		err = -ENOMEM;
+ 		goto out_clear;
+@@ -103,10 +102,9 @@ int phy_led_triggers_register(struct phy_device *phy)
+ 	if (err)
+ 		goto out_free_link;
+ 
+-	phy->phy_led_triggers = devm_kcalloc(&phy->mdio.dev,
+-					    phy->phy_num_led_triggers,
+-					    sizeof(struct phy_led_trigger),
+-					    GFP_KERNEL);
++	phy->phy_led_triggers = kcalloc(phy->phy_num_led_triggers,
++					sizeof(struct phy_led_trigger),
++					GFP_KERNEL);
+ 	if (!phy->phy_led_triggers) {
+ 		err = -ENOMEM;
+ 		goto out_unreg_link;
+@@ -127,11 +125,11 @@ int phy_led_triggers_register(struct phy_device *phy)
+ out_unreg:
+ 	while (i--)
+ 		phy_led_trigger_unregister(&phy->phy_led_triggers[i]);
+-	devm_kfree(&phy->mdio.dev, phy->phy_led_triggers);
++	kfree(phy->phy_led_triggers);
+ out_unreg_link:
+ 	phy_led_trigger_unregister(phy->led_link_trigger);
+ out_free_link:
+-	devm_kfree(&phy->mdio.dev, phy->led_link_trigger);
++	kfree(phy->led_link_trigger);
+ 	phy->led_link_trigger = NULL;
+ out_clear:
+ 	phy->phy_num_led_triggers = 0;
+@@ -145,8 +143,13 @@ void phy_led_triggers_unregister(struct phy_device *phy)
+ 
+ 	for (i = 0; i < phy->phy_num_led_triggers; i++)
+ 		phy_led_trigger_unregister(&phy->phy_led_triggers[i]);
++	kfree(phy->phy_led_triggers);
++	phy->phy_led_triggers = NULL;
+ 
+-	if (phy->led_link_trigger)
++	if (phy->led_link_trigger) {
+ 		phy_led_trigger_unregister(phy->led_link_trigger);
++		kfree(phy->led_link_trigger);
++		phy->led_link_trigger = NULL;
++	}
+ }
+ EXPORT_SYMBOL_GPL(phy_led_triggers_unregister);
 -- 
 2.39.5
 
