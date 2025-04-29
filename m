@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530201519A6;
-	Tue, 29 Apr 2025 18:13:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E0D1519A6;
+	Tue, 29 Apr 2025 18:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950384; cv=none; b=tGMrdxts6IbyZ8PokFXNr6nAqY1ybIQnnJDsRKwggv1nzCi7DoxLtdpaPCtC3yNV4/KH6JqX9/x+JzkyemPTE2rkhHlV0xwwER7d1tlV3O8qJFgdzb+pVCPMDb1oQ6rBiji2Ur3DDMG/7z7InGUOj4qdz+gjWZZOl5nWK+81woY=
+	t=1745950387; cv=none; b=XmOUFXZXqRfxBuRXJmkaXEeAXYVFo8sgs0m8q3DwEDuOcf4+pYoSbtKmeCk3ID1M8ufv5pfAuR58QNl8CXXTym42gtFqtNJITdjCiUzQFDvmcJSOdO2NvhOz13eV1XUOBiV4mfaQJZq6uYe8/QOM/c+xX7xsLTuja2fhYEYIlO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950384; c=relaxed/simple;
-	bh=wBaOxdwcUbk2rcXZtf5/ZrHon9I3vDZWkm+db3N1Vwg=;
+	s=arc-20240116; t=1745950387; c=relaxed/simple;
+	bh=ar1CzgXaX5HIiJmT+Wc8fKs4urOyZCuUjHV0xI/am1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mG6JyNtWk5dj5lJjPBODy+jwqoGvZlCLymKnEu6iuSQjv5Y7cUxUl8vc2w1Xv9GYi9D/n+TWlfKwyRgKrhxg5x1PDvfZ6Xd3XM44mdlxQ0S7SKporh5hdQ+hDmih/mb0+d9ZTVO7RFMo53rzi+wawoK7XClpmdfafIEznE3FIwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIpb3/tW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R8Vjk/vEzItSSp/2DqP+X9A9bZYZnlMaVwiPsrIkHjonLyxxvdR+NX9Mgalvh5Uocn4ayedSbyBuVYkmqWyjwkIh7ZzzS9Iw9xQGDxUKCOwv2DaKFG8yCWKHi9WfN2NHNftgLk46CI+wwT8CIh97KVwm9R/lp1YqKdW8H9WQ2pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnSxuZRW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIpb3/tW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691EAC4CEE3;
-	Tue, 29 Apr 2025 18:13:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnSxuZRW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1CAC4CEE3;
+	Tue, 29 Apr 2025 18:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950383;
-	bh=wBaOxdwcUbk2rcXZtf5/ZrHon9I3vDZWkm+db3N1Vwg=;
+	s=korg; t=1745950387;
+	bh=ar1CzgXaX5HIiJmT+Wc8fKs4urOyZCuUjHV0xI/am1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dIpb3/tW3xPmn1Ifs7/HmyjRtVFpjLYpdDR5U1c8Glkb/+ohOTOYz0jAQT/5O+DRP
-	 OE7YmSwV1hnAsuGA0UeuRilQ1CcFMiGOsHYQzpWSA7tRocnmnnl1lCwvheMuLJR+a6
-	 29RvLqINhWW3dbNa/WjXL9Ym4cXpCvsGxKZ/T7Sg=
+	b=PnSxuZRWia9c+qJjmeK6/EzqB9PLdoigcgg7PpIwF2ykcGCV8h/zAJEcmAQos1LaF
+	 l+1+Z3ZAs1l+C2+oFoUCaCmxX++9/6+FvJ3bnDW+RFogL5rypKsl4AmnM+ny7A5VoL
+	 bElIhcAy3SFyeT+hfQCRcF/DebozU2MB4MvcGOKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.6 079/204] irqchip/gic-v2m: Prevent use after free of gicv2m_get_fwnode()
-Date: Tue, 29 Apr 2025 18:42:47 +0200
-Message-ID: <20250429161102.653746887@linuxfoundation.org>
+	Peter Xu <peterx@redhat.com>,
+	Hongchen Zhang <zhanghongchen@loongson.cn>,
+	Ming Wang <wangming01@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 080/204] LoongArch: Return NULL from huge_pte_offset() for invalid PMD
+Date: Tue, 29 Apr 2025 18:42:48 +0200
+Message-ID: <20250429161102.692805610@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,46 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
+From: Ming Wang <wangming01@loongson.cn>
 
-commit 3318dc299b072a0511d6dfd8367f3304fb6d9827 upstream.
+commit bd51834d1cf65a2c801295d230c220aeebf87a73 upstream.
 
-With ACPI in place, gicv2m_get_fwnode() is registered with the pci
-subsystem as pci_msi_get_fwnode_cb(), which may get invoked at runtime
-during a PCI host bridge probe. But, the call back is wrongly marked as
-__init, causing it to be freed, while being registered with the PCI
-subsystem and could trigger:
+LoongArch's huge_pte_offset() currently returns a pointer to a PMD slot
+even if the underlying entry points to invalid_pte_table (indicating no
+mapping). Callers like smaps_hugetlb_range() fetch this invalid entry
+value (the address of invalid_pte_table) via this pointer.
 
- Unable to handle kernel paging request at virtual address ffff8000816c0400
-  gicv2m_get_fwnode+0x0/0x58 (P)
-  pci_set_bus_msi_domain+0x74/0x88
-  pci_register_host_bridge+0x194/0x548
+The generic is_swap_pte() check then incorrectly identifies this address
+as a swap entry on LoongArch, because it satisfies the "!pte_present()
+&& !pte_none()" conditions. This misinterpretation, combined with a
+coincidental match by is_migration_entry() on the address bits, leads to
+kernel crashes in pfn_swap_entry_to_page().
 
-This is easily reproducible on a Juno board with ACPI boot.
+Fix this at the architecture level by modifying huge_pte_offset() to
+check the PMD entry's content using pmd_none() before returning. If the
+entry is invalid (i.e., it points to invalid_pte_table), return NULL
+instead of the pointer to the slot.
 
-Retain the function for later use.
-
-Fixes: 0644b3daca28 ("irqchip/gic-v2m: acpi: Introducing GICv2m ACPI support")
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
+Acked-by: Peter Xu <peterx@redhat.com>
+Co-developed-by: Hongchen Zhang <zhanghongchen@loongson.cn>
+Signed-off-by: Hongchen Zhang <zhanghongchen@loongson.cn>
+Signed-off-by: Ming Wang <wangming01@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v2m.c |    2 +-
+ arch/loongarch/mm/hugetlbpage.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/irqchip/irq-gic-v2m.c
-+++ b/drivers/irqchip/irq-gic-v2m.c
-@@ -454,7 +454,7 @@ static int __init gicv2m_of_init(struct
- #ifdef CONFIG_ACPI
- static int acpi_num_msi;
+--- a/arch/loongarch/mm/hugetlbpage.c
++++ b/arch/loongarch/mm/hugetlbpage.c
+@@ -47,7 +47,7 @@ pte_t *huge_pte_offset(struct mm_struct
+ 				pmd = pmd_offset(pud, addr);
+ 		}
+ 	}
+-	return (pte_t *) pmd;
++	return pmd_none(pmdp_get(pmd)) ? NULL : (pte_t *) pmd;
+ }
  
--static __init struct fwnode_handle *gicv2m_get_fwnode(struct device *dev)
-+static struct fwnode_handle *gicv2m_get_fwnode(struct device *dev)
- {
- 	struct v2m_data *data;
- 
+ int pmd_huge(pmd_t pmd)
 
 
