@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E380D242D94;
-	Tue, 29 Apr 2025 17:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF668215F7C;
+	Tue, 29 Apr 2025 17:34:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948086; cv=none; b=XmqO5ZDVW/qVzwSsiPfAHYvUfKlsUZgv97oK9JyHDKV3W6hM71gHd+1ug17laDHjIgCZemEyXLsS/a331JvRstb/tzFddnTzJnJxeYwFFqtmimv6WUvDRw0WTUBOQZvKyuoQ55pFF0maA7eVGfDst0A/Ue+OjKA6JL/G5Z/R3mQ=
+	t=1745948089; cv=none; b=tRLRi+I7mOw1rm59uGthRFPhxm7dFGNT7a+mCoSh65v+cZbgc4NvyjplT1l5/KP0UMePG+a5GSX9mjBbNsVTHV4pUNEdX7UC+RizlrU9lSpWy9eix6IjKcaA/HIgES9FQWQY1+Qy6lRrsTpchW90igRZgtJ7zaZkmgnr0eGwaEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948086; c=relaxed/simple;
-	bh=dQfLGWsBXFjlmVXjYzTy1mIDeNHAKn89SJPxOxJzApM=;
+	s=arc-20240116; t=1745948089; c=relaxed/simple;
+	bh=ctF9xn6qFbCHEJFmDYt3vUe+kW5WXbYkVxZRMd1D1hs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Htn0FHt+KSn7UjQCg4ukx/QLBZ+sT6uOOSvR2pMgx2/Cm1MJbbJAsjlOsXRDp1JE5Jdr9RBBUPnNvDAqml4BF2x97zfBTE8hLHfeUUQzm0D4YMbGC7T3zy7aDW8scQCmXbBhXAfKsH2tgfVRJPhe/jfA58wkuczAYd91jVmDrXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P6E243IB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RHEkrrkQctyHbfajELEUd/g4Hn0mgw8ytYE9y6bYvJQ4kyc1LOOGMZWAluzVf2lhTPI3pdOExpSmXtkH9PkUsT8INzjR6K6qRwj4gHFUBzb60wIfvHd3xI31s+lpo/zias/RvJVyWLQy/w2f9nITeUjaR12zy4yt/oROMxU0kUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQuBjfc6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P6E243IB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5456AC4CEE9;
-	Tue, 29 Apr 2025 17:34:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQuBjfc6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE999C4CEE9;
+	Tue, 29 Apr 2025 17:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948085;
-	bh=dQfLGWsBXFjlmVXjYzTy1mIDeNHAKn89SJPxOxJzApM=;
+	s=korg; t=1745948089;
+	bh=ctF9xn6qFbCHEJFmDYt3vUe+kW5WXbYkVxZRMd1D1hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P6E243IBNavrj+u8B5sRnaVXU+Z1Rhg9xC0MNHxdogDziSF1qV+hTKVmFNij7EMTg
-	 eUQuWr4dzI2VCGuVzAEZ19l9CenYclFMgmloNxvYvkjbCBjwl3ONepvFa8KWuCn0De
-	 hm2IkBS/U7/dqjji3RmbkwEoRXAh4ztQ3wICEwWk=
+	b=DQuBjfc6cZoZlLdg9xf7vvUyew9ug4Refm+UvwvTpHiLSUDJkmWXCB4s97FW0QF5x
+	 6mXnHjVAnaRgUy68w8m6vlZKx9TZWfw4I04uS20hjHbHI+Mp3ON57Yh44rgKuT/0Bb
+	 orxVN1AyE1Iy2CIuoiJiYdZFq3DFleGoFovpjxho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robbie King <robbiek@xsightlabs.com>,
-	Huisong Li <lihuisong@huawei.com>,
-	Adam Young <admiyo@os.amperecomputing.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 169/280] mailbox: pcc: Always clear the platform ack interrupt first
-Date: Tue, 29 Apr 2025 18:41:50 +0200
-Message-ID: <20250429161122.031937603@linuxfoundation.org>
+Subject: [PATCH 6.12 187/280] objtool: Silence more KCOV warnings
+Date: Tue, 29 Apr 2025 18:42:08 +0200
+Message-ID: <20250429161122.758862599@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -54,104 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit cf1338c0e02880cd235a4590eeb15e2039c873bc ]
+[ Upstream commit 6b023c7842048c4bbeede802f3cf36b96c7a8b25 ]
 
-The PCC mailbox interrupt handler (pcc_mbox_irq()) currently checks
-for command completion flags and any error status before clearing the
-interrupt.
+In the past there were issues with KCOV triggering unreachable
+instruction warnings, which is why unreachable warnings are now disabled
+with CONFIG_KCOV.
 
-The below sequence highlights an issue in the handling of PCC mailbox
-interrupts, specifically when dealing with doorbell notifications and
-acknowledgment between the OSPM and the platform where type3 and type4
-channels are sharing the interrupt.
+Now some new KCOV warnings are showing up with GCC 14:
 
--------------------------------------------------------------------------
-| T |       Platform Firmware         |    OSPM/Linux PCC driver        |
-|---|---------------------------------|---------------------------------|
-| 1 |                                 | Build message in shmem          |
-| 2 |                                 | Ring Type3 chan doorbell        |
-| 3 | Receives the doorbell interrupt |                                 |
-| 4 | Process the message from OSPM   |                                 |
-| 5 | Build response for the message  |                                 |
-| 6 | Ring Platform ACK interrupt on  |                                 |
-|   |  Type3 chan to OSPM             | Received the interrupt          |
-| 7 | Build Notification in Type4 Chan|                                 |
-| 8 |                                 | Start processing interrupt in   |
-|   |                                 |  pcc_mbox_irq() handler         |
-| 9 |                                 | Enter PCC handler for Type4 chan|
-|10 |                                 | Check command complete cleared  |
-|11 |                                 | Read the notification           |
-|12 |                                 | Clear Platform ACK interrupt    |
-|   | No effect from the previous step yet as the Platform ACK          |
-|   |  interrupt has not yet been triggered for this channel            |
-|13 | Ring Platform ACK interrupt on  |                                 |
-|   | Type4 chan to OSPM              |                                 |
-|14 |                                 | Enter PCC handler for Type3 chan|
-|15 |                                 | Command complete is set.        |
-|16 |                                 | Read the response.              |
-|17 |                                 | Clear Platform ACK interrupt    |
-|18 |                                 | Leave PCC handler for Type3     |
-|19 |                                 | Leave pcc_mbox_irq() handler    |
-|20 |                                 | Re-enter pcc_mbox_irq() handler |
-|21 |                                 | Enter PCC handler for Type4 chan|
-|22 |                                 | Leave PCC handler for Type4 chan|
-|23 |                                 | Enter PCC handler for Type3 chan|
-|24 |                                 | Leave PCC handler for Type3 chan|
-|25 |                                 | Leave pcc_mbox_irq() handler    |
--------------------------------------------------------------------------
+  vmlinux.o: warning: objtool: cpuset_write_resmask() falls through to next function cpuset_update_active_cpus.cold()
+  drivers/usb/core/driver.o: error: objtool: usb_deregister() falls through to next function usb_match_device()
+  sound/soc/codecs/snd-soc-wcd934x.o: warning: objtool: .text.wcd934x_slim_irq_handler: unexpected end of section
 
-The key issue occurs when OSPM tries to acknowledge platform ack
-interrupt for a notification which is ready to be read and processed
-but the interrupt itself is not yet triggered by the platform.
+All are caused by GCC KCOV not finishing an optimization, leaving behind
+a never-taken conditional branch to a basic block which falls through to
+the next function (or end of section).
 
-This ineffective acknowledgment leads to an issue later in time where
-the interrupt remains pending as we exit the interrupt handler without
-clearing the platform ack interrupt as there is no pending response or
-notification. The interrupt acknowledgment order is incorrect.
+At a high level this is similar to the unreachable warnings mentioned
+above, in that KCOV isn't fully removing dead code.  Treat it the same
+way by adding these to the list of warnings to ignore with CONFIG_KCOV.
 
-To resolve this issue, the platform acknowledgment interrupt should
-always be cleared before processing the interrupt for any notifications
-or response.
-
-Reported-by: Robbie King <robbiek@xsightlabs.com>
-Reviewed-by: Huisong Li <lihuisong@huawei.com>
-Tested-by: Huisong Li <lihuisong@huawei.com>
-Tested-by: Adam Young <admiyo@os.amperecomputing.com>
-Tested-by: Robbie King <robbiek@xsightlabs.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Reported-by: Ingo Molnar <mingo@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/66a61a0b65d74e072d3dc02384e395edb2adc3c5.1742852846.git.jpoimboe@kernel.org
+Closes: https://lore.kernel.org/Z9iTsI09AEBlxlHC@gmail.com
+Closes: https://lore.kernel.org/oe-kbuild-all/202503180044.oH9gyPeg-lkp@intel.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/pcc.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ tools/objtool/check.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
-index 8fd4d0f79b090..f8215a8f656a4 100644
---- a/drivers/mailbox/pcc.c
-+++ b/drivers/mailbox/pcc.c
-@@ -313,6 +313,10 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
- 	int ret;
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index ce3ea0c2de042..ff7e0622e9112 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -3634,6 +3634,9 @@ static int validate_branch(struct objtool_file *file, struct symbol *func,
+ 			    !strncmp(func->name, "__pfx_", 6))
+ 				return 0;
  
- 	pchan = chan->con_priv;
++			if (file->ignore_unreachables)
++				return 0;
 +
-+	if (pcc_chan_reg_read_modify_write(&pchan->plat_irq_ack))
-+		return IRQ_NONE;
+ 			WARN("%s() falls through to next function %s()",
+ 			     func->name, insn_func(insn)->name);
+ 			return 1;
+@@ -3853,6 +3856,9 @@ static int validate_branch(struct objtool_file *file, struct symbol *func,
+ 		if (!next_insn) {
+ 			if (state.cfi.cfa.base == CFI_UNDEFINED)
+ 				return 0;
++			if (file->ignore_unreachables)
++				return 0;
 +
- 	if (pchan->type == ACPI_PCCT_TYPE_EXT_PCC_MASTER_SUBSPACE &&
- 	    !pchan->chan_in_use)
- 		return IRQ_NONE;
-@@ -330,9 +334,6 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
- 		return IRQ_NONE;
- 	}
- 
--	if (pcc_chan_reg_read_modify_write(&pchan->plat_irq_ack))
--		return IRQ_NONE;
--
- 	/*
- 	 * Clear this flag after updating interrupt ack register and just
- 	 * before mbox_chan_received_data() which might call pcc_send_data()
+ 			WARN("%s: unexpected end of section", sec->name);
+ 			return 1;
+ 		}
 -- 
 2.39.5
 
