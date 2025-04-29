@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7022A221DA7;
-	Tue, 29 Apr 2025 17:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7490221DA7;
+	Tue, 29 Apr 2025 17:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946841; cv=none; b=TRN7iEmPyfJ2esjmUyZvKLcZH+xGql3lJr2appjoqK4UNANnP+W2h0PqC5I7VHuvD9bPVD7VQLz3vtNJKOcVKwOeYOgHQMvdTlnuHnhxavj8CWZCghkk+nw3Fj71oSwcHyh/gIauF+hqEKOf8It7Gdq5KQcMbZtZ9Ebu1VZwSYE=
+	t=1745946845; cv=none; b=I+GijYs1ji1Jt+aw1mwSpHYK6AFnt6S98I4LVfwg8FWBYzdwSoRHwBnmTaWFd79KJyUie4D9vZtJUHYAu9ljut3Xuc6sKjzkYRhAkWRge2zXxBiAMzvuorHO5owQKvp9U6Lj16/J6nsjPRKv6q3op/QG1VoWrViSiv169rwskhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946841; c=relaxed/simple;
-	bh=hNBtf9tMlUXYEzQ8voM5rYacm60gDwns/yC51qYc6WY=;
+	s=arc-20240116; t=1745946845; c=relaxed/simple;
+	bh=/qdJinrI3Czl0j639QHnGGhRX4dHyEu8iRffQ+Sy3j0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B40Qc+Q815VYKzdYcAakjd/szL3yEZgtR3aK8Kk8a7AVhWWf7Bq9cj5XkZp8YC6IuwV8MrRfZLsyqYdMbRVybj3rtC8a6gGw4NxGtbyfFDx7nkf5jjdIsF9bYVx+QUjITf99kNRukomwoMiHRzNY+duWhKFDxv1prjRvIuul/c4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjEc+1T1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TlU7IamfzKO3qriPPZV/BzEkqHKcD8kYruTZPHtbg/nfLYqdJkEwGm92aORmMcrcOZcOuj3OfvIKmkes0/cLTsjCuRyC4M1JthnvTll4A++E8048ZFim2xMuszqC46qdzCuhfugzYXhz2ZVg2r3Gn02IiTAAJKOPUQNfkc4gBJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNVjRDpO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjEc+1T1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D006CC4CEE3;
-	Tue, 29 Apr 2025 17:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNVjRDpO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17BAC4CEE3;
+	Tue, 29 Apr 2025 17:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946841;
-	bh=hNBtf9tMlUXYEzQ8voM5rYacm60gDwns/yC51qYc6WY=;
+	s=korg; t=1745946844;
+	bh=/qdJinrI3Czl0j639QHnGGhRX4dHyEu8iRffQ+Sy3j0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zjEc+1T1omMv4TgcLuKSedV1ibzQ0pYzhfe15ZBkuceJMLlMegxrAgK7FkMXHretl
-	 IjsHgIpU668V5YNTn9R5zPTHnvAtfw4H0GOMYAYSo49+rGfhPhqJUbZ3UxXdCkhfy/
-	 lmOlW1Flz+QCsTv4StF08UfsH0vhwcXRYGjVzLrA=
+	b=aNVjRDpOhENJ03wXiM4QUugfsnyp+33cTCLUDeppr6zASrIIXXQlJNaugKv4ZdOuY
+	 9Wtvqrh40hMFsyU0lD5lpgLCD6exRZ3kt9rg/1lIlx6OD/QIJM+8T5Tz7iGH7JER+8
+	 W1E798BOuuY/7bIuGy3YpTp0ySbHdy0E7CgCWOB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trevor Woerner <twoerner@gmail.com>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>
-Subject: [PATCH 5.10 086/286] thermal/drivers/rockchip: Add missing rk3328 mapping entry
-Date: Tue, 29 Apr 2025 18:39:50 +0200
-Message-ID: <20250429161111.394028013@linuxfoundation.org>
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.10 087/286] crypto: ccp - Fix check for the primary ASP device
+Date: Tue, 29 Apr 2025 18:39:51 +0200
+Message-ID: <20250429161111.435425660@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -51,61 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trevor Woerner <twoerner@gmail.com>
+From: Tom Lendacky <thomas.lendacky@amd.com>
 
-commit ee022e5cae052e0c67ca7c5fec0f2e7bc897c70e upstream.
+commit 07bb097b92b987db518e72525b515d77904e966e upstream.
 
-The mapping table for the rk3328 is missing the entry for -25C which is
-found in the TRM section 9.5.2 "Temperature-to-code mapping".
+Currently, the ASP primary device check does not have support for PCI
+domains, and, as a result, when the system is configured with PCI domains
+(PCI segments) the wrong device can be selected as primary. This results
+in commands submitted to the device timing out and failing. The device
+check also relies on specific device and function assignments that may
+not hold in the future.
 
-NOTE: the kernel uses the tsadc_q_sel=1'b1 mode which is defined as:
-      4096-<code in table>. Whereas the table in the TRM gives the code
-      "3774" for -25C, the kernel uses 4096-3774=322.
+Fix the primary ASP device check to include support for PCI domains and
+to perform proper checking of the Bus/Device/Function positions.
 
-[Dragan Simic] : "After going through the RK3308 and RK3328 TRMs, as
-  well as through the downstream kernel code, it seems we may have
-  some troubles at our hands.  Let me explain, please.
-
-  To sum it up, part 1 of the RK3308 TRM v1.1 says on page 538 that
-  the equation for the output when tsadc_q_sel equals 1 is (4096 -
-  tsadc_q), while part 1 of the RK3328 TRM v1.2 says that the output
-  equation is (1024 - tsadc_q) in that case.
-
-  The downstream kernel code, however, treats the RK3308 and RK3328
-  tables and their values as being the same.  It even mentions 1024 as
-  the "offset" value in a comment block for the rk_tsadcv3_control()
-  function, just like the upstream code does, which is obviously wrong
-  "offset" value when correlated with the table on page 544 of part 1
-  of the RK3308 TRM v1.1.
-
-  With all this in mind, it's obvious that more work is needed to make
-  it clear where's the actual mistake (it could be that the TRM is
-  wrong), which I'll volunteer for as part of the SoC binning project.
-  In the meantime, this patch looks fine as-is to me, by offering
-  what's a clear improvement to the current state of the upstream
-  code"
-
-Link: https://opensource.rock-chips.com/images/9/97/Rockchip_RK3328TRM_V1.1-Part1-20170321.pdf
+Fixes: 2a6170dfe755 ("crypto: ccp: Add Platform Security Processor (PSP) device support")
 Cc: stable@vger.kernel.org
-Fixes: eda519d5f73e ("thermal: rockchip: Support the RK3328 SOC in thermal driver")
-Signed-off-by: Trevor Woerner <twoerner@gmail.com>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Link: https://lore.kernel.org/r/20250207175048.35959-1-twoerner@gmail.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/rockchip_thermal.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/ccp/sp-pci.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/drivers/thermal/rockchip_thermal.c
-+++ b/drivers/thermal/rockchip_thermal.c
-@@ -363,6 +363,7 @@ static const struct tsadc_table rk3328_c
- 	{296, -40000},
- 	{304, -35000},
- 	{313, -30000},
-+	{322, -25000},
- 	{331, -20000},
- 	{340, -15000},
- 	{349, -10000},
+--- a/drivers/crypto/ccp/sp-pci.c
++++ b/drivers/crypto/ccp/sp-pci.c
+@@ -118,14 +118,17 @@ static bool sp_pci_is_master(struct sp_d
+ 	pdev_new = to_pci_dev(dev_new);
+ 	pdev_cur = to_pci_dev(dev_cur);
+ 
+-	if (pdev_new->bus->number < pdev_cur->bus->number)
+-		return true;
++	if (pci_domain_nr(pdev_new->bus) != pci_domain_nr(pdev_cur->bus))
++		return pci_domain_nr(pdev_new->bus) < pci_domain_nr(pdev_cur->bus);
+ 
+-	if (PCI_SLOT(pdev_new->devfn) < PCI_SLOT(pdev_cur->devfn))
+-		return true;
++	if (pdev_new->bus->number != pdev_cur->bus->number)
++		return pdev_new->bus->number < pdev_cur->bus->number;
+ 
+-	if (PCI_FUNC(pdev_new->devfn) < PCI_FUNC(pdev_cur->devfn))
+-		return true;
++	if (PCI_SLOT(pdev_new->devfn) != PCI_SLOT(pdev_cur->devfn))
++		return PCI_SLOT(pdev_new->devfn) < PCI_SLOT(pdev_cur->devfn);
++
++	if (PCI_FUNC(pdev_new->devfn) != PCI_FUNC(pdev_cur->devfn))
++		return PCI_FUNC(pdev_new->devfn) < PCI_FUNC(pdev_cur->devfn);
+ 
+ 	return false;
+ }
 
 
