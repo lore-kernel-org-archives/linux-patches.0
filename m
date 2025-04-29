@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22D72517AB;
-	Tue, 29 Apr 2025 17:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12E824EF6B;
+	Tue, 29 Apr 2025 17:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948141; cv=none; b=WZo7QLUrmmMOIaxopSHIj5iNNYDZ0L6aUxHBk98gLvkzBewMEHEjUGNkRF3DfUYtRLls4NsG3lvX+ITAhkUeCh0TCgwNpG5/9uyNY8r4zuzO75pT0dRt5YmgDS1vqXZ8c1TnlCVtqVsukVmMg/XLuOPPIghOpjsLPFHRlrAEkP0=
+	t=1745948145; cv=none; b=Xtp5u3J/ZHPMwutjixSEb6reqRlvE99YMRyr2DUxo8tiv6z4LMcZTZ6FH+sdiqOaOzCID9FIR4PKi94becUtc5H+FvGmnuByiHGdqzt4gzXYoRQftsXgp+oyE+Qt6mx9oSw4ZIyktj6VAhQ1eTdplSby1xdLmdF9ZpdihfqhNPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948141; c=relaxed/simple;
-	bh=9J3ZRDpL4d8DFfP5bCCvD8m6/bm0PyBnzYVHmDMXDvQ=;
+	s=arc-20240116; t=1745948145; c=relaxed/simple;
+	bh=Qo66y2sKVQN8cfpWal7zxd2FgG4N/BO9BGBCYSsmOWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c8HX7ShQ470XhdQnqqiiJuYKHTRAi5KVKveCdls0xQYSerKl+OmccqFUhuIzm3yQUwOhl6bHXiApan446TlD8Dee5/e99eB7skiB3TRtuOfX1FHf9uvS6ToHq16tlIzpVa6e1q4N9vJWpf28pNkNFT/cE4DRDsqP0XSEv+EqvkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y+8KRNBG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NtvZm+P9hTzWisXHVty0DeLQGdab/NRPEzPYNQoQEsxcQTV1H6n8ok/WLu3PllMKCbA2VEN3OcvhowhBW0GC1kRkxdTZ9644AquUWZnPi0CLc4DcQUUs2XZiCQJiXq1f+0/kxe4CPGVfKO4dKAGWGEi9OxJaR4b4YR5SAaRSmLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x84REJRN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y+8KRNBG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4428C4CEE3;
-	Tue, 29 Apr 2025 17:35:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x84REJRN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2327C4CEE9;
+	Tue, 29 Apr 2025 17:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948141;
-	bh=9J3ZRDpL4d8DFfP5bCCvD8m6/bm0PyBnzYVHmDMXDvQ=;
+	s=korg; t=1745948145;
+	bh=Qo66y2sKVQN8cfpWal7zxd2FgG4N/BO9BGBCYSsmOWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y+8KRNBGEo6WbpZ0X8pMKE8flKrqBiuMLrY057dC98Gc8QPpICqJrsD5VHyQkGnvb
-	 H8LejgcaydT2kNazMJdUIc6L2Xiqp/hx2I3ILTImqscBXdyFuAT0ZbA5vLxqrx8EAn
-	 u9UOdaWOTDGHjSynToZdyjENu4wPwEqOAnkza0Nw=
+	b=x84REJRNE87Y3V+aCDxrnGpvVBszNOeHAJtmuZbITnTwoQSQB08epkXnPieDNaztl
+	 u9kdd+frFMQCQZtH/LQRBDQdQBGhw9iNRVe2+8Lh3zG5j7okB8JfVvZQeLuVviq3V4
+	 eDCD07ErQ+HO7o6kThv3NtnM7ZWGyGHEEyUMCEoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xi Ruoyao <xry111@xry111.site>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	syzbot+5d0bdc98770e6c55a0fd@syzkaller.appspotmail.com,
+	Lizhi Xu <lizhi.xu@windriver.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 199/280] kbuild: add dependency from vmlinux to sorttable
-Date: Tue, 29 Apr 2025 18:42:20 +0200
-Message-ID: <20250429161123.269594936@linuxfoundation.org>
+Subject: [PATCH 6.12 171/280] fs/ntfs3: Keep write operations atomic
+Date: Tue, 29 Apr 2025 18:41:52 +0200
+Message-ID: <20250429161122.112450952@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -52,37 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xi Ruoyao <xry111@xry111.site>
+From: Lizhi Xu <lizhi.xu@windriver.com>
 
-[ Upstream commit 82c09de2d4c472ab1b973e6e033671020691e637 ]
+[ Upstream commit 285cec318bf5a7a6c8ba999b2b6ec96f9a20590f ]
 
-Without this dependency it's really puzzling when we bisect for a "bad"
-commit in a series of sorttable change: when "git bisect" switches to
-another commit, "make" just does nothing to vmlinux.
+syzbot reported a NULL pointer dereference in __generic_file_write_iter. [1]
 
-Signed-off-by: Xi Ruoyao <xry111@xry111.site>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Before the write operation is completed, the user executes ioctl[2] to clear
+the compress flag of the file, which causes the is_compressed() judgment to
+return 0, further causing the program to enter the wrong process and call the
+wrong ops ntfs_aops_cmpr, which triggers the null pointer dereference of
+write_begin.
+
+Use inode lock to synchronize ioctl and write to avoid this case.
+
+[1]
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+Mem abort info:
+  ESR = 0x0000000086000006
+  EC = 0x21: IABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+  FSC = 0x06: level 2 translation fault
+user pgtable: 4k pages, 48-bit VAs, pgdp=000000011896d000
+[0000000000000000] pgd=0800000118b44403, p4d=0800000118b44403, pud=0800000117517403, pmd=0000000000000000
+Internal error: Oops: 0000000086000006 [#1] PREEMPT SMP
+Modules linked in:
+CPU: 0 UID: 0 PID: 6427 Comm: syz-executor347 Not tainted 6.13.0-rc3-syzkaller-g573067a5a685 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : 0x0
+lr : generic_perform_write+0x29c/0x868 mm/filemap.c:4055
+sp : ffff80009d4978a0
+x29: ffff80009d4979c0 x28: dfff800000000000 x27: ffff80009d497bc8
+x26: 0000000000000000 x25: ffff80009d497960 x24: ffff80008ba71c68
+x23: 0000000000000000 x22: ffff0000c655dac0 x21: 0000000000001000
+x20: 000000000000000c x19: 1ffff00013a92f2c x18: ffff0000e183aa1c
+x17: 0004060000000014 x16: ffff800083275834 x15: 0000000000000001
+x14: 0000000000000000 x13: 0000000000000001 x12: ffff0000c655dac0
+x11: 0000000000ff0100 x10: 0000000000ff0100 x9 : 0000000000000000
+x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
+x5 : ffff80009d497980 x4 : ffff80009d497960 x3 : 0000000000001000
+x2 : 0000000000000000 x1 : ffff0000e183a928 x0 : ffff0000d60b0fc0
+Call trace:
+ 0x0 (P)
+ __generic_file_write_iter+0xfc/0x204 mm/filemap.c:4156
+ ntfs_file_write_iter+0x54c/0x630 fs/ntfs3/file.c:1267
+ new_sync_write fs/read_write.c:586 [inline]
+ vfs_write+0x920/0xcf4 fs/read_write.c:679
+ ksys_write+0x15c/0x26c fs/read_write.c:731
+ __do_sys_write fs/read_write.c:742 [inline]
+ __se_sys_write fs/read_write.c:739 [inline]
+ __arm64_sys_write+0x7c/0x90 fs/read_write.c:739
+ __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
+ invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
+ el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
+ do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
+ el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:744
+ el0t_64_sync_handler+0x84/0x108 arch/arm64/kernel/entry-common.c:762
+
+[2]
+ioctl$FS_IOC_SETFLAGS(r0, 0x40086602, &(0x7f00000000c0)=0x20)
+
+Reported-by: syzbot+5d0bdc98770e6c55a0fd@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5d0bdc98770e6c55a0fd
+Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Makefile.vmlinux | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ntfs3/file.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/scripts/Makefile.vmlinux b/scripts/Makefile.vmlinux
-index 1284f05555b97..0c2494ffcaf87 100644
---- a/scripts/Makefile.vmlinux
-+++ b/scripts/Makefile.vmlinux
-@@ -33,6 +33,10 @@ targets += vmlinux
- vmlinux: scripts/link-vmlinux.sh vmlinux.o $(KBUILD_LDS) FORCE
- 	+$(call if_changed_dep,link_vmlinux)
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index 7976ac4611c8d..4ca1fff826fd0 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -1238,21 +1238,22 @@ static ssize_t ntfs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 	ssize_t ret;
+ 	int err;
  
-+ifdef CONFIG_BUILDTIME_TABLE_SORT
-+vmlinux: scripts/sorttable
-+endif
+-	err = check_write_restriction(inode);
+-	if (err)
+-		return err;
+-
+-	if (is_compressed(ni) && (iocb->ki_flags & IOCB_DIRECT)) {
+-		ntfs_inode_warn(inode, "direct i/o + compressed not supported");
+-		return -EOPNOTSUPP;
+-	}
+-
+ 	if (!inode_trylock(inode)) {
+ 		if (iocb->ki_flags & IOCB_NOWAIT)
+ 			return -EAGAIN;
+ 		inode_lock(inode);
+ 	}
+ 
++	ret = check_write_restriction(inode);
++	if (ret)
++		goto out;
 +
- # module.builtin.ranges
- # ---------------------------------------------------------------------------
- ifdef CONFIG_BUILTIN_MODULE_RANGES
++	if (is_compressed(ni) && (iocb->ki_flags & IOCB_DIRECT)) {
++		ntfs_inode_warn(inode, "direct i/o + compressed not supported");
++		ret = -EOPNOTSUPP;
++		goto out;
++	}
++
+ 	ret = generic_write_checks(iocb, from);
+ 	if (ret <= 0)
+ 		goto out;
 -- 
 2.39.5
 
