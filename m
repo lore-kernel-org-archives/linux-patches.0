@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E574621ABC1;
-	Tue, 29 Apr 2025 18:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D311A5BBB;
+	Tue, 29 Apr 2025 18:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950099; cv=none; b=E1IwVnLZfzGhBx9xd0R2NulXUPVuHZeY7fPHGpiwbvcRKwUHrGsT2OWzSfsvcbc64m/bRUg1uukE+LBiiW/noYsud80OGBYAwQd4ZvvGpq/NnLJGInwN2rFPBQJFvrnLQ314PDQEET8KrGSh8W7p3KfgnofDJU2JTnXkpUgoF5w=
+	t=1745950102; cv=none; b=TG/HJao4vJjfpPPwWgubGgIR59qkV6RFnHFJCURKs3lAkH9jKyfWdKObHolm/05fmfbl1ukpuxibL0w0AsPkJ4Fnafz7xcrF00S2Xmyt1RSVPW9vYVRAngMUQXCHsgxsiXqACLQ62XYGPjx8JnjOPrftxDuOTJaaWwPj9x2rvAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950099; c=relaxed/simple;
-	bh=ffjcPUxAwvlw9Rsj535FNnjSSvbcT3GdFQVJOCha1j4=;
+	s=arc-20240116; t=1745950102; c=relaxed/simple;
+	bh=kGr4vMUtTCiZYoLCGzjbcrQoOVyp2VaQj24HufiliQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RBXCWhFKnp/rsSSgDwKtw7ejClHYGCMFbWtxc5/Q2JfJdNhcl4xaRpgt2s4aZ/D+77szIjDXN2P9Vb4i+eRqi/9ZVg7cFpKhdHJKmHCMO0xv9XcyThx5Ot3gR5AeV5oDYK6VazeCPDqPADeehEQjxl4RCd5AtMEk58zGIgC9X3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXgMRKBv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pZaS+50rMNVUl+SJH8o/3qHFSEx3kP3R3Keju2BoxkLJWg8s+tjW+gTC9d4Y2ou2IdFb/56eaZNQb0TdiKZsyXpYoAXjuShaX1kV5UBb4m19lSpubs+y1BmPb2f6nYSa2WqxVcPdFbumEglCeVIkCOAjWIasvG1CnX+hk4V4iow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fe2AwO3x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXgMRKBv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5498DC4CEE3;
-	Tue, 29 Apr 2025 18:08:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fe2AwO3x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980ABC4CEE3;
+	Tue, 29 Apr 2025 18:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950098;
-	bh=ffjcPUxAwvlw9Rsj535FNnjSSvbcT3GdFQVJOCha1j4=;
+	s=korg; t=1745950102;
+	bh=kGr4vMUtTCiZYoLCGzjbcrQoOVyp2VaQj24HufiliQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WXgMRKBvbZikKs2tnKbb75WZ68A3yX45SsMlc4lSP5YJBtnLBPLzIgnRxBk0v/Be0
-	 TmG9RH8VYobAdfgK/lxb4S8hq9T6+JqzIVeVrE8AUyC3UG6Ar00Zqk8DFQ584jTIoj
-	 ExOt9YBOJIeVhpg3l9E9n8owEHjAVzY2TQK0343I=
+	b=Fe2AwO3xaJo/ImwerXdTOruCJIEgF+yzGC5ANwpGQdLHenajYDbsIt1gY8EqGgys4
+	 Fyi3JAldwFV364Gm1e96ewFuG6DpU1Cn3wCyo8MXs49wrRAdEae1Loyze7/OhlXs5Q
+	 H1dMG4hsZrLaKRbGKJTFBdsc4UULyBSOs6CY2y20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uday Shankar <ushankar@purestorage.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jan Beulich <jbeulich@suse.com>,
+	Jason Andryuk <jason.andryuk@amd.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 126/167] selftests: ublk: fix test_stripe_04
-Date: Tue, 29 Apr 2025 18:43:54 +0200
-Message-ID: <20250429161056.838202552@linuxfoundation.org>
+Subject: [PATCH 6.1 127/167] xen: Change xen-acpi-processor dom0 dependency
+Date: Tue, 29 Apr 2025 18:43:55 +0200
+Message-ID: <20250429161056.879861187@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -52,56 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Jason Andryuk <jason.andryuk@amd.com>
 
-[ Upstream commit 72070e57b0a518ec8e562a2b68fdfc796ef5c040 ]
+[ Upstream commit 0f2946bb172632e122d4033e0b03f85230a29510 ]
 
-Commit 57ed58c13256 ("selftests: ublk: enable zero copy for stripe target")
-added test entry of test_stripe_04, but forgot to add the test script.
+xen-acpi-processor functions under a PVH dom0 with only a
+xen_initial_domain() runtime check.  Change the Kconfig dependency from
+PV dom0 to generic dom0 to reflect that.
 
-So fix the test by adding the script file.
-
-Reported-by: Uday Shankar <ushankar@purestorage.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Uday Shankar <ushankar@purestorage.com>
-Link: https://lore.kernel.org/r/20250404001849.1443064-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Suggested-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Tested-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20250331172913.51240-1-jason.andryuk@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/ublk/test_stripe_04.sh  | 24 +++++++++++++++++++
- 1 file changed, 24 insertions(+)
- create mode 100755 tools/testing/selftests/ublk/test_stripe_04.sh
+ drivers/xen/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/ublk/test_stripe_04.sh b/tools/testing/selftests/ublk/test_stripe_04.sh
-new file mode 100755
-index 0000000000000..1f2b642381d17
---- /dev/null
-+++ b/tools/testing/selftests/ublk/test_stripe_04.sh
-@@ -0,0 +1,24 @@
-+#!/bin/bash
-+# SPDX-License-Identifier: GPL-2.0
-+
-+. "$(cd "$(dirname "$0")" && pwd)"/test_common.sh
-+
-+TID="stripe_04"
-+ERR_CODE=0
-+
-+_prep_test "stripe" "mkfs & mount & umount on zero copy"
-+
-+backfile_0=$(_create_backfile 256M)
-+backfile_1=$(_create_backfile 256M)
-+dev_id=$(_add_ublk_dev -t stripe -z -q 2 "$backfile_0" "$backfile_1")
-+_check_add_dev $TID $? "$backfile_0" "$backfile_1"
-+
-+_mkfs_mount_test /dev/ublkb"${dev_id}"
-+ERR_CODE=$?
-+
-+_cleanup_test "stripe"
-+
-+_remove_backfile "$backfile_0"
-+_remove_backfile "$backfile_1"
-+
-+_show_result $TID $ERR_CODE
+diff --git a/drivers/xen/Kconfig b/drivers/xen/Kconfig
+index d5d7c402b6511..ab135c3e43410 100644
+--- a/drivers/xen/Kconfig
++++ b/drivers/xen/Kconfig
+@@ -271,7 +271,7 @@ config XEN_PRIVCMD
+ 
+ config XEN_ACPI_PROCESSOR
+ 	tristate "Xen ACPI processor"
+-	depends on XEN && XEN_PV_DOM0 && X86 && ACPI_PROCESSOR && CPU_FREQ
++	depends on XEN && XEN_DOM0 && X86 && ACPI_PROCESSOR && CPU_FREQ
+ 	default m
+ 	help
+ 	  This ACPI processor uploads Power Management information to the Xen
 -- 
 2.39.5
 
