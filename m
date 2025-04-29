@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C4825334B;
-	Tue, 29 Apr 2025 16:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAA6253F09;
+	Tue, 29 Apr 2025 16:54:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945660; cv=none; b=rzYLOj8Jk5HO05gcxNBB9PnOmGl4O4FARoZB3H0tLrgtHMKRcYKd7NDmDqk29LJANck6av3Wk/X/bNrJVTHpbSs9+xIpylofP/gMUnWTGFfjoldq0lVfaoA0Ui00NgGOCXyMvXtO0cdiRUu2M5wHFJZw5ChdFqbfh5bmOdKWTdk=
+	t=1745945663; cv=none; b=hIz3DvfnobHCmkt2y+yrFH8S2c7NGLMzra5kblt7rMJZLyr6c0KogiID7nuIqrysmlKbKtqYhLjooJCW329NGiq8Wo0UShzewCQYPrVn30v6wupnJj57NOxlqVVxpyCdmFBjFy9hgTT0B9M3lBSQxqrbMJZTkEuDXYkenJUn38E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945660; c=relaxed/simple;
-	bh=qBF4CKLwSXyqIKiq8tNBsIihqWvUPKXjkCxa8jHtook=;
+	s=arc-20240116; t=1745945663; c=relaxed/simple;
+	bh=vCrM5pZq+aE8Nr3kuQxypblm1T7YPLJ/QUAmB0QnDG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CAbdKwPsa7qpRPwueOGzZnNUBzjjwK0JHoOxnD1hshIz0mX+mlhqRspDtyMzt9/FTdzz3Y1VPKgUFnvctgBV2aijgor4RVCeoBLUvnFlqszSVtB8Hx82ATtSQ87vbV1A1Zbn5TjAeZ6VAxAmprG3lI9/4KgqcZiUpz6sArhsONk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bl8u5//j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HdLp/geNagadhbIRXrssS6aUjV9XvBefWQe/byFbBQ4aqahL8D2Cqj6mWbJmb1TOAzZA0LFhqd/CHSWrU6I5Y8t8m3JxJLqejKFkemtlML0+AlwFsCckQUUb5TbHRQ+qiEWicylkuUJ/4TmKnizmMOWfTbLf8p4YLRF7wdCOuA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BwHCdyte; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bl8u5//j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278D3C4CEEA;
-	Tue, 29 Apr 2025 16:54:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BwHCdyte"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07379C4CEEA;
+	Tue, 29 Apr 2025 16:54:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945660;
-	bh=qBF4CKLwSXyqIKiq8tNBsIihqWvUPKXjkCxa8jHtook=;
+	s=korg; t=1745945663;
+	bh=vCrM5pZq+aE8Nr3kuQxypblm1T7YPLJ/QUAmB0QnDG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bl8u5//jqU4l0V2a7d6aF78Kb38EccOjmabK8HmoyQ/oOXMiK/OPJ5W6f4wghS1Pe
-	 VawK820+kaq01Kx1VR6vl/YJ7A3Z70q8u7vmxF0OS4IXvN/f7sTKCiXrKare6Ex0kZ
-	 oZ3AcXRbc+xKJ8s9Z4CEUJVffLjk7iJZjxiKVf7U=
+	b=BwHCdytetmw4VU5l2VUu8pPEIDlYEUZ+Hc7iTB9BeUemXXdumTrY8iDH704/Fo0+B
+	 ynAyBKmQzwpw+zeL6PCHXPFBhAKM38XdxLjKsHMGpoa1uKvf0IAXrzQo8BYSkn+NxU
+	 XHN4SPZH6kvtkAfBgZiL3WiorOIW4HzCRfo6Iqyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Oliver Neukum <oneukum@suse.com>
-Subject: [PATCH 5.4 158/179] USB: VLI disk crashes if LPM is used
-Date: Tue, 29 Apr 2025 18:41:39 +0200
-Message-ID: <20250429161055.773672220@linuxfoundation.org>
+	Ryo Takakura <ryotkkr98@gmail.com>,
+	Petr Mladek <pmladek@suse.com>,
+	John Ogness <john.ogness@linutronix.de>
+Subject: [PATCH 5.4 149/179] serial: sifive: lock port in startup()/shutdown() callbacks
+Date: Tue, 29 Apr 2025 18:41:30 +0200
+Message-ID: <20250429161055.414786153@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -50,31 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Ryo Takakura <ryotkkr98@gmail.com>
 
-commit e00b39a4f3552c730f1e24c8d62c4a8c6aad4e5d upstream.
+commit e1ca3ff28ab1e2c1e70713ef3fa7943c725742c3 upstream.
 
-This device needs the NO_LPM quirk.
+startup()/shutdown() callbacks access SIFIVE_SERIAL_IE_OFFS.
+The register is also accessed from write() callback.
 
-Cc: stable <stable@kernel.org>
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/20250408135800.792515-1-oneukum@suse.com
+If console were printing and startup()/shutdown() callback
+gets called, its access to the register could be overwritten.
+
+Add port->lock to startup()/shutdown() callbacks to make sure
+their access to SIFIVE_SERIAL_IE_OFFS is synchronized against
+write() callback.
+
+Fixes: 45c054d0815b ("tty: serial: add driver for the SiFive UART")
+Signed-off-by: Ryo Takakura <ryotkkr98@gmail.com>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: John Ogness <john.ogness@linutronix.de>
+Rule: add
+Link: https://lore.kernel.org/stable/20250330003522.386632-1-ryotkkr98%40gmail.com
+Link: https://lore.kernel.org/r/20250412001847.183221-1-ryotkkr98@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/tty/serial/sifive.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -540,6 +540,9 @@ static const struct usb_device_id usb_qu
- 	{ USB_DEVICE(0x2040, 0x7200), .driver_info =
- 			USB_QUIRK_CONFIG_INTF_STRINGS },
+--- a/drivers/tty/serial/sifive.c
++++ b/drivers/tty/serial/sifive.c
+@@ -596,8 +596,11 @@ static void sifive_serial_break_ctl(stru
+ static int sifive_serial_startup(struct uart_port *port)
+ {
+ 	struct sifive_serial_port *ssp = port_to_sifive_serial_port(port);
++	unsigned long flags;
  
-+	/* VLI disk */
-+	{ USB_DEVICE(0x2109, 0x0711), .driver_info = USB_QUIRK_NO_LPM },
-+
- 	/* Raydium Touchscreen */
- 	{ USB_DEVICE(0x2386, 0x3114), .driver_info = USB_QUIRK_NO_LPM },
++	uart_port_lock_irqsave(&ssp->port, &flags);
+ 	__ssp_enable_rxwm(ssp);
++	uart_port_unlock_irqrestore(&ssp->port, flags);
  
+ 	return 0;
+ }
+@@ -605,9 +608,12 @@ static int sifive_serial_startup(struct
+ static void sifive_serial_shutdown(struct uart_port *port)
+ {
+ 	struct sifive_serial_port *ssp = port_to_sifive_serial_port(port);
++	unsigned long flags;
+ 
++	uart_port_lock_irqsave(&ssp->port, &flags);
+ 	__ssp_disable_rxwm(ssp);
+ 	__ssp_disable_txwm(ssp);
++	uart_port_unlock_irqrestore(&ssp->port, flags);
+ }
+ 
+ /**
 
 
