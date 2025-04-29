@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC03625335F;
-	Tue, 29 Apr 2025 17:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1597D253948;
+	Tue, 29 Apr 2025 17:54:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949290; cv=none; b=dC2x8kedlsvy4T1Ak1l7kN2Ki9aE9RV5YUqgL8lJYcl/xOTRZYiKjxniiEWpZaX9jZeceGcpwXM3kuEf/2PYzt8kKZtMpK0yt/NkYhFlmXNjdQH9D5yK5FsTRtXE7vtiYCllH6kr9iXxFLurFSBBGtCKJXSYLi14K8ox+r4tBvU=
+	t=1745949293; cv=none; b=SRdY4pSbdLQEIo6+wXRQBntBdZ9385MSVORuANJ5t/w9EcQV+elzbo9CrEfgj/Kta6LxtSONwSO9dc5WBvny79vmQfy+HQb3faS5Pk5ny2BPJ04NWzD9uCkvrOCVL8gx2N0M8Ds9HKHkRZ15gWLJMLKAlRIct1MAhZvPlevN5DM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949290; c=relaxed/simple;
-	bh=Vfw8vPkwXzTwf1sVYrw+C0K4aR9CedY58It+hDQXH7g=;
+	s=arc-20240116; t=1745949293; c=relaxed/simple;
+	bh=vyeKTg4UKhLKi8lKp9Ea8PU3q2TCynd+MCUEFuaUKuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ue18Y9MXght8+QRajxBxNIQaAqSc6y62OzZywu7LGm1dOJqm0ibJsmRDO232Y1o0pHhGgBQ2PlN2kyoXgiy+NNFz6LlZdWDEpUnfwNeqE5Am3vEfoadd4VH42TUETaniPsU58JoIJqS1WUvgi9v7qjzQO2bgmF0XRETLFdD2tSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ayzlmDOL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=udTIqoeEJ66SQyZttGsovjXYFMViE6E9DuL2l/acJye5OUzT7I9FX0MV3+UfOqi3Kma/pPVIc1aYgr92wOa5uoMtCLYizQbti3vrOLjFSZ8dspXA5dp60hIb4pjt2VNhGebPqowU0BLBGH0PsFcMyUYPSMVA8Lg0m1RVBcdSNIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZS4NEor; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ayzlmDOL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6943AC4CEE3;
-	Tue, 29 Apr 2025 17:54:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZS4NEor"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8500EC4CEE3;
+	Tue, 29 Apr 2025 17:54:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949289;
-	bh=Vfw8vPkwXzTwf1sVYrw+C0K4aR9CedY58It+hDQXH7g=;
+	s=korg; t=1745949293;
+	bh=vyeKTg4UKhLKi8lKp9Ea8PU3q2TCynd+MCUEFuaUKuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ayzlmDOLJeZOipDYsgkUtpcSZz0KWq0iCV1tFPVbaxenDQ3ttgL4zJ9tKUTrg5aJb
-	 EWGaYOMNaLtJ0upqVbSR+LDjHlZBTSQEbqm2PkKE9clN7EWRG+zlzMIQJ2mDC/SOdG
-	 wNNlFFRgy4HMndih0myG/j/NtgKkeRtJLLUnEveg=
+	b=UZS4NEorxRoWIrDQOt24oxQtr0CCiHdfjNfH55n4Vd+B6Yhetv3H6RAUgZdQSo3fW
+	 uhcN2EXsPlNeUxLYdD/SNiu8IfJdrDBDLflf9YguSM1hN+EmU54baNxgVLExxdJCxu
+	 apgsNI0smRjeqjFtRqYkVwKUM92s8BRKRCKKksOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Diupina <adiupina@astralinux.ru>,
+	Roman Smirnov <r.smirnov@omp.ru>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 271/373] cifs: avoid NULL pointer dereference in dbg call
-Date: Tue, 29 Apr 2025 18:42:28 +0200
-Message-ID: <20250429161134.275170345@linuxfoundation.org>
+Subject: [PATCH 5.15 272/373] cifs: fix integer overflow in match_server()
+Date: Tue, 29 Apr 2025 18:42:29 +0200
+Message-ID: <20250429161134.319749772@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,45 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Diupina <adiupina@astralinux.ru>
+From: Roman Smirnov <r.smirnov@omp.ru>
 
-[ Upstream commit b4885bd5935bb26f0a414ad55679a372e53f9b9b ]
+[ Upstream commit 2510859475d7f46ed7940db0853f3342bf1b65ee ]
 
-cifs_server_dbg() implies server to be non-NULL so
-move call under condition to avoid NULL pointer dereference.
+The echo_interval is not limited in any way during mounting,
+which makes it possible to write a large number to it. This can
+cause an overflow when multiplying ctx->echo_interval by HZ in
+match_server().
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Add constraints for echo_interval to smb3_fs_context_parse_param().
 
-Fixes: e79b0332ae06 ("cifs: ignore cached share root handle closing errors")
+Found by Linux Verification Center (linuxtesting.org) with Svace.
+
+Fixes: adfeb3e00e8e1 ("cifs: Make echo interval tunable")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexandra Diupina <adiupina@astralinux.ru>
+Signed-off-by: Roman Smirnov <r.smirnov@omp.ru>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2misc.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/cifs/fs_context.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/cifs/smb2misc.c b/fs/cifs/smb2misc.c
-index 12b6684f2d372..b84e682b4cae2 100644
---- a/fs/cifs/smb2misc.c
-+++ b/fs/cifs/smb2misc.c
-@@ -788,11 +788,12 @@ smb2_handle_cancelled_close(struct cifs_tcon *tcon, __u64 persistent_fid,
- 		WARN_ONCE(tcon->tc_count < 0, "tcon refcount is negative");
- 		spin_unlock(&cifs_tcp_ses_lock);
- 
--		if (tcon->ses)
-+		if (tcon->ses) {
- 			server = tcon->ses->server;
--
--		cifs_server_dbg(FYI, "tid=0x%x: tcon is closing, skipping async close retry of fid %llu %llu\n",
--				tcon->tid, persistent_fid, volatile_fid);
-+			cifs_server_dbg(FYI,
-+					"tid=0x%x: tcon is closing, skipping async close retry of fid %llu %llu\n",
-+					tcon->tid, persistent_fid, volatile_fid);
+diff --git a/fs/cifs/fs_context.c b/fs/cifs/fs_context.c
+index 24c42043a2271..c3a71c69d3395 100644
+--- a/fs/cifs/fs_context.c
++++ b/fs/cifs/fs_context.c
+@@ -1088,6 +1088,11 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
+ 		ctx->closetimeo = HZ * result.uint_32;
+ 		break;
+ 	case Opt_echo_interval:
++		if (result.uint_32 < SMB_ECHO_INTERVAL_MIN ||
++		    result.uint_32 > SMB_ECHO_INTERVAL_MAX) {
++			cifs_errorf(fc, "echo interval is out of bounds\n");
++			goto cifs_parse_mount_err;
 +		}
- 
- 		return 0;
- 	}
+ 		ctx->echo_interval = result.uint_32;
+ 		break;
+ 	case Opt_snapshot:
 -- 
 2.39.5
 
