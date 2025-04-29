@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE5A2459C5;
-	Tue, 29 Apr 2025 17:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF76F233735;
+	Tue, 29 Apr 2025 17:57:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949436; cv=none; b=geHxIvZ3fyEE2PzlgJfK+nlq/2cEyhlQ91991OJcdUHqx7ELmLMDYYsd0Ch24mPw6RC50WnCRQQuG9MDWz/DRDERwgwYYcFiLawGI8E0L2hPJ+MZUvUUAgsikI7L1ft4+uvoMaE2rwTEIErUI25g4g/j8n1UDaSknNr3UazzVkQ=
+	t=1745949440; cv=none; b=iR1e07JSv7M2SgJAP8d7MnqG7675YFDdbGniR6fTGv5rE2hwkwJCF7PogoatLNSO29MDMqLpSo68KYt3vl0IdM6AAQnhimYqqKQvnLwqkJNvJ8WBG+l+iKiJB+VoKmcZXOUxEg+rFUYjU4Krj+Zx22tiyau+kGjqiaqDPt++9RQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949436; c=relaxed/simple;
-	bh=lcfeS8NqzUnPya10mc++yo+EUu9GhAF+yHF99f4am/c=;
+	s=arc-20240116; t=1745949440; c=relaxed/simple;
+	bh=po+Lh1YGujt9LOAjXS7kYT7dtR7TwbsBYwHXHxQIhWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KozjCltoDtFYXHQ8QrfrtQtr7IE7FHS6VnONUc6uf99o3Km7XWLtMzQVgEus04sZ2mPCRnnl8y+YUXb30Oc2lXk5XDG4Ye+lGoAxa13q4EDW9X/Hx3tHF2JKHD4JulEsBp1s45obrqAuH7qkAsRKIM6tPoM9/xNv6x3ruyb3D2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R03P4MFm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p3xRbUyIV47jX1+xAK0Ever6biOFrvEOI1JvFsF/XmZYh0rIk1osXC9+CqErOaTOpperXwUE5VO4esrqIU/WETj9EOEoAzSnfQZS1ZOYHXbBC3RbFhvrTZQTznipTE0I4Xpkq6TVsG6IkXhrUxbOVjB9df2IboCgBLkbihnHkWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLdZjkuT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R03P4MFm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B51AC4CEE3;
-	Tue, 29 Apr 2025 17:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLdZjkuT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F165C4CEE3;
+	Tue, 29 Apr 2025 17:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949436;
-	bh=lcfeS8NqzUnPya10mc++yo+EUu9GhAF+yHF99f4am/c=;
+	s=korg; t=1745949439;
+	bh=po+Lh1YGujt9LOAjXS7kYT7dtR7TwbsBYwHXHxQIhWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R03P4MFmOAK6bDhiBOHAVNGzZONHAQSytzFi02CL/hP81luTaHNthJPwl3LnKhIEz
-	 C22sueB8nRcUlY3ZAWGbTy7iqzk8HKX25sfUF6AkXvVWJKkUqvjXj/tUNy0iB03A+i
-	 zHSqFcb1R78JomNYntZToL2bO7j8ekEXjtkKp/QU=
+	b=vLdZjkuTEiZ8AhJeKvn4Ki94m7pLAgdaljzvx0K2+JTTny9frNQV6GZS1OyRu5AQs
+	 DReir0a2QOwAhP8QRQV91FQpSJp5g8GHs6qw+d2ibUEuFW9x8L+YwLX4dRa8bVigjT
+	 Py7I9BqD5cYuuNLXWjY03b/ZeQ+YJlDDkOw2HAG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 5.15 311/373] usb: chipidea: ci_hdrc_imx: fix usbmisc handling
-Date: Tue, 29 Apr 2025 18:43:08 +0200
-Message-ID: <20250429161135.902203607@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 5.15 320/373] USB: wdm: close race between wdm_open and wdm_wwan_port_stop
+Date: Tue, 29 Apr 2025 18:43:17 +0200
+Message-ID: <20250429161136.287362842@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,49 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 4e28f79e3dffa52d327b46d1a78dac16efb5810b upstream.
+commit c1846ed4eb527bdfe6b3b7dd2c78e2af4bf98f4f upstream.
 
-usbmisc is an optional device property so it is totally valid for the
-corresponding data->usbmisc_data to have a NULL value.
+Clearing WDM_WWAN_IN_USE must be the last action or
+we can open a chardev whose URBs are still poisoned
 
-Check that before dereferencing the pointer.
-
-Found by Linux Verification Center (linuxtesting.org) with Svace static
-analysis tool.
-
-Fixes: 74adad500346 ("usb: chipidea: ci_hdrc_imx: decrement device's refcount in .remove() and in the error path of .probe()")
+Fixes: cac6fb015f71 ("usb: class: cdc-wdm: WWAN framework integration")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20250316102658.490340-2-pchelkin@ispras.ru
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/20250401084749.175246-3-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/ci_hdrc_imx.c |    6 ++++--
+ drivers/usb/class/cdc-wdm.c |    6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/chipidea/ci_hdrc_imx.c
-+++ b/drivers/usb/chipidea/ci_hdrc_imx.c
-@@ -509,7 +509,8 @@ disable_hsic_regulator:
- 		cpu_latency_qos_remove_request(&data->pm_qos_req);
- 	data->ci_pdev = NULL;
- err_put:
--	put_device(data->usbmisc_data->dev);
-+	if (data->usbmisc_data)
-+		put_device(data->usbmisc_data->dev);
- 	return ret;
- }
- 
-@@ -533,7 +534,8 @@ static void ci_hdrc_imx_remove(struct pl
- 		if (data->hsic_pad_regulator)
- 			regulator_disable(data->hsic_pad_regulator);
+--- a/drivers/usb/class/cdc-wdm.c
++++ b/drivers/usb/class/cdc-wdm.c
+@@ -726,7 +726,7 @@ static int wdm_open(struct inode *inode,
+ 		rv = -EBUSY;
+ 		goto out;
  	}
--	put_device(data->usbmisc_data->dev);
-+	if (data->usbmisc_data)
-+		put_device(data->usbmisc_data->dev);
+-
++	smp_rmb(); /* ordered against wdm_wwan_port_stop() */
+ 	rv = usb_autopm_get_interface(desc->intf);
+ 	if (rv < 0) {
+ 		dev_err(&desc->intf->dev, "Error autopm - %d\n", rv);
+@@ -868,8 +868,10 @@ static void wdm_wwan_port_stop(struct ww
+ 	poison_urbs(desc);
+ 	desc->manage_power(desc->intf, 0);
+ 	clear_bit(WDM_READ, &desc->flags);
+-	clear_bit(WDM_WWAN_IN_USE, &desc->flags);
+ 	unpoison_urbs(desc);
++	smp_wmb(); /* ordered against wdm_open() */
++	/* this must be last lest we open a poisoned device */
++	clear_bit(WDM_WWAN_IN_USE, &desc->flags);
  }
  
- static void ci_hdrc_imx_shutdown(struct platform_device *pdev)
+ static void wdm_wwan_port_tx_complete(struct urb *urb)
 
 
