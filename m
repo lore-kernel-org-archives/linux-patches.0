@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E462472AA;
-	Tue, 29 Apr 2025 16:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E89F215060;
+	Tue, 29 Apr 2025 16:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945438; cv=none; b=QcWfzQDWuyMSyG1w0T/j6OUzWVHgCrdWa3X+G3NK/fh0u2kzZS83YjiOI5C4PFM6VpUbGPkfhCIuv0MZ9hHAQ26DL1g92fcB/qlM6Dk3dOe98qIP8fFpDrSrZW9xplSDMjt2Ss7NPiuBIDio3uf5Pb6dXJm5OPt9b0cr22WhWV4=
+	t=1745945441; cv=none; b=R2nC6sBKBk3Rt+qWy4i98oKx5FeN3jrE1+hrf7AbTaO2UVFoLLXOK8AH8g4TUt2nq8pTjTNIYXBzh1pV3y+CvgLatjlGYSiaaluBN8bzQ2jZNjSy0hT69+kPeaNL18ffkBRoef9DW4qRnQk5zCcUhe8qutfSbJxQLM99tLxO7VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945438; c=relaxed/simple;
-	bh=RAYZW4OJ+ESdxaxfmvHbQiqCqrHwKGCS+D9bqUOKG4o=;
+	s=arc-20240116; t=1745945441; c=relaxed/simple;
+	bh=VpkalxLZsGgvIMANy0Q5UGoBRz+a4Gsq6/zpQXVrI+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BFrX/tvQ23NNOweguMJGzRygctXZV+T5RokQ/xtZ/1cBGVIE37v+IwgVimgDqm4noDjF/SuAzBs9F41G6P73rs6EU0w4mulVZiBh/jHaYi1xc/svLR3423DR0h4IJubV5xatKWzScpD/aMcy8SoWv+OZjVoduabu3pid74xYHmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZOV4Dg5f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mcHVM3Phfgt43QsfC4oC1y2iDbeZ4WNZ56R0AJ/pc++zI/vEwL4cCA5+ozq9HnzHUfvVOcvmZ7zn578qB8j6b/iDQL+QV8O/l8ae1KpLilyXH+Pf7gjZjyXky9ZWTneCLZYCI98iecks+oCRm4WmKKk3G9eWxF8fhtNQjp7n8ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFL7OTgM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZOV4Dg5f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0192CC4CEE3;
-	Tue, 29 Apr 2025 16:50:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFL7OTgM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB445C4CEE3;
+	Tue, 29 Apr 2025 16:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945438;
-	bh=RAYZW4OJ+ESdxaxfmvHbQiqCqrHwKGCS+D9bqUOKG4o=;
+	s=korg; t=1745945441;
+	bh=VpkalxLZsGgvIMANy0Q5UGoBRz+a4Gsq6/zpQXVrI+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZOV4Dg5fBU3CsFM2vMqrQ2frQ9TfKbNwsyBobdHuhxLVBcq6A/8t2fQt2v1EfGxIz
-	 pC0FfeR8cVV98r54rDAtpeHwl3CzBQaOmxI8PBULcH13qsOSYAjnSsxL8rabXHJF/0
-	 zwrzHQNPH5NaOfgYLlOdxoalJgkfopNdSd5sOv4Q=
+	b=EFL7OTgM9Et6A5jiwZU7j0rw+fdEsGslnQ3QShmiQlv+jZEMRqcLcofOciaoWoxW3
+	 wsmz3ETYdxuZGerqDWhvucxb2UA5B0PE7VmYO/tZj4RGsxzlz0Ys0ZT2Sdcd3HZcma
+	 q6J0QBhCspzipri6yOuwNt+oxm7zrlQZdRDtN5v8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.4 112/179] kbuild: Add -fno-builtin-wcslen
-Date: Tue, 29 Apr 2025 18:40:53 +0200
-Message-ID: <20250429161053.937628257@linuxfoundation.org>
+	Nick Desaulneris <ndesaulniers@google.com>,
+	Nathan Chancellor <natechancellor@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 5.4 113/179] powerpc/prom_init: Use -ffreestanding to avoid a reference to bcmp
+Date: Tue, 29 Apr 2025 18:40:54 +0200
+Message-ID: <20250429161053.978458168@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -50,59 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Nathan Chancellor <natechancellor@gmail.com>
 
-commit 84ffc79bfbf70c779e60218563f2f3ad45288671 upstream.
+commit 8dcd71b45df34d9b903450fab147ee8c1e6c16b5 upstream.
 
-A recent optimization change in LLVM [1] aims to transform certain loop
-idioms into calls to strlen() or wcslen(). This change transforms the
-first while loop in UniStrcat() into a call to wcslen(), breaking the
-build when UniStrcat() gets inlined into alloc_path_with_tree_prefix():
+LLVM revision r374662 gives LLVM the ability to convert certain loops
+into a reference to bcmp as an optimization; this breaks
+prom_init_check.sh:
 
-  ld.lld: error: undefined symbol: wcslen
-  >>> referenced by nls_ucs2_utils.h:54 (fs/smb/client/../../nls/nls_ucs2_utils.h:54)
-  >>>               vmlinux.o:(alloc_path_with_tree_prefix)
-  >>> referenced by nls_ucs2_utils.h:54 (fs/smb/client/../../nls/nls_ucs2_utils.h:54)
-  >>>               vmlinux.o:(alloc_path_with_tree_prefix)
+    CALL    arch/powerpc/kernel/prom_init_check.sh
+  Error: External symbol 'bcmp' referenced from prom_init.c
+  make[2]: *** [arch/powerpc/kernel/Makefile:196: prom_init_check] Error 1
 
-Disable this optimization with '-fno-builtin-wcslen', which prevents the
-compiler from assuming that wcslen() is available in the kernel's C
-library.
+bcmp is defined in lib/string.c as a wrapper for memcmp so this could
+be added to the whitelist. However, commit
+450e7dd4001f ("powerpc/prom_init: don't use string functions from
+lib/") copied memcmp as prom_memcmp to avoid KASAN instrumentation so
+having bcmp be resolved to regular memcmp would break that assumption.
+Furthermore, because the compiler is the one that inserted bcmp, we
+cannot provide something like prom_bcmp.
 
-[ More to the point - it's not that we couldn't implement wcslen(), it's
-  that this isn't an optimization at all in the context of the kernel.
+To prevent LLVM from being clever with optimizations like this, use
+-ffreestanding to tell LLVM we are not hosted so it is not free to
+make transformations like this.
 
-  Replacing a simple inlined loop with a function call to the same loop
-  is just stupid and pointless if you don't have long strings and fancy
-  libraries with vectorization support etc.
-
-  For the regular 'strlen()' cases, we want the compiler to do this in
-  order to handle the trivial case of constant strings. And we do have
-  optimized versions of 'strlen()' on some architectures. But for
-  wcslen? Just no.    - Linus ]
-
-Cc: stable@vger.kernel.org
-Link: https://github.com/llvm/llvm-project/commit/9694844d7e36fd5e01011ab56b64f27b867aa72d [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-[nathan: Resolve small conflict in older trees]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Nick Desaulneris <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20191119045712.39633-4-natechancellor@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/powerpc/kernel/Makefile |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/Makefile
-+++ b/Makefile
-@@ -930,6 +930,9 @@ KBUILD_CFLAGS   += $(call cc-option,-Wer
- # Require designated initializers for all marked structures
- KBUILD_CFLAGS   += $(call cc-option,-Werror=designated-init)
+--- a/arch/powerpc/kernel/Makefile
++++ b/arch/powerpc/kernel/Makefile
+@@ -21,6 +21,7 @@ CFLAGS_prom.o += $(DISABLE_LATENT_ENTROP
  
-+# Ensure compilers do not transform certain loops into calls to wcslen()
-+KBUILD_CFLAGS += -fno-builtin-wcslen
-+
- # change __FILE__ to the relative path from the srctree
- KBUILD_CFLAGS	+= $(call cc-option,-fmacro-prefix-map=$(srctree)/=)
+ CFLAGS_prom_init.o += $(call cc-option, -fno-stack-protector)
+ CFLAGS_prom_init.o += -DDISABLE_BRANCH_PROFILING
++CFLAGS_prom_init.o += -ffreestanding
  
+ ifdef CONFIG_FUNCTION_TRACER
+ # Do not trace early boot code
 
 
