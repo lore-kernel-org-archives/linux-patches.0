@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF205227E95;
-	Tue, 29 Apr 2025 17:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677F4253326;
+	Tue, 29 Apr 2025 17:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948644; cv=none; b=SBNQJD0JLNGNNsCCMBeC6sFlcTnHr/DBWzoz5JxoQ/SehIquSomxG5IU6RcynLHO+t9xunErptIMpi64gVVL/UleWsG4mQYPDVConKPcd26Kh7iWOLqnMmOWOjE1ZCWdA2GWbAz6ODr45fI/MN9leIYKt36quHxg8qnvuH0Y5rI=
+	t=1745948648; cv=none; b=TduBcyw5dc0Yq5Aiix8boDO+8k6Ll6uhCBJtBHw1gytpl4O/73AQLavSTCcviXrU3c3xZRGtubH7EO3xIVOVVp+ugYDZiB/qLVOaEiBeUQbXmyMPsqoeClznNPeQbvK1/cKvFWFrbv9JuXUUMMZTbRM+VFrcEdch+yFlnZYN94k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948644; c=relaxed/simple;
-	bh=Ped+tdmXvscKXuIikgEnX8q8f9/mWrCT5kas6ljiP7M=;
+	s=arc-20240116; t=1745948648; c=relaxed/simple;
+	bh=p+WfWhvjyism/G6H1mOOskBzh/OM+ZrHwKHHVLu9yeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AxztTjnw3AJ6DaNOz5WYMo4yscfoZ80Fx+9rdrWU8s4bvkROtFIbwxXMVuhLWZneN92INXc0L/NwuJNBuuGfnWssB33EJdndxXRTTiRI+OCIYPvVgU+XAXqIibWSLimJAQZSUa7+qwHv+xTtO7R+HtqGCfFEDUfJZuQPpLVWXeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0e92NXn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M0l5FVLjVNTyiMKTnezUUzrCAibZp/Je6tzi7+pxZB8oaPQ3vYSs6CjvZb4dWL6a1cnIga00TKxlIx32RWXVAetRHL7g3F/ZZ3w/H6ofDF++YZKD0F5u1i8iPWXeKq7Kd0Vovc7yw3LjeLJgaWR03AzaV+XVK6o31ScUF5zngdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZv2OECT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0e92NXn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14934C4CEE9;
-	Tue, 29 Apr 2025 17:44:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZv2OECT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77886C4CEF0;
+	Tue, 29 Apr 2025 17:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948643;
-	bh=Ped+tdmXvscKXuIikgEnX8q8f9/mWrCT5kas6ljiP7M=;
+	s=korg; t=1745948648;
+	bh=p+WfWhvjyism/G6H1mOOskBzh/OM+ZrHwKHHVLu9yeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C0e92NXn6NiUpSXg1TK2sRFghZGbzww9nln6ObwsVPE+hW6V85i15sG6ZF3y+cXSy
-	 qvLAp8qHGObWg7pIDicsmxHaxmweNNGVuNOFVQjR80wPH2RPC7rT54DOlEyi/IG2p9
-	 F2o2mO1297lc/O8DRCSQcBx92YJQ+PB7BlYzs8xI=
+	b=TZv2OECT8XtmGgHLVpiuqh6ALEqxjYrpb5Qhe6Nbsku8chMK1ywJWf4iq7gdN3KA3
+	 6IOoes8D0ZgerH4I/CMH/wT/IPs5O41GfCx2MeB4AW+cR5wNR80Gp6mNKFDzdcY7vY
+	 2/UDW0SfSzdC1HZYNCP5RKpfSa6Wap9FDwOpaZWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Murad Masimov <m.masimov@mt-integration.ru>,
-	Sean Young <sean@mess.org>,
+	Karina Yankevich <k.yankevich@omp.ru>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.15 070/373] media: streamzap: prevent processing IR data on URB failure
-Date: Tue, 29 Apr 2025 18:39:07 +0200
-Message-ID: <20250429161126.025261780@linuxfoundation.org>
+Subject: [PATCH 5.15 071/373] media: v4l2-dv-timings: prevent possible overflow in v4l2_detect_gtf()
+Date: Tue, 29 Apr 2025 18:39:08 +0200
+Message-ID: <20250429161126.065978552@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,116 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Karina Yankevich <k.yankevich@omp.ru>
 
-commit 549f6d348167fb2f7800ed7c8d4bce9630c74498 upstream.
+commit 3edd1fc48d2c045e8259561797c89fe78f01717e upstream.
 
-If streamzap_callback() receives an urb with any non-critical error
-status, i.e. any error code other than -ECONNRESET, -ENOENT or -ESHUTDOWN,
-it will try to process IR data, ignoring a possible transfer failure.
+In v4l2_detect_gtf(), it seems safer to cast the 32-bit image_width
+variable to the 64-bit type u64 before multiplying to avoid
+a possible overflow. The resulting object code even seems to
+look better, at least on x86_64.
 
-Make streamzap_callback() process IR data only when urb->status is 0.
-Move processing logic to a separate function to make code cleaner and
-more similar to the URB completion handlers in other RC drivers.
+Found by Linux Verification Center (linuxtesting.org) with Svace.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+[Sergey: rewrote the patch subject/descripition]
 
-Fixes: 19770693c354 ("V4L/DVB: staging/lirc: add lirc_streamzap driver")
+Fixes: c9bc9f50753d ("[media] v4l2-dv-timings: fix overflow in gtf timings calculation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Karina Yankevich <k.yankevich@omp.ru>
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/streamzap.c |   68 ++++++++++++++++++++++++-------------------
- 1 file changed, 38 insertions(+), 30 deletions(-)
+ drivers/media/v4l2-core/v4l2-dv-timings.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/rc/streamzap.c
-+++ b/drivers/media/rc/streamzap.c
-@@ -179,39 +179,10 @@ static void sz_push_half_space(struct st
- 	sz_push_full_space(sz, value & SZ_SPACE_MASK);
- }
+--- a/drivers/media/v4l2-core/v4l2-dv-timings.c
++++ b/drivers/media/v4l2-core/v4l2-dv-timings.c
+@@ -764,7 +764,7 @@ bool v4l2_detect_gtf(unsigned int frame_
+ 		u64 num;
+ 		u32 den;
  
--/*
-- * streamzap_callback - usb IRQ handler callback
-- *
-- * This procedure is invoked on reception of data from
-- * the usb remote.
-- */
--static void streamzap_callback(struct urb *urb)
-+static void sz_process_ir_data(struct streamzap_ir *sz, int len)
- {
--	struct streamzap_ir *sz;
- 	unsigned int i;
--	int len;
--
--	if (!urb)
--		return;
--
--	sz = urb->context;
--	len = urb->actual_length;
--
--	switch (urb->status) {
--	case -ECONNRESET:
--	case -ENOENT:
--	case -ESHUTDOWN:
--		/*
--		 * this urb is terminated, clean up.
--		 * sz might already be invalid at this point
--		 */
--		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
--		return;
--	default:
--		break;
--	}
+-		num = ((image_width * GTF_D_C_PRIME * (u64)hfreq) -
++		num = (((u64)image_width * GTF_D_C_PRIME * hfreq) -
+ 		      ((u64)image_width * GTF_D_M_PRIME * 1000));
+ 		den = (hfreq * (100 - GTF_D_C_PRIME) + GTF_D_M_PRIME * 1000) *
+ 		      (2 * GTF_CELL_GRAN);
+@@ -774,7 +774,7 @@ bool v4l2_detect_gtf(unsigned int frame_
+ 		u64 num;
+ 		u32 den;
  
--	dev_dbg(sz->dev, "%s: received urb, len %d\n", __func__, len);
- 	for (i = 0; i < len; i++) {
- 		dev_dbg(sz->dev, "sz->buf_in[%d]: %x\n",
- 			i, (unsigned char)sz->buf_in[i]);
-@@ -264,6 +235,43 @@ static void streamzap_callback(struct ur
- 	}
- 
- 	ir_raw_event_handle(sz->rdev);
-+}
-+
-+/*
-+ * streamzap_callback - usb IRQ handler callback
-+ *
-+ * This procedure is invoked on reception of data from
-+ * the usb remote.
-+ */
-+static void streamzap_callback(struct urb *urb)
-+{
-+	struct streamzap_ir *sz;
-+	int len;
-+
-+	if (!urb)
-+		return;
-+
-+	sz = urb->context;
-+	len = urb->actual_length;
-+
-+	switch (urb->status) {
-+	case 0:
-+		dev_dbg(sz->dev, "%s: received urb, len %d\n", __func__, len);
-+		sz_process_ir_data(sz, len);
-+		break;
-+	case -ECONNRESET:
-+	case -ENOENT:
-+	case -ESHUTDOWN:
-+		/*
-+		 * this urb is terminated, clean up.
-+		 * sz might already be invalid at this point
-+		 */
-+		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
-+		return;
-+	default:
-+		break;
-+	}
-+
- 	usb_submit_urb(urb, GFP_ATOMIC);
- }
- 
+-		num = ((image_width * GTF_S_C_PRIME * (u64)hfreq) -
++		num = (((u64)image_width * GTF_S_C_PRIME * hfreq) -
+ 		      ((u64)image_width * GTF_S_M_PRIME * 1000));
+ 		den = (hfreq * (100 - GTF_S_C_PRIME) + GTF_S_M_PRIME * 1000) *
+ 		      (2 * GTF_CELL_GRAN);
 
 
