@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294521917E3;
-	Tue, 29 Apr 2025 17:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6481917E3;
+	Tue, 29 Apr 2025 17:40:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948420; cv=none; b=qsHnAf5LFzefAffLqDO3rT5jgs1vOoSsvzCrl3Xv+hvqFKQcV80LynUAonwAsItkJ10O5zuIipafKyEiV4FJyaSmPdhSyTlz0/HhkQ6WmpcTBd6/0Hz8XITVpS+GHufuJHcppVdWIGMzIl7Fd1DbkBmZsWGqmjV+x9q/GB7lGhE=
+	t=1745948423; cv=none; b=Ln3jAclVZPjJrw1EBfhCy2E0BSkJQnOTL5Nj10z3Ja71qkkHnqblmUzbJLSF/clcXxtQ7oHMmkF/9zGqe46oNd6+GmYnMssKvf8X36x2/R1bUzNG1FFMz9xEZCOLyJgCrHLk0zffU0cXtIfIRdopTicLBRj27mrM8R86CVx9rws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948420; c=relaxed/simple;
-	bh=9JMgEPd/otdSbJ0s8WLEDI9siMgh1bCE80fLRJX1fyo=;
+	s=arc-20240116; t=1745948423; c=relaxed/simple;
+	bh=AgHMfWP45GJNCtASSFK1N/ZOTLBuD8jKcUIj2qDfhBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BoLquwKBvHKYkRFAq0lJB0ytPWug6pO3xU5hG1Pvn7AewRowIDxrv71sv38dh1fsZnpXqK91R0LWwwQckRgqw3e9qJrdQfQEk7xcz1j6fQjiV5Dxl/5gf5lNZXF6OHyOGiYrcxYCy+hiny576QVzeP8mCW8aLq/miQKRsq4WXOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=huRlL5kk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U625K9Vuay+eng7vr9lh+XCLSaAeJCJxgqrVkp6YkYEbbRKO0RmtcRXwaI4hs4Rmd8Q5GQk6qZRvSxOdRFwpT2DMMDXNH0TE1cZlR89nb/UTEeEnrZyqiA1w7zsApvLYZSVedQwa8jHuZuArjmj1fP2drxS+UstvbH/RKGi7kck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1N0kztw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="huRlL5kk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DF4C4CEE3;
-	Tue, 29 Apr 2025 17:40:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1N0kztw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87658C4CEE3;
+	Tue, 29 Apr 2025 17:40:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948420;
-	bh=9JMgEPd/otdSbJ0s8WLEDI9siMgh1bCE80fLRJX1fyo=;
+	s=korg; t=1745948422;
+	bh=AgHMfWP45GJNCtASSFK1N/ZOTLBuD8jKcUIj2qDfhBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=huRlL5kkCwEEqaCA19U3B7ZPLJFu+EGjt8XzIotvmAWkLO2bhq2Ry/WP0bP0GHrYt
-	 gFkHHD18W49cqS/9fXg+5V0e6h9TVSkGv9BjQkgGACgwxmB5cOgvYMtV2IFtbnQBQO
-	 GVo3JwG2S5dmT253hO2w0CIEMNPHReIGrRbBJyfA=
+	b=g1N0kztwFazKdAzTvMkpNQfMDBGYH0oEtOiStW2PmcgIZwwsm2bDPVs+DEGO+Udvo
+	 ynm4o2MCDar82H4+eYOfVWaIKBUX3w6SbrUbesamoBTSCy5ZMdSKFTGt259hRvwDGS
+	 ntetT+nlPRUN4hfnCgJ1uhLlB3l1P2G4IsUXXrDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	"stable@vger.kernel.org, Sasha Levin" <sashal@kernel.org>
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 268/280] net: dsa: mv88e6xxx: enable STU methods for 6320 family
-Date: Tue, 29 Apr 2025 18:43:29 +0200
-Message-ID: <20250429161126.099934959@linuxfoundation.org>
+	Charan Teja Kalla <quic_charante@quicinc.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 6.12 269/280] iommu: Handle race with default domain setup
+Date: Tue, 29 Apr 2025 18:43:30 +0200
+Message-ID: <20250429161126.143962569@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -46,66 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Marek Behún" <kabel@kernel.org>
+From: Robin Murphy <robin.murphy@arm.com>
 
-commit 1428a6109b20e356188c3fb027bdb7998cc2fb98 upstream.
+commit b46064a18810bad3aea089a79993ca5ea7a3d2b2 upstream.
 
-Commit c050f5e91b47 ("net: dsa: mv88e6xxx: Fill in STU support for all
-supported chips") introduced STU methods, but did not add them to the
-6320 family. Fix it.
+It turns out that deferred default domain creation leaves a subtle
+race window during iommu_device_register() wherein a client driver may
+asynchronously probe in parallel and get as far as performing DMA API
+operations with dma-direct, only to be switched to iommu-dma underfoot
+once the default domain attachment finally happens, with obviously
+disastrous consequences. Even the wonky of_iommu_configure() path is at
+risk, since iommu_fwspec_init() will no longer defer client probe as the
+instance ops are (necessarily) already registered, and the "replay"
+iommu_probe_device() call can see dev->iommu_group already set and so
+think there's nothing to do either.
 
-Fixes: c050f5e91b47 ("net: dsa: mv88e6xxx: Fill in STU support for all supported chips")
-Signed-off-by: Marek BehÃºn <kabel@kernel.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250317173250.28780-6-kabel@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fortunately we already have the right tool in the right place in the
+form of iommu_device_use_default_domain(), which just needs to ensure
+that said default domain is actually ready to *be* used. Deferring the
+client probe shouldn't have too much impact, given that this only
+happens while the IOMMU driver is probing, and thus due to kick the
+deferred probe list again once it finishes.
+
+Reported-by: Charan Teja Kalla <quic_charante@quicinc.com>
+Fixes: 98ac73f99bc4 ("iommu: Require a default_domain for all iommu drivers")
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/e88b94c9b575034a2c98a48b3d383654cbda7902.1740753261.git.robin.murphy@arm.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/iommu/iommu.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -5213,6 +5213,8 @@ static const struct mv88e6xxx_ops mv88e6
- 	.reset = mv88e6352_g1_reset,
- 	.vtu_getnext = mv88e6352_g1_vtu_getnext,
- 	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
-+	.stu_getnext = mv88e6352_g1_stu_getnext,
-+	.stu_loadpurge = mv88e6352_g1_stu_loadpurge,
- 	.gpio_ops = &mv88e6352_gpio_ops,
- 	.avb_ops = &mv88e6352_avb_ops,
- 	.ptp_ops = &mv88e6352_ptp_ops,
-@@ -5263,6 +5265,8 @@ static const struct mv88e6xxx_ops mv88e6
- 	.reset = mv88e6352_g1_reset,
- 	.vtu_getnext = mv88e6352_g1_vtu_getnext,
- 	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
-+	.stu_getnext = mv88e6352_g1_stu_getnext,
-+	.stu_loadpurge = mv88e6352_g1_stu_loadpurge,
- 	.gpio_ops = &mv88e6352_gpio_ops,
- 	.avb_ops = &mv88e6352_avb_ops,
- 	.ptp_ops = &mv88e6352_ptp_ops,
-@@ -6258,6 +6262,7 @@ static const struct mv88e6xxx_info mv88e
- 		.num_internal_phys = 5,
- 		.num_gpio = 15,
- 		.max_vid = 4095,
-+		.max_sid = 63,
- 		.port_base_addr = 0x10,
- 		.phy_base_addr = 0x0,
- 		.global1_addr = 0x1b,
-@@ -6283,6 +6288,7 @@ static const struct mv88e6xxx_info mv88e
- 		.num_internal_phys = 5,
- 		.num_gpio = 15,
- 		.max_vid = 4095,
-+		.max_sid = 63,
- 		.port_base_addr = 0x10,
- 		.phy_base_addr = 0x0,
- 		.global1_addr = 0x1b,
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -3115,6 +3115,11 @@ int iommu_device_use_default_domain(stru
+ 		return 0;
+ 
+ 	mutex_lock(&group->mutex);
++	/* We may race against bus_iommu_probe() finalising groups here */
++	if (!group->default_domain) {
++		ret = -EPROBE_DEFER;
++		goto unlock_out;
++	}
+ 	if (group->owner_cnt) {
+ 		if (group->domain != group->default_domain || group->owner ||
+ 		    !xa_empty(&group->pasid_array)) {
 
 
