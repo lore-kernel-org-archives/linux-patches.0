@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5962AE96;
-	Tue, 29 Apr 2025 18:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3E42AE96;
+	Tue, 29 Apr 2025 18:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949688; cv=none; b=UF/DIfh2NGUFwYV7G64czM4bpSdnHTmMCxfFffo3O3Yld5TSHoiHF1Xsjg2/itmsBPV1WCLlpliWAasowUESVChuSwTgAiCalWxLoepu+f76938ngOWEk31BjZJczzbezzYf7HLK6ug6QkCIrZvoEoGQ5c2Sg6JTLUDEPuUodak=
+	t=1745949691; cv=none; b=I7o5Dn7iwMw9pOEiDu5AzMm92vLwcNEzhLPrTuev6C6s6+eC5afq88dm4zCokBsgvcRfr9HocRQXSdlrG/K4n1qmqUsz63Noh7JPDfRJzXrHzSwzSmg37ifZx/ALW8a8zBY5WPrwuvyAJkfQlx82Y2YUb3bzVC3sA2z6c7i53hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949688; c=relaxed/simple;
-	bh=lPEaFUi/rUfkkOrXT7dZP4n5lsLBLk5eCz13DV5ZSwM=;
+	s=arc-20240116; t=1745949691; c=relaxed/simple;
+	bh=C6J/u5s4GkPcLO8tnGV4eBizfzbvsgH0FmEMozPJuXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m0WvU8CEP9H5sNkl0y7gOCde+18Jdc2CDy7OmWWPvHA+R7uQmmPlMxiYhUO+yQzH53LQGuvVWoedSDFQtnqbqWF33SpYaFdTV72/9iY+9i4HT9mJAlyLKdwbwj4L1MbbZdGVpEoANgFp7eOpzrqfXeuRiKgM9i7sPEYNR2etO7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0Lxu7ru; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pfGAkr8S8wComiDZAv4LoxvkQ6/YWAcDJ+kxliRQ8gRaAd83ba5sZfcu5VRNobFLFP+l1bJmKd6IThm6/IX69UY3mOfRU70idTtVRQm98Gi2Jp79A0MWyOcGUGJ/u6G2vLJD1azzfio3Z5nUjdTxHGuPB6vzqCIpMZUuz8vYjKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=087OsH5U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0Lxu7ru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFAEC4CEE3;
-	Tue, 29 Apr 2025 18:01:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="087OsH5U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD9EC4CEE3;
+	Tue, 29 Apr 2025 18:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949688;
-	bh=lPEaFUi/rUfkkOrXT7dZP4n5lsLBLk5eCz13DV5ZSwM=;
+	s=korg; t=1745949691;
+	bh=C6J/u5s4GkPcLO8tnGV4eBizfzbvsgH0FmEMozPJuXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t0Lxu7ruEUHslA9OwzdsBQbdccTh0ITLF1NGQ2q/BPDxPA92f63pSddViOmbjbI/L
-	 ybGcsuEttmBKdj6eOhFU/0XtYFqpLdHN5HImMvN29YtWE9MD/iiKJ/zecYgFQCb4FQ
-	 uhMqg401cEd7hM6VwDEY7U7RAYlIu0IGYZKsNJGM=
+	b=087OsH5UqbZzXtolMGPDWg7rEWCjIZoBJxRAqOy8wvOzpc/HOByLUBlZQ1v/UWvim
+	 QLEmsNF/vhKRBhM1CRk0ubKVTvYyOD4owHTjbviclJu5Bk7xFYsLTbOG03izt+mX7h
+	 FhAtUxv1hBIzV9bE7Bwx62b53MSSdjWXcCBHAHsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Valentin Schneider <vschneid@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/167] clk: renesas: rzg2l: Refactor SD mux driver
-Date: Tue, 29 Apr 2025 18:42:12 +0200
-Message-ID: <20250429161052.728543927@linuxfoundation.org>
+Subject: [PATCH 6.1 003/167] tracing: Add __cpumask to denote a trace event field that is a cpumask_t
+Date: Tue, 29 Apr 2025 18:41:51 +0200
+Message-ID: <20250429161051.887929162@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -45,428 +45,399 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 16b86e5c03c5b3ef35bf5126b35384faa97428f0 ]
+[ Upstream commit 8230f27b1ccc4b8976c137e3d6d690f9d4ffca8d ]
 
-Refactor SD MUX driver to be able to reuse the same code on RZ/G3S.
-RZ/G2{L,UL} has a limitation with regards to switching the clock source
-for SD MUX (MUX clock source has to be switched to 266MHz before
-switching b/w 533MHz and 400MHz).  Rework the handling of this limitation
-to use a clock notifier that is registered according to platform based
-initialization data, so the SD MUX code can be reused on RZ/G3S.
+The trace events have a __bitmask field that can be used for anything
+that requires bitmasks. Although currently it is only used for CPU
+masks, it could be used in the future for any type of bitmasks.
 
-As RZ/G2{L,UL} and RZ/G3S use different bits in different registers to
-check if the clock switching has been done, this configuration (register
-offset, register bits and bitfield width) is now passed through struct
-cpg_core_clk::sconf (status configuration) from platform specific
-initialization code.
+There is some user space tooling that wants to know if a field is a CPU
+mask and not just some random unsigned long bitmask. Introduce
+"__cpumask()" helper functions that work the same as the current
+__bitmask() helpers but displays in the format file:
 
-Along with struct cpg_core_clk::sconf the mux table indices are also
-passed from platform specific initialization code.
+  field:__data_loc cpumask_t *[] mask;    offset:36;      size:4; signed:0;
 
-Also, mux flags are now passed to DEF_SD_MUX() as they will be used
-later by RZ/G3S.
+Instead of:
 
-CPG_WEN_BIT macro has been introduced to select properly the WEN bit
-of various registers.
+  field:__data_loc unsigned long[] mask;  offset:32;      size:4; signed:0;
 
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20231006103959.197485-3-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Stable-dep-of: 7f22a298d926 ("clk: renesas: r9a07g043: Fix HP clock source for RZ/Five")
+The main difference is the type. Instead of "unsigned long" it is
+"cpumask_t *". Note, this type field needs to be a real type in the
+__dynamic_array() logic that both __cpumask and__bitmask use, but the
+comparison field requires it to be a scalar type whereas cpumask_t is a
+structure (non-scalar). But everything works when making it a pointer.
+
+Valentin added changes to remove the need of passing in "nr_bits" and the
+__cpumask will always use nr_cpumask_bits as its size.
+
+Link: https://lkml.kernel.org/r/20221014080456.1d32b989@rorschach.local.home
+
+Requested-by: Valentin Schneider <vschneid@redhat.com>
+Reviewed-by: Valentin Schneider <vschneid@redhat.com>
+Signed-off-by: Valentin Schneider <vschneid@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: ea8d7647f9dd ("tracing: Verify event formats that have "%*p.."")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r9a07g043-cpg.c |  12 ++-
- drivers/clk/renesas/r9a07g044-cpg.c |  12 ++-
- drivers/clk/renesas/rzg2l-cpg.c     | 150 ++++++++++++++++++++--------
- drivers/clk/renesas/rzg2l-cpg.h     |  16 ++-
- 4 files changed, 139 insertions(+), 51 deletions(-)
+ include/trace/bpf_probe.h                    |  6 ++++
+ include/trace/perf.h                         |  6 ++++
+ include/trace/stages/stage1_struct_define.h  |  6 ++++
+ include/trace/stages/stage2_data_offsets.h   |  6 ++++
+ include/trace/stages/stage3_trace_output.h   |  6 ++++
+ include/trace/stages/stage4_event_fields.h   |  6 ++++
+ include/trace/stages/stage5_get_offsets.h    |  6 ++++
+ include/trace/stages/stage6_event_callback.h | 20 ++++++++++++
+ include/trace/stages/stage7_class_define.h   |  2 ++
+ samples/trace_events/trace-events-sample.c   |  2 +-
+ samples/trace_events/trace-events-sample.h   | 34 +++++++++++++++-----
+ 11 files changed, 91 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/clk/renesas/r9a07g043-cpg.c b/drivers/clk/renesas/r9a07g043-cpg.c
-index 866d355911818..31b7c24fe4d0f 100644
---- a/drivers/clk/renesas/r9a07g043-cpg.c
-+++ b/drivers/clk/renesas/r9a07g043-cpg.c
-@@ -21,6 +21,10 @@
- #define SEL_SDHI0		SEL_PLL_PACK(CPG_PL2SDHI_DSEL, 0, 2)
- #define SEL_SDHI1		SEL_PLL_PACK(CPG_PL2SDHI_DSEL, 4, 2)
+diff --git a/include/trace/bpf_probe.h b/include/trace/bpf_probe.h
+index 6a13220d2d27b..155c495b89ead 100644
+--- a/include/trace/bpf_probe.h
++++ b/include/trace/bpf_probe.h
+@@ -21,6 +21,9 @@
+ #undef __get_bitmask
+ #define __get_bitmask(field) (char *)__get_dynamic_array(field)
  
-+/* Clock status configuration. */
-+#define SEL_SDHI0_STS		SEL_PLL_PACK(CPG_CLKSTATUS, 28, 1)
-+#define SEL_SDHI1_STS		SEL_PLL_PACK(CPG_CLKSTATUS, 29, 1)
++#undef __get_cpumask
++#define __get_cpumask(field) (char *)__get_dynamic_array(field)
 +
- enum clk_ids {
- 	/* Core Clock Outputs exported to DT */
- 	LAST_DT_CORE_CLK = R9A07G043_CLK_P0_DIV2,
-@@ -85,6 +89,8 @@ static const char * const sel_pll3_3[] = { ".pll3_533", ".pll3_400" };
- static const char * const sel_pll6_2[]	= { ".pll6_250", ".pll5_250" };
- static const char * const sel_shdi[] = { ".clk_533", ".clk_400", ".clk_266" };
+ #undef __get_sockaddr
+ #define __get_sockaddr(field) ((struct sockaddr *)__get_dynamic_array(field))
  
-+static const u32 mtable_sdhi[] = { 1, 2, 3 };
+@@ -40,6 +43,9 @@
+ #undef __get_rel_bitmask
+ #define __get_rel_bitmask(field) (char *)__get_rel_dynamic_array(field)
+ 
++#undef __get_rel_cpumask
++#define __get_rel_cpumask(field) (char *)__get_rel_dynamic_array(field)
 +
- static const struct cpg_core_clk r9a07g043_core_clks[] __initconst = {
- 	/* External Clock Inputs */
- 	DEF_INPUT("extal", CLK_EXTAL),
-@@ -130,8 +136,10 @@ static const struct cpg_core_clk r9a07g043_core_clks[] __initconst = {
- 	DEF_MUX("HP", R9A07G043_CLK_HP, SEL_PLL6_2, sel_pll6_2),
- 	DEF_FIXED("SPI0", R9A07G043_CLK_SPI0, CLK_DIV_PLL3_C, 1, 2),
- 	DEF_FIXED("SPI1", R9A07G043_CLK_SPI1, CLK_DIV_PLL3_C, 1, 4),
--	DEF_SD_MUX("SD0", R9A07G043_CLK_SD0, SEL_SDHI0, sel_shdi),
--	DEF_SD_MUX("SD1", R9A07G043_CLK_SD1, SEL_SDHI1, sel_shdi),
-+	DEF_SD_MUX("SD0", R9A07G043_CLK_SD0, SEL_SDHI0, SEL_SDHI0_STS, sel_shdi,
-+		   mtable_sdhi, 0, rzg2l_cpg_sd_clk_mux_notifier),
-+	DEF_SD_MUX("SD1", R9A07G043_CLK_SD1, SEL_SDHI1, SEL_SDHI0_STS, sel_shdi,
-+		   mtable_sdhi, 0, rzg2l_cpg_sd_clk_mux_notifier),
- 	DEF_FIXED("SD0_DIV4", CLK_SD0_DIV4, R9A07G043_CLK_SD0, 1, 4),
- 	DEF_FIXED("SD1_DIV4", CLK_SD1_DIV4, R9A07G043_CLK_SD1, 1, 4),
- };
-diff --git a/drivers/clk/renesas/r9a07g044-cpg.c b/drivers/clk/renesas/r9a07g044-cpg.c
-index ca56bc67da25e..3ae1c792b104c 100644
---- a/drivers/clk/renesas/r9a07g044-cpg.c
-+++ b/drivers/clk/renesas/r9a07g044-cpg.c
-@@ -22,6 +22,10 @@
- #define SEL_SDHI0		SEL_PLL_PACK(CPG_PL2SDHI_DSEL, 0, 2)
- #define SEL_SDHI1		SEL_PLL_PACK(CPG_PL2SDHI_DSEL, 4, 2)
+ #undef __get_rel_sockaddr
+ #define __get_rel_sockaddr(field) ((struct sockaddr *)__get_rel_dynamic_array(field))
  
-+/* Clock status configuration. */
-+#define SEL_SDHI0_STS		SEL_PLL_PACK(CPG_CLKSTATUS, 28, 1)
-+#define SEL_SDHI1_STS		SEL_PLL_PACK(CPG_CLKSTATUS, 29, 1)
+diff --git a/include/trace/perf.h b/include/trace/perf.h
+index 5800d13146c3d..8f3bf1e177070 100644
+--- a/include/trace/perf.h
++++ b/include/trace/perf.h
+@@ -21,6 +21,9 @@
+ #undef __get_bitmask
+ #define __get_bitmask(field) (char *)__get_dynamic_array(field)
+ 
++#undef __get_cpumask
++#define __get_cpumask(field) (char *)__get_dynamic_array(field)
 +
- enum clk_ids {
- 	/* Core Clock Outputs exported to DT */
- 	LAST_DT_CORE_CLK = R9A07G054_CLK_DRP_A,
-@@ -105,6 +109,8 @@ static const char * const sel_pll6_2[]	= { ".pll6_250", ".pll5_250" };
- static const char * const sel_shdi[] = { ".clk_533", ".clk_400", ".clk_266" };
- static const char * const sel_gpu2[] = { ".pll6", ".pll3_div2_2" };
+ #undef __get_sockaddr
+ #define __get_sockaddr(field) ((struct sockaddr *)__get_dynamic_array(field))
  
-+static const u32 mtable_sdhi[] = { 1, 2, 3 };
+@@ -41,6 +44,9 @@
+ #undef __get_rel_bitmask
+ #define __get_rel_bitmask(field) (char *)__get_rel_dynamic_array(field)
+ 
++#undef __get_rel_cpumask
++#define __get_rel_cpumask(field) (char *)__get_rel_dynamic_array(field)
 +
- static const struct {
- 	struct cpg_core_clk common[56];
- #ifdef CONFIG_CLK_R9A07G054
-@@ -170,8 +176,10 @@ static const struct {
- 		DEF_MUX("HP", R9A07G044_CLK_HP, SEL_PLL6_2, sel_pll6_2),
- 		DEF_FIXED("SPI0", R9A07G044_CLK_SPI0, CLK_DIV_PLL3_C, 1, 2),
- 		DEF_FIXED("SPI1", R9A07G044_CLK_SPI1, CLK_DIV_PLL3_C, 1, 4),
--		DEF_SD_MUX("SD0", R9A07G044_CLK_SD0, SEL_SDHI0, sel_shdi),
--		DEF_SD_MUX("SD1", R9A07G044_CLK_SD1, SEL_SDHI1, sel_shdi),
-+		DEF_SD_MUX("SD0", R9A07G044_CLK_SD0, SEL_SDHI0, SEL_SDHI0_STS, sel_shdi,
-+			   mtable_sdhi, 0, rzg2l_cpg_sd_clk_mux_notifier),
-+		DEF_SD_MUX("SD1", R9A07G044_CLK_SD1, SEL_SDHI1, SEL_SDHI0_STS, sel_shdi,
-+			   mtable_sdhi, 0, rzg2l_cpg_sd_clk_mux_notifier),
- 		DEF_FIXED("SD0_DIV4", CLK_SD0_DIV4, R9A07G044_CLK_SD0, 1, 4),
- 		DEF_FIXED("SD1_DIV4", CLK_SD1_DIV4, R9A07G044_CLK_SD1, 1, 4),
- 		DEF_DIV("G", R9A07G044_CLK_G, CLK_SEL_GPU2, DIVGPU, dtable_1_8),
-diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
-index 2d298d94e1d85..af4f40c108d8c 100644
---- a/drivers/clk/renesas/rzg2l-cpg.c
-+++ b/drivers/clk/renesas/rzg2l-cpg.c
-@@ -57,31 +57,37 @@
- #define GET_REG_SAMPLL_CLK1(val)	((val >> 22) & 0xfff)
- #define GET_REG_SAMPLL_CLK2(val)	((val >> 12) & 0xfff)
+ #undef __get_rel_sockaddr
+ #define __get_rel_sockaddr(field) ((struct sockaddr *)__get_rel_dynamic_array(field))
  
-+#define CPG_WEN_BIT		BIT(16)
+diff --git a/include/trace/stages/stage1_struct_define.h b/include/trace/stages/stage1_struct_define.h
+index 1b7bab60434c1..69e0dae453bfa 100644
+--- a/include/trace/stages/stage1_struct_define.h
++++ b/include/trace/stages/stage1_struct_define.h
+@@ -32,6 +32,9 @@
+ #undef __bitmask
+ #define __bitmask(item, nr_bits) __dynamic_array(char, item, -1)
+ 
++#undef __cpumask
++#define __cpumask(item) __dynamic_array(char, item, -1)
 +
- #define MAX_VCLK_FREQ		(148500000)
+ #undef __sockaddr
+ #define __sockaddr(field, len) __dynamic_array(u8, field, len)
  
- /**
-  * struct clk_hw_data - clock hardware data
-  * @hw: clock hw
-  * @conf: clock configuration (register offset, shift, width)
-+ * @sconf: clock status configuration (register offset, shift, width)
-  * @priv: CPG private data structure
-  */
- struct clk_hw_data {
- 	struct clk_hw hw;
- 	u32 conf;
-+	u32 sconf;
- 	struct rzg2l_cpg_priv *priv;
- };
+@@ -47,6 +50,9 @@
+ #undef __rel_bitmask
+ #define __rel_bitmask(item, nr_bits) __rel_dynamic_array(char, item, -1)
  
- #define to_clk_hw_data(_hw)	container_of(_hw, struct clk_hw_data, hw)
++#undef __rel_cpumask
++#define __rel_cpumask(item) __rel_dynamic_array(char, item, -1)
++
+ #undef __rel_sockaddr
+ #define __rel_sockaddr(field, len) __rel_dynamic_array(u8, field, len)
  
- /**
-- * struct sd_hw_data - SD clock hardware data
-+ * struct sd_mux_hw_data - SD MUX clock hardware data
-  * @hw_data: clock hw data
-+ * @mtable: clock mux table
-  */
--struct sd_hw_data {
-+struct sd_mux_hw_data {
- 	struct clk_hw_data hw_data;
-+	const u32 *mtable;
- };
+diff --git a/include/trace/stages/stage2_data_offsets.h b/include/trace/stages/stage2_data_offsets.h
+index 1b7a8f764fddd..469b6a64293de 100644
+--- a/include/trace/stages/stage2_data_offsets.h
++++ b/include/trace/stages/stage2_data_offsets.h
+@@ -38,6 +38,9 @@
+ #undef __bitmask
+ #define __bitmask(item, nr_bits) __dynamic_array(unsigned long, item, -1)
  
--#define to_sd_hw_data(_hw)	container_of(_hw, struct sd_hw_data, hw_data)
-+#define to_sd_mux_hw_data(_hw)	container_of(_hw, struct sd_mux_hw_data, hw_data)
++#undef __cpumask
++#define __cpumask(item) __dynamic_array(unsigned long, item, -1)
++
+ #undef __sockaddr
+ #define __sockaddr(field, len) __dynamic_array(u8, field, len)
  
- struct rzg2l_pll5_param {
- 	u32 pl5_fracin;
-@@ -135,6 +141,76 @@ static void rzg2l_cpg_del_clk_provider(void *data)
- 	of_clk_del_provider(data);
+@@ -53,5 +56,8 @@
+ #undef __rel_bitmask
+ #define __rel_bitmask(item, nr_bits) __rel_dynamic_array(unsigned long, item, -1)
+ 
++#undef __rel_cpumask
++#define __rel_cpumask(item) __rel_dynamic_array(unsigned long, item, -1)
++
+ #undef __rel_sockaddr
+ #define __rel_sockaddr(field, len) __rel_dynamic_array(u8, field, len)
+diff --git a/include/trace/stages/stage3_trace_output.h b/include/trace/stages/stage3_trace_output.h
+index e3b183e9d18ea..66374df61ed30 100644
+--- a/include/trace/stages/stage3_trace_output.h
++++ b/include/trace/stages/stage3_trace_output.h
+@@ -42,6 +42,9 @@
+ 		trace_print_bitmask_seq(p, __bitmask, __bitmask_size);	\
+ 	})
+ 
++#undef __get_cpumask
++#define __get_cpumask(field) __get_bitmask(field)
++
+ #undef __get_rel_bitmask
+ #define __get_rel_bitmask(field)						\
+ 	({								\
+@@ -51,6 +54,9 @@
+ 		trace_print_bitmask_seq(p, __bitmask, __bitmask_size);	\
+ 	})
+ 
++#undef __get_rel_cpumask
++#define __get_rel_cpumask(field) __get_rel_bitmask(field)
++
+ #undef __get_sockaddr
+ #define __get_sockaddr(field)	((struct sockaddr *)__get_dynamic_array(field))
+ 
+diff --git a/include/trace/stages/stage4_event_fields.h b/include/trace/stages/stage4_event_fields.h
+index fae467ccd0c3c..5e7ebe69de8c1 100644
+--- a/include/trace/stages/stage4_event_fields.h
++++ b/include/trace/stages/stage4_event_fields.h
+@@ -47,6 +47,9 @@
+ #undef __bitmask
+ #define __bitmask(item, nr_bits) __dynamic_array(unsigned long, item, -1)
+ 
++#undef __cpumask
++#define __cpumask(item) __dynamic_array(cpumask_t *, item, -1)
++
+ #undef __sockaddr
+ #define __sockaddr(field, len) __dynamic_array(u8, field, len)
+ 
+@@ -65,5 +68,8 @@
+ #undef __rel_bitmask
+ #define __rel_bitmask(item, nr_bits) __rel_dynamic_array(unsigned long, item, -1)
+ 
++#undef __rel_cpumask
++#define __rel_cpumask(item) __rel_dynamic_array(cpumask_t *, item, -1)
++
+ #undef __rel_sockaddr
+ #define __rel_sockaddr(field, len) __rel_dynamic_array(u8, field, len)
+diff --git a/include/trace/stages/stage5_get_offsets.h b/include/trace/stages/stage5_get_offsets.h
+index def36fbb8c5cd..e30a13be46ba5 100644
+--- a/include/trace/stages/stage5_get_offsets.h
++++ b/include/trace/stages/stage5_get_offsets.h
+@@ -95,10 +95,16 @@
+ #define __bitmask(item, nr_bits) __dynamic_array(unsigned long, item,	\
+ 					 __bitmask_size_in_longs(nr_bits))
+ 
++#undef __cpumask
++#define __cpumask(item) __bitmask(item, nr_cpumask_bits)
++
+ #undef __rel_bitmask
+ #define __rel_bitmask(item, nr_bits) __rel_dynamic_array(unsigned long, item,	\
+ 					 __bitmask_size_in_longs(nr_bits))
+ 
++#undef __rel_cpumask
++#define __rel_cpumask(item) __rel_bitmask(item, nr_cpumask_bits)
++
+ #undef __sockaddr
+ #define __sockaddr(field, len) __dynamic_array(u8, field, len)
+ 
+diff --git a/include/trace/stages/stage6_event_callback.h b/include/trace/stages/stage6_event_callback.h
+index 3c554a5853204..49c32394b53fb 100644
+--- a/include/trace/stages/stage6_event_callback.h
++++ b/include/trace/stages/stage6_event_callback.h
+@@ -57,6 +57,16 @@
+ #define __assign_bitmask(dst, src, nr_bits)					\
+ 	memcpy(__get_bitmask(dst), (src), __bitmask_size_in_bytes(nr_bits))
+ 
++#undef __cpumask
++#define __cpumask(item) __dynamic_array(unsigned long, item, -1)
++
++#undef __get_cpumask
++#define __get_cpumask(field) (char *)__get_dynamic_array(field)
++
++#undef __assign_cpumask
++#define __assign_cpumask(dst, src)					\
++	memcpy(__get_cpumask(dst), (src), __bitmask_size_in_bytes(nr_cpumask_bits))
++
+ #undef __sockaddr
+ #define __sockaddr(field, len) __dynamic_array(u8, field, len)
+ 
+@@ -98,6 +108,16 @@
+ #define __assign_rel_bitmask(dst, src, nr_bits)					\
+ 	memcpy(__get_rel_bitmask(dst), (src), __bitmask_size_in_bytes(nr_bits))
+ 
++#undef __rel_cpumask
++#define __rel_cpumask(item) __rel_dynamic_array(unsigned long, item, -1)
++
++#undef __get_rel_cpumask
++#define __get_rel_cpumask(field) (char *)__get_rel_dynamic_array(field)
++
++#undef __assign_rel_cpumask
++#define __assign_rel_cpumask(dst, src)					\
++	memcpy(__get_rel_cpumask(dst), (src), __bitmask_size_in_bytes(nr_cpumask_bits))
++
+ #undef __rel_sockaddr
+ #define __rel_sockaddr(field, len) __rel_dynamic_array(u8, field, len)
+ 
+diff --git a/include/trace/stages/stage7_class_define.h b/include/trace/stages/stage7_class_define.h
+index 8a7ec24c246dd..8795429f388b0 100644
+--- a/include/trace/stages/stage7_class_define.h
++++ b/include/trace/stages/stage7_class_define.h
+@@ -13,11 +13,13 @@
+ #undef __get_dynamic_array_len
+ #undef __get_str
+ #undef __get_bitmask
++#undef __get_cpumask
+ #undef __get_sockaddr
+ #undef __get_rel_dynamic_array
+ #undef __get_rel_dynamic_array_len
+ #undef __get_rel_str
+ #undef __get_rel_bitmask
++#undef __get_rel_cpumask
+ #undef __get_rel_sockaddr
+ #undef __print_array
+ #undef __print_hex_dump
+diff --git a/samples/trace_events/trace-events-sample.c b/samples/trace_events/trace-events-sample.c
+index 608c4ae3b08a3..ecc7db237f2ef 100644
+--- a/samples/trace_events/trace-events-sample.c
++++ b/samples/trace_events/trace-events-sample.c
+@@ -50,7 +50,7 @@ static void do_simple_thread_func(int cnt, const char *fmt, ...)
+ 
+ 	trace_foo_with_template_print("I have to be different", cnt);
+ 
+-	trace_foo_rel_loc("Hello __rel_loc", cnt, bitmask);
++	trace_foo_rel_loc("Hello __rel_loc", cnt, bitmask, current->cpus_ptr);
  }
  
-+/* Must be called in atomic context. */
-+static int rzg2l_cpg_wait_clk_update_done(void __iomem *base, u32 conf)
-+{
-+	u32 bitmask = GENMASK(GET_WIDTH(conf) - 1, 0) << GET_SHIFT(conf);
-+	u32 off = GET_REG_OFFSET(conf);
-+	u32 val;
-+
-+	return readl_poll_timeout_atomic(base + off, val, !(val & bitmask), 10, 200);
-+}
-+
-+int rzg2l_cpg_sd_clk_mux_notifier(struct notifier_block *nb, unsigned long event,
-+				  void *data)
-+{
-+	struct clk_notifier_data *cnd = data;
-+	struct clk_hw *hw = __clk_get_hw(cnd->clk);
-+	struct clk_hw_data *clk_hw_data = to_clk_hw_data(hw);
-+	struct rzg2l_cpg_priv *priv = clk_hw_data->priv;
-+	u32 off = GET_REG_OFFSET(clk_hw_data->conf);
-+	u32 shift = GET_SHIFT(clk_hw_data->conf);
-+	const u32 clk_src_266 = 3;
-+	unsigned long flags;
-+	int ret;
-+
-+	if (event != PRE_RATE_CHANGE || (cnd->new_rate / MEGA == 266))
-+		return NOTIFY_DONE;
-+
-+	spin_lock_irqsave(&priv->rmw_lock, flags);
-+
-+	/*
-+	 * As per the HW manual, we should not directly switch from 533 MHz to
-+	 * 400 MHz and vice versa. To change the setting from 2’b01 (533 MHz)
-+	 * to 2’b10 (400 MHz) or vice versa, Switch to 2’b11 (266 MHz) first,
-+	 * and then switch to the target setting (2’b01 (533 MHz) or 2’b10
-+	 * (400 MHz)).
-+	 * Setting a value of '0' to the SEL_SDHI0_SET or SEL_SDHI1_SET clock
-+	 * switching register is prohibited.
-+	 * The clock mux has 3 input clocks(533 MHz, 400 MHz, and 266 MHz), and
-+	 * the index to value mapping is done by adding 1 to the index.
-+	 */
-+
-+	writel((CPG_WEN_BIT | clk_src_266) << shift, priv->base + off);
-+
-+	/* Wait for the update done. */
-+	ret = rzg2l_cpg_wait_clk_update_done(priv->base, clk_hw_data->sconf);
-+
-+	spin_unlock_irqrestore(&priv->rmw_lock, flags);
-+
-+	if (ret)
-+		dev_err(priv->dev, "failed to switch to safe clk source\n");
-+
-+	return notifier_from_errno(ret);
-+}
-+
-+static int rzg2l_register_notifier(struct clk_hw *hw, const struct cpg_core_clk *core,
-+				   struct rzg2l_cpg_priv *priv)
-+{
-+	struct notifier_block *nb;
-+
-+	if (!core->notifier)
-+		return 0;
-+
-+	nb = devm_kzalloc(priv->dev, sizeof(*nb), GFP_KERNEL);
-+	if (!nb)
-+		return -ENOMEM;
-+
-+	nb->notifier_call = core->notifier;
-+
-+	return clk_notifier_register(hw->clk, nb);
-+}
-+
- static struct clk * __init
- rzg2l_cpg_div_clk_register(const struct cpg_core_clk *core,
- 			   struct clk **clks,
-@@ -204,48 +280,27 @@ static int rzg2l_cpg_sd_clk_mux_determine_rate(struct clk_hw *hw,
- static int rzg2l_cpg_sd_clk_mux_set_parent(struct clk_hw *hw, u8 index)
- {
- 	struct clk_hw_data *clk_hw_data = to_clk_hw_data(hw);
-+	struct sd_mux_hw_data *sd_mux_hw_data = to_sd_mux_hw_data(clk_hw_data);
- 	struct rzg2l_cpg_priv *priv = clk_hw_data->priv;
- 	u32 off = GET_REG_OFFSET(clk_hw_data->conf);
- 	u32 shift = GET_SHIFT(clk_hw_data->conf);
--	const u32 clk_src_266 = 2;
--	u32 msk, val, bitmask;
- 	unsigned long flags;
-+	u32 val;
- 	int ret;
+ static void simple_thread_func(int cnt)
+diff --git a/samples/trace_events/trace-events-sample.h b/samples/trace_events/trace-events-sample.h
+index 1a92226202fc5..fb4548a44153c 100644
+--- a/samples/trace_events/trace-events-sample.h
++++ b/samples/trace_events/trace-events-sample.h
+@@ -200,6 +200,16 @@
+  *
+  *         __assign_bitmask(target_cpus, cpumask_bits(bar), nr_cpumask_bits);
+  *
++ *   __cpumask: This is pretty much the same as __bitmask but is specific for
++ *         CPU masks. The type displayed to the user via the format files will
++ *         be "cpumaks_t" such that user space may deal with them differently
++ *         if they choose to do so, and the bits is always set to nr_cpumask_bits.
++ *
++ *         __cpumask(target_cpu)
++ *
++ *         To assign a cpumask, use the __assign_cpumask() helper macro.
++ *
++ *         __assign_cpumask(target_cpus, cpumask_bits(bar));
+  *
+  * fast_assign: This is a C like function that is used to store the items
+  *    into the ring buffer. A special variable called "__entry" will be the
+@@ -212,8 +222,8 @@
+  *    This is also used to print out the data from the trace files.
+  *    Again, the __entry macro is used to access the data from the ring buffer.
+  *
+- *    Note, __dynamic_array, __string, and __bitmask require special helpers
+- *       to access the data.
++ *    Note, __dynamic_array, __string, __bitmask and __cpumask require special
++ *       helpers to access the data.
+  *
+  *      For __dynamic_array(int, foo, bar) use __get_dynamic_array(foo)
+  *            Use __get_dynamic_array_len(foo) to get the length of the array
+@@ -226,6 +236,8 @@
+  *
+  *      For __bitmask(target_cpus, nr_cpumask_bits) use __get_bitmask(target_cpus)
+  *
++ *      For __cpumask(target_cpus) use __get_cpumask(target_cpus)
++ *
+  *
+  * Note, that for both the assign and the printk, __entry is the handler
+  * to the data structure in the ring buffer, and is defined by the
+@@ -288,6 +300,7 @@ TRACE_EVENT(foo_bar,
+ 		__dynamic_array(int,	list,   __length_of(lst))
+ 		__string(	str,	string			)
+ 		__bitmask(	cpus,	num_possible_cpus()	)
++		__cpumask(	cpum				)
+ 		__vstring(	vstr,	fmt,	va		)
+ 	),
  
--	/*
--	 * As per the HW manual, we should not directly switch from 533 MHz to
--	 * 400 MHz and vice versa. To change the setting from 2’b01 (533 MHz)
--	 * to 2’b10 (400 MHz) or vice versa, Switch to 2’b11 (266 MHz) first,
--	 * and then switch to the target setting (2’b01 (533 MHz) or 2’b10
--	 * (400 MHz)).
--	 * Setting a value of '0' to the SEL_SDHI0_SET or SEL_SDHI1_SET clock
--	 * switching register is prohibited.
--	 * The clock mux has 3 input clocks(533 MHz, 400 MHz, and 266 MHz), and
--	 * the index to value mapping is done by adding 1 to the index.
--	 */
--	bitmask = (GENMASK(GET_WIDTH(clk_hw_data->conf) - 1, 0) << shift) << 16;
--	msk = off ? CPG_CLKSTATUS_SELSDHI1_STS : CPG_CLKSTATUS_SELSDHI0_STS;
-+	val = clk_mux_index_to_val(sd_mux_hw_data->mtable, CLK_MUX_ROUND_CLOSEST, index);
-+
- 	spin_lock_irqsave(&priv->rmw_lock, flags);
--	if (index != clk_src_266) {
--		writel(bitmask | ((clk_src_266 + 1) << shift), priv->base + off);
--
--		ret = readl_poll_timeout_atomic(priv->base + CPG_CLKSTATUS, val,
--						!(val & msk), 10,
--						CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US);
--		if (ret)
--			goto unlock;
--	}
+@@ -299,9 +312,10 @@ TRACE_EVENT(foo_bar,
+ 		__assign_str(str, string);
+ 		__assign_vstr(vstr, fmt, va);
+ 		__assign_bitmask(cpus, cpumask_bits(mask), num_possible_cpus());
++		__assign_cpumask(cpum, cpumask_bits(mask));
+ 	),
  
--	writel(bitmask | ((index + 1) << shift), priv->base + off);
-+	writel((CPG_WEN_BIT | val) << shift, priv->base + off);
-+
-+	/* Wait for the update done. */
-+	ret = rzg2l_cpg_wait_clk_update_done(priv->base, clk_hw_data->sconf);
+-	TP_printk("foo %s %d %s %s %s %s (%s) %s", __entry->foo, __entry->bar,
++	TP_printk("foo %s %d %s %s %s %s (%s) (%s) %s", __entry->foo, __entry->bar,
  
--	ret = readl_poll_timeout_atomic(priv->base + CPG_CLKSTATUS, val,
--					!(val & msk), 10,
--					CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US);
--unlock:
- 	spin_unlock_irqrestore(&priv->rmw_lock, flags);
+ /*
+  * Notice here the use of some helper functions. This includes:
+@@ -345,7 +359,8 @@ TRACE_EVENT(foo_bar,
+ 		  __print_array(__get_dynamic_array(list),
+ 				__get_dynamic_array_len(list) / sizeof(int),
+ 				sizeof(int)),
+-		  __get_str(str), __get_bitmask(cpus), __get_str(vstr))
++		  __get_str(str), __get_bitmask(cpus), __get_cpumask(cpus),
++		  __get_str(vstr))
+ );
  
- 	if (ret)
--		dev_err(priv->dev, "failed to switch clk source\n");
-+		dev_err(priv->dev, "Failed to switch parent\n");
+ /*
+@@ -542,15 +557,16 @@ DEFINE_EVENT_PRINT(foo_template, foo_with_template_print,
  
- 	return ret;
- }
-@@ -253,13 +308,15 @@ static int rzg2l_cpg_sd_clk_mux_set_parent(struct clk_hw *hw, u8 index)
- static u8 rzg2l_cpg_sd_clk_mux_get_parent(struct clk_hw *hw)
- {
- 	struct clk_hw_data *clk_hw_data = to_clk_hw_data(hw);
-+	struct sd_mux_hw_data *sd_mux_hw_data = to_sd_mux_hw_data(clk_hw_data);
- 	struct rzg2l_cpg_priv *priv = clk_hw_data->priv;
--	u32 val = readl(priv->base + GET_REG_OFFSET(clk_hw_data->conf));
-+	u32 val;
+ TRACE_EVENT(foo_rel_loc,
  
-+	val = readl(priv->base + GET_REG_OFFSET(clk_hw_data->conf));
- 	val >>= GET_SHIFT(clk_hw_data->conf);
- 	val &= GENMASK(GET_WIDTH(clk_hw_data->conf) - 1, 0);
+-	TP_PROTO(const char *foo, int bar, unsigned long *mask),
++	TP_PROTO(const char *foo, int bar, unsigned long *mask, const cpumask_t *cpus),
  
--	return val ? val - 1 : 0;
-+	return clk_mux_val_to_index(hw, sd_mux_hw_data->mtable, CLK_MUX_ROUND_CLOSEST, val);
- }
+-	TP_ARGS(foo, bar, mask),
++	TP_ARGS(foo, bar, mask, cpus),
  
- static const struct clk_ops rzg2l_cpg_sd_clk_mux_ops = {
-@@ -273,31 +330,40 @@ rzg2l_cpg_sd_mux_clk_register(const struct cpg_core_clk *core,
- 			      void __iomem *base,
- 			      struct rzg2l_cpg_priv *priv)
- {
--	struct sd_hw_data *sd_hw_data;
-+	struct sd_mux_hw_data *sd_mux_hw_data;
- 	struct clk_init_data init;
- 	struct clk_hw *clk_hw;
- 	int ret;
+ 	TP_STRUCT__entry(
+ 		__rel_string(	foo,	foo	)
+ 		__field(	int,	bar	)
+ 		__rel_bitmask(	bitmask,
+ 			BITS_PER_BYTE * sizeof(unsigned long)	)
++		__rel_cpumask(	cpumask )
+ 	),
  
--	sd_hw_data = devm_kzalloc(priv->dev, sizeof(*sd_hw_data), GFP_KERNEL);
--	if (!sd_hw_data)
-+	sd_mux_hw_data = devm_kzalloc(priv->dev, sizeof(*sd_mux_hw_data), GFP_KERNEL);
-+	if (!sd_mux_hw_data)
- 		return ERR_PTR(-ENOMEM);
+ 	TP_fast_assign(
+@@ -558,10 +574,12 @@ TRACE_EVENT(foo_rel_loc,
+ 		__entry->bar = bar;
+ 		__assign_rel_bitmask(bitmask, mask,
+ 			BITS_PER_BYTE * sizeof(unsigned long));
++		__assign_rel_cpumask(cpumask, cpus);
+ 	),
  
--	sd_hw_data->hw_data.priv = priv;
--	sd_hw_data->hw_data.conf = core->conf;
-+	sd_mux_hw_data->hw_data.priv = priv;
-+	sd_mux_hw_data->hw_data.conf = core->conf;
-+	sd_mux_hw_data->hw_data.sconf = core->sconf;
-+	sd_mux_hw_data->mtable = core->mtable;
- 
- 	init.name = GET_SHIFT(core->conf) ? "sd1" : "sd0";
- 	init.ops = &rzg2l_cpg_sd_clk_mux_ops;
--	init.flags = 0;
-+	init.flags = core->flag;
- 	init.num_parents = core->num_parents;
- 	init.parent_names = core->parent_names;
- 
--	clk_hw = &sd_hw_data->hw_data.hw;
-+	clk_hw = &sd_mux_hw_data->hw_data.hw;
- 	clk_hw->init = &init;
- 
- 	ret = devm_clk_hw_register(priv->dev, clk_hw);
- 	if (ret)
- 		return ERR_PTR(ret);
- 
-+	ret = rzg2l_register_notifier(clk_hw, core, priv);
-+	if (ret) {
-+		dev_err(priv->dev, "Failed to register notifier for %s\n",
-+			core->name);
-+		return ERR_PTR(ret);
-+	}
-+
- 	return clk_hw->clk;
- }
- 
-diff --git a/drivers/clk/renesas/rzg2l-cpg.h b/drivers/clk/renesas/rzg2l-cpg.h
-index a3f908e555552..6418961dc8822 100644
---- a/drivers/clk/renesas/rzg2l-cpg.h
-+++ b/drivers/clk/renesas/rzg2l-cpg.h
-@@ -9,6 +9,8 @@
- #ifndef __RENESAS_RZG2L_CPG_H__
- #define __RENESAS_RZG2L_CPG_H__
- 
-+#include <linux/notifier.h>
-+
- #define CPG_SIPLL5_STBY		(0x140)
- #define CPG_SIPLL5_CLK1		(0x144)
- #define CPG_SIPLL5_CLK3		(0x14C)
-@@ -42,8 +44,6 @@
- #define CPG_CLKSTATUS_SELSDHI0_STS	BIT(28)
- #define CPG_CLKSTATUS_SELSDHI1_STS	BIT(29)
- 
--#define CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US	200
--
- /* n = 0/1/2 for PLL1/4/6 */
- #define CPG_SAMPLL_CLK1(n)	(0x04 + (16 * n))
- #define CPG_SAMPLL_CLK2(n)	(0x08 + (16 * n))
-@@ -86,8 +86,11 @@ struct cpg_core_clk {
- 	unsigned int mult;
- 	unsigned int type;
- 	unsigned int conf;
-+	unsigned int sconf;
- 	const struct clk_div_table *dtable;
-+	const u32 *mtable;
- 	const char * const *parent_names;
-+	notifier_fn_t notifier;
- 	u32 flag;
- 	u32 mux_flags;
- 	int num_parents;
-@@ -147,10 +150,11 @@ enum clk_types {
- 		 .parent_names = _parent_names, \
- 		 .num_parents = ARRAY_SIZE(_parent_names), \
- 		 .mux_flags = CLK_MUX_READ_ONLY)
--#define DEF_SD_MUX(_name, _id, _conf, _parent_names) \
--	DEF_TYPE(_name, _id, CLK_TYPE_SD_MUX, .conf = _conf, \
-+#define DEF_SD_MUX(_name, _id, _conf, _sconf, _parent_names, _mtable, _clk_flags, _notifier) \
-+	DEF_TYPE(_name, _id, CLK_TYPE_SD_MUX, .conf = _conf, .sconf = _sconf, \
- 		 .parent_names = _parent_names, \
--		 .num_parents = ARRAY_SIZE(_parent_names))
-+		 .num_parents = ARRAY_SIZE(_parent_names), \
-+		 .mtable = _mtable, .flag = _clk_flags, .notifier = _notifier)
- #define DEF_PLL5_FOUTPOSTDIV(_name, _id, _parent) \
- 	DEF_TYPE(_name, _id, CLK_TYPE_SIPLL5, .parent = _parent)
- #define DEF_PLL5_4_MUX(_name, _id, _conf, _parent_names) \
-@@ -265,4 +269,6 @@ extern const struct rzg2l_cpg_info r9a07g044_cpg_info;
- extern const struct rzg2l_cpg_info r9a07g054_cpg_info;
- extern const struct rzg2l_cpg_info r9a09g011_cpg_info;
- 
-+int rzg2l_cpg_sd_clk_mux_notifier(struct notifier_block *nb, unsigned long event, void *data);
-+
+-	TP_printk("foo_rel_loc %s, %d, %s", __get_rel_str(foo), __entry->bar,
+-		  __get_rel_bitmask(bitmask))
++	TP_printk("foo_rel_loc %s, %d, %s, %s", __get_rel_str(foo), __entry->bar,
++		  __get_rel_bitmask(bitmask),
++		  __get_rel_cpumask(cpumask))
+ );
  #endif
+ 
 -- 
 2.39.5
 
