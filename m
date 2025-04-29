@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6BB248878;
-	Tue, 29 Apr 2025 17:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39909248191;
+	Tue, 29 Apr 2025 17:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946247; cv=none; b=YQDmydMZAMB9IaubV2tro1tAwNZKpdtMIA3gyM84Ckpvp6LtVQi/NSwnEjrv26bOxtExfmjyH4SyJxB2UVmkvsJEADiCKka7ZzHL/R3fBZZxLRohuHpMZBNZAaDK+BdAzx9D3cp3iVJhZr1MZ7UtHQH2vVJY7elwpq919C8zBNw=
+	t=1745946250; cv=none; b=nqL6e7Z6SiVEtJbBfTLoOW3vxUY018TCMyB6c31bjXc4F20Chtqjn3u77t1cy+R9qHKjFleigksLbCj9zCoTm3IgBEAX8xZWLkZw5bfZUaxcBVT8vq4r+cMdIFn8bHzDvwYGyDDKldSuk+6VtQSbStUJewCzoB0DQ2VrqD0sfto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946247; c=relaxed/simple;
-	bh=yybpQSRdhFjbPV3vnRSnbaNaaoxShaNnQPSeqQIQ/CE=;
+	s=arc-20240116; t=1745946250; c=relaxed/simple;
+	bh=UsGgrEonUwl8WQj+4qMU/rZlQEUub3K06SK/KtW74+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ckTlQdEXBT2VvxMlHUQgw0rTdd6FdEyIFxdkVR8KGyXTT3lmblPmZnCEml8VOL2LRZPEc+eyGHAe0P2Q1xqRnInGlGECGxvfnDBSNhKuSsaAC+3iJNQvCTfe11FfviTTLTCatgRu925gukzmxENLhyc4f03jSfpysDik7VBS4Fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CVNtviVO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bhLuCxqzrvZSVHCnzPryAkQxfLiQK8IsPPaggKidK8r3cY431d/lpNgGjVnj3z2mehxbDaJw7ga+6/2wF9i2N9Y1QTUiJa8C2uiakGyLkYdqoosXs9SX41qreF1/8hUzTbWr640GgQMRFutSqxQlqEAPiuEE4+UVLjdTbS/jMCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aPCKx93j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CVNtviVO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A06C4CEE3;
-	Tue, 29 Apr 2025 17:04:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPCKx93j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0F5C4CEE3;
+	Tue, 29 Apr 2025 17:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946246;
-	bh=yybpQSRdhFjbPV3vnRSnbaNaaoxShaNnQPSeqQIQ/CE=;
+	s=korg; t=1745946249;
+	bh=UsGgrEonUwl8WQj+4qMU/rZlQEUub3K06SK/KtW74+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CVNtviVOxHi4AkvclTH31We6InMSdBQ9pfwHO+r52Ct2DmgzgsiyimlUkLMTNcK4B
-	 zClZf6lvBfgNKCzv98Fp7drx/tXIi/3m0er46O7QQWJpsLhF7WI3lJwnQRKHAM1E+g
-	 F9uoTP1p0MRC/iEvnQeFa2J6em9uyK1JvnrWwly4=
+	b=aPCKx93jraih3/hdkwMiHBMfVXCjofMKcK/5zhhykpIq5hHGZKkfRnEN9P9KHaVAk
+	 yPRmIwF3fVRAVZHxG4TT6FM5gAfn9VRrD4HGUY2GVwT8dcnocvuP6awj2bS3qLBN3A
+	 QHB3DP9hzVHROXjDPQQbnF7SJYywgo92E0T91FPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5d0bdc98770e6c55a0fd@syzkaller.appspotmail.com,
-	Lizhi Xu <lizhi.xu@windriver.com>,
+	Edward Adam Davis <eadavis@qq.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 203/311] fs/ntfs3: Keep write operations atomic
-Date: Tue, 29 Apr 2025 18:40:40 +0200
-Message-ID: <20250429161129.326656922@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+e37dd1dfc814b10caa55@syzkaller.appspotmail.com
+Subject: [PATCH 6.14 204/311] fs/ntfs3: Fix WARNING in ntfs_extend_initialized_size
+Date: Tue, 29 Apr 2025 18:40:41 +0200
+Message-ID: <20250429161129.366732748@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -52,113 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Xu <lizhi.xu@windriver.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 285cec318bf5a7a6c8ba999b2b6ec96f9a20590f ]
+[ Upstream commit ff355926445897cc9fdea3b00611e514232c213c ]
 
-syzbot reported a NULL pointer dereference in __generic_file_write_iter. [1]
+Syzbot reported a WARNING in ntfs_extend_initialized_size.
+The data type of in->i_valid and to is u64 in ntfs_file_mmap().
+If their values are greater than LLONG_MAX, overflow will occur because
+the data types of the parameters valid and new_valid corresponding to
+the function ntfs_extend_initialized_size() are loff_t.
 
-Before the write operation is completed, the user executes ioctl[2] to clear
-the compress flag of the file, which causes the is_compressed() judgment to
-return 0, further causing the program to enter the wrong process and call the
-wrong ops ntfs_aops_cmpr, which triggers the null pointer dereference of
-write_begin.
+Before calling ntfs_extend_initialized_size() in the ntfs_file_mmap(),
+the "ni->i_valid < to" has been determined, so the same WARN_ON determination
+is not required in ntfs_extend_initialized_size().
+Just execute the ntfs_extend_initialized_size() in ntfs_extend() to make
+a WARN_ON check.
 
-Use inode lock to synchronize ioctl and write to avoid this case.
-
-[1]
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-Mem abort info:
-  ESR = 0x0000000086000006
-  EC = 0x21: IABT (current EL), IL = 32 bits
-  SET = 0, FnV = 0
-  EA = 0, S1PTW = 0
-  FSC = 0x06: level 2 translation fault
-user pgtable: 4k pages, 48-bit VAs, pgdp=000000011896d000
-[0000000000000000] pgd=0800000118b44403, p4d=0800000118b44403, pud=0800000117517403, pmd=0000000000000000
-Internal error: Oops: 0000000086000006 [#1] PREEMPT SMP
-Modules linked in:
-CPU: 0 UID: 0 PID: 6427 Comm: syz-executor347 Not tainted 6.13.0-rc3-syzkaller-g573067a5a685 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : 0x0
-lr : generic_perform_write+0x29c/0x868 mm/filemap.c:4055
-sp : ffff80009d4978a0
-x29: ffff80009d4979c0 x28: dfff800000000000 x27: ffff80009d497bc8
-x26: 0000000000000000 x25: ffff80009d497960 x24: ffff80008ba71c68
-x23: 0000000000000000 x22: ffff0000c655dac0 x21: 0000000000001000
-x20: 000000000000000c x19: 1ffff00013a92f2c x18: ffff0000e183aa1c
-x17: 0004060000000014 x16: ffff800083275834 x15: 0000000000000001
-x14: 0000000000000000 x13: 0000000000000001 x12: ffff0000c655dac0
-x11: 0000000000ff0100 x10: 0000000000ff0100 x9 : 0000000000000000
-x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
-x5 : ffff80009d497980 x4 : ffff80009d497960 x3 : 0000000000001000
-x2 : 0000000000000000 x1 : ffff0000e183a928 x0 : ffff0000d60b0fc0
-Call trace:
- 0x0 (P)
- __generic_file_write_iter+0xfc/0x204 mm/filemap.c:4156
- ntfs_file_write_iter+0x54c/0x630 fs/ntfs3/file.c:1267
- new_sync_write fs/read_write.c:586 [inline]
- vfs_write+0x920/0xcf4 fs/read_write.c:679
- ksys_write+0x15c/0x26c fs/read_write.c:731
- __do_sys_write fs/read_write.c:742 [inline]
- __se_sys_write fs/read_write.c:739 [inline]
- __arm64_sys_write+0x7c/0x90 fs/read_write.c:739
- __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
- invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
- el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
- do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
- el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:744
- el0t_64_sync_handler+0x84/0x108 arch/arm64/kernel/entry-common.c:762
-
-[2]
-ioctl$FS_IOC_SETFLAGS(r0, 0x40086602, &(0x7f00000000c0)=0x20)
-
-Reported-by: syzbot+5d0bdc98770e6c55a0fd@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5d0bdc98770e6c55a0fd
-Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+Reported-and-tested-by: syzbot+e37dd1dfc814b10caa55@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e37dd1dfc814b10caa55
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ fs/ntfs3/file.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index e9f701f884e72..d884facc53166 100644
+index d884facc53166..9b6a3f8d2e7c5 100644
 --- a/fs/ntfs3/file.c
 +++ b/fs/ntfs3/file.c
-@@ -1246,21 +1246,22 @@ static ssize_t ntfs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 	ssize_t ret;
- 	int err;
- 
--	err = check_write_restriction(inode);
--	if (err)
--		return err;
--
--	if (is_compressed(ni) && (iocb->ki_flags & IOCB_DIRECT)) {
--		ntfs_inode_warn(inode, "direct i/o + compressed not supported");
--		return -EOPNOTSUPP;
--	}
--
- 	if (!inode_trylock(inode)) {
- 		if (iocb->ki_flags & IOCB_NOWAIT)
- 			return -EAGAIN;
- 		inode_lock(inode);
+@@ -430,6 +430,7 @@ static int ntfs_extend(struct inode *inode, loff_t pos, size_t count,
  	}
  
-+	ret = check_write_restriction(inode);
-+	if (ret)
-+		goto out;
-+
-+	if (is_compressed(ni) && (iocb->ki_flags & IOCB_DIRECT)) {
-+		ntfs_inode_warn(inode, "direct i/o + compressed not supported");
-+		ret = -EOPNOTSUPP;
-+		goto out;
-+	}
-+
- 	ret = generic_write_checks(iocb, from);
- 	if (ret <= 0)
- 		goto out;
+ 	if (extend_init && !is_compressed(ni)) {
++		WARN_ON(ni->i_valid >= pos);
+ 		err = ntfs_extend_initialized_size(file, ni, ni->i_valid, pos);
+ 		if (err)
+ 			goto out;
 -- 
 2.39.5
 
