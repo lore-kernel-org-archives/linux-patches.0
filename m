@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8E7244664;
-	Tue, 29 Apr 2025 17:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8363F244664;
+	Tue, 29 Apr 2025 17:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948458; cv=none; b=fnqXFlO6Vm1YYU2ywf+h1QzCW/2276voCVyqaQx/Zar64e2SxNS2CY+wfS+Z8AzFAF4CcjrB9+iPDy3VkwzyIo4LvSG0AkjimrrFdSSyGWeB5+3JimezSFwZP886VJY4rCWGwjoGVrtk9RZ7ujT1XdPKBtgqzR8P7i9Rz4rE2Hg=
+	t=1745948461; cv=none; b=hX0zax1cS/6VjmhBtpLzHf4ChfwKTN/kCJJLziiveOddN7CZuI/jxdHL/1xlLx2HXfl8ZvlHAfirVkIYa+QDqQO12kHJf3UaySNDC3lc7s6bRiIkVj0SS++AWwVWGj1mmtxZZfpuTCDIg+dZFvOvIZiz6nidd5IcOwITUHGIig0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948458; c=relaxed/simple;
-	bh=nlft/leLtsc3LqgSBRdKRS9V6JYONN+PD8jKF8v3qi0=;
+	s=arc-20240116; t=1745948461; c=relaxed/simple;
+	bh=fhPnWJJY583cZ15Ua3laYYAmNXuRZQbnnqrjQOPsAhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YNZAckOdy4OoaQrI1G6+biZC8DToCVKwq2PgFSgKfy0Dbg2UFwEd4p8ymGTVrwaWQT7BSDkZTnMUgv2YsT0m//mOL0eJryeK8gtR9sDKIasTJxlBIt4kjdlnW1useYGmgsgbMad7a8tVAcbW+VwDQlUwEscUyqAl4amMGvKTlpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0JI2S7n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A9VmyTTwuoTYph82TEZjYwCPYr7K/uaylk1/xultypPQYnENrqGSohr5Tyoq4PqGplEf4vTZw6QlCRbg2JHQmdHbPGGrLL9aWmTW90Vc9JfBASoBfEoQLuuvMbNt+GCZEH83NvYjCxC76VbiDSpoCTMEj0Vu32q1zEJPihOqESw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXAcuSdI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0JI2S7n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F00AC4CEE3;
-	Tue, 29 Apr 2025 17:40:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXAcuSdI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2FAC4CEE3;
+	Tue, 29 Apr 2025 17:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948458;
-	bh=nlft/leLtsc3LqgSBRdKRS9V6JYONN+PD8jKF8v3qi0=;
+	s=korg; t=1745948461;
+	bh=fhPnWJJY583cZ15Ua3laYYAmNXuRZQbnnqrjQOPsAhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g0JI2S7nGfnPFEDlP6NtDEvRcHfd7FT21KRk0w5Vyru9h0pPeD2yEzHLV2U++8Kuz
-	 BBOR8UiZV+UUhpYP+nqGN8yF3V0o85cU6Rhs6IoKHDo1qEC/obwAkeUL3VFmwGEGzJ
-	 oU/L3tlWSp0pb5qWgKybqWLuJ19LGgLfGXlCNiR0=
+	b=QXAcuSdI+tfeoHIycwYwOw55s6YAjspowYilr2eSrE1w1wGO3jVaS6ilpymdwv3Rl
+	 rgeZ5dn5Zk7YVzN/EqUkSsQRysBFLfiMwUpcBbdezOoPqhxx5YfPX4JfW2cgXTQwb7
+	 JOFtRiuO4KKnTMpkR7Hzmr9Wug51583MGkI5YLvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Will Deacon <will@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Trilok Soni <quic_tsoni@quicinc.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 014/373] perf: arm_pmu: Dont disable counter in armpmu_add()
-Date: Tue, 29 Apr 2025 18:38:11 +0200
-Message-ID: <20250429161123.720803637@linuxfoundation.org>
+Subject: [PATCH 5.15 015/373] arm64: cputype: Add QCOM_CPU_PART_KRYO_3XX_GOLD
+Date: Tue, 29 Apr 2025 18:38:12 +0200
+Message-ID: <20250429161123.760440956@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -54,65 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit dcca27bc1eccb9abc2552aab950b18a9742fb8e7 ]
+[ Upstream commit 401c3333bb2396aa52e4121887a6f6a6e2f040bc ]
 
-Currently armpmu_add() tries to handle a newly-allocated counter having
-a stale associated event, but this should not be possible, and if this
-were to happen the current mitigation is insufficient and potentially
-expensive. It would be better to warn if we encounter the impossible
-case.
+Add a definition for the Qualcomm Kryo 300-series Gold cores.
 
-Calls to pmu::add() and pmu::del() are serialized by the core perf code,
-and armpmu_del() clears the relevant slot in pmu_hw_events::events[]
-before clearing the bit in pmu_hw_events::used_mask such that the
-counter can be reallocated. Thus when armpmu_add() allocates a counter
-index from pmu_hw_events::used_mask, it should not be possible to observe
-a stale even in pmu_hw_events::events[] unless either
-pmu_hw_events::used_mask or pmu_hw_events::events[] have been corrupted.
-
-If this were to happen, we'd end up with two events with the same
-event->hw.idx, which would clash with each other during reprogramming,
-deletion, etc, and produce bogus results. Add a WARN_ON_ONCE() for this
-case so that we can detect if this ever occurs in practice.
-
-That possiblity aside, there's no need to call arm_pmu::disable(event)
-for the new event. The PMU reset code initialises the counter in a
-disabled state, and armpmu_del() will disable the counter before it can
-be reused. Remove the redundant disable.
-
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Tested-by: James Clark <james.clark@linaro.org>
-Link: https://lore.kernel.org/r/20250218-arm-brbe-v19-v20-2-4e9922fc2e8e@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Acked-by: Trilok Soni <quic_tsoni@quicinc.com>
+Link: https://lore.kernel.org/r/20241219131107.v3.1.I18e0288742871393228249a768e5d56ea65d93dc@changeid
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm_pmu.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ arch/arm64/include/asm/cputype.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/perf/arm_pmu.c b/drivers/perf/arm_pmu.c
-index 57d20cf3da7a3..fd59f40f74435 100644
---- a/drivers/perf/arm_pmu.c
-+++ b/drivers/perf/arm_pmu.c
-@@ -338,12 +338,10 @@ armpmu_add(struct perf_event *event, int flags)
- 	if (idx < 0)
- 		return idx;
- 
--	/*
--	 * If there is an event in the counter we are going to use then make
--	 * sure it is disabled.
--	 */
-+	/* The newly-allocated counter should be empty */
-+	WARN_ON_ONCE(hw_events->events[idx]);
-+
- 	event->hw.idx = idx;
--	armpmu->disable(event);
- 	hw_events->events[idx] = event;
- 
- 	hwc->state = PERF_HES_STOPPED | PERF_HES_UPTODATE;
+diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+index 7dfaad0fa17b7..f3729ef92e570 100644
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -111,6 +111,7 @@
+ #define QCOM_CPU_PART_KRYO		0x200
+ #define QCOM_CPU_PART_KRYO_2XX_GOLD	0x800
+ #define QCOM_CPU_PART_KRYO_2XX_SILVER	0x801
++#define QCOM_CPU_PART_KRYO_3XX_GOLD	0x802
+ #define QCOM_CPU_PART_KRYO_3XX_SILVER	0x803
+ #define QCOM_CPU_PART_KRYO_4XX_GOLD	0x804
+ #define QCOM_CPU_PART_KRYO_4XX_SILVER	0x805
+@@ -170,6 +171,7 @@
+ #define MIDR_QCOM_KRYO MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO)
+ #define MIDR_QCOM_KRYO_2XX_GOLD MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_2XX_GOLD)
+ #define MIDR_QCOM_KRYO_2XX_SILVER MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_2XX_SILVER)
++#define MIDR_QCOM_KRYO_3XX_GOLD MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_3XX_GOLD)
+ #define MIDR_QCOM_KRYO_3XX_SILVER MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_3XX_SILVER)
+ #define MIDR_QCOM_KRYO_4XX_GOLD MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_4XX_GOLD)
+ #define MIDR_QCOM_KRYO_4XX_SILVER MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_4XX_SILVER)
 -- 
 2.39.5
 
