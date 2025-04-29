@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C15A1FE468;
-	Tue, 29 Apr 2025 17:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A056324503E;
+	Tue, 29 Apr 2025 17:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947657; cv=none; b=IcLsMgoyzRXmR3tObHW3S81H6w1g/ryiMjaycmwK2uAk3EWJKmc7Sr/jb5r5hzXrYkJ/6aOtZBOpxqHtJxBfL99Q6Gky0jW1Q2ptXnWNCneoN6TI8KDCciGTFGCfVgBewczQmq7ZQih4QleYlbH+9NKedPaSp0biT1QVgjVF7O4=
+	t=1745947660; cv=none; b=Y9p8HGgJiXOcWxCu6uWOSER0jYs/m2C1Dq/5R2vva17Y0ob86Behicva24x+CvSIE1ccngs0WfOgfPkGNczRbmDO1kShiQ9sY8EgmZx/uGTAjhLHsVFyNdXsu8+0q0RL931yf6+LUujOQ/CAOMfCwAx/FpVJMYA7mqDAOc/b8g8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947657; c=relaxed/simple;
-	bh=2qw5ztrW8HChDrkuEz7Fwiuc/PAgHVrK/mXLZKIUJGc=;
+	s=arc-20240116; t=1745947660; c=relaxed/simple;
+	bh=M2nH/BDMCIAKyMBKg+9yXthNM196KwHY+cjxOY42CxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AaXMUKf/PdqcKc0/XtgoFyCpDmc4CG8lk3P70tGPFviq/CuATN6riW3zk3/P+R2SLe2Bya+3Wuz7hBBv2IjkDaamesJb7lbK1TQgbuA6m7i3p8QkjxAHoH8h1og7X6ylSq5g+mouOhWT2DnBHyGf2Q1xUViPuhtzix0ZKNarXSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XmILPTxt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mrdbu7wVXkfSUcQQ75SJqYj72YIqCIdVsqCtVYVXpVq7Cexy75BbcQuywrRdoV4d4IqzwrNRZpV9n0snShSE0qtwov+hdn+LSgTgR2IqjXedQNs8WwcEOArdvx9tJ4F1g6+QRN+2fx499bRMIIC/qutK/tVUg1eThH7XcR1ALj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YVTxRgoK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XmILPTxt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E64C4CEE3;
-	Tue, 29 Apr 2025 17:27:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YVTxRgoK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F490C4CEE3;
+	Tue, 29 Apr 2025 17:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947657;
-	bh=2qw5ztrW8HChDrkuEz7Fwiuc/PAgHVrK/mXLZKIUJGc=;
+	s=korg; t=1745947660;
+	bh=M2nH/BDMCIAKyMBKg+9yXthNM196KwHY+cjxOY42CxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XmILPTxtD0pvYV1fmTJEDfr6iM4/BSnpGsXdLpRIsA+cMq5TX8rv+jKhM+bZn6CSV
-	 WnaT0L11BiIPRYrbFPjgjlZqrMlKCsUwQYjnvz7iuKMgDbpAvOldQT3WmVxTl1FgAw
-	 zGi+92PUVK8Cc0pA9/YZpYWzEFYTbS6zG/q1yssM=
+	b=YVTxRgoKlP+zABwdRZ/YOyDaKZt3Fv5j36IGNx444JPh1yBxZEwoU/U99AIiik5A4
+	 p155rRUWvLCd9GmGacXDl4tczvpF+KtYn0xV+KN9qjuEKPOS3465zMK9hZdRpXivbe
+	 ak4E7EfQQSE7mvG5EqyBGL2+0atS5nApB/Wx6tPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongli Zhang <dongli.zhang@oracle.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 065/280] vhost-scsi: Fix vhost_scsi_send_status()
-Date: Tue, 29 Apr 2025 18:40:06 +0200
-Message-ID: <20250429161117.772963675@linuxfoundation.org>
+Subject: [PATCH 6.12 066/280] net/mlx5: Fix null-ptr-deref in mlx5_create_{inner_,}ttc_table()
+Date: Tue, 29 Apr 2025 18:40:07 +0200
+Message-ID: <20250429161117.811841849@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -53,74 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dongli Zhang <dongli.zhang@oracle.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 58465d86071b61415e25fb054201f61e83d21465 ]
+[ Upstream commit 91037037ee3d611ce17f39d75f79c7de394b122a ]
 
-Although the support of VIRTIO_F_ANY_LAYOUT + VIRTIO_F_VERSION_1 was
-signaled by the commit 664ed90e621c ("vhost/scsi: Set
-VIRTIO_F_ANY_LAYOUT + VIRTIO_F_VERSION_1 feature bits"),
-vhost_scsi_send_bad_target() still assumes the response in a single
-descriptor.
+Add NULL check for mlx5_get_flow_namespace() returns in
+mlx5_create_inner_ttc_table() and mlx5_create_ttc_table() to prevent
+NULL pointer dereference.
 
-Similar issue in vhost_scsi_send_bad_target() has been fixed in previous
-commit. In addition, similar issue for vhost_scsi_complete_cmd_work() has
-been fixed by the commit 6dd88fd59da8 ("vhost-scsi: unbreak any layout for
-response").
-
-Fixes: 3ca51662f818 ("vhost-scsi: Add better resource allocation failure handling")
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Message-Id: <20250403063028.16045-4-dongli.zhang@oracle.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 137f3d50ad2a ("net/mlx5: Support matching on l4_type for ttc_table")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/20250418023814.71789-2-bsdhenrymartin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/scsi.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-index 7bfe5e5865fe9..35a03306d1345 100644
---- a/drivers/vhost/scsi.c
-+++ b/drivers/vhost/scsi.c
-@@ -931,18 +931,22 @@ static void vhost_scsi_target_queue_cmd(struct vhost_scsi_cmd *cmd)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c
+index 9f13cea164465..510879e1ba30e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c
+@@ -636,6 +636,11 @@ struct mlx5_ttc_table *mlx5_create_inner_ttc_table(struct mlx5_core_dev *dev,
+ 	}
  
- static void
- vhost_scsi_send_status(struct vhost_scsi *vs, struct vhost_virtqueue *vq,
--		       int head, unsigned int out, u8 status)
-+		       struct vhost_scsi_ctx *vc, u8 status)
- {
--	struct virtio_scsi_cmd_resp __user *resp;
- 	struct virtio_scsi_cmd_resp rsp;
-+	struct iov_iter iov_iter;
- 	int ret;
+ 	ns = mlx5_get_flow_namespace(dev, params->ns_type);
++	if (!ns) {
++		kvfree(ttc);
++		return ERR_PTR(-EOPNOTSUPP);
++	}
++
+ 	groups = use_l4_type ? &inner_ttc_groups[TTC_GROUPS_USE_L4_TYPE] :
+ 			       &inner_ttc_groups[TTC_GROUPS_DEFAULT];
  
- 	memset(&rsp, 0, sizeof(rsp));
- 	rsp.status = status;
--	resp = vq->iov[out].iov_base;
--	ret = __copy_to_user(resp, &rsp, sizeof(rsp));
--	if (!ret)
--		vhost_add_used_and_signal(&vs->dev, vq, head, 0);
+@@ -709,6 +714,11 @@ struct mlx5_ttc_table *mlx5_create_ttc_table(struct mlx5_core_dev *dev,
+ 	}
+ 
+ 	ns = mlx5_get_flow_namespace(dev, params->ns_type);
++	if (!ns) {
++		kvfree(ttc);
++		return ERR_PTR(-EOPNOTSUPP);
++	}
 +
-+	iov_iter_init(&iov_iter, ITER_DEST, &vq->iov[vc->out], vc->in,
-+		      sizeof(rsp));
-+
-+	ret = copy_to_iter(&rsp, sizeof(rsp), &iov_iter);
-+
-+	if (likely(ret == sizeof(rsp)))
-+		vhost_add_used_and_signal(&vs->dev, vq, vc->head, 0);
- 	else
- 		pr_err("Faulted on virtio_scsi_cmd_resp\n");
- }
-@@ -1302,7 +1306,7 @@ vhost_scsi_handle_vq(struct vhost_scsi *vs, struct vhost_virtqueue *vq)
- 		else if (ret == -EIO)
- 			vhost_scsi_send_bad_target(vs, vq, &vc, TYPE_IO_CMD);
- 		else if (ret == -ENOMEM)
--			vhost_scsi_send_status(vs, vq, vc.head, vc.out,
-+			vhost_scsi_send_status(vs, vq, &vc,
- 					       SAM_STAT_TASK_SET_FULL);
- 	} while (likely(!vhost_exceeds_weight(vq, ++c, 0)));
- out:
+ 	groups = use_l4_type ? &ttc_groups[TTC_GROUPS_USE_L4_TYPE] :
+ 			       &ttc_groups[TTC_GROUPS_DEFAULT];
+ 
 -- 
 2.39.5
 
