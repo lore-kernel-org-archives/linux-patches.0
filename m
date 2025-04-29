@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0B8253332;
-	Tue, 29 Apr 2025 16:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D763B25228D;
+	Tue, 29 Apr 2025 16:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945761; cv=none; b=OKg/KLnILXv0UOz3Gl9qRce3sb5NwPanLCwZTEl4uO+2zN/hDwId1OBkpWgNrnnb0ixJTCfhlaxmSydnAZd5f1VSZwQZP5VNbYThZlu0ZKk7sq4tZEg5aXjOfLShhOaOsDFqOXhz5qAbBpHCFmGUcG73XeWm/SGRPJaCadjIo7o=
+	t=1745945764; cv=none; b=Ww9MvgAnjYQKqdHu5dWnJC++ORGCwC4+Kldxu4IoCCYg7udweFXewIa2d0LQQtxZQrqxR9vv6uAoWYK10nuGz0zd6fSLhu1d1KLpwGmW31sYNjmvCUHun43uQks/oZpKp3JHo46ql7y1qFP7hw5SEFfqRuMvI09SVxztsEWwZnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945761; c=relaxed/simple;
-	bh=PLApYQlCAY1C2VPjkVm/U+TFLQczVPtFrgazakt1NE8=;
+	s=arc-20240116; t=1745945764; c=relaxed/simple;
+	bh=hM6kCd0JEMomFqVPLkQHZHy9e9LSvD93d/j3Ycj3W9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xbc2zDV/vnDZnsZcCKs8ziYq/cL5bPeBSp9cUKDLkUCMUUQTY6mUh0pRClfIGiK8SRr6tgrVx8clwgpMQ4PEMxKHB3r15DANKxu7v7RSUHgac49NJvZDaHSGiXqFOksFaVM1nI+oKa5R/XKBApY2pKmQLEe1NBad5tUBJwS4JmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a77ehFXX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d3n6KnZTUzSigWpEC/QW0h6Vth8c9iHb+kg3RUAp36Zx8OmeIPcWhMgBAi2cIjMvCnJAQYCyTJa9NMeARUDPNhrrhiJARiFxC2IGtMFHv4ks8SpqI9eBd3Sie/Lt1RS41UMKVPGtzCF7qv/JwgM3OehvoLNGyQPMLl42Jb23tgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fqoxWesk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a77ehFXX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E24EC4CEE3;
-	Tue, 29 Apr 2025 16:56:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fqoxWesk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 685AEC4CEE3;
+	Tue, 29 Apr 2025 16:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945760;
-	bh=PLApYQlCAY1C2VPjkVm/U+TFLQczVPtFrgazakt1NE8=;
+	s=korg; t=1745945764;
+	bh=hM6kCd0JEMomFqVPLkQHZHy9e9LSvD93d/j3Ycj3W9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a77ehFXX9uvwFwrTFuxlUujo7yJUHpP3WiddDySNThyNpJ3xXGBq6ysmKDyqUERcJ
-	 YguW4K1jAu6FK7ZgUWjJox1DCWEoH5Pyl3N6Ei9dpeZ7qR2OxGCVE88tmM7D1E7xF+
-	 0Ht6IUW8Z/T1vL0ZOnF21IVRvGayan9YkG1N+eXU=
+	b=fqoxWeskMpFvBTr2FwfBgHFLQmDBBMaM9W8Fw2fSbyPY678Lw5FkWo5AtNW+U1WCB
+	 3vABbwYP7+BpCoO0TaMXyLT4lhTDNbvoNemh9MjjlXiENIzk5MoqdH8WwQo8sipdBZ
+	 KOlCTAOFtjCCj5TM6jKjtyvSVIv8avc3waJeJmxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Jurgens <danielj@nvidia.com>,
-	Parav Pandit <parav@nvidia.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Marc Zyngier <maz@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Lifeng Zheng <zhenglifeng1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 040/311] virtio_pci: Use self group type for cap commands
-Date: Tue, 29 Apr 2025 18:37:57 +0200
-Message-ID: <20250429161122.668090036@linuxfoundation.org>
+Subject: [PATCH 6.14 041/311] cpufreq: cppc: Fix invalid return value in .get() callback
+Date: Tue, 29 Apr 2025 18:37:58 +0200
+Message-ID: <20250429161122.708870767@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -52,63 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Jurgens <danielj@nvidia.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 16c22c56d4282584742022a37d4f79a46ca6094a ]
+[ Upstream commit 2b8e6b58889c672e1ae3601d9b2b070be4dc2fbc ]
 
-Section 2.12.1.2 of v1.4 of the VirtIO spec states:
+Returning a negative error code in a function with an unsigned
+return type is a pretty bad idea. It is probably worse when the
+justification for the change is "our static analisys tool found it".
 
-The device and driver capabilities commands are currently defined for
-self group type.
-1. VIRTIO_ADMIN_CMD_CAP_ID_LIST_QUERY
-2. VIRTIO_ADMIN_CMD_DEVICE_CAP_GET
-3. VIRTIO_ADMIN_CMD_DRIVER_CAP_SET
-
-Fixes: bfcad518605d ("virtio: Manage device and driver capabilities via the admin commands")
-Signed-off-by: Daniel Jurgens <danielj@nvidia.com>
-Reviewed-by: Parav Pandit <parav@nvidia.com>
-Message-Id: <20250304161442.90700-1-danielj@nvidia.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: cf7de25878a1 ("cppc_cpufreq: Fix possible null pointer dereference")
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: Viresh Kumar <viresh.kumar@linaro.org>
+Reviewed-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_pci_modern.c | 4 ++--
- include/uapi/linux/virtio_pci.h    | 1 +
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/cpufreq/cppc_cpufreq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/virtio/virtio_pci_modern.c b/drivers/virtio/virtio_pci_modern.c
-index 5eaade7578606..d50fe030d8253 100644
---- a/drivers/virtio/virtio_pci_modern.c
-+++ b/drivers/virtio/virtio_pci_modern.c
-@@ -247,7 +247,7 @@ virtio_pci_admin_cmd_dev_parts_objects_enable(struct virtio_device *virtio_dev)
- 	sg_init_one(&data_sg, get_data, sizeof(*get_data));
- 	sg_init_one(&result_sg, result, sizeof(*result));
- 	cmd.opcode = cpu_to_le16(VIRTIO_ADMIN_CMD_DEVICE_CAP_GET);
--	cmd.group_type = cpu_to_le16(VIRTIO_ADMIN_GROUP_TYPE_SRIOV);
-+	cmd.group_type = cpu_to_le16(VIRTIO_ADMIN_GROUP_TYPE_SELF);
- 	cmd.data_sg = &data_sg;
- 	cmd.result_sg = &result_sg;
- 	ret = vp_modern_admin_cmd_exec(virtio_dev, &cmd);
-@@ -305,7 +305,7 @@ static void virtio_pci_admin_cmd_cap_init(struct virtio_device *virtio_dev)
+diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
+index 8f512448382f4..ba7c16c0e4756 100644
+--- a/drivers/cpufreq/cppc_cpufreq.c
++++ b/drivers/cpufreq/cppc_cpufreq.c
+@@ -749,7 +749,7 @@ static unsigned int cppc_cpufreq_get_rate(unsigned int cpu)
+ 	int ret;
  
- 	sg_init_one(&result_sg, data, sizeof(*data));
- 	cmd.opcode = cpu_to_le16(VIRTIO_ADMIN_CMD_CAP_ID_LIST_QUERY);
--	cmd.group_type = cpu_to_le16(VIRTIO_ADMIN_GROUP_TYPE_SRIOV);
-+	cmd.group_type = cpu_to_le16(VIRTIO_ADMIN_GROUP_TYPE_SELF);
- 	cmd.result_sg = &result_sg;
+ 	if (!policy)
+-		return -ENODEV;
++		return 0;
  
- 	ret = vp_modern_admin_cmd_exec(virtio_dev, &cmd);
-diff --git a/include/uapi/linux/virtio_pci.h b/include/uapi/linux/virtio_pci.h
-index 8549d45712571..c691ac210ce2e 100644
---- a/include/uapi/linux/virtio_pci.h
-+++ b/include/uapi/linux/virtio_pci.h
-@@ -246,6 +246,7 @@ struct virtio_pci_cfg_cap {
- #define VIRTIO_ADMIN_CMD_LIST_USE	0x1
+ 	cpu_data = policy->driver_data;
  
- /* Admin command group type. */
-+#define VIRTIO_ADMIN_GROUP_TYPE_SELF	0x0
- #define VIRTIO_ADMIN_GROUP_TYPE_SRIOV	0x1
- 
- /* Transitional device admin command. */
 -- 
 2.39.5
 
