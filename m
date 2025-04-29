@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247182472B0;
-	Tue, 29 Apr 2025 17:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFDA221DA7;
+	Tue, 29 Apr 2025 17:11:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946707; cv=none; b=j9lTYw7/s+efJRzHTXjPk3U7slSCKZodPsYIVzFMAJa0P6FAd2xjNtNqsId+l/bfMwdHvrvCP19CyKu17M8lncC6xlTdGwdDLKDGdJFRLHSMVYSM8Y3aCYb09mjU8fYIkeRJTt9Z0KYcyAUS3K+wopCNgY1xk8oBRCYPr6muZ3M=
+	t=1745946710; cv=none; b=hBT72Bx7+oXZzAjhbN6cLO3TAc0dIq9g3IAGEi5SJ02Ec9j584JBuQwFb8qEQXVxYD3YpHZSTHsfTr8rx9Os/RVFNyfD3MGa7oOXrrUAFi9vWH3pqno0JTTTCQLECPvHu44MgTnwnS+UjScXJWKpAA0H0MHwAPX6nkoweag2YSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946707; c=relaxed/simple;
-	bh=nLkDthn5TOxyDdpRo5pqEYpx533z6eUQv/iTfavCvJA=;
+	s=arc-20240116; t=1745946710; c=relaxed/simple;
+	bh=PLfxIup9cKXifnUqqiC1dFlrpU1wRK/AuDoMFKjQC6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bmc51y2rDcOF832GFmQnQQLi6EToaEY7qMpi2MzkxKjON4l8lH4MtLOWzhqnIaTU0meWcsHxPiHvmOdXaYY69bUKLIsxvkFidP2Qfp5vEhtSuRVPtmmTvZgAJBLA0n10qQYOSv6KsexsTWiQthNFXbcpT3a32VB/fjIRiWvQW4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h91gDzEP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FrxYf/opraVMSrGBngyOX6kPL7CGHBHH4cwK/CySN4nqDPIBmmJCh6oblstTIDAo1Hd7Gf24FvqvfuVh7UdrhL6l2QcoaR+wElnkG/BqEm23RkXxKxOXKhW4CAcsxDszRyA1U9UUmSFk4X6aWRiv719wqbRhn8lx1dmQZCLOBGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUh5nVQs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h91gDzEP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377E2C4CEE3;
-	Tue, 29 Apr 2025 17:11:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUh5nVQs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB40C4CEE3;
+	Tue, 29 Apr 2025 17:11:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946706;
-	bh=nLkDthn5TOxyDdpRo5pqEYpx533z6eUQv/iTfavCvJA=;
+	s=korg; t=1745946710;
+	bh=PLfxIup9cKXifnUqqiC1dFlrpU1wRK/AuDoMFKjQC6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h91gDzEPapueXIpJaNbm+my8Tl6NeYbNjd/WIKK4L+apqNODL6fVJ4pop6OUFAXiD
-	 G6fMmEKiIbPM7wbJkAEc3LHXneMwlDx//7vNuYSEZEDYwZEME94bKU7cfZpVDmIQY+
-	 F25xbEU+MVrbGCoCI+QgAWui8cZxioviQ++ylB0E=
+	b=OUh5nVQsJXkpKehbW4ElnwV5Il4ogHbpElFFHdFs0UsodaFHAG0ep0uBOAc93tsFO
+	 1ZQVHZJaSqWuDFKCdudv+iPFKDkkrY4hn9N/QuCF7btoLe90VZMF17Rybq+hAOa7TP
+	 Decj4bIVZvcZknbgppDFBhNkOlYyysrsyViWKYTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leonid Arapov <arapovl839@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Fabien Parent <fparent@baylibre.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 043/286] fbdev: omapfb: Add plane value check
-Date: Tue, 29 Apr 2025 18:39:07 +0200
-Message-ID: <20250429161109.632380708@linuxfoundation.org>
+Subject: [PATCH 5.10 044/286] pwm: mediatek: Always use bus clock
+Date: Tue, 29 Apr 2025 18:39:08 +0200
+Message-ID: <20250429161109.674061274@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -51,55 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leonid Arapov <arapovl839@gmail.com>
+From: Fabien Parent <fparent@baylibre.com>
 
-[ Upstream commit 3e411827f31db7f938a30a3c7a7599839401ec30 ]
+[ Upstream commit 0c0ead76235db0bcfaab83f04db546995449d002 ]
 
-Function dispc_ovl_setup is not intended to work with the value OMAP_DSS_WB
-of the enum parameter plane.
+The MediaTek PWM IP can sometimes use the 26 MHz source clock to
+generate the PWM signal, but the driver currently assumes that we always
+use the PWM bus clock to generate the PWM signal.
 
-The value of this parameter is initialized in dss_init_overlays and in the
-current state of the code it cannot take this value so it's not a real
-problem.
+This commit modifies the PWM driver in order to force the PWM IP to
+always use the bus clock as source clock.
 
-For the purposes of defensive coding it wouldn't be superfluous to check
-the parameter value, because some functions down the call stack process
-this value correctly and some not.
+I do not have the datasheet of all the MediaTek SoC, so I don't know if
+the register to choose the source clock is present in all the SoCs or
+only in subset. As a consequence I made this change optional by using a
+platform data paremeter to says whether this register is supported or
+not. On all the SoCs I don't have the datasheet (MT2712, MT7622, MT7623,
+MT7628, MT7629) I kept the behavior to be the same as before this
+change.
 
-For example, in dispc_ovl_setup_global_alpha it may lead to buffer
-overflow.
-
-Add check for this value.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE static
-analysis tool.
-
-Signed-off-by: Leonid Arapov <arapovl839@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Fabien Parent <fparent@baylibre.com>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Stable-dep-of: 7ca59947b5fc ("pwm: mediatek: Prevent divide-by-zero in pwm_mediatek_config()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/omap2/omapfb/dss/dispc.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/pwm/pwm-mediatek.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/video/fbdev/omap2/omapfb/dss/dispc.c b/drivers/video/fbdev/omap2/omapfb/dss/dispc.c
-index b2d6e6df21615..d852bef1d507f 100644
---- a/drivers/video/fbdev/omap2/omapfb/dss/dispc.c
-+++ b/drivers/video/fbdev/omap2/omapfb/dss/dispc.c
-@@ -2751,9 +2751,13 @@ int dispc_ovl_setup(enum omap_plane plane, const struct omap_overlay_info *oi,
- 		bool mem_to_mem)
- {
- 	int r;
--	enum omap_overlay_caps caps = dss_feat_get_overlay_caps(plane);
-+	enum omap_overlay_caps caps;
- 	enum omap_channel channel;
+diff --git a/drivers/pwm/pwm-mediatek.c b/drivers/pwm/pwm-mediatek.c
+index ab001ce55178e..108881619aea1 100644
+--- a/drivers/pwm/pwm-mediatek.c
++++ b/drivers/pwm/pwm-mediatek.c
+@@ -30,12 +30,14 @@
+ #define PWM45DWIDTH_FIXUP	0x30
+ #define PWMTHRES		0x30
+ #define PWM45THRES_FIXUP	0x34
++#define PWM_CK_26M_SEL		0x210
  
-+	if (plane == OMAP_DSS_WB)
-+		return -EINVAL;
+ #define PWM_CLK_DIV_MAX		7
+ 
+ struct pwm_mediatek_of_data {
+ 	unsigned int num_pwms;
+ 	bool pwm45_fixup;
++	bool has_ck_26m_sel;
+ };
+ 
+ /**
+@@ -132,6 +134,10 @@ static int pwm_mediatek_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	if (ret < 0)
+ 		return ret;
+ 
++	/* Make sure we use the bus clock and not the 26MHz clock */
++	if (pc->soc->has_ck_26m_sel)
++		writel(0, pc->regs + PWM_CK_26M_SEL);
 +
-+	caps = dss_feat_get_overlay_caps(plane);
- 	channel = dispc_ovl_get_channel_out(plane);
+ 	/* Using resolution in picosecond gets accuracy higher */
+ 	resolution = (u64)NSEC_PER_SEC * 1000;
+ 	do_div(resolution, clk_get_rate(pc->clk_pwms[pwm->hwpwm]));
+@@ -281,31 +287,37 @@ static int pwm_mediatek_remove(struct platform_device *pdev)
+ static const struct pwm_mediatek_of_data mt2712_pwm_data = {
+ 	.num_pwms = 8,
+ 	.pwm45_fixup = false,
++	.has_ck_26m_sel = false,
+ };
  
- 	DSSDBG("dispc_ovl_setup %d, pa %pad, pa_uv %pad, sw %d, %d,%d, %dx%d ->"
+ static const struct pwm_mediatek_of_data mt7622_pwm_data = {
+ 	.num_pwms = 6,
+ 	.pwm45_fixup = false,
++	.has_ck_26m_sel = false,
+ };
+ 
+ static const struct pwm_mediatek_of_data mt7623_pwm_data = {
+ 	.num_pwms = 5,
+ 	.pwm45_fixup = true,
++	.has_ck_26m_sel = false,
+ };
+ 
+ static const struct pwm_mediatek_of_data mt7628_pwm_data = {
+ 	.num_pwms = 4,
+ 	.pwm45_fixup = true,
++	.has_ck_26m_sel = false,
+ };
+ 
+ static const struct pwm_mediatek_of_data mt7629_pwm_data = {
+ 	.num_pwms = 1,
+ 	.pwm45_fixup = false,
++	.has_ck_26m_sel = false,
+ };
+ 
+ static const struct pwm_mediatek_of_data mt8516_pwm_data = {
+ 	.num_pwms = 5,
+ 	.pwm45_fixup = false,
++	.has_ck_26m_sel = true,
+ };
+ 
+ static const struct of_device_id pwm_mediatek_of_match[] = {
 -- 
 2.39.5
 
