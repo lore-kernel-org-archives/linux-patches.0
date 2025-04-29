@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1ECC148;
-	Tue, 29 Apr 2025 17:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A88724BD02;
+	Tue, 29 Apr 2025 17:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948916; cv=none; b=WH5j6oKo5UZJAS+Ms67jOrB11qvM7I37jE743QmiiHt+3hJ2XjSoxOiiDN+LXm1247rCNWaheoYfh8r8godwkcrNTiMfmRYMyqZb1E9XgUjtcyzb1BrlSsLOVc9Q8zqSdq7W8/16q4PRD3jvYqyhSMm1X0Cs1evvQSZahz8Cicc=
+	t=1745948919; cv=none; b=gqZ62OK9uFgCw7DhPiGumyP58huzOu4JpLQu0z6Ov0qiA2yksUSzLAMCOFlhngzhI/j9MPDrPHUmcefgjzHaHHhitN+LwINw5qR/sVAh1PirN6ZRdGZANDQ4e8J2MQxSwDa0Y1+wu9IE+GVZIo/vO4FQmAuU33P981TRm4w0x/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948916; c=relaxed/simple;
-	bh=W44X0iwujwBhbpfdB1Q1pRqIoq8Jf3L+/H12n/lh6NA=;
+	s=arc-20240116; t=1745948919; c=relaxed/simple;
+	bh=/g8XxKqH/bEbSAFfguprWCCW5AgTGLLmIeGkDA975Vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Vm/QNYjNwTWM5dzS23oy7HV0L9DjkLYwrAeouTHLs+zRxhPg2kV93/DJy7uq29BM04OhYW/+Eio21rmyI7cME01Esjs0O6kn6/tYpvXeYCSEhmWRo7Y6zN3zdNgn25TFD3fXkvV+wsGZC4qISNsrrQU18H0oFPpV8Rrn6bVZXA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=daP8g8La; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bgcPCJVylN7iLQ5I/+zWIzLj4KRWL3OI6heS084HZVJ6XAdrOYzT1ImLmmjQYRzYQsyB4UHZMBbiHE0bdqvtdnPN6gP4YHwq7Q83fRiITc9DmqN/0ekVI4jWxNyvwpUaNb6Ow96090xoH3VN4P60a7NhYJ8G30FbBY9wbm9mGBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AFJjo3QH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="daP8g8La"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A281C4CEE3;
-	Tue, 29 Apr 2025 17:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AFJjo3QH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2663C4CEE9;
+	Tue, 29 Apr 2025 17:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948916;
-	bh=W44X0iwujwBhbpfdB1Q1pRqIoq8Jf3L+/H12n/lh6NA=;
+	s=korg; t=1745948919;
+	bh=/g8XxKqH/bEbSAFfguprWCCW5AgTGLLmIeGkDA975Vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=daP8g8La7fcocGK55rd17UvlePdttQE1ZnPwr3W/VHFRknjFJoEv8RyaXhYmst5/T
-	 35nBCwL76uuv2n1k9htf6DJH3N8xNQJA7orn559yHEGOOkCswJjAuvpQW9FwomxsAH
-	 w9y1/02iQcJWrXdomxZ+spA/ijoAdVZAkOyeglZ4=
+	b=AFJjo3QH2S27s21nwURUEAvRiXIwDir7t9KEKGvhQ3DIHvjvLzgIgQZTX/CMuifIS
+	 E1nSZIx1WG7QQ8w79aT+NqLQYD16FnXmKPewUgHxo48QmvF8JgNZ86mnXeFobfTSJl
+	 c8yqYJFrejkUbpapXXUd5DfF3J5REv8Y2z7ieEXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	=?UTF-8?q?Horia=20Geant=C4=83?= <horia.geanta@nxp.com>
-Subject: [PATCH 5.15 163/373] crypto: caam/qi - Fix drv_ctx refcount bug
-Date: Tue, 29 Apr 2025 18:40:40 +0200
-Message-ID: <20250429161129.844905332@linuxfoundation.org>
+	syzbot+5f3a973ed3dfb85a6683@syzkaller.appspotmail.com,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Cengiz Can <cengiz.can@canonical.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.15 164/373] hfs/hfsplus: fix slab-out-of-bounds in hfs_bnode_read_key
+Date: Tue, 29 Apr 2025 18:40:41 +0200
+Message-ID: <20250429161129.899608952@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -45,49 +46,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-commit b7b39df7e710b0068356e4c696af07aa10e2cd3d upstream.
+commit bb5e07cb927724e0b47be371fa081141cfb14414 upstream.
 
-Ensure refcount is raised before request is enqueued since it could
-be dequeued before the call returns.
+Syzbot reported an issue in hfs subsystem:
 
-Reported-by: Sean Anderson <sean.anderson@linux.dev>
-Cc: <stable@vger.kernel.org>
-Fixes: 11144416a755 ("crypto: caam/qi - optimize frame queue cleanup")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reviewed-by: Horia Geantă <horia.geanta@nxp.com>
-Tested-by: Sean Anderson <sean.anderson@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+BUG: KASAN: slab-out-of-bounds in memcpy_from_page include/linux/highmem.h:423 [inline]
+BUG: KASAN: slab-out-of-bounds in hfs_bnode_read fs/hfs/bnode.c:35 [inline]
+BUG: KASAN: slab-out-of-bounds in hfs_bnode_read_key+0x314/0x450 fs/hfs/bnode.c:70
+Write of size 94 at addr ffff8880123cd100 by task syz-executor237/5102
+
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:377 [inline]
+ print_report+0x169/0x550 mm/kasan/report.c:488
+ kasan_report+0x143/0x180 mm/kasan/report.c:601
+ kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
+ __asan_memcpy+0x40/0x70 mm/kasan/shadow.c:106
+ memcpy_from_page include/linux/highmem.h:423 [inline]
+ hfs_bnode_read fs/hfs/bnode.c:35 [inline]
+ hfs_bnode_read_key+0x314/0x450 fs/hfs/bnode.c:70
+ hfs_brec_insert+0x7f3/0xbd0 fs/hfs/brec.c:159
+ hfs_cat_create+0x41d/0xa50 fs/hfs/catalog.c:118
+ hfs_mkdir+0x6c/0xe0 fs/hfs/dir.c:232
+ vfs_mkdir+0x2f9/0x4f0 fs/namei.c:4257
+ do_mkdirat+0x264/0x3a0 fs/namei.c:4280
+ __do_sys_mkdir fs/namei.c:4300 [inline]
+ __se_sys_mkdir fs/namei.c:4298 [inline]
+ __x64_sys_mkdir+0x6c/0x80 fs/namei.c:4298
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fbdd6057a99
+
+Add a check for key length in hfs_bnode_read_key to prevent
+out-of-bounds memory access. If the key length is invalid, the
+key buffer is cleared, improving stability and reliability.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+5f3a973ed3dfb85a6683@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5f3a973ed3dfb85a6683
+Cc: stable@vger.kernel.org
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Link: https://lore.kernel.org/20241019191303.24048-1-kovalev@altlinux.org
+Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/caam/qi.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/hfs/bnode.c     |    6 ++++++
+ fs/hfsplus/bnode.c |    6 ++++++
+ 2 files changed, 12 insertions(+)
 
---- a/drivers/crypto/caam/qi.c
-+++ b/drivers/crypto/caam/qi.c
-@@ -115,12 +115,12 @@ int caam_qi_enqueue(struct device *qidev
- 	qm_fd_addr_set64(&fd, addr);
+--- a/fs/hfs/bnode.c
++++ b/fs/hfs/bnode.c
+@@ -70,6 +70,12 @@ void hfs_bnode_read_key(struct hfs_bnode
+ 	else
+ 		key_len = tree->max_key_len + 1;
  
- 	do {
-+		refcount_inc(&req->drv_ctx->refcnt);
- 		ret = qman_enqueue(req->drv_ctx->req_fq, &fd);
--		if (likely(!ret)) {
--			refcount_inc(&req->drv_ctx->refcnt);
-+		if (likely(!ret))
- 			return 0;
--		}
++	if (key_len > sizeof(hfs_btree_key) || key_len < 1) {
++		memset(key, 0, sizeof(hfs_btree_key));
++		pr_err("hfs: Invalid key length: %d\n", key_len);
++		return;
++	}
++
+ 	hfs_bnode_read(node, key, off, key_len);
+ }
  
-+		refcount_dec(&req->drv_ctx->refcnt);
- 		if (ret != -EBUSY)
- 			break;
- 		num_retries++;
+--- a/fs/hfsplus/bnode.c
++++ b/fs/hfsplus/bnode.c
+@@ -69,6 +69,12 @@ void hfs_bnode_read_key(struct hfs_bnode
+ 	else
+ 		key_len = tree->max_key_len + 2;
+ 
++	if (key_len > sizeof(hfsplus_btree_key) || key_len < 1) {
++		memset(key, 0, sizeof(hfsplus_btree_key));
++		pr_err("hfsplus: Invalid key length: %d\n", key_len);
++		return;
++	}
++
+ 	hfs_bnode_read(node, key, off, key_len);
+ }
+ 
 
 
