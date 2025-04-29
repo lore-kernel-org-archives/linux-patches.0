@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2312AE72;
-	Tue, 29 Apr 2025 18:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8840A24E4BF;
+	Tue, 29 Apr 2025 18:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950336; cv=none; b=OnMzXZu1ddKyU5SFKcBNbxuvdcPZ7l36is9jKE04d9GsSIVi2ES8RPd9WH/BSpDNUkjM5uLC86pWtmveZTM+7vSEh3VsGnUmkTQEh9lQRN0XzYgQuxGsV4uvLI6cs5CbMwCgr8PwOoiZxPTDLLlHOMNTzz0gYt/sjTmlWTeULy4=
+	t=1745950339; cv=none; b=CWTDDw2Q0KYPmN4xv9p17f1MGUnLvbNOLDmZ4pk3t43EZQXu1gwKk/P4Kcpi20hxwh6IKqSaXnaOR147O4PbXUTFwmJzlCDFUYfrWIqYhvWRJvF7rbIpy/lB5FzdXHiKB8Qqge7ZKBM6DeXz99beomYay29/x181utqj6NN9tnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950336; c=relaxed/simple;
-	bh=SnLGy9aOOPmr1qBZbPE0k9I2zKAuf4sMwBISMVMxjGk=;
+	s=arc-20240116; t=1745950339; c=relaxed/simple;
+	bh=r/BfWwW3mtkgU5ksuOY4XnoKfUxe8VOdN0yWimA2TaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dl3Fuvutpxus3VBIDT+lCsfgsP9K1pHQsUW5rB5EXL2TJNBO4BTs/1SyR2+MdAYvOV0m6n3Uqc0lXYC2mKmrdVjvM7xaP2O/iyxU1b9IXZanjcgQiaWMY73Vo7BDysyjHzI1rpRnlOf6hfcVeb8narnpdJhR4ObSZuEIQ5vjJZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhIsmM54; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FCZZTAZHOIQNeFUv+/jm5ymA5bs7GLlRZUw0H6BCZzPWbRs4V7hbnfLB9HM6cfdBCekT/14q5pMcv5OkNoSeEZILPnTdk7k8zUwgaRVafkfVY/GxSAzf6QvI1HYE5pA9uxBEhQOPrsT6WKfwIEFzWEzp6xPDlyyyG8mmjvCpHHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16We9fjv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhIsmM54"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF374C4CEE3;
-	Tue, 29 Apr 2025 18:12:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16We9fjv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7CC6C4CEE3;
+	Tue, 29 Apr 2025 18:12:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950336;
-	bh=SnLGy9aOOPmr1qBZbPE0k9I2zKAuf4sMwBISMVMxjGk=;
+	s=korg; t=1745950339;
+	bh=r/BfWwW3mtkgU5ksuOY4XnoKfUxe8VOdN0yWimA2TaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uhIsmM54FSXC6j7ub/3Cf08tbT9GfsFRR9QgasOH9nz0IEG+aM/NYnb6dYGNKztRW
-	 YXeGkNf+ex7K3b/TU1DCsgUJxepFfIGRKF8FODnbnek1sFl6nlicPJh+6kVVrEEHf7
-	 ApUWXCBMZs+Z20h5dkk9h4QenRMnycI/3WmnnPeI=
+	b=16We9fjv0xCL1O7aAbnX8bJ0V9s/3bFJJ9QWa1FSq1CnFWP2jviuD0HWzNt6d9tVa
+	 v7WSvuVAtA4A5X+6iqYO5JXPqDh0CFRIIBnjtHiHTlbFzTKyHd10ZXEugi0OMtbw9e
+	 3ZHvikbcUfagj9MeKn+N0pagcrTiwN5VzA0Z0KR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brett Creeley <brett.creeley@amd.com>,
-	Simon Horman <horms@kernel.org>,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ma Ke <make24@iscas.ac.cn>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 062/204] pds_core: handle unsupported PDS_CORE_CMD_FW_CONTROL result
-Date: Tue, 29 Apr 2025 18:42:30 +0200
-Message-ID: <20250429161101.966552360@linuxfoundation.org>
+Subject: [PATCH 6.6 035/204] PCI: Fix reference leak in pci_register_host_bridge()
+Date: Tue, 29 Apr 2025 18:42:03 +0200
+Message-ID: <20250429161100.847233849@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -54,58 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brett Creeley <brett.creeley@amd.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-[ Upstream commit 2567daad69cd1107fc0ec29b1615f110d7cf7385 ]
+[ Upstream commit 804443c1f27883926de94c849d91f5b7d7d696e9 ]
 
-If the FW doesn't support the PDS_CORE_CMD_FW_CONTROL command
-the driver might at the least print garbage and at the worst
-crash when the user runs the "devlink dev info" devlink command.
+If device_register() fails, call put_device() to give up the reference to
+avoid a memory leak, per the comment at device_register().
 
-This happens because the stack variable fw_list is not 0
-initialized which results in fw_list.num_fw_slots being a
-garbage value from the stack.  Then the driver tries to access
-fw_list.fw_names[i] with i >= ARRAY_SIZE and runs off the end
-of the array.
+Found by code review.
 
-Fix this by initializing the fw_list and by not failing
-completely if the devcmd fails because other useful information
-is printed via devlink dev info even if the devcmd fails.
-
-Fixes: 45d76f492938 ("pds_core: set up device and adminq")
-Signed-off-by: Brett Creeley <brett.creeley@amd.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20250421174606.3892-3-shannon.nelson@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20250225021440.3130264-1-make24@iscas.ac.cn
+Fixes: 37d6a0a6f470 ("PCI: Add pci_register_host_bridge() interface")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+[bhelgaas: squash Dan Carpenter's double free fix from
+https://lore.kernel.org/r/db806a6c-a91b-4e5a-a84b-6b7e01bdac85@stanley.mountain]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/devlink.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/pci/probe.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/devlink.c b/drivers/net/ethernet/amd/pds_core/devlink.c
-index 971d4278280d6..0032e8e351811 100644
---- a/drivers/net/ethernet/amd/pds_core/devlink.c
-+++ b/drivers/net/ethernet/amd/pds_core/devlink.c
-@@ -101,7 +101,7 @@ int pdsc_dl_info_get(struct devlink *dl, struct devlink_info_req *req,
- 		.fw_control.opcode = PDS_CORE_CMD_FW_CONTROL,
- 		.fw_control.oper = PDS_CORE_FW_GET_LIST,
- 	};
--	struct pds_core_fw_list_info fw_list;
-+	struct pds_core_fw_list_info fw_list = {};
- 	struct pdsc *pdsc = devlink_priv(dl);
- 	union pds_core_dev_comp comp;
- 	char buf[32];
-@@ -114,8 +114,6 @@ int pdsc_dl_info_get(struct devlink *dl, struct devlink_info_req *req,
- 	if (!err)
- 		memcpy_fromio(&fw_list, pdsc->cmd_regs->data, sizeof(fw_list));
- 	mutex_unlock(&pdsc->devcmd_lock);
--	if (err && err != -EIO)
--		return err;
+diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+index 8e5d818c29a98..b7cec139d816b 100644
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -885,6 +885,7 @@ static int pci_register_host_bridge(struct pci_host_bridge *bridge)
+ 	resource_size_t offset, next_offset;
+ 	LIST_HEAD(resources);
+ 	struct resource *res, *next_res;
++	bool bus_registered = false;
+ 	char addr[64], *fmt;
+ 	const char *name;
+ 	int err;
+@@ -948,6 +949,7 @@ static int pci_register_host_bridge(struct pci_host_bridge *bridge)
+ 	name = dev_name(&bus->dev);
  
- 	listlen = min(fw_list.num_fw_slots, ARRAY_SIZE(fw_list.fw_names));
- 	for (i = 0; i < listlen; i++) {
+ 	err = device_register(&bus->dev);
++	bus_registered = true;
+ 	if (err)
+ 		goto unregister;
+ 
+@@ -1031,12 +1033,15 @@ static int pci_register_host_bridge(struct pci_host_bridge *bridge)
+ unregister:
+ 	put_device(&bridge->dev);
+ 	device_del(&bridge->dev);
+-
+ free:
+ #ifdef CONFIG_PCI_DOMAINS_GENERIC
+ 	pci_bus_release_domain_nr(bus, parent);
+ #endif
+-	kfree(bus);
++	if (bus_registered)
++		put_device(&bus->dev);
++	else
++		kfree(bus);
++
+ 	return err;
+ }
+ 
 -- 
 2.39.5
 
