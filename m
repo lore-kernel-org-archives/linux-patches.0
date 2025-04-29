@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF312472B9;
-	Tue, 29 Apr 2025 16:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F5724BD02;
+	Tue, 29 Apr 2025 16:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945832; cv=none; b=aQkp8gRaapColIMIlcz2o0swGSk9LGXF8EuR85FQfAdTg0wDKWEc3czMMOWE8KkMRSa9/IuF5vl8gxff0h4mikgxgom3W7gS1X7ISu9cNooJYDIpoX5mGxuJaC9OOdAsdgq4/3o8yhKQcBx8PK18gmGliAtZVBcRVeE+VF82amA=
+	t=1745945835; cv=none; b=R9l6sEfE5v8t22w5oUF9wMlpsDX54H9vY1K+nC7lifpwebxFIZDScUEOBBa7iGl6bF4WNjCbTLDfw3ch9oVA3kcrRTbO09AmYgKYM3/HVDsCaMCRdPv+pYqj+62yMLY3fyuPMLbKablv+UeAgEuTrrq2UfPtW1IQX3u79MaGtFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945832; c=relaxed/simple;
-	bh=fugs0xe/obFqU6wbqbm5+7nduWckGHWczFnahg6fqWs=;
+	s=arc-20240116; t=1745945835; c=relaxed/simple;
+	bh=vMQh3/5ybEkYvW+tvtXCfURYs2KAgl5v2ysAogpGIfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OTuJNCq57BZo2NyI9pWfYx/n1v4anKHfOD0B2VjpEzqdaGKcBgpL5pcKqFJhJ9LL3PMgkRwTvzPXp0GYTQREg5w6GILgf495lGeHPRg7eDiMJisYzAsnMp1/HOpJo2O1ZDiavsqofHEafWj/UwUFas47s6iHAYbzChdyGLocUdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vESKu5Rz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dcEm4N+cffcK6kPUpBcjoOo+fT6uqmBfup6DfWuF2Kyx5x0eVbcNnuew5t0e3VqccXiJvLndXLMapTfDFQB/gMedJPC0lT/b9elUVugpqyg/PtGClXa2NFW1jrQW4fSI3Wh2IXg0QGfki2XLzQG8BymSQp6806+hrYm4hl2fopY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YtWgCROl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vESKu5Rz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751F0C4CEE3;
-	Tue, 29 Apr 2025 16:57:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YtWgCROl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FEA6C4CEE3;
+	Tue, 29 Apr 2025 16:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945831;
-	bh=fugs0xe/obFqU6wbqbm5+7nduWckGHWczFnahg6fqWs=;
+	s=korg; t=1745945835;
+	bh=vMQh3/5ybEkYvW+tvtXCfURYs2KAgl5v2ysAogpGIfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vESKu5RzJ3/i+wBMYEpE6anE3ZqnGFEs2HXIn+irho/IiExPLZgduHRdPw5s8KSLJ
-	 6othQiFZ7QgB+r9bEXqVFkaxjSUS1vVLgBkmEEU+28bJdBXoKWmXwYsGnj02OzRRqc
-	 UEEW4xnrFuJbfrR0oHRL9e4sJ7QrhxsnT0g3VRxo=
+	b=YtWgCROliBUg/XxkNkRVaGOmNLHvHtTKekIYPlShwNKhBIH2qtl1GIShP1nBsoDoM
+	 8cL8RAfmTHQ7p7LcvmKIdl95reDzte2zp4QWHNRTmIDou05utj4g0rE/B0Gvtq7vQG
+	 IgpphDKgMPnjrsWe0TKBH3OUHtJhs1bo4bGgo+4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ed60da8d686dc709164c@syzkaller.appspotmail.com,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Bo-Cun Chen <bc-bocun.chen@mediatek.com>,
+	Daniel Golle <daniel@makrotopia.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 065/311] tipc: fix NULL pointer dereference in tipc_mon_reinit_self()
-Date: Tue, 29 Apr 2025 18:38:22 +0200
-Message-ID: <20250429161123.703277352@linuxfoundation.org>
+Subject: [PATCH 6.14 066/311] net: ethernet: mtk_eth_soc: net: revise NETSYSv3 hardware configuration
+Date: Tue, 29 Apr 2025 18:38:23 +0200
+Message-ID: <20250429161123.744029524@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -53,123 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tung Nguyen <tung.quang.nguyen@est.tech>
+From: Bo-Cun Chen <bc-bocun.chen@mediatek.com>
 
-[ Upstream commit d63527e109e811ef11abb1c2985048fdb528b4cb ]
+[ Upstream commit 491ef1117c56476f199b481f8c68820fe4c3a7c2 ]
 
-syzbot reported:
+Change hardware configuration for the NETSYSv3.
+ - Enable PSE dummy page mechanism for the GDM1/2/3
+ - Enable PSE drop mechanism when the WDMA Rx ring full
+ - Enable PSE no-drop mechanism for packets from the WDMA Tx
+ - Correct PSE free drop threshold
+ - Correct PSE CDMA high threshold
 
-tipc: Node number set to 1055423674
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 3 UID: 0 PID: 6017 Comm: kworker/3:5 Not tainted 6.15.0-rc1-syzkaller-00246-g900241a5cc15 #0 PREEMPT(full)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-Workqueue: events tipc_net_finalize_work
-RIP: 0010:tipc_mon_reinit_self+0x11c/0x210 net/tipc/monitor.c:719
-...
-RSP: 0018:ffffc9000356fb68 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: 000000003ee87cba
-RDX: 0000000000000000 RSI: ffffffff8dbc56a7 RDI: ffff88804c2cc010
-RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000007
-R13: fffffbfff2111097 R14: ffff88804ead8000 R15: ffff88804ead9010
-FS:  0000000000000000(0000) GS:ffff888097ab9000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00000000f720eb00 CR3: 000000000e182000 CR4: 0000000000352ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- tipc_net_finalize+0x10b/0x180 net/tipc/net.c:140
- process_one_work+0x9cc/0x1b70 kernel/workqueue.c:3238
- process_scheduled_works kernel/workqueue.c:3319 [inline]
- worker_thread+0x6c8/0xf10 kernel/workqueue.c:3400
- kthread+0x3c2/0x780 kernel/kthread.c:464
- ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:153
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
- </TASK>
-...
-RIP: 0010:tipc_mon_reinit_self+0x11c/0x210 net/tipc/monitor.c:719
-...
-RSP: 0018:ffffc9000356fb68 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: 000000003ee87cba
-RDX: 0000000000000000 RSI: ffffffff8dbc56a7 RDI: ffff88804c2cc010
-RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000007
-R13: fffffbfff2111097 R14: ffff88804ead8000 R15: ffff88804ead9010
-FS:  0000000000000000(0000) GS:ffff888097ab9000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00000000f720eb00 CR3: 000000000e182000 CR4: 0000000000352ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-
-There is a racing condition between workqueue created when enabling
-bearer and another thread created when disabling bearer right after
-that as follow:
-
-enabling_bearer                          | disabling_bearer
----------------                          | ----------------
-tipc_disc_timeout()                      |
-{                                        | bearer_disable()
- ...                                     | {
- schedule_work(&tn->work);               |  tipc_mon_delete()
- ...                                     |  {
-}                                        |   ...
-                                         |   write_lock_bh(&mon->lock);
-                                         |   mon->self = NULL;
-                                         |   write_unlock_bh(&mon->lock);
-                                         |   ...
-                                         |  }
-tipc_net_finalize_work()                 | }
-{                                        |
- ...                                     |
- tipc_net_finalize()                     |
- {                                       |
-  ...                                    |
-  tipc_mon_reinit_self()                 |
-  {                                      |
-   ...                                   |
-   write_lock_bh(&mon->lock);            |
-   mon->self->addr = tipc_own_addr(net); |
-   write_unlock_bh(&mon->lock);          |
-   ...                                   |
-  }                                      |
-  ...                                    |
- }                                       |
- ...                                     |
-}                                        |
-
-'mon->self' is set to NULL in disabling_bearer thread and dereferenced
-later in enabling_bearer thread.
-
-This commit fixes this issue by validating 'mon->self' before assigning
-node address to it.
-
-Reported-by: syzbot+ed60da8d686dc709164c@syzkaller.appspotmail.com
-Fixes: 46cb01eeeb86 ("tipc: update mon's self addr when node addr generated")
-Signed-off-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Fixes: 1953f134a1a8b ("net: ethernet: mtk_eth_soc: add NETSYS_V3 version support")
+Signed-off-by: Bo-Cun Chen <bc-bocun.chen@mediatek.com>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250417074826.578115-1-tung.quang.nguyen@est.tech
+Link: https://patch.msgid.link/b71f8fd9d4bb69c646c4d558f9331dd965068606.1744907886.git.daniel@makrotopia.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/monitor.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 24 +++++++++++++++++----
+ drivers/net/ethernet/mediatek/mtk_eth_soc.h | 10 ++++++++-
+ 2 files changed, 29 insertions(+), 5 deletions(-)
 
-diff --git a/net/tipc/monitor.c b/net/tipc/monitor.c
-index e2f19627e43d5..b45c5b91bc7af 100644
---- a/net/tipc/monitor.c
-+++ b/net/tipc/monitor.c
-@@ -716,7 +716,8 @@ void tipc_mon_reinit_self(struct net *net)
- 		if (!mon)
- 			continue;
- 		write_lock_bh(&mon->lock);
--		mon->self->addr = tipc_own_addr(net);
-+		if (mon->self)
-+			mon->self->addr = tipc_own_addr(net);
- 		write_unlock_bh(&mon->lock);
- 	}
- }
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index 0cd1ecacfd29f..477b8732b8609 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -3997,11 +3997,27 @@ static int mtk_hw_init(struct mtk_eth *eth, bool reset)
+ 	mtk_w32(eth, 0x21021000, MTK_FE_INT_GRP);
+ 
+ 	if (mtk_is_netsys_v3_or_greater(eth)) {
+-		/* PSE should not drop port1, port8 and port9 packets */
+-		mtk_w32(eth, 0x00000302, PSE_DROP_CFG);
++		/* PSE dummy page mechanism */
++		mtk_w32(eth, PSE_DUMMY_WORK_GDM(1) | PSE_DUMMY_WORK_GDM(2) |
++			PSE_DUMMY_WORK_GDM(3) | DUMMY_PAGE_THR, PSE_DUMY_REQ);
++
++		/* PSE free buffer drop threshold */
++		mtk_w32(eth, 0x00600009, PSE_IQ_REV(8));
++
++		/* PSE should not drop port8, port9 and port13 packets from
++		 * WDMA Tx
++		 */
++		mtk_w32(eth, 0x00002300, PSE_DROP_CFG);
++
++		/* PSE should drop packets to port8, port9 and port13 on WDMA Rx
++		 * ring full
++		 */
++		mtk_w32(eth, 0x00002300, PSE_PPE_DROP(0));
++		mtk_w32(eth, 0x00002300, PSE_PPE_DROP(1));
++		mtk_w32(eth, 0x00002300, PSE_PPE_DROP(2));
+ 
+ 		/* GDM and CDM Threshold */
+-		mtk_w32(eth, 0x00000707, MTK_CDMW0_THRES);
++		mtk_w32(eth, 0x08000707, MTK_CDMW0_THRES);
+ 		mtk_w32(eth, 0x00000077, MTK_CDMW1_THRES);
+ 
+ 		/* Disable GDM1 RX CRC stripping */
+@@ -4018,7 +4034,7 @@ static int mtk_hw_init(struct mtk_eth *eth, bool reset)
+ 		mtk_w32(eth, 0x00000300, PSE_DROP_CFG);
+ 
+ 		/* PSE should drop packets to port 8/9 on WDMA Rx ring full */
+-		mtk_w32(eth, 0x00000300, PSE_PPE0_DROP);
++		mtk_w32(eth, 0x00000300, PSE_PPE_DROP(0));
+ 
+ 		/* PSE Free Queue Flow Control  */
+ 		mtk_w32(eth, 0x01fa01f4, PSE_FQFC_CFG2);
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+index 8d7b6818d8601..0570623e569d5 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+@@ -151,7 +151,15 @@
+ #define PSE_FQFC_CFG1		0x100
+ #define PSE_FQFC_CFG2		0x104
+ #define PSE_DROP_CFG		0x108
+-#define PSE_PPE0_DROP		0x110
++#define PSE_PPE_DROP(x)		(0x110 + ((x) * 0x4))
++
++/* PSE Last FreeQ Page Request Control */
++#define PSE_DUMY_REQ		0x10C
++/* PSE_DUMY_REQ is not a typo but actually called like that also in
++ * MediaTek's datasheet
++ */
++#define PSE_DUMMY_WORK_GDM(x)	BIT(16 + (x))
++#define DUMMY_PAGE_THR		0x1
+ 
+ /* PSE Input Queue Reservation Register*/
+ #define PSE_IQ_REV(x)		(0x140 + (((x) - 1) << 2))
 -- 
 2.39.5
 
