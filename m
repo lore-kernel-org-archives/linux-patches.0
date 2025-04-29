@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E48638FB0;
-	Tue, 29 Apr 2025 17:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D596D82C60;
+	Tue, 29 Apr 2025 17:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947633; cv=none; b=eCy24Vr28QxDRT+0B9PJ6ZQUwkYbevhnYiyCZozsU6GES87Km2gd2VDVauXf2FH9ZSeqAO9aGzmcwU9/Q/qYv0MHeQHqGnf87K7X/XNr0VSAJxNHjhb/hYuxBQ9s1spn5NRpaMmopziszEcklv3Vk5W/S9SniJI5htdTgmlSStk=
+	t=1745947635; cv=none; b=S09zmz6iAD+BO+OXgaYTn+HZKQGWHEiupMfoCqoZmGIMRbdyxS1FrNwMCxQJU+ny5Tsxyjs8XTr/0cjpzM3/C46BKg2JfkP97qZTpxnZwJAzvAmsLXNeD0mAZj01UNz2nhfRmjkehCOeub5h63NTB7ijDwo+pZSCcHHfa3Sis9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947633; c=relaxed/simple;
-	bh=LlPmK/I+772LHL2II9mCsv9+WjG8Mdh3DPkGeT54B8Q=;
+	s=arc-20240116; t=1745947635; c=relaxed/simple;
+	bh=R+VoeLLeDuJnBfVhiVhjg+mcJcAB9846Urxyn9NZAbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IfvqCZXPAX2zwEpmKV/6w6VPT+pIz6efAoVeWw1DKqE+1JB6Isezfg5bGJcZf+A9xtXvWXG8UFkf3OYyZE5vcMZX1WLhIDWKInHgUNcWfYqQZPTHgX45lYBrCh9cUzRUGR/6RcRb8v1UB6nZ6WBGFNk8y7+HSN/NV/5vVi1tI2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tNT/au8F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YIU1nJ8gAg3Sgit6avmGZEvAOkFjNPNBNiRXikdvymGgMRi69KOj87scmkMwACGhP/Fcg8gu2byfeYCyCpvhejSDay403QIFKW1AENkNENanvzy55vGLDIY/yH5pzUVdXECPoMlAm3MPGZ1N1OOavrf43WfvyVGVomfZpRj5eDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WHBn79wp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNT/au8F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C184C4CEE3;
-	Tue, 29 Apr 2025 17:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHBn79wp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9C5C4CEE3;
+	Tue, 29 Apr 2025 17:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947632;
-	bh=LlPmK/I+772LHL2II9mCsv9+WjG8Mdh3DPkGeT54B8Q=;
+	s=korg; t=1745947635;
+	bh=R+VoeLLeDuJnBfVhiVhjg+mcJcAB9846Urxyn9NZAbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tNT/au8FzIO7YzwGMVW4LxOIgUQEevohBc5HwZZw3WbUWAVdYd5p54mBsLWfTDdW8
-	 AXLjcugehoSYmEbeEJfG7J+DG1JG9dCElHFzr7TjfxTVOe8az4im6tjzxHnGf1GblZ
-	 lCQFL8qGJI7zxuAknul4en13KWxVadlLPjTtZb7c=
+	b=WHBn79wp/o5TNF9/jV9Syzi1eiQ3Hdhja8/R3xbQQ7EXynqOMM6ljHDZgfi7HF5+m
+	 6ItUHX9Eb4bMxqQugl5PZwxC9AfOt2BpG9G6fgQct6qZyWp6k/PIbpjxOeKcyQeuQO
+	 BlksfqssxrO6Yy9YXrPwJKaf92Qizv1Cz32cI1Ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 057/280] cpufreq: cppc: Fix invalid return value in .get() callback
-Date: Tue, 29 Apr 2025 18:39:58 +0200
-Message-ID: <20250429161117.450159070@linuxfoundation.org>
+Subject: [PATCH 6.12 058/280] cpufreq: Do not enable by default during compile testing
+Date: Tue, 29 Apr 2025 18:39:59 +0200
+Message-ID: <20250429161117.489149103@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -53,38 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 2b8e6b58889c672e1ae3601d9b2b070be4dc2fbc ]
+[ Upstream commit d4f610a9bafdec8e3210789aa19335367da696ea ]
 
-Returning a negative error code in a function with an unsigned
-return type is a pretty bad idea. It is probably worse when the
-justification for the change is "our static analisys tool found it".
+Enabling the compile test should not cause automatic enabling of all
+drivers.
 
-Fixes: cf7de25878a1 ("cppc_cpufreq: Fix possible null pointer dereference")
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: Viresh Kumar <viresh.kumar@linaro.org>
-Reviewed-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Stable-dep-of: a374f28700ab ("cpufreq: fix compile-test defaults")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cppc_cpufreq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/Kconfig.arm | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
-index c1cdf0f4d0ddd..36ea181260c7e 100644
---- a/drivers/cpufreq/cppc_cpufreq.c
-+++ b/drivers/cpufreq/cppc_cpufreq.c
-@@ -767,7 +767,7 @@ static unsigned int cppc_cpufreq_get_rate(unsigned int cpu)
- 	int ret;
+diff --git a/drivers/cpufreq/Kconfig.arm b/drivers/cpufreq/Kconfig.arm
+index e67b2326671c9..f6e6066e2e64b 100644
+--- a/drivers/cpufreq/Kconfig.arm
++++ b/drivers/cpufreq/Kconfig.arm
+@@ -67,7 +67,7 @@ config ARM_VEXPRESS_SPC_CPUFREQ
+ config ARM_BRCMSTB_AVS_CPUFREQ
+ 	tristate "Broadcom STB AVS CPUfreq driver"
+ 	depends on (ARCH_BRCMSTB && !ARM_SCMI_CPUFREQ) || COMPILE_TEST
+-	default y
++	default ARCH_BRCMSTB
+ 	help
+ 	  Some Broadcom STB SoCs use a co-processor running proprietary firmware
+ 	  ("AVS") to handle voltage and frequency scaling. This driver provides
+@@ -172,7 +172,7 @@ config ARM_RASPBERRYPI_CPUFREQ
+ config ARM_S3C64XX_CPUFREQ
+ 	bool "Samsung S3C64XX"
+ 	depends on CPU_S3C6410 || COMPILE_TEST
+-	default y
++	default CPU_S3C6410
+ 	help
+ 	  This adds the CPUFreq driver for Samsung S3C6410 SoC.
  
- 	if (!policy)
--		return -ENODEV;
-+		return 0;
+@@ -181,7 +181,7 @@ config ARM_S3C64XX_CPUFREQ
+ config ARM_S5PV210_CPUFREQ
+ 	bool "Samsung S5PV210 and S5PC110"
+ 	depends on CPU_S5PV210 || COMPILE_TEST
+-	default y
++	default CPU_S5PV210
+ 	help
+ 	  This adds the CPUFreq driver for Samsung S5PV210 and
+ 	  S5PC110 SoCs.
+@@ -205,7 +205,7 @@ config ARM_SCMI_CPUFREQ
+ config ARM_SPEAR_CPUFREQ
+ 	bool "SPEAr CPUFreq support"
+ 	depends on PLAT_SPEAR || COMPILE_TEST
+-	default y
++	default PLAT_SPEAR
+ 	help
+ 	  This adds the CPUFreq driver support for SPEAr SOCs.
  
- 	cpu_data = policy->driver_data;
+@@ -224,7 +224,7 @@ config ARM_TEGRA20_CPUFREQ
+ 	tristate "Tegra20/30 CPUFreq support"
+ 	depends on ARCH_TEGRA || COMPILE_TEST
+ 	depends on CPUFREQ_DT
+-	default y
++	default ARCH_TEGRA
+ 	help
+ 	  This adds the CPUFreq driver support for Tegra20/30 SOCs.
  
+@@ -232,7 +232,7 @@ config ARM_TEGRA124_CPUFREQ
+ 	bool "Tegra124 CPUFreq support"
+ 	depends on ARCH_TEGRA || COMPILE_TEST
+ 	depends on CPUFREQ_DT
+-	default y
++	default ARCH_TEGRA
+ 	help
+ 	  This adds the CPUFreq driver support for Tegra124 SOCs.
+ 
+@@ -247,14 +247,14 @@ config ARM_TEGRA194_CPUFREQ
+ 	tristate "Tegra194 CPUFreq support"
+ 	depends on ARCH_TEGRA_194_SOC || ARCH_TEGRA_234_SOC || (64BIT && COMPILE_TEST)
+ 	depends on TEGRA_BPMP
+-	default y
++	default ARCH_TEGRA
+ 	help
+ 	  This adds CPU frequency driver support for Tegra194 SOCs.
+ 
+ config ARM_TI_CPUFREQ
+ 	bool "Texas Instruments CPUFreq support"
+ 	depends on ARCH_OMAP2PLUS || ARCH_K3 || COMPILE_TEST
+-	default y
++	default ARCH_OMAP2PLUS || ARCH_K3
+ 	help
+ 	  This driver enables valid OPPs on the running platform based on
+ 	  values contained within the SoC in use. Enable this in order to
 -- 
 2.39.5
 
