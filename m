@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE71B243371;
-	Tue, 29 Apr 2025 17:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03898216605;
+	Tue, 29 Apr 2025 17:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949408; cv=none; b=d34BhEt08/7NcxFA6WLk4cLajGK5DO2mVQ8qkem6f6u7w9svnfmBvcAL60jmzT0TZ8f6ixFD3INUIQAqgn3VRqp/UT+dXwtabHmfCTtbyKbJtveHsiEQwSnKoTkekg8WJp6DX8jILJ/Ae81lor9VWMuxQ1C14Rn2OOMN3APgZ64=
+	t=1745949412; cv=none; b=ML95yxzkYQpmxtmaFm4tAtvfpVKs+rAagxCmBKfrt9qYJmhVvK0ACrFZ286JjcgQoXJ3cfShwFxFD4QydNpvROzQgyV7PVpuCtDisrA70/D1/kwR6OCScJtXwIzB2rzILDcfKtfCtG6ywvGdoFNue5gdLF1+w7KYx4K0ERXcYME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949408; c=relaxed/simple;
-	bh=/mwHVNN43PaCsG95b21knU3d+xeZ3hzixzNVOU05Yvc=;
+	s=arc-20240116; t=1745949412; c=relaxed/simple;
+	bh=jikojnoGfMnaD3HMwTLiCo3wpih+///IkU0x5PDmjP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pfOwk+mxGQ23MDrIwUhFWeMbPEkF42TPBpphwkwI+GipAZqFdZW22+Cn2xzBfGX/m858bE3P4oXg4TiInG75tEuWP07hfadlvj4Hs/ZvzRrH3tBn9+ho5sFGB8S6d/d42OD0mv3CArIUN5uJNw+0QFCzgKHMmBk82HSd+oHXOKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sI4BdSrm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QR9k0rts3L5ZjXkZwsLWEfpxt0ZzvMtIEVRUByFbYrtgz0AlyEmXaZPFEf9Riw9i+5xXkZK94e5Wn5BOW3jM0Lo0x+XqKABJ/EXKD2m2Rm0Wmlk7FvCKL3JSCe3HD+1L0pwGyFcxgmrWTt0r2K5MVTVB7iMTI8+HjNBbPaz4/jU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDuF+Gci; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sI4BdSrm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F62EC4CEE3;
-	Tue, 29 Apr 2025 17:56:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDuF+Gci"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F77C4CEE3;
+	Tue, 29 Apr 2025 17:56:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949408;
-	bh=/mwHVNN43PaCsG95b21knU3d+xeZ3hzixzNVOU05Yvc=;
+	s=korg; t=1745949411;
+	bh=jikojnoGfMnaD3HMwTLiCo3wpih+///IkU0x5PDmjP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sI4BdSrmgyI/XNEu6l4hmIZChsFPZGtQ/k6fwayOrQ4yv2GwBF/qaoTHXxEs8/pDf
-	 +s7K8jccjhDBKMb08D7sFDJsIOEbzKGdBp5Zq02KFmV7mUjM2tE4um5OSPCOJlfUgP
-	 t9Ma8F0V8o3fHN5nEiLrWoVCk5C1KpLgQV1fhlSA=
+	b=wDuF+GciMvaIvW5cLnwLKIspnfEaI8j6XMjJoid/koKvX6dnDEWKHeXoLudEesAO2
+	 2hNt8GB3Xc86zLXLXQvgKXvCDGa7LTFCU7kX/v/CVTaFh/T82x/HYQuBwAIBEYN3yE
+	 f+hHqDh+CTl4ObXDuxpNNfLDY+VomaAT3LVMhHoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	Rob Clark <robdclark@chromium.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 282/373] drm/msm/a6xx: Improve gpu recovery sequence
-Date: Tue, 29 Apr 2025 18:42:39 +0200
-Message-ID: <20250429161134.713802268@linuxfoundation.org>
+	Craig Hesling <craig@hesling.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 309/373] USB: serial: simple: add OWON HDS200 series oscilloscope support
+Date: Tue, 29 Apr 2025 18:43:06 +0200
+Message-ID: <20250429161135.821588418@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,175 +50,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+From: Craig Hesling <craig@hesling.com>
 
-[ Upstream commit 3a9dd708b902a1a646c3725151554cbef16c2c28 ]
+commit 4cc01410e1c1dd075df10f750775c81d1cb6672b upstream.
 
-We can do a few more things to improve our chance at a successful gpu
-recovery, especially during a hangcheck timeout:
-1. Halt CP and GMU core
-2. Do RBBM GBIF HALT sequence
-3. Do a soft reset of GPU core
+Add serial support for OWON HDS200 series oscilloscopes and likely
+many other pieces of OWON test equipment.
 
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/498400/
-Link: https://lore.kernel.org/r/20220819015030.v5.6.Idf2ba51078e87ae7ceb75cc77a5bd4ff2bd31eab@changeid
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Stable-dep-of: f561db72a663 ("drm/msm/a6xx: Fix stale rpmh votes from GPU")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+OWON HDS200 series devices host two USB endpoints, designed to
+facilitate bidirectional SCPI. SCPI is a predominately ASCII text
+protocol for test/measurement equipment. Having a serial/tty interface
+for these devices lowers the barrier to entry for anyone trying to
+write programs to communicate with them.
+
+The following shows the USB descriptor for the OWON HDS272S running
+firmware V5.7.1:
+
+Bus 001 Device 068: ID 5345:1234 Owon PDS6062T Oscilloscope
+Negotiated speed: Full Speed (12Mbps)
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               2.00
+  bDeviceClass            0 [unknown]
+  bDeviceSubClass         0 [unknown]
+  bDeviceProtocol         0
+  bMaxPacketSize0        64
+  idVendor           0x5345 Owon
+  idProduct          0x1234 PDS6062T Oscilloscope
+  bcdDevice            1.00
+  iManufacturer           1 oscilloscope
+  iProduct                2 oscilloscope
+  iSerial                 3 oscilloscope
+  bNumConfigurations      1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength       0x0029
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          0
+    bmAttributes         0x80
+      (Bus Powered)
+    MaxPower              100mA
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           2
+      bInterfaceClass         5 Physical Interface Device
+      bInterfaceSubClass      0 [unknown]
+      bInterfaceProtocol      0
+      iInterface              0
+      ** UNRECOGNIZED:  09 21 11 01 00 01 22 5f 00
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0040  1x 64 bytes
+        bInterval              32
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x01  EP 1 OUT
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0040  1x 64 bytes
+        bInterval              32
+Device Status:     0x0000
+  (Bus Powered)
+
+OWON appears to be using the same USB Vendor and Product ID for many
+of their oscilloscopes. Looking at the discussion about the USB
+vendor/product ID, in the link bellow, suggests that this VID/PID is
+shared with VDS, SDS, PDS, and now the HDS series oscilloscopes.
+Available documentation for these devices seems to indicate that all
+use a similar SCPI protocol, some with RS232 options. It is likely that
+this same simple serial setup would work correctly for them all.
+
+Link: https://usb-ids.gowdy.us/read/UD/5345/1234
+Signed-off-by: Craig Hesling <craig@hesling.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx.xml.h |  4 ++
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 77 ++++++++++++++++-----------
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c |  7 +++
- 3 files changed, 58 insertions(+), 30 deletions(-)
+ drivers/usb/serial/usb-serial-simple.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx.xml.h b/drivers/gpu/drm/msm/adreno/a6xx.xml.h
-index a3cb3d988ba4e..5b1adda08d056 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx.xml.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx.xml.h
-@@ -1354,6 +1354,10 @@ static inline uint32_t REG_A6XX_RBBM_PERFCTR_RBBM_SEL(uint32_t i0) { return 0x00
+--- a/drivers/usb/serial/usb-serial-simple.c
++++ b/drivers/usb/serial/usb-serial-simple.c
+@@ -101,6 +101,11 @@ DEVICE(nokia, NOKIA_IDS);
+ 	{ USB_DEVICE(0x09d7, 0x0100) }	/* NovAtel FlexPack GPS */
+ DEVICE_N(novatel_gps, NOVATEL_IDS, 3);
  
- #define REG_A6XX_RBBM_GBIF_CLIENT_QOS_CNTL			0x00000011
- 
-+#define REG_A6XX_RBBM_GBIF_HALT					0x00000016
++/* OWON electronic test and measurement equipment driver */
++#define OWON_IDS()			\
++	{ USB_DEVICE(0x5345, 0x1234) } /* HDS200 oscilloscopes and others */
++DEVICE(owon, OWON_IDS);
 +
-+#define REG_A6XX_RBBM_GBIF_HALT_ACK				0x00000017
-+
- #define REG_A6XX_RBBM_WAIT_FOR_GPU_IDLE_CMD			0x0000001c
- #define A6XX_RBBM_WAIT_FOR_GPU_IDLE_CMD_WAIT_GPU_IDLE		0x00000001
- 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 8b6fc1b26f049..db19f3dee6f2b 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -869,9 +869,47 @@ static void a6xx_gmu_rpmh_off(struct a6xx_gmu *gmu)
- 		(val & 1), 100, 1000);
- }
- 
-+#define GBIF_CLIENT_HALT_MASK             BIT(0)
-+#define GBIF_ARB_HALT_MASK                BIT(1)
-+
-+static void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu)
-+{
-+	struct msm_gpu *gpu = &adreno_gpu->base;
-+
-+	if (!a6xx_has_gbif(adreno_gpu)) {
-+		gpu_write(gpu, REG_A6XX_VBIF_XIN_HALT_CTRL0, 0xf);
-+		spin_until((gpu_read(gpu, REG_A6XX_VBIF_XIN_HALT_CTRL1) &
-+								0xf) == 0xf);
-+		gpu_write(gpu, REG_A6XX_VBIF_XIN_HALT_CTRL0, 0);
-+
-+		return;
-+	}
-+
-+	/* Halt the gx side of GBIF */
-+	gpu_write(gpu, REG_A6XX_RBBM_GBIF_HALT, 1);
-+	spin_until(gpu_read(gpu, REG_A6XX_RBBM_GBIF_HALT_ACK) & 1);
-+
-+	/* Halt new client requests on GBIF */
-+	gpu_write(gpu, REG_A6XX_GBIF_HALT, GBIF_CLIENT_HALT_MASK);
-+	spin_until((gpu_read(gpu, REG_A6XX_GBIF_HALT_ACK) &
-+			(GBIF_CLIENT_HALT_MASK)) == GBIF_CLIENT_HALT_MASK);
-+
-+	/* Halt all AXI requests on GBIF */
-+	gpu_write(gpu, REG_A6XX_GBIF_HALT, GBIF_ARB_HALT_MASK);
-+	spin_until((gpu_read(gpu,  REG_A6XX_GBIF_HALT_ACK) &
-+			(GBIF_ARB_HALT_MASK)) == GBIF_ARB_HALT_MASK);
-+
-+	/* The GBIF halt needs to be explicitly cleared */
-+	gpu_write(gpu, REG_A6XX_GBIF_HALT, 0x0);
-+}
-+
- /* Force the GMU off in case it isn't responsive */
- static void a6xx_gmu_force_off(struct a6xx_gmu *gmu)
- {
-+	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
-+	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
-+	struct msm_gpu *gpu = &adreno_gpu->base;
-+
- 	/* Flush all the queues */
- 	a6xx_hfi_stop(gmu);
- 
-@@ -883,6 +921,15 @@ static void a6xx_gmu_force_off(struct a6xx_gmu *gmu)
- 
- 	/* Make sure there are no outstanding RPMh votes */
- 	a6xx_gmu_rpmh_off(gmu);
-+
-+	/* Halt the gmu cm3 core */
-+	gmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 1);
-+
-+	a6xx_bus_clear_pending_transactions(adreno_gpu);
-+
-+	/* Reset GPU core blocks */
-+	gpu_write(gpu, REG_A6XX_RBBM_SW_RESET_CMD, 1);
-+	udelay(100);
- }
- 
- static void a6xx_gmu_set_initial_freq(struct msm_gpu *gpu, struct a6xx_gmu *gmu)
-@@ -1010,36 +1057,6 @@ bool a6xx_gmu_isidle(struct a6xx_gmu *gmu)
- 	return true;
- }
- 
--#define GBIF_CLIENT_HALT_MASK             BIT(0)
--#define GBIF_ARB_HALT_MASK                BIT(1)
--
--static void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu)
--{
--	struct msm_gpu *gpu = &adreno_gpu->base;
--
--	if (!a6xx_has_gbif(adreno_gpu)) {
--		gpu_write(gpu, REG_A6XX_VBIF_XIN_HALT_CTRL0, 0xf);
--		spin_until((gpu_read(gpu, REG_A6XX_VBIF_XIN_HALT_CTRL1) &
--								0xf) == 0xf);
--		gpu_write(gpu, REG_A6XX_VBIF_XIN_HALT_CTRL0, 0);
--
--		return;
--	}
--
--	/* Halt new client requests on GBIF */
--	gpu_write(gpu, REG_A6XX_GBIF_HALT, GBIF_CLIENT_HALT_MASK);
--	spin_until((gpu_read(gpu, REG_A6XX_GBIF_HALT_ACK) &
--			(GBIF_CLIENT_HALT_MASK)) == GBIF_CLIENT_HALT_MASK);
--
--	/* Halt all AXI requests on GBIF */
--	gpu_write(gpu, REG_A6XX_GBIF_HALT, GBIF_ARB_HALT_MASK);
--	spin_until((gpu_read(gpu,  REG_A6XX_GBIF_HALT_ACK) &
--			(GBIF_ARB_HALT_MASK)) == GBIF_ARB_HALT_MASK);
--
--	/* The GBIF halt needs to be explicitly cleared */
--	gpu_write(gpu, REG_A6XX_GBIF_HALT, 0x0);
--}
--
- /* Gracefully try to shut down the GMU and by extension the GPU */
- static void a6xx_gmu_shutdown(struct a6xx_gmu *gmu)
- {
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 27fae0dc97040..a1dff22b02a7a 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -891,6 +891,10 @@ static int hw_init(struct msm_gpu *gpu)
- 	/* Make sure the GMU keeps the GPU on while we set it up */
- 	a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET);
- 
-+	/* Clear GBIF halt in case GX domain was not collapsed */
-+	if (a6xx_has_gbif(adreno_gpu))
-+		gpu_write(gpu, REG_A6XX_RBBM_GBIF_HALT, 0);
-+
- 	gpu_write(gpu, REG_A6XX_RBBM_SECVID_TSB_CNTL, 0);
- 
- 	/*
-@@ -1174,6 +1178,9 @@ static void a6xx_recover(struct msm_gpu *gpu)
- 	if (hang_debug)
- 		a6xx_dump(gpu);
- 
-+	/* Halt SQE first */
-+	gpu_write(gpu, REG_A6XX_CP_SQE_CNTL, 3);
-+
- 	/*
- 	 * Turn off keep alive that might have been enabled by the hang
- 	 * interrupt
--- 
-2.39.5
-
+ /* Siemens USB/MPI adapter */
+ #define SIEMENS_IDS()			\
+ 	{ USB_DEVICE(0x908, 0x0004) }
+@@ -135,6 +140,7 @@ static struct usb_serial_driver * const
+ 	&motorola_tetra_device,
+ 	&nokia_device,
+ 	&novatel_gps_device,
++	&owon_device,
+ 	&siemens_mpi_device,
+ 	&suunto_device,
+ 	&vivopay_device,
+@@ -154,6 +160,7 @@ static const struct usb_device_id id_tab
+ 	MOTOROLA_TETRA_IDS(),
+ 	NOKIA_IDS(),
+ 	NOVATEL_IDS(),
++	OWON_IDS(),
+ 	SIEMENS_IDS(),
+ 	SUUNTO_IDS(),
+ 	VIVOPAY_IDS(),
 
 
