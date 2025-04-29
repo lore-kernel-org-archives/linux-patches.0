@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BA221ABB7;
-	Tue, 29 Apr 2025 17:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC2A1C6B4;
+	Tue, 29 Apr 2025 17:37:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948246; cv=none; b=qIgthUa6Xiu1Ey40jl8vHs5BiT0yY5q1XsJehu54Zw54l2UXKoyiAYkArtjatFOkrcDGOmAWcWZHgIdEcq5F9qEI3jDyzy+8PeQZNHW3lwFl9zCMUlYctLqampGCQvSSXgYlFGgPTZkaf9DiYCYAhlej65RkdMhqZguMVHbmMXo=
+	t=1745948252; cv=none; b=rPY4gZsC+mrm6ceIMmlB4BBdt9G4BTD3mH9z3NR8ZhU6laMGAiuIaLVBtxwwGxTUzEhZTiFFNhTD+zUamSiB/oqW1LW5tGrmzEzawi3BMH16fF5TqOK6EnLeQzhvw7XaLxgDgUPhT0qZ9akjAsEqh3Z9WTU+b4NukG1/Gjq8Ass=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948246; c=relaxed/simple;
-	bh=6CDYcRv/r2df/0DrE8qkTFBUhZXaEmCbBCqUreOX7t0=;
+	s=arc-20240116; t=1745948252; c=relaxed/simple;
+	bh=a2d9FUssCeTyoeSzeHzz4uGtL+v49Nd6iBnSyERyEdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Za6DiEfIthK9ERLyk6dLRkID7IbgfNYF/UmdL1w2G/QMQyZa0hxCg2+vc0iM8FkUyipgsBpTgPWkGkAym+gq5oPJmtfl+aR96xFdvYoZTphwBQPSPDo9dHTGNSQYw7m18H68RN+oVHuECmpGEiCvnGD2NS/k1EtGRNPTjAhMLJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2aQ6TL6a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=suvHDNVlgIGEp0Yc9NLsS6qlOK0z3i1S0WBEML1/e39egiL7kyxu4enw2vmbVkkSAK8NI/RsuYYyhOxuVah9mipeSLex06NFE/As/W2XOi5SyDhofxL1z+VaR4hroDk3/Q5yMrvDYfeuKDujNtOg/wwaLDXqDc23jbWcGpqTa5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o7m8ByjD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2aQ6TL6a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BFCC4CEE3;
-	Tue, 29 Apr 2025 17:37:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o7m8ByjD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA2EC4CEE3;
+	Tue, 29 Apr 2025 17:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948246;
-	bh=6CDYcRv/r2df/0DrE8qkTFBUhZXaEmCbBCqUreOX7t0=;
+	s=korg; t=1745948251;
+	bh=a2d9FUssCeTyoeSzeHzz4uGtL+v49Nd6iBnSyERyEdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2aQ6TL6az+f/v6UkGZlWFDBP3YT+AFkxby9cHYCi8re43V17e8tgin3Vuw45B7mS5
-	 YrT3iKgzIH/G5O025n8BYGpxqwiZyaZdrtvT7qPJSm2Dyz/B/oMCx/+1oKNhDV96Gf
-	 pyFlvnJ2CQxMMv0qS69KLmoYx9Zt4DPmNYv/FNks=
+	b=o7m8ByjDzfXw99GBgLv2O0JDFPwGdozGlxxe9l/eg2F0ZZC8IVnLX74b9SabmuKcq
+	 oksV5oyZSEyfEj9htny2kzPBITE04me/qQOjGzyHZYcRGQmzIbBApAMNN40Cv3AieZ
+	 Aqt83idf5mXRPByDz431vsEXjtS9qqktu2FW2Jo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 230/280] scsi: ufs: exynos: Enable PRDT pre-fetching with UFSHCD_CAP_CRYPTO
-Date: Tue, 29 Apr 2025 18:42:51 +0200
-Message-ID: <20250429161124.531605230@linuxfoundation.org>
+Subject: [PATCH 6.12 231/280] scsi: ufs: exynos: Move phy calls to .exit() callback
+Date: Tue, 29 Apr 2025 18:42:52 +0200
+Message-ID: <20250429161124.571338939@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -54,54 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Griffin <peter.griffin@linaro.org>
 
-[ Upstream commit deac9ad496ec17e1ec06848964ecc635bdaca703 ]
+[ Upstream commit 67e4085015c33bf2fb552af1f171c58b81ef0616 ]
 
-PRDT_PREFETCH_ENABLE[31] bit should be set when desctype field of
-fmpsecurity0 register is type2 (double file encryption) or type3
-(support for file and disk encryption). Setting this bit enables PRDT
-pre-fetching on both TXPRDT and RXPRDT.
+ufshcd_pltfrm_remove() calls ufshcd_remove(hba) which in turn calls
+ufshcd_hba_exit().
+
+By moving the phy_power_off() and phy_exit() calls to the newly created
+.exit callback they get called by ufshcd_variant_hba_exit() before
+ufshcd_hba_exit() turns off the regulators. This is also similar flow to
+the ufs-qcom driver.
 
 Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-Link: https://lore.kernel.org/r/20250319-exynos-ufs-stability-fixes-v2-5-96722cc2ba1b@linaro.org
+Link: https://lore.kernel.org/r/20250319-exynos-ufs-stability-fixes-v2-6-96722cc2ba1b@linaro.org
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-exynos.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/ufs/host/ufs-exynos.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
-index 75bb0ff07b07e..626187100316b 100644
+index 626187100316b..55ea863b47f3d 100644
 --- a/drivers/ufs/host/ufs-exynos.c
 +++ b/drivers/ufs/host/ufs-exynos.c
-@@ -34,7 +34,7 @@
-  * Exynos's Vendor specific registers for UFSHCI
-  */
- #define HCI_TXPRDT_ENTRY_SIZE	0x00
--#define PRDT_PREFECT_EN		BIT(31)
-+#define PRDT_PREFETCH_EN	BIT(31)
- #define HCI_RXPRDT_ENTRY_SIZE	0x04
- #define HCI_1US_TO_CNT_VAL	0x0C
- #define CNT_VAL_1US_MASK	0x3FF
-@@ -1066,12 +1066,17 @@ static int exynos_ufs_post_link(struct ufs_hba *hba)
+@@ -1490,6 +1490,14 @@ static int exynos_ufs_init(struct ufs_hba *hba)
+ 	return ret;
+ }
+ 
++static void exynos_ufs_exit(struct ufs_hba *hba)
++{
++	struct exynos_ufs *ufs = ufshcd_get_variant(hba);
++
++	phy_power_off(ufs->phy);
++	phy_exit(ufs->phy);
++}
++
+ static int exynos_ufs_host_reset(struct ufs_hba *hba)
+ {
  	struct exynos_ufs *ufs = ufshcd_get_variant(hba);
- 	struct phy *generic_phy = ufs->phy;
- 	struct exynos_ufs_uic_attr *attr = ufs->drv_data->uic_attr;
-+	u32 val = ilog2(DATA_UNIT_SIZE);
+@@ -1958,6 +1966,7 @@ static int gs101_ufs_pre_pwr_change(struct exynos_ufs *ufs,
+ static const struct ufs_hba_variant_ops ufs_hba_exynos_ops = {
+ 	.name				= "exynos_ufs",
+ 	.init				= exynos_ufs_init,
++	.exit				= exynos_ufs_exit,
+ 	.hce_enable_notify		= exynos_ufs_hce_enable_notify,
+ 	.link_startup_notify		= exynos_ufs_link_startup_notify,
+ 	.pwr_change_notify		= exynos_ufs_pwr_change_notify,
+@@ -1996,13 +2005,7 @@ static int exynos_ufs_probe(struct platform_device *pdev)
  
- 	exynos_ufs_establish_connt(ufs);
- 	exynos_ufs_fit_aggr_timeout(ufs);
+ static void exynos_ufs_remove(struct platform_device *pdev)
+ {
+-	struct ufs_hba *hba =  platform_get_drvdata(pdev);
+-	struct exynos_ufs *ufs = ufshcd_get_variant(hba);
+-
+ 	ufshcd_pltfrm_remove(pdev);
+-
+-	phy_power_off(ufs->phy);
+-	phy_exit(ufs->phy);
+ }
  
- 	hci_writel(ufs, 0xa, HCI_DATA_REORDER);
--	hci_writel(ufs, ilog2(DATA_UNIT_SIZE), HCI_TXPRDT_ENTRY_SIZE);
-+
-+	if (hba->caps & UFSHCD_CAP_CRYPTO)
-+		val |= PRDT_PREFETCH_EN;
-+	hci_writel(ufs, val, HCI_TXPRDT_ENTRY_SIZE);
-+
- 	hci_writel(ufs, ilog2(DATA_UNIT_SIZE), HCI_RXPRDT_ENTRY_SIZE);
- 	hci_writel(ufs, (1 << hba->nutrs) - 1, HCI_UTRL_NEXUS_TYPE);
- 	hci_writel(ufs, (1 << hba->nutmrs) - 1, HCI_UTMRL_NEXUS_TYPE);
+ static struct exynos_ufs_uic_attr exynos7_uic_attr = {
 -- 
 2.39.5
 
