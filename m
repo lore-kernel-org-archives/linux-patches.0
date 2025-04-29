@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDEE24111D;
-	Tue, 29 Apr 2025 17:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6EF2451C8;
+	Tue, 29 Apr 2025 17:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947480; cv=none; b=jaLeQnD10wA1xSHeyRtnNsPLM3cjXEfHCJcjJGpoXjtlOvFWBinDAFZ8i6XQa89CgKmMEBmYI72erUpL/CBAWKfhxOcW8AuBMIq0fjcCW6Qj/v80wYzToCjg0Ozk46U0JbrcFmc76q1M7eao8mXdiTMbcGDCwTRS9JQQZfj7yNM=
+	t=1745947484; cv=none; b=PJ8avZxH0Vth+j45pht67uZSJcksH0O3WBmH/2Q6R/WBiQGcta0I+yW6xJA9Tmes01YnRf5mFwL9Lh81eFz19ZTUveeTQ536sEStJnfbb07517ooLLPMXOCWTg6awBijZECBAnBc5l3iDIZn2VLFpCapGjVjAfR/s+0iZZtd5oY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947480; c=relaxed/simple;
-	bh=72uk10cH46oEN2PydDukXYRspPFDNnyk5PQhzjnYGXk=;
+	s=arc-20240116; t=1745947484; c=relaxed/simple;
+	bh=yBpX4jyDL8KWeXJDH+IsNxedGgmG3rXgPqnQ+8W8PDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=au34RXTKSVq53ayLqrSrpwMdGwXemVp2Px5NYJ+FVvRpVwUrFVGAugjbhJZJGvMPQFzSKVaNE2hUZiDPPfny+ofFv2P2bTRNyfuRlawsZYdLZla29R7W3iKu6gknOb3Pp0qDHGiIgnyRVEHue/Wrr9OGAAC2GSJBsxKl2Il1i7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3AVq0/f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jENdx3s+xJxK/oRfnJjmwDpY2PAtvv3Xxij9zofGFa4fVXUiARSoAMrfMbKYoiqWonA/mWKZxsrQlj15hYOHUG+hraWma5RSdjaUiK59Vv9t4g1hrfrTo5hxZNUq2ff6ZN/5yd6Sc+rIdlHRLpVUy+RN60/MlJ8/LLQ1ovSx4J4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vu5YKqlq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3AVq0/f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BEE2C4CEE3;
-	Tue, 29 Apr 2025 17:24:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vu5YKqlq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F1B9C4CEF0;
+	Tue, 29 Apr 2025 17:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947480;
-	bh=72uk10cH46oEN2PydDukXYRspPFDNnyk5PQhzjnYGXk=;
+	s=korg; t=1745947483;
+	bh=yBpX4jyDL8KWeXJDH+IsNxedGgmG3rXgPqnQ+8W8PDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I3AVq0/fHmJW+lc8PzW83eotpqdYgC4BbD9ho1RxuQbCbBwW4WguxWjLaetlqe/qp
-	 N/AzH4mXqpfy3uxNt62tG2+C8+4yvLaGGYzGII5Z5tATx82tj9m5PRYHgDgNMxz4t4
-	 RGdAADDiwL4j/8Arwl6ieOcQ7jrnmsVF2L6cGCRU=
+	b=Vu5YKqlqB3tBHJQzgoQZUYGTWNMb9jlrRPnA0p9K3tjI9e/CL2OTCzvKAi0OtKANZ
+	 goy2HeKNejvNnxOX/u9k7cYq07EpZGWxJ8vLAXBERVS0ROHjoClA847snvd/6KRmv2
+	 ygSrAPcvCJ88jB5GEivrXQu5dgp41Sti6uLc+nTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 258/286] dmaengine: dmatest: Fix dmatest waiting less when interrupted
-Date: Tue, 29 Apr 2025 18:42:42 +0200
-Message-ID: <20250429161118.531998939@linuxfoundation.org>
+	Thorsten Leemhuis <linux@leemhuis.info>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	kdevops <kdevops@lists.linux.dev>
+Subject: [PATCH 6.12 001/280] module: sign with sha512 instead of sha1 by default
+Date: Tue, 29 Apr 2025 18:39:02 +0200
+Message-ID: <20250429161115.071231258@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
-References: <20250429161107.848008295@linuxfoundation.org>
+In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
+References: <20250429161115.008747050@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,55 +48,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Thorsten Leemhuis <linux@leemhuis.info>
 
-[ Upstream commit e87ca16e99118ab4e130a41bdf12abbf6a87656c ]
+commit f3b93547b91ad849b58eb5ab2dd070950ad7beb3 upstream.
 
-Change the "wait for operation finish" logic to take interrupts into
-account.
+Switch away from using sha1 for module signing by default and use the
+more modern sha512 instead, which is what among others Arch, Fedora,
+RHEL, and Ubuntu are currently using for their kernels.
 
-When using dmatest with idxd DMA engine, it's possible that during
-longer tests, the interrupt notifying the finish of an operation
-happens during wait_event_freezable_timeout(), which causes dmatest to
-cleanup all the resources, some of which might still be in use.
+Sha1 has not been considered secure against well-funded opponents since
+2005[1]; since 2011 the NIST and other organizations furthermore
+recommended its replacement[2]. This is why OpenSSL on RHEL9, Fedora
+Linux 41+[3], and likely some other current and future distributions
+reject the creation of sha1 signatures, which leads to a build error of
+allmodconfig configurations:
 
-This fix ensures that the wait logic correctly handles interrupts,
-preventing premature cleanup of resources.
+  80A20474797F0000:error:03000098:digital envelope routines:do_sigver_init:invalid digest:crypto/evp/m_sigver.c:342:
+  make[4]: *** [.../certs/Makefile:53: certs/signing_key.pem] Error 1
+  make[4]: *** Deleting file 'certs/signing_key.pem'
+  make[4]: *** Waiting for unfinished jobs....
+  make[3]: *** [.../scripts/Makefile.build:478: certs] Error 2
+  make[2]: *** [.../Makefile:1936: .] Error 2
+  make[1]: *** [.../Makefile:224: __sub-make] Error 2
+  make[1]: Leaving directory '...'
+  make: *** [Makefile:224: __sub-make] Error 2
 
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202502171134.8c403348-lkp@intel.com
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20250305230007.590178-1-vinicius.gomes@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This change makes allmodconfig work again and sets a default that is
+more appropriate for current and future users, too.
+
+Link: https://www.schneier.com/blog/archives/2005/02/cryptanalysis_o.html [1]
+Link: https://csrc.nist.gov/projects/hash-functions [2]
+Link: https://fedoraproject.org/wiki/Changes/OpenSSLDistrustsha1SigVer [3]
+Signed-off-by: Thorsten Leemhuis <linux@leemhuis.info>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Tested-by: kdevops <kdevops@lists.linux.dev> [0]
+Link: https://github.com/linux-kdevops/linux-modules-kpd/actions/runs/11420092929/job/31775404330 [0]
+Link: https://lore.kernel.org/r/52ee32c0c92afc4d3263cea1f8a1cdc809728aff.1729088288.git.linux@leemhuis.info
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/dmatest.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/module/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
-index a3a172173e345..915724fd7ea6f 100644
---- a/drivers/dma/dmatest.c
-+++ b/drivers/dma/dmatest.c
-@@ -825,9 +825,9 @@ static int dmatest_func(void *data)
- 		} else {
- 			dma_async_issue_pending(chan);
- 
--			wait_event_freezable_timeout(thread->done_wait,
--					done->done,
--					msecs_to_jiffies(params->timeout));
-+			wait_event_timeout(thread->done_wait,
-+					   done->done,
-+					   msecs_to_jiffies(params->timeout));
- 
- 			status = dma_async_is_tx_complete(chan, cookie, NULL,
- 							  NULL);
--- 
-2.39.5
-
+--- a/kernel/module/Kconfig
++++ b/kernel/module/Kconfig
+@@ -231,6 +231,7 @@ comment "Do not forget to sign required
+ choice
+ 	prompt "Hash algorithm to sign modules"
+ 	depends on MODULE_SIG || IMA_APPRAISE_MODSIG
++	default MODULE_SIG_SHA512
+ 	help
+ 	  This determines which sort of hashing algorithm will be used during
+ 	  signature generation.  This algorithm _must_ be built into the kernel
 
 
