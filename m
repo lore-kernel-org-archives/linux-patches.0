@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659621C6B4;
-	Tue, 29 Apr 2025 17:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7684F1C6B4;
+	Tue, 29 Apr 2025 17:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948197; cv=none; b=WbcxPtYj+g9TyvsFXKpFMQxcm2WvuUeEBrKPYmaX444GZs0o8ARsPzJUC4R6WRxb07s6pZVY1lCZm0mRUJVmwDPlCkxb0/SjMTnPvgAAs+gD2LfgZw2dYo4CNN5nYAMzch/8vOCRlN3gFk7QqImnxzXXOPfHd9m+w2OzVd5Ql0s=
+	t=1745948200; cv=none; b=EwWWGRXJu4Ow02csj4fI7MhCshuQ4Y2EeZzi89u4CYtth4F2DQEwuojGB0+8VGFaABcZjgMhN48DnDMQwS5TzKjnfd6mwgR4eI16VozhR2PL48Z3wTNO9xQjSm8IYun/SfGb51avfOtwKyWfbvl7Ony8fxdVzc67c4scwTmQhVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948197; c=relaxed/simple;
-	bh=voxzmSVG6Y18qdMgMnuI0v/d7R0uz2vku6X+ZVcyXjk=;
+	s=arc-20240116; t=1745948200; c=relaxed/simple;
+	bh=9sxjKxPtk4IZ58at2RlYjnkcnYNpVGPO0eqQHp/jsKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YE4XeWcrsrk+dq/tbnqyVroRvFouPEClQ8qVL1lFO8I1BwRnAKYgXFZik5W+yk2W1DMIYrPoPJtAmeC1aDgBLQK8xRGJSluoOGKiwG7RHzLdi+4koM2puVDLCu4ahAOoS4Z8nbzD2dK3MqkGp2Fq6EaDkm80xlFaCjAZTvDcBU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2MVTP1J6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AHOqo/SnMtYSpXjXGgUJw/nQlf6k1Ux4Z04HJ0z8ycGH7fhfJSwt9fpBHB63ikBsad4eihiwr1n/sbS/IF/tpljgBB6x2xo7LljeP/6HlJ04G7BVYKrdFzsEFGCQrPWxadpV/du0vOayRNs8H0HkAonj9s/9Sd/zRMp2Xj8jZiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kS+bgddJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2MVTP1J6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED93CC4CEE3;
-	Tue, 29 Apr 2025 17:36:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kS+bgddJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090C3C4CEE3;
+	Tue, 29 Apr 2025 17:36:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948197;
-	bh=voxzmSVG6Y18qdMgMnuI0v/d7R0uz2vku6X+ZVcyXjk=;
+	s=korg; t=1745948200;
+	bh=9sxjKxPtk4IZ58at2RlYjnkcnYNpVGPO0eqQHp/jsKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2MVTP1J6KDONd7Mu1yGMafh64GDfpHEuNPJoE7X1DDAZA/55We3OwmIjTPtQlB3OV
-	 WERQ1FkRo+F/+Xb5o/Un7dbZVx68DfObLWBhoq2QbS/L6kSyOvQ34jpkB1s3svFHaX
-	 XamOXkf4zUSfTXbQph6lOZckleyGCb0QcNLOAHgI=
+	b=kS+bgddJE9EjxQzF/ChILvcxQmNzwhqrc8yYwZC9m1JKId8YA6IHMwEx28Fo9wOzs
+	 noWqeP7Ntf481l99aQcz+VMuyiUz31E4Iu1nPZbGkEhaq+AuJOIQwP5VthyePGV+tq
+	 3bJcRHbQEbmP5OYYX9JzYUf64kiB2ID3s84hRJ7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Lai <yi1.lai@intel.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 217/280] selftests/mincore: Allow read-ahead pages to reach the end of the file
-Date: Tue, 29 Apr 2025 18:42:38 +0200
-Message-ID: <20250429161124.002261755@linuxfoundation.org>
+Subject: [PATCH 6.12 218/280] x86/bugs: Use SBPB in write_ibpb() if applicable
+Date: Tue, 29 Apr 2025 18:42:39 +0200
+Message-ID: <20250429161124.042326121@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -52,59 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 197c1eaa7ba633a482ed7588eea6fd4aa57e08d4 ]
+[ Upstream commit fc9fd3f98423367c79e0bd85a9515df26dc1b3cc ]
 
-When running the mincore_selftest on a system with an XFS file system, it
-failed the "check_file_mmap" test case due to the read-ahead pages reaching
-the end of the file. The failure log is as below:
+write_ibpb() does IBPB, which (among other things) flushes branch type
+predictions on AMD.  If the CPU has SRSO_NO, or if the SRSO mitigation
+has been disabled, branch type flushing isn't needed, in which case the
+lighter-weight SBPB can be used.
 
-   RUN           global.check_file_mmap ...
-  mincore_selftest.c:264:check_file_mmap:Expected i (1024) < vec_size (1024)
-  mincore_selftest.c:265:check_file_mmap:Read-ahead pages reached the end of the file
-  check_file_mmap: Test failed
-           FAIL  global.check_file_mmap
+The 'x86_pred_cmd' variable already keeps track of whether IBPB or SBPB
+should be used.  Use that instead of hardcoding IBPB.
 
-This is because the read-ahead window size of the XFS file system on this
-machine is 4 MB, which is larger than the size from the #PF address to the
-end of the file. As a result, all the pages for this file are populated.
-
-  blockdev --getra /dev/nvme0n1p5
-    8192
-  blockdev --getbsz /dev/nvme0n1p5
-    512
-
-This issue can be fixed by extending the current FILE_SIZE 4MB to a larger
-number, but it will still fail if the read-ahead window size of the file
-system is larger enough. Additionally, in the real world, read-ahead pages
-reaching the end of the file can happen and is an expected behavior.
-Therefore, allowing read-ahead pages to reach the end of the file is a
-better choice for the "check_file_mmap" test case.
-
-Link: https://lore.kernel.org/r/20250311080940.21413-1-qiuxu.zhuo@intel.com
-Reported-by: Yi Lai <yi1.lai@intel.com>
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/17c5dcd14b29199b75199d67ff7758de9d9a4928.1744148254.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mincore/mincore_selftest.c | 3 ---
- 1 file changed, 3 deletions(-)
+ arch/x86/entry/entry.S | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/mincore/mincore_selftest.c b/tools/testing/selftests/mincore/mincore_selftest.c
-index e949a43a61450..efabfcbe0b498 100644
---- a/tools/testing/selftests/mincore/mincore_selftest.c
-+++ b/tools/testing/selftests/mincore/mincore_selftest.c
-@@ -261,9 +261,6 @@ TEST(check_file_mmap)
- 		TH_LOG("No read-ahead pages found in memory");
- 	}
+diff --git a/arch/x86/entry/entry.S b/arch/x86/entry/entry.S
+index b7ea3e8e9eccd..58e3124ee2b42 100644
+--- a/arch/x86/entry/entry.S
++++ b/arch/x86/entry/entry.S
+@@ -18,7 +18,7 @@
  
--	EXPECT_LT(i, vec_size) {
--		TH_LOG("Read-ahead pages reached the end of the file");
--	}
- 	/*
- 	 * End of the readahead window. The rest of the pages shouldn't
- 	 * be in memory.
+ SYM_FUNC_START(entry_ibpb)
+ 	movl	$MSR_IA32_PRED_CMD, %ecx
+-	movl	$PRED_CMD_IBPB, %eax
++	movl	_ASM_RIP(x86_pred_cmd), %eax
+ 	xorl	%edx, %edx
+ 	wrmsr
+ 
 -- 
 2.39.5
 
