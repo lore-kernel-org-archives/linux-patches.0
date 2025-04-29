@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEF82528EC;
-	Tue, 29 Apr 2025 17:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE67242D6A;
+	Tue, 29 Apr 2025 17:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947881; cv=none; b=F3f2ypvRCVuE/EPSaiGjG8fLlguUnCLv56tK6zxApQk/jERhnCpSw/h5AV+ESdtgs/e8261uBlQomzrBOyolfIdp+CSo2jvtSBtlX5TnWmVcKWZ/gu2G4QCDes41aijL0tZHdXppv4iVJzESfXYxDAtBuL2Ru+63pvN+RqxJVyc=
+	t=1745947883; cv=none; b=aBSEu1Od+yRuzgaiBEO+V4PfQTfhTz1z0SSuCus3faFA6kl3xQtQeQDundZvcH+DHCBMQKK22+D0HpYobcGTgJjgPWqEUfSxqooiJS6sdweIBLs95o6y2YmmyIcx8UpjS8YthCTQjtCOrsVrtNnroHhrGQaf75kU+BfSK3sqK40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947881; c=relaxed/simple;
-	bh=4iVPUqiQSRt2ne+u8W5jW6QOsCqohMfuZxeM4K1qiFw=;
+	s=arc-20240116; t=1745947883; c=relaxed/simple;
+	bh=cirfQG/aHiYH61f5Vs2vXxn0Qe4F7WVHA9Guwbu303U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h5wVdK14JvctC6t2LSngneZCblimEaW56VgRPEs49xliuVM6H7F3Ix5UTBjqa4U1olT9r6uO3yShNxlRDZAJdBmmRc3P2Cegyu34r27Sv9WuTkHo+eX8wCvASKQ5YQi2v9OBEbf4YsSZ4jllqKH6o4UYLikqKQqFsRP8asR/efw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7ZnjHSa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jZRFDfkYw9YvwHTvuXz1tqErHp31t+EbTlXAdche2aZHrWvPj3zNtPgKqnGB8fiL1W30LyRRIEc/K+RACbl4dlKpSW5H19Swd2XmkS1dE4OJ6mMJ9XO31/pAvP2jtmCh2VeE0EaDzXUI1rvI04PoPv43hehYAXyUw+d/2juotDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c62ucrOl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7ZnjHSa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F9FC4CEE3;
-	Tue, 29 Apr 2025 17:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c62ucrOl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3066EC4CEE3;
+	Tue, 29 Apr 2025 17:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947880;
-	bh=4iVPUqiQSRt2ne+u8W5jW6QOsCqohMfuZxeM4K1qiFw=;
+	s=korg; t=1745947883;
+	bh=cirfQG/aHiYH61f5Vs2vXxn0Qe4F7WVHA9Guwbu303U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h7ZnjHSam5M1/hIsAp8xfvdJ6aCbfL2EKLWfCBNdKwC6vtplG77IlPxNhlnM4DWPx
-	 Vd5G8zrQe6cCAoUB0Sx9MneXj7qSDzZkqSpnhOyofYFST0eH6tQpFc8FJdt2U0zyMJ
-	 igGVD4tfno1yPbsfsEBfcPTmDZOaMefK0ty3w5rc=
+	b=c62ucrOl981Myx8D6u2y0P2l0dURDHk7oJP6r5vJ8ByQ0LAbnRCIzuq8sTId4bDAh
+	 hOYQliXjpFee/WSWwpYpKAiwm+sf/vRXBX//+s69cr2fhQBND/E7uRM3vO67qoxCBq
+	 /DRWIMAl3WLp4UsRIW+gmcreLuWSxC7RKxCTdYR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.12 131/280] serial: msm: Configure correct working mode before starting earlycon
-Date: Tue, 29 Apr 2025 18:41:12 +0200
-Message-ID: <20250429161120.487128090@linuxfoundation.org>
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Adrian Hunter <adrian.hunter@intel.com>
+Subject: [PATCH 6.12 105/280] x86/insn: Fix CTEST instruction decoding
+Date: Tue, 29 Apr 2025 18:40:46 +0200
+Message-ID: <20250429161119.405299971@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -51,54 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-commit 7094832b5ac861b0bd7ed8866c93cb15ef619996 upstream.
+commit 85fd85bc025a525354acb2241beb3c5387c551ec upstream.
 
-The MSM UART DM controller supports different working modes, e.g. DMA or
-the "single-character mode", where all reads/writes operate on a single
-character rather than 4 chars (32-bit) at once. When using earlycon,
-__msm_console_write() always writes 4 characters at a time, but we don't
-know which mode the bootloader was using and we don't set the mode either.
+insn_decoder_test found a problem with decoding APX CTEST instructions:
 
-This causes garbled output if the bootloader was using the single-character
-mode, because only every 4th character appears in the serial console, e.g.
+	Found an x86 instruction decoder bug, please report this.
+	ffffffff810021df	62 54 94 05 85 ff    	ctestneq
+	objdump says 6 bytes, but insn_get_length() says 5
 
-  "[ 00oni pi  000xf0[ 00i s 5rm9(l)l s 1  1 SPMTA 7:C 5[ 00A ade k d[
-   00ano:ameoi .Q1B[ 00ac _idaM00080oo'"
+It happens because x86-opcode-map.txt doesn't specify arguments for the
+instruction and the decoder doesn't expect to see ModRM byte.
 
-If the bootloader was using the DMA ("DM") mode, output would likely fail
-entirely. Later, when the full serial driver probes, the port is
-re-initialized and output works as expected.
-
-Fix this also for earlycon by clearing the DMEN register and
-reset+re-enable the transmitter to apply the change. This ensures the
-transmitter is in the expected state before writing any output.
-
-Cc: stable <stable@kernel.org>
-Fixes: 0efe72963409 ("tty: serial: msm: Add earlycon support")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250408-msm-serial-earlycon-v1-1-429080127530@linaro.org
+Fixes: 690ca3a3067f ("x86/insn: Add support for APX EVEX instructions to the opcode map")
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org # v6.10+
+Link: https://lore.kernel.org/r/20250423065815.2003231-1-kirill.shutemov@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/msm_serial.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/x86/lib/x86-opcode-map.txt       |    4 ++--
+ tools/arch/x86/lib/x86-opcode-map.txt |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/msm_serial.c
-+++ b/drivers/tty/serial/msm_serial.c
-@@ -1746,6 +1746,12 @@ msm_serial_early_console_setup_dm(struct
- 	if (!device->port.membase)
- 		return -ENODEV;
- 
-+	/* Disable DM / single-character modes */
-+	msm_write(&device->port, 0, UARTDM_DMEN);
-+	msm_write(&device->port, MSM_UART_CR_CMD_RESET_RX, MSM_UART_CR);
-+	msm_write(&device->port, MSM_UART_CR_CMD_RESET_TX, MSM_UART_CR);
-+	msm_write(&device->port, MSM_UART_CR_TX_ENABLE, MSM_UART_CR);
-+
- 	device->con->write = msm_serial_early_write_dm;
- 	return 0;
- }
+--- a/arch/x86/lib/x86-opcode-map.txt
++++ b/arch/x86/lib/x86-opcode-map.txt
+@@ -996,8 +996,8 @@ AVXcode: 4
+ 83: Grp1 Ev,Ib (1A),(es)
+ # CTESTSCC instructions are: CTESTB, CTESTBE, CTESTF, CTESTL, CTESTLE, CTESTNB, CTESTNBE, CTESTNL,
+ #			     CTESTNLE, CTESTNO, CTESTNS, CTESTNZ, CTESTO, CTESTS, CTESTT, CTESTZ
+-84: CTESTSCC (ev)
+-85: CTESTSCC (es) | CTESTSCC (66),(es)
++84: CTESTSCC Eb,Gb (ev)
++85: CTESTSCC Ev,Gv (es) | CTESTSCC Ev,Gv (66),(es)
+ 88: POPCNT Gv,Ev (es) | POPCNT Gv,Ev (66),(es)
+ 8f: POP2 Bq,Rq (000),(11B),(ev)
+ a5: SHLD Ev,Gv,CL (es) | SHLD Ev,Gv,CL (66),(es)
+--- a/tools/arch/x86/lib/x86-opcode-map.txt
++++ b/tools/arch/x86/lib/x86-opcode-map.txt
+@@ -996,8 +996,8 @@ AVXcode: 4
+ 83: Grp1 Ev,Ib (1A),(es)
+ # CTESTSCC instructions are: CTESTB, CTESTBE, CTESTF, CTESTL, CTESTLE, CTESTNB, CTESTNBE, CTESTNL,
+ #			     CTESTNLE, CTESTNO, CTESTNS, CTESTNZ, CTESTO, CTESTS, CTESTT, CTESTZ
+-84: CTESTSCC (ev)
+-85: CTESTSCC (es) | CTESTSCC (66),(es)
++84: CTESTSCC Eb,Gb (ev)
++85: CTESTSCC Ev,Gv (es) | CTESTSCC Ev,Gv (66),(es)
+ 88: POPCNT Gv,Ev (es) | POPCNT Gv,Ev (66),(es)
+ 8f: POP2 Bq,Rq (000),(11B),(ev)
+ a5: SHLD Ev,Gv,CL (es) | SHLD Ev,Gv,CL (66),(es)
 
 
