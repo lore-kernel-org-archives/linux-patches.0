@@ -1,49 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6158A24466C;
-	Tue, 29 Apr 2025 16:48:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481F4126BF7;
+	Tue, 29 Apr 2025 16:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945300; cv=none; b=Zo34OVU6QkQ08t9M3JWAQ8o1GSYhdVPfRyx7aXCkbuN4gxgAj1sF9U7Cdr7P7QREAUJwJcoFqljZ71LgZCaa58VaUVaMvpGaZu8WUvKy77BLr5+RHtssRC80Fz1ctWzcOWX7XDVVSmKlRjdskwl2K0sGcMIa+5koEiqQgNi1jp8=
+	t=1745945303; cv=none; b=Q0aiu8TaVHYpDx2FhyxFpW7aAAVTx1gPuGVHZk85IsYFwqJK/f+crjjbJGN5+w6DuS4+JHXi9JOTWHB7xMxuthIxInWTs4JvLGQWeqXJbtrwbR+eU7AdO6d0JLZ9zTby1Xj7pNjuC68VSl5q3EDyq+h03U0oOqxQ0x41k9iZlq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945300; c=relaxed/simple;
-	bh=xLLaqyeoFYA9ZcSqame/gCXygz/tIvQv4X0ShTJSIaU=;
+	s=arc-20240116; t=1745945303; c=relaxed/simple;
+	bh=ECJXLX05E4dAdAy4FKKVZd7L4noSD72+/xkXAMEuIik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ozjVqZKBO3WxbK2mC5Nzh79gdd7XHslkeM9hOHqoh0KEOhm4WM57VqO1/AQDF9jNd6ZCyEvC6pAj4ArZ4xrMehjSOa71rK8TDoW81iHa415cTpIfuxu66L1ASQWj3GILQCwt7bllTYPwLDF4pVI7QXWk/d/+SFtDehwqGiTdqr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r0rG86e5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=R9t29idGY9vX0954a0LVa8g4gyzGTBMULAuOaxn4H3yyHhMULIOexaiJ2CTJ0kmEhmbwlvr8+dE3haxlhqZAdxCy+HKLlSyJ5LUrpOfTSODpb73B9kGqLt2jeT6zDUe77E/kqCyyBORFVtMYY/ALQ6RHvyOlvyOvM+REJ+bSilc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZkWo80F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r0rG86e5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF264C4CEE9;
-	Tue, 29 Apr 2025 16:48:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZkWo80F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD66CC4CEE3;
+	Tue, 29 Apr 2025 16:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945300;
-	bh=xLLaqyeoFYA9ZcSqame/gCXygz/tIvQv4X0ShTJSIaU=;
+	s=korg; t=1745945303;
+	bh=ECJXLX05E4dAdAy4FKKVZd7L4noSD72+/xkXAMEuIik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r0rG86e53Xki/2JrvNEpe6En57Y7Vd8kNE/9Np+EGYj2y9OsToXSSlKAKtC91Ts/h
-	 C56HUfUNLYmJRhVkxreB9HJlXV09s9Q0L1N6DiWJAhq75mFlWR7h4uq0ZDA3LVBwRD
-	 WzEa3CD04vwTvyBEx4sQeDbayJGxmH4zQZxT0BMA=
+	b=XZkWo80Fmt79r+kF9bYNfbBdvbDsJhb55Nxqboe1oHrWxhxl5NTp4+zj2OMBpo1RQ
+	 0anV6/KHvlUdjYnVZZoehEUND1t2qS/lFsGH2Z9wrGKRuqzRjWUHgCo7CWekCnxvdW
+	 eK9HwN0Xqu2QDAyjSqlFrAiPcZ8GGDk+5bvj6oDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Jade Alglave <j.alglave@ucl.ac.uk>,
-	Luc Maranget <luc.maranget@inria.fr>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 067/179] mm: add missing release barrier on PGDAT_RECLAIM_LOCKED unlock
-Date: Tue, 29 Apr 2025 18:40:08 +0200
-Message-ID: <20250429161052.132059414@linuxfoundation.org>
+	Xin Long <lucien.xin@gmail.com>,
+	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo=20Navarro?= <rcn@igalia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.4 068/179] sctp: detect and prevent references to a freed transport in sendmsg
+Date: Tue, 29 Apr 2025 18:40:09 +0200
+Message-ID: <20250429161052.170471102@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -56,68 +45,163 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+From: Ricardo Cañuelo Navarro <rcn@igalia.com>
 
-commit c0ebbb3841e07c4493e6fe351698806b09a87a37 upstream.
+commit f1a69a940de58b16e8249dff26f74c8cc59b32be upstream.
 
-The PGDAT_RECLAIM_LOCKED bit is used to provide mutual exclusion of node
-reclaim for struct pglist_data using a single bit.
+sctp_sendmsg() re-uses associations and transports when possible by
+doing a lookup based on the socket endpoint and the message destination
+address, and then sctp_sendmsg_to_asoc() sets the selected transport in
+all the message chunks to be sent.
 
-It is "locked" with a test_and_set_bit (similarly to a try lock) which
-provides full ordering with respect to loads and stores done within
-__node_reclaim().
+There's a possible race condition if another thread triggers the removal
+of that selected transport, for instance, by explicitly unbinding an
+address with setsockopt(SCTP_SOCKOPT_BINDX_REM), after the chunks have
+been set up and before the message is sent. This can happen if the send
+buffer is full, during the period when the sender thread temporarily
+releases the socket lock in sctp_wait_for_sndbuf().
 
-It is "unlocked" with clear_bit(), which does not provide any ordering
-with respect to loads and stores done before clearing the bit.
+This causes the access to the transport data in
+sctp_outq_select_transport(), when the association outqueue is flushed,
+to result in a use-after-free read.
 
-The lack of clear_bit() memory ordering with respect to stores within
-__node_reclaim() can cause a subsequent CPU to fail to observe stores from
-a prior node reclaim.  This is not an issue in practice on TSO (e.g.
-x86), but it is an issue on weakly-ordered architectures (e.g.  arm64).
+This change avoids this scenario by having sctp_transport_free() signal
+the freeing of the transport, tagging it as "dead". In order to do this,
+the patch restores the "dead" bit in struct sctp_transport, which was
+removed in
+commit 47faa1e4c50e ("sctp: remove the dead field of sctp_transport").
 
-Fix this by using clear_bit_unlock rather than clear_bit to clear
-PGDAT_RECLAIM_LOCKED with a release memory ordering semantic.
+Then, in the scenario where the sender thread has released the socket
+lock in sctp_wait_for_sndbuf(), the bit is checked again after
+re-acquiring the socket lock to detect the deletion. This is done while
+holding a reference to the transport to prevent it from being freed in
+the process.
 
-This provides stronger memory ordering (release rather than relaxed).
+If the transport was deleted while the socket lock was relinquished,
+sctp_sendmsg_to_asoc() will return -EAGAIN to let userspace retry the
+send.
 
-Link: https://lkml.kernel.org/r/20250312141014.129725-1-mathieu.desnoyers@efficios.com
-Fixes: d773ed6b856a ("mm: test and set zone reclaim lock before starting reclaim")
-Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Cc: Andrea Parri <parri.andrea@gmail.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Boqun Feng <boqun.feng@gmail.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Jade Alglave <j.alglave@ucl.ac.uk>
-Cc: Luc Maranget <luc.maranget@inria.fr>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The bug was found by a private syzbot instance (see the error report [1]
+and the C reproducer that triggers it [2]).
+
+Link: https://people.igalia.com/rcn/kernel_logs/20250402__KASAN_slab-use-after-free_Read_in_sctp_outq_select_transport.txt [1]
+Link: https://people.igalia.com/rcn/kernel_logs/20250402__KASAN_slab-use-after-free_Read_in_sctp_outq_select_transport__repro.c [2]
+Cc: stable@vger.kernel.org
+Fixes: df132eff4638 ("sctp: clear the transport of some out_chunk_list chunks in sctp_assoc_rm_peer")
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Ricardo Cañuelo Navarro <rcn@igalia.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20250404-kasan_slab-use-after-free_read_in_sctp_outq_select_transport__20250404-v1-1-5ce4a0b78ef2@igalia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmscan.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/sctp/structs.h |    3 ++-
+ net/sctp/socket.c          |   22 ++++++++++++++--------
+ net/sctp/transport.c       |    2 ++
+ 3 files changed, 18 insertions(+), 9 deletions(-)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -4331,7 +4331,7 @@ int node_reclaim(struct pglist_data *pgd
- 		return NODE_RECLAIM_NOSCAN;
+--- a/include/net/sctp/structs.h
++++ b/include/net/sctp/structs.h
+@@ -779,6 +779,7 @@ struct sctp_transport {
  
- 	ret = __node_reclaim(pgdat, gfp_mask, order);
--	clear_bit(PGDAT_RECLAIM_LOCKED, &pgdat->flags);
-+	clear_bit_unlock(PGDAT_RECLAIM_LOCKED, &pgdat->flags);
+ 	/* Reference counting. */
+ 	refcount_t refcnt;
++	__u32	dead:1,
+ 		/* RTO-Pending : A flag used to track if one of the DATA
+ 		 *		chunks sent to this address is currently being
+ 		 *		used to compute a RTT. If this flag is 0,
+@@ -788,7 +789,7 @@ struct sctp_transport {
+ 		 *		calculation completes (i.e. the DATA chunk
+ 		 *		is SACK'd) clear this flag.
+ 		 */
+-	__u32	rto_pending:1,
++		rto_pending:1,
  
- 	if (!ret)
- 		count_vm_event(PGSCAN_ZONE_RECLAIM_FAILED);
+ 		/*
+ 		 * hb_sent : a flag that signals that we have a pending
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -70,8 +70,9 @@
+ /* Forward declarations for internal helper functions. */
+ static bool sctp_writeable(const struct sock *sk);
+ static void sctp_wfree(struct sk_buff *skb);
+-static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
+-				size_t msg_len);
++static int sctp_wait_for_sndbuf(struct sctp_association *asoc,
++				struct sctp_transport *transport,
++				long *timeo_p, size_t msg_len);
+ static int sctp_wait_for_packet(struct sock *sk, int *err, long *timeo_p);
+ static int sctp_wait_for_connect(struct sctp_association *, long *timeo_p);
+ static int sctp_wait_for_accept(struct sock *sk, long timeo);
+@@ -1847,7 +1848,7 @@ static int sctp_sendmsg_to_asoc(struct s
+ 
+ 	if (sctp_wspace(asoc) <= 0 || !sk_wmem_schedule(sk, msg_len)) {
+ 		timeo = sock_sndtimeo(sk, msg->msg_flags & MSG_DONTWAIT);
+-		err = sctp_wait_for_sndbuf(asoc, &timeo, msg_len);
++		err = sctp_wait_for_sndbuf(asoc, transport, &timeo, msg_len);
+ 		if (err)
+ 			goto err;
+ 		if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt)) {
+@@ -9060,8 +9061,9 @@ void sctp_sock_rfree(struct sk_buff *skb
+ 
+ 
+ /* Helper function to wait for space in the sndbuf.  */
+-static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
+-				size_t msg_len)
++static int sctp_wait_for_sndbuf(struct sctp_association *asoc,
++				struct sctp_transport *transport,
++				long *timeo_p, size_t msg_len)
+ {
+ 	struct sock *sk = asoc->base.sk;
+ 	long current_timeo = *timeo_p;
+@@ -9071,7 +9073,9 @@ static int sctp_wait_for_sndbuf(struct s
+ 	pr_debug("%s: asoc:%p, timeo:%ld, msg_len:%zu\n", __func__, asoc,
+ 		 *timeo_p, msg_len);
+ 
+-	/* Increment the association's refcnt.  */
++	/* Increment the transport and association's refcnt. */
++	if (transport)
++		sctp_transport_hold(transport);
+ 	sctp_association_hold(asoc);
+ 
+ 	/* Wait on the association specific sndbuf space. */
+@@ -9080,7 +9084,7 @@ static int sctp_wait_for_sndbuf(struct s
+ 					  TASK_INTERRUPTIBLE);
+ 		if (asoc->base.dead)
+ 			goto do_dead;
+-		if (!*timeo_p)
++		if ((!*timeo_p) || (transport && transport->dead))
+ 			goto do_nonblock;
+ 		if (sk->sk_err || asoc->state >= SCTP_STATE_SHUTDOWN_PENDING)
+ 			goto do_error;
+@@ -9107,7 +9111,9 @@ static int sctp_wait_for_sndbuf(struct s
+ out:
+ 	finish_wait(&asoc->wait, &wait);
+ 
+-	/* Release the association's refcnt.  */
++	/* Release the transport and association's refcnt. */
++	if (transport)
++		sctp_transport_put(transport);
+ 	sctp_association_put(asoc);
+ 
+ 	return err;
+--- a/net/sctp/transport.c
++++ b/net/sctp/transport.c
+@@ -116,6 +116,8 @@ fail:
+  */
+ void sctp_transport_free(struct sctp_transport *transport)
+ {
++	transport->dead = 1;
++
+ 	/* Try to delete the heartbeat timer.  */
+ 	if (del_timer(&transport->hb_timer))
+ 		sctp_transport_put(transport);
 
 
