@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBE07E110;
-	Tue, 29 Apr 2025 17:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C4B7E110;
+	Tue, 29 Apr 2025 17:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946099; cv=none; b=gOfaVjvPAUf+ttKkFUxloSVnVOiaVggSbCuL3V6j4t2nx135wz0lHzLDj8d/adWEEuR/FhfxjpP/7D6OrmwdCX98RHdl7Q8IxJH1EfaEZToFru1dm7BhAX/X/oA9X1vYlVypqzw51+cfdEYYoq86EKyS3uiLY0czmE1QSbhS/po=
+	t=1745946102; cv=none; b=UQ/DPfLvojpYIooWgKNAvE01AvHqGRqWUMkFl+hIiuLio8yOkos+20LDXGZwxHTA+3OhxIn/hwBL3/exHXoEMOL3CBJlmmrec906cQnU2W2LLTUtaPGm2HOVlWCBNpoIV3N+kXu/sHYV1QYM8cAJ+HiA1x58fBSgGu4d419xY9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946099; c=relaxed/simple;
-	bh=PCeomyGnWVXdqEQjITpM1qECmpaCOCOz3utQttZqg2A=;
+	s=arc-20240116; t=1745946102; c=relaxed/simple;
+	bh=pYdr3lBozU0H6i3zJasZMv+dNslUFrVvo1tet2WUH9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kFrAyxSmk9lPcUyE86247sAcXYYHxBkH/7HI7fuUhINXeUUDwR4ThIhbGkCrXcJmzhIYIbh1RXV40l3zRJAeUsMGc3+M90X8gfTRHWN+GiNNWrd5xXr3d1hAXsyyLbkYxm+Tcty//497Gs3I7rHgxfw/XBka1tBjY4WrtmDxn2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yhNF12gg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hx6VRtbzSSte5/ASh0c8RQzrXAVLgLcheXqMtimw++d9SIE6xH4eXnQ5B+Wc3V2LL5c3+xbbBfbpCuSCb1Z9MH5YzfNyTC8f0Y7kffa0Q4GPzjy6S+J2Y6XBosFBu8ZgRBxuEuc73rsRtab06X7C4GMvs6COe9jMx+6VPICKick=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vN5ztzm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yhNF12gg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44981C4CEE9;
-	Tue, 29 Apr 2025 17:01:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vN5ztzm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38233C4CEE3;
+	Tue, 29 Apr 2025 17:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946099;
-	bh=PCeomyGnWVXdqEQjITpM1qECmpaCOCOz3utQttZqg2A=;
+	s=korg; t=1745946102;
+	bh=pYdr3lBozU0H6i3zJasZMv+dNslUFrVvo1tet2WUH9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yhNF12gg6XSFs0L1qNXVL1nX8Ks1Zs2aaS2aUxBlwZtXfYcYfnorZuzZMzLuDvmpA
-	 O+IgIk266ZW1jeAiJUfdUNLawN4MBSdQdUzFhfAHmOpv2BqngfHC5vYPbyiCdKcfHW
-	 VpaHlRrxzmNhOvL1EoQXNVVzTK1hiyoUVWHs6GRI=
+	b=1vN5ztzm3nVGoltDMd1ZmFoRurOET5MENJo2JaRD4aZRP3BpAgbTjoRklTF6diXZG
+	 dPjJLUof9er/GmPFI1+oyIi6h+g+ZaCneWZV6Xf0Xz/TtCsVNk8+pgLpo3cmJQCzvn
+	 mu3CbQp1X+HXkV0yMGRoCx+jL8CWYiC478tAn5Ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Petr=20Van=C4=9Bk?= <arkamar@atlas.cz>,
-	Juergen Gross <jgross@suse.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 6.14 124/311] x86/mm: Fix _pgd_alloc() for Xen PV mode
-Date: Tue, 29 Apr 2025 18:39:21 +0200
-Message-ID: <20250429161126.116304451@linuxfoundation.org>
+	Fiona Klute <fiona.klute@gmx.de>,
+	kernel-list@raspberrypi.com,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.14 115/311] net: phy: microchip: force IRQ polling mode for lan88xx
+Date: Tue, 29 Apr 2025 18:39:12 +0200
+Message-ID: <20250429161125.752058597@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -45,143 +46,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Fiona Klute <fiona.klute@gmx.de>
 
-commit 4ce385f56434f3810ef103e1baea357ddcc6667e upstream.
+commit 30a41ed32d3088cd0d682a13d7f30b23baed7e93 upstream.
 
-Recently _pgd_alloc() was switched from using __get_free_pages() to
-pagetable_alloc_noprof(), which might return a compound page in case
-the allocation order is larger than 0.
+With lan88xx based devices the lan78xx driver can get stuck in an
+interrupt loop while bringing the device up, flooding the kernel log
+with messages like the following:
 
-On x86 this will be the case if CONFIG_MITIGATION_PAGE_TABLE_ISOLATION
-is set, even if PTI has been disabled at runtime.
+lan78xx 2-3:1.0 enp1s0u3: kevent 4 may have been dropped
 
-When running as a Xen PV guest (this will always disable PTI), using
-a compound page for a PGD will result in VM_BUG_ON_PGFLAGS being
-triggered when the Xen code tries to pin the PGD.
+Removing interrupt support from the lan88xx PHY driver forces the
+driver to use polling instead, which avoids the problem.
 
-Fix the Xen issue together with the not needed 8k allocation for a
-PGD with PTI disabled by replacing PGD_ALLOCATION_ORDER with an
-inline helper returning the needed order for PGD allocations.
+The issue has been observed with Raspberry Pi devices at least since
+4.14 (see [1], bug report for their downstream kernel), as well as
+with Nvidia devices [2] in 2020, where disabling interrupts was the
+vendor-suggested workaround (together with the claim that phylib
+changes in 4.9 made the interrupt handling in lan78xx incompatible).
 
-Fixes: a9b3c355c2e6 ("asm-generic: pgalloc: provide generic __pgd_{alloc,free}")
-Reported-by: Petr Vaněk <arkamar@atlas.cz>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Tested-by: Petr Vaněk <arkamar@atlas.cz>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20250422131717.25724-1-jgross%40suse.com
+Iperf reports well over 900Mbits/sec per direction with client in
+--dualtest mode, so there does not seem to be a significant impact on
+throughput (lan88xx device connected via switch to the peer).
+
+[1] https://github.com/raspberrypi/linux/issues/2447
+[2] https://forums.developer.nvidia.com/t/jetson-xavier-and-lan7800-problem/142134/11
+
+Link: https://lore.kernel.org/0901d90d-3f20-4a10-b680-9c978e04ddda@lunn.ch
+Fixes: 792aec47d59d ("add microchip LAN88xx phy driver")
+Signed-off-by: Fiona Klute <fiona.klute@gmx.de>
+Cc: kernel-list@raspberrypi.com
+Cc: stable@vger.kernel.org
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250416102413.30654-1-fiona.klute@gmx.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/pgalloc.h     |   19 +++++++++++--------
- arch/x86/kernel/machine_kexec_32.c |    4 ++--
- arch/x86/mm/pgtable.c              |    4 ++--
- arch/x86/platform/efi/efi_64.c     |    4 ++--
- 4 files changed, 17 insertions(+), 14 deletions(-)
+ drivers/net/phy/microchip.c |   46 ++------------------------------------------
+ 1 file changed, 3 insertions(+), 43 deletions(-)
 
---- a/arch/x86/include/asm/pgalloc.h
-+++ b/arch/x86/include/asm/pgalloc.h
-@@ -6,6 +6,8 @@
- #include <linux/mm.h>		/* for struct page */
- #include <linux/pagemap.h>
- 
-+#include <asm/cpufeature.h>
-+
- #define __HAVE_ARCH_PTE_ALLOC_ONE
- #define __HAVE_ARCH_PGD_FREE
- #include <asm-generic/pgalloc.h>
-@@ -34,16 +36,17 @@ static inline void paravirt_release_p4d(
-  */
- extern gfp_t __userpte_alloc_gfp;
- 
--#ifdef CONFIG_MITIGATION_PAGE_TABLE_ISOLATION
- /*
-- * Instead of one PGD, we acquire two PGDs.  Being order-1, it is
-- * both 8k in size and 8k-aligned.  That lets us just flip bit 12
-- * in a pointer to swap between the two 4k halves.
-+ * In case of Page Table Isolation active, we acquire two PGDs instead of one.
-+ * Being order-1, it is both 8k in size and 8k-aligned.  That lets us just
-+ * flip bit 12 in a pointer to swap between the two 4k halves.
-  */
--#define PGD_ALLOCATION_ORDER 1
--#else
--#define PGD_ALLOCATION_ORDER 0
--#endif
-+static inline unsigned int pgd_allocation_order(void)
-+{
-+	if (cpu_feature_enabled(X86_FEATURE_PTI))
-+		return 1;
-+	return 0;
-+}
- 
- /*
-  * Allocate and free page tables.
---- a/arch/x86/kernel/machine_kexec_32.c
-+++ b/arch/x86/kernel/machine_kexec_32.c
-@@ -42,7 +42,7 @@ static void load_segments(void)
- 
- static void machine_kexec_free_page_tables(struct kimage *image)
- {
--	free_pages((unsigned long)image->arch.pgd, PGD_ALLOCATION_ORDER);
-+	free_pages((unsigned long)image->arch.pgd, pgd_allocation_order());
- 	image->arch.pgd = NULL;
- #ifdef CONFIG_X86_PAE
- 	free_page((unsigned long)image->arch.pmd0);
-@@ -59,7 +59,7 @@ static void machine_kexec_free_page_tabl
- static int machine_kexec_alloc_page_tables(struct kimage *image)
- {
- 	image->arch.pgd = (pgd_t *)__get_free_pages(GFP_KERNEL | __GFP_ZERO,
--						    PGD_ALLOCATION_ORDER);
-+						    pgd_allocation_order());
- #ifdef CONFIG_X86_PAE
- 	image->arch.pmd0 = (pmd_t *)get_zeroed_page(GFP_KERNEL);
- 	image->arch.pmd1 = (pmd_t *)get_zeroed_page(GFP_KERNEL);
---- a/arch/x86/mm/pgtable.c
-+++ b/arch/x86/mm/pgtable.c
-@@ -404,7 +404,7 @@ static inline pgd_t *_pgd_alloc(struct m
- 	 * We allocate one page for pgd.
- 	 */
- 	if (!SHARED_KERNEL_PMD)
--		return __pgd_alloc(mm, PGD_ALLOCATION_ORDER);
-+		return __pgd_alloc(mm, pgd_allocation_order());
- 
- 	/*
- 	 * Now PAE kernel is not running as a Xen domain. We can allocate
-@@ -424,7 +424,7 @@ static inline void _pgd_free(struct mm_s
- 
- static inline pgd_t *_pgd_alloc(struct mm_struct *mm)
- {
--	return __pgd_alloc(mm, PGD_ALLOCATION_ORDER);
-+	return __pgd_alloc(mm, pgd_allocation_order());
+--- a/drivers/net/phy/microchip.c
++++ b/drivers/net/phy/microchip.c
+@@ -37,47 +37,6 @@ static int lan88xx_write_page(struct phy
+ 	return __phy_write(phydev, LAN88XX_EXT_PAGE_ACCESS, page);
  }
  
- static inline void _pgd_free(struct mm_struct *mm, pgd_t *pgd)
---- a/arch/x86/platform/efi/efi_64.c
-+++ b/arch/x86/platform/efi/efi_64.c
-@@ -73,7 +73,7 @@ int __init efi_alloc_page_tables(void)
- 	gfp_t gfp_mask;
+-static int lan88xx_phy_config_intr(struct phy_device *phydev)
+-{
+-	int rc;
+-
+-	if (phydev->interrupts == PHY_INTERRUPT_ENABLED) {
+-		/* unmask all source and clear them before enable */
+-		rc = phy_write(phydev, LAN88XX_INT_MASK, 0x7FFF);
+-		rc = phy_read(phydev, LAN88XX_INT_STS);
+-		rc = phy_write(phydev, LAN88XX_INT_MASK,
+-			       LAN88XX_INT_MASK_MDINTPIN_EN_ |
+-			       LAN88XX_INT_MASK_LINK_CHANGE_);
+-	} else {
+-		rc = phy_write(phydev, LAN88XX_INT_MASK, 0);
+-		if (rc)
+-			return rc;
+-
+-		/* Ack interrupts after they have been disabled */
+-		rc = phy_read(phydev, LAN88XX_INT_STS);
+-	}
+-
+-	return rc < 0 ? rc : 0;
+-}
+-
+-static irqreturn_t lan88xx_handle_interrupt(struct phy_device *phydev)
+-{
+-	int irq_status;
+-
+-	irq_status = phy_read(phydev, LAN88XX_INT_STS);
+-	if (irq_status < 0) {
+-		phy_error(phydev);
+-		return IRQ_NONE;
+-	}
+-
+-	if (!(irq_status & LAN88XX_INT_STS_LINK_CHANGE_))
+-		return IRQ_NONE;
+-
+-	phy_trigger_machine(phydev);
+-
+-	return IRQ_HANDLED;
+-}
+-
+ static int lan88xx_suspend(struct phy_device *phydev)
+ {
+ 	struct lan88xx_priv *priv = phydev->priv;
+@@ -528,8 +487,9 @@ static struct phy_driver microchip_phy_d
+ 	.config_aneg	= lan88xx_config_aneg,
+ 	.link_change_notify = lan88xx_link_change_notify,
  
- 	gfp_mask = GFP_KERNEL | __GFP_ZERO;
--	efi_pgd = (pgd_t *)__get_free_pages(gfp_mask, PGD_ALLOCATION_ORDER);
-+	efi_pgd = (pgd_t *)__get_free_pages(gfp_mask, pgd_allocation_order());
- 	if (!efi_pgd)
- 		goto fail;
+-	.config_intr	= lan88xx_phy_config_intr,
+-	.handle_interrupt = lan88xx_handle_interrupt,
++	/* Interrupt handling is broken, do not define related
++	 * functions to force polling.
++	 */
  
-@@ -96,7 +96,7 @@ free_p4d:
- 	if (pgtable_l5_enabled())
- 		free_page((unsigned long)pgd_page_vaddr(*pgd));
- free_pgd:
--	free_pages((unsigned long)efi_pgd, PGD_ALLOCATION_ORDER);
-+	free_pages((unsigned long)efi_pgd, pgd_allocation_order());
- fail:
- 	return -ENOMEM;
- }
+ 	.suspend	= lan88xx_suspend,
+ 	.resume		= genphy_resume,
 
 
