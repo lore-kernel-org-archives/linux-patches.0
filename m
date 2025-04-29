@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068FC24EAB2;
-	Tue, 29 Apr 2025 17:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B63E2522A1;
+	Tue, 29 Apr 2025 17:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949367; cv=none; b=QHw8x1KF4Wdg1lbb+BOzEr5PP9kSd62FXK6mZYpbq8opxKMCv6H32dMsb4sB/84VZvgkSvS3i7JyKuUzKaTYVGrdf7nXQDeZur3zGKmz0Si9AOU4POoVwBVpKfBgbbyzfA+rIxF3cBH3SEs85TrwNsCtdWKJK9Q0zzrvhZUHc+0=
+	t=1745949370; cv=none; b=NeO1TJXBuN9negzjXIEPWFN7c/7kSFCmmBVG6d73cXzqkMhk6C5XT75J5G9ffpHv9nmhXu+HXo9r24PekJdqfYMo4lLlptbzWZstWmb2ck/lpaoiVUPxn+qjst36Pzb0/7wxBQ2NMBoMu24j4PLLkPlfXbpKjGHwXD0zRx78jrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949367; c=relaxed/simple;
-	bh=/0WzHXs5AfraOg5+PycNMmObZzQwpu3uH+9V2hwyVrc=;
+	s=arc-20240116; t=1745949370; c=relaxed/simple;
+	bh=OLjq3wRhvHgdLSsC4nRAE4pr4R/M2rSHlJoewUsyHq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ltgKfGQz8tWRdTWhO+aLD4zK+SV0J/+7B/dO3exC0LxWv6LGlC9B+HRDRP7l4b//PS85A0OXnSH4oO4dJX0zJ5JvFt7TpyTeFe7L0IRjLUlSFWbNbo9qLT+ERlQ9nMfVI5TQkjuHOW3H0/MlMvBPxKDnl8CqzViU4+doiYzbjNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CT1H50YA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q8vfcWr05as40MiyZFuHb1hjYK/q1jbIrmoY+TTbzrMj89R7nYR+Of4vZbqX2EMd7SpULfRIehZwoc+UE0WSlkYunB5cYBV53LrfABeMJouWQCvXpO5ZT0k3PBFO/yBqPTNebtfVPH4RK8fELrxw4423LQo+uF26d8rCKSDISb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGkyfCUy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CT1H50YA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FD7C4CEE3;
-	Tue, 29 Apr 2025 17:56:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGkyfCUy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B4EC4CEEA;
+	Tue, 29 Apr 2025 17:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949366;
-	bh=/0WzHXs5AfraOg5+PycNMmObZzQwpu3uH+9V2hwyVrc=;
+	s=korg; t=1745949370;
+	bh=OLjq3wRhvHgdLSsC4nRAE4pr4R/M2rSHlJoewUsyHq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CT1H50YAZTLEDYUnvH6SRrB5gD7bvLFU5l8eBS3GsU10tip36nzJLOQfbqVhl+ENF
-	 jgLi4+prUEjv/K38YeqcWBR+a1M6L8ftf1FwG2jswmmDTKvVbcNUzx3O2ydnzKmbo1
-	 +DrtrsFjzwGFO7HOa8Fiz7DGnHzpN1CBqpHHU23I=
+	b=CGkyfCUyiumlmzEwvc+EcKtvZNvTKtkWO7cDAfnBNtgSGgfUAdcWyaE4AIP7tgkKX
+	 odMLchMJXoMmQRTTKMcyUDGOUf1E3kYyUUjMli3OmDnI9QaprgA3G5yzzUgw3MZ/dT
+	 11OGfArYt1aVbYkW0YUIRcqUqOPrKKnI0ndFrtmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Halil Pasic <pasic@linux.ibm.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 5.15 297/373] virtio_console: fix missing byte order handling for cols and rows
-Date: Tue, 29 Apr 2025 18:42:54 +0200
-Message-ID: <20250429161135.329920774@linuxfoundation.org>
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 298/373] net: selftests: initialize TCP header and skb payload with zero
+Date: Tue, 29 Apr 2025 18:42:55 +0200
+Message-ID: <20250429161135.371175732@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -50,60 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Halil Pasic <pasic@linux.ibm.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit fbd3039a64b01b769040677c4fc68badeca8e3b2 upstream.
+commit 9e8d1013b0c38910cbc9e60de74dbe883878469d upstream.
 
-As per virtio spec the fields cols and rows are specified as little
-endian. Although there is no legacy interface requirement that would
-state that cols and rows need to be handled as native endian when legacy
-interface is used, unlike for the fields of the adjacent struct
-virtio_console_control, I decided to err on the side of caution based
-on some non-conclusive virtio spec repo archaeology and opt for using
-virtio16_to_cpu() much like for virtio_console_control.event. Strictly
-by the letter of the spec virtio_le_to_cpu() would have been sufficient.
-But when the legacy interface is not used, it boils down to the same.
+Zero-initialize TCP header via memset() to avoid garbage values that
+may affect checksum or behavior during test transmission.
 
-And when using the legacy interface, the device formatting these as
-little endian when the guest is big endian would surprise me more than
-it using guest native byte order (which would make it compatible with
-the current implementation). Nevertheless somebody trying to implement
-the spec following it to the letter could end up forcing little endian
-byte order when the legacy interface is in use. So IMHO this ultimately
-needs a judgement call by the maintainers.
+Also zero-fill allocated payload and padding regions using memset()
+after skb_put(), ensuring deterministic content for all outgoing
+test packets.
 
-Fixes: 8345adbf96fc1 ("virtio: console: Accept console size along with resize control message")
-Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
-Cc: stable@vger.kernel.org # v2.6.35+
-Message-Id: <20250322002954.3129282-1-pasic@linux.ibm.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 3e1e58d64c3d ("net: add generic selftest support")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Cc: stable@vger.kernel.org
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250416160125.2914724-1-o.rempel@pengutronix.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/virtio_console.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/core/selftests.c |   18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
---- a/drivers/char/virtio_console.c
-+++ b/drivers/char/virtio_console.c
-@@ -1614,8 +1614,8 @@ static void handle_control_message(struc
- 		break;
- 	case VIRTIO_CONSOLE_RESIZE: {
- 		struct {
--			__u16 rows;
--			__u16 cols;
-+			__virtio16 rows;
-+			__virtio16 cols;
- 		} size;
+--- a/net/core/selftests.c
++++ b/net/core/selftests.c
+@@ -100,10 +100,10 @@ static struct sk_buff *net_test_get_skb(
+ 	ehdr->h_proto = htons(ETH_P_IP);
  
- 		if (!is_console_port(port))
-@@ -1623,7 +1623,8 @@ static void handle_control_message(struc
+ 	if (attr->tcp) {
++		memset(thdr, 0, sizeof(*thdr));
+ 		thdr->source = htons(attr->sport);
+ 		thdr->dest = htons(attr->dport);
+ 		thdr->doff = sizeof(struct tcphdr) / 4;
+-		thdr->check = 0;
+ 	} else {
+ 		uhdr->source = htons(attr->sport);
+ 		uhdr->dest = htons(attr->dport);
+@@ -144,10 +144,18 @@ static struct sk_buff *net_test_get_skb(
+ 	attr->id = net_test_next_id;
+ 	shdr->id = net_test_next_id++;
  
- 		memcpy(&size, buf->buf + buf->offset + sizeof(*cpkt),
- 		       sizeof(size));
--		set_console_size(port, size.rows, size.cols);
-+		set_console_size(port, virtio16_to_cpu(vdev, size.rows),
-+				 virtio16_to_cpu(vdev, size.cols));
+-	if (attr->size)
+-		skb_put(skb, attr->size);
+-	if (attr->max_size && attr->max_size > skb->len)
+-		skb_put(skb, attr->max_size - skb->len);
++	if (attr->size) {
++		void *payload = skb_put(skb, attr->size);
++
++		memset(payload, 0, attr->size);
++	}
++
++	if (attr->max_size && attr->max_size > skb->len) {
++		size_t pad_len = attr->max_size - skb->len;
++		void *pad = skb_put(skb, pad_len);
++
++		memset(pad, 0, pad_len);
++	}
  
- 		port->cons.hvc->irq_requested = 1;
- 		resize_console(port);
+ 	skb->csum = 0;
+ 	skb->ip_summed = CHECKSUM_PARTIAL;
 
 
