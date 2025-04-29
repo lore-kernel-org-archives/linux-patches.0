@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD1982C60;
-	Tue, 29 Apr 2025 17:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3942528ED;
+	Tue, 29 Apr 2025 17:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947846; cv=none; b=Q1/lRWyYj1kfD/iOrhpSR/bF+XR8fJBS9F3HalFTXyGvZShofx34mdwy20vXExurFkFJTD1jvGaEVLS8JANkjqv4R3RULRHirxwnagGNmNutQEdQlAJemWYiV4azhKhNtg1f7wRfyJbRLlVyXnayTasxXBF1ndwDRFrayhxbDgM=
+	t=1745947849; cv=none; b=GP8WjNgrU2qPPjWRVFKEjZOeESq6pM5Q+1yaI/2B1hlluqWlABPpzAFnifLsrMa3mstfKbrZ47T36SpflzgrUSxjrJQnf2/i+g//XRNZ7h6vAaMBu5lJ1s2vL0pO78hcJ1nLfKz9TPOUV+RALpdP+5w98aOVQk0FxkjuK6B5sus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947846; c=relaxed/simple;
-	bh=kp8RwjHHfzCBccdxbGuqtA70Xa6IQppwFi+4BKTY4Eo=;
+	s=arc-20240116; t=1745947849; c=relaxed/simple;
+	bh=Lc5h4XT+C0UHaTmm57X1juCr/5k7NhNU60bQ5fFvZNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bQxF7RCmXWTGXY4WY8AX/g3NL6X4ZTxf7r2mvwCErm2rDup1nWePROtgvSEOyjcKnO29l0HRI+jAtv5pU9rQBjB5dNXlsfpji7UoRs7Grso9+duKJSDKnw/cbJpwOxbgLSx+8DmYe7QlEhU3osPedTExHQ0iLqiPI+wBnGHYLUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zL71p3+B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g+BXhFrz5wEUs+7M10eOcYXXzuxRA0ZBX1fa2DklgvKyK0OIXwisg5fJS6MsaWlZk5dR3Icgy38ILA8qC8mCr03LKwISUomny79WR+P/1+Gt9/EO7qaZga99LY3eEc1Jd00tQm+4y0u7m01To7FWOZTXfBdPwYmgfBE5u9X5nUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ke3QM/AL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zL71p3+B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0249DC4CEE9;
-	Tue, 29 Apr 2025 17:30:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ke3QM/AL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2218C4CEE9;
+	Tue, 29 Apr 2025 17:30:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947846;
-	bh=kp8RwjHHfzCBccdxbGuqtA70Xa6IQppwFi+4BKTY4Eo=;
+	s=korg; t=1745947849;
+	bh=Lc5h4XT+C0UHaTmm57X1juCr/5k7NhNU60bQ5fFvZNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zL71p3+BmyhSpeIdB+c+JWGFPelnPsrhzK7jPk7kjyA4S5rAJ4pqzBpyoVEkvh43O
-	 9dHgGI02WHGN3h52UoyLWu0oMzH/igZPJmkLZg/fBrFoba5yYfoa4K6IWQzAIOU9TE
-	 j1D36Xfg9O5WyqGOYQ2eEBa6dZgT58W2mXOIuO8c=
+	b=Ke3QM/ALR5Z5yrPQOZJENbbLXBx1Xcyr0oPWDEK1rwO9xzefME0TjcarCt/p+O/MH
+	 HKKs9OptSg4TXax5T8qFa2zsS4oAu/illJlFEYqsqEiWHsZvOTiNZP0E/MJCtTzwli
+	 icZPghYhs9Rf9wpsBvMszDUPKlCFOjWGav/wYBw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Tomas Winkler <tomasw@gmail.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>
-Subject: [PATCH 6.12 121/280] mei: me: add panther lake H DID
-Date: Tue, 29 Apr 2025 18:41:02 +0200
-Message-ID: <20250429161120.061690660@linuxfoundation.org>
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Roman Li <Roman.Li@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Mark Broadworth <mark.broadworth@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 104/280] drm/amd/display: Force full update in gpu reset
+Date: Tue, 29 Apr 2025 18:40:45 +0200
+Message-ID: <20250429161119.365582512@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -51,42 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Roman Li <Roman.Li@amd.com>
 
-commit 86ce5c0a1dec02e21b4c864b2bc0cc5880a2c13c upstream.
+commit 67fe574651c73fe5cc176e35f28f2ec1ba498d14 upstream.
 
-Add Panther Lake H device id.
+[Why]
+While system undergoing gpu reset always do full update
+to sync the dc state before and after reset.
 
-Cc: stable <stable@kernel.org>
-Co-developed-by: Tomas Winkler <tomasw@gmail.com>
-Signed-off-by: Tomas Winkler <tomasw@gmail.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://lore.kernel.org/r/20250408130005.1358140-1-alexander.usyskin@intel.com
+[How]
+Return true in should_reset_plane() if gpu reset detected
+
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Roman Li <Roman.Li@amd.com>
+Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Tested-by: Mark Broadworth <mark.broadworth@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 2ba8619b9a378ad218ad6c2e2ccaee8f531e08de)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/hw-me-regs.h |    1 +
- drivers/misc/mei/pci-me.c     |    1 +
- 2 files changed, 2 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/misc/mei/hw-me-regs.h
-+++ b/drivers/misc/mei/hw-me-regs.h
-@@ -117,6 +117,7 @@
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -10775,6 +10775,9 @@ static bool should_reset_plane(struct dr
+ 	    state->allow_modeset)
+ 		return true;
  
- #define MEI_DEV_ID_LNL_M      0xA870  /* Lunar Lake Point M */
- 
-+#define MEI_DEV_ID_PTL_H      0xE370  /* Panther Lake H */
- #define MEI_DEV_ID_PTL_P      0xE470  /* Panther Lake P */
- 
- /*
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -124,6 +124,7 @@ static const struct pci_device_id mei_me
- 
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_LNL_M, MEI_ME_PCH15_CFG)},
- 
-+	{MEI_PCI_DEVICE(MEI_DEV_ID_PTL_H, MEI_ME_PCH15_CFG)},
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_PTL_P, MEI_ME_PCH15_CFG)},
- 
- 	/* required last entry */
++	if (amdgpu_in_reset(adev) && state->allow_modeset)
++		return true;
++
+ 	/* Exit early if we know that we're adding or removing the plane. */
+ 	if (old_plane_state->crtc != new_plane_state->crtc)
+ 		return true;
 
 
