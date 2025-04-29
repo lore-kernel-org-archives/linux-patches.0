@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B546721CA0E;
-	Tue, 29 Apr 2025 17:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF19A1DC988;
+	Tue, 29 Apr 2025 17:58:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949522; cv=none; b=nbi57Hd/zuEKSH+QbNyV+38HZbOW3aEg8aLCuGJRheY72UA63+PyQh/071+Yrtiv1qYoq6WXlA704jMsSlq/WdER67aQMB7R9T0a+QqKBRm9aZIwgVCO/hlbfaYotTMxYihY3ASaqpCQ0LJy1ctsHQnHQXV65aklWkPLBSXas8A=
+	t=1745949526; cv=none; b=oU3RxHJSPJxML0/0iLBfRGwrxekzpkwDLUiXy5B/fzXcMvszcMEba0jVr0mdh4YPc0/qYhH9BrsImkHfiH5ZYK+iWJOgyCDymYhZvSrnppPDoKuH2hkG8i9IIJ7hQiAGXEUJooixQcukNFz8c/AN8issUzziAPdnRBGpKFZgNVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949522; c=relaxed/simple;
-	bh=DN5pK3qhcRatTJEkdNecyUk1dP4Tj2XTvBetb6MTack=;
+	s=arc-20240116; t=1745949526; c=relaxed/simple;
+	bh=LSeT3swboYsGzqPAZkrZWHOamYFGPr6N2BipAxZvcZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ri8qu8V1wl++2iknwfbUFxwRqXKrrUBxE3wWSTBwPM8NYJeguJxVbJnxdmQYbo5uN/BVMdvp3BwX+37BmPSC/4cEMlkY0lC/ZoPdTvJ5wMTNgD0lPw322rCMe07FakU9Q4LqirHN1kgj+vRiT0vb0J8Oqwd8MaH5BZ1TXGxr2iE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l20Ll5Fm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BLmEji+jfuekaelfN13/XIZcPdzwODyQYg3K6mROwCStx/rN7YorpxMpLQb23utRqxS/nt1d28SmcdWckWNfy1xdwVAL2iF8XVno0KWEjmPF0d1UyjcaFMYZyFgivVHEDXHHFd0/EHzm1HN/KWzai3rE1L8S/d1h63vXT3eZhKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RNzr5+KC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l20Ll5Fm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF30C4CEE3;
-	Tue, 29 Apr 2025 17:58:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNzr5+KC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5F2C4CEE3;
+	Tue, 29 Apr 2025 17:58:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949522;
-	bh=DN5pK3qhcRatTJEkdNecyUk1dP4Tj2XTvBetb6MTack=;
+	s=korg; t=1745949525;
+	bh=LSeT3swboYsGzqPAZkrZWHOamYFGPr6N2BipAxZvcZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l20Ll5FmwhTN+u+E+DB5Kop2W4g5bcQYW6IjyyEO2S3id5BCd/F8Q1GbZVA0OGqCx
-	 4P5YBBD8RMtCMxZ4khEi0xAPPjexcBW8SUsySbc7CTe8RVSTPCtkk6GtCtV1Gv/qa0
-	 22nRQDB4emh+5633jvcmJ15Du/pj3bWrTfxk3wWo=
+	b=RNzr5+KC5h66acFTgAbYp+F3HXuRZ+OgQGFxQoAQCHNZKpbgEtrJKG6cXnFWuxq0k
+	 YHRQRZ6Q7UUb9w4rSxUIUcDFTH4sD2ahuBsnWDslYp5hwoMZKGeUnvB7RUp8G2IBpJ
+	 MY28LLGzMvtgiQ37bM/7CE6vveEjs2YQo3+LlD0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frode Isaksen <frode@meta.com>,
-	stable <stable@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.15 315/373] usb: dwc3: gadget: check that event count does not exceed event buffer length
-Date: Tue, 29 Apr 2025 18:43:12 +0200
-Message-ID: <20250429161136.064350240@linuxfoundation.org>
+	Miao Li <limiao@kylinos.cn>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 316/373] usb: quirks: add DELAY_INIT quirk for Silicon Motion Flash Drive
+Date: Tue, 29 Apr 2025 18:43:13 +0200
+Message-ID: <20250429161136.110250658@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,49 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frode Isaksen <frode@meta.com>
+From: Miao Li <limiao@kylinos.cn>
 
-commit 63ccd26cd1f6600421795f6ca3e625076be06c9f upstream.
+commit 2932b6b547ec36ad2ed60fbf2117c0e46bb7d40a upstream.
 
-The event count is read from register DWC3_GEVNTCOUNT.
-There is a check for the count being zero, but not for exceeding the
-event buffer length.
-Check that event count does not exceed event buffer length,
-avoiding an out-of-bounds access when memcpy'ing the event.
-Crash log:
-Unable to handle kernel paging request at virtual address ffffffc0129be000
-pc : __memcpy+0x114/0x180
-lr : dwc3_check_event_buf+0xec/0x348
-x3 : 0000000000000030 x2 : 000000000000dfc4
-x1 : ffffffc0129be000 x0 : ffffff87aad60080
-Call trace:
-__memcpy+0x114/0x180
-dwc3_interrupt+0x24/0x34
+Silicon Motion Flash Drive connects to Huawei hisi platforms and
+performs a system reboot test for two thousand circles, it will
+randomly work incorrectly on boot, set DELAY_INIT quirk can workaround
+this issue.
 
-Signed-off-by: Frode Isaksen <frode@meta.com>
-Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
+Signed-off-by: Miao Li <limiao@kylinos.cn>
 Cc: stable <stable@kernel.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20250403072907.448524-1-fisaksen@baylibre.com
+Link: https://lore.kernel.org/r/20250401023027.44894-1-limiao870622@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/core/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -4361,6 +4361,12 @@ static irqreturn_t dwc3_check_event_buf(
- 	if (!count)
- 		return IRQ_NONE;
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -380,6 +380,9 @@ static const struct usb_device_id usb_qu
+ 	{ USB_DEVICE(0x0904, 0x6103), .driver_info =
+ 			USB_QUIRK_LINEAR_FRAME_INTR_BINTERVAL },
  
-+	if (count > evt->length) {
-+		dev_err_ratelimited(dwc->dev, "invalid count(%u) > evt->length(%u)\n",
-+			count, evt->length);
-+		return IRQ_NONE;
-+	}
++	/* Silicon Motion Flash Drive */
++	{ USB_DEVICE(0x090c, 0x1000), .driver_info = USB_QUIRK_DELAY_INIT },
 +
- 	evt->count = count;
- 	evt->flags |= DWC3_EVENT_PENDING;
- 
+ 	/* Sound Devices USBPre2 */
+ 	{ USB_DEVICE(0x0926, 0x0202), .driver_info =
+ 			USB_QUIRK_ENDPOINT_IGNORE },
 
 
