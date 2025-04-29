@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F71D221DA7;
-	Tue, 29 Apr 2025 17:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E857221DA7;
+	Tue, 29 Apr 2025 17:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949046; cv=none; b=C457hoBvcWJAdsuW1GUBc63FpZrSV3DWMF2jIlQYyKhHY0ITED7pjvJwvdjo7Hg5fr6tEXU/ZYx3amiV+NISXOJJAdq1M1Wcenya4E0eUzhLp2VTkD2QwkGWzxlT7A/7H13yUloIDfAs3+aPUK8rQT2HK8l15bPFDtYrxS3tSdA=
+	t=1745949049; cv=none; b=pvxrE56trt741mz3aICnARFtRmaTYefLvXHPrNL6yqe8rHFK3qvp4Qq1U/oSbrrrH9ALaLpyWY1VEOmPzdZd3ietJJ2JZkaWORu/u8fmspYzQLKxePY4tGuvcUDLXRvDXm1xwZkt4FUQ1S3QRx2L8aYZfdbPJjJhIs/F9l1Quqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949046; c=relaxed/simple;
-	bh=7PotjZRFMNOhogpvEsKeMUmwZk4wRQt0LhHooU+VLV0=;
+	s=arc-20240116; t=1745949049; c=relaxed/simple;
+	bh=AjhRstLQ3bkyH6Mo+TSRnoxLMEqgj2Sjxhx1UgcOpzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gmMaUjdI7QN/0ujvfxFPhClzPjcHMM613L+glCG3XcDxLTF6q7s0gg+m6lsndNQcIpGdemvDbKpfngxkEyEYrtMw3v4uJCIF9UmNT/yd5EYcLEyhtkY7V6MlD1sEyvVv38+OcdixTrDmtLbyqhSSVbE18dErn/ZiJsMBqgYXk9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X3f3x8rs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PEOtu6mgF4DhttxzmaivSrPDTMjOLSka7Wb//BfIrFiU7mJyDZ8GdBHq5dfTkAGyzWoJhYU9+EffbazR0p41cDGP4ipof/KLOzx7RKHKHrWS9WbQHl3ys9XihNYgwLkchxglCe3ypFm1G/65+OE0xE7jaNJt2lib/KsY85ZL+Hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HmZ1WwzW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X3f3x8rs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE0FC4CEE3;
-	Tue, 29 Apr 2025 17:50:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HmZ1WwzW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9B00C4CEE3;
+	Tue, 29 Apr 2025 17:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949046;
-	bh=7PotjZRFMNOhogpvEsKeMUmwZk4wRQt0LhHooU+VLV0=;
+	s=korg; t=1745949049;
+	bh=AjhRstLQ3bkyH6Mo+TSRnoxLMEqgj2Sjxhx1UgcOpzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X3f3x8rsOUTlLd+uVM6pGPBiVyGiUqZpz54r1B1C4SztlWfDwQ0gmtQbJ833Kojor
-	 qJNNVJDblZC2b0yesRZrYDQqgkjGsK6/hRxtqMiRZ0OnPVphem1zLxQ9W6YUeZc1VT
-	 WfXvHoLFvRNQegzun6SzQDcN+LMYMlmR+BGDxBVc=
+	b=HmZ1WwzWrLy5m2Vyips50Sa+Dc0YuAHO6c5utio0uDZo9Vqb8ZcnzB/pUs79yacQY
+	 Z4fdK/vTkz8uKOH47PImPOrr5WIxvjDI20jZ1+hYr94e8IPGup8tgK9sbHvthEdr+O
+	 XNfy1KMgAL8JacmzC/3VbKGNbazDfxLlGX6hFPTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.15 198/373] kbuild: Add -fno-builtin-wcslen
-Date: Tue, 29 Apr 2025 18:41:15 +0200
-Message-ID: <20250429161131.315341063@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 199/373] mptcp: sockopt: fix getting IPV6_V6ONLY
+Date: Tue, 29 Apr 2025 18:41:16 +0200
+Message-ID: <20250429161131.354131679@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -50,59 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 84ffc79bfbf70c779e60218563f2f3ad45288671 upstream.
+commit 8c39633759885b6ff85f6d96cf445560e74df5e8 upstream.
 
-A recent optimization change in LLVM [1] aims to transform certain loop
-idioms into calls to strlen() or wcslen(). This change transforms the
-first while loop in UniStrcat() into a call to wcslen(), breaking the
-build when UniStrcat() gets inlined into alloc_path_with_tree_prefix():
+When adding a socket option support in MPTCP, both the get and set parts
+are supposed to be implemented.
 
-  ld.lld: error: undefined symbol: wcslen
-  >>> referenced by nls_ucs2_utils.h:54 (fs/smb/client/../../nls/nls_ucs2_utils.h:54)
-  >>>               vmlinux.o:(alloc_path_with_tree_prefix)
-  >>> referenced by nls_ucs2_utils.h:54 (fs/smb/client/../../nls/nls_ucs2_utils.h:54)
-  >>>               vmlinux.o:(alloc_path_with_tree_prefix)
+IPV6_V6ONLY support for the setsockopt part has been added a while ago,
+but it looks like the get part got forgotten. It should have been
+present as a way to verify a setting has been set as expected, and not
+to act differently from TCP or any other socket types.
 
-Disable this optimization with '-fno-builtin-wcslen', which prevents the
-compiler from assuming that wcslen() is available in the kernel's C
-library.
+Not supporting this getsockopt(IPV6_V6ONLY) blocks some apps which want
+to check the default value, before doing extra actions. On Linux, the
+default value is 0, but this can be changed with the net.ipv6.bindv6only
+sysctl knob. On Windows, it is set to 1 by default. So supporting the
+get part, like for all other socket options, is important.
 
-[ More to the point - it's not that we couldn't implement wcslen(), it's
-  that this isn't an optimization at all in the context of the kernel.
+Everything was in place to expose it, just the last step was missing.
+Only new code is added to cover this specific getsockopt(), that seems
+safe.
 
-  Replacing a simple inlined loop with a function call to the same loop
-  is just stupid and pointless if you don't have long strings and fancy
-  libraries with vectorization support etc.
-
-  For the regular 'strlen()' cases, we want the compiler to do this in
-  order to handle the trivial case of constant strings. And we do have
-  optimized versions of 'strlen()' on some architectures. But for
-  wcslen? Just no.    - Linus ]
-
+Fixes: c9b95a135987 ("mptcp: support IPV6_V6ONLY setsockopt")
 Cc: stable@vger.kernel.org
-Link: https://github.com/llvm/llvm-project/commit/9694844d7e36fd5e01011ab56b64f27b867aa72d [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-[nathan: Resolve small conflict in older trees]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/550
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250314-net-mptcp-fix-data-stream-corr-sockopt-v1-2-122dbb249db3@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ Conflicts in sockopt.c in the context, because commit 3b1e21eb60e8
+  ("mptcp: getsockopt: add support for IP_TOS") is not in this release.
+  The conflicts are in the context, the new helper can be added without
+  issue. It depends on mptcp_put_int_option() which has been added via
+  another backport, see commit 874aae15fbef ("mptcp: fix full TCP
+  keep-alive support"). ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    3 +++
- 1 file changed, 3 insertions(+)
+ net/mptcp/sockopt.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/Makefile
-+++ b/Makefile
-@@ -1066,6 +1066,9 @@ KBUILD_CFLAGS   += $(call cc-option,-Wer
- # Require designated initializers for all marked structures
- KBUILD_CFLAGS   += $(call cc-option,-Werror=designated-init)
+--- a/net/mptcp/sockopt.c
++++ b/net/mptcp/sockopt.c
+@@ -793,6 +793,20 @@ static int mptcp_getsockopt_sol_tcp(stru
+ 	return -EOPNOTSUPP;
+ }
  
-+# Ensure compilers do not transform certain loops into calls to wcslen()
-+KBUILD_CFLAGS += -fno-builtin-wcslen
++static int mptcp_getsockopt_v6(struct mptcp_sock *msk, int optname,
++			       char __user *optval, int __user *optlen)
++{
++	struct sock *sk = (void *)msk;
 +
- # change __FILE__ to the relative path from the srctree
- KBUILD_CPPFLAGS += $(call cc-option,-fmacro-prefix-map=$(srctree)/=)
++	switch (optname) {
++	case IPV6_V6ONLY:
++		return mptcp_put_int_option(msk, optval, optlen,
++					    sk->sk_ipv6only);
++	}
++
++	return -EOPNOTSUPP;
++}
++
+ int mptcp_getsockopt(struct sock *sk, int level, int optname,
+ 		     char __user *optval, int __user *option)
+ {
+@@ -813,6 +827,8 @@ int mptcp_getsockopt(struct sock *sk, in
+ 	if (ssk)
+ 		return tcp_getsockopt(ssk, level, optname, optval, option);
  
++	if (level == SOL_IPV6)
++		return mptcp_getsockopt_v6(msk, optname, optval, option);
+ 	if (level == SOL_TCP)
+ 		return mptcp_getsockopt_sol_tcp(msk, optname, optval, option);
+ 	return -EOPNOTSUPP;
 
 
