@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D92321772B;
-	Tue, 29 Apr 2025 16:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1E5215060;
+	Tue, 29 Apr 2025 16:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945794; cv=none; b=LAEu05n+MIe6xDkAnSAu8yJB1oHusiUhL/8T9LJ3+T3rdH5Hc7PPtemxp6QbYHm589BulFaQEGqh94IHJJwdSuOSiwCPovIm6NuH4PXcjLnHzDhWPivcyDyv/D2jZWfpwxNAVYScN6b2I0MZHQucLcVnTAGEW6ho9fgH5x8UHsI=
+	t=1745945797; cv=none; b=Q/xeQ9GYiXqNMUrHMlyrE9W4gxz7i3vXog9G5FGFAClp2cJd/bNjrHnaqtcNEBZ/Kxu0FieTGO8f/hPEjEGiv8XLK5Q18FN5M/l6/65qU3su7/EMMYanznUEe0uwaNvUKLfQHvegmVFCVopju+QMnjHnKgmNMfvGT1/nyOBcAdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945794; c=relaxed/simple;
-	bh=WvZqEz/kxPQAKPJV/KuvQ+boxgFPTz3/1j1hDCNQu5o=;
+	s=arc-20240116; t=1745945797; c=relaxed/simple;
+	bh=bD59qvbaCFO7KEZNHneRj4N2VSNGeTuglSuhao1qv9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mu9xHVQtT13+or36YMSwAjbwvakeaoD05xUAqv7/O3zYZtZhGNiMcpPRPlRBXQl3hSYg+7eqg4a8Xn7BgRCbpsl9Q9HEB71zXMeuk2bEz47GzxmVmI+REG6rLFJyDMV+z/IMtCERC37ntwgUx2pQlUQbNEuaFi7hkkJhURY21aM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyrFyVAK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iJgxra7zDnV4seU44Q/GMuy6Z6A+CTw2cnI8QmI17aq9pBa7vhrrYbuvvInRn1F23kCn1NUBo8qLLpcs9FGgwh/yGLcpLc+2kYa5K7s68vVPPh0TU8Hw9tgwH4ZyF9gkIBXogJaIqBqcWqk2FM5lVMPS8jYc+SVjpBAI5BeiiFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oAcGk/Xy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyrFyVAK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77648C4CEE3;
-	Tue, 29 Apr 2025 16:56:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oAcGk/Xy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D71C4CEE3;
+	Tue, 29 Apr 2025 16:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945793;
-	bh=WvZqEz/kxPQAKPJV/KuvQ+boxgFPTz3/1j1hDCNQu5o=;
+	s=korg; t=1745945796;
+	bh=bD59qvbaCFO7KEZNHneRj4N2VSNGeTuglSuhao1qv9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WyrFyVAKtn2OH5bTD7UvrFnC7qaT/Qd8XtPmZvgzZhSC8NGjWgiY0Cagpxz+LLOAx
-	 d57o0v/aK6Y9T8BtVoJnZE5Z3XbB/djQ/p9aXuBXhsamstXeQ8a4G1pfekkQ9EFx7C
-	 RE2MhakEsGHMFI6dVtNtUvUpnUGc3Rs1knETeegE=
+	b=oAcGk/Xypekb8hu81dc4IaICMWOgO5Vaid8on55y5cTmZWE+tHZaoRWcofhVxI1dW
+	 /DRL0hx9lvdHCJRH8nS+NKeMjxtzwCy1s2nE/FQ6gqSM4JIpkGgcfhWgXTiPfU+6TA
+	 ekhmRbyBNpzj9bpRZXDG3fpJK+YfI9CzM2Rju68w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Currier <dullfire@yahoo.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 022/311] PCI/MSI: Add an option to write MSIX ENTRY_DATA before any reads
-Date: Tue, 29 Apr 2025 18:37:39 +0200
-Message-ID: <20250429161121.939605191@linuxfoundation.org>
+Subject: [PATCH 6.14 023/311] irqchip/renesas-rzv2h: Simplify rzv2h_icu_init()
+Date: Tue, 29 Apr 2025 18:37:40 +0200
+Message-ID: <20250429161121.979513648@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -51,57 +53,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Currier <dullfire@yahoo.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit cf761e3dacc6ad5f65a4886d00da1f9681e6805a ]
+[ Upstream commit f5de95438834a3bc3ad747f67c9da93cd08e5008 ]
 
-Commit 7d5ec3d36123 ("PCI/MSI: Mask all unused MSI-X entries") introduced a
-readl() from ENTRY_VECTOR_CTRL before the writel() to ENTRY_DATA.
+Use devm_add_action_or_reset() for calling put_device in error path of
+rzv2h_icu_init() to simplify the code by using the recently added devm_*
+helpers.
 
-This is correct, however some hardware, like the Sun Neptune chips, the NIU
-module, will cause an error and/or fatal trap if any MSIX table entry is
-read before the corresponding ENTRY_DATA field is written to.
-
-Add an optional early writel() in msix_prepare_msi_desc().
-
-Fixes: 7d5ec3d36123 ("PCI/MSI: Mask all unused MSI-X entries")
-Signed-off-by: Jonathan Currier <dullfire@yahoo.com>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20241117234843.19236-2-dullfire@yahoo.com
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Link: https://lore.kernel.org/all/20250224131253.134199-5-biju.das.jz@bp.renesas.com
+Stable-dep-of: 28e89cdac648 ("irqchip/renesas-rzv2h: Prevent TINT spurious interrupt")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/msi/msi.c | 3 +++
- include/linux/pci.h   | 2 ++
- 2 files changed, 5 insertions(+)
+ drivers/irqchip/irq-renesas-rzv2h.c | 37 +++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/pci/msi/msi.c b/drivers/pci/msi/msi.c
-index 6569ba3577fe6..8b88487886184 100644
---- a/drivers/pci/msi/msi.c
-+++ b/drivers/pci/msi/msi.c
-@@ -615,6 +615,9 @@ void msix_prepare_msi_desc(struct pci_dev *dev, struct msi_desc *desc)
- 		void __iomem *addr = pci_msix_desc_addr(desc);
- 
- 		desc->pci.msi_attrib.can_mask = 1;
-+		/* Workaround for SUN NIU insanity, which requires write before read */
-+		if (dev->dev_flags & PCI_DEV_FLAGS_MSIX_TOUCH_ENTRY_DATA_FIRST)
-+			writel(0, addr + PCI_MSIX_ENTRY_DATA);
- 		desc->pci.msix_ctrl = readl(addr + PCI_MSIX_ENTRY_VECTOR_CTRL);
- 	}
+diff --git a/drivers/irqchip/irq-renesas-rzv2h.c b/drivers/irqchip/irq-renesas-rzv2h.c
+index f6363246a71a0..6be38aa86f9b8 100644
+--- a/drivers/irqchip/irq-renesas-rzv2h.c
++++ b/drivers/irqchip/irq-renesas-rzv2h.c
+@@ -421,6 +421,11 @@ static int rzv2h_icu_parse_interrupts(struct rzv2h_icu_priv *priv, struct device
+ 	return 0;
  }
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 47b31ad724fa5..8e028620642f3 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -245,6 +245,8 @@ enum pci_dev_flags {
- 	PCI_DEV_FLAGS_NO_RELAXED_ORDERING = (__force pci_dev_flags_t) (1 << 11),
- 	/* Device does honor MSI masking despite saying otherwise */
- 	PCI_DEV_FLAGS_HAS_MSI_MASKING = (__force pci_dev_flags_t) (1 << 12),
-+	/* Device requires write to PCI_MSIX_ENTRY_DATA before any MSIX reads */
-+	PCI_DEV_FLAGS_MSIX_TOUCH_ENTRY_DATA_FIRST = (__force pci_dev_flags_t) (1 << 13),
- };
  
- enum pci_irq_reroute_variant {
++static void rzv2h_icu_put_device(void *data)
++{
++	put_device(data);
++}
++
+ static int rzv2h_icu_init(struct device_node *node, struct device_node *parent)
+ {
+ 	struct irq_domain *irq_domain, *parent_domain;
+@@ -433,43 +438,41 @@ static int rzv2h_icu_init(struct device_node *node, struct device_node *parent)
+ 	if (!pdev)
+ 		return -ENODEV;
+ 
++	ret = devm_add_action_or_reset(&pdev->dev, rzv2h_icu_put_device,
++				       &pdev->dev);
++	if (ret < 0)
++		return ret;
++
+ 	parent_domain = irq_find_host(parent);
+ 	if (!parent_domain) {
+ 		dev_err(&pdev->dev, "cannot find parent domain\n");
+-		ret = -ENODEV;
+-		goto put_dev;
++		return -ENODEV;
+ 	}
+ 
+ 	rzv2h_icu_data = devm_kzalloc(&pdev->dev, sizeof(*rzv2h_icu_data), GFP_KERNEL);
+-	if (!rzv2h_icu_data) {
+-		ret = -ENOMEM;
+-		goto put_dev;
+-	}
++	if (!rzv2h_icu_data)
++		return -ENOMEM;
+ 
+ 	rzv2h_icu_data->irqchip = &rzv2h_icu_chip;
+ 
+ 	rzv2h_icu_data->base = devm_of_iomap(&pdev->dev, pdev->dev.of_node, 0, NULL);
+-	if (IS_ERR(rzv2h_icu_data->base)) {
+-		ret = PTR_ERR(rzv2h_icu_data->base);
+-		goto put_dev;
+-	}
++	if (IS_ERR(rzv2h_icu_data->base))
++		return PTR_ERR(rzv2h_icu_data->base);
+ 
+ 	ret = rzv2h_icu_parse_interrupts(rzv2h_icu_data, node);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "cannot parse interrupts: %d\n", ret);
+-		goto put_dev;
++		return ret;
+ 	}
+ 
+ 	resetn = devm_reset_control_get_exclusive(&pdev->dev, NULL);
+-	if (IS_ERR(resetn)) {
+-		ret = PTR_ERR(resetn);
+-		goto put_dev;
+-	}
++	if (IS_ERR(resetn))
++		return PTR_ERR(resetn);
+ 
+ 	ret = reset_control_deassert(resetn);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to deassert resetn pin, %d\n", ret);
+-		goto put_dev;
++		return ret;
+ 	}
+ 
+ 	pm_runtime_enable(&pdev->dev);
+@@ -500,8 +503,6 @@ static int rzv2h_icu_init(struct device_node *node, struct device_node *parent)
+ pm_disable:
+ 	pm_runtime_disable(&pdev->dev);
+ 	reset_control_assert(resetn);
+-put_dev:
+-	put_device(&pdev->dev);
+ 
+ 	return ret;
+ }
 -- 
 2.39.5
 
