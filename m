@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B045538FB0;
-	Tue, 29 Apr 2025 17:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4067127453;
+	Tue, 29 Apr 2025 17:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946801; cv=none; b=jIciZCudByXH2dZGJFClFWZsAt4XVAkrBGQigKiXQtRj8v701N9GIFE/XAY9IHR3T6CnmzwbwH4/LNHlcIAIOOrLIW5Ri5Q78zcfqKpWcghJ5jBKDwt5J0/KHKa8MRODvfaWIKOmng1hwahXs+bGM5vjqP07JInYzyW60e/+fUc=
+	t=1745946804; cv=none; b=rUQT+GOAwr7BoxrDHGKHqcX5q4cMn8/vqQMGEft67i/3QcjGx8pRNzSiePTSkqkJqPIXvOMMyKmyt6nKvCTcAcC7civBwdjutWb6qZ0ETY8cgkT6KzSmehAJa1hFwC9+zu6NvBJRlI+xPbA4cdRE4XxlYq1qdrG2ktTHs1I4bqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946801; c=relaxed/simple;
-	bh=pNdIv1Hx7vKcgVJHLzU7+KeNpwQQU/IA1oHbJ7DPxho=;
+	s=arc-20240116; t=1745946804; c=relaxed/simple;
+	bh=MJ5iiKWvpUmZrDJyLOaf66S/XGBgGr5YOC2ERE50U1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iN48shSyBAE6HNZTt2f3yEFnu8Wwdq0dpp8HzpqwzfQ6Mt9wkErzNf5weZqnyI67r6cBSU/Q3gmxujmNUaFCFxAaOThJek7jokM2L1aERds8i7yfTY07HlDpMje/k0taB5NoetHXUoinQaoXzUqnyl1SjQ/H5rviUSIXnWvfEwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQAuwt2Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Yrh+awmjwV695G5ebw6fpFhH3zgq6+AOjkEtZFXimDgQ5WBH5UVPxxZTKxlsxdxUxMgWhwUK4ZRFEyJrrcqoYRb2Tir+5NmrPOPwJxZrKDaaiJQjSPd6BletpN7l2E+gMqdjlvbwnJNnMaC5/0X90+Rc3CTw1A1Dw3fHh0nBhAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fIDL2NLm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQAuwt2Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FABC4CEE3;
-	Tue, 29 Apr 2025 17:13:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fIDL2NLm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEBAFC4CEE3;
+	Tue, 29 Apr 2025 17:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946801;
-	bh=pNdIv1Hx7vKcgVJHLzU7+KeNpwQQU/IA1oHbJ7DPxho=;
+	s=korg; t=1745946804;
+	bh=MJ5iiKWvpUmZrDJyLOaf66S/XGBgGr5YOC2ERE50U1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KQAuwt2QynnQNzmBtkqw43JYLygtJsBOSbDz0l9sit1qnZj12JYg1U6h2xvTZzOjW
-	 8hxUk0w6Ewt+uNLqq0UlDnXBfOVUNrhnLzs+d1cjrIT1ckTjxndoxkRjwBjV/+XOLc
-	 5cByPbmZRYM6N0E6O6oHcZURw0GG7DQboF6wiDr0=
+	b=fIDL2NLm/pzGr1/EJ2XJqEF+avKYpzi7xh6XrBo/AfSOgLcyaYImgFqnuHwjhqkZq
+	 oHwFFpiJd7LOChErwX3hVg2vM3GO/5Aa+thjUPH7aaIMk23GjtpPDg+hstgIMAWBCW
+	 Ah2lAIQ1IMmpVodVdYKDrjsSPNU4ZcAG+CC3bz/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Meng <cong.meng@oracle.com>,
-	Si-Wei Liu <si-wei.liu@oracle.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>
-Subject: [PATCH 5.10 074/286] vdpa/mlx5: Fix oversized null mkey longer than 32bit
-Date: Tue, 29 Apr 2025 18:39:38 +0200
-Message-ID: <20250429161110.896651226@linuxfoundation.org>
+	Manjunatha Venkatesh <manjunatha.venkatesh@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.10 075/286] i3c: Add NULL pointer check in i3c_master_queue_ibi()
+Date: Tue, 29 Apr 2025 18:39:39 +0200
+Message-ID: <20250429161110.936982401@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -55,46 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Si-Wei Liu <si-wei.liu@oracle.com>
+From: Manjunatha Venkatesh <manjunatha.venkatesh@nxp.com>
 
-commit a6097e0a54a5c24f8d577ffecbc35289ae281c2e upstream.
+commit bd496a44f041da9ef3afe14d1d6193d460424e91 upstream.
 
-create_user_mr() has correct code to count the number of null keys
-used to fill in a hole for the memory map. However, fill_indir()
-does not follow the same to cap the range up to the 1GB limit
-correspondingly. Fill in more null keys for the gaps in between,
-so that null keys are correctly populated.
+The I3C master driver may receive an IBI from a target device that has not
+been probed yet. In such cases, the master calls `i3c_master_queue_ibi()`
+to queue an IBI work task, leading to "Unable to handle kernel read from
+unreadable memory" and resulting in a kernel panic.
 
-Fixes: 94abbccdf291 ("vdpa/mlx5: Add shared memory registration code")
+Typical IBI handling flow:
+1. The I3C master scans target devices and probes their respective drivers.
+2. The target device driver calls `i3c_device_request_ibi()` to enable IBI
+   and assigns `dev->ibi = ibi`.
+3. The I3C master receives an IBI from the target device and calls
+   `i3c_master_queue_ibi()` to queue the target device driver’s IBI
+   handler task.
+
+However, since target device events are asynchronous to the I3C probe
+sequence, step 3 may occur before step 2, causing `dev->ibi` to be `NULL`,
+leading to a kernel panic.
+
+Add a NULL pointer check in `i3c_master_queue_ibi()` to prevent accessing
+an uninitialized `dev->ibi`, ensuring stability.
+
+Fixes: 3a379bbcea0af ("i3c: Add core I3C infrastructure")
 Cc: stable@vger.kernel.org
-Reported-by: Cong Meng <cong.meng@oracle.com>
-Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Message-Id: <20250220193732.521462-2-dtatulea@nvidia.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Link: https://lore.kernel.org/lkml/Z9gjGYudiYyl3bSe@lizhi-Precision-Tower-5810/
+Signed-off-by: Manjunatha Venkatesh <manjunatha.venkatesh@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20250326123047.2797946-1-manjunatha.venkatesh@nxp.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vdpa/mlx5/core/mr.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/i3c/master.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/vdpa/mlx5/core/mr.c
-+++ b/drivers/vdpa/mlx5/core/mr.c
-@@ -165,9 +165,12 @@ again:
- 			klm->bcount = cpu_to_be32(klm_bcount(dmr->end - dmr->start));
- 			preve = dmr->end;
- 		} else {
-+			u64 bcount = min_t(u64, dmr->start - preve, MAX_KLM_SIZE);
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -2282,6 +2282,9 @@ static void i3c_master_unregister_i3c_de
+  */
+ void i3c_master_queue_ibi(struct i3c_dev_desc *dev, struct i3c_ibi_slot *slot)
+ {
++	if (!dev->ibi || !slot)
++		return;
 +
- 			klm->key = cpu_to_be32(mvdev->res.null_mkey);
--			klm->bcount = cpu_to_be32(klm_bcount(dmr->start - preve));
--			preve = dmr->start;
-+			klm->bcount = cpu_to_be32(klm_bcount(bcount));
-+			preve += bcount;
-+
- 			goto again;
- 		}
- 	}
+ 	atomic_inc(&dev->ibi->pending_ibis);
+ 	queue_work(dev->common.master->wq, &slot->work);
+ }
 
 
