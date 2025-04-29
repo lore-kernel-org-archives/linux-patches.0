@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365F81917E3;
-	Tue, 29 Apr 2025 17:40:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABE41917E3;
+	Tue, 29 Apr 2025 17:40:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948407; cv=none; b=r30u6Xfc58JgiNeaB/pBgeMTNgAJ+ytdNy27Td74W2+dBkFWws6AL0W+CrWMdxxIClyxtr1qx7louPWVjGpmjyk5OJA0VTdTy+bwhNjJGDK+HcemT8ZNktdjrAC7H7+avYZTe7EHjM3YkPT+zso2eE39VIpsQy6Ak7/Pt8ibXCY=
+	t=1745948410; cv=none; b=ZpxZYDHekjnWnDdqxh772kYhadcxsnSI2CIGTlEykfrJ9cIMc4I3F1W0n9mHZy4ILL8f0Pe+PSmbUjlYgnOnv+eWwBpbNpT/zjaP/pVjzouP1q4rKUXhjQ/ikN1bE5IVJ0sUzRjyLdMjbM+REg5mlyuXifS0avOHsaxgCcUDeko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948407; c=relaxed/simple;
-	bh=Ki3i2Rqe8ShcBUhEzanqRzhzLGaAlaMVLpM5H5PJfYA=;
+	s=arc-20240116; t=1745948410; c=relaxed/simple;
+	bh=H978HMNV2rmYPflarVEVee5TDY1tJ67cxkC1bKwMOoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hb8bvDvpRpcxxmNgwqVjQ45u1+ilyaQ5acmGTvoNXmquc9J4U1B/m3xbj3kZ97xYCmPLSHK2lnvypT82NCzYKp833zsw1V5eAA2pru7E4CVWLqQ834dpK4cGNKRKaV9AvD0BrwjPhja4ICqA+Ubw/E1eR8yWy3vzWNnqp7TE7Zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RjBppcOi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ilVJk2pvHm/DAcktF7BIHRfiq/3TE+2JQOirJfSUDK4xiDzr1VAQKFrIjQ6IwR8prFrK5goUI3Jk2vDXTbnP3+ID5c0brBQgp0JD4Qr1hW5tGDbCiJZx6waJyrSaktVDpDD+k4MHY9+zz8xxx/PhAVxiLM2+u5+Ki5IN1EEzjZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=em2Q/SEl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RjBppcOi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD096C4CEE3;
-	Tue, 29 Apr 2025 17:40:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="em2Q/SEl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D70C4CEE3;
+	Tue, 29 Apr 2025 17:40:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948407;
-	bh=Ki3i2Rqe8ShcBUhEzanqRzhzLGaAlaMVLpM5H5PJfYA=;
+	s=korg; t=1745948410;
+	bh=H978HMNV2rmYPflarVEVee5TDY1tJ67cxkC1bKwMOoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RjBppcOirDxJZNvLU5bafUXl91Iqq8aNI2Z1Lka/KiCECOXMYumm5lgr9lD98S3OA
-	 aKcGKgW2HotTZ73sf8sZrOb2zhQEuW8Xp18izbX/0Tb8d/12YgEtCCRcC9krbAz9EF
-	 wj9yuqtFlET07L2vA9Xp/5j/S5jb3Bdi3wXRMsZ0=
+	b=em2Q/SElZXTd1odbVZpkTF9R0zclYua1mSnHfb9dJjHjOGtlWo52Or8IQajsa4CEF
+	 VE8LV1wYKbNefVEDHT6mbOgqZR9SFOf268oSeG2+Fl6uolz0mZgzx9fHHvnr4za7/5
+	 rykap2crBAnHs1zJHlvoCTAU2ETB4/W314RSCCeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keerthy <j-keerthy@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>
-Subject: [PATCH 6.12 279/280] arm64: dts: ti: k3-j784s4-j742s2-main-common: Correct the GICD size
-Date: Tue, 29 Apr 2025 18:43:40 +0200
-Message-ID: <20250429161126.548510996@linuxfoundation.org>
+	Chris Bainbridge <chris.bainbridge@gmail.com>,
+	Sam Protsenko <semen.protsenko@linaro.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 280/280] mq-deadline: dont call req_get_ioprio from the I/O completion handler
+Date: Tue, 29 Apr 2025 18:43:41 +0200
+Message-ID: <20250429161126.588690301@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -50,37 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keerthy <j-keerthy@ti.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 398898f9cca1a19a83184430c675562680e57c7b upstream.
+commit 1b0cab327e060ccf397ae634a34c84dd1d4d2bb2 upstream.
 
-Currently we get the warning:
+req_get_ioprio looks at req->bio to find the I/O priority, which is not
+set when completing bios that the driver fully iterated through.
 
-"GICv3: [Firmware Bug]: GICR region 0x0000000001900000 has
-overlapping address"
+Stash away the dd_per_prio in the elevator private data instead of looking
+it up again to optimize the code a bit while fixing the regression from
+removing the per-request ioprio value.
 
-As per TRM GICD is 64 KB. Fix it by correcting the size of GICD.
-
-Cc: stable@vger.kernel.org
-Fixes: 9cc161a4509c ("arm64: dts: ti: Refactor J784s4 SoC files to a common file")
-Link: https://lore.kernel.org/r/20250218052248.4734-1-j-keerthy@ti.com
-Signed-off-by: Keerthy <j-keerthy@ti.com>
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Fixes: 6975c1a486a4 ("block: remove the ioprio field from struct request")
+Reported-by: Chris Bainbridge <chris.bainbridge@gmail.com>
+Reported-by: Sam Protsenko <semen.protsenko@linaro.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Tested-by: Chris Bainbridge <chris.bainbridge@gmail.com>
+Tested-by: Sam Protsenko <semen.protsenko@linaro.org>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20241126102136.619067-1-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-j784s4-j742s2-main-common.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/mq-deadline.c |   13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
---- a/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-main-common.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-main-common.dtsi
-@@ -195,7 +195,7 @@
- 		ranges;
- 		#interrupt-cells = <3>;
- 		interrupt-controller;
--		reg = <0x00 0x01800000 0x00 0x200000>, /* GICD */
-+		reg = <0x00 0x01800000 0x00 0x10000>, /* GICD */
- 		      <0x00 0x01900000 0x00 0x100000>, /* GICR */
- 		      <0x00 0x6f000000 0x00 0x2000>,   /* GICC */
- 		      <0x00 0x6f010000 0x00 0x1000>,   /* GICH */
+--- a/block/mq-deadline.c
++++ b/block/mq-deadline.c
+@@ -685,10 +685,9 @@ static void dd_insert_request(struct blk
+ 
+ 	prio = ioprio_class_to_prio[ioprio_class];
+ 	per_prio = &dd->per_prio[prio];
+-	if (!rq->elv.priv[0]) {
++	if (!rq->elv.priv[0])
+ 		per_prio->stats.inserted++;
+-		rq->elv.priv[0] = (void *)(uintptr_t)1;
+-	}
++	rq->elv.priv[0] = per_prio;
+ 
+ 	if (blk_mq_sched_try_insert_merge(q, rq, free))
+ 		return;
+@@ -753,18 +752,14 @@ static void dd_prepare_request(struct re
+  */
+ static void dd_finish_request(struct request *rq)
+ {
+-	struct request_queue *q = rq->q;
+-	struct deadline_data *dd = q->elevator->elevator_data;
+-	const u8 ioprio_class = dd_rq_ioclass(rq);
+-	const enum dd_prio prio = ioprio_class_to_prio[ioprio_class];
+-	struct dd_per_prio *per_prio = &dd->per_prio[prio];
++	struct dd_per_prio *per_prio = rq->elv.priv[0];
+ 
+ 	/*
+ 	 * The block layer core may call dd_finish_request() without having
+ 	 * called dd_insert_requests(). Skip requests that bypassed I/O
+ 	 * scheduling. See also blk_mq_request_bypass_insert().
+ 	 */
+-	if (rq->elv.priv[0])
++	if (per_prio)
+ 		atomic_inc(&per_prio->stats.completed);
+ }
+ 
 
 
