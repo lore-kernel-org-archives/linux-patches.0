@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE75243964;
-	Tue, 29 Apr 2025 17:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63A6243964;
+	Tue, 29 Apr 2025 17:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948870; cv=none; b=ko7PzthAaNBF0G0hgdXyZ3zkb8vWFin+vxdWHoZL0VqP6tg+5Tn0mHTwOgBi5QDn/VphfhgTyZaGm4J0eoBbR/CHlo58i/KwGBTMFgmGT9ylEu/XGQyCSoDhW6AZcyb/uwHOD/n4Z8t9JOQRmFJl+/2MkYvTbDFEZq/N3wHZlXQ=
+	t=1745948872; cv=none; b=u+2Lam4lDq7Ebwi68Nxev2xCQ0qtNNfECqY3h5c9/OWD0rtbNqxoMUvUsrlY05cBARJ1m4gxvWEQFIMRwiijI80/42JAKB4di7/YH/4jobC6gSkl0xwMFJx0Y3CoZcBGIwSe8rxx/uBIGGCx48Mx5XSYtAm8VYoLKQ1kX01xz7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948870; c=relaxed/simple;
-	bh=YkutJcz7QKYEG3H6tlZB7UC5aBxkClo4Rg14abSx95c=;
+	s=arc-20240116; t=1745948872; c=relaxed/simple;
+	bh=Lwl147XR4aVPA9t5vU7+7kipt6a5mVnQp3yaBNGJEK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mR33ElL23xFdD6D/GvNBIl04L4FQBojdgAMTAZzNEZmmeDzXMClhzHYyrIxcHO0iDveX8MMvT6Yti/ueoj9Bj1GvNLlIimf2JOxdIV769kDFU7a+0DaNeuex+w85MYyWS3RGyr4s5OYWHLCDI6UxfzFlJnoLL7pJXA0oUsWojQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7UkpdxA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M2rfm1xBAqWPTEZrkUCHfcSk/vnjN2IRtomH2x9gdrNIMrZSLrzrqn+XFIchbw9gOWMLRJHqhCSrV7rxj7tjRIMXRNsYQ8vf0WtJLxqHTxuCewljKP1b8xkE0oW0UmHonAuRtzJw8Rd4V7jrrGW+KtgHZfbeB44QVQBc7JkH12s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dLcG5bn4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7UkpdxA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54C3C4CEE3;
-	Tue, 29 Apr 2025 17:47:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dLcG5bn4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4876FC4CEE9;
+	Tue, 29 Apr 2025 17:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948870;
-	bh=YkutJcz7QKYEG3H6tlZB7UC5aBxkClo4Rg14abSx95c=;
+	s=korg; t=1745948872;
+	bh=Lwl147XR4aVPA9t5vU7+7kipt6a5mVnQp3yaBNGJEK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E7UkpdxABHhFSaifSyb8fbNhKmXAbwjS7Ht+OOLjqITG75jlur/5NFVMq69iZql2n
-	 0vRqEXvEaNjGz6OcCrZP9PyQPookZw+eyerg3dIL6vnV0EydGfVoSB6/wDT0i6uCp5
-	 SnyJXvlrCHgQhJk1mcd6aNyDzx+DKosQdinFdZpk=
+	b=dLcG5bn4v6y7DHT0Ie4U6BqT3ulmQvN2utE/jGJnZAAfil0C44AXjrK+HqH5RD7bG
+	 Gm4aFABryDlJxYed8sUA31jtBTGWsKfcC+oLfLTOe7wU4NqLWHZTcgagIQDzJVemA/
+	 LUBKj5E+gheVFFJ5eF/cAmIkf1YIWfg4jAIU9D2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Johnston <matt@codeconstruct.com.au>,
+	syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	Aaron Conole <aconole@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 144/373] net: mctp: Set SOCK_RCU_FREE
-Date: Tue, 29 Apr 2025 18:40:21 +0200
-Message-ID: <20250429161129.089031056@linuxfoundation.org>
+Subject: [PATCH 5.15 145/373] net: openvswitch: fix nested key length validation in the set() action
+Date: Tue, 29 Apr 2025 18:40:22 +0200
+Message-ID: <20250429161129.127572982@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,36 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Johnston <matt@codeconstruct.com.au>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit 52024cd6ec71a6ca934d0cc12452bd8d49850679 ]
+[ Upstream commit 65d91192aa66f05710cfddf6a14b5a25ee554dba ]
 
-Bind lookup runs under RCU, so ensure that a socket doesn't go away in
-the middle of a lookup.
+It's not safe to access nla_len(ovs_key) if the data is smaller than
+the netlink header.  Check that the attribute is OK first.
 
-Fixes: 833ef3b91de6 ("mctp: Populate socket implementation")
-Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
-Link: https://patch.msgid.link/20250410-mctp-rcu-sock-v1-1-872de9fdc877@codeconstruct.com.au
+Fixes: ccb1352e76cf ("net: Add Open vSwitch kernel components.")
+Reported-by: syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b07a9da40df1576b8048
+Tested-by: syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
+Acked-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20250412104052.2073688-1-i.maximets@ovn.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/af_mctp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/openvswitch/flow_netlink.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/mctp/af_mctp.c b/net/mctp/af_mctp.c
-index 0ca031866ce1a..53b3a294b0424 100644
---- a/net/mctp/af_mctp.c
-+++ b/net/mctp/af_mctp.c
-@@ -253,6 +253,9 @@ static int mctp_sk_hash(struct sock *sk)
- {
- 	struct net *net = sock_net(sk);
+diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
+index d9bef3decd70c..7db0f8938c145 100644
+--- a/net/openvswitch/flow_netlink.c
++++ b/net/openvswitch/flow_netlink.c
+@@ -2831,7 +2831,8 @@ static int validate_set(const struct nlattr *a,
+ 	size_t key_len;
  
-+	/* Bind lookup runs under RCU, remain live during that. */
-+	sock_set_flag(sk, SOCK_RCU_FREE);
-+
- 	mutex_lock(&net->mctp.bind_lock);
- 	sk_add_node_rcu(sk, &net->mctp.binds);
- 	mutex_unlock(&net->mctp.bind_lock);
+ 	/* There can be only one key in a action */
+-	if (nla_total_size(nla_len(ovs_key)) != nla_len(a))
++	if (!nla_ok(ovs_key, nla_len(a)) ||
++	    nla_total_size(nla_len(ovs_key)) != nla_len(a))
+ 		return -EINVAL;
+ 
+ 	key_len = nla_len(ovs_key);
 -- 
 2.39.5
 
