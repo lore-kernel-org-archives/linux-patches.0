@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D922AE96;
-	Tue, 29 Apr 2025 17:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C492AE96;
+	Tue, 29 Apr 2025 17:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949468; cv=none; b=dVuFDfV9hcECLx72dV60YrlD9hWjBUwdvhD64+pg0Abj6aN56urccgRVl7GXPfpu8qJ23HXoRpF8CdIEGZL6ZX/4X85i6N1JR5wITveGskVkWuSpjrWvxeGTuJPayRWYJLjRu3EA0CgttxMFwBqbgRPPOKN+HtgeN3L9gYabXAc=
+	t=1745949471; cv=none; b=HZ+SfE210Fex6g/XU9bWY6Zbjf3dd4U92Z+29ELNsG+MGRLskNMIIW/AUX8U4k1uaQPj1lrdngzmUOK3YOrPOuV6qiqZvANfCiJrMlmEmf40YtuJE6kV+5+i8Wx4ALZH8vh2sSjQ90tRldbzCs8nlxjP+8KegS+JlqR7OeyDly4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949468; c=relaxed/simple;
-	bh=ypu7z+GZfqcohkrN16gc7CNEwMNYXN2WpLzNxXVC3so=;
+	s=arc-20240116; t=1745949471; c=relaxed/simple;
+	bh=j5Qzfdcxiwf4iYBrUbLEYR5fusepHYRwe5bBAPz04EA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kBTzueJSYwR7xi4Bn0sV1zSQROIsqO5gDnvDldzeZ237eDp1G/RlfPVG6D8oaZhPYa4la7Gjhf1E9bNmJJUaBpCbORaEqhg35lQ7w6s2Cte7+EW+nHQn4riGnth4pO5A/Vp/3XesDgHaJuUxbJ+oNVzkr6ElRDzxKNJeTYutMv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZrWBFnE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cslp/ViKjk8GUWzkExcz203+BTG8RZz5YzyUdGO1TUKTQPGbpg41zosrILkVcVSBJQ7IwOdj2ocWH/LPhyNfbtqK2jJO3aMcI7Tv9ffNUFHGVArs4IhYbO5qET6dyF3Exi73hruZTJhNTUooOM96hWxpq0wjqqj0lkMr/HChfJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGpLCLYF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZrWBFnE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28859C4CEE3;
-	Tue, 29 Apr 2025 17:57:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGpLCLYF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAB4C4CEE3;
+	Tue, 29 Apr 2025 17:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949468;
-	bh=ypu7z+GZfqcohkrN16gc7CNEwMNYXN2WpLzNxXVC3so=;
+	s=korg; t=1745949471;
+	bh=j5Qzfdcxiwf4iYBrUbLEYR5fusepHYRwe5bBAPz04EA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EZrWBFnEEXU/Fga9a47y99GHJsTr+r5sWyJ5PFZgQUYGE7VL0qVrIOFIf3T3h2YwS
-	 70YsK2J7cnrH/6ZI0B+E3XCSNaVz3zas/RmSVbE6GuNXfQVajrkos2J9MwV1f19PDs
-	 TZx90IqcvCIG8uUqPW71ZOKWcuFA+pNv/ENBJ+xk=
+	b=KGpLCLYFKr+483z5tYAKYbNTYpSZEZ7oaz7yL2U7ow9diUqCakkj25qam2ags+Y+y
+	 C3uDlEMqS67+2Jj9aOeZV/OH/KdfS/t9b2Sm1pbbbyyYk9v9qkLeft0ERttE57dNnJ
+	 +lU5kGEwuJsvQfSVJB9f6Yv6ei3HvIdoEprUAJ0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@mailbox.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 329/373] usb: host: max3421-hcd: Add missing spi_device_id table
-Date: Tue, 29 Apr 2025 18:43:26 +0200
-Message-ID: <20250429161136.667810118@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 5.15 312/373] usb: chipidea: ci_hdrc_imx: fix call balance of regulator routines
+Date: Tue, 29 Apr 2025 18:43:09 +0200
+Message-ID: <20250429161135.942726220@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -50,51 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@mailbox.org>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 41d5e3806cf589f658f92c75195095df0b66f66a ]
+commit 8cab0e9a3f3e8d700179e0d6141643d54a267fd5 upstream.
 
-"maxim,max3421" DT compatible is missing its SPI device ID entry, not
-allowing module autoloading and leading to the following message:
- "SPI driver max3421-hcd has no spi_device_id for maxim,max3421"
+Upon encountering errors during the HSIC pinctrl handling section the
+regulator should be disabled.
 
-Fix this by adding the spi_device_id table.
+Use devm_add_action_or_reset() to let the regulator-disabling routine be
+handled by device resource management stack.
 
-Signed-off-by: Alexander Stein <alexander.stein@mailbox.org>
-Link: https://lore.kernel.org/r/20250128195114.56321-1-alexander.stein@mailbox.org
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: 4d6141288c33 ("usb: chipidea: imx: pinctrl for HSIC is optional")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/20250316102658.490340-3-pchelkin@ispras.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/max3421-hcd.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/chipidea/ci_hdrc_imx.c |   25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/usb/host/max3421-hcd.c b/drivers/usb/host/max3421-hcd.c
-index 6d95b90683bc8..37a5914f79871 100644
---- a/drivers/usb/host/max3421-hcd.c
-+++ b/drivers/usb/host/max3421-hcd.c
-@@ -1956,6 +1956,12 @@ max3421_remove(struct spi_device *spi)
- 	return 0;
+--- a/drivers/usb/chipidea/ci_hdrc_imx.c
++++ b/drivers/usb/chipidea/ci_hdrc_imx.c
+@@ -322,6 +322,13 @@ static int ci_hdrc_imx_notify_event(stru
+ 	return ret;
  }
  
-+static const struct spi_device_id max3421_spi_ids[] = {
-+	{ "max3421" },
-+	{ },
-+};
-+MODULE_DEVICE_TABLE(spi, max3421_spi_ids);
++static void ci_hdrc_imx_disable_regulator(void *arg)
++{
++	struct ci_hdrc_imx_data *data = arg;
 +
- static const struct of_device_id max3421_of_match_table[] = {
- 	{ .compatible = "maxim,max3421", },
- 	{},
-@@ -1965,6 +1971,7 @@ MODULE_DEVICE_TABLE(of, max3421_of_match_table);
- static struct spi_driver max3421_driver = {
- 	.probe		= max3421_probe,
- 	.remove		= max3421_remove,
-+	.id_table	= max3421_spi_ids,
- 	.driver		= {
- 		.name	= "max3421-hcd",
- 		.of_match_table = of_match_ptr(max3421_of_match_table),
--- 
-2.39.5
-
++	regulator_disable(data->hsic_pad_regulator);
++}
++
+ static int ci_hdrc_imx_probe(struct platform_device *pdev)
+ {
+ 	struct ci_hdrc_imx_data *data;
+@@ -379,6 +386,13 @@ static int ci_hdrc_imx_probe(struct plat
+ 					"Failed to enable HSIC pad regulator\n");
+ 				goto err_put;
+ 			}
++			ret = devm_add_action_or_reset(dev,
++					ci_hdrc_imx_disable_regulator, data);
++			if (ret) {
++				dev_err(dev,
++					"Failed to add regulator devm action\n");
++				goto err_put;
++			}
+ 		}
+ 	}
+ 
+@@ -417,11 +431,11 @@ static int ci_hdrc_imx_probe(struct plat
+ 
+ 	ret = imx_get_clks(dev);
+ 	if (ret)
+-		goto disable_hsic_regulator;
++		goto qos_remove_request;
+ 
+ 	ret = imx_prepare_enable_clks(dev);
+ 	if (ret)
+-		goto disable_hsic_regulator;
++		goto qos_remove_request;
+ 
+ 	data->phy = devm_usb_get_phy_by_phandle(dev, "fsl,usbphy", 0);
+ 	if (IS_ERR(data->phy)) {
+@@ -501,10 +515,7 @@ disable_device:
+ 	ci_hdrc_remove_device(data->ci_pdev);
+ err_clk:
+ 	imx_disable_unprepare_clks(dev);
+-disable_hsic_regulator:
+-	if (data->hsic_pad_regulator)
+-		/* don't overwrite original ret (cf. EPROBE_DEFER) */
+-		regulator_disable(data->hsic_pad_regulator);
++qos_remove_request:
+ 	if (pdata.flags & CI_HDRC_PMQOS)
+ 		cpu_latency_qos_remove_request(&data->pm_qos_req);
+ 	data->ci_pdev = NULL;
+@@ -531,8 +542,6 @@ static void ci_hdrc_imx_remove(struct pl
+ 		imx_disable_unprepare_clks(&pdev->dev);
+ 		if (data->plat_data->flags & CI_HDRC_PMQOS)
+ 			cpu_latency_qos_remove_request(&data->pm_qos_req);
+-		if (data->hsic_pad_regulator)
+-			regulator_disable(data->hsic_pad_regulator);
+ 	}
+ 	if (data->usbmisc_data)
+ 		put_device(data->usbmisc_data->dev);
 
 
