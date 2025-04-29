@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA23C253F12;
-	Tue, 29 Apr 2025 17:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F652522A8;
+	Tue, 29 Apr 2025 17:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946927; cv=none; b=gePvf56mfKzEtFQ8limhEiTt+y4nDNY34qQUrp9D7MppkmvZHKfuSOTAKDjdWXvJQli3h2SUirt/U2+6Uh4d7CLrX9/aVq6Zt8h5mKF6y/47CVHvOLdEp4TjToT/GLOvMH1eLtQUyLTAPLMHGqMJ9d1/wnL4shWObJj5/Rq4gF0=
+	t=1745946931; cv=none; b=eZJBn7ZaCMR6a2oWecSjpN+pSzMhDP5+LnFUuktNAU1i5nu2GX1ukWXEqgOJ3xsgLkBmNz8UzTR81NoZcJtUcZJnP97bHAbsTsT+0dBTnnJleF2O8De4+n6XOpVsV22CjOujHvAc961e/YFGpUz3CzQmsyloJOvsh2CLqwnpjh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946927; c=relaxed/simple;
-	bh=UfX4OsDOGgMOsl3jiLNVK1D7aMZlq13Vn7I4afRVf6s=;
+	s=arc-20240116; t=1745946931; c=relaxed/simple;
+	bh=eJQGIT/41MSTHtppLjhWaLlc7lJGEYvNte1EnTpba9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zzu7zTyHxzz0yMI8sZ8u50cEaPDMCxHB+xhphpC+eNNurujS3lvRDugZunIzhqXCcuNJ+sHqU8ngGIm2GrF17f3sDDl/v8mGvQmFd58b4mXP82jpRt+MpjksW3ee2VT4fiAgs9PMUqynRlCF3QzXPexvluUKIKGdnL80F1SNaKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2vvNRuZs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XzDvJr/sYzDz1Rv0X5W4ky5nZxzRzIBDieXxLpv0Uw3tR4NBJQtpM/9SRE63FjwpWsMcISBS09rgxM9XgThr2py4pCgyciosfVTYwjphtHNsY0yTFaQ6Fdm8EnKOozHuzxmkVEujfOiPAx62gbaSBmMD7jQOMMozwFnnwPpTk5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D1FIy5dO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vvNRuZs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E82C4CEE3;
-	Tue, 29 Apr 2025 17:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1FIy5dO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236EEC4CEE3;
+	Tue, 29 Apr 2025 17:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946927;
-	bh=UfX4OsDOGgMOsl3jiLNVK1D7aMZlq13Vn7I4afRVf6s=;
+	s=korg; t=1745946930;
+	bh=eJQGIT/41MSTHtppLjhWaLlc7lJGEYvNte1EnTpba9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2vvNRuZs5Bfv0Zi/NZm+LVU7ZQ9ah+F/8t7UJ67Lrb3F8U4puuNZRC+0m7f7t/Lu6
-	 1VTG+7QBo6qAfhoun+K4jC0zOhLOsg6zsacSfKZ08TEG1SsU9uGCsux3e0qDQytxAl
-	 ijMa2YeYBAzqwCLb1J/+enNet6PP7KDDR7TKkCb0=
+	b=D1FIy5dOo3r2jWA9XANw+mOHoUmUzb0wsvaCWhyBEPOZLdeZe9bbDRXXtbHry5Xb0
+	 LTT+0EYJAhID5SyI7YBogy9e5c0h5O3JVgIYb5CSZ+9fFABrYYdN1u4XIHMrNst6Jm
+	 NviZZabvATyKhXfravR3MntkXamttlzFt0MFiI8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 115/286] net: openvswitch: fix nested key length validation in the set() action
-Date: Tue, 29 Apr 2025 18:40:19 +0200
-Message-ID: <20250429161112.588609840@linuxfoundation.org>
+	Roberto Ricci <io@r-ricci.it>,
+	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Kees Cook <keescook@chromium.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Len Brown <len.brown@intel.com>
+Subject: [PATCH 5.10 098/286] x86/e820: Fix handling of subpage regions when calculating nosave ranges in e820__register_nosave_regions()
+Date: Tue, 29 Apr 2025 18:40:02 +0200
+Message-ID: <20250429161111.886272162@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -54,43 +58,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
 
-[ Upstream commit 65d91192aa66f05710cfddf6a14b5a25ee554dba ]
+commit f2f29da9f0d4367f6ff35e0d9d021257bb53e273 upstream.
 
-It's not safe to access nla_len(ovs_key) if the data is smaller than
-the netlink header.  Check that the attribute is OK first.
+While debugging kexec/hibernation hangs and crashes, it turned out that
+the current implementation of e820__register_nosave_regions() suffers from
+multiple serious issues:
 
-Fixes: ccb1352e76cf ("net: Add Open vSwitch kernel components.")
-Reported-by: syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b07a9da40df1576b8048
-Tested-by: syzbot+b07a9da40df1576b8048@syzkaller.appspotmail.com
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
-Acked-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20250412104052.2073688-1-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ - The end of last region is tracked by PFN, causing it to find holes
+   that aren't there if two consecutive subpage regions are present
+
+ - The nosave PFN ranges derived from holes are rounded out (instead of
+   rounded in) which makes it inconsistent with how explicitly reserved
+   regions are handled
+
+Fix this by:
+
+ - Treating reserved regions as if they were holes, to ensure consistent
+   handling (rounding out nosave PFN ranges is more correct as the
+   kernel does not use partial pages)
+
+ - Tracking the end of the last RAM region by address instead of pages
+   to detect holes more precisely
+
+These bugs appear to have been introduced about ~18 years ago with the very
+first version of e820_mark_nosave_regions(), and its flawed assumptions were
+carried forward uninterrupted through various waves of rewrites and renames.
+
+[ mingo: Added Git archeology details, for kicks and giggles. ]
+
+Fixes: e8eff5ac294e ("[PATCH] Make swsusp avoid memory holes and reserved memory regions on x86_64")
+Reported-by: Roberto Ricci <io@r-ricci.it>
+Tested-by: Roberto Ricci <io@r-ricci.it>
+Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Woodhouse <dwmw@amazon.co.uk>
+Cc: Len Brown <len.brown@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250406-fix-e820-nosave-v3-1-f3787bc1ee1d@qtmlabs.xyz
+Closes: https://lore.kernel.org/all/Z4WFjBVHpndct7br@desktop0a/
+Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/flow_netlink.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kernel/e820.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
-index cff18a5bbf386..3f8f43dbf44fc 100644
---- a/net/openvswitch/flow_netlink.c
-+++ b/net/openvswitch/flow_netlink.c
-@@ -2834,7 +2834,8 @@ static int validate_set(const struct nlattr *a,
- 	size_t key_len;
+--- a/arch/x86/kernel/e820.c
++++ b/arch/x86/kernel/e820.c
+@@ -753,22 +753,21 @@ void __init e820__memory_setup_extended(
+ void __init e820__register_nosave_regions(unsigned long limit_pfn)
+ {
+ 	int i;
+-	unsigned long pfn = 0;
++	u64 last_addr = 0;
  
- 	/* There can be only one key in a action */
--	if (nla_total_size(nla_len(ovs_key)) != nla_len(a))
-+	if (!nla_ok(ovs_key, nla_len(a)) ||
-+	    nla_total_size(nla_len(ovs_key)) != nla_len(a))
- 		return -EINVAL;
+ 	for (i = 0; i < e820_table->nr_entries; i++) {
+ 		struct e820_entry *entry = &e820_table->entries[i];
  
- 	key_len = nla_len(ovs_key);
--- 
-2.39.5
-
+-		if (pfn < PFN_UP(entry->addr))
+-			register_nosave_region(pfn, PFN_UP(entry->addr));
+-
+-		pfn = PFN_DOWN(entry->addr + entry->size);
+-
+ 		if (entry->type != E820_TYPE_RAM && entry->type != E820_TYPE_RESERVED_KERN)
+-			register_nosave_region(PFN_UP(entry->addr), pfn);
++			continue;
+ 
+-		if (pfn >= limit_pfn)
+-			break;
++		if (last_addr < entry->addr)
++			register_nosave_region(PFN_DOWN(last_addr), PFN_UP(entry->addr));
++
++		last_addr = entry->addr + entry->size;
+ 	}
++
++	register_nosave_region(PFN_DOWN(last_addr), limit_pfn);
+ }
+ 
+ #ifdef CONFIG_ACPI
 
 
