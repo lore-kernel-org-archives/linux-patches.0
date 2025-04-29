@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0EC211A0B;
-	Tue, 29 Apr 2025 17:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9329922A81D;
+	Tue, 29 Apr 2025 17:07:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946448; cv=none; b=On2xY0NPrE06Bta+70vaT7HrOqKYRdOUYvI54DRMBylWhxrRY84XPbJCLidWUZR5ORujr8S/lWMgcsFJBesFT/ctgeJkV/6Oo4wYs00mAMMXDallfjRIbSpJ+MzpaJTJChFNJuY9GZ19RllKOWH+pD3PSX0GVYzAaYCubFkMvIU=
+	t=1745946451; cv=none; b=KiH+lUZZqmCl/X6VvEcW7rEJrdemGrDofZKCSJ32DiNpUV9HlemKx4aBB2xPIprO6Gy5B0p1oQucwcVlZD/D7wSqzMw7lGskA+lsKthdoiMa/w/WtPzPkYRIl51S8a0Ti0AMphVoCev33f1P/KNxC2fVy1vJeJmhYgsVpuUEyS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946448; c=relaxed/simple;
-	bh=Y21z6VkR9fCw4LN9kCQeS8E6KlGBC9PcPC4vjduyXs0=;
+	s=arc-20240116; t=1745946451; c=relaxed/simple;
+	bh=abHBS2kT72fE0XOEMVhG4T7Bctp+ry+1c9hY10hg8Qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CRLg/pLLMKWqpvsvNDjLr+9qgifWoiC5S5cpw/HGcNmNYdCHvPOr5Mu/uydDdYTFfeEw9r2tZfJgwscRBPU1r1KOMMwOTFtcfUUv4KLOS58YkjdVsQF8rHbgH3jsH9UnXWA2lA+Q1DxEIADizsVLUpf16x8Xc3PJT5+2Hk0ahDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6d5kC9R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q+MWp7vbUZM10Uel1aCKgrsUVhVDc10AjM+Nfy7R44PL8HSlX+oDYaKt+7hCs67GHnrhEAYEBlpJijM21NaQ7e/PRkuhlmgAj0g4rcFdWX256jMiJBHjCUV3/C5+QrcY9xrCGDyhQnJ5TLca9C6OpHexsvWJ6awEa1wchXtb6GQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tu1bynPe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6d5kC9R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22765C4CEE3;
-	Tue, 29 Apr 2025 17:07:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tu1bynPe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C69AC4CEE3;
+	Tue, 29 Apr 2025 17:07:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946448;
-	bh=Y21z6VkR9fCw4LN9kCQeS8E6KlGBC9PcPC4vjduyXs0=;
+	s=korg; t=1745946451;
+	bh=abHBS2kT72fE0XOEMVhG4T7Bctp+ry+1c9hY10hg8Qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W6d5kC9RuwTAS8FKGFxumFR93c7P2dcPl4SxTpuzXPwMYQwVX9db0O1bM9AU0jW+A
-	 K4V+2IHO5o7Lj5Til0iDN4qkQS7GwNYfNWBzJ0gIThwqnDSEyR+EkoyXMzPC7zbrXb
-	 y6zkfV3Gs3rL92pM+DT6KkemMNaMmOvk2Jmi+aMU=
+	b=Tu1bynPe9DxrYdgGiHCt7PoJuumg7PLuPOyGwMcX20hRJgwdCnIFuq4YJTunlaLsS
+	 4Arsbpp63bgJqXrWT7G/I5GU3cGS8k6pR/CRPJArVrvoxfZj7kdZ57MlqWaCQwJkmh
+	 dQuXAVKI6rGvy9MVMP25KH0Cqrb0SH2Ym8mYzerk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 270/311] scsi: ufs: exynos: Ensure pre_link() executes before exynos_ufs_phy_init()
-Date: Tue, 29 Apr 2025 18:41:47 +0200
-Message-ID: <20250429161132.084723021@linuxfoundation.org>
+Subject: [PATCH 6.14 271/311] scsi: ufs: exynos: Enable PRDT pre-fetching with UFSHCD_CAP_CRYPTO
+Date: Tue, 29 Apr 2025 18:41:48 +0200
+Message-ID: <20250429161132.125237744@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -54,53 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Griffin <peter.griffin@linaro.org>
 
-[ Upstream commit 3d101165e72316775947d71321d97194f03dfef3 ]
+[ Upstream commit deac9ad496ec17e1ec06848964ecc635bdaca703 ]
 
-Ensure clocks are enabled before configuring unipro. Additionally move
-the pre_link() hook before the exynos_ufs_phy_init() calls. This means
-the register write sequence more closely resembles the ordering of the
-downstream driver.
+PRDT_PREFETCH_ENABLE[31] bit should be set when desctype field of
+fmpsecurity0 register is type2 (double file encryption) or type3
+(support for file and disk encryption). Setting this bit enables PRDT
+pre-fetching on both TXPRDT and RXPRDT.
 
 Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-Link: https://lore.kernel.org/r/20250319-exynos-ufs-stability-fixes-v2-1-96722cc2ba1b@linaro.org
+Link: https://lore.kernel.org/r/20250319-exynos-ufs-stability-fixes-v2-5-96722cc2ba1b@linaro.org
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-exynos.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/ufs/host/ufs-exynos.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
-index 5ea3f9beb1bd9..e77b3c63e6981 100644
+index e77b3c63e6981..ac71b878d872f 100644
 --- a/drivers/ufs/host/ufs-exynos.c
 +++ b/drivers/ufs/host/ufs-exynos.c
-@@ -1060,9 +1060,14 @@ static int exynos_ufs_pre_link(struct ufs_hba *hba)
- 	exynos_ufs_config_intr(ufs, DFES_DEF_L4_ERRS, UNIPRO_L4);
- 	exynos_ufs_set_unipro_pclk_div(ufs);
+@@ -34,7 +34,7 @@
+  * Exynos's Vendor specific registers for UFSHCI
+  */
+ #define HCI_TXPRDT_ENTRY_SIZE	0x00
+-#define PRDT_PREFECT_EN		BIT(31)
++#define PRDT_PREFETCH_EN	BIT(31)
+ #define HCI_RXPRDT_ENTRY_SIZE	0x04
+ #define HCI_1US_TO_CNT_VAL	0x0C
+ #define CNT_VAL_1US_MASK	0x3FF
+@@ -1098,12 +1098,17 @@ static int exynos_ufs_post_link(struct ufs_hba *hba)
+ 	struct exynos_ufs *ufs = ufshcd_get_variant(hba);
+ 	struct phy *generic_phy = ufs->phy;
+ 	struct exynos_ufs_uic_attr *attr = ufs->drv_data->uic_attr;
++	u32 val = ilog2(DATA_UNIT_SIZE);
  
-+	exynos_ufs_setup_clocks(hba, true, PRE_CHANGE);
+ 	exynos_ufs_establish_connt(ufs);
+ 	exynos_ufs_fit_aggr_timeout(ufs);
+ 
+ 	hci_writel(ufs, 0xa, HCI_DATA_REORDER);
+-	hci_writel(ufs, ilog2(DATA_UNIT_SIZE), HCI_TXPRDT_ENTRY_SIZE);
 +
- 	/* unipro */
- 	exynos_ufs_config_unipro(ufs);
- 
-+	if (ufs->drv_data->pre_link)
-+		ufs->drv_data->pre_link(ufs);
++	if (hba->caps & UFSHCD_CAP_CRYPTO)
++		val |= PRDT_PREFETCH_EN;
++	hci_writel(ufs, val, HCI_TXPRDT_ENTRY_SIZE);
 +
- 	/* m-phy */
- 	exynos_ufs_phy_init(ufs);
- 	if (!(ufs->opts & EXYNOS_UFS_OPT_SKIP_CONFIG_PHY_ATTR)) {
-@@ -1070,11 +1075,6 @@ static int exynos_ufs_pre_link(struct ufs_hba *hba)
- 		exynos_ufs_config_phy_cap_attr(ufs);
- 	}
- 
--	exynos_ufs_setup_clocks(hba, true, PRE_CHANGE);
--
--	if (ufs->drv_data->pre_link)
--		ufs->drv_data->pre_link(ufs);
--
- 	return 0;
- }
- 
+ 	hci_writel(ufs, ilog2(DATA_UNIT_SIZE), HCI_RXPRDT_ENTRY_SIZE);
+ 	hci_writel(ufs, (1 << hba->nutrs) - 1, HCI_UTRL_NEXUS_TYPE);
+ 	hci_writel(ufs, (1 << hba->nutmrs) - 1, HCI_UTMRL_NEXUS_TYPE);
 -- 
 2.39.5
 
