@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA2240C03;
-	Tue, 29 Apr 2025 18:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71A240C03;
+	Tue, 29 Apr 2025 18:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950046; cv=none; b=tksyqvckIVJkYBaP45L35yfp1Uok6tOnjFolDCNPDPSGgaqSnzqc/zTA7zs9PPbtYemG7DTXSt2VduKirPYbl1CWLiDS/PQ4eKEUHfYH50XuON8oTrxCZ8CI6FD++Wh7IUBFXjk9Xtp8hx/iwfXQSb4L8ASrRxEZtVuBM4bvYSk=
+	t=1745950049; cv=none; b=PZymUVdYwtQ1QXejg5mRoDjTaqGqGKbk6y/rW/V0YFDliJ7qEOyOwUc0WjPokXZ0VAig5WdE/dO2O81+YsyqdddIa2KnLIA5fMztZV1aYqiZEElI88kcrlnWm48jBOG8IIz02eznO02ELVC3V8TUNLdlMjWYZrV7bqQ3inwRwLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950046; c=relaxed/simple;
-	bh=cpG7n15Y3sxUgtbrsHOxI6PAvP+xfdGpOb9tId8vKgg=;
+	s=arc-20240116; t=1745950049; c=relaxed/simple;
+	bh=3No4+HEVOzxop8r2VsoemUBMqwYHEWo4roGS2cuw7eg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LdxcYwfVBHod6EsjAyuhocXe2pBpOlTVc4SutNN7+7Tm5/iW8/hEteI13oepurpRAac3xBzl5up9Jxd3EVXKO8xR7kTMuM9qhOMJ0CmslW1ynWb5Zj+D0Qf0Txt7Xhtrrma54xJcqgmo72Y4aI0p/EjHqo5VUfeK6x/zXPAzleY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qh2KV107; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MKzbayrb+dWbJz+Rc+k8VraURx9Z+t90DSlOCTxWtMT4Sgpaq9mDxpkqxQG5wMmuZ+xau1bqW355JRc9hFJ7YOIfVO/mPKIi/xXqXJpUQtkdBKjl5GS4+Yw+Uz5JPrVuwtK/XQ89nTeKQLN18zgf7szT+YeiWzsZjR+SWdP+oTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oxejFi67; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qh2KV107"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 046B2C4CEE3;
-	Tue, 29 Apr 2025 18:07:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxejFi67"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F09C4CEE3;
+	Tue, 29 Apr 2025 18:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950046;
-	bh=cpG7n15Y3sxUgtbrsHOxI6PAvP+xfdGpOb9tId8vKgg=;
+	s=korg; t=1745950049;
+	bh=3No4+HEVOzxop8r2VsoemUBMqwYHEWo4roGS2cuw7eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qh2KV107NUP4fWSuSniWfB1h4LCm4OrQCpFKM8MmUxrQpaosvaYGi6niIJ8pFgeri
-	 V7gUVCuO4SvPEzZmGn04mCGps7pFI9oxpUTQdhPFLaXQcaJSnMXkJmXmcBlzr1gGKZ
-	 5a6ndG0qCoDfxUKwJXhdM+rQLNoOp8KUjNKIl88A=
+	b=oxejFi67bjUf9kpcFdBoOUtwI5cch1le0eorTrYdBWZoVA4B3PX7m9Wkevwxz/KVw
+	 625AYh+HWwRBDmfQuuAJcQV7tfTklXog4XLGpOIhAaB1Ew3czzPktE5p5Gl3ycAZkm
+	 nPF4eh3fZpMNJLUDdUB+4ZN14N1+oGEYnZwyMwwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 140/167] scsi: hisi_sas: Fix I/O errors caused by hardware port ID changes
-Date: Tue, 29 Apr 2025 18:44:08 +0200
-Message-ID: <20250429161057.392413983@linuxfoundation.org>
+Subject: [PATCH 6.1 141/167] scsi: ufs: exynos: Ensure pre_link() executes before exynos_ufs_phy_init()
+Date: Tue, 29 Apr 2025 18:44:09 +0200
+Message-ID: <20250429161057.433699801@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -51,57 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingui Yang <yangxingui@huawei.com>
+From: Peter Griffin <peter.griffin@linaro.org>
 
-[ Upstream commit daff37f00c7506ca322ccfce95d342022f06ec58 ]
+[ Upstream commit 3d101165e72316775947d71321d97194f03dfef3 ]
 
-The hw port ID of phy may change when inserting disks in batches, causing
-the port ID in hisi_sas_port and itct to be inconsistent with the hardware,
-resulting in I/O errors. The solution is to set the device state to gone to
-intercept I/O sent to the device, and then execute linkreset to discard and
-find the disk to re-update its information.
+Ensure clocks are enabled before configuring unipro. Additionally move
+the pre_link() hook before the exynos_ufs_phy_init() calls. This means
+the register write sequence more closely resembles the ordering of the
+downstream driver.
 
-Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Link: https://lore.kernel.org/r/20250312095135.3048379-3-yangxingui@huawei.com
+Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
+Link: https://lore.kernel.org/r/20250319-exynos-ufs-stability-fixes-v2-1-96722cc2ba1b@linaro.org
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_main.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/ufs/host/ufs-exynos.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
-index 2116f5ee36e20..02855164bf28d 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_main.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
-@@ -865,8 +865,28 @@ static void hisi_sas_phyup_work_common(struct work_struct *work,
- 		container_of(work, typeof(*phy), works[event]);
- 	struct hisi_hba *hisi_hba = phy->hisi_hba;
- 	struct asd_sas_phy *sas_phy = &phy->sas_phy;
-+	struct asd_sas_port *sas_port = sas_phy->port;
-+	struct hisi_sas_port *port = phy->port;
-+	struct device *dev = hisi_hba->dev;
-+	struct domain_device *port_dev;
- 	int phy_no = sas_phy->id;
+diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
+index 064829640c187..e981f1f8805f2 100644
+--- a/drivers/ufs/host/ufs-exynos.c
++++ b/drivers/ufs/host/ufs-exynos.c
+@@ -990,9 +990,14 @@ static int exynos_ufs_pre_link(struct ufs_hba *hba)
+ 	exynos_ufs_config_intr(ufs, DFES_DEF_L4_ERRS, UNIPRO_L4);
+ 	exynos_ufs_set_unipro_pclk_div(ufs);
  
-+	if (!test_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags) &&
-+	    sas_port && port && (port->id != phy->port_id)) {
-+		dev_info(dev, "phy%d's hw port id changed from %d to %llu\n",
-+				phy_no, port->id, phy->port_id);
-+		port_dev = sas_port->port_dev;
-+		if (port_dev && !dev_is_expander(port_dev->dev_type)) {
-+			/*
-+			 * Set the device state to gone to block
-+			 * sending IO to the device.
-+			 */
-+			set_bit(SAS_DEV_GONE, &port_dev->state);
-+			hisi_sas_notify_phy_event(phy, HISI_PHYE_LINK_RESET);
-+			return;
-+		}
-+	}
++	exynos_ufs_setup_clocks(hba, true, PRE_CHANGE);
 +
- 	phy->wait_phyup_cnt = 0;
- 	if (phy->identify.target_port_protocols == SAS_PROTOCOL_SSP)
- 		hisi_hba->hw->sl_notify_ssp(hisi_hba, phy_no);
+ 	/* unipro */
+ 	exynos_ufs_config_unipro(ufs);
+ 
++	if (ufs->drv_data->pre_link)
++		ufs->drv_data->pre_link(ufs);
++
+ 	/* m-phy */
+ 	exynos_ufs_phy_init(ufs);
+ 	if (!(ufs->opts & EXYNOS_UFS_OPT_SKIP_CONFIG_PHY_ATTR)) {
+@@ -1000,11 +1005,6 @@ static int exynos_ufs_pre_link(struct ufs_hba *hba)
+ 		exynos_ufs_config_phy_cap_attr(ufs);
+ 	}
+ 
+-	exynos_ufs_setup_clocks(hba, true, PRE_CHANGE);
+-
+-	if (ufs->drv_data->pre_link)
+-		ufs->drv_data->pre_link(ufs);
+-
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
