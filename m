@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E605421ADC7;
-	Tue, 29 Apr 2025 17:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6A521ADC7;
+	Tue, 29 Apr 2025 17:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947490; cv=none; b=bujnugN8hW4E9sJM+Ol+98dbm1Dxkzm/MRpzu1o6YfxCxLT4VV88tsOmiRq2E0mAlk5hK9BzNyrUd3rrYkz7Q47HeqyGdXfyl3JUmN+HyGuhpbzXJO2T9vdWkYLErcKn6zt9Gel2QtoScLBfF0kxCrzCUUsalOfkFzfxOkDWT9E=
+	t=1745947493; cv=none; b=Ea/tS0VfqxWJCkVJqjuJsRN0otCFQfJa3lHYuVjkXA0fl+jMd4GcOHunEb4ljaNf9spfVbW99lXlpYpNnzuQzK96H9Y4PnHyiym0eej8F5WLWl1uUn1GPaDctl2ciP7/17qEcgXKMEJt1hkBJhhHf/4w7KTHpb7Oty9v+eRJx6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947490; c=relaxed/simple;
-	bh=HtRwpXNqlunRhjadqqP3TZ5D7TGu6Bu0WqMMzeyD7Qg=;
+	s=arc-20240116; t=1745947493; c=relaxed/simple;
+	bh=tUTamObTEO3Czi1Ov3ANQMbcPjuPOdJliYFv944WcCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FHstxElDhwsc3k0q+3EbEvMoG4g41dQRK8Bryqwe5+uhQsaNHqnVQMHrsIUBeJGRZI8TQXX13HNwSquBOEDL3xxwKBf4RUMsGS0R1bCp/8uPiOzaXxQBzVL2+cSxFyBL94IsZJ4hjg8ppQXTBNEkuajkcGNlIqRr1Vls5HaRZDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/0BYFid; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tyLgy0vvCdx8Cda7Hu5tHNuXE2Gk+oki5ws109eXNszwQa7SptztYY+Gmg24YwBVFzVvaNBRqmNuoQPkJV7XmHO9dIvoU4+dwkOfPBTdJofuNAdmmiPJ4BJJTH6bsyblyZIfe0lHJE7Cohj0vj0GbBrfbhomkHhwK1GKthiLysQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/64X9Lh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/0BYFid"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B05C4CEE3;
-	Tue, 29 Apr 2025 17:24:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/64X9Lh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B71C4CEE3;
+	Tue, 29 Apr 2025 17:24:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947489;
-	bh=HtRwpXNqlunRhjadqqP3TZ5D7TGu6Bu0WqMMzeyD7Qg=;
+	s=korg; t=1745947492;
+	bh=tUTamObTEO3Czi1Ov3ANQMbcPjuPOdJliYFv944WcCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/0BYFidcKPtI4aTUwp9BPoRF+An4fOncPK5bU2Pns/3LTFM2TjQ7ovIQaIT6PRe5
-	 lfjbAVdW2DfRcc3cxk3l+ITqBVpjXqJoqMl4dW/RolrFvu7dV8F83a9/bGhc68WU3O
-	 oPSzsnLj3AgN/LpSI4orElsEb64V5JCbIcNuxzF0=
+	b=z/64X9Lh4xPUrbF5U+CvfXSQ+cggfPVVZPZqE0GWjOFKVq085ojIYe2Fg98lRu4k/
+	 55CbJpYjAtkB0dbXKGeFu9G9zdDyAGJG/s+cfQYcfcKjsXckRfkfRQUpZggutoDkac
+	 7XGt0Qn6qCcQXYctnzKZPBb+0qXQ+OqlKP3GltU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Libo Chen <libo.chen@oracle.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 003/280] tracing: Verify event formats that have "%*p.."
-Date: Tue, 29 Apr 2025 18:39:04 +0200
-Message-ID: <20250429161115.153929613@linuxfoundation.org>
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	kernel.org
+Subject: [PATCH 6.12 004/280] mm/vmscan: dont try to reclaim hwpoison folio
+Date: Tue, 29 Apr 2025 18:39:05 +0200
+Message-ID: <20250429161115.193296895@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -53,91 +57,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-[ Upstream commit ea8d7647f9ddf1f81e2027ed305299797299aa03 ]
+[ Upstream commit 1b0449544c6482179ac84530b61fc192a6527bfd ]
 
-The trace event verifier checks the formats of trace events to make sure
-that they do not point at memory that is not in the trace event itself or
-in data that will never be freed. If an event references data that was
-allocated when the event triggered and that same data is freed before the
-event is read, then the kernel can crash by reading freed memory.
+Syzkaller reports a bug as follows:
 
-The verifier runs at boot up (or module load) and scans the print formats
-of the events and checks their arguments to make sure that dereferenced
-pointers are safe. If the format uses "%*p.." the verifier will ignore it,
-and that could be dangerous. Cover this case as well.
+Injecting memory failure for pfn 0x18b00e at process virtual address 0x20ffd000
+Memory failure: 0x18b00e: dirty swapcache page still referenced by 2 users
+Memory failure: 0x18b00e: recovery action for dirty swapcache page: Failed
+page: refcount:2 mapcount:0 mapping:0000000000000000 index:0x20ffd pfn:0x18b00e
+memcg:ffff0000dd6d9000
+anon flags: 0x5ffffe00482011(locked|dirty|arch_1|swapbacked|hwpoison|node=0|zone=2|lastcpupid=0xfffff)
+raw: 005ffffe00482011 dead000000000100 dead000000000122 ffff0000e232a7c9
+raw: 0000000000020ffd 0000000000000000 00000002ffffffff ffff0000dd6d9000
+page dumped because: VM_BUG_ON_FOLIO(!folio_test_uptodate(folio))
+------------[ cut here ]------------
+kernel BUG at mm/swap_state.c:184!
+Internal error: Oops - BUG: 00000000f2000800 [#1] SMP
+Modules linked in:
+CPU: 0 PID: 60 Comm: kswapd0 Not tainted 6.6.0-gcb097e7de84e #3
+Hardware name: linux,dummy-virt (DT)
+pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : add_to_swap+0xbc/0x158
+lr : add_to_swap+0xbc/0x158
+sp : ffff800087f37340
+x29: ffff800087f37340 x28: fffffc00052c0380 x27: ffff800087f37780
+x26: ffff800087f37490 x25: ffff800087f37c78 x24: ffff800087f377a0
+x23: ffff800087f37c50 x22: 0000000000000000 x21: fffffc00052c03b4
+x20: 0000000000000000 x19: fffffc00052c0380 x18: 0000000000000000
+x17: 296f696c6f662865 x16: 7461646f7470755f x15: 747365745f6f696c
+x14: 6f6621284f494c4f x13: 0000000000000001 x12: ffff600036d8b97b
+x11: 1fffe00036d8b97a x10: ffff600036d8b97a x9 : dfff800000000000
+x8 : 00009fffc9274686 x7 : ffff0001b6c5cbd3 x6 : 0000000000000001
+x5 : ffff0000c25896c0 x4 : 0000000000000000 x3 : 0000000000000000
+x2 : 0000000000000000 x1 : ffff0000c25896c0 x0 : 0000000000000000
+Call trace:
+ add_to_swap+0xbc/0x158
+ shrink_folio_list+0x12ac/0x2648
+ shrink_inactive_list+0x318/0x948
+ shrink_lruvec+0x450/0x720
+ shrink_node_memcgs+0x280/0x4a8
+ shrink_node+0x128/0x978
+ balance_pgdat+0x4f0/0xb20
+ kswapd+0x228/0x438
+ kthread+0x214/0x230
+ ret_from_fork+0x10/0x20
 
-Also add to the sample code a use case of "%*pbl".
+I can reproduce this issue with the following steps:
 
-Link: https://lore.kernel.org/all/bcba4d76-2c3f-4d11-baf0-02905db953dd@oracle.com/
+1) When a dirty swapcache page is isolated by reclaim process and the
+   page isn't locked, inject memory failure for the page.
+   me_swapcache_dirty() clears uptodate flag and tries to delete from lru,
+   but fails.  Reclaim process will put the hwpoisoned page back to lru.
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: 5013f454a352c ("tracing: Add check of trace event print fmts for dereferencing pointers")
-Link: https://lore.kernel.org/20250327195311.2d89ec66@gandalf.local.home
-Reported-by: Libo Chen <libo.chen@oracle.com>
-Reviewed-by: Libo Chen <libo.chen@oracle.com>
-Tested-by: Libo Chen <libo.chen@oracle.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+2) The process that maps the hwpoisoned page exits, the page is deleted
+   the page will never be freed and will be in the lru forever.
+
+3) If we trigger a reclaim again and tries to reclaim the page,
+   add_to_swap() will trigger VM_BUG_ON_FOLIO due to the uptodate flag is
+   cleared.
+
+To fix it, skip the hwpoisoned page in shrink_folio_list().  Besides, the
+hwpoison folio may not be unmapped by hwpoison_user_mappings() yet, unmap
+it in shrink_folio_list(), otherwise the folio will fail to be unmaped by
+hwpoison_user_mappings() since the folio isn't in lru list.
+
+Link: https://lkml.kernel.org/r/20250318083939.987651-3-tujinjiang@huawei.com
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
+Acked-by: Miaohe Lin <linmiaohe@huawei.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: <stable@vger,kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events.c                | 7 +++++++
- samples/trace_events/trace-events-sample.h | 8 ++++++--
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ mm/vmscan.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-index 11dea25ef880a..15fb255733fb6 100644
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -470,6 +470,7 @@ static void test_event_printk(struct trace_event_call *call)
- 			case '%':
- 				continue;
- 			case 'p':
-+ do_pointer:
- 				/* Find dereferencing fields */
- 				switch (fmt[i + 1]) {
- 				case 'B': case 'R': case 'r':
-@@ -498,6 +499,12 @@ static void test_event_printk(struct trace_event_call *call)
- 						continue;
- 					if (fmt[i + j] == '*') {
- 						star = true;
-+						/* Handle %*pbl case */
-+						if (!j && fmt[i + 1] == 'p') {
-+							arg++;
-+							i++;
-+							goto do_pointer;
-+						}
- 						continue;
- 					}
- 					if ((fmt[i + j] == 's')) {
-diff --git a/samples/trace_events/trace-events-sample.h b/samples/trace_events/trace-events-sample.h
-index 999f78d380aee..1a05fc1533531 100644
---- a/samples/trace_events/trace-events-sample.h
-+++ b/samples/trace_events/trace-events-sample.h
-@@ -319,7 +319,8 @@ TRACE_EVENT(foo_bar,
- 		__assign_cpumask(cpum, cpumask_bits(mask));
- 	),
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 39b3c7f35ea85..0eb5d510d4f6b 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -1079,6 +1079,13 @@ static unsigned int shrink_folio_list(struct list_head *folio_list,
+ 		if (!folio_trylock(folio))
+ 			goto keep;
  
--	TP_printk("foo %s %d %s %s %s %s %s %s (%s) (%s) %s", __entry->foo, __entry->bar,
-+	TP_printk("foo %s %d %s %s %s %s %s %s (%s) (%s) %s [%d] %*pbl",
-+		  __entry->foo, __entry->bar,
++		if (folio_contain_hwpoisoned_page(folio)) {
++			unmap_poisoned_folio(folio, folio_pfn(folio), false);
++			folio_unlock(folio);
++			folio_put(folio);
++			continue;
++		}
++
+ 		VM_BUG_ON_FOLIO(folio_test_active(folio), folio);
  
- /*
-  * Notice here the use of some helper functions. This includes:
-@@ -370,7 +371,10 @@ TRACE_EVENT(foo_bar,
- 
- 		  __get_str(str), __get_str(lstr),
- 		  __get_bitmask(cpus), __get_cpumask(cpum),
--		  __get_str(vstr))
-+		  __get_str(vstr),
-+		  __get_dynamic_array_len(cpus),
-+		  __get_dynamic_array_len(cpus),
-+		  __get_dynamic_array(cpus))
- );
- 
- /*
+ 		nr_pages = folio_nr_pages(folio);
 -- 
 2.39.5
 
