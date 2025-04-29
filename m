@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4067127453;
-	Tue, 29 Apr 2025 17:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA7D27453;
+	Tue, 29 Apr 2025 17:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946804; cv=none; b=rUQT+GOAwr7BoxrDHGKHqcX5q4cMn8/vqQMGEft67i/3QcjGx8pRNzSiePTSkqkJqPIXvOMMyKmyt6nKvCTcAcC7civBwdjutWb6qZ0ETY8cgkT6KzSmehAJa1hFwC9+zu6NvBJRlI+xPbA4cdRE4XxlYq1qdrG2ktTHs1I4bqA=
+	t=1745946807; cv=none; b=caUmjuw/WAlpSvmoVF+/IFq0S7dRlECS7b2/Oi20yS6izEon3I6hZPPQrd8D1C58zCbq3BtLoLz+Y+5X0P1me9v4O9Yu5b8DaKBpLIVJDDtn8eiN1sVEcIZoRByKHgUlRRxLQTW+i13Ep0Igsv46zJTnSVQacFIxvHDzT1eu2uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946804; c=relaxed/simple;
-	bh=MJ5iiKWvpUmZrDJyLOaf66S/XGBgGr5YOC2ERE50U1Q=;
+	s=arc-20240116; t=1745946807; c=relaxed/simple;
+	bh=OwxsJnoObmk8JR3QIjbCx4HI1bG12051WCBjIp8n56Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Yrh+awmjwV695G5ebw6fpFhH3zgq6+AOjkEtZFXimDgQ5WBH5UVPxxZTKxlsxdxUxMgWhwUK4ZRFEyJrrcqoYRb2Tir+5NmrPOPwJxZrKDaaiJQjSPd6BletpN7l2E+gMqdjlvbwnJNnMaC5/0X90+Rc3CTw1A1Dw3fHh0nBhAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fIDL2NLm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PVaoe2fAiMDmSlv71XR7hO1qOHCCmyvStzYiopEYC/HBmH77NcR1B6KrrYWx7KoJna6tWvjQ802N1kokjqjX9Jin2OYSCh6yzbkXBxXRnTpnPreNpxbe6Bu90o+u+7qaFQ0EXem3lTxnC5v2vqGZtN18oS0E9i27ns+dg1mKXeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cDu7spia; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fIDL2NLm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEBAFC4CEE3;
-	Tue, 29 Apr 2025 17:13:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cDu7spia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4C4C4CEE3;
+	Tue, 29 Apr 2025 17:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946804;
-	bh=MJ5iiKWvpUmZrDJyLOaf66S/XGBgGr5YOC2ERE50U1Q=;
+	s=korg; t=1745946807;
+	bh=OwxsJnoObmk8JR3QIjbCx4HI1bG12051WCBjIp8n56Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fIDL2NLm/pzGr1/EJ2XJqEF+avKYpzi7xh6XrBo/AfSOgLcyaYImgFqnuHwjhqkZq
-	 oHwFFpiJd7LOChErwX3hVg2vM3GO/5Aa+thjUPH7aaIMk23GjtpPDg+hstgIMAWBCW
-	 Ah2lAIQ1IMmpVodVdYKDrjsSPNU4ZcAG+CC3bz/0=
+	b=cDu7spiahxCIWyhOKDVQB6Ul9JWA7IQB3Ks2m7bQLU5XBj8t2pzeNVe8WZkg9uOlw
+	 fpHhNpSlX6qfQ4OgzQbDMCIjumXpJYh5O13YSsld8FUN+FikLtB6HCIo54+dB/NTR6
+	 pcZH0nTs8/xWk3JCq1iYYDXsX21PJcCJRke+7spU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manjunatha Venkatesh <manjunatha.venkatesh@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 5.10 075/286] i3c: Add NULL pointer check in i3c_master_queue_ibi()
-Date: Tue, 29 Apr 2025 18:39:39 +0200
-Message-ID: <20250429161110.936982401@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 076/286] jbd2: remove wrong sb->s_sequence check
+Date: Tue, 29 Apr 2025 18:39:40 +0200
+Message-ID: <20250429161110.976479051@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -45,60 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manjunatha Venkatesh <manjunatha.venkatesh@nxp.com>
+From: Jan Kara <jack@suse.cz>
 
-commit bd496a44f041da9ef3afe14d1d6193d460424e91 upstream.
+commit e6eff39dd0fe4190c6146069cc16d160e71d1148 upstream.
 
-The I3C master driver may receive an IBI from a target device that has not
-been probed yet. In such cases, the master calls `i3c_master_queue_ibi()`
-to queue an IBI work task, leading to "Unable to handle kernel read from
-unreadable memory" and resulting in a kernel panic.
+Journal emptiness is not determined by sb->s_sequence == 0 but rather by
+sb->s_start == 0 (which is set a few lines above). Furthermore 0 is a
+valid transaction ID so the check can spuriously trigger. Remove the
+invalid WARN_ON.
 
-Typical IBI handling flow:
-1. The I3C master scans target devices and probes their respective drivers.
-2. The target device driver calls `i3c_device_request_ibi()` to enable IBI
-   and assigns `dev->ibi = ibi`.
-3. The I3C master receives an IBI from the target device and calls
-   `i3c_master_queue_ibi()` to queue the target device driver’s IBI
-   handler task.
-
-However, since target device events are asynchronous to the I3C probe
-sequence, step 3 may occur before step 2, causing `dev->ibi` to be `NULL`,
-leading to a kernel panic.
-
-Add a NULL pointer check in `i3c_master_queue_ibi()` to prevent accessing
-an uninitialized `dev->ibi`, ensuring stability.
-
-Fixes: 3a379bbcea0af ("i3c: Add core I3C infrastructure")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/lkml/Z9gjGYudiYyl3bSe@lizhi-Precision-Tower-5810/
-Signed-off-by: Manjunatha Venkatesh <manjunatha.venkatesh@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250326123047.2797946-1-manjunatha.venkatesh@nxp.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20250206094657.20865-3-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/jbd2/journal.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -2282,6 +2282,9 @@ static void i3c_master_unregister_i3c_de
-  */
- void i3c_master_queue_ibi(struct i3c_dev_desc *dev, struct i3c_ibi_slot *slot)
- {
-+	if (!dev->ibi || !slot)
-+		return;
-+
- 	atomic_inc(&dev->ibi->pending_ibis);
- 	queue_work(dev->common.master->wq, &slot->work);
- }
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -1649,7 +1649,6 @@ int jbd2_journal_update_sb_log_tail(jour
+ 
+ 	/* Log is no longer empty */
+ 	write_lock(&journal->j_state_lock);
+-	WARN_ON(!sb->s_sequence);
+ 	journal->j_flags &= ~JBD2_FLUSHED;
+ 	write_unlock(&journal->j_state_lock);
+ 
 
 
