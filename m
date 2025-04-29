@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C881821ABC1;
-	Tue, 29 Apr 2025 17:48:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59FC5242D73;
+	Tue, 29 Apr 2025 17:48:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948908; cv=none; b=fhS/KvW8vbEkjFZqzA9FhsbxHq7fmBiIwgl5zI2t3bbJgZ0XEOxxIYk/jdy0b9p8O48Ng2KcjePilgTopJ7ZZhT+t/+ireSvlB/Wp0MD8zDWZ+QDCmp+wytIzI9fE/m8xmlRPF3ibC6r/k4SHrlEQab+XHudAS7QodgHaGKJVZ4=
+	t=1745948911; cv=none; b=bxtepDf75Hr4aMtixph/H9w3tBGcKP7MBDPtrJ3FKJ8AQHVUV91T/LXb8cCJxn5Eyo11LcJJ17ZvZI3Gp/hE8i9auKVwJOLzYikQUTzS22TR6mPNUk/YjOTxFPOYivlFDaR0wK/mq/ltnc1NF/OgVtsUoJd7tNWmQq9Qkods0hQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948908; c=relaxed/simple;
-	bh=mmnWJlaFMxsvSu7l6X+mQadvG6zmXjv76Ppom0d7dmY=;
+	s=arc-20240116; t=1745948911; c=relaxed/simple;
+	bh=6dueBsiFMLXg+5OTKLmgjYfNsHoj0UU6GHAiZgUSijw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dh/mZKtmT17EASY3Ibk9Xsz3xJSCziH+9DeSn1ShiH6qDVpDxlRVCPIvR1tF1Y1U5sVfLDNcNaBgDIcry5wvUGXIIkST31t5GCRU5hdFymQ6sRtcxm332F0b7xysTJanimlOrHQbUJOMy5qzk1UevAJOOl+zMcBFE8hgQw2bI3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nnzAUm1C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PIA9wKXh9f7jeOWf6iegWJPQx63JSuPENn/P9aHJaWmZMF8mwJtw7Zp/fMqcvxvOPGuhFdhyXyZIhjY/Xa/8JBRXuJ/aO4y02PYXMwt0X4C9X31oGySXSwPPWjMPMre2TTzn6i14bsHb1JbRbvHiJ+Jdgi2Wr3HMJcvi6GMQ6Mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/Tbl/vz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nnzAUm1C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D407C4CEE3;
-	Tue, 29 Apr 2025 17:48:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/Tbl/vz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF409C4CEE3;
+	Tue, 29 Apr 2025 17:48:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948908;
-	bh=mmnWJlaFMxsvSu7l6X+mQadvG6zmXjv76Ppom0d7dmY=;
+	s=korg; t=1745948911;
+	bh=6dueBsiFMLXg+5OTKLmgjYfNsHoj0UU6GHAiZgUSijw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nnzAUm1CKGuP9it1LP4+1zY/RB4MY96CSHakiK0mwWIb2SEb4BQl9HraIdgCpG9xW
-	 PoEdElGYbSTJ1pJQqBxOXI9IDiDuzsVDbOZf6sMqYB6lD0YN/+oNLlTkzX1bspn64F
-	 45OoLG12wLvfQmJ7pmkvwQdKqKdHfj2G0pxbdmvg=
+	b=A/Tbl/vzKDWtLfU5vZFDCeGkHLyy3IRhQCvDMseGZcsGde0Ktu54MElKeez9qEfIU
+	 vzWxdZKIW/F16+4NYQTD6Q/Pb4tQ3cnXf8XPFBvNrLP9kHI3Z6shbWAjPYcNzLM9/M
+	 Mx5rQI7HvWYdLXBAPtyNbAP07GmrIUeDb61fN9lM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	WangYuli <wangyuli@uniontech.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 152/373] riscv: KGDB: Remove ".option norvc/.option rvc" for kgdb_compiled_break
-Date: Tue, 29 Apr 2025 18:40:29 +0200
-Message-ID: <20250429161129.407966867@linuxfoundation.org>
+Subject: [PATCH 5.15 161/373] nfsd: decrease sc_count directly if fail to queue dl_recall
+Date: Tue, 29 Apr 2025 18:40:38 +0200
+Message-ID: <20250429161129.763265328@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -54,61 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Li Lingfeng <lilingfeng3@huawei.com>
 
-[ Upstream commit 550c2aa787d1b06efcb11de1877354502a1237f2 ]
+[ Upstream commit a1d14d931bf700c1025db8c46d6731aa5cf440f9 ]
 
-[ Quoting Samuel Holland: ]
+A deadlock warning occurred when invoking nfs4_put_stid following a failed
+dl_recall queue operation:
+            T1                            T2
+                                nfs4_laundromat
+                                 nfs4_get_client_reaplist
+                                  nfs4_anylock_blockers
+__break_lease
+ spin_lock // ctx->flc_lock
+                                   spin_lock // clp->cl_lock
+                                   nfs4_lockowner_has_blockers
+                                    locks_owner_has_blockers
+                                     spin_lock // flctx->flc_lock
+ nfsd_break_deleg_cb
+  nfsd_break_one_deleg
+   nfs4_put_stid
+    refcount_dec_and_lock
+     spin_lock // clp->cl_lock
 
-  This is a separate issue, but using ".option rvc" here is a bug.
-  It will unconditionally enable the C extension for the rest of
-  the file, even if the kernel is being built with CONFIG_RISCV_ISA_C=n.
+When a file is opened, an nfs4_delegation is allocated with sc_count
+initialized to 1, and the file_lease holds a reference to the delegation.
+The file_lease is then associated with the file through kernel_setlease.
 
-[ Quoting Palmer Dabbelt: ]
+The disassociation is performed in nfsd4_delegreturn via the following
+call chain:
+nfsd4_delegreturn --> destroy_delegation --> destroy_unhashed_deleg -->
+nfs4_unlock_deleg_lease --> kernel_setlease --> generic_delete_lease
+The corresponding sc_count reference will be released after this
+disassociation.
 
-  We're just looking at the address of kgdb_compiled_break, so it's
-  fine if it ends up as a c.ebreak.
+Since nfsd_break_one_deleg executes while holding the flc_lock, the
+disassociation process becomes blocked when attempting to acquire flc_lock
+in generic_delete_lease. This means:
+1) sc_count in nfsd_break_one_deleg will not be decremented to 0;
+2) The nfs4_put_stid called by nfsd_break_one_deleg will not attempt to
+acquire cl_lock;
+3) Consequently, no deadlock condition is created.
 
-[ Quoting Alexandre Ghiti: ]
+Given that sc_count in nfsd_break_one_deleg remains non-zero, we can
+safely perform refcount_dec on sc_count directly. This approach
+effectively avoids triggering deadlock warnings.
 
-  .option norvc is used to prevent the assembler from using compressed
-  instructions, but it's generally used when we need to ensure the
-  size of the instructions that are used, which is not the case here
-  as noted by Palmer since we only care about the address. So yes
-  it will work fine with C enabled :)
-
-So let's just remove them all.
-
-Link: https://lore.kernel.org/all/4b4187c1-77e5-44b7-885f-d6826723dd9a@sifive.com/
-Link: https://lore.kernel.org/all/mhng-69513841-5068-441d-be8f-2aeebdc56a08@palmer-ri-x1c9a/
-Link: https://lore.kernel.org/all/23693e7f-4fff-40f3-a437-e06d827278a5@ghiti.fr/
-Fixes: fe89bd2be866 ("riscv: Add KGDB support")
-Cc: Samuel Holland <samuel.holland@sifive.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Link: https://lore.kernel.org/r/8B431C6A4626225C+20250411073222.56820-2-wangyuli@uniontech.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 230ca758453c ("nfsd: put dl_stid if fail to queue dl_recall")
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/kgdb.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/nfsd/nfs4state.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/kgdb.c b/arch/riscv/kernel/kgdb.c
-index b0db3350d243b..1d83b36967212 100644
---- a/arch/riscv/kernel/kgdb.c
-+++ b/arch/riscv/kernel/kgdb.c
-@@ -276,9 +276,7 @@ void kgdb_arch_set_pc(struct pt_regs *regs, unsigned long pc)
- noinline void arch_kgdb_breakpoint(void)
- {
- 	asm(".global kgdb_compiled_break\n"
--	    ".option norvc\n"
--	    "kgdb_compiled_break: ebreak\n"
--	    ".option rvc\n");
-+	    "kgdb_compiled_break: ebreak\n");
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 5e576b1f46c79..1d09fb4ff5a5e 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -4944,7 +4944,7 @@ static void nfsd_break_one_deleg(struct nfs4_delegation *dp)
+ 	queued = nfsd4_run_cb(&dp->dl_recall);
+ 	WARN_ON_ONCE(!queued);
+ 	if (!queued)
+-		nfs4_put_stid(&dp->dl_stid);
++		refcount_dec(&dp->dl_stid.sc_count);
  }
  
- void kgdb_arch_handle_qxfer_pkt(char *remcom_in_buffer,
+ /* Called from break_lease() with flc_lock held. */
 -- 
 2.39.5
 
