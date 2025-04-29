@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F032251788;
-	Tue, 29 Apr 2025 16:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1179A251788;
+	Tue, 29 Apr 2025 16:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945643; cv=none; b=bFGwX82EFSqkoF3JUv4PHUYzWsbwHriATqu0O25xpLh4O8AHbjXBvdrpgLSA0Z9yuaMjB+dHzPWs+pbCFr+fw4p8ZXez5vVl1yHoMDBQDjtlfDsMpFNcr5Ps/M31Bir137KL7v5LieDE0vhMCebtYGEovda5v2az5cxO8NlSP1Q=
+	t=1745945646; cv=none; b=K3kY25YVxTgVUp3vlimTEbaE0T7Ac+ciiT65nd4OXZ4fupbqPl3vm3kRhwplr0XYuog8IUsadVlGxfvdHrVvtMfBhFyoZ5bZdD9AC5YPT6F9QKjOuUIdwYUkks+5agYhBywCJgEiy3z5Qi3PmB5nBnSigsVbjAaxNemrr5Laog4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945643; c=relaxed/simple;
-	bh=Iq0EdHNZ3J4agLhKd2KGDbEJ3ANRR2sUybJQjQqBYMc=;
+	s=arc-20240116; t=1745945646; c=relaxed/simple;
+	bh=Cge39suPAAIrdX2qfTX0t/OxJJIwM18xGaCkBKJjKQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Pnw0eWErG92OirRtT4hrkxj8y6aYAPZii3COLHyWNl4ySgi+cJ7Lx228ylnQ1TXrBw+uHOlFqLWa/eL/+IF8W1MZy0Yrw+oUTKLw3ET3knWKcQqJB9nS3N4XvqEazUeffYr+VCshcAcObgjySg2qxhHkDjxxrz+6RSQfthvDCEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qjt48XEj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JP5hkHuZYUa71Z6vjiBWSpk7b5HCa1ADarSWXIsPh/0Hr4kLz1NCqYVyXhZOQwU4VGhNGtgHJ3PpIXvVLMfLwgNCGtfHTd6dA1BSr8LEU2SoPwmZMw+bWk84P+IfTslMSRBLke3E/4anVfpp160wsun09JNYDgQnXp+PRYaIjPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ScfW/zW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qjt48XEj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93969C4AF09;
-	Tue, 29 Apr 2025 16:54:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ScfW/zW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D22DC4CEE9;
+	Tue, 29 Apr 2025 16:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945643;
-	bh=Iq0EdHNZ3J4agLhKd2KGDbEJ3ANRR2sUybJQjQqBYMc=;
+	s=korg; t=1745945645;
+	bh=Cge39suPAAIrdX2qfTX0t/OxJJIwM18xGaCkBKJjKQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qjt48XEjAGgIoFGTnXA0dG5hpCUJ82gZCTxWKx493HmeeRUTL62njQ0w8fFaEAoE6
-	 wLhOIbQB8oZ6jWEoYQSQB5fqgT/XONWjm19Svl2dIXhMRYB4Q4NxIdoOlZKm9J+HNc
-	 b3Q5FtCw7Y5iG5CTWrlR3AmpvS6iQmVtud/3BAQQ=
+	b=0ScfW/zWLe7MGb48WhPTipGe6S+a66B9p6O/pd3A1Wr/32dV1hBV+OPEkShytj+0j
+	 m09Zq1iEAQVnHQ+jG0ABXmN0+8AzstKj7BmRD81tWB1iaEaqK/eRTmAIjC+NdYhbkV
+	 KeEWsHVfXDu+0jbJ3zBVh7u6VLyAqdFhhuQcTZi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 5.4 179/179] MIPS: cm: Fix warning if MIPS_CM is disabled
-Date: Tue, 29 Apr 2025 18:42:00 +0200
-Message-ID: <20250429161056.636773338@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ralph Siemsen <ralph.siemsen@linaro.org>,
+	Peter Chen <peter.chen@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Subject: [PATCH 5.4 153/179] usb: cdns3: Fix deadlock when using NCM gadget
+Date: Tue, 29 Apr 2025 18:41:34 +0200
+Message-ID: <20250429161055.573171960@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -43,42 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+From: Ralph Siemsen <ralph.siemsen@linaro.org>
 
-commit b73c3ccdca95c237750c981054997c71d33e09d7 upstream.
+commit a1059896f2bfdcebcdc7153c3be2307ea319501f upstream.
 
-Commit e27fbe16af5c ("MIPS: cm: Detect CM quirks from device tree")
-introduced
+The cdns3 driver has the same NCM deadlock as fixed in cdnsp by commit
+58f2fcb3a845 ("usb: cdnsp: Fix deadlock issue during using NCM gadget").
 
-arch/mips/include/asm/mips-cm.h:119:13: error: ‘mips_cm_update_property’
-	defined but not used [-Werror=unused-function]
+Under PREEMPT_RT the deadlock can be readily triggered by heavy network
+traffic, for example using "iperf --bidir" over NCM ethernet link.
 
-Fix this by making empty function implementation inline
+The deadlock occurs because the threaded interrupt handler gets
+preempted by a softirq, but both are protected by the same spinlock.
+Prevent deadlock by disabling softirq during threaded irq handler.
 
-Fixes: e27fbe16af5c ("MIPS: cm: Detect CM quirks from device tree")
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: stable <stable@kernel.org>
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Signed-off-by: Ralph Siemsen <ralph.siemsen@linaro.org>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/r/20250318-rfs-cdns3-deadlock-v2-1-bfd9cfcee732@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/include/asm/mips-cm.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/cdns3/gadget.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/mips/include/asm/mips-cm.h
-+++ b/arch/mips/include/asm/mips-cm.h
-@@ -104,7 +104,7 @@ static inline bool mips_cm_present(void)
- #ifdef CONFIG_MIPS_CM
- extern void mips_cm_update_property(void);
- #else
--static void mips_cm_update_property(void) {}
-+static inline void mips_cm_update_property(void) {}
- #endif
+--- a/drivers/usb/cdns3/gadget.c
++++ b/drivers/usb/cdns3/gadget.c
+@@ -1920,6 +1920,7 @@ static int cdns3_gadget_ep_disable(struc
+ 			  "%s is already disabled\n", priv_ep->name))
+ 		return 0;
  
- /**
++	local_bh_disable();
+ 	spin_lock_irqsave(&priv_dev->lock, flags);
+ 
+ 	trace_cdns3_gadget_ep_disable(priv_ep);
+@@ -1976,6 +1977,7 @@ static int cdns3_gadget_ep_disable(struc
+ 	priv_ep->flags &= ~EP_ENABLED;
+ 
+ 	spin_unlock_irqrestore(&priv_dev->lock, flags);
++	local_bh_enable();
+ 
+ 	return ret;
+ }
 
 
