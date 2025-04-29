@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBAC12472B4;
-	Tue, 29 Apr 2025 17:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5946221DA7;
+	Tue, 29 Apr 2025 17:16:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947008; cv=none; b=L7JqIKwrzzhsedYprgN41clzuQKzEafiUw1MyslPPB9+A8qf5EbdUq/WTKTMABGnhYtPbdtNMYymXaoSIofeH4oesHriKVpLSmuPnOn83lR0B668xnXEHi/pDcyaEXJVwJHdfS7c/k3irRN0KdX2hLccZIRQzGMPBnj6cK5pd7Y=
+	t=1745947011; cv=none; b=mwpr/3yGTZcMCdXUXt9TtdRPrdCoQj75qZOUWlYiJJ/ePY9zcoLxcfG30FsWLamlruBBtynDNDiB2faLSUK1wsVpdO4Xhcqes/FWVP1IXvdBKbJedN3WmA8fDJQLkMYpPGrmOflr3sihknq3+Dlia35DBi8MQG/eNaoeftAx9yQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947008; c=relaxed/simple;
-	bh=Vak9bmKGuGWmKNsPzp1aMq4+FN9RusbwreWGCjhdcQw=;
+	s=arc-20240116; t=1745947011; c=relaxed/simple;
+	bh=W7mYE3B4mmsa5K0sxjRjk1AWWkTDidf29HQR8EfsYd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QEH3Lwnb8RT4FOP2+fxykRogs/0UfkZB4i0CZPMLGnGE/KGOwuze9MtR1lESBiLODGBnBEgUt8daU5sIhr2G4GmRaPplgWHr8uUTRZKKrH/A+yrI5zbzhiB1p2aRqW6VRtr4/m83vXUrXFCngaIQDvIN/czj2bIN6Smcxt/nqgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mH0aA2Y2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HxJinXEmyHpV0x+A8KSGS3JEAyPjcaHb8WcN1G/d80YIEZ2wOpIhVPe0ZGTJqIbwFyX8IzUXy2B3D4wyf8BpC4VgXzn8VNGHgdIAlYsXHfIekF3pniNJ0NGw5fWdcA/PKCEq+lEiqi/wcNLSPKpELV89Epp0+FnUglxF4mBKsko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ALLZkxQr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mH0aA2Y2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BBDC4CEE3;
-	Tue, 29 Apr 2025 17:16:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ALLZkxQr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362F4C4CEE3;
+	Tue, 29 Apr 2025 17:16:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947008;
-	bh=Vak9bmKGuGWmKNsPzp1aMq4+FN9RusbwreWGCjhdcQw=;
+	s=korg; t=1745947011;
+	bh=W7mYE3B4mmsa5K0sxjRjk1AWWkTDidf29HQR8EfsYd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mH0aA2Y2xDMYy2aVjXP5+qphL7FQvucoL6nV11FGgsrHrNzRp7/mbJ5kGWHtEAFMq
-	 g8DFCX6XBIwWidB7aiy5HmvjzNiEKtxdYZxzoKEKdsWW2F+5oGxfHmPHsSd5p/q10f
-	 /J3RjJq0EsCiEKz5N99us4N0sAwXJSEIvQUUgHpo=
+	b=ALLZkxQrF5n7qTRFI9oqLQCKit9BEWfhDAXMu4dLsfTPcYRs3/86W4KVdoRXXZbCd
+	 Tg2N/03mMwCLJBec0iYqRpL36or0Nro0a6XAd8EfuJMhGOq/uZ/mZ/Uw+is2Zjn30J
+	 +sA7CB6Mhm46xYFbHCpUZad/WDboc9UPMcid3sbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Bainbridge <chris.bainbridge@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Stable@vger.kernel.org,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 5.10 142/286] drm/nouveau: prime: fix ttm_bo_delayed_delete oops
-Date: Tue, 29 Apr 2025 18:40:46 +0200
-Message-ID: <20250429161113.721335413@linuxfoundation.org>
+	stable@kernel.org,
+	Rolf Eike Beer <eb@emlix.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+Subject: [PATCH 5.10 143/286] drm/sti: remove duplicate object names
+Date: Tue, 29 Apr 2025 18:40:47 +0200
+Message-ID: <20250429161113.762777430@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -46,113 +46,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Bainbridge <chris.bainbridge@gmail.com>
+From: Rolf Eike Beer <eb@emlix.com>
 
-commit 8ec0fbb28d049273bfd4f1e7a5ae4c74884beed3 upstream.
+commit 7fb6afa9125fc111478615e24231943c4f76cc2e upstream.
 
-Fix an oops in ttm_bo_delayed_delete which results from dererencing a
-dangling pointer:
+When merging 2 drivers common object files were not deduplicated.
 
-Oops: general protection fault, probably for non-canonical address 0x6b6b6b6b6b6b6b7b: 0000 [#1] PREEMPT SMP
-CPU: 4 UID: 0 PID: 1082 Comm: kworker/u65:2 Not tainted 6.14.0-rc4-00267-g505460b44513-dirty #216
-Hardware name: LENOVO 82N6/LNVNB161216, BIOS GKCN65WW 01/16/2024
-Workqueue: ttm ttm_bo_delayed_delete [ttm]
-RIP: 0010:dma_resv_iter_first_unlocked+0x55/0x290
-Code: 31 f6 48 c7 c7 00 2b fa aa e8 97 bd 52 ff e8 a2 c1 53 00 5a 85 c0 74 48 e9 88 01 00 00 4c 89 63 20 4d 85 e4 0f 84 30 01 00 00 <41> 8b 44 24 10 c6 43 2c 01 48 89 df 89 43 28 e8 97 fd ff ff 4c 8b
-RSP: 0018:ffffbf9383473d60 EFLAGS: 00010202
-RAX: 0000000000000001 RBX: ffffbf9383473d88 RCX: 0000000000000000
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffffbf9383473d78 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: 6b6b6b6b6b6b6b6b
-R13: ffffa003bbf78580 R14: ffffa003a6728040 R15: 00000000000383cc
-FS:  0000000000000000(0000) GS:ffffa00991c00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000758348024dd0 CR3: 000000012c259000 CR4: 0000000000f50ef0
-PKRU: 55555554
-Call Trace:
- <TASK>
- ? __die_body.cold+0x19/0x26
- ? die_addr+0x3d/0x70
- ? exc_general_protection+0x159/0x460
- ? asm_exc_general_protection+0x27/0x30
- ? dma_resv_iter_first_unlocked+0x55/0x290
- dma_resv_wait_timeout+0x56/0x100
- ttm_bo_delayed_delete+0x69/0xb0 [ttm]
- process_one_work+0x217/0x5c0
- worker_thread+0x1c8/0x3d0
- ? apply_wqattrs_cleanup.part.0+0xc0/0xc0
- kthread+0x10b/0x240
- ? kthreads_online_cpu+0x140/0x140
- ret_from_fork+0x40/0x70
- ? kthreads_online_cpu+0x140/0x140
- ret_from_fork_asm+0x11/0x20
- </TASK>
-
-The cause of this is:
-
-- drm_prime_gem_destroy calls dma_buf_put(dma_buf) which releases the
-  reference to the shared dma_buf. The reference count is 0, so the
-  dma_buf is destroyed, which in turn decrements the corresponding
-  amdgpu_bo reference count to 0, and the amdgpu_bo is destroyed -
-  calling drm_gem_object_release then dma_resv_fini (which destroys the
-  reservation object), then finally freeing the amdgpu_bo.
-
-- nouveau_bo obj->bo.base.resv is now a dangling pointer to the memory
-  formerly allocated to the amdgpu_bo.
-
-- nouveau_gem_object_del calls ttm_bo_put(&nvbo->bo) which calls
-  ttm_bo_release, which schedules ttm_bo_delayed_delete.
-
-- ttm_bo_delayed_delete runs and dereferences the dangling resv pointer,
-  resulting in a general protection fault.
-
-Fix this by moving the drm_prime_gem_destroy call from
-nouveau_gem_object_del to nouveau_bo_del_ttm. This ensures that it will
-be run after ttm_bo_delayed_delete.
-
-Signed-off-by: Chris Bainbridge <chris.bainbridge@gmail.com>
-Suggested-by: Christian König <christian.koenig@amd.com>
-Fixes: 22b33e8ed0e3 ("nouveau: add PRIME support")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3937
-Cc: Stable@vger.kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/Z-P4epVK8k7tFZ7C@debian.local
+Fixes: dcec16efd677 ("drm/sti: Build monolithic driver")
+Cc: stable@kernel.org
+Signed-off-by: Rolf Eike Beer <eb@emlix.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/1920148.tdWV9SEqCh@devpool47.emlix.com
+Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_bo.c  |    3 +++
- drivers/gpu/drm/nouveau/nouveau_gem.c |    3 ---
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/sti/Makefile |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_bo.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_bo.c
-@@ -143,6 +143,9 @@ nouveau_bo_del_ttm(struct ttm_buffer_obj
- 	nouveau_bo_del_io_reserve_lru(bo);
- 	nv10_bo_put_tile_region(dev, nvbo->tile, NULL);
- 
-+	if (bo->base.import_attach)
-+		drm_prime_gem_destroy(&bo->base, bo->sg);
-+
- 	/*
- 	 * If nouveau_bo_new() allocated this buffer, the GEM object was never
- 	 * initialized, so don't attempt to release it.
---- a/drivers/gpu/drm/nouveau/nouveau_gem.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_gem.c
-@@ -51,9 +51,6 @@ nouveau_gem_object_del(struct drm_gem_ob
- 		return;
- 	}
- 
--	if (gem->import_attach)
--		drm_prime_gem_destroy(gem, nvbo->bo.sg);
--
- 	ttm_bo_put(&nvbo->bo);
- 
- 	pm_runtime_mark_last_busy(dev);
+--- a/drivers/gpu/drm/sti/Makefile
++++ b/drivers/gpu/drm/sti/Makefile
+@@ -7,8 +7,6 @@ sti-drm-y := \
+ 	sti_compositor.o \
+ 	sti_crtc.o \
+ 	sti_plane.o \
+-	sti_crtc.o \
+-	sti_plane.o \
+ 	sti_hdmi.o \
+ 	sti_hdmi_tx3g4c28phy.o \
+ 	sti_dvo.o \
 
 
