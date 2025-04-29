@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F49211A0B;
-	Tue, 29 Apr 2025 17:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58A4242902;
+	Tue, 29 Apr 2025 17:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946488; cv=none; b=jWhsKUF/oXhP6Gpj4elSQZuvtuJgpC5RoYJ1mVmSuSLqnmgMhn7aCxxX8RCCfeyQTdD1iGMbq+zMapIBEggubmDLhYqRz+srQIODfFhIAi8MMB4rSVZtD8U/iyR3T5PD9HlBs6E7UqU/PKKhiGcYxBYhHBIoWWSPs9CUSRGuKiE=
+	t=1745946491; cv=none; b=O7oOFOMnX5X0eMUMiCUGixkCbt4wHyn1VMTgpRq9wCi+97hurLepfIAzD2QhojJPRm4S6JsWgJcISDrluGAyKAw4v422Y0wsVfzHVSY8zNrNrMwkEDheTIJSAySPKbxKOfaCgaqTqYhAHze0pvVUOWpSxBmdlZ2j4uz/3Sg2Iho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946488; c=relaxed/simple;
-	bh=Hs/fII55j4lQ5a0VD7EA94GYTiD8wqe6qXHkPdtuKtQ=;
+	s=arc-20240116; t=1745946491; c=relaxed/simple;
+	bh=LBs6WnlVjkD6yPY9QxQKtbiO73tNE1eSE8czxu04xfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RNGjtnXAboozJvbP6YoZEgRqY46exgZVl4PevT7honMkEWw8UtFzmFc5cd7i//H7AmMYWvCPFQANylgJFzyZT3oQxOW7Fc4GHPm1lavubh7Q1J5XAEaIi7l3YyKmgK8XTWn79BSbuPo8YOlTJ9h5Hpr+FJvpGQRoP5qxLI+gj4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpYcaxdR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WszHdB//8kr3qOl/6fHwksX//+a63a2YXXT+lYfiICNyiNGX68gyWaXFy3T5Rl7n9ygJsVtjwUaccKtSVOFC9XqRMZ/dkCbrjY13Fq7maNYWToRygbJ7pUqH+Kg1HogJMiCAud68EVSndpzbA0WeGuexfrP/XRSp+3YIsAIhJVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlB1eiVi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpYcaxdR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0229AC4CEE3;
-	Tue, 29 Apr 2025 17:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlB1eiVi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2251EC4CEE3;
+	Tue, 29 Apr 2025 17:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946488;
-	bh=Hs/fII55j4lQ5a0VD7EA94GYTiD8wqe6qXHkPdtuKtQ=;
+	s=korg; t=1745946491;
+	bh=LBs6WnlVjkD6yPY9QxQKtbiO73tNE1eSE8czxu04xfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XpYcaxdR6DILLc9/fPNbuiVnWGkzoMYNDdDspLVaxI7/H3Wz7FAOd3oLsiibzprDM
-	 aDqfGuMiMLrbfKvqTJMfbOLCXKppEec99hNkGd/bGlTImx4sbUC5wMLOOxOkWldiq2
-	 KJBK8oKvdB7DupQdIwgXkNevnjFTnMnRVlsCzdLk=
+	b=jlB1eiViZOIQQ8iChggaXrSvVVVD3WB0WfF+hBF4couau05k3ruEUbz8Uqu/GWEIh
+	 ongdwt4puOk4HPxtULraDhHl4rObLECsgj1dUXmIQV/G0a7jZ4QsPuMGVQeqRvvQ5Y
+	 HkUHadcDP8/R6zO5M11eVU+DFpihhYXJkSpwXu/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uday Shankar <ushankar@purestorage.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 254/311] nvme: multipath: fix return value of nvme_available_path
-Date: Tue, 29 Apr 2025 18:41:31 +0200
-Message-ID: <20250429161131.428773437@linuxfoundation.org>
+Subject: [PATCH 6.14 255/311] objtool: Stop UNRET validation on UD2
+Date: Tue, 29 Apr 2025 18:41:32 +0200
+Message-ID: <20250429161131.469079842@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -51,33 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uday Shankar <ushankar@purestorage.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit e3105f54a51554fb1bbf19dcaf93c4411d2d6c8a ]
+[ Upstream commit 9f9cc012c2cbac4833746a0182e06a8eec940d19 ]
 
-The function returns bool so we should return false, not NULL. No
-functional changes are expected.
+In preparation for simplifying INSN_SYSCALL, make validate_unret()
+terminate control flow on UD2 just like validate_branch() already does.
 
-Signed-off-by: Uday Shankar <ushankar@purestorage.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/ce841269e7e28c8b7f32064464a9821034d724ff.1744095216.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/multipath.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/objtool/check.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
-index 2a76355650830..f39823cde62c7 100644
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -427,7 +427,7 @@ static bool nvme_available_path(struct nvme_ns_head *head)
- 	struct nvme_ns *ns;
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index bbfd81f49802e..eb9109b4aaf35 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -3870,6 +3870,9 @@ static int validate_unret(struct objtool_file *file, struct instruction *insn)
+ 			break;
+ 		}
  
- 	if (!test_bit(NVME_NSHEAD_DISK_LIVE, &head->flags))
--		return NULL;
-+		return false;
- 
- 	list_for_each_entry_srcu(ns, &head->list, siblings,
- 				 srcu_read_lock_held(&head->srcu)) {
++		if (insn->dead_end)
++			return 0;
++
+ 		if (!next) {
+ 			WARN_INSN(insn, "teh end!");
+ 			return -1;
 -- 
 2.39.5
 
