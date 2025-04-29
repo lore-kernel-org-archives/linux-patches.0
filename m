@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC40B248883;
-	Tue, 29 Apr 2025 17:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D072459C5;
+	Tue, 29 Apr 2025 17:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949156; cv=none; b=PARt228a9GTBNMFkyCDUZ8JpVqnaZfGd8pl8Ckoy2W5AgssStqVYbKSVowij/dHDyFCSO7aHJUplJBgKGKaFr7PRmJhNkeAjl1dq3P7JV6FOANYayU4uMjzY156ymi83m02u5kdOAVDW8cZt8Fd8hu0MRXd3+xT7XVHFDyD8nCQ=
+	t=1745949159; cv=none; b=NuV9JPUF5alz+i9sR1d43QJ0G4DkR6rksW5EdcqD9AKJBbFX2ZH+WHXeLGy7G60jFIl400gnruycznuhtC1Mlfst8dRtqNUYLMBqmYr//018JKDAUsJSHPSfRwuR4bPr4dIdfTtCHBfMSbuBaMdPd0+m1wSNQ/5ZdVbVgmekG0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949156; c=relaxed/simple;
-	bh=7W7AZJ5eeRPc8r+9oXJWX4XxHxYFC+EwXSX9y2vPrzY=;
+	s=arc-20240116; t=1745949159; c=relaxed/simple;
+	bh=/vQ0UzKPwuFHnnm1RLfV2racaT5LQazjGZ9vgFEz+P4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JyXKgZHdcm2b8hrbxsShz9EkUkeZ78kSWYnGQ3oNxpRi8MGCaGABYDnWXhZs6gKaTy/w1HrVFSvOctRN3UvBtaekfr4z+BWwV0rbbTHwuVv7GN5jvEr3h3EvJeoDctqKcb3Rpch8zO5xI7b2dPo5vGkVfMaBznquYR1LIYNaXVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MAspZy4k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lBI4tvViwQ++yTZsCJsv1aSyJT5M+7TaC8COfM63kgyzr7vE2pQEl3uPL+GFESuZR2+fkehP7U6tdgYxs5i7iSkFG5uMSvKgh8lGLOR7Ls3V5akptVDkwNvxck3rnztAAFeazDYRiTBOHJsnxqs39YMuwATwejXlqKHpY10jxFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2b7BOS3+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MAspZy4k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68A4C4CEE3;
-	Tue, 29 Apr 2025 17:52:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2b7BOS3+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD37EC4CEE3;
+	Tue, 29 Apr 2025 17:52:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949156;
-	bh=7W7AZJ5eeRPc8r+9oXJWX4XxHxYFC+EwXSX9y2vPrzY=;
+	s=korg; t=1745949159;
+	bh=/vQ0UzKPwuFHnnm1RLfV2racaT5LQazjGZ9vgFEz+P4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MAspZy4k84l+Mvx3cvDPVIydWgsgqxRlfzlBSvtyPtqaXlGxys8lNUaO4de+LE4K0
-	 osft3TSNJA+HYZ1ZN8/kV19Da6LVVRT0EFBpZvmFJb/jvDGWFhx+Gv3N1wHzcJhhy5
-	 pyhipHFQPRx3tL9gYPOTWzIushlrXr6riJqlE+i8=
+	b=2b7BOS3+qxfItv+WEmhj+eaS+Xb4xwex773e+wM1rqwS3IDSJTEK524uOo5xzTsW7
+	 onInwkSHFx5eJxWYFCxxI5Ux8ovr0sbhgvf7c50POCkn3dSpC72EhqWx6NN47KHViQ
+	 KaBCX2cJC76nW1eIZKOvQ113VnETU9llxiJM4NU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Cliff Liu <donghua.liu@windriver.com>,
-	He Zhe <Zhe.He@windriver.com>
-Subject: [PATCH 5.15 231/373] bpf: Check rcu_read_lock_trace_held() before calling bpf map helpers
-Date: Tue, 29 Apr 2025 18:41:48 +0200
-Message-ID: <20250429161132.646618933@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
+	Bin Lan <bin.lan.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 5.15 232/373] blk-cgroup: support to track if policy is online
+Date: Tue, 29 Apr 2025 18:41:49 +0200
+Message-ID: <20250429161132.686642769@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -52,100 +54,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit 169410eba271afc9f0fb476d996795aa26770c6d upstream.
+commit dfd6200a095440b663099d8d42f1efb0175a1ce3 upstream.
 
-These three bpf_map_{lookup,update,delete}_elem() helpers are also
-available for sleepable bpf program, so add the corresponding lock
-assertion for sleepable bpf program, otherwise the following warning
-will be reported when a sleepable bpf program manipulates bpf map under
-interpreter mode (aka bpf_jit_enable=0):
+A new field 'online' is added to blkg_policy_data to fix following
+2 problem:
 
-  WARNING: CPU: 3 PID: 4985 at kernel/bpf/helpers.c:40 ......
-  CPU: 3 PID: 4985 Comm: test_progs Not tainted 6.6.0+ #2
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996) ......
-  RIP: 0010:bpf_map_lookup_elem+0x54/0x60
-  ......
-  Call Trace:
-   <TASK>
-   ? __warn+0xa5/0x240
-   ? bpf_map_lookup_elem+0x54/0x60
-   ? report_bug+0x1ba/0x1f0
-   ? handle_bug+0x40/0x80
-   ? exc_invalid_op+0x18/0x50
-   ? asm_exc_invalid_op+0x1b/0x20
-   ? __pfx_bpf_map_lookup_elem+0x10/0x10
-   ? rcu_lockdep_current_cpu_online+0x65/0xb0
-   ? rcu_is_watching+0x23/0x50
-   ? bpf_map_lookup_elem+0x54/0x60
-   ? __pfx_bpf_map_lookup_elem+0x10/0x10
-   ___bpf_prog_run+0x513/0x3b70
-   __bpf_prog_run32+0x9d/0xd0
-   ? __bpf_prog_enter_sleepable_recur+0xad/0x120
-   ? __bpf_prog_enter_sleepable_recur+0x3e/0x120
-   bpf_trampoline_6442580665+0x4d/0x1000
-   __x64_sys_getpgid+0x5/0x30
-   ? do_syscall_64+0x36/0xb0
-   entry_SYSCALL_64_after_hwframe+0x6e/0x76
-   </TASK>
+1) In blkcg_activate_policy(), if pd_alloc_fn() with 'GFP_NOWAIT'
+   failed, 'queue_lock' will be dropped and pd_alloc_fn() will try again
+   without 'GFP_NOWAIT'. In the meantime, remove cgroup can race with
+   it, and pd_offline_fn() will be called without pd_init_fn() and
+   pd_online_fn(). This way null-ptr-deference can be triggered.
 
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20231204140425.1480317-2-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Cliff Liu <donghua.liu@windriver.com>
-Signed-off-by: He Zhe <Zhe.He@windriver.com>
+2) In order to synchronize pd_free_fn() from blkg_free_workfn() and
+   blkcg_deactivate_policy(), 'list_del_init(&blkg->q_node)' will be
+   delayed to blkg_free_workfn(), hence pd_offline_fn() can be called
+   first in blkg_destroy(), and then blkcg_deactivate_policy() will
+   call it again, we must prevent it.
+
+The new field 'online' will be set after pd_online_fn() and will be
+cleared after pd_offline_fn(), in the meantime pd_offline_fn() will only
+be called if 'online' is set.
+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20230119110350.2287325-3-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/helpers.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ block/blk-cgroup.c         |   24 +++++++++++++++++-------
+ include/linux/blk-cgroup.h |    1 +
+ 2 files changed, 18 insertions(+), 7 deletions(-)
 
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -3,6 +3,7 @@
-  */
- #include <linux/bpf.h>
- #include <linux/rcupdate.h>
-+#include <linux/rcupdate_trace.h>
- #include <linux/random.h>
- #include <linux/smp.h>
- #include <linux/topology.h>
-@@ -24,12 +25,13 @@
-  *
-  * Different map implementations will rely on rcu in map methods
-  * lookup/update/delete, therefore eBPF programs must run under rcu lock
-- * if program is allowed to access maps, so check rcu_read_lock_held in
-- * all three functions.
-+ * if program is allowed to access maps, so check rcu_read_lock_held() or
-+ * rcu_read_lock_trace_held() in all three functions.
-  */
- BPF_CALL_2(bpf_map_lookup_elem, struct bpf_map *, map, void *, key)
- {
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
-+		     !rcu_read_lock_bh_held());
- 	return (unsigned long) map->ops->map_lookup_elem(map, key);
- }
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -192,6 +192,7 @@ static struct blkcg_gq *blkg_alloc(struc
+ 		blkg->pd[i] = pd;
+ 		pd->blkg = blkg;
+ 		pd->plid = i;
++		pd->online = false;
+ 	}
  
-@@ -45,7 +47,8 @@ const struct bpf_func_proto bpf_map_look
- BPF_CALL_4(bpf_map_update_elem, struct bpf_map *, map, void *, key,
- 	   void *, value, u64, flags)
- {
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
-+		     !rcu_read_lock_bh_held());
- 	return map->ops->map_update_elem(map, key, value, flags);
- }
+ 	return blkg;
+@@ -289,8 +290,11 @@ static struct blkcg_gq *blkg_create(stru
+ 		for (i = 0; i < BLKCG_MAX_POLS; i++) {
+ 			struct blkcg_policy *pol = blkcg_policy[i];
  
-@@ -62,7 +65,8 @@ const struct bpf_func_proto bpf_map_upda
+-			if (blkg->pd[i] && pol->pd_online_fn)
+-				pol->pd_online_fn(blkg->pd[i]);
++			if (blkg->pd[i]) {
++				if (pol->pd_online_fn)
++					pol->pd_online_fn(blkg->pd[i]);
++				blkg->pd[i]->online = true;
++			}
+ 		}
+ 	}
+ 	blkg->online = true;
+@@ -390,8 +394,11 @@ static void blkg_destroy(struct blkcg_gq
+ 	for (i = 0; i < BLKCG_MAX_POLS; i++) {
+ 		struct blkcg_policy *pol = blkcg_policy[i];
  
- BPF_CALL_2(bpf_map_delete_elem, struct bpf_map *, map, void *, key)
- {
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
-+		     !rcu_read_lock_bh_held());
- 	return map->ops->map_delete_elem(map, key);
- }
+-		if (blkg->pd[i] && pol->pd_offline_fn)
+-			pol->pd_offline_fn(blkg->pd[i]);
++		if (blkg->pd[i] && blkg->pd[i]->online) {
++			if (pol->pd_offline_fn)
++				pol->pd_offline_fn(blkg->pd[i]);
++			blkg->pd[i]->online = false;
++		}
+ 	}
  
+ 	blkg->online = false;
+@@ -1367,6 +1374,7 @@ retry:
+ 		blkg->pd[pol->plid] = pd;
+ 		pd->blkg = blkg;
+ 		pd->plid = pol->plid;
++		pd->online = false;
+ 	}
+ 
+ 	/* all allocated, init in the same order */
+@@ -1374,9 +1382,11 @@ retry:
+ 		list_for_each_entry_reverse(blkg, &q->blkg_list, q_node)
+ 			pol->pd_init_fn(blkg->pd[pol->plid]);
+ 
+-	if (pol->pd_online_fn)
+-		list_for_each_entry_reverse(blkg, &q->blkg_list, q_node)
++	list_for_each_entry_reverse(blkg, &q->blkg_list, q_node) {
++		if (pol->pd_online_fn)
+ 			pol->pd_online_fn(blkg->pd[pol->plid]);
++		blkg->pd[pol->plid]->online = true;
++	}
+ 
+ 	__set_bit(pol->plid, q->blkcg_pols);
+ 	ret = 0;
+@@ -1438,7 +1448,7 @@ void blkcg_deactivate_policy(struct requ
+ 
+ 		spin_lock(&blkcg->lock);
+ 		if (blkg->pd[pol->plid]) {
+-			if (pol->pd_offline_fn)
++			if (blkg->pd[pol->plid]->online && pol->pd_offline_fn)
+ 				pol->pd_offline_fn(blkg->pd[pol->plid]);
+ 			pol->pd_free_fn(blkg->pd[pol->plid]);
+ 			blkg->pd[pol->plid] = NULL;
+--- a/include/linux/blk-cgroup.h
++++ b/include/linux/blk-cgroup.h
+@@ -92,6 +92,7 @@ struct blkg_policy_data {
+ 	/* the blkg and policy id this per-policy data belongs to */
+ 	struct blkcg_gq			*blkg;
+ 	int				plid;
++	bool				online;
+ };
+ 
+ /*
 
 
