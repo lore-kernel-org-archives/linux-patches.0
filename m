@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3D5250BF2;
-	Tue, 29 Apr 2025 16:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1E3250BF2;
+	Tue, 29 Apr 2025 16:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945767; cv=none; b=KmS58jcZquz36qgU/zRd0ExiPZLt4n8eJeuo7+My1XHBf3QvkN1BnP1dpk/U3YWHx71YbT9bGMeMIb6yfPy4khD16vNo30D7+0EhwPZRJ8F7dGSzJXgi8ZHHJp/EPI/H1Ob2GsbwZOt1cxk15E1eN2TMaxNHOUIuAcBf9icEoMQ=
+	t=1745945770; cv=none; b=bPaVopP645r48ciCxr+ZOLK3sgEz4JI0Vv9ZoCoCQHhv1uquphz4h5HfCyGhygh6QovOaLUzYiBVVGRafPUuUO6PuJntfVwFwSwc4lUQ2QjZWxeaGt09iXvIT/N4/mCPS3nRuXLEvnaIo6ACpYtjFCKwjJI2XEEnDbYDe8pvFgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945767; c=relaxed/simple;
-	bh=wLaVp3v2XUQ9tJbW9U8jjx+aV7znrg5Tp+87LPAxiak=;
+	s=arc-20240116; t=1745945770; c=relaxed/simple;
+	bh=8rXFOwAJ/EVxO9QHztEonMmn8Uq+fZzvKi4dUE5LAEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XyFJfP0O4mkVeb9GLNIJzAs3Tg8KbIVEVg8kMS0q2STATutpfuQxRra2hZ5bCwEUdp8O2jvZQjoofRawsDR0OCvXo9w8b/UkB6SMPuJIQzwGE0ldoHoQjuFmD2EDeYw1VBGQGoGGYJnS07UDEuoISg/9+Aj6Pwb/kFsoTwLpZQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nuuugWe4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=smnrGBc49Np8QHDqYHvI8YSgdmSLcsfbmWXpxX7u3LfUdBME2iZCNvWrOH64SSAEsPOESe0S2EKLwi5WVbT2q3S57HPGqqKcHHaptTXSDrGLDeu0vfgdUDcdP5k42cMcUpL4IWbKoldbjYxBVTzdFnabxhDYU36vEU9gUoIfB/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbqMLo/M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nuuugWe4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C071C4CEE3;
-	Tue, 29 Apr 2025 16:56:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbqMLo/M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17ED5C4CEE3;
+	Tue, 29 Apr 2025 16:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945767;
-	bh=wLaVp3v2XUQ9tJbW9U8jjx+aV7znrg5Tp+87LPAxiak=;
+	s=korg; t=1745945770;
+	bh=8rXFOwAJ/EVxO9QHztEonMmn8Uq+fZzvKi4dUE5LAEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nuuugWe4wmAW6GYWoplrCs9ilXeCimb6291mdsY08JvpsJ2Sd89VWUkQ1dXPYsa/w
-	 fy2MSh3x4A/L30X+XbKba1DzCmkk53V1Hsj4QGuwQzGNo6q8LztBS18kfYnX/f6RFV
-	 I7a35J+hRoA1oKWDnC8YiM22y2b8b7PjMylg/yPg=
+	b=rbqMLo/MpIETgxYA7dxE/Xg4jYKzmv4Gjy+Mn+aFnPw9LSh2ONObae9tZcxjAz04Y
+	 Uj57IIm6tp3YqwagnfCOiS+No/xd8UVs3a5qH0igunnTrAFEkQBVbLgLrzNRAP/SOG
+	 tOmtXCbvAOoV8hVlUUDv0CK7zBJ35YTV65sqJ4AY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 042/311] cpufreq: Do not enable by default during compile testing
-Date: Tue, 29 Apr 2025 18:37:59 +0200
-Message-ID: <20250429161122.748385287@linuxfoundation.org>
+Subject: [PATCH 6.14 043/311] cpufreq: fix compile-test defaults
+Date: Tue, 29 Apr 2025 18:38:00 +0200
+Message-ID: <20250429161122.788940231@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -51,96 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit d4f610a9bafdec8e3210789aa19335367da696ea ]
+[ Upstream commit a374f28700abd20e8a7d026f89aa26f759445918 ]
 
-Enabling the compile test should not cause automatic enabling of all
-drivers.
+Commit 3f66425a4fc8 ("cpufreq: Enable COMPILE_TEST on Arm drivers")
+enabled compile testing of most Arm CPUFreq drivers but left the
+existing default values unchanged so that many drivers are enabled by
+default whenever COMPILE_TEST is selected.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+This specifically results in the S3C64XX CPUFreq driver being enabled
+and initialised during boot of non-S3C64XX platforms with the following
+error logged:
+
+	cpufreq: Unable to obtain ARMCLK: -2
+
+Commit d4f610a9bafd ("cpufreq: Do not enable by default during compile
+testing") recently fixed most of the default values, but two entries
+were missed and two could use a more specific default condition.
+
+Fix the default values for drivers that can be compile tested and that
+should be enabled by default when not compile testing.
+
+Fixes: 3f66425a4fc8 ("cpufreq: Enable COMPILE_TEST on Arm drivers")
+Cc: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Stable-dep-of: a374f28700ab ("cpufreq: fix compile-test defaults")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/Kconfig.arm | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/cpufreq/Kconfig.arm | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/cpufreq/Kconfig.arm b/drivers/cpufreq/Kconfig.arm
-index 4f9cb943d945c..d4d625ded285f 100644
+index d4d625ded285f..0d46402e30942 100644
 --- a/drivers/cpufreq/Kconfig.arm
 +++ b/drivers/cpufreq/Kconfig.arm
 @@ -76,7 +76,7 @@ config ARM_VEXPRESS_SPC_CPUFREQ
  config ARM_BRCMSTB_AVS_CPUFREQ
  	tristate "Broadcom STB AVS CPUfreq driver"
  	depends on (ARCH_BRCMSTB && !ARM_SCMI_CPUFREQ) || COMPILE_TEST
--	default y
-+	default ARCH_BRCMSTB
+-	default ARCH_BRCMSTB
++	default y if ARCH_BRCMSTB && !ARM_SCMI_CPUFREQ
  	help
  	  Some Broadcom STB SoCs use a co-processor running proprietary firmware
  	  ("AVS") to handle voltage and frequency scaling. This driver provides
-@@ -181,7 +181,7 @@ config ARM_RASPBERRYPI_CPUFREQ
- config ARM_S3C64XX_CPUFREQ
- 	bool "Samsung S3C64XX"
- 	depends on CPU_S3C6410 || COMPILE_TEST
--	default y
-+	default CPU_S3C6410
+@@ -88,7 +88,7 @@ config ARM_HIGHBANK_CPUFREQ
+ 	tristate "Calxeda Highbank-based"
+ 	depends on ARCH_HIGHBANK || COMPILE_TEST
+ 	depends on CPUFREQ_DT && REGULATOR && PL320_MBOX
+-	default m
++	default m if ARCH_HIGHBANK
  	help
- 	  This adds the CPUFreq driver for Samsung S3C6410 SoC.
- 
-@@ -190,7 +190,7 @@ config ARM_S3C64XX_CPUFREQ
- config ARM_S5PV210_CPUFREQ
- 	bool "Samsung S5PV210 and S5PC110"
- 	depends on CPU_S5PV210 || COMPILE_TEST
--	default y
-+	default CPU_S5PV210
+ 	  This adds the CPUFreq driver for Calxeda Highbank SoC
+ 	  based boards.
+@@ -133,7 +133,7 @@ config ARM_MEDIATEK_CPUFREQ
+ config ARM_MEDIATEK_CPUFREQ_HW
+ 	tristate "MediaTek CPUFreq HW driver"
+ 	depends on ARCH_MEDIATEK || COMPILE_TEST
+-	default m
++	default m if ARCH_MEDIATEK
  	help
- 	  This adds the CPUFreq driver for Samsung S5PV210 and
- 	  S5PC110 SoCs.
-@@ -214,7 +214,7 @@ config ARM_SCMI_CPUFREQ
- config ARM_SPEAR_CPUFREQ
- 	bool "SPEAr CPUFreq support"
- 	depends on PLAT_SPEAR || COMPILE_TEST
--	default y
-+	default PLAT_SPEAR
- 	help
- 	  This adds the CPUFreq driver support for SPEAr SOCs.
- 
-@@ -233,7 +233,7 @@ config ARM_TEGRA20_CPUFREQ
- 	tristate "Tegra20/30 CPUFreq support"
- 	depends on ARCH_TEGRA || COMPILE_TEST
- 	depends on CPUFREQ_DT
--	default y
-+	default ARCH_TEGRA
- 	help
- 	  This adds the CPUFreq driver support for Tegra20/30 SOCs.
- 
-@@ -241,7 +241,7 @@ config ARM_TEGRA124_CPUFREQ
- 	bool "Tegra124 CPUFreq support"
- 	depends on ARCH_TEGRA || COMPILE_TEST
- 	depends on CPUFREQ_DT
--	default y
-+	default ARCH_TEGRA
- 	help
- 	  This adds the CPUFreq driver support for Tegra124 SOCs.
- 
-@@ -256,14 +256,14 @@ config ARM_TEGRA194_CPUFREQ
+ 	  Support for the CPUFreq HW driver.
+ 	  Some MediaTek chipsets have a HW engine to offload the steps
+@@ -256,7 +256,7 @@ config ARM_TEGRA194_CPUFREQ
  	tristate "Tegra194 CPUFreq support"
  	depends on ARCH_TEGRA_194_SOC || ARCH_TEGRA_234_SOC || (64BIT && COMPILE_TEST)
  	depends on TEGRA_BPMP
--	default y
-+	default ARCH_TEGRA
+-	default ARCH_TEGRA
++	default ARCH_TEGRA_194_SOC || ARCH_TEGRA_234_SOC
  	help
  	  This adds CPU frequency driver support for Tegra194 SOCs.
  
- config ARM_TI_CPUFREQ
- 	bool "Texas Instruments CPUFreq support"
- 	depends on ARCH_OMAP2PLUS || ARCH_K3 || COMPILE_TEST
--	default y
-+	default ARCH_OMAP2PLUS || ARCH_K3
- 	help
- 	  This driver enables valid OPPs on the running platform based on
- 	  values contained within the SoC in use. Enable this in order to
 -- 
 2.39.5
 
