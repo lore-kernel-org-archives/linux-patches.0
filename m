@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C59B241667;
-	Tue, 29 Apr 2025 16:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25911221719;
+	Tue, 29 Apr 2025 16:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945717; cv=none; b=blEztVzAc03tb9pa3X1ZiccWsr7ToYefOHSHbJbjKc/DWXJSCQFAPSpfTP0X5I3kupppZqcD0rmUbcpyRFRGRz3vYT62K6T3RbtFzRQeKlywWxgvmPY1Pf8JWvo0gTiyWvkVLrZse4qEEdFxfsCtl5s+x2dYrE/EogtGtrtGKHI=
+	t=1745945720; cv=none; b=Qt6H909CSpJlXaXiFeKgdX8HnTg9mhK63TvfU9dNtJUUKkG8iGslXKy8Jn4bYPeCICeqPxlWI+B2t8nrOiAegVe7bsjJ8g6blf879jxj03/oXp+Nphb5c3ATGDzXHK2j+10yDDAC/PPZH+8r33oirCuzXThVtqPgnc0VQe4FDRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945717; c=relaxed/simple;
-	bh=KUcJsBPGSVTKyJvmZctl0NLwSmGvnduQAAlAQgYstPo=;
+	s=arc-20240116; t=1745945720; c=relaxed/simple;
+	bh=H6bFYy6vHLOV4INzBkL/Yf8Ws+r1olcUF6j9eylSvXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EUx5clXBWMh2oao7wE+uZb1pHzTxgt3Ng3EwuEHalSTZK3VnQChwBhvgzG3O3GpUZQW8wBn5nu/ZbGJUpNuNzoKICz5qHXRBIvH4axgJejZStiVpmrNfgbgZ0zdT+NrsYFDvIzgVI2boMYOkJIdov9v72SsbM1EmRh3ZyGuH6R4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XEhmhtP6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C0T1F0F0rpGK35tJybIzkZ8LT34f07rFRl5fZ8VwGvY1GSUMMACY/rGKJbdyJzpPj/+AHLR0WM4Rpe5INfgz0TDxGESIgdvuHDM4HggBvb+dFeyZ+k/tKl0ig5+CQbE+huRppGzN+grlodfSV4PcaCDVmOE76fGUuS7xUVQYS80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qwqdnuyr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XEhmhtP6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F191C4CEE3;
-	Tue, 29 Apr 2025 16:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qwqdnuyr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE6FC4CEE3;
+	Tue, 29 Apr 2025 16:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945717;
-	bh=KUcJsBPGSVTKyJvmZctl0NLwSmGvnduQAAlAQgYstPo=;
+	s=korg; t=1745945720;
+	bh=H6bFYy6vHLOV4INzBkL/Yf8Ws+r1olcUF6j9eylSvXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XEhmhtP6GP7RRlVPfiY8jBfFJsN4n2qhL6+2ts9Uhi6VfI5MBi6cCsw1BM9JD8sc/
-	 HnWWx2hC776pjvHVY4yE1sOhQIWUrtNPe6sZK89gUMmrEE/SUbFJsgpl5PnrBumOFu
-	 Or8rSQF8YnqN8EvUA8BSFpWZRR2FaOAoLK0MS9lM=
+	b=QwqdnuyrOHs+8drGMZf7sWhj/HqEGfS9Xm4hgAPCAeuN/8T1qel0JrBUFKr5dQLU9
+	 bwOYA6dNJZL7fLjQGI0Gp2feWitfeT9IPhrYEQkVzVG1TAudqlHOOEvPhji7ooF0Gr
+	 TFM7+OWiKupEnaiF2Z4afvf5Pms/Lh/9aMwOKbB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	David Hildenbrand <david@redhat.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Nanyong Sun <sunnanyong@huawei.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	kernel.org
-Subject: [PATCH 6.14 001/311] mm/vmscan: dont try to reclaim hwpoison folio
-Date: Tue, 29 Apr 2025 18:37:18 +0200
-Message-ID: <20250429161121.073658280@linuxfoundation.org>
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.14 019/311] s390/pci: Support mmap() of PCI resources except for ISM devices
+Date: Tue, 29 Apr 2025 18:37:36 +0200
+Message-ID: <20250429161121.820299536@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -57,104 +51,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjiang Tu <tujinjiang@huawei.com>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-[ Upstream commit 1b0449544c6482179ac84530b61fc192a6527bfd ]
+[ Upstream commit aa9f168d55dc47c0de564f7dfe0e90467c9fee71 ]
 
-Syzkaller reports a bug as follows:
+So far s390 does not allow mmap() of PCI resources to user-space via the
+usual mechanisms, though it does use it for RDMA. For the PCI sysfs
+resource files and /proc/bus/pci it defines neither HAVE_PCI_MMAP nor
+ARCH_GENERIC_PCI_MMAP_RESOURCE. For vfio-pci s390 previously relied on
+disabled VFIO_PCI_MMAP and now relies on setting pdev->non_mappable_bars
+for all devices.
 
-Injecting memory failure for pfn 0x18b00e at process virtual address 0x20ffd000
-Memory failure: 0x18b00e: dirty swapcache page still referenced by 2 users
-Memory failure: 0x18b00e: recovery action for dirty swapcache page: Failed
-page: refcount:2 mapcount:0 mapping:0000000000000000 index:0x20ffd pfn:0x18b00e
-memcg:ffff0000dd6d9000
-anon flags: 0x5ffffe00482011(locked|dirty|arch_1|swapbacked|hwpoison|node=0|zone=2|lastcpupid=0xfffff)
-raw: 005ffffe00482011 dead000000000100 dead000000000122 ffff0000e232a7c9
-raw: 0000000000020ffd 0000000000000000 00000002ffffffff ffff0000dd6d9000
-page dumped because: VM_BUG_ON_FOLIO(!folio_test_uptodate(folio))
-------------[ cut here ]------------
-kernel BUG at mm/swap_state.c:184!
-Internal error: Oops - BUG: 00000000f2000800 [#1] SMP
-Modules linked in:
-CPU: 0 PID: 60 Comm: kswapd0 Not tainted 6.6.0-gcb097e7de84e #3
-Hardware name: linux,dummy-virt (DT)
-pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : add_to_swap+0xbc/0x158
-lr : add_to_swap+0xbc/0x158
-sp : ffff800087f37340
-x29: ffff800087f37340 x28: fffffc00052c0380 x27: ffff800087f37780
-x26: ffff800087f37490 x25: ffff800087f37c78 x24: ffff800087f377a0
-x23: ffff800087f37c50 x22: 0000000000000000 x21: fffffc00052c03b4
-x20: 0000000000000000 x19: fffffc00052c0380 x18: 0000000000000000
-x17: 296f696c6f662865 x16: 7461646f7470755f x15: 747365745f6f696c
-x14: 6f6621284f494c4f x13: 0000000000000001 x12: ffff600036d8b97b
-x11: 1fffe00036d8b97a x10: ffff600036d8b97a x9 : dfff800000000000
-x8 : 00009fffc9274686 x7 : ffff0001b6c5cbd3 x6 : 0000000000000001
-x5 : ffff0000c25896c0 x4 : 0000000000000000 x3 : 0000000000000000
-x2 : 0000000000000000 x1 : ffff0000c25896c0 x0 : 0000000000000000
-Call trace:
- add_to_swap+0xbc/0x158
- shrink_folio_list+0x12ac/0x2648
- shrink_inactive_list+0x318/0x948
- shrink_lruvec+0x450/0x720
- shrink_node_memcgs+0x280/0x4a8
- shrink_node+0x128/0x978
- balance_pgdat+0x4f0/0xb20
- kswapd+0x228/0x438
- kthread+0x214/0x230
- ret_from_fork+0x10/0x20
+This is partly because access to mapped PCI resources from user-space
+requires special PCI load/store memory-I/O (MIO) instructions, or the
+special MMIO syscalls when these are not available. Still, such access is
+possible and useful not just for RDMA, in fact not being able to mmap() PCI
+resources has previously caused extra work when testing devices.
 
-I can reproduce this issue with the following steps:
+One thing that doesn't work with PCI resources mapped to user-space though
+is the s390 specific virtual ISM device. Not only because the BAR size of
+256 TiB prevents mapping the whole BAR but also because access requires use
+of the legacy PCI instructions which are not accessible to user-space on
+systems with the newer MIO PCI instructions.
 
-1) When a dirty swapcache page is isolated by reclaim process and the
-   page isn't locked, inject memory failure for the page.
-   me_swapcache_dirty() clears uptodate flag and tries to delete from lru,
-   but fails.  Reclaim process will put the hwpoisoned page back to lru.
+Now with the pdev->non_mappable_bars flag ISM can be excluded from mapping
+its resources while making this functionality available for all other PCI
+devices. To this end introduce a minimal implementation of PCI_QUIRKS and
+use that to set pdev->non_mappable_bars for ISM devices only. Then also set
+ARCH_GENERIC_PCI_MMAP_RESOURCE to take advantage of the generic
+implementation of pci_mmap_resource_range() enabling only the newer sysfs
+mmap() interface. This follows the recommendation in
+Documentation/PCI/sysfs-pci.rst.
 
-2) The process that maps the hwpoisoned page exits, the page is deleted
-   the page will never be freed and will be in the lru forever.
-
-3) If we trigger a reclaim again and tries to reclaim the page,
-   add_to_swap() will trigger VM_BUG_ON_FOLIO due to the uptodate flag is
-   cleared.
-
-To fix it, skip the hwpoisoned page in shrink_folio_list().  Besides, the
-hwpoison folio may not be unmapped by hwpoison_user_mappings() yet, unmap
-it in shrink_folio_list(), otherwise the folio will fail to be unmaped by
-hwpoison_user_mappings() since the folio isn't in lru list.
-
-Link: https://lkml.kernel.org/r/20250318083939.987651-3-tujinjiang@huawei.com
-Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
-Acked-by: Miaohe Lin <linmiaohe@huawei.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Nanyong Sun <sunnanyong@huawei.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: <stable@vger,kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/r/20250226-vfio_pci_mmap-v7-3-c5c0f1d26efd@linux.ibm.com
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vmscan.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/s390/Kconfig           |  4 +---
+ arch/s390/include/asm/pci.h |  3 +++
+ arch/s390/pci/Makefile      |  2 +-
+ arch/s390/pci/pci_fixup.c   | 23 +++++++++++++++++++++++
+ drivers/s390/net/ism_drv.c  |  1 -
+ include/linux/pci_ids.h     |  1 +
+ 6 files changed, 29 insertions(+), 5 deletions(-)
+ create mode 100644 arch/s390/pci/pci_fixup.c
 
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index fada3b35aff83..e9f3ae8158a66 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -1112,6 +1112,13 @@ static unsigned int shrink_folio_list(struct list_head *folio_list,
- 		if (!folio_trylock(folio))
- 			goto keep;
+diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
+index 9c9ec08d78c71..e48741e001476 100644
+--- a/arch/s390/Kconfig
++++ b/arch/s390/Kconfig
+@@ -41,9 +41,6 @@ config AUDIT_ARCH
+ config NO_IOPORT_MAP
+ 	def_bool y
  
-+		if (folio_contain_hwpoisoned_page(folio)) {
-+			unmap_poisoned_folio(folio, folio_pfn(folio), false);
-+			folio_unlock(folio);
-+			folio_put(folio);
-+			continue;
-+		}
+-config PCI_QUIRKS
+-	def_bool n
+-
+ config ARCH_SUPPORTS_UPROBES
+ 	def_bool y
+ 
+@@ -258,6 +255,7 @@ config S390
+ 	select PCI_DOMAINS		if PCI
+ 	select PCI_MSI			if PCI
+ 	select PCI_MSI_ARCH_FALLBACKS	if PCI_MSI
++	select PCI_QUIRKS		if PCI
+ 	select SPARSE_IRQ
+ 	select SWIOTLB
+ 	select SYSCTL_EXCEPTION_TRACE
+diff --git a/arch/s390/include/asm/pci.h b/arch/s390/include/asm/pci.h
+index 474e1f8d1d3c2..d2086af3434c0 100644
+--- a/arch/s390/include/asm/pci.h
++++ b/arch/s390/include/asm/pci.h
+@@ -11,6 +11,9 @@
+ #include <asm/pci_insn.h>
+ #include <asm/sclp.h>
+ 
++#define ARCH_GENERIC_PCI_MMAP_RESOURCE	1
++#define arch_can_pci_mmap_wc()		1
 +
- 		VM_BUG_ON_FOLIO(folio_test_active(folio), folio);
+ #define PCIBIOS_MIN_IO		0x1000
+ #define PCIBIOS_MIN_MEM		0x10000000
  
- 		nr_pages = folio_nr_pages(folio);
+diff --git a/arch/s390/pci/Makefile b/arch/s390/pci/Makefile
+index df73c5182990a..1810e0944a4ed 100644
+--- a/arch/s390/pci/Makefile
++++ b/arch/s390/pci/Makefile
+@@ -5,6 +5,6 @@
+ 
+ obj-$(CONFIG_PCI)	+= pci.o pci_irq.o pci_clp.o \
+ 			   pci_event.o pci_debug.o pci_insn.o pci_mmio.o \
+-			   pci_bus.o pci_kvm_hook.o pci_report.o
++			   pci_bus.o pci_kvm_hook.o pci_report.o pci_fixup.o
+ obj-$(CONFIG_PCI_IOV)	+= pci_iov.o
+ obj-$(CONFIG_SYSFS)	+= pci_sysfs.o
+diff --git a/arch/s390/pci/pci_fixup.c b/arch/s390/pci/pci_fixup.c
+new file mode 100644
+index 0000000000000..35688b6450983
+--- /dev/null
++++ b/arch/s390/pci/pci_fixup.c
+@@ -0,0 +1,23 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Exceptions for specific devices,
++ *
++ * Copyright IBM Corp. 2025
++ *
++ * Author(s):
++ *   Niklas Schnelle <schnelle@linux.ibm.com>
++ */
++#include <linux/pci.h>
++
++static void zpci_ism_bar_no_mmap(struct pci_dev *pdev)
++{
++	/*
++	 * ISM's BAR is special. Drivers written for ISM know
++	 * how to handle this but others need to be aware of their
++	 * special nature e.g. to prevent attempts to mmap() it.
++	 */
++	pdev->non_mappable_bars = 1;
++}
++DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_IBM,
++			PCI_DEVICE_ID_IBM_ISM,
++			zpci_ism_bar_no_mmap);
+diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
+index 2f34761e64135..60ed70a39d2cc 100644
+--- a/drivers/s390/net/ism_drv.c
++++ b/drivers/s390/net/ism_drv.c
+@@ -20,7 +20,6 @@
+ MODULE_DESCRIPTION("ISM driver for s390");
+ MODULE_LICENSE("GPL");
+ 
+-#define PCI_DEVICE_ID_IBM_ISM 0x04ED
+ #define DRV_NAME "ism"
+ 
+ static const struct pci_device_id ism_device_table[] = {
+diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
+index 2a9ca3dbaa0e9..5bd122a9afdc6 100644
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -518,6 +518,7 @@
+ #define PCI_DEVICE_ID_IBM_ICOM_V2_ONE_PORT_RVX_ONE_PORT_MDM	0x0251
+ #define PCI_DEVICE_ID_IBM_ICOM_V2_ONE_PORT_RVX_ONE_PORT_MDM_PCIE 0x0361
+ #define PCI_DEVICE_ID_IBM_ICOM_FOUR_PORT_MODEL	0x252
++#define PCI_DEVICE_ID_IBM_ISM		0x04ed
+ 
+ #define PCI_SUBVENDOR_ID_IBM		0x1014
+ #define PCI_SUBDEVICE_ID_IBM_SATURN_SERIAL_ONE_PORT	0x03d4
 -- 
 2.39.5
 
