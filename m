@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7BBD38FB0;
-	Tue, 29 Apr 2025 17:58:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FC92AE96;
+	Tue, 29 Apr 2025 17:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949537; cv=none; b=khgy8/LsKItpK5Boe7HdEeytPk9Rp/8wDTKxjYGM0uKelRKZzBr/YPRo4UAJNIaot8s+Bn19Ykm1YVFmacjiACkNVtgE7CNbEAAFVI3Ja778ZKeU8t1k7Lf9JyzE87rWYuOIookn4fcS+dPkjbJrPRqCrvrqrqblFNqFYWdR8G0=
+	t=1745949541; cv=none; b=t25GLDRXE9kjVRDvfqIGkVdGgGEvqbhjXEJ+dN4gR2scL29K0BXR17F7l+/cemp08MMSqy+agzj4AFJFnFh6TSApY8HP4EElImnpaqr6TVgW8x2R/qHRSqqiPeSEI4KKRbQUtAxD2kpKdnrTGOPZw1D8xr/CHlpc17uXGoNXSuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949537; c=relaxed/simple;
-	bh=BkeegXV7QathaBW0sgS68LPj+A0DFCAbbY+Vb3SKAA0=;
+	s=arc-20240116; t=1745949541; c=relaxed/simple;
+	bh=dU9fsw8+iVQv92k0of37Cr0C3KpHm/ElnoDVCEUJVt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dQ45osR7f9ppuJaDsoR1ZUpp1VQPSFJxgTUDaeEYERoLaajWmaBwdPPIS56M4TCjXAJiLpHzQ0qMPikN0UUJGxzBXUF/5OgXQ3R1agDMyjDkJ95DPCs/DiO+BSzo0ZY9cDpy3HzEdsAfJPf4FsOiYOgI8+dR6ji+3OrjcWmB27o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=txFSjMiJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KzriClG9LiCJz5V8lBzczo74vBJ868iMmwM5jpjlNBDbV54Xptv2K1F8Oi5cOJa2H5tnDIJdcZybYi7OcQNEOazPvRHNUrqrogZQtHJxQitv/vL86pRUwKb//Xs86Ot1PYbP1he4OmKuf3QDVjnJDg/NL7Yi5jEZOgetiyKhOKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/mkgMAL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txFSjMiJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457E6C4CEE3;
-	Tue, 29 Apr 2025 17:58:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/mkgMAL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573A0C4CEE9;
+	Tue, 29 Apr 2025 17:59:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949537;
-	bh=BkeegXV7QathaBW0sgS68LPj+A0DFCAbbY+Vb3SKAA0=;
+	s=korg; t=1745949540;
+	bh=dU9fsw8+iVQv92k0of37Cr0C3KpHm/ElnoDVCEUJVt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=txFSjMiJN/bx5MuXyXKEgWnfeppdMFH2tlj4U+EU8wAnpybaEfVbSU/2x48SKigMU
-	 oMG24eSYsGzNg4vNQqAegCAuLap9nLHCz0UN9ZqboUd2DE66JF6s04PEKshsxACXfk
-	 NCt0YJ0Qg4teBHAONHYixfyL7cdlTuo5KZnntARs=
+	b=Z/mkgMALHiCLrDeCVOL/y8Wiien74NX60TDddpYV+z6ZnZeampdiy3FpEGk5N4mXv
+	 iEwcs8x9X29e6TS/TAv4sBLUuMrc60wQaXMgA4gzvJoJrrfAGTZMYSDk7Dtr4GpUSH
+	 ZXIY+nSq0mtWCLLHjtWwAdzmn1L0sfaE/iaGKW9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ralph Siemsen <ralph.siemsen@linaro.org>,
-	Peter Chen <peter.chen@kernel.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Subject: [PATCH 5.15 310/373] usb: cdns3: Fix deadlock when using NCM gadget
-Date: Tue, 29 Apr 2025 18:43:07 +0200
-Message-ID: <20250429161135.862025812@linuxfoundation.org>
+	Hannes Reinecke <hare@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 344/373] nvme: requeue namespace scan on missed AENs
+Date: Tue, 29 Apr 2025 18:43:41 +0200
+Message-ID: <20250429161137.286448628@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -52,48 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralph Siemsen <ralph.siemsen@linaro.org>
+From: Hannes Reinecke <hare@kernel.org>
 
-commit a1059896f2bfdcebcdc7153c3be2307ea319501f upstream.
+[ Upstream commit 9546ad1a9bda7362492114f5866b95b0ac4a100e ]
 
-The cdns3 driver has the same NCM deadlock as fixed in cdnsp by commit
-58f2fcb3a845 ("usb: cdnsp: Fix deadlock issue during using NCM gadget").
+Scanning for namespaces can take some time, so if the target is
+reconfigured while the scan is running we may miss a Attached Namespace
+Attribute Changed AEN.
 
-Under PREEMPT_RT the deadlock can be readily triggered by heavy network
-traffic, for example using "iperf --bidir" over NCM ethernet link.
+Check if the NVME_AER_NOTICE_NS_CHANGED bit is set once the scan has
+finished, and requeue scanning to pick up any missed change.
 
-The deadlock occurs because the threaded interrupt handler gets
-preempted by a softirq, but both are protected by the same spinlock.
-Prevent deadlock by disabling softirq during threaded irq handler.
-
-Cc: stable <stable@kernel.org>
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
-Signed-off-by: Ralph Siemsen <ralph.siemsen@linaro.org>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20250318-rfs-cdns3-deadlock-v2-1-bfd9cfcee732@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/cdns3/cdns3-gadget.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/nvme/host/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/cdns3/cdns3-gadget.c
-+++ b/drivers/usb/cdns3/cdns3-gadget.c
-@@ -1960,6 +1960,7 @@ static irqreturn_t cdns3_device_thread_i
- 	unsigned int bit;
- 	unsigned long reg;
- 
-+	local_bh_disable();
- 	spin_lock_irqsave(&priv_dev->lock, flags);
- 
- 	reg = readl(&priv_dev->regs->usb_ists);
-@@ -2001,6 +2002,7 @@ static irqreturn_t cdns3_device_thread_i
- irqend:
- 	writel(~0, &priv_dev->regs->ep_ien);
- 	spin_unlock_irqrestore(&priv_dev->lock, flags);
-+	local_bh_enable();
- 
- 	return ret;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 6748532c776b8..85d965fe8838c 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4221,6 +4221,10 @@ static void nvme_scan_work(struct work_struct *work)
+ 	if (nvme_scan_ns_list(ctrl) != 0)
+ 		nvme_scan_ns_sequential(ctrl);
+ 	mutex_unlock(&ctrl->scan_lock);
++
++	/* Requeue if we have missed AENs */
++	if (test_bit(NVME_AER_NOTICE_NS_CHANGED, &ctrl->events))
++		nvme_queue_scan(ctrl);
  }
+ 
+ /*
+-- 
+2.39.5
+
 
 
