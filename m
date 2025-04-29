@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74EB221DA7;
-	Tue, 29 Apr 2025 17:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F77921ABDB;
+	Tue, 29 Apr 2025 17:18:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947111; cv=none; b=Lv6xu+pjga9rbY0F/898GHI8PKZtsGNJmOZY6JPa5blrfrztRBJcL6oXAyFhxBH8xqrUYc7aM74UDYC+y1NfPjGQm4mW8cgLrPmK/fpqhfp6ZQqnAVxcJgIbjf8tHwqg3n4UhHr++/ktcyoWhCVicWClYZeOAvG5kR/qS99pIwY=
+	t=1745947115; cv=none; b=jrog+CFe08/bOdcHbuQICASRDkO/OaATa3c7wGIukGzpzijo59SFGvBW94j7wTl2HtBwLHDcWi730Z57jcaVYiv/5ZQMemCcTYT4S/51Pcso+zNdJIkUTzuo3aDgFfVmm1aQ/GLDrCVG4qlMr7rAGIlh1aXl/gpFYRUljYsyYIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947111; c=relaxed/simple;
-	bh=YYU5FledBKiGgQXnCsOu/roEzrfyatemB7vaFOxPn54=;
+	s=arc-20240116; t=1745947115; c=relaxed/simple;
+	bh=Ge4kmdqfT5QjOf8EFair+b8bAofH51j1T67RDX9N32o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=llDDT5Fcf1/YQeHBTKWN6ljqg8YMgcpgutkxUXKqJUaJc0jkU/zJ+/6kt/zMYQHc156duHUZmMLlrUDQg3ABL4+7MAC0Z0b6vpYGD4bd3oW90eZXQldqYSBpLK67VZ9xELuypKU+r4o2+ZIRt5ztj48by4J2IYtktYt64DTlsEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FEiLuj1k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hqi0nYsXfEVsxCrCA8nSU/jK0XylDOwv1gkjGREhTZ59N92QXHCqzrjRzOc16agVaOJ8Xoa0ECxS8rkApm3D1b895fWoZ4m8tAJQa27dLOHmFSUO93kgNnVY88aNSV/P8grdke77YfdXbLKMl8QeNwENktRat5tkGW3//YYcTHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ku7VJiOw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FEiLuj1k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A21C4CEEE;
-	Tue, 29 Apr 2025 17:18:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ku7VJiOw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7222CC4CEEE;
+	Tue, 29 Apr 2025 17:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947111;
-	bh=YYU5FledBKiGgQXnCsOu/roEzrfyatemB7vaFOxPn54=;
+	s=korg; t=1745947114;
+	bh=Ge4kmdqfT5QjOf8EFair+b8bAofH51j1T67RDX9N32o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FEiLuj1kmxr9m0pXmvwOIDKWw4xGe/C+ylhQki3JrHNfiXvYh1/c25qz5i8tPJ+66
-	 +3oGBiSc9wTIic/iAaxOFNN/IDk/t4cx6Ul1kOOofm2AcZWRuzjAPKW7yqkPsA5Gr1
-	 BpTWefT4rpdcGPXjXs1cM5yIl6jIgKrNk7OasK+I=
+	b=Ku7VJiOw/MwESOG3apuwKHYVTu0K0x/TW+0xrnbRA3yfqZCq/SynQAm06/Hx2b1bJ
+	 GrTaXmfn5CTZOTyM+FiukUvlnCrth0oRpJlRPipMwxWIm1i1iIXLMFgKMC7KzcyTFK
+	 zmvzE5r3UfKJY4x2T5pnYgJvWtZaxtqZ0HKQyJm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Friedrich Weber <f.weber@proxmox.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Carlos Soto <carlos.soto@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 5.10 176/286] openvswitch: fix lockup on tx to unregistering netdev with carrier
-Date: Tue, 29 Apr 2025 18:41:20 +0200
-Message-ID: <20250429161115.138401605@linuxfoundation.org>
+	BassCheck <bass@buaa.edu.cn>,
+	Tuo Li <islituo@gmail.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Bin Lan <bin.lan.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 5.10 177/286] scsi: lpfc: Fix a possible data race in lpfc_unregister_fcf_rescan()
+Date: Tue, 29 Apr 2025 18:41:21 +0200
+Message-ID: <20250429161115.179634974@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -55,77 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Tuo Li <islituo@gmail.com>
 
-commit 47e55e4b410f7d552e43011baa5be1aab4093990 upstream.
+commit 0e881c0a4b6146b7e856735226208f48251facd8 upstream.
 
-Commit in a fixes tag attempted to fix the issue in the following
-sequence of calls:
+The variable phba->fcf.fcf_flag is often protected by the lock
+phba->hbalock() when is accessed. Here is an example in
+lpfc_unregister_fcf_rescan():
 
-    do_output
-    -> ovs_vport_send
-       -> dev_queue_xmit
-          -> __dev_queue_xmit
-             -> netdev_core_pick_tx
-                -> skb_tx_hash
+  spin_lock_irq(&phba->hbalock);
+  phba->fcf.fcf_flag |= FCF_INIT_DISC;
+  spin_unlock_irq(&phba->hbalock);
 
-When device is unregistering, the 'dev->real_num_tx_queues' goes to
-zero and the 'while (unlikely(hash >= qcount))' loop inside the
-'skb_tx_hash' becomes infinite, locking up the core forever.
+However, in the same function, phba->fcf.fcf_flag is assigned with 0
+without holding the lock, and thus can cause a data race:
 
-But unfortunately, checking just the carrier status is not enough to
-fix the issue, because some devices may still be in unregistering
-state while reporting carrier status OK.
+  phba->fcf.fcf_flag = 0;
 
-One example of such device is a net/dummy.  It sets carrier ON
-on start, but it doesn't implement .ndo_stop to set the carrier off.
-And it makes sense, because dummy doesn't really have a carrier.
-Therefore, while this device is unregistering, it's still easy to hit
-the infinite loop in the skb_tx_hash() from the OVS datapath.  There
-might be other drivers that do the same, but dummy by itself is
-important for the OVS ecosystem, because it is frequently used as a
-packet sink for tcpdump while debugging OVS deployments.  And when the
-issue is hit, the only way to recover is to reboot.
+To fix this possible data race, a lock and unlock pair is added when
+accessing the variable phba->fcf.fcf_flag.
 
-Fix that by also checking if the device is running.  The running
-state is handled by the net core during unregistering, so it covers
-unregistering case better, and we don't really need to send packets
-to devices that are not running anyway.
-
-While only checking the running state might be enough, the carrier
-check is preserved.  The running and the carrier states seem disjoined
-throughout the code and different drivers.  And other core functions
-like __dev_direct_xmit() check both before attempting to transmit
-a packet.  So, it seems safer to check both flags in OVS as well.
-
-Fixes: 066b86787fa3 ("net: openvswitch: fix race on port output")
-Reported-by: Friedrich Weber <f.weber@proxmox.com>
-Closes: https://mail.openvswitch.org/pipermail/ovs-discuss/2025-January/053423.html
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Tested-by: Friedrich Weber <f.weber@proxmox.com>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20250109122225.4034688-1-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Carlos Soto <carlos.soto@broadcom.com>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reported-by: BassCheck <bass@buaa.edu.cn>
+Signed-off-by: Tuo Li <islituo@gmail.com>
+Link: https://lore.kernel.org/r/20230630024748.1035993-1-islituo@gmail.com
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/actions.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/scsi/lpfc/lpfc_hbadisc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -912,7 +912,9 @@ static void do_output(struct datapath *d
- {
- 	struct vport *vport = ovs_vport_rcu(dp, out_port);
+--- a/drivers/scsi/lpfc/lpfc_hbadisc.c
++++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
+@@ -6790,7 +6790,9 @@ lpfc_unregister_fcf_rescan(struct lpfc_h
+ 	if (rc)
+ 		return;
+ 	/* Reset HBA FCF states after successful unregister FCF */
++	spin_lock_irq(&phba->hbalock);
+ 	phba->fcf.fcf_flag = 0;
++	spin_unlock_irq(&phba->hbalock);
+ 	phba->fcf.current_rec.flag = 0;
  
--	if (likely(vport && netif_carrier_ok(vport->dev))) {
-+	if (likely(vport &&
-+		   netif_running(vport->dev) &&
-+		   netif_carrier_ok(vport->dev))) {
- 		u16 mru = OVS_CB(skb)->mru;
- 		u32 cutlen = OVS_CB(skb)->cutlen;
- 
+ 	/*
 
 
