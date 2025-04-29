@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361D621ABDB;
-	Tue, 29 Apr 2025 17:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC99721ADC7;
+	Tue, 29 Apr 2025 17:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947224; cv=none; b=Xu2JcLExEyAnw6IUPusKymd+A0+wZkxzga2bVaB1aSg7+ejuxRNFauKlPuwJ9Ktdwvi0c5KGU9GdcJt7LLJB/mi/lNFzeSPce271JQFkipjrbT75uC2smXRwuJiTYljSsLB5yfNUQnn9DHO0aLdSYM0n7tyD3R3PsiCe16w+UQY=
+	t=1745947226; cv=none; b=YA99EOS+G4diV9d4JgH6AwoAjZ0QGe5bPgemS41FE6oHLwEveN6KijKtZCx4ZjkRrdyje1k6DXIRbJPd/hbg88gOdf5aNgJkXvlT6lqIHNHtC8jIjAs5OtvZE90TPb891p+x62Jmtn2Oa7gCa+GjVWXqWhyAbWSE9DVfiKirsUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947224; c=relaxed/simple;
-	bh=xRFzAemfhT31C46nOcecGl5+QhtqGmKQ27yl5wz5mOA=;
+	s=arc-20240116; t=1745947226; c=relaxed/simple;
+	bh=3MBDPuu411X5wyGS0az8dU+jsD3yVqqaiP2U/4Prx5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BIOpuVwsWIFzfTWA+oZgk/oytoLL/LNCm9z+U6X1ead/KiWdjuXg5tDcxFUsIRLL6/lmXYyyK5WeAsW4da0PB0u41nUvJPQx9tslUpbYpECAs3AJuRKsl5sGDJxk462C4d9U5M9h/+lhQI1989+VXACdE4Y6lh8SytwqT44WOqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6KJ3Fqt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QrR8PnjHH2Sg0oMfWpvpy91lPyTV4EmF0Xlk3y7/r3XTgIbgB5pm4Rw3KsqorpQW7CE0KkiMnRLbMarRoZJxqWQ8CGG1fYZ/0LxiMYps5tlZOLb4iGL3bXhMsrSuQESo6EJagEuiVEKTFUij+vp4gYVOxekxLbY/7KzjuqkwI0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrzlAeIB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6KJ3Fqt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35046C4CEE3;
-	Tue, 29 Apr 2025 17:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrzlAeIB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 478ECC4CEE3;
+	Tue, 29 Apr 2025 17:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947223;
-	bh=xRFzAemfhT31C46nOcecGl5+QhtqGmKQ27yl5wz5mOA=;
+	s=korg; t=1745947226;
+	bh=3MBDPuu411X5wyGS0az8dU+jsD3yVqqaiP2U/4Prx5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M6KJ3Fqt2I/SocFc3gph3oFLL9lTdDm9D72Lu1oW8YdIGRFGtamK440xwIcZN0KkN
-	 G4T2L7JcwK50FJe6S1D3V9MqpIJ88QejSXAdn+cuiErVAsjLRfiKW1YLgvTgGPgZHG
-	 paMV+YcQMZmtAc8VzqDwq9T4pN/ayqm7XfEAoRcc=
+	b=yrzlAeIBf+AsspMBcmKw4BxMN8RFAeA25glznfR9PWw5F5rGxy8YdtLEg86Nr+Bb3
+	 F7Th7vGqhs/zuIdoswbbP7rENYXNS8sc1GPSG26fmoUZc0siUxYsezdeLlYf8aDhzI
+	 1b/19v0nXToNaLvVg28WTRAtrtxG1yBFk/75z3fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Tom Zanussi <zanussi@kernel.org>,
+	Ross Zwisler <zwisler@google.com>,
+	Ching-lin Yu <chinglinyu@google.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 212/286] soc: samsung: exynos-chipid: initialize later - with arch_initcall
-Date: Tue, 29 Apr 2025 18:41:56 +0200
-Message-ID: <20250429161116.671366305@linuxfoundation.org>
+Subject: [PATCH 5.10 195/286] tracing: Allow synthetic events to pass around stacktraces
+Date: Tue, 29 Apr 2025 18:41:39 +0200
+Message-ID: <20250429161115.986254655@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -50,53 +55,280 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzk@kernel.org>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 3b4c362e5ef102ca2d70d33f4e8cf0780053a7db ]
+[ Upstream commit 00cf3d672a9dd409418647e9f98784c339c3ff63 ]
 
-The Exynos ChipID driver on Exynos SoCs has only informational
-purpose - to expose the SoC device in sysfs.  No other drivers
-depend on it so there is really no benefit of initializing it early.
+Allow a stacktrace from one event to be displayed by the end event of a
+synthetic event. This is very useful when looking for the longest latency
+of a sleep or something blocked on I/O.
 
-Instead, initialize everything with arch_initcall which:
-1. Allows to use dev_info() as the SoC bus is present (since
-   core_initcall),
-2. Could speed things up because of execution in a SMP environment
-   (after bringing up secondary CPUs, unlike early_initcall),
-3. Reduces the amount of work to be done early, when the kernel has to
-   bring up critical devices.
+ # cd /sys/kernel/tracing/
+ # echo 's:block_lat pid_t pid; u64 delta; unsigned long[] stack;' > dynamic_events
+ # echo 'hist:keys=next_pid:ts=common_timestamp.usecs,st=stacktrace  if prev_state == 1||prev_state == 2' > events/sched/sched_switch/trigger
+ # echo 'hist:keys=prev_pid:delta=common_timestamp.usecs-$ts,s=$st:onmax($delta).trace(block_lat,prev_pid,$delta,$s)' >> events/sched/sched_switch/trigger
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-Link: https://lore.kernel.org/r/20201202195955.128633-2-krzk@kernel.org
-Stable-dep-of: c8222ef6cf29 ("soc: samsung: exynos-chipid: Add NULL pointer check in exynos_chipid_probe()")
+The above creates a "block_lat" synthetic event that take the stacktrace of
+when a task schedules out in either the interruptible or uninterruptible
+states, and on a new per process max $delta (the time it was scheduled
+out), will print the process id and the stacktrace.
+
+  # echo 1 > events/synthetic/block_lat/enable
+  # cat trace
+ #           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+ #              | |         |   |||||     |         |
+    kworker/u16:0-767     [006] d..4.   560.645045: block_lat: pid=767 delta=66 stack=STACK:
+ => __schedule
+ => schedule
+ => pipe_read
+ => vfs_read
+ => ksys_read
+ => do_syscall_64
+ => 0x966000aa
+
+           <idle>-0       [003] d..4.   561.132117: block_lat: pid=0 delta=413787 stack=STACK:
+ => __schedule
+ => schedule
+ => schedule_hrtimeout_range_clock
+ => do_sys_poll
+ => __x64_sys_poll
+ => do_syscall_64
+ => 0x966000aa
+
+            <...>-153     [006] d..4.   562.068407: block_lat: pid=153 delta=54 stack=STACK:
+ => __schedule
+ => schedule
+ => io_schedule
+ => rq_qos_wait
+ => wbt_wait
+ => __rq_qos_throttle
+ => blk_mq_submit_bio
+ => submit_bio_noacct_nocheck
+ => ext4_bio_write_page
+ => mpage_submit_page
+ => mpage_process_page_bufs
+ => mpage_prepare_extent_to_map
+ => ext4_do_writepages
+ => ext4_writepages
+ => do_writepages
+ => __writeback_single_inode
+
+Link: https://lkml.kernel.org/r/20230117152236.010941267@goodmis.org
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Tom Zanussi <zanussi@kernel.org>
+Cc: Ross Zwisler <zwisler@google.com>
+Cc: Ching-lin Yu <chinglinyu@google.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: 4d38328eb442 ("tracing: Fix synth event printk format for str fields")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/samsung/exynos-chipid.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/trace/trace.h              |  4 ++
+ kernel/trace/trace_events_hist.c  |  7 ++-
+ kernel/trace/trace_events_synth.c | 80 ++++++++++++++++++++++++++++++-
+ kernel/trace/trace_synth.h        |  1 +
+ 4 files changed, 87 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/soc/samsung/exynos-chipid.c b/drivers/soc/samsung/exynos-chipid.c
-index 8d4d050869068..0f2de1b016a59 100644
---- a/drivers/soc/samsung/exynos-chipid.c
-+++ b/drivers/soc/samsung/exynos-chipid.c
-@@ -98,9 +98,9 @@ static int __init exynos_chipid_early_init(void)
- 		goto err;
- 	}
+diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
+index 7c90872f2435d..f47938d8401a2 100644
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -109,6 +109,10 @@ enum trace_type {
+ 	unlikely(__ret_warn_once);				\
+ })
  
--	/* it is too early to use dev_info() here (soc_dev is NULL) */
--	pr_info("soc soc0: Exynos: CPU[%s] PRO_ID[0x%x] REV[0x%x] Detected\n",
--		soc_dev_attr->soc_id, product_id, revision);
-+	dev_info(soc_device_to_device(soc_dev),
-+		 "Exynos: CPU[%s] PRO_ID[0x%x] REV[0x%x] Detected\n",
-+		 soc_dev_attr->soc_id, product_id, revision);
++#define HIST_STACKTRACE_DEPTH	16
++#define HIST_STACKTRACE_SIZE	(HIST_STACKTRACE_DEPTH * sizeof(unsigned long))
++#define HIST_STACKTRACE_SKIP	5
++
+ /*
+  * syscalls are special, and need special handling, this is why
+  * they are not included in trace_entries.h
+diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
+index 059a106e62bec..a0342b45a06da 100644
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -282,10 +282,6 @@ DEFINE_HIST_FIELD_FN(u8);
+ #define for_each_hist_key_field(i, hist_data)	\
+ 	for ((i) = (hist_data)->n_vals; (i) < (hist_data)->n_fields; (i)++)
  
- 	return 0;
+-#define HIST_STACKTRACE_DEPTH	16
+-#define HIST_STACKTRACE_SIZE	(HIST_STACKTRACE_DEPTH * sizeof(unsigned long))
+-#define HIST_STACKTRACE_SKIP	5
+-
+ #define HITCOUNT_IDX		0
+ #define HIST_KEY_SIZE_MAX	(MAX_FILTER_STR_VAL + HIST_STACKTRACE_SIZE)
  
-@@ -110,4 +110,4 @@ static int __init exynos_chipid_early_init(void)
- 	return ret;
+@@ -3356,6 +3352,9 @@ static int check_synth_field(struct synth_event *event,
+ 	    && field->is_dynamic)
+ 		return 0;
+ 
++	if (strstr(hist_field->type, "long[") && field->is_stack)
++		return 0;
++
+ 	if (strcmp(field->type, hist_field->type) != 0) {
+ 		if (field->size != hist_field->size ||
+ 		    (!field->is_string && field->is_signed != hist_field->is_signed))
+diff --git a/kernel/trace/trace_events_synth.c b/kernel/trace/trace_events_synth.c
+index e43426aa12830..4878758ceea2a 100644
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -162,6 +162,14 @@ static int synth_field_is_string(char *type)
+ 	return false;
  }
  
--early_initcall(exynos_chipid_early_init);
-+arch_initcall(exynos_chipid_early_init);
++static int synth_field_is_stack(char *type)
++{
++	if (strstr(type, "long[") != NULL)
++		return true;
++
++	return false;
++}
++
+ static int synth_field_string_size(char *type)
+ {
+ 	char buf[4], *end, *start;
+@@ -237,6 +245,8 @@ static int synth_field_size(char *type)
+ 		size = sizeof(gfp_t);
+ 	else if (synth_field_is_string(type))
+ 		size = synth_field_string_size(type);
++	else if (synth_field_is_stack(type))
++		size = 0;
+ 
+ 	return size;
+ }
+@@ -281,6 +291,8 @@ static const char *synth_field_fmt(char *type)
+ 		fmt = "%x";
+ 	else if (synth_field_is_string(type))
+ 		fmt = "%.*s";
++	else if (synth_field_is_stack(type))
++		fmt = "%s";
+ 
+ 	return fmt;
+ }
+@@ -360,6 +372,23 @@ static enum print_line_t print_synth_event(struct trace_iterator *iter,
+ 						 i == se->n_fields - 1 ? "" : " ");
+ 				n_u64 += STR_VAR_LEN_MAX / sizeof(u64);
+ 			}
++		} else if (se->fields[i]->is_stack) {
++			u32 offset, data_offset, len;
++			unsigned long *p, *end;
++
++			offset = (u32)entry->fields[n_u64];
++			data_offset = offset & 0xffff;
++			len = offset >> 16;
++
++			p = (void *)entry + data_offset;
++			end = (void *)p + len - (sizeof(long) - 1);
++
++			trace_seq_printf(s, "%s=STACK:\n", se->fields[i]->name);
++
++			for (; *p && p < end; p++)
++				trace_seq_printf(s, "=> %pS\n", (void *)*p);
++			n_u64++;
++
+ 		} else {
+ 			struct trace_print_flags __flags[] = {
+ 			    __def_gfpflag_names, {-1, NULL} };
+@@ -427,6 +456,43 @@ static unsigned int trace_string(struct synth_trace_event *entry,
+ 	return len;
+ }
+ 
++static unsigned int trace_stack(struct synth_trace_event *entry,
++				 struct synth_event *event,
++				 long *stack,
++				 unsigned int data_size,
++				 unsigned int *n_u64)
++{
++	unsigned int len;
++	u32 data_offset;
++	void *data_loc;
++
++	data_offset = struct_size(entry, fields, event->n_u64);
++	data_offset += data_size;
++
++	for (len = 0; len < HIST_STACKTRACE_DEPTH; len++) {
++		if (!stack[len])
++			break;
++	}
++
++	/* Include the zero'd element if it fits */
++	if (len < HIST_STACKTRACE_DEPTH)
++		len++;
++
++	len *= sizeof(long);
++
++	/* Find the dynamic section to copy the stack into. */
++	data_loc = (void *)entry + data_offset;
++	memcpy(data_loc, stack, len);
++
++	/* Fill in the field that holds the offset/len combo */
++	data_offset |= len << 16;
++	*(u32 *)&entry->fields[*n_u64] = data_offset;
++
++	(*n_u64)++;
++
++	return len;
++}
++
+ static notrace void trace_event_raw_event_synth(void *__data,
+ 						u64 *var_ref_vals,
+ 						unsigned int *var_ref_idx)
+@@ -479,6 +545,12 @@ static notrace void trace_event_raw_event_synth(void *__data,
+ 					   event->fields[i]->is_dynamic,
+ 					   data_size, &n_u64);
+ 			data_size += len; /* only dynamic string increments */
++		} if (event->fields[i]->is_stack) {
++		        long *stack = (long *)(long)var_ref_vals[val_idx];
++
++			len = trace_stack(entry, event, stack,
++					   data_size, &n_u64);
++			data_size += len;
+ 		} else {
+ 			struct synth_field *field = event->fields[i];
+ 			u64 val = var_ref_vals[val_idx];
+@@ -541,6 +613,9 @@ static int __set_synth_event_print_fmt(struct synth_event *event,
+ 		    event->fields[i]->is_dynamic)
+ 			pos += snprintf(buf + pos, LEN_OR_ZERO,
+ 				", __get_str(%s)", event->fields[i]->name);
++		else if (event->fields[i]->is_stack)
++			pos += snprintf(buf + pos, LEN_OR_ZERO,
++				", __get_stacktrace(%s)", event->fields[i]->name);
+ 		else
+ 			pos += snprintf(buf + pos, LEN_OR_ZERO,
+ 					", REC->%s", event->fields[i]->name);
+@@ -660,7 +735,8 @@ static struct synth_field *parse_synth_field(int argc, const char **argv,
+ 		ret = -EINVAL;
+ 		goto free;
+ 	} else if (size == 0) {
+-		if (synth_field_is_string(field->type)) {
++		if (synth_field_is_string(field->type) ||
++		    synth_field_is_stack(field->type)) {
+ 			char *type;
+ 
+ 			len = sizeof("__data_loc ") + strlen(field->type) + 1;
+@@ -691,6 +767,8 @@ static struct synth_field *parse_synth_field(int argc, const char **argv,
+ 
+ 	if (synth_field_is_string(field->type))
+ 		field->is_string = true;
++	else if (synth_field_is_stack(field->type))
++		field->is_stack = true;
+ 
+ 	field->is_signed = synth_field_signed(field->type);
+  out:
+diff --git a/kernel/trace/trace_synth.h b/kernel/trace/trace_synth.h
+index 4007fe95cf42c..077c748a8b3a6 100644
+--- a/kernel/trace/trace_synth.h
++++ b/kernel/trace/trace_synth.h
+@@ -18,6 +18,7 @@ struct synth_field {
+ 	bool is_signed;
+ 	bool is_string;
+ 	bool is_dynamic;
++	bool is_stack;
+ };
+ 
+ struct synth_event {
 -- 
 2.39.5
 
