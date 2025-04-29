@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8E2155A4E;
-	Tue, 29 Apr 2025 18:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1F225332D;
+	Tue, 29 Apr 2025 18:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950627; cv=none; b=cf0fsWFKVVui43F5mDy6WhTY1buXR09fJ1I88jrmz3Gw3pFhTUzxmDt8dpPsZNCZkxkEZhS0afxHqPPZvUhcuFsBpBse/3PJ6xn23V3CjcmDCN58tO6zEnlf6z7n47InsTVXIRWj4k8q/gESrwdVCsHMhYpSoFp2iyKDjM3zeUs=
+	t=1745950630; cv=none; b=p3JhzB4Az6whtUkLqCE/O8c8GTWMYldwAzKeCvZdRUbF0NNM0B3ardo+ts2gcyemlOkyM1d4tA7HYn+vahdOGHnF7gnoTyTbwqQpkIvHRakpdT+k9ovJBLjTyEFYMvS6ce9582X0Jm12H4O/e4y2axYJHoAimwu4jGGnxD0REA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950627; c=relaxed/simple;
-	bh=6JFQocfNGQgnJkyZIOAs/qk7amQLFPN7vQ59sR1WdlQ=;
+	s=arc-20240116; t=1745950630; c=relaxed/simple;
+	bh=QCrmf1lMKYikWyUyhfKoc27gatIW9Mg2o4EeaFqipZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pzeF9V6lu8YycZBXft6I14kv/Pw4pdXaEfqQlcROKdgyb1UQ9judnevmIzTXOu0zObiD3m/kEf8aFpWzp/ld8nAJS/pw6utV0YKzS4FNir8YAv+Sf6jkXC0ZRgPKFV9XVpvzxaegZqhyxkf/nZgx7u8iSZ1H8Z0WKhg/qADJcT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WeKVblVv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JcTvA95Lf3nvKQMXKXQvKrw5ntwLMIJuTHYyoE3kmcKCI5rvPpagdKyMLd3O/CTN+F0y3ym5E/9KzllYGLvMNbz74Y2jnPOmiC/zvhQB7v/oOVMA4iPcVgVlZdLNa2/TgXwbAudMCR8PFAvl9FvSq6H5U4VNe5xr+wgOtviB+O8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKlf5j3+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WeKVblVv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6EEC4CEE3;
-	Tue, 29 Apr 2025 18:17:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKlf5j3+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35365C4CEE3;
+	Tue, 29 Apr 2025 18:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950627;
-	bh=6JFQocfNGQgnJkyZIOAs/qk7amQLFPN7vQ59sR1WdlQ=;
+	s=korg; t=1745950630;
+	bh=QCrmf1lMKYikWyUyhfKoc27gatIW9Mg2o4EeaFqipZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WeKVblVvW0oLV6BIDYaSh2Ksj5/FnCRCF//3y+XNywPVnt+gKNo+lBZNBLTF+jS2S
-	 49qx9yQYedtC4mFjjZoPpGPBarN+iNT+jCTKFTUroL4u0KUtuchUrhLEye+7h4jrMd
-	 GHeadxj/nuNvVpihzYMKltisrb9PYK/7XYAYA5s8=
+	b=NKlf5j3+pkQHBCd1I96OI7X+Yn6OoqFLi83Ne18mYhZnuzxia9hT6MLwcok2wsCyh
+	 ksk5Z4PJL3gEqbUC9kM96dBqgzlJ/h28qWiniMAbGvyZStQjdlwXhKKEvg3/kvmc5W
+	 WaG3hqyG96lUVuP5pQoImcHObUX06LohWJJmY/zU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaogang Chen <Xiaogang.Chen@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Uday Shankar <ushankar@purestorage.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 155/204] udmabuf: fix a buf size overflow issue during udmabuf creation
-Date: Tue, 29 Apr 2025 18:44:03 +0200
-Message-ID: <20250429161105.759897550@linuxfoundation.org>
+Subject: [PATCH 6.6 156/204] selftests: ublk: fix test_stripe_04
+Date: Tue, 29 Apr 2025 18:44:04 +0200
+Message-ID: <20250429161105.799959706@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -45,40 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiaogang Chen <xiaogang.chen@amd.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 021ba7f1babd029e714d13a6bf2571b08af96d0f ]
+[ Upstream commit 72070e57b0a518ec8e562a2b68fdfc796ef5c040 ]
 
-by casting size_limit_mb to u64  when calculate pglimit.
+Commit 57ed58c13256 ("selftests: ublk: enable zero copy for stripe target")
+added test entry of test_stripe_04, but forgot to add the test script.
 
-Signed-off-by: Xiaogang Chen<Xiaogang.Chen@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250321164126.329638-1-xiaogang.chen@amd.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
+So fix the test by adding the script file.
+
+Reported-by: Uday Shankar <ushankar@purestorage.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Uday Shankar <ushankar@purestorage.com>
+Link: https://lore.kernel.org/r/20250404001849.1443064-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/udmabuf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../testing/selftests/ublk/test_stripe_04.sh  | 24 +++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+ create mode 100755 tools/testing/selftests/ublk/test_stripe_04.sh
 
-diff --git a/drivers/dma-buf/udmabuf.c b/drivers/dma-buf/udmabuf.c
-index d1fcdd1f9aaed..373282beeb606 100644
---- a/drivers/dma-buf/udmabuf.c
-+++ b/drivers/dma-buf/udmabuf.c
-@@ -214,7 +214,7 @@ static long udmabuf_create(struct miscdevice *device,
- 	if (!ubuf)
- 		return -ENOMEM;
- 
--	pglimit = (size_limit_mb * 1024 * 1024) >> PAGE_SHIFT;
-+	pglimit = ((u64)size_limit_mb * 1024 * 1024) >> PAGE_SHIFT;
- 	for (i = 0; i < head->count; i++) {
- 		if (!IS_ALIGNED(list[i].offset, PAGE_SIZE))
- 			goto err;
+diff --git a/tools/testing/selftests/ublk/test_stripe_04.sh b/tools/testing/selftests/ublk/test_stripe_04.sh
+new file mode 100755
+index 0000000000000..1f2b642381d17
+--- /dev/null
++++ b/tools/testing/selftests/ublk/test_stripe_04.sh
+@@ -0,0 +1,24 @@
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0
++
++. "$(cd "$(dirname "$0")" && pwd)"/test_common.sh
++
++TID="stripe_04"
++ERR_CODE=0
++
++_prep_test "stripe" "mkfs & mount & umount on zero copy"
++
++backfile_0=$(_create_backfile 256M)
++backfile_1=$(_create_backfile 256M)
++dev_id=$(_add_ublk_dev -t stripe -z -q 2 "$backfile_0" "$backfile_1")
++_check_add_dev $TID $? "$backfile_0" "$backfile_1"
++
++_mkfs_mount_test /dev/ublkb"${dev_id}"
++ERR_CODE=$?
++
++_cleanup_test "stripe"
++
++_remove_backfile "$backfile_0"
++_remove_backfile "$backfile_1"
++
++_show_result $TID $ERR_CODE
 -- 
 2.39.5
 
