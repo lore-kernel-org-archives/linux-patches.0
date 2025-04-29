@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1612459C5;
-	Tue, 29 Apr 2025 17:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0C9248883;
+	Tue, 29 Apr 2025 17:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949132; cv=none; b=LW+bpzBYiEJS9HUTp0I374PNQYHT2JbiePNYMvNEQl2VpHFwj+BDXTzXM/Uw43pmMeu9R+bO/TledUZEdKDRhLTilOnYW5/8lWb7/q5ixxIdq7Y74whCiie5R4ROb+7jxhyoHMuutDJB1TpHnrSyQWubNLciDtrfmDMQkh605lY=
+	t=1745949137; cv=none; b=SKntXlcT7mbj3wEAg1KFSMOJvSsYGelyYGEh785ZIuMwPiguqBpMdghY1axBqWnlrnzQM+cqAxK78Ymb9lmkqaPbAQ6hwKVjPlS/XbLx19Oqenaxj339rF9RGHV7te1C4nSRf8g1RpDO6nL7w3BCbrynZ2LMW2PhXQVYBm2m4bI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949132; c=relaxed/simple;
-	bh=05nktgDCIe+WCtqHBxIAW05dcgYiuJFhhekljUiEjjA=;
+	s=arc-20240116; t=1745949137; c=relaxed/simple;
+	bh=04/OrJdav82mg0yReRB9rkgHcWvK0/pPwvYHl3oMVpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NUhSxKC+9e18zuCcq3QLikJsVB4joKSuCS6rqJxlluaszgzWfzhDjhXXNftHe1gw0E/I+0poyoGNYbIn1SPkEsP3Yo5ZmrZJQv+dE4OTRAeIYJzgn6KjokkeildbcPl6H6AkODiKs4hxRhghmvF970v7xUzzB5AXLYNWVt/Is1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qwABrYaE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j6U1Fe9jcEYWcotkWZoUYuil4bYY+vPeroz2wsMYgbeR/OpNxXihiXWvZw1CQ+ltL20NEefyKhBpDmWEhPyNYVFuGjlCEmDeLrBPyL6DJ82Ij8yHnvBiAzVX8aSH0DD9sjAtsJZn5R5dqyCILsbiTzcIFevv/ZcA0XxlCMCBdy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRNUFd+v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwABrYaE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C156C4CEE3;
-	Tue, 29 Apr 2025 17:52:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRNUFd+v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F96C4CEE3;
+	Tue, 29 Apr 2025 17:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949132;
-	bh=05nktgDCIe+WCtqHBxIAW05dcgYiuJFhhekljUiEjjA=;
+	s=korg; t=1745949137;
+	bh=04/OrJdav82mg0yReRB9rkgHcWvK0/pPwvYHl3oMVpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qwABrYaEYtLWEJBp7ZZn+/lSzmvJaoSQYOqaWDXrSo5HhDEmf1X6EPkAdC9YnSeAW
-	 HtCE4EV/kWxAqokTEsOSWEWn5MVkPBnmHgXzIpHBFUt6472eIVGdisJuLU+iUJIhds
-	 qkt8Xw5v8sHpsdJ7Vhunui5yYs2ozzJByBMB0tds=
+	b=qRNUFd+v6/uOY2THgTngcacVGjk1Ul3ItMxwy/lDt+VOVSOPma3aKIfTg/DxrRGdv
+	 6RHcZ/ee9NIGtTO4sU/B9vDkT1KJpj0SSWGguxibFxlgPJ/4iDNhx7KFk4wbjxNTlY
+	 GQ2yKHjxYN263SMphmAlx4naMmcswA1XWaeHYNec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Bin Lan <bin.lan.cn@windriver.com>,
+	Tom Talpey <tom@talpey.com>,
+	Jianhong Yin <jiyin@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
 	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.15 216/373] drm/amdgpu: fix usage slab after free
-Date: Tue, 29 Apr 2025 18:41:33 +0200
-Message-ID: <20250429161132.042579208@linuxfoundation.org>
+Subject: [PATCH 5.15 225/373] smb: client: fix NULL ptr deref in crypto_aead_setkey()
+Date: Tue, 29 Apr 2025 18:41:42 +0200
+Message-ID: <20250429161132.402780777@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -47,225 +48,133 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vitaly Prosyak <vitaly.prosyak@amd.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-commit b61badd20b443eabe132314669bb51a263982e5c upstream.
+commit 4bdec0d1f658f7c98749bd2c5a486e6cfa8565d2 upstream.
 
-[  +0.000021] BUG: KASAN: slab-use-after-free in drm_sched_entity_flush+0x6cb/0x7a0 [gpu_sched]
-[  +0.000027] Read of size 8 at addr ffff8881b8605f88 by task amd_pci_unplug/2147
+Neither SMB3.0 or SMB3.02 supports encryption negotiate context, so
+when SMB2_GLOBAL_CAP_ENCRYPTION flag is set in the negotiate response,
+the client uses AES-128-CCM as the default cipher.  See MS-SMB2
+3.3.5.4.
 
-[  +0.000023] CPU: 6 PID: 2147 Comm: amd_pci_unplug Not tainted 6.10.0+ #1
-[  +0.000016] Hardware name: ASUS System Product Name/ROG STRIX B550-F GAMING (WI-FI), BIOS 1401 12/03/2020
-[  +0.000016] Call Trace:
-[  +0.000008]  <TASK>
-[  +0.000009]  dump_stack_lvl+0x76/0xa0
-[  +0.000017]  print_report+0xce/0x5f0
-[  +0.000017]  ? drm_sched_entity_flush+0x6cb/0x7a0 [gpu_sched]
-[  +0.000019]  ? srso_return_thunk+0x5/0x5f
-[  +0.000015]  ? kasan_complete_mode_report_info+0x72/0x200
-[  +0.000016]  ? drm_sched_entity_flush+0x6cb/0x7a0 [gpu_sched]
-[  +0.000019]  kasan_report+0xbe/0x110
-[  +0.000015]  ? drm_sched_entity_flush+0x6cb/0x7a0 [gpu_sched]
-[  +0.000023]  __asan_report_load8_noabort+0x14/0x30
-[  +0.000014]  drm_sched_entity_flush+0x6cb/0x7a0 [gpu_sched]
-[  +0.000020]  ? srso_return_thunk+0x5/0x5f
-[  +0.000013]  ? __kasan_check_write+0x14/0x30
-[  +0.000016]  ? __pfx_drm_sched_entity_flush+0x10/0x10 [gpu_sched]
-[  +0.000020]  ? srso_return_thunk+0x5/0x5f
-[  +0.000013]  ? __kasan_check_write+0x14/0x30
-[  +0.000013]  ? srso_return_thunk+0x5/0x5f
-[  +0.000013]  ? enable_work+0x124/0x220
-[  +0.000015]  ? __pfx_enable_work+0x10/0x10
-[  +0.000013]  ? srso_return_thunk+0x5/0x5f
-[  +0.000014]  ? free_large_kmalloc+0x85/0xf0
-[  +0.000016]  drm_sched_entity_destroy+0x18/0x30 [gpu_sched]
-[  +0.000020]  amdgpu_vce_sw_fini+0x55/0x170 [amdgpu]
-[  +0.000735]  ? __kasan_check_read+0x11/0x20
-[  +0.000016]  vce_v4_0_sw_fini+0x80/0x110 [amdgpu]
-[  +0.000726]  amdgpu_device_fini_sw+0x331/0xfc0 [amdgpu]
-[  +0.000679]  ? mutex_unlock+0x80/0xe0
-[  +0.000017]  ? __pfx_amdgpu_device_fini_sw+0x10/0x10 [amdgpu]
-[  +0.000662]  ? srso_return_thunk+0x5/0x5f
-[  +0.000014]  ? __kasan_check_write+0x14/0x30
-[  +0.000013]  ? srso_return_thunk+0x5/0x5f
-[  +0.000013]  ? mutex_unlock+0x80/0xe0
-[  +0.000016]  amdgpu_driver_release_kms+0x16/0x80 [amdgpu]
-[  +0.000663]  drm_minor_release+0xc9/0x140 [drm]
-[  +0.000081]  drm_release+0x1fd/0x390 [drm]
-[  +0.000082]  __fput+0x36c/0xad0
-[  +0.000018]  __fput_sync+0x3c/0x50
-[  +0.000014]  __x64_sys_close+0x7d/0xe0
-[  +0.000014]  x64_sys_call+0x1bc6/0x2680
-[  +0.000014]  do_syscall_64+0x70/0x130
-[  +0.000014]  ? srso_return_thunk+0x5/0x5f
-[  +0.000014]  ? irqentry_exit_to_user_mode+0x60/0x190
-[  +0.000015]  ? srso_return_thunk+0x5/0x5f
-[  +0.000014]  ? irqentry_exit+0x43/0x50
-[  +0.000012]  ? srso_return_thunk+0x5/0x5f
-[  +0.000013]  ? exc_page_fault+0x7c/0x110
-[  +0.000015]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[  +0.000014] RIP: 0033:0x7ffff7b14f67
-[  +0.000013] Code: ff e8 0d 16 02 00 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 03 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 41 c3 48 83 ec 18 89 7c 24 0c e8 73 ba f7 ff
-[  +0.000026] RSP: 002b:00007fffffffe378 EFLAGS: 00000246 ORIG_RAX: 0000000000000003
-[  +0.000019] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ffff7b14f67
-[  +0.000014] RDX: 0000000000000000 RSI: 00007ffff7f6f47a RDI: 0000000000000003
-[  +0.000014] RBP: 00007fffffffe3a0 R08: 0000555555569890 R09: 0000000000000000
-[  +0.000014] R10: 0000000000000000 R11: 0000000000000246 R12: 00007fffffffe5c8
-[  +0.000013] R13: 00005555555552a9 R14: 0000555555557d48 R15: 00007ffff7ffd040
-[  +0.000020]  </TASK>
+Commit b0abcd65ec54 ("smb: client: fix UAF in async decryption") added
+a @server->cipher_type check to conditionally call
+smb3_crypto_aead_allocate(), but that check would always be false as
+@server->cipher_type is unset for SMB3.02.
 
-[  +0.000016] Allocated by task 383 on cpu 7 at 26.880319s:
-[  +0.000014]  kasan_save_stack+0x28/0x60
-[  +0.000008]  kasan_save_track+0x18/0x70
-[  +0.000007]  kasan_save_alloc_info+0x38/0x60
-[  +0.000007]  __kasan_kmalloc+0xc1/0xd0
-[  +0.000007]  kmalloc_trace_noprof+0x180/0x380
-[  +0.000007]  drm_sched_init+0x411/0xec0 [gpu_sched]
-[  +0.000012]  amdgpu_device_init+0x695f/0xa610 [amdgpu]
-[  +0.000658]  amdgpu_driver_load_kms+0x1a/0x120 [amdgpu]
-[  +0.000662]  amdgpu_pci_probe+0x361/0xf30 [amdgpu]
-[  +0.000651]  local_pci_probe+0xe7/0x1b0
-[  +0.000009]  pci_device_probe+0x248/0x890
-[  +0.000008]  really_probe+0x1fd/0x950
-[  +0.000008]  __driver_probe_device+0x307/0x410
-[  +0.000007]  driver_probe_device+0x4e/0x150
-[  +0.000007]  __driver_attach+0x223/0x510
-[  +0.000006]  bus_for_each_dev+0x102/0x1a0
-[  +0.000007]  driver_attach+0x3d/0x60
-[  +0.000006]  bus_add_driver+0x2ac/0x5f0
-[  +0.000006]  driver_register+0x13d/0x490
-[  +0.000008]  __pci_register_driver+0x1ee/0x2b0
-[  +0.000007]  llc_sap_close+0xb0/0x160 [llc]
-[  +0.000009]  do_one_initcall+0x9c/0x3e0
-[  +0.000008]  do_init_module+0x241/0x760
-[  +0.000008]  load_module+0x51ac/0x6c30
-[  +0.000006]  __do_sys_init_module+0x234/0x270
-[  +0.000007]  __x64_sys_init_module+0x73/0xc0
-[  +0.000006]  x64_sys_call+0xe3/0x2680
-[  +0.000006]  do_syscall_64+0x70/0x130
-[  +0.000007]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Fix the following KASAN splat by setting @server->cipher_type for
+SMB3.02 as well.
 
-[  +0.000015] Freed by task 2147 on cpu 6 at 160.507651s:
-[  +0.000013]  kasan_save_stack+0x28/0x60
-[  +0.000007]  kasan_save_track+0x18/0x70
-[  +0.000007]  kasan_save_free_info+0x3b/0x60
-[  +0.000007]  poison_slab_object+0x115/0x1c0
-[  +0.000007]  __kasan_slab_free+0x34/0x60
-[  +0.000007]  kfree+0xfa/0x2f0
-[  +0.000007]  drm_sched_fini+0x19d/0x410 [gpu_sched]
-[  +0.000012]  amdgpu_fence_driver_sw_fini+0xc4/0x2f0 [amdgpu]
-[  +0.000662]  amdgpu_device_fini_sw+0x77/0xfc0 [amdgpu]
-[  +0.000653]  amdgpu_driver_release_kms+0x16/0x80 [amdgpu]
-[  +0.000655]  drm_minor_release+0xc9/0x140 [drm]
-[  +0.000071]  drm_release+0x1fd/0x390 [drm]
-[  +0.000071]  __fput+0x36c/0xad0
-[  +0.000008]  __fput_sync+0x3c/0x50
-[  +0.000007]  __x64_sys_close+0x7d/0xe0
-[  +0.000007]  x64_sys_call+0x1bc6/0x2680
-[  +0.000007]  do_syscall_64+0x70/0x130
-[  +0.000007]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+mount.cifs //srv/share /mnt -o vers=3.02,seal,...
 
-[  +0.000014] The buggy address belongs to the object at ffff8881b8605f80
-               which belongs to the cache kmalloc-64 of size 64
-[  +0.000020] The buggy address is located 8 bytes inside of
-               freed 64-byte region [ffff8881b8605f80, ffff8881b8605fc0)
+BUG: KASAN: null-ptr-deref in crypto_aead_setkey+0x2c/0x130
+Read of size 8 at addr 0000000000000020 by task mount.cifs/1095
+CPU: 1 UID: 0 PID: 1095 Comm: mount.cifs Not tainted 6.12.0 #1
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-3.fc41
+04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x5d/0x80
+ ? crypto_aead_setkey+0x2c/0x130
+ kasan_report+0xda/0x110
+ ? crypto_aead_setkey+0x2c/0x130
+ crypto_aead_setkey+0x2c/0x130
+ crypt_message+0x258/0xec0 [cifs]
+ ? __asan_memset+0x23/0x50
+ ? __pfx_crypt_message+0x10/0x10 [cifs]
+ ? mark_lock+0xb0/0x6a0
+ ? hlock_class+0x32/0xb0
+ ? mark_lock+0xb0/0x6a0
+ smb3_init_transform_rq+0x352/0x3f0 [cifs]
+ ? lock_acquire.part.0+0xf4/0x2a0
+ smb_send_rqst+0x144/0x230 [cifs]
+ ? __pfx_smb_send_rqst+0x10/0x10 [cifs]
+ ? hlock_class+0x32/0xb0
+ ? smb2_setup_request+0x225/0x3a0 [cifs]
+ ? __pfx_cifs_compound_last_callback+0x10/0x10 [cifs]
+ compound_send_recv+0x59b/0x1140 [cifs]
+ ? __pfx_compound_send_recv+0x10/0x10 [cifs]
+ ? __create_object+0x5e/0x90
+ ? hlock_class+0x32/0xb0
+ ? do_raw_spin_unlock+0x9a/0xf0
+ cifs_send_recv+0x23/0x30 [cifs]
+ SMB2_tcon+0x3ec/0xb30 [cifs]
+ ? __pfx_SMB2_tcon+0x10/0x10 [cifs]
+ ? lock_acquire.part.0+0xf4/0x2a0
+ ? __pfx_lock_release+0x10/0x10
+ ? do_raw_spin_trylock+0xc6/0x120
+ ? lock_acquire+0x3f/0x90
+ ? _get_xid+0x16/0xd0 [cifs]
+ ? __pfx_SMB2_tcon+0x10/0x10 [cifs]
+ ? cifs_get_smb_ses+0xcdd/0x10a0 [cifs]
+ cifs_get_smb_ses+0xcdd/0x10a0 [cifs]
+ ? __pfx_cifs_get_smb_ses+0x10/0x10 [cifs]
+ ? cifs_get_tcp_session+0xaa0/0xca0 [cifs]
+ cifs_mount_get_session+0x8a/0x210 [cifs]
+ dfs_mount_share+0x1b0/0x11d0 [cifs]
+ ? __pfx___lock_acquire+0x10/0x10
+ ? __pfx_dfs_mount_share+0x10/0x10 [cifs]
+ ? lock_acquire.part.0+0xf4/0x2a0
+ ? find_held_lock+0x8a/0xa0
+ ? hlock_class+0x32/0xb0
+ ? lock_release+0x203/0x5d0
+ cifs_mount+0xb3/0x3d0 [cifs]
+ ? do_raw_spin_trylock+0xc6/0x120
+ ? __pfx_cifs_mount+0x10/0x10 [cifs]
+ ? lock_acquire+0x3f/0x90
+ ? find_nls+0x16/0xa0
+ ? smb3_update_mnt_flags+0x372/0x3b0 [cifs]
+ cifs_smb3_do_mount+0x1e2/0xc80 [cifs]
+ ? __pfx_vfs_parse_fs_string+0x10/0x10
+ ? __pfx_cifs_smb3_do_mount+0x10/0x10 [cifs]
+ smb3_get_tree+0x1bf/0x330 [cifs]
+ vfs_get_tree+0x4a/0x160
+ path_mount+0x3c1/0xfb0
+ ? kasan_quarantine_put+0xc7/0x1d0
+ ? __pfx_path_mount+0x10/0x10
+ ? kmem_cache_free+0x118/0x3e0
+ ? user_path_at+0x74/0xa0
+ __x64_sys_mount+0x1a6/0x1e0
+ ? __pfx___x64_sys_mount+0x10/0x10
+ ? mark_held_locks+0x1a/0x90
+ do_syscall_64+0xbb/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-[  +0.000028] The buggy address belongs to the physical page:
-[  +0.000011] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1b8605
-[  +0.000008] anon flags: 0x17ffffc0000000(node=0|zone=2|lastcpupid=0x1fffff)
-[  +0.000007] page_type: 0xffffefff(slab)
-[  +0.000009] raw: 0017ffffc0000000 ffff8881000428c0 0000000000000000 dead000000000001
-[  +0.000006] raw: 0000000000000000 0000000000200020 00000001ffffefff 0000000000000000
-[  +0.000006] page dumped because: kasan: bad access detected
-
-[  +0.000012] Memory state around the buggy address:
-[  +0.000011]  ffff8881b8605e80: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-[  +0.000015]  ffff8881b8605f00: 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc
-[  +0.000015] >ffff8881b8605f80: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-[  +0.000013]                       ^
-[  +0.000011]  ffff8881b8606000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fc
-[  +0.000014]  ffff8881b8606080: fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb fb
-[  +0.000013] ==================================================================
-
-The issue reproduced on VG20 during the IGT pci_unplug test.
-The root cause of the issue is that the function drm_sched_fini is called before drm_sched_entity_kill.
-In drm_sched_fini, the drm_sched_rq structure is freed, but this structure is later accessed by
-each entity within the run queue, leading to invalid memory access.
-To resolve this, the order of cleanup calls is updated:
-
-    Before:
-        amdgpu_fence_driver_sw_fini
-        amdgpu_device_ip_fini
-
-    After:
-        amdgpu_device_ip_fini
-        amdgpu_fence_driver_sw_fini
-
-This updated order ensures that all entities in the IPs are cleaned up first, followed by proper
-cleanup of the schedulers.
-
-Additional Investigation:
-
-During debugging, another issue was identified in the amdgpu_vce_sw_fini function. The vce.vcpu_bo
-buffer must be freed only as the final step in the cleanup process to prevent any premature
-access during earlier cleanup stages.
-
-v2: Using Christian suggestion call drm_sched_entity_destroy before drm_sched_fini.
-
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-[Minor context change fixed.]
-Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
+Cc: Tom Talpey <tom@talpey.com>
+Reported-by: Jianhong Yin <jiyin@redhat.com>
+Cc: stable@vger.kernel.org # v6.12
+Fixes: b0abcd65ec54 ("smb: client: fix UAF in async decryption")
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[Commit b0abcd65ec54 ("smb: client: fix UAF in async decryption")
+fixes CVE-2024-50047 but brings NULL-pointer dereferebce. So
+commit 4bdec0d1f658 ("smb: client: fix NULL ptr deref in crypto_aead_setkey()")
+should be backported too.]
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c    |    6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ fs/cifs/smb2pdu.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4008,8 +4008,8 @@ void amdgpu_device_fini_hw(struct amdgpu
+--- a/fs/cifs/smb2pdu.c
++++ b/fs/cifs/smb2pdu.c
+@@ -1028,7 +1028,9 @@ SMB2_negotiate(const unsigned int xid, s
+ 	 * SMB3.0 supports only 1 cipher and doesn't have a encryption neg context
+ 	 * Set the cipher type manually.
+ 	 */
+-	if (server->dialect == SMB30_PROT_ID && (server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
++	if ((server->dialect == SMB30_PROT_ID ||
++	     server->dialect == SMB302_PROT_ID) &&
++	    (server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
+ 		server->cipher_type = SMB2_ENCRYPTION_AES128_CCM;
  
- void amdgpu_device_fini_sw(struct amdgpu_device *adev)
- {
--	amdgpu_fence_driver_sw_fini(adev);
- 	amdgpu_device_ip_fini(adev);
-+	amdgpu_fence_driver_sw_fini(adev);
- 	release_firmware(adev->firmware.gpu_info_fw);
- 	adev->firmware.gpu_info_fw = NULL;
- 	adev->accel_working = false;
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
-@@ -220,15 +220,15 @@ int amdgpu_vce_sw_fini(struct amdgpu_dev
- 
- 	drm_sched_entity_destroy(&adev->vce.entity);
- 
--	amdgpu_bo_free_kernel(&adev->vce.vcpu_bo, &adev->vce.gpu_addr,
--		(void **)&adev->vce.cpu_addr);
--
- 	for (i = 0; i < adev->vce.num_rings; i++)
- 		amdgpu_ring_fini(&adev->vce.ring[i]);
- 
- 	release_firmware(adev->vce.fw);
- 	mutex_destroy(&adev->vce.idle_mutex);
- 
-+	amdgpu_bo_free_kernel(&adev->vce.vcpu_bo, &adev->vce.gpu_addr,
-+		(void **)&adev->vce.cpu_addr);
-+
- 	return 0;
- }
- 
+ 	security_blob = smb2_get_data_area_len(&blob_offset, &blob_length,
 
 
