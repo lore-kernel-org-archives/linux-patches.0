@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2255D1A5BBB;
-	Tue, 29 Apr 2025 18:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E901155A4E;
+	Tue, 29 Apr 2025 18:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950368; cv=none; b=BuzEGEUD1XNEZWDcCJCBe27Tax3t2ov/ohe4GXZf2ORwtRobnGN9K8b+GdONjR2VMSoqM9/iWwtrhynrGcsBCj+Izjt8ESCRUcCjiwzea22Ev5z2xU+6JfJPdb/1v+J/PMZPC+NeYkST0qldn8x4EuWOq+AG9JQSEKkmDi3ftv0=
+	t=1745950371; cv=none; b=tmegMYDVBEilqXcITioyrK1O/UDr06GgTDFzFS9WQlCgFfFVn3E1W9TZdY7oT63MEBFq1FMxVjJmTf7Hlh6ZoHdHpKI4rL0vF28P+Y/xhLPsACfouVLnL8KXDJjG+g7OxjZk9yC7ikwiZvrjLeg15CAVhpjA1zjtIbdFH3Ngf5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950368; c=relaxed/simple;
-	bh=1+grEEiSbQ8TkdNjwLUswYviy22b2H9xl0P18sBXbPQ=;
+	s=arc-20240116; t=1745950371; c=relaxed/simple;
+	bh=Sc5t6OHf5Fsj3EnW9lnjBqwHWnHU6Kjq1VYCjhveSeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ovnt+sxXCd8HT5oiRA7AmxTctgQ8zrJCTp0q2EUMWAYo9f2j75kMP8M1vNyxK5S/L1yoGd+Q3rxVVfsVAOg/quQEvRrjv3F1Au4B9SCXKoC/8KWiCk9PoUckYMRaiJHDypLU0MEjkK56G0kthtFIoLarJPV08kZlsL4l82yGXbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QB4+kyTD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q1VjUOHHs3+KVXC2cyYeuXvC3tSrT1HwqIBnceNNs1isRzAiZ68LRwg88cdU6/9eXNuTbyISYCRXjaUm0q6hcR6Zr2YXluMx4kkVZz6/BF/EliKoQblp6ByObRHU6uv6gMzhXHIEjI1D0tFQbDrS4n8UJbbVayZh8bp6kp/9jbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orTd6UBt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QB4+kyTD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F91C4CEE9;
-	Tue, 29 Apr 2025 18:12:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orTd6UBt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E34C4CEE3;
+	Tue, 29 Apr 2025 18:12:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950368;
-	bh=1+grEEiSbQ8TkdNjwLUswYviy22b2H9xl0P18sBXbPQ=;
+	s=korg; t=1745950371;
+	bh=Sc5t6OHf5Fsj3EnW9lnjBqwHWnHU6Kjq1VYCjhveSeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QB4+kyTDbtALOhCrghVOKqvXEZga1/EVGXXugS+z0ItQ5yexqB1CAZadP/rwdptbb
-	 x2So8tc7f8gF4OUCmytHbVqAgVe/aRYWz5wjKHEdDSgAYHp4mVua8uzLVxnDxkcR2Z
-	 4qvKN/FflA8/jSlTt8w8WjvGF1QS+GDdTUsDc+r8=
+	b=orTd6UBtHL+qh8GkG2/03mtI4rIfp2kS5/bs3nqKP5rYodTuwMGep44wXAaQe+Q++
+	 +AbUTndctiYiXa5NwCE+AQR7YlPFbsSzVhb7FmJnQc0I83dtoUAuELyagCqMWkwjPD
+	 D+4zdeS6LQ+6YVeJpnt74V7pHTqAv5MYwKzv4MSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Nepomnyashih <sdl@nppct.ru>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 074/204] xen-netfront: handle NULL returned by xdp_convert_buff_to_frame()
-Date: Tue, 29 Apr 2025 18:42:42 +0200
-Message-ID: <20250429161102.449319303@linuxfoundation.org>
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 075/204] net: selftests: initialize TCP header and skb payload with zero
+Date: Tue, 29 Apr 2025 18:42:43 +0200
+Message-ID: <20250429161102.492848066@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -50,65 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Nepomnyashih <sdl@nppct.ru>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit cc3628dcd851ddd8d418bf0c897024b4621ddc92 upstream.
+commit 9e8d1013b0c38910cbc9e60de74dbe883878469d upstream.
 
-The function xdp_convert_buff_to_frame() may return NULL if it fails
-to correctly convert the XDP buffer into an XDP frame due to memory
-constraints, internal errors, or invalid data. Failing to check for NULL
-may lead to a NULL pointer dereference if the result is used later in
-processing, potentially causing crashes, data corruption, or undefined
-behavior.
+Zero-initialize TCP header via memset() to avoid garbage values that
+may affect checksum or behavior during test transmission.
 
-On XDP redirect failure, the associated page must be released explicitly
-if it was previously retained via get_page(). Failing to do so may result
-in a memory leak, as the pages reference count is not decremented.
+Also zero-fill allocated payload and padding regions using memset()
+after skb_put(), ensuring deterministic content for all outgoing
+test packets.
 
-Cc: stable@vger.kernel.org # v5.9+
-Fixes: 6c5aa6fc4def ("xen networking: add basic XDP support for xen-netfront")
-Signed-off-by: Alexey Nepomnyashih <sdl@nppct.ru>
-Link: https://patch.msgid.link/20250417122118.1009824-1-sdl@nppct.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3e1e58d64c3d ("net: add generic selftest support")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Cc: stable@vger.kernel.org
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250416160125.2914724-1-o.rempel@pengutronix.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/xen-netfront.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ net/core/selftests.c |   18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
---- a/drivers/net/xen-netfront.c
-+++ b/drivers/net/xen-netfront.c
-@@ -985,20 +985,27 @@ static u32 xennet_run_xdp(struct netfron
- 	act = bpf_prog_run_xdp(prog, xdp);
- 	switch (act) {
- 	case XDP_TX:
--		get_page(pdata);
- 		xdpf = xdp_convert_buff_to_frame(xdp);
-+		if (unlikely(!xdpf)) {
-+			trace_xdp_exception(queue->info->netdev, prog, act);
-+			break;
-+		}
-+		get_page(pdata);
- 		err = xennet_xdp_xmit(queue->info->netdev, 1, &xdpf, 0);
--		if (unlikely(!err))
-+		if (unlikely(err <= 0)) {
-+			if (err < 0)
-+				trace_xdp_exception(queue->info->netdev, prog, act);
- 			xdp_return_frame_rx_napi(xdpf);
--		else if (unlikely(err < 0))
--			trace_xdp_exception(queue->info->netdev, prog, act);
-+		}
- 		break;
- 	case XDP_REDIRECT:
- 		get_page(pdata);
- 		err = xdp_do_redirect(queue->info->netdev, xdp, prog);
- 		*need_xdp_flush = true;
--		if (unlikely(err))
-+		if (unlikely(err)) {
- 			trace_xdp_exception(queue->info->netdev, prog, act);
-+			xdp_return_buff(xdp);
-+		}
- 		break;
- 	case XDP_PASS:
- 	case XDP_DROP:
+--- a/net/core/selftests.c
++++ b/net/core/selftests.c
+@@ -100,10 +100,10 @@ static struct sk_buff *net_test_get_skb(
+ 	ehdr->h_proto = htons(ETH_P_IP);
+ 
+ 	if (attr->tcp) {
++		memset(thdr, 0, sizeof(*thdr));
+ 		thdr->source = htons(attr->sport);
+ 		thdr->dest = htons(attr->dport);
+ 		thdr->doff = sizeof(struct tcphdr) / 4;
+-		thdr->check = 0;
+ 	} else {
+ 		uhdr->source = htons(attr->sport);
+ 		uhdr->dest = htons(attr->dport);
+@@ -144,10 +144,18 @@ static struct sk_buff *net_test_get_skb(
+ 	attr->id = net_test_next_id;
+ 	shdr->id = net_test_next_id++;
+ 
+-	if (attr->size)
+-		skb_put(skb, attr->size);
+-	if (attr->max_size && attr->max_size > skb->len)
+-		skb_put(skb, attr->max_size - skb->len);
++	if (attr->size) {
++		void *payload = skb_put(skb, attr->size);
++
++		memset(payload, 0, attr->size);
++	}
++
++	if (attr->max_size && attr->max_size > skb->len) {
++		size_t pad_len = attr->max_size - skb->len;
++		void *pad = skb_put(skb, pad_len);
++
++		memset(pad, 0, pad_len);
++	}
+ 
+ 	skb->csum = 0;
+ 	skb->ip_summed = CHECKSUM_PARTIAL;
 
 
