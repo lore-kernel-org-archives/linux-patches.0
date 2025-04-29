@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27747243964;
-	Tue, 29 Apr 2025 18:04:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009DD243964;
+	Tue, 29 Apr 2025 18:04:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949885; cv=none; b=TRRXygBdbZSJeDwAtm0Nc+v4BPBdHHTt8tipTdUpg0bdmEEQC2sl0Fi40pPqlg1qxAfLn8x/yA8iQUOhn2mwr6SCjnLp6Ya1NNeS1SKOKp43p84HX2cPMRyh6gdoWyN90ZCXo76d7MrD91imPJ7wlmS9fm1+Rq4hPWl14viXE1k=
+	t=1745949888; cv=none; b=Z42rhH4ZeQ+0WEdCyyKbcUML8e2DecGW5nW0WFsa7JD2gaMctq1BLygrCiByEYTBmmfzG73VPRrBbMo//sa3joUclINx7pLiZCM9LY58f/aN1ZWfR1yMFhUTUOYsvgs8ClWh2H65i+FzjREkuo/Z6FJVkcXviEEBSPs5vrqs0eI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949885; c=relaxed/simple;
-	bh=Efgw9k4aVj6GT2SBZiyN1Z3Lzh9cjhFTMCTUqwICswA=;
+	s=arc-20240116; t=1745949888; c=relaxed/simple;
+	bh=OmyuvChdLpN/7ZyBLCH4znl1KW/n2H4bCy7z3xvfunQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W8sxKockkynoFI3NxMi+IWdrYdEyGLeUO4VOSlJlpiVB+P54nHHVxby/0aWh2CKzWfpJhjBDMhxD1MINIrbPofNbeCEU7uTOwVJsbjMHZikkg6q4heyqpBCpEQw5vxTCPP0XoIEQetXTLr7zewOfxw/5YqseytFHQbKCYJG1FTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTUDo0K8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tCil/xpdLReT7FgnmdijPC7WnfLOq3vJf3pDTbP0r4vjSzSiqtnCIicKsRDwjYSkAsRs1XOWMjdJO84WZGYMlk3Oy/LFZ9D6TFiN5cMmLIPD/ThXrKOnztDDSfb/MlfpiM3hST4stwpI2RGNrw1zFVfiHAyD/A16/6GMHSH1DOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hsof58ZK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTUDo0K8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DBEBC4CEE3;
-	Tue, 29 Apr 2025 18:04:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hsof58ZK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61492C4CEE3;
+	Tue, 29 Apr 2025 18:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949884;
-	bh=Efgw9k4aVj6GT2SBZiyN1Z3Lzh9cjhFTMCTUqwICswA=;
+	s=korg; t=1745949887;
+	bh=OmyuvChdLpN/7ZyBLCH4znl1KW/n2H4bCy7z3xvfunQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xTUDo0K8lYKQTL6Dtu1aom3Xn7UTTtdehlTBgiKHz58qhOfbwp6BHyhMLBRKt3Lhk
-	 4NEJxev5CJCErrrG5lglatYRCEWNw3ja5KsMnEw9Xax4jSsXzah5nA6/tnUPB99sMl
-	 ki6R5c1VKgIc5uUZNpVfm+adEFuDnfNy8Mx/oTK0=
+	b=hsof58ZKKNtVZP+mXp7SdDEFXoSpcmU/8pT6x6ytROJT1ssEa5Ii/Tl3tnXNeNsbd
+	 ILse7oTxvxJcCjySLXUc0QGiDty60Nugi+BXfH/kelliGFAyMZPUrGvp3ltnLPj2J1
+	 Ai5GuVVBbuEvzkqHxD38H9ph4TfCwcyUoUEmYQAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 060/167] wifi: mac80211: export ieee80211_purge_tx_queue() for drivers
-Date: Tue, 29 Apr 2025 18:42:48 +0200
-Message-ID: <20250429161054.198648669@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Mingcong Bai <baimingcong@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.1 087/167] USB: OHCI: Add quirk for LS7A OHCI controller (rev 0x02)
+Date: Tue, 29 Apr 2025 18:43:15 +0200
+Message-ID: <20250429161055.272847347@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -50,64 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 53bc1b73b67836ac9867f93dee7a443986b4a94f upstream.
+commit bcb60d438547355b8f9ad48645909139b64d3482 upstream.
 
-Drivers need to purge TX SKB when stopping. Using skb_queue_purge() can't
-report TX status to mac80211, causing ieee80211_free_ack_frame() warns
-"Have pending ack frames!". Export ieee80211_purge_tx_queue() for drivers
-to not have to reimplement it.
+The OHCI controller (rev 0x02) under LS7A PCI host has a hardware flaw.
+MMIO register with offset 0x60/0x64 is treated as legacy PS2-compatible
+keyboard/mouse interface, which confuse the OHCI controller. Since OHCI
+only use a 4KB BAR resource indeed, the LS7A OHCI controller's 32KB BAR
+is wrapped around (the second 4KB BAR space is the same as the first 4KB
+internally). So we can add an 4KB offset (0x1000) to the OHCI registers
+(from the PCI BAR resource) as a quirk.
 
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20240822014255.10211-1-pkshih@realtek.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Cc: stable <stable@kernel.org>
+Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Tested-by: Mingcong Bai <baimingcong@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Link: https://lore.kernel.org/r/20250328040059.3672979-1-chenhuacai@loongson.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/mac80211.h     |   13 +++++++++++++
- net/mac80211/ieee80211_i.h |    2 --
- net/mac80211/status.c      |    1 +
- 3 files changed, 14 insertions(+), 2 deletions(-)
+ drivers/usb/host/ohci-pci.c |   23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
---- a/include/net/mac80211.h
-+++ b/include/net/mac80211.h
-@@ -2957,6 +2957,19 @@ ieee80211_get_alt_retry_rate(const struc
- void ieee80211_free_txskb(struct ieee80211_hw *hw, struct sk_buff *skb);
- 
- /**
-+ * ieee80211_purge_tx_queue - purge TX skb queue
-+ * @hw: the hardware
-+ * @skbs: the skbs
-+ *
-+ * Free a set of transmit skbs. Use this function when device is going to stop
-+ * but some transmit skbs without TX status are still queued.
-+ * This function does not take the list lock and the caller must hold the
-+ * relevant locks to use it.
-+ */
-+void ieee80211_purge_tx_queue(struct ieee80211_hw *hw,
-+			      struct sk_buff_head *skbs);
-+
-+/**
-  * DOC: Hardware crypto acceleration
-  *
-  * mac80211 is capable of taking advantage of many hardware
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -1984,8 +1984,6 @@ void __ieee80211_subif_start_xmit(struct
- 				  u32 info_flags,
- 				  u32 ctrl_flags,
- 				  u64 *cookie);
--void ieee80211_purge_tx_queue(struct ieee80211_hw *hw,
--			      struct sk_buff_head *skbs);
- struct sk_buff *
- ieee80211_build_data_template(struct ieee80211_sub_if_data *sdata,
- 			      struct sk_buff *skb, u32 info_flags);
---- a/net/mac80211/status.c
-+++ b/net/mac80211/status.c
-@@ -1294,3 +1294,4 @@ void ieee80211_purge_tx_queue(struct iee
- 	while ((skb = __skb_dequeue(skbs)))
- 		ieee80211_free_txskb(hw, skb);
+--- a/drivers/usb/host/ohci-pci.c
++++ b/drivers/usb/host/ohci-pci.c
+@@ -165,6 +165,25 @@ static int ohci_quirk_amd700(struct usb_
+ 	return 0;
  }
-+EXPORT_SYMBOL(ieee80211_purge_tx_queue);
+ 
++static int ohci_quirk_loongson(struct usb_hcd *hcd)
++{
++	struct pci_dev *pdev = to_pci_dev(hcd->self.controller);
++
++	/*
++	 * Loongson's LS7A OHCI controller (rev 0x02) has a
++	 * flaw. MMIO register with offset 0x60/64 is treated
++	 * as legacy PS2-compatible keyboard/mouse interface.
++	 * Since OHCI only use 4KB BAR resource, LS7A OHCI's
++	 * 32KB BAR is wrapped around (the 2nd 4KB BAR space
++	 * is the same as the 1st 4KB internally). So add 4KB
++	 * offset (0x1000) to the OHCI registers as a quirk.
++	 */
++	if (pdev->revision == 0x2)
++		hcd->regs += SZ_4K;	/* SZ_4K = 0x1000 */
++
++	return 0;
++}
++
+ static int ohci_quirk_qemu(struct usb_hcd *hcd)
+ {
+ 	struct ohci_hcd *ohci = hcd_to_ohci(hcd);
+@@ -225,6 +244,10 @@ static const struct pci_device_id ohci_p
+ 		.driver_data = (unsigned long)ohci_quirk_amd700,
+ 	},
+ 	{
++		PCI_DEVICE(PCI_VENDOR_ID_LOONGSON, 0x7a24),
++		.driver_data = (unsigned long)ohci_quirk_loongson,
++	},
++	{
+ 		.vendor		= PCI_VENDOR_ID_APPLE,
+ 		.device		= 0x003f,
+ 		.subvendor	= PCI_SUBVENDOR_ID_REDHAT_QUMRANET,
 
 
