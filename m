@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2E621ABBD;
-	Tue, 29 Apr 2025 18:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD6921ABBD;
+	Tue, 29 Apr 2025 18:09:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950188; cv=none; b=B62KRgqNJ9IjJyB807hydZ84K1WbZ8e6AIqoSU6cHIW6zl+g8aHc6rBY8ZREO6LRHp6QIzEnvcTe+UxOy2PWzrHNShHLuMOfCuzEbnm1FytZYrINRZjybwv4CFFek/0yVBhwqmKXILKhZfbJ8HPFB7iJ80+ihpJ1DbeDaE+SsKg=
+	t=1745950191; cv=none; b=a95LTMahJUXYiVZYOpulDOWLmUcIFsvxHLtXYNwzI8dja2ZAQfqzR8H1fy4UDw1y+DqHlZSaRdbJpDjoT+fs4a3Sg3WUXZZsqztstt4NFK2vKx9/K8gZfWfZotIPd0WaYlqTDMFdoY1UxLBFPjJ0eYxIi9scdukMTvsVoVAQG70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950188; c=relaxed/simple;
-	bh=5tZKboWF9+P2t1tGAJYtBcYBwzQTRr7FxCWddsWsai4=;
+	s=arc-20240116; t=1745950191; c=relaxed/simple;
+	bh=xlmQVDDtR2yhB4TadYqn86d5Ur3ZxgHld76IVCPSbPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VJrewJZqGB2N2qGX34po5k+G/e+Z2xFrBfjoR6VuHA708Dn4aHpQ7u1qIcCnuaBZ/PrNNn2MwKgwpiyhAnjGr4wVyRQu+/BaO6s/LifRm3CN/es1eJBigvWdvyIIF8iWuERF0oumF/cY+FMv2DDMfm3VsJNg2BrRa2VJdpUU6jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VR11OVef; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ht01Y4Jto46UYpUynfmTc1i3mE+82TpQdArUEBVLCsGK8M59AH0TC3mciQH5Y7W4kX5KF46730i+no4tgo8FYHJ0GwGau04vxOfxX7+uA47OMdPeDaIcsUoPdJegeMhUY3SWcKcK4ck7NWV1ScBDYYyNH1uFfMfN55dbpNFo9BI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0kYMu03s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VR11OVef"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C572C4CEE3;
-	Tue, 29 Apr 2025 18:09:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0kYMu03s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4ADC4CEEE;
+	Tue, 29 Apr 2025 18:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950188;
-	bh=5tZKboWF9+P2t1tGAJYtBcYBwzQTRr7FxCWddsWsai4=;
+	s=korg; t=1745950191;
+	bh=xlmQVDDtR2yhB4TadYqn86d5Ur3ZxgHld76IVCPSbPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VR11OVefbwfwD+ND/r3YNEQJKt/hcfbm6CjnLVBSJESVat7zer45o0/QoeWUFTpkm
-	 sSJqc8s6EZ9Hl3wmRa5JUJBKWdNSXBFgvItQdgTDLsHjPmPMmcWmrjOTqcr5yNQnb3
-	 AMdYnNavxdJvyjCft/M647yI8ezf8Qo45RGCIB/g=
+	b=0kYMu03sGO4afTVvsdtwhpYwkTLbXDAzCy33rd7fStXrCMOGbebXnS95y2GdGN079
+	 eiQmtf8JhKi42ZlVmQiOZ++YT9ok3skLz2rqqk40rTPg2fPEYRQmKERmNAjDLsN58p
+	 +ja0HsstrLhrZjMk9VGgquuzfJ9HQcaguwI8cwl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 016/204] net: dsa: mv88e6xxx: fix internal PHYs for 6320 family
-Date: Tue, 29 Apr 2025 18:41:44 +0200
-Message-ID: <20250429161100.087535211@linuxfoundation.org>
+Subject: [PATCH 6.6 017/204] net: dsa: mv88e6xxx: fix VTU methods for 6320 family
+Date: Tue, 29 Apr 2025 18:41:45 +0200
+Message-ID: <20250429161100.130554218@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -55,46 +55,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit 52fdc41c3278c981066a461d03d5477ebfcf270c ]
+[ Upstream commit f9a457722cf5e3534be5ffab549d6b49737fca72 ]
 
-Fix internal PHYs definition for the 6320 family, which has only 2
-internal PHYs (on ports 3 and 4).
+The VTU registers of the 6320 family use the 6352 semantics, not 6185.
+Fix it.
 
-Fixes: bc3931557d1d ("net: dsa: mv88e6xxx: Add number of internal PHYs")
+Fixes: b8fee9571063 ("net: dsa: mv88e6xxx: add VLAN Get Next support")
 Signed-off-by: Marek Behún <kabel@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.6.x
+Cc: <stable@vger.kernel.org> # 5.15.x
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250317173250.28780-7-kabel@kernel.org
+Link: https://patch.msgid.link/20250317173250.28780-2-kabel@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index da7260e505a2e..d66448f0833cc 100644
+index d66448f0833cc..bf93d700802be 100644
 --- a/drivers/net/dsa/mv88e6xxx/chip.c
 +++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -6114,7 +6114,8 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.num_databases = 4096,
- 		.num_macs = 8192,
- 		.num_ports = 7,
--		.num_internal_phys = 5,
-+		.num_internal_phys = 2,
-+		.internal_phys_offset = 3,
- 		.num_gpio = 15,
- 		.max_vid = 4095,
- 		.port_base_addr = 0x10,
-@@ -6139,7 +6140,8 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.num_databases = 4096,
- 		.num_macs = 8192,
- 		.num_ports = 7,
--		.num_internal_phys = 5,
-+		.num_internal_phys = 2,
-+		.internal_phys_offset = 3,
- 		.num_gpio = 15,
- 		.max_vid = 4095,
- 		.port_base_addr = 0x10,
+@@ -5071,8 +5071,8 @@ static const struct mv88e6xxx_ops mv88e6320_ops = {
+ 	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
+ 	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
+-	.vtu_getnext = mv88e6185_g1_vtu_getnext,
+-	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
++	.vtu_getnext = mv88e6352_g1_vtu_getnext,
++	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
+ 	.gpio_ops = &mv88e6352_gpio_ops,
+ 	.avb_ops = &mv88e6352_avb_ops,
+ 	.ptp_ops = &mv88e6352_ptp_ops,
+@@ -5120,8 +5120,8 @@ static const struct mv88e6xxx_ops mv88e6321_ops = {
+ 	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
+ 	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
+-	.vtu_getnext = mv88e6185_g1_vtu_getnext,
+-	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
++	.vtu_getnext = mv88e6352_g1_vtu_getnext,
++	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
+ 	.gpio_ops = &mv88e6352_gpio_ops,
+ 	.avb_ops = &mv88e6352_avb_ops,
+ 	.ptp_ops = &mv88e6352_ptp_ops,
 -- 
 2.39.5
 
