@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C964F20C488;
-	Tue, 29 Apr 2025 18:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112941A5BBB;
+	Tue, 29 Apr 2025 18:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950149; cv=none; b=g4ADbiKv37NBup7VxB7/jeI7/+SM2KE0SpfUFA6S3PUdp3iI8AQqKQsSOFmfG+DDocUdBH2eWNk+B3bF50u4fUHYS7qw0197b7xMt+C47MigSYvk9Yc+uANvSLUA43ub2gUJWAXAm8/F6CDeHPS/5GN2HaJrYY5B0QZc2nAP6K8=
+	t=1745950153; cv=none; b=GYXVJDA4LtYZKTgR5d8ED0IfX/jMUfUpYvHs8erM104bh4Az7lmcz4IrZqlV8tJRxUj7hfRvHLnG4PomAqx5SDGM34cHCIcQj5hK3XtDxEFMrj+ApEhRwUEnVU2QbVe+ykKmEVruCpWkLet/QmXjLTIG+ZqrK4APOsY3LXlsJRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950149; c=relaxed/simple;
-	bh=o3GwYfMoqEuL3D3BkxdQkoKgz588JM95Mo3Gv7ASgvI=;
+	s=arc-20240116; t=1745950153; c=relaxed/simple;
+	bh=VhlaRE8SC1gR150HzZITGJCi4nYjadXSeaPx90Tb39A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ac/k/MB68aURl8qzsXhC7gjPoFx9XQVHffGOEuNtGlqBSXU/0CnPtqok5csk1sQoTOgTrziw82g9cTdSAnlF3Zc/wYdNrx6CCYQZDf3l6qjA/jaijxyAQiR6kgNXQuwSIi+i/de0bTtpI5kk7b4OsZm3lBUitgE6BJOArGHo1LE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HDe9dRJL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UZkr7nSeyLx9r2WNt5ocnW+IRXg9GF5JxpBlNEAAoLI9mxM/JYJlKk5ivbexIP/Mz2oQJMpAPB9xhE7NraSByepw/nzjs9qALHVHc8tVzQIDU4sDOJ+E1lUwcZU85EyJWTjCF5j4RadqeS1inRqXHJOXuNwSgt0i3gGnhnEPWF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pHMsV6KE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDe9dRJL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D3CC4CEE3;
-	Tue, 29 Apr 2025 18:09:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pHMsV6KE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D19FC4CEE3;
+	Tue, 29 Apr 2025 18:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950149;
-	bh=o3GwYfMoqEuL3D3BkxdQkoKgz588JM95Mo3Gv7ASgvI=;
+	s=korg; t=1745950152;
+	bh=VhlaRE8SC1gR150HzZITGJCi4nYjadXSeaPx90Tb39A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HDe9dRJL/PxGnCIa7TprrbIbLBPSfDOoK5H9nyfpLS7N//SQR8s8/LxnvYVFdWID4
-	 w6VTynfQFctwD55UY7n3plGn5Ax58OBeOnmZowVAsn7uHTNjfOhwOtsxN+ebIcz1it
-	 LxjccKRxa2Xwc2nQSgzKzA9P4+Of+mUf4bf79Cus=
+	b=pHMsV6KEZTmlKZEBFCYafv2HzaUhZgHdzkEaQCvID7b0g00oJ4vffb5dRvXP6O6EM
+	 Bj0BVaUdFXI905PmAUHcMmjAi4bMT8T5XMD/OuU0vYdXaCHLS7goPRkx+KZpmZMXE9
+	 cqkIM7Y3kRJ7f/py9IbO0/o6lx5QTfyAAIzy7xaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.1 160/167] MIPS: cm: Fix warning if MIPS_CM is disabled
-Date: Tue, 29 Apr 2025 18:44:28 +0200
-Message-ID: <20250429161058.200096926@linuxfoundation.org>
+	Hannes Reinecke <hare@kernel.org>,
+	Srikanth Aithal <sraithal@amd.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>
+Subject: [PATCH 6.1 161/167] nvme: fixup scan failure for non-ANA multipath controllers
+Date: Tue, 29 Apr 2025 18:44:29 +0200
+Message-ID: <20250429161058.239780414@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -43,42 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+From: Hannes Reinecke <hare@kernel.org>
 
-commit b73c3ccdca95c237750c981054997c71d33e09d7 upstream.
+commit 26d7fb4fd4ca1180e2fa96587dea544563b4962a upstream.
 
-Commit e27fbe16af5c ("MIPS: cm: Detect CM quirks from device tree")
-introduced
+Commit 62baf70c3274 caused the ANA log page to be re-read, even on
+controllers that do not support ANA.  While this should generally
+harmless, some controllers hang on the unsupported log page and
+never finish probing.
 
-arch/mips/include/asm/mips-cm.h:119:13: error: ‘mips_cm_update_property’
-	defined but not used [-Werror=unused-function]
-
-Fix this by making empty function implementation inline
-
-Fixes: e27fbe16af5c ("MIPS: cm: Detect CM quirks from device tree")
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 62baf70c3274 ("nvme: re-read ANA log page after ns scan completes")
+Signed-off-by: Hannes Reinecke <hare@kernel.org>
+Tested-by: Srikanth Aithal <sraithal@amd.com>
+[hch: more detailed commit message]
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/include/asm/mips-cm.h |    2 +-
+ drivers/nvme/host/core.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/mips/include/asm/mips-cm.h
-+++ b/arch/mips/include/asm/mips-cm.h
-@@ -104,7 +104,7 @@ static inline bool mips_cm_present(void)
- #ifdef CONFIG_MIPS_CM
- extern void mips_cm_update_property(void);
- #else
--static void mips_cm_update_property(void) {}
-+static inline void mips_cm_update_property(void) {}
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4709,7 +4709,7 @@ static void nvme_scan_work(struct work_s
+ 	if (test_bit(NVME_AER_NOTICE_NS_CHANGED, &ctrl->events))
+ 		nvme_queue_scan(ctrl);
+ #ifdef CONFIG_NVME_MULTIPATH
+-	else
++	else if (ctrl->ana_log_buf)
+ 		/* Re-read the ANA log page to not miss updates */
+ 		queue_work(nvme_wq, &ctrl->ana_work);
  #endif
- 
- /**
 
 
