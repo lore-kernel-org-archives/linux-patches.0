@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677F4253326;
-	Tue, 29 Apr 2025 17:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA6624397A;
+	Tue, 29 Apr 2025 17:44:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948648; cv=none; b=TduBcyw5dc0Yq5Aiix8boDO+8k6Ll6uhCBJtBHw1gytpl4O/73AQLavSTCcviXrU3c3xZRGtubH7EO3xIVOVVp+ugYDZiB/qLVOaEiBeUQbXmyMPsqoeClznNPeQbvK1/cKvFWFrbv9JuXUUMMZTbRM+VFrcEdch+yFlnZYN94k=
+	t=1745948652; cv=none; b=bFf3pZj20yueRp3Q/jtIS/AGWicOdsVQbo0mFXEdLCw1qIjtKmlEHwjFz/eBc2MF/xSQfNNesyJgSi3U8yqtu2vNdgfzOusm64UvFtwjxq1BvpSAlHBzLBOiDXFjGz5n74nCLdwIR04i4+7wc0SgtKjNM9z0UuTFG5ao4ce/MPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948648; c=relaxed/simple;
-	bh=p+WfWhvjyism/G6H1mOOskBzh/OM+ZrHwKHHVLu9yeA=;
+	s=arc-20240116; t=1745948652; c=relaxed/simple;
+	bh=npYWyG8DbKFkaAv47UsiPDLGmJO11y1EH/5UUM995sY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M0l5FVLjVNTyiMKTnezUUzrCAibZp/Je6tzi7+pxZB8oaPQ3vYSs6CjvZb4dWL6a1cnIga00TKxlIx32RWXVAetRHL7g3F/ZZ3w/H6ofDF++YZKD0F5u1i8iPWXeKq7Kd0Vovc7yw3LjeLJgaWR03AzaV+XVK6o31ScUF5zngdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZv2OECT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g3p/MdYfs1HID69rvS9UXkEibcNUb9xoK2fIb2qbup23Z6EuhXmUTF64vnM4ki4OzcE7IVB7e3VZ5U3+TCi7vMNohbyhZnPQpX9thU6nEb7a0zKQzq6EZvrIxfrmoUeKpRb38BQQ4DQFI+u4rUryH9jKIpSOmWvG7ut6lWCab6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTNiW61p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZv2OECT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77886C4CEF0;
-	Tue, 29 Apr 2025 17:44:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTNiW61p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A60C4CEF5;
+	Tue, 29 Apr 2025 17:44:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948648;
-	bh=p+WfWhvjyism/G6H1mOOskBzh/OM+ZrHwKHHVLu9yeA=;
+	s=korg; t=1745948652;
+	bh=npYWyG8DbKFkaAv47UsiPDLGmJO11y1EH/5UUM995sY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TZv2OECT8XtmGgHLVpiuqh6ALEqxjYrpb5Qhe6Nbsku8chMK1ywJWf4iq7gdN3KA3
-	 6IOoes8D0ZgerH4I/CMH/wT/IPs5O41GfCx2MeB4AW+cR5wNR80Gp6mNKFDzdcY7vY
-	 2/UDW0SfSzdC1HZYNCP5RKpfSa6Wap9FDwOpaZWg=
+	b=fTNiW61pmlsxm3s5/dSUpM9OgsFCwajrDslBEO1DJqrrUUDStbueQf/4VvCrXuRRS
+	 iKDNrTiTkbu6zt6+Z8FJ58PtIUkY95UA61nfoFRDxCK9rSymgrX6U119jjPvKGprmg
+	 fb7lTt/BDlDb428+GnrfbvY5qV92dBeYMbsUzCD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karina Yankevich <k.yankevich@omp.ru>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.15 071/373] media: v4l2-dv-timings: prevent possible overflow in v4l2_detect_gtf()
-Date: Tue, 29 Apr 2025 18:39:08 +0200
-Message-ID: <20250429161126.065978552@linuxfoundation.org>
+Subject: [PATCH 5.15 072/373] media: i2c: ccs: Set the devices runtime PM status correctly in remove
+Date: Tue, 29 Apr 2025 18:39:09 +0200
+Message-ID: <20250429161126.106565274@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,48 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karina Yankevich <k.yankevich@omp.ru>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit 3edd1fc48d2c045e8259561797c89fe78f01717e upstream.
+commit e04604583095faf455b3490b004254a225fd60d4 upstream.
 
-In v4l2_detect_gtf(), it seems safer to cast the 32-bit image_width
-variable to the 64-bit type u64 before multiplying to avoid
-a possible overflow. The resulting object code even seems to
-look better, at least on x86_64.
+Set the device's runtime PM status to suspended in device removal only if
+it wasn't suspended already.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace.
-
-[Sergey: rewrote the patch subject/descripition]
-
-Fixes: c9bc9f50753d ("[media] v4l2-dv-timings: fix overflow in gtf timings calculation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Karina Yankevich <k.yankevich@omp.ru>
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Fixes: 9447082ae666 ("[media] smiapp: Implement power-on and power-off sequences without runtime PM")
+Cc: stable@vger.kernel.org # for >= v5.15
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-dv-timings.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/i2c/ccs/ccs-core.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/media/v4l2-core/v4l2-dv-timings.c
-+++ b/drivers/media/v4l2-core/v4l2-dv-timings.c
-@@ -764,7 +764,7 @@ bool v4l2_detect_gtf(unsigned int frame_
- 		u64 num;
- 		u32 den;
+--- a/drivers/media/i2c/ccs/ccs-core.c
++++ b/drivers/media/i2c/ccs/ccs-core.c
+@@ -3677,9 +3677,10 @@ static int ccs_remove(struct i2c_client
+ 	v4l2_async_unregister_subdev(subdev);
  
--		num = ((image_width * GTF_D_C_PRIME * (u64)hfreq) -
-+		num = (((u64)image_width * GTF_D_C_PRIME * hfreq) -
- 		      ((u64)image_width * GTF_D_M_PRIME * 1000));
- 		den = (hfreq * (100 - GTF_D_C_PRIME) + GTF_D_M_PRIME * 1000) *
- 		      (2 * GTF_CELL_GRAN);
-@@ -774,7 +774,7 @@ bool v4l2_detect_gtf(unsigned int frame_
- 		u64 num;
- 		u32 den;
+ 	pm_runtime_disable(&client->dev);
+-	if (!pm_runtime_status_suspended(&client->dev))
++	if (!pm_runtime_status_suspended(&client->dev)) {
+ 		ccs_power_off(&client->dev);
+-	pm_runtime_set_suspended(&client->dev);
++		pm_runtime_set_suspended(&client->dev);
++	}
  
--		num = ((image_width * GTF_S_C_PRIME * (u64)hfreq) -
-+		num = (((u64)image_width * GTF_S_C_PRIME * hfreq) -
- 		      ((u64)image_width * GTF_S_M_PRIME * 1000));
- 		den = (hfreq * (100 - GTF_S_C_PRIME) + GTF_S_M_PRIME * 1000) *
- 		      (2 * GTF_CELL_GRAN);
+ 	for (i = 0; i < sensor->ssds_used; i++) {
+ 		v4l2_device_unregister_subdev(&sensor->ssds[i].sd);
 
 
