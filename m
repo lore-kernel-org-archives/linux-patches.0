@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCA9215060;
-	Tue, 29 Apr 2025 16:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1FF215060;
+	Tue, 29 Apr 2025 16:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945622; cv=none; b=Yc7Yp5xpBZxrONlXZsBd3Ywl8SVfDtxmgTLlEtFRWYrNlvaq2UzBdDRugAWszNQ9aygTt/JuCtoeVAAwDZa7vSzNQkUKhAn9e378coLpxMSKlVM4UyOomaDwMYLgq3ek4P16kefab/PWd7O6OY7DDx+5psBEK5OPLRi6ePvRYxQ=
+	t=1745945625; cv=none; b=XuW5ALp6RgIWVXOpA5K+F1VJ4Oci3uP3DRYR0EQVpoVz3Ef6Y5yBZ9vs3G9HF990txln0A6NpzOXcgJRhQxQHs3qjmgUuRTZl9+zxoPojWLqmhycsF6Fm4Erk1dzbj2576I/hoP7mnMMO1d3wXKl1GXcgJQVoq9X++m4nCrnzMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945622; c=relaxed/simple;
-	bh=xCe8ujLChza/mR+vNxEDMa/LEYEnPJrEuAj1EJKjRUs=;
+	s=arc-20240116; t=1745945625; c=relaxed/simple;
+	bh=ydI8iRM0lcg8opEAuT7HQ1fRyyHq1lHBD+psCEtPZto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fVZqxUEfmjr/MEt0SyDOGqWFY2wsqFEER8ZgpGYHaRm7t7pQfBQ6Ew5S2mZg0JRtPl+/Qn6LEG1q0JJZTufJ9kQn9wbwtN0XyXI+CSpkiRjTU2nACT4D9WPzRqeWenAFJakfD3dpdrlus/6FrDupgsM5pw1mAeVTks1h8vU7YUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SIPuU56x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SllyoELstlxn9JrmjDimADM9VyjwvgvJNKkLHvczfkdo4Jb06BtblxR8o5+NFo9rPweOCUPr+0tj6XfRB0vLfgYmWhkJ2C7qtk+B/NafVGT7dQlk7lc3aQuzdLreMAEImG+nBqyU5p1tp1MxmZsa3uWr6iknAGM2pOvIfzsXWZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QczZfJep; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIPuU56x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C7AC4CEE3;
-	Tue, 29 Apr 2025 16:53:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QczZfJep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5716C4CEE3;
+	Tue, 29 Apr 2025 16:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945622;
-	bh=xCe8ujLChza/mR+vNxEDMa/LEYEnPJrEuAj1EJKjRUs=;
+	s=korg; t=1745945625;
+	bh=ydI8iRM0lcg8opEAuT7HQ1fRyyHq1lHBD+psCEtPZto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SIPuU56xn9T5rspsTJU1A3kq4xprOKsteAXCTI9OkfjIDRZF5wmetk+Ql1xd/UVDD
-	 DVC/tEezlg9YITHB1yJ0983Erq7rfB6i672uwprkDhIKj9jmGZ3BcIflKPybiOPDL4
-	 AVV3waBEgLbcUXV9IwLMWknOI+N8VEiu2+eAVH1o=
+	b=QczZfJep1a4f4aiqRLoyVepgUeXgNx+aHP+4JdJOJJDA6Mh/ukRllkGpjxtbJF1C8
+	 IgW5s7zue3yoZ1Dw2LlKHxPGLzivOT8oKfLDB+sBNcjhNJqX5LKt95tX8VdHmPgaH8
+	 qyeT6ABUYtB5xmGkpivN+CUDK35atZTaPjSZgDYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Pylypiv <ipylypiv@google.com>,
-	Salomon Dushimirimana <salomondush@google.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Meir Elisha <meir.elisha@volumez.com>,
+	Yu Kuai <yukuai3@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 174/179] scsi: pm80xx: Set phy_attached to zero when device is gone
-Date: Tue, 29 Apr 2025 18:41:55 +0200
-Message-ID: <20250429161056.434127842@linuxfoundation.org>
+Subject: [PATCH 5.4 175/179] md/raid1: Add check for missing source disk in process_checks()
+Date: Tue, 29 Apr 2025 18:41:56 +0200
+Message-ID: <20250429161056.473420623@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -52,34 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Pylypiv <ipylypiv@google.com>
+From: Meir Elisha <meir.elisha@volumez.com>
 
-[ Upstream commit f7b705c238d1483f0a766e2b20010f176e5c0fb7 ]
+[ Upstream commit b7c178d9e57c8fd4238ff77263b877f6f16182ba ]
 
-When a fatal error occurs, a phy down event may not be received to set
-phy->phy_attached to zero.
+During recovery/check operations, the process_checks function loops
+through available disks to find a 'primary' source with successfully
+read data.
 
-Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
-Signed-off-by: Salomon Dushimirimana <salomondush@google.com>
-Link: https://lore.kernel.org/r/20250319230305.3172920-1-salomondush@google.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+If no suitable source disk is found after checking all possibilities,
+the 'primary' index will reach conf->raid_disks * 2. Add an explicit
+check for this condition after the loop. If no source disk was found,
+print an error message and return early to prevent further processing
+without a valid primary source.
+
+Link: https://lore.kernel.org/linux-raid/20250408143808.1026534-1-meir.elisha@volumez.com
+Signed-off-by: Meir Elisha <meir.elisha@volumez.com>
+Suggested-and-reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/pm8001/pm8001_sas.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/raid1.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/scsi/pm8001/pm8001_sas.c b/drivers/scsi/pm8001/pm8001_sas.c
-index 36f5bab09f73e..1215fc36862da 100644
---- a/drivers/scsi/pm8001/pm8001_sas.c
-+++ b/drivers/scsi/pm8001/pm8001_sas.c
-@@ -893,6 +893,7 @@ static void pm8001_dev_gone_notify(struct domain_device *dev)
- 			spin_lock_irqsave(&pm8001_ha->lock, flags);
- 		}
- 		PM8001_CHIP_DISP->dereg_dev_req(pm8001_ha, device_id);
-+		pm8001_ha->phy[pm8001_dev->attached_phy].phy_attached = 0;
- 		pm8001_free_dev(pm8001_dev);
- 	} else {
- 		PM8001_DISC_DBG(pm8001_ha,
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index c40237cfdcb0f..395a279e2c885 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -2051,14 +2051,9 @@ static int fix_sync_read_error(struct r1bio *r1_bio)
+ 				if (!rdev_set_badblocks(rdev, sect, s, 0))
+ 					abort = 1;
+ 			}
+-			if (abort) {
+-				conf->recovery_disabled =
+-					mddev->recovery_disabled;
+-				set_bit(MD_RECOVERY_INTR, &mddev->recovery);
+-				md_done_sync(mddev, r1_bio->sectors, 0);
+-				put_buf(r1_bio);
++			if (abort)
+ 				return 0;
+-			}
++
+ 			/* Try next page */
+ 			sectors -= s;
+ 			sect += s;
+@@ -2198,10 +2193,21 @@ static void sync_request_write(struct mddev *mddev, struct r1bio *r1_bio)
+ 	int disks = conf->raid_disks * 2;
+ 	struct bio *wbio;
+ 
+-	if (!test_bit(R1BIO_Uptodate, &r1_bio->state))
+-		/* ouch - failed to read all of that. */
+-		if (!fix_sync_read_error(r1_bio))
++	if (!test_bit(R1BIO_Uptodate, &r1_bio->state)) {
++		/*
++		 * ouch - failed to read all of that.
++		 * No need to fix read error for check/repair
++		 * because all member disks are read.
++		 */
++		if (test_bit(MD_RECOVERY_REQUESTED, &mddev->recovery) ||
++		    !fix_sync_read_error(r1_bio)) {
++			conf->recovery_disabled = mddev->recovery_disabled;
++			set_bit(MD_RECOVERY_INTR, &mddev->recovery);
++			md_done_sync(mddev, r1_bio->sectors, 0);
++			put_buf(r1_bio);
+ 			return;
++		}
++	}
+ 
+ 	if (test_bit(MD_RECOVERY_REQUESTED, &mddev->recovery))
+ 		process_checks(r1_bio);
 -- 
 2.39.5
 
