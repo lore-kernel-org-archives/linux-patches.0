@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E78253354;
-	Tue, 29 Apr 2025 17:56:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18F9215060;
+	Tue, 29 Apr 2025 17:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949382; cv=none; b=TxzsirW0NM+Z6Lv0XFKgXHXZe3LLmbWqYYJaIE4Bm0iUJlP+zjFLwOfAKXyX7oXBr3rKj8Anobmb0oolRmr6DdCJM5Ueefak+DVWD1dk8cmHoSJxB9t6Ez6tiNq999QB5PFtICAdybAZj6jqm0QSQ2jGicw30Aal/Lcv6ANRDzw=
+	t=1745949385; cv=none; b=igKy3a9Uft7MWg5FraAb3/Y/Btyq01LSlGrPCQwxWpRGna4EpWxydB530GSTkdU3dTbdsGxZi/tH9e0OEOuv8jISY64E073U4IU7NRoICHgu7oOBhaPGo6m91xpQhjxi7f2iQB1di0JzQXp7asQzzuOd1GKbZ15/oFfQWfHhkJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949382; c=relaxed/simple;
-	bh=MRKXqZzW0sbZ62HNatZabwj3Vx41kLRYFcboQEnLLwU=;
+	s=arc-20240116; t=1745949385; c=relaxed/simple;
+	bh=magYQQ8SfuoVWMBNX7HtLl7CIjPMPjbUlWnKTOkV2rw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KnnSWp7yMV4yDGGYkRmZlRwQhDqI7AZRML80KnyzoBlSLEFH+agsF4iOqgjwP2xq/UObbmRK7xX/IU/9fgsPCar9vQinvP8J4Zlux0Rynn+h3jlVot6N0PzTGGWE5rKh/nC/hA+fS0pWWwLkaM4N3/VrIrCEb3X2pitwMRmbQdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tMJhezSn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rigk4kbKyyedpgCEYYtUAdGAo/JqRAVNr985feX1TcS5YtI79LdxyUWUOAPGJ2v5888HuzRR0dYKuIXgOFl+DILrrF6glQUhD1T6By5cHkcx7PuWVZHhQVKWVcGl1XMKVgH5c9wXvO8eVEPn7fJ3lVN0ewu+UrjJbdpqGjFoHyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0W4lXXow; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tMJhezSn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0C8C4CEEF;
-	Tue, 29 Apr 2025 17:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0W4lXXow"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D583C4CEE3;
+	Tue, 29 Apr 2025 17:56:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949382;
-	bh=MRKXqZzW0sbZ62HNatZabwj3Vx41kLRYFcboQEnLLwU=;
+	s=korg; t=1745949384;
+	bh=magYQQ8SfuoVWMBNX7HtLl7CIjPMPjbUlWnKTOkV2rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tMJhezSnrAr0cPgeVF4YbfsnMwM4sNvNLSHDh+AdIwUaEEwI/LT8f6Ji3Ep1UYf3S
-	 3XWhWB7hKHhH7UozKVSubs23WketAF4yOSQ8SxH9vt2SDxOv26AFhK6qIZXcb/l6DQ
-	 eGrEpP3XPcbGeY3u+urxilS2SI7MqXBEftO2iaL0=
+	b=0W4lXXowBQx4AdveJ3KDh1f7LMxkcCAiroTJEgD1Fp8jAP4ix6E8cfqEgdb3d5pWb
+	 ADYTdpY9d7kMXkUA/9p2bGH7SGX0mI4lBHbXLuovL+gNDQ6InxUPW34xZiUVOWTr6j
+	 kVSovlPLOGBCh4tqtAUXcvJKeAhWAth9YZsngoY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Roman Li <Roman.Li@amd.com>,
-	Zaeem Mohamed <zaeem.mohamed@amd.com>,
-	Mark Broadworth <mark.broadworth@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 300/373] drm/amd/display: Fix gpu reset in multidisplay config
-Date: Tue, 29 Apr 2025 18:42:57 +0200
-Message-ID: <20250429161135.454331295@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.15 301/373] KVM: SVM: Allocate IR data using atomic allocation
+Date: Tue, 29 Apr 2025 18:42:58 +0200
+Message-ID: <20250429161135.496255609@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -54,53 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Li <Roman.Li@amd.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 7eb287beeb60be1e4437be2b4e4e9f0da89aab97 upstream.
+commit 7537deda36521fa8fff9133b39c46e31893606f2 upstream.
 
-[Why]
-The indexing of stream_status in dm_gpureset_commit_state() is incorrect.
-That leads to asserts in multi-display configuration after gpu reset.
+Allocate SVM's interrupt remapping metadata using GFP_ATOMIC as
+svm_ir_list_add() is called with IRQs are disabled and irqfs.lock held
+when kvm_irq_routing_update() reacts to GSI routing changes.
 
-[How]
-Adjust the indexing logic to align stream_status with surface_updates.
-
-Fixes: cdaae8371aa9 ("drm/amd/display: Handle GPU reset for DC block")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3808
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Roman Li <Roman.Li@amd.com>
-Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
-Tested-by: Mark Broadworth <mark.broadworth@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d91bc901398741d317d9b55c59ca949d4bc7394b)
+Fixes: 411b44ba80ab ("svm: Implements update_pi_irte hook to setup posted interrupt")
 Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20250404193923.1413163-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/kvm/svm/avic.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2590,16 +2590,16 @@ static void dm_gpureset_commit_state(str
- 	for (k = 0; k < dc_state->stream_count; k++) {
- 		bundle->stream_update.stream = dc_state->streams[k];
- 
--		for (m = 0; m < dc_state->stream_status->plane_count; m++) {
-+		for (m = 0; m < dc_state->stream_status[k].plane_count; m++) {
- 			bundle->surface_updates[m].surface =
--				dc_state->stream_status->plane_states[m];
-+				dc_state->stream_status[k].plane_states[m];
- 			bundle->surface_updates[m].surface->force_full_update =
- 				true;
- 		}
- 
- 		update_planes_and_stream_adapter(dm->dc,
- 					 UPDATE_TYPE_FULL,
--					 dc_state->stream_status->plane_count,
-+					 dc_state->stream_status[k].plane_count,
- 					 dc_state->streams[k],
- 					 &bundle->stream_update,
- 					 bundle->surface_updates);
+--- a/arch/x86/kvm/svm/avic.c
++++ b/arch/x86/kvm/svm/avic.c
+@@ -737,7 +737,7 @@ static int svm_ir_list_add(struct vcpu_s
+ 	 * Allocating new amd_iommu_pi_data, which will get
+ 	 * add to the per-vcpu ir_list.
+ 	 */
+-	ir = kzalloc(sizeof(struct amd_svm_iommu_ir), GFP_KERNEL_ACCOUNT);
++	ir = kzalloc(sizeof(struct amd_svm_iommu_ir), GFP_ATOMIC | __GFP_ACCOUNT);
+ 	if (!ir) {
+ 		ret = -ENOMEM;
+ 		goto out;
 
 
