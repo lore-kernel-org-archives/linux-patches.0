@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0AA242D73;
-	Tue, 29 Apr 2025 17:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32CC2528F1;
+	Tue, 29 Apr 2025 17:47:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948833; cv=none; b=XB+a7wYSAZ1k4iSOYeyat8S+VGqBfrH+NTxGbbcp1OG935U+Oi8h5DdUgMb4x91Wefz9fWV05kE/8QuACWwaZy8jQucU5aC7cnZbtWN2EhW9aDbHWHjhYnp8zjUbc2Bq1NDQSokjTNYXJfEy1kpCy+XkSejN7WFaAtrS0Dyb9vA=
+	t=1745948836; cv=none; b=oWloOTFSb60i8PwKoYRrhzaCnXmL6aJSRQba2QDmqTbzJfSLFVKP267VSj8m4cOd5PRdzfOZsQJFpcj9oPMqP2LNf5P9vsaHs4xuGUxvoerCNfhvA3M6Sh/2AowP2wrhOlQqfeOfomWa4sshv6McJImGyMOsGv59ekGPjkVngPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948833; c=relaxed/simple;
-	bh=r3Ki7FSyP+qPXGyZZccEvhs8JnLIuqCq77ngTIubUhw=;
+	s=arc-20240116; t=1745948836; c=relaxed/simple;
+	bh=0dKhmXcJEMA6Y+10g+u5oEpeKMJOQR+ICARTUFrzxTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FhRdNSioyu90kBB8pNQtAeu3LF1Mdbisr73NMz5/nTez1KZtE2G9iGne51Ji7zt/zW0ASjBO6+3vI+igHkHVs3UIX7XkN+7lZvqINVM/yR+y/PD6CInMHE1ewavzC/woUAg4ANNgp2BRiKN8sr6xUZ0Rfk4AKRhp7J1XFai0mLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQF0Y3g9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GQeINPCuOV1uhp/fTi5ikS2jcrwcgCz+XhkF0a/1YeI57XFFuA9PDodo8PoRgPIQ/fGiROUeXEafYtrg8B/EgkD6uAi9RrnEUDMDHi6KbKK2Q3rB3Eery/SqvNQxF+h/Z2s7sO2IgD2v7c2AI1BTe7vpUa8rgVSzz1qzsoOND6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHfYbl6o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQF0Y3g9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB58C4CEE3;
-	Tue, 29 Apr 2025 17:47:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHfYbl6o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35176C4CEE9;
+	Tue, 29 Apr 2025 17:47:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948833;
-	bh=r3Ki7FSyP+qPXGyZZccEvhs8JnLIuqCq77ngTIubUhw=;
+	s=korg; t=1745948836;
+	bh=0dKhmXcJEMA6Y+10g+u5oEpeKMJOQR+ICARTUFrzxTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jQF0Y3g9qZfTUriUb4ThAMUmtpoM/vgkhCN5LKPOt7BtEhB8mkaLAGANw3KUitgqC
-	 c5inhQvqL8I2fPcWi86chnHsRbh9ZTqQHa5kY0VTN0kjwjvWYLEe0Ck3Q9tRWqoCsM
-	 vY19WChNK1HCRIHBg7/EtQXXKPzk7fiYdbG08hMg=
+	b=bHfYbl6oZjmjx60voAR36U5w9swR/OA7aKh8kfO5G6vgoe+uHx0CzbUyjvdnrEPaw
+	 iJnjkzmoComTCpGhWkNqWycVc+kzS8GfWlrAhnXdteYVzWNp0d5KBiiaAysLNmOHxB
+	 RxkfHaH1vTqZ942PWHpQut6IzMKIVtaBzLeVSImI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Coly Li <colyli@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 131/373] scsi: iscsi: Fix missing scsi_host_put() in error path
-Date: Tue, 29 Apr 2025 18:40:08 +0200
-Message-ID: <20250429161128.557019048@linuxfoundation.org>
+Subject: [PATCH 5.15 132/373] md/raid10: fix missing discard IO accounting
+Date: Tue, 29 Apr 2025 18:40:09 +0200
+Message-ID: <20250429161128.596931365@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -52,45 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 72eea84a1092b50a10eeecfeba4b28ac9f1312ab ]
+[ Upstream commit d05af90d6218e9c8f1c2026990c3f53c1b41bfb0 ]
 
-Add goto to ensure scsi_host_put() is called in all error paths of
-iscsi_set_host_param() function. This fixes a potential memory leak when
-strlen() check fails.
+md_account_bio() is not called from raid10_handle_discard(), now that we
+handle bitmap inside md_account_bio(), also fix missing
+bitmap_startwrite for discard.
 
-Fixes: ce51c8170084 ("scsi: iscsi: Add strlen() check in iscsi_if_set{_host}_param()")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Link: https://lore.kernel.org/r/20250318094344.91776-1-linmq006@gmail.com
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Test whole disk discard for 20G raid10:
+
+Before:
+Device   d/s     dMB/s   drqm/s  %drqm d_await dareq-sz
+md0    48.00     16.00     0.00   0.00    5.42   341.33
+
+After:
+Device   d/s     dMB/s   drqm/s  %drqm d_await dareq-sz
+md0    68.00  20462.00     0.00   0.00    2.65 308133.65
+
+Link: https://lore.kernel.org/linux-raid/20250325015746.3195035-1-yukuai1@huaweicloud.com
+Fixes: 528bc2cf2fcc ("md/raid10: enable io accounting")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Acked-by: Coly Li <colyli@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_transport_iscsi.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/md/raid10.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/scsi_transport_iscsi.c b/drivers/scsi/scsi_transport_iscsi.c
-index f839e8e497be3..8930acdff08c5 100644
---- a/drivers/scsi/scsi_transport_iscsi.c
-+++ b/drivers/scsi/scsi_transport_iscsi.c
-@@ -3228,11 +3228,14 @@ iscsi_set_host_param(struct iscsi_transport *transport,
- 	}
- 
- 	/* see similar check in iscsi_if_set_param() */
--	if (strlen(data) > ev->u.set_host_param.len)
--		return -EINVAL;
-+	if (strlen(data) > ev->u.set_host_param.len) {
-+		err = -EINVAL;
-+		goto out;
-+	}
- 
- 	err = transport->set_host_param(shost, ev->u.set_host_param.param,
- 					data, ev->u.set_host_param.len);
-+out:
- 	scsi_host_put(shost);
- 	return err;
- }
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index bdd5a564e3191..e6c0e24cb9ae2 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -1771,6 +1771,7 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
+ 	 * The discard bio returns only first r10bio finishes
+ 	 */
+ 	if (first_copy) {
++		md_account_bio(mddev, &bio);
+ 		r10_bio->master_bio = bio;
+ 		set_bit(R10BIO_Discard, &r10_bio->state);
+ 		first_copy = false;
 -- 
 2.39.5
 
