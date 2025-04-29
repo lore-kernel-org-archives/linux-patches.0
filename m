@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A500121ABC6;
-	Tue, 29 Apr 2025 18:03:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0EA2AE96;
+	Tue, 29 Apr 2025 18:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949827; cv=none; b=owwotHkXl6fwfintSorHS+rzAA1iZH/Q22UjBwoECs5c6tjtjmiAndyePMsUhN1yQwXOQPpOMy+J3Wpnuh7CmEXotZlTaY1/CIK0eUKZN1f9SdMIHEGdJX7eK+gvH7Af9gf3RYQqX95JM0brdJkGFA6MY+xUIp9UudAMzKCXeok=
+	t=1745949831; cv=none; b=TrdVS6UVkDB31YvN/GGxPU1/W0lIk2UR4w1hPMzyLKFZ1wwNI1CodEsCi98Go35mvOUBjxef7YWhSAV2Wrv2k0IG6raYFapnSsFryUFGFZv31gFShK9tq+3jeak0O7mjNAwo1xX+na3jX1WbC6DiWv1+kIk9htRuORq5G3SjO20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949827; c=relaxed/simple;
-	bh=Z/lpXFI3rNzdj+gGgwpGJ96iB/7UE+MBiqSeDJf4t7E=;
+	s=arc-20240116; t=1745949831; c=relaxed/simple;
+	bh=5utZ+PkDzOmd3mtjhPX5I2w6zhnYq8ChIZghx7jG0mU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NSu3jXbPUyM4vgHvkrLy+DKIDPU+OfNO6RGLr3DV6kiHvbMH5Agt56xW6XqX0oQ/XFx5Ub0aEGPXRS7FJykJSH57DAiH9jH03JFojLMeUEFXavYtYdfTz68gr+upUbQgaS1RrzOeVR3AjG6rtmBvHatWzjwJce9zGBnVjU/o33U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+6YhPlr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dt2etExb0IjYKPvoontZGdle+Uj31jIIMFTjO/akpYFLjlNqK9CemMXy8Qw3iq4OP7e6iNJ403u1z2w/2KUX1ygZ8A5o1hoWVqqDTOvkRrAbXpZwu69o37Eh9y9vnbhfCW6YIs0a2yFB372LoTIfI43DDncTlejy7PDw4T2wB74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GymE9wQ0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+6YhPlr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226FFC4CEE3;
-	Tue, 29 Apr 2025 18:03:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GymE9wQ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DEECC4CEE3;
+	Tue, 29 Apr 2025 18:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949827;
-	bh=Z/lpXFI3rNzdj+gGgwpGJ96iB/7UE+MBiqSeDJf4t7E=;
+	s=korg; t=1745949830;
+	bh=5utZ+PkDzOmd3mtjhPX5I2w6zhnYq8ChIZghx7jG0mU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u+6YhPlrnxJzpHUb6aW5hgAntz8aR9n6nU3qFrtJz++6OrGAQvE+nYGqR91DBw0Mj
-	 Md9xjw6espu9Qjw4tujP69CKQQbViNLztsWk3hq3StkDLwNgicW+2E6ykRGfsGf1po
-	 JAgDVbV8Ca0NJNFABL/j+Axfj/tRmSfhoxEGubDY=
+	b=GymE9wQ0UTtSP2/TAYwaXsPkM5eYIurX+rfiI67rjBd2MqnK39P7QV8yRjsyhRHxz
+	 ouju5whxLLyGUOrenUHR19E49XiIbAF0/n6HRMXySniL5jkh10i+ZtLNScnblsci74
+	 axTNiXel8Z39edNqZPlRUrYtSu0fcwwnSvumJxDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.1 070/167] KVM: SVM: Allocate IR data using atomic allocation
-Date: Tue, 29 Apr 2025 18:42:58 +0200
-Message-ID: <20250429161054.601449387@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Johannes Thumshirn <jth@kernel.org>
+Subject: [PATCH 6.1 071/167] mcb: fix a double free bug in chameleon_parse_gdd()
+Date: Tue, 29 Apr 2025 18:42:59 +0200
+Message-ID: <20250429161054.640245402@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -50,34 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 7537deda36521fa8fff9133b39c46e31893606f2 upstream.
+commit 7c7f1bfdb2249f854a736d9b79778c7e5a29a150 upstream.
 
-Allocate SVM's interrupt remapping metadata using GFP_ATOMIC as
-svm_ir_list_add() is called with IRQs are disabled and irqfs.lock held
-when kvm_irq_routing_update() reacts to GSI routing changes.
+In chameleon_parse_gdd(), if mcb_device_register() fails, 'mdev'
+would be released in mcb_device_register() via put_device().
+Thus, goto 'err' label and free 'mdev' again causes a double free.
+Just return if mcb_device_register() fails.
 
-Fixes: 411b44ba80ab ("svm: Implements update_pi_irte hook to setup posted interrupt")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20250404193923.1413163-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: 3764e82e5150 ("drivers: Introduce MEN Chameleon Bus")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Signed-off-by: Johannes Thumshirn <jth@kernel.org>
+Link: https://lore.kernel.org/r/6201d09e2975ae5789879f79a6de4c38de9edd4a.1741596225.git.jth@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/avic.c |    2 +-
+ drivers/mcb/mcb-parse.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -839,7 +839,7 @@ static int svm_ir_list_add(struct vcpu_s
- 	 * Allocating new amd_iommu_pi_data, which will get
- 	 * add to the per-vcpu ir_list.
- 	 */
--	ir = kzalloc(sizeof(struct amd_svm_iommu_ir), GFP_KERNEL_ACCOUNT);
-+	ir = kzalloc(sizeof(struct amd_svm_iommu_ir), GFP_ATOMIC | __GFP_ACCOUNT);
- 	if (!ir) {
- 		ret = -ENOMEM;
- 		goto out;
+--- a/drivers/mcb/mcb-parse.c
++++ b/drivers/mcb/mcb-parse.c
+@@ -101,7 +101,7 @@ static int chameleon_parse_gdd(struct mc
+ 
+ 	ret = mcb_device_register(bus, mdev);
+ 	if (ret < 0)
+-		goto err;
++		return ret;
+ 
+ 	return 0;
+ 
 
 
