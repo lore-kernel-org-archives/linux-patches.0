@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8162215060;
-	Tue, 29 Apr 2025 16:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9833C21772B;
+	Tue, 29 Apr 2025 16:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945939; cv=none; b=DLHol53s2qX4ERMAGazf8Eg62pb30Jfbql5gZ1Wv9vb/+7lKDrOYXLu28kNzSSsi8KGsd9YIgWa7QhzBYx445JdtS+dBGz+eSh5ltAIxO5InIxWrNMjDoOQokrZ5XBzpiMR0LUkhmtTMayBU/UH5LjXzw4nfMSuvOO7Yd0mPtQ0=
+	t=1745945942; cv=none; b=N+5zsKurY0vSeBQ5L38ufjREq19jdrpH7AYwGkT85co2swl9AhxES+JhO7u3ZrYDEiHc8KJ4TGC1zWgNGeQzjqiRvWcMFLPMFBPPiU7qt8eotJODBHQ+3tK5e97DyPF97hiC96OcF0FES/cAMFLjY/D9OV5+jLSvrjYgclWFayY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945939; c=relaxed/simple;
-	bh=FnUDNVu6mqMwkLS+rcfUiA1Dhfjj7oKxFl7RsKs8S4I=;
+	s=arc-20240116; t=1745945942; c=relaxed/simple;
+	bh=i8CbdBT6LSG9l1ncl6iqw/tRES+Jp7w0T80AeIjZvP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AgLg2TdaXyWqPzAcuLdHT8xbaBXzBVq9pAgQrrB/ZE6j0y3LBWQTQzAHeGU6dzdLJcT97NKVZjNaoL6kxqsulpoWzzQ3pX5PYevB1b+wOC0AdJHaIbugdDIMC84HoLPmXJxZT0FwjOFdVW0YkPgjVfSK6rumcDc4v6Y6CW+gmSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HmiX+8wg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PpojWj/ot1pCS+RWWxnNNQTh5t0xd1Vv5z8m+WtjDvn3XOcdaBv7cfR82OUeaXFDUPDdwElHUfg6vYjFbYDGbUwiv9JFww0rJSZNAX4l2Xn4WetPYbUHRJ39zpvKhVC8ZipaCKd/3Q1j+XVdwSWUOG3iDpkkMEfNZ3eXGQ43A+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZGbMAxn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HmiX+8wg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B75C4CEE3;
-	Tue, 29 Apr 2025 16:58:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZGbMAxn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE57C4CEE3;
+	Tue, 29 Apr 2025 16:59:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945939;
-	bh=FnUDNVu6mqMwkLS+rcfUiA1Dhfjj7oKxFl7RsKs8S4I=;
+	s=korg; t=1745945942;
+	bh=i8CbdBT6LSG9l1ncl6iqw/tRES+Jp7w0T80AeIjZvP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HmiX+8wgB2yHvoID3qeR0ABjoOLIEtqqpdQzCnV1qUAm0SuZQl+B870Kboiil5XxV
-	 D5Ea2QwmS2HFzcQT7c7H8bMjkrAvNEwZucUSZr3mHbaoUAmx4cdgA4Tx+HeR5CQWca
-	 I6RcCfOpg8/jvQYtaM7P9zdKpktN168FXkHxElWY=
+	b=jZGbMAxnl3nCyOqi5svgAdL3auH6ZXYYPX+kkXJvKOO+MN8Cbi3UFVpzXdmszokLR
+	 i9pRVcYn3BKKhILR6FZzT5RAaE9gf+Xv7XZ2KqBsm2nFvEHDoTle5uLcyipKp9TFRP
+	 LOAzDWolS6yHEdb6y6nMYHYCxC+rjz7+Xy+idb64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinyang He <hejinyang@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Tianyang Zhang <zhangtianyang@loongson.cn>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Christoph Hellwig <hch@lst.de>,
+	Christian Brauner <brauner@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 101/311] LoongArch: Make do_xyz() exception handlers more robust
-Date: Tue, 29 Apr 2025 18:38:58 +0200
-Message-ID: <20250429161125.176309388@linuxfoundation.org>
+Subject: [PATCH 6.14 084/311] block: dont autoload drivers on stat
+Date: Tue, 29 Apr 2025 18:38:41 +0200
+Message-ID: <20250429161124.493922058@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -53,138 +53,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit cc73cc6bcdb5f959670e3ff9abdc62461452ddff ]
+[ Upstream commit 5f33b5226c9d92359e58e91ad0bf0c1791da36a1 ]
 
-Currently, interrupts need to be disabled before single-step mode is
-set, it requires that CSR_PRMD_PIE be cleared in save_local_irqflag()
-which is called by setup_singlestep(), this is reasonable.
+blkdev_get_no_open can trigger the legacy autoload of block drivers.  A
+simple stat of a block device has not historically done that, so disable
+this behavior again.
 
-But in the first kprobe breakpoint exception, if the irq is enabled at
-the beginning of do_bp(), it will not be disabled at the end of do_bp()
-due to the CSR_PRMD_PIE has been cleared in save_local_irqflag(). So for
-this case, it may corrupt exception context when restoring the exception
-after do_bp() in handle_bp(), this is not reasonable.
-
-In order to restore exception safely in handle_bp(), it needs to ensure
-the irq is disabled at the end of do_bp(), so just add a local variable
-to record the original interrupt status in the parent context, then use
-it as the check condition to enable and disable irq in do_bp().
-
-While at it, do the similar thing for other do_xyz() exception handlers
-to make them more robust.
-
-Fixes: 6d4cc40fb5f5 ("LoongArch: Add kprobes support")
-Suggested-by: Jinyang He <hejinyang@loongson.cn>
-Suggested-by: Huacai Chen <chenhuacai@loongson.cn>
-Co-developed-by: Tianyang Zhang <zhangtianyang@loongson.cn>
-Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 9abcfbd235f5 ("block: Add atomic write support for statx")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20250423053810.1683309-4-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/traps.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ block/bdev.c       | 8 ++++----
+ block/blk-cgroup.c | 2 +-
+ block/blk.h        | 2 +-
+ block/fops.c       | 2 +-
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/arch/loongarch/kernel/traps.c b/arch/loongarch/kernel/traps.c
-index 2ec3106c0da3d..47fc2de6d1501 100644
---- a/arch/loongarch/kernel/traps.c
-+++ b/arch/loongarch/kernel/traps.c
-@@ -553,9 +553,10 @@ asmlinkage void noinstr do_ale(struct pt_regs *regs)
- 	die_if_kernel("Kernel ale access", regs);
- 	force_sig_fault(SIGBUS, BUS_ADRALN, (void __user *)regs->csr_badvaddr);
- #else
-+	bool pie = regs_irqs_disabled(regs);
- 	unsigned int *pc;
+diff --git a/block/bdev.c b/block/bdev.c
+index 89235796e51a5..5aebcf437f17c 100644
+--- a/block/bdev.c
++++ b/block/bdev.c
+@@ -773,13 +773,13 @@ static void blkdev_put_part(struct block_device *part)
+ 	blkdev_put_whole(whole);
+ }
  
--	if (regs->csr_prmd & CSR_PRMD_PIE)
-+	if (!pie)
- 		local_irq_enable();
- 
- 	perf_sw_event(PERF_COUNT_SW_ALIGNMENT_FAULTS, 1, regs, regs->csr_badvaddr);
-@@ -582,7 +583,7 @@ asmlinkage void noinstr do_ale(struct pt_regs *regs)
- 	die_if_kernel("Kernel ale access", regs);
- 	force_sig_fault(SIGBUS, BUS_ADRALN, (void __user *)regs->csr_badvaddr);
- out:
--	if (regs->csr_prmd & CSR_PRMD_PIE)
-+	if (!pie)
- 		local_irq_disable();
- #endif
- 	irqentry_exit(regs, state);
-@@ -621,12 +622,13 @@ static void bug_handler(struct pt_regs *regs)
- asmlinkage void noinstr do_bce(struct pt_regs *regs)
+-struct block_device *blkdev_get_no_open(dev_t dev)
++struct block_device *blkdev_get_no_open(dev_t dev, bool autoload)
  {
- 	bool user = user_mode(regs);
-+	bool pie = regs_irqs_disabled(regs);
- 	unsigned long era = exception_era(regs);
- 	u64 badv = 0, lower = 0, upper = ULONG_MAX;
- 	union loongarch_instruction insn;
- 	irqentry_state_t state = irqentry_enter(regs);
+ 	struct block_device *bdev;
+ 	struct inode *inode;
  
--	if (regs->csr_prmd & CSR_PRMD_PIE)
-+	if (!pie)
- 		local_irq_enable();
+ 	inode = ilookup(blockdev_superblock, dev);
+-	if (!inode && IS_ENABLED(CONFIG_BLOCK_LEGACY_AUTOLOAD)) {
++	if (!inode && autoload && IS_ENABLED(CONFIG_BLOCK_LEGACY_AUTOLOAD)) {
+ 		blk_request_module(dev);
+ 		inode = ilookup(blockdev_superblock, dev);
+ 		if (inode)
+@@ -1001,7 +1001,7 @@ struct file *bdev_file_open_by_dev(dev_t dev, blk_mode_t mode, void *holder,
+ 	if (ret)
+ 		return ERR_PTR(ret);
  
- 	current->thread.trap_nr = read_csr_excode();
-@@ -692,7 +694,7 @@ asmlinkage void noinstr do_bce(struct pt_regs *regs)
- 	force_sig_bnderr((void __user *)badv, (void __user *)lower, (void __user *)upper);
+-	bdev = blkdev_get_no_open(dev);
++	bdev = blkdev_get_no_open(dev, true);
+ 	if (!bdev)
+ 		return ERR_PTR(-ENXIO);
  
- out:
--	if (regs->csr_prmd & CSR_PRMD_PIE)
-+	if (!pie)
- 		local_irq_disable();
- 
- 	irqentry_exit(regs, state);
-@@ -710,11 +712,12 @@ asmlinkage void noinstr do_bce(struct pt_regs *regs)
- asmlinkage void noinstr do_bp(struct pt_regs *regs)
- {
- 	bool user = user_mode(regs);
-+	bool pie = regs_irqs_disabled(regs);
- 	unsigned int opcode, bcode;
- 	unsigned long era = exception_era(regs);
- 	irqentry_state_t state = irqentry_enter(regs);
- 
--	if (regs->csr_prmd & CSR_PRMD_PIE)
-+	if (!pie)
- 		local_irq_enable();
- 
- 	if (__get_inst(&opcode, (u32 *)era, user))
-@@ -780,7 +783,7 @@ asmlinkage void noinstr do_bp(struct pt_regs *regs)
- 	}
- 
- out:
--	if (regs->csr_prmd & CSR_PRMD_PIE)
-+	if (!pie)
- 		local_irq_disable();
- 
- 	irqentry_exit(regs, state);
-@@ -1015,6 +1018,7 @@ static void init_restore_lbt(void)
- 
- asmlinkage void noinstr do_lbt(struct pt_regs *regs)
- {
-+	bool pie = regs_irqs_disabled(regs);
- 	irqentry_state_t state = irqentry_enter(regs);
- 
- 	/*
-@@ -1024,7 +1028,7 @@ asmlinkage void noinstr do_lbt(struct pt_regs *regs)
- 	 * (including the user using 'MOVGR2GCSR' to turn on TM, which
- 	 * will not trigger the BTE), we need to check PRMD first.
+@@ -1279,7 +1279,7 @@ void bdev_statx(struct path *path, struct kstat *stat,
+ 	 * use I_BDEV() here; the block device has to be looked up by i_rdev
+ 	 * instead.
  	 */
--	if (regs->csr_prmd & CSR_PRMD_PIE)
-+	if (!pie)
- 		local_irq_enable();
+-	bdev = blkdev_get_no_open(d_backing_inode(path->dentry)->i_rdev);
++	bdev = blkdev_get_no_open(d_backing_inode(path->dentry)->i_rdev, false);
+ 	if (!bdev)
+ 		return;
  
- 	if (!cpu_has_lbt) {
-@@ -1038,7 +1042,7 @@ asmlinkage void noinstr do_lbt(struct pt_regs *regs)
- 	preempt_enable();
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index 9ed93d91d754a..c94efae5bcfaf 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -796,7 +796,7 @@ int blkg_conf_open_bdev(struct blkg_conf_ctx *ctx)
+ 		return -EINVAL;
+ 	input = skip_spaces(input);
  
- out:
--	if (regs->csr_prmd & CSR_PRMD_PIE)
-+	if (!pie)
- 		local_irq_disable();
+-	bdev = blkdev_get_no_open(MKDEV(major, minor));
++	bdev = blkdev_get_no_open(MKDEV(major, minor), true);
+ 	if (!bdev)
+ 		return -ENODEV;
+ 	if (bdev_is_partition(bdev)) {
+diff --git a/block/blk.h b/block/blk.h
+index c0120a3d9dc57..9dcc92c7f2b50 100644
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -94,7 +94,7 @@ static inline void blk_wait_io(struct completion *done)
+ 		wait_for_completion_io(done);
+ }
  
- 	irqentry_exit(regs, state);
+-struct block_device *blkdev_get_no_open(dev_t dev);
++struct block_device *blkdev_get_no_open(dev_t dev, bool autoload);
+ void blkdev_put_no_open(struct block_device *bdev);
+ 
+ #define BIO_INLINE_VECS 4
+diff --git a/block/fops.c b/block/fops.c
+index be9f1dbea9ce0..d23ddb2dc1138 100644
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -642,7 +642,7 @@ static int blkdev_open(struct inode *inode, struct file *filp)
+ 	if (ret)
+ 		return ret;
+ 
+-	bdev = blkdev_get_no_open(inode->i_rdev);
++	bdev = blkdev_get_no_open(inode->i_rdev, true);
+ 	if (!bdev)
+ 		return -ENXIO;
+ 
 -- 
 2.39.5
 
