@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8307E110;
-	Tue, 29 Apr 2025 17:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D72A2517AB;
+	Tue, 29 Apr 2025 17:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948021; cv=none; b=SPX/OOxK1byZ1l9I8DvmeI1565Nmx5xFuax+zQZSoM0bUi/Bsh8sJH1n0jcosTqKRtJ5kExOmHRdWP/tnf3FCKgvjGChd/T5aZW55gU7xAY9yl8qhEv7PObx9LAjmdIwlR8voeX9l61DIsEqs/3AP8P9Mvma9EuAeAr41UKpGU0=
+	t=1745948024; cv=none; b=W9B3+pe+vVB/g7jhEyiPbVvI1GwEJ0tTJVWxt28wA8QZJc+6LeoTfOOl14UdulV1SX8qn69GNO4vOiy6T5NsD6pVgjVT9hSo/X6v77uuJI/aiBI1d624gWYD07JsbXjfkMxeUfQhUFMJtMLGXs1Gy73vqOmK3uQB577BgoCrVuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948021; c=relaxed/simple;
-	bh=JNRhAtH2v5p8YDVGtRf2EEvPTZWE0x7lQNcyVeN+KiQ=;
+	s=arc-20240116; t=1745948024; c=relaxed/simple;
+	bh=uB515YeIVJUzRhImaKnMJ2ggGVqu3UY2EcMkEBOiKHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YIf5DDqnm/8FbzSfWS4EStV4P4BEtP3MXcFU8HFclJpcC72tKSSQr5BFMUsZ3RvusV98y/1Rx81NCDJqCaDrBNGjEfswIbzkegHc8ccj6r3n/YXW+lz2lvy22bnGf0tkqi7oEEMQ+p7KJdxSE3y6kM7KK4XjNCgR0WqTFYIh35s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hu+x/UhM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nlhhQGPq+2rbvUYQYAfnDBdhVXDXEHZ5WXeI3gqf99t6fvkx5egTtMfLxfI9NBrI9EWsvgjkPyiskfD2W/PMG/un2fQzZwlUN5EV82fF/hBhbzhbMhqew5g/3Ql6ZEjz/JWx5KZ1peRe0Lk0xNh/sv2+Ks4VUwsmS4xpAWjSw3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TN3yuwXM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hu+x/UhM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC09C4CEE3;
-	Tue, 29 Apr 2025 17:33:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TN3yuwXM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB154C4CEF1;
+	Tue, 29 Apr 2025 17:33:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948021;
-	bh=JNRhAtH2v5p8YDVGtRf2EEvPTZWE0x7lQNcyVeN+KiQ=;
+	s=korg; t=1745948024;
+	bh=uB515YeIVJUzRhImaKnMJ2ggGVqu3UY2EcMkEBOiKHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hu+x/UhMfSQ3Nb+cEjlLgGdYjuDQKOiKLDlnkPy0N7LMkILLEgydkvqJ2FQvD2Xzm
-	 SJUtsi9bcDlVVVZCShJ8x1tQyWTrNvOqLohrhmtVmACNHZZuF1pppGzgzC2KFE3esV
-	 tBmM3OgrbVjYeeXZCrMBQgKDi6FNSahoG9JM9Gzs=
+	b=TN3yuwXMmGiEu2WhZXA8B181NbK1lBFX265Nty+qa8WCEISkk6iontK8/d9hi83m0
+	 tp4fZkHuD11h2fnCzZQkH3Vr0KC7RG9h5SxAc8G5Rb/RbUqVIlbQb/ucpvqkn3vj9t
+	 fXuDzb4r6FzdwdF/6yeT8QuJbMH4ST4qbl87TMmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable <stable@kernel.org>,
 	Fedor Pchelkin <pchelkin@ispras.ru>,
 	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.12 140/280] usb: chipidea: ci_hdrc_imx: fix call balance of regulator routines
-Date: Tue, 29 Apr 2025 18:41:21 +0200
-Message-ID: <20250429161120.853859617@linuxfoundation.org>
+Subject: [PATCH 6.12 141/280] usb: chipidea: ci_hdrc_imx: implement usb_phy_init() error handling
+Date: Tue, 29 Apr 2025 18:41:22 +0200
+Message-ID: <20250429161120.895571482@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -53,90 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 8cab0e9a3f3e8d700179e0d6141643d54a267fd5 upstream.
+commit 8c531e0a8c2d82509ad97c6d3a1e6217c7ed136d upstream.
 
-Upon encountering errors during the HSIC pinctrl handling section the
-regulator should be disabled.
-
-Use devm_add_action_or_reset() to let the regulator-disabling routine be
-handled by device resource management stack.
+usb_phy_init() may return an error code if e.g. its implementation fails
+to prepare/enable some clocks. And properly rollback on probe error path
+by calling the counterpart usb_phy_shutdown().
 
 Found by Linux Verification Center (linuxtesting.org).
 
-Fixes: 4d6141288c33 ("usb: chipidea: imx: pinctrl for HSIC is optional")
+Fixes: be9cae2479f4 ("usb: chipidea: imx: Fix ULPI on imx53")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20250316102658.490340-3-pchelkin@ispras.ru
+Link: https://lore.kernel.org/r/20250316102658.490340-4-pchelkin@ispras.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/ci_hdrc_imx.c |   25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/usb/chipidea/ci_hdrc_imx.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
 --- a/drivers/usb/chipidea/ci_hdrc_imx.c
 +++ b/drivers/usb/chipidea/ci_hdrc_imx.c
-@@ -336,6 +336,13 @@ static int ci_hdrc_imx_notify_event(stru
- 	return ret;
- }
- 
-+static void ci_hdrc_imx_disable_regulator(void *arg)
-+{
-+	struct ci_hdrc_imx_data *data = arg;
-+
-+	regulator_disable(data->hsic_pad_regulator);
-+}
-+
- static int ci_hdrc_imx_probe(struct platform_device *pdev)
- {
- 	struct ci_hdrc_imx_data *data;
-@@ -394,6 +401,13 @@ static int ci_hdrc_imx_probe(struct plat
- 					"Failed to enable HSIC pad regulator\n");
- 				goto err_put;
- 			}
-+			ret = devm_add_action_or_reset(dev,
-+					ci_hdrc_imx_disable_regulator, data);
-+			if (ret) {
-+				dev_err(dev,
-+					"Failed to add regulator devm action\n");
-+				goto err_put;
-+			}
- 		}
+@@ -484,7 +484,11 @@ static int ci_hdrc_imx_probe(struct plat
+ 	    of_usb_get_phy_mode(np) == USBPHY_INTERFACE_MODE_ULPI) {
+ 		pdata.flags |= CI_HDRC_OVERRIDE_PHY_CONTROL;
+ 		data->override_phy_control = true;
+-		usb_phy_init(pdata.usb_phy);
++		ret = usb_phy_init(pdata.usb_phy);
++		if (ret) {
++			dev_err(dev, "Failed to init phy\n");
++			goto err_clk;
++		}
  	}
  
-@@ -432,11 +446,11 @@ static int ci_hdrc_imx_probe(struct plat
+ 	if (pdata.flags & CI_HDRC_SUPPORTS_RUNTIME_PM)
+@@ -493,7 +497,7 @@ static int ci_hdrc_imx_probe(struct plat
+ 	ret = imx_usbmisc_init(data->usbmisc_data);
+ 	if (ret) {
+ 		dev_err(dev, "usbmisc init failed, ret=%d\n", ret);
+-		goto err_clk;
++		goto phy_shutdown;
+ 	}
  
- 	ret = imx_get_clks(dev);
- 	if (ret)
--		goto disable_hsic_regulator;
-+		goto qos_remove_request;
+ 	data->ci_pdev = ci_hdrc_add_device(dev,
+@@ -502,7 +506,7 @@ static int ci_hdrc_imx_probe(struct plat
+ 	if (IS_ERR(data->ci_pdev)) {
+ 		ret = PTR_ERR(data->ci_pdev);
+ 		dev_err_probe(dev, ret, "ci_hdrc_add_device failed\n");
+-		goto err_clk;
++		goto phy_shutdown;
+ 	}
  
- 	ret = imx_prepare_enable_clks(dev);
- 	if (ret)
--		goto disable_hsic_regulator;
-+		goto qos_remove_request;
+ 	if (data->usbmisc_data) {
+@@ -536,6 +540,9 @@ static int ci_hdrc_imx_probe(struct plat
  
- 	ret = clk_prepare_enable(data->clk_wakeup);
- 	if (ret)
-@@ -526,10 +540,7 @@ err_clk:
+ disable_device:
+ 	ci_hdrc_remove_device(data->ci_pdev);
++phy_shutdown:
++	if (data->override_phy_control)
++		usb_phy_shutdown(data->phy);
+ err_clk:
  	clk_disable_unprepare(data->clk_wakeup);
  err_wakeup_clk:
- 	imx_disable_unprepare_clks(dev);
--disable_hsic_regulator:
--	if (data->hsic_pad_regulator)
--		/* don't overwrite original ret (cf. EPROBE_DEFER) */
--		regulator_disable(data->hsic_pad_regulator);
-+qos_remove_request:
- 	if (pdata.flags & CI_HDRC_PMQOS)
- 		cpu_latency_qos_remove_request(&data->pm_qos_req);
- 	data->ci_pdev = NULL;
-@@ -557,8 +568,6 @@ static void ci_hdrc_imx_remove(struct pl
- 		clk_disable_unprepare(data->clk_wakeup);
- 		if (data->plat_data->flags & CI_HDRC_PMQOS)
- 			cpu_latency_qos_remove_request(&data->pm_qos_req);
--		if (data->hsic_pad_regulator)
--			regulator_disable(data->hsic_pad_regulator);
- 	}
- 	if (data->usbmisc_data)
- 		put_device(data->usbmisc_data->dev);
 
 
