@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D421E883E
-	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 00:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A834D217F56
+	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 00:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745886873; cv=none; b=eKqjBhYelsNpDDtWmZbKCKtzQLYt/L8BaTioZOhEyUNsHjm+qwhotNl5GKlH2HLP+tUWc0+GehyX4mvRqlbTKW3D1Eam6XpRMn8c0RPv5OlcW+HOH/0/4cNZ9bxj5/IhgYRMKcuq6XnddbT1mJlHHKBdcz/nY/8t0eKTe9DwCI8=
+	t=1745886873; cv=none; b=i00y4K1X67kmT1c9rLsCahd/A9WO8nnCXrlMvyYxPr9qSvW/LG1qoHvJZVR9YpgYIUAkuruM71ng9/yq3yyTTAMLMDAZjAS8Y+x82+HpMDrsG9j9Pq/gucgpxt/7tFPqn6YrBf9Vlkx7y/iPfIyGwYS0u1UgN80EEl3f9oHy44w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1745886873; c=relaxed/simple;
-	bh=kOMp9z1scfUT1uqprTrt2iskyhryhvGGEZykm2shN0g=;
+	bh=Nc8PBuxU/Zr6RfO730ZadTnp1SP5khITKMe7nIqiyZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lwyp9ANyQsVnwasSuz88rD0tA7zkjIAntSlwFIKPmy+rJ76df/RC+7FE1vfptyI/qAKAhbkqOey2JhY+KsTh5yCaUlvCL6RtO1W398Xk6Ogr1xg9bTN/dhoSp2ipSeF2kztjRoBZXxdth7WPUhjLrLrt3DEchmWsrnMYXpQUyD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LchUxxS2; arc=none smtp.client-ip=192.198.163.9
+	 MIME-Version; b=bE6GjM9dYXY4razmXw/kX8Pz0aF+dMPQh5Z5c8nC7GA0/2zJplxaY3dV7xy4rh/XD22bQ4vzLkM9DM9DbBRh/aIVPoCePBBG7alh3WKLkDxq7VGtIkg9P062ME5ITNsUMMhZcdE1m3BvNSXkq7F2CBkFHudcqYe3fh7JwHqr+bQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=juFr4hgJ; arc=none smtp.client-ip=192.198.163.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LchUxxS2"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="juFr4hgJ"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1745886870; x=1777422870;
+  t=1745886871; x=1777422871;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=kOMp9z1scfUT1uqprTrt2iskyhryhvGGEZykm2shN0g=;
-  b=LchUxxS2j9tRwaOp3/trpkVFuke+rQrRRoVCo6mFQt3z5gSS5D9dhZKz
-   XXzvPorEbdpToCrEltnUVOhX8eOoHNwgqeA+ldfUaId5Bj2ZYEf6pdmdf
-   xa7zbwWwNwbrGMURzcGrVNBjtkZPLCFWoJFMVvWMzs24c+5+figgYd+XV
-   bIemcgH7RmtxzU3yDYVPSgE5TUvrz55WF2eWBGezpcQE9nRHEDR66X3si
-   DprvSd5TmRN+mpvYBROTx1Poe9Q9U1xepS4F3UqcCoPCyRKkK6TPZPLvO
-   xX/V78Wpu70nIeyImmGf8L2l6w8mTPOptj7K81vOEM+FojmtPF28KWBwz
+  bh=Nc8PBuxU/Zr6RfO730ZadTnp1SP5khITKMe7nIqiyZQ=;
+  b=juFr4hgJiT8Peh/W6N4+H2AXZUd1MzK83LUrwvj0ITFBL+ibZeAxgyjJ
+   HqwAbRaXrMO2whFCJT4I0OZ/XEQcWQ0Qy9p3VoO6UuhiOkRNXVCKOOfbP
+   UJ5hxCmfXBVHkzftNnNiX6MOPAgWUwLqFkFLEK9Tz9yFXPkmKhAEPo5PZ
+   z3/FLHum0q4v4qvMfJbDyox8AJYI/G2MfTayq07faew7qSMLmUDqty5D2
+   Zk805cUUYHNJMweR6+NdZJOBZ/hrEeu+bxMwMFRjj/4FR1DX7YeCZcg24
+   UPGkNrqYeTsphBhnTr/ILiFpS969lJ9yQXf+ckqBN5YdKikgTRcwmrfqv
    w==;
-X-CSE-ConnectionGUID: GJaoLg4MS++P3yQ0XOEyRg==
-X-CSE-MsgGUID: XVMRcjTyTOC6WeBH80JcFA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11417"; a="58148290"
+X-CSE-ConnectionGUID: vWi22xGXSCO4HmOJH3iORw==
+X-CSE-MsgGUID: WPk2DvNCQqS38w0f2i4sTA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11417"; a="58148309"
 X-IronPort-AV: E=Sophos;i="6.15,247,1739865600"; 
-   d="scan'208";a="58148290"
+   d="scan'208";a="58148309"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2025 17:34:23 -0700
-X-CSE-ConnectionGUID: +SwzuqKUSzqHyiQw2izBYw==
-X-CSE-MsgGUID: W9zYiQgXQ4umUZVchGkaXw==
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2025 17:34:24 -0700
+X-CSE-ConnectionGUID: y4vW/neFQ+eI0ludOzZs0g==
+X-CSE-MsgGUID: qa12DkJOR5CnQIpQ93tjYg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.15,247,1739865600"; 
-   d="scan'208";a="133394073"
+   d="scan'208";a="133394082"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
-  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2025 17:34:22 -0700
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2025 17:34:23 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -58,9 +58,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v4 26/31] x86/resctrl: Add energy/perf choices to rdt boot option
-Date: Mon, 28 Apr 2025 17:33:52 -0700
-Message-ID: <20250429003359.375508-27-tony.luck@intel.com>
+Subject: [PATCH v4 28/31] x86,fs/resctrl: Fix RMID allocation for multiple monitor resources
+Date: Mon, 28 Apr 2025 17:33:54 -0700
+Message-ID: <20250429003359.375508-29-tony.luck@intel.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250429003359.375508-1-tony.luck@intel.com>
 References: <20250429003359.375508-1-tony.luck@intel.com>
@@ -72,140 +72,241 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Users may want to force either of the telemetry features on
-(in the case where they are disabled due to erratum) or off
-(in the case that a limited number of RMIDs for a telemetry
-feature reduces the number of monitor groups that can be
-created.)
+The resctrl file system code assumed that the only monitor events were
+tied to the RDT_RESOURCE_L3 resource. Also that the number of supported
+RMIDs was enumerated during early initialization.
 
-Unlike other options that are tied to X86_FEATURE_* flags,
-these must be queried by name. Add a function to do that.
+RDT_RESOURCE_PERF_PKG breaks both of those assumptions.
 
-Add checks for users who forced either feature off.
+Delay the final enumeration of the number of RMIDs and subsequent
+allocation of structures until first mount of the resctrl file system.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- .../admin-guide/kernel-parameters.txt         |  2 +-
- arch/x86/kernel/cpu/resctrl/internal.h        |  2 ++
- arch/x86/kernel/cpu/resctrl/core.c            | 19 +++++++++++++++++++
- arch/x86/kernel/cpu/resctrl/intel_aet.c       |  6 ++++++
- 4 files changed, 28 insertions(+), 1 deletion(-)
+ fs/resctrl/internal.h              |  4 +--
+ arch/x86/kernel/cpu/resctrl/core.c |  8 +++--
+ fs/resctrl/monitor.c               | 48 +++++++++++++-----------------
+ fs/resctrl/rdtgroup.c              | 13 ++++----
+ 4 files changed, 35 insertions(+), 38 deletions(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index d9fd26b95b34..4811bc812f0f 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -5988,7 +5988,7 @@
- 	rdt=		[HW,X86,RDT]
- 			Turn on/off individual RDT features. List is:
- 			cmt, mbmtotal, mbmlocal, l3cat, l3cdp, l2cat, l2cdp,
--			mba, smba, bmec.
-+			mba, smba, bmec, energy, perf.
- 			E.g. to turn on cmt and turn off mba use:
- 				rdt=cmt,!mba
+diff --git a/fs/resctrl/internal.h b/fs/resctrl/internal.h
+index 623a9fadc18a..fb5ae8ba0c17 100644
+--- a/fs/resctrl/internal.h
++++ b/fs/resctrl/internal.h
+@@ -364,7 +364,7 @@ int alloc_rmid(u32 closid);
  
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index dd5fe8a98304..92cbba9d82a8 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -167,6 +167,8 @@ void __init intel_rdt_mbm_apply_quirk(void);
+ void free_rmid(u32 closid, u32 rmid);
  
- void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
+-void resctrl_mon_resource_exit(void);
++void resctrl_dom_data_exit(void);
  
-+bool rdt_check_option(char *name, bool is_on, bool is_off);
-+
- #ifdef CONFIG_INTEL_AET_RESCTRL
- bool intel_aet_get_events(void);
- void __exit intel_aet_exit(void);
+ void mon_event_count(void *info);
+ 
+@@ -405,7 +405,7 @@ enum resctrl_event_id resctrl_get_mon_event_by_name(char *name);
+ 
+ char *resctrl_mon_event_name(enum resctrl_event_id evt);
+ 
+-void resctrl_init_mon_events(void);
++int resctrl_init_mon_events(void);
+ 
+ #ifdef CONFIG_RESCTRL_FS_PSEUDO_LOCK
+ int rdtgroup_locksetup_enter(struct rdtgroup *rdtgrp);
 diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 9fa4cc66faf4..dc312e24ab87 100644
+index dc312e24ab87..d921f32a1b6c 100644
 --- a/arch/x86/kernel/cpu/resctrl/core.c
 +++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -795,6 +795,8 @@ enum {
- 	RDT_FLAG_MBA,
- 	RDT_FLAG_SMBA,
- 	RDT_FLAG_BMEC,
-+	RDT_FLAG_ENERGY,
-+	RDT_FLAG_PERF,
- };
+@@ -112,10 +112,14 @@ struct rdt_hw_resource rdt_resources_all[RDT_NUM_RESOURCES] = {
  
- #define RDT_OPT(idx, n, f)	\
-@@ -820,6 +822,8 @@ static struct rdt_options rdt_options[]  __ro_after_init = {
- 	RDT_OPT(RDT_FLAG_MBA,	    "mba",	X86_FEATURE_MBA),
- 	RDT_OPT(RDT_FLAG_SMBA,	    "smba",	X86_FEATURE_SMBA),
- 	RDT_OPT(RDT_FLAG_BMEC,	    "bmec",	X86_FEATURE_BMEC),
-+	RDT_OPT(RDT_FLAG_ENERGY,    "energy",	0),
-+	RDT_OPT(RDT_FLAG_PERF,	    "perf",	0),
- };
- #define NUM_RDT_OPTIONS ARRAY_SIZE(rdt_options)
+ u32 resctrl_arch_system_num_rmid_idx(void)
+ {
+-	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
++	struct rdt_resource *r;
++	int num_rmids = S32_MAX;
++
++	for_each_mon_capable_rdt_resource(r)
++		num_rmids = min(num_rmids, r->num_rmid);
  
-@@ -869,6 +873,21 @@ bool rdt_cpu_has(int flag)
- 	return ret;
+ 	/* RMID are independent numbers for x86. num_rmid_idx == num_rmid */
+-	return r->num_rmid;
++	return num_rmids;
  }
  
-+/* Check if a named option has been forced on, or forced off */
-+bool rdt_check_option(char *name, bool is_on, bool is_off)
-+{
-+	struct rdt_options *o;
-+
-+	WARN_ON(!(is_on ^ is_off));
-+
-+	for (o = rdt_options; o < &rdt_options[NUM_RDT_OPTIONS]; o++) {
-+		if (!strcmp(name, o->name))
-+			return (is_on && o->force_on) || (is_off && o->force_off);
-+	}
-+
-+	return false;
-+}
-+
- bool resctrl_arch_is_evt_configurable(enum resctrl_event_id evt)
+ struct rdt_resource *resctrl_arch_get_resource(enum resctrl_res_level l)
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index f848325591b4..f7a5ffe9be25 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -762,7 +762,7 @@ void mbm_setup_overflow_handler(struct rdt_l3_mon_domain *dom, unsigned long del
+ 		schedule_delayed_work_on(cpu, &dom->mbm_over, delay);
+ }
+ 
+-static int dom_data_init(struct rdt_resource *r)
++static int resctrl_dom_data_init(struct rdt_resource *r)
  {
- 	if (!rdt_cpu_has(X86_FEATURE_BMEC))
-diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-index 0bbf991da981..aacaedcc7b74 100644
---- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
-+++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-@@ -49,6 +49,7 @@ struct pmt_event {
-  *                      gleaned from the XML files. Others are set from data
-  *                      retrieved from intel_pmt_get_regions_by_feature().
-  * @pfg:		The pmt_feature_group for this event group
-+ * @name:		Name for this group
-  * @guid:		Unique number per XML description file
-  * @mmio_size:		Number of bytes of mmio registers for this group
-  * @pkginfo:		Per-package MMIO addresses
-@@ -57,6 +58,7 @@ struct pmt_event {
+ 	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
+ 	u32 num_closid = resctrl_arch_get_num_closid(r);
+@@ -770,7 +770,10 @@ static int dom_data_init(struct rdt_resource *r)
+ 	int err = 0, i;
+ 	u32 idx;
+ 
+-	mutex_lock(&rdtgroup_mutex);
++	/* Are there any mon_capable resources? */
++	if (idx_limit == S32_MAX)
++		return 0;
++
+ 	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
+ 		u32 *tmp;
+ 
+@@ -783,7 +786,7 @@ static int dom_data_init(struct rdt_resource *r)
+ 		tmp = kcalloc(num_closid, sizeof(*tmp), GFP_KERNEL);
+ 		if (!tmp) {
+ 			err = -ENOMEM;
+-			goto out_unlock;
++			goto out;
+ 		}
+ 
+ 		closid_num_dirty_rmid = tmp;
+@@ -796,7 +799,7 @@ static int dom_data_init(struct rdt_resource *r)
+ 			closid_num_dirty_rmid = NULL;
+ 		}
+ 		err = -ENOMEM;
+-		goto out_unlock;
++		goto out;
+ 	}
+ 
+ 	for (i = 0; i < idx_limit; i++) {
+@@ -817,14 +820,15 @@ static int dom_data_init(struct rdt_resource *r)
+ 	entry = __rmid_entry(idx);
+ 	list_del(&entry->list);
+ 
+-out_unlock:
+-	mutex_unlock(&rdtgroup_mutex);
++out:
+ 
+ 	return err;
+ }
+ 
+-static void dom_data_exit(struct rdt_resource *r)
++void resctrl_dom_data_exit(void)
+ {
++	struct rdt_resource *r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
++
+ 	mutex_lock(&rdtgroup_mutex);
+ 
+ 	if (!r->mon_capable)
+@@ -954,16 +958,21 @@ char *resctrl_mon_event_name(enum resctrl_event_id evt)
+  * events have been enumerated. Only needs to build the per-resource
+  * event lists once.
   */
- struct event_group {
- 	struct pmt_feature_group	*pfg;
-+	char				*name;
- 	int				guid;
- 	int				mmio_size;
- 	struct mmio_info		**pkginfo;
-@@ -66,6 +68,7 @@ struct event_group {
+-void resctrl_init_mon_events(void)
++int resctrl_init_mon_events(void)
+ {
++	struct rdt_resource *r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
+ 	enum resctrl_event_id evt;
+-	struct rdt_resource *r;
+ 	static bool only_once;
++	int ret;
  
- /* Link: https://github.com/intel/Intel-PMT xml/CWF/OOBMSM/RMID-ENERGY *.xml */
- static struct event_group energy_0x26696143 = {
-+	.name		= "energy",
- 	.guid		= 0x26696143,
- 	.mmio_size	= (576 * 2 + 3) * 8,
- 	.num_events	= 2,
-@@ -77,6 +80,7 @@ static struct event_group energy_0x26696143 = {
+ 	if (only_once)
+-		return;
++		return 0;
+ 	only_once = true;
  
- /* Link: https://github.com/intel/Intel-PMT xml/CWF/OOBMSM/RMID-PERF *.xml */
- static struct event_group perf_0x26557651 = {
-+	.name		= "perf",
- 	.guid		= 0x26557651,
- 	.mmio_size	= (576 * 7 + 3) * 8,
- 	.num_events	= 7,
-@@ -208,6 +212,8 @@ static bool get_pmt_feature(enum pmt_feature_id feature)
- 	for (peg = &known_event_groups[0]; peg < &known_event_groups[NUM_KNOWN_GROUPS]; peg++) {
- 		for (int i = 0; i < p->count; i++) {
- 			if ((*peg)->guid == p->regions[i].guid) {
-+				if (rdt_check_option((*peg)->name, false, true))
-+					return false;
- 				ret = configure_events((*peg), p);
- 				if (ret) {
- 					(*peg)->pfg = no_free_ptr(p);
++	ret = resctrl_dom_data_init(r);
++	if (ret)
++		return ret;
++
+ 	for_each_mon_capable_rdt_resource(r)
+ 		INIT_LIST_HEAD(&r->evt_list);
+ 
+@@ -973,6 +982,8 @@ void resctrl_init_mon_events(void)
+ 		r = resctrl_arch_get_resource(mon_event_all[evt].rid);
+ 		list_add_tail(&mon_event_all[evt].list, &r->evt_list);
+ 	}
++
++	return ret;
+ }
+ 
+ /**
+@@ -989,16 +1000,6 @@ void resctrl_init_mon_events(void)
+  */
+ int resctrl_mon_resource_init(void)
+ {
+-	struct rdt_resource *r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
+-	int ret;
+-
+-	if (!r->mon_capable)
+-		return 0;
+-
+-	ret = dom_data_init(r);
+-	if (ret)
+-		return ret;
+-
+ 	if (resctrl_arch_is_evt_configurable(QOS_L3_MBM_TOTAL_EVENT_ID)) {
+ 		mon_event_all[QOS_L3_MBM_TOTAL_EVENT_ID].configurable = true;
+ 		resctrl_file_fflags_init("mbm_total_bytes_config",
+@@ -1017,10 +1018,3 @@ int resctrl_mon_resource_init(void)
+ 
+ 	return 0;
+ }
+-
+-void resctrl_mon_resource_exit(void)
+-{
+-	struct rdt_resource *r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
+-
+-	dom_data_exit(r);
+-}
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index 544fa721e067..195e41eb73fb 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -2595,7 +2595,9 @@ static int rdt_get_tree(struct fs_context *fc)
+ 		goto out;
+ 	}
+ 
+-	resctrl_init_mon_events();
++	ret = resctrl_init_mon_events();
++	if (ret)
++		goto out;
+ 
+ 	ret = rdtgroup_setup_root(ctx);
+ 	if (ret)
+@@ -4300,10 +4302,8 @@ int resctrl_init(void)
+ 		return ret;
+ 
+ 	ret = sysfs_create_mount_point(fs_kobj, "resctrl");
+-	if (ret) {
+-		resctrl_mon_resource_exit();
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	ret = register_filesystem(&rdt_fs_type);
+ 	if (ret)
+@@ -4336,7 +4336,6 @@ int resctrl_init(void)
+ 
+ cleanup_mountpoint:
+ 	sysfs_remove_mount_point(fs_kobj, "resctrl");
+-	resctrl_mon_resource_exit();
+ 
+ 	return ret;
+ }
+@@ -4363,7 +4362,7 @@ static bool resctrl_online_domains_exist(void)
+  * When called by the architecture code, all CPUs and resctrl domains must be
+  * offline. This ensures the limbo and overflow handlers are not scheduled to
+  * run, meaning the data structures they access can be freed by
+- * resctrl_mon_resource_exit().
++ * resctrl_dom_data_exit().
+  *
+  * After this function has returned, the architecture code should return an
+  * from all resctrl_arch_ functions that can do this.
+@@ -4390,5 +4389,5 @@ void resctrl_exit(void)
+ 	 * it can be used to umount resctrl.
+ 	 */
+ 
+-	resctrl_mon_resource_exit();
++	resctrl_dom_data_exit();
+ }
 -- 
 2.48.1
 
