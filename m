@@ -1,46 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9672AE96;
-	Tue, 29 Apr 2025 18:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B6D2AE96;
+	Tue, 29 Apr 2025 18:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949913; cv=none; b=myXKcmsg/sjTh6OlDZ7KpKPpcL0b70guRIOODZ8nLl/XhdcTAHx85eDZ7ni3HBbu8VbEo99L9TA8AutjXuEWOVn4wrgCsuAF5xW7YRBUypS9tuaAchVp0lncPa8kzBETiuOO/FGwqGvbRP9a6TojUe5f9GqlY3dflXM2ZboWrfI=
+	t=1745949916; cv=none; b=udRHn52CuzA1KiQYKchdrTnMPk2gX+zALt2rR6TJPOPM8E5XdYu6SQMaNsom43TjcO0mDZmFViX1zgpAJgud1e9GEdr6OR2Z5Qau76Y6kwo9PJpqaBTId/4StO0JHpNuOrjK6oXbp3NidcUYiVjfBo1rya/MBmMech7fMRnsdx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949913; c=relaxed/simple;
-	bh=2DHIkQWn1UrB0B0dKBBLz3SDk90XlSYT7EhtjhmZPC4=;
+	s=arc-20240116; t=1745949916; c=relaxed/simple;
+	bh=6aJlFYi0n1hgC+wdu+I0R2DZP1O+71PHB/3U+Byqx/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uZWwMW3Dc5GKTeDxdIq4kI9/o1vhMs/MtUgmIE0FvCh1op4GB2Lwxl3VxDGhIB4QI1cD/oFrjoeCXD9oaRmA6okPPQqkCtPaKXtMKbedq579RgKY5LNzRLBqz1WtGHqqxBjShGhNsT6lBdnxm5SMSJTF7jGF0iEKnwAtnfI59Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNbVlecS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BlmikwTjp0E7l54Lh8/qQoJ3gkR9ylC+FQba7NqvvnuGubTCR2NigYffY4k+AZsMo67FnNZXhayAHAeNkNktn6AoJJZgI8EOrD3V3QqxAfvuMzELRHygNI+hZescDj5D6FLlYDzG5/ttL0nsNYo3wl9eklt5yr3F28OPW0dtFD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLYr0fte; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNbVlecS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8803C4CEE3;
-	Tue, 29 Apr 2025 18:05:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLYr0fte"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC30CC4CEE3;
+	Tue, 29 Apr 2025 18:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949913;
-	bh=2DHIkQWn1UrB0B0dKBBLz3SDk90XlSYT7EhtjhmZPC4=;
+	s=korg; t=1745949916;
+	bh=6aJlFYi0n1hgC+wdu+I0R2DZP1O+71PHB/3U+Byqx/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNbVlecSdoDkUjlZk+5b+dL+dHibLcLfh8UICRB9lGVPSKgxi9Iktq3PM/8l5l8zW
-	 aQiW0kt9zuxl7OpORVT3l4vFSb6u4po1vdBTpvuWJyLKaWo9uesHyS0+FQw2qddyCH
-	 KS6C3Z9vZCCU40P/GLGx4oJ62uEbNvunoWnnbwYo=
+	b=ZLYr0fteOfY5qJVurw7NIRqfocd1C0sxxGpK+b7cCulRK/c8Pg/qodn56mzahfr9s
+	 8dq/bndQ3h/k90KVotk6xCb7RTgfqUWviWccasgC68AQ4CMGHCEXovM9K8OygHHpbK
+	 vCN7yh/4D9LwN0Mt3n+h4M89fW2LQ2RNt2dqHVAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Gengkun <luogengkun@huaweicloud.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Jiri Olsa <jolsa@redhat.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/167] perf/x86: Fix non-sampling (counting) events on certain x86 platforms
-Date: Tue, 29 Apr 2025 18:42:45 +0200
-Message-ID: <20250429161054.074222038@linuxfoundation.org>
+	Miao Li <limiao@kylinos.cn>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.1 090/167] usb: quirks: add DELAY_INIT quirk for Silicon Motion Flash Drive
+Date: Tue, 29 Apr 2025 18:43:18 +0200
+Message-ID: <20250429161055.393201644@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -59,62 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luo Gengkun <luogengkun@huaweicloud.com>
+From: Miao Li <limiao@kylinos.cn>
 
-[ Upstream commit 1a97fea9db9e9b9c4839d4232dde9f505ff5b4cc ]
+commit 2932b6b547ec36ad2ed60fbf2117c0e46bb7d40a upstream.
 
-Perf doesn't work at perf stat for hardware events on certain x86 platforms:
+Silicon Motion Flash Drive connects to Huawei hisi platforms and
+performs a system reboot test for two thousand circles, it will
+randomly work incorrectly on boot, set DELAY_INIT quirk can workaround
+this issue.
 
- $perf stat -- sleep 1
- Performance counter stats for 'sleep 1':
-             16.44 msec task-clock                       #    0.016 CPUs utilized
-                 2      context-switches                 #  121.691 /sec
-                 0      cpu-migrations                   #    0.000 /sec
-                54      page-faults                      #    3.286 K/sec
-   <not supported>	cycles
-   <not supported>	instructions
-   <not supported>	branches
-   <not supported>	branch-misses
-
-The reason is that the check in x86_pmu_hw_config() for sampling events is
-unexpectedly applied to counting events as well.
-
-It should only impact x86 platforms with limit_period used for non-PEBS
-events. For Intel platforms, it should only impact some older platforms,
-e.g., HSW, BDW and NHM.
-
-Fixes: 88ec7eedbbd2 ("perf/x86: Fix low freqency setting issue")
-Signed-off-by: Luo Gengkun <luogengkun@huaweicloud.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Jiri Olsa <jolsa@redhat.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Link: https://lore.kernel.org/r/20250423064724.3716211-1-luogengkun@huaweicloud.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Miao Li <limiao@kylinos.cn>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20250401023027.44894-1-limiao870622@163.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/core/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
-index fa07447324445..a8732dd9fedb9 100644
---- a/arch/x86/events/core.c
-+++ b/arch/x86/events/core.c
-@@ -623,7 +623,7 @@ int x86_pmu_hw_config(struct perf_event *event)
- 	if (event->attr.type == event->pmu->type)
- 		event->hw.config |= event->attr.config & X86_RAW_EVENT_MASK;
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -383,6 +383,9 @@ static const struct usb_device_id usb_qu
+ 	{ USB_DEVICE(0x0904, 0x6103), .driver_info =
+ 			USB_QUIRK_LINEAR_FRAME_INTR_BINTERVAL },
  
--	if (!event->attr.freq && x86_pmu.limit_period) {
-+	if (is_sampling_event(event) && !event->attr.freq && x86_pmu.limit_period) {
- 		s64 left = event->attr.sample_period;
- 		x86_pmu.limit_period(event, &left);
- 		if (left > event->attr.sample_period)
--- 
-2.39.5
-
++	/* Silicon Motion Flash Drive */
++	{ USB_DEVICE(0x090c, 0x1000), .driver_info = USB_QUIRK_DELAY_INIT },
++
+ 	/* Sound Devices USBPre2 */
+ 	{ USB_DEVICE(0x0926, 0x0202), .driver_info =
+ 			USB_QUIRK_ENDPOINT_IGNORE },
 
 
