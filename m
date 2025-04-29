@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E932517A6;
-	Tue, 29 Apr 2025 17:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CE22512F3;
+	Tue, 29 Apr 2025 17:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949221; cv=none; b=DsVFNYq4rtAz76uvLP/7nyam96p3BkQ2EhEA+qahIc4JOyiukaKJ7TjvhP2nnH0klyygTjmq4FLvnUuB/FE38cp/FxUDP6OZ9EgKyYMNjJReVkSSKut7Ds5Nk9MnW4udl+r/5B0s4+JaCUbGHfedz+c+pnc27z2Cyd+ZvcPUoJU=
+	t=1745949224; cv=none; b=fB98wl8cYq5joCuCPO/YDTO3GNl4fPF8JQoeMSe3KJ61GBMf9Y8E7tVmrwQxCzY6WIa6vmR9m81ndTNo87Uy0F0T+HHf1CxMxdBBp7meHbNn3aYA/LNQJRgXcBH369KvkvLB9eY6aHuQaVxqvYGaiioRohG+vQvsod0Ksa4iMF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949221; c=relaxed/simple;
-	bh=0Andh60W6pCeJAR/nQoTcLY7+YBIG0kAw6Vf4aKc+bY=;
+	s=arc-20240116; t=1745949224; c=relaxed/simple;
+	bh=gfGPHWlm0vGnmasKqvVop0y6ESvmH5ML4e6zvkBZ8QI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H0aUmWN5UCo0BkUKzt+QtgSxseYDNoIIZ9IrH7Ffg8NV98kpJUPL9j1viuQeSaiZs/nRcY8X5151E1GWFXY1pehtJWywewKS2jRQOv5HwFz8reuNhP7wuWKWsl2iA4bjEQFGvtuU5uAF4K3n61fo0BajgdDEVvZSU+YRrvT7lAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/pFT5Xm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MQpT880jC1HFWYEDnW4cX8kWnHOpQpGDwUtxr+tJ1MWC+dS1X34LxQ3yD1rp+UdeP7Ckd2O8cB47SkrDiJNJJKDYTZFIx9tA/nasJOp3PHoRJ0nWm4Ej1K5HprwGDZFIbGdWhT+7EluAsqBVXlVmONW2kUFl5msHbeOWykpNWHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Nr0J0Mx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/pFT5Xm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FCD9C4CEE9;
-	Tue, 29 Apr 2025 17:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Nr0J0Mx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B917C4CEE3;
+	Tue, 29 Apr 2025 17:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949220;
-	bh=0Andh60W6pCeJAR/nQoTcLY7+YBIG0kAw6Vf4aKc+bY=;
+	s=korg; t=1745949223;
+	bh=gfGPHWlm0vGnmasKqvVop0y6ESvmH5ML4e6zvkBZ8QI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a/pFT5Xmtwi0hF8IM4TEHIC1+/N1VEdlJH1N+4Esr4HLTwvnWYB5Vqsh0rgsDLb4W
-	 aUtkDkckcXC1xdul9mvRRrYHRoBQ9hsvadsJ2xdo5nRcdZUihF7jjd6iIvo4d9Qccm
-	 H9lVg15it4DrwPMF4a+Q/SxLTwhSvorjxO1G68jE=
+	b=2Nr0J0Mx5PuY9/wOmDvCSZ8pSJzL0wO20i0wA4ZzOYjsX/CabeNZAyy60i5vcgG8o
+	 SmSbEVQlc66iWUhkrByxuMX3/bUIkJ1/HKg4XjfctQjqWIvMwigzRFP2uW1Df7JVfF
+	 QgebcD8mNEI3Vfpvs75ehdp0nTY2qAXfd73i+YWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Xiangyu Chen <xiangyu.chen@windriver.com>,
 	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.15 221/373] net: make sock_inuse_add() available
-Date: Tue, 29 Apr 2025 18:41:38 +0200
-Message-ID: <20250429161132.244442340@linuxfoundation.org>
+Subject: [PATCH 5.15 222/373] smb: client: fix use-after-free bug in cifs_debug_data_proc_show()
+Date: Tue, 29 Apr 2025 18:41:39 +0200
+Message-ID: <20250429161132.284564166@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -53,97 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-commit d477eb9004845cb2dc92ad5eed79a437738a868a upstream.
+commit d328c09ee9f15ee5a26431f5aad7c9239fa85e62 upstream.
 
-MPTCP hard codes it, let us instead provide this helper.
+Skip SMB sessions that are being teared down
+(e.g. @ses->ses_status == SES_EXITING) in cifs_debug_data_proc_show()
+to avoid use-after-free in @ses.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-[ cherry-pick from amazon-linux amazon-5.15.y/mainline ]
-Link: https://github.com/amazonlinux/linux/commit/7154d8eaac16
+This fixes the following GPF when reading from /proc/fs/cifs/DebugData
+while mounting and umounting
+
+  [ 816.251274] general protection fault, probably for non-canonical
+  address 0x6b6b6b6b6b6b6d81: 0000 [#1] PREEMPT SMP NOPTI
+  ...
+  [  816.260138] Call Trace:
+  [  816.260329]  <TASK>
+  [  816.260499]  ? die_addr+0x36/0x90
+  [  816.260762]  ? exc_general_protection+0x1b3/0x410
+  [  816.261126]  ? asm_exc_general_protection+0x26/0x30
+  [  816.261502]  ? cifs_debug_tcon+0xbd/0x240 [cifs]
+  [  816.261878]  ? cifs_debug_tcon+0xab/0x240 [cifs]
+  [  816.262249]  cifs_debug_data_proc_show+0x516/0xdb0 [cifs]
+  [  816.262689]  ? seq_read_iter+0x379/0x470
+  [  816.262995]  seq_read_iter+0x118/0x470
+  [  816.263291]  proc_reg_read_iter+0x53/0x90
+  [  816.263596]  ? srso_alias_return_thunk+0x5/0x7f
+  [  816.263945]  vfs_read+0x201/0x350
+  [  816.264211]  ksys_read+0x75/0x100
+  [  816.264472]  do_syscall_64+0x3f/0x90
+  [  816.264750]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+  [  816.265135] RIP: 0033:0x7fd5e669d381
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ This patch removed lock/unlock operation due to ses_lock is
+not present in v5.15 and not ported yet. ses->status is protected
+by a global lock, cifs_tcp_ses_lock, in v5.15. ]
 Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/sock.h  |   10 ++++++++++
- net/core/sock.c     |   10 ----------
- net/mptcp/subflow.c |    4 +---
- 3 files changed, 11 insertions(+), 13 deletions(-)
+ fs/cifs/cifs_debug.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1472,6 +1472,12 @@ static inline void sock_prot_inuse_add(c
- {
- 	this_cpu_add(net->core.prot_inuse->val[prot->inuse_idx], val);
- }
-+
-+static inline void sock_inuse_add(const struct net *net, int val)
-+{
-+	this_cpu_add(*net->core.sock_inuse, val);
-+}
-+
- int sock_prot_inuse_get(struct net *net, struct proto *proto);
- int sock_inuse_get(struct net *net);
- #else
-@@ -1479,6 +1485,10 @@ static inline void sock_prot_inuse_add(c
- 				       const struct proto *prot, int val)
- {
- }
-+
-+static inline void sock_inuse_add(const struct net *net, int val)
-+{
-+}
- #endif
- 
- 
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -144,8 +144,6 @@
- static DEFINE_MUTEX(proto_list_mutex);
- static LIST_HEAD(proto_list);
- 
--static void sock_inuse_add(struct net *net, int val);
--
- /**
-  * sk_ns_capable - General socket capability test
-  * @sk: Socket to use a capability on or through
-@@ -3519,11 +3517,6 @@ int sock_prot_inuse_get(struct net *net,
- }
- EXPORT_SYMBOL_GPL(sock_prot_inuse_get);
- 
--static void sock_inuse_add(struct net *net, int val)
--{
--	this_cpu_add(*net->core.sock_inuse, val);
--}
--
- int sock_inuse_get(struct net *net)
- {
- 	int cpu, res = 0;
-@@ -3602,9 +3595,6 @@ static inline void release_proto_idx(str
- {
- }
- 
--static void sock_inuse_add(struct net *net, int val)
--{
--}
- #endif
- 
- static void tw_prot_cleanup(struct timewait_sock_ops *twsk_prot)
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1584,9 +1584,7 @@ int mptcp_subflow_create_socket(struct s
- 	 */
- 	sf->sk->sk_net_refcnt = 1;
- 	get_net(net);
--#ifdef CONFIG_PROC_FS
--	this_cpu_add(*net->core.sock_inuse, 1);
--#endif
-+	sock_inuse_add(net, 1);
- 	err = tcp_set_ulp(sf->sk, "mptcp");
- 	release_sock(sf->sk);
- 
+--- a/fs/cifs/cifs_debug.c
++++ b/fs/cifs/cifs_debug.c
+@@ -382,6 +382,8 @@ skip_rdma:
+ 		list_for_each(tmp2, &server->smb_ses_list) {
+ 			ses = list_entry(tmp2, struct cifs_ses,
+ 					 smb_ses_list);
++			if (ses->status == CifsExiting)
++				continue;
+ 			i++;
+ 			if ((ses->serverDomain == NULL) ||
+ 				(ses->serverOS == NULL) ||
 
 
