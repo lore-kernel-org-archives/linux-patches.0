@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD2627453;
-	Tue, 29 Apr 2025 17:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9536527453;
+	Tue, 29 Apr 2025 17:14:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946875; cv=none; b=iquGp2+nAyoBrhaOWiOsqYfFCrzC0U2WDp/4EKKMwhMIgXMiCRwAwbocsQiPdJVCJCWq2wsqXUf81DLfowc5MrHOIbdvu5jmGNr6slyO5bNpw/z6fozaknQnNGjwNXzddxoZa14sjxWYWHqyoFttu6x85zhhx+VlUuVtQlREOPI=
+	t=1745946878; cv=none; b=lXOXNY7KZj+FVEE/jV1ZjYcWK1Ub5yYIO+nniYeZPPEO7wrZjRflwfptIg922KIB1XFRUzT3N14xeDMncCq+s+Kr4k5+IK4RInI+rcYgtZxVcBy9/NpsgNnF6JMqfpR952G22YvCVYOiRYpx0ryy+h9bmmuyStX0vU3tzJ6jj1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946875; c=relaxed/simple;
-	bh=aEmLQdKKsJkPjhcFscwdp34P4aJ54gnxowfF/vyeUzY=;
+	s=arc-20240116; t=1745946878; c=relaxed/simple;
+	bh=aMrwDQ8dxOuCKEhBZjV5DFiiVpdKI8w4tV+o4Tfn+ZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mbs6LuR9I1UMjnu1B6dDSEuhPEQPlc2RBrF4xs7BOvIvJXfK65uOsIUni7mu25h9Ah6i/yKqcM9U0j+j6tbeVczOhLO/+UYQTzU4B5yz1Bv+tinmBhZqNu/YNpkqlGAFwkFegDTT0yJldL7NpqM1COW1M3OvndgAIw8BThShrxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DLQA753s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=F6kro2AyiNLLKsfeBByJRFYoHP6sxMVe37gRQ/YKpUx8VEb6hVwEk54xbXyWmHHiOzqNxK78tyRabmv7o5r+3ME8CC6BBCS51aUbkjdOIYc23w/ipvdlaWrXK/TfUqYiWhIUKZYDSWUHaUjwhRLRpCC+qxsW8I4Gy6mmROKLDAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fnOkOFiC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DLQA753s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD4EC4CEE3;
-	Tue, 29 Apr 2025 17:14:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnOkOFiC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11301C4CEE3;
+	Tue, 29 Apr 2025 17:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946875;
-	bh=aEmLQdKKsJkPjhcFscwdp34P4aJ54gnxowfF/vyeUzY=;
+	s=korg; t=1745946878;
+	bh=aMrwDQ8dxOuCKEhBZjV5DFiiVpdKI8w4tV+o4Tfn+ZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DLQA753shYVNoHgT0ElMIZY2PCc114cvRDAjCMvuEsjLPAahFEfLKDvCwiivF97jk
-	 1DzldkJUxiGZCR8gXHzWvT9x+AG8AhMtd5moBS+5lj355qQHP5p77CBTRLnrZuyHcP
-	 jugJnHAqkiOIqm/pbYr/Lx3zIzwXNIWF+SOjxw8I=
+	b=fnOkOFiC9NF0+QHR3h2LT5hdjib0ad/bOhoTkLjpv5Qs5wK9czzfOT88WerMH3SF2
+	 aOX5zWOu9++ud9XtKy9HO/+b2uK/U5E4GK72bWV7aXbF5LqCOdK6Qsn/Wv8xOfkiXw
+	 WCwmyhNMisOp+hmdGiMxb6XXDyZc5H+2oi8Bt5FM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.10 067/286] media: venus: hfi_parser: add check to avoid out of bound access
-Date: Tue, 29 Apr 2025 18:39:31 +0200
-Message-ID: <20250429161110.596892749@linuxfoundation.org>
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 068/286] net: dsa: mv88e6xxx: workaround RGMII transmit delay erratum for 6320 family
+Date: Tue, 29 Apr 2025 18:39:32 +0200
+Message-ID: <20250429161110.647413427@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -45,41 +45,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
+From: Marek Behún <kabel@kernel.org>
 
-commit 172bf5a9ef70a399bb227809db78442dc01d9e48 upstream.
+commit 1ebc8e1ef906db9c08e9abe9776d85ddec837725 upstream.
 
-There is a possibility that init_codecs is invoked multiple times during
-manipulated payload from video firmware. In such case, if codecs_count
-can get incremented to value more than MAX_CODEC_NUM, there can be OOB
-access. Reset the count so that it always starts from beginning.
+Implement the workaround for erratum
+  3.3 RGMII timing may be out of spec when transmit delay is enabled
+for the 6320 family, which says:
 
-Cc: stable@vger.kernel.org
-Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+  When transmit delay is enabled via Port register 1 bit 14 = 1, duty
+  cycle may be out of spec. Under very rare conditions this may cause
+  the attached device receive CRC errors.
+
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.4.x
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250317173250.28780-8-kabel@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_parser.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/dsa/mv88e6xxx/chip.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/media/platform/qcom/venus/hfi_parser.c
-+++ b/drivers/media/platform/qcom/venus/hfi_parser.c
-@@ -19,6 +19,8 @@ static void init_codecs(struct venus_cor
- 	struct venus_caps *caps = core->caps, *cap;
- 	unsigned long bit;
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -2832,6 +2832,21 @@ static int mv88e6xxx_stats_setup(struct
+ 	return mv88e6xxx_g1_stats_clear(chip);
+ }
  
-+	core->codecs_count = 0;
++static int mv88e6320_setup_errata(struct mv88e6xxx_chip *chip)
++{
++	u16 dummy;
++	int err;
 +
- 	if (hweight_long(core->dec_codecs) + hweight_long(core->enc_codecs) > MAX_CODEC_NUM)
- 		return;
++	/* Workaround for erratum
++	 *   3.3 RGMII timing may be out of spec when transmit delay is enabled
++	 */
++	err = mv88e6xxx_port_hidden_write(chip, 0, 0xf, 0x7, 0xe000);
++	if (err)
++		return err;
++
++	return mv88e6xxx_port_hidden_read(chip, 0, 0xf, 0x7, &dummy);
++}
++
+ /* Check if the errata has already been applied. */
+ static bool mv88e6390_setup_errata_applied(struct mv88e6xxx_chip *chip)
+ {
+@@ -4122,6 +4137,7 @@ static const struct mv88e6xxx_ops mv88e6
  
+ static const struct mv88e6xxx_ops mv88e6320_ops = {
+ 	/* MV88E6XXX_FAMILY_6320 */
++	.setup_errata = mv88e6320_setup_errata,
+ 	.ieee_pri_map = mv88e6085_g1_ieee_pri_map,
+ 	.ip_pri_map = mv88e6085_g1_ip_pri_map,
+ 	.irl_init_all = mv88e6352_g2_irl_init_all,
+@@ -4164,6 +4180,7 @@ static const struct mv88e6xxx_ops mv88e6
+ 
+ static const struct mv88e6xxx_ops mv88e6321_ops = {
+ 	/* MV88E6XXX_FAMILY_6320 */
++	.setup_errata = mv88e6320_setup_errata,
+ 	.ieee_pri_map = mv88e6085_g1_ieee_pri_map,
+ 	.ip_pri_map = mv88e6085_g1_ip_pri_map,
+ 	.irl_init_all = mv88e6352_g2_irl_init_all,
 
 
