@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C8F38FB0;
-	Tue, 29 Apr 2025 17:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B319478F58;
+	Tue, 29 Apr 2025 17:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947663; cv=none; b=VqcR9xaSfdFKZ+uFc6azTrHsbKWlCGCMXpanUJ94p18gD3Jg9yN8EO0Y8wT7g4MQAd2GWPx4oU5fZGyWU4liSKcd/cB6jxyRrKrEp04XCSqctFkmL7QrWOiGizHVedRdWTiWrQYAZtF1MRuHVmlFmmkDZAf3Oj8AgcySuzoDBkg=
+	t=1745947666; cv=none; b=rbUI/CRv69zi3VuB5hcJhEiSl3LkEQNwzIEda2DO+YMlODBlxBrwfv4sISVWDE/3me7yadgw8unu8YU5/wfSNKHQQiNnYpQ2kwWLWUpeUI9bYxJUF7LJJLkWqypPq+0QAiArNboje0fZGY7ucN0pQFLcYxPFgYmZwzyRX6K3ZvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947663; c=relaxed/simple;
-	bh=b+fHEg+70uEbGKyfrcHRFgqDa6yb800pW7HtK2MD9MM=;
+	s=arc-20240116; t=1745947666; c=relaxed/simple;
+	bh=vYHFNuKOJKhntA6IiFM+ixNkER/hUywVT9rHhNxwKz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JwaGD8d9eaWujdfOkrskDIHNMxzcPB5CL2MYYWlu3mgU7g41KPJPbR57CZ+MtJROWe3jYr2QsCJM07ClwnJcj5EWNWvycnXr6R20V1lk58WBu6xUHyG6FHUFB9Cw3z0qSiO0Q4lLseG3B2ZKkM5qkvWEeYOvnqABwezbZp2XOUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xoKaoseh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kM2mAmuGSP8i2tTs03uUR91KAyvnlqwAqNYdzu4lpjHqSaxsK7ZLteBQlsjXngxP+OCI0kv6m69eRoayQMpTPgOJlG2fs0owdySiRwlVWH/LZeWUa0pw1ca1pauS9e3G+6oXKNRgx7KdXopOeXxbjfOHR889fprXVXOAP+siEb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10Omeq/3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xoKaoseh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF03C4CEE9;
-	Tue, 29 Apr 2025 17:27:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10Omeq/3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4706AC4CEE3;
+	Tue, 29 Apr 2025 17:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947663;
-	bh=b+fHEg+70uEbGKyfrcHRFgqDa6yb800pW7HtK2MD9MM=;
+	s=korg; t=1745947666;
+	bh=vYHFNuKOJKhntA6IiFM+ixNkER/hUywVT9rHhNxwKz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xoKaosehJ8maAuvYjBh6xg8etpGmPL+E+a2Yk+mmLraBfk1b6ZQ1VIC+Jg5i9kqHt
-	 qy6DZ7QHIc2HkTcKZE8QdIv8b3YN+cHsEH9eCg8hap9SU4+CCvwf7az+oWDPpgL4/R
-	 uY2RwiBld2hX8N497P/iyZEa+5uukP62ENKSjPNk=
+	b=10Omeq/32HT5SR3d+J+Y+vMnctlUQCr1of3x6nTIzsppXasxPtVLcGRF5ucVez+td
+	 ZSo8r8B3EhxxS0cbt0/gp4td79/GNpI28Dgco3yef1tA0oD+Kvd4WqHU8rG8xrSyXw
+	 DcQHxhQsNpxoIp0P0z5TarFwzF8pfL0LaeQoSLo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 040/280] scsi: ufs: exynos: Remove empty drv_init method
-Date: Tue, 29 Apr 2025 18:39:41 +0200
-Message-ID: <20250429161116.762920673@linuxfoundation.org>
+Subject: [PATCH 6.12 067/280] net/mlx5: Move ttc allocation after switch case to prevent leaks
+Date: Tue, 29 Apr 2025 18:40:08 +0200
+Message-ID: <20250429161117.851780176@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -52,47 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 07c2a737504457c41678c5c30abe9107cd28dce6 ]
+[ Upstream commit fa8fd315127ca48c65e7e6692a84ffcf3d07168e ]
 
-Remove empty method. When the method is not set, the call is not made,
-saving a few cycles.
+Relocate the memory allocation for ttc table after the switch statement
+that validates params->ns_type in both mlx5_create_inner_ttc_table() and
+mlx5_create_ttc_table(). This ensures memory is only allocated after
+confirming valid input, eliminating potential memory leaks when invalid
+ns_type cases occur.
 
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-Link: https://lore.kernel.org/r/20241031150033.3440894-2-peter.griffin@linaro.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 68f5ef7eebf0 ("scsi: ufs: exynos: Move UFS shareability value to drvdata")
+Fixes: 137f3d50ad2a ("net/mlx5: Support matching on l4_type for ttc_table")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250418023814.71789-3-bsdhenrymartin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-exynos.c | 6 ------
- 1 file changed, 6 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
-index f2cbfc2d399cd..69fcfffb1c89d 100644
---- a/drivers/ufs/host/ufs-exynos.c
-+++ b/drivers/ufs/host/ufs-exynos.c
-@@ -198,11 +198,6 @@ static inline void exynos_ufs_ungate_clks(struct exynos_ufs *ufs)
- 	exynos_ufs_ctrl_clkstop(ufs, false);
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c
+index 510879e1ba30e..43b2216bc0a22 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c
+@@ -618,10 +618,6 @@ struct mlx5_ttc_table *mlx5_create_inner_ttc_table(struct mlx5_core_dev *dev,
+ 	bool use_l4_type;
+ 	int err;
  
--static int exynos7_ufs_drv_init(struct device *dev, struct exynos_ufs *ufs)
--{
--	return 0;
--}
+-	ttc = kvzalloc(sizeof(*ttc), GFP_KERNEL);
+-	if (!ttc)
+-		return ERR_PTR(-ENOMEM);
 -
- static int exynosauto_ufs_drv_init(struct device *dev, struct exynos_ufs *ufs)
- {
- 	struct exynos_ufs_uic_attr *attr = ufs->drv_data->uic_attr;
-@@ -2044,7 +2039,6 @@ static const struct exynos_ufs_drv_data exynos_ufs_drvs = {
- 				  EXYNOS_UFS_OPT_BROKEN_RX_SEL_IDX |
- 				  EXYNOS_UFS_OPT_SKIP_CONNECTION_ESTAB |
- 				  EXYNOS_UFS_OPT_USE_SW_HIBERN8_TIMER,
--	.drv_init		= exynos7_ufs_drv_init,
- 	.pre_link		= exynos7_ufs_pre_link,
- 	.post_link		= exynos7_ufs_post_link,
- 	.pre_pwr_change		= exynos7_ufs_pre_pwr_change,
+ 	switch (params->ns_type) {
+ 	case MLX5_FLOW_NAMESPACE_PORT_SEL:
+ 		use_l4_type = MLX5_CAP_GEN_2(dev, pcc_ifa2) &&
+@@ -635,6 +631,10 @@ struct mlx5_ttc_table *mlx5_create_inner_ttc_table(struct mlx5_core_dev *dev,
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
++	ttc = kvzalloc(sizeof(*ttc), GFP_KERNEL);
++	if (!ttc)
++		return ERR_PTR(-ENOMEM);
++
+ 	ns = mlx5_get_flow_namespace(dev, params->ns_type);
+ 	if (!ns) {
+ 		kvfree(ttc);
+@@ -696,10 +696,6 @@ struct mlx5_ttc_table *mlx5_create_ttc_table(struct mlx5_core_dev *dev,
+ 	bool use_l4_type;
+ 	int err;
+ 
+-	ttc = kvzalloc(sizeof(*ttc), GFP_KERNEL);
+-	if (!ttc)
+-		return ERR_PTR(-ENOMEM);
+-
+ 	switch (params->ns_type) {
+ 	case MLX5_FLOW_NAMESPACE_PORT_SEL:
+ 		use_l4_type = MLX5_CAP_GEN_2(dev, pcc_ifa2) &&
+@@ -713,6 +709,10 @@ struct mlx5_ttc_table *mlx5_create_ttc_table(struct mlx5_core_dev *dev,
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
++	ttc = kvzalloc(sizeof(*ttc), GFP_KERNEL);
++	if (!ttc)
++		return ERR_PTR(-ENOMEM);
++
+ 	ns = mlx5_get_flow_namespace(dev, params->ns_type);
+ 	if (!ns) {
+ 		kvfree(ttc);
 -- 
 2.39.5
 
