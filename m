@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A2324397A;
-	Tue, 29 Apr 2025 17:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DAB2512C6;
+	Tue, 29 Apr 2025 17:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947030; cv=none; b=Pz5YqHM2q0DSathO8sSGZn8sVJ/hZXapdHHxfxg/wyBeuQUTVgn+56eOo354+wx7PD0sKLij89zeCogVr7/MBT9e32OUeRp8m76h2/0fiiZOuqCrbJhtOwlN5NrxscsQwA5EEeT3pDZ3TVbmT8ZdiFrhp21eIT38OkUO+OgB0UA=
+	t=1745947033; cv=none; b=KSW3m0Os18T2boqcLbS15TfbrAbq5uphwbhIv/AoP9/LtdVokticSZV8W6SUfKJTPVFKj9gOds0zH0J2urytb6LpJwyXQveVM1ubaTHRSZjTSswH3PXEy30JmOhfv2GIk+LbdiHr8cQkDBsLlGzqoMambLWenFeko+djyT7x6x4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947030; c=relaxed/simple;
-	bh=LkDIjzRdRYIrNfyVT4rrhhLQ0hN+EWkuosVYkTFM4o0=;
+	s=arc-20240116; t=1745947033; c=relaxed/simple;
+	bh=mg0BXOGZgwtarsCWyWmMKNCxBfUPAu10+QedH787ZX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bDhYZI76+Y4OeulgynDDxyDxVPVBm2fTlMMJKUPi5znjNk/5kv+TCYTH+YSGGWCIWieqPEUcVCZgbOI0PVbNIXE8ugbn1AlETXfazjD/eYa0ejeKSiI3rDEo0WITw+I0YBsYda7SmtZ2lIw4r7t0YwqldbenQSc5xw7kavx2px4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HnjjyLyq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oPDsgxIYV0ggLgeuAOk3W+k7Q5dtfslhPDyqWbUN4c9hLO2SwXZjcGTjCgsBBk1YhR7wap8hod6eM/kZ7tdKlYdfyQQRQuA7Kllk6HkdHaqcBoNsbZKy5GJBtw280UX60YEOLN0P9ouwhds1o7rcBBvgFjdmTYI2OYdxaoOoUNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=luPqats5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HnjjyLyq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F66C4CEE3;
-	Tue, 29 Apr 2025 17:17:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="luPqats5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DECDDC4CEE3;
+	Tue, 29 Apr 2025 17:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947030;
-	bh=LkDIjzRdRYIrNfyVT4rrhhLQ0hN+EWkuosVYkTFM4o0=;
+	s=korg; t=1745947033;
+	bh=mg0BXOGZgwtarsCWyWmMKNCxBfUPAu10+QedH787ZX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HnjjyLyqJOHMVrQyG8cqcwSe/qynISSpJusU3i0mOxkrot2OtoMZK+kYajl12gKtx
-	 WbGXCZg0YRikh1FlWTbsGekYyhNej4XdVpQ+P0rNnQGX/Qnz5W7D/Dymq0xYIIq/e0
-	 pl3PPIW9DnH0HTaWjy1cmBg2Rc61L1TOw9P6LHOc=
+	b=luPqats5yhqtGcTOiKbJ839iid7Y6VPC5SMIp/jO5+jCgCCtQwKuhShFkswme0xSD
+	 /fnAfwX19e1gL9nw3MDaewmTkrRy1nMFOK+gAU8K52A/ufJRYS+Os0K5NZ4KkI7sJs
+	 YOcyA6ZyVVs0TAobNGl06Mm6EcZLSr04QEMQLctA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Dmitry V. Levin" <ldv@strace.io>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.10 131/286] riscv: Avoid fortify warning in syscall_get_arguments()
-Date: Tue, 29 Apr 2025 18:40:35 +0200
-Message-ID: <20250429161113.258368991@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.10 149/286] mptcp: sockopt: fix getting IPV6_V6ONLY
+Date: Tue, 29 Apr 2025 18:40:53 +0200
+Message-ID: <20250429161114.014921161@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -51,67 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit adf53771a3123df99ca26e38818760fbcf5c05d0 upstream.
+commit 8c39633759885b6ff85f6d96cf445560e74df5e8 upstream.
 
-When building with CONFIG_FORTIFY_SOURCE=y and W=1, there is a warning
-because of the memcpy() in syscall_get_arguments():
+When adding a socket option support in MPTCP, both the get and set parts
+are supposed to be implemented.
 
-  In file included from include/linux/string.h:392,
-                   from include/linux/bitmap.h:13,
-                   from include/linux/cpumask.h:12,
-                   from arch/riscv/include/asm/processor.h:55,
-                   from include/linux/sched.h:13,
-                   from kernel/ptrace.c:13:
-  In function 'fortify_memcpy_chk',
-      inlined from 'syscall_get_arguments.isra' at arch/riscv/include/asm/syscall.h:66:2:
-  include/linux/fortify-string.h:580:25: error: call to '__read_overflow2_field' declared with attribute warning: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
-    580 |                         __read_overflow2_field(q_size_field, size);
-        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  cc1: all warnings being treated as errors
+IPV6_V6ONLY support for the setsockopt part has been added a while ago,
+but it looks like the get part got forgotten. It should have been
+present as a way to verify a setting has been set as expected, and not
+to act differently from TCP or any other socket types.
 
-The fortified memcpy() routine enforces that the source is not overread
-and the destination is not overwritten if the size of either field and
-the size of the copy are known at compile time. The memcpy() in
-syscall_get_arguments() intentionally overreads from a1 to a5 in
-'struct pt_regs' but this is bigger than the size of a1.
+Not supporting this getsockopt(IPV6_V6ONLY) blocks some apps which want
+to check the default value, before doing extra actions. On Linux, the
+default value is 0, but this can be changed with the net.ipv6.bindv6only
+sysctl knob. On Windows, it is set to 1 by default. So supporting the
+get part, like for all other socket options, is important.
 
-Normally, this could be solved by wrapping a1 through a5 with
-struct_group() but there was already a struct_group() applied to these
-members in commit bba547810c66 ("riscv: tracing: Fix
-__write_overflow_field in ftrace_partial_regs()").
+Everything was in place to expose it, just the last step was missing.
+Only new code is added to cover this specific getsockopt(), that seems
+safe.
 
-Just avoid memcpy() altogether and write the copying of args from regs
-manually, which clears up the warning at the expense of three extra
-lines of code.
-
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Dmitry V. Levin <ldv@strace.io>
-Fixes: e2c0cdfba7f6 ("RISC-V: User-facing API")
+Fixes: c9b95a135987 ("mptcp: support IPV6_V6ONLY setsockopt")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250409-riscv-avoid-fortify-warning-syscall_get_arguments-v1-1-7853436d4755@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/550
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250314-net-mptcp-fix-data-stream-corr-sockopt-v1-2-122dbb249db3@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ Conflicts in sockopt.c in the context, because commit 0abdde82b163
+  ("mptcp: move sockopt function into a new file") is not in this
+  release. The modifications can still be done in protocol.c without
+  difficulties. A particularity is that the mptcp_put_int_option()
+  helper is required, and imported from newer versions without taking
+  the extra features introduced with them in commit 2c9e77659a0c
+  ("mptcp: add TCP_INQ cmsg support") and commit 3b1e21eb60e8 ("mptcp:
+  getsockopt: add support for IP_TOS"). ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/syscall.h |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/mptcp/protocol.c |   45 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
---- a/arch/riscv/include/asm/syscall.h
-+++ b/arch/riscv/include/asm/syscall.h
-@@ -60,8 +60,11 @@ static inline void syscall_get_arguments
- 					 unsigned long *args)
- {
- 	args[0] = regs->orig_a0;
--	args++;
--	memcpy(args, &regs->a1, 5 * sizeof(args[0]));
-+	args[1] = regs->a1;
-+	args[2] = regs->a2;
-+	args[3] = regs->a3;
-+	args[4] = regs->a4;
-+	args[5] = regs->a5;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2395,6 +2395,49 @@ static int mptcp_setsockopt(struct sock
+ 	return -EOPNOTSUPP;
  }
  
- static inline void syscall_set_arguments(struct task_struct *task,
++static int mptcp_put_int_option(struct mptcp_sock *msk, char __user *optval,
++				int __user *optlen, int val)
++{
++	int len;
++
++	if (get_user(len, optlen))
++		return -EFAULT;
++	if (len < 0)
++		return -EINVAL;
++
++	if (len < sizeof(int) && len > 0 && val >= 0 && val <= 255) {
++		unsigned char ucval = (unsigned char)val;
++
++		len = 1;
++		if (put_user(len, optlen))
++			return -EFAULT;
++		if (copy_to_user(optval, &ucval, 1))
++			return -EFAULT;
++	} else {
++		len = min_t(unsigned int, len, sizeof(int));
++		if (put_user(len, optlen))
++			return -EFAULT;
++		if (copy_to_user(optval, &val, len))
++			return -EFAULT;
++	}
++
++	return 0;
++}
++
++static int mptcp_getsockopt_v6(struct mptcp_sock *msk, int optname,
++			       char __user *optval, int __user *optlen)
++{
++	struct sock *sk = (void *)msk;
++
++	switch (optname) {
++	case IPV6_V6ONLY:
++		return mptcp_put_int_option(msk, optval, optlen,
++					    sk->sk_ipv6only);
++	}
++
++	return -EOPNOTSUPP;
++}
++
+ static int mptcp_getsockopt(struct sock *sk, int level, int optname,
+ 			    char __user *optval, int __user *option)
+ {
+@@ -2415,6 +2458,8 @@ static int mptcp_getsockopt(struct sock
+ 	if (ssk)
+ 		return tcp_getsockopt(ssk, level, optname, optval, option);
+ 
++	if (level == SOL_IPV6)
++		return mptcp_getsockopt_v6(msk, optname, optval, option);
+ 	return -EOPNOTSUPP;
+ }
+ 
 
 
