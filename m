@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB45233735;
-	Tue, 29 Apr 2025 17:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30EB22AE68;
+	Tue, 29 Apr 2025 17:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949092; cv=none; b=oJcME8A6bpHbkaU3iChLIF9RrC6ix+C3tWSUUzyNmiy8Iy2uUHyLyD5EJLS157k5rgbUPxhERnSlcfYPhsOCcR6VSBom8ALegqatH2qRjHE1olO7ly1LHWR9qmUmL4zZVDADVtyXhC3oVHOAauxhIcMTMiGMshnghb+b8QCD93s=
+	t=1745949096; cv=none; b=RNksxpxBJvzE6+9fcgRvIfLirHtJ3+m5E+B5T5Hp0UWONlPoH2yz0ftoRSDw9t5EddTVHZlMG2PUZ5tjuqYq653WCLtwf/jIkQxwNmC5VpPfrMPSh4BQGqBro6mWijWh6GjlX+yza2hL+KtyRBrhjOHv5DnPxlyU85sz09X2EWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949092; c=relaxed/simple;
-	bh=p3RYblvpapUaeEH8ayNTXq6mhA8VLoZIAsyIYwFgyxE=;
+	s=arc-20240116; t=1745949096; c=relaxed/simple;
+	bh=jDU3XUbmvsU4WkVZcD9oahoOPlwxmJ2LchvHTEJdxo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rKVQlETpneAvSJg48AvfSLJthSoEuyhhjmScxuI3j9V/zhgQxNQxkyMEAwUpAnYWyGMJS+Wpt+5rUEyn4kruIpVDbXHixcLTOm1vSSNCLmeq5NqxcLP144zijRHeiOFh6EPRXrE3gH78+UEDIRUnj3uyJdb0xLAW3Dja3DXlFqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmi4pE+b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lhmvaLTCSMGxY9T43msN13V3ftFsjr0dRprwmpEyD/5tBHrpo+nIpdGrxAmS1fA1TAJNu7rCko2x2vU6ogNS3uDpRivj/s9TVNB/8hkGZj/aeM0akAMvNPmJvguwxhApLe5XZbxyM+R8fO1VgZIRiD9neBB0jB6qwaI7LA+cr/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRVHHvck; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmi4pE+b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243EFC4CEE3;
-	Tue, 29 Apr 2025 17:51:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRVHHvck"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D68CC4CEE3;
+	Tue, 29 Apr 2025 17:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949092;
-	bh=p3RYblvpapUaeEH8ayNTXq6mhA8VLoZIAsyIYwFgyxE=;
+	s=korg; t=1745949096;
+	bh=jDU3XUbmvsU4WkVZcD9oahoOPlwxmJ2LchvHTEJdxo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nmi4pE+bSxsJ08QhLCLx595FJvfzN1I4/sY6RTna8rktH7qexzaaAxqIGpkVpQPoW
-	 lM4Tq/ofdAJI+UYyAsra35+PIhCJ97jSdydkYi8ba8uhMBNxXDstRsz+RqXRoPC3X6
-	 vFu6igHRO7TflxJZMMiZ9A7+zGsf1rgCCRwnjF54=
+	b=dRVHHvckPhCA/MQTTjiDO4VzmiO7kTg+vquS993GIUNSOyBgP+xU4btsDQhndtrsG
+	 0hXvrezMdeuAX0mZR5tQEIVYP38FB1CMBzaIZ5sx9hFIbaYXeOdNbfyIkWPLJ27Jrq
+	 CMUoN2VLNmpBUAKHFdLF3Tx+FtHjDLkDcB9x/s/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Kang Yang <quic_kangyang@quicinc.com>,
+	David Ruth <druth@chromium.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
 	Alva Lan <alvalan9@foxmail.com>
-Subject: [PATCH 5.15 211/373] phy: tegra: xusb: Fix return value of tegra_xusb_find_port_node function
-Date: Tue, 29 Apr 2025 18:41:28 +0200
-Message-ID: <20250429161131.841369371@linuxfoundation.org>
+Subject: [PATCH 5.15 212/373] wifi: ath10k: avoid NULL pointer error during sdio remove
+Date: Tue, 29 Apr 2025 18:41:29 +0200
+Message-ID: <20250429161131.881864116@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -46,40 +46,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Kang Yang <quic_kangyang@quicinc.com>
 
-commit 045a31b95509c8f25f5f04ec5e0dec5cd09f2c5f upstream.
+commit 95c38953cb1ecf40399a676a1f85dfe2b5780a9a upstream.
 
-callers of tegra_xusb_find_port_node() function only do NULL checking for
-the return value. return NULL instead of ERR_PTR(-ENOMEM) to keep
-consistent.
+When running 'rmmod ath10k', ath10k_sdio_remove() will free sdio
+workqueue by destroy_workqueue(). But if CONFIG_INIT_ON_FREE_DEFAULT_ON
+is set to yes, kernel panic will happen:
+Call trace:
+ destroy_workqueue+0x1c/0x258
+ ath10k_sdio_remove+0x84/0x94
+ sdio_bus_remove+0x50/0x16c
+ device_release_driver_internal+0x188/0x25c
+ device_driver_detach+0x20/0x2c
 
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Link: https://lore.kernel.org/r/20211213020507.1458-1-linmq006@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+This is because during 'rmmod ath10k', ath10k_sdio_remove() will call
+ath10k_core_destroy() before destroy_workqueue(). wiphy_dev_release()
+will finally be called in ath10k_core_destroy(). This function will free
+struct cfg80211_registered_device *rdev and all its members, including
+wiphy, dev and the pointer of sdio workqueue. Then the pointer of sdio
+workqueue will be set to NULL due to CONFIG_INIT_ON_FREE_DEFAULT_ON.
+
+After device release, destroy_workqueue() will use NULL pointer then the
+kernel panic happen.
+
+Call trace:
+ath10k_sdio_remove
+  ->ath10k_core_unregister
+    ……
+    ->ath10k_core_stop
+      ->ath10k_hif_stop
+        ->ath10k_sdio_irq_disable
+    ->ath10k_hif_power_down
+      ->del_timer_sync(&ar_sdio->sleep_timer)
+  ->ath10k_core_destroy
+    ->ath10k_mac_destroy
+      ->ieee80211_free_hw
+        ->wiphy_free
+    ……
+          ->wiphy_dev_release
+  ->destroy_workqueue
+
+Need to call destroy_workqueue() before ath10k_core_destroy(), free
+the work queue buffer first and then free pointer of work queue by
+ath10k_core_destroy(). This order matches the error path order in
+ath10k_sdio_probe().
+
+No work will be queued on sdio workqueue between it is destroyed and
+ath10k_core_destroy() is called. Based on the call_stack above, the
+reason is:
+Only ath10k_sdio_sleep_timer_handler(), ath10k_sdio_hif_tx_sg() and
+ath10k_sdio_irq_disable() will queue work on sdio workqueue.
+Sleep timer will be deleted before ath10k_core_destroy() in
+ath10k_hif_power_down().
+ath10k_sdio_irq_disable() only be called in ath10k_hif_stop().
+ath10k_core_unregister() will call ath10k_hif_power_down() to stop hif
+bus, so ath10k_sdio_hif_tx_sg() won't be called anymore.
+
+Tested-on: QCA6174 hw3.2 SDIO WLAN.RMH.4.4.1-00189
+
+Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
+Tested-by: David Ruth <druth@chromium.org>
+Reviewed-by: David Ruth <druth@chromium.org>
+Link: https://patch.msgid.link/20241008022246.1010-1-quic_kangyang@quicinc.com
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/tegra/xusb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath10k/sdio.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/phy/tegra/xusb.c
-+++ b/drivers/phy/tegra/xusb.c
-@@ -455,7 +455,7 @@ tegra_xusb_find_port_node(struct tegra_x
- 	name = kasprintf(GFP_KERNEL, "%s-%u", type, index);
- 	if (!name) {
- 		of_node_put(ports);
--		return ERR_PTR(-ENOMEM);
-+		return NULL;
- 	}
- 	np = of_get_child_by_name(ports, name);
- 	kfree(name);
+--- a/drivers/net/wireless/ath/ath10k/sdio.c
++++ b/drivers/net/wireless/ath/ath10k/sdio.c
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2004-2011 Atheros Communications Inc.
+  * Copyright (c) 2011-2012,2017 Qualcomm Atheros, Inc.
+  * Copyright (c) 2016-2017 Erik Stromdahl <erik.stromdahl@gmail.com>
++ * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+ #include <linux/module.h>
+@@ -2648,9 +2649,9 @@ static void ath10k_sdio_remove(struct sd
+ 
+ 	netif_napi_del(&ar->napi);
+ 
+-	ath10k_core_destroy(ar);
+-
+ 	destroy_workqueue(ar_sdio->workqueue);
++
++	ath10k_core_destroy(ar);
+ }
+ 
+ static const struct sdio_device_id ath10k_sdio_devices[] = {
 
 
