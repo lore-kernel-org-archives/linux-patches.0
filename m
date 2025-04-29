@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C626B221719;
-	Tue, 29 Apr 2025 17:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389C2244664;
+	Tue, 29 Apr 2025 17:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948679; cv=none; b=KMqo85kHqfeMHvX6OlYD7lu00Bf5JZ1RtMdN02bTCUM4iBmHFom7ZRI7vWUiIcxt0xeiV3T/E5C/+Pigbex5+INDgNr6GAGHS8Azui9za2RdaznRa7e4O20YzQNo7OJcIucnIlSzvS4GVM7DGkSy1wnlqjD4i1PBpQRfp0UuLTY=
+	t=1745948683; cv=none; b=PsIJlzop/HQChQjcINdxZlauyVSRjfBZUZwENULk3+oLgCUBbUuFLz9YOy7WlJQmO9rzEWJlZY4sWKvBEUrVaeuRjcu2ugxZYPKs8nqEFFuBZ+C5wpkW1hBgbYHwmVT2j6G40+zhtdmxoS2OHgL/Jc5sbU6wFmXhHEzRBsewnV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948679; c=relaxed/simple;
-	bh=T7FvCwzBeWpyN8wRXfiZYxIeYS9lBCufghOm+EjjaAk=;
+	s=arc-20240116; t=1745948683; c=relaxed/simple;
+	bh=yxtTjFTxiyuGajZa8DtkxSIPRB3lbF/Mty4P/CpwbOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qYnUY6G+YQ4U78KH2kZtDkgXZ9Q6p0TtQbXRE5wHo9t44hPLm1gyHiOF71OIYETnfmGsqQqHrnPn2B7XMFyDp6zRz1y9+z8Duy0yDqUoQC2KF1S/nafrU8MI1c7pkbYNjAF+RGXync1ceE5ETWVEUXiwaDdQsb944iQTkIHIJZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPofiLxJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U8trYSIwYuo0MxHIRjWh0YknfmodXA4IoQ81xLZBoOZ8N2EVNCDF8aYeNiLghz3bDaxPa+5aHs3bxKcu2nqonv4HFR7M/rtE85wxx+iW7zsZEVyp59Qr3jovYt+KsyrYqIlaZotcQGkL35vPv7xLUD9jNinbOQPQ5MTpiO2bFwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oS0vRdcN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPofiLxJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595F3C4CEE9;
-	Tue, 29 Apr 2025 17:44:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oS0vRdcN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E70C4CEE3;
+	Tue, 29 Apr 2025 17:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948679;
-	bh=T7FvCwzBeWpyN8wRXfiZYxIeYS9lBCufghOm+EjjaAk=;
+	s=korg; t=1745948683;
+	bh=yxtTjFTxiyuGajZa8DtkxSIPRB3lbF/Mty4P/CpwbOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xPofiLxJyF//WyctgYv7rJXJRQmTjugj7J8WYgUCXW3RwUQShZ6hnbip2fba5aHW/
-	 gqLA7UG/K9iqZ7BJU10vh8n5wFuoOhsfJHjn5rhrqJ4uZng3eHPSRijkt6iEEuXLcn
-	 G79BLqARq67jYrDBFskwLRsf3hBwdORuKAQfVPbA=
+	b=oS0vRdcNsDJFGGcaoJ4Ucf2XYcfq+A1BVKuSluHC61Jz9hTNWd3JBsS0x4JDQobR0
+	 lsiFb4uoTJc/6vFrq6Y7Fq/KWxDyl9tFBLLKL22yeqXA0DKAMNzGT9qOG4gqd0rnk4
+	 Ascf55j5mYmgJrxsg1rATC7O4in3QMMn0OfFbvLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 079/373] net: dsa: mv88e6xxx: workaround RGMII transmit delay erratum for 6320 family
-Date: Tue, 29 Apr 2025 18:39:16 +0200
-Message-ID: <20250429161126.402303208@linuxfoundation.org>
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.15 080/373] mtd: Replace kcalloc() with devm_kcalloc()
+Date: Tue, 29 Apr 2025 18:39:17 +0200
+Message-ID: <20250429161126.444020024@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -45,74 +44,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-commit 1ebc8e1ef906db9c08e9abe9776d85ddec837725 upstream.
+commit 1b61a59876f0eafc19b23007c522ee407f55dbec upstream.
 
-Implement the workaround for erratum
-  3.3 RGMII timing may be out of spec when transmit delay is enabled
-for the 6320 family, which says:
+Replace kcalloc() with devm_kcalloc() to prevent memory leaks in case of
+errors.
 
-  When transmit delay is enabled via Port register 1 bit 14 = 1, duty
-  cycle may be out of spec. Under very rare conditions this may cause
-  the attached device receive CRC errors.
-
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.4.x
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250317173250.28780-8-kabel@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 78c08247b9d3 ("mtd: Support kmsg dumper based on pstore/blk")
+Cc: stable@vger.kernel.org # v5.10+
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/mtd/mtdpstore.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -3192,6 +3192,21 @@ static int mv88e6xxx_stats_setup(struct
- 	return mv88e6xxx_g1_stats_clear(chip);
+--- a/drivers/mtd/mtdpstore.c
++++ b/drivers/mtd/mtdpstore.c
+@@ -417,11 +417,11 @@ static void mtdpstore_notify_add(struct
+ 	}
+ 
+ 	longcnt = BITS_TO_LONGS(div_u64(mtd->size, info->kmsg_size));
+-	cxt->rmmap = kcalloc(longcnt, sizeof(long), GFP_KERNEL);
+-	cxt->usedmap = kcalloc(longcnt, sizeof(long), GFP_KERNEL);
++	cxt->rmmap = devm_kcalloc(&mtd->dev, longcnt, sizeof(long), GFP_KERNEL);
++	cxt->usedmap = devm_kcalloc(&mtd->dev, longcnt, sizeof(long), GFP_KERNEL);
+ 
+ 	longcnt = BITS_TO_LONGS(div_u64(mtd->size, mtd->erasesize));
+-	cxt->badmap = kcalloc(longcnt, sizeof(long), GFP_KERNEL);
++	cxt->badmap = devm_kcalloc(&mtd->dev, longcnt, sizeof(long), GFP_KERNEL);
+ 
+ 	if (!cxt->rmmap || !cxt->usedmap || !cxt->badmap)
+ 		return;
+@@ -530,9 +530,6 @@ static void mtdpstore_notify_remove(stru
+ 	mtdpstore_flush_removed(cxt);
+ 
+ 	unregister_pstore_device(&cxt->dev);
+-	kfree(cxt->badmap);
+-	kfree(cxt->usedmap);
+-	kfree(cxt->rmmap);
+ 	cxt->mtd = NULL;
+ 	cxt->index = -1;
  }
- 
-+static int mv88e6320_setup_errata(struct mv88e6xxx_chip *chip)
-+{
-+	u16 dummy;
-+	int err;
-+
-+	/* Workaround for erratum
-+	 *   3.3 RGMII timing may be out of spec when transmit delay is enabled
-+	 */
-+	err = mv88e6xxx_port_hidden_write(chip, 0, 0xf, 0x7, 0xe000);
-+	if (err)
-+		return err;
-+
-+	return mv88e6xxx_port_hidden_read(chip, 0, 0xf, 0x7, &dummy);
-+}
-+
- /* Check if the errata has already been applied. */
- static bool mv88e6390_setup_errata_applied(struct mv88e6xxx_chip *chip)
- {
-@@ -4569,6 +4584,7 @@ static const struct mv88e6xxx_ops mv88e6
- 
- static const struct mv88e6xxx_ops mv88e6320_ops = {
- 	/* MV88E6XXX_FAMILY_6320 */
-+	.setup_errata = mv88e6320_setup_errata,
- 	.ieee_pri_map = mv88e6085_g1_ieee_pri_map,
- 	.ip_pri_map = mv88e6085_g1_ip_pri_map,
- 	.irl_init_all = mv88e6352_g2_irl_init_all,
-@@ -4615,6 +4631,7 @@ static const struct mv88e6xxx_ops mv88e6
- 
- static const struct mv88e6xxx_ops mv88e6321_ops = {
- 	/* MV88E6XXX_FAMILY_6320 */
-+	.setup_errata = mv88e6320_setup_errata,
- 	.ieee_pri_map = mv88e6085_g1_ieee_pri_map,
- 	.ip_pri_map = mv88e6085_g1_ip_pri_map,
- 	.irl_init_all = mv88e6352_g2_irl_init_all,
 
 
