@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 477D0215060;
-	Tue, 29 Apr 2025 16:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005B8215060;
+	Tue, 29 Apr 2025 16:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945563; cv=none; b=Izca4QyI67CYE03oaCVVEqhW6dA/Ob/Dw3kCu9C6tFEMyajDiE9N+748iwP1oWWlvRUnd2jJWVdjMT/TdjtuzaMQDIladC61YSf9S3L4SfagMnYe5pUN9LDIUbsrTUQmhNTmXxNQQcmnn1Id/hQ2Fxb2eLWhuhs7ocTzBh19vus=
+	t=1745945566; cv=none; b=PitEd2caCD/f1y+gEZ1VGi3pJNa2MhRmn+PQWhUPX1tIFYclouzZLVvBSyBK5wYFbGasZ1EgYVkJK8eepKveHg/UgmSYtK5N1h3DLkolbj8DbhBlG+QYVPqeYPKN1vdz+FA6/9CqC5hr/5iWpbNZOjkJlR2frlHAuX3EN1bTJd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945563; c=relaxed/simple;
-	bh=7bQW4V55G8gJeBepH8slSrRJOfKtoZeJs5i/LR/k1ws=;
+	s=arc-20240116; t=1745945566; c=relaxed/simple;
+	bh=CbaB9NcDHSEKSA/Xxgmmi3hsvEDeacz0Tb4TB8vEVfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ggYN9z7XwvljBqNKU6MK96Wx2erH2xSMNTnWxYSJRj6kfcJZqVdlg6l/Uh6aLfeBhKnThYmJ0tbtQW1qByLkctlBoxTKL3miX0Yvf0H5d6P754w8qgIVj49GVj5pncjn5E/72cLttjy279/t32hCVDLUGU67oiNgTrTikT0rEoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=soZ23cHg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JeDx1yE3xSjTGNf1pK3L+IL7lcRowbP/yC4xznpRvEY+UrUs7EgeR/u+S6t6mTQQOpxo4fwjzZdrmS+fa+QxvImCeCEADCmOFfxdYdtLUejiAZITB1a52w4avI6QSCHVPPcsdYM+AldTUmj5hbpRM6T+DxQ4KG275pbaheMM9i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wb9H6oIk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="soZ23cHg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41278C4CEE3;
-	Tue, 29 Apr 2025 16:52:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wb9H6oIk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84FFAC4CEE3;
+	Tue, 29 Apr 2025 16:52:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945563;
-	bh=7bQW4V55G8gJeBepH8slSrRJOfKtoZeJs5i/LR/k1ws=;
+	s=korg; t=1745945565;
+	bh=CbaB9NcDHSEKSA/Xxgmmi3hsvEDeacz0Tb4TB8vEVfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=soZ23cHglA/IqXnvwXTLRKmnn1dL8vzhQyaTRCpogP+k6W/1yHH5sISIcqNrZJYzY
-	 o8Zx6iD0zyT4XPjM/Kx5uyXUaJZthpdXBq+Z8v6P2LgI5oGca4D7LALnGMd++9uCNW
-	 BCZ1dn8F9t64ryPmEybmc5kPrsM+OuNtkjbOU8m8=
+	b=Wb9H6oIkhB3aAOFgnftJXg3Pcdq+XYJmocljzxmb5eT3QS4Nexz7v5m39zYvOav8d
+	 v43krj9iZkI5dvGh0A1t0GIOdf1neSIB7e6VSTYyzJldBCQzS2VKTVK/g4Tzew2eOZ
+	 DIg5PkvEdEhxI3F2Fvv6R9A5aYqFuwbC2Vlc8WPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	WangYuli <wangyuli@uniontech.com>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 5.4 125/179] MIPS: cevt-ds1287: Add missing ds1287.h include
-Date: Tue, 29 Apr 2025 18:41:06 +0200
-Message-ID: <20250429161054.453023004@linuxfoundation.org>
+Subject: [PATCH 5.4 126/179] MIPS: ds1287: Match ds1287_set_base_clock() function types
+Date: Tue, 29 Apr 2025 18:41:07 +0200
+Message-ID: <20250429161054.491617650@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -53,25 +53,21 @@ Content-Transfer-Encoding: 8bit
 
 From: WangYuli <wangyuli@uniontech.com>
 
-commit f3be225f338a578851a7b607a409f476354a8deb upstream.
+commit a759109b234385b74d2f5f4c86b5f59b3201ec12 upstream.
 
-Address the issue of cevt-ds1287.c not including the ds1287.h header
-file.
+Synchronize the declaration of ds1287_set_base_clock() between
+cevt-ds1287.c and ds1287.h.
 
-Fix follow errors with gcc-14 when -Werror:
+Fix follow error with gcc-14 when -Werror:
 
-arch/mips/kernel/cevt-ds1287.c:15:5: error: no previous prototype for ‘ds1287_timer_state’ [-Werror=missing-prototypes]
-   15 | int ds1287_timer_state(void)
-      |     ^~~~~~~~~~~~~~~~~~
-arch/mips/kernel/cevt-ds1287.c:20:5: error: no previous prototype for ‘ds1287_set_base_clock’ [-Werror=missing-prototypes]
-   20 | int ds1287_set_base_clock(unsigned int hz)
+arch/mips/kernel/cevt-ds1287.c:21:5: error: conflicting types for ‘ds1287_set_base_clock’; have ‘int(unsigned int)’
+   21 | int ds1287_set_base_clock(unsigned int hz)
       |     ^~~~~~~~~~~~~~~~~~~~~
-arch/mips/kernel/cevt-ds1287.c:103:12: error: no previous prototype for ‘ds1287_clockevent_init’ [-Werror=missing-prototypes]
-  103 | int __init ds1287_clockevent_init(int irq)
-      |            ^~~~~~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
+In file included from arch/mips/kernel/cevt-ds1287.c:13:
+./arch/mips/include/asm/ds1287.h:11:13: note: previous declaration of ‘ds1287_set_base_clock’ with type ‘void(unsigned int)’
+   11 | extern void ds1287_set_base_clock(unsigned int clock);
+      |             ^~~~~~~~~~~~~~~~~~~~~
 make[7]: *** [scripts/Makefile.build:207: arch/mips/kernel/cevt-ds1287.o] Error 1
-make[7]: *** Waiting for unfinished jobs....
 make[6]: *** [scripts/Makefile.build:465: arch/mips/kernel] Error 2
 make[6]: *** Waiting for unfinished jobs....
 
@@ -79,18 +75,19 @@ Signed-off-by: WangYuli <wangyuli@uniontech.com>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kernel/cevt-ds1287.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/mips/include/asm/ds1287.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/mips/kernel/cevt-ds1287.c
-+++ b/arch/mips/kernel/cevt-ds1287.c
-@@ -10,6 +10,7 @@
- #include <linux/mc146818rtc.h>
- #include <linux/irq.h>
+--- a/arch/mips/include/asm/ds1287.h
++++ b/arch/mips/include/asm/ds1287.h
+@@ -8,7 +8,7 @@
+ #define __ASM_DS1287_H
  
-+#include <asm/ds1287.h>
- #include <asm/time.h>
+ extern int ds1287_timer_state(void);
+-extern void ds1287_set_base_clock(unsigned int clock);
++extern int ds1287_set_base_clock(unsigned int hz);
+ extern int ds1287_clockevent_init(int irq);
  
- int ds1287_timer_state(void)
+ #endif
 
 
