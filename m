@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8506C243364;
-	Tue, 29 Apr 2025 17:12:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A1F27453;
+	Tue, 29 Apr 2025 17:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946750; cv=none; b=SrhBwoVmAuqWuu1L+toEO1z8lgdtzUzvXrG+iPvC4i570eRfLaoyHxbZ/rR0iLxXqz+SJJUxE9CWa2RdO5P0GFax8Iw/NaFxOsNFY/9sTkj8k04nxTowCsOkhqjWtgLL47+1o7K+ZWvh/5z8a0smah111CxsBAV8G0d7ryBcdfM=
+	t=1745946754; cv=none; b=IxSEHmWxPyJKgBE1JofvZHkMGEmXbcSLJT39SALcaZjjEQed4abTb8sj1calX6N/Z2JQbY3PFMJ7t5KdEpILW6N2KLLdYufmZt//4LYfXpv9IS6ol1yaiQoNlHIT/XsP/xfQXNNdou9MPRQG+74635nshP+mKOvAmrc7lni6eds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946750; c=relaxed/simple;
-	bh=WVl82863RtOHQMb404BDv2DXpYTS7QzWys4FXMkjKvE=;
+	s=arc-20240116; t=1745946754; c=relaxed/simple;
+	bh=uX3YSwIJyhmPc3XJydbIXxgrrBC9LTll0JtGqt+T9oU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IAv7wNk5NlbOQvmgxD17TP/og/JWRI1m0NEXJWyCA2GRHOrxIP8pMweX/tif7mZ3CNhkz+h4LQFCtMv5eDNxyX85MWyi3afzvyOj/flqqJgaQVk86B9VPByIb2Lzw3XwcjeZyYS1mXbDDsYDrdIX2vIMX9685iLRH7z+N+Z2YKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rDd8MgCM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZxSSR7xJijJRXbKAWexpHprLr/ZU7lhpTrW7GRRiNNmZU8KNaxYCfVxVxByU75E9MTTZQ9lekjFLOu0uS0LL3J+cE2RmI2H5zIRKbRAigfgShDCoMcseqdF9WDNG2gWJa88EbACTJoE4vFuzU5e87Isvd2Y1Y/MqlZut5n1kS3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFuPtO8j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rDd8MgCM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0152C4CEE3;
-	Tue, 29 Apr 2025 17:12:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFuPtO8j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1AEAC4CEE3;
+	Tue, 29 Apr 2025 17:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946750;
-	bh=WVl82863RtOHQMb404BDv2DXpYTS7QzWys4FXMkjKvE=;
+	s=korg; t=1745946753;
+	bh=uX3YSwIJyhmPc3XJydbIXxgrrBC9LTll0JtGqt+T9oU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rDd8MgCMk9M6mP1+9QE/+Yp6JVIvIikb4AAlzcaHccxlbUOvAK1QF9UkZ4CUQV8fq
-	 AcjYxfM8vxCjYe5cZsu1aAaCwA5L0oh/5ejmkyBRqFtTiq4+nWauHFbhKtveIb93Gh
-	 HOqmTNCXD1lisZCZVVFuJy7nFblTPL4ZeSttspHU=
+	b=rFuPtO8jGjSqTIk1/zUMRhwE+2ogDkga9NjBhDiMgYjfIlI34KO8SckCOOoYYRNJk
+	 37AaM1PVFabQOnuCJ0UYiOtbDIwbcXVihTjs7lRMpAsTULGV3PZQHUv8f40krBrDwp
+	 y+WAaH0odvAsNY1MKnA0XGWR2jC2DKlhP+8SDp3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.10 057/286] media: siano: Fix error handling in smsdvb_module_init()
-Date: Tue, 29 Apr 2025 18:39:21 +0200
-Message-ID: <20250429161110.193422646@linuxfoundation.org>
+	stable@kernel.org,
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 5.10 058/286] xenfs/xensyms: respect hypervisors "next" indication
+Date: Tue, 29 Apr 2025 18:39:22 +0200
+Message-ID: <20250429161110.233690371@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -51,35 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Can <yuancan@huawei.com>
+From: Jan Beulich <jbeulich@suse.com>
 
-commit 734ac57e47b3bdd140a1119e2c4e8e6f8ef8b33d upstream.
+commit 5c4e79e29a9fe4ea132118ac40c2bc97cfe23077 upstream.
 
-The smsdvb_module_init() returns without checking the retval from
-smscore_register_hotplug().
-If the smscore_register_hotplug() failed, the module failed to install,
-leaving the smsdvb_debugfs not unregistered.
+The interface specifies the symnum field as an input and output; the
+hypervisor sets it to the next sequential symbol's index. xensyms_next()
+incrementing the position explicitly (and xensyms_next_sym()
+decrementing it to "rewind") is only correct as long as the sequence of
+symbol indexes is non-sparse. Use the hypervisor-supplied value instead
+to update the position in xensyms_next(), and use the saved incoming
+index in xensyms_next_sym().
 
-Fixes: 3f6b87cff66b ("[media] siano: allow showing the complete statistics via debugfs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Acked-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Cc: stable@kernel.org
+Fixes: a11f4f0a4e18 ("xen: xensyms support")
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Message-ID: <15d5e7fa-ec5d-422f-9319-d28bed916349@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/common/siano/smsdvb-main.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/xen/xenfs/xensyms.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/common/siano/smsdvb-main.c
-+++ b/drivers/media/common/siano/smsdvb-main.c
-@@ -1210,6 +1210,8 @@ static int __init smsdvb_module_init(voi
- 	smsdvb_debugfs_register();
+--- a/drivers/xen/xenfs/xensyms.c
++++ b/drivers/xen/xenfs/xensyms.c
+@@ -48,7 +48,7 @@ static int xensyms_next_sym(struct xensy
+ 			return -ENOMEM;
  
- 	rc = smscore_register_hotplug(smsdvb_hotplug);
-+	if (rc)
-+		smsdvb_debugfs_unregister();
+ 		set_xen_guest_handle(symdata->name, xs->name);
+-		symdata->symnum--; /* Rewind */
++		symdata->symnum = symnum; /* Rewind */
  
- 	pr_debug("\n");
+ 		ret = HYPERVISOR_platform_op(&xs->op);
+ 		if (ret < 0)
+@@ -78,7 +78,7 @@ static void *xensyms_next(struct seq_fil
+ {
+ 	struct xensyms *xs = (struct xensyms *)m->private;
  
+-	xs->op.u.symdata.symnum = ++(*pos);
++	*pos = xs->op.u.symdata.symnum;
+ 
+ 	if (xensyms_next_sym(xs))
+ 		return NULL;
 
 
