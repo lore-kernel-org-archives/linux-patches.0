@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1BC7E110;
-	Tue, 29 Apr 2025 17:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3962124A07B;
+	Tue, 29 Apr 2025 17:00:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946032; cv=none; b=OVA9Sg8CqHo3LTIvb6Qp1MeDTmgYpfl6S99G1C8/+X+R9fmw6cjBQiJvc4asGjz74UyA9R5l5nw0sqCbaa30dl6bpyqG7+A1eZ4wxisVIRDdqDzLqlvwlZVL2w46Iy95NhVYfNusr5y9usIYSTRgrz1Iqs5IBw3eOhxhQe3UCpM=
+	t=1745946035; cv=none; b=uaASaiurPksMo4bZHh7DyYsXJ2Do2mUb/CrgrOhBXUwOqvdl5HbgdPqA3FudB5+p/Xx/mw8oljkbDFmVe5qyH2aFtldoINvbltSINOu7lrSV1MsOSPoWwRoj0VlCDLS4TVwLR3nYUIJMLrWYnK1a6nQH6hEkGbrhydvvMff3plU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946032; c=relaxed/simple;
-	bh=jelVxnANYkxCEDv6vkz2J1Xvrz2/NRFCorCwoLAiFxI=;
+	s=arc-20240116; t=1745946035; c=relaxed/simple;
+	bh=jLWy7fSX+0GmsbJsMquAqHIaI5rrlVmd4vqRIRpKR/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WVJJuBNVeVcgonZOCba00TlLvxzFZPEnoo4mr20I5w1G3oTPKBKBkADvxthJvgSMzwE6DlRxa/pHzgY7oy8P6XOyb0tRK99qOEd/cVFpFnuGNJcKMiPzKmC3MIvvVuwaXW7uycITuDxEE3L7fWWu2E8EnN+xOtb/219seYXZatI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HPtlUj46; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SntuwPGk9zw+QqU+yGLDr1Psw2t9Q5talJd660i0Ev10YFzDd5T+ZXV3Wt03SZ9pKAMyJbOBY9nvb2q+mut0HBj8mf5uzMDqh63ZK9k2IccxXSjtjS0GOKf00/n/J1y5S274QoO/tZzkb86mM7SyckbUoNnKotLtacL0qKXDOhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KmAnAWBp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HPtlUj46"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1836C4CEE3;
-	Tue, 29 Apr 2025 17:00:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KmAnAWBp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA468C4CEE3;
+	Tue, 29 Apr 2025 17:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946032;
-	bh=jelVxnANYkxCEDv6vkz2J1Xvrz2/NRFCorCwoLAiFxI=;
+	s=korg; t=1745946035;
+	bh=jLWy7fSX+0GmsbJsMquAqHIaI5rrlVmd4vqRIRpKR/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HPtlUj46GLysOSp3x09Ai+m7SyZyXmP5e40WzEMc+OlHxbOFeg3xa23jv8n4wryCj
-	 ekuLfi54dynNy1B+9TlNeKsB2sKW2roAgrmoZyhTFyb6/742bkC4Gb+VBx2XnAqIbh
-	 +Mcy7WokMYX7sjMhxQ7nnCVSRh8aKKrZPaSMyiDI=
+	b=KmAnAWBpEA5wH4YBnUBd2Tx8w9EGGhaA6R3ANk/fviC9rKcgE2xb+Ho6C+YaIZLn5
+	 3z+Mi86LvdgBjQj/D2F4QnOTBxAzIh7WopkdhmKoRuWAFbNVBi6iQeI37hQW+zGpfg
+	 6+4cSlFX4a2THc6Tsn66hL1eN7+x9FSUzbt9xGy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bibo Mao <maobibo@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.14 132/311] LoongArch: KVM: Fully clear some CSRs when VM reboot
-Date: Tue, 29 Apr 2025 18:39:29 +0200
-Message-ID: <20250429161126.449263519@linuxfoundation.org>
+Subject: [PATCH 6.14 133/311] LoongArch: KVM: Fix PMU pass-through issue if VM exits to host finally
+Date: Tue, 29 Apr 2025 18:39:30 +0200
+Message-ID: <20250429161126.487975804@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -52,44 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-commit 9ea86232a5520d9d21832d06031ea80f055a6ff8 upstream.
+commit 5add0dbbebd60628b55e5eb8426612dedab7311a upstream.
 
-Some registers such as LOONGARCH_CSR_ESTAT and LOONGARCH_CSR_GINTC are
-partly cleared with function _kvm_setcsr(). This comes from the hardware
-specification, some bits are read only in VM mode, and however they can
-be written in host mode. So they are partly cleared in VM mode, and can
-be fully cleared in host mode.
-
-These read only bits show pending interrupt or exception status. When VM
-reset, the read-only bits should be cleared, otherwise vCPU will receive
-unknown interrupts in boot stage.
-
-Here registers LOONGARCH_CSR_ESTAT/LOONGARCH_CSR_GINTC are fully cleared
-in ioctl KVM_REG_LOONGARCH_VCPU_RESET vCPU reset path.
+In function kvm_pre_enter_guest(), it prepares to enter guest and check
+whether there are pending signals or events. And it will not enter guest
+if there are, PMU pass-through preparation for guest should be cancelled
+and host should own PMU hardware.
 
 Cc: stable@vger.kernel.org
+Fixes: f4e40ea9f78f ("LoongArch: KVM: Add PMU support for guest")
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/vcpu.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/loongarch/kvm/vcpu.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/arch/loongarch/kvm/vcpu.c
 +++ b/arch/loongarch/kvm/vcpu.c
-@@ -874,6 +874,13 @@ static int kvm_set_one_reg(struct kvm_vc
- 			vcpu->arch.st.guest_addr = 0;
- 			memset(&vcpu->arch.irq_pending, 0, sizeof(vcpu->arch.irq_pending));
- 			memset(&vcpu->arch.irq_clear, 0, sizeof(vcpu->arch.irq_clear));
-+
-+			/*
-+			 * When vCPU reset, clear the ESTAT and GINTC registers
-+			 * Other CSR registers are cleared with function _kvm_setcsr().
-+			 */
-+			kvm_write_sw_gcsr(vcpu->arch.csr, LOONGARCH_CSR_GINTC, 0);
-+			kvm_write_sw_gcsr(vcpu->arch.csr, LOONGARCH_CSR_ESTAT, 0);
- 			break;
- 		default:
- 			ret = -EINVAL;
+@@ -294,6 +294,7 @@ static int kvm_pre_enter_guest(struct kv
+ 		vcpu->arch.aux_inuse &= ~KVM_LARCH_SWCSR_LATEST;
+ 
+ 		if (kvm_request_pending(vcpu) || xfer_to_guest_mode_work_pending()) {
++			kvm_lose_pmu(vcpu);
+ 			/* make sure the vcpu mode has been written */
+ 			smp_store_mb(vcpu->mode, OUTSIDE_GUEST_MODE);
+ 			local_irq_enable();
 
 
