@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FFD2135DD;
-	Tue, 29 Apr 2025 17:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8886B24DFF3;
+	Tue, 29 Apr 2025 17:45:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948733; cv=none; b=Q3gtE74384O+Jq059riUoM2trl3HknYUh4jrz9RNfzDcNn2VfNwsXTBcqoYyvbvONTOnobQesUMbw4KS3LMQ69ixFkX7KzTWZcp2ND6DSjrMXbesvBmyIGEkfiglNQ8KdtJQa6ZzYLoKM90dfUWG8oD10whPoWknunv87sWTD1k=
+	t=1745948736; cv=none; b=b33jsD+ruE1zQGp8eGK0m20VI/ywl/LPXmA4wk8VAnsXutDtrcCRE/OZdVV4qXcn4M8pgpPtKzf8DyUdAzDSBeMaqPQ21lPWeWs8OuYPYs96bqE7JsdxKFHcsx4l1VF4zMV9eZRsAPKVNSIbYq6WUQcR4xLFjm64hU+LZ6Q+qrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948733; c=relaxed/simple;
-	bh=SA7pAnDHE6KfMH1UZZ/FQxzR4MxGITZganFAmNhQXAE=;
+	s=arc-20240116; t=1745948736; c=relaxed/simple;
+	bh=1dyTQkL2RGr94G/A83fwLKrIA3BUQ+KG/ngEDV8UzwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=omVFvoRJGH/e7NSKg2Sh+afbQ5QulIOCIhAKhnODV54uNY6JmKMXcGIdzyKp9q9uO5D+Qxe9AnnbnZrAPNXXT50iBWQpUn+JOSYen6XW7nDsKqOCipq7e2m+2k1ek4FCU3COjLXCA81+8rIwNJKaU0stbzU6zvCcnAzhJVGz6I8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVv37biI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=B7BSZzVvMsaLRMvUPUCiBjDmzssX9dtfj634z1EnqM3OuJYkXFTHACjo81I/X8E9iRXRVvi4jiWv1akGZcFqMq2SH6FcTvLL8tg5fZsuoweEk929VpkubTG1yeGrjGXBTFiqQRD4v0HKmJs6lFPl2hWOj5DC/FMSD2xzBmaIG0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fm8U0DN9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVv37biI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9CBC4CEE3;
-	Tue, 29 Apr 2025 17:45:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fm8U0DN9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6F2C4CEE3;
+	Tue, 29 Apr 2025 17:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948732;
-	bh=SA7pAnDHE6KfMH1UZZ/FQxzR4MxGITZganFAmNhQXAE=;
+	s=korg; t=1745948736;
+	bh=1dyTQkL2RGr94G/A83fwLKrIA3BUQ+KG/ngEDV8UzwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EVv37biIMVYpKWF72HJelwf/hoU86qULKPmwHgkvA52eH8HsAD5L1O+UtPmTyPrkG
-	 cEpPq+wx0FekLHoAMBVD+t2ZoMbswnjaT4mkocPtRN8dGVvTJygIwBlydOC7NLmBa/
-	 CtWsl+vrU5ZvWwdrrfL/9X+TfYof1DQ9XQBF4uz4=
+	b=Fm8U0DN9cE9u5STt5Aj/L0hmKQqxFWhJO7LRaOVrEAOclNvf4WModjRfR9PTDnhPd
+	 h2dcfkoWAFHwXfxE0n+cwwhA3dmIQr+gqTEaL0bhrS7AOEI7wvXXfserD7+OWLMt3b
+	 fJahxB8E37thqrTDeFqwE0PKaByGQ0PUCAGEbezE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Dooks <ben.dooks@sifive.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 055/373] bpf: Add endian modifiers to fix endian warnings
-Date: Tue, 29 Apr 2025 18:38:52 +0200
-Message-ID: <20250429161125.390756386@linuxfoundation.org>
+	Manjunatha Venkatesh <manjunatha.venkatesh@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.15 089/373] i3c: Add NULL pointer check in i3c_master_queue_ibi()
+Date: Tue, 29 Apr 2025 18:39:26 +0200
+Message-ID: <20250429161126.823377957@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -45,67 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ben Dooks <ben.dooks@sifive.com>
+From: Manjunatha Venkatesh <manjunatha.venkatesh@nxp.com>
 
-[ Upstream commit 96a233e600df351bcb06e3c20efe048855552926 ]
+commit bd496a44f041da9ef3afe14d1d6193d460424e91 upstream.
 
-A couple of the syscalls which load values (bpf_skb_load_helper_16() and
-bpf_skb_load_helper_32()) are using u16/u32 types which are triggering
-warnings as they are then converted from big-endian to CPU-endian. Fix
-these by making the types __be instead.
+The I3C master driver may receive an IBI from a target device that has not
+been probed yet. In such cases, the master calls `i3c_master_queue_ibi()`
+to queue an IBI work task, leading to "Unable to handle kernel read from
+unreadable memory" and resulting in a kernel panic.
 
-Fixes the following sparse warnings:
+Typical IBI handling flow:
+1. The I3C master scans target devices and probes their respective drivers.
+2. The target device driver calls `i3c_device_request_ibi()` to enable IBI
+   and assigns `dev->ibi = ibi`.
+3. The I3C master receives an IBI from the target device and calls
+   `i3c_master_queue_ibi()` to queue the target device driver’s IBI
+   handler task.
 
-  net/core/filter.c:246:32: warning: cast to restricted __be16
-  net/core/filter.c:246:32: warning: cast to restricted __be16
-  net/core/filter.c:246:32: warning: cast to restricted __be16
-  net/core/filter.c:246:32: warning: cast to restricted __be16
-  net/core/filter.c:273:32: warning: cast to restricted __be32
-  net/core/filter.c:273:32: warning: cast to restricted __be32
-  net/core/filter.c:273:32: warning: cast to restricted __be32
-  net/core/filter.c:273:32: warning: cast to restricted __be32
-  net/core/filter.c:273:32: warning: cast to restricted __be32
-  net/core/filter.c:273:32: warning: cast to restricted __be32
+However, since target device events are asynchronous to the I3C probe
+sequence, step 3 may occur before step 2, causing `dev->ibi` to be `NULL`,
+leading to a kernel panic.
 
-Signed-off-by: Ben Dooks <ben.dooks@sifive.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20220714105101.297304-1-ben.dooks@sifive.com
-Stable-dep-of: d4bac0288a2b ("bpf: support SKF_NET_OFF and SKF_LL_OFF on skb frags")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add a NULL pointer check in `i3c_master_queue_ibi()` to prevent accessing
+an uninitialized `dev->ibi`, ensuring stability.
+
+Fixes: 3a379bbcea0af ("i3c: Add core I3C infrastructure")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/lkml/Z9gjGYudiYyl3bSe@lizhi-Precision-Tower-5810/
+Signed-off-by: Manjunatha Venkatesh <manjunatha.venkatesh@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20250326123047.2797946-1-manjunatha.venkatesh@nxp.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/filter.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/i3c/master.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 84ec1b14b23f3..45cde12e41284 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -239,7 +239,7 @@ BPF_CALL_2(bpf_skb_load_helper_8_no_cache, const struct sk_buff *, skb,
- BPF_CALL_4(bpf_skb_load_helper_16, const struct sk_buff *, skb, const void *,
- 	   data, int, headlen, int, offset)
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -2240,6 +2240,9 @@ static void i3c_master_unregister_i3c_de
+  */
+ void i3c_master_queue_ibi(struct i3c_dev_desc *dev, struct i3c_ibi_slot *slot)
  {
--	u16 tmp, *ptr;
-+	__be16 tmp, *ptr;
- 	const int len = sizeof(tmp);
- 
- 	if (offset >= 0) {
-@@ -266,7 +266,7 @@ BPF_CALL_2(bpf_skb_load_helper_16_no_cache, const struct sk_buff *, skb,
- BPF_CALL_4(bpf_skb_load_helper_32, const struct sk_buff *, skb, const void *,
- 	   data, int, headlen, int, offset)
- {
--	u32 tmp, *ptr;
-+	__be32 tmp, *ptr;
- 	const int len = sizeof(tmp);
- 
- 	if (likely(offset >= 0)) {
--- 
-2.39.5
-
++	if (!dev->ibi || !slot)
++		return;
++
+ 	atomic_inc(&dev->ibi->pending_ibis);
+ 	queue_work(dev->common.master->wq, &slot->work);
+ }
 
 
