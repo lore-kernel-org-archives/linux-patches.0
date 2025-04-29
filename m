@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B53F24113C;
-	Tue, 29 Apr 2025 17:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C427E21ADC7;
+	Tue, 29 Apr 2025 17:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947197; cv=none; b=tiTPnGkWRGOYBQnYcVmZ4FhI9EfkVbWa7fA5Gz/7CR6I9HaFDMykUAfKFx7JyvenohThbzz1jUS8Bdd//fFmzh00s+S/L3f5DBLiVwSFVjg2MnHEX8DrGi5M4lmY/eLMoSNnQUAI/nMRayuQtINLzgfyQFkM5LB1P7546lgMa2U=
+	t=1745947200; cv=none; b=p9HHF9xfQx3tiiNTPw1sgRSIkYdtvk0/2H0XDuR16d+umVM0R4bubBxDT5rXVQ0oemgR1PemFjgVFGDzzSD2fOgFKNQ0jRRvq0nEOnZjv/XzYiEjYjAAA958xp25/EMvlw8pB0N0jnWurLXFGdq8n8hIklDGZUp7Ww4gyeUQbYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947197; c=relaxed/simple;
-	bh=m8AmfNs6Kr6v+JhTcJCV3TULGj8Xp+hRgI/9Xbk8e0k=;
+	s=arc-20240116; t=1745947200; c=relaxed/simple;
+	bh=kfh85hfAbChhk57YnAuxT+YHa14lP4e1UxBMeWxV1v4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hbrouQdEoNWA95M44wDquEPxBDjmr2eRr0XoZdP28Ys6ku5kwcdJbbnmuMrNNSuO+AblcBj1vE66PtHuqGZ35K8w6yPhjvmCOIkE1VH1lpkQzXuXpc51Da5jVFhVPj9UTVHXUq+0lTEq+7wVaRvu0+Tueo4Q/sRQ0RXpKvq4s+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qp7ZZgdn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U5GzrU+tlsw2hxY9XNJJmjH37vU0JvlQeaZdbguytnifnnSaHU/QpO3jq6So8yI4jGYbSp5qE4U0HP3IYYKImBpHAWu+KNr+du6bLw/ncXPvuHZPGrvQCXDKfkPHhCfA8m5+eV5V0jONweKGyygLgSA3El61BozwzO9ZF2Jy2CE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DzTAEICB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qp7ZZgdn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD5DCC4CEE9;
-	Tue, 29 Apr 2025 17:19:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzTAEICB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4979C4CEE3;
+	Tue, 29 Apr 2025 17:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947197;
-	bh=m8AmfNs6Kr6v+JhTcJCV3TULGj8Xp+hRgI/9Xbk8e0k=;
+	s=korg; t=1745947200;
+	bh=kfh85hfAbChhk57YnAuxT+YHa14lP4e1UxBMeWxV1v4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qp7ZZgdnSlbWwz6cY3GlQCU+FtqTrLlC2eWTY21+QnVvQBJTOOrOcRLUmw+TaTmvk
-	 h/U++c79wmHVM8SDL47sHEyBHsMey3v8Hk5Oz2sttycpxrrgoOnyr0MBec3UQi5SUU
-	 EyvgubGZRjwKVvmz3Y431FM3ETVj/OFHn+OX6IVw=
+	b=DzTAEICBNHChlyxkuzbzALuuWEW4P29e9QGZObYbaICjGd/DDXhe6OMprHjYWH8Kr
+	 yryrQiscQgPmCgxvd44VxF2wNCv7iOJ2T4jPbo6Bc+FWce/7tCSG13Njo6mbmiJi3J
+	 R2mC9IHggPsrIT1+VMFV6COCzK2r7QK5GdMd9XnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fritz Koenig <frkoenig@chromium.org>,
 	Stanimir Varbanov <stanimir.varbanov@linaro.org>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 204/286] media: venus: hfi: Correct session init return error
-Date: Tue, 29 Apr 2025 18:41:48 +0200
-Message-ID: <20250429161116.351470831@linuxfoundation.org>
+Subject: [PATCH 5.10 205/286] media: venus: pm_helpers: Check instance state when calculate instance frequency
+Date: Tue, 29 Apr 2025 18:41:49 +0200
+Message-ID: <20250429161116.390281895@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -54,64 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 
-[ Upstream commit e922a33e0228fa314ffc4f70b3b9ffbc4aad1bbe ]
+[ Upstream commit d33a94412ed1081f30d904cab54faea7c7b839fc ]
 
-The hfi_session_init can be called many times and it returns
-EINVAL when the session was already initialized. This error code
-(EINVAL) is confusing for the callers. Change hfi_session_init to
-return EALREADY error code when the session has been already
-initialized.
+Skip calculating instance frequency if it is not in running state.
 
-Tested-by: Fritz Koenig <frkoenig@chromium.org>
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Stable-dep-of: 9edaaa8e3e15 ("media: venus: hfi_parser: refactor hfi packet parsing logic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/hfi.c  | 2 +-
- drivers/media/platform/qcom/venus/vdec.c | 2 +-
- drivers/media/platform/qcom/venus/venc.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/platform/qcom/venus/pm_helpers.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
-index 17da555905e98..5fd53227c2c0b 100644
---- a/drivers/media/platform/qcom/venus/hfi.c
-+++ b/drivers/media/platform/qcom/venus/hfi.c
-@@ -212,7 +212,7 @@ int hfi_session_init(struct venus_inst *inst, u32 pixfmt)
- 	int ret;
+diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+index fd55352d743ee..12c5811fefdf9 100644
+--- a/drivers/media/platform/qcom/venus/pm_helpers.c
++++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+@@ -937,6 +937,9 @@ static unsigned long calculate_inst_freq(struct venus_inst *inst,
  
- 	if (inst->state != INST_UNINIT)
--		return -EINVAL;
-+		return -EALREADY;
+ 	mbs_per_sec = load_per_instance(inst) / fps;
  
- 	inst->hfi_codec = to_codec_type(pixfmt);
- 	reinit_completion(&inst->done);
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index d91030a134c0e..6e9b62645e917 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -768,7 +768,7 @@ static int vdec_session_init(struct venus_inst *inst)
- 	int ret;
- 
- 	ret = hfi_session_init(inst, inst->fmt_out->pixfmt);
--	if (ret == -EINVAL)
-+	if (ret == -EALREADY)
- 		return 0;
- 	else if (ret)
- 		return ret;
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 18d20b4ca2cfd..9f1b02e31b98c 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -727,7 +727,7 @@ static int venc_init_session(struct venus_inst *inst)
- 	int ret;
- 
- 	ret = hfi_session_init(inst, inst->fmt_cap->pixfmt);
--	if (ret == -EINVAL)
-+	if (ret == -EALREADY)
- 		return 0;
- 	else if (ret)
- 		return ret;
++	if (inst->state != INST_START)
++		return 0;
++
+ 	vpp_freq = mbs_per_sec * inst->clk_data.codec_freq_data->vpp_freq;
+ 	/* 21 / 20 is overhead factor */
+ 	vpp_freq += vpp_freq / 20;
 -- 
 2.39.5
 
