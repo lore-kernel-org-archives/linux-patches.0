@@ -1,227 +1,523 @@
-Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10F7215F76
-	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 02:08:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.166.238
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745892497; cv=fail; b=nHoWqV/PRpF3NniZTOh7O+30eJozK4425KmofOWTRkPeL37xSuZipGIi1zYdFUAARieKx+prkkwn2dnyFXQcY4pL2zI6XJ621eoHVemeBXMkHiRlsoVBi6p+C7BsesULPNJWnlyDRBW3GgudIlY0P6Fe976ooJkGJAxLpo77OZY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745892497; c=relaxed/simple;
-	bh=JWKsIARcfySALNPWjIAEJRkkmAR7j3kFMkwMMILADAU=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=reJoQoPLvSVacDFwdoFWsAp7VguBiJoBWXJTx9kitev/ia/vcXhMThyvhTbJ7nKi5xubUkyzTIMMU3myqWxlewhK9zJfOGNeh3ikBDVNe5Rni5446pMIqd2fzylbndtYgozNQIOGp4eDOQwXLdJYGiV+TBxQGji2EY4NeDik45E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=fail smtp.client-ip=205.220.166.238
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250810.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53SB7iFG019475;
-	Mon, 28 Apr 2025 19:08:00 -0700
-Received: from nam04-dm6-obe.outbound.protection.outlook.com (mail-dm6nam04lp2045.outbound.protection.outlook.com [104.47.73.45])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 468ts3secg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 28 Apr 2025 19:08:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=llLagB+jMyPNCZQavCR+eRe9zAKlCJK+Xzx1FMqErt8pfjSLb5zN3RlQ28/xFpcLIWyQkp9otE58s5ersbcY+KTKDM8x/7z6q6bYAjMjzPsG79FxPnM/uepg3NKPgyuROPvN6wEsdsIXn9nl9WtQl9rEeaGh3bI2WkyQoZrgT2URMrtZxw1UZ7MKv5H4bEgQXaGP3vJJG9aQGMlGvc0Q7Bh/XWYEH2fcQusWHzk79QohvnmlW8m2/EfYHaMheqCrMDiSoX0mLVz0rZDuCVETB8rnIRQUlDwj46PWgjw2fNifqdFff4vvIZ6cv6F3BlMAV4RiMWiDDOK2y8B2Bj4XkA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kbob4CQ+rRwsvGFabjx0n7TTpnThqqdInYL2DqSOvmk=;
- b=nj0wqx6z23HTX5HGqYi8t3YzKo7L6+nSU+5r/TKUUNJ3YsuYSfkQmAnEJLRfbFj/BQcbf3xsh/rR7xDTTi7PQDn/1D5HhNdt/Jl65lKkO6etekQOOdCQRhStnJ7HgDxUGdb+l67/g4ZqPPpKcY+lcLGydDynrY5e3p4ShyVVJiUyktfhwKJGL5a1Rsrygaes/FjTo2itq4+Ji6+MFwQnu8VfJhUd6pkS731VI5KTnOYAQlHJWiQIep4lNhfWayBAR3xkQonBQwzSBpVhaMi2Q44GivNBTV83O7br++CZQZVNVIG9MmN4W0BE2qDSpf0aN+RTCisHYB683OxQ/H8WRg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=windriver.com; dmarc=pass action=none
- header.from=windriver.com; dkim=pass header.d=windriver.com; arc=none
-Received: from IA1PR11MB6170.namprd11.prod.outlook.com (2603:10b6:208:3ea::11)
- by IA1PR11MB6265.namprd11.prod.outlook.com (2603:10b6:208:3e7::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.33; Tue, 29 Apr
- 2025 02:07:55 +0000
-Received: from IA1PR11MB6170.namprd11.prod.outlook.com
- ([fe80::f850:53da:e11b:1653]) by IA1PR11MB6170.namprd11.prod.outlook.com
- ([fe80::f850:53da:e11b:1653%3]) with mapi id 15.20.8678.028; Tue, 29 Apr 2025
- 02:07:54 +0000
-From: "Ren, Jianqi (Jacky) (CN)" <Jianqi.Ren.CN@windriver.com>
-To: Greg KH <gregkh@linuxfoundation.org>
-CC: "stable@vger.kernel.org" <stable@vger.kernel.org>,
-        "patches@lists.linux.dev" <patches@lists.linux.dev>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "jhs@mojatatu.com" <jhs@mojatatu.com>,
-        "xiyou.wangcong@gmail.com"
-	<xiyou.wangcong@gmail.com>,
-        "jiri@resnulli.us" <jiri@resnulli.us>,
-        "davem@davemloft.net" <davem@davemloft.net>,
-        "kuba@kernel.org"
-	<kuba@kernel.org>,
-        "pabeni@redhat.com" <pabeni@redhat.com>,
-        "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
-        "michal.swiatkowski@linux.intel.com" <michal.swiatkowski@linux.intel.com>,
-        "He, Zhe" <Zhe.He@windriver.com>
-Subject: RE: [PATCH 6.1.y v2] net/sched: act_mirred: don't override retval if
- we already lost the skb
-Thread-Topic: [PATCH 6.1.y v2] net/sched: act_mirred: don't override retval if
- we already lost the skb
-Thread-Index: AQHbuBO3T/45kqXRK0W7E9ZjTIlKQLO49hWAgADwHSA=
-Date: Tue, 29 Apr 2025 02:07:54 +0000
-Message-ID:
- <IA1PR11MB61703A24C42BAA887F5263ACBB802@IA1PR11MB6170.namprd11.prod.outlook.com>
-References: <20250428080103.4158144-1-jianqi.ren.cn@windriver.com>
- <2025042844-pavestone-fringe-1478@gregkh>
-In-Reply-To: <2025042844-pavestone-fringe-1478@gregkh>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA1PR11MB6170:EE_|IA1PR11MB6265:EE_
-x-ms-office365-filtering-correlation-id: 89b94b6b-3dcc-41e7-9437-08dd86c2a77a
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|376014|7416014|366016|38070700018;
-x-microsoft-antispam-message-info:
- =?us-ascii?Q?Zzzrr7dp8bZPxFTQ7guxxGh8LYOwmh6qc3ktk/zHW/V2FfDxmkMPJpdtGKDT?=
- =?us-ascii?Q?HhzBHVCMpxYrCyYHhdq9Rq5gocf7LOijjcH3X0+9CWH5us+LJl86sgsQcxEK?=
- =?us-ascii?Q?xYHvRgO2lBE5c30X2H4EfeYOluFZmajzUS/BpwI5Ss8rlqGXaAWSIeX8jNoR?=
- =?us-ascii?Q?Kd3x9maR59obMBq9zoRUCPDxDeYtnaiICHHhdud8ObbAgUsMu+87ljE6MHyt?=
- =?us-ascii?Q?WmHniHidlRpowHlqZOEu/bvhy8Uuevcfhp/J2ASjmuIi0oR6gAp9l9Ijnmb3?=
- =?us-ascii?Q?CPuvgrFLuoLc1fHZ1qFRXWfAkbimZGs8iGkLtaEjnKE+QaA4lVlr9YkeeHOE?=
- =?us-ascii?Q?Xh7mxVFKdAflAANo7UrI6xr7vMAFc2akZN897x0Kwm+BUVm6z9qDx6n6x6XI?=
- =?us-ascii?Q?59TK+fcnUcZyqIKpk74y3mqyT8/slzuPBCQNLWiBo2zd6h2G1NcSyv9Ab840?=
- =?us-ascii?Q?Ksuv45DQwvIpIe2cEemDy2PMQUInRj7XX3LZipVaTAcNAmpzWzi+DsCaFFS2?=
- =?us-ascii?Q?DwGJgOCrRNLy2xaW2FF9bUHxwQIq6IENDBZu84FwH/Sw/zF94kCcXWcNW8u4?=
- =?us-ascii?Q?YGausqkYDfvhlxbW0I3iNqZgNtLo08bG0Q1/mJS7Q9tKNlVQ39ibCbvB6FP7?=
- =?us-ascii?Q?aP5zi9Vr/B5YMI0JcqT8QUk5UBMt3aJA9uWgRddwDMuiXFX9HC9CSNAE59oh?=
- =?us-ascii?Q?QRXzXQIF6hq9hZwzxV0IuL529S9R/kFH9cHcek6K0Xfnz6JdOotPyU9MZ9eh?=
- =?us-ascii?Q?LFsAcVCpmG3aGYInlWjxLFE+LsDH9xl7sc740Qq/XZuq9wYVfkYuM1vFduOa?=
- =?us-ascii?Q?L+FIC7SIYuuG3BojAFJz2QFVPDI2EfCsTyOAZHpLicIZKc0WIr6Y/SDm9wvl?=
- =?us-ascii?Q?gQQZIPSm0MDimtcBp9qLI0O82vec6Awxbig9JQsRUU+jGrhMKm4TFEzZK7Uu?=
- =?us-ascii?Q?MlG5LF13UrQqFoQ/W9iyiPUJ616+63Gbti3Jp6G3HSAtT3SKQApgMOjpagJf?=
- =?us-ascii?Q?4OZ0VnCJ7LQJsWPp2787NH2wjMhS49qTk3dEYcQr6wO+34wx8bSXWHXS6cNu?=
- =?us-ascii?Q?4I2a65rQKz/4Rdy6p1F151X+edzhESlAwwKmmD9C+fNze5h2wdazHO33hsEQ?=
- =?us-ascii?Q?KNGbPCkIoyn3a4gwX7HV9bXcAAYi5qrdmJK15I7GKxIJOmTgduvaOikkS+ZM?=
- =?us-ascii?Q?0JVHJCffv8pfeYTButOV9k8g9d2xK/RQ3SZh1z+Xxu+n0w2KX87OUGT3size?=
- =?us-ascii?Q?Ufo43RfMZrEoES7vgY/wpeTMH6e5KW0ZFdEHXjVW3c/aj7HvfOHt8T/o8wWo?=
- =?us-ascii?Q?Zgi9dMm7nNsjlfwjvA4wawTDoyHLLgDtsY0ptP2yIKYhdaJR2pBqqA9QzqhR?=
- =?us-ascii?Q?EzY2pvQiVz7HcB4gKdvtuSJZG/go9krDswuGgPJhM6UeZVlu1UtimR/m1WdO?=
- =?us-ascii?Q?Wp6jnILMTVA3VfqIEWBGJuLGQ55u4gMCQhQq8jooLxBwShDYCff3oA=3D=3D?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR11MB6170.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(7416014)(366016)(38070700018);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?oRR8fKvyvTDZ5pMMqfmNu6j3kWC3YPj4+XZfjkw+rPQpkzhu+cB5vPKf2VZ5?=
- =?us-ascii?Q?7HpNu2Jn71hU4TejtFtUlq9whLqE4204TpLv8tv1igEWZub3mq82OBWek770?=
- =?us-ascii?Q?C4yrYsRdanSnI4/o95CImvlv/ioHT4atp5XRJHnetVQpu+NEXEIizO8wRiu7?=
- =?us-ascii?Q?C0Psl1NWHDHbcM/g3qasoxHp6eukO0COEuwFm6ZLFH87EKbOBoARfSxp9IYm?=
- =?us-ascii?Q?QZ+t6mayk55hn9Y5fWCQzYNs3fhuTxo0O4XheKDDWgxwObNAh4xMbMNRnUjR?=
- =?us-ascii?Q?7exRAq6DdZNe6TmwahAB6vgbJJTJoMJXhzGLHoO+iy2oWrQgbQVKgM5o4l/3?=
- =?us-ascii?Q?KxRHST5z2fSVI9Nwg6KaTmjwOdRfznrV/AAC11XNhPw14nErX/BZGK4RsaKz?=
- =?us-ascii?Q?TNp4tFeEjpDJwrKygR+iLdlvES8K/g42+//snWFWjfEbcFklRqI1g89Aog8F?=
- =?us-ascii?Q?3eJSOFDZG8VTxTral2W5IiHWpkftRoijFB3YG1D+Y0N6sfR1+4bsPa6u+OJD?=
- =?us-ascii?Q?/EAi0s2n9fCRL9z5kYFihTX7Q/ZVhppDfe1B3ZUaONm6AcOreRbNY6YwBaId?=
- =?us-ascii?Q?Z0zmiPU1ROlTmglriLE8CLMOp9+G2fFwedTQrG/9UEUTsdcNayX80U+XN6gU?=
- =?us-ascii?Q?sVNITQWFTCPobKOzNRd8J/KxefADXPSihul69e3fIfx0xIXY30Hsj+ulQKv9?=
- =?us-ascii?Q?yqlUlubLPtm65ZZtW5eiXJL/Pm0sNuMbzSxyXCu9D6RGFf7wD7D73NGjhfWu?=
- =?us-ascii?Q?L1o7O5kv6zDuCHdqe1tGSWhxVg3lblo6gdD5WQLTovnTX0ym+Es26+pnX1il?=
- =?us-ascii?Q?bBeh7saa9YYJ3nD8FCR/FXxmdt6s6gZ219fjX6kFc55a4o+DXf0DiC5ROk+O?=
- =?us-ascii?Q?9szHb/eIVIWbK3KQNj0yUBQgDxa9INyWM7b5KquyMJdi8bfsu6DdWFRSm3Mr?=
- =?us-ascii?Q?f4X0xKfOKwHIrRoFDbPV+sBDj4VqGUpCXeFi+V6USDh30xZU1f+CIEZmbf7U?=
- =?us-ascii?Q?mmdnLSfDJNlE72FQPomtjRuXma7CPhch88pU2h8HKsRg2fbuQP0TdjGJ62Dw?=
- =?us-ascii?Q?QQcE4SDDqyiSSD5G134inpG/RSvSEr17N6fxQAJsXfT8Cr+DmGVOqFnI6Zyu?=
- =?us-ascii?Q?/WDkRqtMs3jmMTH6nEyVEmVf1FraSikNuL7JTGxkkmO0qZATbvGtPJs7dXPD?=
- =?us-ascii?Q?/OF73YtQOKxG7pgeKzRlcTMJuzg/GGwbWHlP2CgByDxJgViR2mjpaHGaHvwa?=
- =?us-ascii?Q?6qUsZ8p+EM3j7ruWViNGZVlkS8bqCmsSo9n/68+GQKa3m61326nN9JFhiXHm?=
- =?us-ascii?Q?QHMRIjNzyUgAV5Hn7Jjkrqscxh9RwD/Ov2kF7x5UVyGAds/tYz48ATxNQ24k?=
- =?us-ascii?Q?ocTrzRJJs3lMJOUnYSi6iSczJPRui2J8L7AihhC3L8RjN3HrSlfF1IvHIx1W?=
- =?us-ascii?Q?hSVUPzpnwWIsBQATktMfZ0NtsOOveUQXknmww5YJ90f6WThi6KgXxwVhcxo8?=
- =?us-ascii?Q?4qAQLpOJ9L0TVryQ8WxGy01ILEt2O/sbez/s1qnm60Olhcy8TvX4QOqa/smy?=
- =?us-ascii?Q?5jzAPvWPLc0E6QXNQSuYXJty47/Ssh1O3MGVBkQM?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77272175A5
+	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 05:01:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745902869; cv=none; b=iJ6H//e9mtOW8GU7S2Dtfe8y3cayqsOi1Q9t61JmfYbSAz2qtHy7Cdow9TUPlO8d5Kd1AYqApmSGN4IsjswuLJbiLpFKI59548IX3MV5K0hoXk4xN2g28x77BcsBba3Iqcdi79hAMeN3BmMZ54p/RSGY46IXROMbSJKOK/cYCuA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745902869; c=relaxed/simple;
+	bh=e7LE0XFwgQp2PdvXX50SvA6GIx4Mgzxu+xNfO2kB0z8=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DTcD+TIFN+IjNADYX/j2IgKtsY824UMfGAkmsm3b1201zrfl/flvL1J1e+m4pUm8gXvizYRbBMpDc8lkscQmFaUXPHaN+75omhdVcreZ7H9wTcehscmghY4MWk+GylmQ/k6nvmTWV3LhOJK6XeiW46a4Vgs5MhOzpNQWqah0yB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=i/BoDRwZ; arc=none smtp.client-ip=209.85.222.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="i/BoDRwZ"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7c5e39d1db2so338482185a.3
+        for <patches@lists.linux.dev>; Mon, 28 Apr 2025 22:01:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1745902865; x=1746507665; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
+         :from:references:in-reply-to:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+g54+s9aZuGswPXEDEk5jdyNkLdOH4muLufHQ2pgK3U=;
+        b=i/BoDRwZJlgAGCKgEtHPEwOxWLNoIbd210zlgVxWzNhAVXbB6GittKRsH47nBb93nB
+         IdZ/ZekWwpz9SZujtNIZIJrobozqvYFjf6qSMr5Hobh+vPPoHWm8DNTc1dkgljw4YIXR
+         YWvW1O5T7rBbel/c7AvZz79hja/klz1l7d8U4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745902865; x=1746507665;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
+         :from:references:in-reply-to:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+g54+s9aZuGswPXEDEk5jdyNkLdOH4muLufHQ2pgK3U=;
+        b=oJuXceXBEMnQHA8V5+/0ryqOWOJzrfRzGCDSUcz2SG1RhpUkXnYfX05emwZdfAqHyw
+         Xn7fH1lnRRV+jcdkP0L/RWFZxXkxfnrxMV1nST5Okim+Hr3VjLh0Wwa4y5545iyTkH7j
+         5bydRxppMI9SlWyfuCLVOqrKE4aGXTPbt+8yxaoamwM1srlSVmcpz1nnxhVhzT25HdrG
+         ewpbt75tRm9WC6FMu2r4lxbtzCf5MjntjCUHr70PxBo6mtjE+5vCIlZzyzgHUD6siTDF
+         /Tjfpfql85er9YzVM00DUrHFrB816rbi4fLzy5vXtm51MVgyuFAGwAXkyuLPRvWofvpF
+         YDjw==
+X-Forwarded-Encrypted: i=1; AJvYcCUi6cBTZSPyxC52sRWvtalgVb5GI0kdJ6hovT5j4m798hQ1F8pgmLfgQHLHnBZEvMwmwKaObtsG@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz4fh1rjMjNNZqmUDTWsYILbdn5EDtAQ4vAO9uqKiY9QxDIMzwl
+	DnuSdknB6cunrGdESztErbcqz5mHjAxJ5ZaHuhnmkoqwGHd0rjf2hLIrfxzJspTiGg+cVFSu4zI
+	Y3Mu5ImAAennwAWZW3Al5ZMHYkabrK+H8tcZK
+X-Gm-Gg: ASbGncshd5xIzTmaUPZ6mgxjMvxUqyAeulKKa7tXRZ4iLIEDG/t46rL3OWMEq72EMCa
+	2b/x8H3O2MYahmF9FFQkE0QutarzasYGPPVak9M6spRw7fHPp1/1CMAHehaMzpJvCH56p9oE4PR
+	ErQ87ZXWtYI5gPqh3osjGQWQ8h1vhqBsTsK0dpkWPzKL5LrxJBPQ==
+X-Google-Smtp-Source: AGHT+IH/cTIgZbTtJX+LijPUr/ABJvzBkHBUqPo5poUjvMA9PYLyZr9S87/2WDOWapFTxha4Uwo7L/uO7K4HxcaTHrQ=
+X-Received: by 2002:a05:620a:8289:b0:7c7:b5f7:31a5 with SMTP id
+ af79cd13be357-7cabddd8292mr309549485a.53.1745902865349; Mon, 28 Apr 2025
+ 22:01:05 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 28 Apr 2025 22:01:04 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 28 Apr 2025 22:01:04 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: windriver.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR11MB6170.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 89b94b6b-3dcc-41e7-9437-08dd86c2a77a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Apr 2025 02:07:54.7561
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ddb2873-a1ad-4a18-ae4e-4644631433be
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Ct4eid/EGsJELn0qmhYDWfnCC+Hzz32IJeGuMEZvZLAc0DvJC/cOHryH0bvN9GrN54R/TPRiDCBbqOeeruYh/FuJFeB2ItEvKfCnIatWjPE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB6265
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDAxNCBTYWx0ZWRfX1iTTQNP69+Km ddGAJewjm68cEF/Zq3aMrIN9H0LOYfdfvenoYXgjpf42xQVkWpDRN5s7xKTOSTi21npkMXFjQiW hG5UI42QVzihyuauCV6Bj6Aitu2sASnn8KMg4VcrIavVzCRbFzvYSPb1aRnbM2dmqFpJf0VeU4r
- 0aMerud+DMWzSIB0SG8HdlcQHQR+HKFuUKaa/eo7/QoH+wPO/+r1t1Mb7mIrKBb6SYxyoe7Pi7I RhmakYoEkQ44y6JCthuXZykDKl2jxUX8T9qy1/eYZnC8nMUKCAhgPmV/B/EHk/bTd6aXrTw7M1T uP+vrt1hZWKd8HpwSwraXpy2rjBa411ougXwL2w8eri/B5j6zQpYOWpRzjS1Cvut3lKHC0MwEFt
- jQh7SgkiJhcy06dd64HcIKcIAhiABng3QwOSZrXBumsVQWJkcuUKgFDF0jOqZ++IJgm16xdz
-X-Proofpoint-GUID: xDWgJbFO1cgEwKNpmEooh_-QIPQBMmWk
-X-Proofpoint-ORIG-GUID: xDWgJbFO1cgEwKNpmEooh_-QIPQBMmWk
-X-Authority-Analysis: v=2.4 cv=YJifyQGx c=1 sm=1 tr=0 ts=68103480 cx=c_pps a=o99l/OlIsmxthp48M8gYaQ==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=ag1SF4gXAAAA:8 a=t7CeM3EgAAAA:8 a=A7XncKjpAAAA:8 a=pGLkceISAAAA:8 a=J1Y8HTJGAAAA:8 a=20KFwNOVAAAA:8 a=QyXUC8HyAAAA:8 a=yj-aMKAYKbz0kkd27lYA:9 a=CjuIK1q_8ugA:10 a=Yupwre4RP9_Eg_Bd0iYG:22 a=FdTzh2GWekK77mhwV6Dw:22
- a=R9rPLQDAdC6-Ub70kJmZ:22 a=y1Q9-5lHfBjTkpIzbSAN:22
-X-Sensitive_Customer_Information: Yes
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-29_01,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 adultscore=0 bulkscore=0 malwarescore=0
- lowpriorityscore=0 impostorscore=0 phishscore=0 clxscore=1015
- suspectscore=0 mlxlogscore=999 mlxscore=0 classifier=spam authscore=0
- authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.21.0-2504070000 definitions=main-2504290014
+In-Reply-To: <20250422121837.GA734359-robh@kernel.org>
+References: <20250416000208.3568635-1-swboyd@chromium.org> <20250416000208.3568635-6-swboyd@chromium.org>
+ <20250422121837.GA734359-robh@kernel.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.12.dev8+g17a99a841c4b
+Date: Mon, 28 Apr 2025 22:01:04 -0700
+X-Gm-Features: ATxdqUGHE-hg0TKzzfW0b6WqCXJ5hFex9LRGyJsjzIPGPl6nCb3NX33AuvfAxeg
+Message-ID: <CAE-0n51Zk83EBv-QKjB57zKDs5RqugDzMQ1rR2Ux8=p1AVUPJw@mail.gmail.com>
+Subject: Re: [PATCH 5/7] dt-bindings: usb: google,cros-ec-typec: Add ports for
+ DP altmode
+To: Rob Herring <robh@kernel.org>
+Cc: Tzung-Bi Shih <tzungbi@kernel.org>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, Conor Dooley <conor+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Lee Jones <lee@kernel.org>, 
+	Benson Leung <bleung@chromium.org>, Guenter Roeck <groeck@chromium.org>, 
+	chrome-platform@lists.linux.dev, Pin-yen Lin <treapking@chromium.org>, 
+	Abhishek Pandit-Subedi <abhishekpandit@chromium.org>, =?UTF-8?Q?=C5=81ukasz_Bartosik?= <ukaszb@chromium.org>, 
+	Jameson Thies <jthies@google.com>, Andrei Kuchynski <akuchynski@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
-I have already dropped the first v2 patch for incorrect comments(Maybe you =
-missed the dropping email). This v2 patch is just I want to send. Thanks!
-
------Original Message-----
-From: Greg KH <gregkh@linuxfoundation.org>=20
-Sent: Monday, April 28, 2025 19:46
-To: Ren, Jianqi (Jacky) (CN) <Jianqi.Ren.CN@windriver.com>
-Cc: stable@vger.kernel.org; patches@lists.linux.dev; linux-kernel@vger.kern=
-el.org; jhs@mojatatu.com; xiyou.wangcong@gmail.com; jiri@resnulli.us; davem=
-@davemloft.net; kuba@kernel.org; pabeni@redhat.com; netdev@vger.kernel.org;=
- michal.swiatkowski@linux.intel.com; He, Zhe <Zhe.He@windriver.com>
-Subject: Re: [PATCH 6.1.y v2] net/sched: act_mirred: don't override retval =
-if we already lost the skb
-
-CAUTION: This email comes from a non Wind River email account!
-Do not click links or open attachments unless you recognize the sender and =
-know the content is safe.
-
-On Mon, Apr 28, 2025 at 04:01:03PM +0800, jianqi.ren.cn@windriver.com wrote=
-:
-> From: Jakub Kicinski <kuba@kernel.org>
+Quoting Rob Herring (2025-04-22 05:18:37)
+> On Tue, Apr 15, 2025 at 05:02:05PM -0700, Stephen Boyd wrote:
+> > Add a DT graph binding to google,cros-ec-typec so that it can combine
+> > DisplayPort (DP) and USB SuperSpeed (SS) data into a USB type-c endpoin=
+t
+> > that is connected to the usb-c-connector node's SS endpoint. Allow ther=
+e
+> > to be multiple 'typec' nodes underneath the EC node so that one DT grap=
+h
+> > exists per DP bridge. The EC is actually controlling TCPCs and redriver=
+s
+> > that combine the DP and USB signals together so this more accurately
+> > reflects the hardware design without introducing yet another DT node
+> > underneath the EC for USB type-c "stuff".
+> >
+> > If the type-c ports are being shared between a single DP controller the=
+n
+> > the ports need to know about each other and determine a policy to drive
+> > DP to one type-c port or the other. If the type-c ports each have their
+> > own dedicated DP controller then they're able to operate independently
+> > and enter/exit DP altmode independently as well. We can't connect the D=
+P
+> > controller's endpoint to one usb-c-connector port@1 endpoint and the US=
+B
+> > controller's endpoint to another usb-c-connector port@1 endpoint either
+> > because the DP muxing case would have DP connected to two
+> > usb-c-connector endpoints which the graph binding doesn't support.
+> >
+> > Therefore, one typec node is required per the capabilities of the type-=
+c
+> > port(s) being managed. Add a port to the DisplayPort altmode as well, s=
+o
+> > that we can show the connection between the DP controller and the DP
+> > altmode. This lets us indicate which type-c ports the DP controller is
+> > wired to. For example, if DP was connected to ports 0 and 2, while port
+> > 1 was connected to another DP controller we wouldn't be able to
+> > implement that without having some other DT property to indicate which
+> > output ports are connected to the DP endpoint.
+> >
+> > Furthermore, this supports ChromeOS designs like Corsola where a DP
+> > controller/PHY is split with two lanes going to one connector and the
+> > other two lanes going to another connector. In this case, we wouldn't
+> > have the graph binding under the cros-ec-typec node, but we would have
+> > the graph binding in the DP altmode directly connected to the DP
+> > controller's two output endpoints.
+> >
+> > Cc: Rob Herring (Arm) <robh@kernel.org>
+> > Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+> > Cc: Conor Dooley <conor+dt@kernel.org>
+> > Acked-by: Lee Jones <lee@kernel.org>
+> > Cc: Benson Leung <bleung@chromium.org>
+> > Cc: Guenter Roeck <groeck@chromium.org>
+> > Cc: Tzung-Bi Shih <tzungbi@kernel.org>
+> > Cc: <devicetree@vger.kernel.org>
+> > Cc: <chrome-platform@lists.linux.dev>
+> > Cc: Pin-yen Lin <treapking@chromium.org>
+> > Cc: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+> > Cc: =C5=81ukasz Bartosik <ukaszb@chromium.org>
+> > Cc: Jameson Thies <jthies@google.com>
+> > Cc: Andrei Kuchynski <akuchynski@chromium.org>
+> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > ---
+> >  .../bindings/connector/usb-connector.yaml     |   6 +
+> >  .../bindings/mfd/google,cros-ec.yaml          |   7 +-
+> >  .../bindings/usb/google,cros-ec-typec.yaml    | 165 ++++++++++++++++++
+> >  3 files changed, 175 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/connector/usb-connector.=
+yaml b/Documentation/devicetree/bindings/connector/usb-connector.yaml
+> > index 11e40d225b9f..e3d60997c03e 100644
+> > --- a/Documentation/devicetree/bindings/connector/usb-connector.yaml
+> > +++ b/Documentation/devicetree/bindings/connector/usb-connector.yaml
+> > @@ -179,6 +179,12 @@ properties:
+> >              $ref: /schemas/types.yaml#/definitions/uint32
+> >              description: VDO returned by Discover Modes USB PD command=
+.
+> >
+> > +          port:
+> > +            $ref: /schemas/graph.yaml#/properties/port
+> > +            description: OF graph bindings modeling a data bus to the
+> > +              DisplayPort altmode from the DisplayPort controller. Use=
+d when
+> > +              the altmode switch is part of the port manager.
+> > +
 >
-> [ Upstream commit 166c2c8a6a4dc2e4ceba9e10cfe81c3e469e3210 ]
->
-> If we're redirecting the skb, and haven't called tcf_mirred_forward(),=20
-> yet, we need to tell the core to drop the skb by setting the retcode=20
-> to SHOT. If we have called tcf_mirred_forward(), however, the skb is=20
-> out of our hands and returning SHOT will lead to UaF.
->
-> Move the retval override to the error path which actually need it.
->
-> Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-> Fixes: e5cf1baf92cb ("act_mirred: use TC_ACT_REINSERT when possible")
-> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-> Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-> Signed-off-by: David S. Miller <davem@davemloft.net> [Minor conflict=20
-> resolved due to code context change.]
-> Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-> Signed-off-by: He Zhe <zhe.he@windriver.com>
-> ---
-> v2: Fix the following issue
-> net/sched/act_mirred.c:265:6: error: variable 'is_redirect' is used=20
-> uninitialized whenever 'if' condition is true found by the following=20
-> tuxmake
-> (https://lore.kernel.org/stable/CA+G9fYu+FEZ-3ye30Hk2sk1+LFsw7iO5AHueU
-> a9H1Ub=3DJO-k2g@mail.gmail.com/) Verified the build test by cmd(tuxmake=20
-> --runtime podman --target-arch arm  --toolchain clang-20 --kconfig=20
-> allmodconfig LLVM=3D1 LLVM_IAS=3D1)
+> Why can't this connection be another endpoint on port@1 as that is the
+> port for the SS signals.
 
-I see 2 "v2" patches here, both different, so I'm dropping both of them :(
+It can be. I mentioned this in the cover letter but I understand if you
+didn't read it. :)
 
+I put it here in the displayport node because I wanted to represent that
+this is the graph endpoint for displayport altmode. Otherwise, I'll have
+to represent that with an endpoint in the usb-c-connector/port@1 node
+that represents the SuperSpeed lanes, or do even more.
+
+>
+> >    port:
+> >      $ref: /schemas/graph.yaml#/properties/port
+> >      description: OF graph bindings modeling a data bus to the connecto=
+r, e.g.
+> > diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml =
+b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> > index ac89696fa649..63d506e88abb 100644
+> > --- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> > +++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+> > @@ -98,9 +98,6 @@ properties:
+> >
+> >    gpio-controller: true
+> >
+> > -  typec:
+> > -    $ref: /schemas/usb/google,cros-ec-typec.yaml#
+> > -
+> >    ec-pwm:
+> >      $ref: /schemas/pwm/google,cros-ec-pwm.yaml#
+> >      deprecated: true
+> > @@ -163,6 +160,10 @@ patternProperties:
+> >      type: object
+> >      $ref: /schemas/extcon/extcon-usbc-cros-ec.yaml#
+> >
+> > +  "^typec(-[0-9])*$":
+> > +    type: object
+> > +    $ref: /schemas/usb/google,cros-ec-typec.yaml#
+> > +
+> >  required:
+> >    - compatible
+> >
+> > diff --git a/Documentation/devicetree/bindings/usb/google,cros-ec-typec=
+.yaml b/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
+> > index 3272d0e01f7e..611345bbe884 100644
+> > --- a/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
+> > +++ b/Documentation/devicetree/bindings/usb/google,cros-ec-typec.yaml
+> > @@ -26,6 +26,55 @@ properties:
+> >    '#size-cells':
+> >      const: 0
+> >
+> > +  mux-gpios:
+> > +    description: GPIOs indicating which way the DisplayPort mux is ste=
+ered
+> > +    minItems: 1
+> > +    maxItems: 3
+> > +
+> > +  no-hpd:
+> > +    description: Indicates this device doesn't signal HPD for DisplayP=
+ort
+> > +    type: boolean
+> > +
+> > +  ports:
+> > +    $ref: /schemas/graph.yaml#/properties/ports
+> > +
+> > +    properties:
+> > +      port@0:
+> > +        $ref: /schemas/graph.yaml#/properties/port
+> > +        description:
+> > +          Port for DisplayPort (DP) data
+> > +
+> > +        properties:
+> > +          endpoint@0:
+> > +            $ref: /schemas/graph.yaml#/properties/endpoint
+> > +            description: Input DP port
+> > +
+> > +        patternProperties:
+> > +          '^endpoint@[1-8]$':
+> > +            $ref: /schemas/graph.yaml#/properties/endpoint
+> > +            description: Output to the usb-c connector's DP altmode
+>
+> This is odd. Generally (or always?) a port is 1 direction.
+
+I was thinking about the case where PCIe is wired here as well for
+thunderbolt altmode. If all the "DP stuff" is in one port then I can
+pick the port@0 and follow endpoints from there. We don't have the PCIe
+case on DT systems so it probably doesn't matter. If we had that case we
+would probably add another endpoint to the usb-c-connector/port@1 to
+represent that connection to the PCIe phy/controller anyway because I
+suspect we wouldn't be able to steer the PCIe links physically. This
+also helps to represent the analog mux we have on Trogdor that steers
+the DP lanes to one or the other usb-c-connector.
+
+>
+> Other bindings IIRC have 3 ports in the device doing the muxing: 1
+> output for connector port@1, 1 USB SS input, and 1 DP input.
+>
+
+I'm trying to represent the altmode muxing that happens with hardware
+that the EC controls (i.e. not on the AP/Linux) along with describing
+the connection between the usb-c-connector and the USB/DP controllers.
+Basically 2 DP lanes and 2 USB SS lanes go into a muxing chip that the
+EC controls and the output of that chip is 4 lanes of USB SS lanes that
+go straight to the usb-c-connector with the proper orientation for the
+pin configuration. Depending on the altmode that the EC enters on the
+usb-c-connector, the 2 DP lanes pass through the EC to the connector, or
+they're terminated at the muxing chip. If we controlled it from the
+kernel the binding would look very much like the other bindings that
+have 3 ports like you mention, 1 USB SS input and 1 DP input and a
+single output for the usb-c-connector/port@1.
+
+On some ARM chromebooks (e.g. Corsola), we have a DP transmitter that
+wires 2 DP lanes to one usb-c-connector and 2 DP lanes to another
+usb-c-connector. The graph is sort of like
+
+ port0: AP DSI -> IT6505 DP_ML0/1 -> EC TCPC0 -> usb-c-connector@0
+ port1: AP DSI -> IT6505 DP_ML2/3 -> EC TCPC1 -> usb-c-connector@1
+
+where IT6505 can have two outputs in the graph, for either DP_ML0/1 or
+DP_ML2/3. I imagine the graph for that device looks like this:
+
+ ports {
+   port@0 { // DSI input
+   };
+   port@1 { // DP output
+     dp_ml01: endpoint@0 { // DP_ML0/1
+       data-lanes =3D <0 1>;
+     };
+     dp_ml23: endpoint@1 {
+       data-lanes =3D <2 3>;
+     };
+   };
+ };
+
+and the usb-c-connector accepts the DP endpoint:
+
+ usb-c-connector@0 {
+   altmodes {
+     displayport {
+       ports { endpoint { remote-endpoint =3D <&dp_ml01>; }; };
+     };
+ };
+ usb-c-connector@1 {
+   altmodes {
+     displayport {
+       ports { endpoint { remote-endpoint =3D <&dp_ml23>; }; };
+     };
+ };
+
+On other ARM chromebooks (e.g. Trogdor) we have a DP transmitter that we
+steer through an EC controlled analog mux. That looks like this:
+
+ port0: AP DP -> EC mux -> EC TCPC0 -> usb-c-connector@0
+ port1: AP DP -> EC mux -> EC TCPC1 -> usb-c-connector@1
+
+where the AP DP binding looks like a single port
+
+ port { ap_dp: endpoint { remote-endpoint =3D <&ec_dp>; };};
+
+and the EC binding accepts that single port as input
+
+ ports {
+   port@0 {
+     ec_dp: endpoint@0 {
+       remote-endpoint =3D <&ap_dp>;
+     };
+     ec_dp0: endpoint@1 {
+       remote-endpoint =3D <&dp_c0>;
+     };
+     ec_dp1: endpoint@2 {
+       remote-endpoint =3D <&dp_c1>;
+     };
+   };
+ };
+
+and finally the connector takes an output endpoint from the DP "port"
+into the altmode node.
+
+ usb-c-connector@0 {
+   altmodes {
+     displayport {
+       ports { dp_c0: endpoint { remote-endpoint =3D <&ec_dp0>; }; };
+     };
+ };
+ usb-c-connector@1 {
+   altmodes {
+     displayport {
+       ports { dp_c1: endpoint { remote-endpoint =3D <&ec_dp1>; }; };
+     };
+ };
+
+I was thinking of making a drm_bridge for each usb-c-connector node and
+for each DP input node in the EC typec node, then hotplugging the bridge
+chain from the EC typec driver when the EC indicates the usb-c-connector
+is in DP altmode. When we have a chip like IT6505 that means we make two
+drm_bridges in the IT6505 driver, two in the EC typec driver, and one
+for each usb-c-connector node (usually two). When we steer two DP lanes
+with the EC, we have two drm_bridges in the EC typec driver and one for
+each usb-c-connector node. The hotplug portion of the bridge chain only
+goes to the EC in the latter case while it extends up to the IT6505 chip
+in the former.
+
+If we add endpoints for each altmode into the usb-c-connector/port@1
+node then it may work without adding the intermediate EC graph, but I
+worry about the Trogdor case. We could number the endpoints in the
+connector like this:
+
+usb-c-connector/port@1
+   endpoint@0 =3D=3D USB SS (USB3)
+   endpoint@1 =3D=3D DP lanes (DisplayPort)
+   endpoint@2 =3D=3D TBT links (Thunderbolt)
+
+but the DP controller only has one output port for the 2 DP lanes on
+Trogdor, so we really need the graph binding in the EC just so that we
+can have two graph output ports to connect to each usb-c-connector's
+SuperSpeed port without changing the DP controller's binding.
+
+TL;DR: I'm hesitant to add another endpoint into the usb-c-connector
+graph's port@1 to handle alternate modes. It doesn't reflect reality. At
+the same time, it looks verbose to describe the EC controlled TCPCs and
+the mux. Ugh.
+
+Now that I've written this all (thanks for reading!) I wonder if I
+should bite the bullet and describe the TCPCs the EC controls as part of
+the graph binding. If we did that it may be verbose but it would reflect
+reality. Similarly, we can describe the EC mux on Trogdor as a single DP
+input port. Maybe a graph binding like this would work in all cases:
+
+ ec-typec {
+   ports {
+     port@0 { // DP mux input (only on Trogdor)
+       endpoint {};
+     };
+     port@1 { // TCPC0
+       endpoint@0 { // DP input (empty on Trogdor?)
+       };
+       endpoint@1 { // USB SS input
+       };
+       endpoint@2 { // PCIe input
+       };
+     };
+     port@2 { // TCPC1
+       endpoint@0 { // DP input (empty on Trogdor?)
+       };
+       endpoint@1 { // USB SS input
+       };
+     };
+     // output starts at 9 =3D 1 + 8 possible connectors
+     port@9 { // TCPC0 output
+       endpoint { }; // To usb-c-connector@0/port@1
+     };
+     port@10 { // TCPC1 output
+       endpoint { }; // To usb-c-connector@1/port@1
+     };
+   };
+ };
+
+or I need to make a whole new node for the DP mux that the EC controls
+because the graph is getting gnarly:
+
+ dp-mux { // Only on Trogdor
+   mux-gpios =3D <&ec 42 GPIO_ACTIVE_HIGH>>;
+   ports {
+     port@0 { // DP input
+     };
+     port@1 {
+       mux_output0: endpoint { };
+     };
+     port@2 {
+       mux_output1: endpoint { };
+     };
+   };
+ };
+
+ ec-typec {
+   ports {
+     port@0 { // TCPC0
+       endpoint@0 { // DP input
+         remote-endpoint =3D <&mux_output0> or <&dp_ml01>;
+       };
+       endpoint@1 { // USB SS input
+       };
+     };
+     port@1 { // TCPC1
+       endpoint@0 { // DP input
+         remote-endpoint =3D <&mux_output1> or <&dp_ml23>;
+       };
+       endpoint@1 { // USB SS input
+       };
+     };
+     port@8 { // TCPC0 output
+       endpoint { }; // To usb-c-connector@0/port@1
+     };
+     port@9 { // TCPC1 output
+       endpoint { }; // To usb-c-connector@1/port@1
+     };
+   };
+   usb-c-connector@0 { };
+   usb-c-connector@1 { };
+ };
+
+Any binding that relies on having multiple DP input endpoints in the
+same ports node will require the ability to register more than one
+drm_bridge for the same parent node. I haven't checked to see if that's
+possible with the hotplug bridge patches. If it isn't, then we'll
+possibly want to describe each TCPC as a different node as well so that
+a drm_bridge can be associated with a graph node parent device.
+
+ tcpc0 {
+   ports {
+     port@0 { // DP input
+       endpoint {
+         remote-endpoint =3D <&mux_output0> or <&dp_ml01>;
+       };
+     };
+     port@1 { // USB SS input
+       endpoint {
+       };
+     };
+     port@2 { // USB type-c output
+       endpoint { }; // To usb-c-connector@0/port@1
+     };
+   };
+ };
+
+ tcpc1 {
+   ports {
+     port@0 { // DP input
+       endpoint {
+         remote-endpoint =3D <&mux_output1> or <&dp_ml23>;
+       };
+     };
+     port@1 { // USB SS input
+       endpoint {
+       };
+     };
+     port@2 { // USB type-c output
+       endpoint { }; // To usb-c-connector@1/port@1
+     };
+   };
+ };
+
+ ec-typec {
+   usb-c-connector@0 { };
+   usb-c-connector@1 { };
+ };
+
+In this last example, a drm_bridge is made for each tcpc,
+usb-c-connector, and mux node. Any direction you can provide? Maybe this
+last one is the best approach that doesn't suffer from trying to cram
+everything into the typec node.
