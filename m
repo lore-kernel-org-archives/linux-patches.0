@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9C125178C;
-	Tue, 29 Apr 2025 17:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C626B221719;
+	Tue, 29 Apr 2025 17:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948677; cv=none; b=V8BVPyrSmdGLm7loX45XFozysfF/KoHa1F3OdWUYPBZq33aeZ7LVwdIa2QNts4n+kztYqppjb6w1mzt3JjbbknzXw2mGDMeL/1G0xonbuSA/liagIcZl/E2Sh4pDodX4sR+PlSvyi6z1GsT1+bHLpGpWyJB75dKH6gLDAectBBQ=
+	t=1745948679; cv=none; b=KMqo85kHqfeMHvX6OlYD7lu00Bf5JZ1RtMdN02bTCUM4iBmHFom7ZRI7vWUiIcxt0xeiV3T/E5C/+Pigbex5+INDgNr6GAGHS8Azui9za2RdaznRa7e4O20YzQNo7OJcIucnIlSzvS4GVM7DGkSy1wnlqjD4i1PBpQRfp0UuLTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948677; c=relaxed/simple;
-	bh=C5aY2Z0kGiqx0ixSDaC1iYJuOU0/Ty9oBA+6tDcPbrg=;
+	s=arc-20240116; t=1745948679; c=relaxed/simple;
+	bh=T7FvCwzBeWpyN8wRXfiZYxIeYS9lBCufghOm+EjjaAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C8DJpVMDF6/Ef1zgqw2xln+dttxw+H+VeTSYqzjKUYsh/W5wbrNy5Lfu/UP4Sp0hbW/0xdp95DBkHEH02pK9HesJpJJm+eS91Bsu0yVWv4O8m4ojsaoilOxCaHlu9G4tep03Bb0aebkK/ZfQp3zGnJ1dU1XQIbyTm9w7bKRW42E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TTArCkvX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qYnUY6G+YQ4U78KH2kZtDkgXZ9Q6p0TtQbXRE5wHo9t44hPLm1gyHiOF71OIYETnfmGsqQqHrnPn2B7XMFyDp6zRz1y9+z8Duy0yDqUoQC2KF1S/nafrU8MI1c7pkbYNjAF+RGXync1ceE5ETWVEUXiwaDdQsb944iQTkIHIJZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPofiLxJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TTArCkvX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B53C4CEF0;
-	Tue, 29 Apr 2025 17:44:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPofiLxJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595F3C4CEE9;
+	Tue, 29 Apr 2025 17:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948676;
-	bh=C5aY2Z0kGiqx0ixSDaC1iYJuOU0/Ty9oBA+6tDcPbrg=;
+	s=korg; t=1745948679;
+	bh=T7FvCwzBeWpyN8wRXfiZYxIeYS9lBCufghOm+EjjaAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TTArCkvXC3ZTQ3JKY9iGTK54zHe+lJW731jm7EdvTdUy6dDLOl0L3quYwhWqmv19w
-	 iDp4OQpJ/eUFLs3gilo8GaTAEP+O7A6XVI2ERcmGfs0GfZ3m8jJo1aQ4vF/FbJW6tA
-	 W+8PVCtFRQSexdnwtdIkR4AfSqQ2j33YVCn/zigI=
+	b=xPofiLxJyF//WyctgYv7rJXJRQmTjugj7J8WYgUCXW3RwUQShZ6hnbip2fba5aHW/
+	 gqLA7UG/K9iqZ7BJU10vh8n5wFuoOhsfJHjn5rhrqJ4uZng3eHPSRijkt6iEEuXLcn
+	 G79BLqARq67jYrDBFskwLRsf3hBwdORuKAQfVPbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.15 078/373] mtd: Add check for devm_kcalloc()
-Date: Tue, 29 Apr 2025 18:39:15 +0200
-Message-ID: <20250429161126.362581300@linuxfoundation.org>
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 079/373] net: dsa: mv88e6xxx: workaround RGMII transmit delay erratum for 6320 family
+Date: Tue, 29 Apr 2025 18:39:16 +0200
+Message-ID: <20250429161126.402303208@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -44,38 +45,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Marek Behún <kabel@kernel.org>
 
-commit 2aee30bb10d7bad0a60255059c9ce1b84cf0130e upstream.
+commit 1ebc8e1ef906db9c08e9abe9776d85ddec837725 upstream.
 
-Add a check for devm_kcalloc() to ensure successful allocation.
+Implement the workaround for erratum
+  3.3 RGMII timing may be out of spec when transmit delay is enabled
+for the 6320 family, which says:
 
-Fixes: 78c08247b9d3 ("mtd: Support kmsg dumper based on pstore/blk")
-Cc: stable@vger.kernel.org # v5.10+
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+  When transmit delay is enabled via Port register 1 bit 14 = 1, duty
+  cycle may be out of spec. Under very rare conditions this may cause
+  the attached device receive CRC errors.
+
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.4.x
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250317173250.28780-8-kabel@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdpstore.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/dsa/mv88e6xxx/chip.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/mtd/mtdpstore.c
-+++ b/drivers/mtd/mtdpstore.c
-@@ -423,6 +423,9 @@ static void mtdpstore_notify_add(struct
- 	longcnt = BITS_TO_LONGS(div_u64(mtd->size, mtd->erasesize));
- 	cxt->badmap = kcalloc(longcnt, sizeof(long), GFP_KERNEL);
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -3192,6 +3192,21 @@ static int mv88e6xxx_stats_setup(struct
+ 	return mv88e6xxx_g1_stats_clear(chip);
+ }
  
-+	if (!cxt->rmmap || !cxt->usedmap || !cxt->badmap)
-+		return;
++static int mv88e6320_setup_errata(struct mv88e6xxx_chip *chip)
++{
++	u16 dummy;
++	int err;
 +
- 	/* just support dmesg right now */
- 	cxt->dev.flags = PSTORE_FLAGS_DMESG;
- 	cxt->dev.zone.read = mtdpstore_read;
++	/* Workaround for erratum
++	 *   3.3 RGMII timing may be out of spec when transmit delay is enabled
++	 */
++	err = mv88e6xxx_port_hidden_write(chip, 0, 0xf, 0x7, 0xe000);
++	if (err)
++		return err;
++
++	return mv88e6xxx_port_hidden_read(chip, 0, 0xf, 0x7, &dummy);
++}
++
+ /* Check if the errata has already been applied. */
+ static bool mv88e6390_setup_errata_applied(struct mv88e6xxx_chip *chip)
+ {
+@@ -4569,6 +4584,7 @@ static const struct mv88e6xxx_ops mv88e6
+ 
+ static const struct mv88e6xxx_ops mv88e6320_ops = {
+ 	/* MV88E6XXX_FAMILY_6320 */
++	.setup_errata = mv88e6320_setup_errata,
+ 	.ieee_pri_map = mv88e6085_g1_ieee_pri_map,
+ 	.ip_pri_map = mv88e6085_g1_ip_pri_map,
+ 	.irl_init_all = mv88e6352_g2_irl_init_all,
+@@ -4615,6 +4631,7 @@ static const struct mv88e6xxx_ops mv88e6
+ 
+ static const struct mv88e6xxx_ops mv88e6321_ops = {
+ 	/* MV88E6XXX_FAMILY_6320 */
++	.setup_errata = mv88e6320_setup_errata,
+ 	.ieee_pri_map = mv88e6085_g1_ieee_pri_map,
+ 	.ip_pri_map = mv88e6085_g1_ip_pri_map,
+ 	.irl_init_all = mv88e6352_g2_irl_init_all,
 
 
