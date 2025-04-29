@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B4825393F;
-	Tue, 29 Apr 2025 17:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105CA2517A6;
+	Tue, 29 Apr 2025 17:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949065; cv=none; b=IPqbIYVUlKIa4o3VP4cgkjAyph4pV8PBhfa1tSnfIpWGbJGUdrY1sR247VMZWd4rCg31rGQWHBssMdf4f6LpR7Kp9yTu5762ng8izlyzqK8wm+DAdcX3bKCXz6KjJE/PpYWPohgFiSpYkYUOiCKpXF/GDhFE1aaWe+6Ht1Vhuyw=
+	t=1745949068; cv=none; b=Dq9/zywrbdHWGGa3T1Rfe/KubMCv1Nc4M9lF5RBrQPxipUc7UU1iAUPkw1RDeixqkU7GFtcHFTo0RIuUDB2uTbxnNmin4v/G/7QR5Tq+g2w9A4XZLqYqyNT2gzIdIfliIYa2MMxY+Nb33iIaCBPKOf9KGgpbcW8aZzFWokPDnV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949065; c=relaxed/simple;
-	bh=wTD+AZaHWYLgycpG0MmeHb4DKma3YNjtiJr44/QqZzQ=;
+	s=arc-20240116; t=1745949068; c=relaxed/simple;
+	bh=uCBLZ4nU5hTq08akN5YnnvLO4lsKa0bYK9+SRvjDPHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uU+sscHEcX3q7PNXVchkIWBjF1l32fQyPggUcU54T6HnThdUnRQRaBNlWQauaAyiX4DepPk/PpN/yE7hncxEQZ1rFQlIsM0VyqW6u8SnQ1UvF4e+6dgI1e+Y93Vi9/Wb7GnmnzRJtNDMm63P51FFm9yqzUDyt7OU4bmn5frgot8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybAeFssN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=isE2+PUCkVy8rctdZkV1Wnwc9wON4f+B/LZ/qNiJjyVB3DSep8ClK7o/kYIe22W8HFUYosHggwLOyHJVkyQxt/eRv/hVeqKAGHGgdOTdHyiXgPDhX1AgPufPGVMfT59+Fp5+LNkIfeJcgVClVQAKI5qhHZA8CbOiGJMcVwWzTog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dbgz9YjN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybAeFssN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FA3C4CEE9;
-	Tue, 29 Apr 2025 17:51:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dbgz9YjN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B99CC4CEE3;
+	Tue, 29 Apr 2025 17:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949065;
-	bh=wTD+AZaHWYLgycpG0MmeHb4DKma3YNjtiJr44/QqZzQ=;
+	s=korg; t=1745949067;
+	bh=uCBLZ4nU5hTq08akN5YnnvLO4lsKa0bYK9+SRvjDPHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ybAeFssNLnS82sccIpzkLtyTUSgAtvSKxRfJAtMxv1Btm1GYlt0I9WjOxPstAP4Kf
-	 snE933NFznaCtXRyJqItasyxcjwH3PFJnfDLm8GZvK3dq/BiCZD5ScKZbwWyNn9jY9
-	 ewcdqBnwD4YyMzzZ2yH0tFgBPJmJ/imXw3gCWzjk=
+	b=dbgz9YjNnRPGEJGwpu9C0DEjrLZ4dkMCYF3pE3vsB22ncJ3ApGd0AP9o5XE/Dz5qV
+	 JXgwepkFAjSlT+bsmK3UTIJ28ND2qZyQggtTqlQGSsuBny9v07HniNmUu5mcbp2MDd
+	 2c2Hb3KcxOWFgQbrE0x+0zlIayqe1U9oAnaORYeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
+	Wang Liang <wangliang74@huawei.com>,
 	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Bin Lan <bin.lan.cn@windriver.com>,
+	Sasha Levin <sashal@kernel.org>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 5.15 203/373] ipv6: release nexthop on device removal
-Date: Tue, 29 Apr 2025 18:41:20 +0200
-Message-ID: <20250429161131.514501753@linuxfoundation.org>
+Subject: [PATCH 5.15 204/373] net: fix crash when config small gso_max_size/gso_ipv4_max_size
+Date: Tue, 29 Apr 2025 18:41:21 +0200
+Message-ID: <20250429161131.555999310@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -53,99 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Wang Liang <wangliang74@huawei.com>
 
-[ Upstream commit eb02688c5c45c3e7af7e71f036a7144f5639cbfe ]
+[ Upstream commit 9ab5cf19fb0e4680f95e506d6c544259bf1111c4 ]
 
-The CI is hitting some aperiodic hangup at device removal time in the
-pmtu.sh self-test:
+Config a small gso_max_size/gso_ipv4_max_size will lead to an underflow
+in sk_dst_gso_max_size(), which may trigger a BUG_ON crash,
+because sk->sk_gso_max_size would be much bigger than device limits.
+Call Trace:
+tcp_write_xmit
+    tso_segs = tcp_init_tso_segs(skb, mss_now);
+        tcp_set_skb_tso_segs
+            tcp_skb_pcount_set
+                // skb->len = 524288, mss_now = 8
+                // u16 tso_segs = 524288/8 = 65535 -> 0
+                tso_segs = DIV_ROUND_UP(skb->len, mss_now)
+    BUG_ON(!tso_segs)
+Add check for the minimum value of gso_max_size and gso_ipv4_max_size.
 
-unregister_netdevice: waiting for veth_A-R1 to become free. Usage count = 6
-ref_tracker: veth_A-R1@ffff888013df15d8 has 1/5 users at
-	dst_init+0x84/0x4a0
-	dst_alloc+0x97/0x150
-	ip6_dst_alloc+0x23/0x90
-	ip6_rt_pcpu_alloc+0x1e6/0x520
-	ip6_pol_route+0x56f/0x840
-	fib6_rule_lookup+0x334/0x630
-	ip6_route_output_flags+0x259/0x480
-	ip6_dst_lookup_tail.constprop.0+0x5c2/0x940
-	ip6_dst_lookup_flow+0x88/0x190
-	udp_tunnel6_dst_lookup+0x2a7/0x4c0
-	vxlan_xmit_one+0xbde/0x4a50 [vxlan]
-	vxlan_xmit+0x9ad/0xf20 [vxlan]
-	dev_hard_start_xmit+0x10e/0x360
-	__dev_queue_xmit+0xf95/0x18c0
-	arp_solicit+0x4a2/0xe00
-	neigh_probe+0xaa/0xf0
-
-While the first suspect is the dst_cache, explicitly tracking the dst
-owing the last device reference via probes proved such dst is held by
-the nexthop in the originating fib6_info.
-
-Similar to commit f5b51fe804ec ("ipv6: route: purge exception on
-removal"), we need to explicitly release the originating fib info when
-disconnecting a to-be-removed device from a live ipv6 dst: move the
-fib6_info cleanup into ip6_dst_ifdown().
-
-Tested running:
-
-./pmtu.sh cleanup_ipv6_exception
-
-in a tight loop for more than 400 iterations with no spat, running an
-unpatched kernel  I observed a splat every ~10 iterations.
-
-Fixes: f88d8ea67fbd ("ipv6: Plumb support for nexthop object in a fib6_info")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 46e6b992c250 ("rtnetlink: allow GSO maximums to be set on device creation")
+Fixes: 9eefedd58ae1 ("net: add gso_ipv4_max_size and gro_ipv4_max_size per device")
+Signed-off-by: Wang Liang <wangliang74@huawei.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/604c45c188c609b732286b47ac2a451a40f6cf6d.1730828007.git.pabeni@redhat.com
+Link: https://patch.msgid.link/20241023035213.517386-1-wangliang74@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-(cherry picked from commit eb02688c5c45c3e7af7e71f036a7144f5639cbfe)
-[Harshit: Resolved conflict due to missing commit: e5f80fcf869a ("ipv6:
-give an IPv6 dev to blackhole_netdev") and commit: b4cb4a1391dc ("net:
-use unrcu_pointer() helper") in linux-5.15.y]
+[ Resolve minor conflicts to fix CVE-2024-50258 ]
+Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[Harshit: Clean cherrypick from 6.1.y commit]
 Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/route.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/core/rtnetlink.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -377,6 +377,7 @@ static void ip6_dst_ifdown(struct dst_en
- 	struct inet6_dev *idev = rt->rt6i_idev;
- 	struct net_device *loopback_dev =
- 		dev_net(dev)->loopback_dev;
-+	struct fib6_info *from;
- 
- 	if (idev && idev->dev != loopback_dev) {
- 		struct inet6_dev *loopback_idev = in6_dev_get(loopback_dev);
-@@ -385,6 +386,8 @@ static void ip6_dst_ifdown(struct dst_en
- 			in6_dev_put(idev);
- 		}
- 	}
-+	from = xchg((__force struct fib6_info **)&rt->from, NULL);
-+	fib6_info_release(from);
- }
- 
- static bool __rt6_check_expired(const struct rt6_info *rt)
-@@ -1443,7 +1446,6 @@ static DEFINE_SPINLOCK(rt6_exception_loc
- static void rt6_remove_exception(struct rt6_exception_bucket *bucket,
- 				 struct rt6_exception *rt6_ex)
- {
--	struct fib6_info *from;
- 	struct net *net;
- 
- 	if (!bucket || !rt6_ex)
-@@ -1455,8 +1457,6 @@ static void rt6_remove_exception(struct
- 	/* purge completely the exception to allow releasing the held resources:
- 	 * some [sk] cache may keep the dst around for unlimited time
- 	 */
--	from = xchg((__force struct fib6_info **)&rt6_ex->rt6i->from, NULL);
--	fib6_info_release(from);
- 	dst_dev_put(&rt6_ex->rt6i->dst);
- 
- 	hlist_del_rcu(&rt6_ex->hlist);
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -1899,7 +1899,7 @@ static const struct nla_policy ifla_poli
+ 	[IFLA_NUM_TX_QUEUES]	= { .type = NLA_U32 },
+ 	[IFLA_NUM_RX_QUEUES]	= { .type = NLA_U32 },
+ 	[IFLA_GSO_MAX_SEGS]	= { .type = NLA_U32 },
+-	[IFLA_GSO_MAX_SIZE]	= { .type = NLA_U32 },
++	[IFLA_GSO_MAX_SIZE]	= NLA_POLICY_MIN(NLA_U32, MAX_TCP_HEADER + 1),
+ 	[IFLA_PHYS_PORT_ID]	= { .type = NLA_BINARY, .len = MAX_PHYS_ITEM_ID_LEN },
+ 	[IFLA_CARRIER_CHANGES]	= { .type = NLA_U32 },  /* ignored */
+ 	[IFLA_PHYS_SWITCH_ID]	= { .type = NLA_BINARY, .len = MAX_PHYS_ITEM_ID_LEN },
 
 
