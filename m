@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E57229B05;
-	Tue, 29 Apr 2025 17:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0332517B6;
+	Tue, 29 Apr 2025 17:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946167; cv=none; b=XD7o9qUlbB8DkJcX4JJ/rMDBhV4UhliwnCG1G80RzPbF9pyY90Kp37KhKAkDeBsSgQG1hvS0tlexTtB7TLWRIXokWRvN8HYu9KVFvcRqawaVffKj/L4sgb9qUH4nkd2i1PVP2WIBDPRrT60wNa2dBZXjPfO18JJIczlE0pqDrGM=
+	t=1745946170; cv=none; b=lwHbctZ4bBK2hASAXo3B2e0UKUuIcI6/VzvS6AyphkYxJb51vXx4E0XmW1AumBsOaGL+BkaTsDzOHY9bPhXvvMBfBeJgICrTyRGG8FEifq3ibNm/zKyAu2mhhfIoL3+t67Cf9NR46p+8A79D2D+2sxNUHZicpiowDIJm//Kihtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946167; c=relaxed/simple;
-	bh=GJ04eBvDLbt437VUbAvmbD8PEzCTcfQhbdrjmY7Iqa8=;
+	s=arc-20240116; t=1745946170; c=relaxed/simple;
+	bh=bre1+LrcRSl8dDxD5eKAUBBm/ldF4PdRyxhhA7rSAXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7nQCUq+fCb2VxUHB9avDXKe02x2hIOJmCWm8ZR3b0A4yIuC6WyKhfwXA8IvZOVAepEfbPsa+YI+Whu36zVFlP7MqsO358m7FzLSQGjMQFwcZFs8jp6/A0slqnzsYfdXDC6XFsXW8l8dyYb21UkUfiNxdy36twz/JXf7RVr2smA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWzWfydK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oZrTyNg8YKPUZC8XUu9QM521eJ3/P+xBy5RZ444Lbhq4jItGCdqLqaKPZtaCy0x8BHwouJYiYfawmFxU3Ljr+gTAZtzDvrL7j/y4pygjkg61kh9RUskNRkxMBZLSDXndFCLycUSrCjFYqmwnhpkLAG3AAET69UOLac0xgikci1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wORIKonN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWzWfydK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD86C4CEE3;
-	Tue, 29 Apr 2025 17:02:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wORIKonN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC67C4CEF1;
+	Tue, 29 Apr 2025 17:02:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946167;
-	bh=GJ04eBvDLbt437VUbAvmbD8PEzCTcfQhbdrjmY7Iqa8=;
+	s=korg; t=1745946170;
+	bh=bre1+LrcRSl8dDxD5eKAUBBm/ldF4PdRyxhhA7rSAXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vWzWfydKh7CycA9Qh3sySDxCcZmo1kAourZfU0Zj9lcJWHkb4GTpcISG5ep5yP/lc
-	 82bdGEU9hJu8h2JwoUBtudy4jzpn9q9wGiBgYBupb8FtPouxu12b1KYXqrTwPh9XPQ
-	 1DFTxYl9O+/Y5tqTmpsa3jZHaF0U4IEbJxSl5Nks=
+	b=wORIKonN6G89NyImqqICL8mQwdyf/Tk546JUKZ1cw4WPBwnu5z+H/64ol4BXIRS3P
+	 fBo3+W364UG7Lzj1+SVQjHr10KvHamtTL3x5t+p+7EYiSrcq1SY2QvvN/JDKpak1OB
+	 xxS/n5awSH0e5kezv4dmz9fRJQ9SAY0hDjQINwrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 177/311] crypto: ecdsa - Harden against integer overflows in DIV_ROUND_UP()
-Date: Tue, 29 Apr 2025 18:40:14 +0200
-Message-ID: <20250429161128.278346321@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Mahesh Rao <mahesh.rao@intel.com>,
+	Dinh Nguyen <dinguyen@kernel.org>
+Subject: [PATCH 6.14 151/311] firmware: stratix10-svc: Add of_platform_default_populate()
+Date: Tue, 29 Apr 2025 18:39:48 +0200
+Message-ID: <20250429161127.225144154@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -51,101 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Mahesh Rao <mahesh.rao@intel.com>
 
-[ Upstream commit b16510a530d1e6ab9683f04f8fb34f2e0f538275 ]
+commit 4d239f447f96bd2cb646f89431e9db186c1ccfd4 upstream.
 
-Herbert notes that DIV_ROUND_UP() may overflow unnecessarily if an ecdsa
-implementation's ->key_size() callback returns an unusually large value.
-Herbert instead suggests (for a division by 8):
+Add of_platform_default_populate() to stratix10-svc
+driver as the firmware/svc node was moved out of soc.
+This fixes the failed probing of child drivers of
+svc node.
 
-  X / 8 + !!(X & 7)
-
-Based on this formula, introduce a generic DIV_ROUND_UP_POW2() macro and
-use it in lieu of DIV_ROUND_UP() for ->key_size() return values.
-
-Additionally, use the macro in ecc_digits_from_bytes(), whose "nbytes"
-parameter is a ->key_size() return value in some instances, or a
-user-specified ASN.1 length in the case of ecdsa_get_signature_rs().
-
-Link: https://lore.kernel.org/r/Z3iElsILmoSu6FuC@gondor.apana.org.au/
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 23c3ebed382a ("arm64: dts: socfpga: agilex: move firmware out of soc node")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Signed-off-by: Mahesh Rao <mahesh.rao@intel.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Link: https://lore.kernel.org/r/20250326115446.36123-1-dinguyen@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/ecc.c         |  2 +-
- crypto/ecdsa-p1363.c |  2 +-
- crypto/ecdsa-x962.c  |  4 ++--
- include/linux/math.h | 12 ++++++++++++
- 4 files changed, 16 insertions(+), 4 deletions(-)
+ drivers/firmware/stratix10-svc.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/crypto/ecc.c b/crypto/ecc.c
-index 50ad2d4ed672c..6cf9a945fc6c2 100644
---- a/crypto/ecc.c
-+++ b/crypto/ecc.c
-@@ -71,7 +71,7 @@ EXPORT_SYMBOL(ecc_get_curve);
- void ecc_digits_from_bytes(const u8 *in, unsigned int nbytes,
- 			   u64 *out, unsigned int ndigits)
- {
--	int diff = ndigits - DIV_ROUND_UP(nbytes, sizeof(u64));
-+	int diff = ndigits - DIV_ROUND_UP_POW2(nbytes, sizeof(u64));
- 	unsigned int o = nbytes & 7;
- 	__be64 msd = 0;
+--- a/drivers/firmware/stratix10-svc.c
++++ b/drivers/firmware/stratix10-svc.c
+@@ -1224,22 +1224,28 @@ static int stratix10_svc_drv_probe(struc
+ 	if (!svc->intel_svc_fcs) {
+ 		dev_err(dev, "failed to allocate %s device\n", INTEL_FCS);
+ 		ret = -ENOMEM;
+-		goto err_unregister_dev;
++		goto err_unregister_rsu_dev;
+ 	}
  
-diff --git a/crypto/ecdsa-p1363.c b/crypto/ecdsa-p1363.c
-index eaae7214d69bc..4454f1f8f33f5 100644
---- a/crypto/ecdsa-p1363.c
-+++ b/crypto/ecdsa-p1363.c
-@@ -22,7 +22,7 @@ static int ecdsa_p1363_verify(struct crypto_sig *tfm,
- {
- 	struct ecdsa_p1363_ctx *ctx = crypto_sig_ctx(tfm);
- 	unsigned int keylen = crypto_sig_keysize(ctx->child);
--	unsigned int ndigits = DIV_ROUND_UP(keylen, sizeof(u64));
-+	unsigned int ndigits = DIV_ROUND_UP_POW2(keylen, sizeof(u64));
- 	struct ecdsa_raw_sig sig;
+ 	ret = platform_device_add(svc->intel_svc_fcs);
+ 	if (ret) {
+ 		platform_device_put(svc->intel_svc_fcs);
+-		goto err_unregister_dev;
++		goto err_unregister_rsu_dev;
+ 	}
  
- 	if (slen != 2 * keylen)
-diff --git a/crypto/ecdsa-x962.c b/crypto/ecdsa-x962.c
-index 6a77c13e192b1..90a04f4b9a2f5 100644
---- a/crypto/ecdsa-x962.c
-+++ b/crypto/ecdsa-x962.c
-@@ -81,8 +81,8 @@ static int ecdsa_x962_verify(struct crypto_sig *tfm,
- 	struct ecdsa_x962_signature_ctx sig_ctx;
- 	int err;
- 
--	sig_ctx.ndigits = DIV_ROUND_UP(crypto_sig_keysize(ctx->child),
--				       sizeof(u64));
-+	sig_ctx.ndigits = DIV_ROUND_UP_POW2(crypto_sig_keysize(ctx->child),
-+					    sizeof(u64));
- 
- 	err = asn1_ber_decoder(&ecdsasignature_decoder, &sig_ctx, src, slen);
- 	if (err < 0)
-diff --git a/include/linux/math.h b/include/linux/math.h
-index f5f18dc3616b0..0198c92cbe3ef 100644
---- a/include/linux/math.h
-+++ b/include/linux/math.h
-@@ -34,6 +34,18 @@
-  */
- #define round_down(x, y) ((x) & ~__round_mask(x, y))
- 
-+/**
-+ * DIV_ROUND_UP_POW2 - divide and round up
-+ * @n: numerator
-+ * @d: denominator (must be a power of 2)
-+ *
-+ * Divides @n by @d and rounds up to next multiple of @d (which must be a power
-+ * of 2). Avoids integer overflows that may occur with __KERNEL_DIV_ROUND_UP().
-+ * Performance is roughly equivalent to __KERNEL_DIV_ROUND_UP().
-+ */
-+#define DIV_ROUND_UP_POW2(n, d) \
-+	((n) / (d) + !!((n) & ((d) - 1)))
++	ret = of_platform_default_populate(dev_of_node(dev), NULL, dev);
++	if (ret)
++		goto err_unregister_fcs_dev;
 +
- #define DIV_ROUND_UP __KERNEL_DIV_ROUND_UP
+ 	dev_set_drvdata(dev, svc);
  
- #define DIV_ROUND_DOWN_ULL(ll, d) \
--- 
-2.39.5
-
+ 	pr_info("Intel Service Layer Driver Initialized\n");
+ 
+ 	return 0;
+ 
+-err_unregister_dev:
++err_unregister_fcs_dev:
++	platform_device_unregister(svc->intel_svc_fcs);
++err_unregister_rsu_dev:
+ 	platform_device_unregister(svc->stratix10_svc_rsu);
+ err_free_kfifo:
+ 	kfifo_free(&controller->svc_fifo);
+@@ -1253,6 +1259,8 @@ static void stratix10_svc_drv_remove(str
+ 	struct stratix10_svc *svc = dev_get_drvdata(&pdev->dev);
+ 	struct stratix10_svc_controller *ctrl = platform_get_drvdata(pdev);
+ 
++	of_platform_depopulate(ctrl->dev);
++
+ 	platform_device_unregister(svc->intel_svc_fcs);
+ 	platform_device_unregister(svc->stratix10_svc_rsu);
+ 
 
 
