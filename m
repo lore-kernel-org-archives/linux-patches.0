@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D7022AE68;
-	Tue, 29 Apr 2025 18:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E289416A94A;
+	Tue, 29 Apr 2025 18:10:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950219; cv=none; b=SDRQk5rddLh+HaoVrbgEbEbKbzPIvivB+pQCvLkLqbre5BbFg8vhSMvpJDL2h14Y2t8BNJGqeBDFC6x/XWJv14tMqQDefsXs7S8V07PJxztUmA+fgV9lGx9cHwT4YmWjFrfnFPN6roXmeTasihoxfg2tVtpSJSLlFsRfgTBmfuE=
+	t=1745950223; cv=none; b=D20nhfT1Aw9Sm81aJqZ09XfDnm5KVp3uYxPAif7T/c89IVwSzwRXw5qI+WghMce0tYO4Qs+ebPJJbMw8F/vZK412giDf09KnWIk08zTp96RlryQitCQhlyfdy4ATYc0KvZc+UFB9wmH/HD+gZAhcb4TENOpfKwOhF1IA9HulFas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950219; c=relaxed/simple;
-	bh=OZaIftCPA/bbzS9+l4BTmxIVmGCMD8GrpLns/nn/YY8=;
+	s=arc-20240116; t=1745950223; c=relaxed/simple;
+	bh=5XSi7i3y5jLAokaqs+6eUyW8bgLlNfxFzENjU/3OSqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bi6f7CxTVrzKgHNpjvlH3Otpfujdjvm2EPf/V+ivXsgmCgMJp4j49LRef4G0Rhbggb7ZeNW6IElqdJ39wjqtzpJQBsIkC24V+sQf07IrZqj+HsiVUovDToCL7l6DsBKhxz4RaWg6rqBPAqxQbbs5KxuXI29YwvTgv4fynLRsQkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHaj5l6i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JE4cCqs1IWbzMzztYkStlNWGr3VaXWxA4QzA2Jndid+myRdqppPPrcE0DRQgTkYUYdwJWW/+UGN0UTgMoUGmgQqct9xXQTNeE6yLPJb2ao4ntEcFMEb00V8oE+1CPDezmSuj9LG7fEpKEahb4MjShy5x3L+pc9HxTekAVkK0z0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xJwZucZo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHaj5l6i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF8DDC4CEE3;
-	Tue, 29 Apr 2025 18:10:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJwZucZo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65F2C4CEE3;
+	Tue, 29 Apr 2025 18:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950219;
-	bh=OZaIftCPA/bbzS9+l4BTmxIVmGCMD8GrpLns/nn/YY8=;
+	s=korg; t=1745950222;
+	bh=5XSi7i3y5jLAokaqs+6eUyW8bgLlNfxFzENjU/3OSqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hHaj5l6iryyJmwV9vF/TMpWzSfG1BvODeS0NJsNLBPNUdax+DgvGwGsHyPk4WamH0
-	 w6sYWWbEEJlVubdAZ8eHwmLgbAzNR/DEuDF8Msf2tG4zzJQF/glJxA5mnhXN9iTlvM
-	 iJ0O4jSBMTLNzUwFbY/CjK2+ZjYACW3RUdVVdEzg=
+	b=xJwZucZoiTo+8ZAds8dzwCj9QpSqxumO8hNA5oenGeLm1aWMAMPArJ3HWWtpqNJ1W
+	 HslrpPv/wgvJp6H3blOWT8CXmt3I7X6yT4t0kb8FwFTh39elwca2Ox8Eb7qLOteVKr
+	 1ERebCqCKLAdyytHTFdBTMeC6GcWid9IgFbiFZcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ninad Malwade <nmalwade@nvidia.com>,
-	Ivy Huang <yijuh@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 025/204] arm64: tegra: Remove the Orin NX/Nano suspend key
-Date: Tue, 29 Apr 2025 18:41:53 +0200
-Message-ID: <20250429161100.448661343@linuxfoundation.org>
+Subject: [PATCH 6.6 026/204] clk: renesas: rzg2l: Use u32 for flag and mux_flags
+Date: Tue, 29 Apr 2025 18:41:54 +0200
+Message-ID: <20250429161100.488874588@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,48 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ninad Malwade <nmalwade@nvidia.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit bb8a3ad25f098b6ea9b1d0f522427b4ad53a7bba ]
+[ Upstream commit 897a3e34d6e73d2386715d5c44c57992f2c0eada ]
 
-As per the Orin Nano Dev Kit schematic, GPIO_G.02 is not available
-on this device family. It should not be used at all on Orin NX/Nano.
-Having this unused pin mapped as the suspend key can lead to
-unpredictable behavior for low power modes.
+flag and mux_flags are intended to keep bit masks.  Use u32 type for it.
 
-Orin NX/Nano uses GPIO_EE.04 as both a "power" button and a "suspend"
-button. However, we cannot have two gpio-keys mapped to the same
-GPIO. Therefore remove the "suspend" key.
-
-Cc: stable@vger.kernel.org
-Fixes: e63472eda5ea ("arm64: tegra: Support Jetson Orin NX reference platform")
-Signed-off-by: Ninad Malwade <nmalwade@nvidia.com>
-Signed-off-by: Ivy Huang <yijuh@nvidia.com>
-Link: https://lore.kernel.org/r/20250206224034.3691397-1-yijuh@nvidia.com
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230912045157.177966-15-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Stable-dep-of: 7f22a298d926 ("clk: renesas: r9a07g043: Fix HP clock source for RZ/Five")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra234-p3768-0000.dtsi | 7 -------
- 1 file changed, 7 deletions(-)
+ drivers/clk/renesas/rzg2l-cpg.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra234-p3768-0000.dtsi b/arch/arm64/boot/dts/nvidia/tegra234-p3768-0000.dtsi
-index 39110c1232e0d..db10b4b46cca9 100644
---- a/arch/arm64/boot/dts/nvidia/tegra234-p3768-0000.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra234-p3768-0000.dtsi
-@@ -196,13 +196,6 @@ key-power {
- 			wakeup-event-action = <EV_ACT_ASSERTED>;
- 			wakeup-source;
- 		};
--
--		key-suspend {
--			label = "Suspend";
--			gpios = <&gpio TEGRA234_MAIN_GPIO(G, 2) GPIO_ACTIVE_LOW>;
--			linux,input-type = <EV_KEY>;
--			linux,code = <KEY_SLEEP>;
--		};
- 	};
+diff --git a/drivers/clk/renesas/rzg2l-cpg.h b/drivers/clk/renesas/rzg2l-cpg.h
+index 91e9c2569f801..097fd8f616806 100644
+--- a/drivers/clk/renesas/rzg2l-cpg.h
++++ b/drivers/clk/renesas/rzg2l-cpg.h
+@@ -92,8 +92,8 @@ struct cpg_core_clk {
+ 	unsigned int conf;
+ 	const struct clk_div_table *dtable;
+ 	const char * const *parent_names;
+-	int flag;
+-	int mux_flags;
++	u32 flag;
++	u32 mux_flags;
+ 	int num_parents;
+ };
  
- 	fan: pwm-fan {
 -- 
 2.39.5
 
