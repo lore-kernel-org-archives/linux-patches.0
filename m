@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F9E23E32B;
-	Tue, 29 Apr 2025 18:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3844524502C;
+	Tue, 29 Apr 2025 18:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949737; cv=none; b=SHaGHToit2xZyuMWpX3N+BtXjHC5MYV7v2cad9TRsMkWH27M51mwddViMQP+j7PfabiKcgSSxZF0SQP6vs1z0HT8+3z/ziWaOYUq33gBFjowH5Ccpi8DqtGh7WExgdWnsmmTPn2xmivuE5gNzZHDIPNUJ1hqqmYe51NBIwXrvJw=
+	t=1745949740; cv=none; b=lMUi2leFjnX0m5aKWlXkjvaNqsCLHbQIh/8sPaWqKHJUj5TbkAxny8wOc6rDCjs5pGB9DEMlQnLjkAt45zr8B3IFHZ14acKZ7eMQ9UW4apD+hMJr2IoDVd42MyLvMp6e5ecXqjZr1ludgsL88y48VQ7V0joJHOSReMGPlPH6m24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949737; c=relaxed/simple;
-	bh=wQwpJIthJMXeUV1WE2Y8d3K9MyZ2bjbY2fVtaS5d0iA=;
+	s=arc-20240116; t=1745949740; c=relaxed/simple;
+	bh=ptpwMN3JSEuBD4VnSbwuVrZtSmbmazrIskRxk0qtZ64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QOrDz+ofIBnF/KiIiQL3Kn9cUCGJwl/5Kfn6lb9znLcAfIUBatPZQib0inFsp4yxOzmaykCuqDXNoovicWe14THuGuiyN7qWRR8xPlfAK1vgr2yQU7LVvRz2tv8nkgvOEZq8ll7KlqWFQqFgUHsmNb3CHItQCPgIhjc62+/hUzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+DU6var; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mKMphwWz27jhgfKf6NNOGlsp40P4l6XQQ43ED4DAQvk0Y2ZTRYaORWH2MpBz9rVjouiwIkmFI3WYgrsvUH4rRKmQlw5RhwlBTfmIAdp6yTRtTSKMCp9vMjtm8NSkNBt51jBnNOEZgahHq7MOZayOesji12xQ2W0Djo5bW3XOsMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNInZ1V2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+DU6var"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 889B4C4CEE9;
-	Tue, 29 Apr 2025 18:02:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNInZ1V2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3183C4CEE3;
+	Tue, 29 Apr 2025 18:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949737;
-	bh=wQwpJIthJMXeUV1WE2Y8d3K9MyZ2bjbY2fVtaS5d0iA=;
+	s=korg; t=1745949740;
+	bh=ptpwMN3JSEuBD4VnSbwuVrZtSmbmazrIskRxk0qtZ64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z+DU6varJhWmGuzSG8FMv6sL4oxJqF8WtNM0/rBAPimlkrvUuwc51Igp+jwv+u2b+
-	 3/BszZLdJq9tO8qksWRAU4+qp6xdDN2L74ifA3PPpkKeZaxx0kAMIJeU1vq/B33MEn
-	 46w8cBJcOrwkk5FcncWYCwuE1zZ/plP0G0gAGDBs=
+	b=NNInZ1V2N1mhj3MJzrKaSxijdG+s6M5zJZ2N5kzE4gtkCU2c1BRZXwd7XGwwyZBiB
+	 r5zzNuU/Ey+YdMiWKRKxTzmHFgi+n9mCKGFEtPtOSfdENyPc/YIk4LF3xi7LjY92f3
+	 ByxDEWJsIQRRhoKr6aPzZstNYnkg5+jLlEdi7oEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Kobuk <m.kobuk@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	Evgeny Pimenov <pimenoveu12@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
+	Aishwarya TCV <aishwarya.tcv@arm.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/167] ASoC: qcom: Fix sc7280 lpass potential buffer overflow
-Date: Tue, 29 Apr 2025 18:42:29 +0200
-Message-ID: <20250429161053.418379416@linuxfoundation.org>
+Subject: [PATCH 6.1 042/167] selftests/mm: generate a temporary mountpoint for cgroup filesystem
+Date: Tue, 29 Apr 2025 18:42:30 +0200
+Message-ID: <20250429161053.462503356@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -53,49 +55,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Evgeny Pimenov <pimenoveu12@gmail.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit a31a4934b31faea76e735bab17e63d02fcd8e029 ]
+[ Upstream commit 9c02223e2d9df5cb37c51aedb78f3960294e09b5 ]
 
-Case values introduced in commit
-5f78e1fb7a3e ("ASoC: qcom: Add driver support for audioreach solution")
-cause out of bounds access in arrays of sc7280 driver data (e.g. in case
-of RX_CODEC_DMA_RX_0 in sc7280_snd_hw_params()).
+Currently if the filesystem for the cgroups version it wants to use is not
+mounted charge_reserved_hugetlb.sh and hugetlb_reparenting_test.sh tests
+will attempt to mount it on the hard coded path /dev/cgroup/memory,
+deleting that directory when the test finishes.  This will fail if there
+is not a preexisting directory at that path, and since the directory is
+deleted subsequent runs of the test will fail.  Instead of relying on this
+hard coded directory name use mktemp to generate a temporary directory to
+use as a mountpoint, fixing both the assumption and the disruption caused
+by deleting a preexisting directory.
 
-Redefine LPASS_MAX_PORTS to consider the maximum possible port id for
-q6dsp as sc7280 driver utilizes some of those values.
+This means that if the relevant cgroup filesystem is not already mounted
+then we rely on having coreutils (which provides mktemp) installed.  I
+suspect that many current users are relying on having things automounted
+by default, and given that the script relies on bash it's probably not an
+unreasonable requirement.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 77d0ffef793d ("ASoC: qcom: Add macro for lpass DAI id's max limit")
-Cc: stable@vger.kernel.org # v6.0+
-Suggested-by: Mikhail Kobuk <m.kobuk@ispras.ru>
-Suggested-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Signed-off-by: Evgeny Pimenov <pimenoveu12@gmail.com>
-Link: https://patch.msgid.link/20250401204058.32261-1-pimenoveu12@gmail.com
+Link: https://lkml.kernel.org/r/20250404-kselftest-mm-cgroup2-detection-v1-1-3dba6d32ba8c@kernel.org
+Fixes: 209376ed2a84 ("selftests/vm: make charge_reserved_hugetlb.sh work with existing cgroup setting")
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Aishwarya TCV <aishwarya.tcv@arm.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Mina Almasry <almasrymina@google.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Waiman Long <longman@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/lpass.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/vm/charge_reserved_hugetlb.sh  | 4 ++--
+ tools/testing/selftests/vm/hugetlb_reparenting_test.sh | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
-index dd78600fc7b01..b96116ea81167 100644
---- a/sound/soc/qcom/lpass.h
-+++ b/sound/soc/qcom/lpass.h
-@@ -13,10 +13,11 @@
- #include <linux/platform_device.h>
- #include <linux/regmap.h>
- #include <dt-bindings/sound/qcom,lpass.h>
-+#include <dt-bindings/sound/qcom,q6afe.h>
- #include "lpass-hdmi.h"
- 
- #define LPASS_AHBIX_CLOCK_FREQUENCY		131072000
--#define LPASS_MAX_PORTS			(LPASS_CDC_DMA_VA_TX8 + 1)
-+#define LPASS_MAX_PORTS			(DISPLAY_PORT_RX_7 + 1)
- #define LPASS_MAX_MI2S_PORTS			(8)
- #define LPASS_MAX_DMA_CHANNELS			(8)
- #define LPASS_MAX_HDMI_DMA_CHANNELS		(4)
+diff --git a/tools/testing/selftests/vm/charge_reserved_hugetlb.sh b/tools/testing/selftests/vm/charge_reserved_hugetlb.sh
+index 8e00276b4e69b..dc3fc438b3d9e 100644
+--- a/tools/testing/selftests/vm/charge_reserved_hugetlb.sh
++++ b/tools/testing/selftests/vm/charge_reserved_hugetlb.sh
+@@ -27,7 +27,7 @@ fi
+ if [[ $cgroup2 ]]; then
+   cgroup_path=$(mount -t cgroup2 | head -1 | awk '{print $3}')
+   if [[ -z "$cgroup_path" ]]; then
+-    cgroup_path=/dev/cgroup/memory
++    cgroup_path=$(mktemp -d)
+     mount -t cgroup2 none $cgroup_path
+     do_umount=1
+   fi
+@@ -35,7 +35,7 @@ if [[ $cgroup2 ]]; then
+ else
+   cgroup_path=$(mount -t cgroup | grep ",hugetlb" | awk '{print $3}')
+   if [[ -z "$cgroup_path" ]]; then
+-    cgroup_path=/dev/cgroup/memory
++    cgroup_path=$(mktemp -d)
+     mount -t cgroup memory,hugetlb $cgroup_path
+     do_umount=1
+   fi
+diff --git a/tools/testing/selftests/vm/hugetlb_reparenting_test.sh b/tools/testing/selftests/vm/hugetlb_reparenting_test.sh
+index 14d26075c8635..302f2c7003f03 100644
+--- a/tools/testing/selftests/vm/hugetlb_reparenting_test.sh
++++ b/tools/testing/selftests/vm/hugetlb_reparenting_test.sh
+@@ -22,7 +22,7 @@ fi
+ if [[ $cgroup2 ]]; then
+   CGROUP_ROOT=$(mount -t cgroup2 | head -1 | awk '{print $3}')
+   if [[ -z "$CGROUP_ROOT" ]]; then
+-    CGROUP_ROOT=/dev/cgroup/memory
++    CGROUP_ROOT=$(mktemp -d)
+     mount -t cgroup2 none $CGROUP_ROOT
+     do_umount=1
+   fi
 -- 
 2.39.5
 
