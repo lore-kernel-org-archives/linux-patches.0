@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F403FFD;
-	Tue, 29 Apr 2025 18:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7443FFD;
+	Tue, 29 Apr 2025 18:14:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950479; cv=none; b=Pphlue0oCn/LbVv9Kr6SzqxNXQ0YHuAA6uCv7t5yEppf97th3mHnyAIHaooXPWjnCiT39MIVlQ0Tk55eLfXymM4uGCDNYyFN6gds7QW4Z+6RwHTdHjDBpfJiGuPXLrE3gRsipzcQpVp/FUq3FRP/11NkMn0zTrvEflR/0hsL4EU=
+	t=1745950482; cv=none; b=VKEsAcgjZHIwpCsGCTq10wyCy38+3BzYUM7LHuqlOad6zeRN2EVOJkcni1CLO/3qkEk154dcYNtwvYJHkv/Mtj9lep9HheoKmAt9yMKtCVIWJwVUDIizLyPQW7DhorfyZkxNX9pAkl8cfjHFZ2t2zGx1s4HOsOTvkMMLJS/AJX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950479; c=relaxed/simple;
-	bh=DP9jchkVvIiHdYoYAHh12YBXQJVCI0TuLA4xA/IHSDA=;
+	s=arc-20240116; t=1745950482; c=relaxed/simple;
+	bh=2hJMBLXHw7LW/WMpl29g9zg5JZrtQcSLHcUy3O8F55E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Un+d/iEgB0dpMj3owDOz2ZjMDmrUIZAWRWU63mCCam6q++HY7+qGl/04tEe1kCkLNklJcMuE6oVpOprffy4wWW3LQqTS5ttJTEVPcOaDqobYAaoCUeIefyJDtqIdTmwJdMMS4APuEQnjnZPzusU2wJfJnVSsMP2SLEpJnoFnxzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Htn5WwaU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jRIOAZc4shsN0Xbz+biDv+de9gfI1HcUiudUaOCd01ssh3UJF6LXOPzq0pMT0P+51IE0MyPGtn94qVa/2U1Rn1p2U0wG9VduCBdJ6ukzhfendeJfgbKdE2z89NiIZo3sj7hEaKLNP3RIUpqIZj5tTjQpUXeLNQRaFve5951mY0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFQFwvpn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Htn5WwaU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F997C4CEE3;
-	Tue, 29 Apr 2025 18:14:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFQFwvpn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81DC8C4CEE3;
+	Tue, 29 Apr 2025 18:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950478;
-	bh=DP9jchkVvIiHdYoYAHh12YBXQJVCI0TuLA4xA/IHSDA=;
+	s=korg; t=1745950482;
+	bh=2hJMBLXHw7LW/WMpl29g9zg5JZrtQcSLHcUy3O8F55E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Htn5WwaU4u+4YoAgM7G1OGpkI8YUIA/o9REgrauvNX5Xpz3kA8b30IVOedSPh4ilJ
-	 JXUa2MWIcvoO62xbSc1UmNvCXK/97FuUNxRvkPjUgvwucOvSLWABx4U46H+L66p+DX
-	 lQis0/4WtT2xMn05eRNYKL8X+5KcnomKkKLKU5pQ=
+	b=WFQFwvpnBg140HnuSmdUYTnEYSOZQbcXZ4wraiUEvQ5qhBqtl+7pVw24b/o6gdIz9
+	 hWIhJXQIBbBAKthvAMYNGMnpOJxNUEPTA7ys62TsBvp4P58joClSvi0DHcdxxXfpKp
+	 6UbSCiavlv+wsGV6f7rZhMgFvADQ0q5TTTJvZUMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Mike Looijmans <mike.looijmans@topic.nl>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.6 109/204] usb: dwc3: xilinx: Prevent spike in reset signal
-Date: Tue, 29 Apr 2025 18:43:17 +0200
-Message-ID: <20250429161103.899174018@linuxfoundation.org>
+	Miao Li <limiao@kylinos.cn>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.6 110/204] usb: quirks: add DELAY_INIT quirk for Silicon Motion Flash Drive
+Date: Tue, 29 Apr 2025 18:43:18 +0200
+Message-ID: <20250429161103.939297155@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -52,72 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Looijmans <mike.looijmans@topic.nl>
+From: Miao Li <limiao@kylinos.cn>
 
-commit 38d6e60b6f3a99f8f13bee22eab616136c2c0675 upstream.
+commit 2932b6b547ec36ad2ed60fbf2117c0e46bb7d40a upstream.
 
-The "reset" GPIO controls the RESET signal to an external, usually
-ULPI PHY, chip. The original code path acquires the signal in LOW
-state, and then immediately asserts it HIGH again, if the reset
-signal defaulted to asserted, there'd be a short "spike" before the
-reset.
+Silicon Motion Flash Drive connects to Huawei hisi platforms and
+performs a system reboot test for two thousand circles, it will
+randomly work incorrectly on boot, set DELAY_INIT quirk can workaround
+this issue.
 
-Here is what happens depending on the pre-existing state of the reset
-signal:
-Reset (previously asserted):   ~~~|_|~~~~|_______
-Reset (previously deasserted): _____|~~~~|_______
-                                  ^ ^    ^
-                                  A B    C
-
-At point A, the low going transition is because the reset line is
-requested using GPIOD_OUT_LOW. If the line is successfully requested,
-the first thing we do is set it high _without_ any delay. This is
-point B. So, a glitch occurs between A and B.
-
-Requesting the line using GPIOD_OUT_HIGH eliminates the A and B
-transitions. Instead we get:
-
-Reset (previously asserted)  : ~~~~~~~~~~|______
-Reset (previously deasserted): ____|~~~~~|______
-                                   ^     ^
-                                   A     C
-
-Where A and C are the points described above in the code. Point B
-has been eliminated.
-
-The issue was found during code inspection.
-
-Also remove the cryptic "toggle ulpi .." comment.
-
-Fixes: ca05b38252d7 ("usb: dwc3: xilinx: Add gpio-reset support")
+Signed-off-by: Miao Li <limiao@kylinos.cn>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Mike Looijmans <mike.looijmans@topic.nl>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20250318064518.9320-1-mike.looijmans@topic.nl
+Link: https://lore.kernel.org/r/20250401023027.44894-1-limiao870622@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-xilinx.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/usb/core/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/dwc3/dwc3-xilinx.c
-+++ b/drivers/usb/dwc3/dwc3-xilinx.c
-@@ -207,15 +207,13 @@ static int dwc3_xlnx_init_zynqmp(struct
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -383,6 +383,9 @@ static const struct usb_device_id usb_qu
+ 	{ USB_DEVICE(0x0904, 0x6103), .driver_info =
+ 			USB_QUIRK_LINEAR_FRAME_INTR_BINTERVAL },
  
- skip_usb3_phy:
- 	/* ulpi reset via gpio-modepin or gpio-framework driver */
--	reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_LOW);
-+	reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
- 	if (IS_ERR(reset_gpio)) {
- 		return dev_err_probe(dev, PTR_ERR(reset_gpio),
- 				     "Failed to request reset GPIO\n");
- 	}
- 
- 	if (reset_gpio) {
--		/* Toggle ulpi to reset the phy. */
--		gpiod_set_value_cansleep(reset_gpio, 1);
- 		usleep_range(5000, 10000);
- 		gpiod_set_value_cansleep(reset_gpio, 0);
- 		usleep_range(5000, 10000);
++	/* Silicon Motion Flash Drive */
++	{ USB_DEVICE(0x090c, 0x1000), .driver_info = USB_QUIRK_DELAY_INIT },
++
+ 	/* Sound Devices USBPre2 */
+ 	{ USB_DEVICE(0x0926, 0x0202), .driver_info =
+ 			USB_QUIRK_ENDPOINT_IGNORE },
 
 
