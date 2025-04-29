@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5687222A81D;
-	Tue, 29 Apr 2025 17:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E0B221719;
+	Tue, 29 Apr 2025 17:09:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946577; cv=none; b=t72/LJTqmFac2YhdjiLJ+vZHy5r8F0J9RL0sMXXRwWEzaEMjBqVKr0rP+JdQXWbd6A9JlOQ518x/vURtiYkMnZj1URd4m4lHdhFk7kQYJpExun0yoPnpoK1uZg9XKq2bNURMv8dekMRdR60bsdTNPxwKebQeWYSYvBZu4wL2s2E=
+	t=1745946580; cv=none; b=TE8ox1wR4vaLlCcYF0q47NbzEWZpY0fG09TSRr7tP28/OQfknpErFjjzrMGkazndUn9kD5t9TcJUsqXdsOzP6BGOezelS9WiCL4xa51U+RD8NTTv3BcgSgeAZl9wSTMZNFXfX6khqjZ+BiDC/AJHqci1rp6YeSlZLOae4/dKTk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946577; c=relaxed/simple;
-	bh=wCWI9xS6ojLpKnM4WLI8t3Qn1yCPZyVIoHZKs2sDXgI=;
+	s=arc-20240116; t=1745946580; c=relaxed/simple;
+	bh=5gOaQtnGFt4VHW8VeHgSeWT/A95hHPxVWueUWBUt9HA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=scTOsL2PBmdJkBDSFNzGztn0DqXQZfrOH//lJSKwtQkj1HJvpmcUmI1QCwLcYMoIyqxC3DTzASfhwLVch6J9a2DFA1RQtEGJ7XgMARLPoTOGtjsWNEdRykBoYxN0EjRRuJQvpYxRQZ1Of3asS4UQa/Nm3A3j2ebRgBi4eYY8AIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UdKyu2Dm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R11b4nRMKlFvOhEGbhKle72YP+fmYUHcQ/2OUhRY2f11Ek2A1slzbnsbo/vfZnK5qrW3qTL2gkcmNjiTlckKjxE7JXTayivqoyLOuOSL15bqu7hZ45a8dazElAnBAQs9Z5mFPaRQB2Z9kOumlPYkYcXKxkODJfSYZUKYstLfy48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCrWIwCE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UdKyu2Dm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8DA1C4CEE3;
-	Tue, 29 Apr 2025 17:09:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCrWIwCE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A4FC4CEE3;
+	Tue, 29 Apr 2025 17:09:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946577;
-	bh=wCWI9xS6ojLpKnM4WLI8t3Qn1yCPZyVIoHZKs2sDXgI=;
+	s=korg; t=1745946580;
+	bh=5gOaQtnGFt4VHW8VeHgSeWT/A95hHPxVWueUWBUt9HA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UdKyu2DmmXEwfQU6AT2zrjxUL2evRLRn6nMdwFBDFMgK2YdMVxHYZkdtOL0jpeDCn
-	 yGGIEic1u5Se29RWOqRuZYkuAAm20sUcgUFbehPWjBphPEfTydNResrgBQQtfDwLjY
-	 y+YZ7JD6lgGBTgMpJ+kcaO9RdHArHkO+ncr+uI8k=
+	b=lCrWIwCEfCEGayJnCzukJH+gE+yIMhfEfXhHVIJ2f5Ol5D1xwqtT4rRgG6ICbh/Ws
+	 XMm6uGa9100Gxt8A1J99o/yD5zJNdUmXAeyGCe9ojVbwjoMmSppKy7xatJNaAfuM11
+	 1sEGftnXoDB3DAVdgw/rBZMG3aoNbzfGz+HtYiHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Breno Leitao <leitao@debian.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 283/311] ksmbd: fix WARNING "do not call blocking ops when !TASK_RUNNING"
-Date: Tue, 29 Apr 2025 18:42:00 +0200
-Message-ID: <20250429161132.603168989@linuxfoundation.org>
+Subject: [PATCH 6.14 284/311] spi: tegra210-quad: use WARN_ON_ONCE instead of WARN_ON for timeouts
+Date: Tue, 29 Apr 2025 18:42:01 +0200
+Message-ID: <20250429161132.642434080@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -51,57 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 1df0d4c616138784e033ad337961b6e1a6bcd999 ]
+[ Upstream commit 41c721fc093938745d116c3a21326a0ee03bb491 ]
 
-wait_event_timeout() will set the state of the current
-task to TASK_UNINTERRUPTIBLE, before doing the condition check. This
-means that ksmbd_durable_scavenger_alive() will try to acquire the mutex
-while already in a sleeping state. The scheduler warns us by giving
-the following warning:
+Some machines with tegra_qspi_combined_seq_xfer hardware issues generate
+excessive kernel warnings, severely polluting the logs:
 
-do not call blocking ops when !TASK_RUNNING; state=2 set at
- [<0000000061515a6f>] prepare_to_wait_event+0x9f/0x6c0
-WARNING: CPU: 2 PID: 4147 at kernel/sched/core.c:10099 __might_sleep+0x12f/0x160
+    dmesg | grep -i "WARNING:.*tegra_qspi_transfer_one_message" | wc -l
+    94451
 
-mutex lock is not needed in ksmbd_durable_scavenger_alive().
+This patch replaces WARN_ON with WARN_ON_ONCE for timeout conditions to
+reduce log spam. The subsequent error message still prints on each
+occurrence, providing sufficient information about the failure, while
+the stack trace is only needed once for debugging purposes.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20250401-tegra-v2-1-126c293ec047@debian.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs_cache.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/spi/spi-tegra210-quad.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index 8d1f30dcba7e8..1f8fa3468173a 100644
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -713,12 +713,8 @@ static bool tree_conn_fd_check(struct ksmbd_tree_connect *tcon,
+diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
+index 08e49a8768943..2d320fbb8875f 100644
+--- a/drivers/spi/spi-tegra210-quad.c
++++ b/drivers/spi/spi-tegra210-quad.c
+@@ -1117,7 +1117,7 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
+ 					(&tqspi->xfer_completion,
+ 					QSPI_DMA_TIMEOUT);
  
- static bool ksmbd_durable_scavenger_alive(void)
- {
--	mutex_lock(&durable_scavenger_lock);
--	if (!durable_scavenger_running) {
--		mutex_unlock(&durable_scavenger_lock);
-+	if (!durable_scavenger_running)
- 		return false;
--	}
--	mutex_unlock(&durable_scavenger_lock);
- 
- 	if (kthread_should_stop())
- 		return false;
-@@ -799,9 +795,7 @@ static int ksmbd_durable_scavenger(void *dummy)
- 			break;
- 	}
- 
--	mutex_lock(&durable_scavenger_lock);
- 	durable_scavenger_running = false;
--	mutex_unlock(&durable_scavenger_lock);
- 
- 	module_put(THIS_MODULE);
- 
+-			if (WARN_ON(ret == 0)) {
++			if (WARN_ON_ONCE(ret == 0)) {
+ 				dev_err(tqspi->dev, "QSPI Transfer failed with timeout: %d\n",
+ 					ret);
+ 				if (tqspi->is_curr_dma_xfer &&
 -- 
 2.39.5
 
