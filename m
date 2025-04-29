@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B2382C60;
-	Tue, 29 Apr 2025 17:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082BC21A43D;
+	Tue, 29 Apr 2025 17:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946038; cv=none; b=ftX4MQja/fITd+LvPxrMuw0Kr6VngdstynSnQMd5coxVi+bBtdZu5ORbXV9Wcjn69k03zHJWClzKhs/wUclH4SMibZb4xBx3tCBlhCgIzSgk1QslgkMQGo2s2b6WY0kFoT0lX6oH9xptplOFqAU1sU4MF6bBB31CYadS9vUVroQ=
+	t=1745946041; cv=none; b=k04TvGDUroXCDAeoYI9eYI9pKebSy45/qGitW85eNWK61XjPmuyF3iMEmdTHHZ4fUJqpa4r5jmDkxm3cDewKl6JMp5j7dZae5XeO/3WC0LlSFYZuvW2L3oCeH0qoomiPTQfrzCKUCy0dGavptLP8xYQggyhIiWPIsdnDK0ZFHtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946038; c=relaxed/simple;
-	bh=Zqfzxi4jzU57WdXGFLGiupZEedwky3ydFtsxLecUViw=;
+	s=arc-20240116; t=1745946041; c=relaxed/simple;
+	bh=Hg52meg4sgG0qfTQ4/l6hsqrjWPCylf9aFmzXfFcPUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jjfAhj+XuuxR0KxnpgM7X7qM01ZZwr204PBQ0dMcABdI7OiXd5fKasUbEPmFeiKfrJH58WAnZ0LdFc8D4QHPZyxK0cJ/sJ/sO+2NCGmXBJk3OyxAGrX7Gwth9W6pj6Gkihs9qBaaWwwcyCJF/nezPm3COiy/CRv1V8E2/VBIVOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNs32E07; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eEd5z4mcE+NHwxyw1+L+YjeHlaZp6bZKsQNzXz1SdQ03FeJAJ+fMKQijv4tCKnupv/Re6W9X8rCyBMHs2t64GUSgUBciBl/7T+5zLTtCLSO33lw6HgPZ69G3xp/R88FfzSrnZnJAqTbX1ppy015c+qJDZUb+IBfsRoRsEuGLz0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MeyevQXL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNs32E07"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 819F9C4CEEE;
-	Tue, 29 Apr 2025 17:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeyevQXL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75679C4CEE3;
+	Tue, 29 Apr 2025 17:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946037;
-	bh=Zqfzxi4jzU57WdXGFLGiupZEedwky3ydFtsxLecUViw=;
+	s=korg; t=1745946040;
+	bh=Hg52meg4sgG0qfTQ4/l6hsqrjWPCylf9aFmzXfFcPUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lNs32E07LBMSkJAmjADRq/5Kd2+JedjXjn6s0AdP8zKNdDyXyagsdy2WmF7OASs1Q
-	 Z0LNX+vJM/nYopIC10AmzmChwKpWmpe9pGZFLKtMk1f1oYuAyox9q91dJpQxqmLf4b
-	 VW1RelWsyN2IzxBEtoDCVOHxt2sZ+g04LpMlh4AY=
+	b=MeyevQXLgNmWRZUzSSxutxB/qZukTkLSNKkgZ87OX77lG7CMtyJ/LOPhf9U8b9Qrq
+	 ZwloEsLSRocPXuEiRvicE1QqW59nia4OF1wYqug8mJXiAl1KeMqW6yx0OBlBwuwCaK
+	 EpG+K3wDm6NgglwGZzFLOYYlMSNZPcF7lqjjYsR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.14 134/311] io_uring: fix sync handling of io_fallback_tw()
-Date: Tue, 29 Apr 2025 18:39:31 +0200
-Message-ID: <20250429161126.529960348@linuxfoundation.org>
+	Sathya Prakash <sathya.prakash@broadcom.com>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.14 117/311] scsi: mpi3mr: Fix pending I/O counter
+Date: Tue, 29 Apr 2025 18:39:14 +0200
+Message-ID: <20250429161125.833681721@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -49,53 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-commit edd43f4d6f50ec3de55a0c9e9df6348d1da51965 upstream.
+commit cdd445258db9919e9dde497a6d5c3477ea7faf4d upstream.
 
-A previous commit added a 'sync' parameter to io_fallback_tw(), which if
-true, means the caller wants to wait on the fallback thread handling it.
-But the logic is somewhat messed up, ensure that ctxs are swapped and
-flushed appropriately.
+Commit 199510e33dea ("scsi: mpi3mr: Update consumer index of reply
+queues after every 100 replies") introduced a regression with the
+per-reply queue pending I/O counter which was erroneously decremented,
+leading to the counter going negative.
 
+Drop the incorrect atomic decrement for the pending I/O counter.
+
+Fixes: 199510e33dea ("scsi: mpi3mr: Update consumer index of reply queues after every 100 replies")
 Cc: stable@vger.kernel.org
-Fixes: dfbe5561ae93 ("io_uring: flush offloaded and delayed task_work on exit")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Co-developed-by: Sathya Prakash <sathya.prakash@broadcom.com>
+Signed-off-by: Sathya Prakash <sathya.prakash@broadcom.com>
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Link: https://lore.kernel.org/r/20250411111419.135485-2-ranjan.kumar@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -1080,21 +1080,22 @@ static __cold void __io_fallback_tw(stru
- 	while (node) {
- 		req = container_of(node, struct io_kiocb, io_task_work.node);
- 		node = node->next;
--		if (sync && last_ctx != req->ctx) {
-+		if (last_ctx != req->ctx) {
- 			if (last_ctx) {
--				flush_delayed_work(&last_ctx->fallback_work);
-+				if (sync)
-+					flush_delayed_work(&last_ctx->fallback_work);
- 				percpu_ref_put(&last_ctx->refs);
- 			}
- 			last_ctx = req->ctx;
- 			percpu_ref_get(&last_ctx->refs);
- 		}
--		if (llist_add(&req->io_task_work.node,
--			      &req->ctx->fallback_llist))
--			schedule_delayed_work(&req->ctx->fallback_work, 1);
-+		if (llist_add(&req->io_task_work.node, &last_ctx->fallback_llist))
-+			schedule_delayed_work(&last_ctx->fallback_work, 1);
- 	}
- 
- 	if (last_ctx) {
--		flush_delayed_work(&last_ctx->fallback_work);
-+		if (sync)
-+			flush_delayed_work(&last_ctx->fallback_work);
- 		percpu_ref_put(&last_ctx->refs);
- 	}
- }
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -563,7 +563,7 @@ int mpi3mr_process_op_reply_q(struct mpi
+ 		WRITE_ONCE(op_req_q->ci, le16_to_cpu(reply_desc->request_queue_ci));
+ 		mpi3mr_process_op_reply_desc(mrioc, reply_desc, &reply_dma,
+ 		    reply_qidx);
+-		atomic_dec(&op_reply_q->pend_ios);
++
+ 		if (reply_dma)
+ 			mpi3mr_repost_reply_buf(mrioc, reply_dma);
+ 		num_op_reply++;
 
 
