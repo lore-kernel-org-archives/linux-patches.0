@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CEF22AE68;
-	Tue, 29 Apr 2025 18:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7C024111D;
+	Tue, 29 Apr 2025 18:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949759; cv=none; b=kPvuKWsHL9qzOdnPqHEcwLDTT8YyBiVAEQaWXTxZHNTjzO6dTgAxufrRw2DzmmeO4ds/KvV05q07Jd/tTjCYiBheb1aqpMsiX4RVoiMH6aDnfu+JHGHNy0Y+upjJAnDUeMTahC+3lj9w3lZCutZldz2vClU1o6jmC48j8tq+ZNc=
+	t=1745949762; cv=none; b=IytoVy14fhSbPvOMjz1BGsIY5/Z2dQf2GZCikSCA+BM1NJrBjTLHcMeJUER4UIZnHq16lHWcIN8KhTEU+R74NxhXVwrw4A72nQV9IMsP2Wml8wh2Gr86mvr46udi4R8o6Q8VhA8lL9Q2QoDZq9cBzPp/MAbpg4oiqOjuMBZlcaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949759; c=relaxed/simple;
-	bh=Gvg68PHoevoa+JLi5MmtPV/8sWhi7GWEXpWA+vrIoGk=;
+	s=arc-20240116; t=1745949762; c=relaxed/simple;
+	bh=XVhZDnMsaTfmJMuAo2xN9W7iLHrqNuBSPDDcoRWB89c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BH52Tlw9SHKxbs6TbBhQgUEFq/cCZw2VmGCNLRcleLUeO/VxiPialsR+NzAI+qWrr4S+Lr+p7MHoHMU8itQYeyTK/PXA0PZ8r/kS5CYfN7cI8NB1/GztLDVJ8KQ9N13LSwxKyrbWGlD0TI6qPriYW660s2WBvO1vGt6BeMQiTd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQZa3/4o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dl48rsCiLc+E5pw2UnRZe2zL02jhU4kwoSrKDKDF2OZBFy8irwgYnX1Gez8BiT+LQYTebTDIMdXZscDlsB5nuI9bBy2niT+8NxkPSnJ4CVGWL+tC/XJmHCeGaluRSy181QsZJ8Jrl/GKVny75RFUTsSW9cpoJhc0rsXuTrJWaEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VwqoNUuf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQZa3/4o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28CF6C4CEE3;
-	Tue, 29 Apr 2025 18:02:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VwqoNUuf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97ADEC4CEE3;
+	Tue, 29 Apr 2025 18:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949758;
-	bh=Gvg68PHoevoa+JLi5MmtPV/8sWhi7GWEXpWA+vrIoGk=;
+	s=korg; t=1745949762;
+	bh=XVhZDnMsaTfmJMuAo2xN9W7iLHrqNuBSPDDcoRWB89c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VQZa3/4oFK6aYEYGllgHfePVBjeaxVsZOYP2NCEhS/hxwH3IB/UmFGWm2BLvAkDnN
-	 VnySkRl34+yjZn/ldGywbRjOy8Q02F96ZQTylsQIgD2XDB+p3H2Q8bk7+ywO36Cdfn
-	 XLZY7iljuxJCeN0Io+O3SvfiGI3PsBTTmAW3MTm8=
+	b=VwqoNUufSjoriSkRR8konTpNR9u2VW96KoFgEReNQcNNtltlOtt6HhhWkiAO30Io7
+	 7RJvVcJPgi/MzU5usGlDQvZn5WZgDIxl8hdorziqHxth9UALykNzyfcWw6nexJ8WlW
+	 CfBFKjVqKjnPq8Jraysr/UEgGqywk+wteDpQTnDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Anastasia Kovaleva <a.kovaleva@yadro.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/167] btrfs: avoid page_lockend underflow in btrfs_punch_hole_lock_range()
-Date: Tue, 29 Apr 2025 18:42:35 +0200
-Message-ID: <20250429161053.665207250@linuxfoundation.org>
+Subject: [PATCH 6.1 048/167] scsi: core: Clear flags for scsi_cmnd that did not complete
+Date: Tue, 29 Apr 2025 18:42:36 +0200
+Message-ID: <20250429161053.705708325@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -52,93 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Anastasia Kovaleva <a.kovaleva@yadro.com>
 
-[ Upstream commit bc2dbc4983afedd198490cca043798f57c93e9bf ]
+[ Upstream commit 54bebe46871d4e56e05fcf55c1a37e7efa24e0a8 ]
 
-[BUG]
-When running btrfs/004 with 4K fs block size and 64K page size,
-sometimes fsstress workload can take 100% CPU for a while, but not long
-enough to trigger a 120s hang warning.
+Commands that have not been completed with scsi_done() do not clear the
+SCMD_INITIALIZED flag and therefore will not be properly reinitialized.
+Thus, the next time the scsi_cmnd structure is used, the command may
+fail in scsi_cmd_runtime_exceeded() due to the old jiffies_at_alloc
+value:
 
-[CAUSE]
-When such 100% CPU usage happens, btrfs_punch_hole_lock_range() is
-always in the call trace.
+  kernel: sd 16:0:1:84: [sdts] tag#405 timing out command, waited 720s
+  kernel: sd 16:0:1:84: [sdts] tag#405 FAILED Result: hostbyte=DID_OK driverbyte=DRIVER_OK cmd_age=66636s
 
-One example when this problem happens, the function
-btrfs_punch_hole_lock_range() got the following parameters:
+Clear flags for commands that have not been completed by SCSI.
 
-  lock_start = 4096, lockend = 20469
-
-Then we calculate @page_lockstart by rounding up lock_start to page
-boundary, which is 64K (page size is 64K).
-
-For @page_lockend, we round down the value towards page boundary, which
-result 0.  Then since we need to pass an inclusive end to
-filemap_range_has_page(), we subtract 1 from the rounded down value,
-resulting in (u64)-1.
-
-In the above case, the range is inside the same page, and we do not even
-need to call filemap_range_has_page(), not to mention to call it with
-(u64)-1 at the end.
-
-This behavior will cause btrfs_punch_hole_lock_range() to busy loop
-waiting for irrelevant range to have its pages dropped.
-
-[FIX]
-Calculate @page_lockend by just rounding down @lockend, without
-decreasing the value by one.  So @page_lockend will no longer overflow.
-
-Then exit early if @page_lockend is no larger than @page_lockstart.
-As it means either the range is inside the same page, or the two pages
-are adjacent already.
-
-Finally only decrease @page_lockend when calling filemap_range_has_page().
-
-Fixes: 0528476b6ac7 ("btrfs: fix the filemap_range_has_page() call in btrfs_punch_hole_lock_range()")
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 4abafdc4360d ("block: remove the initialize_rq_fn blk_mq_ops method")
+Signed-off-by: Anastasia Kovaleva <a.kovaleva@yadro.com>
+Link: https://lore.kernel.org/r/20250324084933.15932-2-a.kovaleva@yadro.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/file.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/scsi/scsi_lib.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
-index 9e06d1a0d373d..3814f09dc4ae0 100644
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -2224,15 +2224,20 @@ static void btrfs_punch_hole_lock_range(struct inode *inode,
- 	 * will always return true.
- 	 * So here we need to do extra page alignment for
- 	 * filemap_range_has_page().
-+	 *
-+	 * And do not decrease page_lockend right now, as it can be 0.
- 	 */
- 	const u64 page_lockstart = round_up(lockstart, PAGE_SIZE);
--	const u64 page_lockend = round_down(lockend + 1, PAGE_SIZE) - 1;
-+	const u64 page_lockend = round_down(lockend + 1, PAGE_SIZE);
- 
- 	while (1) {
- 		truncate_pagecache_range(inode, lockstart, lockend);
- 
- 		lock_extent(&BTRFS_I(inode)->io_tree, lockstart, lockend,
- 			    cached_state);
-+		/* The same page or adjacent pages. */
-+		if (page_lockend <= page_lockstart)
-+			break;
- 		/*
- 		 * We can't have ordered extents in the range, nor dirty/writeback
- 		 * pages, because we have locked the inode's VFS lock in exclusive
-@@ -2244,7 +2249,7 @@ static void btrfs_punch_hole_lock_range(struct inode *inode,
- 		 * we do, unlock the range and retry.
- 		 */
- 		if (!filemap_range_has_page(inode->i_mapping, page_lockstart,
--					    page_lockend))
-+					    page_lockend - 1))
- 			break;
- 
- 		unlock_extent(&BTRFS_I(inode)->io_tree, lockstart, lockend,
+diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
+index 8e75eb1b6eab8..df61d7b906653 100644
+--- a/drivers/scsi/scsi_lib.c
++++ b/drivers/scsi/scsi_lib.c
+@@ -1158,8 +1158,12 @@ EXPORT_SYMBOL_GPL(scsi_alloc_request);
+  */
+ static void scsi_cleanup_rq(struct request *rq)
+ {
++	struct scsi_cmnd *cmd = blk_mq_rq_to_pdu(rq);
++
++	cmd->flags = 0;
++
+ 	if (rq->rq_flags & RQF_DONTPREP) {
+-		scsi_mq_uninit_cmd(blk_mq_rq_to_pdu(rq));
++		scsi_mq_uninit_cmd(cmd);
+ 		rq->rq_flags &= ~RQF_DONTPREP;
+ 	}
+ }
 -- 
 2.39.5
 
