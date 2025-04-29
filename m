@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E75253327;
-	Tue, 29 Apr 2025 17:40:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC4D2528FC;
+	Tue, 29 Apr 2025 17:40:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948445; cv=none; b=N4NZQjg8igpRIPPnpLCSAA8lSjajjrkEtRionq2fpsS7wb7nq+2H86ODdya9tCWIO27pBoT03ZijmVpJgiS7KVgSGbbMa340Qa8BQM7I1XcGsS8dlrWhPpPCg+RN6FkdehAJFRSnXFKssh2+pAsLqWjfzXQCCUefk1qs6FUgLaI=
+	t=1745948447; cv=none; b=LynXT67pnB5DuCI4rqpRoCcVP92uROtoj6fPIyJzKIfQwC63zaGkhzpoWweWEwA1pczGow1DHB2Wmdeqz09m2s7meRKRVVk0TJA+7waoLUZWQqxYHosCBtVIYcz6pKTbcZDAlTD9GrvsU7E61+NNGZYMWZKtz7i6GtSAUxNCu1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948445; c=relaxed/simple;
-	bh=LK3ndlAQ+ZFKCnfDbWGNDz2j/AOJTOg+CG7ImEMFtr8=;
+	s=arc-20240116; t=1745948447; c=relaxed/simple;
+	bh=3Hr10sQgOej4IT7YoQdoqGdwN59QHV0bm6MDgsbfx0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nGZVWSooocghyv2qjzmJ7Dh4V7uV7fGARUB6BfIEe59LTAt9n9ldmzPCn6/0B6aeoB88sxW1qtgNcwhSuLzP8lajN0d7UHQUlhe0lAPlFV/ou2pFfE+cu53IDJxGWJ8eBZXFvbG8y+qAJM+yGu0oSgdLx1Rp0WE+27Ddrw4K6XM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mO2sBazp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NOjD95OwM6YSahQUe8AQSwf8kETKq64lQqAqJ9xb4K+3NzjJ3QXIowY+25lO8nc+EgaIU9hJHzT9uKJaZumFmYTcporO8n1MacVB8E3QOeXKiKVCaCz6tcRDq5Bttnux8o060Fafqmsa+OZ7nsBKwlgr3/InNRlLA3FiBudP2H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HXO7rQJ1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mO2sBazp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A1DC4CEE9;
-	Tue, 29 Apr 2025 17:40:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HXO7rQJ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F48AC4CEE3;
+	Tue, 29 Apr 2025 17:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948444;
-	bh=LK3ndlAQ+ZFKCnfDbWGNDz2j/AOJTOg+CG7ImEMFtr8=;
+	s=korg; t=1745948447;
+	bh=3Hr10sQgOej4IT7YoQdoqGdwN59QHV0bm6MDgsbfx0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mO2sBazp/ZUS4qlK6L9nVFwCtACZKcrYPo+hD0f47HTRb4li8Wzi1kEy98muyr6Hr
-	 thy2x2w7vc9DbMMgoBOtnFKsy6z7xz1jf0x8TRWzGEW6qFHThNwPHQYxSsNj7Lp5yN
-	 hKFi61VceY83KF0Wt98jYKfgQPk/1tOefPz6lu0Q=
+	b=HXO7rQJ18kwlL4hpYmjPgTua8OSXcMdr/5SQXdaZKxoFbRwksT7vG2R7g81qhqEZX
+	 v2JMz6A1CxnaT9jYc1Vy7nCq97LJvd0limHCZ5CbWMWma+by+7saTCghvU5QCXIRgF
+	 xYoxZ6sDA4lnJQ+ufVtQQYzwOK/3K75AEDb7VUTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	sontu mazumdar <sontu21@gmail.com>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 001/373] ata: pata_pxa: Fix potential NULL pointer dereference in pxa_ata_probe()
-Date: Tue, 29 Apr 2025 18:37:58 +0200
-Message-ID: <20250429161123.187704166@linuxfoundation.org>
+Subject: [PATCH 5.15 010/373] nft_set_pipapo: fix incorrect avx2 match of 5th field octet
+Date: Tue, 29 Apr 2025 18:38:07 +0200
+Message-ID: <20250429161123.558209307@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,44 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit ad320e408a8c95a282ab9c05cdf0c9b95e317985 ]
+[ Upstream commit e042ed950d4e176379ba4c0722146cd96fb38aa2 ]
 
-devm_ioremap() returns NULL on error. Currently, pxa_ata_probe() does
-not check for this case, which can result in a NULL pointer dereference.
+Given a set element like:
 
-Add NULL check after devm_ioremap() to prevent this issue.
+	icmpv6 . dead:beef:00ff::1
 
-Fixes: 2dc6c6f15da9 ("[ARM] pata_pxa: DMA-capable PATA driver")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+The value of 'ff' is irrelevant, any address will be matched
+as long as the other octets are the same.
+
+This is because of too-early register clobbering:
+ymm7 is reloaded with new packet data (pkt[9])  but it still holds data
+of an earlier load that wasn't processed yet.
+
+The existing tests in nft_concat_range.sh selftests do exercise this code
+path, but do not trigger incorrect matching due to the network prefix
+limitation.
+
+Fixes: 7400b063969b ("nft_set_pipapo: Introduce AVX2-based lookup implementation")
+Reported-by: sontu mazumdar <sontu21@gmail.com>
+Closes: https://lore.kernel.org/netfilter/CANgxkqwnMH7fXra+VUfODT-8+qFLgskq3set1cAzqqJaV4iEZg@mail.gmail.com/T/#t
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_pxa.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/netfilter/nft_set_pipapo_avx2.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ata/pata_pxa.c b/drivers/ata/pata_pxa.c
-index 41430f79663c1..3502bfb03c56c 100644
---- a/drivers/ata/pata_pxa.c
-+++ b/drivers/ata/pata_pxa.c
-@@ -223,10 +223,16 @@ static int pxa_ata_probe(struct platform_device *pdev)
+diff --git a/net/netfilter/nft_set_pipapo_avx2.c b/net/netfilter/nft_set_pipapo_avx2.c
+index dfae90cd34939..ecabe66368eab 100644
+--- a/net/netfilter/nft_set_pipapo_avx2.c
++++ b/net/netfilter/nft_set_pipapo_avx2.c
+@@ -994,8 +994,9 @@ static int nft_pipapo_avx2_lookup_8b_16(unsigned long *map, unsigned long *fill,
+ 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(5, lt,  8,  pkt[8], bsize);
  
- 	ap->ioaddr.cmd_addr	= devm_ioremap(&pdev->dev, cmd_res->start,
- 						resource_size(cmd_res));
-+	if (!ap->ioaddr.cmd_addr)
-+		return -ENOMEM;
- 	ap->ioaddr.ctl_addr	= devm_ioremap(&pdev->dev, ctl_res->start,
- 						resource_size(ctl_res));
-+	if (!ap->ioaddr.ctl_addr)
-+		return -ENOMEM;
- 	ap->ioaddr.bmdma_addr	= devm_ioremap(&pdev->dev, dma_res->start,
- 						resource_size(dma_res));
-+	if (!ap->ioaddr.bmdma_addr)
-+		return -ENOMEM;
- 
- 	/*
- 	 * Adjust register offsets
+ 		NFT_PIPAPO_AVX2_AND(6, 2, 3);
++		NFT_PIPAPO_AVX2_AND(3, 4, 7);
+ 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(7, lt,  9,  pkt[9], bsize);
+-		NFT_PIPAPO_AVX2_AND(0, 4, 5);
++		NFT_PIPAPO_AVX2_AND(0, 3, 5);
+ 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(1, lt, 10, pkt[10], bsize);
+ 		NFT_PIPAPO_AVX2_AND(2, 6, 7);
+ 		NFT_PIPAPO_AVX2_BUCKET_LOAD8(3, lt, 11, pkt[11], bsize);
 -- 
 2.39.5
 
