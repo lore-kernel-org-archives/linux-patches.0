@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFDC22AE68;
-	Tue, 29 Apr 2025 18:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A684252905;
+	Tue, 29 Apr 2025 18:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949700; cv=none; b=kkn6/EfWaBf8aK7hVI8xAjBBPCQiwDPfggZHKfGfO9CjIUNq8STn+pkr+1Nq44tVqtcssTHqEJccbHD0p061iZ2hJkM/rlY332//tXYphBM9FUzuiy45TxScurKcZjD7ib0WGdz8GNMMieicMUB4XXxjoRazWaKWkZMOQ/H16RQ=
+	t=1745949703; cv=none; b=sWZu8XBFYS/j0sfli+t0orsAWXEEQvxw90js5b39RAW3s64OR1UHJNhOWUj22Be+RgvStX75lpcYYvQSh3Ixl5KB4gG8b3TGmGi+Lgnn9wWP4HRBVIgLiTD5IMI05FdA6OPBwJtf5ELVMyHJJgHuQoqBNXzw/qSaXh4K8WW4E78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949700; c=relaxed/simple;
-	bh=xpMnXY1bk8qV4rqLUBB9Hp/cDvtMFbnzHM9mOcCCI8Q=;
+	s=arc-20240116; t=1745949703; c=relaxed/simple;
+	bh=G74FP6qlEzUNNDSsv68y0azF0kCaaDYNYstZNIFOxSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HHJggNmcaQsGmVNEGHLWWCjPTXZ+jDST5AyVXMacWAVu+WsGOaauHxxJYXv4ObvDd4Gqy8P6rdZPE0po1LJfNhKFV88QtPpaa7I3GcAj9QjygZcRuNTacnvW/U0fCutq1ufIwM419pyCvlCIzygFbA//wWUOBtQ8UFz+Ufy2oEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvBzCbe8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WqkTKiz2uLZkhiIB2AtXrFLqxvLt312XHBFC9MXU3oChc2mLtxvaeHfQEcE1Hsps/nbBGySFmC2nErIYYIr1QlKCpfAnJPdn7UYaqnT76dfGdniCSTaRJlmjxL+0bSZsV68/SoMj6xFiGtkNDIqFH0jjDDDl572d5NSEx7SULn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+ieZkPG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvBzCbe8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACCDDC4CEE3;
-	Tue, 29 Apr 2025 18:01:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+ieZkPG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE0BC4CEEE;
+	Tue, 29 Apr 2025 18:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949700;
-	bh=xpMnXY1bk8qV4rqLUBB9Hp/cDvtMFbnzHM9mOcCCI8Q=;
+	s=korg; t=1745949703;
+	bh=G74FP6qlEzUNNDSsv68y0azF0kCaaDYNYstZNIFOxSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fvBzCbe8IQmZyW5pofp9hyI++yDMCBtpSzYcZvwZV2L0gnmJ1TCJQ4p1LR10HqD6o
-	 0WhIn25DkUa14/pintWsuVpJqVrutAuktnh5FBGSwSaxklopR08LtWkZdH0mu73V5Y
-	 G2zae0Su/b8X3FIsh4bFIr78W5hx2wjz/b9Fc++M=
+	b=b+ieZkPGElcuSVQfwexMCEQqYJ5DgcxEWLMBmLVpu5JkT8w5lbTyvKuawCV7TZ2Jq
+	 yrh6Kz40a5x/uq3OqCj9V03lq0doHJznIRi1bg707jIXMA4ze0m0qph5PPdM5KZ1hh
+	 4loBn54Dpr9DMIpbUVSBRCXWSGT6TVaZV1nDTcLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Libo Chen <libo.chen@oracle.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Avadhut Naik <avadhut.naik@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 006/167] tracing: Add __print_dynamic_array() helper
-Date: Tue, 29 Apr 2025 18:41:54 +0200
-Message-ID: <20250429161052.006719140@linuxfoundation.org>
+Subject: [PATCH 6.1 007/167] tracing: Verify event formats that have "%*p.."
+Date: Tue, 29 Apr 2025 18:41:55 +0200
+Message-ID: <20250429161052.048388375@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -55,90 +55,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit e52750fb1458ae9ea5860a08ed7a149185bc5b97 ]
+[ Upstream commit ea8d7647f9ddf1f81e2027ed305299797299aa03 ]
 
-When printing a dynamic array in a trace event, the method is rather ugly.
-It has the format of:
+The trace event verifier checks the formats of trace events to make sure
+that they do not point at memory that is not in the trace event itself or
+in data that will never be freed. If an event references data that was
+allocated when the event triggered and that same data is freed before the
+event is read, then the kernel can crash by reading freed memory.
 
-  __print_array(__get_dynamic_array(array),
-            __get_dynmaic_array_len(array) / el_size, el_size)
+The verifier runs at boot up (or module load) and scans the print formats
+of the events and checks their arguments to make sure that dereferenced
+pointers are safe. If the format uses "%*p.." the verifier will ignore it,
+and that could be dangerous. Cover this case as well.
 
-Since dynamic arrays are known to the tracing infrastructure, create a
-helper macro that does the above for you.
+Also add to the sample code a use case of "%*pbl".
 
-  __print_dynamic_array(array, el_size)
+Link: https://lore.kernel.org/all/bcba4d76-2c3f-4d11-baf0-02905db953dd@oracle.com/
 
-Which would expand to the same output.
-
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Fixes: 5013f454a352c ("tracing: Add check of trace event print fmts for dereferencing pointers")
+Link: https://lore.kernel.org/20250327195311.2d89ec66@gandalf.local.home
+Reported-by: Libo Chen <libo.chen@oracle.com>
+Reviewed-by: Libo Chen <libo.chen@oracle.com>
+Tested-by: Libo Chen <libo.chen@oracle.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Avadhut Naik <avadhut.naik@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Link: https://lore.kernel.org/r/20241022194158.110073-3-avadhut.naik@amd.com
-Stable-dep-of: ea8d7647f9dd ("tracing: Verify event formats that have "%*p.."")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/stages/stage3_trace_output.h | 8 ++++++++
- include/trace/stages/stage7_class_define.h | 1 +
- samples/trace_events/trace-events-sample.h | 7 ++++++-
- 3 files changed, 15 insertions(+), 1 deletion(-)
+ kernel/trace/trace_events.c                | 7 +++++++
+ samples/trace_events/trace-events-sample.h | 8 ++++++--
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/include/trace/stages/stage3_trace_output.h b/include/trace/stages/stage3_trace_output.h
-index 66374df61ed30..816c2da7a46ff 100644
---- a/include/trace/stages/stage3_trace_output.h
-+++ b/include/trace/stages/stage3_trace_output.h
-@@ -119,6 +119,14 @@
- 		trace_print_array_seq(p, array, count, el_size);	\
- 	})
- 
-+#undef __print_dynamic_array
-+#define __print_dynamic_array(array, el_size)				\
-+	({								\
-+		__print_array(__get_dynamic_array(array),		\
-+			      __get_dynamic_array_len(array) / (el_size), \
-+			      (el_size));				\
-+	})
-+
- #undef __print_hex_dump
- #define __print_hex_dump(prefix_str, prefix_type,			\
- 			 rowsize, groupsize, buf, len, ascii)		\
-diff --git a/include/trace/stages/stage7_class_define.h b/include/trace/stages/stage7_class_define.h
-index 8795429f388b0..5e3e43adb73e6 100644
---- a/include/trace/stages/stage7_class_define.h
-+++ b/include/trace/stages/stage7_class_define.h
-@@ -22,6 +22,7 @@
- #undef __get_rel_cpumask
- #undef __get_rel_sockaddr
- #undef __print_array
-+#undef __print_dynamic_array
- #undef __print_hex_dump
- 
- /*
+diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
+index ed0d0c8a2b4bb..8723ad2f9c63b 100644
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -456,6 +456,7 @@ static void test_event_printk(struct trace_event_call *call)
+ 			case '%':
+ 				continue;
+ 			case 'p':
++ do_pointer:
+ 				/* Find dereferencing fields */
+ 				switch (fmt[i + 1]) {
+ 				case 'B': case 'R': case 'r':
+@@ -484,6 +485,12 @@ static void test_event_printk(struct trace_event_call *call)
+ 						continue;
+ 					if (fmt[i + j] == '*') {
+ 						star = true;
++						/* Handle %*pbl case */
++						if (!j && fmt[i + 1] == 'p') {
++							arg++;
++							i++;
++							goto do_pointer;
++						}
+ 						continue;
+ 					}
+ 					if ((fmt[i + j] == 's')) {
 diff --git a/samples/trace_events/trace-events-sample.h b/samples/trace_events/trace-events-sample.h
-index 04541dfbd44cc..24ec968d481fb 100644
+index 24ec968d481fb..06be777b3b14b 100644
 --- a/samples/trace_events/trace-events-sample.h
 +++ b/samples/trace_events/trace-events-sample.h
-@@ -317,7 +317,7 @@ TRACE_EVENT(foo_bar,
+@@ -317,7 +317,8 @@ TRACE_EVENT(foo_bar,
  		__assign_cpumask(cpum, cpumask_bits(mask));
  	),
  
--	TP_printk("foo %s %d %s %s %s %s %s (%s) (%s) %s", __entry->foo, __entry->bar,
-+	TP_printk("foo %s %d %s %s %s %s %s %s (%s) (%s) %s", __entry->foo, __entry->bar,
+-	TP_printk("foo %s %d %s %s %s %s %s %s (%s) (%s) %s", __entry->foo, __entry->bar,
++	TP_printk("foo %s %d %s %s %s %s %s %s (%s) (%s) %s [%d] %*pbl",
++		  __entry->foo, __entry->bar,
  
  /*
   * Notice here the use of some helper functions. This includes:
-@@ -361,6 +361,11 @@ TRACE_EVENT(foo_bar,
- 		  __print_array(__get_dynamic_array(list),
- 				__get_dynamic_array_len(list) / sizeof(int),
- 				sizeof(int)),
-+
-+/*     A shortcut is to use __print_dynamic_array for dynamic arrays */
-+
-+		  __print_dynamic_array(list, sizeof(int)),
-+
+@@ -368,7 +369,10 @@ TRACE_EVENT(foo_bar,
+ 
  		  __get_str(str), __get_str(lstr),
  		  __get_bitmask(cpus), __get_cpumask(cpum),
- 		  __get_str(vstr))
+-		  __get_str(vstr))
++		  __get_str(vstr),
++		  __get_dynamic_array_len(cpus),
++		  __get_dynamic_array_len(cpus),
++		  __get_dynamic_array(cpus))
+ );
+ 
+ /*
 -- 
 2.39.5
 
