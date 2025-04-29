@@ -1,54 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8C9C148;
-	Tue, 29 Apr 2025 17:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE88242D73;
+	Tue, 29 Apr 2025 17:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948750; cv=none; b=EEjGni2UxHppw3y4wR0QUo78pBa1p0brd9tsXy6aHLokd4P/cPBHLOPayRSs8/M/MqP5w000aaDuXYvT4ZdOvTkPUqKcz3wXwzkrepmEsRGKLj4Yt2sfT0Y2KK/D0qMh/SAAOc3/TSp/xtPMQoGYARl6XUlU0+3sXbTFA8ToWzY=
+	t=1745948753; cv=none; b=Yb/NJ+Vq9sjayWatXJYkLSBGWNjnD6tKi7Y+NMELqF1rxJTo+MdDJLINFVT3WRldlu06cOoWqMGN9JY9ghKAmH2DfyGwJh7/xWYy9LxMcUUfpSnOgp3m1Z9wkLwp9Auy17AlC/ZWoWG00g8yhJOl3JYrirre0103lVjfeIaWDIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948750; c=relaxed/simple;
-	bh=Gt//bfCqD2BiHvcUUM+DAfT1mbNBufPIGiQHNz+jpOQ=;
+	s=arc-20240116; t=1745948753; c=relaxed/simple;
+	bh=9XN5JwI4YF4xR2s2LBM8cPNTQI8Ez4MmmmRf93L3PDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b6LOeTAq6fbAVfbL/OVTGmbL+b5AypCIrm3Hz540LGBARy22uiiIKu7GtxDpT6l7BmHtg7Dk5OmCwvrR9B/IO6dUQRWPUFziK0Ru57fHUXO8OKU5u8pnSiSnbMF9RID1SF3bOHL2Ye+xNEi/yhyXLIe1Pyeja0oXyfny3DAPdcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KEznZR8U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gEaCjSJoexpSVSXtHYe1NbybiqeXBRoir6oFDapMbrMUXi3Oet1MpIli2yM8s7faiOmGhmX0w1LhC9QZkEEHVC78IC7xmq9ZfOXFoDGJpubWNEJEbZzEMxITASppZq6TgiP/Wob0faqN6HwrKZsU35gjpvLpLmi5uMk3c2WWlDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxEErmyk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KEznZR8U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27E5C4CEE3;
-	Tue, 29 Apr 2025 17:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxEErmyk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D63C4CEE3;
+	Tue, 29 Apr 2025 17:45:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948750;
-	bh=Gt//bfCqD2BiHvcUUM+DAfT1mbNBufPIGiQHNz+jpOQ=;
+	s=korg; t=1745948753;
+	bh=9XN5JwI4YF4xR2s2LBM8cPNTQI8Ez4MmmmRf93L3PDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KEznZR8U21XyfHB5DER6Eoo82gdDTNXYLX8veSsb7Z+KO236uiVuJO9TgHQ/9zL9d
-	 g5m5ooBkrMMcTH8pyylCBMlUmONE+z5iExEJVUygWH7hg31Ddplvh1cWVT+LsG0215
-	 OdSrKMhcDrCaKxU9NGSsqCAQzlXyKzsq20uTrLas=
+	b=yxEErmykm/CvU3W91vsaV4DNlKJe/X2dRbFNUYg3Vqk6i5jBEWskn0d0oVoA9IR9m
+	 IFsgCjKMeeDwtsQxm/xhRoAviC6n1aawzk+0wnrAu8nmc086pHR8l2GJoH5ug2Gk+W
+	 krP+vtGOYP1NgoywIMIOukWnlR5povhaBTTII4mE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Tony Luck <tony.luck@intel.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Borislav Betkov <bp@alien8.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jane Chu <jane.chu@oracle.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ruidong Tian <tianruidong@linux.alibaba.com>,
-	Thomas Gleinxer <tglx@linutronix.de>,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 101/373] mm/hwpoison: do not send SIGBUS to processes with recovered clean pages
-Date: Tue, 29 Apr 2025 18:39:38 +0200
-Message-ID: <20250429161127.311113048@linuxfoundation.org>
+	Xin Long <lucien.xin@gmail.com>,
+	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo=20Navarro?= <rcn@igalia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 102/373] sctp: detect and prevent references to a freed transport in sendmsg
+Date: Tue, 29 Apr 2025 18:39:39 +0200
+Message-ID: <20250429161127.352688174@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -61,143 +45,163 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Ricardo Cañuelo Navarro <rcn@igalia.com>
 
-commit aaf99ac2ceb7c974f758a635723eeaf48596388e upstream.
+commit f1a69a940de58b16e8249dff26f74c8cc59b32be upstream.
 
-When an uncorrected memory error is consumed there is a race between the
-CMCI from the memory controller reporting an uncorrected error with a UCNA
-signature, and the core reporting and SRAR signature machine check when
-the data is about to be consumed.
+sctp_sendmsg() re-uses associations and transports when possible by
+doing a lookup based on the socket endpoint and the message destination
+address, and then sctp_sendmsg_to_asoc() sets the selected transport in
+all the message chunks to be sent.
 
-- Background: why *UN*corrected errors tied to *C*MCI in Intel platform [1]
+There's a possible race condition if another thread triggers the removal
+of that selected transport, for instance, by explicitly unbinding an
+address with setsockopt(SCTP_SOCKOPT_BINDX_REM), after the chunks have
+been set up and before the message is sent. This can happen if the send
+buffer is full, during the period when the sender thread temporarily
+releases the socket lock in sctp_wait_for_sndbuf().
 
-Prior to Icelake memory controllers reported patrol scrub events that
-detected a previously unseen uncorrected error in memory by signaling a
-broadcast machine check with an SRAO (Software Recoverable Action
-Optional) signature in the machine check bank.  This was overkill because
-it's not an urgent problem that no core is on the verge of consuming that
-bad data.  It's also found that multi SRAO UCE may cause nested MCE
-interrupts and finally become an IERR.
+This causes the access to the transport data in
+sctp_outq_select_transport(), when the association outqueue is flushed,
+to result in a use-after-free read.
 
-Hence, Intel downgrades the machine check bank signature of patrol scrub
-from SRAO to UCNA (Uncorrected, No Action required), and signal changed to
-#CMCI.  Just to add to the confusion, Linux does take an action (in
-uc_decode_notifier()) to try to offline the page despite the UC*NA*
-signature name.
+This change avoids this scenario by having sctp_transport_free() signal
+the freeing of the transport, tagging it as "dead". In order to do this,
+the patch restores the "dead" bit in struct sctp_transport, which was
+removed in
+commit 47faa1e4c50e ("sctp: remove the dead field of sctp_transport").
 
-- Background: why #CMCI and #MCE race when poison is consuming in Intel platform [1]
+Then, in the scenario where the sender thread has released the socket
+lock in sctp_wait_for_sndbuf(), the bit is checked again after
+re-acquiring the socket lock to detect the deletion. This is done while
+holding a reference to the transport to prevent it from being freed in
+the process.
 
-Having decided that CMCI/UCNA is the best action for patrol scrub errors,
-the memory controller uses it for reads too.  But the memory controller is
-executing asynchronously from the core, and can't tell the difference
-between a "real" read and a speculative read.  So it will do CMCI/UCNA if
-an error is found in any read.
+If the transport was deleted while the socket lock was relinquished,
+sctp_sendmsg_to_asoc() will return -EAGAIN to let userspace retry the
+send.
 
-Thus:
+The bug was found by a private syzbot instance (see the error report [1]
+and the C reproducer that triggers it [2]).
 
-1) Core is clever and thinks address A is needed soon, issues a speculative read.
-2) Core finds it is going to use address A soon after sending the read request
-3) The CMCI from the memory controller is in a race with MCE from the core
-   that will soon try to retire the load from address A.
-
-Quite often (because speculation has got better) the CMCI from the memory
-controller is delivered before the core is committed to the instruction
-reading address A, so the interrupt is taken, and Linux offlines the page
-(marking it as poison).
-
-- Why user process is killed for instr case
-
-Commit 046545a661af ("mm/hwpoison: fix error page recovered but reported
-"not recovered"") tries to fix noise message "Memory error not recovered"
-and skips duplicate SIGBUSs due to the race.  But it also introduced a bug
-that kill_accessing_process() return -EHWPOISON for instr case, as result,
-kill_me_maybe() send a SIGBUS to user process.
-
-If the CMCI wins that race, the page is marked poisoned when
-uc_decode_notifier() calls memory_failure().  For dirty pages,
-memory_failure() invokes try_to_unmap() with the TTU_HWPOISON flag,
-converting the PTE to a hwpoison entry.  As a result,
-kill_accessing_process():
-
-- call walk_page_range() and return 1 regardless of whether
-  try_to_unmap() succeeds or fails,
-- call kill_proc() to make sure a SIGBUS is sent
-- return -EHWPOISON to indicate that SIGBUS is already sent to the
-  process and kill_me_maybe() doesn't have to send it again.
-
-However, for clean pages, the TTU_HWPOISON flag is cleared, leaving the
-PTE unchanged and not converted to a hwpoison entry.  Conversely, for
-clean pages where PTE entries are not marked as hwpoison,
-kill_accessing_process() returns -EFAULT, causing kill_me_maybe() to send
-a SIGBUS.
-
-Console log looks like this:
-
-    Memory failure: 0x827ca68: corrupted page was clean: dropped without side effects
-    Memory failure: 0x827ca68: recovery action for clean LRU page: Recovered
-    Memory failure: 0x827ca68: already hardware poisoned
-    mce: Memory error not recovered
-
-To fix it, return 0 for "corrupted page was clean", preventing an
-unnecessary SIGBUS to user process.
-
-[1] https://lore.kernel.org/lkml/20250217063335.22257-1-xueshuai@linux.alibaba.com/T/#mba94f1305b3009dd340ce4114d3221fe810d1871
-Link: https://lkml.kernel.org/r/20250312112852.82415-3-xueshuai@linux.alibaba.com
-Fixes: 046545a661af ("mm/hwpoison: fix error page recovered but reported "not recovered"")
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Tested-by: Tony Luck <tony.luck@intel.com>
-Acked-by: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Borislav Betkov <bp@alien8.de>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jane Chu <jane.chu@oracle.com>
-Cc: Jarkko Sakkinen <jarkko@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ruidong Tian <tianruidong@linux.alibaba.com>
-Cc: Thomas Gleinxer <tglx@linutronix.de>
-Cc: Yazen Ghannam <yazen.ghannam@amd.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://people.igalia.com/rcn/kernel_logs/20250402__KASAN_slab-use-after-free_Read_in_sctp_outq_select_transport.txt [1]
+Link: https://people.igalia.com/rcn/kernel_logs/20250402__KASAN_slab-use-after-free_Read_in_sctp_outq_select_transport__repro.c [2]
+Cc: stable@vger.kernel.org
+Fixes: df132eff4638 ("sctp: clear the transport of some out_chunk_list chunks in sctp_assoc_rm_peer")
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Ricardo Cañuelo Navarro <rcn@igalia.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20250404-kasan_slab-use-after-free_read_in_sctp_outq_select_transport__20250404-v1-1-5ce4a0b78ef2@igalia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ include/net/sctp/structs.h |    3 ++-
+ net/sctp/socket.c          |   22 ++++++++++++++--------
+ net/sctp/transport.c       |    2 ++
+ 3 files changed, 18 insertions(+), 9 deletions(-)
 
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -707,12 +707,17 @@ static int kill_accessing_process(struct
- 	mmap_read_lock(p->mm);
- 	ret = walk_page_range(p->mm, 0, TASK_SIZE, &hwp_walk_ops,
- 			      (void *)&priv);
-+	/*
-+	 * ret = 1 when CMCI wins, regardless of whether try_to_unmap()
-+	 * succeeds or fails, then kill the process with SIGBUS.
-+	 * ret = 0 when poison page is a clean page and it's dropped, no
-+	 * SIGBUS is needed.
-+	 */
- 	if (ret == 1 && priv.tk.addr)
- 		kill_proc(&priv.tk, pfn, flags);
--	else
--		ret = 0;
- 	mmap_read_unlock(p->mm);
--	return ret > 0 ? -EHWPOISON : -EFAULT;
-+
-+	return ret > 0 ? -EHWPOISON : 0;
- }
+--- a/include/net/sctp/structs.h
++++ b/include/net/sctp/structs.h
+@@ -777,6 +777,7 @@ struct sctp_transport {
  
- static const char *action_name[] = {
+ 	/* Reference counting. */
+ 	refcount_t refcnt;
++	__u32	dead:1,
+ 		/* RTO-Pending : A flag used to track if one of the DATA
+ 		 *		chunks sent to this address is currently being
+ 		 *		used to compute a RTT. If this flag is 0,
+@@ -786,7 +787,7 @@ struct sctp_transport {
+ 		 *		calculation completes (i.e. the DATA chunk
+ 		 *		is SACK'd) clear this flag.
+ 		 */
+-	__u32	rto_pending:1,
++		rto_pending:1,
+ 
+ 		/*
+ 		 * hb_sent : a flag that signals that we have a pending
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -70,8 +70,9 @@
+ /* Forward declarations for internal helper functions. */
+ static bool sctp_writeable(const struct sock *sk);
+ static void sctp_wfree(struct sk_buff *skb);
+-static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
+-				size_t msg_len);
++static int sctp_wait_for_sndbuf(struct sctp_association *asoc,
++				struct sctp_transport *transport,
++				long *timeo_p, size_t msg_len);
+ static int sctp_wait_for_packet(struct sock *sk, int *err, long *timeo_p);
+ static int sctp_wait_for_connect(struct sctp_association *, long *timeo_p);
+ static int sctp_wait_for_accept(struct sock *sk, long timeo);
+@@ -1828,7 +1829,7 @@ static int sctp_sendmsg_to_asoc(struct s
+ 
+ 	if (sctp_wspace(asoc) <= 0 || !sk_wmem_schedule(sk, msg_len)) {
+ 		timeo = sock_sndtimeo(sk, msg->msg_flags & MSG_DONTWAIT);
+-		err = sctp_wait_for_sndbuf(asoc, &timeo, msg_len);
++		err = sctp_wait_for_sndbuf(asoc, transport, &timeo, msg_len);
+ 		if (err)
+ 			goto err;
+ 		if (unlikely(sinfo->sinfo_stream >= asoc->stream.outcnt)) {
+@@ -9206,8 +9207,9 @@ void sctp_sock_rfree(struct sk_buff *skb
+ 
+ 
+ /* Helper function to wait for space in the sndbuf.  */
+-static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
+-				size_t msg_len)
++static int sctp_wait_for_sndbuf(struct sctp_association *asoc,
++				struct sctp_transport *transport,
++				long *timeo_p, size_t msg_len)
+ {
+ 	struct sock *sk = asoc->base.sk;
+ 	long current_timeo = *timeo_p;
+@@ -9217,7 +9219,9 @@ static int sctp_wait_for_sndbuf(struct s
+ 	pr_debug("%s: asoc:%p, timeo:%ld, msg_len:%zu\n", __func__, asoc,
+ 		 *timeo_p, msg_len);
+ 
+-	/* Increment the association's refcnt.  */
++	/* Increment the transport and association's refcnt. */
++	if (transport)
++		sctp_transport_hold(transport);
+ 	sctp_association_hold(asoc);
+ 
+ 	/* Wait on the association specific sndbuf space. */
+@@ -9226,7 +9230,7 @@ static int sctp_wait_for_sndbuf(struct s
+ 					  TASK_INTERRUPTIBLE);
+ 		if (asoc->base.dead)
+ 			goto do_dead;
+-		if (!*timeo_p)
++		if ((!*timeo_p) || (transport && transport->dead))
+ 			goto do_nonblock;
+ 		if (sk->sk_err || asoc->state >= SCTP_STATE_SHUTDOWN_PENDING)
+ 			goto do_error;
+@@ -9253,7 +9257,9 @@ static int sctp_wait_for_sndbuf(struct s
+ out:
+ 	finish_wait(&asoc->wait, &wait);
+ 
+-	/* Release the association's refcnt.  */
++	/* Release the transport and association's refcnt. */
++	if (transport)
++		sctp_transport_put(transport);
+ 	sctp_association_put(asoc);
+ 
+ 	return err;
+--- a/net/sctp/transport.c
++++ b/net/sctp/transport.c
+@@ -117,6 +117,8 @@ fail:
+  */
+ void sctp_transport_free(struct sctp_transport *transport)
+ {
++	transport->dead = 1;
++
+ 	/* Try to delete the heartbeat timer.  */
+ 	if (del_timer(&transport->hb_timer))
+ 		sctp_transport_put(transport);
 
 
