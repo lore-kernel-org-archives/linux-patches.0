@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34B6229B05;
-	Tue, 29 Apr 2025 16:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDD52459C9;
+	Tue, 29 Apr 2025 16:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945363; cv=none; b=NPmS6ePMK3WijzuPpreiObivtZ0DgKjWp/vaMMGyNOoywsoSzu00n7ljZwpdsppuRi3Ky+tr7YwqzRIXdNJoeCdhEmFBzA4hVs99bfW/V69ogX2l+LCbmSqvbbgSbuqn9SOS6+LTAp/QqEl5bJTprWbcAT5gH6w+/4vHdcT95Qk=
+	t=1745945366; cv=none; b=FC9HugCu5CCPqepeXe9H0ejuUEfuno8vbAE3+IQTLottUw1mVGuzrpcLbbNEvBmbnOzZGklDV9QEm8/Xcj6M6xHIpmRMMA95bs3c/B1UvDgtX7qatGcX/Sa8ygh8LBCX4m+DDf9kBIt8ejgswhM/pcTxxxY8vdjOvg52yx5EYXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945363; c=relaxed/simple;
-	bh=ckVsofM6W5Al0kpuSLevzSgnOl5E+MAiDQh90+mbHWY=;
+	s=arc-20240116; t=1745945366; c=relaxed/simple;
+	bh=BEWQA7Ftn/CF8qUfbFjBrJcPVEuiNBtrXe980fv8Q4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sYy5d+Jof7DB683Ei/wYZH0amTR6nBBmQdbnQUBcS9oe8JbykSvW5X76Pmy68SqB/JOC2vBg4kzzpyUTZXDNZB7i2jkNINWLZZHAwCelURtzl4dod0VtBqxgWasNe8XIy70VjaBt2tskq/1zBbUnRGdwcircyh8Dr8T29kSz9/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4smMeRI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CqRu7DXfO+CqNc2P1fZkrv5p1WHuiJSgy7+yupdSa9mLO2OCbkK7vJyspUl0XVt7s7zFboSz6oXjZVVnxwePmPnEP0ZTuFZ7SNkv0H2mjgzBoZGCxktXrG9JnTXkFi3kyC1uOfpygJjZE7yz/4lTf7iNyjEFJRC6K8miaeQDJfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LObLQgmO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4smMeRI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87A9C4CEE3;
-	Tue, 29 Apr 2025 16:49:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LObLQgmO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D236BC4CEE3;
+	Tue, 29 Apr 2025 16:49:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945363;
-	bh=ckVsofM6W5Al0kpuSLevzSgnOl5E+MAiDQh90+mbHWY=;
+	s=korg; t=1745945366;
+	bh=BEWQA7Ftn/CF8qUfbFjBrJcPVEuiNBtrXe980fv8Q4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A4smMeRIxeLb9g03pO0MvWBB/1Dreo5FtEJeMB51Pa3CwcTAXeQy7WSNDcPsyoUva
-	 oljdhIJZcEe5Pe0rLOtRxuy0Tc4Y/X+W0Aet+zvUepVrvw1SR2Pv6C5WAWSHyvL3wf
-	 etJCwT29Bea3tKuSYT3TxfPCenxq596i0lRR2hp8=
+	b=LObLQgmORwRKGSQWY+6OPTU7yDl9lCMMYXHSaQy/Q368oXyiXeq3YdJGlWOb82RVs
+	 u0TcoiH9ia2DEqZWzAN6+UIJCZYvTS2HYpS07WNe2CoP1f7uj4xL+f9GFYXMp8eXmY
+	 LPpKJWPo9si6FysI2Q3ctIvwEDXevvrNDtlqjHGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.4 057/179] wifi: mac80211: fix integer overflow in hwmp_route_info_get()
-Date: Tue, 29 Apr 2025 18:39:58 +0200
-Message-ID: <20250429161051.703848213@linuxfoundation.org>
+	Artem Sadovnikov <a.sadovnikov@ispras.ru>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.4 058/179] ext4: fix off-by-one error in do_split
+Date: Tue, 29 Apr 2025 18:39:59 +0200
+Message-ID: <20250429161051.746091516@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -50,63 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
+From: Artem Sadovnikov <a.sadovnikov@ispras.ru>
 
-commit d00c0c4105e5ab8a6a13ed23d701cceb285761fa upstream.
+commit 94824ac9a8aaf2fb3c54b4bdde842db80ffa555d upstream.
 
-Since the new_metric and last_hop_metric variables can reach
-the MAX_METRIC(0xffffffff) value, an integer overflow may occur
-when multiplying them by 10/9. It can lead to incorrect behavior.
+Syzkaller detected a use-after-free issue in ext4_insert_dentry that was
+caused by out-of-bounds access due to incorrect splitting in do_split.
 
-Found by InfoTeCS on behalf of Linux Verification Center
-(linuxtesting.org) with SVACE.
+BUG: KASAN: use-after-free in ext4_insert_dentry+0x36a/0x6d0 fs/ext4/namei.c:2109
+Write of size 251 at addr ffff888074572f14 by task syz-executor335/5847
 
-Fixes: a8d418d9ac25 ("mac80211: mesh: only switch path when new metric is at least 10% better")
+CPU: 0 UID: 0 PID: 5847 Comm: syz-executor335 Not tainted 6.12.0-rc6-syzkaller-00318-ga9cda7c0ffed #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/30/2024
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:377 [inline]
+ print_report+0x169/0x550 mm/kasan/report.c:488
+ kasan_report+0x143/0x180 mm/kasan/report.c:601
+ kasan_check_range+0x282/0x290 mm/kasan/generic.c:189
+ __asan_memcpy+0x40/0x70 mm/kasan/shadow.c:106
+ ext4_insert_dentry+0x36a/0x6d0 fs/ext4/namei.c:2109
+ add_dirent_to_buf+0x3d9/0x750 fs/ext4/namei.c:2154
+ make_indexed_dir+0xf98/0x1600 fs/ext4/namei.c:2351
+ ext4_add_entry+0x222a/0x25d0 fs/ext4/namei.c:2455
+ ext4_add_nondir+0x8d/0x290 fs/ext4/namei.c:2796
+ ext4_symlink+0x920/0xb50 fs/ext4/namei.c:3431
+ vfs_symlink+0x137/0x2e0 fs/namei.c:4615
+ do_symlinkat+0x222/0x3a0 fs/namei.c:4641
+ __do_sys_symlink fs/namei.c:4662 [inline]
+ __se_sys_symlink fs/namei.c:4660 [inline]
+ __x64_sys_symlink+0x7a/0x90 fs/namei.c:4660
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
+
+The following loop is located right above 'if' statement.
+
+for (i = count-1; i >= 0; i--) {
+	/* is more than half of this entry in 2nd half of the block? */
+	if (size + map[i].size/2 > blocksize/2)
+		break;
+	size += map[i].size;
+	move++;
+}
+
+'i' in this case could go down to -1, in which case sum of active entries
+wouldn't exceed half the block size, but previous behaviour would also do
+split in half if sum would exceed at the very last block, which in case of
+having too many long name files in a single block could lead to
+out-of-bounds access and following use-after-free.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
-Link: https://patch.msgid.link/20250212082124.4078236-1-Ilia.Gavrilov@infotecs.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 5872331b3d91 ("ext4: fix potential negative array index in do_split()")
+Signed-off-by: Artem Sadovnikov <a.sadovnikov@ispras.ru>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20250404082804.2567-3-a.sadovnikov@ispras.ru
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mesh_hwmp.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ fs/ext4/namei.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mac80211/mesh_hwmp.c
-+++ b/net/mac80211/mesh_hwmp.c
-@@ -360,6 +360,12 @@ u32 airtime_link_metric_get(struct ieee8
- 	return (u32)result;
- }
- 
-+/* Check that the first metric is at least 10% better than the second one */
-+static bool is_metric_better(u32 x, u32 y)
-+{
-+	return (x < y) && (x < (y - x / 10));
-+}
-+
- /**
-  * hwmp_route_info_get - Update routing info to originator and transmitter
-  *
-@@ -450,8 +456,8 @@ static u32 hwmp_route_info_get(struct ie
- 				    (mpath->sn == orig_sn &&
- 				     (rcu_access_pointer(mpath->next_hop) !=
- 						      sta ?
--					      mult_frac(new_metric, 10, 9) :
--					      new_metric) >= mpath->metric)) {
-+					      !is_metric_better(new_metric, mpath->metric) :
-+					      new_metric >= mpath->metric))) {
- 					process = false;
- 					fresh_info = false;
- 				}
-@@ -521,8 +527,8 @@ static u32 hwmp_route_info_get(struct ie
- 			if ((mpath->flags & MESH_PATH_FIXED) ||
- 			    ((mpath->flags & MESH_PATH_ACTIVE) &&
- 			     ((rcu_access_pointer(mpath->next_hop) != sta ?
--				       mult_frac(last_hop_metric, 10, 9) :
--				       last_hop_metric) > mpath->metric)))
-+				      !is_metric_better(last_hop_metric, mpath->metric) :
-+				       last_hop_metric > mpath->metric))))
- 				fresh_info = false;
- 		} else {
- 			mpath = mesh_path_add(sdata, ta);
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -1918,7 +1918,7 @@ static struct ext4_dir_entry_2 *do_split
+ 	 * split it in half by count; each resulting block will have at least
+ 	 * half the space free.
+ 	 */
+-	if (i > 0)
++	if (i >= 0)
+ 		split = count - move;
+ 	else
+ 		split = count/2;
 
 
