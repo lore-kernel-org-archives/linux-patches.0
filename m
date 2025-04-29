@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9C582C60;
-	Tue, 29 Apr 2025 17:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D451F4736;
+	Tue, 29 Apr 2025 17:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947892; cv=none; b=NFFBoxiDocgCH4UcxL03cKowruRdXP+Xami6QUHB7FdVl/zTiGLCt3BjbAxm23T0YwLaKCmRErGabJGlGfDD+EhW7s8qHYlbnUcUtGvw9ewWWNzYC1RACvx2ElJ6NxgVnd55RrVMCVxTzHsI2u7W2+B7IYHv0RIOwAs0OF61MSQ=
+	t=1745947895; cv=none; b=iyqmdf+r6nGarOdlEgbnkXKbVgFzu+d/bkuuSiYKubJnkcQGyjI8FQiKrSFRt4LFkW0pfZTUExUzqFmr1ESafm7ZeATLVnwsYeo4lOR7Q5Fc4Um+4Hhy5ukOl5CMY5I+k0UQ5OeT9jIPFtI1++XxEL5x5EivxEaRHLK9a0ceUTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947892; c=relaxed/simple;
-	bh=XSAZImW9xZ0tvzuyKwq/+06ZBjiN0L5KRwcpi4hZqbc=;
+	s=arc-20240116; t=1745947895; c=relaxed/simple;
+	bh=+Ol5LLr+CE3dGNdwF1gEugbW8RDk6E17oUT8dbkVWic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AUOWYZlVODCw5KuLgc06QotpQZgBEovTtQwLeog2KbATsDZ5nBqO5qccSiazs+U3WxlTyXKhNLAZ29g265KiEP2YkBYCurdqihQPtSxA20HJvYaRP3SfcYVEYWyUjcqiuY5y4WE6np6fkYzMS0R7Qiv8HS/SvMXNnNI/FREZIMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sIC1N5x5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qNqN3Ay0V0CGwNTt/SjlG5nbzOCkNK7wi59zrdA2enwX+lRmKtBXjESmNpZsfSKYFBag5W0UF1jz3Jy8CgZmpsUnOCzQdOaUQW7EWMOPdF1ftcn6mlNZOH6urtL97pYDUOy6G3qX6HXxPPdLxzf4zkx7aVteocN548sm/QcCaqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTyXKMUG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sIC1N5x5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C30BFC4CEE9;
-	Tue, 29 Apr 2025 17:31:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTyXKMUG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB950C4CEE3;
+	Tue, 29 Apr 2025 17:31:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947892;
-	bh=XSAZImW9xZ0tvzuyKwq/+06ZBjiN0L5KRwcpi4hZqbc=;
+	s=korg; t=1745947895;
+	bh=+Ol5LLr+CE3dGNdwF1gEugbW8RDk6E17oUT8dbkVWic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sIC1N5x5+8GgQksAnfTPpRVaQbLCSzZlV0SpEukLmi3O5yLcFB+cfi+u+G/VsNb4x
-	 8wOmzsHZbQiPDquYGLmUfVfeHwHrheCLXZKxs3FZvFwHdsruKVWtu9gBpyUuin5iWg
-	 /A6vEIPIaPoD7Q8NI1XLvLl+Xfo0u1xmQmquPbYY=
+	b=mTyXKMUGGeMDjvCtpchPvQk883ZK6x01wdKDoUs870W23/RnSrGzDt/uz/jpAHBT8
+	 ljgTl4ASuNI5eqbFSYDo0LXglWSIs4IHspu0plHhr5744RsBYYMT/K+JhiVe9dzm2M
+	 QtsOYGp4OCZo/yNSbOO8UAjq3teGmmhU/4yc56ZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.12 106/280] irqchip/gic-v2m: Prevent use after free of gicv2m_get_fwnode()
-Date: Tue, 29 Apr 2025 18:40:47 +0200
-Message-ID: <20250429161119.446057663@linuxfoundation.org>
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.12 107/280] LoongArch: Handle fp, lsx, lasx and lbt assembly symbols
+Date: Tue, 29 Apr 2025 18:40:48 +0200
+Message-ID: <20250429161119.485270684@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
 References: <20250429161115.008747050@linuxfoundation.org>
@@ -52,46 +50,209 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit 3318dc299b072a0511d6dfd8367f3304fb6d9827 upstream.
+commit 2ef174b13344b3b4554d3d28e6f9e2a2c1d3138f upstream.
 
-With ACPI in place, gicv2m_get_fwnode() is registered with the pci
-subsystem as pci_msi_get_fwnode_cb(), which may get invoked at runtime
-during a PCI host bridge probe. But, the call back is wrongly marked as
-__init, causing it to be freed, while being registered with the PCI
-subsystem and could trigger:
+Like the other relevant symbols, export some fp, lsx, lasx and lbt
+assembly symbols and put the function declarations in header files
+rather than source files.
 
- Unable to handle kernel paging request at virtual address ffff8000816c0400
-  gicv2m_get_fwnode+0x0/0x58 (P)
-  pci_set_bus_msi_domain+0x74/0x88
-  pci_register_host_bridge+0x194/0x548
+While at it, use "asmlinkage" for the other existing C prototypes
+of assembly functions and also do not use the "extern" keyword with
+function declarations according to the document coding-style.rst.
 
-This is easily reproducible on a Juno board with ACPI boot.
-
-Retain the function for later use.
-
-Fixes: 0644b3daca28 ("irqchip/gic-v2m: acpi: Introducing GICv2m ACPI support")
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # 6.6+
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v2m.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/include/asm/fpu.h |   37 ++++++++++++++++++++++---------------
+ arch/loongarch/include/asm/lbt.h |   10 +++++++---
+ arch/loongarch/kernel/fpu.S      |    6 ++++++
+ arch/loongarch/kernel/lbt.S      |    4 ++++
+ arch/loongarch/kernel/signal.c   |   21 ---------------------
+ 5 files changed, 39 insertions(+), 39 deletions(-)
 
---- a/drivers/irqchip/irq-gic-v2m.c
-+++ b/drivers/irqchip/irq-gic-v2m.c
-@@ -423,7 +423,7 @@ static int __init gicv2m_of_init(struct
- #ifdef CONFIG_ACPI
- static int acpi_num_msi;
+--- a/arch/loongarch/include/asm/fpu.h
++++ b/arch/loongarch/include/asm/fpu.h
+@@ -22,22 +22,29 @@
+ struct sigcontext;
  
--static __init struct fwnode_handle *gicv2m_get_fwnode(struct device *dev)
-+static struct fwnode_handle *gicv2m_get_fwnode(struct device *dev)
+ #define kernel_fpu_available() cpu_has_fpu
+-extern void kernel_fpu_begin(void);
+-extern void kernel_fpu_end(void);
+ 
+-extern void _init_fpu(unsigned int);
+-extern void _save_fp(struct loongarch_fpu *);
+-extern void _restore_fp(struct loongarch_fpu *);
+-
+-extern void _save_lsx(struct loongarch_fpu *fpu);
+-extern void _restore_lsx(struct loongarch_fpu *fpu);
+-extern void _init_lsx_upper(void);
+-extern void _restore_lsx_upper(struct loongarch_fpu *fpu);
+-
+-extern void _save_lasx(struct loongarch_fpu *fpu);
+-extern void _restore_lasx(struct loongarch_fpu *fpu);
+-extern void _init_lasx_upper(void);
+-extern void _restore_lasx_upper(struct loongarch_fpu *fpu);
++void kernel_fpu_begin(void);
++void kernel_fpu_end(void);
++
++asmlinkage void _init_fpu(unsigned int);
++asmlinkage void _save_fp(struct loongarch_fpu *);
++asmlinkage void _restore_fp(struct loongarch_fpu *);
++asmlinkage int _save_fp_context(void __user *fpregs, void __user *fcc, void __user *csr);
++asmlinkage int _restore_fp_context(void __user *fpregs, void __user *fcc, void __user *csr);
++
++asmlinkage void _save_lsx(struct loongarch_fpu *fpu);
++asmlinkage void _restore_lsx(struct loongarch_fpu *fpu);
++asmlinkage void _init_lsx_upper(void);
++asmlinkage void _restore_lsx_upper(struct loongarch_fpu *fpu);
++asmlinkage int _save_lsx_context(void __user *fpregs, void __user *fcc, void __user *fcsr);
++asmlinkage int _restore_lsx_context(void __user *fpregs, void __user *fcc, void __user *fcsr);
++
++asmlinkage void _save_lasx(struct loongarch_fpu *fpu);
++asmlinkage void _restore_lasx(struct loongarch_fpu *fpu);
++asmlinkage void _init_lasx_upper(void);
++asmlinkage void _restore_lasx_upper(struct loongarch_fpu *fpu);
++asmlinkage int _save_lasx_context(void __user *fpregs, void __user *fcc, void __user *fcsr);
++asmlinkage int _restore_lasx_context(void __user *fpregs, void __user *fcc, void __user *fcsr);
+ 
+ static inline void enable_lsx(void);
+ static inline void disable_lsx(void);
+--- a/arch/loongarch/include/asm/lbt.h
++++ b/arch/loongarch/include/asm/lbt.h
+@@ -12,9 +12,13 @@
+ #include <asm/loongarch.h>
+ #include <asm/processor.h>
+ 
+-extern void _init_lbt(void);
+-extern void _save_lbt(struct loongarch_lbt *);
+-extern void _restore_lbt(struct loongarch_lbt *);
++asmlinkage void _init_lbt(void);
++asmlinkage void _save_lbt(struct loongarch_lbt *);
++asmlinkage void _restore_lbt(struct loongarch_lbt *);
++asmlinkage int _save_lbt_context(void __user *regs, void __user *eflags);
++asmlinkage int _restore_lbt_context(void __user *regs, void __user *eflags);
++asmlinkage int _save_ftop_context(void __user *ftop);
++asmlinkage int _restore_ftop_context(void __user *ftop);
+ 
+ static inline int is_lbt_enabled(void)
  {
- 	struct v2m_data *data;
+--- a/arch/loongarch/kernel/fpu.S
++++ b/arch/loongarch/kernel/fpu.S
+@@ -458,6 +458,7 @@ SYM_FUNC_START(_save_fp_context)
+ 	li.w		a0, 0				# success
+ 	jr		ra
+ SYM_FUNC_END(_save_fp_context)
++EXPORT_SYMBOL_GPL(_save_fp_context)
  
+ /*
+  * a0: fpregs
+@@ -471,6 +472,7 @@ SYM_FUNC_START(_restore_fp_context)
+ 	li.w		a0, 0				# success
+ 	jr		ra
+ SYM_FUNC_END(_restore_fp_context)
++EXPORT_SYMBOL_GPL(_restore_fp_context)
+ 
+ /*
+  * a0: fpregs
+@@ -484,6 +486,7 @@ SYM_FUNC_START(_save_lsx_context)
+ 	li.w	a0, 0					# success
+ 	jr	ra
+ SYM_FUNC_END(_save_lsx_context)
++EXPORT_SYMBOL_GPL(_save_lsx_context)
+ 
+ /*
+  * a0: fpregs
+@@ -497,6 +500,7 @@ SYM_FUNC_START(_restore_lsx_context)
+ 	li.w	a0, 0					# success
+ 	jr	ra
+ SYM_FUNC_END(_restore_lsx_context)
++EXPORT_SYMBOL_GPL(_restore_lsx_context)
+ 
+ /*
+  * a0: fpregs
+@@ -510,6 +514,7 @@ SYM_FUNC_START(_save_lasx_context)
+ 	li.w	a0, 0					# success
+ 	jr	ra
+ SYM_FUNC_END(_save_lasx_context)
++EXPORT_SYMBOL_GPL(_save_lasx_context)
+ 
+ /*
+  * a0: fpregs
+@@ -523,6 +528,7 @@ SYM_FUNC_START(_restore_lasx_context)
+ 	li.w	a0, 0					# success
+ 	jr	ra
+ SYM_FUNC_END(_restore_lasx_context)
++EXPORT_SYMBOL_GPL(_restore_lasx_context)
+ 
+ .L_fpu_fault:
+ 	li.w	a0, -EFAULT				# failure
+--- a/arch/loongarch/kernel/lbt.S
++++ b/arch/loongarch/kernel/lbt.S
+@@ -90,6 +90,7 @@ SYM_FUNC_START(_save_lbt_context)
+ 	li.w		a0, 0			# success
+ 	jr		ra
+ SYM_FUNC_END(_save_lbt_context)
++EXPORT_SYMBOL_GPL(_save_lbt_context)
+ 
+ /*
+  * a0: scr
+@@ -110,6 +111,7 @@ SYM_FUNC_START(_restore_lbt_context)
+ 	li.w		a0, 0			# success
+ 	jr		ra
+ SYM_FUNC_END(_restore_lbt_context)
++EXPORT_SYMBOL_GPL(_restore_lbt_context)
+ 
+ /*
+  * a0: ftop
+@@ -120,6 +122,7 @@ SYM_FUNC_START(_save_ftop_context)
+ 	li.w		a0, 0			# success
+ 	jr		ra
+ SYM_FUNC_END(_save_ftop_context)
++EXPORT_SYMBOL_GPL(_save_ftop_context)
+ 
+ /*
+  * a0: ftop
+@@ -150,6 +153,7 @@ SYM_FUNC_START(_restore_ftop_context)
+ 	li.w		a0, 0			# success
+ 	jr		ra
+ SYM_FUNC_END(_restore_ftop_context)
++EXPORT_SYMBOL_GPL(_restore_ftop_context)
+ 
+ .L_lbt_fault:
+ 	li.w		a0, -EFAULT		# failure
+--- a/arch/loongarch/kernel/signal.c
++++ b/arch/loongarch/kernel/signal.c
+@@ -51,27 +51,6 @@
+ #define lock_lbt_owner()	({ preempt_disable(); pagefault_disable(); })
+ #define unlock_lbt_owner()	({ pagefault_enable(); preempt_enable(); })
+ 
+-/* Assembly functions to move context to/from the FPU */
+-extern asmlinkage int
+-_save_fp_context(void __user *fpregs, void __user *fcc, void __user *csr);
+-extern asmlinkage int
+-_restore_fp_context(void __user *fpregs, void __user *fcc, void __user *csr);
+-extern asmlinkage int
+-_save_lsx_context(void __user *fpregs, void __user *fcc, void __user *fcsr);
+-extern asmlinkage int
+-_restore_lsx_context(void __user *fpregs, void __user *fcc, void __user *fcsr);
+-extern asmlinkage int
+-_save_lasx_context(void __user *fpregs, void __user *fcc, void __user *fcsr);
+-extern asmlinkage int
+-_restore_lasx_context(void __user *fpregs, void __user *fcc, void __user *fcsr);
+-
+-#ifdef CONFIG_CPU_HAS_LBT
+-extern asmlinkage int _save_lbt_context(void __user *regs, void __user *eflags);
+-extern asmlinkage int _restore_lbt_context(void __user *regs, void __user *eflags);
+-extern asmlinkage int _save_ftop_context(void __user *ftop);
+-extern asmlinkage int _restore_ftop_context(void __user *ftop);
+-#endif
+-
+ struct rt_sigframe {
+ 	struct siginfo rs_info;
+ 	struct ucontext rs_uctx;
 
 
