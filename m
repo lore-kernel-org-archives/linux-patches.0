@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A71246326;
-	Tue, 29 Apr 2025 17:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBD2246326;
+	Tue, 29 Apr 2025 17:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946161; cv=none; b=FXHYd7H/h2sAtQz21rYxMrnG4gJ4vBR5FsPzlfOHtCIfcKSSLxxb6AG6a3ASFn4uPxkZmRbVZlHyP6c0l++JQzX2rHwDj8VEDXx2G4EniiwT5BsWoWbnJJEs73wQb6WN+cNx35O29rDtSuySTZjowp78P9zSDAaqBgoMxj2ky2M=
+	t=1745946164; cv=none; b=ZbARxkcHj8qz8uOVVTjdt7OfbrhJTV1UhGi3Q8Q8D10q59ImYw0WsTdyJY01U6FHyxbmkVAORnDvzogm+Jk1pAlUGl7RXyR3QgYLyUWWLVWsfsl1FSnPINMZpykiYNfNzukM25sUiW2iNySXs+cgqhALGQsMIXkk9mYUmbpUl60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946161; c=relaxed/simple;
-	bh=w+AMD5QeMTEaf6tcvzH/kTW4MUvmKVHI92MG3vTaQqQ=;
+	s=arc-20240116; t=1745946164; c=relaxed/simple;
+	bh=/8iLxp1Xv9YOkE47A1Neyhil2JYc/q/rSbcLaAWBM+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h9NxMoQ7Sl14FXVPyh7y9KznZ2eE5L2TgW8YskaIbBE5SjvhSxrSZWd+aINtxDbIF1yIposqs41xEtNlT/NLzvMYe9CCs9ZoXyEiDfnMtCqf89HM3qIAiX+nURl4ILmJc6Mi4c+w5Huhj55RRGJWqB+GuQddnyDV02b/3xIj2g4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x3XDrJF7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WyxXZeZVPLjNzUiDJDpu0TL6AWjp5xCbTa6ILsnh4s17e3OL3+sFunjJCnf+2FCSqIAaCF+hRwAiLkuoE12Awltn8c8oHLrss6qZsPaEUnzM9wY37Rhu8+n0f9gUkkndcd2FqxE37wvyaf2KCsH4003iJHG6lRJVMk93FwvJPQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OU6x2l4j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x3XDrJF7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB196C4CEE3;
-	Tue, 29 Apr 2025 17:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OU6x2l4j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B223FC4CEE3;
+	Tue, 29 Apr 2025 17:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946161;
-	bh=w+AMD5QeMTEaf6tcvzH/kTW4MUvmKVHI92MG3vTaQqQ=;
+	s=korg; t=1745946164;
+	bh=/8iLxp1Xv9YOkE47A1Neyhil2JYc/q/rSbcLaAWBM+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x3XDrJF7dUS3tsWVckPyx9aIpBi5Stf39wNbLHrC8PdtfAhlbtmlw0hwbJiUwCFi7
-	 IYDrLBGHufvWOHMvhlWQVaWl54Kn6zTpE0JIJFrdxHOouuwqx3QdOv3+oYuAPlJmuC
-	 R5X735PUoLweXlkMhoogCs5AMHsNqpyyEaBLkHik=
+	b=OU6x2l4jZCcZurcI5NStFbI6oT8lqK1Hc1/75BW47YoyfJ3ea71xkSbvLVLzzfQol
+	 wy2lEebTX3VWOJC6p1dmVjooR1cg67gGCH2KpmnDqADJYbS/XrQcH+f5ykmWLV7R+4
+	 BR97rxdHEm3CdPaviq+C/D0BdRS6hNCRBbkCHn80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
 	Oliver Neukum <oneukum@suse.com>
-Subject: [PATCH 6.14 175/311] USB: wdm: wdm_wwan_port_tx_complete mutex in atomic context
-Date: Tue, 29 Apr 2025 18:40:12 +0200
-Message-ID: <20250429161128.198684566@linuxfoundation.org>
+Subject: [PATCH 6.14 176/311] USB: wdm: add annotation
+Date: Tue, 29 Apr 2025 18:40:13 +0200
+Message-ID: <20250429161128.237526440@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -52,17 +52,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Oliver Neukum <oneukum@suse.com>
 
-commit 1fdc4dca350c0b8ada0b8ebf212504e1ad55e511 upstream.
+commit 73e9cc1ffd3650b12c4eb059dfdafd56e725ceda upstream.
 
-wdm_wwan_port_tx_complete is called from a completion
-handler with irqs disabled and possible in IRQ context
-usb_autopm_put_interface can take a mutex.
-Hence usb_autopm_put_interface_async must be used.
+This is not understandable without a comment on endianness
 
-Fixes: cac6fb015f71 ("usb: class: cdc-wdm: WWAN framework integration")
+Fixes: afba937e540c9 ("USB: CDC WDM driver")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/20250401084749.175246-4-oneukum@suse.com
+Link: https://lore.kernel.org/r/20250401084749.175246-5-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  drivers/usb/class/cdc-wdm.c |    2 +-
@@ -70,14 +67,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/usb/class/cdc-wdm.c
 +++ b/drivers/usb/class/cdc-wdm.c
-@@ -879,7 +879,7 @@ static void wdm_wwan_port_tx_complete(st
- 	struct sk_buff *skb = urb->context;
- 	struct wdm_device *desc = skb_shinfo(skb)->destructor_arg;
+@@ -909,7 +909,7 @@ static int wdm_wwan_port_tx(struct wwan_
+ 	req->bRequestType = (USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE);
+ 	req->bRequest = USB_CDC_SEND_ENCAPSULATED_COMMAND;
+ 	req->wValue = 0;
+-	req->wIndex = desc->inum;
++	req->wIndex = desc->inum; /* already converted */
+ 	req->wLength = cpu_to_le16(skb->len);
  
--	usb_autopm_put_interface(desc->intf);
-+	usb_autopm_put_interface_async(desc->intf);
- 	wwan_port_txon(desc->wwanp);
- 	kfree_skb(skb);
- }
+ 	skb_shinfo(skb)->destructor_arg = desc;
 
 
