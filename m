@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD74126BF7;
-	Tue, 29 Apr 2025 16:50:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13059126BF7;
+	Tue, 29 Apr 2025 16:50:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945409; cv=none; b=hA47YCsZECUzI43ZTqbqtR4kVP/rjpoEJrf6eX6jpR9cs81PfsMhy3UfHDiPFgwSaafoqa3hNGAkmylRq4VrNsRTKMvyKNS8ZeDTWKJJSz7Ywumo784tl/e25Pbs7fsYJ1vBT6nIfZ7m8WhKvj/WWN1N9pAjcggFk+0egROhMrE=
+	t=1745945412; cv=none; b=ndvNcdonlv4lNJYjk9yt1VGq/u7oqwFvf8NvxPCIkXMT6L9u9vP7kRlr/LhljYs9ucs48lWKOqCSM4mQE8trZrVusOaRcEypd1iunlHtio+87kQQFGA1OSeuv81RW0vwKiABiJQFQcZbIshOfiCPfD3zGfLQDwBu90yrYdvmF68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945409; c=relaxed/simple;
-	bh=ElH4FAkEZnlLQMZbRxPi7HiBJzt2EcDiKX5xMXtnifA=;
+	s=arc-20240116; t=1745945412; c=relaxed/simple;
+	bh=G6ulf52i+UGO8vrquq55V5U09biQjSKzChapjHkd8Ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fFJs+1OO254C5qYF30R2g5/cTjvdi7yBwLVjBPEYZS5ZAr8GWofQqaZq/HU4K+qV3/9XlQfw6Kp8pZZVkbquSORNgY0xTV35XBZ8vbbc/e9M0v+/1iguksrlmD6E7TTin4fHUdDVUrmF3C6mwgjCkTyZgVPjPg5XLtBXR3k/wqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cVJde99h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eis+VZLwrAypZc7v1+3kRfGyRoBoKmtzEeFxv/Ky6DXBtkGYY3Bj/PIrMZzH9Q/9ObIf2UK2s0koDuBKuuLdQPXyHuHbYfuY55O0xxRwn0R6iCeK4w8xTbu3Qm1XL4TXCc9QwJrTrY5gJIFrcPC3Qk2S+VvWe2y8CoI9y6qbEZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SW7AWOOy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cVJde99h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E28FC4CEE3;
-	Tue, 29 Apr 2025 16:50:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SW7AWOOy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81BD8C4CEE3;
+	Tue, 29 Apr 2025 16:50:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945408;
-	bh=ElH4FAkEZnlLQMZbRxPi7HiBJzt2EcDiKX5xMXtnifA=;
+	s=korg; t=1745945412;
+	bh=G6ulf52i+UGO8vrquq55V5U09biQjSKzChapjHkd8Ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cVJde99hCBrFbjrCRDJDudd2EiP0sGHO3GCPQohGwWhT2KaN1qnyTkdKn5jy3rXu/
-	 sTnLaDJUIMgT1Ykhz5M5E6Pf+9jVdibswCer9fqhV6QzVr7pHnKmRY6BT42RSvqler
-	 qwzhC4dEgxt6rGCTYHFTz+lACsLqs+vt/XMU8cg4=
+	b=SW7AWOOycSPiVLF+aDnuBFxS+zSmDB+ZK1K0uaJzOI3WRKhqhp9WpJHqOaX+u1gfm
+	 H4V95ENIhBgJhnbKevak3IzEIFm7tbtt28mGXax/xhxPwvFNqXJADM+iyF2ABih7yv
+	 z7uHWYi6jtiuxgpT8zvzbOr6g2jTJR+6Qwn+mQuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Dmitry V. Levin" <ldv@strace.io>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.4 103/179] riscv: Avoid fortify warning in syscall_get_arguments()
-Date: Tue, 29 Apr 2025 18:40:44 +0200
-Message-ID: <20250429161053.569235213@linuxfoundation.org>
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Michael Nemanov <michael.nemanov@ti.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 086/179] wifi: wl1251: fix memory leak in wl1251_tx_work
+Date: Tue, 29 Apr 2025 18:40:27 +0200
+Message-ID: <20250429161052.881697150@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -51,67 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-commit adf53771a3123df99ca26e38818760fbcf5c05d0 upstream.
+[ Upstream commit a0f0dc96de03ffeefc2a177b7f8acde565cb77f4 ]
 
-When building with CONFIG_FORTIFY_SOURCE=y and W=1, there is a warning
-because of the memcpy() in syscall_get_arguments():
+The skb dequeued from tx_queue is lost when wl1251_ps_elp_wakeup fails
+with a -ETIMEDOUT error. Fix that by queueing the skb back to tx_queue.
 
-  In file included from include/linux/string.h:392,
-                   from include/linux/bitmap.h:13,
-                   from include/linux/cpumask.h:12,
-                   from arch/riscv/include/asm/processor.h:55,
-                   from include/linux/sched.h:13,
-                   from kernel/ptrace.c:13:
-  In function 'fortify_memcpy_chk',
-      inlined from 'syscall_get_arguments.isra' at arch/riscv/include/asm/syscall.h:66:2:
-  include/linux/fortify-string.h:580:25: error: call to '__read_overflow2_field' declared with attribute warning: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
-    580 |                         __read_overflow2_field(q_size_field, size);
-        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  cc1: all warnings being treated as errors
-
-The fortified memcpy() routine enforces that the source is not overread
-and the destination is not overwritten if the size of either field and
-the size of the copy are known at compile time. The memcpy() in
-syscall_get_arguments() intentionally overreads from a1 to a5 in
-'struct pt_regs' but this is bigger than the size of a1.
-
-Normally, this could be solved by wrapping a1 through a5 with
-struct_group() but there was already a struct_group() applied to these
-members in commit bba547810c66 ("riscv: tracing: Fix
-__write_overflow_field in ftrace_partial_regs()").
-
-Just avoid memcpy() altogether and write the copying of args from regs
-manually, which clears up the warning at the expense of three extra
-lines of code.
-
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Dmitry V. Levin <ldv@strace.io>
-Fixes: e2c0cdfba7f6 ("RISC-V: User-facing API")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250409-riscv-avoid-fortify-warning-syscall_get_arguments-v1-1-7853436d4755@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c5483b719363 ("wl12xx: check if elp wakeup failed")
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Reviewed-by: Michael Nemanov <michael.nemanov@ti.com>
+Link: https://patch.msgid.link/20250330104532.44935-1-abdun.nihaal@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/syscall.h |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ti/wl1251/tx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/include/asm/syscall.h
-+++ b/arch/riscv/include/asm/syscall.h
-@@ -67,8 +67,11 @@ static inline void syscall_get_arguments
- 					 unsigned long *args)
- {
- 	args[0] = regs->orig_a0;
--	args++;
--	memcpy(args, &regs->a1, 5 * sizeof(args[0]));
-+	args[1] = regs->a1;
-+	args[2] = regs->a2;
-+	args[3] = regs->a3;
-+	args[4] = regs->a4;
-+	args[5] = regs->a5;
- }
+diff --git a/drivers/net/wireless/ti/wl1251/tx.c b/drivers/net/wireless/ti/wl1251/tx.c
+index 98cd39619d579..5771f61392efb 100644
+--- a/drivers/net/wireless/ti/wl1251/tx.c
++++ b/drivers/net/wireless/ti/wl1251/tx.c
+@@ -342,8 +342,10 @@ void wl1251_tx_work(struct work_struct *work)
+ 	while ((skb = skb_dequeue(&wl->tx_queue))) {
+ 		if (!woken_up) {
+ 			ret = wl1251_ps_elp_wakeup(wl);
+-			if (ret < 0)
++			if (ret < 0) {
++				skb_queue_head(&wl->tx_queue, skb);
+ 				goto out;
++			}
+ 			woken_up = true;
+ 		}
  
- static inline void syscall_set_arguments(struct task_struct *task,
+-- 
+2.39.5
+
 
 
