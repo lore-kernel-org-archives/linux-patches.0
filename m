@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E9724C067;
-	Tue, 29 Apr 2025 17:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF38F7E110;
+	Tue, 29 Apr 2025 17:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946026; cv=none; b=Q9hWTOUimWwAXouCFgg7SF3u99mbQzyMtCKj/k1IIFubMaUQ69xfwL2PpLCySnMKDLuldc4IycerJr5nDhLFIXXocWgZzZ4/9HNWTwlOc7oOdcWoflrYA4NmNjlWQ18AABj3HqXOXX2dFdF4wLtkIFTlN7XgE81lixD9tnBDH7g=
+	t=1745946030; cv=none; b=lQqpFvYPv6f9eYmyWFKIYRGlf/GXu4vTL/EtLZuzLRXxdyOGoF1IblWMRdB3G8nJnRMcgLY7ZpHP0tUY8Q9pIhbZCyshDFLg1sHBPmkmVkkrdh8Noly0wSaNWExi+kODYSoZf+5YT/KP2WQeyCHEclal/h+UtlTFBjgu0KPi/8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946026; c=relaxed/simple;
-	bh=lRgNcphxLm2o7XY6mWbdaGfj3LykZ0AY4HIU3HA1ReQ=;
+	s=arc-20240116; t=1745946030; c=relaxed/simple;
+	bh=YMcI3uh8Hko4qzcyqgKdiDHqrsR22X5X0c4QozvM7qw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DWcR6/re6QfaLXnXQpThJsZECqglzyt1tP07pI+F26vEj2xrLuxX+PfYM9Bqx8a9y4O4W2lOjdHQ4SHOThzvaEstCPZIu0eDXv4qc36XJWxp0/2TRBw9jFLQvCWAXZ3vjo6U9s2R2T67kZ7jamMNeZyZmyGsVr8h05HUbmXtu4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jaLQL89E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mLdqtW1vdmfgM9KmJBJrKtP+1gaFX1TyO8vAXC1yfZGMoVEbhx+cNGDwgJlysSF4mM9cNqKeSWgTnMl7dFjMrUBJ3w8iE4WQKnPca3bvo5Sejh3c/1SrAS1g6GWYJzxbVYTIgKVo3ALMAtmVbeLlvf4wCZ+e4OvAA5AW1BwONnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=raKYPL60; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jaLQL89E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ADDCC4CEE3;
-	Tue, 29 Apr 2025 17:00:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="raKYPL60"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9449C4CEEA;
+	Tue, 29 Apr 2025 17:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946026;
-	bh=lRgNcphxLm2o7XY6mWbdaGfj3LykZ0AY4HIU3HA1ReQ=;
+	s=korg; t=1745946029;
+	bh=YMcI3uh8Hko4qzcyqgKdiDHqrsR22X5X0c4QozvM7qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jaLQL89EdXeQ+73PcK7YIymnXOfmr80UFdrMhOVecod4Km5ltcTl4hkupISPup+aq
-	 wyg1hu6G0pgFNN3BQWfaApIyGQcQTivZLPN3olLU2d+VTtSKjfTSOJCH4hjrpHioka
-	 JZw4tI/+4wGahH32vtZplxf6ypCzQ8uJPCBTeG0E=
+	b=raKYPL60qrlvT11/upHdFz/uVex5JlsDaYTlGflpBEqy/qDxxndLGcvhwLTMlg6GJ
+	 bI4926RFs19qiSai0Ghl9otGmYs3q6X0t8IyycqQx9zFTpEF95EWHBPBh4y5YC7HIL
+	 4m9cIpyzN1U+94544OsGe3Og8MmMRht4jQmRIKdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Petr Tesarik <ptesarik@suse.com>,
+	Yuli Wang <wangyuli@uniontech.com>,
+	Bibo Mao <maobibo@loongson.cn>,
+	Yulong Han <wheatfox17@icloud.com>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.14 130/311] LoongArch: Remove a bogus reference to ZONE_DMA
-Date: Tue, 29 Apr 2025 18:39:27 +0200
-Message-ID: <20250429161126.367045541@linuxfoundation.org>
+Subject: [PATCH 6.14 131/311] LoongArch: KVM: Fix multiple typos of KVM code
+Date: Tue, 29 Apr 2025 18:39:28 +0200
+Message-ID: <20250429161126.408529487@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -51,33 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Tesarik <ptesarik@suse.com>
+From: Yulong Han <wheatfox17@icloud.com>
 
-commit c37325cbd91abe3bfab280b3b09947155abe8e07 upstream.
+commit 8b2d01fec800081dd68271c01e4d239ef4d7115e upstream.
 
-Remove dead code. LoongArch does not have a DMA memory zone (24bit DMA).
-The architecture does not even define MAX_DMA_PFN.
+Fix multiple typos inside arch/loongarch/kvm.
 
 Cc: stable@vger.kernel.org
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Petr Tesarik <ptesarik@suse.com>
+Reviewed-by: Yuli Wang <wangyuli@uniontech.com>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Yulong Han <wheatfox17@icloud.com>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/mm/init.c |    3 ---
- 1 file changed, 3 deletions(-)
+ arch/loongarch/kvm/intc/ipi.c |    4 ++--
+ arch/loongarch/kvm/main.c     |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/loongarch/mm/init.c
-+++ b/arch/loongarch/mm/init.c
-@@ -65,9 +65,6 @@ void __init paging_init(void)
- {
- 	unsigned long max_zone_pfns[MAX_NR_ZONES];
+--- a/arch/loongarch/kvm/intc/ipi.c
++++ b/arch/loongarch/kvm/intc/ipi.c
+@@ -111,7 +111,7 @@ static int send_ipi_data(struct kvm_vcpu
+ 		ret = kvm_io_bus_read(vcpu, KVM_IOCSR_BUS, addr, sizeof(val), &val);
+ 		srcu_read_unlock(&vcpu->kvm->srcu, idx);
+ 		if (unlikely(ret)) {
+-			kvm_err("%s: : read date from addr %llx failed\n", __func__, addr);
++			kvm_err("%s: : read data from addr %llx failed\n", __func__, addr);
+ 			return ret;
+ 		}
+ 		/* Construct the mask by scanning the bit 27-30 */
+@@ -127,7 +127,7 @@ static int send_ipi_data(struct kvm_vcpu
+ 	ret = kvm_io_bus_write(vcpu, KVM_IOCSR_BUS, addr, sizeof(val), &val);
+ 	srcu_read_unlock(&vcpu->kvm->srcu, idx);
+ 	if (unlikely(ret))
+-		kvm_err("%s: : write date to addr %llx failed\n", __func__, addr);
++		kvm_err("%s: : write data to addr %llx failed\n", __func__, addr);
  
--#ifdef CONFIG_ZONE_DMA
--	max_zone_pfns[ZONE_DMA] = MAX_DMA_PFN;
--#endif
- #ifdef CONFIG_ZONE_DMA32
- 	max_zone_pfns[ZONE_DMA32] = MAX_DMA32_PFN;
- #endif
+ 	return ret;
+ }
+--- a/arch/loongarch/kvm/main.c
++++ b/arch/loongarch/kvm/main.c
+@@ -296,10 +296,10 @@ int kvm_arch_enable_virtualization_cpu(v
+ 	/*
+ 	 * Enable virtualization features granting guest direct control of
+ 	 * certain features:
+-	 * GCI=2:       Trap on init or unimplement cache instruction.
++	 * GCI=2:       Trap on init or unimplemented cache instruction.
+ 	 * TORU=0:      Trap on Root Unimplement.
+ 	 * CACTRL=1:    Root control cache.
+-	 * TOP=0:       Trap on Previlege.
++	 * TOP=0:       Trap on Privilege.
+ 	 * TOE=0:       Trap on Exception.
+ 	 * TIT=0:       Trap on Timer.
+ 	 */
 
 
