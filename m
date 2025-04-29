@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0669C215060;
-	Tue, 29 Apr 2025 16:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97CA24466C;
+	Tue, 29 Apr 2025 16:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945523; cv=none; b=gQKmshw95o0ZR0NhnSzRYrabUc/HBUmE8sW0AxzlEXa/bQO3KJibyULp/E97t9cwBEYUCa5GpjrKiuG0EquO5PhBcMbyohZt9wsxSQP6shoDfacjEEE81zDRCdDuqV9gggtWn8fQUfLW2X94/WBzp4JQCd+QnPUiJfpBFsGSta8=
+	t=1745945525; cv=none; b=c9FcOnwcE8IUWpKBp3IK2V5e2bDT4WJlpMVLttO3xvNTZ4ZcrTQAoK6AAjXo5/h7puwzdxi65n58ldL6v4HpNn7By7e01wePfTquU9u46MPlyRpY9LleygVSeYTCpS4yN3E7YLVMUmHCW22PjJAo6L7qqGFURSAUeUXd4/jvdRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945523; c=relaxed/simple;
-	bh=GswN5RhNiR2cpOWaPT9AqMiYRYDMzuoaI7FMRm6N+wE=;
+	s=arc-20240116; t=1745945525; c=relaxed/simple;
+	bh=LqRhkeKWD3nT7w7ISgmiVrDRPNUx2f47mmQhArFbs8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HT7D+6dYI9qFSmMbQj4O+McsENjA58vIvnDWZoCdHlqRdobtszNUkYmy89SMm6IwdWT9A3ZjrOqC6hJOOjLGqEcMRVzkdPZRFpF0/fVCwoCtTDLJ7vtUxN/Ms3PMIkrUJmNr0qWEwF21iclu9P+6V4szX+Hd5Svo9PgDSDi23Js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JH2u/nrI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TQA216H2XBtlAvJqq7Lq2u7T3KHoiEmwzAaCT45ogXGZzL8upH6fzRgF/I0OKLSJ2SdJtWPciqCeeiiJeo/CUdzcfKD5L+ILUIBQwlEcDuk+LsvBQT3luprfShStf+8Mosmf2XbskYA6FnIsnHXFJYA1R85SEZ32FZX20M18hzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuMzSLUB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JH2u/nrI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E4BC4CEE3;
-	Tue, 29 Apr 2025 16:52:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuMzSLUB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49479C4CEE3;
+	Tue, 29 Apr 2025 16:52:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945522;
-	bh=GswN5RhNiR2cpOWaPT9AqMiYRYDMzuoaI7FMRm6N+wE=;
+	s=korg; t=1745945525;
+	bh=LqRhkeKWD3nT7w7ISgmiVrDRPNUx2f47mmQhArFbs8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JH2u/nrIdzx0WlTUPevmn7/+yDk3BJ4FOsmOdW/Xv3X3WPPviBYh0AMHfvOTalOol
-	 mkCv8Q29sbqqdIjVSDAzqWfCj9BBmgNV7Vs1jv8dYkE/WQvoeVKjXc161yS4yPzscK
-	 CwkfE2Jg094n7Q/9yhAAitPhmmzhUkhzbm05IRyQ=
+	b=kuMzSLUBwvay72ssuIX9lOY8kQBnFlq7SvsbbH5qJVfRh4c32DJekBiFr9vxc+eVe
+	 8TbihHDSiyIHs/ej4rkt2pYqqVe/30spyg1lNnky2vwgUciw13SN5/EY2F1m96wQp6
+	 IAvWrjQHzPBhFA8oG9hwb/dzBhNLBW15JxOxGsyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Hao Guan <hao.guan@siflower.com.cn>,
+	Qingfang Deng <qingfang.deng@siflower.com.cn>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 141/179] cpufreq: scpi: Fix null-ptr-deref in scpi_cpufreq_get_rate()
-Date: Tue, 29 Apr 2025 18:41:22 +0200
-Message-ID: <20250429161055.100161134@linuxfoundation.org>
+Subject: [PATCH 5.4 142/179] net: phy: leds: fix memory leak
+Date: Tue, 29 Apr 2025 18:41:23 +0200
+Message-ID: <20250429161055.139337006@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -52,47 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Qingfang Deng <qingfang.deng@siflower.com.cn>
 
-[ Upstream commit 73b24dc731731edf762f9454552cb3a5b7224949 ]
+[ Upstream commit b7f0ee992adf601aa00c252418266177eb7ac2bc ]
 
-cpufreq_cpu_get_raw() can return NULL when the target CPU is not present
-in the policy->cpus mask. scpi_cpufreq_get_rate() does not check for
-this case, which results in a NULL pointer dereference.
+A network restart test on a router led to an out-of-memory condition,
+which was traced to a memory leak in the PHY LED trigger code.
 
-Fixes: 343a8d17fa8d ("cpufreq: scpi: remove arm_big_little dependency")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Acked-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+The root cause is misuse of the devm API. The registration function
+(phy_led_triggers_register) is called from phy_attach_direct, not
+phy_probe, and the unregister function (phy_led_triggers_unregister)
+is called from phy_detach, not phy_remove. This means the register and
+unregister functions can be called multiple times for the same PHY
+device, but devm-allocated memory is not freed until the driver is
+unbound.
+
+This also prevents kmemleak from detecting the leak, as the devm API
+internally stores the allocated pointer.
+
+Fix this by replacing devm_kzalloc/devm_kcalloc with standard
+kzalloc/kcalloc, and add the corresponding kfree calls in the unregister
+path.
+
+Fixes: 3928ee6485a3 ("net: phy: leds: Add support for "link" trigger")
+Fixes: 2e0bc452f472 ("net: phy: leds: add support for led triggers on phy link state change")
+Signed-off-by: Hao Guan <hao.guan@siflower.com.cn>
+Signed-off-by: Qingfang Deng <qingfang.deng@siflower.com.cn>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250417032557.2929427-1-dqfext@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/scpi-cpufreq.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/net/phy/phy_led_triggers.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/cpufreq/scpi-cpufreq.c b/drivers/cpufreq/scpi-cpufreq.c
-index b341ffbf56bc3..73539f357c7ae 100644
---- a/drivers/cpufreq/scpi-cpufreq.c
-+++ b/drivers/cpufreq/scpi-cpufreq.c
-@@ -39,9 +39,16 @@ static struct scpi_ops *scpi_ops;
+diff --git a/drivers/net/phy/phy_led_triggers.c b/drivers/net/phy/phy_led_triggers.c
+index 59a94e07e7c55..ae28aa2f9a392 100644
+--- a/drivers/net/phy/phy_led_triggers.c
++++ b/drivers/net/phy/phy_led_triggers.c
+@@ -91,9 +91,8 @@ int phy_led_triggers_register(struct phy_device *phy)
+ 	if (!phy->phy_num_led_triggers)
+ 		return 0;
  
- static unsigned int scpi_cpufreq_get_rate(unsigned int cpu)
- {
--	struct cpufreq_policy *policy = cpufreq_cpu_get_raw(cpu);
--	struct scpi_data *priv = policy->driver_data;
--	unsigned long rate = clk_get_rate(priv->clk);
-+	struct cpufreq_policy *policy;
-+	struct scpi_data *priv;
-+	unsigned long rate;
-+
-+	policy = cpufreq_cpu_get_raw(cpu);
-+	if (unlikely(!policy))
-+		return 0;
-+
-+	priv = policy->driver_data;
-+	rate = clk_get_rate(priv->clk);
+-	phy->led_link_trigger = devm_kzalloc(&phy->mdio.dev,
+-					     sizeof(*phy->led_link_trigger),
+-					     GFP_KERNEL);
++	phy->led_link_trigger = kzalloc(sizeof(*phy->led_link_trigger),
++					GFP_KERNEL);
+ 	if (!phy->led_link_trigger) {
+ 		err = -ENOMEM;
+ 		goto out_clear;
+@@ -108,10 +107,9 @@ int phy_led_triggers_register(struct phy_device *phy)
+ 	if (err)
+ 		goto out_free_link;
  
- 	return rate / 1000;
+-	phy->phy_led_triggers = devm_kcalloc(&phy->mdio.dev,
+-					    phy->phy_num_led_triggers,
+-					    sizeof(struct phy_led_trigger),
+-					    GFP_KERNEL);
++	phy->phy_led_triggers = kcalloc(phy->phy_num_led_triggers,
++					sizeof(struct phy_led_trigger),
++					GFP_KERNEL);
+ 	if (!phy->phy_led_triggers) {
+ 		err = -ENOMEM;
+ 		goto out_unreg_link;
+@@ -131,11 +129,11 @@ int phy_led_triggers_register(struct phy_device *phy)
+ out_unreg:
+ 	while (i--)
+ 		phy_led_trigger_unregister(&phy->phy_led_triggers[i]);
+-	devm_kfree(&phy->mdio.dev, phy->phy_led_triggers);
++	kfree(phy->phy_led_triggers);
+ out_unreg_link:
+ 	phy_led_trigger_unregister(phy->led_link_trigger);
+ out_free_link:
+-	devm_kfree(&phy->mdio.dev, phy->led_link_trigger);
++	kfree(phy->led_link_trigger);
+ 	phy->led_link_trigger = NULL;
+ out_clear:
+ 	phy->phy_num_led_triggers = 0;
+@@ -149,8 +147,13 @@ void phy_led_triggers_unregister(struct phy_device *phy)
+ 
+ 	for (i = 0; i < phy->phy_num_led_triggers; i++)
+ 		phy_led_trigger_unregister(&phy->phy_led_triggers[i]);
++	kfree(phy->phy_led_triggers);
++	phy->phy_led_triggers = NULL;
+ 
+-	if (phy->led_link_trigger)
++	if (phy->led_link_trigger) {
+ 		phy_led_trigger_unregister(phy->led_link_trigger);
++		kfree(phy->led_link_trigger);
++		phy->led_link_trigger = NULL;
++	}
  }
+ EXPORT_SYMBOL_GPL(phy_led_triggers_unregister);
 -- 
 2.39.5
 
