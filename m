@@ -1,41 +1,71 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2371325332D;
-	Tue, 29 Apr 2025 17:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B85253F21;
+	Tue, 29 Apr 2025 17:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949336; cv=none; b=Ov5ax2AmEZ9TxDL0vZSb/sZT3nbFY427KXLtmhoRwbMWeE2epADk2DzawmE8rKkKPjw6RZ+XpPLjtrFXSz1s5v45n17DatoX7U2ZOXa4s5p2p1SFkvDWgLrJ54h7w/Fi9D3Z6PCcKO75XuoUU4G/SQi9AxtrXP3v9FruDN0grBo=
+	t=1745949339; cv=none; b=c8v0jStB5WAb2tw2gXh+3jQ4gFI0JOzLpcWGu+6lMOpYFTTeLBIujJVdrofQAPUhcdZUl0M/7LwaX6bnDt1uVg7ggk5hDXna0mBSlaou2lAvfAZZyUsuqkVlK1PjUtrkeOb4eJJQ4mdjiEYlD0iY2WL/b2hnd5QQ/N0WZW+dch0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949336; c=relaxed/simple;
-	bh=4HNIH3FI1knwA4tP+iPLttXPim2mU7qUVEZbtDzbQa0=;
+	s=arc-20240116; t=1745949339; c=relaxed/simple;
+	bh=NVGufydM4TklOuB9f+NCGplCNnj1VYmHipZt+nlGoqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MViPMP0IfdpcwrFjBsSUiz7dJqllcm1LbnLrfOApmFfyAo6rwIkpSxC5y1j1xlXEqisuy2od3FyxA0gdx6gDI13Duii8CHkxq53OC02oBF4vHijviZusV6ba12a2nY4AOK+1CS4m61XYwgE5S7HplUvUkK5hRYIDAPlHT2jA0dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyHsK5Xh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ot9647g9rrYoxZSsPu2a4Xjz83wdo5SopFSwKl8IpG0LN9f1nC0MOpsqL0wvNC/VqaBqiyql1V8TlblYrkziYHhCXxdSdOJVHY184uTxo6RpWbNIiEhZeaEG7pSJXFXYP9dCFbkjZC55S3y1I9gftj/qDR6qJMg3HmyP0iYO51w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAsGh7aq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyHsK5Xh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8755DC4CEE3;
-	Tue, 29 Apr 2025 17:55:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAsGh7aq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFDFC4CEE3;
+	Tue, 29 Apr 2025 17:55:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949336;
-	bh=4HNIH3FI1knwA4tP+iPLttXPim2mU7qUVEZbtDzbQa0=;
+	s=korg; t=1745949339;
+	bh=NVGufydM4TklOuB9f+NCGplCNnj1VYmHipZt+nlGoqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jyHsK5XhOrQrj5soh8lMBPk7WHW9YhMjUR36AztEaRCyg6Rbgw1uQ5zs+GiQTMQ1E
-	 Na963pezD0IPvK4VMjw0cN4ranxnzgrPUj4VqFtuKMfqjLp4JuRlhO3gzw6O0t7qun
-	 F4Gh3p2QbcQqEU6t+1RyBceE3iUHtoODYXAksl1k=
+	b=ZAsGh7aqUQWP6bQwllBDfDqnJenCptWVkwH+TjLgz6o6snhBPBQRy0D1gqx5CA2kQ
+	 ABC8H1jurowUfdCLVbY3VkRNUPAKS0qPuwJnRk3LRFcAUBNE1Q1eHxjSqo7x29vW9T
+	 rICEaacsYoxPk7zGBeEbPKRIYVwlvyi7HUZGK3Z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Dylan Hatch <dylanbhatch@google.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Alexander Potapenko <glider@google.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Konovalov <andreyknvl@google.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Borislav Petkov <bp@alien8.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Christoph Lameter <cl@linux.com>,
+	David Rientjes <rientjes@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Kees Cook <keescook@chromium.org>,
+	Marco Elver <elver@google.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	David Sauerwein <dssauerw@amazon.de>
-Subject: [PATCH 5.15 247/373] fs/proc: do_task_stat: use sig->stats_lock to gather the threads/children stats
-Date: Tue, 29 Apr 2025 18:42:04 +0200
-Message-ID: <20250429161133.283702860@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 280/373] kmsan: disable strscpy() optimization under KMSAN
+Date: Tue, 29 Apr 2025 18:42:37 +0200
+Message-ID: <20250429161134.634442961@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -54,124 +84,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Alexander Potapenko <glider@google.com>
 
-commit 7601df8031fd67310af891897ef6cc0df4209305 upstream.
+[ Upstream commit 2de6f3bf75058e35eff04e6fab7ca41533bdb027 ]
 
-lock_task_sighand() can trigger a hard lockup.  If NR_CPUS threads call
-do_task_stat() at the same time and the process has NR_THREADS, it will
-spin with irqs disabled O(NR_CPUS * NR_THREADS) time.
+Disable the efficient 8-byte reading under KMSAN to avoid false positives.
 
-Change do_task_stat() to use sig->stats_lock to gather the statistics
-outside of ->siglock protected section, in the likely case this code will
-run lockless.
-
-Link: https://lkml.kernel.org/r/20240123153357.GA21857@redhat.com
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Dylan Hatch <dylanbhatch@google.com>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Cc: <stable@vger.kernel.org>
+Link: https://lkml.kernel.org/r/20220915150417.722975-26-glider@google.com
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Konovalov <andreyknvl@google.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Christoph Lameter <cl@linux.com>
+Cc: David Rientjes <rientjes@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Eric Biggers <ebiggers@google.com>
+Cc: Eric Biggers <ebiggers@kernel.org>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Marco Elver <elver@google.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Cc: Pekka Enberg <penberg@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Stephen Rothwell <sfr@canb.auug.org.au>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Vegard Nossum <vegard.nossum@oracle.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: d94c12bd97d5 ("string: Add load_unaligned_zeropad() code path to sized_strscpy()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: David Sauerwein <dssauerw@amazon.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/array.c |   53 +++++++++++++++++++++++++++++------------------------
- 1 file changed, 29 insertions(+), 24 deletions(-)
+ lib/string.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/proc/array.c
-+++ b/fs/proc/array.c
-@@ -462,12 +462,12 @@ static int do_task_stat(struct seq_file
- 	int permitted;
- 	struct mm_struct *mm;
- 	unsigned long long start_time;
--	unsigned long cmin_flt = 0, cmaj_flt = 0;
--	unsigned long  min_flt = 0,  maj_flt = 0;
--	u64 cutime, cstime, utime, stime;
--	u64 cgtime, gtime;
-+	unsigned long cmin_flt, cmaj_flt, min_flt, maj_flt;
-+	u64 cutime, cstime, cgtime, utime, stime, gtime;
- 	unsigned long rsslim = 0;
- 	unsigned long flags;
-+	struct signal_struct *sig = task->signal;
-+	unsigned int seq = 1;
+diff --git a/lib/string.c b/lib/string.c
+index b2de45a581f4f..9fb9be19a95d7 100644
+--- a/lib/string.c
++++ b/lib/string.c
+@@ -202,6 +202,14 @@ ssize_t strscpy(char *dest, const char *src, size_t count)
+ 		max = 0;
+ #endif
  
- 	state = *get_task_state(task);
- 	vsize = eip = esp = 0;
-@@ -495,12 +495,8 @@ static int do_task_stat(struct seq_file
++	/*
++	 * read_word_at_a_time() below may read uninitialized bytes after the
++	 * trailing zero and use them in comparisons. Disable this optimization
++	 * under KMSAN to prevent false positive reports.
++	 */
++	if (IS_ENABLED(CONFIG_KMSAN))
++		max = 0;
++
+ 	while (max >= sizeof(unsigned long)) {
+ 		unsigned long c, data;
  
- 	sigemptyset(&sigign);
- 	sigemptyset(&sigcatch);
--	cutime = cstime = 0;
--	cgtime = gtime = 0;
- 
- 	if (lock_task_sighand(task, &flags)) {
--		struct signal_struct *sig = task->signal;
--
- 		if (sig->tty) {
- 			struct pid *pgrp = tty_get_pgrp(sig->tty);
- 			tty_pgrp = pid_nr_ns(pgrp, ns);
-@@ -511,36 +507,45 @@ static int do_task_stat(struct seq_file
- 		num_threads = get_nr_threads(task);
- 		collect_sigign_sigcatch(task, &sigign, &sigcatch);
- 
-+		rsslim = READ_ONCE(sig->rlim[RLIMIT_RSS].rlim_cur);
-+
-+		sid = task_session_nr_ns(task, ns);
-+		ppid = task_tgid_nr_ns(task->real_parent, ns);
-+		pgid = task_pgrp_nr_ns(task, ns);
-+
-+		unlock_task_sighand(task, &flags);
-+	}
-+
-+	if (permitted && (!whole || num_threads < 2))
-+		wchan = !task_is_running(task);
-+
-+	do {
-+		seq++; /* 2 on the 1st/lockless path, otherwise odd */
-+		flags = read_seqbegin_or_lock_irqsave(&sig->stats_lock, &seq);
-+
- 		cmin_flt = sig->cmin_flt;
- 		cmaj_flt = sig->cmaj_flt;
- 		cutime = sig->cutime;
- 		cstime = sig->cstime;
- 		cgtime = sig->cgtime;
--		rsslim = READ_ONCE(sig->rlim[RLIMIT_RSS].rlim_cur);
- 
--		/* add up live thread stats at the group level */
- 		if (whole) {
- 			struct task_struct *t = task;
-+
-+			min_flt = sig->min_flt;
-+			maj_flt = sig->maj_flt;
-+			gtime = sig->gtime;
-+
-+			rcu_read_lock();
- 			do {
- 				min_flt += t->min_flt;
- 				maj_flt += t->maj_flt;
- 				gtime += task_gtime(t);
- 			} while_each_thread(task, t);
--
--			min_flt += sig->min_flt;
--			maj_flt += sig->maj_flt;
--			gtime += sig->gtime;
-+			rcu_read_unlock();
- 		}
--
--		sid = task_session_nr_ns(task, ns);
--		ppid = task_tgid_nr_ns(task->real_parent, ns);
--		pgid = task_pgrp_nr_ns(task, ns);
--
--		unlock_task_sighand(task, &flags);
--	}
--
--	if (permitted && (!whole || num_threads < 2))
--		wchan = !task_is_running(task);
-+	} while (need_seqretry(&sig->stats_lock, seq));
-+	done_seqretry_irqrestore(&sig->stats_lock, seq, flags);
- 
- 	if (whole) {
- 		thread_group_cputime_adjusted(task, &utime, &stime);
+-- 
+2.39.5
+
 
 
