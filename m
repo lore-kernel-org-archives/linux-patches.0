@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F77921ABDB;
-	Tue, 29 Apr 2025 17:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2278F24397A;
+	Tue, 29 Apr 2025 17:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947115; cv=none; b=jrog+CFe08/bOdcHbuQICASRDkO/OaATa3c7wGIukGzpzijo59SFGvBW94j7wTl2HtBwLHDcWi730Z57jcaVYiv/5ZQMemCcTYT4S/51Pcso+zNdJIkUTzuo3aDgFfVmm1aQ/GLDrCVG4qlMr7rAGIlh1aXl/gpFYRUljYsyYIs=
+	t=1745947118; cv=none; b=Y3VYQOUEMum4mR6KtaVZza7c6ET6IRigNVMnUo7Mi9mkPbyuefgWUqauMkZoWgqj89Xz8ZEGJwT8D4cPlSFnI+njLCgWg/MsvS3I+/V4D6M22xbtUqdLmaGCoZC4V4+Az0+tEv/ONKjolX63pNjfMSN6R4ro9mGDgrDi3M/Slz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947115; c=relaxed/simple;
-	bh=Ge4kmdqfT5QjOf8EFair+b8bAofH51j1T67RDX9N32o=;
+	s=arc-20240116; t=1745947118; c=relaxed/simple;
+	bh=+9npQ6Lale+KaMfptes2W9SeNiFt4UM6x+brR74/1PQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hqi0nYsXfEVsxCrCA8nSU/jK0XylDOwv1gkjGREhTZ59N92QXHCqzrjRzOc16agVaOJ8Xoa0ECxS8rkApm3D1b895fWoZ4m8tAJQa27dLOHmFSUO93kgNnVY88aNSV/P8grdke77YfdXbLKMl8QeNwENktRat5tkGW3//YYcTHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ku7VJiOw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FFAqDLhRSKGG058/5tQiY4sxLTkdVFWyUHwc2vmL+BRkccWY4MsukxkUR/hwAe9oZvBuacHE6iQX5cq0x5KGU3SZvMOaUDc3lwDzOUdrG87FRmS+9GufXvlW+pW5ubHg7sKGDCg9ps8SPnzYheQkndvWJ231tkrVHwUO3rbFVMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q46+uDhG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ku7VJiOw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7222CC4CEEE;
-	Tue, 29 Apr 2025 17:18:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q46+uDhG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FD0C4CEE3;
+	Tue, 29 Apr 2025 17:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947114;
-	bh=Ge4kmdqfT5QjOf8EFair+b8bAofH51j1T67RDX9N32o=;
+	s=korg; t=1745947118;
+	bh=+9npQ6Lale+KaMfptes2W9SeNiFt4UM6x+brR74/1PQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ku7VJiOw/MwESOG3apuwKHYVTu0K0x/TW+0xrnbRA3yfqZCq/SynQAm06/Hx2b1bJ
-	 GrTaXmfn5CTZOTyM+FiukUvlnCrth0oRpJlRPipMwxWIm1i1iIXLMFgKMC7KzcyTFK
-	 zmvzE5r3UfKJY4x2T5pnYgJvWtZaxtqZ0HKQyJm8=
+	b=q46+uDhGdAEo4CzotKU7I47EANZJAObziheEDERxf7LJ/wCBTki5R3oxwQPzvcSFH
+	 0qM5oCM6dQoNzRNvRII5KfbVHA/VTIB8Tg4a17QohKpA1uh/GA9daUvrT4igP3jA3W
+	 TtLq0+LPb7JTFmGMfsiqS+wdo7ay60IeNCJiJPYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	BassCheck <bass@buaa.edu.cn>,
-	Tuo Li <islituo@gmail.com>,
-	Justin Tee <justin.tee@broadcom.com>,
-	Laurence Oberman <loberman@redhat.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Avri Altman <avri.altman@wdc.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Bin Lan <bin.lan.cn@windriver.com>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>,
 	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.10 177/286] scsi: lpfc: Fix a possible data race in lpfc_unregister_fcf_rescan()
-Date: Tue, 29 Apr 2025 18:41:21 +0200
-Message-ID: <20250429161115.179634974@linuxfoundation.org>
+Subject: [PATCH 5.10 178/286] scsi: ufs: bsg: Set bsg_queue to NULL after removal
+Date: Tue, 29 Apr 2025 18:41:22 +0200
+Message-ID: <20250429161115.227151652@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -55,50 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tuo Li <islituo@gmail.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-commit 0e881c0a4b6146b7e856735226208f48251facd8 upstream.
+commit 1e95c798d8a7f70965f0f88d4657b682ff0ec75f upstream.
 
-The variable phba->fcf.fcf_flag is often protected by the lock
-phba->hbalock() when is accessed. Here is an example in
-lpfc_unregister_fcf_rescan():
+Currently, this does not cause any issues, but I believe it is necessary to
+set bsg_queue to NULL after removing it to prevent potential use-after-free
+(UAF) access.
 
-  spin_lock_irq(&phba->hbalock);
-  phba->fcf.fcf_flag |= FCF_INIT_DISC;
-  spin_unlock_irq(&phba->hbalock);
-
-However, in the same function, phba->fcf.fcf_flag is assigned with 0
-without holding the lock, and thus can cause a data race:
-
-  phba->fcf.fcf_flag = 0;
-
-To fix this possible data race, a lock and unlock pair is added when
-accessing the variable phba->fcf.fcf_flag.
-
-Reported-by: BassCheck <bass@buaa.edu.cn>
-Signed-off-by: Tuo Li <islituo@gmail.com>
-Link: https://lore.kernel.org/r/20230630024748.1035993-1-islituo@gmail.com
-Reviewed-by: Justin Tee <justin.tee@broadcom.com>
-Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20241218014214.64533-3-kanie@linux.alibaba.com
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/lpfc/lpfc_hbadisc.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/ufs/ufs_bsg.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/scsi/lpfc/lpfc_hbadisc.c
-+++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
-@@ -6790,7 +6790,9 @@ lpfc_unregister_fcf_rescan(struct lpfc_h
- 	if (rc)
+--- a/drivers/scsi/ufs/ufs_bsg.c
++++ b/drivers/scsi/ufs/ufs_bsg.c
+@@ -175,6 +175,7 @@ void ufs_bsg_remove(struct ufs_hba *hba)
  		return;
- 	/* Reset HBA FCF states after successful unregister FCF */
-+	spin_lock_irq(&phba->hbalock);
- 	phba->fcf.fcf_flag = 0;
-+	spin_unlock_irq(&phba->hbalock);
- 	phba->fcf.current_rec.flag = 0;
  
- 	/*
+ 	bsg_remove_queue(hba->bsg_queue);
++	hba->bsg_queue = NULL;
+ 
+ 	device_del(bsg_dev);
+ 	put_device(bsg_dev);
 
 
