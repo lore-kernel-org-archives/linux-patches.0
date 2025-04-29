@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A962522B4;
-	Tue, 29 Apr 2025 17:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66CF24BD02;
+	Tue, 29 Apr 2025 17:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948932; cv=none; b=tDDvI+Sn7HsTIUSQo34wLFl/Aqc4N0tcrBKoYojY0DqO91p9WRJUTMXuJo2FOWn7AYRQeHmN2+fe3Cj3Gx+aoN16y+Nbwu9hx1kcpi17wcVT50OpcmQ2OxoLpYe6+coa11ngUsmOXdJqUkguMPrBb9T1EQmERnol9VGnSPjcWgE=
+	t=1745948937; cv=none; b=Di86/Ppa86r82OzhPWi0MLrn5khiWdQG8FqpmkC04Bk23UAiNsXXnDvr14QHwlZ5hhVrdqTBLUpWl3rJdDuTJt3E5wyobD8GXt/FxILPFuzpGSgm8Cj7988pvbFJv9YyIScT9qXxVyIsYnQnNhKyucbzbNBoQyXndigR4g+ZAKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948932; c=relaxed/simple;
-	bh=Y0JcT4uLNEXD5OcvlyBeUCLvuAgODgtzWJOaqRvZiVA=;
+	s=arc-20240116; t=1745948937; c=relaxed/simple;
+	bh=CxGXRYQxmv5PHnzpPtrRQMQBGTBszLsg8mS4CaeCPYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lV2+5IATwmL4w/QygA6OroeWpGdlADmyKi1ZaGS7Y+EF4RRrtQ4S9ycg9g2kmL24PqI5d0fvSineTd0IWo3ynp0OMhoAE4+Nl2WZQyM1Hr05/eWBJ7qauDNE8aokMpPn7UD0oW7NCCxJfrCZ0oB9q9QN2LdhOJlMYgqxPH0fTOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebxmhpt5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uYbveNQUT7PO2Y+f2cKSef2tVodWJCDtEaTNa6swFNIi9fp1MzkrtkLS21eBD2Z59eA6wVIB3SuIJjgcmA3ZQqYT8qFN1+KA/h092tw9zdV+iT5C9sRZ1ffVjvEpKvl4FT0GwGHfnOUrQvhIGQEJyHHOvCajUijMGPP7M2yc3fM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DYq2A2b+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebxmhpt5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39661C4CEE3;
-	Tue, 29 Apr 2025 17:48:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DYq2A2b+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93CF8C4CEE3;
+	Tue, 29 Apr 2025 17:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948932;
-	bh=Y0JcT4uLNEXD5OcvlyBeUCLvuAgODgtzWJOaqRvZiVA=;
+	s=korg; t=1745948937;
+	bh=CxGXRYQxmv5PHnzpPtrRQMQBGTBszLsg8mS4CaeCPYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ebxmhpt5Mn/lx3MuBN0D01poV1PGo4rrYmn/Tlk4XyZlH6DDgMYgNh0+r3Blbrw1i
-	 pmimDkOSrTHs7LPAW7/b4L5p3UEvEfcxTR4hWgdZwp7N6F6cSvMLPeBPot8O92ht4q
-	 932H/fgCThXujzbG8kC4vsniFB8NNHIL29yTuslk=
+	b=DYq2A2b+S2wTvdeYaz4kXEzs4C7S/2VsceuSbrV9q5wDDi2lYB1HfKlP9xL9yCxCv
+	 uZMLZJ5A3Ysg07ogClNtB9ehlRfei/lbUMegRkqJ1DPiew1gBEsC06LwIKHQ+m4ucS
+	 dc1D6n1eysABea8nqkZyX+IFfnfgpp+C7VWD2a4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baoquan He <bhe@redhat.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	David Hildenbrand <david@redhat.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	"Yanjun.Zhu" <yanjun.zhu@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 169/373] mm/gup: fix wrongly calculated returned value in fault_in_safe_writeable()
-Date: Tue, 29 Apr 2025 18:40:46 +0200
-Message-ID: <20250429161130.126884175@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	"Dmitry V. Levin" <ldv@strace.io>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 5.15 170/373] riscv: Avoid fortify warning in syscall_get_arguments()
+Date: Tue, 29 Apr 2025 18:40:47 +0200
+Message-ID: <20250429161130.167374919@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -54,51 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baoquan He <bhe@redhat.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 8c03ebd7cdc06bd0d2fecb4d1a609ef1dbb7d0aa upstream.
+commit adf53771a3123df99ca26e38818760fbcf5c05d0 upstream.
 
-Not like fault_in_readable() or fault_in_writeable(), in
-fault_in_safe_writeable() local variable 'start' is increased page by page
-to loop till the whole address range is handled.  However, it mistakenly
-calculates the size of the handled range with 'uaddr - start'.
+When building with CONFIG_FORTIFY_SOURCE=y and W=1, there is a warning
+because of the memcpy() in syscall_get_arguments():
 
-Fix it here.
+  In file included from include/linux/string.h:392,
+                   from include/linux/bitmap.h:13,
+                   from include/linux/cpumask.h:12,
+                   from arch/riscv/include/asm/processor.h:55,
+                   from include/linux/sched.h:13,
+                   from kernel/ptrace.c:13:
+  In function 'fortify_memcpy_chk',
+      inlined from 'syscall_get_arguments.isra' at arch/riscv/include/asm/syscall.h:66:2:
+  include/linux/fortify-string.h:580:25: error: call to '__read_overflow2_field' declared with attribute warning: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
+    580 |                         __read_overflow2_field(q_size_field, size);
+        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  cc1: all warnings being treated as errors
 
-Andreas said:
+The fortified memcpy() routine enforces that the source is not overread
+and the destination is not overwritten if the size of either field and
+the size of the copy are known at compile time. The memcpy() in
+syscall_get_arguments() intentionally overreads from a1 to a5 in
+'struct pt_regs' but this is bigger than the size of a1.
 
-: In gfs2, fault_in_iov_iter_writeable() is used in
-: gfs2_file_direct_read() and gfs2_file_read_iter(), so this potentially
-: affects buffered as well as direct reads.  This bug could cause those
-: gfs2 functions to spin in a loop.
+Normally, this could be solved by wrapping a1 through a5 with
+struct_group() but there was already a struct_group() applied to these
+members in commit bba547810c66 ("riscv: tracing: Fix
+__write_overflow_field in ftrace_partial_regs()").
 
-Link: https://lkml.kernel.org/r/20250410035717.473207-1-bhe@redhat.com
-Link: https://lkml.kernel.org/r/20250410035717.473207-2-bhe@redhat.com
-Signed-off-by: Baoquan He <bhe@redhat.com>
-Fixes: fe673d3f5bf1 ("mm: gup: make fault_in_safe_writeable() use fixup_user_fault()")
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Andreas Gruenbacher <agruenba@redhat.com>
-Cc: Yanjun.Zhu <yanjun.zhu@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Just avoid memcpy() altogether and write the copying of args from regs
+manually, which clears up the warning at the expense of three extra
+lines of code.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Dmitry V. Levin <ldv@strace.io>
+Fixes: e2c0cdfba7f6 ("RISC-V: User-facing API")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250409-riscv-avoid-fortify-warning-syscall_get_arguments-v1-1-7853436d4755@kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/gup.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/riscv/include/asm/syscall.h |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -1768,8 +1768,8 @@ size_t fault_in_safe_writeable(const cha
- 	} while (start != end);
- 	mmap_read_unlock(mm);
- 
--	if (size > (unsigned long)uaddr - start)
--		return size - ((unsigned long)uaddr - start);
-+	if (size > start - (unsigned long)uaddr)
-+		return size - (start - (unsigned long)uaddr);
- 	return 0;
+--- a/arch/riscv/include/asm/syscall.h
++++ b/arch/riscv/include/asm/syscall.h
+@@ -60,8 +60,11 @@ static inline void syscall_get_arguments
+ 					 unsigned long *args)
+ {
+ 	args[0] = regs->orig_a0;
+-	args++;
+-	memcpy(args, &regs->a1, 5 * sizeof(args[0]));
++	args[1] = regs->a1;
++	args[2] = regs->a2;
++	args[3] = regs->a3;
++	args[4] = regs->a4;
++	args[5] = regs->a5;
  }
- EXPORT_SYMBOL(fault_in_safe_writeable);
+ 
+ static inline void syscall_set_arguments(struct task_struct *task,
 
 
