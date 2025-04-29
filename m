@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12501519A6;
-	Tue, 29 Apr 2025 18:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73BD9CA5A;
+	Tue, 29 Apr 2025 18:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950425; cv=none; b=YBayWU2gQpAxTgJuNt13UNZy7TUiZ3Hgcj3kVV9OHUFfFUoa+nBpYcIwAI5Oc/zXB7+2hr9K17qpcQTr1yucR+EFm+rV92WcAFzXoAlVI43UUxcN5S+8F/fAA/mz/rYKCIAzVIR9TXRTqt8PnpiYXbhTX0hqzgnnUMCN8XlODmE=
+	t=1745950428; cv=none; b=U5LNLDdoYM/VGXWZcdqPWvPBtDe9RWOKCrPksL1lvrms2WSsoqtUWUzq00mcRfQg9HlUbPHPQc644hz1cjBi+0oxYFf+S3D6tV4b1+AY14EvB1Qhr5ayhgZfRe3RR7JmLVJPfr8SxqeDVaVgpM/Rl51efSogxpO5I46rg0zeA7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950425; c=relaxed/simple;
-	bh=KQA/2FGJZU544z83ofAhdz9otrIdbaguL/cOlPRMQ6Y=;
+	s=arc-20240116; t=1745950428; c=relaxed/simple;
+	bh=6C9Hr8suHzeN/USZbq40fB2EKZeI3qwS/6/m3fJDMGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I9r/OSa07RhtgUTiJ3OfFDe6Jr/vjAEPqAkvdv7dJZz3a+mkA1SueXjeNToBi7IqroBNsSn6f0lkSTeAaXv37Ut44i9/uzgqvzZvm2f/6UdpKssMTPv9RTLeUXQJVEY5kjuiIB5Y0ti+nJAS0iBQicoF1+xQXY6KbvZmswyBmgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ArOjmwLt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jv5XHDeAl5AZfYUf49R6G27u1lLvnxMJVg8q5UjiPF0+xDOpRUzjImfGg/cseAly7GOEE/Gdi4+1+2xcPZcO3T5RWNBR6lWaIHuV645YQUXe3ANd6n5RAoG167hByO5uYbkFJl5YiD1LrnZ0TuaDOnFsk2YL0qP1t89xCS600Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/yxZ/MH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ArOjmwLt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79883C4CEE3;
-	Tue, 29 Apr 2025 18:13:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/yxZ/MH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89E77C4CEE3;
+	Tue, 29 Apr 2025 18:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950424;
-	bh=KQA/2FGJZU544z83ofAhdz9otrIdbaguL/cOlPRMQ6Y=;
+	s=korg; t=1745950427;
+	bh=6C9Hr8suHzeN/USZbq40fB2EKZeI3qwS/6/m3fJDMGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ArOjmwLtUxg4AKERk6PYhMyDgwWZQxdis2+PFpujUC8dlL2tN/b7rSgSu0dGsJpX6
-	 UNTGRYpRH3obGdeVT/lNTZDk1IX6LFu3NwdfjjJr6WJKnnHc3+i+4DCrqfPGFbjABO
-	 5nA6NmFp0Itq3J/DylA8cp0fL0lAp1W6b1jI6dR0=
+	b=D/yxZ/MH9NpJF8hBv1Psex1+EyXt1FDjXlnDYaWY4BlDFYy/cHSi7uPP3em8Q6DpQ
+	 cV7WV4uTIGbDCMhm66jW9uO7yFWBDlBnP0p5nLQ1miHDdwS5IA04tm1rqKuEae+b6j
+	 6CD8Ka8YDn3WJKPqwp+MJRmw5qvbje1gZSRwQva8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Tomas Winkler <tomasw@gmail.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>
-Subject: [PATCH 6.6 091/204] mei: me: add panther lake H DID
-Date: Tue, 29 Apr 2025 18:42:59 +0200
-Message-ID: <20250429161103.156810145@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.6 092/204] KVM: x86: Explicitly treat routing entry type changes as changes
+Date: Tue, 29 Apr 2025 18:43:00 +0200
+Message-ID: <20250429161103.197286599@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -51,42 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 86ce5c0a1dec02e21b4c864b2bc0cc5880a2c13c upstream.
+commit bcda70c56f3e718465cab2aad260cf34183ce1ce upstream.
 
-Add Panther Lake H device id.
+Explicitly treat type differences as GSI routing changes, as comparing MSI
+data between two entries could get a false negative, e.g. if userspace
+changed the type but left the type-specific data as-is.
 
-Cc: stable <stable@kernel.org>
-Co-developed-by: Tomas Winkler <tomasw@gmail.com>
-Signed-off-by: Tomas Winkler <tomasw@gmail.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://lore.kernel.org/r/20250408130005.1358140-1-alexander.usyskin@intel.com
+Fixes: 515a0c79e796 ("kvm: irqfd: avoid update unmodified entries of the routing")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20250404193923.1413163-4-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/hw-me-regs.h |    1 +
- drivers/misc/mei/pci-me.c     |    1 +
- 2 files changed, 2 insertions(+)
+ arch/x86/kvm/x86.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/misc/mei/hw-me-regs.h
-+++ b/drivers/misc/mei/hw-me-regs.h
-@@ -117,6 +117,7 @@
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -13297,7 +13297,8 @@ int kvm_arch_update_irqfd_routing(struct
+ bool kvm_arch_irqfd_route_changed(struct kvm_kernel_irq_routing_entry *old,
+ 				  struct kvm_kernel_irq_routing_entry *new)
+ {
+-	if (new->type != KVM_IRQ_ROUTING_MSI)
++	if (old->type != KVM_IRQ_ROUTING_MSI ||
++	    new->type != KVM_IRQ_ROUTING_MSI)
+ 		return true;
  
- #define MEI_DEV_ID_LNL_M      0xA870  /* Lunar Lake Point M */
- 
-+#define MEI_DEV_ID_PTL_H      0xE370  /* Panther Lake H */
- #define MEI_DEV_ID_PTL_P      0xE470  /* Panther Lake P */
- 
- /*
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -124,6 +124,7 @@ static const struct pci_device_id mei_me
- 
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_LNL_M, MEI_ME_PCH15_CFG)},
- 
-+	{MEI_PCI_DEVICE(MEI_DEV_ID_PTL_H, MEI_ME_PCH15_CFG)},
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_PTL_P, MEI_ME_PCH15_CFG)},
- 
- 	/* required last entry */
+ 	return !!memcmp(&old->msi, &new->msi, sizeof(new->msi));
 
 
