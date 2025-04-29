@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1624624C098;
-	Tue, 29 Apr 2025 16:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5009C24113C;
+	Tue, 29 Apr 2025 16:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945313; cv=none; b=fS0tlJu109sSOcy7n/4avX8+zYsB8uXLTvVYYu4g715aTMU1Dx37rMZ8UN+Useh9j+SQiJJc7udYGsIM1hr4UgxnZlercGrO1Rau5c7SXf+faUSS/NvDMx5wXnLkJUp0KciCTi0pVK+D5SmP+YYOyWrmlxLU1m7Y9MOcPfPNZto=
+	t=1745945316; cv=none; b=dNBQ82rMJpZFIVoWa7hXefaulZY0yBWlWd6YU6OuqbHJIC/w2bLeYbYK/8VqmbYqy7iSEAg6vil9PR6rkSdTHggmNlsTmINCvf2OOpGK1uaB66L0E+UTuwKSrcJA+IcRM+keqYpJOTyKN9axHkIm8RaJgD0N1nwsMlw2U1+8auU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945313; c=relaxed/simple;
-	bh=sWXuxyoUlVCvKyQbOy3mT3jqte2MmoBSsymGGwWvRzI=;
+	s=arc-20240116; t=1745945316; c=relaxed/simple;
+	bh=KyGmg8+6APYLqAlQRowjJsAFhv2tn3lxSk+7vct7xQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oxiTSLpiHg0Y7zErVAJd/vwJ3c5+AJote7PWDwC0lC9zxPWa6bKtHEKStBTQ65+mPWjBVYhlIE/YsBdyVKJuT8gkAVJ+bvo6wOjb1lgzbSK70hgu54QjFwmreTNuEDIv3OELMyOkjUHXPf+YcdhzLtO6klAMeKSDVnYw6HdRAWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PuZyLFdL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bVVawTcuJ30C6wTsT7xmFUgPhFPQ/EWV1qYhTXmgGpMRlfuxrJbAvFJPGlE5Syve5EefurI5R4IcD5qWH3c6uzxizJ4KgpcyidoQVPgkbbkFdQw0cIsVJjg6UEEesqB5LvBDzUqFu2LKix86+FdypYmBy6cofwN3qQIcGkyyD2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0N6ukxW9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PuZyLFdL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1852FC4CEE9;
-	Tue, 29 Apr 2025 16:48:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0N6ukxW9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC46C4CEE3;
+	Tue, 29 Apr 2025 16:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945312;
-	bh=sWXuxyoUlVCvKyQbOy3mT3jqte2MmoBSsymGGwWvRzI=;
+	s=korg; t=1745945315;
+	bh=KyGmg8+6APYLqAlQRowjJsAFhv2tn3lxSk+7vct7xQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PuZyLFdL83k2jrkSjHgRL2+bjwlF3ffhlHWa+oIhQJn6yNWW/STu8vGFhh6/MgDFG
-	 PRaD/+nB0C51UXqcRl4nbl3xpMOaLcqMyRHhhI42IXfyFHoVjb+HssO2GM9+4PHZsw
-	 Mn5q8mSECUGzDaUOqWcbsXusW8KRyOU7eZLBRUyo=
+	b=0N6ukxW9cEI+1LkMbCy960MC+Daf7aJxevkHt6nrAYn59iMDRJlQWsjhog32xkMPh
+	 Fw6VH+HQ65D5yEXqd6o8sL3OGs+la95Dy3LjLV7MU99kXQUqjDK8e0zWEyrkII0zFL
+	 mDb28n+vqH2/wSKuN+nGNofVicUUaUVvXDdBpqrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.4 071/179] dm-integrity: set ti->error on memory allocation failure
-Date: Tue, 29 Apr 2025 18:40:12 +0200
-Message-ID: <20250429161052.289727756@linuxfoundation.org>
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 5.4 054/179] media: i2c: ov7251: Introduce 1 ms delay between regulators and en GPIO
+Date: Tue, 29 Apr 2025 18:39:55 +0200
+Message-ID: <20250429161051.583572585@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -49,41 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit 00204ae3d6712ee053353920e3ce2b00c35ef75b upstream.
+commit 3d391292cdd53984ec1b9a1f6182a62a62751e03 upstream.
 
-The dm-integrity target didn't set the error string when memory
-allocation failed. This patch fixes it.
+Lift the xshutdown (enable) GPIO 1 ms after enabling the regulators, as
+required by the sensor's power-up sequence.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: d30bb512da3d ("media: Add a driver for the ov7251 camera sensor")
 Cc: stable@vger.kernel.org
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/i2c/ov7251.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -4112,16 +4112,19 @@ try_smaller_buffer:
+--- a/drivers/media/i2c/ov7251.c
++++ b/drivers/media/i2c/ov7251.c
+@@ -748,6 +748,8 @@ static int ov7251_set_power_on(struct ov
+ 		return ret;
+ 	}
  
- 		ic->recalc_bitmap = dm_integrity_alloc_page_list(n_bitmap_pages);
- 		if (!ic->recalc_bitmap) {
-+			ti->error = "Could not allocate memory for bitmap";
- 			r = -ENOMEM;
- 			goto bad;
- 		}
- 		ic->may_write_bitmap = dm_integrity_alloc_page_list(n_bitmap_pages);
- 		if (!ic->may_write_bitmap) {
-+			ti->error = "Could not allocate memory for bitmap";
- 			r = -ENOMEM;
- 			goto bad;
- 		}
- 		ic->bbs = kvmalloc_array(ic->n_bitmap_blocks, sizeof(struct bitmap_block_status), GFP_KERNEL);
- 		if (!ic->bbs) {
-+			ti->error = "Could not allocate memory for bitmap";
- 			r = -ENOMEM;
- 			goto bad;
- 		}
++	usleep_range(1000, 1100);
++
+ 	gpiod_set_value_cansleep(ov7251->enable_gpio, 1);
+ 
+ 	/* wait at least 65536 external clock cycles */
 
 
