@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FAF2522A5;
-	Tue, 29 Apr 2025 18:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CDF25332E;
+	Tue, 29 Apr 2025 18:01:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949715; cv=none; b=RMTS4ntS1LuO3jlucUrO3ynKVX76vKGMbjYIA1yknvz2mjfZzrw/ivNGJOi7uKKt3pNyS09XdCEg02gO/VEqUqDpcPld5hHMSQrn+kuyZ0vXI3jU6pYBXGDeooLznPchIaSQRItNZzXCu1kuL8wMr1RXAfvZN8zy54tvE8UDiYY=
+	t=1745949718; cv=none; b=N/QaKsu4i1DxinRHsYSTzrzTHL1jkEIgBiyjbr+tBa3FngBVw0X9T/GoAfhpzV2upqfRt5cJC8/kNZ+pmBIS/Hv74GwdEnSS3uplwznteUavn+0+SMCd12rljGZDwqZQTXLDpVObAMigBWFZmH5Ggw0l6FBGkA2qhB3k8Mzys8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949715; c=relaxed/simple;
-	bh=85Z/20scaTccRNQEGfDHVZvQm0ROPnYFwmenJOnS7dk=;
+	s=arc-20240116; t=1745949718; c=relaxed/simple;
+	bh=Uvklg8GafiDFfYQbrQnY2wJafV4dfA/PFCtcKrppmSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GMPTQSSGpFbRKcxqkGsV0k5KtKs0ElUE0qMTaEhGFpF0mZp7smNMR6e3cDP9Ml7UMqm42YS+GWNF4e8fu+y7cIOA6XPT/Ny4k18oxzVd+7TLrYypLvI94p1v8PzdS9PmbF4pmFGMyVL4xCsa2FiA4XsWEovJwbYip12fgef1Js0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/PxS9SB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dxUeN0SjDiNEJFJ9e2iAH1Traph36ywRJW1gW7GyCywQB37hIo3zMeTEIgobDvKYcTdS90ARlNpCdrORrHC4wvW3dRlp4t5EHBxVP2HauZdgayYlQni+cmREWoRxagKY/LFr7OPkUbvUwmy6VIsK2FmIPTYc8YA1MwOiKbSWTkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UxDsJ7Bn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/PxS9SB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1CEC4CEE3;
-	Tue, 29 Apr 2025 18:01:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UxDsJ7Bn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3B5C4CEE3;
+	Tue, 29 Apr 2025 18:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949715;
-	bh=85Z/20scaTccRNQEGfDHVZvQm0ROPnYFwmenJOnS7dk=;
+	s=korg; t=1745949717;
+	bh=Uvklg8GafiDFfYQbrQnY2wJafV4dfA/PFCtcKrppmSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V/PxS9SBEuKpHGNOviNcxDZCgmq5ZkfXmlX7S8nxjN5eAMtXVRMMElCzIpi0xklBk
-	 tbmwkYXkFMy7WbNN45YmByVTPebGjcWvGqp1d/Vpz/GEkMfJozIetYyR0bCg78o5Qo
-	 7uV7hj1zgnP/fNHIC7LkffN4cFb8s0SAPUFPLSF0=
+	b=UxDsJ7BnOKgjbDR01cwThr7x0hY6EG8Gm3tL6khZjPEsMHCk3Kh4GyHMzyilMvvg+
+	 iGUplkPvkBMFeFH/9nDStBrHvfBJ2hO7p8vkvIgp/bbquegecYUpi7Af1igMg2UCzh
+	 TCqC0MoDrcQ7uIhEntT2XdKj8qcj1YWJGXtdcjoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Marek Vasut <marex@denx.de>,
+	Richard Leitner <richard.leitner@skidata.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/167] clk: renesas: r9a07g04[34]: Fix typo for sel_shdi variable
-Date: Tue, 29 Apr 2025 18:42:14 +0200
-Message-ID: <20250429161052.807238559@linuxfoundation.org>
+Subject: [PATCH 6.1 035/167] phy: freescale: imx8m-pcie: Add i.MX8MP PCIe PHY support
+Date: Tue, 29 Apr 2025 18:42:23 +0200
+Message-ID: <20250429161053.176069961@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -51,73 +56,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Richard Zhu <hongxing.zhu@nxp.com>
 
-[ Upstream commit 46fb5dd9ca289953fa791b2bb060dac7f8002ae0 ]
+[ Upstream commit dce9edff16ee8df20e791e82e0704c4667cc3908 ]
 
-Fix typo for sel_shdi variable.
+Add i.MX8MP PCIe PHY support.
 
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20240131102930.1841901-3-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Stable-dep-of: 7f22a298d926 ("clk: renesas: r9a07g043: Fix HP clock source for RZ/Five")
+Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Tested-by: Marek Vasut <marex@denx.de>
+Tested-by: Richard Leitner <richard.leitner@skidata.com>
+Tested-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
+Reviewed-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Link: https://lore.kernel.org/r/1665625622-20551-5-git-send-email-hongxing.zhu@nxp.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: aecb63e88c5e ("phy: freescale: imx8m-pcie: assert phy reset and perst in power off")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r9a07g043-cpg.c | 6 +++---
- drivers/clk/renesas/r9a07g044-cpg.c | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/phy/freescale/phy-fsl-imx8m-pcie.c | 25 ++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/renesas/r9a07g043-cpg.c b/drivers/clk/renesas/r9a07g043-cpg.c
-index 284bab8366ef5..1526de808576e 100644
---- a/drivers/clk/renesas/r9a07g043-cpg.c
-+++ b/drivers/clk/renesas/r9a07g043-cpg.c
-@@ -87,7 +87,7 @@ static const struct clk_div_table dtable_1_32[] = {
- /* Mux clock tables */
- static const char * const sel_pll3_3[] = { ".pll3_533", ".pll3_400" };
- static const char * const sel_pll6_2[]	= { ".pll6_250", ".pll5_250" };
--static const char * const sel_shdi[] = { ".clk_533", ".clk_400", ".clk_266" };
-+static const char * const sel_sdhi[] = { ".clk_533", ".clk_400", ".clk_266" };
+diff --git a/drivers/phy/freescale/phy-fsl-imx8m-pcie.c b/drivers/phy/freescale/phy-fsl-imx8m-pcie.c
+index 211ce84d980f9..0082de17cf4de 100644
+--- a/drivers/phy/freescale/phy-fsl-imx8m-pcie.c
++++ b/drivers/phy/freescale/phy-fsl-imx8m-pcie.c
+@@ -50,6 +50,7 @@
  
- static const u32 mtable_sdhi[] = { 1, 2, 3 };
+ enum imx8_pcie_phy_type {
+ 	IMX8MM,
++	IMX8MP,
+ };
  
-@@ -136,9 +136,9 @@ static const struct cpg_core_clk r9a07g043_core_clks[] __initconst = {
- 	DEF_MUX("HP", R9A07G043_CLK_HP, SEL_PLL6_2, sel_pll6_2),
- 	DEF_FIXED("SPI0", R9A07G043_CLK_SPI0, CLK_DIV_PLL3_C, 1, 2),
- 	DEF_FIXED("SPI1", R9A07G043_CLK_SPI1, CLK_DIV_PLL3_C, 1, 4),
--	DEF_SD_MUX("SD0", R9A07G043_CLK_SD0, SEL_SDHI0, SEL_SDHI0_STS, sel_shdi,
-+	DEF_SD_MUX("SD0", R9A07G043_CLK_SD0, SEL_SDHI0, SEL_SDHI0_STS, sel_sdhi,
- 		   mtable_sdhi, 0, rzg2l_cpg_sd_clk_mux_notifier),
--	DEF_SD_MUX("SD1", R9A07G043_CLK_SD1, SEL_SDHI1, SEL_SDHI1_STS, sel_shdi,
-+	DEF_SD_MUX("SD1", R9A07G043_CLK_SD1, SEL_SDHI1, SEL_SDHI1_STS, sel_sdhi,
- 		   mtable_sdhi, 0, rzg2l_cpg_sd_clk_mux_notifier),
- 	DEF_FIXED("SD0_DIV4", CLK_SD0_DIV4, R9A07G043_CLK_SD0, 1, 4),
- 	DEF_FIXED("SD1_DIV4", CLK_SD1_DIV4, R9A07G043_CLK_SD1, 1, 4),
-diff --git a/drivers/clk/renesas/r9a07g044-cpg.c b/drivers/clk/renesas/r9a07g044-cpg.c
-index b61a17fd4cc33..77e1a3a4ef1e6 100644
---- a/drivers/clk/renesas/r9a07g044-cpg.c
-+++ b/drivers/clk/renesas/r9a07g044-cpg.c
-@@ -106,7 +106,7 @@ static const struct clk_div_table dtable_16_128[] = {
- static const char * const sel_pll3_3[] = { ".pll3_533", ".pll3_400" };
- static const char * const sel_pll5_4[] = { ".pll5_foutpostdiv", ".pll5_fout1ph0" };
- static const char * const sel_pll6_2[]	= { ".pll6_250", ".pll5_250" };
--static const char * const sel_shdi[] = { ".clk_533", ".clk_400", ".clk_266" };
-+static const char * const sel_sdhi[] = { ".clk_533", ".clk_400", ".clk_266" };
- static const char * const sel_gpu2[] = { ".pll6", ".pll3_div2_2" };
+ struct imx8_pcie_phy_drvdata {
+@@ -62,6 +63,7 @@ struct imx8_pcie_phy {
+ 	struct clk		*clk;
+ 	struct phy		*phy;
+ 	struct regmap		*iomuxc_gpr;
++	struct reset_control	*perst;
+ 	struct reset_control	*reset;
+ 	u32			refclk_pad_mode;
+ 	u32			tx_deemph_gen1;
+@@ -76,11 +78,11 @@ static int imx8_pcie_phy_power_on(struct phy *phy)
+ 	u32 val, pad_mode;
+ 	struct imx8_pcie_phy *imx8_phy = phy_get_drvdata(phy);
  
- static const u32 mtable_sdhi[] = { 1, 2, 3 };
-@@ -176,9 +176,9 @@ static const struct {
- 		DEF_MUX("HP", R9A07G044_CLK_HP, SEL_PLL6_2, sel_pll6_2),
- 		DEF_FIXED("SPI0", R9A07G044_CLK_SPI0, CLK_DIV_PLL3_C, 1, 2),
- 		DEF_FIXED("SPI1", R9A07G044_CLK_SPI1, CLK_DIV_PLL3_C, 1, 4),
--		DEF_SD_MUX("SD0", R9A07G044_CLK_SD0, SEL_SDHI0, SEL_SDHI0_STS, sel_shdi,
-+		DEF_SD_MUX("SD0", R9A07G044_CLK_SD0, SEL_SDHI0, SEL_SDHI0_STS, sel_sdhi,
- 			   mtable_sdhi, 0, rzg2l_cpg_sd_clk_mux_notifier),
--		DEF_SD_MUX("SD1", R9A07G044_CLK_SD1, SEL_SDHI1, SEL_SDHI1_STS, sel_shdi,
-+		DEF_SD_MUX("SD1", R9A07G044_CLK_SD1, SEL_SDHI1, SEL_SDHI1_STS, sel_sdhi,
- 			   mtable_sdhi, 0, rzg2l_cpg_sd_clk_mux_notifier),
- 		DEF_FIXED("SD0_DIV4", CLK_SD0_DIV4, R9A07G044_CLK_SD0, 1, 4),
- 		DEF_FIXED("SD1_DIV4", CLK_SD1_DIV4, R9A07G044_CLK_SD1, 1, 4),
+-	reset_control_assert(imx8_phy->reset);
+-
+ 	pad_mode = imx8_phy->refclk_pad_mode;
+ 	switch (imx8_phy->drvdata->variant) {
+ 	case IMX8MM:
++		reset_control_assert(imx8_phy->reset);
++
+ 		/* Tune PHY de-emphasis setting to pass PCIe compliance. */
+ 		if (imx8_phy->tx_deemph_gen1)
+ 			writel(imx8_phy->tx_deemph_gen1,
+@@ -89,6 +91,8 @@ static int imx8_pcie_phy_power_on(struct phy *phy)
+ 			writel(imx8_phy->tx_deemph_gen2,
+ 			       imx8_phy->base + PCIE_PHY_TRSV_REG6);
+ 		break;
++	case IMX8MP: /* Do nothing. */
++		break;
+ 	}
+ 
+ 	if (pad_mode == IMX8_PCIE_REFCLK_PAD_INPUT ||
+@@ -145,6 +149,9 @@ static int imx8_pcie_phy_power_on(struct phy *phy)
+ 			   IMX8MM_GPR_PCIE_CMN_RST);
+ 
+ 	switch (imx8_phy->drvdata->variant) {
++	case IMX8MP:
++		reset_control_deassert(imx8_phy->perst);
++		fallthrough;
+ 	case IMX8MM:
+ 		reset_control_deassert(imx8_phy->reset);
+ 		usleep_range(200, 500);
+@@ -186,8 +193,14 @@ static const struct imx8_pcie_phy_drvdata imx8mm_drvdata = {
+ 	.variant = IMX8MM,
+ };
+ 
++static const struct imx8_pcie_phy_drvdata imx8mp_drvdata = {
++	.gpr = "fsl,imx8mp-iomuxc-gpr",
++	.variant = IMX8MP,
++};
++
+ static const struct of_device_id imx8_pcie_phy_of_match[] = {
+ 	{.compatible = "fsl,imx8mm-pcie-phy", .data = &imx8mm_drvdata, },
++	{.compatible = "fsl,imx8mp-pcie-phy", .data = &imx8mp_drvdata, },
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(of, imx8_pcie_phy_of_match);
+@@ -243,6 +256,14 @@ static int imx8_pcie_phy_probe(struct platform_device *pdev)
+ 		return PTR_ERR(imx8_phy->reset);
+ 	}
+ 
++	if (imx8_phy->drvdata->variant == IMX8MP) {
++		imx8_phy->perst =
++			devm_reset_control_get_exclusive(dev, "perst");
++		if (IS_ERR(imx8_phy->perst))
++			dev_err_probe(dev, PTR_ERR(imx8_phy->perst),
++				      "Failed to get PCIE PHY PERST control\n");
++	}
++
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	imx8_phy->base = devm_ioremap_resource(dev, res);
+ 	if (IS_ERR(imx8_phy->base))
 -- 
 2.39.5
 
