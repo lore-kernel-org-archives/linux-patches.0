@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A80211A0B;
-	Tue, 29 Apr 2025 17:07:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C639211A0B;
+	Tue, 29 Apr 2025 17:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946430; cv=none; b=fRUCBcvg1XKQmt0GDmUMNRwS9xWzyv4CqvPJTHdQ6dkEpLDTU8xY7iXnbJkVrobGOzHrIFcBk9Hrcpu8hNBxDVxjkFmUlntXv1SZ/Dg3scAZuZVRLWPK4My/gyzLSabE3gLpS2lZsSoknTW7j8M7odTsINO2KGbhT6uCllAdYAw=
+	t=1745946433; cv=none; b=DJaqfpmuvgf2ZnWWBFzRankwMP+kTB16VilbzZPpV2BKqWR/xbxcoX2SKP8ktDoNN43tbllHNgXmGFcW7u2YcFHcvqKTiaZYq+xseaCJ8JksKPMR7b4In/jfbRy5B8Biy257wzOT1KjU5+MGFVn1NNzZLg5v7R3JYUvT3vnIiU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946430; c=relaxed/simple;
-	bh=PNY1mPED5HWJojudthxCYO5GKgvPV7SbtRwp+ldhnBc=;
+	s=arc-20240116; t=1745946433; c=relaxed/simple;
+	bh=sNlvuSqtNnjoffiLglioY1P9X0Bl9NrdjO3fsryDajI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n6tqxpwotf75nVIpXydIYtkjCnzz9uUwBIwDVnciYXLlfC0lDsnIgiXdfgRfcOP0wXsPN/uo5pwEHdeqs/Yp05AclOApEjMb+1y1LhCJTEmDYi0kD2I9ALd4EMkJ2OUODQLk3ka3i6exq6l9l1ObHvogsM1f+DexT9cFK6tBc+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TRerBwp0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eJSf2V7RCZ+AE8GHUwiRaNmrIahQKkohwZi748Uj3Of2Kug9QqY/9fQ3gvMamEUtnc3pYlEMaJqQTwCk1XBuLHenzHOnux4hx52lv18cX120Q+l3t4UZ7dT3KS67Qrxg8L9i2En8FaBVX/uZrmCBYj6UAqoTgcGwU4YGLbwi62c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nouWPjWD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TRerBwp0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3B8C4CEE3;
-	Tue, 29 Apr 2025 17:07:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nouWPjWD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D24C4CEE3;
+	Tue, 29 Apr 2025 17:07:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946430;
-	bh=PNY1mPED5HWJojudthxCYO5GKgvPV7SbtRwp+ldhnBc=;
+	s=korg; t=1745946433;
+	bh=sNlvuSqtNnjoffiLglioY1P9X0Bl9NrdjO3fsryDajI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TRerBwp0t5dWKjOfO5WydmWPZDbXIOvxCpFK3D5t/bgWwHWirtyhXcVEhsGLqkgne
-	 emhhWGH+2ql7HHfZCFxp8z0p3fzYfwN36Y/CMpf4gg6i2bagQv8rrQ64fspA1NIzKo
-	 45V8QV6cyCLnGaX31wuKLqkq/cZlZKtgYGj7Ex/Y=
+	b=nouWPjWDJ+RzXRDjZwp0d2sWJDTTQg9TZaup9jNccp1l+QjYiQJqnS1PwZzSRJPNn
+	 istbZC6iryac1EkxntgOPtOx0kePrkB5ueo6jZtC3xwGd00am/4gzRUt5mQAl/hgx8
+	 be17TSfeyuM1x/KsaXYYxMySKwZlksDowTZHDdQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@alien8.de>,
-	Chris Bainbridge <chris.bainbridge@gmail.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 265/311] timekeeping: Add a lockdep override in tick_freeze()
-Date: Tue, 29 Apr 2025 18:41:42 +0200
-Message-ID: <20250429161131.883329566@linuxfoundation.org>
+Subject: [PATCH 6.14 248/311] ACPI: EC: Set ec_no_wakeup for Lenovo Go S
+Date: Tue, 29 Apr 2025 18:41:25 +0200
+Message-ID: <20250429161131.186092055@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -54,83 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 92e250c624ea37fde64bfd624fd2556f0d846f18 ]
+[ Upstream commit b988685388effd648150aab272533f833a2a70f0 ]
 
-tick_freeze() acquires a raw spinlock (tick_freeze_lock). Later in the
-callchain (timekeeping_suspend() -> mc146818_avoid_UIP()) the RTC driver
-acquires a spinlock which becomes a sleeping lock on PREEMPT_RT.  Lockdep
-complains about this lock nesting.
+When AC adapter is unplugged or plugged in EC wakes from HW sleep but
+APU doesn't enter back into HW sleep.
 
-Add a lockdep override for this special case and a comment explaining
-why it is okay.
+The reason this happens is that, when the APU exits HW sleep, the power
+rails controlled by the EC will power up the TCON.  The TCON has a GPIO
+that will be toggled at this time.  The GPIO is not marked as a wakeup
+source, but the GPIO controller still has an unserviced interrupt.
+Unserviced interrupts will block entering HW sleep again. Clearing the
+GPIO doesn't help as the TCON continues to assert it until it's been
+initialized by i2c-hid.
 
-Reported-by: Borislav Petkov <bp@alien8.de>
-Reported-by: Chris Bainbridge <chris.bainbridge@gmail.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/all/20250404133429.pnAzf-eF@linutronix.de
-Closes: https://lore.kernel.org/all/20250330113202.GAZ-krsjAnurOlTcp-@fat_crate.local/
-Closes: https://lore.kernel.org/all/CAP-bSRZ0CWyZZsMtx046YV8L28LhY0fson2g4EqcwRAVN1Jk+Q@mail.gmail.com/
+Fixing this would require TCON F/W changes and it's already broken in
+the wild on production hardware.
+
+To avoid triggering this issue add a quirk to avoid letting EC wake
+up system at all.  The power button still works properly on this system.
+
+Reported-by: Antheas Kapenekakis <lkml@antheas.dev>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3929
+Link: https://github.com/bazzite-org/patchwork/commit/95b93b2852718ee1e808c72e6b1836da4a95fc63
+Co-developed-by: Antheas Kapenekakis <lkml@antheas.dev>
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20250401133858.1892077-1-superm1@kernel.org
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/tick-common.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/acpi/ec.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/kernel/time/tick-common.c b/kernel/time/tick-common.c
-index a47bcf71defcf..9a3859443c042 100644
---- a/kernel/time/tick-common.c
-+++ b/kernel/time/tick-common.c
-@@ -509,6 +509,7 @@ void tick_resume(void)
+diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
+index 8db09d81918fb..3c5f34892734e 100644
+--- a/drivers/acpi/ec.c
++++ b/drivers/acpi/ec.c
+@@ -2301,6 +2301,34 @@ static const struct dmi_system_id acpi_ec_no_wakeup[] = {
+ 			DMI_MATCH(DMI_PRODUCT_FAMILY, "103C_5336AN HP ZHAN 66 Pro"),
+ 		},
+ 	},
++	/*
++	 * Lenovo Legion Go S; touchscreen blocks HW sleep when woken up from EC
++	 * https://gitlab.freedesktop.org/drm/amd/-/issues/3929
++	 */
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83L3"),
++		}
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83N6"),
++		}
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83Q2"),
++		}
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83Q3"),
++		}
++	},
+ 	{ },
+ };
  
- #ifdef CONFIG_SUSPEND
- static DEFINE_RAW_SPINLOCK(tick_freeze_lock);
-+static DEFINE_WAIT_OVERRIDE_MAP(tick_freeze_map, LD_WAIT_SLEEP);
- static unsigned int tick_freeze_depth;
- 
- /**
-@@ -528,9 +529,22 @@ void tick_freeze(void)
- 	if (tick_freeze_depth == num_online_cpus()) {
- 		trace_suspend_resume(TPS("timekeeping_freeze"),
- 				     smp_processor_id(), true);
-+		/*
-+		 * All other CPUs have their interrupts disabled and are
-+		 * suspended to idle. Other tasks have been frozen so there
-+		 * is no scheduling happening. This means that there is no
-+		 * concurrency in the system at this point. Therefore it is
-+		 * okay to acquire a sleeping lock on PREEMPT_RT, such as a
-+		 * spinlock, because the lock cannot be held by other CPUs
-+		 * or threads and acquiring it cannot block.
-+		 *
-+		 * Inform lockdep about the situation.
-+		 */
-+		lock_map_acquire_try(&tick_freeze_map);
- 		system_state = SYSTEM_SUSPEND;
- 		sched_clock_suspend();
- 		timekeeping_suspend();
-+		lock_map_release(&tick_freeze_map);
- 	} else {
- 		tick_suspend_local();
- 	}
-@@ -552,8 +566,16 @@ void tick_unfreeze(void)
- 	raw_spin_lock(&tick_freeze_lock);
- 
- 	if (tick_freeze_depth == num_online_cpus()) {
-+		/*
-+		 * Similar to tick_freeze(). On resumption the first CPU may
-+		 * acquire uncontended sleeping locks while other CPUs block on
-+		 * tick_freeze_lock.
-+		 */
-+		lock_map_acquire_try(&tick_freeze_map);
- 		timekeeping_resume();
- 		sched_clock_resume();
-+		lock_map_release(&tick_freeze_map);
-+
- 		system_state = SYSTEM_RUNNING;
- 		trace_suspend_resume(TPS("timekeeping_freeze"),
- 				     smp_processor_id(), false);
 -- 
 2.39.5
 
