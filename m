@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F078B24EF7F;
-	Tue, 29 Apr 2025 16:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97E72459FA;
+	Tue, 29 Apr 2025 16:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945812; cv=none; b=mGJBYOwG/ccVBI1BZN3Hg0zOD3iG8JATbaRhbvjMUh57cFqSdMLcQC45ZFgQ4uIXqomIddmkv10HocqmUNI0S5fqlHiSExB7n55kd5H+xOgcjZNeS2EGrIPafdgH+/Ve59H1+VIHjbkZAqaXTKJf3ItVPlkz8S86Pp1a0ad9I3Q=
+	t=1745945814; cv=none; b=BCenmbvn3UXuFibZnt7sCgdZ/gdnxWKeRJQk33oI1A/oD6F3eknLrJp+ToACjXlipewH6N3j6zvoxq4A1bHSBKg0grCgzyJzBMGRaEL4QA8XiKPE7WLgsS8UC0V1zYk9L8WmHejZ7G15Zw1T2+WBCqBsPzUm4mZUSkrgH6sxa/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945812; c=relaxed/simple;
-	bh=f+j6EOSj72I4csUUebg1Ir/Oh2wR4Zh6O73OTPB9uEU=;
+	s=arc-20240116; t=1745945814; c=relaxed/simple;
+	bh=EbFb0twjB33FdfI6fzOzOo/IVTjY5cXpKGrhybxx0NA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IEfYqQ6hE6r5U4OiLA2SChl2/Ko46RYOJTH9kSqD3rWYJvCAwEKBfx7r1n+6vsB3VqG2isIIxlHKN9Volzf3KcPbW4EfqzMvWqS/gEou7m2goDoEUYUR+uDVy2LKJwNiNZ2FBQfMulELNrhTqT4Uen5/rPvpFFi0rWCJZi+gTjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GonFUQI2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dCRWWS3HDo6vls0qBSDXzL/tWjTPOwPHxCZzLpIQduLKyKzzYbekpqc5SE0vUrHVthxNQkDb6b7K/FnASsd9f2R5odrpYGdL3+6LGQwB4ATOEdb6kZLx0WywO//b+/tDZIKAzHiyDJdMrdysSIiNoDMFegRAu5+R6GheuGvdJ8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q44nYq5g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GonFUQI2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A8CC4CEE3;
-	Tue, 29 Apr 2025 16:56:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q44nYq5g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 587B2C4CEE3;
+	Tue, 29 Apr 2025 16:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945811;
-	bh=f+j6EOSj72I4csUUebg1Ir/Oh2wR4Zh6O73OTPB9uEU=;
+	s=korg; t=1745945814;
+	bh=EbFb0twjB33FdfI6fzOzOo/IVTjY5cXpKGrhybxx0NA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GonFUQI2sVeMgOSTCysC24kByrE3qvyVjqej7zTHGLdN1wscmaRakPao6Cn8UxJSX
-	 scKLQIhSZNx9e9mxXD2qLlpr7iYWvds50MZcDhD1j3fuRcDSvq/K+nk6eK1BkQ92cw
-	 A0djKJypccQhIUDMTFVYf7mQxiJLEC58/fpgfpq0=
+	b=Q44nYq5g6HcCueGowSBSiz9ZyOigdurfPJNWQVbfYhZzqf4FsNh0sssXkYsh6HxhW
+	 hRQ5E6Zk9oDznV+TRfrSSWiMQ1HGAqILn5V0XVWkeUZi29jeIcRF0oMAx487CtEeu2
+	 WwBR+2sb+wzmYUf3Z8a3IG0EFht++7NNmKHj1AOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.14 018/311] scsi: ufs: qcom: fix dev reference leaked through of_qcom_ice_get
-Date: Tue, 29 Apr 2025 18:37:35 +0200
-Message-ID: <20250429161121.779623153@linuxfoundation.org>
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.14 051/311] net/mlx5: Move ttc allocation after switch case to prevent leaks
+Date: Tue, 29 Apr 2025 18:38:08 +0200
+Message-ID: <20250429161123.123395429@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -55,40 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit ded40f32b55f7f2f4ed9627dd3c37a1fe89ed8c6 ]
+[ Upstream commit fa8fd315127ca48c65e7e6692a84ffcf3d07168e ]
 
-The driver leaks the device reference taken with
-of_find_device_by_node(). Fix the leak by using devm_of_qcom_ice_get().
+Relocate the memory allocation for ttc table after the switch statement
+that validates params->ns_type in both mlx5_create_inner_ttc_table() and
+mlx5_create_ttc_table(). This ensures memory is only allocated after
+confirming valid input, eliminating potential memory leaks when invalid
+ns_type cases occur.
 
-Fixes: 56541c7c4468 ("scsi: ufs: ufs-qcom: Switch to the new ICE API")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Acked-by: Martin K. Petersen <martin.petersen@oracle.com> # SCSI
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20250117-qcom-ice-fix-dev-leak-v2-3-1ffa5b6884cb@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 137f3d50ad2a ("net/mlx5: Support matching on l4_type for ttc_table")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250418023814.71789-3-bsdhenrymartin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 23b9f6efa0475..a455a95f65fc6 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -125,7 +125,7 @@ static int ufs_qcom_ice_init(struct ufs_qcom_host *host)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c
+index 510879e1ba30e..43b2216bc0a22 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_ttc.c
+@@ -618,10 +618,6 @@ struct mlx5_ttc_table *mlx5_create_inner_ttc_table(struct mlx5_core_dev *dev,
+ 	bool use_l4_type;
  	int err;
- 	int i;
  
--	ice = of_qcom_ice_get(dev);
-+	ice = devm_of_qcom_ice_get(dev);
- 	if (ice == ERR_PTR(-EOPNOTSUPP)) {
- 		dev_warn(dev, "Disabling inline encryption support\n");
- 		ice = NULL;
+-	ttc = kvzalloc(sizeof(*ttc), GFP_KERNEL);
+-	if (!ttc)
+-		return ERR_PTR(-ENOMEM);
+-
+ 	switch (params->ns_type) {
+ 	case MLX5_FLOW_NAMESPACE_PORT_SEL:
+ 		use_l4_type = MLX5_CAP_GEN_2(dev, pcc_ifa2) &&
+@@ -635,6 +631,10 @@ struct mlx5_ttc_table *mlx5_create_inner_ttc_table(struct mlx5_core_dev *dev,
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
++	ttc = kvzalloc(sizeof(*ttc), GFP_KERNEL);
++	if (!ttc)
++		return ERR_PTR(-ENOMEM);
++
+ 	ns = mlx5_get_flow_namespace(dev, params->ns_type);
+ 	if (!ns) {
+ 		kvfree(ttc);
+@@ -696,10 +696,6 @@ struct mlx5_ttc_table *mlx5_create_ttc_table(struct mlx5_core_dev *dev,
+ 	bool use_l4_type;
+ 	int err;
+ 
+-	ttc = kvzalloc(sizeof(*ttc), GFP_KERNEL);
+-	if (!ttc)
+-		return ERR_PTR(-ENOMEM);
+-
+ 	switch (params->ns_type) {
+ 	case MLX5_FLOW_NAMESPACE_PORT_SEL:
+ 		use_l4_type = MLX5_CAP_GEN_2(dev, pcc_ifa2) &&
+@@ -713,6 +709,10 @@ struct mlx5_ttc_table *mlx5_create_ttc_table(struct mlx5_core_dev *dev,
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
++	ttc = kvzalloc(sizeof(*ttc), GFP_KERNEL);
++	if (!ttc)
++		return ERR_PTR(-ENOMEM);
++
+ 	ns = mlx5_get_flow_namespace(dev, params->ns_type);
+ 	if (!ns) {
+ 		kvfree(ttc);
 -- 
 2.39.5
 
