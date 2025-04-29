@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9EE254AFB;
-	Tue, 29 Apr 2025 18:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A75221ABBD;
+	Tue, 29 Apr 2025 18:10:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950255; cv=none; b=XNmKoj5+Q+u6GUSAzaEcPA0TP5O3X/cUkJZaOBF7JQD8cGTJwVS8z33M4v0+bhlwdpdFaDcdMTpwR05AX0yJlI7lEwX4XP3nAEvNYfeZHswzU0DdpdBTvrjX4IJGdsLG3AFhaF8+WU3owJWF7XwvadRplgAtjkse/oCbFYHmRr0=
+	t=1745950258; cv=none; b=amksvVc9zBFBxMfw7ucmLj+/IfESUdZjOI1DPTWg/ud+FPqfyYBU/oPEczDJjah4kmtSVaavVCtngx5IY6Ia9AqvrHgWsDgIpTidxbT9F7LkLro9PIFSCXyX1iYP8GbY2KeBclVht8jIeYVnwPiPFsVIcwN47+JBlY49eWYI7IQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950255; c=relaxed/simple;
-	bh=CyF5M40BxhfziimjL8KiWgpLtaYIaO4p8N/F03xijn4=;
+	s=arc-20240116; t=1745950258; c=relaxed/simple;
+	bh=6TW8LSxUMb9V/1d003CCIroUXAjd0Abd0cTBGMCYtuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cdEk8/mcos99SmGT8+DUW5Hggfh/6ZRf6CeUChpTcz4P5B+Ed6VvvdHpeU8sudBp367Yz7pbkR7EOrd5q74Rru79cSrJh7PCcx6zL8/r7OPLEeyrTJQ/Qfz79gbcJvnWVc0QItwGJdYdBTBYPEpX2UmfUzS1+2H3dEKs+Z8djKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8+olgE1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I58rZCPBISsnimOBN/tBpBDficgH7mVPtEwmHb2sWZiisJ3d8bPB98yzxRS50x0Wmo7xlv5UYHlTVCSASrndRJ9/lJ91dqwFymtt9RgLc7Cw/xmipt8XeR8LYj3fyu9hqU5kxZR7QsiOCYMqnbsDBPA9WJSrj5Gkq+fk7BPRxjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zmit8k8R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8+olgE1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC91C4CEE3;
-	Tue, 29 Apr 2025 18:10:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zmit8k8R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97ACAC4CEE3;
+	Tue, 29 Apr 2025 18:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950255;
-	bh=CyF5M40BxhfziimjL8KiWgpLtaYIaO4p8N/F03xijn4=;
+	s=korg; t=1745950258;
+	bh=6TW8LSxUMb9V/1d003CCIroUXAjd0Abd0cTBGMCYtuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V8+olgE1xhR7x+qKIek5KS2NzvuJrLi00BpkehGazM13p69J5ycfOa0u78vmRchWK
-	 KhG4p424gTgBD4wFrZsuoUa1FiKHhZllUY1Nz4nRiv7zbo7ekbHQxaz9sCHDa6t59g
-	 oluhSXTyXpRpTncp2mNTcZZo+4sbk71zgFwGeeJA=
+	b=zmit8k8R3incHK8FLUfqymZOcfNNx9rIU7fwyDQ3Fu4rlsLvz1L3JwwnrMC8JlAsS
+	 ekFub0cMprRcf74SZfo/g+79BlDat2u29khgYBSpcj9eAC2bit33CYeb62RhhqUBAE
+	 uy8HJnCmzBVsKPkpRnjgU9PaAdmZCaXHjdEGB6wM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Umang Jain <umang.jain@ideasonboard.com>,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Umang Jain <umang.jain@ideasonboard.com>,
 	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 008/204] media: subdev: Fix use of sd->enabled_streams in call_s_stream()
-Date: Tue, 29 Apr 2025 18:41:36 +0200
-Message-ID: <20250429161059.744952586@linuxfoundation.org>
+Subject: [PATCH 6.6 009/204] media: subdev: Improve v4l2_subdev_enable/disable_streams_fallback
+Date: Tue, 29 Apr 2025 18:41:37 +0200
+Message-ID: <20250429161059.786946770@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -56,24 +56,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 1d7804281df3f09f0a109d00406e859a00bae7ae ]
+[ Upstream commit 61d6c8c896c1ccde350c281817847a32b0c6b83b ]
 
-call_s_stream() uses sd->enabled_streams to track whether streaming has
-already been enabled. However,
-v4l2_subdev_enable/disable_streams_fallback(), which was the original
-user of this field, already uses it, and
-v4l2_subdev_enable/disable_streams_fallback() will call call_s_stream().
+v4l2_subdev_enable/disable_streams_fallback() supports falling back to
+.s_stream() for subdevs with a single source pad. It also tracks the
+enabled streams for that one pad in the sd->enabled_streams field.
 
-This leads to a conflict as both functions set the field. Afaics, both
-functions set the field to the same value, so it won't cause a runtime
-bug, but it's still wrong and if we, e.g., change how
-v4l2_subdev_enable/disable_streams_fallback() operates we might easily
-cause bugs.
+Tracking the enabled streams with sd->enabled_streams does not make
+sense, as with .s_stream() there can only be a single stream per pad.
+Thus, as the v4l2_subdev_enable/disable_streams_fallback() only supports
+a single source pad, all we really need is a boolean which tells whether
+streaming has been enabled on this pad or not.
 
-Fix this by adding a new field, 's_stream_enabled', for
-call_s_stream().
+However, as we only need a true/false state for a pad (instead of
+tracking which streams have been enabled for a pad), we can easily
+extend the fallback mechanism to support multiple source pads as we only
+need to keep track of which pads have been enabled.
 
-Reviewed-by: Umang Jain <umang.jain@ideasonboard.com>
+Change the sd->enabled_streams field to sd->enabled_pads, which is a
+64-bit bitmask tracking the enabled source pads. With this change we can
+remove the restriction that
+v4l2_subdev_enable/disable_streams_fallback() only supports a single
+source pad.
+
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Tested-by: Umang Jain <umang.jain@ideasonboard.com>
 Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
@@ -82,57 +87,156 @@ Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Stable-dep-of: 36cef585e2a3 ("media: vimc: skip .s_stream() for stopped entities")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-subdev.c | 8 ++------
- include/media/v4l2-subdev.h           | 3 +++
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ drivers/media/v4l2-core/v4l2-subdev.c | 68 ++++++++++++++++-----------
+ include/media/v4l2-subdev.h           |  9 ++--
+ 2 files changed, 44 insertions(+), 33 deletions(-)
 
 diff --git a/drivers/media/v4l2-core/v4l2-subdev.c b/drivers/media/v4l2-core/v4l2-subdev.c
-index a32ef739eb449..8bfbe9d5fe3c4 100644
+index 8bfbe9d5fe3c4..f555fd3c4b76d 100644
 --- a/drivers/media/v4l2-core/v4l2-subdev.c
 +++ b/drivers/media/v4l2-core/v4l2-subdev.c
-@@ -363,12 +363,8 @@ static int call_s_stream(struct v4l2_subdev *sd, int enable)
- 	 * The .s_stream() operation must never be called to start or stop an
- 	 * already started or stopped subdev. Catch offenders but don't return
- 	 * an error yet to avoid regressions.
--	 *
--	 * As .s_stream() is mutually exclusive with the .enable_streams() and
--	 * .disable_streams() operation, we can use the enabled_streams field
--	 * to store the subdev streaming state.
- 	 */
--	if (WARN_ON(!!sd->enabled_streams == !!enable))
-+	if (WARN_ON(sd->s_stream_enabled == !!enable))
- 		return 0;
+@@ -1925,37 +1925,43 @@ static int v4l2_subdev_enable_streams_fallback(struct v4l2_subdev *sd, u32 pad,
+ 					       u64 streams_mask)
+ {
+ 	struct device *dev = sd->entity.graph_obj.mdev->dev;
+-	unsigned int i;
+ 	int ret;
  
- 	ret = sd->ops->video->s_stream(sd, enable);
-@@ -379,7 +375,7 @@ static int call_s_stream(struct v4l2_subdev *sd, int enable)
+ 	/*
+ 	 * The subdev doesn't implement pad-based stream enable, fall back
+-	 * on the .s_stream() operation. This can only be done for subdevs that
+-	 * have a single source pad, as sd->enabled_streams is global to the
+-	 * subdev.
++	 * to the .s_stream() operation.
+ 	 */
+ 	if (!(sd->entity.pads[pad].flags & MEDIA_PAD_FL_SOURCE))
+ 		return -EOPNOTSUPP;
+ 
+-	for (i = 0; i < sd->entity.num_pads; ++i) {
+-		if (i != pad && sd->entity.pads[i].flags & MEDIA_PAD_FL_SOURCE)
+-			return -EOPNOTSUPP;
+-	}
++	/*
++	 * .s_stream() means there is no streams support, so the only allowed
++	 * stream is the implicit stream 0.
++	 */
++	if (streams_mask != BIT_ULL(0))
++		return -EOPNOTSUPP;
++
++	/*
++	 * We use a 64-bit bitmask for tracking enabled pads, so only subdevices
++	 * with 64 pads or less can be supported.
++	 */
++	if (pad >= sizeof(sd->enabled_pads) * BITS_PER_BYTE)
++		return -EOPNOTSUPP;
+ 
+-	if (sd->enabled_streams & streams_mask) {
+-		dev_dbg(dev, "set of streams %#llx already enabled on %s:%u\n",
+-			streams_mask, sd->entity.name, pad);
++	if (sd->enabled_pads & BIT_ULL(pad)) {
++		dev_dbg(dev, "pad %u already enabled on %s\n",
++			pad, sd->entity.name);
+ 		return -EALREADY;
  	}
  
- 	if (!ret) {
--		sd->enabled_streams = enable ? BIT(0) : 0;
-+		sd->s_stream_enabled = enable;
+-	/* Start streaming when the first streams are enabled. */
+-	if (!sd->enabled_streams) {
++	/* Start streaming when the first pad is enabled. */
++	if (!sd->enabled_pads) {
+ 		ret = v4l2_subdev_call(sd, video, s_stream, 1);
+ 		if (ret)
+ 			return ret;
+ 	}
  
- #if IS_REACHABLE(CONFIG_LEDS_CLASS)
- 		if (!IS_ERR_OR_NULL(sd->privacy_led)) {
+-	sd->enabled_streams |= streams_mask;
++	sd->enabled_pads |= BIT_ULL(pad);
+ 
+ 	return 0;
+ }
+@@ -2042,37 +2048,43 @@ static int v4l2_subdev_disable_streams_fallback(struct v4l2_subdev *sd, u32 pad,
+ 						u64 streams_mask)
+ {
+ 	struct device *dev = sd->entity.graph_obj.mdev->dev;
+-	unsigned int i;
+ 	int ret;
+ 
+ 	/*
+-	 * If the subdev doesn't implement pad-based stream enable, fall  back
+-	 * on the .s_stream() operation. This can only be done for subdevs that
+-	 * have a single source pad, as sd->enabled_streams is global to the
+-	 * subdev.
++	 * If the subdev doesn't implement pad-based stream enable, fall back
++	 * to the .s_stream() operation.
+ 	 */
+ 	if (!(sd->entity.pads[pad].flags & MEDIA_PAD_FL_SOURCE))
+ 		return -EOPNOTSUPP;
+ 
+-	for (i = 0; i < sd->entity.num_pads; ++i) {
+-		if (i != pad && sd->entity.pads[i].flags & MEDIA_PAD_FL_SOURCE)
+-			return -EOPNOTSUPP;
+-	}
++	/*
++	 * .s_stream() means there is no streams support, so the only allowed
++	 * stream is the implicit stream 0.
++	 */
++	if (streams_mask != BIT_ULL(0))
++		return -EOPNOTSUPP;
++
++	/*
++	 * We use a 64-bit bitmask for tracking enabled pads, so only subdevices
++	 * with 64 pads or less can be supported.
++	 */
++	if (pad >= sizeof(sd->enabled_pads) * BITS_PER_BYTE)
++		return -EOPNOTSUPP;
+ 
+-	if ((sd->enabled_streams & streams_mask) != streams_mask) {
+-		dev_dbg(dev, "set of streams %#llx already disabled on %s:%u\n",
+-			streams_mask, sd->entity.name, pad);
++	if (!(sd->enabled_pads & BIT_ULL(pad))) {
++		dev_dbg(dev, "pad %u already disabled on %s\n",
++			pad, sd->entity.name);
+ 		return -EALREADY;
+ 	}
+ 
+ 	/* Stop streaming when the last streams are disabled. */
+-	if (!(sd->enabled_streams & ~streams_mask)) {
++	if (!(sd->enabled_pads & ~BIT_ULL(pad))) {
+ 		ret = v4l2_subdev_call(sd, video, s_stream, 0);
+ 		if (ret)
+ 			return ret;
+ 	}
+ 
+-	sd->enabled_streams &= ~streams_mask;
++	sd->enabled_pads &= ~BIT_ULL(pad);
+ 
+ 	return 0;
+ }
 diff --git a/include/media/v4l2-subdev.h b/include/media/v4l2-subdev.h
-index ab2a7ef61d420..ee570dfbd791d 100644
+index ee570dfbd791d..0a8d75b009ea2 100644
 --- a/include/media/v4l2-subdev.h
 +++ b/include/media/v4l2-subdev.h
-@@ -1042,6 +1042,8 @@ struct v4l2_subdev_platform_data {
-  *		     v4l2_subdev_enable_streams() and
-  *		     v4l2_subdev_disable_streams() helper functions for fallback
-  *		     cases.
-+ * @s_stream_enabled: Tracks whether streaming has been enabled with s_stream.
-+ *                    This is only for call_s_stream() internal use.
+@@ -1038,10 +1038,9 @@ struct v4l2_subdev_platform_data {
+  * @active_state: Active state for the subdev (NULL for subdevs tracking the
+  *		  state internally). Initialized by calling
+  *		  v4l2_subdev_init_finalize().
+- * @enabled_streams: Bitmask of enabled streams used by
+- *		     v4l2_subdev_enable_streams() and
+- *		     v4l2_subdev_disable_streams() helper functions for fallback
+- *		     cases.
++ * @enabled_pads: Bitmask of enabled pads used by v4l2_subdev_enable_streams()
++ *		  and v4l2_subdev_disable_streams() helper functions for
++ *		  fallback cases.
+  * @s_stream_enabled: Tracks whether streaming has been enabled with s_stream.
+  *                    This is only for call_s_stream() internal use.
   *
-  * Each instance of a subdev driver should create this struct, either
-  * stand-alone or embedded in a larger struct.
-@@ -1090,6 +1092,7 @@ struct v4l2_subdev {
+@@ -1091,7 +1090,7 @@ struct v4l2_subdev {
+ 	 * doesn't support it.
  	 */
  	struct v4l2_subdev_state *active_state;
- 	u64 enabled_streams;
-+	bool s_stream_enabled;
+-	u64 enabled_streams;
++	u64 enabled_pads;
+ 	bool s_stream_enabled;
  };
- 
  
 -- 
 2.39.5
