@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EEF155A4E;
-	Tue, 29 Apr 2025 18:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0C1155A4E;
+	Tue, 29 Apr 2025 18:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950600; cv=none; b=p/5OT1tvrctpxuYjuSn40SNvDkK1tYpm9e9ear2C2lBf73PnFTyOi38NzM2aEnWh3zaJA/Y4w/DLYMQIifH1pvKByfpzGcMW2T1g0/WwFVSETO4PuLVQt87woZ51DthTw/XenQn7tMWjrNwsYGBrLIBZ+Ry+Os8s21KbQCjZ6M4=
+	t=1745950603; cv=none; b=GTIfMQrSagMGzG7U0YqH3IMyc+Ko+gQgEZTuEdXADEGHFhs9JXYpRWEI4Bn/B/8rkgKLt+e24OpixOdDXh8ZF9ls1seuQCx5tqCH7vm55G5tICAKsjmq6WmuCLQAVi9IUgT0q/5DRXyeY9ha974/I/erFM/PYrpZ+P2fB513DxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950600; c=relaxed/simple;
-	bh=IaHjsmPdK48WtS6hYbDpC6oMv3kIQhgvf14XappBuAQ=;
+	s=arc-20240116; t=1745950603; c=relaxed/simple;
+	bh=mhCxIKxSGn8nAAfahxPLo7uc7rnEYEVEkIKF36WimMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BHkQTMctfJsVsNfpNWSgmVUj4YZ4Q36fiZnz08bHqaenfupmKpoJI3KaQ5bGHkdigi5BAFpqPR0ghhE95NnxB0j6Z78aFWlhE1UWsl20PhTleyX3RcQNXhrqGBMEYe0YJW+XaPe8km3dkDtfxeowN7xI8QXB/z/GT8Bp0tdXYF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwvxRSzS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q8MKIYjT/WLkwIuloopuHQgd1ilLIOXYh13c31/Q7AyXI6ean2IjEvAqNihbbxR7/7CmBe8TG5EyoltGpE9v4oyCHjkpkBlLoeA/RNGDNWSXw52LXfvuPKT2jEma75D6WNOagL/if9GscR0uku+3QPzI4m94EfsZ3oVxb35vVas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X69xrM+T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwvxRSzS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E60C4CEE3;
-	Tue, 29 Apr 2025 18:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X69xrM+T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A46C4CEE3;
+	Tue, 29 Apr 2025 18:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950600;
-	bh=IaHjsmPdK48WtS6hYbDpC6oMv3kIQhgvf14XappBuAQ=;
+	s=korg; t=1745950603;
+	bh=mhCxIKxSGn8nAAfahxPLo7uc7rnEYEVEkIKF36WimMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iwvxRSzSTUDhdUz103LQrt1FHSXkrCjN3JDZFcxlI7Xy5nUwmVhh6479OemHz8w07
-	 7flpZqHmcjT5LAO3DFEZLfKagIBUo0dXFqpeNsztUmHZKKZ/Ubaasu3BLEEHGtMGu3
-	 vily8SgkRD8DFlTEKLvjEyY8MNlRge5DHaY07lm0=
+	b=X69xrM+TFKCr5TH/ljv7YLOBprbjiq1bthcPJSYHcO0z1++vi3r6PozqObZl6eP5C
+	 c7+ytaP6vnhC0RlgRZzk8q6WMqi9Y4y5HXuVtI+s1Oxbh43H1ivvUNP3CnjV+rDW73
+	 Xw+SKhgTKyzat5YcMGxzEdE8W6KntT/20FxYgRUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Young <admiyo@os.amperecomputing.com>,
-	Robbie King <robbiek@xsightlabs.com>,
-	Huisong Li <lihuisong@huawei.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	kernel test robot <lkp@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Jon Mason <jdmason@kudzu.us>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 129/204] mailbox: pcc: Fix the possible race in updation of chan_in_use flag
-Date: Tue, 29 Apr 2025 18:43:37 +0200
-Message-ID: <20250429161104.708403631@linuxfoundation.org>
+Subject: [PATCH 6.6 147/204] ntb: reduce stack usage in idt_scan_mws
+Date: Tue, 29 Apr 2025 18:43:55 +0200
+Message-ID: <20250429161105.437877000@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -54,95 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huisong Li <lihuisong@huawei.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 9779d45c749340ab461d595c1a4a664cb28f3007 ]
+[ Upstream commit aff12700b8dd7422bfe2277696e192af4df9de8f ]
 
-The function mbox_chan_received_data() calls the Rx callback of the
-mailbox client driver. The callback might set chan_in_use flag from
-pcc_send_data(). This flag's status determines whether the PCC channel
-is in use.
+idt_scan_mws() puts a large fixed-size array on the stack and copies
+it into a smaller dynamically allocated array at the end. On 32-bit
+targets, the fixed size can easily exceed the warning limit for
+possible stack overflow:
 
-However, there is a potential race condition where chan_in_use is
-updated incorrectly due to concurrency between the interrupt handler
-(pcc_mbox_irq()) and the command sender(pcc_send_data()).
+drivers/ntb/hw/idt/ntb_hw_idt.c:1041:27: error: stack frame size (1032) exceeds limit (1024) in 'idt_scan_mws' [-Werror,-Wframe-larger-than]
 
-The 'chan_in_use' flag of a channel is set to true after sending a
-command. And the flag of the new command may be cleared erroneous by
-the interrupt handler afer mbox_chan_received_data() returns,
+Change it to instead just always use dynamic allocation for the
+array from the start. It's too big for the stack, but not actually
+all that much for a permanent allocation.
 
-As a result, the interrupt being level triggered can't be cleared in
-pcc_mbox_irq() and it will be disabled after the number of handled times
-exceeds the specified value. The error log is as follows:
-
-  |  kunpeng_hccs HISI04B2:00: PCC command executed timeout!
-  |  kunpeng_hccs HISI04B2:00: get port link status info failed, ret = -110
-  |  irq 13: nobody cared (try booting with the "irqpoll" option)
-  |  Call trace:
-  |   dump_backtrace+0x0/0x210
-  |   show_stack+0x1c/0x2c
-  |   dump_stack+0xec/0x130
-  |   __report_bad_irq+0x50/0x190
-  |   note_interrupt+0x1e4/0x260
-  |   handle_irq_event+0x144/0x17c
-  |   handle_fasteoi_irq+0xd0/0x240
-  |   __handle_domain_irq+0x80/0xf0
-  |   gic_handle_irq+0x74/0x2d0
-  |   el1_irq+0xbc/0x140
-  |   mnt_clone_write+0x0/0x70
-  |   file_update_time+0xcc/0x160
-  |   fault_dirty_shared_page+0xe8/0x150
-  |   do_shared_fault+0x80/0x1d0
-  |   do_fault+0x118/0x1a4
-  |   handle_pte_fault+0x154/0x230
-  |   __handle_mm_fault+0x1ac/0x390
-  |   handle_mm_fault+0xf0/0x250
-  |   do_page_fault+0x184/0x454
-  |   do_translation_fault+0xac/0xd4
-  |   do_mem_abort+0x44/0xb4
-  |   el0_da+0x40/0x74
-  |   el0_sync_handler+0x60/0xb4
-  |   el0_sync+0x168/0x180
-  |  handlers:
-  |   pcc_mbox_irq
-  |  Disabling IRQ #13
-
-To solve this issue, pcc_mbox_irq() must clear 'chan_in_use' flag before
-the call to mbox_chan_received_data().
-
-Tested-by: Adam Young <admiyo@os.amperecomputing.com>
-Tested-by: Robbie King <robbiek@xsightlabs.com>
-Signed-off-by: Huisong Li <lihuisong@huawei.com>
-(sudeep.holla: Minor updates to the subject, commit message and comment)
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/all/202205111109.PiKTruEj-lkp@intel.com/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/pcc.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/ntb/hw/idt/ntb_hw_idt.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
-index 82102a4c5d688..8fd4d0f79b090 100644
---- a/drivers/mailbox/pcc.c
-+++ b/drivers/mailbox/pcc.c
-@@ -333,10 +333,16 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
- 	if (pcc_chan_reg_read_modify_write(&pchan->plat_irq_ack))
- 		return IRQ_NONE;
+diff --git a/drivers/ntb/hw/idt/ntb_hw_idt.c b/drivers/ntb/hw/idt/ntb_hw_idt.c
+index 48823b53ede3e..22aaa60d2d384 100644
+--- a/drivers/ntb/hw/idt/ntb_hw_idt.c
++++ b/drivers/ntb/hw/idt/ntb_hw_idt.c
+@@ -1041,7 +1041,7 @@ static inline char *idt_get_mw_name(enum idt_mw_type mw_type)
+ static struct idt_mw_cfg *idt_scan_mws(struct idt_ntb_dev *ndev, int port,
+ 				       unsigned char *mw_cnt)
+ {
+-	struct idt_mw_cfg mws[IDT_MAX_NR_MWS], *ret_mws;
++	struct idt_mw_cfg *mws;
+ 	const struct idt_ntb_bar *bars;
+ 	enum idt_mw_type mw_type;
+ 	unsigned char widx, bidx, en_cnt;
+@@ -1049,6 +1049,11 @@ static struct idt_mw_cfg *idt_scan_mws(struct idt_ntb_dev *ndev, int port,
+ 	int aprt_size;
+ 	u32 data;
  
-+	/*
-+	 * Clear this flag after updating interrupt ack register and just
-+	 * before mbox_chan_received_data() which might call pcc_send_data()
-+	 * where the flag is set again to start new transfer. This is
-+	 * required to avoid any possible race in updatation of this flag.
-+	 */
-+	pchan->chan_in_use = false;
- 	mbox_chan_received_data(chan, NULL);
++	mws = devm_kcalloc(&ndev->ntb.pdev->dev, IDT_MAX_NR_MWS,
++			   sizeof(*mws), GFP_KERNEL);
++	if (!mws)
++		return ERR_PTR(-ENOMEM);
++
+ 	/* Retrieve the array of the BARs registers */
+ 	bars = portdata_tbl[port].bars;
  
- 	check_and_ack(pchan, chan);
--	pchan->chan_in_use = false;
+@@ -1103,16 +1108,7 @@ static struct idt_mw_cfg *idt_scan_mws(struct idt_ntb_dev *ndev, int port,
+ 		}
+ 	}
  
- 	return IRQ_HANDLED;
+-	/* Allocate memory for memory window descriptors */
+-	ret_mws = devm_kcalloc(&ndev->ntb.pdev->dev, *mw_cnt, sizeof(*ret_mws),
+-			       GFP_KERNEL);
+-	if (!ret_mws)
+-		return ERR_PTR(-ENOMEM);
+-
+-	/* Copy the info of detected memory windows */
+-	memcpy(ret_mws, mws, (*mw_cnt)*sizeof(*ret_mws));
+-
+-	return ret_mws;
++	return mws;
  }
+ 
+ /*
 -- 
 2.39.5
 
