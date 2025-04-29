@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3325427453;
-	Tue, 29 Apr 2025 16:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA9F23FC7D;
+	Tue, 29 Apr 2025 16:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945149; cv=none; b=OP6x6wAkvmQj8e+JkCtTn/ZA6TradU9Zrv+Dp7z/vL6yjS4LUoi9CtCu/8kIvIbgmzJ/N3yYKzDOdbbA7r2Ne/B37BUv3s3s2/CdVA0QfWGzV2Bf8Jerc5kUY/KB9DZerF7XpPnVdRaJ4zJ5OuXz+MWPWipjN2y8nRvcVkqDAXw=
+	t=1745945152; cv=none; b=lRxMZx8puIQXtCWaq+oEHST8le1U1lzqtdfikE1TcOqNcNXs17W6/PYap1pP+MN2h0oKuXTg5htQo9N/tRSdGrHWtahOUfj2yavxAB9jZs5j9NbmUmmDbW5cusQgtX0Cd8xixhWRfDRvLHo11rOLPcHJS3TmMDXTn/RRoOVXmbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945149; c=relaxed/simple;
-	bh=XEq4zHJmTo243ECKWgdJi8bdmeZnlF2uDDTXWEPbPK0=;
+	s=arc-20240116; t=1745945152; c=relaxed/simple;
+	bh=2KEZiZF3KNQCh00/tomlD+4EmvOVFQ5SLE85YDO9rlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mHx20d+Otgz2lf6uuaT9xVylU6T3mWkApY+Pk8eXaZ3VAfi6oY+iwEQ42M/suXcOVYOkB/+F8I7ijEX5vkYrL/0dOvZpq+Loqm9nSTHTlcZqRMdzWBGFQCoFtYYYxOVuL8Eglt57LP/z2hlUq2z7pLcumdawBHDjg3zFywW5pSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPiAFHM/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NecZkEKE7uw8mpHyrCJGiNym6DPiKmHJkOvLlImIt4+2z15WjMT7GxsSAn8TD6XUA2+3aAKcsXBf7/GCUfOXF0NB0KDL3KvjFoBdA1uIL2Q2OM7QtL67aqeMUvs0CBlwXWssoAUdu2BhqlBmXI/twfcexAl+9OQ2FDHsETOq6VU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z75DLbkV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPiAFHM/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91F42C4CEE9;
-	Tue, 29 Apr 2025 16:45:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z75DLbkV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BCCCC4CEE3;
+	Tue, 29 Apr 2025 16:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945148;
-	bh=XEq4zHJmTo243ECKWgdJi8bdmeZnlF2uDDTXWEPbPK0=;
+	s=korg; t=1745945152;
+	bh=2KEZiZF3KNQCh00/tomlD+4EmvOVFQ5SLE85YDO9rlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NPiAFHM/33HlzPVhfVo+vF5M6L0ddeuXXQA/bjC1GFcUK/JrxS8PUqCiTVr+fNIFN
-	 u0c6cOfh02V/9HFp5veCFY+VHHRFQwgG8h4BlTSHFDc7jeubKW2W08ZlK185t1wQIG
-	 284FEf3sm51lmemXikOwI3+EK+N3xQU5MP/nDkak=
+	b=Z75DLbkVda8Ak6bvVOZjAPeHZRd/M2fm5CH4AHuz03ukNa+Zo+8QVB4nBT5gh6/Fw
+	 QmVyOaPpcRMMTDl+yeMoFwABjs44+lfN+FNKNw5ajEThGMtcsQNnuRbxIHrNOT/rb9
+	 Mt/ykwPOFjubP3S4whAmxIxmGMjz1TE4J7hpEulE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rand Deeb <rand.sec96@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 018/179] fs/jfs: Prevent integer overflow in AG size calculation
-Date: Tue, 29 Apr 2025 18:39:19 +0200
-Message-ID: <20250429161050.145691342@linuxfoundation.org>
+Subject: [PATCH 5.4 002/179] tipc: fix memory leak in tipc_link_xmit
+Date: Tue, 29 Apr 2025 18:39:03 +0200
+Message-ID: <20250429161049.491821627@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -51,54 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rand Deeb <rand.sec96@gmail.com>
+From: Tung Nguyen <tung.quang.nguyen@est.tech>
 
-[ Upstream commit 7fcbf789629cdb9fbf4e2172ce31136cfed11e5e ]
+[ Upstream commit 69ae94725f4fc9e75219d2d69022029c5b24bc9a ]
 
-The JFS filesystem calculates allocation group (AG) size using 1 <<
-l2agsize in dbExtendFS(). When l2agsize exceeds 31 (possible with >2TB
-aggregates on 32-bit systems), this 32-bit shift operation causes undefined
-behavior and improper AG sizing.
+In case the backlog transmit queue for system-importance messages is overloaded,
+tipc_link_xmit() returns -ENOBUFS but the skb list is not purged. This leads to
+memory leak and failure when a skb is allocated.
 
-On 32-bit architectures:
-- Left-shifting 1 by 32+ bits results in 0 due to integer overflow
-- This creates invalid AG sizes (0 or garbage values) in
-sbi->bmap->db_agsize
-- Subsequent block allocations would reference invalid AG structures
-- Could lead to:
-  - Filesystem corruption during extend operations
-  - Kernel crashes due to invalid memory accesses
-  - Security vulnerabilities via malformed on-disk structures
+This commit fixes this issue by purging the skb list before tipc_link_xmit()
+returns.
 
-Fix by casting to s64 before shifting:
-bmp->db_agsize = (s64)1 << l2agsize;
-
-This ensures 64-bit arithmetic even on 32-bit architectures. The cast
-matches the data type of db_agsize (s64) and follows similar patterns in
-JFS block calculation code.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Fixes: 365ad353c256 ("tipc: reduce risk of user starvation during link congestion")
+Signed-off-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250403092431.514063-1-tung.quang.nguyen@est.tech
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tipc/link.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 3bc304d4886e6..d4e26744b2005 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -3465,7 +3465,7 @@ int dbExtendFS(struct inode *ipbmap, s64 blkno,	s64 nblocks)
- 	oldl2agsize = bmp->db_agl2size;
- 
- 	bmp->db_agl2size = l2agsize;
--	bmp->db_agsize = 1 << l2agsize;
-+	bmp->db_agsize = (s64)1 << l2agsize;
- 
- 	/* compute new number of AG */
- 	agno = bmp->db_numag;
+diff --git a/net/tipc/link.c b/net/tipc/link.c
+index b653d16ab21f7..2052649fb537e 100644
+--- a/net/tipc/link.c
++++ b/net/tipc/link.c
+@@ -969,6 +969,7 @@ int tipc_link_xmit(struct tipc_link *l, struct sk_buff_head *list,
+ 	if (unlikely(l->backlog[imp].len >= l->backlog[imp].limit)) {
+ 		if (imp == TIPC_SYSTEM_IMPORTANCE) {
+ 			pr_warn("%s<%s>, link overflow", link_rst_msg, l->name);
++			__skb_queue_purge(list);
+ 			return -ENOBUFS;
+ 		}
+ 		rc = link_schedule_user(l, hdr);
 -- 
 2.39.5
 
