@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F58424E016;
-	Tue, 29 Apr 2025 17:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961B2216605;
+	Tue, 29 Apr 2025 17:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946979; cv=none; b=mKswlGT12oBWKiNYA/G8reweom0c7gA74wLx03rFyfeugDRjxYLtahVEZ2WCBBe0Crp7Fq0KrsmOTIENBU1vAQ7PXDwRktDisPbpN6YK6uR4t8qi08OpUT48AFER0Ohyf6H4EkF+ZpFAAJ9e/YR1Wugc5br7mjyBz7eaSXX76YA=
+	t=1745946982; cv=none; b=idX4zIwzlybWKg8gu4Yg349SRNhPkUP9Xh8MhIlPvmUt+GdE1Bd/YDRqI4QTG9PFCYdfBgS4wp8xzk0bdlyM68TfNT0S60nzgwjzAltSPMsCZDG5hYdY9D7e7xLFRIT99pjs9B6yPKaRyZBXRQl8xUaeTGpQRSvaCx0Tz4PO6T4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946979; c=relaxed/simple;
-	bh=4EvJ1L4HPkrsILKfwcWPTTirHWID7SCM1M8wxwyAviU=;
+	s=arc-20240116; t=1745946982; c=relaxed/simple;
+	bh=T3ma/iRZ/D2EQz5Nkpy2kMRVMJ4Fvqd2QthQNncjcDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XzvkqXz21aRaFKobLb+L3yzzzJbpfQn/J0B1llCjhynxycKZOkdKu6soEBOoECR+ZX5wVKZXdDP103qakbp2sUdWsluKrzWfaPpe/PHZorgQoV7ihKeZGSpe2saBMnynKXgIr0LM1x9PG4tdURpBeijxM5rUxnFObPQgYe0OSVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DYIEwWbG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VoqoYHTSEMw7yWdyOcjog2YBolqg9OhNQthnqnbb8aXUazdz186SiZzgZtl461J4HKh6rm/+CrxbM2CGTEkBoJZWuVbAZN/JUcpVzIu0zJjqIGiPsW6gvKreyWCO+k/ZehzcKwqifAs0U+kQr/sKA7udJIuRpkKEb1ytcvW6yLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NMZvrvD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DYIEwWbG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1BCEC4CEE3;
-	Tue, 29 Apr 2025 17:16:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NMZvrvD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB35C4CEE9;
+	Tue, 29 Apr 2025 17:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946979;
-	bh=4EvJ1L4HPkrsILKfwcWPTTirHWID7SCM1M8wxwyAviU=;
+	s=korg; t=1745946982;
+	bh=T3ma/iRZ/D2EQz5Nkpy2kMRVMJ4Fvqd2QthQNncjcDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DYIEwWbGlK2Z9H41tP1WLvCZH6HGwCwUiqpHWkd2oJ+h6/pss6jHztoS66cpCBtAV
-	 rmPeCw2LKj0OJ9GT4WIe74XyR23slrxUoqD2QyKBWOTRtyavpZWNsvFxow+f+p0U+7
-	 lbekuqzVIMjnhLG1rfNhQWLjtaO+ZVHofbKwmX9M=
+	b=2NMZvrvD0vliatIAZDH6eqlNmMiAg5yz9ovW0PxkhPyxPeZ2VmTqw1Ozhs+GdE3y/
+	 OtGzBgkr0hsJ/bj19Iw1oVzN2OrcU1/ijefObWxadHU4UcH8yOsMckzKJrA6UGn6uy
+	 6obO1R/sq6kU4DjfZDwHIEjNWOdOvRP4GSdedcC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaixin Wang <kxwang23@m.fudan.edu.cn>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 5.10 101/286] HSI: ssi_protocol: Fix use after free vulnerability in ssi_protocol Driver Due to Race Condition
-Date: Tue, 29 Apr 2025 18:40:05 +0200
-Message-ID: <20250429161112.012123544@linuxfoundation.org>
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 102/286] wifi: at76c50x: fix use after free access in at76_disconnect
+Date: Tue, 29 Apr 2025 18:40:06 +0200
+Message-ID: <20250429161112.052038931@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -51,49 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaixin Wang <kxwang23@m.fudan.edu.cn>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-commit e3f88665a78045fe35c7669d2926b8d97b892c11 upstream.
+[ Upstream commit 27c7e63b3cb1a20bb78ed4a36c561ea4579fd7da ]
 
-In the ssi_protocol_probe() function, &ssi->work is bound with
-ssip_xmit_work(), In ssip_pn_setup(), the ssip_pn_xmit() function
-within the ssip_pn_ops structure is capable of starting the
-work.
+The memory pointed to by priv is freed at the end of at76_delete_device
+function (using ieee80211_free_hw). But the code then accesses the udev
+field of the freed object to put the USB device. This may also lead to a
+memory leak of the usb device. Fix this by using udev from interface.
 
-If we remove the module which will call ssi_protocol_remove()
-to make a cleanup, it will free ssi through kfree(ssi),
-while the work mentioned above will be used. The sequence
-of operations that may lead to a UAF bug is as follows:
-
-CPU0                                    CPU1
-
-                        | ssip_xmit_work
-ssi_protocol_remove     |
-kfree(ssi);             |
-                        | struct hsi_client *cl = ssi->cl;
-                        | // use ssi
-
-Fix it by ensuring that the work is canceled before proceeding
-with the cleanup in ssi_protocol_remove().
-
-Signed-off-by: Kaixin Wang <kxwang23@m.fudan.edu.cn>
-Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240918120749.1730-1-kxwang23@m.fudan.edu.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 29e20aa6c6af ("at76c50x-usb: fix use after free on failure path in at76_probe()")
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Link: https://patch.msgid.link/20250330103110.44080-1-abdun.nihaal@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hsi/clients/ssi_protocol.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/atmel/at76c50x-usb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hsi/clients/ssi_protocol.c
-+++ b/drivers/hsi/clients/ssi_protocol.c
-@@ -403,6 +403,7 @@ static void ssip_reset(struct hsi_client
- 	del_timer(&ssi->rx_wd);
- 	del_timer(&ssi->tx_wd);
- 	del_timer(&ssi->keep_alive);
-+	cancel_work_sync(&ssi->work);
- 	ssi->main_state = 0;
- 	ssi->send_state = 0;
- 	ssi->recv_state = 0;
+diff --git a/drivers/net/wireless/atmel/at76c50x-usb.c b/drivers/net/wireless/atmel/at76c50x-usb.c
+index 4042578000331..706de33d0ed49 100644
+--- a/drivers/net/wireless/atmel/at76c50x-usb.c
++++ b/drivers/net/wireless/atmel/at76c50x-usb.c
+@@ -2553,7 +2553,7 @@ static void at76_disconnect(struct usb_interface *interface)
+ 
+ 	wiphy_info(priv->hw->wiphy, "disconnecting\n");
+ 	at76_delete_device(priv);
+-	usb_put_dev(priv->udev);
++	usb_put_dev(interface_to_usbdev(interface));
+ 	dev_info(&interface->dev, "disconnected\n");
+ }
+ 
+-- 
+2.39.5
+
 
 
