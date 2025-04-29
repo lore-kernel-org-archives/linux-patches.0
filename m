@@ -1,55 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1372524C098;
-	Tue, 29 Apr 2025 18:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5349125485A;
+	Tue, 29 Apr 2025 18:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745950241; cv=none; b=EzvJb3znO/P+jUnmWIDYLTNzsAVQjgkYeeadzmhzVAhAnjoMz6jBvK5s3FpZYu+cUhj+EMCLHH5tfCan/QSXmsr2b/I+rLqJa+cpsIZo8Sr3cqYRwFLrivb+IMl+ofvRINNIWS875OKfXcWl0ySeFsnw0EXw79ofkL8Faq+mQYE=
+	t=1745950244; cv=none; b=XKKR1U5uroZz4Sp3XX+vp26LpsXPbjyom+FVur2kU+0aV2jYHLN3SHuT49cphniwrr5pdhVZPe2Zh72qGezmk1nsNrjthE+/kngIXqZnL5Ou0gubgE/ttThrUG30UN5hVxstJnedq5FGUGMF1q0AnfDlfc2XRaxIXiGCvwjgtds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745950241; c=relaxed/simple;
-	bh=+idx8h2VoiPk4i8zL2KeW1otE3q0meyKn/nRLuapqR0=;
+	s=arc-20240116; t=1745950244; c=relaxed/simple;
+	bh=upv3//YFF/aP2o7DMEopK9YTeSQ982HhFfVryj6cHIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=InxFnoVJiJrXI2MyWuPG6/d/AGnN3XomhgyIVIKs6xFripoK32xY6bOO/IsW5jND7d0JRdkj0vTOiOsY8gz0eKShat5+qltxbpiXsBAwlVG/Y/N3v3TuCMZNHUJ6xQxt2cRDu0NgRpphka9jGjXNnD2QC+tOgYov1Z0KLY7HjAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lfwe2Zhk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sG3uf/KlDx9ZhzCv9iQaW8sq/nIpttv4UH0ud18zpl1Ymz3MbsyDPG3U2NniX0WeustqKD1535UPtsRO2VUs350K3G9ynQ7wh/Ferbm0kGzxFg/5Dr5GgmzMKs3Ql5+324EIsPvVVpveRwvU9g+acoO5QrpzT85/G2fYyOKd1is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+HQvo29; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lfwe2Zhk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BE84C4CEE3;
-	Tue, 29 Apr 2025 18:10:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+HQvo29"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D5CC4CEE9;
+	Tue, 29 Apr 2025 18:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745950240;
-	bh=+idx8h2VoiPk4i8zL2KeW1otE3q0meyKn/nRLuapqR0=;
+	s=korg; t=1745950243;
+	bh=upv3//YFF/aP2o7DMEopK9YTeSQ982HhFfVryj6cHIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lfwe2Zhk1sZnFd5PSNNrxU2E8+N5CUoHzS1SWeaYEzESoGxDMdlFpeyWyUkjr8rnf
-	 Rrdk0XQ2HVAtu4A0ehcKGFJQg0LKhSHSgzBEo9Fx5O/oEuVCgT7LKMqLdndzTe9EtH
-	 uFNMRmiR4XJVoYDTILr76HGbIRv+o0kURBVthgCU=
+	b=0+HQvo29irVEwas+Y8S3ttdXs6q8qk0gnxaz7oyBYzecQJ35yhZ+pPTeMf8yECpU4
+	 2Qez7APeLg/bloMt98CzN/6ecqvLuvVs+wUnp03kExqJecCKmTpSsFaufiFZcufCZP
+	 d/v8HRuz40YAMwwtjBTZ37iBI7f0fSggl606GMZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tony Luck <tony.luck@intel.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Ruidong Tian <tianruidong@linux.alibaba.com>,
-	Thomas Gleinxer <tglx@linutronix.de>,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	Jane Chu <jane.chu@oracle.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/204] x86/mce: use is_copy_from_user() to determine copy-from-user context
-Date: Tue, 29 Apr 2025 18:41:32 +0200
-Message-ID: <20250429161059.579736213@linuxfoundation.org>
+Subject: [PATCH 6.6 005/204] tracing: Add __string_len() example
+Date: Tue, 29 Apr 2025 18:41:33 +0200
+Message-ID: <20250429161059.623274557@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
 References: <20250429161059.396852607@linuxfoundation.org>
@@ -68,213 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 1a15bb8303b6b104e78028b6c68f76a0d4562134 ]
+[ Upstream commit dd6ae6d90a84d4bec49887c7aa2b22aa1c8b2897 ]
 
-Patch series "mm/hwpoison: Fix regressions in memory failure handling",
-v4.
+There's no example code that uses __string_len(), and since the sample
+code is used for testing the event logic, add a use case.
 
-## 1. What am I trying to do:
+Link: https://lore.kernel.org/linux-trace-kernel/20240223152827.5f9f78e2@gandalf.local.home
 
-This patchset resolves two critical regressions related to memory failure
-handling that have appeared in the upstream kernel since version 5.17, as
-compared to 5.10 LTS.
-
-    - copyin case: poison found in user page while kernel copying from user space
-    - instr case: poison found while instruction fetching in user space
-
-## 2. What is the expected outcome and why
-
-- For copyin case:
-
-Kernel can recover from poison found where kernel is doing get_user() or
-copy_from_user() if those places get an error return and the kernel return
--EFAULT to the process instead of crashing.  More specifily, MCE handler
-checks the fixup handler type to decide whether an in kernel #MC can be
-recovered.  When EX_TYPE_UACCESS is found, the PC jumps to recovery code
-specified in _ASM_EXTABLE_FAULT() and return a -EFAULT to user space.
-
-- For instr case:
-
-If a poison found while instruction fetching in user space, full recovery
-is possible.  User process takes #PF, Linux allocates a new page and fills
-by reading from storage.
-
-## 3. What actually happens and why
-
-- For copyin case: kernel panic since v5.17
-
-Commit 4c132d1d844a ("x86/futex: Remove .fixup usage") introduced a new
-extable fixup type, EX_TYPE_EFAULT_REG, and later patches updated the
-extable fixup type for copy-from-user operations, changing it from
-EX_TYPE_UACCESS to EX_TYPE_EFAULT_REG.  It breaks previous EX_TYPE_UACCESS
-handling when posion found in get_user() or copy_from_user().
-
-- For instr case: user process is killed by a SIGBUS signal due to #CMCI
-  and #MCE race
-
-When an uncorrected memory error is consumed there is a race between the
-CMCI from the memory controller reporting an uncorrected error with a UCNA
-signature, and the core reporting and SRAR signature machine check when
-the data is about to be consumed.
-
-### Background: why *UN*corrected errors tied to *C*MCI in Intel platform [1]
-
-Prior to Icelake memory controllers reported patrol scrub events that
-detected a previously unseen uncorrected error in memory by signaling a
-broadcast machine check with an SRAO (Software Recoverable Action
-Optional) signature in the machine check bank.  This was overkill because
-it's not an urgent problem that no core is on the verge of consuming that
-bad data.  It's also found that multi SRAO UCE may cause nested MCE
-interrupts and finally become an IERR.
-
-Hence, Intel downgrades the machine check bank signature of patrol scrub
-from SRAO to UCNA (Uncorrected, No Action required), and signal changed to
-#CMCI.  Just to add to the confusion, Linux does take an action (in
-uc_decode_notifier()) to try to offline the page despite the UC*NA*
-signature name.
-
-### Background: why #CMCI and #MCE race when poison is consuming in
-    Intel platform [1]
-
-Having decided that CMCI/UCNA is the best action for patrol scrub errors,
-the memory controller uses it for reads too.  But the memory controller is
-executing asynchronously from the core, and can't tell the difference
-between a "real" read and a speculative read.  So it will do CMCI/UCNA if
-an error is found in any read.
-
-Thus:
-
-1) Core is clever and thinks address A is needed soon, issues a
-   speculative read.
-
-2) Core finds it is going to use address A soon after sending the read
-   request
-
-3) The CMCI from the memory controller is in a race with MCE from the
-   core that will soon try to retire the load from address A.
-
-Quite often (because speculation has got better) the CMCI from the memory
-controller is delivered before the core is committed to the instruction
-reading address A, so the interrupt is taken, and Linux offlines the page
-(marking it as poison).
-
-## Why user process is killed for instr case
-
-Commit 046545a661af ("mm/hwpoison: fix error page recovered but reported
-"not recovered"") tries to fix noise message "Memory error not recovered"
-and skips duplicate SIGBUSs due to the race.  But it also introduced a bug
-that kill_accessing_process() return -EHWPOISON for instr case, as result,
-kill_me_maybe() send a SIGBUS to user process.
-
-# 4. The fix, in my opinion, should be:
-
-- For copyin case:
-
-The key point is whether the error context is in a read from user memory.
-We do not care about the ex-type if we know its a MOV reading from
-userspace.
-
-is_copy_from_user() return true when both of the following two checks are
-true:
-
-    - the current instruction is copy
-    - source address is user memory
-
-If copy_user is true, we set
-
-m->kflags |= MCE_IN_KERNEL_COPYIN | MCE_IN_KERNEL_RECOV;
-
-Then do_machine_check() will try fixup_exception() first.
-
-- For instr case: let kill_accessing_process() return 0 to prevent a SIGBUS.
-
-- For patch 3:
-
-The return value of memory_failure() is quite important while discussed
-instr case regression with Tony and Miaohe for patch 2, so add comment
-about the return value.
-
-This patch (of 3):
-
-Commit 4c132d1d844a ("x86/futex: Remove .fixup usage") introduced a new
-extable fixup type, EX_TYPE_EFAULT_REG, and commit 4c132d1d844a
-("x86/futex: Remove .fixup usage") updated the extable fixup type for
-copy-from-user operations, changing it from EX_TYPE_UACCESS to
-EX_TYPE_EFAULT_REG.  The error context for copy-from-user operations no
-longer functions as an in-kernel recovery context.  Consequently, the
-error context for copy-from-user operations no longer functions as an
-in-kernel recovery context, resulting in kernel panics with the message:
-"Machine check: Data load in unrecoverable area of kernel."
-
-To address this, it is crucial to identify if an error context involves a
-read operation from user memory.  The function is_copy_from_user() can be
-utilized to determine:
-
-    - the current operation is copy
-    - when reading user memory
-
-When these conditions are met, is_copy_from_user() will return true,
-confirming that it is indeed a direct copy from user memory.  This check
-is essential for correctly handling the context of errors in these
-operations without relying on the extable fixup types that previously
-allowed for in-kernel recovery.
-
-So, use is_copy_from_user() to determine if a context is copy user directly.
-
-Link: https://lkml.kernel.org/r/20250312112852.82415-1-xueshuai@linux.alibaba.com
-Link: https://lkml.kernel.org/r/20250312112852.82415-2-xueshuai@linux.alibaba.com
-Fixes: 4c132d1d844a ("x86/futex: Remove .fixup usage")
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Tony Luck <tony.luck@intel.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Borislav Betkov <bp@alien8.de>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Ruidong Tian <tianruidong@linux.alibaba.com>
-Cc: Thomas Gleinxer <tglx@linutronix.de>
-Cc: Yazen Ghannam <yazen.ghannam@amd.com>
-Cc: Jane Chu <jane.chu@oracle.com>
-Cc: Jarkko Sakkinen <jarkko@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: ea8d7647f9dd ("tracing: Verify event formats that have "%*p.."")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/mce/severity.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ samples/trace_events/trace-events-sample.h | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/mce/severity.c b/arch/x86/kernel/cpu/mce/severity.c
-index bca780fa5e577..9c5754229d6ed 100644
---- a/arch/x86/kernel/cpu/mce/severity.c
-+++ b/arch/x86/kernel/cpu/mce/severity.c
-@@ -288,13 +288,12 @@ static noinstr int error_context(struct mce *m, struct pt_regs *regs)
- 	copy_user  = is_copy_from_user(regs);
- 	instrumentation_end();
+diff --git a/samples/trace_events/trace-events-sample.h b/samples/trace_events/trace-events-sample.h
+index 1c6b843b8c4ee..04541dfbd44cc 100644
+--- a/samples/trace_events/trace-events-sample.h
++++ b/samples/trace_events/trace-events-sample.h
+@@ -302,6 +302,7 @@ TRACE_EVENT(foo_bar,
+ 		__bitmask(	cpus,	num_possible_cpus()	)
+ 		__cpumask(	cpum				)
+ 		__vstring(	vstr,	fmt,	va		)
++		__string_len(	lstr,	foo,	bar / 2 < strlen(foo) ? bar / 2 : strlen(foo) )
+ 	),
  
--	switch (fixup_type) {
--	case EX_TYPE_UACCESS:
--		if (!copy_user)
--			return IN_KERNEL;
--		m->kflags |= MCE_IN_KERNEL_COPYIN;
--		fallthrough;
-+	if (copy_user) {
-+		m->kflags |= MCE_IN_KERNEL_COPYIN | MCE_IN_KERNEL_RECOV;
-+		return IN_KERNEL_RECOV;
-+	}
+ 	TP_fast_assign(
+@@ -310,12 +311,13 @@ TRACE_EVENT(foo_bar,
+ 		memcpy(__get_dynamic_array(list), lst,
+ 		       __length_of(lst) * sizeof(int));
+ 		__assign_str(str, string);
++		__assign_str(lstr, foo);
+ 		__assign_vstr(vstr, fmt, va);
+ 		__assign_bitmask(cpus, cpumask_bits(mask), num_possible_cpus());
+ 		__assign_cpumask(cpum, cpumask_bits(mask));
+ 	),
  
-+	switch (fixup_type) {
- 	case EX_TYPE_FAULT_MCE_SAFE:
- 	case EX_TYPE_DEFAULT_MCE_SAFE:
- 		m->kflags |= MCE_IN_KERNEL_RECOV;
+-	TP_printk("foo %s %d %s %s %s %s (%s) (%s) %s", __entry->foo, __entry->bar,
++	TP_printk("foo %s %d %s %s %s %s %s (%s) (%s) %s", __entry->foo, __entry->bar,
+ 
+ /*
+  * Notice here the use of some helper functions. This includes:
+@@ -359,7 +361,8 @@ TRACE_EVENT(foo_bar,
+ 		  __print_array(__get_dynamic_array(list),
+ 				__get_dynamic_array_len(list) / sizeof(int),
+ 				sizeof(int)),
+-		  __get_str(str), __get_bitmask(cpus), __get_cpumask(cpum),
++		  __get_str(str), __get_str(lstr),
++		  __get_bitmask(cpus), __get_cpumask(cpum),
+ 		  __get_str(vstr))
+ );
+ 
 -- 
 2.39.5
 
