@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C08D21ABC1;
-	Tue, 29 Apr 2025 17:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A01227E95;
+	Tue, 29 Apr 2025 17:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948621; cv=none; b=pUm0TvNC+b++bg92XWBs4lRDLZB6mqGAhxCLta/sfv61vK2Cu9M4hvjmW7JL8c2/AOf6ooYL6f6tJGfnIaFAInw+DSVCp7zsh0VBWtBL8XWfrn/jg0GWlaYcppwGeFMfpqVRLoPII+RG0tIVeAd5VwCuD+T62EUHwvhL60ykvgY=
+	t=1745948624; cv=none; b=h/sDiBEjLxX5w7uPxUsZ5xcesV11Rolbkjznm5IVk6gfe/gVUew/OsLjEevp2TJSTgG6RuHCuFd1rs0gHKxSo9ulPZKN2va11MU6AsxJRUVUrOujFHUzy0XY5Kc8XpMqEI5Tju1SefKxcvBqqzxDI7mT23UKu4oA4gVwivJO2vQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948621; c=relaxed/simple;
-	bh=cd71VExCzKaF+RVx507kMP2pKJj6krDDoEDAwjMJFeA=;
+	s=arc-20240116; t=1745948624; c=relaxed/simple;
+	bh=xoKGhzsJnj3jPglH43vY1DfTcjUY/uZrQvxK4BHjBgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VxppYNKddVjrKSa4hfKE0zDJMjMxoJxkRpuFs5+0bszm0Wzlco7sX/EjLr5k5sSCgqjIkzr0CVUwqAIGjeSf6OenSss2Ajthznq3KfqIiql4OZw5z3PAdmyxnmqHBui9sYHDV1HjZByhjoC5774+31I4uDGpZ8xQL6PHC0aXhGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BH6D9KCP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SuckJVZeg6ybcWqxhMe65p4yJZeNWhfOftAmxlXPvkF2AWjy5EgVSLYsn70DvOkCvfbst3TWYOJC2FS4Og/rmh/SvGPp067NgWqphUZzmfyGE9UhaDmHZO57qgCZaMURywXCV7HwBiwHHR2mIAwvHkv/8gOIcyIhOko5KF/LxT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x9h++9sp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BH6D9KCP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE0AC4CEE3;
-	Tue, 29 Apr 2025 17:43:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x9h++9sp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154A9C4CEE3;
+	Tue, 29 Apr 2025 17:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948621;
-	bh=cd71VExCzKaF+RVx507kMP2pKJj6krDDoEDAwjMJFeA=;
+	s=korg; t=1745948624;
+	bh=xoKGhzsJnj3jPglH43vY1DfTcjUY/uZrQvxK4BHjBgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BH6D9KCP2heHXfgKyCy81Trn7IP0UDxezLZ7NaIHdn/WMT7pbg0W/qUR1/QzNGYJ7
-	 vT8miKXNMFGQ4N44LJART17KboLzQG3ut/7EEVhEcl91a9BfEtGy0iNF/QJxPlQAqQ
-	 QZNyNH56SiMx0at30OjbbHzmhc+p8tu+EEVb9cSo=
+	b=x9h++9sptioMaPaQAmkL2HHCVR2vEDvix9aVLCmRWEy5XxsZi7O/LlX76fJhuR4vx
+	 gNAY6JP6DkGTonA/Gqv85YhO5xMG5RrDj4M305dVCRTEi9J2lQtG50OPI/BmYRKtmH
+	 8djzBUStCoNJpYnVJePX4OoBSphTX4xf3qHCkLdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricard Wanderlof <ricard2013@butoba.net>,
-	Takashi Iwai <tiwai@suse.de>,
+	Matt Moeller <moeller.matt@gmail.com>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 022/373] ALSA: usb-audio: Fix CME quirk for UF series keyboards
-Date: Tue, 29 Apr 2025 18:38:19 +0200
-Message-ID: <20250429161124.044453306@linuxfoundation.org>
+Subject: [PATCH 5.15 056/373] bpf: support SKF_NET_OFF and SKF_LL_OFF on skb frags
+Date: Tue, 29 Apr 2025 18:38:53 +0200
+Message-ID: <20250429161125.430715003@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -45,127 +48,184 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricard Wanderlof <ricard2013@butoba.net>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit c2820405ba55a38932aa2177f026b70064296663 ]
+[ Upstream commit d4bac0288a2b444e468e6df9cb4ed69479ddf14a ]
 
-Fix quirk for CME master keyboards so it not only handles
-sysex but also song position pointer, MIDI timing clock, start
-and stop messages, and active sensing. All of these can be
-output by the CME UF series master keyboards.
+Classic BPF socket filters with SKB_NET_OFF and SKB_LL_OFF fail to
+read when these offsets extend into frags.
 
-Tested with a CME UF6 in a desktop Linux environment as
-well as on the Zynthian Raspberry Pi based platform.
+This has been observed with iwlwifi and reproduced with tun with
+IFF_NAPI_FRAGS. The below straightforward socket filter on UDP port,
+applied to a RAW socket, will silently miss matching packets.
 
-Signed-off-by: Ricard Wanderlof <ricard2013@butoba.net>
-Link: https://patch.msgid.link/20250313-cme-fix-v1-1-d404889e4de8@butoba.net
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+    const int offset_proto = offsetof(struct ip6_hdr, ip6_nxt);
+    const int offset_dport = sizeof(struct ip6_hdr) + offsetof(struct udphdr, dest);
+    struct sock_filter filter_code[] = {
+            BPF_STMT(BPF_LD  + BPF_B   + BPF_ABS, SKF_AD_OFF + SKF_AD_PKTTYPE),
+            BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, PACKET_HOST, 0, 4),
+            BPF_STMT(BPF_LD  + BPF_B   + BPF_ABS, SKF_NET_OFF + offset_proto),
+            BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, IPPROTO_UDP, 0, 2),
+            BPF_STMT(BPF_LD  + BPF_H   + BPF_ABS, SKF_NET_OFF + offset_dport),
+
+This is unexpected behavior. Socket filter programs should be
+consistent regardless of environment. Silent misses are
+particularly concerning as hard to detect.
+
+Use skb_copy_bits for offsets outside linear, same as done for
+non-SKF_(LL|NET) offsets.
+
+Offset is always positive after subtracting the reference threshold
+SKB_(LL|NET)_OFF, so is always >= skb_(mac|network)_offset. The sum of
+the two is an offset against skb->data, and may be negative, but it
+cannot point before skb->head, as skb_(mac|network)_offset would too.
+
+This appears to go back to when frag support was introduced to
+sk_run_filter in linux-2.4.4, before the introduction of git.
+
+The amount of code change and 8/16/32 bit duplication are unfortunate.
+But any attempt I made to be smarter saved very few LoC while
+complicating the code.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/netdev/20250122200402.3461154-1-maze@google.com/
+Link: https://elixir.bootlin.com/linux/2.4.4/source/net/core/filter.c#L244
+Reported-by: Matt Moeller <moeller.matt@gmail.com>
+Co-developed-by: Maciej Żenczykowski <maze@google.com>
+Signed-off-by: Maciej Żenczykowski <maze@google.com>
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://lore.kernel.org/r/20250408132833.195491-2-willemdebruijn.kernel@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/midi.c | 80 ++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 74 insertions(+), 6 deletions(-)
+ net/core/filter.c | 80 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 44 insertions(+), 36 deletions(-)
 
-diff --git a/sound/usb/midi.c b/sound/usb/midi.c
-index a56c1a69b422a..c6586da43a048 100644
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -489,16 +489,84 @@ static void ch345_broken_sysex_input(struct snd_usb_midi_in_endpoint *ep,
- 
- /*
-  * CME protocol: like the standard protocol, but SysEx commands are sent as a
-- * single USB packet preceded by a 0x0F byte.
-+ * single USB packet preceded by a 0x0F byte, as are system realtime
-+ * messages and MIDI Active Sensing.
-+ * Also, multiple messages can be sent in the same packet.
-  */
- static void snd_usbmidi_cme_input(struct snd_usb_midi_in_endpoint *ep,
- 				  uint8_t *buffer, int buffer_length)
- {
--	if (buffer_length < 2 || (buffer[0] & 0x0f) != 0x0f)
--		snd_usbmidi_standard_input(ep, buffer, buffer_length);
--	else
--		snd_usbmidi_input_data(ep, buffer[0] >> 4,
--				       &buffer[1], buffer_length - 1);
-+	int remaining = buffer_length;
-+
-+	/*
-+	 * CME send sysex, song position pointer, system realtime
-+	 * and active sensing using CIN 0x0f, which in the standard
-+	 * is only intended for single byte unparsed data.
-+	 * So we need to interpret these here before sending them on.
-+	 * By default, we assume single byte data, which is true
-+	 * for system realtime (midi clock, start, stop and continue)
-+	 * and active sensing, and handle the other (known) cases
-+	 * separately.
-+	 * In contrast to the standard, CME does not split sysex
-+	 * into multiple 4-byte packets, but lumps everything together
-+	 * into one. In addition, CME can string multiple messages
-+	 * together in the same packet; pressing the Record button
-+	 * on an UF6 sends a sysex message directly followed
-+	 * by a song position pointer in the same packet.
-+	 * For it to have any reasonable meaning, a sysex message
-+	 * needs to be at least 3 bytes in length (0xf0, id, 0xf7),
-+	 * corresponding to a packet size of 4 bytes, and the ones sent
-+	 * by CME devices are 6 or 7 bytes, making the packet fragments
-+	 * 7 or 8 bytes long (six or seven bytes plus preceding CN+CIN byte).
-+	 * For the other types, the packet size is always 4 bytes,
-+	 * as per the standard, with the data size being 3 for SPP
-+	 * and 1 for the others.
-+	 * Thus all packet fragments are at least 4 bytes long, so we can
-+	 * skip anything that is shorter; this also conveniantly skips
-+	 * packets with size 0, which CME devices continuously send when
-+	 * they have nothing better to do.
-+	 * Another quirk is that sometimes multiple messages are sent
-+	 * in the same packet. This has been observed for midi clock
-+	 * and active sensing i.e. 0x0f 0xf8 0x00 0x00 0x0f 0xfe 0x00 0x00,
-+	 * but also multiple note ons/offs, and control change together
-+	 * with MIDI clock. Similarly, some sysex messages are followed by
-+	 * the song position pointer in the same packet, and occasionally
-+	 * additionally by a midi clock or active sensing.
-+	 * We handle this by looping over all data and parsing it along the way.
-+	 */
-+	while (remaining >= 4) {
-+		int source_length = 4; /* default */
-+
-+		if ((buffer[0] & 0x0f) == 0x0f) {
-+			int data_length = 1; /* default */
-+
-+			if (buffer[1] == 0xf0) {
-+				/* Sysex: Find EOX and send on whole message. */
-+				/* To kick off the search, skip the first
-+				 * two bytes (CN+CIN and SYSEX (0xf0).
-+				 */
-+				uint8_t *tmp_buf = buffer + 2;
-+				int tmp_length = remaining - 2;
-+
-+				while (tmp_length > 1 && *tmp_buf != 0xf7) {
-+					tmp_buf++;
-+					tmp_length--;
-+				}
-+				data_length = tmp_buf - buffer;
-+				source_length = data_length + 1;
-+			} else if (buffer[1] == 0xf2) {
-+				/* Three byte song position pointer */
-+				data_length = 3;
-+			}
-+			snd_usbmidi_input_data(ep, buffer[0] >> 4,
-+					       &buffer[1], data_length);
-+		} else {
-+			/* normal channel events */
-+			snd_usbmidi_standard_input(ep, buffer, source_length);
-+		}
-+		buffer += source_length;
-+		remaining -= source_length;
-+	}
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 45cde12e41284..9d358fb865e28 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -209,24 +209,36 @@ BPF_CALL_3(bpf_skb_get_nlattr_nest, struct sk_buff *, skb, u32, a, u32, x)
+ 	return 0;
  }
  
- /*
++static int bpf_skb_load_helper_convert_offset(const struct sk_buff *skb, int offset)
++{
++	if (likely(offset >= 0))
++		return offset;
++
++	if (offset >= SKF_NET_OFF)
++		return offset - SKF_NET_OFF + skb_network_offset(skb);
++
++	if (offset >= SKF_LL_OFF && skb_mac_header_was_set(skb))
++		return offset - SKF_LL_OFF + skb_mac_offset(skb);
++
++	return INT_MIN;
++}
++
+ BPF_CALL_4(bpf_skb_load_helper_8, const struct sk_buff *, skb, const void *,
+ 	   data, int, headlen, int, offset)
+ {
+-	u8 tmp, *ptr;
++	u8 tmp;
+ 	const int len = sizeof(tmp);
+ 
+-	if (offset >= 0) {
+-		if (headlen - offset >= len)
+-			return *(u8 *)(data + offset);
+-		if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
+-			return tmp;
+-	} else {
+-		ptr = bpf_internal_load_pointer_neg_helper(skb, offset, len);
+-		if (likely(ptr))
+-			return *(u8 *)ptr;
+-	}
++	offset = bpf_skb_load_helper_convert_offset(skb, offset);
++	if (offset == INT_MIN)
++		return -EFAULT;
+ 
+-	return -EFAULT;
++	if (headlen - offset >= len)
++		return *(u8 *)(data + offset);
++	if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
++		return tmp;
++	else
++		return -EFAULT;
+ }
+ 
+ BPF_CALL_2(bpf_skb_load_helper_8_no_cache, const struct sk_buff *, skb,
+@@ -239,21 +251,19 @@ BPF_CALL_2(bpf_skb_load_helper_8_no_cache, const struct sk_buff *, skb,
+ BPF_CALL_4(bpf_skb_load_helper_16, const struct sk_buff *, skb, const void *,
+ 	   data, int, headlen, int, offset)
+ {
+-	__be16 tmp, *ptr;
++	__be16 tmp;
+ 	const int len = sizeof(tmp);
+ 
+-	if (offset >= 0) {
+-		if (headlen - offset >= len)
+-			return get_unaligned_be16(data + offset);
+-		if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
+-			return be16_to_cpu(tmp);
+-	} else {
+-		ptr = bpf_internal_load_pointer_neg_helper(skb, offset, len);
+-		if (likely(ptr))
+-			return get_unaligned_be16(ptr);
+-	}
++	offset = bpf_skb_load_helper_convert_offset(skb, offset);
++	if (offset == INT_MIN)
++		return -EFAULT;
+ 
+-	return -EFAULT;
++	if (headlen - offset >= len)
++		return get_unaligned_be16(data + offset);
++	if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
++		return be16_to_cpu(tmp);
++	else
++		return -EFAULT;
+ }
+ 
+ BPF_CALL_2(bpf_skb_load_helper_16_no_cache, const struct sk_buff *, skb,
+@@ -266,21 +276,19 @@ BPF_CALL_2(bpf_skb_load_helper_16_no_cache, const struct sk_buff *, skb,
+ BPF_CALL_4(bpf_skb_load_helper_32, const struct sk_buff *, skb, const void *,
+ 	   data, int, headlen, int, offset)
+ {
+-	__be32 tmp, *ptr;
++	__be32 tmp;
+ 	const int len = sizeof(tmp);
+ 
+-	if (likely(offset >= 0)) {
+-		if (headlen - offset >= len)
+-			return get_unaligned_be32(data + offset);
+-		if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
+-			return be32_to_cpu(tmp);
+-	} else {
+-		ptr = bpf_internal_load_pointer_neg_helper(skb, offset, len);
+-		if (likely(ptr))
+-			return get_unaligned_be32(ptr);
+-	}
++	offset = bpf_skb_load_helper_convert_offset(skb, offset);
++	if (offset == INT_MIN)
++		return -EFAULT;
+ 
+-	return -EFAULT;
++	if (headlen - offset >= len)
++		return get_unaligned_be32(data + offset);
++	if (!skb_copy_bits(skb, offset, &tmp, sizeof(tmp)))
++		return be32_to_cpu(tmp);
++	else
++		return -EFAULT;
+ }
+ 
+ BPF_CALL_2(bpf_skb_load_helper_32_no_cache, const struct sk_buff *, skb,
 -- 
 2.39.5
 
