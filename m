@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048BE227E95;
-	Tue, 29 Apr 2025 17:42:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D6F227E95;
+	Tue, 29 Apr 2025 17:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948536; cv=none; b=JlAMFl6HOjs9EDXwS5ZKb5drWqYvKgjuBR5E4kGfZ2zYh2pf/B4iFgRJM+XdYnaKlA+C/Bz+gsyFdo3khLZM2dTGq4iTjqAEykJlSyVl7Q0YO0xmaJAsvH6tWQrkeCMtUUoIYHsVKAT7zDk/IrSgFAyQ8QpA95OAUQCDxCetwgQ=
+	t=1745948538; cv=none; b=aDp6yNSaL7oEmezoDSYCzJsxY0jkvNPNVBPfed/5SelEYut7aJobxz16cAeo5wm3kPPHtpe7dVslTD5KKIQ8eH1WYwkjqtjQ9wGskzy4s2Sjc5jNR6fNVouYLJsxCUR1geKVg14FfwET1fETqxzivWgG5hEQ/5XfN8rzc736Lfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948536; c=relaxed/simple;
-	bh=mHndRvTxxhBDc9WL2JB9/YwkelhfMYqwqRYLDV/ert0=;
+	s=arc-20240116; t=1745948538; c=relaxed/simple;
+	bh=Y9gEAkrfFJgjc+1G2AC3gCIF55d8w45ineqfxgZiuyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DUGC3zUw5PqqjKxt/gpG8nJ7Ntsj6xhrydbY3Tm34fA55727xQlnxIrOkX+InDOFHsAmdap+fct9wqSMh+UzNQTP+TvrPZEL0DQme5z07vEw5cPuGgrc8GUs4Zxuj7+Idkfmp/ftw5/WQ7QODH/kgGeZ2tT3ukb1AW3oYU+Dizk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlkMJhj4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ttqmZzY0G96SiviT5EvJA+2xnpiV2kuYUhQUe0e1QYKX3TG1nJQ3KCt4UhmNfKkzNd1lzkwy2DJs9fgbEBdCiq8/kcTjBFHqXtcHDWAR11vIki4VQRxD5zkpfTLqtTzPCKTQNwuOKKfGeErSN57a3BpOSJHL+d8vZ1b15oXfZ0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G93oZPSs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlkMJhj4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785DBC4CEE3;
-	Tue, 29 Apr 2025 17:42:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G93oZPSs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F8BC4CEE3;
+	Tue, 29 Apr 2025 17:42:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948535;
-	bh=mHndRvTxxhBDc9WL2JB9/YwkelhfMYqwqRYLDV/ert0=;
+	s=korg; t=1745948538;
+	bh=Y9gEAkrfFJgjc+1G2AC3gCIF55d8w45ineqfxgZiuyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jlkMJhj4sZPSjzJsLtzCajcBjoXNYw9j+L+fqDpjYk1bLoVZtaQR76v+Bti8Bwn1U
-	 Ctn+1qq/XBP0FiYUBH3sA+7E5GkyFzobSGJ+WVgERU5TSXAciaPpLy7G0J2srOlkpr
-	 pvMObB6PlC1UxVMNA5aTrH2gT3OcUUYW2NXuqqbM=
+	b=G93oZPSsTvRyVHEXBPT76jC/gMzmikyl9CaayO5n+cFgF1C+I6icFga4sIMG2LVxG
+	 JSOv426iZVlrlnH8tsX+yTyl0m8rtf05rEAf0CWs2x3L6mu2HH0Kf3DxlPEXwUdbX6
+	 yk5HCbaAz2OkAel/PozbaFUieWtaZpgwZ6dPO9AU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arseniy Krasnov <avkrasnov@salutedevices.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 038/373] Bluetooth: hci_uart: fix race during initialization
-Date: Tue, 29 Apr 2025 18:38:35 +0200
-Message-ID: <20250429161124.698935720@linuxfoundation.org>
+Subject: [PATCH 5.15 039/373] drm: allow encoder mode_set even when connectors change for crtc
+Date: Tue, 29 Apr 2025 18:38:36 +0200
+Message-ID: <20250429161124.738544739@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,47 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arseniy Krasnov <avkrasnov@salutedevices.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-[ Upstream commit 366ceff495f902182d42b6f41525c2474caf3f9a ]
+[ Upstream commit 7e182cb4f5567f53417b762ec0d679f0b6f0039d ]
 
-'hci_register_dev()' calls power up function, which is executed by
-kworker - 'hci_power_on()'. This function does access to bluetooth chip
-using callbacks from 'hci_ldisc.c', for example 'hci_uart_send_frame()'.
-Now 'hci_uart_send_frame()' checks 'HCI_UART_PROTO_READY' bit set, and
-if not - it fails. Problem is that 'HCI_UART_PROTO_READY' is set after
-'hci_register_dev()', and there is tiny chance that 'hci_power_on()' will
-be executed before setting this bit. In that case HCI init logic fails.
+In certain use-cases, a CRTC could switch between two encoders
+and because the mode being programmed on the CRTC remains
+the same during this switch, the CRTC's mode_changed remains false.
+In such cases, the encoder's mode_set also gets skipped.
 
-Patch moves setting of 'HCI_UART_PROTO_READY' before calling function
-'hci_uart_register_dev()'.
+Skipping mode_set on the encoder for such cases could cause an issue
+because even though the same CRTC mode was being used, the encoder
+type could have changed like the CRTC could have switched from a
+real time encoder to a writeback encoder OR vice-versa.
 
-Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Allow encoder's mode_set to happen even when connectors changed on a
+CRTC and not just when the mode changed.
+
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241211-abhinavk-modeset-fix-v3-1-0de4bf3e7c32@quicinc.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_ldisc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_atomic_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/hci_ldisc.c b/drivers/bluetooth/hci_ldisc.c
-index be51528afed9d..fbbd832e4def1 100644
---- a/drivers/bluetooth/hci_ldisc.c
-+++ b/drivers/bluetooth/hci_ldisc.c
-@@ -706,12 +706,13 @@ static int hci_uart_set_proto(struct hci_uart *hu, int id)
+diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
+index 2c3883d79f531..bd01d925769db 100644
+--- a/drivers/gpu/drm/drm_atomic_helper.c
++++ b/drivers/gpu/drm/drm_atomic_helper.c
+@@ -1279,7 +1279,7 @@ crtc_set_mode(struct drm_device *dev, struct drm_atomic_state *old_state)
+ 		mode = &new_crtc_state->mode;
+ 		adjusted_mode = &new_crtc_state->adjusted_mode;
  
- 	hu->proto = p;
+-		if (!new_crtc_state->mode_changed)
++		if (!new_crtc_state->mode_changed && !new_crtc_state->connectors_changed)
+ 			continue;
  
-+	set_bit(HCI_UART_PROTO_READY, &hu->flags);
-+
- 	err = hci_uart_register_dev(hu);
- 	if (err) {
- 		return err;
- 	}
- 
--	set_bit(HCI_UART_PROTO_READY, &hu->flags);
- 	return 0;
- }
- 
+ 		DRM_DEBUG_ATOMIC("modeset on [ENCODER:%d:%s]\n",
 -- 
 2.39.5
 
