@@ -1,99 +1,121 @@
-Received: from mx.denx.de (mx.denx.de [89.58.32.78])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02269252900
-	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 20:18:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2CC21CA0E
+	for <patches@lists.linux.dev>; Tue, 29 Apr 2025 20:24:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745957930; cv=none; b=txOsED2CA5M9dItmuY8stb4CAolrK4uoOcxuIf8fc9/93n1pD8xpDFqoGP2w2ZU4V2BWHUGVRmeCJDY8oer9+cU0GEVlJmYugGpQBWzhzXbgX1AV22WQXeZu5RGP3HCn1MnUQfOGvBU7NgP3hpVYufr3SOB/Xw/QqIhZwtUCxoo=
+	t=1745958261; cv=none; b=PmFLx6ExQh2Y8Afn/ResxrDFJiUTgxK1hiy7Fl0hWgwcXnuWhDhea1qeAB11JlwU/G/tyIBFCvIJPUzD2DT3zsG88AnKgFlBRbrAYqZ60HArSavgmviIzvSzsEJLPDqKzQy0WwgkIAs4Vy493/VHsq5AzKIp7++zNDSgKtDL0rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745957930; c=relaxed/simple;
-	bh=sDMxoCpucl7FxGwnSXWDMmTs32K9ueRzoHGHU98VOYI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aJR5+0v6msKuny8Uk0DmE6GFmTnmMWKmnDS0u04F8LZTIw/WIDHMmMp3u60cJ79XHWJ3e4vjeXsDYXT69D3QA8re8x/M7G7vsCXDmp6PBskHB+NHKOS63gDKX2hduqwHYehMd8fTPRjnCsPGTps1rQV5DyLqC+jHqda+O4pea1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=M8q/mjVp; arc=none smtp.client-ip=89.58.32.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
+	s=arc-20240116; t=1745958261; c=relaxed/simple;
+	bh=6BiOBBRPksYZ79Zl+8MOX/mVDJcU5/RCvN/jjbfh2To=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=swwfljwuK7kXV8SddC0MZ++jMTsDRfDren2d5hSMnJc9XVytjkARsMakj979uWH7Y030nmY9OPyUPZZIPrYFs8EhwRwmKSydlR9o6uIWaJvATVJ6ZboRo0p7PCUu8ZC9yQ3ZI/vHJCkIOJ7j5FJz9i2SDlXhzzu1h1lyOdD5Ok8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dZPZaHPb; arc=none smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="M8q/mjVp"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 625A210273DB0;
-	Tue, 29 Apr 2025 22:18:43 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
-	t=1745957926; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=03RJ6CVBBgFmy/eiFwV71/JOGoxqIX2jDinYEZTMhQQ=;
-	b=M8q/mjVpAHYHYEZK5YFKnqmW2WyeCR3hPZaXaWCvE8fWTg1BScBirgNma9cDe3zWIwvBuy
-	lXNBM5pm25Bl+A5GQiqbKS3/vnZIHSSvoPGq2SvIeb12ujTmZHTETNSqCoPeGzFN1EvmZL
-	DZwMBGoirIcVd129wCZXOG9BSLhr9oBXI2oMGxjdmfjGGTNDr2mHFFJdXpg955AT98q/rg
-	tkBRrpBmmiJQkaehmhrZm0O9hOmK5ss4kIXtFngveHnh3W7yRgi1z4dahMv1AmsVrXktiC
-	tfl1wKnEc3ZrDqce093H0Y/10ZOxKy3Z8rMaogMX1+1IuF4wBYf2aM03ADVVsw==
-Date: Tue, 29 Apr 2025 22:18:41 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.14 000/311] 6.14.5-rc1 review
-Message-ID: <aBE0IVi4gqCLpdu7@duo.ucw.cz>
-References: <20250429161121.011111832@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dZPZaHPb"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1745958259; x=1777494259;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=6BiOBBRPksYZ79Zl+8MOX/mVDJcU5/RCvN/jjbfh2To=;
+  b=dZPZaHPbjzlxUS3T+1eEnPwaiMNHl5m9tR2zDlxgPnabMeWmcXRt3e+g
+   xkInKReoIuvF1a0tMen4qUV/sBaDU5EODEN93X0jWJvyPwGe2nBDWGGAL
+   Ie71MjEybMYVt+FVafTBAtVwRpyahczk2FCTpuyee7Bzq3ImbW+sSurPN
+   6dJ193LLo2ND6rsO3qpBd4oE9QpI0U9c8mtajxC+BKJ719TjhIfy9Wuwo
+   4Orkim80PM14CHRvj7XeNsmuLTVj9JbLfGscVqz3fvrb6VBG9bWnoP91P
+   kciqUno0B/4gNEmQoexMOVkc6Ny2vZiDlBViqwsyfc0Rx8wAPDafkIUJJ
+   Q==;
+X-CSE-ConnectionGUID: PNCA1CkfQRykngq/jccROA==
+X-CSE-MsgGUID: m5uthNoWRtOZnhT8lqXhPw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11418"; a="47314061"
+X-IronPort-AV: E=Sophos;i="6.15,250,1739865600"; 
+   d="scan'208";a="47314061"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2025 13:24:19 -0700
+X-CSE-ConnectionGUID: RI1MOyAVRkqbMRiE3WF4hg==
+X-CSE-MsgGUID: pF+gcqPGQnSzbcYU37YAzg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,250,1739865600"; 
+   d="scan'208";a="139036124"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
+  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2025 13:24:18 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: rafael@kernel.org
+Cc: lenb@kernel.org,
+	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
+	linux-acpi@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v4 0/4] Add interfaces for ACPI MRRM table
+Date: Tue, 29 Apr 2025 13:24:07 -0700
+Message-ID: <20250429202412.380637-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="2IQwKLXhs60ALlL1"
-Content-Disposition: inline
-In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
+
+Memory used to be homogeneous. Then NUMA came along. Later different
+types of memory (persistent memory, on-package high bandwidth memory,
+CXL attached memory).
+
+Each type of memory has its own performance characteristics, and users
+will need to monitor and control access by type.
+
+The MRRM solution is to tag physical address ranges with "region IDs"
+so that platform firmware[1] can indicate the type of memory for each
+range (with separate tags available for local vs. remote access to
+each range). Note that these ranges can include addresses reserved
+for future hotplugged memory.
+
+The region IDs will be used to provide separate event counts for each
+region for "perf" and for the "resctrl" file system to monitor and
+control memory bandwidth in each region.
+
+Users will need to know the address range(s) that are part of each
+region. This patch series adds
+	/sys/firmware/acpi/memory_ranges/rangeX
+directories to provide user space accessible enumeration.
+
+-Tony
+
+[1] MRRM definition allow for future expansion for the OS to assign
+these region IDs.
+
+Changes since version 3 here:
+https://lore.kernel.org/all/20250410223207.257722-1-tony.luck@intel.com/
+
+1) Rebase to v6.15-rc4
+2) Removed ugly #ifdef in acpi_mrrm.c with better fix for CONFIG_NUMA=n
+3) Moved stub for acpi_mrrm_max_mem_region() into #else !ACPI section
+   of <linux/acpi.h>
+
+Tony Luck (4):
+  ACPICA: Define MRRM ACPI table
+  ACPI/MRRM: Minimal parse of ACPI MRRM table
+  ACPI/MRRM: Add /sys files to describe memory ranges
+  ACPI: Add documentation for exposing MRRM data
+
+ include/linux/acpi.h                          |   9 +
+ include/acpi/actbl1.h                         |   7 +
+ include/acpi/actbl2.h                         |  42 ++++
+ drivers/acpi/acpi_mrrm.c                      | 183 ++++++++++++++++++
+ Documentation/ABI/testing/sysfs-firmware-acpi |  21 ++
+ arch/x86/Kconfig                              |   1 +
+ drivers/acpi/Kconfig                          |   3 +
+ drivers/acpi/Makefile                         |   1 +
+ 8 files changed, 267 insertions(+)
+ create mode 100644 drivers/acpi/acpi_mrrm.c
 
 
---2IQwKLXhs60ALlL1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+base-commit: b4432656b36e5cc1d50a1f2dc15357543add530e
+-- 
+2.48.1
 
-Hi!
-
-> This is the start of the stable review cycle for the 6.14.5 release.
-> There are 311 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-CIP testing did not find any problems here:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.14.y
-
-6.12 and 6.6 pass our testing, too:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.12.y
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.6.y
-
-I'm still retrying 5.4 and 5.15.
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---2IQwKLXhs60ALlL1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaBE0IQAKCRAw5/Bqldv6
-8ou6AKC9vt9++Fuyt36MUw6sabcV7fSCpgCghmJkgIJBeDshvTrNjSMf+ze4B2I=
-=jCHC
------END PGP SIGNATURE-----
-
---2IQwKLXhs60ALlL1--
