@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D3DF253327;
-	Tue, 29 Apr 2025 18:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC5F25335B;
+	Tue, 29 Apr 2025 18:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949765; cv=none; b=VN2h//L5xbjO9ylgbxHko7qcKA0w6mAoMiE7/4a72DG2CPRai0/rNs79IDeoz39fpLOpvweCt+bAdrjJXWIx8ER5qCxZcXxWe+i99IsJhm5fwll8JjlkkhiorOhtmPHtdCtaZOccug8zxPzMqUteOAFnreZ75ySXs4QsyUEOyaI=
+	t=1745949768; cv=none; b=j7PxDFB0/NOfSkoiTy22/RL1mRDvG+KrDbrsZu8tAWceUSy7UCv4Yn1pZ+pqQWRzeQ59bErb0IF7BbtaktKrQNdLvbxyvSCF43lxfVL0YSjtLtXt0r9h+OrZmeDpqsgY6goE1ekQ5CBwQNQCzayyAXEASz8ZVjfbTSBPur3g90Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949765; c=relaxed/simple;
-	bh=udF3PFrNks6aCs5N5gg7W71Q3cQwrrr/0boEIYgYyyk=;
+	s=arc-20240116; t=1745949768; c=relaxed/simple;
+	bh=SMcD9zFZR16Vl0AiE/rdajfCkB/pGlSkDlsBhhroPyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f7qNyH5Stsh0qbUqsHH/m0AH6FR8LItO5LwTg5ClsFNRc5ubxrgtiV3UGfrHJ+tB3tzrVeAKKIYPkXi/38bgGZaqwDlIG8BM1Fe5bojLz11zKQY4BHCNqKnbbuJ3QOkVpOtTa71J5N1c6ab2UCA2zwRdcVuTLJgUtWK2TeFC5XM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aj1OvD1z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IcmsHzp4qJ08+S6hAOnS9JPiSnNb0WSuZh4tKypMFMLRK2a8QW/XWEietTHUUGYZsDYxn1dJjSEqjFL2MO5RM29UTXd+xQkyyHgyor0b9f8f9fcHsCNZO0pga4//0ICrpNmIRqxLg9fnZBOVXjJx4LXfw7HlGVbpLE/OwAkRma8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWWvtzZL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aj1OvD1z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6AF2C4CEE3;
-	Tue, 29 Apr 2025 18:02:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWWvtzZL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA34CC4CEE3;
+	Tue, 29 Apr 2025 18:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949765;
-	bh=udF3PFrNks6aCs5N5gg7W71Q3cQwrrr/0boEIYgYyyk=;
+	s=korg; t=1745949768;
+	bh=SMcD9zFZR16Vl0AiE/rdajfCkB/pGlSkDlsBhhroPyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Aj1OvD1zeUP6pHdYtKXMsxggz+dhl3fOr7cCqIXSvRdOI+a/VN0bQ/kExxRPFfRe2
-	 CWOp9RjUXDvEnsMLn7QdTIxY0KySEWi6ksnO2YWEupOs0lHN4J7sJJ0msKNXjN7fPq
-	 +2h7I/BBGU1whEZiQiWymNBvB/jwLhCc6rR194Cc=
+	b=WWWvtzZLNH2y9zscKR9Y8Y3pzNZRMmv/eBs1aMgtmwQFvdJKEUzr+sHxz2e+cwvG7
+	 +ieYsFtIDybKwATHsWQJDVEsI6xMel9MOeVb8jJMrTry9rEFUadzXz7vckx+qRA98k
+	 OEp3p8/t1/Op54dugQCBdvsxdaoHWAoiA3mtPuio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Justin Iurman <justin.iurman@uliege.be>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Hao Guan <hao.guan@siflower.com.cn>,
+	Qingfang Deng <qingfang.deng@siflower.com.cn>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 049/167] net: lwtunnel: disable BHs when required
-Date: Tue, 29 Apr 2025 18:42:37 +0200
-Message-ID: <20250429161053.745199705@linuxfoundation.org>
+Subject: [PATCH 6.1 050/167] net: phy: leds: fix memory leak
+Date: Tue, 29 Apr 2025 18:42:38 +0200
+Message-ID: <20250429161053.789067485@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
@@ -54,118 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Iurman <justin.iurman@uliege.be>
+From: Qingfang Deng <qingfang.deng@siflower.com.cn>
 
-[ Upstream commit c03a49f3093a4903c8a93c8b5c9a297b5343b169 ]
+[ Upstream commit b7f0ee992adf601aa00c252418266177eb7ac2bc ]
 
-In lwtunnel_{output|xmit}(), dev_xmit_recursion() may be called in
-preemptible scope for PREEMPT kernels. This patch disables BHs before
-calling dev_xmit_recursion(). BHs are re-enabled only at the end, since
-we must ensure the same CPU is used for both dev_xmit_recursion_inc()
-and dev_xmit_recursion_dec() (and any other recursion levels in some
-cases) in order to maintain valid per-cpu counters.
+A network restart test on a router led to an out-of-memory condition,
+which was traced to a memory leak in the PHY LED trigger code.
 
-Reported-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Closes: https://lore.kernel.org/netdev/CAADnVQJFWn3dBFJtY+ci6oN1pDFL=TzCmNbRgey7MdYxt_AP2g@mail.gmail.com/
-Reported-by: Eduard Zingerman <eddyz87@gmail.com>
-Closes: https://lore.kernel.org/netdev/m2h62qwf34.fsf@gmail.com/
-Fixes: 986ffb3a57c5 ("net: lwtunnel: fix recursion loops")
-Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250416160716.8823-1-justin.iurman@uliege.be
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The root cause is misuse of the devm API. The registration function
+(phy_led_triggers_register) is called from phy_attach_direct, not
+phy_probe, and the unregister function (phy_led_triggers_unregister)
+is called from phy_detach, not phy_remove. This means the register and
+unregister functions can be called multiple times for the same PHY
+device, but devm-allocated memory is not freed until the driver is
+unbound.
+
+This also prevents kmemleak from detecting the leak, as the devm API
+internally stores the allocated pointer.
+
+Fix this by replacing devm_kzalloc/devm_kcalloc with standard
+kzalloc/kcalloc, and add the corresponding kfree calls in the unregister
+path.
+
+Fixes: 3928ee6485a3 ("net: phy: leds: Add support for "link" trigger")
+Fixes: 2e0bc452f472 ("net: phy: leds: add support for led triggers on phy link state change")
+Signed-off-by: Hao Guan <hao.guan@siflower.com.cn>
+Signed-off-by: Qingfang Deng <qingfang.deng@siflower.com.cn>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250417032557.2929427-1-dqfext@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/lwtunnel.c | 26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+ drivers/net/phy/phy_led_triggers.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/net/core/lwtunnel.c b/net/core/lwtunnel.c
-index 4417a18b3e951..f63586c9ce021 100644
---- a/net/core/lwtunnel.c
-+++ b/net/core/lwtunnel.c
-@@ -332,6 +332,8 @@ int lwtunnel_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 	struct dst_entry *dst;
- 	int ret;
+diff --git a/drivers/net/phy/phy_led_triggers.c b/drivers/net/phy/phy_led_triggers.c
+index f550576eb9dae..6f9d8da76c4df 100644
+--- a/drivers/net/phy/phy_led_triggers.c
++++ b/drivers/net/phy/phy_led_triggers.c
+@@ -91,9 +91,8 @@ int phy_led_triggers_register(struct phy_device *phy)
+ 	if (!phy->phy_num_led_triggers)
+ 		return 0;
  
-+	local_bh_disable();
-+
- 	if (dev_xmit_recursion()) {
- 		net_crit_ratelimited("%s(): recursion limit reached on datapath\n",
- 				     __func__);
-@@ -347,8 +349,10 @@ int lwtunnel_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 	lwtstate = dst->lwtstate;
+-	phy->led_link_trigger = devm_kzalloc(&phy->mdio.dev,
+-					     sizeof(*phy->led_link_trigger),
+-					     GFP_KERNEL);
++	phy->led_link_trigger = kzalloc(sizeof(*phy->led_link_trigger),
++					GFP_KERNEL);
+ 	if (!phy->led_link_trigger) {
+ 		err = -ENOMEM;
+ 		goto out_clear;
+@@ -103,10 +102,9 @@ int phy_led_triggers_register(struct phy_device *phy)
+ 	if (err)
+ 		goto out_free_link;
  
- 	if (lwtstate->type == LWTUNNEL_ENCAP_NONE ||
--	    lwtstate->type > LWTUNNEL_ENCAP_MAX)
--		return 0;
-+	    lwtstate->type > LWTUNNEL_ENCAP_MAX) {
-+		ret = 0;
-+		goto out;
+-	phy->phy_led_triggers = devm_kcalloc(&phy->mdio.dev,
+-					    phy->phy_num_led_triggers,
+-					    sizeof(struct phy_led_trigger),
+-					    GFP_KERNEL);
++	phy->phy_led_triggers = kcalloc(phy->phy_num_led_triggers,
++					sizeof(struct phy_led_trigger),
++					GFP_KERNEL);
+ 	if (!phy->phy_led_triggers) {
+ 		err = -ENOMEM;
+ 		goto out_unreg_link;
+@@ -127,11 +125,11 @@ int phy_led_triggers_register(struct phy_device *phy)
+ out_unreg:
+ 	while (i--)
+ 		phy_led_trigger_unregister(&phy->phy_led_triggers[i]);
+-	devm_kfree(&phy->mdio.dev, phy->phy_led_triggers);
++	kfree(phy->phy_led_triggers);
+ out_unreg_link:
+ 	phy_led_trigger_unregister(phy->led_link_trigger);
+ out_free_link:
+-	devm_kfree(&phy->mdio.dev, phy->led_link_trigger);
++	kfree(phy->led_link_trigger);
+ 	phy->led_link_trigger = NULL;
+ out_clear:
+ 	phy->phy_num_led_triggers = 0;
+@@ -145,8 +143,13 @@ void phy_led_triggers_unregister(struct phy_device *phy)
+ 
+ 	for (i = 0; i < phy->phy_num_led_triggers; i++)
+ 		phy_led_trigger_unregister(&phy->phy_led_triggers[i]);
++	kfree(phy->phy_led_triggers);
++	phy->phy_led_triggers = NULL;
+ 
+-	if (phy->led_link_trigger)
++	if (phy->led_link_trigger) {
+ 		phy_led_trigger_unregister(phy->led_link_trigger);
++		kfree(phy->led_link_trigger);
++		phy->led_link_trigger = NULL;
 +	}
- 
- 	ret = -EOPNOTSUPP;
- 	rcu_read_lock();
-@@ -363,11 +367,13 @@ int lwtunnel_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 	if (ret == -EOPNOTSUPP)
- 		goto drop;
- 
--	return ret;
-+	goto out;
- 
- drop:
- 	kfree_skb(skb);
- 
-+out:
-+	local_bh_enable();
- 	return ret;
  }
- EXPORT_SYMBOL_GPL(lwtunnel_output);
-@@ -379,6 +385,8 @@ int lwtunnel_xmit(struct sk_buff *skb)
- 	struct dst_entry *dst;
- 	int ret;
- 
-+	local_bh_disable();
-+
- 	if (dev_xmit_recursion()) {
- 		net_crit_ratelimited("%s(): recursion limit reached on datapath\n",
- 				     __func__);
-@@ -395,8 +403,10 @@ int lwtunnel_xmit(struct sk_buff *skb)
- 	lwtstate = dst->lwtstate;
- 
- 	if (lwtstate->type == LWTUNNEL_ENCAP_NONE ||
--	    lwtstate->type > LWTUNNEL_ENCAP_MAX)
--		return 0;
-+	    lwtstate->type > LWTUNNEL_ENCAP_MAX) {
-+		ret = 0;
-+		goto out;
-+	}
- 
- 	ret = -EOPNOTSUPP;
- 	rcu_read_lock();
-@@ -411,11 +421,13 @@ int lwtunnel_xmit(struct sk_buff *skb)
- 	if (ret == -EOPNOTSUPP)
- 		goto drop;
- 
--	return ret;
-+	goto out;
- 
- drop:
- 	kfree_skb(skb);
- 
-+out:
-+	local_bh_enable();
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(lwtunnel_xmit);
-@@ -427,6 +439,8 @@ int lwtunnel_input(struct sk_buff *skb)
- 	struct dst_entry *dst;
- 	int ret;
- 
-+	DEBUG_NET_WARN_ON_ONCE(!in_softirq());
-+
- 	if (dev_xmit_recursion()) {
- 		net_crit_ratelimited("%s(): recursion limit reached on datapath\n",
- 				     __func__);
+ EXPORT_SYMBOL_GPL(phy_led_triggers_unregister);
 -- 
 2.39.5
 
