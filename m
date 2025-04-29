@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B60221DA7;
-	Tue, 29 Apr 2025 17:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CA1221DA7;
+	Tue, 29 Apr 2025 17:14:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946893; cv=none; b=MilZde4qd5n+k7tTf2HTcb0PVdHI/Q38lAs2aFJ83MkbgaxsNglBPVbiRACoSVOmt7FN6IYd+Ene/jgjUsyh/fQe5Ayn4SSH0Q/sCF4E7Fp7lAapj03SKi0t/CoaFXK7EL0h5s5/UTfVQPwzass5pyqUf6kDQ2ZWep4JrZOrSLQ=
+	t=1745946896; cv=none; b=EUalvym2lGxnFZ2xAyXJj+hrvzxtMBcRgx8DkZrDIuvWJgR3p1AEsNAsRFmx75khHBs72rUy+zcYqf90YldeXpUd3VW/iR1v2zhjlTlrawdI6/HAvN38NufZlv9hRld6aXC8S9dsUFOFeKJlQ3+n+aM9f6kNK6caeVbWhg+LZRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946893; c=relaxed/simple;
-	bh=IriIdFnnHwXQEhEJago4HWG5UmrK6Cu/lQIEXwne+Is=;
+	s=arc-20240116; t=1745946896; c=relaxed/simple;
+	bh=gTkkoam+4KZsB83f9yX0wIN7Agq4ROKzqD6W/Msr2qI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kRpXH4JfbUGRL2ZtjE7iMmflLx12SDGiCK1EUBwI3RcNTZ4mr5KzPKyO7uEtup0+uafHoVepOK+6gvJkeXPdevMKHt4VZlav5soTgx4XMM6AU9JFtuFjrW6s1Bt8k+810kliAsfHuZ4Aqhtq6lS866HkzgPU36YM8iM9kki+qpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BvNUW5wt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o/iG4bC+tO4QCsqKx80whD7wjyK4/CvwnNA/Bst4duJWW/ClglF/pByJ/JUmKxkB/+T7gPsy5aVIGTLVdjBsuFBGJVgqYslRQA0a11QsuoAjcUQqy9NHRDGGxbakrib7niMBqGR7+UoOcqw5lpLJ8rJVuC1v++86/IJ7xGtrUTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Syu9PxCY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BvNUW5wt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13722C4CEE3;
-	Tue, 29 Apr 2025 17:14:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Syu9PxCY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B358C4CEE3;
+	Tue, 29 Apr 2025 17:14:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946893;
-	bh=IriIdFnnHwXQEhEJago4HWG5UmrK6Cu/lQIEXwne+Is=;
+	s=korg; t=1745946896;
+	bh=gTkkoam+4KZsB83f9yX0wIN7Agq4ROKzqD6W/Msr2qI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BvNUW5wtJVz+31ytiynD4BcwJxpQ44O8YyBdEhxHviIw0enBXFMDTWB1kSc2gJF+x
-	 pfAFCNtTmMBrnea7y/I5iVfLp33hmQNTRY2hocMauvkdBHCrvOawUccA+JTnqBBBj4
-	 vVy+KnCp/HnhkgWqT1k+F8ZPtx23QxREyJRQ+4B0=
+	b=Syu9PxCY9y1crvyFBV3My0ZcnqkljUG872VZ7dH3n97FQJg89k5MGQ0gM0a9aK3kN
+	 c/8GeIebSJiyULlvqDKA/UqV4Miko6e+/XJbEyRJwToE4niylNBiJMjsHD7er7xwnL
+	 NBqn3KcoRhcotE5Bhej3tTI0v6sZQEpiaewXIHi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Murad Masimov <m.masimov@mt-integration.ru>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.10 063/286] media: streamzap: prevent processing IR data on URB failure
-Date: Tue, 29 Apr 2025 18:39:27 +0200
-Message-ID: <20250429161110.438488893@linuxfoundation.org>
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 5.10 097/286] pinctrl: qcom: Clear latched interrupt status when changing IRQ type
+Date: Tue, 29 Apr 2025 18:40:01 +0200
+Message-ID: <20250429161111.846796662@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -51,116 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit 549f6d348167fb2f7800ed7c8d4bce9630c74498 upstream.
+commit e225128c3f8be879e7d4eb71a25949e188b420ae upstream.
 
-If streamzap_callback() receives an urb with any non-critical error
-status, i.e. any error code other than -ECONNRESET, -ENOENT or -ESHUTDOWN,
-it will try to process IR data, ignoring a possible transfer failure.
+When submitting the TLMM test driver, Bjorn reported that some of the test
+cases are failing for GPIOs that not are backed by PDC (i.e. "non-wakeup"
+GPIOs that are handled directly in pinctrl-msm). Basically, lingering
+latched interrupt state is still being delivered at IRQ request time, e.g.:
 
-Make streamzap_callback() process IR data only when urb->status is 0.
-Move processing logic to a separate function to make code cleaner and
-more similar to the URB completion handlers in other RC drivers.
+  ok 1 tlmm_test_silent_rising
+  tlmm_test_silent_falling: ASSERTION FAILED at drivers/pinctrl/qcom/tlmm-test.c:178
+  Expected atomic_read(&priv->intr_count) == 0, but
+      atomic_read(&priv->intr_count) == 1 (0x1)
+  not ok 2 tlmm_test_silent_falling
+  tlmm_test_silent_low: ASSERTION FAILED at drivers/pinctrl/qcom/tlmm-test.c:178
+  Expected atomic_read(&priv->intr_count) == 0, but
+      atomic_read(&priv->intr_count) == 1 (0x1)
+  not ok 3 tlmm_test_silent_low
+  ok 4 tlmm_test_silent_high
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+Whether to report interrupts that came in while the IRQ was unclaimed
+doesn't seem to be well-defined in the Linux IRQ API. However, looking
+closer at these specific cases, we're actually reporting events that do not
+match the interrupt type requested by the driver:
 
-Fixes: 19770693c354 ("V4L/DVB: staging/lirc: add lirc_streamzap driver")
+ 1. After "ok 1 tlmm_test_silent_rising", the GPIO is in low state and
+    configured for IRQF_TRIGGER_RISING.
+
+ 2. (a) In preparation for "tlmm_test_silent_falling", the GPIO is switched
+        to high state. The rising interrupt gets latched.
+    (b) The GPIO is re-configured for IRQF_TRIGGER_FALLING, but the latched
+        interrupt isn't cleared.
+    (c) The IRQ handler is called for the latched interrupt, but there
+        wasn't any falling edge.
+
+ 3. (a) For "tlmm_test_silent_low", the GPIO remains in high state.
+    (b) The GPIO is re-configured for IRQF_TRIGGER_LOW. This seems to
+        result in a phantom interrupt that gets latched.
+    (c) The IRQ handler is called for the latched interrupt, but the GPIO
+        isn't in low state.
+
+ 4. (a) For "tlmm_test_silent_high", the GPIO is switched to low state.
+    (b) This doesn't result in a latched interrupt, because RAW_STATUS_EN
+        was cleared when masking the level-triggered interrupt.
+
+Fix this by clearing the interrupt state whenever making any changes to the
+interrupt configuration. This includes previously disabled interrupts, but
+also any changes to interrupt polarity or detection type.
+
+With this change, all 16 test cases are now passing for the non-wakeup
+GPIOs in the TLMM.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: cf9d052aa600 ("pinctrl: qcom: Don't clear pending interrupts when enabling")
+Reported-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Closes: https://lore.kernel.org/r/20250227-tlmm-test-v1-1-d18877b4a5db@oss.qualcomm.com/
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Tested-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/20250312-pinctrl-msm-type-latch-v1-1-ce87c561d3d7@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/streamzap.c |   68 ++++++++++++++++++++++++-------------------
- 1 file changed, 38 insertions(+), 30 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-msm.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/media/rc/streamzap.c
-+++ b/drivers/media/rc/streamzap.c
-@@ -179,39 +179,10 @@ static void sz_push_half_space(struct st
- 	sz_push_full_space(sz, value & SZ_SPACE_MASK);
- }
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -955,8 +955,7 @@ static int msm_gpio_irq_set_type(struct
+ 	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
+ 	const struct msm_pingroup *g;
+ 	unsigned long flags;
+-	bool was_enabled;
+-	u32 val;
++	u32 val, oldval;
  
--/*
-- * streamzap_callback - usb IRQ handler callback
-- *
-- * This procedure is invoked on reception of data from
-- * the usb remote.
-- */
--static void streamzap_callback(struct urb *urb)
-+static void sz_process_ir_data(struct streamzap_ir *sz, int len)
- {
--	struct streamzap_ir *sz;
- 	unsigned int i;
--	int len;
--
--	if (!urb)
--		return;
--
--	sz = urb->context;
--	len = urb->actual_length;
--
--	switch (urb->status) {
--	case -ECONNRESET:
--	case -ENOENT:
--	case -ESHUTDOWN:
--		/*
--		 * this urb is terminated, clean up.
--		 * sz might already be invalid at this point
--		 */
--		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
--		return;
--	default:
--		break;
--	}
+ 	if (msm_gpio_needs_dual_edge_parent_workaround(d, type)) {
+ 		set_bit(d->hwirq, pctrl->dual_edge_irqs);
+@@ -1016,8 +1015,7 @@ static int msm_gpio_irq_set_type(struct
+ 	 * internal circuitry of TLMM, toggling the RAW_STATUS
+ 	 * could cause the INTR_STATUS to be set for EDGE interrupts.
+ 	 */
+-	val = msm_readl_intr_cfg(pctrl, g);
+-	was_enabled = val & BIT(g->intr_raw_status_bit);
++	val = oldval = msm_readl_intr_cfg(pctrl, g);
+ 	val |= BIT(g->intr_raw_status_bit);
+ 	if (g->intr_detection_width == 2) {
+ 		val &= ~(3 << g->intr_detection_bit);
+@@ -1070,9 +1068,11 @@ static int msm_gpio_irq_set_type(struct
+ 	/*
+ 	 * The first time we set RAW_STATUS_EN it could trigger an interrupt.
+ 	 * Clear the interrupt.  This is safe because we have
+-	 * IRQCHIP_SET_TYPE_MASKED.
++	 * IRQCHIP_SET_TYPE_MASKED. When changing the interrupt type, we could
++	 * also still have a non-matching interrupt latched, so clear whenever
++	 * making changes to the interrupt configuration.
+ 	 */
+-	if (!was_enabled)
++	if (val != oldval)
+ 		msm_ack_intr_status(pctrl, g);
  
--	dev_dbg(sz->dev, "%s: received urb, len %d\n", __func__, len);
- 	for (i = 0; i < len; i++) {
- 		dev_dbg(sz->dev, "sz->buf_in[%d]: %x\n",
- 			i, (unsigned char)sz->buf_in[i]);
-@@ -264,6 +235,43 @@ static void streamzap_callback(struct ur
- 	}
- 
- 	ir_raw_event_handle(sz->rdev);
-+}
-+
-+/*
-+ * streamzap_callback - usb IRQ handler callback
-+ *
-+ * This procedure is invoked on reception of data from
-+ * the usb remote.
-+ */
-+static void streamzap_callback(struct urb *urb)
-+{
-+	struct streamzap_ir *sz;
-+	int len;
-+
-+	if (!urb)
-+		return;
-+
-+	sz = urb->context;
-+	len = urb->actual_length;
-+
-+	switch (urb->status) {
-+	case 0:
-+		dev_dbg(sz->dev, "%s: received urb, len %d\n", __func__, len);
-+		sz_process_ir_data(sz, len);
-+		break;
-+	case -ECONNRESET:
-+	case -ENOENT:
-+	case -ESHUTDOWN:
-+		/*
-+		 * this urb is terminated, clean up.
-+		 * sz might already be invalid at this point
-+		 */
-+		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
-+		return;
-+	default:
-+		break;
-+	}
-+
- 	usb_submit_urb(urb, GFP_ATOMIC);
- 
- 	return;
+ 	if (test_bit(d->hwirq, pctrl->dual_edge_irqs))
 
 
