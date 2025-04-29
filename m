@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00AE62206AA;
-	Tue, 29 Apr 2025 17:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24822206AA;
+	Tue, 29 Apr 2025 17:19:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947185; cv=none; b=SxdzpwZnRgbXJwxQrH0mZIIsM2QujWaIvUbWsX8Lz1PKgRkEMWaUvzhfcitT3cvKhOZCIyjGEUghwDtK4/7RL/FAIEc4CkdC0OB50kZQCZsXDibNx03pu6sJHt+bRcstTM31xcCjwbhHFKzTEapDhJsHU39IlLnLD2ceGn8zfpg=
+	t=1745947187; cv=none; b=IUVlnJpfjUe5wnd+HnhRHu+gpXBR6N+SLvIWhU+zB0qu1SziZ1JFndMfEPhEy9r1fpjjvqxLRdupfwSIzelvVTrzJo+MUDoN5wWM0LXg49pIhqLT0aggKfyFhnGPrlQu+Z+TGHbwvDTmcIJGbcxuptKmEogk7+oBeBY253GroIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947185; c=relaxed/simple;
-	bh=60T5jdSV1Bbl+42uiECU3vUomaZ2jueyEKOnkU90HMQ=;
+	s=arc-20240116; t=1745947187; c=relaxed/simple;
+	bh=TcG8tgpJ+bi3HZi5NQq0FNSQRcFuOWdfe+dmZSnkGsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YIHyznR2f6EMU9Z5eeU6UbdyOp3XCgkqJ8R+3liMGxT5n3Fv8l/wSY/NCmPZIGeNZ4Zl9iK1A9gRoWizrCvtMspwOLahz5TnqAFqMts8tMM3wyj2DQivrA85z7m9UIBv+PSIO/8YXFKNh0goHcgOuCzrC4OJRhWkQz888d7yZt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G++PsmSS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TeLalwNE98UyH0hvwFVt+vZGtVA0cruj5cbDEWHn1oRSv4SS8FZIq7SOZE3jaTuMDmrYp9ZJIKSGjCd56MgL0NiLESPUZ2TcdHIDEqznibIP2JEMdI0OnAh3P0VdBRAImGHYn4SEjTqCXqyS/8DLs011ljgTggDhVv8pHT3I7KU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7L+2q1q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G++PsmSS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63794C4CEE3;
-	Tue, 29 Apr 2025 17:19:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7L+2q1q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43FE9C4CEE3;
+	Tue, 29 Apr 2025 17:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947184;
-	bh=60T5jdSV1Bbl+42uiECU3vUomaZ2jueyEKOnkU90HMQ=;
+	s=korg; t=1745947187;
+	bh=TcG8tgpJ+bi3HZi5NQq0FNSQRcFuOWdfe+dmZSnkGsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G++PsmSSmRJWWa+30HG5Zovg8fb7i5C2yJgZ5VERNKSwwvKzrik0YgxZwUjwx4yVD
-	 sSE0PrVES0Ny3vqnNh12gALpnVcKVvWQdgyG4FpH9pryRViamLYixjtFk64govCgLU
-	 8W9E50TxZToO+SBVciSwUwKKw5/BTV//WXWfHrsU=
+	b=Q7L+2q1qHHEwv7xDeSAwmBjTCg8Uk0lQAcC3i3z7VqyKN5hLgfJKlqVbXZmPgJ89K
+	 zz06ICKuemzcKc3UHyaHjyAvqPMKHtpyL5Oy6rFj+jm6DCLsec+u5STHDzF2hR47/h
+	 z0oLZ21713dH65nAV8HGtZRZ8o9Z3XxhBOUnzLSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Tejun Heo <tj@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Bin Lan <bin.lan.cn@windriver.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
 	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.10 170/286] blk-cgroup: support to track if policy is online
-Date: Tue, 29 Apr 2025 18:41:14 +0200
-Message-ID: <20250429161114.878961854@linuxfoundation.org>
+Subject: [PATCH 5.10 161/286] smb: client: fix potential UAF in cifs_debug_files_proc_show()
+Date: Tue, 29 Apr 2025 18:41:05 +0200
+Message-ID: <20250429161114.508796090@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -54,120 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-commit dfd6200a095440b663099d8d42f1efb0175a1ce3 upstream.
+commit ca545b7f0823f19db0f1148d59bc5e1a56634502 upstream.
 
-A new field 'online' is added to blkg_policy_data to fix following
-2 problem:
+Skip sessions that are being teared down (status == SES_EXITING) to
+avoid UAF.
 
-1) In blkcg_activate_policy(), if pd_alloc_fn() with 'GFP_NOWAIT'
-   failed, 'queue_lock' will be dropped and pd_alloc_fn() will try again
-   without 'GFP_NOWAIT'. In the meantime, remove cgroup can race with
-   it, and pd_offline_fn() will be called without pd_init_fn() and
-   pd_online_fn(). This way null-ptr-deference can be triggered.
-
-2) In order to synchronize pd_free_fn() from blkg_free_workfn() and
-   blkcg_deactivate_policy(), 'list_del_init(&blkg->q_node)' will be
-   delayed to blkg_free_workfn(), hence pd_offline_fn() can be called
-   first in blkg_destroy(), and then blkcg_deactivate_policy() will
-   call it again, we must prevent it.
-
-The new field 'online' will be set after pd_online_fn() and will be
-cleared after pd_offline_fn(), in the meantime pd_offline_fn() will only
-be called if 'online' is set.
-
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230119110350.2287325-3-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ This patch removes lock/unlock operation in routine cifs_ses_exiting()
+  for ses_lock is not present in v5.10 and not ported yet. ses->status
+  is protected by a global lock, cifs_tcp_ses_lock, in v5.10. ]
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-cgroup.c         |   24 +++++++++++++++++-------
- include/linux/blk-cgroup.h |    1 +
- 2 files changed, 18 insertions(+), 7 deletions(-)
+ fs/cifs/cifs_debug.c |    2 ++
+ fs/cifs/cifsglob.h   |    8 ++++++++
+ 2 files changed, 10 insertions(+)
 
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -191,6 +191,7 @@ static struct blkcg_gq *blkg_alloc(struc
- 		blkg->pd[i] = pd;
- 		pd->blkg = blkg;
- 		pd->plid = i;
-+		pd->online = false;
- 	}
+--- a/fs/cifs/cifs_debug.c
++++ b/fs/cifs/cifs_debug.c
+@@ -183,6 +183,8 @@ static int cifs_debug_files_proc_show(st
+ 				    tcp_ses_list);
+ 		list_for_each(tmp, &server->smb_ses_list) {
+ 			ses = list_entry(tmp, struct cifs_ses, smb_ses_list);
++			if (cifs_ses_exiting(ses))
++				continue;
+ 			list_for_each(tmp1, &ses->tcon_list) {
+ 				tcon = list_entry(tmp1, struct cifs_tcon, tcon_list);
+ 				spin_lock(&tcon->open_file_lock);
+--- a/fs/cifs/cifsglob.h
++++ b/fs/cifs/cifsglob.h
+@@ -2115,4 +2115,12 @@ static inline struct scatterlist *cifs_s
+ 	return sg;
+ }
  
- 	return blkg;
-@@ -288,8 +289,11 @@ static struct blkcg_gq *blkg_create(stru
- 		for (i = 0; i < BLKCG_MAX_POLS; i++) {
- 			struct blkcg_policy *pol = blkcg_policy[i];
- 
--			if (blkg->pd[i] && pol->pd_online_fn)
--				pol->pd_online_fn(blkg->pd[i]);
-+			if (blkg->pd[i]) {
-+				if (pol->pd_online_fn)
-+					pol->pd_online_fn(blkg->pd[i]);
-+				blkg->pd[i]->online = true;
-+			}
- 		}
- 	}
- 	blkg->online = true;
-@@ -389,8 +393,11 @@ static void blkg_destroy(struct blkcg_gq
- 	for (i = 0; i < BLKCG_MAX_POLS; i++) {
- 		struct blkcg_policy *pol = blkcg_policy[i];
- 
--		if (blkg->pd[i] && pol->pd_offline_fn)
--			pol->pd_offline_fn(blkg->pd[i]);
-+		if (blkg->pd[i] && blkg->pd[i]->online) {
-+			if (pol->pd_offline_fn)
-+				pol->pd_offline_fn(blkg->pd[i]);
-+			blkg->pd[i]->online = false;
-+		}
- 	}
- 
- 	blkg->online = false;
-@@ -1364,6 +1371,7 @@ retry:
- 		blkg->pd[pol->plid] = pd;
- 		pd->blkg = blkg;
- 		pd->plid = pol->plid;
-+		pd->online = false;
- 	}
- 
- 	/* all allocated, init in the same order */
-@@ -1371,9 +1379,11 @@ retry:
- 		list_for_each_entry_reverse(blkg, &q->blkg_list, q_node)
- 			pol->pd_init_fn(blkg->pd[pol->plid]);
- 
--	if (pol->pd_online_fn)
--		list_for_each_entry_reverse(blkg, &q->blkg_list, q_node)
-+	list_for_each_entry_reverse(blkg, &q->blkg_list, q_node) {
-+		if (pol->pd_online_fn)
- 			pol->pd_online_fn(blkg->pd[pol->plid]);
-+		blkg->pd[pol->plid]->online = true;
-+	}
- 
- 	__set_bit(pol->plid, q->blkcg_pols);
- 	ret = 0;
-@@ -1435,7 +1445,7 @@ void blkcg_deactivate_policy(struct requ
- 
- 		spin_lock(&blkcg->lock);
- 		if (blkg->pd[pol->plid]) {
--			if (pol->pd_offline_fn)
-+			if (blkg->pd[pol->plid]->online && pol->pd_offline_fn)
- 				pol->pd_offline_fn(blkg->pd[pol->plid]);
- 			pol->pd_free_fn(blkg->pd[pol->plid]);
- 			blkg->pd[pol->plid] = NULL;
---- a/include/linux/blk-cgroup.h
-+++ b/include/linux/blk-cgroup.h
-@@ -87,6 +87,7 @@ struct blkg_policy_data {
- 	/* the blkg and policy id this per-policy data belongs to */
- 	struct blkcg_gq			*blkg;
- 	int				plid;
-+	bool				online;
- };
- 
- /*
++static inline bool cifs_ses_exiting(struct cifs_ses *ses)
++{
++	bool ret;
++
++	ret = ses->status == CifsExiting;
++	return ret;
++}
++
+ #endif	/* _CIFS_GLOB_H */
 
 
