@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0BB24A07B;
-	Tue, 29 Apr 2025 17:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1265B248878;
+	Tue, 29 Apr 2025 17:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946951; cv=none; b=GXlGmrXUUoKQhZFcvF3fxZSZn4EzoJq37ewPjNAN2jPavTDuH6SIhtOiuO5fsQKrg5dciZsdvw/9e7qQ995btvpeVxXwETUbeaYrVI6O3tPI/QbcMhBJll8N3r5fXKrfzf+vjSIIhJebsY6qFq/UMVlexULKr/LVBrLuHakk3Uk=
+	t=1745946954; cv=none; b=MRURzJy+539L7BSNLGK59KZlpGEjOh7fCH8aEsnhJxLOlQNILG9qFQyY56oWFfmVD/OGlV2hOV2m4nwvnEXdB0T/aJ4+UpSQ23dH1OxPv+qYE1ok3dr5gACEsVNUchEE7t1ymO68PXUKNmTiLohEN15T08VzEHv6yaop+5S77/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946951; c=relaxed/simple;
-	bh=wCSixmf0iDtqOJru3zJCt9kdUaerdL2Ra46dwNphzxI=;
+	s=arc-20240116; t=1745946954; c=relaxed/simple;
+	bh=/BR4imJ0yZHN/QzR6UXOFWA9ZZFR3/hw7Z08lsJoK2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HB2O77T8I+Zzq+NfyvTBJSwGdOojk07GbAej4IxmL5H1FAPwKtVLOLl0VRL5lMUnzRWPSzmmhP1K454i9ZHcQrHAICU2fFOsHOaC2KvmCgDXypNh/ePr0fcf/I5yz44MxFkmyY/g729L1SaPhLBa3rKguQly5dbBAna9WpX5Y0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAUt6LAr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FRYEX6YeFZBvghq9Y36X3iKcquQSLJyawLDZJNhHLRjq09JbJCw9Ro8mawozpF+EPfZqyAAFqJ0u13gaiDxnKRQf+rkaz/Z6MZIGnQ4w/GGQAwDF3TIba0QBDiH7RJUyIQ8yCj11wYztVErQuajNCd8yFuuVjziGkfkba/Ca54w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/6xoUOL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAUt6LAr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B19EBC4CEE3;
-	Tue, 29 Apr 2025 17:15:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/6xoUOL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DF8C4CEE3;
+	Tue, 29 Apr 2025 17:15:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946951;
-	bh=wCSixmf0iDtqOJru3zJCt9kdUaerdL2Ra46dwNphzxI=;
+	s=korg; t=1745946954;
+	bh=/BR4imJ0yZHN/QzR6UXOFWA9ZZFR3/hw7Z08lsJoK2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zAUt6LArtPJwUagv/6G+MwqkgryhwI1Xi15rtPZ6MerbPT9aMzd2xgolgmRvannQC
-	 rd4DHrIny3koFmZAdqXa9yRtEGwFP7P32Xan2eFSj1vPUqydh9Dr+bbln5bowKeQaD
-	 laHkGq8Q4w+1NoNdUv54kNqBMLHznZc/ilmNXgLE=
+	b=m/6xoUOLMFII2dT2a9HcG57qRvXREAN38bXIPxlCUPq0ryooXnxMyFzrqDOD6iHMb
+	 uPFk4GszwRlHMC0jtzowfURIaM5Yqe7sgLXq3gFBcOqtFYQDJsxPCCPv3zPbB5qvei
+	 6qU0/7fA2G2mrwEtle/MX1wmam3sIv6aHXYLMXI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 5.10 122/286] asus-laptop: Fix an uninitialized variable
-Date: Tue, 29 Apr 2025 18:40:26 +0200
-Message-ID: <20250429161112.875397382@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 123/286] nfs: move nfs_fhandle_hash to common include file
+Date: Tue, 29 Apr 2025 18:40:27 +0200
+Message-ID: <20250429161112.914965431@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -44,60 +45,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 6c683c6887e4addcd6bd1ddce08cafccb0a21e32 upstream.
+[ Upstream commit e59fb6749ed833deee5b3cfd7e89925296d41f49 ]
 
-The value returned by acpi_evaluate_integer() is not checked,
-but the result is not always successful, so it is necessary to
-add a check of the returned value.
+lockd needs to be able to hash filehandles for tracepoints. Move the
+nfs_fhandle_hash() helper to a common nfs include file.
 
-If the result remains negative during three iterations of the loop,
-then the uninitialized variable 'val' will be used in the clamp_val()
-macro, so it must be initialized with the current value of the 'curr'
-variable.
-
-In this case, the algorithm should be less noisy.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: b23910c2194e ("asus-laptop: Pegatron Lucid accelerometer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Link: https://lore.kernel.org/r/20250403122603.18172-1-arefev@swemel.ru
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: cd35b6cb4664 ("nfs: add missing selections of CONFIG_CRC32")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-laptop.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/nfs/internal.h   | 15 ---------------
+ include/linux/nfs.h | 20 ++++++++++++++++++++
+ 2 files changed, 20 insertions(+), 15 deletions(-)
 
---- a/drivers/platform/x86/asus-laptop.c
-+++ b/drivers/platform/x86/asus-laptop.c
-@@ -427,11 +427,14 @@ static int asus_pega_lucid_set(struct as
+diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
+index 394a82d470d55..05e807a0ba225 100644
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -776,27 +776,12 @@ u64 nfs_timespec_to_change_attr(const struct timespec64 *ts)
+ }
  
- static int pega_acc_axis(struct asus_laptop *asus, int curr, char *method)
+ #ifdef CONFIG_CRC32
+-/**
+- * nfs_fhandle_hash - calculate the crc32 hash for the filehandle
+- * @fh - pointer to filehandle
+- *
+- * returns a crc32 hash for the filehandle that is compatible with
+- * the one displayed by "wireshark".
+- */
+-static inline u32 nfs_fhandle_hash(const struct nfs_fh *fh)
+-{
+-	return ~crc32_le(0xFFFFFFFF, &fh->data[0], fh->size);
+-}
+ static inline u32 nfs_stateid_hash(const nfs4_stateid *stateid)
  {
-+	unsigned long long val = (unsigned long long)curr;
-+	acpi_status status;
- 	int i, delta;
--	unsigned long long val;
--	for (i = 0; i < PEGA_ACC_RETRIES; i++) {
--		acpi_evaluate_integer(asus->handle, method, NULL, &val);
+ 	return ~crc32_le(0xFFFFFFFF, &stateid->other[0],
+ 				NFS4_STATEID_OTHER_SIZE);
+ }
+ #else
+-static inline u32 nfs_fhandle_hash(const struct nfs_fh *fh)
+-{
+-	return 0;
+-}
+ static inline u32 nfs_stateid_hash(nfs4_stateid *stateid)
+ {
+ 	return 0;
+diff --git a/include/linux/nfs.h b/include/linux/nfs.h
+index b06375e88e589..ceb70a926b95e 100644
+--- a/include/linux/nfs.h
++++ b/include/linux/nfs.h
+@@ -10,6 +10,7 @@
  
-+	for (i = 0; i < PEGA_ACC_RETRIES; i++) {
-+		status = acpi_evaluate_integer(asus->handle, method, NULL, &val);
-+		if (ACPI_FAILURE(status))
-+			continue;
- 		/* The output is noisy.  From reading the ASL
- 		 * dissassembly, timeout errors are returned with 1's
- 		 * in the high word, and the lack of locking around
+ #include <linux/sunrpc/msg_prot.h>
+ #include <linux/string.h>
++#include <linux/crc32.h>
+ #include <uapi/linux/nfs.h>
+ 
+ /*
+@@ -44,4 +45,23 @@ enum nfs3_stable_how {
+ 	/* used by direct.c to mark verf as invalid */
+ 	NFS_INVALID_STABLE_HOW = -1
+ };
++
++#ifdef CONFIG_CRC32
++/**
++ * nfs_fhandle_hash - calculate the crc32 hash for the filehandle
++ * @fh - pointer to filehandle
++ *
++ * returns a crc32 hash for the filehandle that is compatible with
++ * the one displayed by "wireshark".
++ */
++static inline u32 nfs_fhandle_hash(const struct nfs_fh *fh)
++{
++	return ~crc32_le(0xFFFFFFFF, &fh->data[0], fh->size);
++}
++#else /* CONFIG_CRC32 */
++static inline u32 nfs_fhandle_hash(const struct nfs_fh *fh)
++{
++	return 0;
++}
++#endif /* CONFIG_CRC32 */
+ #endif /* _LINUX_NFS_H */
+-- 
+2.39.5
+
 
 
