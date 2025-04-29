@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9376F24C08D;
-	Tue, 29 Apr 2025 17:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46F824A07D;
+	Tue, 29 Apr 2025 17:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745947428; cv=none; b=K++uSlOX65+4Nj0tmk39eTb1I2lfVjyPN8N1ZHmeCm91mfg5BjluFcPHHTGpY1VQb/MjLq29YCS2z5YUlnmOvYFhleLvexicSQLgBgssM/Yu/amTL6O23l3v+mhs437tnK5i5DZ+fl5VExb2cECrbbjvRTpGBv2XU/3l7ADrPoM=
+	t=1745947431; cv=none; b=B59wQYxsQe/E4J87w47VPOG0Z41dJDW1ZcVs16l1gv0aXbOw8TfD6YYRTaDvYzw3lv7tiex3RrFMG96Jdt/O5dfromypRUxO4Wd8IqttWe/4ImqegdDxCUlwY8/VbvmlgQWpFnKKM7n4YLQZ5orPLSXdfsa4Ql+JpSRFDLeOxPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745947428; c=relaxed/simple;
-	bh=Wfb8rRFluUXF757kun7w+kGUbl+nCI7XpjyGQSOp5Ek=;
+	s=arc-20240116; t=1745947431; c=relaxed/simple;
+	bh=EVxNLEjGgFzhSOc8fWNddBjmhIfGRRtpoPBPzixVAgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oya2A/fqvGDPKIsjbee7QFxiXgNMETpfd6tjWw5miKnbRYflOy6nJQc1pMtMzduQUwshfiukU07efJPw+9FsP3OsnhS9Z8Ol+AY1F8+PL9/e1ZYErPG0im1c/JNsJFstFSmKeUAICm6GBonaq2lwa+UlQXBzFD8sq18CdJCX25U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XbxrFevR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hljIBXoWilpFsOS00FpVu9k9YNFWkHHa1kU+27Biv6DPnih53S6C5O5PavGMnkI1IxhXPPkbMHbMlAQsY2tn3fNx9eagsY581cF3ghPe+d9azpGroBrB/u2pC0xvrLrBJLNd76nL3sKN86Q7IYw5mVpZM1CyV5vl1oP6/AJqR80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sR9VBLbv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XbxrFevR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050E1C4CEE3;
-	Tue, 29 Apr 2025 17:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sR9VBLbv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32008C4CEE3;
+	Tue, 29 Apr 2025 17:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745947428;
-	bh=Wfb8rRFluUXF757kun7w+kGUbl+nCI7XpjyGQSOp5Ek=;
+	s=korg; t=1745947431;
+	bh=EVxNLEjGgFzhSOc8fWNddBjmhIfGRRtpoPBPzixVAgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XbxrFevRmDzwtrSJBQqS5NdZsv8EkaNfpgQuyh3tufs6u741QtJ6J5IJZJttUh77l
-	 Xiev+CBSKlPCHoMtXB7P25zei/FPvt6Vc8mjoX1RgZtp5zC+2SN1X352eP5dW+MDIo
-	 tMKaHS/LKRqTPX9W8NCkdDj/BtYu3aTB0tVe7NW8=
+	b=sR9VBLbvf0FFBadCLz8qZgSVQIkyefdQQVZddUPxBftwcaOWo3TWWX7PQe4uWG1PO
+	 lN443UuGDquYAYOqlOPMzRBBvpRM883VBddMi3u+rcPZPNRabtnLy/oaFLCpBnhUj4
+	 WNj8Xey0TRXzmf0zTNfoxEJkz7hHoQDR3s6DmYX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 260/286] objtool, ASoC: codecs: wcd934x: Remove potential undefined behavior in wcd934x_slim_irq_handler()
-Date: Tue, 29 Apr 2025 18:42:44 +0200
-Message-ID: <20250429161118.613372283@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 5.10 278/286] comedi: jr3_pci: Fix synchronous deletion of timer
+Date: Tue, 29 Apr 2025 18:43:02 +0200
+Message-ID: <20250429161119.348885172@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161107.848008295@linuxfoundation.org>
 References: <20250429161107.848008295@linuxfoundation.org>
@@ -58,57 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 060aed9c0093b341480770457093449771cf1496 ]
+commit 44d9b3f584c59a606b521e7274e658d5b866c699 upstream.
 
-If 'port_id' is negative, the shift counts in wcd934x_slim_irq_handler()
-also become negative, resulting in undefined behavior due to shift out
-of bounds.
+When `jr3_pci_detach()` is called during device removal, it calls
+`timer_delete_sync()` to stop the timer, but the timer expiry function
+always reschedules the timer, so the synchronization is ineffective.
 
-If I'm reading the code correctly, that appears to be not possible, but
-with KCOV enabled, Clang's range analysis isn't always able to determine
-that and generates undefined behavior.
+Call `timer_shutdown_sync()` instead.  It does not matter that the timer
+expiry function pointer is cleared, because the device is being removed.
 
-As a result the code generation isn't optimal, and undefined behavior
-should be avoided regardless.  Improve code generation and remove the
-undefined behavior by converting the signed variables to unsigned.
-
-Fixes the following warning with UBSAN:
-
-  sound/soc/codecs/snd-soc-wcd934x.o: warning: objtool: .text.wcd934x_slim_irq_handler: unexpected end of section
-
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Mark Brown <broonie@kernel.org>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/7e863839ec7301bf9c0f429a03873d44e484c31c.1742852847.git.jpoimboe@kernel.org
-Closes: https://lore.kernel.org/oe-kbuild-all/202503180044.oH9gyPeg-lkp@intel.com/
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 07b509e6584a5 ("Staging: comedi: add jr3_pci driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20250415123901.13483-1-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wcd934x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/comedi/drivers/jr3_pci.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/wcd934x.c b/sound/soc/codecs/wcd934x.c
-index 104751ac6cd14..8580f5e95ccf6 100644
---- a/sound/soc/codecs/wcd934x.c
-+++ b/sound/soc/codecs/wcd934x.c
-@@ -2188,7 +2188,7 @@ static irqreturn_t wcd934x_slim_irq_handler(int irq, void *data)
+--- a/drivers/staging/comedi/drivers/jr3_pci.c
++++ b/drivers/staging/comedi/drivers/jr3_pci.c
+@@ -88,6 +88,7 @@ struct jr3_pci_poll_delay {
+ struct jr3_pci_dev_private {
+ 	struct timer_list timer;
+ 	struct comedi_device *dev;
++	bool timer_enable;
+ };
+ 
+ union jr3_pci_single_range {
+@@ -612,10 +613,11 @@ static void jr3_pci_poll_dev(struct time
+ 				delay = sub_delay.max;
+ 		}
+ 	}
++	if (devpriv->timer_enable) {
++		devpriv->timer.expires = jiffies + msecs_to_jiffies(delay);
++		add_timer(&devpriv->timer);
++	}
+ 	spin_unlock_irqrestore(&dev->spinlock, flags);
+-
+-	devpriv->timer.expires = jiffies + msecs_to_jiffies(delay);
+-	add_timer(&devpriv->timer);
+ }
+ 
+ static struct jr3_pci_subdev_private *
+@@ -764,6 +766,7 @@ static int jr3_pci_auto_attach(struct co
+ 	devpriv->dev = dev;
+ 	timer_setup(&devpriv->timer, jr3_pci_poll_dev, 0);
+ 	devpriv->timer.expires = jiffies + msecs_to_jiffies(1000);
++	devpriv->timer_enable = true;
+ 	add_timer(&devpriv->timer);
+ 
+ 	return 0;
+@@ -773,8 +776,12 @@ static void jr3_pci_detach(struct comedi
  {
- 	struct wcd934x_codec *wcd = data;
- 	unsigned long status = 0;
--	int i, j, port_id;
-+	unsigned int i, j, port_id;
- 	unsigned int val, int_val = 0;
- 	irqreturn_t ret = IRQ_NONE;
- 	bool tx;
--- 
-2.39.5
-
+ 	struct jr3_pci_dev_private *devpriv = dev->private;
+ 
+-	if (devpriv)
++	if (devpriv) {
++		spin_lock_bh(&dev->spinlock);
++		devpriv->timer_enable = false;
++		spin_unlock_bh(&dev->spinlock);
+ 		del_timer_sync(&devpriv->timer);
++	}
+ 
+ 	comedi_pci_detach(dev);
+ }
 
 
