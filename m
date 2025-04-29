@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C492AE96;
-	Tue, 29 Apr 2025 17:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6F9243964;
+	Tue, 29 Apr 2025 17:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949471; cv=none; b=HZ+SfE210Fex6g/XU9bWY6Zbjf3dd4U92Z+29ELNsG+MGRLskNMIIW/AUX8U4k1uaQPj1lrdngzmUOK3YOrPOuV6qiqZvANfCiJrMlmEmf40YtuJE6kV+5+i8Wx4ALZH8vh2sSjQ90tRldbzCs8nlxjP+8KegS+JlqR7OeyDly4=
+	t=1745949474; cv=none; b=K1CpC0ofDNU7qMx8Q/tYJ++L6widDrwjajaE4qgk/+76S2E00Zx+pWEn1+kNY4qMU7K3tFpmoqzuZeNw/C8Dn0Mf71fXOFFHz+/MZzt7XvvjI3favvqYBYWuaXNkHaXYYuSr/TqxFqgs6+1RvTqYkRLcH5ueesXS0hWHPabmLrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949471; c=relaxed/simple;
-	bh=j5Qzfdcxiwf4iYBrUbLEYR5fusepHYRwe5bBAPz04EA=;
+	s=arc-20240116; t=1745949474; c=relaxed/simple;
+	bh=3LKYrr+eyka/VFxdzepxoLr2yoWK9NV2Ce5m1aGy/Yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cslp/ViKjk8GUWzkExcz203+BTG8RZz5YzyUdGO1TUKTQPGbpg41zosrILkVcVSBJQ7IwOdj2ocWH/LPhyNfbtqK2jJO3aMcI7Tv9ffNUFHGVArs4IhYbO5qET6dyF3Exi73hruZTJhNTUooOM96hWxpq0wjqqj0lkMr/HChfJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGpLCLYF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RA1CPVHWMV5xb2fmdtr+EuSrLWuuHPovlBR66SRxqNDDh50gp09FG3do8KYjHQQxkqzMNX2p/HMzXx3Tyfb/FqGwCpm/rDjaTXw9cZZEC4NeHvLA3aooBbfST5aeI0RcdxCF7wQ/ycUp5W6MEt5hx47HaSnEj1nNMt+zyVmimfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7em14FD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGpLCLYF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAB4C4CEE3;
-	Tue, 29 Apr 2025 17:57:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7em14FD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBAEBC4CEE9;
+	Tue, 29 Apr 2025 17:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949471;
-	bh=j5Qzfdcxiwf4iYBrUbLEYR5fusepHYRwe5bBAPz04EA=;
+	s=korg; t=1745949474;
+	bh=3LKYrr+eyka/VFxdzepxoLr2yoWK9NV2Ce5m1aGy/Yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KGpLCLYFKr+483z5tYAKYbNTYpSZEZ7oaz7yL2U7ow9diUqCakkj25qam2ags+Y+y
-	 C3uDlEMqS67+2Jj9aOeZV/OH/KdfS/t9b2Sm1pbbbyyYk9v9qkLeft0ERttE57dNnJ
-	 +lU5kGEwuJsvQfSVJB9f6Yv6ei3HvIdoEprUAJ0U=
+	b=w7em14FDGagqHwOjU5GQ1lrgdA9USFRZqbPt60KOEt8C5ywydTHzkj70MyE81mW2Z
+	 WqgiN2wcc4fcEicFSVMAHXeKrwf/mM16PTWUlLrObWb2nwikV/fYykCumxLorLZpuV
+	 +TrAtBMLXLfbfUml/bA6X5tA+JZsiw22HWUC+tc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 5.15 312/373] usb: chipidea: ci_hdrc_imx: fix call balance of regulator routines
-Date: Tue, 29 Apr 2025 18:43:09 +0200
-Message-ID: <20250429161135.942726220@linuxfoundation.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+e37dd1dfc814b10caa55@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 330/373] fs/ntfs3: Fix WARNING in ntfs_extend_initialized_size
+Date: Tue, 29 Apr 2025 18:43:27 +0200
+Message-ID: <20250429161136.706827552@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,92 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit 8cab0e9a3f3e8d700179e0d6141643d54a267fd5 upstream.
+[ Upstream commit ff355926445897cc9fdea3b00611e514232c213c ]
 
-Upon encountering errors during the HSIC pinctrl handling section the
-regulator should be disabled.
+Syzbot reported a WARNING in ntfs_extend_initialized_size.
+The data type of in->i_valid and to is u64 in ntfs_file_mmap().
+If their values are greater than LLONG_MAX, overflow will occur because
+the data types of the parameters valid and new_valid corresponding to
+the function ntfs_extend_initialized_size() are loff_t.
 
-Use devm_add_action_or_reset() to let the regulator-disabling routine be
-handled by device resource management stack.
+Before calling ntfs_extend_initialized_size() in the ntfs_file_mmap(),
+the "ni->i_valid < to" has been determined, so the same WARN_ON determination
+is not required in ntfs_extend_initialized_size().
+Just execute the ntfs_extend_initialized_size() in ntfs_extend() to make
+a WARN_ON check.
 
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: 4d6141288c33 ("usb: chipidea: imx: pinctrl for HSIC is optional")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20250316102658.490340-3-pchelkin@ispras.ru
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-and-tested-by: syzbot+e37dd1dfc814b10caa55@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e37dd1dfc814b10caa55
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/ci_hdrc_imx.c |   25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ fs/ntfs3/file.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/chipidea/ci_hdrc_imx.c
-+++ b/drivers/usb/chipidea/ci_hdrc_imx.c
-@@ -322,6 +322,13 @@ static int ci_hdrc_imx_notify_event(stru
- 	return ret;
- }
- 
-+static void ci_hdrc_imx_disable_regulator(void *arg)
-+{
-+	struct ci_hdrc_imx_data *data = arg;
-+
-+	regulator_disable(data->hsic_pad_regulator);
-+}
-+
- static int ci_hdrc_imx_probe(struct platform_device *pdev)
- {
- 	struct ci_hdrc_imx_data *data;
-@@ -379,6 +386,13 @@ static int ci_hdrc_imx_probe(struct plat
- 					"Failed to enable HSIC pad regulator\n");
- 				goto err_put;
- 			}
-+			ret = devm_add_action_or_reset(dev,
-+					ci_hdrc_imx_disable_regulator, data);
-+			if (ret) {
-+				dev_err(dev,
-+					"Failed to add regulator devm action\n");
-+				goto err_put;
-+			}
- 		}
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index 2d5d234a4533d..74cf9c51e3228 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -435,6 +435,7 @@ static int ntfs_extend(struct inode *inode, loff_t pos, size_t count,
  	}
  
-@@ -417,11 +431,11 @@ static int ci_hdrc_imx_probe(struct plat
- 
- 	ret = imx_get_clks(dev);
- 	if (ret)
--		goto disable_hsic_regulator;
-+		goto qos_remove_request;
- 
- 	ret = imx_prepare_enable_clks(dev);
- 	if (ret)
--		goto disable_hsic_regulator;
-+		goto qos_remove_request;
- 
- 	data->phy = devm_usb_get_phy_by_phandle(dev, "fsl,usbphy", 0);
- 	if (IS_ERR(data->phy)) {
-@@ -501,10 +515,7 @@ disable_device:
- 	ci_hdrc_remove_device(data->ci_pdev);
- err_clk:
- 	imx_disable_unprepare_clks(dev);
--disable_hsic_regulator:
--	if (data->hsic_pad_regulator)
--		/* don't overwrite original ret (cf. EPROBE_DEFER) */
--		regulator_disable(data->hsic_pad_regulator);
-+qos_remove_request:
- 	if (pdata.flags & CI_HDRC_PMQOS)
- 		cpu_latency_qos_remove_request(&data->pm_qos_req);
- 	data->ci_pdev = NULL;
-@@ -531,8 +542,6 @@ static void ci_hdrc_imx_remove(struct pl
- 		imx_disable_unprepare_clks(&pdev->dev);
- 		if (data->plat_data->flags & CI_HDRC_PMQOS)
- 			cpu_latency_qos_remove_request(&data->pm_qos_req);
--		if (data->hsic_pad_regulator)
--			regulator_disable(data->hsic_pad_regulator);
- 	}
- 	if (data->usbmisc_data)
- 		put_device(data->usbmisc_data->dev);
+ 	if (extend_init && !is_compressed(ni)) {
++		WARN_ON(ni->i_valid >= pos);
+ 		err = ntfs_extend_initialized_size(file, ni, ni->i_valid, pos);
+ 		if (err)
+ 			goto out;
+-- 
+2.39.5
+
 
 
