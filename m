@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BFAC2522AB;
-	Tue, 29 Apr 2025 16:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8A0254AE1;
+	Tue, 29 Apr 2025 16:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945672; cv=none; b=iUPgukwS2LzfLUfaunyd/rgf6zrNgDlQ4oyrRF1oxJ30xEE8IpZgyQZf2XOGYasJ2s8mmUHEchh5FU6nnl/SK6L8ICNonzZZ3q2yCbOsUR61ldqrtWbQRp9m+NTHFkMXh98Y13ecU8NPQYuTbdjVzYHbvid6LSDQrRB3hKczds8=
+	t=1745945675; cv=none; b=kmQ7WS0UxKtJhiBhDaEIRZv/mGG0rX57a3gcFpJ0AexzrsKKVPKR7crTcQWv0MViq7ypR6a698n6gqIpWh/frKMNQQZNn04eThYKBV8UjVEawcPkdV06rfg6p3qRCqyW+Eq6bRQmgza9a0vtSL//S56o3t27z+gzSJtSEojBlHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945672; c=relaxed/simple;
-	bh=uQ9vc51s2sWKE1bEiduQxo22ryczjr/kz4yUu+MMYu0=;
+	s=arc-20240116; t=1745945675; c=relaxed/simple;
+	bh=0oVUmIb8bi/FujRmFgsqgjzLwKn8nH1BmnFlkhS7YNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ULgryNUsSkXPbwHjMFEvP5TI0++sJXNxhOVwTy1icZqvofWSDq2MmgL4T+n+pjTFYpVcfzQMNIJzvdAnY44dSpfUKwQ8oX6zX4m4CvFdKEmlBEN8JEHYPBzDDwU2PTvyFFaiMUwpMokZQl+7DNnX57AUJINdr2Auv7EGFzhpMAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCM3aNT+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AO0U4utske1YCIy9jSLK+Eq13tmqDS904ZB2W1tz36D3vDRBQ5z1QspI7sVBpqS0XkIe3cxbHWxehOV2xKBnYftkdYWUca2yPZ2qB3PA015FQwhkg/V6dBwBwcTX2L6HQPnR8IzIYIyWll3b0HPZLY0hjLA/OL8YM20+8BI6mPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PbclQEWq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCM3aNT+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34AFC4CEE3;
-	Tue, 29 Apr 2025 16:54:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PbclQEWq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5616C4CEE3;
+	Tue, 29 Apr 2025 16:54:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945672;
-	bh=uQ9vc51s2sWKE1bEiduQxo22ryczjr/kz4yUu+MMYu0=;
+	s=korg; t=1745945675;
+	bh=0oVUmIb8bi/FujRmFgsqgjzLwKn8nH1BmnFlkhS7YNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uCM3aNT+cGjAMkt0UXDbAQXC5+Tu4KmgGDn90UgoLHbmAdT+MRjenogdML0gGRxja
-	 nIXEfT3scBzE1Aw+TDp26uicCEUvE59KV3eZfePhIgLyfLtJ4qqsLGeHkrQQZH6mGX
-	 MIw/JxPKtlMf4m+lHTcYjSDRchE5ein22dnfA68g=
+	b=PbclQEWqm/e7mkOuUshl7+ki9ciqnHFCLaUSzNjrYQkQCi1ElmcKL5nx8rTr/Y/5n
+	 nF2yNrSBUsNZJLrsQlJ51YoBHOOcUuTwZLo1gwPtI2ZbgMd3K2qORTuFtF8yzNgn+n
+	 47Pfx7iD12AGsa9isDzvAOGex3KlFyeH0YrQM9V8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 011/311] media: i2c: imx214: Fix link frequency validation
-Date: Tue, 29 Apr 2025 18:37:28 +0200
-Message-ID: <20250429161121.495206835@linuxfoundation.org>
+Subject: [PATCH 6.14 012/311] media: ov08x40: Move ov08x40_identify_module() function up
+Date: Tue, 29 Apr 2025 18:37:29 +0200
+Message-ID: <20250429161121.534719345@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -47,96 +47,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Apitzsch <git@apitzsch.eu>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit acc294519f1749041e1b8c74d46bbf6c57d8b061 ]
+[ Upstream commit 7a39639e448f070cbe37317ac922886b6080ff43 ]
 
-The driver defines IMX214_DEFAULT_LINK_FREQ 480000000, and then
-IMX214_DEFAULT_PIXEL_RATE ((IMX214_DEFAULT_LINK_FREQ * 8LL) / 10),
-which works out as 384MPix/s. (The 8 is 4 lanes and DDR.)
+Move the ov08x40_identify_module() function to above ov08x40_set_stream()
+this is a preparation patch for adding a missing ov08x40_identify_module()
+call to ov08x40_set_stream().
 
-Parsing the PLL registers with the defined 24MHz input. We're in single
-PLL mode, so MIPI frequency is directly linked to pixel rate.  VTCK ends
-up being 1200MHz, and VTPXCK and OPPXCK both are 120MHz.  Section 5.3
-"Frame rate calculation formula" says "Pixel rate
-[pixels/s] = VTPXCK [MHz] * 4", so 120 * 4 = 480MPix/s, which basically
-agrees with my number above.
+No functional changes, just moving code around.
 
-3.1.4. MIPI global timing setting says "Output bitrate = OPPXCK * reg
-0x113[7:0]", so 120MHz * 10, or 1200Mbit/s. That would be a link
-frequency of 600MHz due to DDR.
-That also matches to 480MPix/s * 10bpp / 4 lanes / 2 for DDR.
-
-Keep the previous link frequency for backward compatibility.
-
-Acked-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: André Apitzsch <git@apitzsch.eu>
-Fixes: 436190596241 ("media: imx214: Add imx214 camera sensor driver")
-Cc: stable@vger.kernel.org
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Stable-dep-of: ebf185efadb7 ("media: ov08x40: Add missing ov08x40_identify_module() call on stream-start")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/imx214.c | 28 +++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ drivers/media/i2c/ov08x40.c | 52 ++++++++++++++++++-------------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/media/i2c/imx214.c b/drivers/media/i2c/imx214.c
-index fdc2dfb4ebcdd..bdf2396c2482b 100644
---- a/drivers/media/i2c/imx214.c
-+++ b/drivers/media/i2c/imx214.c
-@@ -27,7 +27,9 @@
- #define IMX214_REG_FAST_STANDBY_CTRL	CCI_REG8(0x0106)
+diff --git a/drivers/media/i2c/ov08x40.c b/drivers/media/i2c/ov08x40.c
+index 83b49cf114acc..580d902977b68 100644
+--- a/drivers/media/i2c/ov08x40.c
++++ b/drivers/media/i2c/ov08x40.c
+@@ -1937,6 +1937,32 @@ static int ov08x40_stop_streaming(struct ov08x40 *ov08x)
+ 				 OV08X40_REG_VALUE_08BIT, OV08X40_MODE_STANDBY);
+ }
  
- #define IMX214_DEFAULT_CLK_FREQ	24000000
--#define IMX214_DEFAULT_LINK_FREQ 480000000
-+#define IMX214_DEFAULT_LINK_FREQ	600000000
-+/* Keep wrong link frequency for backward compatibility */
-+#define IMX214_DEFAULT_LINK_FREQ_LEGACY	480000000
- #define IMX214_DEFAULT_PIXEL_RATE ((IMX214_DEFAULT_LINK_FREQ * 8LL) / 10)
- #define IMX214_FPS 30
- #define IMX214_MBUS_CODE MEDIA_BUS_FMT_SRGGB10_1X10
-@@ -965,18 +967,26 @@ static int imx214_parse_fwnode(struct device *dev)
- 		goto done;
- 	}
- 
--	for (i = 0; i < bus_cfg.nr_of_link_frequencies; i++)
-+	if (bus_cfg.nr_of_link_frequencies != 1)
-+		dev_warn(dev, "Only one link-frequency supported, please review your DT. Continuing anyway\n");
++/* Verify chip ID */
++static int ov08x40_identify_module(struct ov08x40 *ov08x)
++{
++	struct i2c_client *client = v4l2_get_subdevdata(&ov08x->sd);
++	int ret;
++	u32 val;
 +
-+	for (i = 0; i < bus_cfg.nr_of_link_frequencies; i++) {
- 		if (bus_cfg.link_frequencies[i] == IMX214_DEFAULT_LINK_FREQ)
- 			break;
++	if (ov08x->identified)
++		return 0;
++
++	ret = ov08x40_read_reg(ov08x, OV08X40_REG_CHIP_ID,
++			       OV08X40_REG_VALUE_24BIT, &val);
++	if (ret)
++		return ret;
++
++	if (val != OV08X40_CHIP_ID) {
++		dev_err(&client->dev, "chip id mismatch: %x!=%x\n",
++			OV08X40_CHIP_ID, val);
++		return -ENXIO;
++	}
++
++	ov08x->identified = true;
++
++	return 0;
++}
++
+ static int ov08x40_set_stream(struct v4l2_subdev *sd, int enable)
+ {
+ 	struct ov08x40 *ov08x = to_ov08x40(sd);
+@@ -1974,32 +2000,6 @@ static int ov08x40_set_stream(struct v4l2_subdev *sd, int enable)
+ 	return ret;
+ }
+ 
+-/* Verify chip ID */
+-static int ov08x40_identify_module(struct ov08x40 *ov08x)
+-{
+-	struct i2c_client *client = v4l2_get_subdevdata(&ov08x->sd);
+-	int ret;
+-	u32 val;
 -
--	if (i == bus_cfg.nr_of_link_frequencies) {
--		dev_err_probe(dev, -EINVAL,
--			      "link-frequencies %d not supported, Please review your DT\n",
--			      IMX214_DEFAULT_LINK_FREQ);
--		ret = -EINVAL;
--		goto done;
-+		if (bus_cfg.link_frequencies[i] ==
-+		    IMX214_DEFAULT_LINK_FREQ_LEGACY) {
-+			dev_warn(dev,
-+				 "link-frequencies %d not supported, please review your DT. Continuing anyway\n",
-+				 IMX214_DEFAULT_LINK_FREQ);
-+			break;
-+		}
- 	}
- 
-+	if (i == bus_cfg.nr_of_link_frequencies)
-+		ret = dev_err_probe(dev, -EINVAL,
-+				    "link-frequencies %d not supported, please review your DT\n",
-+				    IMX214_DEFAULT_LINK_FREQ);
-+
- done:
- 	v4l2_fwnode_endpoint_free(&bus_cfg);
- 	fwnode_handle_put(endpoint);
+-	if (ov08x->identified)
+-		return 0;
+-
+-	ret = ov08x40_read_reg(ov08x, OV08X40_REG_CHIP_ID,
+-			       OV08X40_REG_VALUE_24BIT, &val);
+-	if (ret)
+-		return ret;
+-
+-	if (val != OV08X40_CHIP_ID) {
+-		dev_err(&client->dev, "chip id mismatch: %x!=%x\n",
+-			OV08X40_CHIP_ID, val);
+-		return -ENXIO;
+-	}
+-
+-	ov08x->identified = true;
+-
+-	return 0;
+-}
+-
+ static const struct v4l2_subdev_video_ops ov08x40_video_ops = {
+ 	.s_stream = ov08x40_set_stream,
+ };
 -- 
 2.39.5
 
