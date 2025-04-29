@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F69126BF7;
-	Tue, 29 Apr 2025 16:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD74126BF7;
+	Tue, 29 Apr 2025 16:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945407; cv=none; b=IddCUwNbYBrj3lvxu/yL6l3tkZAjZO/zV7+AvqH76d4xtkiPt+XlP6+HFTfyTurCtBpBg37gr/T1w6sV3CTSVUS6SiLtA+o5eCxjeZj2lUEklIIaKLJiZFySIOFPjhVAFpwaxE5O9GimFVYi5h6NpEGPI47ROJ2albpdLhIyTu4=
+	t=1745945409; cv=none; b=hA47YCsZECUzI43ZTqbqtR4kVP/rjpoEJrf6eX6jpR9cs81PfsMhy3UfHDiPFgwSaafoqa3hNGAkmylRq4VrNsRTKMvyKNS8ZeDTWKJJSz7Ywumo784tl/e25Pbs7fsYJ1vBT6nIfZ7m8WhKvj/WWN1N9pAjcggFk+0egROhMrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945407; c=relaxed/simple;
-	bh=sW4wsm5YdhqOhg40bq8dK1e39o0iaPgRx/SBl0KvLMY=;
+	s=arc-20240116; t=1745945409; c=relaxed/simple;
+	bh=ElH4FAkEZnlLQMZbRxPi7HiBJzt2EcDiKX5xMXtnifA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gRyOJCbxfjzCshlHSk6ijHLUmp15n+fklQCHtYO9IO649eReEiRVj5C/Ny/aO5pQUc0eBC3ekDZRzRNzbjQmBDAGzHrFxinFxiyfgduX4OlG8SJaOlo07sH/3CKXkWkSb5HJOKzyZIsy9aLqii0xI6Mspq0l2mc1Lg0TZllr2ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CV+zLhty; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fFJs+1OO254C5qYF30R2g5/cTjvdi7yBwLVjBPEYZS5ZAr8GWofQqaZq/HU4K+qV3/9XlQfw6Kp8pZZVkbquSORNgY0xTV35XBZ8vbbc/e9M0v+/1iguksrlmD6E7TTin4fHUdDVUrmF3C6mwgjCkTyZgVPjPg5XLtBXR3k/wqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cVJde99h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CV+zLhty"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC06AC4CEE3;
-	Tue, 29 Apr 2025 16:50:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cVJde99h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E28FC4CEE3;
+	Tue, 29 Apr 2025 16:50:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945406;
-	bh=sW4wsm5YdhqOhg40bq8dK1e39o0iaPgRx/SBl0KvLMY=;
+	s=korg; t=1745945408;
+	bh=ElH4FAkEZnlLQMZbRxPi7HiBJzt2EcDiKX5xMXtnifA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CV+zLhtytWC7LpVSgmlpk7ocUTTSoPsOCkpQzV7ee6uBCZs+0JnuupsEQTn2KSd2h
-	 eUvQtdfXwQtiFlAhnOv+kM2gbvF+onfgdhpVs8kVay53evR7OAO2MFLfzNnHQLPsMg
-	 6DMn3bm9cXk9EOuYnS02nh36KcLz/tbt0ECO97hA=
+	b=cVJde99hCBrFbjrCRDJDudd2EiP0sGHO3GCPQohGwWhT2KaN1qnyTkdKn5jy3rXu/
+	 sTnLaDJUIMgT1Ykhz5M5E6Pf+9jVdibswCer9fqhV6QzVr7pHnKmRY6BT42RSvqler
+	 qwzhC4dEgxt6rGCTYHFTz+lACsLqs+vt/XMU8cg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.4 102/179] isofs: Prevent the use of too small fid
-Date: Tue, 29 Apr 2025 18:40:43 +0200
-Message-ID: <20250429161053.529971351@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	"Dmitry V. Levin" <ldv@strace.io>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 5.4 103/179] riscv: Avoid fortify warning in syscall_get_arguments()
+Date: Tue, 29 Apr 2025 18:40:44 +0200
+Message-ID: <20250429161053.569235213@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -51,95 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 0405d4b63d082861f4eaff9d39c78ee9dc34f845 upstream.
+commit adf53771a3123df99ca26e38818760fbcf5c05d0 upstream.
 
-syzbot reported a slab-out-of-bounds Read in isofs_fh_to_parent. [1]
+When building with CONFIG_FORTIFY_SOURCE=y and W=1, there is a warning
+because of the memcpy() in syscall_get_arguments():
 
-The handle_bytes value passed in by the reproducing program is equal to 12.
-In handle_to_path(), only 12 bytes of memory are allocated for the structure
-file_handle->f_handle member, which causes an out-of-bounds access when
-accessing the member parent_block of the structure isofs_fid in isofs,
-because accessing parent_block requires at least 16 bytes of f_handle.
-Here, fh_len is used to indirectly confirm that the value of handle_bytes
-is greater than 3 before accessing parent_block.
+  In file included from include/linux/string.h:392,
+                   from include/linux/bitmap.h:13,
+                   from include/linux/cpumask.h:12,
+                   from arch/riscv/include/asm/processor.h:55,
+                   from include/linux/sched.h:13,
+                   from kernel/ptrace.c:13:
+  In function 'fortify_memcpy_chk',
+      inlined from 'syscall_get_arguments.isra' at arch/riscv/include/asm/syscall.h:66:2:
+  include/linux/fortify-string.h:580:25: error: call to '__read_overflow2_field' declared with attribute warning: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
+    580 |                         __read_overflow2_field(q_size_field, size);
+        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  cc1: all warnings being treated as errors
 
-[1]
-BUG: KASAN: slab-out-of-bounds in isofs_fh_to_parent+0x1b8/0x210 fs/isofs/export.c:183
-Read of size 4 at addr ffff0000cc030d94 by task syz-executor215/6466
-CPU: 1 UID: 0 PID: 6466 Comm: syz-executor215 Not tainted 6.14.0-rc7-syzkaller-ga2392f333575 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
-Call trace:
- show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:466 (C)
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0xe4/0x150 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:408 [inline]
- print_report+0x198/0x550 mm/kasan/report.c:521
- kasan_report+0xd8/0x138 mm/kasan/report.c:634
- __asan_report_load4_noabort+0x20/0x2c mm/kasan/report_generic.c:380
- isofs_fh_to_parent+0x1b8/0x210 fs/isofs/export.c:183
- exportfs_decode_fh_raw+0x2dc/0x608 fs/exportfs/expfs.c:523
- do_handle_to_path+0xa0/0x198 fs/fhandle.c:257
- handle_to_path fs/fhandle.c:385 [inline]
- do_handle_open+0x8cc/0xb8c fs/fhandle.c:403
- __do_sys_open_by_handle_at fs/fhandle.c:443 [inline]
- __se_sys_open_by_handle_at fs/fhandle.c:434 [inline]
- __arm64_sys_open_by_handle_at+0x80/0x94 fs/fhandle.c:434
- __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
- invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
- el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
- do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
- el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:744
- el0t_64_sync_handler+0x84/0x108 arch/arm64/kernel/entry-common.c:762
- el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
+The fortified memcpy() routine enforces that the source is not overread
+and the destination is not overwritten if the size of either field and
+the size of the copy are known at compile time. The memcpy() in
+syscall_get_arguments() intentionally overreads from a1 to a5 in
+'struct pt_regs' but this is bigger than the size of a1.
 
-Allocated by task 6466:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x40/0x78 mm/kasan/common.c:68
- kasan_save_alloc_info+0x40/0x50 mm/kasan/generic.c:562
- poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
- __kasan_kmalloc+0xac/0xc4 mm/kasan/common.c:394
- kasan_kmalloc include/linux/kasan.h:260 [inline]
- __do_kmalloc_node mm/slub.c:4294 [inline]
- __kmalloc_noprof+0x32c/0x54c mm/slub.c:4306
- kmalloc_noprof include/linux/slab.h:905 [inline]
- handle_to_path fs/fhandle.c:357 [inline]
- do_handle_open+0x5a4/0xb8c fs/fhandle.c:403
- __do_sys_open_by_handle_at fs/fhandle.c:443 [inline]
- __se_sys_open_by_handle_at fs/fhandle.c:434 [inline]
- __arm64_sys_open_by_handle_at+0x80/0x94 fs/fhandle.c:434
- __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
- invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
- el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
- do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
- el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:744
- el0t_64_sync_handler+0x84/0x108 arch/arm64/kernel/entry-common.c:762
- el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
+Normally, this could be solved by wrapping a1 through a5 with
+struct_group() but there was already a struct_group() applied to these
+members in commit bba547810c66 ("riscv: tracing: Fix
+__write_overflow_field in ftrace_partial_regs()").
 
-Reported-by: syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=4d7cd7dd0ce1aa8d5c65
-Tested-by: syzbot+4d7cd7dd0ce1aa8d5c65@syzkaller.appspotmail.com
-CC: stable@vger.kernel.org
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/tencent_9C8CB8A7E7C6C512C7065DC98B6EDF6EC606@qq.com
+Just avoid memcpy() altogether and write the copying of args from regs
+manually, which clears up the warning at the expense of three extra
+lines of code.
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Dmitry V. Levin <ldv@strace.io>
+Fixes: e2c0cdfba7f6 ("RISC-V: User-facing API")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250409-riscv-avoid-fortify-warning-syscall_get_arguments-v1-1-7853436d4755@kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/isofs/export.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/include/asm/syscall.h |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/isofs/export.c
-+++ b/fs/isofs/export.c
-@@ -180,7 +180,7 @@ static struct dentry *isofs_fh_to_parent
- 		return NULL;
- 
- 	return isofs_export_iget(sb,
--			fh_len > 2 ? ifid->parent_block : 0,
-+			fh_len > 3 ? ifid->parent_block : 0,
- 			ifid->parent_offset,
- 			fh_len > 4 ? ifid->parent_generation : 0);
+--- a/arch/riscv/include/asm/syscall.h
++++ b/arch/riscv/include/asm/syscall.h
+@@ -67,8 +67,11 @@ static inline void syscall_get_arguments
+ 					 unsigned long *args)
+ {
+ 	args[0] = regs->orig_a0;
+-	args++;
+-	memcpy(args, &regs->a1, 5 * sizeof(args[0]));
++	args[1] = regs->a1;
++	args[2] = regs->a2;
++	args[3] = regs->a3;
++	args[4] = regs->a4;
++	args[5] = regs->a5;
  }
+ 
+ static inline void syscall_set_arguments(struct task_struct *task,
 
 
