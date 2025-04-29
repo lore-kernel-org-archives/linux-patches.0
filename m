@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9B8126BF7;
-	Tue, 29 Apr 2025 16:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58458229B05;
+	Tue, 29 Apr 2025 16:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945326; cv=none; b=EnUbtODOnQut4Hs6IWrgF7ivs7AJYb88DzX7KKtyC+7PcpwNdcDOH1Nk4l0/fC7Hh52T8UzO4xV05mjWruzsUElVUlWrFGelXWg11Dv5PIzS6t8zf0GvOqbnqzHqClz0bK9BQV37KSWT68vZyNV/fj2fH7V1y84VFZj9tO5Ebnk=
+	t=1745945328; cv=none; b=rbFXhvOKIPiFuVJIUbSXbDMYjErO/MDl+pvzvYobWUv4EKf5JqWLTCJSgSm3wni2XiKrs7417KwQGgEANpvpyxW4u5xjjDVExB7GIro/KZS/ErlYpbjffDSzZVHiY3Y60ryFDxu3MkhLFk2FZ+8OVn90cRdsHDWVPG84bklNVzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945326; c=relaxed/simple;
-	bh=mz58rFw/voBn6bQKOsn3JWhfxPYhHfjWqKw/Xj3CuV4=;
+	s=arc-20240116; t=1745945328; c=relaxed/simple;
+	bh=LGtv5277mREodKUyRIu1taB9JVVb62AT94/p4GNJj5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DRw7Im0yvkL4ATqIPanz0IGG3TsKlNhpXUm2WJICXfpsMNIyYK1kIs+ab+CENh5zElzI/LIPBsHob/+/4L9F9Lklp/AS6NcTHjRGoQCn9Hz2qP9RY9ttGJ6TOCDnMPTgWYZ3Rzmpyn1lWB96iuH/mfYg/DRdHWTTqXfblqFa4H4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrFVRn5N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m1PvOJ2yRIpaLRs5CwRDdP5/2ZSltcvps0hz61ny3aiJ6syya8R179oYDEU1h6UShqbE0Ki5Oo3GvOvbNwYzVLPPiKo01jxMYqgduNEa6gIlfkA8W7ff1T2ZY+/NB28uY+Qddo5Y+d9D2tRgc0aCpsLDn1Bghy4KQtegHTVZKjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jK7Rym5K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrFVRn5N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D10C4CEE3;
-	Tue, 29 Apr 2025 16:48:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jK7Rym5K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB658C4CEE9;
+	Tue, 29 Apr 2025 16:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745945325;
-	bh=mz58rFw/voBn6bQKOsn3JWhfxPYhHfjWqKw/Xj3CuV4=;
+	s=korg; t=1745945328;
+	bh=LGtv5277mREodKUyRIu1taB9JVVb62AT94/p4GNJj5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BrFVRn5NoSWgqbpkpZ9x8RNKYSoxDs1spYyBM86ktyNMRcCtHj/KBw4guu0Y3bdwB
-	 p8EJOCorDwnddbKeq/BPguulEfwZCxzW7Db466JLUJUSuA9ARRXFciRyMECM7PZWrE
-	 wHxRQaGWaDQXP2HI4PmdZlNspeW1ks2v6Wv5Wj9A=
+	b=jK7Rym5Kc4AQiYcxEt6SHv4F1vThWtyGHgrYkIjaWNJ5uFZX+y5Kq7ZzdUIJfiaCt
+	 ComCFicTEMAE1GtezeVcb0wHM90ooaOK0t4B/pfriUp/pga30AFn3kRXddkxJno54Z
+	 Yi3cQwxAFsLU3pdb8hzGLEO/Bw/bAV403OroXzXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jon Mason <jdmason@kudzu.us>
-Subject: [PATCH 5.4 074/179] ntb: use 64-bit arithmetic for the MSI doorbell mask
-Date: Tue, 29 Apr 2025 18:40:15 +0200
-Message-ID: <20250429161052.408543194@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 5.4 075/179] of/irq: Fix device node refcount leakages in of_irq_count()
+Date: Tue, 29 Apr 2025 18:40:16 +0200
+Message-ID: <20250429161052.449660883@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161049.383278312@linuxfoundation.org>
 References: <20250429161049.383278312@linuxfoundation.org>
@@ -51,40 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit fd5625fc86922f36bedee5846fefd647b7e72751 upstream.
+commit bbf71f44aaf241d853759a71de7e7ebcdb89be3d upstream.
 
-msi_db_mask is of type 'u64', still the standard 'int' arithmetic is
-performed to compute its value.
+of_irq_count() invokes of_irq_parse_one() to count IRQs, and successful
+invocation of the later will get device node @irq.np refcount, but the
+former does not put the refcount before next iteration invocation, hence
+causes device node refcount leakages.
 
-While most of the ntb_hw drivers actually don't utilize the higher 32
-bits of the doorbell mask now, this may be the case for Switchtec - see
-switchtec_ntb_init_db().
+Fix by putting @irq.np refcount before the next iteration invocation.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE static
-analysis tool.
-
-Fixes: 2b0569b3b7e6 ("NTB: Add MSI interrupt support to ntb_transport")
+Fixes: 3da5278727a8 ("of/irq: Rework of_irq_count()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20250209-of_irq_fix-v2-5-93e3a2659aa7@quicinc.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ntb/ntb_transport.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/of/irq.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/ntb/ntb_transport.c
-+++ b/drivers/ntb/ntb_transport.c
-@@ -1340,7 +1340,7 @@ static int ntb_transport_probe(struct nt
- 	qp_count = ilog2(qp_bitmap);
- 	if (nt->use_msi) {
- 		qp_count -= 1;
--		nt->msi_db_mask = 1 << qp_count;
-+		nt->msi_db_mask = BIT_ULL(qp_count);
- 		ntb_db_clear_mask(ndev, nt->msi_db_mask);
- 	}
+--- a/drivers/of/irq.c
++++ b/drivers/of/irq.c
+@@ -443,8 +443,10 @@ int of_irq_count(struct device_node *dev
+ 	struct of_phandle_args irq;
+ 	int nr = 0;
  
+-	while (of_irq_parse_one(dev, nr, &irq) == 0)
++	while (of_irq_parse_one(dev, nr, &irq) == 0) {
++		of_node_put(irq.np);
+ 		nr++;
++	}
+ 
+ 	return nr;
+ }
 
 
