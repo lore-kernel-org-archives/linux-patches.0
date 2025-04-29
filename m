@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27983244664;
-	Tue, 29 Apr 2025 17:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32DF244664;
+	Tue, 29 Apr 2025 17:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745948686; cv=none; b=u0cHCfBxdjwYuEeOe7sPS5+Csgg0GNzNpoKJzL54vnCijnO+nTgRnfhRRXYoDa2TE1jFI5Zs4mOgZOjVuGe7Hty+tZgh5MobfW+S/G5ACK+6Ut4bkcYCfgoZEm7ax5ZpnFEH9uS1HLH7yOs+09bob1P2JEIEC01ndtDG3iaJCNM=
+	t=1745948689; cv=none; b=DWgoRL8yQn62OibKrayKHR0ecuxioJh5nMHWoMX/3WZaL1Qxx4laqR7XkUzwF6Xiy1pRiAIQkvl/xNKdVT2lH0el47Db11gBIl4G3FmY6Ubtw1zfk2D2d2xZS1xz+DnwbZJtq0dJB1JuBnTUtd3xzAy2ssPUjSueUA8bikouWv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745948686; c=relaxed/simple;
-	bh=eiUrZMhSLdc/usUb7neiOuaSUZLdPKCQWMUeuJfATWA=;
+	s=arc-20240116; t=1745948689; c=relaxed/simple;
+	bh=CoXytnKz63mTNIH+gmNNO49AmOtlXr4kQrHxUfLwqxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OXYJBsx0EXUlPIIUqZ62bquAWT6Z4iVIf6R9YfobJ2aWKrKeoUOzeYKSTBYH/gsK5+1bHuc0CSXGhMowpNU9536KZ7MSZn1PVJYs8vWZ9VRvErSuurKznmcdaqTBIHE10GdcUA3XgREkO5lYGhSeGRt5KC6Mg3fcikGLSXhAhTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cuRU5XmX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O43RBifCFGMd0ZJylPTYrH8UitD/zza1cUhU+f3Q4jeQoiMH1sVl+4/9gUptjRRpo5JjrlYGoQYxlVQwmiEUh9mgEIoX/4tL/n5Vj9l4TO0vjRRaGYBJzFCdcWuDxmMj+YJDYxwLtUcUW7CFJPOxvUtAT16KIRFkaE1AJc+Ns64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=joa6qLmr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cuRU5XmX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA35C4CEEF;
-	Tue, 29 Apr 2025 17:44:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="joa6qLmr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0B8C4CEE3;
+	Tue, 29 Apr 2025 17:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745948685;
-	bh=eiUrZMhSLdc/usUb7neiOuaSUZLdPKCQWMUeuJfATWA=;
+	s=korg; t=1745948689;
+	bh=CoXytnKz63mTNIH+gmNNO49AmOtlXr4kQrHxUfLwqxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cuRU5XmXIUZ9mmFcSkSaJL3fApCKVTqm9T22Pw1uMFhAyzvUg/5dbFqNtjKzA5Nj4
-	 haXOkCeHr8qnhotlBF9HKcZrGmEEzBaoRgV7GlaHXGC6IPsp+wLCxcPLy+2C22ZdBj
-	 ewHDUYtrT4KscbNBWnQ1qSvzb0U07bduzz+q9LUs=
+	b=joa6qLmrZbblfKYSGiyr+rZ0tv9vRPDL9G0hrwU97272GHYRwQWsWptkmi2ELIBWm
+	 Tjs+8mhnq47kyopFbEJJQxo2afQPba8enJKhtGfmOhTCI/Jn4ZyBqrJcv1XRF7XBzw
+	 NaHHEY3hIg1DPdofBQxXdUkeP8qum899bblt5tpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>
-Subject: [PATCH 5.15 081/373] clocksource/drivers/stm32-lptimer: Use wakeup capable instead of init wakeup
-Date: Tue, 29 Apr 2025 18:39:18 +0200
-Message-ID: <20250429161126.484056530@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 5.15 082/373] wifi: mt76: Add check for devm_kstrdup()
+Date: Tue, 29 Apr 2025 18:39:19 +0200
+Message-ID: <20250429161126.523505191@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -51,38 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Torgue <alexandre.torgue@foss.st.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 96bf4b89a6ab22426ad83ef76e66c72a5a8daca0 upstream.
+commit 4bc1da524b502999da28d287de4286c986a1af57 upstream.
 
-"wakeup-source" property describes a device which has wakeup capability
-but should not force this device as a wakeup source.
+Add check for the return value of devm_kstrdup() in
+mt76_get_of_data_from_mtd() to catch potential exception.
 
-Fixes: 48b41c5e2de6 ("clocksource: Add Low Power STM32 timers driver")
+Fixes: e7a6a044f9b9 ("mt76: testmode: move mtd part to mt76_dev")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Rule: add
-Link: https://lore.kernel.org/stable/20250306083407.2374894-1-fabrice.gasnier%40foss.st.com
-Link: https://lore.kernel.org/r/20250306102501.2980153-1-fabrice.gasnier@foss.st.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20250219033645.2594753-1-haoxiang_li2024@163.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clocksource/timer-stm32-lp.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/eeprom.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/clocksource/timer-stm32-lp.c
-+++ b/drivers/clocksource/timer-stm32-lp.c
-@@ -168,9 +168,7 @@ static int stm32_clkevent_lp_probe(struc
- 	}
+--- a/drivers/net/wireless/mediatek/mt76/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/eeprom.c
+@@ -74,6 +74,10 @@ int mt76_get_of_eeprom(struct mt76_dev *
  
- 	if (of_property_read_bool(pdev->dev.parent->of_node, "wakeup-source")) {
--		ret = device_init_wakeup(&pdev->dev, true);
--		if (ret)
--			goto out_clk_disable;
-+		device_set_wakeup_capable(&pdev->dev, true);
+ #ifdef CONFIG_NL80211_TESTMODE
+ 	dev->test_mtd.name = devm_kstrdup(dev->dev, part, GFP_KERNEL);
++	if (!dev->test_mtd.name) {
++		ret = -ENOMEM;
++		goto out_put_node;
++	}
+ 	dev->test_mtd.offset = offset;
+ #endif
  
- 		ret = dev_pm_set_wake_irq(&pdev->dev, irq);
- 		if (ret)
 
 
