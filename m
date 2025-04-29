@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65FC252284;
-	Tue, 29 Apr 2025 17:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18281D7E35;
+	Tue, 29 Apr 2025 17:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949594; cv=none; b=sEM7bYsfv6oAjznL7B142MTwHKpZzBWq0jcYZmMdIe6w5DZJeoMfr/G4pV5HSqAOrFp6j+Ic4ffbW6IgBb8A4Rwr86ywDjHZiDB96DhmW37QlQFYq7St9+hCiJdnHzmD/HbBS2jnFHdYF+SALQOIjhqvSjcbyBflZXJSwdUrZKg=
+	t=1745949598; cv=none; b=qlH2zdp62U9RvYVD+azR4sms1Kg5kLOf08Jm577meXGvl3weNcbMk8nAyzJKppmhqqDrR2X0itLTOxhD44z5UCQ6HZKmJmsRp/DjT99b+G+6y4SaOK9z0ntM9tBAPgDruRi/pGDo4nG1i3kD2wOPFrvKCupBHEXunJeEGLT/PBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949594; c=relaxed/simple;
-	bh=6U0FyAaThMMvevzNemwdUcptYXZNxDBUGV5rn+CWjpo=;
+	s=arc-20240116; t=1745949598; c=relaxed/simple;
+	bh=SGV86SQq9DPHFgF/sHTEmtA8Wu7h4NcBEkt1UGQUkmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t0g8qOsL0ccVPAIF00tJXGg3o2P5dwfE3xF5QrDtd1foa9s14G/iNQvn/j2K9D4kpjtumBEl6Fl6AwG0shdpg72i4+k20EMTzrVuN5mpHdxOGlg/2LI27+Vnfo+ogZWrxipC1noW5DMEboLMGbUU5yF3+Gm+J8dyay+CoeHnnT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1nQoBLmz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IylIIqsEc0qgl6oIEDJ5mt4w0oKCRaPqs8h69q7tfQL3zUJ7hNHbpvrxd62oPPXQUhrHwiqpN3TOJ05L7RLHPH4UbYuQXlOw7SKt907EoeiKboanH/D95QrU+/4jAYbhCWJd+h2qxwu5F+Chso7f7hAi2/4apjNRGZ7jiI/+fEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gP4Zcd87; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1nQoBLmz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C6CC4CEE3;
-	Tue, 29 Apr 2025 17:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gP4Zcd87"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60DE8C4CEE3;
+	Tue, 29 Apr 2025 17:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745949594;
-	bh=6U0FyAaThMMvevzNemwdUcptYXZNxDBUGV5rn+CWjpo=;
+	s=korg; t=1745949597;
+	bh=SGV86SQq9DPHFgF/sHTEmtA8Wu7h4NcBEkt1UGQUkmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1nQoBLmzWzzHYc/lcFhlw76qU5q4v1a00Tzbk8o+M4xdDczTIxH8b98GFUlJphoR9
-	 vJMdu62ZszBKJGLo70yvw5nIXN3Wxy63jgZDgeGXBtPXdH86Uru4kr4TUw4rJMkphu
-	 IPLOSKn9RDjtHJva4xMb0G6S0LHFxyg+UX9cgoC8=
+	b=gP4Zcd87+x1WqOs6uhdcgyd0Eif+IVljOQNzaQPzbD43wILTr8F7q14d3fKvu3Y7+
+	 7Q7ybJp+Ciaj5NVgi4BhURvRCSxeVrOZnF74h5nyXbJ7Ej/c0V1qpjFPXCdaq1kB2W
+	 84eKjXYIZYdBeC/hQaH79/tXt512+yxNxwBayKJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Toke=20H=F8iland-J=F8rgensen?= <toke@kernel.org>,
-	=?UTF-8?q?Ricardo=20Ca=F1uelo=20Navarro?= <rcn@igalia.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Subject: [PATCH 5.15 368/373] xdp: Reset bpf_redirect_info before running a xdps BPF prog.
-Date: Tue, 29 Apr 2025 18:44:05 +0200
-Message-ID: <20250429161138.267799200@linuxfoundation.org>
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 5.15 369/373] MIPS: cm: Fix warning if MIPS_CM is disabled
+Date: Tue, 29 Apr 2025 18:44:06 +0200
+Message-ID: <20250429161138.309909042@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161123.119104857@linuxfoundation.org>
 References: <20250429161123.119104857@linuxfoundation.org>
@@ -52,60 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 
-Ricardo reported a KASAN discovered use after free in v6.6-stable.
+commit b73c3ccdca95c237750c981054997c71d33e09d7 upstream.
 
-The syzbot starts a BPF program via xdp_test_run_batch() which assigns
-ri->tgt_value via dev_hash_map_redirect() and the return code isn't
-XDP_REDIRECT it looks like nonsense. So the output in
-bpf_warn_invalid_xdp_action() appears once.
-Then the TUN driver runs another BPF program (on the same CPU) which
-returns XDP_REDIRECT without setting ri->tgt_value first. It invokes
-bpf_trace_printk() to print four characters and obtain the required
-return value. This is enough to get xdp_do_redirect() invoked which
-then accesses the pointer in tgt_value which might have been already
-deallocated.
+Commit e27fbe16af5c ("MIPS: cm: Detect CM quirks from device tree")
+introduced
 
-This problem does not affect upstream because since commit
-	401cb7dae8130 ("net: Reference bpf_redirect_info via task_struct on PREEMPT_RT.")
+arch/mips/include/asm/mips-cm.h:119:13: error: â€˜mips_cm_update_propertyâ€™
+	defined but not used [-Werror=unused-function]
 
-the per-CPU variable is referenced via task's task_struct and exists on
-the stack during NAPI callback. Therefore it is cleared once before the
-first invocation and remains valid within the RCU section of the NAPI
-callback.
+Fix this by making empty function implementation inline
 
-Instead of performing the huge backport of the commit (plus its fix ups)
-here is an alternative version which only resets the variable in
-question prior invoking the BPF program.
-
-Acked-by: Toke Høiland-Jørgensen <toke@kernel.org>
-Reported-by: Ricardo Cañuelo Navarro <rcn@igalia.com>
-Closes: https://lore.kernel.org/all/20250226-20250204-kasan-slab-use-after-free-read-in-dev_map_enqueue__submit-v3-0-360efec441ba@igalia.com/
-Fixes: 97f91a7cf04ff ("bpf: add bpf_redirect_map helper routine")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Fixes: e27fbe16af5c ("MIPS: cm: Detect CM quirks from device tree")
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/filter.h |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/mips/include/asm/mips-cm.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/filter.h
-+++ b/include/linux/filter.h
-@@ -800,7 +800,14 @@ static __always_inline u32 bpf_prog_run_
- 	 * under local_bh_disable(), which provides the needed RCU protection
- 	 * for accessing map entries.
- 	 */
--	u32 act = __bpf_prog_run(prog, xdp, BPF_DISPATCHER_FUNC(xdp));
-+	struct bpf_redirect_info *ri = this_cpu_ptr(&bpf_redirect_info);
-+	u32 act;
-+
-+	if (ri->map_id || ri->map_type) {
-+		ri->map_id = 0;
-+		ri->map_type = BPF_MAP_TYPE_UNSPEC;
-+	}
-+	act = __bpf_prog_run(prog, xdp, BPF_DISPATCHER_FUNC(xdp));
+--- a/arch/mips/include/asm/mips-cm.h
++++ b/arch/mips/include/asm/mips-cm.h
+@@ -104,7 +104,7 @@ static inline bool mips_cm_present(void)
+ #ifdef CONFIG_MIPS_CM
+ extern void mips_cm_update_property(void);
+ #else
+-static void mips_cm_update_property(void) {}
++static inline void mips_cm_update_property(void) {}
+ #endif
  
- 	if (static_branch_unlikely(&bpf_master_redirect_enabled_key)) {
- 		if (act == XDP_TX && netif_is_bond_slave(xdp->rxq->dev))
+ /**
 
 
