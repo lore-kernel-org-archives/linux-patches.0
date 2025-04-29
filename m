@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091B8211A0B;
-	Tue, 29 Apr 2025 17:06:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E7E211A0B;
+	Tue, 29 Apr 2025 17:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745946391; cv=none; b=CCQ8oPr4yMDklgBmX8jlYGOnBkNsxmLLG8UixaQcf1St+xtbc07nxEwPG8QJl8+yyLinsfbEVljsL5kPD9Ork8h6FQOo/jufeIhQjduhG5XHkNaxMRsoEQcmsrLoW+Sl20grm8TF76dDZQw9dniEZoN1rX4+p/TE8l9GAfMV3FQ=
+	t=1745946394; cv=none; b=hXZgxU1pz7kWIhqGBLrHG0v3DFAYCZgb85nwolhLt6SUwDxBi3L0bZVnHu06JolOvcUoyekLEtkHLZ7sDWePHPfA9vGsFimhJbqpaRQ9MHTbt+D8JsT3isQj83uXGySdNMhBeEBjhJ+QNLG5uWhXl7UI6nIEELU1jfO/T75/wjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745946391; c=relaxed/simple;
-	bh=9vD1Tshq2693gFqSUektjmnjqg8/4y6QZkWWp6u9r+Q=;
+	s=arc-20240116; t=1745946394; c=relaxed/simple;
+	bh=4Qt2wBqvlSbZ8lv2j1YHWjMaxg8fMANXQCgBUWdah2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lEOTCtDbm0zINyUTK85glxLKrlVgMG7+j9CU7m4tdwrDBAngvxt+20d/Bt/P65vuoWhd0M1M4wt9sjGqrHjx/mXIXl4mMkRk7sF2EVn7oyA/+QUoNIFyqSK3yrm6GyaG6XW48bbAiIZsVtooz3n15hYYodSD4BlDvgh3xmU6OTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWc/Q8lD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CnPm5ezbJ2U+0GLqqzQcCmCZof95BFRa13+E2XWwRqmyVbnXEO7oi77eAxUqxS+paVFtX2zlYYXMQwlBxxEH4p6z3itwtZ19C4M+mNrHXa51SulaBKgS/lm/KGOfcrbmIaC5hCW1ss4U+6XKaDK85qKSsChugV+o5dUkdeVAudI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9Y4RM6D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWc/Q8lD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5AFC4CEE3;
-	Tue, 29 Apr 2025 17:06:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9Y4RM6D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF9CC4CEE3;
+	Tue, 29 Apr 2025 17:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1745946390;
-	bh=9vD1Tshq2693gFqSUektjmnjqg8/4y6QZkWWp6u9r+Q=;
+	s=korg; t=1745946393;
+	bh=4Qt2wBqvlSbZ8lv2j1YHWjMaxg8fMANXQCgBUWdah2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LWc/Q8lDYD1VnZvcb0RUHPldP/Gcwog0qyfEWQi5+XXez2XDY75Q9UGkZL/0MKXAZ
-	 uZfzcFQkQVYYegIazlJzQkDBoqo5N5zA8b+L62JamZTcsj5S5btVMJxdTQntWZJfbX
-	 gTJwub5hcNm1TanCk8RxDgZjBOlFvVaQRva5wZb4=
+	b=o9Y4RM6DoAEibXjYwkkycESnHVchrH5yw+/nvk/Ib36QU1KbrbPlfpwKNsQIr7zY6
+	 QPdB7mnBPRqccBbdxwc7XFhW9dFFz4teo5YFLDpYPHYzLZdEUCRlAvclXt7Ojp5tmE
+	 gRZ3C6KjS2VGCKLCquqZTqSgJ4SXMw9hdGVXppUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Molnar <mingo@kernel.org>,
-	kernel test robot <lkp@intel.com>,
 	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 221/311] objtool: Silence more KCOV warnings
-Date: Tue, 29 Apr 2025 18:40:58 +0200
-Message-ID: <20250429161130.072034407@linuxfoundation.org>
+Subject: [PATCH 6.14 222/311] objtool, panic: Disable SMAP in __stack_chk_fail()
+Date: Tue, 29 Apr 2025 18:40:59 +0200
+Message-ID: <20250429161130.113365814@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 References: <20250429161121.011111832@linuxfoundation.org>
@@ -55,63 +56,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 6b023c7842048c4bbeede802f3cf36b96c7a8b25 ]
+[ Upstream commit 72c774aa9d1e16bfd247096935e7dae194d84929 ]
 
-In the past there were issues with KCOV triggering unreachable
-instruction warnings, which is why unreachable warnings are now disabled
-with CONFIG_KCOV.
+__stack_chk_fail() can be called from uaccess-enabled code.  Make sure
+uaccess gets disabled before calling panic().
 
-Now some new KCOV warnings are showing up with GCC 14:
+Fixes the following warning:
 
-  vmlinux.o: warning: objtool: cpuset_write_resmask() falls through to next function cpuset_update_active_cpus.cold()
-  drivers/usb/core/driver.o: error: objtool: usb_deregister() falls through to next function usb_match_device()
-  sound/soc/codecs/snd-soc-wcd934x.o: warning: objtool: .text.wcd934x_slim_irq_handler: unexpected end of section
+  kernel/trace/trace_branch.o: error: objtool: ftrace_likely_update+0x1ea: call to __stack_chk_fail() with UACCESS enabled
 
-All are caused by GCC KCOV not finishing an optimization, leaving behind
-a never-taken conditional branch to a basic block which falls through to
-the next function (or end of section).
-
-At a high level this is similar to the unreachable warnings mentioned
-above, in that KCOV isn't fully removing dead code.  Treat it the same
-way by adding these to the list of warnings to ignore with CONFIG_KCOV.
-
-Reported-by: Ingo Molnar <mingo@kernel.org>
-Reported-by: kernel test robot <lkp@intel.com>
 Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/66a61a0b65d74e072d3dc02384e395edb2adc3c5.1742852846.git.jpoimboe@kernel.org
-Closes: https://lore.kernel.org/Z9iTsI09AEBlxlHC@gmail.com
-Closes: https://lore.kernel.org/oe-kbuild-all/202503180044.oH9gyPeg-lkp@intel.com/
+Link: https://lore.kernel.org/r/a3e97e0119e1b04c725a8aa05f7bc83d98e657eb.1742852847.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/check.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/panic.c        | 6 ++++++
+ tools/objtool/check.c | 5 ++++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
+diff --git a/kernel/panic.c b/kernel/panic.c
+index d8635d5cecb25..f9f0c5148f6aa 100644
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -832,9 +832,15 @@ device_initcall(register_warn_debugfs);
+  */
+ __visible noinstr void __stack_chk_fail(void)
+ {
++	unsigned long flags;
++
+ 	instrumentation_begin();
++	flags = user_access_save();
++
+ 	panic("stack-protector: Kernel stack is corrupted in: %pB",
+ 		__builtin_return_address(0));
++
++	user_access_restore(flags);
+ 	instrumentation_end();
+ }
+ EXPORT_SYMBOL(__stack_chk_fail);
 diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 7b535e119cafa..0ca83c74c1f38 100644
+index 0ca83c74c1f38..bbfd81f49802e 100644
 --- a/tools/objtool/check.c
 +++ b/tools/objtool/check.c
-@@ -3490,6 +3490,9 @@ static int validate_branch(struct objtool_file *file, struct symbol *func,
- 			    !strncmp(func->name, "__pfx_", 6))
- 				return 0;
- 
-+			if (file->ignore_unreachables)
-+				return 0;
-+
- 			WARN("%s() falls through to next function %s()",
- 			     func->name, insn_func(insn)->name);
- 			return 1;
-@@ -3709,6 +3712,9 @@ static int validate_branch(struct objtool_file *file, struct symbol *func,
- 		if (!next_insn) {
- 			if (state.cfi.cfa.base == CFI_UNDEFINED)
- 				return 0;
-+			if (file->ignore_unreachables)
-+				return 0;
-+
- 			WARN("%s: unexpected end of section", sec->name);
- 			return 1;
- 		}
+@@ -1189,12 +1189,15 @@ static const char *uaccess_safe_builtin[] = {
+ 	"__ubsan_handle_load_invalid_value",
+ 	/* STACKLEAK */
+ 	"stackleak_track_stack",
++	/* TRACE_BRANCH_PROFILING */
++	"ftrace_likely_update",
++	/* STACKPROTECTOR */
++	"__stack_chk_fail",
+ 	/* misc */
+ 	"csum_partial_copy_generic",
+ 	"copy_mc_fragile",
+ 	"copy_mc_fragile_handle_tail",
+ 	"copy_mc_enhanced_fast_string",
+-	"ftrace_likely_update", /* CONFIG_TRACE_BRANCH_PROFILING */
+ 	"rep_stos_alternative",
+ 	"rep_movs_alternative",
+ 	"__copy_user_nocache",
 -- 
 2.39.5
 
