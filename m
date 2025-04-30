@@ -1,107 +1,101 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CE62DC761
-	for <patches@lists.linux.dev>; Wed, 30 Apr 2025 01:10:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B64732DC77B;
+	Wed, 30 Apr 2025 01:36:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745975438; cv=none; b=e4uphQa4k2EKO2DlXwQydUP6cJ0oIFaTy1QBxBghhTvjCXWMjZaStpfvHfrOWfgD+hFbOUe1b58wwu7578YqoVDECGdC0tktS5I8iw0rUqZAOVNw0uCMxeoAL8u40svRBDohVlnuNb0HK51QqcR3v3ns5o5v9N7FGHOGFfxkGO8=
+	t=1745977012; cv=none; b=rd1jhl9+CjkbzwUFx9z8NIfgjwafh5lEdA8zRKzby0h4vKgtomn1KSlXvBRpf7QilkgzSddvgV8Iu2m+4M3Znyrk+LtyKjgfrAU8Uq1bjgxeFDb/3cthyoLgIsEeTT8k7WnqawJE/vUuVlB6CPMuPGRuMNFTP8P+Jebflq1Yyi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745975438; c=relaxed/simple;
-	bh=GcA0wqe4bwS+nqsbaE7zGxsfAfwH+z1wdZ2jUKGpfNQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TcGIzf/2BvJKPq2M6NK0MZZv0eoQbboW+H0LjhnBXazojg2uor1ldqhdK/RS0mXtcCFcokFP9ej0H18IyoLlcOIUSkNItDt7Woyo9z+ES4SlXvY0qIwLsUXwO82GcvNSeVwgjeyIYM06Cj9qy+jyc7l183xpk4b5aUAX3A+X6H8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=exTIOqvz; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1745977012; c=relaxed/simple;
+	bh=8hIrgiEsPsWuoBwRtZoK8cMgMpFtEq4I5UiSjoqyvgU=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=WFac1aoymZoXAuMdTLl0/DssJZI3W7VivKfTv9Z23T6+T0eshp/dSnRn0HwHX+0MjQIloXRUndlNJVHemJZ5Fwxf4EZ1PTQjOA+KQi875K8U+8MgMUZtImDUT/shBNtJbuwncafl9iaQdmWljT5632J3giWeXHdx09pfuzJnTic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=none smtp.mailfrom=linux-m68k.org; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nNNn21xL; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux-m68k.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="exTIOqvz"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-39ac9aea656so7662924f8f.3
-        for <patches@lists.linux.dev>; Tue, 29 Apr 2025 18:10:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1745975435; x=1746580235; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fy0EpqkwjDtmTcF94zxnemA5fOntKhPCB9hsiCBnym0=;
-        b=exTIOqvzbqak4pJVbtx0iAUY4xEYRdicZg+2k552SYOZ4lTeTNbwstnSvcJH1GPRdB
-         /rcl/tqHP1fXJcRrnIm0UmbYWpeq+LblAf8HU28d3khHiQrcwxdhTXaBjUE7l53gqvnM
-         IQ9NhHO5YVj4cUwvy3FGgw4TRyI8S51mZMNJTbF9YuDvIj722qboPrj0fssGXiRQX69j
-         8rlgjC+4CiJ65/Rnqx/t94G28uwVNzfWepJlOc1jlp2vVMWtW6R1hK1EBblpDNmvdv7C
-         tdLQCVoAqUYN6KTOMBFVXzabcobOOozxbbh5LRrVrqJSI57m/nYTCgA5QWnntn13zVhN
-         +vzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745975435; x=1746580235;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fy0EpqkwjDtmTcF94zxnemA5fOntKhPCB9hsiCBnym0=;
-        b=HEE/YnVkonsx79ShflTAeTdfG0x163jCHJlr3Dw1DoSuzi7inrD84JxGgkHen9lWR3
-         I+jQ4n9HUWUi2WUIpiMfGxUBdJfz9NFIB5Dt1r86P4Ues1EkmjrX932CCWJ4yAm+ocsO
-         j5nD5+SKp55xE4wDsTtbWkP7hzne2xKwOf06Gxf1WzNAHHgCTtuBA2+4n/wQ4/9BrbPX
-         WR/VsVOkeDuJRoK6CDUGxtmznYxhftgJ5FT7bKzCPI8ySsS6hP7yyuHYZLZW4zC7Y/N5
-         7zLdVGo9Qf+BUwe0hqnNJFdNGWKuNFjq4scrL46SukitJefOZ+52xlh2sbK+6KqgrNE6
-         4tBA==
-X-Gm-Message-State: AOJu0YwfMQp6a1Fq25SI1+NLkBhshWy6Y/rR0zMBwuanfyOUHLskQIyH
-	1xiS1gJZY/O6TAItej+k/gIca5MzvbaLHTfIyoeF96vfbZzfvog=
-X-Gm-Gg: ASbGnctmE8QBpcr3KPQuCkSQHPlxyWDtfDLFvMJpzzDxPh7DtepfnlDmjCfZFapQu2T
-	9UAAa6B39rr4gEDz4ky0hDE97QksiI3wRh8QR5J2Sc2CDPkNbxDEvtDAxRCBm5+ZQ3X8OUAEwYW
-	Ge6FJTd3IAPKkcysJ0w+i0GYJqIjaWPeFC+pRPXBaZ4SphAzWOj6rcb6rlFPdhqoWX40xsYzwKy
-	uwoT68sJ6QuxyvUzPao2/LfSmte/BVS4vvnoaCukpaVMGLIhw0cBPDBCwl2FVZ7yHmWjVr4Odr5
-	A/ZVPxn7jgTy8EQyNiLNUKpbs93g0esT8ieWz/nqQr1BkrJ91Ucm1maKmj5zbPLTH5g+wPO2x7d
-	KokkplP9Q16jCoGprJxc=
-X-Google-Smtp-Source: AGHT+IEfCZyklWz25dz8UgxLE8bMSFKXl1EvDpiL4cI6Uh838bs3W6K4R8SlOQyze6UjmyVl60Hv3A==
-X-Received: by 2002:a5d:64a5:0:b0:39e:e438:8e3c with SMTP id ffacd0b85a97d-3a08f7babaamr1003573f8f.53.1745975434662;
-        Tue, 29 Apr 2025 18:10:34 -0700 (PDT)
-Received: from [192.168.1.3] (p5b2ac6c7.dip0.t-ipconnect.de. [91.42.198.199])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073e5c6a0sm15385345f8f.86.2025.04.29.18.10.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Apr 2025 18:10:33 -0700 (PDT)
-Message-ID: <92ed23e2-651a-4730-b5b6-d9e85761c1f8@googlemail.com>
-Date: Wed, 30 Apr 2025 03:10:32 +0200
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nNNn21xL"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8B9852540219;
+	Tue, 29 Apr 2025 21:36:49 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Tue, 29 Apr 2025 21:36:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1745977009; x=1746063409; bh=lXtmYKmM+kLolKVr6MLT45PItAjhInNaFFT
+	UQ66S0vY=; b=nNNn21xLHwds027493PbUXZFdwb7RM6yKPq7+j9yt2nc1GICHci
+	sfCWY4me2ALWZHf3ASZpXsbr/t1btceANo02pEnyA0AKehCH+Cl9WOSOvV3yxMiG
+	ha7MI+Y7QpJ+jD4RjSqE5popyrN+wSGeZqTx/BegEUeTItG29PlU7QvugoxYpL3k
+	euIHh0Bk/mL1ZJlqqpVLghxrWFsVu46Jl+2ZQ2EXa8nEJ2klpmeL/SZ+Dr46R5rc
+	fFhI8fsSS9BGMRyAbPODsWLt16CtQ6T2Bx5ijm4ct/qwOspUY+CjLpPhbWxEnt4P
+	OXTQYyuVXDivZ0fufK4iwUlCbVXM68TI+ww==
+X-ME-Sender: <xms:sH4RaPYSD_Il7S0M2mID4NsGO9mL3qgqwizUVYdAmVDGvdpWOhUVow>
+    <xme:sH4RaOYyMrLopypTHH84rdBJVUttHWx8vp9nvjEsz3kPV91R-lqJQBa416gjxlagz
+    fnTaXmUJ7JbOukhJIo>
+X-ME-Received: <xmr:sH4RaB-oglDBVItNy6ZX37oIp-EcnybmsTkW0EOF4cc72jwnUEntV6_r0soyhQoohiZiMY3aOGUxdOupnGZsW0U7_3VBGY_Ag4M>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieehfeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevufgjkfhfgggtsehttdertddttddv
+    necuhfhrohhmpefhihhnnhcuvfhhrghinhcuoehfthhhrghinheslhhinhhugidqmheike
+    hkrdhorhhgqeenucggtffrrghtthgvrhhnpeelueehleehkefgueevtdevteejkefhffek
+    feffffdtgfejveekgeefvdeuheeuleenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehfthhhrghinheslhhinhhugidqmheikehkrdhorhhgpdhn
+    sggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnrghthh
+    grnheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepohhnvghukhhumhesshhushgvrdgt
+    ohhmpdhrtghpthhtoheprghlihgrkhgtseifvggsrdguvgdprhgtphhtthhopehlvghnvg
+    hhrghnsehtfihisggslhgvrdhorhhgpdhrtghpthhtohepmhgrrhhtihhnrdhpvghtvghr
+    shgvnhesohhrrggtlhgvrdgtohhmpdhrtghpthhtoheptgholhhinhdrihdrkhhinhhgse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtoheplhhinhhugidqshgtshhisehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtoheplhhlvhhmsehlihhsthhsrdhlihhnuhigrdguvg
+    hvpdhrtghpthhtohepphgrthgthhgvsheslhhishhtshdrlhhinhhugidruggvvh
+X-ME-Proxy: <xmx:sH4RaFrbJM5lV8M-uzGSDXczNSRgvq8nG6xeCoGQy58JuqJSu66sWA>
+    <xmx:sH4RaKoFAGK-hVmcVkDZ6SG7cGE86ZEn1VSjDCzts4bBgpV4AgGNBQ>
+    <xmx:sH4RaLTBt-QfFvpxmM8N8ELdlERkiWQIfK9Lr9_AS6vsfSC3GV5bcA>
+    <xmx:sH4RaCrD0pYPJCa1Kb6pk_WIoHM8j4kVS3ysEFBxbX9cWVVE5t-Zaw>
+    <xmx:sX4RaOzBUmJuu7VnfZCKdCdlSHfwxicqfMAmiHo7SoiXYBeHM08ctsiK>
+Feedback-ID: i58a146ae:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 29 Apr 2025 21:36:46 -0400 (EDT)
+Date: Wed, 30 Apr 2025 11:36:55 +1000 (AEST)
+From: Finn Thain <fthain@linux-m68k.org>
+To: Nathan Chancellor <nathan@kernel.org>
+cc: Oliver Neukum <oneukum@suse.com>, Ali Akcaagac <aliakc@web.de>, 
+    Jamie Lenehan <lenehan@twibble.org>, 
+    "Martin K. Petersen" <martin.petersen@oracle.com>, 
+    Colin Ian King <colin.i.king@gmail.com>, linux-scsi@vger.kernel.org, 
+    llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH] scsi: dc395x: Remove leftover if statement in
+ reselect()
+In-Reply-To: <20250429-scsi-dc395x-fix-uninit-var-v1-1-25215d481020@kernel.org>
+Message-ID: <91ba6cf2-ca95-1ebe-837f-ecc89f547ea2@linux-m68k.org>
+References: <20250429-scsi-dc395x-fix-uninit-var-v1-1-25215d481020@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.6 000/204] 6.6.89-rc1 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250429161059.396852607@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-
-Am 29.04.2025 um 18:41 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.6.89 release.
-> There are 204 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
-oddities or regressions found.
-
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+Content-Type: text/plain; charset=us-ascii
 
 
-Beste Grüße,
-Peter Schneider
+On Tue, 29 Apr 2025, Nathan Chancellor wrote:
 
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+> This if statement only existed for a debugging print but it was not 
+> removed with the debugging print in a recent cleanup
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+The patch you called "cleanup" has a "fixes" tag. Strange.
+
+I think it's unreasonable to refer to a patch which alters object code as 
+"cleanup".
+
+I also think it's unreasonable to put a "fixes" tag on a patch that 
+doesn't alter object code (for any shipping config, for any supported 
+toolchain).
+
+Those assertions could be tested automatically by CI. And maybe that could 
+prevent this kind of regression.
