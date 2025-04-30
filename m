@@ -1,179 +1,201 @@
-Received: from e2i340.smtp2go.com (e2i340.smtp2go.com [103.2.141.84])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD29A21B9E3
-	for <patches@lists.linux.dev>; Wed, 30 Apr 2025 08:57:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.2.141.84
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746003436; cv=none; b=arj5m26VWMdlELplT1K+Q3uVcpp0WXIfeLg8dvLIgXTvfyxIOFRbTKdsiAMWbiXzWoOHOqHm06Dj6K/1xDG2ggyZ4Eoq8yr4/RA9QXo8QvbgSuZFDXr0kbX1xqPvx/o3t8gnOeBvwws81NGTI+XmR7VFOdCT6prb4ktGPPwOBHU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746003436; c=relaxed/simple;
-	bh=kZ7ImT5zfbzlRBanFhM9ITuwN/m7Xo8NR2YPEAruOTo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S2zIiYh6cWZ353RtX6eMKtgVdoOoB14N/BG6I8Efg0dhT48Qa7qRo0luhRSf2rpboaffXROiyRzS6Hk0VLJ6OQxYmgnW0jab8S8r7Bkibe8AMI9LleoXAS5HXvPf/mFVMnFeyhMFlUq/HQ3DoM1T7zTWfdpEuGL3q4pybMEW3+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=triplefau.lt; spf=pass smtp.mailfrom=em510616.triplefau.lt; dkim=fail (0-bit key) header.d=smtpservice.net header.i=@smtpservice.net header.b=zKyAhu6D reason="unknown key version"; dkim=pass (2048-bit key) header.d=triplefau.lt header.i=@triplefau.lt header.b=jQ1JcNj9; arc=none smtp.client-ip=103.2.141.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=triplefau.lt
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=em510616.triplefau.lt
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCAC1EEA46;
+	Wed, 30 Apr 2025 09:00:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.16
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746003650; cv=fail; b=NVIhoXQSijODF4iRjNIYpmU/PTcOtMF+LaDjbyiW+PjEK0YX62ZotBhOG9RpTtzbUHexbL4SD3A48AHG3LY/7tAwhJb8aMCWm2B0tNlBkXMfg8eyUQbMC2YuuQYJY/cW0MLgOx9u2lYcyBcNlFGOf9MNty5SzBb9AdQdJBWGOZg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746003650; c=relaxed/simple;
+	bh=mE8AFZQBX1br/HM/PrsGivuK/jUrElCdvXxBCyx4jVI=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=P6jPXovu9WkMxQuKcPZHnwKf+Dq2LYFwSQsgOAFV+srWwIRlpIbA4zUcq0m5DWaFaWaFQMRTL84FFZzdvt7UDjevcAOVJrzXvycfq1YXHAzv2wkU8wox9PZsJUkvgg42seOHktUv4yf8JxLV7gPTioJaYXnJDQlB5QuPEVt2IxU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=i4P2B7Ap; arc=fail smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="unknown key version" (0-bit key) header.d=smtpservice.net header.i=@smtpservice.net header.b="zKyAhu6D";
-	dkim=pass (2048-bit key) header.d=triplefau.lt header.i=@triplefau.lt header.b="jQ1JcNj9"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=smtpservice.net; s=maxzs0.a1-4.dyn; x=1746004331; h=Feedback-ID:
-	X-Smtpcorp-Track:Message-ID:Subject:To:From:Date:Reply-To:Sender:
-	List-Unsubscribe:List-Unsubscribe-Post;
-	bh=Kgav3+rFuWlgAfp8zAMTZtwJ3iGx3mOTRhPWv27IYqs=; b=zKyAhu6DURYu7Jssi71YvUVCz4
-	j8Zzkt3tIceXGuzQMLgsIyYdInyz1gJ3nyEiHDLWTN0XY39pnttpj31l0dkTupfBo2dcGL13KfbRd
-	o1ct6gI4JKmcyB2fLc5e31SRGYwGUqVzQ1Fs9ksZFpSReCxle5Z5qa4nw8Uqqk5T2gsdEbH14wJOV
-	WJgyCT3cwySJcsQvC9vn3Xlflc9o0RSkm0jGBMG2hDbFFEJk13KQtl7D06HNzbRa5l530unNFjWLc
-	LWVs2e9MTcKXO1XKlRNGZOmS3HYxW4qdinAuYtPTIB4QXHxt/iwTxhcWHZmMRwZlj5RQD4reiDEZU
-	QhycFUMg==;
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=triplefau.lt;
- i=@triplefau.lt; q=dns/txt; s=s510616; t=1746003431; h=from : subject
- : to : message-id : date;
- bh=Kgav3+rFuWlgAfp8zAMTZtwJ3iGx3mOTRhPWv27IYqs=;
- b=jQ1JcNj97GjHSJJpCpi0M7qhtJVO3/kib6DwjRIWuaQeqWrNSn4B8dKAOes4dMLlUx+8z
- LNqZZNBDJOcKwfFfyppvaNrrIANweHhz9y8xTEtWLwjgXmdhMq8oQoaRDxYoop2lH+5SvFo
- uIdgq2mqCaa9ML+P8Jhkq/mEzsQ+zkIs4ZaVgW+Rmdd6IRG5D27TDbsK8y1Y1RBbW+DD9VO
- 3El0WFiKnGWuAIrb/lWC33ApcdkedWi/BLlCBox5yAwdCY7dGaZB4c47OcIT1PfpFyZlzHb
- mPwoM8J0MU7dFYUKJ2t8uevVDAOCnT3kgRtQd2Y7H7O9Xq5FVXc8e6xI/TZQ==
-Received: from [10.176.58.103] (helo=SmtpCorp) by smtpcorp.com with esmtpsa
- (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
- (Exim 4.94.2-S2G) (envelope-from <repk@triplefau.lt>)
- id 1uA3FT-TRjz74-Js; Wed, 30 Apr 2025 08:56:59 +0000
-Received: from [10.12.239.196] (helo=localhost) by smtpcorp.com with esmtpsa
- (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
- (Exim 4.97.1-S2G) (envelope-from <repk@triplefau.lt>)
- id 1uA3FT-4o5NDgrkUe2-ptNp; Wed, 30 Apr 2025 08:56:59 +0000
-Date: Wed, 30 Apr 2025 10:49:43 +0200
-From: Remi Pommarel <repk@triplefau.lt>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- Johannes Berg <johannes.berg@intel.com>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 128/373] wifi: mac80211: Update skbs control block
- key in ieee80211_tx_dequeue()
-Message-ID: <aBHkJ0v5UnXPlRWl@pilgrim>
-References: <20250429161123.119104857@linuxfoundation.org>
- <20250429161128.436695769@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="i4P2B7Ap"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1746003648; x=1777539648;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=mE8AFZQBX1br/HM/PrsGivuK/jUrElCdvXxBCyx4jVI=;
+  b=i4P2B7Ap36TfZ3W36BxUBD3wZ8/jJsMkTosnnXx9L2qDfbEDv/wZeGaM
+   8pdSeAN1RFWydVorZPBD0yPsOEDPzQFlFZMXtww8eMzxax6h0L1Gn+N4X
+   UBD3Rh+HOxCTxcMEZ3P/beNilg3bibJWUeS5Bv6CWvAldqxtEBlRlq3rl
+   Bf+pBh+yHEzBfWn68CSeiDsUYUqN6kZVenmNlpO7glRISQ4m3fYSbCwxZ
+   Nr5MNi8YaV14O9ZFDO6g9fQYn+5y/FGSqOxQGvHhGRO2XKGmhsUIc/90A
+   i51zB7cLnq2PL3PCkY/SMidDV1WgdFUM72lfCne2CJj+XFIuKgSxrcfgt
+   Q==;
+X-CSE-ConnectionGUID: CMVic+ouS9yf716GC90T6Q==
+X-CSE-MsgGUID: yQ0TTHDtSCaKD3d1vSsMdA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11418"; a="35267769"
+X-IronPort-AV: E=Sophos;i="6.15,251,1739865600"; 
+   d="scan'208";a="35267769"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2025 02:00:47 -0700
+X-CSE-ConnectionGUID: hHaq6L3TQRuLst1p2j4Y6Q==
+X-CSE-MsgGUID: 03mJ9cFVR+K9+wHxh2DcZw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,251,1739865600"; 
+   d="scan'208";a="165008503"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+  by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2025 02:00:42 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Wed, 30 Apr 2025 02:00:41 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14 via Frontend Transport; Wed, 30 Apr 2025 02:00:41 -0700
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (104.47.55.175)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Wed, 30 Apr 2025 02:00:41 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=eKCU2/2wIZa7jc137Kj2tCuwj6UJ/M6ztbrXZlYhyzPnr8DLDFdH5A93xILsjx8P9jbEVRKrEZ3/RwLzRzk5q75lIZousg6hajE/t78sMYxjfbLrT4eUwh0rtsWEGOlZMBIdSdPKPtZPpZsU7Ho204SAQ/yd4GYnWnHilHwEEfNZ6OEzQP5znQ+PsXUAgu/er8VBMnP3KUOFggtBKhmvkqYfc1O9h+tHxk+a7l90IeL4CH5HkQtq7sa27wdPRpi0+vplr3GEs6PMxSFJAULFnK5z1wnWHYOjNDJpnLtJxFhHuJNMS7dj5/NCq7MwkkZ2dz3/cVmCaJlEAvnsKHfMTg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mE8AFZQBX1br/HM/PrsGivuK/jUrElCdvXxBCyx4jVI=;
+ b=rR9uuF+NU9cYbyKNT4wBy2BTOmJs5uuR5eVNCcZBG8Kr/qiG4l6gjC425NzXCKzon2+lbP/TZqFLkj4mRRe04Lf1tG1B4VlZfD6nkO/Xv92YtQG+59QgGLleZuTWjl+P82FyQFj8PE6/4zrkCmuwh6i2ZxP2c6akJVTFhG7coOTQNgT+wu6J0y5H/NI4t8YXtaw7h1NvspK0sjpfjVnlXB/cgF959iVhWaBkyuIWpOFhljMyJ2Z4X9qh7Rixxw7LnMxAjBfBzturjWOsmR5o8UjTVU/G9XwWSLvxsWuBkHSG491u70EkvNtdlHF9TIw2Z/lu5sIlWzb5MdbdmKCrig==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
+ by MW4PR11MB6911.namprd11.prod.outlook.com (2603:10b6:303:22d::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.31; Wed, 30 Apr
+ 2025 09:00:24 +0000
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::b576:d3bd:c8e0:4bc1]) by BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::b576:d3bd:c8e0:4bc1%6]) with mapi id 15.20.8699.012; Wed, 30 Apr 2025
+ 09:00:24 +0000
+From: "Tian, Kevin" <kevin.tian@intel.com>
+To: Jason Gunthorpe <jgg@nvidia.com>, Lu Baolu <baolu.lu@linux.intel.com>,
+	David Woodhouse <dwmw2@infradead.org>, "iommu@lists.linux.dev"
+	<iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>, Robin Murphy
+	<robin.murphy@arm.com>, Will Deacon <will@kernel.org>
+CC: "patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: RE: [PATCH] iommu/vt-d: Restore WO permissions on second-level paging
+ entries
+Thread-Topic: [PATCH] iommu/vt-d: Restore WO permissions on second-level
+ paging entries
+Thread-Index: AQHbuSGwjCkCq1Tvkk+j4UaPR+HwNbO76cMg
+Date: Wed, 30 Apr 2025 09:00:24 +0000
+Message-ID: <BN9PR11MB5276862FA18022CE00DCFFD08C832@BN9PR11MB5276.namprd11.prod.outlook.com>
+References: <0-v1-c26553717e90+65f-iommu_vtd_ss_wo_jgg@nvidia.com>
+In-Reply-To: <0-v1-c26553717e90+65f-iommu_vtd_ss_wo_jgg@nvidia.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BN9PR11MB5276:EE_|MW4PR11MB6911:EE_
+x-ms-office365-filtering-correlation-id: 598d58e1-6108-464b-2303-08dd87c571b0
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|1800799024|366016|376014|38070700018;
+x-microsoft-antispam-message-info: =?us-ascii?Q?N3JK5/nh4fCfudnrCDs6xaZKlTIxS7xRwv0JZ4OuzwuvorIJT4uu0d476pbr?=
+ =?us-ascii?Q?QDIaX+pRun8RT8gpN3eeAEdvDZzL7GWbR204+gu124nluxsIFwnYoUVDztuA?=
+ =?us-ascii?Q?hyjOJk/z1ZS+Wu+ObChUVRH2M+lfehQ2stWDDOVMIumSW5m8JmP0vUGAdcD0?=
+ =?us-ascii?Q?IloLogkjc7z5qQp2c+3d9bvzbTqSQDm60tFdz50XgTAFuq9PFLThqSkZZzBa?=
+ =?us-ascii?Q?pPAX7rpOHpVrdTh8u2pz71rH8QtlnVRzJPsITDNfTpZYQolzhIrKfI7Ts0+N?=
+ =?us-ascii?Q?ylRMXuX8RQXd6Rl0s4dhlosQkjwetmNzteQRQMnnIcjGWO/GtM02kQ9VI6g9?=
+ =?us-ascii?Q?Vgx8TXTFRQMEHtcY8KcpGDooQhdVjmK/jB9GlEDwwSv+OoOOiGHSXoUS8UGj?=
+ =?us-ascii?Q?hi9rSFTFkb0uuFhJXEAdku1a3xBbxPyeaFx6FEsRf8wI17mfY8CSODQ8L4kM?=
+ =?us-ascii?Q?KKiTRnHN/6C0oCYMTBg9vZciXYrm6DLNCyKdkvjhPyD6cV7gDZnrSz/kBdsC?=
+ =?us-ascii?Q?GMbDOEYDyr6pW9b+mpwjdanafbypIzsJpxlpZio3Lkb8t4gj/8PyY60AQp6l?=
+ =?us-ascii?Q?Zxem892QTOUUubvez6Ett2Z62DpEg0DE/Yi6PplD6mURqaiVWXTLlDbg8ORa?=
+ =?us-ascii?Q?S2TrPgK3P/Hy8u/JzsnQdxANIYQcm18ssDgEEjfOZ/ZiqTxqByktmSFBnfBN?=
+ =?us-ascii?Q?wRG22P5i8RaDzZZKk/q33hNhD5W28+YYLvoXc8vdiLnvwpeGArjLwm8s/efQ?=
+ =?us-ascii?Q?IDnZcu1Yqr8OWqQ6OIHE9C5qhWhxpu8hek5lCoC/rHfJUozhtD4HdY0P8f0w?=
+ =?us-ascii?Q?OLCInJRPevZK5lFb1OyVc76OtXdsRFgxB68kZGDow2RLemAYGXqeTBGoVgqO?=
+ =?us-ascii?Q?J/dtb6yYZgK/1KZE+PvgGLk1uSTgldjmIDj201h6G1D9l6v7yfBp/+L9Hz9m?=
+ =?us-ascii?Q?kay/BCyu4VXhmy1bvd1uTGJElBelmQ9IphUiOizPpauYDDObUvuKfx4oi5Qn?=
+ =?us-ascii?Q?n6ByLJKD/gniuYWU6Y6HUeqfCuhi7B44odN2Jesf8ZF1opS4KsToM05GWM28?=
+ =?us-ascii?Q?214k5NygGiWP7mq2HhxSicjMIvBpeXFyiJ4zgMYm3TY2qNE+JdpEbk5HxDrD?=
+ =?us-ascii?Q?83A1ocNHDFQmE6isUI43jn64qL2yFeyYDgxX96J0sKsIjkuhpwH3mOE1uU9I?=
+ =?us-ascii?Q?euX7tRQMbogZQzhB4o2AWJltDdp22dAu8FLncXhyGu5269NDgv08pNzF3DTy?=
+ =?us-ascii?Q?TEuCO10dpG5NtGsJRDf35mvl+Oz9sHR+bgBgfnaH60C9lLgvTGXVlfJaiDUE?=
+ =?us-ascii?Q?euA32icBTgSDSYU0WHYSQxwGvpm5jP2pcWy8Hs1ulpcOiPIuBsPCbXP2x2R9?=
+ =?us-ascii?Q?4oGVTgap7MmFdx1eLJfeNgfoJNGMm7RPVmB1/hoze1MrabI0PL4IxxcSkp0l?=
+ =?us-ascii?Q?hZWkvuK9ykwxP4W7BM/z1NCr+9QkvfpT+AZm1SeqCyIQWWmhG66I7A=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?jiQCVVDkUtxjrVHm74mI6vYrxqzBsHfSjjLbUfEF9V4e8RJIE+3ojDzcHNGC?=
+ =?us-ascii?Q?r9ADx2yA5cBYnYlmw3+G6B0v4mvEcMdRiwy0dwbWMvF56rz0LACZXTc6051h?=
+ =?us-ascii?Q?ziXtN1iU6jq3gjRziSlhl1DPr0iIl+7kwipcKR4UXdse56BkX1uMaRWuduKu?=
+ =?us-ascii?Q?A5cmVmLt43vP2naTCA/MBnIphAi+LMbpOErwkjl+HrGtphKkOhbZmy6V4LI+?=
+ =?us-ascii?Q?Ke0SFDdDfeAZ8P11WqgpfI0ybc1Xw/g4gEzo9SUEqRI7aPFCwFHeUqCn6KDT?=
+ =?us-ascii?Q?B8hZ5A6KDiiXTa+YaVDCjjs9j5Ox93MpvfNKdTQ8tHy3SYkLuCwhTycXldx9?=
+ =?us-ascii?Q?CNRz4vak1gmj2uwc4QUZmTWLHyIgTfUGyHXiJxvyys7O3PHfPjyeHC6IUwE3?=
+ =?us-ascii?Q?PUzrd0gNbmixXoqBk8QZGfRwUfXiboXu5sbiSKTYQSBIQuIXxs/89PcD1stO?=
+ =?us-ascii?Q?GVMgq/4lu+wvdb6HJSug0Er879ZWh8GQTm3YuuxeL82p1MihhgtrbHbdboCL?=
+ =?us-ascii?Q?A52zzzpSsw6ghoJvTIYgV3K0fWqR+NLC83yak/5BPjcxTW7DzS5QzRqRXSAL?=
+ =?us-ascii?Q?3Mjk9eqvtdMv1tYWai0kt893IqvlxsuVACpIolO6WewOHtTOYwA9KGSfeKcr?=
+ =?us-ascii?Q?by4U0jXoyFye/B8U7G94BQNCif7Yyfy4/qY5jq9NE2elB2OB7szDfOVWxpaW?=
+ =?us-ascii?Q?CFLdcrt1tvzmCmO3vmtdBXp1jNPDzY5NC1z5+YWXvH36h97WbWG+XJc4WpeH?=
+ =?us-ascii?Q?tl6tFjH9iQkp11DEtct0xk+eGywfNgIf6duotbNw7Y+TmLDCe75oMejxpHZv?=
+ =?us-ascii?Q?6gTYec9+ui4raWw7g8vyp3+JJD/+6xiNU2X1ygiFAlCq+wc6WDSP8Mb/MI8z?=
+ =?us-ascii?Q?JgPnyNgcWWdGN9WAUus8qjbmdJvFUP+7h/m9h9BriT/2F4YRTdc7SCe44bLv?=
+ =?us-ascii?Q?YxT/M48nnWCsuHjgyKwhh54daMdDcyMNNc+jIsBlP+VpW6L2sesEi5QaIv9A?=
+ =?us-ascii?Q?E8qTpScPXutbVzXDzxmv/xwxmZOqNsrU/ROpzUNMLv4UMFa/9usnhb92TZMh?=
+ =?us-ascii?Q?ZIG61kMeRN06+9gOwCzdokhwlUw+VmPqVaEAiyStGpZkD5D9RoU1WoJd8RBs?=
+ =?us-ascii?Q?quT58jeacxPHUsF3xxiB9gdJFQd7zEySxsdQJpIwrKWkQc+kXQTkdYo2l/yW?=
+ =?us-ascii?Q?0CMxuXuEO//iNb3L3lJoMiGKpwSVj+bRmKru6bkSHzdCg7B4VLNjYXogExEZ?=
+ =?us-ascii?Q?8pOpAZ0g/uqlagwJzg93Qpkoir4Iwe9ISSzRqB2khBnf8Jb2eW4IkC08wOhh?=
+ =?us-ascii?Q?R5YwzZH38sbaw6tr1CF8+c8nb5YIg3UuApBZD5ubQ2TwOI9Fy0F3gJd3E37H?=
+ =?us-ascii?Q?EH3e7OwTKpBf8gKATVlijh6sLCTR3rCSbefoyFi4murUFnEjqmfwKAiktjWW?=
+ =?us-ascii?Q?XkOb5lMZPKRqf07DY1j2E+lYbaR2hAJF7s7KUpDyKy2LrSqivA8EkwULAmfQ?=
+ =?us-ascii?Q?03IvL37vfes9WGm8xQiumzS/u/BpUgcVGKXc9pDqSWqvNV93dXRsLwh96BH1?=
+ =?us-ascii?Q?XbOMBP5ut1TSl9qoes+nLYCARE7mH9jrWrpQF6c4?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250429161128.436695769@linuxfoundation.org>
-X-Smtpcorp-Track: k5Zd_mCmS_az.rsq4dw40dADU.46QN_wvhSL5
-Feedback-ID: 510616m:510616apGKSTK:510616susjtUlcmQ
-X-Report-Abuse: Please forward a copy of this message, including all headers,
- to <abuse-report@smtp2go.com>
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 598d58e1-6108-464b-2303-08dd87c571b0
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Apr 2025 09:00:24.1737
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: EIsloSK+NMm5tKRqRH9NoSfpoDxo0zZH2KfREMC+4YpH2oYeoLp7nnVU1w1wHSDOFwuFwM+raqFwYsv61DZ2Jg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR11MB6911
+X-OriginatorOrg: intel.com
 
-Hello,
+> From: Jason Gunthorpe <jgg@nvidia.com>
+> Sent: Wednesday, April 30, 2025 12:12 AM
+>=20
+> VT-D HW can do WO permissions on the second-stage but not the first-stage
+> page table formats. The commit eea53c581688 ("iommu/vt-d: Remove WO
+> permissions on second-level paging entries") wanted to make this uniform
+> for VT-D by disabling the support for WO permissions in the second-stage.
+>=20
+> This isn't consistent with how other drivers are working. Instead if the
+> underlying HW can support WO, it should. For instance AMD already
+> supports
+> WO on its second stage (v1) format and not its first (v2).
+>=20
+> If WO support needs to be discoverable it should be done through an
+> iommu_domain capability flag.
 
-On Tue, Apr 29, 2025 at 06:40:05PM +0200, Greg Kroah-Hartman wrote:
-> 5.15-stable review patch.  If anyone has any objections, please let me know.
+DMA_FROM_DEVICE ideally implies a WO mapping but it is more
+a hint instead of an enforcement. so yes a new flag might be
+required when a strict WO support is required.
 
-This patch should not be included in any stable version.
+>=20
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
--- 
-Remi
-
-> 
-> ------------------
-> 
-> From: Remi Pommarel <repk@triplefau.lt>
-> 
-> [ Upstream commit a104042e2bf6528199adb6ca901efe7b60c2c27f ]
-> 
-> The ieee80211 skb control block key (set when skb was queued) could have
-> been removed before ieee80211_tx_dequeue() call. ieee80211_tx_dequeue()
-> already called ieee80211_tx_h_select_key() to get the current key, but
-> the latter do not update the key in skb control block in case it is
-> NULL. Because some drivers actually use this key in their TX callbacks
-> (e.g. ath1{1,2}k_mac_op_tx()) this could lead to the use after free
-> below:
-> 
->   BUG: KASAN: slab-use-after-free in ath11k_mac_op_tx+0x590/0x61c
->   Read of size 4 at addr ffffff803083c248 by task kworker/u16:4/1440
-> 
->   CPU: 3 UID: 0 PID: 1440 Comm: kworker/u16:4 Not tainted 6.13.0-ge128f627f404 #2
->   Hardware name: HW (DT)
->   Workqueue: bat_events batadv_send_outstanding_bcast_packet
->   Call trace:
->    show_stack+0x14/0x1c (C)
->    dump_stack_lvl+0x58/0x74
->    print_report+0x164/0x4c0
->    kasan_report+0xac/0xe8
->    __asan_report_load4_noabort+0x1c/0x24
->    ath11k_mac_op_tx+0x590/0x61c
->    ieee80211_handle_wake_tx_queue+0x12c/0x1c8
->    ieee80211_queue_skb+0xdcc/0x1b4c
->    ieee80211_tx+0x1ec/0x2bc
->    ieee80211_xmit+0x224/0x324
->    __ieee80211_subif_start_xmit+0x85c/0xcf8
->    ieee80211_subif_start_xmit+0xc0/0xec4
->    dev_hard_start_xmit+0xf4/0x28c
->    __dev_queue_xmit+0x6ac/0x318c
->    batadv_send_skb_packet+0x38c/0x4b0
->    batadv_send_outstanding_bcast_packet+0x110/0x328
->    process_one_work+0x578/0xc10
->    worker_thread+0x4bc/0xc7c
->    kthread+0x2f8/0x380
->    ret_from_fork+0x10/0x20
-> 
->   Allocated by task 1906:
->    kasan_save_stack+0x28/0x4c
->    kasan_save_track+0x1c/0x40
->    kasan_save_alloc_info+0x3c/0x4c
->    __kasan_kmalloc+0xac/0xb0
->    __kmalloc_noprof+0x1b4/0x380
->    ieee80211_key_alloc+0x3c/0xb64
->    ieee80211_add_key+0x1b4/0x71c
->    nl80211_new_key+0x2b4/0x5d8
->    genl_family_rcv_msg_doit+0x198/0x240
->   <...>
-> 
->   Freed by task 1494:
->    kasan_save_stack+0x28/0x4c
->    kasan_save_track+0x1c/0x40
->    kasan_save_free_info+0x48/0x94
->    __kasan_slab_free+0x48/0x60
->    kfree+0xc8/0x31c
->    kfree_sensitive+0x70/0x80
->    ieee80211_key_free_common+0x10c/0x174
->    ieee80211_free_keys+0x188/0x46c
->    ieee80211_stop_mesh+0x70/0x2cc
->    ieee80211_leave_mesh+0x1c/0x60
->    cfg80211_leave_mesh+0xe0/0x280
->    cfg80211_leave+0x1e0/0x244
->   <...>
-> 
-> Reset SKB control block key before calling ieee80211_tx_h_select_key()
-> to avoid that.
-> 
-> Fixes: bb42f2d13ffc ("mac80211: Move reorder-sensitive TX handlers to after TXQ dequeue")
-> Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-> Link: https://patch.msgid.link/06aa507b853ca385ceded81c18b0a6dd0f081bc8.1742833382.git.repk@triplefau.lt
-> Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  net/mac80211/tx.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-> index c4e6fbe4343ee..0a658e747798b 100644
-> --- a/net/mac80211/tx.c
-> +++ b/net/mac80211/tx.c
-> @@ -3704,6 +3704,7 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
->  	 * The key can be removed while the packet was queued, so need to call
->  	 * this here to get the current key.
->  	 */
-> +	info->control.hw_key = NULL;
->  	r = ieee80211_tx_h_select_key(&tx);
->  	if (r != TX_CONTINUE) {
->  		ieee80211_free_txskb(&local->hw, skb);
-> -- 
-> 2.39.5
-> 
-> 
-> 
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
