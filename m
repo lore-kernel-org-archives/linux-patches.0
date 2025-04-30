@@ -1,95 +1,107 @@
-Received: from mail-ej1-f66.google.com (mail-ej1-f66.google.com [209.85.218.66])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F8319F135
-	for <patches@lists.linux.dev>; Wed, 30 Apr 2025 02:59:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E550126F0A
+	for <patches@lists.linux.dev>; Wed, 30 Apr 2025 03:03:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745981997; cv=none; b=mDARa8hBGFtAB8IHzggv1HlCSCoxIdXM9PZwuduOq8Im6+ywV01F6rhj90lhAeEmPXpvUHiicyDy3Y96xJijeOY3476AvUp9d0qUyHlxd7FRm/BUripg26ryE20US2vNjHLdQTspe7bUOznU3WRKh6a/Whp+wiii7XO+ciiyalc=
+	t=1745982232; cv=none; b=K765DLqJkVCVzJpom5j9TUwzVwrguuTePm5Oo5rYZJIJluposHUCjndMdWW4Xe15NiyT8H0h/UW+zWQp/zn7C9KI6csRhEEG4VPApgrvpWAQVcYY2oZoGVJaC/1spmI9vCg5Es2UqY72mshPMJ1ysKaFl9QtQjEq32Xt/1ziYjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745981997; c=relaxed/simple;
-	bh=GHQkc3FXloqlNAuYTzeb0ZL6MOxgugaK43eAMibLWeE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FclIcn7k2mAXwINTpmt3xeHYFi+H5G+BzUgWgN67h2M4S3HQHFSxpHWlqluA3MvX8K8QNKspl7ovd9zW1o+OlaSMpcerKHQbHqxsv+OPpYW1jexoaJjd4ARTzPR8KR0Ky+/v71P2hmlhWe/bSix+UlAvm2rd0ZdGJoMZK19KaDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=UB71FYll; arc=none smtp.client-ip=209.85.218.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	s=arc-20240116; t=1745982232; c=relaxed/simple;
+	bh=flJyldUPUjTdxfP+ie4pglwXh2rhaGbocVUL5PwSRPU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kp8+NorbUNH0XH9OqDo8hRaiOmwIot9T0MO6FeAZb7omoMvKgwmNlZCiscMqkiXLUKQQDl8PFlIRnE33yWRqa6w5J9RD4h1royAcoH/N3LPs3iWIW/YrAECGQdtrINwEqPb3PeMba88YkUDe1VN2RfR97zxC3c1JxP/HBZsOJEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=MY+9Jk4Z; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="UB71FYll"
-Received: by mail-ej1-f66.google.com with SMTP id a640c23a62f3a-ac2dfdf3c38so1173551866b.3
-        for <patches@lists.linux.dev>; Tue, 29 Apr 2025 19:59:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="MY+9Jk4Z"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43cf257158fso38164505e9.2
+        for <patches@lists.linux.dev>; Tue, 29 Apr 2025 20:03:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1745981994; x=1746586794; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pG6I5vWSFedJSkBxsNAzdBugXyUbw1kRyptLvd0MY2k=;
-        b=UB71FYllXWtcmCf8WoIKdeyXLCHbE1LmG461cdRSPiC0gTkJ9gaDhn4bhB97HlQMM7
-         hbYPLXXaOi4u68SX5NpR+4QR54Ql1YZe+5uWQSCKTAg4M+xk9B5wuiB+hs7PBgOjofoZ
-         OgnBUwkUKthDmiDPHK7/P92AOVDChxXNQlEHffl8QTN6BZIrG0jBmT+NKi81zNLqB5DC
-         IPC+SJ2d6MXNZFZvAPZgv2yjUn7SprgG8kiUwNzKXdEC97pSpWLXrJtPrM2D457U/D6M
-         dmV+YPxshDSZ6u/PN2L4QjYPsvk96qiy5UVn9n2AOA0TzncoiQ2+cuQh4mt3HZrob2sf
-         FcDQ==
+        d=googlemail.com; s=20230601; t=1745982229; x=1746587029; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gE8L88GgBMGbh45ODSYqjl77s9d7K6gsG0j9QpojvBo=;
+        b=MY+9Jk4Zt2ymyyh4YMYsxA9nDi+ylrZV+jZHK2dwizOWBPpXScg7wCgJb3HrXUe6Eq
+         MMLNpV9YiqsgEUapHEMT5m8hX+sqny+2S/3sMcV8c5qTT7KFHN+ECKE1ghSDEFv7UUw/
+         cbdb0OPfP33ytjMLjfAtdYMf2q9wvQgxdiQZYqrJSgzgRfTJzGBDmWuWhpt38rDIJL0E
+         wNxadkZ2CPEHJn4+LPHWy7iwplcXzUbSFgInfb4n2WCRDgc4YD1p2g/vjGQh4erp0XqF
+         79gWi+r2ylmoKoilcFbj21RncW4K9sOCZPFRZaZkzacjeVvT3kZFsUmx+0W+tvDIcYIL
+         gO4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745981994; x=1746586794;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pG6I5vWSFedJSkBxsNAzdBugXyUbw1kRyptLvd0MY2k=;
-        b=UKnO0hFYZc11rXkppnxLst1+fY5N/cN3y7sC3BxL+1vSR9s9hgFjftr3E5R6Kx9u3O
-         Qu+j7rhn4+0Vo1+Cj3XH8zHfSvkV+8Wi/L4DuWHI4lThE8DSzsVlMWJhELzwP/zGc3JC
-         dWwl/muzFw7VNN2cAHKbQjHHJfjUCC8zqYIJcaqhMPWGt/WnhuZob6zHungDGYw++OAC
-         nQhJ96SOAQ3CU4gCo+vt0jDOw1LDFdJP9bGvTN+6Rz8TsedpqH/6pxBzO3EIJ49FaXbK
-         /rr+A83GZcMdD2q523RChxfScP0Pp/7gpDCslbJ5Jh2Wal8C69Q14djU59G++4Cq2G6t
-         hvag==
-X-Forwarded-Encrypted: i=1; AJvYcCUKbrpWKvlNBHVyq8pCLNf8qr92qhCl3LlM1Gxc3XDJiZcR5Tti6ctgTIUaSpI996HK/lwE55u/@lists.linux.dev
-X-Gm-Message-State: AOJu0YyWKtT5v08IUuYKliHCx4841y7JCqmjF13tfh4X8GvEFh8qsDVv
-	hEB5nA8uN1rlpcmSbVSyA8NA+ZQ5KNC2qaK06rqfLRiafGwyRlPQFA3NzQaGtG4=
-X-Gm-Gg: ASbGncuv7f1UCZaAYaZ6qySCiC2wf7Z2vmtvFufy/5W3ZSG948K5XOXBtoUST1Rd0f1
-	UWfSwIYgLC3pU8xZlVCToDri6hA/RsYWp5Gy5FiEShlqjcPhyeeNt53yyM5JagacJ5jEviD3gKP
-	2ZMyUWKfeu71yGif02L7NazsakzIBzH1h7FOesgoXwiiOrkGCZjbJZWmZKxNnsGjcmM9SECuC2V
-	04C7JoJuZWG6Pl4c9x5Bz23nbHuiNSlD6P+dodpOsG/ZqBd1XaE4KqHk7OE/l4Cj9WWPIGWZ7+j
-	kjxoJviA1v/aC4QmzX9lVy7MWLXfhG+JGAc4fIEAfh8V8mymX9M/4j2UGeTk7AALRQ==
-X-Google-Smtp-Source: AGHT+IH2cNTkQBzyqfuqh97tDzMgDA/fmKHw+4HpNwa25q5IavYcAeKgdHYsqOCmKNZQVXcjThwZng==
-X-Received: by 2002:a17:907:3f1f:b0:acb:4de7:14d8 with SMTP id a640c23a62f3a-acee21a69b6mr84838666b.14.1745981994039;
-        Tue, 29 Apr 2025 19:59:54 -0700 (PDT)
-Received: from u94a (27-240-163-208.adsl.fetnet.net. [27.240.163.208])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6edb1580sm875529266b.175.2025.04.29.19.59.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Apr 2025 19:59:53 -0700 (PDT)
-Date: Wed, 30 Apr 2025 10:59:40 +0800
-From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.12 000/280] 6.12.26-rc1 review
-Message-ID: <dbif2hqcfe6oz2zziy5e2anzdvi7swbrb3xqcmdxobmj3fczrn@le5rlwynle6y>
-References: <20250429161115.008747050@linuxfoundation.org>
+        d=1e100.net; s=20230601; t=1745982229; x=1746587029;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gE8L88GgBMGbh45ODSYqjl77s9d7K6gsG0j9QpojvBo=;
+        b=U9nSvQY/WR1q/VIiV+Qs+hol7v6f7jR44CBvOCfYmjS8LJRPU2FgsRQU+H7bHq/mGA
+         X0pEoJNh+WxzIcllEVBSJY+ORB6BboJWfLuO0x4fxiGV5e0jvrAGtvK27bkq2LQu6+MP
+         XztX5o6jAsiK/UQUlrn8AGwmkqTR/AoRPd26K6KCgPrv2XHloAs+Wnl7fFG+4KqRSlb2
+         1RXYvBvjMuepvmSPH3ZmoLOahJN/q9VzifpogDFrsyWNQNkhFw5jTTR8WFrZzXq4Vzre
+         dWhQOm5XopqwOsaAw0LLPjbNdmQB7wKVn70sdF1X5yLAKggiDs/CwfHOK5LCAUWM4f3s
+         XaqA==
+X-Gm-Message-State: AOJu0YyiPU/Eny3uiakum3DG1XXwp4LRpejzSQWhHDwKUyNkybeJ+17F
+	zO/tElg6mPSUhgW1fTdPLg2k7fxTVEXaQBVceb9jiz3s5yFrzrA=
+X-Gm-Gg: ASbGncvCzEKI0wmH/EtIDWzbaOaUI803hh/fA0JGp5nwU5sjJAdlvge0MMoQ5nvkBOH
+	qRtY0xf/ppDXTGCDPWtxtqfUgOlLr21y5FXkgiA/Q2QpAtAiS+ChWUp0eY5GY/fF7nR+2Ju/QDZ
+	A/MuXtmY7hJcuFB0PfIZk3a9whcruo6yMbN3GVOyv6Ub9CaWjmH9mvxNVtizfHMCUH36KyUJ/nG
+	S68NtDQdzRVjotAHOxsbwcxurRYawaSk0rhWnWsQg9AEw6Aky/obz2v/tIz+Su8cySDWXBnDBb1
+	eEeOusy7gPd4l3y0LJAx1zGZ21bG6bOR6PXVWZ/snptzMHHgjwEsh2kFCXMYMQD7WbCciUQYG3a
+	KoEb0hqHEN00Ao+XYd5o=
+X-Google-Smtp-Source: AGHT+IFuSFCMk2NyOA+Ab/UGUF2QS2kK1ZDDDW+pqr1XFieTUQv3rWtf7EKj7LPcGoSe4pwrbjCwhA==
+X-Received: by 2002:a05:600c:3d18:b0:43c:f629:66f4 with SMTP id 5b1f17b1804b1-441b25dd103mr7939065e9.0.1745982229350;
+        Tue, 29 Apr 2025 20:03:49 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2ac6c7.dip0.t-ipconnect.de. [91.42.198.199])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-441b2b972casm7710135e9.3.2025.04.29.20.03.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Apr 2025 20:03:48 -0700 (PDT)
+Message-ID: <8427fad9-8c45-4fd1-9675-bfec041d3028@googlemail.com>
+Date: Wed, 30 Apr 2025 05:03:47 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.14 000/311] 6.14.5-rc1 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250429161121.011111832@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, Apr 29, 2025 at 06:39:01PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.26 release.
-> There are 280 patches in this series, all will be posted as a response
+Am 29.04.2025 um 18:37 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.14.5 release.
+> There are 311 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
-test_progs, test_progs-no_alu32, test_progs-cpuv4, test_maps,
-test_verifier in BPF selftests all passes (with 82303a059aab
-cherry-picked from bpf tree to deal with sockmap_ktls failure, it will
-be sent to stable once it made its way to Linus' tree).
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
+oddities or regressions found.
 
-Link: https://github.com/shunghsiyu/libbpf/actions/runs/14738691393/job/41371100896
-Tested-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-...
+
+Beste Grüße,
+Peter Schneider
+
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
