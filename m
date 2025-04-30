@@ -1,131 +1,82 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202DC34545;
-	Wed, 30 Apr 2025 22:58:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271C8225413
+	for <patches@lists.linux.dev>; Wed, 30 Apr 2025 23:02:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746053935; cv=none; b=ksoll7oFfURhOxSyQIf0Yr/TLpYt/hkxvcznz+7TRWgVYqHbz1l/p8JFQFDOn7EKFx+cfTNNKGHN5rQLQdRnkZkUj9Uj4mYGJ9IDhENIvFpMfzF2IrXB5sKlL0S9MvY/CWWqJCnDtAVzrtsVP7pIFtE1e1jzclMTAJpwMQ2MsR8=
+	t=1746054173; cv=none; b=Wvqfvfu/XHPQZslVT3v8EHernCVDueHXPwo/d7a3Rw0cJZO5gF+lxjzBNPtH+wIKxf5hySBqOGjr4GqdN61HOgNYuWyPFx29R+7c/zfqEK1dOp5GQeoWa0pefAwAmO5HX4E0Akkjb8xENOd/yK6qee6xFKUR/y31WW4HcALht04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746053935; c=relaxed/simple;
-	bh=wiInPDhsaRQhzyjCvueGftRayfrzomVv/gP9R4/ohjw=;
+	s=arc-20240116; t=1746054173; c=relaxed/simple;
+	bh=QcyPLVBYkw8YT/YG26ONvu5F6rsCMN1k+vumcWe39Zc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SSdq5hAT+7HoduWxM67EiGJ0ehZqkjjH/pCZ1a9zIZN6fPyApRSV2DQpvFFoxLl3Mqc1mfvyLpO24CMTmer6OFD+LsmLUtFyVKG7kk5Pypd3tj2iC1Ch9VLE67XK2yOHjj6sTG7J16cdXyBdDXvkYU1SrFBHvgFj7z/98EQj+AE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EvOZlYlO; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=jRULwAExoBNJo5lSlpCOanUN2R+Aumpzxb+JXff2cR3OwioQa6D8NozAFkplid0Z3Pzs/QamauA+NeHYej8teToXNl+Ou+IdZt3F2CCkIUdZ1C9Ef/ftIF7QHAYn2MaSeA8/FAX9Q9Lj+noRxc1N4VXVb25SE3NWstQhHPijt8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=BSyEHhFd; arc=none smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EvOZlYlO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E04C4CEE7;
-	Wed, 30 Apr 2025 22:58:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746053934;
-	bh=wiInPDhsaRQhzyjCvueGftRayfrzomVv/gP9R4/ohjw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=EvOZlYlOvx9FfiJWIxuWbBIFwPGJpc2hLl9EgmwstajH6zalh1O9gRhQKcM4gpcJm
-	 ex9kSULKUrzRrCkEzXWG95pfFatFpXTNpSFsaCSRxki27WPZA6VqSY4XbUWzPrwxUK
-	 qw810+1JLAWGPiCuYmIh8oo0R1aA03D/jP8s5unzgi/0yu30qLAf80D8KUxGYf5Q13
-	 NKjxyychXjrd30YE1+bMEvLwj4hV/0VmXDiUOL6p8/ZpzvM6xS2xqzXDfYzSe7O1ju
-	 mLnjXO5pL4al47OBlzs5QZqdrcK8iQKPGjhiNaabJSM09yInXE9mj/SpVXw0JlEhuP
-	 en+ScX72hvAaw==
-Date: Thu, 1 May 2025 07:58:50 +0900
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com
-Subject: Re: [PATCH 6.1 000/167] 6.1.136-rc1 review
-Message-ID: <aBKrKvYpCKWcoOGI@finisterre.sirena.org.uk>
-References: <20250429161051.743239894@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BSyEHhFd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1746054172; x=1777590172;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=QcyPLVBYkw8YT/YG26ONvu5F6rsCMN1k+vumcWe39Zc=;
+  b=BSyEHhFdMnUhsc550XNuTz8x2jEHFvq8trZJo5QrKHTtanTuLWPWj0Y5
+   t9QbgCCsqe4tt8eP6/ptqouf8qJ/U0/6Jh2QVI18vBwrzNkBHQf0PR8hb
+   pvR8eZuk4q1z+FZSXTdIGjtuCScf/Pfvr00MTQgpy9MUS6Nxfz4+kBySi
+   OleaW4vSQcl4XVTqhjtvcaLBbF71aJNP7aI4LbcFnemV+aehzi6Xvh33O
+   892qYHNCOk0Qe9+uOoQnffBMTcbAjgXXmy7AWj/NsjqwwdwVRgJm1EWMH
+   QgyBUgvdk6Vgf5URznv2+LK9vxbv9D1xqkOEj9H/jSj+Y9NQBvgH7dzqN
+   w==;
+X-CSE-ConnectionGUID: P7EugbyjQ+6GEQQ/n0mZ3Q==
+X-CSE-MsgGUID: hvP2qRZAQvS4IFKORFZ5eQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11419"; a="47449917"
+X-IronPort-AV: E=Sophos;i="6.15,252,1739865600"; 
+   d="scan'208";a="47449917"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2025 16:02:51 -0700
+X-CSE-ConnectionGUID: uwnAy4y5T1y09PQXV6LABQ==
+X-CSE-MsgGUID: 0rKYNfIdTZ6qBwurhY76rg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,252,1739865600"; 
+   d="scan'208";a="139067559"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.70])
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2025 16:02:51 -0700
+Date: Wed, 30 Apr 2025 16:02:49 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
+	Chen Yu <yu.c.chen@intel.com>
+Cc: x86@kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v4 06/31] x86/rectrl: Fake OOBMSM interface
+Message-ID: <aBKsGa4tdcuPHf1x@agluck-desk3>
+References: <20250429003359.375508-1-tony.luck@intel.com>
+ <20250429003359.375508-7-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="O4i/hNuYEfmFpkoL"
-Content-Disposition: inline
-In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
-X-Cookie: Well begun is half done.
-
-
---O4i/hNuYEfmFpkoL
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20250429003359.375508-7-tony.luck@intel.com>
 
-On Tue, Apr 29, 2025 at 06:41:48PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.136 release.
-> There are 167 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Mon, Apr 28, 2025 at 05:33:32PM -0700, Tony Luck wrote:
+> Real version is coming soon ... this is here so the remaining parts
+> will build (and run ... assuming a 2 socket system that supports RDT
+> monitoring ... only missing part is that the event counters just
+> report fixed values).
 
-This breaks NFS boot on the Raspberry Pi 3+, the same issue appears in
-5.15.  We don't appear to get any incoming traffic:
+Real OOBMSM discovery patches have now been posted:
 
-  Begin: Waiting up to 180 secs for any network device to become available ... done.
-  IP-Config: enxb827eb57f534 hardware address b8:27:eb:57:f5:34 mt[   16.127316] lan78xx 1-1.1.1:1.0 enxb827eb57f534: Link is Down
-  u 1500 DHCP
-  [   16.840932] brcmfmac: brcmf_sdio_htclk: HT Avail timeout (1000000): clkctl 0x50
-  IP-Config: no response after 2 secs - giving up
-  IP-Config: enxb827eb57f534 hardware address b8:27:eb:57:f5:34 mtu 1500 DHCP
+https://lore.kernel.org/all/20250430212106.369208-1-david.e.box@linux.intel.com/
 
-There was a similar issue in mainline last release, I can't remember the
-exact fix though.
-
-A bisect identifies "net: phy: microchip: force IRQ polling mode for
-lan88xx" as the problematic commit.
-
-# bad: [c77e7bf5aa741c165e37394b3adb82bcb3cd9918] Linux 5.15.181-rc1
-# good: [f7347f4005727f3155551c0550f4deb9c40b56c2] Linux 5.15.180
-git bisect start 'c77e7bf5aa741c165e37394b3adb82bcb3cd9918' 'f7347f4005727f3155551c0550f4deb9c40b56c2'
-# test job: [c77e7bf5aa741c165e37394b3adb82bcb3cd9918] https://lava.sirena.org.uk/scheduler/job/1340356
-# bad: [c77e7bf5aa741c165e37394b3adb82bcb3cd9918] Linux 5.15.181-rc1
-git bisect bad c77e7bf5aa741c165e37394b3adb82bcb3cd9918
-# test job: [9599afaa6d1a303c39918a477f76fe8cc9534115] https://lava.sirena.org.uk/scheduler/job/1340569
-# good: [9599afaa6d1a303c39918a477f76fe8cc9534115] KVM: arm64: Always start with clearing SVE flag on load
-git bisect good 9599afaa6d1a303c39918a477f76fe8cc9534115
-# test job: [714307f60a32bfc44a0767e9b0fc66a841d2b8f6] https://lava.sirena.org.uk/scheduler/job/1340691
-# good: [714307f60a32bfc44a0767e9b0fc66a841d2b8f6] kmsan: disable strscpy() optimization under KMSAN
-git bisect good 714307f60a32bfc44a0767e9b0fc66a841d2b8f6
-# test job: [db8fb490436bd100da815da4e775b51b01e42df2] https://lava.sirena.org.uk/scheduler/job/1341008
-# bad: [db8fb490436bd100da815da4e775b51b01e42df2] s390/sclp: Add check for get_zeroed_page()
-git bisect bad db8fb490436bd100da815da4e775b51b01e42df2
-# test job: [4757e8122001124752d7854bec726a61c60ae36a] https://lava.sirena.org.uk/scheduler/job/1341258
-# bad: [4757e8122001124752d7854bec726a61c60ae36a] USB: storage: quirk for ADATA Portable HDD CH94
-git bisect bad 4757e8122001124752d7854bec726a61c60ae36a
-# test job: [1f079f1c5fcf13295fc1b583268cc53c80492cfb] https://lava.sirena.org.uk/scheduler/job/1341360
-# good: [1f079f1c5fcf13295fc1b583268cc53c80492cfb] tipc: fix NULL pointer dereference in tipc_mon_reinit_self()
-git bisect good 1f079f1c5fcf13295fc1b583268cc53c80492cfb
-# test job: [cee5176a98accc550585680213f71d1d307a2e9a] https://lava.sirena.org.uk/scheduler/job/1341449
-# good: [cee5176a98accc550585680213f71d1d307a2e9a] virtio_console: fix missing byte order handling for cols and rows
-git bisect good cee5176a98accc550585680213f71d1d307a2e9a
-# test job: [5e9fff164f2e60ade9282ee30ad3293eb6312f0e] https://lava.sirena.org.uk/scheduler/job/1341692
-# bad: [5e9fff164f2e60ade9282ee30ad3293eb6312f0e] drm/amd/display: Fix gpu reset in multidisplay config
-git bisect bad 5e9fff164f2e60ade9282ee30ad3293eb6312f0e
-# test job: [ecc30d7f041daf7de7d0d554ebeeaec1a0870e53] https://lava.sirena.org.uk/scheduler/job/1341795
-# bad: [ecc30d7f041daf7de7d0d554ebeeaec1a0870e53] net: phy: microchip: force IRQ polling mode for lan88xx
-git bisect bad ecc30d7f041daf7de7d0d554ebeeaec1a0870e53
-# test job: [40dc7515d0b13057d576610a8dd23ccb42d4259f] https://lava.sirena.org.uk/scheduler/job/1341924
-# good: [40dc7515d0b13057d576610a8dd23ccb42d4259f] net: selftests: initialize TCP header and skb payload with zero
-git bisect good 40dc7515d0b13057d576610a8dd23ccb42d4259f
-# first bad commit: [ecc30d7f041daf7de7d0d554ebeeaec1a0870e53] net: phy: microchip: force IRQ polling mode for lan88xx
-
---O4i/hNuYEfmFpkoL
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmgSqycACgkQJNaLcl1U
-h9D5Bwf9EeXIvXszO1tBDS/6cWnKGy4O2RYhYlouW/pMJCgi74GrRcTl1zHpdPoW
-jVRZcDg9d+y43v47B4i+PYE3vKqZV0VSFIGudhEirrHHoSySuHBjqrZWbGRAoR9S
-Z6vYCJgMK2VAbwnbKbKNSf+GLmbu/gJliqtFAKsN9PKmkzeaIE/wMDaP+sqV/ZVU
-2Bha9utW7nHI4txcGLSH/uTUvxojGPqxxh5C/WpOgV8UkaB8yO4LsAZtgCgSGGNV
-PwbjSclnlBqJfY7F01SyhDMHOBe8VlAO0BaupEoJcgJ9krMGmn7HADuX+VHdIR3T
-gbZo6A/82+EV1R8HNnVICtnZDtv5mQ==
-=57/T
------END PGP SIGNATURE-----
-
---O4i/hNuYEfmFpkoL--
+-Tony
