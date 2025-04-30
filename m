@@ -1,71 +1,77 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3201321ABC6;
-	Wed, 30 Apr 2025 15:33:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905B4253F32;
+	Wed, 30 Apr 2025 15:36:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746027236; cv=none; b=Wh2RRoizDGARCOUZINI1u3F2fBHGzctgZ3uWfHswXB/pLJNfrZ/v6bxjCXl/6EbAA0I04nrK9SCqXd2kIxgS9Avxpzcv6RWZS1UvnZFNLVKTEKuOYdl5LNoY1NfiL+Ba1CIKBSfmTY/9E95SsEKfOXMEFJK0e0AKuuRTbucgBu8=
+	t=1746027386; cv=none; b=LzgU+POAf7f/ao3VMs8O9Eoz7SA48mFifxPBHCdOvpGv1vygVoV98YMf0TIxArzc7ZbecTcO2mSULk5CM0M4vkgGxYaAfdEJY61n9fEVNyWC2GhutZjlhTCuxNjxV2fVI9HHMaBPPk4cSNmX6Kg9bwhDBWU8KXqEbepcsvc15xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746027236; c=relaxed/simple;
-	bh=8YqhwQ56qWWKSZbcPxlFRP1HJoZQdqfrBv3dl/MkcHg=;
+	s=arc-20240116; t=1746027386; c=relaxed/simple;
+	bh=yvJWhklhiQg5zgFbWfOmpnwhPXhHn+YJ/mE8QDyAjk0=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=uGErY9LqoArvnU4Lg31L0EdfLX2RQh7XTNFCQ8pdpFdQWIzopUuQvIkhStHjfued8HC11+UyqDY1KrdC13h7J055hsa3hQBmH4XZdJGjPOceq/3VExhJAfBv489Gzo7/VKmD7P4orsXSAd5gumlawlbK20TxCqVTsNeYkwCRAVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=jd+LnT8J; arc=none smtp.client-ip=148.163.156.1
+	 Content-Type:MIME-Version; b=hsyl5VQW+mOhmgn8BVVXdWF8ZcZyGrUZE6O5Xf1JO6KKhfADhvon8Cb9J/fV06tS8GvAFIyqDck9Pil4g80xGi2NFOPLANfIj/w8IhqY93IqBZRvpqt3vbckviXtfAhewBA4Y5WQf6SPfvP+GJnMjIjFXYXr4BpNmRSWbpeZ9rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=QQ+kxOb8; arc=none smtp.client-ip=148.163.158.5
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="jd+LnT8J"
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53UA4D5w006400;
-	Wed, 30 Apr 2025 15:33:51 GMT
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="QQ+kxOb8"
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53UAepr2010941;
+	Wed, 30 Apr 2025 15:36:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=NUvm9H
-	VviMbXOTRxu29ZZVxO6TjfFLwh95KyRi8FbSU=; b=jd+LnT8JWqWYQ8jCFqPPFB
-	YmNEIzmL63znwB7Bq/6rWA5ddjv1nz7cmIL07tO2j5ZKXgWXaFUYpJW/Q8EgmBr4
-	E16nNwf94/XLfouTxrq7f/2JRsTWwmolWgEahbJI4fToI/+6cVVIuQVgQfbRUya8
-	JU4X6yjtujifxDr7eRCpjC5WIU2hTjw5BJAzrtsUaprSgQoKd0BjShFQlgo8yuo4
-	ucnBS0rbxvkWkPzMps3IOXmFIKr8ti15xjzcw4ZjlIhc5dP4sOna4c+HxZT05DPP
-	oVq6TtJI/TmWTqMvO/iR5gf48ErjikbwLzWnagLFSZRDxxG3/IPl9E5pFVO26NfQ
+	:message-id:mime-version:references:subject:to; s=pp1; bh=JtNXDB
+	zssud0Fnzs7wmWQTMeiApbkLrMgOegYCZ8s2c=; b=QQ+kxOb808eDUnSFpNLm4Q
+	WbF7nWbhNhW7VN7yV5wkUYrMx5vNDq2e2lBcuC40BwFCMFlodH8BGVBKi7JF9v4N
+	i2eF7pEl9xeth1tPGGjiRH/NucT/VOZvXMs89irNGtfATrZ0ZTjEo0zAEwodfS2R
+	P8gF0jlgebit2KICEhE5hCnswJms1u/4Gtmxw0PBGxagVbvFbW/Jhvr+KhXt+lh2
+	FiT8UWjYlcegYtPVRpvI9FB7N6U0vGOyLabOAlspcYctv+Ogb7bFm5SfT0jn+hH8
+	Zqn7vBme3jULaB03o8I3gQTTCCYn2UQEG9yD99Y2/HemcGoyXGGaTS86C/rSwXQQ
 	==
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46bjas1dt8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 30 Apr 2025 15:36:19 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+	by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 53UFUMaj010440;
+	Wed, 30 Apr 2025 15:36:19 GMT
 Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46bhsjsk3m-1
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46bjas1dt2-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Apr 2025 15:33:51 +0000 (GMT)
+	Wed, 30 Apr 2025 15:36:19 +0000 (GMT)
 Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53UCsUJ4001791;
-	Wed, 30 Apr 2025 15:33:50 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 469bamrcb2-1
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53UD0QPH001880;
+	Wed, 30 Apr 2025 15:36:16 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 469bamrckj-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 30 Apr 2025 15:33:50 +0000
+	Wed, 30 Apr 2025 15:36:16 +0000
 Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com [10.39.53.233])
-	by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 53UFXmD731785690
+	by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 53UFaFOs31261400
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 30 Apr 2025 15:33:49 GMT
+	Wed, 30 Apr 2025 15:36:15 GMT
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id E210E58055;
-	Wed, 30 Apr 2025 15:33:48 +0000 (GMT)
+	by IMSVA (Postfix) with ESMTP id 0F9B958056;
+	Wed, 30 Apr 2025 15:36:15 +0000 (GMT)
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 7787858066;
-	Wed, 30 Apr 2025 15:33:47 +0000 (GMT)
+	by IMSVA (Postfix) with ESMTP id C27F558054;
+	Wed, 30 Apr 2025 15:36:13 +0000 (GMT)
 Received: from [9.111.36.251] (unknown [9.111.36.251])
 	by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Wed, 30 Apr 2025 15:33:47 +0000 (GMT)
-Message-ID: <b2609f9018e9a9897233ee71be19ac64d6408e07.camel@linux.ibm.com>
-Subject: Re: [PATCH 6.1 038/167] s390/pci: Report PCI error recovery results
- via SCLP
+	Wed, 30 Apr 2025 15:36:13 +0000 (GMT)
+Message-ID: <fd60973b1901ad1604e163e4bb3bd188879288fa.camel@linux.ibm.com>
+Subject: Re: [PATCH 6.1 039/167] s390/pci: Support mmap() of PCI resources
+ except for ISM devices
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Halil Pasic <pasic@linux.ibm.com>,
-        Alexander
- Gordeev <agordeev@linux.ibm.com>,
-        Sasha Levin <sashal@kernel.org>
-Date: Wed, 30 Apr 2025 17:33:46 +0200
-In-Reply-To: <20250429161053.295203006@linuxfoundation.org>
+Cc: patches@lists.linux.dev, Bjorn Helgaas <bhelgaas@google.com>,
+        Sasha
+ Levin	 <sashal@kernel.org>
+Date: Wed, 30 Apr 2025 17:36:12 +0200
+In-Reply-To: <20250429161053.337884386@linuxfoundation.org>
 References: <20250429161051.743239894@linuxfoundation.org>
-	 <20250429161053.295203006@linuxfoundation.org>
+	 <20250429161053.337884386@linuxfoundation.org>
 Autocrypt: addr=schnelle@linux.ibm.com; prefer-encrypt=mutual;
  keydata=mQINBGHm3M8BEAC+MIQkfoPIAKdjjk84OSQ8erd2OICj98+GdhMQpIjHXn/RJdCZLa58k
  /ay5x0xIHkWzx1JJOm4Lki7WEzRbYDexQEJP0xUia0U+4Yg7PJL4Dg/W4Ho28dRBROoJjgJSLSHwc
@@ -131,21 +137,22 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=dcuA3WXe c=1 sm=1 tr=0 ts=681242df cx=c_pps a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=dHsNYD73hYLi79cDiOUA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 96K3M3-MIYyzdAgezgqg22xNEtEnYdGR
-X-Proofpoint-ORIG-GUID: 96K3M3-MIYyzdAgezgqg22xNEtEnYdGR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDMwMDEwNyBTYWx0ZWRfX40x0unhBVw1o NYmU31JjkNDXlI4OwMtgv6lBfa/QIUBTFDk3f2qZaJbxGLHa2r+L76FV0Lqbp3RdnhjK0ikRPUV Or2NxE7As/6fOSEKmdjVgD2fwx1RBPqML1eqFdkkfaGuQRYokFnd5xw1XZYACzJbf1yWNT+b8fU
- ty0NHqvnDqhNsrd9mWkt09LZrPe8uYYy5H1gtF4/MrEsZJwhzpNkfMwmpnvp7fozdMgXqRktxSp s4tYsJZ1jW5KqBD0epfAIMiQ/EZWVxeFGskYlbvoFLwfIw9q1eALmkZnpNQTzfPQW0oV5N1fyjS 1D5OJ5snjI2sRCDrigDsuF/bsfPQOYzeo0A/LKrpoCB4HrCNWU5Ix/rhY3GvrbmC7gDljSIAXFL
- wkFR63WHMhzMH2RAGlVw7nNdPRI1ba/wFfNxr4Frqj0t9t331OKBMFGSkCzYk4L0Q4gNKerq
+X-Proofpoint-GUID: FuNX2K1yo4Q6sqxwBod_nJCKBSdmLxjd
+X-Proofpoint-ORIG-GUID: pG-05CqXy5Br8yYQ7oJETa4mOCyTBAmK
+X-Authority-Analysis: v=2.4 cv=LKNmQIW9 c=1 sm=1 tr=0 ts=68124373 cx=c_pps a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17 a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=1XWaLZrsAAAA:8 a=uRncMJLuRcV0XrlLTekA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDMwMDExMSBTYWx0ZWRfX9I1fSjKEBgqP r6p3nLRFdAIrl8FQzs2Ut7tGeRiHTxpl/9ifHHvCWvsrk24SUFdtuIsae/i76D4fMQNqQeMKvAi 2Cjq1smkGnBJxBrtwc7G6XE+O7chQJBUYKgBtUxG4XkcGbGbw6bLUq3UiPgxpvhlKSgcBd21mpg
+ KhApfG3qUwhUQjE7IkBkdliMQO/wRdcuVPsFXwgwVtOdLq9Lz5XQc++OedsLwWLXpU5y26UX3jC KMYn4aXq2phdalUMTV306Ff6BYxQorvrixWasVdUAdoJ2TysmK92npCLIkf2wPrskgnyOcWZcIm x4l18Jf4OpeRMm6HVRPNmaNLIvx7YIC6IRGjWbYs0N/dMFlXKm3Apu8WW3zJ8UV20py6/Dsmo8j
+ 6BQZWhUyXaNmWYuAvwKbRSTEGeWmWHzlba8M8mEcuf5SdhjejYSuV5P6zH1GpR+U6mOK/UDU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-04-30_04,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- spamscore=0 impostorscore=0 bulkscore=0 adultscore=0 mlxscore=0
- malwarescore=0 mlxlogscore=999 priorityscore=1501 lowpriorityscore=0
- clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504300107
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 spamscore=0 mlxscore=0
+ impostorscore=0 adultscore=0 bulkscore=0 mlxlogscore=999 clxscore=1015
+ phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504300111
 
 On Tue, 2025-04-29 at 18:42 +0200, Greg Kroah-Hartman wrote:
 > 6.1-stable review patch.  If anyone has any objections, please let me kno=
@@ -155,91 +162,137 @@ w.
 >=20
 > From: Niklas Schnelle <schnelle@linux.ibm.com>
 >=20
-> [ Upstream commit 4ec6054e7321dc24ebccaa08b3af0d590f5666e6 ]
+> [ Upstream commit aa9f168d55dc47c0de564f7dfe0e90467c9fee71 ]
 >=20
-> Add a mechanism with which the status of PCI error recovery runs
-> is reported to the platform. Together with the status supply additional
-> information that may aid in problem determination.
+> So far s390 does not allow mmap() of PCI resources to user-space via the
+> usual mechanisms, though it does use it for RDMA. For the PCI sysfs
+> resource files and /proc/bus/pci it defines neither HAVE_PCI_MMAP nor
+> ARCH_GENERIC_PCI_MMAP_RESOURCE. For vfio-pci s390 previously relied on
+> disabled VFIO_PCI_MMAP and now relies on setting pdev->non_mappable_bars
+> for all devices.
 >=20
-> Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
+> This is partly because access to mapped PCI resources from user-space
+> requires special PCI load/store memory-I/O (MIO) instructions, or the
+> special MMIO syscalls when these are not available. Still, such access is
+> possible and useful not just for RDMA, in fact not being able to mmap() P=
+CI
+> resources has previously caused extra work when testing devices.
+>=20
+> One thing that doesn't work with PCI resources mapped to user-space thoug=
+h
+> is the s390 specific virtual ISM device. Not only because the BAR size of
+> 256 TiB prevents mapping the whole BAR but also because access requires u=
+se
+> of the legacy PCI instructions which are not accessible to user-space on
+> systems with the newer MIO PCI instructions.
+>=20
+> Now with the pdev->non_mappable_bars flag ISM can be excluded from mappin=
+g
+> its resources while making this functionality available for all other PCI
+> devices. To this end introduce a minimal implementation of PCI_QUIRKS and
+> use that to set pdev->non_mappable_bars for ISM devices only. Then also s=
+et
+> ARCH_GENERIC_PCI_MMAP_RESOURCE to take advantage of the generic
+> implementation of pci_mmap_resource_range() enabling only the newer sysfs
+> mmap() interface. This follows the recommendation in
+> Documentation/PCI/sysfs-pci.rst.
+>=20
+> Link: https://lore.kernel.org/r/20250226-vfio_pci_mmap-v7-3-c5c0f1d26efd@=
+linux.ibm.com
 > Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-> Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-> Stable-dep-of: aa9f168d55dc ("s390/pci: Support mmap() of PCI resources e=
-xcept for ISM devices")
+> Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > ---
->  arch/s390/include/asm/sclp.h |  33 +++++++++++
->  arch/s390/pci/Makefile       |   2 +-
->  arch/s390/pci/pci_event.c    |  21 +++++--
->  arch/s390/pci/pci_report.c   | 111 +++++++++++++++++++++++++++++++++++
->  arch/s390/pci/pci_report.h   |  16 +++++
->  drivers/s390/char/sclp.h     |  14 -----
->  drivers/s390/char/sclp_pci.c |  19 ------
->  7 files changed, 178 insertions(+), 38 deletions(-)
->  create mode 100644 arch/s390/pci/pci_report.c
->  create mode 100644 arch/s390/pci/pci_report.h
+>  arch/s390/Kconfig           |  4 +---
+>  arch/s390/include/asm/pci.h |  3 +++
+>  arch/s390/pci/Makefile      |  2 +-
+>  arch/s390/pci/pci_fixup.c   | 23 +++++++++++++++++++++++
+>  drivers/s390/net/ism_drv.c  |  1 -
+>  include/linux/pci_ids.h     |  1 +
+>  6 files changed, 29 insertions(+), 5 deletions(-)
+>  create mode 100644 arch/s390/pci/pci_fixup.c
 >=20
-> diff --git a/arch/s390/include/asm/sclp.h b/arch/s390/include/asm/sclp.h
-> index 9d4c7f71e070f..e64dac00e7bf7 100644
-> --- a/arch/s390/include/asm/sclp.h
-> +++ b/arch/s390/include/asm/sclp.h
->=20
---- snip ---
-> diff --git a/arch/s390/pci/pci_report.c b/arch/s390/pci/pci_report.c
+> diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
+> index de575af02ffea..50a4a878bae6d 100644
+> --- a/arch/s390/Kconfig
+> +++ b/arch/s390/Kconfig
+> @@ -38,9 +38,6 @@ config AUDIT_ARCH
+>  config NO_IOPORT_MAP
+>  	def_bool y
+> =20
+> -config PCI_QUIRKS
+> -	def_bool n
+> -
+>  config ARCH_SUPPORTS_UPROBES
+>  	def_bool y
+> =20
+> @@ -213,6 +210,7 @@ config S390
+>  	select PCI_DOMAINS		if PCI
+>  	select PCI_MSI			if PCI
+>  	select PCI_MSI_ARCH_FALLBACKS	if PCI_MSI
+> +	select PCI_QUIRKS		if PCI
+>  	select SPARSE_IRQ
+>  	select SWIOTLB
+>  	select SYSCTL_EXCEPTION_TRACE
+> diff --git a/arch/s390/include/asm/pci.h b/arch/s390/include/asm/pci.h
+> index 108e732d7b140..a4e9a6ecbd437 100644
+> --- a/arch/s390/include/asm/pci.h
+> +++ b/arch/s390/include/asm/pci.h
+> @@ -11,6 +11,9 @@
+>  #include <asm/pci_insn.h>
+>  #include <asm/sclp.h>
+> =20
+> +#define ARCH_GENERIC_PCI_MMAP_RESOURCE	1
+> +#define arch_can_pci_mmap_wc()		1
+> +
+>  #define PCIBIOS_MIN_IO		0x1000
+>  #define PCIBIOS_MIN_MEM		0x10000000
+> =20
+> diff --git a/arch/s390/pci/Makefile b/arch/s390/pci/Makefile
+> index eeef68901a15c..2f8dd3f688391 100644
+> --- a/arch/s390/pci/Makefile
+> +++ b/arch/s390/pci/Makefile
+> @@ -5,5 +5,5 @@
+> =20
+>  obj-$(CONFIG_PCI)	+=3D pci.o pci_irq.o pci_dma.o pci_clp.o pci_sysfs.o \
+>  			   pci_event.o pci_debug.o pci_insn.o pci_mmio.o \
+> -			   pci_bus.o pci_kvm_hook.o pci_report.o
+> +			   pci_bus.o pci_kvm_hook.o pci_report.o pci_fixup.o
+>  obj-$(CONFIG_PCI_IOV)	+=3D pci_iov.o
+> diff --git a/arch/s390/pci/pci_fixup.c b/arch/s390/pci/pci_fixup.c
 > new file mode 100644
-> index 0000000000000..2754c9c161f5b
+> index 0000000000000..35688b6450983
 > --- /dev/null
-> +++ b/arch/s390/pci/pci_report.c
-> @@ -0,0 +1,111 @@
+> +++ b/arch/s390/pci/pci_fixup.c
+> @@ -0,0 +1,23 @@
 > +// SPDX-License-Identifier: GPL-2.0
 > +/*
-> + * Copyright IBM Corp. 2024
+> + * Exceptions for specific devices,
+> + *
+> + * Copyright IBM Corp. 2025
 > + *
 > + * Author(s):
 > + *   Niklas Schnelle <schnelle@linux.ibm.com>
-> + *
 > + */
+> +#include <linux/pci.h>
 > +
-> +#define KMSG_COMPONENT "zpci"
-> +#define pr_fmt(fmt) KMSG_COMPONENT ": " fmt
-> +
-> +#include <linux/kernel.h>
-> +#include <linux/sprintf.h>
+> +static void zpci_ism_bar_no_mmap(struct pci_dev *pdev)
+> +{
+> +	/*
+> +	 * ISM's BAR is special. Drivers written for ISM know
+> +	 * how to handle this but others need to be aware of their
+> +	 * special nature e.g. to prevent attempts to mmap() it.
+> +	 */
+> +	pdev->non_mappable_bars =3D 1;
+> +}
+
+As already noted by others and for other versions the above will cause
+a build error without also pulling in commit 888bd8322dfc ("s390/pci:
+Introduce pdev->non_mappable_bars and replace VFIO_PCI_MMAP")
+
+> +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_IBM,
+> +			PCI_DEVICE_ID_IBM_ISM,
+> +			zpci_ism_bar_no_mmap);
 >=20
-
-This seems to cause a compile error due to missing linux/sprintf.h,
-not sure if that is a good target for a backport? I also don't remember
-running into this during my backports for the enterprise distributions
-so maybe they have that backported.
-
-Also, this was pulled in as a dependency for commit aa9f168d55dc
-("s390/pci: Support mmap() of PCI resources except for ISM devices")
-but I'm not sure why that would depend on this? The only thing I can
-think of is the Makefile change to add pci_fixup.c also having
-pci_report.c in it.
-
-For context I did backports for this for RHEL 10.0, and RHEL 9.6 and it
-was also backported for Ubuntu 25.04 and SLES 16 SP 0. That was for a
-larger series of improving debug information gathering though not as
-dependencies. There I included the following upstream commits:
-
-897614f90f7c ("s390/debug: Pass in and enforce output buffer size for forma=
-t handlers")
-4c41a48f5f3e ("s390/pci: Add pci_msg debug view to PCI report")
-dc18c81a57e7 ("s390/debug: Add a reverse mode for debug_dump()")
-5f952dae48d0 ("s390/debug: Add debug_dump() to write debug view to a string=
- buffer")
-460c52a57f83 ("s390/debug: Split private data alloc/free out of file operat=
-ions")
-7832b3047d10 ("s390/debug: Simplify and document debug_next_entry() logic")
-4ec6054e7321 ("s390/pci: Report PCI error recovery results via SCLP")
-
-
-Not sure what the stable policy is on such stuff and if staying in sync
-with the above mentioned distributions for s390 is=C2=A0desirable and/or
-worth the effort.
-
-Thanks,
-Niklas
-
+--- snip ---
 
