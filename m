@@ -1,216 +1,439 @@
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2074.outbound.protection.outlook.com [40.107.236.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4378A236421;
-	Wed, 30 Apr 2025 10:21:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.74
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746008502; cv=fail; b=th3a2Rc3oyesXDxAzsdoOtWlChvO7vMJlV3gCUSKO1Fg2P3clMXEEq5iP+H9JCOTIyV7uAsswBX1UgJyJnOlSs+Pb4oVwMcSe19O2EVNl5d+Jtotr3gulsAezjh7UzOlyl/4+yHJllO888NaEGJr7Oiis3LKRCyy5E7HEf3lp64=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746008502; c=relaxed/simple;
-	bh=4Yk56KgQVnnlhFek1f/1YVvlq69mR3iX7OjNV9JXcwY=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=KAlfGHJKWgf7xRbNoO1QigBkOVRLFDIjkqkxtONz/xFYyDjeUlo6rB0M3fRh19Vu9sblE7s1dagjZdKWmaI00fo4sQWHQdh2klNYpwr4s1H1IOxRvB0fU7q1CAgny8IklBP97WNFyPOzwRIdRo7AXzjbyRyr/oztOJ2OwiQq65I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=f9g8/DN5; arc=fail smtp.client-ip=40.107.236.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215E825B683
+	for <patches@lists.linux.dev>; Wed, 30 Apr 2025 10:39:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.174
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746009575; cv=none; b=jJ6eFojRHrPSC+mTC5xVjUn3IMi/HtsCgWuCEUBvyF492CExHE8qqgibtZA8BVjPD8DLoKMquXoJVfjYVAEWHouIO2ICYtNj60dgCvS21oPQErHRglXMD3odQg9KSHSpDsjjO3E1JqrIVN1ukqPOv8Su4h/oBUnq9FJ1YPwzpH4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746009575; c=relaxed/simple;
+	bh=d4RLgrZhyX8/Pg01VVv6h4TRP9Jm0WhqcAfzUScAuus=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bYnbfJ52EJhnsEB12ZndIWB7kbtRNUv0kvrnsvB9OVWoJ1zYfHtP6yv4kN5dMdP23+09Lftoc2Uy3XXzHzO4lu26W7E7izGbH/A+A6gnSDI57ihT3YbGS8ORcnXO6LhWLnhDeurqrR76elIynJ4D5NOsjLR7AVxhydmVsJ9CgG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r5IjD4EH; arc=none smtp.client-ip=209.85.221.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="f9g8/DN5"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=AnJhqNxeGNX9bAGuazsIDLoXXVhcuy0I7x+iiavHK5K7+SQ8+pGkDR5YAdkrZUkOcCOIirdI5/pZbxB3oVjtx0U/3Ok0tRf8t+JyQFnkKh6OT5TCpMTTgpGbmNc3yVH4/yyxa5pgFbIszUjIcqsrJf7K4VA6kaaXy0jFyotCms0hWtIikpUf1zqRj41/MJ1a3aa8O8JKzpmhy5H81TJBTLe5VTsBS1lroDg9w6ccugMCeaUiFAOhdDNo7T4mKy/AOvsyVJikfEJSUS9AJGwutwD5HtYFcCujuqxJNruPT6gMzgny/DYMbhloudLMgl3Tnq2s3wXEq/L+ysDCaLivzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mZHRKRQv42WFAxuLlKP7nxFLBp2cVWMhnA3LCgC8tN4=;
- b=R1Yjh4O73Ayu3HpGBHfQuGrzvDGAG+i0nqNlVpYAYWSx9QicnDDGKBwmYvyXh5sDSsZJoZook2S+FSKiUaBPZcdI9X00lq4Ops3QPu5zcl6dGz0zhWl1pvailYQj5aI29jC6CZ+UG1CyezD6/FRQv2unikIGk6OqN4eq0oS0DYIIquhK0uqpHgc7Bb8X1V8mIP0mIiOTOJYymESVjsRwJ8etWFcCL00qHDgqWg2r3I1eOrT+YVSmuhoWNx9qUWn38yiL2nP/ldAqLBJfGeYDdr+ulRUwwD3gXQXwrlax2TSyhqLopZg+IIVKBFw6jB/Kz1PqMOpGH/rFc7V7Cw3N0Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mZHRKRQv42WFAxuLlKP7nxFLBp2cVWMhnA3LCgC8tN4=;
- b=f9g8/DN5C6TtZvOlc5+NcmfbUtmjynuvkqwAzEjFU2LLFlV88Sok77PbPzNIdQAWCeG7M4so39NDm8l6cODreTdJZMwWWcMn+2Ekc0KvTWhQ1VG9tQtQE4get1kY+niVlZmE7ah4VL1WwWsy9fC7mwfAp9WQNeH8s6OPNf6Ayg4=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from DS7PR12MB6048.namprd12.prod.outlook.com (2603:10b6:8:9f::5) by
- PH8PR12MB7277.namprd12.prod.outlook.com (2603:10b6:510:223::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.27; Wed, 30 Apr
- 2025 10:21:37 +0000
-Received: from DS7PR12MB6048.namprd12.prod.outlook.com
- ([fe80::6318:26e5:357a:74a5]) by DS7PR12MB6048.namprd12.prod.outlook.com
- ([fe80::6318:26e5:357a:74a5%5]) with mapi id 15.20.8678.028; Wed, 30 Apr 2025
- 10:21:37 +0000
-Message-ID: <91d1df7e-b136-4024-a1f2-20b1374ede40@amd.com>
-Date: Wed, 30 Apr 2025 15:51:25 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/22] iommufd/viommmu: Add IOMMUFD_CMD_VCMDQ_ALLOC
- ioctl
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: jgg@nvidia.com, kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
- bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
- thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
- shuah@kernel.org, jsnitsel@redhat.com, nathan@kernel.org,
- peterz@infradead.org, yi.l.liu@intel.com, mshavit@google.com,
- praan@google.com, zhangzekun11@huawei.com, iommu@lists.linux.dev,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
- linux-kselftest@vger.kernel.org, patches@lists.linux.dev, mochs@nvidia.com,
- alok.a.tiwari@oracle.com,
- Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-References: <cover.1745646960.git.nicolinc@nvidia.com>
- <094992b874190ffdcf6012104b419c8649b5e4b4.1745646960.git.nicolinc@nvidia.com>
- <b0d01609-bdda-49a3-af0c-ca828a9c4cea@amd.com>
- <aA/exylmYJhIhEVL@Asurada-Nvidia>
- <b8338b47-6fbf-44ac-9b99-3555997c9f36@amd.com>
- <aBB1gLfahnLmn0N1@Asurada-Nvidia>
- <a3860aed-5b6b-4e68-a8fd-1a6ee28ba022@amd.com>
- <aBEI+T7P+hV8Y6tU@Asurada-Nvidia>
- <7c813df6-e37d-47ae-9b5a-b8735c865626@amd.com>
- <aBHY8wOmpMOxelE/@Asurada-Nvidia>
-Content-Language: en-US
-From: Vasant Hegde <vasant.hegde@amd.com>
-In-Reply-To: <aBHY8wOmpMOxelE/@Asurada-Nvidia>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PN2PR01CA0228.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:eb::16) To DS7PR12MB6048.namprd12.prod.outlook.com
- (2603:10b6:8:9f::5)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r5IjD4EH"
+Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-525b44ec88aso3098919e0c.3
+        for <patches@lists.linux.dev>; Wed, 30 Apr 2025 03:39:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1746009571; x=1746614371; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ylwsJDrt4vv0hbcQwuLON7i6O6OaEoOImrGaJinpJGA=;
+        b=r5IjD4EHYTJjRg9F0mHo3J2H4XDwzL8kZV66tv6M6HmWI2dswObYyEmE96R3otuCHK
+         BWSls3BOntYc04xmI7UhC8kVfTlKQERYtcxdLK79L/2daF0RjEtyAsxe6avvuu6HZzMX
+         mvtlFCmOmnTx7qtUwm3Odwn1XRSLV/dJACLt+B6keDlD8TkZm0rq9dDdvpyEKdpMBxpk
+         0I+Eb2nSrAuTDnuvr3nV+Fg12Pcu5nWOtJh356E3XLxXNZ1vrO2sJMIM494PYP6H9Twq
+         8f3xPjKPRXYTJecL5FiXRrXHpjQsLEXpA3xWg2A5vtSPXGNc+nv9UHje7BL2Vq+73X67
+         Ep7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746009571; x=1746614371;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ylwsJDrt4vv0hbcQwuLON7i6O6OaEoOImrGaJinpJGA=;
+        b=wqfGLpv6+STy7/+qs00nYP6CLjZkPX/ciiyBGVeBrU+rd4UvRy8DGFSmCk8NaFKLdj
+         Ye6sIJCx9DPEEoSHe0SNQWHro1XF+aFlY0VnrJoN0spxMnZ66Yq1ECV9814yjScccCCr
+         Xu566nbXNLnJcmkSLB8qwzXrbv+5P3K07/CLnF856aeTIzYqSor+IZoDQr5xj+1ICPGE
+         vw07MipUcB1sfhdKUOVFK3MOK030yxAD4SRinK53HLg3ktK52RS4YUhw6A1Ym/JD+gHp
+         vNwKffEg+IfnTqt81pS5t54mweV2azQP4z6B4ZmoDwsd+FITzfFtBu94NH4ckI99EA56
+         ySdQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWZzILNYpo81wGeIEU/VDLkMDNcJRYnPNp0VMJVCrCxCRrQIQp4R0Juoie4+iEp8vMTzn2+cBR/@lists.linux.dev
+X-Gm-Message-State: AOJu0YwycUFDZ1JBF04AQk6BcbbeRUtSW5wNteZp5vdYugsfbHIJuRKd
+	ciDe72ji/rTMKsol686dx2QX2DeSDoV03fWDwnLT+U87l3V4i4oLbY3rninlswiC4rHwV6eWZ+x
+	J1zSYPmyLYjhiHNlgDF7VlEfR0fGEQjJfqg01+Q==
+X-Gm-Gg: ASbGncvdFgzkPYsxolW396E0YAosEh110Guw3RDvpHY61iiJX4X3/rOVv39YiFntlN5
+	sPxFuNKLs7CHvDu01O3TjVfv7qv293EGuMtaBgVQNSQtpdcgnejkhGShZ/r6PdVceQeIJHIEGOa
+	bmRULXxLlVcz/JcEcxjR2+Cn5edTvHWcugIPrf+kBguThbOswzx6MD5DzM4Fs+4KjH
+X-Google-Smtp-Source: AGHT+IEGrbJc8JxtRP89FE4xXSHbjaEwuC2CG8y2YBkTpepRUy6crz/1pfGUdfcI0IOB0Gksvo22zIGEP03RI2L25Ng=
+X-Received: by 2002:a05:6122:25d8:b0:52a:d0f3:1ec1 with SMTP id
+ 71dfb90a1353d-52ad0f31f5fmr358417e0c.0.1746009570825; Wed, 30 Apr 2025
+ 03:39:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR12MB6048:EE_|PH8PR12MB7277:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1a002af8-39e3-44c5-f30a-08dd87d0ca39
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?aHRDaHNSQ1RKc2dLaUI0Q01iNS9neERESGhWYXFNSU5VM20ydEZxU0JNcnh6?=
- =?utf-8?B?c0hwUHZMSmZGQjVCR3BFa0IzRk51V0doRXVkU1h6UUpjdnIvQ3VCcjNwLzd3?=
- =?utf-8?B?c3FmN0MrY3l2aXQ5a3UvMTNXY0NiVmtLSXJLUTNnU0RCSmRoc2hxT3VnSEo0?=
- =?utf-8?B?OU1XV2R6amgwY3dmRW5JR1gwZXE0UERZVjlVN0ZxOW5BWXJhZ3ZjTEYzMjNn?=
- =?utf-8?B?c0xLaS9iNEZhUVcvN3RneUV4ZmxkOER6OFdrRnVkUDgyaEFoU2VDcWZTRHV2?=
- =?utf-8?B?dXdwSHRLdzd6WkVtS21uUFA1ZTl5WFF5bTV0ZmI5MktQRkZsd2QxanBHV0Iv?=
- =?utf-8?B?VmJhdXNDdTA3ZEREcTlBYUlyYk1TdzdZSXo1UENzOERBbFByT2RlL1g1SEwy?=
- =?utf-8?B?WDlXRE11T2tRUFdBRG8zbGZnaWdzRUhkYUp2RWswd3B4d2kveVpWVmxteXZL?=
- =?utf-8?B?QkhWV1k4MGdRZmRpanVoS2NuNm5ETUlUTmRFOGFpc2ZRbSsvNzFKQm5jdFBp?=
- =?utf-8?B?R0xnR29xSXdSNjdVdkhpcWlBM0h4Y1dmSFYwdzNwSkRPR1ExSGFzU28ramtz?=
- =?utf-8?B?NUxvSG44Rll5LzZxclhRejNMbUVCR24xWm9EVFpVWlJpeWFhWkFObWxSMllm?=
- =?utf-8?B?TXpETmM3Zm5lMTBuZmc0K2htY1A5dk40RWFuRmJ0U0F2N2FUUGRobm5tN3Rt?=
- =?utf-8?B?ZWYrUHpjTE0rdm5nZCtKeEdLajR6d2hDR0NXOTEzcHdWcHdKb29CR1BVS2hq?=
- =?utf-8?B?Znk4YUY0cms1SmZTUzgwKzNNODd2a3EwNzVjVEtVUzFVMUlVcjBmRHB5ODJT?=
- =?utf-8?B?VUEvZWJpZU03U3V4MmJ1em8vN01RV0R6eXV3eC9JRHlHdGpoMUZNbnJhb0cw?=
- =?utf-8?B?UjBEY0NlL2dGb3dEbm1FdE53NXozc3A1R0ltQ2JXNUdDWmNPcTNFajBQQTIv?=
- =?utf-8?B?aXNwYXd0dm01MktPVm41QnBIVE5CVXl6aGxQMXFPVWNnVURZQVU4dVlVdjhR?=
- =?utf-8?B?MkNGY3ZDeHltdGRVa1VKNGp6TnBldVEwMXNSVUtrUUNUQkhtb0QrOG5MS0VW?=
- =?utf-8?B?WWUweTYrYUFMWUlxM2pEYVFYZEE3aDJTNzZYZ0N1WjB2TllQaU1NdFFCRDc4?=
- =?utf-8?B?NUFMS21GTFZSYjgvRDhBQThLd2QrQWVPa3BuNjZ4MXFqMCtOSTQyQlhHUWlY?=
- =?utf-8?B?ZHpDV3l6UXA4YVVERWRzOUVhNlBCVVl2NE5PM0FPUjZZdkwzZWk5LzBUd3Qr?=
- =?utf-8?B?WTcxOUo2b0I1UFJYUHp5RXpTM0dkd1planBzTmJoZ3dVbFhQZEY3N282ZUpS?=
- =?utf-8?B?U3RJcU9rU3RtbndNbW1VcFV3NkVSODhLdUt1VTVuekJRZy9BY1FhME1tQlZU?=
- =?utf-8?B?amtzQmplcjVmRHF3Q1FaWHQxK3BqY3VnNXpmTmJUTW5tMng3eTBlM2FSRG1Y?=
- =?utf-8?B?Q29tOXFjWVRoVVNLSWhiNmVwRTJibU5Na3lKYVhXNWp1REpDdVMvblB5Skh3?=
- =?utf-8?B?RjVYaTRycDJCblVPVEk2K2o1aGpZRHNTOUxtUHdKWmtXS082Tkc0SmZPNS9r?=
- =?utf-8?B?R0xYUUlsVUJZaDAyeWorR09WTjJGUENBcVZOV1Z0MGkzbDhnWDFodUR6WWJL?=
- =?utf-8?B?d2lrVlNFMGhid011K3RZckc4VC9PSzNWdjhLUjVoV2t2QmZHMWN3TWhVblNR?=
- =?utf-8?B?UTM5TUtybXQ0OUhqUW5tZ1ljRENlYWtjRXdUK1RRSHg2ZEFNcGZOZnFPdHND?=
- =?utf-8?B?SEVQV004VW04R0RNZm9lRnNwbngzRFpmQUVPUW9yZ3dlUGdVVUZYU0xNL0hB?=
- =?utf-8?B?bmpnamd0WGxjYi9Sc1FPUkZIcUdaemsrVysxTHJNZXIrVW5FcW1hdmxGZkR4?=
- =?utf-8?B?SktDemt1ajYzb1ZGcVBqeGNJTFJkYXQ5MXFxMEtQTTU5anlzamVQdlk2WGJN?=
- =?utf-8?Q?9OQnVvqfZHI=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR12MB6048.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Tk5KZFozNjR3bURLL29odk8zTitFSFFBazF0RGVuYUJ6SXNuRGljU3ZsaDNU?=
- =?utf-8?B?OUxKY1drbVlIVnBaWGczNEc4Q2d3RTZiaHo2U3FEQzlKaFBBQ3h5NS9qOFU2?=
- =?utf-8?B?Uk9Zdmp0VmN5ZXhRUUR6N29wWXlURzNhRTFnSERQbWpTbElxYW0zRmxVVDRl?=
- =?utf-8?B?VW91K2dtYmhBN3RTWUF4TVYvK3h0M2RjTXNWdXp2eUQ0MHF3R1dFQ1NIaTNP?=
- =?utf-8?B?ZEVuTVk2cHQ2eG1BWWRKSVRPczZ4RHkxcCtuQ2p1WHJkdEsrYzYxWnp4RjBC?=
- =?utf-8?B?K1kycmFwbVkydGhySnYyeGtXdGo5bERlZHBYWThjOVN0ZkNvd3FXa1YrTDVV?=
- =?utf-8?B?YWdTbkJxbnZvZXJHZWljWWNuYm9kbUo1ZWxWK2lMc3BIc1AvUWJndHNNeEhY?=
- =?utf-8?B?Qnp0NmtpQXhINGJIeXJJNkVVWXNySnpYRlhnSGt0aWhuZHFNbHVsNzJnVExG?=
- =?utf-8?B?blJxb2lweFlrWGtyT3N1cDhIRVFQb2ovYk1WNURxdnpwbjg3WlZveDBRZkR4?=
- =?utf-8?B?b1d4dEE3cnpSTFVFcFZ5ZGlsdTdiMUJUc3NsbEdMMWFDb2MvWlhmODBpOE5P?=
- =?utf-8?B?QzlIZ3FuekVLNGN0UnByb1M3WHhSeGxDRHJhMEl2R25NdUo4bndUNGZOMndv?=
- =?utf-8?B?NHZMQUt4cXJYRHpKSkUyREdGc3FOTUIyNEE3U0JlMEl2NDRLVEp0YXVQVEJq?=
- =?utf-8?B?ZnZqM2h6b0JPTjMza3YxN2ZLeDRzOXlKK2tTbjlxaEQ0N1Rqa01LYlk4eWEz?=
- =?utf-8?B?R2hNZWN2UDFaMThIUlllT3ArSG5FV2FSNERIVGM0RzVyZGljNnMzd2YwT3dT?=
- =?utf-8?B?RzRoY3pGRTE0Tmx5WXk0VEVZS3FCbjN6ODdycUJnV2EyNzZ2N2RrM1F2b1Vo?=
- =?utf-8?B?MGRHQ013NTVISlFaOUlvNkJ4K1lBN2xyMWxENlpZY01qSnpkWU5EWmF0RWZw?=
- =?utf-8?B?dDNVNWt1dDFJQ2ZWcURmTi8zYmpETmVMNmRjd21FQVpZT2JTaGVwL2ZHUWpG?=
- =?utf-8?B?V3B1M0tZZjhwa1RWVEkvSjBaY2taUFcwbHBVbWo2ME9SODJqNTdGcnl5VE5W?=
- =?utf-8?B?TTI3L3IxaS93OHJMV2xvR1RnMUQya3VvRkNUOTBISjFJNUZlaUxpbTQxLzhD?=
- =?utf-8?B?UEVlTW1CYUoyWExxWGN1MnF0b0VWcWdQTHcvM1BnUHFFdEJEbXNoTm82V29G?=
- =?utf-8?B?cVFwWVU3V3BjcVhIZGo2dG9GelF0VkFYYnh2UjdYcVN3UXhDeU1CakcyK2hT?=
- =?utf-8?B?YlBJZUZxTjdsWCtBczBkTEx1UmJEc2Q2eGFoOXFhekJtdTlsRDl6YUNqZEly?=
- =?utf-8?B?VVFRRkpaS1o1Qk96Wkk3anR5anFaaDBpV1dKN0w2QzUzZFkyNzdKTFNZbmZi?=
- =?utf-8?B?dC8wZzJuVXJrcS9CTFhRUGl3U2tkNWpYNVB6bUxYNGg2M0ppbUpDTStJYWty?=
- =?utf-8?B?V0E0VXY0S29OZmRRQU1hbGdhVXA5dWI4MmpWRzcraGNJY3U0T01xQzBIZW12?=
- =?utf-8?B?SjhwVzErSThGTXg5TlVDdE1TYlhvYWs4dG5FencxY3dFT2U1TVFhcnB5R0V2?=
- =?utf-8?B?WWUwanpualNhVTI0aks2Z1FmdlBVWElaNTJJOS9PYWM5aWxxcEdRN3AyOXpL?=
- =?utf-8?B?ak82aGNmeklyNmUzN3dLOWFpb3ZBS3QxN0RDeGpwSUN5akVBSUYyenZNQ3FZ?=
- =?utf-8?B?VEJKdGp6SS9CUHZWSlBhRUVDLzg5aGJhcWlWREtWemhiK2ltY1pTeVpqMnhk?=
- =?utf-8?B?WGtETllFaWZtQVJyekRJQ3VBY1JvSW1vWHZjSllFQys0M0Z5N2szcmpWdGs2?=
- =?utf-8?B?bjNoN0tFVjYwZG0wMDBhbkJDRWF1MzUxK213eHp6K1pYVFphNGt0RzhHbnlV?=
- =?utf-8?B?a1FwUVI1SGJNMWV2ek9GKzE0SzljMTY5NSswRHhRVFQ3U3dRQ2xNWXBZRGJG?=
- =?utf-8?B?QTRBSlR3TDA2THBURlpWTE1hWU5ZNmgxcmZLc3ovTERZckl5eXJxMHRIY2dQ?=
- =?utf-8?B?em1ZNS9aN3A4bnFWK3B2ZDNyZ1BISloyWktnRmtmalpmWHA2N3ZpTzFaL1dJ?=
- =?utf-8?B?eWpvNVpOWFpKb1RvaHBRRTlIODloS3kwdHpiNTM2dnQ0T0pkcm9YajRoZnc1?=
- =?utf-8?Q?752ONNIncED7tmUmldOCIN56s?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1a002af8-39e3-44c5-f30a-08dd87d0ca39
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB6048.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Apr 2025 10:21:37.5702
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7CGghJgdYT0+JG+V097ft0mKSYqr589tg96ZrMGzsiTHLuklNaOjYAvjsT9ttuyF78pRtIVKhXLrfqCrVpZijw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7277
+References: <20250429161051.743239894@linuxfoundation.org>
+In-Reply-To: <20250429161051.743239894@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 30 Apr 2025 16:09:18 +0530
+X-Gm-Features: ATxdqUGXDo7pBa4eq0bS5qcWzmVSW-p2cU-XdgUlse38VYng22TRg-n231NAwjI
+Message-ID: <CA+G9fYuNjKcxFKS_MKPRuga32XbndkLGcY-PVuoSwzv6VWbY=w@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/167] 6.1.136-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, clang-built-linux <llvm@lists.linux.dev>, 
+	Nathan Chancellor <nathan@kernel.org>, Anders Roxell <anders.roxell@linaro.org>, 
+	Arnd Bergmann <arnd@arndb.de>, Dan Carpenter <dan.carpenter@linaro.org>, linux-s390@vger.kernel.org, 
+	linux-mips@vger.kernel.org, io-uring@vger.kernel.org, 
+	virtualization@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+
+On Tue, 29 Apr 2025 at 23:31, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.136 release.
+> There are 167 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 01 May 2025 16:10:15 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.136-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+
+There are three build regressions and two build warnings.
+
+1)
+Regressions on x86_64 with defconfig builds with clang-nightly toolchain
+on the stable-rc 6.1.136-rc1.
+
+* x86_64, build
+  - clang-nightly-lkftconfig
+  - clang-nightly-x86_64_defconfig
+
+Regression Analysis:
+ - New regression? Yes
+ - Reproducibility? Yes
+
+Build regression: x86_64 clang-nightly net ip.h error default
+initialization of an object of type 'typeof (rt->dst.expires)'
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Build error x86_64
+include/net/ip.h:462:14: error: default initialization of an object of
+type 'typeof (rt->dst.expires)' (aka 'const unsigned long') leaves the
+object uninitialized and is incompatible with C++
+[-Werror,-Wdefault-const-init-unsafe]
+  462 |                 if (mtu && time_before(jiffies, rt->dst.expires))
+      |                            ^
+
+## Build x86_64
+* Build log: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.134-461-g961a5173f29d/testrun/28268204/suite/build/test/clang-nightly-x86_64_defconfig/log
+* Build history:
+https://qa-reports.linaro.org/lkft/linux-stale-rc-linux-6.1.y/build/v6.1.134-461-g961a5173f29d/testrun/28268204/suite/build/test/clang-nightly-x86_64_defconfig/history/
+* Build details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.134-461-g961a5173f29d/testrun/28268204/suite/build/test/clang-nightly-x86_64_defconfig/details/
+* Build link: https://storage.tuxsuite.com/public/linaro/lkft/builds/2wPjfmTxuT4qMCUSSj4ZwJQJrqY/
+* Kernel config:
+https://storage.tuxsuite.com/public/linaro/lkft/builds/2wPjfmTxuT4qMCUSSj4ZwJQJrqY/config
+* Toolchain: Debian clang version 21.0.0
+(++20250428112741+e086d7b1464a-1~exp1~20250428112923.1416)
+
+2)
+Regressions on s390 with defconfig builds with gcc-13, gcc-8 and
+clang-20 and clang-nightly toolchains on the stable-rc 6.1.136-rc1.
+
+* s390, build
+  - clang-20-defconfig
+  - clang-nightly-defconfig
+  - gcc-13-allmodconfig
+  - gcc-13-defconfig
+  - gcc-8-defconfig-fe40093d
+
+Regression Analysis:
+ - New regression? Yes
+ - Reproducibility? Yes
+
+Build regression: s390 pci_report.c fatal error linux sprintf.h No
+such file or directory
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Build error S390
+arch/s390/pci/pci_report.c:14:10: fatal error: linux/sprintf.h: No
+such file or directory
+   14 | #include <linux/sprintf.h>
+      |          ^~~~~~~~~~~~~~~~~
+compilation terminated.
+arch/s390/pci/pci_fixup.c: In function 'zpci_ism_bar_no_mmap':
+arch/s390/pci/pci_fixup.c:19:13: error: 'struct pci_dev' has no member
+named 'non_mappable_bars'
+   19 |         pdev->non_mappable_bars = 1;
+      |             ^~
+drivers/s390/virtio/virtio_ccw.c:88:9: error: unknown type name 'dma64_t'
+   88 |         dma64_t queue;
+      |         ^~~~~~~
+drivers/s390/virtio/virtio_ccw.c:95:9: error: unknown type name 'dma64_t'
+   95 |         dma64_t desc;
+      |         ^~~~~~~
+drivers/s390/virtio/virtio_ccw.c:99:9: error: unknown type name 'dma64_t'
+   99 |         dma64_t avail;
+      |         ^~~~~~~
+drivers/s390/virtio/virtio_ccw.c:100:9: error: unknown type name 'dma64_t'
+  100 |         dma64_t used;
+      |         ^~~~~~~
+drivers/s390/virtio/virtio_ccw.c:109:9: error: unknown type name 'dma64_t'
+  109 |         dma64_t summary_indicator;
+      |         ^~~~~~~
+drivers/s390/virtio/virtio_ccw.c:110:9: error: unknown type name 'dma64_t'
+  110 |         dma64_t indicator;
+      |         ^~~~~~~
+drivers/s390/virtio/virtio_ccw.c: In function 'virtio_ccw_drop_indicator':
+drivers/s390/virtio/virtio_ccw.c:370:25: error: implicit declaration
+of function 'virt_to_dma64'; did you mean 'virt_to_page'?
+[-Werror=implicit-function-declaration]
+  370 |                         virt_to_dma64(get_summary_indicator(airq_info));
+      |                         ^~~~~~~~~~~~~
+      |                         virt_to_page
+drivers/s390/virtio/virtio_ccw.c:374:28: error: implicit declaration
+of function 'virt_to_dma32'; did you mean 'virt_to_page'?
+[-Werror=implicit-function-declaration]
+  374 |                 ccw->cda = virt_to_dma32(thinint_area);
+      |                            ^~~~~~~~~~~~~
+      |                            virt_to_page
+drivers/s390/virtio/virtio_ccw.c: In function 'virtio_ccw_setup_vq':
+drivers/s390/virtio/virtio_ccw.c:552:45: error: implicit declaration
+of function 'u64_to_dma64' [-Werror=implicit-function-declaration]
+  552 |                 info->info_block->l.queue = u64_to_dma64(queue);
+      |                                             ^~~~~~~~~~~~
+drivers/s390/virtio/virtio_ccw.c: In function 'virtio_ccw_find_vqs':
+drivers/s390/virtio/virtio_ccw.c:654:9: error: unknown type name 'dma64_t'
+  654 |         dma64_t *indicatorp = NULL;
+      |         ^~~~~~~
+cc1: some warnings being treated as errors
+
+## Build s390
+* Build log: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.134-461-g961a5173f29d/testrun/28268210/suite/build/test/gcc-13-defconfig/log
+* Build history:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.134-461-g961a5173f29d/testrun/28268210/suite/build/test/gcc-13-defconfig/history/
+* Build details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.134-461-g961a5173f29d/testrun/28268210/suite/build/test/gcc-13-defconfig/details/
+* Build link: https://storage.tuxsuite.com/public/linaro/lkft/builds/2wPjfcqRiiDhTc38knEJ0xbygtF/
+* Kernel config:
+https://storage.tuxsuite.com/public/linaro/lkft/builds/2wPjfcqRiiDhTc38knEJ0xbygtF/config
+* Toolchain: Debian clang version 21.0.0
+(++20250428112741+e086d7b1464a-1~exp1~20250428112923.1416)
+
+3)
+Regressions on mips with defconfig builds with clang-nightly
+toolchains on the stable-rc 6.1.136-rc1.
+
+* mips, build
+  - clang-nightly-allnoconfig
+  - clang-nightly-defconfig
+  - clang-nightly-tinyconfig
+
+Regression Analysis:
+ - New regression? Yes
+ - Reproducibility? Yes
+
+Build regression: mips kernel branch.c error default initialization of
+an object of type union
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Build error mips
+arch/mips/kernel/branch.c:35:6: error: default initialization of an
+object of type 'union (unnamed union at
+arch/mips/kernel/branch.c:35:6)' with const member leaves the object
+uninitialized and is incompatible with C++
+[-Werror,-Wdefault-const-init-unsafe]
+   35 |         if (__get_user(inst, (u16 __user *) msk_isa16_mode(epc))) {
+      |             ^
 
 
-
-On 4/30/2025 1:31 PM, Nicolin Chen wrote:
-> On Wed, Apr 30, 2025 at 09:52:09AM +0530, Vasant Hegde wrote:
->>>>> Will the hardware replace the physical device ID in the event with
->>>>> the virtual device ID when injecting the event to a guest event/PPR
->>>>> queue? 
->>>>> If so, yea, I think you can define them separately using the> vCMDQ
->>>> infrastructures:
->>>>>  - IOMMU_VCMDQ_TYPE_AMD_VIOMMU_CMDBUF
->>>>>  - IOMMU_VCMDQ_TYPE_AMD_VIOMMU_EVENTLOG
->>>>>  - IOMMU_VCMDQ_TYPE_AMD_VIOMMU_PPRLOG
->>>>> (@Kevin @Jason Hmm, in this case we might want to revert the naming
->>>>>  "vCMDQ" back to "vQEUEUE", once Vasant confirms.)
->>>
->>> I think I should rename IOMMUFD_OBJ_VCMDQ back to IOMMUFD_OBJ_VQUEUE
->>> since the same object fits three types of queue now in the AMD case.
->>
->> Makes sense.
->>
->> AMD architecture supports 5 buffers. In practice we have not implemented event
->> log  B / PPR Log B in Linux.
->>   Command buffer
->>   Event Log A / B
->>   PPR Log A / B
-> 
-> I think those A/B should be dual buffers of the same type?
-
-Yes.
+## Build mips
+* Build log:  https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.134-461-g961a5173f29d/testrun/28266863/suite/build/test/clang-nightly-tinyconfig/log
+* Build history:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.134-461-g961a5173f29d/testrun/28266863/suite/build/test/clang-nightly-tinyconfig/history/
+* Build details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.134-461-g961a5173f29d/testrun/28266863/suite/build/test/clang-nightly-tinyconfig/details/
+* Build link: https://storage.tuxsuite.com/public/linaro/lkft/builds/2wPjfMHLLGL9OjZrjKvW9u8uy4b/
+* Kernel config:
+https://storage.tuxsuite.com/public/linaro/lkft/builds/2wPjfMHLLGL9OjZrjKvW9u8uy4b/config
 
 
+## Build warnings
 
-> 
-> Anyway, I have renamed all the core "vCMDQ" back to "vQUEUE" in my
-> local branch. Will send v3 in the next days.
+a)
+Build warnings on x86_64 builds.
+io_uring/timeout.c:410:31: warning: default initialization of an
+object of type 'typeof ((sqe->addr2))' (aka 'const unsigned long
+long') leaves the object uninitialized and is incompatible with C++
+[-Wdefault-const-init-unsafe]
+  410 |                 if (get_timespec64(&tr->ts,
+u64_to_user_ptr(sqe->addr2)))
+      |                                             ^
 
-Sure thanks.
+Links:
+ - https://storage.tuxsuite.com/public/linaro/lkft/builds/2wPjeiV7BNYgKZ2oXuK3BNEYYBa/
 
--Vasant
+b)
+Build warnings on arm with clang-nightly with tinyconfig.
 
+clang: warning: argument unused during compilation: '-march=armv7-m'
+[-Wunused-command-line-argument]
+kernel/params.c:367:22: warning: default initialization of an object
+of type 'struct kernel_param' with const member leaves the object
+uninitialized and is incompatible with C++
+[-Wdefault-const-init-unsafe]
+  367 |         struct kernel_param dummy;
+      |                             ^
+include/linux/moduleparam.h:73:12: note: member 'perm' declared 'const' here
+   73 |         const u16 perm;
+      |                   ^
+kernel/params.c:423:22: warning: default initialization of an object
+of type 'struct kernel_param' with const member leaves the object
+uninitialized and is incompatible with C++
+[-Wdefault-const-init-unsafe]
+  423 |         struct kernel_param kp;
+      |                             ^
+include/linux/moduleparam.h:73:12: note: member 'perm' declared 'const' here
+   73 |         const u16 perm;
+      |                   ^
+2 warnings generated.
+
+Links:
+ - https://storage.tuxsuite.com/public/linaro/lkft/builds/2wPjeaX1oyIaa7F0nsdW1BymEGQ/
+
+## Build
+* kernel: 6.1.136-rc1
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+* git commit: 961a5173f29d2aa1f2c87ff9612b029c46086972
+* git describe: v6.1.134-461-g961a5173f29d
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.134-461-g961a5173f29d
+
+## Test Regressions (compared to v6.1.134-292-gb8b5da130779)
+* i386, build
+  - clang-nightly-defconfig
+  - clang-nightly-lkftconfig
+
+* mips, build
+  - clang-nightly-allnoconfig
+  - clang-nightly-defconfig
+  - clang-nightly-tinyconfig
+
+* s390, build
+  - clang-20-defconfig
+  - clang-nightly-defconfig
+  - gcc-13-allmodconfig
+  - gcc-13-defconfig
+  - gcc-8-defconfig-fe40093d
+
+* x86_64, build
+  - clang-nightly-lkftconfig
+  - clang-nightly-x86_64_defconfig
+
+## Metric Regressions (compared to v6.1.134-292-gb8b5da130779)
+
+## Test Fixes (compared to v6.1.134-292-gb8b5da130779)
+
+## Metric Fixes (compared to v6.1.134-292-gb8b5da130779)
+
+## Test result summary
+total: 96862, pass: 76665, fail: 4435, skip: 15439, xfail: 323
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 135 total, 135 passed, 0 failed
+* arm64: 43 total, 43 passed, 0 failed
+* i386: 27 total, 20 passed, 7 failed
+* mips: 26 total, 22 passed, 4 failed
+* parisc: 4 total, 4 passed, 0 failed
+* powerpc: 32 total, 31 passed, 1 failed
+* riscv: 11 total, 9 passed, 2 failed
+* s390: 14 total, 8 passed, 6 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 7 total, 7 passed, 0 failed
+* x86_64: 35 total, 32 passed, 3 failed
+
+## Test suites summary
+* boot
+* commands
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-kcmp
+* kselftest-kvm
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-mincore
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-x86
+* kunit
+* kvm-unit-tests
+* lava
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-build-clang
+* log-parser-build-gcc
+* log-parser-test
+* ltp-capability
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
+
+--
+Linaro LKFT
+https://lkft.linaro.org
