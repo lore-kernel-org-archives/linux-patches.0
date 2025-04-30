@@ -1,37 +1,74 @@
-Received: from pidgin.makrotopia.org (pidgin.makrotopia.org [185.142.180.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f66.google.com (mail-ej1-f66.google.com [209.85.218.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D72F13B5A9
-	for <patches@lists.linux.dev>; Wed, 30 Apr 2025 02:41:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.142.180.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D9913957E
+	for <patches@lists.linux.dev>; Wed, 30 Apr 2025 02:58:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745980892; cv=none; b=Y0WAdVEDvVAq63NV3RiuPSoG14wmp/zW8gAl9lyZuvCRBxa0R5xLU6UTqYZ7lpi1n36ypWgXV1wUoosWIPNZzFlWm2uwPkIzPx2K8jXORw2RJ+xh52zu2lsZRc2yk6YmY1suep7wogIGljAmK5Ki7LisTKtZreYZieVsS2WofAQ=
+	t=1745981885; cv=none; b=oEQe/oQoi4A7HUgmbA+G/1E/fv2KOlseZi+JyEqJ8SeCAurvaXzjamkddzX2s0MMexmXPJQbcblngGfMgGRcxalYB0JchH+enESvxJeQC95PQ/7lxqtPTYFK3im6TkY4orbrHR1P4mcU7g50tPyha7wxyKg3VLG84hwv33tHmk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745980892; c=relaxed/simple;
-	bh=eY5lON/0VtKN+8zhZHnwDVS18HQJMNK3PU4hmkoLby4=;
+	s=arc-20240116; t=1745981885; c=relaxed/simple;
+	bh=vSVqtBuB+jDZR9oAppVW3n9jSJJUZ7Ihd2hGUqwZ6Ls=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ghnWm4jPv/4oZKLX6d//54Gz3RTDPqUKDbY22CYC0ZAGqtMFo3Us0rzsNPHkeERunipjLelrCaXpGJmJsCvWI992//j+3eCXqonXWIkRg7fJj34f26tztPZTNSb0qTI3oV+H/1T/m4Op+61Jma6/mLFwYYzgsLUYKJH6VABbbrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=makrotopia.org; spf=pass smtp.mailfrom=makrotopia.org; arc=none smtp.client-ip=185.142.180.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=makrotopia.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=makrotopia.org
-Received: from local
-	by pidgin.makrotopia.org with esmtpsa (TLS1.3:TLS_AES_256_GCM_SHA384:256)
-	 (Exim 4.98.2)
-	(envelope-from <daniel@makrotopia.org>)
-	id 1u9xIJ-00000000269-3ztd;
-	Wed, 30 Apr 2025 02:41:27 +0000
-Date: Wed, 30 Apr 2025 03:41:23 +0100
-From: Daniel Golle <daniel@makrotopia.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=HuFrpAwlFx9cU74k75XcYlqvuUIyVq/HPYZ7VIMzD1ou7mRJN5YJrQKyKvwrf9DPT54UKQ3SRC8BqznlckhPmXq9IakcouyfCOThtj/YZUrH7NN3xwRv5vTt5mrcm4VxmqpCfaPH/wSq1Y/JmA1h+xa2BPWvVOS+qDewW6qenjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=WskegakH; arc=none smtp.client-ip=209.85.218.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="WskegakH"
+Received: by mail-ej1-f66.google.com with SMTP id a640c23a62f3a-ac2c663a3daso1342423666b.2
+        for <patches@lists.linux.dev>; Tue, 29 Apr 2025 19:58:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1745981881; x=1746586681; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=orERZRi+X77AnHhL2gqMTjYmeyPepMy3FKT+ifyIpL4=;
+        b=WskegakHNRo0f3KN+Xu3qOeywW5Yhm6KUWInbZ0P43SJkyOLUcx7Opj6MsPhJEnTfg
+         bzqFlKKjTseIKbKACjbtC9dbGy4gnP0Nkolcz04DIyc4PN4PX6VRDHwau55Mwy/wnfME
+         VSF0HbfhaMK6dIQ7BWyOd6JN76IspRhXvpjop6v5op1wK99ZTWWK547sRM1Kp/lcVNyu
+         yDA9GAYk9+1dsCNnGDUcH+nuAQzLTaWtraz39wPDoDpzHpEW4JJb+p0cnVV/xuYViKH8
+         KRwP9Flyd7POz8zfEW128DRZc8Lry7/qbUS2rgMhi8eODYIjFiUcY0m9peAczFD+zwfn
+         bS/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745981881; x=1746586681;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=orERZRi+X77AnHhL2gqMTjYmeyPepMy3FKT+ifyIpL4=;
+        b=dyHKM1VEuDVmNOuwa2EtEUQD3SVzAgDUZg9CsTRc1uzsX3KPDL74pesItT7QNBMpyX
+         huTgY4HJFrylK7FHxg/tOQNy/f3I5jpC9OT7LzPLBP+6e+4j/yMOlZIRi/6Yk3+nn44x
+         ihv8/MayjRj58Cn7Kc85lWlJ0nEUiOXLYne8KstoVCgDxCCkZlowARnJUf5brWGh2qB6
+         B/hrsGPy019za24QRKgxvjL8PAsUx47UCd480sk+NnqsBejPo2AWzbB7AkBGYvBdFby6
+         yAlclB7OALAu1/pbXBMfkR6DmbJdmBA3YhMp9EKPmvTjBXM7XMHFaZ/gq3aPyiPNY+Gx
+         52YA==
+X-Forwarded-Encrypted: i=1; AJvYcCXHvU7UnJ0qBJIZxRu8XZbc1hz/eocfkyxLlj43ZSvTyJ3B1fGQZho4QB4QMRFFsfK0dpCIZRuS@lists.linux.dev
+X-Gm-Message-State: AOJu0YzkGbxhCXawTrT605Q1WSsMIHCS9MLFjv4XG5wsR+0efz/fRRiK
+	BV2Du8xK+Uc4HHsv3Wbh5kXD8hHEZnw49Pydt9bIee/X4Mj/X7b+IvgXQRQKrLw=
+X-Gm-Gg: ASbGncs/wmcQeoMQgkcKsBe2UDswTHce3Zu0XaNupTl9IHtg8nLbsoMZNkPZINkZA6N
+	SKJ+2s+IEv6EErz+/SyI4Q84lWZcp4DLAM+fFgXDdC6ABbEQFs9sPqTOVwgraF6+uR1YsuAquAY
+	8ReiGRJYuRMCwTpFj4iApJYwpQLmHsAIuA9ReY3pl0XYVvkpa6le21ZWcH6GJEgLH/ckCj3ei/Z
+	Kl58FmxcobqkkUTk56VMjSGeq1Dsnb8NACy4i3uQEDwUen4R4Qu8VyScNIW6mkFZBT1UT7kotmU
+	gs9sw3TU3acHO8zmNaG+vJD4nW6UUjVU+Z5fcogoLkDH/7PpE598JOBPkLDk51AHvAEfcZWCqR/
+	E
+X-Google-Smtp-Source: AGHT+IEWjFrMLBqOV/1rb7M+m2k06D+kpRwrzKt1j1RkJYk/ipaKYAiZsHrqN38WPJ7aRNgfa7eHCg==
+X-Received: by 2002:a17:907:6d15:b0:acb:4cd7:2963 with SMTP id a640c23a62f3a-acee241c417mr87778166b.33.1745981880926;
+        Tue, 29 Apr 2025 19:58:00 -0700 (PDT)
+Received: from u94a (27-240-163-208.adsl.fetnet.net. [27.240.163.208])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acec2e5ad9fsm246073666b.23.2025.04.29.19.57.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Apr 2025 19:58:00 -0700 (PDT)
+Date: Wed, 30 Apr 2025 10:57:48 +0800
+From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	"Chester A. Unal" <chester.a.unal@arinc9.com>,
-	Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 294/373] net: dsa: mt7530: sync driver-specific
- behavior of MT7531 variants
-Message-ID: <aBGN0w1Wp1PRfPWn@makrotopia.org>
-References: <20250429161123.119104857@linuxfoundation.org>
- <20250429161135.207985097@linuxfoundation.org>
- <aBEbqsJhVNaLh82G@makrotopia.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.14 000/311] 6.14.5-rc1 review
+Message-ID: <4vosggktdpxcddwlbopxxfzs5nscgllrqrhyxfibzd74wur65c@qo26jck7ok3q>
+References: <20250429161121.011111832@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -40,47 +77,20 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aBEbqsJhVNaLh82G@makrotopia.org>
+In-Reply-To: <20250429161121.011111832@linuxfoundation.org>
 
-Hi again,
+On Tue, Apr 29, 2025 at 06:37:17PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.14.5 release.
+> There are 311 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-On Tue, Apr 29, 2025 at 07:34:21PM +0100, Daniel Golle wrote:
-> On Tue, Apr 29, 2025 at 06:42:51PM +0200, Greg Kroah-Hartman wrote:
-> > 5.15-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Daniel Golle <daniel@makrotopia.org>
-> > 
-> > [ Upstream commit 497041d763016c2e8314d2f6a329a9b77c3797ca ]
-> > 
-> > MT7531 standalone and MMIO variants found in MT7988 and EN7581 share
-> > most basic properties. Despite that, assisted_learning_on_cpu_port and
-> > mtu_enforcement_ingress were only applied for MT7531 but not for MT7988
-> > or EN7581, causing the expected issues on MMIO devices.
-> > 
-> > Apply both settings equally also for MT7988 and EN7581 by moving both
-> > assignments form mt7531_setup() to mt7531_setup_common().
-> > 
-> > This fixes unwanted flooding of packets due to unknown unicast
-> > during DA lookup, as well as issues with heterogenous MTU settings.
-> > 
-> > Fixes: 7f54cc9772ce ("net: dsa: mt7530: split-off common parts from mt7531_setup")
-> 
-> The commit 7f54cc9772ce ("net: dsa: mt7530: split-off common parts from
-> mt7531_setup") is only present since v6.4 so backport to 5.15 and 6.1
-> doesn't make sense
+test_progs, test_progs-no_alu32, test_progs-cpuv4, test_maps,
+test_verifier in BPF selftests all passes (with 82303a059aab
+cherry-picked from bpf tree to deal with sockmap_ktls failure, it will
+be sent to stable once it made its way to Linus' tree).
 
-I should have actually checked and only now noticed that 7f54cc9772ce
-("net: dsa: mt7530: split-off common parts from mt7531_setup") has been
-picked to stable kernels down to Linux 5.15.
+Link: https://github.com/shunghsiyu/libbpf/actions/runs/14738691393/job/41371100920
+Tested-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 
-However, the bug only affects MMIO variants of the switch which are
-supported since commit 110c18bfed414 ("net: dsa: mt7530: introduce
-driver for MT7988 built-in switch"), and that is present only since
-Linux 6.6.
-
-Sorry about the confusion, I should have probably chosen that commit in
-the Fixes: tag despite the original mistake was introduced in commit
-7f54cc9772ce ("net: dsa: mt7530: split-off common parts from
-mt7531_setup").
+...
