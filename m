@@ -1,104 +1,107 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1202DC768;
-	Wed, 30 Apr 2025 00:47:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CE62DC761
+	for <patches@lists.linux.dev>; Wed, 30 Apr 2025 01:10:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745974030; cv=none; b=FdIJ0/zw5YxgOHHmX3E+ifynXwPeBKNk+6d3QMA6qi1pj2oRMXegGs8wIsmzs24Gcs5emldQzggVxAZHsFXXXMHxfsmh2ZLDbrSvkrfnlwGOzBOfh+f7+D4jNTmicVI+WaXcTgwmAn/DlMBQ5WtJULCFFigmWFLa7l/14apvFfI=
+	t=1745975438; cv=none; b=e4uphQa4k2EKO2DlXwQydUP6cJ0oIFaTy1QBxBghhTvjCXWMjZaStpfvHfrOWfgD+hFbOUe1b58wwu7578YqoVDECGdC0tktS5I8iw0rUqZAOVNw0uCMxeoAL8u40svRBDohVlnuNb0HK51QqcR3v3ns5o5v9N7FGHOGFfxkGO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745974030; c=relaxed/simple;
-	bh=0y9B9wg71iPcc94hYHsLcd4ggl+XIo8SKgRXNkzmgnQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=BLBkS7F/d05XT3mAIyigOawe2eAU0Omuv29ASTLzflM+//bUq38HcT9bMWdw+9HR+Iy2/fdEXs4tmMEF+PRFTrgXCafS44mDtdl5IlQf1AZ/hbcqPh46h3ryNnXFg2BhCZRtRV9YUYweZHM3rYgYq1Eg4k81XcEX9mbCCx0tBmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sdy2T0GX; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1745975438; c=relaxed/simple;
+	bh=GcA0wqe4bwS+nqsbaE7zGxsfAfwH+z1wdZ2jUKGpfNQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TcGIzf/2BvJKPq2M6NK0MZZv0eoQbboW+H0LjhnBXazojg2uor1ldqhdK/RS0mXtcCFcokFP9ej0H18IyoLlcOIUSkNItDt7Woyo9z+ES4SlXvY0qIwLsUXwO82GcvNSeVwgjeyIYM06Cj9qy+jyc7l183xpk4b5aUAX3A+X6H8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=exTIOqvz; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sdy2T0GX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859E7C4CEE3;
-	Wed, 30 Apr 2025 00:47:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745974030;
-	bh=0y9B9wg71iPcc94hYHsLcd4ggl+XIo8SKgRXNkzmgnQ=;
-	h=From:Date:Subject:To:Cc:From;
-	b=sdy2T0GXO8CQlUN6voiRN1QFUXKDE5Aoouowjk4T3KqnfwqXPFd7eqJtTdIgVLcHk
-	 lA10dVUhAHGMVG4+hLd1ENGrYkZfVSg1LSuiP1dipodi3K8c8HhK/uH4MyGkTrzXyl
-	 9E+CG4mF7DePlUX6YBNqUzRiSs+X3ZMy1FFCNKphVe28Vs8qm4IBu9YQgcbP6giBNr
-	 kPNKOj7AebpQEVe+cYXtnNdkrY5zhmyiPiID8/OgnXrtp1UEMXGltFkm5sU0YHib3l
-	 /jwG+cUXFMAb2VasHwHokXZSApuPhVy6KxhQeaGiq8h1BvoyoNazF2b4a55xoyymQo
-	 7f/oa0t0iAisg==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 29 Apr 2025 17:46:49 -0700
-Subject: [PATCH] scsi: dc395x: Remove leftover if statement in reselect()
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="exTIOqvz"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-39ac9aea656so7662924f8f.3
+        for <patches@lists.linux.dev>; Tue, 29 Apr 2025 18:10:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1745975435; x=1746580235; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fy0EpqkwjDtmTcF94zxnemA5fOntKhPCB9hsiCBnym0=;
+        b=exTIOqvzbqak4pJVbtx0iAUY4xEYRdicZg+2k552SYOZ4lTeTNbwstnSvcJH1GPRdB
+         /rcl/tqHP1fXJcRrnIm0UmbYWpeq+LblAf8HU28d3khHiQrcwxdhTXaBjUE7l53gqvnM
+         IQ9NhHO5YVj4cUwvy3FGgw4TRyI8S51mZMNJTbF9YuDvIj722qboPrj0fssGXiRQX69j
+         8rlgjC+4CiJ65/Rnqx/t94G28uwVNzfWepJlOc1jlp2vVMWtW6R1hK1EBblpDNmvdv7C
+         tdLQCVoAqUYN6KTOMBFVXzabcobOOozxbbh5LRrVrqJSI57m/nYTCgA5QWnntn13zVhN
+         +vzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745975435; x=1746580235;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fy0EpqkwjDtmTcF94zxnemA5fOntKhPCB9hsiCBnym0=;
+        b=HEE/YnVkonsx79ShflTAeTdfG0x163jCHJlr3Dw1DoSuzi7inrD84JxGgkHen9lWR3
+         I+jQ4n9HUWUi2WUIpiMfGxUBdJfz9NFIB5Dt1r86P4Ues1EkmjrX932CCWJ4yAm+ocsO
+         j5nD5+SKp55xE4wDsTtbWkP7hzne2xKwOf06Gxf1WzNAHHgCTtuBA2+4n/wQ4/9BrbPX
+         WR/VsVOkeDuJRoK6CDUGxtmznYxhftgJ5FT7bKzCPI8ySsS6hP7yyuHYZLZW4zC7Y/N5
+         7zLdVGo9Qf+BUwe0hqnNJFdNGWKuNFjq4scrL46SukitJefOZ+52xlh2sbK+6KqgrNE6
+         4tBA==
+X-Gm-Message-State: AOJu0YwfMQp6a1Fq25SI1+NLkBhshWy6Y/rR0zMBwuanfyOUHLskQIyH
+	1xiS1gJZY/O6TAItej+k/gIca5MzvbaLHTfIyoeF96vfbZzfvog=
+X-Gm-Gg: ASbGnctmE8QBpcr3KPQuCkSQHPlxyWDtfDLFvMJpzzDxPh7DtepfnlDmjCfZFapQu2T
+	9UAAa6B39rr4gEDz4ky0hDE97QksiI3wRh8QR5J2Sc2CDPkNbxDEvtDAxRCBm5+ZQ3X8OUAEwYW
+	Ge6FJTd3IAPKkcysJ0w+i0GYJqIjaWPeFC+pRPXBaZ4SphAzWOj6rcb6rlFPdhqoWX40xsYzwKy
+	uwoT68sJ6QuxyvUzPao2/LfSmte/BVS4vvnoaCukpaVMGLIhw0cBPDBCwl2FVZ7yHmWjVr4Odr5
+	A/ZVPxn7jgTy8EQyNiLNUKpbs93g0esT8ieWz/nqQr1BkrJ91Ucm1maKmj5zbPLTH5g+wPO2x7d
+	KokkplP9Q16jCoGprJxc=
+X-Google-Smtp-Source: AGHT+IEfCZyklWz25dz8UgxLE8bMSFKXl1EvDpiL4cI6Uh838bs3W6K4R8SlOQyze6UjmyVl60Hv3A==
+X-Received: by 2002:a5d:64a5:0:b0:39e:e438:8e3c with SMTP id ffacd0b85a97d-3a08f7babaamr1003573f8f.53.1745975434662;
+        Tue, 29 Apr 2025 18:10:34 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2ac6c7.dip0.t-ipconnect.de. [91.42.198.199])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073e5c6a0sm15385345f8f.86.2025.04.29.18.10.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Apr 2025 18:10:33 -0700 (PDT)
+Message-ID: <92ed23e2-651a-4730-b5b6-d9e85761c1f8@googlemail.com>
+Date: Wed, 30 Apr 2025 03:10:32 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250429-scsi-dc395x-fix-uninit-var-v1-1-25215d481020@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAPhyEWgC/x3MMQqAMAxA0atIZgPaqlivIg4ljZqlSqMiiHe3O
- D74/AeUk7DCUDyQ+BKVLWbUZQG0+rgwSsgGU5m2aoxDJRUMZF174yw3nlGiHHj5hFTTHPre+c4
- GyIM9cS7++Ti97wcvjvGybAAAAA==
-X-Change-ID: 20250429-scsi-dc395x-fix-uninit-var-c1cfd889a63d
-To: Oliver Neukum <oneukum@suse.com>, Ali Akcaagac <aliakc@web.de>, 
- Jamie Lenehan <lenehan@twibble.org>, 
- "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: Colin Ian King <colin.i.king@gmail.com>, linux-scsi@vger.kernel.org, 
- llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1855; i=nathan@kernel.org;
- h=from:subject:message-id; bh=0y9B9wg71iPcc94hYHsLcd4ggl+XIo8SKgRXNkzmgnQ=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDBmCxTxr1x745q7GrN2nevQjX6vWN0al5y/f3JvsWHg4Y
- u3r5HfGHaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAiv3gZ/lmJf69excOhbcHE
- fPHMXoH7qw+FKcnEXDAWvbfou3p7yFxGhpZuidc5kh9/H/r2wPyF/b6o5TKp2zOFPM7Nnf8myp/
- tBDMA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.6 000/204] 6.6.89-rc1 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250429161059.396852607@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20250429161059.396852607@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Clang warns (or errors with CONFIG_WERROR=y):
+Am 29.04.2025 um 18:41 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.6.89 release.
+> There are 204 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-  drivers/scsi/dc395x.c:2553:6: error: variable 'id' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
-   2553 |         if (!(rsel_tar_lun_id & (IDENTIFY_BASE << 8)))
-        |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  drivers/scsi/dc395x.c:2556:22: note: uninitialized use occurs here
-   2556 |         dcb = find_dcb(acb, id, lun);
-        |                             ^~
-  drivers/scsi/dc395x.c:2553:2: note: remove the 'if' if its condition is always true
-   2553 |         if (!(rsel_tar_lun_id & (IDENTIFY_BASE << 8)))
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   2554 |         id = rsel_tar_lun_id & 0xff;
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
+oddities or regressions found.
 
-This if statement only existed for a debugging print but it was not
-removed with the debugging print in a recent cleanup, leading to id only
-being initialized when the if condition is true. Remove the if
-statement to ensure id is always initialized, clearing up the warning.
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-Fixes: 62b434b0db2c ("scsi: dc395x: Remove DEBUG conditional compilation")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/scsi/dc395x.c | 1 -
- 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/scsi/dc395x.c b/drivers/scsi/dc395x.c
-index 95145b9d9ce3..96b335c92603 100644
---- a/drivers/scsi/dc395x.c
-+++ b/drivers/scsi/dc395x.c
-@@ -2550,7 +2550,6 @@ static void reselect(struct AdapterCtlBlk *acb)
- 		}
- 	}
- 	/* Read Reselected Target Id and LUN */
--	if (!(rsel_tar_lun_id & (IDENTIFY_BASE << 8)))
- 	id = rsel_tar_lun_id & 0xff;
- 	lun = (rsel_tar_lun_id >> 8) & 7;
- 	dcb = find_dcb(acb, id, lun);
+Beste Grüße,
+Peter Schneider
 
----
-base-commit: e142de4aac2aae697d7e977b01e7a889e9f454df
-change-id: 20250429-scsi-dc395x-fix-uninit-var-c1cfd889a63d
-
-Best regards,
 -- 
-Nathan Chancellor <nathan@kernel.org>
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
