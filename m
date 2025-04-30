@@ -1,107 +1,110 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137D078F44
-	for <patches@lists.linux.dev>; Wed, 30 Apr 2025 01:56:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573B434545;
+	Wed, 30 Apr 2025 02:37:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745978202; cv=none; b=CbiZWET4quF4/4z82wwSfX9y5OSbYnIme01RsEeyfVrVo/hzDdjdtnS3+mg5L1QTR4U28zjXXaGSKpRjYNJC9GyfZNvJUrcH4+V+ezyLm5JAp3k2X7ekLL5zOfBu3ynqypS0JjUDuJHuonu5RE6xf1K1atyEwSZVN7aYb2PcSxM=
+	t=1745980633; cv=none; b=hFxFpcX7FvZKWt+M7zeiH0rcc50wTxAGOEWgCpxyvjjvrsaAHbaNXtb770TqbtGNB91v4NMtpiCkOuuGqNsnFqHVANszSg9AwbhNQfXpInOiPNQ4y6HKgO3ZLISlKZzojW05CmD0qLTb72FRJjeMw0ly8NZACbVwk0rQwxw8GvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745978202; c=relaxed/simple;
-	bh=+KfHjPK5yIR7Je8kKXT7ZbpVESHoHpgIj07gDqmJzUQ=;
+	s=arc-20240116; t=1745980633; c=relaxed/simple;
+	bh=UeVWVQMtCSgoY6I17XEsqNEXKT0TWbHaFTIMLOeTnTs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VXr8V7QoccyBPu/7jP3REWH8bhMZbTS26iPkPdSpePlgl+rK4j/vFvfryh8OSt0KJalcz9btPnFon81u+0XXHswzKeDrdPX5iwmyvsTrO6t1R/YuHv6jhyxLa9ObL78sBTclzBXRIGbN9uWqLw4lF2zEcwEeHsZo3RaOfU6n/xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=mZpI1mps; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	 In-Reply-To:Content-Type; b=E56n228goyoSAXxOhpFWC2KLQVS8csCsq4kC74nRfcQ0aQFqCk/Wox3cUg2geCq01QypWbua7rOUS+krIVDVhkFawPqRKWltaBOcpnHMAjlU433HVIfMfAO14PJY36s7l8OCkDeGHar7GDzUvcNtgj+RpigxJ4UjcHJnP7JZ/rE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RsGi18MN; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="mZpI1mps"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43690d4605dso51297545e9.0
-        for <patches@lists.linux.dev>; Tue, 29 Apr 2025 18:56:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1745978199; x=1746582999; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MpsYOY6/z+Z1DTeFAke43VvZPd6wkIifXztjpmPpqaM=;
-        b=mZpI1mpspLly34XijW7LxxkL+5ao8x6HggDkU91xlsWLn19lVefoqc4lWzFiXy+djo
-         NUEO6eJfG0fCN+uyr1wywoLJTppzrc1uvFQxvzURgbTjm4puIccQ3RkipsF9XpWUv4tP
-         f0G3nuS8Wew6hkUBZtBdYA6N+tdMCGqSr2BUP8OfYEi7V2m6w00zokdqk4lRhz71e2+h
-         Hh3QPf0rWOeJQwr2lp3c3/q51Way7p4bSbWam+OEBMr6PxwXsGyWhSbHLw+zbt9h9nb5
-         RYJ9bkIa9xMxzrDeUstTGgtPM21sWvqToFn8nDl+yMsPQToOf7V9ESQ/xPJSgjP4iDh6
-         S4QQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745978199; x=1746582999;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MpsYOY6/z+Z1DTeFAke43VvZPd6wkIifXztjpmPpqaM=;
-        b=C55AS1GJ4fteSUerjhsLeXpKyi/glCaWn0XOIKxH5aR23p53EV/vu3cGlZypbk2lHE
-         RblpLjMj//7FFcw70EdSycbLA/b1a6u6qE0cp04bnQPhZ9bwcW97FoQgsXKPB1Or1h6A
-         PxxFjv+2cqmx+Ix9oG2f1iHe/AQJeVV6WddfauXRavg9XwF0zRhmGAjYAlj8TDTpwqpo
-         B9DESFjHnJi0l+nRfkM6p0gmIGF91+csZmfYgWwyi8Bk//W2gN70zJgYw/VwsrCAolw+
-         +2sJdpddpB0RmNQFGxmHk4W3kpwcgC/RW81E7CwFL/FFTei72/HIxJyI+sZXVw1eoJJQ
-         Uh+Q==
-X-Gm-Message-State: AOJu0Yx/C4ASWZcwCTNbSzqK0wvLw3N5SXnabkI9fW9B/of3xStPMGHC
-	CfimPohlaa2sjzZzIkBO6FNoJ1c688O0jMxrxSOl5dpn1b+zq08=
-X-Gm-Gg: ASbGncvsKUmVdNfz7uLssbbJNjju6oQ/qqNy42jgfZfMneRxHzz0Bqw9bz69xajuRyI
-	7Tqt29Lo0xceQMGTbFT/V58BTJa+4eNyeHoleiQ06yGoS61Q6NqhR+1cDLpYgApMZdrnUv1t9nK
-	NOU7G6u+TTOsTcxQsPRaZ/nn3B2DwWpP+fPdzY8QdV6xKSzgMB17P8FdsI6VeJVOtwYfvMVN4J1
-	q8NZvKDtHFPiWZB3+VDqCtjzm21H0mrSoATtgCQglsnBuOqrAv+XaGrB/R7bSbmVoN6OINA9YXA
-	+pWPZvPOpz2Q/AkIuNyhTKZ6Gz/KM/x6hEspXKFfCyQct2sgEfoBowKnUgrUe6HVUx8ojX/XohK
-	nWdb047LijtAJ4uOlL9o=
-X-Google-Smtp-Source: AGHT+IG2NrJCRDLN9FWQaP9OFYSF4SIsI76/UxFWwjgAlCOpjR+ekqLFJ/p8Fv/eZLk1OIzUutk6OA==
-X-Received: by 2002:a05:600c:1f11:b0:440:6a1a:d8a0 with SMTP id 5b1f17b1804b1-441b2634d64mr5263105e9.7.1745978199061;
-        Tue, 29 Apr 2025 18:56:39 -0700 (PDT)
-Received: from [192.168.1.3] (p5b2ac6c7.dip0.t-ipconnect.de. [91.42.198.199])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-441b2aecc89sm6717535e9.9.2025.04.29.18.56.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Apr 2025 18:56:38 -0700 (PDT)
-Message-ID: <f3247312-d88e-4075-b27f-9c73998b82b0@googlemail.com>
-Date: Wed, 30 Apr 2025 03:56:37 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RsGi18MN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1745980632; x=1777516632;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=UeVWVQMtCSgoY6I17XEsqNEXKT0TWbHaFTIMLOeTnTs=;
+  b=RsGi18MNF8jGZalT5uwWEr7+XwHGKafTsSeLz/yTc84l1CVW8nb6eQGn
+   bJ5FJSZOGdHd3qCWfIEZHesxJGcPvsgwyCTM9Rs7iv2vYhNSpQNw+1DkH
+   hT+41b02Igg2vBsZ1GTXYHAStTougPRAkcRhKN02U9FiuNf6F2UI182dh
+   fibc0UebK422qSdSPFDtQyoQ8NwXcQvSAkIE4w1KMepXqzyTBWLvjZbkt
+   h3GIjj1rlbYDH+Qmf4kpYsGKajeeI6qA/RTWeJ3+Ki4VyYCJmE/5H/lE1
+   03k5aWTVaHL7VGQnXJOCL3OZkfKZLRlTBoUS+WWnKKDS4hhXjArOAIvvP
+   A==;
+X-CSE-ConnectionGUID: R4sf0fRGTneoXFUXRXqVvQ==
+X-CSE-MsgGUID: xhXryxAsTla99pI9NZIkXw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11418"; a="51445225"
+X-IronPort-AV: E=Sophos;i="6.15,250,1739865600"; 
+   d="scan'208";a="51445225"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2025 19:37:10 -0700
+X-CSE-ConnectionGUID: rPKpQb86Qv+hi9Gbn/bOCw==
+X-CSE-MsgGUID: eN7Ab3jZTbWZDraScrUmnA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,250,1739865600"; 
+   d="scan'208";a="134508430"
+Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
+  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2025 19:37:00 -0700
+Message-ID: <0a5f2f46-f474-49d3-baee-59f2ad0a6f0a@linux.intel.com>
+Date: Wed, 30 Apr 2025 10:32:46 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.12 000/280] 6.12.26-rc1 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250429161115.008747050@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20250429161115.008747050@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/7] iommu: Remove ops.pgsize_bitmap from drivers that
+ don't use it
+To: Jason Gunthorpe <jgg@nvidia.com>, Alexandre Ghiti <alex@ghiti.fr>,
+ Alim Akhtar <alim.akhtar@samsung.com>,
+ Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, asahi@lists.linux.dev,
+ Baolin Wang <baolin.wang@linux.alibaba.com>,
+ David Woodhouse <dwmw2@infradead.org>,
+ Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+ Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+ Janne Grunau <j@jannau.net>, Jean-Philippe Brucker
+ <jean-philippe@linaro.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>, Joerg Roedel <joro@8bytes.org>,
+ Kevin Tian <kevin.tian@intel.com>, Krzysztof Kozlowski <krzk@kernel.org>,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, linux-riscv@lists.infradead.org,
+ linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+ linux-tegra@vger.kernel.org, Marek Szyprowski <m.szyprowski@samsung.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Neal Gompa <neal@gompa.dev>,
+ Orson Zhai <orsonzhai@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Rob Clark <robdclark@gmail.com>,
+ Robin Murphy <robin.murphy@arm.com>, Samuel Holland <samuel@sholland.org>,
+ Niklas Schnelle <schnelle@linux.ibm.com>, Sven Peter <sven@svenpeter.dev>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Tomasz Jeznach <tjeznach@rivosinc.com>, Krishna Reddy <vdumpa@nvidia.com>,
+ virtualization@lists.linux.dev, Chen-Yu Tsai <wens@csie.org>,
+ Will Deacon <will@kernel.org>, Yong Wu <yong.wu@mediatek.com>,
+ Chunyan Zhang <zhang.lyra@gmail.com>
+Cc: patches@lists.linux.dev
+References: <3-v1-7c5282b0c334+2db-iommu_rm_ops_pgsize_jgg@nvidia.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <3-v1-7c5282b0c334+2db-iommu_rm_ops_pgsize_jgg@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Am 29.04.2025 um 18:39 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.12.26 release.
-> There are 280 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 4/29/25 22:34, Jason Gunthorpe wrote:
+> These drivers all set the domain->pgsize_bitmap in their
+> domain_alloc_paging() functions, so the ops value is never used. Delete
+> it.
+> 
+> Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
+> ---
+>   drivers/iommu/apple-dart.c       | 1 -
+>   drivers/iommu/intel/iommu.c      | 1 -
+>   drivers/iommu/iommufd/selftest.c | 1 -
+>   drivers/iommu/riscv/iommu.c      | 1 -
+>   drivers/iommu/virtio-iommu.c     | 6 ++----
+>   5 files changed, 2 insertions(+), 8 deletions(-)
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
-oddities or regressions found.
+For intel vt-d driver,
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
-
-
-Beste Grüße,
-Peter Schneider
-
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
