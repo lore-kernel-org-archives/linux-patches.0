@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8B425B1E2;
-	Thu,  1 May 2025 08:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3C825B1E2;
+	Thu,  1 May 2025 08:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746086451; cv=none; b=ENtAREaFv9C33demhpupB+tezil8zsOURtp2hg52djEv0G3L/hMNI5vTLnfvuI7RG+zlFPdoMncnx9JB2bk0+pIONdr931KA50Jt9WxF53lPMopFZmh8GUGL35YdpfTT9T7ExrANJDm1mqIMLf2A0KaWmyObRUCTgGBEABnX5L8=
+	t=1746086642; cv=none; b=CUEMoK0jhuKnC2tCYIhRED7hKV9IAQ2u+3Wh/T6aF41K3jw8sOCe9w0vxtaEebWgBMspBopmL7BBBfY0XFoPXMP2TpGt4tUxz6ohhq8grn1BhaxOkdiOu/o81EzKtBjEaoGtryijRBN777lxvdndv6aOSBleesAA6P6nGF5GLSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746086451; c=relaxed/simple;
-	bh=pTNtLy9iWiiWule0FiNE66wyiC9Hlc5hYY4+vRE+U18=;
+	s=arc-20240116; t=1746086642; c=relaxed/simple;
+	bh=FrLlyf/zQU3F+r4XElWenJtWwdZ9x7pgnKF2V1e/y1E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VzCYhWr53hu9gpEpi5u/zzuVOHVNkCj3SEewf4FVOAHkpXZDjRFrMYyslqygP/nYO/B9w8qq+gwIFbj1/seFRfQJMbRJ4UlzEjl0a4NLL/7mP65dQhR5KKQ37sznacleSu77QatHQyWe1wiJReYiXsC451WpfSQzo1fdVtqZQBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lo2/oL26; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=dD1ljagCP6NuLaVEUdl22MbNhkbPibC93w0A5At198VwB+JaGjQJbTgjUUpOKM7AB/S27WUeJSr6s8Bzgi53fPysCoUpspesxv6+7K3js9WRfoqkUQhWIVNdYNkTT44iyZe1hM8LZ45FNOPxRJ+KAV/GUSbK8EeudbE5NDkbeBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T3wRn7lv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lo2/oL26"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51CD4C4CEE3;
-	Thu,  1 May 2025 08:00:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3wRn7lv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 058F7C4CEE3;
+	Thu,  1 May 2025 08:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746086450;
-	bh=pTNtLy9iWiiWule0FiNE66wyiC9Hlc5hYY4+vRE+U18=;
+	s=korg; t=1746086641;
+	bh=FrLlyf/zQU3F+r4XElWenJtWwdZ9x7pgnKF2V1e/y1E=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Lo2/oL26tK27Yn0OqdG2IrwmYZMzfsxhnwD/FZA4G13wKzDlkH1uvyXmChfUzMgpG
-	 pvMewQKiqpOqq9kQkoNG1HKLdOgcn0QrSrlTnTw3Km4uxLGNcr7t3oPmJSZnxnNBgx
-	 8ubHiYieQqw27xrNxVvYU/BedzYFIi/VOhp2ts8g=
-Date: Thu, 1 May 2025 10:00:47 +0200
+	b=T3wRn7lvbL63Clu6iAAOyqkUBzXeVmCRs8AXWk5jCKSmC9LqeI1+0YxehWu8zH8f6
+	 g0VRtO52tk3uVWTIBXHPm4Pi+DqDo0jCjjrzFqYj119IsOSlydXCLHKhZ36UCsJl/4
+	 iNWWN3NDnt+OmrZIKwRzBX/oKc3g/R/Z/S7MMJig=
+Date: Thu, 1 May 2025 10:03:53 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Daniel Golle <daniel@makrotopia.org>
+To: "Tai, Gerrard" <gerrard.tai@starlabs.sg>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	"Chester A. Unal" <chester.a.unal@arinc9.com>,
-	Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 294/373] net: dsa: mt7530: sync driver-specific
- behavior of MT7531 variants
-Message-ID: <2025050134-freestyle-delirious-fffe@gregkh>
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.15 003/373] codel: remove sch->q.qlen check before
+ qdisc_tree_reduce_backlog()
+Message-ID: <2025050131-fragrant-famine-eb32@gregkh>
 References: <20250429161123.119104857@linuxfoundation.org>
- <20250429161135.207985097@linuxfoundation.org>
- <aBEbqsJhVNaLh82G@makrotopia.org>
- <aBGN0w1Wp1PRfPWn@makrotopia.org>
+ <20250429161123.269149769@linuxfoundation.org>
+ <CAHcdcOnHVSAF9DOjGqSWrZYiS-5LyXHimdVou6zf-6zZyvZhPg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,54 +45,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aBGN0w1Wp1PRfPWn@makrotopia.org>
+In-Reply-To: <CAHcdcOnHVSAF9DOjGqSWrZYiS-5LyXHimdVou6zf-6zZyvZhPg@mail.gmail.com>
 
-On Wed, Apr 30, 2025 at 03:41:23AM +0100, Daniel Golle wrote:
-> Hi again,
+On Wed, Apr 30, 2025 at 04:12:39PM +0800, Tai, Gerrard wrote:
+> Hi,
 > 
-> On Tue, Apr 29, 2025 at 07:34:21PM +0100, Daniel Golle wrote:
-> > On Tue, Apr 29, 2025 at 06:42:51PM +0200, Greg Kroah-Hartman wrote:
-> > > 5.15-stable review patch.  If anyone has any objections, please let me know.
-> > > 
-> > > ------------------
-> > > 
-> > > From: Daniel Golle <daniel@makrotopia.org>
-> > > 
-> > > [ Upstream commit 497041d763016c2e8314d2f6a329a9b77c3797ca ]
-> > > 
-> > > MT7531 standalone and MMIO variants found in MT7988 and EN7581 share
-> > > most basic properties. Despite that, assisted_learning_on_cpu_port and
-> > > mtu_enforcement_ingress were only applied for MT7531 but not for MT7988
-> > > or EN7581, causing the expected issues on MMIO devices.
-> > > 
-> > > Apply both settings equally also for MT7988 and EN7581 by moving both
-> > > assignments form mt7531_setup() to mt7531_setup_common().
-> > > 
-> > > This fixes unwanted flooding of packets due to unknown unicast
-> > > during DA lookup, as well as issues with heterogenous MTU settings.
-> > > 
-> > > Fixes: 7f54cc9772ce ("net: dsa: mt7530: split-off common parts from mt7531_setup")
-> > 
-> > The commit 7f54cc9772ce ("net: dsa: mt7530: split-off common parts from
-> > mt7531_setup") is only present since v6.4 so backport to 5.15 and 6.1
-> > doesn't make sense
+> I have a question regarding the patchset this patch belongs to.
 > 
-> I should have actually checked and only now noticed that 7f54cc9772ce
-> ("net: dsa: mt7530: split-off common parts from mt7531_setup") has been
-> picked to stable kernels down to Linux 5.15.
+> I saw the recent netdev thread
+> https://lore.kernel.org/stable/6fa68b02-cf82-aeca-56e6-e3b8565b22f4@applied-asynchrony.com/
+> and noticed that for the patchset
+> https://lore.kernel.org/all/174410343500.1831514.15019771038334698036.git-patchwork-notify@kernel.org/
+> only patch 06/11 "codel: remove sch->q.qlen check before
+> qdisc_tree_reduce_backlog()" was pulled into 6.6, 6.1, 6.12, 6.13, 6.14
+> stable. This was to fix a UAF vulnerability.
 > 
-> However, the bug only affects MMIO variants of the switch which are
-> supported since commit 110c18bfed414 ("net: dsa: mt7530: introduce
-> driver for MT7988 built-in switch"), and that is present only since
-> Linux 6.6.
+> In this case for the 5.15 release (and 5.10 and 5.4), the rest of the set
+> is once again excluded. I'm not familiar with the process of pulling kernel
+> patches so I may be missing something - is excluding the rest of the
+> patchset intentional?
 > 
-> Sorry about the confusion, I should have probably chosen that commit in
-> the Fixes: tag despite the original mistake was introduced in commit
-> 7f54cc9772ce ("net: dsa: mt7530: split-off common parts from
-> mt7531_setup").
+> >From my understanding, this patch depends on the previous patches to work.
+> Without patches 01-05 which make various classful qdiscs' qlen_notify()
+> idempotent, if an fq_codel's dequeue() routine empties the fq_codel qdisc,
+> it will be doubly deactivated - first in the parent qlen_notify and then
+> again in the parent dequeue. For instance, in the case of parent drr,
+> the double deactivation will either cause a fault on an invalid address,
+> or trigger a splat if list checks are compiled into the kernel. This is
+> also why the original unpatched code included the qlen check in the first
+> place.
 > 
+> I think that the rest of the patchset should be pulled as well, for all
+> releases.
 
-Thanks for the info, I've dropped this from the 5.15.y and 6.1.y queues
-now.
+Can you submit that whole series then?  I've dropped this single patch
+from all of the other queues for now.
+
+thanks,
 
 greg k-h
