@@ -1,51 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD1C126BFF;
-	Thu,  1 May 2025 06:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6FA126BFF;
+	Thu,  1 May 2025 06:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746081647; cv=none; b=Cilq951S8+8B5msBrpV+P0t2Yd3BE+DpfsWKIZWP737SYu8hEh32gYMDT5hoPIQXVvIrzuqvDERC1MLotTE9dNQicVxfvdfP2iHAwimntcS/FI9ifo5LkODTjQrIxV5CHcdooJ+6f9/2UqXTOfn/RexGoGYow5tjLIsYpG7zuAA=
+	t=1746081667; cv=none; b=rn1EhwLy/xCjGPJz3W9YMe08VL3HJa7g0KfvL5I3QITIi/cUSf6RFBaGXpo6qMMUbiT07MiEn8+hFsAEBKvx38C9uSdVVCsaubAsYB9nBPBNCBoHCSjF6CyoJ4kGVLolO2V9TmTP/bKWAWUtY6swzDWIWtFhdAO/Z32Zujy2ucw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746081647; c=relaxed/simple;
-	bh=VO9EA4oDMPzK6+/Ev6nI9duNORDsGXRBZzqoFHsegrA=;
+	s=arc-20240116; t=1746081667; c=relaxed/simple;
+	bh=W48JYejqADIDKPUsukk17y5qY0ej1+aFr6DyKQKoSqQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YGE4h/46AO8IQabDFJ34Y/Apba639vzdHkbb6sB8mJUfPBo3NPg+nsNpOJ/hqUC5bH/rWQ1wq4ocPapIaTH9l+gJKRw/xxZlCSS9AUa8zFZJnlUqbCI309W1/qCl59cMX3Ce3xSYmbEtUs4bbpEMz2uY5aW5Tp8by4iaCWfhHds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J79lP5ZS; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=XCgjBJo5W0G1e1rb/9maCSLiKyJrwFjua8prvCWLAABTQ9QpYSaCwbEassvShEO875y6701wqxc5RXjUrXNPSNFTiePdk9YgsUvoJVyAkaUVHlsVmnjuRbTewQmipkWhImj71IuZpTMVhu66JKM3bgjTKD1i7wqnpulwnLynmv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2lgxZ3CQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J79lP5ZS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86688C4CEE3;
-	Thu,  1 May 2025 06:40:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lgxZ3CQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5013C4CEE3;
+	Thu,  1 May 2025 06:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746081646;
-	bh=VO9EA4oDMPzK6+/Ev6nI9duNORDsGXRBZzqoFHsegrA=;
+	s=korg; t=1746081666;
+	bh=W48JYejqADIDKPUsukk17y5qY0ej1+aFr6DyKQKoSqQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=J79lP5ZSvJaBWWQQg/NVltRCl9QpolSXBqN4iBB4KEuY31S0FoLh5fXs9xfTDDvRn
-	 363WFsE8D0Ue67M+Pr8tF+Cg0Fs2ju+cP50Aou9widecEfsDzaNlP6FE6t7n+Phx/C
-	 jc6m+Is5RL0a8FwNu/yT3NAT/oTfQpkTeeCj3Y10=
-Date: Thu, 1 May 2025 08:40:43 +0200
+	b=2lgxZ3CQ/TybZEKo6K4vhrEt2fJryZ7lJEshNb7Q80x5dWe3hSN22VUEC73kiYs/W
+	 wWxDeoG6ZUvLk9G4HILRHfz4QWpnyVlQ3Jl0a4msdsSpMgP1l39G1WamD9LYqZBTVC
+	 PbKPZRhgGwnms6R240gS1AObWDihTOpJqoMzonhQ=
+Date: Thu, 1 May 2025 08:41:03 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Niklas Schnelle <schnelle@linux.ibm.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Halil Pasic <pasic@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 039/167] s390/pci: Support mmap() of PCI resources
- except for ISM devices
-Message-ID: <2025050136-doing-childhood-f3e7@gregkh>
+Subject: Re: [PATCH 6.1 038/167] s390/pci: Report PCI error recovery results
+ via SCLP
+Message-ID: <2025050146-gush-registry-e02c@gregkh>
 References: <20250429161051.743239894@linuxfoundation.org>
- <20250429161053.337884386@linuxfoundation.org>
- <fd60973b1901ad1604e163e4bb3bd188879288fa.camel@linux.ibm.com>
+ <20250429161053.295203006@linuxfoundation.org>
+ <b2609f9018e9a9897233ee71be19ac64d6408e07.camel@linux.ibm.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <fd60973b1901ad1604e163e4bb3bd188879288fa.camel@linux.ibm.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b2609f9018e9a9897233ee71be19ac64d6408e07.camel@linux.ibm.com>
 
-On Wed, Apr 30, 2025 at 05:36:12PM +0200, Niklas Schnelle wrote:
+On Wed, Apr 30, 2025 at 05:33:46PM +0200, Niklas Schnelle wrote:
 > On Tue, 2025-04-29 at 18:42 +0200, Greg Kroah-Hartman wrote:
 > > 6.1-stable review patch.  If anyone has any objections, please let me know.
 > > 
@@ -53,128 +55,87 @@ On Wed, Apr 30, 2025 at 05:36:12PM +0200, Niklas Schnelle wrote:
 > > 
 > > From: Niklas Schnelle <schnelle@linux.ibm.com>
 > > 
-> > [ Upstream commit aa9f168d55dc47c0de564f7dfe0e90467c9fee71 ]
+> > [ Upstream commit 4ec6054e7321dc24ebccaa08b3af0d590f5666e6 ]
 > > 
-> > So far s390 does not allow mmap() of PCI resources to user-space via the
-> > usual mechanisms, though it does use it for RDMA. For the PCI sysfs
-> > resource files and /proc/bus/pci it defines neither HAVE_PCI_MMAP nor
-> > ARCH_GENERIC_PCI_MMAP_RESOURCE. For vfio-pci s390 previously relied on
-> > disabled VFIO_PCI_MMAP and now relies on setting pdev->non_mappable_bars
-> > for all devices.
+> > Add a mechanism with which the status of PCI error recovery runs
+> > is reported to the platform. Together with the status supply additional
+> > information that may aid in problem determination.
 > > 
-> > This is partly because access to mapped PCI resources from user-space
-> > requires special PCI load/store memory-I/O (MIO) instructions, or the
-> > special MMIO syscalls when these are not available. Still, such access is
-> > possible and useful not just for RDMA, in fact not being able to mmap() PCI
-> > resources has previously caused extra work when testing devices.
-> > 
-> > One thing that doesn't work with PCI resources mapped to user-space though
-> > is the s390 specific virtual ISM device. Not only because the BAR size of
-> > 256 TiB prevents mapping the whole BAR but also because access requires use
-> > of the legacy PCI instructions which are not accessible to user-space on
-> > systems with the newer MIO PCI instructions.
-> > 
-> > Now with the pdev->non_mappable_bars flag ISM can be excluded from mapping
-> > its resources while making this functionality available for all other PCI
-> > devices. To this end introduce a minimal implementation of PCI_QUIRKS and
-> > use that to set pdev->non_mappable_bars for ISM devices only. Then also set
-> > ARCH_GENERIC_PCI_MMAP_RESOURCE to take advantage of the generic
-> > implementation of pci_mmap_resource_range() enabling only the newer sysfs
-> > mmap() interface. This follows the recommendation in
-> > Documentation/PCI/sysfs-pci.rst.
-> > 
-> > Link: https://lore.kernel.org/r/20250226-vfio_pci_mmap-v7-3-c5c0f1d26efd@linux.ibm.com
+> > Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
 > > Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-> > Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+> > Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+> > Stable-dep-of: aa9f168d55dc ("s390/pci: Support mmap() of PCI resources except for ISM devices")
 > > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > > ---
-> >  arch/s390/Kconfig           |  4 +---
-> >  arch/s390/include/asm/pci.h |  3 +++
-> >  arch/s390/pci/Makefile      |  2 +-
-> >  arch/s390/pci/pci_fixup.c   | 23 +++++++++++++++++++++++
-> >  drivers/s390/net/ism_drv.c  |  1 -
-> >  include/linux/pci_ids.h     |  1 +
-> >  6 files changed, 29 insertions(+), 5 deletions(-)
-> >  create mode 100644 arch/s390/pci/pci_fixup.c
+> >  arch/s390/include/asm/sclp.h |  33 +++++++++++
+> >  arch/s390/pci/Makefile       |   2 +-
+> >  arch/s390/pci/pci_event.c    |  21 +++++--
+> >  arch/s390/pci/pci_report.c   | 111 +++++++++++++++++++++++++++++++++++
+> >  arch/s390/pci/pci_report.h   |  16 +++++
+> >  drivers/s390/char/sclp.h     |  14 -----
+> >  drivers/s390/char/sclp_pci.c |  19 ------
+> >  7 files changed, 178 insertions(+), 38 deletions(-)
+> >  create mode 100644 arch/s390/pci/pci_report.c
+> >  create mode 100644 arch/s390/pci/pci_report.h
 > > 
-> > diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
-> > index de575af02ffea..50a4a878bae6d 100644
-> > --- a/arch/s390/Kconfig
-> > +++ b/arch/s390/Kconfig
-> > @@ -38,9 +38,6 @@ config AUDIT_ARCH
-> >  config NO_IOPORT_MAP
-> >  	def_bool y
-> >  
-> > -config PCI_QUIRKS
-> > -	def_bool n
-> > -
-> >  config ARCH_SUPPORTS_UPROBES
-> >  	def_bool y
-> >  
-> > @@ -213,6 +210,7 @@ config S390
-> >  	select PCI_DOMAINS		if PCI
-> >  	select PCI_MSI			if PCI
-> >  	select PCI_MSI_ARCH_FALLBACKS	if PCI_MSI
-> > +	select PCI_QUIRKS		if PCI
-> >  	select SPARSE_IRQ
-> >  	select SWIOTLB
-> >  	select SYSCTL_EXCEPTION_TRACE
-> > diff --git a/arch/s390/include/asm/pci.h b/arch/s390/include/asm/pci.h
-> > index 108e732d7b140..a4e9a6ecbd437 100644
-> > --- a/arch/s390/include/asm/pci.h
-> > +++ b/arch/s390/include/asm/pci.h
-> > @@ -11,6 +11,9 @@
-> >  #include <asm/pci_insn.h>
-> >  #include <asm/sclp.h>
-> >  
-> > +#define ARCH_GENERIC_PCI_MMAP_RESOURCE	1
-> > +#define arch_can_pci_mmap_wc()		1
-> > +
-> >  #define PCIBIOS_MIN_IO		0x1000
-> >  #define PCIBIOS_MIN_MEM		0x10000000
-> >  
-> > diff --git a/arch/s390/pci/Makefile b/arch/s390/pci/Makefile
-> > index eeef68901a15c..2f8dd3f688391 100644
-> > --- a/arch/s390/pci/Makefile
-> > +++ b/arch/s390/pci/Makefile
-> > @@ -5,5 +5,5 @@
-> >  
-> >  obj-$(CONFIG_PCI)	+= pci.o pci_irq.o pci_dma.o pci_clp.o pci_sysfs.o \
-> >  			   pci_event.o pci_debug.o pci_insn.o pci_mmio.o \
-> > -			   pci_bus.o pci_kvm_hook.o pci_report.o
-> > +			   pci_bus.o pci_kvm_hook.o pci_report.o pci_fixup.o
-> >  obj-$(CONFIG_PCI_IOV)	+= pci_iov.o
-> > diff --git a/arch/s390/pci/pci_fixup.c b/arch/s390/pci/pci_fixup.c
+> > diff --git a/arch/s390/include/asm/sclp.h b/arch/s390/include/asm/sclp.h
+> > index 9d4c7f71e070f..e64dac00e7bf7 100644
+> > --- a/arch/s390/include/asm/sclp.h
+> > +++ b/arch/s390/include/asm/sclp.h
+> > 
+> --- snip ---
+> > diff --git a/arch/s390/pci/pci_report.c b/arch/s390/pci/pci_report.c
 > > new file mode 100644
-> > index 0000000000000..35688b6450983
+> > index 0000000000000..2754c9c161f5b
 > > --- /dev/null
-> > +++ b/arch/s390/pci/pci_fixup.c
-> > @@ -0,0 +1,23 @@
+> > +++ b/arch/s390/pci/pci_report.c
+> > @@ -0,0 +1,111 @@
 > > +// SPDX-License-Identifier: GPL-2.0
 > > +/*
-> > + * Exceptions for specific devices,
-> > + *
-> > + * Copyright IBM Corp. 2025
+> > + * Copyright IBM Corp. 2024
 > > + *
 > > + * Author(s):
 > > + *   Niklas Schnelle <schnelle@linux.ibm.com>
+> > + *
 > > + */
-> > +#include <linux/pci.h>
 > > +
-> > +static void zpci_ism_bar_no_mmap(struct pci_dev *pdev)
-> > +{
-> > +	/*
-> > +	 * ISM's BAR is special. Drivers written for ISM know
-> > +	 * how to handle this but others need to be aware of their
-> > +	 * special nature e.g. to prevent attempts to mmap() it.
-> > +	 */
-> > +	pdev->non_mappable_bars = 1;
-> > +}
+> > +#define KMSG_COMPONENT "zpci"
+> > +#define pr_fmt(fmt) KMSG_COMPONENT ": " fmt
+> > +
+> > +#include <linux/kernel.h>
+> > +#include <linux/sprintf.h>
+> > 
 > 
-> As already noted by others and for other versions the above will cause
-> a build error without also pulling in commit 888bd8322dfc ("s390/pci:
-> Introduce pdev->non_mappable_bars and replace VFIO_PCI_MMAP")
+> This seems to cause a compile error due to missing linux/sprintf.h,
+> not sure if that is a good target for a backport? I also don't remember
+> running into this during my backports for the enterprise distributions
+> so maybe they have that backported.
+> 
+> Also, this was pulled in as a dependency for commit aa9f168d55dc
+> ("s390/pci: Support mmap() of PCI resources except for ISM devices")
+> but I'm not sure why that would depend on this? The only thing I can
+> think of is the Makefile change to add pci_fixup.c also having
+> pci_report.c in it.
+> 
+> For context I did backports for this for RHEL 10.0, and RHEL 9.6 and it
+> was also backported for Ubuntu 25.04 and SLES 16 SP 0. That was for a
+> larger series of improving debug information gathering though not as
+> dependencies. There I included the following upstream commits:
+> 
+> 897614f90f7c ("s390/debug: Pass in and enforce output buffer size for format handlers")
+> 4c41a48f5f3e ("s390/pci: Add pci_msg debug view to PCI report")
+> dc18c81a57e7 ("s390/debug: Add a reverse mode for debug_dump()")
+> 5f952dae48d0 ("s390/debug: Add debug_dump() to write debug view to a string buffer")
+> 460c52a57f83 ("s390/debug: Split private data alloc/free out of file operations")
+> 7832b3047d10 ("s390/debug: Simplify and document debug_next_entry() logic")
+> 4ec6054e7321 ("s390/pci: Report PCI error recovery results via SCLP")
+> 
+> 
+> Not sure what the stable policy is on such stuff and if staying in sync
+> with the above mentioned distributions for s390 is desirable and/or
+> worth the effort.
 
-Now dropped, thanks.
+I've dropped all of the offending s390 patches from the queues now,
+thanks.
 
 greg k-h
