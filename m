@@ -1,53 +1,80 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 745BA22576A;
-	Wed, 30 Apr 2025 23:32:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C14520EB;
+	Thu,  1 May 2025 00:20:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746055942; cv=none; b=uFizHAE0MaHPGZD0Td4CpPezbuC2lwspyHRr4V2kSKG7+4ZiLWnTZ1xMuVWxeMJ9EIVKBEEupAGPGPVXhFyBiUQf6p42tGPuUSUVq4RITJ6eJA2wAa/JA7ccNd0DGXRYOIZUZq35OLeK+YpR5KibgdOVImk+raagxy9hF8/gkOE=
+	t=1746058805; cv=none; b=ZVUnPARAYOzTWmZhjdIv3FSgcdR3lbeHVex1vqC4JYV40+PPNxiPLxzgSHVoTI5oF55Fj59Y3RmpXSjVUFaSJqIQecoeVuGgsQ6seLWNfmBhBwrR3WACPSqzdUfSiZ78mq3ZNhrGuWsGiDOL6c2LOR/VD26ZN4X9qSyZD+CZzm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746055942; c=relaxed/simple;
-	bh=injRZ9eFv1pQlB4XTtV4bwLucOJq7jcy48IS30S1PN4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KgMpdk3SQneVSwHVifizXZMuzOXShsxNgvEg+3k2Ag8Ne4ikyTdsC6jKtq7Rs5a34jWXDVsKAtoSk7vNdBAv5E532DACGsas6Ohprg3Phab5e2kUlRzBFcQwyO5TeSRwUFyA6zQ/CrN9KjzdhuhdX6jTCyx97TjoPkEVAOZFvlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jIzTjYsF; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1746058805; c=relaxed/simple;
+	bh=/46Q97vcy/33zGgkHbh7iEVragIn3KetTP89aed2zxg=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=cs+kTPYfaObeVN+jy2g71duOJheQ+RbzYLHmesUJvfNaq/ei2I441Vsud0eGPaaZWWsr/RfmKVD2C0FIA49QeurU4vHxJrTlcrBlaihXHxzE/DqdVQImyj1ko/MvM/2dsAgcNBvAoHdWcsR1my6zmMMywm24Dmb0mJlKzxgWFU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=none smtp.mailfrom=linux-m68k.org; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QFHocaF2; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux-m68k.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jIzTjYsF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACAD0C4CEE7;
-	Wed, 30 Apr 2025 23:32:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746055941;
-	bh=injRZ9eFv1pQlB4XTtV4bwLucOJq7jcy48IS30S1PN4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jIzTjYsFTFwiwRq3tj7yguqrHRe0TbnVzePwStGnaGhUKS6nUd7TqBQ10jr+2jhe2
-	 neo9h6UBYhG2zD3AKVhHK9X7x9hqwgTQGFgUD7AkT00FkxYP3RE6c/sAO2jfFEDEUJ
-	 rjiylF2zs2vkmsALcnTpUvKuWvymy471JQ5zS+yfQCYxS0sOogEza44RfhdjIq8W6M
-	 5lpr0Y5JWS8gy9EV8AulHk8dddIciPhJ8yXKguc2jb5DefDhVLBZh7/sD/wuFAm5Pk
-	 aQ2FOToLP19T6JIZjCofYoWGS59sGBPL/f4Sm9xD7C6+5OuqWuyqsS/185Krzi159A
-	 tpVP1UwtIbWMA==
-Date: Wed, 30 Apr 2025 16:32:14 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org,
-	clang-built-linux <llvm@lists.linux.dev>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	linux-s390@vger.kernel.org, linux-mips@vger.kernel.org,
-	io-uring@vger.kernel.org, virtualization@lists.linux.dev
-Subject: Re: [PATCH 6.1 000/167] 6.1.136-rc1 review
-Message-ID: <20250430233214.GC3715926@ax162>
-References: <20250429161051.743239894@linuxfoundation.org>
- <CA+G9fYuNjKcxFKS_MKPRuga32XbndkLGcY-PVuoSwzv6VWbY=w@mail.gmail.com>
- <2025043049-banked-doorpost-5e06@gregkh>
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QFHocaF2"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 07275114025A;
+	Wed, 30 Apr 2025 20:20:02 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Wed, 30 Apr 2025 20:20:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746058801; x=1746145201; bh=/5EPHsjwidgwd+da4u+ZT6nCp9gLDKf6842
+	v7sb19qk=; b=QFHocaF2YzTUp7w8H07S+Ot/pOK5t/iD4XNDlcpz7upNRheve34
+	qsvSA/cMtvH9Uc0U+Ub0Uizor9H/TCPj9kHX18tfi7lDoBIH2Vn7xtxFPRX7NDhD
+	cXn8UkfeJN+0SkbFpRxnoWOQ8RR2Hhc/SoCkSmMQPchB/B7gKJEzjpq+guLI5INm
+	cAusnVzyFl2Q7Qv+3tk58eqEcSM3GbZPprklMUZ2UNm5cLlkOXV9mPqPFC2QB5sE
+	c/HBCdawobTFOPGCs2IL/B34eBnFBtFgkI8YceUStnTng1ddldfu0D7A5clsMDS4
+	mupdjjm9vqxdVzgUceMJIZlKG6VYBcc9SEg==
+X-ME-Sender: <xms:Mb4SaK25KeIILb10NEoqYQ2Zq1haCIRBp1_E9Z8PPQgiEy0_G524MQ>
+    <xme:Mb4SaNGYB0LWmvj1_0TJMzAJi5YMW_aC7GSesJGK5htce1emFbAfFXPeg5QuwBKxh
+    sudtvS6-jZ_jAmLh0M>
+X-ME-Received: <xmr:Mb4SaC4vlAZQnPsUWPhHOGEGnHck5LI9fWajqQiQwdAC2stBelLZSZvCGFega7YHSQLvasq_x0Jh23PddUrgRo_qoGLhPKk8FOw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieekuddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevufgjkfhfgggtsehttdertddttddv
+    necuhfhrohhmpefhihhnnhcuvfhhrghinhcuoehfthhhrghinheslhhinhhugidqmheike
+    hkrdhorhhgqeenucggtffrrghtthgvrhhnpeelueehleehkefgueevtdevteejkefhffek
+    feffffdtgfejveekgeefvdeuheeuleenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehfthhhrghinheslhhinhhugidqmheikehkrdhorhhgpdhn
+    sggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehonhgvuh
+    hkuhhmsehsuhhsvgdrtghomhdprhgtphhtthhopehnrghthhgrnheskhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtoheprghlihgrkhgtseifvggsrdguvgdprhgtphhtthhopehlvghnvg
+    hhrghnsehtfihisggslhgvrdhorhhgpdhrtghpthhtohepmhgrrhhtihhnrdhpvghtvghr
+    shgvnhesohhrrggtlhgvrdgtohhmpdhrtghpthhtoheptgholhhinhdrihdrkhhinhhgse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtoheplhhinhhugidqshgtshhisehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtoheplhhlvhhmsehlihhsthhsrdhlihhnuhigrdguvg
+    hvpdhrtghpthhtohepphgrthgthhgvsheslhhishhtshdrlhhinhhugidruggvvh
+X-ME-Proxy: <xmx:Mb4SaL3WxpZT9vEmf1ngsv79rVHsOy1cQljiU41H-d0kmFlDYJK3kQ>
+    <xmx:Mb4SaNEAF_CR6Cjj4MdnC8H_yph85c4BoHM1427ZwNZROM21gG2t0A>
+    <xmx:Mb4SaE-7GWSiKZ1wAtgp5Qh6fpwpxaef9Uonlcth5yFPQVjPCpC3Mg>
+    <xmx:Mb4SaClMr15tHggT73n8zeDmbqM_mkWU77OGIH2-0lvQHf9Lh6cQjQ>
+    <xmx:Mb4SaKba0hnM9KLESdBdag9QDJGk3eJRk91zeLQcGykzQwPMIDHl0z6s>
+Feedback-ID: i58a146ae:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 30 Apr 2025 20:19:58 -0400 (EDT)
+Date: Thu, 1 May 2025 10:20:05 +1000 (AEST)
+From: Finn Thain <fthain@linux-m68k.org>
+To: Oliver Neukum <oneukum@suse.com>
+cc: Nathan Chancellor <nathan@kernel.org>, Ali Akcaagac <aliakc@web.de>, 
+    Jamie Lenehan <lenehan@twibble.org>, 
+    "Martin K. Petersen" <martin.petersen@oracle.com>, 
+    Colin Ian King <colin.i.king@gmail.com>, linux-scsi@vger.kernel.org, 
+    llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH] scsi: dc395x: Remove leftover if statement in
+ reselect()
+In-Reply-To: <06495223-342d-4759-995f-f62234fb1020@suse.com>
+Message-ID: <f0842307-a0e9-6e50-e6be-b25e38ca7120@linux-m68k.org>
+References: <20250429-scsi-dc395x-fix-uninit-var-v1-1-25215d481020@kernel.org> <91ba6cf2-ca95-1ebe-837f-ecc89f547ea2@linux-m68k.org> <41bc286e-6e6b-4ae8-ad6a-3bdf56cd172b@suse.com> <bd660f83-434a-85dc-0037-7830f58acd6f@linux-m68k.org>
+ <06495223-342d-4759-995f-f62234fb1020@suse.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,70 +82,30 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2025043049-banked-doorpost-5e06@gregkh>
 
-On Wed, Apr 30, 2025 at 12:58:13PM +0200, Greg Kroah-Hartman wrote:
-> On Wed, Apr 30, 2025 at 04:09:18PM +0530, Naresh Kamboju wrote:
-> > Regressions on x86_64 with defconfig builds with clang-nightly toolchain
-> > on the stable-rc 6.1.136-rc1.
 
-clang-nightly is always a moving target so for the sake of the stable
--rc reports, I would only focus on issues that appear with just those
-patches, as you should see this issue on 6.1.136.
+On Wed, 30 Apr 2025, Oliver Neukum wrote:
 
-> > * x86_64, build
-> >   - clang-nightly-lkftconfig
-> >   - clang-nightly-x86_64_defconfig
-> > 
-> > Regression Analysis:
-> >  - New regression? Yes
-> >  - Reproducibility? Yes
-> > 
-> > Build regression: x86_64 clang-nightly net ip.h error default
-> > initialization of an object of type 'typeof (rt->dst.expires)'
-> > 
-> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> > 
-> > ## Build error x86_64
-> > include/net/ip.h:462:14: error: default initialization of an object of
-> > type 'typeof (rt->dst.expires)' (aka 'const unsigned long') leaves the
-> > object uninitialized and is incompatible with C++
-> > [-Werror,-Wdefault-const-init-unsafe]
-> >   462 |                 if (mtu && time_before(jiffies, rt->dst.expires))
-> >       |                            ^
+> On 30.04.25 11:43, Finn Thain wrote:
 > 
-> This isn't c++, so are you sure this isn't just a clang bug?
+> >> yes, I was unsure about terminology used for code that is by default not
+> >> compiled, but would not compile if the attempt is made to compile it.
+> >>
+> > 
+> > Yes, I realize that you were referring to the intention as "cleanup" and
+> > not the actual patch that got merged.
+> > 
+> > I'm afraid my message was poorly expressed. I don't have a problem with
+> > your fix. I was only interested in the general case.
+> 
+> Well, in general I think such code is problematic. In general I think we 
+> should use dynamic debugging statements. The issue seems to be of 
+> terminology. However, we can hope that this will go away and become 
+> moot.
+> 
 
-Yes, it is intentional that this warns for C code, the clang maintainer
-felt that the default initialization behavior of const variables not
-marked as static or thread local was worth warning about by default.
+I think you're saying that the general problem is the style of the 
+debugging code that everyone disables. I'm afraid I don't see it that way.
 
-https://github.com/llvm/llvm-project/pull/137166
-
-But it is going to be adjusted to allow the kernel to opt-out of the
-warning for aggregate members, as that triggers often in the kernel:
-
-https://github.com/llvm/llvm-project/pull/137961
-
-The only instance of -Wdefault-const-init-var-unsafe that I have found
-so far is in typecheck(), which should be easy enough to clean up.
-
-Cheers,
-Nathan
-
-diff --git a/include/linux/typecheck.h b/include/linux/typecheck.h
-index 46b15e2aaefb..5b473c9905ae 100644
---- a/include/linux/typecheck.h
-+++ b/include/linux/typecheck.h
-@@ -7,8 +7,8 @@
-  * Always evaluates to 1 so you may use it easily in comparisons.
-  */
- #define typecheck(type,x) \
--({	type __dummy; \
--	typeof(x) __dummy2; \
-+({	type __dummy = {}; \
-+	typeof(x) __dummy2 = {}; \
- 	(void)(&__dummy == &__dummy2); \
- 	1; \
- })
+The general problem here is a bad cleanup masquerading as a fix that got 
+merged because of a missed opportunity for automated vetting.
