@@ -1,86 +1,80 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9BC422172C;
-	Thu,  1 May 2025 12:08:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23882B9BF;
+	Thu,  1 May 2025 16:53:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746101321; cv=none; b=psmgUwBlxLToDe+MF2Vh+wf5GaK/yycblWgXUqyIHhnPfLZqdS6Xr2O+Yzljvji667MxfnGUbkeEVz+ObBavOnngbwm1Mb7Vxylaitkm+cm1agCPuwgKSpfhHR3e4j4eYsBTknmkAk673uTrMLzTY99pWkDwTv1JjK3SiX+Tk60=
+	t=1746118387; cv=none; b=UhSFwyDeVsbxWPUTY1o2EXMhiH0mNWlVO2bPmfJe0WGgV3HL58cjxRNgKeb1SIPII/TBTdXoKjA8n9MLmn/4Dr1z+ahnQIiZt1gQDq5EHdlrDgczO6ZC9uAPs7/EhugfHhQnZybPxdKFk9y0haXCpqz0D04sRoRwg6DDFpSzRsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746101321; c=relaxed/simple;
-	bh=u2MmEqJy/SJZoUoRB2qEBCQqBQSZGn/luJwgJregaE4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NDXelrE4YdAPN9sBRdFJyto2YuZD9w1N5Q5hXoEZpVly9F90rsKoo+uQKlbkfDpu+g+cRFCPOpFUWIDfRELrk+kzzT94BN3E16xlcaDBoEaPyPzwxY9PvIpLsqIevKssKIzZxHKHEtbB9gB7UY5zqi79bwWAyfvtUskgBHdzUFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=in9IcdMp; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1746118387; c=relaxed/simple;
+	bh=+asoCr+kCdq2HXbDDlDIEGdHKQf3BuN2b1OJEx0twLU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AbVcKtEhrBBxRZ8ks6ZzkakHixnKIaNuOId4azxO3CXJkXcDXqxmLEscJlfT/3ceQSg5CWcxu4oOXuVyUcEidarzYtG+kC1aON6+XpIzsldk1Ky82pArjPAVb2dQzqv1gk/KTLyUlizDl56Cb2aQeXyeMVWLvWn1n2Fd038/g+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BRJ1j5XE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="in9IcdMp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE69CC4CEE3;
-	Thu,  1 May 2025 12:08:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746101320;
-	bh=u2MmEqJy/SJZoUoRB2qEBCQqBQSZGn/luJwgJregaE4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=in9IcdMpfhe1hDjD9Zf4yYrA/+389dvoDD6ReE7b/+uVxibs3RHTKfw5S3zRYS7X2
-	 d+aC2epahwAN5Z0dF2CVZOb1EBY0bRiyKG3tV400CONg0UHAnda0oSaKx/cxjOK+qi
-	 iZa21cIBUHzSfMQJOoZm/sKPeKGBnn2frIkUCM7M=
-Date: Thu, 1 May 2025 14:08:37 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jon Hunter <jonathanh@nvidia.com>
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
-	linux-tegra@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 5.15 000/368] 5.15.181-rc2 review
-Message-ID: <2025050129-pantyhose-stereo-569f@gregkh>
-References: <20250501081459.064070563@linuxfoundation.org>
- <76ee0569-5d39-4bb4-a3c2-f222ca17c0f7@rnnvmail203.nvidia.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BRJ1j5XE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCB2AC4CEE3;
+	Thu,  1 May 2025 16:53:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746118386;
+	bh=+asoCr+kCdq2HXbDDlDIEGdHKQf3BuN2b1OJEx0twLU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=BRJ1j5XEHsmvM/u/Ehjlv80WXSsdM2dKRQ7ARKTiltyMF/8fqXKj8Y2PtCKuptXhW
+	 I0xyWvKkPQhJPxmUSpseEFB8Nd454hGymPoiVns3YRAjtZUZd/Wy8ZFGLUKCA73dgp
+	 9+rBZVvMyPpIdzAFceozylFx+44QDKffOR3acOOe2rDceowjVVQAg5YfqtbomnAkS4
+	 xEU+1qcrj17vBv4YGN4fEDzIDmAOIjikXOotOFiQDScuTBO6sPbOO0Khe/3UEdRPu+
+	 LztvIn7jHXdnVa8daPU1J7dfTHDZNAfClcT46fuasy6OL9gdw658zmLxzQFZrGz+V/
+	 BlmL3KmhvO0dw==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: gregkh@linuxfoundation.org
+Cc: akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
+	patches@lists.linux.dev,
+	pavel@denx.de,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	srw@sladewatkins.net,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: Re: [PATCH 6.1 000/157] 6.1.136-rc2 review
+Date: Thu,  1 May 2025 18:52:49 +0200
+Message-ID: <20250501165249.1124969-1-ojeda@kernel.org>
+In-Reply-To: <20250501080849.930068482@linuxfoundation.org>
+References: <20250501080849.930068482@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <76ee0569-5d39-4bb4-a3c2-f222ca17c0f7@rnnvmail203.nvidia.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, May 01, 2025 at 04:07:27AM -0700, Jon Hunter wrote:
-> On Thu, 01 May 2025 10:18:10 +0200, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.15.181 release.
-> > There are 368 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Sat, 03 May 2025 08:13:53 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.181-rc2.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
-> 
-> All tests passing for Tegra ...
-> 
-> Test results for stable-v5.15:
->     10 builds:	10 pass, 0 fail
->     28 boots:	28 pass, 0 fail
->     101 tests:	101 pass, 0 fail
-> 
-> Linux version:	5.15.181-rc2-g85e697938eb0
-> Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
->                 tegra186-p3509-0000+p3636-0001, tegra194-p2972-0000,
->                 tegra194-p3509-0000+p3668-0000, tegra20-ventana,
->                 tegra210-p2371-2180, tegra210-p3450-0000,
->                 tegra30-cardhu-a04
-> 
-> Tested-by: Jon Hunter <jonathanh@nvidia.com>
+On Thu, 01 May 2025 10:14:15 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.136 release.
+> There are 157 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 03 May 2025 08:08:16 +0000.
+> Anything received after that time might be too late.
 
-Great, thanks for the quick turn-around!
+Boot-tested under QEMU for Rust x86_64:
+
+Tested-by: Miguel Ojeda <ojeda@kernel.org>
+
+Thanks!
+
+Cheers,
+Miguel
