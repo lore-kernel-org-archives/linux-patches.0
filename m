@@ -1,154 +1,1259 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325731E260D;
-	Fri,  2 May 2025 07:31:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3759A19DF66;
+	Fri,  2 May 2025 09:47:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746171080; cv=none; b=eB5mRRU5XKStozOmcI0hW4/bbeTdtS0Zx5DAKwv4DzdZlULZf+faVNSg/zkhvdpKYBSxhB4z7HYz0njSqoVhtrabGk0T+Sr1hx8TlW+dd1Al/9NmqTo9t1GJhkuGhaGbEyuOk6U0UBd92AyxTyLvS3Wn9FJXxxMbjQU6rWx1iGU=
+	t=1746179274; cv=none; b=cDyR84ba9c6cW23oLCvy5HuT78O5DKvkQs18Dk1dqKs1iIzZC+L7Tu5hOvlozj8xKCj1BGkumkREbjqNlvAwrX8ZFVVSEsrwsE3/Iw08qmPdPgfO8NnlO1WeLRxd7hEvnWDycmOfEpeAEXdwzsP6K4LIOq+c+30jELSINEV4qvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746171080; c=relaxed/simple;
-	bh=wtoQr0xWC7SiqYlR1iiTaHqZi3kSYO3Wq5NsfIXggRU=;
+	s=arc-20240116; t=1746179274; c=relaxed/simple;
+	bh=P5UCzUKv4/n0vlYFviJHuU1DmLeX/5NeD5upa3uzmcA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nOuM6VMPkNvpBSzAV39jI1DiKGYPETAguNVEZ+dCNtrTClNZgtsKxAdt3CwM09yMItkk9gnfNYlVzXBbZlRB4NrCzBHulXVh+MFpqsaFCinzaIr/TjLVQu+Gtety7bc4CrbO+yK1WNHNcs1fRU57UUxMGGUapEWXjHoCB6tQ3x8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ImJMIqFx; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=crOwrEV1RQM0bAbg5IH+Ce/tVOHFzWl7cFDMq/sp1tkYgGx4alpBjUgsXsd5uS1+4HWHi3wCfQpRGaOnsR3zW8pZi+u42i6Gc4bnL6t5qlBF1npoQO7vpmZbRJQ+Bq2vnL7lu4usm0yGq90XjbjHZ9+76e8B23pIDDmukp+l7Vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Sb2ckM/S; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ImJMIqFx"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-22435603572so20241515ad.1;
-        Fri, 02 May 2025 00:31:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746171077; x=1746775877; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WhyG+qPql1C6VOEStks/G335oAHhX6Klfc0SAJXR260=;
-        b=ImJMIqFxB6XXyj5SvhtkRy4WdTknlHmhnRNcLNLKaatE97G6SlROr/9ThSoRw8y3me
-         vODALKytw7Xts6pIyzW9sLdUPECkPtVQi214OXbHbKgNjkld7fvuUtgqdIwDvFR1lHlJ
-         fxcVSCXbqB8XmzJtRZ7XgEFbBnxNx7W8UuJkh0vjvIvsmgzpuAJTUeuC/QsQpLnqUIn0
-         0UXRwxCYcqHIX/li4UUurw9OhHn24QePEAfxRA66Gi6sUfOGRB6h6WfRyaQX0nkqV5dV
-         LVAD06JJrfazc/A31lEfB8dtYDMj8Ft1aXPt4NFciQROu1KUIDaE9i4UOLntAcjP1ZWh
-         tqzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746171077; x=1746775877;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WhyG+qPql1C6VOEStks/G335oAHhX6Klfc0SAJXR260=;
-        b=vI01HFVy9ONyhuwCICbA3h83G6W04StrZMc42ynU3KjBaC8nr4PGCxGUm/IR5QN2Vl
-         mukGUVPENNGepajIDeX1Xv5kywzAelwt5HkrCYlYSJ2kSgYa0va346Sb7pEJCoF4bGiD
-         jQoPn9OvhdJ9sfaXLSBIk8JnF9PKR6TrdnFN/uGV0Gditq5ox3+sADmYG2FYlwpEqkr4
-         qH5GDVa4D0r9N9R3rWvmPJfKcMydMl+i5SE2QjRIpGRNo9Uc2hy/wB9AebuNnDOtDgm9
-         iGznVL4dmg6H/r/s5ZTIPGH+s+3ClVbDZzZl8SDWnOeFWjP9xH1Y4j1LBea37Y0yDHCU
-         Tdlg==
-X-Forwarded-Encrypted: i=1; AJvYcCUn2mE3jo+ysPn/Jpz5YyuX910BRPKAa/PGZCqFtfIAQW7BDbLYl4dQ79NQMy11vzgt785q95mZlw==@lists.linux.dev, AJvYcCWa2jR8tvQ5pqbaFUrnNF8TfFE9oGDEI/mhlBkIv8AEpEAO35gJymVAynxgHBkwffTv8oV3SQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyvnj8Quu8pGHBsSpxMl1EsT22+5DkE7Z5mbwEWzon2vRWGplXr
-	ZEUPjBREjBTNcwJr5zuhBIDgX6moO2QzhvPVs08hE16fDD9CLZqK
-X-Gm-Gg: ASbGncto6iT+ejQ4vF1n/AfT5JmBeJXLPtIAJE7NrnRmfkHMJTB9XnYIiUw0TV61bgv
-	auz80ftliIoKoFHQUdmm64zSvZ4zMkxmSnXGKmrAcrl3L6GoiS+RCOh+gGR4uRdPJLkzQOtyJ7C
-	PP7ykMvsqz/p2BjhLiBXjFWbFaALkkdWXP5tchOgiXagWZ5mGvqlnSu943NBax5hsWfh3QHBu8q
-	jd6LUpD+Wpux5u7gwBDwIMEDaIjf6QAXdGWiw11RSvnmsPPeZV6njWVwbAjAMwFVXD7tgjnZPup
-	LlHni58xAw7vKTJDPnhucmLEdqIGJcgRAbESE3nG
-X-Google-Smtp-Source: AGHT+IH52a6BgPoPUu5N1D3Rb40EG6pjnTkV9nhRgxYGSZyv07U3fjSm8A6SXkBygATuXX2l4VA+sQ==
-X-Received: by 2002:a17:903:2f91:b0:224:191d:8a87 with SMTP id d9443c01a7336-22e1034418bmr27532815ad.26.1746171077036;
-        Fri, 02 May 2025 00:31:17 -0700 (PDT)
-Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22e1522f7c8sm937775ad.228.2025.05.02.00.31.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 May 2025 00:31:15 -0700 (PDT)
-Received: by archie.me (Postfix, from userid 1000)
-	id B8C52420A6AB; Fri, 02 May 2025 14:31:13 +0700 (WIB)
-Date: Fri, 2 May 2025 14:31:13 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: jgg@nvidia.com, kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
-	robin.murphy@arm.com, joro@8bytes.org, thierry.reding@gmail.com,
-	vdumpa@nvidia.com, jonathanh@nvidia.com, shuah@kernel.org,
-	jsnitsel@redhat.com, nathan@kernel.org, peterz@infradead.org,
-	yi.l.liu@intel.com, mshavit@google.com, praan@google.com,
-	zhangzekun11@huawei.com, iommu@lists.linux.dev,
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
-	linux-kselftest@vger.kernel.org, patches@lists.linux.dev,
-	mochs@nvidia.com, alok.a.tiwari@oracle.com, vasant.hegde@amd.com
-Subject: Re: [PATCH v3 16/23] Documentation: userspace-api: iommufd: Update
- vQUEUE
-Message-ID: <aBR0wWzQablOklyW@archie.me>
-References: <cover.1746139811.git.nicolinc@nvidia.com>
- <0beddeaaa4a8a7a45ce93ff21c543ae58be64908.1746139811.git.nicolinc@nvidia.com>
- <aBRA75V9l9WlI2Q3@archie.me>
- <aBRYVkOKfFGMb5Y+@Asurada-Nvidia>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Sb2ckM/S"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1746179271; x=1777715271;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=P5UCzUKv4/n0vlYFviJHuU1DmLeX/5NeD5upa3uzmcA=;
+  b=Sb2ckM/S3JGe7nvfYgSjpb2KKo81cgTNzBgVNcgqAv5kjZHYrHBjD62U
+   Pg+jS3VOfVsrIfxzzBh7kKJWQMwWgXIEWeWPNx5fx2yOlAftVB7DL2XGb
+   4XQ0eIgv+i5hKod4RYqQbxMn2YUqZmXyvJtdfUVlXL1SzqPXYawYc9z/0
+   Lmfxg06i1IPhXlz9SIWIsPlXKRZj5W//ud+w+gHfpD1GY2fCN0zkkNOv2
+   g6AjfTVEWOjPuiLdTHClYYmIdhTgnlglx9iq2R7inweCs0EbDrqNnRizq
+   U5pLHbHtOxliaptcztX6Gdca7H02bJd5M5cUcNS9XVE/D4Xd56vIjYHyI
+   A==;
+X-CSE-ConnectionGUID: JXj9HrcSQ1KnfB+CuC3kgQ==
+X-CSE-MsgGUID: LC7BHgAxRLKifJ8D6RIAfw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11420"; a="58527395"
+X-IronPort-AV: E=Sophos;i="6.15,256,1739865600"; 
+   d="scan'208";a="58527395"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 May 2025 02:47:50 -0700
+X-CSE-ConnectionGUID: Z0kay3TzT3e/uQiC9vR0Kg==
+X-CSE-MsgGUID: 0HqwONdjQgarRTfnniSxFA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,256,1739865600"; 
+   d="scan'208";a="139411714"
+Received: from lkp-server01.sh.intel.com (HELO 1992f890471c) ([10.239.97.150])
+  by fmviesa005.fm.intel.com with ESMTP; 02 May 2025 02:47:46 -0700
+Received: from kbuild by 1992f890471c with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1uAmzf-0004fJ-0c;
+	Fri, 02 May 2025 09:47:43 +0000
+Date: Fri, 2 May 2025 17:46:53 +0800
+From: kernel test robot <lkp@intel.com>
+To: Nathan Chancellor <nathan@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev,
+	Linux Memory Management List <linux-mm@kvack.org>,
+	Nicolas Schier <nicolas.schier@linux.dev>,
+	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>, linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev, stable@vger.kernel.org,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Marcus Seyfarth <m.seyfarth@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: Re: [PATCH 2/2] include/linux/typecheck.h: Zero initialize dummy
+ variables
+Message-ID: <202505021716.olmL8WzB-lkp@intel.com>
+References: <20250501-default-const-init-clang-v1-2-3d2c6c185dbb@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="vde97DQHR/3Yogi4"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aBRYVkOKfFGMb5Y+@Asurada-Nvidia>
+In-Reply-To: <20250501-default-const-init-clang-v1-2-3d2c6c185dbb@kernel.org>
+
+Hi Nathan,
+
+kernel test robot noticed the following build errors:
+
+[auto build test ERROR on ebd297a2affadb6f6f4d2e5d975c1eda18ac762d]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Nathan-Chancellor/kbuild-Disable-Wdefault-const-init-field-unsafe/20250502-070313
+base:   ebd297a2affadb6f6f4d2e5d975c1eda18ac762d
+patch link:    https://lore.kernel.org/r/20250501-default-const-init-clang-v1-2-3d2c6c185dbb%40kernel.org
+patch subject: [PATCH 2/2] include/linux/typecheck.h: Zero initialize dummy variables
+config: arc-randconfig-002-20250502 (https://download.01.org/0day-ci/archive/20250502/202505021716.olmL8WzB-lkp@intel.com/config)
+compiler: arc-linux-gcc (GCC) 12.4.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250502/202505021716.olmL8WzB-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202505021716.olmL8WzB-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   In file included from include/linux/preempt.h:11,
+                    from include/linux/sched.h:15,
+                    from arch/arc/kernel/asm-offsets.c:6:
+   include/linux/irqflags.h: In function 'class_irqsave_destructor':
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/cleanup.h:385:25: note: in definition of macro '__DEFINE_UNLOCK_GUARD'
+     385 |         if (_T->lock) { _unlock; }                                      \
+         |                         ^~~~~~~
+   include/linux/irqflags.h:266:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_0'
+     266 | DEFINE_LOCK_GUARD_0(irqsave,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:223:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     223 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:268:21: note: in expansion of macro 'local_irq_restore'
+     268 |                     local_irq_restore(_T->flags),
+         |                     ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/cleanup.h:385:25: note: in definition of macro '__DEFINE_UNLOCK_GUARD'
+     385 |         if (_T->lock) { _unlock; }                                      \
+         |                         ^~~~~~~
+   include/linux/irqflags.h:266:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_0'
+     266 | DEFINE_LOCK_GUARD_0(irqsave,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:223:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     223 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:268:21: note: in expansion of macro 'local_irq_restore'
+     268 |                     local_irq_restore(_T->flags),
+         |                     ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/cleanup.h:385:25: note: in definition of macro '__DEFINE_UNLOCK_GUARD'
+     385 |         if (_T->lock) { _unlock; }                                      \
+         |                         ^~~~~~~
+   include/linux/irqflags.h:266:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_0'
+     266 | DEFINE_LOCK_GUARD_0(irqsave,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:223:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     223 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:268:21: note: in expansion of macro 'local_irq_restore'
+     268 |                     local_irq_restore(_T->flags),
+         |                     ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/cleanup.h:385:25: note: in definition of macro '__DEFINE_UNLOCK_GUARD'
+     385 |         if (_T->lock) { _unlock; }                                      \
+         |                         ^~~~~~~
+   include/linux/irqflags.h:266:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_0'
+     266 | DEFINE_LOCK_GUARD_0(irqsave,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:223:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     223 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:268:21: note: in expansion of macro 'local_irq_restore'
+     268 |                     local_irq_restore(_T->flags),
+         |                     ^~~~~~~~~~~~~~~~~
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/cleanup.h:385:25: note: in definition of macro '__DEFINE_UNLOCK_GUARD'
+     385 |         if (_T->lock) { _unlock; }                                      \
+         |                         ^~~~~~~
+   include/linux/irqflags.h:266:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_0'
+     266 | DEFINE_LOCK_GUARD_0(irqsave,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:177:17: note: in expansion of macro 'typecheck'
+     177 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:225:17: note: in expansion of macro 'raw_local_irq_restore'
+     225 |                 raw_local_irq_restore(flags);           \
+         |                 ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:268:21: note: in expansion of macro 'local_irq_restore'
+     268 |                     local_irq_restore(_T->flags),
+         |                     ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/cleanup.h:385:25: note: in definition of macro '__DEFINE_UNLOCK_GUARD'
+     385 |         if (_T->lock) { _unlock; }                                      \
+         |                         ^~~~~~~
+   include/linux/irqflags.h:266:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_0'
+     266 | DEFINE_LOCK_GUARD_0(irqsave,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:177:17: note: in expansion of macro 'typecheck'
+     177 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:225:17: note: in expansion of macro 'raw_local_irq_restore'
+     225 |                 raw_local_irq_restore(flags);           \
+         |                 ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:268:21: note: in expansion of macro 'local_irq_restore'
+     268 |                     local_irq_restore(_T->flags),
+         |                     ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/cleanup.h:385:25: note: in definition of macro '__DEFINE_UNLOCK_GUARD'
+     385 |         if (_T->lock) { _unlock; }                                      \
+         |                         ^~~~~~~
+   include/linux/irqflags.h:266:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_0'
+     266 | DEFINE_LOCK_GUARD_0(irqsave,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:177:17: note: in expansion of macro 'typecheck'
+     177 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:225:17: note: in expansion of macro 'raw_local_irq_restore'
+     225 |                 raw_local_irq_restore(flags);           \
+         |                 ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:268:21: note: in expansion of macro 'local_irq_restore'
+     268 |                     local_irq_restore(_T->flags),
+         |                     ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/cleanup.h:385:25: note: in definition of macro '__DEFINE_UNLOCK_GUARD'
+     385 |         if (_T->lock) { _unlock; }                                      \
+         |                         ^~~~~~~
+   include/linux/irqflags.h:266:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_0'
+     266 | DEFINE_LOCK_GUARD_0(irqsave,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:177:17: note: in expansion of macro 'typecheck'
+     177 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:225:17: note: in expansion of macro 'raw_local_irq_restore'
+     225 |                 raw_local_irq_restore(flags);           \
+         |                 ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:268:21: note: in expansion of macro 'local_irq_restore'
+     268 |                     local_irq_restore(_T->flags),
+         |                     ^~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h: In function 'class_irqsave_constructor':
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/cleanup.h:403:9: note: in definition of macro '__DEFINE_LOCK_GUARD_0'
+     403 |         _lock;                                                          \
+         |         ^~~~~
+   include/linux/irqflags.h:266:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_0'
+     266 | DEFINE_LOCK_GUARD_0(irqsave,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:267:21: note: in expansion of macro 'local_irq_save'
+     267 |                     local_irq_save(_T->flags),
+         |                     ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/cleanup.h:403:9: note: in definition of macro '__DEFINE_LOCK_GUARD_0'
+     403 |         _lock;                                                          \
+         |         ^~~~~
+   include/linux/irqflags.h:266:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_0'
+     266 | DEFINE_LOCK_GUARD_0(irqsave,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:267:21: note: in expansion of macro 'local_irq_save'
+     267 |                     local_irq_save(_T->flags),
+         |                     ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/cleanup.h:403:9: note: in definition of macro '__DEFINE_LOCK_GUARD_0'
+     403 |         _lock;                                                          \
+         |         ^~~~~
+   include/linux/irqflags.h:266:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_0'
+     266 | DEFINE_LOCK_GUARD_0(irqsave,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:267:21: note: in expansion of macro 'local_irq_save'
+     267 |                     local_irq_save(_T->flags),
+         |                     ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/cleanup.h:403:9: note: in definition of macro '__DEFINE_LOCK_GUARD_0'
+     403 |         _lock;                                                          \
+         |         ^~~~~
+   include/linux/irqflags.h:266:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_0'
+     266 | DEFINE_LOCK_GUARD_0(irqsave,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:267:21: note: in expansion of macro 'local_irq_save'
+     267 |                     local_irq_save(_T->flags),
+         |                     ^~~~~~~~~~~~~~
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/cleanup.h:403:9: note: in definition of macro '__DEFINE_LOCK_GUARD_0'
+     403 |         _lock;                                                          \
+         |         ^~~~~
+   include/linux/irqflags.h:266:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_0'
+     266 | DEFINE_LOCK_GUARD_0(irqsave,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:217:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     217 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:267:21: note: in expansion of macro 'local_irq_save'
+     267 |                     local_irq_save(_T->flags),
+         |                     ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/cleanup.h:403:9: note: in definition of macro '__DEFINE_LOCK_GUARD_0'
+     403 |         _lock;                                                          \
+         |         ^~~~~
+   include/linux/irqflags.h:266:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_0'
+     266 | DEFINE_LOCK_GUARD_0(irqsave,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:217:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     217 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:267:21: note: in expansion of macro 'local_irq_save'
+     267 |                     local_irq_save(_T->flags),
+         |                     ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/cleanup.h:403:9: note: in definition of macro '__DEFINE_LOCK_GUARD_0'
+     403 |         _lock;                                                          \
+         |         ^~~~~
+   include/linux/irqflags.h:266:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_0'
+     266 | DEFINE_LOCK_GUARD_0(irqsave,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:217:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     217 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:267:21: note: in expansion of macro 'local_irq_save'
+     267 |                     local_irq_save(_T->flags),
+         |                     ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/cleanup.h:403:9: note: in definition of macro '__DEFINE_LOCK_GUARD_0'
+     403 |         _lock;                                                          \
+         |         ^~~~~
+   include/linux/irqflags.h:266:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_0'
+     266 | DEFINE_LOCK_GUARD_0(irqsave,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:217:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     217 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:267:21: note: in expansion of macro 'local_irq_save'
+     267 |                     local_irq_save(_T->flags),
+         |                     ^~~~~~~~~~~~~~
+   In file included from include/linux/bitops.h:7,
+                    from include/linux/thread_info.h:27,
+                    from include/linux/sched.h:14:
+   include/linux/spinlock_api_smp.h: In function '__raw_spin_lock_irqsave':
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/spinlock_api_smp.h:108:9: note: in expansion of macro 'local_irq_save'
+     108 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/spinlock_api_smp.h:108:9: note: in expansion of macro 'local_irq_save'
+     108 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/spinlock_api_smp.h:108:9: note: in expansion of macro 'local_irq_save'
+     108 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/spinlock_api_smp.h:108:9: note: in expansion of macro 'local_irq_save'
+     108 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:217:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     217 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock_api_smp.h:108:9: note: in expansion of macro 'local_irq_save'
+     108 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:217:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     217 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock_api_smp.h:108:9: note: in expansion of macro 'local_irq_save'
+     108 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:217:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     217 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock_api_smp.h:108:9: note: in expansion of macro 'local_irq_save'
+     108 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:217:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     217 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock_api_smp.h:108:9: note: in expansion of macro 'local_irq_save'
+     108 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/spinlock_api_smp.h: In function '__raw_spin_unlock_irqrestore':
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:223:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     223 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock_api_smp.h:151:9: note: in expansion of macro 'local_irq_restore'
+     151 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:223:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     223 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock_api_smp.h:151:9: note: in expansion of macro 'local_irq_restore'
+     151 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:223:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     223 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock_api_smp.h:151:9: note: in expansion of macro 'local_irq_restore'
+     151 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:223:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     223 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock_api_smp.h:151:9: note: in expansion of macro 'local_irq_restore'
+     151 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:177:17: note: in expansion of macro 'typecheck'
+     177 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:225:17: note: in expansion of macro 'raw_local_irq_restore'
+     225 |                 raw_local_irq_restore(flags);           \
+         |                 ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock_api_smp.h:151:9: note: in expansion of macro 'local_irq_restore'
+     151 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:177:17: note: in expansion of macro 'typecheck'
+     177 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:225:17: note: in expansion of macro 'raw_local_irq_restore'
+     225 |                 raw_local_irq_restore(flags);           \
+         |                 ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock_api_smp.h:151:9: note: in expansion of macro 'local_irq_restore'
+     151 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:177:17: note: in expansion of macro 'typecheck'
+     177 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:225:17: note: in expansion of macro 'raw_local_irq_restore'
+     225 |                 raw_local_irq_restore(flags);           \
+         |                 ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock_api_smp.h:151:9: note: in expansion of macro 'local_irq_restore'
+     151 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:177:17: note: in expansion of macro 'typecheck'
+     177 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:225:17: note: in expansion of macro 'raw_local_irq_restore'
+     225 |                 raw_local_irq_restore(flags);           \
+         |                 ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock_api_smp.h:151:9: note: in expansion of macro 'local_irq_restore'
+     151 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h: In function '__raw_read_lock_irqsave':
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:158:9: note: in expansion of macro 'local_irq_save'
+     158 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:158:9: note: in expansion of macro 'local_irq_save'
+     158 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:158:9: note: in expansion of macro 'local_irq_save'
+     158 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:158:9: note: in expansion of macro 'local_irq_save'
+     158 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:217:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     217 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:158:9: note: in expansion of macro 'local_irq_save'
+     158 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:217:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     217 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:158:9: note: in expansion of macro 'local_irq_save'
+     158 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:217:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     217 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:158:9: note: in expansion of macro 'local_irq_save'
+     158 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:217:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     217 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:158:9: note: in expansion of macro 'local_irq_save'
+     158 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h: In function '__raw_write_lock_irqsave':
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:184:9: note: in expansion of macro 'local_irq_save'
+     184 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:184:9: note: in expansion of macro 'local_irq_save'
+     184 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:184:9: note: in expansion of macro 'local_irq_save'
+     184 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:184:9: note: in expansion of macro 'local_irq_save'
+     184 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:217:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     217 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:184:9: note: in expansion of macro 'local_irq_save'
+     184 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:217:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     217 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:184:9: note: in expansion of macro 'local_irq_save'
+     184 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:217:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     217 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:184:9: note: in expansion of macro 'local_irq_save'
+     184 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:217:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     217 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:184:9: note: in expansion of macro 'local_irq_save'
+     184 |         local_irq_save(flags);
+         |         ^~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h: In function '__raw_read_unlock_irqrestore':
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:223:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     223 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:241:9: note: in expansion of macro 'local_irq_restore'
+     241 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:223:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     223 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:241:9: note: in expansion of macro 'local_irq_restore'
+     241 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:223:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     223 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:241:9: note: in expansion of macro 'local_irq_restore'
+     241 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:223:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     223 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:241:9: note: in expansion of macro 'local_irq_restore'
+     241 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:177:17: note: in expansion of macro 'typecheck'
+     177 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:225:17: note: in expansion of macro 'raw_local_irq_restore'
+     225 |                 raw_local_irq_restore(flags);           \
+         |                 ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:241:9: note: in expansion of macro 'local_irq_restore'
+     241 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:177:17: note: in expansion of macro 'typecheck'
+     177 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:225:17: note: in expansion of macro 'raw_local_irq_restore'
+     225 |                 raw_local_irq_restore(flags);           \
+         |                 ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:241:9: note: in expansion of macro 'local_irq_restore'
+     241 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:177:17: note: in expansion of macro 'typecheck'
+     177 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:225:17: note: in expansion of macro 'raw_local_irq_restore'
+     225 |                 raw_local_irq_restore(flags);           \
+         |                 ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:241:9: note: in expansion of macro 'local_irq_restore'
+     241 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:177:17: note: in expansion of macro 'typecheck'
+     177 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:225:17: note: in expansion of macro 'raw_local_irq_restore'
+     225 |                 raw_local_irq_restore(flags);           \
+         |                 ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:241:9: note: in expansion of macro 'local_irq_restore'
+     241 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h: In function '__raw_write_unlock_irqrestore':
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:223:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     223 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:265:9: note: in expansion of macro 'local_irq_restore'
+     265 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:223:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     223 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:265:9: note: in expansion of macro 'local_irq_restore'
+     265 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:223:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     223 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:265:9: note: in expansion of macro 'local_irq_restore'
+     265 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:223:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     223 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:265:9: note: in expansion of macro 'local_irq_restore'
+     265 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:177:17: note: in expansion of macro 'typecheck'
+     177 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:225:17: note: in expansion of macro 'raw_local_irq_restore'
+     225 |                 raw_local_irq_restore(flags);           \
+         |                 ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:265:9: note: in expansion of macro 'local_irq_restore'
+     265 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/irqflags.h:177:17: note: in expansion of macro 'typecheck'
+     177 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:225:17: note: in expansion of macro 'raw_local_irq_restore'
+     225 |                 raw_local_irq_restore(flags);           \
+         |                 ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:265:9: note: in expansion of macro 'local_irq_restore'
+     265 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:177:17: note: in expansion of macro 'typecheck'
+     177 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:225:17: note: in expansion of macro 'raw_local_irq_restore'
+     225 |                 raw_local_irq_restore(flags);           \
+         |                 ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:265:9: note: in expansion of macro 'local_irq_restore'
+     265 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/irqflags.h:177:17: note: in expansion of macro 'typecheck'
+     177 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:225:17: note: in expansion of macro 'raw_local_irq_restore'
+     225 |                 raw_local_irq_restore(flags);           \
+         |                 ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/rwlock_api_smp.h:265:9: note: in expansion of macro 'local_irq_restore'
+     265 |         local_irq_restore(flags);
+         |         ^~~~~~~~~~~~~~~~~
+   include/linux/spinlock.h: In function 'spin_unlock_irqrestore':
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/spinlock.h:281:17: note: in expansion of macro 'typecheck'
+     281 |                 typecheck(unsigned long, flags);                \
+         |                 ^~~~~~~~~
+   include/linux/spinlock.h:406:9: note: in expansion of macro 'raw_spin_unlock_irqrestore'
+     406 |         raw_spin_unlock_irqrestore(&lock->rlock, flags);
+         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/spinlock.h:281:17: note: in expansion of macro 'typecheck'
+     281 |                 typecheck(unsigned long, flags);                \
+         |                 ^~~~~~~~~
+   include/linux/spinlock.h:406:9: note: in expansion of macro 'raw_spin_unlock_irqrestore'
+     406 |         raw_spin_unlock_irqrestore(&lock->rlock, flags);
+         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/spinlock.h:281:17: note: in expansion of macro 'typecheck'
+     281 |                 typecheck(unsigned long, flags);                \
+         |                 ^~~~~~~~~
+   include/linux/spinlock.h:406:9: note: in expansion of macro 'raw_spin_unlock_irqrestore'
+     406 |         raw_spin_unlock_irqrestore(&lock->rlock, flags);
+         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/spinlock.h:281:17: note: in expansion of macro 'typecheck'
+     281 |                 typecheck(unsigned long, flags);                \
+         |                 ^~~~~~~~~
+   include/linux/spinlock.h:406:9: note: in expansion of macro 'raw_spin_unlock_irqrestore'
+     406 |         raw_spin_unlock_irqrestore(&lock->rlock, flags);
+         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock.h: In function 'class_raw_spinlock_irqsave_destructor':
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/cleanup.h:385:25: note: in definition of macro '__DEFINE_UNLOCK_GUARD'
+     385 |         if (_T->lock) { _unlock; }                                      \
+         |                         ^~~~~~~
+   include/linux/spinlock.h:557:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_1'
+     557 | DEFINE_LOCK_GUARD_1(raw_spinlock_irqsave, raw_spinlock_t,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock.h:281:17: note: in expansion of macro 'typecheck'
+     281 |                 typecheck(unsigned long, flags);                \
+         |                 ^~~~~~~~~
+   include/linux/spinlock.h:559:21: note: in expansion of macro 'raw_spin_unlock_irqrestore'
+     559 |                     raw_spin_unlock_irqrestore(_T->lock, _T->flags),
+         |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/cleanup.h:385:25: note: in definition of macro '__DEFINE_UNLOCK_GUARD'
+     385 |         if (_T->lock) { _unlock; }                                      \
+         |                         ^~~~~~~
+   include/linux/spinlock.h:557:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_1'
+     557 | DEFINE_LOCK_GUARD_1(raw_spinlock_irqsave, raw_spinlock_t,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock.h:281:17: note: in expansion of macro 'typecheck'
+     281 |                 typecheck(unsigned long, flags);                \
+         |                 ^~~~~~~~~
+   include/linux/spinlock.h:559:21: note: in expansion of macro 'raw_spin_unlock_irqrestore'
+     559 |                     raw_spin_unlock_irqrestore(_T->lock, _T->flags),
+         |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/cleanup.h:385:25: note: in definition of macro '__DEFINE_UNLOCK_GUARD'
+     385 |         if (_T->lock) { _unlock; }                                      \
+         |                         ^~~~~~~
+   include/linux/spinlock.h:557:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_1'
+     557 | DEFINE_LOCK_GUARD_1(raw_spinlock_irqsave, raw_spinlock_t,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock.h:281:17: note: in expansion of macro 'typecheck'
+     281 |                 typecheck(unsigned long, flags);                \
+         |                 ^~~~~~~~~
+   include/linux/spinlock.h:559:21: note: in expansion of macro 'raw_spin_unlock_irqrestore'
+     559 |                     raw_spin_unlock_irqrestore(_T->lock, _T->flags),
+         |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/cleanup.h:385:25: note: in definition of macro '__DEFINE_UNLOCK_GUARD'
+     385 |         if (_T->lock) { _unlock; }                                      \
+         |                         ^~~~~~~
+   include/linux/spinlock.h:557:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_1'
+     557 | DEFINE_LOCK_GUARD_1(raw_spinlock_irqsave, raw_spinlock_t,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock.h:281:17: note: in expansion of macro 'typecheck'
+     281 |                 typecheck(unsigned long, flags);                \
+         |                 ^~~~~~~~~
+   include/linux/spinlock.h:559:21: note: in expansion of macro 'raw_spin_unlock_irqrestore'
+     559 |                     raw_spin_unlock_irqrestore(_T->lock, _T->flags),
+         |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock.h: In function 'class_raw_spinlock_irqsave_constructor':
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/cleanup.h:394:9: note: in definition of macro '__DEFINE_LOCK_GUARD_1'
+     394 |         _lock;                                                          \
+         |         ^~~~~
+   include/linux/spinlock.h:557:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_1'
+     557 | DEFINE_LOCK_GUARD_1(raw_spinlock_irqsave, raw_spinlock_t,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock.h:243:17: note: in expansion of macro 'typecheck'
+     243 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/spinlock.h:558:21: note: in expansion of macro 'raw_spin_lock_irqsave'
+     558 |                     raw_spin_lock_irqsave(_T->lock, _T->flags),
+         |                     ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/cleanup.h:394:9: note: in definition of macro '__DEFINE_LOCK_GUARD_1'
+     394 |         _lock;                                                          \
+         |         ^~~~~
+   include/linux/spinlock.h:557:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_1'
+     557 | DEFINE_LOCK_GUARD_1(raw_spinlock_irqsave, raw_spinlock_t,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock.h:243:17: note: in expansion of macro 'typecheck'
+     243 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/spinlock.h:558:21: note: in expansion of macro 'raw_spin_lock_irqsave'
+     558 |                     raw_spin_lock_irqsave(_T->lock, _T->flags),
+         |                     ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/cleanup.h:394:9: note: in definition of macro '__DEFINE_LOCK_GUARD_1'
+     394 |         _lock;                                                          \
+         |         ^~~~~
+   include/linux/spinlock.h:557:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_1'
+     557 | DEFINE_LOCK_GUARD_1(raw_spinlock_irqsave, raw_spinlock_t,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock.h:243:17: note: in expansion of macro 'typecheck'
+     243 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/spinlock.h:558:21: note: in expansion of macro 'raw_spin_lock_irqsave'
+     558 |                     raw_spin_lock_irqsave(_T->lock, _T->flags),
+         |                     ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/cleanup.h:394:9: note: in definition of macro '__DEFINE_LOCK_GUARD_1'
+     394 |         _lock;                                                          \
+         |         ^~~~~
+   include/linux/spinlock.h:557:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_1'
+     557 | DEFINE_LOCK_GUARD_1(raw_spinlock_irqsave, raw_spinlock_t,
+         | ^~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock.h:243:17: note: in expansion of macro 'typecheck'
+     243 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/spinlock.h:558:21: note: in expansion of macro 'raw_spin_lock_irqsave'
+     558 |                     raw_spin_lock_irqsave(_T->lock, _T->flags),
+         |                     ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock.h: In function 'class_raw_spinlock_irqsave_try_constructor':
+>> include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/cleanup.h:255:25: note: in definition of macro 'EXTEND_CLASS'
+     255 | { class_##_name##_t t = _init; return t; }
+         |                         ^~~~~
+   include/linux/spinlock.h:562:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_1_COND'
+     562 | DEFINE_LOCK_GUARD_1_COND(raw_spinlock_irqsave, _try,
+         | ^~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/spinlock.h:298:9: note: in expansion of macro 'local_irq_save'
+     298 |         local_irq_save(flags); \
+         |         ^~~~~~~~~~~~~~
+   include/linux/spinlock.h:563:26: note: in expansion of macro 'raw_spin_trylock_irqsave'
+     563 |                          raw_spin_trylock_irqsave(_T->lock, _T->flags))
+         |                          ^~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: note: (near initialization for '__dummy')
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/cleanup.h:255:25: note: in definition of macro 'EXTEND_CLASS'
+     255 | { class_##_name##_t t = _init; return t; }
+         |                         ^~~~~
+   include/linux/spinlock.h:562:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_1_COND'
+     562 | DEFINE_LOCK_GUARD_1_COND(raw_spinlock_irqsave, _try,
+         | ^~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/spinlock.h:298:9: note: in expansion of macro 'local_irq_save'
+     298 |         local_irq_save(flags); \
+         |         ^~~~~~~~~~~~~~
+   include/linux/spinlock.h:563:26: note: in expansion of macro 'raw_spin_trylock_irqsave'
+     563 |                          raw_spin_trylock_irqsave(_T->lock, _T->flags))
+         |                          ^~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: error: empty scalar initializer
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/cleanup.h:255:25: note: in definition of macro 'EXTEND_CLASS'
+     255 | { class_##_name##_t t = _init; return t; }
+         |                         ^~~~~
+   include/linux/spinlock.h:562:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_1_COND'
+     562 | DEFINE_LOCK_GUARD_1_COND(raw_spinlock_irqsave, _try,
+         | ^~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/spinlock.h:298:9: note: in expansion of macro 'local_irq_save'
+     298 |         local_irq_save(flags); \
+         |         ^~~~~~~~~~~~~~
+   include/linux/spinlock.h:563:26: note: in expansion of macro 'raw_spin_trylock_irqsave'
+     563 |                          raw_spin_trylock_irqsave(_T->lock, _T->flags))
+         |                          ^~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:11:30: note: (near initialization for '__dummy2')
+      11 |         typeof(x) __dummy2 = {}; \
+         |                              ^
+   include/linux/cleanup.h:255:25: note: in definition of macro 'EXTEND_CLASS'
+     255 | { class_##_name##_t t = _init; return t; }
+         |                         ^~~~~
+   include/linux/spinlock.h:562:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_1_COND'
+     562 | DEFINE_LOCK_GUARD_1_COND(raw_spinlock_irqsave, _try,
+         | ^~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:172:17: note: in expansion of macro 'typecheck'
+     172 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:216:17: note: in expansion of macro 'raw_local_irq_save'
+     216 |                 raw_local_irq_save(flags);              \
+         |                 ^~~~~~~~~~~~~~~~~~
+   include/linux/spinlock.h:298:9: note: in expansion of macro 'local_irq_save'
+     298 |         local_irq_save(flags); \
+         |         ^~~~~~~~~~~~~~
+   include/linux/spinlock.h:563:26: note: in expansion of macro 'raw_spin_trylock_irqsave'
+     563 |                          raw_spin_trylock_irqsave(_T->lock, _T->flags))
+         |                          ^~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/typecheck.h:10:24: error: empty scalar initializer
+      10 | ({      type __dummy = {}; \
+         |                        ^
+   include/linux/cleanup.h:255:25: note: in definition of macro 'EXTEND_CLASS'
+     255 | { class_##_name##_t t = _init; return t; }
+         |                         ^~~~~
+   include/linux/spinlock.h:562:1: note: in expansion of macro 'DEFINE_LOCK_GUARD_1_COND'
+     562 | DEFINE_LOCK_GUARD_1_COND(raw_spinlock_irqsave, _try,
+         | ^~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/irqflags.h:188:17: note: in expansion of macro 'typecheck'
+     188 |                 typecheck(unsigned long, flags);        \
+         |                 ^~~~~~~~~
+   include/linux/irqflags.h:217:22: note: in expansion of macro 'raw_irqs_disabled_flags'
+     217 |                 if (!raw_irqs_disabled_flags(flags))    \
+         |                      ^~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/spinlock.h:298:9: note: in expansion of macro 'local_irq_save'
+     298 |         local_irq_save(flags); \
 
 
---vde97DQHR/3Yogi4
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+vim +10 include/linux/typecheck.h
 
-On Thu, May 01, 2025 at 10:29:58PM -0700, Nicolin Chen wrote:
-> On Fri, May 02, 2025 at 10:50:07AM +0700, Bagas Sanjaya wrote:
-> > On Thu, May 01, 2025 at 04:01:22PM -0700, Nicolin Chen wrote:
-> > > +- IOMMUFD_OBJ_VQUEUE, representing a hardware accelerated virtual qu=
-eue, as a
-> > > +  subset of IOMMU's virtualization features, for the IOMMU HW to dir=
-ectly read
-> > > +  or write the virtual queue memory owned by a guest OS. This HW-acc=
-eleration
-> > > +  allows VM to work with the IOMMU HW directly without a VM Exit, i.=
-e. reducing
-> > > +  overhead from the hypercalls. Along with this vQUEUE object, iommu=
-fd provides
-> > > +  user space an mmap interface for VMM to mmap a physical MMIO regio=
-n from the
-> > > +  host physical address space to the guest physical address space, a=
-llowing the
-> > > +  guest OS to control the allocated vQUEUE HW. Thus, when allocating=
- a vQUEUE,
-> > > +  the VMM must request a pair of VMA info (vm_pgoff/size) for an mma=
-p syscall.
-> > > +  The length argument of an mmap syscall can be smaller than the giv=
-en size for
-> > > +  a partial mmap, but the addr argument of the mmap syscall should n=
-ever offset
-> > > +  from the returned vm_pgoff, which implies that an mmap will always=
- start from
-> >=20
-> > Did you mean never be offset from returned vm_pgoff?
->=20
-> Yes. Will fix this.
->=20
-> > > +  the beginning of the physical MMIO region.
-> > > +
-> >=20
-> > Confused...
->=20
-> Meaning that VMM should just use the given vm_pgoff as is, without
-> adding any offset to the vm_pgoff.
+     4	
+     5	/*
+     6	 * Check at compile time that something is of a particular type.
+     7	 * Always evaluates to 1 so you may use it easily in comparisons.
+     8	 */
+     9	#define typecheck(type,x) \
+  > 10	({	type __dummy = {}; \
+    11		typeof(x) __dummy2 = {}; \
+    12		(void)(&__dummy == &__dummy2); \
+    13		1; \
+    14	})
+    15	
 
-Understood, thanks!
-=20
---=20
-An old man doll... just what I always wanted! - Clara
-
---vde97DQHR/3Yogi4
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCaBR0wQAKCRD2uYlJVVFO
-o2GmAQD6yTz+9Kdn/nHALYBCiSbtX+ewWJjZ0spXlFlQyWBmSgEA9HdlnssGmaCv
-oibhf/yiDjC4MkNfQVDV7Jw5qTjhagQ=
-=zmrU
------END PGP SIGNATURE-----
-
---vde97DQHR/3Yogi4--
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
