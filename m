@@ -1,117 +1,219 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3F34689;
-	Fri,  2 May 2025 02:36:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF241547EE
+	for <patches@lists.linux.dev>; Fri,  2 May 2025 02:54:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746153413; cv=none; b=qaHR44GznOaQzubA7LEf18JDw0veYavzvLr2p80DGAb5H8hAnmhjwgaNKtmXHwTS5SSBXRA6vqQjAmcBGp/MokXTnf9Lm6jo3PW1e2baTQjaNVYzocUBxqov/sLLwBB40z+AYw9MnNsU6sbQS9Agh18VBjoUgTqSTQMcJTdayNw=
+	t=1746154483; cv=none; b=Y0aiYj8WqVGF/O7Yi5B7MQAyRVqIU3cE8oSyHphpDdGXbvXpPP8gVGQW2UrV3riRZIl1TZKp2SMRyUd4uKr6gU4ZKMAbjHXerQoRe8sR2V531NBScBvr6muvUHZOJ8aDeMXeltNfetAcKmbH79+WT3eMBC9OuOSrCgS/VA6SEao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746153413; c=relaxed/simple;
-	bh=kGjqdNL6uWTxYXfoihhELmFCGnZqUTkDeX57TXY79HE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=usFmv94pQ/P80ogU19Nim2IKSmFbtCJ6UvVnoP2uee8Zhv80vh5g0edYuMIWJW9FYHyvFoenCdT75simxZMbWL7eSy+W3CUK3NgHUnEmOLQRPudh50N6YowhB6+y2hdsMZnb5BOE9ipSADlnqyHgb0pBjEOVtvL4L1wRSrc5MMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gvxly764; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1746154483; c=relaxed/simple;
+	bh=0hYuoJkG1HiS0affuKYm7oyM12/o0VWgq0bU7+BeSQE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IowlXjmDM0DjUJSAD5qmEyhqvUraTPB8DxP+HlocxMCAYSwnjvceSZtXbN6AXYqxFm4kyPBz8hWeYtQNzyWY3mg7GFXOmSM6+nsVWSTIr0fmT9z2jo5cptBmmMg9A2jM/KqiiSgwq/oRACV19kOswRgu6000ZvZaqbhYCdZO56M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=linIhy8g; arc=none smtp.client-ip=209.85.222.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gvxly764"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDF0C4CEE3;
-	Fri,  2 May 2025 02:36:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746153413;
-	bh=kGjqdNL6uWTxYXfoihhELmFCGnZqUTkDeX57TXY79HE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gvxly764wJbgzP9snvgCvOl2pbOzHoX4FAL21k1/SmWVDnmwm7Muxgc2uMhdtoYBI
-	 er2RlDHi8pKyojvj0RFjRrlPAt1EwEpMcmpzdGWy6dOeb/kALWD9dsGkJWmcH2C7xw
-	 RL4wTkqSvJz1M/p2zACHb3aBMMM2LvTTbK/PeIRaSmmU5CKU0IJSL8RSRrn2SaP+n9
-	 KC6ZKmzwztSvOW6lwDpOeqJAJbtFo1lHL5LVUm9K8mRN53cCRdzBnjrtBUNpty6shX
-	 0qtm/durPsaBGrDJA1EmDApizIxI/xpw6QfFi6eVIu2mEEvJK2NZDSFIG+LmC2UuoF
-	 X1vIvfnnfZmOg==
-Date: Thu, 1 May 2025 19:36:47 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nicolas Schier <nicolas.schier@linux.dev>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>, linux-kbuild@vger.kernel.org,
-	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev, stable@vger.kernel.org,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Marcus Seyfarth <m.seyfarth@gmail.com>
-Subject: Re: [PATCH 2/2] include/linux/typecheck.h: Zero initialize dummy
- variables
-Message-ID: <20250502023647.GC1744689@ax162>
-References: <20250501-default-const-init-clang-v1-0-3d2c6c185dbb@kernel.org>
- <20250501-default-const-init-clang-v1-2-3d2c6c185dbb@kernel.org>
- <CAHk-=whL8rmneKbrXpccouEN1LYDtEX3L6xTr20rkn7O_XT4uw@mail.gmail.com>
- <20250502012449.GA1744689@ax162>
- <20250502020534.GU2023217@ZenIV>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="linIhy8g"
+Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-86dde90e7a3so355664241.1
+        for <patches@lists.linux.dev>; Thu, 01 May 2025 19:54:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1746154480; x=1746759280; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cEZEuaBQX0F2OnwvUEVgaG6Yg7wPrQNQ4N5MN97UuLA=;
+        b=linIhy8g8Cpzb7LinzPsHIQZnjyZzyOdsZROo0UWQH//In0vXTQ6LOwH4JBlVV8Kq7
+         Ki8xSGz3Eg+RZkHXL5BDOpY42ZUnhcVeSXLnd48Gi8GMSkx6SX15aTfREb4J2/KvaUSq
+         d7wU8Ww8rCqsvxo4uFz/3X47KaIb7eIvQlg2G9dho6wGbHvgtlNRIr9I5xRUhYxLoJip
+         xgxv5RGMAKE9uwBaVp9e77OIJcD94mvFOlmQdcSNpYDmZ9+mGKVppWgZw5EEu2Xn0gcy
+         IC1XpSNh8OWUex9ZBAVRJiOD+Q3u4u5ACyWfOewb6Z593wdWgavOSG5q/FnDXUtXhXxs
+         dyjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746154480; x=1746759280;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cEZEuaBQX0F2OnwvUEVgaG6Yg7wPrQNQ4N5MN97UuLA=;
+        b=D4qAwG/vNgVqUD7McQkWfU+7J6uKImX+NpgRiJVM8506OG0jPXakDa7xQFbL942kZT
+         PTvpyHPwdSzVNfyIS+8nKE8XXoNUqmY/qEZWxYm53GuX1shqIVtPihh2bxbWzZ8oA46K
+         fiKcLjYuf8LJdSNpDdddQ4Pn4u3ZFL4JFrx7ACTs4N2yacaUKZVvcrkY++Uzu5CPHe1X
+         efL0SeOdP1HwUlpanWo1hzGDrw2dmiRUjWYBvl/NrgA/hBWamkxh2ZDuK56Y9MVCajUU
+         twjDFmImLQbHVVzdIopIMQctjEE5G5uty6WCUSXjPnyYRgCUCMF/XJk9hEq9sMoe2Iq3
+         wH0g==
+X-Forwarded-Encrypted: i=1; AJvYcCUC54YUVPT0/xAt5JfDsa6cqj0xvk7HHcMLT0EkHZpPDeDppgB0L2NuO7cgi+ervZN8l4M5lLZJ@lists.linux.dev
+X-Gm-Message-State: AOJu0YyxK4MvGorY5c3Za6JxLBsEcFiDcqTetsz/5uT91F9/+/Zo9ZvJ
+	nU2Gum51X282M5uGDrGp4zi3yssUbZB90/WuMhfLFMoFBAagY/r4FgbCdA94+ixaPevbJl131AF
+	/VyWiLeafjXxNAopbRB2SPcfFEynRRSSqKLZkog==
+X-Gm-Gg: ASbGncuxvhuU1gCEmbV4xx+SopepebRqO83xr6lWEuntlRv7jjWo/hRIzBaGM3vgYTb
+	TIMGLahsOO/lG40spYhjtgyNWbHvVDpr/5K01RL9RnWcygIU9C9g/N514wYF6jiYwZW2n2wik8q
+	JVZk4Vx9dmvTONDDiMA/Ia
+X-Google-Smtp-Source: AGHT+IEDIdOj9oMB0nKvbGRJkCmB7KOZ3tGAGHP+ARfItXrPW4FpkddRtuJsISkNkowV55n2pzm5c2j+ozEWBz9kQVI=
+X-Received: by 2002:a67:e7ca:0:b0:4d5:cbbf:456f with SMTP id
+ ada2fe7eead31-4dafb4fae17mr976341137.10.1746154480135; Thu, 01 May 2025
+ 19:54:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250502020534.GU2023217@ZenIV>
+References: <20250501081459.064070563@linuxfoundation.org>
+In-Reply-To: <20250501081459.064070563@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Fri, 2 May 2025 08:24:28 +0530
+X-Gm-Features: ATxdqUETEfbQXoB7koW_BPnoWBWbalINWlkur-9r8oo5Yb17vFPnHyQy6r5AsNo
+Message-ID: <CA+G9fYtLUfJs2zAzvVhKN4Mo=3ZH455dnfQwc+Ck7HYJEhDUUA@mail.gmail.com>
+Subject: Re: [PATCH 5.15 000/368] 5.15.181-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 02, 2025 at 03:05:34AM +0100, Al Viro wrote:
-> On Thu, May 01, 2025 at 06:24:49PM -0700, Nathan Chancellor wrote:
-> 
-> > > How long has that been valid? Because this is certainly new to the
-> > > kernel, and sparse does complain about this initializer.
-> > 
-> > As you noted, brace initialization for scalars appears to always be
-> > valid (at least in my testing) but as Al points out, empty braces for
-> > scalars is only supported in GCC 13+ and Clang 17+ (I think [1] was the
-> > clang commit), so that is not going to fly...
-> 
-> From some digging around it looks like
-> 	* {} for compounds had been an extension for quite a while
-> 	* C++11 got it into standard, with semantics defined as "same
-> value you get for static-duration variables of that type without an
-> explicit initializer".  For scalar types as well, with the same
-> semantics.
-> 	* On C side that happened (again, with scalar types allowed)
-> in 2022; N2912 is the first draft with that change already merged,
-> N2913 is the corresponding editor's report, saying that change in question
-> (N2900) got merged in January/February virtual meeting.
-> 	IOW, C23 has it, no previous versions do.  For C17 this syntax
-> is an error, and AFAICS you need at least -std=c2x or -std=gnu2x to have
-> it acceptable.
+On Thu, 1 May 2025 at 13:48, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.15.181 release.
+> There are 368 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 03 May 2025 08:13:53 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.15.181-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Neat, thanks for digging around.
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-> We can make sparse accept it (either unconditionally or with sufficient
-> -std in arguments), but that won't do a damn thing for cc(1).  Does
-> clang (any version) really accept it with -std=gnu11?
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Yes, it appears that both GCC and clang accept it even with -std=gnu89:
-https://godbolt.org/z/GYKrKhTdf
+## Build
+* kernel: 5.15.181-rc2
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
+rc.git
+* git commit: 85e697938eb09a3beb10ccd150f64f998876c4cc
+* git describe: v5.15.180-369-g85e697938eb0
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
+.180-369-g85e697938eb0
 
-The clang commit mentions that this is exposed to older C modes like the
-GNU extension was.
+## Test Regressions (compared to v5.15.180)
 
-I guess another option to locally silence the warning would be to insert
-something like
+## Metric Regressions (compared to v5.15.180)
 
-  #if defined(__clang__) && __clang_major__ >= 21
-  #define typecheck_init = {}
-  #else
-  #define typecheck_init
-  #endif
+## Test Fixes (compared to v5.15.180)
 
-  #define typecheck(type,x) \
-  ({    type __dummy typecheck_init; \
-        typeof(x) __dummy2 typecheck_init; \
-        (void)(&__dummy == &__dummy2); \
-        1; \
-  })
+## Metric Fixes (compared to v5.15.180)
 
-but maybe that is just too ugly or worthless.
+## Test result summary
+total: 76543, pass: 58926, fail: 3514, skip: 13517, xfail: 586
 
-Cheers,
-Nathan
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 102 total, 102 passed, 0 failed
+* arm64: 30 total, 30 passed, 0 failed
+* i386: 22 total, 20 passed, 2 failed
+* mips: 22 total, 22 passed, 0 failed
+* parisc: 3 total, 3 passed, 0 failed
+* powerpc: 22 total, 22 passed, 0 failed
+* riscv: 8 total, 8 passed, 0 failed
+* s390: 9 total, 9 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 26 total, 26 passed, 0 failed
+
+## Test suites summary
+* boot
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-kcmp
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-mincore
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-x86
+* kunit
+* kvm-unit-tests
+* lava
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-build-clang
+* log-parser-build-gcc
+* log-parser-test
+* ltp-capability
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
+
+--
+Linaro LKFT
+https://lkft.linaro.org
