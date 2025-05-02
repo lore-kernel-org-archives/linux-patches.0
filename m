@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB5A256C9D;
-	Fri,  2 May 2025 14:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43BF32561D6;
+	Fri,  2 May 2025 14:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746194593; cv=none; b=CaaYq4ziJ6a5YgFEJLMYH6ALaIE5R+JtYZbd3v5tDuAa7alSjaTw0JcMvJifzg1qieH79MwOMWkE6Y0dTJoZtKC2LWmxF7WxpELqXVlVDKKGTYaBcYSh8sOZwKlEZa6jlDGQFpYRwURuPsvnMh2lS/VG0tLaO1vM8ckOxbJQbHo=
+	t=1746194599; cv=none; b=uoHwv3Y5InZLgfUNWW/l5b3DIL4B6g1Q1zHIG/wsWGwL/6uTCtiX+Avjso7ZeTtRFNMojt89aD0qxPQLXwDoI9ebgIIxMUWkJ4Rc49fH9nN7ETsGLXxAVCg2MPau5TT282aIFwcfiBgCGf7FE4o7p9RYUxSzx0NtK3kTiX4BkRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746194593; c=relaxed/simple;
-	bh=rrnV+01T0+qPAKcB4Oo8Wm9xDzxUTNA9dV6DF4q3AcI=;
+	s=arc-20240116; t=1746194599; c=relaxed/simple;
+	bh=JcmBhEUrvfaH96FSKF0m0KRLP7jLR6gEc4dpoEbdEt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FSvZRfaCCvV9Q3w/lABZq7+YiAyCJMm7JWOBszGE2p8MQDs6a5EEMtoK1HVsOwh2y9VL9Wng4MLQUOiNJyQB2UVVL4IJOhAcNw3c5qoO9SMAyFhH5uENcOXIrvYEZjL11ZXzoKG2cxzkwHvu7hOn/hfYWHwZJRYxgZjiQrgrFsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qp0QSRIo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MQvV7N6qk1gRrOez3zP3QgQRPLGaQoJMDy9yomuRpxOuPal1W5BoTQaTntd8tt5wU3BT3X2LhXdjaL8gaO15dEKoYNR6QhIkr5lo8lH7Z62/rpLN10GkXv0ZoAsiI3bMZoqORNTGQhrWO/Z4tdDuIXS6DmHgpSLHv4H+p9c8pjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=inN3AMId; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qp0QSRIo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF059C4CEEE;
-	Fri,  2 May 2025 14:03:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="inN3AMId"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA56C4CEEB;
+	Fri,  2 May 2025 14:03:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746194593;
-	bh=rrnV+01T0+qPAKcB4Oo8Wm9xDzxUTNA9dV6DF4q3AcI=;
+	s=k20201202; t=1746194596;
+	bh=JcmBhEUrvfaH96FSKF0m0KRLP7jLR6gEc4dpoEbdEt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qp0QSRIomAvKJbz+U5LCvGYCyU01BuMGu3kqGdK1A4+4bmZyu9GlSOh+wKfVTfJ5M
-	 F/8lu7NqNVHB02N/VHVr+0JB0dc1O9AFH/exMehPZ4R2Km5eD1uTKrsODTH1KKKhIA
-	 lyOsH8hppjF0o6RX/h5a7kKN9AxJqZj5zyYCSJrZkNnUV9DLLwqk5o8dW5bt5ThFW9
-	 BofecH5FtLViHgdCpwPXK2G23yeJ9/rgiNUfnRZGiZ5LYH1pXxbYZTXkcajM9vRhNH
-	 0NXg4qQk7JggluSY6yMIj3Uvx2BBy7vFbCG1xVAryQqKQzt5b63qFCVOU4n61TFvjX
-	 emBDq/TryySKw==
+	b=inN3AMIdb/IvUq7c5JYjEEcJjZ4YJZtQZNjXxcAYlOxOM9xu2aeLGlpsD5nSDenGF
+	 4AMtdAweIx6EMTDD2Ii4WaP8m/pC7hqExaara4Yvh9+/tOGwvcSXHhgVwGn/1LQdOn
+	 Iz/b8LINQOCO+9YGWO+/4kaLuSqL/2hRLu7rvhPtjRMb8KoEzgO7ZD22BUWnCt7UHh
+	 V/PRX9oU1uVdvT8Kxy8F+l3JOokHLiLIjyxMkTczVmOGck6i/nL2x5KN9QdG1SdeH9
+	 2M+JoHM5+Cfs91jk1mDWZ0z6/Ys9DpRBJJHHsSUlGsrbMu51LDo7qf6nwqFqW6LN0v
+	 DC4bpSveSTl0w==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>
@@ -41,9 +41,9 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	stable@vger.kernel.org
-Subject: [PATCH 3/5] rust: clean Rust 1.88.0's `unnecessary_transmutes` lint
-Date: Fri,  2 May 2025 16:02:35 +0200
-Message-ID: <20250502140237.1659624-4-ojeda@kernel.org>
+Subject: [PATCH 4/5] rust: clean Rust 1.88.0's warning about `clippy::disallowed_macros` configuration
+Date: Fri,  2 May 2025 16:02:36 +0200
+Message-ID: <20250502140237.1659624-5-ojeda@kernel.org>
 In-Reply-To: <20250502140237.1659624-1-ojeda@kernel.org>
 References: <20250502140237.1659624-1-ojeda@kernel.org>
 Precedence: bulk
@@ -54,74 +54,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Starting with Rust 1.88.0 (expected 2025-06-26) [1][2], `rustc` may
-introduce a new lint that catches unnecessary transmutes, e.g.:
+Starting with Rust 1.88.0 (expected 2025-06-26) [1], Clippy may start
+warning about paths that do not resolve in the `disallowed_macros`
+configuration:
 
-     error: unnecessary transmute
-         --> rust/uapi/uapi_generated.rs:23242:18
-          |
-    23242 |         unsafe { ::core::mem::transmute(self._bitfield_1.get(0usize, 1u8) as u8) }
-          |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: replace this with: `(self._bitfield_1.get(0usize, 1u8) as u8 == 1)`
-          |
-          = note: `-D unnecessary-transmutes` implied by `-D warnings`
-          = help: to override `-D warnings` add `#[allow(unnecessary_transmutes)]`
+    warning: `kernel::dbg` does not refer to an existing macro
+      --> .clippy.toml:10:5
+       |
+    10 |     { path = "kernel::dbg", reason = "the `dbg!` macro is intended as a debugging tool" },
+       |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-There are a lot of them (at least 300), but luckily they are all in
-`bindgen`-generated code.
+This is a lint we requested at [2], due to the trouble debugging
+the lint due to false negatives (e.g. [3]), which we use to emulate
+`clippy::dbg_macro` [4]. See commit 8577c9dca799 ("rust: replace
+`clippy::dbg_macro` with `disallowed_macros`") for more details.
 
-Thus clean all up by allowing it there.
+Given the false negatives are not resolved yet, it is expected that
+Clippy complains about not finding this macro.
 
-Since unknown lints trigger a lint itself in older compilers, do it
-conditionally so that we can keep the `unknown_lints` lint enabled.
+Thus, until the false negatives are fixed (and, even then, probably we
+will need to wait for the MSRV to raise enough), use the escape hatch
+to allow an invalid path.
 
 Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Link: https://github.com/rust-lang/rust/pull/136083 [1]
-Link: https://github.com/rust-lang/rust/issues/136067 [2]
+Link: https://github.com/rust-lang/rust-clippy/pull/14397 [1]
+Link: https://github.com/rust-lang/rust-clippy/issues/11432 [2]
+Link: https://github.com/rust-lang/rust-clippy/issues/11431 [3]
+Link: https://github.com/rust-lang/rust-clippy/issues/11303 [4]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- init/Kconfig         | 3 +++
- rust/bindings/lib.rs | 1 +
- rust/uapi/lib.rs     | 1 +
- 3 files changed, 5 insertions(+)
+ .clippy.toml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/init/Kconfig b/init/Kconfig
-index 63f5974b9fa6..4cdd1049283c 100644
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -140,6 +140,9 @@ config LD_CAN_USE_KEEP_IN_OVERLAY
- config RUSTC_HAS_COERCE_POINTEE
- 	def_bool RUSTC_VERSION >= 108400
- 
-+config RUSTC_HAS_UNNECESSARY_TRANSMUTES
-+	def_bool RUSTC_VERSION >= 108800
-+
- config PAHOLE_VERSION
- 	int
- 	default $(shell,$(srctree)/scripts/pahole-version.sh $(PAHOLE))
-diff --git a/rust/bindings/lib.rs b/rust/bindings/lib.rs
-index 014af0d1fc70..a08eb5518cac 100644
---- a/rust/bindings/lib.rs
-+++ b/rust/bindings/lib.rs
-@@ -26,6 +26,7 @@
- 
- #[allow(dead_code)]
- #[allow(clippy::undocumented_unsafe_blocks)]
-+#[cfg_attr(CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES, allow(unnecessary_transmutes))]
- mod bindings_raw {
-     // Manual definition for blocklisted types.
-     type __kernel_size_t = usize;
-diff --git a/rust/uapi/lib.rs b/rust/uapi/lib.rs
-index 13495910271f..c98d7a8cde77 100644
---- a/rust/uapi/lib.rs
-+++ b/rust/uapi/lib.rs
-@@ -24,6 +24,7 @@
-     unreachable_pub,
-     unsafe_op_in_unsafe_fn
- )]
-+#![cfg_attr(CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES, allow(unnecessary_transmutes))]
- 
- // Manual definition of blocklisted types.
- type __kernel_size_t = usize;
+diff --git a/.clippy.toml b/.clippy.toml
+index 815c94732ed7..137f41d203de 100644
+--- a/.clippy.toml
++++ b/.clippy.toml
+@@ -7,5 +7,5 @@ check-private-items = true
+ disallowed-macros = [
+     # The `clippy::dbg_macro` lint only works with `std::dbg!`, thus we simulate
+     # it here, see: https://github.com/rust-lang/rust-clippy/issues/11303.
+-    { path = "kernel::dbg", reason = "the `dbg!` macro is intended as a debugging tool" },
++    { path = "kernel::dbg", reason = "the `dbg!` macro is intended as a debugging tool", allow-invalid = true },
+ ]
 -- 
 2.49.0
 
