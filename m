@@ -1,70 +1,70 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDBD71AA1D5
-	for <patches@lists.linux.dev>; Mon,  5 May 2025 06:02:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD9218FC89
+	for <patches@lists.linux.dev>; Mon,  5 May 2025 06:02:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746424953; cv=none; b=LT5aQD4cQpJnCWF8iZbZli59gxcanmINqP0QigjK9dI5HUO40Gf+XWWrqgPB5+n2/5u+c+JF4FQoRLSDrmFgFk4ySBMXAgo6pY+AOs7pF69oP+PaCILCJ2d0T4jGuZNjHg5Yr/afXs1KGoWq/Y/lDEAUcX/os3S3dKzPKLTvnwQ=
+	t=1746424964; cv=none; b=d2Izh4T5XAwoY0qGhMN8+RN10D8ddNBof/M6DgRUYUJpIAN+VkhT96efGTbK8EWHVVmyD9mKjUJ151VJANYUWO0K8tyQgoQwMd2+tMfsE72SdMEQeu7JUGUYUpUV6cbTsCv0RhfoBbKXbOVBZdY7kPpVg0He7DjF9rxisoldvzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746424953; c=relaxed/simple;
-	bh=BpxIkt8xS0at7NDKLzbFrRi15bBKs4TFe9BEL6By/E0=;
+	s=arc-20240116; t=1746424964; c=relaxed/simple;
+	bh=KeYd266nJHLS0hTmd4cVdAX3XKxbfL3pTaZcQFyjWWA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=X0kZ7mzGl+TuE4UBPUZtWO9sKAeCVlNHxFIWCu8bQD6rnKUwNXNnCKwJGxw7N5AdcnivEzJVuODVEOsnMmzpzVttcQqn2WeveMZyXU2Tp9sHRy1bViDDiySONV5tvNObLib31nPBUNNcCZFGdQKUCY95/WLQ0zM6mb7inPcTfTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=endhQ0Pu; arc=none smtp.client-ip=209.85.219.50
+	 To:Cc:Content-Type; b=KX3/LMCetKXYOFThtb4j0RBtVMM7SmfsAN4fuLubr0e/s81CK9UCXeR4wS0XpOK3ZQwAeV1nVEVlc4fJZc8KNXU51pD56xDyPY6LXFgH9RvbBSEhszySXgjOIXfw3uhPb1V2E98qY2qtOSB9IIDMjJuqtVjMzfJUsFI3URBfzRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Fm+bQCKs; arc=none smtp.client-ip=209.85.219.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="endhQ0Pu"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6f0c30a1ca3so45405956d6.1
-        for <patches@lists.linux.dev>; Sun, 04 May 2025 23:02:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Fm+bQCKs"
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-6ed16ce246bso25013846d6.3
+        for <patches@lists.linux.dev>; Sun, 04 May 2025 23:02:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1746424951; x=1747029751; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1746424961; x=1747029761; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=PrqaSXSyQzmQHiahcSaUnHJ55548APPhugJ6VveO4gg=;
-        b=endhQ0PuZq2OyvsvDLRzqdx5O2g1IF+oRhTDQ2CEHphYfPcY0Tvv0IMqSzL1RdvRSW
-         8YrLRHE0V3JfWaeLk45KRUgmtDrVJLa9VciL4JKONKaEDqDM146z1xUE9bfrDnDKL4lU
-         Na0VdfYf+G2n5sGyxvVQOah2j1z8UClz5hRrqzq83urEDoJG3cBg2i5h5TfBPyuHWoJ9
-         NxSU4jUSr25Mw9YTzAKLB/dbBPaOTNnd5dELmO794JZboLq0nDEQHrmqKWD+cQayhSPC
-         ZvdaTG7jS8FYo5Aq5Cnht4uojQq8SKIdkBl8XNzPVH8kIUA48GJcMfPTCGaOShuAsqXQ
-         XHjA==
+        bh=fh5RsgNoGbYHlxwAqdBHBEP+ElJnaoYYs4MSGQ2h2WI=;
+        b=Fm+bQCKsTYxm4dgQhgC30pgF9+DO1aW2nLVfQWhxSHHc0Aboal+qpUxKBk8UAldcDS
+         kne+Ge6uebQvWYmUnar1TjMtpFrVBUWxFBw2eG3tB+mTG+sWuoG0FcmCs7rMio4iRQcI
+         sm4y1ngChvmAIQcm8v6tiYf3GNFqF9m9+HNYoX+4AByhgnNH6OT6NsBpp6j1EQLIokWv
+         Dz0D37dkWaZSF/+FfG+LTt03gVpqvFCx4n3lRsl0SrSZAs1zuJsZFP/ZRxrIPYiW2T2f
+         9+tqXZ8FHuDrascNIzU89z2QEhcINID/k2o8SNwAAK+dLx3T7On65hkc4d9UQl8fXqPc
+         uicg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746424951; x=1747029751;
+        d=1e100.net; s=20230601; t=1746424961; x=1747029761;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=PrqaSXSyQzmQHiahcSaUnHJ55548APPhugJ6VveO4gg=;
-        b=GOcjnmTkoXvrmX1aM+nxyivPeC4t6CrzHCj7dbH74VSE2TDkJSnETLet68TnwZXeNi
-         3b3B86XhNfHvDW3bCPqLFuVyw6plJGZt069juNes8+ZVshwjLzdzsrsy/vxxIm0KeDmb
-         8VsA2aAQyRiD8SLoeJlt+MSPOc6C6s+Hiv9nyItABVQE2hD7T976litroJIpW/GrYeK7
-         OlZOxEJHNa6BD+fn9vLo+l0dQwRRSeZnYcB8yGP+Fuc8EAbC7tqUyotp8+ZrCWnip5Qh
-         xi0rUYymDejoFBaNrPQxWhLqsIvN2g96uW3fIYABHr0DuD2zsw2+VQs7zjA4i6Mbt0lS
-         +4RA==
-X-Forwarded-Encrypted: i=1; AJvYcCUu/VCB7f43WS24xQZ4vByHJW76nnFbDs1TCerE/sb1YQntJ0VRG3WKEe3eC7Lh1FnK/EP+uRS4@lists.linux.dev
-X-Gm-Message-State: AOJu0YyzCujpVJX4Vkii1DisBj7OUSdTBRwETjySMdgBEMD8SZkcZQGw
-	TduGEkSL+JEgO7bEWPUFbYayVs5xKX8wh/GldomFlUKWwequVqKxruXvFDL5ayQrVxahJUOjwl2
-	MVptOlCeuhv94gjbMMBLE8YN9k45hYMWUPucT
-X-Gm-Gg: ASbGncskhyyhF4H7cV50hiclHUQGJWVRGrP3v0LyjWVJEq0KBkKHTST6fYl550x8NCP
-	ZB3EdLjzx9w2UnFSBR0z7uT+/4D14RP203DvkV01FpExEXlLkBmGmv6e3ZGbQkHpliCozaKGhC1
-	b4Lub+NvRzpk6HR8nwhG9RV8Q=
-X-Google-Smtp-Source: AGHT+IE1jvV5zyoDQV6U8eJw4nA3aGdNUsdl8m1aIfk+yYb28903AQoLHqt9OrvhB+SmObJpSWzkav4YzK3p/GNjbPw=
-X-Received: by 2002:a05:6214:40e:b0:6f5:e2b:98a3 with SMTP id
- 6a1803df08f44-6f51578d484mr226285866d6.25.1746424950430; Sun, 04 May 2025
- 23:02:30 -0700 (PDT)
+        bh=fh5RsgNoGbYHlxwAqdBHBEP+ElJnaoYYs4MSGQ2h2WI=;
+        b=QGRLXzQ4mdDzVUdNe2MHq98i7i+2Hb+BeNKNLnfzME9+oqdvQKPE0IF6EOvVljGv67
+         BUdjAdu80RDpgwEMaGgu4Orhr3CHqJrHeX91v1H0q2G1NOcZVF+YzEmPX7UcVqj7BvLD
+         lnVq5eS1toGCAjcW8Rj3tnmhFnRuuKZwf1I1ZMB2EAlsc2NeTLcsMCnqexfJRrzcxz/x
+         GQ0FvfseKtutsfSWuiU1+Ar0ySpcwJiWxGCqWQz+SaLgm37hPjesL3ERcWCCmzZrqz1C
+         J6mThvblakVTxY4fqYlVocVcwyYoMbeVo4cz7I3d8HTrzF+2N9zaJODDxaPenaufkYW6
+         JAtA==
+X-Forwarded-Encrypted: i=1; AJvYcCWKTJ2jSTmVI3sb68Goj0IdI/55LIxcMqBjruQ3kvTrUxJPk1IGZksS7//xZL4JrXeMWJaOBKcd@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywpff7S5Xqw1i6DusLs21BkiV0qKrghLiYYctLxI4I5d5bfwEKA
+	r0IMfvNjbR9dVC3m7Nzs6Yvdt7eOQvHemEngMpdqUKtPdyxohuPtuyziWJFsgH/0KxMlteT0PP9
+	MmJKWwt8B18yeaRORSRaHU2ruPQkE2dc8zE5Z
+X-Gm-Gg: ASbGncsNgNjm4LMaD7NJ2n0uOaU6LRGLZwBU1Vl8t4hDMEEcAPLOWhPSkzjzef7jrfp
+	Qrlv5Pqu+T2X0T40XPira5zTqfDRqMEh2/YkinNcV5+pVYfl4+U+RdCx6/Yk6W3VmLQjzJu0yMC
+	4SNkVWvZ4ymuAf3Ex6vQWTEZs=
+X-Google-Smtp-Source: AGHT+IE/een+33qStrjqyZRhiuzy3UEHlwc4K0A60/T1NSFAkenAwwwJYuSduKrnAURhktFRCmNZvkKcVwBaLsfSFS4=
+X-Received: by 2002:a05:6214:1bce:b0:6f4:cbd1:58fd with SMTP id
+ 6a1803df08f44-6f528cf65cfmr88418586d6.28.1746424961209; Sun, 04 May 2025
+ 23:02:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250502215133.1923676-1-ojeda@kernel.org> <20250502215133.1923676-4-ojeda@kernel.org>
-In-Reply-To: <20250502215133.1923676-4-ojeda@kernel.org>
+References: <20250502215133.1923676-1-ojeda@kernel.org> <20250502215133.1923676-5-ojeda@kernel.org>
+In-Reply-To: <20250502215133.1923676-5-ojeda@kernel.org>
 From: David Gow <davidgow@google.com>
-Date: Mon, 5 May 2025 14:02:18 +0800
-X-Gm-Features: ATxdqUGk-208LuwU83pB8PjZACgO3m0UULik7N9jS6i3J2EgxkCEtrpGH_sixD8
-Message-ID: <CABVgOSms9m6zRsaC0d3PLxe+Q1x7d0a5+mMqQrT9Nk2onqC9=w@mail.gmail.com>
-Subject: Re: [PATCH 3/7] rust: add `kunit_tests` to the prelude
+Date: Mon, 5 May 2025 14:02:27 +0800
+X-Gm-Features: ATxdqUF6EdsL7SwB1urmnOEViLCdlZsMgaJwS1kXgK1SH7tDIH1XcPGp_Dr9CT8
+Message-ID: <CABVgOSkgZ1A4Org42Ge2eo_ANHwnQ5wmzsK-7UYBmqnEPVgrLQ@mail.gmail.com>
+Subject: Re: [PATCH 4/7] rust: str: convert `rusttest` tests into KUnit
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Brendan Higgins <brendan.higgins@linux.dev>, Alex Gaynor <alex.gaynor@gmail.com>, 
 	Rae Moar <rmoar@google.com>, linux-kselftest@vger.kernel.org, 
@@ -75,24 +75,23 @@ Cc: Brendan Higgins <brendan.higgins@linux.dev>, Alex Gaynor <alex.gaynor@gmail.
 	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000d4c4a806345d3ed0"
+	boundary="00000000000079411706345d3f76"
 
---000000000000d4c4a806345d3ed0
+--00000000000079411706345d3f76
 Content-Type: text/plain; charset="UTF-8"
 
 On Sat, 3 May 2025 at 05:52, Miguel Ojeda <ojeda@kernel.org> wrote:
 >
-> It is convenient to have certain things in the `kernel` prelude, and
-> means kernel developers will find it even easier to start writing tests.
+> In general, we should aim to test as much as possible within the actual
+> kernel, and not in the build host.
 >
-> And, anyway, nobody should need to use this identifier for anything else.
->
-> Thus add it to the prelude.
+> Thus convert these `rusttest` tests into KUnit tests.
 >
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 > ---
 
-Definitely a fan of this here, thanks!
+I'm obviously a fan of this. Assuming no-one working on the str code
+strenuously objects, let's do it!
 
 Reviewed-by: David Gow <davidgow@google.com>
 
@@ -100,63 +99,51 @@ Cheers,
 -- David
 
 
->  rust/kernel/kunit.rs   | 3 +--
->  rust/kernel/prelude.rs | 2 +-
->  rust/macros/lib.rs     | 2 +-
->  3 files changed, 3 insertions(+), 4 deletions(-)
+>  rust/kernel/str.rs | 10 ++++------
+>  1 file changed, 4 insertions(+), 6 deletions(-)
 >
-> diff --git a/rust/kernel/kunit.rs b/rust/kernel/kunit.rs
-> index f43e3ed460c2..053a7da147d5 100644
-> --- a/rust/kernel/kunit.rs
-> +++ b/rust/kernel/kunit.rs
-> @@ -6,6 +6,7 @@
->  //!
->  //! Reference: <https://docs.kernel.org/dev-tools/kunit/index.html>
+> diff --git a/rust/kernel/str.rs b/rust/kernel/str.rs
+> index 878111cb77bc..cf2caa2db168 100644
+> --- a/rust/kernel/str.rs
+> +++ b/rust/kernel/str.rs
+> @@ -6,7 +6,7 @@
+>  use core::fmt::{self, Write};
+>  use core::ops::{self, Deref, DerefMut, Index};
 >
+> -use crate::error::{code::*, Error};
 > +use crate::prelude::*;
->  use core::{ffi::c_void, fmt};
 >
->  /// Prints a KUnit error-level message.
-> @@ -40,8 +41,6 @@ pub fn info(args: fmt::Arguments<'_>) {
->      }
+>  /// Byte string without UTF-8 validity guarantee.
+>  #[repr(transparent)]
+> @@ -572,8 +572,7 @@ macro_rules! c_str {
+>      }};
 >  }
 >
-> -use macros::kunit_tests;
-> -
->  /// Asserts that a boolean expression is `true` at runtime.
->  ///
->  /// Public but hidden since it should only be used from generated tests.
-> diff --git a/rust/kernel/prelude.rs b/rust/kernel/prelude.rs
-> index baa774a351ce..e5d61a83952f 100644
-> --- a/rust/kernel/prelude.rs
-> +++ b/rust/kernel/prelude.rs
-> @@ -17,7 +17,7 @@
->  pub use crate::alloc::{flags::*, Box, KBox, KVBox, KVVec, KVec, VBox, VVec, Vec};
+> -#[cfg(test)]
+> -#[expect(clippy::items_after_test_module)]
+> +#[kunit_tests(rust_kernel_str)]
+>  mod tests {
+>      use super::*;
 >
->  #[doc(no_inline)]
-> -pub use macros::{export, module, vtable};
-> +pub use macros::{export, kunit_tests, module, vtable};
+> @@ -622,11 +621,10 @@ fn test_cstr_to_str() {
+>      }
 >
->  pub use pin_init::{init, pin_data, pin_init, pinned_drop, InPlaceWrite, Init, PinInit, Zeroable};
+>      #[test]
+> -    #[should_panic]
+> -    fn test_cstr_to_str_panic() {
+> +    fn test_cstr_to_str_invalid_utf8() {
+>          let bad_bytes = b"\xc3\x28\0";
+>          let checked_cstr = CStr::from_bytes_with_nul(bad_bytes).unwrap();
+> -        checked_cstr.to_str().unwrap();
+> +        assert!(checked_cstr.to_str().is_err());
+>      }
 >
-> diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
-> index 8bd7906276be..8b8d46e759d4 100644
-> --- a/rust/macros/lib.rs
-> +++ b/rust/macros/lib.rs
-> @@ -406,7 +406,7 @@ pub fn paste(input: TokenStream) -> TokenStream {
->  /// # Examples
->  ///
->  /// ```ignore
-> -/// # use macros::kunit_tests;
-> +/// # use kernel::prelude::*;
->  /// #[kunit_tests(kunit_test_suit_name)]
->  /// mod tests {
->  ///     #[test]
+>      #[test]
 > --
 > 2.49.0
 >
 
---000000000000d4c4a806345d3ed0
+--00000000000079411706345d3f76
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -246,13 +233,13 @@ uFrCoYIRlx4rSVHpBIKgnsgdm0SFQK72MPmIkfhfq9Fh0h8AjhF73sLO7K5BfwWkx1gwMySyNY0e
 PCRYr6WEVOkUJS0a0fui693ymMPFLQAimmz8EpyFok4Ju066StkYO1dIgUIla4x61auxkWHwnzGC
 Al0wggJZAgEBMGgwVDELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExKjAo
 BgNVBAMTIUdsb2JhbFNpZ24gQXRsYXMgUjYgU01JTUUgQ0EgMjAyMwIQAcDMKctW1GQKDKqEUSh4
-pjANBglghkgBZQMEAgEFAKCBxzAvBgkqhkiG9w0BCQQxIgQgyVIv2KTG0sHx4GPvduQfEpjs4QHi
-wtvMFVXMrQLcCRUwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjUw
-NTA1MDYwMjMxWjBcBgkqhkiG9w0BCQ8xTzBNMAsGCWCGSAFlAwQBKjALBglghkgBZQMEARYwCwYJ
+pjANBglghkgBZQMEAgEFAKCBxzAvBgkqhkiG9w0BCQQxIgQgH87kuncbEO6yBWR2JHuyZxiwAcci
+kLIx0eD4cF7fp3AwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjUw
+NTA1MDYwMjQxWjBcBgkqhkiG9w0BCQ8xTzBNMAsGCWCGSAFlAwQBKjALBglghkgBZQMEARYwCwYJ
 YIZIAWUDBAECMAoGCCqGSIb3DQMHMAsGCSqGSIb3DQEBBzALBglghkgBZQMEAgEwDQYJKoZIhvcN
-AQEBBQAEggEARh/P8k6MEkGRGwnfpD/rMXfxBc/VhVG/OvFcddjCD8bpgDC0EUiEJr2GytY8LGUc
-29UZ5cCrvKuklf4NNr1O4PqnC68YfZXCnh6mZLEjWZ6BmhFaULYFz6Y+BrdiujBNzx0l3yZ4fZ3u
-ZXqlxhaYzE3ae950aUgsMotg/UQ6jRNBkc9zpvYSj3An+y/zyBl6Q/QrBQH0VqQbaWpkjRgmwZMB
-M+AUnXTllwOte2KdN8hJxR3VZCpo9C3g05HDfFM3Ql7VMQAubUIqIbJC+RbWoZJwRLt0RKMhVMf6
-MInwxwMENPWnHkeHhOGkv1Hr4rLSkHEE5hPwG0AKyMfKvplNfw==
---000000000000d4c4a806345d3ed0--
+AQEBBQAEggEAj3zm/U8C7ACBhY1CSIBEMN9MUw3jBwzsHH+4NDPHKOdsQuLQhUEGp6CJTK+yvEgS
+/MxrNpFRz6BCFmf/8KoUilGIedWCH6FucQGRuo08CqKwF7kxS1qmHF44XnbPxhyNAxd08ZSmRgp/
+XFesAp92qTcL+aZZIWQQiMqpP1fgiksMckYlddTGTw5fIdSSkuJnkdk/bKYiXf+Nm8VgxdOgxaF+
+VOybUDaTT8mX/BCwB4I6BFNaFw9HszPq9DmBE+cXibjndLbfHgqixVYSi+exQLUDnQUK4PnrUK9p
+jIAEMk1L9ip4UYIwhJSKc/y1Zoi+TV1p8437SYhnw7jx+NDsSA==
+--00000000000079411706345d3f76--
