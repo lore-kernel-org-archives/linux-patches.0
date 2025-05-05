@@ -1,107 +1,81 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D669026D4CD
-	for <patches@lists.linux.dev>; Mon,  5 May 2025 17:38:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1179626B978;
+	Mon,  5 May 2025 17:45:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746466718; cv=none; b=IoWbAlzAiIMrYTCbEqdXyl9kS4NMXQPUWP/eJpmkOjCN32AKOBHlUhO1Wdj6Pf7rxNu0l9+M6LaLDTziQbs4O15KFI5dILfrYrAC0uo0wyEqi8N16B0pLERkjjjQ5z7JnVip2sZU8/V0zNMVlnx5GIi6XvzWkNtRVPFjW1bY0J4=
+	t=1746467105; cv=none; b=BqY4/j2IJyla4ab5eRY2PcM06RcFXZZ0y9f36dHe2VOLDFfQ0mBb7Oqil+akaM75YMtdt07bfzpUP2ybXP/1focJX9KoOC1NvhztIuARtWsIpYtbKQbn3reAk/SOdYIz1ZLiVYMW7TzBdY8C9Pkn7mfG9XOybpQL4ZuMCeb2HpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746466718; c=relaxed/simple;
-	bh=Mzf4z3JjeUDeBLBOc9nbGSbBtSvIhz9Znl+rjIhT6PU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mjWXLAHCpC6r2aCb4kAyObG63jVeQ7QBy75uDu75e8pJ/jpKgJ0JmcdIToYRIMEMCMfrmpCmN858JkEFHqRHzVqRPMjWd5Qx4ZqmXEkFj/I3OR+89b6nqbr6ivdlO2ocKjduWRU/Jz4pjXBndXPfKEcWetioJ7Nl5e5FblT+3KU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SPgqdkxD; arc=none smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1746467105; c=relaxed/simple;
+	bh=tk7U1ZYOt9dOOZMnnMpk17Wvn2aRgYFBIaSakS84d4o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NYaQZWkAyMVbiD5Zq2FNAXbituCd8khwgIxVW8Zcp7PyI9B7Uy218tEcBflUAAh+KVNj+wYiJ5fN0ja8LUQXrw7elHaOJyYafk0K/WVYIznOip+Vw2d2WcVugTjgG5HTRWBPCdFoY8utumMUztNhXtN1zOibeNMlGtAsuXPWTRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fAtZ7ffp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SPgqdkxD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1746466717; x=1778002717;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=Mzf4z3JjeUDeBLBOc9nbGSbBtSvIhz9Znl+rjIhT6PU=;
-  b=SPgqdkxD2ritFXTfbTjll5At4uMciXgEhJbYvpTuTYAWDmE9svTzdgD7
-   wXlJ+awh7EhdqiBqogE4AN93wOT7kvEYh5qEHuJ0Z0EPRbm+qKhgifxyt
-   wW1LnXgrsmUFFKdhnmjxlnhgjmbJLGeovIr2BxsGDXpaflf886i3Ac3lt
-   xziFAlRYC+BMzxCzBWnHQXqdc2nVyQmOwd2CaSYmhgZHOWCjg7FiJwyR/
-   m6u+Ax/Zco+bjPgpAAVw3UzGD5BH/rMx0O9Dp0AIKW79/pMxRUlcXKUSo
-   6Q7SbxkU5hg7NRfJGV6YJF3yfNc70biGLFF76/936YXCnGBPTkn5qeEXm
-   w==;
-X-CSE-ConnectionGUID: eB+peN8jT22xp0kM0Sorzw==
-X-CSE-MsgGUID: 8QNTGaZWTQa53PZ0tjrHcQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11424"; a="47991520"
-X-IronPort-AV: E=Sophos;i="6.15,264,1739865600"; 
-   d="scan'208";a="47991520"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2025 10:38:28 -0700
-X-CSE-ConnectionGUID: cQ6n0HIDSqaaMSj/gcpTBA==
-X-CSE-MsgGUID: ht8awrqQTrukANsIgRozgQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,264,1739865600"; 
-   d="scan'208";a="140092233"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
-  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2025 10:38:28 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: rafael@kernel.org
-Cc: lenb@kernel.org,
-	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
-	linux-acpi@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v5 3/3] ACPI: Add documentation for exposing MRRM data
-Date: Mon,  5 May 2025 10:38:19 -0700
-Message-ID: <20250505173819.419271-4-tony.luck@intel.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250505173819.419271-1-tony.luck@intel.com>
-References: <20250505173819.419271-1-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fAtZ7ffp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC6DC4CEE4;
+	Mon,  5 May 2025 17:45:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746467104;
+	bh=tk7U1ZYOt9dOOZMnnMpk17Wvn2aRgYFBIaSakS84d4o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fAtZ7ffpayHrfo5skM+RXAF7CKeDQkgDBUvzBGEZWc3APg/G2/CDXhqZodgNJW6T2
+	 +p0DnskLEc+bjm2BqJcDFHeaOykHmsIvhHJgHUInAXfny0FPYbxIZbON2XyUKxlFDc
+	 TxzNcr6xu56fdS/Af4ksJPDteOqDg/NZtXuBCdD//bqqs+4HMUKio7h7bMAzyuw3bz
+	 LNjvgm9P5XIqnynn+B7oqPyJTNgA5za5ykuFNhRIFwpslO08+2OifTa2pTY5VeSNZ+
+	 6jMOkvS4Jwz4i8VPAOg+4Yjn6rAwto0gdnriS3SK/hG2lkVsDEycJNJjPP6N89Rpnl
+	 8eARugLl26RXA==
+Date: Mon, 5 May 2025 10:44:58 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Jonathan Corbet <corbet@lwn.net>, iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>,
+	Justin Stitt <justinstitt@google.com>,
+	Kevin Tian <kevin.tian@intel.com>, linux-doc@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, llvm@lists.linux.dev,
+	Bill Wendling <morbo@google.com>,
+	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Will Deacon <will@kernel.org>, Alexey Kardashevskiy <aik@amd.com>,
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	James Gowans <jgowans@amazon.com>,
+	Michael Roth <michael.roth@amd.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev
+Subject: Re: [PATCH v2 15/15] iommupt: Add a kunit test for the IOMMU
+ implementation
+Message-ID: <20250505174458.GA226031@ax162>
+References: <0-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com>
+ <15-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <15-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com>
 
-Initial implementation provides enumeration of the address ranges
-NUMA node numbers, and BIOS assigned region IDs for each range.
+On Mon, May 05, 2025 at 11:18:45AM -0300, Jason Gunthorpe wrote:
+> This intends to have high coverage of the page table format functions and
+> the IOMMU implementation itself, exercising the various corner cases.
+> 
+> The kunit can be run in the kunit framework, using commands like:
+> 
+> tools/testing/kunit/kunit.py run --build_dir build_kunit_arm64 --arch arm64 --make_options LLVM=1 --make_options LLVM_SUFFIX=-19 --kunitconfig ./drivers/iommu/generic_pt/.kunitconfig
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- Documentation/ABI/testing/sysfs-firmware-acpi | 21 +++++++++++++++++++
- 1 file changed, 21 insertions(+)
+Just a small comment about the command:
 
-diff --git a/Documentation/ABI/testing/sysfs-firmware-acpi b/Documentation/ABI/testing/sysfs-firmware-acpi
-index 5249ad5a96d9..fffba38f9ce1 100644
---- a/Documentation/ABI/testing/sysfs-firmware-acpi
-+++ b/Documentation/ABI/testing/sysfs-firmware-acpi
-@@ -248,3 +248,24 @@ Description:
- 		  # cat ff_pwr_btn
- 		  7	enabled
- 
-+What:		/sys/firmware/acpi/memory_ranges/rangeX
-+Date:		February 2025
-+Contact:	Tony Luck <tony.luck@intel.com>
-+Description:
-+		On systems with the ACPI MRRM table reports the
-+		parameters for each range.
-+
-+		base: Starting system physical address.
-+
-+		length: Length of this range in bytes.
-+
-+		node: NUMA node that this range belongs to. Negative numbers
-+		indicate that the node number could not be determined (e.g
-+		for an address range that is reserved for future hot add of
-+		memory).
-+
-+		local_region_id: ID associated with access by agents
-+		local to this range of addresses.
-+
-+		remote_region_id: ID associated with access by agents
-+		non-local to this range of addresses.
--- 
-2.48.1
+  --make_options LLVM=1 --make_options LLVM_SUFFIX=-19
 
+can be simplified to just
+
+  --make_options LLVM=-19
+
+You should never need to specify either LLVM_SUFFIX or LLVM_PREFIX.
+
+Cheers,
+Nathan
