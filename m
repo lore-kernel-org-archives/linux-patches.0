@@ -1,70 +1,70 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9A3EEBA
-	for <patches@lists.linux.dev>; Mon,  5 May 2025 06:02:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709241B3955
+	for <patches@lists.linux.dev>; Mon,  5 May 2025 06:02:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746424938; cv=none; b=BfMForsiJ948HjhmzpABQ2+8P2gpOJxTZ8Efv4YoZdpKRxUs+htDO20BBjEULFhrZ013j1J+2s9HFmxWmzo9xJSVWfVqsNc25Au65gZy2moZrNd14KJw7IJHM1PdmHNhx++ABD0jYAltNIJsKX40Jra1SL72eubt/VwlQCFWf64=
+	t=1746424945; cv=none; b=iew+giILtBEMLy2EXKR7xzsqGoGtmcsRLWOzfLF499aBRkNWvkBi+WgpJuiC6RsiGz8wov+DcOHsPk+fU5ywuXAt/fd29P9OckvpgQaAbSHzThj+Wk7GURjSb7e8xCTGlWCQVvrbFMoFErFzam24b4OHHz/AFSPY2BtYgx5e/DE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746424938; c=relaxed/simple;
-	bh=4sbg6ymhkyW/FKS9s/U4xEps4g4EO/fqk2Db8UPs3dw=;
+	s=arc-20240116; t=1746424945; c=relaxed/simple;
+	bh=B0QjVnWAO/yyvcSCk2bKDa1ahF/k3a5NiQuPxyp2vIQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jKsh9rzMM9w3yO11UIPX9jlYCff91hYbI2D1y/lBZWV7K8aLcwWc21LYH58hbQUYRHn8CQQmghdBAcrsG6u9H8BpDRPJcHGewYRlXAdeXykXEpLbK5lQnB60rw5LPNRDo0IV0aSbMPmMDrgZ5g6srnWv57QD0dHdZppGo983snw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OhkQWomc; arc=none smtp.client-ip=209.85.219.41
+	 To:Cc:Content-Type; b=JP6G6r/oit/J6OXVIyrIVIleqt/D0U/pDBFqUWvi5BeZ9IF9tAQtYWOQ6iV7WKZ6fwnUBEni+S2J44DFWimB1ADt0oNjH6HNfo1poEbbYF0V8IEOpWHhTp4IokAQmBuuQ0Dij+tHzjwsP40rh3foLfdYi4E6THB4ib1SQ3064HY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=rYd62OEx; arc=none smtp.client-ip=209.85.219.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OhkQWomc"
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-6f2b05f87fdso42911506d6.2
-        for <patches@lists.linux.dev>; Sun, 04 May 2025 23:02:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="rYd62OEx"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6e8f8657f29so41616126d6.3
+        for <patches@lists.linux.dev>; Sun, 04 May 2025 23:02:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1746424935; x=1747029735; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1746424942; x=1747029742; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=kAVcmICawq2dBV8MifondGvQG2Puksul4i45UZuVP1w=;
-        b=OhkQWomcmIiW5tXrAS4tDYqHYFqh+K+Xg7moTBO47qUsueiMs6wCl8bvqBm9p/RfCn
-         jim0kfT0OgFMr60NPxbcShxX4ljgHLOQt/MxGlzV8n2yX/QZKDaptWMwwDNapctG/rJ3
-         Dv/GHJFIlD55g24XHY1+hpMwxg4w7W8EAULk9AK0Uwu/fIpwk4oyBm+meUzr6jxd74nq
-         2xe9gVBYGlp0kAC1RUsCf0HOgBt8Jt5BrL3JFRnfk9ITY4NnzPf81GFdJ/LhtEl/BdNv
-         iBUtjjk9d6+dbc01bXEx9etccqELZysv4m0PnNVPEdhfrAdFrqUV6hsNafjraUWbBDhK
-         jXjw==
+        bh=03A52pl8wZ8tsDZymwaXxsvz/K8nNmWFzlMw0k70i/U=;
+        b=rYd62OExCmSrROZI9QsuJ9ZMnRLpCnryVASrDYtwjM2VOs8ejDC5fW24VN7Kt4ldB/
+         EGiUrHKkTnazmZ9VHYW1/eXsAghtnDRu2ZufoeeM68qVYF33Uam7Zd3vaycAkGiB3CuH
+         UGlCJkPaIJuzaTl/8YC/2pCiguHBoDk3dRDtrF5Z2mF2DrnC79HEMmrRpuNgIVeoysK/
+         V7pczyWv4fI5XP7k3n3XlG31LNODaAQMEhvyPakF6pudSsfN34w4WDcf7HcJOg3ZHb0z
+         nQs6zfvGRw7LIWkqBqyqmenvAvVKqySNzdNeSHYYQIXqHbEusIod5LaVWbCTJF8XNCCJ
+         O8LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746424935; x=1747029735;
+        d=1e100.net; s=20230601; t=1746424942; x=1747029742;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=kAVcmICawq2dBV8MifondGvQG2Puksul4i45UZuVP1w=;
-        b=T5a031pvFGvWiAibZGoSGUTwNVhQ8S0lqAsHPGH4ZO9EEsi2sFsSYZuQfFWDx4IP22
-         WUKe0jRsiEdGKUACFH8vKOifWiBii8nxy1y43OjLZEzrHzPFP2CTuksQLB3VjCQXpt0A
-         vZ6yzwVbuysm9UBCz7BEmJfO/0E1zowSqtlVZMPnLczOc4qMYKIe6/VC2uigib0mvT5j
-         t4i6ZMf3Sbo/0/EXoZKQ+UIKbP23RssQj9nykKkOEwUyOTFhRm/Ahw+U4BIqb5yNx2X3
-         QxquqElhNtfPDEGImSENz/iMMYYVEz0+Et/hpLdZjO6XF9PJerrVIQMA/ipQS71UnWiX
-         hICw==
-X-Forwarded-Encrypted: i=1; AJvYcCXfVM1IN0EVXaAntq4wLmSc1fViLrz608ijyP3vKBTAJrQRxM3b1FUn16jV8o1GI5/WPQYeh85J@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzih/ODNbD9PAC00MskoQ146glb60jqQLPNsixdyMpCe6PluXws
-	lWidh8wRERpMaJDl9u27t4lh5zKyVgOGkT3Ih8tDTruJepxHucyu4S3fcWuQj58D/ETey4lKPcI
-	gZLIXrDHnduyDTQhmQDFCP1kKr+m86xiMDxEa
-X-Gm-Gg: ASbGncsZ07U3pftsZxSv+Oe/ay3j/0b/sHU0fOqDipYLYk2/h5Iqb0fuHDFhvclCijh
-	7PKyrWEnwnbQqJxjh5MyFYExhyOY8FzXH2w1THF/WeSm0kFR+k082WT2SyH8ml9vt5R3OqO7cy1
-	d2KHSEF5vIarQbkOSOU/Cc3X0=
-X-Google-Smtp-Source: AGHT+IFz19h0gtF/Pkgj8MIlU04lhiA1UrobGXAJyyRiR553mQw9E+ThHfqS3TMI0jLj9Ed3i4AtmKEStU/WCDquLjw=
-X-Received: by 2002:a05:6214:ac1:b0:6e4:4331:aae6 with SMTP id
- 6a1803df08f44-6f51580c1fbmr162530186d6.39.1746424934881; Sun, 04 May 2025
- 23:02:14 -0700 (PDT)
+        bh=03A52pl8wZ8tsDZymwaXxsvz/K8nNmWFzlMw0k70i/U=;
+        b=MYb2wMqVXjqMoJiXHRiLAX9exE1hGbeUJt6E5e0q5zE0jmF7b8xbxaa1/GW/FJjfV0
+         E2IhtIha7DiLWx/Ptgcf/BjhQ2Y3tayXa3ZYKGvju3+vZcwb7jD1hTGLm0x0u+06P8mS
+         fUmGexVCWNbAP3CzXpnwz0LG4Nahz46fUP75f1YQ1Ukun0bRPSYUNYIaNLQm2ql50iQg
+         0CwBfCK9GBnoUT1SkagBFQisv+sIlA5FPVNq18h2lP6nbzAcdwWDUkZDJqTcD169kxDE
+         Q4e+fJDFmMI4S+C7XZi54iXRefkclD5tR7jTSJRfnFCmnkRkWFhg7Phsmu01i8coEZf7
+         B5JA==
+X-Forwarded-Encrypted: i=1; AJvYcCW5YUdyQUe40EoTvkxdiy4rjMM4KWYy7SkWeqCgdZgEVBzck/FLL0g1OZSV1N//FdNTsf+vemA/@lists.linux.dev
+X-Gm-Message-State: AOJu0YzXyupJNJkVW818B4N/j3LGm86YV3qUVgaJt7TsSkS37PUlpVqv
+	n0t9gNrGIXplvephCMDMnrX44XjeZrueUJRMdxlqf41srsF/TxRuAg85C7oNHJQteN2+rpGFfft
+	C/X0DmiSpIuVSURQ2wjOBHWU5shDLufkllteM
+X-Gm-Gg: ASbGnct/45lCEkSDKZNkOy29iKVt3pOaCMQsnR8nKEiB0XExLTrAj6lkKljewuSkcFZ
+	L6TtImYxMLd4ygmBT2ahO4KUT3+Sf5CCdTc1PXv5Vune3RyZYfL5xL08pM4amYWEbKFL1dMCv68
+	T6S5OwvdNv4qBH6Ys+lBU7dBsNaC8Xre3bew==
+X-Google-Smtp-Source: AGHT+IENwTVXLe0Zw2O1nUpfwQXnNBCVqTq4UiTlOPBV71cZTouue+7h2pZ+FTYfkSRyTTOhACxuS/VjEDiAolqr37Y=
+X-Received: by 2002:a05:6214:23c6:b0:6e4:4194:df35 with SMTP id
+ 6a1803df08f44-6f528c3ec64mr103380936d6.9.1746424942052; Sun, 04 May 2025
+ 23:02:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250502215133.1923676-1-ojeda@kernel.org> <20250502215133.1923676-2-ojeda@kernel.org>
-In-Reply-To: <20250502215133.1923676-2-ojeda@kernel.org>
+References: <20250502215133.1923676-1-ojeda@kernel.org> <20250502215133.1923676-3-ojeda@kernel.org>
+In-Reply-To: <20250502215133.1923676-3-ojeda@kernel.org>
 From: David Gow <davidgow@google.com>
-Date: Mon, 5 May 2025 14:02:00 +0800
-X-Gm-Features: ATxdqUHZERB2C3U4u6kShNMtwcE3PTFscuVcnOz4kZR6nB5RLwbx3SVgk-Qjzpo
-Message-ID: <CABVgOSnTYwYtoMXCC-mUxV=A2quCrA+CD1Qe32n=qddxLKpcUw@mail.gmail.com>
-Subject: Re: [PATCH 1/7] rust: kunit: support KUnit-mapped `assert!` macros in `#[test]`s
+Date: Mon, 5 May 2025 14:02:09 +0800
+X-Gm-Features: ATxdqUF9V_rvhFyRGFAGYXIbVphSS3lW64Xn1BEyDIoe-HUn4JUFA_DHxJFMkSY
+Message-ID: <CABVgOSm8T+_kXY78sioUHEcG7rYApfWK2Gfxkrvw94Dz57G0oQ@mail.gmail.com>
+Subject: Re: [PATCH 2/7] rust: kunit: support checked `-> Result`s in KUnit `#[test]`s
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Brendan Higgins <brendan.higgins@linux.dev>, Alex Gaynor <alex.gaynor@gmail.com>, 
 	Rae Moar <rmoar@google.com>, linux-kselftest@vger.kernel.org, 
@@ -75,70 +75,48 @@ Cc: Brendan Higgins <brendan.higgins@linux.dev>, Alex Gaynor <alex.gaynor@gmail.
 	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000e7f90106345d3d62"
+	boundary="00000000000054fb7e06345d3eaf"
 
---000000000000e7f90106345d3d62
+--00000000000054fb7e06345d3eaf
 Content-Type: text/plain; charset="UTF-8"
 
 On Sat, 3 May 2025 at 05:51, Miguel Ojeda <ojeda@kernel.org> wrote:
 >
-> The KUnit `#[test]` support that landed recently is very basic and does
-> not map the `assert*!` macros into KUnit like the doctests do, so they
-> panic at the moment.
+> Currently, return values of KUnit `#[test]` functions are ignored.
 >
-> Thus implement the custom mapping in a similar way to doctests, reusing
-> the infrastructure there.
+> Thus introduce support for `-> Result` functions by checking their
+> returned values.
 >
-> In Rust 1.88.0, the `file()` method in `Span` may be stable [1]. However,
-> it was changed recently (from `SourceFile`), so we need to do something
-> different in previous versions. Thus create a helper for it and use it
-> to get the path.
+> At the same time, require that test functions return `()` or `Result<T,
+> E>`, which should avoid mistakes, especially with non-`#[must_use]`
+> types. Other types can be supported in the future if needed.
 >
-> With this, a failing test suite like:
+> With this, a failing test like:
 >
->     #[kunit_tests(my_test_suite)]
->     mod tests {
->         use super::*;
->
->         #[test]
->         fn my_first_test() {
->             assert_eq!(42, 43);
->         }
->
->         #[test]
->         fn my_second_test() {
->             assert!(42 >= 43);
->         }
+>     #[test]
+>     fn my_test() -> Result {
+>         f()?;
+>         Ok(())
 >     }
 >
-> will properly map back to KUnit, printing something like:
+> will output:
 >
->     [    1.924325]     KTAP version 1
->     [    1.924421]     # Subtest: my_test_suite
->     [    1.924506]     # speed: normal
->     [    1.924525]     1..2
->     [    1.926385]     # my_first_test: ASSERTION FAILED at rust/kernel/lib.rs:251
->     [    1.926385]     Expected 42 == 43 to be true, but is false
->     [    1.928026]     # my_first_test.speed: normal
->     [    1.928075]     not ok 1 my_first_test
->     [    1.928723]     # my_second_test: ASSERTION FAILED at rust/kernel/lib.rs:256
->     [    1.928723]     Expected 42 >= 43 to be true, but is false
->     [    1.929834]     # my_second_test.speed: normal
->     [    1.929868]     not ok 2 my_second_test
->     [    1.930032] # my_test_suite: pass:0 fail:2 skip:0 total:2
->     [    1.930153] # Totals: pass:0 fail:2 skip:0 total
+>     [    3.744214]     KTAP version 1
+>     [    3.744287]     # Subtest: my_test_suite
+>     [    3.744378]     # speed: normal
+>     [    3.744399]     1..1
+>     [    3.745817]     # my_test: ASSERTION FAILED at rust/kernel/lib.rs:321
+>     [    3.745817]     Expected is_test_result_ok(my_test()) to be true, but is false
+>     [    3.747152]     # my_test.speed: normal
+>     [    3.747199]     not ok 1 my_test
+>     [    3.747345] not ok 4 my_test_suite
 >
-> Link: https://github.com/rust-lang/rust/pull/140514 [1]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 > ---
 
-Nice! While I do think there may still be some cases where we might
-want to use KUnit-specific macros in the future (particularly if we
-have more complex, multithreaded test contexts), this is definitely
-better for most cases.
-
-I also managed to test it against the 1.88 nightly, and the message is
-looking good.
+This is a neat idea. I think a lot of tests will still want to go with
+the () return value, but having both as an option seems like a good
+idea to me.
 
 Reviewed-by: David Gow <davidgow@google.com>
 
@@ -146,151 +124,66 @@ Cheers,
 -- David
 
 
->  init/Kconfig           |  3 +++
->  rust/Makefile          |  3 ++-
->  rust/kernel/kunit.rs   |  1 -
->  rust/macros/helpers.rs | 16 ++++++++++++++++
->  rust/macros/kunit.rs   | 28 +++++++++++++++++++++++++++-
->  rust/macros/lib.rs     |  4 ++++
->  6 files changed, 52 insertions(+), 3 deletions(-)
+>  rust/kernel/kunit.rs | 25 +++++++++++++++++++++++++
+>  rust/macros/kunit.rs |  3 ++-
+>  2 files changed, 27 insertions(+), 1 deletion(-)
 >
-> diff --git a/init/Kconfig b/init/Kconfig
-> index 63f5974b9fa6..5f442c64c47b 100644
-> --- a/init/Kconfig
-> +++ b/init/Kconfig
-> @@ -140,6 +140,9 @@ config LD_CAN_USE_KEEP_IN_OVERLAY
->  config RUSTC_HAS_COERCE_POINTEE
->         def_bool RUSTC_VERSION >= 108400
->
-> +config RUSTC_HAS_SPAN_FILE
-> +       def_bool RUSTC_VERSION >= 108800
-> +
->  config PAHOLE_VERSION
->         int
->         default $(shell,$(srctree)/scripts/pahole-version.sh $(PAHOLE))
-> diff --git a/rust/Makefile b/rust/Makefile
-> index 3aca903a7d08..075b38a24997 100644
-> --- a/rust/Makefile
-> +++ b/rust/Makefile
-> @@ -402,7 +402,8 @@ quiet_cmd_rustc_procmacro = $(RUSTC_OR_CLIPPY_QUIET) P $@
->                 -Clink-args='$(call escsq,$(KBUILD_PROCMACROLDFLAGS))' \
->                 --emit=dep-info=$(depfile) --emit=link=$@ --extern proc_macro \
->                 --crate-type proc-macro \
-> -               --crate-name $(patsubst lib%.$(libmacros_extension),%,$(notdir $@)) $<
-> +               --crate-name $(patsubst lib%.$(libmacros_extension),%,$(notdir $@)) \
-> +               @$(objtree)/include/generated/rustc_cfg $<
->
->  # Procedural macros can only be used with the `rustc` that compiled it.
->  $(obj)/$(libmacros_name): $(src)/macros/lib.rs FORCE
 > diff --git a/rust/kernel/kunit.rs b/rust/kernel/kunit.rs
-> index 1604fb6a5b1b..2659895d4c5d 100644
+> index 2659895d4c5d..f43e3ed460c2 100644
 > --- a/rust/kernel/kunit.rs
 > +++ b/rust/kernel/kunit.rs
-> @@ -323,7 +323,6 @@ mod tests {
->
->      #[test]
->      fn rust_test_kunit_example_test() {
-> -        #![expect(clippy::eq_op)]
->          assert_eq!(1 + 1, 2);
->      }
->
-> diff --git a/rust/macros/helpers.rs b/rust/macros/helpers.rs
-> index a3ee27e29a6f..57c3b0f0c194 100644
-> --- a/rust/macros/helpers.rs
-> +++ b/rust/macros/helpers.rs
-> @@ -86,3 +86,19 @@ pub(crate) fn function_name(input: TokenStream) -> Option<Ident> {
->      }
->      None
+> @@ -164,6 +164,31 @@ macro_rules! kunit_assert_eq {
+>      }};
 >  }
+>
+> +trait TestResult {
+> +    fn is_test_result_ok(&self) -> bool;
+> +}
 > +
-> +pub(crate) fn file() -> String {
-> +    #[cfg(not(CONFIG_RUSTC_HAS_SPAN_FILE))]
-> +    {
-> +        proc_macro::Span::call_site()
-> +            .source_file()
-> +            .path()
-> +            .to_string_lossy()
-> +            .into_owned()
-> +    }
-> +
-> +    #[cfg(CONFIG_RUSTC_HAS_SPAN_FILE)]
-> +    {
-> +        proc_macro::Span::call_site().file()
+> +impl TestResult for () {
+> +    fn is_test_result_ok(&self) -> bool {
+> +        true
 > +    }
 > +}
+> +
+> +impl<T, E> TestResult for Result<T, E> {
+> +    fn is_test_result_ok(&self) -> bool {
+> +        self.is_ok()
+> +    }
+> +}
+> +
+> +/// Returns whether a test result is to be considered OK.
+> +///
+> +/// This will be `assert!`ed from the generated tests.
+> +#[doc(hidden)]
+> +#[expect(private_bounds)]
+> +pub fn is_test_result_ok(t: impl TestResult) -> bool {
+> +    t.is_test_result_ok()
+> +}
+> +
+>  /// Represents an individual test case.
+>  ///
+>  /// The [`kunit_unsafe_test_suite!`] macro expects a NULL-terminated list of valid test cases.
 > diff --git a/rust/macros/kunit.rs b/rust/macros/kunit.rs
-> index 4f553ecf40c0..eb4f2afdbe43 100644
+> index eb4f2afdbe43..9681775d160a 100644
 > --- a/rust/macros/kunit.rs
 > +++ b/rust/macros/kunit.rs
-> @@ -101,6 +101,8 @@ pub(crate) fn kunit_tests(attr: TokenStream, ts: TokenStream) -> TokenStream {
->      // ```
->      let mut kunit_macros = "".to_owned();
->      let mut test_cases = "".to_owned();
-> +    let mut assert_macros = "".to_owned();
-> +    let path = crate::helpers::file();
+> @@ -105,8 +105,9 @@ pub(crate) fn kunit_tests(attr: TokenStream, ts: TokenStream) -> TokenStream {
+>      let path = crate::helpers::file();
 >      for test in &tests {
 >          let kunit_wrapper_fn_name = format!("kunit_rust_wrapper_{}", test);
+> +        // An extra `use` is used here to reduce the length of the message.
 >          let kunit_wrapper = format!(
-> @@ -114,6 +116,27 @@ pub(crate) fn kunit_tests(attr: TokenStream, ts: TokenStream) -> TokenStream {
->              test, kunit_wrapper_fn_name
->          )
->          .unwrap();
-> +        writeln!(
-> +            assert_macros,
-> +            r#"
-> +/// Overrides the usual [`assert!`] macro with one that calls KUnit instead.
-> +#[allow(unused)]
-> +macro_rules! assert {{
-> +    ($cond:expr $(,)?) => {{{{
-> +        kernel::kunit_assert!("{test}", "{path}", 0, $cond);
-> +    }}}}
-> +}}
-> +
-> +/// Overrides the usual [`assert_eq!`] macro with one that calls KUnit instead.
-> +#[allow(unused)]
-> +macro_rules! assert_eq {{
-> +    ($left:expr, $right:expr $(,)?) => {{{{
-> +        kernel::kunit_assert_eq!("{test}", "{path}", 0, $left, $right);
-> +    }}}}
-> +}}
-> +        "#
-> +        )
-> +        .unwrap();
->      }
->
->      writeln!(kunit_macros).unwrap();
-> @@ -152,7 +175,10 @@ pub(crate) fn kunit_tests(attr: TokenStream, ts: TokenStream) -> TokenStream {
->          }
->      }
->
-> -    let mut new_body = TokenStream::from_iter(new_body);
-> +    let body = new_body;
-> +    let mut new_body = TokenStream::new();
-> +    new_body.extend::<TokenStream>(assert_macros.parse().unwrap());
-> +    new_body.extend(body);
->      new_body.extend::<TokenStream>(kunit_macros.parse().unwrap());
->
->      tokens.push(TokenTree::Group(Group::new(Delimiter::Brace, new_body)));
-> diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
-> index 9acaa68c974e..8bd7906276be 100644
-> --- a/rust/macros/lib.rs
-> +++ b/rust/macros/lib.rs
-> @@ -6,6 +6,10 @@
->  // and thus add a dependency on `include/config/RUSTC_VERSION_TEXT`, which is
->  // touched by Kconfig when the version string from the compiler changes.
->
-> +// TODO: check that when Rust 1.88.0 is released, this would be enough:
-> +// #![cfg_attr(not(CONFIG_RUSTC_HAS_SPAN_FILE), feature(proc_macro_span))]
-> +#![feature(proc_macro_span)]
-> +
->  #[macro_use]
->  mod quote;
->  mod concat_idents;
+> -            "unsafe extern \"C\" fn {}(_test: *mut kernel::bindings::kunit) {{ {}(); }}",
+> +            "unsafe extern \"C\" fn {}(_test: *mut kernel::bindings::kunit) {{ use kernel::kunit::is_test_result_ok; assert!(is_test_result_ok({}())); }}",
+>              kunit_wrapper_fn_name, test
+>          );
+>          writeln!(kunit_macros, "{kunit_wrapper}").unwrap();
 > --
 > 2.49.0
 >
 
---000000000000e7f90106345d3d62
+--00000000000054fb7e06345d3eaf
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -380,13 +273,13 @@ uFrCoYIRlx4rSVHpBIKgnsgdm0SFQK72MPmIkfhfq9Fh0h8AjhF73sLO7K5BfwWkx1gwMySyNY0e
 PCRYr6WEVOkUJS0a0fui693ymMPFLQAimmz8EpyFok4Ju066StkYO1dIgUIla4x61auxkWHwnzGC
 Al0wggJZAgEBMGgwVDELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExKjAo
 BgNVBAMTIUdsb2JhbFNpZ24gQXRsYXMgUjYgU01JTUUgQ0EgMjAyMwIQAcDMKctW1GQKDKqEUSh4
-pjANBglghkgBZQMEAgEFAKCBxzAvBgkqhkiG9w0BCQQxIgQgUK3/EqcOGO9Y5rt76cagcZTjYYF2
-Pg44A3wewLDKv1EwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjUw
-NTA1MDYwMjE1WjBcBgkqhkiG9w0BCQ8xTzBNMAsGCWCGSAFlAwQBKjALBglghkgBZQMEARYwCwYJ
+pjANBglghkgBZQMEAgEFAKCBxzAvBgkqhkiG9w0BCQQxIgQgNhAn3f/12NBagT16C9hg3zgKpV5j
+dovMJa/O80pk87kwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjUw
+NTA1MDYwMjIyWjBcBgkqhkiG9w0BCQ8xTzBNMAsGCWCGSAFlAwQBKjALBglghkgBZQMEARYwCwYJ
 YIZIAWUDBAECMAoGCCqGSIb3DQMHMAsGCSqGSIb3DQEBBzALBglghkgBZQMEAgEwDQYJKoZIhvcN
-AQEBBQAEggEAKnccjcI3NMcGQ0x/pwdJczsMo7ZIWirv1pMHBXEu7runF7mCpBa9mn1G5JF9poX/
-jG7u/Z0bVb6fvJ0iMOeDiIm46UZbSRHj+Hz00ht7gnwYsmBKsF+/jiBIh0j0ZVE3JzYCnpBLf15h
-h2zHczk+cHEc18o8N7SHoEWvo9vslqCW1tCtJdKhXMntQpzuk1RxAvqnPNCbvbVyRMJ5+qGk1FVd
-Ey5byuG+4e9FRaLaXGbOpoFBpIKkwirELNEVpFpK6gvbrgueY7bDleucbTh6AzJNhbXJCvjQY59B
-ys/dXxJbuv0ReNgNV+Xls3+iv0PGKorE8KQ5W88nuHpQGvnGcQ==
---000000000000e7f90106345d3d62--
+AQEBBQAEggEAbtntQIDFJxZgiRYx58ewaZKuQ6/YKOyKdhry66d8ZEGpfXUUTq1QtPSGV6CpJJFh
+pj5hKgAb6BWnPPzG45NyJ8gvyv9K5Xx9GtcAU0p84f9lQrtq6J1+rtDWw1F41y/z9duU2urCPfgp
+cJxPQnofMVlBfMOeUEjwz02al9CELPyGLbRRQbH5iCLg+ZgOEAPJiFdZfLJwXHsYnW2lX4JrxNQt
+mv7VS0ATjlvViIPgbscw9CFYlbdR75Omn/tAVTxGmKdFvOFQSnXYG60hDaUvnQrHQGkj1t8GdtxC
+74wFLjTnRKC9LzQ6n3X6PGjTvqsPaEfi/PNW/a7ve84Q3UoC4g==
+--00000000000054fb7e06345d3eaf--
