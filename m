@@ -1,90 +1,96 @@
-Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95CA1F5617
-	for <patches@lists.linux.dev>; Mon,  5 May 2025 09:23:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D901F4184;
+	Mon,  5 May 2025 09:28:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746437038; cv=none; b=eBKeQ50b3g/pDsiSUTQwmC9vBq9eyxKNdU9uD/hmlIeCjPNneS0Eh1m7JOn/zlCOXLRgjV0PFZcjB2fOl7/FtcFhbAzq1mb42RXpwR/yRYNIZOYhfgRUMU6m715/YhbDAPQX195/B/jxsurijG6pbdjweLEuE/IcOC722R/P1qM=
+	t=1746437299; cv=none; b=jbWUdBA3R8AHaJyFEIzAAiBG9bZ+yrHOXG/OFJy5Tl3kaD/DqAxmfip2mubDYGVSBbjYbG+9NvpbbBPvpukEqs5Dcq9Yk2GmhboBkNCNQlTsiN6a8Lr8zdFrOaKjbHyktkuUYVu9vR/ihSFqHyn/Ow39rPtLA0Z22vbqygg3olM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746437038; c=relaxed/simple;
-	bh=2xxpj+2ReE48KbP5KJ11PgdY9Ly28L5Z4eGb6xFarec=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=ac6cuu6qswRAA/6U5B+JDuMnjjPGVYBERov0k/KW8ajolzZh2jkM+tBtzZzAlpu/nn7kSRItvilACpQ2jz2bobLIprTbdCcoScqDas2nZ91qHcbve2Dap9VX3X2KhdqlvcUpyu06IZa07Fq6ctr1TnJH1ZfgKTZ6MMh7dxcDHKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=b32T+7Ba; arc=none smtp.client-ip=209.85.128.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
+	s=arc-20240116; t=1746437299; c=relaxed/simple;
+	bh=dCOuf1fuJW62yJ0CcdQm/lsVYvmHoGYJFQZUHRvn+jU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kOEaKqSMl8j5MrRzveO/AgjaFvIkvmWxkIhp8cuQkho2yz1kIJuF4UwVJIKDsPg+3ClKtmBVHd+V4SaQYyAfxT24kPqG/3dTxjFFdiM0PFbzTgcwDXc/59Q4ENtjkQt5Xgde6NVHam+bx4FpNMZZYZxy86JbVM8B8oqfKFdtQow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KSZCvqlU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="b32T+7Ba"
-Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-43cf44b66f7so22863685e9.1
-        for <patches@lists.linux.dev>; Mon, 05 May 2025 02:23:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1746437035; x=1747041835; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UNKpSETC3aRoWs26slbmPYaRhZWnx/HOj+OMKwfNopA=;
-        b=b32T+7Bayv5RmebM4WPJf4wgMhuK9reo4nmYvLViaddj8d0bBvXWFjNgbPiAyuWfyv
-         JhyqEdrZ3WmjU+MHlSEymlDQIc0ed3xkj4ypvrv2xzigI0gz9F9lUvUQrpKypu1aGlWW
-         3SCRtHjmy6IKYseT5LfRYdtAp760U5SSG0zNkrCDWP5joEg+BHMyUuFHL27UhuvHlobP
-         W4nI42fTUJdgp4lifXyMFCThX8686e7eBc9HAljKFINTIN5bbDCGXo9LIFF6wIcivciU
-         CSgS0wsInkL4FwVb0Wk3kSM4A4T++OBz2KD5VEKVEd4XJjT48ZvrWln0Cjh/kY9LmFaU
-         L3Fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746437035; x=1747041835;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UNKpSETC3aRoWs26slbmPYaRhZWnx/HOj+OMKwfNopA=;
-        b=HEX5xY/LYXsL70/7+ETwgTsOLH29WZvyvzY0vsXiZUap/gLAYWTx/cyYTDVWQUG1eA
-         zDxJ83m0bfV+z2vnFc4f1jU4wZ9N6QZ83cWpEahJwGRWECQdjeRibHyh3It4wMh8MgDt
-         adFdFWwT3ZO4st9BAyoTlGMQDr9MSGLpA/DPtuqogXpxZrrnL+VBZYmailaD86H1MWcD
-         zgsN/rarVMBgG4t+wQ71TshKmQZAnIponSJBtKcukbTjB5c5AckXSRCnLCE83sp2jYDX
-         hNKQxEDZ+Fn0HC3NcIC4ZxY/3bkSGRMxITIhvfP2ogggYEKajoYILIDHBxSZjdAjxE89
-         LhKA==
-X-Forwarded-Encrypted: i=1; AJvYcCVwAyPunGsWlNgt+++NncW+MFsw9icvF6d81r1xeN4YS9xcyrKcFMoz8ECpolj3H1dqQeVRSeMR@lists.linux.dev
-X-Gm-Message-State: AOJu0YxLGP2m0oP8e5JewlKmGeQl/wvRXqI6aNbfrWpsbdpBNywkHW5x
-	lY2K6rCDI0bwblpRtfHGjXNhK+JVVjjffMCP60HRSSgXDIDVJ5eGlQfcM5LrAP+k2AZKAgMtaE6
-	IOclfwoQuW9o56w==
-X-Google-Smtp-Source: AGHT+IHD25Gl0hnIcuOchqaJj6jrQJy3Tcy1tSunT6kxPFMJLsXGIsx+DEdSlsV661NRNl3V8hAe7ZryPPG14R4=
-X-Received: from wmbhh12.prod.google.com ([2002:a05:600c:530c:b0:441:b3fe:b95a])
- (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:3548:b0:43c:e7ae:4bcf with SMTP id 5b1f17b1804b1-441c1c70782mr68477705e9.0.1746437035142;
- Mon, 05 May 2025 02:23:55 -0700 (PDT)
-Date: Mon, 5 May 2025 09:23:53 +0000
-In-Reply-To: <20250502140237.1659624-1-ojeda@kernel.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KSZCvqlU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE25DC4CEE4;
+	Mon,  5 May 2025 09:28:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1746437298;
+	bh=dCOuf1fuJW62yJ0CcdQm/lsVYvmHoGYJFQZUHRvn+jU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KSZCvqlUzTvtM0CoA5F1U0jzoN2XfHErluwYePeV6ewy+5JQGb+/XEN3nT/mBkh5E
+	 OSjXEbePEa56Y4nGNwRsACtOjWcLBaQQ1Tn64w4aZ8H1QpcA4nJziFNolfVjJAgsBC
+	 SUGGoErqNu3vAsCcQBeRcoefK31rsDWKb7DYHcPs=
+Date: Mon, 5 May 2025 11:28:15 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: "Tai, Gerrard" <gerrard.tai@starlabs.sg>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>, Sasha Levin <sashal@kernel.org>
+Subject: Re: net/sched: codel: Inclusion of patchset
+Message-ID: <2025050519-stem-fidelity-25b1@gregkh>
+References: <CAHcdcOkW1D_zKh-HPsfjX-oGYhv-OwojPXVwcA=NYoO0hcCbZQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20250502140237.1659624-1-ojeda@kernel.org>
-Message-ID: <aBiDqQxAzTC4N-n-@google.com>
-Subject: Re: [PATCH 0/5] Rust beta (1.87) and nightly (1.88) lint cleanups
-From: Alice Ryhl <aliceryhl@google.com>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, 
-	"=?utf-8?B?QmrDtnJu?= Roy Baron" <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, 
-	Andreas Hindborg <a.hindborg@kernel.org>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHcdcOkW1D_zKh-HPsfjX-oGYhv-OwojPXVwcA=NYoO0hcCbZQ@mail.gmail.com>
 
-On Fri, May 02, 2025 at 04:02:32PM +0200, Miguel Ojeda wrote:
-> Now that Rust 1.87.0 is close to release, clean up the new lints that appeared.
+On Fri, May 02, 2025 at 12:49:48PM +0800, Tai, Gerrard wrote:
+> Upstream commits:
+> 01: 5ba8b837b522d7051ef81bacf3d95383ff8edce5 ("sch_htb: make
+> htb_qlen_notify() idempotent")
+> 02: df008598b3a00be02a8051fde89ca0fbc416bd55 ("sch_drr: make
+> drr_qlen_notify() idempotent")
+> 03: 51eb3b65544c9efd6a1026889ee5fb5aa62da3bb ("sch_hfsc: make
+> hfsc_qlen_notify() idempotent")
+> 04: 55f9eca4bfe30a15d8656f915922e8c98b7f0728 ("sch_qfq: make
+> qfq_qlen_notify() idempotent")
+> 05: a7a15f39c682ac4268624da2abdb9114bdde96d5 ("sch_ets: make
+> est_qlen_notify() idempotent")
+> 06: 342debc12183b51773b3345ba267e9263bdfaaef ("codel: remove
+> sch->q.qlen check before qdisc_tree_reduce_backlog()")
 > 
-> It may be that one of the patches is not needed by the time it releases, but
-> I prefer to not wait much longer since I would like to land this for -rc6 so
-> that it is clean for release.
+> These patches are patch 01-06 of the original patchset ([1]) authored by
+> Cong Wang. I have omitted patches 07-11 which are selftests. This patchset
+> addresses a UAF vulnerability.
 > 
-> In addition, clean some nightly (1.88.0) ones too.
+> Originally, only the last commit (06) was picked to merge into the latest
+> round of stable queues 5.15,5.10,5.4. For 6.x stable branches, that sole
+> commit has already been merged in a previous cycle.
 > 
-> Miguel Ojeda (5):
->   objtool/rust: add one more `noreturn` Rust function for Rust 1.87.0
->   rust: clean Rust 1.87.0's `clippy::ptr_eq` lints
->   rust: clean Rust 1.88.0's `unnecessary_transmutes` lint
->   rust: clean Rust 1.88.0's warning about `clippy::disallowed_macros`
->     configuration
->   rust: clean Rust 1.88.0's `clippy::uninlined_format_args` lint
+> >From my understanding, this patch depends on the previous patches to work.
+> Without patches 01-05 which make various classful qdiscs' qlen_notify()
+> idempotent, if an fq_codel's dequeue() routine empties the fq_codel qdisc,
+> it will be doubly deactivated - first in the parent qlen_notify and then
+> again in the parent dequeue. For instance, in the case of parent drr,
+> the double deactivation will either cause a fault on an invalid address,
+> or trigger a splat if list checks are compiled into the kernel. This is
+> also why the original unpatched code included the qlen check in the first
+> place.
+> 
+> After discussion with Greg, he has helped to temporarily drop the patch
+> from the 5.x queues ([2]). My suggestion is to include patches 01-06 of the
+> patchset, as listed above, for the 5.x queues. For the 6.x queues that have
+> already merged patch 06, the earlier patches 01-05 should be merged too.
+> 
+> I'm not too familiar with the stable patch process, so I may be completely
+> mistaken here.
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+I'll be glad to take what is needed, but please list what commits need
+to go to what branches and in what exact order please.
+
+Or better yet, send backported patches to us, as patch series emails,
+which we can import that way as we know you have tested them properly.
+
+thanks!
+
+greg k-h
