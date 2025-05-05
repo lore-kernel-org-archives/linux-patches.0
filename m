@@ -1,255 +1,204 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02on2060.outbound.protection.outlook.com [40.107.96.60])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C184219CC22
-	for <patches@lists.linux.dev>; Mon,  5 May 2025 19:34:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746473697; cv=none; b=d0BgGNsSnQjjUvmFXVFxjWL4lEsn3QFYMItjgg6/Ib6ZpcFIrd5oWHuzKA8sG6uJkhwEXjl3j9WYh0KVW46GrFAvzL2LmvMRtm8nbsu3GhSr1hL0bx+ohqSA0eZp2ROt7C9r4RS0Mb6GILCC4iWbGOBInFeFcGIQ59rZPYhPTBE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746473697; c=relaxed/simple;
-	bh=R4UOYAFLSdII7+XphTMNWPVBpYzJxCWHQxa8/SgBsFI=;
-	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cwI6HjYu6PSZEbxMY9Oe2t5v6jAsphvlc5DzTKSk57xTKrgQZGUVEdU1eLmMEz8psBVfFVLl1zO767yhP792M+i+ugOIfTAju6W4uNjMq24XajhDVcSOAffzOJlDnpBtD2G1Bw//CcUeEc4hUvS7vUmSENwjWbK2yzLWSyLAztE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q15Pypew; arc=none smtp.client-ip=209.85.222.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974C01EEE6;
+	Mon,  5 May 2025 19:51:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.96.60
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746474721; cv=fail; b=bsx3/GEkDnenW7c6jv8iSUCn6Dpd2pDwtCEAPX07bWf3lUue6IkS8+/XG6HKxkDgmI2n6R0mqiCYIhNpOshP+qzT/tIMV2eeawb/dU1WdObLwNKBT4ZMHcmPARfWR/veJpdz7lD72sQksEN7zCv23lE2aUSDYDsTb5f+hBMpftM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746474721; c=relaxed/simple;
+	bh=eO+d22S2C81Fjq1X4UMTLFFhbj4t4gy5citg6o8NrFg=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cYQRNfz3ms/rcWmRQovM7/w9Yn+znYV/m776RyPtyK79JV9l4DlwOCidimZ0s/amCZGrPuMP1xpHyV2og1CP7HgCL4/dwE0BQ8XzdAjUBxYkTZWI64/3W8VGnGUW136EMCrrA/jys4jZInmfYBfn4CRn6ITwu5YcP0MA9ok84ac=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=BPTx2CmJ; arc=fail smtp.client-ip=40.107.96.60
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q15Pypew"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-7c5f720c717so685889885a.0
-        for <patches@lists.linux.dev>; Mon, 05 May 2025 12:34:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746473694; x=1747078494; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:feedback-id:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GkBn/ab9f6AA7W5UCEebQAelvR/PRTQoq/54e+igHhU=;
-        b=Q15Pypew87lV3vJRVCU5LQv/7aO3JfTIiEg35AnZzx6l1WuYphBk+grrJXCTVzA485
-         bJRgolEQzC28H9Ta27sDfNm0iEmpzCgFFPUIEGYBB4F20zwbzIrW8J+XAX9Pyhbw8aGo
-         4y9y6igliQeDVUMF+BxaG+4ejmzva1g81ofBsIIF/EhklijAGDXLqFzNsSFp22PYemWw
-         XlUHaz8X3OSFCFz2vfUmssRlCguBoqsJeM/VAFY2+VC4sbpDz2saBnlDJy4CKMfLE4GF
-         bCXo2ZrBUks1ri683CJc+402zbEAbuMsyQeU+22BZBigN9aYAjY1M+yEv7QTN/UyHc3H
-         RiBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746473694; x=1747078494;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:feedback-id:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GkBn/ab9f6AA7W5UCEebQAelvR/PRTQoq/54e+igHhU=;
-        b=JwALWyU5V6Jf5VIPhjmqtXMIGGJeT9yKOfIkJuBjtTut2SOrm5+GcUo7s29+swEnoP
-         A3wwqxwWju3YVXq6EvgjOYdLjrnwz1nsniXdpfujzoWNJjsdNJ2CEwgHwGnv2J1EvTbG
-         hcqvFNFtmlDdYN0lmxqx/hM2SMlnSWFpd1w52Wj0jxjPdo/SVW9PxRejwbrMMBGaeJCS
-         oKJl9cQIwXuSqDIiLez9QuONhRkcTzJunw0q64UY0SlnGMU9ci997naTpnwAYiQmCuwW
-         9yK1Pwvam0wEws+JBpuzMiqoNJjL9+225ZdM8s0w4O3z9b+gF7VG4ud+7W0MtYDbXZEf
-         deGA==
-X-Forwarded-Encrypted: i=1; AJvYcCUM62hoCMXiesdxwEOqLhoA0tvktIaC7veHciRh67MmN0ED7bsI/09Qq4Ek7FkjGOP+l0/2Mi3+@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz5iHb6X0W/tlFxohUl9LDHagS3JxAz8NyEcbji9qvp5H1AcO+d
-	bXTe4JD+D1hgwVx/+rKL6pafC95m0Y2PWTNGxdNkVXXRPXwqt+M4
-X-Gm-Gg: ASbGncs9KZ2DuTcCAjHcHH8y2ATfwFwZq9iy2mwDM0hgKafHL3K+xX6Pooz6AQGx2Xb
-	xOdeU8f4LJLJrbbyrap0XZf3Xu22pA2pXgjbMjOwvuwL/oojRqWHFno7p8DOmGFGkTMgcNSDIkf
-	oRYd0MxFaziukYbIbZXFC5PS86RKivUIe+PUb6yR3n1msVvlfIjDqKE3vIOtCdaZC539QYlZ/WR
-	cNcWJzX2dlr2haOTHr5mwPjfvsGDOmhPWOH9T7FEXXRqcRUuSQecOXHdCGZ0HlK31PcpLKBlmN7
-	trUznolv4swokjTVR6LJjv/j3rWZzGvvOwb8i/ZrgPDXVF3DQ7XPs3Ye5bbJtAlL+A4bbzWuXlK
-	FpLua0wtteBRO/x6p7N2UM1A8XHR41Ew=
-X-Google-Smtp-Source: AGHT+IFY12NsRRcgW0xx+lO9IySSe0Y4a8h3F+41ev4UQvcjKPFIvM2ToqA8JyqXddvLXXcDLCEXng==
-X-Received: by 2002:a05:620a:6105:b0:7c7:c6e9:963c with SMTP id af79cd13be357-7caf04c142fmr87551785a.4.1746473694490;
-        Mon, 05 May 2025 12:34:54 -0700 (PDT)
-Received: from fauth-a1-smtp.messagingengine.com (fauth-a1-smtp.messagingengine.com. [103.168.172.200])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7cad23b5278sm606919985a.1.2025.05.05.12.34.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 May 2025 12:34:54 -0700 (PDT)
-Message-ID: <681912de.050a0220.383f17.18c4@mx.google.com>
-X-Google-Original-Message-ID: <aBkS25IAZXiyXeXZ@winterfell.>
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 8B8F3120007E;
-	Mon,  5 May 2025 15:34:53 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Mon, 05 May 2025 15:34:53 -0400
-X-ME-Sender: <xms:3RIZaENOKcV_V4pchMDIGpgqOT8XeYyK7jqMEa--H2Sfepw08f8ijg>
-    <xme:3RIZaK-goJa0QuWpIgmKvY5jgUBAc87hW5au3mVlx9jIUH-AYw9c88C3LDlN6Ame6
-    ChzIm-TziuNeJNc_Q>
-X-ME-Received: <xmr:3RIZaLT8dU3hIUe4mBMvj7PC8hJ4ISIQfR0g0qsKehaR0zeBobQnmGEWsA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeduleeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomhepuehoqhhunhcuhfgvnhhguceosghoqhhunhdrfhgvnhhgsehgmhgrih
-    hlrdgtohhmqeenucggtffrrghtthgvrhhnpeehudfgudffffetuedtvdehueevledvhfel
-    leeivedtgeeuhfegueevieduffeivdenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpegsohhquhhnodhmvghsmhhtphgruhhthhhpvghrshhonhgr
-    lhhithihqdeiledvgeehtdeigedqudejjeekheehhedvqdgsohhquhhnrdhfvghngheppe
-    hgmhgrihhlrdgtohhmsehfihigmhgvrdhnrghmvgdpnhgspghrtghpthhtohepudekpdhm
-    ohguvgepshhmthhpohhuthdprhgtphhtthhopegurghvihgughhofiesghhoohhglhgvrd
-    gtohhmpdhrtghpthhtohepohhjvggurgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    sghrvghnuggrnhdrhhhighhgihhnsheslhhinhhugidruggvvhdprhgtphhtthhopegrlh
-    gvgidrghgrhihnohhrsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprhhmohgrrhesghho
-    ohhglhgvrdgtohhmpdhrtghpthhtoheplhhinhhugidqkhhsvghlfhhtvghsthesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkuhhnihhtqdguvghvsehgohhoghhl
-    vghgrhhouhhpshdrtghomhdprhgtphhtthhopehgrghrhiesghgrrhihghhuohdrnhgvth
-    dprhgtphhtthhopegsjhhorhhnfegpghhhsehprhhothhonhhmrghilhdrtghomh
-X-ME-Proxy: <xmx:3RIZaMu8GU9Ixwt_lnrfB4AOZGU4ehJiJajRp5xMVPmQiJJXIwMR5g>
-    <xmx:3RIZaMeI-x4I7P7SZLXK0Dwz3XQnfvQVaJ_THw1O1SNzSzJBci_P5A>
-    <xmx:3RIZaA2jVlhadXx5BUw9i9mSQsvMTHBgGYZ8_1YVGzakXFGH0f3tqA>
-    <xmx:3RIZaA-s-nsYuLKNr6F4LFSWwXc7q5nZq_aELczlW1uCS0L1ELdSLw>
-    <xmx:3RIZaD-J1ajwYTRjr-wt8yw2pWXopfcpzZwsO8yCWY4bEDWi68U8qru9>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 May 2025 15:34:53 -0400 (EDT)
-Date: Mon, 5 May 2025 12:34:51 -0700
-From: Boqun Feng <boqun.feng@gmail.com>
-To: David Gow <davidgow@google.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Rae Moar <rmoar@google.com>,
-	linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com,
-	Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 2/7] rust: kunit: support checked `-> Result`s in KUnit
- `#[test]`s
-References: <20250502215133.1923676-1-ojeda@kernel.org>
- <20250502215133.1923676-3-ojeda@kernel.org>
- <CABVgOSm8T+_kXY78sioUHEcG7rYApfWK2Gfxkrvw94Dz57G0oQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="BPTx2CmJ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ffQK/aqdXSmr4zZdoh2l6/UoOloYTCuEje3TQr1avStP7GRqUgKbBYhDMa4xhn1CJDfYoA4g3XuFYWeZ8XKhcHlsmGIp8XE2pmCsHhNy86iu5cFDuih7OOC/brg/V6lGau9T2NasZPK6M89sRdKi0XIZx3aXAkGRT1VKsoqLUkJkpTd9yLsiYJHNi6m8ITTPP9RmQ8xlPsbqHSF2H1dGfNBDnMUWlxy4QISkv0CR/IZ74gGSXTwsh91u0BCjlfju0c5E8ew5M+SOgdpMfuQXeBbUPoHrplxs8Nn5KJSZ9ZAiIGiaX5jCk6Bvz7um6aJIlI52ysfMzH9PqtAKtcCttg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lzYz1kQE776rppX2LjWBcEzYot/SUfNrKDUyz+RyId0=;
+ b=gI0RbNlQPDEhprL8fLU2+rE9+jvV//cfQcc6kASgf2dsYA5E4hbHiuEXaof2mwseGvU0iLee4AaT3mK7+LUjcFjRvSnOqGDq3P5+G+5smNZQ9jCm6mxRSiNeLWNd3oxErOiLP+XTJJx4rVI/9bfcwZKhP/xvZS70tli7QVPd2yZAeMZYkLHDvbftM8d7tjdNY9A5vljPq8jJ/n1rqeGKxCfPGIZa3SgWofBQaLJtzjnoOAWD1AjAzSg1Gw5jteX2nKgeWjNf4VsEM1Wmy9re4M9J596rRz/SU/BjJFANTOfW0fNPojwZBVTZcNvoJsIQHDLb/RjhCDHJGUc4o+RfCQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lzYz1kQE776rppX2LjWBcEzYot/SUfNrKDUyz+RyId0=;
+ b=BPTx2CmJpt2SZLOgPcsu3iGTTQKEHXkXmi2EWp9nC5eSc6AsWnmDVIB2Meh8H9VCw6ty8alTSQOCAF2we9FzvKd7RfNWdNZj/7fiC0Dwc5+k7hw9C4+4xH3vIY2Ah9q7HFVKP8UgCN+q033dE5whIxFMzHK2i7PY8dI8K6DQglX6lCM/m6XDDEx87wMpFw7K4rz0oKmUj5WBusw/2F8nAnbOq55wE32+sf4LpJxE9KYg/qFjlRHIaOimTHFByEnEgx3jd9uchbz4kbWZxLFibUcxiddOMqDKPJLEuugLMaKCJJopWOKX3TnctX6YTYgX6usVhdwLDJvZla/2bV6WGA==
+Received: from CH0PR03CA0016.namprd03.prod.outlook.com (2603:10b6:610:b0::21)
+ by SA1PR12MB8743.namprd12.prod.outlook.com (2603:10b6:806:37c::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.24; Mon, 5 May
+ 2025 19:51:55 +0000
+Received: from CH2PEPF00000141.namprd02.prod.outlook.com
+ (2603:10b6:610:b0:cafe::20) by CH0PR03CA0016.outlook.office365.com
+ (2603:10b6:610:b0::21) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8699.31 via Frontend Transport; Mon,
+ 5 May 2025 19:51:54 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ CH2PEPF00000141.mail.protection.outlook.com (10.167.244.74) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8722.18 via Frontend Transport; Mon, 5 May 2025 19:51:54 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 5 May 2025
+ 12:51:33 -0700
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 5 May
+ 2025 12:51:32 -0700
+Received: from nvidia.com (10.127.8.13) by mail.nvidia.com (10.129.68.6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Mon, 5 May 2025 12:51:05 -0700
+Date: Mon, 5 May 2025 12:50:56 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: Pranjal Shrivastava <praan@google.com>, <kevin.tian@intel.com>,
+	<corbet@lwn.net>, <will@kernel.org>, <bagasdotme@gmail.com>,
+	<robin.murphy@arm.com>, <joro@8bytes.org>, <thierry.reding@gmail.com>,
+	<vdumpa@nvidia.com>, <jonathanh@nvidia.com>, <shuah@kernel.org>,
+	<jsnitsel@redhat.com>, <nathan@kernel.org>, <peterz@infradead.org>,
+	<yi.l.liu@intel.com>, <mshavit@google.com>, <zhangzekun11@huawei.com>,
+	<iommu@lists.linux.dev>, <linux-doc@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-tegra@vger.kernel.org>, <linux-kselftest@vger.kernel.org>,
+	<patches@lists.linux.dev>, <mochs@nvidia.com>, <alok.a.tiwari@oracle.com>,
+	<vasant.hegde@amd.com>
+Subject: Re: [PATCH v2 13/22] iommufd: Add mmap interface
+Message-ID: <aBkWoH23VysYake3@nvidia.com>
+References: <aBE1gUz9y415EuBQ@google.com>
+ <aBE38GwvGBnpRNLc@google.com>
+ <aBE47aySzDp2lsAz@Asurada-Nvidia>
+ <aBE800DsAOOZ4ybv@google.com>
+ <aBE/CD4Ilbydnmud@Asurada-Nvidia>
+ <aBFGCxcTh54pecsk@google.com>
+ <aBFIsYg+ITU8RvTT@Asurada-Nvidia>
+ <20250505165552.GN2260709@nvidia.com>
+ <aBj1Av6Xaj8flMN+@nvidia.com>
+ <20250505173101.GT2260709@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <CABVgOSm8T+_kXY78sioUHEcG7rYApfWK2Gfxkrvw94Dz57G0oQ@mail.gmail.com>
+In-Reply-To: <20250505173101.GT2260709@nvidia.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF00000141:EE_|SA1PR12MB8743:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2d706f07-d75f-4763-2845-08dd8c0e4976
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|7416014|1800799024|376014|36860700013|13003099007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?6wnDJg8TfHKTv54yOKMCTOAojk6lC2PwLFxItsGRTOjvAqR+q2DgtDh+nzwj?=
+ =?us-ascii?Q?73j2Ls1EBIEZcsgXP7WYkRWD4s63RwnABRhSgUo7p3v3RQqzy9jP0fNGJv0E?=
+ =?us-ascii?Q?2CQys5kC8fgsqOHqetIktkxz81EnFB/VH68GAtNXFgBUc9DAEa5isvCAXUte?=
+ =?us-ascii?Q?FtE7qAlqsLUVPXhoOQm4zDFK1va3p3s9yPAsgvSrlRmeRfizYGgw6UdGQ7xy?=
+ =?us-ascii?Q?tR317b1JRXwVBE8OB+T6ThxEK3O3dKwLp+byAzYclgHynSFWAxZqt4FdPu3J?=
+ =?us-ascii?Q?3fy/ss+ZgxYvEUGUod8OvFGgUFnrPtjd5cj3LmgeFojWF4qUWLpNcnTzBmcs?=
+ =?us-ascii?Q?oFEmRnzz4+Gjiag5tUjAHEqThvfFCvZAUD97pqC/ApRY+u95FaIiwZx840qQ?=
+ =?us-ascii?Q?CEEZhiuJxix7YIYe2MIpoMdHENShXRY99rS4AFM+8SXjEPE9sCby7IH2O6uS?=
+ =?us-ascii?Q?ji1XMxiBdwDsL8Bpyd1nIX2xIjkPynXKk8zqmQ93sw+0ecKkmiyohmU8MNXy?=
+ =?us-ascii?Q?mNOTqHAThesKyCNpao42YFnIXcHu5bCwFPypFUt1dT/2HJa7d0ffKT+3XPam?=
+ =?us-ascii?Q?8gexgI1xTQ40U6VouP4/wzYOQqUplrlQJYNrQ8QCUxf4oJEVnVIwKFRSNP7u?=
+ =?us-ascii?Q?0bLiJrAAGou/PnvRPlmBbuCGPOgRJexDhYaJM8HbfPkluZr6EDdW3aubsbP8?=
+ =?us-ascii?Q?oNoD1GeckP6AT2qgY1Giq3CsVhk9ttG98eBByNsolEEFLULqkrzYAdehxGab?=
+ =?us-ascii?Q?8hNSw/HpaYe/xRZB/zg9IMPX0TIKaOi/2o9f/mUV6H+cdQ2nAo5kw70udEJj?=
+ =?us-ascii?Q?QV/HEhpwISmyTXUMFHzyFfoobSrvrqmmhydirW1hgt8MejQzThv7YQHf7sZR?=
+ =?us-ascii?Q?3KGgOw4yMhndPVTGWE3nbgEgjHwqebEYZIqAF6Mck8YJjlaJWI1ketuAs8Ag?=
+ =?us-ascii?Q?t67kYhVHPZIkztokI+pRPfb6ouUDVdWyFlhBVFQZzaAZinIlDyfDN3TGhcn+?=
+ =?us-ascii?Q?IEvTU49qMBmt9DIsngCGmhp4LDvvO9uSDdF+V5ukPfriIRQEdnnfgnBLH7P/?=
+ =?us-ascii?Q?TujLdFQ/6yyTLLi+IkW71kYS1IN88ZfWQGkbkvx3Kd1T8WNaBIB/X74FFWzZ?=
+ =?us-ascii?Q?Sbz2tREnxkKPjbq0zYBey+SPbS3bp39NLUfW4DdYIyIZL1m5j+R3+9tu0uzu?=
+ =?us-ascii?Q?Df/0dTMucw01d9HhRdBLAKCU2UzaPqadCBXSsKxXvMsSphRTC1gFWxPBLzg7?=
+ =?us-ascii?Q?TR+tZWIFvwY8x538QlQPA5WfssIWFCYZM10pWmmN7pUhk2YZqcEVVJnxkaDP?=
+ =?us-ascii?Q?w6yiv7b5pCRhhhT1GzU2iFmt69t0/lpAyehRlGgnOojB6Ih1hiBZpyyN+Zf0?=
+ =?us-ascii?Q?kXGC/oWDUe+umz/LrYKzLZhuTs2Vp8YkOPjPjrbUe1NPkxk42i8bZwqOTxGu?=
+ =?us-ascii?Q?MANXCT0aI3RzHQUammuQtTIvE+39uoW+Q9GCisER1m8R9Mc4YPPQmZmSaYyy?=
+ =?us-ascii?Q?JZOnpJz8VmkI+AcxIq0rSbu6BKkLyGm9xKtIfk+jGPY4naYtHfjG06eS3Q?=
+ =?us-ascii?Q?=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(7416014)(1800799024)(376014)(36860700013)(13003099007);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 May 2025 19:51:54.4858
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2d706f07-d75f-4763-2845-08dd8c0e4976
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CH2PEPF00000141.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB8743
 
-On Mon, May 05, 2025 at 02:02:09PM +0800, David Gow wrote:
-> On Sat, 3 May 2025 at 05:51, Miguel Ojeda <ojeda@kernel.org> wrote:
-> >
-> > Currently, return values of KUnit `#[test]` functions are ignored.
-> >
-> > Thus introduce support for `-> Result` functions by checking their
-> > returned values.
-> >
-> > At the same time, require that test functions return `()` or `Result<T,
-> > E>`, which should avoid mistakes, especially with non-`#[must_use]`
-> > types. Other types can be supported in the future if needed.
-> >
-> > With this, a failing test like:
-> >
-> >     #[test]
-> >     fn my_test() -> Result {
-> >         f()?;
-> >         Ok(())
-> >     }
-> >
-> > will output:
-> >
-> >     [    3.744214]     KTAP version 1
-> >     [    3.744287]     # Subtest: my_test_suite
-> >     [    3.744378]     # speed: normal
-> >     [    3.744399]     1..1
-> >     [    3.745817]     # my_test: ASSERTION FAILED at rust/kernel/lib.rs:321
-> >     [    3.745817]     Expected is_test_result_ok(my_test()) to be true, but is false
-> >     [    3.747152]     # my_test.speed: normal
-> >     [    3.747199]     not ok 1 my_test
-> >     [    3.747345] not ok 4 my_test_suite
-> >
-> > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> > ---
+On Mon, May 05, 2025 at 02:31:01PM -0300, Jason Gunthorpe wrote:
+> On Mon, May 05, 2025 at 10:27:30AM -0700, Nicolin Chen wrote:
+> > > So when calling mtree_alloc_range:
+> > > 
+> > > int mtree_alloc_range(struct maple_tree *mt, unsigned long *startp,
+> > > 		void *entry, unsigned long size, unsigned long min,
+> > > 		unsigned long max, gfp_t gfp)
+> > > 
+> > > size should be the number of PFNs this mmap is going to use, which is
+> > > not sizeof() anything
+> > > 
+> > > min should be 0 and max should be uh.. U32_MAX >> PAGE_SHIFT
+> > > IIRC.. There is a different limit for pgof fon 32 bit mmap()
+> > 
+> > Should the startp (input) be the pfn_start (i.e. pgoff)?
 > 
-> This is a neat idea. I think a lot of tests will still want to go with
-> the () return value, but having both as an option seems like a good
-> idea to me.
+> pfn_start/pgoff is the output of the allocation, it is not an input.
+
+Sorry, I got it wrong. Not "startp": it's an output that should
+be returned to user space, as pgoff of mmap.
+
+I wanted to ask: what should we pass in to the "entry"? An mmap
+structure that hold the pfn range? Or just pfn_start?
+
+> > In this case, it would return startp as the ID, which will
+> > be further returned to the user space. So, basically user
+> > space know the pfn range, v.s being given an mmap cookie?
 > 
+> Userspace is given the pgoff to pass to mmap as a cookie, it doesn't
+> know anything about it beyond that passing that pgoff will get the
+> mmap it should get. Userspace must also know how big the mmap is.
 
-Handling the return value of a test is definitely a good thing, but I'm
-not sure returning `Err` should be treated as assertion failure
-though. Considering:
+Yes. I got this part.
 
-    #[test]
-    fn foo() -> Result {
-        let b = KBox::new(...)?; // need to allocate memory for the test
-	use_box(b);
-	assert!(...);
-    }
-
-if the test runs without enough memory, then KBox::new() would return a
-Err(ENOMEM), and technically, it's not a test failure rather the test
-has been skipped because of no enough resource.
-
-I would suggest we handle the `Err` returns specially (mark as "SKIPPED"
-maybe?).
-
-Thoughts?
-
-Regards,
-Boqun
-
-> Reviewed-by: David Gow <davidgow@google.com>
+> The pgoffs should all be allocated from non-overlapping ranges as
+> though they were bytes in a file so that the mmaps are all
+> disjoint. This makes debugging easier and the API saner.
 > 
-> Cheers,
-> -- David
-> 
-> 
-> >  rust/kernel/kunit.rs | 25 +++++++++++++++++++++++++
-> >  rust/macros/kunit.rs |  3 ++-
-> >  2 files changed, 27 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/rust/kernel/kunit.rs b/rust/kernel/kunit.rs
-> > index 2659895d4c5d..f43e3ed460c2 100644
-> > --- a/rust/kernel/kunit.rs
-> > +++ b/rust/kernel/kunit.rs
-> > @@ -164,6 +164,31 @@ macro_rules! kunit_assert_eq {
-> >      }};
-> >  }
-> >
-> > +trait TestResult {
-> > +    fn is_test_result_ok(&self) -> bool;
-> > +}
-> > +
-> > +impl TestResult for () {
-> > +    fn is_test_result_ok(&self) -> bool {
-> > +        true
-> > +    }
-> > +}
-> > +
-> > +impl<T, E> TestResult for Result<T, E> {
-> > +    fn is_test_result_ok(&self) -> bool {
-> > +        self.is_ok()
-> > +    }
-> > +}
-> > +
-> > +/// Returns whether a test result is to be considered OK.
-> > +///
-> > +/// This will be `assert!`ed from the generated tests.
-> > +#[doc(hidden)]
-> > +#[expect(private_bounds)]
-> > +pub fn is_test_result_ok(t: impl TestResult) -> bool {
-> > +    t.is_test_result_ok()
-> > +}
-> > +
-> >  /// Represents an individual test case.
-> >  ///
-> >  /// The [`kunit_unsafe_test_suite!`] macro expects a NULL-terminated list of valid test cases.
-> > diff --git a/rust/macros/kunit.rs b/rust/macros/kunit.rs
-> > index eb4f2afdbe43..9681775d160a 100644
-> > --- a/rust/macros/kunit.rs
-> > +++ b/rust/macros/kunit.rs
-> > @@ -105,8 +105,9 @@ pub(crate) fn kunit_tests(attr: TokenStream, ts: TokenStream) -> TokenStream {
-> >      let path = crate::helpers::file();
-> >      for test in &tests {
-> >          let kunit_wrapper_fn_name = format!("kunit_rust_wrapper_{}", test);
-> > +        // An extra `use` is used here to reduce the length of the message.
-> >          let kunit_wrapper = format!(
-> > -            "unsafe extern \"C\" fn {}(_test: *mut kernel::bindings::kunit) {{ {}(); }}",
-> > +            "unsafe extern \"C\" fn {}(_test: *mut kernel::bindings::kunit) {{ use kernel::kunit::is_test_result_ok; assert!(is_test_result_ok({}())); }}",
-> >              kunit_wrapper_fn_name, test
-> >          );
-> >          writeln!(kunit_macros, "{kunit_wrapper}").unwrap();
-> > --
-> > 2.49.0
-> >
+> There is no "id" here..
 
+Ah, right. "ID" is more of the xarray term. Here it's "startp"
+right? And it would be used as the "index" for mtree_load().
 
+With that being said, it seems that I have been misusing the
+mtree data structure, treating it as an xarray. In your very
+first email suggesting the mmap design, where you mentioned
+"xarray" first and "maple tree" following. So, I thought they
+can be used in the similar way, especially after reading this:
+https://lwn.net/Articles/846175/
+
+Thanks
+Nicolin
