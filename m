@@ -1,126 +1,134 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302442DC782
-	for <patches@lists.linux.dev>; Sun,  4 May 2025 21:54:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403FFEBE;
+	Mon,  5 May 2025 05:51:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746395688; cv=none; b=R3wOjNIVTa70GJGLWtP5DcLCYLsgD/jVK6F1lp2dJ91DqdDDnPUJndvLcEPJf2mwkJLgUknPh+0bnesQitTU0DwSYlkHYUDLCilcVAQxoKQIQmLFlaJvSIdFFQR/rj31lihUq2qMn6n7P0od9GPzECBzoRrDAAvkS7kTtCGHqVs=
+	t=1746424312; cv=none; b=MpO3UhJzeo4z5QTmV/07ah8UsWiCilE1sTT3xy6oGbGTm4cdUwVMiRjptfhP1SPGKYQi058YFDQ626d/nfJY9zmXmUAQggqggYtrFflT8b0/WWfCeE8NcwCqT95yflEkva9OeE/sLdJBU7egDm4pryfwDqk2d4r5Di2SA4EJRl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746395688; c=relaxed/simple;
-	bh=/l+1MvI7GiT5veI5LytixczDbnMXe1+igUv8pI8VedY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lip7Dq6k7UzSoT4LKiSc2yeLspGthA3ase+6f2+dfjSTd+WF9AkfoVLX+c6+OTN3mKc8bDktzxhLCBRQ8FjCRNk8/MX5rAniPSDEg19UlbUxYBuc4LfDZGR3kAGjFQzSRieTGdwF/e00AXzyQ4vtXTsupNyI7fx25Pby6YDCGYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V1lGf8p0; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746424312; c=relaxed/simple;
+	bh=zXcSX0oVI15EUzn/dn/FSDVWzqi8VdD0Sm5jZDhwDFA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=URtx0wyrkQo+NXbq9BGq5UrPoA5J332XHN0D96sqEGUHYzQV9Zvsyg8nM9Wv3zi8KGRwFRqvdgOW741OAT/Nn21KK20NNeRwCf3KZjo2JjFoWwCKzcD1HxkNorM98SfTL1GQHd0V7Bs8KqZK4bic9sRlK/IRW8xp3iaGmNYuDWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EXRSJFi0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V1lGf8p0"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2240ff0bd6eso8307975ad.0
-        for <patches@lists.linux.dev>; Sun, 04 May 2025 14:54:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746395686; x=1747000486; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DJZjw8+wVh7l3iylx7BP6JrAtv+cQBGrHFy+Umlf40Q=;
-        b=V1lGf8p0JZIjW+5LIFexoykzZR0w5AR+RIzy2BloxBLQTr8di+siX9o16H1T8DgPxn
-         aTVcV+zps24oPoDIaGK6GQPh08qj7Y5ljWsWuNIWjuTWpJR/8LsSRwKLqdd0feHkMI41
-         oj6F9xl4pX1pbScTUdaslaRNDlF7w3xT8o4db1BZmoDTF1xNrkJV/+hxoBYNXmzT3UeA
-         rJlYQRdTx8bCVYzIfC53gjQ4Fq+I0N0Y5K/11JGhqKFgrcjW1wR16U09MuK5n31w7KhG
-         ivoyNT+FD27KuT2hlUDzt0ne5jgZi7o5/oaIwblVMVNefUnucRMT51psGz+2BWYTbvra
-         oPWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746395686; x=1747000486;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DJZjw8+wVh7l3iylx7BP6JrAtv+cQBGrHFy+Umlf40Q=;
-        b=HVM1op43oyPisApOfF3aSQ8Y+wDgVQXoStnNuJFeypHoUtYgR9uq9cAWIJKZKEXuwW
-         Fyo2ypuWx057l9daCNrVGgJfqSFbSvAla6KdmY/JC9aQrGUT+DPTRdMWBiptWQyForNN
-         jKhUPaw/mJLPJ49pdpjxbMjmtqesg8SAVGHsof7Hnv49P0LsVnV8YoIYIg/lj9nzrkCn
-         VjHyJ+FYN18ENEPlH2n5/ZNmbjBXwsxgKMUMCw2i6iqJ59Soe/HqH3DOm3AnVwk1Gnbz
-         oBx9fxMwZTsJWGzDWHWp38UQVTViidFAbAu1VNJL7BeWzx23cWWBqSAcPq3MABka5a45
-         YrkQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW7rOJ/M1fO2OTuiuRjSd8MunxHIzHsgNkjOjWte0Jl4eP4gWcsdvlxDIgNtS0TiqdvPbrbXAzy@lists.linux.dev
-X-Gm-Message-State: AOJu0YxvNim2gt5/lH5whbf5CdR/Rj4hMUvOdgAGNGSXS7MNPQurMpni
-	/HWmN5BEl6nzIGRKRgtYPCVc1Q7ZQWkEtTaumTOMSz0pEZS8dR/PPy1VYYNL7Q0tDP+c7+Edpa1
-	e5+lNkxCSwq+yaQpMo9yZMBWLr0M=
-X-Gm-Gg: ASbGncveNycRSbWYOWw13+/S+ZopDH1BqE1qo4BcnSk3/BwfkkOGWc6S0JGM+howdtA
-	RapqdFeeWBDrMvd4rJn+JBfMgQAHk7nn/II917O2bXlhVfIFGu4aNZF1AdB9UI15Zt1gsitcGgP
-	aKwzRPL9p1ZSUSFuz68p+WjQ==
-X-Google-Smtp-Source: AGHT+IGdRAz15W9ZI5e1vtLXdhvXxSEUGSGPLW8JUTr/B9AnQL9gWGgZkz1pkGpOe9LOvI/UmsARew+FCAFE5sAYpws=
-X-Received: by 2002:a17:90b:4c45:b0:2fe:b879:b68c with SMTP id
- 98e67ed59e1d1-30a4e6c1a1cmr6287602a91.6.1746395686405; Sun, 04 May 2025
- 14:54:46 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EXRSJFi0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08371C4CEE4;
+	Mon,  5 May 2025 05:51:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1746424311;
+	bh=zXcSX0oVI15EUzn/dn/FSDVWzqi8VdD0Sm5jZDhwDFA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EXRSJFi0uXu0ImW7xfRGk4mjq9mkHaZAKX2k/bDRKVl2xVW2HdffGcbX2FGszX53o
+	 m8S6JnyW924THNmrETp9oUXrfsOBRwMbH31R2wLF9i/UPDMH9SJHanMfbWaiZAx2zk
+	 TzvMgqsFf0+9OVOeclr5Co+ohDaI4u1eqxVrajBA=
+Date: Mon, 5 May 2025 07:51:48 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Jared Holzman <jholzman@nvidia.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Ming Lei <ming.lei@redhat.com>, Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.14 092/311] ublk: call ublk_dispatch_req() for handling
+ UBLK_U_IO_NEED_GET_DATA
+Message-ID: <2025050509-impending-uranium-ccba@gregkh>
+References: <20250429161121.011111832@linuxfoundation.org>
+ <20250429161124.815951989@linuxfoundation.org>
+ <830759ad-243a-4fd5-9fa1-a106e6e6bb0d@nvidia.com>
+ <2025050455-reconvene-denial-e291@gregkh>
+ <744b4d9b-24f3-487c-805f-5aa02eaa093b@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250502215133.1923676-1-ojeda@kernel.org> <20250502215133.1923676-6-ojeda@kernel.org>
- <CAJ-ks9n7u3WkYmJCVc18c_cKod6DaB7KrA7NXbOuD3E3TYbvpQ@mail.gmail.com>
- <CANiq72nEHy5wvOyPzW4DLu9aE_MxTx1gq7AJ-f_Ny4E6bbOJ5g@mail.gmail.com> <CAJ-ks9krSxo_DWFJdccP+SYJhX4WF0hXdq-20Rtf3doMp_2zDw@mail.gmail.com>
-In-Reply-To: <CAJ-ks9krSxo_DWFJdccP+SYJhX4WF0hXdq-20Rtf3doMp_2zDw@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sun, 4 May 2025 23:54:33 +0200
-X-Gm-Features: ATxdqUHzESE1JbgdxZ5Ox-DqWnyCuIUC7SNpfqlQ8QGc4FkMOFcuq4OR1DTOBFg
-Message-ID: <CANiq72kLz7nXOKR+f=pNCu=hEEs6XQV_oDr9-xB_sq7N+svQ3A@mail.gmail.com>
-Subject: Re: [PATCH 5/7] rust: str: take advantage of the `-> Result` support
- in KUnit `#[test]`'s
-To: Tamir Duberstein <tamird@gmail.com>, David Gow <davidgow@google.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Brendan Higgins <brendan.higgins@linux.dev>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Rae Moar <rmoar@google.com>, 
-	linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <744b4d9b-24f3-487c-805f-5aa02eaa093b@nvidia.com>
 
-On Sun, May 4, 2025 at 8:23=E2=80=AFPM Tamir Duberstein <tamird@gmail.com> =
-wrote:
->
-> I see. Up to you, obviously, but ISTM that this degree of freedom is
-> unnecessary, but perhaps there's a benefit I'm underappreciating?
+On Sun, May 04, 2025 at 04:47:20PM +0300, Jared Holzman wrote:
+> On 04/05/2025 15:39, Greg Kroah-Hartman wrote:
+> > On Sun, May 04, 2025 at 02:55:00PM +0300, Jared Holzman wrote:
+> >> On 29/04/2025 19:38, Greg Kroah-Hartman wrote:
+> >>> 6.14-stable review patch.  If anyone has any objections, please let me know.
+> >>>
+> >>> ------------------
+> >>>
+> >>> From: Ming Lei <ming.lei@redhat.com>
+> >>>
+> >>> [ Upstream commit d6aa0c178bf81f30ae4a780b2bca653daa2eb633 ]
+> >>>
+> >>> We call io_uring_cmd_complete_in_task() to schedule task_work for handling
+> >>> UBLK_U_IO_NEED_GET_DATA.
+> >>>
+> >>> This way is really not necessary because the current context is exactly
+> >>> the ublk queue context, so call ublk_dispatch_req() directly for handling
+> >>> UBLK_U_IO_NEED_GET_DATA.
+> >>>
+> >>> Fixes: 216c8f5ef0f2 ("ublk: replace monitor with cancelable uring_cmd")
+> >>> Tested-by: Jared Holzman <jholzman@nvidia.com>
+> >>> Signed-off-by: Ming Lei <ming.lei@redhat.com>
+> >>> Link: https://lore.kernel.org/r/20250425013742.1079549-2-ming.lei@redhat.com
+> >>> Signed-off-by: Jens Axboe <axboe@kernel.dk>
+> >>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> >>> ---
+> >>>  drivers/block/ublk_drv.c | 14 +++-----------
+> >>>  1 file changed, 3 insertions(+), 11 deletions(-)
+> >>>
+> >>> diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+> >>> index 437297022dcfa..c7761a5cfeec0 100644
+> >>> --- a/drivers/block/ublk_drv.c
+> >>> +++ b/drivers/block/ublk_drv.c
+> >>> @@ -1812,15 +1812,6 @@ static void ublk_mark_io_ready(struct ublk_device *ub, struct ublk_queue *ubq)
+> >>>  	mutex_unlock(&ub->mutex);
+> >>>  }
+> >>>  
+> >>> -static void ublk_handle_need_get_data(struct ublk_device *ub, int q_id,
+> >>> -		int tag)
+> >>> -{
+> >>> -	struct ublk_queue *ubq = ublk_get_queue(ub, q_id);
+> >>> -	struct request *req = blk_mq_tag_to_rq(ub->tag_set.tags[q_id], tag);
+> >>> -
+> >>> -	ublk_queue_cmd(ubq, req);
+> >>> -}
+> >>> -
+> >>>  static inline int ublk_check_cmd_op(u32 cmd_op)
+> >>>  {
+> >>>  	u32 ioc_type = _IOC_TYPE(cmd_op);
+> >>> @@ -1967,8 +1958,9 @@ static int __ublk_ch_uring_cmd(struct io_uring_cmd *cmd,
+> >>>  		if (!(io->flags & UBLK_IO_FLAG_OWNED_BY_SRV))
+> >>>  			goto out;
+> >>>  		ublk_fill_io_cmd(io, cmd, ub_cmd->addr);
+> >>> -		ublk_handle_need_get_data(ub, ub_cmd->q_id, ub_cmd->tag);
+> >>> -		break;
+> >>> +		req = blk_mq_tag_to_rq(ub->tag_set.tags[ub_cmd->q_id], tag);
+> >>> +		ublk_dispatch_req(ubq, req, issue_flags);
+> >>> +		return -EIOCBQUEUED;
+> >>>  	default:
+> >>>  		goto out;
+> >>>  	}
+> >>
+> >> Hi Greg,
+> >>
+> >> Will you also be backporting "ublk: fix race between io_uring_cmd_complete_in_task and ublk_cancel_cmd" to 6.14-stable?
+> > 
+> > What is the git commit id you are referring to?  And was it asked to be
+> > included in a stable release?
+> > 
+> > thanks,
+> > 
+> > greg k-h
+> 
+> Hi Greg,
+> 
+> The commit is: f40139fde527
+> 
+> It is Part 2 of the same patch series.
 
-Well, having this allows one to write code like the rest of the kernel
-code, instead of, say, `.unwrap()`ing or `assert!`ing everywhere.
+It does not apply to the stable tree at all, so no, we will not be
+adding it unless someone provides a working version of it.
 
-So easier to read, easier to copy-paste from normal code, and people
-(especially those learning) wouldn't get accustomed to seeing
-`.unwrap()`s etc. everywhere.
+thanks,
 
-Having said that, C KUnit uses the macros for things that require
-stopping the test, even if "unrelated" to the actual test, and it does
-not look like normal code, of course. They do have `->init()` which
-can return a failure, but not the test cases themselves.
-
-David perhaps has some advice here. Perhaps test functions being
-fallible (like returning `int`) were considered (or asserts for
-"unrelated" things) for C at some point and discarded.
-
-The custom `?` is quite tempting, to get the best of both worlds,
-assuming we could make it work well.
-
-> Even without this change, couldn't you apply
->
->      macro_rules! format {
->          ($($f:tt)*) =3D> ({
-> -            &*String::from_fmt(kernel::fmt!($($f)*))
-> +            CString::try_from_fmt(kernel::fmt!($($f)*)).unwrap().to_str(=
-).unwrap()
->          })
->      }
->
-> and achieve roughly the same reduction in line count in the test module?
-
-Sure, the line would need to change again later, but that is fine too,
-we can do a separate commit.
-
-Cheers,
-Miguel
+greg k-h
