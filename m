@@ -1,47 +1,47 @@
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2076.outbound.protection.outlook.com [40.107.94.76])
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2054.outbound.protection.outlook.com [40.107.93.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2D025C6E6;
-	Mon,  5 May 2025 14:19:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC27725CC44;
+	Mon,  5 May 2025 14:19:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.54
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746454744; cv=fail; b=XPpHLr9ASufO2kHjtSnXq+JGsbhA9dW+y50MEjcgHGZeRPCrkV9qleZ0WwtW9CA4RA5jXoKdvW5gLgNmWkHPIF2sAlJFp4nvQGtd1J9QljQChke7EJERdsXPVimy85QFu9LneEK1dZG9XA5AcgM8Mru4NCwfY4XUqJAyGDXAQzg=
+	t=1746454746; cv=fail; b=tteGf1H4LS2nKMrMMDHSq0Z3nlYIf5SjfQX5ZCqqqWx6lNKyTxfp6/3N05zC/p54rOmp5DZu1SfYsJD2H49m8TIzJ2zbClgboCI0P38S476xM61fg1dpXZOxi5UINOIIyqzm62RBALWaw3R6QxRnrflr7LwWH9U5rH05ED/Tpao=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746454744; c=relaxed/simple;
-	bh=q88AhdmCO0WoolBaRi+I/JkHfMNA5knP5h8dUYZsLpU=;
+	s=arc-20240116; t=1746454746; c=relaxed/simple;
+	bh=MBNfDhZP5UCvw0yRrLZGEUM8hIBlYePpU416BLsvPl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=kaEOLa00c2g01jchglOhGr0WD/6IRkwrCdnZlC4zD+uGnPRRVwDNJ6HAYh17q1jc0vino5pIQI78mGox73Vi5nB6r/f7BzM4mxDFkfuf4PK0muaVxgrF/Us39htpfkm3dZb9+mJiXymbItKmpUNkbUUU2+2qFKV2UNiXTakcH5g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=JwowZGEr; arc=fail smtp.client-ip=40.107.94.76
+	 Content-Type:MIME-Version; b=CsmQlhDamGZZepLPqU17rTH3RoQUKLb6d/FNPyUvBiq4/KRfaWpqksNhrC0CfEds4LPKst1+JaiPXxgtoabL52qQsEttxGSFFLXt16Cbzb5+Jjjhidoyq5pdXVFqHzKkmRm8wa1X0yY+Oq+ms9VTIuygALWAVNqabmBHg7YytPE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=dyLlPH5b; arc=fail smtp.client-ip=40.107.93.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="JwowZGEr"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="dyLlPH5b"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=oYBY4mtwuKzTIArYzGprP1zB2ap7z+jCSqAq4G+nlbOiTq06skrAGSqlZpAPuvDx4kAvb88qmsPo7tA4YFV6CbJ/g3+ryKkocvQZwuYTrc8J/1ukbGLLDrryYLAyor9aoPSm3ALBaG7k1nEgljIdQDqyZ+mfRkKltXvjMU9N9MPhlUIsf6SvQhs5jeUqsqhehNAzOoln5VsbaBA9emMmR0YfAGgnOMoWtjz14sKUvrCPP9v9XtNa68EkLdMVIsAbzCv1AcZ2ijcVwWRU6fNUcl1plpOPfwTspzBllW49NeBURkmFl57nCJWT4Y4EQbX6ORRTH7tNYW/zkJ9xgc+ZuA==
+ b=CHd1VZNBZg+oN+sNGIFrv/DhhyQd5LIIXSq0Vb3+kmP272H/ejcoBDYuLeGnzWU94I7aREthuf7IzLMxnE8Z7eUu4fC8vOf2TZ5e8v5BSE7+T3YjMVx1Iw39e00KRAMMyu09AmyRBpbXKlMNBKqpsldsEdAvIGZxaZs0yhl7PUR0hyrn8Rl320A5XhmI9lgvEeTGl8AMANPbAkl/vsdlTKgO3MbU1iycBBpXZnPzCQqo3fB6ZbdSJT4JxS8b0ZFHcKGKoAPUwpEVCewD+abxgn2+kmRUWqvgRkQATr3zi1u6joamS6LulDDqX/LdIUHN3acVdReyhw4n2WNF7r0syQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kgE3kc79tCgLTRyylln7NCRiHnhgHqWBWtCimWnG+6A=;
- b=X/UhcC2J9rcdSJCtrjlWVsExRp7Y3vbMVz9ixyxOtSLemNn4kXo3DQoKsA19Rtep3zLdnc5lobKbFCcZ77BrwKeNz7+UqIiWOPTzxk9UUW68BxLbqGNUMdR5hEYI1HY0+U0ATZ6gCwq7iDbOob/uKRFvrbVAt3Gon/P4lD2JHhcMsj05tSApmw/vk442kPYgQvhyx388+V4uWWEvw9JFkCfxPJ1HszwJfD07nm+pjOkYTfZhIAeQdwr+Du6WKylK2sefHzHbJDs+UDsBnb26un7D+Z1adDFXy2S938d7jA8vK5YE9AqKVqyWOgpxkKQvWuiC8pKQ1Jes/VI3gDrtVw==
+ bh=TU2bkfZsjYT+X5HeKXM74+ODYmfm552FSGWXZM+47Qw=;
+ b=W/IfSqHriemd9Qm1TPJs08OCTe/3fy2/PJJK8IzFMDNYArXMefnaNpA/+kNH0PIQ9+0mqfnuvGwTtRdrhSvEjV1FhRh3V0aHfLemhW1uCftWrxpjIUa9H+E+cXity2NosejNO4l25x/jqGkRStq/srAANeq78SrLMdbXgPkfVQpu3KEosWnC6JmU/oHyDNP8jTcPppyGhuL00uautWGxgDjVAK1OnAXeYKDn2bEnLfHXp2sHjwVtpf3nR/Tp7LnWMlh2ZZgxLpl4szy/rwgT4Lvpq9KMa3WKuaJTCOLAMZjKaq4312SZfQE5yrBz/VV6j63TQ4dwJAd8t3PlECk37A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kgE3kc79tCgLTRyylln7NCRiHnhgHqWBWtCimWnG+6A=;
- b=JwowZGEr1QEaWX1jBYxWL/Rg1GDIevxdedDLcqqywUAGBTeeT/8qaSLkThipfdhYiRTcICXNvIuBGY6MGb8jhj52KlA6PqkdBwgPbhdlvLz/oK3Rkn+rcFgTp4xfyExBmMwDpW4YC90FlxvCIOplG/3ORf6QARqCFB0rsXmvJb302ITpGDqWtj44i1XSeST/QplxUlsxv+iKezkkSV4/FtxzniNEY69U9V+tsd6oiSaLdl2w9kDJpKOABCs+lfH3x9mSBSgfA1TMBy2W+ABtAcGwBExM6vV1cn5v5pps5AW0+VR4OfPSUcR5+J3efqUexwSk/HCH+bgLiIeoAp0OYA==
+ bh=TU2bkfZsjYT+X5HeKXM74+ODYmfm552FSGWXZM+47Qw=;
+ b=dyLlPH5bKZ1MphVgNJ+ZnMR1yBFASkBdpx295hORoftVklkFz2lQLVrkaf1/rFKQ5Q3w0Az+HMneUjm470isfsqU+q9xJXaV55nNmEhLyXjw7XeuPIOFQlvxo1aG1gkFgCkN3vVBds3dLE7HcQKjg1TgSiVYzH1lwBD5X3LnhneUfUm7nof4grLJQTh26Fz9BJFujdG0HT2218e9Q8JwxzMPoSP9e2d96uPeR7oK/+rMHTd6I4Upt5fgaqkcw7alSNLv/PMm/jzY7lTlvO1/5CSAHkMQk1f0MS2p/7/kY1iKFuT0BxSCsf5lvDxh6/1r7uu5IkMSY2Ve/px3yihicg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by SA1PR12MB7444.namprd12.prod.outlook.com (2603:10b6:806:2b3::16) with
+ by MN0PR12MB5978.namprd12.prod.outlook.com (2603:10b6:208:37d::10) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.22; Mon, 5 May
- 2025 14:18:49 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.26; Mon, 5 May
+ 2025 14:18:52 +0000
 Received: from CH3PR12MB8659.namprd12.prod.outlook.com
  ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
  ([fe80::6eb6:7d37:7b4b:1732%6]) with mapi id 15.20.8699.026; Mon, 5 May 2025
- 14:18:49 +0000
+ 14:18:52 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Jonathan Corbet <corbet@lwn.net>,
 	iommu@lists.linux.dev,
@@ -65,15 +65,15 @@ Cc: Alexey Kardashevskiy <aik@amd.com>,
 	Michael Roth <michael.roth@amd.com>,
 	Pasha Tatashin <pasha.tatashin@soleen.com>,
 	patches@lists.linux.dev
-Subject: [PATCH v2 13/15] iommu/amd: Use the generic iommu page table
-Date: Mon,  5 May 2025 11:18:43 -0300
-Message-ID: <13-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com>
+Subject: [PATCH v2 07/15] iommupt: Add map_pages op
+Date: Mon,  5 May 2025 11:18:37 -0300
+Message-ID: <7-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com>
 In-Reply-To: <0-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BN9PR03CA0469.namprd03.prod.outlook.com
- (2603:10b6:408:139::24) To CH3PR12MB8659.namprd12.prod.outlook.com
+X-ClientProxiedBy: BN9PR03CA0477.namprd03.prod.outlook.com
+ (2603:10b6:408:139::32) To CH3PR12MB8659.namprd12.prod.outlook.com
  (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -82,859 +82,728 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|SA1PR12MB7444:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9889bae6-6120-4639-4b7c-08dd8bdfbfc8
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|MN0PR12MB5978:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9a1d9f82-514c-43e8-df1b-08dd8bdfc0ca
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|1800799024|366016|921020;
+	BCL:0;ARA:13230040|366016|1800799024|376014|7416014|921020;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?eOWI7HymI3dP6Mqr0b29hYQeUR//jHbnPcMO6xJFj2DxTqMuxRNn/SFGgYJ4?=
- =?us-ascii?Q?9CvD/zI3obRQvmMjCJGq3TJMcDzK6b1l/ov+uuDQVZPOv3dxZJmEfQy3q2V0?=
- =?us-ascii?Q?TV9mjdd2ral+IAKV066MHbWVC6Ao+oFtHVuyegha9txptCoO+fp3EtDLVDAX?=
- =?us-ascii?Q?qnoE3qw47TzSQi3htsQnlKA6gFoA3FPs1cHg1kHCsbuvqw7Hu0IJwHBDaelp?=
- =?us-ascii?Q?tRYK7DYKFLQcxhYnbNcBRCaHtSqHdseFdTYrDHWtx2/ztRUDMGHXy3A00PZC?=
- =?us-ascii?Q?/1eNHbDqN1L8XacfN1Lk9iwJXcUf5bpjBW8/7a4owm9jWvc0xr7C7I3abNAD?=
- =?us-ascii?Q?dzAdDJt07OWAj5i/xOlSXQmskR+jtATR1KUPLLTeW6d1f4FnyFVvNftoQyNZ?=
- =?us-ascii?Q?Fckh2LpWtOhFW6GSaWW6vF4DPt6VJZAOijJzcgVRxOmbJtHV/OTzK+mb77wR?=
- =?us-ascii?Q?RqXuE4FC7tWAw+phn2f9uqNGo0zykqu8Lkyu8v07YnroQHiSjfM3bLDL/E0/?=
- =?us-ascii?Q?X4MCHzN/GR8fs/FXeLDh+x+fZPWL4kj4DebyBZvxcX7mWDys3jcM4eASfpVQ?=
- =?us-ascii?Q?BETNf76eVIPlKRDmiVBEVgjx1GtlUhxtTrK4fltEQfybl7zyNC4/4cXSnDae?=
- =?us-ascii?Q?aa5i3PSf54nTOlcAb5eVTUJ0dn7H8sAYgbtJhWT6iKzT5ii4S4WZt4BwO4J1?=
- =?us-ascii?Q?+0ATXbH1BTm1sWkonGJNE3I9TySAR04xvjRdaD/H86yJjEhhETFVnO+p0sxl?=
- =?us-ascii?Q?FZ6sJByFDl1KhErIiW8Jzy1CZnF4nyDGQpOjrW7q9sT463S22KpaVApqeq4n?=
- =?us-ascii?Q?0ZbhGIdwOim7MnGCQA/8kUio4yajvhsDUik0zxG95ZZnQ7mowDakfYf94juf?=
- =?us-ascii?Q?48Qiks9iYd+7khMAXy82Jl32nn3jDma4nrMEZ605EJFhC/uTgO8aO+MGzjPs?=
- =?us-ascii?Q?91PeLuELa6B3u3XolwMJwEkIDuEEx1hnyAFIGHbA5gN/vXP6H/zZshEjW/fL?=
- =?us-ascii?Q?xWlUBdyEjAmSulwFkwiFmxVBcanNNwKeDmBMEo0lkoDfEUhwhlqYzmIJCTV5?=
- =?us-ascii?Q?Ih3SAwtXI2aytmYfsAIZAs7t68jT+O5METgKcJrIaNqXo4JQ+CKMR1x3yOeQ?=
- =?us-ascii?Q?N1i8W+prvmVVVfxwiNIshamZwJyLTmmrsVFJul4/u9rJg8nBi1PUbg5wjrTN?=
- =?us-ascii?Q?qEangDKp9Zyk1zwleE5tRS5x+ZVkyULsFDznaxrvrxsvw6CoeLpmUn9d8NfP?=
- =?us-ascii?Q?+FrdzdMQxKSe2x480Nm2JY6gwz7vO9hSAIN3cHiuSvQp9c5pWrIhxPYO6Fhw?=
- =?us-ascii?Q?AolMqOs7dSR0pV0Hns8cV4bXB4Dlb0YmGvfm8o3MEW6CMCMvakX3MBIBofgO?=
- =?us-ascii?Q?qvDliajwnU18M31fREBr72oFd0qXBQlvDhFQViVb1ppm+rpyemmbIcxDcPLB?=
- =?us-ascii?Q?0fVw46dDDDrl5cziLLGdYP+UzplMFrR4Hvlk2EdNnQOvTTFH8xjtRQ=3D=3D?=
+	=?us-ascii?Q?cFgV9TDEBwBU5ZhMfwo5T5wtnVrEY0+LNJax7Bh1TlnEN7/wJsLfGwj5PJvb?=
+ =?us-ascii?Q?YyWtI3IBz4NvKtEQuUdfcnFndkFoNtiNPr/DyKHn8/YV174Rq4OERxrxr6kv?=
+ =?us-ascii?Q?ou6Xh2bGtN87Bv1+/pzRt2sCWUjaCsOMzA8ttIrRc9owA9LD6A/4VS0RzEDx?=
+ =?us-ascii?Q?Og/cotLSzehYR0bcaDqgx/cDgaJAdhQhmdxqft0DrplWOTyvEbyFGn3ymXMP?=
+ =?us-ascii?Q?Aml3mNpLf/6ijFMq0Gxv/OVvorQRkISa6e8O8dYjTVXuZbsGc9rlhipFXGBk?=
+ =?us-ascii?Q?yhVLwmDLsK0VuGgcKYaGIvzdPf4T1WtMMVSwcLCHj/BWZ6Me9qDWXoxBfz0M?=
+ =?us-ascii?Q?HBAaHUiY/Dnl0lSh5euUCMFSIodv1RSPY16xlZz7w3nvKS1lD7CI/wgvXUbO?=
+ =?us-ascii?Q?DeOPmXYMy3/JuFSpHGB4MjMvMQq7Fx8BUCNbZrnv4Sv6lCospQyqr6qvhQJM?=
+ =?us-ascii?Q?KzmOf8vIh1wxry92x8uR+Ln2dYJEDgMK3AK0uR3TvW2dGH0UUqAPJ0GKo+Bc?=
+ =?us-ascii?Q?xl5EPEODhG6HGVTIP+u9HhO5WU+9NdJUzmn45dn8wdg32esxvR5fnhoonEhP?=
+ =?us-ascii?Q?nVLq+x871ZA6CDZBLliwKbguVZjGTBFjY8d0DPtlXFLAHBBO/flmdBTi4JfU?=
+ =?us-ascii?Q?4djZoaB0zIWb7NTCN8VV7mV+c8rZEoKlXLk73ddjHL7QY5PlNffA2StqR9Ah?=
+ =?us-ascii?Q?kzXovAhVJ2R1guEfW1EjssjEqYsnC2/xpBUDrOwS66L8UfIknj/aIa5LCuqW?=
+ =?us-ascii?Q?WNSaSFoZv7GB9biKYyP5uMd0CrZCyWAfdDCTSleS/x/xqqee+7WNd14ncVQ0?=
+ =?us-ascii?Q?lcNfcphYiHGAb4YYLWQ8Owl3TGpKGJsTlVWYQMSffRkWsIy3Ocrz2UQu9GKt?=
+ =?us-ascii?Q?PtIOOm+t28VrjhoUQU4j+Z1XiIJ9J+n8vr0g0GimOjtzggqXm/tqu8J1dNva?=
+ =?us-ascii?Q?EFUp3F+a7A9XvIGpdLLk2phnOkhlLn/qlPH8MnmexzT4eIR+e0QAD1TlTXMz?=
+ =?us-ascii?Q?veJnUV7dSqAMDH0AcmtAKyx17hgAamJAn+cJDkLTSWzUqZ2x+UT8xF0aAqDx?=
+ =?us-ascii?Q?F6YbL5dWDHlwjYZns5j9eyWfGTO1fNE5BbOSkdzRKETFZD8AxwvSawe9mxUV?=
+ =?us-ascii?Q?BoaPF4pu7wmDENzGXqJ34Sav0TPRH4JKSI+TRPvEMoGr7dsk8s4Gp1F2EZuX?=
+ =?us-ascii?Q?uiC3QwjrAVg0+LGmN3VEdU/FxQ8Z4Nux0EplubmY4EJGC7+WgoQhrdzejln+?=
+ =?us-ascii?Q?90R+9z6b1swdZLsjqGztmD8gBfHDpUOGvmvNcsmFrWcp8r5rqlrmMItD1T0o?=
+ =?us-ascii?Q?Sn/fxJeVPfL23bSDnpCf89143FJIBj+7FNQ6LOaBHPN0u9F8qa9gdOVytjRt?=
+ =?us-ascii?Q?mv1T39HqRtpqMKrwuSBckpKVzNrMQh9O+ejGMj4QSvD+mdlJ1HHY9sqIYqM8?=
+ =?us-ascii?Q?Z0XkRDr98iEQ/6tvymQhtAmr2ES3pdFjt1CP0IbJmH0ZneE7C46PxA=3D=3D?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(366016)(921020);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014)(921020);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?udmTrz1DiLyiUsHYNocucAZspN2K7TsCLUmA+z8Xx3Cd3N1NEaO+FZQeY+aL?=
- =?us-ascii?Q?ZHm4lnna+ftq4YvjH3P9DDAYIr2396MaUESjTCmpm7Ir9U3wQ4S71xD39GOp?=
- =?us-ascii?Q?q0nOAtJKrE1qpAjk0LpOLbQwenBITGodk1YwNeFq1eMC3QheD9OdVLwaQD97?=
- =?us-ascii?Q?LBPRnAMy2LrO6E0o9Osv8e37m1UnN3ddoJp+nw8bJ7Hx2UMtYp9EwuXU/omg?=
- =?us-ascii?Q?ozrrNnM6vXxFeDm2lYw5YgSy5w5TCVg5ovUCh9ohuLbTVcx115g3xwyK1oDJ?=
- =?us-ascii?Q?u+iWagCD/5nLdaZgT+At1hAl7xOPPctk1bxqxbhPBHRzQjmCiy/a2BplXe+X?=
- =?us-ascii?Q?YSAtyqetsWi3CwBIsmqDSuV/tYaCmEiZCH9O/0nT6yDNGbJH4C3UulpTN6Cs?=
- =?us-ascii?Q?O0ZFA0pLqASJZ2GmNX8DoPr84+6gFFn2vybadOn0C4VuDHpohg7Bb1zB+LR1?=
- =?us-ascii?Q?ZC6NP6+4VbKcVc1S7x/502O4Ssb2IJ3nh2Sj+XMbGMDdBPkQnbHlNBiSgEn3?=
- =?us-ascii?Q?moA6EKOZ1mGmfVVJ3H7jZVf/a19xZ3jJH24j8o9wyGZIX17rFLEoOCLGXrOJ?=
- =?us-ascii?Q?fcreJyNRd120h3RLNiKIUdfSOj+d+GbruJlIdsgYZGUCXX/6Cntvzrn8wOB/?=
- =?us-ascii?Q?L4m1aAIylphitTVOak/BZeGxw0PB+4upyLslHd6EpM/mDMJl+KHFbfF1zBD5?=
- =?us-ascii?Q?O2gG/nt8rQbFLFZu3uzrjaN7rbAC5sMeNFfl8s/X7F1yGy4BsEPfVuFfd7Zx?=
- =?us-ascii?Q?/SPimEoJ54s/+Ji5yuhs7HEKEGImvzElqRPk1qD6ZSbK9+ykQlZdrFIpKTgE?=
- =?us-ascii?Q?QPYIWBq4+o8AJh3A2KLNy5xAlqsQ9mHcGm28X9qmQmAYK0TSbBMr7IDKeydP?=
- =?us-ascii?Q?xThg9LOJYJqnv+AjJJoukrODZzkO5B/pCI4tzNs6itS9ic9B5OhfqeDIeeCl?=
- =?us-ascii?Q?jKBq8TNvIuxU0ll41timNcnUjvrldGWN0SqW2cZPkJj+QYzXlLAI+fJv99sZ?=
- =?us-ascii?Q?DLZK96wkWgG9c++Laf0SjHi28JDygZSzZY3k2x9o83h+6TbQRrz9iUPmd4DY?=
- =?us-ascii?Q?Y/WhTrKL/9yVJOLPT1/buli4cVNNqLoJ13XSn222Bkg6qZoLjlS0fllZzWmB?=
- =?us-ascii?Q?uXoIcx7o+ip5Am7B56BtZAmFRCGniVkK4j4Gfbuwz8AWzyiw7pwX/oKSk8xd?=
- =?us-ascii?Q?ufxbbXRSlaO55HB/+HRuq+fK8IY1gsFXNSR/culnuVQAVudMyO2vs3KyEDWN?=
- =?us-ascii?Q?48F4+sKO+F+lfdqWxzLvknKoeYhK/WFb4V8TDXrL/gI8RwI6U97rJTSwcW+y?=
- =?us-ascii?Q?DiH/ktslZ7uev13Epg3UWm8oxIQWmm7/Y9VxLFJAx7swB6Nf9PM4vkL4Lhpv?=
- =?us-ascii?Q?c1eM6flNVrj7d90E76UKDCSsAwsxlSsEPrOsfLvAaHzYWeOIWu1cmutbdGZ3?=
- =?us-ascii?Q?fjeyv5COVAbD35s8/sy4DsdBcZuwJSgwtWx+ib72xlMKYsLMz9pbduDgpKHf?=
- =?us-ascii?Q?sw+vZdUlbOpIJHtUj3WV6/2YuZhh/vZydFLmeev9oZDVX0e5ZMhU3jdOgXpa?=
- =?us-ascii?Q?pMIqzLv/AHCLwfGA+hiufkYpcd18ux4LG7ToPa8y?=
+	=?us-ascii?Q?NK0MBALv2y2A+tfwf9HS4TaEVtEhSApDI7rQZm9qm2U4kFnSE/vsoGGkLHXm?=
+ =?us-ascii?Q?yTopuLetuzIuneWmrwG2162yyaebendyS82rYLg8ZYaVYr1SwLyx2rvZN5HM?=
+ =?us-ascii?Q?tR/ulKDmdpQjCOCaHF4gmjJr+cQYwyqkZVz89F83hViLCw1nG2txYFzhU/TM?=
+ =?us-ascii?Q?s2yveXpgkxE4CXvD+BwwKzNsbqfHDiL/ddMlHwh5tHVdqRjHOdlXbwX78wfU?=
+ =?us-ascii?Q?gSYvwAD4tkOi4zs2yipS3TNouEBfoYlbBTqiJEEaysBUecClW/DCGg5bca6Z?=
+ =?us-ascii?Q?aw8u6SsPduhW5FzTHU+Wj0ejYoPgquxLPmdTpIXHJygtHqxCMliDd+AWkgbY?=
+ =?us-ascii?Q?IUbdG7TiPoN19Bv3fbnQPX+/vhIrU5aN7Thg5xZ/wlmHrUfYGBs09YYHQK5w?=
+ =?us-ascii?Q?yxHy/Ja2/ntTtcwvvgDEvco9gq2v3fKZmxk0ddOEGArPSgs2iFplkHUlWQdD?=
+ =?us-ascii?Q?6NRbxjRGrXP14lEBBR6XiUt4J3K+8tvXlgmxijO0muatVtvHxv/zVN2E7+w1?=
+ =?us-ascii?Q?5t2z2zFwbXEAyTYN1Ctgdk9jimfcb3hKxUTGpG/BJGBAV0TJJIR1vLcaBz3D?=
+ =?us-ascii?Q?1sY7fOAQcEFfrSRc08OLNXfhsR2gUDfMyqEFuPJV6aDCzYUg6W6INamK6Dbm?=
+ =?us-ascii?Q?Gmw9AJNF7apag9ePIdHavC252sQXR3PjFqbwsim2d2iCelnkGKBcfA2HzON9?=
+ =?us-ascii?Q?1qbICGF0zZa2e54opCqV6aUL7g/rUcjO1J0P0GUvSiu28Zbaxv0RZiYn1ME1?=
+ =?us-ascii?Q?DYi1diIeLcIxeDr3cISRt4F4770bEqUqOhRuSoWJqR5jR8+PUiWxz+BiTLHJ?=
+ =?us-ascii?Q?ptoOqe/EnbzJVQrjHU2RJFBdU5eV2cRsdY62pNFbUdn12Kal/f97qAn6E9L8?=
+ =?us-ascii?Q?iddyg2m8w+4JFh5W4gXiTUyevBwr0r9kh/QuzpTSTcoSsbsC82wnQL/eJfEV?=
+ =?us-ascii?Q?iBY6SgMBMN/v/YU5nw80rRrCCSWwyJK/z0StzOF7Z6keDaIFFZ0z5LCfXUAq?=
+ =?us-ascii?Q?Fvkatn8XHUoS8xQM0qKJ2DNHGFrcVuRjU0aREzrJr95cjYvkFm4RkNLt7Ir+?=
+ =?us-ascii?Q?Lgs5bfee+fkQ6qmbfuX0xaz5HXGMcQnEHTmWl3j/agSykKQRSFfPwKrKFqwf?=
+ =?us-ascii?Q?/VYmhsbGPZjto0Mmmf3+d+OKJF3xdxYAdAqymTZJk1+yBHxt4txcgOC3DbOg?=
+ =?us-ascii?Q?mON1dAnlYEwa96nKaGTDtp+LgdUtcbTrG4Fu+Z+jBUCnJJzaprnVpRiKEm/3?=
+ =?us-ascii?Q?eOTVT53GX7sncrslhDTpauE74Sevylqr2s1pSgvWcPZ2nqJ4zTOmUlcOwkNO?=
+ =?us-ascii?Q?J+vEkMo6QFkHMuA5kw8goy8YGMFiBPKQjo/WvAjSHPga0kyx8s51Pcjazwf/?=
+ =?us-ascii?Q?xpLuVhxXiwOjtnzM+yTIUcbMxlWNJMn+/A7nqBCbJYoo3D3xSpoKfh2tqGZm?=
+ =?us-ascii?Q?UeFk3qF1oT5kbPmFh0EDnfEhHs6eklgvH7pv3FQvPh5FQCN9/G7xgl/tJK6L?=
+ =?us-ascii?Q?A9za0ETP0LAEEhbSJBu/ADhqFMsImAbCTea9qPNYJEJv4pY9YPGAs1UiRcSt?=
+ =?us-ascii?Q?pAbJukZLAVTHUKw7LoCnO2L2TqfMdoI9VTlqb37X?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9889bae6-6120-4639-4b7c-08dd8bdfbfc8
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9a1d9f82-514c-43e8-df1b-08dd8bdfc0ca
 X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 May 2025 14:18:47.3156
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 May 2025 14:18:48.9342
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: aVuzC4qZnva4pu/ZuTkl7nvvxnZ3cSQy6hSS9/IBk1qip9TVWckEOi63s1LB09Mk
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7444
+X-MS-Exchange-CrossTenant-UserPrincipalName: +zUYFiKruimyT4SJKDCrgzClYXFVG+EoT460vl4FKlMVWDjB0cY/JDajBpYt+OCo
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB5978
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+map is slightly complicated because it has to handle a number of special
+edge cases:
+ - Overmapping a previously shared table with an OA - requries validating
+   and freeing the possibly empty tables
+ - Doing the above across an entire to-be-created contiguous entry
+ - Installing a new shared table level concurrently with another thread
+ - Expanding the table by adding more top levels
 
-Replace the io_pgtable versions with pt_iommu versions. The v2 page table
-uses the x86 implementation that will be eventually shared with VT-D.
+Table expansion is a unique feature of AMDv1, this version is quite
+similar except we handle racing concurrent lockless map. The table top
+pointer and starting level are encoded in a single uintptr_t which ensures
+we can READ_ONCE() without tearing. Any op will do the READ_ONCE() and use
+that fixed point as its starting point. Concurrent expansion is handled
+with a table global spinlock.
 
-This supports the same special features as the original code:
- - increase_top for the v1 format to allow scaling from 3 to 6 levels
- - non-present flushing
- - Dirty tracking for v1 only
- - __sme_set() to adjust the PTEs for CC
- - Optimization for flushing with virtualization to minimize the range
- - amd_iommu_pgsize_bitmap override of the native page sizes
- - page tables allocate from the device's NUMA node
+When inserting a new table entry map checks that the entire portion of the
+table is empty. This includes freeing any empty lower tables that will be
+overwritten by an OA. A separate free list is used while checking and
+collecting all the empty lower tables so that writing the new entry is
+uninterrupted, either the new entry fully writes or nothing changes.
 
-Rework the domain ops so that v1/v2 get their own ops. Make dedicated
-allocation functions for v1 and v2. Hook up invalidation for a top change
-to struct pt_iommu_flush_ops. Delete some of the iopgtable related code
-that becomes unused in this patch. The next patch will delete the rest of
-it.
+A special fast path for PAGE_SIZE is implemented that does a direct walk
+to the leaf level and installs a single entry. This gives ~15% improvement
+for iommu_map() when mapping lists of single pages.
 
-This fixes a race bug in AMD's increase_address_space() implementation. It
-stores the top level and top pointer in different memory, which prevents
-other threads from reading a coherent version:
+This version sits under the iommu_domain_ops as map_pages() but does not
+require the external page size calculation. The implementation is actually
+map_range() and can do arbitrary ranges, internally handling all the
+validation and supporting any arrangment of page sizes. A future series
+can optimize iommu_map() to take advantage of this.
 
-   increase_address_space()   alloc_pte()
-                                level = pgtable->mode - 1;
-	pgtable->root  = pte;
-	pgtable->mode += 1;
-                                pte = &pgtable->root[PM_LEVEL_INDEX(level, address)];
-
-The iommupt version is careful to put mode and root under a single
-READ_ONCE and then is careful to only READ_ONCE a single time per
-walk.
-
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/iommu/amd/Kconfig           |   5 +-
- drivers/iommu/amd/amd_iommu.h       |   1 -
- drivers/iommu/amd/amd_iommu_types.h |  12 +-
- drivers/iommu/amd/io_pgtable.c      |   1 -
- drivers/iommu/amd/iommu.c           | 493 ++++++++++++++--------------
- 5 files changed, 256 insertions(+), 256 deletions(-)
+ drivers/iommu/generic_pt/iommu_pt.h | 481 ++++++++++++++++++++++++++++
+ include/linux/generic_pt/iommu.h    |  58 ++++
+ 2 files changed, 539 insertions(+)
 
-diff --git a/drivers/iommu/amd/Kconfig b/drivers/iommu/amd/Kconfig
-index 994063e5586f0f..9f3e3ebd49a201 100644
---- a/drivers/iommu/amd/Kconfig
-+++ b/drivers/iommu/amd/Kconfig
-@@ -10,10 +10,13 @@ config AMD_IOMMU
- 	select MMU_NOTIFIER
- 	select IOMMU_API
- 	select IOMMU_IOVA
--	select IOMMU_IO_PGTABLE
- 	select IOMMU_SVA
- 	select IOMMU_IOPF
- 	select IOMMUFD_DRIVER if IOMMUFD
-+	select GENERIC_PT
-+	select IOMMU_PT
-+	select IOMMU_PT_AMDV1
-+	select IOMMU_PT_X86_64
- 	depends on X86_64 && PCI && ACPI && HAVE_CMPXCHG_DOUBLE
- 	help
- 	  With this option you can enable support for AMD IOMMU hardware in
-diff --git a/drivers/iommu/amd/amd_iommu.h b/drivers/iommu/amd/amd_iommu.h
-index 220c598b7e1486..9b3ee4cf23d14e 100644
---- a/drivers/iommu/amd/amd_iommu.h
-+++ b/drivers/iommu/amd/amd_iommu.h
-@@ -86,7 +86,6 @@ int amd_iommu_complete_ppr(struct device *dev, u32 pasid, int status, int tag);
-  * the IOMMU used by this driver.
-  */
- void amd_iommu_flush_all_caches(struct amd_iommu *iommu);
--void amd_iommu_update_and_flush_device_table(struct protection_domain *domain);
- void amd_iommu_domain_flush_pages(struct protection_domain *domain,
- 				  u64 address, size_t size);
- void amd_iommu_dev_flush_pasid_pages(struct iommu_dev_data *dev_data,
-diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
-index bc9f0bbf3c0864..abd05ef75239d4 100644
---- a/drivers/iommu/amd/amd_iommu_types.h
-+++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -19,6 +19,7 @@
- #include <linux/pci.h>
- #include <linux/irqreturn.h>
- #include <linux/io-pgtable.h>
-+#include <linux/generic_pt/iommu.h>
+diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_pt/iommu_pt.h
+index aa15fb79abf24a..7a680017f35bff 100644
+--- a/drivers/iommu/generic_pt/iommu_pt.h
++++ b/drivers/iommu/generic_pt/iommu_pt.h
+@@ -90,6 +90,23 @@ static __maybe_unused int make_range_u64(struct pt_common *common,
+ 		ret;                                                     \
+ 	})
  
- /*
-  * Maximum number of IOMMUs supported
-@@ -582,9 +583,13 @@ struct pdom_iommu_info {
-  * independent of their use.
-  */
- struct protection_domain {
-+	union {
-+		struct iommu_domain domain;
-+		struct pt_iommu iommu;
-+		struct pt_iommu_amdv1 amdv1;
-+		struct pt_iommu_x86_64 amdv2;
-+	};
- 	struct list_head dev_list; /* List of all devices in this domain */
--	struct iommu_domain domain; /* generic domain handle used by
--				       iommu core code */
- 	struct amd_io_pgtable iop;
- 	spinlock_t lock;	/* mostly used to lock the page table*/
- 	u16 id;			/* the domain id written to the device table */
-@@ -595,6 +600,9 @@ struct protection_domain {
- 	struct mmu_notifier mn;	/* mmu notifier for the SVA domain */
- 	struct list_head dev_data_list; /* List of pdom_dev_data */
- };
-+PT_IOMMU_CHECK_DOMAIN(struct protection_domain, iommu, domain);
-+PT_IOMMU_CHECK_DOMAIN(struct protection_domain, amdv1.iommu, domain);
-+PT_IOMMU_CHECK_DOMAIN(struct protection_domain, amdv2.iommu, domain);
- 
- /*
-  * This structure contains information about one PCI segment in the system.
-diff --git a/drivers/iommu/amd/io_pgtable.c b/drivers/iommu/amd/io_pgtable.c
-index 4d308c07113495..e4b33eba554599 100644
---- a/drivers/iommu/amd/io_pgtable.c
-+++ b/drivers/iommu/amd/io_pgtable.c
-@@ -132,7 +132,6 @@ static bool increase_address_space(struct amd_io_pgtable *pgtable,
- 
- 	pgtable->root  = pte;
- 	pgtable->mode += 1;
--	amd_iommu_update_and_flush_device_table(domain);
- 
- 	pte = NULL;
- 	ret = true;
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index dea0fed7abb044..6f0da8123101b2 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -28,7 +28,6 @@
- #include <linux/msi.h>
- #include <linux/irqdomain.h>
- #include <linux/percpu.h>
--#include <linux/io-pgtable.h>
- #include <linux/cc_platform.h>
- #include <asm/irq_remapping.h>
- #include <asm/io_apic.h>
-@@ -39,9 +38,9 @@
- #include <asm/gart.h>
- #include <asm/dma.h>
- #include <uapi/linux/iommufd.h>
-+#include <linux/generic_pt/iommu.h>
- 
- #include "amd_iommu.h"
--#include "../dma-iommu.h"
- #include "../irq_remapping.h"
- #include "../iommu-pages.h"
- 
-@@ -79,11 +78,18 @@ static int amd_iommu_attach_device(struct iommu_domain *dom,
- 				   struct device *dev);
- 
- static void set_dte_entry(struct amd_iommu *iommu,
--			  struct iommu_dev_data *dev_data);
-+			  struct iommu_dev_data *dev_data,
-+			  phys_addr_t top_paddr, unsigned int top_level);
-+
-+static void amd_iommu_change_top(struct pt_iommu *iommu_table,
-+				 phys_addr_t top_paddr, unsigned int top_level);
- 
- static void iommu_flush_dte_sync(struct amd_iommu *iommu, u16 devid);
- 
- static struct iommu_dev_data *find_dev_data(struct amd_iommu *iommu, u16 devid);
-+static bool amd_iommu_enforce_cache_coherency(struct iommu_domain *domain);
-+static int amd_iommu_set_dirty_tracking(struct iommu_domain *domain,
-+					bool enable);
- 
- /****************************************************************************
-  *
-@@ -1730,42 +1736,6 @@ static void dev_flush_pasid_all(struct iommu_dev_data *dev_data,
- 					CMD_INV_IOMMU_ALL_PAGES_ADDRESS);
- }
- 
--/* Flush the not present cache if it exists */
--static void domain_flush_np_cache(struct protection_domain *domain,
--		dma_addr_t iova, size_t size)
--{
--	if (unlikely(amd_iommu_np_cache)) {
--		unsigned long flags;
--
--		spin_lock_irqsave(&domain->lock, flags);
--		amd_iommu_domain_flush_pages(domain, iova, size);
--		spin_unlock_irqrestore(&domain->lock, flags);
--	}
--}
--
--
--/*
-- * This function flushes the DTEs for all devices in domain
-- */
--void amd_iommu_update_and_flush_device_table(struct protection_domain *domain)
--{
--	struct iommu_dev_data *dev_data;
--
--	lockdep_assert_held(&domain->lock);
--
--	list_for_each_entry(dev_data, &domain->dev_list, list) {
--		struct amd_iommu *iommu = rlookup_amd_iommu(dev_data->dev);
--
--		set_dte_entry(iommu, dev_data);
--		clone_aliases(iommu, dev_data->dev);
--	}
--
--	list_for_each_entry(dev_data, &domain->dev_list, list)
--		device_flush_dte(dev_data);
--
--	domain_flush_complete(domain);
--}
--
- int amd_iommu_complete_ppr(struct device *dev, u32 pasid, int status, int tag)
- {
- 	struct iommu_dev_data *dev_data;
-@@ -2025,7 +1995,8 @@ static void set_dte_gcr3_table(struct amd_iommu *iommu,
- }
- 
- static void set_dte_entry(struct amd_iommu *iommu,
--			  struct iommu_dev_data *dev_data)
-+			  struct iommu_dev_data *dev_data,
-+			  phys_addr_t top_paddr, unsigned int top_level)
- {
- 	u16 domid;
- 	u32 old_domid;
-@@ -2034,19 +2005,36 @@ static void set_dte_entry(struct amd_iommu *iommu,
- 	struct protection_domain *domain = dev_data->domain;
- 	struct gcr3_tbl_info *gcr3_info = &dev_data->gcr3_info;
- 	struct dev_table_entry *dte = &get_dev_table(iommu)[dev_data->devid];
--
--	if (gcr3_info && gcr3_info->gcr3_tbl)
--		domid = dev_data->gcr3_info.domid;
--	else
--		domid = domain->id;
-+	struct pt_iommu_amdv1_hw_info pt_info;
- 
- 	make_clear_dte(dev_data, dte, &new);
- 
--	if (domain->iop.mode != PAGE_MODE_NONE)
--		new.data[0] |= iommu_virt_to_phys(domain->iop.root);
-+	if (gcr3_info && gcr3_info->gcr3_tbl)
-+		domid = dev_data->gcr3_info.domid;
-+	else {
-+		domid = domain->id;
- 
--	new.data[0] |= (domain->iop.mode & DEV_ENTRY_MODE_MASK)
--		    << DEV_ENTRY_MODE_SHIFT;
-+		if (domain->domain.type & __IOMMU_DOMAIN_PAGING) {
-+			/*
-+			 * When updating the IO pagetable, the new top and level
-+			 * are provided as parameters. For other operations i.e.
-+			 * device attach, retrieve the current pagetable info
-+			 * via the IOMMU PT API.
-+			 */
-+			if (top_paddr) {
-+				pt_info.host_pt_root = top_paddr;
-+				pt_info.mode = top_level + 1;
-+			} else {
-+				WARN_ON(top_paddr || top_level);
-+				pt_iommu_amdv1_hw_info(&domain->amdv1,
-+						       &pt_info);
-+			}
-+
-+			new.data[0] |= pt_info.host_pt_root |
-+				       (pt_info.mode & DEV_ENTRY_MODE_MASK)
-+					       << DEV_ENTRY_MODE_SHIFT;
-+		}
-+	}
- 
- 	new.data[0] |= DTE_FLAG_IR | DTE_FLAG_IW;
- 
-@@ -2112,7 +2100,7 @@ static void dev_update_dte(struct iommu_dev_data *dev_data, bool set)
- 	struct amd_iommu *iommu = get_amd_iommu_from_dev(dev_data->dev);
- 
- 	if (set)
--		set_dte_entry(iommu, dev_data);
-+		set_dte_entry(iommu, dev_data, 0, 0);
- 	else
- 		clear_dte_entry(iommu, dev_data);
- 
-@@ -2130,6 +2118,7 @@ static int init_gcr3_table(struct iommu_dev_data *dev_data,
- {
- 	struct amd_iommu *iommu = get_amd_iommu_from_dev_data(dev_data);
- 	int max_pasids = dev_data->max_pasids;
-+	struct pt_iommu_x86_64_hw_info pt_info;
- 	int ret = 0;
- 
- 	 /*
-@@ -2152,7 +2141,8 @@ static int init_gcr3_table(struct iommu_dev_data *dev_data,
- 	if (!pdom_is_v2_pgtbl_mode(pdom))
- 		return ret;
- 
--	ret = update_gcr3(dev_data, 0, iommu_virt_to_phys(pdom->iop.pgd), true);
-+	pt_iommu_x86_64_hw_info(&pdom->amdv2, &pt_info);
-+	ret = update_gcr3(dev_data, 0, pt_info.gcr3_pt, true);
- 	if (ret)
- 		free_gcr3_table(&dev_data->gcr3_info);
- 
-@@ -2467,49 +2457,113 @@ struct protection_domain *protection_domain_alloc(void)
- 	return domain;
- }
- 
--static int pdom_setup_pgtable(struct protection_domain *domain,
--			      struct device *dev)
--{
--	struct io_pgtable_ops *pgtbl_ops;
--	enum io_pgtable_fmt fmt;
--
--	switch (domain->pd_mode) {
--	case PD_MODE_V1:
--		fmt = AMD_IOMMU_V1;
--		break;
--	case PD_MODE_V2:
--		fmt = AMD_IOMMU_V2;
--		break;
--	}
--
--	domain->iop.pgtbl.cfg.amd.nid = dev_to_node(dev);
--	pgtbl_ops = alloc_io_pgtable_ops(fmt, &domain->iop.pgtbl.cfg, domain);
--	if (!pgtbl_ops)
--		return -ENOMEM;
--
--	return 0;
--}
--
--static inline u64 dma_max_address(enum protection_domain_mode pgtable)
--{
--	if (pgtable == PD_MODE_V1)
--		return ~0ULL;
--
--	/* V2 with 4/5 level page table */
--	return ((1ULL << PM_LEVEL_SHIFT(amd_iommu_gpt_level)) - 1);
--}
--
- static bool amd_iommu_hd_support(struct amd_iommu *iommu)
- {
- 	return iommu && (iommu->features & FEATURE_HDSUP);
- }
- 
--static struct iommu_domain *
--do_iommu_domain_alloc(struct device *dev, u32 flags,
--		      enum protection_domain_mode pgtable)
-+static spinlock_t *amd_iommu_get_top_lock(struct pt_iommu *iommupt)
- {
--	bool dirty_tracking = flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
--	struct amd_iommu *iommu = get_amd_iommu_from_dev(dev);
-+	struct protection_domain *pdom =
-+		container_of(iommupt, struct protection_domain, iommu);
-+
-+	return &pdom->lock;
-+}
-+
-+/*
-+ * Update all HW references to the domain with a new pgtable configuration.
-+ */
-+static void amd_iommu_change_top(struct pt_iommu *iommu_table,
-+				 phys_addr_t top_paddr, unsigned int top_level)
++static inline unsigned int compute_best_pgsize(struct pt_state *pts,
++					       pt_oaddr_t oa)
 +{
-+	struct protection_domain *pdom =
-+		container_of(iommu_table, struct protection_domain, iommu);
-+	struct iommu_dev_data *dev_data;
++	struct pt_iommu *iommu_table = iommu_from_common(pts->range->common);
 +
-+	lockdep_assert_held(&pdom->lock);
-+
-+	/* Update the DTE for all devices attached to this domain */
-+	list_for_each_entry(dev_data, &pdom->dev_list, list) {
-+		struct amd_iommu *iommu = rlookup_amd_iommu(dev_data->dev);
-+
-+		/* Update the HW references with the new level and top ptr */
-+		set_dte_entry(iommu, dev_data, top_paddr, top_level);
-+		clone_aliases(iommu, dev_data->dev);
-+	}
-+
-+	list_for_each_entry(dev_data, &pdom->dev_list, list)
-+		device_flush_dte(dev_data);
-+
-+	domain_flush_complete(pdom);
-+}
-+
-+/*
-+ * amd_iommu_iotlb_sync_map() is used to generate flushes for non-present to
-+ * present (ie mapping) operations. It is a NOP if the IOMMU doesn't have non
-+ * present caching (like hypervisor shadowing).
-+ */
-+static int amd_iommu_iotlb_sync_map(struct iommu_domain *dom,
-+				    unsigned long iova, size_t size)
-+{
-+	struct protection_domain *domain = to_pdomain(dom);
-+	unsigned long flags;
-+
-+	if (likely(!amd_iommu_np_cache))
++	if (!pt_can_have_leaf(pts))
 +		return 0;
 +
-+	spin_lock_irqsave(&domain->lock, flags);
-+	amd_iommu_domain_flush_pages(domain, iova, size);
-+	spin_unlock_irqrestore(&domain->lock, flags);
++	/*
++	 * The page size is limited by the domain's bitmap. This allows the core
++	 * code to reduce the supported page sizes by changing the bitmap.
++	 */
++	return pt_compute_best_pgsize(pt_possible_sizes(pts) &
++					      iommu_table->domain.pgsize_bitmap,
++				      pts->range->va, pts->range->last_va, oa);
++}
++
+ static __always_inline int __do_iova_to_phys(struct pt_range *range, void *arg,
+ 					     unsigned int level,
+ 					     struct pt_table_p *table,
+@@ -189,6 +206,463 @@ static inline struct pt_table_p *table_alloc_top(struct pt_common *common,
+ 		log2_to_int(pt_top_memsize_lg2(common, top_of_table)));
+ }
+ 
++/* Allocate an interior table */
++static inline struct pt_table_p *table_alloc(const struct pt_state *parent_pts,
++					     gfp_t gfp)
++{
++	struct pt_iommu *iommu_table =
++		iommu_from_common(parent_pts->range->common);
++	struct pt_state child_pts =
++		pt_init(parent_pts->range, parent_pts->level - 1, NULL);
++
++	return iommu_alloc_pages_node_sz(
++		iommu_table->nid, gfp,
++		log2_to_int(pt_num_items_lg2(&child_pts) +
++			    ilog2(PT_ENTRY_WORD_SIZE)));
++}
++
++static inline int pt_iommu_new_table(struct pt_state *pts,
++				     struct pt_write_attrs *attrs)
++{
++	struct pt_table_p *table_mem;
++	phys_addr_t phys;
++
++	/* Given PA/VA/length can't be represented */
++	if (unlikely(!pt_can_have_table(pts)))
++		return -ENXIO;
++
++	table_mem = table_alloc(pts, attrs->gfp);
++	if (IS_ERR(table_mem))
++		return PTR_ERR(table_mem);
++
++	phys = virt_to_phys(table_mem);
++	if (!pt_install_table(pts, phys, attrs)) {
++		iommu_free_pages(table_mem);
++		return -EAGAIN;
++	}
++
++	if (IS_ENABLED(CONFIG_DEBUG_GENERIC_PT)) {
++		/*
++		 * The underlying table can't store the physical table address.
++		 * This happens when kunit testing tables outside their normal
++		 * environment where a CPU might be limited.
++		 */
++		pt_load_single_entry(pts);
++		if (PT_WARN_ON(pt_table_pa(pts) != phys)) {
++			pt_clear_entry(pts, ilog2(1));
++			iommu_free_pages(table_mem);
++			return -EINVAL;
++		}
++	}
++
++	pts->table_lower = table_mem;
 +	return 0;
 +}
 +
-+static void amd_iommu_flush_iotlb_all(struct iommu_domain *domain)
-+{
-+	struct protection_domain *dom = to_pdomain(domain);
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&dom->lock, flags);
-+	amd_iommu_domain_flush_all(dom);
-+	spin_unlock_irqrestore(&dom->lock, flags);
-+}
-+
-+static void amd_iommu_iotlb_sync(struct iommu_domain *domain,
-+				 struct iommu_iotlb_gather *gather)
-+{
-+	struct protection_domain *dom = to_pdomain(domain);
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&dom->lock, flags);
-+	amd_iommu_domain_flush_pages(dom, gather->start,
-+				     gather->end - gather->start + 1);
-+	spin_unlock_irqrestore(&dom->lock, flags);
-+	iommu_put_pages_list(&gather->freelist);
-+}
-+
-+static const struct pt_iommu_flush_ops amd_hw_flush_ops_v1 = {
-+	.get_top_lock = amd_iommu_get_top_lock,
-+	.change_top = amd_iommu_change_top,
++struct pt_iommu_map_args {
++	struct iommu_iotlb_gather *iotlb_gather;
++	struct pt_write_attrs attrs;
++	pt_oaddr_t oa;
++	unsigned int leaf_pgsize_lg2;
++	unsigned int leaf_level;
 +};
 +
-+static const struct iommu_domain_ops amdv1_ops = {
-+	IOMMU_PT_DOMAIN_OPS(amdv1),
-+	.iotlb_sync_map = amd_iommu_iotlb_sync_map,
-+	.flush_iotlb_all = amd_iommu_flush_iotlb_all,
-+	.iotlb_sync = amd_iommu_iotlb_sync,
-+	.attach_dev = amd_iommu_attach_device,
-+	.free = amd_iommu_domain_free,
-+	.enforce_cache_coherency = amd_iommu_enforce_cache_coherency,
-+};
-+
-+static const struct iommu_dirty_ops amdv1_dirty_ops = {
-+	IOMMU_PT_DIRTY_OPS(amdv1),
-+	.set_dirty_tracking = amd_iommu_set_dirty_tracking,
-+};
-+
-+static struct iommu_domain *amd_iommu_domain_alloc_paging_v1(struct device *dev,
-+							     u32 flags)
++/*
++ * Check that the items in a contiguous block are all empty. This will
++ * recursively check any tables in the block to validate they are empty and
++ * accumulate them on the free list. Makes no change on failure. On success
++ * caller must fill the items.
++ */
++static int clear_contig(const struct pt_state *start_pts,
++			struct iommu_iotlb_gather *iotlb_gather,
++			unsigned int step, unsigned int pgsize_lg2)
 +{
-+	struct pt_iommu_amdv1_cfg cfg = {};
- 	struct protection_domain *domain;
- 	int ret;
- 
-@@ -2517,25 +2571,106 @@ do_iommu_domain_alloc(struct device *dev, u32 flags,
- 	if (!domain)
- 		return ERR_PTR(-ENOMEM);
- 
--	domain->pd_mode = pgtable;
--	ret = pdom_setup_pgtable(domain, dev);
-+	domain->pd_mode = PD_MODE_V1;
-+	domain->iommu.hw_flush_ops = &amd_hw_flush_ops_v1;
-+	domain->iommu.nid = dev_to_node(dev);
-+	if (flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING)
-+		domain->domain.dirty_ops = &amdv1_dirty_ops;
-+
-+	/*
-+	 * Someday FORCE_COHERENCE should be set by
-+	 * amd_iommu_enforce_cache_coherency() like VT-D does.
-+	 */
-+	cfg.common.features = BIT(PT_FEAT_DYNAMIC_TOP) |
-+			      BIT(PT_FEAT_AMDV1_ENCRYPT_TABLES) |
-+			      BIT(PT_FEAT_AMDV1_FORCE_COHERENCE);
-+
-+	/*
-+	 * AMD's IOMMU can flush as many pages as necessary in a single flush.
-+	 * Unless we run in a virtual machine, which can be inferred according
-+	 * to whether "non-present cache" is on, it is probably best to prefer
-+	 * (potentially) too extensive TLB flushing (i.e., more misses) over
-+	 * mutliple TLB flushes (i.e., more flushes). For virtual machines the
-+	 * hypervisor needs to synchronize the host IOMMU PTEs with those of
-+	 * the guest, and the trade-off is different: unnecessary TLB flushes
-+	 * should be avoided.
-+	 */
-+	if (amd_iommu_np_cache)
-+		cfg.common.features |= BIT(PT_FEAT_FLUSH_RANGE_NO_GAPS);
-+	else
-+		cfg.common.features |= BIT(PT_FEAT_FLUSH_RANGE);
-+
-+	cfg.common.hw_max_vasz_lg2 = 64;
-+	cfg.common.hw_max_oasz_lg2 = 52;
-+	cfg.starting_level = 2;
-+	domain->domain.ops = &amdv1_ops;
-+
-+	ret = pt_iommu_amdv1_init(&domain->amdv1, &cfg, GFP_KERNEL);
- 	if (ret) {
--		pdom_id_free(domain->id);
--		kfree(domain);
-+		amd_iommu_domain_free(&domain->domain);
- 		return ERR_PTR(ret);
- 	}
- 
--	domain->domain.geometry.aperture_start = 0;
--	domain->domain.geometry.aperture_end   = dma_max_address(pgtable);
--	domain->domain.geometry.force_aperture = true;
--	domain->domain.pgsize_bitmap = domain->iop.pgtbl.cfg.pgsize_bitmap;
-+	/*
-+	 * Narrow the supported page sizes to those selected by the kernel
-+	 * command line.
-+	 */
-+	domain->domain.pgsize_bitmap &= amd_iommu_pgsize_bitmap;
-+	return &domain->domain;
-+}
- 
--	domain->domain.type = IOMMU_DOMAIN_UNMANAGED;
--	domain->domain.ops = iommu->iommu.ops->default_domain_ops;
-+static const struct iommu_domain_ops amdv2_ops = {
-+	IOMMU_PT_DOMAIN_OPS(x86_64),
-+	.iotlb_sync_map = amd_iommu_iotlb_sync_map,
-+	.flush_iotlb_all = amd_iommu_flush_iotlb_all,
-+	.iotlb_sync = amd_iommu_iotlb_sync,
-+	.attach_dev = amd_iommu_attach_device,
-+	.free = amd_iommu_domain_free,
-+	/*
-+	 * Note the AMDv2 page table format does not support a Force Coherency
-+	 * bit, so enforce_cache_coherency should not be set. However VFIO is
-+	 * not prepared to handle a case where some domains will support
-+	 * enforcement and others do not. VFIO and iommufd will have to be fixed
-+	 * before it can fully use the V2 page table. See the comment in
-+	 * iommufd_hwpt_paging_alloc(). For now leave things as they have
-+	 * historically been and lie about enforce_cache_coherencey.
-+	 */
-+	.enforce_cache_coherency = amd_iommu_enforce_cache_coherency,
-+};
- 
--	if (dirty_tracking)
--		domain->domain.dirty_ops = &amd_dirty_ops;
-+static struct iommu_domain *amd_iommu_domain_alloc_paging_v2(struct device *dev,
-+							     u32 flags)
-+{
-+	struct pt_iommu_x86_64_cfg cfg = {};
-+	struct protection_domain *domain;
++	struct pt_iommu *iommu_table =
++		iommu_from_common(start_pts->range->common);
++	struct pt_range range = *start_pts->range;
++	struct pt_state pts =
++		pt_init(&range, start_pts->level, start_pts->table);
++	struct pt_iommu_collect_args collect = {
++		.free_list = IOMMU_PAGES_LIST_INIT(collect.free_list),
++	};
++	pt_vaddr_t start_va = range.va;
 +	int ret;
- 
-+	domain = protection_domain_alloc();
-+	if (!domain)
-+		return ERR_PTR(-ENOMEM);
 +
-+	domain->pd_mode = PD_MODE_V2;
-+	domain->iommu.nid = dev_to_node(dev);
++	pts.index = start_pts->index;
++	pts.end_index = start_pts->index + step;
++	for (; _pt_iter_load(&pts); pt_next_entry(&pts)) {
++		if (pts.type == PT_ENTRY_TABLE) {
++			ret = pt_walk_descend_all(&pts, __collect_tables,
++						  &collect);
++			if (ret)
++				return ret;
 +
-+	cfg.common.features = BIT(PT_FEAT_SIGN_EXTEND) |
-+			      BIT(PT_FEAT_X86_64_AMD_ENCRYPT_TABLES);
-+	if (amd_iommu_np_cache)
-+		cfg.common.features |= BIT(PT_FEAT_FLUSH_RANGE_NO_GAPS);
-+	else
-+		cfg.common.features |= BIT(PT_FEAT_FLUSH_RANGE);
-+
-+	if (amd_iommu_gpt_level == PAGE_MODE_5_LEVEL)
-+		cfg.common.hw_max_vasz_lg2 = 57;
-+	else
-+		cfg.common.hw_max_vasz_lg2 = 48;
-+	cfg.common.hw_max_oasz_lg2 = 52;
-+	domain->domain.ops = &amdv2_ops;
-+
-+	ret = pt_iommu_x86_64_init(&domain->amdv2, &cfg, GFP_KERNEL);
-+	if (ret) {
-+		amd_iommu_domain_free(&domain->domain);
-+		return ERR_PTR(ret);
++			iommu_pages_list_add(&collect.free_list,
++					     pt_table_ptr(&pts));
++		} else if (pts.type != PT_ENTRY_EMPTY) {
++			return -EADDRINUSE;
++		}
 +	}
- 	return &domain->domain;
++
++	if (!iommu_pages_list_empty(&collect.free_list)) {
++		gather_range(iotlb_gather, iommu_table, start_va,
++			     range.va - start_va);
++		iommu_pages_list_splice(&collect.free_list,
++					&iotlb_gather->freelist);
++	}
++	return 0;
++}
++
++static int __map_range_leaf(struct pt_range *range, void *arg,
++			    unsigned int level, struct pt_table_p *table)
++{
++	struct pt_state pts = pt_init(range, level, table);
++	struct pt_iommu_map_args *map = arg;
++	unsigned int leaf_pgsize_lg2 = map->leaf_pgsize_lg2;
++	unsigned int start_index;
++	pt_oaddr_t oa = map->oa;
++	unsigned int step;
++	bool need_contig;
++
++	PT_WARN_ON(map->leaf_level != level);
++	PT_WARN_ON(!pt_can_have_leaf(&pts));
++
++	step = log2_to_int_t(unsigned int,
++			     leaf_pgsize_lg2 - pt_table_item_lg2sz(&pts));
++	need_contig = leaf_pgsize_lg2 != pt_table_item_lg2sz(&pts);
++
++	_pt_iter_first(&pts);
++	start_index = pts.index;
++	do {
++		pts.type = pt_load_entry_raw(&pts);
++		if (pts.type != PT_ENTRY_EMPTY || need_contig) {
++			int ret;
++
++			if (pts.index != start_index)
++				pt_index_to_va(&pts);
++			ret = clear_contig(&pts, map->iotlb_gather, step,
++					   leaf_pgsize_lg2);
++			if (ret) {
++				map->oa = oa;
++				return ret;
++			}
++		}
++
++		PT_WARN_ON(compute_best_pgsize(&pts, oa) != leaf_pgsize_lg2);
++
++		pt_install_leaf_entry(&pts, oa, leaf_pgsize_lg2, &map->attrs);
++
++		oa += log2_to_int(leaf_pgsize_lg2);
++		pts.index += step;
++	} while (pts.index < pts.end_index);
++
++	map->oa = oa;
++	return 0;
++}
++
++static int __map_range(struct pt_range *range, void *arg, unsigned int level,
++		       struct pt_table_p *table)
++{
++	struct pt_state pts = pt_init(range, level, table);
++	struct pt_iommu_map_args *map = arg;
++	int ret;
++
++	PT_WARN_ON(map->leaf_level == level);
++	PT_WARN_ON(!pt_can_have_table(&pts));
++
++	_pt_iter_first(&pts);
++
++	/* Descend to a child table */
++	do {
++		pts.type = pt_load_entry_raw(&pts);
++
++		if (pts.type != PT_ENTRY_TABLE) {
++			if (pts.type != PT_ENTRY_EMPTY)
++				return -EADDRINUSE;
++			ret = pt_iommu_new_table(&pts, &map->attrs);
++			if (ret) {
++				/*
++				 * Racing with another thread installing a table
++				 */
++				if (ret == -EAGAIN)
++					continue;
++				return ret;
++			}
++		} else {
++			pts.table_lower = pt_table_ptr(&pts);
++		}
++
++		/*
++		 * The already present table can possibly be shared with another
++		 * concurrent map.
++		 */
++		if (map->leaf_level == level - 1)
++			ret = pt_descend(&pts, arg, __map_range_leaf);
++		else
++			ret = pt_descend(&pts, arg, __map_range);
++		if (ret)
++			return ret;
++
++		pts.index++;
++		pt_index_to_va(&pts);
++		if (pts.index >= pts.end_index)
++			break;
++		pts.type = pt_load_entry_raw(&pts);
++	} while (true);
++	return 0;
++}
++
++static __always_inline int __do_map_single_page(struct pt_range *range,
++						void *arg, unsigned int level,
++						struct pt_table_p *table,
++						pt_level_fn_t descend_fn)
++{
++	struct pt_state pts = pt_init(range, level, table);
++	struct pt_iommu_map_args *map = arg;
++
++	pts.type = pt_load_single_entry(&pts);
++	if (level == 0) {
++		if (pts.type != PT_ENTRY_EMPTY)
++			return -EADDRINUSE;
++		pt_install_leaf_entry(&pts, map->oa, PAGE_SHIFT,
++				      &map->attrs);
++		map->oa += PAGE_SIZE;
++		return 0;
++	}
++	if (pts.type != PT_ENTRY_TABLE)
++		return -EAGAIN;
++	return pt_descend(&pts, arg, descend_fn);
++}
++PT_MAKE_LEVELS(__map_single_page, __do_map_single_page);
++
++/*
++ * Add a table to the top, increasing the top level as much as necessary to
++ * encompass range.
++ */
++static int increase_top(struct pt_iommu *iommu_table, struct pt_range *range,
++			struct pt_iommu_map_args *map)
++{
++	struct iommu_pages_list free_list = IOMMU_PAGES_LIST_INIT(free_list);
++	struct pt_common *common = common_from_iommu(iommu_table);
++	uintptr_t top_of_table = READ_ONCE(common->top_of_table);
++	uintptr_t new_top_of_table = top_of_table;
++	struct pt_table_p *table_mem;
++	unsigned int new_level;
++	spinlock_t *domain_lock;
++	unsigned long flags;
++	int ret;
++
++	while (true) {
++		struct pt_range top_range =
++			_pt_top_range(common, new_top_of_table);
++		struct pt_state pts = pt_init_top(&top_range);
++
++		top_range.va = range->va;
++		top_range.last_va = range->last_va;
++
++		if (!pt_check_range(&top_range) && map->leaf_level <= pts.level)
++			break;
++
++		pts.level++;
++		if (pts.level > PT_MAX_TOP_LEVEL ||
++		    pt_table_item_lg2sz(&pts) >= common->max_vasz_lg2) {
++			ret = -ERANGE;
++			goto err_free;
++		}
++
++		new_level = pts.level;
++		table_mem = table_alloc_top(
++			common, _pt_top_set(NULL, pts.level), map->attrs.gfp);
++		if (IS_ERR(table_mem))
++			return PTR_ERR(table_mem);
++		iommu_pages_list_add(&free_list, table_mem);
++
++		/* The new table links to the lower table always at index 0 */
++		top_range.va = 0;
++		top_range.top_level = new_level;
++		pts.table_lower = pts.table;
++		pts.table = table_mem;
++		pt_load_single_entry(&pts);
++		PT_WARN_ON(pts.index != 0);
++		pt_install_table(&pts, virt_to_phys(pts.table_lower),
++				 &map->attrs);
++		new_top_of_table = _pt_top_set(pts.table, pts.level);
++	}
++
++	/*
++	 * top_of_table is write locked by the spinlock, but readers can use
++	 * READ_ONCE() to get the value. Since we encode both the level and the
++	 * pointer in one quanta the lockless reader will always see something
++	 * valid. The HW must be updated to the new level under the spinlock
++	 * before top_of_table is updated so that concurrent readers don't map
++	 * into the new level until it is fully functional. If another thread
++	 * already updated it while we were working then throw everything away
++	 * and try again.
++	 */
++	domain_lock = iommu_table->hw_flush_ops->get_top_lock(iommu_table);
++	spin_lock_irqsave(domain_lock, flags);
++	if (common->top_of_table != top_of_table) {
++		spin_unlock_irqrestore(domain_lock, flags);
++		ret = -EAGAIN;
++		goto err_free;
++	}
++
++	/*
++	 * We do not issue any flushes for change_top on the expectation that
++	 * any walk cache will not become a problem by adding another layer to
++	 * the tree. Misses will rewalk from the updated top pointer, hits
++	 * continue to be correct. Negative caching is fine too since all the
++	 * new IOVA added by the new top is non-present.
++	 */
++	iommu_table->hw_flush_ops->change_top(
++		iommu_table, virt_to_phys(table_mem), new_level);
++	WRITE_ONCE(common->top_of_table, new_top_of_table);
++	spin_unlock_irqrestore(domain_lock, flags);
++	return 0;
++
++err_free:
++	iommu_put_pages_list(&free_list);
++	return ret;
++}
++
++static int check_map_range(struct pt_iommu *iommu_table, struct pt_range *range,
++			   struct pt_iommu_map_args *map)
++{
++	struct pt_common *common = common_from_iommu(iommu_table);
++	int ret;
++
++	do {
++		ret = pt_check_range(range);
++		if (!pt_feature(common, PT_FEAT_DYNAMIC_TOP))
++			return ret;
++
++		if (!ret && map->leaf_level <= range->top_level)
++			break;
++
++		ret = increase_top(iommu_table, range, map);
++		if (ret && ret != -EAGAIN)
++			return ret;
++
++		/* Reload the new top */
++		*range = pt_make_range(common, range->va, range->last_va);
++	} while (ret);
++	PT_WARN_ON(pt_check_range(range));
++	return 0;
++}
++
++/**
++ * map_range() - Install translation for an IOVA range
++ * @iommu_table: Table to manipulate
++ * @iova: IO virtual address to start
++ * @paddr: Physical/Output address to start
++ * @len: Length of the range starting from @iova
++ * @prot: A bitmap of IOMMU_READ/WRITE/CACHE/NOEXEC/MMIO
++ * @gfp: GFP flags for any memory allocations
++ * @gather: Gather struct that must be flushed on return
++ *
++ * The range starting at IOVA will have paddr installed into it. The rage is
++ * automatically segmented into optimally sized table entries, and can have any
++ * valid alignment.
++ *
++ * On error the caller will probably want to invoke unmap on the range from iova
++ * up to the amount indicated by @mapped to return the table back to an
++ * unchanged state.
++ *
++ * Context: The caller must hold a write range lock that includes the whole
++ * range.
++ *
++ * Returns: -ERRNO on failure, 0 on success. The number of bytes of VA that were
++ * mapped are added to @mapped, @mapped is not zerod first.
++ */
++int DOMAIN_NS(map_pages)(struct iommu_domain *domain, unsigned long iova,
++			 phys_addr_t paddr, size_t pgsize, size_t pgcount,
++			 int prot, gfp_t gfp, size_t *mapped)
++{
++	struct pt_iommu *iommu_table =
++		container_of(domain, struct pt_iommu, domain);
++	pt_vaddr_t pgsize_bitmap = iommu_table->domain.pgsize_bitmap;
++	struct pt_common *common = common_from_iommu(iommu_table);
++	struct iommu_iotlb_gather iotlb_gather;
++	pt_vaddr_t len = pgsize * pgcount;
++	struct pt_iommu_map_args map = {
++		.iotlb_gather = &iotlb_gather,
++		.oa = paddr,
++		.leaf_pgsize_lg2 = log2_ffs(pgsize),
++	};
++	bool single_page = false;
++	struct pt_range range;
++	int ret;
++
++	iommu_iotlb_gather_init(&iotlb_gather);
++
++	if (WARN_ON(!(prot & (IOMMU_READ | IOMMU_WRITE))))
++		return -EINVAL;
++
++	/* Check the paddr doesn't exceed what the table can store */
++	if ((sizeof(pt_oaddr_t) > sizeof(paddr) && paddr > PT_VADDR_MAX) ||
++	    (common->max_oasz_lg2 != PT_VADDR_MAX_LG2 &&
++	     oalog2_div(paddr, common->max_oasz_lg2)))
++		return -ERANGE;
++
++	ret = pt_iommu_set_prot(common, &map.attrs, prot);
++	if (ret)
++		return ret;
++	map.attrs.gfp = gfp;
++
++	ret = make_range_no_check(common, &range, iova, len);
++	if (ret)
++		return ret;
++
++	/* Calculate target page size and level for the leaves */
++	if (pt_has_system_page(common) && pgsize == PAGE_SIZE && pgcount == 1) {
++		PT_WARN_ON(!(pgsize_bitmap & PAGE_SIZE));
++		if (log2_mod(iova | paddr, PAGE_SHIFT))
++			return -ENXIO;
++		map.leaf_pgsize_lg2 = PAGE_SHIFT;
++		map.leaf_level = 0;
++		single_page = true;
++	} else {
++		map.leaf_pgsize_lg2 = pt_compute_best_pgsize(
++			pgsize_bitmap, range.va, range.last_va, paddr);
++		if (!map.leaf_pgsize_lg2)
++			return -ENXIO;
++		map.leaf_level =
++			pt_pgsz_lg2_to_level(common, map.leaf_pgsize_lg2);
++	}
++
++	ret = check_map_range(iommu_table, &range, &map);
++	if (ret)
++		return ret;
++
++	PT_WARN_ON(map.leaf_level > range.top_level);
++
++	do {
++		if (single_page) {
++			ret = pt_walk_range(&range, __map_single_page, &map);
++			if (ret != -EAGAIN)
++				break;
++		}
++
++		if (map.leaf_level == range.top_level)
++			ret = pt_walk_range(&range, __map_range_leaf, &map);
++		else
++			ret = pt_walk_range(&range, __map_range, &map);
++	} while (false);
++
++	/*
++	 * Table levels were freed and replaced with large items, flush any walk
++	 * cache that may refer to the freed levels.
++	 */
++	if (!iommu_pages_list_empty(&iotlb_gather.freelist))
++		iommu_iotlb_sync(&iommu_table->domain, &iotlb_gather);
++
++	/* Bytes successfully mapped */
++	PT_WARN_ON(!ret && map.oa - paddr != len);
++	*mapped += map.oa - paddr;
++	return ret;
++}
++EXPORT_SYMBOL_NS_GPL(DOMAIN_NS(map_pages), "GENERIC_PT_IOMMU");
++
+ struct pt_unmap_args {
+ 	struct iommu_pages_list free_list;
+ 	pt_vaddr_t unmapped;
+@@ -448,6 +922,7 @@ static void pt_iommu_zero(struct pt_iommu_table *fmt_table)
+ 	memset_after(fmt_table, 0, iommu.domain);
+ 
+ 	/* The caller can initialize some of these values */
++	iommu_table->hw_flush_ops = cfg.hw_flush_ops;
+ 	iommu_table->nid = cfg.nid;
  }
  
-@@ -2556,15 +2691,17 @@ amd_iommu_domain_alloc_paging_flags(struct device *dev, u32 flags,
- 		/* Allocate domain with v1 page table for dirty tracking */
- 		if (!amd_iommu_hd_support(iommu))
- 			break;
--		return do_iommu_domain_alloc(dev, flags, PD_MODE_V1);
-+		return amd_iommu_domain_alloc_paging_v1(dev, flags);
- 	case IOMMU_HWPT_ALLOC_PASID:
- 		/* Allocate domain with v2 page table if IOMMU supports PASID. */
- 		if (!amd_iommu_pasid_supported())
- 			break;
--		return do_iommu_domain_alloc(dev, flags, PD_MODE_V2);
-+		return amd_iommu_domain_alloc_paging_v2(dev, flags);
- 	case 0:
- 		/* If nothing specific is required use the kernel commandline default */
--		return do_iommu_domain_alloc(dev, 0, amd_iommu_pgtable);
-+		if (amd_iommu_pgtable == PD_MODE_V1)
-+			return amd_iommu_domain_alloc_paging_v1(dev, flags);
-+		return amd_iommu_domain_alloc_paging_v2(dev, flags);
- 	default:
- 		break;
- 	}
-@@ -2576,8 +2713,9 @@ void amd_iommu_domain_free(struct iommu_domain *dom)
- 	struct protection_domain *domain = to_pdomain(dom);
+@@ -483,6 +958,12 @@ int pt_iommu_init(struct pt_iommu_table *fmt_table,
+ 	if (ret)
+ 		return ret;
  
- 	WARN_ON(!list_empty(&domain->dev_list));
-+	/* Passed pt_iommu_XX_init() */
- 	if (domain->domain.type & __IOMMU_DOMAIN_PAGING)
--		free_io_pgtable_ops(&domain->iop.pgtbl.ops);
-+		pt_iommu_deinit(&domain->iommu);
- 	pdom_id_free(domain->id);
- 	kfree(domain);
- }
-@@ -2682,93 +2820,6 @@ static int amd_iommu_attach_device(struct iommu_domain *dom,
- 	return ret;
- }
++	if (pt_feature(common, PT_FEAT_DYNAMIC_TOP) &&
++	    WARN_ON(!iommu_table->hw_flush_ops ||
++		    !iommu_table->hw_flush_ops->change_top ||
++		    !iommu_table->hw_flush_ops->get_top_lock))
++		return -EINVAL;
++
+ 	if (pt_feature(common, PT_FEAT_SIGN_EXTEND) &&
+ 	    (pt_feature(common, PT_FEAT_FULL_VA) ||
+ 	     pt_feature(common, PT_FEAT_DYNAMIC_TOP)))
+diff --git a/include/linux/generic_pt/iommu.h b/include/linux/generic_pt/iommu.h
+index 862d224c59281e..fd0c598526ce57 100644
+--- a/include/linux/generic_pt/iommu.h
++++ b/include/linux/generic_pt/iommu.h
+@@ -11,6 +11,7 @@
  
--static int amd_iommu_iotlb_sync_map(struct iommu_domain *dom,
--				    unsigned long iova, size_t size)
--{
--	struct protection_domain *domain = to_pdomain(dom);
--	struct io_pgtable_ops *ops = &domain->iop.pgtbl.ops;
--
--	if (ops->map_pages)
--		domain_flush_np_cache(domain, iova, size);
--	return 0;
--}
--
--static int amd_iommu_map_pages(struct iommu_domain *dom, unsigned long iova,
--			       phys_addr_t paddr, size_t pgsize, size_t pgcount,
--			       int iommu_prot, gfp_t gfp, size_t *mapped)
--{
--	struct protection_domain *domain = to_pdomain(dom);
--	struct io_pgtable_ops *ops = &domain->iop.pgtbl.ops;
--	int prot = 0;
--	int ret = -EINVAL;
--
--	if ((domain->pd_mode == PD_MODE_V1) &&
--	    (domain->iop.mode == PAGE_MODE_NONE))
--		return -EINVAL;
--
--	if (iommu_prot & IOMMU_READ)
--		prot |= IOMMU_PROT_IR;
--	if (iommu_prot & IOMMU_WRITE)
--		prot |= IOMMU_PROT_IW;
--
--	if (ops->map_pages) {
--		ret = ops->map_pages(ops, iova, paddr, pgsize,
--				     pgcount, prot, gfp, mapped);
--	}
--
--	return ret;
--}
--
--static void amd_iommu_iotlb_gather_add_page(struct iommu_domain *domain,
--					    struct iommu_iotlb_gather *gather,
--					    unsigned long iova, size_t size)
--{
--	/*
--	 * AMD's IOMMU can flush as many pages as necessary in a single flush.
--	 * Unless we run in a virtual machine, which can be inferred according
--	 * to whether "non-present cache" is on, it is probably best to prefer
--	 * (potentially) too extensive TLB flushing (i.e., more misses) over
--	 * mutliple TLB flushes (i.e., more flushes). For virtual machines the
--	 * hypervisor needs to synchronize the host IOMMU PTEs with those of
--	 * the guest, and the trade-off is different: unnecessary TLB flushes
--	 * should be avoided.
--	 */
--	if (amd_iommu_np_cache &&
--	    iommu_iotlb_gather_is_disjoint(gather, iova, size))
--		iommu_iotlb_sync(domain, gather);
--
--	iommu_iotlb_gather_add_range(gather, iova, size);
--}
--
--static size_t amd_iommu_unmap_pages(struct iommu_domain *dom, unsigned long iova,
--				    size_t pgsize, size_t pgcount,
--				    struct iommu_iotlb_gather *gather)
--{
--	struct protection_domain *domain = to_pdomain(dom);
--	struct io_pgtable_ops *ops = &domain->iop.pgtbl.ops;
--	size_t r;
--
--	if ((domain->pd_mode == PD_MODE_V1) &&
--	    (domain->iop.mode == PAGE_MODE_NONE))
--		return 0;
--
--	r = (ops->unmap_pages) ? ops->unmap_pages(ops, iova, pgsize, pgcount, NULL) : 0;
--
--	if (r)
--		amd_iommu_iotlb_gather_add_page(dom, gather, iova, r);
--
--	return r;
--}
--
--static phys_addr_t amd_iommu_iova_to_phys(struct iommu_domain *dom,
--					  dma_addr_t iova)
--{
--	struct protection_domain *domain = to_pdomain(dom);
--	struct io_pgtable_ops *ops = &domain->iop.pgtbl.ops;
--
--	return ops->iova_to_phys(ops, iova);
--}
--
- static bool amd_iommu_capable(struct device *dev, enum iommu_cap cap)
- {
- 	switch (cap) {
-@@ -2835,28 +2886,6 @@ static int amd_iommu_set_dirty_tracking(struct iommu_domain *domain,
- 	return 0;
- }
+ struct iommu_iotlb_gather;
+ struct pt_iommu_ops;
++struct pt_iommu_flush_ops;
  
--static int amd_iommu_read_and_clear_dirty(struct iommu_domain *domain,
--					  unsigned long iova, size_t size,
--					  unsigned long flags,
--					  struct iommu_dirty_bitmap *dirty)
--{
--	struct protection_domain *pdomain = to_pdomain(domain);
--	struct io_pgtable_ops *ops = &pdomain->iop.pgtbl.ops;
--	unsigned long lflags;
--
--	if (!ops || !ops->read_and_clear_dirty)
--		return -EOPNOTSUPP;
--
--	spin_lock_irqsave(&pdomain->lock, lflags);
--	if (!pdomain->dirty_tracking && dirty->bitmap) {
--		spin_unlock_irqrestore(&pdomain->lock, lflags);
--		return -EINVAL;
--	}
--	spin_unlock_irqrestore(&pdomain->lock, lflags);
--
--	return ops->read_and_clear_dirty(ops, iova, size, flags, dirty);
--}
--
- static void amd_iommu_get_resv_regions(struct device *dev,
- 				       struct list_head *head)
- {
-@@ -2923,28 +2952,6 @@ static bool amd_iommu_is_attach_deferred(struct device *dev)
- 	return dev_data->defer_attach;
- }
+ /**
+  * DOC: IOMMU Radix Page Table
+@@ -43,6 +44,12 @@ struct pt_iommu {
+ 	 */
+ 	const struct pt_iommu_ops *ops;
  
--static void amd_iommu_flush_iotlb_all(struct iommu_domain *domain)
--{
--	struct protection_domain *dom = to_pdomain(domain);
--	unsigned long flags;
--
--	spin_lock_irqsave(&dom->lock, flags);
--	amd_iommu_domain_flush_all(dom);
--	spin_unlock_irqrestore(&dom->lock, flags);
--}
--
--static void amd_iommu_iotlb_sync(struct iommu_domain *domain,
--				 struct iommu_iotlb_gather *gather)
--{
--	struct protection_domain *dom = to_pdomain(domain);
--	unsigned long flags;
--
--	spin_lock_irqsave(&dom->lock, flags);
--	amd_iommu_domain_flush_pages(dom, gather->start,
--				     gather->end - gather->start + 1);
--	spin_unlock_irqrestore(&dom->lock, flags);
--}
--
- static int amd_iommu_def_domain_type(struct device *dev)
- {
- 	struct iommu_dev_data *dev_data;
-@@ -2979,11 +2986,6 @@ static bool amd_iommu_enforce_cache_coherency(struct iommu_domain *domain)
- 	return true;
- }
- 
--static const struct iommu_dirty_ops amd_dirty_ops = {
--	.set_dirty_tracking = amd_iommu_set_dirty_tracking,
--	.read_and_clear_dirty = amd_iommu_read_and_clear_dirty,
--};
--
- static int amd_iommu_dev_enable_feature(struct device *dev,
- 					enum iommu_dev_features feat)
- {
-@@ -3032,17 +3034,6 @@ const struct iommu_ops amd_iommu_ops = {
- 	.dev_enable_feat = amd_iommu_dev_enable_feature,
- 	.dev_disable_feat = amd_iommu_dev_disable_feature,
- 	.page_response = amd_iommu_page_response,
--	.default_domain_ops = &(const struct iommu_domain_ops) {
--		.attach_dev	= amd_iommu_attach_device,
--		.map_pages	= amd_iommu_map_pages,
--		.unmap_pages	= amd_iommu_unmap_pages,
--		.iotlb_sync_map	= amd_iommu_iotlb_sync_map,
--		.iova_to_phys	= amd_iommu_iova_to_phys,
--		.flush_iotlb_all = amd_iommu_flush_iotlb_all,
--		.iotlb_sync	= amd_iommu_iotlb_sync,
--		.free		= amd_iommu_domain_free,
--		.enforce_cache_coherency = amd_iommu_enforce_cache_coherency,
--	}
++	/**
++	 * @hw_flush_ops - Function pointers provided by the HW driver to flush
++	 * HW caches after changes to the page table.
++	 */
++	const struct pt_iommu_flush_ops *hw_flush_ops;
++
+ 	/**
+ 	 * @nid - Node ID to use for table memory allocations. The iommu driver
+ 	 * may want to set the NID to the device's NID, if there are multiple
+@@ -84,6 +91,52 @@ struct pt_iommu_ops {
+ 	void (*deinit)(struct pt_iommu *iommu_table);
  };
  
- #ifdef CONFIG_IRQ_REMAP
++/**
++ * struct pt_iommu_flush_ops - HW IOTLB cache flushing operations
++ *
++ * The IOMMU driver should implement these using container_of(iommu_table) to
++ * get to it's iommu_domain dervied structure. All ops can be called in atomic
++ * contexts as they are buried under DMA API calls.
++ */
++struct pt_iommu_flush_ops {
++	/**
++	 * change_top() - Update the top of table pointer
++	 * @iommu_table: Table to operate on
++	 * @top_paddr: New CPU physical address of the top pointer
++	 * @top_level: IOMMU PT level of the new top
++	 *
++	 * Called under the get_top_lock() spinlock. The driver must update all
++	 * HW references to this domain with a new top address and
++	 * configuration. On return mappings placed in the new top must be
++	 * reachable by the HW.
++	 *
++	 * top_level encodes the level in IOMMU PT format, level 0 is the
++	 * smallest page size increasing from there. This has to be translated
++	 * to any HW specific format. During this call the new top will not be
++	 * visible to any other API.
++	 *
++	 * This op is only used by PT_FEAT_DYNAMIC_TOP, and is required if
++	 * enabled.
++	 */
++	void (*change_top)(struct pt_iommu *iommu_table, phys_addr_t top_paddr,
++			   unsigned int top_level);
++
++	/**
++	 * get_top_lock() - Return a lock to hold when changing the table top
++	 * @iommu_table: Table to operate on
++	 *
++	 * page table from being stored in HW. The lock will be held prior
++	 * to calling change_top() and released once the top is fully visible.
++	 *
++	 * Typically this would be a lock that protects the iommu_domain's
++	 * attachment list.
++	 *
++	 * This op is only used by PT_FEAT_DYNAMIC_TOP, and is required if
++	 * enabled.
++	 */
++	spinlock_t *(*get_top_lock)(struct pt_iommu *iommu_table);
++};
++
+ static inline void pt_iommu_deinit(struct pt_iommu *iommu_table)
+ {
+ 	iommu_table->ops->deinit(iommu_table);
+@@ -114,6 +167,10 @@ struct pt_iommu_cfg {
+ #define IOMMU_PROTOTYPES(fmt)                                                  \
+ 	phys_addr_t pt_iommu_##fmt##_iova_to_phys(struct iommu_domain *domain, \
+ 						  dma_addr_t iova);            \
++	int pt_iommu_##fmt##_map_pages(struct iommu_domain *domain,            \
++				       unsigned long iova, phys_addr_t paddr,  \
++				       size_t pgsize, size_t pgcount,          \
++				       int prot, gfp_t gfp, size_t *mapped);   \
+ 	size_t pt_iommu_##fmt##_unmap_pages(                                   \
+ 		struct iommu_domain *domain, unsigned long iova,               \
+ 		size_t pgsize, size_t pgcount,                                 \
+@@ -136,6 +193,7 @@ struct pt_iommu_cfg {
+  */
+ #define IOMMU_PT_DOMAIN_OPS(fmt)                        \
+ 	.iova_to_phys = &pt_iommu_##fmt##_iova_to_phys, \
++	.map_pages = &pt_iommu_##fmt##_map_pages,       \
+ 	.unmap_pages = &pt_iommu_##fmt##_unmap_pages
+ 
+ /*
 -- 
 2.43.0
 
