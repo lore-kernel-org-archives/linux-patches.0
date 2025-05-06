@@ -1,48 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D2022DA18;
-	Tue,  6 May 2025 21:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2F622DA18;
+	Tue,  6 May 2025 21:37:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746567419; cv=none; b=WAudcWQ/j8g2E57tuWVOQXk01kOp4teNkHkx6hLdggmvQeXLxEQrTsUyBSR74TT1rXjkr9I6V5RZYJj4gPjMiWJbXYvJDxXbAeWjFJ/wD43D5crqEPATACIxySrZLGiSR3fHoZlvmQnfXw9Eb4poTcOnGM+i0/6KNAkW6FPTG34=
+	t=1746567422; cv=none; b=kWa9S6T0pT5701rqrW72yBN0ZJP8AxE+LeAmkkoc1Kn3p4QqMlwMvexXwW6l+ZhO7BAZNaLcsd96j+wKq9bCqItS0gvvIc3oi6S8gYI/kX58W+0YhjndMPK60nKStSuEoZOhXyK1kc4HHyurHhPBpfVE9+xSl0JgfYx8AagAwYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746567419; c=relaxed/simple;
-	bh=ez9u/BuWJEg0RHfSW99LzmyCIqgTW3VTc2VfAMJgvqU=;
+	s=arc-20240116; t=1746567422; c=relaxed/simple;
+	bh=gCQtUy2FXFpyFzd/xZBO7QA5ttv7YMPT9eMgP4La28s=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=J92SERAgcqxYnfYWZkw+RnUGjAPw9fwdiYVc83Wk5olmLlf0Kft0r4fPQLxDFe+cHGc8UELQMzPhbHcifzKXfo0U2Sy+wgvKBwDh5oIAz8CcSTHyvXchGSuwSRvQx8PzayDi4TvlHmFJFB4UejwHsxuE35ZvNzdN2UUJ0AVgXds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LgaYUqw+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mxXTDpMLBflE5x/5jZlEtyTGDqbt2406ghKLK5+YhJSAdmQI6QhBlOJCPy8Sfffseak4v2qrVDeiJIQmIOLTrUT4ksHOgpLphBJoDbMf4/BmcCwqIJ2Pf7vczCW0FYbwZyEHrVhRNsifkO7LZlX2pOVIM1q8VDAVhglMh595Hac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n/Pkucn3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LgaYUqw+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9FFCC4CEEF;
-	Tue,  6 May 2025 21:36:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n/Pkucn3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FFD5C4CEE4;
+	Tue,  6 May 2025 21:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746567419;
-	bh=ez9u/BuWJEg0RHfSW99LzmyCIqgTW3VTc2VfAMJgvqU=;
+	s=k20201202; t=1746567422;
+	bh=gCQtUy2FXFpyFzd/xZBO7QA5ttv7YMPT9eMgP4La28s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LgaYUqw+L6QXbv3FiqKa6QFyJLt5gR/zdsqhCdhrQ5NmU/JzlLWdgLy3m9In6lENP
-	 AOPub9MmUeBlDqzmA9HuvFYefY2WMhRvH90NrgKd+91gBhb7ahTe3BAyu+rNC0e1ZF
-	 HOK7CHYqN2+VWTyOPx9cy/e6gV8PhQUwWaUfoB5aW0Ck3lWPlXUWAA0ENObqOMOUcs
-	 WfEIRIeR6GYZdY/pnDvd/H8hd9SgBodZR8wPIVS0m/tTRKLo1ruLSyhrpYyWhTLVk2
-	 c3WP/LFz+ikGOHXcakSx8lQKe/FzYo2xRHdFHUkpoPUgqngge5ZlK39ZVeRwaAaZ5i
-	 DoHTznVwPztuQ==
+	b=n/Pkucn3nb7h3P87gjlRMAC8FoOfUZcDbpeYyCeK7m+2qKLmE53yoOqPn7ID6h7FR
+	 7R59dTmEtvxdtL9TTJL8ZH6mdQnEz8NL8EPEYvEgkaY7N6D2rFbt4xZhYmawIwzvIi
+	 3+T22QBQGYIKk6Bzc4LaVacGkNocaSVX2U2w6942JIAvqM3r8ka0cQLvKVmeR7SgiX
+	 qy5hgW6uqKakUsytUb4IaC2syewu3lFSDsVqAA+/1p5wV/9ReQ0BZUl9+Bq6ZPcRag
+	 0DBOWKSyx8P/vjMWEYU+2ERsAOV8xsHZYXWqq5Yuit0B+Vi1r1pM6spDG6aiDCaO78
+	 j13IjI9OWeT7g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Charles Keepax <ckeepax@opensource.cirrus.com>,
+Cc: Takashi Iwai <tiwai@suse.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	david.rhodes@cirrus.com,
-	rf@opensource.cirrus.com,
-	lgirdwood@gmail.com,
+	cezary.rojewski@intel.com,
+	liam.r.girdwood@linux.intel.com,
+	peter.ujfalusi@linux.intel.com,
+	yung-chuan.liao@linux.intel.com,
+	ranjani.sridharan@linux.intel.com,
+	kai.vehmanen@linux.intel.com,
 	perex@perex.cz,
 	tiwai@suse.com,
+	hdegoede@redhat.com,
+	pierre-louis.bossart@linux.dev,
+	tomlohave@gmail.com,
+	u.kleine-koenig@baylibre.com,
+	kuninori.morimoto.gx@renesas.com,
 	linux-sound@vger.kernel.org,
-	patches@opensource.cirrus.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 04/12] ASoC: cs42l43: Disable headphone clamps during type detection
-Date: Tue,  6 May 2025 17:36:39 -0400
-Message-Id: <20250506213647.2983356-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 05/12] ASoC: Intel: bytcr_rt5640: Add DMI quirk for Acer Aspire SW3-013
+Date: Tue,  6 May 2025 17:36:40 -0400
+Message-Id: <20250506213647.2983356-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250506213647.2983356-1-sashal@kernel.org>
 References: <20250506213647.2983356-1-sashal@kernel.org>
@@ -57,48 +64,46 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.89
 Content-Transfer-Encoding: 8bit
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 70ad2e6bd180f94be030aef56e59693e36d945f3 ]
+[ Upstream commit a549b927ea3f5e50b1394209b64e6e17e31d4db8 ]
 
-The headphone clamps cause fairly loud pops during type detect
-because they sink current from the detection process itself. Disable
-the clamps whilst the type detect runs, to improve the detection
-pop performance.
+Acer Aspire SW3-013 requires the very same quirk as other Acer Aspire
+model for making it working.
 
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250423090944.1504538-1-ckeepax@opensource.cirrus.com
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220011
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250420085716.12095-1-tiwai@suse.de
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs42l43-jack.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/soc/intel/boards/bytcr_rt5640.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/sound/soc/codecs/cs42l43-jack.c b/sound/soc/codecs/cs42l43-jack.c
-index 0b8e88b19888e..6d8455c1bee6d 100644
---- a/sound/soc/codecs/cs42l43-jack.c
-+++ b/sound/soc/codecs/cs42l43-jack.c
-@@ -642,6 +642,10 @@ static int cs42l43_run_type_detect(struct cs42l43_codec *priv)
- 
- 	reinit_completion(&priv->type_detect);
- 
-+	regmap_update_bits(cs42l43->regmap, CS42L43_STEREO_MIC_CLAMP_CTRL,
-+			   CS42L43_SMIC_HPAMP_CLAMP_DIS_FRC_VAL_MASK,
-+			   CS42L43_SMIC_HPAMP_CLAMP_DIS_FRC_VAL_MASK);
-+
- 	cs42l43_start_hs_bias(priv, true);
- 	regmap_update_bits(cs42l43->regmap, CS42L43_HS2,
- 			   CS42L43_HSDET_MODE_MASK, 0x3 << CS42L43_HSDET_MODE_SHIFT);
-@@ -653,6 +657,9 @@ static int cs42l43_run_type_detect(struct cs42l43_codec *priv)
- 			   CS42L43_HSDET_MODE_MASK, 0x2 << CS42L43_HSDET_MODE_SHIFT);
- 	cs42l43_stop_hs_bias(priv);
- 
-+	regmap_update_bits(cs42l43->regmap, CS42L43_STEREO_MIC_CLAMP_CTRL,
-+			   CS42L43_SMIC_HPAMP_CLAMP_DIS_FRC_VAL_MASK, 0);
-+
- 	if (!time_left)
- 		return -ETIMEDOUT;
- 
+diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
+index ce80adc30fe94..6a85e8fdcae64 100644
+--- a/sound/soc/intel/boards/bytcr_rt5640.c
++++ b/sound/soc/intel/boards/bytcr_rt5640.c
+@@ -576,6 +576,19 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
+ 					BYT_RT5640_SSP0_AIF2 |
+ 					BYT_RT5640_MCLK_EN),
+ 	},
++	{       /* Acer Aspire SW3-013 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire SW3-013"),
++		},
++		.driver_data = (void *)(BYT_RT5640_DMIC1_MAP |
++					BYT_RT5640_JD_SRC_JD2_IN4N |
++					BYT_RT5640_OVCD_TH_2000UA |
++					BYT_RT5640_OVCD_SF_0P75 |
++					BYT_RT5640_DIFF_MIC |
++					BYT_RT5640_SSP0_AIF1 |
++					BYT_RT5640_MCLK_EN),
++	},
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
 -- 
 2.39.5
 
