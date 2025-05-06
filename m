@@ -1,274 +1,228 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM02-DM3-obe.outbound.protection.outlook.com (mail-dm3nam02on2079.outbound.protection.outlook.com [40.107.95.79])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B847822171F
-	for <patches@lists.linux.dev>; Tue,  6 May 2025 06:32:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746513182; cv=none; b=iqAptqeXgZ/XbQDArmG8zEfnEk0mE5XwChgj3SNlbeg6VXvNMT9ZkhNQJfek58FMba6VyzHKktQDqlxmkfEHU/2Gd4WSjuNelx+OFjvSUxVcKIW6sgyBoMr7KH6uSS2Pk3Miw7RSY5jcf3KCz7VGfLcYGd7IyTXD6Ye50hHwTDI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746513182; c=relaxed/simple;
-	bh=JhnCphewxom5qFZMqmcRWE+4s6lUhXW4uHSsf6ZOgIw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fihaeWhH1DJIjos3Hzic9E9/SqDED//06xA/0jXNtMNfIwOMO/fryzEBAcE3GrAyC71qYUxkrpDWe5iG1nq7yHuWKh4vnsityD1j/t8727y6dcTwqdUoNe6Pq0lCiB5HtZd7GNZoqBc8mBHtuNgG7H2u53sDh6m38vCLCNnKjPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=g8xdxlZx; arc=none smtp.client-ip=209.85.219.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749CF264A73;
+	Tue,  6 May 2025 09:15:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.95.79
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746522925; cv=fail; b=Jowjtv2r/lVzxdxsdmZA7i6NDJkNOem6SNzyrePYs7VsIui92X4WiLJgyJ+lN9Sb+pro/i7HPEcFxPL+MVGkCZjVa5Hpiutnz59n6RGMQxO36VWGOvdQT5CH0Bz95jhtBYLaWMMYx2DqF9yQtJEa0Aqg2mePEvFqElt3IM5ayEY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746522925; c=relaxed/simple;
+	bh=HHbqG9yHv+M+OQeazMBcILw3NylTSRFBXzUTd6YLhOk=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=dDlWk5BC08ILWHfuvImYflCADREACJUf24MSA6nPqvey99bs3YStWm45ljM/+5+zlCcZA9qcWVInDChcXSUSOzC/ggF4sg5iMJPJIaH9ZZ/UGcjXKEuHe8vWQyaBzTP92mZLpRgyDkQW+blTd/B8DYi2whzgcv8JZ+HRBiLrN00=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=rAheDo5C; arc=fail smtp.client-ip=40.107.95.79
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="g8xdxlZx"
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6ed0cc5eca4so69091476d6.1
-        for <patches@lists.linux.dev>; Mon, 05 May 2025 23:32:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1746513177; x=1747117977; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mNI32/std+JvLzT7bQUZqpuhgXMjchv4rJzfSP0DboU=;
-        b=g8xdxlZxSt2I72o3P+MLvMXuYuyaXvHuKLR+RKdfKY/l84E6TtlV7MbbMWC1+GWZKE
-         TcbsxjcfRi8OvbFCDK/IRXTTE4pdb3YalGJaKi5oYuHBbNkhJfd9+5I5/3KZbnDIxuqb
-         jMfqDun1k/ZzjLN8FTFDzIRskU8P0tB60oMFOhDsGeL4KIyPhKWed/PepdGd1plw3zzP
-         5LAwolohxE7AHrl8XdV6BlHsLd48Mi9wMP0gOP6K9dsdyYZopyGkI4+oXaLtrqKaQ61+
-         +0ph5yogs/j69Ii0Bsb6fLLdqN5l2woPfaBl6XKUC2E86+8fhSQUtk6Nz7Zl6QMMxmNE
-         n2/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746513177; x=1747117977;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mNI32/std+JvLzT7bQUZqpuhgXMjchv4rJzfSP0DboU=;
-        b=deIKup7dIU1DxKqgKEAeOkmF6v8xTqlFR14EoigM39R52QF4w8WtlLYh1gcMk7YYJJ
-         GnHmAMPkhBUFi/BFeztXwegVGhge3fQFpTtb+KloV59nMipG0wVzgVr45eqi0oOYG2dR
-         X7KCFebK8rxYIu93Sd7reJ1iAe3aNcGD2la3hvO/MGTZO0vhw3FPcR9+XPJnpGsZuUIs
-         EnNqHO5Wv1qtpzb+DuBPf5SiS5QTfre2XwOZqkcZ15dGY4M5mTUfY/R1g9ADk67ME56n
-         55gnTwx/VPg1B5EYWwBMkwQblI1ncHLjXu4dZgTAL3N+b2msRKJxBKfsB1FBijsm24aF
-         rrxA==
-X-Forwarded-Encrypted: i=1; AJvYcCXdDQyueLKkj/xgzLEn4+nLNvL1SmieZUsy+BJncVSEmlng61XveaH6YKyQE5nWXLF26TNZCCHo@lists.linux.dev
-X-Gm-Message-State: AOJu0Yws+RzB9NqzXhxp5apqbLcS56bU8lP3v6csnAntLv6V5F3wR9o5
-	FiGaR8AVA/BfuDA8RclTg5npf7vDceEnRQCdgEZxSC2nbqYV3w2UuIiLV2qURvp82QY6Lzv3J1M
-	n3JmVGMW9NUoVti3Kvpys4WZP9rxvlRe1DYY8
-X-Gm-Gg: ASbGncuxEYhtlnLFH2F4Dh9Tcj98S/DjSVCNVbreSyTGpnae4LXQbAP9yXhlP+Rbxmi
-	DveuWB9KLfnA9fY1KTHVH/6g1orx/IdDLnRO/ewMWEBeZLD/3NMBnze6EvEWTio2Vs88EGS2UsP
-	s3uyprEqIFDIfJPQBWC8UObrs=
-X-Google-Smtp-Source: AGHT+IHmXB/cKgFL6nNzt+WRsUf7MU0M8pDV/7/x1FX+60+c46wo4YqV3iuu4VbjaOKZK01pck0OeA2bhk94rgg5Sc0=
-X-Received: by 2002:a05:6214:2426:b0:6e4:4adb:8c29 with SMTP id
- 6a1803df08f44-6f5353561bemr37943116d6.12.1746513177383; Mon, 05 May 2025
- 23:32:57 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="rAheDo5C"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=c5ZBA5rHKI8+tSE3oh7RcIjury1Z11CVBFPpUcvUBlInfscZkoJVmYb/aQYfDppXvBHHz3X2ujfeEl2bXzQGTdZzR/v+DgTadVPv+ZDpBgvhucqSyoI3QhopMKYDlLtXTlVXoC0xnxUJZA9mmwVwJp34oVdbLYodikZODkrPTiW+P1D24s5WS6aJU+0dmS1psrZKZQKD+N/eAXiImcvxFkMjF30Nb+lh6CsabbfEbLJtrRFq6qEHT5vTnyd1KX4G3U6MI6Pjp9Sp80b1RGA66URhSCRQyuAZ+tjEv7mJWJivU14Rh3XxED5se2OtUY2oq8NvhuahnX75J+v6rJSI1g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fq20y2nrejaOAkIDUCbu/CjgSaW0xQeDQAkBCO7Zl3Q=;
+ b=vhSQmxzyl5oMNFHHapt2IT7sLSy06WgicMDQ5To3pnEB26yPGAoku+xcSyoyfkoQPOEvFDzbwlVAOcNF1OrF3iaGtkwtMNJRmirAw5Oa6C+wlxXrCIBva4C19E3Fd9/BceWA5HNoI4RX6eFey4Ivu+W5Kr1IN/B6EjpaGhuq2amKJyCW4Jiwdf4k6vRjN4JhAVdz4oIKVMDFdnPAujX/IMyEerwgYZxA9g5s+wCM06SqwgvZ1ALvzvUYSyTif6OP3Rp03KLnU7/O212z0FeBmK9CWdj49MdTX2GI52BLPg/gIpePRr5pycD3rMqM33otLZmhjjOeX7/36CHiP+PUPA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fq20y2nrejaOAkIDUCbu/CjgSaW0xQeDQAkBCO7Zl3Q=;
+ b=rAheDo5CIiNPqx3YHk+8pmS3GjwC9qK05ZpuR5m7s8MenzKdWweU3L3c6q+EtnqQDNINq4f54NW1OGfQug9uqmaEP/YwZAQ4gmomTifSTJbGocj+zdQHbSoAK0B1X3/UWydGWFoFNeHPbP0xMJjB7I0L4nKjkyQXQ0CtECx6bag=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DS7PR12MB6048.namprd12.prod.outlook.com (2603:10b6:8:9f::5) by
+ SA1PR12MB7222.namprd12.prod.outlook.com (2603:10b6:806:2bf::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.23; Tue, 6 May
+ 2025 09:15:16 +0000
+Received: from DS7PR12MB6048.namprd12.prod.outlook.com
+ ([fe80::6318:26e5:357a:74a5]) by DS7PR12MB6048.namprd12.prod.outlook.com
+ ([fe80::6318:26e5:357a:74a5%5]) with mapi id 15.20.8699.019; Tue, 6 May 2025
+ 09:15:16 +0000
+Message-ID: <6ffe5249-b429-435e-a780-ee90aeb3f0da@amd.com>
+Date: Tue, 6 May 2025 14:45:00 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 11/23] iommufd/viommu: Add IOMMUFD_CMD_VQUEUE_ALLOC
+ ioctl
+To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com,
+ corbet@lwn.net, will@kernel.org
+Cc: bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
+ thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
+ shuah@kernel.org, jsnitsel@redhat.com, nathan@kernel.org,
+ peterz@infradead.org, yi.l.liu@intel.com, mshavit@google.com,
+ praan@google.com, zhangzekun11@huawei.com, iommu@lists.linux.dev,
+ linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+ linux-kselftest@vger.kernel.org, patches@lists.linux.dev, mochs@nvidia.com,
+ alok.a.tiwari@oracle.com,
+ Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+References: <cover.1746139811.git.nicolinc@nvidia.com>
+ <1ef2e242ee1d844f823581a5365823d78c67ec6a.1746139811.git.nicolinc@nvidia.com>
+Content-Language: en-US
+From: Vasant Hegde <vasant.hegde@amd.com>
+In-Reply-To: <1ef2e242ee1d844f823581a5365823d78c67ec6a.1746139811.git.nicolinc@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN2PR01CA0073.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:23::18) To DS7PR12MB6048.namprd12.prod.outlook.com
+ (2603:10b6:8:9f::5)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250502215133.1923676-1-ojeda@kernel.org> <20250502215133.1923676-3-ojeda@kernel.org>
- <CABVgOSm8T+_kXY78sioUHEcG7rYApfWK2Gfxkrvw94Dz57G0oQ@mail.gmail.com> <681912de.050a0220.383f17.18c4@mx.google.com>
-In-Reply-To: <681912de.050a0220.383f17.18c4@mx.google.com>
-From: David Gow <davidgow@google.com>
-Date: Tue, 6 May 2025 14:32:43 +0800
-X-Gm-Features: ATxdqUEJy-YpyvvP5U1JCMB6nqHR1GK4Dy7-fxrfVz-rfLQI6xTA5TKAnyHCloE
-Message-ID: <CABVgOSnqtxwYQBbed_-TYr6D3BZJ=MT3KVv-eXUFbnRm1UyETw@mail.gmail.com>
-Subject: Re: [PATCH 2/7] rust: kunit: support checked `-> Result`s in KUnit `#[test]`s
-To: Boqun Feng <boqun.feng@gmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Brendan Higgins <brendan.higgins@linux.dev>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Rae Moar <rmoar@google.com>, 
-	linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000909658063471c905"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR12MB6048:EE_|SA1PR12MB7222:EE_
+X-MS-Office365-Filtering-Correlation-Id: e2806eef-b75e-4726-c64a-08dd8c7e83bd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|7416014|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?TEFiU1h2WVlxUTFCaVJ3aWdmRS9uZGx2OUd4YVVETEJ5NXoyWG9XOU5oRUZP?=
+ =?utf-8?B?SnBCcWt6dHlPRTdNRHhiaUoyc2VlZTFJNTF6d0xnSytqUG1XczA1WmZ5RXd2?=
+ =?utf-8?B?L0VuS3hZZ3FuWWprMzErK2xuS0dpbzZWYTRNYUFVVlhwT2JiNkNXUzhqODBy?=
+ =?utf-8?B?KzBsQ0psSHhzTTYrUkpWUTFMTWpwNksxNXJDWG9pM2FHdk1MZzhCTitmby9B?=
+ =?utf-8?B?dWJ1dC9CSDNXVGxoSWx1dlRldmI2TjBWdk4wYkFQR25DUlRyNGY1Um1OSjVM?=
+ =?utf-8?B?dzZSZVdLUkxrUStTWjMwTjlvTVZnKzJsTUw2U1ltSndPbzhxN3dqL3pURG5D?=
+ =?utf-8?B?NFhES2Vyb1FEMENadnhpYjM4cVk5emlndmVDVXRpVlNaeUVXbmlSL1ZzYlMz?=
+ =?utf-8?B?bUZSakNid1dXbkVnMzJYMFlYNDV5eHVEZFNYQ2w5WW80ajY2UGJHVjlsWlEr?=
+ =?utf-8?B?d2dXZEl0cHlnYnJhVEV5Tk1kY2xXcTBjN2ttb2o5VWYxdGJTeGI0ckN1ZnBn?=
+ =?utf-8?B?QkMxMURoaUljSFRERmlmSnB6QU1jeEdFMG1rVHB2Sm5kaEIxYXdvdk5JVVhu?=
+ =?utf-8?B?a01qdWI1Z3o5WEhNS2RaR0hybXlicHY4aGZIU1BKSEpVSGN3SGMrUVVsUzJv?=
+ =?utf-8?B?UElMditKQ09pYmJ0WTZxdEVZTlpvTVk1ZnNPVVBMSjhLLytnTUJyRDJ4UG93?=
+ =?utf-8?B?QlpKcFl4N0tzM1pBUFFsN09xbFJsaTliSkR3dWhweGpIU0lhazJ4eGJEcWx1?=
+ =?utf-8?B?RVJndnVLSFA3bmx4SVlhdWpYWXhYWi90T1FjVEl4ak85d0djdkpwL1lDdSt2?=
+ =?utf-8?B?bjEvamV0TTc0UU1xVVg2a2dHUWNITUIrRVd6bk8xTkpRRmdOYmVkWFYraUZD?=
+ =?utf-8?B?N3JsRFVsbG0wL01Mc1ZIcjVra0R5SXFYamg5ZmVUeHlyUE9YcjdHV25iOVAv?=
+ =?utf-8?B?Z2ZFVlBhWWJ2M2VrNUU5SDlBRE1DMW11RXphVDNNY2I3aUN0NVA0eGtZbUMr?=
+ =?utf-8?B?bEpkMGFkOXdqaDN3VXE2SDdWUEgzVTRGMUM2VG9HY3hxckd2OUVwM0ZGY29k?=
+ =?utf-8?B?d2R0TXE3RmdMUktSVCtZc01NUFNzRlNpYXBXWUJZMnROYVRMaUdXbjhMMXls?=
+ =?utf-8?B?RTJkdGJSbjFMM29ENVJRem1RK21aM3ZJajVGbGdkYTJ5WGtPc3c2QnNRajJ2?=
+ =?utf-8?B?cVRvbEJ2R2tyYTErYytWZFRXc3RrYUJGRHBjV0F0RzRTVjNzSldNSDFnc3Jz?=
+ =?utf-8?B?WmxTZHovQmd5SFdqOGhuZkxHdkVHd0hqb2VxL0dhaXFYVlcwQTg2MFdyYVVN?=
+ =?utf-8?B?U20raDlGS2tVS0I5ZzluZnJyTm1iK0VRc0pra3MyNmhlYktHcG9XR210cE5H?=
+ =?utf-8?B?Y05uRXZ4MlZvZjNmVjRLaWM1S1A3NnVKNG81dDFvc2dPSG1MbjhWNk9weWto?=
+ =?utf-8?B?UFNIdURXbEFtTVFEQlFXdkQ2WDZnamorcDdRSGpYblFsVmhwSzJEaVFFdFZr?=
+ =?utf-8?B?T09HV2pERDk0NXZCZVc2MUtpcml2a0dsVEVhYzNTck1pSklFUVVvUmpaVG0x?=
+ =?utf-8?B?aVpZZTdPNkZMbHhXeEV0SU02M09KUFRHTlU1VXFwOENBMFdxalQ5dHBheWlz?=
+ =?utf-8?B?NzBhQ1JEMExsb1FuUVNXdmNLNjBaWkJPT0NaTW43WjNOaFdTRmE0cDRLRzRy?=
+ =?utf-8?B?Ym1YeEdwd2o0dFNmUTkzZEtVRXFuUGYzdlc0OS84WHloUi9ZOVFYWVY4ZEM2?=
+ =?utf-8?B?NDM4M2UvS1g1bWRlTUVwNlVRb09HQjJOY1V1aWRMZXRSSnMvZHVnb1ZsdG9z?=
+ =?utf-8?B?RkE2Y21ZZ0dxcjNCVnRvQUc5Y25nd29ETjJGZUdVV09KY0docFlNSGE3WnI2?=
+ =?utf-8?B?ZXptSEJMenZ1TUZTWlFBTDkrajZDdjlYVmZWc0YxR1JEdlZqQnJvSFphTXRu?=
+ =?utf-8?Q?2D5RyKYwEJM=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR12MB6048.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?ZVFrbFJSTktHdHNua2xRUmxIL0J6bDM4SmtaSGFacUZua1RxSTBFamI5WlYr?=
+ =?utf-8?B?ZnpKcTMwdmxLY2VHVGhiN2tYZHNBdXpHamhDZjlhZlZwRGxOdEFMR2RQMFo0?=
+ =?utf-8?B?SXBsK2ZYNWIxcVd6S09DcTZ4S2xxcEtzRytFbGlYdXFocXlHNDBhUGwvR0h4?=
+ =?utf-8?B?S1h5ODZMTFVrTlM1czI3L0tSQ2QxY2N0ZVlMVURqUStmNUIzOUFINGhhT0lU?=
+ =?utf-8?B?NkV3VStiZFlheGplaGF2L2NOeXpuL3VQTDJEcEtjTHdDSklxbG9PWjA0RzhD?=
+ =?utf-8?B?VWcyY1pyb1RVZzRrbXVLakRRcXRBUEY3bjZ0ZGFqK2dhanAxTmJOMmkzRFpy?=
+ =?utf-8?B?ZEIxOHJvWW41eVBaT2RtTUcxZEJGdFkzUVFtYkhPL3RKbFJBRHg5K1NyRlQ4?=
+ =?utf-8?B?MUdGT2FVRVdCWFp1WDN4dzRrUThpNnJxNHF1SnhWRFZXdDBQZzNYbGgxenRD?=
+ =?utf-8?B?UktIYkhzL0h4djFQaU5IRVAvdkRKdGsyR1BKYWp3VnpFV2N0YkpydCtSVkRH?=
+ =?utf-8?B?Y0tzUUpZYUdHTXJ5V09yV3I5d3RCSnNxWVl6T0VGK29IVHV3WWZUYTVYbzlT?=
+ =?utf-8?B?cWI0ankwMlhUUDNqODgvQ05LRzlBbWFlNU9ER1lFdXYxZ29tSXk4L3RhbElM?=
+ =?utf-8?B?em1DbEpNeVJrREJiNExSQml6WHpMSHpqcnZZUXRaRElDU2JIL0FmcmNCNm0w?=
+ =?utf-8?B?Z2tvM012b2dMdDFTa09ObWRJQ00wSThSZXg4WHNDVTNySDBYWDd6MG9vcDFX?=
+ =?utf-8?B?RmNzVWtEYmZmclIyQXkwTFhPd092d2REV2RVRnBzWWxmd1J0VWwzQTBIRlV5?=
+ =?utf-8?B?V1ZQRjBuakJwcU1tYkRRRlFCTUlYR3dXQ0dtVGlySnpONDRCSEd3ZXFHUEdi?=
+ =?utf-8?B?WlZyS2NydStFY0thNVZ2ME5lRGxyTHlRdENyTVBOQ1g2YWpsb0pQd1dZOW9y?=
+ =?utf-8?B?dHBvNUlzeU9uTHVESlFJaFdGQTNQVGdFV3F6OTd5YTIrNjgwNjBPQU5XWW9m?=
+ =?utf-8?B?bjNlT25mb0YxQWNvT1V6S1lLcGhQc2FIQi9yZ0ZqdnBHbmJhOWVOb21BVW1X?=
+ =?utf-8?B?RlYxRS95ckdCOEh1ckxUUk5ITXhWaTEzanA1alN2dG9CTTR4THFsdjNENG1F?=
+ =?utf-8?B?ZE5nQnNHWThQZHNVTFVQQ0VIRTNFZGdHSVZlbXZjbnQwK3Y5V250M3EzWHU5?=
+ =?utf-8?B?OFVjMEw1b3dkNC9hME1JaHY3Z3g4aWxMU3haQ3IvcjRram1JME02Zk1DdTBG?=
+ =?utf-8?B?MFNSTW51VVNiRnA5eC9tcVFCalRCLy9QLzhtcVRSRzVHc1gya3NWeWxJdXNX?=
+ =?utf-8?B?cFU5VlIxV2JiREUwVVFYYkdyWVZ0blROMUVrOFdlUWtJMXVVdVp2ZmxPYkJq?=
+ =?utf-8?B?QjZWVUJ5WE8zTGpRY0IxejI3M0poWGhzVmk2ZnArUEZSTFJraTlUYm0wcVIy?=
+ =?utf-8?B?S3Blcmt3VnJQbjVrOEpBVUIvdTU4bGxadlZRY2tYako0ZDNoWUd4OCtlOEY5?=
+ =?utf-8?B?dmpucHBtQTgyQ2oyakZJRnVEaU94aC9CN3hSa2pIZzJkTmlsTkgvV3pnaUp6?=
+ =?utf-8?B?RVNqbWt5Q0JYQTRXeGpYNCsxblg1aTA1RXB4NXZJQ0JvcjVycTNqaHdwanpa?=
+ =?utf-8?B?d1dxRUZRZEU1RkRWUUxvelJBWHJ1M1ptSkhpdkw3UC95WUs0K0dYbkNuejgz?=
+ =?utf-8?B?R0hDRlFaa3h5Ny9QVXpoRytyZjdnMWtkZVFSakRVSzROKzYyVmZVTXlpY0p4?=
+ =?utf-8?B?YmRyRytxcEhxRjVrMlV1d3E2azRHT1BGaTVhaklZZ0grOXNYUDFQc25GK1Zn?=
+ =?utf-8?B?MW40YW4xelYvUThNSTFkYUs5eU4vOXU0OEZ0UW83Rlcza3BWcHFHbTdWZEw3?=
+ =?utf-8?B?ZTMyMTFHQmtjNmx6Y0NESWM1MWUvVm4xQktvcDMwUGJiaS9HSDVoS0NPcldG?=
+ =?utf-8?B?UFJia1ZyeW5HYWc1VnU2dktYYk9PRnBwT0g1blZEOEFiT0VVb3l5eWRybWxK?=
+ =?utf-8?B?aWlyaFFEY0dzYnkzUWhCZDdMYmJpNEhJbyt2a0hnVitwRlNkT0JMek5XR1pJ?=
+ =?utf-8?B?TnFlRTJneU9EcGtHNEZabTRHUnhKTzlyMmowWkRsWXIrMzR6Njluc3RwMGho?=
+ =?utf-8?Q?+whQQGCXJ1zLzrRVT8pM0XvPv?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e2806eef-b75e-4726-c64a-08dd8c7e83bd
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB6048.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 May 2025 09:15:16.4393
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: /5ChaMc5aThU8gFYkFelBEsUG44KobRq5cth6IDqdcAQF/gN9U3bbL54D4RSZEXQQF2yOmyui3Q1suREHJF8pQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7222
 
---000000000000909658063471c905
-Content-Type: text/plain; charset="UTF-8"
+Hi Nicolin,
 
-On Tue, 6 May 2025 at 03:34, Boqun Feng <boqun.feng@gmail.com> wrote:
->
-> On Mon, May 05, 2025 at 02:02:09PM +0800, David Gow wrote:
-> > On Sat, 3 May 2025 at 05:51, Miguel Ojeda <ojeda@kernel.org> wrote:
-> > >
-> > > Currently, return values of KUnit `#[test]` functions are ignored.
-> > >
-> > > Thus introduce support for `-> Result` functions by checking their
-> > > returned values.
-> > >
-> > > At the same time, require that test functions return `()` or `Result<T,
-> > > E>`, which should avoid mistakes, especially with non-`#[must_use]`
-> > > types. Other types can be supported in the future if needed.
-> > >
-> > > With this, a failing test like:
-> > >
-> > >     #[test]
-> > >     fn my_test() -> Result {
-> > >         f()?;
-> > >         Ok(())
-> > >     }
-> > >
-> > > will output:
-> > >
-> > >     [    3.744214]     KTAP version 1
-> > >     [    3.744287]     # Subtest: my_test_suite
-> > >     [    3.744378]     # speed: normal
-> > >     [    3.744399]     1..1
-> > >     [    3.745817]     # my_test: ASSERTION FAILED at rust/kernel/lib.rs:321
-> > >     [    3.745817]     Expected is_test_result_ok(my_test()) to be true, but is false
-> > >     [    3.747152]     # my_test.speed: normal
-> > >     [    3.747199]     not ok 1 my_test
-> > >     [    3.747345] not ok 4 my_test_suite
-> > >
-> > > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> > > ---
-> >
-> > This is a neat idea. I think a lot of tests will still want to go with
-> > the () return value, but having both as an option seems like a good
-> > idea to me.
-> >
->
-> Handling the return value of a test is definitely a good thing, but I'm
-> not sure returning `Err` should be treated as assertion failure
-> though. Considering:
->
->     #[test]
->     fn foo() -> Result {
->         let b = KBox::new(...)?; // need to allocate memory for the test
->         use_box(b);
->         assert!(...);
->     }
->
-> if the test runs without enough memory, then KBox::new() would return a
-> Err(ENOMEM), and technically, it's not a test failure rather the test
-> has been skipped because of no enough resource.
->
-> I would suggest we handle the `Err` returns specially (mark as "SKIPPED"
-> maybe?).
->
-> Thoughts?
->
-> Regards,
-> Boqun
->
 
-FWIW, having out-of-memory situations trigger a test failure is
-consistent with what other KUnit tests (written in C) do.
+On 5/2/2025 4:31 AM, Nicolin Chen wrote:
+> Introduce a new IOMMUFD_CMD_VQUEUE_ALLOC ioctl for user space to allocate
+> a vQUEUE object for a vIOMMU specific HW-accelerated virtual queue, e.g.:
+>  - NVIDIA's Virtual Command Queue
+>  - AMD vIOMMU's Command Buffer, Event Log Buffer, and PPR Log Buffer
+> 
+> This is a vIOMMU based ioctl. Simply increase the refcount of the vIOMMU.
+> 
+> Reviewed-by: Pranjal Shrivastava <praan@google.com>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> ---
+>  drivers/iommu/iommufd/iommufd_private.h |  2 +
+>  include/uapi/linux/iommufd.h            | 44 +++++++++++
+>  drivers/iommu/iommufd/main.c            |  6 ++
+>  drivers/iommu/iommufd/viommu.c          | 99 +++++++++++++++++++++++++
+>  4 files changed, 151 insertions(+)
+> 
 
-There's both advantages and disadvantages to this: on the one hand,
-it's prone to false positives (as you mention), on the other, it
-catches cases where the test is using an unusually large amount of
-memory (which could indeed be a test issues).
 
-My go-to rule is that tests should fail if small allocations (which,
-in the normal course of events, _should_ succeed) fail, but if they
-have unusual resource requirements (beyond "enough memory for the
-system to run normally") these should be checked separately when the
-test starts.
+.../...
 
-That being said, I definitely think that, by default, an `Err` return
-should map to a FAILED test result, as not all Err Results are a
-resource exhaustion issue, and we definitely don't want to mark a test
-as skipped if there's a real error occurring. If test authors wish to
-skip a test when an out-of-memory condition occurs, they probably
-should handle that explicitly. (But I'd not be opposed to helpers to
-make it easier.)
 
-Cheers,
--- David
+> +
+> +/**
+> + * struct iommu_vqueue_alloc - ioctl(IOMMU_VQUEUE_ALLOC)
+> + * @size: sizeof(struct iommu_vqueue_alloc)
+> + * @flags: Must be 0
+> + * @viommu_id: Virtual IOMMU ID to associate the virtual queue with
+> + * @type: One of enum iommu_vqueue_type
+> + * @index: The logical index to the virtual queue per virtual IOMMU, for a multi
+> + *         queue model
+> + * @out_vqueue_id: The ID of the new virtual queue
+> + * @addr: Base address of the queue memory in the guest physical address space
+> + * @length: Length of the queue memory in the guest physical address space
+> + *
+> + * Allocate a virtual queue object for a vIOMMU-specific HW-acceleration feature
+> + * that allows HW to access a guest queue memory described by @addr and @length.
+> + * It's suggested for VMM to back the queue memory using a single huge page with
+> + * a proper alignment for its contiguity in the host physical address space. The
+> + * call will fail, if the queue memory is not contiguous in the physical address
+> + * space. Upon success, its underlying physical pages will be pinned to prevent
+> + * VMM from unmapping them in the IOAS, until the virtual queue gets destroyed.
+> + *
+> + * A vIOMMU can allocate multiple queues, but it must use a different @index to
+> + * separate each allocation, e.g. VCMDQ0, VCMDQ1, ...
 
---000000000000909658063471c905
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
+This will handle multiple queues. But AMD vIOMMU needs to comunicate certain
+control bit setting which is not related to buffers like "Completion wait
+interrupt".
 
-MIIUnQYJKoZIhvcNAQcCoIIUjjCCFIoCAQExDzANBglghkgBZQMEAgEFADALBgkqhkiG9w0BBwGg
-ghIEMIIGkTCCBHmgAwIBAgIQfofDAVIq0iZG5Ok+mZCT2TANBgkqhkiG9w0BAQwFADBMMSAwHgYD
-VQQLExdHbG9iYWxTaWduIFJvb3QgQ0EgLSBSNjETMBEGA1UEChMKR2xvYmFsU2lnbjETMBEGA1UE
-AxMKR2xvYmFsU2lnbjAeFw0yMzA0MTkwMzUzNDdaFw0zMjA0MTkwMDAwMDBaMFQxCzAJBgNVBAYT
-AkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMSowKAYDVQQDEyFHbG9iYWxTaWduIEF0bGFz
-IFI2IFNNSU1FIENBIDIwMjMwggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQDYydcdmKyg
-4IBqVjT4XMf6SR2Ix+1ChW2efX6LpapgGIl63csmTdJQw8EcbwU9C691spkltzTASK2Ayi4aeosB
-mk63SPrdVjJNNTkSbTowej3xVVGnYwAjZ6/qcrIgRUNtd/mbtG7j9W80JoP6o2Szu6/mdjb/yxRM
-KaCDlloE9vID2jSNB5qOGkKKvN0x6I5e/B1Y6tidYDHemkW4Qv9mfE3xtDAoe5ygUvKA4KHQTOIy
-VQEFpd/ZAu1yvrEeA/egkcmdJs6o47sxfo9p/fGNsLm/TOOZg5aj5RHJbZlc0zQ3yZt1wh+NEe3x
-ewU5ZoFnETCjjTKz16eJ5RE21EmnCtLb3kU1s+t/L0RUU3XUAzMeBVYBEsEmNnbo1UiiuwUZBWiJ
-vMBxd9LeIodDzz3ULIN5Q84oYBOeWGI2ILvplRe9Fx/WBjHhl9rJgAXs2h9dAMVeEYIYkvW+9mpt
-BIU9cXUiO0bky1lumSRRg11fOgRzIJQsphStaOq5OPTb3pBiNpwWvYpvv5kCG2X58GfdR8SWA+fm
-OLXHcb5lRljrS4rT9MROG/QkZgNtoFLBo/r7qANrtlyAwPx5zPsQSwG9r8SFdgMTHnA2eWCZPOmN
-1Tt4xU4v9mQIHNqQBuNJLjlxvalUOdTRgw21OJAFt6Ncx5j/20Qw9FECnP+B3EPVmQIDAQABo4IB
-ZTCCAWEwDgYDVR0PAQH/BAQDAgGGMDMGA1UdJQQsMCoGCCsGAQUFBwMCBggrBgEFBQcDBAYJKwYB
-BAGCNxUGBgkrBgEEAYI3FQUwEgYDVR0TAQH/BAgwBgEB/wIBADAdBgNVHQ4EFgQUM7q+o9Q5TSoZ
-18hmkmiB/cHGycYwHwYDVR0jBBgwFoAUrmwFo5MT4qLn4tcc1sfwf8hnU6AwewYIKwYBBQUHAQEE
-bzBtMC4GCCsGAQUFBzABhiJodHRwOi8vb2NzcDIuZ2xvYmFsc2lnbi5jb20vcm9vdHI2MDsGCCsG
-AQUFBzAChi9odHRwOi8vc2VjdXJlLmdsb2JhbHNpZ24uY29tL2NhY2VydC9yb290LXI2LmNydDA2
-BgNVHR8ELzAtMCugKaAnhiVodHRwOi8vY3JsLmdsb2JhbHNpZ24uY29tL3Jvb3QtcjYuY3JsMBEG
-A1UdIAQKMAgwBgYEVR0gADANBgkqhkiG9w0BAQwFAAOCAgEAVc4mpSLg9A6QpSq1JNO6tURZ4rBI
-MkwhqdLrEsKs8z40RyxMURo+B2ZljZmFLcEVxyNt7zwpZ2IDfk4URESmfDTiy95jf856Hcwzdxfy
-jdwx0k7n4/0WK9ElybN4J95sgeGRcqd4pji6171bREVt0UlHrIRkftIMFK1bzU0dgpgLMu+ykJSE
-0Bog41D9T6Swl2RTuKYYO4UAl9nSjWN6CVP8rZQotJv8Kl2llpe83n6ULzNfe2QT67IB5sJdsrNk
-jIxSwaWjOUNddWvCk/b5qsVUROOuctPyYnAFTU5KY5qhyuiFTvvVlOMArFkStNlVKIufop5EQh6p
-jqDGT6rp4ANDoEWbHKd4mwrMtvrh51/8UzaJrLzj3GjdkJ/sPWkDbn+AIt6lrO8hbYSD8L7RQDqK
-C28FheVr4ynpkrWkT7Rl6npWhyumaCbjR+8bo9gs7rto9SPDhWhgPSR9R1//WF3mdHt8SKERhvtd
-NFkE3zf36V9Vnu0EO1ay2n5imrOfLkOVF3vtAjleJnesM/R7v5tMS0tWoIr39KaQNURwI//WVuR+
-zjqIQVx5s7Ta1GgEL56z0C5GJoNE1LvGXnQDyvDO6QeJVThFNgwkossyvmMAaPOJYnYCrYXiXXle
-A6TpL63Gu8foNftUO0T83JbV/e6J8iCOnGZwZDrubOtYn1QwggWDMIIDa6ADAgECAg5F5rsDgzPD
-hWVI5v9FUTANBgkqhkiG9w0BAQwFADBMMSAwHgYDVQQLExdHbG9iYWxTaWduIFJvb3QgQ0EgLSBS
-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
-YE9NAgMBAAGjggHgMIIB3DAeBgNVHREEFzAVgRNkYXZpZGdvd0Bnb29nbGUuY29tMA4GA1UdDwEB
-/wQEAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIwHQYDVR0OBBYEFHgsCGkO2Hex
-N6ybc+GeQEb6790qMFgGA1UdIARRME8wCQYHZ4EMAQUBAjBCBgorBgEEAaAyCgMDMDQwMgYIKwYB
-BQUHAgEWJmh0dHBzOi8vd3d3Lmdsb2JhbHNpZ24uY29tL3JlcG9zaXRvcnkvMAwGA1UdEwEB/wQC
-MAAwgZoGCCsGAQUFBwEBBIGNMIGKMD4GCCsGAQUFBzABhjJodHRwOi8vb2NzcC5nbG9iYWxzaWdu
-LmNvbS9jYS9nc2F0bGFzcjZzbWltZWNhMjAyMzBIBggrBgEFBQcwAoY8aHR0cDovL3NlY3VyZS5n
-bG9iYWxzaWduLmNvbS9jYWNlcnQvZ3NhdGxhc3I2c21pbWVjYTIwMjMuY3J0MB8GA1UdIwQYMBaA
-FDO6vqPUOU0qGdfIZpJogf3BxsnGMEYGA1UdHwQ/MD0wO6A5oDeGNWh0dHA6Ly9jcmwuZ2xvYmFs
-c2lnbi5jb20vY2EvZ3NhdGxhc3I2c21pbWVjYTIwMjMuY3JsMA0GCSqGSIb3DQEBCwUAA4ICAQAs
-exV05yVDmPhHRqOq9lAbfWOUvEf8zydxabZUHna6bayb83jD2eb9nMGGEprfuNBRmFg35sgF1TyN
-+ieuQakvQYmY8tzK49hhHa2Y3qhGCTqYTHO3ypHvhHsZiGbL0gmdgB9P8ssVIws//34ae99GUOxo
-XKTxPwwsQ5Arq42besv3/HXAW+4nRAT8d3ht5ZWCHc5rjL/vdGzu7PaYo3u0da69AZ8Sh4Gf5yoc
-QANr2ZkMrxXbLmSmnRvbkQrzlZp2YbTFnczx46429D6q75/FNFOL1vAjxtRAPzkyACvW0eKvchza
-TMvvD3IWERLlcBL5yXpENc3rI8/wVjqgAWYxlFg1b/4b/TCgYe2MZC0rx4Uh3zTIbmPNiHdN6QZ9
-oDiYzWUcqWZ5jCO4bMKNlVJXeCvdANLHuhcC8FONj5VzNgYXs6gWkp9/Wt6XnQPX4dF4JBa8JdL/
-cT46RJIzoiJHEx/8syO5FparZHIKbkunoq6niPsRaQUGeqWc56H4Z1sQXuBJN9fhqkIkG0Ywfrwt
-uFrCoYIRlx4rSVHpBIKgnsgdm0SFQK72MPmIkfhfq9Fh0h8AjhF73sLO7K5BfwWkx1gwMySyNY0e
-PCRYr6WEVOkUJS0a0fui693ymMPFLQAimmz8EpyFok4Ju066StkYO1dIgUIla4x61auxkWHwnzGC
-Al0wggJZAgEBMGgwVDELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExKjAo
-BgNVBAMTIUdsb2JhbFNpZ24gQXRsYXMgUjYgU01JTUUgQ0EgMjAyMwIQAcDMKctW1GQKDKqEUSh4
-pjANBglghkgBZQMEAgEFAKCBxzAvBgkqhkiG9w0BCQQxIgQgtWZOZdZAuDJGghy98sOge3obIWgb
-sZBJP2EJxUeNElcwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjUw
-NTA2MDYzMjU3WjBcBgkqhkiG9w0BCQ8xTzBNMAsGCWCGSAFlAwQBKjALBglghkgBZQMEARYwCwYJ
-YIZIAWUDBAECMAoGCCqGSIb3DQMHMAsGCSqGSIb3DQEBBzALBglghkgBZQMEAgEwDQYJKoZIhvcN
-AQEBBQAEggEAf1UK/9UyQAUjxGkWPZYh4PBL1uU/h+b0nxtlji0QztEM+xzxwSROiRk7bF7JPMnx
-ptVEjM3rKVdsuYsi++U5HSycfpRJ9pEDTZNskk0RIa8H1ci2a29BIxPDPY5SUvQqy3Y+r8Cedh5a
-+FN3+h+raNiX0B/jD3iCEdt6E8nArrq5dl+zMLZAC1J6wmbWPRiEYQVOvdP3QPZJ4eALSoNYaiFO
-BvFuOaAwwDyInUTu1JIs/P/ghQP6E0HvcmQXRnTTA0fNUnpvKqqFwQ4rHNdgYai3DcbMcFE9bcoa
-HcwZfdiIYqsFQ3xwS4ImZXhGt2q2BFIBaiUhNyCh8Igc20tgCg==
---000000000000909658063471c905--
+How do we handle that? extend iommu_queue_alloc() or have different interface?
+
+-Vasant
+
+
+
