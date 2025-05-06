@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26678224AF7;
-	Tue,  6 May 2025 21:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A292253F9;
+	Tue,  6 May 2025 21:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746567385; cv=none; b=nuDKQ0GpYjsLvE6Zol2pJ4FxmFziWRmnTigUWceF9oM2fdcRSguRWROkXPePZ+n4xNLSFOD+D7kO5/N1rxAj5+QEdYyndcs2SGeoyt99sj2liL3ZKPQNZSFivw+YvAMa8uN120DTwFt13b3aUPtKyVxmwXQFfgirf4g8jNPAiBY=
+	t=1746567387; cv=none; b=NftRtYt9L79+MrkMzTmPgl4zqdNhq9J6WNvuiBOnbpZvPxTJ/IEnaXbCRpmbI9cxx64BE7ZkoyWGRffWEz/vrJp3LzMWr5QFVaa2CDmxFia/fTsL+UYeLvTiJbIX8AZc/cn13UUB8MxQ/Un3b/1gzNuPSRylaGkJkkE90XARqKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746567385; c=relaxed/simple;
-	bh=6CBKxtxV46y/JcjwWYNa+IQV04c9qBXyeFOnqf9zPM8=;
+	s=arc-20240116; t=1746567387; c=relaxed/simple;
+	bh=ZFS/cOA4uhmIrJCCoSmxVe1M1yiqzEf1zoliJJ66p7M=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XuBdhrpQ0R9Qut/WXZa6L8Cc2jzMuhc+RKggNtWmwN6N2FX4FlYVgsqO1q6/4FLkzyHZhtJeqCilM8iEbCUMMlvsOHawDdSzaf5Qj0SQEx8XpndThO8csVNDKNPBeev31VW6IIKakmmKeHHiCjZFcv2SHwNPBgPNB1mgO5YlWmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LADznOaj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TyBMFOp2p2fKXQV7YfTGb7etgM/m6HVuUORoqKKnYyp0HMqnsVEoayE5KDab9gTIHsUCiMOWSDdvQ3NbyzX3fDsrs/Sm7I3xVtGr/ldC7sliouFFoa7pxKQkwH50ObhxNZaI2b/nufCFFSGVKuV8C24IJFYnDVFbafoGmsyOw7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ksmUbmWQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LADznOaj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04037C4CEE4;
-	Tue,  6 May 2025 21:36:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ksmUbmWQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FDB0C4CEEF;
+	Tue,  6 May 2025 21:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746567385;
-	bh=6CBKxtxV46y/JcjwWYNa+IQV04c9qBXyeFOnqf9zPM8=;
+	s=k20201202; t=1746567386;
+	bh=ZFS/cOA4uhmIrJCCoSmxVe1M1yiqzEf1zoliJJ66p7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LADznOaj5uSbYIrPbAqnOcG1luxLO0OcYEFelLReg6gFDAfZy9cXnDNbc5WaVdbE+
-	 xpzuuokUlX+Bv2ZdBqsM2/Uy+E+xl/BgcFk2VdMDMTCHLKbsZqvnyX4Djz1YDsxPpf
-	 mf7nZuNdseZTJWtHXqJtv2S+4zdG7xsf9zjbxlPeSVgbTDXahuiNBBpm/qGNePSNpI
-	 gvDV9Am18Z/9wuCDWIMTnRhAETi1dOz4ITnH1ZdV29xjQLOoBiBx8AQkqTsD9lpcGs
-	 jqQjEy7A85rSfpuTciZ0SIRSY/SEmgNiwKrSrJv3MM/S2qKVbdgd+x1NBf+f9o4kxH
-	 LZAbltMQiGdhA==
+	b=ksmUbmWQxmoONDWIQ/Of+yjs8CoYG3+IE0nUIn5iN77g70HrTrswI4LCpoIwTa+2l
+	 ZcTQ7QY/fA5y4chtYF/MG9aX4LBMdbr6oesI8WhP23bF2KaTSBhriAPsOFmfBMxDuI
+	 XbWkhyF5vXdBJhRCakxJFr810O7ZSiFe5TGae3T8cau+0DtNHz/HKITFOPyxZ6JCDK
+	 QIRG+NGm5s7EUsjF2Ub9DOrDpRXNeDCCtbSTZ0uGewPaF8Cc0HGnoPwx9J2REvIjfS
+	 vRMoQZat6kbf7UAMEP0Tpy9i9tca8j9u0MTbT2FQovW/Bi5ffmZRnIDEyzhsMmMOEK
+	 ckTu1OKg3/ybQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Ga=C5=A1per=20Nemgar?= <gasper.nemgar@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	ikepanhc@gmail.com,
-	platform-driver-x86@vger.kernel.org,
+	david.rhodes@cirrus.com,
+	rf@opensource.cirrus.com,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
+	patches@opensource.cirrus.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 07/18] platform/x86: ideapad-laptop: add support for some new buttons
-Date: Tue,  6 May 2025 17:35:59 -0400
-Message-Id: <20250506213610.2983098-7-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 08/18] ASoC: cs42l43: Disable headphone clamps during type detection
+Date: Tue,  6 May 2025 17:36:00 -0400
+Message-Id: <20250506213610.2983098-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250506213610.2983098-1-sashal@kernel.org>
 References: <20250506213610.2983098-1-sashal@kernel.org>
@@ -48,64 +52,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.27
 Content-Transfer-Encoding: 8bit
 
-From: Gašper Nemgar <gasper.nemgar@gmail.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 02c6e43397c39edd0c172859bf8c851b46be09a8 ]
+[ Upstream commit 70ad2e6bd180f94be030aef56e59693e36d945f3 ]
 
-Add entries to unsupported WMI codes in ideapad_keymap[] and one
-check for WMI code 0x13d to trigger platform_profile_cycle().
+The headphone clamps cause fairly loud pops during type detect
+because they sink current from the detection process itself. Disable
+the clamps whilst the type detect runs, to improve the detection
+pop performance.
 
-Signed-off-by: Gašper Nemgar <gasper.nemgar@gmail.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20250418070738.7171-1-gasper.nemgar@gmail.com
-[ij: joined nested if ()s & major tweaks to changelog]
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250423090944.1504538-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/ideapad-laptop.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ sound/soc/codecs/cs42l43-jack.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/platform/x86/ideapad-laptop.c b/drivers/platform/x86/ideapad-laptop.c
-index c908f52ed717b..bdb4cbee42058 100644
---- a/drivers/platform/x86/ideapad-laptop.c
-+++ b/drivers/platform/x86/ideapad-laptop.c
-@@ -1297,6 +1297,16 @@ static const struct key_entry ideapad_keymap[] = {
- 	/* Specific to some newer models */
- 	{ KE_KEY,	0x3e | IDEAPAD_WMI_KEY, { KEY_MICMUTE } },
- 	{ KE_KEY,	0x3f | IDEAPAD_WMI_KEY, { KEY_RFKILL } },
-+	/* Star- (User Assignable Key) */
-+	{ KE_KEY,	0x44 | IDEAPAD_WMI_KEY, { KEY_PROG1 } },
-+	/* Eye */
-+	{ KE_KEY,	0x45 | IDEAPAD_WMI_KEY, { KEY_PROG3 } },
-+	/* Performance toggle also Fn+Q, handled inside ideapad_wmi_notify() */
-+	{ KE_KEY,	0x3d | IDEAPAD_WMI_KEY, { KEY_PROG4 } },
-+	/* shift + prtsc */
-+	{ KE_KEY,   0x2d | IDEAPAD_WMI_KEY, { KEY_CUT } },
-+	{ KE_KEY,   0x29 | IDEAPAD_WMI_KEY, { KEY_TOUCHPAD_TOGGLE } },
-+	{ KE_KEY,   0x2a | IDEAPAD_WMI_KEY, { KEY_ROOT_MENU } },
+diff --git a/sound/soc/codecs/cs42l43-jack.c b/sound/soc/codecs/cs42l43-jack.c
+index 73d764fc85392..984a7f470a31f 100644
+--- a/sound/soc/codecs/cs42l43-jack.c
++++ b/sound/soc/codecs/cs42l43-jack.c
+@@ -654,6 +654,10 @@ static int cs42l43_run_type_detect(struct cs42l43_codec *priv)
  
- 	{ KE_END },
- };
-@@ -2083,6 +2093,12 @@ static void ideapad_wmi_notify(struct wmi_device *wdev, union acpi_object *data)
- 		dev_dbg(&wdev->dev, "WMI fn-key event: 0x%llx\n",
- 			data->integer.value);
+ 	reinit_completion(&priv->type_detect);
  
-+		/* performance button triggered by 0x3d */
-+		if (data->integer.value == 0x3d && priv->dytc) {
-+			platform_profile_cycle();
-+			break;
-+		}
++	regmap_update_bits(cs42l43->regmap, CS42L43_STEREO_MIC_CLAMP_CTRL,
++			   CS42L43_SMIC_HPAMP_CLAMP_DIS_FRC_VAL_MASK,
++			   CS42L43_SMIC_HPAMP_CLAMP_DIS_FRC_VAL_MASK);
 +
- 		/* 0x02 FnLock, 0x03 Esc */
- 		if (data->integer.value == 0x02 || data->integer.value == 0x03)
- 			ideapad_fn_lock_led_notify(priv, data->integer.value == 0x02);
+ 	cs42l43_start_hs_bias(priv, true);
+ 	regmap_update_bits(cs42l43->regmap, CS42L43_HS2,
+ 			   CS42L43_HSDET_MODE_MASK, 0x3 << CS42L43_HSDET_MODE_SHIFT);
+@@ -665,6 +669,9 @@ static int cs42l43_run_type_detect(struct cs42l43_codec *priv)
+ 			   CS42L43_HSDET_MODE_MASK, 0x2 << CS42L43_HSDET_MODE_SHIFT);
+ 	cs42l43_stop_hs_bias(priv);
+ 
++	regmap_update_bits(cs42l43->regmap, CS42L43_STEREO_MIC_CLAMP_CTRL,
++			   CS42L43_SMIC_HPAMP_CLAMP_DIS_FRC_VAL_MASK, 0);
++
+ 	if (!time_left)
+ 		return -ETIMEDOUT;
+ 
 -- 
 2.39.5
 
