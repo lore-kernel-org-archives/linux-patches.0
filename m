@@ -1,46 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7162367A9;
-	Tue,  6 May 2025 21:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5450E220F49;
+	Tue,  6 May 2025 21:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746567462; cv=none; b=Hn76SwwDRcDBdmlWKLYtMUOAKG2G0YLjuIO88zDH4UBWiD7so8U+wf/9Yj2ekY3JMD+Syl2C5xgyjzwEU0nO4aogH44Ropq/akQTJ+vQAwAYEd862FrmLFmua5zCg8BnuZislLMRQqlNg5ToVIMR9K7zL7so8S3GrVx9sIF7C8k=
+	t=1746567465; cv=none; b=odwaI4LFQgTKMypuoHCtQ+lTcp1g/yR/kgmm5yw1JKquq0vlDaoog0Xt9Hfz00PSqhEdyoN+YbwwB3tpIdvJSP49RWUPeVfjSsuT8hlbVGwBCQyFU1vjD7SGZBhPqmeC4D9z/I2ufDPQhWk58qGh22SUTlJTB1GuWSvhmb1C8Yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746567462; c=relaxed/simple;
-	bh=WuayqM34DjU30K0wBirA7NlxyGuo4ZoD+IetHQ56Wwo=;
+	s=arc-20240116; t=1746567465; c=relaxed/simple;
+	bh=qGx8MQ+e85kv2jkI5StnipDH0UHucdAD1pRSwU0WMbY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=bxkhRe/pAdUk/meCidn7UHNWCPQi2yqO0yYren9WybLemnvpCZ3Muchc3NtWUnAJ3YUgSnJOovlauxilrFlcdzfAA4eUQSeJi6ztSsdHTLHdDVkTjxptY+FEsrxBTglR3qxl6wePuVGL4wWxkEmde2BcySLtfPnQW9DlEz+L8b8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kByIgeOM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XS1O/03wsR55sxvoAQ2vNg+shWoeAI7r/c0qshjfJZqXmZwkNaS/2s1d/2sVPi1mToGxG3VDluZ46WofflJiOpzOZw4VrP9izTJXoMcIF8rY3TRWppYlHr6sa4NvxESrOzKNwq8oCvMUz2A+SYtkFWQcYI7gUOf6A0GmOvgXVsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rlEWJ8Ss; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kByIgeOM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C295DC4CEEE;
-	Tue,  6 May 2025 21:37:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rlEWJ8Ss"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E6B0C4CEE4;
+	Tue,  6 May 2025 21:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746567461;
-	bh=WuayqM34DjU30K0wBirA7NlxyGuo4ZoD+IetHQ56Wwo=;
+	s=k20201202; t=1746567465;
+	bh=qGx8MQ+e85kv2jkI5StnipDH0UHucdAD1pRSwU0WMbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kByIgeOMB2BiccFyIYYiuRACKDhKNdjPYmd8RfECBKAAom1vNsfz8uoD2dWHqK9G9
-	 Brbde7OQaHRZZxwxnLGpMNAhKvDl8Fzqy9XbkqsFHHOyHH71Q5Z25jFHRWliPGn21j
-	 9P04X8e4riDBeHjny1d9YRL34u6MpLrh+f3cGNR4qGlv2ZVd9PYjUbbyGF7xNpENOH
-	 KFgLu2tmKBh19hZj12BD1xrZyjSBM/rjyzo7Tx2yd7UBCPByfbxlhLHds7wpFBxtEc
-	 9dwqEyj1ArOBGJI0xNKzKbt/wc1VAvSQ/cYr4t4kT4kbSyjgeiUQ4cir5aSvNnKRGG
-	 U7eyQY9rPPZ+A==
+	b=rlEWJ8Ssgs850rz1Zh49P2FEmi3I9pkAJstaNuuAgO4kE7TlcTLkZVCTjqgQVW3QB
+	 SJs4zYwgybxA0OcXbWdTvDIRZrEhfnKcJI6rM1gMsJKjDje1oWP5HuXpsvbEuYJIIE
+	 IdcF94CV7Wd4H59V9D1EmmSWzJizAe2Tb3smua9MBTWsVo7hFH5dA6q0PLCccCG3j6
+	 Zmdyu1ylfF/pJSi9P4Sjub+0wkeon9FIjNqv36Z491p/QbeiJby8yf817o9VuTOs0l
+	 bU6jfvm7EOjtFuvqWOaIx5p43mSw7MOP4Aa0I+gGxC+JEHWL+pAu2s/CR+fxW1X3PB
+	 ZQORizX5n5jiQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+Cc: Takashi Iwai <tiwai@suse.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	khilman@baylibre.com,
-	linux-gpio@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-amlogic@lists.infradead.org,
+	cezary.rojewski@intel.com,
+	liam.r.girdwood@linux.intel.com,
+	peter.ujfalusi@linux.intel.com,
+	yung-chuan.liao@linux.intel.com,
+	ranjani.sridharan@linux.intel.com,
+	kai.vehmanen@linux.intel.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	hdegoede@redhat.com,
+	pierre-louis.bossart@linux.dev,
+	tomlohave@gmail.com,
+	kuninori.morimoto.gx@renesas.com,
+	u.kleine-koenig@baylibre.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 2/5] pinctrl: meson: define the pull up/down resistor value as 60 kOhm
-Date: Tue,  6 May 2025 17:37:31 -0400
-Message-Id: <20250506213734.2983663-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 3/5] ASoC: Intel: bytcr_rt5640: Add DMI quirk for Acer Aspire SW3-013
+Date: Tue,  6 May 2025 17:37:32 -0400
+Message-Id: <20250506213734.2983663-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250506213734.2983663-1-sashal@kernel.org>
 References: <20250506213734.2983663-1-sashal@kernel.org>
@@ -55,51 +64,46 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.181
 Content-Transfer-Encoding: 8bit
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit e56088a13708757da68ad035269d69b93ac8c389 ]
+[ Upstream commit a549b927ea3f5e50b1394209b64e6e17e31d4db8 ]
 
-The public datasheets of the following Amlogic SoCs describe a typical
-resistor value for the built-in pull up/down resistor:
-- Meson8/8b/8m2: not documented
-- GXBB (S905): 60 kOhm
-- GXL (S905X): 60 kOhm
-- GXM (S912): 60 kOhm
-- G12B (S922X): 60 kOhm
-- SM1 (S905D3): 60 kOhm
+Acer Aspire SW3-013 requires the very same quirk as other Acer Aspire
+model for making it working.
 
-The public G12B and SM1 datasheets additionally state min and max
-values:
-- min value: 50 kOhm for both, pull-up and pull-down
-- max value for the pull-up: 70 kOhm
-- max value for the pull-down: 130 kOhm
-
-Use 60 kOhm in the pinctrl-meson driver as well so it's shown in the
-debugfs output. It may not be accurate for Meson8/8b/8m2 but in reality
-60 kOhm is closer to the actual value than 1 Ohm.
-
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/20250329190132.855196-1-martin.blumenstingl@googlemail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220011
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250420085716.12095-1-tiwai@suse.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/meson/pinctrl-meson.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/boards/bytcr_rt5640.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/pinctrl/meson/pinctrl-meson.c b/drivers/pinctrl/meson/pinctrl-meson.c
-index 49851444a6e3b..d239ad85a510d 100644
---- a/drivers/pinctrl/meson/pinctrl-meson.c
-+++ b/drivers/pinctrl/meson/pinctrl-meson.c
-@@ -486,7 +486,7 @@ static int meson_pinconf_get(struct pinctrl_dev *pcdev, unsigned int pin,
- 	case PIN_CONFIG_BIAS_PULL_DOWN:
- 	case PIN_CONFIG_BIAS_PULL_UP:
- 		if (meson_pinconf_get_pull(pc, pin) == param)
--			arg = 1;
-+			arg = 60000;
- 		else
- 			return -EINVAL;
- 		break;
+diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
+index 721b9971fd744..4954e8c494c6d 100644
+--- a/sound/soc/intel/boards/bytcr_rt5640.c
++++ b/sound/soc/intel/boards/bytcr_rt5640.c
+@@ -573,6 +573,19 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
+ 					BYT_RT5640_SSP0_AIF2 |
+ 					BYT_RT5640_MCLK_EN),
+ 	},
++	{       /* Acer Aspire SW3-013 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire SW3-013"),
++		},
++		.driver_data = (void *)(BYT_RT5640_DMIC1_MAP |
++					BYT_RT5640_JD_SRC_JD2_IN4N |
++					BYT_RT5640_OVCD_TH_2000UA |
++					BYT_RT5640_OVCD_SF_0P75 |
++					BYT_RT5640_DIFF_MIC |
++					BYT_RT5640_SSP0_AIF1 |
++					BYT_RT5640_MCLK_EN),
++	},
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
 -- 
 2.39.5
 
