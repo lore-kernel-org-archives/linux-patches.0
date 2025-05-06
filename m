@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1729C222580;
-	Tue,  6 May 2025 21:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30F8223DC0;
+	Tue,  6 May 2025 21:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746567381; cv=none; b=Z6ipgdyCZVvmk/xjfWgBqrYdKkmmJGiAc/WsllCcmWWuKhWLSv4MLQ9aILMny4VDo1EYEkWvlibHO/jV8nBMzusxZZPURiUhFC4z2KjL8B4LcefMG9SFdaBxQ0OUJl1u8J/WBtaxrYfiVHAQRWMa2x+pBOyIH+d6afjugOVQyOw=
+	t=1746567382; cv=none; b=s+RFxAhuGfiJ2rBDrrN4+N3RXcttOWeY8ppp4XedvSW3OcMlR46hdm3ty8FLBoWZrYaru5Dmq34NvBs9e7NaMwA9u6ibnO7pjJw2E5BtQjZjZI2OtspvEbKkwdW5SNDYQxtfX/avNm0RugCKEa93wvGm5d9f6zXq2qRgBzKpCjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746567381; c=relaxed/simple;
-	bh=n75AxjRaIh79fMF9r3kZtrqsvJ5Y/8iHAjDLx/mYGG4=;
+	s=arc-20240116; t=1746567382; c=relaxed/simple;
+	bh=vcIDJmEDMs66KkCTPnjXRpxp9M0R+JOuxqcCSSQCht4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=li7iHSFpAY/fYXqZN0lWQJvLeO++xUYb763DKMlWQnjZS5NOUD8hFKuXh73xOsaJy5Nn1xC2EV4F8nfxnqGptWuWFJ2smX5eYMno3iBGM5itEIPWOPYfwlOkq4tbHmVszH6NtEcFFtPd7qesCQzIqI2O3xVZspvnymbE8yru4sU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DemWjyKH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HbiEL+hzTaS7bmTa3PFQQabkarQRBJFpYZT53cJzGy+LegmRPvHT3GHv59Fjl0FOi4FaA4+UTA5/tlnBUGfyubzOzDW/55LJGJfs+DLqJo/b9oIym/tYErd+4UIm4wtbjn24656kcL8pA9IEqglFlwqd5OHxGv/tmj5y0uWzayc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=olDqrbwl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DemWjyKH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92559C4CEE4;
-	Tue,  6 May 2025 21:36:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="olDqrbwl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF93DC4CEF0;
+	Tue,  6 May 2025 21:36:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746567380;
-	bh=n75AxjRaIh79fMF9r3kZtrqsvJ5Y/8iHAjDLx/mYGG4=;
+	s=k20201202; t=1746567382;
+	bh=vcIDJmEDMs66KkCTPnjXRpxp9M0R+JOuxqcCSSQCht4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DemWjyKH8FGnBNtb8lFvZ7V+lCMS2M4XmADB3V18DFBxnUoo8P98WjHBc49Fe3zY0
-	 CUeB3jvpRYLDl3WSjux4HKCggherHZVbTatatrhHdy32uC3cbz9SjtFnE3hmoNdgz2
-	 83GqnoEXCBK1ImXTWp+Wvb+bbTZ9vs9n3J8pEAnpBRrfH+a+3sxeH4LE2xk9mwEC1v
-	 saZpNLfYbyTkcQDF2JFRyApR2nvb68JcH0RDDGsyTO8X/cUTSQjJusb8lXs+ZDp2SF
-	 aMhekQz1mZCD8A5cugFD7Um8pLTDcLeXu3tJSPNL23uk6G4RkEk9+HQwcECAFzcIDo
-	 /xP5dYX9kEG6w==
+	b=olDqrbwlk7//46Cj/IRGNdeOsYExn+63zyJX9UeFYtZbhvcuuZiHvL0pXg4UgQgaN
+	 oHwgTwa/N7DFozRcIaab7IbExuvl3e5lIEGLx1HjRoFbTcfluHwjTw7e8Fl+wViDYe
+	 gSlSYt4yD8eqEs2tby+2uu/WLQJoPfRN0UGbaNkEJDiYEX18byXvrCOKe09Iu50Rdj
+	 Ni7dE4xiAEi0w7rICAr9USJHYvkwEUj/Kk6aHAsfVAA0So9qsWilfh3HEV6ov/TV0I
+	 fRYiuV+PMkOsSLmyyhE2tZeW97/Lm0MaaKnpISPgh0zsNL61Hy+rPYPjNMc26HW6mB
+	 DAvHygkbxPY8Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Salah Triki <salah.triki@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Saranya Gopal <saranya.gopal@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	smfrench@gmail.com,
-	linux-cifs@vger.kernel.org,
+	alexhung@gmail.com,
+	hdegoede@redhat.com,
+	platform-driver-x86@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 04/18] smb: server: smb2pdu: check return value of xa_store()
-Date: Tue,  6 May 2025 17:35:56 -0400
-Message-Id: <20250506213610.2983098-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 05/18] platform/x86/intel: hid: Add Pantherlake support
+Date: Tue,  6 May 2025 17:35:57 -0400
+Message-Id: <20250506213610.2983098-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250506213610.2983098-1-sashal@kernel.org>
 References: <20250506213610.2983098-1-sashal@kernel.org>
@@ -48,52 +49,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.27
 Content-Transfer-Encoding: 8bit
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Saranya Gopal <saranya.gopal@intel.com>
 
-[ Upstream commit af5226abb40cae959f424f7ca614787a1c87ce48 ]
+[ Upstream commit 12df9ec3e1955aed6a0c839f2375cd8e5d5150cf ]
 
-xa_store() may fail so check its return value and return error code if
-error occurred.
+Add Pantherlake ACPI device ID to the Intel HID driver.
 
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+While there, clean up the device ID table to remove the ", 0" parts.
+
+Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Saranya Gopal <saranya.gopal@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20250421041332.830136-1-saranya.gopal@intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/platform/x86/intel/hid.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 6b9286c963439..f52afb01175dd 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1443,7 +1443,7 @@ static int ntlm_authenticate(struct ksmbd_work *work,
- {
- 	struct ksmbd_conn *conn = work->conn;
- 	struct ksmbd_session *sess = work->sess;
--	struct channel *chann = NULL;
-+	struct channel *chann = NULL, *old;
- 	struct ksmbd_user *user;
- 	u64 prev_id;
- 	int sz, rc;
-@@ -1555,7 +1555,12 @@ static int ntlm_authenticate(struct ksmbd_work *work,
- 				return -ENOMEM;
+diff --git a/drivers/platform/x86/intel/hid.c b/drivers/platform/x86/intel/hid.c
+index 9a609358956f3..59392f1a0d8ad 100644
+--- a/drivers/platform/x86/intel/hid.c
++++ b/drivers/platform/x86/intel/hid.c
+@@ -44,16 +44,17 @@ MODULE_LICENSE("GPL");
+ MODULE_AUTHOR("Alex Hung");
  
- 			chann->conn = conn;
--			xa_store(&sess->ksmbd_chann_list, (long)conn, chann, KSMBD_DEFAULT_GFP);
-+			old = xa_store(&sess->ksmbd_chann_list, (long)conn, chann,
-+					KSMBD_DEFAULT_GFP);
-+			if (xa_is_err(old)) {
-+				kfree(chann);
-+				return xa_err(old);
-+			}
- 		}
- 	}
+ static const struct acpi_device_id intel_hid_ids[] = {
+-	{"INT33D5", 0},
+-	{"INTC1051", 0},
+-	{"INTC1054", 0},
+-	{"INTC1070", 0},
+-	{"INTC1076", 0},
+-	{"INTC1077", 0},
+-	{"INTC1078", 0},
+-	{"INTC107B", 0},
+-	{"INTC10CB", 0},
+-	{"", 0},
++	{ "INT33D5" },
++	{ "INTC1051" },
++	{ "INTC1054" },
++	{ "INTC1070" },
++	{ "INTC1076" },
++	{ "INTC1077" },
++	{ "INTC1078" },
++	{ "INTC107B" },
++	{ "INTC10CB" },
++	{ "INTC10CC" },
++	{ }
+ };
+ MODULE_DEVICE_TABLE(acpi, intel_hid_ids);
  
 -- 
 2.39.5
