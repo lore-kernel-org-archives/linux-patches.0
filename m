@@ -1,55 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5450E220F49;
-	Tue,  6 May 2025 21:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D53F219312;
+	Tue,  6 May 2025 21:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746567465; cv=none; b=odwaI4LFQgTKMypuoHCtQ+lTcp1g/yR/kgmm5yw1JKquq0vlDaoog0Xt9Hfz00PSqhEdyoN+YbwwB3tpIdvJSP49RWUPeVfjSsuT8hlbVGwBCQyFU1vjD7SGZBhPqmeC4D9z/I2ufDPQhWk58qGh22SUTlJTB1GuWSvhmb1C8Yw=
+	t=1746567469; cv=none; b=Nbl+3jJJzQRaxERj0nXbjzyHPZZSYzcLKFay7Gwl73cfYrieSNXoSYBM4gUHcWkg5wiSiEWgbG+8zPHGBBLTeQHkvOi0opNmn5lBcSFCGGrgdCdE0NulTqFtscR/TTLBtdeaebAIahcGj0zPas2x6dM23jhr4YfteOAYyYEGsto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746567465; c=relaxed/simple;
-	bh=qGx8MQ+e85kv2jkI5StnipDH0UHucdAD1pRSwU0WMbY=;
+	s=arc-20240116; t=1746567469; c=relaxed/simple;
+	bh=wAI3dQWkNaRRKjJ3ZNDTY/nPXw2oeFHiHdD9SrnMDIo=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=XS1O/03wsR55sxvoAQ2vNg+shWoeAI7r/c0qshjfJZqXmZwkNaS/2s1d/2sVPi1mToGxG3VDluZ46WofflJiOpzOZw4VrP9izTJXoMcIF8rY3TRWppYlHr6sa4NvxESrOzKNwq8oCvMUz2A+SYtkFWQcYI7gUOf6A0GmOvgXVsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rlEWJ8Ss; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EXoNNL++e0IrYtkEuAWClMAlIk/HyCzkofC0AYE79EWP9bOK/gRfCILHEoCBn97Oagpa6rGcjD1Q6t16aRPkCMRth6KNjrW8wSRERrkJZxbN/Tp5PeSareqaSDyf2fKTkzsGHf1rAUatZ5WpWt3xjh08Y7pBw7POh11kHV7lDIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MUF7x/e4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rlEWJ8Ss"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E6B0C4CEE4;
-	Tue,  6 May 2025 21:37:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MUF7x/e4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F35DC4CEE4;
+	Tue,  6 May 2025 21:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746567465;
-	bh=qGx8MQ+e85kv2jkI5StnipDH0UHucdAD1pRSwU0WMbY=;
+	s=k20201202; t=1746567468;
+	bh=wAI3dQWkNaRRKjJ3ZNDTY/nPXw2oeFHiHdD9SrnMDIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rlEWJ8Ssgs850rz1Zh49P2FEmi3I9pkAJstaNuuAgO4kE7TlcTLkZVCTjqgQVW3QB
-	 SJs4zYwgybxA0OcXbWdTvDIRZrEhfnKcJI6rM1gMsJKjDje1oWP5HuXpsvbEuYJIIE
-	 IdcF94CV7Wd4H59V9D1EmmSWzJizAe2Tb3smua9MBTWsVo7hFH5dA6q0PLCccCG3j6
-	 Zmdyu1ylfF/pJSi9P4Sjub+0wkeon9FIjNqv36Z491p/QbeiJby8yf817o9VuTOs0l
-	 bU6jfvm7EOjtFuvqWOaIx5p43mSw7MOP4Aa0I+gGxC+JEHWL+pAu2s/CR+fxW1X3PB
-	 ZQORizX5n5jiQ==
+	b=MUF7x/e40a4yW7abLhrHjhqnU/AZX+v9MUe9MuXtABo3dIq5/7Rd0Le//VQrUa131
+	 NPMsznw3OB/Tekv34qwkUSi7eDv/1kXzyJumWwWRu8/jReEx9N9SKdzvi5uR9IPllm
+	 EjXotedNxAVPCRIn+nSQZckatimlX/o7ZFZ3x3GvQelzqlC71XcDt7MsCMkFOgtakJ
+	 7ALJb9GrDDudYko9eSGUjuHV0pJkgI+yARzlwhAOSU76BeZB5s3vkocEzBVt5uzB/Y
+	 ke8OZ2o6kfrSx+ROrZkhZBrBRbQzDiOfMKMNnMxaLlGjThEtZiI3CxYSYBsgfj6pUe
+	 ZgaTbBmInX08A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Takashi Iwai <tiwai@suse.de>,
-	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	cezary.rojewski@intel.com,
-	liam.r.girdwood@linux.intel.com,
-	peter.ujfalusi@linux.intel.com,
-	yung-chuan.liao@linux.intel.com,
-	ranjani.sridharan@linux.intel.com,
-	kai.vehmanen@linux.intel.com,
 	perex@perex.cz,
 	tiwai@suse.com,
-	hdegoede@redhat.com,
-	pierre-louis.bossart@linux.dev,
-	tomlohave@gmail.com,
-	kuninori.morimoto.gx@renesas.com,
-	u.kleine-koenig@baylibre.com,
+	kailang@realtek.com,
+	sbinding@opensource.cirrus.com,
+	simont@opensource.cirrus.com,
+	josh@joshuagrisham.com,
 	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 3/5] ASoC: Intel: bytcr_rt5640: Add DMI quirk for Acer Aspire SW3-013
-Date: Tue,  6 May 2025 17:37:32 -0400
-Message-Id: <20250506213734.2983663-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 4/5] ALSA: hda/realtek: Add quirk for HP Spectre x360 15-df1xxx
+Date: Tue,  6 May 2025 17:37:33 -0400
+Message-Id: <20250506213734.2983663-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250506213734.2983663-1-sashal@kernel.org>
 References: <20250506213734.2983663-1-sashal@kernel.org>
@@ -66,44 +58,102 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit a549b927ea3f5e50b1394209b64e6e17e31d4db8 ]
+[ Upstream commit be0c40da888840fe91b45474cb70779e6cbaf7ca ]
 
-Acer Aspire SW3-013 requires the very same quirk as other Acer Aspire
-model for making it working.
+HP Spectre x360 15-df1xxx with SSID 13c:863e requires similar
+workarounds that were applied to another HP Spectre x360 models;
+it has a mute LED only, no micmute LEDs, and needs the speaker GPIO
+seup.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220011
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220054
+Link: https://patch.msgid.link/20250427081035.11567-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250420085716.12095-1-tiwai@suse.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5640.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ sound/pci/hda/patch_realtek.c | 42 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
-index 721b9971fd744..4954e8c494c6d 100644
---- a/sound/soc/intel/boards/bytcr_rt5640.c
-+++ b/sound/soc/intel/boards/bytcr_rt5640.c
-@@ -573,6 +573,19 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
- 					BYT_RT5640_SSP0_AIF2 |
- 					BYT_RT5640_MCLK_EN),
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index e1de24c9f6265..7a8ac8d3d2175 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -6758,6 +6758,41 @@ static void alc285_fixup_hp_spectre_x360_eb1(struct hda_codec *codec,
+ 	}
+ }
+ 
++/* GPIO1 = amplifier on/off */
++static void alc285_fixup_hp_spectre_x360_df1(struct hda_codec *codec,
++					     const struct hda_fixup *fix,
++					     int action)
++{
++	struct alc_spec *spec = codec->spec;
++	static const hda_nid_t conn[] = { 0x02 };
++	static const struct hda_pintbl pincfgs[] = {
++		{ 0x14, 0x90170110 },  /* front/high speakers */
++		{ 0x17, 0x90170130 },  /* back/bass speakers */
++		{ }
++	};
++
++	// enable mute led
++	alc285_fixup_hp_mute_led_coefbit(codec, fix, action);
++
++	switch (action) {
++	case HDA_FIXUP_ACT_PRE_PROBE:
++		/* needed for amp of back speakers */
++		spec->gpio_mask |= 0x01;
++		spec->gpio_dir |= 0x01;
++		snd_hda_apply_pincfgs(codec, pincfgs);
++		/* share DAC to have unified volume control */
++		snd_hda_override_conn_list(codec, 0x14, ARRAY_SIZE(conn), conn);
++		snd_hda_override_conn_list(codec, 0x17, ARRAY_SIZE(conn), conn);
++		break;
++	case HDA_FIXUP_ACT_INIT:
++		/* need to toggle GPIO to enable the amp of back speakers */
++		alc_update_gpio_data(codec, 0x01, true);
++		msleep(100);
++		alc_update_gpio_data(codec, 0x01, false);
++		break;
++	}
++}
++
+ static void alc285_fixup_hp_spectre_x360(struct hda_codec *codec,
+ 					  const struct hda_fixup *fix, int action)
+ {
+@@ -7040,6 +7075,7 @@ enum {
+ 	ALC280_FIXUP_HP_9480M,
+ 	ALC245_FIXUP_HP_X360_AMP,
+ 	ALC285_FIXUP_HP_SPECTRE_X360_EB1,
++	ALC285_FIXUP_HP_SPECTRE_X360_DF1,
+ 	ALC285_FIXUP_HP_ENVY_X360,
+ 	ALC288_FIXUP_DELL_HEADSET_MODE,
+ 	ALC288_FIXUP_DELL1_MIC_NO_PRESENCE,
+@@ -8881,6 +8917,10 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc285_fixup_hp_spectre_x360_eb1
  	},
-+	{       /* Acer Aspire SW3-013 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire SW3-013"),
-+		},
-+		.driver_data = (void *)(BYT_RT5640_DMIC1_MAP |
-+					BYT_RT5640_JD_SRC_JD2_IN4N |
-+					BYT_RT5640_OVCD_TH_2000UA |
-+					BYT_RT5640_OVCD_SF_0P75 |
-+					BYT_RT5640_DIFF_MIC |
-+					BYT_RT5640_SSP0_AIF1 |
-+					BYT_RT5640_MCLK_EN),
++	[ALC285_FIXUP_HP_SPECTRE_X360_DF1] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc285_fixup_hp_spectre_x360_df1
 +	},
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
+ 	[ALC285_FIXUP_HP_ENVY_X360] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc285_fixup_hp_envy_x360,
+@@ -9286,6 +9326,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x86c1, "HP Laptop 15-da3001TU", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x86c7, "HP Envy AiO 32", ALC274_FIXUP_HP_ENVY_GPIO),
+ 	SND_PCI_QUIRK(0x103c, 0x86e7, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
++	SND_PCI_QUIRK(0x103c, 0x863e, "HP Spectre x360 15-df1xxx", ALC285_FIXUP_HP_SPECTRE_X360_DF1),
+ 	SND_PCI_QUIRK(0x103c, 0x86e8, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
+ 	SND_PCI_QUIRK(0x103c, 0x86f9, "HP Spectre x360 13-aw0xxx", ALC285_FIXUP_HP_SPECTRE_X360_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8716, "HP Elite Dragonfly G2 Notebook PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+@@ -9832,6 +9873,7 @@ static const struct hda_model_fixup alc269_fixup_models[] = {
+ 	{.id = ALC295_FIXUP_HP_OMEN, .name = "alc295-hp-omen"},
+ 	{.id = ALC285_FIXUP_HP_SPECTRE_X360, .name = "alc285-hp-spectre-x360"},
+ 	{.id = ALC285_FIXUP_HP_SPECTRE_X360_EB1, .name = "alc285-hp-spectre-x360-eb1"},
++	{.id = ALC285_FIXUP_HP_SPECTRE_X360_DF1, .name = "alc285-hp-spectre-x360-df1"},
+ 	{.id = ALC285_FIXUP_HP_ENVY_X360, .name = "alc285-hp-envy-x360"},
+ 	{.id = ALC287_FIXUP_IDEAPAD_BASS_SPK_AMP, .name = "alc287-ideapad-bass-spk-amp"},
+ 	{.id = ALC623_FIXUP_LENOVO_THINKSTATION_P340, .name = "alc623-lenovo-thinkstation-p340"},
 -- 
 2.39.5
 
