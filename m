@@ -1,50 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775D42206B3;
-	Tue,  6 May 2025 21:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DAD220F2D;
+	Tue,  6 May 2025 21:35:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746567349; cv=none; b=VK67C8c+xgfhjq2ZWXO8IC4LPEPgEuLVLJsBbFch8bwv/PLikArs43MTktH/R+RtH+8xJvLllK17hzTYD0FYOO88GNZJmVA0sENrFt9CV9m9A6JEEf0OGl5hp0trDSOoLBntFZNa2M1WUQOAGMDHZeTqNtLBP7HRpPgNgI6MpN0=
+	t=1746567350; cv=none; b=ALc0ubtxB/v0nZIbzdSP5bX3RdT8H3HwCFrVsPe2twfGLKPsK2qgZ7ImXAvGCV5svqlFmtkFG8WxFoq46e3IXg5xT2Mh3xpzx8SREdJJ0m6E+tVbzI1dsxNCaSWvJIMnd8tLyA4KMs1IjLd6oqLEakmhWHN1FtT5o/NknFZ7VsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746567349; c=relaxed/simple;
-	bh=Qe5sNRWYtiTfgDv5ouAxuNIYGGRjOlvUc6icwUgzKIQ=;
+	s=arc-20240116; t=1746567350; c=relaxed/simple;
+	bh=z+Mr6Ym3UPcatOcr7n2Yrm8AYWpQ6LViN7grat5QJLE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G/wCndh6NoCZX/UQ37Zm77GX8GXE/tD14dklj8WW94P0jDT+uBMGXt0gtpZ/lYtHJwa3zVvyEjSEhHTTKJYKRTNSRmdwfdR6JLmU+lXKiS/vL8BzkgAVckLoKtfVxFJnhwA1NUbWAGTCaN3R/nNTcR0aNMEPB0PYkkptLmsnbng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aDucf8Gg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XJVGczDfbwvQnr5Wg+KeTZbzJ5FgNoHCkj3FBLhUjhvgbFoUYKmReosCcrvh9X266YH2EIrgFevBb0hUPlRYeq6y2y6SYVcdW4W8eShohx4m4ZFfnbGQBHYq8NkDvgFnTNI8Uzsq5t7ajqU+RKaX8pUiTGI9iXqdzXHo7qqYG8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O1RrPeDz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aDucf8Gg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B30AC4CEEF;
-	Tue,  6 May 2025 21:35:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O1RrPeDz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B1FC4CEF0;
+	Tue,  6 May 2025 21:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746567348;
-	bh=Qe5sNRWYtiTfgDv5ouAxuNIYGGRjOlvUc6icwUgzKIQ=;
+	s=k20201202; t=1746567350;
+	bh=z+Mr6Ym3UPcatOcr7n2Yrm8AYWpQ6LViN7grat5QJLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aDucf8GgI63lDRSbjqo7/kABWG/zFqg4Qw+KJzzBRHUuHiVEZaBpIbl/40Nv95RdP
-	 mj06GadJWXnkPkIVUalGAhlHKhBNK24l9cD1rqJjwVbTaLQ/AAdUAtbSRY7AnvFgWJ
-	 tM8ADTmcXQNGgOl1Qfl43nPJSY/c/EE4864WtfbRAkwE3KkZ1b6+ClJgBq24bYyXF8
-	 His1aDWT6OiD5mu8y26RoRMUYqH8eVoYWJTMn3JGAJcHCHphUsxHwCTct9INtNA7sn
-	 9Xoj7e9++0cZlsm0Oacad5+rk8+dX/Wtia/L/IcMl4iV6K3RoBKOWDQs8qK6aAZ42J
-	 i8M1Cmu8t/8Jg==
+	b=O1RrPeDzaZqCaxOReuEZ4YpnlKuC+mfouX9EkNMf39/oL609dNZXbQ4K1S8+3sUCy
+	 P4xTH1FUUjlPur3kW1sf8i07rJt3JzzkyPTU3kfP6mncR3g+XwFMyAj1Te2GG+t0lv
+	 Srxydy+YnhVTd1pu5nARqs/660KdKUoyJcW64vlE+8Iwj+lXZYNzZwU9e1BcyJg88t
+	 fACA7gIGGEqID+nIZPtPa4gGAjboHS2R1qgbLqLyfzr7Y9f5O90ZfGz1GN5lPQWY0p
+	 09dl2ke7eagm4LH2Lk8afnFKr+Y+QbI4ajCIXoBJ2SsUzunbvStcmujoQkFl7jKmk5
+	 eLCReClqdNjew==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sunil Khatri <sunil.khatri@amd.com>,
-	Maarten Lankhorst <dev@lankhorst.se>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+Cc: Wentao Guan <guanwentao@uniontech.com>,
+	WangYuli <wangyuli@uniontech.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>,
-	ray.huang@amd.com,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	dri-devel@lists.freedesktop.org,
+	kbusch@kernel.org,
+	linux-nvme@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 11/20] drm/ttm: fix the warning for hit_low and evict_low
-Date: Tue,  6 May 2025 17:35:14 -0400
-Message-Id: <20250506213523.2982756-11-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.14 12/20] nvme-pci: add quirks for device 126f:1001
+Date: Tue,  6 May 2025 17:35:15 -0400
+Message-Id: <20250506213523.2982756-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250506213523.2982756-1-sashal@kernel.org>
 References: <20250506213523.2982756-1-sashal@kernel.org>
@@ -54,45 +49,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.5
 Content-Transfer-Encoding: 8bit
 
-From: Sunil Khatri <sunil.khatri@amd.com>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-[ Upstream commit 76047483fe94414edf409dc498498abf346e22f1 ]
+[ Upstream commit 5b960f92ac3e5b4d7f60a506a6b6735eead1da01 ]
 
-fix the below warning messages:
-ttm/ttm_bo.c:1098: warning: Function parameter or struct member 'hit_low' not described in 'ttm_bo_swapout_walk'
-ttm/ttm_bo.c:1098: warning: Function parameter or struct member 'evict_low' not described in 'ttm_bo_swapout_walk'
+This commit adds NVME_QUIRK_NO_DEEPEST_PS and NVME_QUIRK_BOGUS_NID for
+device [126f:1001].
 
-Cc: Maarten Lankhorst <dev@lankhorst.se>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
-Reviewed-by: Maarten Lankhorst <dev@lankhorst.se>
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Link: https://lore.kernel.org/r/20250423042442.762108-1-sunil.khatri@amd.com
+It is similar to commit e89086c43f05 ("drivers/nvme: Add quirks for
+device 126f:2262")
+
+Diff is according the dmesg, use NVME_QUIRK_IGNORE_DEV_SUBNQN.
+
+dmesg | grep -i nvme0:
+  nvme nvme0: pci function 0000:01:00.0
+  nvme nvme0: missing or invalid SUBNQN field.
+  nvme nvme0: 12/0/0 default/read/poll queues
+
+Link:https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e89086c43f0500bc7c4ce225495b73b8ce234c1f
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ttm/ttm_bo.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/nvme/host/pci.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/ttm/ttm_bo.c b/drivers/gpu/drm/ttm/ttm_bo.c
-index ea5e498588573..72c675191a022 100644
---- a/drivers/gpu/drm/ttm/ttm_bo.c
-+++ b/drivers/gpu/drm/ttm/ttm_bo.c
-@@ -1092,7 +1092,8 @@ struct ttm_bo_swapout_walk {
- 	struct ttm_lru_walk walk;
- 	/** @gfp_flags: The gfp flags to use for ttm_tt_swapout() */
- 	gfp_t gfp_flags;
--
-+	/** @hit_low: Whether we should attempt to swap BO's with low watermark threshold */
-+	/** @evict_low: If we cannot swap a bo when @try_low is false (first pass) */
- 	bool hit_low, evict_low;
- };
- 
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 1dc12784efafc..d4d109df3c84d 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3626,6 +3626,9 @@ static const struct pci_device_id nvme_id_table[] = {
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1217, 0x8760), /* O2 Micro 64GB Steam Deck */
+ 		.driver_data = NVME_QUIRK_DMAPOOL_ALIGN_512, },
++	{ PCI_DEVICE(0x126f, 0x1001),	/* Silicon Motion generic */
++		.driver_data = NVME_QUIRK_NO_DEEPEST_PS |
++				NVME_QUIRK_IGNORE_DEV_SUBNQN, },
+ 	{ PCI_DEVICE(0x126f, 0x2262),	/* Silicon Motion generic */
+ 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS |
+ 				NVME_QUIRK_BOGUS_NID, },
 -- 
 2.39.5
 
