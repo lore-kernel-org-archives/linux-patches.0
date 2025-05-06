@@ -1,190 +1,198 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2052.outbound.protection.outlook.com [40.107.243.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848BC1A76D0;
-	Tue,  6 May 2025 16:12:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746547940; cv=none; b=S7KkFtYzmXo3S5IrH4XLd/ZrX+vMiZ/TJjWPuU8FCu3AWWkTZGorlj3vvfTzsobnSQwgAc7T8K7eOYAx821DTUNw2MmtG0B0FuGNphqGP/vqcUvGPQp4EC1nSL+oE/Ds8HMApQVgCTI3OGgCHhCh76fIhW3BqY8rFO8mTo/DwTI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746547940; c=relaxed/simple;
-	bh=Ja8R6PBJOP3kiBaQRzBM/QTYmWLJfq8Yv0MlEpMcSDc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fivFLhiOFczAvxmDSJ8RpgyHlyGALtnXmR7r2WIuefPi4F9mupAIg7ZMZlS2uD35lY4KDYXZWwsIV6UDPMeqp9aMDllVCdXiGNCRvglW1OrDnAXPiyzGo1EaS+3Q5+zog+oQXkSpoJYwhj14dSev0DozQ7d40WpKq5Y00W3MNOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usNB21Kz; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DDD5142E77;
+	Tue,  6 May 2025 19:18:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746559093; cv=fail; b=Yjexd0kjMVFuYiz1wmtUKd+0nM48qHHu3kMtl7GFOH5TKujlFVGN66dz7zNF3N9PRGVSpCTtFvy9dkOvAow62QYgyXNXRiPtstn5MLdelT49iRIHofoeHAhhPhuynLHLROMcckFT2hz2VDl0KJjCirckODaYMQXOOhDn5vUXU2Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746559093; c=relaxed/simple;
+	bh=qVJNjDxG4lW0jUnoxYUSpnba1sLsm5Rs/BxNAnL01Uc=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=c1731ZQHUcapv1xoeivqpg64EkiouG2b0vjca1dL5yAWH9G2hU8Ae0ixmsTxwSa+GJAlB+GLI6PfoTOfugTJDo0E8icQ5iC7g32aQ5H7oGRlzbm6QJrvliP+7Aice6qFKqrCc9jaS+kTML6eO2KHhHgFSw2uSzoZLtNuGHl+Crs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=QrKTfV6l; arc=fail smtp.client-ip=40.107.243.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usNB21Kz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48242C4CEE4;
-	Tue,  6 May 2025 16:12:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746547938;
-	bh=Ja8R6PBJOP3kiBaQRzBM/QTYmWLJfq8Yv0MlEpMcSDc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=usNB21KzlaAT93voU8Gmgs63ZOm7Lti5kJB6ISZ4hOtvYWIji+eZfZCEQLuIOVxcj
-	 H4ILlWe4jG+1gesv5mWakpP8JdB5UYXnu0fQs6n9PeG5uumNdcxC80K3xT1j3FpN38
-	 G7vHQI7tGKNBakUKznhdGA31FXgfdDCmMEz1ajQY=
-Date: Tue, 6 May 2025 18:12:15 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jared Holzman <jholzman@nvidia.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>, Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.14 092/311] ublk: call ublk_dispatch_req() for handling
- UBLK_U_IO_NEED_GET_DATA
-Message-ID: <2025050646-glitch-carpentry-017e@gregkh>
-References: <20250429161124.815951989@linuxfoundation.org>
- <830759ad-243a-4fd5-9fa1-a106e6e6bb0d@nvidia.com>
- <2025050455-reconvene-denial-e291@gregkh>
- <744b4d9b-24f3-487c-805f-5aa02eaa093b@nvidia.com>
- <2025050509-impending-uranium-ccba@gregkh>
- <c5022682-52e7-4340-995c-7d3d84bb77aa@nvidia.com>
- <2025050537-flaring-wolverine-c3fd@gregkh>
- <843866f8-059a-4e5d-8316-19c92ae25a82@nvidia.com>
- <2025050524-turmoil-garden-66b3@gregkh>
- <922ba351-2b17-4b92-94d2-8a1fef390cd5@nvidia.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="QrKTfV6l"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=h2cROMUIRTALtAr/6XdSK5c2HqKeajYMBQNLsCfBxFEVnAh/FGZCM9/ePesNW/ZWhnmNTSNjNMjb8HyhwsThcdgEQzZ38HFBo7iwusZ2n/2/dZSUuJbJpL9anVPp6Zxb8urDZUx4ULAS/AQDo7gMpxfkZheK3vEKCgC/1iHhOQ3o7c4NBJOaO76KdFTuryr0xZ3g5jI0yo1KmMIs6kWYeJK0DlqFN7oqHY3D9RLNYLP3lqHnTZIA9d7g3xvfoUC96sTRv+yzy/9JCiSGB5ZsBSx59QyLSG0urteTX7oEIx1PiLmun9BsoyvfnNAOQr6juqX4og2kyCSbD3FyeVrIIA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cY/K5+FoK+Mfk4GXFhnHQwdewYfg96+/eD0ihF2U13M=;
+ b=gEmGPaVN4JukG3AUJJRfDOwFu/WkNiCiiw+xhd1kK8PxTqRnMb4XlwFhk27HCD1Oyr6ljqbzAHiIysq/azdrjOufok0dOdzRHKp+/onc4lWjgVXb6U8OZih9ZDSPplAbATMV3iMfu5uvqeK+tyyYBzaQkCprwHzdXa+FbWp2SO/Nnx6griWzMefufyMuWx7oUWbA7E+c//QBM/QS1XLH3Etbd8Cz4KqH9r54uxPg8ISvqfPp/nYUNR1wsa7bFbACsxajJ0NQLfbwxjlV/nYh9Kd42RmZYR0Im1MvGvEX8C+5KvJ/aefuHg0mwUPjHWjj+z0lXQoiVRV/dKJooKxuMg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cY/K5+FoK+Mfk4GXFhnHQwdewYfg96+/eD0ihF2U13M=;
+ b=QrKTfV6lHJKiH0wwyk+RNbt4kAqvfMGYWP0i7v0k7aYFTc6QKEIBvV76+N+hxVTXY2Rcrz8CHJn5hVhp5wJIUht7RU8AR9JgEzjvKHCk7es0AOXR9SwclA2qSMONKafjIRQ0PeP2khihSx/KOfomW+FdH8tKqLShRVqy9zYQ5uaZONtlEszLMFWnoB6a0XXRUktjNRb8VkNd1Z25pvop5Ni+N2BeQr+CkKYCe/9khRBsRLStUzpxIO+ZHkYcwMNyMVmoaZZxYeCpESA1FCRxaaIZfPUmJyLdn3+kg/+opnuh6TeQHxkKLcuy5UVFsu2CUytVcyPqhWr2JkDuynumwQ==
+Received: from SA9PR13CA0135.namprd13.prod.outlook.com (2603:10b6:806:27::20)
+ by CY5PR12MB6381.namprd12.prod.outlook.com (2603:10b6:930:3f::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.26; Tue, 6 May
+ 2025 19:18:01 +0000
+Received: from SN1PEPF000397B5.namprd05.prod.outlook.com
+ (2603:10b6:806:27:cafe::c8) by SA9PR13CA0135.outlook.office365.com
+ (2603:10b6:806:27::20) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8722.16 via Frontend Transport; Tue,
+ 6 May 2025 19:18:01 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ SN1PEPF000397B5.mail.protection.outlook.com (10.167.248.59) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8722.18 via Frontend Transport; Tue, 6 May 2025 19:18:00 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 6 May 2025
+ 12:17:49 -0700
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Tue, 6 May 2025 12:17:51 -0700
+Received: from nvidia.com (10.127.8.14) by mail.nvidia.com (10.126.190.182)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Tue, 6 May 2025 12:17:47 -0700
+Date: Tue, 6 May 2025 12:17:44 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: "Tian, Kevin" <kevin.tian@intel.com>
+CC: "jgg@nvidia.com" <jgg@nvidia.com>, "corbet@lwn.net" <corbet@lwn.net>,
+	"will@kernel.org" <will@kernel.org>, "bagasdotme@gmail.com"
+	<bagasdotme@gmail.com>, "robin.murphy@arm.com" <robin.murphy@arm.com>,
+	"joro@8bytes.org" <joro@8bytes.org>, "thierry.reding@gmail.com"
+	<thierry.reding@gmail.com>, "vdumpa@nvidia.com" <vdumpa@nvidia.com>,
+	"jonathanh@nvidia.com" <jonathanh@nvidia.com>, "shuah@kernel.org"
+	<shuah@kernel.org>, "jsnitsel@redhat.com" <jsnitsel@redhat.com>,
+	"nathan@kernel.org" <nathan@kernel.org>, "peterz@infradead.org"
+	<peterz@infradead.org>, "Liu, Yi L" <yi.l.liu@intel.com>,
+	"mshavit@google.com" <mshavit@google.com>, "praan@google.com"
+	<praan@google.com>, "zhangzekun11@huawei.com" <zhangzekun11@huawei.com>,
+	"iommu@lists.linux.dev" <iommu@lists.linux.dev>, "linux-doc@vger.kernel.org"
+	<linux-doc@vger.kernel.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, "linux-tegra@vger.kernel.org"
+	<linux-tegra@vger.kernel.org>, "linux-kselftest@vger.kernel.org"
+	<linux-kselftest@vger.kernel.org>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>, "mochs@nvidia.com" <mochs@nvidia.com>,
+	"alok.a.tiwari@oracle.com" <alok.a.tiwari@oracle.com>, "vasant.hegde@amd.com"
+	<vasant.hegde@amd.com>
+Subject: Re: [PATCH v2 08/22] iommufd: Abstract iopt_pin_pages and
+ iopt_unpin_pages helpers
+Message-ID: <aBpgWNitAgNenOPY@nvidia.com>
+References: <cover.1745646960.git.nicolinc@nvidia.com>
+ <d44272c153e7596c3cef716044de3dc6c2a8254a.1745646960.git.nicolinc@nvidia.com>
+ <BN9PR11MB52762F5A464ACC68D78465578C892@BN9PR11MB5276.namprd11.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <922ba351-2b17-4b92-94d2-8a1fef390cd5@nvidia.com>
+In-Reply-To: <BN9PR11MB52762F5A464ACC68D78465578C892@BN9PR11MB5276.namprd11.prod.outlook.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF000397B5:EE_|CY5PR12MB6381:EE_
+X-MS-Office365-Filtering-Correlation-Id: ff6b5a81-9fb8-41a4-5515-08dd8cd2b7af
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|82310400026|36860700013|376014|7416014|13003099007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?0EVZvUx26scwIWvQqjcVvpB/aaKp7RocTh0pbM9PzbU4rpProl4ZNB5+dSnG?=
+ =?us-ascii?Q?M6Qe3e2nApJJFpl6xVaIFnmNVjzietBtGFrm/X37XXw9KisM2IIuJq0JwTeP?=
+ =?us-ascii?Q?Jl9UEzRNBlpyHjUAJfIQH0MMNpB51IVEd0Dhh6RK/9Iz8w7tQQJD06Hjy5hR?=
+ =?us-ascii?Q?JcCj/BYB3DRpo+9rMHMFgEiFkaUQCw8CP1KAn9BzsWSZeswROgbZVhvOCxPx?=
+ =?us-ascii?Q?dMSHcAXHaBBEuYKO0SIqf3NCwTIGGOtNmOVOGIYwku6TOhacLT2Hy55ArqV+?=
+ =?us-ascii?Q?hUyhx/QHflCYKVvrN0EiFmT6DWm5rIQPpP8IVECKSH0Zh4xnvdQkIdB5m2F5?=
+ =?us-ascii?Q?usZ//oZTWPFGSzfBh6f/P4FFtqcMPubb806lXbEdW9cszAtoyrGTMzWUf5CS?=
+ =?us-ascii?Q?AXy64W6pSnHm6CNHF1ENZ1BQzIECz5M40sHRJWL/NbU2yP38iEEO0nsSfT7i?=
+ =?us-ascii?Q?W8HKPd6MWLVvcvNwiWVawqQU8uMPHvbX0DdeZZerpbovxWPDXcxmMT0KsB2y?=
+ =?us-ascii?Q?IvYw8iSfAOaClprazN3c2lCJ4xMWUlNU7TM/EIdXSkMUsZirP6hW8S5ENXuV?=
+ =?us-ascii?Q?zDn7qBriuWArnvHoaGMrYRVnDKDsYbt0asw2gDf7MvDhxb+IvypZcFQSqnOW?=
+ =?us-ascii?Q?1aF6b7RuVLkQ5OnKdXQgd602f7KiaDdRzp05lUYOo8Sqp3KsM6YJ/FCi3FvF?=
+ =?us-ascii?Q?DnJ3JRuIKa3yqUhZ2TsmiDrohuOoG+seb9cHU++ClByQbd+8QX1zfEy4SMWw?=
+ =?us-ascii?Q?IzEA3bnzEv4lgpO00TvVFr4MBq4U/nPx1lHVPxn2r2al38og+4AF+zK6QYbJ?=
+ =?us-ascii?Q?86bHxzDUhGnLI5cNw5lhhF6XuWhll/gXLlcaQCvwBMrgMHrtAjwvWjhPX95z?=
+ =?us-ascii?Q?orzuWmo4Tscn2cWQs7pS8CljXgzXfF1r5d+LqtnLQ1yb6r1FTf/zKS38RrrE?=
+ =?us-ascii?Q?VA69KheHrnWC7PHJwrrrWPTVvTVnw7SWSBR4vCjRnEcPizPNcLfB01Vsdr6G?=
+ =?us-ascii?Q?Wd7tyQQMIlFLDDTtLk4Fr0bJOxK4WHJFytt4whs0qZKBYXC+E9ArAJ3HmPMQ?=
+ =?us-ascii?Q?WpQPR8K8ujsRhZx/+s/Yruu8XqY7sIhHLtI+YDtR/cqXCt49DthBhQRshszU?=
+ =?us-ascii?Q?gyqxn6nQst01RvJD+yOhNAZgJc45b2P2uwOgloXnImIMrJb/w8TxBBBBEvAY?=
+ =?us-ascii?Q?UXe+pgyHrMScg8Gf32s7CvUPNrtx4sBc1PJpQV+bnNVODNsoFCzK6MC1JvYn?=
+ =?us-ascii?Q?iY0NMMBvqdCdRk2emoJn6dJTnMNOICFVKRelcHx3QeRvEDh5kjmQaBS5tmlj?=
+ =?us-ascii?Q?N+OOqJv2+YgOn/XykPsDOBMOrPItXYjCHcuo6oosqVIOhsHWQJ0gdba32XnO?=
+ =?us-ascii?Q?6gtEDr4RNlijbDrN08+C3VqRireW7WX2E7jvQyJ4FuuqstuRUcIpO2yXKoAy?=
+ =?us-ascii?Q?ePCbK1KfTNelzDu9Jhlr/vv6jx5QAJdDouN2W/dxdUao9p7UhkGSv41GRq8i?=
+ =?us-ascii?Q?2mADEv4H3OUidHMYAVGeVa034A098slr93qvgRgqrFW8/MAvaOeETsuUAg?=
+ =?us-ascii?Q?=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(36860700013)(376014)(7416014)(13003099007);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 May 2025 19:18:00.7981
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ff6b5a81-9fb8-41a4-5515-08dd8cd2b7af
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SN1PEPF000397B5.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6381
 
-On Tue, May 06, 2025 at 05:31:50PM +0300, Jared Holzman wrote:
-> On 05/05/2025 11:50, Greg Kroah-Hartman wrote:
-> > On Mon, May 05, 2025 at 11:25:24AM +0300, Jared Holzman wrote:
-> >> On 05/05/2025 10:54, Greg Kroah-Hartman wrote:
-> >>> On Mon, May 05, 2025 at 10:47:03AM +0300, Jared Holzman wrote:
-> >>>> On 05/05/2025 8:51, Greg Kroah-Hartman wrote:
-> >>>>> On Sun, May 04, 2025 at 04:47:20PM +0300, Jared Holzman wrote:
-> >>>>>> On 04/05/2025 15:39, Greg Kroah-Hartman wrote:
-> >>>>>>> On Sun, May 04, 2025 at 02:55:00PM +0300, Jared Holzman wrote:
-> >>>>>>>> On 29/04/2025 19:38, Greg Kroah-Hartman wrote:
-> >>>>>>>>> 6.14-stable review patch.  If anyone has any objections, please let me know.
-> >>>>>>>>>
-> >>>>>>>>> ------------------
-> >>>>>>>>>
-> >>>>>>>>> From: Ming Lei <ming.lei@redhat.com>
-> >>>>>>>>>
-> >>>>>>>>> [ Upstream commit d6aa0c178bf81f30ae4a780b2bca653daa2eb633 ]
-> >>>>>>>>>
-> >>>>>>>>> We call io_uring_cmd_complete_in_task() to schedule task_work for handling
-> >>>>>>>>> UBLK_U_IO_NEED_GET_DATA.
-> >>>>>>>>>
-> >>>>>>>>> This way is really not necessary because the current context is exactly
-> >>>>>>>>> the ublk queue context, so call ublk_dispatch_req() directly for handling
-> >>>>>>>>> UBLK_U_IO_NEED_GET_DATA.
-> >>>>>>>>>
-> >>>>>>>>> Fixes: 216c8f5ef0f2 ("ublk: replace monitor with cancelable uring_cmd")
-> >>>>>>>>> Tested-by: Jared Holzman <jholzman@nvidia.com>
-> >>>>>>>>> Signed-off-by: Ming Lei <ming.lei@redhat.com>
-> >>>>>>>>> Link: https://lore.kernel.org/r/20250425013742.1079549-2-ming.lei@redhat.com
-> >>>>>>>>> Signed-off-by: Jens Axboe <axboe@kernel.dk>
-> >>>>>>>>> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> >>>>>>>>> ---
-> >>>>>>>>>  drivers/block/ublk_drv.c | 14 +++-----------
-> >>>>>>>>>  1 file changed, 3 insertions(+), 11 deletions(-)
-> >>>>>>>>>
-> >>>>>>>>> diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-> >>>>>>>>> index 437297022dcfa..c7761a5cfeec0 100644
-> >>>>>>>>> --- a/drivers/block/ublk_drv.c
-> >>>>>>>>> +++ b/drivers/block/ublk_drv.c
-> >>>>>>>>> @@ -1812,15 +1812,6 @@ static void ublk_mark_io_ready(struct ublk_device *ub, struct ublk_queue *ubq)
-> >>>>>>>>>  	mutex_unlock(&ub->mutex);
-> >>>>>>>>>  }
-> >>>>>>>>>  
-> >>>>>>>>> -static void ublk_handle_need_get_data(struct ublk_device *ub, int q_id,
-> >>>>>>>>> -		int tag)
-> >>>>>>>>> -{
-> >>>>>>>>> -	struct ublk_queue *ubq = ublk_get_queue(ub, q_id);
-> >>>>>>>>> -	struct request *req = blk_mq_tag_to_rq(ub->tag_set.tags[q_id], tag);
-> >>>>>>>>> -
-> >>>>>>>>> -	ublk_queue_cmd(ubq, req);
-> >>>>>>>>> -}
-> >>>>>>>>> -
-> >>>>>>>>>  static inline int ublk_check_cmd_op(u32 cmd_op)
-> >>>>>>>>>  {
-> >>>>>>>>>  	u32 ioc_type = _IOC_TYPE(cmd_op);
-> >>>>>>>>> @@ -1967,8 +1958,9 @@ static int __ublk_ch_uring_cmd(struct io_uring_cmd *cmd,
-> >>>>>>>>>  		if (!(io->flags & UBLK_IO_FLAG_OWNED_BY_SRV))
-> >>>>>>>>>  			goto out;
-> >>>>>>>>>  		ublk_fill_io_cmd(io, cmd, ub_cmd->addr);
-> >>>>>>>>> -		ublk_handle_need_get_data(ub, ub_cmd->q_id, ub_cmd->tag);
-> >>>>>>>>> -		break;
-> >>>>>>>>> +		req = blk_mq_tag_to_rq(ub->tag_set.tags[ub_cmd->q_id], tag);
-> >>>>>>>>> +		ublk_dispatch_req(ubq, req, issue_flags);
-> >>>>>>>>> +		return -EIOCBQUEUED;
-> >>>>>>>>>  	default:
-> >>>>>>>>>  		goto out;
-> >>>>>>>>>  	}
-> >>>>>>>>
-> >>>>>>>> Hi Greg,
-> >>>>>>>>
-> >>>>>>>> Will you also be backporting "ublk: fix race between io_uring_cmd_complete_in_task and ublk_cancel_cmd" to 6.14-stable?
-> >>>>>>>
-> >>>>>>> What is the git commit id you are referring to?  And was it asked to be
-> >>>>>>> included in a stable release?
-> >>>>>>>
-> >>>>>>> thanks,
-> >>>>>>>
-> >>>>>>> greg k-h
-> >>>>>>
-> >>>>>> Hi Greg,
-> >>>>>>
-> >>>>>> The commit is: f40139fde527
-> >>>>>>
-> >>>>>> It is Part 2 of the same patch series.
-> >>>>>
-> >>>>> It does not apply to the stable tree at all, so no, we will not be
-> >>>>> adding it unless someone provides a working version of it.
-> >>>>>
-> >>>>> thanks,
-> >>>>>
-> >>>>> greg k-h
-> >>>>
-> >>>> Hi Greg,
-> >>>>
-> >>>> Happy to provide a version that will apply. I just need to know where to get your working branch to base it on.
-> >>>
-> >>> The latest stable release tree.
-> >>>
-> >>> thanks,
-> >>>
-> >>> greg k-h
-> >>
-> >> Hi Greg,
-> >>
-> >> I tried branch linux-6.14.y of repo: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/
-> >>
-> >> But I can't apply any of the previous patches in the series [PATCH 6.14 000/311] to get to the point
-> >> where I can create my version of the patch.
+On Tue, May 06, 2025 at 09:36:38AM +0000, Tian, Kevin wrote:
+> > From: Nicolin Chen <nicolinc@nvidia.com>
+> > Sent: Saturday, April 26, 2025 1:58 PM
 > > 
-> > All of those changes are already in that branch, right?  So no need to
-> > apply them again :)
+> > The new vCMDQ object will be added for HW to access the guest memory for
+> > a
+> > HW-accelerated virtualization feature. It needs to ensure the guest memory
+> > pages are pinned when HW accesses them and they are contiguous in
+> > physical
+> > address space.
 > > 
-> > thanks,
+> > This is very like the existing iommufd_access_pin_pages() that outputs the
+> > pinned page list for the caller to test its contiguity.
 > > 
-> > greg k-h
+> > Move those code from iommufd_access_pin/unpin_pages() and related
+> > function
+> > for a pair of iopt helpers that can be shared with the vCMDQ allocator. As
+> > the vCMDQ allocator will be a user-space triggered ioctl function, WARN_ON
+> > would not be a good fit in the new iopt_unpin_pages(), thus change them to
+> > use WARN_ON_ONCE instead.
+> > 
+> > Rename check_area_prot() to align with the existing iopt_area helpers, and
+> > inline it to the header since iommufd_access_rw() still uses it.
+> > 
+> > Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 > 
-> Hi Greg,
+> any reason why this cannot be done by the core? all types of vcmd
+> queues need to pin the guest buffer pages, no matter the IOMMU
+> accesses GPA or HPA.
 > 
-> Thanks, I figured it out finally. Sorry for the noise.
+> Jason made a similar comment earlier [1]. 
 > 
-> I needed some help with the patch, so I consulted with the maintainer (Ming Lei).
+> check of continuity is still done by the driver, if HPA is being accessed.
 > 
-> He has provided me with a branch based stable/linux-6.14.y, containing several commits that are needed to get to the point where the patch can be applied.
-> 
-> I've tested it and it works and he has given me the go-ahead to send you a pull request.
-> 
-> I've never done that before so I'd prefer to just send a patch series to the mailing-list.
-> 
-> Let me know if that's okay.
+> [1] https://lore.kernel.org/all/20250424134049.GP1648741@nvidia.com/
 
-Please do, we can not take pull request for stable patches as we require
-them to be in individual patches for our tools to process.
+But I am doing in the core. I have iopt_pin_pages() called in the
+core ioctl handler iommufd_vqueue_alloc_ioctl():
 
-thanks,
+https://lore.kernel.org/linux-iommu/1ef2e242ee1d844f823581a5365823d78c67ec6a.1746139811.git.nicolinc@nvidia.com/
 
-greg k-h
+Thanks
+Nicolin
