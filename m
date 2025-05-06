@@ -1,51 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D351ACEAC;
-	Tue,  6 May 2025 21:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06137215F52;
+	Tue,  6 May 2025 21:35:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746567330; cv=none; b=UsZbGMaF7okIi12q9tiZEUmee2paaVsOhl9k4FNCgVweAP7hySCVmv26+JUSqMNjfUASd1RR7gdBpnOZvxTVLuk2wme7gOjzGnJICt5FwxCZs28rEUQDr+eieGrl3BWbQudVqi+MvySX4mpwpw26VC6hh5lIAWGRgQz2PAkm4Fs=
+	t=1746567332; cv=none; b=lhLAgAknRdLDV0HmeZXx5z+rR33lx1BMsUnqLEG9uqnoIzSO9AJ1ESu+E6MQto316lEctgSvxyGuI5W5UL+48Chx8lpPOSLQ/hQ2UDrAmJYr3yHlBJlGcsi1xM2T1ssb8cRtwevJvwATS8/zohzczEs0Dfx9UYeXahAWE3mvzF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746567330; c=relaxed/simple;
-	bh=TKtp1XPzEnz0nV/IHJfa7zuMDZxO8VXjrfb3mToz8VE=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ZCZP1DRnFfoAA4mSSowZOjXA0WW99hQoGqv0cQ4qFuPPjFPTKzG6RkAgj+rJDK6yfljDtNpQk1JXgA0mYSat6xnvdaEqlSx1FYSYmg5noUrxeBeNtgagFnfKaSv6kLPjUDGoYcqm5Jx0yBZ4IfQyVR755zKUTLI90xgsw/wDTKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CV0IYFxE; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1746567332; c=relaxed/simple;
+	bh=Jm5WhIlJxrkHokatjuS6LYXj+etWscX/nFFkAt3oKKg=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=SzIsX/kkwzT0Ba7azLY3fl5Q44DRyygAFdznzYgYhoaOby276q5c21I1MpXw/dM1LAbAYu8KFo8BxBBMWME+1LVUGYoN5DrpX5aKAPfhH8uatHDr+9YuXlovvfEUFIb0B/3zq8TaEoZUQU5/qa4BTPb1WtUilxPR9liJ3yIHaEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s723eAEO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CV0IYFxE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512D8C4CEE4;
-	Tue,  6 May 2025 21:35:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s723eAEO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1912C4CEF1;
+	Tue,  6 May 2025 21:35:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746567329;
-	bh=TKtp1XPzEnz0nV/IHJfa7zuMDZxO8VXjrfb3mToz8VE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=CV0IYFxEGG3ggtbFUnwPZLVjTKIO7or7fTpnCNZtuLVBAoENhSCQ+NeDR95PU4s53
-	 JYd5MDy5T8UqM7Cdl65/pNb28ZEZd4wNyYmP9uky9ecK8uXp2U5eG/dNTvUVwbcUXs
-	 gF4gnwPQE5imHi1UT1L5m6Lv8Bs3vdzHqxLOs8EKa3wkBTJ7436sLdf3oFOVVB/Spf
-	 SOeqr73xkw8iSUULpqYI7hRsnsrusx9G9yrarLU09r36tSVGcm8F+id/jrr8axyKRk
-	 PHFA7SxUW5Mge0tKAagVbXNDtQlj68O+UBVnmeXYw/DrsbuVlbluQt0LbHj44EGkAx
-	 gqlRRnkk3Dufg==
+	s=k20201202; t=1746567331;
+	bh=Jm5WhIlJxrkHokatjuS6LYXj+etWscX/nFFkAt3oKKg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=s723eAEOCJAhUsf+O/0fuvlOBF/IOgzZ/OSnqiAlJq47enTr/rbt9sFC0MDwTtDvQ
+	 HkZ9GBgvcP1QFIKFfrStj871aFCmnOQ/6Pmw+bv0LYPvWF1XyoO2hCu+W175ka0onH
+	 FVm3iiQScYxXLNPR4bl+beuDEUx9tSqHSDMhZu5EDsdshQZKns5um50bj4S5rw+F+c
+	 CWlFK9KMqXoLwOxJxpPUbLSCEcDqqOUa+MceoUp26wRiF8HMA8eIVjz101joFmqElF
+	 9UhX9MTnuos6Kbg89jzomdN1ZrMWD3cKo+BVvGxYRbg6yBJVauww8dgkYg3DXb7vDK
+	 gwazZrH0mNHaQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chenyuan Yang <chenyuan0y@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Donet Tom <donettom@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	shengjiu.wang@gmail.com,
-	Xiubo.Lee@gmail.com,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	shawnguo@kernel.org,
-	linux-sound@vger.kernel.org,
+	mpe@ellerman.id.au,
+	hbathini@linux.ibm.com,
 	linuxppc-dev@lists.ozlabs.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 01/20] ASoC: imx-card: Adjust over allocation of memory in imx_card_parse_of()
-Date: Tue,  6 May 2025 17:35:04 -0400
-Message-Id: <20250506213523.2982756-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.14 02/20] book3s64/radix: Fix compile errors when CONFIG_ARCH_WANT_OPTIMIZE_DAX_VMEMMAP=n
+Date: Tue,  6 May 2025 17:35:05 -0400
+Message-Id: <20250506213523.2982756-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250506213523.2982756-1-sashal@kernel.org>
+References: <20250506213523.2982756-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,37 +54,42 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.5
 Content-Transfer-Encoding: 8bit
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
 
-[ Upstream commit a9a69c3b38c89d7992fb53db4abb19104b531d32 ]
+[ Upstream commit 29bdc1f1c1df80868fb35bc69d1f073183adc6de ]
 
-Incorrect types are used as sizeof() arguments in devm_kcalloc().
-It should be sizeof(dai_link_data) for link_data instead of
-sizeof(snd_soc_dai_link).
+Fix compile errors when CONFIG_ARCH_WANT_OPTIMIZE_DAX_VMEMMAP=n
 
-This is found by our static analysis tool.
-
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Link: https://patch.msgid.link/20250406210854.149316-1-chenyuan0y@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Donet Tom <donettom@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/8231763344223c193e3452eab0ae8ea966aff466.1741609795.git.donettom@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/imx-card.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/mm/book3s64/radix_pgtable.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/imx-card.c b/sound/soc/fsl/imx-card.c
-index 21f617f6f9fa8..566214cb3d60c 100644
---- a/sound/soc/fsl/imx-card.c
-+++ b/sound/soc/fsl/imx-card.c
-@@ -543,7 +543,7 @@ static int imx_card_parse_of(struct imx_card_data *data)
- 	if (!card->dai_link)
- 		return -ENOMEM;
+diff --git a/arch/powerpc/mm/book3s64/radix_pgtable.c b/arch/powerpc/mm/book3s64/radix_pgtable.c
+index 311e2112d782e..bd6916419472c 100644
+--- a/arch/powerpc/mm/book3s64/radix_pgtable.c
++++ b/arch/powerpc/mm/book3s64/radix_pgtable.c
+@@ -976,7 +976,7 @@ int __meminit radix__vmemmap_create_mapping(unsigned long start,
+ 	return 0;
+ }
  
--	data->link_data = devm_kcalloc(dev, num_links, sizeof(*link), GFP_KERNEL);
-+	data->link_data = devm_kcalloc(dev, num_links, sizeof(*link_data), GFP_KERNEL);
- 	if (!data->link_data)
- 		return -ENOMEM;
+-
++#ifdef CONFIG_ARCH_WANT_OPTIMIZE_DAX_VMEMMAP
+ bool vmemmap_can_optimize(struct vmem_altmap *altmap, struct dev_pagemap *pgmap)
+ {
+ 	if (radix_enabled())
+@@ -984,6 +984,7 @@ bool vmemmap_can_optimize(struct vmem_altmap *altmap, struct dev_pagemap *pgmap)
  
+ 	return false;
+ }
++#endif
+ 
+ int __meminit vmemmap_check_pmd(pmd_t *pmdp, int node,
+ 				unsigned long addr, unsigned long next)
 -- 
 2.39.5
 
