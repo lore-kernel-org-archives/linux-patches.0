@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D194E1DDC23;
-	Wed,  7 May 2025 18:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238AF1DDC23;
+	Wed,  7 May 2025 18:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643757; cv=none; b=btT1uHqkA+YYKsVea8E03Kg5g/GP5phdH6LJMkycVIa79g/iRJYI/hp0UlqGuyDziDFtr+JqHHaXEC0VfhkACBWZwrvq/uZ6J8GC2mLHS59PX1E00PZd9D2bYrWXSZMrcEKsRNujqTUcYWMGU8LrGJmp5hVNtwVk2t3c0DlLSsk=
+	t=1746643760; cv=none; b=IDWi01P/C/ItoI4Q29PbZRwAOpOUQLyRZ6SiEyWWYrQzxw93zqTmB8XsK26ab3A96lyHAG1GPKzombiXGM2TvmsyFZq+t5/AtGvN+oKaYCz7qxAdY9Xh/ztry2Ec7+Ctv/9IfuwKHcXp5tNvIKxeSOQmcYMM3UCVtse5KGjpJqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643757; c=relaxed/simple;
-	bh=1HKv9Q9g1CP0bVizhABm5eeOj2mzzh6c8lysHRmQjzY=;
+	s=arc-20240116; t=1746643760; c=relaxed/simple;
+	bh=U2S4aeme5OAJi5ei4hlgu1MYuzxusRwsqSkgBA9dRbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mxYSDFXplRxjKvIoWJCGlBMvak968SFPus8pPwNF4dM0N1ratGZOCa+iF7poqCbc8g9+aT2QyVE2sQa0kijQCpgACydu0cXt4uK+5bHpwMTo+rgjmLQVQoCBO1p49YmKoxLtVnNVaNdfKoblijFOQIUYnujzgbQV3SILUgB0gm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2gKZz8J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lqgqI85T3Vm0THXZ8a8fztzf4EqHh7rU6ltzVNTgZm/qQ4eZcsrZpqtE2/sTsWH5p1sdW2A2vZSIQG4v/+opzk9K8nwFC0TwYQTP1hIviqpprDrq/mK5djlHXbbkqZMBNftfGF5em8TO7gMSfvE7zlyUnNXnJRF6uSCUM9L4bOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3xBLone; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2gKZz8J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6D8C4CEE2;
-	Wed,  7 May 2025 18:49:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3xBLone"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13BBC4CEE2;
+	Wed,  7 May 2025 18:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643757;
-	bh=1HKv9Q9g1CP0bVizhABm5eeOj2mzzh6c8lysHRmQjzY=;
+	s=korg; t=1746643760;
+	bh=U2S4aeme5OAJi5ei4hlgu1MYuzxusRwsqSkgBA9dRbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J2gKZz8JMysgfDRbMFs3mH4/XWJjsvm3P4I/NgYmBTR7/0OgVw1wAUq/yr1i5rsZg
-	 hZ5VFRsN6kkYOYE1oxKyBRYksUBn7CDX4JdaSOiIyiju41gs6f0+rRTGma1+4Ymfsk
-	 uS/5iZWDjWypfHbjIUWxj7gGBXI6udANVMLf661I=
+	b=U3xBLonekqZamjuVd9qM/lubxyrbqPEjw03eKRCk07Dr7r+rWak62c70SQR84s8nq
+	 xg9cew7Y6cieBRk/Z8TkEh0bOBj0X85F0b90Z+Xih/nD0MRXVX6I0sSJ9ENbJvPmjL
+	 DAQ/a4prTocgsuzn+oOPWisZqUNEl14sox/Ywun8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 84/97] Revert "drm/meson: vclk: fix calculation of 59.94 fractional rates"
-Date: Wed,  7 May 2025 20:39:59 +0200
-Message-ID: <20250507183810.358014757@linuxfoundation.org>
+	Lubomir Rintel <lkundrak@v3.sk>,
+	Christian Heusel <christian@heusel.eu>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.14 001/183] Revert "rndis_host: Flag RNDIS modems as WWAN devices"
+Date: Wed,  7 May 2025 20:37:26 +0200
+Message-ID: <20250507183824.744350503@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250507183806.987408728@linuxfoundation.org>
-References: <20250507183806.987408728@linuxfoundation.org>
+In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
+References: <20250507183824.682671926@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,65 +47,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Hewitt <christianshewitt@gmail.com>
+From: Christian Heusel <christian@heusel.eu>
 
-[ Upstream commit f37bb5486ea536c1d61df89feeaeff3f84f0b560 ]
+commit 765f253e28909f161b0211f85cf0431cfee7d6df upstream.
 
-This reverts commit bfbc68e.
+This reverts commit 67d1a8956d2d62fe6b4c13ebabb57806098511d8. Since this
+commit has been proven to be problematic for the setup of USB-tethered
+ethernet connections and the related breakage is very noticeable for
+users it should be reverted until a fixed version of the change can be
+rolled out.
 
-The patch does permit the offending YUV420 @ 59.94 phy_freq and
-vclk_freq mode to match in calculations. It also results in all
-fractional rates being unavailable for use. This was unintended
-and requires the patch to be reverted.
-
-Fixes: bfbc68e4d869 ("drm/meson: vclk: fix calculation of 59.94 fractional rates")
+Closes: https://lore.kernel.org/all/e0df2d85-1296-4317-b717-bd757e3ab928@heusel.eu/
+Link: https://chaos.social/@gromit/114377862699921553
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220002
+Link: https://bugs.gentoo.org/953555
+Link: https://bbs.archlinux.org/viewtopic.php?id=304892
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250421201300.778955-2-martin.blumenstingl@googlemail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250421201300.778955-2-martin.blumenstingl@googlemail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Acked-by: Lubomir Rintel <lkundrak@v3.sk>
+Signed-off-by: Christian Heusel <christian@heusel.eu>
+Link: https://patch.msgid.link/20250424-usb-tethering-fix-v1-1-b65cf97c740e@heusel.eu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/meson/meson_vclk.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/usb/rndis_host.c |   16 ++--------------
+ 1 file changed, 2 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
-index 2a942dc6a6dc2..2a82119eb58ed 100644
---- a/drivers/gpu/drm/meson/meson_vclk.c
-+++ b/drivers/gpu/drm/meson/meson_vclk.c
-@@ -790,13 +790,13 @@ meson_vclk_vic_supported_freq(struct meson_drm *priv, unsigned int phy_freq,
- 				 FREQ_1000_1001(params[i].pixel_freq));
- 		DRM_DEBUG_DRIVER("i = %d phy_freq = %d alt = %d\n",
- 				 i, params[i].phy_freq,
--				 FREQ_1000_1001(params[i].phy_freq/1000)*1000);
-+				 FREQ_1000_1001(params[i].phy_freq/10)*10);
- 		/* Match strict frequency */
- 		if (phy_freq == params[i].phy_freq &&
- 		    vclk_freq == params[i].vclk_freq)
- 			return MODE_OK;
- 		/* Match 1000/1001 variant */
--		if (phy_freq == (FREQ_1000_1001(params[i].phy_freq/1000)*1000) &&
-+		if (phy_freq == (FREQ_1000_1001(params[i].phy_freq/10)*10) &&
- 		    vclk_freq == FREQ_1000_1001(params[i].vclk_freq))
- 			return MODE_OK;
- 	}
-@@ -1070,7 +1070,7 @@ void meson_vclk_setup(struct meson_drm *priv, unsigned int target,
+--- a/drivers/net/usb/rndis_host.c
++++ b/drivers/net/usb/rndis_host.c
+@@ -630,16 +630,6 @@ static const struct driver_info	zte_rndi
+ 	.tx_fixup =	rndis_tx_fixup,
+ };
  
- 	for (freq = 0 ; params[freq].pixel_freq ; ++freq) {
- 		if ((phy_freq == params[freq].phy_freq ||
--		     phy_freq == FREQ_1000_1001(params[freq].phy_freq/1000)*1000) &&
-+		     phy_freq == FREQ_1000_1001(params[freq].phy_freq/10)*10) &&
- 		    (vclk_freq == params[freq].vclk_freq ||
- 		     vclk_freq == FREQ_1000_1001(params[freq].vclk_freq))) {
- 			if (vclk_freq != params[freq].vclk_freq)
--- 
-2.39.5
-
+-static const struct driver_info	wwan_rndis_info = {
+-	.description =	"Mobile Broadband RNDIS device",
+-	.flags =	FLAG_WWAN | FLAG_POINTTOPOINT | FLAG_FRAMING_RN | FLAG_NO_SETINT,
+-	.bind =		rndis_bind,
+-	.unbind =	rndis_unbind,
+-	.status =	rndis_status,
+-	.rx_fixup =	rndis_rx_fixup,
+-	.tx_fixup =	rndis_tx_fixup,
+-};
+-
+ /*-------------------------------------------------------------------------*/
+ 
+ static const struct usb_device_id	products [] = {
+@@ -676,11 +666,9 @@ static const struct usb_device_id	produc
+ 	USB_INTERFACE_INFO(USB_CLASS_WIRELESS_CONTROLLER, 1, 3),
+ 	.driver_info = (unsigned long) &rndis_info,
+ }, {
+-	/* Mobile Broadband Modem, seen in Novatel Verizon USB730L and
+-	 * Telit FN990A (RNDIS)
+-	 */
++	/* Novatel Verizon USB730L */
+ 	USB_INTERFACE_INFO(USB_CLASS_MISC, 4, 1),
+-	.driver_info = (unsigned long)&wwan_rndis_info,
++	.driver_info = (unsigned long) &rndis_info,
+ },
+ 	{ },		// END
+ };
 
 
