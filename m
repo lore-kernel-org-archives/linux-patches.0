@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB33729A0;
-	Wed,  7 May 2025 19:03:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A274029A0;
+	Wed,  7 May 2025 19:03:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644617; cv=none; b=FelfIsgut4I6tc1mmEZ7zZ8VV2f6ykq6SrrCRhXU7ZHwhJww0iMBBEyFVw26YaF1TsLmAr9Ub3Vr/WLFM9Mp2dxHCPU7LoEZ6x52tquhpTbyHNtYi6W+2KyPK+0bGeKRXJFBskIJnB4Qc2TM9x99QPswgCR6DmEElIKoM53lCXY=
+	t=1746644620; cv=none; b=AxNEhZRK6G3arSgf4Pfip4HeGQRtUsQpstRbtfDTsZTR7EM1SWQuH9yf7+7+HRUtwo1Ln+WATEn/4wUcKw3Lfk2fba1VPcK1x1sZzQWdZVopbY5pFzaUfpey8Erh8bSVYDyYppPsiV+cSTpovuf4xvrs6Bph3cGMA+cBDAkGVho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644617; c=relaxed/simple;
-	bh=p1guZmSKc5mGOmhOJtf0cRwD8o7yGIR6DMl8ofVrdqw=;
+	s=arc-20240116; t=1746644620; c=relaxed/simple;
+	bh=PRELH5o9NnMmpbnjxhlinkz1uPQgNphP5Xl4S2zCA4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SeU5ZlSriehmKhRTbWd7Eifvn9Roe5sKNwXQ6K0xgnRPikzTZWclXlCG2TM5Eotx31Uqq8LfsEmI+YLd8iFx9b6Nt4iTGRQ12Cu53qhyt70yVN74wM5KK5xsK8FiNv7gVVbBJs0AR8VOWbPHDZNh4yPMf+SYFaQVGHsIB/v1qQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T0w5UJku; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UiSsjVd/RZSR7dytITH2nA4OStlqnaZk1bY8iDBIDquqEmgOKA9fcOTYdlr+NgDHXs9oTh6EAMUHwwFkZAbkpwbB5MIxzxe1Lt/u2vbaopWAm62Wva9cgMv8W2onS59LeUt8U4Y2kg1VhiwQaiHgg/yoWUPIwOAU68I/E6PFdU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e3dKKGiM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0w5UJku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B42C4CEE2;
-	Wed,  7 May 2025 19:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3dKKGiM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D3A4C4CEE2;
+	Wed,  7 May 2025 19:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644617;
-	bh=p1guZmSKc5mGOmhOJtf0cRwD8o7yGIR6DMl8ofVrdqw=;
+	s=korg; t=1746644620;
+	bh=PRELH5o9NnMmpbnjxhlinkz1uPQgNphP5Xl4S2zCA4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T0w5UJkuQpockP6Ijr15rZNpvkM26jcMIANBFk4koewf8FJ+is1mkT57tZnEw+hBh
-	 9/Rd77NDN24RMl324RNdpsiavgYd/O0Ap1cXTu0P54gWOc4kWQkcWqQbHIOHQXqt9u
-	 ycDamKlSBZVAMrk1Pc4+ec+I15WOghNY1LI14i8I=
+	b=e3dKKGiMd6Ta5OsEsyd5Opl1STkFOyn8IyX6yRZWqKjKQnk/ooNndufUl0meRYWtM
+	 GPQaJ5kPwWnufVcEVtBCD7unw3OI51VGbjBykHouSM8BH5klya7rvjhuI2rPlgOMob
+	 NqHl4OZbkFdj/ly0jnRH0Zr+neiqbN2HI3nO3n4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
+	Da Xue <da@libre.computer>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 102/164] net: dlink: Correct endianness handling of led_mode
-Date: Wed,  7 May 2025 20:39:47 +0200
-Message-ID: <20250507183825.105986435@linuxfoundation.org>
+Subject: [PATCH 6.12 103/164] net: mdio: mux-meson-gxl: set reversed bit when using internal phy
+Date: Wed,  7 May 2025 20:39:48 +0200
+Message-ID: <20250507183825.144793246@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -51,78 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Da Xue <da@libre.computer>
 
-[ Upstream commit e7e5ae71831c44d58627a991e603845a2fed2cab ]
+[ Upstream commit b23285e93bef729e67519a5209d5b7fde3b4af50 ]
 
-As it's name suggests, parse_eeprom() parses EEPROM data.
+This bit is necessary to receive packets from the internal PHY.
+Without this bit set, no activity occurs on the interface.
 
-This is done by reading data, 16 bits at a time as follows:
+Normally u-boot sets this bit, but if u-boot is compiled without
+net support, the interface will be up but without any activity.
+If bit is set once, it will work until the IP is powered down or reset.
 
-	for (i = 0; i < 128; i++)
-                ((__le16 *) sromdata)[i] = cpu_to_le16(read_eeprom(np, i));
+The vendor SDK sets this bit along with the PHY_ID bits.
 
-sromdata is at the same memory location as psrom.
-And the type of psrom is a pointer to struct t_SROM.
-
-As can be seen in the loop above, data is stored in sromdata, and thus psrom,
-as 16-bit little-endian values.
-
-However, the integer fields of t_SROM are host byte order integers.
-And in the case of led_mode this leads to a little endian value
-being incorrectly treated as host byte order.
-
-Looking at rio_set_led_mode, this does appear to be a bug as that code
-masks led_mode with 0x1, 0x2 and 0x8. Logic that would be effected by a
-reversed byte order.
-
-This problem would only manifest on big endian hosts.
-
-Found by inspection while investigating a sparse warning
-regarding the crc field of t_SROM.
-
-I believe that warning is a false positive. And although I plan
-to send a follow-up to use little-endian types for other the integer
-fields of PSROM_t I do not believe that will involve any bug fixes.
-
-Compile tested only.
-
-Fixes: c3f45d322cbd ("dl2k: Add support for IP1000A-based cards")
-Signed-off-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250425-dlink-led-mode-v1-1-6bae3c36e736@kernel.org
+Signed-off-by: Da Xue <da@libre.computer>
+Fixes: 9a24e1ff4326 ("net: mdio: add amlogic gxl mdio mux support")
+Link: https://patch.msgid.link/20250425192009.1439508-1-da@libre.computer
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/dlink/dl2k.c | 2 +-
- drivers/net/ethernet/dlink/dl2k.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/mdio/mdio-mux-meson-gxl.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
-index d0ea926078706..6bf8a7aeef908 100644
---- a/drivers/net/ethernet/dlink/dl2k.c
-+++ b/drivers/net/ethernet/dlink/dl2k.c
-@@ -352,7 +352,7 @@ parse_eeprom (struct net_device *dev)
- 	eth_hw_addr_set(dev, psrom->mac_addr);
+diff --git a/drivers/net/mdio/mdio-mux-meson-gxl.c b/drivers/net/mdio/mdio-mux-meson-gxl.c
+index 89554021b5ccc..f9f02d3136492 100644
+--- a/drivers/net/mdio/mdio-mux-meson-gxl.c
++++ b/drivers/net/mdio/mdio-mux-meson-gxl.c
+@@ -17,6 +17,7 @@
+ #define  REG2_LEDACT		GENMASK(23, 22)
+ #define  REG2_LEDLINK		GENMASK(25, 24)
+ #define  REG2_DIV4SEL		BIT(27)
++#define  REG2_REVERSED		BIT(28)
+ #define  REG2_ADCBYPASS		BIT(30)
+ #define  REG2_CLKINSEL		BIT(31)
+ #define ETH_REG3		0x4
+@@ -65,7 +66,7 @@ static void gxl_enable_internal_mdio(struct gxl_mdio_mux *priv)
+ 	 * The only constraint is that it must match the one in
+ 	 * drivers/net/phy/meson-gxl.c to properly match the PHY.
+ 	 */
+-	writel(FIELD_PREP(REG2_PHYID, EPHY_GXL_ID),
++	writel(REG2_REVERSED | FIELD_PREP(REG2_PHYID, EPHY_GXL_ID),
+ 	       priv->regs + ETH_REG2);
  
- 	if (np->chip_id == CHIP_IP1000A) {
--		np->led_mode = psrom->led_mode;
-+		np->led_mode = le16_to_cpu(psrom->led_mode);
- 		return 0;
- 	}
- 
-diff --git a/drivers/net/ethernet/dlink/dl2k.h b/drivers/net/ethernet/dlink/dl2k.h
-index 195dc6cfd8955..0e33e2eaae960 100644
---- a/drivers/net/ethernet/dlink/dl2k.h
-+++ b/drivers/net/ethernet/dlink/dl2k.h
-@@ -335,7 +335,7 @@ typedef struct t_SROM {
- 	u16 sub_system_id;	/* 0x06 */
- 	u16 pci_base_1;		/* 0x08 (IP1000A only) */
- 	u16 pci_base_2;		/* 0x0a (IP1000A only) */
--	u16 led_mode;		/* 0x0c (IP1000A only) */
-+	__le16 led_mode;	/* 0x0c (IP1000A only) */
- 	u16 reserved1[9];	/* 0x0e-0x1f */
- 	u8 mac_addr[6];		/* 0x20-0x25 */
- 	u8 reserved2[10];	/* 0x26-0x2f */
+ 	/* Enable the internal phy */
 -- 
 2.39.5
 
