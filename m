@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481FC1DE4C4;
-	Wed,  7 May 2025 18:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA1B288CB0;
+	Wed,  7 May 2025 18:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643372; cv=none; b=nWWCJzLJZjDFDw7uF0vFwYRmkQFCrPDQ/+YZ2pA+O2cxvNB9oIypRxe+XbIwHoKYsAHLMi90sRR/3cHN1GVU3IQYuT8bOiUSEHGKEbyKWR0yXhMyc+Nvyw+GwBk8bX10c9epml2030OedrLTFY02LM60bbObu7RzUdgzqq404GY=
+	t=1746643375; cv=none; b=ucQLsI0fkUb4BrHDx+GCLyNJdnqmkQUtgNqdbfCIF2hoHEJIcUTg+y3JT6nRbzFe3XT/abqfM1ts9+FfurLJe4Em23uMmw/dq+I0XGi61Qqc8KURDxjOc9ZE8Oxri2/mAcXcTfP0rjvDxcg1gWgRzX0pt8kw7xHp8Z/IvDLJRig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643372; c=relaxed/simple;
-	bh=qWUMQThKi5fvnB4X8iJMcMhrnsBHbQW6oph+SQsutJk=;
+	s=arc-20240116; t=1746643375; c=relaxed/simple;
+	bh=j/MbElfbkBdorHUcbQGDaID2q5ON/1qw1UpsHCotv28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nf3d06mO2UrhD+C8zzJjBAbGXUG6BAqxxvdyAZUW75T7GPNp38kNAWP31yqqAsVFas/B114H3pxn/xXxKJ+iYOXCdxF9Pyd5GgX9zakrr9JNdwDhG8FH1NNr/Zb2laMm+XXswo6wlzuhmxQ7HpEBEYPVHoQrmcccUR6tVy0eti0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HYR5v5Ai; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pk7p2W2Xrkh+pXA0ej5jgMwT6oi4GhPcU0nehOXXdM1dO3EXQIhvi6TA5eFP3MfzBIYsXGYH4rOJA+2GDjBFVQyKPkDlXUJUG1Sb9PxguFRQ21Vy/RCDCO7+KuB6xggNZwSywXapU3GykNtd5xCX5xSbMBc/7H1mGMtcOLcdPHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mKRGkKiF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HYR5v5Ai"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A941CC4CEE2;
-	Wed,  7 May 2025 18:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mKRGkKiF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAEE5C4CEE2;
+	Wed,  7 May 2025 18:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643372;
-	bh=qWUMQThKi5fvnB4X8iJMcMhrnsBHbQW6oph+SQsutJk=;
+	s=korg; t=1746643375;
+	bh=j/MbElfbkBdorHUcbQGDaID2q5ON/1qw1UpsHCotv28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HYR5v5AiK9rvU8Yj3h8AXH3bNVQaUPBGxfC7z+yaTenRcKh+1CreierbkwQ85CjWY
-	 M0/5ze0u7Owbmd0Zwm2TJjwk8qiwrH4nEOcFYODbgJ+pGXekSxYHVyK8FGUCg8T4YP
-	 1n87DFcWietP7H+d5onqsmdcjl//+kAHsDFJ6ERA=
+	b=mKRGkKiFl0eVxkcGcw7e0ylJ8iTQPYvJu5Vx9X/nBHgbBwI6P/3X6/7iBG6+lglPZ
+	 7asNiEmc4lDU5HrACamEE4uE0bmy2qTeNSiQEEeR777qdDv/8I0rktSPGQh7C1M65k
+	 ZU530sAG11Rk9oEfKbkP2mIJF18nZmXTVCWKK8cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yonglong Liu <liuyonglong@huawei.com>,
-	Guangbin Huang <huangguangbin2@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 38/55] net: hns3: add support for external loopback test
-Date: Wed,  7 May 2025 20:39:39 +0200
-Message-ID: <20250507183800.575307223@linuxfoundation.org>
+Subject: [PATCH 5.15 39/55] net: hns3: fix an interrupt residual problem
+Date: Wed,  7 May 2025 20:39:40 +0200
+Message-ID: <20250507183800.622418642@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183759.048732653@linuxfoundation.org>
 References: <20250507183759.048732653@linuxfoundation.org>
@@ -54,330 +54,187 @@ Content-Transfer-Encoding: 8bit
 
 From: Yonglong Liu <liuyonglong@huawei.com>
 
-[ Upstream commit 04b6ba143521f4485b7f2c36c655b262a79dae97 ]
+[ Upstream commit 8e6b9c6ea5a55045eed6526d8ee49e93192d1a58 ]
 
-This patch add support for external loopback test.
-The successful test need the link is up with duplex full. The
-driver do external loopback first, and then the whole offline
-test.
+When a VF is passthrough to a VM, and the VM is killed, the reported
+interrupt may not been handled, it will remain, and won't be clear by
+the nic engine even with a flr or tqp reset. When the VM restart, the
+interrupt of the first vector may be dropped by the second enable_irq
+in vfio, see the issue below:
+https://gitlab.com/qemu-project/qemu/-/issues/2884#note_2423361621
 
+We notice that the vfio has always behaved this way, and the interrupt
+is a residue of the nic engine, so we fix the problem by moving the
+vector enable process out of the enable_irq loop.
+
+Fixes: 08a100689d4b ("net: hns3: re-organize vector handle")
 Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
-Signed-off-by: Guangbin Huang <huangguangbin2@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Link: https://patch.msgid.link/20250430093052.2400464-3-shaojijie@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 8e6b9c6ea5a5 ("net: hns3: fix an interrupt residual problem")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hnae3.h   |  2 +
- .../net/ethernet/hisilicon/hns3/hns3_enet.c   | 51 ++++++++++++++++
- .../net/ethernet/hisilicon/hns3/hns3_enet.h   |  3 +
- .../ethernet/hisilicon/hns3/hns3_ethtool.c    | 61 +++++++++++++------
- .../hisilicon/hns3/hns3pf/hclge_main.c        | 26 +++++---
- 5 files changed, 119 insertions(+), 24 deletions(-)
+ .../net/ethernet/hisilicon/hns3/hns3_enet.c   | 82 +++++++++----------
+ 1 file changed, 39 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hnae3.h b/drivers/net/ethernet/hisilicon/hns3/hnae3.h
-index fa16cdcee10db..8d1b66281c095 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hnae3.h
-+++ b/drivers/net/ethernet/hisilicon/hns3/hnae3.h
-@@ -178,6 +178,7 @@ struct hns3_mac_stats {
- 
- /* hnae3 loop mode */
- enum hnae3_loop {
-+	HNAE3_LOOP_EXTERNAL,
- 	HNAE3_LOOP_APP,
- 	HNAE3_LOOP_SERIAL_SERDES,
- 	HNAE3_LOOP_PARALLEL_SERDES,
-@@ -802,6 +803,7 @@ struct hnae3_roce_private_info {
- #define HNAE3_SUPPORT_SERDES_SERIAL_LOOPBACK	BIT(2)
- #define HNAE3_SUPPORT_VF	      BIT(3)
- #define HNAE3_SUPPORT_SERDES_PARALLEL_LOOPBACK	BIT(4)
-+#define HNAE3_SUPPORT_EXTERNAL_LOOPBACK	BIT(5)
- 
- #define HNAE3_USER_UPE		BIT(0)	/* unicast promisc enabled by user */
- #define HNAE3_USER_MPE		BIT(1)	/* mulitcast promisc enabled by user */
 diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-index 60592e8ddf3b8..03fe5e0729f64 100644
+index 03fe5e0729f64..af33074267ec9 100644
 --- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
 +++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-@@ -5642,6 +5642,57 @@ int hns3_set_channels(struct net_device *netdev,
+@@ -473,20 +473,14 @@ static void hns3_mask_vector_irq(struct hns3_enet_tqp_vector *tqp_vector,
+ 	writel(mask_en, tqp_vector->mask_addr);
+ }
+ 
+-static void hns3_vector_enable(struct hns3_enet_tqp_vector *tqp_vector)
++static void hns3_irq_enable(struct hns3_enet_tqp_vector *tqp_vector)
+ {
+ 	napi_enable(&tqp_vector->napi);
+ 	enable_irq(tqp_vector->vector_irq);
+-
+-	/* enable vector */
+-	hns3_mask_vector_irq(tqp_vector, 1);
+ }
+ 
+-static void hns3_vector_disable(struct hns3_enet_tqp_vector *tqp_vector)
++static void hns3_irq_disable(struct hns3_enet_tqp_vector *tqp_vector)
+ {
+-	/* disable vector */
+-	hns3_mask_vector_irq(tqp_vector, 0);
+-
+ 	disable_irq(tqp_vector->vector_irq);
+ 	napi_disable(&tqp_vector->napi);
+ 	cancel_work_sync(&tqp_vector->rx_group.dim.work);
+@@ -707,11 +701,42 @@ static int hns3_set_rx_cpu_rmap(struct net_device *netdev)
  	return 0;
  }
  
-+void hns3_external_lb_prepare(struct net_device *ndev, bool if_running)
++static void hns3_enable_irqs_and_tqps(struct net_device *netdev)
 +{
-+	struct hns3_nic_priv *priv = netdev_priv(ndev);
++	struct hns3_nic_priv *priv = netdev_priv(netdev);
 +	struct hnae3_handle *h = priv->ae_handle;
-+	int i;
-+
-+	if (!if_running)
-+		return;
-+
-+	netif_carrier_off(ndev);
-+	netif_tx_disable(ndev);
++	u16 i;
 +
 +	for (i = 0; i < priv->vector_num; i++)
-+		hns3_vector_disable(&priv->tqp_vector[i]);
++		hns3_irq_enable(&priv->tqp_vector[i]);
++
++	for (i = 0; i < priv->vector_num; i++)
++		hns3_mask_vector_irq(&priv->tqp_vector[i], 1);
++
++	for (i = 0; i < h->kinfo.num_tqps; i++)
++		hns3_tqp_enable(h->kinfo.tqp[i]);
++}
++
++static void hns3_disable_irqs_and_tqps(struct net_device *netdev)
++{
++	struct hns3_nic_priv *priv = netdev_priv(netdev);
++	struct hnae3_handle *h = priv->ae_handle;
++	u16 i;
 +
 +	for (i = 0; i < h->kinfo.num_tqps; i++)
 +		hns3_tqp_disable(h->kinfo.tqp[i]);
 +
-+	/* delay ring buffer clearing to hns3_reset_notify_uninit_enet
-+	 * during reset process, because driver may not be able
-+	 * to disable the ring through firmware when downing the netdev.
-+	 */
-+	if (!hns3_nic_resetting(ndev))
-+		hns3_nic_reset_all_ring(priv->ae_handle);
-+
-+	hns3_reset_tx_queue(priv->ae_handle);
-+}
-+
-+void hns3_external_lb_restore(struct net_device *ndev, bool if_running)
-+{
-+	struct hns3_nic_priv *priv = netdev_priv(ndev);
-+	struct hnae3_handle *h = priv->ae_handle;
-+	int i;
-+
-+	if (!if_running)
-+		return;
-+
-+	hns3_nic_reset_all_ring(priv->ae_handle);
++	for (i = 0; i < priv->vector_num; i++)
++		hns3_mask_vector_irq(&priv->tqp_vector[i], 0);
 +
 +	for (i = 0; i < priv->vector_num; i++)
-+		hns3_vector_enable(&priv->tqp_vector[i]);
-+
-+	for (i = 0; i < h->kinfo.num_tqps; i++)
-+		hns3_tqp_enable(h->kinfo.tqp[i]);
-+
-+	netif_tx_wake_all_queues(ndev);
-+
-+	if (h->ae_algo->ops->get_status(h))
-+		netif_carrier_on(ndev);
++		hns3_irq_disable(&priv->tqp_vector[i]);
 +}
 +
- static const struct hns3_hw_error_info hns3_hw_err[] = {
- 	{ .type = HNAE3_PPU_POISON_ERROR,
- 	  .msg = "PPU poison" },
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.h b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.h
-index f60ba2ee8b8b1..f3f7f370807f0 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.h
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.h
-@@ -729,4 +729,7 @@ u16 hns3_get_max_available_channels(struct hnae3_handle *h);
- void hns3_cq_period_mode_init(struct hns3_nic_priv *priv,
- 			      enum dim_cq_period_mode tx_mode,
- 			      enum dim_cq_period_mode rx_mode);
-+
-+void hns3_external_lb_prepare(struct net_device *ndev, bool if_running);
-+void hns3_external_lb_restore(struct net_device *ndev, bool if_running);
- #endif
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c b/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
-index 17fa4e7684cd2..b01ce4fd6bc43 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
-@@ -67,7 +67,6 @@ static const struct hns3_stats hns3_rxq_stats[] = {
- 
- #define HNS3_TQP_STATS_COUNT (HNS3_TXQ_STATS_COUNT + HNS3_RXQ_STATS_COUNT)
- 
--#define HNS3_SELF_TEST_TYPE_NUM         4
- #define HNS3_NIC_LB_TEST_PKT_NUM	1
- #define HNS3_NIC_LB_TEST_RING_ID	0
- #define HNS3_NIC_LB_TEST_PACKET_SIZE	128
-@@ -93,6 +92,7 @@ static int hns3_lp_setup(struct net_device *ndev, enum hnae3_loop loop, bool en)
- 	case HNAE3_LOOP_PARALLEL_SERDES:
- 	case HNAE3_LOOP_APP:
- 	case HNAE3_LOOP_PHY:
-+	case HNAE3_LOOP_EXTERNAL:
- 		ret = h->ae_algo->ops->set_loopback(h, loop, en);
- 		break;
- 	default:
-@@ -300,6 +300,10 @@ static int hns3_lp_run_test(struct net_device *ndev, enum hnae3_loop mode)
- 
- static void hns3_set_selftest_param(struct hnae3_handle *h, int (*st_param)[2])
+ static int hns3_nic_net_up(struct net_device *netdev)
  {
-+	st_param[HNAE3_LOOP_EXTERNAL][0] = HNAE3_LOOP_EXTERNAL;
-+	st_param[HNAE3_LOOP_EXTERNAL][1] =
-+			h->flags & HNAE3_SUPPORT_EXTERNAL_LOOPBACK;
-+
- 	st_param[HNAE3_LOOP_APP][0] = HNAE3_LOOP_APP;
- 	st_param[HNAE3_LOOP_APP][1] =
- 			h->flags & HNAE3_SUPPORT_APP_LOOPBACK;
-@@ -318,17 +322,11 @@ static void hns3_set_selftest_param(struct hnae3_handle *h, int (*st_param)[2])
- 			h->flags & HNAE3_SUPPORT_PHY_LOOPBACK;
- }
+ 	struct hns3_nic_priv *priv = netdev_priv(netdev);
+ 	struct hnae3_handle *h = priv->ae_handle;
+-	int i, j;
+ 	int ret;
  
--static void hns3_selftest_prepare(struct net_device *ndev,
--				  bool if_running, int (*st_param)[2])
-+static void hns3_selftest_prepare(struct net_device *ndev, bool if_running)
+ 	ret = hns3_nic_reset_all_ring(h);
+@@ -720,23 +745,13 @@ static int hns3_nic_net_up(struct net_device *netdev)
+ 
+ 	clear_bit(HNS3_NIC_STATE_DOWN, &priv->state);
+ 
+-	/* enable the vectors */
+-	for (i = 0; i < priv->vector_num; i++)
+-		hns3_vector_enable(&priv->tqp_vector[i]);
+-
+-	/* enable rcb */
+-	for (j = 0; j < h->kinfo.num_tqps; j++)
+-		hns3_tqp_enable(h->kinfo.tqp[j]);
++	hns3_enable_irqs_and_tqps(netdev);
+ 
+ 	/* start the ae_dev */
+ 	ret = h->ae_algo->ops->start ? h->ae_algo->ops->start(h) : 0;
+ 	if (ret) {
+ 		set_bit(HNS3_NIC_STATE_DOWN, &priv->state);
+-		while (j--)
+-			hns3_tqp_disable(h->kinfo.tqp[j]);
+-
+-		for (j = i - 1; j >= 0; j--)
+-			hns3_vector_disable(&priv->tqp_vector[j]);
++		hns3_disable_irqs_and_tqps(netdev);
+ 	}
+ 
+ 	return ret;
+@@ -823,17 +838,9 @@ static void hns3_reset_tx_queue(struct hnae3_handle *h)
+ static void hns3_nic_net_down(struct net_device *netdev)
+ {
+ 	struct hns3_nic_priv *priv = netdev_priv(netdev);
+-	struct hnae3_handle *h = hns3_get_handle(netdev);
+ 	const struct hnae3_ae_ops *ops;
+-	int i;
+ 
+-	/* disable vectors */
+-	for (i = 0; i < priv->vector_num; i++)
+-		hns3_vector_disable(&priv->tqp_vector[i]);
+-
+-	/* disable rcb */
+-	for (i = 0; i < h->kinfo.num_tqps; i++)
+-		hns3_tqp_disable(h->kinfo.tqp[i]);
++	hns3_disable_irqs_and_tqps(netdev);
+ 
+ 	/* stop ae_dev */
+ 	ops = priv->ae_handle->ae_algo->ops;
+@@ -5645,8 +5652,6 @@ int hns3_set_channels(struct net_device *netdev,
+ void hns3_external_lb_prepare(struct net_device *ndev, bool if_running)
+ {
+ 	struct hns3_nic_priv *priv = netdev_priv(ndev);
+-	struct hnae3_handle *h = priv->ae_handle;
+-	int i;
+ 
+ 	if (!if_running)
+ 		return;
+@@ -5654,11 +5659,7 @@ void hns3_external_lb_prepare(struct net_device *ndev, bool if_running)
+ 	netif_carrier_off(ndev);
+ 	netif_tx_disable(ndev);
+ 
+-	for (i = 0; i < priv->vector_num; i++)
+-		hns3_vector_disable(&priv->tqp_vector[i]);
+-
+-	for (i = 0; i < h->kinfo.num_tqps; i++)
+-		hns3_tqp_disable(h->kinfo.tqp[i]);
++	hns3_disable_irqs_and_tqps(ndev);
+ 
+ 	/* delay ring buffer clearing to hns3_reset_notify_uninit_enet
+ 	 * during reset process, because driver may not be able
+@@ -5674,18 +5675,13 @@ void hns3_external_lb_restore(struct net_device *ndev, bool if_running)
  {
  	struct hns3_nic_priv *priv = netdev_priv(ndev);
  	struct hnae3_handle *h = priv->ae_handle;
+-	int i;
  
--	if (netif_msg_ifdown(h))
--		netdev_info(ndev, "self test start\n");
--
--	hns3_set_selftest_param(h, st_param);
--
- 	if (if_running)
- 		ndev->netdev_ops->ndo_stop(ndev);
- 
-@@ -367,18 +365,15 @@ static void hns3_selftest_restore(struct net_device *ndev, bool if_running)
- 
- 	if (if_running)
- 		ndev->netdev_ops->ndo_open(ndev);
--
--	if (netif_msg_ifdown(h))
--		netdev_info(ndev, "self test end\n");
- }
- 
- static void hns3_do_selftest(struct net_device *ndev, int (*st_param)[2],
- 			     struct ethtool_test *eth_test, u64 *data)
- {
--	int test_index = 0;
-+	int test_index = HNAE3_LOOP_APP;
- 	u32 i;
- 
--	for (i = 0; i < HNS3_SELF_TEST_TYPE_NUM; i++) {
-+	for (i = HNAE3_LOOP_APP; i < HNAE3_LOOP_NONE; i++) {
- 		enum hnae3_loop loop_type = (enum hnae3_loop)st_param[i][0];
- 
- 		if (!st_param[i][1])
-@@ -397,6 +392,20 @@ static void hns3_do_selftest(struct net_device *ndev, int (*st_param)[2],
- 	}
- }
- 
-+static void hns3_do_external_lb(struct net_device *ndev,
-+				struct ethtool_test *eth_test, u64 *data)
-+{
-+	data[HNAE3_LOOP_EXTERNAL] = hns3_lp_up(ndev, HNAE3_LOOP_EXTERNAL);
-+	if (!data[HNAE3_LOOP_EXTERNAL])
-+		data[HNAE3_LOOP_EXTERNAL] = hns3_lp_run_test(ndev, HNAE3_LOOP_EXTERNAL);
-+	hns3_lp_down(ndev, HNAE3_LOOP_EXTERNAL);
-+
-+	if (data[HNAE3_LOOP_EXTERNAL])
-+		eth_test->flags |= ETH_TEST_FL_FAILED;
-+
-+	eth_test->flags |= ETH_TEST_FL_EXTERNAL_LB_DONE;
-+}
-+
- /**
-  * hns3_nic_self_test - self test
-  * @ndev: net device
-@@ -406,7 +415,9 @@ static void hns3_do_selftest(struct net_device *ndev, int (*st_param)[2],
- static void hns3_self_test(struct net_device *ndev,
- 			   struct ethtool_test *eth_test, u64 *data)
- {
--	int st_param[HNS3_SELF_TEST_TYPE_NUM][2];
-+	struct hns3_nic_priv *priv = netdev_priv(ndev);
-+	struct hnae3_handle *h = priv->ae_handle;
-+	int st_param[HNAE3_LOOP_NONE][2];
- 	bool if_running = netif_running(ndev);
- 
- 	if (hns3_nic_resetting(ndev)) {
-@@ -414,13 +425,29 @@ static void hns3_self_test(struct net_device *ndev,
- 		return;
- 	}
- 
--	/* Only do offline selftest, or pass by default */
--	if (eth_test->flags != ETH_TEST_FL_OFFLINE)
-+	if (!(eth_test->flags & ETH_TEST_FL_OFFLINE))
+ 	if (!if_running)
  		return;
  
--	hns3_selftest_prepare(ndev, if_running, st_param);
-+	if (netif_msg_ifdown(h))
-+		netdev_info(ndev, "self test start\n");
-+
-+	hns3_set_selftest_param(h, st_param);
-+
-+	/* external loopback test requires that the link is up and the duplex is
-+	 * full, do external test first to reduce the whole test time
-+	 */
-+	if (eth_test->flags & ETH_TEST_FL_EXTERNAL_LB) {
-+		hns3_external_lb_prepare(ndev, if_running);
-+		hns3_do_external_lb(ndev, eth_test, data);
-+		hns3_external_lb_restore(ndev, if_running);
-+	}
-+
-+	hns3_selftest_prepare(ndev, if_running);
- 	hns3_do_selftest(ndev, st_param, eth_test, data);
- 	hns3_selftest_restore(ndev, if_running);
-+
-+	if (netif_msg_ifdown(h))
-+		netdev_info(ndev, "self test end\n");
- }
+ 	hns3_nic_reset_all_ring(priv->ae_handle);
  
- static void hns3_update_limit_promisc_mode(struct net_device *netdev,
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 35411f9a14323..a0284a9d90e89 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -151,10 +151,11 @@ static const u32 tqp_intr_reg_addr_list[] = {HCLGE_TQP_INTR_CTRL_REG,
- 					     HCLGE_TQP_INTR_RL_REG};
+-	for (i = 0; i < priv->vector_num; i++)
+-		hns3_vector_enable(&priv->tqp_vector[i]);
+-
+-	for (i = 0; i < h->kinfo.num_tqps; i++)
+-		hns3_tqp_enable(h->kinfo.tqp[i]);
++	hns3_enable_irqs_and_tqps(ndev);
  
- static const char hns3_nic_test_strs[][ETH_GSTRING_LEN] = {
--	"App    Loopback test",
--	"Serdes serial Loopback test",
--	"Serdes parallel Loopback test",
--	"Phy    Loopback test"
-+	"External Loopback test",
-+	"App      Loopback test",
-+	"Serdes   serial Loopback test",
-+	"Serdes   parallel Loopback test",
-+	"Phy      Loopback test"
- };
+ 	netif_tx_wake_all_queues(ndev);
  
- static const struct hclge_comm_stats_str g_mac_stats_string[] = {
-@@ -754,7 +755,8 @@ static int hclge_get_sset_count(struct hnae3_handle *handle, int stringset)
- #define HCLGE_LOOPBACK_TEST_FLAGS (HNAE3_SUPPORT_APP_LOOPBACK | \
- 		HNAE3_SUPPORT_PHY_LOOPBACK | \
- 		HNAE3_SUPPORT_SERDES_SERIAL_LOOPBACK | \
--		HNAE3_SUPPORT_SERDES_PARALLEL_LOOPBACK)
-+		HNAE3_SUPPORT_SERDES_PARALLEL_LOOPBACK | \
-+		HNAE3_SUPPORT_EXTERNAL_LOOPBACK)
- 
- 	struct hclge_vport *vport = hclge_get_vport(handle);
- 	struct hclge_dev *hdev = vport->back;
-@@ -776,9 +778,12 @@ static int hclge_get_sset_count(struct hnae3_handle *handle, int stringset)
- 			handle->flags |= HNAE3_SUPPORT_APP_LOOPBACK;
- 		}
- 
--		count += 2;
-+		count += 1;
- 		handle->flags |= HNAE3_SUPPORT_SERDES_SERIAL_LOOPBACK;
-+		count += 1;
- 		handle->flags |= HNAE3_SUPPORT_SERDES_PARALLEL_LOOPBACK;
-+		count += 1;
-+		handle->flags |= HNAE3_SUPPORT_EXTERNAL_LOOPBACK;
- 
- 		if ((hdev->hw.mac.phydev && hdev->hw.mac.phydev->drv &&
- 		     hdev->hw.mac.phydev->drv->set_loopback) ||
-@@ -806,6 +811,11 @@ static void hclge_get_strings(struct hnae3_handle *handle, u32 stringset,
- 					   size, p);
- 		p = hclge_tqps_get_strings(handle, p);
- 	} else if (stringset == ETH_SS_TEST) {
-+		if (handle->flags & HNAE3_SUPPORT_EXTERNAL_LOOPBACK) {
-+			memcpy(p, hns3_nic_test_strs[HNAE3_LOOP_EXTERNAL],
-+			       ETH_GSTRING_LEN);
-+			p += ETH_GSTRING_LEN;
-+		}
- 		if (handle->flags & HNAE3_SUPPORT_APP_LOOPBACK) {
- 			memcpy(p, hns3_nic_test_strs[HNAE3_LOOP_APP],
- 			       ETH_GSTRING_LEN);
-@@ -8060,7 +8070,7 @@ static int hclge_set_loopback(struct hnae3_handle *handle,
- {
- 	struct hclge_vport *vport = hclge_get_vport(handle);
- 	struct hclge_dev *hdev = vport->back;
--	int ret;
-+	int ret = 0;
- 
- 	/* Loopback can be enabled in three places: SSU, MAC, and serdes. By
- 	 * default, SSU loopback is enabled, so if the SMAC and the DMAC are
-@@ -8087,6 +8097,8 @@ static int hclge_set_loopback(struct hnae3_handle *handle,
- 	case HNAE3_LOOP_PHY:
- 		ret = hclge_set_phy_loopback(hdev, en);
- 		break;
-+	case HNAE3_LOOP_EXTERNAL:
-+		break;
- 	default:
- 		ret = -ENOTSUPP;
- 		dev_err(&hdev->pdev->dev,
 -- 
 2.39.5
 
