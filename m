@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5412473451;
-	Wed,  7 May 2025 18:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0EAC29A0;
+	Wed,  7 May 2025 18:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643561; cv=none; b=MDI6riv3evg+mrylS1MYhlXK5dF6BtvJjnKezY2qi6Rif0+ZktO5BikIfJ/fkgd5ezLE0uRmPW2McRorLcb0OrPgaQdxZdV8Vocc4jneMSmpro29XLk/gquzOduDcCghaQMYATp5TmN/poXo/oAjNMcTedTxldC4kkUXTm3DXAE=
+	t=1746643564; cv=none; b=dzYhJNuJ9JPhwzaF4tOviWKPsAIdqTLbMITGoSo2GiaxwuwYlfyGrYY0aQDyNeqSXeEYubdbstaDy7RhwiTAfP5RIyu/c7IrteoLvuGbzLkztSgUlKru1NkZs5AhvllVBF4Xi9yj4NnCZSUqFgIA+IujBf1GRhOT/H6UrVwC7Gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643561; c=relaxed/simple;
-	bh=gDUhcn0fZg6iyEU1HsJL9TLwp+n1o3kjle1amVtkUZ0=;
+	s=arc-20240116; t=1746643564; c=relaxed/simple;
+	bh=KFUJYSSLLN8to2H/MiWBfjB229i+cSMVE8eGUiq7j5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L5iuXXQBGgSAztuyy0G8U6sBtVCDhPM5OwgBDDxEfueOvrgVeWXfv5aWK6ozgk/ORIxJnDwnZ/hqmE/o1r712yXNKzT+RBz6doVEmcsE7vCj3tAAHPP1ENety+UI8uzKzT+RtnqM9R0oOsuEZhsb4B6MobpPwyYurEVg61Oa77U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d5hp2DsK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UhIfZNcdtmGIwV3hNXhL21NT9gG9E7WdISgzAQEsZAI/tkZ3s1JB5FkJqpTJDyijkNi6BGnMUodyKOLW8GoobBM7CQ1NutnS3KBOxu8jED2CY+/hSBs59PeTY0/+13wgD6GFVGGvWawiKpSAmI+RGLHToDrocJ25LPX0cO5M/bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/WHxDID; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d5hp2DsK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D75C4CEE2;
-	Wed,  7 May 2025 18:46:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/WHxDID"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F179C4CEE2;
+	Wed,  7 May 2025 18:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643560;
-	bh=gDUhcn0fZg6iyEU1HsJL9TLwp+n1o3kjle1amVtkUZ0=;
+	s=korg; t=1746643563;
+	bh=KFUJYSSLLN8to2H/MiWBfjB229i+cSMVE8eGUiq7j5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d5hp2DsK8IvUay6nxDQP/omsJnIyoodeRCmlam8RAqp5zqcR5Z3RHszi3yqdCY2TR
-	 yyV0hqdNQ5BOHxY7Tr18A4dl3IS94uX1N2NZ+aRdTN7cWt/ktrcrs6QhGph1lLypoi
-	 1k6qz8kwLQ84dJqnZw6TUinaBK4u66+c9LRu28pU=
+	b=G/WHxDIDl8Xf3QR5LEyJ5/1NThMkcVzlMlOw4Z5qZYAZv2oKZxb56bVwd+sdLRHEO
+	 iZwdybX+m/1Uzh8NAytQGoi7W6Z+DzqoUxKoFEsKDgrNWOGrzU2h3a/tUEs1jzy4sq
+	 QzKuAgNZLzwfjxdXxdJK79ZQulbKMYUwjtAJkzvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7d4f142f6c288de8abfe@syzkaller.appspotmail.com,
-	Murad Masimov <m.masimov@mt-integration.ru>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 42/97] wifi: plfxlc: Remove erroneous assert in plfxlc_mac_release
-Date: Wed,  7 May 2025 20:39:17 +0200
-Message-ID: <20250507183808.684358089@linuxfoundation.org>
+Subject: [PATCH 6.1 43/97] vxlan: vnifilter: Fix unlocked deletion of default FDB entry
+Date: Wed,  7 May 2025 20:39:18 +0200
+Message-ID: <20250507183808.723537108@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183806.987408728@linuxfoundation.org>
 References: <20250507183806.987408728@linuxfoundation.org>
@@ -52,87 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 0fb15ae3b0a9221be01715dac0335647c79f3362 ]
+[ Upstream commit 087a9eb9e5978e3ba362e1163691e41097e8ca20 ]
 
-plfxlc_mac_release() asserts that mac->lock is held. This assertion is
-incorrect, because even if it was possible, it would not be the valid
-behaviour. The function is used when probe fails or after the device is
-disconnected. In both cases mac->lock can not be held as the driver is
-not working with the device at the moment. All functions that use mac->lock
-unlock it just after it was held. There is also no need to hold mac->lock
-for plfxlc_mac_release() itself, as mac data is not affected, except for
-mac->flags, which is modified atomically.
+When a VNI is deleted from a VXLAN device in 'vnifilter' mode, the FDB
+entry associated with the default remote (assuming one was configured)
+is deleted without holding the hash lock. This is wrong and will result
+in a warning [1] being generated by the lockdep annotation that was
+added by commit ebe642067455 ("vxlan: Create wrappers for FDB lookup").
 
-This bug leads to the following warning:
-================================================================
-WARNING: CPU: 0 PID: 127 at drivers/net/wireless/purelifi/plfxlc/mac.c:106 plfxlc_mac_release+0x7d/0xa0
-Modules linked in:
-CPU: 0 PID: 127 Comm: kworker/0:2 Not tainted 6.1.124-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-Workqueue: usb_hub_wq hub_event
-RIP: 0010:plfxlc_mac_release+0x7d/0xa0 drivers/net/wireless/purelifi/plfxlc/mac.c:106
+Reproducer:
+
+ # ip link add vx0 up type vxlan dstport 4789 external vnifilter local 192.0.2.1
+ # bridge vni add vni 10010 remote 198.51.100.1 dev vx0
+ # bridge vni del vni 10010 dev vx0
+
+Fix by acquiring the hash lock before the deletion and releasing it
+afterwards. Blame the original commit that introduced the issue rather
+than the one that exposed it.
+
+[1]
+WARNING: CPU: 3 PID: 392 at drivers/net/vxlan/vxlan_core.c:417 vxlan_find_mac+0x17f/0x1a0
+[...]
+RIP: 0010:vxlan_find_mac+0x17f/0x1a0
+[...]
 Call Trace:
  <TASK>
- probe+0x941/0xbd0 drivers/net/wireless/purelifi/plfxlc/usb.c:694
- usb_probe_interface+0x5c0/0xaf0 drivers/usb/core/driver.c:396
- really_probe+0x2ab/0xcb0 drivers/base/dd.c:639
- __driver_probe_device+0x1a2/0x3d0 drivers/base/dd.c:785
- driver_probe_device+0x50/0x420 drivers/base/dd.c:815
- __device_attach_driver+0x2cf/0x510 drivers/base/dd.c:943
- bus_for_each_drv+0x183/0x200 drivers/base/bus.c:429
- __device_attach+0x359/0x570 drivers/base/dd.c:1015
- bus_probe_device+0xba/0x1e0 drivers/base/bus.c:489
- device_add+0xb48/0xfd0 drivers/base/core.c:3696
- usb_set_configuration+0x19dd/0x2020 drivers/usb/core/message.c:2165
- usb_generic_driver_probe+0x84/0x140 drivers/usb/core/generic.c:238
- usb_probe_device+0x130/0x260 drivers/usb/core/driver.c:293
- really_probe+0x2ab/0xcb0 drivers/base/dd.c:639
- __driver_probe_device+0x1a2/0x3d0 drivers/base/dd.c:785
- driver_probe_device+0x50/0x420 drivers/base/dd.c:815
- __device_attach_driver+0x2cf/0x510 drivers/base/dd.c:943
- bus_for_each_drv+0x183/0x200 drivers/base/bus.c:429
- __device_attach+0x359/0x570 drivers/base/dd.c:1015
- bus_probe_device+0xba/0x1e0 drivers/base/bus.c:489
- device_add+0xb48/0xfd0 drivers/base/core.c:3696
- usb_new_device+0xbdd/0x18f0 drivers/usb/core/hub.c:2620
- hub_port_connect drivers/usb/core/hub.c:5477 [inline]
- hub_port_connect_change drivers/usb/core/hub.c:5617 [inline]
- port_event drivers/usb/core/hub.c:5773 [inline]
- hub_event+0x2efe/0x5730 drivers/usb/core/hub.c:5855
- process_one_work+0x8a9/0x11d0 kernel/workqueue.c:2292
- worker_thread+0xa47/0x1200 kernel/workqueue.c:2439
- kthread+0x28d/0x320 kernel/kthread.c:376
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:295
- </TASK>
-================================================================
+ __vxlan_fdb_delete+0xbe/0x560
+ vxlan_vni_delete_group+0x2ba/0x940
+ vxlan_vni_del.isra.0+0x15f/0x580
+ vxlan_process_vni_filter+0x38b/0x7b0
+ vxlan_vnifilter_process+0x3bb/0x510
+ rtnetlink_rcv_msg+0x2f7/0xb70
+ netlink_rcv_skb+0x131/0x360
+ netlink_unicast+0x426/0x710
+ netlink_sendmsg+0x75a/0xc20
+ __sock_sendmsg+0xc1/0x150
+ ____sys_sendmsg+0x5aa/0x7b0
+ ___sys_sendmsg+0xfc/0x180
+ __sys_sendmsg+0x121/0x1b0
+ do_syscall_64+0xbb/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 68d57a07bfe5 ("wireless: add plfxlc driver for pureLiFi X, XL, XC devices")
-Reported-by: syzbot+7d4f142f6c288de8abfe@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7d4f142f6c288de8abfe
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Link: https://patch.msgid.link/20250321185226.71-2-m.masimov@mt-integration.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: f9c4bb0b245c ("vxlan: vni filtering support on collect metadata device")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20250423145131.513029-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/purelifi/plfxlc/mac.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/vxlan/vxlan_vnifilter.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/purelifi/plfxlc/mac.c b/drivers/net/wireless/purelifi/plfxlc/mac.c
-index 87a4ff888ddd4..70d6f5244e5e4 100644
---- a/drivers/net/wireless/purelifi/plfxlc/mac.c
-+++ b/drivers/net/wireless/purelifi/plfxlc/mac.c
-@@ -103,7 +103,6 @@ int plfxlc_mac_init_hw(struct ieee80211_hw *hw)
- void plfxlc_mac_release(struct plfxlc_mac *mac)
- {
- 	plfxlc_chip_release(&mac->chip);
--	lockdep_assert_held(&mac->lock);
- }
+diff --git a/drivers/net/vxlan/vxlan_vnifilter.c b/drivers/net/vxlan/vxlan_vnifilter.c
+index 1ffc00e270802..c6d4fae958ca8 100644
+--- a/drivers/net/vxlan/vxlan_vnifilter.c
++++ b/drivers/net/vxlan/vxlan_vnifilter.c
+@@ -627,7 +627,11 @@ static void vxlan_vni_delete_group(struct vxlan_dev *vxlan,
+ 	 * default dst remote_ip previously added for this vni
+ 	 */
+ 	if (!vxlan_addr_any(&vninode->remote_ip) ||
+-	    !vxlan_addr_any(&dst->remote_ip))
++	    !vxlan_addr_any(&dst->remote_ip)) {
++		u32 hash_index = fdb_head_index(vxlan, all_zeros_mac,
++						vninode->vni);
++
++		spin_lock_bh(&vxlan->hash_lock[hash_index]);
+ 		__vxlan_fdb_delete(vxlan, all_zeros_mac,
+ 				   (vxlan_addr_any(&vninode->remote_ip) ?
+ 				   dst->remote_ip : vninode->remote_ip),
+@@ -635,6 +639,8 @@ static void vxlan_vni_delete_group(struct vxlan_dev *vxlan,
+ 				   vninode->vni, vninode->vni,
+ 				   dst->remote_ifindex,
+ 				   true);
++		spin_unlock_bh(&vxlan->hash_lock[hash_index]);
++	}
  
- int plfxlc_op_start(struct ieee80211_hw *hw)
+ 	if (vxlan->dev->flags & IFF_UP) {
+ 		if (vxlan_addr_multicast(&vninode->remote_ip) &&
 -- 
 2.39.5
 
