@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB49329A0;
-	Wed,  7 May 2025 19:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B592929A0;
+	Wed,  7 May 2025 19:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644527; cv=none; b=Q1CpZQu8a94J5y9Ecj8QeeaEL239lNPSuCuvXxSzxBhRk7IxuYai9TNQiH+2UmSB1YlIpv93NsZEXt2TdP1+H4ZJVInyWilUWW8Ohm2SIthS6dX2x3l77+YUBcllHN9TUuTAPt5HMW+h/UwF2Nb1a96ljDFx/rQaeusPYGvA+qw=
+	t=1746644530; cv=none; b=gLvBfE2fyzMM3uPQWmz9Pw+9YL24B/uQziSa0kiMbFecRmNYxArWIcXnElzA5GP9rgARxozLUApif14m0Vo830/QWoDv/nWLLdymlRZbwjVW8huEAiV7m3i0jOOukzHU2mCS0ekJROJu2wL3n3gzuMoP6a/TPj6blzVY0vooHvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644527; c=relaxed/simple;
-	bh=A8tySBSIWSgCa42SuslNbqp9njFXEtAoX6XLaaS2bEQ=;
+	s=arc-20240116; t=1746644530; c=relaxed/simple;
+	bh=PXLAKOjC1YsmiZPx5ru17r4giawbHnJuu/yTANG8qP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DJQM6f6lJZro/tbDhlxfRIrkib7lY6+MQF5rSWcvNj7r1Ubkg6St0sxAd5iZdx78W/EpUaSMuFQKUffHK3tD0vxVEdK9mFPmJ8LmOma8HPaFPB7Xq3wzBk385yT3bUHdlLA73KPPaq7XEOW9eu07rimXFRjdfl0U4XQVeKIY2zE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbnhfQKP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kAgVwI1UlICRJxZdp9sug/v+u14LL9ClTPzbzLioBmy7206ZSrdm2U5zCZIzyOKrRpiE5QkQyXDO0s6fUf6hBABK3Uwz9gPXjpIOg+65KzGPvjpANC1STeCqsBlFJHvaXs4/yWnPcfTDeJR//tKrk3jOmVMQIM1KwmsVdw9aAho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdrlVchF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbnhfQKP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47FA3C4CEE2;
-	Wed,  7 May 2025 19:02:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdrlVchF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4706DC4CEE2;
+	Wed,  7 May 2025 19:02:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644527;
-	bh=A8tySBSIWSgCa42SuslNbqp9njFXEtAoX6XLaaS2bEQ=;
+	s=korg; t=1746644530;
+	bh=PXLAKOjC1YsmiZPx5ru17r4giawbHnJuu/yTANG8qP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZbnhfQKPKoBGJiLcfwG9+37N8CR3LaZRB5r7iXXzibXtpv49nPPg0y8LOtDh8+osZ
-	 gfZ11gC/mg2Rm8MyAV4tPTVppDpwvVPM+ADv8TYsSadY3jLQft4FNx/6Wj/V6fRNCC
-	 lQJTZINluMxSF1lYtzhkDrVgScr15CgiDza3hW0g=
+	b=CdrlVchFY+FwEPnDknfznIkju3EjtTO7ji5wbGTqOn4APYJF8+NjNbDqmA/q1Qqow
+	 duD7HFLeYv1Lx2iNBeZD/7rBEPg1JuoL5VQgEsu+r3XFAvkwGg1KgjArJm9I1wBd7q
+	 cCdvH+feTQFm1jpgNqvzXklLI6h4WkaDtjxarSB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkata Prasad Potturu <venkataprasad.potturu@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Iulia Tanasescu <iulia.tanasescu@nxp.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 073/164] ASoC: amd: acp: Fix NULL pointer deref in acp_i2s_set_tdm_slot
-Date: Wed,  7 May 2025 20:39:18 +0200
-Message-ID: <20250507183823.921241159@linuxfoundation.org>
+Subject: [PATCH 6.12 074/164] Bluetooth: hci_conn: Remove alloc from critical section
+Date: Wed,  7 May 2025 20:39:19 +0200
+Message-ID: <20250507183823.960975334@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -51,36 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
+From: Iulia Tanasescu <iulia.tanasescu@nxp.com>
 
-[ Upstream commit 6d9b64156d849e358cb49b6b899fb0b7d262bda8 ]
+[ Upstream commit 25ab2db3e60e0e84d7cdc740ea6ae3c10fe61eaa ]
 
-Update chip data using dev_get_drvdata(dev->parent) to fix
-NULL pointer deref in acp_i2s_set_tdm_slot.
+This removes the kzalloc memory allocation inside critical section in
+create_pa_sync, fixing the following message that appears when the kernel
+is compiled with CONFIG_DEBUG_ATOMIC_SLEEP enabled:
 
-Fixes: cd60dec8994c ("ASoC: amd: acp: Refactor TDM slots selction based on acp revision id")
+BUG: sleeping function called from invalid context at
+include/linux/sched/mm.h:321
 
-Signed-off-by: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
-Link: https://patch.msgid.link/20250425060144.1773265-2-venkataprasad.potturu@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 6d0417e4e1cf ("Bluetooth: hci_conn: Fix not setting conn_timeout for Broadcast Receiver")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-i2s.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_conn.c | 28 ++++++++++------------------
+ 1 file changed, 10 insertions(+), 18 deletions(-)
 
-diff --git a/sound/soc/amd/acp/acp-i2s.c b/sound/soc/amd/acp/acp-i2s.c
-index 92c5ff0deea2c..607a3eaeb6da8 100644
---- a/sound/soc/amd/acp/acp-i2s.c
-+++ b/sound/soc/amd/acp/acp-i2s.c
-@@ -101,7 +101,7 @@ static int acp_i2s_set_tdm_slot(struct snd_soc_dai *dai, u32 tx_mask, u32 rx_mas
- 	struct acp_stream *stream;
- 	int slot_len, no_of_slots;
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index e6591f487a511..d097e308a7554 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -2079,7 +2079,7 @@ static bool hci_conn_check_create_pa_sync(struct hci_conn *conn)
  
--	chip = dev_get_platdata(dev);
-+	chip = dev_get_drvdata(dev->parent);
- 	switch (slot_width) {
- 	case SLOT_WIDTH_8:
- 		slot_len = 8;
+ static int create_pa_sync(struct hci_dev *hdev, void *data)
+ {
+-	struct hci_cp_le_pa_create_sync *cp = NULL;
++	struct hci_cp_le_pa_create_sync cp = {0};
+ 	struct hci_conn *conn;
+ 	int err = 0;
+ 
+@@ -2108,19 +2108,13 @@ static int create_pa_sync(struct hci_dev *hdev, void *data)
+ 		if (hci_conn_check_create_pa_sync(conn)) {
+ 			struct bt_iso_qos *qos = &conn->iso_qos;
+ 
+-			cp = kzalloc(sizeof(*cp), GFP_KERNEL);
+-			if (!cp) {
+-				err = -ENOMEM;
+-				goto unlock;
+-			}
+-
+-			cp->options = qos->bcast.options;
+-			cp->sid = conn->sid;
+-			cp->addr_type = conn->dst_type;
+-			bacpy(&cp->addr, &conn->dst);
+-			cp->skip = cpu_to_le16(qos->bcast.skip);
+-			cp->sync_timeout = cpu_to_le16(qos->bcast.sync_timeout);
+-			cp->sync_cte_type = qos->bcast.sync_cte_type;
++			cp.options = qos->bcast.options;
++			cp.sid = conn->sid;
++			cp.addr_type = conn->dst_type;
++			bacpy(&cp.addr, &conn->dst);
++			cp.skip = cpu_to_le16(qos->bcast.skip);
++			cp.sync_timeout = cpu_to_le16(qos->bcast.sync_timeout);
++			cp.sync_cte_type = qos->bcast.sync_cte_type;
+ 
+ 			break;
+ 		}
+@@ -2131,17 +2125,15 @@ static int create_pa_sync(struct hci_dev *hdev, void *data)
+ 
+ 	hci_dev_unlock(hdev);
+ 
+-	if (cp) {
++	if (bacmp(&cp.addr, BDADDR_ANY)) {
+ 		hci_dev_set_flag(hdev, HCI_PA_SYNC);
+ 		set_bit(HCI_CONN_CREATE_PA_SYNC, &conn->flags);
+ 
+ 		err = __hci_cmd_sync_status(hdev, HCI_OP_LE_PA_CREATE_SYNC,
+-					    sizeof(*cp), cp, HCI_CMD_TIMEOUT);
++					    sizeof(cp), &cp, HCI_CMD_TIMEOUT);
+ 		if (!err)
+ 			err = hci_update_passive_scan_sync(hdev);
+ 
+-		kfree(cp);
+-
+ 		if (err) {
+ 			hci_dev_clear_flag(hdev, HCI_PA_SYNC);
+ 			clear_bit(HCI_CONN_CREATE_PA_SYNC, &conn->flags);
 -- 
 2.39.5
 
