@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B011A29A;
-	Wed,  7 May 2025 18:47:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C681A29A;
+	Wed,  7 May 2025 18:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643656; cv=none; b=b7/bfTIjmQeweVARW7UWOILzrZlVG+o8rIlSATt2EX5Ly2A5qzlbGYRsdrAhAI3odWGylpivc3ye6QBRIplsNMJJtmIU212hslxymKvcbRFe3PSb5fHHqQJEI1IZNkmZ0opFY3doGn68wDyWo+JEw7d0IozBJPb/fOWab3aZY8U=
+	t=1746643659; cv=none; b=diDAqR3TPQ7jobL6RFc2AbJ/YyYzVwWhAtvp3nxA/g3auTIbZSscHPb/jr27RDTF+hQxCxkCX3UNGFkGR7s/cpHe1SZE4t65rcQlZd3iSIDmATX+HqyccHRas+lTxZ0MeWT/AsUv+yvMezlzmyMHct8p+Z8yfnZv0hFQLxVDOmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643656; c=relaxed/simple;
-	bh=JMayWtIKxoJTD5ZJOl7vDXPCPoqK8cftIK2PiKnejmw=;
+	s=arc-20240116; t=1746643659; c=relaxed/simple;
+	bh=Ml1Ls26j149o3cUDH0iPT0Ma6byKBnqz0AqndwPC5pE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pja/c8R3/8y+1T1v+9Fmv36aZr3QnLiwuYIA+cPY+b/CbB3wop0/6DFCWPj95dSLQTLjlxF7wyng/7werZW/yKMEJk0TB7l/SMilxEx837kQHruk8LQgi5QMAuAipeEkT3XTUa1+5q6ndnqqrImVKS6IF15xkHO3lHXzYYyMRZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKaK/O9M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YvgltKdhzt8afyzm5iobDPuwb6s7kpo6zRQuPEn9KY6NpushXsUNCJCH/KXgfVkZ2+P0ejRMQQv/LYGrak+TpFyRbbWpLNyctFK8YbHqM136Tzt7YLvCgxJ1JsyW6L+J8RzYhfFzZ2IiDs/jE+E4zR/d/4Cbi+EVWJxLamfbcnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ROLeBE7J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKaK/O9M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 284DCC4CEE2;
-	Wed,  7 May 2025 18:47:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROLeBE7J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53149C4CEE2;
+	Wed,  7 May 2025 18:47:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643656;
-	bh=JMayWtIKxoJTD5ZJOl7vDXPCPoqK8cftIK2PiKnejmw=;
+	s=korg; t=1746643659;
+	bh=Ml1Ls26j149o3cUDH0iPT0Ma6byKBnqz0AqndwPC5pE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NKaK/O9M27bXQPKYaRhR4JsOhfUCS21/6KpJ7B2oUi1KbaVqQBLCOlQTJ9JBEhL/s
-	 ZNWCMoPFBucx4AryNxNIF2V/fQScLhka1Xotqp0lYIKGZkAorn+iHAHWiJyCcYhdFm
-	 LPZpHoQtUxJhYC3vq/Xwx/Uy+VoY2miirOIdVtXI=
+	b=ROLeBE7JrOr8KH+WtK5FmhIjip9hWyKb4uNqrx4+lW2gC0bbYZYFvhl1NEj3qQxVi
+	 jRgAhZe0iaFDnurI3HIA8XLmr8Jf1jZl1LLSlHBpmj5tcBUpBvtdMk6Kv84nPEqu1l
+	 VS+st+lJMaijbqhPHqQvfd3UjGvmWo+tCK96CRcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Ryan Matthews <ryanmatthews@fastmail.com>
-Subject: [PATCH 6.1 73/97] PCI: imx6: Skip controller_id generation logic for i.MX7D
-Date: Wed,  7 May 2025 20:39:48 +0200
-Message-ID: <20250507183809.926851989@linuxfoundation.org>
+	Gerrard Tai <gerrard.tai@starlabs.sg>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 74/97] sch_htb: make htb_qlen_notify() idempotent
+Date: Wed,  7 May 2025 20:39:49 +0200
+Message-ID: <20250507183809.966745014@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183806.987408728@linuxfoundation.org>
 References: <20250507183806.987408728@linuxfoundation.org>
@@ -48,52 +47,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: Cong Wang <xiyou.wangcong@gmail.com>
 
-commit f068ffdd034c93f0c768acdc87d4d2d7023c1379 upstream.
+commit 5ba8b837b522d7051ef81bacf3d95383ff8edce5 upstream.
 
-The i.MX7D only has one PCIe controller, so controller_id should always be
-0. The previous code is incorrect although yielding the correct result.
+htb_qlen_notify() always deactivates the HTB class and in fact could
+trigger a warning if it is already deactivated. Therefore, it is not
+idempotent and not friendly to its callers, like fq_codel_dequeue().
 
-Fix by removing "IMX7D" from the switch case branch.
+Let's make it idempotent to ease qdisc_tree_reduce_backlog() callers'
+life.
 
-Fixes: 2d8ed461dbc9 ("PCI: imx6: Add support for i.MX8MQ")
-Link: https://lore.kernel.org/r/20241126075702.4099164-5-hongxing.zhu@nxp.com
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-[Because this switch case does more than just controller_id
- logic, move the "IMX7D" case label instead of removing it entirely.]
-Signed-off-by: Ryan Matthews <ryanmatthews@fastmail.com>
+Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250403211033.166059-2-xiyou.wangcong@gmail.com
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/sched/sch_htb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -1172,11 +1172,10 @@ static int imx6_pcie_probe(struct platfo
- 		if (IS_ERR(imx6_pcie->pcie_aux))
- 			return dev_err_probe(dev, PTR_ERR(imx6_pcie->pcie_aux),
- 					     "pcie_aux clock source missing or invalid\n");
--		fallthrough;
--	case IMX7D:
- 		if (dbi_base->start == IMX8MQ_PCIE2_BASE_ADDR)
- 			imx6_pcie->controller_id = 1;
--
-+		fallthrough;
-+	case IMX7D:
- 		imx6_pcie->pciephy_reset = devm_reset_control_get_exclusive(dev,
- 									    "pciephy");
- 		if (IS_ERR(imx6_pcie->pciephy_reset)) {
+--- a/net/sched/sch_htb.c
++++ b/net/sched/sch_htb.c
+@@ -1482,6 +1482,8 @@ static void htb_qlen_notify(struct Qdisc
+ {
+ 	struct htb_class *cl = (struct htb_class *)arg;
+ 
++	if (!cl->prio_activity)
++		return;
+ 	htb_deactivate(qdisc_priv(sch), cl);
+ }
+ 
 
 
