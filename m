@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FF01FF5EC;
-	Wed,  7 May 2025 18:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F161FF5EC;
+	Wed,  7 May 2025 18:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643977; cv=none; b=Qg+DRA1PIuiB2TZqKGpSCwGnPsC46zV+Xu7rKYNBeoBfS+OAeg86nbkoQjyhJt/BA/2TiLqZT7E3acYr2M9rzbb8mNQ3I7xNfu+pUiKgsqI6BDM5C3QdkDVCrr7VhEaLWanh7THBBkSUBnUN49LHC9NfI+t1XB2xGhsNppjxkR0=
+	t=1746643980; cv=none; b=IdT5+tSn4qcgtY5Q1iu6wkzK6B5UQGU6ypCQuyf4aiGcM+l+qSZ0nuSPgc/jQwohn0ETzXy6NwMTByJ1nF2VDIVKMeck7SfNPasgBH7XNStF+QO0w7x+HuyIel0hIeRx8TzmW1zhTWmNwr8NuLKCuCqzLibZBBydtXAWwmSEsHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643977; c=relaxed/simple;
-	bh=+YQxLNL4DAw+XCyvsM7i9YYmbU3jV9UgPTN/vl29d3o=;
+	s=arc-20240116; t=1746643980; c=relaxed/simple;
+	bh=5wPXc7uaUgRYr1Y9lF+McPK+SoYHav8eMxL8A4sVGas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=omOF6QBaYgboe3ifWb2P6TqC5FMSZeHq/74OHXAOMo6EQvzx/WnhB5HF4vHtUwSSgu8H693DDqjTXqJbeDlg4sFMwmxR6+zkA0m61Y7zQ9aNk46DnoGoWVUmG4ZjnCIF/Cgcz47T5BJ2BjRrogkMZwk0QliYGfxFeAtjVr1lwUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHJQXD18; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hBz1XdBBxkDgt+EBUpvwUZF+Onlf2Cvhe3v1U9GAowx759QFXjnZmtBrtQsxOuCWadlijZBA2CmV7jjRuSwKY04OBmnl8e1xd2cap8eh7Ybj0oeE6NSlIUyn2hL/2N5Duk2SKidfrPFPWipvmbZE1abBQZW9ipSZvLHhOO4fheM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q8ddQepS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHJQXD18"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D71C4CEE2;
-	Wed,  7 May 2025 18:52:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q8ddQepS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EEFDC4CEE2;
+	Wed,  7 May 2025 18:52:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643977;
-	bh=+YQxLNL4DAw+XCyvsM7i9YYmbU3jV9UgPTN/vl29d3o=;
+	s=korg; t=1746643980;
+	bh=5wPXc7uaUgRYr1Y9lF+McPK+SoYHav8eMxL8A4sVGas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JHJQXD182vTtA1F4ZxYJwydVyoaqCeKEA6F5BH4ihxLEMPmdHeR4ODO3E2TXc20Yq
-	 S+MrHzdC2ItMUiPvVU0yLfVH00xykb0DK69pjLEB8W58Zbktl5vpt9Ugs63IoYA+ec
-	 YiFdOZ3KEyE8ah++IhAKkXeIVWsNstZEYHtvxwH0=
+	b=q8ddQepS/5xm2nHvVwQXhxkIEodb5E2wT6WE13Zh6czSrEhrn6BNTEVgE9DrXXdA4
+	 bsTwO2QbxQylTf6gxBQ6dizSqmdZqCyyOIb0Ae8RRcETz2s6oFUn4CaA6xpRyTiPiY
+	 mJ51WmHThKjieTveU3GyBUzO/W8dtFEJXZFyA7xE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Nico Pache <npache@redhat.com>,
 	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	David Gow <davidgow@google.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 050/183] ASoC: cs-amp-lib-test: Dont select SND_SOC_CS_AMP_LIB
-Date: Wed,  7 May 2025 20:38:15 +0200
-Message-ID: <20250507183826.718190240@linuxfoundation.org>
+Subject: [PATCH 6.14 051/183] firmware: cs_dsp: tests: Depend on FW_CS_DSP rather then enabling it
+Date: Wed,  7 May 2025 20:38:16 +0200
+Message-ID: <20250507183826.758021166@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -52,43 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Nico Pache <npache@redhat.com>
 
-[ Upstream commit 96014d91cffb335d3b396771524ff2aba3549865 ]
+[ Upstream commit a0b887f6eb9a0d1be3c57d00b0f3ba8408d3018a ]
 
-Depend on SND_SOC_CS_AMP_LIB instead of selecting it.
+FW_CS_DSP gets enabled if KUNIT is enabled. The test should rather
+depend on if the feature is enabled. Fix this by moving FW_CS_DSP to the
+depends on clause.
 
-KUNIT_ALL_TESTS should only build tests for components that are
-already being built, it should not cause other stuff to be added
-to the build.
-
-Fixes: 177862317a98 ("ASoC: cs-amp-lib: Add KUnit test for calibration helpers")
+Fixes: dd0b6b1f29b9 ("firmware: cs_dsp: Add KUnit testing of bin file download")
+Signed-off-by: Nico Pache <npache@redhat.com>
 Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250411123608.1676462-3-rf@opensource.cirrus.com
+Link: https://patch.msgid.link/20250411123608.1676462-4-rf@opensource.cirrus.com
 Reviewed-by: David Gow <davidgow@google.com>
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/Kconfig | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/firmware/cirrus/Kconfig | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
-index ee35f3aa55216..0138cfabbb038 100644
---- a/sound/soc/codecs/Kconfig
-+++ b/sound/soc/codecs/Kconfig
-@@ -763,10 +763,9 @@ config SND_SOC_CS_AMP_LIB
- 	tristate
+diff --git a/drivers/firmware/cirrus/Kconfig b/drivers/firmware/cirrus/Kconfig
+index 0a883091259a2..e3c2e38b746df 100644
+--- a/drivers/firmware/cirrus/Kconfig
++++ b/drivers/firmware/cirrus/Kconfig
+@@ -6,14 +6,11 @@ config FW_CS_DSP
  
- config SND_SOC_CS_AMP_LIB_TEST
--	tristate "KUnit test for Cirrus Logic cs-amp-lib"
--	depends on KUNIT
-+	tristate "KUnit test for Cirrus Logic cs-amp-lib" if !KUNIT_ALL_TESTS
-+	depends on SND_SOC_CS_AMP_LIB && KUNIT
+ config FW_CS_DSP_KUNIT_TEST_UTILS
+ 	tristate
+-	depends on KUNIT && REGMAP
+-	select FW_CS_DSP
+ 
+ config FW_CS_DSP_KUNIT_TEST
+ 	tristate "KUnit tests for Cirrus Logic cs_dsp" if !KUNIT_ALL_TESTS
+-	depends on KUNIT && REGMAP
++	depends on KUNIT && REGMAP && FW_CS_DSP
  	default KUNIT_ALL_TESTS
--	select SND_SOC_CS_AMP_LIB
+-	select FW_CS_DSP
+ 	select FW_CS_DSP_KUNIT_TEST_UTILS
  	help
- 	  This builds KUnit tests for the Cirrus Logic common
- 	  amplifier library.
+ 	  This builds KUnit tests for cs_dsp.
 -- 
 2.39.5
 
