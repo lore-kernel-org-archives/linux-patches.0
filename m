@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC3D1CF5C6;
-	Wed,  7 May 2025 19:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1C41CF5C6;
+	Wed,  7 May 2025 19:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644832; cv=none; b=g4vJizmyCZGpfWK9uu2bWBXqTg4k+svS7JzQIaNqnpkMgDSA3i2N2ywPmXE3v/w9f8BBcrxgfmB2KuFVHrUbccPcmVghRQGTkTcmtfyk4IjPLHVNVJDloHyF+XpxjplNJowZnqekKXmY0UkGHqCmDnoLk01MX82nl3jAFT0FKIo=
+	t=1746644835; cv=none; b=sQ3bv1aKCmcB47yWzeWDKeNUHxRbE0o0qqSaEBm0ySggvqxzPQFpGKsjGv7hF7H83YZ392R1340XfuYN10ZvFwjElZDbgndiAoExx1sfWNL51T80fZXbNcNO/XJE7nTWu+IjklrvY5SgMOO5Pxi+PNSSxamV5ghGyUvD1ovhcbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644832; c=relaxed/simple;
-	bh=kn/Sjphatso3aWa6kQGTWjCl8sLdfyepkVHzRXoQoJY=;
+	s=arc-20240116; t=1746644835; c=relaxed/simple;
+	bh=qeoG/nXleA38bu7RUdWDcGr5o4kNiXIKFSjpQ2mJiDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qiLf0L9Q0JCGZnfzIkCHGR1nS4vdgJ8k7UKzoJyu+l7adh/G0687pkTWIlkC7yqiAyg1fi9+fUEzUpxo6N0Ou2rhZ1kspT5OTJEUTregq6v8dpgrvcWubmgEe5ZiHQRhMOYhNQg3clW5t7XrVWTRc6zlTm7Ya9pPgrvDXnjx+eA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWPG47qx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PlOdViCVDl4J4NadEABvmemPpworLbn9YEtcFo3hae9jr6Tge6GrY0hXDd+fMgVG0lT/wbEUT626S85IeabYYb4j4F+7fDcozRxH+sVlGECGRJqnOk54xAsyh/cxN3uUqYdXtp98DE9N3ogsk+6iM1er/d9OE61V+VWYCqgbw1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SjnHvMZn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWPG47qx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA60C4CEE2;
-	Wed,  7 May 2025 19:07:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SjnHvMZn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3AFC4CEE2;
+	Wed,  7 May 2025 19:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644832;
-	bh=kn/Sjphatso3aWa6kQGTWjCl8sLdfyepkVHzRXoQoJY=;
+	s=korg; t=1746644835;
+	bh=qeoG/nXleA38bu7RUdWDcGr5o4kNiXIKFSjpQ2mJiDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sWPG47qxKQrGq4rug3nM8izE6ROXY6P+OQN6KfpVXVhvyR9bDA5PY3sUsJqnfQoe/
-	 d6GgO7r0I9lFAhMZbinGnctlO+b2pemud3EoNt2408abPdzNyIG7DXPBY+NFtEllEz
-	 M+pwQVSczgfYEnGiU1sFZwIwP0zlfkpCybq8HJGs=
+	b=SjnHvMZneanyvTFNJluHyINVXIZRSy3RludglN1lqZx9JGDCFgQQv6eGuZrUp314z
+	 8HPpXLuVrOzZYq/YA9g3tDNJYIhmPW/209E6oYvIvGaolx3YfRrzOmV54HKLbeoHSQ
+	 o/SUXheXcs9Q93c3+sIikl1WYCOZCd3PWh5WZasM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Shyam Saini <shyamsaini@linux.microsoft.com>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 161/164] kernel: globalize lookup_or_create_module_kobject()
-Date: Wed,  7 May 2025 20:40:46 +0200
-Message-ID: <20250507183827.482637469@linuxfoundation.org>
+	Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.12 152/164] drm/xe: Ensure fixed_slice_mode gets set after ccs_mode change
+Date: Wed,  7 May 2025 20:40:37 +0200
+Message-ID: <20250507183827.122450618@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -52,55 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Saini <shyamsaini@linux.microsoft.com>
+From: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
 
-[ Upstream commit 7c76c813cfc42a7376378a0c4b7250db2eebab81 ]
+commit 262de94a3a7ef23c326534b3d9483602b7af841e upstream.
 
-lookup_or_create_module_kobject() is marked as static and __init,
-to make it global drop static keyword.
-Since this function can be called from non-init code, use __modinit
-instead of __init, __modinit marker will make it __init if
-CONFIG_MODULES is not defined.
+The RCU_MODE_FIXED_SLICE_CCS_MODE setting is not getting invoked
+in the gt reset path after the ccs_mode setting by the user.
+Add it to engine register update list (in hw_engine_setup_default_state())
+which ensures it gets set in the gt reset and engine reset paths.
 
-Suggested-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Signed-off-by: Shyam Saini <shyamsaini@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20250227184930.34163-4-shyamsaini@linux.microsoft.com
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Stable-dep-of: f95bbfe18512 ("drivers: base: handle module_kobject creation")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+v2: Add register update to engine list to ensure it gets updated
+after engine reset also.
+
+Fixes: 0d97ecce16bd ("drm/xe: Enable Fixed CCS mode setting")
+Cc: stable@vger.kernel.org
+Signed-off-by: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://lore.kernel.org/r/20250327185604.18230-1-niranjana.vishwanathapura@intel.com
+(cherry picked from commit 12468e519f98e4d93370712e3607fab61df9dae9)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/module.h | 2 ++
- kernel/params.c        | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_hw_engine.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/module.h b/include/linux/module.h
-index 88ecc5e9f5230..82a9527d43c76 100644
---- a/include/linux/module.h
-+++ b/include/linux/module.h
-@@ -162,6 +162,8 @@ extern void cleanup_module(void);
- #define __INITRODATA_OR_MODULE __INITRODATA
- #endif /*CONFIG_MODULES*/
+--- a/drivers/gpu/drm/xe/xe_hw_engine.c
++++ b/drivers/gpu/drm/xe/xe_hw_engine.c
+@@ -381,12 +381,6 @@ xe_hw_engine_setup_default_lrc_state(str
+ 				 blit_cctl_val,
+ 				 XE_RTP_ACTION_FLAG(ENGINE_BASE)))
+ 		},
+-		/* Use Fixed slice CCS mode */
+-		{ XE_RTP_NAME("RCU_MODE_FIXED_SLICE_CCS_MODE"),
+-		  XE_RTP_RULES(FUNC(xe_hw_engine_match_fixed_cslice_mode)),
+-		  XE_RTP_ACTIONS(FIELD_SET(RCU_MODE, RCU_MODE_FIXED_SLICE_CCS_MODE,
+-					   RCU_MODE_FIXED_SLICE_CCS_MODE))
+-		},
+ 		/* Disable WMTP if HW doesn't support it */
+ 		{ XE_RTP_NAME("DISABLE_WMTP_ON_UNSUPPORTED_HW"),
+ 		  XE_RTP_RULES(FUNC(xe_rtp_cfeg_wmtp_disabled)),
+@@ -454,6 +448,12 @@ hw_engine_setup_default_state(struct xe_
+ 		  XE_RTP_ACTIONS(SET(CSFE_CHICKEN1(0), CS_PRIORITY_MEM_READ,
+ 				     XE_RTP_ACTION_FLAG(ENGINE_BASE)))
+ 		},
++		/* Use Fixed slice CCS mode */
++		{ XE_RTP_NAME("RCU_MODE_FIXED_SLICE_CCS_MODE"),
++		  XE_RTP_RULES(FUNC(xe_hw_engine_match_fixed_cslice_mode)),
++		  XE_RTP_ACTIONS(FIELD_SET(RCU_MODE, RCU_MODE_FIXED_SLICE_CCS_MODE,
++					   RCU_MODE_FIXED_SLICE_CCS_MODE))
++		},
+ 		{}
+ 	};
  
-+struct module_kobject *lookup_or_create_module_kobject(const char *name);
-+
- /* Generic info of form tag = "info" */
- #define MODULE_INFO(tag, info) __MODULE_INFO(tag, tag, info)
- 
-diff --git a/kernel/params.c b/kernel/params.c
-index d62a116918cd0..33b2985b31c7f 100644
---- a/kernel/params.c
-+++ b/kernel/params.c
-@@ -763,7 +763,7 @@ void destroy_params(const struct kernel_param *params, unsigned num)
- 			params[i].ops->free(params[i].arg);
- }
- 
--static struct module_kobject * __init lookup_or_create_module_kobject(const char *name)
-+struct module_kobject __modinit * lookup_or_create_module_kobject(const char *name)
- {
- 	struct module_kobject *mk;
- 	struct kobject *kobj;
--- 
-2.39.5
-
 
 
