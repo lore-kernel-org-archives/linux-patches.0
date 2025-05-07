@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2F01FF5EC;
-	Wed,  7 May 2025 18:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617EC1FF5EC;
+	Wed,  7 May 2025 18:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643962; cv=none; b=gXJBGasRu5TP4qaG44MEvLR2hf/Rdzk9+pJzexEybPFPFZifyicPCPFtyMatHudvLddcJ3Faj3kDK354TlvUUTYa7gf9kaAxQz3Jaq3g1Ya03I5FwNemp865S7s742pkhgMd/T+xgoHKJQaGYroKWLAbsEamBa+KTIi0cwMQzco=
+	t=1746643965; cv=none; b=mailcpxcyNGSAQSPhFSVejK1KeP7R57OHybalFg6SW+T3ZNkkbZ7yZgaQGs4emOn73/c4GIlC9Jxgsi3Pej3D/B1vCHZD4NEV7aG7R2KyPu/oJOGCimXjwhL2dz3Va0Y5YazzIngDzhWMq6ta47UZNl4i81zJhxJngHE98n6vGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643962; c=relaxed/simple;
-	bh=qGIZMHPuf+tq/aL+dY+QSrl4NlKQtWVqVEq+WbC0iJI=;
+	s=arc-20240116; t=1746643965; c=relaxed/simple;
+	bh=ImsVPsMY2BUe4Wy3plp/RrI6Fk7oeSZ1kOD8xrUsoFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bJ3sHTotrfyjOoF26vPW9G2n4Aj5H+MIhtntO5MjpeWXOm0mM6bm9msgP2h3yPLYhvgtFpXHLhw1IxI6wVq3DPc4K3d4KlGCLwQJkAhswq+CQQ+6/lfVlc67QQltQNgaFMDY0IOqJnStsg2eJvEUsy2bJc/a0aLNTBEp5w9HteI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKwE22d9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t2mBJwpfWiZH0CRsPv2M0hpl05gZg53Wq/5m7CRTjehyGvGI8oKBIGy0Z6ERMGmm/60iDkGDBSZui3uz+agKh08fxYqVVa+J5WLYFEhb6Bp8t4a0HiI4wUR3Zp0Jz/bEHudMc/kSgo4/Ki8vUsLbsn7QoZMfLKdfdy/3/SEXqPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAyzYBF4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKwE22d9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4577C4CEE2;
-	Wed,  7 May 2025 18:52:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAyzYBF4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4470C4CEE2;
+	Wed,  7 May 2025 18:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643962;
-	bh=qGIZMHPuf+tq/aL+dY+QSrl4NlKQtWVqVEq+WbC0iJI=;
+	s=korg; t=1746643965;
+	bh=ImsVPsMY2BUe4Wy3plp/RrI6Fk7oeSZ1kOD8xrUsoFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xKwE22d9wShybizpatrKySBO2+Mt8rCgUWfHzVoiyRGBrhXUK+ihxTbb+XaWLN1V/
-	 LE2DHA70i5Ru1ljeTHY1hxmQX9Ing3R+ClHOVTiHJ1LBVrks2UReU/OvIBOYGLnpDu
-	 WPxJnrIumM7zds7GjVVhm+kRvILMZJSOyXIhtF24=
+	b=bAyzYBF4WlfsUWrAIho/Av1neZy+No3tHRLYNneh4/0d2qVEG9q9+yiVpNjaUl4l9
+	 u+WfKhORTPtZLIo8goipVRj4+V5rL1QDR7XhcbP/MlnSv6usreO2jhLUpbnOjR2/tC
+	 N3KCXTQd2rUElzOOy/fRh/enTUk17Mp92oNdsgw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karol Wachowski <karol.wachowski@intel.com>,
-	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+	Krishnamoorthi M <krishnamoorthi.m@amd.com>,
+	Akshata MukundShetty <akshata.mukundshetty@amd.com>,
+	Raju Rangoju <Raju.Rangoju@amd.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 074/183] accel/ivpu: Correct DCT interrupt handling
-Date: Wed,  7 May 2025 20:38:39 +0200
-Message-ID: <20250507183827.689499378@linuxfoundation.org>
+Subject: [PATCH 6.14 075/183] spi: spi-mem: Add fix to avoid divide error
+Date: Wed,  7 May 2025 20:38:40 +0200
+Message-ID: <20250507183827.728743318@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -53,95 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karol Wachowski <karol.wachowski@intel.com>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-[ Upstream commit e53e004e346062e15df9511bd4b5a19e34701384 ]
+[ Upstream commit 8e4d3d8a5e51e07bd0d6cdd81b5e4af79f796927 ]
 
-Fix improper use of dct_active_percent field in DCT interrupt handler
-causing DCT to never get enabled. Set dct_active_percent internally before
-IPC to ensure correct driver value even if IPC fails.
-Set default DCT value to 30 accordingly to HW architecture specification.
+For some SPI flash memory operations, dummy bytes are not mandatory. For
+example, in Winbond SPINAND flash memory devices, the `write_cache` and
+`update_cache` operation variants have zero dummy bytes. Calculating the
+duration for SPI memory operations with zero dummy bytes causes
+a divide error when `ncycles` is calculated in the
+spi_mem_calc_op_duration().
 
-Fixes: a19bffb10c46 ("accel/ivpu: Implement DCT handling")
-Signed-off-by: Karol Wachowski <karol.wachowski@intel.com>
-Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://lore.kernel.org/r/20250416102616.384577-1-maciej.falkowski@linux.intel.com
+Add changes to skip the 'ncylcles' calculation for zero dummy bytes.
+
+Following divide error is fixed by this change:
+
+ Oops: divide error: 0000 [#1] PREEMPT SMP NOPTI
+...
+
+  ? do_trap+0xdb/0x100
+  ? do_error_trap+0x75/0xb0
+  ? spi_mem_calc_op_duration+0x56/0xb0
+  ? exc_divide_error+0x3b/0x70
+  ? spi_mem_calc_op_duration+0x56/0xb0
+  ? asm_exc_divide_error+0x1b/0x20
+  ? spi_mem_calc_op_duration+0x56/0xb0
+  ? spinand_select_op_variant+0xee/0x190 [spinand]
+  spinand_match_and_init+0x13e/0x1a0 [spinand]
+  spinand_manufacturer_match+0x6e/0xa0 [spinand]
+  spinand_probe+0x357/0x7f0 [spinand]
+  ? kernfs_activate+0x87/0xd0
+  spi_mem_probe+0x7a/0xb0
+  spi_probe+0x7d/0x130
+
+Fixes: 226d6cb3cb79 ("spi: spi-mem: Estimate the time taken by operations")
+Suggested-by: Krishnamoorthi M <krishnamoorthi.m@amd.com>
+Co-developed-by: Akshata MukundShetty <akshata.mukundshetty@amd.com>
+Signed-off-by: Akshata MukundShetty <akshata.mukundshetty@amd.com>
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
+Link: https://patch.msgid.link/20250424121333.417372-1-Raju.Rangoju@amd.com
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_hw_btrs.h |  2 +-
- drivers/accel/ivpu/ivpu_pm.c      | 18 ++++++++++--------
- 2 files changed, 11 insertions(+), 9 deletions(-)
+ drivers/spi/spi-mem.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/accel/ivpu/ivpu_hw_btrs.h b/drivers/accel/ivpu/ivpu_hw_btrs.h
-index 71792dab3c210..3855e2df1e0c8 100644
---- a/drivers/accel/ivpu/ivpu_hw_btrs.h
-+++ b/drivers/accel/ivpu/ivpu_hw_btrs.h
-@@ -14,7 +14,7 @@
- #define PLL_PROFILING_FREQ_DEFAULT   38400000
- #define PLL_PROFILING_FREQ_HIGH      400000000
- 
--#define DCT_DEFAULT_ACTIVE_PERCENT 15u
-+#define DCT_DEFAULT_ACTIVE_PERCENT 30u
- #define DCT_PERIOD_US		   35300u
- 
- int ivpu_hw_btrs_info_init(struct ivpu_device *vdev);
-diff --git a/drivers/accel/ivpu/ivpu_pm.c b/drivers/accel/ivpu/ivpu_pm.c
-index 5060c5dd40d1f..7acf78aeb3800 100644
---- a/drivers/accel/ivpu/ivpu_pm.c
-+++ b/drivers/accel/ivpu/ivpu_pm.c
-@@ -433,16 +433,17 @@ int ivpu_pm_dct_enable(struct ivpu_device *vdev, u8 active_percent)
- 	active_us = (DCT_PERIOD_US * active_percent) / 100;
- 	inactive_us = DCT_PERIOD_US - active_us;
- 
-+	vdev->pm->dct_active_percent = active_percent;
+diff --git a/drivers/spi/spi-mem.c b/drivers/spi/spi-mem.c
+index a9f0f47f4759b..74b013c41601d 100644
+--- a/drivers/spi/spi-mem.c
++++ b/drivers/spi/spi-mem.c
+@@ -585,7 +585,11 @@ u64 spi_mem_calc_op_duration(struct spi_mem_op *op)
+ 	ns_per_cycles = 1000000000 / op->max_freq;
+ 	ncycles += ((op->cmd.nbytes * 8) / op->cmd.buswidth) / (op->cmd.dtr ? 2 : 1);
+ 	ncycles += ((op->addr.nbytes * 8) / op->addr.buswidth) / (op->addr.dtr ? 2 : 1);
+-	ncycles += ((op->dummy.nbytes * 8) / op->dummy.buswidth) / (op->dummy.dtr ? 2 : 1);
 +
-+	ivpu_dbg(vdev, PM, "DCT requested %u%% (D0: %uus, D0i2: %uus)\n",
-+		 active_percent, active_us, inactive_us);
++	/* Dummy bytes are optional for some SPI flash memory operations */
++	if (op->dummy.nbytes)
++		ncycles += ((op->dummy.nbytes * 8) / op->dummy.buswidth) / (op->dummy.dtr ? 2 : 1);
 +
- 	ret = ivpu_jsm_dct_enable(vdev, active_us, inactive_us);
- 	if (ret) {
- 		ivpu_err_ratelimited(vdev, "Failed to enable DCT: %d\n", ret);
- 		return ret;
- 	}
+ 	ncycles += ((op->data.nbytes * 8) / op->data.buswidth) / (op->data.dtr ? 2 : 1);
  
--	vdev->pm->dct_active_percent = active_percent;
--
--	ivpu_dbg(vdev, PM, "DCT set to %u%% (D0: %uus, D0i2: %uus)\n",
--		 active_percent, active_us, inactive_us);
- 	return 0;
- }
- 
-@@ -450,15 +451,16 @@ int ivpu_pm_dct_disable(struct ivpu_device *vdev)
- {
- 	int ret;
- 
-+	vdev->pm->dct_active_percent = 0;
-+
-+	ivpu_dbg(vdev, PM, "DCT requested to be disabled\n");
-+
- 	ret = ivpu_jsm_dct_disable(vdev);
- 	if (ret) {
- 		ivpu_err_ratelimited(vdev, "Failed to disable DCT: %d\n", ret);
- 		return ret;
- 	}
- 
--	vdev->pm->dct_active_percent = 0;
--
--	ivpu_dbg(vdev, PM, "DCT disabled\n");
- 	return 0;
- }
- 
-@@ -470,7 +472,7 @@ void ivpu_pm_dct_irq_thread_handler(struct ivpu_device *vdev)
- 	if (ivpu_hw_btrs_dct_get_request(vdev, &enable))
- 		return;
- 
--	if (vdev->pm->dct_active_percent)
-+	if (enable)
- 		ret = ivpu_pm_dct_enable(vdev, DCT_DEFAULT_ACTIVE_PERCENT);
- 	else
- 		ret = ivpu_pm_dct_disable(vdev);
+ 	return ncycles * ns_per_cycles;
 -- 
 2.39.5
 
