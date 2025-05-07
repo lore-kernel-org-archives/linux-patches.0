@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DAF2116E9;
-	Wed,  7 May 2025 18:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F082116E9;
+	Wed,  7 May 2025 18:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644088; cv=none; b=KZBuZAuBQ/A6KtfM1rysYne+6Fez8IqXNI65xqYTXtjmTiL1E+bYVaqSQyuW4kIhHPegFpUHs1SsvDCynV/1f89X/UJ/YjmVmQLpENZRWbP49mlW3f6OvFRLpOzxHd187M8Z+FonTs6WbLsWKDCBzfva52aXtex1kGi2lpwXYPw=
+	t=1746644091; cv=none; b=FKiNl1zVx1Nhje2NKAOPGXhfFHCoKGcxfZFRHU1wQHPNt0vcw/H6PGO4gXEm2z/JWzpF3ok1yBOw5UBOQR9mv5UNbKYxe4HANUB7omRRxgu2wTmCr3xl/M+L2J4inQGZ0AngKVfoxopM5TZIQAOApxIAkLw062rewFqhHP6wZQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644088; c=relaxed/simple;
-	bh=cQNzI+uBv3f2w/Q7CBHB9rZE8mIXLgGUHiXos2QIdfo=;
+	s=arc-20240116; t=1746644091; c=relaxed/simple;
+	bh=v4Iez7PyRQw6ZUKGgMnAuKh1eVaFYZoNTDkw26gNFGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FDgysN2hf3qIi3s7x3UWmu8KMGGHiDiHatBFKqyhmQC7AurpljKba9gFf2SZM+3j1WTpqBBye+GAhgZrBUriPZwcC0ihBMFkHHBHRNGxCWnHX2MnKkuX64eV1W2k5WSdyWY4Q3ijj9Uv9k5M2QACCdxZWuiEDMjs1AOTAjDppC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ToP5Rw1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uP6CvuBiIfcNmCz893wKn6jHUGC+0tK/Yg2/U9oLO8gkgqfvs0PgmDWb9lLpbpktqEoArKL1gv7Po/PquXaB8EzCrQFerFC4gcxu1EVS2EYZNpbMFFDP4TQMoTZt3s30pdGtvSIwv5DF6+nCPSlSfOF7mzJj88btgYimDF5wdiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrqv0WkF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ToP5Rw1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9282C4CEE2;
-	Wed,  7 May 2025 18:54:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrqv0WkF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB52C4CEE2;
+	Wed,  7 May 2025 18:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644088;
-	bh=cQNzI+uBv3f2w/Q7CBHB9rZE8mIXLgGUHiXos2QIdfo=;
+	s=korg; t=1746644091;
+	bh=v4Iez7PyRQw6ZUKGgMnAuKh1eVaFYZoNTDkw26gNFGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ToP5Rw1H6OkBNHXbgGHCpwwBL/14iLyI7ajU3mNdysjA2zHIIDIZJm7zgBzFb0xV
-	 ZQY7ikRfhenXJd61H+mkVGQC9zcvR+DgxKAAzr18p02ninMteIs6FsVFGil62aKge5
-	 R6ZhjADkNMeJcQTmzfULhPqqD/hsdrKXHLchSlZQ=
+	b=lrqv0WkFRYvemenuh7NxktXpxaTp5nQgImeFgTE5F7WRGF2TiQa1da8hsH1r43WUv
+	 8esF3VTKsjdZ5TtpaBlruuCAgY5KMqSDtU5uwBl5XulEZmhj+tbsJVum2ZnnJgvB9g
+	 iP+wVxF57aZgebtqKAxlBl0BmrbBjeITDpq5jtPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Sathesh B Edara <sedara@marvell.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 086/183] net: mscc: ocelot: delete PVID VLAN when readding it as non-PVID
-Date: Wed,  7 May 2025 20:38:51 +0200
-Message-ID: <20250507183828.313750503@linuxfoundation.org>
+Subject: [PATCH 6.14 087/183] octeon_ep_vf: Resolve netdevice usage count issue
+Date: Wed,  7 May 2025 20:38:52 +0200
+Message-ID: <20250507183828.352208416@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -51,70 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Sathesh B Edara <sedara@marvell.com>
 
-[ Upstream commit 5ec6d7d737a491256cd37e33910f7ac1978db591 ]
+[ Upstream commit 8548c84c004be3da4ffbe35ed0589041a4050c03 ]
 
-The following set of commands:
+The netdevice usage count increases during transmit queue timeouts
+because netdev_hold is called in ndo_tx_timeout, scheduling a task
+to reinitialize the card. Although netdev_put is called at the end
+of the scheduled work, rtnl_unlock checks the reference count during
+cleanup. This could cause issues if transmit timeout is called on
+multiple queues.
 
-ip link add br0 type bridge vlan_filtering 1 # vlan_default_pvid 1 is implicit
-ip link set swp0 master br0
-bridge vlan add dev swp0 vid 1
-
-should result in the dropping of untagged and 802.1p-tagged traffic, but
-we see that it continues to be accepted. Whereas, had we deleted VID 1
-instead, the aforementioned dropping would have worked
-
-This is because the ANA_PORT_DROP_CFG update logic doesn't run, because
-ocelot_vlan_add() only calls ocelot_port_set_pvid() if the new VLAN has
-the BRIDGE_VLAN_INFO_PVID flag.
-
-Similar to other drivers like mt7530_port_vlan_add() which handle this
-case correctly, we need to test whether the VLAN we're changing used to
-have the BRIDGE_VLAN_INFO_PVID flag, but lost it now. That amounts to a
-PVID deletion and should be treated as such.
-
-Regarding blame attribution: this never worked properly since the
-introduction of bridge VLAN filtering in commit 7142529f1688 ("net:
-mscc: ocelot: add VLAN filtering"). However, there was a significant
-paradigm shift which aligned the ANA_PORT_DROP_CFG register with the
-PVID concept rather than with the native VLAN concept, and that change
-wasn't targeted for 'stable'. Realistically, that is as far as this fix
-needs to be propagated to.
-
-Fixes: be0576fed6d3 ("net: mscc: ocelot: move the logic to drop 802.1p traffic to the pvid deletion")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250424223734.3096202-1-vladimir.oltean@nxp.com
+Fixes: cb7dd712189f ("octeon_ep_vf: Add driver framework and device initialization")
+Signed-off-by: Sathesh B Edara <sedara@marvell.com>
+Link: https://patch.msgid.link/20250424133944.28128-1-sedara@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mscc/ocelot.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mscc/ocelot.c b/drivers/net/ethernet/mscc/ocelot.c
-index ef93df5208871..08bee56aea35f 100644
---- a/drivers/net/ethernet/mscc/ocelot.c
-+++ b/drivers/net/ethernet/mscc/ocelot.c
-@@ -830,6 +830,7 @@ EXPORT_SYMBOL(ocelot_vlan_prepare);
- int ocelot_vlan_add(struct ocelot *ocelot, int port, u16 vid, bool pvid,
- 		    bool untagged)
- {
-+	struct ocelot_port *ocelot_port = ocelot->ports[port];
- 	int err;
+diff --git a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c
+index 18c922dd5fc64..ccb69bc5c9529 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c
++++ b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c
+@@ -835,7 +835,9 @@ static void octep_vf_tx_timeout(struct net_device *netdev, unsigned int txqueue)
+ 	struct octep_vf_device *oct = netdev_priv(netdev);
  
- 	/* Ignore VID 0 added to our RX filter by the 8021q module, since
-@@ -849,6 +850,11 @@ int ocelot_vlan_add(struct ocelot *ocelot, int port, u16 vid, bool pvid,
- 					   ocelot_bridge_vlan_find(ocelot, vid));
- 		if (err)
- 			return err;
-+	} else if (ocelot_port->pvid_vlan &&
-+		   ocelot_bridge_vlan_find(ocelot, vid) == ocelot_port->pvid_vlan) {
-+		err = ocelot_port_set_pvid(ocelot, port, NULL);
-+		if (err)
-+			return err;
- 	}
+ 	netdev_hold(netdev, NULL, GFP_ATOMIC);
+-	schedule_work(&oct->tx_timeout_task);
++	if (!schedule_work(&oct->tx_timeout_task))
++		netdev_put(netdev, NULL);
++
+ }
  
- 	/* Untagged egress vlan clasification */
+ static int octep_vf_set_mac(struct net_device *netdev, void *p)
 -- 
 2.39.5
 
