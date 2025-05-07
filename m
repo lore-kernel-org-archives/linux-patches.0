@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400A61E22E9;
-	Wed,  7 May 2025 19:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C85329A0;
+	Wed,  7 May 2025 19:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644565; cv=none; b=Rygn5kwRc5+t4v0f4rl169F5gODWPDqgtE4RBLDUXTWnca+SINnYJQypz7RIQFKvDqhmkoJlfzVttX5+w61WEdPm7akF8jBhWl42imxCAx37kG52bAT8TcR7uCr7m86iuWdWaOb7ZmpaAbTbogodyQFrYsf5I2oDR6x0RVz83RU=
+	t=1746644568; cv=none; b=kp4eIKhvda+IG+WOVVMpvHjoSq/yEFnATIr5m8loIHIz1m5muo5P2y+yWG/SplxB1sF9jtBOnvcbLLBXQ6F2ibq18nzSJsJwfZC0zjUdI2Rc4BeHLZCizyt42yaVpNUVYR0wRhGQAI5p3OOheBpDYXsYkM2/N4E/TO/fPR9vWWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644565; c=relaxed/simple;
-	bh=9/btidaj0r97E6khCpRANVcYhB+xFk1Yq8fzEfdVtWg=;
+	s=arc-20240116; t=1746644568; c=relaxed/simple;
+	bh=EDlQ+TBOTVlYRryWeZoD57IcA45iPFSx1gNIRMkW9y8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RmG1HshcvyF/+C36II9pH8LLdeonorLtNhbPAFxM+vhcXqwXVUbJohHCUUvorXDb2DTdCAts9y1PrNGTAB60bygNeSPTHtaVvzntceXV+9QyxpYw6SItdZ9VVJ1P/SydyqaeWRTtiEf/9qODpI8aDCHsGGNA7eywmB4x11k8laY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cfytvBKF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sSqjh/f6IenpL7U6e1f+edpbHnYoNonVK2UvMjqMbXqyd1yjQPVGA+ODDSG2VzGE12Q9fknkO+gAHnI5CT7UqwW2sbxEB7Sm2a1F/G5EGwONRs/SsT07IGjJ1u2YHM7gadGCBBrcBObyvJZG5PfXavCeMTuE7PnNtdHDXEh17ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Vl17En0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cfytvBKF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C455EC4CEE2;
-	Wed,  7 May 2025 19:02:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Vl17En0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B59FAC4CEE9;
+	Wed,  7 May 2025 19:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644565;
-	bh=9/btidaj0r97E6khCpRANVcYhB+xFk1Yq8fzEfdVtWg=;
+	s=korg; t=1746644568;
+	bh=EDlQ+TBOTVlYRryWeZoD57IcA45iPFSx1gNIRMkW9y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cfytvBKFmsyH2UgSbsDZjuQgGv1SUFRigqTzCK1v2LSNT1LIeayrnOuSsP8kPKNhC
-	 6lolJpt/mlP87s6IkM1ZYvsupFVePOIv4u+GUoDkPruh2gHfuqy1w/NBmsAB935Te/
-	 4b6Lo+bfiXVjbNKPZfIQVv/QjiSEr6FZZlkuhUec=
+	b=0Vl17En07qtql8sy2/jl9ptZc+K6ibvjaPB7oQB4AQ+WZXge1Ea8zd+dOWUxqmtdm
+	 ZR2DOuJIJcc8yjQK//EegBkEHpBV1jMfqZULFlphj4PdO5pEE9n6njoCLEVCcw1LKX
+	 cUBwfVgLTpxEggqkjJZCO+ff3tbSbz+QLtv39Ii0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Justin Lai <justinlai0215@realtek.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 084/164] rtase: Modify the condition used to detect overflow in rtase_calc_time_mitigation
-Date: Wed,  7 May 2025 20:39:29 +0200
-Message-ID: <20250507183824.363112467@linuxfoundation.org>
+Subject: [PATCH 6.12 058/164] ASoC: Intel: sof_sdw: Add NULL check in asoc_sdw_rt_dmic_rtd_init()
+Date: Wed,  7 May 2025 20:39:03 +0200
+Message-ID: <20250507183823.283268061@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -53,63 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Lai <justinlai0215@realtek.com>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-[ Upstream commit 68f9d8974b545668e1be2422240b25a92e304b14 ]
+[ Upstream commit 68715cb5c0e00284d93f976c6368809f64131b0b ]
 
-Fix the following compile error reported by the kernel test
-robot by modifying the condition used to detect overflow in
-rtase_calc_time_mitigation.
+mic_name returned by devm_kasprintf() could be NULL.
+Add a check for it.
 
-In file included from include/linux/mdio.h:10:0,
-                  from drivers/net/ethernet/realtek/rtase/rtase_main.c:58:
- In function 'u16_encode_bits',
-     inlined from 'rtase_calc_time_mitigation.constprop' at drivers/net/
-     ethernet/realtek/rtase/rtase_main.c:1915:13,
-     inlined from 'rtase_init_software_variable.isra.41' at drivers/net/
-     ethernet/realtek/rtase/rtase_main.c:1961:13,
-     inlined from 'rtase_init_one' at drivers/net/ethernet/realtek/
-     rtase/rtase_main.c:2111:2:
->> include/linux/bitfield.h:178:3: error: call to '__field_overflow'
-      declared with attribute error: value doesn't fit into mask
-    __field_overflow();     \
-    ^~~~~~~~~~~~~~~~~~
- include/linux/bitfield.h:198:2: note: in expansion of macro
- '____MAKE_OP'
-   ____MAKE_OP(u##size,u##size,,)
-   ^~~~~~~~~~~
- include/linux/bitfield.h:200:1: note: in expansion of macro
- '__MAKE_OP'
-  __MAKE_OP(16)
-  ^~~~~~~~~
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202503182158.nkAlbJWX-lkp@intel.com/
-Fixes: a36e9f5cfe9e ("rtase: Add support for a pci table in this module")
-Signed-off-by: Justin Lai <justinlai0215@realtek.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250424040444.5530-1-justinlai0215@realtek.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Fixes: bee2fe44679f ("ASoC: Intel: sof_sdw: use generic rtd_init function for Realtek SDW DMICs")
+Link: https://patch.msgid.link/20250415194134.292830-1-chenyuan0y@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/rtase/rtase_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/sdw_utils/soc_sdw_rt_dmic.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/realtek/rtase/rtase_main.c b/drivers/net/ethernet/realtek/rtase/rtase_main.c
-index 86dd034fdddc5..3a588aaa89c58 100644
---- a/drivers/net/ethernet/realtek/rtase/rtase_main.c
-+++ b/drivers/net/ethernet/realtek/rtase/rtase_main.c
-@@ -1924,8 +1924,8 @@ static u16 rtase_calc_time_mitigation(u32 time_us)
+diff --git a/sound/soc/sdw_utils/soc_sdw_rt_dmic.c b/sound/soc/sdw_utils/soc_sdw_rt_dmic.c
+index 7f24806d809d9..74bca3d04e4f1 100644
+--- a/sound/soc/sdw_utils/soc_sdw_rt_dmic.c
++++ b/sound/soc/sdw_utils/soc_sdw_rt_dmic.c
+@@ -29,6 +29,8 @@ int asoc_sdw_rt_dmic_rtd_init(struct snd_soc_pcm_runtime *rtd, struct snd_soc_da
+ 		mic_name = devm_kasprintf(card->dev, GFP_KERNEL, "rt715-sdca");
+ 	else
+ 		mic_name = devm_kasprintf(card->dev, GFP_KERNEL, "%s", component->name_prefix);
++	if (!mic_name)
++		return -ENOMEM;
  
- 	time_us = min_t(int, time_us, RTASE_MITI_MAX_TIME);
- 
--	msb = fls(time_us);
--	if (msb >= RTASE_MITI_COUNT_BIT_NUM) {
-+	if (time_us > RTASE_MITI_TIME_COUNT_MASK) {
-+		msb = fls(time_us);
- 		time_unit = msb - RTASE_MITI_COUNT_BIT_NUM;
- 		time_count = time_us >> (msb - RTASE_MITI_COUNT_BIT_NUM);
- 	} else {
+ 	card->components = devm_kasprintf(card->dev, GFP_KERNEL,
+ 					  "%s mic:%s", card->components,
 -- 
 2.39.5
 
