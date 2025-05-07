@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF431482F5;
-	Wed,  7 May 2025 18:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A68F24E4CE;
+	Wed,  7 May 2025 18:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644263; cv=none; b=jI+j4YEBaq+hkrvlrvf7zNvjOroCk0gde1i6Ag7bNmrrptrrO6mG1/xza5mbjpIK5rNnYqb2xdTPELjnO+3uwfYZK0Asf3BtE5ECwqalVqxY6RHk3VWvsrWC/COy5p/PI1jqVnUWX+PTkVyQZT24ml/WYgZ1YXNzH60GCA8NoZg=
+	t=1746644267; cv=none; b=E/ltx6emzTrxk27bl5ZaPS1KxQ4teSjN5UMCT1Tciye7Zk+qTCmViqF4SHweOU4nD0J5QHki9Z0Da4ALPbz/oixbSapq/uT4CVVkmw4qnOQ35ZNqHTUs6ew1ezvm/hwluLDcxbylTnmBHP7/PvqQW/YSAeGGZkiMIy1ypJqyhME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644263; c=relaxed/simple;
-	bh=0xhvxbip8sOBXmzwQ/2M97pSLJcrKNslLj+E6D7dvmI=;
+	s=arc-20240116; t=1746644267; c=relaxed/simple;
+	bh=MzmC0pim/TZJgoNTrv1crcXzH4CNG5gLp+lKe+qBgXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RjH4QPH7TyURtA7YNBdI6IannbkGm3C3gISDIRUAFQawWVfO5GsWq/FEzeAdemnmFmG2t9bKs6eLMOkDZ9Os4fVArb+ISK18vpc6WMcS/ANjYuyLJKAewcOCbjh8Q1foIb8ktP+Z4lpVCGC5kriVq8HQt6uTdzgCfuDDsvgH0Uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZTYdBq5u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P+iErG7inVFn1vWBN6dHiDJiXD1I6EwuPtybTFlT8+14BD1Rix5pWxL7Yuh8/vQ9RGc7QpKvVmce1itb2OXFkNvu8l5vgPxNHuRiwJDCot4QswZMzu5JSuQXkqdMFmlJg48UEO/mDK4YdIPxza+5ybmFBkbdAaLNB+4w9Lqkdh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dX/Ggr8W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZTYdBq5u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FCACC4CEE2;
-	Wed,  7 May 2025 18:57:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dX/Ggr8W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6474C4CEE2;
+	Wed,  7 May 2025 18:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644263;
-	bh=0xhvxbip8sOBXmzwQ/2M97pSLJcrKNslLj+E6D7dvmI=;
+	s=korg; t=1746644267;
+	bh=MzmC0pim/TZJgoNTrv1crcXzH4CNG5gLp+lKe+qBgXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZTYdBq5ucasBaN372+sLhhVGmBNWJXjXTpkPzo2mSF8zLNn28na8CH0zXFw6xmaVS
-	 MIZlJ576U0EG7x3HpkvHWt3xM6kv2o+zKe2e4Frs852qEIBtK/YtjWOWEYFunETTjw
-	 ANK1RkEzmScv9w3URwkyCjyrTXwM40iBiuQwTm/U=
+	b=dX/Ggr8W7eavQwYE+c+iyMOInrCdpba6bJDjpvAcz5ddWDwp0BoOeV0RnULb1A6MJ
+	 HupHymyTOm7sv35FrLEeZKd8zoDjh/i4L1JOZoRMB4nR0Fw4UdIysu7Orvkka4mvnZ
+	 OFGTqw6sGUKFVOulXnYobRTWxeawds4LmOfOCKj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Christian Bruel <christian.bruel@foss.st.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 171/183] arm64: dts: st: Use 128kB size for aliased GIC400 register access on stm32mp25 SoCs
-Date: Wed,  7 May 2025 20:40:16 +0200
-Message-ID: <20250507183831.787558539@linuxfoundation.org>
+Subject: [PATCH 6.14 172/183] block: introduce zone capacity helper
+Date: Wed,  7 May 2025 20:40:17 +0200
+Message-ID: <20250507183831.827140197@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -53,45 +54,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Bruel <christian.bruel@foss.st.com>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-[ Upstream commit 06c231fe953a26f4bc9d7a37ba1b9b288a59c7c2 ]
+[ Upstream commit c1a79b1a583654f24b17da81ba868b0064077243 ]
 
-Adjust the size of 8kB GIC regions to 128kB so that each 4kB is mapped 16
-times over a 64kB region.
-The offset is then adjusted in the irq-gic driver.
+{bdev,disk}_zone_capacity() takes block_device or gendisk and sector position
+and returns the zone capacity of the corresponding zone.
 
-see commit 12e14066f4835 ("irqchip/GIC: Add workaround for aliased GIC400")
+With that, move disk_nr_zones() and blk_zone_plug_bio() to consolidate them in
+the same #ifdef block.
 
-Fixes: 5d30d03aaf785 ("arm64: dts: st: introduce stm32mp25 SoCs family")
-Suggested-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Christian Bruel <christian.bruel@foss.st.com>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20250415111654.2103767-3-christian.bruel@foss.st.com
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 866bafae59ec ("btrfs: zoned: skip reporting zone for new block group")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/st/stm32mp251.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/linux/blkdev.h | 67 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 45 insertions(+), 22 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/st/stm32mp251.dtsi b/arch/arm64/boot/dts/st/stm32mp251.dtsi
-index 379e290313dc0..87110f91e4895 100644
---- a/arch/arm64/boot/dts/st/stm32mp251.dtsi
-+++ b/arch/arm64/boot/dts/st/stm32mp251.dtsi
-@@ -119,9 +119,9 @@
- 		#interrupt-cells = <3>;
- 		interrupt-controller;
- 		reg = <0x0 0x4ac10000 0x0 0x1000>,
--		      <0x0 0x4ac20000 0x0 0x2000>,
--		      <0x0 0x4ac40000 0x0 0x2000>,
--		      <0x0 0x4ac60000 0x0 0x2000>;
-+		      <0x0 0x4ac20000 0x0 0x20000>,
-+		      <0x0 0x4ac40000 0x0 0x20000>,
-+		      <0x0 0x4ac60000 0x0 0x20000>;
- 	};
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index 6aa67e9b2ec08..0fec27d6b986c 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -691,23 +691,6 @@ static inline bool blk_queue_is_zoned(struct request_queue *q)
+ 		(q->limits.features & BLK_FEAT_ZONED);
+ }
  
- 	psci {
+-#ifdef CONFIG_BLK_DEV_ZONED
+-static inline unsigned int disk_nr_zones(struct gendisk *disk)
+-{
+-	return disk->nr_zones;
+-}
+-bool blk_zone_plug_bio(struct bio *bio, unsigned int nr_segs);
+-#else /* CONFIG_BLK_DEV_ZONED */
+-static inline unsigned int disk_nr_zones(struct gendisk *disk)
+-{
+-	return 0;
+-}
+-static inline bool blk_zone_plug_bio(struct bio *bio, unsigned int nr_segs)
+-{
+-	return false;
+-}
+-#endif /* CONFIG_BLK_DEV_ZONED */
+-
+ static inline unsigned int disk_zone_no(struct gendisk *disk, sector_t sector)
+ {
+ 	if (!blk_queue_is_zoned(disk->queue))
+@@ -715,11 +698,6 @@ static inline unsigned int disk_zone_no(struct gendisk *disk, sector_t sector)
+ 	return sector >> ilog2(disk->queue->limits.chunk_sectors);
+ }
+ 
+-static inline unsigned int bdev_nr_zones(struct block_device *bdev)
+-{
+-	return disk_nr_zones(bdev->bd_disk);
+-}
+-
+ static inline unsigned int bdev_max_open_zones(struct block_device *bdev)
+ {
+ 	return bdev->bd_disk->queue->limits.max_open_zones;
+@@ -826,6 +804,51 @@ static inline u64 sb_bdev_nr_blocks(struct super_block *sb)
+ 		(sb->s_blocksize_bits - SECTOR_SHIFT);
+ }
+ 
++#ifdef CONFIG_BLK_DEV_ZONED
++static inline unsigned int disk_nr_zones(struct gendisk *disk)
++{
++	return disk->nr_zones;
++}
++bool blk_zone_plug_bio(struct bio *bio, unsigned int nr_segs);
++
++/**
++ * disk_zone_capacity - returns the zone capacity of zone containing @sector
++ * @disk:	disk to work with
++ * @sector:	sector number within the querying zone
++ *
++ * Returns the zone capacity of a zone containing @sector. @sector can be any
++ * sector in the zone.
++ */
++static inline unsigned int disk_zone_capacity(struct gendisk *disk,
++					      sector_t sector)
++{
++	sector_t zone_sectors = disk->queue->limits.chunk_sectors;
++
++	if (sector + zone_sectors >= get_capacity(disk))
++		return disk->last_zone_capacity;
++	return disk->zone_capacity;
++}
++static inline unsigned int bdev_zone_capacity(struct block_device *bdev,
++					      sector_t pos)
++{
++	return disk_zone_capacity(bdev->bd_disk, pos);
++}
++#else /* CONFIG_BLK_DEV_ZONED */
++static inline unsigned int disk_nr_zones(struct gendisk *disk)
++{
++	return 0;
++}
++static inline bool blk_zone_plug_bio(struct bio *bio, unsigned int nr_segs)
++{
++	return false;
++}
++#endif /* CONFIG_BLK_DEV_ZONED */
++
++static inline unsigned int bdev_nr_zones(struct block_device *bdev)
++{
++	return disk_nr_zones(bdev->bd_disk);
++}
++
+ int bdev_disk_changed(struct gendisk *disk, bool invalidate);
+ 
+ void put_disk(struct gendisk *disk);
 -- 
 2.39.5
 
