@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACA528E57E;
-	Wed,  7 May 2025 19:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8B821146F;
+	Wed,  7 May 2025 19:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644426; cv=none; b=Ayb0eZJRDtnMq0bZFtfWGPzS1YIYmltoUReJY90xcCGXG6fiRo6UkFfHhjzr2MyXbCkDh6sS735liemH/33DTfBVe37E7CCx8rfrQo9zRYUyiJVz6wcy1ObzInnMZgSs4sa9b/o7hxpd5Uo7tdUqkz2CE/vsGQ8IZxm5F0oi6fM=
+	t=1746644430; cv=none; b=KQ+Fp9EE+vkAOYwxEvpvtKlB4EYgxGnu6LXH25HTTMt3cH4g8IDR1HW3LyxAARzjwpnj2KtO9iza4WKiIcFMMf+gFbIs4nYpyczPtUwwg2XcYRu4JUNo8uRKfoT2C6c9xMJFC+isAZLAMCDEJq4LX4+2Fiw8geTq6r7aZ6SJmb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644426; c=relaxed/simple;
-	bh=S13P6Zu9V74iigruQHD/uG2PaSaM65leWXaY10FGq/w=;
+	s=arc-20240116; t=1746644430; c=relaxed/simple;
+	bh=HFUJH1itM5qB6zwcr4XqIOKTkneQH4TgMtn7WjL/oBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jTP+PivcH7huRUd/ZyHrRffXbmkRjZZ4Bom2Nrfyq+9aNNQBGKw3Pl9QbM6FK9yJRUAmPu5JxVHU+/TkuwJzj6RMbQ8ck2QtFijezs1fvE//jH6HWiv5jcUE+1D6PsqiCoydwwMybLfaMdwcJZ6Ee0WJadDrIiZ/8Su3QJp7eFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9mdM78D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kvq0/WIIQb9tNOwd2/V7XhcK7FYu7pZjW9Lk62OoIS+4SdK96eR4YQ27+f41nGiXtdIlzihemPwtcOvCVnph6IGffzPoVpb6q2Qs7N7Aw3hM6F8gSMUkoA/c7noeC0hQybRHTO+ljOGX6+cSjuITM4ECTIWrvL6k0eZgRTE7Ggo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lymVMHYe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9mdM78D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D614C4CEE2;
-	Wed,  7 May 2025 19:00:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lymVMHYe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F0BC4CEEB;
+	Wed,  7 May 2025 19:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644425;
-	bh=S13P6Zu9V74iigruQHD/uG2PaSaM65leWXaY10FGq/w=;
+	s=korg; t=1746644429;
+	bh=HFUJH1itM5qB6zwcr4XqIOKTkneQH4TgMtn7WjL/oBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N9mdM78D/GHH4bnmXYTuWwabITfkCelWgLotlWsVoDl+VVI/9KQ1JNXOiXtSEY2xr
-	 giaxYt4gakoTDpdh4LnzDumx/+ET4SCDw1YiGoaZeLR/2OzoukoK2tQW6hqrd3ywe8
-	 A1e8d6YIVUAZjCZj6Q8SEVCzEyhMhuyFkWLgtdro=
+	b=lymVMHYeb2zueA+sdcKgZrGugvIQUyY2O54KJJvWbS2J7ZkUJKWluzTEGgsH87Jpq
+	 f2ghzI8DRxbKobT79ctR/8jsWkdz0tyvnvQQnR2nVO/zrNhkbpVeLeaFF3E117QvLY
+	 jaIjdawxqhIcmvzXy0xXxPD57h5i8gLxI/+P+/HE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenhao Sun <weiguangtwk@outlook.com>,
-	Mingcong Bai <jeffbai@aosc.io>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	"Matthew R. Ochs" <mochs@nvidia.com>,
 	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 6.12 040/164] iommu/vt-d: Apply quirk_iommu_igfx for 8086:0044 (QM57/QS57)
-Date: Wed,  7 May 2025 20:38:45 +0200
-Message-ID: <20250507183822.507476664@linuxfoundation.org>
+Subject: [PATCH 6.12 041/164] iommu: Fix two issues in iommu_copy_struct_from_user()
+Date: Wed,  7 May 2025 20:38:46 +0200
+Message-ID: <20250507183822.547336141@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -52,102 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingcong Bai <jeffbai@aosc.io>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit 2c8a7c66c90832432496616a9a3c07293f1364f3 upstream.
+commit 30a3f2f3e4bd6335b727c83c08a982d969752bc1 upstream.
 
-On the Lenovo ThinkPad X201, when Intel VT-d is enabled in the BIOS, the
-kernel boots with errors related to DMAR, the graphical interface appeared
-quite choppy, and the system resets erratically within a minute after it
-booted:
+In the review for iommu_copy_struct_to_user() helper, Matt pointed out that
+a NULL pointer should be rejected prior to dereferencing it:
+https://lore.kernel.org/all/86881827-8E2D-461C-BDA3-FA8FD14C343C@nvidia.com
 
-DMAR: DRHD: handling fault status reg 3
-DMAR: [DMA Write NO_PASID] Request device [00:02.0] fault addr 0xb97ff000
-[fault reason 0x05] PTE Write access is not set
+And Alok pointed out a typo at the same time:
+https://lore.kernel.org/all/480536af-6830-43ce-a327-adbd13dc3f1d@oracle.com
 
-Upon comparing boot logs with VT-d on/off, I found that the Intel Calpella
-quirk (`quirk_calpella_no_shadow_gtt()') correctly applied the igfx IOMMU
-disable/quirk correctly:
+Since both issues were copied from iommu_copy_struct_from_user(), fix them
+first in the current header.
 
-pci 0000:00:00.0: DMAR: BIOS has allocated no shadow GTT; disabling IOMMU
-for graphics
-
-Whereas with VT-d on, it went into the "else" branch, which then
-triggered the DMAR handling fault above:
-
-... else if (!disable_igfx_iommu) {
-	/* we have to ensure the gfx device is idle before we flush */
-	pci_info(dev, "Disabling batched IOTLB flush on Ironlake\n");
-	iommu_set_dma_strict();
-}
-
-Now, this is not exactly scientific, but moving 0x0044 to quirk_iommu_igfx
-seems to have fixed the aforementioned issue. Running a few `git blame'
-runs on the function, I have found that the quirk was originally
-introduced as a fix specific to ThinkPad X201:
-
-commit 9eecabcb9a92 ("intel-iommu: Abort IOMMU setup for igfx if BIOS gave
-no shadow GTT space")
-
-Which was later revised twice to the "else" branch we saw above:
-
-- 2011: commit 6fbcfb3e467a ("intel-iommu: Workaround IOTLB hang on
-  Ironlake GPU")
-- 2024: commit ba00196ca41c ("iommu/vt-d: Decouple igfx_off from graphic
-  identity mapping")
-
-I'm uncertain whether further testings on this particular laptops were
-done in 2011 and (honestly I'm not sure) 2024, but I would be happy to do
-some distro-specific testing if that's what would be required to verify
-this patch.
-
-P.S., I also see IDs 0x0040, 0x0062, and 0x006a listed under the same
-`quirk_calpella_no_shadow_gtt()' quirk, but I'm not sure how similar these
-chipsets are (if they share the same issue with VT-d or even, indeed, if
-this issue is specific to a bug in the Lenovo BIOS). With regards to
-0x0062, it seems to be a Centrino wireless card, but not a chipset?
-
-I have also listed a couple (distro and kernel) bug reports below as
-references (some of them are from 7-8 years ago!), as they seem to be
-similar issue found on different Westmere/Ironlake, Haswell, and Broadwell
-hardware setups.
-
+Fixes: e9d36c07bb78 ("iommu: Add iommu_copy_struct_from_user helper")
 Cc: stable@vger.kernel.org
-Fixes: 6fbcfb3e467a ("intel-iommu: Workaround IOTLB hang on Ironlake GPU")
-Fixes: ba00196ca41c ("iommu/vt-d: Decouple igfx_off from graphic identity mapping")
-Link: https://groups.google.com/g/qubes-users/c/4NP4goUds2c?pli=1
-Link: https://bugs.archlinux.org/task/65362
-Link: https://bbs.archlinux.org/viewtopic.php?id=230323
-Reported-by: Wenhao Sun <weiguangtwk@outlook.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=197029
-Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
-Link: https://lore.kernel.org/r/20250415133330.12528-1-jeffbai@aosc.io
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Acked-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Matthew R. Ochs <mochs@nvidia.com>
+Link: https://lore.kernel.org/r/20250414191635.450472-1-nicolinc@nvidia.com
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/iommu.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/linux/iommu.h |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -4666,6 +4666,9 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_I
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x2e40, quirk_iommu_igfx);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x2e90, quirk_iommu_igfx);
- 
-+/* QM57/QS57 integrated gfx malfunctions with dmar */
-+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x0044, quirk_iommu_igfx);
-+
- /* Broadwell igfx malfunctions with dmar */
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x1606, quirk_iommu_igfx);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x160B, quirk_iommu_igfx);
-@@ -4743,7 +4746,6 @@ static void quirk_calpella_no_shadow_gtt
- 	}
- }
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x0040, quirk_calpella_no_shadow_gtt);
--DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x0044, quirk_calpella_no_shadow_gtt);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x0062, quirk_calpella_no_shadow_gtt);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x006a, quirk_calpella_no_shadow_gtt);
- 
+--- a/include/linux/iommu.h
++++ b/include/linux/iommu.h
+@@ -423,10 +423,10 @@ static inline int __iommu_copy_struct_fr
+ 	void *dst_data, const struct iommu_user_data *src_data,
+ 	unsigned int data_type, size_t data_len, size_t min_len)
+ {
+-	if (src_data->type != data_type)
+-		return -EINVAL;
+ 	if (WARN_ON(!dst_data || !src_data))
+ 		return -EINVAL;
++	if (src_data->type != data_type)
++		return -EINVAL;
+ 	if (src_data->len < min_len || data_len < src_data->len)
+ 		return -EINVAL;
+ 	return copy_struct_from_user(dst_data, data_len, src_data->uptr,
+@@ -439,8 +439,8 @@ static inline int __iommu_copy_struct_fr
+  *        include/uapi/linux/iommufd.h
+  * @user_data: Pointer to a struct iommu_user_data for user space data info
+  * @data_type: The data type of the @kdst. Must match with @user_data->type
+- * @min_last: The last memember of the data structure @kdst points in the
+- *            initial version.
++ * @min_last: The last member of the data structure @kdst points in the initial
++ *            version.
+  * Return 0 for success, otherwise -error.
+  */
+ #define iommu_copy_struct_from_user(kdst, user_data, data_type, min_last) \
 
 
