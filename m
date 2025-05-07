@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D110C29A0;
-	Wed,  7 May 2025 19:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97FB1E22E9;
+	Wed,  7 May 2025 19:01:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644469; cv=none; b=DAvxFp0v60NOkBqlN/iwwGR5DkCPaO11S+qKl9KcG/fepMQvnmP5jvVNesSGOpOpTG8ItqoYAmUVrQkjScZCG3c41J7HGdsq+PxOF1NBiebVIxI44ND8UCfWEoR0ZzqTFzzQ3ThpYdFFpNNeiSCw1lGDY0dFkcGIVdZN28UDrec=
+	t=1746644472; cv=none; b=rVVZli8+V83J+hLtbv2LnLudYbsmA5D5oAwZ0v+16v7dc2RHetXDf8gJZ1obwZVmWdIriyvgYkAdCZUqmGvF2u0UsmXgi19ANsY8BZY2G/8Qz4ia3QZTe3n0tYA+hOf1yvGHnkTjqMC+p0pKJ86AdWxu6tlJtEKT+mRryuyyGCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644469; c=relaxed/simple;
-	bh=Nw4sDg24p17iMnNtyS6bf5vtwnm/0oONzeLz76WRKPQ=;
+	s=arc-20240116; t=1746644472; c=relaxed/simple;
+	bh=UZgns7wcqi2swwqPzQ2PV3v+1mgQykza6zqckqJacjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r6paYalcf/PFmLmg4RIFGflYTwBHP+kuNf2klopb3aoKAKjfvEvWQXBZ7DMJfzSdiKlEkMbKYYN1eDdIab+D8Gz+2bPmlD35Jua3YuOZdcaiPQR+jQscEKcHxcWymH4BpvD3yne3YOf/pGoHwXlLhkxOjU+0UVR9qqXL6ay+XOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udXzKmSi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ie1cUmlogmQYr0Q10Qu27Fj0ov86dEZJa5zUlKTrcCsCFvMY7zpOUblL2ss5SOMc1/M/ZmUeUqo5xaCG7PfW2TK9CcFnU2ISsGI/LEFYc4FTpt7MWBcdan0qcvIRnPjCJXvUZECLrr1MzDY2C4GdGhaIAXORN9NA0IUYrDtP9uI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MN2BPke1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udXzKmSi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39056C4CEE2;
-	Wed,  7 May 2025 19:01:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MN2BPke1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2749FC4CEE2;
+	Wed,  7 May 2025 19:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644469;
-	bh=Nw4sDg24p17iMnNtyS6bf5vtwnm/0oONzeLz76WRKPQ=;
+	s=korg; t=1746644472;
+	bh=UZgns7wcqi2swwqPzQ2PV3v+1mgQykza6zqckqJacjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=udXzKmSiJH2JgZIJmL5X4IOhRhBmmxL7tl6RMg6tK/WFhqKugniWewCtzJDR/Rl80
-	 mptJgcMnySipsA6YT8HQswl4kLLnY5Wn1NGS2HolvaSRYj29FvnJicqrgBzoAB8yWt
-	 8J2eCynZopsuMlaglh0OPXIwBKezjwFiCiXRPEpY=
+	b=MN2BPke1JN4ozN2SMLABeQpQnG+JoHP4WXVWtUsYYaf0XC48CSdma3v2OvSPhCDXJ
+	 UMzJ98wo3PfbkOHhdU+JV7L+0pqrMYQvg2b+oxnIy2qqoDy/dosnk2eZorDNLZyIks
+	 a3pylF+lZ5abL0oKkCX5m2oMfTO4ys2PrCkUjeXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 052/164] ASoC: soc-core: Stop using of_property_read_bool() for non-boolean properties
-Date: Wed,  7 May 2025 20:38:57 +0200
-Message-ID: <20250507183822.991638633@linuxfoundation.org>
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	David Gow <davidgow@google.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 053/164] ASoC: cs-amp-lib-test: Dont select SND_SOC_CS_AMP_LIB
+Date: Wed,  7 May 2025 20:38:58 +0200
+Message-ID: <20250507183823.082018067@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -50,95 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-commit 6eab7034579917f207ca6d8e3f4e11e85e0ab7d5 upstream.
+[ Upstream commit 96014d91cffb335d3b396771524ff2aba3549865 ]
 
-On R-Car:
+Depend on SND_SOC_CS_AMP_LIB instead of selecting it.
 
-    OF: /sound: Read of boolean property 'simple-audio-card,bitclock-master' with a value.
-    OF: /sound: Read of boolean property 'simple-audio-card,frame-master' with a value.
+KUNIT_ALL_TESTS should only build tests for components that are
+already being built, it should not cause other stuff to be added
+to the build.
 
-or:
-
-    OF: /soc/sound@ec500000/ports/port@0/endpoint: Read of boolean property 'bitclock-master' with a value.
-    OF: /soc/sound@ec500000/ports/port@0/endpoint: Read of boolean property 'frame-master' with a value.
-
-The use of of_property_read_bool() for non-boolean properties is
-deprecated in favor of of_property_present() when testing for property
-presence.
-
-Replace testing for presence before calling of_property_read_u32() by
-testing for an -EINVAL return value from the latter, to simplify the
-code.
-
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/db10e96fbda121e7456d70e97a013cbfc9755f4d.1737533954.git.geert+renesas@glider.be
+Fixes: 177862317a98 ("ASoC: cs-amp-lib: Add KUnit test for calibration helpers")
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250411123608.1676462-3-rf@opensource.cirrus.com
+Reviewed-by: David Gow <davidgow@google.com>
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-core.c |   32 +++++++++++++-------------------
- 1 file changed, 13 insertions(+), 19 deletions(-)
+ sound/soc/codecs/Kconfig | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/sound/soc/soc-core.c
-+++ b/sound/soc/soc-core.c
-@@ -3057,7 +3057,7 @@ int snd_soc_of_parse_pin_switches(struct
- 	unsigned int i, nb_controls;
- 	int ret;
+diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
+index 0d9d1d250f2b5..6a72561c4189b 100644
+--- a/sound/soc/codecs/Kconfig
++++ b/sound/soc/codecs/Kconfig
+@@ -746,10 +746,9 @@ config SND_SOC_CS_AMP_LIB
+ 	tristate
  
--	if (!of_property_read_bool(dev->of_node, prop))
-+	if (!of_property_present(dev->of_node, prop))
- 		return 0;
- 
- 	strings = devm_kcalloc(dev, nb_controls_max,
-@@ -3131,23 +3131,17 @@ int snd_soc_of_parse_tdm_slot(struct dev
- 	if (rx_mask)
- 		snd_soc_of_get_slot_mask(np, "dai-tdm-slot-rx-mask", rx_mask);
- 
--	if (of_property_read_bool(np, "dai-tdm-slot-num")) {
--		ret = of_property_read_u32(np, "dai-tdm-slot-num", &val);
--		if (ret)
--			return ret;
--
--		if (slots)
--			*slots = val;
--	}
--
--	if (of_property_read_bool(np, "dai-tdm-slot-width")) {
--		ret = of_property_read_u32(np, "dai-tdm-slot-width", &val);
--		if (ret)
--			return ret;
-+	ret = of_property_read_u32(np, "dai-tdm-slot-num", &val);
-+	if (ret && ret != -EINVAL)
-+		return ret;
-+	if (!ret && slots)
-+		*slots = val;
- 
--		if (slot_width)
--			*slot_width = val;
--	}
-+	ret = of_property_read_u32(np, "dai-tdm-slot-width", &val);
-+	if (ret && ret != -EINVAL)
-+		return ret;
-+	if (!ret && slot_width)
-+		*slot_width = val;
- 
- 	return 0;
- }
-@@ -3411,12 +3405,12 @@ unsigned int snd_soc_daifmt_parse_clock_
- 	 * check "[prefix]frame-master"
- 	 */
- 	snprintf(prop, sizeof(prop), "%sbitclock-master", prefix);
--	bit = of_property_read_bool(np, prop);
-+	bit = of_property_present(np, prop);
- 	if (bit && bitclkmaster)
- 		*bitclkmaster = of_parse_phandle(np, prop, 0);
- 
- 	snprintf(prop, sizeof(prop), "%sframe-master", prefix);
--	frame = of_property_read_bool(np, prop);
-+	frame = of_property_present(np, prop);
- 	if (frame && framemaster)
- 		*framemaster = of_parse_phandle(np, prop, 0);
- 
+ config SND_SOC_CS_AMP_LIB_TEST
+-	tristate "KUnit test for Cirrus Logic cs-amp-lib"
+-	depends on KUNIT
++	tristate "KUnit test for Cirrus Logic cs-amp-lib" if !KUNIT_ALL_TESTS
++	depends on SND_SOC_CS_AMP_LIB && KUNIT
+ 	default KUNIT_ALL_TESTS
+-	select SND_SOC_CS_AMP_LIB
+ 	help
+ 	  This builds KUnit tests for the Cirrus Logic common
+ 	  amplifier library.
+-- 
+2.39.5
+
 
 
