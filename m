@@ -1,72 +1,73 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from hsmtpd-dty.xspmail.jp (hsmtpd-dty.xspmail.jp [210.130.137.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D545021504D;
-	Wed,  7 May 2025 13:28:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D3978F4F
+	for <patches@lists.linux.dev>; Wed,  7 May 2025 13:32:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.130.137.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746624510; cv=none; b=lbAf0AJB30HjgdLhKZ2F4S7Ri/SocjRkivKPBuZqAafyfiIW3X5Wh4r2ugyXgCmmRUIHDSfKbLPF3DklA2KTsh53ztIebBh/Q0tTLmAt8s7SkQU2zwkJ9VgMzHEv9hg5yehNYnmx0UIg1vuE1PrYMrNCtNm3W1VZWsnv6X0lnWM=
+	t=1746624764; cv=none; b=SsAqgB9A4oTivi0V/IiddaY5Tb1m80gx6ZFvs6iXtind49xAzqf2HY4VbdStWYXqAGAwrFNF4M6d7kb7y+aLdjJCaPMG9PCRwySRPeg1gT8QQT0G33gz9KWQNyDv+kktVWXJ7GS6fhEDYxrXyWCx8p5/OLwm7GJNTxZIEIb6iNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746624510; c=relaxed/simple;
-	bh=CdK7UDpe+n+B1AWq9r87Xx3u1iESZApxZFrTY8qGDqY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HQLzv1UCRKBjctksa7jvYXx41sivgM/9wln40chrIa29GGZudTkicMyYx6IRPO2GQvDOzJDD/+wxXlNq9ueZktbDPNOOmhdtPYacR/I3YKfcjknQqI/qjXbKIuq9c1cFebv0Cgo9v5LWkJKfjkPhXvc3WgYfFgYK6UxHRkBUlFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tjhgxxRw; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1746624764; c=relaxed/simple;
+	bh=b93IRXpKZuiJmeVSeTcY71kbyIcUJ5FiY9P9+AmYZL8=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=nZsA8dToZM6asO0IPsRS6UH3k5oNPxAmdk3WhF/84FOHizijw5lY1moejEs1LDzLPpJJDBI3zllIOdnfr/Vwsu03jmM+SoaN0LKkan/rFishcrb8VRKQjuaWZOC/ZNPk0+l6HeKQeut08IZNtJlIvNFXQwSjakB4ux2DF2BjZVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=iijmio-mail.jp; spf=pass smtp.mailfrom=iijmio-mail.jp; dkim=pass (2048-bit key) header.d=iijmio-mail.jp header.i=henrich@iijmio-mail.jp header.b=vB+P0NeN; arc=none smtp.client-ip=210.130.137.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=iijmio-mail.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iijmio-mail.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tjhgxxRw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDEFC4CEE7;
-	Wed,  7 May 2025 13:28:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746624509;
-	bh=CdK7UDpe+n+B1AWq9r87Xx3u1iESZApxZFrTY8qGDqY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tjhgxxRwjnUcD9W61ES6yNSC/lNNdWqKqVZ/a6ny9Dp7iTX5oFrypxwWMAPWWT5m0
-	 3lhymGGYWycmcf4Zo79zgfW8uw/qlbGzTsxzZG0ZHtTi36+PlPo1CKy1bRU2N4MtJl
-	 llNzHwLh5ULfTT5HfDIW5GowegJd1HIr/tJNuefk=
-Date: Wed, 7 May 2025 15:28:25 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Hideki Yamane <henrich@iijmio-mail.jp>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>, Rob Herring <robh@kernel.org>,
-	Uwe =?iso-8859-1?Q?Kleine-K=C3=B6nig?= <ukleinek@debian.org>,
-	h-yamane@sios.com
+	dkim=pass (2048-bit key) header.d=iijmio-mail.jp header.i=henrich@iijmio-mail.jp header.b="vB+P0NeN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1746624760;
+	d=iijmio-mail.jp; s=x01; i=henrich@iijmio-mail.jp;
+	h=content-transfer-encoding:content-type:mime-version:references:in-reply-to:
+	 message-id:subject:cc:to:from:date:from;
+	bh=sIbr/C5hG61pCDo6Gu04oU4RzXBq7aIXbgelNNjpQts=;
+	b=vB+P0NeN83cUeyCpY6EWRviFfA4ZAKCWMApjOELlslHfZJntVC9uV2KeMbLVo/bazT38lBCUcQeUZ
+	 Xwau1eIK3XoeIMyvuWjtuoTemdz46gkHy2pbCcWakTQnqkoJt/SVtY1T54D5cEAdzaZcGNeKEJpQp5
+	 3Kd/7SzG9+mW+AY7GbDbr8lGJPftWz5wRK44LBSxsw/P7WAmPNxhCqii/AfDEp2myez2XbGbEdHDdr
+	 zAKDc1mIgupkPiQ7d8AaqzqwyLugwqpgOr9SAoMpIk4keQrfukbsiop9EY52Btn4ou7r5arx32KljH
+	 sFS1fxy4lRe0/yPzV7xy7MKBUi0hfTg==
+X-Country-Code: JP
+Received: from t14s (unknown [2409:12:b80:1600:5410:436b:3e69:1281])
+	by hsmtpd-out-0.iij.cluster.xspmail.jp (Halon) with ESMTPSA (TLSv1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	id e75fe861-5480-428f-ac1b-2c4f5ef90c50;
+	Wed, 07 May 2025 22:32:40 +0900 (JST)
+Date: Wed, 7 May 2025 22:32:39 +0900
+From: Hideki Yamane <henrich@iijmio-mail.jp>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Uwe
+ =?UTF-8?B?S2xlaW5lLUvDg8K2bmln?= <ukleinek@debian.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, Sergey Shtylyov
+ <s.shtylyov@omp.ru>, Rob Herring <robh@kernel.org>, h-yamane@sios.com
 Subject: Re: [PATCH 6.1 150/167] of: module: add buffer overflow check in
  of_modalias()
-Message-ID: <2025050751-backer-update-3b45@gregkh>
+Message-Id: <20250507223239.a07fd11a7d3d9bbc819273c1@iijmio-mail.jp>
+In-Reply-To: <2025050751-backer-update-3b45@gregkh>
 References: <20250429161051.743239894@linuxfoundation.org>
- <20250429161057.791863253@linuxfoundation.org>
- <20250507200533.ac131fe0c774b23054b4261e@iijmio-mail.jp>
- <2025050737-banked-clarify-3bf8@gregkh>
- <20250507222156.6c59459565246dc1b5ae37fc@iijmio-mail.jp>
+	<20250429161057.791863253@linuxfoundation.org>
+	<20250507200533.ac131fe0c774b23054b4261e@iijmio-mail.jp>
+	<2025050737-banked-clarify-3bf8@gregkh>
+	<20250507222156.6c59459565246dc1b5ae37fc@iijmio-mail.jp>
+	<2025050751-backer-update-3b45@gregkh>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250507222156.6c59459565246dc1b5ae37fc@iijmio-mail.jp>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Wed, May 07, 2025 at 10:21:56PM +0900, Hideki Yamane wrote:
-> On Wed, 7 May 2025 13:12:02 +0200
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> > It does not apply there cleanly, please submit tested patches against
-> > those branches if you wish to have it applied there.
-> 
->  Diff attached, and built fine with those patches and corresponded branches
->  on my laptop. Those changes just adds checks for length, so I guess no harm
->  with that.
-> 
-> 
->  I'm not familiar with Linux kernel development (my previous 1-liner patch
->  was merged 20 years ago ;) so maybe I did something wrong again, please
->  point out, then. Thank you.
+Hi,
 
-I'll take Uwe's backports, but in the future, when you send a patch on
-like this, you also need to sign-off on it, especially as you had to
-modify it from the original change.
+On Wed, 7 May 2025 15:28:25 +0200
+Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> I'll take Uwe's backports, but in the future, when you send a patch on
+> like this, you also need to sign-off on it, especially as you had to
+> modify it from the original change.
 
-thanks,
+ Thanks Greg and Uwe, I'll do it as you suggest if I can have a chance to
+ contribute something to Linux again :)
 
-greg k-h
+
+-- 
+Hideki Yamane <henrich@iijmio-mail.jp / debian.org | h-yamane@sios.com>
