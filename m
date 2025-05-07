@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFF01DDC23;
-	Wed,  7 May 2025 18:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D194E1DDC23;
+	Wed,  7 May 2025 18:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643755; cv=none; b=qFfHiDWjf0ddSGAmPZvBPe0YsWjH2ILWwZQQ/JffqydZ6w+8CLpO4s3D34w25dqRb0HPOExc1pRPhzk68m09/pNVCeI1CMMWPeSbiYPYRchhUcqTYvE9ZcAvaGdkxAxfHVSh5NEyrYihrIjYUm/LpRnJEwwiWKnxDvmy6OMmh7o=
+	t=1746643757; cv=none; b=btT1uHqkA+YYKsVea8E03Kg5g/GP5phdH6LJMkycVIa79g/iRJYI/hp0UlqGuyDziDFtr+JqHHaXEC0VfhkACBWZwrvq/uZ6J8GC2mLHS59PX1E00PZd9D2bYrWXSZMrcEKsRNujqTUcYWMGU8LrGJmp5hVNtwVk2t3c0DlLSsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643755; c=relaxed/simple;
-	bh=yCYoQDR7kwKX5YvSO53jY25j8gKC3MoY62XJLu8gruY=;
+	s=arc-20240116; t=1746643757; c=relaxed/simple;
+	bh=1HKv9Q9g1CP0bVizhABm5eeOj2mzzh6c8lysHRmQjzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iU3puXwDc7iFIls2B4+TsjPXQIRfoFIUogGn/mAwF7zP69F6wxounEJjh5ewrz5ITEZv6wWawTlWl+CUJkio6DMW1hxSouYDCqsp26daiwl7RBpVdBYsiJpN5ZXHl4z8prqA/G5J2jAbKUJzRhIU62DDBE7i2c3GdwTOhmcxsfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qs/+69cP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mxYSDFXplRxjKvIoWJCGlBMvak968SFPus8pPwNF4dM0N1ratGZOCa+iF7poqCbc8g9+aT2QyVE2sQa0kijQCpgACydu0cXt4uK+5bHpwMTo+rgjmLQVQoCBO1p49YmKoxLtVnNVaNdfKoblijFOQIUYnujzgbQV3SILUgB0gm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2gKZz8J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qs/+69cP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0397C4CEE2;
-	Wed,  7 May 2025 18:49:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2gKZz8J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6D8C4CEE2;
+	Wed,  7 May 2025 18:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643754;
-	bh=yCYoQDR7kwKX5YvSO53jY25j8gKC3MoY62XJLu8gruY=;
+	s=korg; t=1746643757;
+	bh=1HKv9Q9g1CP0bVizhABm5eeOj2mzzh6c8lysHRmQjzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qs/+69cP8el2l/pLHikQVuzzi424GdgfpZ3iDXIlYLBg+AOqY8xTI/GYRO+YVbEPP
-	 TfZbkrELAC2A+c+uLXFFPL+vUMnGwpK4KjAps0RGwOmIDHLxkW9LH+z23lb5aSiH4g
-	 L0ITWCFt7UMmZzj9BdXIRormlaBUddzr8cIXhlKs=
+	b=J2gKZz8JMysgfDRbMFs3mH4/XWJjsvm3P4I/NgYmBTR7/0OgVw1wAUq/yr1i5rsZg
+	 hZ5VFRsN6kkYOYE1oxKyBRYksUBn7CDX4JdaSOiIyiju41gs6f0+rRTGma1+4Ymfsk
+	 uS/5iZWDjWypfHbjIUWxj7gGBXI6udANVMLf661I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Bhawanpreet Lakha <bhawanpreet.lakha@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Christian Hewitt <christianshewitt@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 93/97] drm/amd/display: Change HDCP update sequence for DM
-Date: Wed,  7 May 2025 20:40:08 +0200
-Message-ID: <20250507183810.714628932@linuxfoundation.org>
+Subject: [PATCH 6.1 84/97] Revert "drm/meson: vclk: fix calculation of 59.94 fractional rates"
+Date: Wed,  7 May 2025 20:39:59 +0200
+Message-ID: <20250507183810.358014757@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183806.987408728@linuxfoundation.org>
 References: <20250507183806.987408728@linuxfoundation.org>
@@ -54,161 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bhawanpreet Lakha <bhawanpreet.lakha@amd.com>
+From: Christian Hewitt <christianshewitt@gmail.com>
 
-[ Upstream commit 393e83484839970e4975dfa1f0666f939a6f3e3d ]
+[ Upstream commit f37bb5486ea536c1d61df89feeaeff3f84f0b560 ]
 
-Refactor the sequence in hdcp_update_display() to use
-mod_hdcp_update_display().
+This reverts commit bfbc68e.
 
-Previous sequence:
-	- remove()->add()
+The patch does permit the offending YUV420 @ 59.94 phy_freq and
+vclk_freq mode to match in calculations. It also results in all
+fractional rates being unavailable for use. This was unintended
+and requires the patch to be reverted.
 
-This Sequence was used to update the display, (mod_hdcp_update_display
-didn't exist at the time). This meant for any hdcp updates (type changes,
-enable/disable) we would remove, reconstruct, and add. This leads to
-unnecessary calls to psp eventually
-
-New Sequence using mod_hdcp_update_display():
-	- add() once when stream is enabled
-	- use update() for all updates
-
-The update function checks for prev == new states and will not
-unnecessarily end up calling psp via add/remove.
-
-Reviewed-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Bhawanpreet Lakha <bhawanpreet.lakha@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: be593d9d91c5 ("drm/amd/display: Fix slab-use-after-free in hdcp")
+Fixes: bfbc68e4d869 ("drm/meson: vclk: fix calculation of 59.94 fractional rates")
+Cc: stable@vger.kernel.org
+Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250421201300.778955-2-martin.blumenstingl@googlemail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250421201300.778955-2-martin.blumenstingl@googlemail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/amdgpu_dm/amdgpu_dm_hdcp.c    | 80 +++++++++----------
- 1 file changed, 38 insertions(+), 42 deletions(-)
+ drivers/gpu/drm/meson/meson_vclk.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
-index 15537f554ca86..7c67bb771f996 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
-@@ -168,53 +168,45 @@ void hdcp_update_display(struct hdcp_workqueue *hdcp_work,
- 			 bool enable_encryption)
- {
- 	struct hdcp_workqueue *hdcp_w = &hdcp_work[link_index];
--	struct mod_hdcp_display *display = &hdcp_work[link_index].display;
--	struct mod_hdcp_link *link = &hdcp_work[link_index].link;
--	struct mod_hdcp_display_query query;
-+	struct mod_hdcp_link_adjustment link_adjust;
-+	struct mod_hdcp_display_adjustment display_adjust;
- 	unsigned int conn_index = aconnector->base.index;
- 
- 	mutex_lock(&hdcp_w->mutex);
- 	hdcp_w->aconnector[conn_index] = aconnector;
- 
--	query.display = NULL;
--	mod_hdcp_query_display(&hdcp_w->hdcp, aconnector->base.index, &query);
--
--	if (query.display) {
--		memcpy(display, query.display, sizeof(struct mod_hdcp_display));
--		mod_hdcp_remove_display(&hdcp_w->hdcp, aconnector->base.index, &hdcp_w->output);
--
--		hdcp_w->link.adjust.hdcp2.force_type = MOD_HDCP_FORCE_TYPE_0;
--
--		if (enable_encryption) {
--			/* Explicitly set the saved SRM as sysfs call will be after
--			 * we already enabled hdcp (s3 resume case)
--			 */
--			if (hdcp_work->srm_size > 0)
--				psp_set_srm(hdcp_work->hdcp.config.psp.handle, hdcp_work->srm,
--					    hdcp_work->srm_size,
--					    &hdcp_work->srm_version);
--
--			display->adjust.disable = MOD_HDCP_DISPLAY_NOT_DISABLE;
--			if (content_type == DRM_MODE_HDCP_CONTENT_TYPE0) {
--				hdcp_w->link.adjust.hdcp1.disable = 0;
--				hdcp_w->link.adjust.hdcp2.force_type = MOD_HDCP_FORCE_TYPE_0;
--			} else if (content_type == DRM_MODE_HDCP_CONTENT_TYPE1) {
--				hdcp_w->link.adjust.hdcp1.disable = 1;
--				hdcp_w->link.adjust.hdcp2.force_type = MOD_HDCP_FORCE_TYPE_1;
--			}
-+	memset(&link_adjust, 0, sizeof(link_adjust));
-+	memset(&display_adjust, 0, sizeof(display_adjust));
- 
--			schedule_delayed_work(&hdcp_w->property_validate_dwork,
--					      msecs_to_jiffies(DRM_HDCP_CHECK_PERIOD_MS));
--		} else {
--			display->adjust.disable = MOD_HDCP_DISPLAY_DISABLE_AUTHENTICATION;
--			hdcp_w->encryption_status[conn_index] = MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF;
--			cancel_delayed_work(&hdcp_w->property_validate_dwork);
-+	if (enable_encryption) {
-+		/* Explicitly set the saved SRM as sysfs call will be after we already enabled hdcp
-+		 * (s3 resume case)
-+		 */
-+		if (hdcp_work->srm_size > 0)
-+			psp_set_srm(hdcp_work->hdcp.config.psp.handle, hdcp_work->srm,
-+				    hdcp_work->srm_size,
-+				    &hdcp_work->srm_version);
-+
-+		display_adjust.disable = MOD_HDCP_DISPLAY_NOT_DISABLE;
-+
-+		link_adjust.auth_delay = 2;
-+
-+		if (content_type == DRM_MODE_HDCP_CONTENT_TYPE0) {
-+			link_adjust.hdcp2.force_type = MOD_HDCP_FORCE_TYPE_0;
-+		} else if (content_type == DRM_MODE_HDCP_CONTENT_TYPE1) {
-+			link_adjust.hdcp1.disable = 1;
-+			link_adjust.hdcp2.force_type = MOD_HDCP_FORCE_TYPE_1;
- 		}
- 
--		display->state = MOD_HDCP_DISPLAY_ACTIVE;
-+		schedule_delayed_work(&hdcp_w->property_validate_dwork,
-+				      msecs_to_jiffies(DRM_HDCP_CHECK_PERIOD_MS));
-+	} else {
-+		display_adjust.disable = MOD_HDCP_DISPLAY_DISABLE_AUTHENTICATION;
-+		hdcp_w->encryption_status[conn_index] = MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF;
-+		cancel_delayed_work(&hdcp_w->property_validate_dwork);
+diff --git a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
+index 2a942dc6a6dc2..2a82119eb58ed 100644
+--- a/drivers/gpu/drm/meson/meson_vclk.c
++++ b/drivers/gpu/drm/meson/meson_vclk.c
+@@ -790,13 +790,13 @@ meson_vclk_vic_supported_freq(struct meson_drm *priv, unsigned int phy_freq,
+ 				 FREQ_1000_1001(params[i].pixel_freq));
+ 		DRM_DEBUG_DRIVER("i = %d phy_freq = %d alt = %d\n",
+ 				 i, params[i].phy_freq,
+-				 FREQ_1000_1001(params[i].phy_freq/1000)*1000);
++				 FREQ_1000_1001(params[i].phy_freq/10)*10);
+ 		/* Match strict frequency */
+ 		if (phy_freq == params[i].phy_freq &&
+ 		    vclk_freq == params[i].vclk_freq)
+ 			return MODE_OK;
+ 		/* Match 1000/1001 variant */
+-		if (phy_freq == (FREQ_1000_1001(params[i].phy_freq/1000)*1000) &&
++		if (phy_freq == (FREQ_1000_1001(params[i].phy_freq/10)*10) &&
+ 		    vclk_freq == FREQ_1000_1001(params[i].vclk_freq))
+ 			return MODE_OK;
  	}
+@@ -1070,7 +1070,7 @@ void meson_vclk_setup(struct meson_drm *priv, unsigned int target,
  
--	mod_hdcp_add_display(&hdcp_w->hdcp, link, display, &hdcp_w->output);
-+	mod_hdcp_update_display(&hdcp_w->hdcp, conn_index, &link_adjust, &display_adjust, &hdcp_w->output);
- 
- 	process_output(hdcp_w);
- 	mutex_unlock(&hdcp_w->mutex);
-@@ -521,7 +513,7 @@ static void update_config(void *handle, struct cp_psp_stream_config *config)
- 	int link_index = aconnector->dc_link->link_index;
- 	struct mod_hdcp_display *display = &hdcp_work[link_index].display;
- 	struct mod_hdcp_link *link = &hdcp_work[link_index].link;
--	struct drm_connector_state *conn_state;
-+	struct hdcp_workqueue *hdcp_w = &hdcp_work[link_index];
- 	struct dc_sink *sink = NULL;
- 	bool link_is_hdcp14 = false;
- 
-@@ -563,7 +555,7 @@ static void update_config(void *handle, struct cp_psp_stream_config *config)
- 	display->adjust.disable = MOD_HDCP_DISPLAY_DISABLE_AUTHENTICATION;
- 	link->adjust.auth_delay = 3;
- 	link->adjust.hdcp1.disable = 0;
--	conn_state = aconnector->base.state;
-+	hdcp_w->encryption_status[display->index] = MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF;
- 
- 	DRM_DEBUG_DRIVER("[HDCP_DM] display %d, CP %d, type %d\n", aconnector->base.index,
- 			 (!!aconnector->base.state) ?
-@@ -571,9 +563,13 @@ static void update_config(void *handle, struct cp_psp_stream_config *config)
- 			 (!!aconnector->base.state) ?
- 			 aconnector->base.state->hdcp_content_type : -1);
- 
--	if (conn_state)
--		hdcp_update_display(hdcp_work, link_index, aconnector,
--				    conn_state->hdcp_content_type, false);
-+	mutex_lock(&hdcp_w->mutex);
-+
-+	mod_hdcp_add_display(&hdcp_w->hdcp, link, display, &hdcp_w->output);
-+
-+	process_output(hdcp_w);
-+	mutex_unlock(&hdcp_w->mutex);
-+
- }
- 
- /**
+ 	for (freq = 0 ; params[freq].pixel_freq ; ++freq) {
+ 		if ((phy_freq == params[freq].phy_freq ||
+-		     phy_freq == FREQ_1000_1001(params[freq].phy_freq/1000)*1000) &&
++		     phy_freq == FREQ_1000_1001(params[freq].phy_freq/10)*10) &&
+ 		    (vclk_freq == params[freq].vclk_freq ||
+ 		     vclk_freq == FREQ_1000_1001(params[freq].vclk_freq))) {
+ 			if (vclk_freq != params[freq].vclk_freq)
 -- 
 2.39.5
 
