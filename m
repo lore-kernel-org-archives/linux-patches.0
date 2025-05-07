@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634AF19007D;
-	Wed,  7 May 2025 18:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BAC41A2390;
+	Wed,  7 May 2025 18:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643545; cv=none; b=gtEFfqZ62hyscNekq95OHg0g0/IowgqmS2hEl989ikVJkbAo+CYLUjXCD6g3vuMVpQD+RsalUnj83ul756dB9Zd6/foI4raYlgPS/TkOc5N6ch5to9Yp+HnSlHzEpP0m6Pl3EkFxZZfuwdaE1YXGP9O1/9Sy4MhSMc4x/8vga6g=
+	t=1746643548; cv=none; b=kZpI0Ef+ddLrzfoGWncwWz9GktC9AYiu8YbU0aJK8h+1xTeV770wlsUEurUCcYZRyyOdY1mT8hyq6eJV451LsL/aOpuTNU+r2zjrrfnK5xglURKOETGEmpvskiKwk3QgS9ZBK9ZFJNk+vG2NIQQ8wqck1/UEXe0SPblohQtVpEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643545; c=relaxed/simple;
-	bh=41V3owcb126VQrpPK8nou+upk5AOrfLd2j3BEZETqUU=;
+	s=arc-20240116; t=1746643548; c=relaxed/simple;
+	bh=LXRUoogXz0LB076E4+7n2vhZ2Oj0nISAq28F+3E3nk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKAwGwsViydEBJf2/rrSbNH+jTnVySUi2uVGNh5uQ5f32kowSxtACCXkx1WApElBoTUCbNYkFkhop354CckDA/zUcO5128O3SX847AIa3Y5WL9wTdLPap7Q+dSbsDTDeHFcduBXPbbpq1jMP4xLAhnkBNG5PyrAzw9i3Xksyvv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLFDKD7X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G5AMMVe7orhA7UFajTrQ2TnnhYbOVWqcmDfcvpsQ+dpHADqVY43YhBMaIHldm70m5jd8ifKwDslGyQ7MqAnKVF7rqTInvxzxfNpGtny3tjkgpe1a15b/y/7BFW2juVH1VDqDxBvSkVdSII9Am3PBJkqusX5xPeZqgSNBJwlqtKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQjZ/27k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLFDKD7X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40FDC4CEE2;
-	Wed,  7 May 2025 18:45:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQjZ/27k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC433C4CEE2;
+	Wed,  7 May 2025 18:45:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643545;
-	bh=41V3owcb126VQrpPK8nou+upk5AOrfLd2j3BEZETqUU=;
+	s=korg; t=1746643548;
+	bh=LXRUoogXz0LB076E4+7n2vhZ2Oj0nISAq28F+3E3nk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BLFDKD7X8rLtVuE18J3TeUAIeybeWkvYgxvI1HJBzlLJBB5jmdLaWizAHDyOZhg6a
-	 J65L+308/TpZY0Pev92NWt7tvjzKlIF/vagXU7dyv7mZavJOj7Z+FMNjzY3IWyw1ex
-	 Q5qwY/HgINzLA5danTAvCxI6p81USDrmF+KsuBX8=
+	b=mQjZ/27kMIlvP3gYvaRw8kP1HlOpUyWuxnLEyfUIX3DNGdxTW5ogcitNYN6ZfLtxx
+	 ASkoVb+GaW4/BbWNdGfppIfGUMLF+0dJTqAcRd95IrytAldcaSOL425IfWnW3PQ3kR
+	 W2HNIFI57B8rL+eK1Cc6Ym12PZh0XBm8naYT50vQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	Leah Rumancik <leah.rumancik@gmail.com>
-Subject: [PATCH 6.1 38/97] xfs: restrict when we try to align cow fork delalloc to cowextsz hints
-Date: Wed,  7 May 2025 20:39:13 +0200
-Message-ID: <20250507183808.526382076@linuxfoundation.org>
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Lifeng Zheng <zhenglifeng1@huawei.com>
+Subject: [PATCH 6.1 21/97] cpufreq: Fix setting policy limits when frequency tables are used
+Date: Wed,  7 May 2025 20:38:56 +0200
+Message-ID: <20250507183807.834562711@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183806.987408728@linuxfoundation.org>
 References: <20250507183806.987408728@linuxfoundation.org>
@@ -52,172 +51,295 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 288e1f693f04e66be99f27e7cbe4a45936a66745 ]
+commit b79028039f440e7d2c4df6ab243060c4e3803e84 upstream.
 
-xfs/205 produces the following failure when always_cow is enabled:
+Commit 7491cdf46b5c ("cpufreq: Avoid using inconsistent policy->min and
+policy->max") overlooked the fact that policy->min and policy->max were
+accessed directly in cpufreq_frequency_table_target() and in the
+functions called by it.  Consequently, the changes made by that commit
+led to problems with setting policy limits.
 
-#  --- a/tests/xfs/205.out	2024-02-28 16:20:24.437887970 -0800
-#  +++ b/tests/xfs/205.out.bad	2024-06-03 21:13:40.584000000 -0700
-#  @@ -1,4 +1,5 @@
-#   QA output created by 205
-#   *** one file
-#  +   !!! disk full (expected)
-#   *** one file, a few bytes at a time
-#   *** done
+Address this by passing the target frequency limits to __resolve_freq()
+and cpufreq_frequency_table_target() and propagating them to the
+functions called by the latter.
 
-This is the result of overly aggressive attempts to align cow fork
-delalloc reservations to the CoW extent size hint.  Looking at the trace
-data, we're trying to append a single fsblock to the "fred" file.
-Trying to create a speculative post-eof reservation fails because
-there's not enough space.
-
-We then set @prealloc_blocks to zero and try again, but the cowextsz
-alignment code triggers, which expands our request for a 1-fsblock
-reservation into a 39-block reservation.  There's not enough space for
-that, so the whole write fails with ENOSPC even though there's
-sufficient space in the filesystem to allocate the single block that we
-need to land the write.
-
-There are two things wrong here -- first, we shouldn't be attempting
-speculative preallocations beyond what was requested when we're low on
-space.  Second, if we've already computed a posteof preallocation, we
-shouldn't bother trying to align that to the cowextsize hint.
-
-Fix both of these problems by adding a flag that only enables the
-expansion of the delalloc reservation to the cowextsize if we're doing a
-non-extending write, and only if we're not doing an ENOSPC retry.  This
-requires us to move the ENOSPC retry logic to xfs_bmapi_reserve_delalloc.
-
-I probably should have caught this six years ago when 6ca30729c206d was
-being reviewed, but oh well.  Update the comments to reflect what the
-code does now.
-
-Fixes: 6ca30729c206d ("xfs: bmap code cleanup")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: "Darrick J. Wong" <djwong@kernel.org>
+Fixes: 7491cdf46b5c ("cpufreq: Avoid using inconsistent policy->min and policy->max")
+Cc: 5.16+ <stable@vger.kernel.org> # 5.16+
+Closes: https://lore.kernel.org/linux-pm/aAplED3IA_J0eZN0@linaro.org/
+Reported-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Tested-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Reviewed-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Link: https://patch.msgid.link/5896780.DvuYhMxLoT@rjwysocki.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_bmap.c |   31 +++++++++++++++++++++++++++----
- fs/xfs/xfs_iomap.c       |   34 ++++++++++++----------------------
- 2 files changed, 39 insertions(+), 26 deletions(-)
+ drivers/cpufreq/cpufreq.c          |   22 ++++++---
+ drivers/cpufreq/cpufreq_ondemand.c |    3 -
+ drivers/cpufreq/freq_table.c       |    6 +-
+ include/linux/cpufreq.h            |   83 ++++++++++++++++++++++++-------------
+ 4 files changed, 73 insertions(+), 41 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_bmap.c
-+++ b/fs/xfs/libxfs/xfs_bmap.c
-@@ -3959,20 +3959,32 @@ xfs_bmapi_reserve_delalloc(
- 	xfs_extlen_t		alen;
- 	xfs_extlen_t		indlen;
- 	int			error;
--	xfs_fileoff_t		aoff = off;
-+	xfs_fileoff_t		aoff;
-+	bool			use_cowextszhint =
-+					whichfork == XFS_COW_FORK && !prealloc;
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -528,14 +528,18 @@ void cpufreq_disable_fast_switch(struct
+ EXPORT_SYMBOL_GPL(cpufreq_disable_fast_switch);
  
-+retry:
- 	/*
- 	 * Cap the alloc length. Keep track of prealloc so we know whether to
- 	 * tag the inode before we return.
- 	 */
-+	aoff = off;
- 	alen = XFS_FILBLKS_MIN(len + prealloc, XFS_MAX_BMBT_EXTLEN);
- 	if (!eof)
- 		alen = XFS_FILBLKS_MIN(alen, got->br_startoff - aoff);
- 	if (prealloc && alen >= len)
- 		prealloc = alen - len;
+ static unsigned int __resolve_freq(struct cpufreq_policy *policy,
+-		unsigned int target_freq, unsigned int relation)
++				   unsigned int target_freq,
++				   unsigned int min, unsigned int max,
++				   unsigned int relation)
+ {
+ 	unsigned int idx;
  
--	/* Figure out the extent size, adjust alen */
--	if (whichfork == XFS_COW_FORK) {
-+	/*
-+	 * If we're targetting the COW fork but aren't creating a speculative
-+	 * posteof preallocation, try to expand the reservation to align with
-+	 * the COW extent size hint if there's sufficient free space.
-+	 *
-+	 * Unlike the data fork, the CoW cancellation functions will free all
-+	 * the reservations at inactivation, so we don't require that every
-+	 * delalloc reservation have a dirty pagecache.
-+	 */
-+	if (use_cowextszhint) {
- 		struct xfs_bmbt_irec	prev;
- 		xfs_extlen_t		extsz = xfs_get_cowextsz_hint(ip);
- 
-@@ -3991,7 +4003,7 @@ xfs_bmapi_reserve_delalloc(
- 	 */
- 	error = xfs_quota_reserve_blkres(ip, alen);
- 	if (error)
--		return error;
-+		goto out;
- 
- 	/*
- 	 * Split changing sb for alen and indlen since they could be coming
-@@ -4036,6 +4048,17 @@ out_unreserve_blocks:
- out_unreserve_quota:
- 	if (XFS_IS_QUOTA_ON(mp))
- 		xfs_quota_unreserve_blkres(ip, alen);
-+out:
-+	if (error == -ENOSPC || error == -EDQUOT) {
-+		trace_xfs_delalloc_enospc(ip, off, len);
++	target_freq = clamp_val(target_freq, min, max);
 +
-+		if (prealloc || use_cowextszhint) {
-+			/* retry without any preallocation */
-+			use_cowextszhint = false;
-+			prealloc = 0;
-+			goto retry;
-+		}
-+	}
- 	return error;
+ 	if (!policy->freq_table)
+ 		return target_freq;
+ 
+-	idx = cpufreq_frequency_table_target(policy, target_freq, relation);
++	idx = cpufreq_frequency_table_target(policy, target_freq, min, max, relation);
+ 	policy->cached_resolved_idx = idx;
+ 	policy->cached_target_freq = target_freq;
+ 	return policy->freq_table[idx].frequency;
+@@ -569,8 +573,7 @@ unsigned int cpufreq_driver_resolve_freq
+ 	if (unlikely(min > max))
+ 		min = max;
+ 
+-	return __resolve_freq(policy, clamp_val(target_freq, min, max),
+-			      CPUFREQ_RELATION_LE);
++	return __resolve_freq(policy, target_freq, min, max, CPUFREQ_RELATION_LE);
+ }
+ EXPORT_SYMBOL_GPL(cpufreq_driver_resolve_freq);
+ 
+@@ -2296,8 +2299,8 @@ int __cpufreq_driver_target(struct cpufr
+ 	if (cpufreq_disabled())
+ 		return -ENODEV;
+ 
+-	target_freq = clamp_val(target_freq, policy->min, policy->max);
+-	target_freq = __resolve_freq(policy, target_freq, relation);
++	target_freq = __resolve_freq(policy, target_freq, policy->min,
++				     policy->max, relation);
+ 
+ 	pr_debug("target for CPU %u: %u kHz, relation %u, requested %u kHz\n",
+ 		 policy->cpu, target_freq, relation, old_target_freq);
+@@ -2592,8 +2595,11 @@ static int cpufreq_set_policy(struct cpu
+ 	 * compiler optimizations around them because they may be accessed
+ 	 * concurrently by cpufreq_driver_resolve_freq() during the update.
+ 	 */
+-	WRITE_ONCE(policy->max, __resolve_freq(policy, new_data.max, CPUFREQ_RELATION_H));
+-	new_data.min = __resolve_freq(policy, new_data.min, CPUFREQ_RELATION_L);
++	WRITE_ONCE(policy->max, __resolve_freq(policy, new_data.max,
++					       new_data.min, new_data.max,
++					       CPUFREQ_RELATION_H));
++	new_data.min = __resolve_freq(policy, new_data.min, new_data.min,
++				      new_data.max, CPUFREQ_RELATION_L);
+ 	WRITE_ONCE(policy->min, new_data.min > policy->max ? policy->max : new_data.min);
+ 
+ 	trace_cpu_frequency_limits(policy);
+--- a/drivers/cpufreq/cpufreq_ondemand.c
++++ b/drivers/cpufreq/cpufreq_ondemand.c
+@@ -77,7 +77,8 @@ static unsigned int generic_powersave_bi
+ 		return freq_next;
+ 	}
+ 
+-	index = cpufreq_frequency_table_target(policy, freq_next, relation);
++	index = cpufreq_frequency_table_target(policy, freq_next, policy->min,
++					       policy->max, relation);
+ 	freq_req = freq_table[index].frequency;
+ 	freq_reduc = freq_req * od_tuners->powersave_bias / 1000;
+ 	freq_avg = freq_req - freq_reduc;
+--- a/drivers/cpufreq/freq_table.c
++++ b/drivers/cpufreq/freq_table.c
+@@ -116,8 +116,8 @@ int cpufreq_generic_frequency_table_veri
+ EXPORT_SYMBOL_GPL(cpufreq_generic_frequency_table_verify);
+ 
+ int cpufreq_table_index_unsorted(struct cpufreq_policy *policy,
+-				 unsigned int target_freq,
+-				 unsigned int relation)
++				 unsigned int target_freq, unsigned int min,
++				 unsigned int max, unsigned int relation)
+ {
+ 	struct cpufreq_frequency_table optimal = {
+ 		.driver_data = ~0,
+@@ -148,7 +148,7 @@ int cpufreq_table_index_unsorted(struct
+ 	cpufreq_for_each_valid_entry_idx(pos, table, i) {
+ 		freq = pos->frequency;
+ 
+-		if ((freq < policy->min) || (freq > policy->max))
++		if (freq < min || freq > max)
+ 			continue;
+ 		if (freq == target_freq) {
+ 			optimal.driver_data = i;
+--- a/include/linux/cpufreq.h
++++ b/include/linux/cpufreq.h
+@@ -789,8 +789,8 @@ int cpufreq_frequency_table_verify(struc
+ int cpufreq_generic_frequency_table_verify(struct cpufreq_policy_data *policy);
+ 
+ int cpufreq_table_index_unsorted(struct cpufreq_policy *policy,
+-				 unsigned int target_freq,
+-				 unsigned int relation);
++				 unsigned int target_freq, unsigned int min,
++				 unsigned int max, unsigned int relation);
+ int cpufreq_frequency_table_get_index(struct cpufreq_policy *policy,
+ 		unsigned int freq);
+ 
+@@ -855,12 +855,12 @@ static inline int cpufreq_table_find_ind
+ 	return best;
  }
  
---- a/fs/xfs/xfs_iomap.c
-+++ b/fs/xfs/xfs_iomap.c
-@@ -1115,33 +1115,23 @@ xfs_buffered_write_iomap_begin(
- 		}
+-/* Works only on sorted freq-tables */
+-static inline int cpufreq_table_find_index_l(struct cpufreq_policy *policy,
+-					     unsigned int target_freq,
+-					     bool efficiencies)
++static inline int find_index_l(struct cpufreq_policy *policy,
++			       unsigned int target_freq,
++			       unsigned int min, unsigned int max,
++			       bool efficiencies)
+ {
+-	target_freq = clamp_val(target_freq, policy->min, policy->max);
++	target_freq = clamp_val(target_freq, min, max);
+ 
+ 	if (policy->freq_table_sorted == CPUFREQ_TABLE_SORTED_ASCENDING)
+ 		return cpufreq_table_find_index_al(policy, target_freq,
+@@ -870,6 +870,14 @@ static inline int cpufreq_table_find_ind
+ 						   efficiencies);
+ }
+ 
++/* Works only on sorted freq-tables */
++static inline int cpufreq_table_find_index_l(struct cpufreq_policy *policy,
++					     unsigned int target_freq,
++					     bool efficiencies)
++{
++	return find_index_l(policy, target_freq, policy->min, policy->max, efficiencies);
++}
++
+ /* Find highest freq at or below target in a table in ascending order */
+ static inline int cpufreq_table_find_index_ah(struct cpufreq_policy *policy,
+ 					      unsigned int target_freq,
+@@ -923,12 +931,12 @@ static inline int cpufreq_table_find_ind
+ 	return best;
+ }
+ 
+-/* Works only on sorted freq-tables */
+-static inline int cpufreq_table_find_index_h(struct cpufreq_policy *policy,
+-					     unsigned int target_freq,
+-					     bool efficiencies)
++static inline int find_index_h(struct cpufreq_policy *policy,
++			       unsigned int target_freq,
++			       unsigned int min, unsigned int max,
++			       bool efficiencies)
+ {
+-	target_freq = clamp_val(target_freq, policy->min, policy->max);
++	target_freq = clamp_val(target_freq, min, max);
+ 
+ 	if (policy->freq_table_sorted == CPUFREQ_TABLE_SORTED_ASCENDING)
+ 		return cpufreq_table_find_index_ah(policy, target_freq,
+@@ -938,6 +946,14 @@ static inline int cpufreq_table_find_ind
+ 						   efficiencies);
+ }
+ 
++/* Works only on sorted freq-tables */
++static inline int cpufreq_table_find_index_h(struct cpufreq_policy *policy,
++					     unsigned int target_freq,
++					     bool efficiencies)
++{
++	return find_index_h(policy, target_freq, policy->min, policy->max, efficiencies);
++}
++
+ /* Find closest freq to target in a table in ascending order */
+ static inline int cpufreq_table_find_index_ac(struct cpufreq_policy *policy,
+ 					      unsigned int target_freq,
+@@ -1008,12 +1024,12 @@ static inline int cpufreq_table_find_ind
+ 	return best;
+ }
+ 
+-/* Works only on sorted freq-tables */
+-static inline int cpufreq_table_find_index_c(struct cpufreq_policy *policy,
+-					     unsigned int target_freq,
+-					     bool efficiencies)
++static inline int find_index_c(struct cpufreq_policy *policy,
++			       unsigned int target_freq,
++			       unsigned int min, unsigned int max,
++			       bool efficiencies)
+ {
+-	target_freq = clamp_val(target_freq, policy->min, policy->max);
++	target_freq = clamp_val(target_freq, min, max);
+ 
+ 	if (policy->freq_table_sorted == CPUFREQ_TABLE_SORTED_ASCENDING)
+ 		return cpufreq_table_find_index_ac(policy, target_freq,
+@@ -1023,7 +1039,17 @@ static inline int cpufreq_table_find_ind
+ 						   efficiencies);
+ }
+ 
+-static inline bool cpufreq_is_in_limits(struct cpufreq_policy *policy, int idx)
++/* Works only on sorted freq-tables */
++static inline int cpufreq_table_find_index_c(struct cpufreq_policy *policy,
++					     unsigned int target_freq,
++					     bool efficiencies)
++{
++	return find_index_c(policy, target_freq, policy->min, policy->max, efficiencies);
++}
++
++static inline bool cpufreq_is_in_limits(struct cpufreq_policy *policy,
++					unsigned int min, unsigned int max,
++					int idx)
+ {
+ 	unsigned int freq;
+ 
+@@ -1032,11 +1058,13 @@ static inline bool cpufreq_is_in_limits(
+ 
+ 	freq = policy->freq_table[idx].frequency;
+ 
+-	return freq == clamp_val(freq, policy->min, policy->max);
++	return freq == clamp_val(freq, min, max);
+ }
+ 
+ static inline int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
+ 						 unsigned int target_freq,
++						 unsigned int min,
++						 unsigned int max,
+ 						 unsigned int relation)
+ {
+ 	bool efficiencies = policy->efficiencies_available &&
+@@ -1047,29 +1075,26 @@ static inline int cpufreq_frequency_tabl
+ 	relation &= ~CPUFREQ_RELATION_E;
+ 
+ 	if (unlikely(policy->freq_table_sorted == CPUFREQ_TABLE_UNSORTED))
+-		return cpufreq_table_index_unsorted(policy, target_freq,
+-						    relation);
++		return cpufreq_table_index_unsorted(policy, target_freq, min,
++						    max, relation);
+ retry:
+ 	switch (relation) {
+ 	case CPUFREQ_RELATION_L:
+-		idx = cpufreq_table_find_index_l(policy, target_freq,
+-						 efficiencies);
++		idx = find_index_l(policy, target_freq, min, max, efficiencies);
+ 		break;
+ 	case CPUFREQ_RELATION_H:
+-		idx = cpufreq_table_find_index_h(policy, target_freq,
+-						 efficiencies);
++		idx = find_index_h(policy, target_freq, min, max, efficiencies);
+ 		break;
+ 	case CPUFREQ_RELATION_C:
+-		idx = cpufreq_table_find_index_c(policy, target_freq,
+-						 efficiencies);
++		idx = find_index_c(policy, target_freq, min, max, efficiencies);
+ 		break;
+ 	default:
+ 		WARN_ON_ONCE(1);
+ 		return 0;
  	}
  
--retry:
--	error = xfs_bmapi_reserve_delalloc(ip, allocfork, offset_fsb,
--			end_fsb - offset_fsb, prealloc_blocks,
--			allocfork == XFS_DATA_FORK ? &imap : &cmap,
--			allocfork == XFS_DATA_FORK ? &icur : &ccur,
--			allocfork == XFS_DATA_FORK ? eof : cow_eof);
--	switch (error) {
--	case 0:
--		break;
--	case -ENOSPC:
--	case -EDQUOT:
--		/* retry without any preallocation */
--		trace_xfs_delalloc_enospc(ip, offset, count);
--		if (prealloc_blocks) {
--			prealloc_blocks = 0;
--			goto retry;
--		}
--		fallthrough;
--	default:
--		goto out_unlock;
--	}
--
- 	if (allocfork == XFS_COW_FORK) {
-+		error = xfs_bmapi_reserve_delalloc(ip, allocfork, offset_fsb,
-+				end_fsb - offset_fsb, prealloc_blocks, &cmap,
-+				&ccur, cow_eof);
-+		if (error)
-+			goto out_unlock;
-+
- 		trace_xfs_iomap_alloc(ip, offset, count, allocfork, &cmap);
- 		goto found_cow;
+-	/* Limit frequency index to honor policy->min/max */
+-	if (!cpufreq_is_in_limits(policy, idx) && efficiencies) {
++	/* Limit frequency index to honor min and max */
++	if (!cpufreq_is_in_limits(policy, min, max, idx) && efficiencies) {
+ 		efficiencies = false;
+ 		goto retry;
  	}
- 
-+	error = xfs_bmapi_reserve_delalloc(ip, allocfork, offset_fsb,
-+			end_fsb - offset_fsb, prealloc_blocks, &imap, &icur,
-+			eof);
-+	if (error)
-+		goto out_unlock;
-+
- 	/*
- 	 * Flag newly allocated delalloc blocks with IOMAP_F_NEW so we punch
- 	 * them out if the write happens to fail.
 
 
