@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F5A28AAE9;
-	Wed,  7 May 2025 19:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC6723DE;
+	Wed,  7 May 2025 19:00:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644405; cv=none; b=EqTvfVERv646QY61zpCxOlUcbZdHD3/iOF1NDhIt3G/IKEWNUE6pR/TqNhxkN3XySJHv6OZW766Zp2aKWheBkcRS8yK6hvfa5uzGIXtbezu2W9z2ApM2Gd6yOVdURFqWHANpYcLPPx5Nv1YuLZvCeI4AP/Hx9UpRAqP0FvtErmU=
+	t=1746644408; cv=none; b=jrwHbq+MxqKH3t7n+Yeh46/aByqNhLpOXdUOIbGYGlfjeqMdnTnoJsN7tkHj8mkiosunQZ/z8bkfe11cEMjs07CTr8PuwmBl5aX45CUB0Y3bx3MwIXQl9o3B8jMpo8gcexXM2bYd2NM2ltqAiLiKlt+ncfd5sia7V3yh2LuPApI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644405; c=relaxed/simple;
-	bh=OzU7vVGetSAjD58KHIOTspSBMHDfC51ZHlKi16AxbRQ=;
+	s=arc-20240116; t=1746644408; c=relaxed/simple;
+	bh=y6eC3AAWEPI/aPqLMqho/jD6ES8DATp+dk26x3BzR1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pMqXyXKU56caUOAxyiCBT4jwfPZ61LFxfM921ZToEhySjqYnU0eAMDTerxOCLBvdAdrQN2xjqcMf4v0Ts1gTYsT3km/JVivBnPgviqW1X82DXRDQVpZKgAfCECJJ3KHL+sphgNyPqFCtHQ0C6vP+eISHy9BtyScIIAQf3aZrmzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXQPKCKO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vx9lo4MLYqcNOdjVBZ2l8gMZbQ/eeXYg1Tp1Ocbl963UKam02/5+7SzP97+FWe9PCet+Jjb8jNWDQzQ/hh0ojETH4ryxKCCSHfSITuM7MVvwevXk6lBcBBP8JLLTGfihtkttIeNcVY/IQWVvbc1U84YYWpH4V2mUWbJEmsSTZOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGN108p4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXQPKCKO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1CDC4CEE2;
-	Wed,  7 May 2025 19:00:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGN108p4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8BF9C4CEE2;
+	Wed,  7 May 2025 19:00:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644404;
-	bh=OzU7vVGetSAjD58KHIOTspSBMHDfC51ZHlKi16AxbRQ=;
+	s=korg; t=1746644408;
+	bh=y6eC3AAWEPI/aPqLMqho/jD6ES8DATp+dk26x3BzR1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RXQPKCKOHQAx5p1WYaWrdCU4dnP2IUNUE8MX0SwYr3hV/5SG/IIvFpkeLBvJynIIv
-	 JS/nuKdyPvlwL5iX+S8AppSzit+vwfC0pxITUux6mjcFFmRHBNC7yE6LH/mE9P9RYk
-	 mFdu1+GtqQTtwED/G02rOlRfyVdVLLweIYpRmpW4=
+	b=eGN108p4+Bm5Bkh4Dm+esuZKnG+GRQrPnnmcob6zK6bJ7bYOkcLjh9lfQ32p6+T+S
+	 KYzvIjdLBDMIN41hZy97ZnbGapQOQf1faSuu3phgOeRlWkYIiePAQ56BkAkip0FNCQ
+	 mTceRa54vwKgn6ej5saSz7Ptfn22sLdaG3Qq5W5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Benjamin Marzinski <bmarzins@redhat.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 033/164] dm-integrity: fix a warning on invalid table line
-Date: Wed,  7 May 2025 20:38:38 +0200
-Message-ID: <20250507183822.216818310@linuxfoundation.org>
+Subject: [PATCH 6.12 034/164] dm: always update the array size in realloc_argv on success
+Date: Wed,  7 May 2025 20:38:39 +0200
+Message-ID: <20250507183822.257118622@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -49,31 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-commit 0a533c3e4246c29d502a7e0fba0e86d80a906b04 upstream.
+commit 5a2a6c428190f945c5cbf5791f72dbea83e97f66 upstream.
 
-If we use the 'B' mode and we have an invalit table line,
-cancel_delayed_work_sync would trigger a warning. This commit avoids the
-warning.
+realloc_argv() was only updating the array size if it was called with
+old_argv already allocated. The first time it was called to create an
+argv array, it would allocate the array but return the array size as
+zero. dm_split_args() would think that it couldn't store any arguments
+in the array and would call realloc_argv() again, causing it to
+reallocate the initial slots (this time using GPF_KERNEL) and finally
+return a size. Aside from being wasteful, this could cause deadlocks on
+targets that need to process messages without starting new IO. Instead,
+realloc_argv should always update the allocated array size on success.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: a0651926553c ("dm table: don't copy from a NULL pointer in realloc_argv()")
 Cc: stable@vger.kernel.org
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-table.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -5173,7 +5173,7 @@ static void dm_integrity_dtr(struct dm_t
- 	BUG_ON(!RB_EMPTY_ROOT(&ic->in_progress));
- 	BUG_ON(!list_empty(&ic->wait_list));
+--- a/drivers/md/dm-table.c
++++ b/drivers/md/dm-table.c
+@@ -523,9 +523,10 @@ static char **realloc_argv(unsigned int
+ 		gfp = GFP_NOIO;
+ 	}
+ 	argv = kmalloc_array(new_size, sizeof(*argv), gfp);
+-	if (argv && old_argv) {
+-		memcpy(argv, old_argv, *size * sizeof(*argv));
++	if (argv) {
+ 		*size = new_size;
++		if (old_argv)
++			memcpy(argv, old_argv, *size * sizeof(*argv));
+ 	}
  
--	if (ic->mode == 'B')
-+	if (ic->mode == 'B' && ic->bitmap_flush_work.work.func)
- 		cancel_delayed_work_sync(&ic->bitmap_flush_work);
- 	if (ic->metadata_wq)
- 		destroy_workqueue(ic->metadata_wq);
+ 	kfree(old_argv);
 
 
