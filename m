@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31CB2116E9;
-	Wed,  7 May 2025 18:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30B92116E9;
+	Wed,  7 May 2025 18:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643837; cv=none; b=PS+Su9oRhK4lN2Xa336l0a5Tf3auyVyXXvaghWgv0zkwCes4mmfNWbacacgy3d3Hpmuqsviz4YXw+2UjQod6qofMIvzocx10ZRxQYMKGqLRsLZTLwZLZZ+KWzLv3koN7qdPMTfAed7Z0LkejBQ+oQK9mh8+wodqT6T+uDh2O9mA=
+	t=1746643840; cv=none; b=AZEkNkxQ2IwwzhwBK7U6yvaZP0KaCUltrkaEC+IHGNF+U389ZpYIPL7/U6nxqWqz8WLYJcNYzFrYS+W5XNu79Tj37FPFtGP3PpEo9/bPoEG9Rjgnm4qeJWf0qek8RCA7f7DmlJ8+5GVO0+YsFKsCiaQpSL7u0soLS27lKGhRtxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643837; c=relaxed/simple;
-	bh=IFEYx/D20qTcFiq8YlDuBIC7iY4mUTBR+DRwChf8IeU=;
+	s=arc-20240116; t=1746643840; c=relaxed/simple;
+	bh=kk//gxpFZEUskOmxmJHP16jac1TxnZdt98343Y6+vu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tYntG0EgpObWHRcP3buKTz2huIwzkph113uGoTv8WuRoAA7wb3neC/1pHlIud7Gne9bJFWcZFojEYKp4igZxMQ0cQpxHFBvZaURxyh8M6ulqo8NDJ+oE2N0oilvNlEstf+LhdgrymXIc1VfX8VwQzl5S+ztvLIID2Qb7t0I/o6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sngYlE1E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fH9ZzdOI8m5TXgSSojaMthJZPd9pmrUkDVZ0oGkw7Vei9f51NoEqaePhkZbrfaJyTQh95+AQxac05UjXYnl76XeQWFUVjIYXlOeWdjefVP9+0w7EO8JnlmFCftJxRT2c6y0J/SmFeEXoeu6Mt2aRmv6ORtYsmJIMTAXTn9KjHgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEx9jTZI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sngYlE1E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 662F7C4CEE2;
-	Wed,  7 May 2025 18:50:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEx9jTZI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C102C4CEE2;
+	Wed,  7 May 2025 18:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643837;
-	bh=IFEYx/D20qTcFiq8YlDuBIC7iY4mUTBR+DRwChf8IeU=;
+	s=korg; t=1746643840;
+	bh=kk//gxpFZEUskOmxmJHP16jac1TxnZdt98343Y6+vu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sngYlE1EpD4CjM1y0640VD3NjtymjfHTmF+NKoy3Vfttj9+JCTGusMA7rxzZa7+Ys
-	 qWNAHuD8iGn4npovmYBjrK97l4uk6L+GOImq5aRII8nHCmbZibAtlvDWn37cZNDNMU
-	 kMwVtK6tzbT4gz5ba6V0dur3FPeWfN0IJo0u0wJw=
+	b=wEx9jTZI2matVlth9zzzI37gklbw0Y+ddMwkrSo9W/87VlScXCldzYRB6LgIoWyFU
+	 9amrXu/tbIl1QjAyKajuYfWYzsOvUiPlVW2hxFStUQArtadJsO3CRN8aVa/N9LeWbF
+	 2hQwTkKB+IVl4UUooAV0Dm0sTsbb4IXK8IfLFQg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Paklov <Pavel.Paklov@cyberprotect.ru>,
-	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 6.14 033/183] iommu/amd: Fix potential buffer overflow in parse_ivrs_acpihid
-Date: Wed,  7 May 2025 20:37:58 +0200
-Message-ID: <20250507183826.029891035@linuxfoundation.org>
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.14 034/183] iommu/arm-smmu-v3: Fix iommu_device_probe bug due to duplicated stream ids
+Date: Wed,  7 May 2025 20:37:59 +0200
+Message-ID: <20250507183826.069104075@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -50,52 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Paklov <Pavel.Paklov@cyberprotect.ru>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit 8dee308e4c01dea48fc104d37f92d5b58c50b96c upstream.
+commit b00d24997a11c10d3e420614f0873b83ce358a34 upstream.
 
-There is a string parsing logic error which can lead to an overflow of hid
-or uid buffers. Comparing ACPIID_LEN against a total string length doesn't
-take into account the lengths of individual hid and uid buffers so the
-check is insufficient in some cases. For example if the length of hid
-string is 4 and the length of the uid string is 260, the length of str
-will be equal to ACPIID_LEN + 1 but uid string will overflow uid buffer
-which size is 256.
+ASPEED VGA card has two built-in devices:
+ 0008:06:00.0 PCI bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge (rev 06)
+ 0008:07:00.0 VGA compatible controller: ASPEED Technology, Inc. ASPEED Graphics Family (rev 52)
 
-The same applies to the hid string with length 13 and uid string with
-length 250.
+Its toplogy looks like this:
+ +-[0008:00]---00.0-[01-09]--+-00.0-[02-09]--+-00.0-[03]----00.0  Sandisk Corp Device 5017
+                             |               +-01.0-[04]--
+                             |               +-02.0-[05]----00.0  NVIDIA Corporation Device
+                             |               +-03.0-[06-07]----00.0-[07]----00.0  ASPEED Technology, Inc. ASPEED Graphics Family
+                             |               +-04.0-[08]----00.0  Renesas Technology Corp. uPD720201 USB 3.0 Host Controller
+                             |               \-05.0-[09]----00.0  Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller
+                             \-00.1  PMC-Sierra Inc. Device 4028
 
-Check the length of hid and uid strings separately to prevent
-buffer overflow.
+The IORT logic populaties two identical IDs into the fwspec->ids array via
+DMA aliasing in iort_pci_iommu_init() called by pci_for_each_dma_alias().
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Though the SMMU driver had been able to handle this situation since commit
+563b5cbe334e ("iommu/arm-smmu-v3: Cope with duplicated Stream IDs"), that
+got broken by the later commit cdf315f907d4 ("iommu/arm-smmu-v3: Maintain
+a SID->device structure"), which ended up with allocating separate streams
+with the same stuffing.
 
-Fixes: ca3bf5d47cec ("iommu/amd: Introduces ivrs_acpihid kernel parameter")
+On a kernel prior to v6.15-rc1, there has been an overlooked warning:
+  pci 0008:07:00.0: vgaarb: setting as boot VGA device
+  pci 0008:07:00.0: vgaarb: bridge control possible
+  pci 0008:07:00.0: vgaarb: VGA device added: decodes=io+mem,owns=none,locks=none
+  pcieport 0008:06:00.0: Adding to iommu group 14
+  ast 0008:07:00.0: stream 67328 already in tree   <===== WARNING
+  ast 0008:07:00.0: enabling device (0002 -> 0003)
+  ast 0008:07:00.0: Using default configuration
+  ast 0008:07:00.0: AST 2600 detected
+  ast 0008:07:00.0: [drm] Using analog VGA
+  ast 0008:07:00.0: [drm] dram MCLK=396 Mhz type=1 bus_width=16
+  [drm] Initialized ast 0.1.0 for 0008:07:00.0 on minor 0
+  ast 0008:07:00.0: [drm] fb0: astdrmfb frame buffer device
+
+With v6.15-rc, since the commit bcb81ac6ae3c ("iommu: Get DT/ACPI parsing
+into the proper probe path"), the error returned with the warning is moved
+to the SMMU device probe flow:
+  arm_smmu_probe_device+0x15c/0x4c0
+  __iommu_probe_device+0x150/0x4f8
+  probe_iommu_group+0x44/0x80
+  bus_for_each_dev+0x7c/0x100
+  bus_iommu_probe+0x48/0x1a8
+  iommu_device_register+0xb8/0x178
+  arm_smmu_device_probe+0x1350/0x1db0
+which then fails the entire SMMU driver probe:
+  pci 0008:06:00.0: Adding to iommu group 21
+  pci 0008:07:00.0: stream 67328 already in tree
+  arm-smmu-v3 arm-smmu-v3.9.auto: Failed to register iommu
+  arm-smmu-v3 arm-smmu-v3.9.auto: probe with driver arm-smmu-v3 failed with error -22
+
+Since SMMU driver had been already expecting a potential duplicated Stream
+ID in arm_smmu_install_ste_for_dev(), change the arm_smmu_insert_master()
+routine to ignore a duplicated ID from the fwspec->sids array as well.
+
+Note: this has been failing the iommu_device_probe() since 2021, although a
+recent iommu commit in v6.15-rc1 that moves iommu_device_probe() started to
+fail the SMMU driver probe. Since nobody has cared about DMA Alias support,
+leave that as it was but fix the fundamental iommu_device_probe() breakage.
+
+Fixes: cdf315f907d4 ("iommu/arm-smmu-v3: Maintain a SID->device structure")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pavel Paklov <Pavel.Paklov@cyberprotect.ru>
-Link: https://lore.kernel.org/r/20250325092259.392844-1-Pavel.Paklov@cyberprotect.ru
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Link: https://lore.kernel.org/r/20250415185620.504299-1-nicolinc@nvidia.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/init.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -3677,6 +3677,14 @@ found:
- 	while (*uid == '0' && *(uid + 1))
- 		uid++;
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -3364,6 +3364,7 @@ static int arm_smmu_insert_master(struct
+ 	mutex_lock(&smmu->streams_mutex);
+ 	for (i = 0; i < fwspec->num_ids; i++) {
+ 		struct arm_smmu_stream *new_stream = &master->streams[i];
++		struct rb_node *existing;
+ 		u32 sid = fwspec->ids[i];
  
-+	if (strlen(hid) >= ACPIHID_HID_LEN) {
-+		pr_err("Invalid command line: hid is too long\n");
-+		return 1;
-+	} else if (strlen(uid) >= ACPIHID_UID_LEN) {
-+		pr_err("Invalid command line: uid is too long\n");
-+		return 1;
-+	}
+ 		new_stream->id = sid;
+@@ -3374,10 +3375,20 @@ static int arm_smmu_insert_master(struct
+ 			break;
+ 
+ 		/* Insert into SID tree */
+-		if (rb_find_add(&new_stream->node, &smmu->streams,
+-				arm_smmu_streams_cmp_node)) {
+-			dev_warn(master->dev, "stream %u already in tree\n",
+-				 sid);
++		existing = rb_find_add(&new_stream->node, &smmu->streams,
++				       arm_smmu_streams_cmp_node);
++		if (existing) {
++			struct arm_smmu_master *existing_master =
++				rb_entry(existing, struct arm_smmu_stream, node)
++					->master;
 +
- 	i = early_acpihid_map_size++;
- 	memcpy(early_acpihid_map[i].hid, hid, strlen(hid));
- 	memcpy(early_acpihid_map[i].uid, uid, strlen(uid));
++			/* Bridged PCI devices may end up with duplicated IDs */
++			if (existing_master == master)
++				continue;
++
++			dev_warn(master->dev,
++				 "stream %u already in tree from dev %s\n", sid,
++				 dev_name(existing_master->dev));
+ 			ret = -EINVAL;
+ 			break;
+ 		}
 
 
