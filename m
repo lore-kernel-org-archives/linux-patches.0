@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA5C28B7D6;
-	Wed,  7 May 2025 18:41:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3CC28B7D6;
+	Wed,  7 May 2025 18:41:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643297; cv=none; b=c0aQ0sqGH0ExO8UpHZqvti+sjxogU644Eu5tcgPZD1vXlgfQcQnGwjBRqeBTdJQJSmyMP4YBI0DX9IAwzGp67ZpUCXnN6MqD5q6DO0AiNCMacH5qzt1muUrwDVHA+4vaIve9k81vRBSAt9AP+TBfbV6hxCRk1eoFfOb3nuwjWlE=
+	t=1746643300; cv=none; b=ln9tCxugAtm2ixPoOzNvkczS3AtoNyp7GItrGsgdTUNYOKWmGMAwfWrsWaeVQVJALKU34aZ7xjSrXHHTBuMF8FlSxpJFs4tclzATcFe6BI+513/KOPkr9AWbppJbGQVj6PqqkRDri6yjfdWXsbYYSGqJ+UnP8uUMbMArTRBn7Ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643297; c=relaxed/simple;
-	bh=oy6EfjFJd/XEUByuV4uGLBlskjZPesAYLVLu0HICF+w=;
+	s=arc-20240116; t=1746643300; c=relaxed/simple;
+	bh=OJnsfStJJvpz701L+eBTaiO8bD4UCz7ot4uFq2vGMwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gbM9+XJiPgfJ0qB8WDWYyk0JgUYmJky0WNHKvGvwEfx35SsiA+ughiEZxCZhdLHSYu6oJ+k+SHYNKAlki/IYA5kdojyS/Q2J45Xq+a4BgrL3x6y+GlyAcjGofoUK2IE0BEQNwO7wQgkdzLV78J0/stuMDgNIdtJejlGx4XrAHbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QuVywNID; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sq+jyl9GvSVYaJYH/v3H8FZr5+OA83K96QXMQnn+CvG5ScuGAV1NPl5xssZmNkAc+ZfIDaNRrkHLFWJ7fueA0XuOOg+9O9M7F267l8grY1zQYjB7I7Ec+kcZVuFGqFd6Il6yZ8iBdVBriZFWHy72kGGF8sBgnndTMWR4Y+k2nn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJL4+piA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QuVywNID"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42B3C4CEE2;
-	Wed,  7 May 2025 18:41:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJL4+piA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935A9C4CEE2;
+	Wed,  7 May 2025 18:41:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643297;
-	bh=oy6EfjFJd/XEUByuV4uGLBlskjZPesAYLVLu0HICF+w=;
+	s=korg; t=1746643300;
+	bh=OJnsfStJJvpz701L+eBTaiO8bD4UCz7ot4uFq2vGMwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QuVywNIDuZ+8OmP27yRHUT9UZHJ0tV0xd1jLy1tRs57SxM6KU5EqoSx1lfYc412qv
-	 ckQE5cXYykkK9gF8etFRCOFQilvAM6UVjdYriMuEdGR53LPRY6U3hSXOZ8KhsVg2Su
-	 y2+hBQwQrErl4GmWOF4tfO68WEx0G5Y6QJPg6B6M=
+	b=DJL4+piAIE1lTEDjVXwYrYILvE6cExBlgBtKNBv/GseXzKvY5uSlulM2+y0YQYjXk
+	 gKFyk94xQTXJpTlDMBuwNWi0/XD2Zr9bde5t2cS+jli0tbx1L5ch/XcnQOkG/SzA/4
+	 +ok1gEEN3BNa0MfvLQlywK/gMCN80oFtjGeRt5tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Paklov <Pavel.Paklov@cyberprotect.ru>,
+	Wenhao Sun <weiguangtwk@outlook.com>,
+	Mingcong Bai <jeffbai@aosc.io>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
 	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 5.15 13/55] iommu/amd: Fix potential buffer overflow in parse_ivrs_acpihid
-Date: Wed,  7 May 2025 20:39:14 +0200
-Message-ID: <20250507183759.585715426@linuxfoundation.org>
+Subject: [PATCH 5.15 14/55] iommu/vt-d: Apply quirk_iommu_igfx for 8086:0044 (QM57/QS57)
+Date: Wed,  7 May 2025 20:39:15 +0200
+Message-ID: <20250507183759.625450353@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183759.048732653@linuxfoundation.org>
 References: <20250507183759.048732653@linuxfoundation.org>
@@ -50,52 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Paklov <Pavel.Paklov@cyberprotect.ru>
+From: Mingcong Bai <jeffbai@aosc.io>
 
-commit 8dee308e4c01dea48fc104d37f92d5b58c50b96c upstream.
+commit 2c8a7c66c90832432496616a9a3c07293f1364f3 upstream.
 
-There is a string parsing logic error which can lead to an overflow of hid
-or uid buffers. Comparing ACPIID_LEN against a total string length doesn't
-take into account the lengths of individual hid and uid buffers so the
-check is insufficient in some cases. For example if the length of hid
-string is 4 and the length of the uid string is 260, the length of str
-will be equal to ACPIID_LEN + 1 but uid string will overflow uid buffer
-which size is 256.
+On the Lenovo ThinkPad X201, when Intel VT-d is enabled in the BIOS, the
+kernel boots with errors related to DMAR, the graphical interface appeared
+quite choppy, and the system resets erratically within a minute after it
+booted:
 
-The same applies to the hid string with length 13 and uid string with
-length 250.
+DMAR: DRHD: handling fault status reg 3
+DMAR: [DMA Write NO_PASID] Request device [00:02.0] fault addr 0xb97ff000
+[fault reason 0x05] PTE Write access is not set
 
-Check the length of hid and uid strings separately to prevent
-buffer overflow.
+Upon comparing boot logs with VT-d on/off, I found that the Intel Calpella
+quirk (`quirk_calpella_no_shadow_gtt()') correctly applied the igfx IOMMU
+disable/quirk correctly:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+pci 0000:00:00.0: DMAR: BIOS has allocated no shadow GTT; disabling IOMMU
+for graphics
 
-Fixes: ca3bf5d47cec ("iommu/amd: Introduces ivrs_acpihid kernel parameter")
+Whereas with VT-d on, it went into the "else" branch, which then
+triggered the DMAR handling fault above:
+
+... else if (!disable_igfx_iommu) {
+	/* we have to ensure the gfx device is idle before we flush */
+	pci_info(dev, "Disabling batched IOTLB flush on Ironlake\n");
+	iommu_set_dma_strict();
+}
+
+Now, this is not exactly scientific, but moving 0x0044 to quirk_iommu_igfx
+seems to have fixed the aforementioned issue. Running a few `git blame'
+runs on the function, I have found that the quirk was originally
+introduced as a fix specific to ThinkPad X201:
+
+commit 9eecabcb9a92 ("intel-iommu: Abort IOMMU setup for igfx if BIOS gave
+no shadow GTT space")
+
+Which was later revised twice to the "else" branch we saw above:
+
+- 2011: commit 6fbcfb3e467a ("intel-iommu: Workaround IOTLB hang on
+  Ironlake GPU")
+- 2024: commit ba00196ca41c ("iommu/vt-d: Decouple igfx_off from graphic
+  identity mapping")
+
+I'm uncertain whether further testings on this particular laptops were
+done in 2011 and (honestly I'm not sure) 2024, but I would be happy to do
+some distro-specific testing if that's what would be required to verify
+this patch.
+
+P.S., I also see IDs 0x0040, 0x0062, and 0x006a listed under the same
+`quirk_calpella_no_shadow_gtt()' quirk, but I'm not sure how similar these
+chipsets are (if they share the same issue with VT-d or even, indeed, if
+this issue is specific to a bug in the Lenovo BIOS). With regards to
+0x0062, it seems to be a Centrino wireless card, but not a chipset?
+
+I have also listed a couple (distro and kernel) bug reports below as
+references (some of them are from 7-8 years ago!), as they seem to be
+similar issue found on different Westmere/Ironlake, Haswell, and Broadwell
+hardware setups.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Pavel Paklov <Pavel.Paklov@cyberprotect.ru>
-Link: https://lore.kernel.org/r/20250325092259.392844-1-Pavel.Paklov@cyberprotect.ru
+Fixes: 6fbcfb3e467a ("intel-iommu: Workaround IOTLB hang on Ironlake GPU")
+Fixes: ba00196ca41c ("iommu/vt-d: Decouple igfx_off from graphic identity mapping")
+Link: https://groups.google.com/g/qubes-users/c/4NP4goUds2c?pli=1
+Link: https://bugs.archlinux.org/task/65362
+Link: https://bbs.archlinux.org/viewtopic.php?id=230323
+Reported-by: Wenhao Sun <weiguangtwk@outlook.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=197029
+Signed-off-by: Mingcong Bai <jeffbai@aosc.io>
+Link: https://lore.kernel.org/r/20250415133330.12528-1-jeffbai@aosc.io
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/init.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/iommu/intel/iommu.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -3343,6 +3343,14 @@ found:
- 	while (*uid == '0' && *(uid + 1))
- 		uid++;
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -5660,6 +5660,9 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_I
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x2e40, quirk_iommu_igfx);
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x2e90, quirk_iommu_igfx);
  
-+	if (strlen(hid) >= ACPIHID_HID_LEN) {
-+		pr_err("Invalid command line: hid is too long\n");
-+		return 1;
-+	} else if (strlen(uid) >= ACPIHID_UID_LEN) {
-+		pr_err("Invalid command line: uid is too long\n");
-+		return 1;
-+	}
++/* QM57/QS57 integrated gfx malfunctions with dmar */
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x0044, quirk_iommu_igfx);
 +
- 	i = early_acpihid_map_size++;
- 	memcpy(early_acpihid_map[i].hid, hid, strlen(hid));
- 	memcpy(early_acpihid_map[i].uid, uid, strlen(uid));
+ /* Broadwell igfx malfunctions with dmar */
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x1606, quirk_iommu_igfx);
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x160B, quirk_iommu_igfx);
+@@ -5737,7 +5740,6 @@ static void quirk_calpella_no_shadow_gtt
+ 	}
+ }
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x0040, quirk_calpella_no_shadow_gtt);
+-DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x0044, quirk_calpella_no_shadow_gtt);
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x0062, quirk_calpella_no_shadow_gtt);
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x006a, quirk_calpella_no_shadow_gtt);
+ 
 
 
