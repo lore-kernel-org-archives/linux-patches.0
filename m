@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1CB214813;
-	Wed,  7 May 2025 19:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC99214813;
+	Wed,  7 May 2025 19:13:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746645186; cv=none; b=RSxowDooGHKVuX/FvciXbyEBsgTuZErAyLoKMNEmQhR0JIrXkF40kSPsqrbNqLoG96nnYQFBNaq18RbcXUb1maOfXjVgTemk10WXNZv5x1I6nHH8vSuTUJVAAODOPVqPmVxbNQbNmhBTzj3woYvh113iM8LxsTlZTPEVE8nmQrc=
+	t=1746645190; cv=none; b=rxksCxGjUWuOsXWaaW1wXfeMm5Qvvpf8Lirryv13WRDAArqxeeW2izfzZDevWaAiSI4fo1CmD71yTH8Cw6fGOsq2K8u6UJ6pRwBFcLn65scPD5n8cdSHVVe97uUj99evD6GtazfwegYhitETl4Flmx+24DgdJ9gi9iZKKyQRxag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746645186; c=relaxed/simple;
-	bh=qYJ7jya2RU+GkySVXaW/j5J1CZoZ91Hdb13/6ny2tW0=;
+	s=arc-20240116; t=1746645190; c=relaxed/simple;
+	bh=qUJsJRNorasHLx3rpPehjmHEIAVPYkiM9g4H72NZtvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IYpg3wXH0U91Cxvf+BnN/MwhKOE0cYz/PKWXEYz3n6IeWhT6Z5Y8NhbNO9phuPu7kskjXMUuglp/NWv/EbcnQXOKv3gYzgrUVOpkYOJ3M3dV42Q3RHgJVaeB9fqvU4H5bKGDcuCSfxF9xaul6mrqlqSiGUjvqxYmKYF6PP1wLCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcQWSVeS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TN6ZshSIzOhUptjqnymKZUdn5JUuoPe3V6F6Jig35ltJ75HoVQoizKtvz43BNseTF4L46DTQfxyeiOb7CQznb/asZM2bsc1C5Thm/4i1yf/oj6kjLMOOY8Gehn+WgdbERfE08hkKYLYk+XYzop1UGbo5js5Bj1U0KCTkTPaUsG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jahoBNlW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcQWSVeS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F56BC4CEE2;
-	Wed,  7 May 2025 19:13:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jahoBNlW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80758C4CEE2;
+	Wed,  7 May 2025 19:13:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746645186;
-	bh=qYJ7jya2RU+GkySVXaW/j5J1CZoZ91Hdb13/6ny2tW0=;
+	s=korg; t=1746645190;
+	bh=qUJsJRNorasHLx3rpPehjmHEIAVPYkiM9g4H72NZtvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rcQWSVeSb8GzimSMMVRF8sJPrPZO8PQtE5dnPITDorXAmJh1Je8zeWUcbzytBz+lZ
-	 56++KNsk3/uMqBgQnnK9xLvibhmGsEEV2fAStcatuHMflc4stKXetMQLRQKjntc/QR
-	 jm1xkj4H0OD0rSWVSsvPZFIJPQ1UjQFnX9pvq4V4=
+	b=jahoBNlWQNGBMRy0XiTnWAAHox1RaiUMGBQmynMwCDde2Cp68rckDte5CiZ1yBPyK
+	 dNFhTVWFcb1itwPAPJjLjF9tEOPkE9mwes5G6G1FYqnIx1z/VhtoF/XkyxAwqGdL4P
+	 a17TIc5bz9er7eSi2CCXs4xuc2+ON8xv6zCMDHbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Shruti Parab <shruti.parab@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 091/129] net: hns3: defer calling ptp_clock_register()
-Date: Wed,  7 May 2025 20:40:27 +0200
-Message-ID: <20250507183817.188537980@linuxfoundation.org>
+Subject: [PATCH 6.6 082/129] bnxt_en: Fix out-of-bound memcpy() during ethtool -w
+Date: Wed,  7 May 2025 20:40:18 +0200
+Message-ID: <20250507183816.832036426@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -53,56 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Shruti Parab <shruti.parab@broadcom.com>
 
-[ Upstream commit 4971394d9d624f91689d766f31ce668d169d9959 ]
+[ Upstream commit 6b87bd94f34370bbf1dfa59352bed8efab5bf419 ]
 
-Currently the ptp_clock_register() is called before relative
-ptp resource ready. It may cause unexpected result when upper
-layer called the ptp API during the timewindow. Fix it by
-moving the ptp_clock_register() to the function end.
+When retrieving the FW coredump using ethtool, it can sometimes cause
+memory corruption:
 
-Fixes: 0bf5eb788512 ("net: hns3: add support for PTP")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20250430093052.2400464-5-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+BUG: KFENCE: memory corruption in __bnxt_get_coredump+0x3ef/0x670 [bnxt_en]
+Corrupted memory at 0x000000008f0f30e8 [ ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ] (in kfence-#45):
+__bnxt_get_coredump+0x3ef/0x670 [bnxt_en]
+ethtool_get_dump_data+0xdc/0x1a0
+__dev_ethtool+0xa1e/0x1af0
+dev_ethtool+0xa8/0x170
+dev_ioctl+0x1b5/0x580
+sock_do_ioctl+0xab/0xf0
+sock_ioctl+0x1ce/0x2e0
+__x64_sys_ioctl+0x87/0xc0
+do_syscall_64+0x5c/0xf0
+entry_SYSCALL_64_after_hwframe+0x78/0x80
+
+...
+
+This happens when copying the coredump segment list in
+bnxt_hwrm_dbg_dma_data() with the HWRM_DBG_COREDUMP_LIST FW command.
+The info->dest_buf buffer is allocated based on the number of coredump
+segments returned by the FW.  The segment list is then DMA'ed by
+the FW and the length of the DMA is returned by FW.  The driver then
+copies this DMA'ed segment list to info->dest_buf.
+
+In some cases, this DMA length may exceed the info->dest_buf length
+and cause the above BUG condition.  Fix it by capping the copy
+length to not exceed the length of info->dest_buf.  The extra
+DMA data contains no useful information.
+
+This code path is shared for the HWRM_DBG_COREDUMP_LIST and the
+HWRM_DBG_COREDUMP_RETRIEVE FW commands.  The buffering is different
+for these 2 FW commands.  To simplify the logic, we need to move
+the line to adjust the buffer length for HWRM_DBG_COREDUMP_RETRIEVE
+up, so that the new check to cap the copy length will work for both
+commands.
+
+Fixes: c74751f4c392 ("bnxt_en: Return error if FW returns more data than dump length")
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Shruti Parab <shruti.parab@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c  | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ .../net/ethernet/broadcom/bnxt/bnxt_coredump.c    | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
-index ddc691424c816..9a806ac727cf5 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
-@@ -440,6 +440,13 @@ static int hclge_ptp_create_clock(struct hclge_dev *hdev)
- 	ptp->info.settime64 = hclge_ptp_settime;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
+index b57d2a25ae276..32813cdd5aa5c 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
+@@ -66,10 +66,19 @@ static int bnxt_hwrm_dbg_dma_data(struct bnxt *bp, void *msg,
+ 			}
+ 		}
  
- 	ptp->info.n_alarm = 0;
++		if (cmn_req->req_type ==
++				cpu_to_le16(HWRM_DBG_COREDUMP_RETRIEVE))
++			info->dest_buf_size += len;
 +
-+	spin_lock_init(&ptp->lock);
-+	ptp->io_base = hdev->hw.hw.io_base + HCLGE_PTP_REG_OFFSET;
-+	ptp->ts_cfg.rx_filter = HWTSTAMP_FILTER_NONE;
-+	ptp->ts_cfg.tx_type = HWTSTAMP_TX_OFF;
-+	hdev->ptp = ptp;
+ 		if (info->dest_buf) {
+ 			if ((info->seg_start + off + len) <=
+ 			    BNXT_COREDUMP_BUF_LEN(info->buf_len)) {
+-				memcpy(info->dest_buf + off, dma_buf, len);
++				u16 copylen = min_t(u16, len,
++						    info->dest_buf_size - off);
 +
- 	ptp->clock = ptp_clock_register(&ptp->info, &hdev->pdev->dev);
- 	if (IS_ERR(ptp->clock)) {
- 		dev_err(&hdev->pdev->dev,
-@@ -451,12 +458,6 @@ static int hclge_ptp_create_clock(struct hclge_dev *hdev)
- 		return -ENODEV;
- 	}
++				memcpy(info->dest_buf + off, dma_buf, copylen);
++				if (copylen < len)
++					break;
+ 			} else {
+ 				rc = -ENOBUFS;
+ 				if (cmn_req->req_type ==
+@@ -81,10 +90,6 @@ static int bnxt_hwrm_dbg_dma_data(struct bnxt *bp, void *msg,
+ 			}
+ 		}
  
--	spin_lock_init(&ptp->lock);
--	ptp->io_base = hdev->hw.hw.io_base + HCLGE_PTP_REG_OFFSET;
--	ptp->ts_cfg.rx_filter = HWTSTAMP_FILTER_NONE;
--	ptp->ts_cfg.tx_type = HWTSTAMP_TX_OFF;
--	hdev->ptp = ptp;
+-		if (cmn_req->req_type ==
+-				cpu_to_le16(HWRM_DBG_COREDUMP_RETRIEVE))
+-			info->dest_buf_size += len;
 -
- 	return 0;
- }
+ 		if (!(cmn_resp->flags & HWRM_DBG_CMN_FLAGS_MORE))
+ 			break;
  
 -- 
 2.39.5
