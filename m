@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B886E2144BF;
-	Wed,  7 May 2025 19:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED77319AD5C;
+	Wed,  7 May 2025 19:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644846; cv=none; b=kZ07JTxKEoiV2wp8tHqMa9aU5UKfOya3Y97lDEcTPkHiWYzqn4GyaJ5NCI5Rlbivr54qPeb3YQrNW2In5hUiD79LrGnEggnKpeO/rx8PBNblEr38QkZqFtbG5KTX2OzAhEAhPL9n6bwYPOOsziEx+tFRimbUk0mIlkc7T4NjKbE=
+	t=1746644850; cv=none; b=PE5zJziTKLCN+SYrRCi7p95/u3Zl1aBj/VC++fWP+TaBgXaSCoyuZDReGctzW8a8KAjj6NqKzpYUqmlcxu1cFe2bSyVfOSELhGsCtPNUjtHbIm3BZQX/JGGC1N8x1BZLDHgrefaumQzGQ4dWO2b8mFG1+uMBud8iMmyIo/yyo1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644846; c=relaxed/simple;
-	bh=MiUt3pxvSzBp/X4vazk9WYdyZ3lHhUHmcCdIpRmOlbI=;
+	s=arc-20240116; t=1746644850; c=relaxed/simple;
+	bh=MDwenpOcm47qQBe586DeUeJe6p4QvjYJYmr5LPpVJ7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lasi0lutBt+9TFIvVvY3m+Wieifn81aXa+5OuJug87uzoL04ZfC35bnKZy2UFqmPFUdNfDqzYEABc7l3Y/sYI/AFiqbiRmX2+Kjbe3Dk6PViG6UrMhC1Al1hq5HAvLygvQD8fjIRTaf1IQSvI0+QdbeUkbI4ugng/0oAQueoOy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JaLgGzmF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mVME8J39kqUiADXrFUyU2reWgaDUXAYwrBjqfbFgIZUb7uYUCjb0FL1TdjWqbUEAvbew1iQfGg1NI7/IFgFqi5BmmDQKzwEzgNrOOjG8bqn8wH9j4BCtdqmc9ohiBEl4bevlkxw7XNaPkiLAOrNO46eutGqs2EOQbU3na3mUL24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J39d2pbK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JaLgGzmF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47209C4CEE2;
-	Wed,  7 May 2025 19:07:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J39d2pbK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C38C4CEE2;
+	Wed,  7 May 2025 19:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644846;
-	bh=MiUt3pxvSzBp/X4vazk9WYdyZ3lHhUHmcCdIpRmOlbI=;
+	s=korg; t=1746644849;
+	bh=MDwenpOcm47qQBe586DeUeJe6p4QvjYJYmr5LPpVJ7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JaLgGzmFeD7mieT5T5QCIO6OW5KhhHHLF+O/ZT8W7luTDROUgMuZlrLdX/ktQN1cB
-	 YZtc0CNrK3+1ZiR6bxuBmapq12fKgHC8eabpfXC5zdaotBV41q963Umo7VpeEZHCF5
-	 ODFA3KqQtKbcO46/nI4AmYVAwQSFmthEqH+saZAA=
+	b=J39d2pbKskv8Rz6MwQchy6Gjr0zYpWEyQrudZ3x1H2+FnvkrDAObPXh7xS9ErbIkr
+	 LkJw3tC98Goc+dbruLpiuzd08zAzwKhSRjukaCuOlmMzoIzLgTpMIHVlWs3/6l4HXL
+	 DoWI4wvOn+UJoR6+vPBPldHO1j7KCjcMvRCTPnJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seth Forshee <sforshee@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>
-Subject: [PATCH 6.6 012/129] perf/x86/intel: KVM: Mask PEBS_ENABLE loaded for guest with vCPUs value.
-Date: Wed,  7 May 2025 20:39:08 +0200
-Message-ID: <20250507183814.036055162@linuxfoundation.org>
+	Vishal Badole <Vishal.Badole@amd.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 013/129] amd-xgbe: Fix to ensure dependent features are toggled with RX checksum offload
+Date: Wed,  7 May 2025 20:39:09 +0200
+Message-ID: <20250507183814.076658063@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -52,64 +51,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Vishal Badole <Vishal.Badole@amd.com>
 
-commit 58f6217e5d0132a9f14e401e62796916aa055c1b upstream.
+commit f04dd30f1bef1ed2e74a4050af6e5e5e3869bac3 upstream.
 
-When generating the MSR_IA32_PEBS_ENABLE value that will be loaded on
-VM-Entry to a KVM guest, mask the value with the vCPU's desired PEBS_ENABLE
-value.  Consulting only the host kernel's host vs. guest masks results in
-running the guest with PEBS enabled even when the guest doesn't want to use
-PEBS.  Because KVM uses perf events to proxy the guest virtual PMU, simply
-looking at exclude_host can't differentiate between events created by host
-userspace, and events created by KVM on behalf of the guest.
+According to the XGMAC specification, enabling features such as Layer 3
+and Layer 4 Packet Filtering, Split Header and Virtualized Network support
+automatically selects the IPC Full Checksum Offload Engine on the receive
+side.
 
-Running the guest with PEBS unexpectedly enabled typically manifests as
-crashes due to a near-infinite stream of #PFs.  E.g. if the guest hasn't
-written MSR_IA32_DS_AREA, the CPU will hit page faults on address '0' when
-trying to record PEBS events.
+When RX checksum offload is disabled, these dependent features must also
+be disabled to prevent abnormal behavior caused by mismatched feature
+dependencies.
 
-The issue is most easily reproduced by running `perf kvm top` from before
-commit 7b100989b4f6 ("perf evlist: Remove __evlist__add_default") (after
-which, `perf kvm top` effectively stopped using PEBS).	The userspace side
-of perf creates a guest-only PEBS event, which intel_guest_get_msrs()
-misconstrues a guest-*owned* PEBS event.
+Ensure that toggling RX checksum offload (disabling or enabling) properly
+disables or enables all dependent features, maintaining consistent and
+expected behavior in the network device.
 
-Arguably, this is a userspace bug, as enabling PEBS on guest-only events
-simply cannot work, and userspace can kill VMs in many other ways (there
-is no danger to the host).  However, even if this is considered to be bad
-userspace behavior, there's zero downside to perf/KVM restricting PEBS to
-guest-owned events.
-
-Note, commit 854250329c02 ("KVM: x86/pmu: Disable guest PEBS temporarily
-in two rare situations") fixed the case where host userspace is profiling
-KVM *and* userspace, but missed the case where userspace is profiling only
-KVM.
-
-Fixes: c59a1f106f5c ("KVM: x86/pmu: Add IA32_PEBS_ENABLE MSR emulation for extended PEBS")
-Closes: https://lore.kernel.org/all/Z_VUswFkWiTYI0eD@do-x1carbon
-Reported-by: Seth Forshee <sforshee@kernel.org>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Tested-by: "Seth Forshee (DigitalOcean)" <sforshee@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250426001355.1026530-1-seanjc@google.com
+Fixes: 1a510ccf5869 ("amd-xgbe: Add support for VXLAN offload capabilities")
+Signed-off-by: Vishal Badole <Vishal.Badole@amd.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250424130248.428865-1-Vishal.Badole@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-desc.c |    9 +++++++--
+ drivers/net/ethernet/amd/xgbe/xgbe-dev.c  |   24 ++++++++++++++++++++++--
+ drivers/net/ethernet/amd/xgbe/xgbe-drv.c  |   11 +++++++++--
+ drivers/net/ethernet/amd/xgbe/xgbe.h      |    4 ++++
+ 4 files changed, 42 insertions(+), 6 deletions(-)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -4206,7 +4206,7 @@ static struct perf_guest_switch_msr *int
- 	arr[pebs_enable] = (struct perf_guest_switch_msr){
- 		.msr = MSR_IA32_PEBS_ENABLE,
- 		.host = cpuc->pebs_enabled & ~cpuc->intel_ctrl_guest_mask,
--		.guest = pebs_mask & ~cpuc->intel_ctrl_host_mask,
-+		.guest = pebs_mask & ~cpuc->intel_ctrl_host_mask & kvm_pmu->pebs_enable,
- 	};
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-desc.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-desc.c
+@@ -373,8 +373,13 @@ static int xgbe_map_rx_buffer(struct xgb
+ 	}
  
- 	if (arr[pebs_enable].host) {
+ 	/* Set up the header page info */
+-	xgbe_set_buffer_data(&rdata->rx.hdr, &ring->rx_hdr_pa,
+-			     XGBE_SKB_ALLOC_SIZE);
++	if (pdata->netdev->features & NETIF_F_RXCSUM) {
++		xgbe_set_buffer_data(&rdata->rx.hdr, &ring->rx_hdr_pa,
++				     XGBE_SKB_ALLOC_SIZE);
++	} else {
++		xgbe_set_buffer_data(&rdata->rx.hdr, &ring->rx_hdr_pa,
++				     pdata->rx_buf_size);
++	}
+ 
+ 	/* Set up the buffer page info */
+ 	xgbe_set_buffer_data(&rdata->rx.buf, &ring->rx_buf_pa,
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
+@@ -320,6 +320,18 @@ static void xgbe_config_sph_mode(struct
+ 	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, HDSMS, XGBE_SPH_HDSMS_SIZE);
+ }
+ 
++static void xgbe_disable_sph_mode(struct xgbe_prv_data *pdata)
++{
++	unsigned int i;
++
++	for (i = 0; i < pdata->channel_count; i++) {
++		if (!pdata->channel[i]->rx_ring)
++			break;
++
++		XGMAC_DMA_IOWRITE_BITS(pdata->channel[i], DMA_CH_CR, SPH, 0);
++	}
++}
++
+ static int xgbe_write_rss_reg(struct xgbe_prv_data *pdata, unsigned int type,
+ 			      unsigned int index, unsigned int val)
+ {
+@@ -3545,8 +3557,12 @@ static int xgbe_init(struct xgbe_prv_dat
+ 	xgbe_config_tx_coalesce(pdata);
+ 	xgbe_config_rx_buffer_size(pdata);
+ 	xgbe_config_tso_mode(pdata);
+-	xgbe_config_sph_mode(pdata);
+-	xgbe_config_rss(pdata);
++
++	if (pdata->netdev->features & NETIF_F_RXCSUM) {
++		xgbe_config_sph_mode(pdata);
++		xgbe_config_rss(pdata);
++	}
++
+ 	desc_if->wrapper_tx_desc_init(pdata);
+ 	desc_if->wrapper_rx_desc_init(pdata);
+ 	xgbe_enable_dma_interrupts(pdata);
+@@ -3702,5 +3718,9 @@ void xgbe_init_function_ptrs_dev(struct
+ 	hw_if->disable_vxlan = xgbe_disable_vxlan;
+ 	hw_if->set_vxlan_id = xgbe_set_vxlan_id;
+ 
++	/* For Split Header*/
++	hw_if->enable_sph = xgbe_config_sph_mode;
++	hw_if->disable_sph = xgbe_disable_sph_mode;
++
+ 	DBGPR("<--xgbe_init_function_ptrs\n");
+ }
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
+@@ -2257,10 +2257,17 @@ static int xgbe_set_features(struct net_
+ 	if (ret)
+ 		return ret;
+ 
+-	if ((features & NETIF_F_RXCSUM) && !rxcsum)
++	if ((features & NETIF_F_RXCSUM) && !rxcsum) {
++		hw_if->enable_sph(pdata);
++		hw_if->enable_vxlan(pdata);
+ 		hw_if->enable_rx_csum(pdata);
+-	else if (!(features & NETIF_F_RXCSUM) && rxcsum)
++		schedule_work(&pdata->restart_work);
++	} else if (!(features & NETIF_F_RXCSUM) && rxcsum) {
++		hw_if->disable_sph(pdata);
++		hw_if->disable_vxlan(pdata);
+ 		hw_if->disable_rx_csum(pdata);
++		schedule_work(&pdata->restart_work);
++	}
+ 
+ 	if ((features & NETIF_F_HW_VLAN_CTAG_RX) && !rxvlan)
+ 		hw_if->enable_rx_vlan_stripping(pdata);
+--- a/drivers/net/ethernet/amd/xgbe/xgbe.h
++++ b/drivers/net/ethernet/amd/xgbe/xgbe.h
+@@ -865,6 +865,10 @@ struct xgbe_hw_if {
+ 	void (*enable_vxlan)(struct xgbe_prv_data *);
+ 	void (*disable_vxlan)(struct xgbe_prv_data *);
+ 	void (*set_vxlan_id)(struct xgbe_prv_data *);
++
++	/* For Split Header */
++	void (*enable_sph)(struct xgbe_prv_data *pdata);
++	void (*disable_sph)(struct xgbe_prv_data *pdata);
+ };
+ 
+ /* This structure represents implementation specific routines for an
 
 
