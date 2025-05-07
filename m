@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DABBD24E4CE;
-	Wed,  7 May 2025 18:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4F619AD5C;
+	Wed,  7 May 2025 18:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644300; cv=none; b=aeAsPSzkOupsZOTBr+C1OsC+f64AEitIkW2aWI7Azz1683zKPu/oDU7YJoCIWcC+9Q91BotyMY6O6QE9XYLDkzcCM6/uG0gDZwQL9rqfLNQXbJuZqDVeicN7EPse8nTtg2zPFy4bySK9RwrShDYT9HMAikypG4R1k1va/XS1WiU=
+	t=1746644303; cv=none; b=N1jfVckEmoYaXIqs17K05S4TOkYT0aO1zHT1Y1VldRUvkxh89jP4hQImBVDgg01g1dfODRWyAWmiGTSKt+jc/zxL9muoz5WWnpx+0EC7F/2Pwt1BCkO6uR12tXhukfDvxQq5dNxuB5KS7R4fGWOh8jHHjiJOfxOVUQgRo9xP1KE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644300; c=relaxed/simple;
-	bh=LtlXRditCIBqF9QFvXzjHlQlad8a/Rxy9gjY+gzbglc=;
+	s=arc-20240116; t=1746644303; c=relaxed/simple;
+	bh=TZRzo72VGyl3zl39vfgnmGJxLxmcGPwRqSzRfs2pH8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KfQAOI8tz0WyxjXCp55s49XhSSzrxF4ZJQmsPPKNnDSZag3aOASQ0ZkkuewarpC0ouSZzxRrbUuOadeUhVjBnDKnChvcLAd/CbVqawkWd0SEcCeqjgLnV/okOIqPy1VfXcgd4dZgb9ABzU8wafjU6x9qR4RPzRPeb+evlfhflyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/lLAHqS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZQKY0CXpEzkDupRTubqTSiJX77Ch3hld5SkMVL6SaUChTeCh5uouzABM447fGte9V4NxRwsJrqsSt2eb5t48qT+z1gjfovVsFD+7ZeW7Gfq2wGcX6t35WMNfGxnaVBK14xSellKksOMKihuJQ0yuY0Ilo8W5elNItZtHxQ8paN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RcaFrlOd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/lLAHqS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9EC9C4CEE2;
-	Wed,  7 May 2025 18:58:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RcaFrlOd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 219EBC4CEE2;
+	Wed,  7 May 2025 18:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644297;
-	bh=LtlXRditCIBqF9QFvXzjHlQlad8a/Rxy9gjY+gzbglc=;
+	s=korg; t=1746644303;
+	bh=TZRzo72VGyl3zl39vfgnmGJxLxmcGPwRqSzRfs2pH8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C/lLAHqSdlNLXuvKLOXvmE9M1DRANB0lWVuFuvm77rjD6HRUxIocxDFHiJT/Z614F
-	 bbyplKtcg6evikH0r1rTf1wduTsVBnyVUEnk24fUc8gXxxr7QJ7+jv3OSvqtLTBrPT
-	 0qFLy7tL5r7+/LsVIftqpDUtnsIwNbChAjflUMz0=
+	b=RcaFrlOdkV/a1/r4qKmiBRGSUsua6kmcwTZhyxoFNIA1kGtxzKHQfTg6KEc/gj6yz
+	 ZxfWAslbrHYbMEZnWZOtjWq+fyEy43JWkC16NhqdnzEikjYOWF5HsWaH+xJ+xJCTU5
+	 qke4TND1M8dD1m32yNpVMSZa9ZOzBX3WKNY0oQeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kenneth Graunke <kenneth@whitecape.org>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.14 152/183] drm/xe: Invalidate L3 read-only cachelines for geometry streams too
-Date: Wed,  7 May 2025 20:39:57 +0200
-Message-ID: <20250507183831.020270149@linuxfoundation.org>
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Shyam Saini <shyamsaini@linux.microsoft.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.14 176/183] drivers: base: handle module_kobject creation
+Date: Wed,  7 May 2025 20:40:21 +0200
+Message-ID: <20250507183831.987769220@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -51,96 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kenneth Graunke <kenneth@whitecape.org>
+From: Shyam Saini <shyamsaini@linux.microsoft.com>
 
-commit e775278cd75f24a2758c28558c4e41b36c935740 upstream.
+[ Upstream commit f95bbfe18512c5c018720468959edac056a17196 ]
 
-Historically, the Vertex Fetcher unit has not been an L3 client.  That
-meant that, when a buffer containing vertex data was written to, it was
-necessary to issue a PIPE_CONTROL::VF Cache Invalidate to invalidate any
-VF L2 cachelines associated with that buffer, so the new value would be
-properly read from memory.
+module_add_driver() relies on module_kset list for
+/sys/module/<built-in-module>/drivers directory creation.
 
-Since Tigerlake and later, VERTEX_BUFFER_STATE and 3DSTATE_INDEX_BUFFER
-have included an "L3 Bypass Enable" bit which userspace drivers can set
-to request that the vertex fetcher unit snoop L3.  However, unlike most
-true L3 clients, the "VF Cache Invalidate" bit continues to only
-invalidate the VF L2 cache - and not any associated L3 lines.
+Since,
+commit 96a1a2412acba ("kernel/params.c: defer most of param_sysfs_init() to late_initcall time")
+drivers which are initialized from subsys_initcall() or any other
+higher precedence initcall couldn't find the related kobject entry
+in the module_kset list because module_kset is not fully populated
+by the time module_add_driver() refers it. As a consequence,
+module_add_driver() returns early without calling make_driver_name().
+Therefore, /sys/module/<built-in-module>/drivers is never created.
 
-To handle that, PIPE_CONTROL has a new "L3 Read Only Cache Invalidation
-Bit", which according to the docs, "controls the invalidation of the
-Geometry streams cached in L3 cache at the top of the pipe."  In other
-words, the vertex and index buffer data that gets cached in L3 when
-"L3 Bypass Disable" is set.
+Fix this issue by letting module_add_driver() handle module_kobject
+creation itself.
 
-Mesa always sets L3 Bypass Disable so that the VF unit snoops L3, and
-whenever it issues a VF Cache Invalidate, it also issues a L3 Read Only
-Cache Invalidate so that both L2 and L3 vertex data is invalidated.
-
-xe is issuing VF cache invalidates too (which handles cases like CPU
-writes to a buffer between GPU batches).  Because userspace may enable
-L3 snooping, it needs to issue an L3 Read Only Cache Invalidate as well.
-
-Fixes significant flickering in Firefox on Meteorlake, which was writing
-to vertex buffers via the CPU between batches; the missing L3 Read Only
-invalidates were causing the vertex fetcher to read stale data from L3.
-
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/4460
-Fixes: 6ef3bb60557d ("drm/xe: enable lite restore")
-Cc: stable@vger.kernel.org # v6.13+
-Signed-off-by: Kenneth Graunke <kenneth@whitecape.org>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://lore.kernel.org/r/20250330165923.56410-1-rodrigo.vivi@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit 61672806b579dd5a150a042ec9383be2bbc2ae7e)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Signed-off-by: Kenneth Graunke <kenneth@whitecape.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 96a1a2412acb ("kernel/params.c: defer most of param_sysfs_init() to late_initcall time")
+Cc: stable@vger.kernel.org # requires all other patches from the series
+Suggested-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Signed-off-by: Shyam Saini <shyamsaini@linux.microsoft.com>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20250227184930.34163-5-shyamsaini@linux.microsoft.com
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/instructions/xe_gpu_commands.h |    1 +
- drivers/gpu/drm/xe/xe_ring_ops.c                  |   13 +++++++++----
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/base/module.c | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/xe/instructions/xe_gpu_commands.h
-+++ b/drivers/gpu/drm/xe/instructions/xe_gpu_commands.h
-@@ -41,6 +41,7 @@
+diff --git a/drivers/base/module.c b/drivers/base/module.c
+index 5bc71bea883a0..218aaa0964552 100644
+--- a/drivers/base/module.c
++++ b/drivers/base/module.c
+@@ -42,16 +42,13 @@ int module_add_driver(struct module *mod, const struct device_driver *drv)
+ 	if (mod)
+ 		mk = &mod->mkobj;
+ 	else if (drv->mod_name) {
+-		struct kobject *mkobj;
+-
+-		/* Lookup built-in module entry in /sys/modules */
+-		mkobj = kset_find_obj(module_kset, drv->mod_name);
+-		if (mkobj) {
+-			mk = container_of(mkobj, struct module_kobject, kobj);
++		/* Lookup or create built-in module entry in /sys/modules */
++		mk = lookup_or_create_module_kobject(drv->mod_name);
++		if (mk) {
+ 			/* remember our module structure */
+ 			drv->p->mkobj = mk;
+-			/* kset_find_obj took a reference */
+-			kobject_put(mkobj);
++			/* lookup_or_create_module_kobject took a reference */
++			kobject_put(&mk->kobj);
+ 		}
+ 	}
  
- #define GFX_OP_PIPE_CONTROL(len)	((0x3<<29)|(0x3<<27)|(0x2<<24)|((len)-2))
- 
-+#define	  PIPE_CONTROL0_L3_READ_ONLY_CACHE_INVALIDATE	BIT(10)	/* gen12 */
- #define	  PIPE_CONTROL0_HDC_PIPELINE_FLUSH		BIT(9)	/* gen12 */
- 
- #define   PIPE_CONTROL_COMMAND_CACHE_INVALIDATE		(1<<29)
---- a/drivers/gpu/drm/xe/xe_ring_ops.c
-+++ b/drivers/gpu/drm/xe/xe_ring_ops.c
-@@ -141,7 +141,8 @@ emit_pipe_control(u32 *dw, int i, u32 bi
- static int emit_pipe_invalidate(u32 mask_flags, bool invalidate_tlb, u32 *dw,
- 				int i)
- {
--	u32 flags = PIPE_CONTROL_CS_STALL |
-+	u32 flags0 = 0;
-+	u32 flags1 = PIPE_CONTROL_CS_STALL |
- 		PIPE_CONTROL_COMMAND_CACHE_INVALIDATE |
- 		PIPE_CONTROL_INSTRUCTION_CACHE_INVALIDATE |
- 		PIPE_CONTROL_TEXTURE_CACHE_INVALIDATE |
-@@ -152,11 +153,15 @@ static int emit_pipe_invalidate(u32 mask
- 		PIPE_CONTROL_STORE_DATA_INDEX;
- 
- 	if (invalidate_tlb)
--		flags |= PIPE_CONTROL_TLB_INVALIDATE;
-+		flags1 |= PIPE_CONTROL_TLB_INVALIDATE;
- 
--	flags &= ~mask_flags;
-+	flags1 &= ~mask_flags;
- 
--	return emit_pipe_control(dw, i, 0, flags, LRC_PPHWSP_SCRATCH_ADDR, 0);
-+	if (flags1 & PIPE_CONTROL_VF_CACHE_INVALIDATE)
-+		flags0 |= PIPE_CONTROL0_L3_READ_ONLY_CACHE_INVALIDATE;
-+
-+	return emit_pipe_control(dw, i, flags0, flags1,
-+				 LRC_PPHWSP_SCRATCH_ADDR, 0);
- }
- 
- static int emit_store_imm_ppgtt_posted(u64 addr, u64 value,
+-- 
+2.39.5
+
 
 
