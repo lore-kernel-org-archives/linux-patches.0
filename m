@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD69529A0;
-	Wed,  7 May 2025 19:04:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D57629A0;
+	Wed,  7 May 2025 19:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644648; cv=none; b=GkFAMfX0Yh6pidLg9N9Mm3w1Di3VJmtHvUQKI5dASxXhSVOrcxQgdeMJAZN4aqWyfaCVhnRsRmc1qcDaldVO3JjIF4NaKhJMORW46MOsoxef3nTb9rDe+zAnAA8s9FepoYnNlfp63RWEa6qrvMMXT7X7vVGujrzPti2vF60k8/M=
+	t=1746644651; cv=none; b=oD7i+RQGm6p0AZSgRypQ0nRlVCWYuyEiKSZKB1aj1Xxjs4ScA78rPq44CmUtafe3HUyrlhpETFmFeEacg3Nsy/bn3DUUQMCUehLGti+fg7Yzc3f8Kdjx494DiuCgv7W3bDNa1hVy+gGapdbtN8x22trU8s5BS10DUCxYhlcRqEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644648; c=relaxed/simple;
-	bh=7KNNa4pXd5RvHHAXaw6Et9pHjYnz3vJTZcRo4XitRhI=;
+	s=arc-20240116; t=1746644651; c=relaxed/simple;
+	bh=fOPAJvQ0GCLjGlyD+IwvPMyg5KrYmc16zlm5RoySdng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T4LE0GUFg/AQAs+MrCkFugiJEODR3eoB+4BBdp1ueCqoQSRfnr1DrWSrLAOJUtpevdUFGkjF6HC66/GsiYJ8U/yqLSRRq1Hz1ww/cyNbaA+Y5UxJuaLw1F62eX269sBQNCggWF9YakXsdSX93+/H8ampS5eWxfqYWXxaEE/gbFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kIMi6KDP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ABVk7/9+ge/jqhCBck7/apIQczUjFyiGH8JUZN1l5NzHmKP8XsRarXVaSkn59sP3QvZPt/5mWyodHgTNs38P6kfsVP3hVvT3u+7bQUVCeg9otkPFATk7bSb/Ztb0OcpJIWJM5xtrlrqBaIhfLUDVTW+juHjBVy1FdGvqcHAFEp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBaRxCxp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kIMi6KDP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6431BC4CEE2;
-	Wed,  7 May 2025 19:04:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBaRxCxp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB64C4CEE2;
+	Wed,  7 May 2025 19:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644647;
-	bh=7KNNa4pXd5RvHHAXaw6Et9pHjYnz3vJTZcRo4XitRhI=;
+	s=korg; t=1746644651;
+	bh=fOPAJvQ0GCLjGlyD+IwvPMyg5KrYmc16zlm5RoySdng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kIMi6KDPbeqDVvBAYP0RYZpIE1jIeVoeZTmPpUgjqMuM8TUo+f0TgBrbw8vE3DWsa
-	 n2K02ijptJ94RhiyLpl+tuEKQCZz0bdrdbgzprBl/+0eD3/d5l7u7bQMRRufGaQ22s
-	 KfnzQ1qjLgLGcSW8Cxix3GyTJ4cSd/o1Wusn2i8A=
+	b=oBaRxCxpAuHpyAadmeC7Pg5xPyg8xneWX30UWr/P/E7xrKrP7OaoDwBJ9GZZ3wtHh
+	 NIWnjY2ItwaZndFwoIc+hEzAmVU+U/zV9GK2Jkhh6+SaxybufGZ/Bz7I1Alg4A2e4J
+	 0q+Vns0QLb86tUpNLtpn9r0xivgjx2J9SzVfB53I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Shravya KN <shravya.k-n@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Michael Chan <michael.chan@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 111/164] bnxt_en: Fix error handling path in bnxt_init_chip()
-Date: Wed,  7 May 2025 20:39:56 +0200
-Message-ID: <20250507183825.470720575@linuxfoundation.org>
+Subject: [PATCH 6.12 112/164] bnxt_en: Fix ethtool selftest output in one of the failure cases
+Date: Wed,  7 May 2025 20:39:57 +0200
+Message-ID: <20250507183825.511188448@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -53,48 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shravya KN <shravya.k-n@broadcom.com>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit 9ab7a709c926c16b4433cf02d04fcbcf35aaab2b ]
+[ Upstream commit 8e6cc9045380f3f0c48ebda2bda5e1abe263388d ]
 
-WARN_ON() is triggered in __flush_work() if bnxt_init_chip() fails
-because we call cancel_work_sync() on dim work that has not been
-initialized.
+When RDMA driver is loaded, running offline self test is not
+supported and driver returns failure early. But it is not clearing
+the input buffer and hence the application prints some junk
+characters for individual test results.
 
-WARNING: CPU: 37 PID: 5223 at kernel/workqueue.c:4201 __flush_work.isra.0+0x212/0x230
+Fix it by clearing the buffer before returning.
 
-The driver relies on the BNXT_STATE_NAPI_DISABLED bit to check if dim
-work has already been cancelled.  But in the bnxt_open() path,
-BNXT_STATE_NAPI_DISABLED is not set and this causes the error
-path to think that it needs to cancel the uninitalized dim work.
-Fix it by setting BNXT_STATE_NAPI_DISABLED during initialization.
-The bit will be cleared when we enable NAPI and initialize dim work.
-
-Fixes: 40452969a506 ("bnxt_en: Fix DIM shutdown")
-Suggested-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Fixes: 895621f1c816 ("bnxt_en: Don't support offline self test when RoCE driver is loaded")
 Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Signed-off-by: Shravya KN <shravya.k-n@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 Signed-off-by: Michael Chan <michael.chan@broadcom.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 874a15f33bc5b..026f0d7569e1c 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -11079,6 +11079,9 @@ static void bnxt_init_napi(struct bnxt *bp)
- 		poll_fn = bnxt_poll_p5;
- 	else if (BNXT_CHIP_TYPE_NITRO_A0(bp))
- 		cp_nr_rings--;
-+
-+	set_bit(BNXT_STATE_NAPI_DISABLED, &bp->state);
-+
- 	for (i = 0; i < cp_nr_rings; i++) {
- 		bnapi = bp->bnapi[i];
- 		netif_napi_add(bp->dev, &bnapi->napi, poll_fn);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index b901ecb57f255..36da52c0b9af6 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -4848,6 +4848,7 @@ static void bnxt_self_test(struct net_device *dev, struct ethtool_test *etest,
+ 	if (!bp->num_tests || !BNXT_PF(bp))
+ 		return;
+ 
++	memset(buf, 0, sizeof(u64) * bp->num_tests);
+ 	if (etest->flags & ETH_TEST_FL_OFFLINE &&
+ 	    bnxt_ulp_registered(bp->edev)) {
+ 		etest->flags |= ETH_TEST_FL_FAILED;
+@@ -4855,7 +4856,6 @@ static void bnxt_self_test(struct net_device *dev, struct ethtool_test *etest,
+ 		return;
+ 	}
+ 
+-	memset(buf, 0, sizeof(u64) * bp->num_tests);
+ 	if (!netif_running(dev)) {
+ 		etest->flags |= ETH_TEST_FL_FAILED;
+ 		return;
 -- 
 2.39.5
 
