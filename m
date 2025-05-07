@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0471DDC23;
-	Wed,  7 May 2025 18:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386031DDC23;
+	Wed,  7 May 2025 18:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643763; cv=none; b=cOvP24Mi7spyyJ4dCT9HzuduTK2xNj3AVKaUB9QPznc2NY2EGVe2sLB26u6aBdQs4KwJ9+WUoKc+a3IkCwi6iEmZPYegvK2Isba/zrHpsLCiZFp175lVfNUCMDIHdQxHd6859K02/pP04dOZT6Cf4AdQnpiy6uB3PscrtQ98CvE=
+	t=1746643766; cv=none; b=E9TZBc9FX85ymdNVfyjQoiFQNr0D22Ci3JDSHVHh07nLVLF08vDxGpRnIvrcQJ9+5AlSqAWVSP+Qn4vtf1J20KtLSMMwy19JG6AslvVhLT5G+auqZgjHitlB08ttS1d3SG9DLEwuDP3T0HLakP6olG/PsjNM5FZuR3UjY9QYEjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643763; c=relaxed/simple;
-	bh=lJ9S3oYh3v6h4NS1vrQ/rxXAhN9Epn+BKss9W/C9gbc=;
+	s=arc-20240116; t=1746643766; c=relaxed/simple;
+	bh=JCFzv6CmWc/gbxIUmuSvYAUNpHSJvLNT5BkDiscKs9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mo0rkSJ+eJgMS6gZFon9g9Lt+98h0itRFGFBHxiDpJKo9pTarApRCa0McT6ltmd+HYPPH2ZS8BX8ilEvpi8iUOgrqT6buTStHoDZl14IAbUxudnRWL4oNS6MwanWnBcKFoXZup88rc4nuX6BDVN3Ig8Kiya6+zePkhf5750VccQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wt21hz+Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jYQY1WGTtd8zJ6zMhBhzyzK0ZsU1ntdUYcXWHE2QJ+76oVhl03XGCc9+EM4NQItJiiAb7WqrXy2MnXL7Ahv52OXdAOP/i24yjNRDTsjFwdvAvzgBfYVROgJS7YqDxVah8R3XphCotia8El6wgnPYK+slnfqwNzJ6mD4+1yAf6LQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Syb1wcds; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wt21hz+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 982BFC4CEE2;
-	Wed,  7 May 2025 18:49:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Syb1wcds"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D59C4CEE2;
+	Wed,  7 May 2025 18:49:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643763;
-	bh=lJ9S3oYh3v6h4NS1vrQ/rxXAhN9Epn+BKss9W/C9gbc=;
+	s=korg; t=1746643766;
+	bh=JCFzv6CmWc/gbxIUmuSvYAUNpHSJvLNT5BkDiscKs9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wt21hz+YqH42LOPKo8Hl7oW0UDRcsLdj55n7Mrji7y4OqRcShcoEb5Kl+oMEL6FE4
-	 5vIGF5xp24nNh58V3b3m+I0BF11dEFLBgFa9ojtQ6SjBbVioQne3+XBaVSjhIrEv6q
-	 4tMTrVzHZWRAA4hN6c6ajRb5MojtR8E4fTjozUmo=
+	b=Syb1wcdsQ9nYR/IRey7XbI1BLFY16ETuJle9LwMDk8uioyfpRvXu54vmMzfnI3Tz2
+	 SN3VEOKEDIHrm8amF3ML+VFg+F7ACtGyrNaB43WbjKS6bFtbKidck0OHDwynDB6Wlb
+	 dKCMcHNN/g8qFXmCdOK572hJhgzSke97VQvWmMh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Philipp Stanner <phasta@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.14 010/183] drm/nouveau: Fix WARN_ON in nouveau_fence_context_kill()
-Date: Wed,  7 May 2025 20:37:35 +0200
-Message-ID: <20250507183825.112259693@linuxfoundation.org>
+	Niravkumar L Rabara <niravkumar.l.rabara@altera.com>,
+	Matthew Gerlach <matthew.gerlach@altera.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Dinh Nguyen <dinguyen@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.14 011/183] EDAC/altera: Test the correct error reg offset
+Date: Wed,  7 May 2025 20:37:36 +0200
+Message-ID: <20250507183825.153832609@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -45,50 +47,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philipp Stanner <phasta@kernel.org>
+From: Niravkumar L Rabara <niravkumar.l.rabara@altera.com>
 
-commit bbe5679f30d7690a9b6838a583b9690ea73fe0e9 upstream.
+commit 4fb7b8fceb0beebbe00712c3daf49ade0386076a upstream.
 
-Nouveau is mostly designed in a way that it's expected that fences only
-ever get signaled through nouveau_fence_signal(). However, in at least
-one other place, nouveau_fence_done(), can signal fences, too. If that
-happens (race) a signaled fence remains in the pending list for a while,
-until it gets removed by nouveau_fence_update().
+Test correct structure member, ecc_cecnt_offset, before using it.
 
-Should nouveau_fence_context_kill() run in the meantime, this would be
-a bug because the function would attempt to set an error code on an
-already signaled fence.
+  [ bp: Massage commit message. ]
 
-Have nouveau_fence_context_kill() check for a fence being signaled.
-
-Cc: stable@vger.kernel.org # v5.10+
-Fixes: ea13e5abf807 ("drm/nouveau: signal pending fences when channel has been killed")
-Suggested-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://lore.kernel.org/r/20250415121900.55719-3-phasta@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: 73bcc942f427 ("EDAC, altera: Add Arria10 EDAC support")
+Signed-off-by: Niravkumar L Rabara <niravkumar.l.rabara@altera.com>
+Signed-off-by: Matthew Gerlach <matthew.gerlach@altera.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Dinh Nguyen <dinguyen@kernel.org>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/20250425142640.33125-2-matthew.gerlach@altera.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_fence.c |    2 +-
+ drivers/edac/altera_edac.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_fence.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_fence.c
-@@ -90,7 +90,7 @@ nouveau_fence_context_kill(struct nouvea
- 	while (!list_empty(&fctx->pending)) {
- 		fence = list_entry(fctx->pending.next, typeof(*fence), head);
- 
--		if (error)
-+		if (error && !dma_fence_is_signaled_locked(&fence->base))
- 			dma_fence_set_error(&fence->base, error);
- 
- 		if (nouveau_fence_signal(fence))
+--- a/drivers/edac/altera_edac.c
++++ b/drivers/edac/altera_edac.c
+@@ -99,7 +99,7 @@ static irqreturn_t altr_sdram_mc_err_han
+ 	if (status & priv->ecc_stat_ce_mask) {
+ 		regmap_read(drvdata->mc_vbase, priv->ecc_saddr_offset,
+ 			    &err_addr);
+-		if (priv->ecc_uecnt_offset)
++		if (priv->ecc_cecnt_offset)
+ 			regmap_read(drvdata->mc_vbase,  priv->ecc_cecnt_offset,
+ 				    &err_count);
+ 		edac_mc_handle_error(HW_EVENT_ERR_CORRECTED, mci, err_count,
 
 
