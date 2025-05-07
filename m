@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5B31482F5;
-	Wed,  7 May 2025 18:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1F11482F5;
+	Wed,  7 May 2025 18:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644371; cv=none; b=pl3Yrb4kQo1E2PDBdmmxwETHu58YG8vqereYhIEpdnUc28h/DKBBALHljFgAS2SUw5dcYQOs2kuEQpkVwGBZ9MkQZ51tLsZxyVuWCcbRCRpTXQ9w1s4JzVcO8H0ixtmli19Gp0D0x+2M/W9HwBMM4QoLp0Roqovwv0Hve8f8r6E=
+	t=1746644374; cv=none; b=RnlX+woUyTPERGQvZidg4lkfOo/5YUf1XC8FDHo6SZX5XNxyMtSIuvjDJh/Gd1xkplm2V/wriyjGBgiYYnFCUeHarHvkQ7YlBSgIfB566SiipRkglynPYwQrYfX1iaFa8q0db/LXUQ+3KGdMmec0RgdHwdFvSrxd9KN/dwuFpjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644371; c=relaxed/simple;
-	bh=VhB6Yd7ATZxaN5hg3zw+ekMX8OynOa6btmwYvJ9XIfE=;
+	s=arc-20240116; t=1746644374; c=relaxed/simple;
+	bh=YdZ6UKk0Ep9ugI7ceVqSDbOKmhvp9+M6AzswubN175w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p20vjSU+dLSB8YAjA/8prmqyIIvWg9oC83L8nXdKNUtmdVcEmdmHJL23Fhj9Bo9A1rsqXvLukn7MNqINdgt281Lfdqu2Fzyxxu0KdcQdQV+yEWNH6eUp7SqC6mQtGtV0fAYRaupjTsmY9QSGBTEvLlJE9sJjGI5KgExf3MYFLfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/yeP29P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dHfjufnVQ3yXfGqW6qzW8jnZW8Szk3Oj9VRLMiskkBXkp/AcJKk/sTFdiWlRpCZTpNVvPsdwgHq1brY+T8TQEKo+DCUNCHbD/b3Qtm/DgvTbt5FHDAxd2yZvPKdz/pypwcoGFSv455JPaTrJufa5m1wbvdRJ6ZpImQfD/foM2Zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6tjsvH3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/yeP29P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD52C4CEE2;
-	Wed,  7 May 2025 18:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6tjsvH3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90795C4CEE2;
+	Wed,  7 May 2025 18:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644370;
-	bh=VhB6Yd7ATZxaN5hg3zw+ekMX8OynOa6btmwYvJ9XIfE=;
+	s=korg; t=1746644374;
+	bh=YdZ6UKk0Ep9ugI7ceVqSDbOKmhvp9+M6AzswubN175w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v/yeP29P9SOScaWmQ3AWrI2yJVj2NfdVa0xR6ZqBdM7sPhtg/2dNF5I8UZbShpebR
-	 q/ha9C6ccONN1CSbAJ7UmmiLcuJVSOTxabgbc7Smg6rNYJHUxc+TWBBiVs5JpeDyGd
-	 nwhUJIRByhBSvd8IM+knbKiKQrsQue8jJBGf8hnw=
+	b=O6tjsvH3vSWYVKEV1plVa8VjmPNHEBtDZ1DflsOZyEiVsKDCvgTx9tWPxQitHx02k
+	 sqLEGpFWyO+83kNTyvecPjFYmiw3bTbTQi0irlBoHVVKWFIlGOWkHaThD5OyLcdE4X
+	 gdMwdQ0bqH1tm96Xuy3cJO6R2sJnWiM5xdQlI7cY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Gengkun <luogengkun@huaweicloud.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.12 021/164] perf/x86/intel: Only check the group flag for X86 leader
-Date: Wed,  7 May 2025 20:38:26 +0200
-Message-ID: <20250507183821.727393205@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Alexander Tsoy <alexander@tsoy.me>
+Subject: [PATCH 6.12 003/164] Bluetooth: btusb: Add one more ID 0x13d3:0x3623 for Qualcomm WCN785x
+Date: Wed,  7 May 2025 20:38:08 +0200
+Message-ID: <20250507183820.941845160@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -51,78 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit 75aea4b0656ead0facd13d2aae4cb77326e53d2f upstream.
+[ Upstream commit e69bcffce21c649a23645b20eb527b3d1ce6fc49 ]
 
-A warning in intel_pmu_lbr_counters_reorder() may be triggered by below
-perf command.
+Add one more part with ID (0x13d3, 0x3623) to usb_device_id table for
+Qualcomm WCN785x, and its device info from /sys/kernel/debug/usb/devices
+is shown below:
 
-perf record -e "{cpu-clock,cycles/call-graph="lbr"/}" -- sleep 1
+T:  Bus=01 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
+D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=13d3 ProdID=3623 Rev= 0.01
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 1 Alt= 7 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  65 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  65 Ivl=1ms
 
-It's because the group is mistakenly treated as a branch counter group.
-
-The hw.flags of the leader are used to determine whether a group is a
-branch counters group. However, the hw.flags is only available for a
-hardware event. The field to store the flags is a union type. For a
-software event, it's a hrtimer. The corresponding bit may be set if the
-leader is a software event.
-
-For a branch counter group and other groups that have a group flag
-(e.g., topdown, PEBS counters snapshotting, and ACR), the leader must
-be a X86 event. Check the X86 event before checking the flag.
-The patch only fixes the issue for the branch counter group.
-The following patch will fix the other groups.
-
-There may be an alternative way to fix the issue by moving the hw.flags
-out of the union type. It should work for now. But it's still possible
-that the flags will be used by other types of events later. As long as
-that type of event is used as a leader, a similar issue will be
-triggered. So the alternative way is dropped.
-
-Fixes: 33744916196b ("perf/x86/intel: Support branch counters logging")
-Closes: https://lore.kernel.org/lkml/20250412091423.1839809-1-luogengkun@huaweicloud.com/
-Reported-by: Luo Gengkun <luogengkun@huaweicloud.com>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20250424134718.311934-2-kan.liang@linux.intel.com
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Alexander Tsoy <alexander@tsoy.me>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/core.c       |    2 +-
- arch/x86/events/perf_event.h |    9 ++++++++-
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btusb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/events/core.c
-+++ b/arch/x86/events/core.c
-@@ -753,7 +753,7 @@ void x86_pmu_enable_all(int added)
- 	}
- }
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -375,6 +375,8 @@ static const struct usb_device_id quirks
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe0f3), .driver_info = BTUSB_QCA_WCN6855 |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x13d3, 0x3623), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
  
--static inline int is_x86_event(struct perf_event *event)
-+int is_x86_event(struct perf_event *event)
- {
- 	int i;
- 
---- a/arch/x86/events/perf_event.h
-+++ b/arch/x86/events/perf_event.h
-@@ -110,9 +110,16 @@ static inline bool is_topdown_event(stru
- 	return is_metric_event(event) || is_slots_event(event);
- }
- 
-+int is_x86_event(struct perf_event *event);
-+
-+static inline bool check_leader_group(struct perf_event *leader, int flags)
-+{
-+	return is_x86_event(leader) ? !!(leader->hw.flags & flags) : false;
-+}
-+
- static inline bool is_branch_counters_group(struct perf_event *event)
- {
--	return event->group_leader->hw.flags & PERF_X86_EVENT_BRANCH_COUNTERS;
-+	return check_leader_group(event->group_leader, PERF_X86_EVENT_BRANCH_COUNTERS);
- }
- 
- struct amd_nb {
+ 	/* Broadcom BCM2035 */
+ 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
 
 
