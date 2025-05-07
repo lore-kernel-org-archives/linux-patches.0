@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B252116E9;
-	Wed,  7 May 2025 18:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC322153C6;
+	Wed,  7 May 2025 18:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644137; cv=none; b=atl6CgWg67xfPSEeFz1OH9NxI5WwlsvWyccWPIgwu165CIplI+WUnqbOOyAT4GU9x62yIoTBJQoVMOuTjFLzRcKRf7HBR89nuDcbwP/ZN5ksOpeVKFkpd1oi0CP/4T+0Td2KBYjtP06JV2H7Cv2MRbw207nMAddBip0vqdO2pyk=
+	t=1746644141; cv=none; b=M5DJPRFye5c/yddhRNsJC9OFk/6DHWB2Gls6235rULf0jqjYssje9Mzfue3s7SyOq8scMAFHOuLZxn5yeZE2EeHyJxc5TdLFqApRIiqx6kxrM8gYuEzhJ3uaesGHuqbG/rl0mqbNgSd52aytnixF1ZqjMd9ESTJmTmDkmgszVgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644137; c=relaxed/simple;
-	bh=qXtGjBZfBmmB9PZ0HBrgRsUgt9AEvjwcC1fSvIIwAus=;
+	s=arc-20240116; t=1746644141; c=relaxed/simple;
+	bh=d9vbSsftGXX3Jr4xyw94EFO+6G3a5oJHc9L4f6ziuJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rzoe9I2hRqOws8v832UBlBys/UUTHDWxFsl3yxGRM2Ts6hQKmRsjp2Tqyb99iN/WvPLuxLNEx9jD1PcpF9eZpyoDsC0N3ETl5TI72i8ZpNIRmydNGDjQEBRh49cou6Sr6ZkZ8PjX2xj5hnatd3drFExnUcEAHlXR7kS3qgY2dYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ltGKdXJQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KON9P7/kzYYNfljmn7Jj4bi76MJiZGMBlAjINJ1zrQHO17JcO1AH6UB6BxfiunF3EGsAHYj/7B6jsuPoMd9s9+10NomjXQvkBNq0rDdcc97T+/2EbGUDKbbg6EyrfyJTnu+o7pFWHZAlSsbJkHWEVB3QaV/xroiSukp70wDEmug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gcBUqJMe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ltGKdXJQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770CBC4CEE2;
-	Wed,  7 May 2025 18:55:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcBUqJMe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358A5C4CEE2;
+	Wed,  7 May 2025 18:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644136;
-	bh=qXtGjBZfBmmB9PZ0HBrgRsUgt9AEvjwcC1fSvIIwAus=;
+	s=korg; t=1746644140;
+	bh=d9vbSsftGXX3Jr4xyw94EFO+6G3a5oJHc9L4f6ziuJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ltGKdXJQBIvLXsoH9MJfDZYuT80DoCgRtw+PAiXANdL1xf2v3EMwthMloUZl5kdJQ
-	 EbV1qQ1xEwZvrFxX75TrtQqiboC9e2D5Nv2Wr5SHjBD5zc7fegVeIYSPoZKPz+w63b
-	 zLkyN1vK/ZKPMD2cEmaVCso6hI/JSebB3imRA0yM=
+	b=gcBUqJMeCYuLUTLrTmbXwn7dOMpw/mWzxBGoWLvEyjE0+R41iKP+ORXkDSh/NDnxS
+	 hCLM3oeLOBvsAN/eBgFu25eMB0gtVL/ew8iBYbioh3cXW6hi/KhrxC4FJ+UEfSOR8x
+	 6NO7iIlXeVyQQPbO6k86rdwwnvaYdkRdW06kmzd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Olivier Moysan <olivier.moysan@foss.st.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 131/183] ASoC: stm32: sai: skip useless iterations on kernel rate loop
-Date: Wed,  7 May 2025 20:39:36 +0200
-Message-ID: <20250507183830.126304668@linuxfoundation.org>
+Subject: [PATCH 6.14 132/183] ASoC: stm32: sai: add a check on minimal kernel frequency
+Date: Wed,  7 May 2025 20:39:37 +0200
+Message-ID: <20250507183830.171069332@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -53,68 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Olivier Moysan <olivier.moysan@foss.st.com>
 
-[ Upstream commit edea92770a3b6454dc796fc5436a3315bb402181 ]
+[ Upstream commit cce34d113e2a592806abcdc02c7f8513775d8b20 ]
 
-the frequency of the kernel clock must be greater than or equal to the
-bitclock rate. When searching for a convenient kernel clock rate in
-stm32_sai_set_parent_rate() function, it is useless to continue the loop
-below bitclock rate, as it will result in a invalid kernel clock rate.
-Change the loop output condition.
+On MP2 SoCs SAI kernel clock rate is managed through
+stm32_sai_set_parent_rate() function.
+If the kernel clock rate was set previously to a low frequency, this
+frequency may be too low to support the newly requested audio stream rate.
+However the stm32_sai_rate_accurate() will only check accuracy against
+the maximum kernel clock rate. The function will return leaving the kernel
+clock rate unchanged.
+Add a check on minimal frequency requirement, to avoid this.
 
 Fixes: 2cfe1ff22555 ("ASoC: stm32: sai: add stm32mp25 support")
 Signed-off-by: Olivier Moysan <olivier.moysan@foss.st.com>
-Link: https://patch.msgid.link/20250430165210.321273-2-olivier.moysan@foss.st.com
+Link: https://patch.msgid.link/20250430165210.321273-3-olivier.moysan@foss.st.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/stm/stm32_sai_sub.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ sound/soc/stm/stm32_sai_sub.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/sound/soc/stm/stm32_sai_sub.c b/sound/soc/stm/stm32_sai_sub.c
-index 3efbf4aaf9654..5a5acc67569fe 100644
+index 5a5acc67569fe..d9c4266c8150d 100644
 --- a/sound/soc/stm/stm32_sai_sub.c
 +++ b/sound/soc/stm/stm32_sai_sub.c
-@@ -409,11 +409,11 @@ static int stm32_sai_set_parent_rate(struct stm32_sai_sub_data *sai,
- 				     unsigned int rate)
- {
- 	struct platform_device *pdev = sai->pdev;
--	unsigned int sai_ck_rate, sai_ck_max_rate, sai_curr_rate, sai_new_rate;
-+	unsigned int sai_ck_rate, sai_ck_max_rate, sai_ck_min_rate, sai_curr_rate, sai_new_rate;
- 	int div, ret;
- 
- 	/*
--	 * Set maximum expected kernel clock frequency
-+	 * Set minimum and maximum expected kernel clock frequency
- 	 * - mclk on or spdif:
- 	 *   f_sai_ck = MCKDIV * mclk-fs * fs
- 	 *   Here typical 256 ratio is assumed for mclk-fs
-@@ -423,13 +423,16 @@ static int stm32_sai_set_parent_rate(struct stm32_sai_sub_data *sai,
- 	 *   Set constraint MCKDIV * FRL <= 256, to ensure MCKDIV is in available range
- 	 *   f_sai_ck = sai_ck_max_rate * pow_of_two(FRL) / 256
+@@ -447,7 +447,10 @@ static int stm32_sai_set_parent_rate(struct stm32_sai_sub_data *sai,
+ 	 * return immediately.
  	 */
-+	sai_ck_min_rate = rate * 256;
- 	if (!(rate % SAI_RATE_11K))
- 		sai_ck_max_rate = SAI_MAX_SAMPLE_RATE_11K * 256;
- 	else
- 		sai_ck_max_rate = SAI_MAX_SAMPLE_RATE_8K * 256;
- 
--	if (!sai->sai_mclk && !STM_SAI_PROTOCOL_IS_SPDIF(sai))
-+	if (!sai->sai_mclk && !STM_SAI_PROTOCOL_IS_SPDIF(sai)) {
-+		sai_ck_min_rate = rate * sai->fs_length;
- 		sai_ck_max_rate /= DIV_ROUND_CLOSEST(256, roundup_pow_of_two(sai->fs_length));
-+	}
+ 	sai_curr_rate = clk_get_rate(sai->sai_ck);
+-	if (stm32_sai_rate_accurate(sai_ck_max_rate, sai_curr_rate))
++	dev_dbg(&pdev->dev, "kernel clock rate: min [%u], max [%u], current [%u]",
++		sai_ck_min_rate, sai_ck_max_rate, sai_curr_rate);
++	if (stm32_sai_rate_accurate(sai_ck_max_rate, sai_curr_rate) &&
++	    sai_curr_rate >= sai_ck_min_rate)
+ 		return 0;
  
  	/*
- 	 * Request exclusivity, as the clock is shared by SAI sub-blocks and by
-@@ -472,7 +475,7 @@ static int stm32_sai_set_parent_rate(struct stm32_sai_sub_data *sai,
- 		/* Try a lower frequency */
- 		div++;
- 		sai_ck_rate = sai_ck_max_rate / div;
--	} while (sai_ck_rate > rate);
-+	} while (sai_ck_rate >= sai_ck_min_rate);
- 
- 	/* No accurate rate found */
- 	dev_err(&pdev->dev, "Failed to find an accurate rate");
 -- 
 2.39.5
 
