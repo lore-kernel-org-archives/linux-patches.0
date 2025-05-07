@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1626C1CF5C6;
-	Wed,  7 May 2025 19:06:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD711CF5C6;
+	Wed,  7 May 2025 19:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644811; cv=none; b=TfQZCI/kbi933R3m9CUSQ8GnLU5LsktIuiyFduGwsAHxbrsUd9bcnbPikbddS+tFUzrdko59EcdPJz1pR9oTFuky6OUNsD4lfNKseC/U6vwQx5JJDV7AlnftjUuJo6arlscn1wNQ0VyKhAFksNOVJczvOLUTVVNxB1nTeq+AZN4=
+	t=1746644814; cv=none; b=TRt92MpdIWGdZX3Jp8BKACX9N7rr3ke6PpXKgbHbyWRBiEEGOqS5ubdheeyYraPQvYwNh834LQoffyceP/lJC699tkNVJe20HFd5Jf4+44TkQR/awXlsspFkkXAaXlPadxBPdSzbzG5Dh3OsqQyFCaY/cSkidYpNsQTUIgAzXCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644811; c=relaxed/simple;
-	bh=gE+Z9ZgOMPdUCGyZZFp6v2kBBPWtGNr8BtijQEtazxg=;
+	s=arc-20240116; t=1746644814; c=relaxed/simple;
+	bh=c1v0ZWIjsem/Z48zTo86ewjo/72u0EG9AOaLWIFO3Rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l6dvKealfCaPH7hFKjpzDscbAKPVg6WW1dLC6EdZNTxvMYhzRjDTmCn57N/uUur/11oTciyNoD4iD4MHt9NRpgX1lvl2XXrUyUpCETTjSVRzsJPlAd6yVmfq42fK7xZReV7txSQ6Tqbd1jMdAdJyDWNH3X00ZlOHAc8580AasWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pNkQNRJu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kSQvg1ORwRTkAD3x043BSCjkB30aSEqzRjbZ0vqUOlreHUD4iG6e+UUW9IfwhMTQ8oLNm0JD/zHANdE9FbMBaEizrLLyBDeOTNi2V16uLN+2AzQkl/SGM85HBBlQXr0l9z2h4M9UOlRubAndn29f9jgNwJLd+9rQkM4rPOkCSmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qq83lV9r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pNkQNRJu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE46C4CEE2;
-	Wed,  7 May 2025 19:06:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qq83lV9r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7403C4CEE2;
+	Wed,  7 May 2025 19:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644811;
-	bh=gE+Z9ZgOMPdUCGyZZFp6v2kBBPWtGNr8BtijQEtazxg=;
+	s=korg; t=1746644814;
+	bh=c1v0ZWIjsem/Z48zTo86ewjo/72u0EG9AOaLWIFO3Rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pNkQNRJun0K5B6lQFRKoPLFXJhREcATR79JiZJFqqnMcP+yTJUfxJdaOb5dvpo7fh
-	 mTXn7XSB+prbqRFBIIHExpibWJ3Dd2U1vApUxhyroM9tAjxWvhSaSnxlAJ8FlvfpI5
-	 3ULsSeQvI5lh0LhXIA17fAasrwdd/djKTBytYEsU=
+	b=Qq83lV9rvGhGvD+QFKNf3TcNHsiIG6tdp8vaHIOLA5JQH39EZalk5FrgdqQ2d2gqM
+	 7OlXB5Getb2gXeO7Ve8qCpCfxOb3RvSW1XknBpo8TKtjuu88Sc6PskA3nIibNTr774
+	 dOWxdP5IeiHpwvxEhrz940DAq5D65yS2JCARLosY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 154/164] firmware: arm_ffa: Skip Rx buffer ownership release if not acquired
-Date: Wed,  7 May 2025 20:40:39 +0200
-Message-ID: <20250507183827.202623427@linuxfoundation.org>
+Subject: [PATCH 6.12 155/164] arm64: dts: imx95: Correct the range of PCIe app-reg region
+Date: Wed,  7 May 2025 20:40:40 +0200
+Message-ID: <20250507183827.243195658@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -44,54 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Richard Zhu <hongxing.zhu@nxp.com>
 
-[ Upstream commit 4567bdaaaaa1744da3d7da07d9aca2f941f5b4e5 ]
+[ Upstream commit 02e4232998db357bb8199778722d81ffcff0cb98 ]
 
-Completion of the FFA_PARTITION_INFO_GET ABI transfers the ownership of
-the caller’s Rx buffer from the producer(typically partition mnager) to
-the consumer(this driver/OS). FFA_RX_RELEASE transfers the ownership
-from the consumer back to the producer.
+Correct the range of PCIe app-reg region from 0x2000 to 0x4000 refer to
+SerDes_SS memory map of i.MX95 Rerference Manual.
 
-However, when we set the flag to just return the count of partitions
-deployed in the system corresponding to the specified UUID while
-invoking FFA_PARTITION_INFO_GET, the Rx buffer ownership shouldn't be
-transferred to this driver. We must be able to skip transferring back
-the ownership to the partition manager when we request just to get the
-count of the partitions as the buffers are not acquired in this case.
-
-Firmware may return FFA_RET_DENIED or other error for the ffa_rx_release()
-in such cases.
-
-Fixes: bb1be7498500 ("firmware: arm_ffa: Add v1.1 get_partition_info support")
-Message-Id: <20250321115700.3525197-1-sudeep.holla@arm.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: 3b1d5deb29ff ("arm64: dts: imx95: add pcie[0,1] and pcie-ep[0,1] support")
+Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx95.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 2c2ec3c35f156..dce448687e28e 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -280,7 +280,8 @@ __ffa_partition_info_get(u32 uuid0, u32 uuid1, u32 uuid2, u32 uuid3,
- 			memcpy(buffer + idx, drv_info->rx_buffer + idx * sz,
- 			       buf_sz);
- 
--	ffa_rx_release();
-+	if (!(flags & PARTITION_INFO_GET_RETURN_COUNT_ONLY))
-+		ffa_rx_release();
- 
- 	mutex_unlock(&drv_info->rx_lock);
- 
+diff --git a/arch/arm64/boot/dts/freescale/imx95.dtsi b/arch/arm64/boot/dts/freescale/imx95.dtsi
+index 40cbb071f265c..f904d6b1c84bf 100644
+--- a/arch/arm64/boot/dts/freescale/imx95.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx95.dtsi
+@@ -1478,7 +1478,7 @@
+ 			reg = <0 0x4c300000 0 0x10000>,
+ 			      <0 0x60100000 0 0xfe00000>,
+ 			      <0 0x4c360000 0 0x10000>,
+-			      <0 0x4c340000 0 0x2000>;
++			      <0 0x4c340000 0 0x4000>;
+ 			reg-names = "dbi", "config", "atu", "app";
+ 			ranges = <0x81000000 0x0 0x00000000 0x0 0x6ff00000 0 0x00100000>,
+ 				 <0x82000000 0x0 0x10000000 0x9 0x10000000 0 0x10000000>;
+@@ -1518,7 +1518,7 @@
+ 			reg = <0 0x4c300000 0 0x10000>,
+ 			      <0 0x4c360000 0 0x1000>,
+ 			      <0 0x4c320000 0 0x1000>,
+-			      <0 0x4c340000 0 0x2000>,
++			      <0 0x4c340000 0 0x4000>,
+ 			      <0 0x4c370000 0 0x10000>,
+ 			      <0x9 0 1 0>;
+ 			reg-names = "dbi","atu", "dbi2", "app", "dma", "addr_space";
+@@ -1545,7 +1545,7 @@
+ 			reg = <0 0x4c380000 0 0x10000>,
+ 			      <8 0x80100000 0 0xfe00000>,
+ 			      <0 0x4c3e0000 0 0x10000>,
+-			      <0 0x4c3c0000 0 0x2000>;
++			      <0 0x4c3c0000 0 0x4000>;
+ 			reg-names = "dbi", "config", "atu", "app";
+ 			ranges = <0x81000000 0 0x00000000 0x8 0x8ff00000 0 0x00100000>,
+ 				 <0x82000000 0 0x10000000 0xa 0x10000000 0 0x10000000>;
+@@ -1585,7 +1585,7 @@
+ 			reg = <0 0x4c380000 0 0x10000>,
+ 			      <0 0x4c3e0000 0 0x1000>,
+ 			      <0 0x4c3a0000 0 0x1000>,
+-			      <0 0x4c3c0000 0 0x2000>,
++			      <0 0x4c3c0000 0 0x4000>,
+ 			      <0 0x4c3f0000 0 0x10000>,
+ 			      <0xa 0 1 0>;
+ 			reg-names = "dbi", "atu", "dbi2", "app", "dma", "addr_space";
 -- 
 2.39.5
 
