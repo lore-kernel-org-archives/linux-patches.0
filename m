@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91EC442A83;
-	Wed,  7 May 2025 18:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D1642A83;
+	Wed,  7 May 2025 18:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643878; cv=none; b=YsNlxAin0QWG0a71C1dgd6UZKDDwSvzqxTcxA9SNGGzR/zkazKdUmdBlJwteA+yZ0ZQjruaIz9o5E9sFyWfWr6IZ6ndgTUEU9SipggQyn0A41FK3dLFJvhv+IkrdijXE/DEZuQOkKnQfcj49UYBnQKwJmNZeKziMY3/IW5tc7RQ=
+	t=1746643881; cv=none; b=BBxhOa0NpiTL1V0xzx/qe8uSwxg7rY2uv+z3Lo1x8iH2dxcbvn87vJMGh94Q8N1BuhtlsYuKP6F6abHhkPofbuJH/xJ0BNJf4qmzsp5ebAXsnivtmaiY1lkFZZpV1xKuuqxbcyyv24q0pySUZO67ZK6GVa9dVrKghSaIC0cS04w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643878; c=relaxed/simple;
-	bh=a7fW2RTD7cbLC975lUNhG+forLaPNR8i+JBBWPbcSuk=;
+	s=arc-20240116; t=1746643881; c=relaxed/simple;
+	bh=MRHTCi2/fdkzsvqka8hhNGnnqfavd5JHJI8XYse0Jjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fKnkJXb/H+w02gT4/Ys5oySiKB2bMaaR3bOGcprFejGp0YuXNILf0MpvTTISu16DE4S5qLieiqYJfWGvvXcoEHyutNTX6CdzXTETkwaAS5CLavwSnVl+yQT4ePoUDvpG0txEObGT+jxlRwhwyqCFiSHFBvI2+VUveaRHNtrfTbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tvExMGoF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uHJJqjpexKv42CAbiyIyuME8K0xO2w0XiBLIlatUXVOZAxzbfiOpQI65Fu75nlOccTjhbecVPJhvbEdrCn+7LUG92UgR/miCq+gM/XdWTXRENH5Y2E32UPbhDhcI4iGr+y8TgEkL9BcALJQGMyGnNcrX9x6FMHjJyl7DHzwEpGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cfw5odDq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tvExMGoF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BA9C4CEE2;
-	Wed,  7 May 2025 18:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cfw5odDq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B5EAC4CEE2;
+	Wed,  7 May 2025 18:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643878;
-	bh=a7fW2RTD7cbLC975lUNhG+forLaPNR8i+JBBWPbcSuk=;
+	s=korg; t=1746643881;
+	bh=MRHTCi2/fdkzsvqka8hhNGnnqfavd5JHJI8XYse0Jjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tvExMGoFOt6XEKNNdAV9ETtuBtnKFAGsX1TVht9NqIP3sgyRUWHfdA0F/96Jw4Ca9
-	 6fAEYRN17+qi0CXdDTg5DceHhsVIfYuVrxYaUvd7cdT7vWsQIlHKzlgv5hYHVs/8aJ
-	 Pr97cdtytbZYuipGATZ0cGtckgzvGMX+xDYUZBoA=
+	b=Cfw5odDqrr6l3t1HBWASlo+qKtnqU8Y1XXRuQyPuCBeUi4P9vYb0BBqmuZIXk/t93
+	 8O8ifUdfwPFdZeXPtgmi3xIs5/a0ckAPP/paqa+coFgvLyMLfO3yS9WsKRt3FmB4uN
+	 O8g1WZyvNideFDJbFgVWMthzp/BTIloLuKna6oYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Gengkun <luogengkun@huaweicloud.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.14 017/183] perf/x86/intel: Only check the group flag for X86 leader
-Date: Wed,  7 May 2025 20:37:42 +0200
-Message-ID: <20250507183825.391916528@linuxfoundation.org>
+	Seth Forshee <sforshee@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>
+Subject: [PATCH 6.14 018/183] perf/x86/intel: KVM: Mask PEBS_ENABLE loaded for guest with vCPUs value.
+Date: Wed,  7 May 2025 20:37:43 +0200
+Message-ID: <20250507183825.431234008@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -51,78 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 75aea4b0656ead0facd13d2aae4cb77326e53d2f upstream.
+commit 58f6217e5d0132a9f14e401e62796916aa055c1b upstream.
 
-A warning in intel_pmu_lbr_counters_reorder() may be triggered by below
-perf command.
+When generating the MSR_IA32_PEBS_ENABLE value that will be loaded on
+VM-Entry to a KVM guest, mask the value with the vCPU's desired PEBS_ENABLE
+value.  Consulting only the host kernel's host vs. guest masks results in
+running the guest with PEBS enabled even when the guest doesn't want to use
+PEBS.  Because KVM uses perf events to proxy the guest virtual PMU, simply
+looking at exclude_host can't differentiate between events created by host
+userspace, and events created by KVM on behalf of the guest.
 
-perf record -e "{cpu-clock,cycles/call-graph="lbr"/}" -- sleep 1
+Running the guest with PEBS unexpectedly enabled typically manifests as
+crashes due to a near-infinite stream of #PFs.  E.g. if the guest hasn't
+written MSR_IA32_DS_AREA, the CPU will hit page faults on address '0' when
+trying to record PEBS events.
 
-It's because the group is mistakenly treated as a branch counter group.
+The issue is most easily reproduced by running `perf kvm top` from before
+commit 7b100989b4f6 ("perf evlist: Remove __evlist__add_default") (after
+which, `perf kvm top` effectively stopped using PEBS).	The userspace side
+of perf creates a guest-only PEBS event, which intel_guest_get_msrs()
+misconstrues a guest-*owned* PEBS event.
 
-The hw.flags of the leader are used to determine whether a group is a
-branch counters group. However, the hw.flags is only available for a
-hardware event. The field to store the flags is a union type. For a
-software event, it's a hrtimer. The corresponding bit may be set if the
-leader is a software event.
+Arguably, this is a userspace bug, as enabling PEBS on guest-only events
+simply cannot work, and userspace can kill VMs in many other ways (there
+is no danger to the host).  However, even if this is considered to be bad
+userspace behavior, there's zero downside to perf/KVM restricting PEBS to
+guest-owned events.
 
-For a branch counter group and other groups that have a group flag
-(e.g., topdown, PEBS counters snapshotting, and ACR), the leader must
-be a X86 event. Check the X86 event before checking the flag.
-The patch only fixes the issue for the branch counter group.
-The following patch will fix the other groups.
+Note, commit 854250329c02 ("KVM: x86/pmu: Disable guest PEBS temporarily
+in two rare situations") fixed the case where host userspace is profiling
+KVM *and* userspace, but missed the case where userspace is profiling only
+KVM.
 
-There may be an alternative way to fix the issue by moving the hw.flags
-out of the union type. It should work for now. But it's still possible
-that the flags will be used by other types of events later. As long as
-that type of event is used as a leader, a similar issue will be
-triggered. So the alternative way is dropped.
-
-Fixes: 33744916196b ("perf/x86/intel: Support branch counters logging")
-Closes: https://lore.kernel.org/lkml/20250412091423.1839809-1-luogengkun@huaweicloud.com/
-Reported-by: Luo Gengkun <luogengkun@huaweicloud.com>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Fixes: c59a1f106f5c ("KVM: x86/pmu: Add IA32_PEBS_ENABLE MSR emulation for extended PEBS")
+Closes: https://lore.kernel.org/all/Z_VUswFkWiTYI0eD@do-x1carbon
+Reported-by: Seth Forshee <sforshee@kernel.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Tested-by: "Seth Forshee (DigitalOcean)" <sforshee@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20250424134718.311934-2-kan.liang@linux.intel.com
+Link: https://lore.kernel.org/r/20250426001355.1026530-1-seanjc@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/core.c       |    2 +-
- arch/x86/events/perf_event.h |    9 ++++++++-
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/events/core.c
-+++ b/arch/x86/events/core.c
-@@ -753,7 +753,7 @@ void x86_pmu_enable_all(int added)
- 	}
- }
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -4341,7 +4341,7 @@ static struct perf_guest_switch_msr *int
+ 	arr[pebs_enable] = (struct perf_guest_switch_msr){
+ 		.msr = MSR_IA32_PEBS_ENABLE,
+ 		.host = cpuc->pebs_enabled & ~cpuc->intel_ctrl_guest_mask,
+-		.guest = pebs_mask & ~cpuc->intel_ctrl_host_mask,
++		.guest = pebs_mask & ~cpuc->intel_ctrl_host_mask & kvm_pmu->pebs_enable,
+ 	};
  
--static inline int is_x86_event(struct perf_event *event)
-+int is_x86_event(struct perf_event *event)
- {
- 	int i;
- 
---- a/arch/x86/events/perf_event.h
-+++ b/arch/x86/events/perf_event.h
-@@ -110,9 +110,16 @@ static inline bool is_topdown_event(stru
- 	return is_metric_event(event) || is_slots_event(event);
- }
- 
-+int is_x86_event(struct perf_event *event);
-+
-+static inline bool check_leader_group(struct perf_event *leader, int flags)
-+{
-+	return is_x86_event(leader) ? !!(leader->hw.flags & flags) : false;
-+}
-+
- static inline bool is_branch_counters_group(struct perf_event *event)
- {
--	return event->group_leader->hw.flags & PERF_X86_EVENT_BRANCH_COUNTERS;
-+	return check_leader_group(event->group_leader, PERF_X86_EVENT_BRANCH_COUNTERS);
- }
- 
- struct amd_nb {
+ 	if (arr[pebs_enable].host) {
 
 
