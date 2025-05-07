@@ -1,73 +1,126 @@
-Received: from hsmtpd-dty.xspmail.jp (hsmtpd-dty.xspmail.jp [210.130.137.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D3978F4F
-	for <patches@lists.linux.dev>; Wed,  7 May 2025 13:32:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.130.137.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C407C28935B;
+	Wed,  7 May 2025 14:04:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746624764; cv=none; b=SsAqgB9A4oTivi0V/IiddaY5Tb1m80gx6ZFvs6iXtind49xAzqf2HY4VbdStWYXqAGAwrFNF4M6d7kb7y+aLdjJCaPMG9PCRwySRPeg1gT8QQT0G33gz9KWQNyDv+kktVWXJ7GS6fhEDYxrXyWCx8p5/OLwm7GJNTxZIEIb6iNo=
+	t=1746626696; cv=none; b=IUfrd+o/J8Rhs5FoPQBzM9I7+5PgCnzHKjfMDh8+dJlwwE8/WoMOQENViiyIQVsB00TyqGplJf66bVaR67eSAULV60lQWy3Wa35Quo3RGZA70DR0F0Am/xjTEm2gxKwjwvAunt+sp2rimE4fWz4PxhBgbFoz2HiM1saUHFIFh9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746624764; c=relaxed/simple;
-	bh=b93IRXpKZuiJmeVSeTcY71kbyIcUJ5FiY9P9+AmYZL8=;
-	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=nZsA8dToZM6asO0IPsRS6UH3k5oNPxAmdk3WhF/84FOHizijw5lY1moejEs1LDzLPpJJDBI3zllIOdnfr/Vwsu03jmM+SoaN0LKkan/rFishcrb8VRKQjuaWZOC/ZNPk0+l6HeKQeut08IZNtJlIvNFXQwSjakB4ux2DF2BjZVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=iijmio-mail.jp; spf=pass smtp.mailfrom=iijmio-mail.jp; dkim=pass (2048-bit key) header.d=iijmio-mail.jp header.i=henrich@iijmio-mail.jp header.b=vB+P0NeN; arc=none smtp.client-ip=210.130.137.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=iijmio-mail.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iijmio-mail.jp
+	s=arc-20240116; t=1746626696; c=relaxed/simple;
+	bh=LyeCkL9rXFb9nzsz3cXF9ksBjZko/3X7PeSEcfUSBJs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=G+XXPJtTJUteyuTkcaM2GwUPCXRW+FQ4Cy8T+GMHo/dqVS7Ti2Hd64mwL+IFPP4pN5xx3CGyIbuCGU8JMS51D4nIIqHFx+f3yV7uZBLbyYX0YBvG9pz7F83+JDbGdsFxmn2v3Jig9rgDN1ogScZki7yGi1tjgBHhFUJmvfvftPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u0WxNwYJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iijmio-mail.jp header.i=henrich@iijmio-mail.jp header.b="vB+P0NeN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1746624760;
-	d=iijmio-mail.jp; s=x01; i=henrich@iijmio-mail.jp;
-	h=content-transfer-encoding:content-type:mime-version:references:in-reply-to:
-	 message-id:subject:cc:to:from:date:from;
-	bh=sIbr/C5hG61pCDo6Gu04oU4RzXBq7aIXbgelNNjpQts=;
-	b=vB+P0NeN83cUeyCpY6EWRviFfA4ZAKCWMApjOELlslHfZJntVC9uV2KeMbLVo/bazT38lBCUcQeUZ
-	 Xwau1eIK3XoeIMyvuWjtuoTemdz46gkHy2pbCcWakTQnqkoJt/SVtY1T54D5cEAdzaZcGNeKEJpQp5
-	 3Kd/7SzG9+mW+AY7GbDbr8lGJPftWz5wRK44LBSxsw/P7WAmPNxhCqii/AfDEp2myez2XbGbEdHDdr
-	 zAKDc1mIgupkPiQ7d8AaqzqwyLugwqpgOr9SAoMpIk4keQrfukbsiop9EY52Btn4ou7r5arx32KljH
-	 sFS1fxy4lRe0/yPzV7xy7MKBUi0hfTg==
-X-Country-Code: JP
-Received: from t14s (unknown [2409:12:b80:1600:5410:436b:3e69:1281])
-	by hsmtpd-out-0.iij.cluster.xspmail.jp (Halon) with ESMTPSA (TLSv1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	id e75fe861-5480-428f-ac1b-2c4f5ef90c50;
-	Wed, 07 May 2025 22:32:40 +0900 (JST)
-Date: Wed, 7 May 2025 22:32:39 +0900
-From: Hideki Yamane <henrich@iijmio-mail.jp>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Uwe
- =?UTF-8?B?S2xlaW5lLUvDg8K2bmln?= <ukleinek@debian.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, Sergey Shtylyov
- <s.shtylyov@omp.ru>, Rob Herring <robh@kernel.org>, h-yamane@sios.com
-Subject: Re: [PATCH 6.1 150/167] of: module: add buffer overflow check in
- of_modalias()
-Message-Id: <20250507223239.a07fd11a7d3d9bbc819273c1@iijmio-mail.jp>
-In-Reply-To: <2025050751-backer-update-3b45@gregkh>
-References: <20250429161051.743239894@linuxfoundation.org>
-	<20250429161057.791863253@linuxfoundation.org>
-	<20250507200533.ac131fe0c774b23054b4261e@iijmio-mail.jp>
-	<2025050737-banked-clarify-3bf8@gregkh>
-	<20250507222156.6c59459565246dc1b5ae37fc@iijmio-mail.jp>
-	<2025050751-backer-update-3b45@gregkh>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u0WxNwYJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F20E3C4CEE2;
+	Wed,  7 May 2025 14:04:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1746626696;
+	bh=LyeCkL9rXFb9nzsz3cXF9ksBjZko/3X7PeSEcfUSBJs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=u0WxNwYJmCc+ussMenRL/XAK3UzQxKc/ji/DUhY+MuAf0CCR7quj6vzh/1ZgGwRA7
+	 W9NJ1YfbH6iuD2Zakct7vEYfODCEREfXi7i5XfcmeqiLwkQ1tLSrVy5pS7A46Pw8+w
+	 GPcHIaqeC/ojX04b0bR9qsP7yDfctxZN8Kn/hs6I=
+Date: Wed, 7 May 2025 16:04:50 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: "Tai, Gerrard" <gerrard.tai@starlabs.sg>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>, Sasha Levin <sashal@kernel.org>
+Subject: Re: net/sched: codel: Inclusion of patchset
+Message-ID: <2025050712-prone-covenant-80c9@gregkh>
+References: <CAHcdcOkW1D_zKh-HPsfjX-oGYhv-OwojPXVwcA=NYoO0hcCbZQ@mail.gmail.com>
+ <2025050519-stem-fidelity-25b1@gregkh>
+ <CAHcdcOkMt_Mpcm1AjxbU8MurGO5e--LPPJOrSTA+utDOzVHE3g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAHcdcOkMt_Mpcm1AjxbU8MurGO5e--LPPJOrSTA+utDOzVHE3g@mail.gmail.com>
 
-Hi,
+On Wed, May 07, 2025 at 10:59:53AM +0800, Tai, Gerrard wrote:
+> On Mon, May 5, 2025 at 5:28 PM Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > On Fri, May 02, 2025 at 12:49:48PM +0800, Tai, Gerrard wrote:
+> > > Upstream commits:
+> > > 01: 5ba8b837b522d7051ef81bacf3d95383ff8edce5 ("sch_htb: make
+> > > htb_qlen_notify() idempotent")
+> > > 02: df008598b3a00be02a8051fde89ca0fbc416bd55 ("sch_drr: make
+> > > drr_qlen_notify() idempotent")
+> > > 03: 51eb3b65544c9efd6a1026889ee5fb5aa62da3bb ("sch_hfsc: make
+> > > hfsc_qlen_notify() idempotent")
+> > > 04: 55f9eca4bfe30a15d8656f915922e8c98b7f0728 ("sch_qfq: make
+> > > qfq_qlen_notify() idempotent")
+> > > 05: a7a15f39c682ac4268624da2abdb9114bdde96d5 ("sch_ets: make
+> > > est_qlen_notify() idempotent")
+> > > 06: 342debc12183b51773b3345ba267e9263bdfaaef ("codel: remove
+> > > sch->q.qlen check before qdisc_tree_reduce_backlog()")
+> > >
+> > > These patches are patch 01-06 of the original patchset ([1]) authored by
+> > > Cong Wang. I have omitted patches 07-11 which are selftests. This patchset
+> > > addresses a UAF vulnerability.
+> > >
+> > > Originally, only the last commit (06) was picked to merge into the latest
+> > > round of stable queues 5.15,5.10,5.4. For 6.x stable branches, that sole
+> > > commit has already been merged in a previous cycle.
+> > >
+> > > >From my understanding, this patch depends on the previous patches to work.
+> > > Without patches 01-05 which make various classful qdiscs' qlen_notify()
+> > > idempotent, if an fq_codel's dequeue() routine empties the fq_codel qdisc,
+> > > it will be doubly deactivated - first in the parent qlen_notify and then
+> > > again in the parent dequeue. For instance, in the case of parent drr,
+> > > the double deactivation will either cause a fault on an invalid address,
+> > > or trigger a splat if list checks are compiled into the kernel. This is
+> > > also why the original unpatched code included the qlen check in the first
+> > > place.
+> > >
+> > > After discussion with Greg, he has helped to temporarily drop the patch
+> > > from the 5.x queues ([2]). My suggestion is to include patches 01-06 of the
+> > > patchset, as listed above, for the 5.x queues. For the 6.x queues that have
+> > > already merged patch 06, the earlier patches 01-05 should be merged too.
+> > >
+> > > I'm not too familiar with the stable patch process, so I may be completely
+> > > mistaken here.
+> >
+> > I'll be glad to take what is needed, but please list what commits need
+> > to go to what branches and in what exact order please.
+> 
+> Here's the list of commits. The order should be the sequence as listed
+> below.
+> 
+> 6.14, 6.13, 6.12, 6.6, 6.1: (all 6.* branches)
+> 5ba8b837b522d7051ef81bacf3d95383ff8edce5 ("sch_htb: make
+> htb_qlen_notify() idempotent")
+> df008598b3a00be02a8051fde89ca0fbc416bd55 ("sch_drr: make
+> drr_qlen_notify() idempotent")
+> 51eb3b65544c9efd6a1026889ee5fb5aa62da3bb ("sch_hfsc: make
+> hfsc_qlen_notify() idempotent")
+> 55f9eca4bfe30a15d8656f915922e8c98b7f0728 ("sch_qfq: make
+> qfq_qlen_notify() idempotent")
+> a7a15f39c682ac4268624da2abdb9114bdde96d5 ("sch_ets: make
+> est_qlen_notify() idempotent")
+> 
+> 5.15, 5.10, 5.4: (all 5.* branches)
+> 5ba8b837b522d7051ef81bacf3d95383ff8edce5 ("sch_htb: make
+> htb_qlen_notify() idempotent")
+> df008598b3a00be02a8051fde89ca0fbc416bd55 ("sch_drr: make
+> drr_qlen_notify() idempotent")
 
-On Wed, 7 May 2025 15:28:25 +0200
-Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> I'll take Uwe's backports, but in the future, when you send a patch on
-> like this, you also need to sign-off on it, especially as you had to
-> modify it from the original change.
+This commit did not apply to 5.15.y and older, sorry.
 
- Thanks Greg and Uwe, I'll do it as you suggest if I can have a chance to
- contribute something to Linux again :)
+Please provide working, and TESTED backports of patches for us to
+be able to include them in the stable trees.
 
+thanks,
 
--- 
-Hideki Yamane <henrich@iijmio-mail.jp / debian.org | h-yamane@sios.com>
+greg k-h
