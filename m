@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D8A1482F5;
-	Wed,  7 May 2025 18:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593D929A0;
+	Wed,  7 May 2025 18:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643551; cv=none; b=ieFw8FAekdhSmrwP1KQtCltbQXTIZbZEVNe4NZ1vOI+ZfPEWKlnr5ArFTejPChuoklUBEUxMiT8MJpM/vNe/qNpPBs0hqwna2t+cG8/DQlCnjPYq7Gzzj4NJw+bJYUIestSmuhpZ9QO6mpfKuE0RBrH1LPxsenP1mSrx7DjZvgk=
+	t=1746643554; cv=none; b=PhATlp3wabJqWazsTxHgQRUq+PxdtQXhTDAYBSiwv3+XW2kHT9CT3FaIB9wx/b5QdzXDMUXXiJxuh/y/Ycse9LWmHS39neIGt2LumSogXwi4u++ddHjzpIVAM8VobFLntSUBnCxBtGmphku3/AJVFkHLNPdYljUkV+6BzMvUZPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643551; c=relaxed/simple;
-	bh=oPxvuW8CJASj5j9sMaBELJTh1GYNS6PTkVGNW5AdYio=;
+	s=arc-20240116; t=1746643554; c=relaxed/simple;
+	bh=VtUnojbH2G8fYbyQ+fyK7a2NEk4YBYR/t/9umPRGDb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oevNNTwm6FZb+yh66vZG7P8+X9rR7HbhMYIVrTqqlmDCa4C7v4fA150Dbu6Lj2UrgzBOcAJDXWNV7jrYO+4RYrHpMhQWobzKSp3rNxqC33aHlEJWi0bJtSCCH2I7VW4W5vmMrpoV/t2Au18xCafJvx5R/EJAXn9xJaSHSCzPihQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxBjO1G3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eXrZ8ONo/MHH1jbSZMeln//DDuE++LpVwqmUVHyUdGyUm5AF9UhAUnSkwHl+TctDjNzW3aAMN3f9Gy0VdHEUvpMRGtEzYBRCD0dZUPo1iLe5F8o8bf49haI+lY7GMRDgk1GaFwbBmRJDXBFXt9ZuB+veWkCJI6DBQYT6tmdWnxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6qyZjAT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxBjO1G3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D01C4CEE2;
-	Wed,  7 May 2025 18:45:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6qyZjAT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9681C4CEEB;
+	Wed,  7 May 2025 18:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643551;
-	bh=oPxvuW8CJASj5j9sMaBELJTh1GYNS6PTkVGNW5AdYio=;
+	s=korg; t=1746643554;
+	bh=VtUnojbH2G8fYbyQ+fyK7a2NEk4YBYR/t/9umPRGDb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bxBjO1G37jupokOXtj3d3THsjuIP9zmhYwW5fN+uTWMV8bnUcxiUy6qRp58goA9OZ
-	 dDyFPsN6KQ2fANisktvOtRlL9ZB89RXBLpF81Gm+sFsjcthdJQldQFk87niUkoIDd+
-	 WthSEHgcVcz6gTiPCf8kz+E7Ml2Bi6yK3P3bhTiQ=
+	b=Y6qyZjATe9jRzKkE0qUVS+PV2bNj1/1P8KatfN6oWjohMtkQPen5DO+xqk5kddyUC
+	 QPlfMAOsYoYLloUqcMp33jPmOpsRMi7JM//EC1eGrjFJ9syyFKJ5pkf+IX1chV0X7F
+	 GDURJQhxYyqlocFtQp6WOvvuDHLBSPE8XgnxX8+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Stultz <jstultz@google.com>,
-	Jim Mattson <jmattson@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	James Houghton <jthoughton@google.com>
-Subject: [PATCH 6.1 39/97] KVM: x86: Load DR6 with guest value only before entering .vcpu_run() loop
-Date: Wed,  7 May 2025 20:39:14 +0200
-Message-ID: <20250507183808.567190117@linuxfoundation.org>
+	LongPing Wei <weilongping@oppo.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.1 40/97] dm-bufio: dont schedule in atomic context
+Date: Wed,  7 May 2025 20:39:15 +0200
+Message-ID: <20250507183808.605491441@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183806.987408728@linuxfoundation.org>
 References: <20250507183806.987408728@linuxfoundation.org>
@@ -52,228 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: LongPing Wei <weilongping@oppo.com>
 
-commit c2fee09fc167c74a64adb08656cb993ea475197e upstream.
+commit a3d8f0a7f5e8b193db509c7191fefeed3533fc44 upstream.
 
-Move the conditional loading of hardware DR6 with the guest's DR6 value
-out of the core .vcpu_run() loop to fix a bug where KVM can load hardware
-with a stale vcpu->arch.dr6.
+A BUG was reported as below when CONFIG_DEBUG_ATOMIC_SLEEP and
+try_verify_in_tasklet are enabled.
+[  129.444685][  T934] BUG: sleeping function called from invalid context at drivers/md/dm-bufio.c:2421
+[  129.444723][  T934] in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 934, name: kworker/1:4
+[  129.444740][  T934] preempt_count: 201, expected: 0
+[  129.444756][  T934] RCU nest depth: 0, expected: 0
+[  129.444781][  T934] Preemption disabled at:
+[  129.444789][  T934] [<ffffffd816231900>] shrink_work+0x21c/0x248
+[  129.445167][  T934] kernel BUG at kernel/sched/walt/walt_debug.c:16!
+[  129.445183][  T934] Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
+[  129.445204][  T934] Skip md ftrace buffer dump for: 0x1609e0
+[  129.447348][  T934] CPU: 1 PID: 934 Comm: kworker/1:4 Tainted: G        W  OE      6.6.56-android15-8-o-g6f82312b30b9-debug #1 1400000003000000474e5500b3187743670464e8
+[  129.447362][  T934] Hardware name: Qualcomm Technologies, Inc. Parrot QRD, Alpha-M (DT)
+[  129.447373][  T934] Workqueue: dm_bufio_cache shrink_work
+[  129.447394][  T934] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  129.447406][  T934] pc : android_rvh_schedule_bug+0x0/0x8 [sched_walt_debug]
+[  129.447435][  T934] lr : __traceiter_android_rvh_schedule_bug+0x44/0x6c
+[  129.447451][  T934] sp : ffffffc0843dbc90
+[  129.447459][  T934] x29: ffffffc0843dbc90 x28: ffffffffffffffff x27: 0000000000000c8b
+[  129.447479][  T934] x26: 0000000000000040 x25: ffffff804b3d6260 x24: ffffffd816232b68
+[  129.447497][  T934] x23: ffffff805171c5b4 x22: 0000000000000000 x21: ffffffd816231900
+[  129.447517][  T934] x20: ffffff80306ba898 x19: 0000000000000000 x18: ffffffc084159030
+[  129.447535][  T934] x17: 00000000d2b5dd1f x16: 00000000d2b5dd1f x15: ffffffd816720358
+[  129.447554][  T934] x14: 0000000000000004 x13: ffffff89ef978000 x12: 0000000000000003
+[  129.447572][  T934] x11: ffffffd817a823c4 x10: 0000000000000202 x9 : 7e779c5735de9400
+[  129.447591][  T934] x8 : ffffffd81560d004 x7 : 205b5d3938373434 x6 : ffffffd8167397c8
+[  129.447610][  T934] x5 : 0000000000000000 x4 : 0000000000000001 x3 : ffffffc0843db9e0
+[  129.447629][  T934] x2 : 0000000000002f15 x1 : 0000000000000000 x0 : 0000000000000000
+[  129.447647][  T934] Call trace:
+[  129.447655][  T934]  android_rvh_schedule_bug+0x0/0x8 [sched_walt_debug 1400000003000000474e550080cce8a8a78606b6]
+[  129.447681][  T934]  __might_resched+0x190/0x1a8
+[  129.447694][  T934]  shrink_work+0x180/0x248
+[  129.447706][  T934]  process_one_work+0x260/0x624
+[  129.447718][  T934]  worker_thread+0x28c/0x454
+[  129.447729][  T934]  kthread+0x118/0x158
+[  129.447742][  T934]  ret_from_fork+0x10/0x20
+[  129.447761][  T934] Code: ???????? ???????? ???????? d2b5dd1f (d4210000)
+[  129.447772][  T934] ---[ end trace 0000000000000000 ]---
 
-When the guest accesses a DR and host userspace isn't debugging the guest,
-KVM disables DR interception and loads the guest's values into hardware on
-VM-Enter and saves them on VM-Exit.  This allows the guest to access DRs
-at will, e.g. so that a sequence of DR accesses to configure a breakpoint
-only generates one VM-Exit.
+dm_bufio_lock will call spin_lock_bh when try_verify_in_tasklet
+is enabled, and __scan will be called in atomic context.
 
-For DR0-DR3, the logic/behavior is identical between VMX and SVM, and also
-identical between KVM_DEBUGREG_BP_ENABLED (userspace debugging the guest)
-and KVM_DEBUGREG_WONT_EXIT (guest using DRs), and so KVM handles loading
-DR0-DR3 in common code, _outside_ of the core kvm_x86_ops.vcpu_run() loop.
-
-But for DR6, the guest's value doesn't need to be loaded into hardware for
-KVM_DEBUGREG_BP_ENABLED, and SVM provides a dedicated VMCB field whereas
-VMX requires software to manually load the guest value, and so loading the
-guest's value into DR6 is handled by {svm,vmx}_vcpu_run(), i.e. is done
-_inside_ the core run loop.
-
-Unfortunately, saving the guest values on VM-Exit is initiated by common
-x86, again outside of the core run loop.  If the guest modifies DR6 (in
-hardware, when DR interception is disabled), and then the next VM-Exit is
-a fastpath VM-Exit, KVM will reload hardware DR6 with vcpu->arch.dr6 and
-clobber the guest's actual value.
-
-The bug shows up primarily with nested VMX because KVM handles the VMX
-preemption timer in the fastpath, and the window between hardware DR6
-being modified (in guest context) and DR6 being read by guest software is
-orders of magnitude larger in a nested setup.  E.g. in non-nested, the
-VMX preemption timer would need to fire precisely between #DB injection
-and the #DB handler's read of DR6, whereas with a KVM-on-KVM setup, the
-window where hardware DR6 is "dirty" extends all the way from L1 writing
-DR6 to VMRESUME (in L1).
-
-    L1's view:
-    ==========
-    <L1 disables DR interception>
-           CPU 0/KVM-7289    [023] d....  2925.640961: kvm_entry: vcpu 0
- A:  L1 Writes DR6
-           CPU 0/KVM-7289    [023] d....  2925.640963: <hack>: Set DRs, DR6 = 0xffff0ff1
-
- B:        CPU 0/KVM-7289    [023] d....  2925.640967: kvm_exit: vcpu 0 reason EXTERNAL_INTERRUPT intr_info 0x800000ec
-
- D: L1 reads DR6, arch.dr6 = 0
-           CPU 0/KVM-7289    [023] d....  2925.640969: <hack>: Sync DRs, DR6 = 0xffff0ff0
-
-           CPU 0/KVM-7289    [023] d....  2925.640976: kvm_entry: vcpu 0
-    L2 reads DR6, L1 disables DR interception
-           CPU 0/KVM-7289    [023] d....  2925.640980: kvm_exit: vcpu 0 reason DR_ACCESS info1 0x0000000000000216
-           CPU 0/KVM-7289    [023] d....  2925.640983: kvm_entry: vcpu 0
-
-           CPU 0/KVM-7289    [023] d....  2925.640983: <hack>: Set DRs, DR6 = 0xffff0ff0
-
-    L2 detects failure
-           CPU 0/KVM-7289    [023] d....  2925.640987: kvm_exit: vcpu 0 reason HLT
-    L1 reads DR6 (confirms failure)
-           CPU 0/KVM-7289    [023] d....  2925.640990: <hack>: Sync DRs, DR6 = 0xffff0ff0
-
-    L0's view:
-    ==========
-    L2 reads DR6, arch.dr6 = 0
-          CPU 23/KVM-5046    [001] d....  3410.005610: kvm_exit: vcpu 23 reason DR_ACCESS info1 0x0000000000000216
-          CPU 23/KVM-5046    [001] .....  3410.005610: kvm_nested_vmexit: vcpu 23 reason DR_ACCESS info1 0x0000000000000216
-
-    L2 => L1 nested VM-Exit
-          CPU 23/KVM-5046    [001] .....  3410.005610: kvm_nested_vmexit_inject: reason: DR_ACCESS ext_inf1: 0x0000000000000216
-
-          CPU 23/KVM-5046    [001] d....  3410.005610: kvm_entry: vcpu 23
-          CPU 23/KVM-5046    [001] d....  3410.005611: kvm_exit: vcpu 23 reason VMREAD
-          CPU 23/KVM-5046    [001] d....  3410.005611: kvm_entry: vcpu 23
-          CPU 23/KVM-5046    [001] d....  3410.005612: kvm_exit: vcpu 23 reason VMREAD
-          CPU 23/KVM-5046    [001] d....  3410.005612: kvm_entry: vcpu 23
-
-    L1 writes DR7, L0 disables DR interception
-          CPU 23/KVM-5046    [001] d....  3410.005612: kvm_exit: vcpu 23 reason DR_ACCESS info1 0x0000000000000007
-          CPU 23/KVM-5046    [001] d....  3410.005613: kvm_entry: vcpu 23
-
-    L0 writes DR6 = 0 (arch.dr6)
-          CPU 23/KVM-5046    [001] d....  3410.005613: <hack>: Set DRs, DR6 = 0xffff0ff0
-
- A: <L1 writes DR6 = 1, no interception, arch.dr6 is still '0'>
-
- B:       CPU 23/KVM-5046    [001] d....  3410.005614: kvm_exit: vcpu 23 reason PREEMPTION_TIMER
-          CPU 23/KVM-5046    [001] d....  3410.005614: kvm_entry: vcpu 23
-
- C: L0 writes DR6 = 0 (arch.dr6)
-          CPU 23/KVM-5046    [001] d....  3410.005614: <hack>: Set DRs, DR6 = 0xffff0ff0
-
-    L1 => L2 nested VM-Enter
-          CPU 23/KVM-5046    [001] d....  3410.005616: kvm_exit: vcpu 23 reason VMRESUME
-
-    L0 reads DR6, arch.dr6 = 0
-
-Reported-by: John Stultz <jstultz@google.com>
-Closes: https://lkml.kernel.org/r/CANDhNCq5_F3HfFYABqFGCA1bPd_%2BxgNj-iDQhH4tDk%2Bwi8iZZg%40mail.gmail.com
-Fixes: 375e28ffc0cf ("KVM: X86: Set host DR6 only on VMX and for KVM_DEBUGREG_WONT_EXIT")
-Fixes: d67668e9dd76 ("KVM: x86, SVM: isolate vcpu->arch.dr6 from vmcb->save.dr6")
+Fixes: 7cd326747f46 ("dm bufio: remove dm_bufio_cond_resched()")
+Signed-off-by: LongPing Wei <weilongping@oppo.com>
 Cc: stable@vger.kernel.org
-Cc: Jim Mattson <jmattson@google.com>
-Tested-by: John Stultz <jstultz@google.com>
-Link: https://lore.kernel.org/r/20250125011833.3644371-1-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[jth: Handled conflicts with kvm_x86_ops reshuffle]
-Signed-off-by: James Houghton <jthoughton@google.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/kvm-x86-ops.h |    1 +
- arch/x86/include/asm/kvm_host.h    |    1 +
- arch/x86/kvm/svm/svm.c             |   13 ++++++-------
- arch/x86/kvm/vmx/vmx.c             |   11 +++++++----
- arch/x86/kvm/x86.c                 |    3 +++
- 5 files changed, 18 insertions(+), 11 deletions(-)
+ drivers/md/dm-bufio.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/include/asm/kvm-x86-ops.h
-+++ b/arch/x86/include/asm/kvm-x86-ops.h
-@@ -47,6 +47,7 @@ KVM_X86_OP(set_idt)
- KVM_X86_OP(get_gdt)
- KVM_X86_OP(set_gdt)
- KVM_X86_OP(sync_dirty_debug_regs)
-+KVM_X86_OP(set_dr6)
- KVM_X86_OP(set_dr7)
- KVM_X86_OP(cache_reg)
- KVM_X86_OP(get_rflags)
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -1499,6 +1499,7 @@ struct kvm_x86_ops {
- 	void (*get_gdt)(struct kvm_vcpu *vcpu, struct desc_ptr *dt);
- 	void (*set_gdt)(struct kvm_vcpu *vcpu, struct desc_ptr *dt);
- 	void (*sync_dirty_debug_regs)(struct kvm_vcpu *vcpu);
-+	void (*set_dr6)(struct kvm_vcpu *vcpu, unsigned long value);
- 	void (*set_dr7)(struct kvm_vcpu *vcpu, unsigned long value);
- 	void (*cache_reg)(struct kvm_vcpu *vcpu, enum kvm_reg reg);
- 	unsigned long (*get_rflags)(struct kvm_vcpu *vcpu);
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -1920,11 +1920,11 @@ static void new_asid(struct vcpu_svm *sv
- 	svm->asid = sd->next_asid++;
- }
- 
--static void svm_set_dr6(struct vcpu_svm *svm, unsigned long value)
-+static void svm_set_dr6(struct kvm_vcpu *vcpu, unsigned long value)
- {
--	struct vmcb *vmcb = svm->vmcb;
-+	struct vmcb *vmcb = to_svm(vcpu)->vmcb;
- 
--	if (svm->vcpu.arch.guest_state_protected)
-+	if (vcpu->arch.guest_state_protected)
- 		return;
- 
- 	if (unlikely(value != vmcb->save.dr6)) {
-@@ -4035,10 +4035,8 @@ static __no_kcsan fastpath_t svm_vcpu_ru
- 	 * Run with all-zero DR6 unless needed, so that we can get the exact cause
- 	 * of a #DB.
- 	 */
--	if (unlikely(vcpu->arch.switch_db_regs & KVM_DEBUGREG_WONT_EXIT))
--		svm_set_dr6(svm, vcpu->arch.dr6);
--	else
--		svm_set_dr6(svm, DR6_ACTIVE_LOW);
-+	if (likely(!(vcpu->arch.switch_db_regs & KVM_DEBUGREG_WONT_EXIT)))
-+		svm_set_dr6(vcpu, DR6_ACTIVE_LOW);
- 
- 	clgi();
- 	kvm_load_guest_xsave_state(vcpu);
-@@ -4807,6 +4805,7 @@ static struct kvm_x86_ops svm_x86_ops __
- 	.set_idt = svm_set_idt,
- 	.get_gdt = svm_get_gdt,
- 	.set_gdt = svm_set_gdt,
-+	.set_dr6 = svm_set_dr6,
- 	.set_dr7 = svm_set_dr7,
- 	.sync_dirty_debug_regs = svm_sync_dirty_debug_regs,
- 	.cache_reg = svm_cache_reg,
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -5536,6 +5536,12 @@ static void vmx_sync_dirty_debug_regs(st
- 	set_debugreg(DR6_RESERVED, 6);
- }
- 
-+static void vmx_set_dr6(struct kvm_vcpu *vcpu, unsigned long val)
-+{
-+	lockdep_assert_irqs_disabled();
-+	set_debugreg(vcpu->arch.dr6, 6);
-+}
-+
- static void vmx_set_dr7(struct kvm_vcpu *vcpu, unsigned long val)
- {
- 	vmcs_writel(GUEST_DR7, val);
-@@ -7220,10 +7226,6 @@ static fastpath_t vmx_vcpu_run(struct kv
- 		vmx->loaded_vmcs->host_state.cr4 = cr4;
+--- a/drivers/md/dm-bufio.c
++++ b/drivers/md/dm-bufio.c
+@@ -1685,7 +1685,8 @@ static void __scan(struct dm_bufio_clien
+ 				atomic_long_dec(&c->need_shrink);
+ 				freed++;
+ 			}
+-			cond_resched();
++			if (!(static_branch_unlikely(&no_sleep_enabled) && c->no_sleep))
++				cond_resched();
+ 		}
  	}
- 
--	/* When KVM_DEBUGREG_WONT_EXIT, dr6 is accessible in guest. */
--	if (unlikely(vcpu->arch.switch_db_regs & KVM_DEBUGREG_WONT_EXIT))
--		set_debugreg(vcpu->arch.dr6, 6);
--
- 	/* When single-stepping over STI and MOV SS, we must clear the
- 	 * corresponding interruptibility bits in the guest state. Otherwise
- 	 * vmentry fails as it then expects bit 14 (BS) in pending debug
-@@ -8168,6 +8170,7 @@ static struct kvm_x86_ops vmx_x86_ops __
- 	.set_idt = vmx_set_idt,
- 	.get_gdt = vmx_get_gdt,
- 	.set_gdt = vmx_set_gdt,
-+	.set_dr6 = vmx_set_dr6,
- 	.set_dr7 = vmx_set_dr7,
- 	.sync_dirty_debug_regs = vmx_sync_dirty_debug_regs,
- 	.cache_reg = vmx_cache_reg,
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -10841,6 +10841,9 @@ static int vcpu_enter_guest(struct kvm_v
- 		set_debugreg(vcpu->arch.eff_db[1], 1);
- 		set_debugreg(vcpu->arch.eff_db[2], 2);
- 		set_debugreg(vcpu->arch.eff_db[3], 3);
-+		/* When KVM_DEBUGREG_WONT_EXIT, dr6 is accessible in guest. */
-+		if (unlikely(vcpu->arch.switch_db_regs & KVM_DEBUGREG_WONT_EXIT))
-+			static_call(kvm_x86_set_dr6)(vcpu, vcpu->arch.dr6);
- 	} else if (unlikely(hw_breakpoint_active())) {
- 		set_debugreg(0, 7);
- 	}
+ }
 
 
