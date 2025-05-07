@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50A91FF5EC;
-	Wed,  7 May 2025 18:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312B81A29A;
+	Wed,  7 May 2025 18:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643535; cv=none; b=eOj287skI/GvySd3cyNYzj1BbFdZOyr4kx02mFN4QVCvLrWyQ16jDY+Xaeo5TcJSl7mdzr2QuaZqFHY4VYaER1Ir08Mei7e7n1Eb1pW6Rtv6aINMeurSjbcOFzpxemVn5gJQs1KOpu+K9ro6nUbPWzWCF8v7ii5H3OoipZBRcIA=
+	t=1746643541; cv=none; b=Yufw7jdWYXqkh1zLLRDZmaftTDjx93y8+CRO230ToqUQOidhz/GCgsQU6tB4IXVDt8VankvIBpHzOmJK+HZeGa+QX7pY/TMDR1pdSf6awa3ZxQt/AqJDo7KAYXHdzNI2kdE2TMlhR6ihIi2D0NY/5paKzcoOhxO51QtqsrvrOc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643535; c=relaxed/simple;
-	bh=dMZq3b9s1bHjS7fzzsSaktzvoWdFv41bXoa9owDKMeY=;
+	s=arc-20240116; t=1746643541; c=relaxed/simple;
+	bh=HpmRBTxqHjD/Z45+qNUAVjwwCy+ulGoB3uH1+cP/csg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=STdVTOSRk5WCp9/Oma22J6epTRJL3JsCLmHnaAoFm8RWN2v9v5cdd9q/D+8RI2lsPAj7f2dkoErXX9d1T9F9tN00dMK3Wq6rEZRPYrxhmZh46avYJiQeDVUlRVxBKRTtSrJrpGte2LuL5feGZiCMmTV5y8IZWTOb/yhz7NFtc0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avDUVcuN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qGu3gSLhxT3vtCMvTUO5OUsOeJR2Rm61Ea95oGYYKbrmd4R5/6SdBthMQnwCjtbdCt+dyEVjr2Q0ppiO6HU3mwy3NX6vKRwxHKYgKXsqDDeiqh5Dpb1uUNJNJQxgbWCteFDDxEK7KgVLjmkk4b3xSmAXTxAJtVsDEF0GD/EubtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNTwPHbt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avDUVcuN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A353C4CEE2;
-	Wed,  7 May 2025 18:45:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNTwPHbt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC36C4CEE2;
+	Wed,  7 May 2025 18:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643534;
-	bh=dMZq3b9s1bHjS7fzzsSaktzvoWdFv41bXoa9owDKMeY=;
+	s=korg; t=1746643539;
+	bh=HpmRBTxqHjD/Z45+qNUAVjwwCy+ulGoB3uH1+cP/csg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=avDUVcuNg/y1n54+8jJNvNpnlvil/7Td42uqNJtufhDMAeZ+0ecoz2dQM3puDtLwx
-	 frI2UGCyCTXE4jP48OHEXuMf2j6oAKamDEVDy657dNmN7qL805ArrcvmzLlG07EVGJ
-	 W1DmQj3Vj+iXXbwOtFU9DB6QS6qU8ye/q+Kpao54=
+	b=QNTwPHbtzg70NF1CwhaKklwyafz4ZwYQYy3JovRQib6PYe3EcXtjS9G4DJmR1m7i0
+	 7sa6nhqd8m+zyoP+d8nXuaAeyyQAfBTwCtZ8rvcXqRTnRqWvFyKIDxxAr/5mEvP7pM
+	 pGrRtiEH9zWsymu5bUkDurBEcbG09lmxGRLglcUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Chandan Babu R <chandanbabu@kernel.org>,
 	Leah Rumancik <leah.rumancik@gmail.com>
-Subject: [PATCH 6.1 36/97] xfs: fix freeing speculative preallocations for preallocated files
-Date: Wed,  7 May 2025 20:39:11 +0200
-Message-ID: <20250507183808.446128039@linuxfoundation.org>
+Subject: [PATCH 6.1 37/97] xfs: allow unlinked symlinks and dirs with zero size
+Date: Wed,  7 May 2025 20:39:12 +0200
+Message-ID: <20250507183808.486021624@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183806.987408728@linuxfoundation.org>
 References: <20250507183806.987408728@linuxfoundation.org>
@@ -52,166 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit 610b29161b0aa9feb59b78dc867553274f17fb01 ]
+[ Upstream commit 1ec9307fc066dd8a140d5430f8a7576aa9d78cd3 ]
 
-xfs_can_free_eofblocks returns false for files that have persistent
-preallocations unless the force flag is passed and there are delayed
-blocks.  This means it won't free delalloc reservations for files
-with persistent preallocations unless the force flag is set, and it
-will also free the persistent preallocations if the force flag is
-set and the file happens to have delayed allocations.
+For a very very long time, inode inactivation has set the inode size to
+zero before unmapping the extents associated with the data fork.
+Unfortunately, commit 3c6f46eacd876 changed the inode verifier to
+prohibit zero-length symlinks and directories.  If an inode happens to
+get logged in this state and the system crashes before freeing the
+inode, log recovery will also fail on the broken inode.
 
-Both of these are bad, so do away with the force flag and always free
-only post-EOF delayed allocations for files with the XFS_DIFLAG_PREALLOC
-or APPEND flags set.
+Therefore, allow zero-size symlinks and directories as long as the link
+count is zero; nobody will be able to open these files by handle so
+there isn't any risk of data exposure.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Fixes: 3c6f46eacd876 ("xfs: sanity check directory inode di_size")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_bmap_util.c |   30 ++++++++++++++++++++++--------
- fs/xfs/xfs_bmap_util.h |    2 +-
- fs/xfs/xfs_icache.c    |    2 +-
- fs/xfs/xfs_inode.c     |   14 ++++----------
- 4 files changed, 28 insertions(+), 20 deletions(-)
+ fs/xfs/libxfs/xfs_inode_buf.c |   23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
---- a/fs/xfs/xfs_bmap_util.c
-+++ b/fs/xfs/xfs_bmap_util.c
-@@ -636,13 +636,11 @@ out_unlock:
- 
- /*
-  * Test whether it is appropriate to check an inode for and free post EOF
-- * blocks. The 'force' parameter determines whether we should also consider
-- * regular files that are marked preallocated or append-only.
-+ * blocks.
-  */
- bool
- xfs_can_free_eofblocks(
--	struct xfs_inode	*ip,
--	bool			force)
-+	struct xfs_inode	*ip)
- {
- 	struct xfs_bmbt_irec	imap;
- 	struct xfs_mount	*mp = ip->i_mount;
-@@ -676,11 +674,11 @@ xfs_can_free_eofblocks(
- 		return false;
- 
- 	/*
--	 * Do not free real preallocated or append-only files unless the file
--	 * has delalloc blocks and we are forced to remove them.
-+	 * Only free real extents for inodes with persistent preallocations or
-+	 * the append-only flag.
- 	 */
- 	if (ip->i_diflags & (XFS_DIFLAG_PREALLOC | XFS_DIFLAG_APPEND))
--		if (!force || ip->i_delayed_blks == 0)
-+		if (ip->i_delayed_blks == 0)
- 			return false;
- 
- 	/*
-@@ -734,6 +732,22 @@ xfs_free_eofblocks(
- 	/* Wait on dio to ensure i_size has settled. */
- 	inode_dio_wait(VFS_I(ip));
- 
-+	/*
-+	 * For preallocated files only free delayed allocations.
-+	 *
-+	 * Note that this means we also leave speculative preallocations in
-+	 * place for preallocated files.
-+	 */
-+	if (ip->i_diflags & (XFS_DIFLAG_PREALLOC | XFS_DIFLAG_APPEND)) {
-+		if (ip->i_delayed_blks) {
-+			xfs_bmap_punch_delalloc_range(ip,
-+				round_up(XFS_ISIZE(ip), mp->m_sb.sb_blocksize),
-+				LLONG_MAX);
-+		}
-+		xfs_inode_clear_eofblocks_tag(ip);
-+		return 0;
-+	}
-+
- 	error = xfs_trans_alloc(mp, &M_RES(mp)->tr_itruncate, 0, 0, 0, &tp);
- 	if (error) {
- 		ASSERT(xfs_is_shutdown(mp));
-@@ -1048,7 +1062,7 @@ xfs_prepare_shift(
- 	 * Trim eofblocks to avoid shifting uninitialized post-eof preallocation
- 	 * into the accessible region of the file.
- 	 */
--	if (xfs_can_free_eofblocks(ip, true)) {
-+	if (xfs_can_free_eofblocks(ip)) {
- 		error = xfs_free_eofblocks(ip);
- 		if (error)
- 			return error;
---- a/fs/xfs/xfs_bmap_util.h
-+++ b/fs/xfs/xfs_bmap_util.h
-@@ -63,7 +63,7 @@ int	xfs_insert_file_space(struct xfs_ino
- 				xfs_off_t len);
- 
- /* EOF block manipulation functions */
--bool	xfs_can_free_eofblocks(struct xfs_inode *ip, bool force);
-+bool	xfs_can_free_eofblocks(struct xfs_inode *ip);
- int	xfs_free_eofblocks(struct xfs_inode *ip);
- 
- int	xfs_swap_extents(struct xfs_inode *ip, struct xfs_inode *tip,
---- a/fs/xfs/xfs_icache.c
-+++ b/fs/xfs/xfs_icache.c
-@@ -1186,7 +1186,7 @@ xfs_inode_free_eofblocks(
- 	}
- 	*lockflags |= XFS_IOLOCK_EXCL;
- 
--	if (xfs_can_free_eofblocks(ip, false))
-+	if (xfs_can_free_eofblocks(ip))
- 		return xfs_free_eofblocks(ip);
- 
- 	/* inode could be preallocated or append-only */
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -1459,7 +1459,7 @@ xfs_release(
- 	if (!xfs_ilock_nowait(ip, XFS_IOLOCK_EXCL))
- 		return 0;
- 
--	if (xfs_can_free_eofblocks(ip, false)) {
-+	if (xfs_can_free_eofblocks(ip)) {
+--- a/fs/xfs/libxfs/xfs_inode_buf.c
++++ b/fs/xfs/libxfs/xfs_inode_buf.c
+@@ -370,10 +370,13 @@ xfs_dinode_verify_fork(
  		/*
- 		 * Check if the inode is being opened, written and closed
- 		 * frequently and we have delayed allocation blocks outstanding
-@@ -1675,15 +1675,13 @@ xfs_inode_needs_inactive(
- 
- 	/*
- 	 * This file isn't being freed, so check if there are post-eof blocks
--	 * to free.  @force is true because we are evicting an inode from the
--	 * cache.  Post-eof blocks must be freed, lest we end up with broken
--	 * free space accounting.
-+	 * to free.
- 	 *
- 	 * Note: don't bother with iolock here since lockdep complains about
- 	 * acquiring it in reclaim context. We have the only reference to the
- 	 * inode at this point anyways.
- 	 */
--	return xfs_can_free_eofblocks(ip, true);
-+	return xfs_can_free_eofblocks(ip);
- }
- 
- /*
-@@ -1734,15 +1732,11 @@ xfs_inactive(
- 
- 	if (VFS_I(ip)->i_nlink != 0) {
- 		/*
--		 * force is true because we are evicting an inode from the
--		 * cache. Post-eof blocks must be freed, lest we end up with
--		 * broken free space accounting.
--		 *
- 		 * Note: don't bother with iolock here since lockdep complains
- 		 * about acquiring it in reclaim context. We have the only
- 		 * reference to the inode at this point anyways.
+ 		 * A directory small enough to fit in the inode must be stored
+ 		 * in local format.  The directory sf <-> extents conversion
+-		 * code updates the directory size accordingly.
++		 * code updates the directory size accordingly.  Directories
++		 * being truncated have zero size and are not subject to this
++		 * check.
  		 */
--		if (xfs_can_free_eofblocks(ip, true))
-+		if (xfs_can_free_eofblocks(ip))
- 			error = xfs_free_eofblocks(ip);
+ 		if (S_ISDIR(mode)) {
+-			if (be64_to_cpu(dip->di_size) <= fork_size &&
++			if (dip->di_size &&
++			    be64_to_cpu(dip->di_size) <= fork_size &&
+ 			    fork_format != XFS_DINODE_FMT_LOCAL)
+ 				return __this_address;
+ 		}
+@@ -511,9 +514,19 @@ xfs_dinode_verify(
+ 	if (mode && xfs_mode_to_ftype(mode) == XFS_DIR3_FT_UNKNOWN)
+ 		return __this_address;
  
- 		goto out;
+-	/* No zero-length symlinks/dirs. */
+-	if ((S_ISLNK(mode) || S_ISDIR(mode)) && di_size == 0)
+-		return __this_address;
++	/*
++	 * No zero-length symlinks/dirs unless they're unlinked and hence being
++	 * inactivated.
++	 */
++	if ((S_ISLNK(mode) || S_ISDIR(mode)) && di_size == 0) {
++		if (dip->di_version > 1) {
++			if (dip->di_nlink)
++				return __this_address;
++		} else {
++			if (dip->di_onlink)
++				return __this_address;
++		}
++	}
+ 
+ 	fa = xfs_dinode_verify_nrext64(mp, dip);
+ 	if (fa)
 
 
