@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447E22144C1;
-	Wed,  7 May 2025 19:09:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C93621504D;
+	Wed,  7 May 2025 19:09:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644954; cv=none; b=Kr8ImuNf4oxgx4wS24VG1L0xCPLq6NQmkUtQ5yCSAkU3fSdF4BFK07PaLZV9zTpkb4odP5GnxcGNu2YYMJpjKlnmJHxSloVEro8etG+3he68WwlCaXnNxagYF6O4gkBoxAkIcGiaMSYbbA8pyfTu847yAZFUdIQP9ec9ZV0E6FE=
+	t=1746644957; cv=none; b=rpuEQm602g75NOIuAqVpstpdei93nMsQ/po5pyGTuRfLZy1cO60Rlo9Ov/kcEncu5SdxYuCyDl08vtY5hTkNkk5PAuDiTyBwNnJb6XLPo5JMmXpby4aRsgU1ToPZSCpp6OD7D/WUigk/jXLSXMnGqvRMhOYXewHyt0gRnsHr9GQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644954; c=relaxed/simple;
-	bh=L+0qLxX0Phso5ZrUsELYM1FCnnYuS98Vx8AgNaRkMU8=;
+	s=arc-20240116; t=1746644957; c=relaxed/simple;
+	bh=3N8D5S5C5hPdUxfWhUKdQl2Tg5AQ+LZg/s6Vaw897DI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HAy6b6LJoQapKxA22SEKXQz7DFIt1VEkXIx/TMFr1/oY7E4Ul9G2FHBMsq+QHURfqJgq8IYzDAd6dVqVIHj9lUum7zr8QukOMVboBl6eYrMcZx+HVRD3zltHafyLrqu644177Y+kZByAUZuzVylIgchcPT7lfFbhg3c4wcB1OgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XTP7x5Tm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qz4FmzNW1v0aOxpbf73hC87kUz0PaakpYtBkgyBVZeS2jmpYZ+gaMqWKXhW1HsZ/tRWCdkXa0E2mJwiRHhGQyp4eixyyM8Bnvor9izb6JRP2bucKa71dJln0d1obTifOX25tfeav03Gy3ZP/YJurED3UjGD/7z+1zAnyBQ5I5i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HacdPea/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XTP7x5Tm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9BABC4CEE2;
-	Wed,  7 May 2025 19:09:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HacdPea/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27DCC4CEE2;
+	Wed,  7 May 2025 19:09:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644954;
-	bh=L+0qLxX0Phso5ZrUsELYM1FCnnYuS98Vx8AgNaRkMU8=;
+	s=korg; t=1746644957;
+	bh=3N8D5S5C5hPdUxfWhUKdQl2Tg5AQ+LZg/s6Vaw897DI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XTP7x5TmMRlPRSCsn30PnzbpF6clFF7QQORaMHjmjO3m/P9etYU5yG+SAXxr40J4m
-	 8XMw0cYXSS0itisTE0o1bv008iJL0zg4/87c1jQwBkbujftzVjrVGt1aRLUGp0Zo06
-	 9nnrGXpnT3xa212GjoYB9cCdH/vYQ4WGMuMyYKck=
+	b=HacdPea/6z7/chi8+L+Mk25mHyB+hMKvFhKw/mGnu+fBmmUuL5/rPRAD+fSAmtus+
+	 0MGlVSt3VHE7IJwnYdZndANN85cuP4nwNsDggHfcRJI4EIqSIBYDd3j/btGGq0YoMy
+	 oGOSSeD3DtoSW7vxzoIM6AK62cUN+yS036177Rj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charan Teja Kalla <quic_charante@quicinc.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 6.6 046/129] iommu: Handle race with default domain setup
-Date: Wed,  7 May 2025 20:39:42 +0200
-Message-ID: <20250507183815.404972824@linuxfoundation.org>
+	Sheetal <sheetal@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 047/129] ASoC: soc-pcm: Fix hw_params() and DAPM widget sequence
+Date: Wed,  7 May 2025 20:39:43 +0200
+Message-ID: <20250507183815.445441317@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -52,73 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Sheetal <sheetal@nvidia.com>
 
-commit b46064a18810bad3aea089a79993ca5ea7a3d2b2 upstream.
+[ Upstream commit 9aff2e8df240e84a36f2607f98a0a9924a24e65d ]
 
-It turns out that deferred default domain creation leaves a subtle
-race window during iommu_device_register() wherein a client driver may
-asynchronously probe in parallel and get as far as performing DMA API
-operations with dma-direct, only to be switched to iommu-dma underfoot
-once the default domain attachment finally happens, with obviously
-disastrous consequences. Even the wonky of_iommu_configure() path is at
-risk, since iommu_fwspec_init() will no longer defer client probe as the
-instance ops are (necessarily) already registered, and the "replay"
-iommu_probe_device() call can see dev->iommu_group already set and so
-think there's nothing to do either.
+Issue:
+ When multiple audio streams share a common BE DAI, the BE DAI
+ widget can be powered up before its hardware parameters are configured.
+ This incorrect sequence leads to intermittent pcm_write errors.
 
-Fortunately we already have the right tool in the right place in the
-form of iommu_device_use_default_domain(), which just needs to ensure
-that said default domain is actually ready to *be* used. Deferring the
-client probe shouldn't have too much impact, given that this only
-happens while the IOMMU driver is probing, and thus due to kick the
-deferred probe list again once it finishes.
+ For example, the below Tegra use-case throws an error:
+  aplay(2 streams) -> AMX(mux) -> ADX(demux) -> arecord(2 streams),
+  here, 'AMX TX' and 'ADX RX' are common BE DAIs.
 
-Reported-by: Charan Teja Kalla <quic_charante@quicinc.com>
-Fixes: 98ac73f99bc4 ("iommu: Require a default_domain for all iommu drivers")
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/e88b94c9b575034a2c98a48b3d383654cbda7902.1740753261.git.robin.murphy@arm.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+For above usecase when failure happens below sequence is observed:
+ aplay(1) FE open()
+  - BE DAI callbacks added to the list
+  - BE DAI state = SND_SOC_DPCM_STATE_OPEN
+ aplay(2) FE open()
+  - BE DAI callbacks are not added to the list as the state is
+    already SND_SOC_DPCM_STATE_OPEN during aplay(1) FE open().
+ aplay(2) FE hw_params()
+  - BE DAI hw_params() callback ignored
+ aplay(2) FE prepare()
+  - Widget is powered ON without BE DAI hw_params() call
+ aplay(1) FE hw_params()
+  - BE DAI hw_params() is now called
+
+Fix:
+ Add BE DAIs in the list if its state is either SND_SOC_DPCM_STATE_OPEN
+ or SND_SOC_DPCM_STATE_HW_PARAMS as well.
+
+It ensures the widget is powered ON after BE DAI hw_params() callback.
+
+Fixes: 0c25db3f7621 ("ASoC: soc-pcm: Don't reconnect an already active BE")
+Signed-off-by: Sheetal <sheetal@nvidia.com>
+Link: https://patch.msgid.link/20250404105953.2784819-1-sheetal@nvidia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommu.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ sound/soc/soc-pcm.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -566,6 +566,18 @@ int iommu_probe_device(struct device *de
- 	mutex_lock(&iommu_probe_device_lock);
- 	ret = __iommu_probe_device(dev, NULL);
- 	mutex_unlock(&iommu_probe_device_lock);
-+
-+	/*
-+	 * The dma_configure replay paths need bus_iommu_probe() to
-+	 * finish before they can call arch_setup_dma_ops()
-+	 */
-+	if (IS_ENABLED(CONFIG_IOMMU_DMA) && !ret && dev->iommu_group) {
-+		mutex_lock(&dev->iommu_group->mutex);
-+		if (!dev->iommu_group->default_domain &&
-+		    !dev_iommu_ops(dev)->set_platform_dma_ops)
-+			ret = -EPROBE_DEFER;
-+		mutex_unlock(&dev->iommu_group->mutex);
-+	}
- 	if (ret)
- 		return ret;
+diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
+index 60248a6820aac..30e93f9aad762 100644
+--- a/sound/soc/soc-pcm.c
++++ b/sound/soc/soc-pcm.c
+@@ -1534,10 +1534,13 @@ static int dpcm_add_paths(struct snd_soc_pcm_runtime *fe, int stream,
+ 		/*
+ 		 * Filter for systems with 'component_chaining' enabled.
+ 		 * This helps to avoid unnecessary re-configuration of an
+-		 * already active BE on such systems.
++		 * already active BE on such systems and ensures the BE DAI
++		 * widget is powered ON after hw_params() BE DAI callback.
+ 		 */
+ 		if (fe->card->component_chaining &&
+ 		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_NEW) &&
++		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_OPEN) &&
++		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_HW_PARAMS) &&
+ 		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_CLOSE))
+ 			continue;
  
-@@ -3149,6 +3161,12 @@ int iommu_device_use_default_domain(stru
- 		return 0;
- 
- 	mutex_lock(&group->mutex);
-+	/* We may race against bus_iommu_probe() finalising groups here */
-+	if (IS_ENABLED(CONFIG_IOMMU_DMA) && !group->default_domain &&
-+	    !dev_iommu_ops(dev)->set_platform_dma_ops) {
-+		ret = -EPROBE_DEFER;
-+		goto unlock_out;
-+	}
- 	if (group->owner_cnt) {
- 		if (group->owner || !iommu_is_default_domain(group) ||
- 		    !xa_empty(&group->pasid_array)) {
+-- 
+2.39.5
+
 
 
