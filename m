@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD711CF5C6;
-	Wed,  7 May 2025 19:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF0C1CF5C6;
+	Wed,  7 May 2025 19:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644814; cv=none; b=TRt92MpdIWGdZX3Jp8BKACX9N7rr3ke6PpXKgbHbyWRBiEEGOqS5ubdheeyYraPQvYwNh834LQoffyceP/lJC699tkNVJe20HFd5Jf4+44TkQR/awXlsspFkkXAaXlPadxBPdSzbzG5Dh3OsqQyFCaY/cSkidYpNsQTUIgAzXCs=
+	t=1746644817; cv=none; b=JuvqX0I8IQf8VXY0F1XeEBXsqinznmgcumxiV4X9X6cNWWQTbVV1ElGpDjiKwH6XmgAQeMML54nrtEPa5UiDQl5B/o+3CR7C03cv2Yi4IRcsaSat1q/JgTg5balieaUZCmiku8RZROHuo5QZt0BQEyktJKnbFWGY5XTv18TXEPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644814; c=relaxed/simple;
-	bh=c1v0ZWIjsem/Z48zTo86ewjo/72u0EG9AOaLWIFO3Rg=;
+	s=arc-20240116; t=1746644817; c=relaxed/simple;
+	bh=gXD+uJ7JjgEQfzYxv1rrItH9u3wBaCJrZCCunlH9rqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kSQvg1ORwRTkAD3x043BSCjkB30aSEqzRjbZ0vqUOlreHUD4iG6e+UUW9IfwhMTQ8oLNm0JD/zHANdE9FbMBaEizrLLyBDeOTNi2V16uLN+2AzQkl/SGM85HBBlQXr0l9z2h4M9UOlRubAndn29f9jgNwJLd+9rQkM4rPOkCSmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qq83lV9r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sNEIkqzFzdy9X4cCspFAf7R8z8FQl/R6l1rLPpUFaCTebbvH2oblq/v3nUI6I2zGjmoD3d0K7sYd/+Z3my5APDIyaEH0FLvuoz3ZFPbZfSHQLVI0uwpd8xoOXUO9v+lDJ1Hn3rdzsTor8O42OsuufzBrlWj2dy2ip9TfLHVkKEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q2elBUCh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qq83lV9r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7403C4CEE2;
-	Wed,  7 May 2025 19:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q2elBUCh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1743DC4CEE2;
+	Wed,  7 May 2025 19:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644814;
-	bh=c1v0ZWIjsem/Z48zTo86ewjo/72u0EG9AOaLWIFO3Rg=;
+	s=korg; t=1746644817;
+	bh=gXD+uJ7JjgEQfzYxv1rrItH9u3wBaCJrZCCunlH9rqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qq83lV9rvGhGvD+QFKNf3TcNHsiIG6tdp8vaHIOLA5JQH39EZalk5FrgdqQ2d2gqM
-	 7OlXB5Getb2gXeO7Ve8qCpCfxOb3RvSW1XknBpo8TKtjuu88Sc6PskA3nIibNTr774
-	 dOWxdP5IeiHpwvxEhrz940DAq5D65yS2JCARLosY=
+	b=Q2elBUChT3/owQNVCbhMaOALhG1XytIEv5LcJ6JXAmAKgtB/3+1qkYJ2eLWCwn5pY
+	 JBg6D3MvXAAumcw4FLtFQsWHn0YR2IQf6cDKouFRd2Dz1W8utRpkfEfi9aNAW555Ez
+	 QraDOofPu8qkeVhsFxnKHYWVG4omAshY8c5nxK9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	=?UTF-8?q?S=C3=A9bastien=20Szymanski?= <sebastien.szymanski@armadeus.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 155/164] arm64: dts: imx95: Correct the range of PCIe app-reg region
-Date: Wed,  7 May 2025 20:40:40 +0200
-Message-ID: <20250507183827.243195658@linuxfoundation.org>
+Subject: [PATCH 6.12 156/164] ARM: dts: opos6ul: add ksz8081 phy properties
+Date: Wed,  7 May 2025 20:40:41 +0200
+Message-ID: <20250507183827.281978710@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -46,68 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: Sébastien Szymanski <sebastien.szymanski@armadeus.com>
 
-[ Upstream commit 02e4232998db357bb8199778722d81ffcff0cb98 ]
+[ Upstream commit 6e1a7bc8382b0d4208258f7d2a4474fae788dd90 ]
 
-Correct the range of PCIe app-reg region from 0x2000 to 0x4000 refer to
-SerDes_SS memory map of i.MX95 Rerference Manual.
+Commit c7e73b5051d6 ("ARM: imx: mach-imx6ul: remove 14x14 EVK specific
+PHY fixup") removed a PHY fixup that setted the clock mode and the LED
+mode.
+Make the Ethernet interface work again by doing as advised in the
+commit's log, set clock mode and the LED mode in the device tree.
 
-Fixes: 3b1d5deb29ff ("arm64: dts: imx95: add pcie[0,1] and pcie-ep[0,1] support")
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Fixes: c7e73b5051d6 ("ARM: imx: mach-imx6ul: remove 14x14 EVK specific PHY fixup")
+Signed-off-by: Sébastien Szymanski <sebastien.szymanski@armadeus.com>
+Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx95.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/nxp/imx/imx6ul-imx6ull-opos6ul.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx95.dtsi b/arch/arm64/boot/dts/freescale/imx95.dtsi
-index 40cbb071f265c..f904d6b1c84bf 100644
---- a/arch/arm64/boot/dts/freescale/imx95.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx95.dtsi
-@@ -1478,7 +1478,7 @@
- 			reg = <0 0x4c300000 0 0x10000>,
- 			      <0 0x60100000 0 0xfe00000>,
- 			      <0 0x4c360000 0 0x10000>,
--			      <0 0x4c340000 0 0x2000>;
-+			      <0 0x4c340000 0 0x4000>;
- 			reg-names = "dbi", "config", "atu", "app";
- 			ranges = <0x81000000 0x0 0x00000000 0x0 0x6ff00000 0 0x00100000>,
- 				 <0x82000000 0x0 0x10000000 0x9 0x10000000 0 0x10000000>;
-@@ -1518,7 +1518,7 @@
- 			reg = <0 0x4c300000 0 0x10000>,
- 			      <0 0x4c360000 0 0x1000>,
- 			      <0 0x4c320000 0 0x1000>,
--			      <0 0x4c340000 0 0x2000>,
-+			      <0 0x4c340000 0 0x4000>,
- 			      <0 0x4c370000 0 0x10000>,
- 			      <0x9 0 1 0>;
- 			reg-names = "dbi","atu", "dbi2", "app", "dma", "addr_space";
-@@ -1545,7 +1545,7 @@
- 			reg = <0 0x4c380000 0 0x10000>,
- 			      <8 0x80100000 0 0xfe00000>,
- 			      <0 0x4c3e0000 0 0x10000>,
--			      <0 0x4c3c0000 0 0x2000>;
-+			      <0 0x4c3c0000 0 0x4000>;
- 			reg-names = "dbi", "config", "atu", "app";
- 			ranges = <0x81000000 0 0x00000000 0x8 0x8ff00000 0 0x00100000>,
- 				 <0x82000000 0 0x10000000 0xa 0x10000000 0 0x10000000>;
-@@ -1585,7 +1585,7 @@
- 			reg = <0 0x4c380000 0 0x10000>,
- 			      <0 0x4c3e0000 0 0x1000>,
- 			      <0 0x4c3a0000 0 0x1000>,
--			      <0 0x4c3c0000 0 0x2000>,
-+			      <0 0x4c3c0000 0 0x4000>,
- 			      <0 0x4c3f0000 0 0x10000>,
- 			      <0xa 0 1 0>;
- 			reg-names = "dbi", "atu", "dbi2", "app", "dma", "addr_space";
+diff --git a/arch/arm/boot/dts/nxp/imx/imx6ul-imx6ull-opos6ul.dtsi b/arch/arm/boot/dts/nxp/imx/imx6ul-imx6ull-opos6ul.dtsi
+index f2386dcb9ff2c..dda4fa91b2f2c 100644
+--- a/arch/arm/boot/dts/nxp/imx/imx6ul-imx6ull-opos6ul.dtsi
++++ b/arch/arm/boot/dts/nxp/imx/imx6ul-imx6ull-opos6ul.dtsi
+@@ -40,6 +40,9 @@
+ 			reg = <1>;
+ 			interrupt-parent = <&gpio4>;
+ 			interrupts = <16 IRQ_TYPE_LEVEL_LOW>;
++			micrel,led-mode = <1>;
++			clocks = <&clks IMX6UL_CLK_ENET_REF>;
++			clock-names = "rmii-ref";
+ 			status = "okay";
+ 		};
+ 	};
 -- 
 2.39.5
 
