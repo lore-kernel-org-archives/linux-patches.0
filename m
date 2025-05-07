@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E133629A0;
-	Wed,  7 May 2025 19:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22BD28DF2A;
+	Wed,  7 May 2025 19:04:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644666; cv=none; b=prPTiVx258Nld4l7pP68KpFiNXldWdOmenINKoPfL8PJfmJVCDR8QTQN5bmjzoV9en8qQZWJqVIPXScYsPC+5sK+f3aKDhFQNjGLlhLIPKMB1dOxt5lATSFSonx4jyOHDL7yf9ygjS7CxzYacqxc1wJZ+I0VA9VG1MNw19WN+OE=
+	t=1746644669; cv=none; b=tDmOXGo4hOdS44Mm7zlQKKZxVYRDHV1kiWQFHOKe73IIwcKQ1o77BwmIEKe0Wl7Zml92qLvWggHs+RtWyPvOTrukgp51PMA7asuz2hf4k9hhAJ9y1f41rvr/mhu8fd5ZCRiVlan3rFeaxyxQm0QliEdeN7ANusucQWE/FacpNX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644666; c=relaxed/simple;
-	bh=o3mgDSEKeftG0wsoDxzj8JlpePksXaWZ7W/4gBkGJ5I=;
+	s=arc-20240116; t=1746644669; c=relaxed/simple;
+	bh=34beBP9m68sHVjO0ymGoIhjKTOaNxG9SUt9IycYCHEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YPEaSGoYRKhfGs7i6yXuAcsEO8zBVJ4yzQXR7S3oJet0FJafC504jzdBs7VqsuXvdvDGdDegSJU06JQdwrZDmzLHRQlRRLDO08fixziKl9UJwuP5G82DxkUje22oWEsJ3pUtZYWZo8YrGDH1nYM9yetIcpT1R6KwbOlYbgLzE5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZ3iIsMP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VHQXkor0W5y5b/qL/lg5ba0m8Z2fHvbQjyyudHn6qqGx6Z+NEoJT6Q7EZQXzBTxvEvtmggJBMRrvktO+zoSfAYOyFD4mCx4XFGSbt7CeB/MOuD/lyx4EOXO4IU5lKhvIVFQQQiP87TVLtHfmj/6/j+Sfn2eqLGuUlsf1OOXVaXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+pBvvFW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZ3iIsMP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 607E0C4CEE2;
-	Wed,  7 May 2025 19:04:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+pBvvFW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C149C4CEE2;
+	Wed,  7 May 2025 19:04:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644665;
-	bh=o3mgDSEKeftG0wsoDxzj8JlpePksXaWZ7W/4gBkGJ5I=;
+	s=korg; t=1746644668;
+	bh=34beBP9m68sHVjO0ymGoIhjKTOaNxG9SUt9IycYCHEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HZ3iIsMPM0xSVUcMRHrMB+Yr+OzQ47S5LCKEQTfMXBebfrg59JDIvlTH+/SIAZErE
-	 pnH71wdeQCOxYvFpPBnQZJ65DwEOUxTVjdiswGjHGTBxo11JtETyxWwllUoqfSSO24
-	 T4zwXztcGcuCBZxikrZz+Pm6p173SwTnIHsK4dvI=
+	b=Z+pBvvFWZ8qEMxIijOWXgNDAdy94J61c7ZK/3uxJoxErJFwlExn3EBFBUvl6aMVf0
+	 zWfAQERlWTIymdkAAmhZwJESDJ6U5IT88p2Ad16/Lba7ywoRjxP0Q6LyGAQJBVeE2Y
+	 iThm2QqRMDpOL801OB1TFXG+dpeCsN2PbeAuGyz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Shruti Parab <shruti.parab@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 116/164] bnxt_en: Fix out-of-bound memcpy() during ethtool -w
-Date: Wed,  7 May 2025 20:40:01 +0200
-Message-ID: <20250507183825.667673028@linuxfoundation.org>
+Subject: [PATCH 6.12 090/164] pds_core: remove write-after-free of client_id
+Date: Wed,  7 May 2025 20:39:35 +0200
+Message-ID: <20250507183824.608082913@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -53,93 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shruti Parab <shruti.parab@broadcom.com>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 6b87bd94f34370bbf1dfa59352bed8efab5bf419 ]
+[ Upstream commit dfd76010f8e821b66116dec3c7d90dd2403d1396 ]
 
-When retrieving the FW coredump using ethtool, it can sometimes cause
-memory corruption:
+A use-after-free error popped up in stress testing:
 
-BUG: KFENCE: memory corruption in __bnxt_get_coredump+0x3ef/0x670 [bnxt_en]
-Corrupted memory at 0x000000008f0f30e8 [ ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ] (in kfence-#45):
-__bnxt_get_coredump+0x3ef/0x670 [bnxt_en]
-ethtool_get_dump_data+0xdc/0x1a0
-__dev_ethtool+0xa1e/0x1af0
-dev_ethtool+0xa8/0x170
-dev_ioctl+0x1b5/0x580
-sock_do_ioctl+0xab/0xf0
-sock_ioctl+0x1ce/0x2e0
-__x64_sys_ioctl+0x87/0xc0
-do_syscall_64+0x5c/0xf0
-entry_SYSCALL_64_after_hwframe+0x78/0x80
+[Mon Apr 21 21:21:33 2025] BUG: KFENCE: use-after-free write in pdsc_auxbus_dev_del+0xef/0x160 [pds_core]
+[Mon Apr 21 21:21:33 2025] Use-after-free write at 0x000000007013ecd1 (in kfence-#47):
+[Mon Apr 21 21:21:33 2025]  pdsc_auxbus_dev_del+0xef/0x160 [pds_core]
+[Mon Apr 21 21:21:33 2025]  pdsc_remove+0xc0/0x1b0 [pds_core]
+[Mon Apr 21 21:21:33 2025]  pci_device_remove+0x24/0x70
+[Mon Apr 21 21:21:33 2025]  device_release_driver_internal+0x11f/0x180
+[Mon Apr 21 21:21:33 2025]  driver_detach+0x45/0x80
+[Mon Apr 21 21:21:33 2025]  bus_remove_driver+0x83/0xe0
+[Mon Apr 21 21:21:33 2025]  pci_unregister_driver+0x1a/0x80
 
-...
+The actual device uninit usually happens on a separate thread
+scheduled after this code runs, but there is no guarantee of order
+of thread execution, so this could be a problem.  There's no
+actual need to clear the client_id at this point, so simply
+remove the offending code.
 
-This happens when copying the coredump segment list in
-bnxt_hwrm_dbg_dma_data() with the HWRM_DBG_COREDUMP_LIST FW command.
-The info->dest_buf buffer is allocated based on the number of coredump
-segments returned by the FW.  The segment list is then DMA'ed by
-the FW and the length of the DMA is returned by FW.  The driver then
-copies this DMA'ed segment list to info->dest_buf.
-
-In some cases, this DMA length may exceed the info->dest_buf length
-and cause the above BUG condition.  Fix it by capping the copy
-length to not exceed the length of info->dest_buf.  The extra
-DMA data contains no useful information.
-
-This code path is shared for the HWRM_DBG_COREDUMP_LIST and the
-HWRM_DBG_COREDUMP_RETRIEVE FW commands.  The buffering is different
-for these 2 FW commands.  To simplify the logic, we need to move
-the line to adjust the buffer length for HWRM_DBG_COREDUMP_RETRIEVE
-up, so that the new check to cap the copy length will work for both
-commands.
-
-Fixes: c74751f4c392 ("bnxt_en: Return error if FW returns more data than dump length")
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Shruti Parab <shruti.parab@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 10659034c622 ("pds_core: add the aux client API")
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250425203857.71547-1-shannon.nelson@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/bnxt/bnxt_coredump.c    | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/amd/pds_core/auxbus.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
-index 651d3b1d153e0..d80ce437435f0 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
-@@ -66,10 +66,19 @@ static int bnxt_hwrm_dbg_dma_data(struct bnxt *bp, void *msg,
- 			}
- 		}
+diff --git a/drivers/net/ethernet/amd/pds_core/auxbus.c b/drivers/net/ethernet/amd/pds_core/auxbus.c
+index 4d3387bebe6a4..889a18962270a 100644
+--- a/drivers/net/ethernet/amd/pds_core/auxbus.c
++++ b/drivers/net/ethernet/amd/pds_core/auxbus.c
+@@ -186,7 +186,6 @@ void pdsc_auxbus_dev_del(struct pdsc *cf, struct pdsc *pf,
+ 	pds_client_unregister(pf, padev->client_id);
+ 	auxiliary_device_delete(&padev->aux_dev);
+ 	auxiliary_device_uninit(&padev->aux_dev);
+-	padev->client_id = 0;
+ 	*pd_ptr = NULL;
  
-+		if (cmn_req->req_type ==
-+				cpu_to_le16(HWRM_DBG_COREDUMP_RETRIEVE))
-+			info->dest_buf_size += len;
-+
- 		if (info->dest_buf) {
- 			if ((info->seg_start + off + len) <=
- 			    BNXT_COREDUMP_BUF_LEN(info->buf_len)) {
--				memcpy(info->dest_buf + off, dma_buf, len);
-+				u16 copylen = min_t(u16, len,
-+						    info->dest_buf_size - off);
-+
-+				memcpy(info->dest_buf + off, dma_buf, copylen);
-+				if (copylen < len)
-+					break;
- 			} else {
- 				rc = -ENOBUFS;
- 				if (cmn_req->req_type ==
-@@ -81,10 +90,6 @@ static int bnxt_hwrm_dbg_dma_data(struct bnxt *bp, void *msg,
- 			}
- 		}
- 
--		if (cmn_req->req_type ==
--				cpu_to_le16(HWRM_DBG_COREDUMP_RETRIEVE))
--			info->dest_buf_size += len;
--
- 		if (!(cmn_resp->flags & HWRM_DBG_CMN_FLAGS_MORE))
- 			break;
- 
+ 	mutex_unlock(&pf->config_lock);
 -- 
 2.39.5
 
