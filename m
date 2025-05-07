@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730BF1482F5;
-	Wed,  7 May 2025 18:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B151A00E7;
+	Wed,  7 May 2025 18:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644383; cv=none; b=fEEFpssnwlLWHSjVojm0C7jKj5f8lC3gWPyeDaqMovehgS99bNUJoLk4NW78zrp2T5P5eQbE+ilo6sL1OyWQBB/RRHPoMuNqNRTkNfSrdcHlxCuOPxaiWC+XKOs9QeldsJAs8APcv24E+U32gbMoM0kT4Akh5iH7PuQlXAlvFIM=
+	t=1746644386; cv=none; b=Gulk8WaPORX92+VIXDeHee7sb8a3+WHVqwOWgi/wlBjdCnxThgXAH7KyqaNggXwHgLq7AITyeuvpoxpO2Ed9yDi8QoDUoSXIXe7v0a8xiVw47UkwkSjAsqocrwqyJpU7emKh/j85W9c2mO4tcaptVv98sJ/HG6xyQj563JtVDL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644383; c=relaxed/simple;
-	bh=vkvbUguU42iHr02QjnKnweVqtAgGBy4Av4K8vYn6t60=;
+	s=arc-20240116; t=1746644386; c=relaxed/simple;
+	bh=Jj0pgvVvBP2/kYumAkXf3iSy8EIEm1hDwrd79jt5Qq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G44eAM7eaeEjJ23Kf5CFow68k5lfE4L3uEZHWJwBOCKxPrgTGVB7rMD2/cOeQ/hTPlrGDAk+megm+Lc+B1hdm+V+TKA1v2QK5HyrSDlr8Mf5g/uubGrc6TVJxZNe+UtFhQczQtAbtusf4sXzchDofdAjR5roFjUlTpbKKQHgCdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A49BoRRX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=krStlJkLT65KuKchGK00hklovj7zEjWx81O+ricFvLOSS8on47MVnXwgkIkySL1ZCk36COjVJPimYyMXG00fKNPRghrgcPMncAPfE5iaLdwH/VJT54/WGohFzFR475pTudu+T/I7dakk+KGp23GaAPZU30EiKJEJEy0llUmGiqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qw8I+ulc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A49BoRRX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0B3C4CEE2;
-	Wed,  7 May 2025 18:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qw8I+ulc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D21C4CEE2;
+	Wed,  7 May 2025 18:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644383;
-	bh=vkvbUguU42iHr02QjnKnweVqtAgGBy4Av4K8vYn6t60=;
+	s=korg; t=1746644386;
+	bh=Jj0pgvVvBP2/kYumAkXf3iSy8EIEm1hDwrd79jt5Qq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A49BoRRX1ke6RcnA40/zGGqIx87MJ4PL7h4vxLWLTmY/PvGAwmWGpoN8rJ602s5ab
-	 8PnW1FN8I7YjF5jaeJtcZNYfnBzuRiRc0E2E5dkFd5360EozRA1+IAt5PI33xePeYh
-	 7Q2594xGMKO4fquKupcj2T/VhNVHfwaomCvxZEQU=
+	b=qw8I+ulcHFN530vZ3NXBUS5HihhqMNJk6BVFOCS4AvN7nYIflAnYoHe9oQ4zan+MT
+	 9R9oKn3TeY3I4PepUdh4rbnHN+ugoZCBXd1s+Hm86XrcxgSoR8UcNejWDYhOyf4noU
+	 vs1s7tbUdXfINgr+G34oZXkV92EKvtAYqZDiU9l0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Alexander Tsoy <alexander@tsoy.me>
-Subject: [PATCH 6.12 006/164] Bluetooth: btusb: Add 13 USB device IDs for Qualcomm WCN785x
-Date: Wed,  7 May 2025 20:38:11 +0200
-Message-ID: <20250507183821.076435761@linuxfoundation.org>
+	Lubomir Rintel <lkundrak@v3.sk>,
+	Christian Heusel <christian@heusel.eu>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 007/164] Revert "rndis_host: Flag RNDIS modems as WWAN devices"
+Date: Wed,  7 May 2025 20:38:12 +0200
+Message-ID: <20250507183821.118775910@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -51,62 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Christian Heusel <christian@heusel.eu>
 
-[ Upstream commit 2dd1c1eee3e496fcc16971be4db5bb792a36025c ]
+commit 765f253e28909f161b0211f85cf0431cfee7d6df upstream.
 
-Add 13 USB device IDs for Qualcomm WCN785x, and these IDs are
-extracted from Windows driver inf file for various types of
-WoS (Windows on Snapdragon) laptop.
+This reverts commit 67d1a8956d2d62fe6b4c13ebabb57806098511d8. Since this
+commit has been proven to be problematic for the setup of USB-tethered
+ethernet connections and the related breakage is very noticeable for
+users it should be reverted until a fixed version of the change can be
+rolled out.
 
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Alexander Tsoy <alexander@tsoy.me>
+Closes: https://lore.kernel.org/all/e0df2d85-1296-4317-b717-bd757e3ab928@heusel.eu/
+Link: https://chaos.social/@gromit/114377862699921553
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220002
+Link: https://bugs.gentoo.org/953555
+Link: https://bbs.archlinux.org/viewtopic.php?id=304892
+Cc: stable@vger.kernel.org
+Acked-by: Lubomir Rintel <lkundrak@v3.sk>
+Signed-off-by: Christian Heusel <christian@heusel.eu>
+Link: https://patch.msgid.link/20250424-usb-tethering-fix-v1-1-b65cf97c740e@heusel.eu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |   26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ drivers/net/usb/rndis_host.c |   16 ++--------------
+ 1 file changed, 2 insertions(+), 14 deletions(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -375,12 +375,38 @@ static const struct usb_device_id quirks
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0489, 0xe0f3), .driver_info = BTUSB_QCA_WCN6855 |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe100), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe103), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe10a), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0489, 0xe10d), .driver_info = BTUSB_QCA_WCN6855 |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe11b), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe11c), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe11f), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe141), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe14a), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe14b), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe14d), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3623), .driver_info = BTUSB_QCA_WCN6855 |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x13d3, 0x3624), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x2c7c, 0x0130), .driver_info = BTUSB_QCA_WCN6855 |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x2c7c, 0x0131), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x2c7c, 0x0132), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH },
+--- a/drivers/net/usb/rndis_host.c
++++ b/drivers/net/usb/rndis_host.c
+@@ -630,16 +630,6 @@ static const struct driver_info	zte_rndi
+ 	.tx_fixup =	rndis_tx_fixup,
+ };
  
- 	/* Broadcom BCM2035 */
- 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
+-static const struct driver_info	wwan_rndis_info = {
+-	.description =	"Mobile Broadband RNDIS device",
+-	.flags =	FLAG_WWAN | FLAG_POINTTOPOINT | FLAG_FRAMING_RN | FLAG_NO_SETINT,
+-	.bind =		rndis_bind,
+-	.unbind =	rndis_unbind,
+-	.status =	rndis_status,
+-	.rx_fixup =	rndis_rx_fixup,
+-	.tx_fixup =	rndis_tx_fixup,
+-};
+-
+ /*-------------------------------------------------------------------------*/
+ 
+ static const struct usb_device_id	products [] = {
+@@ -676,11 +666,9 @@ static const struct usb_device_id	produc
+ 	USB_INTERFACE_INFO(USB_CLASS_WIRELESS_CONTROLLER, 1, 3),
+ 	.driver_info = (unsigned long) &rndis_info,
+ }, {
+-	/* Mobile Broadband Modem, seen in Novatel Verizon USB730L and
+-	 * Telit FN990A (RNDIS)
+-	 */
++	/* Novatel Verizon USB730L */
+ 	USB_INTERFACE_INFO(USB_CLASS_MISC, 4, 1),
+-	.driver_info = (unsigned long)&wwan_rndis_info,
++	.driver_info = (unsigned long) &rndis_info,
+ },
+ 	{ },		// END
+ };
 
 
