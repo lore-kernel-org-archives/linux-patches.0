@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2881414A4C7;
-	Wed,  7 May 2025 18:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182C214A4C7;
+	Wed,  7 May 2025 18:44:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643488; cv=none; b=lfW8PoLRLRogUb5CM2KDkxnsNdxnF1t7HLJY8OxlJAE4FAZ0a4+eV/3EZv//98ncmj6Cqwh0ebiHZv9Y5O2/sHk9Bgl2vSLGchW1FkvCDUv4F3fKhf1N6Mo90fLSyZlfGUAPDrgcekBgltbHKQg3lTSKjFlV09GGGXiW2EtdiKk=
+	t=1746643491; cv=none; b=l1rctcrxot++7inUe/NK1IcZiWDsu4gmtyKiMjBvoIJJsiNkCBU36i+IGAI7b07GsfkSAaemV81nhza+F7MZfjEr485f/77T5IpL9LeET2/kcDiBhSm292Qwyi+ckMkvGAY8q/IlFDYAT/DP8euYOQ2O7oL7oYtg/0ZRgSZfFFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643488; c=relaxed/simple;
-	bh=DU8/90qZXlTSf6MECIt0Qo7dG2yNfJxtfWu6eU2DXyo=;
+	s=arc-20240116; t=1746643491; c=relaxed/simple;
+	bh=XQtJSI6MW2pTW6RZXLQiMOLTCvrM0Gid6R4Kibro8G0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RLFB4475r+dRAnXwNq2WmHIHoYkpUo/qNiOiXJB6oXalwa/zBSdH01MWu6ObkAHSOMjSagLUo8ZhnDjV61yaKZYbBf5ALUzEoYSAijO3MPZEDbbKOQQbJY5zmcBXVVepIzUf1D+9hu7wGjz7jwxZ2NP8Wxhdz4Q3pF5vvg5bWYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c6eRNwnU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ohSEh07GOpJo1kcaIKdQSy7c1kN2cytVpxOYc5/Myya86uCwIDQM8XnDZL5fGDA3NzR+tIo56cVz/jGsiWXC0kUHPrPa6AzE5FFslPK/82gLHyRyRlpR56Im2/4xzgga0TnzqmEV1nKlO/ZC51wHyYUBUMFODgLKsoDIYSKuTZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1KO8kSvc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6eRNwnU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE985C4CEE2;
-	Wed,  7 May 2025 18:44:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1KO8kSvc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9763AC4CEE2;
+	Wed,  7 May 2025 18:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643488;
-	bh=DU8/90qZXlTSf6MECIt0Qo7dG2yNfJxtfWu6eU2DXyo=;
+	s=korg; t=1746643491;
+	bh=XQtJSI6MW2pTW6RZXLQiMOLTCvrM0Gid6R4Kibro8G0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c6eRNwnUX34/fLoSxpCirnaUmObZT89SYXhnMJRfS6cjONByaT3LoI3pezqWHeT/M
-	 gIZlIaFLkbvP0ReKkn62hlP3/MDAq+R5ULEQyLs3A7r3PiBMcE2AazcjjPQkxf7fhX
-	 ca+52B1mxRec87DGCxkhGIkiBZ68jKRJmsIG0B1I=
+	b=1KO8kSvcQUwW0vmQvokCRhikpZbr9CSaZtVsaP48jfbkMIIJ+Ws668Pg0K7MfslaF
+	 RqDfxrB5AXvZ3ZNlIheMy+IFhkpaaiq8S9W7o5wMLsCk3MHwmTDszcavPr35jLPEVC
+	 ZD9/v2rLDP11GRqECMgwmFY5VVGxr222EwSx+XzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Dinh Nguyen <dinguyen@kernel.org>,
 	stable@kernel.org
-Subject: [PATCH 6.1 04/97] EDAC/altera: Test the correct error reg offset
-Date: Wed,  7 May 2025 20:38:39 +0200
-Message-ID: <20250507183807.173991848@linuxfoundation.org>
+Subject: [PATCH 6.1 05/97] EDAC/altera: Set DDR and SDMMC interrupt mask before registration
+Date: Wed,  7 May 2025 20:38:40 +0200
+Message-ID: <20250507183807.212239723@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183806.987408728@linuxfoundation.org>
 References: <20250507183806.987408728@linuxfoundation.org>
@@ -55,34 +55,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Niravkumar L Rabara <niravkumar.l.rabara@altera.com>
 
-commit 4fb7b8fceb0beebbe00712c3daf49ade0386076a upstream.
+commit 6dbe3c5418c4368e824bff6ae4889257dd544892 upstream.
 
-Test correct structure member, ecc_cecnt_offset, before using it.
+Mask DDR and SDMMC in probe function to avoid spurious interrupts before
+registration.  Removed invalid register write to system manager.
 
-  [ bp: Massage commit message. ]
-
-Fixes: 73bcc942f427 ("EDAC, altera: Add Arria10 EDAC support")
+Fixes: 1166fde93d5b ("EDAC, altera: Add Arria10 ECC memory init functions")
 Signed-off-by: Niravkumar L Rabara <niravkumar.l.rabara@altera.com>
 Signed-off-by: Matthew Gerlach <matthew.gerlach@altera.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Acked-by: Dinh Nguyen <dinguyen@kernel.org>
 Cc: stable@kernel.org
-Link: https://lore.kernel.org/20250425142640.33125-2-matthew.gerlach@altera.com
+Link: https://lore.kernel.org/20250425142640.33125-3-matthew.gerlach@altera.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/altera_edac.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/edac/altera_edac.c |    7 ++++---
+ drivers/edac/altera_edac.h |    2 ++
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
 --- a/drivers/edac/altera_edac.c
 +++ b/drivers/edac/altera_edac.c
-@@ -98,7 +98,7 @@ static irqreturn_t altr_sdram_mc_err_han
- 	if (status & priv->ecc_stat_ce_mask) {
- 		regmap_read(drvdata->mc_vbase, priv->ecc_saddr_offset,
- 			    &err_addr);
--		if (priv->ecc_uecnt_offset)
-+		if (priv->ecc_cecnt_offset)
- 			regmap_read(drvdata->mc_vbase,  priv->ecc_cecnt_offset,
- 				    &err_count);
- 		edac_mc_handle_error(HW_EVENT_ERR_CORRECTED, mci, err_count,
+@@ -1015,9 +1015,6 @@ altr_init_a10_ecc_block(struct device_no
+ 		}
+ 	}
+ 
+-	/* Interrupt mode set to every SBERR */
+-	regmap_write(ecc_mgr_map, ALTR_A10_ECC_INTMODE_OFST,
+-		     ALTR_A10_ECC_INTMODE);
+ 	/* Enable ECC */
+ 	ecc_set_bits(ecc_ctrl_en_mask, (ecc_block_base +
+ 					ALTR_A10_ECC_CTRL_OFST));
+@@ -2138,6 +2135,10 @@ static int altr_edac_a10_probe(struct pl
+ 		return PTR_ERR(edac->ecc_mgr_map);
+ 	}
+ 
++	/* Set irq mask for DDR SBE to avoid any pending irq before registration */
++	regmap_write(edac->ecc_mgr_map, A10_SYSMGR_ECC_INTMASK_SET_OFST,
++		     (A10_SYSMGR_ECC_INTMASK_SDMMCB | A10_SYSMGR_ECC_INTMASK_DDR0));
++
+ 	edac->irq_chip.name = pdev->dev.of_node->name;
+ 	edac->irq_chip.irq_mask = a10_eccmgr_irq_mask;
+ 	edac->irq_chip.irq_unmask = a10_eccmgr_irq_unmask;
+--- a/drivers/edac/altera_edac.h
++++ b/drivers/edac/altera_edac.h
+@@ -249,6 +249,8 @@ struct altr_sdram_mc_data {
+ #define A10_SYSMGR_ECC_INTMASK_SET_OFST   0x94
+ #define A10_SYSMGR_ECC_INTMASK_CLR_OFST   0x98
+ #define A10_SYSMGR_ECC_INTMASK_OCRAM      BIT(1)
++#define A10_SYSMGR_ECC_INTMASK_SDMMCB     BIT(16)
++#define A10_SYSMGR_ECC_INTMASK_DDR0       BIT(17)
+ 
+ #define A10_SYSMGR_ECC_INTSTAT_SERR_OFST  0x9C
+ #define A10_SYSMGR_ECC_INTSTAT_DERR_OFST  0xA0
 
 
