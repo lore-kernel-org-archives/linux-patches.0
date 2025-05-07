@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26B22144C1;
-	Wed,  7 May 2025 19:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E932144C1;
+	Wed,  7 May 2025 19:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746645072; cv=none; b=Pa3nF2WWwKAObLX4ZwBOS2igMhdF+J4znolobEBPLeUzO6ucFMaHX7k8y7AeuYy7UwLYsvN0wYnAV3fcsrQ7lVMbbkH4e4UUPLNktEaLjO7t7dXd9AJVBD+kywOD3OInhW53510SjIol+3DA8k3BCVkDFO+JZLoyR5+ZhoeDkEY=
+	t=1746645075; cv=none; b=KMmRa58iFuvBvOUlcqLA9w1ykqW00mqzJSByKviARwyFAj+dIDqpiTxSOxdSxHptoe634kMrKuoEyXmFY6fRDnrDqxnr0Jj+rqV0ExKTM+LFu+hT8U+lFKmuMKkIFQr/VEmyrkN3kneacHhB41WWEQTS6ipw76EQGJ9ninsHJIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746645072; c=relaxed/simple;
-	bh=wc3ZVTZj8mTII4LC9kmDJ/lHIDr5O9ouA7cDy5BlWuY=;
+	s=arc-20240116; t=1746645075; c=relaxed/simple;
+	bh=V22rfBX6YptZ8WCaj9oidSuabuyRGAzScSFmHMXgsxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Si9aylizF2LElLZ9f7qPZKeADR8M75AXvxCDguTu5PD21vlbN6fqel/nSSk8tD1Vi6G6IgrHC1CKm+xA+fNlZh15laqpjeg1kSaNG8mWAwM8O3ma08jLAF7d2Yf9DEMfBi6lVsgMvxl4AWy1UDLDG2vL4i8ldWg3deWv6GS0ZR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HjYyKrHz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DUO/diMt/v1j+P6k/ECwa2mVk4j+cYTACFjofpY0GsZeXmZQtn6Cfnyc8gF7v4On+y+dqjCGwtLaoMV/I8WenwS0j945fybT499oPVRWOY2nap8olOZS5NfZ65gvks36dpcqNO77c/PPKH8kUJ26Ggj2VylVOgpzvPQrQP8kCAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PN5ei7Yr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HjYyKrHz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1132FC4CEE2;
-	Wed,  7 May 2025 19:11:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PN5ei7Yr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BD3BC4CEE2;
+	Wed,  7 May 2025 19:11:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746645072;
-	bh=wc3ZVTZj8mTII4LC9kmDJ/lHIDr5O9ouA7cDy5BlWuY=;
+	s=korg; t=1746645075;
+	bh=V22rfBX6YptZ8WCaj9oidSuabuyRGAzScSFmHMXgsxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HjYyKrHz13OMCrpDC4QeJ80KY6d6Nf7ih3A/EOI1f0VpS/wHyMLJy/qu0Pf6Xa980
-	 mEQplKuAWtaBkFTDNcP3hnJs5qclgqVMzz0aQ5j5dKo4pF7G+noAzF5ffDdQP3RKpr
-	 ww7SJBsG2IVeZI3aGBY6OVlhmRjZrvm+4TYt9a5c=
+	b=PN5ei7Yr7gHfrxypnamMAtMmopWwkoizGJMIBYYOMKn7s5yQ8SqKOAXAqyHtVMhYY
+	 8q58ogDpM0BJzMEWAVjLLhcNqTLn4N64DC6l49K/eqOxrVNh+jqp3l1OCb6shqEM9P
+	 hU47LlLaLWiK1s5idiCROzeCIsQQiHjv+XFbOy4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mi <cmi@nvidia.com>,
-	Roi Dayan <roid@nvidia.com>,
-	Maor Gottlieb <maorg@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	En-Wei Wu <en-wei.wu@canonical.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 055/129] net/mlx5: E-switch, Fix error handling for enabling roce
-Date: Wed,  7 May 2025 20:39:51 +0200
-Message-ID: <20250507183815.763523186@linuxfoundation.org>
+Subject: [PATCH 6.6 056/129] Bluetooth: btusb: avoid NULL pointer dereference in skb_dequeue()
+Date: Wed,  7 May 2025 20:39:52 +0200
+Message-ID: <20250507183815.802915625@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -55,108 +51,195 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mi <cmi@nvidia.com>
+From: En-Wei Wu <en-wei.wu@canonical.com>
 
-[ Upstream commit 90538d23278a981e344d364e923162fce752afeb ]
+[ Upstream commit 0317b033abcd1d8dd2798f0e2de5e84543d0bd22 ]
 
-The cited commit assumes enabling roce always succeeds. But it is
-not true. Add error handling for it.
+A NULL pointer dereference can occur in skb_dequeue() when processing a
+QCA firmware crash dump on WCN7851 (0489:e0f3).
 
-Fixes: 80f09dfc237f ("net/mlx5: Eswitch, enable RoCE loopback traffic")
-Signed-off-by: Chris Mi <cmi@nvidia.com>
-Reviewed-by: Roi Dayan <roid@nvidia.com>
-Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/20250423083611.324567-6-mbloch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ 93.672166] Bluetooth: hci0: ACL memdump size(589824)
+
+[ 93.672475] BUG: kernel NULL pointer dereference, address: 0000000000000008
+[ 93.672517] Workqueue: hci0 hci_devcd_rx [bluetooth]
+[ 93.672598] RIP: 0010:skb_dequeue+0x50/0x80
+
+The issue stems from handle_dump_pkt_qca() returning 0 even when a dump
+packet is successfully processed. This is because it incorrectly
+forwards the return value of hci_devcd_init() (which returns 0 on
+success). As a result, the caller (btusb_recv_acl_qca() or
+btusb_recv_evt_qca()) assumes the packet was not handled and passes it
+to hci_recv_frame(), leading to premature kfree() of the skb.
+
+Later, hci_devcd_rx() attempts to dequeue the same skb from the dump
+queue, resulting in a NULL pointer dereference.
+
+Fix this by:
+1. Making handle_dump_pkt_qca() return 0 on success and negative errno
+   on failure, consistent with kernel conventions.
+2. Splitting dump packet detection into separate functions for ACL
+   and event packets for better structure and readability.
+
+This ensures dump packets are properly identified and consumed, avoiding
+double handling and preventing NULL pointer access.
+
+Fixes: 20981ce2d5a5 ("Bluetooth: btusb: Add WCN6855 devcoredump support")
+Signed-off-by: En-Wei Wu <en-wei.wu@canonical.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/eswitch_offloads.c   | 5 ++++-
- drivers/net/ethernet/mellanox/mlx5/core/rdma.c           | 9 +++++----
- drivers/net/ethernet/mellanox/mlx5/core/rdma.h           | 4 ++--
- 3 files changed, 11 insertions(+), 7 deletions(-)
+ drivers/bluetooth/btusb.c | 101 +++++++++++++++++++++++++++-----------
+ 1 file changed, 73 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-index 7eba3a5bb97ca..326c72b3df867 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-@@ -3499,7 +3499,9 @@ int esw_offloads_enable(struct mlx5_eswitch *esw)
- 	int err;
- 
- 	mutex_init(&esw->offloads.termtbl_mutex);
--	mlx5_rdma_enable_roce(esw->dev);
-+	err = mlx5_rdma_enable_roce(esw->dev);
-+	if (err)
-+		goto err_roce;
- 
- 	err = mlx5_esw_host_number_init(esw);
- 	if (err)
-@@ -3560,6 +3562,7 @@ int esw_offloads_enable(struct mlx5_eswitch *esw)
- 	esw_offloads_metadata_uninit(esw);
- err_metadata:
- 	mlx5_rdma_disable_roce(esw->dev);
-+err_roce:
- 	mutex_destroy(&esw->offloads.termtbl_mutex);
- 	return err;
- }
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/rdma.c b/drivers/net/ethernet/mellanox/mlx5/core/rdma.c
-index f585ef5a34243..5c552b71e371c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/rdma.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/rdma.c
-@@ -140,17 +140,17 @@ void mlx5_rdma_disable_roce(struct mlx5_core_dev *dev)
- 	mlx5_nic_vport_disable_roce(dev);
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index bc3f63f1ccd86..d6195565ef7ae 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3521,22 +3521,16 @@ static void btusb_coredump_qca(struct hci_dev *hdev)
+ 		bt_dev_err(hdev, "%s: triggle crash failed (%d)", __func__, err);
  }
  
--void mlx5_rdma_enable_roce(struct mlx5_core_dev *dev)
-+int mlx5_rdma_enable_roce(struct mlx5_core_dev *dev)
+-/*
+- * ==0: not a dump pkt.
+- * < 0: fails to handle a dump pkt
+- * > 0: otherwise.
+- */
++/* Return: 0 on success, negative errno on failure. */
+ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
  {
- 	int err;
+-	int ret = 1;
++	int ret = 0;
+ 	u8 pkt_type;
+ 	u8 *sk_ptr;
+ 	unsigned int sk_len;
+ 	u16 seqno;
+ 	u32 dump_size;
  
- 	if (!MLX5_CAP_GEN(dev, roce))
--		return;
-+		return 0;
+-	struct hci_event_hdr *event_hdr;
+-	struct hci_acl_hdr *acl_hdr;
+ 	struct qca_dump_hdr *dump_hdr;
+ 	struct btusb_data *btdata = hci_get_drvdata(hdev);
+ 	struct usb_device *udev = btdata->udev;
+@@ -3546,30 +3540,14 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
+ 	sk_len = skb->len;
  
- 	err = mlx5_nic_vport_enable_roce(dev);
- 	if (err) {
- 		mlx5_core_err(dev, "Failed to enable RoCE: %d\n", err);
--		return;
-+		return err;
+ 	if (pkt_type == HCI_ACLDATA_PKT) {
+-		acl_hdr = hci_acl_hdr(skb);
+-		if (le16_to_cpu(acl_hdr->handle) != QCA_MEMDUMP_ACL_HANDLE)
+-			return 0;
+ 		sk_ptr += HCI_ACL_HDR_SIZE;
+ 		sk_len -= HCI_ACL_HDR_SIZE;
+-		event_hdr = (struct hci_event_hdr *)sk_ptr;
+-	} else {
+-		event_hdr = hci_event_hdr(skb);
  	}
  
- 	err = mlx5_rdma_add_roce_addr(dev);
-@@ -165,10 +165,11 @@ void mlx5_rdma_enable_roce(struct mlx5_core_dev *dev)
- 		goto del_roce_addr;
- 	}
+-	if ((event_hdr->evt != HCI_VENDOR_PKT)
+-		|| (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE)))
+-		return 0;
+-
+ 	sk_ptr += HCI_EVENT_HDR_SIZE;
+ 	sk_len -= HCI_EVENT_HDR_SIZE;
  
--	return;
-+	return err;
- 
- del_roce_addr:
- 	mlx5_rdma_del_roce_addr(dev);
- disable_roce:
- 	mlx5_nic_vport_disable_roce(dev);
-+	return err;
+ 	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
+-	if ((sk_len < offsetof(struct qca_dump_hdr, data))
+-		|| (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS)
+-	    || (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
+-		return 0;
+-
+-	/*it is dump pkt now*/
+ 	seqno = le16_to_cpu(dump_hdr->seqno);
+ 	if (seqno == 0) {
+ 		set_bit(BTUSB_HW_SSR_ACTIVE, &btdata->flags);
+@@ -3643,17 +3621,84 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
+ 	return ret;
  }
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/rdma.h b/drivers/net/ethernet/mellanox/mlx5/core/rdma.h
-index 750cff2a71a4b..3d9e76c3d42fb 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/rdma.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/rdma.h
-@@ -8,12 +8,12 @@
  
- #ifdef CONFIG_MLX5_ESWITCH
++/* Return: true if the ACL packet is a dump packet, false otherwise. */
++static bool acl_pkt_is_dump_qca(struct hci_dev *hdev, struct sk_buff *skb)
++{
++	u8 *sk_ptr;
++	unsigned int sk_len;
++
++	struct hci_event_hdr *event_hdr;
++	struct hci_acl_hdr *acl_hdr;
++	struct qca_dump_hdr *dump_hdr;
++
++	sk_ptr = skb->data;
++	sk_len = skb->len;
++
++	acl_hdr = hci_acl_hdr(skb);
++	if (le16_to_cpu(acl_hdr->handle) != QCA_MEMDUMP_ACL_HANDLE)
++		return false;
++
++	sk_ptr += HCI_ACL_HDR_SIZE;
++	sk_len -= HCI_ACL_HDR_SIZE;
++	event_hdr = (struct hci_event_hdr *)sk_ptr;
++
++	if ((event_hdr->evt != HCI_VENDOR_PKT) ||
++	    (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE)))
++		return false;
++
++	sk_ptr += HCI_EVENT_HDR_SIZE;
++	sk_len -= HCI_EVENT_HDR_SIZE;
++
++	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
++	if ((sk_len < offsetof(struct qca_dump_hdr, data)) ||
++	    (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS) ||
++	    (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
++		return false;
++
++	return true;
++}
++
++/* Return: true if the event packet is a dump packet, false otherwise. */
++static bool evt_pkt_is_dump_qca(struct hci_dev *hdev, struct sk_buff *skb)
++{
++	u8 *sk_ptr;
++	unsigned int sk_len;
++
++	struct hci_event_hdr *event_hdr;
++	struct qca_dump_hdr *dump_hdr;
++
++	sk_ptr = skb->data;
++	sk_len = skb->len;
++
++	event_hdr = hci_event_hdr(skb);
++
++	if ((event_hdr->evt != HCI_VENDOR_PKT)
++	    || (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE)))
++		return false;
++
++	sk_ptr += HCI_EVENT_HDR_SIZE;
++	sk_len -= HCI_EVENT_HDR_SIZE;
++
++	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
++	if ((sk_len < offsetof(struct qca_dump_hdr, data)) ||
++	    (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS) ||
++	    (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
++		return false;
++
++	return true;
++}
++
+ static int btusb_recv_acl_qca(struct hci_dev *hdev, struct sk_buff *skb)
+ {
+-	if (handle_dump_pkt_qca(hdev, skb))
+-		return 0;
++	if (acl_pkt_is_dump_qca(hdev, skb))
++		return handle_dump_pkt_qca(hdev, skb);
+ 	return hci_recv_frame(hdev, skb);
+ }
  
--void mlx5_rdma_enable_roce(struct mlx5_core_dev *dev);
-+int mlx5_rdma_enable_roce(struct mlx5_core_dev *dev);
- void mlx5_rdma_disable_roce(struct mlx5_core_dev *dev);
+ static int btusb_recv_evt_qca(struct hci_dev *hdev, struct sk_buff *skb)
+ {
+-	if (handle_dump_pkt_qca(hdev, skb))
+-		return 0;
++	if (evt_pkt_is_dump_qca(hdev, skb))
++		return handle_dump_pkt_qca(hdev, skb);
+ 	return hci_recv_frame(hdev, skb);
+ }
  
- #else /* CONFIG_MLX5_ESWITCH */
- 
--static inline void mlx5_rdma_enable_roce(struct mlx5_core_dev *dev) {}
-+static inline int mlx5_rdma_enable_roce(struct mlx5_core_dev *dev) { return 0; }
- static inline void mlx5_rdma_disable_roce(struct mlx5_core_dev *dev) {}
- 
- #endif /* CONFIG_MLX5_ESWITCH */
 -- 
 2.39.5
 
