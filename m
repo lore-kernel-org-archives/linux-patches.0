@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E52F2116E9;
-	Wed,  7 May 2025 18:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1F82116E9;
+	Wed,  7 May 2025 18:55:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644119; cv=none; b=BrVcAXx08+nRuE1YUIz9gwaIai1WRMkJJslHxGsQZOn0DVeny8iypMlQsJaRjRyO+zFDj+oE8KhOKoPTHKC0Fe/8AEGfJuoMlb+y/Rkt/oIYAefPCvFceGw5TY4a4LMZ4jWTsqaluc0gGHL34fpCsPpnjTvP3pJivhnAimFxiE4=
+	t=1746644122; cv=none; b=DMeP9Yl3hMyA5pIBz0IFHftWZghhFCy5JjhNswJfq1Zo7oG4q7T9n3ELIQ0Q8vsuUzhYa0jeGFzVG8aDQCnx9XvsSU00N5GJN8w3XuEzoq85hwsKzaiQpMcRiw/ttRYRkdKvtTzV8f3QjRhhkIGj9aU33phcEP2HE6fE+bqWJTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644119; c=relaxed/simple;
-	bh=0aOdiSW8wGyBkmyDauM2mNCJ/20stk9RmFclJgrADh0=;
+	s=arc-20240116; t=1746644122; c=relaxed/simple;
+	bh=cb3s9FGU98MryfVvCZpqWQ5VFePfrUAlac32XHOjfXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yuih3ZSzgQ7UeeYIDCKAdpuq0qxi4sI58ky7nRk/Mgy9X4S/arpBN5ltifdlT2zo4OzTChH3/REXNkHOiyPPxk1WJPsFkkiM7R+rbE0BK9nnZRr2FtXixFLplA4fruAA/8vtJLD4qxgJ8sbeLoUdJlJ8PhWrjun8nvlCa5Uuxl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfrzXqnn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kyYeTGDOj3/wBc8655/OK/+buUriFJArBe2qLCGAYn/zaV8r7YEihWI1tg/g6gV+DkyfsvJeTlhWl6M6ffHJ3D+qL/oOGi9OkKoaVfJ2h4TEEWwzmwe/9yQn1g/c4RW5YG+6a3sSN2+oChRZm26QBg7kjCuBg0wNFt9p2Aq5gK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=frijUT3G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfrzXqnn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D28AC4CEE9;
-	Wed,  7 May 2025 18:55:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="frijUT3G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77413C4CEE2;
+	Wed,  7 May 2025 18:55:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644119;
-	bh=0aOdiSW8wGyBkmyDauM2mNCJ/20stk9RmFclJgrADh0=;
+	s=korg; t=1746644122;
+	bh=cb3s9FGU98MryfVvCZpqWQ5VFePfrUAlac32XHOjfXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vfrzXqnnHo6EnRJGxsFN7WDaKcb9Fi9VYNdPzW+wWgwlX0ed1QZDV9jEwwVXAaN0Y
-	 g1PX6e2a7dgFlCAkv6qDDMJ6EmehTOGKCvicEcMR/tQFPVg1usnpaptrO47NPFmEy9
-	 3EC05MSs0LByaPaktSoVI9Zzx1xpGvcoEyP0ntsg=
+	b=frijUT3GKDeq6HJS1nrMQxF8U0oXTAEW/yTuY7S/sWO8nbPJZNf6l+0DC/GXERMah
+	 90g65NQAvGshVQcw0BHQbnOl7J3wfSQ7zxeaPgWydIsLzD98D2G+WAMhU3XdPJU7KS
+	 Hv7rXzETBtsTkXRfKlIM6Wmt3cWmPlnTf8W3FanI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Shruti Parab <shruti.parab@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
 	Michael Chan <michael.chan@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 126/183] bnxt_en: Fix out-of-bound memcpy() during ethtool -w
-Date: Wed,  7 May 2025 20:39:31 +0200
-Message-ID: <20250507183829.920991619@linuxfoundation.org>
+Subject: [PATCH 6.14 127/183] bnxt_en: Fix ethtool -d byte order for 32-bit values
+Date: Wed,  7 May 2025 20:39:32 +0200
+Message-ID: <20250507183829.962309465@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -53,93 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shruti Parab <shruti.parab@broadcom.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 6b87bd94f34370bbf1dfa59352bed8efab5bf419 ]
+[ Upstream commit 02e8be5a032cae0f4ca33c6053c44d83cf4acc93 ]
 
-When retrieving the FW coredump using ethtool, it can sometimes cause
-memory corruption:
+For version 1 register dump that includes the PCIe stats, the existing
+code incorrectly assumes that all PCIe stats are 64-bit values.  Fix it
+by using an array containing the starting and ending index of the 32-bit
+values.  The loop in bnxt_get_regs() will use the array to do proper
+endian swap for the 32-bit values.
 
-BUG: KFENCE: memory corruption in __bnxt_get_coredump+0x3ef/0x670 [bnxt_en]
-Corrupted memory at 0x000000008f0f30e8 [ ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ] (in kfence-#45):
-__bnxt_get_coredump+0x3ef/0x670 [bnxt_en]
-ethtool_get_dump_data+0xdc/0x1a0
-__dev_ethtool+0xa1e/0x1af0
-dev_ethtool+0xa8/0x170
-dev_ioctl+0x1b5/0x580
-sock_do_ioctl+0xab/0xf0
-sock_ioctl+0x1ce/0x2e0
-__x64_sys_ioctl+0x87/0xc0
-do_syscall_64+0x5c/0xf0
-entry_SYSCALL_64_after_hwframe+0x78/0x80
-
-...
-
-This happens when copying the coredump segment list in
-bnxt_hwrm_dbg_dma_data() with the HWRM_DBG_COREDUMP_LIST FW command.
-The info->dest_buf buffer is allocated based on the number of coredump
-segments returned by the FW.  The segment list is then DMA'ed by
-the FW and the length of the DMA is returned by FW.  The driver then
-copies this DMA'ed segment list to info->dest_buf.
-
-In some cases, this DMA length may exceed the info->dest_buf length
-and cause the above BUG condition.  Fix it by capping the copy
-length to not exceed the length of info->dest_buf.  The extra
-DMA data contains no useful information.
-
-This code path is shared for the HWRM_DBG_COREDUMP_LIST and the
-HWRM_DBG_COREDUMP_RETRIEVE FW commands.  The buffering is different
-for these 2 FW commands.  To simplify the logic, we need to move
-the line to adjust the buffer length for HWRM_DBG_COREDUMP_RETRIEVE
-up, so that the new check to cap the copy length will work for both
-commands.
-
-Fixes: c74751f4c392 ("bnxt_en: Return error if FW returns more data than dump length")
+Fixes: b5d600b027eb ("bnxt_en: Add support for 'ethtool -d'")
+Reviewed-by: Shruti Parab <shruti.parab@broadcom.com>
 Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Shruti Parab <shruti.parab@broadcom.com>
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
 Signed-off-by: Michael Chan <michael.chan@broadcom.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/bnxt/bnxt_coredump.c    | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ .../net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 38 ++++++++++++++++---
+ 1 file changed, 32 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
-index 0c0d833d19342..a73398c4a3e98 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
-@@ -110,10 +110,19 @@ static int bnxt_hwrm_dbg_dma_data(struct bnxt *bp, void *msg,
- 			}
- 		}
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index d974f71074a76..54208e0495983 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -2062,6 +2062,17 @@ static int bnxt_get_regs_len(struct net_device *dev)
+ 	return reg_len;
+ }
  
-+		if (cmn_req->req_type ==
-+				cpu_to_le16(HWRM_DBG_COREDUMP_RETRIEVE))
-+			info->dest_buf_size += len;
++#define BNXT_PCIE_32B_ENTRY(start, end)			\
++	 { offsetof(struct pcie_ctx_hw_stats, start),	\
++	   offsetof(struct pcie_ctx_hw_stats, end) }
 +
- 		if (info->dest_buf) {
- 			if ((info->seg_start + off + len) <=
- 			    BNXT_COREDUMP_BUF_LEN(info->buf_len)) {
--				memcpy(info->dest_buf + off, dma_buf, len);
-+				u16 copylen = min_t(u16, len,
-+						    info->dest_buf_size - off);
++static const struct {
++	u16 start;
++	u16 end;
++} bnxt_pcie_32b_entries[] = {
++	BNXT_PCIE_32B_ENTRY(pcie_ltssm_histogram[0], pcie_ltssm_histogram[3]),
++};
 +
-+				memcpy(info->dest_buf + off, dma_buf, copylen);
-+				if (copylen < len)
-+					break;
- 			} else {
- 				rc = -ENOBUFS;
- 				if (cmn_req->req_type ==
-@@ -125,10 +134,6 @@ static int bnxt_hwrm_dbg_dma_data(struct bnxt *bp, void *msg,
- 			}
- 		}
- 
--		if (cmn_req->req_type ==
--				cpu_to_le16(HWRM_DBG_COREDUMP_RETRIEVE))
--			info->dest_buf_size += len;
+ static void bnxt_get_regs(struct net_device *dev, struct ethtool_regs *regs,
+ 			  void *_p)
+ {
+@@ -2094,12 +2105,27 @@ static void bnxt_get_regs(struct net_device *dev, struct ethtool_regs *regs,
+ 	req->pcie_stat_host_addr = cpu_to_le64(hw_pcie_stats_addr);
+ 	rc = hwrm_req_send(bp, req);
+ 	if (!rc) {
+-		__le64 *src = (__le64 *)hw_pcie_stats;
+-		u64 *dst = (u64 *)(_p + BNXT_PXP_REG_LEN);
+-		int i;
 -
- 		if (!(cmn_resp->flags & HWRM_DBG_CMN_FLAGS_MORE))
- 			break;
- 
+-		for (i = 0; i < sizeof(*hw_pcie_stats) / sizeof(__le64); i++)
+-			dst[i] = le64_to_cpu(src[i]);
++		u8 *dst = (u8 *)(_p + BNXT_PXP_REG_LEN);
++		u8 *src = (u8 *)hw_pcie_stats;
++		int i, j;
++
++		for (i = 0, j = 0; i < sizeof(*hw_pcie_stats); ) {
++			if (i >= bnxt_pcie_32b_entries[j].start &&
++			    i <= bnxt_pcie_32b_entries[j].end) {
++				u32 *dst32 = (u32 *)(dst + i);
++
++				*dst32 = le32_to_cpu(*(__le32 *)(src + i));
++				i += 4;
++				if (i > bnxt_pcie_32b_entries[j].end &&
++				    j < ARRAY_SIZE(bnxt_pcie_32b_entries) - 1)
++					j++;
++			} else {
++				u64 *dst64 = (u64 *)(dst + i);
++
++				*dst64 = le64_to_cpu(*(__le64 *)(src + i));
++				i += 8;
++			}
++		}
+ 	}
+ 	hwrm_req_drop(bp, req);
+ }
 -- 
 2.39.5
 
