@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE6E1DE4C4;
-	Wed,  7 May 2025 18:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715F914A4C7;
+	Wed,  7 May 2025 18:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643470; cv=none; b=ktQ22rZh+wzluiLuoZWJltYjt/AQCo30sb0kTdurzETWHVGZff9+X+64USYrNId4U918tFLYQm7XgL2Shx7wDjhzr+Y+FC/zGwBs+tbaqFhoPVFkeJomJQparMmAkjF3v/TbhsgyUo0mOuBsvxnQ1Ek0kcCvIfaANZbuHSf46qE=
+	t=1746643473; cv=none; b=TUPivpExsOuyfSei1VO+al0ZnzAAl3Q1vJyQbmajMMPj+dNIQnZrdSR9rCkeazJvrjZkd3ScwZtSWRT3JKr+qkJ7ZBUgexMU0HcuWI8RwU9W3Ov6vRzKwu5RtVo6eOJO4By14tEbJHoBcGVrinbhvRGGZl+15yTl5ZBhAIeS2J8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643470; c=relaxed/simple;
-	bh=yNlzM0a8qzw31Q1j9nei2fTBjhJ98ooWcfMZFxHTkBI=;
+	s=arc-20240116; t=1746643473; c=relaxed/simple;
+	bh=FCeKJ/Hm5vZsF9h5LUVTtkL94gMaMbv/M+4nTD4/IHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sW199Y1zxZhcugR+u5ccs4Y2jEChuBZyuK37apRDpjFhWm04xLe8E6DErLAvqSc+x5c9Gf4sZu1G0f/QrSl9r2qVC7dV0NPTOykgnAZ3FykqbEfJTQ9sZZRVcN+GG4G6x+9eztRpjpGSayCUETXB8P5wDFM6erL6LPjKXLbfMSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJUffbJ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hUZnWrPbO4JbczhbygiRBHbS7Br4Tfh5I7ieqYoBraPQCQXM/F9gyzegFlCb+vyTV2fzuWd/jsjLd5A2adwi5RKhkJdI7TgTzfBqgqXd8zmqjhJmhxgXapxQNa6S9gx46FdwLhn6T9MHdsOW7/8nFdMacs176HeCGaCB1mqQvVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=exn6REtE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJUffbJ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E637C4CEE2;
-	Wed,  7 May 2025 18:44:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exn6REtE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D83C4CEE2;
+	Wed,  7 May 2025 18:44:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643470;
-	bh=yNlzM0a8qzw31Q1j9nei2fTBjhJ98ooWcfMZFxHTkBI=;
+	s=korg; t=1746643473;
+	bh=FCeKJ/Hm5vZsF9h5LUVTtkL94gMaMbv/M+4nTD4/IHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dJUffbJ6PQpnOZqs6x6DQt3+oTM7TyukUf9H0NE3nHFCCFM4wao/H+IlQwuUXS/by
-	 iaStl7pDQwUPMrQYDS4lcwHaY47HVUxuzYzs/+U5VAjgDcalNodRBuJQ2MmvdoHfo4
-	 gMpROCBWdA5L2p7e0bCE08HYrlHCTbmoksMe7rWs=
+	b=exn6REtEqRz+cRa3lN3UXTRmTBeWCpoSOf8DKVWRedJZZEfZbPB/ANMQM1zC3wan3
+	 wJ05ZxpsvUNIcR4xDTxTRgvUz0SNhnFsRIyI3X13kB4e8paIe/6XXzui9KReIP4fVL
+	 VW3M0XZFL52hBJM17ptySvtZ+h9hvXVO46cFpuEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.1 15/97] dm: always update the array size in realloc_argv on success
-Date: Wed,  7 May 2025 20:38:50 +0200
-Message-ID: <20250507183807.602111045@linuxfoundation.org>
+	Pavel Paklov <Pavel.Paklov@cyberprotect.ru>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 6.1 16/97] iommu/amd: Fix potential buffer overflow in parse_ivrs_acpihid
+Date: Wed,  7 May 2025 20:38:51 +0200
+Message-ID: <20250507183807.641944031@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183806.987408728@linuxfoundation.org>
 References: <20250507183806.987408728@linuxfoundation.org>
@@ -50,43 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Marzinski <bmarzins@redhat.com>
+From: Pavel Paklov <Pavel.Paklov@cyberprotect.ru>
 
-commit 5a2a6c428190f945c5cbf5791f72dbea83e97f66 upstream.
+commit 8dee308e4c01dea48fc104d37f92d5b58c50b96c upstream.
 
-realloc_argv() was only updating the array size if it was called with
-old_argv already allocated. The first time it was called to create an
-argv array, it would allocate the array but return the array size as
-zero. dm_split_args() would think that it couldn't store any arguments
-in the array and would call realloc_argv() again, causing it to
-reallocate the initial slots (this time using GPF_KERNEL) and finally
-return a size. Aside from being wasteful, this could cause deadlocks on
-targets that need to process messages without starting new IO. Instead,
-realloc_argv should always update the allocated array size on success.
+There is a string parsing logic error which can lead to an overflow of hid
+or uid buffers. Comparing ACPIID_LEN against a total string length doesn't
+take into account the lengths of individual hid and uid buffers so the
+check is insufficient in some cases. For example if the length of hid
+string is 4 and the length of the uid string is 260, the length of str
+will be equal to ACPIID_LEN + 1 but uid string will overflow uid buffer
+which size is 256.
 
-Fixes: a0651926553c ("dm table: don't copy from a NULL pointer in realloc_argv()")
+The same applies to the hid string with length 13 and uid string with
+length 250.
+
+Check the length of hid and uid strings separately to prevent
+buffer overflow.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: ca3bf5d47cec ("iommu/amd: Introduces ivrs_acpihid kernel parameter")
 Cc: stable@vger.kernel.org
-Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Pavel Paklov <Pavel.Paklov@cyberprotect.ru>
+Link: https://lore.kernel.org/r/20250325092259.392844-1-Pavel.Paklov@cyberprotect.ru
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-table.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/iommu/amd/init.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/md/dm-table.c
-+++ b/drivers/md/dm-table.c
-@@ -502,9 +502,10 @@ static char **realloc_argv(unsigned int
- 		gfp = GFP_NOIO;
- 	}
- 	argv = kmalloc_array(new_size, sizeof(*argv), gfp);
--	if (argv && old_argv) {
--		memcpy(argv, old_argv, *size * sizeof(*argv));
-+	if (argv) {
- 		*size = new_size;
-+		if (old_argv)
-+			memcpy(argv, old_argv, *size * sizeof(*argv));
- 	}
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -3610,6 +3610,14 @@ found:
+ 	while (*uid == '0' && *(uid + 1))
+ 		uid++;
  
- 	kfree(old_argv);
++	if (strlen(hid) >= ACPIHID_HID_LEN) {
++		pr_err("Invalid command line: hid is too long\n");
++		return 1;
++	} else if (strlen(uid) >= ACPIHID_UID_LEN) {
++		pr_err("Invalid command line: uid is too long\n");
++		return 1;
++	}
++
+ 	i = early_acpihid_map_size++;
+ 	memcpy(early_acpihid_map[i].hid, hid, strlen(hid));
+ 	memcpy(early_acpihid_map[i].uid, uid, strlen(uid));
 
 
