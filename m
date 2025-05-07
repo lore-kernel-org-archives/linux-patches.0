@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224622116E9;
-	Wed,  7 May 2025 18:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF68B1DDC23;
+	Wed,  7 May 2025 18:49:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643776; cv=none; b=cy/1EKf0i//PCUU/XvHlLwWwDw8jdFOgKGS7v6XjQCcXA4GTjW6VcAftd4cdxGROm5ItYbQUDoPjGcidjHbZ8t/cugLVF5QLw86MXkk+7em5GKEBZP+Fc8dg/dNgSV482NA9SGnfpA+Y2QDjQOQM3mWKxw4n7ZYyRRLfdhLyThE=
+	t=1746643779; cv=none; b=C1S/F+zFsDxOo97rJ861t3JlNAM4b1PlOQr4s5r3ilF4L2DgG4IiKgzbrfAi6RxaWAQXZ5JW6/xz9xvs3XQo5wIsF5GVSdavbGSjnIWqUqNdosB2pWRZsPxS2pNrCx7RzuVwX7X/slz+bxs1F9UHGlM0VTxqe/4GhMOMvSe86Yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643776; c=relaxed/simple;
-	bh=aircaE4orOV9gVGJXTls+8WypVWOjTAbCFmcGjctK58=;
+	s=arc-20240116; t=1746643779; c=relaxed/simple;
+	bh=LSvdmHLSJW/JToKLrA8JHNmzJOVbeCKJmgOu9P4hPcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mOOeb3riRxN34Ha6K/BaMCz9PrPkNFj3HMf+GPHqw37hOYyKDaIJhUZhNAQSwX73CQ52Y3NsEktJqnbBfJHQ683gcNDQCigvdzltsPgBtZvzD6XD8toJ7Jxg2n8pHd0ngZvFJSZmye7MG1sE4Rxigx65wJsyDX2bzf72HFBe3PY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNAaoyrV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FxezTSOO09Ou/YDoUr8IxAn2YNtwW8pzrNpvQQDkN/y35YdwrqDLqIQh7fw1N+eB60sdC+fELK96tzSxXzB6d0RB69D7lsqW1kf7qNx/+9z9Sj1/7k49RKDASvXSOV7Rh8UZXRaurK0P3Stn60bgrzbz0kTNPl9EcF6G/jFQNWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tUwY8/1w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNAaoyrV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26663C4CEE2;
-	Wed,  7 May 2025 18:49:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tUwY8/1w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51809C4CEE2;
+	Wed,  7 May 2025 18:49:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643775;
-	bh=aircaE4orOV9gVGJXTls+8WypVWOjTAbCFmcGjctK58=;
+	s=korg; t=1746643778;
+	bh=LSvdmHLSJW/JToKLrA8JHNmzJOVbeCKJmgOu9P4hPcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VNAaoyrVt21fRSTt3RmtfT1W6Mj81LeisUlRyQu4+K+I638+1p+SndGs9cPXijuPW
-	 WOKDBgK0+rNRru0aK2n2OsgWdeXICA6Y/jOLtJnIaK2NUtH/KFBT9rRKs3Fqx4F54C
-	 1xSP4FdFqWCIsoHHpJZcwk0eG6vgyOBG3lIXW9wA=
+	b=tUwY8/1wJdWiUa5Lvr0I+3AIFdy29hH9PtiWcwtJJUp6ynklJC16UM1OU7nYxxYuO
+	 WUS2pPavSN8Ryyub7MO3JkrFdaVrh7+rkEvW8RK77L2U4VM91ULMvHeWd1+v0yYzfr
+	 agDjGSGlLMTb15HvRdw6eNNVB+nqzJSqTllkYxf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
+	Joachim Priesner <joachim.priesner@web.de>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.14 003/183] ALSA: usb-audio: Add retry on -EPROTO from usb_set_interface()
-Date: Wed,  7 May 2025 20:37:28 +0200
-Message-ID: <20250507183824.826722017@linuxfoundation.org>
+Subject: [PATCH 6.14 004/183] ALSA: usb-audio: Add second USB ID for Jabra Evolve 65 headset
+Date: Wed,  7 May 2025 20:37:29 +0200
+Message-ID: <20250507183824.866864571@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -50,55 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geoffrey D. Bennett <g@b4.vu>
+From: Joachim Priesner <joachim.priesner@web.de>
 
-commit f406005e162b660dc405b4f18bf7bcb93a515608 upstream.
+commit 1149719442d28c96dc63cad432b5a6db7c300e1a upstream.
 
-During initialisation of Focusrite USB audio interfaces, -EPROTO is
-sometimes returned from usb_set_interface(), which sometimes prevents
-the device from working: subsequent usb_set_interface() and
-uac_clock_source_is_valid() calls fail.
+There seem to be multiple USB device IDs used for these;
+the one I have reports as 0b0e:030c when powered on.
+(When powered off, it reports as 0b0e:0311.)
 
-This patch adds up to 5 retries in endpoint_set_interface(), with a
-delay starting at 5ms and doubling each time. 5 retries was chosen to
-allow for longer than expected waits for the interface to start
-responding correctly; in testing, a single 5ms delay was sufficient to
-fix the issue.
-
-Closes: https://github.com/geoffreybennett/fcp-support/issues/2
-Cc: stable@vger.kernel.org
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Link: https://patch.msgid.link/Z//7s9dKsmVxHzY2@m.b4.vu
+Signed-off-by: Joachim Priesner <joachim.priesner@web.de>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250428053606.9237-1-joachim.priesner@web.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/endpoint.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/usb/format.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -926,6 +926,8 @@ static int endpoint_set_interface(struct
- {
- 	int altset = set ? ep->altsetting : 0;
- 	int err;
-+	int retries = 0;
-+	const int max_retries = 5;
+--- a/sound/usb/format.c
++++ b/sound/usb/format.c
+@@ -260,7 +260,8 @@ static int parse_audio_format_rates_v1(s
+ 	}
  
- 	if (ep->iface_ref->altset == altset)
- 		return 0;
-@@ -935,8 +937,13 @@ static int endpoint_set_interface(struct
- 
- 	usb_audio_dbg(chip, "Setting usb interface %d:%d for EP 0x%x\n",
- 		      ep->iface, altset, ep->ep_num);
-+retry:
- 	err = usb_set_interface(chip->dev, ep->iface, altset);
- 	if (err < 0) {
-+		if (err == -EPROTO && ++retries <= max_retries) {
-+			msleep(5 * (1 << (retries - 1)));
-+			goto retry;
-+		}
- 		usb_audio_err_ratelimited(
- 			chip, "%d:%d: usb_set_interface failed (%d)\n",
- 			ep->iface, altset, err);
+ 	/* Jabra Evolve 65 headset */
+-	if (chip->usb_id == USB_ID(0x0b0e, 0x030b)) {
++	if (chip->usb_id == USB_ID(0x0b0e, 0x030b) ||
++	    chip->usb_id == USB_ID(0x0b0e, 0x030c)) {
+ 		/* only 48kHz for playback while keeping 16kHz for capture */
+ 		if (fp->nr_rates != 1)
+ 			return set_fixed_rate(fp, 48000, SNDRV_PCM_RATE_48000);
 
 
