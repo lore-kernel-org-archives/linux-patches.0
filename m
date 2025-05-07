@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C85D9214813;
-	Wed,  7 May 2025 19:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C92214813;
+	Wed,  7 May 2025 19:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746645195; cv=none; b=Ws6bp79Zs/34K8LiAppjLdcFuEg4i9JkvUqLoSzJNzpM1wUrkUSWi2dSWspzPqSfPeRP8+QMnv8sCTaF2P2Xdn4AUo4PYZ6Rv8n+C0JXXWfb02OUHf8Bxf74gdttFrGoQJit4wyDsuHNrLlralOZC53bHfo00VCMluSbhov9Gt0=
+	t=1746645198; cv=none; b=EUvFAWlEwvluTlcPa/Lcr4R7GYFmCPE9msxm3sQFzn5aSpswJNdwBWTFLOfg14aHeV4fdxF823E+6WnSOFYoWS8EbdHbf0j57N1SY2mZRmtukrfCLhGSZz8giFQkGg+TS3AGMR7+UKIRo4l7OLPrhtkaClwCQWVRESPFFuV/0qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746645195; c=relaxed/simple;
-	bh=m7kr8s0SHRqECJ82HYLUT1Aw3L0IgUXBl0y08T1bDqw=;
+	s=arc-20240116; t=1746645198; c=relaxed/simple;
+	bh=Po7GqoYwcZGs8fP89OsDGELv+ArVXsFLDBhqK3DlC7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rn7eO0RgEQY4ETMSuQpxUGywjmKbqii8ZJGZU0+Ad9aO1cGCWyT5JVFoSPbxNhycKjXZkEIvfW0AeC4bUMbZ8HuR+4YDyOvabIHi/OhxV9X1u9/zTWhAINCgB5HATtltoiHi9c0V4LfarK2g/E9R/XetPxZYnM3fz3r3p2+m7xM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zs2wuNdU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SbFI7C+iKIw3j+zfa6/HCjCBu/dHx/6PoyQWRp0r8ODEVbPmUrTa6NfwkLGB6zbM5LSnYTgf8+MC0V3sUp23/MfHR7HidE9oPsmt6LNziOGHzcaHKqwXwy1JK7okXkao00AVE059cLZpkQJ2UaEHODQE1I5mI8nWVZJMiCWc4TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebtAY5Io; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zs2wuNdU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B8EC4CEE2;
-	Wed,  7 May 2025 19:13:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebtAY5Io"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F83C4CEE2;
+	Wed,  7 May 2025 19:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746645195;
-	bh=m7kr8s0SHRqECJ82HYLUT1Aw3L0IgUXBl0y08T1bDqw=;
+	s=korg; t=1746645198;
+	bh=Po7GqoYwcZGs8fP89OsDGELv+ArVXsFLDBhqK3DlC7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zs2wuNdU2A5KcNXaVI4D7WzO+M5rbx7aDaevVmVbgmop5hLdTSFs2gIs0rGJkwQJS
-	 bWsSgeuBXEMZZXwH7d2kPJrIV/Tvtk/Jtujs2V4lH4uoExjmYqnXT1RxvElVjtNSng
-	 Hyfpjy8eBZGhq1eTzxNL8/KQJSwyJGDWWD5P2vZU=
+	b=ebtAY5IofHHnDuVu3DrIMKExVGPyu109jAhYbDm1Lawq+FtVGFVD+IN19XyLcWQLa
+	 nMAIKLpAdd2tR4eW0vfrPtx3P4pd7YeGBCtwQhSY+JV3XKLMvd0SpC9ATUr7Qp3+vj
+	 bPy2Xh2bAze18EouKHNLAtcIajSFVKEofRcuA5KY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Will Deacon <will@kernel.org>,
+	Alex Hung <alex.hung@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 125/129] iommu/arm-smmu-v3: Fix iommu_device_probe bug due to duplicated stream ids
-Date: Wed,  7 May 2025 20:41:01 +0200
-Message-ID: <20250507183818.655729303@linuxfoundation.org>
+Subject: [PATCH 6.6 126/129] drm/amd/display: Add scoped mutexes for amdgpu_dm_dhcp
+Date: Wed,  7 May 2025 20:41:02 +0200
+Message-ID: <20250507183818.698530471@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -52,120 +54,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit b00d24997a11c10d3e420614f0873b83ce358a34 ]
+[ Upstream commit 6b675ab8efbf2bcee25be29e865455c56e246401 ]
 
-ASPEED VGA card has two built-in devices:
- 0008:06:00.0 PCI bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge (rev 06)
- 0008:07:00.0 VGA compatible controller: ASPEED Technology, Inc. ASPEED Graphics Family (rev 52)
+[Why]
+Guards automatically release mutex when it goes out of scope making
+code easier to follow.
 
-Its toplogy looks like this:
- +-[0008:00]---00.0-[01-09]--+-00.0-[02-09]--+-00.0-[03]----00.0  Sandisk Corp Device 5017
-                             |               +-01.0-[04]--
-                             |               +-02.0-[05]----00.0  NVIDIA Corporation Device
-                             |               +-03.0-[06-07]----00.0-[07]----00.0  ASPEED Technology, Inc. ASPEED Graphics Family
-                             |               +-04.0-[08]----00.0  Renesas Technology Corp. uPD720201 USB 3.0 Host Controller
-                             |               \-05.0-[09]----00.0  Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller
-                             \-00.1  PMC-Sierra Inc. Device 4028
+[How]
+Replace all use of mutex_lock()/mutex_unlock() with guard(mutex).
 
-The IORT logic populaties two identical IDs into the fwspec->ids array via
-DMA aliasing in iort_pci_iommu_init() called by pci_for_each_dma_alias().
-
-Though the SMMU driver had been able to handle this situation since commit
-563b5cbe334e ("iommu/arm-smmu-v3: Cope with duplicated Stream IDs"), that
-got broken by the later commit cdf315f907d4 ("iommu/arm-smmu-v3: Maintain
-a SID->device structure"), which ended up with allocating separate streams
-with the same stuffing.
-
-On a kernel prior to v6.15-rc1, there has been an overlooked warning:
-  pci 0008:07:00.0: vgaarb: setting as boot VGA device
-  pci 0008:07:00.0: vgaarb: bridge control possible
-  pci 0008:07:00.0: vgaarb: VGA device added: decodes=io+mem,owns=none,locks=none
-  pcieport 0008:06:00.0: Adding to iommu group 14
-  ast 0008:07:00.0: stream 67328 already in tree   <===== WARNING
-  ast 0008:07:00.0: enabling device (0002 -> 0003)
-  ast 0008:07:00.0: Using default configuration
-  ast 0008:07:00.0: AST 2600 detected
-  ast 0008:07:00.0: [drm] Using analog VGA
-  ast 0008:07:00.0: [drm] dram MCLK=396 Mhz type=1 bus_width=16
-  [drm] Initialized ast 0.1.0 for 0008:07:00.0 on minor 0
-  ast 0008:07:00.0: [drm] fb0: astdrmfb frame buffer device
-
-With v6.15-rc, since the commit bcb81ac6ae3c ("iommu: Get DT/ACPI parsing
-into the proper probe path"), the error returned with the warning is moved
-to the SMMU device probe flow:
-  arm_smmu_probe_device+0x15c/0x4c0
-  __iommu_probe_device+0x150/0x4f8
-  probe_iommu_group+0x44/0x80
-  bus_for_each_dev+0x7c/0x100
-  bus_iommu_probe+0x48/0x1a8
-  iommu_device_register+0xb8/0x178
-  arm_smmu_device_probe+0x1350/0x1db0
-which then fails the entire SMMU driver probe:
-  pci 0008:06:00.0: Adding to iommu group 21
-  pci 0008:07:00.0: stream 67328 already in tree
-  arm-smmu-v3 arm-smmu-v3.9.auto: Failed to register iommu
-  arm-smmu-v3 arm-smmu-v3.9.auto: probe with driver arm-smmu-v3 failed with error -22
-
-Since SMMU driver had been already expecting a potential duplicated Stream
-ID in arm_smmu_install_ste_for_dev(), change the arm_smmu_insert_master()
-routine to ignore a duplicated ID from the fwspec->sids array as well.
-
-Note: this has been failing the iommu_device_probe() since 2021, although a
-recent iommu commit in v6.15-rc1 that moves iommu_device_probe() started to
-fail the SMMU driver probe. Since nobody has cared about DMA Alias support,
-leave that as it was but fix the fundamental iommu_device_probe() breakage.
-
-Fixes: cdf315f907d4 ("iommu/arm-smmu-v3: Maintain a SID->device structure")
-Cc: stable@vger.kernel.org
-Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Link: https://lore.kernel.org/r/20250415185620.504299-1-nicolinc@nvidia.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: be593d9d91c5 ("drm/amd/display: Fix slab-use-after-free in hdcp")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ .../amd/display/amdgpu_dm/amdgpu_dm_hdcp.c    | 37 +++++--------------
+ 1 file changed, 10 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 2cab4798e7a0d..f2260f45728e7 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -2597,6 +2597,7 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
- 	mutex_lock(&smmu->streams_mutex);
- 	for (i = 0; i < fwspec->num_ids; i++) {
- 		struct arm_smmu_stream *new_stream = &master->streams[i];
-+		struct rb_node *existing;
- 		u32 sid = fwspec->ids[i];
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
+index 2ad9f900a8574..4330d37022fa3 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
+@@ -172,7 +172,7 @@ void hdcp_update_display(struct hdcp_workqueue *hdcp_work,
+ 	struct mod_hdcp_display_adjustment display_adjust;
+ 	unsigned int conn_index = aconnector->base.index;
  
- 		new_stream->id = sid;
-@@ -2607,10 +2608,20 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
- 			break;
+-	mutex_lock(&hdcp_w->mutex);
++	guard(mutex)(&hdcp_w->mutex);
+ 	hdcp_w->aconnector[conn_index] = aconnector;
  
- 		/* Insert into SID tree */
--		if (rb_find_add(&new_stream->node, &smmu->streams,
--				arm_smmu_streams_cmp_node)) {
--			dev_warn(master->dev, "stream %u already in tree\n",
--				 sid);
-+		existing = rb_find_add(&new_stream->node, &smmu->streams,
-+				       arm_smmu_streams_cmp_node);
-+		if (existing) {
-+			struct arm_smmu_master *existing_master =
-+				rb_entry(existing, struct arm_smmu_stream, node)
-+					->master;
-+
-+			/* Bridged PCI devices may end up with duplicated IDs */
-+			if (existing_master == master)
-+				continue;
-+
-+			dev_warn(master->dev,
-+				 "stream %u already in tree from dev %s\n", sid,
-+				 dev_name(existing_master->dev));
- 			ret = -EINVAL;
- 			break;
+ 	memset(&link_adjust, 0, sizeof(link_adjust));
+@@ -209,7 +209,6 @@ void hdcp_update_display(struct hdcp_workqueue *hdcp_work,
+ 	mod_hdcp_update_display(&hdcp_w->hdcp, conn_index, &link_adjust, &display_adjust, &hdcp_w->output);
+ 
+ 	process_output(hdcp_w);
+-	mutex_unlock(&hdcp_w->mutex);
+ }
+ 
+ static void hdcp_remove_display(struct hdcp_workqueue *hdcp_work,
+@@ -220,7 +219,7 @@ static void hdcp_remove_display(struct hdcp_workqueue *hdcp_work,
+ 	struct drm_connector_state *conn_state = aconnector->base.state;
+ 	unsigned int conn_index = aconnector->base.index;
+ 
+-	mutex_lock(&hdcp_w->mutex);
++	guard(mutex)(&hdcp_w->mutex);
+ 	hdcp_w->aconnector[conn_index] = aconnector;
+ 
+ 	/* the removal of display will invoke auth reset -> hdcp destroy and
+@@ -239,7 +238,6 @@ static void hdcp_remove_display(struct hdcp_workqueue *hdcp_work,
+ 	mod_hdcp_remove_display(&hdcp_w->hdcp, aconnector->base.index, &hdcp_w->output);
+ 
+ 	process_output(hdcp_w);
+-	mutex_unlock(&hdcp_w->mutex);
+ }
+ 
+ void hdcp_reset_display(struct hdcp_workqueue *hdcp_work, unsigned int link_index)
+@@ -247,7 +245,7 @@ void hdcp_reset_display(struct hdcp_workqueue *hdcp_work, unsigned int link_inde
+ 	struct hdcp_workqueue *hdcp_w = &hdcp_work[link_index];
+ 	unsigned int conn_index;
+ 
+-	mutex_lock(&hdcp_w->mutex);
++	guard(mutex)(&hdcp_w->mutex);
+ 
+ 	mod_hdcp_reset_connection(&hdcp_w->hdcp,  &hdcp_w->output);
+ 
+@@ -259,8 +257,6 @@ void hdcp_reset_display(struct hdcp_workqueue *hdcp_work, unsigned int link_inde
+ 	}
+ 
+ 	process_output(hdcp_w);
+-
+-	mutex_unlock(&hdcp_w->mutex);
+ }
+ 
+ void hdcp_handle_cpirq(struct hdcp_workqueue *hdcp_work, unsigned int link_index)
+@@ -277,7 +273,7 @@ static void event_callback(struct work_struct *work)
+ 	hdcp_work = container_of(to_delayed_work(work), struct hdcp_workqueue,
+ 				 callback_dwork);
+ 
+-	mutex_lock(&hdcp_work->mutex);
++	guard(mutex)(&hdcp_work->mutex);
+ 
+ 	cancel_delayed_work(&hdcp_work->callback_dwork);
+ 
+@@ -285,8 +281,6 @@ static void event_callback(struct work_struct *work)
+ 			       &hdcp_work->output);
+ 
+ 	process_output(hdcp_work);
+-
+-	mutex_unlock(&hdcp_work->mutex);
+ }
+ 
+ static void event_property_update(struct work_struct *work)
+@@ -323,7 +317,7 @@ static void event_property_update(struct work_struct *work)
+ 			continue;
+ 
+ 		drm_modeset_lock(&dev->mode_config.connection_mutex, NULL);
+-		mutex_lock(&hdcp_work->mutex);
++		guard(mutex)(&hdcp_work->mutex);
+ 
+ 		if (conn_state->commit) {
+ 			ret = wait_for_completion_interruptible_timeout(&conn_state->commit->hw_done,
+@@ -355,7 +349,6 @@ static void event_property_update(struct work_struct *work)
+ 			drm_hdcp_update_content_protection(connector,
+ 							   DRM_MODE_CONTENT_PROTECTION_DESIRED);
  		}
+-		mutex_unlock(&hdcp_work->mutex);
+ 		drm_modeset_unlock(&dev->mode_config.connection_mutex);
+ 	}
+ }
+@@ -368,7 +361,7 @@ static void event_property_validate(struct work_struct *work)
+ 	struct amdgpu_dm_connector *aconnector;
+ 	unsigned int conn_index;
+ 
+-	mutex_lock(&hdcp_work->mutex);
++	guard(mutex)(&hdcp_work->mutex);
+ 
+ 	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX;
+ 	     conn_index++) {
+@@ -408,8 +401,6 @@ static void event_property_validate(struct work_struct *work)
+ 			schedule_work(&hdcp_work->property_update_work);
+ 		}
+ 	}
+-
+-	mutex_unlock(&hdcp_work->mutex);
+ }
+ 
+ static void event_watchdog_timer(struct work_struct *work)
+@@ -420,7 +411,7 @@ static void event_watchdog_timer(struct work_struct *work)
+ 				 struct hdcp_workqueue,
+ 				      watchdog_timer_dwork);
+ 
+-	mutex_lock(&hdcp_work->mutex);
++	guard(mutex)(&hdcp_work->mutex);
+ 
+ 	cancel_delayed_work(&hdcp_work->watchdog_timer_dwork);
+ 
+@@ -429,8 +420,6 @@ static void event_watchdog_timer(struct work_struct *work)
+ 			       &hdcp_work->output);
+ 
+ 	process_output(hdcp_work);
+-
+-	mutex_unlock(&hdcp_work->mutex);
+ }
+ 
+ static void event_cpirq(struct work_struct *work)
+@@ -439,13 +428,11 @@ static void event_cpirq(struct work_struct *work)
+ 
+ 	hdcp_work = container_of(work, struct hdcp_workqueue, cpirq_work);
+ 
+-	mutex_lock(&hdcp_work->mutex);
++	guard(mutex)(&hdcp_work->mutex);
+ 
+ 	mod_hdcp_process_event(&hdcp_work->hdcp, MOD_HDCP_EVENT_CPIRQ, &hdcp_work->output);
+ 
+ 	process_output(hdcp_work);
+-
+-	mutex_unlock(&hdcp_work->mutex);
+ }
+ 
+ void hdcp_destroy(struct kobject *kobj, struct hdcp_workqueue *hdcp_work)
+@@ -479,7 +466,7 @@ static bool enable_assr(void *handle, struct dc_link *link)
+ 
+ 	dtm_cmd = (struct ta_dtm_shared_memory *)psp->dtm_context.context.mem_context.shared_buf;
+ 
+-	mutex_lock(&psp->dtm_context.mutex);
++	guard(mutex)(&psp->dtm_context.mutex);
+ 	memset(dtm_cmd, 0, sizeof(struct ta_dtm_shared_memory));
+ 
+ 	dtm_cmd->cmd_id = TA_DTM_COMMAND__TOPOLOGY_ASSR_ENABLE;
+@@ -494,8 +481,6 @@ static bool enable_assr(void *handle, struct dc_link *link)
+ 		res = false;
+ 	}
+ 
+-	mutex_unlock(&psp->dtm_context.mutex);
+-
+ 	return res;
+ }
+ 
+@@ -557,13 +542,11 @@ static void update_config(void *handle, struct cp_psp_stream_config *config)
+ 			 (!!aconnector->base.state) ?
+ 			 aconnector->base.state->hdcp_content_type : -1);
+ 
+-	mutex_lock(&hdcp_w->mutex);
++	guard(mutex)(&hdcp_w->mutex);
+ 
+ 	mod_hdcp_add_display(&hdcp_w->hdcp, link, display, &hdcp_w->output);
+ 
+ 	process_output(hdcp_w);
+-	mutex_unlock(&hdcp_w->mutex);
+-
+ }
+ 
+ /**
 -- 
 2.39.5
 
