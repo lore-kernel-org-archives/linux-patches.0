@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B9A1FF5EC;
-	Wed,  7 May 2025 18:53:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0066A1FF5EC;
+	Wed,  7 May 2025 18:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644014; cv=none; b=GuaQFZaT1sFs8B7KtwMVP5jx2nyuL0ofT9b+50WBCLiSd/srC6mrhbWQP8kdsoyuOMhfeyo0P2DBJoUAkC8xj/TqGAb3U0ciAzgiPMkl6cZpmlGCVvMKUPx5b6q8RIrFhIYz1hXvZDq3Nk8yXRMXfh+o4SlcJ/Y3xF8S467ZvF0=
+	t=1746644017; cv=none; b=Uutgrn/WGHoG7qE1Jc042cj+zBU6t1CuXg1JJjzU5u9a4oppZvJzkumA0RJUchX4dS0sPox0WUbWNLwZ5rFmCpTWEztINYabbrgfUD3rRphMsx3jDCj31Le40LbxUlRFENaOsKZqoF6M7laIzGP6JHofzKim8RvPeXLedoyYBlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644014; c=relaxed/simple;
-	bh=HAi9yoqyqsHK05+fVAMFOHHvKaM65JsbUT9nkgDDtAc=;
+	s=arc-20240116; t=1746644017; c=relaxed/simple;
+	bh=0Auyg0+csm/ZQtnuu6zI/buvYshZ2J7fI1celgfnROU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nluz7QP80kJvmDek7SPqI5NpObBOY8pfS+ddYEhZ80WsJADW+KQxOmcbZq6jxf0ao4ZQdSrYwVjfU8/13sNza8mM14pqNIbU0VhGS2NBTF/lLE0p9pkR0quzltMuVLQnwMIkRqok8lf1dU7+Ad+a1/tJ8sa+JBAazakYxhY0Dd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAWMtRL2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qbULp6paG0514bsJB5DrQ9IwZ4qG5dAkCA4cmg2y1EXudcmyfgIZGn2JtZBRaNSK4f/6Tzu4GembugDH8/EjayNAFyzX29re+6egvghuoVQRf1Y93ue9tOgHtr8aqsKzf58Mx5qWoM1Ilk7jGHGTwr15+OmtAWTflJYESvByhG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qFFBYrcl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAWMtRL2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86051C4CEE2;
-	Wed,  7 May 2025 18:53:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qFFBYrcl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BBDC4CEE9;
+	Wed,  7 May 2025 18:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644014;
-	bh=HAi9yoqyqsHK05+fVAMFOHHvKaM65JsbUT9nkgDDtAc=;
+	s=korg; t=1746644016;
+	bh=0Auyg0+csm/ZQtnuu6zI/buvYshZ2J7fI1celgfnROU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VAWMtRL20kt8+p2qqPQcwas2OCuzP9WRgB1bn6x5ZXkI6BOT+NsqaxQIMjY23XN1f
-	 MhuEmIPHKu4vQXBJrjYsMDNDsEEIoU3gy2OtXam+7DnfTQHfelSDU9mHkI9YTycaQf
-	 AcGWoj0MnlX/YMIT7os8JkzjllCUVW4QJxX0XHts=
+	b=qFFBYrclTH6INukOen/Q6maRmO28mCfN2wUHHbbzKQW90U+o872QKSrtAnewBRIKw
+	 YB67JS/fQ9CRFeWaqrMjxbScKGd4cf61qu5r9JU2PODYwtoY4H6PLJxIBU5vdQdgwW
+	 azT9m+E8CRRXS9Q1VF+Xzaqpp4U8oW7UavonMqOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 092/183] net: ethernet: mtk_eth_soc: sync mtk_clks_source_name array
-Date: Wed,  7 May 2025 20:38:57 +0200
-Message-ID: <20250507183828.551026718@linuxfoundation.org>
+Subject: [PATCH 6.14 093/183] pds_core: make pdsc_auxbus_dev_del() void
+Date: Wed,  7 May 2025 20:38:58 +0200
+Message-ID: <20250507183828.592911640@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -52,45 +55,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 8c47d5753a119f1c986bc3ed92e9178d2624e1e8 ]
+[ Upstream commit e8562da829432d04a0de1830146984c89844f35e ]
 
-When removing the clock bits for clocks which aren't used by the
-Ethernet driver their names should also have been removed from the
-mtk_clks_source_name array.
+Since there really is no useful return, advertising a return value
+is rather misleading.  Make pdsc_auxbus_dev_del() a void function.
 
-Remove them now as enum mtk_clks_map needs to match the
-mtk_clks_source_name array so the driver can make sure that all required
-clocks are present and correctly name missing clocks.
-
-Fixes: 887b1d1adb2e ("net: ethernet: mtk_eth_soc: drop clocks unused by Ethernet driver")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/d075e706ff1cebc07f9ec666736d0b32782fd487.1745555321.git.daniel@makrotopia.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/r/20250320194412.67983-2-shannon.nelson@amd.com
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: dfd76010f8e8 ("pds_core: remove write-after-free of client_id")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/net/ethernet/amd/pds_core/auxbus.c  | 7 +------
+ drivers/net/ethernet/amd/pds_core/core.h    | 2 +-
+ drivers/net/ethernet/amd/pds_core/devlink.c | 6 ++++--
+ 3 files changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 477b8732b8609..1365888a4be11 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -269,12 +269,8 @@ static const char * const mtk_clks_source_name[] = {
- 	"ethwarp_wocpu2",
- 	"ethwarp_wocpu1",
- 	"ethwarp_wocpu0",
--	"top_usxgmii0_sel",
--	"top_usxgmii1_sel",
- 	"top_sgm0_sel",
- 	"top_sgm1_sel",
--	"top_xfi_phy0_xtal_sel",
--	"top_xfi_phy1_xtal_sel",
- 	"top_eth_gmii_sel",
- 	"top_eth_refck_50m_sel",
- 	"top_eth_sys_200m_sel",
+diff --git a/drivers/net/ethernet/amd/pds_core/auxbus.c b/drivers/net/ethernet/amd/pds_core/auxbus.c
+index b76a9b7e0aed6..d53b2124b1498 100644
+--- a/drivers/net/ethernet/amd/pds_core/auxbus.c
++++ b/drivers/net/ethernet/amd/pds_core/auxbus.c
+@@ -172,13 +172,9 @@ static struct pds_auxiliary_dev *pdsc_auxbus_dev_register(struct pdsc *cf,
+ 	return padev;
+ }
+ 
+-int pdsc_auxbus_dev_del(struct pdsc *cf, struct pdsc *pf)
++void pdsc_auxbus_dev_del(struct pdsc *cf, struct pdsc *pf)
+ {
+ 	struct pds_auxiliary_dev *padev;
+-	int err = 0;
+-
+-	if (!cf)
+-		return -ENODEV;
+ 
+ 	mutex_lock(&pf->config_lock);
+ 
+@@ -192,7 +188,6 @@ int pdsc_auxbus_dev_del(struct pdsc *cf, struct pdsc *pf)
+ 	pf->vfs[cf->vf_id].padev = NULL;
+ 
+ 	mutex_unlock(&pf->config_lock);
+-	return err;
+ }
+ 
+ int pdsc_auxbus_dev_add(struct pdsc *cf, struct pdsc *pf)
+diff --git a/drivers/net/ethernet/amd/pds_core/core.h b/drivers/net/ethernet/amd/pds_core/core.h
+index ec637dc4327a5..08b8280437dcf 100644
+--- a/drivers/net/ethernet/amd/pds_core/core.h
++++ b/drivers/net/ethernet/amd/pds_core/core.h
+@@ -304,7 +304,7 @@ int pdsc_register_notify(struct notifier_block *nb);
+ void pdsc_unregister_notify(struct notifier_block *nb);
+ void pdsc_notify(unsigned long event, void *data);
+ int pdsc_auxbus_dev_add(struct pdsc *cf, struct pdsc *pf);
+-int pdsc_auxbus_dev_del(struct pdsc *cf, struct pdsc *pf);
++void pdsc_auxbus_dev_del(struct pdsc *cf, struct pdsc *pf);
+ 
+ void pdsc_process_adminq(struct pdsc_qcq *qcq);
+ void pdsc_work_thread(struct work_struct *work);
+diff --git a/drivers/net/ethernet/amd/pds_core/devlink.c b/drivers/net/ethernet/amd/pds_core/devlink.c
+index ca23cde385e67..48a7c22fe3320 100644
+--- a/drivers/net/ethernet/amd/pds_core/devlink.c
++++ b/drivers/net/ethernet/amd/pds_core/devlink.c
+@@ -56,8 +56,10 @@ int pdsc_dl_enable_set(struct devlink *dl, u32 id,
+ 	for (vf_id = 0; vf_id < pdsc->num_vfs; vf_id++) {
+ 		struct pdsc *vf = pdsc->vfs[vf_id].vf;
+ 
+-		err = ctx->val.vbool ? pdsc_auxbus_dev_add(vf, pdsc) :
+-				       pdsc_auxbus_dev_del(vf, pdsc);
++		if (ctx->val.vbool)
++			err = pdsc_auxbus_dev_add(vf, pdsc);
++		else
++			pdsc_auxbus_dev_del(vf, pdsc);
+ 	}
+ 
+ 	return err;
 -- 
 2.39.5
 
