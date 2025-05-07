@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4309729A0;
-	Wed,  7 May 2025 18:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E2073451;
+	Wed,  7 May 2025 18:47:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643638; cv=none; b=mxWvGnrFtwpWFZB0xtfUFcgm1kjb8N3nm7cd5a9tfLye17gioxdYXNgHXGS4OmgzZcxe30DNv3MSBEyqySzNDHxtWcYHsu8t4FZCp1qzksT6crl6SX8D3hlS4dgQZina+mnxkDOvicgT2z381KhKodACYyfUC+wDN1e1hFPpoOQ=
+	t=1746643641; cv=none; b=KyU5X/l0mPJna+eddLXv6iMg7ruZVCaXNOSI6UT0DzNjcaAd7Jvpel2kDMAgKqni4U606Jw3lzFmwolcvoBh8C4giEHVPpj76nTIKKf8gANX82A14J5Znyw1RvvG0ivcEn5WHJFVXPb60fG/5DXuuNBLrqd2L4S10W48w8QNQRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643638; c=relaxed/simple;
-	bh=G690tvvv2yhWktKexfRkltwL5Z7hH++Vd7o0z4d+N8Y=;
+	s=arc-20240116; t=1746643641; c=relaxed/simple;
+	bh=PSByi+6z2keFnjkvSh+tOrudEIJ/LGnWQc27Ki7JNNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nfPaMiWphoKnAdZO+A6CWnfRM1gHqzTBP9topzDpYFKsM9ZbR3VdEu4HOPis9QXpQf8LTx3BgwF4gP/aMjoiWIv9qG12AcX6saT9olatU3qB9LJ16Qo7QAsi/Q6xmu+SgOOQMcih8jU7IGzeIr2MAyIHmcn87UMXFhQ6FIDzOrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vcVyNNvm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xte3a6g0nTSJcM4TTFXslXusywI8Hc2s90nd4l00kiTW40VMDBeyFhP2ahf6oZ7YkNuV+0cERxdC6F/PQqpXfpzrWoltMFfeonjwkixB6PNtQ+sod6XNQ4kcD2XoOxrMwgOxygHfVaDGdfq51HvnzYzZqdPrWxUz/EOyJdVHQYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bjkL/zdU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vcVyNNvm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D7BAC4CEE2;
-	Wed,  7 May 2025 18:47:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bjkL/zdU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61197C4CEE2;
+	Wed,  7 May 2025 18:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643637;
-	bh=G690tvvv2yhWktKexfRkltwL5Z7hH++Vd7o0z4d+N8Y=;
+	s=korg; t=1746643640;
+	bh=PSByi+6z2keFnjkvSh+tOrudEIJ/LGnWQc27Ki7JNNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vcVyNNvmZZI8o8qh/Bg61jQ2mn4WELinpnvJM0bjIfmrnYtvOFVwHLRcysd/Z6dy6
-	 xed1FZ1QFpjtiVFZAYnTuEaPVgVklzMAOFpf2xHl60kzzJ92RhFy+eZXtY8ZhGyxNZ
-	 aHh5jbILoYAwL93nUwgGpfyuj9irYUJTwi9doRT8=
+	b=bjkL/zdUw6OP1tyG7ArimfUC9DGakoBKrNWY+397qIh/sMp8mJdd05JEOhzHMxICu
+	 LXfMUI4AvDJXcEpYEG9AxMd0N+gmMlQwI4J31DByrxGgmCGmDXUDSGpPOLDM3NOEmF
+	 ROyJx7pX1Cc8xoKkBxZiE2VoLPRFOSeLOE6A1SjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 68/97] net: vertexcom: mse102x: Fix possible stuck of SPI interrupt
-Date: Wed,  7 May 2025 20:39:43 +0200
-Message-ID: <20250507183809.730568742@linuxfoundation.org>
+Subject: [PATCH 6.1 69/97] net: vertexcom: mse102x: Fix LEN_MASK
+Date: Wed,  7 May 2025 20:39:44 +0200
+Message-ID: <20250507183809.769292114@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183806.987408728@linuxfoundation.org>
 References: <20250507183806.987408728@linuxfoundation.org>
@@ -54,49 +54,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit 55f362885951b2d00fd7fbb02ef0227deea572c2 ]
+[ Upstream commit 74987089ec678b4018dba0a609e9f4bf6ef7f4ad ]
 
-The MSE102x doesn't provide any SPI commands for interrupt handling.
-So in case the interrupt fired before the driver requests the IRQ,
-the interrupt will never fire again. In order to fix this always poll
-for pending packets after opening the interface.
+The LEN_MASK for CMD_RTS doesn't cover the whole parameter mask.
+The Bit 11 is reserved, so adjust LEN_MASK accordingly.
 
 Fixes: 2f207cbf0dd4 ("net: vertexcom: Add MSE102x SPI support")
 Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250430133043.7722-2-wahrenst@gmx.net
+Link: https://patch.msgid.link/20250430133043.7722-3-wahrenst@gmx.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/vertexcom/mse102x.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/ethernet/vertexcom/mse102x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/vertexcom/mse102x.c b/drivers/net/ethernet/vertexcom/mse102x.c
-index 8f67c39f479ee..45f4d2cb5b31a 100644
+index 45f4d2cb5b31a..55f34d9d111c4 100644
 --- a/drivers/net/ethernet/vertexcom/mse102x.c
 +++ b/drivers/net/ethernet/vertexcom/mse102x.c
-@@ -509,6 +509,7 @@ static irqreturn_t mse102x_irq(int irq, void *_mse)
- static int mse102x_net_open(struct net_device *ndev)
- {
- 	struct mse102x_net *mse = netdev_priv(ndev);
-+	struct mse102x_net_spi *mses = to_mse102x_spi(mse);
- 	int ret;
+@@ -33,7 +33,7 @@
+ #define CMD_CTR		(0x2 << CMD_SHIFT)
  
- 	ret = request_threaded_irq(ndev->irq, NULL, mse102x_irq, IRQF_ONESHOT,
-@@ -524,6 +525,13 @@ static int mse102x_net_open(struct net_device *ndev)
+ #define CMD_MASK	GENMASK(15, CMD_SHIFT)
+-#define LEN_MASK	GENMASK(CMD_SHIFT - 1, 0)
++#define LEN_MASK	GENMASK(CMD_SHIFT - 2, 0)
  
- 	netif_carrier_on(ndev);
- 
-+	/* The SPI interrupt can stuck in case of pending packet(s).
-+	 * So poll for possible packet(s) to re-arm the interrupt.
-+	 */
-+	mutex_lock(&mses->lock);
-+	mse102x_rx_pkt_spi(mse);
-+	mutex_unlock(&mses->lock);
-+
- 	netif_dbg(mse, ifup, ndev, "network device up\n");
- 
- 	return 0;
+ #define DET_CMD_LEN	4
+ #define DET_SOF_LEN	2
 -- 
 2.39.5
 
