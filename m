@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F161FF5EC;
-	Wed,  7 May 2025 18:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3641FF5EC;
+	Wed,  7 May 2025 18:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643980; cv=none; b=IdT5+tSn4qcgtY5Q1iu6wkzK6B5UQGU6ypCQuyf4aiGcM+l+qSZ0nuSPgc/jQwohn0ETzXy6NwMTByJ1nF2VDIVKMeck7SfNPasgBH7XNStF+QO0w7x+HuyIel0hIeRx8TzmW1zhTWmNwr8NuLKCuCqzLibZBBydtXAWwmSEsHs=
+	t=1746643983; cv=none; b=FvT8tF/H9SQxvSZG49VPfHukspSCPrcxxEXsJMog+h4JluJK97n27vz5RdMvnWGaIrm757APYmkthPKOMWiB3b5s15zqznQBDSO312bD0MINxLxAl8HCnOXfxsL3JJGdTXFQvskxZAYgZuFY+xdm30yET2nHHuAun53cTkHGmF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643980; c=relaxed/simple;
-	bh=5wPXc7uaUgRYr1Y9lF+McPK+SoYHav8eMxL8A4sVGas=;
+	s=arc-20240116; t=1746643983; c=relaxed/simple;
+	bh=cdtzGWrYujYyjjGQbL8nEXOALBUN8vovDuS6PJVC358=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hBz1XdBBxkDgt+EBUpvwUZF+Onlf2Cvhe3v1U9GAowx759QFXjnZmtBrtQsxOuCWadlijZBA2CmV7jjRuSwKY04OBmnl8e1xd2cap8eh7Ybj0oeE6NSlIUyn2hL/2N5Duk2SKidfrPFPWipvmbZE1abBQZW9ipSZvLHhOO4fheM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q8ddQepS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pSQMAkLaTpAbkkFR9kyfREr4owRDgoT/T4U8/xGryq5sH41ng3GqkpERCr/Ngac9pb6VpQOPKfhXBFhMEG5Cu/dRV5sqbox5NolvBvBZvSMqfGEm8Gop9WdWLlQ1vkE1lTSzuRnVIQryh3C/ky1LtGuiAXX5ddwPuxaf6MwgWo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JynN1gst; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q8ddQepS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EEFDC4CEE2;
-	Wed,  7 May 2025 18:52:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JynN1gst"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07EC2C4CEE2;
+	Wed,  7 May 2025 18:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643980;
-	bh=5wPXc7uaUgRYr1Y9lF+McPK+SoYHav8eMxL8A4sVGas=;
+	s=korg; t=1746643983;
+	bh=cdtzGWrYujYyjjGQbL8nEXOALBUN8vovDuS6PJVC358=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q8ddQepS/5xm2nHvVwQXhxkIEodb5E2wT6WE13Zh6czSrEhrn6BNTEVgE9DrXXdA4
-	 bsTwO2QbxQylTf6gxBQ6dizSqmdZqCyyOIb0Ae8RRcETz2s6oFUn4CaA6xpRyTiPiY
-	 mJ51WmHThKjieTveU3GyBUzO/W8dtFEJXZFyA7xE=
+	b=JynN1gstC4Yw9gKWxSOJAtTCvO8314R22MTsjVCtsRZG03fMKbFszNxhTG5/uguAK
+	 /HbmzTQfgGDCkknWa+yxwmuuQ12382btSl4KAeglzOYw8ZOXnD97Dq05/dio+/JyJ1
+	 dbobH5Rpc+yDBsAUjyIzfH3UQ2xGGoXd/atRNIX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nico Pache <npache@redhat.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	David Gow <davidgow@google.com>,
+	Sheetal <sheetal@nvidia.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 051/183] firmware: cs_dsp: tests: Depend on FW_CS_DSP rather then enabling it
-Date: Wed,  7 May 2025 20:38:16 +0200
-Message-ID: <20250507183826.758021166@linuxfoundation.org>
+Subject: [PATCH 6.14 052/183] ASoC: soc-pcm: Fix hw_params() and DAPM widget sequence
+Date: Wed,  7 May 2025 20:38:17 +0200
+Message-ID: <20250507183826.798381628@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -53,45 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nico Pache <npache@redhat.com>
+From: Sheetal <sheetal@nvidia.com>
 
-[ Upstream commit a0b887f6eb9a0d1be3c57d00b0f3ba8408d3018a ]
+[ Upstream commit 9aff2e8df240e84a36f2607f98a0a9924a24e65d ]
 
-FW_CS_DSP gets enabled if KUNIT is enabled. The test should rather
-depend on if the feature is enabled. Fix this by moving FW_CS_DSP to the
-depends on clause.
+Issue:
+ When multiple audio streams share a common BE DAI, the BE DAI
+ widget can be powered up before its hardware parameters are configured.
+ This incorrect sequence leads to intermittent pcm_write errors.
 
-Fixes: dd0b6b1f29b9 ("firmware: cs_dsp: Add KUnit testing of bin file download")
-Signed-off-by: Nico Pache <npache@redhat.com>
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250411123608.1676462-4-rf@opensource.cirrus.com
-Reviewed-by: David Gow <davidgow@google.com>
+ For example, the below Tegra use-case throws an error:
+  aplay(2 streams) -> AMX(mux) -> ADX(demux) -> arecord(2 streams),
+  here, 'AMX TX' and 'ADX RX' are common BE DAIs.
+
+For above usecase when failure happens below sequence is observed:
+ aplay(1) FE open()
+  - BE DAI callbacks added to the list
+  - BE DAI state = SND_SOC_DPCM_STATE_OPEN
+ aplay(2) FE open()
+  - BE DAI callbacks are not added to the list as the state is
+    already SND_SOC_DPCM_STATE_OPEN during aplay(1) FE open().
+ aplay(2) FE hw_params()
+  - BE DAI hw_params() callback ignored
+ aplay(2) FE prepare()
+  - Widget is powered ON without BE DAI hw_params() call
+ aplay(1) FE hw_params()
+  - BE DAI hw_params() is now called
+
+Fix:
+ Add BE DAIs in the list if its state is either SND_SOC_DPCM_STATE_OPEN
+ or SND_SOC_DPCM_STATE_HW_PARAMS as well.
+
+It ensures the widget is powered ON after BE DAI hw_params() callback.
+
+Fixes: 0c25db3f7621 ("ASoC: soc-pcm: Don't reconnect an already active BE")
+Signed-off-by: Sheetal <sheetal@nvidia.com>
+Link: https://patch.msgid.link/20250404105953.2784819-1-sheetal@nvidia.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/cirrus/Kconfig | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ sound/soc/soc-pcm.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/cirrus/Kconfig b/drivers/firmware/cirrus/Kconfig
-index 0a883091259a2..e3c2e38b746df 100644
---- a/drivers/firmware/cirrus/Kconfig
-+++ b/drivers/firmware/cirrus/Kconfig
-@@ -6,14 +6,11 @@ config FW_CS_DSP
+diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
+index 88b3ad5a25520..53b0ea68b939f 100644
+--- a/sound/soc/soc-pcm.c
++++ b/sound/soc/soc-pcm.c
+@@ -1618,10 +1618,13 @@ static int dpcm_add_paths(struct snd_soc_pcm_runtime *fe, int stream,
+ 		/*
+ 		 * Filter for systems with 'component_chaining' enabled.
+ 		 * This helps to avoid unnecessary re-configuration of an
+-		 * already active BE on such systems.
++		 * already active BE on such systems and ensures the BE DAI
++		 * widget is powered ON after hw_params() BE DAI callback.
+ 		 */
+ 		if (fe->card->component_chaining &&
+ 		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_NEW) &&
++		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_OPEN) &&
++		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_HW_PARAMS) &&
+ 		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_CLOSE))
+ 			continue;
  
- config FW_CS_DSP_KUNIT_TEST_UTILS
- 	tristate
--	depends on KUNIT && REGMAP
--	select FW_CS_DSP
- 
- config FW_CS_DSP_KUNIT_TEST
- 	tristate "KUnit tests for Cirrus Logic cs_dsp" if !KUNIT_ALL_TESTS
--	depends on KUNIT && REGMAP
-+	depends on KUNIT && REGMAP && FW_CS_DSP
- 	default KUNIT_ALL_TESTS
--	select FW_CS_DSP
- 	select FW_CS_DSP_KUNIT_TEST_UTILS
- 	help
- 	  This builds KUnit tests for cs_dsp.
 -- 
 2.39.5
 
