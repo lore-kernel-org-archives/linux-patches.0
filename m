@@ -1,120 +1,189 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2042.outbound.protection.outlook.com [40.107.93.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0686E7263D
-	for <patches@lists.linux.dev>; Wed,  7 May 2025 20:34:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746650087; cv=none; b=tnzFuFBiVGdAWPCEFrWhmEZv85DqNuf1aQByMG5r6mZqGzuXMrGh/PFIZthLNXJ62ULaD9GO/bHG6mLCG58XoIQOUWP1U3FMQnK61S89G8OCz4RKayc7BvKx9retGYsIuGXPF5k7CRnaNCsPQYZOvPtNX940NQzTq8D8BZbsyds=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746650087; c=relaxed/simple;
-	bh=rYwPlKIrc8CEQvItc68MgYlI97CaizPLxQHNldaARzA=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=bBxiiud9w6noNoXK5aHv9kJZE/t95pFHtg+TjvYFkYKfkbd6edD4uPAU/3mL3kAT9i/AihwFsEHZaapgB2gUziEKnzN5VyRaKxtySwxfTT994QE7dOhopmhO21Rzw+qoDwnhW6foJRVsr5J0II7Ow6kJ48BgOUtbNn8GCWMeNqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=eqSRilGd; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3570328FA9E;
+	Wed,  7 May 2025 20:50:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746651022; cv=fail; b=UcjLPcPc9tSuT+/GMqIzZgkUtNW1g+fuhgziBi2Po3zLWVIR5BZVnWsRC2AdhI0JiNLViXebTJR1DZIVrZ9j1pmqAb6pLV/sneei2+5i+MMGODm76qFxApSxAeYYPWiJ8p0hkm2uKvtJl1uL31LNJmBs0iCDFBgjYli1NGhInoM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746651022; c=relaxed/simple;
+	bh=qtaB9zLrx4Ehei6z1FgN9br+hFHuSMtHRE4zkvf7QoM=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y6VBYOEu1g/0A3Bgi00uYLSCJ65WJnBBYhygl51FasMCjMlZoJ6gDdK2STfDEs6puqa97iVTq+idvW/e76OE7IERovtj2bfCtY8sCPIY84Re9pJ83yLFzQVEdGNQkENRdhJLBIgT7EEzc1u0ZP+v/49ElyWGwW5f8uS+37XNW8g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=KQZBUsr/; arc=fail smtp.client-ip=40.107.93.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="eqSRilGd"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1746650082;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ZZS/dW7f0IHeNiVWvc16YzMci9swdBRTEPVRyR/dZeo=;
-	b=eqSRilGdJX4kCGYoFpb6nUmkqBTfzuv5+HnOo9AAo/VoajhBj/pDMtbPUoQwMg8onw/kQn
-	U9XAxx9ixXZTf8qg3OZ60D6GnzC3p+z9C890boOCrjIGGjZ2daBsCkNsJWsKIV3AWQ2iCu
-	LrUxz8ebSqIJnj6fTN1BlXVi1xvX3PU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-470-9veFRZ7bPcSB-rqEDZOkhQ-1; Wed,
- 07 May 2025 16:34:39 -0400
-X-MC-Unique: 9veFRZ7bPcSB-rqEDZOkhQ-1
-X-Mimecast-MFC-AGG-ID: 9veFRZ7bPcSB-rqEDZOkhQ_1746650078
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 235EF18002A5;
-	Wed,  7 May 2025 20:34:38 +0000 (UTC)
-Received: from [10.22.80.45] (unknown [10.22.80.45])
-	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 7A82330001A1;
-	Wed,  7 May 2025 20:34:36 +0000 (UTC)
-Date: Wed, 7 May 2025 22:34:32 +0200 (CEST)
-From: Mikulas Patocka <mpatocka@redhat.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-    Benjamin Marzinski <bmarzins@redhat.com>
-Subject: Re: [PATCH 6.14 030/183] dm: always update the array size in
- realloc_argv on success
-In-Reply-To: <20250507183825.912392976@linuxfoundation.org>
-Message-ID: <2c92ae25-854e-2d60-4b6c-a4cbcd5f4ebd@redhat.com>
-References: <20250507183824.682671926@linuxfoundation.org> <20250507183825.912392976@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="KQZBUsr/"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=hj/v9uIQ1qp8UU9ARMXEiLqHC0zyNUVdJSGKkQ1PIhV09muzaEk5idWNwIkUjwvKc8H0nVmwQwzECsdnpDwchHsFy9n6lhsLkh5qy2OeZB80XctWyV4mQolz91Mit/c4b3mX+loAn68pbgL7o3/rSxK2m/17o9r2odm7tfeTc1NymMQcPTd2l/KerAZ0rJTNWNOndgv0qd+r8Rwd+Hq00kGD4LNdM4W4423VaLhGwQ02xydgoXsv5yyeSerAWlLEdcoNxpmSZ42vmfw4mWh+48Wz1PSl+8KAz3izIdrkSyL12DDqNaFYZJ/vGiYQG/0eEuakkx3SvTRW2I2OhXwSnw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cBBuKirHhbij22TbcvU6Mqo/8sTIvROlRm8Rgh0sDNg=;
+ b=RcBIn2+cVvtrXjSxn/K9EjNiib1bpxIZNNPkxh8CnNwD1HzxJoWFpQDToojvk0Q5VXXyBxG2+vbm6cxbV2XDbLGMZrlu6i++ke2ovxjksrRpDao8wDwSbptGhhfaslfQjjc1H1T70XWPpTNcPd+16O1SVH/3xaYKn4OICeBv+OQl1bS9b98UqGy1erGG6yBPjXukJfTe1PKkNhXJqQtlF5zsZ6+b4/fTpT63eo6LgI0LmXrR02950q4CzG5aWmZdOI9eW3NFLJtPv3VNpH1OG4y2C7i07tX8X9qESQ46EO6o2IOmEIgmKr3AhPbhJdlK+grlSWe9yOkrpLTU9E/uyg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cBBuKirHhbij22TbcvU6Mqo/8sTIvROlRm8Rgh0sDNg=;
+ b=KQZBUsr/uEsZ6f5rQzi841Vg9SgKvfI+S6nWhwxLAg9kRf1EdwKhtemKj8o63zCRuP04DLSV/BxVMB/m0qpRCFVNYra40++vvr43qSZWRP7vvXFmvG1Lr52ipz7W9o6ha8j8NPgLALPmPg2tdP5XvLGUcF+v5bhjTpDIYk+pWoNSZFMftCnD/gkJK6ip9kvqPKThitPYpX8Feo1/sAyjgBfZkrVH+sJQqrYsLUeCwXI0ctbtCFTAtv2pRHrm/L/G7fFawj6eJfpNZ3F3ynGSzmA3GK4x+bB+0lsvNau9VW6/tsXv93AGzCl+i2cJF0zFlEthkVKVxWqHEWtG4oEskw==
+Received: from BL1PR13CA0119.namprd13.prod.outlook.com (2603:10b6:208:2b9::34)
+ by CH0PR12MB8464.namprd12.prod.outlook.com (2603:10b6:610:184::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.22; Wed, 7 May
+ 2025 20:50:16 +0000
+Received: from BN3PEPF0000B071.namprd04.prod.outlook.com
+ (2603:10b6:208:2b9:cafe::2a) by BL1PR13CA0119.outlook.office365.com
+ (2603:10b6:208:2b9::34) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8722.17 via Frontend Transport; Wed,
+ 7 May 2025 20:50:16 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ BN3PEPF0000B071.mail.protection.outlook.com (10.167.243.116) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8722.18 via Frontend Transport; Wed, 7 May 2025 20:50:16 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 7 May 2025
+ 13:50:01 -0700
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Wed, 7 May 2025 13:50:03 -0700
+Received: from nvidia.com (10.127.8.14) by mail.nvidia.com (10.126.190.181)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Wed, 7 May 2025 13:49:57 -0700
+Date: Wed, 7 May 2025 13:49:55 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: Baolu Lu <baolu.lu@linux.intel.com>, <kevin.tian@intel.com>,
+	<corbet@lwn.net>, <will@kernel.org>, <bagasdotme@gmail.com>,
+	<robin.murphy@arm.com>, <joro@8bytes.org>, <thierry.reding@gmail.com>,
+	<vdumpa@nvidia.com>, <jonathanh@nvidia.com>, <shuah@kernel.org>,
+	<jsnitsel@redhat.com>, <nathan@kernel.org>, <peterz@infradead.org>,
+	<yi.l.liu@intel.com>, <mshavit@google.com>, <praan@google.com>,
+	<zhangzekun11@huawei.com>, <iommu@lists.linux.dev>,
+	<linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-tegra@vger.kernel.org>,
+	<linux-kselftest@vger.kernel.org>, <patches@lists.linux.dev>,
+	<mochs@nvidia.com>, <alok.a.tiwari@oracle.com>, <vasant.hegde@amd.com>
+Subject: Re: [PATCH v2 13/22] iommufd: Add mmap interface
+Message-ID: <aBvHcyrLbQGerWFa@nvidia.com>
+References: <cover.1745646960.git.nicolinc@nvidia.com>
+ <7be26560c604b0cbc2fd218997b97a47e4ed11ff.1745646960.git.nicolinc@nvidia.com>
+ <c4d03b52-422e-41ab-845b-1d2eda7ca9e2@linux.intel.com>
+ <20250505165019.GM2260709@nvidia.com>
+ <aBjzf9PrYnwF5uZN@nvidia.com>
+ <20250505172813.GS2260709@nvidia.com>
+ <aBkahmXQGxFC0Fdw@nvidia.com>
+ <20250506125425.GX2260709@nvidia.com>
+ <aBp28sjZpPfDUfYr@nvidia.com>
+ <20250507123648.GE90261@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20250507123648.GE90261@nvidia.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B071:EE_|CH0PR12MB8464:EE_
+X-MS-Office365-Filtering-Correlation-Id: fcb38684-c7bc-4f1b-53cd-08dd8da8c5b7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|7416014|376014|1800799024|36860700013;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?VcAp2uMyLZbLRz0zIoEA9iiRkXKoO1WSQN2JziSBBU2oXSA6qCKqXvUt10qr?=
+ =?us-ascii?Q?AGKbMjDHef86+5uKttI03OTLY3svRKkGDRvL9l4rItBWtUkPHwXObXCx+gJX?=
+ =?us-ascii?Q?qLDyUCqxvo4tb2NKPYDX6oQlZlKoIs8JmYKRvKDrsGEVXwLd3BOKBndEYZ2Z?=
+ =?us-ascii?Q?HUBCZs/MeWkGqNiJXmzsQGLE1OPPNXCm1MivqIH6/OK8aRcjMqYS62GWxg8F?=
+ =?us-ascii?Q?lBlKNLgH/hwDDXdunuAsQWELj1bHvmCIoV+GxFO52y/cL7qiezdTFQC9KxUB?=
+ =?us-ascii?Q?B940JiXWOcZEIxjjR9RmD/oZcpg7RSF7+GR7nIUQdYTPxlaxa5PRfnzNR01y?=
+ =?us-ascii?Q?/lHh4HXYnrbgvMDapouEJ7QcqBOU2rY3oD/MfHuYJ8hIBlrKJJufwE/Daw+8?=
+ =?us-ascii?Q?A1l3uWXw5KCWx0wVy/cIzlbHsxfw8OaYoRavVL28ssYeyiuJAj+zgdAYDZOX?=
+ =?us-ascii?Q?NAwUOXPqy8gs9t3pPLfBdebWvqy7GGY0W3iJ3BGv/6fC7kFX7x3MVvHJszUr?=
+ =?us-ascii?Q?fhjyuZwa3wCVmnosNREJA4fwyuBy87F7wdPlpekE5p7sETuvWft2T60E/9Hl?=
+ =?us-ascii?Q?20TwxOWW00RjeWBBJ9dzKZlMuzvlW+LKiktPzIzOYXjESGJeYr9Kpd0Q4Z73?=
+ =?us-ascii?Q?cb64YJ1zJwq+5joDf8nF3qejbVxyKQQnZVw/VW4BlQHZtNPXT5zr2wJ7w6Cm?=
+ =?us-ascii?Q?rtgz9XXpdmURMN7SbBVHNQqULDCbtW2YswthY9HIOZ164zOpB4xeZHMJZY2j?=
+ =?us-ascii?Q?ChacXocR4GQhR7G5fkjKihMaQpT8alrjuEgXfv3hJwOeXB7PEhrgVpzGQ8FL?=
+ =?us-ascii?Q?lMslZTcc3PUwsQ2wqSm9CyUGI4NvZ6GXde783RofNdugqZxJTl+DXVGcuRjP?=
+ =?us-ascii?Q?5f8t67TjBM3FOS/9brZnhAHJBvzIFBoFtvBrJA5PQHWd2ra7ixgu3uGun0PB?=
+ =?us-ascii?Q?lR01N1Vo3Ua9PFKtBnZNCSfgqJ/GG6rIQNMdxE2jjp91zMbQKWsbjTlx24kh?=
+ =?us-ascii?Q?N10hRH/EpAMmxoiniJw7AWmZYtZoZzWkZn5iL+tCb65vgtYdFKCCHtiy46/p?=
+ =?us-ascii?Q?Kj9YpHGjgV82LpC9dWN/sPHUDPuoEg1RhOaTtr3FH+urjLxDAHXkMya7hFst?=
+ =?us-ascii?Q?Bm2sXF5WVrm40GTy3Fcg63mg3pFs7uwXjAddpzUiuqX/k9FPFalIRSLrvZEJ?=
+ =?us-ascii?Q?+RtToWAhdowcf3M10L2QXFbxKwj0XsXUvmvic9sg0E7QjJpE81Do+BengdBd?=
+ =?us-ascii?Q?FSD3KtwbP8ySLyyManCq/xMzEVqPxnkJ9wpqd8OsjiSklMGm2HclB7+qyPt3?=
+ =?us-ascii?Q?EHPXvcJAAbLIVgo9sl0REY85z6xJ3GzEjq9YR0tk5abYrT7wrRqaw7RLpn+D?=
+ =?us-ascii?Q?q8BIuxT5OWKL1710K9aclniASRDblu0VurRh9p98fhEgwH6b6RvH09K3l9xr?=
+ =?us-ascii?Q?GQ9D76rbaHOm9pZVLAZ9NacAkgCF127gjfgrrFz5UMP/qxZv1ogRdP/VFzq1?=
+ =?us-ascii?Q?RxoI719o1oz7zhqJzsaKFUG5Z9TgRyOMeSEP?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(7416014)(376014)(1800799024)(36860700013);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 May 2025 20:50:16.5569
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: fcb38684-c7bc-4f1b-53cd-08dd8da8c5b7
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN3PEPF0000B071.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR12MB8464
 
-Hi
+On Wed, May 07, 2025 at 09:36:48AM -0300, Jason Gunthorpe wrote:
+> On Tue, May 06, 2025 at 01:54:10PM -0700, Nicolin Chen wrote:
+> 
+> > Now I start to think about the FD situation: either a fault queue or
+> > an eventq returns an FD and holds a refcount on the event object. So
+> > the event object can't be destroyed unless the FD is released first.
+> > Are we doing it incorrectly here?
+> 
+> Not necessarily, and maybe that is a good point that we are already
+> doing these cross dependencies. But we could fix the FDs with some
+> work too.
 
-I'd like to ask you to also backport 
-f1aff4bc199cb92c055668caed65505e3b4d2656 ("dm: fix copying after src array 
-boundaries") to all stable branches because it fixes a bug introduced in 
-the commit 5a2a6c428190f945c5cbf5791f72dbea83e97f66.
+Noted it down. Similar to unmap_mapping_range() in the mmap case,
+is close_fd() or file_close_fd() the one that we should use in the
+event object destroy()? Either of which is holding a spinlock, so
+likely it's safe from a close racing, v.s. the mmap situation?
 
-Mikulas
+> > I see! It just needs to call that function when we remove the mmap
+> > for a vIOMMU destroy().
+> 
+> It is a little fussy to setup the inode as well, but yes.
+> 
+> The other small advantage is you don't need to setup a special VMA ops
+> and do VMA tracking to hold the refcount on the vqueue object.
+> 
+> But there is also any annoying race with unmap in setting up the mmap
+> PFNs which is why vfio is doing it from a fault handler..
 
+I see. That's why VFIO is doing vmf_insert_pfn() in the fault op,
+instead of calling remap_pfn_range() in mmap().
 
+> So maybe refcount is the simplest option for now. We could fix it
+> later and it won't prevent close() from working right.
 
-On Wed, 7 May 2025, Greg Kroah-Hartman wrote:
+Ack. I will keep the one that I posted in v3.
 
-> 6.14-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Benjamin Marzinski <bmarzins@redhat.com>
-> 
-> commit 5a2a6c428190f945c5cbf5791f72dbea83e97f66 upstream.
-> 
-> realloc_argv() was only updating the array size if it was called with
-> old_argv already allocated. The first time it was called to create an
-> argv array, it would allocate the array but return the array size as
-> zero. dm_split_args() would think that it couldn't store any arguments
-> in the array and would call realloc_argv() again, causing it to
-> reallocate the initial slots (this time using GPF_KERNEL) and finally
-> return a size. Aside from being wasteful, this could cause deadlocks on
-> targets that need to process messages without starting new IO. Instead,
-> realloc_argv should always update the allocated array size on success.
-> 
-> Fixes: a0651926553c ("dm table: don't copy from a NULL pointer in realloc_argv()")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
-> Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->  drivers/md/dm-table.c |    5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> --- a/drivers/md/dm-table.c
-> +++ b/drivers/md/dm-table.c
-> @@ -523,9 +523,10 @@ static char **realloc_argv(unsigned int
->  		gfp = GFP_NOIO;
->  	}
->  	argv = kmalloc_array(new_size, sizeof(*argv), gfp);
-> -	if (argv && old_argv) {
-> -		memcpy(argv, old_argv, *size * sizeof(*argv));
-> +	if (argv) {
->  		*size = new_size;
-> +		if (old_argv)
-> +			memcpy(argv, old_argv, *size * sizeof(*argv));
->  	}
->  
->  	kfree(old_argv);
-> 
-> 
-
+Thanks
+Nicolin
