@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DDA128E582;
-	Wed,  7 May 2025 19:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A0128BA9F;
+	Wed,  7 May 2025 19:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644783; cv=none; b=XqY9fIO4Xs9IDoVvzI//ji3IuZkFvPf0FmWjuGmHTa0pjU5GALdBgZm7G62Z/BwG6AAw1Um48VODkCFqh6weTlVhF912uycAt0PFI6HxSdXLoZ6TB2z6erEiQpGHp4JQ3yMKsQa6c5dFQ7Lc0/J/igDODGRYccuLkyDVot7I5q0=
+	t=1746644786; cv=none; b=Wb4iA+DOm/Wkzr1V+5zFgHrH7XB9aet8iVTMvXYegz5mIp8szXRc1eSTuDxGjeZr6D8WjSDr+5hiHASua7kxNHxBM1sFY22OGQQNiP4LvugeulgzTc3Sa25KdzwehrgAqmzsovZjY4OBGJunO2Vf828WjhQmoUbjsWztNsxwzC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644783; c=relaxed/simple;
-	bh=H28PrMFCFJx6lSwqDZkQNISsGjbmBDM9miqf+Zy7vbQ=;
+	s=arc-20240116; t=1746644786; c=relaxed/simple;
+	bh=Y97ikOv9fCaNCMhOwhPJssvqqzzWsSPK9SsDl1u10Aw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kA7jUhB2B7V8CgL4cysJC3hvqsKhN3UIsmvJpQ6hFU0x/3dPFRk0+/vu8z1jVfWer8dAVXBKC0+iLQ0Q7OxYosORtsykOooT4w9ESJXjBN2Hpgql6/1NCYO2I4hfkaixXYXAmowX3Qmu+0a4saHIgwNd28EkVu50cZqKpdy++7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cq//EF5k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kptu5eyOaw71sgL6mptRDFQiUoH23vSuphS6n8XBOFkvJtSnuE1/UWVQ8RrAaIXLr8TGCj342EhKqiCjDA/ScWvdhC/WF0tTmfA1jkE3Bfi9XUoy7GDRUdMPmRsiodZltDsLIs2F1GEPQuO4G6Ho84rfnHHJqXXjNU0DWd+PC0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMcMq9T/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cq//EF5k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8EBBC4CEE2;
-	Wed,  7 May 2025 19:06:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMcMq9T/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F48C4CEE2;
+	Wed,  7 May 2025 19:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644783;
-	bh=H28PrMFCFJx6lSwqDZkQNISsGjbmBDM9miqf+Zy7vbQ=;
+	s=korg; t=1746644786;
+	bh=Y97ikOv9fCaNCMhOwhPJssvqqzzWsSPK9SsDl1u10Aw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cq//EF5khEKmV75ljQN1AXLGfOZDeVxPan/TEKZVkH0xlb81qaItsSEfx0ap1z5iK
-	 ZNAXtk31Chc5InSA2iyDvAzaV4fSYuHvnlF+cNaJZQuHWHZE166PZKCIfQ9qzYjE7Q
-	 2pnqpPyQm5u/dUVckN1EcB9D4vpCAbKN3LlvqfRs=
+	b=PMcMq9T/MalsWwKIgC/WLTB/K9vq+LgQCofXDurYUIjp9toLxpD98/kfFbcCn/egF
+	 myDZPxBNJ5qgGbM/2AJO2htUOfPRUSJZ0OO3xCMB9WHqHdYVR7+lFAfHP22j/4JJxx
+	 JeJv4rzY17cjSsyZ1ew7D/LWPJ/eREh56+a5FNbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mattias Barthel <mattias.barthel@atlascopco.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Sathesh B Edara <sedara@marvell.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 126/164] net: fec: ERR007885 Workaround for conventional TX
-Date: Wed,  7 May 2025 20:40:11 +0200
-Message-ID: <20250507183826.069882410@linuxfoundation.org>
+Subject: [PATCH 6.12 127/164] octeon_ep: Fix host hang issue during device reboot
+Date: Wed,  7 May 2025 20:40:12 +0200
+Message-ID: <20250507183826.109610086@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -52,53 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mattias Barthel <mattias.barthel@atlascopco.com>
+From: Sathesh B Edara <sedara@marvell.com>
 
-[ Upstream commit a179aad12badc43201cbf45d1e8ed2c1383c76b9 ]
+[ Upstream commit 34f42736b325287a7b2ce37e415838f539767bda ]
 
-Activate TX hang workaround also in
-fec_enet_txq_submit_skb() when TSO is not enabled.
+When the host loses heartbeat messages from the device,
+the driver calls the device-specific ndo_stop function,
+which frees the resources. If the driver is unloaded in
+this scenario, it calls ndo_stop again, attempting to free
+resources that have already been freed, leading to a host
+hang issue. To resolve this, dev_close should be called
+instead of the device-specific stop function.dev_close
+internally calls ndo_stop to stop the network interface
+and performs additional cleanup tasks. During the driver
+unload process, if the device is already down, ndo_stop
+is not called.
 
-Errata: ERR007885
-
-Symptoms: NETDEV WATCHDOG: eth0 (fec): transmit queue 0 timed out
-
-commit 37d6017b84f7 ("net: fec: Workaround for imx6sx enet tx hang when enable three queues")
-There is a TDAR race condition for mutliQ when the software sets TDAR
-and the UDMA clears TDAR simultaneously or in a small window (2-4 cycles).
-This will cause the udma_tx and udma_tx_arbiter state machines to hang.
-
-So, the Workaround is checking TDAR status four time, if TDAR cleared by
-    hardware and then write TDAR, otherwise don't set TDAR.
-
-Fixes: 53bb20d1faba ("net: fec: add variable reg_desc_active to speed things up")
-Signed-off-by: Mattias Barthel <mattias.barthel@atlascopco.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250429090826.3101258-1-mattiasbarthel@gmail.com
+Fixes: 5cb96c29aa0e ("octeon_ep: add heartbeat monitor")
+Signed-off-by: Sathesh B Edara <sedara@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250429114624.19104-1-sedara@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeon_ep/octep_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index 2b05d9c6c21a4..04906897615d8 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -714,7 +714,12 @@ static int fec_enet_txq_submit_skb(struct fec_enet_priv_tx_q *txq,
- 	txq->bd.cur = bdp;
- 
- 	/* Trigger transmission start */
--	writel(0, txq->bd.reg_desc_active);
-+	if (!(fep->quirks & FEC_QUIRK_ERR007885) ||
-+	    !readl(txq->bd.reg_desc_active) ||
-+	    !readl(txq->bd.reg_desc_active) ||
-+	    !readl(txq->bd.reg_desc_active) ||
-+	    !readl(txq->bd.reg_desc_active))
-+		writel(0, txq->bd.reg_desc_active);
- 
- 	return 0;
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
+index a89f80bac39b8..1b2f5cae06449 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
+@@ -1184,7 +1184,7 @@ static void octep_hb_timeout_task(struct work_struct *work)
+ 		miss_cnt);
+ 	rtnl_lock();
+ 	if (netif_running(oct->netdev))
+-		octep_stop(oct->netdev);
++		dev_close(oct->netdev);
+ 	rtnl_unlock();
  }
+ 
 -- 
 2.39.5
 
