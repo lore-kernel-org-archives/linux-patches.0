@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3A528C845;
-	Wed,  7 May 2025 18:57:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09501482F5;
+	Wed,  7 May 2025 18:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644223; cv=none; b=u1oW3zwhQ2ad+yiUKxfnZtbbuA5oXjcLm9BWdI4tW/zN1dgS/on9SDREj/sl1QUFr5GnSO04BA8p7hqYB+cqV9BQ6I9a591SW2O2Up80kRy/ZZS7XaoVP4jNRXR4Y1ZTn0p2Kj3E0SlAUl9GbZvRJMpj2tNyNG+THazlW5fyepY=
+	t=1746644226; cv=none; b=sSy1UrDaxIToTeBIgdM4VBiAeUdq5pG54X8zA1L5MIXeh+2VrUYZaWtJ7SSV6HrWTQMyL+VqsVgIdbhY4wauZAzz3O1uIeJQBaySZCsuDMfn0zq89saAR1ad0rJmNMDiRtrSWm3kRp69H1+HY/4EmpzmpVf+p/IEkgxHcdWHkxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644223; c=relaxed/simple;
-	bh=EaUSTkCUOCMVxTR+e+7r2Ha/BiPyp53fw+Ol3gxT93E=;
+	s=arc-20240116; t=1746644226; c=relaxed/simple;
+	bh=Z27d1yylSn+tfjrPkKOAofiF0bQpC6jWHaDAxZrVhQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S2LbqI8RiUp+Kb8v4Dc1LRGHRkkDF4ve87jqLO0O4kdmhVIIPMmLyB8qX+/c/S1tvnE1zhwjFSLm0L4jLEzXzRjTnzl9UP0w+E3FLB8dLAMIJcGWS1b6vVp0JwBmCf0qW/T0R+nlB6Ecamsr4LWuxL4NZqLjEoRIJo7h7SIlCjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=apvHNVJI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XKaKiHOExbHGTxcdHTXNtDvvW1JWtGyMVV/nJhBegPAeDZk+FsYt0WyDn0PrPv59vp075D1ZtIuFi1NSEYP+y0CrijhPG43U8JaaIXvjEnGMMujpY/yrfyI6R2IOfc2xRr09ANseIsvRzDP+Pt3r/7wY2NnsZZKz+s+txuML+gY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QnsJC0Dc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="apvHNVJI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9DDBC4CEE2;
-	Wed,  7 May 2025 18:57:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QnsJC0Dc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A19C4CEE2;
+	Wed,  7 May 2025 18:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644223;
-	bh=EaUSTkCUOCMVxTR+e+7r2Ha/BiPyp53fw+Ol3gxT93E=;
+	s=korg; t=1746644226;
+	bh=Z27d1yylSn+tfjrPkKOAofiF0bQpC6jWHaDAxZrVhQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=apvHNVJIPNEVQvXNS2hth+/Wej60p/3WsVrf9O5vqHygnAUj6PQwPzpkRqmLhKYc1
-	 CVDTyDEyRn1uCKTgfNC1cP3JK5QXWBPxfFzkXQEI9Cozs4wG/oj/UEbfk/QkcIf1uK
-	 u4Q4IOnEBhWHtF0IHup5/bEmqAPe1lwwet6WUkbs=
+	b=QnsJC0DcIIt6UOlZH+5St8mIuv/sAte3EYs3dJtlAUb9N9hl8lHA/j6rtds1A51Za
+	 Nha+lOd5g7HJGo61lOJeNW9taytYqrWNrvhnM+ERd9g7FgycHj0Dvsdf4b2esBY4Oc
+	 0198Axh0GTbAJ/xAWXxm7zrGPwnngB0BTMpWU3yU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uday Shankar <ushankar@purestorage.com>,
+	Jared Holzman <jholzman@nvidia.com>,
 	Ming Lei <ming.lei@redhat.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.14 159/183] ublk: simplify aborting ublk request
-Date: Wed,  7 May 2025 20:40:04 +0200
-Message-ID: <20250507183831.309831200@linuxfoundation.org>
+Subject: [PATCH 6.14 160/183] ublk: fix race between io_uring_cmd_complete_in_task and ublk_cancel_cmd
+Date: Wed,  7 May 2025 20:40:05 +0200
+Message-ID: <20250507183831.348839901@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -53,148 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit e63d2228ef831af36f963b3ab8604160cfff84c1 ]
+[ Upstream commit f40139fde5278d81af3227444fd6e76a76b9506d ]
 
-Now ublk_abort_queue() is moved to ublk char device release handler,
-meantime our request queue is "quiesced" because either ->canceling was
-set from uring_cmd cancel function or all IOs are inflight and can't be
-completed by ublk server, things becomes easy much:
+ublk_cancel_cmd() calls io_uring_cmd_done() to complete uring_cmd, but
+we may have scheduled task work via io_uring_cmd_complete_in_task() for
+dispatching request, then kernel crash can be triggered.
 
-- all uring_cmd are done, so we needn't to mark io as UBLK_IO_FLAG_ABORTED
-for handling completion from uring_cmd
+Fix it by not trying to canceling the command if ublk block request is
+started.
 
-- ublk char device is closed, no one can hold IO request reference any more,
-so we can simply complete this request or requeue it for ublk_nosrv_should_reissue_outstanding.
-
-Reviewed-by: Uday Shankar <ushankar@purestorage.com>
+Fixes: 216c8f5ef0f2 ("ublk: replace monitor with cancelable uring_cmd")
+Reported-by: Jared Holzman <jholzman@nvidia.com>
+Tested-by: Jared Holzman <jholzman@nvidia.com>
+Closes: https://lore.kernel.org/linux-block/d2179120-171b-47ba-b664-23242981ef19@nvidia.com/
 Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20250416035444.99569-8-ming.lei@redhat.com
+Link: https://lore.kernel.org/r/20250425013742.1079549-3-ming.lei@redhat.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/ublk_drv.c |   82 +++++++++++------------------------------------
- 1 file changed, 20 insertions(+), 62 deletions(-)
+ drivers/block/ublk_drv.c |   27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
 --- a/drivers/block/ublk_drv.c
 +++ b/drivers/block/ublk_drv.c
-@@ -116,15 +116,6 @@ struct ublk_uring_cmd_pdu {
- #define UBLK_IO_FLAG_OWNED_BY_SRV 0x02
- 
- /*
-- * IO command is aborted, so this flag is set in case of
-- * !UBLK_IO_FLAG_ACTIVE.
-- *
-- * After this flag is observed, any pending or new incoming request
-- * associated with this io command will be failed immediately
-- */
--#define UBLK_IO_FLAG_ABORTED 0x04
--
--/*
-  * UBLK_IO_FLAG_NEED_GET_DATA is set because IO command requires
-  * get data buffer address from ublksrv.
-  *
-@@ -1054,12 +1045,6 @@ static inline void __ublk_complete_rq(st
- 	unsigned int unmapped_bytes;
- 	blk_status_t res = BLK_STS_OK;
- 
--	/* called from ublk_abort_queue() code path */
--	if (io->flags & UBLK_IO_FLAG_ABORTED) {
--		res = BLK_STS_IOERR;
--		goto exit;
--	}
--
- 	/* failed read IO if nothing is read */
- 	if (!io->res && req_op(req) == REQ_OP_READ)
- 		io->res = -EIO;
-@@ -1109,47 +1094,6 @@ static void ublk_complete_rq(struct kref
- 	__ublk_complete_rq(req);
+@@ -1655,14 +1655,31 @@ static void ublk_start_cancel(struct ubl
+ 	ublk_put_disk(disk);
  }
  
--static void ublk_do_fail_rq(struct request *req)
--{
--	struct ublk_queue *ubq = req->mq_hctx->driver_data;
--
--	if (ublk_nosrv_should_reissue_outstanding(ubq->dev))
--		blk_mq_requeue_request(req, false);
--	else
--		__ublk_complete_rq(req);
--}
--
--static void ublk_fail_rq_fn(struct kref *ref)
--{
--	struct ublk_rq_data *data = container_of(ref, struct ublk_rq_data,
--			ref);
--	struct request *req = blk_mq_rq_from_pdu(data);
--
--	ublk_do_fail_rq(req);
--}
--
--/*
-- * Since ublk_rq_task_work_cb always fails requests immediately during
-- * exiting, __ublk_fail_req() is only called from abort context during
-- * exiting. So lock is unnecessary.
-- *
-- * Also aborting may not be started yet, keep in mind that one failed
-- * request may be issued by block layer again.
-- */
--static void __ublk_fail_req(struct ublk_queue *ubq, struct ublk_io *io,
--		struct request *req)
--{
--	WARN_ON_ONCE(io->flags & UBLK_IO_FLAG_ACTIVE);
--
--	if (ublk_need_req_ref(ubq)) {
--		struct ublk_rq_data *data = blk_mq_rq_to_pdu(req);
--
--		kref_put(&data->ref, ublk_fail_rq_fn);
--	} else {
--		ublk_do_fail_rq(req);
--	}
--}
--
- static void ubq_complete_io_cmd(struct ublk_io *io, int res,
- 				unsigned issue_flags)
+-static void ublk_cancel_cmd(struct ublk_queue *ubq, struct ublk_io *io,
++static void ublk_cancel_cmd(struct ublk_queue *ubq, unsigned tag,
+ 		unsigned int issue_flags)
  {
-@@ -1639,10 +1583,26 @@ static void ublk_commit_completion(struc
- 		ublk_put_req_ref(ubq, req);
++	struct ublk_io *io = &ubq->ios[tag];
++	struct ublk_device *ub = ubq->dev;
++	struct request *req;
+ 	bool done;
+ 
+ 	if (!(io->flags & UBLK_IO_FLAG_ACTIVE))
+ 		return;
+ 
++	/*
++	 * Don't try to cancel this command if the request is started for
++	 * avoiding race between io_uring_cmd_done() and
++	 * io_uring_cmd_complete_in_task().
++	 *
++	 * Either the started request will be aborted via __ublk_abort_rq(),
++	 * then this uring_cmd is canceled next time, or it will be done in
++	 * task work function ublk_dispatch_req() because io_uring guarantees
++	 * that ublk_dispatch_req() is always called
++	 */
++	req = blk_mq_tag_to_rq(ub->tag_set.tags[ubq->q_id], tag);
++	if (req && blk_mq_request_started(req))
++		return;
++
+ 	spin_lock(&ubq->cancel_lock);
+ 	done = !!(io->flags & UBLK_IO_FLAG_CANCELED);
+ 	if (!done)
+@@ -1694,7 +1711,6 @@ static void ublk_uring_cmd_cancel_fn(str
+ 	struct ublk_uring_cmd_pdu *pdu = ublk_get_uring_cmd_pdu(cmd);
+ 	struct ublk_queue *ubq = pdu->ubq;
+ 	struct task_struct *task;
+-	struct ublk_io *io;
+ 
+ 	if (WARN_ON_ONCE(!ubq))
+ 		return;
+@@ -1709,9 +1725,8 @@ static void ublk_uring_cmd_cancel_fn(str
+ 	if (!ubq->canceling)
+ 		ublk_start_cancel(ubq);
+ 
+-	io = &ubq->ios[pdu->tag];
+-	WARN_ON_ONCE(io->cmd != cmd);
+-	ublk_cancel_cmd(ubq, io, issue_flags);
++	WARN_ON_ONCE(ubq->ios[pdu->tag].cmd != cmd);
++	ublk_cancel_cmd(ubq, pdu->tag, issue_flags);
  }
  
-+static void __ublk_fail_req(struct ublk_queue *ubq, struct ublk_io *io,
-+		struct request *req)
-+{
-+	WARN_ON_ONCE(io->flags & UBLK_IO_FLAG_ACTIVE);
-+
-+	if (ublk_nosrv_should_reissue_outstanding(ubq->dev))
-+		blk_mq_requeue_request(req, false);
-+	else {
-+		io->res = -EIO;
-+		__ublk_complete_rq(req);
-+	}
-+}
-+
- /*
-- * Called from ubq_daemon context via cancel fn, meantime quiesce ublk
-- * blk-mq queue, so we are called exclusively with blk-mq and ubq_daemon
-- * context, so everything is serialized.
-+ * Called from ublk char device release handler, when any uring_cmd is
-+ * done, meantime request queue is "quiesced" since all inflight requests
-+ * can't be completed because ublk server is dead.
-+ *
-+ * So no one can hold our request IO reference any more, simply ignore the
-+ * reference, and complete the request immediately
-  */
- static void ublk_abort_queue(struct ublk_device *ub, struct ublk_queue *ubq)
- {
-@@ -1659,10 +1619,8 @@ static void ublk_abort_queue(struct ublk
- 			 * will do it
- 			 */
- 			rq = blk_mq_tag_to_rq(ub->tag_set.tags[ubq->q_id], i);
--			if (rq && blk_mq_request_started(rq)) {
--				io->flags |= UBLK_IO_FLAG_ABORTED;
-+			if (rq && blk_mq_request_started(rq))
- 				__ublk_fail_req(ubq, io, rq);
--			}
- 		}
- 	}
+ static inline bool ublk_queue_ready(struct ublk_queue *ubq)
+@@ -1724,7 +1739,7 @@ static void ublk_cancel_queue(struct ubl
+ 	int i;
+ 
+ 	for (i = 0; i < ubq->q_depth; i++)
+-		ublk_cancel_cmd(ubq, &ubq->ios[i], IO_URING_F_UNLOCKED);
++		ublk_cancel_cmd(ubq, i, IO_URING_F_UNLOCKED);
  }
+ 
+ /* Cancel all pending commands, must be called after del_gendisk() returns */
 
 
