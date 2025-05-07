@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C98E14A4C7;
-	Wed,  7 May 2025 18:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5446014A4C7;
+	Wed,  7 May 2025 18:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643461; cv=none; b=GcfraKL1rSF+EKaint21eK066uEWYl4IZDAqvyCVsaYYzaovKSWfI4bsY4cA80HiECg1s/GY8NWruEYDF80FzLtOMN4EjwNGQXUg4Z2J1djr/pSFtPGMVZ51tVHog9Gj5eYUvdKb0vOsOAewYr/Ajjm4WXSH0o4M3gvQBdL0mNE=
+	t=1746643464; cv=none; b=oCLdX2VgapI8gIY5CYBJ7SrMeb6Xh1+m7EAzVhO5eeEVAMv9eDd/rDYOO4Dao7td4vURIs9cYBKASkfB+6GfHXUjMNypNCB6fzHfRPzGE4r9ySclqyBFc6lozlhDD767qusNyeX3GreNOawtH3biX469TpM5peA+Xt3fqM057XE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643461; c=relaxed/simple;
-	bh=evhziQh+tlDnOP99huLH8+wbi8B5jR1xRUHJBNDAcmg=;
+	s=arc-20240116; t=1746643464; c=relaxed/simple;
+	bh=jeKCRijWqMWJnQg+mB6yC9R45uMpkfz0r3AaLI92Xpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WfXfESPhASAe6YOUeudZO+uoZc3zPKXr3bDZYVUP+rvm4DctFwJGH9w+zrj7zOgQD0LZIDPHwBpJehZ4LqOJXa7ugqE90jV1x7rdp6LIVneKq1HCp5psqPolSqiXRouW5FAAwi+pkLWgFj1fnalSE8Yl7wCAAqZxMyJj+itWq5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mihhDsIM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q/Q3KnWbeOVvbFLZmCpYHrbj0IySSaARCP4S+0L3wqrMCVRurpyfq8Gf/spxzQzg3mVGZUvoA8ZEnm8ySbxxe6ZQ0G5lJKYFtQ3VtIs4UY/peob+UOiGSxqSruROxFNx9aSicNbw/5NBHIp5a4+/osexor0PIJxHMZ22YOvZhc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RpOyQJo4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mihhDsIM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF967C4CEE2;
-	Wed,  7 May 2025 18:44:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RpOyQJo4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7D33C4CEE2;
+	Wed,  7 May 2025 18:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643461;
-	bh=evhziQh+tlDnOP99huLH8+wbi8B5jR1xRUHJBNDAcmg=;
+	s=korg; t=1746643464;
+	bh=jeKCRijWqMWJnQg+mB6yC9R45uMpkfz0r3AaLI92Xpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mihhDsIMwRatX2i5NN5JOSxvQUGeiPbzwZk0HZHHYeagSqGamfLhYbA9Z8cQzUO1K
-	 +EZ4vTwTTe1cJDo00vLW3XJ15xlF1DcN9lI9a/KbRDiJ4Dl0nCG0npaEbBgfbK6xLf
-	 bW39kFBm2Rf753ww/G0K6w4t1PmtTV4LzcRCqa4Y=
+	b=RpOyQJo4DTmB0EzOmqKJtxpMpDzciVoiSnDznP8u5xuXMOlCrYt5STUe4iOqks77w
+	 nbIoqezZ6jlX3wj5uYjf4Yonbaf8RMUGJTmuEDUEaC7qW28B3f1k6UDACgUJs5cCnw
+	 d16tsBBa9nias5Hg4CtPRXuVjAvoi40uR81vLmPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ihar Salauyou <salauyou.ihar@gmail.com>,
-	Ruslan Piasetskyi <ruslan.piasetskyi@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 12/97] mmc: renesas_sdhi: Fix error handling in renesas_sdhi_probe
-Date: Wed,  7 May 2025 20:38:47 +0200
-Message-ID: <20250507183807.486566193@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 13/97] wifi: brcm80211: fmac: Add error handling for brcmf_usb_dl_writeimage()
+Date: Wed,  7 May 2025 20:38:48 +0200
+Message-ID: <20250507183807.523734485@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183806.987408728@linuxfoundation.org>
 References: <20250507183806.987408728@linuxfoundation.org>
@@ -53,68 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruslan Piasetskyi <ruslan.piasetskyi@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 649b50a82f09fa44c2f7a65618e4584072145ab7 upstream.
+commit 8e089e7b585d95122c8122d732d1d5ef8f879396 upstream.
 
-After moving tmio_mmc_host_probe down, error handling has to be
-adjusted.
+The function brcmf_usb_dl_writeimage() calls the function
+brcmf_usb_dl_cmd() but dose not check its return value. The
+'state.state' and the 'state.bytes' are uninitialized if the
+function brcmf_usb_dl_cmd() fails. It is dangerous to use
+uninitialized variables in the conditions.
 
-Fixes: 74f45de394d9 ("mmc: renesas_sdhi: register irqs before registering controller")
-Reviewed-by: Ihar Salauyou <salauyou.ihar@gmail.com>
-Signed-off-by: Ruslan Piasetskyi <ruslan.piasetskyi@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250326220638.460083-1-ruslan.piasetskyi@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Add error handling for brcmf_usb_dl_cmd() to jump to error
+handling path if the brcmf_usb_dl_cmd() fails and the
+'state.state' and the 'state.bytes' are uninitialized.
+
+Improve the error message to report more detailed error
+information.
+
+Fixes: 71bb244ba2fd ("brcm80211: fmac: add USB support for bcm43235/6/8 chipsets")
+Cc: stable@vger.kernel.org # v3.4+
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20250422042203.2259-1-vulab@iscas.ac.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/renesas_sdhi_core.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/renesas_sdhi_core.c
-+++ b/drivers/mmc/host/renesas_sdhi_core.c
-@@ -1109,26 +1109,26 @@ int renesas_sdhi_probe(struct platform_d
- 	num_irqs = platform_irq_count(pdev);
- 	if (num_irqs < 0) {
- 		ret = num_irqs;
--		goto eirq;
-+		goto edisclk;
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+@@ -903,14 +903,16 @@ brcmf_usb_dl_writeimage(struct brcmf_usb
  	}
  
- 	/* There must be at least one IRQ source */
- 	if (!num_irqs) {
- 		ret = -ENXIO;
--		goto eirq;
-+		goto edisclk;
+ 	/* 1) Prepare USB boot loader for runtime image */
+-	brcmf_usb_dl_cmd(devinfo, DL_START, &state, sizeof(state));
++	err = brcmf_usb_dl_cmd(devinfo, DL_START, &state, sizeof(state));
++	if (err)
++		goto fail;
+ 
+ 	rdlstate = le32_to_cpu(state.state);
+ 	rdlbytes = le32_to_cpu(state.bytes);
+ 
+ 	/* 2) Check we are in the Waiting state */
+ 	if (rdlstate != DL_WAITING) {
+-		brcmf_err("Failed to DL_START\n");
++		brcmf_err("Invalid DL state: %u\n", rdlstate);
+ 		err = -EINVAL;
+ 		goto fail;
  	}
- 
- 	for (i = 0; i < num_irqs; i++) {
- 		irq = platform_get_irq(pdev, i);
- 		if (irq < 0) {
- 			ret = irq;
--			goto eirq;
-+			goto edisclk;
- 		}
- 
- 		ret = devm_request_irq(&pdev->dev, irq, tmio_mmc_irq, 0,
- 				       dev_name(&pdev->dev), host);
- 		if (ret)
--			goto eirq;
-+			goto edisclk;
- 	}
- 
- 	ret = tmio_mmc_host_probe(host);
-@@ -1140,8 +1140,6 @@ int renesas_sdhi_probe(struct platform_d
- 
- 	return ret;
- 
--eirq:
--	tmio_mmc_host_remove(host);
- edisclk:
- 	renesas_sdhi_clk_disable(host);
- efree:
 
 
