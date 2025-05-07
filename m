@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10801CF5C6;
-	Wed,  7 May 2025 18:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4C41482F5;
+	Wed,  7 May 2025 18:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644185; cv=none; b=hT6JxJzKBnfG2V9au2z74TA3sS2GWsmhWUKVeebuUqoVphzicPQQGjmDluOxQSdJu1T/057zb/D1Dw1PcjfQaZ7OT7cmo8ZNmFS3nwGMdSl7FVhbCQCvgWwtdoCkrGQduefCE9CVUtHG37pmcUf1a9yaW0U/BtHt8Umu5tUYRuM=
+	t=1746644189; cv=none; b=pfXnjEN0ehwJ/RSGRt19RMnOo5Q1b10qd6GASkgX1j5b1NzjJR3UfwTA0fDeDhHXo+GZFeQNJxi/XgXRYJryWqu/wjPHhihTV6Vj9hprdp9AH9o4ntgVHglzjl0rkLtTiYI0LOqgsCQL7SkSm4NKsDg6dPw+Gc0UzN4pBXMy52o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644185; c=relaxed/simple;
-	bh=C+VO1RoqIH0bN4YkXdPDREBvlsg2XfkFtkMuarPMz4s=;
+	s=arc-20240116; t=1746644189; c=relaxed/simple;
+	bh=Ep4miOLBSDfMaCH/lSw5+OkjqcmFAvNXAWDkzm69wn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OpyZb3f8TLMk9NFdmoLuIUbHMLStrA6KP7tQ/v/xmrdMlIDg858VvF/xC+KUo8L6jlfibkiER5QLHyboLlz//J3mxMv7+S0jtIW3/thb3B+bbDikfsU/D9OITh67pef1lZergmxKCQrWYkbmNhwLtKIxTptiBAcHauX2GD62p14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OsLdAA9S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pzLfBLP9tgbzLQGz2CmzL93R7ppObTADaWBq8/MbV7ZE5zpFl297QNSKOuve7y5G6pSR/wTESLmEMhqnXbxhfJ3+d0zu8qirpEOKa4IRegTw5iix9kRxMsp/lsmMgVLdBDyfVlJ1dMmRAOimoTDxOOnXsV0eoqgAI1X9jS6U9qE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DLqz+f5a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OsLdAA9S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BD0C4CEE2;
-	Wed,  7 May 2025 18:56:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DLqz+f5a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2953C4CEE2;
+	Wed,  7 May 2025 18:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644185;
-	bh=C+VO1RoqIH0bN4YkXdPDREBvlsg2XfkFtkMuarPMz4s=;
+	s=korg; t=1746644189;
+	bh=Ep4miOLBSDfMaCH/lSw5+OkjqcmFAvNXAWDkzm69wn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OsLdAA9Szsi6oi1sEy682ZSE5aEVR6hQhXQc5i2murVLES29YyQqRXpnN3jTVdEBR
-	 PB/I7HUvXKjB5+jTy0TOi88ZHGdlkNdQmh0jpHejFe2XrbqpPSc4m4CeDFpbPhWHHD
-	 lYtS0SggmaFKmRQFHI3EiVFFmFNaUd0LaEECuUwU=
+	b=DLqz+f5ak/fSIuU4b3NZU6sroWxd98pbV2hiPmu+v//mrsai08pJgADesmmjyuoLv
+	 oTKAXzcgMp8KtrzyceJmRgN77BQhjG+sOWthnB7U7CTNWM4cs73b3gV+txO/2kYPXy
+	 aWRma7QV/aZ5xZTzyc8Efcjt/lkJTCUNpcTHuy+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Chad Monroe <chad@monroe.io>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 116/183] igc: fix lock order in igc_ptp_reset
-Date: Wed,  7 May 2025 20:39:21 +0200
-Message-ID: <20250507183829.521542560@linuxfoundation.org>
+Subject: [PATCH 6.14 117/183] net: ethernet: mtk_eth_soc: fix SER panic with 4GB+ RAM
+Date: Wed,  7 May 2025 20:39:22 +0200
+Message-ID: <20250507183829.560093183@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -54,80 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Chad Monroe <chad@monroe.io>
 
-[ Upstream commit c7d6cb96d5c33b5148f3dc76fcd30a9b8cd9e973 ]
+[ Upstream commit 6e0490fc36cdac696f96e57b61d93b9ae32e0f4c ]
 
-Commit 1a931c4f5e68 ("igc: add lock preventing multiple simultaneous PTM
-transactions") added a new mutex to protect concurrent PTM transactions.
-This lock is acquired in igc_ptp_reset() in order to ensure the PTM
-registers are properly disabled after a device reset.
+If the mtk_poll_rx() function detects the MTK_RESETTING flag, it will
+jump to release_desc and refill the high word of the SDP on the 4GB RFB.
+Subsequently, mtk_rx_clean will process an incorrect SDP, leading to a
+panic.
 
-The flow where the lock is acquired already holds a spinlock, so acquiring
-a mutex leads to a sleep-while-locking bug, reported both by smatch,
-and the kernel test robot.
+Add patch from MediaTek's SDK to resolve this.
 
-The critical section in igc_ptp_reset() does correctly use the
-readx_poll_timeout_atomic variants, but the standard PTM flow uses regular
-sleeping variants. This makes converting the mutex to a spinlock a bit
-tricky.
-
-Instead, re-order the locking in igc_ptp_reset. Acquire the mutex first,
-and then the tmreg_lock spinlock. This is safe because there is no other
-ordering dependency on these locks, as this is the only place where both
-locks were acquired simultaneously. Indeed, any other flow acquiring locks
-in that order would be wrong regardless.
-
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Fixes: 1a931c4f5e68 ("igc: add lock preventing multiple simultaneous PTM transactions")
-Link: https://lore.kernel.org/intel-wired-lan/Z_-P-Hc1yxcw0lTB@stanley.mountain/
-Link: https://lore.kernel.org/intel-wired-lan/202504211511.f7738f5d-lkp@intel.com/T/#u
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 2d75891ebc09 ("net: ethernet: mtk_eth_soc: support 36-bit DMA addressing on MT7988")
+Link: https://git01.mediatek.com/plugins/gitiles/openwrt/feeds/mtk-openwrt-feeds/+/71f47ea785699c6aa3b922d66c2bdc1a43da25b1
+Signed-off-by: Chad Monroe <chad@monroe.io>
+Link: https://patch.msgid.link/4adc2aaeb0fb1b9cdc56bf21cf8e7fa328daa345.1745715843.git.daniel@makrotopia.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_ptp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
-index 612ed26a29c5d..efc7b30e42113 100644
---- a/drivers/net/ethernet/intel/igc/igc_ptp.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
-@@ -1290,6 +1290,8 @@ void igc_ptp_reset(struct igc_adapter *adapter)
- 	/* reset the tstamp_config */
- 	igc_ptp_set_timestamp_mode(adapter, &adapter->tstamp_config);
- 
-+	mutex_lock(&adapter->ptm_lock);
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index 1365888a4be11..c6d60f1d4f77a 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -2202,14 +2202,18 @@ static int mtk_poll_rx(struct napi_struct *napi, int budget,
+ 		ring->data[idx] = new_data;
+ 		rxd->rxd1 = (unsigned int)dma_addr;
+ release_desc:
++		if (MTK_HAS_CAPS(eth->soc->caps, MTK_36BIT_DMA)) {
++			if (unlikely(dma_addr == DMA_MAPPING_ERROR))
++				addr64 = FIELD_GET(RX_DMA_ADDR64_MASK,
++						   rxd->rxd2);
++			else
++				addr64 = RX_DMA_PREP_ADDR64(dma_addr);
++		}
 +
- 	spin_lock_irqsave(&adapter->tmreg_lock, flags);
+ 		if (MTK_HAS_CAPS(eth->soc->caps, MTK_SOC_MT7628))
+ 			rxd->rxd2 = RX_DMA_LSO;
+ 		else
+-			rxd->rxd2 = RX_DMA_PREP_PLEN0(ring->buf_size);
+-
+-		if (MTK_HAS_CAPS(eth->soc->caps, MTK_36BIT_DMA) &&
+-		    likely(dma_addr != DMA_MAPPING_ERROR))
+-			rxd->rxd2 |= RX_DMA_PREP_ADDR64(dma_addr);
++			rxd->rxd2 = RX_DMA_PREP_PLEN0(ring->buf_size) | addr64;
  
- 	switch (adapter->hw.mac.type) {
-@@ -1308,7 +1310,6 @@ void igc_ptp_reset(struct igc_adapter *adapter)
- 		if (!igc_is_crosststamp_supported(adapter))
- 			break;
- 
--		mutex_lock(&adapter->ptm_lock);
- 		wr32(IGC_PCIE_DIG_DELAY, IGC_PCIE_DIG_DELAY_DEFAULT);
- 		wr32(IGC_PCIE_PHY_DELAY, IGC_PCIE_PHY_DELAY_DEFAULT);
- 
-@@ -1332,7 +1333,6 @@ void igc_ptp_reset(struct igc_adapter *adapter)
- 			netdev_err(adapter->netdev, "Timeout reading IGC_PTM_STAT register\n");
- 
- 		igc_ptm_reset(hw);
--		mutex_unlock(&adapter->ptm_lock);
- 		break;
- 	default:
- 		/* No work to do. */
-@@ -1349,5 +1349,7 @@ void igc_ptp_reset(struct igc_adapter *adapter)
- out:
- 	spin_unlock_irqrestore(&adapter->tmreg_lock, flags);
- 
-+	mutex_unlock(&adapter->ptm_lock);
-+
- 	wrfl();
- }
+ 		ring->calc_idx = idx;
+ 		done++;
 -- 
 2.39.5
 
