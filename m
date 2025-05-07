@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417D72116E9;
-	Wed,  7 May 2025 18:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9B62116E9;
+	Wed,  7 May 2025 18:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644079; cv=none; b=O7JGk9DttZNv+dsY4lk/YrXNTa7ommz1fOWET0NcN+V0bedqk4BIGYQkYB5uTucHNafIAvbNfieba1diGGTH4gkXSwfAtZGNWP7FjKgrKqAhC0X+LPBPYAIVkBXhuyMfaSwf1gibAKCzRFjf/nPprZ/khe+fWfN4FVCMWGdgTSY=
+	t=1746644082; cv=none; b=ODSi6NLs6WA/n3xLz4+x81W0Dy+PkZEWogxxwkAThZ3akPe4s/ZoWuxmIJZAAGvd8M4Cq7CLA/LJL74M6nLseRkwFna+JOlKGLvKPU07kYQ/+sc4fuP4pYkaNq4estFKi1p2INzYrNX0Ep6lVuKeoZ5T6ZhY2pDkbnCpW/QDRgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644079; c=relaxed/simple;
-	bh=lIFqKX9Vtfx6CZMhhsuqkkt6oJRVl8rE55/amz3u3Qw=;
+	s=arc-20240116; t=1746644082; c=relaxed/simple;
+	bh=eI+xvl6Qv3UeibZScHzASqOmOv9Jpq/oB2o9cR+jqIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e/zp1Fgo5QX0fL54MS2mZV2iHdaPl7P4/tka4jMFtf1mGLf502LQ0CpsUeydCOO6vHadRv06Gw/0KyvXIos6xnyywm9c6dxJzdbiFyly2ZwgCxikaddeHNTqgx+QrpAy3d6cSVbfy2mHMVWc+S1pE1dRcUu9h6JBOQ7qqBYWn9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ug+28b2m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dQyiIMytHsGuI3+yyjB4uhU3UhkRZXA6derwd0Fdyld8fb0t0BQvW/bcinS7Aoh/sGSDxBhnZULhakg0PufxEz1Zml4P/EIZCZmEq8jcaid/drjHtNwKXnmPvFJ8JKFpJ365EDTxj8s3z1iyrdLz0jId8wBNgtapF5PAigD6RW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ytOCfu/M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ug+28b2m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD5D6C4CEE9;
-	Wed,  7 May 2025 18:54:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ytOCfu/M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF891C4CEE2;
+	Wed,  7 May 2025 18:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644079;
-	bh=lIFqKX9Vtfx6CZMhhsuqkkt6oJRVl8rE55/amz3u3Qw=;
+	s=korg; t=1746644082;
+	bh=eI+xvl6Qv3UeibZScHzASqOmOv9Jpq/oB2o9cR+jqIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ug+28b2mpJGXqMwhtg5i9xGHKKbdlLziJpE+IafKSEuuh1xBjY3VK6axHeLfqWTWu
-	 eTQPCaKY9d3dRiQK3tYRB7uE1G1/UKv7WycBhC4W82EhrtiJpkJ7+i/H/Utmd+orfB
-	 snMTi8mZ5SwcgPcjGivb8goMgqU8SsOMzbNFC8DA=
+	b=ytOCfu/MyZcM85NIGqLPsqESnrB6q1vp4H0N/TVD9hJyrVShFpCNaQTmk5cLEPI/x
+	 16XFKZdUKnTPufvpz43FkDopFlIU5skwSDBtlB+tLQoYe52m83r6uwWXHNJKN0003s
+	 R3+IAUgVpUFE9ubP15wIKVFWG07GtLrgHcJcFtEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	En-Wei Wu <en-wei.wu@canonical.com>,
+	Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>,
+	Kiran K <kiran.k@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 083/183] Bluetooth: btusb: avoid NULL pointer dereference in skb_dequeue()
-Date: Wed,  7 May 2025 20:38:48 +0200
-Message-ID: <20250507183828.196247102@linuxfoundation.org>
+Subject: [PATCH 6.14 084/183] Bluetooth: btintel_pcie: Add additional to checks to clear TX/RX paths
+Date: Wed,  7 May 2025 20:38:49 +0200
+Message-ID: <20250507183828.235628741@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -51,195 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: En-Wei Wu <en-wei.wu@canonical.com>
+From: Kiran K <kiran.k@intel.com>
 
-[ Upstream commit 0317b033abcd1d8dd2798f0e2de5e84543d0bd22 ]
+[ Upstream commit 1c7664957e4edb234c69de2db4be1f740d2df564 ]
 
-A NULL pointer dereference can occur in skb_dequeue() when processing a
-QCA firmware crash dump on WCN7851 (0489:e0f3).
+Due to a hardware issue, there is a possibility that the driver may miss
+an MSIx interrupt on the RX/TX data path. Since the TX and RX paths are
+independent, when a TX MSIx interrupt occurs, the driver can check the
+RX queue for any pending data and process it if present. The same
+approach applies to the RX path.
 
-[ 93.672166] Bluetooth: hci0: ACL memdump size(589824)
-
-[ 93.672475] BUG: kernel NULL pointer dereference, address: 0000000000000008
-[ 93.672517] Workqueue: hci0 hci_devcd_rx [bluetooth]
-[ 93.672598] RIP: 0010:skb_dequeue+0x50/0x80
-
-The issue stems from handle_dump_pkt_qca() returning 0 even when a dump
-packet is successfully processed. This is because it incorrectly
-forwards the return value of hci_devcd_init() (which returns 0 on
-success). As a result, the caller (btusb_recv_acl_qca() or
-btusb_recv_evt_qca()) assumes the packet was not handled and passes it
-to hci_recv_frame(), leading to premature kfree() of the skb.
-
-Later, hci_devcd_rx() attempts to dequeue the same skb from the dump
-queue, resulting in a NULL pointer dereference.
-
-Fix this by:
-1. Making handle_dump_pkt_qca() return 0 on success and negative errno
-   on failure, consistent with kernel conventions.
-2. Splitting dump packet detection into separate functions for ACL
-   and event packets for better structure and readability.
-
-This ensures dump packets are properly identified and consumed, avoiding
-double handling and preventing NULL pointer access.
-
-Fixes: 20981ce2d5a5 ("Bluetooth: btusb: Add WCN6855 devcoredump support")
-Signed-off-by: En-Wei Wu <en-wei.wu@canonical.com>
+Fixes: c2b636b3f788 ("Bluetooth: btintel_pcie: Add support for PCIe transport")
+Signed-off-by: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
+Signed-off-by: Kiran K <kiran.k@intel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 101 +++++++++++++++++++++++++++-----------
- 1 file changed, 73 insertions(+), 28 deletions(-)
+ drivers/bluetooth/btintel_pcie.c | 24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index bfd769f2026b3..ccd0a21da3955 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3010,22 +3010,16 @@ static void btusb_coredump_qca(struct hci_dev *hdev)
- 		bt_dev_err(hdev, "%s: triggle crash failed (%d)", __func__, err);
+diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
+index ea9b137b1491c..1636f636fbef0 100644
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -773,10 +773,8 @@ static void btintel_pcie_msix_rx_handle(struct btintel_pcie_data *data)
+ 	bt_dev_dbg(hdev, "RXQ: cr_hia: %u  cr_tia: %u", cr_hia, cr_tia);
+ 
+ 	/* Check CR_TIA and CR_HIA for change */
+-	if (cr_tia == cr_hia) {
+-		bt_dev_warn(hdev, "RXQ: no new CD found");
++	if (cr_tia == cr_hia)
+ 		return;
+-	}
+ 
+ 	rxq = &data->rxq;
+ 
+@@ -812,6 +810,16 @@ static irqreturn_t btintel_pcie_msix_isr(int irq, void *data)
+ 	return IRQ_WAKE_THREAD;
  }
  
--/*
-- * ==0: not a dump pkt.
-- * < 0: fails to handle a dump pkt
-- * > 0: otherwise.
-- */
-+/* Return: 0 on success, negative errno on failure. */
- static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
- {
--	int ret = 1;
-+	int ret = 0;
- 	u8 pkt_type;
- 	u8 *sk_ptr;
- 	unsigned int sk_len;
- 	u16 seqno;
- 	u32 dump_size;
- 
--	struct hci_event_hdr *event_hdr;
--	struct hci_acl_hdr *acl_hdr;
- 	struct qca_dump_hdr *dump_hdr;
- 	struct btusb_data *btdata = hci_get_drvdata(hdev);
- 	struct usb_device *udev = btdata->udev;
-@@ -3035,30 +3029,14 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
- 	sk_len = skb->len;
- 
- 	if (pkt_type == HCI_ACLDATA_PKT) {
--		acl_hdr = hci_acl_hdr(skb);
--		if (le16_to_cpu(acl_hdr->handle) != QCA_MEMDUMP_ACL_HANDLE)
--			return 0;
- 		sk_ptr += HCI_ACL_HDR_SIZE;
- 		sk_len -= HCI_ACL_HDR_SIZE;
--		event_hdr = (struct hci_event_hdr *)sk_ptr;
--	} else {
--		event_hdr = hci_event_hdr(skb);
- 	}
- 
--	if ((event_hdr->evt != HCI_VENDOR_PKT)
--		|| (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE)))
--		return 0;
--
- 	sk_ptr += HCI_EVENT_HDR_SIZE;
- 	sk_len -= HCI_EVENT_HDR_SIZE;
- 
- 	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
--	if ((sk_len < offsetof(struct qca_dump_hdr, data))
--		|| (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS)
--	    || (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
--		return 0;
--
--	/*it is dump pkt now*/
- 	seqno = le16_to_cpu(dump_hdr->seqno);
- 	if (seqno == 0) {
- 		set_bit(BTUSB_HW_SSR_ACTIVE, &btdata->flags);
-@@ -3132,17 +3110,84 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
- 	return ret;
- }
- 
-+/* Return: true if the ACL packet is a dump packet, false otherwise. */
-+static bool acl_pkt_is_dump_qca(struct hci_dev *hdev, struct sk_buff *skb)
++static inline bool btintel_pcie_is_rxq_empty(struct btintel_pcie_data *data)
 +{
-+	u8 *sk_ptr;
-+	unsigned int sk_len;
-+
-+	struct hci_event_hdr *event_hdr;
-+	struct hci_acl_hdr *acl_hdr;
-+	struct qca_dump_hdr *dump_hdr;
-+
-+	sk_ptr = skb->data;
-+	sk_len = skb->len;
-+
-+	acl_hdr = hci_acl_hdr(skb);
-+	if (le16_to_cpu(acl_hdr->handle) != QCA_MEMDUMP_ACL_HANDLE)
-+		return false;
-+
-+	sk_ptr += HCI_ACL_HDR_SIZE;
-+	sk_len -= HCI_ACL_HDR_SIZE;
-+	event_hdr = (struct hci_event_hdr *)sk_ptr;
-+
-+	if ((event_hdr->evt != HCI_VENDOR_PKT) ||
-+	    (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE)))
-+		return false;
-+
-+	sk_ptr += HCI_EVENT_HDR_SIZE;
-+	sk_len -= HCI_EVENT_HDR_SIZE;
-+
-+	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
-+	if ((sk_len < offsetof(struct qca_dump_hdr, data)) ||
-+	    (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS) ||
-+	    (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
-+		return false;
-+
-+	return true;
++	return data->ia.cr_hia[BTINTEL_PCIE_RXQ_NUM] == data->ia.cr_tia[BTINTEL_PCIE_RXQ_NUM];
 +}
 +
-+/* Return: true if the event packet is a dump packet, false otherwise. */
-+static bool evt_pkt_is_dump_qca(struct hci_dev *hdev, struct sk_buff *skb)
++static inline bool btintel_pcie_is_txackq_empty(struct btintel_pcie_data *data)
 +{
-+	u8 *sk_ptr;
-+	unsigned int sk_len;
-+
-+	struct hci_event_hdr *event_hdr;
-+	struct qca_dump_hdr *dump_hdr;
-+
-+	sk_ptr = skb->data;
-+	sk_len = skb->len;
-+
-+	event_hdr = hci_event_hdr(skb);
-+
-+	if ((event_hdr->evt != HCI_VENDOR_PKT)
-+	    || (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE)))
-+		return false;
-+
-+	sk_ptr += HCI_EVENT_HDR_SIZE;
-+	sk_len -= HCI_EVENT_HDR_SIZE;
-+
-+	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
-+	if ((sk_len < offsetof(struct qca_dump_hdr, data)) ||
-+	    (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS) ||
-+	    (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
-+		return false;
-+
-+	return true;
++	return data->ia.cr_tia[BTINTEL_PCIE_TXQ_NUM] == data->ia.cr_hia[BTINTEL_PCIE_TXQ_NUM];
 +}
 +
- static int btusb_recv_acl_qca(struct hci_dev *hdev, struct sk_buff *skb)
+ static irqreturn_t btintel_pcie_irq_msix_handler(int irq, void *dev_id)
  {
--	if (handle_dump_pkt_qca(hdev, skb))
--		return 0;
-+	if (acl_pkt_is_dump_qca(hdev, skb))
-+		return handle_dump_pkt_qca(hdev, skb);
- 	return hci_recv_frame(hdev, skb);
- }
+ 	struct msix_entry *entry = dev_id;
+@@ -839,12 +847,18 @@ static irqreturn_t btintel_pcie_irq_msix_handler(int irq, void *dev_id)
+ 		btintel_pcie_msix_gp0_handler(data);
  
- static int btusb_recv_evt_qca(struct hci_dev *hdev, struct sk_buff *skb)
- {
--	if (handle_dump_pkt_qca(hdev, skb))
--		return 0;
-+	if (evt_pkt_is_dump_qca(hdev, skb))
-+		return handle_dump_pkt_qca(hdev, skb);
- 	return hci_recv_frame(hdev, skb);
- }
+ 	/* For TX */
+-	if (intr_fh & BTINTEL_PCIE_MSIX_FH_INT_CAUSES_0)
++	if (intr_fh & BTINTEL_PCIE_MSIX_FH_INT_CAUSES_0) {
+ 		btintel_pcie_msix_tx_handle(data);
++		if (!btintel_pcie_is_rxq_empty(data))
++			btintel_pcie_msix_rx_handle(data);
++	}
  
+ 	/* For RX */
+-	if (intr_fh & BTINTEL_PCIE_MSIX_FH_INT_CAUSES_1)
++	if (intr_fh & BTINTEL_PCIE_MSIX_FH_INT_CAUSES_1) {
+ 		btintel_pcie_msix_rx_handle(data);
++		if (!btintel_pcie_is_txackq_empty(data))
++			btintel_pcie_msix_tx_handle(data);
++	}
+ 
+ 	/*
+ 	 * Before sending the interrupt the HW disables it to prevent a nested
 -- 
 2.39.5
 
