@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8A01CF5C6;
-	Wed,  7 May 2025 18:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C521482F5;
+	Wed,  7 May 2025 18:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644248; cv=none; b=EcA9EwMiJ2UWzSF5iaHnreiyomqAwmC90vtvt7L+khBmxBCtXCv7TsoyBitz31szCgBHvGSsyWbBfV0HdAInK/VWrsIBzeldvXgLl+eXE+neDvbbUBc4ojHXj0wsCqzbxySPuvIVyvCbyPuQgerMag9zuiY9beIW2SgJ4ACuKCY=
+	t=1746644251; cv=none; b=Kh/RIIxFLpzo0CF2OJmdGsIy2tlbFsIELeabp1sjx/x58RiMSv6QCSVkKTft5PtF9nNQDGsUzzVWBNHQyUBt7NQ4HztxGYBuPZnn4DMORL6mXuWaI/8/l42kB43jChJHEAheQwMZzvrzM4GT/pd1PsYm1l+3MRW3aBFYE4NTNJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644248; c=relaxed/simple;
-	bh=U5MRMQyJd5zFRlrgxzwI7Ea0EPvBYTIvTkmkmDPJxLg=;
+	s=arc-20240116; t=1746644251; c=relaxed/simple;
+	bh=D+85v+96x3lK9bFuMP0YcU7yEQ5OjZD8E9SUOXLxgx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JkVRJOX4uDKcSVy7r3tZHbbdRKGx5zoR1hoA4Sh8607J7pOA+1r9hkQTnry7wEZ0TmVCltnNa422NfnRlcwtEVc0cSShehQZyfMcuYv0XV4RQZkfC24ZgQ8dkUa1WgkvO/aQL7eTdBxYLM4x1pln2EZoXfnjJVZoYCw0cOv4AXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZM8Pt5O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kg8VL+si68ierhmB1asrF5s6cmhXfodIdI7475alIMwrw2XDj6zDimp600iG0sYHh83P4QBRxq4ufaLxet+KQYgkLUcAMpskS7WKZLh9oeR4jneVEgE4IsdtTCUs+O9SVz5kDM1SG6Mb1HipdGpkcAzlJgT1FMNY+leW4D+s/Yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCzPrOOc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZM8Pt5O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9F9C4CEE2;
-	Wed,  7 May 2025 18:57:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCzPrOOc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9419BC4CEE2;
+	Wed,  7 May 2025 18:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644247;
-	bh=U5MRMQyJd5zFRlrgxzwI7Ea0EPvBYTIvTkmkmDPJxLg=;
+	s=korg; t=1746644251;
+	bh=D+85v+96x3lK9bFuMP0YcU7yEQ5OjZD8E9SUOXLxgx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BZM8Pt5O5tU42gjUHNq1q0iKtwe1PHvxsPmzIMLVlgUSft7b8naUEVuVskQfOpcUS
-	 /h3JErGmOweKieWPeAtdh2de7UvWdAaslUn9l+inhGtSK5uLNnbmZJBKMdlfsLtkNs
-	 PiRMPuFVL4HG2y25LAk5dJfvfxrFQOl7jwGzynP0=
+	b=NCzPrOOctdj9Canb7Hmg2lEs8kh58G6rMlkaq5OQ/KIMMm39nlmny5zWPZ7a/MYpF
+	 P06nvlVqRaz/GXKoV7L/W+xGw9XAFGF/ap/315r6RfFEHa4IDj2ysS9MXH0xiXpd8R
+	 vLAVAtoZ7UO4y51PTL8Xp5tQbakvnn00iTvZJNQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
 	Sudeep Holla <sudeep.holla@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Cristian Marussi <cristian.marussi@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 166/183] firmware: arm_scmi: Balance device refcount when destroying devices
-Date: Wed,  7 May 2025 20:40:11 +0200
-Message-ID: <20250507183831.591307693@linuxfoundation.org>
+Subject: [PATCH 6.14 167/183] firmware: arm_ffa: Skip Rx buffer ownership release if not acquired
+Date: Wed,  7 May 2025 20:40:12 +0200
+Message-ID: <20250507183831.630826920@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -47,89 +44,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Sudeep Holla <sudeep.holla@arm.com>
 
-[ Upstream commit 9ca67840c0ddf3f39407339624cef824a4f27599 ]
+[ Upstream commit 4567bdaaaaa1744da3d7da07d9aca2f941f5b4e5 ]
 
-Using device_find_child() to lookup the proper SCMI device to destroy
-causes an unbalance in device refcount, since device_find_child() calls an
-implicit get_device(): this, in turns, inhibits the call of the provided
-release methods upon devices destruction.
+Completion of the FFA_PARTITION_INFO_GET ABI transfers the ownership of
+the caller’s Rx buffer from the producer(typically partition mnager) to
+the consumer(this driver/OS). FFA_RX_RELEASE transfers the ownership
+from the consumer back to the producer.
 
-As a consequence, one of the structures that is not freed properly upon
-destruction is the internal struct device_private dev->p populated by the
-drivers subsystem core.
+However, when we set the flag to just return the count of partitions
+deployed in the system corresponding to the specified UUID while
+invoking FFA_PARTITION_INFO_GET, the Rx buffer ownership shouldn't be
+transferred to this driver. We must be able to skip transferring back
+the ownership to the partition manager when we request just to get the
+count of the partitions as the buffers are not acquired in this case.
 
-KMemleak detects this situation since loading/unloding some SCMI driver
-causes related devices to be created/destroyed without calling any
-device_release method.
+Firmware may return FFA_RET_DENIED or other error for the ffa_rx_release()
+in such cases.
 
-unreferenced object 0xffff00000f583800 (size 512):
-  comm "insmod", pid 227, jiffies 4294912190
-  hex dump (first 32 bytes):
-    00 00 00 00 ad 4e ad de ff ff ff ff 00 00 00 00  .....N..........
-    ff ff ff ff ff ff ff ff 60 36 1d 8a 00 80 ff ff  ........`6......
-  backtrace (crc 114e2eed):
-    kmemleak_alloc+0xbc/0xd8
-    __kmalloc_cache_noprof+0x2dc/0x398
-    device_add+0x954/0x12d0
-    device_register+0x28/0x40
-    __scmi_device_create.part.0+0x1bc/0x380
-    scmi_device_create+0x2d0/0x390
-    scmi_create_protocol_devices+0x74/0xf8
-    scmi_device_request_notifier+0x1f8/0x2a8
-    notifier_call_chain+0x110/0x3b0
-    blocking_notifier_call_chain+0x70/0xb0
-    scmi_driver_register+0x350/0x7f0
-    0xffff80000a3b3038
-    do_one_initcall+0x12c/0x730
-    do_init_module+0x1dc/0x640
-    load_module+0x4b20/0x5b70
-    init_module_from_file+0xec/0x158
-
-$ ./scripts/faddr2line ./vmlinux device_add+0x954/0x12d0
-device_add+0x954/0x12d0:
-kmalloc_noprof at include/linux/slab.h:901
-(inlined by) kzalloc_noprof at include/linux/slab.h:1037
-(inlined by) device_private_init at drivers/base/core.c:3510
-(inlined by) device_add at drivers/base/core.c:3561
-
-Balance device refcount by issuing a put_device() on devices found via
-device_find_child().
-
-Reported-by: Alice Ryhl <aliceryhl@google.com>
-Closes: https://lore.kernel.org/linux-arm-kernel/Z8nK3uFkspy61yjP@arm.com/T/#mc1f73a0ea5e41014fa145147b7b839fc988ada8f
-CC: Sudeep Holla <sudeep.holla@arm.com>
-CC: Catalin Marinas <catalin.marinas@arm.com>
-Fixes: d4f9dddd21f3 ("firmware: arm_scmi: Add dynamic scmi devices creation")
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Tested-by: Alice Ryhl <aliceryhl@google.com>
-Message-Id: <20250306185447.2039336-1-cristian.marussi@arm.com>
+Fixes: bb1be7498500 ("firmware: arm_ffa: Add v1.1 get_partition_info support")
+Message-Id: <20250321115700.3525197-1-sudeep.holla@arm.com>
 Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/bus.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/firmware/arm_ffa/driver.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/arm_scmi/bus.c b/drivers/firmware/arm_scmi/bus.c
-index a3386bf36de50..7d7af2262c013 100644
---- a/drivers/firmware/arm_scmi/bus.c
-+++ b/drivers/firmware/arm_scmi/bus.c
-@@ -260,6 +260,9 @@ static struct scmi_device *scmi_child_dev_find(struct device *parent,
- 	if (!dev)
- 		return NULL;
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index 655672a880959..03d22cbb2ad47 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -280,7 +280,8 @@ __ffa_partition_info_get(u32 uuid0, u32 uuid1, u32 uuid2, u32 uuid3,
+ 			memcpy(buffer + idx, drv_info->rx_buffer + idx * sz,
+ 			       buf_sz);
  
-+	/* Drop the refcnt bumped implicitly by device_find_child */
-+	put_device(dev);
-+
- 	return to_scmi_dev(dev);
- }
+-	ffa_rx_release();
++	if (!(flags & PARTITION_INFO_GET_RETURN_COUNT_ONLY))
++		ffa_rx_release();
+ 
+ 	mutex_unlock(&drv_info->rx_lock);
  
 -- 
 2.39.5
