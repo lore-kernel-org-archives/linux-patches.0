@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265E819AD5C;
-	Wed,  7 May 2025 19:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69ECA19AD5C;
+	Wed,  7 May 2025 19:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644859; cv=none; b=ZAZu/Cyia771P8z0k0hU7Wg+jv7PaR+GBjTdufFwLYSnu2XGObr4Bhb81RAcXSGpLX2xPcDWd2mba4oh2EwYTvmFXZuIbd0GPRGPavKZyzgT4C5prZK1klk7AXu9q1yx5PFNT8wL4KdGRrzEPXayZXp8m2U5jUN9Zjpav5eK+Ww=
+	t=1746644862; cv=none; b=nHLxgmdDeD/YwCkOcSFqdj1aj0XlHpnAw7leQRcNrT2B9W/ZUrH5mX6NpGJfIsLY8wp7lVuH9mtzq6JiOFj770ZrmS5/AZKspPXPGxcSOPvYN+GbarVM9ME5Fj0cXh0i5KzIIT8s1t7QFt97NjI0CIdT2OnOIc7EPPFbvc1cZRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644859; c=relaxed/simple;
-	bh=mXkXdeKcNdrnxmZ1kh5Wv7rOjiddH7XVQKp863EKCHM=;
+	s=arc-20240116; t=1746644862; c=relaxed/simple;
+	bh=1c45j/KIe6jPzMiUvbTHu/iEQDeGt7H2yGAEqPbj4FY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pXSWRPHqv1tb+9Htosxeva6QxcjKJ6yHATt4qGvLSFSQgydtvNbYg6TdTL3W3CLN8sH5HGOuzL+jsABr5N/o919NdkxJdwprkVCRN7JSxaZQAKGZeIxcmAuxeOheU2qy9z7usGzwAFaGb3Ms2pMqipQrgSNWoJ8eAywLXPcVj/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6y2QgU/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ojmMB+nSnj9vu/72Yv0E/ZXPSDFWbxs4ETSjF0zfSvQYQTy0o9OBJNbhyq1osmjvIMa8BfvGoXTJ04hpxRt5KU/bWY8zwXougBYnQXgH5QA+LFOiOq9zlOiNYPZlTOpn1zVfaXPMnoGlWyVGCk1ECVkLMHQ+TPszi2dfuYeEOl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NIcbdDKI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6y2QgU/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10DAC4CEE2;
-	Wed,  7 May 2025 19:07:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NIcbdDKI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9D5C4CEE2;
+	Wed,  7 May 2025 19:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644859;
-	bh=mXkXdeKcNdrnxmZ1kh5Wv7rOjiddH7XVQKp863EKCHM=;
+	s=korg; t=1746644862;
+	bh=1c45j/KIe6jPzMiUvbTHu/iEQDeGt7H2yGAEqPbj4FY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E6y2QgU/rZE45J+v2vnfE/zqnVEFnrKSTiRcbHbSWy5m4LXMi7eXfL4DAw+Q+TpO6
-	 JPYjfuRsWxYL1A2ERBi2Fm/AVXAeDUQacFZ0irDN46kIzAZ/+nTofcjmFu/TCyqHFa
-	 r5QJoUyd3ZZ8EvqP8v8PRQRKiT+npdao1x46eEZg=
+	b=NIcbdDKIL17exbqKNII9jU1DpdgC4nPLJhse7wOuj/McDTfFSor+yOm6YR1MBLMNR
+	 vkOxNCCbjll9Iwx+2x0vFKbTTvWMqF7X8OP70dBJvyCh/D/FoKa7YaehXcNevf7iQI
+	 6bxgNjdcdz1NV7aTQw3FryEFK4fGobORE+cNg3K8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yang <richard.weiyang@gmail.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Yajun Deng <yajun.deng@linux.dev>
-Subject: [PATCH 6.6 016/129] mm/memblock: repeat setting reserved region nid if array is doubled
-Date: Wed,  7 May 2025 20:39:12 +0200
-Message-ID: <20250507183814.194696070@linuxfoundation.org>
+	Ihar Salauyou <salauyou.ihar@gmail.com>,
+	Ruslan Piasetskyi <ruslan.piasetskyi@gmail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 017/129] mmc: renesas_sdhi: Fix error handling in renesas_sdhi_probe
+Date: Wed,  7 May 2025 20:39:13 +0200
+Message-ID: <20250507183814.233857569@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -51,62 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Yang <richard.weiyang@gmail.com>
+From: Ruslan Piasetskyi <ruslan.piasetskyi@gmail.com>
 
-commit eac8ea8736ccc09513152d970eb2a42ed78e87e8 upstream.
+commit 649b50a82f09fa44c2f7a65618e4584072145ab7 upstream.
 
-Commit 61167ad5fecd ("mm: pass nid to reserve_bootmem_region()") introduce
-a way to set nid to all reserved region.
+After moving tmio_mmc_host_probe down, error handling has to be
+adjusted.
 
-But there is a corner case it will leave some region with invalid nid.
-When memblock_set_node() doubles the array of memblock.reserved, it may
-lead to a new reserved region before current position. The new region
-will be left with an invalid node id.
-
-Repeat the process when detecting it.
-
-Fixes: 61167ad5fecd ("mm: pass nid to reserve_bootmem_region()")
-Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
-CC: Mike Rapoport <rppt@kernel.org>
-CC: Yajun Deng <yajun.deng@linux.dev>
-CC: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250318071948.23854-3-richard.weiyang@gmail.com
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Fixes: 74f45de394d9 ("mmc: renesas_sdhi: register irqs before registering controller")
+Reviewed-by: Ihar Salauyou <salauyou.ihar@gmail.com>
+Signed-off-by: Ruslan Piasetskyi <ruslan.piasetskyi@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250326220638.460083-1-ruslan.piasetskyi@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memblock.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/mmc/host/renesas_sdhi_core.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/mm/memblock.c
-+++ b/mm/memblock.c
-@@ -2122,11 +2122,14 @@ static void __init memmap_init_reserved_
- 	struct memblock_region *region;
- 	phys_addr_t start, end;
- 	int nid;
-+	unsigned long max_reserved;
- 
- 	/*
- 	 * set nid on all reserved pages and also treat struct
- 	 * pages for the NOMAP regions as PageReserved
- 	 */
-+repeat:
-+	max_reserved = memblock.reserved.max;
- 	for_each_mem_region(region) {
- 		nid = memblock_get_region_node(region);
- 		start = region->base;
-@@ -2137,6 +2140,13 @@ static void __init memmap_init_reserved_
- 
- 		memblock_set_node(start, region->size, &memblock.reserved, nid);
+--- a/drivers/mmc/host/renesas_sdhi_core.c
++++ b/drivers/mmc/host/renesas_sdhi_core.c
+@@ -1107,26 +1107,26 @@ int renesas_sdhi_probe(struct platform_d
+ 	num_irqs = platform_irq_count(pdev);
+ 	if (num_irqs < 0) {
+ 		ret = num_irqs;
+-		goto eirq;
++		goto edisclk;
  	}
-+	/*
-+	 * 'max' is changed means memblock.reserved has been doubled its
-+	 * array, which may result a new reserved region before current
-+	 * 'start'. Now we should repeat the procedure to set its node id.
-+	 */
-+	if (max_reserved != memblock.reserved.max)
-+		goto repeat;
  
- 	/* initialize struct pages for the reserved regions */
- 	for_each_reserved_mem_region(region) {
+ 	/* There must be at least one IRQ source */
+ 	if (!num_irqs) {
+ 		ret = -ENXIO;
+-		goto eirq;
++		goto edisclk;
+ 	}
+ 
+ 	for (i = 0; i < num_irqs; i++) {
+ 		irq = platform_get_irq(pdev, i);
+ 		if (irq < 0) {
+ 			ret = irq;
+-			goto eirq;
++			goto edisclk;
+ 		}
+ 
+ 		ret = devm_request_irq(&pdev->dev, irq, tmio_mmc_irq, 0,
+ 				       dev_name(&pdev->dev), host);
+ 		if (ret)
+-			goto eirq;
++			goto edisclk;
+ 	}
+ 
+ 	ret = tmio_mmc_host_probe(host);
+@@ -1138,8 +1138,6 @@ int renesas_sdhi_probe(struct platform_d
+ 
+ 	return ret;
+ 
+-eirq:
+-	tmio_mmc_host_remove(host);
+ edisclk:
+ 	renesas_sdhi_clk_disable(host);
+ efree:
 
 
