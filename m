@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A313D29A0;
-	Wed,  7 May 2025 19:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BB828DF5E;
+	Wed,  7 May 2025 19:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644436; cv=none; b=KpBlq/zwk+XAsvBCMGUeEmGOlDcULcPOK3cKrxse0kimW3kJJABE6ArtdSagYLqbaKXSlCdJRjtn5sWbFWFMpQhLPe5j8DBipNLHk7M0JSFN+4DO8G86OSKHkWTu+ONWflrwlRODwmPweRzWvcf8CA6v0HEPGNML7AwS/985TnM=
+	t=1746644439; cv=none; b=qffDCTBjLEOFGYj+aPS8Y9Z84Rc/uWdqmt74jfhFnQvnhBBUckjdTbIHlHj8WoLwzdgQ7uFilC30l3FI6NyH2zH/H65+37+82Q/d2tpweYmcdJD6WozKvP/OOPbScK3U9h7r73gZsm4am9HFwiMgqvUpZfU+d3rggJRQjW11lrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644436; c=relaxed/simple;
-	bh=zSgq2HVl0YhS/OSjJlLsb3Sj+uas3sj4B8Dh0ZEOW2c=;
+	s=arc-20240116; t=1746644439; c=relaxed/simple;
+	bh=c+TVHIreOgIrravS373t4Nul60viPlb5xLUdZdBMqps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NgRmTRdTdoC2tssveQ20qHsufHs/QCb5DEy839IT4qZ8DrWt6oiB6hrj//FpCKTqkzz4gHQyc6PRB02OKLFHzDH2BVebcvGycqm2xBAWDIlxYhy232WQtHGrjyKQThS/vmKsipt3UAQoxRSIWRbXKnQONZFzMeE8zjj/4aof3cM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+Q4z7dS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nJ52rXNloTIoKB3xHxPSpNA9we0vHuzoYCX3qmK0p5k2CqgfgrGHtWB9QTBYxkharysqN3VI9Q1fTdsoohyEp6Un4NMn0NCVkIFh3612shCQnnb44rGRSbLKBVN5sPVHRgzwWcnDAzHGIw0nOK3DCP4pRo7iy8KEg1yTYCYy+fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eT6mPxjT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+Q4z7dS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B86E1C4CEE2;
-	Wed,  7 May 2025 19:00:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eT6mPxjT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA534C4CEF1;
+	Wed,  7 May 2025 19:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644436;
-	bh=zSgq2HVl0YhS/OSjJlLsb3Sj+uas3sj4B8Dh0ZEOW2c=;
+	s=korg; t=1746644439;
+	bh=c+TVHIreOgIrravS373t4Nul60viPlb5xLUdZdBMqps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v+Q4z7dSgS8Y+cp1Tr7U4MpB7ribjLafpuRqSZlmqYB2QZPDW5Zy70pCLqHKOeslZ
-	 /2FHHRHl3LApVW5E5omxwyaXZonaTNWkSYpxKSXMNjSSoNGmtllk3LZjOXMnEcEXEj
-	 2vmNNKmUeuFaAXrvxkTzsPds6u7HalGyK5jfdQk4=
+	b=eT6mPxjTDMgq3s0PnXX9ROjftwad+kfPZ1a8emUf3f1ytY1+IlH5MonzBvcIwMFxY
+	 7zqqRAS4PjdNeRhy653pNYppPY/9l8CXAwUqhUgyKJ8y60/TUsEiwAXa9zRCFMqPCV
+	 GlCXWq86k2qmEC5xRjOBexUr+L8j17n+bPP85C20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Shouye Liu <shouyeliu@tencent.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.12 042/164] platform/x86/amd: pmc: Require at least 2.5 seconds between HW sleep cycles
-Date: Wed,  7 May 2025 20:38:47 +0200
-Message-ID: <20250507183822.587025176@linuxfoundation.org>
+Subject: [PATCH 6.12 043/164] platform/x86/intel-uncore-freq: Fix missing uncore sysfs during CPU hotplug
+Date: Wed,  7 May 2025 20:38:48 +0200
+Message-ID: <20250507183822.628222484@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -52,52 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Shouye Liu <shouyeliu@tencent.com>
 
-commit 9f5595d5f03fd4dc640607a71e89a1daa68fd19d upstream.
+commit 8d6955ed76e8a47115f2ea1d9c263ee6f505d737 upstream.
 
-When an APU exits HW sleep with no active wake sources the Linux kernel will
-rapidly assert that the APU can enter back into HW sleep. This happens in a
-few ms. Contrasting this to Windows, Windows can take 10s of seconds to
-enter back into the resiliency phase for Modern Standby.
+In certain situations, the sysfs for uncore may not be present when all
+CPUs in a package are offlined and then brought back online after boot.
 
-For some situations this can be problematic because it can cause leakage
-from VDDCR_SOC to VDD_MISC and force VDD_MISC outside of the electrical
-design guide specifications. On some designs this will trip the over
-voltage protection feature (OVP) of the voltage regulator module, but it
-could cause APU damage as well.
+This issue can occur if there is an error in adding the sysfs entry due
+to a memory allocation failure. Retrying to bring the CPUs online will
+not resolve the issue, as the uncore_cpu_mask is already set for the
+package before the failure condition occurs.
 
-To prevent this risk, add an explicit sleep call so that future attempts
-to enter into HW sleep will have enough time to settle. This will occur
-while the screen is dark and only on cases that the APU should enter HW
-sleep again, so it shouldn't be noticeable to any user.
+This issue does not occur if the failure happens during module
+initialization, as the module will fail to load in the event of any
+error.
 
+To address this, ensure that the uncore_cpu_mask is not set until the
+successful return of uncore_freq_add_entry().
+
+Fixes: dbce412a7733 ("platform/x86/intel-uncore-freq: Split common and enumeration part")
+Signed-off-by: Shouye Liu <shouyeliu@tencent.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Link: https://lore.kernel.org/r/20250414162446.3853194-1-superm1@kernel.org
+Link: https://lore.kernel.org/r/20250417032321.75580-1-shouyeliu@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/pmc/pmc.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c |   13 ++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/platform/x86/amd/pmc/pmc.c
-+++ b/drivers/platform/x86/amd/pmc/pmc.c
-@@ -892,10 +892,9 @@ static void amd_pmc_s2idle_check(void)
- 	struct smu_metrics table;
- 	int rc;
+--- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
++++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
+@@ -146,15 +146,13 @@ static int uncore_event_cpu_online(unsig
+ {
+ 	struct uncore_data *data;
+ 	int target;
++	int ret;
  
--	/* CZN: Ensure that future s0i3 entry attempts at least 10ms passed */
--	if (pdev->cpu_id == AMD_CPU_ID_CZN && !get_metrics_table(pdev, &table) &&
--	    table.s0i3_last_entry_status)
--		usleep_range(10000, 20000);
-+	/* Avoid triggering OVP */
-+	if (!get_metrics_table(pdev, &table) && table.s0i3_last_entry_status)
-+		msleep(2500);
+ 	/* Check if there is an online cpu in the package for uncore MSR */
+ 	target = cpumask_any_and(&uncore_cpu_mask, topology_die_cpumask(cpu));
+ 	if (target < nr_cpu_ids)
+ 		return 0;
  
- 	/* Dump the IdleMask before we add to the STB */
- 	amd_pmc_idlemask_read(pdev, pdev->dev, NULL);
+-	/* Use this CPU on this die as a control CPU */
+-	cpumask_set_cpu(cpu, &uncore_cpu_mask);
+-
+ 	data = uncore_get_instance(cpu);
+ 	if (!data)
+ 		return 0;
+@@ -163,7 +161,14 @@ static int uncore_event_cpu_online(unsig
+ 	data->die_id = topology_die_id(cpu);
+ 	data->domain_id = UNCORE_DOMAIN_ID_INVALID;
+ 
+-	return uncore_freq_add_entry(data, cpu);
++	ret = uncore_freq_add_entry(data, cpu);
++	if (ret)
++		return ret;
++
++	/* Use this CPU on this die as a control CPU */
++	cpumask_set_cpu(cpu, &uncore_cpu_mask);
++
++	return 0;
+ }
+ 
+ static int uncore_event_cpu_offline(unsigned int cpu)
 
 
