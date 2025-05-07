@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB92828E5FB;
-	Wed,  7 May 2025 19:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B0628E60E;
+	Wed,  7 May 2025 19:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644727; cv=none; b=AHmT8OkylSnWRz8LsFXg3g4JZrF4cnOaJpvG/iq4YqeSe1v3uWYqg1SX6mji2WKziRo2APr1cw6CqkCDCxYPll08g2FQVNlsBtJAFPtl5yenV54/7rpyrED+C3kSHgp9T2NyLIClXjTW65DJEK9cO8+CGgHs76aO0maI5TuBuFo=
+	t=1746644730; cv=none; b=MGwFUQ4a04uaVS9dkNCEL5RyS1IXysL8mt/XXLJrONyunUBDnOwmc/lhnvhxS8U5IvnqNd/qTrp+c5V2gMV5QvVjozq1dXj0VSiVvq9n+yEXigZAX+7WSYZpGaNnFXeCFzKmCel6c7PsbHT0y9gMXWdxcWlE1ECzdfAaf4u+wlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644727; c=relaxed/simple;
-	bh=joyG/6ZbOOkXZNr/mRTYBFo7Ac4Ka4xrobT4p/Oo0ZQ=;
+	s=arc-20240116; t=1746644730; c=relaxed/simple;
+	bh=EvHApb6Mm+pYMx5HvYAvSZqKkuqAKWzR1QsZR6VbvpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jXCSgN0NeRS/ACI2vsWsfEs4LijAjEQWCRcLZpS1NJjAzEIhuUmsZ928FgagcrBCF/aYqpqya7Y67XmuUplntAwXY95JWDd/m3mfMbAnzqWF5g1PhYld6lqIVmSNBPZcPCsPB2jzwtxJ/A867Q1fF13ziVrJyAoOxYsMKKmD59g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=liiFsiXm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VGnu4EIonFoRHS3hltqPhucXiiJj8mkNorVpohyDDA29W+IW3zjx7IPBeNdE036DT4gQRGo84UXGiLeK1ebOUqblx2iuIVkig1nhBvb/dVYR9h49OJUup0OxY6oqlyttDMkHM/TM81ySqAb5cT2vh9SG+l7V5O7o+yKbbt8rk7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E/qFkoDZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="liiFsiXm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A3BC4CEEE;
-	Wed,  7 May 2025 19:05:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E/qFkoDZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5D0C4CEE9;
+	Wed,  7 May 2025 19:05:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644727;
-	bh=joyG/6ZbOOkXZNr/mRTYBFo7Ac4Ka4xrobT4p/Oo0ZQ=;
+	s=korg; t=1746644730;
+	bh=EvHApb6Mm+pYMx5HvYAvSZqKkuqAKWzR1QsZR6VbvpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=liiFsiXmt9g7aT8B7gVJHyGLIIJvg/AdsBgtLG7r/8lMiRnCJit6uBJfDRfMUTuWc
-	 SbvjP0A/cFbtrovqFlknI56nlX42hbH/keXeJD6GQDY/DxP8x4+Qp12NZDgkJDvkYz
-	 DiuBVn0ZiGJfDnR/LCWStf8CyEK6z1i1paTgXU5w=
+	b=E/qFkoDZFfsy+PTWD2YDCg9qjhBIHAgVAz4LY7ahg9GcuJM6hRihODbV1ousoqHti
+	 VX+BZM0nEH9HmFH7QF06dT9ntYHAcrmQSxhFe7WLQceympeZXo++RuPrfgkQllLZa/
+	 mgsZtCfJnEOLFgYlmU3RpMPxoornJvXpvvGNbhdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Huang <mmpgouride@gmail.com>,
-	Kent Overstreet <kent.overstreet@linux.dev>
-Subject: [PATCH 6.12 138/164] bcachefs: Remove incorrect __counted_by annotation
-Date: Wed,  7 May 2025 20:40:23 +0200
-Message-ID: <20250507183826.560526336@linuxfoundation.org>
+	Pranjal Shrivastava <praan@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.12 139/164] net: Fix the devmem sock opts and msgs for parisc
+Date: Wed,  7 May 2025 20:40:24 +0200
+Message-ID: <20250507183826.600557992@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -50,45 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Huang <mmpgouride@gmail.com>
+From: Pranjal Shrivastava <praan@google.com>
 
-commit 6846100b00d97d3d6f05766ae86a0d821d849e78 upstream.
+commit fd87b7783802b45cdd261b273e6b2b792823064d upstream.
 
-This actually reverts 86e92eeeb237 ("bcachefs: Annotate struct bch_xattr
-with __counted_by()").
+The devmem socket options and socket control message definitions
+introduced in the TCP devmem series[1] incorrectly continued the socket
+definitions for arch/parisc.
 
-After the x_name, there is a value. According to the disscussion[1],
-__counted_by assumes that the flexible array member contains exactly
-the amount of elements that are specified. Now there are users came across
-a false positive detection of an out of bounds write caused by
-the __counted_by here[2], so revert that.
+The UAPI change seems safe as there are currently no drivers that
+declare support for devmem TCP RX via PP_FLAG_ALLOW_UNREADABLE_NETMEM.
+Hence, fixing this UAPI should be safe.
 
-[1] https://lore.kernel.org/lkml/Zv8VDKWN1GzLRT-_@archlinux/T/#m0ce9541c5070146320efd4f928cc1ff8de69e9b2
-[2] https://privatebin.net/?a0d4e97d590d71e1#9bLmp2Kb5NU6X6cZEucchDcu88HzUQwHUah8okKPReEt
+Fix the devmem socket options and socket control message definitions to
+reflect the series followed by arch/parisc.
 
-Signed-off-by: Alan Huang <mmpgouride@gmail.com>
-Signed-off-by: Kent Overstreet <kent.overstreet@linux.dev>
+[1]
+https://lore.kernel.org/lkml/20240910171458.219195-10-almasrymina@google.com/
+
+Fixes: 8f0b3cc9a4c10 ("tcp: RX path for devmem TCP")
+Signed-off-by: Pranjal Shrivastava <praan@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/20250324074228.3139088-1-praan@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Pranjal Shrivastava <praan@google.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/bcachefs/xattr_format.h |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/bcachefs/xattr_format.h
-+++ b/fs/bcachefs/xattr_format.h
-@@ -13,7 +13,13 @@ struct bch_xattr {
- 	__u8			x_type;
- 	__u8			x_name_len;
- 	__le16			x_val_len;
--	__u8			x_name[] __counted_by(x_name_len);
-+	/*
-+	 * x_name contains the name and value counted by
-+	 * x_name_len + x_val_len. The introduction of
-+	 * __counted_by(x_name_len) caused a false positive
-+	 * detection of an out of bounds write.
-+	 */
-+	__u8			x_name[];
- } __packed __aligned(8);
+---
+ arch/parisc/include/uapi/asm/socket.h |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+--- a/arch/parisc/include/uapi/asm/socket.h
++++ b/arch/parisc/include/uapi/asm/socket.h
+@@ -132,11 +132,15 @@
+ #define SO_PASSPIDFD		0x404A
+ #define SO_PEERPIDFD		0x404B
  
- #endif /* _BCACHEFS_XATTR_FORMAT_H */
+-#define SO_DEVMEM_LINEAR	78
++#define SCM_TS_OPT_ID		0x404C
++
++#define SO_RCVPRIORITY		0x404D
++
++#define SO_DEVMEM_LINEAR	0x404E
+ #define SCM_DEVMEM_LINEAR	SO_DEVMEM_LINEAR
+-#define SO_DEVMEM_DMABUF	79
++#define SO_DEVMEM_DMABUF	0x404F
+ #define SCM_DEVMEM_DMABUF	SO_DEVMEM_DMABUF
+-#define SO_DEVMEM_DONTNEED	80
++#define SO_DEVMEM_DONTNEED	0x4050
+ 
+ #if !defined(__KERNEL__)
+ 
 
 
