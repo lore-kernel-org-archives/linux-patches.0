@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C92214813;
-	Wed,  7 May 2025 19:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C79211278;
+	Wed,  7 May 2025 19:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746645198; cv=none; b=EUvFAWlEwvluTlcPa/Lcr4R7GYFmCPE9msxm3sQFzn5aSpswJNdwBWTFLOfg14aHeV4fdxF823E+6WnSOFYoWS8EbdHbf0j57N1SY2mZRmtukrfCLhGSZz8giFQkGg+TS3AGMR7+UKIRo4l7OLPrhtkaClwCQWVRESPFFuV/0qc=
+	t=1746645202; cv=none; b=IwP+QFKziFXeMn7LhzV4libLEROsqpIZL0YTX9T90uqAwlvcVSrwxPxTWD5nDigKvU8akSiYqzFOUyLQLKmJxs2KBpOls15ALhf4TOEEOQc2vAkwmRI5rsmeJfjDQ8B5ZPmqFBccwoBm5Na+8+8789vQPm8wr6nO9aaILgKlxXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746645198; c=relaxed/simple;
-	bh=Po7GqoYwcZGs8fP89OsDGELv+ArVXsFLDBhqK3DlC7c=;
+	s=arc-20240116; t=1746645202; c=relaxed/simple;
+	bh=cKPgCmBLstot853jPaxI4C4F8BSEW+yBZjrKUm9CrKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SbFI7C+iKIw3j+zfa6/HCjCBu/dHx/6PoyQWRp0r8ODEVbPmUrTa6NfwkLGB6zbM5LSnYTgf8+MC0V3sUp23/MfHR7HidE9oPsmt6LNziOGHzcaHKqwXwy1JK7okXkao00AVE059cLZpkQJ2UaEHODQE1I5mI8nWVZJMiCWc4TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebtAY5Io; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lcMBQiCC6/JAS2KZXBOdlcy4YlxBB4Dqeley+NZJ6crzPupfjgbPbDoZN2LJ3lrKakk9Fa/4I4/Nzui2DiDWF+Rq9r2kmNNL/daBOf8VlKDGN9dmf2CXAnOb9GrInzTWAz4RfRay0UPfGcpaGqQiH7dGZzdBivVd9OpcxBEtBUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fF0+Pyo/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebtAY5Io"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F83C4CEE2;
-	Wed,  7 May 2025 19:13:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fF0+Pyo/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C03BC4CEE2;
+	Wed,  7 May 2025 19:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746645198;
-	bh=Po7GqoYwcZGs8fP89OsDGELv+ArVXsFLDBhqK3DlC7c=;
+	s=korg; t=1746645202;
+	bh=cKPgCmBLstot853jPaxI4C4F8BSEW+yBZjrKUm9CrKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ebtAY5IofHHnDuVu3DrIMKExVGPyu109jAhYbDm1Lawq+FtVGFVD+IN19XyLcWQLa
-	 nMAIKLpAdd2tR4eW0vfrPtx3P4pd7YeGBCtwQhSY+JV3XKLMvd0SpC9ATUr7Qp3+vj
-	 bPy2Xh2bAze18EouKHNLAtcIajSFVKEofRcuA5KY=
+	b=fF0+Pyo/POV2AFLBXe1HSbjuTyxGK88hCkdsKRgxr93cyhwG0spVyVMdWKpv8DW7j
+	 pCuGvgB0bSZnv4HLq0LuYW0n/fD9aVwPb6YjSoA9Le8BZfA7KdOhLZAWaniYhKinb5
+	 t8y+Ak6ctAlmEFSCLoQAJEcuV2SJGHPBMS+jNhRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Bainbridge <chris.bainbridge@gmail.com>,
 	Alex Hung <alex.hung@amd.com>,
 	Mario Limonciello <mario.limonciello@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 126/129] drm/amd/display: Add scoped mutexes for amdgpu_dm_dhcp
-Date: Wed,  7 May 2025 20:41:02 +0200
-Message-ID: <20250507183818.698530471@linuxfoundation.org>
+Subject: [PATCH 6.6 127/129] drm/amd/display: Fix slab-use-after-free in hdcp
+Date: Wed,  7 May 2025 20:41:03 +0200
+Message-ID: <20250507183818.739356740@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -54,203 +53,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Chris Bainbridge <chris.bainbridge@gmail.com>
 
-[ Upstream commit 6b675ab8efbf2bcee25be29e865455c56e246401 ]
+[ Upstream commit be593d9d91c5a3a363d456b9aceb71029aeb3f1d ]
 
-[Why]
-Guards automatically release mutex when it goes out of scope making
-code easier to follow.
+The HDCP code in amdgpu_dm_hdcp.c copies pointers to amdgpu_dm_connector
+objects without incrementing the kref reference counts. When using a
+USB-C dock, and the dock is unplugged, the corresponding
+amdgpu_dm_connector objects are freed, creating dangling pointers in the
+HDCP code. When the dock is plugged back, the dangling pointers are
+dereferenced, resulting in a slab-use-after-free:
 
-[How]
-Replace all use of mutex_lock()/mutex_unlock() with guard(mutex).
+[   66.775837] BUG: KASAN: slab-use-after-free in event_property_validate+0x42f/0x6c0 [amdgpu]
+[   66.776171] Read of size 4 at addr ffff888127804120 by task kworker/0:1/10
 
+[   66.776179] CPU: 0 UID: 0 PID: 10 Comm: kworker/0:1 Not tainted 6.14.0-rc7-00180-g54505f727a38-dirty #233
+[   66.776183] Hardware name: HP HP Pavilion Aero Laptop 13-be0xxx/8916, BIOS F.17 12/18/2024
+[   66.776186] Workqueue: events event_property_validate [amdgpu]
+[   66.776494] Call Trace:
+[   66.776496]  <TASK>
+[   66.776497]  dump_stack_lvl+0x70/0xa0
+[   66.776504]  print_report+0x175/0x555
+[   66.776507]  ? __virt_addr_valid+0x243/0x450
+[   66.776510]  ? kasan_complete_mode_report_info+0x66/0x1c0
+[   66.776515]  kasan_report+0xeb/0x1c0
+[   66.776518]  ? event_property_validate+0x42f/0x6c0 [amdgpu]
+[   66.776819]  ? event_property_validate+0x42f/0x6c0 [amdgpu]
+[   66.777121]  __asan_report_load4_noabort+0x14/0x20
+[   66.777124]  event_property_validate+0x42f/0x6c0 [amdgpu]
+[   66.777342]  ? __lock_acquire+0x6b40/0x6b40
+[   66.777347]  ? enable_assr+0x250/0x250 [amdgpu]
+[   66.777571]  process_one_work+0x86b/0x1510
+[   66.777575]  ? pwq_dec_nr_in_flight+0xcf0/0xcf0
+[   66.777578]  ? assign_work+0x16b/0x280
+[   66.777580]  ? lock_is_held_type+0xa3/0x130
+[   66.777583]  worker_thread+0x5c0/0xfa0
+[   66.777587]  ? process_one_work+0x1510/0x1510
+[   66.777588]  kthread+0x3a2/0x840
+[   66.777591]  ? kthread_is_per_cpu+0xd0/0xd0
+[   66.777594]  ? trace_hardirqs_on+0x4f/0x60
+[   66.777597]  ? _raw_spin_unlock_irq+0x27/0x60
+[   66.777599]  ? calculate_sigpending+0x77/0xa0
+[   66.777602]  ? kthread_is_per_cpu+0xd0/0xd0
+[   66.777605]  ret_from_fork+0x40/0x90
+[   66.777607]  ? kthread_is_per_cpu+0xd0/0xd0
+[   66.777609]  ret_from_fork_asm+0x11/0x20
+[   66.777614]  </TASK>
+
+[   66.777643] Allocated by task 10:
+[   66.777646]  kasan_save_stack+0x39/0x60
+[   66.777649]  kasan_save_track+0x14/0x40
+[   66.777652]  kasan_save_alloc_info+0x37/0x50
+[   66.777655]  __kasan_kmalloc+0xbb/0xc0
+[   66.777658]  __kmalloc_cache_noprof+0x1c8/0x4b0
+[   66.777661]  dm_dp_add_mst_connector+0xdd/0x5c0 [amdgpu]
+[   66.777880]  drm_dp_mst_port_add_connector+0x47e/0x770 [drm_display_helper]
+[   66.777892]  drm_dp_send_link_address+0x1554/0x2bf0 [drm_display_helper]
+[   66.777901]  drm_dp_check_and_send_link_address+0x187/0x1f0 [drm_display_helper]
+[   66.777909]  drm_dp_mst_link_probe_work+0x2b8/0x410 [drm_display_helper]
+[   66.777917]  process_one_work+0x86b/0x1510
+[   66.777919]  worker_thread+0x5c0/0xfa0
+[   66.777922]  kthread+0x3a2/0x840
+[   66.777925]  ret_from_fork+0x40/0x90
+[   66.777927]  ret_from_fork_asm+0x11/0x20
+
+[   66.777932] Freed by task 1713:
+[   66.777935]  kasan_save_stack+0x39/0x60
+[   66.777938]  kasan_save_track+0x14/0x40
+[   66.777940]  kasan_save_free_info+0x3b/0x60
+[   66.777944]  __kasan_slab_free+0x52/0x70
+[   66.777946]  kfree+0x13f/0x4b0
+[   66.777949]  dm_dp_mst_connector_destroy+0xfa/0x150 [amdgpu]
+[   66.778179]  drm_connector_free+0x7d/0xb0
+[   66.778184]  drm_mode_object_put.part.0+0xee/0x160
+[   66.778188]  drm_mode_object_put+0x37/0x50
+[   66.778191]  drm_atomic_state_default_clear+0x220/0xd60
+[   66.778194]  __drm_atomic_state_free+0x16e/0x2a0
+[   66.778197]  drm_mode_atomic_ioctl+0x15ed/0x2ba0
+[   66.778200]  drm_ioctl_kernel+0x17a/0x310
+[   66.778203]  drm_ioctl+0x584/0xd10
+[   66.778206]  amdgpu_drm_ioctl+0xd2/0x1c0 [amdgpu]
+[   66.778375]  __x64_sys_ioctl+0x139/0x1a0
+[   66.778378]  x64_sys_call+0xee7/0xfb0
+[   66.778381]  do_syscall_64+0x87/0x140
+[   66.778385]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+Fix this by properly incrementing and decrementing the reference counts
+when making and deleting copies of the amdgpu_dm_connector pointers.
+
+(Mario: rebase on current code and update fixes tag)
+
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4006
+Signed-off-by: Chris Bainbridge <chris.bainbridge@gmail.com>
+Fixes: da3fd7ac0bcf3 ("drm/amd/display: Update CP property based on HW query")
 Reviewed-by: Alex Hung <alex.hung@amd.com>
+Link: https://lore.kernel.org/r/20250417215005.37964-1-mario.limonciello@amd.com
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: be593d9d91c5 ("drm/amd/display: Fix slab-use-after-free in hdcp")
+(cherry picked from commit d4673f3c3b3dcb74e36e53cdfc880baa7a87b330)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/amdgpu_dm/amdgpu_dm_hdcp.c    | 37 +++++--------------
- 1 file changed, 10 insertions(+), 27 deletions(-)
+ .../amd/display/amdgpu_dm/amdgpu_dm_hdcp.c    | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
-index 2ad9f900a8574..4330d37022fa3 100644
+index 4330d37022fa3..a048022d9865a 100644
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
-@@ -172,7 +172,7 @@ void hdcp_update_display(struct hdcp_workqueue *hdcp_work,
- 	struct mod_hdcp_display_adjustment display_adjust;
+@@ -173,6 +173,9 @@ void hdcp_update_display(struct hdcp_workqueue *hdcp_work,
  	unsigned int conn_index = aconnector->base.index;
  
--	mutex_lock(&hdcp_w->mutex);
-+	guard(mutex)(&hdcp_w->mutex);
+ 	guard(mutex)(&hdcp_w->mutex);
++	drm_connector_get(&aconnector->base);
++	if (hdcp_w->aconnector[conn_index])
++		drm_connector_put(&hdcp_w->aconnector[conn_index]->base);
  	hdcp_w->aconnector[conn_index] = aconnector;
  
  	memset(&link_adjust, 0, sizeof(link_adjust));
-@@ -209,7 +209,6 @@ void hdcp_update_display(struct hdcp_workqueue *hdcp_work,
- 	mod_hdcp_update_display(&hdcp_w->hdcp, conn_index, &link_adjust, &display_adjust, &hdcp_w->output);
- 
- 	process_output(hdcp_w);
--	mutex_unlock(&hdcp_w->mutex);
- }
- 
- static void hdcp_remove_display(struct hdcp_workqueue *hdcp_work,
-@@ -220,7 +219,7 @@ static void hdcp_remove_display(struct hdcp_workqueue *hdcp_work,
- 	struct drm_connector_state *conn_state = aconnector->base.state;
+@@ -220,7 +223,6 @@ static void hdcp_remove_display(struct hdcp_workqueue *hdcp_work,
  	unsigned int conn_index = aconnector->base.index;
  
--	mutex_lock(&hdcp_w->mutex);
-+	guard(mutex)(&hdcp_w->mutex);
- 	hdcp_w->aconnector[conn_index] = aconnector;
+ 	guard(mutex)(&hdcp_w->mutex);
+-	hdcp_w->aconnector[conn_index] = aconnector;
  
  	/* the removal of display will invoke auth reset -> hdcp destroy and
-@@ -239,7 +238,6 @@ static void hdcp_remove_display(struct hdcp_workqueue *hdcp_work,
+ 	 * we'd expect the Content Protection (CP) property changed back to
+@@ -236,7 +238,10 @@ static void hdcp_remove_display(struct hdcp_workqueue *hdcp_work,
+ 	}
+ 
  	mod_hdcp_remove_display(&hdcp_w->hdcp, aconnector->base.index, &hdcp_w->output);
- 
+-
++	if (hdcp_w->aconnector[conn_index]) {
++		drm_connector_put(&hdcp_w->aconnector[conn_index]->base);
++		hdcp_w->aconnector[conn_index] = NULL;
++	}
  	process_output(hdcp_w);
--	mutex_unlock(&hdcp_w->mutex);
  }
  
- void hdcp_reset_display(struct hdcp_workqueue *hdcp_work, unsigned int link_index)
-@@ -247,7 +245,7 @@ void hdcp_reset_display(struct hdcp_workqueue *hdcp_work, unsigned int link_inde
+@@ -254,6 +259,10 @@ void hdcp_reset_display(struct hdcp_workqueue *hdcp_work, unsigned int link_inde
+ 	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX; conn_index++) {
+ 		hdcp_w->encryption_status[conn_index] =
+ 			MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF;
++		if (hdcp_w->aconnector[conn_index]) {
++			drm_connector_put(&hdcp_w->aconnector[conn_index]->base);
++			hdcp_w->aconnector[conn_index] = NULL;
++		}
+ 	}
+ 
+ 	process_output(hdcp_w);
+@@ -489,6 +498,7 @@ static void update_config(void *handle, struct cp_psp_stream_config *config)
+ 	struct hdcp_workqueue *hdcp_work = handle;
+ 	struct amdgpu_dm_connector *aconnector = config->dm_stream_ctx;
+ 	int link_index = aconnector->dc_link->link_index;
++	unsigned int conn_index = aconnector->base.index;
+ 	struct mod_hdcp_display *display = &hdcp_work[link_index].display;
+ 	struct mod_hdcp_link *link = &hdcp_work[link_index].link;
  	struct hdcp_workqueue *hdcp_w = &hdcp_work[link_index];
- 	unsigned int conn_index;
- 
--	mutex_lock(&hdcp_w->mutex);
-+	guard(mutex)(&hdcp_w->mutex);
- 
- 	mod_hdcp_reset_connection(&hdcp_w->hdcp,  &hdcp_w->output);
- 
-@@ -259,8 +257,6 @@ void hdcp_reset_display(struct hdcp_workqueue *hdcp_work, unsigned int link_inde
- 	}
- 
- 	process_output(hdcp_w);
--
--	mutex_unlock(&hdcp_w->mutex);
- }
- 
- void hdcp_handle_cpirq(struct hdcp_workqueue *hdcp_work, unsigned int link_index)
-@@ -277,7 +273,7 @@ static void event_callback(struct work_struct *work)
- 	hdcp_work = container_of(to_delayed_work(work), struct hdcp_workqueue,
- 				 callback_dwork);
- 
--	mutex_lock(&hdcp_work->mutex);
-+	guard(mutex)(&hdcp_work->mutex);
- 
- 	cancel_delayed_work(&hdcp_work->callback_dwork);
- 
-@@ -285,8 +281,6 @@ static void event_callback(struct work_struct *work)
- 			       &hdcp_work->output);
- 
- 	process_output(hdcp_work);
--
--	mutex_unlock(&hdcp_work->mutex);
- }
- 
- static void event_property_update(struct work_struct *work)
-@@ -323,7 +317,7 @@ static void event_property_update(struct work_struct *work)
- 			continue;
- 
- 		drm_modeset_lock(&dev->mode_config.connection_mutex, NULL);
--		mutex_lock(&hdcp_work->mutex);
-+		guard(mutex)(&hdcp_work->mutex);
- 
- 		if (conn_state->commit) {
- 			ret = wait_for_completion_interruptible_timeout(&conn_state->commit->hw_done,
-@@ -355,7 +349,6 @@ static void event_property_update(struct work_struct *work)
- 			drm_hdcp_update_content_protection(connector,
- 							   DRM_MODE_CONTENT_PROTECTION_DESIRED);
- 		}
--		mutex_unlock(&hdcp_work->mutex);
- 		drm_modeset_unlock(&dev->mode_config.connection_mutex);
- 	}
- }
-@@ -368,7 +361,7 @@ static void event_property_validate(struct work_struct *work)
- 	struct amdgpu_dm_connector *aconnector;
- 	unsigned int conn_index;
- 
--	mutex_lock(&hdcp_work->mutex);
-+	guard(mutex)(&hdcp_work->mutex);
- 
- 	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX;
- 	     conn_index++) {
-@@ -408,8 +401,6 @@ static void event_property_validate(struct work_struct *work)
- 			schedule_work(&hdcp_work->property_update_work);
- 		}
- 	}
--
--	mutex_unlock(&hdcp_work->mutex);
- }
- 
- static void event_watchdog_timer(struct work_struct *work)
-@@ -420,7 +411,7 @@ static void event_watchdog_timer(struct work_struct *work)
- 				 struct hdcp_workqueue,
- 				      watchdog_timer_dwork);
- 
--	mutex_lock(&hdcp_work->mutex);
-+	guard(mutex)(&hdcp_work->mutex);
- 
- 	cancel_delayed_work(&hdcp_work->watchdog_timer_dwork);
- 
-@@ -429,8 +420,6 @@ static void event_watchdog_timer(struct work_struct *work)
- 			       &hdcp_work->output);
- 
- 	process_output(hdcp_work);
--
--	mutex_unlock(&hdcp_work->mutex);
- }
- 
- static void event_cpirq(struct work_struct *work)
-@@ -439,13 +428,11 @@ static void event_cpirq(struct work_struct *work)
- 
- 	hdcp_work = container_of(work, struct hdcp_workqueue, cpirq_work);
- 
--	mutex_lock(&hdcp_work->mutex);
-+	guard(mutex)(&hdcp_work->mutex);
- 
- 	mod_hdcp_process_event(&hdcp_work->hdcp, MOD_HDCP_EVENT_CPIRQ, &hdcp_work->output);
- 
- 	process_output(hdcp_work);
--
--	mutex_unlock(&hdcp_work->mutex);
- }
- 
- void hdcp_destroy(struct kobject *kobj, struct hdcp_workqueue *hdcp_work)
-@@ -479,7 +466,7 @@ static bool enable_assr(void *handle, struct dc_link *link)
- 
- 	dtm_cmd = (struct ta_dtm_shared_memory *)psp->dtm_context.context.mem_context.shared_buf;
- 
--	mutex_lock(&psp->dtm_context.mutex);
-+	guard(mutex)(&psp->dtm_context.mutex);
- 	memset(dtm_cmd, 0, sizeof(struct ta_dtm_shared_memory));
- 
- 	dtm_cmd->cmd_id = TA_DTM_COMMAND__TOPOLOGY_ASSR_ENABLE;
-@@ -494,8 +481,6 @@ static bool enable_assr(void *handle, struct dc_link *link)
- 		res = false;
- 	}
- 
--	mutex_unlock(&psp->dtm_context.mutex);
--
- 	return res;
- }
- 
-@@ -557,13 +542,11 @@ static void update_config(void *handle, struct cp_psp_stream_config *config)
- 			 (!!aconnector->base.state) ?
- 			 aconnector->base.state->hdcp_content_type : -1);
- 
--	mutex_lock(&hdcp_w->mutex);
-+	guard(mutex)(&hdcp_w->mutex);
+@@ -545,7 +555,10 @@ static void update_config(void *handle, struct cp_psp_stream_config *config)
+ 	guard(mutex)(&hdcp_w->mutex);
  
  	mod_hdcp_add_display(&hdcp_w->hdcp, link, display, &hdcp_w->output);
- 
- 	process_output(hdcp_w);
--	mutex_unlock(&hdcp_w->mutex);
 -
++	drm_connector_get(&aconnector->base);
++	if (hdcp_w->aconnector[conn_index])
++		drm_connector_put(&hdcp_w->aconnector[conn_index]->base);
++	hdcp_w->aconnector[conn_index] = aconnector;
+ 	process_output(hdcp_w);
  }
  
- /**
 -- 
 2.39.5
 
