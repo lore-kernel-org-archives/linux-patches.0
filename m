@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A971E1DF6;
-	Wed,  7 May 2025 19:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC051E1DF6;
+	Wed,  7 May 2025 19:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644868; cv=none; b=mjigySwrqydG9Li7jtRLt9h6nhy+3zb4VJke09trLZMxOq9WPXrzOxEGs/tJTwnR8y2Tb//2sdeoPQK27g1lrdWMbeaR6eoA1ohe83TPt1EGKx6VSJJzeT+V+R/EKx2vL2JIFufu2KOTZtsNS/vzgGR38TTAWEpDuluyo0u16Us=
+	t=1746644871; cv=none; b=dDsdCRk895jRzPj5x/MTzhp1bCN+QbnpPEiX4qpNDf7Uc+UX+0i4Y7wenXakCefK6CSymXmZiAIDqWx1iIIxP7AnObkunX2BLnh0sOhWQnLoCqK2QROedv8Ijjck6qvRM4uQXunJLTVGujM03vUkd1foRw/O024JMFgC5gZVxew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644868; c=relaxed/simple;
-	bh=7AzUVJrmF5erQZNpKRABd0WD2YLhO+xEzQcjA1uDud0=;
+	s=arc-20240116; t=1746644871; c=relaxed/simple;
+	bh=K3K9sDxhE8+LqJliPEEXYLGq5IrtA2HmAvaOrh5IzSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DawFpZy3entj8ul2S01nH4PzFeLxC18/TAzuicWtwcq9jA+wLvA81QC6i2kiLR+6AdknKNAHggxB77uaEsNTdv7bbImT54jVVm8Pr0D0nPmgIsCXRqambf6UXi1eiFlw3XzWC3UFsu8kbterPhG4P3/kBHOZTFEdVHrZHUu3/08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GYZ1oQC9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X/Cfd7flPODGd+FQHQjrgToO6tTtBaYQPLi52rvVHrUDacce6GHjSQcJsYScxX72cJOowU+SvYK517uUEVc+KzQXGtT0pxbrZVGvRYeiUocZQn96mbsuv7PbzqcRyQ0LidqI8ZsDEARDr7hZbNBXsqBqTGkTPYm5Ny4HG61lRFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYpVkjyY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYZ1oQC9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE307C4CEE2;
-	Wed,  7 May 2025 19:07:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYpVkjyY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF7BC4CEE2;
+	Wed,  7 May 2025 19:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644868;
-	bh=7AzUVJrmF5erQZNpKRABd0WD2YLhO+xEzQcjA1uDud0=;
+	s=korg; t=1746644871;
+	bh=K3K9sDxhE8+LqJliPEEXYLGq5IrtA2HmAvaOrh5IzSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GYZ1oQC9+Nbdvevb1tgolPbl3/OwMPS6rpkwIbDH/HRfGcDBh1EHKiave8SGDz5M5
-	 0lvI/VVUF1Py1wrjZ5lG64AdmNIGVXvxXpAnLAwGc8i+edx/UxAB/y9ZWHnBn4KZql
-	 h5WE4yfl9SdmZ5tlqbZk9PsQolVuDgwdlI2mhib4=
+	b=cYpVkjyYeHMeEaL7CezIQJNKsdpY0W2YNAEZwML56CqMtJV4r0xQk63p+xIMbfnTw
+	 UQetqAYeQuMVTtK3LHzlItagZ0Jpv/a5xnPlUBdtXboD4dhrREhKHJeoIXDiHn91Hm
+	 lUzXBXbXKR2jivQIzWxgy37eM/iR2UtUlxBDGIqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joachim Priesner <joachim.priesner@web.de>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 003/129] ALSA: usb-audio: Add second USB ID for Jabra Evolve 65 headset
-Date: Wed,  7 May 2025 20:38:59 +0200
-Message-ID: <20250507183813.646381439@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	Dave Chen <davechen@synology.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 004/129] btrfs: fix COW handling in run_delalloc_nocow()
+Date: Wed,  7 May 2025 20:39:00 +0200
+Message-ID: <20250507183813.704738907@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -50,34 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joachim Priesner <joachim.priesner@web.de>
+From: Dave Chen <davechen@synology.com>
 
-commit 1149719442d28c96dc63cad432b5a6db7c300e1a upstream.
+commit be3f1938d3e6ea8186f0de3dd95245dda4f22c1e upstream.
 
-There seem to be multiple USB device IDs used for these;
-the one I have reports as 0b0e:030c when powered on.
-(When powered off, it reports as 0b0e:0311.)
+In run_delalloc_nocow(), when the found btrfs_key's offset > cur_offset,
+it indicates a gap between the current processing region and
+the next file extent. The original code would directly jump to
+the "must_cow" label, which increments the slot and forces a fallback
+to COW. This behavior might skip an extent item and result in an
+overestimated COW fallback range.
 
-Signed-off-by: Joachim Priesner <joachim.priesner@web.de>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250428053606.9237-1-joachim.priesner@web.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This patch modifies the logic so that when a gap is detected:
+
+- If no COW range is already being recorded (cow_start is unset),
+  cow_start is set to cur_offset.
+
+- cur_offset is then advanced to the beginning of the next extent.
+
+- Instead of jumping to "must_cow", control flows directly to
+  "next_slot" so that the same extent item can be reexamined properly.
+
+The change ensures that we accurately account for the extent gap and
+avoid accidentally extending the range that needs to fallback to COW.
+
+CC: stable@vger.kernel.org # 6.6+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Dave Chen <davechen@synology.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/format.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/inode.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/sound/usb/format.c
-+++ b/sound/usb/format.c
-@@ -263,7 +263,8 @@ static int parse_audio_format_rates_v1(s
- 	}
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -2058,12 +2058,13 @@ next_slot:
  
- 	/* Jabra Evolve 65 headset */
--	if (chip->usb_id == USB_ID(0x0b0e, 0x030b)) {
-+	if (chip->usb_id == USB_ID(0x0b0e, 0x030b) ||
-+	    chip->usb_id == USB_ID(0x0b0e, 0x030c)) {
- 		/* only 48kHz for playback while keeping 16kHz for capture */
- 		if (fp->nr_rates != 1)
- 			return set_fixed_rate(fp, 48000, SNDRV_PCM_RATE_48000);
+ 		/*
+ 		 * If the found extent starts after requested offset, then
+-		 * adjust extent_end to be right before this extent begins
++		 * adjust cur_offset to be right before this extent begins.
+ 		 */
+ 		if (found_key.offset > cur_offset) {
+-			extent_end = found_key.offset;
+-			extent_type = 0;
+-			goto must_cow;
++			if (cow_start == (u64)-1)
++				cow_start = cur_offset;
++			cur_offset = found_key.offset;
++			goto next_slot;
+ 		}
+ 
+ 		/*
 
 
