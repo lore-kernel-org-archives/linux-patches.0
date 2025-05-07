@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDF02144BF;
-	Wed,  7 May 2025 19:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A401E22E9;
+	Wed,  7 May 2025 19:01:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644475; cv=none; b=i6n8wEk/6Jcfy1u7E5fgqzC5vK8/47iGRaS23fdVyLHLxozdbTMBhHRhqSPAE08mQoPInA+kppO8LvN8ct3KGplE0WG1ozpX9ZnWOwnLISSouxg2686m5mjT+Wtl/W97mN1ZF0NxRqotfEqLDwFglXJsSqCNOI1GkX+pJq1y/Fw=
+	t=1746644481; cv=none; b=g5gqklU51GSBN+UAO82pbeOJxuSyqoefXvVQ4qaYC2+gLnt5kZz31mMs29N3O+EW4AX0ECh08ouKg4pUfdAZivyKUFD5EDbkUe3w7hF3fFRGXqi6bC/xBQ51rVEmoI5sAsm/Dk4KYPj1Y5u4up4NUeAc05B5FmLc95hDqqS15uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644475; c=relaxed/simple;
-	bh=cq7+mUz3uSU7YzTc7idC4tqntGSzVNcBgIzWQdHIMUU=;
+	s=arc-20240116; t=1746644481; c=relaxed/simple;
+	bh=W/MDSvhMkZcKvUfPjFP3Q3vkibbJR7cp1/3zW5HLx/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PEHsnktIDYYXrQMjaKLlTalRO8cw7eTw/O8kX0g+eusoPoQaxy/zlyx44GE5f3sqTfJqRrZq5C4o7mQUg82BUaIr9bQekBbUKH+dCjIooxxky9uaQaEtf36yHGZStmbgf1DcBbGGGszB6QQuz5WSzx8n2VXI/vrk0mBlxSlTmuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSc7zZ7X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NK/GsclYdOmEeBuddWTmRSBY8NhkI+eTTdFvaHGzz0WLiZNiwhY+OVRf3j7IrHckrMi35X7WwfCAKRHd8gFtV9vraPC/r6XLliFJk6XdCw7ZXRt7DC5eKdqBpJQboJH3LAAbFd4+CRXuQYXbAbc1NoAIAPYvLcQFeEBPXS48u5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ec54N2mN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSc7zZ7X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE78C4CEE2;
-	Wed,  7 May 2025 19:01:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ec54N2mN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE38BC4CEE2;
+	Wed,  7 May 2025 19:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644475;
-	bh=cq7+mUz3uSU7YzTc7idC4tqntGSzVNcBgIzWQdHIMUU=;
+	s=korg; t=1746644478;
+	bh=W/MDSvhMkZcKvUfPjFP3Q3vkibbJR7cp1/3zW5HLx/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cSc7zZ7XARFVUyDtw2JVq9bG+XXH0HtgLdZa8t7FVpYbtjaHKG2M0wIN09XMNsGkf
-	 IlxreIKfDp6iinwSJIrWbAK+fbtnndw7ue6qF/5CWyQz+aZJYRbzBWpnCmob3ReF9h
-	 uK8oAB5saONHpYFsT1YXUCAFiO0AuNlQSiucxlzk=
+	b=Ec54N2mNY9L/j8XvKmx7PG9t2BoTEd52s8VlDhVrwsZ/QI0xJjUJqs/y3VDWX0QHh
+	 RSD6/kUv6tJ9rbiRi5DAAs/wzol1er4RZzNRW1tbAieMQXnoUUz5IHffaGQ+7xIe05
+	 MBvkeGvdXKI+Sa0TsNW5GCmLOLZp2aDup+18Or1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sheetal <sheetal@nvidia.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 054/164] ASoC: soc-pcm: Fix hw_params() and DAPM widget sequence
-Date: Wed,  7 May 2025 20:38:59 +0200
-Message-ID: <20250507183823.124077427@linuxfoundation.org>
+	Wei Yang <richard.weiyang@gmail.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Yajun Deng <yajun.deng@linux.dev>
+Subject: [PATCH 6.12 026/164] mm/memblock: repeat setting reserved region nid if array is doubled
+Date: Wed,  7 May 2025 20:38:31 +0200
+Message-ID: <20250507183821.928003093@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -51,69 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sheetal <sheetal@nvidia.com>
+From: Wei Yang <richard.weiyang@gmail.com>
 
-[ Upstream commit 9aff2e8df240e84a36f2607f98a0a9924a24e65d ]
+commit eac8ea8736ccc09513152d970eb2a42ed78e87e8 upstream.
 
-Issue:
- When multiple audio streams share a common BE DAI, the BE DAI
- widget can be powered up before its hardware parameters are configured.
- This incorrect sequence leads to intermittent pcm_write errors.
+Commit 61167ad5fecd ("mm: pass nid to reserve_bootmem_region()") introduce
+a way to set nid to all reserved region.
 
- For example, the below Tegra use-case throws an error:
-  aplay(2 streams) -> AMX(mux) -> ADX(demux) -> arecord(2 streams),
-  here, 'AMX TX' and 'ADX RX' are common BE DAIs.
+But there is a corner case it will leave some region with invalid nid.
+When memblock_set_node() doubles the array of memblock.reserved, it may
+lead to a new reserved region before current position. The new region
+will be left with an invalid node id.
 
-For above usecase when failure happens below sequence is observed:
- aplay(1) FE open()
-  - BE DAI callbacks added to the list
-  - BE DAI state = SND_SOC_DPCM_STATE_OPEN
- aplay(2) FE open()
-  - BE DAI callbacks are not added to the list as the state is
-    already SND_SOC_DPCM_STATE_OPEN during aplay(1) FE open().
- aplay(2) FE hw_params()
-  - BE DAI hw_params() callback ignored
- aplay(2) FE prepare()
-  - Widget is powered ON without BE DAI hw_params() call
- aplay(1) FE hw_params()
-  - BE DAI hw_params() is now called
+Repeat the process when detecting it.
 
-Fix:
- Add BE DAIs in the list if its state is either SND_SOC_DPCM_STATE_OPEN
- or SND_SOC_DPCM_STATE_HW_PARAMS as well.
-
-It ensures the widget is powered ON after BE DAI hw_params() callback.
-
-Fixes: 0c25db3f7621 ("ASoC: soc-pcm: Don't reconnect an already active BE")
-Signed-off-by: Sheetal <sheetal@nvidia.com>
-Link: https://patch.msgid.link/20250404105953.2784819-1-sheetal@nvidia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 61167ad5fecd ("mm: pass nid to reserve_bootmem_region()")
+Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
+CC: Mike Rapoport <rppt@kernel.org>
+CC: Yajun Deng <yajun.deng@linux.dev>
+CC: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250318071948.23854-3-richard.weiyang@gmail.com
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/soc-pcm.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ mm/memblock.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
-index 1102599403c53..0e21ff9f7b74e 100644
---- a/sound/soc/soc-pcm.c
-+++ b/sound/soc/soc-pcm.c
-@@ -1633,10 +1633,13 @@ static int dpcm_add_paths(struct snd_soc_pcm_runtime *fe, int stream,
- 		/*
- 		 * Filter for systems with 'component_chaining' enabled.
- 		 * This helps to avoid unnecessary re-configuration of an
--		 * already active BE on such systems.
-+		 * already active BE on such systems and ensures the BE DAI
-+		 * widget is powered ON after hw_params() BE DAI callback.
- 		 */
- 		if (fe->card->component_chaining &&
- 		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_NEW) &&
-+		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_OPEN) &&
-+		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_HW_PARAMS) &&
- 		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_CLOSE))
- 			continue;
+--- a/mm/memblock.c
++++ b/mm/memblock.c
+@@ -2160,11 +2160,14 @@ static void __init memmap_init_reserved_
+ 	struct memblock_region *region;
+ 	phys_addr_t start, end;
+ 	int nid;
++	unsigned long max_reserved;
  
--- 
-2.39.5
-
+ 	/*
+ 	 * set nid on all reserved pages and also treat struct
+ 	 * pages for the NOMAP regions as PageReserved
+ 	 */
++repeat:
++	max_reserved = memblock.reserved.max;
+ 	for_each_mem_region(region) {
+ 		nid = memblock_get_region_node(region);
+ 		start = region->base;
+@@ -2175,6 +2178,13 @@ static void __init memmap_init_reserved_
+ 
+ 		memblock_set_node(start, region->size, &memblock.reserved, nid);
+ 	}
++	/*
++	 * 'max' is changed means memblock.reserved has been doubled its
++	 * array, which may result a new reserved region before current
++	 * 'start'. Now we should repeat the procedure to set its node id.
++	 */
++	if (max_reserved != memblock.reserved.max)
++		goto repeat;
+ 
+ 	/*
+ 	 * initialize struct pages for reserved regions that don't have
 
 
