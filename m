@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD5628DF1B;
-	Wed,  7 May 2025 18:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB8628DF45;
+	Wed,  7 May 2025 18:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643285; cv=none; b=jbbFjHAY1M2tC7FYM8kiO6wAghyylT/z8iNzvx0vJkbmdl02HpADgovAS5s/2ukI3/6YmKiFKNbJHfUz7aRxcCIicCcrzlBEIXp8ko3Cxwo/mcH+CPo+9/JtTFwwRgw5/NylBt4A6OeybIbpcSKIEf+SnkXfUaXFGEbyqzSYz5Y=
+	t=1746643288; cv=none; b=nqwC/eOuoUm/sMtvzfOkcWpIVsR+36D6XSzIFnRMeT0nS0aqo3xS0a5tomCQiuf7kca6XMpowX923lYQDtVjFP/JJMeGXZLOfzhN9zDVNF5Dk6aXRUhbxAduHng0ELIqDSsPa7OsVg8DEHZRTpRlRfGd02/mdYLDXTDQfXoAR+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643285; c=relaxed/simple;
-	bh=iO0bKtEsGPZbYFH0Hg4rL+BK0ex7cYz7G4lT2o9tPxw=;
+	s=arc-20240116; t=1746643288; c=relaxed/simple;
+	bh=5c2sqvYnbqTKW6JpEWfZj8SjNl60nn+2iuq383huVwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H6lwPiVl87KF+uZ+HVhRsZ3dCapbvh8dF6PKHc2+Y4hhTURCj61g7++zFmbIJDT/OF5HHdy7zto8bGhcouih4U/TKaiNjaI9WBI5MSPgKVBeqPdhKU//IzTpapZoC0mYXqh3GabYBb4aPBujfUYdXA0co3RwV79pOPaxfHeEweI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IzTvRk64; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dPhdF8MOV1WA5wz4gX7Maxlm+3KnpkyWtly5wxpCFCZvyN/F0d+u7ZR3GP/q8vai0q/aCipXmm3qtJcimRdU9+k9zYQLlGWYykOlyLsfplizxpotlUTBkxWURdavrU4aoYfqbHKI25SooPw7qrK2VpzomzKRnMbqRG+QocHZjvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bIGpDf7o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IzTvRk64"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8664CC4CEE2;
-	Wed,  7 May 2025 18:41:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bIGpDf7o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC628C4CEE2;
+	Wed,  7 May 2025 18:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643285;
-	bh=iO0bKtEsGPZbYFH0Hg4rL+BK0ex7cYz7G4lT2o9tPxw=;
+	s=korg; t=1746643288;
+	bh=5c2sqvYnbqTKW6JpEWfZj8SjNl60nn+2iuq383huVwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IzTvRk64+jVNNc4tjmFg02+0+WNHNpSEbBhJlc0UBEu+eNmljVO0mewiZ0UcfBJbn
-	 l4QxI/XRs8UvOlHmlvqJ0co3HCAHxxTUQbUkyLDGQ8fMoY++/VypPRjF+RUUwaT2Gp
-	 qHm4YKFzzZDMC+9Mqccqdfmcwg3uQ0TtjIH+7YE8=
+	b=bIGpDf7oeiH8RWlAk/BqniNnuhTVsT7YAOzCifJHDy5a4pHamblyurnqOWjNL4Fo/
+	 o2GUviAzlshsqMfhUmUiamXCWhPDJsXxXVTfjM31rhFYyhTN5CrIq1Ky6nOgsObyl0
+	 +nw3ZB6bouBgIewAY4peE28SkEOqMXLlcm78r27A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joachim Priesner <joachim.priesner@web.de>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 01/55] ALSA: usb-audio: Add second USB ID for Jabra Evolve 65 headset
-Date: Wed,  7 May 2025 20:39:02 +0200
-Message-ID: <20250507183759.109735334@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.15 10/55] wifi: brcm80211: fmac: Add error handling for brcmf_usb_dl_writeimage()
+Date: Wed,  7 May 2025 20:39:11 +0200
+Message-ID: <20250507183759.466542047@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183759.048732653@linuxfoundation.org>
 References: <20250507183759.048732653@linuxfoundation.org>
@@ -50,34 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joachim Priesner <joachim.priesner@web.de>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 1149719442d28c96dc63cad432b5a6db7c300e1a upstream.
+commit 8e089e7b585d95122c8122d732d1d5ef8f879396 upstream.
 
-There seem to be multiple USB device IDs used for these;
-the one I have reports as 0b0e:030c when powered on.
-(When powered off, it reports as 0b0e:0311.)
+The function brcmf_usb_dl_writeimage() calls the function
+brcmf_usb_dl_cmd() but dose not check its return value. The
+'state.state' and the 'state.bytes' are uninitialized if the
+function brcmf_usb_dl_cmd() fails. It is dangerous to use
+uninitialized variables in the conditions.
 
-Signed-off-by: Joachim Priesner <joachim.priesner@web.de>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250428053606.9237-1-joachim.priesner@web.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Add error handling for brcmf_usb_dl_cmd() to jump to error
+handling path if the brcmf_usb_dl_cmd() fails and the
+'state.state' and the 'state.bytes' are uninitialized.
+
+Improve the error message to report more detailed error
+information.
+
+Fixes: 71bb244ba2fd ("brcm80211: fmac: add USB support for bcm43235/6/8 chipsets")
+Cc: stable@vger.kernel.org # v3.4+
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20250422042203.2259-1-vulab@iscas.ac.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/format.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/sound/usb/format.c
-+++ b/sound/usb/format.c
-@@ -263,7 +263,8 @@ static int parse_audio_format_rates_v1(s
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+@@ -903,14 +903,16 @@ brcmf_usb_dl_writeimage(struct brcmf_usb
  	}
  
- 	/* Jabra Evolve 65 headset */
--	if (chip->usb_id == USB_ID(0x0b0e, 0x030b)) {
-+	if (chip->usb_id == USB_ID(0x0b0e, 0x030b) ||
-+	    chip->usb_id == USB_ID(0x0b0e, 0x030c)) {
- 		/* only 48kHz for playback while keeping 16kHz for capture */
- 		if (fp->nr_rates != 1)
- 			return set_fixed_rate(fp, 48000, SNDRV_PCM_RATE_48000);
+ 	/* 1) Prepare USB boot loader for runtime image */
+-	brcmf_usb_dl_cmd(devinfo, DL_START, &state, sizeof(state));
++	err = brcmf_usb_dl_cmd(devinfo, DL_START, &state, sizeof(state));
++	if (err)
++		goto fail;
+ 
+ 	rdlstate = le32_to_cpu(state.state);
+ 	rdlbytes = le32_to_cpu(state.bytes);
+ 
+ 	/* 2) Check we are in the Waiting state */
+ 	if (rdlstate != DL_WAITING) {
+-		brcmf_err("Failed to DL_START\n");
++		brcmf_err("Invalid DL state: %u\n", rdlstate);
+ 		err = -EINVAL;
+ 		goto fail;
+ 	}
 
 
