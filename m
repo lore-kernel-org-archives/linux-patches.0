@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A213028DB59;
-	Wed,  7 May 2025 18:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B8728DF30;
+	Wed,  7 May 2025 19:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644398; cv=none; b=OSGXPvbnoBopMiqjguW0BjLFseDnsYLyY7C0RxbwEVMjPFdRtmeKR4ri1C9JWhcdvcgiX21UI8z5Tkp2Hrc7ql1GJuPAFc3J4WgqFBSy1dmVVfQKc4CGLeChZexEGY2dGX+F//7D3t8KWJZxakbWIos09CnU9LmAOlvYPaOtvoA=
+	t=1746644401; cv=none; b=K11EMY6OOiuCraoOpmGmUnRwhqdoNhvMgYyNqny8lcfaqWd40M089zBTkyydfNeyjm5TI4dML0y+Hqe4DbWDqWclmweYX/8Y/I6z9Vy+ZzFMPotC9Y6e0wY/e/8MNXEweV8preHR6VL30n4MYst5JByps5joNXJYVjnMl7bixCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644398; c=relaxed/simple;
-	bh=s6QI1Wndnb8+byKDdCHhWi1f/idfAVZcUtGTGZby/dQ=;
+	s=arc-20240116; t=1746644401; c=relaxed/simple;
+	bh=I7NP2PZhu59iIs/jmH3amjRvv5Fm1CMsZZJ0Pf/EBZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p1bNK6+wlDGHNbtTVRJheCgJgMMLGauD6seuIc3uHk65eIWftvXxLita7/nAjdCEjTYXMuzARDJp+2AGRNLTy8XAJbaoeshWzSkVpRUi3Qq7jyhydYje6vFSLV3vlscFnNaDbl9Ln3p6k7N09R7mB6+K4d7t2dwEFrXoJlN/ywM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWmc/uVt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nqoc48XpEC0bvlmmlDD7Koi0rAtxtd6H0XAzDWB3m38L4FU7QR9aIuRUmHyKYHOS7J/tHkF4HjmlBsX/uGfy1sKdn3bD+IjIWvjf/OrNWn7S3c9h2f1Z9kj3ajwth+lf85MzsGFrN/likGwqLZew0enlLlgXlfODctB4adr6h3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HAm05tco; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWmc/uVt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E65C4CEE2;
-	Wed,  7 May 2025 18:59:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HAm05tco"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B1AC4CEE2;
+	Wed,  7 May 2025 19:00:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644398;
-	bh=s6QI1Wndnb8+byKDdCHhWi1f/idfAVZcUtGTGZby/dQ=;
+	s=korg; t=1746644401;
+	bh=I7NP2PZhu59iIs/jmH3amjRvv5Fm1CMsZZJ0Pf/EBZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWmc/uVtkyFvbwJkwAphhRKRWNbmSgsZJZv8o+ND89guSz0bym6oO9QmwkvKr6N8J
-	 Y3nK0xEFwrTx3GR7v7eyJfoY4W08+51msCKLD9TWugQcBLXrkIjhrikSEAxinXpEmn
-	 eAH2dWpEdaAS3imTvNdMDet2ySRc2yoC7fcIOdXM=
+	b=HAm05tcosutoQQ8XyXrOXL+X1snYmcWzNXpaIjwYQx/hVCMQm/PXJt/zp36i03J+E
+	 5VuZJKM6+bH0wUIES0t9sPZDscsv6dH3EUr3aQ3j7v6rPFo8eIc4vpQ8MRzCzLlkNH
+	 M7G/CdG4rr2pQtoBqvG88NMomkffrZXonw06fZek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vishal Badole <Vishal.Badole@amd.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 023/164] amd-xgbe: Fix to ensure dependent features are toggled with RX checksum offload
-Date: Wed,  7 May 2025 20:38:28 +0200
-Message-ID: <20250507183821.806619959@linuxfoundation.org>
+	LongPing Wei <weilongping@oppo.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.12 032/164] dm-bufio: dont schedule in atomic context
+Date: Wed,  7 May 2025 20:38:37 +0200
+Message-ID: <20250507183822.176723386@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -51,135 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishal Badole <Vishal.Badole@amd.com>
+From: LongPing Wei <weilongping@oppo.com>
 
-commit f04dd30f1bef1ed2e74a4050af6e5e5e3869bac3 upstream.
+commit a3d8f0a7f5e8b193db509c7191fefeed3533fc44 upstream.
 
-According to the XGMAC specification, enabling features such as Layer 3
-and Layer 4 Packet Filtering, Split Header and Virtualized Network support
-automatically selects the IPC Full Checksum Offload Engine on the receive
-side.
+A BUG was reported as below when CONFIG_DEBUG_ATOMIC_SLEEP and
+try_verify_in_tasklet are enabled.
+[  129.444685][  T934] BUG: sleeping function called from invalid context at drivers/md/dm-bufio.c:2421
+[  129.444723][  T934] in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 934, name: kworker/1:4
+[  129.444740][  T934] preempt_count: 201, expected: 0
+[  129.444756][  T934] RCU nest depth: 0, expected: 0
+[  129.444781][  T934] Preemption disabled at:
+[  129.444789][  T934] [<ffffffd816231900>] shrink_work+0x21c/0x248
+[  129.445167][  T934] kernel BUG at kernel/sched/walt/walt_debug.c:16!
+[  129.445183][  T934] Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
+[  129.445204][  T934] Skip md ftrace buffer dump for: 0x1609e0
+[  129.447348][  T934] CPU: 1 PID: 934 Comm: kworker/1:4 Tainted: G        W  OE      6.6.56-android15-8-o-g6f82312b30b9-debug #1 1400000003000000474e5500b3187743670464e8
+[  129.447362][  T934] Hardware name: Qualcomm Technologies, Inc. Parrot QRD, Alpha-M (DT)
+[  129.447373][  T934] Workqueue: dm_bufio_cache shrink_work
+[  129.447394][  T934] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  129.447406][  T934] pc : android_rvh_schedule_bug+0x0/0x8 [sched_walt_debug]
+[  129.447435][  T934] lr : __traceiter_android_rvh_schedule_bug+0x44/0x6c
+[  129.447451][  T934] sp : ffffffc0843dbc90
+[  129.447459][  T934] x29: ffffffc0843dbc90 x28: ffffffffffffffff x27: 0000000000000c8b
+[  129.447479][  T934] x26: 0000000000000040 x25: ffffff804b3d6260 x24: ffffffd816232b68
+[  129.447497][  T934] x23: ffffff805171c5b4 x22: 0000000000000000 x21: ffffffd816231900
+[  129.447517][  T934] x20: ffffff80306ba898 x19: 0000000000000000 x18: ffffffc084159030
+[  129.447535][  T934] x17: 00000000d2b5dd1f x16: 00000000d2b5dd1f x15: ffffffd816720358
+[  129.447554][  T934] x14: 0000000000000004 x13: ffffff89ef978000 x12: 0000000000000003
+[  129.447572][  T934] x11: ffffffd817a823c4 x10: 0000000000000202 x9 : 7e779c5735de9400
+[  129.447591][  T934] x8 : ffffffd81560d004 x7 : 205b5d3938373434 x6 : ffffffd8167397c8
+[  129.447610][  T934] x5 : 0000000000000000 x4 : 0000000000000001 x3 : ffffffc0843db9e0
+[  129.447629][  T934] x2 : 0000000000002f15 x1 : 0000000000000000 x0 : 0000000000000000
+[  129.447647][  T934] Call trace:
+[  129.447655][  T934]  android_rvh_schedule_bug+0x0/0x8 [sched_walt_debug 1400000003000000474e550080cce8a8a78606b6]
+[  129.447681][  T934]  __might_resched+0x190/0x1a8
+[  129.447694][  T934]  shrink_work+0x180/0x248
+[  129.447706][  T934]  process_one_work+0x260/0x624
+[  129.447718][  T934]  worker_thread+0x28c/0x454
+[  129.447729][  T934]  kthread+0x118/0x158
+[  129.447742][  T934]  ret_from_fork+0x10/0x20
+[  129.447761][  T934] Code: ???????? ???????? ???????? d2b5dd1f (d4210000)
+[  129.447772][  T934] ---[ end trace 0000000000000000 ]---
 
-When RX checksum offload is disabled, these dependent features must also
-be disabled to prevent abnormal behavior caused by mismatched feature
-dependencies.
+dm_bufio_lock will call spin_lock_bh when try_verify_in_tasklet
+is enabled, and __scan will be called in atomic context.
 
-Ensure that toggling RX checksum offload (disabling or enabling) properly
-disables or enables all dependent features, maintaining consistent and
-expected behavior in the network device.
-
+Fixes: 7cd326747f46 ("dm bufio: remove dm_bufio_cond_resched()")
+Signed-off-by: LongPing Wei <weilongping@oppo.com>
 Cc: stable@vger.kernel.org
-Fixes: 1a510ccf5869 ("amd-xgbe: Add support for VXLAN offload capabilities")
-Signed-off-by: Vishal Badole <Vishal.Badole@amd.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250424130248.428865-1-Vishal.Badole@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-desc.c |    9 +++++++--
- drivers/net/ethernet/amd/xgbe/xgbe-dev.c  |   24 ++++++++++++++++++++++--
- drivers/net/ethernet/amd/xgbe/xgbe-drv.c  |   11 +++++++++--
- drivers/net/ethernet/amd/xgbe/xgbe.h      |    4 ++++
- 4 files changed, 42 insertions(+), 6 deletions(-)
+ drivers/md/dm-bufio.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/amd/xgbe/xgbe-desc.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-desc.c
-@@ -373,8 +373,13 @@ static int xgbe_map_rx_buffer(struct xgb
+--- a/drivers/md/dm-bufio.c
++++ b/drivers/md/dm-bufio.c
+@@ -68,6 +68,8 @@
+ #define LIST_DIRTY	1
+ #define LIST_SIZE	2
+ 
++#define SCAN_RESCHED_CYCLE	16
++
+ /*--------------------------------------------------------------*/
+ 
+ /*
+@@ -2414,7 +2416,12 @@ static void __scan(struct dm_bufio_clien
+ 
+ 			atomic_long_dec(&c->need_shrink);
+ 			freed++;
+-			cond_resched();
++
++			if (unlikely(freed % SCAN_RESCHED_CYCLE == 0)) {
++				dm_bufio_unlock(c);
++				cond_resched();
++				dm_bufio_lock(c);
++			}
+ 		}
  	}
- 
- 	/* Set up the header page info */
--	xgbe_set_buffer_data(&rdata->rx.hdr, &ring->rx_hdr_pa,
--			     XGBE_SKB_ALLOC_SIZE);
-+	if (pdata->netdev->features & NETIF_F_RXCSUM) {
-+		xgbe_set_buffer_data(&rdata->rx.hdr, &ring->rx_hdr_pa,
-+				     XGBE_SKB_ALLOC_SIZE);
-+	} else {
-+		xgbe_set_buffer_data(&rdata->rx.hdr, &ring->rx_hdr_pa,
-+				     pdata->rx_buf_size);
-+	}
- 
- 	/* Set up the buffer page info */
- 	xgbe_set_buffer_data(&rdata->rx.buf, &ring->rx_buf_pa,
---- a/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
-@@ -320,6 +320,18 @@ static void xgbe_config_sph_mode(struct
- 	XGMAC_IOWRITE_BITS(pdata, MAC_RCR, HDSMS, XGBE_SPH_HDSMS_SIZE);
  }
- 
-+static void xgbe_disable_sph_mode(struct xgbe_prv_data *pdata)
-+{
-+	unsigned int i;
-+
-+	for (i = 0; i < pdata->channel_count; i++) {
-+		if (!pdata->channel[i]->rx_ring)
-+			break;
-+
-+		XGMAC_DMA_IOWRITE_BITS(pdata->channel[i], DMA_CH_CR, SPH, 0);
-+	}
-+}
-+
- static int xgbe_write_rss_reg(struct xgbe_prv_data *pdata, unsigned int type,
- 			      unsigned int index, unsigned int val)
- {
-@@ -3545,8 +3557,12 @@ static int xgbe_init(struct xgbe_prv_dat
- 	xgbe_config_tx_coalesce(pdata);
- 	xgbe_config_rx_buffer_size(pdata);
- 	xgbe_config_tso_mode(pdata);
--	xgbe_config_sph_mode(pdata);
--	xgbe_config_rss(pdata);
-+
-+	if (pdata->netdev->features & NETIF_F_RXCSUM) {
-+		xgbe_config_sph_mode(pdata);
-+		xgbe_config_rss(pdata);
-+	}
-+
- 	desc_if->wrapper_tx_desc_init(pdata);
- 	desc_if->wrapper_rx_desc_init(pdata);
- 	xgbe_enable_dma_interrupts(pdata);
-@@ -3702,5 +3718,9 @@ void xgbe_init_function_ptrs_dev(struct
- 	hw_if->disable_vxlan = xgbe_disable_vxlan;
- 	hw_if->set_vxlan_id = xgbe_set_vxlan_id;
- 
-+	/* For Split Header*/
-+	hw_if->enable_sph = xgbe_config_sph_mode;
-+	hw_if->disable_sph = xgbe_disable_sph_mode;
-+
- 	DBGPR("<--xgbe_init_function_ptrs\n");
- }
---- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-@@ -2257,10 +2257,17 @@ static int xgbe_set_features(struct net_
- 	if (ret)
- 		return ret;
- 
--	if ((features & NETIF_F_RXCSUM) && !rxcsum)
-+	if ((features & NETIF_F_RXCSUM) && !rxcsum) {
-+		hw_if->enable_sph(pdata);
-+		hw_if->enable_vxlan(pdata);
- 		hw_if->enable_rx_csum(pdata);
--	else if (!(features & NETIF_F_RXCSUM) && rxcsum)
-+		schedule_work(&pdata->restart_work);
-+	} else if (!(features & NETIF_F_RXCSUM) && rxcsum) {
-+		hw_if->disable_sph(pdata);
-+		hw_if->disable_vxlan(pdata);
- 		hw_if->disable_rx_csum(pdata);
-+		schedule_work(&pdata->restart_work);
-+	}
- 
- 	if ((features & NETIF_F_HW_VLAN_CTAG_RX) && !rxvlan)
- 		hw_if->enable_rx_vlan_stripping(pdata);
---- a/drivers/net/ethernet/amd/xgbe/xgbe.h
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe.h
-@@ -865,6 +865,10 @@ struct xgbe_hw_if {
- 	void (*enable_vxlan)(struct xgbe_prv_data *);
- 	void (*disable_vxlan)(struct xgbe_prv_data *);
- 	void (*set_vxlan_id)(struct xgbe_prv_data *);
-+
-+	/* For Split Header */
-+	void (*enable_sph)(struct xgbe_prv_data *pdata);
-+	void (*disable_sph)(struct xgbe_prv_data *pdata);
- };
- 
- /* This structure represents implementation specific routines for an
 
 
