@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A229D214813;
-	Wed,  7 May 2025 18:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B43E2153C6;
+	Wed,  7 May 2025 18:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644170; cv=none; b=l++xMi1Nx7qvNSs8+wk1krO8wIB5W/hRZni/r7BMo6z6tsVOVnJPlZCsy+gzeeck75xpJPr3tY14aV29YZaoGJW2AytlJj+Yv0lB4FOI4WeCctLu3XbzDvBTIM5kHJVGqvGPiD+CcfyJIUa7PY6mZoPcueKNkgLGERY6JhU1u8I=
+	t=1746644174; cv=none; b=elidY2XMQu65AmJQJDc5irydqfYQmeN6+0Pdp748ToxLgjwykOxAL1GoH8k7SdA0F4KgUgkloNlhACf3UiEkpQK9sD6R+EOGwtznrP0JppOU5NwU0VtY8CfSe0kR9gAUQN1WycTnaBboFXbxIBi4caYz8B/2GRj5oqPtfnItx0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644170; c=relaxed/simple;
-	bh=K8uJBeRSXMp0aBHW8eCheMnQzvJYdgC+k9lntSfsaCM=;
+	s=arc-20240116; t=1746644174; c=relaxed/simple;
+	bh=yzrKNR/RGq3vxdgAt42HMN7UsDHwX+uoL7YkiJ0Bihs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O48+nVxyENtTC55Latvt+YrtgERkk6H1VE/LUx0xJdNb/umwSq4Ut/EAH2HBA6Vrge4immkJdcCsApbaIf4Fx4X7EHwTunTZRgGZfF4O8HfpECT0JB5Z4Hiw2iiCK4snYCeU7Utq+xG2lJg+aR0V3arIKwK5n/o9msZhWSUucgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nDgLEERT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MSCBFY+NxoYWccuUUDMZQas4+daRG5rPnXGjrQa4aVDD738q/QuXZja/5SZhHCe0Vds52ZCHNiJr+AxAqSFKtiyDNBVNDqAMwKGpfm5BxWQ2Zf5oa/YN+4EjuqGcnmrzSudN2ayVhBEOb7C+F4FJyKtSSapmph5kXhlVd4GQNMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jhw+XLiR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nDgLEERT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94397C4CEE2;
-	Wed,  7 May 2025 18:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhw+XLiR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D7FC4CEE2;
+	Wed,  7 May 2025 18:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644170;
-	bh=K8uJBeRSXMp0aBHW8eCheMnQzvJYdgC+k9lntSfsaCM=;
+	s=korg; t=1746644174;
+	bh=yzrKNR/RGq3vxdgAt42HMN7UsDHwX+uoL7YkiJ0Bihs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nDgLEERTmjE3NjqOGiccavf9QXmfBEH3CNehbwLpnLk7i+LHotVsF+GVZMuL9Wpc9
-	 1Cyj/npTrEOW0ysAyeCeAN0mqEqGX+uIBwVNJE6dQqnhEmMtgoLKCy6GmY1OgE3v0f
-	 xiUF9YpYkR5Zu52c7RKuQMODgrYETfs6rD4Gv0bs=
+	b=jhw+XLiRdqY12+HfEKQO0DX/DI33ZfFhuUZhcwDhhsF0RcjwIPP4oyQs4MxLqPwCb
+	 koAmnUfg5PJBfnZwz8aGiHr43qEbQ8/BW8zqNlRbY5a+IgkmmBTcGYqR8mlyhzLLcY
+	 Cuz4u3lKlxiqrbQxY42blgEQwo2F7RZXUIcuxtiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
+	Yonglong Liu <liuyonglong@huawei.com>,
 	Jijie Shao <shaojijie@huawei.com>,
-	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 140/183] net: hns3: store rx VLAN tag offload state for VF
-Date: Wed,  7 May 2025 20:39:45 +0200
-Message-ID: <20250507183830.536929726@linuxfoundation.org>
+Subject: [PATCH 6.14 141/183] net: hns3: fix an interrupt residual problem
+Date: Wed,  7 May 2025 20:39:46 +0200
+Message-ID: <20250507183830.581708710@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -53,110 +52,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Yonglong Liu <liuyonglong@huawei.com>
 
-[ Upstream commit ef2383d078edcbe3055032436b16cdf206f26de2 ]
+[ Upstream commit 8e6b9c6ea5a55045eed6526d8ee49e93192d1a58 ]
 
-The VF driver missed to store the rx VLAN tag strip state when
-user change the rx VLAN tag offload state. And it will default
-to enable the rx vlan tag strip when re-init VF device after
-reset. So if user disable rx VLAN tag offload, and trig reset,
-then the HW will still strip the VLAN tag from packet nad fill
-into RX BD, but the VF driver will ignore it for rx VLAN tag
-offload disabled. It may cause the rx VLAN tag dropped.
+When a VF is passthrough to a VM, and the VM is killed, the reported
+interrupt may not been handled, it will remain, and won't be clear by
+the nic engine even with a flr or tqp reset. When the VM restart, the
+interrupt of the first vector may be dropped by the second enable_irq
+in vfio, see the issue below:
+https://gitlab.com/qemu-project/qemu/-/issues/2884#note_2423361621
 
-Fixes: b2641e2ad456 ("net: hns3: Add support of hardware rx-vlan-offload to HNS3 VF driver")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
+We notice that the vfio has always behaved this way, and the interrupt
+is a residue of the nic engine, so we fix the problem by moving the
+vector enable process out of the enable_irq loop.
+
+Fixes: 08a100689d4b ("net: hns3: re-organize vector handle")
+Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250430093052.2400464-2-shaojijie@huawei.com
+Link: https://patch.msgid.link/20250430093052.2400464-3-shaojijie@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../hisilicon/hns3/hns3vf/hclgevf_main.c      | 25 ++++++++++++++-----
- .../hisilicon/hns3/hns3vf/hclgevf_main.h      |  1 +
- 2 files changed, 20 insertions(+), 6 deletions(-)
+ .../net/ethernet/hisilicon/hns3/hns3_enet.c   | 82 +++++++++----------
+ 1 file changed, 39 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-index 9ba767740a043..dada42e7e0ec9 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-@@ -1292,9 +1292,8 @@ static void hclgevf_sync_vlan_filter(struct hclgevf_dev *hdev)
- 	rtnl_unlock();
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+index 9ff797fb36c45..b03b8758c7774 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+@@ -473,20 +473,14 @@ static void hns3_mask_vector_irq(struct hns3_enet_tqp_vector *tqp_vector,
+ 	writel(mask_en, tqp_vector->mask_addr);
  }
  
--static int hclgevf_en_hw_strip_rxvtag(struct hnae3_handle *handle, bool enable)
-+static int hclgevf_en_hw_strip_rxvtag_cmd(struct hclgevf_dev *hdev, bool enable)
+-static void hns3_vector_enable(struct hns3_enet_tqp_vector *tqp_vector)
++static void hns3_irq_enable(struct hns3_enet_tqp_vector *tqp_vector)
  {
--	struct hclgevf_dev *hdev = hclgevf_ae_get_hdev(handle);
- 	struct hclge_vf_to_pf_msg send_msg;
- 
- 	hclgevf_build_send_msg(&send_msg, HCLGE_MBX_SET_VLAN,
-@@ -1303,6 +1302,19 @@ static int hclgevf_en_hw_strip_rxvtag(struct hnae3_handle *handle, bool enable)
- 	return hclgevf_send_mbx_msg(hdev, &send_msg, false, NULL, 0);
+ 	napi_enable(&tqp_vector->napi);
+ 	enable_irq(tqp_vector->vector_irq);
+-
+-	/* enable vector */
+-	hns3_mask_vector_irq(tqp_vector, 1);
  }
  
-+static int hclgevf_en_hw_strip_rxvtag(struct hnae3_handle *handle, bool enable)
+-static void hns3_vector_disable(struct hns3_enet_tqp_vector *tqp_vector)
++static void hns3_irq_disable(struct hns3_enet_tqp_vector *tqp_vector)
+ {
+-	/* disable vector */
+-	hns3_mask_vector_irq(tqp_vector, 0);
+-
+ 	disable_irq(tqp_vector->vector_irq);
+ 	napi_disable(&tqp_vector->napi);
+ 	cancel_work_sync(&tqp_vector->rx_group.dim.work);
+@@ -707,11 +701,42 @@ static int hns3_set_rx_cpu_rmap(struct net_device *netdev)
+ 	return 0;
+ }
+ 
++static void hns3_enable_irqs_and_tqps(struct net_device *netdev)
 +{
-+	struct hclgevf_dev *hdev = hclgevf_ae_get_hdev(handle);
-+	int ret;
++	struct hns3_nic_priv *priv = netdev_priv(netdev);
++	struct hnae3_handle *h = priv->ae_handle;
++	u16 i;
 +
-+	ret = hclgevf_en_hw_strip_rxvtag_cmd(hdev, enable);
-+	if (ret)
-+		return ret;
++	for (i = 0; i < priv->vector_num; i++)
++		hns3_irq_enable(&priv->tqp_vector[i]);
 +
-+	hdev->rxvtag_strip_en = enable;
-+	return 0;
++	for (i = 0; i < priv->vector_num; i++)
++		hns3_mask_vector_irq(&priv->tqp_vector[i], 1);
++
++	for (i = 0; i < h->kinfo.num_tqps; i++)
++		hns3_tqp_enable(h->kinfo.tqp[i]);
 +}
 +
- static int hclgevf_reset_tqp(struct hnae3_handle *handle)
++static void hns3_disable_irqs_and_tqps(struct net_device *netdev)
++{
++	struct hns3_nic_priv *priv = netdev_priv(netdev);
++	struct hnae3_handle *h = priv->ae_handle;
++	u16 i;
++
++	for (i = 0; i < h->kinfo.num_tqps; i++)
++		hns3_tqp_disable(h->kinfo.tqp[i]);
++
++	for (i = 0; i < priv->vector_num; i++)
++		hns3_mask_vector_irq(&priv->tqp_vector[i], 0);
++
++	for (i = 0; i < priv->vector_num; i++)
++		hns3_irq_disable(&priv->tqp_vector[i]);
++}
++
+ static int hns3_nic_net_up(struct net_device *netdev)
  {
- #define HCLGEVF_RESET_ALL_QUEUE_DONE	1U
-@@ -2204,12 +2216,13 @@ static int hclgevf_rss_init_hw(struct hclgevf_dev *hdev)
- 					  tc_valid, tc_size);
- }
- 
--static int hclgevf_init_vlan_config(struct hclgevf_dev *hdev)
-+static int hclgevf_init_vlan_config(struct hclgevf_dev *hdev,
-+				    bool rxvtag_strip_en)
- {
- 	struct hnae3_handle *nic = &hdev->nic;
+ 	struct hns3_nic_priv *priv = netdev_priv(netdev);
+ 	struct hnae3_handle *h = priv->ae_handle;
+-	int i, j;
  	int ret;
  
--	ret = hclgevf_en_hw_strip_rxvtag(nic, true);
-+	ret = hclgevf_en_hw_strip_rxvtag(nic, rxvtag_strip_en);
- 	if (ret) {
- 		dev_err(&hdev->pdev->dev,
- 			"failed to enable rx vlan offload, ret = %d\n", ret);
-@@ -2879,7 +2892,7 @@ static int hclgevf_reset_hdev(struct hclgevf_dev *hdev)
- 	if (ret)
- 		return ret;
+ 	ret = hns3_nic_reset_all_ring(h);
+@@ -720,23 +745,13 @@ static int hns3_nic_net_up(struct net_device *netdev)
  
--	ret = hclgevf_init_vlan_config(hdev);
-+	ret = hclgevf_init_vlan_config(hdev, hdev->rxvtag_strip_en);
+ 	clear_bit(HNS3_NIC_STATE_DOWN, &priv->state);
+ 
+-	/* enable the vectors */
+-	for (i = 0; i < priv->vector_num; i++)
+-		hns3_vector_enable(&priv->tqp_vector[i]);
+-
+-	/* enable rcb */
+-	for (j = 0; j < h->kinfo.num_tqps; j++)
+-		hns3_tqp_enable(h->kinfo.tqp[j]);
++	hns3_enable_irqs_and_tqps(netdev);
+ 
+ 	/* start the ae_dev */
+ 	ret = h->ae_algo->ops->start ? h->ae_algo->ops->start(h) : 0;
  	if (ret) {
- 		dev_err(&hdev->pdev->dev,
- 			"failed(%d) to initialize VLAN config\n", ret);
-@@ -2994,7 +3007,7 @@ static int hclgevf_init_hdev(struct hclgevf_dev *hdev)
- 		goto err_config;
+ 		set_bit(HNS3_NIC_STATE_DOWN, &priv->state);
+-		while (j--)
+-			hns3_tqp_disable(h->kinfo.tqp[j]);
+-
+-		for (j = i - 1; j >= 0; j--)
+-			hns3_vector_disable(&priv->tqp_vector[j]);
++		hns3_disable_irqs_and_tqps(netdev);
  	}
  
--	ret = hclgevf_init_vlan_config(hdev);
-+	ret = hclgevf_init_vlan_config(hdev, true);
- 	if (ret) {
- 		dev_err(&hdev->pdev->dev,
- 			"failed(%d) to initialize VLAN config\n", ret);
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
-index cccef32284616..0208425ab594f 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
-@@ -253,6 +253,7 @@ struct hclgevf_dev {
- 	int *vector_irq;
+ 	return ret;
+@@ -823,17 +838,9 @@ static void hns3_reset_tx_queue(struct hnae3_handle *h)
+ static void hns3_nic_net_down(struct net_device *netdev)
+ {
+ 	struct hns3_nic_priv *priv = netdev_priv(netdev);
+-	struct hnae3_handle *h = hns3_get_handle(netdev);
+ 	const struct hnae3_ae_ops *ops;
+-	int i;
  
- 	bool gro_en;
-+	bool rxvtag_strip_en;
+-	/* disable vectors */
+-	for (i = 0; i < priv->vector_num; i++)
+-		hns3_vector_disable(&priv->tqp_vector[i]);
+-
+-	/* disable rcb */
+-	for (i = 0; i < h->kinfo.num_tqps; i++)
+-		hns3_tqp_disable(h->kinfo.tqp[i]);
++	hns3_disable_irqs_and_tqps(netdev);
  
- 	unsigned long vlan_del_fail_bmap[BITS_TO_LONGS(VLAN_N_VID)];
+ 	/* stop ae_dev */
+ 	ops = priv->ae_handle->ae_algo->ops;
+@@ -5864,8 +5871,6 @@ int hns3_set_channels(struct net_device *netdev,
+ void hns3_external_lb_prepare(struct net_device *ndev, bool if_running)
+ {
+ 	struct hns3_nic_priv *priv = netdev_priv(ndev);
+-	struct hnae3_handle *h = priv->ae_handle;
+-	int i;
+ 
+ 	if (!if_running)
+ 		return;
+@@ -5876,11 +5881,7 @@ void hns3_external_lb_prepare(struct net_device *ndev, bool if_running)
+ 	netif_carrier_off(ndev);
+ 	netif_tx_disable(ndev);
+ 
+-	for (i = 0; i < priv->vector_num; i++)
+-		hns3_vector_disable(&priv->tqp_vector[i]);
+-
+-	for (i = 0; i < h->kinfo.num_tqps; i++)
+-		hns3_tqp_disable(h->kinfo.tqp[i]);
++	hns3_disable_irqs_and_tqps(ndev);
+ 
+ 	/* delay ring buffer clearing to hns3_reset_notify_uninit_enet
+ 	 * during reset process, because driver may not be able
+@@ -5896,7 +5897,6 @@ void hns3_external_lb_restore(struct net_device *ndev, bool if_running)
+ {
+ 	struct hns3_nic_priv *priv = netdev_priv(ndev);
+ 	struct hnae3_handle *h = priv->ae_handle;
+-	int i;
+ 
+ 	if (!if_running)
+ 		return;
+@@ -5912,11 +5912,7 @@ void hns3_external_lb_restore(struct net_device *ndev, bool if_running)
+ 
+ 	clear_bit(HNS3_NIC_STATE_DOWN, &priv->state);
+ 
+-	for (i = 0; i < priv->vector_num; i++)
+-		hns3_vector_enable(&priv->tqp_vector[i]);
+-
+-	for (i = 0; i < h->kinfo.num_tqps; i++)
+-		hns3_tqp_enable(h->kinfo.tqp[i]);
++	hns3_enable_irqs_and_tqps(ndev);
+ 
+ 	netif_tx_wake_all_queues(ndev);
  
 -- 
 2.39.5
