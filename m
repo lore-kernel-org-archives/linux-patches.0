@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB072116E9;
-	Wed,  7 May 2025 18:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E031FF5EC;
+	Wed,  7 May 2025 18:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644024; cv=none; b=OG3u04r7fbHRdu0NTtook1P1Pwh8y4Vx7xp0ckE6RWZsVqNrKq4gmgPM9kBd3XtSryD4UycNhUwfFTs3/ZX31OKH30o5so1qbItVhNVnOG9Hcs9EWPGsPsB0Gr8yPI37r/UV4QWF0lUgqIAOPWDjw5JKn4BLLAiXX/YsTNSTd7w=
+	t=1746644026; cv=none; b=ZNBQM5UxfB3Osyll3aMMnYJc0MIh6+H4LNHLihDHDqrEeLEjyopm1wheFO54+BFpAZ5hZnUwPWkcbxcAaKSPM5hdKZOAvLk02isiJY/Fb3YV5ATVk8NWCocYeZnB8Sju6FZXs7UH0c/U2fW1EcGEuvfRwGOkr+MP0DkIIdtFa+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644024; c=relaxed/simple;
-	bh=pXTH2jlUg6H9yMX73ONz8/FLSJ8gopop/RTEzA9WLEM=;
+	s=arc-20240116; t=1746644026; c=relaxed/simple;
+	bh=Sakcz5K4/nzFFMt7m2qV3/2SLRK4NnQTd6SPP12du98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XkHWnALo+Gj+1wI4kX7DM+UUq9p50anDW2AvQW0dphWmD8zfggntsrFj1e5JdIGDTGT+/p+cjMsxfP0P71N/wfpX2nqKuYsp79XlXQMgrtyFJSB5xbd0UABdzfak++AqL6VwqLhov3KT9i8ekqq96bwwVT3cEG0KiW7HzgaoqGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eud+Kk/K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RPNVKwEnzKN/njsYhmkky7DCm4P1K8Ua3QvqRrH7/pAOEEl0DWNbF51AqRYUepkvSKiC9E4kyKS66XqQWHcbbPYK8Uvv8BHESQd0LwRjkvB98tzdskJeEFDLhM4PmLGSgE1dhhjvkKwmBuzEeJqVW8uEHp41PVD94CBuXOyYUNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AFJ80L6E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eud+Kk/K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B806C4CEE2;
-	Wed,  7 May 2025 18:53:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AFJ80L6E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D08C4CEEB;
+	Wed,  7 May 2025 18:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644022;
-	bh=pXTH2jlUg6H9yMX73ONz8/FLSJ8gopop/RTEzA9WLEM=;
+	s=korg; t=1746644026;
+	bh=Sakcz5K4/nzFFMt7m2qV3/2SLRK4NnQTd6SPP12du98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eud+Kk/KkFscz5V4cIWxqk98HNMbI68O0ols1tY/3SAwA18PEBiTlvWupNdAo2U7T
-	 t5XHIhgDjdtwRHUg4JoBZUXoTmh51VvQWCzLKdkakqRpkNGKXIXzahpPxs+ELJqqER
-	 2NZEUFg4nPmuUJFP7vAkb+k1soshEXJLpPWteNHI=
+	b=AFJ80L6EV+MAIeWI9X4uGJSvJzy2YafkPgJQRmQe+3qoKMSSxdeU9DSQ4+PTeItc8
+	 UzPv03ldEAnTYS2RbhiA+IG1Pp33sOoAXaFi7lWcRWj0PWCcVZOCMHR3REwwYoatU7
+	 m77qL4NfAUHriz0ozYKtC/Fi47AVhKNSBcQed6PQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Simon Horman <horms@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 095/183] pds_core: remove write-after-free of client_id
-Date: Wed,  7 May 2025 20:39:00 +0200
-Message-ID: <20250507183828.672830749@linuxfoundation.org>
+Subject: [PATCH 6.14 096/183] net_sched: drr: Fix double list add in class with netem as child qdisc
+Date: Wed,  7 May 2025 20:39:01 +0200
+Message-ID: <20250507183828.712794134@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -52,50 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shannon Nelson <shannon.nelson@amd.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit dfd76010f8e821b66116dec3c7d90dd2403d1396 ]
+[ Upstream commit f99a3fbf023e20b626be4b0f042463d598050c9a ]
 
-A use-after-free error popped up in stress testing:
+As described in Gerrard's report [1], there are use cases where a netem
+child qdisc will make the parent qdisc's enqueue callback reentrant.
+In the case of drr, there won't be a UAF, but the code will add the same
+classifier to the list twice, which will cause memory corruption.
 
-[Mon Apr 21 21:21:33 2025] BUG: KFENCE: use-after-free write in pdsc_auxbus_dev_del+0xef/0x160 [pds_core]
-[Mon Apr 21 21:21:33 2025] Use-after-free write at 0x000000007013ecd1 (in kfence-#47):
-[Mon Apr 21 21:21:33 2025]  pdsc_auxbus_dev_del+0xef/0x160 [pds_core]
-[Mon Apr 21 21:21:33 2025]  pdsc_remove+0xc0/0x1b0 [pds_core]
-[Mon Apr 21 21:21:33 2025]  pci_device_remove+0x24/0x70
-[Mon Apr 21 21:21:33 2025]  device_release_driver_internal+0x11f/0x180
-[Mon Apr 21 21:21:33 2025]  driver_detach+0x45/0x80
-[Mon Apr 21 21:21:33 2025]  bus_remove_driver+0x83/0xe0
-[Mon Apr 21 21:21:33 2025]  pci_unregister_driver+0x1a/0x80
+In addition to checking for qlen being zero, this patch checks whether the
+class was already added to the active_list (cl_is_active) before adding
+to the list to cover for the reentrant case.
 
-The actual device uninit usually happens on a separate thread
-scheduled after this code runs, but there is no guarantee of order
-of thread execution, so this could be a problem.  There's no
-actual need to clear the client_id at this point, so simply
-remove the offending code.
+[1] https://lore.kernel.org/netdev/CAHcdcOm+03OD2j6R0=YHKqmy=VgJ8xEOKuP6c7mSgnp-TEJJbw@mail.gmail.com/
 
-Fixes: 10659034c622 ("pds_core: add the aux client API")
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250425203857.71547-1-shannon.nelson@amd.com
+Fixes: 37d9cf1a3ce3 ("sched: Fix detection of empty queues in child qdiscs")
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20250425220710.3964791-2-victor@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/auxbus.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/sched/sch_drr.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/auxbus.c b/drivers/net/ethernet/amd/pds_core/auxbus.c
-index 4d3387bebe6a4..889a18962270a 100644
---- a/drivers/net/ethernet/amd/pds_core/auxbus.c
-+++ b/drivers/net/ethernet/amd/pds_core/auxbus.c
-@@ -186,7 +186,6 @@ void pdsc_auxbus_dev_del(struct pdsc *cf, struct pdsc *pf,
- 	pds_client_unregister(pf, padev->client_id);
- 	auxiliary_device_delete(&padev->aux_dev);
- 	auxiliary_device_uninit(&padev->aux_dev);
--	padev->client_id = 0;
- 	*pd_ptr = NULL;
+diff --git a/net/sched/sch_drr.c b/net/sched/sch_drr.c
+index c69b999fae171..25b77ed0c1f28 100644
+--- a/net/sched/sch_drr.c
++++ b/net/sched/sch_drr.c
+@@ -35,6 +35,11 @@ struct drr_sched {
+ 	struct Qdisc_class_hash		clhash;
+ };
  
- 	mutex_unlock(&pf->config_lock);
++static bool cl_is_active(struct drr_class *cl)
++{
++	return !list_empty(&cl->alist);
++}
++
+ static struct drr_class *drr_find_class(struct Qdisc *sch, u32 classid)
+ {
+ 	struct drr_sched *q = qdisc_priv(sch);
+@@ -336,7 +341,6 @@ static int drr_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 	struct drr_sched *q = qdisc_priv(sch);
+ 	struct drr_class *cl;
+ 	int err = 0;
+-	bool first;
+ 
+ 	cl = drr_classify(skb, sch, &err);
+ 	if (cl == NULL) {
+@@ -346,7 +350,6 @@ static int drr_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		return err;
+ 	}
+ 
+-	first = !cl->qdisc->q.qlen;
+ 	err = qdisc_enqueue(skb, cl->qdisc, to_free);
+ 	if (unlikely(err != NET_XMIT_SUCCESS)) {
+ 		if (net_xmit_drop_count(err)) {
+@@ -356,7 +359,7 @@ static int drr_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		return err;
+ 	}
+ 
+-	if (first) {
++	if (!cl_is_active(cl)) {
+ 		list_add_tail(&cl->alist, &q->active);
+ 		cl->deficit = cl->quantum;
+ 	}
 -- 
 2.39.5
 
