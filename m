@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADF128C024;
-	Wed,  7 May 2025 19:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC3C28C024;
+	Wed,  7 May 2025 19:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746645125; cv=none; b=r/B2PLojcaTIOwP+1x79en112Ad1DJKItCJau/ZVZCWAXPtpncnnDGi+BlrZ50W4Yi15dTBORVTwbaxjwhEz4KyE82aW6Uf12SmSjxQD+TZNWtLTL+nD4AgM9lZxz8kBTaalbYf4mlE9cmdzBj7PQUgHuWSQbYbj/Y8KQugrOwM=
+	t=1746645128; cv=none; b=nJV03p1z1nqyyziB0me+xawgc5Yj9EyKYq0KMehCt3E227/KL88zTm08QMtQPCm5NQHahZsfwYpI1AFYTxwy455WmUheV9hgrMsfjdlXuW91qLuh7UkImWwl5CyYEJKcdDru5fX3hsS3Zp8uoyM5eHWOxBXj6fJdWEL1NZUyM2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746645125; c=relaxed/simple;
-	bh=VhLoNZzzs8h18eEfkY4nKm/62bRoy+nctMqNNuMQG64=;
+	s=arc-20240116; t=1746645128; c=relaxed/simple;
+	bh=EuImWDjYE3czbJ7hElb3ZGxEEmQZ6D2Qe2CRjiHuetY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dskNqjG+7JCaaob4qWksXFxfj4Qz/HsE1BYmHioCL+XLaCPahwS7zqjuIYv6f8GYVQ+cEbp/nRKXGNJANNeL5LFWRfyTFGC2eas0Uvn+47mw65v2PTb6la7J4qZQ4gOtFMgNMPnyePGGho4AoIzYFWg3wGPmX4V/+fOu5FMJ6Fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMKW7fKw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A+fJ+pV94DQOD0prQP7ygvJPd8CgnvNk0qSs+Gwqy2qyPYigpGOznywY14tOyDwhY/KgUpWqcozbssyGrdG3/77jQRu6ZIy41BqilnIJhGoq+iz8ChrLyfm79KHXCN+6/x15daFwQ+cCIhUq3GPy+AFZOrgkVa/BmVaFAEIu/i4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ua06W8J9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMKW7fKw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC909C4CEE2;
-	Wed,  7 May 2025 19:12:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ua06W8J9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1456C4CEE2;
+	Wed,  7 May 2025 19:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746645125;
-	bh=VhLoNZzzs8h18eEfkY4nKm/62bRoy+nctMqNNuMQG64=;
+	s=korg; t=1746645128;
+	bh=EuImWDjYE3czbJ7hElb3ZGxEEmQZ6D2Qe2CRjiHuetY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yMKW7fKwpKzq6BE2W7Uzp1AfliSNTG0H4f+HZX2FaOdnFus/Mo1KBQHAN1FFjQFkh
-	 x3G8yHpGLwafTpg/b8lT61YJClvQsvtd1cyzIS4OOx4FCpVbANDabiG7oE2K+bFCzY
-	 OHaXacPg4EmdVJQh/miSWdyrIGPZywxBb1ukB/fY=
+	b=Ua06W8J9xk362nw0JGtjGQF3R6uPcoq3wESHAK4IlzlDDyR5zainJXz7f8BRrg9cW
+	 AqBOHWVoUd6w5nsJufvWHXuk6F8aqgf93k5qPguMKMCP70fxHCoXX5ZAB0skotGF+0
+	 QNqNqrq6LxSdem2hyuPb9nQcDjMMoIKyP/7FE2qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Liang <mliang@purestorage.com>,
-	Mohamed Khalfella <mkhalfella@purestorage.com>,
-	Randy Jennings <randyj@purestorage.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 084/129] nvme-tcp: fix premature queue removal and I/O failover
-Date: Wed,  7 May 2025 20:40:20 +0200
-Message-ID: <20250507183816.911651818@linuxfoundation.org>
+	Gerrard Tai <gerrard.tai@starlabs.sg>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 102/129] sch_qfq: make qfq_qlen_notify() idempotent
+Date: Wed,  7 May 2025 20:40:38 +0200
+Message-ID: <20250507183817.632452736@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -48,116 +47,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Liang <mliang@purestorage.com>
+From: Cong Wang <xiyou.wangcong@gmail.com>
 
-[ Upstream commit 77e40bbce93059658aee02786a32c5c98a240a8a ]
+commit 55f9eca4bfe30a15d8656f915922e8c98b7f0728 upstream.
 
-This patch addresses a data corruption issue observed in nvme-tcp during
-testing.
+qfq_qlen_notify() always deletes its class from its active list
+with list_del_init() _and_ calls qfq_deactivate_agg() when the whole list
+becomes empty.
 
-In an NVMe native multipath setup, when an I/O timeout occurs, all
-inflight I/Os are canceled almost immediately after the kernel socket is
-shut down. These canceled I/Os are reported as host path errors,
-triggering a failover that succeeds on a different path.
+To make it idempotent, just skip everything when it is not in the active
+list.
 
-However, at this point, the original I/O may still be outstanding in the
-host's network transmission path (e.g., the NIC’s TX queue). From the
-user-space app's perspective, the buffer associated with the I/O is
-considered completed since they're acked on the different path and may
-be reused for new I/O requests.
+Also change other list_del()'s to list_del_init() just to be extra safe.
 
-Because nvme-tcp enables zero-copy by default in the transmission path,
-this can lead to corrupted data being sent to the original target,
-ultimately causing data corruption.
-
-We can reproduce this data corruption by injecting delay on one path and
-triggering i/o timeout.
-
-To prevent this issue, this change ensures that all inflight
-transmissions are fully completed from host's perspective before
-returning from queue stop. To handle concurrent I/O timeout from multiple
-namespaces under the same controller, always wait in queue stop
-regardless of queue's state.
-
-This aligns with the behavior of queue stopping in other NVMe fabric
-transports.
-
-Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
-Signed-off-by: Michael Liang <mliang@purestorage.com>
-Reviewed-by: Mohamed Khalfella <mkhalfella@purestorage.com>
-Reviewed-by: Randy Jennings <randyj@purestorage.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250403211033.166059-5-xiyou.wangcong@gmail.com
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/tcp.c | 31 +++++++++++++++++++++++++++++--
- 1 file changed, 29 insertions(+), 2 deletions(-)
+ net/sched/sch_qfq.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 84db7f4f861cb..5b76670f34be2 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -1710,7 +1710,7 @@ static void __nvme_tcp_stop_queue(struct nvme_tcp_queue *queue)
- 	cancel_work_sync(&queue->io_work);
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -352,7 +352,7 @@ static void qfq_deactivate_class(struct
+ 	struct qfq_aggregate *agg = cl->agg;
+ 
+ 
+-	list_del(&cl->alist); /* remove from RR queue of the aggregate */
++	list_del_init(&cl->alist); /* remove from RR queue of the aggregate */
+ 	if (list_empty(&agg->active)) /* agg is now inactive */
+ 		qfq_deactivate_agg(q, agg);
+ }
+@@ -482,6 +482,7 @@ static int qfq_change_class(struct Qdisc
+ 	gnet_stats_basic_sync_init(&cl->bstats);
+ 	cl->common.classid = classid;
+ 	cl->deficit = lmax;
++	INIT_LIST_HEAD(&cl->alist);
+ 
+ 	cl->qdisc = qdisc_create_dflt(sch->dev_queue, &pfifo_qdisc_ops,
+ 				      classid, NULL);
+@@ -990,7 +991,7 @@ static struct sk_buff *agg_dequeue(struc
+ 	cl->deficit -= (int) len;
+ 
+ 	if (cl->qdisc->q.qlen == 0) /* no more packets, remove from list */
+-		list_del(&cl->alist);
++		list_del_init(&cl->alist);
+ 	else if (cl->deficit < qdisc_pkt_len(cl->qdisc->ops->peek(cl->qdisc))) {
+ 		cl->deficit += agg->lmax;
+ 		list_move_tail(&cl->alist, &agg->active);
+@@ -1421,6 +1422,8 @@ static void qfq_qlen_notify(struct Qdisc
+ 	struct qfq_sched *q = qdisc_priv(sch);
+ 	struct qfq_class *cl = (struct qfq_class *)arg;
+ 
++	if (list_empty(&cl->alist))
++		return;
+ 	qfq_deactivate_class(q, cl);
  }
  
--static void nvme_tcp_stop_queue(struct nvme_ctrl *nctrl, int qid)
-+static void nvme_tcp_stop_queue_nowait(struct nvme_ctrl *nctrl, int qid)
- {
- 	struct nvme_tcp_ctrl *ctrl = to_tcp_ctrl(nctrl);
- 	struct nvme_tcp_queue *queue = &ctrl->queues[qid];
-@@ -1724,6 +1724,31 @@ static void nvme_tcp_stop_queue(struct nvme_ctrl *nctrl, int qid)
- 	mutex_unlock(&queue->queue_lock);
- }
- 
-+static void nvme_tcp_wait_queue(struct nvme_ctrl *nctrl, int qid)
-+{
-+	struct nvme_tcp_ctrl *ctrl = to_tcp_ctrl(nctrl);
-+	struct nvme_tcp_queue *queue = &ctrl->queues[qid];
-+	int timeout = 100;
-+
-+	while (timeout > 0) {
-+		if (!test_bit(NVME_TCP_Q_ALLOCATED, &queue->flags) ||
-+		    !sk_wmem_alloc_get(queue->sock->sk))
-+			return;
-+		msleep(2);
-+		timeout -= 2;
-+	}
-+	dev_warn(nctrl->device,
-+		 "qid %d: timeout draining sock wmem allocation expired\n",
-+		 qid);
-+}
-+
-+static void nvme_tcp_stop_queue(struct nvme_ctrl *nctrl, int qid)
-+{
-+	nvme_tcp_stop_queue_nowait(nctrl, qid);
-+	nvme_tcp_wait_queue(nctrl, qid);
-+}
-+
-+
- static void nvme_tcp_setup_sock_ops(struct nvme_tcp_queue *queue)
- {
- 	write_lock_bh(&queue->sock->sk->sk_callback_lock);
-@@ -1790,7 +1815,9 @@ static void nvme_tcp_stop_io_queues(struct nvme_ctrl *ctrl)
- 	int i;
- 
- 	for (i = 1; i < ctrl->queue_count; i++)
--		nvme_tcp_stop_queue(ctrl, i);
-+		nvme_tcp_stop_queue_nowait(ctrl, i);
-+	for (i = 1; i < ctrl->queue_count; i++)
-+		nvme_tcp_wait_queue(ctrl, i);
- }
- 
- static int nvme_tcp_start_io_queues(struct nvme_ctrl *ctrl,
--- 
-2.39.5
-
 
 
