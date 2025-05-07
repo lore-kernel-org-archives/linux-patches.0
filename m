@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F07214813;
-	Wed,  7 May 2025 18:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC532116E9;
+	Wed,  7 May 2025 18:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644097; cv=none; b=XGx5K7JB4jVtBuBPfqDFyGezzWUw0XfmRtLPj4DdpmMuq9lbwYVvnorlRbjhwRcjJ9BaUtjCTv4Czqy707UhtK20vruo08NYfFh8cEAvi+fywMXYKqfjI6AwAnlTjBNbjNa138swOBLdcVOqklf0IXQVj4Ekq1V0wo77KZJFbjk=
+	t=1746644101; cv=none; b=ofXS5wToeGEUWJrxMJkdgVSHu0gNE6B+xdRKnP+FAeTa4Hcfz67WUYsGL0/V0w0dT7xXuP+xNOdF8yldlkCSLigHVCaTEUIhysY3CLE3kdbWIpXr6vpqLnGaaqT4YJ+be5At0FcGAHhFOSzRQlagbgRl55TqLJfKss/SD3Zklyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644097; c=relaxed/simple;
-	bh=SLke+ncZVxsSuDFPR10UgiyY+4fxBx6pjaXVQ2UIJWM=;
+	s=arc-20240116; t=1746644101; c=relaxed/simple;
+	bh=TDiMTYrr6pU1UL0eaJqEd3St34xNUTQfOURU8baAP3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YDncuTIPkytbanqDdarDoYqirMUyxcBLQswJ0hp8aVzQasYbIBzT21qLsBuUU8KD7B1ehyny2iQI0//VshPq+ny3iQGqULxKIQzG5MeaN15aDfBJ9bHMLpTEaT2OKp+2rYJyw7bQmPuS0gnwd8HzqPkkfuATmKjrAyOz0B7C6bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWQqjZYq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BIy8F+VlZudRwoCyoI7sTvHhsSqy+4fqjmiigk8NxZ4sBoB627XiXiSeK+PQFqYdzlln/6OHjgC3cZnZ5sXSR0oISflBfzP/Ux9l4u/I939CnddYpMUBWWxVRnJPI70ISr8lmrWyZ3NELc3R1j7KfdT3YKU4Qjy6eNt6ilZYGSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEaz7Rvz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWQqjZYq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D568C4CEE2;
-	Wed,  7 May 2025 18:54:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEaz7Rvz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1BFC4CEE2;
+	Wed,  7 May 2025 18:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644097;
-	bh=SLke+ncZVxsSuDFPR10UgiyY+4fxBx6pjaXVQ2UIJWM=;
+	s=korg; t=1746644100;
+	bh=TDiMTYrr6pU1UL0eaJqEd3St34xNUTQfOURU8baAP3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IWQqjZYqcsLin7UcO84P8g79uWkcPwCgyNXjyudBXSNA/IiFU5AVBknxub5hDVa5p
-	 lh9NmqBILwsMcoDsv3MYQ3Mf08Uo2lkM1hIev3JQOwwVwOZuVTP4GGLTbILxqCDhUE
-	 aWpTfNT6RVFPhrY8pgvcqq5exq42/nT8gyHFwMp8=
+	b=GEaz7RvzL0IfBYNl2sCULjGOQFWvQyXf0k9m5oRFf64pTHelrJ0S+d2OWppkLSBm9
+	 WU8ZV68NsIYZ0znRPa46iidrPfiJGkIIt0lE5tDV7ewRRUCaCutX+IvYS44tCbLI9x
+	 g91F+p8C2hH0QInV25UcRXyeU58nSzJ7uG0HVQQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell Cloran <rcloran@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 111/183] drm/mipi-dbi: Fix blanking for non-16 bit formats
-Date: Wed,  7 May 2025 20:39:16 +0200
-Message-ID: <20250507183829.323375155@linuxfoundation.org>
+Subject: [PATCH 6.14 120/183] ALSA: hda/realtek: Fix built-mic regression on other ASUS models
+Date: Wed,  7 May 2025 20:39:25 +0200
+Message-ID: <20250507183829.686718875@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -51,51 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell Cloran <rcloran@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 1a8bc0fe8039e1e57f68c4a588f0403d98bfeb1f ]
+[ Upstream commit 4d5b71b487291da9f92e352c0a7e39f256d60db8 ]
 
-On r6x2b6x2g6x2 displays not enough blank data is sent to blank the
-entire screen. When support for these displays was added, the dirty
-function was updated to handle the different amount of data, but
-blanking was not, and remained hardcoded as 2 bytes per pixel.
+A few ASUS models use the ALC256_FIXUP_ASUS_HEADSET_MODE although they
+have no built-in mic pin on NID 0x13, as found in the commit
+c1732ede5e80 ("ALSA: hda/realtek - Fix headset and mic on several Asus
+laptops with ALC256").  This was relatively harmless in the past as
+NID 0x13 was assigned as the secondary mic.  But since the fix for the
+pin sort order, this pin became the primary one, hence user started
+noticing the broken input, and we've fixed already for a few ASUS
+models to switch to ALC256_FIXUP_ASUS_MIC_NO_PRESENCE.
 
-This change applies almost the same algorithm used in the dirty function
-to the blank function, but there is no fb available at that point, and
-no concern about having to transform any data, so the dbidev pixel
-format is always used for calculating the length.
+This patch corrects the other ASUS models to use the right quirk entry
+for fixing the built-in mic regression.  Here we cover X541SA
+(1043:12e0), X541UV (1043:12f0), Z550SA (1043:13bf0) and X555UB
+(1043:1ccd).
 
-Fixes: 4aebb79021f3 ("drm/mipi-dbi: Add support for DRM_FORMAT_RGB888")
-Signed-off-by: Russell Cloran <rcloran@gmail.com>
-Link: https://lore.kernel.org/r/20250415053259.79572-1-rcloran@gmail.com
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Fixes: 3b4309546b48 ("ALSA: hda: Fix headset detection failure due to unstable sort")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220058
+Link: https://patch.msgid.link/20250430053210.31776-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_mipi_dbi.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_mipi_dbi.c b/drivers/gpu/drm/drm_mipi_dbi.c
-index 34bca75675766..3ea9f23b4f67a 100644
---- a/drivers/gpu/drm/drm_mipi_dbi.c
-+++ b/drivers/gpu/drm/drm_mipi_dbi.c
-@@ -404,12 +404,16 @@ static void mipi_dbi_blank(struct mipi_dbi_dev *dbidev)
- 	u16 height = drm->mode_config.min_height;
- 	u16 width = drm->mode_config.min_width;
- 	struct mipi_dbi *dbi = &dbidev->dbi;
--	size_t len = width * height * 2;
-+	const struct drm_format_info *dst_format;
-+	size_t len;
- 	int idx;
- 
- 	if (!drm_dev_enter(drm, &idx))
- 		return;
- 
-+	dst_format = drm_format_info(dbidev->pixel_format);
-+	len = drm_format_info_min_pitch(dst_format, 0, width) * height;
-+
- 	memset(dbidev->tx_buf, 0, len);
- 
- 	mipi_dbi_set_window_address(dbidev, 0, width - 1, 0, height - 1);
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 263c7be1d4e29..2ff02fb6f7e94 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10774,10 +10774,10 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x12a3, "Asus N7691ZM", ALC269_FIXUP_ASUS_N7601ZM),
+ 	SND_PCI_QUIRK(0x1043, 0x12af, "ASUS UX582ZS", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x12b4, "ASUS B3405CCA / P3405CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
+-	SND_PCI_QUIRK(0x1043, 0x12e0, "ASUS X541SA", ALC256_FIXUP_ASUS_MIC),
+-	SND_PCI_QUIRK(0x1043, 0x12f0, "ASUS X541UV", ALC256_FIXUP_ASUS_MIC),
++	SND_PCI_QUIRK(0x1043, 0x12e0, "ASUS X541SA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1043, 0x12f0, "ASUS X541UV", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1313, "Asus K42JZ", ALC269VB_FIXUP_ASUS_MIC_NO_PRESENCE),
+-	SND_PCI_QUIRK(0x1043, 0x13b0, "ASUS Z550SA", ALC256_FIXUP_ASUS_MIC),
++	SND_PCI_QUIRK(0x1043, 0x13b0, "ASUS Z550SA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1427, "Asus Zenbook UX31E", ALC269VB_FIXUP_ASUS_ZENBOOK),
+ 	SND_PCI_QUIRK(0x1043, 0x1433, "ASUS GX650PY/PZ/PV/PU/PYV/PZV/PIV/PVV", ALC285_FIXUP_ASUS_I2C_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x1460, "Asus VivoBook 15", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+@@ -10831,7 +10831,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x1c92, "ASUS ROG Strix G15", ALC285_FIXUP_ASUS_G533Z_PINS),
+ 	SND_PCI_QUIRK(0x1043, 0x1c9f, "ASUS G614JU/JV/JI", ALC285_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x1caf, "ASUS G634JY/JZ/JI/JG", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
+-	SND_PCI_QUIRK(0x1043, 0x1ccd, "ASUS X555UB", ALC256_FIXUP_ASUS_MIC),
++	SND_PCI_QUIRK(0x1043, 0x1ccd, "ASUS X555UB", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1ccf, "ASUS G814JU/JV/JI", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1cdf, "ASUS G814JY/JZ/JG", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1cef, "ASUS G834JY/JZ/JI/JG", ALC285_FIXUP_ASUS_HEADSET_MIC),
 -- 
 2.39.5
 
