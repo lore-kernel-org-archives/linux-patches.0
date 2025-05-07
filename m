@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BAB6288A8;
-	Wed,  7 May 2025 19:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DBB288A8;
+	Wed,  7 May 2025 19:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644587; cv=none; b=spebadHRmkbvQXPyUYt5S1QTzgaIgyyHaCye5xwLvA+5vj0KgBrFM6BgCnvWxzVPre5Y9ZumcyoMPEnIQhRXdblGwtLSRaSpKw7SvTM7hCMFmRQhgeP1FIIjFoE6hLC1lUYLQdqAHaqmgrxx4UPrUT6OCIa0VHdUONoBlRexnh0=
+	t=1746644590; cv=none; b=GfNDVMp8vimVTwZAq+osuy9T0KLdQRPNLlTA6CDJBzSp/Ty002chUsLGBGZSr/Gih1uDwWYrQdprSa3bhTm8/1tdKBInGBhJzAWzeAqk2jSeCwj1T8QmzXIBYtYj5Q1m1g4uJXoHSlXYHLp91benxrfnxjgzLDx9d2Dmn58Y16U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644587; c=relaxed/simple;
-	bh=4ol4k5ApxW7o+OjWIkjW37SlhNsclUSPwJgOSkk3z68=;
+	s=arc-20240116; t=1746644590; c=relaxed/simple;
+	bh=4mqByN+I5I/zjcQtH+iYUAoJEw8OLWt5ILcwYBENApo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NkWaD27uOxAnUsmWKrA/3AYCdzsOd4MZYFhNtgVqsSyudD0Q1ugiRuXTxxUlxd5azkxHDSR6006JJLIrciwv3kGId0ms7Nq5uoj+W+eOoVtY38Z9n1MXE5+FYu818vJageiE/f+I73Cy5InqVc4pR132QMogBADSbdvhMyKUOIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPseBvQj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q0F9J4BzPcEqFDBmeV8VJPrrGkD7qTqpwS+QIVccfQunNfyKnQQ+8QaXH6Z/r1nclTWtOM/hV2G6XwUKdwq5etYnQnkZ+eSS+TMzpc5XYggbWrmIQZr11Nb11Kytbj/jTbDPApTP9R4iN4QZ0bM3265NxmTZtLjdFe2kDYK1cmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zwDfPKku; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPseBvQj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EBD1C4CEE2;
-	Wed,  7 May 2025 19:03:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwDfPKku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9CA8C4CEE2;
+	Wed,  7 May 2025 19:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644587;
-	bh=4ol4k5ApxW7o+OjWIkjW37SlhNsclUSPwJgOSkk3z68=;
+	s=korg; t=1746644590;
+	bh=4mqByN+I5I/zjcQtH+iYUAoJEw8OLWt5ILcwYBENApo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dPseBvQjvC3aL19324BUuEQ+2H7I+wIC156weCb08kf56g8W9q1E1cYErbPX3vXMu
-	 I04oNeuV8wpocKiP+YI9Wf1pDyLmxyoebZgRGvus3Dkja4zR7BjK5HVx4RdtjFNPzV
-	 P882qSU3H4g/NrcRRdfzgk/tsZDHrUJY/XbZubps=
+	b=zwDfPKkuiU6huCMbMmsFgNSgxN+GDBef8nLn/F5TAPwrnfAS9w+IZvsEN4gT1tjZa
+	 zrkDZP/dkrJrXXSV4FwU0aTW8qt1ImcJ5rISTeA3etfLJvH9uKtoxAL4ynOecRKoyr
+	 pFnX6hWjiwrIjUtVPSch24GepKphG4Z0ub1oDeXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	syzbot+7d4f142f6c288de8abfe@syzkaller.appspotmail.com,
+	Murad Masimov <m.masimov@mt-integration.ru>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 062/164] wifi: iwlwifi: fix the check for the SCRATCH register upon resume
-Date: Wed,  7 May 2025 20:39:07 +0200
-Message-ID: <20250507183823.452325182@linuxfoundation.org>
+Subject: [PATCH 6.12 063/164] wifi: plfxlc: Remove erroneous assert in plfxlc_mac_release
+Date: Wed,  7 May 2025 20:39:08 +0200
+Message-ID: <20250507183823.494469804@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -52,61 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-[ Upstream commit a17821321a9b42f26e77335cd525fee72dc1cd63 ]
+[ Upstream commit 0fb15ae3b0a9221be01715dac0335647c79f3362 ]
 
-We can't rely on the SCRATCH register being 0 on platform that power
-gate the NIC in S3. Even in those platforms, the SCRATCH register is
-still returning 0x1010000.
+plfxlc_mac_release() asserts that mac->lock is held. This assertion is
+incorrect, because even if it was possible, it would not be the valid
+behaviour. The function is used when probe fails or after the device is
+disconnected. In both cases mac->lock can not be held as the driver is
+not working with the device at the moment. All functions that use mac->lock
+unlock it just after it was held. There is also no need to hold mac->lock
+for plfxlc_mac_release() itself, as mac data is not affected, except for
+mac->flags, which is modified atomically.
 
-Make sure that we understand that those platforms have powered off the
-device.
+This bug leads to the following warning:
+================================================================
+WARNING: CPU: 0 PID: 127 at drivers/net/wireless/purelifi/plfxlc/mac.c:106 plfxlc_mac_release+0x7d/0xa0
+Modules linked in:
+CPU: 0 PID: 127 Comm: kworker/0:2 Not tainted 6.1.124-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+Workqueue: usb_hub_wq hub_event
+RIP: 0010:plfxlc_mac_release+0x7d/0xa0 drivers/net/wireless/purelifi/plfxlc/mac.c:106
+Call Trace:
+ <TASK>
+ probe+0x941/0xbd0 drivers/net/wireless/purelifi/plfxlc/usb.c:694
+ usb_probe_interface+0x5c0/0xaf0 drivers/usb/core/driver.c:396
+ really_probe+0x2ab/0xcb0 drivers/base/dd.c:639
+ __driver_probe_device+0x1a2/0x3d0 drivers/base/dd.c:785
+ driver_probe_device+0x50/0x420 drivers/base/dd.c:815
+ __device_attach_driver+0x2cf/0x510 drivers/base/dd.c:943
+ bus_for_each_drv+0x183/0x200 drivers/base/bus.c:429
+ __device_attach+0x359/0x570 drivers/base/dd.c:1015
+ bus_probe_device+0xba/0x1e0 drivers/base/bus.c:489
+ device_add+0xb48/0xfd0 drivers/base/core.c:3696
+ usb_set_configuration+0x19dd/0x2020 drivers/usb/core/message.c:2165
+ usb_generic_driver_probe+0x84/0x140 drivers/usb/core/generic.c:238
+ usb_probe_device+0x130/0x260 drivers/usb/core/driver.c:293
+ really_probe+0x2ab/0xcb0 drivers/base/dd.c:639
+ __driver_probe_device+0x1a2/0x3d0 drivers/base/dd.c:785
+ driver_probe_device+0x50/0x420 drivers/base/dd.c:815
+ __device_attach_driver+0x2cf/0x510 drivers/base/dd.c:943
+ bus_for_each_drv+0x183/0x200 drivers/base/bus.c:429
+ __device_attach+0x359/0x570 drivers/base/dd.c:1015
+ bus_probe_device+0xba/0x1e0 drivers/base/bus.c:489
+ device_add+0xb48/0xfd0 drivers/base/core.c:3696
+ usb_new_device+0xbdd/0x18f0 drivers/usb/core/hub.c:2620
+ hub_port_connect drivers/usb/core/hub.c:5477 [inline]
+ hub_port_connect_change drivers/usb/core/hub.c:5617 [inline]
+ port_event drivers/usb/core/hub.c:5773 [inline]
+ hub_event+0x2efe/0x5730 drivers/usb/core/hub.c:5855
+ process_one_work+0x8a9/0x11d0 kernel/workqueue.c:2292
+ worker_thread+0xa47/0x1200 kernel/workqueue.c:2439
+ kthread+0x28d/0x320 kernel/kthread.c:376
+ ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:295
+ </TASK>
+================================================================
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219597
-Fixes: cb347bd29d0d ("wifi: iwlwifi: mvm: fix hibernation")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250420095642.a7e082ee785c.I9418d76f860f54261cfa89e1f7ac10300904ba40@changeid
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 68d57a07bfe5 ("wireless: add plfxlc driver for pureLiFi X, XL, XC devices")
+Reported-by: syzbot+7d4f142f6c288de8abfe@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7d4f142f6c288de8abfe
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
+Link: https://patch.msgid.link/20250321185226.71-2-m.masimov@mt-integration.ru
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-csr.h  | 1 +
- drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 6 ++++--
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/wireless/purelifi/plfxlc/mac.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-csr.h b/drivers/net/wireless/intel/iwlwifi/iwl-csr.h
-index 98563757ce2c9..405bba199fe7f 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-csr.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-csr.h
-@@ -148,6 +148,7 @@
-  * during a error FW error.
-  */
- #define CSR_FUNC_SCRATCH_INIT_VALUE		(0x01010101)
-+#define CSR_FUNC_SCRATCH_POWER_OFF_MASK		0xFFFF
+diff --git a/drivers/net/wireless/purelifi/plfxlc/mac.c b/drivers/net/wireless/purelifi/plfxlc/mac.c
+index eae93efa61504..82d1bf7edba20 100644
+--- a/drivers/net/wireless/purelifi/plfxlc/mac.c
++++ b/drivers/net/wireless/purelifi/plfxlc/mac.c
+@@ -102,7 +102,6 @@ int plfxlc_mac_init_hw(struct ieee80211_hw *hw)
+ void plfxlc_mac_release(struct plfxlc_mac *mac)
+ {
+ 	plfxlc_chip_release(&mac->chip);
+-	lockdep_assert_held(&mac->lock);
+ }
  
- /* Bits for CSR_HW_IF_CONFIG_REG */
- #define CSR_HW_IF_CONFIG_REG_MSK_MAC_STEP_DASH	(0x0000000F)
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-index a3cabee35d471..9141ea57abfce 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-@@ -1651,11 +1651,13 @@ static int _iwl_pci_resume(struct device *device, bool restore)
- 	 * Scratch value was altered, this means the device was powered off, we
- 	 * need to reset it completely.
- 	 * Note: MAC (bits 0:7) will be cleared upon suspend even with wowlan,
--	 * so assume that any bits there mean that the device is usable.
-+	 * but not bits [15:8]. So if we have bits set in lower word, assume
-+	 * the device is alive.
- 	 * For older devices, just try silently to grab the NIC.
- 	 */
- 	if (trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_BZ) {
--		if (!iwl_read32(trans, CSR_FUNC_SCRATCH))
-+		if (!(iwl_read32(trans, CSR_FUNC_SCRATCH) &
-+		      CSR_FUNC_SCRATCH_POWER_OFF_MASK))
- 			device_was_powered_off = true;
- 	} else {
- 		/*
+ int plfxlc_op_start(struct ieee80211_hw *hw)
 -- 
 2.39.5
 
