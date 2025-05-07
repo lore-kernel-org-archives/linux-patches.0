@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA89821146F;
-	Wed,  7 May 2025 19:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D246928C024;
+	Wed,  7 May 2025 19:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644458; cv=none; b=I9X0Kegqx7hA6Lsd63yVqDJ+fIIl0Zk5zZT4kIRcF0ztoIIt3bdDUn8iIDhrKLOVVFtfdRN5OQOx/omNX+5URQC+kA4nTQKhnk1zzL8fyl0kkcaANI1lpCh3ITV5zXoxBvSQa061WBChw/tQXC54z0UsWnpjXFbhFjvAM8jb8mY=
+	t=1746644460; cv=none; b=Y/Ml2MkmprQU8pihHNG93bxAVPu0bEoV1Na+SbSEvZsedeUQT6SgI392Cs/iuERBgIGQCvw05gF1buxi5VvZa6t6fFmf4J+chex4f+hnOB41FhpqlShpMejVpdzDEQtAmU55S0Uw5AflsTfqPzEUE2s9Ouk6l2f6GJa607brH+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644458; c=relaxed/simple;
-	bh=2KUgpYDvJ4nx6vcsCq564i5N50KJMGrf4kNSk/tVAfo=;
+	s=arc-20240116; t=1746644460; c=relaxed/simple;
+	bh=++v9BtMlMQrLxAGHe7CKlhoTGMo4WkpL56Z31rbqJDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aeAiLNpja1IQZe0rg3itCn/Rd/ZtuGRSdUrJxCnU1ngdMh2Dm9pwZPCc36zP8I+VYsiCTExddLs0bo1YC8NVLdyp7rReE31kb61Kgt0+RnJoarPVCBP9A6CiYnDWwd+81AQFO0LMDdqwHnyyGpowJKQzhsOqdJlyVwU/9JFg/Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSlrCqH/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lxbUE695NFV8bmGx3D9ERNl2OR8yav7Oo0kHIX348TKaeQiIVPGk28xMUo41c4D0nnyQ8Kj/ifxxA9At5UT2mfnjlSCzhR5Yd1CsatXoh4OP12ST/cJOA7k8vLOPsA8acpP5Q93v9Ta6piCqveKODGKEA+aq6UY/h9N1ra7RekM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TMCL82jI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSlrCqH/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE512C4CEEE;
-	Wed,  7 May 2025 19:00:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TMCL82jI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0527EC4CEE2;
+	Wed,  7 May 2025 19:00:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644457;
-	bh=2KUgpYDvJ4nx6vcsCq564i5N50KJMGrf4kNSk/tVAfo=;
+	s=korg; t=1746644460;
+	bh=++v9BtMlMQrLxAGHe7CKlhoTGMo4WkpL56Z31rbqJDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sSlrCqH/AdIAXkDFofundEk4QhD1jlCDgfrkfaRDjM7qzBj3x+66ITPQa8Js0Xqpz
-	 2zcApA0bwdfnmHIthrqwV7KU7xFynJzBZkbSF1wpodqDNFATANRDpHY9ihak7DfDzE
-	 qFQQFrQlC3u62EWYZQ6EJHtbg12JS3nrBieusXwA=
+	b=TMCL82jIrtXC71QmPN4f1LR2qcqMIB0+F9IT1mFAEeo+fgKzZF1m1+leBgZ+SN3kT
+	 i3v/qNpi21YK9wXi0Ovwxsvny6Z38w9IaaGO0c2xbEUJ5ikkAKyHx/y2gfxU/+S10F
+	 pzzWJMSmiUf55GkglEPhpf/hWFrATqFWlgpHMP1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Lifeng Zheng <zhenglifeng1@huawei.com>
-Subject: [PATCH 6.12 049/164] cpufreq: Fix setting policy limits when frequency tables are used
-Date: Wed,  7 May 2025 20:38:54 +0200
-Message-ID: <20250507183822.869195446@linuxfoundation.org>
+	syzbot+c8cd2d2c412b868263fb@syzkaller.appspotmail.com,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Jeongjun Park <aha310510@gmail.com>
+Subject: [PATCH 6.12 050/164] tracing: Fix oob write in trace_seq_to_buffer()
+Date: Wed,  7 May 2025 20:38:55 +0200
+Message-ID: <20250507183822.912053691@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -51,295 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit b79028039f440e7d2c4df6ab243060c4e3803e84 upstream.
+commit f5178c41bb43444a6008150fe6094497135d07cb upstream.
 
-Commit 7491cdf46b5c ("cpufreq: Avoid using inconsistent policy->min and
-policy->max") overlooked the fact that policy->min and policy->max were
-accessed directly in cpufreq_frequency_table_target() and in the
-functions called by it.  Consequently, the changes made by that commit
-led to problems with setting policy limits.
+syzbot reported this bug:
+==================================================================
+BUG: KASAN: slab-out-of-bounds in trace_seq_to_buffer kernel/trace/trace.c:1830 [inline]
+BUG: KASAN: slab-out-of-bounds in tracing_splice_read_pipe+0x6be/0xdd0 kernel/trace/trace.c:6822
+Write of size 4507 at addr ffff888032b6b000 by task syz.2.320/7260
 
-Address this by passing the target frequency limits to __resolve_freq()
-and cpufreq_frequency_table_target() and propagating them to the
-functions called by the latter.
+CPU: 1 UID: 0 PID: 7260 Comm: syz.2.320 Not tainted 6.15.0-rc1-syzkaller-00301-g3bde70a2c827 #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:408 [inline]
+ print_report+0xc3/0x670 mm/kasan/report.c:521
+ kasan_report+0xe0/0x110 mm/kasan/report.c:634
+ check_region_inline mm/kasan/generic.c:183 [inline]
+ kasan_check_range+0xef/0x1a0 mm/kasan/generic.c:189
+ __asan_memcpy+0x3c/0x60 mm/kasan/shadow.c:106
+ trace_seq_to_buffer kernel/trace/trace.c:1830 [inline]
+ tracing_splice_read_pipe+0x6be/0xdd0 kernel/trace/trace.c:6822
+ ....
+==================================================================
 
-Fixes: 7491cdf46b5c ("cpufreq: Avoid using inconsistent policy->min and policy->max")
-Cc: 5.16+ <stable@vger.kernel.org> # 5.16+
-Closes: https://lore.kernel.org/linux-pm/aAplED3IA_J0eZN0@linaro.org/
-Reported-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Tested-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Reviewed-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Link: https://patch.msgid.link/5896780.DvuYhMxLoT@rjwysocki.net
+It has been reported that trace_seq_to_buffer() tries to copy more data
+than PAGE_SIZE to buf. Therefore, to prevent this, we should use the
+smaller of trace_seq_used(&iter->seq) and PAGE_SIZE as an argument.
+
+Link: https://lore.kernel.org/20250422113026.13308-1-aha310510@gmail.com
+Reported-by: syzbot+c8cd2d2c412b868263fb@syzkaller.appspotmail.com
+Fixes: 3c56819b14b0 ("tracing: splice support for tracing_pipe")
+Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cpufreq.c          |   22 ++++++---
- drivers/cpufreq/cpufreq_ondemand.c |    3 -
- drivers/cpufreq/freq_table.c       |    6 +-
- include/linux/cpufreq.h            |   83 ++++++++++++++++++++++++-------------
- 4 files changed, 73 insertions(+), 41 deletions(-)
+ kernel/trace/trace.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -534,14 +534,18 @@ void cpufreq_disable_fast_switch(struct
- EXPORT_SYMBOL_GPL(cpufreq_disable_fast_switch);
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -6703,13 +6703,14 @@ static ssize_t tracing_splice_read_pipe(
+ 		/* Copy the data into the page, so we can start over. */
+ 		ret = trace_seq_to_buffer(&iter->seq,
+ 					  page_address(spd.pages[i]),
+-					  trace_seq_used(&iter->seq));
++					  min((size_t)trace_seq_used(&iter->seq),
++						  PAGE_SIZE));
+ 		if (ret < 0) {
+ 			__free_page(spd.pages[i]);
+ 			break;
+ 		}
+ 		spd.partial[i].offset = 0;
+-		spd.partial[i].len = trace_seq_used(&iter->seq);
++		spd.partial[i].len = ret;
  
- static unsigned int __resolve_freq(struct cpufreq_policy *policy,
--		unsigned int target_freq, unsigned int relation)
-+				   unsigned int target_freq,
-+				   unsigned int min, unsigned int max,
-+				   unsigned int relation)
- {
- 	unsigned int idx;
- 
-+	target_freq = clamp_val(target_freq, min, max);
-+
- 	if (!policy->freq_table)
- 		return target_freq;
- 
--	idx = cpufreq_frequency_table_target(policy, target_freq, relation);
-+	idx = cpufreq_frequency_table_target(policy, target_freq, min, max, relation);
- 	policy->cached_resolved_idx = idx;
- 	policy->cached_target_freq = target_freq;
- 	return policy->freq_table[idx].frequency;
-@@ -575,8 +579,7 @@ unsigned int cpufreq_driver_resolve_freq
- 	if (unlikely(min > max))
- 		min = max;
- 
--	return __resolve_freq(policy, clamp_val(target_freq, min, max),
--			      CPUFREQ_RELATION_LE);
-+	return __resolve_freq(policy, target_freq, min, max, CPUFREQ_RELATION_LE);
- }
- EXPORT_SYMBOL_GPL(cpufreq_driver_resolve_freq);
- 
-@@ -2336,8 +2339,8 @@ int __cpufreq_driver_target(struct cpufr
- 	if (cpufreq_disabled())
- 		return -ENODEV;
- 
--	target_freq = clamp_val(target_freq, policy->min, policy->max);
--	target_freq = __resolve_freq(policy, target_freq, relation);
-+	target_freq = __resolve_freq(policy, target_freq, policy->min,
-+				     policy->max, relation);
- 
- 	pr_debug("target for CPU %u: %u kHz, relation %u, requested %u kHz\n",
- 		 policy->cpu, target_freq, relation, old_target_freq);
-@@ -2666,8 +2669,11 @@ static int cpufreq_set_policy(struct cpu
- 	 * compiler optimizations around them because they may be accessed
- 	 * concurrently by cpufreq_driver_resolve_freq() during the update.
- 	 */
--	WRITE_ONCE(policy->max, __resolve_freq(policy, new_data.max, CPUFREQ_RELATION_H));
--	new_data.min = __resolve_freq(policy, new_data.min, CPUFREQ_RELATION_L);
-+	WRITE_ONCE(policy->max, __resolve_freq(policy, new_data.max,
-+					       new_data.min, new_data.max,
-+					       CPUFREQ_RELATION_H));
-+	new_data.min = __resolve_freq(policy, new_data.min, new_data.min,
-+				      new_data.max, CPUFREQ_RELATION_L);
- 	WRITE_ONCE(policy->min, new_data.min > policy->max ? policy->max : new_data.min);
- 
- 	trace_cpu_frequency_limits(policy);
---- a/drivers/cpufreq/cpufreq_ondemand.c
-+++ b/drivers/cpufreq/cpufreq_ondemand.c
-@@ -76,7 +76,8 @@ static unsigned int generic_powersave_bi
- 		return freq_next;
- 	}
- 
--	index = cpufreq_frequency_table_target(policy, freq_next, relation);
-+	index = cpufreq_frequency_table_target(policy, freq_next, policy->min,
-+					       policy->max, relation);
- 	freq_req = freq_table[index].frequency;
- 	freq_reduc = freq_req * od_tuners->powersave_bias / 1000;
- 	freq_avg = freq_req - freq_reduc;
---- a/drivers/cpufreq/freq_table.c
-+++ b/drivers/cpufreq/freq_table.c
-@@ -116,8 +116,8 @@ int cpufreq_generic_frequency_table_veri
- EXPORT_SYMBOL_GPL(cpufreq_generic_frequency_table_verify);
- 
- int cpufreq_table_index_unsorted(struct cpufreq_policy *policy,
--				 unsigned int target_freq,
--				 unsigned int relation)
-+				 unsigned int target_freq, unsigned int min,
-+				 unsigned int max, unsigned int relation)
- {
- 	struct cpufreq_frequency_table optimal = {
- 		.driver_data = ~0,
-@@ -148,7 +148,7 @@ int cpufreq_table_index_unsorted(struct
- 	cpufreq_for_each_valid_entry_idx(pos, table, i) {
- 		freq = pos->frequency;
- 
--		if ((freq < policy->min) || (freq > policy->max))
-+		if (freq < min || freq > max)
- 			continue;
- 		if (freq == target_freq) {
- 			optimal.driver_data = i;
---- a/include/linux/cpufreq.h
-+++ b/include/linux/cpufreq.h
-@@ -770,8 +770,8 @@ int cpufreq_frequency_table_verify(struc
- int cpufreq_generic_frequency_table_verify(struct cpufreq_policy_data *policy);
- 
- int cpufreq_table_index_unsorted(struct cpufreq_policy *policy,
--				 unsigned int target_freq,
--				 unsigned int relation);
-+				 unsigned int target_freq, unsigned int min,
-+				 unsigned int max, unsigned int relation);
- int cpufreq_frequency_table_get_index(struct cpufreq_policy *policy,
- 		unsigned int freq);
- 
-@@ -836,12 +836,12 @@ static inline int cpufreq_table_find_ind
- 	return best;
- }
- 
--/* Works only on sorted freq-tables */
--static inline int cpufreq_table_find_index_l(struct cpufreq_policy *policy,
--					     unsigned int target_freq,
--					     bool efficiencies)
-+static inline int find_index_l(struct cpufreq_policy *policy,
-+			       unsigned int target_freq,
-+			       unsigned int min, unsigned int max,
-+			       bool efficiencies)
- {
--	target_freq = clamp_val(target_freq, policy->min, policy->max);
-+	target_freq = clamp_val(target_freq, min, max);
- 
- 	if (policy->freq_table_sorted == CPUFREQ_TABLE_SORTED_ASCENDING)
- 		return cpufreq_table_find_index_al(policy, target_freq,
-@@ -851,6 +851,14 @@ static inline int cpufreq_table_find_ind
- 						   efficiencies);
- }
- 
-+/* Works only on sorted freq-tables */
-+static inline int cpufreq_table_find_index_l(struct cpufreq_policy *policy,
-+					     unsigned int target_freq,
-+					     bool efficiencies)
-+{
-+	return find_index_l(policy, target_freq, policy->min, policy->max, efficiencies);
-+}
-+
- /* Find highest freq at or below target in a table in ascending order */
- static inline int cpufreq_table_find_index_ah(struct cpufreq_policy *policy,
- 					      unsigned int target_freq,
-@@ -904,12 +912,12 @@ static inline int cpufreq_table_find_ind
- 	return best;
- }
- 
--/* Works only on sorted freq-tables */
--static inline int cpufreq_table_find_index_h(struct cpufreq_policy *policy,
--					     unsigned int target_freq,
--					     bool efficiencies)
-+static inline int find_index_h(struct cpufreq_policy *policy,
-+			       unsigned int target_freq,
-+			       unsigned int min, unsigned int max,
-+			       bool efficiencies)
- {
--	target_freq = clamp_val(target_freq, policy->min, policy->max);
-+	target_freq = clamp_val(target_freq, min, max);
- 
- 	if (policy->freq_table_sorted == CPUFREQ_TABLE_SORTED_ASCENDING)
- 		return cpufreq_table_find_index_ah(policy, target_freq,
-@@ -919,6 +927,14 @@ static inline int cpufreq_table_find_ind
- 						   efficiencies);
- }
- 
-+/* Works only on sorted freq-tables */
-+static inline int cpufreq_table_find_index_h(struct cpufreq_policy *policy,
-+					     unsigned int target_freq,
-+					     bool efficiencies)
-+{
-+	return find_index_h(policy, target_freq, policy->min, policy->max, efficiencies);
-+}
-+
- /* Find closest freq to target in a table in ascending order */
- static inline int cpufreq_table_find_index_ac(struct cpufreq_policy *policy,
- 					      unsigned int target_freq,
-@@ -989,12 +1005,12 @@ static inline int cpufreq_table_find_ind
- 	return best;
- }
- 
--/* Works only on sorted freq-tables */
--static inline int cpufreq_table_find_index_c(struct cpufreq_policy *policy,
--					     unsigned int target_freq,
--					     bool efficiencies)
-+static inline int find_index_c(struct cpufreq_policy *policy,
-+			       unsigned int target_freq,
-+			       unsigned int min, unsigned int max,
-+			       bool efficiencies)
- {
--	target_freq = clamp_val(target_freq, policy->min, policy->max);
-+	target_freq = clamp_val(target_freq, min, max);
- 
- 	if (policy->freq_table_sorted == CPUFREQ_TABLE_SORTED_ASCENDING)
- 		return cpufreq_table_find_index_ac(policy, target_freq,
-@@ -1004,7 +1020,17 @@ static inline int cpufreq_table_find_ind
- 						   efficiencies);
- }
- 
--static inline bool cpufreq_is_in_limits(struct cpufreq_policy *policy, int idx)
-+/* Works only on sorted freq-tables */
-+static inline int cpufreq_table_find_index_c(struct cpufreq_policy *policy,
-+					     unsigned int target_freq,
-+					     bool efficiencies)
-+{
-+	return find_index_c(policy, target_freq, policy->min, policy->max, efficiencies);
-+}
-+
-+static inline bool cpufreq_is_in_limits(struct cpufreq_policy *policy,
-+					unsigned int min, unsigned int max,
-+					int idx)
- {
- 	unsigned int freq;
- 
-@@ -1013,11 +1039,13 @@ static inline bool cpufreq_is_in_limits(
- 
- 	freq = policy->freq_table[idx].frequency;
- 
--	return freq == clamp_val(freq, policy->min, policy->max);
-+	return freq == clamp_val(freq, min, max);
- }
- 
- static inline int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
- 						 unsigned int target_freq,
-+						 unsigned int min,
-+						 unsigned int max,
- 						 unsigned int relation)
- {
- 	bool efficiencies = policy->efficiencies_available &&
-@@ -1028,29 +1056,26 @@ static inline int cpufreq_frequency_tabl
- 	relation &= ~CPUFREQ_RELATION_E;
- 
- 	if (unlikely(policy->freq_table_sorted == CPUFREQ_TABLE_UNSORTED))
--		return cpufreq_table_index_unsorted(policy, target_freq,
--						    relation);
-+		return cpufreq_table_index_unsorted(policy, target_freq, min,
-+						    max, relation);
- retry:
- 	switch (relation) {
- 	case CPUFREQ_RELATION_L:
--		idx = cpufreq_table_find_index_l(policy, target_freq,
--						 efficiencies);
-+		idx = find_index_l(policy, target_freq, min, max, efficiencies);
- 		break;
- 	case CPUFREQ_RELATION_H:
--		idx = cpufreq_table_find_index_h(policy, target_freq,
--						 efficiencies);
-+		idx = find_index_h(policy, target_freq, min, max, efficiencies);
- 		break;
- 	case CPUFREQ_RELATION_C:
--		idx = cpufreq_table_find_index_c(policy, target_freq,
--						 efficiencies);
-+		idx = find_index_c(policy, target_freq, min, max, efficiencies);
- 		break;
- 	default:
- 		WARN_ON_ONCE(1);
- 		return 0;
- 	}
- 
--	/* Limit frequency index to honor policy->min/max */
--	if (!cpufreq_is_in_limits(policy, idx) && efficiencies) {
-+	/* Limit frequency index to honor min and max */
-+	if (!cpufreq_is_in_limits(policy, min, max, idx) && efficiencies) {
- 		efficiencies = false;
- 		goto retry;
+ 		trace_seq_init(&iter->seq);
  	}
 
 
