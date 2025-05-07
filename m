@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834EB289348;
-	Wed,  7 May 2025 18:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994301FF5EC;
+	Wed,  7 May 2025 18:53:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644037; cv=none; b=ArnmWNeFzCehgFTA639qQDEMldscFZr+j/klwFCXFgTSZaPPKb0e3RLmxmjH+t5PomymCwRfAif8fIQT4iA9/ey7KwRhw9ZRG9JIZ/BSq6DTCApJEWBdhtc7Yt+J8JlKUZdDgcdxDrJf8FNFc2vGt9ytv92A/X4hvDgRTAiSPzk=
+	t=1746644039; cv=none; b=sxObAwNDP6aazOUgp6OFejONr7jQKn4skLjMit1lmaVRYot8fhcqfGHHTQmvK3hiXJlYVtZ3dKHNZSR7h3L0EdZzbvQuQKmC8gKdSbhgVglEgzN02CpYTZTmd+wAvQDDDTCzB3QVu5zInVm02ICWMajZsNHIx6DSbQ9D1ms3Zf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644037; c=relaxed/simple;
-	bh=Vw8G9QKe90mhbmzTeUG7zB6VQudFf7cGV0Lw/34PC9Y=;
+	s=arc-20240116; t=1746644039; c=relaxed/simple;
+	bh=JE6mRwvTrxNNkty+ax5L4nZnnyoDI8hkGjhykdzDDzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cdgPEmTfRxqVE48MJWW3etmYwb12RDnp9TsdEQIlrHFhGAnkCNnk4+pQhSksn6wLHrFj0j83A7TftLuuOdrgB3a1ImSJR4WNE2/NvnHl2v/APGflyqnhTfnc0qP9oRaave7X4lPXC03oq4uxkliVCjCaxYrtZaPgAnBcKwd5eJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2FiHLLql; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AOaAJwDdh5NgXABKLuYAr+70Rnc6Nt/5R1YJo613ld9ba1UZ9OQxvhrcBvaYDa4MPELoHPks1sPsnfYYLFOz9/K6XWvuLUVH/WUqV/EJvBPyyQcKF8LStoAK9vulHASV+y2fdYGVJLi3jJHzTF6jqrsaRrItvnWOmKxw6Ieczj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hvd07H8P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2FiHLLql"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9904BC4CEE2;
-	Wed,  7 May 2025 18:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hvd07H8P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7DCC4CEE2;
+	Wed,  7 May 2025 18:53:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644035;
-	bh=Vw8G9QKe90mhbmzTeUG7zB6VQudFf7cGV0Lw/34PC9Y=;
+	s=korg; t=1746644039;
+	bh=JE6mRwvTrxNNkty+ax5L4nZnnyoDI8hkGjhykdzDDzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2FiHLLql3M/znEuq3biMYGfjDhLP2unZfPvZhIAV0xeawbQarAroQalNP5Fq82IS6
-	 oi63LD+umiD9aANOJe42eLd/cBOx8jDibONlvnc0Kh6OFPqeoiQOsJF2Ud63MYVROe
-	 oaqAtfoSt4UPRJVdgHllf8pOUGBNyvbXEpZOPgps=
+	b=Hvd07H8PrHtkSDawATRO2JHbUazYjZ6ROGbYq9lAhN+xeJKVoQBtvOpLV51M8RkhH
+	 OGZBEACTZe+vgD0lgZkRdSrvUmujUOEvtBozcuI2YUCcqN4QvYCg251l1yzgD6A92F
+	 VwPZofPz+vYfKogVeK1Ujj/DpUHvcANiZ/hmBJyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Victor Nogueira <victor@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 098/183] net_sched: ets: Fix double list add in class with netem as child qdisc
-Date: Wed,  7 May 2025 20:39:03 +0200
-Message-ID: <20250507183828.791614741@linuxfoundation.org>
+Subject: [PATCH 6.14 099/183] net_sched: qfq: Fix double list add in class with netem as child qdisc
+Date: Wed,  7 May 2025 20:39:04 +0200
+Message-ID: <20250507183828.831950783@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -54,70 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 1a6d0c00fa07972384b0c308c72db091d49988b6 ]
+[ Upstream commit f139f37dcdf34b67f5bf92bc8e0f7f6b3ac63aa4 ]
 
 As described in Gerrard's report [1], there are use cases where a netem
 child qdisc will make the parent qdisc's enqueue callback reentrant.
-In the case of ets, there won't be a UAF, but the code will add the same
+In the case of qfq, there won't be a UAF, but the code will add the same
 classifier to the list twice, which will cause memory corruption.
 
-In addition to checking for qlen being zero, this patch checks whether
-the class was already added to the active_list (cl_is_active) before
-doing the addition to cater for the reentrant case.
+This patch checks whether the class was already added to the agg->active
+list (cl_is_active) before doing the addition to cater for the reentrant
+case.
 
 [1] https://lore.kernel.org/netdev/CAHcdcOm+03OD2j6R0=YHKqmy=VgJ8xEOKuP6c7mSgnp-TEJJbw@mail.gmail.com/
 
 Fixes: 37d9cf1a3ce3 ("sched: Fix detection of empty queues in child qdiscs")
 Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20250425220710.3964791-4-victor@mojatatu.com
+Link: https://patch.msgid.link/20250425220710.3964791-5-victor@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_ets.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/sched/sch_qfq.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/sch_ets.c b/net/sched/sch_ets.c
-index 516038a441638..9e4cd2cefa8c6 100644
---- a/net/sched/sch_ets.c
-+++ b/net/sched/sch_ets.c
-@@ -74,6 +74,11 @@ static const struct nla_policy ets_class_policy[TCA_ETS_MAX + 1] = {
- 	[TCA_ETS_QUANTA_BAND] = { .type = NLA_U32 },
- };
+diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
+index 6a07cdbdb9e12..faba1501ac2fa 100644
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -202,6 +202,11 @@ struct qfq_sched {
+  */
+ enum update_reason {enqueue, requeue};
  
-+static bool cl_is_active(struct ets_class *cl)
++static bool cl_is_active(struct qfq_class *cl)
 +{
 +	return !list_empty(&cl->alist);
 +}
 +
- static int ets_quantum_parse(struct Qdisc *sch, const struct nlattr *attr,
- 			     unsigned int *quantum,
- 			     struct netlink_ext_ack *extack)
-@@ -416,7 +421,6 @@ static int ets_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	struct ets_sched *q = qdisc_priv(sch);
- 	struct ets_class *cl;
+ static struct qfq_class *qfq_find_class(struct Qdisc *sch, u32 classid)
+ {
+ 	struct qfq_sched *q = qdisc_priv(sch);
+@@ -1214,7 +1219,6 @@ static int qfq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 	struct qfq_class *cl;
+ 	struct qfq_aggregate *agg;
  	int err = 0;
 -	bool first;
  
- 	cl = ets_classify(skb, sch, &err);
- 	if (!cl) {
-@@ -426,7 +430,6 @@ static int ets_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		return err;
+ 	cl = qfq_classify(skb, sch, &err);
+ 	if (cl == NULL) {
+@@ -1236,7 +1240,6 @@ static int qfq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
  	}
  
+ 	gso_segs = skb_is_gso(skb) ? skb_shinfo(skb)->gso_segs : 1;
 -	first = !cl->qdisc->q.qlen;
  	err = qdisc_enqueue(skb, cl->qdisc, to_free);
  	if (unlikely(err != NET_XMIT_SUCCESS)) {
- 		if (net_xmit_drop_count(err)) {
-@@ -436,7 +439,7 @@ static int ets_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		return err;
- 	}
+ 		pr_debug("qfq_enqueue: enqueue failed %d\n", err);
+@@ -1252,8 +1255,8 @@ static int qfq_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 	++sch->q.qlen;
  
--	if (first && !ets_class_is_strict(q, cl)) {
-+	if (!cl_is_active(cl) && !ets_class_is_strict(q, cl)) {
- 		list_add_tail(&cl->alist, &q->active);
- 		cl->deficit = cl->quantum;
- 	}
+ 	agg = cl->agg;
+-	/* if the queue was not empty, then done here */
+-	if (!first) {
++	/* if the class is active, then done here */
++	if (cl_is_active(cl)) {
+ 		if (unlikely(skb == cl->qdisc->ops->peek(cl->qdisc)) &&
+ 		    list_first_entry(&agg->active, struct qfq_class, alist)
+ 		    == cl && cl->deficit < len)
 -- 
 2.39.5
 
