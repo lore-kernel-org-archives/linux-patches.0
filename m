@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAE529A0;
-	Wed,  7 May 2025 19:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40D829A0;
+	Wed,  7 May 2025 19:04:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644642; cv=none; b=dloU3udltla0GH/p+m2UFo8uJURp0piUhmpM2a4oFH+DL1Rmumrt43L3djsWffbTpO50uSFXPNEEVMvrOGIPPL5RR8BbT7sgYujXeZ5mqPler1OTk7n6zaNwOKlk8stPBSNvAqEZL7rVkIJ48b9RLvj0k398NkyloBjD4Ui08Os=
+	t=1746644645; cv=none; b=Ahk0JrBJo/tuJ0uEuUa35QR9iejTKJC+xYVd9lw4oobGQYosS2Q8JqbxfTJj2nSHTKt0fYKNcKOR2k8l9V4F2JdQ2AxPajXe9hKBkytp/fqeepJJKkPpY8D9rGkvGf27g1hT7RMizdaRoDH/2QUQjfn6N8pcb3z9XNQKS3zSgo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644642; c=relaxed/simple;
-	bh=9iOYREOi+IOlzXKppTos17iMUi+76nMInbV8Vis7rl0=;
+	s=arc-20240116; t=1746644645; c=relaxed/simple;
+	bh=rx+pH816IasEjIoohzMoPTrWKvWowZP/YbHc42Nb/tU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pB9ktXTuzIh6+g6gRFpULbmMM3tMQUPe2XJI4EnmKHw2vaE3E5hS4HDgZETT64Ta3NeHmYb6uCw+ZkX+gSAjFQiEqiMKhMs6hWO9/65exiRtSsgta9/ptsQAMFvDwhhiEJOt4ey/8iDxJ4h6OF/FTveviKpVyfjIFdO2zH+1uJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVmrmCXY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E4sCFW0TxPZNzNnITWK9BWCs22eMYLnrEBVgT5ukwY4nn9X1m009kpaH559funKW66QWw77GYUicvkudxGm28Tm2oJ0xJNYncD2PxvAbemmIq/9cJLrvjXfKd/9HA9S8AaEVmLWzUtKAGXGiIdvl7Z8/kAlIbskp8QrmAGaCK8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d3js6PRW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVmrmCXY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73EF9C4CEE2;
-	Wed,  7 May 2025 19:04:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3js6PRW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C267C4CEE2;
+	Wed,  7 May 2025 19:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644641;
-	bh=9iOYREOi+IOlzXKppTos17iMUi+76nMInbV8Vis7rl0=;
+	s=korg; t=1746644644;
+	bh=rx+pH816IasEjIoohzMoPTrWKvWowZP/YbHc42Nb/tU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wVmrmCXYK5DCe2LI96vQgs3adrkvuh69E2/lfx6kNbB8fGzVdEkxZZwpub04skBNa
-	 /VROFl8Yit1h6utK/8ENnjw90mwluE7i9mkHatOTzJiS1mIFAyEpWFMRLhwYoUQt+g
-	 kVVQu8nCTBwBJprgW0SIL7a0T4a3U13ZGQCG1YEo=
+	b=d3js6PRW3w+k7a/eTZs8VCnakrdWdWO+L5BVhJlFtCGkT4AKE2V7UW0+Qcq354j9j
+	 ETuJpXW993o/rjq97ET5e1MVCMEIRoDDu/SGGKQaHyurHP05jiA36cS03qIZgFZgCr
+	 H4+6wZLycGM+C53HaO32YG4iJUR7hnIrnLoqEO2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 109/164] net: ipv6: fix UDPv6 GSO segmentation with NAT
-Date: Wed,  7 May 2025 20:39:54 +0200
-Message-ID: <20250507183825.392058478@linuxfoundation.org>
+Subject: [PATCH 6.12 110/164] ALSA: hda/realtek: Fix built-mic regression on other ASUS models
+Date: Wed,  7 May 2025 20:39:55 +0200
+Message-ID: <20250507183825.431757835@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -52,102 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit b936a9b8d4a585ccb6d454921c36286bfe63e01d ]
+[ Upstream commit 4d5b71b487291da9f92e352c0a7e39f256d60db8 ]
 
-If any address or port is changed, update it in all packets and recalculate
-checksum.
+A few ASUS models use the ALC256_FIXUP_ASUS_HEADSET_MODE although they
+have no built-in mic pin on NID 0x13, as found in the commit
+c1732ede5e80 ("ALSA: hda/realtek - Fix headset and mic on several Asus
+laptops with ALC256").  This was relatively harmless in the past as
+NID 0x13 was assigned as the secondary mic.  But since the fix for the
+pin sort order, this pin became the primary one, hence user started
+noticing the broken input, and we've fixed already for a few ASUS
+models to switch to ALC256_FIXUP_ASUS_MIC_NO_PRESENCE.
 
-Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250426153210.14044-1-nbd@nbd.name
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This patch corrects the other ASUS models to use the right quirk entry
+for fixing the built-in mic regression.  Here we cover X541SA
+(1043:12e0), X541UV (1043:12f0), Z550SA (1043:13bf0) and X555UB
+(1043:1ccd).
+
+Fixes: 3b4309546b48 ("ALSA: hda: Fix headset detection failure due to unstable sort")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220058
+Link: https://patch.msgid.link/20250430053210.31776-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_offload.c | 61 +++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 60 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
-index ecfca59f31f13..da5d4aea1b591 100644
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -247,6 +247,62 @@ static struct sk_buff *__udpv4_gso_segment_list_csum(struct sk_buff *segs)
- 	return segs;
- }
- 
-+static void __udpv6_gso_segment_csum(struct sk_buff *seg,
-+				     struct in6_addr *oldip,
-+				     const struct in6_addr *newip,
-+				     __be16 *oldport, __be16 newport)
-+{
-+	struct udphdr *uh = udp_hdr(seg);
-+
-+	if (ipv6_addr_equal(oldip, newip) && *oldport == newport)
-+		return;
-+
-+	if (uh->check) {
-+		inet_proto_csum_replace16(&uh->check, seg, oldip->s6_addr32,
-+					  newip->s6_addr32, true);
-+
-+		inet_proto_csum_replace2(&uh->check, seg, *oldport, newport,
-+					 false);
-+		if (!uh->check)
-+			uh->check = CSUM_MANGLED_0;
-+	}
-+
-+	*oldip = *newip;
-+	*oldport = newport;
-+}
-+
-+static struct sk_buff *__udpv6_gso_segment_list_csum(struct sk_buff *segs)
-+{
-+	const struct ipv6hdr *iph;
-+	const struct udphdr *uh;
-+	struct ipv6hdr *iph2;
-+	struct sk_buff *seg;
-+	struct udphdr *uh2;
-+
-+	seg = segs;
-+	uh = udp_hdr(seg);
-+	iph = ipv6_hdr(seg);
-+	uh2 = udp_hdr(seg->next);
-+	iph2 = ipv6_hdr(seg->next);
-+
-+	if (!(*(const u32 *)&uh->source ^ *(const u32 *)&uh2->source) &&
-+	    ipv6_addr_equal(&iph->saddr, &iph2->saddr) &&
-+	    ipv6_addr_equal(&iph->daddr, &iph2->daddr))
-+		return segs;
-+
-+	while ((seg = seg->next)) {
-+		uh2 = udp_hdr(seg);
-+		iph2 = ipv6_hdr(seg);
-+
-+		__udpv6_gso_segment_csum(seg, &iph2->saddr, &iph->saddr,
-+					 &uh2->source, uh->source);
-+		__udpv6_gso_segment_csum(seg, &iph2->daddr, &iph->daddr,
-+					 &uh2->dest, uh->dest);
-+	}
-+
-+	return segs;
-+}
-+
- static struct sk_buff *__udp_gso_segment_list(struct sk_buff *skb,
- 					      netdev_features_t features,
- 					      bool is_ipv6)
-@@ -259,7 +315,10 @@ static struct sk_buff *__udp_gso_segment_list(struct sk_buff *skb,
- 
- 	udp_hdr(skb)->len = htons(sizeof(struct udphdr) + mss);
- 
--	return is_ipv6 ? skb : __udpv4_gso_segment_list_csum(skb);
-+	if (is_ipv6)
-+		return __udpv6_gso_segment_list_csum(skb);
-+	else
-+		return __udpv4_gso_segment_list_csum(skb);
- }
- 
- struct sk_buff *__udp_gso_segment(struct sk_buff *gso_skb,
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 5a36cb2969b08..db72c5fce9d18 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10723,10 +10723,10 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x12a3, "Asus N7691ZM", ALC269_FIXUP_ASUS_N7601ZM),
+ 	SND_PCI_QUIRK(0x1043, 0x12af, "ASUS UX582ZS", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x12b4, "ASUS B3405CCA / P3405CCA", ALC294_FIXUP_ASUS_CS35L41_SPI_2),
+-	SND_PCI_QUIRK(0x1043, 0x12e0, "ASUS X541SA", ALC256_FIXUP_ASUS_MIC),
+-	SND_PCI_QUIRK(0x1043, 0x12f0, "ASUS X541UV", ALC256_FIXUP_ASUS_MIC),
++	SND_PCI_QUIRK(0x1043, 0x12e0, "ASUS X541SA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1043, 0x12f0, "ASUS X541UV", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1313, "Asus K42JZ", ALC269VB_FIXUP_ASUS_MIC_NO_PRESENCE),
+-	SND_PCI_QUIRK(0x1043, 0x13b0, "ASUS Z550SA", ALC256_FIXUP_ASUS_MIC),
++	SND_PCI_QUIRK(0x1043, 0x13b0, "ASUS Z550SA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1427, "Asus Zenbook UX31E", ALC269VB_FIXUP_ASUS_ZENBOOK),
+ 	SND_PCI_QUIRK(0x1043, 0x1433, "ASUS GX650PY/PZ/PV/PU/PYV/PZV/PIV/PVV", ALC285_FIXUP_ASUS_I2C_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x1460, "Asus VivoBook 15", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+@@ -10780,7 +10780,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x1c92, "ASUS ROG Strix G15", ALC285_FIXUP_ASUS_G533Z_PINS),
+ 	SND_PCI_QUIRK(0x1043, 0x1c9f, "ASUS G614JU/JV/JI", ALC285_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x1caf, "ASUS G634JY/JZ/JI/JG", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
+-	SND_PCI_QUIRK(0x1043, 0x1ccd, "ASUS X555UB", ALC256_FIXUP_ASUS_MIC),
++	SND_PCI_QUIRK(0x1043, 0x1ccd, "ASUS X555UB", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1ccf, "ASUS G814JU/JV/JI", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1cdf, "ASUS G814JY/JZ/JG", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1cef, "ASUS G834JY/JZ/JI/JG", ALC285_FIXUP_ASUS_HEADSET_MIC),
 -- 
 2.39.5
 
