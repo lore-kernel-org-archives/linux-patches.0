@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9B114A4C7;
-	Wed,  7 May 2025 18:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DD714A4C7;
+	Wed,  7 May 2025 18:43:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643398; cv=none; b=EaMWZAj4zKl3MgDRXAJMZ5MccOb4lAlKIJ0fAg7X3TBbhBonHrcwIUKDZbOHhR4Sdr0Hacq5RAX5GAKOgJ3TQQhTQI52M+94586O8THtMpfj1WGkXK1darn+5MhKRZonQmJmWvgXSIMjn4IrBV0AUIDFNIgO/30sqbHJxfXDHJk=
+	t=1746643401; cv=none; b=CdEBjzMFlH6Uot0udoMoj+u2Zr8pE285s+QOtTkGxHtaELPXcnQrwI92XFC8U6iUwxpnCal/PWnJQU9mChKTjTkDYt1JRy/8Ea09xBV2zuud8xuxSlT4Id/qlPLYAGtrPv3A5GGbrkX4d6Au8eaqt1NUhl2GQ++0TMel20olnnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643398; c=relaxed/simple;
-	bh=1jG5a5mO7PxuA26B5WhVr42B5ZIicQ7NZbf11Zn5i9w=;
+	s=arc-20240116; t=1746643401; c=relaxed/simple;
+	bh=50Qd1aiN/cypnTHQ7VJx7GYmVKC+d5nzFQ607LtuA7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qk5C/VKHjwNkJboXiTDDMIDcDZ7vAPWyKAj1jSrdVK8k5GqZSfKCLYn9ttj6KlqCTK/3wR/RSO10U7YTOF4QAnDgV12zd740AlzqLcQa6ocD5EyNxJBbN4lZ8D5NBP4ve/DXdXpkbILP3Kl/YIiY+m29qOfVKAcmML4vvs5u1rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F94gHaRg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WUucDIFO5dG7RODEApievR1LjVtB73atUb/jmOV+wEt8cUMTe2sYAUF5guz2Vnjlp3Vg6veHS4oZdrGcsva8rNYxZGKss0j9PCWuidE/zuFCWzt9EL7kdH9focVtyo0jD92wRvLlyo4exVMHAe2+BV7A6ZLaf2pmEMAgfcP2HT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=prClQVEI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F94gHaRg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7B94C4CEE2;
-	Wed,  7 May 2025 18:43:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="prClQVEI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD228C4CEE2;
+	Wed,  7 May 2025 18:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643398;
-	bh=1jG5a5mO7PxuA26B5WhVr42B5ZIicQ7NZbf11Zn5i9w=;
+	s=korg; t=1746643401;
+	bh=50Qd1aiN/cypnTHQ7VJx7GYmVKC+d5nzFQ607LtuA7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F94gHaRgnnwpJaboONOJIUB/o1X0NfV06Ei5cWlmxNBi0RcORyRDJ4Fcl6pIgqaTf
-	 YOmcev7i6szuJyfpvIP8AAPv0ozDFf8zvvDOjdJaNRwW5N4hzPlj1T+ZHIe0gIbuGn
-	 nvNUlbOnLZ/X6Sq3NUE7iAQ1qT4wUPxp5FD+nmHY=
+	b=prClQVEIQzS/X3c+SlQfX3GUbPsvo86GH/dBbbcj9gR1aShYVQlvCuLZyfaNN1CF6
+	 5FB0XF8Zxuy3nfS3WNDhaMSQ/hLApXAMJG1mwI07IRGaLmpEI/1057xAw3j1ybQCnf
+	 PRaPemsVdTnvxIOyMeq+VsSL9shL/3cf9Dw7X6YE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?S=C3=A9bastien=20Szymanski?= <sebastien.szymanski@armadeus.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Fiona Klute <fiona.klute@gmx.de>,
+	kernel-list@raspberrypi.com,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 46/55] ARM: dts: opos6ul: add ksz8081 phy properties
-Date: Wed,  7 May 2025 20:39:47 +0200
-Message-ID: <20250507183800.894236218@linuxfoundation.org>
+Subject: [PATCH 5.15 47/55] net: phy: microchip: force IRQ polling mode for lan88xx
+Date: Wed,  7 May 2025 20:39:48 +0200
+Message-ID: <20250507183800.933331828@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183759.048732653@linuxfoundation.org>
 References: <20250507183759.048732653@linuxfoundation.org>
@@ -46,46 +47,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sébastien Szymanski <sebastien.szymanski@armadeus.com>
+From: Fiona Klute <fiona.klute@gmx.de>
 
-[ Upstream commit 6e1a7bc8382b0d4208258f7d2a4474fae788dd90 ]
+[ Upstream commit 30a41ed32d3088cd0d682a13d7f30b23baed7e93 ]
 
-Commit c7e73b5051d6 ("ARM: imx: mach-imx6ul: remove 14x14 EVK specific
-PHY fixup") removed a PHY fixup that setted the clock mode and the LED
-mode.
-Make the Ethernet interface work again by doing as advised in the
-commit's log, set clock mode and the LED mode in the device tree.
+With lan88xx based devices the lan78xx driver can get stuck in an
+interrupt loop while bringing the device up, flooding the kernel log
+with messages like the following:
 
-Fixes: c7e73b5051d6 ("ARM: imx: mach-imx6ul: remove 14x14 EVK specific PHY fixup")
-Signed-off-by: Sébastien Szymanski <sebastien.szymanski@armadeus.com>
-Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+lan78xx 2-3:1.0 enp1s0u3: kevent 4 may have been dropped
+
+Removing interrupt support from the lan88xx PHY driver forces the
+driver to use polling instead, which avoids the problem.
+
+The issue has been observed with Raspberry Pi devices at least since
+4.14 (see [1], bug report for their downstream kernel), as well as
+with Nvidia devices [2] in 2020, where disabling interrupts was the
+vendor-suggested workaround (together with the claim that phylib
+changes in 4.9 made the interrupt handling in lan78xx incompatible).
+
+Iperf reports well over 900Mbits/sec per direction with client in
+--dualtest mode, so there does not seem to be a significant impact on
+throughput (lan88xx device connected via switch to the peer).
+
+[1] https://github.com/raspberrypi/linux/issues/2447
+[2] https://forums.developer.nvidia.com/t/jetson-xavier-and-lan7800-problem/142134/11
+
+Link: https://lore.kernel.org/0901d90d-3f20-4a10-b680-9c978e04ddda@lunn.ch
+Fixes: 792aec47d59d ("add microchip LAN88xx phy driver")
+Signed-off-by: Fiona Klute <fiona.klute@gmx.de>
+Cc: kernel-list@raspberrypi.com
+Cc: stable@vger.kernel.org
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250416102413.30654-1-fiona.klute@gmx.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6ul-imx6ull-opos6ul.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/phy/microchip.c | 46 +++----------------------------------
+ 1 file changed, 3 insertions(+), 43 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx6ul-imx6ull-opos6ul.dtsi b/arch/arm/boot/dts/imx6ul-imx6ull-opos6ul.dtsi
-index f2386dcb9ff2c..dda4fa91b2f2c 100644
---- a/arch/arm/boot/dts/imx6ul-imx6ull-opos6ul.dtsi
-+++ b/arch/arm/boot/dts/imx6ul-imx6ull-opos6ul.dtsi
-@@ -40,6 +40,9 @@
- 			reg = <1>;
- 			interrupt-parent = <&gpio4>;
- 			interrupts = <16 IRQ_TYPE_LEVEL_LOW>;
-+			micrel,led-mode = <1>;
-+			clocks = <&clks IMX6UL_CLK_ENET_REF>;
-+			clock-names = "rmii-ref";
- 			status = "okay";
- 		};
- 	};
+diff --git a/drivers/net/phy/microchip.c b/drivers/net/phy/microchip.c
+index 230f2fcf9c46a..7c8bcec0a8fab 100644
+--- a/drivers/net/phy/microchip.c
++++ b/drivers/net/phy/microchip.c
+@@ -31,47 +31,6 @@ static int lan88xx_write_page(struct phy_device *phydev, int page)
+ 	return __phy_write(phydev, LAN88XX_EXT_PAGE_ACCESS, page);
+ }
+ 
+-static int lan88xx_phy_config_intr(struct phy_device *phydev)
+-{
+-	int rc;
+-
+-	if (phydev->interrupts == PHY_INTERRUPT_ENABLED) {
+-		/* unmask all source and clear them before enable */
+-		rc = phy_write(phydev, LAN88XX_INT_MASK, 0x7FFF);
+-		rc = phy_read(phydev, LAN88XX_INT_STS);
+-		rc = phy_write(phydev, LAN88XX_INT_MASK,
+-			       LAN88XX_INT_MASK_MDINTPIN_EN_ |
+-			       LAN88XX_INT_MASK_LINK_CHANGE_);
+-	} else {
+-		rc = phy_write(phydev, LAN88XX_INT_MASK, 0);
+-		if (rc)
+-			return rc;
+-
+-		/* Ack interrupts after they have been disabled */
+-		rc = phy_read(phydev, LAN88XX_INT_STS);
+-	}
+-
+-	return rc < 0 ? rc : 0;
+-}
+-
+-static irqreturn_t lan88xx_handle_interrupt(struct phy_device *phydev)
+-{
+-	int irq_status;
+-
+-	irq_status = phy_read(phydev, LAN88XX_INT_STS);
+-	if (irq_status < 0) {
+-		phy_error(phydev);
+-		return IRQ_NONE;
+-	}
+-
+-	if (!(irq_status & LAN88XX_INT_STS_LINK_CHANGE_))
+-		return IRQ_NONE;
+-
+-	phy_trigger_machine(phydev);
+-
+-	return IRQ_HANDLED;
+-}
+-
+ static int lan88xx_suspend(struct phy_device *phydev)
+ {
+ 	struct lan88xx_priv *priv = phydev->priv;
+@@ -388,8 +347,9 @@ static struct phy_driver microchip_phy_driver[] = {
+ 	.config_aneg	= lan88xx_config_aneg,
+ 	.link_change_notify = lan88xx_link_change_notify,
+ 
+-	.config_intr	= lan88xx_phy_config_intr,
+-	.handle_interrupt = lan88xx_handle_interrupt,
++	/* Interrupt handling is broken, do not define related
++	 * functions to force polling.
++	 */
+ 
+ 	.suspend	= lan88xx_suspend,
+ 	.resume		= genphy_resume,
 -- 
 2.39.5
 
