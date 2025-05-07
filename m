@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082AB29A0;
-	Wed,  7 May 2025 19:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBAB288A8;
+	Wed,  7 May 2025 19:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644581; cv=none; b=N3woAETygJrBSVCaBThoBoCw9LzMqKIpaCc1GwBKtAuYdLpnzc9WWKNf00xKxDhXHsg39iTaMT4oNTCoVLv9tsshx+ppu2GwUvsUAVltDvMubmMQBP71NT+qz5jDq3JTrnFrbLvskEWLFQs+RJlAjashlt8O98SZA75PoJ08n50=
+	t=1746644583; cv=none; b=nX8u5P5cLLvEHT7u4uGBOhMMjGak8/HikaWP9PDaYYNdryr6n3IizsBLgGsCi1nRdcuagh0mSRTJost4JuoR+uMCBTv3vuzLgBydGOOKdo6KlLRPo5VHcDjSh/NdPiPRsJlzsGMDELD63cJSpkMjPeUvuVHKQxefk9ja2GmDVAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644581; c=relaxed/simple;
-	bh=hg25BLaBwZzhTZGLs6OTKnPMeKAWdAui3Oo120RlZgQ=;
+	s=arc-20240116; t=1746644583; c=relaxed/simple;
+	bh=6frX9PzzD4l+aNOJOEybdj4zZ7C9qhHQDenZqRPXG0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tmhukqOB2u95Y+Y+Cne2/BAlceFz13XJOio2TpKb82L8Aphf5eF7YkgIlYYxDOdyYF+vKlCxJELbs4yo636W4AuXGrr1GexmOrEH3mOX6eWtD9FXC5NBLoQhb4vaThQyUtZaUca5UbuURQjjMPYMviKaTb25fjqQFS1fJLGvOL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWXr44tJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YLlP3X39dToANiAGHa9hbet2TuefcFkswA2GC69cJelUyi0pipGSQvqkEnHNM+PfJNe2tYWN9S+YWHDwY50ruPP/KwdM815/sVA+Q57B91Bms55eJSgTvO8wPOh97Y+TQlinSel/ZaD68/7EmqUUxGMaq+QKgLmUpPfeghRcvC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4zmzM8u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWXr44tJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC5FC4CEE2;
-	Wed,  7 May 2025 19:03:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4zmzM8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65022C4CEE2;
+	Wed,  7 May 2025 19:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644580;
-	bh=hg25BLaBwZzhTZGLs6OTKnPMeKAWdAui3Oo120RlZgQ=;
+	s=korg; t=1746644583;
+	bh=6frX9PzzD4l+aNOJOEybdj4zZ7C9qhHQDenZqRPXG0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZWXr44tJuGfr090+qEs0n62sK7vugxFUINKBBh0IMtmRMLnxKOZUnsJXwOFWK6t4e
-	 OqKL3xC0ZzjK3f+zeIhwzACtcDUuU8PxNz3ckLAhOkM64OLxeCvoOwHmppmKGAsXT5
-	 SsHS+qq23jyZldXPH0ztqMyH8A9dAzWOct0E4BBc=
+	b=g4zmzM8uYUfZOyvmSPmX0llBvmZRNJckOsZ3oWVzkV46YWKgqqQnlMya0gc7Hbb5J
+	 ZXV9H2yT5meZsfUpiKi0SUZQDIJPxzWKHCzYFCM75mH2eoNFkxlYhqui8IqFyqBdVV
+	 ZOWyL4lUZk5nZ0YyL447VcAjCnZ1TV8GX1PyHDtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Linxuan <chenlinxuan@uniontech.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 060/164] drm/i915/pxp: fix undefined reference to `intel_pxp_gsccs_is_ready_for_sessions
-Date: Wed,  7 May 2025 20:39:05 +0200
-Message-ID: <20250507183823.370209716@linuxfoundation.org>
+Subject: [PATCH 6.12 061/164] wifi: iwlwifi: dont warn if the NIC is gone in resume
+Date: Wed,  7 May 2025 20:39:06 +0200
+Message-ID: <20250507183823.411299815@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -51,64 +52,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Linxuan <chenlinxuan@uniontech.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 7e21ea8149a0e41c3666ee52cc063a6f797a7a2a ]
+[ Upstream commit 15220a257319ffe3bf95796326dfe0aacdbeb1c4 ]
 
-On x86_64 with gcc version 13.3.0, I compile kernel with:
+Some BIOSes decide to power gate the WLAN device during S3. Since
+iwlwifi doesn't expect this, it gets very noisy reporting that the
+device is no longer available. Wifi is still available because iwlwifi
+recovers, but it spews scary prints in the log.
 
-  make defconfig
-  ./scripts/kconfig/merge_config.sh .config <(
-    echo CONFIG_COMPILE_TEST=y
-  )
-  make KCFLAGS="-fno-inline-functions -fno-inline-small-functions -fno-inline-functions-called-once"
+Fix that by failing gracefully.
 
-Then I get a linker error:
-
-  ld: vmlinux.o: in function `pxp_fw_dependencies_completed':
-  kintel_pxp.c:(.text+0x95728f): undefined reference to `intel_pxp_gsccs_is_ready_for_sessions'
-
-This is caused by not having a intel_pxp_gsccs_is_ready_for_sessions()
-header stub for CONFIG_DRM_I915_PXP=n. Add it.
-
-Signed-off-by: Chen Linxuan <chenlinxuan@uniontech.com>
-Fixes: 99afb7cc8c44 ("drm/i915/pxp: Add ARB session creation and cleanup")
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://lore.kernel.org/r/20250415090616.2649889-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit b484c1e225a6a582fc78c4d7af7b286408bb7d41)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: e8bb19c1d590 ("wifi: iwlwifi: support fast resume")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219597
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250420095642.d8d58146c829.I569ca15eaaa774d633038a749cc6ec7448419714@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.h | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ .../net/wireless/intel/iwlwifi/iwl-trans.c    |  1 -
+ drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 20 ++++++++++++++++---
+ .../wireless/intel/iwlwifi/pcie/internal.h    |  9 +++++----
+ .../net/wireless/intel/iwlwifi/pcie/trans.c   | 13 +++++++++---
+ drivers/net/wireless/intel/iwlwifi/pcie/tx.c  |  2 +-
+ 5 files changed, 33 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.h b/drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.h
-index 9aae779c4da31..4969d3de2bac3 100644
---- a/drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.h
-+++ b/drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.h
-@@ -23,6 +23,7 @@ int intel_pxp_gsccs_init(struct intel_pxp *pxp);
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.c b/drivers/net/wireless/intel/iwlwifi/iwl-trans.c
+index 3c9d91496c826..3b3dcaf33c9d9 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.c
+@@ -347,7 +347,6 @@ void __releases(nic_access)
+ iwl_trans_release_nic_access(struct iwl_trans *trans)
+ {
+ 	iwl_trans_pcie_release_nic_access(trans);
+-	__release(nic_access);
+ }
+ IWL_EXPORT_SYMBOL(iwl_trans_release_nic_access);
  
- int intel_pxp_gsccs_create_session(struct intel_pxp *pxp, int arb_session_id);
- void intel_pxp_gsccs_end_arb_fw_session(struct intel_pxp *pxp, u32 arb_session_id);
-+bool intel_pxp_gsccs_is_ready_for_sessions(struct intel_pxp *pxp);
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+index 9dd0e0a51ce5c..a3cabee35d471 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+@@ -1652,10 +1652,24 @@ static int _iwl_pci_resume(struct device *device, bool restore)
+ 	 * need to reset it completely.
+ 	 * Note: MAC (bits 0:7) will be cleared upon suspend even with wowlan,
+ 	 * so assume that any bits there mean that the device is usable.
++	 * For older devices, just try silently to grab the NIC.
+ 	 */
+-	if (trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_BZ &&
+-	    !iwl_read32(trans, CSR_FUNC_SCRATCH))
+-		device_was_powered_off = true;
++	if (trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_BZ) {
++		if (!iwl_read32(trans, CSR_FUNC_SCRATCH))
++			device_was_powered_off = true;
++	} else {
++		/*
++		 * bh are re-enabled by iwl_trans_pcie_release_nic_access,
++		 * so re-enable them if _iwl_trans_pcie_grab_nic_access fails.
++		 */
++		local_bh_disable();
++		if (_iwl_trans_pcie_grab_nic_access(trans, true)) {
++			iwl_trans_pcie_release_nic_access(trans);
++		} else {
++			device_was_powered_off = true;
++			local_bh_enable();
++		}
++	}
  
- #else
- static inline void intel_pxp_gsccs_fini(struct intel_pxp *pxp)
-@@ -34,8 +35,11 @@ static inline int intel_pxp_gsccs_init(struct intel_pxp *pxp)
- 	return 0;
+ 	if (restore || device_was_powered_off) {
+ 		trans->state = IWL_TRANS_NO_FW;
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/internal.h b/drivers/net/wireless/intel/iwlwifi/pcie/internal.h
+index ebe9b25cc53a9..6019114a5d1aa 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/internal.h
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/internal.h
+@@ -558,10 +558,10 @@ void iwl_trans_pcie_free(struct iwl_trans *trans);
+ void iwl_trans_pcie_free_pnvm_dram_regions(struct iwl_dram_regions *dram_regions,
+ 					   struct device *dev);
+ 
+-bool __iwl_trans_pcie_grab_nic_access(struct iwl_trans *trans);
+-#define _iwl_trans_pcie_grab_nic_access(trans)			\
++bool __iwl_trans_pcie_grab_nic_access(struct iwl_trans *trans, bool silent);
++#define _iwl_trans_pcie_grab_nic_access(trans, silent)		\
+ 	__cond_lock(nic_access_nobh,				\
+-		    likely(__iwl_trans_pcie_grab_nic_access(trans)))
++		    likely(__iwl_trans_pcie_grab_nic_access(trans, silent)))
+ 
+ /*****************************************************
+ * RX
+@@ -1102,7 +1102,8 @@ void iwl_trans_pcie_set_bits_mask(struct iwl_trans *trans, u32 reg,
+ int iwl_trans_pcie_read_config32(struct iwl_trans *trans, u32 ofs,
+ 				 u32 *val);
+ bool iwl_trans_pcie_grab_nic_access(struct iwl_trans *trans);
+-void iwl_trans_pcie_release_nic_access(struct iwl_trans *trans);
++void __releases(nic_access_nobh)
++iwl_trans_pcie_release_nic_access(struct iwl_trans *trans);
+ 
+ /* transport gen 1 exported functions */
+ void iwl_trans_pcie_fw_alive(struct iwl_trans *trans, u32 scd_addr);
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
+index d19b3bd0866bd..18d7d59ae5814 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
+@@ -2191,7 +2191,7 @@ EXPORT_SYMBOL(iwl_trans_pcie_remove);
+  * This version doesn't disable BHs but rather assumes they're
+  * already disabled.
+  */
+-bool __iwl_trans_pcie_grab_nic_access(struct iwl_trans *trans)
++bool __iwl_trans_pcie_grab_nic_access(struct iwl_trans *trans, bool silent)
+ {
+ 	int ret;
+ 	struct iwl_trans_pcie *trans_pcie = IWL_TRANS_GET_PCIE_TRANS(trans);
+@@ -2243,6 +2243,11 @@ bool __iwl_trans_pcie_grab_nic_access(struct iwl_trans *trans)
+ 	if (unlikely(ret < 0)) {
+ 		u32 cntrl = iwl_read32(trans, CSR_GP_CNTRL);
+ 
++		if (silent) {
++			spin_unlock(&trans_pcie->reg_lock);
++			return false;
++		}
++
+ 		WARN_ONCE(1,
+ 			  "Timeout waiting for hardware access (CSR_GP_CNTRL 0x%08x)\n",
+ 			  cntrl);
+@@ -2273,7 +2278,7 @@ bool iwl_trans_pcie_grab_nic_access(struct iwl_trans *trans)
+ 	bool ret;
+ 
+ 	local_bh_disable();
+-	ret = __iwl_trans_pcie_grab_nic_access(trans);
++	ret = __iwl_trans_pcie_grab_nic_access(trans, false);
+ 	if (ret) {
+ 		/* keep BHs disabled until iwl_trans_pcie_release_nic_access */
+ 		return ret;
+@@ -2282,7 +2287,8 @@ bool iwl_trans_pcie_grab_nic_access(struct iwl_trans *trans)
+ 	return false;
  }
  
--#endif
-+static inline bool intel_pxp_gsccs_is_ready_for_sessions(struct intel_pxp *pxp)
-+{
-+	return false;
-+}
+-void iwl_trans_pcie_release_nic_access(struct iwl_trans *trans)
++void __releases(nic_access_nobh)
++iwl_trans_pcie_release_nic_access(struct iwl_trans *trans)
+ {
+ 	struct iwl_trans_pcie *trans_pcie = IWL_TRANS_GET_PCIE_TRANS(trans);
  
--bool intel_pxp_gsccs_is_ready_for_sessions(struct intel_pxp *pxp);
-+#endif
+@@ -2309,6 +2315,7 @@ void iwl_trans_pcie_release_nic_access(struct iwl_trans *trans)
+ 	 * scheduled on different CPUs (after we drop reg_lock).
+ 	 */
+ out:
++	__release(nic_access_nobh);
+ 	spin_unlock_bh(&trans_pcie->reg_lock);
+ }
  
- #endif /*__INTEL_PXP_GSCCS_H__ */
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/tx.c b/drivers/net/wireless/intel/iwlwifi/pcie/tx.c
+index 9fcdd06e126ae..f0213a6b8cf53 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/tx.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/tx.c
+@@ -1021,7 +1021,7 @@ static int iwl_pcie_set_cmd_in_flight(struct iwl_trans *trans,
+ 	 * returned. This needs to be done only on NICs that have
+ 	 * apmg_wake_up_wa set (see above.)
+ 	 */
+-	if (!_iwl_trans_pcie_grab_nic_access(trans))
++	if (!_iwl_trans_pcie_grab_nic_access(trans, false))
+ 		return -EIO;
+ 
+ 	/*
 -- 
 2.39.5
 
