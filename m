@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9CF214813;
-	Wed,  7 May 2025 19:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C87214813;
+	Wed,  7 May 2025 19:12:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746645155; cv=none; b=SPHCUxRiEGUYH7RMZa6QCYyqy1rt/z93fxubmamHGmv7RnNB1dhCcjxQnGX4UROpRKYIItHl/5KwbWXjIiHOydMA87m7PXtHhLuk6X4VEiCwajWSMsCGqto3P1i5TczZVx+fpDRbQhwNeItGFhgjT8BOuJ0KJ/Fhopm+9V83JiA=
+	t=1746645158; cv=none; b=HNAy/N6qBnVpCesfWtG8QbLPKCc5TMnLryZyR0rHkr2eMB7JLEH/AglVcFt0PIljz7hODM31xRVDSYwmgkDdecqu7zeKxmYfTF2/nSJ7o6iu5au4JIz/Ytf+fNwN19cXTWqiQVp0pdtaXfcIfpKMdWE0tp5A5eXGPUcCGPuvPNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746645155; c=relaxed/simple;
-	bh=jpb8c7riOmR8h9D1XCkeFxefrp4HVgaLXnpGcDDE1xM=;
+	s=arc-20240116; t=1746645158; c=relaxed/simple;
+	bh=yVvnfhosniSL44Va3m+wYjdCtJ4n2UV18UZ1Il7U/a0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J0lScqJKhc3iYtRv6Afd1gnLoVSauyV+0xXvs44uyNUzoLS7Xe7l5YWf2bhMpx03Shjbh4XKZK7WZiB2b2Ggukt+9B3Ulb1fDYFd/gyqGqihRkBPaRoCbZ0xswULmDCObdPZV4yyX3bJmbx6hj7l9JgKNHgvBBzdNs/hkLQCmoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rautck9C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KBFaD2JF6c5uUTjkEU6mribKBWLf3wG4CQnlQ0VEZ9bOhgF23HtasxACeXsXbp5y4FViPCJWFJ5YmVZHhlPRjGfWC23ub1hMuZzibvHJcpi2UOAUiaXxZMrK6+rgzLekm992PLhO7y+fS8eQSDU/b6Jrr/rendMOg4Scd6wdoas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGsw5o4z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rautck9C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F4AC4CEE2;
-	Wed,  7 May 2025 19:12:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGsw5o4z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60849C4CEE2;
+	Wed,  7 May 2025 19:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746645155;
-	bh=jpb8c7riOmR8h9D1XCkeFxefrp4HVgaLXnpGcDDE1xM=;
+	s=korg; t=1746645158;
+	bh=yVvnfhosniSL44Va3m+wYjdCtJ4n2UV18UZ1Il7U/a0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rautck9CxMQ9TSBA0NzT4sMT3Ti72RCFJIzTqUIsyJaXxJErvZLbV4Fpp4URQQATX
-	 9p1LbtY6Zsdp6U7PhAdlGF1VirVdJImZ80Uww6oTpUZ0LFIqe6M5JAk5Nh+/TZwYW7
-	 1QEdaJVlzEl7GMpQXjLkNiLgMfg1pO5+b3Hu0lPg=
+	b=cGsw5o4zVPGV7mVdCl6SUJUbNE8CBji1UKbmypA1aKZby+rQsmk7sAEKUAyNFpebe
+	 TAjzKQUb5hSdbhNA/8dUowKQmfG3EhsdSJCAZW86tIUWvUYHpvKGbqGPmPwjd4QaOz
+	 NxB6vXtytOq/CNcqJStxoPwdpqqhOOnS/j+1sRtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Bell <jonathan@raspberrypi.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Thangaraj Samynathan <thangaraj.s@microchip.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 111/129] xhci: Use more than one Event Ring segment
-Date: Wed,  7 May 2025 20:40:47 +0200
-Message-ID: <20250507183817.989811986@linuxfoundation.org>
+Subject: [PATCH 6.6 085/129] net: lan743x: Fix memleak issue when GSO enabled
+Date: Wed,  7 May 2025 20:40:21 +0200
+Message-ID: <20250507183816.952626025@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -52,98 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Bell <jonathan@raspberrypi.com>
+From: Thangaraj Samynathan <thangaraj.s@microchip.com>
 
-[ Upstream commit 28084d3fcc3c8445542917f32e382c45b5343cc2 ]
+[ Upstream commit 2d52e2e38b85c8b7bc00dca55c2499f46f8c8198 ]
 
-Users have reported log spam created by "Event Ring Full" xHC event
-TRBs.  These are caused by interrupt latency in conjunction with a very
-busy set of devices on the bus.  The errors are benign, but throughput
-will suffer as the xHC will pause processing of transfers until the
-Event Ring is drained by the kernel.
+Always map the `skb` to the LS descriptor. Previously skb was
+mapped to EXT descriptor when the number of fragments is zero with
+GSO enabled. Mapping the skb to EXT descriptor prevents it from
+being freed, leading to a memory leak
 
-Commit dc0ffbea5729 ("usb: host: xhci: update event ring dequeue pointer
-on purpose") mitigated the issue by advancing the Event Ring Dequeue
-Pointer already after half a segment has been processed.  Nevertheless,
-providing a larger Event Ring would be useful to cope with load peaks.
-
-Expand the number of event TRB slots available by increasing the number
-of Event Ring segments in the ERST.
-
-Controllers have a hardware-defined limit as to the number of ERST
-entries they can process, but with up to 32k it can be excessively high
-(sec 5.3.4).  So cap the actual number at 2 (configurable through the
-ERST_MAX_SEGS macro), which seems like a reasonable quantity.  It is
-supported by any xHC because the limit in the HCSPARAMS2 register is
-defined as a power of 2.  Renesas uPD720201 and VIA VL805 controllers
-do not support more than 2 ERST entries.
-
-An alternative to increasing the number of Event Ring segments would be
-an increase of the segment size.  But that requires allocating multiple
-contiguous pages, which may be impossible if memory is fragmented.
-
-Signed-off-by: Jonathan Bell <jonathan@raspberrypi.com>
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20231019102924.2797346-6-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: bea5892d0ed2 ("xhci: Limit time spent with xHC interrupts disabled during bus resume")
+Fixes: 23f0703c125b ("lan743x: Add main source files for new lan743x driver")
+Signed-off-by: Thangaraj Samynathan <thangaraj.s@microchip.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20250429052527.10031-1-thangaraj.s@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-mem.c | 10 +++++++---
- drivers/usb/host/xhci.h     |  5 +++--
- 2 files changed, 10 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/microchip/lan743x_main.c | 8 ++++++--
+ drivers/net/ethernet/microchip/lan743x_main.h | 1 +
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index f236fba5cd248..45240299fa171 100644
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -2237,14 +2237,18 @@ xhci_alloc_interrupter(struct xhci_hcd *xhci, gfp_t flags)
- {
- 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
- 	struct xhci_interrupter *ir;
-+	unsigned int num_segs;
- 	int ret;
+diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
+index 92010bfe5e413..5d2ceff72784f 100644
+--- a/drivers/net/ethernet/microchip/lan743x_main.c
++++ b/drivers/net/ethernet/microchip/lan743x_main.c
+@@ -1949,6 +1949,7 @@ static void lan743x_tx_frame_add_lso(struct lan743x_tx *tx,
+ 	if (nr_frags <= 0) {
+ 		tx->frame_data0 |= TX_DESC_DATA0_LS_;
+ 		tx->frame_data0 |= TX_DESC_DATA0_IOC_;
++		tx->frame_last = tx->frame_first;
+ 	}
+ 	tx_descriptor = &tx->ring_cpu_ptr[tx->frame_tail];
+ 	tx_descriptor->data0 = cpu_to_le32(tx->frame_data0);
+@@ -2018,6 +2019,7 @@ static int lan743x_tx_frame_add_fragment(struct lan743x_tx *tx,
+ 		tx->frame_first = 0;
+ 		tx->frame_data0 = 0;
+ 		tx->frame_tail = 0;
++		tx->frame_last = 0;
+ 		return -ENOMEM;
+ 	}
  
- 	ir = kzalloc_node(sizeof(*ir), flags, dev_to_node(dev));
- 	if (!ir)
- 		return NULL;
+@@ -2058,16 +2060,18 @@ static void lan743x_tx_frame_end(struct lan743x_tx *tx,
+ 	    TX_DESC_DATA0_DTYPE_DATA_) {
+ 		tx->frame_data0 |= TX_DESC_DATA0_LS_;
+ 		tx->frame_data0 |= TX_DESC_DATA0_IOC_;
++		tx->frame_last = tx->frame_tail;
+ 	}
  
--	ir->event_ring = xhci_ring_alloc(xhci, ERST_NUM_SEGS, 1, TYPE_EVENT,
--					0, flags);
-+	num_segs = min_t(unsigned int, 1 << HCS_ERST_MAX(xhci->hcs_params2),
-+			 ERST_MAX_SEGS);
-+
-+	ir->event_ring = xhci_ring_alloc(xhci, num_segs, 1, TYPE_EVENT, 0,
-+					 flags);
- 	if (!ir->event_ring) {
- 		xhci_warn(xhci, "Failed to allocate interrupter event ring\n");
- 		kfree(ir);
-@@ -2280,7 +2284,7 @@ xhci_add_interrupter(struct xhci_hcd *xhci, struct xhci_interrupter *ir,
- 	/* set ERST count with the number of entries in the segment table */
- 	erst_size = readl(&ir->ir_set->erst_size);
- 	erst_size &= ERST_SIZE_MASK;
--	erst_size |= ERST_NUM_SEGS;
-+	erst_size |= ir->event_ring->num_segs;
- 	writel(erst_size, &ir->ir_set->erst_size);
+-	tx_descriptor = &tx->ring_cpu_ptr[tx->frame_tail];
+-	buffer_info = &tx->buffer_info[tx->frame_tail];
++	tx_descriptor = &tx->ring_cpu_ptr[tx->frame_last];
++	buffer_info = &tx->buffer_info[tx->frame_last];
+ 	buffer_info->skb = skb;
+ 	if (time_stamp)
+ 		buffer_info->flags |= TX_BUFFER_INFO_FLAG_TIMESTAMP_REQUESTED;
+ 	if (ignore_sync)
+ 		buffer_info->flags |= TX_BUFFER_INFO_FLAG_IGNORE_SYNC;
  
- 	erst_base = xhci_read_64(xhci, &ir->ir_set->erst_base);
-diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-index 0325fccfaa2a4..76a3010b8b74a 100644
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1427,8 +1427,9 @@ struct urb_priv {
-  * Each segment table entry is 4*32bits long.  1K seems like an ok size:
-  * (1K bytes * 8bytes/bit) / (4*32 bits) = 64 segment entries in the table,
-  * meaning 64 ring segments.
-- * Initial allocated size of the ERST, in number of entries */
--#define	ERST_NUM_SEGS	1
-+ * Reasonable limit for number of Event Ring segments (spec allows 32k)
-+ */
-+#define	ERST_MAX_SEGS	2
- /* Poll every 60 seconds */
- #define	POLL_TIMEOUT	60
- /* Stop endpoint command timeout (secs) for URB cancellation watchdog timer */
++	tx_descriptor = &tx->ring_cpu_ptr[tx->frame_tail];
+ 	tx_descriptor->data0 = cpu_to_le32(tx->frame_data0);
+ 	tx->frame_tail = lan743x_tx_next_index(tx, tx->frame_tail);
+ 	tx->last_tail = tx->frame_tail;
+diff --git a/drivers/net/ethernet/microchip/lan743x_main.h b/drivers/net/ethernet/microchip/lan743x_main.h
+index 3b2c6046eb3ad..b6c83c68241e6 100644
+--- a/drivers/net/ethernet/microchip/lan743x_main.h
++++ b/drivers/net/ethernet/microchip/lan743x_main.h
+@@ -974,6 +974,7 @@ struct lan743x_tx {
+ 	u32		frame_first;
+ 	u32		frame_data0;
+ 	u32		frame_tail;
++	u32		frame_last;
+ 
+ 	struct lan743x_tx_buffer_info *buffer_info;
+ 
 -- 
 2.39.5
 
