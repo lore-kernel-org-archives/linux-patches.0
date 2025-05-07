@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB631FF5EC;
-	Wed,  7 May 2025 18:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D3F42A83;
+	Wed,  7 May 2025 18:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643870; cv=none; b=DFNlm52+HOMor1ldJwja/0zBKCsEPwC3AmPfJUpXXODfXr6900KyoXeEOXt612degvZqf6DmHWme5e+m9dzfvjktK6VQW8eJdo1X61A60xurI1SwMyLpGsQTBWRoDv0sAf00iFe5OBE5qS3AwWOzxoeFfQQe+8bTnEG2dcAk2F4=
+	t=1746643873; cv=none; b=K5BUieoV+VthhTEI1a05lVaiooEszWJh06//Salv1fDlVix7WxfJlUQx+OAy1kkc00EYivdgagnIRPbGWz3uQMX72wPnXQ+Ro1EWJWxIYIonirfhzr0mgbUGfqaWl5DUHO4n0OOOG+RbRnMHqV8GSs+Npc9qfu7NLXN5VqcpCEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643870; c=relaxed/simple;
-	bh=SASuT1U3xMsatLMwdPVEk+xgnyzrACHLLRcjbkxgnOw=;
+	s=arc-20240116; t=1746643873; c=relaxed/simple;
+	bh=xRKc71TJ6jvXwgJZHlEE47sjfe5laQPf/SkJFU6OL8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=abMljhxs2SHgieNuNg+9c5gnlUlaD9c0yPWXhgDjkIsveoJYfL8dL+cd5qKT3UOTSZoHfRjkc8uGcttP51S75p7Y5kU3x/mxhuQ6iuYnd2lLGi6a+iV6FDkbVc6gXygwMfXccdPpA61Sxw3W48pxlzew4W3MMTYOwYOwdYE7bWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JwgSoDbH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uzCc+rPotI7k87gKpyc0B6mLiOQsoIgXHSYWho4opSvDee+FCpy33ht9Bpq+R+VH0zARupnhGS59KvfPKXFB3kqSoXAJtJHD3eQGiDdKLO4IawiUq1rDYLHFG5CNbRdI+dQVIZKdy2Mh64BcufZFeV3tSwhSjzZML5j9aeqQa3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRZEplSJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JwgSoDbH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0BCC4CEEB;
-	Wed,  7 May 2025 18:51:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRZEplSJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70024C4CEE2;
+	Wed,  7 May 2025 18:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643869;
-	bh=SASuT1U3xMsatLMwdPVEk+xgnyzrACHLLRcjbkxgnOw=;
+	s=korg; t=1746643872;
+	bh=xRKc71TJ6jvXwgJZHlEE47sjfe5laQPf/SkJFU6OL8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JwgSoDbHp/VCRWIwUwRZ7zIhz5Hd5BKnFMaFkxxuJX13xTvh10dDRatwXHuvuSoo7
-	 DncKlpn3Bp6BbnfxuzijiNLPNr8dzDTdVl+8DGF2+D8GGTfLkfOOF1KM63h+2jIWF2
-	 XZGvMcFXoqeuD323Y/zzC9rSVdPxPSovZzFxKZXk=
+	b=eRZEplSJlg9NuWsUV3Y5//AbABzyuxUcII8mo0u26DNvM5t7Umk531HP7Yg8vABos
+	 /prqK8x0lw5o4nJ/VNHqOs/er5amDKErd19GL8hnlZtw0Kr/rFyiTkuBDMZz22dmk4
+	 tiOxMoO0WrerlAVreArFxUYqIJYbSeq5qkesRsqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jethro Donaldson <devel@jro.nz>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.14 043/183] smb: client: fix zero length for mkdir POSIX create context
-Date: Wed,  7 May 2025 20:38:08 +0200
-Message-ID: <20250507183826.437919980@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>
+Subject: [PATCH 6.14 044/183] cpufreq: Avoid using inconsistent policy->min and policy->max
+Date: Wed,  7 May 2025 20:38:09 +0200
+Message-ID: <20250507183826.477009250@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -52,43 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jethro Donaldson <devel@jro.nz>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 74c72419ec8da5cbc9c49410d3c44bb954538bdd upstream.
+commit 7491cdf46b5cbdf123fc84fbe0a07e9e3d7b7620 upstream.
 
-SMB create requests issued via smb311_posix_mkdir() have an incorrect
-length of zero bytes for the POSIX create context data. ksmbd server
-rejects such requests and logs "cli req too short" causing mkdir to fail
-with "invalid argument" on the client side.  It also causes subsequent
-rmmod to crash in cifs_destroy_request_bufs()
+Since cpufreq_driver_resolve_freq() can run in parallel with
+cpufreq_set_policy() and there is no synchronization between them,
+the former may access policy->min and policy->max while the latter
+is updating them and it may see intermediate values of them due
+to the way the update is carried out.  Also the compiler is free
+to apply any optimizations it wants both to the stores in
+cpufreq_set_policy() and to the loads in cpufreq_driver_resolve_freq()
+which may result in additional inconsistencies.
 
-Inspection of packets sent by cifs.ko using wireshark show valid data for
-the SMB2_POSIX_CREATE_CONTEXT is appended with the correct offset, but
-with an incorrect length of zero bytes. Fails with ksmbd+cifs.ko only as
-Windows server/client does not use POSIX extensions.
+To address this, use WRITE_ONCE() when updating policy->min and
+policy->max in cpufreq_set_policy() and use READ_ONCE() for reading
+them in cpufreq_driver_resolve_freq().  Moreover, rearrange the update
+in cpufreq_set_policy() to avoid storing intermediate values in
+policy->min and policy->max with the help of the observation that
+their new values are expected to be properly ordered upfront.
 
-Fix smb311_posix_mkdir() to set req->CreateContextsLength as part of
-appending the POSIX creation context to the request.
+Also modify cpufreq_driver_resolve_freq() to take the possible reverse
+ordering of policy->min and policy->max, which may happen depending on
+the ordering of operations when this function and cpufreq_set_policy()
+run concurrently, into account by always honoring the max when it
+turns out to be less than the min (in case it comes from thermal
+throttling or similar).
 
-Signed-off-by: Jethro Donaldson <devel@jro.nz>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 151717690694 ("cpufreq: Make policy min/max hard requirements")
+Cc: 5.16+ <stable@vger.kernel.org> # 5.16+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/5907080.DvuYhMxLoT@rjwysocki.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2pdu.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/cpufreq/cpufreq.c |   32 +++++++++++++++++++++++++-------
+ 1 file changed, 25 insertions(+), 7 deletions(-)
 
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -2920,6 +2920,7 @@ replay_again:
- 		req->CreateContextsOffset = cpu_to_le32(
- 			sizeof(struct smb2_create_req) +
- 			iov[1].iov_len);
-+		le32_add_cpu(&req->CreateContextsLength, iov[n_iov-1].iov_len);
- 		pc_buf = iov[n_iov-1].iov_base;
- 	}
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -539,8 +539,6 @@ static unsigned int __resolve_freq(struc
+ {
+ 	unsigned int idx;
  
+-	target_freq = clamp_val(target_freq, policy->min, policy->max);
+-
+ 	if (!policy->freq_table)
+ 		return target_freq;
+ 
+@@ -564,7 +562,22 @@ static unsigned int __resolve_freq(struc
+ unsigned int cpufreq_driver_resolve_freq(struct cpufreq_policy *policy,
+ 					 unsigned int target_freq)
+ {
+-	return __resolve_freq(policy, target_freq, CPUFREQ_RELATION_LE);
++	unsigned int min = READ_ONCE(policy->min);
++	unsigned int max = READ_ONCE(policy->max);
++
++	/*
++	 * If this function runs in parallel with cpufreq_set_policy(), it may
++	 * read policy->min before the update and policy->max after the update
++	 * or the other way around, so there is no ordering guarantee.
++	 *
++	 * Resolve this by always honoring the max (in case it comes from
++	 * thermal throttling or similar).
++	 */
++	if (unlikely(min > max))
++		min = max;
++
++	return __resolve_freq(policy, clamp_val(target_freq, min, max),
++			      CPUFREQ_RELATION_LE);
+ }
+ EXPORT_SYMBOL_GPL(cpufreq_driver_resolve_freq);
+ 
+@@ -2337,6 +2350,7 @@ int __cpufreq_driver_target(struct cpufr
+ 	if (cpufreq_disabled())
+ 		return -ENODEV;
+ 
++	target_freq = clamp_val(target_freq, policy->min, policy->max);
+ 	target_freq = __resolve_freq(policy, target_freq, relation);
+ 
+ 	pr_debug("target for CPU %u: %u kHz, relation %u, requested %u kHz\n",
+@@ -2661,11 +2675,15 @@ static int cpufreq_set_policy(struct cpu
+ 	 * Resolve policy min/max to available frequencies. It ensures
+ 	 * no frequency resolution will neither overshoot the requested maximum
+ 	 * nor undershoot the requested minimum.
++	 *
++	 * Avoid storing intermediate values in policy->max or policy->min and
++	 * compiler optimizations around them because they may be accessed
++	 * concurrently by cpufreq_driver_resolve_freq() during the update.
+ 	 */
+-	policy->min = new_data.min;
+-	policy->max = new_data.max;
+-	policy->min = __resolve_freq(policy, policy->min, CPUFREQ_RELATION_L);
+-	policy->max = __resolve_freq(policy, policy->max, CPUFREQ_RELATION_H);
++	WRITE_ONCE(policy->max, __resolve_freq(policy, new_data.max, CPUFREQ_RELATION_H));
++	new_data.min = __resolve_freq(policy, new_data.min, CPUFREQ_RELATION_L);
++	WRITE_ONCE(policy->min, new_data.min > policy->max ? policy->max : new_data.min);
++
+ 	trace_cpu_frequency_limits(policy);
+ 
+ 	cpufreq_update_pressure(policy);
 
 
