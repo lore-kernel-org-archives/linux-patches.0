@@ -1,132 +1,120 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7437211278;
-	Wed,  7 May 2025 19:13:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0686E7263D
+	for <patches@lists.linux.dev>; Wed,  7 May 2025 20:34:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746645236; cv=none; b=js519YHSHzzwafSQFbRNdeRIdROuDEzaD40a0YMgyuIqUjG51Q7BrOVcyrpSvvZZ3P3hO3O9sfDPFnCtKnecl4U1rbd1oH9EG9MRKS/g6jZ1oo+wuh7tQgKLQs3awl6jOgUfFc5qX9dfCRdX28iGxw4BWnyMStheYnQ6a528BSk=
+	t=1746650087; cv=none; b=tnzFuFBiVGdAWPCEFrWhmEZv85DqNuf1aQByMG5r6mZqGzuXMrGh/PFIZthLNXJ62ULaD9GO/bHG6mLCG58XoIQOUWP1U3FMQnK61S89G8OCz4RKayc7BvKx9retGYsIuGXPF5k7CRnaNCsPQYZOvPtNX940NQzTq8D8BZbsyds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746645236; c=relaxed/simple;
-	bh=4/dN1AAtXinKJ4FPmFK1zGql8HLSKosoEhc38nMR8YY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pCeuNVa1sM2DvIKDbN/BK5hKYTUyS56zmSmBEoV3Lbd/wJRqr1+XXf5pK9DCIrrdv/d4PpVSbmuqk8RM0zi76j0QNUrvQtWo9Oj4e5ahbq1zldDXyuCCrtgziPPWZ6blYpcSbXmPMZd1lwgmf6bz6nZgtbnUIYnLdSLcE7zZN9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/uZ7kIs; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1746650087; c=relaxed/simple;
+	bh=rYwPlKIrc8CEQvItc68MgYlI97CaizPLxQHNldaARzA=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=bBxiiud9w6noNoXK5aHv9kJZE/t95pFHtg+TjvYFkYKfkbd6edD4uPAU/3mL3kAT9i/AihwFsEHZaapgB2gUziEKnzN5VyRaKxtySwxfTT994QE7dOhopmhO21Rzw+qoDwnhW6foJRVsr5J0II7Ow6kJ48BgOUtbNn8GCWMeNqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=eqSRilGd; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/uZ7kIs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3563DC4CEE2;
-	Wed,  7 May 2025 19:13:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746645236;
-	bh=4/dN1AAtXinKJ4FPmFK1zGql8HLSKosoEhc38nMR8YY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N/uZ7kIs+iTSiZ5IzTw4IxCe8ZfgyZ8ahFBW4De0oWcp1wlvORXqbN8x+o1nMNdTY
-	 7KdPHKeDDaxGvYXtRqoIhSNejQWeHAMFLQUuHUrCX6Q2a0Otj9glHCYcMYD39+A1YG
-	 nwW6rzVW6rBsPHRHPFlx14c605wFPnFUAnQn8jqc=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 115/129] xhci: Add helper to set an interrupters interrupt moderation interval
-Date: Wed,  7 May 2025 20:40:51 +0200
-Message-ID: <20250507183818.253599621@linuxfoundation.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
-References: <20250507183813.500572371@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="eqSRilGd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1746650082;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ZZS/dW7f0IHeNiVWvc16YzMci9swdBRTEPVRyR/dZeo=;
+	b=eqSRilGdJX4kCGYoFpb6nUmkqBTfzuv5+HnOo9AAo/VoajhBj/pDMtbPUoQwMg8onw/kQn
+	U9XAxx9ixXZTf8qg3OZ60D6GnzC3p+z9C890boOCrjIGGjZ2daBsCkNsJWsKIV3AWQ2iCu
+	LrUxz8ebSqIJnj6fTN1BlXVi1xvX3PU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-470-9veFRZ7bPcSB-rqEDZOkhQ-1; Wed,
+ 07 May 2025 16:34:39 -0400
+X-MC-Unique: 9veFRZ7bPcSB-rqEDZOkhQ-1
+X-Mimecast-MFC-AGG-ID: 9veFRZ7bPcSB-rqEDZOkhQ_1746650078
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 235EF18002A5;
+	Wed,  7 May 2025 20:34:38 +0000 (UTC)
+Received: from [10.22.80.45] (unknown [10.22.80.45])
+	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 7A82330001A1;
+	Wed,  7 May 2025 20:34:36 +0000 (UTC)
+Date: Wed, 7 May 2025 22:34:32 +0200 (CEST)
+From: Mikulas Patocka <mpatocka@redhat.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+    Benjamin Marzinski <bmarzins@redhat.com>
+Subject: Re: [PATCH 6.14 030/183] dm: always update the array size in
+ realloc_argv on success
+In-Reply-To: <20250507183825.912392976@linuxfoundation.org>
+Message-ID: <2c92ae25-854e-2d60-4b6c-a4cbcd5f4ebd@redhat.com>
+References: <20250507183824.682671926@linuxfoundation.org> <20250507183825.912392976@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+Hi
 
-------------------
+I'd like to ask you to also backport 
+f1aff4bc199cb92c055668caed65505e3b4d2656 ("dm: fix copying after src array 
+boundaries") to all stable branches because it fixes a bug introduced in 
+the commit 5a2a6c428190f945c5cbf5791f72dbea83e97f66.
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
-
-[ Upstream commit ace21625878f78708b75b7a872ec7a0e2ed15ca4 ]
-
-Add a helper to set the interrupt moderation interval for an interrupter.
-Each interrupter can have its own moderation value.
-
-Hardware has a 16bit register for the moderation value, each step is 250ns.
-
-Helper function imod_interval argument is in nanoseconds.
-
-Values from 0 to 16383750 (250 x 0xffff) are accepted.
-0 means no interrupt throttling.
-
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-Link: https://lore.kernel.org/r/20240217001017.29969-3-quic_wcheng@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: bea5892d0ed2 ("xhci: Limit time spent with xHC interrupts disabled during bus resume")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/usb/host/xhci.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
-index 5c3250989047e..d6a0c79e5fada 100644
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -323,6 +323,23 @@ static int xhci_disable_interrupter(struct xhci_interrupter *ir)
- 	return 0;
- }
- 
-+/* interrupt moderation interval imod_interval in nanoseconds */
-+static int xhci_set_interrupter_moderation(struct xhci_interrupter *ir,
-+					   u32 imod_interval)
-+{
-+	u32 imod;
-+
-+	if (!ir || !ir->ir_set || imod_interval > U16_MAX * 250)
-+		return -EINVAL;
-+
-+	imod = readl(&ir->ir_set->irq_control);
-+	imod &= ~ER_IRQ_INTERVAL_MASK;
-+	imod |= (imod_interval / 250) & ER_IRQ_INTERVAL_MASK;
-+	writel(imod, &ir->ir_set->irq_control);
-+
-+	return 0;
-+}
-+
- static void compliance_mode_recovery(struct timer_list *t)
- {
- 	struct xhci_hcd *xhci;
-@@ -505,7 +522,6 @@ static int xhci_run_finished(struct xhci_hcd *xhci)
-  */
- int xhci_run(struct usb_hcd *hcd)
- {
--	u32 temp;
- 	u64 temp_64;
- 	int ret;
- 	struct xhci_hcd *xhci = hcd_to_xhci(hcd);
-@@ -525,12 +541,7 @@ int xhci_run(struct usb_hcd *hcd)
- 	xhci_dbg_trace(xhci, trace_xhci_dbg_init,
- 			"ERST deq = 64'h%0lx", (long unsigned int) temp_64);
- 
--	xhci_dbg_trace(xhci, trace_xhci_dbg_init,
--			"// Set the interrupt modulation register");
--	temp = readl(&ir->ir_set->irq_control);
--	temp &= ~ER_IRQ_INTERVAL_MASK;
--	temp |= (xhci->imod_interval / 250) & ER_IRQ_INTERVAL_MASK;
--	writel(temp, &ir->ir_set->irq_control);
-+	xhci_set_interrupter_moderation(ir, xhci->imod_interval);
- 
- 	if (xhci->quirks & XHCI_NEC_HOST) {
- 		struct xhci_command *command;
--- 
-2.39.5
+Mikulas
 
 
+
+On Wed, 7 May 2025, Greg Kroah-Hartman wrote:
+
+> 6.14-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Benjamin Marzinski <bmarzins@redhat.com>
+> 
+> commit 5a2a6c428190f945c5cbf5791f72dbea83e97f66 upstream.
+> 
+> realloc_argv() was only updating the array size if it was called with
+> old_argv already allocated. The first time it was called to create an
+> argv array, it would allocate the array but return the array size as
+> zero. dm_split_args() would think that it couldn't store any arguments
+> in the array and would call realloc_argv() again, causing it to
+> reallocate the initial slots (this time using GPF_KERNEL) and finally
+> return a size. Aside from being wasteful, this could cause deadlocks on
+> targets that need to process messages without starting new IO. Instead,
+> realloc_argv should always update the allocated array size on success.
+> 
+> Fixes: a0651926553c ("dm table: don't copy from a NULL pointer in realloc_argv()")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+> Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>  drivers/md/dm-table.c |    5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> --- a/drivers/md/dm-table.c
+> +++ b/drivers/md/dm-table.c
+> @@ -523,9 +523,10 @@ static char **realloc_argv(unsigned int
+>  		gfp = GFP_NOIO;
+>  	}
+>  	argv = kmalloc_array(new_size, sizeof(*argv), gfp);
+> -	if (argv && old_argv) {
+> -		memcpy(argv, old_argv, *size * sizeof(*argv));
+> +	if (argv) {
+>  		*size = new_size;
+> +		if (old_argv)
+> +			memcpy(argv, old_argv, *size * sizeof(*argv));
+>  	}
+>  
+>  	kfree(old_argv);
+> 
+> 
 
