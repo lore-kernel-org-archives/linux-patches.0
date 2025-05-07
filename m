@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA992144C1;
-	Wed,  7 May 2025 18:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A071482F5;
+	Wed,  7 May 2025 18:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644316; cv=none; b=sMGhjQ5TZC8dKeazTIOF9QYF+1Wh0tkfeKtSdcLepYbNTEc5EWitnaHGiXH9p6dU57jhLmU2Jfoytzm6nhvGgPun+psAjw+CqF5DLHy/YRg9cJLWyesSWDjExlVIiddZ7BFBApzXJ7rFN5P6dUWHtsNQhGbTihuBfsV/wXCu0CQ=
+	t=1746644319; cv=none; b=UWDawVeAJQNI+paI98ZZw/g0C8YyhzFSBdNEWc481WMS4m7U1IfhFYR/T7Q4Lzanj4zP3iZJl7vh3aV33QfgxvdDRf/a4Hw7T5xnfAmCnUdQXAz3HETm8VwyX1s825qa/ZyqGw46HZDhf9Jodvse1ZyJGEXp488YxZzVPZVnnzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644316; c=relaxed/simple;
-	bh=eN6mUbaj0eUyJtQcWeRL54ZXrMwnlmlzPdKAfKktX+w=;
+	s=arc-20240116; t=1746644319; c=relaxed/simple;
+	bh=EfLdDO16BqQm0FBver6/nUyqJwQ2CnD81mPwIlw3TQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=avnNEZzXhSgIFhDI+6z+P+bnSb+40qJOAijV27gsKeUPkPDkvJTSGYbixobShhEOMs6t0GEwEzyXO6SjjnY/Y8a1uonL4WvJJlpq+ZuXmwYAI6dNwzBVPUiiE+Vqws7jp4gWtDEdZKc18CPwjZcQ0/Sl8bpdnqTWNt+M9mSc7bU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z9d3f5Q6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=shdQ/2O5eIbHe/2pQtl9zbJYZ8lfeD5FlaT3cvQsOS5/h38nInHxAT7b+rhAtyb68y1+F0iqLVEVuxYBMD16jdCmk3N6585Ug1rH3Fvp06k3KiEFTW6gxgfZqF/9bzSOWp+Auwoj/UUnVCGDYTtpGFk1zflC7bBgIcJuE+CM614=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+uLmiOx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z9d3f5Q6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 809C2C4CEE2;
-	Wed,  7 May 2025 18:58:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+uLmiOx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD9FC4CEE2;
+	Wed,  7 May 2025 18:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644316;
-	bh=eN6mUbaj0eUyJtQcWeRL54ZXrMwnlmlzPdKAfKktX+w=;
+	s=korg; t=1746644319;
+	bh=EfLdDO16BqQm0FBver6/nUyqJwQ2CnD81mPwIlw3TQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z9d3f5Q6gxH6v11C9TI23IzKWhiakTKeTuIPYS/JK4L0/QmMaU7TqvrSNgwNav4ps
-	 wkhgujZUpu5XLMurqgQfTDgK7rTWH2sUc7cdozgYl6SeqSa1P4LAD1IXt5vkSQQ4Pp
-	 UHiF17jyWyIKBFgw3FX73kKemHGFVLow+byjb2WU=
+	b=b+uLmiOxgKVXyCvlUEV0qHmj6toCvYKOcCNvTBqokQeSo6X7KW/JpLndrKqm1nTGa
+	 sRhdM/GuJGU7G75fmWhyQatBIWu8lL47AeLkGNF8ZHoriEs6lvKvfVdYW2bmcyUV/+
+	 WDGR3v5SXQZu9mZuJ0V6zBXrAbSmnBpnTKeNHR9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Penglei Jiang <superman.xpt@gmail.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 180/183] btrfs: fix the inode leak in btrfs_iget()
-Date: Wed,  7 May 2025 20:40:25 +0200
-Message-ID: <20250507183832.152633368@linuxfoundation.org>
+Subject: [PATCH 6.14 181/183] drm/amd/display: Add scoped mutexes for amdgpu_dm_dhcp
+Date: Wed,  7 May 2025 20:40:26 +0200
+Message-ID: <20250507183832.193873315@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -52,84 +54,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Penglei Jiang <superman.xpt@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 48c1d1bb525b1c44b8bdc8e7ec5629cb6c2b9fc4 ]
+[ Upstream commit 6b675ab8efbf2bcee25be29e865455c56e246401 ]
 
-[BUG]
-There is a bug report that a syzbot reproducer can lead to the following
-busy inode at unmount time:
+[Why]
+Guards automatically release mutex when it goes out of scope making
+code easier to follow.
 
-  BTRFS info (device loop1): last unmount of filesystem 1680000e-3c1e-4c46-84b6-56bd3909af50
-  VFS: Busy inodes after unmount of loop1 (btrfs)
-  ------------[ cut here ]------------
-  kernel BUG at fs/super.c:650!
-  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-  CPU: 0 UID: 0 PID: 48168 Comm: syz-executor Not tainted 6.15.0-rc2-00471-g119009db2674 #2 PREEMPT(full)
-  Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-  RIP: 0010:generic_shutdown_super+0x2e9/0x390 fs/super.c:650
-  Call Trace:
-   <TASK>
-   kill_anon_super+0x3a/0x60 fs/super.c:1237
-   btrfs_kill_super+0x3b/0x50 fs/btrfs/super.c:2099
-   deactivate_locked_super+0xbe/0x1a0 fs/super.c:473
-   deactivate_super fs/super.c:506 [inline]
-   deactivate_super+0xe2/0x100 fs/super.c:502
-   cleanup_mnt+0x21f/0x440 fs/namespace.c:1435
-   task_work_run+0x14d/0x240 kernel/task_work.c:227
-   resume_user_mode_work include/linux/resume_user_mode.h:50 [inline]
-   exit_to_user_mode_loop kernel/entry/common.c:114 [inline]
-   exit_to_user_mode_prepare include/linux/entry-common.h:329 [inline]
-   __syscall_exit_to_user_mode_work kernel/entry/common.c:207 [inline]
-   syscall_exit_to_user_mode+0x269/0x290 kernel/entry/common.c:218
-   do_syscall_64+0xd4/0x250 arch/x86/entry/syscall_64.c:100
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
+[How]
+Replace all use of mutex_lock()/mutex_unlock() with guard(mutex).
 
-[CAUSE]
-When btrfs_alloc_path() failed, btrfs_iget() directly returned without
-releasing the inode already allocated by btrfs_iget_locked().
-
-This results the above busy inode and trigger the kernel BUG.
-
-[FIX]
-Fix it by calling iget_failed() if btrfs_alloc_path() failed.
-
-If we hit error inside btrfs_read_locked_inode(), it will properly call
-iget_failed(), so nothing to worry about.
-
-Although the iget_failed() cleanup inside btrfs_read_locked_inode() is a
-break of the normal error handling scheme, let's fix the obvious bug
-and backport first, then rework the error handling later.
-
-Reported-by: Penglei Jiang <superman.xpt@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/20250421102425.44431-1-superman.xpt@gmail.com/
-Fixes: 7c855e16ab72 ("btrfs: remove conditional path allocation in btrfs_read_locked_inode()")
-CC: stable@vger.kernel.org # 6.13+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Penglei Jiang <superman.xpt@gmail.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: be593d9d91c5 ("drm/amd/display: Fix slab-use-after-free in hdcp")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../amd/display/amdgpu_dm/amdgpu_dm_hdcp.c    | 37 +++++--------------
+ 1 file changed, 10 insertions(+), 27 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index f6fc4c9ace28c..3be6f8e8e157d 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -5660,8 +5660,10 @@ struct inode *btrfs_iget(u64 ino, struct btrfs_root *root)
- 		return &inode->vfs_inode;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
+index c0dc232440490..53796a74b7a65 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
+@@ -172,7 +172,7 @@ void hdcp_update_display(struct hdcp_workqueue *hdcp_work,
+ 	struct mod_hdcp_display_adjustment display_adjust;
+ 	unsigned int conn_index = aconnector->base.index;
  
- 	path = btrfs_alloc_path();
--	if (!path)
-+	if (!path) {
-+		iget_failed(&inode->vfs_inode);
- 		return ERR_PTR(-ENOMEM);
-+	}
+-	mutex_lock(&hdcp_w->mutex);
++	guard(mutex)(&hdcp_w->mutex);
+ 	hdcp_w->aconnector[conn_index] = aconnector;
  
- 	ret = btrfs_read_locked_inode(inode, path);
- 	btrfs_free_path(path);
+ 	memset(&link_adjust, 0, sizeof(link_adjust));
+@@ -209,7 +209,6 @@ void hdcp_update_display(struct hdcp_workqueue *hdcp_work,
+ 	mod_hdcp_update_display(&hdcp_w->hdcp, conn_index, &link_adjust, &display_adjust, &hdcp_w->output);
+ 
+ 	process_output(hdcp_w);
+-	mutex_unlock(&hdcp_w->mutex);
+ }
+ 
+ static void hdcp_remove_display(struct hdcp_workqueue *hdcp_work,
+@@ -220,7 +219,7 @@ static void hdcp_remove_display(struct hdcp_workqueue *hdcp_work,
+ 	struct drm_connector_state *conn_state = aconnector->base.state;
+ 	unsigned int conn_index = aconnector->base.index;
+ 
+-	mutex_lock(&hdcp_w->mutex);
++	guard(mutex)(&hdcp_w->mutex);
+ 	hdcp_w->aconnector[conn_index] = aconnector;
+ 
+ 	/* the removal of display will invoke auth reset -> hdcp destroy and
+@@ -239,7 +238,6 @@ static void hdcp_remove_display(struct hdcp_workqueue *hdcp_work,
+ 	mod_hdcp_remove_display(&hdcp_w->hdcp, aconnector->base.index, &hdcp_w->output);
+ 
+ 	process_output(hdcp_w);
+-	mutex_unlock(&hdcp_w->mutex);
+ }
+ 
+ void hdcp_reset_display(struct hdcp_workqueue *hdcp_work, unsigned int link_index)
+@@ -247,7 +245,7 @@ void hdcp_reset_display(struct hdcp_workqueue *hdcp_work, unsigned int link_inde
+ 	struct hdcp_workqueue *hdcp_w = &hdcp_work[link_index];
+ 	unsigned int conn_index;
+ 
+-	mutex_lock(&hdcp_w->mutex);
++	guard(mutex)(&hdcp_w->mutex);
+ 
+ 	mod_hdcp_reset_connection(&hdcp_w->hdcp,  &hdcp_w->output);
+ 
+@@ -259,8 +257,6 @@ void hdcp_reset_display(struct hdcp_workqueue *hdcp_work, unsigned int link_inde
+ 	}
+ 
+ 	process_output(hdcp_w);
+-
+-	mutex_unlock(&hdcp_w->mutex);
+ }
+ 
+ void hdcp_handle_cpirq(struct hdcp_workqueue *hdcp_work, unsigned int link_index)
+@@ -277,7 +273,7 @@ static void event_callback(struct work_struct *work)
+ 	hdcp_work = container_of(to_delayed_work(work), struct hdcp_workqueue,
+ 				 callback_dwork);
+ 
+-	mutex_lock(&hdcp_work->mutex);
++	guard(mutex)(&hdcp_work->mutex);
+ 
+ 	cancel_delayed_work(&hdcp_work->callback_dwork);
+ 
+@@ -285,8 +281,6 @@ static void event_callback(struct work_struct *work)
+ 			       &hdcp_work->output);
+ 
+ 	process_output(hdcp_work);
+-
+-	mutex_unlock(&hdcp_work->mutex);
+ }
+ 
+ static void event_property_update(struct work_struct *work)
+@@ -323,7 +317,7 @@ static void event_property_update(struct work_struct *work)
+ 			continue;
+ 
+ 		drm_modeset_lock(&dev->mode_config.connection_mutex, NULL);
+-		mutex_lock(&hdcp_work->mutex);
++		guard(mutex)(&hdcp_work->mutex);
+ 
+ 		if (conn_state->commit) {
+ 			ret = wait_for_completion_interruptible_timeout(&conn_state->commit->hw_done,
+@@ -355,7 +349,6 @@ static void event_property_update(struct work_struct *work)
+ 			drm_hdcp_update_content_protection(connector,
+ 							   DRM_MODE_CONTENT_PROTECTION_DESIRED);
+ 		}
+-		mutex_unlock(&hdcp_work->mutex);
+ 		drm_modeset_unlock(&dev->mode_config.connection_mutex);
+ 	}
+ }
+@@ -368,7 +361,7 @@ static void event_property_validate(struct work_struct *work)
+ 	struct amdgpu_dm_connector *aconnector;
+ 	unsigned int conn_index;
+ 
+-	mutex_lock(&hdcp_work->mutex);
++	guard(mutex)(&hdcp_work->mutex);
+ 
+ 	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX;
+ 	     conn_index++) {
+@@ -408,8 +401,6 @@ static void event_property_validate(struct work_struct *work)
+ 			schedule_work(&hdcp_work->property_update_work);
+ 		}
+ 	}
+-
+-	mutex_unlock(&hdcp_work->mutex);
+ }
+ 
+ static void event_watchdog_timer(struct work_struct *work)
+@@ -420,7 +411,7 @@ static void event_watchdog_timer(struct work_struct *work)
+ 				 struct hdcp_workqueue,
+ 				      watchdog_timer_dwork);
+ 
+-	mutex_lock(&hdcp_work->mutex);
++	guard(mutex)(&hdcp_work->mutex);
+ 
+ 	cancel_delayed_work(&hdcp_work->watchdog_timer_dwork);
+ 
+@@ -429,8 +420,6 @@ static void event_watchdog_timer(struct work_struct *work)
+ 			       &hdcp_work->output);
+ 
+ 	process_output(hdcp_work);
+-
+-	mutex_unlock(&hdcp_work->mutex);
+ }
+ 
+ static void event_cpirq(struct work_struct *work)
+@@ -439,13 +428,11 @@ static void event_cpirq(struct work_struct *work)
+ 
+ 	hdcp_work = container_of(work, struct hdcp_workqueue, cpirq_work);
+ 
+-	mutex_lock(&hdcp_work->mutex);
++	guard(mutex)(&hdcp_work->mutex);
+ 
+ 	mod_hdcp_process_event(&hdcp_work->hdcp, MOD_HDCP_EVENT_CPIRQ, &hdcp_work->output);
+ 
+ 	process_output(hdcp_work);
+-
+-	mutex_unlock(&hdcp_work->mutex);
+ }
+ 
+ void hdcp_destroy(struct kobject *kobj, struct hdcp_workqueue *hdcp_work)
+@@ -479,7 +466,7 @@ static bool enable_assr(void *handle, struct dc_link *link)
+ 
+ 	dtm_cmd = (struct ta_dtm_shared_memory *)psp->dtm_context.context.mem_context.shared_buf;
+ 
+-	mutex_lock(&psp->dtm_context.mutex);
++	guard(mutex)(&psp->dtm_context.mutex);
+ 	memset(dtm_cmd, 0, sizeof(struct ta_dtm_shared_memory));
+ 
+ 	dtm_cmd->cmd_id = TA_DTM_COMMAND__TOPOLOGY_ASSR_ENABLE;
+@@ -494,8 +481,6 @@ static bool enable_assr(void *handle, struct dc_link *link)
+ 		res = false;
+ 	}
+ 
+-	mutex_unlock(&psp->dtm_context.mutex);
+-
+ 	return res;
+ }
+ 
+@@ -557,13 +542,11 @@ static void update_config(void *handle, struct cp_psp_stream_config *config)
+ 			 (!!aconnector->base.state) ?
+ 			 aconnector->base.state->hdcp_content_type : -1);
+ 
+-	mutex_lock(&hdcp_w->mutex);
++	guard(mutex)(&hdcp_w->mutex);
+ 
+ 	mod_hdcp_add_display(&hdcp_w->hdcp, link, display, &hdcp_w->output);
+ 
+ 	process_output(hdcp_w);
+-	mutex_unlock(&hdcp_w->mutex);
+-
+ }
+ 
+ /**
 -- 
 2.39.5
 
