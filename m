@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2431DDC23;
-	Wed,  7 May 2025 18:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C20F1DDC23;
+	Wed,  7 May 2025 18:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643745; cv=none; b=hwTv0XwJ9neyXsssxSVQt6/uKzGLQekCNETHYglBP/CwjF+ZWCDk9ajjhQuOa0cWD0IMiMcM0meOZimQU5N3wvKC2quBonv019xmggxpm5o89VMjM9Q6DXyoCAvob4J8YTTB1HON4sTzgm2qXU0o/RMi9EsM9TCAXHtr6JvC4+k=
+	t=1746643748; cv=none; b=uFjjZCdpFqo4SjBKZsUSVGz6iLLGOyxVgq3tBksL+B10SAzGN5aeRVa83IceenCeWX2qd50CKlIltULYdzU/ueC+u9Sy0ohTgbEU0ADCdaawZ5QwOvxrtpEp9k2SfOauSmRoXMmnxKAVBgN5+Fi58Zb3kAkHQllBgh1POGFZRFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643745; c=relaxed/simple;
-	bh=ukfC/bfM/WEVGI+ZHWUxv2OlIzCmbeKtfnGMmc4Y8Xc=;
+	s=arc-20240116; t=1746643748; c=relaxed/simple;
+	bh=nYE3pSgb9gStjbvhLzJOBGUSNvD2Ftqs1VCc+phGdSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DUmTa+S4qxEJXO4/u9+v+4EyPthiX2AbGtKTmwmrhPb86+zveNBHpKbGHQtjHMHp8z9lpEXfjKGnkto0hH5Dx3Tpxxrpe9wNybMjHeaLLsHWsPzOjhw9OwaaplqOyUOYkY9FE9Xc1ADq1LE8+iPmN7WSarhTjho0BokUiLr6Ovc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhJ0HVUt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QpzWYZa+AcvJYiRd7/DtQBVv4GB11lNHBvG1g0OgJuoX5e2ICQlv0z/Y4I+KXh22lMaqVGYRuG8nEqrkUslmeJ8uKPCvgaN1vN5jW9sO3fh37MS27xN/gQyFN60DTYIxmBmnmRRgfalaChsZzaNgtNJ996eLjs96x1XR5wK8mBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XvkRu0h8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhJ0HVUt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2167EC4CEF0;
-	Wed,  7 May 2025 18:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvkRu0h8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A2EC4CEE2;
+	Wed,  7 May 2025 18:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643744;
-	bh=ukfC/bfM/WEVGI+ZHWUxv2OlIzCmbeKtfnGMmc4Y8Xc=;
+	s=korg; t=1746643747;
+	bh=nYE3pSgb9gStjbvhLzJOBGUSNvD2Ftqs1VCc+phGdSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LhJ0HVUt+5fVDRy4wofQiuNZNuwD7kiq+lDQ1Cm6bPvYuQPjJJZcjapLkM1SBNGsR
-	 0fOQDzEsjcEfjLercbQrOt6gR5kzeSielfGW0gKl6o6h40uvB2LAMRUTnsM9kRM3L9
-	 kdVXwUxbInoAQFzk0vIETi74f9wyuhj9aX6kfZak=
+	b=XvkRu0h8LygH9N4HHqlN8/+L6dvgS52MUO16CyQWq+xP9kfJKD1aWrp/MKc6GF5ev
+	 CypvSmgtX/88paoTtvSSu/HwwGGiqY4ISwjiOu1EPdo5djXZer6+axTNWQY0vYzzAl
+	 teUaF0+2eYN3gO7rHJgHogEu4mzbELbL3kEmKG/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Will Deacon <will@kernel.org>,
+	Daniel Wheeler <Daniel.Wheeler@amd.com>,
+	hersen wu <hersenxs.wu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 90/97] iommu/arm-smmu-v3: Fix iommu_device_probe bug due to duplicated stream ids
-Date: Wed,  7 May 2025 20:40:05 +0200
-Message-ID: <20250507183810.596474265@linuxfoundation.org>
+Subject: [PATCH 6.1 91/97] drm/amd/display: phase2 enable mst hdcp multiple displays
+Date: Wed,  7 May 2025 20:40:06 +0200
+Message-ID: <20250507183810.635002520@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183806.987408728@linuxfoundation.org>
 References: <20250507183806.987408728@linuxfoundation.org>
@@ -52,120 +52,304 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: hersen wu <hersenxs.wu@amd.com>
 
-[ Upstream commit b00d24997a11c10d3e420614f0873b83ce358a34 ]
+[ Upstream commit aa9fdd5d5add50305d2022fa072fe6f189283415 ]
 
-ASPEED VGA card has two built-in devices:
- 0008:06:00.0 PCI bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge (rev 06)
- 0008:07:00.0 VGA compatible controller: ASPEED Technology, Inc. ASPEED Graphics Family (rev 52)
+[why]
+For MST topology with 1 physical link and multiple connectors (>=2),
+e.g. daisy cahined MST + SST, or 1-to-multi MST hub, if userspace
+set to enable the HDCP simultaneously on all connected outputs, the
+commit tail iteratively call the hdcp_update_display() for each
+display (connector). However, the hdcp workqueue data structure for
+each link has only one DM connector and encryption status members,
+which means the work queue of property_validate/update() would only
+be triggered for the last connector within this physical link, and
+therefore the HDCP property value of other connectors would stay on
+DESIRED instead of switching to ENABLED, which is NOT as expected.
 
-Its toplogy looks like this:
- +-[0008:00]---00.0-[01-09]--+-00.0-[02-09]--+-00.0-[03]----00.0  Sandisk Corp Device 5017
-                             |               +-01.0-[04]--
-                             |               +-02.0-[05]----00.0  NVIDIA Corporation Device
-                             |               +-03.0-[06-07]----00.0-[07]----00.0  ASPEED Technology, Inc. ASPEED Graphics Family
-                             |               +-04.0-[08]----00.0  Renesas Technology Corp. uPD720201 USB 3.0 Host Controller
-                             |               \-05.0-[09]----00.0  Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller
-                             \-00.1  PMC-Sierra Inc. Device 4028
+[how]
+Use array of AMDGPU_DM_MAX_DISPLAY_INDEX for both aconnector and
+encryption status in hdcp workqueue data structure for each physical
+link. For property validate/update work queue, we iterates over the
+array and do similar operation/check for each connected display.
 
-The IORT logic populaties two identical IDs into the fwspec->ids array via
-DMA aliasing in iort_pci_iommu_init() called by pci_for_each_dma_alias().
-
-Though the SMMU driver had been able to handle this situation since commit
-563b5cbe334e ("iommu/arm-smmu-v3: Cope with duplicated Stream IDs"), that
-got broken by the later commit cdf315f907d4 ("iommu/arm-smmu-v3: Maintain
-a SID->device structure"), which ended up with allocating separate streams
-with the same stuffing.
-
-On a kernel prior to v6.15-rc1, there has been an overlooked warning:
-  pci 0008:07:00.0: vgaarb: setting as boot VGA device
-  pci 0008:07:00.0: vgaarb: bridge control possible
-  pci 0008:07:00.0: vgaarb: VGA device added: decodes=io+mem,owns=none,locks=none
-  pcieport 0008:06:00.0: Adding to iommu group 14
-  ast 0008:07:00.0: stream 67328 already in tree   <===== WARNING
-  ast 0008:07:00.0: enabling device (0002 -> 0003)
-  ast 0008:07:00.0: Using default configuration
-  ast 0008:07:00.0: AST 2600 detected
-  ast 0008:07:00.0: [drm] Using analog VGA
-  ast 0008:07:00.0: [drm] dram MCLK=396 Mhz type=1 bus_width=16
-  [drm] Initialized ast 0.1.0 for 0008:07:00.0 on minor 0
-  ast 0008:07:00.0: [drm] fb0: astdrmfb frame buffer device
-
-With v6.15-rc, since the commit bcb81ac6ae3c ("iommu: Get DT/ACPI parsing
-into the proper probe path"), the error returned with the warning is moved
-to the SMMU device probe flow:
-  arm_smmu_probe_device+0x15c/0x4c0
-  __iommu_probe_device+0x150/0x4f8
-  probe_iommu_group+0x44/0x80
-  bus_for_each_dev+0x7c/0x100
-  bus_iommu_probe+0x48/0x1a8
-  iommu_device_register+0xb8/0x178
-  arm_smmu_device_probe+0x1350/0x1db0
-which then fails the entire SMMU driver probe:
-  pci 0008:06:00.0: Adding to iommu group 21
-  pci 0008:07:00.0: stream 67328 already in tree
-  arm-smmu-v3 arm-smmu-v3.9.auto: Failed to register iommu
-  arm-smmu-v3 arm-smmu-v3.9.auto: probe with driver arm-smmu-v3 failed with error -22
-
-Since SMMU driver had been already expecting a potential duplicated Stream
-ID in arm_smmu_install_ste_for_dev(), change the arm_smmu_insert_master()
-routine to ignore a duplicated ID from the fwspec->sids array as well.
-
-Note: this has been failing the iommu_device_probe() since 2021, although a
-recent iommu commit in v6.15-rc1 that moves iommu_device_probe() started to
-fail the SMMU driver probe. Since nobody has cared about DMA Alias support,
-leave that as it was but fix the fundamental iommu_device_probe() breakage.
-
-Fixes: cdf315f907d4 ("iommu/arm-smmu-v3: Maintain a SID->device structure")
-Cc: stable@vger.kernel.org
-Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Link: https://lore.kernel.org/r/20250415185620.504299-1-nicolinc@nvidia.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Tested-by: Daniel Wheeler <Daniel.Wheeler@amd.com>
+Signed-off-by: hersen wu <hersenxs.wu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: be593d9d91c5 ("drm/amd/display: Fix slab-use-after-free in hdcp")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ .../amd/display/amdgpu_dm/amdgpu_dm_hdcp.c    | 160 +++++++++++++-----
+ .../amd/display/amdgpu_dm/amdgpu_dm_hdcp.h    |   5 +-
+ 2 files changed, 122 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 1ab2abab46800..6a60bad48b277 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -2612,6 +2612,7 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
- 	mutex_lock(&smmu->streams_mutex);
- 	for (i = 0; i < fwspec->num_ids; i++) {
- 		struct arm_smmu_stream *new_stream = &master->streams[i];
-+		struct rb_node *existing;
- 		u32 sid = fwspec->ids[i];
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
+index 3f211c0308a2f..7fc26ca30dcd6 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.c
+@@ -170,9 +170,10 @@ void hdcp_update_display(struct hdcp_workqueue *hdcp_work,
+ 	struct mod_hdcp_display *display = &hdcp_work[link_index].display;
+ 	struct mod_hdcp_link *link = &hdcp_work[link_index].link;
+ 	struct mod_hdcp_display_query query;
++	unsigned int conn_index = aconnector->base.index;
  
- 		new_stream->id = sid;
-@@ -2622,10 +2623,20 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
- 			break;
+ 	mutex_lock(&hdcp_w->mutex);
+-	hdcp_w->aconnector = aconnector;
++	hdcp_w->aconnector[conn_index] = aconnector;
  
- 		/* Insert into SID tree */
--		if (rb_find_add(&new_stream->node, &smmu->streams,
--				arm_smmu_streams_cmp_node)) {
--			dev_warn(master->dev, "stream %u already in tree\n",
--				 sid);
-+		existing = rb_find_add(&new_stream->node, &smmu->streams,
-+				       arm_smmu_streams_cmp_node);
-+		if (existing) {
-+			struct arm_smmu_master *existing_master =
-+				rb_entry(existing, struct arm_smmu_stream, node)
-+					->master;
-+
-+			/* Bridged PCI devices may end up with duplicated IDs */
-+			if (existing_master == master)
-+				continue;
-+
-+			dev_warn(master->dev,
-+				 "stream %u already in tree from dev %s\n", sid,
-+				 dev_name(existing_master->dev));
- 			ret = -EINVAL;
- 			break;
+ 	query.display = NULL;
+ 	mod_hdcp_query_display(&hdcp_w->hdcp, aconnector->base.index, &query);
+@@ -204,7 +205,7 @@ void hdcp_update_display(struct hdcp_workqueue *hdcp_work,
+ 					      msecs_to_jiffies(DRM_HDCP_CHECK_PERIOD_MS));
+ 		} else {
+ 			display->adjust.disable = MOD_HDCP_DISPLAY_DISABLE_AUTHENTICATION;
+-			hdcp_w->encryption_status = MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF;
++			hdcp_w->encryption_status[conn_index] = MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF;
+ 			cancel_delayed_work(&hdcp_w->property_validate_dwork);
  		}
+ 
+@@ -223,9 +224,10 @@ static void hdcp_remove_display(struct hdcp_workqueue *hdcp_work,
+ {
+ 	struct hdcp_workqueue *hdcp_w = &hdcp_work[link_index];
+ 	struct drm_connector_state *conn_state = aconnector->base.state;
++	unsigned int conn_index = aconnector->base.index;
+ 
+ 	mutex_lock(&hdcp_w->mutex);
+-	hdcp_w->aconnector = aconnector;
++	hdcp_w->aconnector[conn_index] = aconnector;
+ 
+ 	/* the removal of display will invoke auth reset -> hdcp destroy and
+ 	 * we'd expect the Content Protection (CP) property changed back to
+@@ -247,13 +249,18 @@ static void hdcp_remove_display(struct hdcp_workqueue *hdcp_work,
+ void hdcp_reset_display(struct hdcp_workqueue *hdcp_work, unsigned int link_index)
+ {
+ 	struct hdcp_workqueue *hdcp_w = &hdcp_work[link_index];
++	unsigned int conn_index;
+ 
+ 	mutex_lock(&hdcp_w->mutex);
+ 
+ 	mod_hdcp_reset_connection(&hdcp_w->hdcp,  &hdcp_w->output);
+ 
+ 	cancel_delayed_work(&hdcp_w->property_validate_dwork);
+-	hdcp_w->encryption_status = MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF;
++
++	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX; conn_index++) {
++		hdcp_w->encryption_status[conn_index] =
++			MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF;
++	}
+ 
+ 	process_output(hdcp_w);
+ 
+@@ -290,49 +297,83 @@ static void event_callback(struct work_struct *work)
+ 
+ 
+ }
++
+ static void event_property_update(struct work_struct *work)
+ {
+-
+ 	struct hdcp_workqueue *hdcp_work = container_of(work, struct hdcp_workqueue, property_update_work);
+-	struct amdgpu_dm_connector *aconnector = hdcp_work->aconnector;
+-	struct drm_device *dev = hdcp_work->aconnector->base.dev;
++	struct amdgpu_dm_connector *aconnector = NULL;
++	struct drm_device *dev;
+ 	long ret;
++	unsigned int conn_index;
++	struct drm_connector *connector;
++	struct drm_connector_state *conn_state;
+ 
+-	drm_modeset_lock(&dev->mode_config.connection_mutex, NULL);
+-	mutex_lock(&hdcp_work->mutex);
++	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX; conn_index++) {
++		aconnector = hdcp_work->aconnector[conn_index];
+ 
++		if (!aconnector)
++			continue;
+ 
+-	if (aconnector->base.state && aconnector->base.state->commit) {
+-		ret = wait_for_completion_interruptible_timeout(&aconnector->base.state->commit->hw_done, 10 * HZ);
++		if (!aconnector->base.index)
++			continue;
+ 
+-		if (ret == 0) {
+-			DRM_ERROR("HDCP state unknown! Setting it to DESIRED");
+-			hdcp_work->encryption_status = MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF;
+-		}
+-	}
++		connector = &aconnector->base;
++
++		/* check if display connected */
++		if (connector->status != connector_status_connected)
++			continue;
+ 
+-	if (aconnector->base.state) {
+-		if (hdcp_work->encryption_status != MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF) {
+-			if (aconnector->base.state->hdcp_content_type ==
++		conn_state = aconnector->base.state;
++
++		if (!conn_state)
++			continue;
++
++		dev = connector->dev;
++
++		if (!dev)
++			continue;
++
++		drm_modeset_lock(&dev->mode_config.connection_mutex, NULL);
++		mutex_lock(&hdcp_work->mutex);
++
++		if (conn_state->commit) {
++			ret = wait_for_completion_interruptible_timeout(
++				&conn_state->commit->hw_done, 10 * HZ);
++			if (ret == 0) {
++				DRM_ERROR(
++					"HDCP state unknown! Setting it to DESIRED");
++				hdcp_work->encryption_status[conn_index] =
++					MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF;
++			}
++		}
++		if (hdcp_work->encryption_status[conn_index] !=
++			MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF) {
++			if (conn_state->hdcp_content_type ==
+ 				DRM_MODE_HDCP_CONTENT_TYPE0 &&
+-			hdcp_work->encryption_status <=
+-				MOD_HDCP_ENCRYPTION_STATUS_HDCP2_TYPE0_ON)
+-				drm_hdcp_update_content_protection(&aconnector->base,
++				hdcp_work->encryption_status[conn_index] <=
++				MOD_HDCP_ENCRYPTION_STATUS_HDCP2_TYPE0_ON) {
++
++				DRM_DEBUG_DRIVER("[HDCP_DM] DRM_MODE_CONTENT_PROTECTION_ENABLED\n");
++				drm_hdcp_update_content_protection(
++					connector,
+ 					DRM_MODE_CONTENT_PROTECTION_ENABLED);
+-			else if (aconnector->base.state->hdcp_content_type ==
++			} else if (conn_state->hdcp_content_type ==
+ 					DRM_MODE_HDCP_CONTENT_TYPE1 &&
+-				hdcp_work->encryption_status ==
+-					MOD_HDCP_ENCRYPTION_STATUS_HDCP2_TYPE1_ON)
+-				drm_hdcp_update_content_protection(&aconnector->base,
++					hdcp_work->encryption_status[conn_index] ==
++					MOD_HDCP_ENCRYPTION_STATUS_HDCP2_TYPE1_ON) {
++				drm_hdcp_update_content_protection(
++					connector,
+ 					DRM_MODE_CONTENT_PROTECTION_ENABLED);
++			}
+ 		} else {
+-			drm_hdcp_update_content_protection(&aconnector->base,
+-				DRM_MODE_CONTENT_PROTECTION_DESIRED);
++			DRM_DEBUG_DRIVER("[HDCP_DM] DRM_MODE_CONTENT_PROTECTION_DESIRED\n");
++			drm_hdcp_update_content_protection(
++				connector, DRM_MODE_CONTENT_PROTECTION_DESIRED);
++
+ 		}
++		mutex_unlock(&hdcp_work->mutex);
++		drm_modeset_unlock(&dev->mode_config.connection_mutex);
+ 	}
+-
+-	mutex_unlock(&hdcp_work->mutex);
+-	drm_modeset_unlock(&dev->mode_config.connection_mutex);
+ }
+ 
+ static void event_property_validate(struct work_struct *work)
+@@ -340,19 +381,51 @@ static void event_property_validate(struct work_struct *work)
+ 	struct hdcp_workqueue *hdcp_work =
+ 		container_of(to_delayed_work(work), struct hdcp_workqueue, property_validate_dwork);
+ 	struct mod_hdcp_display_query query;
+-	struct amdgpu_dm_connector *aconnector = hdcp_work->aconnector;
+-
+-	if (!aconnector)
+-		return;
++	struct amdgpu_dm_connector *aconnector;
++	unsigned int conn_index;
+ 
+ 	mutex_lock(&hdcp_work->mutex);
+ 
+-	query.encryption_status = MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF;
+-	mod_hdcp_query_display(&hdcp_work->hdcp, aconnector->base.index, &query);
++	for (conn_index = 0; conn_index < AMDGPU_DM_MAX_DISPLAY_INDEX;
++	     conn_index++) {
++		aconnector = hdcp_work->aconnector[conn_index];
++
++
++		if (!aconnector)
++			continue;
++
++		if (!aconnector->base.index)
++			continue;
++
++		/* check if display connected */
++		if (aconnector->base.status != connector_status_connected)
++			continue;
+ 
+-	if (query.encryption_status != hdcp_work->encryption_status) {
+-		hdcp_work->encryption_status = query.encryption_status;
+-		schedule_work(&hdcp_work->property_update_work);
++		if (!aconnector->base.state)
++			continue;
++
++		query.encryption_status = MOD_HDCP_ENCRYPTION_STATUS_HDCP_OFF;
++		mod_hdcp_query_display(&hdcp_work->hdcp, aconnector->base.index,
++				       &query);
++
++		DRM_DEBUG_DRIVER("[HDCP_DM] disp %d, connector->CP %u, (query, work): (%d, %d)\n",
++			aconnector->base.index,
++			aconnector->base.state->content_protection,
++			query.encryption_status,
++			hdcp_work->encryption_status[conn_index]);
++
++		if (query.encryption_status !=
++		    hdcp_work->encryption_status[conn_index]) {
++			DRM_DEBUG_DRIVER("[HDCP_DM] encryption_status change from %x to %x\n",
++				hdcp_work->encryption_status[conn_index], query.encryption_status);
++
++			hdcp_work->encryption_status[conn_index] =
++				query.encryption_status;
++
++			DRM_DEBUG_DRIVER("[HDCP_DM] trigger property_update_work\n");
++
++			schedule_work(&hdcp_work->property_update_work);
++		}
+ 	}
+ 
+ 	mutex_unlock(&hdcp_work->mutex);
+@@ -687,6 +760,13 @@ struct hdcp_workqueue *hdcp_create_workqueue(struct amdgpu_device *adev, struct
+ 		hdcp_work[i].hdcp.config.ddc.funcs.read_i2c = lp_read_i2c;
+ 		hdcp_work[i].hdcp.config.ddc.funcs.write_dpcd = lp_write_dpcd;
+ 		hdcp_work[i].hdcp.config.ddc.funcs.read_dpcd = lp_read_dpcd;
++
++		memset(hdcp_work[i].aconnector, 0,
++		       sizeof(struct amdgpu_dm_connector *) *
++			       AMDGPU_DM_MAX_DISPLAY_INDEX);
++		memset(hdcp_work[i].encryption_status, 0,
++		       sizeof(enum mod_hdcp_encryption_status) *
++			       AMDGPU_DM_MAX_DISPLAY_INDEX);
+ 	}
+ 
+ 	cp_psp->funcs.update_stream_config = update_config;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
+index bbbf7d0eff82f..69b445b011c8c 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_hdcp.h
+@@ -43,7 +43,7 @@ struct hdcp_workqueue {
+ 	struct delayed_work callback_dwork;
+ 	struct delayed_work watchdog_timer_dwork;
+ 	struct delayed_work property_validate_dwork;
+-	struct amdgpu_dm_connector *aconnector;
++	struct amdgpu_dm_connector *aconnector[AMDGPU_DM_MAX_DISPLAY_INDEX];
+ 	struct mutex mutex;
+ 
+ 	struct mod_hdcp hdcp;
+@@ -51,8 +51,7 @@ struct hdcp_workqueue {
+ 	struct mod_hdcp_display display;
+ 	struct mod_hdcp_link link;
+ 
+-	enum mod_hdcp_encryption_status encryption_status;
+-
++	enum mod_hdcp_encryption_status encryption_status[AMDGPU_DM_MAX_DISPLAY_INDEX];
+ 	/* when display is unplugged from mst hub, connctor will be
+ 	 * destroyed within dm_dp_mst_connector_destroy. connector
+ 	 * hdcp perperties, like type, undesired, desired, enabled,
 -- 
 2.39.5
 
