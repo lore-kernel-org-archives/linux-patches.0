@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9A914A4C7;
-	Wed,  7 May 2025 18:42:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833ED288CB0;
+	Wed,  7 May 2025 18:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643366; cv=none; b=CbRFeXBCmVKGIM435vYCnO9Y5qqRvURVD+PnFLsrsNvM6+4a5L7l2zzzaq+iOVgZmTVTCs3Y/R1MXJvWtawg9kRkizYh3keEaYHKJiJ7qtebcNMfgFcFw4PAnm3PrPisZeRvNJ35/5st0CsYWWIrRczzvQ7kL92MdFEAe8ua0Lk=
+	t=1746643369; cv=none; b=f6L8Oz4TJVNO/HBLlOHWh+OEvm2vIwM8xUitamGBNhjYUmU9mX9CMbY4t+hYyjZGAWfTK+4eMqdvkDyrrcDtViMHtgkrZx7aknuHTyGdUFbhBwCuJ4cSQUsysOHI7DV0IHqiI98iq/XdSvhTlaKGbQtowP8BoCczUqnxOhFozHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643366; c=relaxed/simple;
-	bh=lTfiaaPAXjo/1nii0kBLiMc1ItUe2ULfFX65xttx/PY=;
+	s=arc-20240116; t=1746643369; c=relaxed/simple;
+	bh=HNRh4j7OXKFoyxrcn34cgTdWtBgzMy6QtM7iKz+PUx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LIs9imOZznO2zQRkxdEi3KSEhCHFGeOpq+14srrL4K6DPrcRdVH9DYKhogiYBoW1R0E/Q/8pv/sIdOwZj/kvlD5S71K1WY/qraWWhbs0GQMQEe+8HDOtyusQKTraQ0MU8pkdFMbpPNQKDaTwJfcOKsSo3GEgC/j8YhXN4tFJseg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K2jVeetP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uBDkCcQpOeBMngenrrV/IQI4smLMJ601aKA5rJ7ie9B9gp1jVBSTPBNBhvJBzFuPtE1PFVrBJYMIaC0+uXu78IbpoauvAnRse85ur6DaNzZvq8yDXxW+lvaxl7aMfBbqP3or8Q5pFuMcNDp10YT4yENBpe1EWjUDY22HjRM1LSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jinaMU0T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K2jVeetP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFA8C4CEE2;
-	Wed,  7 May 2025 18:42:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jinaMU0T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1415C4CEE2;
+	Wed,  7 May 2025 18:42:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643365;
-	bh=lTfiaaPAXjo/1nii0kBLiMc1ItUe2ULfFX65xttx/PY=;
+	s=korg; t=1746643369;
+	bh=HNRh4j7OXKFoyxrcn34cgTdWtBgzMy6QtM7iKz+PUx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K2jVeetPu9E66Q2sDvwdzuPCJUK3mYQ0UaXwGGpHFmxfd4p3hJidDlGn+e2zQnfZf
-	 k9soGFKo70fO9wM2eIPyuwnsQmeYUPxfyRjGYsN1j7RTEBJVbSBfL4iEcPNBQ81U83
-	 0Ay8nKp/BDJb5RYdHgqlhjETzYtvvwbDphDGIyAY=
+	b=jinaMU0Te/B1a4UIuLPPQH1W/vvwl6v8i+C0ScozDnjCiw0yCgxhiIzHwCTxx8G32
+	 2vCtFCWo5iIqjfSPqjURfcZB+gM1iBG9Ds+oAztpNH1p1gfc+osA3i3rzYe/kTyxUn
+	 8BfSK9fbTtT+SHooKgujU2K3VVsQ2/v07wF8fdm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mattias Barthel <mattias.barthel@atlascopco.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Jian Shen <shenjian15@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 36/55] net: fec: ERR007885 Workaround for conventional TX
-Date: Wed,  7 May 2025 20:39:37 +0200
-Message-ID: <20250507183800.492969108@linuxfoundation.org>
+Subject: [PATCH 5.15 37/55] net: hns3: store rx VLAN tag offload state for VF
+Date: Wed,  7 May 2025 20:39:38 +0200
+Message-ID: <20250507183800.532295617@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183759.048732653@linuxfoundation.org>
 References: <20250507183759.048732653@linuxfoundation.org>
@@ -52,53 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mattias Barthel <mattias.barthel@atlascopco.com>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit a179aad12badc43201cbf45d1e8ed2c1383c76b9 ]
+[ Upstream commit ef2383d078edcbe3055032436b16cdf206f26de2 ]
 
-Activate TX hang workaround also in
-fec_enet_txq_submit_skb() when TSO is not enabled.
+The VF driver missed to store the rx VLAN tag strip state when
+user change the rx VLAN tag offload state. And it will default
+to enable the rx vlan tag strip when re-init VF device after
+reset. So if user disable rx VLAN tag offload, and trig reset,
+then the HW will still strip the VLAN tag from packet nad fill
+into RX BD, but the VF driver will ignore it for rx VLAN tag
+offload disabled. It may cause the rx VLAN tag dropped.
 
-Errata: ERR007885
-
-Symptoms: NETDEV WATCHDOG: eth0 (fec): transmit queue 0 timed out
-
-commit 37d6017b84f7 ("net: fec: Workaround for imx6sx enet tx hang when enable three queues")
-There is a TDAR race condition for mutliQ when the software sets TDAR
-and the UDMA clears TDAR simultaneously or in a small window (2-4 cycles).
-This will cause the udma_tx and udma_tx_arbiter state machines to hang.
-
-So, the Workaround is checking TDAR status four time, if TDAR cleared by
-    hardware and then write TDAR, otherwise don't set TDAR.
-
-Fixes: 53bb20d1faba ("net: fec: add variable reg_desc_active to speed things up")
-Signed-off-by: Mattias Barthel <mattias.barthel@atlascopco.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250429090826.3101258-1-mattiasbarthel@gmail.com
+Fixes: b2641e2ad456 ("net: hns3: Add support of hardware rx-vlan-offload to HNS3 VF driver")
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250430093052.2400464-2-shaojijie@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ .../hisilicon/hns3/hns3vf/hclgevf_main.c      | 25 ++++++++++++++-----
+ .../hisilicon/hns3/hns3vf/hclgevf_main.h      |  1 +
+ 2 files changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index 7b5585bc21d8f..5c860eef03007 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -635,7 +635,12 @@ static int fec_enet_txq_submit_skb(struct fec_enet_priv_tx_q *txq,
- 	txq->bd.cur = bdp;
- 
- 	/* Trigger transmission start */
--	writel(0, txq->bd.reg_desc_active);
-+	if (!(fep->quirks & FEC_QUIRK_ERR007885) ||
-+	    !readl(txq->bd.reg_desc_active) ||
-+	    !readl(txq->bd.reg_desc_active) ||
-+	    !readl(txq->bd.reg_desc_active) ||
-+	    !readl(txq->bd.reg_desc_active))
-+		writel(0, txq->bd.reg_desc_active);
- 
- 	return 0;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+index 7bb01eafba745..628d5c5ad75de 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+@@ -1761,9 +1761,8 @@ static void hclgevf_sync_vlan_filter(struct hclgevf_dev *hdev)
+ 	rtnl_unlock();
  }
+ 
+-static int hclgevf_en_hw_strip_rxvtag(struct hnae3_handle *handle, bool enable)
++static int hclgevf_en_hw_strip_rxvtag_cmd(struct hclgevf_dev *hdev, bool enable)
+ {
+-	struct hclgevf_dev *hdev = hclgevf_ae_get_hdev(handle);
+ 	struct hclge_vf_to_pf_msg send_msg;
+ 
+ 	hclgevf_build_send_msg(&send_msg, HCLGE_MBX_SET_VLAN,
+@@ -1772,6 +1771,19 @@ static int hclgevf_en_hw_strip_rxvtag(struct hnae3_handle *handle, bool enable)
+ 	return hclgevf_send_mbx_msg(hdev, &send_msg, false, NULL, 0);
+ }
+ 
++static int hclgevf_en_hw_strip_rxvtag(struct hnae3_handle *handle, bool enable)
++{
++	struct hclgevf_dev *hdev = hclgevf_ae_get_hdev(handle);
++	int ret;
++
++	ret = hclgevf_en_hw_strip_rxvtag_cmd(hdev, enable);
++	if (ret)
++		return ret;
++
++	hdev->rxvtag_strip_en = enable;
++	return 0;
++}
++
+ static int hclgevf_reset_tqp(struct hnae3_handle *handle)
+ {
+ #define HCLGEVF_RESET_ALL_QUEUE_DONE	1U
+@@ -2684,12 +2696,13 @@ static int hclgevf_rss_init_hw(struct hclgevf_dev *hdev)
+ 	return hclgevf_set_rss_tc_mode(hdev, rss_cfg->rss_size);
+ }
+ 
+-static int hclgevf_init_vlan_config(struct hclgevf_dev *hdev)
++static int hclgevf_init_vlan_config(struct hclgevf_dev *hdev,
++				    bool rxvtag_strip_en)
+ {
+ 	struct hnae3_handle *nic = &hdev->nic;
+ 	int ret;
+ 
+-	ret = hclgevf_en_hw_strip_rxvtag(nic, true);
++	ret = hclgevf_en_hw_strip_rxvtag(nic, rxvtag_strip_en);
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed to enable rx vlan offload, ret = %d\n", ret);
+@@ -3359,7 +3372,7 @@ static int hclgevf_reset_hdev(struct hclgevf_dev *hdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = hclgevf_init_vlan_config(hdev);
++	ret = hclgevf_init_vlan_config(hdev, hdev->rxvtag_strip_en);
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed(%d) to initialize VLAN config\n", ret);
+@@ -3472,7 +3485,7 @@ static int hclgevf_init_hdev(struct hclgevf_dev *hdev)
+ 		goto err_config;
+ 	}
+ 
+-	ret = hclgevf_init_vlan_config(hdev);
++	ret = hclgevf_init_vlan_config(hdev, true);
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed(%d) to initialize VLAN config\n", ret);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
+index 2b216ac96914c..a6468fe2ec326 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
+@@ -315,6 +315,7 @@ struct hclgevf_dev {
+ 	int *vector_irq;
+ 
+ 	bool gro_en;
++	bool rxvtag_strip_en;
+ 
+ 	unsigned long vlan_del_fail_bmap[BITS_TO_LONGS(VLAN_N_VID)];
+ 
 -- 
 2.39.5
 
