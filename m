@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF38214813;
-	Wed,  7 May 2025 18:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509BE214813;
+	Wed,  7 May 2025 18:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644144; cv=none; b=QOKEov6OUOEjDs0TLNyHc4hmNxjxoZd11/cYV5cax3ukZGSHliN1/AKgX9xXQZooW0ya7poJuTa67PXdvrgXuWBmk98FN0GrO/u2+S+0XrIw8jIZUdEzNCDbW7A3/oDhnAx9+nPe8RV3PaX5i7W/bjFFOCYIayP1QZzEKIljmPI=
+	t=1746644147; cv=none; b=AlXpJuiFQkdTvglQeE0SmPwJGYTTDzMjL08aCWkEYr0CsQxLE41GO80nFHg/XHuBuvwC26irpXiLlhwtOT7vjSTVd+Ix2ULsuFpuiedHLtTgDloYKeeGg/sjviP7gUGMr59p25XmR25n8qzZy/aSTPiBp0YydlT121ifaEzKAXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644144; c=relaxed/simple;
-	bh=Vui2QwIJ1aOuUs3FaB75p1Br7V8f4JdD87C5uFz1ibI=;
+	s=arc-20240116; t=1746644147; c=relaxed/simple;
+	bh=FBaBtMiGb8LLLyHn5S2/3Ibbp42PlYOcmYVRZSVgZJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gE6c3Hndn9ppqlrLLn9Ad7gIA1+aSZlY8PDj6YkZ5Ldu3a/4fNZZKc2V5Nlave3AyLgVBuV61RL+NL8Vo6EtMV8sJA71Dequ5Nk3mRYho/FV1jciLfaE6orrhVefy9zIGTfNvTnHUj1S+X0LfsaEkW7VX7eP/mutIWGMjqdEU4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0OKHL3tJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gBRxidUQtQtSxHqsKwfEa1EgEZCq4FBKcrZDvgPke7/iXaUXX4TY2DcRkFe6qHTJtS9VnOIlBSOFAVV4tEoaw2eaNHMj+OOUMdau0/ZVB583cX2L4Kn5hgN/hXuFM8XTgAOv3rdqG8OxkQPoAkyrs08xKBFNeRvzS9spsix/t88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNbYy1Qo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0OKHL3tJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6346AC4CEE9;
-	Wed,  7 May 2025 18:55:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNbYy1Qo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52A0C4CEE2;
+	Wed,  7 May 2025 18:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644144;
-	bh=Vui2QwIJ1aOuUs3FaB75p1Br7V8f4JdD87C5uFz1ibI=;
+	s=korg; t=1746644147;
+	bh=FBaBtMiGb8LLLyHn5S2/3Ibbp42PlYOcmYVRZSVgZJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0OKHL3tJAP/jR3Wrcs3/xdNO7oGkSUJAt+Hj8jFeHviRgSi5WbgYWYcnMqr4YnEqx
-	 uuu7E+7opmScSc6KrPZIZ5RM+vkM6HDC02085VVga+z35SIs7Be+GC4sjgOj9t78jz
-	 OVkjEL/kt2JZlFYAJJuHsIUzWzKVew9jXd3VYy+A=
+	b=QNbYy1QoXh3yswF7gB5oX/dlbRomEzHqp/PsYAgo4eAuCSzzqsrCqKkW/X7N9sAyz
+	 +svZlzUqY/56tfJCVxYmXTmp7bZMtQ8DCsWtmihhFbqA9PH36Go3VkdkLH1rtPCroL
+	 ILfS/Jc6yiheNc61Vjj0QSVyoGfWPdyuqa9nNYX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Mark Brown <broonie@kernel.org>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Vadim Fedorenko <vadfed@meta.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 133/183] ASoC: simple-card-utils: Fix pointer check in graph_util_parse_link_direction
-Date: Wed,  7 May 2025 20:39:38 +0200
-Message-ID: <20250507183830.208843281@linuxfoundation.org>
+Subject: [PATCH 6.14 134/183] bnxt_en: fix module unload sequence
+Date: Wed,  7 May 2025 20:39:39 +0200
+Message-ID: <20250507183830.246842719@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -51,43 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Vadim Fedorenko <vadfed@meta.com>
 
-[ Upstream commit 3cc393d2232ec770b5f79bf0673d67702a3536c3 ]
+[ Upstream commit 927069d5c40c1cfa7b2d13cfc6d7d58bc6f85c50 ]
 
-Actually check if the passed pointers are valid, before writing to them.
-This also fixes a USBAN warning:
-UBSAN: invalid-load in ../sound/soc/fsl/imx-card.c:687:25
-load of value 255 is not a valid value for type '_Bool'
+Recent updates to the PTP part of bnxt changed the way PTP FIFO is
+cleared, skbs waiting for TX timestamps are now cleared during
+ndo_close() call. To do clearing procedure, the ptp structure must
+exist and point to a valid address. Module destroy sequence had ptp
+clear code running before netdev close causing invalid memory access and
+kernel crash. Change the sequence to destroy ptp structure after device
+close.
 
-This is because playback_only is uninitialized and is not written to, as
-the playback-only property is absent.
-
-Fixes: 844de7eebe97 ("ASoC: audio-graph-card2: expand dai_link property part")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Link: https://patch.msgid.link/20250429094910.1150970-1-alexander.stein@ew.tq-group.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 8f7ae5a85137 ("bnxt_en: improve TX timestamping FIFO configuration")
+Reported-by: Taehee Yoo <ap420073@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAMArcTWDe2cd41=ub=zzvYifaYcYv-N-csxfqxUvejy_L0D6UQ@mail.gmail.com/
+Signed-off-by: Vadim Fedorenko <vadfed@meta.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Tested-by: Taehee Yoo <ap420073@gmail.com>
+Link: https://patch.msgid.link/20250430170343.759126-1-vadfed@meta.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/generic/simple-card-utils.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/generic/simple-card-utils.c b/sound/soc/generic/simple-card-utils.c
-index 32efb30c55d69..8bd5b93f34576 100644
---- a/sound/soc/generic/simple-card-utils.c
-+++ b/sound/soc/generic/simple-card-utils.c
-@@ -1146,9 +1146,9 @@ void graph_util_parse_link_direction(struct device_node *np,
- 	bool is_playback_only = of_property_read_bool(np, "playback-only");
- 	bool is_capture_only  = of_property_read_bool(np, "capture-only");
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index a414d7d721b20..bd8b9cb05ae98 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -15731,8 +15731,8 @@ static void bnxt_remove_one(struct pci_dev *pdev)
  
--	if (is_playback_only)
-+	if (playback_only)
- 		*playback_only = is_playback_only;
--	if (is_capture_only)
-+	if (capture_only)
- 		*capture_only = is_capture_only;
- }
- EXPORT_SYMBOL_GPL(graph_util_parse_link_direction);
+ 	bnxt_rdma_aux_device_del(bp);
+ 
+-	bnxt_ptp_clear(bp);
+ 	unregister_netdev(dev);
++	bnxt_ptp_clear(bp);
+ 
+ 	bnxt_rdma_aux_device_uninit(bp);
+ 
 -- 
 2.39.5
 
