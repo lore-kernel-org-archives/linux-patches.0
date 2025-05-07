@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C6628DF5B;
-	Wed,  7 May 2025 19:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C3F28E572;
+	Wed,  7 May 2025 19:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644892; cv=none; b=blrt7MbWPJxQYcUOOazcM4s0qa45nloZDVTK47jJqY4AJuEY1dnENFov/a0En2UGTa8j5uZlpd6DQubdivvQNa6Au77A7WZQGVSkLuMLTLfVW5h2TGzo+N1o4U9isJsQYB5emeF5uE16gEAG9IgD60iTBE5W9xTv3cEc6bgXpfU=
+	t=1746644896; cv=none; b=WrJSCF2mbCWNjscMxvZ7g5sYHoHDmmCqkARFijzm+RgNBkOKoF5eDxdOhSy+q15CakbNyNEzR+S4zY6LCMUafYQvNDW008VXQgydl0jD0vEdPzWRU78GCpG5z7IRRGTwBZBTS5X5iqQ6Zq0IrY4yjIA4r1T7WdarR+7FVmHwzWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644892; c=relaxed/simple;
-	bh=II/AlEKDuOJ3ZGS0/CADNjegc5TUTmOTR72rJjDzekg=;
+	s=arc-20240116; t=1746644896; c=relaxed/simple;
+	bh=H35eDjqp6IsE12i9koZUyHExP42Guyndsz+SoA3IPrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T7xJlnA/TwbKuWTKHYqpnkcherzqjz9S8EuVo75uLJfEZM6mFysLBubZjVXWhqeJImfoLULmwW729TNMlp0t7z5+Vjo3oLdCoKEnSwTMbDCCoroD4i4bwfoxOvob01bOPRCFd6VM4keVVJJhv1C0WmPSblBe0pf9BkAeorLVIuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wvKLg5kd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yn8tKKewJSlE8GVcfAn2BwHSJUrjaSdIr3hdFvUEd9ak37Su7HUIyBTR2huImxeY1giDiieF4nxYlf3toYhS27h9GSC4eXzzXWGVlZ+5m2z0m3sku+C7/KzAUhk+8ZvMZ5o8sBUTobqKNO9scLgppI8vzfbz93V/gXRvyKSRzHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXR2XPY3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wvKLg5kd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E68FC4CEE2;
-	Wed,  7 May 2025 19:08:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXR2XPY3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6819AC4CEE2;
+	Wed,  7 May 2025 19:08:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644892;
-	bh=II/AlEKDuOJ3ZGS0/CADNjegc5TUTmOTR72rJjDzekg=;
+	s=korg; t=1746644895;
+	bh=H35eDjqp6IsE12i9koZUyHExP42Guyndsz+SoA3IPrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wvKLg5kdzZo721C/9dTrpkQ/pxqLmQW0txoTVn4bHjLQ/lvkrgbVDyvD9PlduhdTS
-	 k9S8zJ7/nNSOnx/i/HOSWccMiNfEBsDQE9n+3z4odqr+kYmYZCfDOcxsG+n24En5Gq
-	 CvuckpXcMIf1hYO8hStnri/HVeIA9z7gsUfI14Vc=
+	b=lXR2XPY37q513GLHE/4Kg71ASAYez8FAQw2WVGaPBaYYFxOvvF1ZCF5evh47mgSQW
+	 uxZVc/9Dzv3b56GPFj0aZfUT6JdkKf/UULQzGuAn3tg1kF9EshqfPx31w+MrEgF8Vy
+	 j8y5hVMsvoS+L+64capSN+pod0wRNCH0kWhNzpB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	syzbot+441582c1592938fccf09@syzkaller.appspotmail.com,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 019/129] tracing: Do not take trace_event_sem in print_event_fields()
-Date: Wed,  7 May 2025 20:39:15 +0200
-Message-ID: <20250507183814.312509557@linuxfoundation.org>
+	Sean Heelan <seanheelan@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 028/129] ksmbd: fix use-after-free in kerberos authentication
+Date: Wed,  7 May 2025 20:39:24 +0200
+Message-ID: <20250507183814.668979623@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -52,52 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Sean Heelan <seanheelan@gmail.com>
 
-commit 0a8f11f8569e7ed16cbcedeb28c4350f6378fea6 upstream.
+commit e86e9134e1d1c90a960dd57f59ce574d27b9a124 upstream.
 
-On some paths in print_event_fields() it takes the trace_event_sem for
-read, even though it should always be held when the function is called.
-
-Remove the taking of that mutex and add a lockdep_assert_held_read() to
-make sure the trace_event_sem is held when print_event_fields() is called.
+Setting sess->user = NULL was introduced to fix the dangling pointer
+created by ksmbd_free_user. However, it is possible another thread could
+be operating on the session and make use of sess->user after it has been
+passed to ksmbd_free_user but before sess->user is set to NULL.
 
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20250501224128.0b1f0571@batman.local.home
-Fixes: 80a76994b2d88 ("tracing: Add "fields" option to show raw trace event fields")
-Reported-by: syzbot+441582c1592938fccf09@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6813ff5e.050a0220.14dd7d.001b.GAE@google.com/
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Sean Heelan <seanheelan@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_output.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/server/auth.c    |   14 +++++++++++++-
+ fs/smb/server/smb2pdu.c |    5 -----
+ 2 files changed, 13 insertions(+), 6 deletions(-)
 
---- a/kernel/trace/trace_output.c
-+++ b/kernel/trace/trace_output.c
-@@ -950,11 +950,12 @@ enum print_line_t print_event_fields(str
- 	struct trace_event_call *call;
- 	struct list_head *head;
- 
-+	lockdep_assert_held_read(&trace_event_sem);
+--- a/fs/smb/server/auth.c
++++ b/fs/smb/server/auth.c
+@@ -546,7 +546,19 @@ int ksmbd_krb5_authenticate(struct ksmbd
+ 		retval = -ENOMEM;
+ 		goto out;
+ 	}
+-	sess->user = user;
 +
- 	/* ftrace defined events have separate call structures */
- 	if (event->type <= __TRACE_LAST_TYPE) {
- 		bool found = false;
++	if (!sess->user) {
++		/* First successful authentication */
++		sess->user = user;
++	} else {
++		if (!ksmbd_compare_user(sess->user, user)) {
++			ksmbd_debug(AUTH, "different user tried to reuse session\n");
++			retval = -EPERM;
++			ksmbd_free_user(user);
++			goto out;
++		}
++		ksmbd_free_user(user);
++	}
  
--		down_read(&trace_event_sem);
- 		list_for_each_entry(call, &ftrace_events, list) {
- 			if (call->event.type == event->type) {
- 				found = true;
-@@ -964,7 +965,6 @@ enum print_line_t print_event_fields(str
- 			if (call->event.type > __TRACE_LAST_TYPE)
- 				break;
- 		}
--		up_read(&trace_event_sem);
- 		if (!found) {
- 			trace_seq_printf(&iter->seq, "UNKNOWN TYPE %d\n", event->type);
- 			goto out;
+ 	memcpy(sess->sess_key, resp->payload, resp->session_key_len);
+ 	memcpy(out_blob, resp->payload + resp->session_key_len,
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1599,11 +1599,6 @@ static int krb5_authenticate(struct ksmb
+ 	if (prev_sess_id && prev_sess_id != sess->id)
+ 		destroy_previous_session(conn, sess->user, prev_sess_id);
+ 
+-	if (sess->state == SMB2_SESSION_VALID) {
+-		ksmbd_free_user(sess->user);
+-		sess->user = NULL;
+-	}
+-
+ 	retval = ksmbd_krb5_authenticate(sess, in_blob, in_len,
+ 					 out_blob, &out_len);
+ 	if (retval) {
 
 
