@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 888242144C1;
-	Wed,  7 May 2025 19:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602B42144C1;
+	Wed,  7 May 2025 19:11:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746645085; cv=none; b=oPrCStuHZuaApgZ9x3qwsQpx+vFv5zJJvRl08NHHmX5Wi80P+9ux4faChNB44YOoBxD1D8leo2VPVFtU8Lmhdv6Oa/0H7a7Xy5vbmbn4xkVbNWtXu0PdECE33Bd51TQurUhVWhoYfjFqXIT3l00AF39INGPgmLt0F809HfwZps0=
+	t=1746645088; cv=none; b=oD3ayqQkfRMO9TNqB9sKJScdI0moLhu/2G5NMaqIoUO0Jmqz4NBMVXfUE6HGu9CoHt3JQQnf+OiagCBQwrFhPROe4v6H/mFtGA6s1RcNL82NFw1iHjrI9L4u3qS2rwnfcO38r6YL2ogKo8tErL9YSC43c554IfjeSgLOZJh+udk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746645085; c=relaxed/simple;
-	bh=qGQrlAoYc/8e9IDbDoOzSeNtaXmOZvUxNOcR3iKOdtc=;
+	s=arc-20240116; t=1746645088; c=relaxed/simple;
+	bh=qAz1E8er0nD020c3Gakm8w5bhTFkiUMJtdH7z86E+Mk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=drScmwMSIawzZ8QtymTP5tXuYiwGoc7kDKaqHWX75jSBKGYa5uRU8jMC330tNvu0YgX/4oJSADJAKArQrpMQATt3DaGFm4bjM5TJnGOe5UqmlhE+c5hVzdIgpLF/dWdgZDt0To8SWvG0cYwt7zOFN/S4PQvr4rpHuw2XUtXaSp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1AmV4no6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BYAhDkshdbazCPeApLr88w+2TIAHcSNETGEjFZizcbMdiEyOJ9ov70Lb+NYkRx38bAEO+oZTgCf74j6QRZmzEq+7LSUE/W/cEqzm7CNhDJWY2BZtuiZvIXzFjyt1duSl85nv4/Ey2LcFfOGk84yldN904OrHxU8UqCr6lbfLEyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duYHvOu3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1AmV4no6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C9FC4CEE2;
-	Wed,  7 May 2025 19:11:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duYHvOu3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8ED0C4CEE2;
+	Wed,  7 May 2025 19:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746645085;
-	bh=qGQrlAoYc/8e9IDbDoOzSeNtaXmOZvUxNOcR3iKOdtc=;
+	s=korg; t=1746645088;
+	bh=qAz1E8er0nD020c3Gakm8w5bhTFkiUMJtdH7z86E+Mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1AmV4no6K36op5hX6Aopqld85i3yNhyxjM7+2XCe0GafdRq8rv2Oqx/jx2jD41/4+
-	 J5GNIku2YW6T44QEHydP1AQ2362PMLl5GDnm9arSi9pwnHFlh42E7RKt51P3cx5KYF
-	 eHkeHAm+r32PauAYfcTMWVxlmow0GTjCeBUBEx3I=
+	b=duYHvOu3a3vCkm7v/SzvyRMGmqvOAk/itCbQJyTn19/kfLHrWtFjHIHb0Np22m3J5
+	 kAJpOs8lFbqXwtHgK2sD/Yc+9GcVKEsSfUH6Pfw83j2A8JocqNdKz+JY63OXu4mxhI
+	 Qv75oxdS0xS0WGj1/I32CAH+mMROTVQGUGSOVMPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chen Linxuan <chenlinxuan@uniontech.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 059/129] net: mscc: ocelot: treat 802.1ad tagged traffic as 802.1Q-untagged
-Date: Wed,  7 May 2025 20:39:55 +0200
-Message-ID: <20250507183815.922285883@linuxfoundation.org>
+Subject: [PATCH 6.6 050/129] drm/i915/pxp: fix undefined reference to `intel_pxp_gsccs_is_ready_for_sessions
+Date: Wed,  7 May 2025 20:39:46 +0200
+Message-ID: <20250507183815.565611089@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -51,322 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Chen Linxuan <chenlinxuan@uniontech.com>
 
-[ Upstream commit 36dd1141be70b5966906919714dc504a24c65ddf ]
+[ Upstream commit 7e21ea8149a0e41c3666ee52cc063a6f797a7a2a ]
 
-I was revisiting the topic of 802.1ad treatment in the Ocelot switch [0]
-and realized that not only is its basic VLAN classification pipeline
-improper for offloading vlan_protocol 802.1ad bridges, but also improper
-for offloading regular 802.1Q bridges already.
+On x86_64 with gcc version 13.3.0, I compile kernel with:
 
-Namely, 802.1ad-tagged traffic should be treated as VLAN-untagged by
-bridged ports, but this switch treats it as if it was 802.1Q-tagged with
-the same VID as in the 802.1ad header. This is markedly different to
-what the Linux bridge expects; see the "other_tpid()" function in
-tools/testing/selftests/net/forwarding/bridge_vlan_aware.sh.
+  make defconfig
+  ./scripts/kconfig/merge_config.sh .config <(
+    echo CONFIG_COMPILE_TEST=y
+  )
+  make KCFLAGS="-fno-inline-functions -fno-inline-small-functions -fno-inline-functions-called-once"
 
-An idea came to me that the VCAP IS1 TCAM is more powerful than I'm
-giving it credit for, and that it actually overwrites the classified VID
-before the VLAN Table lookup takes place. In other words, it can be
-used even to save a packet from being dropped on ingress due to VLAN
-membership.
+Then I get a linker error:
 
-Add a sophisticated TCAM rule hardcoded into the driver to force the
-switch to behave like a Linux bridge with vlan_filtering 1 vlan_protocol
-802.1Q.
+  ld: vmlinux.o: in function `pxp_fw_dependencies_completed':
+  kintel_pxp.c:(.text+0x95728f): undefined reference to `intel_pxp_gsccs_is_ready_for_sessions'
 
-Regarding the lifetime of the filter: eventually the bridge will
-disappear, and vlan_filtering on the port will be restored to 0 for
-standalone mode. Then the filter will be deleted.
+This is caused by not having a intel_pxp_gsccs_is_ready_for_sessions()
+header stub for CONFIG_DRM_I915_PXP=n. Add it.
 
-[0]: https://lore.kernel.org/netdev/20201009122947.nvhye4hvcha3tljh@skbuf/
-
-Fixes: 7142529f1688 ("net: mscc: ocelot: add VLAN filtering")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 5ec6d7d737a4 ("net: mscc: ocelot: delete PVID VLAN when readding it as non-PVID")
+Signed-off-by: Chen Linxuan <chenlinxuan@uniontech.com>
+Fixes: 99afb7cc8c44 ("drm/i915/pxp: Add ARB session creation and cleanup")
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://lore.kernel.org/r/20250415090616.2649889-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit b484c1e225a6a582fc78c4d7af7b286408bb7d41)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mscc/ocelot.c      | 188 ++++++++++++++++++++++--
- drivers/net/ethernet/mscc/ocelot_vcap.c |   1 +
- include/soc/mscc/ocelot_vcap.h          |   2 +
- 3 files changed, 180 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.h | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mscc/ocelot.c b/drivers/net/ethernet/mscc/ocelot.c
-index f6aa5d6b6597e..d3e7aff5a794a 100644
---- a/drivers/net/ethernet/mscc/ocelot.c
-+++ b/drivers/net/ethernet/mscc/ocelot.c
-@@ -453,9 +453,158 @@ static u16 ocelot_vlan_unaware_pvid(struct ocelot *ocelot,
- 	return VLAN_N_VID - bridge_num - 1;
- }
+diff --git a/drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.h b/drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.h
+index 298ad38e6c7df..c36d956b9b824 100644
+--- a/drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.h
++++ b/drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.h
+@@ -25,6 +25,7 @@ int intel_pxp_gsccs_init(struct intel_pxp *pxp);
  
-+/**
-+ * ocelot_update_vlan_reclassify_rule() - Make switch aware only to bridge VLAN TPID
-+ *
-+ * @ocelot: Switch private data structure
-+ * @port: Index of ingress port
-+ *
-+ * IEEE 802.1Q-2018 clauses "5.5 C-VLAN component conformance" and "5.6 S-VLAN
-+ * component conformance" suggest that a C-VLAN component should only recognize
-+ * and filter on C-Tags, and an S-VLAN component should only recognize and
-+ * process based on C-Tags.
-+ *
-+ * In Linux, as per commit 1a0b20b25732 ("Merge branch 'bridge-next'"), C-VLAN
-+ * components are largely represented by a bridge with vlan_protocol 802.1Q,
-+ * and S-VLAN components by a bridge with vlan_protocol 802.1ad.
-+ *
-+ * Currently the driver only offloads vlan_protocol 802.1Q, but the hardware
-+ * design is non-conformant, because the switch assigns each frame to a VLAN
-+ * based on an entirely different question, as detailed in figure "Basic VLAN
-+ * Classification Flow" from its manual and reproduced below.
-+ *
-+ * Set TAG_TYPE, PCP, DEI, VID to port-default values in VLAN_CFG register
-+ * if VLAN_AWARE_ENA[port] and frame has outer tag then:
-+ *   if VLAN_INNER_TAG_ENA[port] and frame has inner tag then:
-+ *     TAG_TYPE = (Frame.InnerTPID <> 0x8100)
-+ *     Set PCP, DEI, VID to values from inner VLAN header
-+ *   else:
-+ *     TAG_TYPE = (Frame.OuterTPID <> 0x8100)
-+ *     Set PCP, DEI, VID to values from outer VLAN header
-+ *   if VID == 0 then:
-+ *     VID = VLAN_CFG.VLAN_VID
-+ *
-+ * Summarized, the switch will recognize both 802.1Q and 802.1ad TPIDs as VLAN
-+ * "with equal rights", and just set the TAG_TYPE bit to 0 (if 802.1Q) or to 1
-+ * (if 802.1ad). It will classify based on whichever of the tags is "outer", no
-+ * matter what TPID that may have (or "inner", if VLAN_INNER_TAG_ENA[port]).
-+ *
-+ * In the VLAN Table, the TAG_TYPE information is not accessible - just the
-+ * classified VID is - so it is as if each VLAN Table entry is for 2 VLANs:
-+ * C-VLAN X, and S-VLAN X.
-+ *
-+ * Whereas the Linux bridge behavior is to only filter on frames with a TPID
-+ * equal to the vlan_protocol, and treat everything else as VLAN-untagged.
-+ *
-+ * Consider an ingress packet tagged with 802.1ad VID=3 and 802.1Q VID=5,
-+ * received on a bridge vlan_filtering=1 vlan_protocol=802.1Q port. This frame
-+ * should be treated as 802.1Q-untagged, and classified to the PVID of that
-+ * bridge port. Not to VID=3, and not to VID=5.
-+ *
-+ * The VCAP IS1 TCAM has everything we need to overwrite the choices made in
-+ * the basic VLAN classification pipeline: it can match on TAG_TYPE in the key,
-+ * and it can modify the classified VID in the action. Thus, for each port
-+ * under a vlan_filtering bridge, we can insert a rule in VCAP IS1 lookup 0 to
-+ * match on 802.1ad tagged frames and modify their classified VID to the 802.1Q
-+ * PVID of the port. This effectively makes it appear to the outside world as
-+ * if those packets were processed as VLAN-untagged.
-+ *
-+ * The rule needs to be updated each time the bridge PVID changes, and needs
-+ * to be deleted if the bridge PVID is deleted, or if the port becomes
-+ * VLAN-unaware.
-+ */
-+static int ocelot_update_vlan_reclassify_rule(struct ocelot *ocelot, int port)
-+{
-+	unsigned long cookie = OCELOT_VCAP_IS1_VLAN_RECLASSIFY(ocelot, port);
-+	struct ocelot_vcap_block *block_vcap_is1 = &ocelot->block[VCAP_IS1];
-+	struct ocelot_port *ocelot_port = ocelot->ports[port];
-+	const struct ocelot_bridge_vlan *pvid_vlan;
-+	struct ocelot_vcap_filter *filter;
-+	int err, val, pcp, dei;
-+	bool vid_replace_ena;
-+	u16 vid;
-+
-+	pvid_vlan = ocelot_port->pvid_vlan;
-+	vid_replace_ena = ocelot_port->vlan_aware && pvid_vlan;
-+
-+	filter = ocelot_vcap_block_find_filter_by_id(block_vcap_is1, cookie,
-+						     false);
-+	if (!vid_replace_ena) {
-+		/* If the reclassification filter doesn't need to exist, delete
-+		 * it if it was previously installed, and exit doing nothing
-+		 * otherwise.
-+		 */
-+		if (filter)
-+			return ocelot_vcap_filter_del(ocelot, filter);
-+
-+		return 0;
-+	}
-+
-+	/* The reclassification rule must apply. See if it already exists
-+	 * or if it must be created.
-+	 */
-+
-+	/* Treating as VLAN-untagged means using as classified VID equal to
-+	 * the bridge PVID, and PCP/DEI set to the port default QoS values.
-+	 */
-+	vid = pvid_vlan->vid;
-+	val = ocelot_read_gix(ocelot, ANA_PORT_QOS_CFG, port);
-+	pcp = ANA_PORT_QOS_CFG_QOS_DEFAULT_VAL_X(val);
-+	dei = !!(val & ANA_PORT_QOS_CFG_DP_DEFAULT_VAL);
-+
-+	if (filter) {
-+		bool changed = false;
-+
-+		/* Filter exists, just update it */
-+		if (filter->action.vid != vid) {
-+			filter->action.vid = vid;
-+			changed = true;
-+		}
-+		if (filter->action.pcp != pcp) {
-+			filter->action.pcp = pcp;
-+			changed = true;
-+		}
-+		if (filter->action.dei != dei) {
-+			filter->action.dei = dei;
-+			changed = true;
-+		}
-+
-+		if (!changed)
-+			return 0;
-+
-+		return ocelot_vcap_filter_replace(ocelot, filter);
-+	}
-+
-+	/* Filter doesn't exist, create it */
-+	filter = kzalloc(sizeof(*filter), GFP_KERNEL);
-+	if (!filter)
-+		return -ENOMEM;
-+
-+	filter->key_type = OCELOT_VCAP_KEY_ANY;
-+	filter->ingress_port_mask = BIT(port);
-+	filter->vlan.tpid = OCELOT_VCAP_BIT_1;
-+	filter->prio = 1;
-+	filter->id.cookie = cookie;
-+	filter->id.tc_offload = false;
-+	filter->block_id = VCAP_IS1;
-+	filter->type = OCELOT_VCAP_FILTER_OFFLOAD;
-+	filter->lookup = 0;
-+	filter->action.vid_replace_ena = true;
-+	filter->action.pcp_dei_ena = true;
-+	filter->action.vid = vid;
-+	filter->action.pcp = pcp;
-+	filter->action.dei = dei;
-+
-+	err = ocelot_vcap_filter_add(ocelot, filter, NULL);
-+	if (err)
-+		kfree(filter);
-+
-+	return err;
-+}
-+
- /* Default vlan to clasify for untagged frames (may be zero) */
--static void ocelot_port_set_pvid(struct ocelot *ocelot, int port,
--				 const struct ocelot_bridge_vlan *pvid_vlan)
-+static int ocelot_port_set_pvid(struct ocelot *ocelot, int port,
-+				const struct ocelot_bridge_vlan *pvid_vlan)
- {
- 	struct ocelot_port *ocelot_port = ocelot->ports[port];
- 	u16 pvid = ocelot_vlan_unaware_pvid(ocelot, ocelot_port->bridge);
-@@ -475,15 +624,23 @@ static void ocelot_port_set_pvid(struct ocelot *ocelot, int port,
- 	 * happens automatically), but also 802.1p traffic which gets
- 	 * classified to VLAN 0, but that is always in our RX filter, so it
- 	 * would get accepted were it not for this setting.
-+	 *
-+	 * Also, we only support the bridge 802.1Q VLAN protocol, so
-+	 * 802.1ad-tagged frames (carrying S-Tags) should be considered
-+	 * 802.1Q-untagged, and also dropped.
- 	 */
- 	if (!pvid_vlan && ocelot_port->vlan_aware)
- 		val = ANA_PORT_DROP_CFG_DROP_PRIO_S_TAGGED_ENA |
--		      ANA_PORT_DROP_CFG_DROP_PRIO_C_TAGGED_ENA;
-+		      ANA_PORT_DROP_CFG_DROP_PRIO_C_TAGGED_ENA |
-+		      ANA_PORT_DROP_CFG_DROP_S_TAGGED_ENA;
+ int intel_pxp_gsccs_create_session(struct intel_pxp *pxp, int arb_session_id);
+ void intel_pxp_gsccs_end_arb_fw_session(struct intel_pxp *pxp, u32 arb_session_id);
++bool intel_pxp_gsccs_is_ready_for_sessions(struct intel_pxp *pxp);
  
- 	ocelot_rmw_gix(ocelot, val,
- 		       ANA_PORT_DROP_CFG_DROP_PRIO_S_TAGGED_ENA |
--		       ANA_PORT_DROP_CFG_DROP_PRIO_C_TAGGED_ENA,
-+		       ANA_PORT_DROP_CFG_DROP_PRIO_C_TAGGED_ENA |
-+		       ANA_PORT_DROP_CFG_DROP_S_TAGGED_ENA,
- 		       ANA_PORT_DROP_CFG, port);
-+
-+	return ocelot_update_vlan_reclassify_rule(ocelot, port);
- }
- 
- static struct ocelot_bridge_vlan *ocelot_bridge_vlan_find(struct ocelot *ocelot,
-@@ -631,7 +788,10 @@ int ocelot_port_vlan_filtering(struct ocelot *ocelot, int port,
- 		       ANA_PORT_VLAN_CFG_VLAN_POP_CNT_M,
- 		       ANA_PORT_VLAN_CFG, port);
- 
--	ocelot_port_set_pvid(ocelot, port, ocelot_port->pvid_vlan);
-+	err = ocelot_port_set_pvid(ocelot, port, ocelot_port->pvid_vlan);
-+	if (err)
-+		return err;
-+
- 	ocelot_port_manage_port_tag(ocelot, port);
- 
+ #else
+ static inline void intel_pxp_gsccs_fini(struct intel_pxp *pxp)
+@@ -36,8 +37,11 @@ static inline int intel_pxp_gsccs_init(struct intel_pxp *pxp)
  	return 0;
-@@ -684,9 +844,12 @@ int ocelot_vlan_add(struct ocelot *ocelot, int port, u16 vid, bool pvid,
- 		return err;
- 
- 	/* Default ingress vlan classification */
--	if (pvid)
--		ocelot_port_set_pvid(ocelot, port,
--				     ocelot_bridge_vlan_find(ocelot, vid));
-+	if (pvid) {
-+		err = ocelot_port_set_pvid(ocelot, port,
-+					   ocelot_bridge_vlan_find(ocelot, vid));
-+		if (err)
-+			return err;
-+	}
- 
- 	/* Untagged egress vlan clasification */
- 	ocelot_port_manage_port_tag(ocelot, port);
-@@ -712,8 +875,11 @@ int ocelot_vlan_del(struct ocelot *ocelot, int port, u16 vid)
- 		return err;
- 
- 	/* Ingress */
--	if (del_pvid)
--		ocelot_port_set_pvid(ocelot, port, NULL);
-+	if (del_pvid) {
-+		err = ocelot_port_set_pvid(ocelot, port, NULL);
-+		if (err)
-+			return err;
-+	}
- 
- 	/* Egress */
- 	ocelot_port_manage_port_tag(ocelot, port);
-@@ -2607,7 +2773,7 @@ int ocelot_port_set_default_prio(struct ocelot *ocelot, int port, u8 prio)
- 		       ANA_PORT_QOS_CFG,
- 		       port);
- 
--	return 0;
-+	return ocelot_update_vlan_reclassify_rule(ocelot, port);
  }
- EXPORT_SYMBOL_GPL(ocelot_port_set_default_prio);
  
-diff --git a/drivers/net/ethernet/mscc/ocelot_vcap.c b/drivers/net/ethernet/mscc/ocelot_vcap.c
-index 73cdec5ca6a34..5734b86aed5b5 100644
---- a/drivers/net/ethernet/mscc/ocelot_vcap.c
-+++ b/drivers/net/ethernet/mscc/ocelot_vcap.c
-@@ -695,6 +695,7 @@ static void is1_entry_set(struct ocelot *ocelot, int ix,
- 	vcap_key_bit_set(vcap, &data, VCAP_IS1_HK_L2_MC, filter->dmac_mc);
- 	vcap_key_bit_set(vcap, &data, VCAP_IS1_HK_L2_BC, filter->dmac_bc);
- 	vcap_key_bit_set(vcap, &data, VCAP_IS1_HK_VLAN_TAGGED, tag->tagged);
-+	vcap_key_bit_set(vcap, &data, VCAP_IS1_HK_TPID, tag->tpid);
- 	vcap_key_set(vcap, &data, VCAP_IS1_HK_VID,
- 		     tag->vid.value, tag->vid.mask);
- 	vcap_key_set(vcap, &data, VCAP_IS1_HK_PCP,
-diff --git a/include/soc/mscc/ocelot_vcap.h b/include/soc/mscc/ocelot_vcap.h
-index c601a4598b0da..eb19668a06db1 100644
---- a/include/soc/mscc/ocelot_vcap.h
-+++ b/include/soc/mscc/ocelot_vcap.h
-@@ -13,6 +13,7 @@
-  */
- #define OCELOT_VCAP_ES0_TAG_8021Q_RXVLAN(ocelot, port, upstream) ((upstream) << 16 | (port))
- #define OCELOT_VCAP_IS1_TAG_8021Q_TXVLAN(ocelot, port)		(port)
-+#define OCELOT_VCAP_IS1_VLAN_RECLASSIFY(ocelot, port)		((ocelot)->num_phys_ports + (port))
- #define OCELOT_VCAP_IS2_TAG_8021Q_TXVLAN(ocelot, port)		(port)
- #define OCELOT_VCAP_IS2_MRP_REDIRECT(ocelot, port)		((ocelot)->num_phys_ports + (port))
- #define OCELOT_VCAP_IS2_MRP_TRAP(ocelot)			((ocelot)->num_phys_ports * 2)
-@@ -499,6 +500,7 @@ struct ocelot_vcap_key_vlan {
- 	struct ocelot_vcap_u8  pcp;    /* PCP (3 bit) */
- 	enum ocelot_vcap_bit dei;    /* DEI */
- 	enum ocelot_vcap_bit tagged; /* Tagged/untagged frame */
-+	enum ocelot_vcap_bit tpid;
- };
+-#endif
++static inline bool intel_pxp_gsccs_is_ready_for_sessions(struct intel_pxp *pxp)
++{
++	return false;
++}
  
- struct ocelot_vcap_key_etype {
+-bool intel_pxp_gsccs_is_ready_for_sessions(struct intel_pxp *pxp);
++#endif
+ 
+ #endif /*__INTEL_PXP_GSCCS_H__ */
 -- 
 2.39.5
 
