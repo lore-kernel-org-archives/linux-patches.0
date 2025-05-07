@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53644214813;
-	Wed,  7 May 2025 19:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C17214813;
+	Wed,  7 May 2025 19:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746645174; cv=none; b=c4mVfV/D5O2/hmZptgaAKMeAzcc3wnReQySYNNb9Zs+w8+7Jlih7oKMXZLIbyUOmq5M1sL7rmkrucZkQNkQnt6kIZDNkPxdcul5TN8y+QdR0RKbhHZd++eFlNjR1fGvatQN//Z/aksUSoaHgqWbiHGouGsTy4Vf2lVSNH4kIqrU=
+	t=1746645177; cv=none; b=PTSAd1hUPaHjLkGLRdcLs/cw5OSkxjk6HbbpL4VxDbIDzoeOiYA99+kPixW/t12bj8kJxDD2xEbOZVaUMxY4b6m01aU/aD/FJEefCADlISU/MRapt7glTe38WqrkJUDyLqwIC6y3AC6Fi307R6r4OXy09VsxOrA4waesSGk46DI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746645174; c=relaxed/simple;
-	bh=/qnk9/0ebfiBm8urj90Q9hu4pV3UPWy/hSFGFgDbSYI=;
+	s=arc-20240116; t=1746645177; c=relaxed/simple;
+	bh=EcPQEF1O6VUYbv+LZu3XwNoq+hXHMJp0shpDTaUwjlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qlYV4rdTEFZj4mlfVg2gtsKcS+XhFxOxeXI9Y15zIznI2ZKZg9RRePfw5AWYZniPS9hG3bLgZ2YMN6YAW+y9bbJXMyYQxMuXwnbNdIGnuiUio7c1dk8tFPtSN0PnWtG1cs4Fe8BVGv5BT6lnFu4sGD9c1XNsda0VqSxnZjesRm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JUdcJP3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qQJ9qVG5MEV8H8x8RDqKPafxYRaW8kpsOazkJl0uRatyHy2eu5cqbovIEZnnXKXfDtJke5hB6W/XmbC6RkQlCTJBiv5PJhrr191jwAtb5za+1j+4kVOM59Os7ovsQ+DmUusABDsrK8woLkaPfQaZtFZqKKs1azdoH8e4VlvHT4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfJEiu1H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JUdcJP3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81FEC4CEE2;
-	Wed,  7 May 2025 19:12:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfJEiu1H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07FFBC4CEE2;
+	Wed,  7 May 2025 19:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746645174;
-	bh=/qnk9/0ebfiBm8urj90Q9hu4pV3UPWy/hSFGFgDbSYI=;
+	s=korg; t=1746645177;
+	bh=EcPQEF1O6VUYbv+LZu3XwNoq+hXHMJp0shpDTaUwjlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2JUdcJP3ExFYT6LBvmrQqGfTGaTlysyPTV+92Ds+onMt1VHZNppjYVWlnka+Gdk3a
-	 evkYPdjAdGZKxfRGwh77pBFOQtKk/fb6tZvaCeAK0N4pOwn3hV8Q+weacrRR0o2XYr
-	 yH0FnKvOj1WFbk3M3IPA/b3HXuwBP0ooDC2jqwv8=
+	b=UfJEiu1HPr1C7g0pZobi2LL2rXe8jhfy2tUGuJJOz2mQtu9/X1FCA7fvUdeYwe5KH
+	 UD5CYl2L48qRsqBUtyWGThginfrqiUn+3jPbJ76q4kGoIBlIs+gXgvSqszJ8lp9SqU
+	 KlaMN3ghm1UQc94EmuIsgk+W4Dn0zK+nfYu9XX1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sathesh B Edara <sedara@marvell.com>,
+	Jian Shen <shenjian15@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 087/129] octeon_ep: Fix host hang issue during device reboot
-Date: Wed,  7 May 2025 20:40:23 +0200
-Message-ID: <20250507183817.030217500@linuxfoundation.org>
+Subject: [PATCH 6.6 088/129] net: hns3: store rx VLAN tag offload state for VF
+Date: Wed,  7 May 2025 20:40:24 +0200
+Message-ID: <20250507183817.069598639@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -52,44 +53,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sathesh B Edara <sedara@marvell.com>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit 34f42736b325287a7b2ce37e415838f539767bda ]
+[ Upstream commit ef2383d078edcbe3055032436b16cdf206f26de2 ]
 
-When the host loses heartbeat messages from the device,
-the driver calls the device-specific ndo_stop function,
-which frees the resources. If the driver is unloaded in
-this scenario, it calls ndo_stop again, attempting to free
-resources that have already been freed, leading to a host
-hang issue. To resolve this, dev_close should be called
-instead of the device-specific stop function.dev_close
-internally calls ndo_stop to stop the network interface
-and performs additional cleanup tasks. During the driver
-unload process, if the device is already down, ndo_stop
-is not called.
+The VF driver missed to store the rx VLAN tag strip state when
+user change the rx VLAN tag offload state. And it will default
+to enable the rx vlan tag strip when re-init VF device after
+reset. So if user disable rx VLAN tag offload, and trig reset,
+then the HW will still strip the VLAN tag from packet nad fill
+into RX BD, but the VF driver will ignore it for rx VLAN tag
+offload disabled. It may cause the rx VLAN tag dropped.
 
-Fixes: 5cb96c29aa0e ("octeon_ep: add heartbeat monitor")
-Signed-off-by: Sathesh B Edara <sedara@marvell.com>
+Fixes: b2641e2ad456 ("net: hns3: Add support of hardware rx-vlan-offload to HNS3 VF driver")
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250429114624.19104-1-sedara@marvell.com
+Link: https://patch.msgid.link/20250430093052.2400464-2-shaojijie@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeon_ep/octep_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../hisilicon/hns3/hns3vf/hclgevf_main.c      | 25 ++++++++++++++-----
+ .../hisilicon/hns3/hns3vf/hclgevf_main.h      |  1 +
+ 2 files changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-index 6f1fe7e283d4e..7a30095b3486f 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-@@ -917,7 +917,7 @@ static void octep_hb_timeout_task(struct work_struct *work)
- 		miss_cnt);
- 	rtnl_lock();
- 	if (netif_running(oct->netdev))
--		octep_stop(oct->netdev);
-+		dev_close(oct->netdev);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+index 69bfcfb148def..1ba0b57c7a72d 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+@@ -1257,9 +1257,8 @@ static void hclgevf_sync_vlan_filter(struct hclgevf_dev *hdev)
  	rtnl_unlock();
  }
+ 
+-static int hclgevf_en_hw_strip_rxvtag(struct hnae3_handle *handle, bool enable)
++static int hclgevf_en_hw_strip_rxvtag_cmd(struct hclgevf_dev *hdev, bool enable)
+ {
+-	struct hclgevf_dev *hdev = hclgevf_ae_get_hdev(handle);
+ 	struct hclge_vf_to_pf_msg send_msg;
+ 
+ 	hclgevf_build_send_msg(&send_msg, HCLGE_MBX_SET_VLAN,
+@@ -1268,6 +1267,19 @@ static int hclgevf_en_hw_strip_rxvtag(struct hnae3_handle *handle, bool enable)
+ 	return hclgevf_send_mbx_msg(hdev, &send_msg, false, NULL, 0);
+ }
+ 
++static int hclgevf_en_hw_strip_rxvtag(struct hnae3_handle *handle, bool enable)
++{
++	struct hclgevf_dev *hdev = hclgevf_ae_get_hdev(handle);
++	int ret;
++
++	ret = hclgevf_en_hw_strip_rxvtag_cmd(hdev, enable);
++	if (ret)
++		return ret;
++
++	hdev->rxvtag_strip_en = enable;
++	return 0;
++}
++
+ static int hclgevf_reset_tqp(struct hnae3_handle *handle)
+ {
+ #define HCLGEVF_RESET_ALL_QUEUE_DONE	1U
+@@ -2143,12 +2155,13 @@ static int hclgevf_rss_init_hw(struct hclgevf_dev *hdev)
+ 					  tc_valid, tc_size);
+ }
+ 
+-static int hclgevf_init_vlan_config(struct hclgevf_dev *hdev)
++static int hclgevf_init_vlan_config(struct hclgevf_dev *hdev,
++				    bool rxvtag_strip_en)
+ {
+ 	struct hnae3_handle *nic = &hdev->nic;
+ 	int ret;
+ 
+-	ret = hclgevf_en_hw_strip_rxvtag(nic, true);
++	ret = hclgevf_en_hw_strip_rxvtag(nic, rxvtag_strip_en);
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed to enable rx vlan offload, ret = %d\n", ret);
+@@ -2815,7 +2828,7 @@ static int hclgevf_reset_hdev(struct hclgevf_dev *hdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = hclgevf_init_vlan_config(hdev);
++	ret = hclgevf_init_vlan_config(hdev, hdev->rxvtag_strip_en);
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed(%d) to initialize VLAN config\n", ret);
+@@ -2928,7 +2941,7 @@ static int hclgevf_init_hdev(struct hclgevf_dev *hdev)
+ 		goto err_config;
+ 	}
+ 
+-	ret = hclgevf_init_vlan_config(hdev);
++	ret = hclgevf_init_vlan_config(hdev, true);
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed(%d) to initialize VLAN config\n", ret);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
+index cccef32284616..0208425ab594f 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
+@@ -253,6 +253,7 @@ struct hclgevf_dev {
+ 	int *vector_irq;
+ 
+ 	bool gro_en;
++	bool rxvtag_strip_en;
+ 
+ 	unsigned long vlan_del_fail_bmap[BITS_TO_LONGS(VLAN_N_VID)];
  
 -- 
 2.39.5
