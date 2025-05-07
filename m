@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B22E1C84D7;
-	Wed,  7 May 2025 18:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C2A73451;
+	Wed,  7 May 2025 18:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643603; cv=none; b=bYx26IC835DLQVkbbP/bXzic235wmnXFP1CBMtGGH/BhjKX60LFam2VrOOOc5m23xz7hfqlLf5l+GIZZixbUOFhp13xXj/WG+wD1MZljilMpII1pGkp3PV41K7B9XSzqLG1KX5mM3e77HZIejRz0Ek3yidSm7WRh0aErm1b8iIU=
+	t=1746643606; cv=none; b=PRW5ujfeTEIAEQY4WjaD6sqHs0SXCoIr4UA1o4f/E3CCMt/q5nC8jkf5tMbMkzQSXplJ4NO5KKpQdltt0LiGA1ssNCBwk19gQk5NovI6Mm8VjVwO1xWNPzUkc2u/KSGUFu/LH40JqIcUIalLrC75XbO2I9DjVZa+wVhrgbIGmLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643603; c=relaxed/simple;
-	bh=KCrJZMdAZbqxdFuIaTn4roDxPoyLbVWV6IIcrIutMRo=;
+	s=arc-20240116; t=1746643606; c=relaxed/simple;
+	bh=olb3GorI29rRv/46MGjvoAK0wlLcQje2JEbDWzrYBp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ph8mBOfpid/YUZl2/+R6FPay5/ff6VhadVmbA3350AQN/sNSfhs47unn3hSSmSCDBJIxujSfL4Ht1V/YcG3NnScz4XKIfNszXSXNCNvEC2JbSWWGEvCHBP1DElMXS8hoyts2Uw5e4mBs34pEpKRNSOk8lw01Uci99Dtea8CqnE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YIkqDG9f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jch+VHVDEOXHmUcIN/caobZ2KoschKxx9SvjLsT9Vz04ueLBg3j0RFVNby1SKqC31Veh+jHyQDR3XPmhWRlychsC7Sa0wqtsIw4NVEgTPm4YoB4HpAHScU6e+zN4oySpDCinGenmIF6LtAVzR4rUM22Zr1fUrWaYIyDIzghcYTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2WlI6N1z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YIkqDG9f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF6BC4CEE2;
-	Wed,  7 May 2025 18:46:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2WlI6N1z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161BAC4CEE2;
+	Wed,  7 May 2025 18:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643603;
-	bh=KCrJZMdAZbqxdFuIaTn4roDxPoyLbVWV6IIcrIutMRo=;
+	s=korg; t=1746643606;
+	bh=olb3GorI29rRv/46MGjvoAK0wlLcQje2JEbDWzrYBp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YIkqDG9fodZGiOUO3osJdvoT/RhxRQCQcvSw2PdoCim2jy9zHW80y7WcZEWjm2kdv
-	 zOf0ZyzQdpXQz3500qi9I8+fz5j5/bSFvOvrikpjSGS8Bb8tZA3BWhilC6j077eF6b
-	 fwTcA6KsTxZnZzgZ0mKPWzD5uXjLjg3H1mepbPOI=
+	b=2WlI6N1zZICuA5w87w9XWa3N3QKu96L5Ml0Ne3sll0HLFBndKhBLJKIigNY91MO1x
+	 p2qLIqENU/FIiYSazKXUoJ3xmmpd5x32N2pIQdGejvVMGoT5ksqOvBPTYzCkzyAvQx
+	 4rR6A6c1RYJ3dz6C01T/l+wmfEvgBS1ZTnRNzrSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Leah Rumancik <leah.rumancik@gmail.com>
-Subject: [PATCH 6.1 27/97] xfs: check opcode and iovec count match in xlog_recover_attri_commit_pass2
-Date: Wed,  7 May 2025 20:39:02 +0200
-Message-ID: <20250507183808.079019162@linuxfoundation.org>
+Subject: [PATCH 6.1 28/97] xfs: validate recovered name buffers when recovering xattr items
+Date: Wed,  7 May 2025 20:39:03 +0200
+Message-ID: <20250507183808.122723382@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183806.987408728@linuxfoundation.org>
 References: <20250507183806.987408728@linuxfoundation.org>
@@ -53,10 +53,11 @@ Content-Transfer-Encoding: 8bit
 
 From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit ad206ae50eca62836c5460ab5bbf2a6c59a268e7 ]
+[ Upstream commit 1c7f09d210aba2f2bb206e2e8c97c9f11a3fd880 ]
 
-Check that the number of recovered log iovecs is what is expected for
-the xattri opcode is expecting.
+Strengthen the xattri log item recovery code by checking that we
+actually have the required name and newname buffers for whatever
+operation we're replaying.
 
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
@@ -64,51 +65,112 @@ Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_attr_item.c |   27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ fs/xfs/xfs_attr_item.c |   58 +++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 47 insertions(+), 11 deletions(-)
 
 --- a/fs/xfs/xfs_attr_item.c
 +++ b/fs/xfs/xfs_attr_item.c
-@@ -717,6 +717,7 @@ xlog_recover_attri_commit_pass2(
+@@ -717,22 +717,20 @@ xlog_recover_attri_commit_pass2(
  	const void			*attr_value = NULL;
  	const void			*attr_name;
  	size_t				len;
-+	unsigned int			op;
+-	unsigned int			op;
+-
+-	attri_formatp = item->ri_buf[0].i_addr;
+-	attr_name = item->ri_buf[1].i_addr;
++	unsigned int			op, i = 0;
  
- 	attri_formatp = item->ri_buf[0].i_addr;
- 	attr_name = item->ri_buf[1].i_addr;
-@@ -735,6 +736,32 @@ xlog_recover_attri_commit_pass2(
+ 	/* Validate xfs_attri_log_format before the large memory allocation */
+ 	len = sizeof(struct xfs_attri_log_format);
+-	if (item->ri_buf[0].i_len != len) {
++	if (item->ri_buf[i].i_len != len) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+ 				item->ri_buf[0].i_addr, item->ri_buf[0].i_len);
  		return -EFSCORRUPTED;
  	}
  
-+	/* Check the number of log iovecs makes sense for the op code. */
-+	op = attri_formatp->alfi_op_flags & XFS_ATTRI_OP_FLAGS_TYPE_MASK;
-+	switch (op) {
-+	case XFS_ATTRI_OP_FLAGS_SET:
-+	case XFS_ATTRI_OP_FLAGS_REPLACE:
-+		/* Log item, attr name, attr value */
-+		if (item->ri_total != 3) {
-+			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
-+					     attri_formatp, len);
-+			return -EFSCORRUPTED;
-+		}
-+		break;
-+	case XFS_ATTRI_OP_FLAGS_REMOVE:
-+		/* Log item, attr name */
-+		if (item->ri_total != 2) {
-+			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
-+					     attri_formatp, len);
-+			return -EFSCORRUPTED;
-+		}
-+		break;
-+	default:
++	attri_formatp = item->ri_buf[i].i_addr;
+ 	if (!xfs_attri_validate(mp, attri_formatp)) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+-				item->ri_buf[0].i_addr, item->ri_buf[0].i_len);
++				attri_formatp, len);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+@@ -761,31 +759,69 @@ xlog_recover_attri_commit_pass2(
+ 				     attri_formatp, len);
+ 		return -EFSCORRUPTED;
+ 	}
++	i++;
+ 
+ 	/* Validate the attr name */
+-	if (item->ri_buf[1].i_len !=
++	if (item->ri_buf[i].i_len !=
+ 			xlog_calc_iovec_len(attri_formatp->alfi_name_len)) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+-				item->ri_buf[0].i_addr, item->ri_buf[0].i_len);
++				attri_formatp, len);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
++	attr_name = item->ri_buf[i].i_addr;
+ 	if (!xfs_attr_namecheck(attr_name, attri_formatp->alfi_name_len)) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+-				item->ri_buf[1].i_addr, item->ri_buf[1].i_len);
++				attri_formatp, len);
+ 		return -EFSCORRUPTED;
+ 	}
++	i++;
+ 
+ 	/* Validate the attr value, if present */
+ 	if (attri_formatp->alfi_value_len != 0) {
+-		if (item->ri_buf[2].i_len != xlog_calc_iovec_len(attri_formatp->alfi_value_len)) {
++		if (item->ri_buf[i].i_len != xlog_calc_iovec_len(attri_formatp->alfi_value_len)) {
+ 			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+ 					item->ri_buf[0].i_addr,
+ 					item->ri_buf[0].i_len);
+ 			return -EFSCORRUPTED;
+ 		}
+ 
+-		attr_value = item->ri_buf[2].i_addr;
++		attr_value = item->ri_buf[i].i_addr;
++		i++;
++	}
++
++	/*
++	 * Make sure we got the correct number of buffers for the operation
++	 * that we just loaded.
++	 */
++	if (i != item->ri_total) {
 +		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
-+				     attri_formatp, len);
++				attri_formatp, len);
 +		return -EFSCORRUPTED;
 +	}
 +
- 	/* Validate the attr name */
- 	if (item->ri_buf[1].i_len !=
- 			xlog_calc_iovec_len(attri_formatp->alfi_name_len)) {
++	switch (op) {
++	case XFS_ATTRI_OP_FLAGS_REMOVE:
++		/* Regular remove operations operate only on names. */
++		if (attr_value != NULL || attri_formatp->alfi_value_len != 0) {
++			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
++					     attri_formatp, len);
++			return -EFSCORRUPTED;
++		}
++		fallthrough;
++	case XFS_ATTRI_OP_FLAGS_SET:
++	case XFS_ATTRI_OP_FLAGS_REPLACE:
++		/*
++		 * Regular xattr set/remove/replace operations require a name
++		 * and do not take a newname.  Values are optional for set and
++		 * replace.
++		 */
++		if (attr_name == NULL || attri_formatp->alfi_name_len == 0) {
++			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
++					     attri_formatp, len);
++			return -EFSCORRUPTED;
++		}
++		break;
+ 	}
+ 
+ 	/*
 
 
