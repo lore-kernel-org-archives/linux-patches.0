@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A902144C1;
-	Wed,  7 May 2025 19:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73022144C1;
+	Wed,  7 May 2025 19:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746645100; cv=none; b=J4rJpp+g3HRG/wrKt5y3iG+9NdNgNiXtG9PbqZKYm4hMGjXyn8ELDCgHao087gRSgKCqd31R8ktsYX+YSWbiFs1uiVsfteKgSz+g03miuydrWq6yAqbW9Op9ppJ/ewINZ1NPtmGMmfY5ZgajMefPa2FxaoLJA3XUDFE7AJGS87E=
+	t=1746645103; cv=none; b=tczvRl1iS6bjvimA1rBRz0Rn8CZWZylfcYWcKZxvHrENYez9L6os+nRIKNUXBOskqYPncGe/E7d79rZPc1M8rSto0zqHp+ymADeDr8M5iCwTlWac8TSMy0gYxpOqH1FSJ7hl4D9EQDeK1fE50lEISS4izwWDbl0z3uujkb2P2ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746645100; c=relaxed/simple;
-	bh=Mo7+7aWOw3MfafX7ra5oPp4pYkswiQVcP6yjts2MVcY=;
+	s=arc-20240116; t=1746645103; c=relaxed/simple;
+	bh=u55HoD5XivrLtw3MqvSOIX4zp3j+pCzDeKrsjoeU7M4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gxnJCXeQOTIbwBKbDvrI28oWwZ+vrJMjw9DVe8LrUU/kksd85Le+Xp0T/OwAZyPt4k6YUBSErqUTdfFRZTNSGmtinHeRT0stf68/+0n5Yvdt5mA7myrJMUAgx/fXEEnAb0u/HTGRN1u3VOviUeQhS6o+dshEnlQfNCW8rtDc+Hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGuwOiTs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tG5HYwKLA3IJ0CV5K0sySbRXlak1KtSe0UmGpSH5WCfsrf6frpUfD8v776OMXSCd26oXquYZ6FdVc41itmyFZmji1/yGfAnPnE4yjXsMxFlQtGOuOrfN0icCj7vY9d+ht/77R+IS0ZcO3MNDiX3fO1zk7p8Za/1+zqNUBgMEr40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KO6vNzWf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGuwOiTs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB32DC4CEE2;
-	Wed,  7 May 2025 19:11:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KO6vNzWf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B539C4CEE2;
+	Wed,  7 May 2025 19:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746645100;
-	bh=Mo7+7aWOw3MfafX7ra5oPp4pYkswiQVcP6yjts2MVcY=;
+	s=korg; t=1746645103;
+	bh=u55HoD5XivrLtw3MqvSOIX4zp3j+pCzDeKrsjoeU7M4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VGuwOiTswhiqQnp+e52j5tUK5MzjAf8125SRAvSJua137cuddyIeNAG/GquLl3XmK
-	 IFD74czazhfyxU93kbLn8kmg77aEOoTtET/yMNf4e9CzWi65KTDiU939EZmNyBcxXF
-	 R5oxv/y4GOWzjkEFFNfAP0zUqM2A9rnbJRPC3pD4=
+	b=KO6vNzWfAwvCurP4awlnc2MQZ0W2B/Rxo3vlJ84jERjBwm9ScM7GxVcv10a9IZGyE
+	 gvjzANVD9BLe5U/9P3Pp4L3YkNhUXkUJOnYYo80hLlbJNu+m9f2wk0LrTmtQVjnnkh
+	 INYqAc29xi3gm6LJ73ti+v4UugyUD5U9HofntYwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 094/129] net: vertexcom: mse102x: Add range check for CMD_RTS
-Date: Wed,  7 May 2025 20:40:30 +0200
-Message-ID: <20250507183817.304108312@linuxfoundation.org>
+Subject: [PATCH 6.6 095/129] net: vertexcom: mse102x: Fix RX error handling
+Date: Wed,  7 May 2025 20:40:31 +0200
+Message-ID: <20250507183817.346667570@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -54,46 +54,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit d4dda902dac194e3231a1ed0f76c6c3b6340ba8a ]
+[ Upstream commit ee512922ddd7d64afe2b28830a88f19063217649 ]
 
-Since there is no protection in the SPI protocol against electrical
-interferences, the driver shouldn't blindly trust the length payload
-of CMD_RTS. So introduce a bounds check for incoming frames.
+In case the CMD_RTS got corrupted by interferences, the MSE102x
+doesn't allow a retransmission of the command. Instead the Ethernet
+frame must be shifted out of the SPI FIFO. Since the actual length is
+unknown, assume the maximum possible value.
 
 Fixes: 2f207cbf0dd4 ("net: vertexcom: Add MSE102x SPI support")
 Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250430133043.7722-4-wahrenst@gmx.net
+Link: https://patch.msgid.link/20250430133043.7722-5-wahrenst@gmx.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/vertexcom/mse102x.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/vertexcom/mse102x.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/ethernet/vertexcom/mse102x.c b/drivers/net/ethernet/vertexcom/mse102x.c
-index 55f34d9d111c4..2b1aac72601d0 100644
+index 2b1aac72601d0..060a566bc6aae 100644
 --- a/drivers/net/ethernet/vertexcom/mse102x.c
 +++ b/drivers/net/ethernet/vertexcom/mse102x.c
-@@ -6,6 +6,7 @@
+@@ -263,7 +263,7 @@ static int mse102x_tx_frame_spi(struct mse102x_net *mse, struct sk_buff *txp,
+ }
  
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ static int mse102x_rx_frame_spi(struct mse102x_net *mse, u8 *buff,
+-				unsigned int frame_len)
++				unsigned int frame_len, bool drop)
+ {
+ 	struct mse102x_net_spi *mses = to_mse102x_spi(mse);
+ 	struct spi_transfer *xfer = &mses->spi_xfer;
+@@ -281,6 +281,9 @@ static int mse102x_rx_frame_spi(struct mse102x_net *mse, u8 *buff,
+ 		netdev_err(mse->ndev, "%s: spi_sync() failed: %d\n",
+ 			   __func__, ret);
+ 		mse->stats.xfer_err++;
++	} else if (drop) {
++		netdev_dbg(mse->ndev, "%s: Drop frame\n", __func__);
++		ret = -EINVAL;
+ 	} else if (*sof != cpu_to_be16(DET_SOF)) {
+ 		netdev_dbg(mse->ndev, "%s: SPI start of frame is invalid (0x%04x)\n",
+ 			   __func__, *sof);
+@@ -308,6 +311,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 	struct sk_buff *skb;
+ 	unsigned int rxalign;
+ 	unsigned int rxlen;
++	bool drop = false;
+ 	__be16 rx = 0;
+ 	u16 cmd_resp;
+ 	u8 *rxpkt;
+@@ -330,7 +334,8 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 			net_dbg_ratelimited("%s: Unexpected response (0x%04x)\n",
+ 					    __func__, cmd_resp);
+ 			mse->stats.invalid_rts++;
+-			return;
++			drop = true;
++			goto drop;
+ 		}
  
-+#include <linux/if_vlan.h>
- #include <linux/interrupt.h>
- #include <linux/module.h>
- #include <linux/kernel.h>
-@@ -337,8 +338,9 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
- 	}
- 
- 	rxlen = cmd_resp & LEN_MASK;
--	if (!rxlen) {
--		net_dbg_ratelimited("%s: No frame length defined\n", __func__);
-+	if (rxlen < ETH_ZLEN || rxlen > VLAN_ETH_FRAME_LEN) {
-+		net_dbg_ratelimited("%s: Invalid frame length: %d\n", __func__,
-+				    rxlen);
+ 		net_dbg_ratelimited("%s: Unexpected response to first CMD\n",
+@@ -342,9 +347,16 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 		net_dbg_ratelimited("%s: Invalid frame length: %d\n", __func__,
+ 				    rxlen);
  		mse->stats.invalid_len++;
- 		return;
+-		return;
++		drop = true;
  	}
+ 
++	/* In case of a invalid CMD_RTS, the frame must be consumed anyway.
++	 * So assume the maximum possible frame length.
++	 */
++drop:
++	if (drop)
++		rxlen = VLAN_ETH_FRAME_LEN;
++
+ 	rxalign = ALIGN(rxlen + DET_SOF_LEN + DET_DFT_LEN, 4);
+ 	skb = netdev_alloc_skb_ip_align(mse->ndev, rxalign);
+ 	if (!skb)
+@@ -355,7 +367,7 @@ static void mse102x_rx_pkt_spi(struct mse102x_net *mse)
+ 	 * They are copied, but ignored.
+ 	 */
+ 	rxpkt = skb_put(skb, rxlen) - DET_SOF_LEN;
+-	if (mse102x_rx_frame_spi(mse, rxpkt, rxlen)) {
++	if (mse102x_rx_frame_spi(mse, rxpkt, rxlen, drop)) {
+ 		mse->ndev->stats.rx_errors++;
+ 		dev_kfree_skb(skb);
+ 		return;
 -- 
 2.39.5
 
