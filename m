@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1DF28E578;
-	Wed,  7 May 2025 18:42:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0100414A4C7;
+	Wed,  7 May 2025 18:42:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643357; cv=none; b=sL7AzfbdVpX+xCFpYnv7L+ZAMzNNOm7m/V3dzJHhTlnP5BjDX0PGsWSZzt9qUtmbfFCGDqU8FJnqOVt5JssGNRs5sTZdqgE0VpjyKlG/+OerfZm2dDGLKAXj+czJ4nhHkOC59ib4xawx4wIXm4aBr2K7DSLUH5/4VEDkmJVUodY=
+	t=1746643360; cv=none; b=U32zQuE/ffIgmLVKjCySVCRZy78KGhrX5Ei/U3DZ6WzgT/MQTbopHYEIK+h4mwvtwhRwCrCx5arJkPefMhJyPEA1GsVU5dNy7utLhxPGzx5lnHn7og+QGSPxYVkEtkvtA1RY8E4Dv7OFU4GGCqJSmOjS5aK9Hdt687EFUTzexb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643357; c=relaxed/simple;
-	bh=438xf4lWWYKDwjyIUC0wz8QsNd3PBzBLqygQHNJV3Rg=;
+	s=arc-20240116; t=1746643360; c=relaxed/simple;
+	bh=odkkV6ENEsRNDk8YRZPUnrt2eMhlbZSJBG1HUYd5eTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XbuwU70MHLijfEv2+XRBB0aS2FIlbG0zdHBRgNNYh6W27e22RlwEDZsfQOsBAEQiF6BT2HCp6MHI3qcXXeFLq2pTabD6+yAIP2UeIHjkDFXLCA3o5M8lcJRyWgh32xKZgVM22L6jwWA1JLgJGEPacQZT4iZ/TNdFKgYJklxMTtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxfarznK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aCPgIhdL84+WhhNZe3zfzYGyitAqwawvjBB2+TVmnG5uUAmF4yyGP+/CSB1Qwn7JEcFgJLt3eRMZIHKNe/0SbqjAOP387UMJezB0P+efpSD8OQopBclfwzVlYENwza6NKKsnYRSBXEleIghsZl8Z/jIfffDK7Efx/ehsEzFlboM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/wj98a/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxfarznK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93DBDC4CEE2;
-	Wed,  7 May 2025 18:42:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/wj98a/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638EEC4CEE2;
+	Wed,  7 May 2025 18:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643356;
-	bh=438xf4lWWYKDwjyIUC0wz8QsNd3PBzBLqygQHNJV3Rg=;
+	s=korg; t=1746643359;
+	bh=odkkV6ENEsRNDk8YRZPUnrt2eMhlbZSJBG1HUYd5eTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dxfarznKo/8KU5O+XFUEVuOXZPNURkiABIcHmjKT9o5J23noeXlwFousJjDbylPze
-	 jnXdaxosvam3u25gsrjbh7aDnk2iTJzxdeWW0dGnRNNUfKh8WlIMs59hH1dAYR1/Nf
-	 lxw8lDhRRcnFbIFqR2ybMFiBx7lMDc9ENVoXLevU=
+	b=w/wj98a/nlEQRFDs0SlDpLCH535h5jzS3q8nKgRRTfYAIQzBwz1qLwxA2T6Xul7nt
+	 STX3wEYj+UiLYPezFQTdmxZgbTAJf25RtAr68Yuit3Q8mFKUfV2OUjgM9Uc/hDq6Uk
+	 V4K373kZnXZ5dz8Lm75YyNMKJZWmN5HBDtJj169g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michael Liang <mliang@purestorage.com>,
+	Mohamed Khalfella <mkhalfella@purestorage.com>,
+	Randy Jennings <randyj@purestorage.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 25/55] net_sched: ets: Fix double list add in class with netem as child qdisc
-Date: Wed,  7 May 2025 20:39:26 +0200
-Message-ID: <20250507183800.054481205@linuxfoundation.org>
+Subject: [PATCH 5.15 34/55] nvme-tcp: fix premature queue removal and I/O failover
+Date: Wed,  7 May 2025 20:39:35 +0200
+Message-ID: <20250507183800.413811673@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183759.048732653@linuxfoundation.org>
 References: <20250507183759.048732653@linuxfoundation.org>
@@ -46,78 +48,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Michael Liang <mliang@purestorage.com>
 
-[ Upstream commit 1a6d0c00fa07972384b0c308c72db091d49988b6 ]
+[ Upstream commit 77e40bbce93059658aee02786a32c5c98a240a8a ]
 
-As described in Gerrard's report [1], there are use cases where a netem
-child qdisc will make the parent qdisc's enqueue callback reentrant.
-In the case of ets, there won't be a UAF, but the code will add the same
-classifier to the list twice, which will cause memory corruption.
+This patch addresses a data corruption issue observed in nvme-tcp during
+testing.
 
-In addition to checking for qlen being zero, this patch checks whether
-the class was already added to the active_list (cl_is_active) before
-doing the addition to cater for the reentrant case.
+In an NVMe native multipath setup, when an I/O timeout occurs, all
+inflight I/Os are canceled almost immediately after the kernel socket is
+shut down. These canceled I/Os are reported as host path errors,
+triggering a failover that succeeds on a different path.
 
-[1] https://lore.kernel.org/netdev/CAHcdcOm+03OD2j6R0=YHKqmy=VgJ8xEOKuP6c7mSgnp-TEJJbw@mail.gmail.com/
+However, at this point, the original I/O may still be outstanding in the
+host's network transmission path (e.g., the NIC’s TX queue). From the
+user-space app's perspective, the buffer associated with the I/O is
+considered completed since they're acked on the different path and may
+be reused for new I/O requests.
 
-Fixes: 37d9cf1a3ce3 ("sched: Fix detection of empty queues in child qdiscs")
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20250425220710.3964791-4-victor@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Because nvme-tcp enables zero-copy by default in the transmission path,
+this can lead to corrupted data being sent to the original target,
+ultimately causing data corruption.
+
+We can reproduce this data corruption by injecting delay on one path and
+triggering i/o timeout.
+
+To prevent this issue, this change ensures that all inflight
+transmissions are fully completed from host's perspective before
+returning from queue stop. To handle concurrent I/O timeout from multiple
+namespaces under the same controller, always wait in queue stop
+regardless of queue's state.
+
+This aligns with the behavior of queue stopping in other NVMe fabric
+transports.
+
+Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
+Signed-off-by: Michael Liang <mliang@purestorage.com>
+Reviewed-by: Mohamed Khalfella <mkhalfella@purestorage.com>
+Reviewed-by: Randy Jennings <randyj@purestorage.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_ets.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/nvme/host/tcp.c | 31 +++++++++++++++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_ets.c b/net/sched/sch_ets.c
-index d686ea7e8db49..07fae45f58732 100644
---- a/net/sched/sch_ets.c
-+++ b/net/sched/sch_ets.c
-@@ -74,6 +74,11 @@ static const struct nla_policy ets_class_policy[TCA_ETS_MAX + 1] = {
- 	[TCA_ETS_QUANTA_BAND] = { .type = NLA_U32 },
- };
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index 0fc5aba88bc15..99bf17f2dcfca 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -1602,7 +1602,7 @@ static void __nvme_tcp_stop_queue(struct nvme_tcp_queue *queue)
+ 	cancel_work_sync(&queue->io_work);
+ }
  
-+static bool cl_is_active(struct ets_class *cl)
+-static void nvme_tcp_stop_queue(struct nvme_ctrl *nctrl, int qid)
++static void nvme_tcp_stop_queue_nowait(struct nvme_ctrl *nctrl, int qid)
+ {
+ 	struct nvme_tcp_ctrl *ctrl = to_tcp_ctrl(nctrl);
+ 	struct nvme_tcp_queue *queue = &ctrl->queues[qid];
+@@ -1613,6 +1613,31 @@ static void nvme_tcp_stop_queue(struct nvme_ctrl *nctrl, int qid)
+ 	mutex_unlock(&queue->queue_lock);
+ }
+ 
++static void nvme_tcp_wait_queue(struct nvme_ctrl *nctrl, int qid)
 +{
-+	return !list_empty(&cl->alist);
++	struct nvme_tcp_ctrl *ctrl = to_tcp_ctrl(nctrl);
++	struct nvme_tcp_queue *queue = &ctrl->queues[qid];
++	int timeout = 100;
++
++	while (timeout > 0) {
++		if (!test_bit(NVME_TCP_Q_ALLOCATED, &queue->flags) ||
++		    !sk_wmem_alloc_get(queue->sock->sk))
++			return;
++		msleep(2);
++		timeout -= 2;
++	}
++	dev_warn(nctrl->device,
++		 "qid %d: timeout draining sock wmem allocation expired\n",
++		 qid);
 +}
 +
- static int ets_quantum_parse(struct Qdisc *sch, const struct nlattr *attr,
- 			     unsigned int *quantum,
- 			     struct netlink_ext_ack *extack)
-@@ -424,7 +429,6 @@ static int ets_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	struct ets_sched *q = qdisc_priv(sch);
- 	struct ets_class *cl;
- 	int err = 0;
--	bool first;
++static void nvme_tcp_stop_queue(struct nvme_ctrl *nctrl, int qid)
++{
++	nvme_tcp_stop_queue_nowait(nctrl, qid);
++	nvme_tcp_wait_queue(nctrl, qid);
++}
++
++
+ static void nvme_tcp_setup_sock_ops(struct nvme_tcp_queue *queue)
+ {
+ 	write_lock_bh(&queue->sock->sk->sk_callback_lock);
+@@ -1720,7 +1745,9 @@ static void nvme_tcp_stop_io_queues(struct nvme_ctrl *ctrl)
+ 	int i;
  
- 	cl = ets_classify(skb, sch, &err);
- 	if (!cl) {
-@@ -434,7 +438,6 @@ static int ets_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		return err;
- 	}
+ 	for (i = 1; i < ctrl->queue_count; i++)
+-		nvme_tcp_stop_queue(ctrl, i);
++		nvme_tcp_stop_queue_nowait(ctrl, i);
++	for (i = 1; i < ctrl->queue_count; i++)
++		nvme_tcp_wait_queue(ctrl, i);
+ }
  
--	first = !cl->qdisc->q.qlen;
- 	err = qdisc_enqueue(skb, cl->qdisc, to_free);
- 	if (unlikely(err != NET_XMIT_SUCCESS)) {
- 		if (net_xmit_drop_count(err)) {
-@@ -444,7 +447,7 @@ static int ets_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		return err;
- 	}
- 
--	if (first && !ets_class_is_strict(q, cl)) {
-+	if (!cl_is_active(cl) && !ets_class_is_strict(q, cl)) {
- 		list_add_tail(&cl->alist, &q->active);
- 		cl->deficit = cl->quantum;
- 	}
+ static int nvme_tcp_start_io_queues(struct nvme_ctrl *ctrl)
 -- 
 2.39.5
 
