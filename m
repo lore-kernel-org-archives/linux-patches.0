@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3972116E9;
-	Wed,  7 May 2025 18:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DCA214813;
+	Wed,  7 May 2025 18:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644073; cv=none; b=O1e7/rTJ7wYU0g2DQW342b6HbqL0atNWSzMPIpaFxf1+PjZA1lcO5JmdQ9x0FesfvHHwoiGTAfWZMBNLz2nuoNLt7aP1VxOb/WA9tt4SmqfLYvvfgWoW6cdYvggH5GJ5SrewpDwY4ZMfIqDhfQJPtrbwWHW3ue0Hjl1p1fFmGss=
+	t=1746644076; cv=none; b=tddYnj1y2ZRbjRSur69kmAo0bHvTUc9nYWyoAz53XBf12u9rlBRBz+34Qkc9Om2Z6lkqSlO0GfYV7QmOIZJ8G+n72ZmPTMUUo+B5N76k/+MPcZJ501rfkPPuVVIouNhNccs9UHKsMdVbUSoXGyvbKX2zTR2Y4bi6pTruK/VNQig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644073; c=relaxed/simple;
-	bh=u1I1pGbWduTDLtO+xO9tuK6N11GmdYuNNra1v+p8zu0=;
+	s=arc-20240116; t=1746644076; c=relaxed/simple;
+	bh=EL3w0A2qk+hxgp6R9/SBDaxStiF3RNQozcOG1BAO/Og=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kZsGboyx2i4259s54asmwe3SrxPuaz2SplFyjFT2+7CND1Y94jT9I0V5Jpl5bT5i0XhGdyhFtUwcQd4Nc2/2ZdYHo17cXid1MkVJzsmS8vPVD5+ky16ApxN4/jqSsk7GUQWbKUCIId70tAWL54HMSiDqReQFICG7e6tmn5lxxqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+waLzGA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uu0XnYlAq9lkJwjCehRfRzkDlW6ee3n3GTmorAdkXGdguD/pUplAUKdNFpn0ryaQHqygSHcsX5iZpnvQvRscVCtaA/fy0o8xX18Lw88TPbF3rjL44o2Ks/Lqe5S5teZMB+NyIYWcSr/cRabCNLs79Z6aZbb4FLZA8kJft0M8+Sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVNQfoEf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+waLzGA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C138CC4CEE2;
-	Wed,  7 May 2025 18:54:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVNQfoEf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C276AC4CEE2;
+	Wed,  7 May 2025 18:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644073;
-	bh=u1I1pGbWduTDLtO+xO9tuK6N11GmdYuNNra1v+p8zu0=;
+	s=korg; t=1746644076;
+	bh=EL3w0A2qk+hxgp6R9/SBDaxStiF3RNQozcOG1BAO/Og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B+waLzGAUj8QonJMYaWqq1T1gNk5ZociyLRQEvLySupF9gYGzBaQFEh0HP/HXi1x+
-	 CcqNOe9DUQk9CcbtiDnwZxyVHkNAfv/jG1E5cjikltqEWnxsirc1Mar6K/llgUJeoR
-	 g+NIoRs5hm3y2o/9SSkL+PrFo3x2l4dn/A+QPwL8=
+	b=yVNQfoEfvDDhfUpTy3g42oh1fqJtasraxKc45vUWgIwWTlt0accPzB1glU+erhVo/
+	 ixd78P/j69fB2BM3BPnIgOa+BLmZQGeF8pQEXRUVooITQJDX0c0VYmax7RDparje7K
+	 pb5of2v2++lY+Xi8/a4KNGBQv5ZxevglFN3R0cqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dhankaran Singh Ajravat <dhankaran@meta.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Kiran K <kiran.k@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 109/183] nvme-pci: fix queue unquiesce check on slot_reset
-Date: Wed,  7 May 2025 20:39:14 +0200
-Message-ID: <20250507183829.244979805@linuxfoundation.org>
+Subject: [PATCH 6.14 082/183] Bluetooth: btintel_pcie: Avoid redundant buffer allocation
+Date: Wed,  7 May 2025 20:38:47 +0200
+Message-ID: <20250507183828.156278688@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -52,36 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Kiran K <kiran.k@intel.com>
 
-[ Upstream commit a75401227eeb827b1a162df1aa9d5b33da921c43 ]
+[ Upstream commit d1af1f02ef8653dea4573e444136c8331189cd59 ]
 
-A zero return means the reset was successfully scheduled. We don't want
-to unquiesce the queues while the reset_work is pending, as that will
-just flush out requeued requests to a failed completion.
+Reuse the skb buffer provided by the PCIe driver to pass it onto the
+stack, instead of copying it to a new skb.
 
-Fixes: 71a5bb153be104 ("nvme: ensure disabling pairs with unquiesce")
-Reported-by: Dhankaran Singh Ajravat <dhankaran@meta.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: c2b636b3f788 ("Bluetooth: btintel_pcie: Add support for PCIe transport")
+Signed-off-by: Kiran K <kiran.k@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btintel_pcie.c | 33 ++++++++++++--------------------
+ 1 file changed, 12 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 1dc12784efafc..d49b69565d04c 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3578,7 +3578,7 @@ static pci_ers_result_t nvme_slot_reset(struct pci_dev *pdev)
+diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
+index 6130854b6658a..ea9b137b1491c 100644
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -595,8 +595,10 @@ static int btintel_pcie_recv_event(struct hci_dev *hdev, struct sk_buff *skb)
+ 		/* This is a debug event that comes from IML and OP image when it
+ 		 * starts execution. There is no need pass this event to stack.
+ 		 */
+-		if (skb->data[2] == 0x97)
++		if (skb->data[2] == 0x97) {
++			hci_recv_diag(hdev, skb);
+ 			return 0;
++		}
+ 	}
  
- 	dev_info(dev->ctrl.device, "restart after slot reset\n");
- 	pci_restore_state(pdev);
--	if (!nvme_try_sched_reset(&dev->ctrl))
-+	if (nvme_try_sched_reset(&dev->ctrl))
- 		nvme_unquiesce_io_queues(&dev->ctrl);
- 	return PCI_ERS_RESULT_RECOVERED;
+ 	return hci_recv_frame(hdev, skb);
+@@ -612,7 +614,6 @@ static int btintel_pcie_recv_frame(struct btintel_pcie_data *data,
+ 	u8 pkt_type;
+ 	u16 plen;
+ 	u32 pcie_pkt_type;
+-	struct sk_buff *new_skb;
+ 	void *pdata;
+ 	struct hci_dev *hdev = data->hdev;
+ 
+@@ -689,24 +690,20 @@ static int btintel_pcie_recv_frame(struct btintel_pcie_data *data,
+ 
+ 	bt_dev_dbg(hdev, "pkt_type: 0x%2.2x len: %u", pkt_type, plen);
+ 
+-	new_skb = bt_skb_alloc(plen, GFP_ATOMIC);
+-	if (!new_skb) {
+-		bt_dev_err(hdev, "Failed to allocate memory for skb of len: %u",
+-			   skb->len);
+-		ret = -ENOMEM;
+-		goto exit_error;
+-	}
+-
+-	hci_skb_pkt_type(new_skb) = pkt_type;
+-	skb_put_data(new_skb, skb->data, plen);
++	hci_skb_pkt_type(skb) = pkt_type;
+ 	hdev->stat.byte_rx += plen;
++	skb_trim(skb, plen);
+ 
+ 	if (pcie_pkt_type == BTINTEL_PCIE_HCI_EVT_PKT)
+-		ret = btintel_pcie_recv_event(hdev, new_skb);
++		ret = btintel_pcie_recv_event(hdev, skb);
+ 	else
+-		ret = hci_recv_frame(hdev, new_skb);
++		ret = hci_recv_frame(hdev, skb);
++	skb = NULL; /* skb is freed in the callee  */
+ 
+ exit_error:
++	if (skb)
++		kfree_skb(skb);
++
+ 	if (ret)
+ 		hdev->stat.err_rx++;
+ 
+@@ -720,16 +717,10 @@ static void btintel_pcie_rx_work(struct work_struct *work)
+ 	struct btintel_pcie_data *data = container_of(work,
+ 					struct btintel_pcie_data, rx_work);
+ 	struct sk_buff *skb;
+-	int err;
+-	struct hci_dev *hdev = data->hdev;
+ 
+ 	/* Process the sk_buf in queue and send to the HCI layer */
+ 	while ((skb = skb_dequeue(&data->rx_skb_q))) {
+-		err = btintel_pcie_recv_frame(data, skb);
+-		if (err)
+-			bt_dev_err(hdev, "Failed to send received frame: %d",
+-				   err);
+-		kfree_skb(skb);
++		btintel_pcie_recv_frame(data, skb);
+ 	}
  }
+ 
 -- 
 2.39.5
 
