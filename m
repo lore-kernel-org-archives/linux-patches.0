@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67AE61DDC23;
-	Wed,  7 May 2025 18:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2431DDC23;
+	Wed,  7 May 2025 18:49:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643741; cv=none; b=ui50++usNRpSPZ7CTVYABi6z1TSbyaiEgMjnM7xRNkPMaBqwk/JC7WYwcMpML3vNbNu3J8f+yDIQBPp46p4yIDft1tyRqlCK4kyamsEGwbWd/bvI1PiqRr3mZWrSUWmFFGBLoI1w1tuHOE5VkCyrMGtSYTUwMSYS+7Hd4wqoQc4=
+	t=1746643745; cv=none; b=hwTv0XwJ9neyXsssxSVQt6/uKzGLQekCNETHYglBP/CwjF+ZWCDk9ajjhQuOa0cWD0IMiMcM0meOZimQU5N3wvKC2quBonv019xmggxpm5o89VMjM9Q6DXyoCAvob4J8YTTB1HON4sTzgm2qXU0o/RMi9EsM9TCAXHtr6JvC4+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643741; c=relaxed/simple;
-	bh=Yp17EldaxP9MZ2n9TUqbPcZB88cKXWQUkteN5BjCoCA=;
+	s=arc-20240116; t=1746643745; c=relaxed/simple;
+	bh=ukfC/bfM/WEVGI+ZHWUxv2OlIzCmbeKtfnGMmc4Y8Xc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pmP3hfDwNENLjU2eH5VhRb8rF2cFJfOndz+pnzIXPC+7BhCqmhYho7qB1m9axxWTuTHsbJ7t+7apXkrOpshgkQF7tmsNlX99zoRg/hWHFyoTA0MkGfUgk0BiCmMsRQleSNA14UxREjexp8WvIojT+vT73/e2ECp+ga0Wz2/jmnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+QlknsD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DUmTa+S4qxEJXO4/u9+v+4EyPthiX2AbGtKTmwmrhPb86+zveNBHpKbGHQtjHMHp8z9lpEXfjKGnkto0hH5Dx3Tpxxrpe9wNybMjHeaLLsHWsPzOjhw9OwaaplqOyUOYkY9FE9Xc1ADq1LE8+iPmN7WSarhTjho0BokUiLr6Ovc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhJ0HVUt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+QlknsD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94E0C4CEE2;
-	Wed,  7 May 2025 18:49:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhJ0HVUt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2167EC4CEF0;
+	Wed,  7 May 2025 18:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643741;
-	bh=Yp17EldaxP9MZ2n9TUqbPcZB88cKXWQUkteN5BjCoCA=;
+	s=korg; t=1746643744;
+	bh=ukfC/bfM/WEVGI+ZHWUxv2OlIzCmbeKtfnGMmc4Y8Xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t+QlknsDZqkl0BH3Cit+tiaCmV+AoDqhryXacRBSIXoZXIlgxESgu52vK3xnmrTFz
-	 f532+YM6apmKzBlWJAA7CLLExLC81AkWRSYHVx9qCeoXiD2bNYmegKkowpMgqf7FSJ
-	 28wv17jCKjG17IzQDD7UyEiFnkAetmphi46Q5rJQ=
+	b=LhJ0HVUt+5fVDRy4wofQiuNZNuwD7kiq+lDQ1Cm6bPvYuQPjJJZcjapLkM1SBNGsR
+	 0fOQDzEsjcEfjLercbQrOt6gR5kzeSielfGW0gKl6o6h40uvB2LAMRUTnsM9kRM3L9
+	 kdVXwUxbInoAQFzk0vIETi74f9wyuhj9aX6kfZak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Mostafa Saleh <smostafa@google.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 89/97] iommu/arm-smmu-v3: Use the new rb tree helpers
-Date: Wed,  7 May 2025 20:40:04 +0200
-Message-ID: <20250507183810.557013417@linuxfoundation.org>
+Subject: [PATCH 6.1 90/97] iommu/arm-smmu-v3: Fix iommu_device_probe bug due to duplicated stream ids
+Date: Wed,  7 May 2025 20:40:05 +0200
+Message-ID: <20250507183810.596474265@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183806.987408728@linuxfoundation.org>
 References: <20250507183806.987408728@linuxfoundation.org>
@@ -53,138 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit a2bb820e862d61f9ca1499e500915f9f505a2655 ]
+[ Upstream commit b00d24997a11c10d3e420614f0873b83ce358a34 ]
 
-Since v5.12 the rbtree has gained some simplifying helpers aimed at making
-rb tree users write less convoluted boiler plate code. Instead the caller
-provides a single comparison function and the helpers generate the prior
-open-coded stuff.
+ASPEED VGA card has two built-in devices:
+ 0008:06:00.0 PCI bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge (rev 06)
+ 0008:07:00.0 VGA compatible controller: ASPEED Technology, Inc. ASPEED Graphics Family (rev 52)
 
-Update smmu->streams to use rb_find_add() and rb_find().
+Its toplogy looks like this:
+ +-[0008:00]---00.0-[01-09]--+-00.0-[02-09]--+-00.0-[03]----00.0  Sandisk Corp Device 5017
+                             |               +-01.0-[04]--
+                             |               +-02.0-[05]----00.0  NVIDIA Corporation Device
+                             |               +-03.0-[06-07]----00.0-[07]----00.0  ASPEED Technology, Inc. ASPEED Graphics Family
+                             |               +-04.0-[08]----00.0  Renesas Technology Corp. uPD720201 USB 3.0 Host Controller
+                             |               \-05.0-[09]----00.0  Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller
+                             \-00.1  PMC-Sierra Inc. Device 4028
 
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Mostafa Saleh <smostafa@google.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/1-v3-9fef8cdc2ff6+150d1-smmuv3_tidy_jgg@nvidia.com
+The IORT logic populaties two identical IDs into the fwspec->ids array via
+DMA aliasing in iort_pci_iommu_init() called by pci_for_each_dma_alias().
+
+Though the SMMU driver had been able to handle this situation since commit
+563b5cbe334e ("iommu/arm-smmu-v3: Cope with duplicated Stream IDs"), that
+got broken by the later commit cdf315f907d4 ("iommu/arm-smmu-v3: Maintain
+a SID->device structure"), which ended up with allocating separate streams
+with the same stuffing.
+
+On a kernel prior to v6.15-rc1, there has been an overlooked warning:
+  pci 0008:07:00.0: vgaarb: setting as boot VGA device
+  pci 0008:07:00.0: vgaarb: bridge control possible
+  pci 0008:07:00.0: vgaarb: VGA device added: decodes=io+mem,owns=none,locks=none
+  pcieport 0008:06:00.0: Adding to iommu group 14
+  ast 0008:07:00.0: stream 67328 already in tree   <===== WARNING
+  ast 0008:07:00.0: enabling device (0002 -> 0003)
+  ast 0008:07:00.0: Using default configuration
+  ast 0008:07:00.0: AST 2600 detected
+  ast 0008:07:00.0: [drm] Using analog VGA
+  ast 0008:07:00.0: [drm] dram MCLK=396 Mhz type=1 bus_width=16
+  [drm] Initialized ast 0.1.0 for 0008:07:00.0 on minor 0
+  ast 0008:07:00.0: [drm] fb0: astdrmfb frame buffer device
+
+With v6.15-rc, since the commit bcb81ac6ae3c ("iommu: Get DT/ACPI parsing
+into the proper probe path"), the error returned with the warning is moved
+to the SMMU device probe flow:
+  arm_smmu_probe_device+0x15c/0x4c0
+  __iommu_probe_device+0x150/0x4f8
+  probe_iommu_group+0x44/0x80
+  bus_for_each_dev+0x7c/0x100
+  bus_iommu_probe+0x48/0x1a8
+  iommu_device_register+0xb8/0x178
+  arm_smmu_device_probe+0x1350/0x1db0
+which then fails the entire SMMU driver probe:
+  pci 0008:06:00.0: Adding to iommu group 21
+  pci 0008:07:00.0: stream 67328 already in tree
+  arm-smmu-v3 arm-smmu-v3.9.auto: Failed to register iommu
+  arm-smmu-v3 arm-smmu-v3.9.auto: probe with driver arm-smmu-v3 failed with error -22
+
+Since SMMU driver had been already expecting a potential duplicated Stream
+ID in arm_smmu_install_ste_for_dev(), change the arm_smmu_insert_master()
+routine to ignore a duplicated ID from the fwspec->sids array as well.
+
+Note: this has been failing the iommu_device_probe() since 2021, although a
+recent iommu commit in v6.15-rc1 that moves iommu_device_probe() started to
+fail the SMMU driver probe. Since nobody has cared about DMA Alias support,
+leave that as it was but fix the fundamental iommu_device_probe() breakage.
+
+Fixes: cdf315f907d4 ("iommu/arm-smmu-v3: Maintain a SID->device structure")
+Cc: stable@vger.kernel.org
+Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Link: https://lore.kernel.org/r/20250415185620.504299-1-nicolinc@nvidia.com
 Signed-off-by: Will Deacon <will@kernel.org>
-Stable-dep-of: b00d24997a11 ("iommu/arm-smmu-v3: Fix iommu_device_probe bug due to duplicated stream ids")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 68 ++++++++++-----------
- 1 file changed, 31 insertions(+), 37 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 96b72f3dad0d0..1ab2abab46800 100644
+index 1ab2abab46800..6a60bad48b277 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -1443,26 +1443,37 @@ static int arm_smmu_init_l2_strtab(struct arm_smmu_device *smmu, u32 sid)
- 	return 0;
- }
- 
-+static int arm_smmu_streams_cmp_key(const void *lhs, const struct rb_node *rhs)
-+{
-+	struct arm_smmu_stream *stream_rhs =
-+		rb_entry(rhs, struct arm_smmu_stream, node);
-+	const u32 *sid_lhs = lhs;
-+
-+	if (*sid_lhs < stream_rhs->id)
-+		return -1;
-+	if (*sid_lhs > stream_rhs->id)
-+		return 1;
-+	return 0;
-+}
-+
-+static int arm_smmu_streams_cmp_node(struct rb_node *lhs,
-+				     const struct rb_node *rhs)
-+{
-+	return arm_smmu_streams_cmp_key(
-+		&rb_entry(lhs, struct arm_smmu_stream, node)->id, rhs);
-+}
-+
- static struct arm_smmu_master *
- arm_smmu_find_master(struct arm_smmu_device *smmu, u32 sid)
- {
- 	struct rb_node *node;
--	struct arm_smmu_stream *stream;
- 
- 	lockdep_assert_held(&smmu->streams_mutex);
- 
--	node = smmu->streams.rb_node;
--	while (node) {
--		stream = rb_entry(node, struct arm_smmu_stream, node);
--		if (stream->id < sid)
--			node = node->rb_right;
--		else if (stream->id > sid)
--			node = node->rb_left;
--		else
--			return stream->master;
--	}
--
--	return NULL;
-+	node = rb_find(&sid, &smmu->streams, arm_smmu_streams_cmp_key);
-+	if (!node)
-+		return NULL;
-+	return rb_entry(node, struct arm_smmu_stream, node)->master;
- }
- 
- /* IRQ and event handlers */
-@@ -2590,8 +2601,6 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
- {
- 	int i;
- 	int ret = 0;
--	struct arm_smmu_stream *new_stream, *cur_stream;
--	struct rb_node **new_node, *parent_node = NULL;
- 	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(master->dev);
- 
- 	master->streams = kcalloc(fwspec->num_ids, sizeof(*master->streams),
-@@ -2602,9 +2611,9 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
- 
+@@ -2612,6 +2612,7 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
  	mutex_lock(&smmu->streams_mutex);
  	for (i = 0; i < fwspec->num_ids; i++) {
-+		struct arm_smmu_stream *new_stream = &master->streams[i];
+ 		struct arm_smmu_stream *new_stream = &master->streams[i];
++		struct rb_node *existing;
  		u32 sid = fwspec->ids[i];
  
--		new_stream = &master->streams[i];
  		new_stream->id = sid;
- 		new_stream->master = master;
- 
-@@ -2613,28 +2622,13 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
+@@ -2622,10 +2623,20 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
  			break;
  
  		/* Insert into SID tree */
--		new_node = &(smmu->streams.rb_node);
--		while (*new_node) {
--			cur_stream = rb_entry(*new_node, struct arm_smmu_stream,
--					      node);
--			parent_node = *new_node;
--			if (cur_stream->id > new_stream->id) {
--				new_node = &((*new_node)->rb_left);
--			} else if (cur_stream->id < new_stream->id) {
--				new_node = &((*new_node)->rb_right);
--			} else {
--				dev_warn(master->dev,
--					 "stream %u already in tree\n",
--					 cur_stream->id);
--				ret = -EINVAL;
--				break;
--			}
--		}
--		if (ret)
-+		if (rb_find_add(&new_stream->node, &smmu->streams,
-+				arm_smmu_streams_cmp_node)) {
-+			dev_warn(master->dev, "stream %u already in tree\n",
-+				 sid);
-+			ret = -EINVAL;
+-		if (rb_find_add(&new_stream->node, &smmu->streams,
+-				arm_smmu_streams_cmp_node)) {
+-			dev_warn(master->dev, "stream %u already in tree\n",
+-				 sid);
++		existing = rb_find_add(&new_stream->node, &smmu->streams,
++				       arm_smmu_streams_cmp_node);
++		if (existing) {
++			struct arm_smmu_master *existing_master =
++				rb_entry(existing, struct arm_smmu_stream, node)
++					->master;
++
++			/* Bridged PCI devices may end up with duplicated IDs */
++			if (existing_master == master)
++				continue;
++
++			dev_warn(master->dev,
++				 "stream %u already in tree from dev %s\n", sid,
++				 dev_name(existing_master->dev));
+ 			ret = -EINVAL;
  			break;
--
--		rb_link_node(&new_stream->node, parent_node, new_node);
--		rb_insert_color(&new_stream->node, &smmu->streams);
-+		}
- 	}
- 
- 	if (ret) {
+ 		}
 -- 
 2.39.5
 
