@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9A81FF5EC;
-	Wed,  7 May 2025 18:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A49A1FF5EC;
+	Wed,  7 May 2025 18:53:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643989; cv=none; b=lwhSOR8t7SQjQ742/oKx18CGU6AsBpT2fidioTR2NwOeK4hO8PPCsEAeyguKIAH8T/HvFeVaoUMLAvfZz7H4aeNdM40/StZ5Ql1dc1QCN4M0muaFyZKrad7HF8xoMAmoW4lsLCeYmSlTnh7/R8jTrmsJzmzyNNmgrHpsED+Nc5g=
+	t=1746643992; cv=none; b=P+B3JlG8fPqp6g3hjX7egSwpm4jLwAW6RIL9RZrwz3UWtySGc8zI2t9el/euQmWGQI0dgORYJwG1/iKcfdm+VRkL37hsOqLrCxGOB5R4CDzvLpu3WtmSPDAGS34ArotMNFnmJGO0lpj31bI1ZHuqkX/liqeMA1YA3eroYUYrrnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643989; c=relaxed/simple;
-	bh=75uT/rhCOfEDVGFn+ISlm8TGr4vBkhxx9e83mSUe7K4=;
+	s=arc-20240116; t=1746643992; c=relaxed/simple;
+	bh=62sgjDuFORhnBSiv3adfWUEQPugu2Qm7W6dWxP39/a4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QC0ERTKqWwysBFkxH8oGKWCc7CSBgY8zJoWHK9FFLyt11rpSVB9O/rjTc4UG6AACfRltLQpRkLVpQOVOxt+mFBdO0PO4CQ4DgUuy4xfV2u8aOG7rv3XB+ZeiJtvTXP6MnDvPKNTWyxQ1wk1PsLw8+4Rdmfrha97LwgtXT0dEmOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAy9Qxm8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UzuYvFMYge1gFZItQIHq/+pTcwN/b8QYodZOLMwFUWLQvuoDGXCBbIT56W3nUe1es/jep+aqCrJ5SvH3/b9SgVfDriJcSeyadlT4wqKDNRXTSd7tjtFfA4w3hUNfRuffWOaUMLRTXH7A8vAFtlt/8DKwCAoymX0eBwKp5vP2lVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHd3RHJk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAy9Qxm8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6FDC4CEE2;
-	Wed,  7 May 2025 18:53:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHd3RHJk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19935C4CEE2;
+	Wed,  7 May 2025 18:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643989;
-	bh=75uT/rhCOfEDVGFn+ISlm8TGr4vBkhxx9e83mSUe7K4=;
+	s=korg; t=1746643992;
+	bh=62sgjDuFORhnBSiv3adfWUEQPugu2Qm7W6dWxP39/a4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OAy9Qxm8JxxtWPSqpEANUMKtTu5NaAxcuD+3l9qQt24Sij7LAyGr1W1SfteD3ElUq
-	 ARo9lIvgDrlpL74ZG5UZCFStt/qOK70A08LPCzBhQWcSDPgW27OzHIqmD1wTURa7nd
-	 BH3eOBw5qR+bzxLTz3dlGW/UirzGdVaMhVvVY71E=
+	b=aHd3RHJk65RuRSuOPb9dxBWP+1c/KPJzVRvZ9184Rineh2CSadZL56lW5Gbh/c79x
+	 WiHU3xMZn6qwlqJKSJ8NyORj4peeQePbUNu6a/5OlkSNQkM52ae+6OBf1xwe3nfQOk
+	 OiFY7u3HYaN8V/xUFp0rL+L1JRWgojz0pK6tpRR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Iliopoulos <ailiop@suse.com>,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Hui Wang <hui.wang@canonical.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 054/183] powerpc64/ftrace: fix module loading without patchable function entries
-Date: Wed,  7 May 2025 20:38:19 +0200
-Message-ID: <20250507183826.876727838@linuxfoundation.org>
+Subject: [PATCH 6.14 055/183] pinctrl: imx: Return NULL if no group is matched and found
+Date: Wed,  7 May 2025 20:38:20 +0200
+Message-ID: <20250507183826.916207216@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -52,53 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anthony Iliopoulos <ailiop@suse.com>
+From: Hui Wang <hui.wang@canonical.com>
 
-[ Upstream commit 534f5a8ba27863141e29766467a3e1f61bcb47ac ]
+[ Upstream commit e64c0ff0d5d85791fbcd126ee558100a06a24a97 ]
 
-get_stubs_size assumes that there must always be at least one patchable
-function entry, which is not always the case (modules that export data
-but no code), otherwise it returns -ENOEXEC and thus the section header
-sh_size is set to that value. During module_memory_alloc() the size is
-passed to execmem_alloc() after being page-aligned and thus set to zero
-which will cause it to fail the allocation (and thus module loading) as
-__vmalloc_node_range() checks for zero-sized allocs and returns null:
+Currently if no group is matched and found, this function will return
+the last grp to the caller, this is not expected, it is supposed to
+return NULL in this case.
 
-[  115.466896] module_64: cast_common: doesn't contain __patchable_function_entries.
-[  115.469189] ------------[ cut here ]------------
-[  115.469496] WARNING: CPU: 0 PID: 274 at mm/vmalloc.c:3778 __vmalloc_node_range_noprof+0x8b4/0x8f0
-...
-[  115.478574] ---[ end trace 0000000000000000 ]---
-[  115.479545] execmem: unable to allocate memory
-
-Fix this by removing the check completely, since it is anyway not
-helpful to propagate this as an error upwards.
-
-Fixes: eec37961a56a ("powerpc64/ftrace: Move ftrace sequence out of line")
-Signed-off-by: Anthony Iliopoulos <ailiop@suse.com>
-Acked-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250204231821.39140-1-ailiop@suse.com
+Fixes: e566fc11ea76 ("pinctrl: imx: use generic pinctrl helpers for managing groups")
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/20250327031600.99723-1-hui.wang@canonical.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/module_64.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/pinctrl/freescale/pinctrl-imx.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/kernel/module_64.c b/arch/powerpc/kernel/module_64.c
-index 34a5aec4908fb..126bf3b06ab7e 100644
---- a/arch/powerpc/kernel/module_64.c
-+++ b/arch/powerpc/kernel/module_64.c
-@@ -258,10 +258,6 @@ static unsigned long get_stubs_size(const Elf64_Ehdr *hdr,
- 			break;
- 		}
- 	}
--	if (i == hdr->e_shnum) {
--		pr_err("%s: doesn't contain __patchable_function_entries.\n", me->name);
--		return -ENOEXEC;
--	}
- #endif
+diff --git a/drivers/pinctrl/freescale/pinctrl-imx.c b/drivers/pinctrl/freescale/pinctrl-imx.c
+index 842a1e6cbfc41..18de313285404 100644
+--- a/drivers/pinctrl/freescale/pinctrl-imx.c
++++ b/drivers/pinctrl/freescale/pinctrl-imx.c
+@@ -37,16 +37,16 @@ static inline const struct group_desc *imx_pinctrl_find_group_by_name(
+ 				struct pinctrl_dev *pctldev,
+ 				const char *name)
+ {
+-	const struct group_desc *grp = NULL;
++	const struct group_desc *grp;
+ 	int i;
  
- 	pr_debug("Looks like a total of %lu stubs, max\n", relocs);
+ 	for (i = 0; i < pctldev->num_groups; i++) {
+ 		grp = pinctrl_generic_get_group(pctldev, i);
+ 		if (grp && !strcmp(grp->grp.name, name))
+-			break;
++			return grp;
+ 	}
+ 
+-	return grp;
++	return NULL;
+ }
+ 
+ static void imx_pin_dbg_show(struct pinctrl_dev *pctldev, struct seq_file *s,
 -- 
 2.39.5
 
