@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A92321504D;
-	Wed,  7 May 2025 19:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D6928DF5D;
+	Wed,  7 May 2025 19:09:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644960; cv=none; b=kF2Uu2mW0jW001SYWYgPSDxV6ldcwamme0dK7b4fuWbXNPvP747HwvVh3OF3T3ZigPNq6dxv6aO3LR31APoJC8/CrlZBCLkhzMDJMDDV7lI6bV9dkXoDf51U6ML781EZ8PUlWRx0pMQRQayQ2sSOQtgeh9yji3z34/tfQ/ZH0iA=
+	t=1746644963; cv=none; b=VBmuAewbnmYOK2+poqvhfJIqSg+TjS5k5XClAHmS4o7aU+yIYSgcrQn9hkce9gLqhe96w7NECnKqWETD5yckYgLxZxJsFU/6CfyzwWug36698HtlmLa0upZua8J1Yuccw3A8i0claPVxLuRv4C3k4QN/ZzZjwC2uer/T662nPto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644960; c=relaxed/simple;
-	bh=DCUkxFfRaRqAy3hx9YchTUxJfYJPkzUQDYgl/taSKWo=;
+	s=arc-20240116; t=1746644963; c=relaxed/simple;
+	bh=aeD8mMkb1L31J7ttvrBkNCbwFJqdvDgdF8/mHbHa4ro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mBrUmirkhzmNUbizf04bQO5ay1FSqDNrNjfPnarFMuBpTTe4rCMTXdX6azJdgoY9HucA3rShABPERzanSD6O3NM5xHbLX0oUt8myfTM2GoY388gRjiMUGEMmJP9DIq5874O9jwiX0yNCDMKuHx0y9t9qzeesOhElBPUlB0XzpTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/cTGjTd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TxaQtLEaLVj4jrphHYTgEHGNuWtAjxMs6umw6SPZud9JG0Xktvfwr/ZHJ309rH+UpqPV1lxvMuLvhb4pGAuzP008bsk8nM1D6ZLUeayXeKXFdKI4tR0TnTBLsd5ZmYgDhKlnmMg7dI5UofzHnDwSUg0qBrw2rqylXSEzAWgg7S8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgHjEmOf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/cTGjTd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C12C4CEE2;
-	Wed,  7 May 2025 19:09:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgHjEmOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5F2C4CEE2;
+	Wed,  7 May 2025 19:09:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644959;
-	bh=DCUkxFfRaRqAy3hx9YchTUxJfYJPkzUQDYgl/taSKWo=;
+	s=korg; t=1746644963;
+	bh=aeD8mMkb1L31J7ttvrBkNCbwFJqdvDgdF8/mHbHa4ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U/cTGjTdmpPiEFpTnbeL0iD5Pe5xrM1jVJfthKqGFMnZLHAv+gLCpRjbQN9Q74h91
-	 EOC+0sIFA1drfSeGWq9xjmN4xIQ4Gr8PgxNu0c0sJYwX4Q6d+OgP8PLqk0q8nC0C47
-	 Oizm810946g2qKcVE2EZoAIva0syAm2/bgMeA7g0=
+	b=GgHjEmOf8e29OFS2OCQ/cVjXvmG3AeB9S5kgmZpvugVO8moBkcWYtzut6UfX2Coun
+	 4hcgydKHNZhd1qLAnhCYH2INpGlp6k4mi8+jYjrvshsG6dz2eTR8RFlzwQmGj9vxow
+	 lFDXERRxED/JgYiz/fwydlYHOlCCO00Nl/lJHoNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	LongPing Wei <weilongping@oppo.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.6 021/129] dm-bufio: dont schedule in atomic context
-Date: Wed,  7 May 2025 20:39:17 +0200
-Message-ID: <20250507183814.390622910@linuxfoundation.org>
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Donet Tom <donettom@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 048/129] book3s64/radix : Align section vmemmap start address to PAGE_SIZE
+Date: Wed,  7 May 2025 20:39:44 +0200
+Message-ID: <20250507183815.484731625@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -50,85 +52,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: LongPing Wei <weilongping@oppo.com>
+From: Donet Tom <donettom@linux.ibm.com>
 
-commit a3d8f0a7f5e8b193db509c7191fefeed3533fc44 upstream.
+[ Upstream commit 9cf7e13fecbab0894f6986fc6986ab2eba8de52e ]
 
-A BUG was reported as below when CONFIG_DEBUG_ATOMIC_SLEEP and
-try_verify_in_tasklet are enabled.
-[  129.444685][  T934] BUG: sleeping function called from invalid context at drivers/md/dm-bufio.c:2421
-[  129.444723][  T934] in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 934, name: kworker/1:4
-[  129.444740][  T934] preempt_count: 201, expected: 0
-[  129.444756][  T934] RCU nest depth: 0, expected: 0
-[  129.444781][  T934] Preemption disabled at:
-[  129.444789][  T934] [<ffffffd816231900>] shrink_work+0x21c/0x248
-[  129.445167][  T934] kernel BUG at kernel/sched/walt/walt_debug.c:16!
-[  129.445183][  T934] Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
-[  129.445204][  T934] Skip md ftrace buffer dump for: 0x1609e0
-[  129.447348][  T934] CPU: 1 PID: 934 Comm: kworker/1:4 Tainted: G        W  OE      6.6.56-android15-8-o-g6f82312b30b9-debug #1 1400000003000000474e5500b3187743670464e8
-[  129.447362][  T934] Hardware name: Qualcomm Technologies, Inc. Parrot QRD, Alpha-M (DT)
-[  129.447373][  T934] Workqueue: dm_bufio_cache shrink_work
-[  129.447394][  T934] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  129.447406][  T934] pc : android_rvh_schedule_bug+0x0/0x8 [sched_walt_debug]
-[  129.447435][  T934] lr : __traceiter_android_rvh_schedule_bug+0x44/0x6c
-[  129.447451][  T934] sp : ffffffc0843dbc90
-[  129.447459][  T934] x29: ffffffc0843dbc90 x28: ffffffffffffffff x27: 0000000000000c8b
-[  129.447479][  T934] x26: 0000000000000040 x25: ffffff804b3d6260 x24: ffffffd816232b68
-[  129.447497][  T934] x23: ffffff805171c5b4 x22: 0000000000000000 x21: ffffffd816231900
-[  129.447517][  T934] x20: ffffff80306ba898 x19: 0000000000000000 x18: ffffffc084159030
-[  129.447535][  T934] x17: 00000000d2b5dd1f x16: 00000000d2b5dd1f x15: ffffffd816720358
-[  129.447554][  T934] x14: 0000000000000004 x13: ffffff89ef978000 x12: 0000000000000003
-[  129.447572][  T934] x11: ffffffd817a823c4 x10: 0000000000000202 x9 : 7e779c5735de9400
-[  129.447591][  T934] x8 : ffffffd81560d004 x7 : 205b5d3938373434 x6 : ffffffd8167397c8
-[  129.447610][  T934] x5 : 0000000000000000 x4 : 0000000000000001 x3 : ffffffc0843db9e0
-[  129.447629][  T934] x2 : 0000000000002f15 x1 : 0000000000000000 x0 : 0000000000000000
-[  129.447647][  T934] Call trace:
-[  129.447655][  T934]  android_rvh_schedule_bug+0x0/0x8 [sched_walt_debug 1400000003000000474e550080cce8a8a78606b6]
-[  129.447681][  T934]  __might_resched+0x190/0x1a8
-[  129.447694][  T934]  shrink_work+0x180/0x248
-[  129.447706][  T934]  process_one_work+0x260/0x624
-[  129.447718][  T934]  worker_thread+0x28c/0x454
-[  129.447729][  T934]  kthread+0x118/0x158
-[  129.447742][  T934]  ret_from_fork+0x10/0x20
-[  129.447761][  T934] Code: ???????? ???????? ???????? d2b5dd1f (d4210000)
-[  129.447772][  T934] ---[ end trace 0000000000000000 ]---
+A vmemmap altmap is a device-provided region used to provide
+backing storage for struct pages. For each namespace, the altmap
+should belong to that same namespace. If the namespaces are
+created unaligned, there is a chance that the section vmemmap
+start address could also be unaligned. If the section vmemmap
+start address is unaligned, the altmap page allocated from the
+current namespace might be used by the previous namespace also.
+During the free operation, since the altmap is shared between two
+namespaces, the previous namespace may detect that the page does
+not belong to its altmap and incorrectly assume that the page is a
+normal page. It then attempts to free the normal page, which leads
+to a kernel crash.
 
-dm_bufio_lock will call spin_lock_bh when try_verify_in_tasklet
-is enabled, and __scan will be called in atomic context.
+Kernel attempted to read user page (18) - exploit attempt? (uid: 0)
+BUG: Kernel NULL pointer dereference on read at 0x00000018
+Faulting instruction address: 0xc000000000530c7c
+Oops: Kernel access of bad area, sig: 11 [#1]
+LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA pSeries
+CPU: 32 PID: 2104 Comm: ndctl Kdump: loaded Tainted: G        W
+NIP:  c000000000530c7c LR: c000000000530e00 CTR: 0000000000007ffe
+REGS: c000000015e57040 TRAP: 0300   Tainted: G        W
+MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 84482404
+CFAR: c000000000530dfc DAR: 0000000000000018 DSISR: 40000000 IRQMASK: 0
+GPR00: c000000000530e00 c000000015e572e0 c000000002c5cb00 c00c000101008040
+GPR04: 0000000000000000 0000000000000007 0000000000000001 000000000000001f
+GPR08: 0000000000000005 0000000000000000 0000000000000018 0000000000002000
+GPR12: c0000000001d2fb0 c0000060de6b0080 0000000000000000 c0000060dbf90020
+GPR16: c00c000101008000 0000000000000001 0000000000000000 c000000125b20f00
+GPR20: 0000000000000001 0000000000000000 ffffffffffffffff c00c000101007fff
+GPR24: 0000000000000001 0000000000000000 0000000000000000 0000000000000000
+GPR28: 0000000004040201 0000000000000001 0000000000000000 c00c000101008040
+NIP [c000000000530c7c] get_pfnblock_flags_mask+0x7c/0xd0
+LR [c000000000530e00] free_unref_page_prepare+0x130/0x4f0
+Call Trace:
+free_unref_page+0x50/0x1e0
+free_reserved_page+0x40/0x68
+free_vmemmap_pages+0x98/0xe0
+remove_pte_table+0x164/0x1e8
+remove_pmd_table+0x204/0x2c8
+remove_pud_table+0x1c4/0x288
+remove_pagetable+0x1c8/0x310
+vmemmap_free+0x24/0x50
+section_deactivate+0x28c/0x2a0
+__remove_pages+0x84/0x110
+arch_remove_memory+0x38/0x60
+memunmap_pages+0x18c/0x3d0
+devm_action_release+0x30/0x50
+release_nodes+0x68/0x140
+devres_release_group+0x100/0x190
+dax_pmem_compat_release+0x44/0x80 [dax_pmem_compat]
+device_for_each_child+0x8c/0x100
+[dax_pmem_compat_remove+0x2c/0x50 [dax_pmem_compat]
+nvdimm_bus_remove+0x78/0x140 [libnvdimm]
+device_remove+0x70/0xd0
 
-Fixes: 7cd326747f46 ("dm bufio: remove dm_bufio_cond_resched()")
-Signed-off-by: LongPing Wei <weilongping@oppo.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Another issue is that if there is no altmap, a PMD-sized vmemmap
+page will be allocated from RAM, regardless of the alignment of
+the section start address. If the section start address is not
+aligned to the PMD size, a VM_BUG_ON will be triggered when
+setting the PMD-sized page to page table.
+
+In this patch, we are aligning the section vmemmap start address
+to PAGE_SIZE. After alignment, the start address will not be
+part of the current namespace, and a normal page will be allocated
+for the vmemmap mapping of the current section. For the remaining
+sections, altmaps will be allocated. During the free operation,
+the normal page will be correctly freed.
+
+In the same way, a PMD_SIZE vmemmap page will be allocated only if
+the section start address is PMD_SIZE-aligned; otherwise, it will
+fall back to a PAGE-sized vmemmap allocation.
+
+Without this patch
+==================
+NS1 start               NS2 start
+ _________________________________________________________
+|         NS1               |            NS2              |
+ ---------------------------------------------------------
+| Altmap| Altmap | .....|Altmap| Altmap | ...........
+|  NS1  |  NS1   |      | NS2  |  NS2   |
+
+In the above scenario, NS1 and NS2 are two namespaces. The vmemmap
+for NS1 comes from Altmap NS1, which belongs to NS1, and the
+vmemmap for NS2 comes from Altmap NS2, which belongs to NS2.
+
+The vmemmap start for NS2 is not aligned, so Altmap NS2 is shared
+by both NS1 and NS2. During the free operation in NS1, Altmap NS2
+is not part of NS1's altmap, causing it to attempt to free an
+invalid page.
+
+With this patch
+===============
+NS1 start               NS2 start
+ _________________________________________________________
+|         NS1               |            NS2              |
+ ---------------------------------------------------------
+| Altmap| Altmap | .....| Normal | Altmap | Altmap |.......
+|  NS1  |  NS1   |      |  Page  |  NS2   |  NS2   |
+
+If the vmemmap start for NS2 is not aligned then we are allocating
+a normal page. NS1 and NS2 vmemmap will be freed correctly.
+
+Fixes: 368a0590d954 ("powerpc/book3s64/vmemmap: switch radix to use a different vmemmap handling function")
+Co-developed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Donet Tom <donettom@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/8f98ec2b442977c618f7256cec88eb17dde3f2b9.1741609795.git.donettom@linux.ibm.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-bufio.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/powerpc/mm/book3s64/radix_pgtable.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-bufio.c
-+++ b/drivers/md/dm-bufio.c
-@@ -68,6 +68,8 @@
- #define LIST_DIRTY	1
- #define LIST_SIZE	2
+diff --git a/arch/powerpc/mm/book3s64/radix_pgtable.c b/arch/powerpc/mm/book3s64/radix_pgtable.c
+index c6a4ac766b2bf..28460e3340808 100644
+--- a/arch/powerpc/mm/book3s64/radix_pgtable.c
++++ b/arch/powerpc/mm/book3s64/radix_pgtable.c
+@@ -1056,6 +1056,19 @@ int __meminit radix__vmemmap_populate(unsigned long start, unsigned long end, in
+ 	pmd_t *pmd;
+ 	pte_t *pte;
  
-+#define SCAN_RESCHED_CYCLE	16
++	/*
++	 * Make sure we align the start vmemmap addr so that we calculate
++	 * the correct start_pfn in altmap boundary check to decided whether
++	 * we should use altmap or RAM based backing memory allocation. Also
++	 * the address need to be aligned for set_pte operation.
 +
- /*--------------------------------------------------------------*/
- 
- /*
-@@ -2387,7 +2389,12 @@ static void __scan(struct dm_bufio_clien
- 
- 			atomic_long_dec(&c->need_shrink);
- 			freed++;
--			cond_resched();
++	 * If the start addr is already PMD_SIZE aligned we will try to use
++	 * a pmd mapping. We don't want to be too aggressive here beacause
++	 * that will cause more allocations in RAM. So only if the namespace
++	 * vmemmap start addr is PMD_SIZE aligned we will use PMD mapping.
++	 */
 +
-+			if (unlikely(freed % SCAN_RESCHED_CYCLE == 0)) {
-+				dm_bufio_unlock(c);
-+				cond_resched();
-+				dm_bufio_lock(c);
-+			}
- 		}
- 	}
- }
++	start = ALIGN_DOWN(start, PAGE_SIZE);
+ 	for (addr = start; addr < end; addr = next) {
+ 		next = pmd_addr_end(addr, end);
+ 
+@@ -1081,8 +1094,8 @@ int __meminit radix__vmemmap_populate(unsigned long start, unsigned long end, in
+ 			 * in altmap block allocation failures, in which case
+ 			 * we fallback to RAM for vmemmap allocation.
+ 			 */
+-			if (altmap && (!IS_ALIGNED(addr, PMD_SIZE) ||
+-				       altmap_cross_boundary(altmap, addr, PMD_SIZE))) {
++			if (!IS_ALIGNED(addr, PMD_SIZE) || (altmap &&
++			    altmap_cross_boundary(altmap, addr, PMD_SIZE))) {
+ 				/*
+ 				 * make sure we don't create altmap mappings
+ 				 * covering things outside the device.
+-- 
+2.39.5
+
 
 
