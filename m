@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09501482F5;
-	Wed,  7 May 2025 18:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9C91482F5;
+	Wed,  7 May 2025 18:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644226; cv=none; b=sSy1UrDaxIToTeBIgdM4VBiAeUdq5pG54X8zA1L5MIXeh+2VrUYZaWtJ7SSV6HrWTQMyL+VqsVgIdbhY4wauZAzz3O1uIeJQBaySZCsuDMfn0zq89saAR1ad0rJmNMDiRtrSWm3kRp69H1+HY/4EmpzmpVf+p/IEkgxHcdWHkxg=
+	t=1746644230; cv=none; b=DrTYfNlwOaYqGmEwpUxse9AvUbrnqwn/5nR+YmY0VlJAF7LzWVxb1o+sG+j6KNpoYVJnpAQ8VLpFwyA9NZtbRhbGo4vBDy6aX7u+L0eGaoBkz/wDo/b7gZs97MOuJXP5jKLFw2/+qswNdFyN2pVM+oKc20vZnqE+0tvHNAqguHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644226; c=relaxed/simple;
-	bh=Z27d1yylSn+tfjrPkKOAofiF0bQpC6jWHaDAxZrVhQ4=;
+	s=arc-20240116; t=1746644230; c=relaxed/simple;
+	bh=ik6i85Y7Wjw6h8srq4pLVAvJl8Y1Tr2bmFedDZDqti8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XKaKiHOExbHGTxcdHTXNtDvvW1JWtGyMVV/nJhBegPAeDZk+FsYt0WyDn0PrPv59vp075D1ZtIuFi1NSEYP+y0CrijhPG43U8JaaIXvjEnGMMujpY/yrfyI6R2IOfc2xRr09ANseIsvRzDP+Pt3r/7wY2NnsZZKz+s+txuML+gY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QnsJC0Dc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=snZOpcMP1LnDGdzihapCcOV3r490ioH/3/DCSChdTYpFgNSRpCRuVupnYBFfaxGRRrVANSnvLbASMoxTmHqitg3E97N/FaVZRxrn+d7ubiC0F/32IhhIcqLtZ9Dz8KJxfYlExH6esPQ+szZmpFz1P/s4glnHYVXnpAp4rl2QxLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bcRIR6zq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QnsJC0Dc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A19C4CEE2;
-	Wed,  7 May 2025 18:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bcRIR6zq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 636BBC4CEE2;
+	Wed,  7 May 2025 18:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644226;
-	bh=Z27d1yylSn+tfjrPkKOAofiF0bQpC6jWHaDAxZrVhQ4=;
+	s=korg; t=1746644229;
+	bh=ik6i85Y7Wjw6h8srq4pLVAvJl8Y1Tr2bmFedDZDqti8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QnsJC0DcIIt6UOlZH+5St8mIuv/sAte3EYs3dJtlAUb9N9hl8lHA/j6rtds1A51Za
-	 Nha+lOd5g7HJGo61lOJeNW9taytYqrWNrvhnM+ERd9g7FgycHj0Dvsdf4b2esBY4Oc
-	 0198Axh0GTbAJ/xAWXxm7zrGPwnngB0BTMpWU3yU=
+	b=bcRIR6zqv++07HCs3edl54lVhywmJpVOMCblslImZyrIfyZELYkq1/hm4uBhVKin+
+	 6ytmgm3JxD8Csu/h6GNUkFat3cKanF+hcmnrn0viI4VfB7R03mMYHdqyB8tmYwk0C+
+	 ybcKt/PN3p0X+eDLml3NI01DmzENwXJOPu9cNI3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jared Holzman <jholzman@nvidia.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.14 160/183] ublk: fix race between io_uring_cmd_complete_in_task and ublk_cancel_cmd
-Date: Wed,  7 May 2025 20:40:05 +0200
-Message-ID: <20250507183831.348839901@linuxfoundation.org>
+	Gerrard Tai <gerrard.tai@starlabs.sg>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.14 161/183] sch_htb: make htb_qlen_notify() idempotent
+Date: Wed,  7 May 2025 20:40:06 +0200
+Message-ID: <20250507183831.389555671@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -51,92 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Cong Wang <xiyou.wangcong@gmail.com>
 
-[ Upstream commit f40139fde5278d81af3227444fd6e76a76b9506d ]
+commit 5ba8b837b522d7051ef81bacf3d95383ff8edce5 upstream.
 
-ublk_cancel_cmd() calls io_uring_cmd_done() to complete uring_cmd, but
-we may have scheduled task work via io_uring_cmd_complete_in_task() for
-dispatching request, then kernel crash can be triggered.
+htb_qlen_notify() always deactivates the HTB class and in fact could
+trigger a warning if it is already deactivated. Therefore, it is not
+idempotent and not friendly to its callers, like fq_codel_dequeue().
 
-Fix it by not trying to canceling the command if ublk block request is
-started.
+Let's make it idempotent to ease qdisc_tree_reduce_backlog() callers'
+life.
 
-Fixes: 216c8f5ef0f2 ("ublk: replace monitor with cancelable uring_cmd")
-Reported-by: Jared Holzman <jholzman@nvidia.com>
-Tested-by: Jared Holzman <jholzman@nvidia.com>
-Closes: https://lore.kernel.org/linux-block/d2179120-171b-47ba-b664-23242981ef19@nvidia.com/
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20250425013742.1079549-3-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250403211033.166059-2-xiyou.wangcong@gmail.com
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/ublk_drv.c |   27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ net/sched/sch_htb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -1655,14 +1655,31 @@ static void ublk_start_cancel(struct ubl
- 	ublk_put_disk(disk);
- }
- 
--static void ublk_cancel_cmd(struct ublk_queue *ubq, struct ublk_io *io,
-+static void ublk_cancel_cmd(struct ublk_queue *ubq, unsigned tag,
- 		unsigned int issue_flags)
+--- a/net/sched/sch_htb.c
++++ b/net/sched/sch_htb.c
+@@ -1485,6 +1485,8 @@ static void htb_qlen_notify(struct Qdisc
  {
-+	struct ublk_io *io = &ubq->ios[tag];
-+	struct ublk_device *ub = ubq->dev;
-+	struct request *req;
- 	bool done;
+ 	struct htb_class *cl = (struct htb_class *)arg;
  
- 	if (!(io->flags & UBLK_IO_FLAG_ACTIVE))
- 		return;
- 
-+	/*
-+	 * Don't try to cancel this command if the request is started for
-+	 * avoiding race between io_uring_cmd_done() and
-+	 * io_uring_cmd_complete_in_task().
-+	 *
-+	 * Either the started request will be aborted via __ublk_abort_rq(),
-+	 * then this uring_cmd is canceled next time, or it will be done in
-+	 * task work function ublk_dispatch_req() because io_uring guarantees
-+	 * that ublk_dispatch_req() is always called
-+	 */
-+	req = blk_mq_tag_to_rq(ub->tag_set.tags[ubq->q_id], tag);
-+	if (req && blk_mq_request_started(req))
++	if (!cl->prio_activity)
 +		return;
-+
- 	spin_lock(&ubq->cancel_lock);
- 	done = !!(io->flags & UBLK_IO_FLAG_CANCELED);
- 	if (!done)
-@@ -1694,7 +1711,6 @@ static void ublk_uring_cmd_cancel_fn(str
- 	struct ublk_uring_cmd_pdu *pdu = ublk_get_uring_cmd_pdu(cmd);
- 	struct ublk_queue *ubq = pdu->ubq;
- 	struct task_struct *task;
--	struct ublk_io *io;
- 
- 	if (WARN_ON_ONCE(!ubq))
- 		return;
-@@ -1709,9 +1725,8 @@ static void ublk_uring_cmd_cancel_fn(str
- 	if (!ubq->canceling)
- 		ublk_start_cancel(ubq);
- 
--	io = &ubq->ios[pdu->tag];
--	WARN_ON_ONCE(io->cmd != cmd);
--	ublk_cancel_cmd(ubq, io, issue_flags);
-+	WARN_ON_ONCE(ubq->ios[pdu->tag].cmd != cmd);
-+	ublk_cancel_cmd(ubq, pdu->tag, issue_flags);
+ 	htb_deactivate(qdisc_priv(sch), cl);
  }
  
- static inline bool ublk_queue_ready(struct ublk_queue *ubq)
-@@ -1724,7 +1739,7 @@ static void ublk_cancel_queue(struct ubl
- 	int i;
- 
- 	for (i = 0; i < ubq->q_depth; i++)
--		ublk_cancel_cmd(ubq, &ubq->ios[i], IO_URING_F_UNLOCKED);
-+		ublk_cancel_cmd(ubq, i, IO_URING_F_UNLOCKED);
- }
- 
- /* Cancel all pending commands, must be called after del_gendisk() returns */
 
 
