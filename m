@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7B114A4C7;
-	Wed,  7 May 2025 18:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2466114A4C7;
+	Wed,  7 May 2025 18:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643413; cv=none; b=R0RnEP975TW5n9Brx4f0NGSiHL10hWSXvUuywWNCaC/YLnM390U8sJE2Vzq112WLASbdJNrF7qqD8ic1/QaKDodrK5eVfIOZSzyWhJZ1ASj3dU5pXGmFfH4iR8HfMtfzmmZEyHvliDVwNE2YnYwwChK3H9z/UnMX/M6ZMOFgviA=
+	t=1746643416; cv=none; b=jwPqkoGRU8kdUwt8xMhBVYA1kiNDL4eUKUP9mvJe3/ZtIOil5SOZiwjvuIeXwzgoBAOB0q4Za/FnU7mzbe6KxSsp6CbZhGlUlQvfOnmDyAK489PEZO4/oBIs4WdZMWgSvQRVWVdcQAYnDvLOC7goYzYK2Wn48586HkhNhRcg6/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643413; c=relaxed/simple;
-	bh=7tPN2LFneCPZtyAm6g6ttERY3XOQuqzVh5c4b86qKV8=;
+	s=arc-20240116; t=1746643416; c=relaxed/simple;
+	bh=dh+HlsJwDhAxXvnJ0ejUwtoDaz53WdvMlPvJ2VJtkxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fEYM9nrSkeD7iKD8e3Y0zgXJ4a7vS49Hiez2aE88EjEQkN2nn/A1TQIz1/BDZ2EERuTiflKkGUP9NDmvAzfOgrYei++cISIDi8pK6++A7fMmqkyYVGFvXPHa6pFo5bByBC76z6x4+682It9fmXoV+WNYjePHTaS4Q+yRhcDoKR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xj4ykAEE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fsqVWV7OJhmtTY2DwZmrpPpXvFKBhKcij0yNrMYUQgrvAZBGtVTAYEiDGGUDkAqY+Yvtg5k5LpMgEfZ+/TRNXa4wlsf8K8s8ZPU2qy7Ff24v/EdiL45FU6AMlgg2Ndhm6TjvTEcvwSU8dz9wfFxI3J2XYuKjA58W75yxVXsjPQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=he1tcrBh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xj4ykAEE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D95EC4CEE2;
-	Wed,  7 May 2025 18:43:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="he1tcrBh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1066C4CEE2;
+	Wed,  7 May 2025 18:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643412;
-	bh=7tPN2LFneCPZtyAm6g6ttERY3XOQuqzVh5c4b86qKV8=;
+	s=korg; t=1746643416;
+	bh=dh+HlsJwDhAxXvnJ0ejUwtoDaz53WdvMlPvJ2VJtkxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xj4ykAEEP+P3r1YMU82en1v9TqaQlzLgarHABWCFuYn1R2nTMQYZh9RN6eib+5kUr
-	 lVxX8K3/pbKz23A/2+3FtedfVc/zmCq6PNuhMPuvg0BTYKp/zbmdhIs83IOs7DHE4U
-	 skg8P1mv4kkfPpm0IFRCx4r8+Tj+BD9Lk6B+Z37M=
+	b=he1tcrBhz/DbMUEbOkQmuX6V1gIuAcb4/M2hR8oPhGS5dsK9A3Sr8eKMRjUuxFLoT
+	 xg1vT/R51fyNf23FPQyPd57X0zp2CvrawDlW5wNskr0C3u+rKlhQpe4W4BETT2gYb1
+	 RSYZ/uoANlrTfwqf4H6KA5fEnG1DceQ6kgqADUYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
+	stable <stable@kernel.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 51/55] irqchip/gic-v2m: Prevent use after free of gicv2m_get_fwnode()
-Date: Wed,  7 May 2025 20:39:52 +0200
-Message-ID: <20250507183801.096181179@linuxfoundation.org>
+Subject: [PATCH 5.15 52/55] serial: msm: Configure correct working mode before starting earlycon
+Date: Wed,  7 May 2025 20:39:53 +0200
+Message-ID: <20250507183801.137268867@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183759.048732653@linuxfoundation.org>
 References: <20250507183759.048732653@linuxfoundation.org>
@@ -53,49 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-[ Upstream commit 3318dc299b072a0511d6dfd8367f3304fb6d9827 ]
+[ Upstream commit 7094832b5ac861b0bd7ed8866c93cb15ef619996 ]
 
-With ACPI in place, gicv2m_get_fwnode() is registered with the pci
-subsystem as pci_msi_get_fwnode_cb(), which may get invoked at runtime
-during a PCI host bridge probe. But, the call back is wrongly marked as
-__init, causing it to be freed, while being registered with the PCI
-subsystem and could trigger:
+The MSM UART DM controller supports different working modes, e.g. DMA or
+the "single-character mode", where all reads/writes operate on a single
+character rather than 4 chars (32-bit) at once. When using earlycon,
+__msm_console_write() always writes 4 characters at a time, but we don't
+know which mode the bootloader was using and we don't set the mode either.
 
- Unable to handle kernel paging request at virtual address ffff8000816c0400
-  gicv2m_get_fwnode+0x0/0x58 (P)
-  pci_set_bus_msi_domain+0x74/0x88
-  pci_register_host_bridge+0x194/0x548
+This causes garbled output if the bootloader was using the single-character
+mode, because only every 4th character appears in the serial console, e.g.
 
-This is easily reproducible on a Juno board with ACPI boot.
+  "[ 00oni pi  000xf0[ 00i s 5rm9(l)l s 1  1 SPMTA 7:C 5[ 00A ade k d[
+   00ano:ameoi .Q1B[ 00ac _idaM00080oo'"
 
-Retain the function for later use.
+If the bootloader was using the DMA ("DM") mode, output would likely fail
+entirely. Later, when the full serial driver probes, the port is
+re-initialized and output works as expected.
 
-Fixes: 0644b3daca28 ("irqchip/gic-v2m: acpi: Introducing GICv2m ACPI support")
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
+Fix this also for earlycon by clearing the DMEN register and
+reset+re-enable the transmitter to apply the change. This ensures the
+transmitter is in the expected state before writing any output.
+
+Cc: stable <stable@kernel.org>
+Fixes: 0efe72963409 ("tty: serial: msm: Add earlycon support")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250408-msm-serial-earlycon-v1-1-429080127530@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v2m.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/msm_serial.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/irqchip/irq-gic-v2m.c b/drivers/irqchip/irq-gic-v2m.c
-index 6790a621a9324..9d99b19cd21b6 100644
---- a/drivers/irqchip/irq-gic-v2m.c
-+++ b/drivers/irqchip/irq-gic-v2m.c
-@@ -455,7 +455,7 @@ static int __init gicv2m_of_init(struct fwnode_handle *parent_handle,
- #ifdef CONFIG_ACPI
- static int acpi_num_msi;
+diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
+index 03ff63438e772..9740bc301cc27 100644
+--- a/drivers/tty/serial/msm_serial.c
++++ b/drivers/tty/serial/msm_serial.c
+@@ -1732,6 +1732,12 @@ msm_serial_early_console_setup_dm(struct earlycon_device *device,
+ 	if (!device->port.membase)
+ 		return -ENODEV;
  
--static __init struct fwnode_handle *gicv2m_get_fwnode(struct device *dev)
-+static struct fwnode_handle *gicv2m_get_fwnode(struct device *dev)
- {
- 	struct v2m_data *data;
- 
++	/* Disable DM / single-character modes */
++	msm_write(&device->port, 0, UARTDM_DMEN);
++	msm_write(&device->port, MSM_UART_CR_CMD_RESET_RX, MSM_UART_CR);
++	msm_write(&device->port, MSM_UART_CR_CMD_RESET_TX, MSM_UART_CR);
++	msm_write(&device->port, MSM_UART_CR_TX_ENABLE, MSM_UART_CR);
++
+ 	device->con->write = msm_serial_early_write_dm;
+ 	return 0;
+ }
 -- 
 2.39.5
 
