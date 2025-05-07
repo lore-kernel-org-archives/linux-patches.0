@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AFA2116E9;
-	Wed,  7 May 2025 18:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC222116E9;
+	Wed,  7 May 2025 18:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644110; cv=none; b=SG6en32t33UT7uV0iGenekxjCsB3eVkMIEphkCQpnFvxl6693Y/k5OuVMfy1hEowAlGQd82tJvQjF5tZ/xZbO1Ez61wcm5KhTGmZ9nUnvKtYwpCNLI96rhQFSH/YpmHjMyGmETLBVEZqgc5wZzFQuidL2oztq9aZrmtjLCNky8k=
+	t=1746644113; cv=none; b=ZnhyYNJqK1ih/4bpabQko73ZllkQ69ZBQF1CEBkzu74woI07oyErGsWqkVzOE9VMNaSGqC9ticQpjqvJ/6w0gAXa0icOVd0yjygRdYSno3p6+Mo0MqnYtAY2nSMrv3jph8tv2jx6nXzjjwRKNr32wocS6Nk01Phl87QiqFCUanA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644110; c=relaxed/simple;
-	bh=hNzQ9dUvU14472P2YmL2BCKZSvIBkEs7HACpWQ3CHaQ=;
+	s=arc-20240116; t=1746644113; c=relaxed/simple;
+	bh=9RZ9t9C9+EjaDLEqSm7xZ6jVVVljjHzsnloH0Y30ju8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qLsDCoeOYryU2BI6oyktMPhnpFpY5xbWepLf1CgfoJgoxSxvj2OodBjfPYny9b1xqFw0jKGAn1dLMm0MaunA/+1/7u+StrM2L3C9j6g6NWAOIMwr/z90jfeZSXinLYQMbS6IxWEHa1y2/ObTdOS4rSmNQYS0d6NNpbZrgcQDh4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v64zKon0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h+3BmcARyCfHlvhyUhxFbWpbAu9GRjrJhQ5rtgS5Wkfs6YI/NOySVhXNbMAyTsS5MQFYBe8NHyKd1uz/v/2MlPCzctkoJsA9j43I3OjmJKyqYnf2XAyub7pkoVj/0MmcRER2Fj2poaww9ibPRG4v+AgcBBeNB5zzWPHUwWSL9N0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEpXLb6u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v64zKon0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D60C4CEE2;
-	Wed,  7 May 2025 18:55:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEpXLb6u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF59C4CEE2;
+	Wed,  7 May 2025 18:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644109;
-	bh=hNzQ9dUvU14472P2YmL2BCKZSvIBkEs7HACpWQ3CHaQ=;
+	s=korg; t=1746644112;
+	bh=9RZ9t9C9+EjaDLEqSm7xZ6jVVVljjHzsnloH0Y30ju8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v64zKon0TcVS3faLCy6YweJq+ZrlIjLW/zx4wjuPPYWI5/jwPgsuAALl269UpLBDc
-	 n0v9tsxQ1NilhMr1ypXCzctjFJEYpnG3R/CWBYYkw03vcbXqadCmVocAglOZQ0f1ua
-	 +F59nTJukDKxe0zNLJ0ATgvy4FLPSb3VwnnCFQDc=
+	b=WEpXLb6uZJ/To88/ySRVRDqJYTEtn7UMTKwQambFw2fzlteiufjgp0A+P0OS+e0ql
+	 RFSyGBtXqiBnSN4rVn2SNoBr0KaCxJ/DhvOntYZfsczi+eqaEVn0mvVzvTN5GnOM8h
+	 AbHigiOVx7uQy5ZsyiSSy9yORPiMoG29Hx7IPKYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
 	Michael Chan <michael.chan@broadcom.com>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 123/183] bnxt_en: Add missing skb_mark_for_recycle() in bnxt_rx_vlan()
-Date: Wed,  7 May 2025 20:39:28 +0200
-Message-ID: <20250507183829.804981829@linuxfoundation.org>
+Subject: [PATCH 6.14 124/183] bnxt_en: call pci_alloc_irq_vectors() after bnxt_reserve_rings()
+Date: Wed,  7 May 2025 20:39:29 +0200
+Message-ID: <20250507183829.843428945@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -54,41 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Somnath Kotur <somnath.kotur@broadcom.com>
+From: Kashyap Desai <kashyap.desai@broadcom.com>
 
-[ Upstream commit a63db07e4ecd45b027718168faf7d798bb47bf58 ]
+[ Upstream commit 1ae04e489dd757e1e61999362f33e7c554c3b9e3 ]
 
-If bnxt_rx_vlan() fails because the VLAN protocol ID is invalid,
-the SKB is freed but we're missing the call to recycle it.  This
-may cause the warning:
+On some architectures (e.g. ARM), calling pci_alloc_irq_vectors()
+will immediately cause the MSIX table to be written.  This will not
+work if we haven't called bnxt_reserve_rings() to properly map
+the MSIX table to the MSIX vectors reserved by FW.
 
-"page_pool_release_retry() stalled pool shutdown"
+Fix the FW error recovery path to delay the bnxt_init_int_mode() ->
+pci_alloc_irq_vectors() call by removing it from bnxt_hwrm_if_change().
+bnxt_request_irq() later in the code path will call it and by then the
+MSIX table is properly mapped.
 
-Add the missing skb_mark_for_recycle() in bnxt_rx_vlan().
-
-Fixes: 86b05508f775 ("bnxt_en: Use the unified RX page pool buffers for XDP and non-XDP")
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Fixes: 4343838ca5eb ("bnxt_en: Replace deprecated PCI MSIX APIs")
+Suggested-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
 Signed-off-by: Michael Chan <michael.chan@broadcom.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index da837866c02f8..174bb33432d13 100644
+index 174bb33432d13..a414d7d721b20 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -2011,6 +2011,7 @@ static struct sk_buff *bnxt_rx_vlan(struct sk_buff *skb, u8 cmp_type,
+@@ -12172,13 +12172,8 @@ static int bnxt_hwrm_if_change(struct bnxt *bp, bool up)
+ 				set_bit(BNXT_STATE_ABORT_ERR, &bp->state);
+ 				return rc;
+ 			}
++			/* IRQ will be initialized later in bnxt_request_irq()*/
+ 			bnxt_clear_int_mode(bp);
+-			rc = bnxt_init_int_mode(bp);
+-			if (rc) {
+-				clear_bit(BNXT_STATE_FW_RESET_DET, &bp->state);
+-				netdev_err(bp->dev, "init int mode failed\n");
+-				return rc;
+-			}
+ 		}
+ 		rc = bnxt_cancel_reservations(bp, fw_reset);
  	}
- 	return skb;
- vlan_err:
-+	skb_mark_for_recycle(skb);
- 	dev_kfree_skb(skb);
- 	return NULL;
- }
 -- 
 2.39.5
 
