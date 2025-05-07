@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593862144C1;
-	Wed,  7 May 2025 19:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051A92144C1;
+	Wed,  7 May 2025 19:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746645066; cv=none; b=k4C5ipf96UsVzyKWXDEWaS4m0NsYhrREvV74LMFjaFnjp5NY14nhe7A+JqelhbRBS6tpsxpW4b+uZdfsT6mQV6ECkIZpiE5lQonu4oKwV/b8LKUXVChi9UpIlmEhTG0DwzibqouYS1l/lijaxT1ivuWUH2eTa3L5ZPvdKnN2q54=
+	t=1746645070; cv=none; b=tRNp055uZdyFKnND/L6thMdIRGuw4hBad+ZrNYU7K+gLUKTZIu2LDPZj76kgJ6w0lKlNrbxhFxlBf8JpJ8NrqASugBZxcKoj37++LfZ6wrsAC2w0jiuvilZyMjA2cTR7PRhbRJrn4Mj62MUhAlRmr+uCUYyaeoAPoTpxsN/SiJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746645066; c=relaxed/simple;
-	bh=juCrpGP+HEq642McXKT/XSsLlohYL4NTnIocdvNitTo=;
+	s=arc-20240116; t=1746645070; c=relaxed/simple;
+	bh=dCvzHwQg9Afwp2BqFDQg4G2V67HxE7jU5nC2R6KXMnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jKZS4blsJ7X+fgMZji6t/vYI+vAjCtzLTEvJgbe/bcYHk+1Ve86agz0F6gZHbSYbXF5p3ubfNVyzCb+X/3kIN1Dh4ve9mjmVAPEPsJ6JAti/mSrBTVGtpfTij2Yg6p6XHqEwtoaL8Fr3dMRxQAf8BS661EoXeYqdzQD/7osse2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HjtKmIgM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b5NRHGHcGoYNF0koYp0MZAtEJVZljP411W5uZim5nXmTGrT8WlyQtI25CJG94fIfo7qphBZW7FqmAUqd+Z4dReHM/7y52MeaHYwyLXq/vkHstPKiFO21KzHwD52FE4ydR5mNUSDtBgJz/PeZZujsSeYFIbXeMuS5LvB8urjFr1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T06brcgr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HjtKmIgM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E299FC4CEE2;
-	Wed,  7 May 2025 19:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T06brcgr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1833DC4CEE2;
+	Wed,  7 May 2025 19:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746645066;
-	bh=juCrpGP+HEq642McXKT/XSsLlohYL4NTnIocdvNitTo=;
+	s=korg; t=1746645069;
+	bh=dCvzHwQg9Afwp2BqFDQg4G2V67HxE7jU5nC2R6KXMnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HjtKmIgMLgN6yNwi/KNoHsSnhTWxbz15ZcnMcegpEas+TAv0rI4V1TVoKy/+xDIVF
-	 NAYdvodJvdJsZq3TgBFdaiun58WAbqltycC29mfVrmtD8zutTtEOl4mjwHSamWCtr1
-	 4kuGAMTxCIj3uDEkd3KtdaDgmZhlXwbNZOavolkA=
+	b=T06brcgrFl0CCSwMFLJdUyjMfXaS3wSFAe8iHrlF1LdAXF3HIm0v/OYacLMLOa7k2
+	 freSYt7zsYiUTVCukaOGQoPGhlWJHNngqJwQ2QGFuNcT41m04vOLRtUvHyxLR0lkMb
+	 veZUosxRqc2X1Lod00LS5F1k8g8TCizE7IEVHcjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Chan <michael.chan@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Shruti Parab <shruti.parab@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Maor Gottlieb <maorg@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/129] bnxt_en: Fix coredump logic to free allocated buffer
-Date: Wed,  7 May 2025 20:40:17 +0200
-Message-ID: <20250507183816.792598767@linuxfoundation.org>
+Subject: [PATCH 6.6 054/129] net/mlx5: E-Switch, Initialize MAC Address for Default GID
+Date: Wed,  7 May 2025 20:39:50 +0200
+Message-ID: <20250507183815.724160798@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -53,46 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shruti Parab <shruti.parab@broadcom.com>
+From: Maor Gottlieb <maorg@nvidia.com>
 
-[ Upstream commit ea9376cf68230e05492f22ca45d329f16e262c7b ]
+[ Upstream commit 5d1a04f347e6cbf5ffe74da409a5d71fbe8c5f19 ]
 
-When handling HWRM_DBG_COREDUMP_LIST FW command in
-bnxt_hwrm_dbg_dma_data(), the allocated buffer info->dest_buf is
-not freed in the error path.  In the normal path, info->dest_buf
-is assigned to coredump->data and it will eventually be freed after
-the coredump is collected.
+Initialize the source MAC address when creating the default GID entry.
+Since this entry is used only for loopback traffic, it only needs to
+be a unicast address. A zeroed-out MAC address is sufficient for this
+purpose.
+Without this fix, random bits would be assigned as the source address.
+If these bits formed a multicast address, the firmware would return an
+error, preventing the user from switching to switchdev mode:
 
-Free info->dest_buf immediately inside bnxt_hwrm_dbg_dma_data() in
-the error path.
+Error: mlx5_core: Failed setting eswitch to offloads.
+kernel answers: Invalid argument
 
-Fixes: c74751f4c392 ("bnxt_en: Return error if FW returns more data than dump length")
-Reported-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Shruti Parab <shruti.parab@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 80f09dfc237f ("net/mlx5: Eswitch, enable RoCE loopback traffic")
+Signed-off-by: Maor Gottlieb <maorg@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/20250423083611.324567-3-mbloch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/rdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
-index c067898820360..b57d2a25ae276 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
-@@ -72,6 +72,11 @@ static int bnxt_hwrm_dbg_dma_data(struct bnxt *bp, void *msg,
- 				memcpy(info->dest_buf + off, dma_buf, len);
- 			} else {
- 				rc = -ENOBUFS;
-+				if (cmn_req->req_type ==
-+				    cpu_to_le16(HWRM_DBG_COREDUMP_LIST)) {
-+					kfree(info->dest_buf);
-+					info->dest_buf = NULL;
-+				}
- 				break;
- 			}
- 		}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/rdma.c b/drivers/net/ethernet/mellanox/mlx5/core/rdma.c
+index a42f6cd99b744..f585ef5a34243 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/rdma.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/rdma.c
+@@ -118,8 +118,8 @@ static void mlx5_rdma_make_default_gid(struct mlx5_core_dev *dev, union ib_gid *
+ 
+ static int mlx5_rdma_add_roce_addr(struct mlx5_core_dev *dev)
+ {
++	u8 mac[ETH_ALEN] = {};
+ 	union ib_gid gid;
+-	u8 mac[ETH_ALEN];
+ 
+ 	mlx5_rdma_make_default_gid(dev, &gid);
+ 	return mlx5_core_roce_gid_set(dev, 0,
 -- 
 2.39.5
 
