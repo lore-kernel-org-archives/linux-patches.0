@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330E514A4C7;
-	Wed,  7 May 2025 18:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4A228B7EB;
+	Wed,  7 May 2025 18:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643437; cv=none; b=IzLMSJ79bTffXeZQUArHqqo+Pccrbb6BvpMzls9CdKybRvDKRxVFYTOrysiNZtklXsosJ3hDYBBmY2d/m6yEfIpynt42dv3MDdmrhjsWwDP9BEEsbJ4muMSei/kKovTYDAMv/LAffcW4pefYuxA9HFisADWStsB+G+15GCQpp3M=
+	t=1746643440; cv=none; b=RNORRq96J/u3i75yCvmXL5CATR7VenHUlDPiq3s1ADbZJF31Td/OTxH4loHOXfpATmRWxLeBJylxx6Y7nHzRiuniRasK7EAaW87KHPq6sIjxbQGdUbBKtx0pIF5bAXTCl0/C90FNhyucmZE/MhcgGNV6i7xIGn/jPUTELvMbFQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643437; c=relaxed/simple;
-	bh=sCtEkEQJQd2xYDr0PzkmhwqI0bPLH2x/6CfJxp49u5Y=;
+	s=arc-20240116; t=1746643440; c=relaxed/simple;
+	bh=J/O9n9DI4kG/8namTe6ctaZRm1YlffnEByPs95EwKWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=msI//K5tuDJUw/GG8rkTxbiIchz5griA1bqoFF5ua6ZtF7klrwKLaBZDqs4fKCe7eHbtugFuidO0hd4KO5+jWeFqQ3iLES+JFyA/VmH6AfhUhv2qU83TqgS/E94ccxDTIVus2i/SfA0Mv/N/mtOEssHISbnz379oYfehpVZR9Nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BCtHusC8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KAi0u7h6xIrWvg3wOovpvy4IIK0wKyZY7zVQByiqYV7yzYZgqXw+DIKZ4Kpa5ysALu5DCGh7H+SoJG73Y7N8m9cQvqtctB6t0Mvi4nnHXGSp2p4wbFX3Giya3QHBhIMt8dJgz01dpx2GG1cnTrajnGpF2CPKAu2EiS/kG3Gm/Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nks444tZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BCtHusC8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 972E2C4CEE2;
-	Wed,  7 May 2025 18:43:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nks444tZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8F3C4CEE2;
+	Wed,  7 May 2025 18:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643437;
-	bh=sCtEkEQJQd2xYDr0PzkmhwqI0bPLH2x/6CfJxp49u5Y=;
+	s=korg; t=1746643439;
+	bh=J/O9n9DI4kG/8namTe6ctaZRm1YlffnEByPs95EwKWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BCtHusC8MqUNzDUOpXTxPoSq3arWT3AHGR6Nfc7LP4huvR9lkc2ktUdDsF7htcF0d
-	 gX2INrpehR5Shz0ANGNJsBfNRie/L3YZKj0bJUk19oAESW1vyPnYb0K7fLAqNBVUfS
-	 oUqWTmqnZlYG2lSwwCqNK4hRDGZZtQVECiWPd58k=
+	b=Nks444tZrtXtDn+dFgvaYidGuMWIZE+s8D0P5dJVI3H0On15dx8KQ8vqQehlq5jQ2
+	 OD1cTz71tkR2MwC+EFTRTs5l88CxMTMfPqPbdMV9m1LjTeysWlu4/MR1sKZT7OyaY0
+	 ZjuZn51pUxFolTIN+HedncPbV6D09u5p4qKQQex0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Shruti Parab <shruti.parab@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 30/55] net: ipv6: fix UDPv6 GSO segmentation with NAT
-Date: Wed,  7 May 2025 20:39:31 +0200
-Message-ID: <20250507183800.253477596@linuxfoundation.org>
+Subject: [PATCH 5.15 31/55] bnxt_en: Fix coredump logic to free allocated buffer
+Date: Wed,  7 May 2025 20:39:32 +0200
+Message-ID: <20250507183800.293707749@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183759.048732653@linuxfoundation.org>
 References: <20250507183759.048732653@linuxfoundation.org>
@@ -52,102 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Shruti Parab <shruti.parab@broadcom.com>
 
-[ Upstream commit b936a9b8d4a585ccb6d454921c36286bfe63e01d ]
+[ Upstream commit ea9376cf68230e05492f22ca45d329f16e262c7b ]
 
-If any address or port is changed, update it in all packets and recalculate
-checksum.
+When handling HWRM_DBG_COREDUMP_LIST FW command in
+bnxt_hwrm_dbg_dma_data(), the allocated buffer info->dest_buf is
+not freed in the error path.  In the normal path, info->dest_buf
+is assigned to coredump->data and it will eventually be freed after
+the coredump is collected.
 
-Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250426153210.14044-1-nbd@nbd.name
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Free info->dest_buf immediately inside bnxt_hwrm_dbg_dma_data() in
+the error path.
+
+Fixes: c74751f4c392 ("bnxt_en: Return error if FW returns more data than dump length")
+Reported-by: Michael Chan <michael.chan@broadcom.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Shruti Parab <shruti.parab@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_offload.c | 61 +++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 60 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
-index 1a57dd8aa513b..612da8ec1081c 100644
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -245,6 +245,62 @@ static struct sk_buff *__udpv4_gso_segment_list_csum(struct sk_buff *segs)
- 	return segs;
- }
- 
-+static void __udpv6_gso_segment_csum(struct sk_buff *seg,
-+				     struct in6_addr *oldip,
-+				     const struct in6_addr *newip,
-+				     __be16 *oldport, __be16 newport)
-+{
-+	struct udphdr *uh = udp_hdr(seg);
-+
-+	if (ipv6_addr_equal(oldip, newip) && *oldport == newport)
-+		return;
-+
-+	if (uh->check) {
-+		inet_proto_csum_replace16(&uh->check, seg, oldip->s6_addr32,
-+					  newip->s6_addr32, true);
-+
-+		inet_proto_csum_replace2(&uh->check, seg, *oldport, newport,
-+					 false);
-+		if (!uh->check)
-+			uh->check = CSUM_MANGLED_0;
-+	}
-+
-+	*oldip = *newip;
-+	*oldport = newport;
-+}
-+
-+static struct sk_buff *__udpv6_gso_segment_list_csum(struct sk_buff *segs)
-+{
-+	const struct ipv6hdr *iph;
-+	const struct udphdr *uh;
-+	struct ipv6hdr *iph2;
-+	struct sk_buff *seg;
-+	struct udphdr *uh2;
-+
-+	seg = segs;
-+	uh = udp_hdr(seg);
-+	iph = ipv6_hdr(seg);
-+	uh2 = udp_hdr(seg->next);
-+	iph2 = ipv6_hdr(seg->next);
-+
-+	if (!(*(const u32 *)&uh->source ^ *(const u32 *)&uh2->source) &&
-+	    ipv6_addr_equal(&iph->saddr, &iph2->saddr) &&
-+	    ipv6_addr_equal(&iph->daddr, &iph2->daddr))
-+		return segs;
-+
-+	while ((seg = seg->next)) {
-+		uh2 = udp_hdr(seg);
-+		iph2 = ipv6_hdr(seg);
-+
-+		__udpv6_gso_segment_csum(seg, &iph2->saddr, &iph->saddr,
-+					 &uh2->source, uh->source);
-+		__udpv6_gso_segment_csum(seg, &iph2->daddr, &iph->daddr,
-+					 &uh2->dest, uh->dest);
-+	}
-+
-+	return segs;
-+}
-+
- static struct sk_buff *__udp_gso_segment_list(struct sk_buff *skb,
- 					      netdev_features_t features,
- 					      bool is_ipv6)
-@@ -257,7 +313,10 @@ static struct sk_buff *__udp_gso_segment_list(struct sk_buff *skb,
- 
- 	udp_hdr(skb)->len = htons(sizeof(struct udphdr) + mss);
- 
--	return is_ipv6 ? skb : __udpv4_gso_segment_list_csum(skb);
-+	if (is_ipv6)
-+		return __udpv6_gso_segment_list_csum(skb);
-+	else
-+		return __udpv4_gso_segment_list_csum(skb);
- }
- 
- struct sk_buff *__udp_gso_segment(struct sk_buff *gso_skb,
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
+index 156f76bcea7eb..e0e7bfaf860b7 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
+@@ -72,6 +72,11 @@ static int bnxt_hwrm_dbg_dma_data(struct bnxt *bp, void *msg,
+ 				memcpy(info->dest_buf + off, dma_buf, len);
+ 			} else {
+ 				rc = -ENOBUFS;
++				if (cmn_req->req_type ==
++				    cpu_to_le16(HWRM_DBG_COREDUMP_LIST)) {
++					kfree(info->dest_buf);
++					info->dest_buf = NULL;
++				}
+ 				break;
+ 			}
+ 		}
 -- 
 2.39.5
 
