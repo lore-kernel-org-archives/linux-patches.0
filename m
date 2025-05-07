@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27142116E9;
-	Wed,  7 May 2025 18:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9715211A2A;
+	Wed,  7 May 2025 18:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644043; cv=none; b=dp3DVs159j3AXjKbUhEKgcnxeM/fXsyY4ZjWjxNWYy6YUUxd9pYhvq9CP2sjG8e3OhfArYkls6hpV0xJockFOGz6Op00b3+XYYAkArx9W58SiAyohSOGuDwfAbfFapBM4EhSHCn57Eu8/9l59amK51Ff+YA4lYy6HXxS+Jj2uw0=
+	t=1746644045; cv=none; b=dTqoNE52aMvqCnCFojBpnw9txfDvCL6jTqPeJsH+f6dK4o4Z+rJEYmnINg5g6ZiL7G/1Q01QBzjndUXoi+/vO5+hGzZ6xdSnoJjbBkDzf7zYs/SHqOzm8OcmekzTVbEuC1EuckhD0JSdDSmM7RoEu+jNdRw4z4ZVQJpPCTtrdjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644043; c=relaxed/simple;
-	bh=E6kwcCZpWOa8Wfc14GXHbFUapuxcVHT50uAAwSqZjtc=;
+	s=arc-20240116; t=1746644045; c=relaxed/simple;
+	bh=nU5xlz9oVCr7tFq88UnOLda0WXYWQrPdhyBiYThBzkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ku2V1UIJ7gDZMLt4h3DbbTr8xBcZGO+K0mOjVGZ58gyKDHdZsvUlvGljZ6K6HVzHKEIr1bfeCFjL8ndrpht6FaOoub72g5OKq7dx9vsoc//z7d0zdcayCyL/oxDLK/DXB3LLKp5YHkhSS9yC9gMYtGGvnBwXiFUAbfMr7cStPOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMeU6BgF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DHy+TpgaA/ZDLQfNENjw6DbE0WmTCCh9zh4pATGhjUmTihyolVvVCx5KyGPiYrwi1qFKEjJIfQK5Y+jA0ubeOE3PgknDK4NNqghmktK/XecLYLs97+ASPSBkuv9QzE6gXXKvF4ZwMAMFso/HDZpMvLAlXmOsuRbrSa0Z/SXOa1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VRIA+yPd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMeU6BgF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED91C4CEE2;
-	Wed,  7 May 2025 18:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VRIA+yPd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E36CC4CEE2;
+	Wed,  7 May 2025 18:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644042;
-	bh=E6kwcCZpWOa8Wfc14GXHbFUapuxcVHT50uAAwSqZjtc=;
+	s=korg; t=1746644045;
+	bh=nU5xlz9oVCr7tFq88UnOLda0WXYWQrPdhyBiYThBzkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bMeU6BgFmejOHmIPepfmAZP24WGxp677VqUKyzoBViSF7INX/V7DhOakZPrKjgyNL
-	 V702ipwQyCXWOwZf7xPUFtGBC00gl2tx+3zdrlZMdUIvoS4r2MeqwmahuHyH7Ofx1o
-	 BT00Rrfvt9uATCHxBWdl0os/s5IUlAPK7KIlnl3k=
+	b=VRIA+yPdr+yGPyUxZnlNUWmqVJtS7OL7nflI0pBRl6KBuAqBElm548wUQ2u+lySv3
+	 StmrdXXek3UD9SfnjFw7OA+wYlPjUMHwKqJX+lciPt7f5+miffm6k5HsmUwM8/kyA4
+	 FKmUKAAcqOEfDdEYYhkFEA8Qa3rNHGjg3iJvZkWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.14 100/183] ice: Dont check device type when checking GNSS presence
-Date: Wed,  7 May 2025 20:39:05 +0200
-Message-ID: <20250507183828.872712513@linuxfoundation.org>
+Subject: [PATCH 6.14 101/183] ice: Remove unnecessary ice_is_e8xx() functions
+Date: Wed,  7 May 2025 20:39:06 +0200
+Message-ID: <20250507183828.918467371@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -54,22 +54,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Karol Kolacinski <karol.kolacinski@intel.com>
 
-[ Upstream commit e2c6737e6e82e9991646cd5389391bb6d3572a68 ]
+[ Upstream commit 9973ac9f23a79285d70365c72e98bffdb94a429d ]
 
-Don't check if the device type is E810T as non-E810T devices can support
-GNSS too and PCA9575 check is enough to determine if GNSS is present or
-not.
+Remove unnecessary ice_is_e8xx() functions and PHY model. Instead, use
+MAC type where applicable.
 
-Rename ice_gnss_is_gps_present() to ice_gnss_is_module_present()
-because GNSS module supports multiple GNSS providers, not only GPS.
+Don't check device type in ice_ptp_maybe_trigger_tx_interrupt(), because
+in reality it depends on the ready bitmap, which only E810 does not
+have.
 
-Move functions related to PCA9575 from ice_ptp_hw.c to ice_common.c
-to be able to access them when PTP is disabled in the kernel, but GNSS
-is enabled.
+Call ice_ptp_cfg_phy_interrupt() unconditionally, because all further
+function calls check the MAC type anyway and this allows simpler code
+in the future with addition of the new MAC types.
 
-Remove logical AND with ICE_AQC_LINK_TOPO_NODE_TYPE_M in
-ice_get_pca9575_handle(), which has no effect, and reorder device type
-checks to check the device_id first, then set other variables.
+Reorder ICE_MAC_* cases in switches in ice_ptp* as in enum ice_mac_type.
 
 Signed-off-by: Karol Kolacinski <karol.kolacinski@intel.com>
 Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
@@ -77,329 +75,883 @@ Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Stable-dep-of: 3ffcd7b657c9 ("ice: fix Get Tx Topology AQ command error on E830")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_common.c | 90 ++++++++++++++++++++
- drivers/net/ethernet/intel/ice/ice_common.h |  2 +
- drivers/net/ethernet/intel/ice/ice_gnss.c   | 29 +++----
- drivers/net/ethernet/intel/ice/ice_gnss.h   |  4 +-
- drivers/net/ethernet/intel/ice/ice_lib.c    |  2 +-
- drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 93 ---------------------
- drivers/net/ethernet/intel/ice/ice_ptp_hw.h |  1 -
- 7 files changed, 105 insertions(+), 116 deletions(-)
+ drivers/net/ethernet/intel/ice/ice.h        |   5 -
+ drivers/net/ethernet/intel/ice/ice_common.c | 118 +---------------
+ drivers/net/ethernet/intel/ice/ice_common.h |   5 -
+ drivers/net/ethernet/intel/ice/ice_ddp.c    |   4 +-
+ drivers/net/ethernet/intel/ice/ice_ptp.c    | 133 +++++++++---------
+ drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 142 ++++++++++----------
+ drivers/net/ethernet/intel/ice/ice_ptp_hw.h |  10 +-
+ drivers/net/ethernet/intel/ice/ice_type.h   |   9 --
+ 8 files changed, 147 insertions(+), 279 deletions(-)
 
+diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
+index 71e05d30f0fda..d7b90a77bb49a 100644
+--- a/drivers/net/ethernet/intel/ice/ice.h
++++ b/drivers/net/ethernet/intel/ice/ice.h
+@@ -1047,10 +1047,5 @@ static inline void ice_clear_rdma_cap(struct ice_pf *pf)
+ 	clear_bit(ICE_FLAG_RDMA_ENA, pf->flags);
+ }
+ 
+-static inline enum ice_phy_model ice_get_phy_model(const struct ice_hw *hw)
+-{
+-	return hw->ptp.phy_model;
+-}
+-
+ extern const struct xdp_metadata_ops ice_xdp_md_ops;
+ #endif /* _ICE_H_ */
 diff --git a/drivers/net/ethernet/intel/ice/ice_common.c b/drivers/net/ethernet/intel/ice/ice_common.c
-index 1e801300310e9..f48cb93e10183 100644
+index f48cb93e10183..59df31c2c83f7 100644
 --- a/drivers/net/ethernet/intel/ice/ice_common.c
 +++ b/drivers/net/ethernet/intel/ice/ice_common.c
-@@ -5765,6 +5765,96 @@ ice_aq_write_i2c(struct ice_hw *hw, struct ice_aqc_link_topo_addr topo_addr,
- 	return ice_aq_send_cmd(hw, &desc, NULL, 0, cd);
+@@ -186,7 +186,7 @@ static int ice_set_mac_type(struct ice_hw *hw)
+  * ice_is_generic_mac - check if device's mac_type is generic
+  * @hw: pointer to the hardware structure
+  *
+- * Return: true if mac_type is generic (with SBQ support), false if not
++ * Return: true if mac_type is ICE_MAC_GENERIC*, false otherwise.
+  */
+ bool ice_is_generic_mac(struct ice_hw *hw)
+ {
+@@ -194,120 +194,6 @@ bool ice_is_generic_mac(struct ice_hw *hw)
+ 		hw->mac_type == ICE_MAC_GENERIC_3K_E825);
  }
  
-+/**
-+ * ice_get_pca9575_handle - find and return the PCA9575 controller
-+ * @hw: pointer to the hw struct
-+ * @pca9575_handle: GPIO controller's handle
-+ *
-+ * Find and return the GPIO controller's handle in the netlist.
-+ * When found - the value will be cached in the hw structure and following calls
-+ * will return cached value.
-+ *
-+ * Return: 0 on success, -ENXIO when there's no PCA9575 present.
-+ */
-+int ice_get_pca9575_handle(struct ice_hw *hw, u16 *pca9575_handle)
-+{
-+	struct ice_aqc_get_link_topo *cmd;
-+	struct ice_aq_desc desc;
-+	int err;
-+	u8 idx;
-+
-+	/* If handle was read previously return cached value */
-+	if (hw->io_expander_handle) {
-+		*pca9575_handle = hw->io_expander_handle;
-+		return 0;
-+	}
-+
-+#define SW_PCA9575_SFP_TOPO_IDX		2
-+#define SW_PCA9575_QSFP_TOPO_IDX	1
-+
-+	/* Check if the SW IO expander controlling SMA exists in the netlist. */
-+	if (hw->device_id == ICE_DEV_ID_E810C_SFP)
-+		idx = SW_PCA9575_SFP_TOPO_IDX;
-+	else if (hw->device_id == ICE_DEV_ID_E810C_QSFP)
-+		idx = SW_PCA9575_QSFP_TOPO_IDX;
-+	else
-+		return -ENXIO;
-+
-+	/* If handle was not detected read it from the netlist */
-+	ice_fill_dflt_direct_cmd_desc(&desc, ice_aqc_opc_get_link_topo);
-+	cmd = &desc.params.get_link_topo;
-+	cmd->addr.topo_params.node_type_ctx =
-+		ICE_AQC_LINK_TOPO_NODE_TYPE_GPIO_CTRL;
-+	cmd->addr.topo_params.index = idx;
-+
-+	err = ice_aq_send_cmd(hw, &desc, NULL, 0, NULL);
-+	if (err)
-+		return -ENXIO;
-+
-+	/* Verify if we found the right IO expander type */
-+	if (desc.params.get_link_topo.node_part_num !=
-+	    ICE_AQC_GET_LINK_TOPO_NODE_NR_PCA9575)
-+		return -ENXIO;
-+
-+	/* If present save the handle and return it */
-+	hw->io_expander_handle =
-+		le16_to_cpu(desc.params.get_link_topo.addr.handle);
-+	*pca9575_handle = hw->io_expander_handle;
-+
-+	return 0;
-+}
-+
-+/**
-+ * ice_read_pca9575_reg - read the register from the PCA9575 controller
-+ * @hw: pointer to the hw struct
-+ * @offset: GPIO controller register offset
-+ * @data: pointer to data to be read from the GPIO controller
-+ *
-+ * Return: 0 on success, negative error code otherwise.
-+ */
-+int ice_read_pca9575_reg(struct ice_hw *hw, u8 offset, u8 *data)
-+{
-+	struct ice_aqc_link_topo_addr link_topo;
-+	__le16 addr;
-+	u16 handle;
-+	int err;
-+
-+	memset(&link_topo, 0, sizeof(link_topo));
-+
-+	err = ice_get_pca9575_handle(hw, &handle);
-+	if (err)
-+		return err;
-+
-+	link_topo.handle = cpu_to_le16(handle);
-+	link_topo.topo_params.node_type_ctx =
-+		FIELD_PREP(ICE_AQC_LINK_TOPO_NODE_CTX_M,
-+			   ICE_AQC_LINK_TOPO_NODE_CTX_PROVIDED);
-+
-+	addr = cpu_to_le16((u16)offset);
-+
-+	return ice_aq_read_i2c(hw, link_topo, 0, addr, 1, data, NULL);
-+}
-+
+-/**
+- * ice_is_e810
+- * @hw: pointer to the hardware structure
+- *
+- * returns true if the device is E810 based, false if not.
+- */
+-bool ice_is_e810(struct ice_hw *hw)
+-{
+-	return hw->mac_type == ICE_MAC_E810;
+-}
+-
+-/**
+- * ice_is_e810t
+- * @hw: pointer to the hardware structure
+- *
+- * returns true if the device is E810T based, false if not.
+- */
+-bool ice_is_e810t(struct ice_hw *hw)
+-{
+-	switch (hw->device_id) {
+-	case ICE_DEV_ID_E810C_SFP:
+-		switch (hw->subsystem_device_id) {
+-		case ICE_SUBDEV_ID_E810T:
+-		case ICE_SUBDEV_ID_E810T2:
+-		case ICE_SUBDEV_ID_E810T3:
+-		case ICE_SUBDEV_ID_E810T4:
+-		case ICE_SUBDEV_ID_E810T6:
+-		case ICE_SUBDEV_ID_E810T7:
+-			return true;
+-		}
+-		break;
+-	case ICE_DEV_ID_E810C_QSFP:
+-		switch (hw->subsystem_device_id) {
+-		case ICE_SUBDEV_ID_E810T2:
+-		case ICE_SUBDEV_ID_E810T3:
+-		case ICE_SUBDEV_ID_E810T5:
+-			return true;
+-		}
+-		break;
+-	default:
+-		break;
+-	}
+-
+-	return false;
+-}
+-
+-/**
+- * ice_is_e822 - Check if a device is E822 family device
+- * @hw: pointer to the hardware structure
+- *
+- * Return: true if the device is E822 based, false if not.
+- */
+-bool ice_is_e822(struct ice_hw *hw)
+-{
+-	switch (hw->device_id) {
+-	case ICE_DEV_ID_E822C_BACKPLANE:
+-	case ICE_DEV_ID_E822C_QSFP:
+-	case ICE_DEV_ID_E822C_SFP:
+-	case ICE_DEV_ID_E822C_10G_BASE_T:
+-	case ICE_DEV_ID_E822C_SGMII:
+-	case ICE_DEV_ID_E822L_BACKPLANE:
+-	case ICE_DEV_ID_E822L_SFP:
+-	case ICE_DEV_ID_E822L_10G_BASE_T:
+-	case ICE_DEV_ID_E822L_SGMII:
+-		return true;
+-	default:
+-		return false;
+-	}
+-}
+-
+-/**
+- * ice_is_e823
+- * @hw: pointer to the hardware structure
+- *
+- * returns true if the device is E823-L or E823-C based, false if not.
+- */
+-bool ice_is_e823(struct ice_hw *hw)
+-{
+-	switch (hw->device_id) {
+-	case ICE_DEV_ID_E823L_BACKPLANE:
+-	case ICE_DEV_ID_E823L_SFP:
+-	case ICE_DEV_ID_E823L_10G_BASE_T:
+-	case ICE_DEV_ID_E823L_1GBE:
+-	case ICE_DEV_ID_E823L_QSFP:
+-	case ICE_DEV_ID_E823C_BACKPLANE:
+-	case ICE_DEV_ID_E823C_QSFP:
+-	case ICE_DEV_ID_E823C_SFP:
+-	case ICE_DEV_ID_E823C_10G_BASE_T:
+-	case ICE_DEV_ID_E823C_SGMII:
+-		return true;
+-	default:
+-		return false;
+-	}
+-}
+-
+-/**
+- * ice_is_e825c - Check if a device is E825C family device
+- * @hw: pointer to the hardware structure
+- *
+- * Return: true if the device is E825-C based, false if not.
+- */
+-bool ice_is_e825c(struct ice_hw *hw)
+-{
+-	switch (hw->device_id) {
+-	case ICE_DEV_ID_E825C_BACKPLANE:
+-	case ICE_DEV_ID_E825C_QSFP:
+-	case ICE_DEV_ID_E825C_SFP:
+-	case ICE_DEV_ID_E825C_SGMII:
+-		return true;
+-	default:
+-		return false;
+-	}
+-}
+-
  /**
-  * ice_aq_set_gpio
+  * ice_is_pf_c827 - check if pf contains c827 phy
   * @hw: pointer to the hw struct
+@@ -2409,7 +2295,7 @@ ice_parse_1588_func_caps(struct ice_hw *hw, struct ice_hw_func_caps *func_p,
+ 	info->tmr_index_owned = ((number & ICE_TS_TMR_IDX_OWND_M) != 0);
+ 	info->tmr_index_assoc = ((number & ICE_TS_TMR_IDX_ASSOC_M) != 0);
+ 
+-	if (!ice_is_e825c(hw)) {
++	if (hw->mac_type != ICE_MAC_GENERIC_3K_E825) {
+ 		info->clk_freq = FIELD_GET(ICE_TS_CLK_FREQ_M, number);
+ 		info->clk_src = ((number & ICE_TS_CLK_SRC_M) != 0);
+ 	} else {
 diff --git a/drivers/net/ethernet/intel/ice/ice_common.h b/drivers/net/ethernet/intel/ice/ice_common.h
-index 15ba385437389..54a8692839dd0 100644
+index 54a8692839dd0..9b00aa0ddf10e 100644
 --- a/drivers/net/ethernet/intel/ice/ice_common.h
 +++ b/drivers/net/ethernet/intel/ice/ice_common.h
-@@ -306,5 +306,7 @@ int
- ice_aq_write_i2c(struct ice_hw *hw, struct ice_aqc_link_topo_addr topo_addr,
- 		 u16 bus_addr, __le16 addr, u8 params, const u8 *data,
- 		 struct ice_sq_cd *cd);
-+int ice_get_pca9575_handle(struct ice_hw *hw, u16 *pca9575_handle);
-+int ice_read_pca9575_reg(struct ice_hw *hw, u8 offset, u8 *data);
- bool ice_fw_supports_report_dflt_cfg(struct ice_hw *hw);
- #endif /* _ICE_COMMON_H_ */
-diff --git a/drivers/net/ethernet/intel/ice/ice_gnss.c b/drivers/net/ethernet/intel/ice/ice_gnss.c
-index b2148dbe49b28..6b26290452d48 100644
---- a/drivers/net/ethernet/intel/ice/ice_gnss.c
-+++ b/drivers/net/ethernet/intel/ice/ice_gnss.c
-@@ -381,32 +381,23 @@ void ice_gnss_exit(struct ice_pf *pf)
+@@ -131,7 +131,6 @@ int
+ ice_aq_manage_mac_write(struct ice_hw *hw, const u8 *mac_addr, u8 flags,
+ 			struct ice_sq_cd *cd);
+ bool ice_is_generic_mac(struct ice_hw *hw);
+-bool ice_is_e810(struct ice_hw *hw);
+ int ice_clear_pf_cfg(struct ice_hw *hw);
+ int
+ ice_aq_set_phy_cfg(struct ice_hw *hw, struct ice_port_info *pi,
+@@ -276,10 +275,6 @@ ice_stat_update40(struct ice_hw *hw, u32 reg, bool prev_stat_loaded,
+ void
+ ice_stat_update32(struct ice_hw *hw, u32 reg, bool prev_stat_loaded,
+ 		  u64 *prev_stat, u64 *cur_stat);
+-bool ice_is_e810t(struct ice_hw *hw);
+-bool ice_is_e822(struct ice_hw *hw);
+-bool ice_is_e823(struct ice_hw *hw);
+-bool ice_is_e825c(struct ice_hw *hw);
+ int
+ ice_sched_query_elem(struct ice_hw *hw, u32 node_teid,
+ 		     struct ice_aqc_txsched_elem_data *buf);
+diff --git a/drivers/net/ethernet/intel/ice/ice_ddp.c b/drivers/net/ethernet/intel/ice/ice_ddp.c
+index 03988be03729b..69d5b1a28491d 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ddp.c
++++ b/drivers/net/ethernet/intel/ice/ice_ddp.c
+@@ -2345,14 +2345,14 @@ ice_get_set_tx_topo(struct ice_hw *hw, u8 *buf, u16 buf_size,
+ 			cmd->set_flags |= ICE_AQC_TX_TOPO_FLAGS_SRC_RAM |
+ 					  ICE_AQC_TX_TOPO_FLAGS_LOAD_NEW;
+ 
+-		if (ice_is_e825c(hw))
++		if (hw->mac_type == ICE_MAC_GENERIC_3K_E825)
+ 			desc.flags |= cpu_to_le16(ICE_AQ_FLAG_RD);
+ 	} else {
+ 		ice_fill_dflt_direct_cmd_desc(&desc, ice_aqc_opc_get_tx_topo);
+ 		cmd->get_flags = ICE_AQC_TX_TOPO_GET_RAM;
+ 	}
+ 
+-	if (!ice_is_e825c(hw))
++	if (hw->mac_type != ICE_MAC_GENERIC_3K_E825)
+ 		desc.flags |= cpu_to_le16(ICE_AQ_FLAG_RD);
+ 
+ 	status = ice_aq_send_cmd(hw, &desc, buf, buf_size, cd);
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
+index a99e0fbd0b8b5..92ce419ff0bcb 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp.c
++++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
+@@ -1318,20 +1318,20 @@ ice_ptp_port_phy_stop(struct ice_ptp_port *ptp_port)
+ 	struct ice_hw *hw = &pf->hw;
+ 	int err;
+ 
+-	if (ice_is_e810(hw))
+-		return 0;
+-
+ 	mutex_lock(&ptp_port->ps_lock);
+ 
+-	switch (ice_get_phy_model(hw)) {
+-	case ICE_PHY_ETH56G:
+-		err = ice_stop_phy_timer_eth56g(hw, port, true);
++	switch (hw->mac_type) {
++	case ICE_MAC_E810:
++		err = 0;
+ 		break;
+-	case ICE_PHY_E82X:
++	case ICE_MAC_GENERIC:
+ 		kthread_cancel_delayed_work_sync(&ptp_port->ov_work);
+ 
+ 		err = ice_stop_phy_timer_e82x(hw, port, true);
+ 		break;
++	case ICE_MAC_GENERIC_3K_E825:
++		err = ice_stop_phy_timer_eth56g(hw, port, true);
++		break;
+ 	default:
+ 		err = -ENODEV;
+ 	}
+@@ -1361,19 +1361,16 @@ ice_ptp_port_phy_restart(struct ice_ptp_port *ptp_port)
+ 	unsigned long flags;
+ 	int err;
+ 
+-	if (ice_is_e810(hw))
+-		return 0;
+-
+ 	if (!ptp_port->link_up)
+ 		return ice_ptp_port_phy_stop(ptp_port);
+ 
+ 	mutex_lock(&ptp_port->ps_lock);
+ 
+-	switch (ice_get_phy_model(hw)) {
+-	case ICE_PHY_ETH56G:
+-		err = ice_start_phy_timer_eth56g(hw, port);
++	switch (hw->mac_type) {
++	case ICE_MAC_E810:
++		err = 0;
+ 		break;
+-	case ICE_PHY_E82X:
++	case ICE_MAC_GENERIC:
+ 		/* Start the PHY timer in Vernier mode */
+ 		kthread_cancel_delayed_work_sync(&ptp_port->ov_work);
+ 
+@@ -1398,6 +1395,9 @@ ice_ptp_port_phy_restart(struct ice_ptp_port *ptp_port)
+ 		kthread_queue_delayed_work(pf->ptp.kworker, &ptp_port->ov_work,
+ 					   0);
+ 		break;
++	case ICE_MAC_GENERIC_3K_E825:
++		err = ice_start_phy_timer_eth56g(hw, port);
++		break;
+ 	default:
+ 		err = -ENODEV;
+ 	}
+@@ -1432,12 +1432,13 @@ void ice_ptp_link_change(struct ice_pf *pf, bool linkup)
+ 	/* Skip HW writes if reset is in progress */
+ 	if (pf->hw.reset_ongoing)
+ 		return;
+-	switch (ice_get_phy_model(hw)) {
+-	case ICE_PHY_E810:
++
++	switch (hw->mac_type) {
++	case ICE_MAC_E810:
+ 		/* Do not reconfigure E810 PHY */
+ 		return;
+-	case ICE_PHY_ETH56G:
+-	case ICE_PHY_E82X:
++	case ICE_MAC_GENERIC:
++	case ICE_MAC_GENERIC_3K_E825:
+ 		ice_ptp_port_phy_restart(ptp_port);
+ 		return;
+ 	default:
+@@ -1465,46 +1466,44 @@ static int ice_ptp_cfg_phy_interrupt(struct ice_pf *pf, bool ena, u32 threshold)
+ 
+ 	ice_ptp_reset_ts_memory(hw);
+ 
+-	switch (ice_get_phy_model(hw)) {
+-	case ICE_PHY_ETH56G: {
+-		int port;
++	switch (hw->mac_type) {
++	case ICE_MAC_E810:
++		return 0;
++	case ICE_MAC_GENERIC: {
++		int quad;
+ 
+-		for (port = 0; port < hw->ptp.num_lports; port++) {
++		for (quad = 0; quad < ICE_GET_QUAD_NUM(hw->ptp.num_lports);
++		     quad++) {
+ 			int err;
+ 
+-			err = ice_phy_cfg_intr_eth56g(hw, port, ena, threshold);
++			err = ice_phy_cfg_intr_e82x(hw, quad, ena, threshold);
+ 			if (err) {
+-				dev_err(dev, "Failed to configure PHY interrupt for port %d, err %d\n",
+-					port, err);
++				dev_err(dev, "Failed to configure PHY interrupt for quad %d, err %d\n",
++					quad, err);
+ 				return err;
+ 			}
+ 		}
+ 
+ 		return 0;
+ 	}
+-	case ICE_PHY_E82X: {
+-		int quad;
++	case ICE_MAC_GENERIC_3K_E825: {
++		int port;
+ 
+-		for (quad = 0; quad < ICE_GET_QUAD_NUM(hw->ptp.num_lports);
+-		     quad++) {
++		for (port = 0; port < hw->ptp.num_lports; port++) {
+ 			int err;
+ 
+-			err = ice_phy_cfg_intr_e82x(hw, quad, ena, threshold);
++			err = ice_phy_cfg_intr_eth56g(hw, port, ena, threshold);
+ 			if (err) {
+-				dev_err(dev, "Failed to configure PHY interrupt for quad %d, err %d\n",
+-					quad, err);
++				dev_err(dev, "Failed to configure PHY interrupt for port %d, err %d\n",
++					port, err);
+ 				return err;
+ 			}
+ 		}
+ 
+ 		return 0;
+ 	}
+-	case ICE_PHY_E810:
+-		return 0;
+-	case ICE_PHY_UNSUP:
++	case ICE_MAC_UNKNOWN:
+ 	default:
+-		dev_warn(dev, "%s: Unexpected PHY model %d\n", __func__,
+-			 ice_get_phy_model(hw));
+ 		return -EOPNOTSUPP;
+ 	}
+ }
+@@ -1740,7 +1739,7 @@ static int ice_ptp_write_perout(struct ice_hw *hw, unsigned int chan,
+ 	/* 0. Reset mode & out_en in AUX_OUT */
+ 	wr32(hw, GLTSYN_AUX_OUT(chan, tmr_idx), 0);
+ 
+-	if (ice_is_e825c(hw)) {
++	if (hw->mac_type == ICE_MAC_GENERIC_3K_E825) {
+ 		int err;
+ 
+ 		/* Enable/disable CGU 1PPS output for E825C */
+@@ -1825,7 +1824,7 @@ static int ice_ptp_cfg_perout(struct ice_pf *pf, struct ptp_perout_request *rq,
+ 		return ice_ptp_write_perout(hw, rq->index, gpio_pin, 0, 0);
+ 
+ 	if (strncmp(pf->ptp.pin_desc[pin_desc_idx].name, "1PPS", 64) == 0 &&
+-	    period != NSEC_PER_SEC && hw->ptp.phy_model == ICE_PHY_E82X) {
++	    period != NSEC_PER_SEC && hw->mac_type == ICE_MAC_GENERIC) {
+ 		dev_err(ice_pf_to_dev(pf), "1PPS pin supports only 1 s period\n");
+ 		return -EOPNOTSUPP;
+ 	}
+@@ -2080,7 +2079,7 @@ ice_ptp_settime64(struct ptp_clock_info *info, const struct timespec64 *ts)
+ 	/* For Vernier mode on E82X, we need to recalibrate after new settime.
+ 	 * Start with marking timestamps as invalid.
+ 	 */
+-	if (ice_get_phy_model(hw) == ICE_PHY_E82X) {
++	if (hw->mac_type == ICE_MAC_GENERIC) {
+ 		err = ice_ptp_clear_phy_offset_ready_e82x(hw);
+ 		if (err)
+ 			dev_warn(ice_pf_to_dev(pf), "Failed to mark timestamps as invalid before settime\n");
+@@ -2104,7 +2103,7 @@ ice_ptp_settime64(struct ptp_clock_info *info, const struct timespec64 *ts)
+ 	ice_ptp_enable_all_perout(pf);
+ 
+ 	/* Recalibrate and re-enable timestamp blocks for E822/E823 */
+-	if (ice_get_phy_model(hw) == ICE_PHY_E82X)
++	if (hw->mac_type == ICE_MAC_GENERIC)
+ 		ice_ptp_restart_all_phy(pf);
+ exit:
+ 	if (err) {
+@@ -2558,7 +2557,7 @@ static void ice_ptp_set_funcs_e82x(struct ice_pf *pf)
+ 		pf->ptp.info.getcrosststamp = ice_ptp_getcrosststamp_e82x;
+ 
+ #endif /* CONFIG_ICE_HWTS */
+-	if (ice_is_e825c(&pf->hw)) {
++	if (pf->hw.mac_type == ICE_MAC_GENERIC_3K_E825) {
+ 		pf->ptp.ice_pin_desc = ice_pin_desc_e825c;
+ 		pf->ptp.info.n_pins = ICE_PIN_DESC_ARR_LEN(ice_pin_desc_e825c);
+ 	} else {
+@@ -2646,10 +2645,17 @@ static void ice_ptp_set_caps(struct ice_pf *pf)
+ 	info->enable = ice_ptp_gpio_enable;
+ 	info->verify = ice_verify_pin;
+ 
+-	if (ice_is_e810(&pf->hw))
++	switch (pf->hw.mac_type) {
++	case ICE_MAC_E810:
+ 		ice_ptp_set_funcs_e810(pf);
+-	else
++		return;
++	case ICE_MAC_GENERIC:
++	case ICE_MAC_GENERIC_3K_E825:
+ 		ice_ptp_set_funcs_e82x(pf);
++		return;
++	default:
++		return;
++	}
  }
  
  /**
-- * ice_gnss_is_gps_present - Check if GPS HW is present
-+ * ice_gnss_is_module_present - Check if GNSS HW is present
-  * @hw: pointer to HW struct
-+ *
-+ * Return: true when GNSS is present, false otherwise.
-  */
--bool ice_gnss_is_gps_present(struct ice_hw *hw)
-+bool ice_gnss_is_module_present(struct ice_hw *hw)
- {
--	if (!hw->func_caps.ts_func_info.src_tmr_owned)
--		return false;
-+	int err;
-+	u8 data;
+@@ -2779,7 +2785,7 @@ static void ice_ptp_maybe_trigger_tx_interrupt(struct ice_pf *pf)
+ 	bool trigger_oicr = false;
+ 	unsigned int i;
  
--	if (!ice_is_gps_in_netlist(hw))
-+	if (!hw->func_caps.ts_func_info.src_tmr_owned ||
-+	    !ice_is_gps_in_netlist(hw))
- 		return false;
+-	if (ice_is_e810(hw))
++	if (!pf->ptp.port.tx.has_ready_bitmap)
+ 		return;
  
--#if IS_ENABLED(CONFIG_PTP_1588_CLOCK)
--	if (ice_is_e810t(hw)) {
--		int err;
--		u8 data;
--
--		err = ice_read_pca9575_reg(hw, ICE_PCA9575_P0_IN, &data);
--		if (err || !!(data & ICE_P0_GNSS_PRSNT_N))
--			return false;
--	} else {
--		return false;
+ 	if (!ice_pf_src_tmr_owned(pf))
+@@ -2914,14 +2920,12 @@ static int ice_ptp_rebuild_owner(struct ice_pf *pf)
+ 	 */
+ 	ice_ptp_flush_all_tx_tracker(pf);
+ 
+-	if (!ice_is_e810(hw)) {
+-		/* Enable quad interrupts */
+-		err = ice_ptp_cfg_phy_interrupt(pf, true, 1);
+-		if (err)
+-			return err;
++	/* Enable quad interrupts */
++	err = ice_ptp_cfg_phy_interrupt(pf, true, 1);
++	if (err)
++		return err;
+ 
+-		ice_ptp_restart_all_phy(pf);
 -	}
--#else
--	if (!ice_is_e810t(hw))
-+	err = ice_read_pca9575_reg(hw, ICE_PCA9575_P0_IN, &data);
-+	if (err || !!(data & ICE_P0_GNSS_PRSNT_N))
- 		return false;
--#endif /* IS_ENABLED(CONFIG_PTP_1588_CLOCK) */
++	ice_ptp_restart_all_phy(pf);
  
- 	return true;
- }
-diff --git a/drivers/net/ethernet/intel/ice/ice_gnss.h b/drivers/net/ethernet/intel/ice/ice_gnss.h
-index 75e567ad70594..15daf603ed7bf 100644
---- a/drivers/net/ethernet/intel/ice/ice_gnss.h
-+++ b/drivers/net/ethernet/intel/ice/ice_gnss.h
-@@ -37,11 +37,11 @@ struct gnss_serial {
- #if IS_ENABLED(CONFIG_GNSS)
- void ice_gnss_init(struct ice_pf *pf);
- void ice_gnss_exit(struct ice_pf *pf);
--bool ice_gnss_is_gps_present(struct ice_hw *hw);
-+bool ice_gnss_is_module_present(struct ice_hw *hw);
- #else
- static inline void ice_gnss_init(struct ice_pf *pf) { }
- static inline void ice_gnss_exit(struct ice_pf *pf) { }
--static inline bool ice_gnss_is_gps_present(struct ice_hw *hw)
-+static inline bool ice_gnss_is_module_present(struct ice_hw *hw)
+ 	/* Re-enable all periodic outputs and external timestamp events */
+ 	ice_ptp_enable_all_perout(pf);
+@@ -2973,8 +2977,9 @@ void ice_ptp_rebuild(struct ice_pf *pf, enum ice_reset_req reset_type)
+ 
+ static bool ice_is_primary(struct ice_hw *hw)
  {
- 	return false;
+-	return ice_is_e825c(hw) && ice_is_dual(hw) ?
+-		!!(hw->dev_caps.nac_topo.mode & ICE_NAC_TOPO_PRIMARY_M) : true;
++	return hw->mac_type == ICE_MAC_GENERIC_3K_E825 && ice_is_dual(hw) ?
++		       !!(hw->dev_caps.nac_topo.mode & ICE_NAC_TOPO_PRIMARY_M) :
++		       true;
  }
-diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index d0faa087793da..e0785e820d601 100644
---- a/drivers/net/ethernet/intel/ice/ice_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -3882,7 +3882,7 @@ void ice_init_feature_support(struct ice_pf *pf)
- 			ice_set_feature_support(pf, ICE_F_CGU);
- 		if (ice_is_clock_mux_in_netlist(&pf->hw))
- 			ice_set_feature_support(pf, ICE_F_SMA_CTRL);
--		if (ice_gnss_is_gps_present(&pf->hw))
-+		if (ice_gnss_is_module_present(&pf->hw))
- 			ice_set_feature_support(pf, ICE_F_GNSS);
- 		break;
+ 
+ static int ice_ptp_setup_adapter(struct ice_pf *pf)
+@@ -2992,7 +2997,7 @@ static int ice_ptp_setup_pf(struct ice_pf *pf)
+ 	struct ice_ptp *ctrl_ptp = ice_get_ctrl_ptp(pf);
+ 	struct ice_ptp *ptp = &pf->ptp;
+ 
+-	if (WARN_ON(!ctrl_ptp) || ice_get_phy_model(&pf->hw) == ICE_PHY_UNSUP)
++	if (WARN_ON(!ctrl_ptp) || pf->hw.mac_type == ICE_MAC_UNKNOWN)
+ 		return -ENODEV;
+ 
+ 	INIT_LIST_HEAD(&ptp->port.list_node);
+@@ -3009,7 +3014,7 @@ static void ice_ptp_cleanup_pf(struct ice_pf *pf)
+ {
+ 	struct ice_ptp *ptp = &pf->ptp;
+ 
+-	if (ice_get_phy_model(&pf->hw) != ICE_PHY_UNSUP) {
++	if (pf->hw.mac_type != ICE_MAC_UNKNOWN) {
+ 		mutex_lock(&pf->adapter->ports.lock);
+ 		list_del(&ptp->port.list_node);
+ 		mutex_unlock(&pf->adapter->ports.lock);
+@@ -3136,18 +3141,18 @@ static int ice_ptp_init_port(struct ice_pf *pf, struct ice_ptp_port *ptp_port)
+ 
+ 	mutex_init(&ptp_port->ps_lock);
+ 
+-	switch (ice_get_phy_model(hw)) {
+-	case ICE_PHY_ETH56G:
+-		return ice_ptp_init_tx_eth56g(pf, &ptp_port->tx,
+-					      ptp_port->port_num);
+-	case ICE_PHY_E810:
++	switch (hw->mac_type) {
++	case ICE_MAC_E810:
+ 		return ice_ptp_init_tx_e810(pf, &ptp_port->tx);
+-	case ICE_PHY_E82X:
++	case ICE_MAC_GENERIC:
+ 		kthread_init_delayed_work(&ptp_port->ov_work,
+ 					  ice_ptp_wait_for_offsets);
+ 
+ 		return ice_ptp_init_tx_e82x(pf, &ptp_port->tx,
+ 					    ptp_port->port_num);
++	case ICE_MAC_GENERIC_3K_E825:
++		return ice_ptp_init_tx_eth56g(pf, &ptp_port->tx,
++					      ptp_port->port_num);
  	default:
+ 		return -ENODEV;
+ 	}
+@@ -3164,8 +3169,8 @@ static int ice_ptp_init_port(struct ice_pf *pf, struct ice_ptp_port *ptp_port)
+  */
+ static void ice_ptp_init_tx_interrupt_mode(struct ice_pf *pf)
+ {
+-	switch (ice_get_phy_model(&pf->hw)) {
+-	case ICE_PHY_E82X:
++	switch (pf->hw.mac_type) {
++	case ICE_MAC_GENERIC:
+ 		/* E822 based PHY has the clock owner process the interrupt
+ 		 * for all ports.
+ 		 */
 diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-index ec91822e92806..53ce40fa2fe6b 100644
+index 53ce40fa2fe6b..8475d422f1ec4 100644
 --- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
 +++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-@@ -5315,68 +5315,6 @@ ice_get_phy_tx_tstamp_ready_e810(struct ice_hw *hw, u8 port, u64 *tstamp_ready)
-  * to access the extended GPIOs available.
-  */
+@@ -746,7 +746,7 @@ static int ice_init_cgu_e82x(struct ice_hw *hw)
+ 	int err;
  
--/**
-- * ice_get_pca9575_handle
-- * @hw: pointer to the hw struct
-- * @pca9575_handle: GPIO controller's handle
-- *
-- * Find and return the GPIO controller's handle in the netlist.
-- * When found - the value will be cached in the hw structure and following calls
-- * will return cached value
-- */
--static int
--ice_get_pca9575_handle(struct ice_hw *hw, u16 *pca9575_handle)
--{
--	struct ice_aqc_get_link_topo *cmd;
--	struct ice_aq_desc desc;
--	int status;
--	u8 idx;
--
--	/* If handle was read previously return cached value */
--	if (hw->io_expander_handle) {
--		*pca9575_handle = hw->io_expander_handle;
--		return 0;
--	}
--
--	/* If handle was not detected read it from the netlist */
--	cmd = &desc.params.get_link_topo;
--	ice_fill_dflt_direct_cmd_desc(&desc, ice_aqc_opc_get_link_topo);
--
--	/* Set node type to GPIO controller */
--	cmd->addr.topo_params.node_type_ctx =
--		(ICE_AQC_LINK_TOPO_NODE_TYPE_M &
--		 ICE_AQC_LINK_TOPO_NODE_TYPE_GPIO_CTRL);
--
--#define SW_PCA9575_SFP_TOPO_IDX		2
--#define SW_PCA9575_QSFP_TOPO_IDX	1
--
--	/* Check if the SW IO expander controlling SMA exists in the netlist. */
--	if (hw->device_id == ICE_DEV_ID_E810C_SFP)
--		idx = SW_PCA9575_SFP_TOPO_IDX;
--	else if (hw->device_id == ICE_DEV_ID_E810C_QSFP)
--		idx = SW_PCA9575_QSFP_TOPO_IDX;
--	else
--		return -EOPNOTSUPP;
--
--	cmd->addr.topo_params.index = idx;
--
--	status = ice_aq_send_cmd(hw, &desc, NULL, 0, NULL);
--	if (status)
--		return -EOPNOTSUPP;
--
--	/* Verify if we found the right IO expander type */
--	if (desc.params.get_link_topo.node_part_num !=
--		ICE_AQC_GET_LINK_TOPO_NODE_NR_PCA9575)
--		return -EOPNOTSUPP;
--
--	/* If present save the handle and return it */
--	hw->io_expander_handle =
--		le16_to_cpu(desc.params.get_link_topo.addr.handle);
--	*pca9575_handle = hw->io_expander_handle;
--
--	return 0;
--}
--
- /**
-  * ice_read_sma_ctrl
-  * @hw: pointer to the hw struct
-@@ -5441,37 +5379,6 @@ int ice_write_sma_ctrl(struct ice_hw *hw, u8 data)
- 	return status;
+ 	/* Disable sticky lock detection so lock err reported is accurate */
+-	if (ice_is_e825c(hw))
++	if (hw->mac_type == ICE_MAC_GENERIC_3K_E825)
+ 		err = ice_cfg_cgu_pll_dis_sticky_bits_e825c(hw);
+ 	else
+ 		err = ice_cfg_cgu_pll_dis_sticky_bits_e82x(hw);
+@@ -756,7 +756,7 @@ static int ice_init_cgu_e82x(struct ice_hw *hw)
+ 	/* Configure the CGU PLL using the parameters from the function
+ 	 * capabilities.
+ 	 */
+-	if (ice_is_e825c(hw))
++	if (hw->mac_type == ICE_MAC_GENERIC_3K_E825)
+ 		err = ice_cfg_cgu_pll_e825c(hw, ts_info->time_ref,
+ 					    (enum ice_clk_src)ts_info->clk_src);
+ 	else
+@@ -827,8 +827,8 @@ static u32 ice_ptp_tmr_cmd_to_port_reg(struct ice_hw *hw,
+ 	/* Certain hardware families share the same register values for the
+ 	 * port register and source timer register.
+ 	 */
+-	switch (ice_get_phy_model(hw)) {
+-	case ICE_PHY_E810:
++	switch (hw->mac_type) {
++	case ICE_MAC_E810:
+ 		return ice_ptp_tmr_cmd_to_src_reg(hw, cmd) & TS_CMD_MASK_E810;
+ 	default:
+ 		break;
+@@ -2729,10 +2729,7 @@ static void ice_ptp_init_phy_e825(struct ice_hw *hw)
+ {
+ 	struct ice_ptp_hw *ptp = &hw->ptp;
+ 	struct ice_eth56g_params *params;
+-	u32 phy_rev;
+-	int err;
+ 
+-	ptp->phy_model = ICE_PHY_ETH56G;
+ 	params = &ptp->phy.eth56g;
+ 	params->onestep_ena = false;
+ 	params->peer_delay = 0;
+@@ -2742,9 +2739,6 @@ static void ice_ptp_init_phy_e825(struct ice_hw *hw)
+ 	ptp->num_lports = params->num_phys * ptp->ports_per_phy;
+ 
+ 	ice_sb_access_ena_eth56g(hw, true);
+-	err = ice_read_phy_eth56g(hw, hw->pf_id, PHY_REG_REVISION, &phy_rev);
+-	if (err || phy_rev != PHY_REVISION_ETH56G)
+-		ptp->phy_model = ICE_PHY_UNSUP;
  }
  
--/**
-- * ice_read_pca9575_reg
-- * @hw: pointer to the hw struct
-- * @offset: GPIO controller register offset
-- * @data: pointer to data to be read from the GPIO controller
-- *
-- * Read the register from the GPIO controller
-- */
--int ice_read_pca9575_reg(struct ice_hw *hw, u8 offset, u8 *data)
--{
--	struct ice_aqc_link_topo_addr link_topo;
--	__le16 addr;
--	u16 handle;
--	int err;
--
--	memset(&link_topo, 0, sizeof(link_topo));
--
--	err = ice_get_pca9575_handle(hw, &handle);
--	if (err)
--		return err;
--
--	link_topo.handle = cpu_to_le16(handle);
--	link_topo.topo_params.node_type_ctx =
--		FIELD_PREP(ICE_AQC_LINK_TOPO_NODE_CTX_M,
--			   ICE_AQC_LINK_TOPO_NODE_CTX_PROVIDED);
--
--	addr = cpu_to_le16((u16)offset);
--
--	return ice_aq_read_i2c(hw, link_topo, 0, addr, 1, data, NULL);
--}
--
+ /* E822 family functions
+@@ -4792,7 +4786,6 @@ int ice_phy_cfg_intr_e82x(struct ice_hw *hw, u8 quad, bool ena, u8 threshold)
+  */
+ static void ice_ptp_init_phy_e82x(struct ice_ptp_hw *ptp)
+ {
+-	ptp->phy_model = ICE_PHY_E82X;
+ 	ptp->num_lports = 8;
+ 	ptp->ports_per_phy = 8;
+ }
+@@ -5445,7 +5438,6 @@ int ice_ptp_read_sdp_ac(struct ice_hw *hw, __le16 *entries, uint *num_entries)
+  */
+ static void ice_ptp_init_phy_e810(struct ice_ptp_hw *ptp)
+ {
+-	ptp->phy_model = ICE_PHY_E810;
+ 	ptp->num_lports = 8;
+ 	ptp->ports_per_phy = 4;
+ 
+@@ -5454,9 +5446,8 @@ static void ice_ptp_init_phy_e810(struct ice_ptp_hw *ptp)
+ 
+ /* Device agnostic functions
+  *
+- * The following functions implement shared behavior common to both E822 and
+- * E810 devices, possibly calling a device specific implementation where
+- * necessary.
++ * The following functions implement shared behavior common to all devices,
++ * possibly calling a device specific implementation where necessary.
+  */
+ 
  /**
-  * ice_ptp_read_sdp_ac - read SDP available connections section from NVM
-  * @hw: pointer to the HW struct
+@@ -5519,14 +5510,19 @@ void ice_ptp_init_hw(struct ice_hw *hw)
+ {
+ 	struct ice_ptp_hw *ptp = &hw->ptp;
+ 
+-	if (ice_is_e822(hw) || ice_is_e823(hw))
+-		ice_ptp_init_phy_e82x(ptp);
+-	else if (ice_is_e810(hw))
++	switch (hw->mac_type) {
++	case ICE_MAC_E810:
+ 		ice_ptp_init_phy_e810(ptp);
+-	else if (ice_is_e825c(hw))
++		break;
++	case ICE_MAC_GENERIC:
++		ice_ptp_init_phy_e82x(ptp);
++		break;
++	case ICE_MAC_GENERIC_3K_E825:
+ 		ice_ptp_init_phy_e825(hw);
+-	else
+-		ptp->phy_model = ICE_PHY_UNSUP;
++		break;
++	default:
++		return;
++	}
+ }
+ 
+ /**
+@@ -5547,11 +5543,11 @@ void ice_ptp_init_hw(struct ice_hw *hw)
+ static int ice_ptp_write_port_cmd(struct ice_hw *hw, u8 port,
+ 				  enum ice_ptp_tmr_cmd cmd)
+ {
+-	switch (ice_get_phy_model(hw)) {
+-	case ICE_PHY_ETH56G:
+-		return ice_ptp_write_port_cmd_eth56g(hw, port, cmd);
+-	case ICE_PHY_E82X:
++	switch (hw->mac_type) {
++	case ICE_MAC_GENERIC:
+ 		return ice_ptp_write_port_cmd_e82x(hw, port, cmd);
++	case ICE_MAC_GENERIC_3K_E825:
++		return ice_ptp_write_port_cmd_eth56g(hw, port, cmd);
+ 	default:
+ 		return -EOPNOTSUPP;
+ 	}
+@@ -5612,8 +5608,8 @@ static int ice_ptp_port_cmd(struct ice_hw *hw, enum ice_ptp_tmr_cmd cmd)
+ 	u32 port;
+ 
+ 	/* PHY models which can program all ports simultaneously */
+-	switch (ice_get_phy_model(hw)) {
+-	case ICE_PHY_E810:
++	switch (hw->mac_type) {
++	case ICE_MAC_E810:
+ 		return ice_ptp_port_cmd_e810(hw, cmd);
+ 	default:
+ 		break;
+@@ -5691,17 +5687,17 @@ int ice_ptp_init_time(struct ice_hw *hw, u64 time)
+ 
+ 	/* PHY timers */
+ 	/* Fill Rx and Tx ports and send msg to PHY */
+-	switch (ice_get_phy_model(hw)) {
+-	case ICE_PHY_ETH56G:
+-		err = ice_ptp_prep_phy_time_eth56g(hw,
+-						   (u32)(time & 0xFFFFFFFF));
+-		break;
+-	case ICE_PHY_E810:
++	switch (hw->mac_type) {
++	case ICE_MAC_E810:
+ 		err = ice_ptp_prep_phy_time_e810(hw, time & 0xFFFFFFFF);
+ 		break;
+-	case ICE_PHY_E82X:
++	case ICE_MAC_GENERIC:
+ 		err = ice_ptp_prep_phy_time_e82x(hw, time & 0xFFFFFFFF);
+ 		break;
++	case ICE_MAC_GENERIC_3K_E825:
++		err = ice_ptp_prep_phy_time_eth56g(hw,
++						   (u32)(time & 0xFFFFFFFF));
++		break;
+ 	default:
+ 		err = -EOPNOTSUPP;
+ 	}
+@@ -5737,16 +5733,16 @@ int ice_ptp_write_incval(struct ice_hw *hw, u64 incval)
+ 	wr32(hw, GLTSYN_SHADJ_L(tmr_idx), lower_32_bits(incval));
+ 	wr32(hw, GLTSYN_SHADJ_H(tmr_idx), upper_32_bits(incval));
+ 
+-	switch (ice_get_phy_model(hw)) {
+-	case ICE_PHY_ETH56G:
+-		err = ice_ptp_prep_phy_incval_eth56g(hw, incval);
+-		break;
+-	case ICE_PHY_E810:
++	switch (hw->mac_type) {
++	case ICE_MAC_E810:
+ 		err = ice_ptp_prep_phy_incval_e810(hw, incval);
+ 		break;
+-	case ICE_PHY_E82X:
++	case ICE_MAC_GENERIC:
+ 		err = ice_ptp_prep_phy_incval_e82x(hw, incval);
+ 		break;
++	case ICE_MAC_GENERIC_3K_E825:
++		err = ice_ptp_prep_phy_incval_eth56g(hw, incval);
++		break;
+ 	default:
+ 		err = -EOPNOTSUPP;
+ 	}
+@@ -5806,16 +5802,16 @@ int ice_ptp_adj_clock(struct ice_hw *hw, s32 adj)
+ 	wr32(hw, GLTSYN_SHADJ_L(tmr_idx), 0);
+ 	wr32(hw, GLTSYN_SHADJ_H(tmr_idx), adj);
+ 
+-	switch (ice_get_phy_model(hw)) {
+-	case ICE_PHY_ETH56G:
+-		err = ice_ptp_prep_phy_adj_eth56g(hw, adj);
+-		break;
+-	case ICE_PHY_E810:
++	switch (hw->mac_type) {
++	case ICE_MAC_E810:
+ 		err = ice_ptp_prep_phy_adj_e810(hw, adj);
+ 		break;
+-	case ICE_PHY_E82X:
++	case ICE_MAC_GENERIC:
+ 		err = ice_ptp_prep_phy_adj_e82x(hw, adj);
+ 		break;
++	case ICE_MAC_GENERIC_3K_E825:
++		err = ice_ptp_prep_phy_adj_eth56g(hw, adj);
++		break;
+ 	default:
+ 		err = -EOPNOTSUPP;
+ 	}
+@@ -5839,13 +5835,13 @@ int ice_ptp_adj_clock(struct ice_hw *hw, s32 adj)
+  */
+ int ice_read_phy_tstamp(struct ice_hw *hw, u8 block, u8 idx, u64 *tstamp)
+ {
+-	switch (ice_get_phy_model(hw)) {
+-	case ICE_PHY_ETH56G:
+-		return ice_read_ptp_tstamp_eth56g(hw, block, idx, tstamp);
+-	case ICE_PHY_E810:
++	switch (hw->mac_type) {
++	case ICE_MAC_E810:
+ 		return ice_read_phy_tstamp_e810(hw, block, idx, tstamp);
+-	case ICE_PHY_E82X:
++	case ICE_MAC_GENERIC:
+ 		return ice_read_phy_tstamp_e82x(hw, block, idx, tstamp);
++	case ICE_MAC_GENERIC_3K_E825:
++		return ice_read_ptp_tstamp_eth56g(hw, block, idx, tstamp);
+ 	default:
+ 		return -EOPNOTSUPP;
+ 	}
+@@ -5869,13 +5865,13 @@ int ice_read_phy_tstamp(struct ice_hw *hw, u8 block, u8 idx, u64 *tstamp)
+  */
+ int ice_clear_phy_tstamp(struct ice_hw *hw, u8 block, u8 idx)
+ {
+-	switch (ice_get_phy_model(hw)) {
+-	case ICE_PHY_ETH56G:
+-		return ice_clear_ptp_tstamp_eth56g(hw, block, idx);
+-	case ICE_PHY_E810:
++	switch (hw->mac_type) {
++	case ICE_MAC_E810:
+ 		return ice_clear_phy_tstamp_e810(hw, block, idx);
+-	case ICE_PHY_E82X:
++	case ICE_MAC_GENERIC:
+ 		return ice_clear_phy_tstamp_e82x(hw, block, idx);
++	case ICE_MAC_GENERIC_3K_E825:
++		return ice_clear_ptp_tstamp_eth56g(hw, block, idx);
+ 	default:
+ 		return -EOPNOTSUPP;
+ 	}
+@@ -5932,14 +5928,14 @@ static int ice_get_pf_c827_idx(struct ice_hw *hw, u8 *idx)
+  */
+ void ice_ptp_reset_ts_memory(struct ice_hw *hw)
+ {
+-	switch (ice_get_phy_model(hw)) {
+-	case ICE_PHY_ETH56G:
+-		ice_ptp_reset_ts_memory_eth56g(hw);
+-		break;
+-	case ICE_PHY_E82X:
++	switch (hw->mac_type) {
++	case ICE_MAC_GENERIC:
+ 		ice_ptp_reset_ts_memory_e82x(hw);
+ 		break;
+-	case ICE_PHY_E810:
++	case ICE_MAC_GENERIC_3K_E825:
++		ice_ptp_reset_ts_memory_eth56g(hw);
++		break;
++	case ICE_MAC_E810:
+ 	default:
+ 		return;
+ 	}
+@@ -5961,13 +5957,13 @@ int ice_ptp_init_phc(struct ice_hw *hw)
+ 	/* Clear event err indications for auxiliary pins */
+ 	(void)rd32(hw, GLTSYN_STAT(src_idx));
+ 
+-	switch (ice_get_phy_model(hw)) {
+-	case ICE_PHY_ETH56G:
+-		return ice_ptp_init_phc_eth56g(hw);
+-	case ICE_PHY_E810:
++	switch (hw->mac_type) {
++	case ICE_MAC_E810:
+ 		return ice_ptp_init_phc_e810(hw);
+-	case ICE_PHY_E82X:
++	case ICE_MAC_GENERIC:
+ 		return ice_ptp_init_phc_e82x(hw);
++	case ICE_MAC_GENERIC_3K_E825:
++		return ice_ptp_init_phc_eth56g(hw);
+ 	default:
+ 		return -EOPNOTSUPP;
+ 	}
+@@ -5986,16 +5982,16 @@ int ice_ptp_init_phc(struct ice_hw *hw)
+  */
+ int ice_get_phy_tx_tstamp_ready(struct ice_hw *hw, u8 block, u64 *tstamp_ready)
+ {
+-	switch (ice_get_phy_model(hw)) {
+-	case ICE_PHY_ETH56G:
+-		return ice_get_phy_tx_tstamp_ready_eth56g(hw, block,
+-							  tstamp_ready);
+-	case ICE_PHY_E810:
++	switch (hw->mac_type) {
++	case ICE_MAC_E810:
+ 		return ice_get_phy_tx_tstamp_ready_e810(hw, block,
+ 							tstamp_ready);
+-	case ICE_PHY_E82X:
++	case ICE_MAC_GENERIC:
+ 		return ice_get_phy_tx_tstamp_ready_e82x(hw, block,
+ 							tstamp_ready);
++	case ICE_MAC_GENERIC_3K_E825:
++		return ice_get_phy_tx_tstamp_ready_eth56g(hw, block,
++							  tstamp_ready);
+ 		break;
+ 	default:
+ 		return -EOPNOTSUPP;
 diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.h b/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
-index 6779ce120515a..15f048d9b5823 100644
+index 15f048d9b5823..6b46794075584 100644
 --- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
 +++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
-@@ -395,7 +395,6 @@ int ice_phy_cfg_intr_e82x(struct ice_hw *hw, u8 quad, bool ena, u8 threshold);
- /* E810 family functions */
- int ice_read_sma_ctrl(struct ice_hw *hw, u8 *data);
- int ice_write_sma_ctrl(struct ice_hw *hw, u8 data);
--int ice_read_pca9575_reg(struct ice_hw *hw, u8 offset, u8 *data);
- int ice_ptp_read_sdp_ac(struct ice_hw *hw, __le16 *entries, uint *num_entries);
- int ice_cgu_get_num_pins(struct ice_hw *hw, bool input);
- enum dpll_pin_type ice_cgu_get_pin_type(struct ice_hw *hw, u8 pin, bool input);
+@@ -430,13 +430,13 @@ int ice_phy_cfg_ptp_1step_eth56g(struct ice_hw *hw, u8 port);
+  */
+ static inline u64 ice_get_base_incval(struct ice_hw *hw)
+ {
+-	switch (hw->ptp.phy_model) {
+-	case ICE_PHY_ETH56G:
+-		return ICE_ETH56G_NOMINAL_INCVAL;
+-	case ICE_PHY_E810:
++	switch (hw->mac_type) {
++	case ICE_MAC_E810:
+ 		return ICE_PTP_NOMINAL_INCVAL_E810;
+-	case ICE_PHY_E82X:
++	case ICE_MAC_GENERIC:
+ 		return ice_e82x_nominal_incval(ice_e82x_time_ref(hw));
++	case ICE_MAC_GENERIC_3K_E825:
++		return ICE_ETH56G_NOMINAL_INCVAL;
+ 	default:
+ 		return 0;
+ 	}
+diff --git a/drivers/net/ethernet/intel/ice/ice_type.h b/drivers/net/ethernet/intel/ice/ice_type.h
+index 33a1a5934c0d5..0aab21113cc43 100644
+--- a/drivers/net/ethernet/intel/ice/ice_type.h
++++ b/drivers/net/ethernet/intel/ice/ice_type.h
+@@ -871,14 +871,6 @@ union ice_phy_params {
+ 	struct ice_eth56g_params eth56g;
+ };
+ 
+-/* PHY model */
+-enum ice_phy_model {
+-	ICE_PHY_UNSUP = -1,
+-	ICE_PHY_E810 = 1,
+-	ICE_PHY_E82X,
+-	ICE_PHY_ETH56G,
+-};
+-
+ /* Global Link Topology */
+ enum ice_global_link_topo {
+ 	ICE_LINK_TOPO_UP_TO_2_LINKS,
+@@ -888,7 +880,6 @@ enum ice_global_link_topo {
+ };
+ 
+ struct ice_ptp_hw {
+-	enum ice_phy_model phy_model;
+ 	union ice_phy_params phy;
+ 	u8 num_lports;
+ 	u8 ports_per_phy;
 -- 
 2.39.5
 
