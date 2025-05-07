@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34BFB28BAA1;
-	Wed,  7 May 2025 18:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A55214813;
+	Wed,  7 May 2025 18:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643804; cv=none; b=ZCLXyCSlKA7Ub55as/fWbMU4NIqN5km6guIMThOGN7M2DmiKKggi2UWln4BAsYlS0fpEEaZQ7vP39Wxk5fmWVFGcaaxY6Md7QDt7/kgALEeQoDaJU3UmXhXUuInEfcDdnxy31aEjnwnUcg2bSVkxLia/AoErHG5aw1rA9rM/Cqc=
+	t=1746643808; cv=none; b=SKiXK4qmivvtlGPOmACR5Of+njxpCHdvpZnUH2RtCJZOWtt9Rpk889S3FKS/UEd2Xx+kzFKqA95uTnaxlQ+HsUMvSkKE9UHXpuGEC5jvmCIkFkPTXcEdrQRWXY150Tmz81/pxWk+HY46cCo1PV2CMBxk3wE27kUCORlmw1a0y2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643804; c=relaxed/simple;
-	bh=dRmjhrZhx1PoepoMCynZdPpU6in9C9KF9ZHslpwJQNA=;
+	s=arc-20240116; t=1746643808; c=relaxed/simple;
+	bh=tEp2dOwBdyqt6++z2QyXJZDw/wj5xNqcyNQTqwNIFeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OjwTL0Mp4hOhzAzGIhzMb1Ngb9K7/UK/OHAF8/1pJK3rJ8YDDICELacT5Okto2jNof8DYKqauTfA8/e9R1DCV3KHJYuIP90b859isSjdEWeP67LxYvkyuwpvOnsdh7FC2gFY+OFrmVzpKO54F27Bs1Hei3diMgO5WQ2S3A1yQCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z6UxsIxh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pfPiG01BgporXhXn1KbOQi1JAYQPtOPfRgTrxFBFWwrEBp2teuYaCktYcpH0YL4HG2g2m5bdFxWWSRihCa4de5xj4fmVR9G942dX7yx9cFa4VURPGZaAba++7VjzPkNCNkNcNTTasGZ/KnnALRSuwDktY/BsaCah/myqlcvGFoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9EeYHZf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6UxsIxh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8416C4CEE2;
-	Wed,  7 May 2025 18:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9EeYHZf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB86EC4CEE2;
+	Wed,  7 May 2025 18:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643804;
-	bh=dRmjhrZhx1PoepoMCynZdPpU6in9C9KF9ZHslpwJQNA=;
+	s=korg; t=1746643807;
+	bh=tEp2dOwBdyqt6++z2QyXJZDw/wj5xNqcyNQTqwNIFeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z6UxsIxh8xuVMmLivlgB3LiacDST/VxiQjk9AG3ZyWW/y+yE/OID27VRyRH9PQnF1
-	 DQTy7iGTtgriwZmkaEej8OPnLrSim9b153tKWOjDfrvmTAVPW6HRRNLzoZOCAtkVer
-	 0DL2YeiG4p2ggzPUNDu4A5dAHiM2ZwC4SC+3Vta0=
+	b=P9EeYHZfDkplqjyI7+Mb4xHjhXRXDyBI7qOZVlQNU2W+RdjRMMM8ekDNvPJiPwGtD
+	 S33INTbO7Kt93y+BGX2fQuR1u35YEgiCJnUMlbgOBjHGSdVBfXoxW4+j4Kpg1Ojadm
+	 HsgCB8yI02Y8BKRqoWaDRSJUFd7vM1Bti+KyiAH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ihar Salauyou <salauyou.ihar@gmail.com>,
-	Ruslan Piasetskyi <ruslan.piasetskyi@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.14 023/183] mmc: renesas_sdhi: Fix error handling in renesas_sdhi_probe
-Date: Wed,  7 May 2025 20:37:48 +0200
-Message-ID: <20250507183825.627687023@linuxfoundation.org>
+	Aaron Kling <webgeek1234@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.14 024/183] spi: tegra114: Dont fail set_cs_timing when delays are zero
+Date: Wed,  7 May 2025 20:37:49 +0200
+Message-ID: <20250507183825.666183188@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -53,68 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruslan Piasetskyi <ruslan.piasetskyi@gmail.com>
+From: Aaron Kling <webgeek1234@gmail.com>
 
-commit 649b50a82f09fa44c2f7a65618e4584072145ab7 upstream.
+commit 4426e6b4ecf632bb75d973051e1179b8bfac2320 upstream.
 
-After moving tmio_mmc_host_probe down, error handling has to be
-adjusted.
+The original code would skip null delay pointers, but when the pointers
+were converted to point within the spi_device struct, the check was not
+updated to skip delays of zero. Hence all spi devices that didn't set
+delays would fail to probe.
 
-Fixes: 74f45de394d9 ("mmc: renesas_sdhi: register irqs before registering controller")
-Reviewed-by: Ihar Salauyou <salauyou.ihar@gmail.com>
-Signed-off-by: Ruslan Piasetskyi <ruslan.piasetskyi@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Fixes: 04e6bb0d6bb1 ("spi: modify set_cs_timing parameter")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250326220638.460083-1-ruslan.piasetskyi@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+Link: https://patch.msgid.link/20250423-spi-tegra114-v1-1-2d608bcc12f9@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/renesas_sdhi_core.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/spi/spi-tegra114.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/mmc/host/renesas_sdhi_core.c
-+++ b/drivers/mmc/host/renesas_sdhi_core.c
-@@ -1112,26 +1112,26 @@ int renesas_sdhi_probe(struct platform_d
- 	num_irqs = platform_irq_count(pdev);
- 	if (num_irqs < 0) {
- 		ret = num_irqs;
--		goto eirq;
-+		goto edisclk;
- 	}
+--- a/drivers/spi/spi-tegra114.c
++++ b/drivers/spi/spi-tegra114.c
+@@ -728,9 +728,9 @@ static int tegra_spi_set_hw_cs_timing(st
+ 	u32 inactive_cycles;
+ 	u8 cs_state;
  
- 	/* There must be at least one IRQ source */
- 	if (!num_irqs) {
- 		ret = -ENXIO;
--		goto eirq;
-+		goto edisclk;
- 	}
- 
- 	for (i = 0; i < num_irqs; i++) {
- 		irq = platform_get_irq(pdev, i);
- 		if (irq < 0) {
- 			ret = irq;
--			goto eirq;
-+			goto edisclk;
- 		}
- 
- 		ret = devm_request_irq(&pdev->dev, irq, tmio_mmc_irq, 0,
- 				       dev_name(&pdev->dev), host);
- 		if (ret)
--			goto eirq;
-+			goto edisclk;
- 	}
- 
- 	ret = tmio_mmc_host_probe(host);
-@@ -1143,8 +1143,6 @@ int renesas_sdhi_probe(struct platform_d
- 
- 	return ret;
- 
--eirq:
--	tmio_mmc_host_remove(host);
- edisclk:
- 	renesas_sdhi_clk_disable(host);
- efree:
+-	if (setup->unit != SPI_DELAY_UNIT_SCK ||
+-	    hold->unit != SPI_DELAY_UNIT_SCK ||
+-	    inactive->unit != SPI_DELAY_UNIT_SCK) {
++	if ((setup->unit && setup->unit != SPI_DELAY_UNIT_SCK) ||
++	    (hold->unit && hold->unit != SPI_DELAY_UNIT_SCK) ||
++	    (inactive->unit && inactive->unit != SPI_DELAY_UNIT_SCK)) {
+ 		dev_err(&spi->dev,
+ 			"Invalid delay unit %d, should be SPI_DELAY_UNIT_SCK\n",
+ 			SPI_DELAY_UNIT_SCK);
 
 
