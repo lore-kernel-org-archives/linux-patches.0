@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C706E28BA9F;
-	Wed,  7 May 2025 19:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA7E28BA9F;
+	Wed,  7 May 2025 19:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644915; cv=none; b=Kxzimt5g3Rh0yOigMJNJi4YSMiOayGAoD83k1k2m8r8Dktt1FgIEdedzcC0A6ZwHLOv1Z5WAhIfFMrCKtezAwFvjQa/yOJ1WV41rzGJyUOih90ljUhP/2678R38gS1QDcYVk5d1vMeliBt0Pv8+WwoAJxdLWqLjcSFn4v5fNPm0=
+	t=1746644917; cv=none; b=oW+0gPZXLti3z1xqGgtfUuRy8fuVK8GHxfwd/ygxIMza9nTXPMZI3jb0nw5UoFF5yECmV4qPxtMscYwXE7f7Xa0ptuVJtA8uZEU9jexSte2RQH/XgnCB5tgXmg4QBDxakGFpm5eZ8fMVw+ExcRvDaaCxXhIqH10sLEoiQfSaXJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644915; c=relaxed/simple;
-	bh=n6pCJKxegKGSpZR5yA5gbOA1jRZ67Q+SmR3ViptnOEo=;
+	s=arc-20240116; t=1746644917; c=relaxed/simple;
+	bh=MFMGrS2+3YoGTrbJVbLYHUErg9yO6vSlBeT0HU5k4h4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eTYrZU6CFKnzlD80ex8fFLJibNI7QHIPnOuwcmr9n+SYZrFIChS4R8n6JfVZ1kiszVbmQ9trxvTXGiETVe4ruePMzQPW28wwtNkTtU7qTBlG4a2ofHlgQHc+JJTwDQWvA/JrSOiMUTRwr/Lv3ZET1UhugC9Rk+EOAC4KwnQrBuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ocTjrkZx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eUnYGdyr8hedGUMljPIcP0HTyaufObfOeEWcWd8VYDXc/U1l5bd1iF5zSGJ55msWvthN0U8FTU80cRoPTESQ5m79jH2EEDlY69FFUqAfVLYUu0+iE+vBOmBgWH57UYvaxbCp4x+Hh+gKZZOTxtZJoxcUs4AcfYMsbIXfH84dvJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xMJ5Qedv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ocTjrkZx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B3FC4CEE2;
-	Wed,  7 May 2025 19:08:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMJ5Qedv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3335C4CEE2;
+	Wed,  7 May 2025 19:08:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644914;
-	bh=n6pCJKxegKGSpZR5yA5gbOA1jRZ67Q+SmR3ViptnOEo=;
+	s=korg; t=1746644917;
+	bh=MFMGrS2+3YoGTrbJVbLYHUErg9yO6vSlBeT0HU5k4h4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ocTjrkZx4u30wsYdQmUGtuoEn57IelTpeHCxK04vd03cQyXx+iQqmGisnuNF97XXG
-	 d6TlZoWhJBJqC8w/9pU98IquWIdg9HHVPF6PWMqcpGUQ5qLsSaTb7tWJFCEAjn3cUD
-	 H6SDLf9wlscwUCqWzKUWZdFTzrohs3m5m2dDpqLk=
+	b=xMJ5QedvmWeFgqxJQ4GLrqau++wBtXrrehIUXmH4sWkx90dfhyebu3Ir/OWp/Ozj6
+	 kJtri5dt973CBZdhhKIA23U+rhtyfyC7ppFrFrvrxDNKJdqKSdQvbQCLSyWuY9FSUw
+	 JGTF3/4HwxnloBdKJj3pr763F3NIyhfYz8r3nC4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Nick Zavaritsky <mejedi@gmail.com>,
 	Eduard Zingerman <eddyz87@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Subject: [PATCH 6.6 034/129] bpf: refactor bpf_helper_changes_pkt_data to use helper number
-Date: Wed,  7 May 2025 20:39:30 +0200
-Message-ID: <20250507183814.907269021@linuxfoundation.org>
+Subject: [PATCH 6.6 035/129] bpf: track changes_pkt_data property for global functions
+Date: Wed,  7 May 2025 20:39:31 +0200
+Message-ID: <20250507183814.951072893@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -53,130 +54,160 @@ Content-Transfer-Encoding: 8bit
 
 From: Eduard Zingerman <eddyz87@gmail.com>
 
-commit b238e187b4a2d3b54d80aec05a9cab6466b79dde upstream.
+commit 51081a3f25c742da5a659d7fc6fd77ebfdd555be upstream.
 
-Use BPF helper number instead of function pointer in
-bpf_helper_changes_pkt_data(). This would simplify usage of this
-function in verifier.c:check_cfg() (in a follow-up patch),
-where only helper number is easily available and there is no real need
-to lookup helper proto.
+When processing calls to certain helpers, verifier invalidates all
+packet pointers in a current state. For example, consider the
+following program:
 
+    __attribute__((__noinline__))
+    long skb_pull_data(struct __sk_buff *sk, __u32 len)
+    {
+        return bpf_skb_pull_data(sk, len);
+    }
+
+    SEC("tc")
+    int test_invalidate_checks(struct __sk_buff *sk)
+    {
+        int *p = (void *)(long)sk->data;
+        if ((void *)(p + 1) > (void *)(long)sk->data_end) return TCX_DROP;
+        skb_pull_data(sk, 0);
+        *p = 42;
+        return TCX_PASS;
+    }
+
+After a call to bpf_skb_pull_data() the pointer 'p' can't be used
+safely. See function filter.c:bpf_helper_changes_pkt_data() for a list
+of such helpers.
+
+At the moment verifier invalidates packet pointers when processing
+helper function calls, and does not traverse global sub-programs when
+processing calls to global sub-programs. This means that calls to
+helpers done from global sub-programs do not invalidate pointers in
+the caller state. E.g. the program above is unsafe, but is not
+rejected by verifier.
+
+This commit fixes the omission by computing field
+bpf_subprog_info->changes_pkt_data for each sub-program before main
+verification pass.
+changes_pkt_data should be set if:
+- subprogram calls helper for which bpf_helper_changes_pkt_data
+  returns true;
+- subprogram calls a global function,
+  for which bpf_subprog_info->changes_pkt_data should be set.
+
+The verifier.c:check_cfg() pass is modified to compute this
+information. The commit relies on depth first instruction traversal
+done by check_cfg() and absence of recursive function calls:
+- check_cfg() would eventually visit every call to subprogram S in a
+  state when S is fully explored;
+- when S is fully explored:
+  - every direct helper call within S is explored
+    (and thus changes_pkt_data is set if needed);
+  - every call to subprogram S1 called by S was visited with S1 fully
+    explored (and thus S inherits changes_pkt_data from S1).
+
+The downside of such approach is that dead code elimination is not
+taken into account: if a helper call inside global function is dead
+because of current configuration, verifier would conservatively assume
+that the call occurs for the purpose of the changes_pkt_data
+computation.
+
+Reported-by: Nick Zavaritsky <mejedi@gmail.com>
+Closes: https://lore.kernel.org/bpf/0498CA22-5779-4767-9C0C-A9515CEA711F@gmail.com/
 Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20241210041100.1898468-3-eddyz87@gmail.com
+Link: https://lore.kernel.org/r/20241210041100.1898468-4-eddyz87@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+[shung-hsi.yu: do not use bitfield in "struct bpf_subprog_info" because commit
+406a6fa44bfb ("bpf: use bitfields for simple per-subprog bool flags") is not
+present and minor context difference in check_func_call() because commit
+491dd8edecbc ("bpf: Emit global subprog name in verifier logs") is not present. ]
 Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/filter.h |    2 -
- kernel/bpf/core.c      |    2 -
- kernel/bpf/verifier.c  |    2 -
- net/core/filter.c      |   61 +++++++++++++++++++++----------------------------
- 4 files changed, 30 insertions(+), 37 deletions(-)
+ include/linux/bpf_verifier.h |    1 +
+ kernel/bpf/verifier.c        |   32 +++++++++++++++++++++++++++++++-
+ 2 files changed, 32 insertions(+), 1 deletion(-)
 
---- a/include/linux/filter.h
-+++ b/include/linux/filter.h
-@@ -915,7 +915,7 @@ bool bpf_jit_needs_zext(void);
- bool bpf_jit_supports_subprog_tailcalls(void);
- bool bpf_jit_supports_kfunc_call(void);
- bool bpf_jit_supports_far_kfunc_call(void);
--bool bpf_helper_changes_pkt_data(void *func);
-+bool bpf_helper_changes_pkt_data(enum bpf_func_id func_id);
+--- a/include/linux/bpf_verifier.h
++++ b/include/linux/bpf_verifier.h
+@@ -573,6 +573,7 @@ struct bpf_subprog_info {
+ 	bool tail_call_reachable;
+ 	bool has_ld_abs;
+ 	bool is_async_cb;
++	bool changes_pkt_data;
+ };
  
- static inline bool bpf_dump_raw_ok(const struct cred *cred)
- {
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -2893,7 +2893,7 @@ void __weak bpf_jit_compile(struct bpf_p
- {
- }
- 
--bool __weak bpf_helper_changes_pkt_data(void *func)
-+bool __weak bpf_helper_changes_pkt_data(enum bpf_func_id func_id)
- {
- 	return false;
- }
+ struct bpf_verifier_env;
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -10007,7 +10007,7 @@ static int check_helper_call(struct bpf_
- 	}
+@@ -9364,6 +9364,8 @@ static int check_func_call(struct bpf_ve
  
- 	/* With LD_ABS/IND some JITs save/restore skb from r1. */
--	changes_data = bpf_helper_changes_pkt_data(fn->func);
-+	changes_data = bpf_helper_changes_pkt_data(func_id);
- 	if (changes_data && fn->arg1_type != ARG_PTR_TO_CTX) {
- 		verbose(env, "kernel subsystem misconfigured func %s#%d: r1 != ctx\n",
- 			func_id_name(func_id), func_id);
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -7868,42 +7868,35 @@ static const struct bpf_func_proto bpf_t
+ 		if (env->log.level & BPF_LOG_LEVEL)
+ 			verbose(env, "Func#%d is global and valid. Skipping.\n", subprog);
++		if (env->subprog_info[subprog].changes_pkt_data)
++			clear_all_pkt_pointers(env);
+ 		clear_caller_saved_regs(env, caller->regs);
  
- #endif /* CONFIG_INET */
- 
--bool bpf_helper_changes_pkt_data(void *func)
-+bool bpf_helper_changes_pkt_data(enum bpf_func_id func_id)
- {
--	if (func == bpf_skb_vlan_push ||
--	    func == bpf_skb_vlan_pop ||
--	    func == bpf_skb_store_bytes ||
--	    func == bpf_skb_change_proto ||
--	    func == bpf_skb_change_head ||
--	    func == sk_skb_change_head ||
--	    func == bpf_skb_change_tail ||
--	    func == sk_skb_change_tail ||
--	    func == bpf_skb_adjust_room ||
--	    func == sk_skb_adjust_room ||
--	    func == bpf_skb_pull_data ||
--	    func == sk_skb_pull_data ||
--	    func == bpf_clone_redirect ||
--	    func == bpf_l3_csum_replace ||
--	    func == bpf_l4_csum_replace ||
--	    func == bpf_xdp_adjust_head ||
--	    func == bpf_xdp_adjust_meta ||
--	    func == bpf_msg_pull_data ||
--	    func == bpf_msg_push_data ||
--	    func == bpf_msg_pop_data ||
--	    func == bpf_xdp_adjust_tail ||
--#if IS_ENABLED(CONFIG_IPV6_SEG6_BPF)
--	    func == bpf_lwt_seg6_store_bytes ||
--	    func == bpf_lwt_seg6_adjust_srh ||
--	    func == bpf_lwt_seg6_action ||
--#endif
--#ifdef CONFIG_INET
--	    func == bpf_sock_ops_store_hdr_opt ||
--#endif
--	    func == bpf_lwt_in_push_encap ||
--	    func == bpf_lwt_xmit_push_encap)
-+	switch (func_id) {
-+	case BPF_FUNC_clone_redirect:
-+	case BPF_FUNC_l3_csum_replace:
-+	case BPF_FUNC_l4_csum_replace:
-+	case BPF_FUNC_lwt_push_encap:
-+	case BPF_FUNC_lwt_seg6_action:
-+	case BPF_FUNC_lwt_seg6_adjust_srh:
-+	case BPF_FUNC_lwt_seg6_store_bytes:
-+	case BPF_FUNC_msg_pop_data:
-+	case BPF_FUNC_msg_pull_data:
-+	case BPF_FUNC_msg_push_data:
-+	case BPF_FUNC_skb_adjust_room:
-+	case BPF_FUNC_skb_change_head:
-+	case BPF_FUNC_skb_change_proto:
-+	case BPF_FUNC_skb_change_tail:
-+	case BPF_FUNC_skb_pull_data:
-+	case BPF_FUNC_skb_store_bytes:
-+	case BPF_FUNC_skb_vlan_pop:
-+	case BPF_FUNC_skb_vlan_push:
-+	case BPF_FUNC_store_hdr_opt:
-+	case BPF_FUNC_xdp_adjust_head:
-+	case BPF_FUNC_xdp_adjust_meta:
-+	case BPF_FUNC_xdp_adjust_tail:
- 		return true;
--
--	return false;
-+	default:
-+		return false;
-+	}
+ 		/* All global functions return a 64-bit SCALAR_VALUE */
+@@ -15114,6 +15116,29 @@ static int check_return_code(struct bpf_
+ 	return 0;
  }
  
- const struct bpf_func_proto bpf_event_output_data_proto __weak;
++static void mark_subprog_changes_pkt_data(struct bpf_verifier_env *env, int off)
++{
++	struct bpf_subprog_info *subprog;
++
++	subprog = find_containing_subprog(env, off);
++	subprog->changes_pkt_data = true;
++}
++
++/* 't' is an index of a call-site.
++ * 'w' is a callee entry point.
++ * Eventually this function would be called when env->cfg.insn_state[w] == EXPLORED.
++ * Rely on DFS traversal order and absence of recursive calls to guarantee that
++ * callee's change_pkt_data marks would be correct at that moment.
++ */
++static void merge_callee_effects(struct bpf_verifier_env *env, int t, int w)
++{
++	struct bpf_subprog_info *caller, *callee;
++
++	caller = find_containing_subprog(env, t);
++	callee = find_containing_subprog(env, w);
++	caller->changes_pkt_data |= callee->changes_pkt_data;
++}
++
+ /* non-recursive DFS pseudo code
+  * 1  procedure DFS-iterative(G,v):
+  * 2      label v as discovered
+@@ -15247,6 +15272,7 @@ static int visit_func_call_insn(int t, s
+ 				bool visit_callee)
+ {
+ 	int ret, insn_sz;
++	int w;
+ 
+ 	insn_sz = bpf_is_ldimm64(&insns[t]) ? 2 : 1;
+ 	ret = push_insn(t, t + insn_sz, FALLTHROUGH, env);
+@@ -15258,8 +15284,10 @@ static int visit_func_call_insn(int t, s
+ 	mark_jmp_point(env, t + insn_sz);
+ 
+ 	if (visit_callee) {
++		w = t + insns[t].imm + 1;
+ 		mark_prune_point(env, t);
+-		ret = push_insn(t, t + insns[t].imm + 1, BRANCH, env);
++		merge_callee_effects(env, t, w);
++		ret = push_insn(t, w, BRANCH, env);
+ 	}
+ 	return ret;
+ }
+@@ -15311,6 +15339,8 @@ static int visit_insn(int t, struct bpf_
+ 			mark_prune_point(env, t);
+ 			mark_jmp_point(env, t);
+ 		}
++		if (bpf_helper_call(insn) && bpf_helper_changes_pkt_data(insn->imm))
++			mark_subprog_changes_pkt_data(env, t);
+ 		if (insn->src_reg == BPF_PSEUDO_KFUNC_CALL) {
+ 			struct bpf_kfunc_call_arg_meta meta;
+ 
 
 
