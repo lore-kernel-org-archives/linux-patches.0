@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A49A1FF5EC;
-	Wed,  7 May 2025 18:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4791FF5EC;
+	Wed,  7 May 2025 18:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643992; cv=none; b=P+B3JlG8fPqp6g3hjX7egSwpm4jLwAW6RIL9RZrwz3UWtySGc8zI2t9el/euQmWGQI0dgORYJwG1/iKcfdm+VRkL37hsOqLrCxGOB5R4CDzvLpu3WtmSPDAGS34ArotMNFnmJGO0lpj31bI1ZHuqkX/liqeMA1YA3eroYUYrrnU=
+	t=1746643995; cv=none; b=UVb89em/84o4ic5MaIkxRei6cGIzCf7751++t/scnc4DEeCK21JjGtgZIHbI5UBZRt89LemHDQegUVr/qd0htVHdkkmeAcZNg/usc9YqHHbnoBdYymDt159OOFwm1BufSKTbWjeaqMVIphHcZPOIr+KzBRUuAv7/tiyNJP2aY+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643992; c=relaxed/simple;
-	bh=62sgjDuFORhnBSiv3adfWUEQPugu2Qm7W6dWxP39/a4=;
+	s=arc-20240116; t=1746643995; c=relaxed/simple;
+	bh=/3lGFrr0L8jp1aaVmAi+NavMdGLQghSMcaunZegGoRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UzuYvFMYge1gFZItQIHq/+pTcwN/b8QYodZOLMwFUWLQvuoDGXCBbIT56W3nUe1es/jep+aqCrJ5SvH3/b9SgVfDriJcSeyadlT4wqKDNRXTSd7tjtFfA4w3hUNfRuffWOaUMLRTXH7A8vAFtlt/8DKwCAoymX0eBwKp5vP2lVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHd3RHJk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KxCooeUdYyOYU0rrK3jdGFHR1cDPF2rch16juC/MVkyHSBxdOeKpw6myR5JM5RIKSM/ntIlUCATvq5lHHozlaiIN1ZEL3x93JV4jD6TKxlGjIXbr4uyRfLpKiqLeekMOVyWBbyrGiYq3S1sTh8Sq6KHoOIA0ZJKebjF8BZFnR7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZeIFJ0Q8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHd3RHJk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19935C4CEE2;
-	Wed,  7 May 2025 18:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZeIFJ0Q8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204AEC4CEE2;
+	Wed,  7 May 2025 18:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643992;
-	bh=62sgjDuFORhnBSiv3adfWUEQPugu2Qm7W6dWxP39/a4=;
+	s=korg; t=1746643995;
+	bh=/3lGFrr0L8jp1aaVmAi+NavMdGLQghSMcaunZegGoRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aHd3RHJk65RuRSuOPb9dxBWP+1c/KPJzVRvZ9184Rineh2CSadZL56lW5Gbh/c79x
-	 WiHU3xMZn6qwlqJKSJ8NyORj4peeQePbUNu6a/5OlkSNQkM52ae+6OBf1xwe3nfQOk
-	 OiFY7u3HYaN8V/xUFp0rL+L1JRWgojz0pK6tpRR8=
+	b=ZeIFJ0Q8x0/HdZJsL69BcVzelEEb1++t2NZsG64kEIqaKTKekrub9gUh2D8Bya8n9
+	 M2MLRB31SA58HPz6Bdy7IsQTF3z3aW2+3USpkJXlcw7yBAmbKi4GqtAhSyskEyArzP
+	 h2p6iT01TdPdsz3R5auzqcjydmnj8SerXYHniLNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Wang <hui.wang@canonical.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 055/183] pinctrl: imx: Return NULL if no group is matched and found
-Date: Wed,  7 May 2025 20:38:20 +0200
-Message-ID: <20250507183826.916207216@linuxfoundation.org>
+	syzbot+c8cd2d2c412b868263fb@syzkaller.appspotmail.com,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Jeongjun Park <aha310510@gmail.com>
+Subject: [PATCH 6.14 046/183] tracing: Fix oob write in trace_seq_to_buffer()
+Date: Wed,  7 May 2025 20:38:11 +0200
+Message-ID: <20250507183826.558682038@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -52,50 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Wang <hui.wang@canonical.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit e64c0ff0d5d85791fbcd126ee558100a06a24a97 ]
+commit f5178c41bb43444a6008150fe6094497135d07cb upstream.
 
-Currently if no group is matched and found, this function will return
-the last grp to the caller, this is not expected, it is supposed to
-return NULL in this case.
+syzbot reported this bug:
+==================================================================
+BUG: KASAN: slab-out-of-bounds in trace_seq_to_buffer kernel/trace/trace.c:1830 [inline]
+BUG: KASAN: slab-out-of-bounds in tracing_splice_read_pipe+0x6be/0xdd0 kernel/trace/trace.c:6822
+Write of size 4507 at addr ffff888032b6b000 by task syz.2.320/7260
 
-Fixes: e566fc11ea76 ("pinctrl: imx: use generic pinctrl helpers for managing groups")
-Signed-off-by: Hui Wang <hui.wang@canonical.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/20250327031600.99723-1-hui.wang@canonical.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CPU: 1 UID: 0 PID: 7260 Comm: syz.2.320 Not tainted 6.15.0-rc1-syzkaller-00301-g3bde70a2c827 #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:408 [inline]
+ print_report+0xc3/0x670 mm/kasan/report.c:521
+ kasan_report+0xe0/0x110 mm/kasan/report.c:634
+ check_region_inline mm/kasan/generic.c:183 [inline]
+ kasan_check_range+0xef/0x1a0 mm/kasan/generic.c:189
+ __asan_memcpy+0x3c/0x60 mm/kasan/shadow.c:106
+ trace_seq_to_buffer kernel/trace/trace.c:1830 [inline]
+ tracing_splice_read_pipe+0x6be/0xdd0 kernel/trace/trace.c:6822
+ ....
+==================================================================
+
+It has been reported that trace_seq_to_buffer() tries to copy more data
+than PAGE_SIZE to buf. Therefore, to prevent this, we should use the
+smaller of trace_seq_used(&iter->seq) and PAGE_SIZE as an argument.
+
+Link: https://lore.kernel.org/20250422113026.13308-1-aha310510@gmail.com
+Reported-by: syzbot+c8cd2d2c412b868263fb@syzkaller.appspotmail.com
+Fixes: 3c56819b14b0 ("tracing: splice support for tracing_pipe")
+Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/freescale/pinctrl-imx.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/trace/trace.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/freescale/pinctrl-imx.c b/drivers/pinctrl/freescale/pinctrl-imx.c
-index 842a1e6cbfc41..18de313285404 100644
---- a/drivers/pinctrl/freescale/pinctrl-imx.c
-+++ b/drivers/pinctrl/freescale/pinctrl-imx.c
-@@ -37,16 +37,16 @@ static inline const struct group_desc *imx_pinctrl_find_group_by_name(
- 				struct pinctrl_dev *pctldev,
- 				const char *name)
- {
--	const struct group_desc *grp = NULL;
-+	const struct group_desc *grp;
- 	int i;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -6682,13 +6682,14 @@ static ssize_t tracing_splice_read_pipe(
+ 		/* Copy the data into the page, so we can start over. */
+ 		ret = trace_seq_to_buffer(&iter->seq,
+ 					  page_address(spd.pages[i]),
+-					  trace_seq_used(&iter->seq));
++					  min((size_t)trace_seq_used(&iter->seq),
++						  PAGE_SIZE));
+ 		if (ret < 0) {
+ 			__free_page(spd.pages[i]);
+ 			break;
+ 		}
+ 		spd.partial[i].offset = 0;
+-		spd.partial[i].len = trace_seq_used(&iter->seq);
++		spd.partial[i].len = ret;
  
- 	for (i = 0; i < pctldev->num_groups; i++) {
- 		grp = pinctrl_generic_get_group(pctldev, i);
- 		if (grp && !strcmp(grp->grp.name, name))
--			break;
-+			return grp;
+ 		trace_seq_init(&iter->seq);
  	}
- 
--	return grp;
-+	return NULL;
- }
- 
- static void imx_pin_dbg_show(struct pinctrl_dev *pctldev, struct seq_file *s,
--- 
-2.39.5
-
 
 
