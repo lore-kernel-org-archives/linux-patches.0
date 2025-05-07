@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B0628E60E;
-	Wed,  7 May 2025 19:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348421CF5C6;
+	Wed,  7 May 2025 19:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644730; cv=none; b=MGwFUQ4a04uaVS9dkNCEL5RyS1IXysL8mt/XXLJrONyunUBDnOwmc/lhnvhxS8U5IvnqNd/qTrp+c5V2gMV5QvVjozq1dXj0VSiVvq9n+yEXigZAX+7WSYZpGaNnFXeCFzKmCel6c7PsbHT0y9gMXWdxcWlE1ECzdfAaf4u+wlY=
+	t=1746644735; cv=none; b=NDjk2RxiqSLHCE3h0DN2DsKEpc8eXZMmMS9MIkkTJGuUtcIHKJZhyFSFysktzN5aIQ45nQP83Q5JycztHEeORzTtzh8+WVguuF7AQHjivuLlVJG52Fj5k/y9/+yKTLLzL0eey20jjOXp+vcoYDUWn//R2gyJA8VFLf6oAwJEyng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644730; c=relaxed/simple;
-	bh=EvHApb6Mm+pYMx5HvYAvSZqKkuqAKWzR1QsZR6VbvpM=;
+	s=arc-20240116; t=1746644735; c=relaxed/simple;
+	bh=ux1aD0B6Tx4xP39ef+4IQ4WNl3kljlWy1nTIOP0A4dw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VGnu4EIonFoRHS3hltqPhucXiiJj8mkNorVpohyDDA29W+IW3zjx7IPBeNdE036DT4gQRGo84UXGiLeK1ebOUqblx2iuIVkig1nhBvb/dVYR9h49OJUup0OxY6oqlyttDMkHM/TM81ySqAb5cT2vh9SG+l7V5O7o+yKbbt8rk7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E/qFkoDZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PBDkKKdXwWwh2iuHbIZRGZdJQoAg/eTaHHrT5kCjmQ9ZSDGlkgpVA8C2GMhQnvQnCtoj7I6oRQz+EE/zycRpYt9B6CWZP6aiqDROwZDfvaRk8I5eRlup3FYruTzCbLtzn5Wr6sY8pnpist5uVIErikbp0jVmT142h2CJI9rI2vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cxMD6iRj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E/qFkoDZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5D0C4CEE9;
-	Wed,  7 May 2025 19:05:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cxMD6iRj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA0D4C4CEE9;
+	Wed,  7 May 2025 19:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644730;
-	bh=EvHApb6Mm+pYMx5HvYAvSZqKkuqAKWzR1QsZR6VbvpM=;
+	s=korg; t=1746644735;
+	bh=ux1aD0B6Tx4xP39ef+4IQ4WNl3kljlWy1nTIOP0A4dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E/qFkoDZFfsy+PTWD2YDCg9qjhBIHAgVAz4LY7ahg9GcuJM6hRihODbV1ousoqHti
-	 VX+BZM0nEH9HmFH7QF06dT9ntYHAcrmQSxhFe7WLQceympeZXo++RuPrfgkQllLZa/
-	 mgsZtCfJnEOLFgYlmU3RpMPxoornJvXpvvGNbhdw=
+	b=cxMD6iRjjQzstq0ff9Fn/n4JUZiXyPzK/EZMlmAHp8Pgod1Ur+OTUM09L9piQR8FV
+	 SxwT+NomY1YFNuC2PeTLwuJYC/PTk8pvkJzMwkUz79JGazC4GmWIBN/8eCVjXvaErY
+	 TPyenxPdSUq1RZRfI7y7ERRxG8jSuzbRFrlZKAN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pranjal Shrivastava <praan@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Mina Almasry <almasrymina@google.com>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Vadim Fedorenko <vadfed@meta.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 139/164] net: Fix the devmem sock opts and msgs for parisc
-Date: Wed,  7 May 2025 20:40:24 +0200
-Message-ID: <20250507183826.600557992@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 122/164] bnxt_en: fix module unload sequence
+Date: Wed,  7 May 2025 20:40:07 +0200
+Message-ID: <20250507183825.912106458@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -54,59 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pranjal Shrivastava <praan@google.com>
+From: Vadim Fedorenko <vadfed@meta.com>
 
-commit fd87b7783802b45cdd261b273e6b2b792823064d upstream.
+[ Upstream commit 927069d5c40c1cfa7b2d13cfc6d7d58bc6f85c50 ]
 
-The devmem socket options and socket control message definitions
-introduced in the TCP devmem series[1] incorrectly continued the socket
-definitions for arch/parisc.
+Recent updates to the PTP part of bnxt changed the way PTP FIFO is
+cleared, skbs waiting for TX timestamps are now cleared during
+ndo_close() call. To do clearing procedure, the ptp structure must
+exist and point to a valid address. Module destroy sequence had ptp
+clear code running before netdev close causing invalid memory access and
+kernel crash. Change the sequence to destroy ptp structure after device
+close.
 
-The UAPI change seems safe as there are currently no drivers that
-declare support for devmem TCP RX via PP_FLAG_ALLOW_UNREADABLE_NETMEM.
-Hence, fixing this UAPI should be safe.
-
-Fix the devmem socket options and socket control message definitions to
-reflect the series followed by arch/parisc.
-
-[1]
-https://lore.kernel.org/lkml/20240910171458.219195-10-almasrymina@google.com/
-
-Fixes: 8f0b3cc9a4c10 ("tcp: RX path for devmem TCP")
-Signed-off-by: Pranjal Shrivastava <praan@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/20250324074228.3139088-1-praan@google.com
+Fixes: 8f7ae5a85137 ("bnxt_en: improve TX timestamping FIFO configuration")
+Reported-by: Taehee Yoo <ap420073@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAMArcTWDe2cd41=ub=zzvYifaYcYv-N-csxfqxUvejy_L0D6UQ@mail.gmail.com/
+Signed-off-by: Vadim Fedorenko <vadfed@meta.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Tested-by: Taehee Yoo <ap420073@gmail.com>
+Link: https://patch.msgid.link/20250430170343.759126-1-vadfed@meta.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Pranjal Shrivastava <praan@google.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/include/uapi/asm/socket.h |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/parisc/include/uapi/asm/socket.h
-+++ b/arch/parisc/include/uapi/asm/socket.h
-@@ -132,11 +132,15 @@
- #define SO_PASSPIDFD		0x404A
- #define SO_PEERPIDFD		0x404B
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index e4d5bd30cf319..12b61a6fcda42 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -15421,8 +15421,8 @@ static void bnxt_remove_one(struct pci_dev *pdev)
  
--#define SO_DEVMEM_LINEAR	78
-+#define SCM_TS_OPT_ID		0x404C
-+
-+#define SO_RCVPRIORITY		0x404D
-+
-+#define SO_DEVMEM_LINEAR	0x404E
- #define SCM_DEVMEM_LINEAR	SO_DEVMEM_LINEAR
--#define SO_DEVMEM_DMABUF	79
-+#define SO_DEVMEM_DMABUF	0x404F
- #define SCM_DEVMEM_DMABUF	SO_DEVMEM_DMABUF
--#define SO_DEVMEM_DONTNEED	80
-+#define SO_DEVMEM_DONTNEED	0x4050
+ 	bnxt_rdma_aux_device_del(bp);
  
- #if !defined(__KERNEL__)
+-	bnxt_ptp_clear(bp);
+ 	unregister_netdev(dev);
++	bnxt_ptp_clear(bp);
  
+ 	bnxt_rdma_aux_device_uninit(bp);
+ 
+-- 
+2.39.5
+
 
 
