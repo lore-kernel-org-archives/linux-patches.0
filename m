@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D5D2153C6;
-	Wed,  7 May 2025 18:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D15E1DDC23;
+	Wed,  7 May 2025 18:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643810; cv=none; b=fktpw6EatGLFUAzytraps4XBpctKM1o1j2T/xZ4MqQ5wtDJ2pttXKUgv8n/B3c0nfKj+qB6m75xNtew6ITFjQjRTiz7WojPNK5VSgldcZRR2jczrzXbMCaLvImFDOirz3IBc8AScH0nPBIxZv9Xe/7mkMwc8s0pnAO1ZTCiClAU=
+	t=1746643813; cv=none; b=V6hd8EnCk4VmvZM91P5TFFmnqYc+hfCJX00hO6s1FnJ57RPOWzoGlUuKNStWm1JtYZ13nA59+l2s93qO3F8Rpx7fO/Zcrt3os2SEIW1PxoMgBUoZ/tCJ6Bnfiec911b+qAVhRFnpJXkeYlZJQo/f8EKMtLYtfDa6OZZjIyzIHvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643810; c=relaxed/simple;
-	bh=nWcqKzPyrY7jP+COhEwjdD+F/U5pSV2LkJ/HPvR6qiw=;
+	s=arc-20240116; t=1746643813; c=relaxed/simple;
+	bh=Xzrrb22u3DeCeXnw3TEukle/AjO5T5XKTIOmWZ6tMRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZEm5yUbxaibdLoMaa0JF4V4En2g4LYBlL5wkHMc9O7lakn9s5wwb1XyPlRJa9Np1RvQzSXxmDEL5NTWKBCdN/T699ySPQSfBwcggBayuVL8ONr4rjKJfbhS4+0Vjnn1dUh5wUceVJxF+WaVrGSQcpb1XJhK4evBkhoynqEMIN6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/wArH6g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lgy/9FcBcjtSsTd+jK8BxPuICvMJWkLzY3atluVlUFmdTo4SqpqtUVTrWV4wA03J4koLf3amPnsXUZc2oGYCU64yX2R5FiiD7LbEPojjcuh9jE92xTUalTzIBF2WK1hNScoMk3L18Si5gJXCFLXzmGF28uGDlWkctP+G1l3MKiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q9oV8Wd2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/wArH6g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F64C4CEE2;
-	Wed,  7 May 2025 18:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q9oV8Wd2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C95C4CEE2;
+	Wed,  7 May 2025 18:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643810;
-	bh=nWcqKzPyrY7jP+COhEwjdD+F/U5pSV2LkJ/HPvR6qiw=;
+	s=korg; t=1746643813;
+	bh=Xzrrb22u3DeCeXnw3TEukle/AjO5T5XKTIOmWZ6tMRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0/wArH6gl8eqDIHANd/qV67nUF1FZsKjVaUEo6dxHqpkRcfnlXaoz+j+FA+AXPPMG
-	 X0iFXq9lbgdNOlN0f871t9uauezP4KxZwmNS+1xEXdN+U6G7fcUt+s4NGWvkekWRwA
-	 iRIELpPqWS8hiaM/qwe3sWwEfPqdinVvnSCzXn2E=
+	b=Q9oV8Wd2TQ20QOwPxwFYU4NHH0OpVwd3KDbvtTAgRSaqZNUBXaKKSEioLqLImIlB6
+	 TOOiISvUHpYg0OQFcKaTxW8k+OpkDly56VN8RW5MXTUVn6X0OgAfZpAdRA5OJODJm7
+	 rKvjG0JI/grSulqI6C1trBtp5EoqQUd6Ab72zyog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	syzbot+441582c1592938fccf09@syzkaller.appspotmail.com,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.14 025/183] tracing: Do not take trace_event_sem in print_event_fields()
-Date: Wed,  7 May 2025 20:37:50 +0200
-Message-ID: <20250507183825.706270381@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.14 026/183] wifi: brcm80211: fmac: Add error handling for brcmf_usb_dl_writeimage()
+Date: Wed,  7 May 2025 20:37:51 +0200
+Message-ID: <20250507183825.745424442@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -52,52 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 0a8f11f8569e7ed16cbcedeb28c4350f6378fea6 upstream.
+commit 8e089e7b585d95122c8122d732d1d5ef8f879396 upstream.
 
-On some paths in print_event_fields() it takes the trace_event_sem for
-read, even though it should always be held when the function is called.
+The function brcmf_usb_dl_writeimage() calls the function
+brcmf_usb_dl_cmd() but dose not check its return value. The
+'state.state' and the 'state.bytes' are uninitialized if the
+function brcmf_usb_dl_cmd() fails. It is dangerous to use
+uninitialized variables in the conditions.
 
-Remove the taking of that mutex and add a lockdep_assert_held_read() to
-make sure the trace_event_sem is held when print_event_fields() is called.
+Add error handling for brcmf_usb_dl_cmd() to jump to error
+handling path if the brcmf_usb_dl_cmd() fails and the
+'state.state' and the 'state.bytes' are uninitialized.
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20250501224128.0b1f0571@batman.local.home
-Fixes: 80a76994b2d88 ("tracing: Add "fields" option to show raw trace event fields")
-Reported-by: syzbot+441582c1592938fccf09@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6813ff5e.050a0220.14dd7d.001b.GAE@google.com/
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Improve the error message to report more detailed error
+information.
+
+Fixes: 71bb244ba2fd ("brcm80211: fmac: add USB support for bcm43235/6/8 chipsets")
+Cc: stable@vger.kernel.org # v3.4+
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20250422042203.2259-1-vulab@iscas.ac.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_output.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_output.c
-+++ b/kernel/trace/trace_output.c
-@@ -961,11 +961,12 @@ enum print_line_t print_event_fields(str
- 	struct trace_event_call *call;
- 	struct list_head *head;
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+@@ -896,14 +896,16 @@ brcmf_usb_dl_writeimage(struct brcmf_usb
+ 	}
  
-+	lockdep_assert_held_read(&trace_event_sem);
-+
- 	/* ftrace defined events have separate call structures */
- 	if (event->type <= __TRACE_LAST_TYPE) {
- 		bool found = false;
+ 	/* 1) Prepare USB boot loader for runtime image */
+-	brcmf_usb_dl_cmd(devinfo, DL_START, &state, sizeof(state));
++	err = brcmf_usb_dl_cmd(devinfo, DL_START, &state, sizeof(state));
++	if (err)
++		goto fail;
  
--		down_read(&trace_event_sem);
- 		list_for_each_entry(call, &ftrace_events, list) {
- 			if (call->event.type == event->type) {
- 				found = true;
-@@ -975,7 +976,6 @@ enum print_line_t print_event_fields(str
- 			if (call->event.type > __TRACE_LAST_TYPE)
- 				break;
- 		}
--		up_read(&trace_event_sem);
- 		if (!found) {
- 			trace_seq_printf(&iter->seq, "UNKNOWN TYPE %d\n", event->type);
- 			goto out;
+ 	rdlstate = le32_to_cpu(state.state);
+ 	rdlbytes = le32_to_cpu(state.bytes);
+ 
+ 	/* 2) Check we are in the Waiting state */
+ 	if (rdlstate != DL_WAITING) {
+-		brcmf_err("Failed to DL_START\n");
++		brcmf_err("Invalid DL state: %u\n", rdlstate);
+ 		err = -EINVAL;
+ 		goto fail;
+ 	}
 
 
