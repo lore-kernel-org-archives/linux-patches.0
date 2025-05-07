@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1F11482F5;
-	Wed,  7 May 2025 18:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F84E1482F5;
+	Wed,  7 May 2025 18:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644374; cv=none; b=RnlX+woUyTPERGQvZidg4lkfOo/5YUf1XC8FDHo6SZX5XNxyMtSIuvjDJh/Gd1xkplm2V/wriyjGBgiYYnFCUeHarHvkQ7YlBSgIfB566SiipRkglynPYwQrYfX1iaFa8q0db/LXUQ+3KGdMmec0RgdHwdFvSrxd9KN/dwuFpjU=
+	t=1746644377; cv=none; b=HF6kzLXXpayZxetx89W+aEmXCad0PFG5V3Ac2csfRTNkE6kYLqiRL71jpSxyj0pJe1sH0OGU0sUg9JrgI6yYlz3cTtZZKLQKDt/y+7SS9uWiqi5mK09hYnbg1Cp5CRoVyM0A/heNL8PawdGfs4r1Q3ls2aoWmW340VJaeo0T09c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644374; c=relaxed/simple;
-	bh=YdZ6UKk0Ep9ugI7ceVqSDbOKmhvp9+M6AzswubN175w=;
+	s=arc-20240116; t=1746644377; c=relaxed/simple;
+	bh=7WtcGGnfF2EcR7UoG+Y+sbnjztqrv5BISvuzAumkaro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dHfjufnVQ3yXfGqW6qzW8jnZW8Szk3Oj9VRLMiskkBXkp/AcJKk/sTFdiWlRpCZTpNVvPsdwgHq1brY+T8TQEKo+DCUNCHbD/b3Qtm/DgvTbt5FHDAxd2yZvPKdz/pypwcoGFSv455JPaTrJufa5m1wbvdRJ6ZpImQfD/foM2Zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6tjsvH3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s6JFW5PPTYGaGIvg72A5FwlYCl7H98auFtbD77jyB4mBWczjSVYcrl2aJ3tMskmLAEzuOWkc9GXv5OaAsuGo32lV24WcUGuUo3L9Sxm/4+d3HTbmyC47Z93vCF3bXp9l18NIy/HUFdnM3r5Zxg2TtTyiF55xdMb9TN2dlajTwns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTpDANta; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6tjsvH3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90795C4CEE2;
-	Wed,  7 May 2025 18:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTpDANta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89839C4CEE2;
+	Wed,  7 May 2025 18:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644374;
-	bh=YdZ6UKk0Ep9ugI7ceVqSDbOKmhvp9+M6AzswubN175w=;
+	s=korg; t=1746644377;
+	bh=7WtcGGnfF2EcR7UoG+Y+sbnjztqrv5BISvuzAumkaro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O6tjsvH3vSWYVKEV1plVa8VjmPNHEBtDZ1DflsOZyEiVsKDCvgTx9tWPxQitHx02k
-	 sqLEGpFWyO+83kNTyvecPjFYmiw3bTbTQi0irlBoHVVKWFIlGOWkHaThD5OyLcdE4X
-	 gdMwdQ0bqH1tm96Xuy3cJO6R2sJnWiM5xdQlI7cY=
+	b=HTpDANtaFXaz0BzDCR+/FFcQYuFxSXAkwwssg5JY/pj0s6ICnBCxLLL3ZGg3IrVUd
+	 aTjIJGkwdnEkT0+WOV4y9bSea8tcmdfzYAxfAHW1IwkKpIc/7TAdyiRdbHskVGUij4
+	 sOutaxK3aANlW1puxjdmCygi6T4F/8RzdtUs7kSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Mark Dietzer <git@doridian.net>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Alexander Tsoy <alexander@tsoy.me>
-Subject: [PATCH 6.12 003/164] Bluetooth: btusb: Add one more ID 0x13d3:0x3623 for Qualcomm WCN785x
-Date: Wed,  7 May 2025 20:38:08 +0200
-Message-ID: <20250507183820.941845160@linuxfoundation.org>
+Subject: [PATCH 6.12 004/164] Bluetooth: btusb: Add ID 0x2c7c:0x0130 for Qualcomm WCN785x
+Date: Wed,  7 May 2025 20:38:09 +0200
+Message-ID: <20250507183820.985677840@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -51,17 +51,16 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Mark Dietzer <git@doridian.net>
 
-[ Upstream commit e69bcffce21c649a23645b20eb527b3d1ce6fc49 ]
+[ Upstream commit a6587d7ed2cd8341f8a92112ac772f2c44f09824 ]
 
-Add one more part with ID (0x13d3, 0x3623) to usb_device_id table for
-Qualcomm WCN785x, and its device info from /sys/kernel/debug/usb/devices
-is shown below:
+Adds a new entry with VID 0x2c7c and PID 0x0130 to the btusb quirks table as it uses a Qualcomm WCN785x chipset
 
-T:  Bus=01 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
+The device information from /sys/kernel/debug/usb/devices is provided below:
+T:  Bus=01 Lev=01 Prnt=01 Port=04 Cnt=05 Dev#=  7 Spd=12   MxCh= 0
 D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=13d3 ProdID=3623 Rev= 0.01
+P:  Vendor=2c7c ProdID=0130 Rev= 0.01
 C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
 I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
 E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
@@ -92,7 +91,7 @@ I:  If#= 1 Alt= 7 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
 E:  Ad=83(I) Atr=01(Isoc) MxPS=  65 Ivl=1ms
 E:  Ad=03(O) Atr=01(Isoc) MxPS=  65 Ivl=1ms
 
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Signed-off-by: Mark Dietzer <git@doridian.net>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Alexander Tsoy <alexander@tsoy.me>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -102,11 +101,11 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -375,6 +375,8 @@ static const struct usb_device_id quirks
+@@ -377,6 +377,8 @@ static const struct usb_device_id quirks
  						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0489, 0xe0f3), .driver_info = BTUSB_QCA_WCN6855 |
+ 	{ USB_DEVICE(0x13d3, 0x3623), .driver_info = BTUSB_QCA_WCN6855 |
  						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x13d3, 0x3623), .driver_info = BTUSB_QCA_WCN6855 |
++	{ USB_DEVICE(0x2c7c, 0x0130), .driver_info = BTUSB_QCA_WCN6855 |
 +						     BTUSB_WIDEBAND_SPEECH },
  
  	/* Broadcom BCM2035 */
