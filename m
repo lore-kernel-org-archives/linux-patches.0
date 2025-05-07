@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478621CF5C6;
-	Wed,  7 May 2025 18:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F64B1482F5;
+	Wed,  7 May 2025 18:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644214; cv=none; b=EZsxSJ8T2OxXaCc1H4iJgxikoACk//QlsifOOy02QbI92dvyq20Ib2LSwFD1plagIdX/D/b4Uc+ZKlN+7aNxYBqs29LZsB23oLw1sxlKHQ2ds7e8QMjXqbYxeyzew6KJj8HSpSk+blnOAQWy6EDpQrALKy2GPIZJPQfQOWQ7W40=
+	t=1746644217; cv=none; b=vGUUfeGaOHqJ+t66fRMdkB+JP1Xg/+UPeEQw5JPyxyqmvJcTS+CNRmLqz2JX5aOh8RDbAJviTAbd/VRgkDAxFkes96QcEQ79O6E64JMi0vnzRc7oyoPBnRX9w04bLwm9unqSHx+ABlREuVJVKTz6xP/ClNZletGooAGv+YTVIUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644214; c=relaxed/simple;
-	bh=Y5KPcrtoPHecYw1fEiBwdm5+3DROZM0xZoocZIhNU5A=;
+	s=arc-20240116; t=1746644217; c=relaxed/simple;
+	bh=dbII8cY6fhAlDApL0yc3AsnHIjkiTAmLNCIDUFTCD7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bTDFK0SMr7i6hlVgkaNPi//inzvsc9fEPRCfXbQaw1uYqJnA/6xarJkTT+IZ5uDAL7iYiJLvc+rzmHoNM5M4S03gq2GwTG6ItrAncHTy+4orVKgqliEyVu7rnIEhPprfg6QjNARbWjGBstnF7LAYHVNFNADNuxV7iZE9BVWyjnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qw+agzX9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B6H6v/7qJ0kO7ZUSGUMhVVDlN15Bi25oB/SxOltv5aUpYFqR2euuDYt8tKa0Y0YVoS1IvUyDa/XVhVFZu7WvyWcNAdWEL3/mS4h9GPfwjTFoclnIPXIFa7zseYIT4AYuNfI64KwzthQC/cv0IliUDTSd8yLCz2sSdi8W0NUJxGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aRsCKBRv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qw+agzX9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC93C4CEE2;
-	Wed,  7 May 2025 18:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRsCKBRv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2453C4CEE2;
+	Wed,  7 May 2025 18:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644214;
-	bh=Y5KPcrtoPHecYw1fEiBwdm5+3DROZM0xZoocZIhNU5A=;
+	s=korg; t=1746644217;
+	bh=dbII8cY6fhAlDApL0yc3AsnHIjkiTAmLNCIDUFTCD7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qw+agzX96Rpo7U+dToK2zCVEOWFJXLceraFLD1kz73tsSzPqLomi8OOAzVqbu1uNL
-	 ORXKeaWSqyggS+uNgM+6tnsnZR8k9h1YI+p2eDVZOaAl/bHZ+FKOc1NIHoH7b1xbf/
-	 T83fXgHybsPW53hQP/GWbGsyAe1jNvFd/nuuyLNQ=
+	b=aRsCKBRvxnBWvzNI1hRDDcssaQ8TLIxM7pGZpAlc1CgNqO9mUt+XA516IjO7lUXGV
+	 vXSzUAM0OlVNSbeqQLLq5vBVC/Y74yferxCokPWv8t6Q0d9iLPgoL7N7rcDcKSbHNH
+	 VEKe7vX2f6T4+RJx0FL/yyS32xZcKpjUmXAA8+YQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Uday Shankar <ushankar@purestorage.com>,
 	Ming Lei <ming.lei@redhat.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.14 156/183] ublk: move device reset into ublk_ch_release()
-Date: Wed,  7 May 2025 20:40:01 +0200
-Message-ID: <20250507183831.181369030@linuxfoundation.org>
+Subject: [PATCH 6.14 157/183] ublk: improve detection and handling of ublk server exit
+Date: Wed,  7 May 2025 20:40:02 +0200
+Message-ID: <20250507183831.220986208@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -50,245 +51,456 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Uday Shankar <ushankar@purestorage.com>
 
-[ Upstream commit 728cbac5fe219d3b8a21a0688a08f2b7f8aeda2b ]
+[ Upstream commit 82a8a30c581bbbe653d33c6ce2ef67e3072c7f12 ]
 
-ublk_ch_release() is called after ublk char device is closed, when all
-uring_cmd are done, so it is perfect fine to move ublk device reset to
-ublk_ch_release() from ublk_ctrl_start_recovery().
+There are currently two ways in which ublk server exit is detected by
+ublk_drv:
 
-This way can avoid to grab the exiting daemon task_struct too long.
+1. uring_cmd cancellation. If there are any outstanding uring_cmds which
+   have not been completed to the ublk server when it exits, io_uring
+   calls the uring_cmd callback with a special cancellation flag as the
+   issuing task is exiting.
+2. I/O timeout. This is needed in addition to the above to handle the
+   "saturated queue" case, when all I/Os for a given queue are in the
+   ublk server, and therefore there are no outstanding uring_cmds to
+   cancel when the ublk server exits.
 
-However, reset of the following ublk IO flags has to be moved until ublk
-io_uring queues are ready:
+There are a couple of issues with this approach:
 
-- ubq->canceling
+- It is complex and inelegant to have two methods to detect the same
+  condition
+- The second method detects ublk server exit only after a long delay
+  (~30s, the default timeout assigned by the block layer). This delays
+  the nosrv behavior from kicking in and potential subsequent recovery
+  of the device.
 
-For requeuing IO in case of ublk_nosrv_dev_should_queue_io() before device
-is recovered
+The second issue is brought to light with the new test_generic_06 which
+will be added in following patch. It fails before this fix:
 
-- ubq->fail_io
+selftests: ublk: test_generic_06.sh
+dev id is 0
+dd: error writing '/dev/ublkb0': Input/output error
+1+0 records in
+0+0 records out
+0 bytes copied, 30.0611 s, 0.0 kB/s
+DEAD
+dd took 31 seconds to exit (>= 5s tolerance)!
+generic_06 : [FAIL]
 
-For failing IO in case of UBLK_F_USER_RECOVERY_FAIL_IO before device is
-recovered
+Fix this by instead detecting and handling ublk server exit in the
+character file release callback. This has several advantages:
 
-- ublk_io->flags
+- This one place can handle both saturated and unsaturated queues. Thus,
+  it replaces both preexisting methods of detecting ublk server exit.
+- It runs quickly on ublk server exit - there is no 30s delay.
+- It starts the process of removing task references in ublk_drv. This is
+  needed if we want to relax restrictions in the driver like letting
+  only one thread serve each queue
 
-For preventing using io->cmd
+There is also the disadvantage that the character file release callback
+can also be triggered by intentional close of the file, which is a
+significant behavior change. Preexisting ublk servers (libublksrv) are
+dependent on the ability to open/close the file multiple times. To
+address this, only transition to a nosrv state if the file is released
+while the ublk device is live. This allows for programs to open/close
+the file multiple times during setup. It is still a behavior change if a
+ublk server decides to close/reopen the file while the device is LIVE
+(i.e. while it is responsible for serving I/O), but that would be highly
+unusual. This behavior is in line with what is done by FUSE, which is
+very similar to ublk in that a userspace daemon is providing services
+traditionally provided by the kernel.
 
-With this way, recovery is simplified a lot.
+With this change in, the new test (and all other selftests, and all
+ublksrv tests) pass:
 
+selftests: ublk: test_generic_06.sh
+dev id is 0
+dd: error writing '/dev/ublkb0': Input/output error
+1+0 records in
+0+0 records out
+0 bytes copied, 0.0376731 s, 0.0 kB/s
+DEAD
+generic_04 : [PASS]
+
+Signed-off-by: Uday Shankar <ushankar@purestorage.com>
 Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20250416035444.99569-5-ming.lei@redhat.com
+Link: https://lore.kernel.org/r/20250416035444.99569-6-ming.lei@redhat.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/ublk_drv.c |  121 +++++++++++++++++++++++++++--------------------
- 1 file changed, 72 insertions(+), 49 deletions(-)
+ drivers/block/ublk_drv.c |  223 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 124 insertions(+), 99 deletions(-)
 
 --- a/drivers/block/ublk_drv.c
 +++ b/drivers/block/ublk_drv.c
-@@ -1043,7 +1043,7 @@ static inline struct ublk_uring_cmd_pdu
- 
- static inline bool ubq_daemon_is_dying(struct ublk_queue *ubq)
- {
--	return ubq->ubq_daemon->flags & PF_EXITING;
-+	return !ubq->ubq_daemon || ubq->ubq_daemon->flags & PF_EXITING;
- }
- 
- /* todo: handle partial completion */
-@@ -1440,6 +1440,37 @@ static const struct blk_mq_ops ublk_mq_o
- 	.timeout	= ublk_timeout,
+@@ -194,8 +194,6 @@ struct ublk_device {
+ 	struct completion	completion;
+ 	unsigned int		nr_queues_ready;
+ 	unsigned int		nr_privileged_daemon;
+-
+-	struct work_struct	nosrv_work;
  };
  
-+static void ublk_queue_reinit(struct ublk_device *ub, struct ublk_queue *ubq)
-+{
-+	int i;
+ /* header of ublk_params */
+@@ -204,7 +202,10 @@ struct ublk_params_header {
+ 	__u32	types;
+ };
+ 
+-static bool ublk_abort_requests(struct ublk_device *ub, struct ublk_queue *ubq);
 +
-+	/* All old ioucmds have to be completed */
-+	ubq->nr_io_ready = 0;
-+
-+	/*
-+	 * old daemon is PF_EXITING, put it now
-+	 *
-+	 * It could be NULL in case of closing one quisced device.
-+	 */
-+	if (ubq->ubq_daemon)
-+		put_task_struct(ubq->ubq_daemon);
-+	/* We have to reset it to NULL, otherwise ub won't accept new FETCH_REQ */
-+	ubq->ubq_daemon = NULL;
-+	ubq->timeout = false;
-+
-+	for (i = 0; i < ubq->q_depth; i++) {
-+		struct ublk_io *io = &ubq->ios[i];
-+
-+		/*
-+		 * UBLK_IO_FLAG_CANCELED is kept for avoiding to touch
-+		 * io->cmd
-+		 */
-+		io->flags &= UBLK_IO_FLAG_CANCELED;
-+		io->cmd = NULL;
-+		io->addr = 0;
-+	}
-+}
-+
- static int ublk_ch_open(struct inode *inode, struct file *filp)
++static void ublk_stop_dev_unlocked(struct ublk_device *ub);
++static void ublk_abort_queue(struct ublk_device *ub, struct ublk_queue *ubq);
++static void __ublk_quiesce_dev(struct ublk_device *ub);
+ 
+ static inline unsigned int ublk_req_build_flags(struct request *req);
+ static inline struct ublksrv_io_desc *ublk_get_iod(struct ublk_queue *ubq,
+@@ -1306,8 +1307,6 @@ static void ublk_queue_cmd_list(struct u
+ static enum blk_eh_timer_return ublk_timeout(struct request *rq)
  {
- 	struct ublk_device *ub = container_of(inode->i_cdev,
-@@ -1451,10 +1482,26 @@ static int ublk_ch_open(struct inode *in
- 	return 0;
+ 	struct ublk_queue *ubq = rq->mq_hctx->driver_data;
+-	unsigned int nr_inflight = 0;
+-	int i;
+ 
+ 	if (ubq->flags & UBLK_F_UNPRIVILEGED_DEV) {
+ 		if (!ubq->timeout) {
+@@ -1318,26 +1317,6 @@ static enum blk_eh_timer_return ublk_tim
+ 		return BLK_EH_DONE;
+ 	}
+ 
+-	if (!ubq_daemon_is_dying(ubq))
+-		return BLK_EH_RESET_TIMER;
+-
+-	for (i = 0; i < ubq->q_depth; i++) {
+-		struct ublk_io *io = &ubq->ios[i];
+-
+-		if (!(io->flags & UBLK_IO_FLAG_ACTIVE))
+-			nr_inflight++;
+-	}
+-
+-	/* cancelable uring_cmd can't help us if all commands are in-flight */
+-	if (nr_inflight == ubq->q_depth) {
+-		struct ublk_device *ub = ubq->dev;
+-
+-		if (ublk_abort_requests(ub, ubq)) {
+-			schedule_work(&ub->nosrv_work);
+-		}
+-		return BLK_EH_DONE;
+-	}
+-
+ 	return BLK_EH_RESET_TIMER;
  }
  
-+static void ublk_reset_ch_dev(struct ublk_device *ub)
+@@ -1495,13 +1474,105 @@ static void ublk_reset_ch_dev(struct ubl
+ 	ub->nr_privileged_daemon = 0;
+ }
+ 
++static struct gendisk *ublk_get_disk(struct ublk_device *ub)
 +{
-+	int i;
++	struct gendisk *disk;
 +
-+	for (i = 0; i < ub->dev_info.nr_hw_queues; i++)
-+		ublk_queue_reinit(ub, ublk_get_queue(ub, i));
++	spin_lock(&ub->lock);
++	disk = ub->ub_disk;
++	if (disk)
++		get_device(disk_to_dev(disk));
++	spin_unlock(&ub->lock);
 +
-+	/* set to NULL, otherwise new ubq_daemon cannot mmap the io_cmd_buf */
-+	ub->mm = NULL;
-+	ub->nr_queues_ready = 0;
-+	ub->nr_privileged_daemon = 0;
++	return disk;
++}
++
++static void ublk_put_disk(struct gendisk *disk)
++{
++	if (disk)
++		put_device(disk_to_dev(disk));
 +}
 +
  static int ublk_ch_release(struct inode *inode, struct file *filp)
  {
  	struct ublk_device *ub = filp->private_data;
- 
-+	/* all uring_cmd has been done now, reset device & ubq */
-+	ublk_reset_ch_dev(ub);
++	struct gendisk *disk;
++	int i;
 +
- 	clear_bit(UB_STATE_OPEN, &ub->state);
- 	return 0;
- }
-@@ -1801,6 +1848,24 @@ static void ublk_nosrv_work(struct work_
- 	ublk_cancel_dev(ub);
- }
- 
-+/* reset ublk io_uring queue & io flags */
-+static void ublk_reset_io_flags(struct ublk_device *ub)
-+{
-+	int i, j;
++	/*
++	 * disk isn't attached yet, either device isn't live, or it has
++	 * been removed already, so we needn't to do anything
++	 */
++	disk = ublk_get_disk(ub);
++	if (!disk)
++		goto out;
 +
++	/*
++	 * All uring_cmd are done now, so abort any request outstanding to
++	 * the ublk server
++	 *
++	 * This can be done in lockless way because ublk server has been
++	 * gone
++	 *
++	 * More importantly, we have to provide forward progress guarantee
++	 * without holding ub->mutex, otherwise control task grabbing
++	 * ub->mutex triggers deadlock
++	 *
++	 * All requests may be inflight, so ->canceling may not be set, set
++	 * it now.
++	 */
 +	for (i = 0; i < ub->dev_info.nr_hw_queues; i++) {
 +		struct ublk_queue *ubq = ublk_get_queue(ub, i);
 +
-+		/* UBLK_IO_FLAG_CANCELED can be cleared now */
-+		spin_lock(&ubq->cancel_lock);
-+		for (j = 0; j < ubq->q_depth; j++)
-+			ubq->ios[j].flags &= ~UBLK_IO_FLAG_CANCELED;
-+		spin_unlock(&ubq->cancel_lock);
-+		ubq->canceling = false;
-+		ubq->fail_io = false;
++		ubq->canceling = true;
++		ublk_abort_queue(ub, ubq);
 +	}
-+}
++	blk_mq_kick_requeue_list(disk->queue);
 +
- /* device can only be started after all IOs are ready */
- static void ublk_mark_io_ready(struct ublk_device *ub, struct ublk_queue *ubq)
- 	__must_hold(&ub->mutex)
-@@ -1814,8 +1879,12 @@ static void ublk_mark_io_ready(struct ub
- 		if (capable(CAP_SYS_ADMIN))
- 			ub->nr_privileged_daemon++;
- 	}
--	if (ub->nr_queues_ready == ub->dev_info.nr_hw_queues)
++	/*
++	 * All infligh requests have been completed or requeued and any new
++	 * request will be failed or requeued via `->canceling` now, so it is
++	 * fine to grab ub->mutex now.
++	 */
++	mutex_lock(&ub->mutex);
 +
-+	if (ub->nr_queues_ready == ub->dev_info.nr_hw_queues) {
-+		/* now we are ready for handling ublk io request */
-+		ublk_reset_io_flags(ub);
- 		complete_all(&ub->completion);
++	/* double check after grabbing lock */
++	if (!ub->ub_disk)
++		goto unlock;
++
++	/*
++	 * Transition the device to the nosrv state. What exactly this
++	 * means depends on the recovery flags
++	 */
++	blk_mq_quiesce_queue(disk->queue);
++	if (ublk_nosrv_should_stop_dev(ub)) {
++		/*
++		 * Allow any pending/future I/O to pass through quickly
++		 * with an error. This is needed because del_gendisk
++		 * waits for all pending I/O to complete
++		 */
++		for (i = 0; i < ub->dev_info.nr_hw_queues; i++)
++			ublk_get_queue(ub, i)->force_abort = true;
++		blk_mq_unquiesce_queue(disk->queue);
++
++		ublk_stop_dev_unlocked(ub);
++	} else {
++		if (ublk_nosrv_dev_should_queue_io(ub)) {
++			__ublk_quiesce_dev(ub);
++		} else {
++			ub->dev_info.state = UBLK_S_DEV_FAIL_IO;
++			for (i = 0; i < ub->dev_info.nr_hw_queues; i++)
++				ublk_get_queue(ub, i)->fail_io = true;
++		}
++		blk_mq_unquiesce_queue(disk->queue);
 +	}
++unlock:
++	mutex_unlock(&ub->mutex);
++	ublk_put_disk(disk);
+ 
+ 	/* all uring_cmd has been done now, reset device & ubq */
+ 	ublk_reset_ch_dev(ub);
+-
++out:
+ 	clear_bit(UB_STATE_OPEN, &ub->state);
+ 	return 0;
+ }
+@@ -1597,37 +1668,22 @@ static void ublk_abort_queue(struct ublk
  }
  
- static inline int ublk_check_cmd_op(u32 cmd_op)
-@@ -2866,42 +2935,15 @@ static int ublk_ctrl_set_params(struct u
- 	return ret;
- }
- 
--static void ublk_queue_reinit(struct ublk_device *ub, struct ublk_queue *ubq)
--{
--	int i;
--
--	WARN_ON_ONCE(!(ubq->ubq_daemon && ubq_daemon_is_dying(ubq)));
--
--	/* All old ioucmds have to be completed */
--	ubq->nr_io_ready = 0;
--	/* old daemon is PF_EXITING, put it now */
--	put_task_struct(ubq->ubq_daemon);
--	/* We have to reset it to NULL, otherwise ub won't accept new FETCH_REQ */
--	ubq->ubq_daemon = NULL;
--	ubq->timeout = false;
--
--	for (i = 0; i < ubq->q_depth; i++) {
--		struct ublk_io *io = &ubq->ios[i];
--
--		/* forget everything now and be ready for new FETCH_REQ */
--		io->flags = 0;
--		io->cmd = NULL;
--		io->addr = 0;
--	}
--}
--
- static int ublk_ctrl_start_recovery(struct ublk_device *ub,
- 		struct io_uring_cmd *cmd)
+ /* Must be called when queue is frozen */
+-static bool ublk_mark_queue_canceling(struct ublk_queue *ubq)
++static void ublk_mark_queue_canceling(struct ublk_queue *ubq)
  {
- 	const struct ublksrv_ctrl_cmd *header = io_uring_sqe_cmd(cmd->sqe);
- 	int ret = -EINVAL;
--	int i;
+-	bool canceled;
+-
+ 	spin_lock(&ubq->cancel_lock);
+-	canceled = ubq->canceling;
+-	if (!canceled)
++	if (!ubq->canceling)
+ 		ubq->canceling = true;
+ 	spin_unlock(&ubq->cancel_lock);
+-
+-	return canceled;
+ }
  
- 	mutex_lock(&ub->mutex);
- 	if (ublk_nosrv_should_stop_dev(ub))
- 		goto out_unlock;
--	if (!ub->nr_queues_ready)
--		goto out_unlock;
+-static bool ublk_abort_requests(struct ublk_device *ub, struct ublk_queue *ubq)
++static void ublk_start_cancel(struct ublk_queue *ubq)
+ {
+-	bool was_canceled = ubq->canceling;
+-	struct gendisk *disk;
+-
+-	if (was_canceled)
+-		return false;
+-
+-	spin_lock(&ub->lock);
+-	disk = ub->ub_disk;
+-	if (disk)
+-		get_device(disk_to_dev(disk));
+-	spin_unlock(&ub->lock);
++	struct ublk_device *ub = ubq->dev;
++	struct gendisk *disk = ublk_get_disk(ub);
+ 
+ 	/* Our disk has been dead */
+ 	if (!disk)
+-		return false;
+-
++		return;
  	/*
- 	 * START_RECOVERY is only allowd after:
+ 	 * Now we are serialized with ublk_queue_rq()
  	 *
-@@ -2925,12 +2967,6 @@ static int ublk_ctrl_start_recovery(stru
- 		goto out_unlock;
- 	}
- 	pr_devel("%s: start recovery for dev id %d.\n", __func__, header->dev_id);
--	for (i = 0; i < ub->dev_info.nr_hw_queues; i++)
--		ublk_queue_reinit(ub, ublk_get_queue(ub, i));
--	/* set to NULL, otherwise new ubq_daemon cannot mmap the io_cmd_buf */
--	ub->mm = NULL;
--	ub->nr_queues_ready = 0;
--	ub->nr_privileged_daemon = 0;
- 	init_completion(&ub->completion);
- 	ret = 0;
-  out_unlock:
-@@ -2944,7 +2980,6 @@ static int ublk_ctrl_end_recovery(struct
- 	const struct ublksrv_ctrl_cmd *header = io_uring_sqe_cmd(cmd->sqe);
- 	int ublksrv_pid = (int)header->data[0];
- 	int ret = -EINVAL;
--	int i;
- 
- 	pr_devel("%s: Waiting for new ubq_daemons(nr: %d) are ready, dev id %d...\n",
- 			__func__, ub->dev_info.nr_hw_queues, header->dev_id);
-@@ -2964,22 +2999,10 @@ static int ublk_ctrl_end_recovery(struct
- 		goto out_unlock;
- 	}
- 	ub->dev_info.ublksrv_pid = ublksrv_pid;
-+	ub->dev_info.state = UBLK_S_DEV_LIVE;
- 	pr_devel("%s: new ublksrv_pid %d, dev id %d\n",
- 			__func__, ublksrv_pid, header->dev_id);
--
--	blk_mq_quiesce_queue(ub->ub_disk->queue);
--	ub->dev_info.state = UBLK_S_DEV_LIVE;
--	for (i = 0; i < ub->dev_info.nr_hw_queues; i++) {
--		struct ublk_queue *ubq = ublk_get_queue(ub, i);
--
--		ubq->canceling = false;
--		ubq->fail_io = false;
+@@ -1636,15 +1692,9 @@ static bool ublk_abort_requests(struct u
+ 	 * touch completed uring_cmd
+ 	 */
+ 	blk_mq_quiesce_queue(disk->queue);
+-	was_canceled = ublk_mark_queue_canceling(ubq);
+-	if (!was_canceled) {
+-		/* abort queue is for making forward progress */
+-		ublk_abort_queue(ub, ubq);
 -	}
--	blk_mq_unquiesce_queue(ub->ub_disk->queue);
--	pr_devel("%s: queue unquiesced, dev id %d.\n",
--			__func__, header->dev_id);
- 	blk_mq_kick_requeue_list(ub->ub_disk->queue);
++	ublk_mark_queue_canceling(ubq);
+ 	blk_mq_unquiesce_queue(disk->queue);
+-	put_device(disk_to_dev(disk));
 -
- 	ret = 0;
-  out_unlock:
+-	return !was_canceled;
++	ublk_put_disk(disk);
+ }
+ 
+ static void ublk_cancel_cmd(struct ublk_queue *ubq, struct ublk_io *io,
+@@ -1668,6 +1718,17 @@ static void ublk_cancel_cmd(struct ublk_
+ /*
+  * The ublk char device won't be closed when calling cancel fn, so both
+  * ublk device and queue are guaranteed to be live
++ *
++ * Two-stage cancel:
++ *
++ * - make every active uring_cmd done in ->cancel_fn()
++ *
++ * - aborting inflight ublk IO requests in ublk char device release handler,
++ *   which depends on 1st stage because device can only be closed iff all
++ *   uring_cmd are done
++ *
++ * Do _not_ try to acquire ub->mutex before all inflight requests are
++ * aborted, otherwise deadlock may be caused.
+  */
+ static void ublk_uring_cmd_cancel_fn(struct io_uring_cmd *cmd,
+ 		unsigned int issue_flags)
+@@ -1675,8 +1736,6 @@ static void ublk_uring_cmd_cancel_fn(str
+ 	struct ublk_uring_cmd_pdu *pdu = ublk_get_uring_cmd_pdu(cmd);
+ 	struct ublk_queue *ubq = pdu->ubq;
+ 	struct task_struct *task;
+-	struct ublk_device *ub;
+-	bool need_schedule;
+ 	struct ublk_io *io;
+ 
+ 	if (WARN_ON_ONCE(!ubq))
+@@ -1689,16 +1748,12 @@ static void ublk_uring_cmd_cancel_fn(str
+ 	if (WARN_ON_ONCE(task && task != ubq->ubq_daemon))
+ 		return;
+ 
+-	ub = ubq->dev;
+-	need_schedule = ublk_abort_requests(ub, ubq);
++	if (!ubq->canceling)
++		ublk_start_cancel(ubq);
+ 
+ 	io = &ubq->ios[pdu->tag];
+ 	WARN_ON_ONCE(io->cmd != cmd);
+ 	ublk_cancel_cmd(ubq, io, issue_flags);
+-
+-	if (need_schedule) {
+-		schedule_work(&ub->nosrv_work);
+-	}
+ }
+ 
+ static inline bool ublk_queue_ready(struct ublk_queue *ubq)
+@@ -1757,13 +1812,11 @@ static void __ublk_quiesce_dev(struct ub
+ 			__func__, ub->dev_info.dev_id,
+ 			ub->dev_info.state == UBLK_S_DEV_LIVE ?
+ 			"LIVE" : "QUIESCED");
+-	blk_mq_quiesce_queue(ub->ub_disk->queue);
+ 	/* mark every queue as canceling */
+ 	for (i = 0; i < ub->dev_info.nr_hw_queues; i++)
+ 		ublk_get_queue(ub, i)->canceling = true;
+ 	ublk_wait_tagset_rqs_idle(ub);
+ 	ub->dev_info.state = UBLK_S_DEV_QUIESCED;
+-	blk_mq_unquiesce_queue(ub->ub_disk->queue);
+ }
+ 
+ static void ublk_force_abort_dev(struct ublk_device *ub)
+@@ -1800,50 +1853,25 @@ static struct gendisk *ublk_detach_disk(
+ 	return disk;
+ }
+ 
+-static void ublk_stop_dev(struct ublk_device *ub)
++static void ublk_stop_dev_unlocked(struct ublk_device *ub)
++	__must_hold(&ub->mutex)
+ {
+ 	struct gendisk *disk;
+ 
+-	mutex_lock(&ub->mutex);
+ 	if (ub->dev_info.state == UBLK_S_DEV_DEAD)
+-		goto unlock;
++		return;
++
+ 	if (ublk_nosrv_dev_should_queue_io(ub))
+ 		ublk_force_abort_dev(ub);
+ 	del_gendisk(ub->ub_disk);
+ 	disk = ublk_detach_disk(ub);
+ 	put_disk(disk);
+- unlock:
+-	mutex_unlock(&ub->mutex);
+-	ublk_cancel_dev(ub);
+ }
+ 
+-static void ublk_nosrv_work(struct work_struct *work)
++static void ublk_stop_dev(struct ublk_device *ub)
+ {
+-	struct ublk_device *ub =
+-		container_of(work, struct ublk_device, nosrv_work);
+-	int i;
+-
+-	if (ublk_nosrv_should_stop_dev(ub)) {
+-		ublk_stop_dev(ub);
+-		return;
+-	}
+-
+ 	mutex_lock(&ub->mutex);
+-	if (ub->dev_info.state != UBLK_S_DEV_LIVE)
+-		goto unlock;
+-
+-	if (ublk_nosrv_dev_should_queue_io(ub)) {
+-		__ublk_quiesce_dev(ub);
+-	} else {
+-		blk_mq_quiesce_queue(ub->ub_disk->queue);
+-		ub->dev_info.state = UBLK_S_DEV_FAIL_IO;
+-		for (i = 0; i < ub->dev_info.nr_hw_queues; i++) {
+-			ublk_get_queue(ub, i)->fail_io = true;
+-		}
+-		blk_mq_unquiesce_queue(ub->ub_disk->queue);
+-	}
+-
+- unlock:
++	ublk_stop_dev_unlocked(ub);
  	mutex_unlock(&ub->mutex);
+ 	ublk_cancel_dev(ub);
+ }
+@@ -2419,7 +2447,6 @@ static int ublk_add_tag_set(struct ublk_
+ static void ublk_remove(struct ublk_device *ub)
+ {
+ 	ublk_stop_dev(ub);
+-	cancel_work_sync(&ub->nosrv_work);
+ 	cdev_device_del(&ub->cdev, &ub->cdev_dev);
+ 	ublk_put_device(ub);
+ 	ublks_added--;
+@@ -2693,7 +2720,6 @@ static int ublk_ctrl_add_dev(struct io_u
+ 		goto out_unlock;
+ 	mutex_init(&ub->mutex);
+ 	spin_lock_init(&ub->lock);
+-	INIT_WORK(&ub->nosrv_work, ublk_nosrv_work);
+ 
+ 	ret = ublk_alloc_dev_number(ub, header->dev_id);
+ 	if (ret < 0)
+@@ -2828,7 +2854,6 @@ static inline void ublk_ctrl_cmd_dump(st
+ static int ublk_ctrl_stop_dev(struct ublk_device *ub)
+ {
+ 	ublk_stop_dev(ub);
+-	cancel_work_sync(&ub->nosrv_work);
+ 	return 0;
+ }
+ 
 
 
