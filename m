@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E932144C1;
-	Wed,  7 May 2025 19:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0B32144C1;
+	Wed,  7 May 2025 19:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746645075; cv=none; b=KMmRa58iFuvBvOUlcqLA9w1ykqW00mqzJSByKviARwyFAj+dIDqpiTxSOxdSxHptoe634kMrKuoEyXmFY6fRDnrDqxnr0Jj+rqV0ExKTM+LFu+hT8U+lFKmuMKkIFQr/VEmyrkN3kneacHhB41WWEQTS6ipw76EQGJ9ninsHJIM=
+	t=1746645079; cv=none; b=ku0bSIvsoK1AsSBwHWMjnGJ7HbYGSNhBdnaeuyLnv5xRhSkxLmApT0rfjjrANdruJPcs48q+dbCKlPVgrqdIagX8j5zt25VJbcVCCmaVLRPMVFCjXVTfSw38C4/6yaCZvl/Tjn++VpiTXu2dI6QjpFD/RFyE9C3hf7xRB29EQrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746645075; c=relaxed/simple;
-	bh=V22rfBX6YptZ8WCaj9oidSuabuyRGAzScSFmHMXgsxc=;
+	s=arc-20240116; t=1746645079; c=relaxed/simple;
+	bh=5mHWvxgfR//7PTNs9noScsLKZhXTUh0uh9bnhAHOFvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DUO/diMt/v1j+P6k/ECwa2mVk4j+cYTACFjofpY0GsZeXmZQtn6Cfnyc8gF7v4On+y+dqjCGwtLaoMV/I8WenwS0j945fybT499oPVRWOY2nap8olOZS5NfZ65gvks36dpcqNO77c/PPKH8kUJ26Ggj2VylVOgpzvPQrQP8kCAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PN5ei7Yr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rXmANMnLEuZenxIWnXqxGrWxMcIrG/sJVO959NlEo0+TZ39dmIdtOkkCsXbGZCUnZTj40n5aae4+W8bP9fIVU6lu9xQILveJ4YdeYczK+/5CXG22xnL2E05U6N4cEnZrdfKhvXr7jU88V/HluB8Y0jRyvx46BEuAVb9do2Tz/VI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pXULxJ/e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PN5ei7Yr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BD3BC4CEE2;
-	Wed,  7 May 2025 19:11:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pXULxJ/e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D0DC4CEE2;
+	Wed,  7 May 2025 19:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746645075;
-	bh=V22rfBX6YptZ8WCaj9oidSuabuyRGAzScSFmHMXgsxc=;
+	s=korg; t=1746645079;
+	bh=5mHWvxgfR//7PTNs9noScsLKZhXTUh0uh9bnhAHOFvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PN5ei7Yr7gHfrxypnamMAtMmopWwkoizGJMIBYYOMKn7s5yQ8SqKOAXAqyHtVMhYY
-	 8q58ogDpM0BJzMEWAVjLLhcNqTLn4N64DC6l49K/eqOxrVNh+jqp3l1OCb6shqEM9P
-	 hU47LlLaLWiK1s5idiCROzeCIsQQiHjv+XFbOy4A=
+	b=pXULxJ/eotCB7n2JUH+owpYTUowMiylyHxsy0Y2lEHKfgSH0lY0fWYiL1ZpiA5GYh
+	 5omiyJ7AEEaNP12eFJWvGp/t67GfxgZmQlIah0P0yJ82sjuC2p7HlfkTkYa975ZZtx
+	 kNEEvnAUPVCOu4VNfTtS3IOw101GkaY6D3avTX+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	En-Wei Wu <en-wei.wu@canonical.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Abhishek Chauhan <quic_abchauha@quicinc.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/129] Bluetooth: btusb: avoid NULL pointer dereference in skb_dequeue()
-Date: Wed,  7 May 2025 20:39:52 +0200
-Message-ID: <20250507183815.802915625@linuxfoundation.org>
+Subject: [PATCH 6.6 057/129] net: Rename mono_delivery_time to tstamp_type for scalabilty
+Date: Wed,  7 May 2025 20:39:53 +0200
+Message-ID: <20250507183815.841217180@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -51,195 +52,567 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: En-Wei Wu <en-wei.wu@canonical.com>
+From: Abhishek Chauhan <quic_abchauha@quicinc.com>
 
-[ Upstream commit 0317b033abcd1d8dd2798f0e2de5e84543d0bd22 ]
+[ Upstream commit 4d25ca2d6801cfcf26f7f39c561611ba5be99bf8 ]
 
-A NULL pointer dereference can occur in skb_dequeue() when processing a
-QCA firmware crash dump on WCN7851 (0489:e0f3).
+mono_delivery_time was added to check if skb->tstamp has delivery
+time in mono clock base (i.e. EDT) otherwise skb->tstamp has
+timestamp in ingress and delivery_time at egress.
 
-[ 93.672166] Bluetooth: hci0: ACL memdump size(589824)
+Renaming the bitfield from mono_delivery_time to tstamp_type is for
+extensibilty for other timestamps such as userspace timestamp
+(i.e. SO_TXTIME) set via sock opts.
 
-[ 93.672475] BUG: kernel NULL pointer dereference, address: 0000000000000008
-[ 93.672517] Workqueue: hci0 hci_devcd_rx [bluetooth]
-[ 93.672598] RIP: 0010:skb_dequeue+0x50/0x80
+As we are renaming the mono_delivery_time to tstamp_type, it makes
+sense to start assigning tstamp_type based on enum defined
+in this commit.
 
-The issue stems from handle_dump_pkt_qca() returning 0 even when a dump
-packet is successfully processed. This is because it incorrectly
-forwards the return value of hci_devcd_init() (which returns 0 on
-success). As a result, the caller (btusb_recv_acl_qca() or
-btusb_recv_evt_qca()) assumes the packet was not handled and passes it
-to hci_recv_frame(), leading to premature kfree() of the skb.
+Earlier we used bool arg flag to check if the tstamp is mono in
+function skb_set_delivery_time, Now the signature of the functions
+accepts tstamp_type to distinguish between mono and real time.
 
-Later, hci_devcd_rx() attempts to dequeue the same skb from the dump
-queue, resulting in a NULL pointer dereference.
+Also skb_set_delivery_type_by_clockid is a new function which accepts
+clockid to determine the tstamp_type.
 
-Fix this by:
-1. Making handle_dump_pkt_qca() return 0 on success and negative errno
-   on failure, consistent with kernel conventions.
-2. Splitting dump packet detection into separate functions for ACL
-   and event packets for better structure and readability.
+In future tstamp_type:1 can be extended to support userspace timestamp
+by increasing the bitfield.
 
-This ensures dump packets are properly identified and consumed, avoiding
-double handling and preventing NULL pointer access.
-
-Fixes: 20981ce2d5a5 ("Bluetooth: btusb: Add WCN6855 devcoredump support")
-Signed-off-by: En-Wei Wu <en-wei.wu@canonical.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Abhishek Chauhan <quic_abchauha@quicinc.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://lore.kernel.org/r/20240509211834.3235191-2-quic_abchauha@quicinc.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Stable-dep-of: 3908feb1bd7f ("Bluetooth: L2CAP: copy RX timestamp to new fragments")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 101 +++++++++++++++++++++++++++-----------
- 1 file changed, 73 insertions(+), 28 deletions(-)
+ include/linux/skbuff.h                     | 52 ++++++++++++++++------
+ include/net/inet_frag.h                    |  4 +-
+ net/bridge/netfilter/nf_conntrack_bridge.c |  6 +--
+ net/core/dev.c                             |  2 +-
+ net/core/filter.c                          | 10 ++---
+ net/ieee802154/6lowpan/reassembly.c        |  2 +-
+ net/ipv4/inet_fragment.c                   |  2 +-
+ net/ipv4/ip_fragment.c                     |  2 +-
+ net/ipv4/ip_output.c                       |  9 ++--
+ net/ipv4/tcp_output.c                      | 14 +++---
+ net/ipv6/ip6_output.c                      |  6 +--
+ net/ipv6/netfilter.c                       |  6 +--
+ net/ipv6/netfilter/nf_conntrack_reasm.c    |  2 +-
+ net/ipv6/reassembly.c                      |  2 +-
+ net/ipv6/tcp_ipv6.c                        |  2 +-
+ net/sched/act_bpf.c                        |  4 +-
+ net/sched/cls_bpf.c                        |  4 +-
+ 17 files changed, 78 insertions(+), 51 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index bc3f63f1ccd86..d6195565ef7ae 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3521,22 +3521,16 @@ static void btusb_coredump_qca(struct hci_dev *hdev)
- 		bt_dev_err(hdev, "%s: triggle crash failed (%d)", __func__, err);
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index 5f11f98733419..f7d392d849be5 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -685,6 +685,11 @@ typedef unsigned int sk_buff_data_t;
+ typedef unsigned char *sk_buff_data_t;
+ #endif
+ 
++enum skb_tstamp_type {
++	SKB_CLOCK_REALTIME,
++	SKB_CLOCK_MONOTONIC,
++};
++
+ /**
+  * DOC: Basic sk_buff geometry
+  *
+@@ -804,10 +809,8 @@ typedef unsigned char *sk_buff_data_t;
+  *	@dst_pending_confirm: need to confirm neighbour
+  *	@decrypted: Decrypted SKB
+  *	@slow_gro: state present at GRO time, slower prepare step required
+- *	@mono_delivery_time: When set, skb->tstamp has the
+- *		delivery_time in mono clock base (i.e. EDT).  Otherwise, the
+- *		skb->tstamp has the (rcv) timestamp at ingress and
+- *		delivery_time at egress.
++ *	@tstamp_type: When set, skb->tstamp has the
++ *		delivery_time clock base of skb->tstamp.
+  *	@napi_id: id of the NAPI struct this skb came from
+  *	@sender_cpu: (aka @napi_id) source CPU in XPS
+  *	@alloc_cpu: CPU which did the skb allocation.
+@@ -935,7 +938,7 @@ struct sk_buff {
+ 	/* private: */
+ 	__u8			__mono_tc_offset[0];
+ 	/* public: */
+-	__u8			mono_delivery_time:1;	/* See SKB_MONO_DELIVERY_TIME_MASK */
++	__u8			tstamp_type:1;	/* See skb_tstamp_type */
+ #ifdef CONFIG_NET_XGRESS
+ 	__u8			tc_at_ingress:1;	/* See TC_AT_INGRESS_MASK */
+ 	__u8			tc_skip_classify:1;
+@@ -4189,7 +4192,7 @@ static inline void skb_get_new_timestampns(const struct sk_buff *skb,
+ static inline void __net_timestamp(struct sk_buff *skb)
+ {
+ 	skb->tstamp = ktime_get_real();
+-	skb->mono_delivery_time = 0;
++	skb->tstamp_type = SKB_CLOCK_REALTIME;
  }
  
--/*
-- * ==0: not a dump pkt.
-- * < 0: fails to handle a dump pkt
-- * > 0: otherwise.
-- */
-+/* Return: 0 on success, negative errno on failure. */
- static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
+ static inline ktime_t net_timedelta(ktime_t t)
+@@ -4198,10 +4201,33 @@ static inline ktime_t net_timedelta(ktime_t t)
+ }
+ 
+ static inline void skb_set_delivery_time(struct sk_buff *skb, ktime_t kt,
+-					 bool mono)
++					 u8 tstamp_type)
  {
--	int ret = 1;
-+	int ret = 0;
- 	u8 pkt_type;
- 	u8 *sk_ptr;
- 	unsigned int sk_len;
- 	u16 seqno;
- 	u32 dump_size;
+ 	skb->tstamp = kt;
+-	skb->mono_delivery_time = kt && mono;
++
++	if (kt)
++		skb->tstamp_type = tstamp_type;
++	else
++		skb->tstamp_type = SKB_CLOCK_REALTIME;
++}
++
++static inline void skb_set_delivery_type_by_clockid(struct sk_buff *skb,
++						    ktime_t kt, clockid_t clockid)
++{
++	u8 tstamp_type = SKB_CLOCK_REALTIME;
++
++	switch (clockid) {
++	case CLOCK_REALTIME:
++		break;
++	case CLOCK_MONOTONIC:
++		tstamp_type = SKB_CLOCK_MONOTONIC;
++		break;
++	default:
++		WARN_ON_ONCE(1);
++		kt = 0;
++	}
++
++	skb_set_delivery_time(skb, kt, tstamp_type);
+ }
  
--	struct hci_event_hdr *event_hdr;
--	struct hci_acl_hdr *acl_hdr;
- 	struct qca_dump_hdr *dump_hdr;
- 	struct btusb_data *btdata = hci_get_drvdata(hdev);
- 	struct usb_device *udev = btdata->udev;
-@@ -3546,30 +3540,14 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
- 	sk_len = skb->len;
+ DECLARE_STATIC_KEY_FALSE(netstamp_needed_key);
+@@ -4211,8 +4237,8 @@ DECLARE_STATIC_KEY_FALSE(netstamp_needed_key);
+  */
+ static inline void skb_clear_delivery_time(struct sk_buff *skb)
+ {
+-	if (skb->mono_delivery_time) {
+-		skb->mono_delivery_time = 0;
++	if (skb->tstamp_type) {
++		skb->tstamp_type = SKB_CLOCK_REALTIME;
+ 		if (static_branch_unlikely(&netstamp_needed_key))
+ 			skb->tstamp = ktime_get_real();
+ 		else
+@@ -4222,7 +4248,7 @@ static inline void skb_clear_delivery_time(struct sk_buff *skb)
  
- 	if (pkt_type == HCI_ACLDATA_PKT) {
--		acl_hdr = hci_acl_hdr(skb);
--		if (le16_to_cpu(acl_hdr->handle) != QCA_MEMDUMP_ACL_HANDLE)
--			return 0;
- 		sk_ptr += HCI_ACL_HDR_SIZE;
- 		sk_len -= HCI_ACL_HDR_SIZE;
--		event_hdr = (struct hci_event_hdr *)sk_ptr;
--	} else {
--		event_hdr = hci_event_hdr(skb);
+ static inline void skb_clear_tstamp(struct sk_buff *skb)
+ {
+-	if (skb->mono_delivery_time)
++	if (skb->tstamp_type)
+ 		return;
+ 
+ 	skb->tstamp = 0;
+@@ -4230,7 +4256,7 @@ static inline void skb_clear_tstamp(struct sk_buff *skb)
+ 
+ static inline ktime_t skb_tstamp(const struct sk_buff *skb)
+ {
+-	if (skb->mono_delivery_time)
++	if (skb->tstamp_type)
+ 		return 0;
+ 
+ 	return skb->tstamp;
+@@ -4238,7 +4264,7 @@ static inline ktime_t skb_tstamp(const struct sk_buff *skb)
+ 
+ static inline ktime_t skb_tstamp_cond(const struct sk_buff *skb, bool cond)
+ {
+-	if (!skb->mono_delivery_time && skb->tstamp)
++	if (skb->tstamp_type != SKB_CLOCK_MONOTONIC && skb->tstamp)
+ 		return skb->tstamp;
+ 
+ 	if (static_branch_unlikely(&netstamp_needed_key) || cond)
+diff --git a/include/net/inet_frag.h b/include/net/inet_frag.h
+index 153960663ce4c..5af6eb14c5db1 100644
+--- a/include/net/inet_frag.h
++++ b/include/net/inet_frag.h
+@@ -76,7 +76,7 @@ struct frag_v6_compare_key {
+  * @stamp: timestamp of the last received fragment
+  * @len: total length of the original datagram
+  * @meat: length of received fragments so far
+- * @mono_delivery_time: stamp has a mono delivery time (EDT)
++ * @tstamp_type: stamp has a mono delivery time (EDT)
+  * @flags: fragment queue flags
+  * @max_size: maximum received fragment size
+  * @fqdir: pointer to struct fqdir
+@@ -97,7 +97,7 @@ struct inet_frag_queue {
+ 	ktime_t			stamp;
+ 	int			len;
+ 	int			meat;
+-	u8			mono_delivery_time;
++	u8			tstamp_type;
+ 	__u8			flags;
+ 	u16			max_size;
+ 	struct fqdir		*fqdir;
+diff --git a/net/bridge/netfilter/nf_conntrack_bridge.c b/net/bridge/netfilter/nf_conntrack_bridge.c
+index 6ef04f9fe481b..4fbfbafdfa027 100644
+--- a/net/bridge/netfilter/nf_conntrack_bridge.c
++++ b/net/bridge/netfilter/nf_conntrack_bridge.c
+@@ -32,7 +32,7 @@ static int nf_br_ip_fragment(struct net *net, struct sock *sk,
+ 					   struct sk_buff *))
+ {
+ 	int frag_max_size = BR_INPUT_SKB_CB(skb)->frag_max_size;
+-	bool mono_delivery_time = skb->mono_delivery_time;
++	u8 tstamp_type = skb->tstamp_type;
+ 	unsigned int hlen, ll_rs, mtu;
+ 	ktime_t tstamp = skb->tstamp;
+ 	struct ip_frag_state state;
+@@ -82,7 +82,7 @@ static int nf_br_ip_fragment(struct net *net, struct sock *sk,
+ 			if (iter.frag)
+ 				ip_fraglist_prepare(skb, &iter);
+ 
+-			skb_set_delivery_time(skb, tstamp, mono_delivery_time);
++			skb_set_delivery_time(skb, tstamp, tstamp_type);
+ 			err = output(net, sk, data, skb);
+ 			if (err || !iter.frag)
+ 				break;
+@@ -113,7 +113,7 @@ static int nf_br_ip_fragment(struct net *net, struct sock *sk,
+ 			goto blackhole;
+ 		}
+ 
+-		skb_set_delivery_time(skb2, tstamp, mono_delivery_time);
++		skb_set_delivery_time(skb2, tstamp, tstamp_type);
+ 		err = output(net, sk, data, skb2);
+ 		if (err)
+ 			goto blackhole;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index c31a7f7bedf3d..4006fd164b7bc 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -2189,7 +2189,7 @@ EXPORT_SYMBOL(net_disable_timestamp);
+ static inline void net_timestamp_set(struct sk_buff *skb)
+ {
+ 	skb->tstamp = 0;
+-	skb->mono_delivery_time = 0;
++	skb->tstamp_type = SKB_CLOCK_REALTIME;
+ 	if (static_branch_unlikely(&netstamp_needed_key))
+ 		skb->tstamp = ktime_get_real();
+ }
+diff --git a/net/core/filter.c b/net/core/filter.c
+index c4c27e03279c9..066277b91a1be 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -7734,13 +7734,13 @@ BPF_CALL_3(bpf_skb_set_tstamp, struct sk_buff *, skb,
+ 		if (!tstamp)
+ 			return -EINVAL;
+ 		skb->tstamp = tstamp;
+-		skb->mono_delivery_time = 1;
++		skb->tstamp_type = SKB_CLOCK_MONOTONIC;
+ 		break;
+ 	case BPF_SKB_TSTAMP_UNSPEC:
+ 		if (tstamp)
+ 			return -EINVAL;
+ 		skb->tstamp = 0;
+-		skb->mono_delivery_time = 0;
++		skb->tstamp_type = SKB_CLOCK_REALTIME;
+ 		break;
+ 	default:
+ 		return -EINVAL;
+@@ -9438,7 +9438,7 @@ static struct bpf_insn *bpf_convert_tstamp_read(const struct bpf_prog *prog,
+ 					TC_AT_INGRESS_MASK | SKB_MONO_DELIVERY_TIME_MASK);
+ 		*insn++ = BPF_JMP32_IMM(BPF_JNE, tmp_reg,
+ 					TC_AT_INGRESS_MASK | SKB_MONO_DELIVERY_TIME_MASK, 2);
+-		/* skb->tc_at_ingress && skb->mono_delivery_time,
++		/* skb->tc_at_ingress && skb->tstamp_type,
+ 		 * read 0 as the (rcv) timestamp.
+ 		 */
+ 		*insn++ = BPF_MOV64_IMM(value_reg, 0);
+@@ -9463,7 +9463,7 @@ static struct bpf_insn *bpf_convert_tstamp_write(const struct bpf_prog *prog,
+ 	 * the bpf prog is aware the tstamp could have delivery time.
+ 	 * Thus, write skb->tstamp as is if tstamp_type_access is true.
+ 	 * Otherwise, writing at ingress will have to clear the
+-	 * mono_delivery_time bit also.
++	 * skb->tstamp_type bit also.
+ 	 */
+ 	if (!prog->tstamp_type_access) {
+ 		__u8 tmp_reg = BPF_REG_AX;
+@@ -9473,7 +9473,7 @@ static struct bpf_insn *bpf_convert_tstamp_write(const struct bpf_prog *prog,
+ 		*insn++ = BPF_JMP32_IMM(BPF_JSET, tmp_reg, TC_AT_INGRESS_MASK, 1);
+ 		/* goto <store> */
+ 		*insn++ = BPF_JMP_A(2);
+-		/* <clear>: mono_delivery_time */
++		/* <clear>: skb->tstamp_type */
+ 		*insn++ = BPF_ALU32_IMM(BPF_AND, tmp_reg, ~SKB_MONO_DELIVERY_TIME_MASK);
+ 		*insn++ = BPF_STX_MEM(BPF_B, skb_reg, tmp_reg, SKB_BF_MONO_TC_OFFSET);
  	}
+diff --git a/net/ieee802154/6lowpan/reassembly.c b/net/ieee802154/6lowpan/reassembly.c
+index 6dd960ec558cf..ba0455ad77019 100644
+--- a/net/ieee802154/6lowpan/reassembly.c
++++ b/net/ieee802154/6lowpan/reassembly.c
+@@ -130,7 +130,7 @@ static int lowpan_frag_queue(struct lowpan_frag_queue *fq,
+ 		goto err;
  
--	if ((event_hdr->evt != HCI_VENDOR_PKT)
--		|| (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE)))
--		return 0;
--
- 	sk_ptr += HCI_EVENT_HDR_SIZE;
- 	sk_len -= HCI_EVENT_HDR_SIZE;
+ 	fq->q.stamp = skb->tstamp;
+-	fq->q.mono_delivery_time = skb->mono_delivery_time;
++	fq->q.tstamp_type = skb->tstamp_type;
+ 	if (frag_type == LOWPAN_DISPATCH_FRAG1)
+ 		fq->q.flags |= INET_FRAG_FIRST_IN;
  
- 	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
--	if ((sk_len < offsetof(struct qca_dump_hdr, data))
--		|| (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS)
--	    || (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
--		return 0;
--
--	/*it is dump pkt now*/
- 	seqno = le16_to_cpu(dump_hdr->seqno);
- 	if (seqno == 0) {
- 		set_bit(BTUSB_HW_SSR_ACTIVE, &btdata->flags);
-@@ -3643,17 +3621,84 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
- 	return ret;
- }
+diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
+index c88c9034d6300..496308c023848 100644
+--- a/net/ipv4/inet_fragment.c
++++ b/net/ipv4/inet_fragment.c
+@@ -619,7 +619,7 @@ void inet_frag_reasm_finish(struct inet_frag_queue *q, struct sk_buff *head,
+ 	skb_mark_not_on_list(head);
+ 	head->prev = NULL;
+ 	head->tstamp = q->stamp;
+-	head->mono_delivery_time = q->mono_delivery_time;
++	head->tstamp_type = q->tstamp_type;
  
-+/* Return: true if the ACL packet is a dump packet, false otherwise. */
-+static bool acl_pkt_is_dump_qca(struct hci_dev *hdev, struct sk_buff *skb)
-+{
-+	u8 *sk_ptr;
-+	unsigned int sk_len;
-+
-+	struct hci_event_hdr *event_hdr;
-+	struct hci_acl_hdr *acl_hdr;
-+	struct qca_dump_hdr *dump_hdr;
-+
-+	sk_ptr = skb->data;
-+	sk_len = skb->len;
-+
-+	acl_hdr = hci_acl_hdr(skb);
-+	if (le16_to_cpu(acl_hdr->handle) != QCA_MEMDUMP_ACL_HANDLE)
-+		return false;
-+
-+	sk_ptr += HCI_ACL_HDR_SIZE;
-+	sk_len -= HCI_ACL_HDR_SIZE;
-+	event_hdr = (struct hci_event_hdr *)sk_ptr;
-+
-+	if ((event_hdr->evt != HCI_VENDOR_PKT) ||
-+	    (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE)))
-+		return false;
-+
-+	sk_ptr += HCI_EVENT_HDR_SIZE;
-+	sk_len -= HCI_EVENT_HDR_SIZE;
-+
-+	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
-+	if ((sk_len < offsetof(struct qca_dump_hdr, data)) ||
-+	    (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS) ||
-+	    (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
-+		return false;
-+
-+	return true;
-+}
-+
-+/* Return: true if the event packet is a dump packet, false otherwise. */
-+static bool evt_pkt_is_dump_qca(struct hci_dev *hdev, struct sk_buff *skb)
-+{
-+	u8 *sk_ptr;
-+	unsigned int sk_len;
-+
-+	struct hci_event_hdr *event_hdr;
-+	struct qca_dump_hdr *dump_hdr;
-+
-+	sk_ptr = skb->data;
-+	sk_len = skb->len;
-+
-+	event_hdr = hci_event_hdr(skb);
-+
-+	if ((event_hdr->evt != HCI_VENDOR_PKT)
-+	    || (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE)))
-+		return false;
-+
-+	sk_ptr += HCI_EVENT_HDR_SIZE;
-+	sk_len -= HCI_EVENT_HDR_SIZE;
-+
-+	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
-+	if ((sk_len < offsetof(struct qca_dump_hdr, data)) ||
-+	    (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS) ||
-+	    (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
-+		return false;
-+
-+	return true;
-+}
-+
- static int btusb_recv_acl_qca(struct hci_dev *hdev, struct sk_buff *skb)
+ 	if (sk)
+ 		refcount_add(sum_truesize - head_truesize, &sk->sk_wmem_alloc);
+diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
+index 877d1e03150c7..484edc8513e4b 100644
+--- a/net/ipv4/ip_fragment.c
++++ b/net/ipv4/ip_fragment.c
+@@ -360,7 +360,7 @@ static int ip_frag_queue(struct ipq *qp, struct sk_buff *skb)
+ 		qp->iif = dev->ifindex;
+ 
+ 	qp->q.stamp = skb->tstamp;
+-	qp->q.mono_delivery_time = skb->mono_delivery_time;
++	qp->q.tstamp_type = skb->tstamp_type;
+ 	qp->q.meat += skb->len;
+ 	qp->ecn |= ecn;
+ 	add_frag_mem_limit(qp->q.fqdir, skb->truesize);
+diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
+index 765bd3f2a8408..b8cfe6afc84b8 100644
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -764,7 +764,7 @@ int ip_do_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
  {
--	if (handle_dump_pkt_qca(hdev, skb))
--		return 0;
-+	if (acl_pkt_is_dump_qca(hdev, skb))
-+		return handle_dump_pkt_qca(hdev, skb);
- 	return hci_recv_frame(hdev, skb);
- }
+ 	struct iphdr *iph;
+ 	struct sk_buff *skb2;
+-	bool mono_delivery_time = skb->mono_delivery_time;
++	u8 tstamp_type = skb->tstamp_type;
+ 	struct rtable *rt = skb_rtable(skb);
+ 	unsigned int mtu, hlen, ll_rs;
+ 	struct ip_fraglist_iter iter;
+@@ -856,7 +856,7 @@ int ip_do_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
+ 				}
+ 			}
  
- static int btusb_recv_evt_qca(struct hci_dev *hdev, struct sk_buff *skb)
+-			skb_set_delivery_time(skb, tstamp, mono_delivery_time);
++			skb_set_delivery_time(skb, tstamp, tstamp_type);
+ 			err = output(net, sk, skb);
+ 
+ 			if (!err)
+@@ -912,7 +912,7 @@ int ip_do_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
+ 		/*
+ 		 *	Put this fragment into the sending queue.
+ 		 */
+-		skb_set_delivery_time(skb2, tstamp, mono_delivery_time);
++		skb_set_delivery_time(skb2, tstamp, tstamp_type);
+ 		err = output(net, sk, skb2);
+ 		if (err)
+ 			goto fail;
+@@ -1648,7 +1648,8 @@ void ip_send_unicast_reply(struct sock *sk, struct sk_buff *skb,
+ 			  arg->csumoffset) = csum_fold(csum_add(nskb->csum,
+ 								arg->csum));
+ 		nskb->ip_summed = CHECKSUM_NONE;
+-		nskb->mono_delivery_time = !!transmit_time;
++		if (transmit_time)
++			nskb->tstamp_type = SKB_CLOCK_MONOTONIC;
+ 		if (txhash)
+ 			skb_set_hash(nskb, txhash, PKT_HASH_TYPE_L4);
+ 		ip_push_pending_frames(sk, &fl4);
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 3771ed22c2f56..560273e7f7736 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -1266,7 +1266,7 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
+ 	tp = tcp_sk(sk);
+ 	prior_wstamp = tp->tcp_wstamp_ns;
+ 	tp->tcp_wstamp_ns = max(tp->tcp_wstamp_ns, tp->tcp_clock_cache);
+-	skb_set_delivery_time(skb, tp->tcp_wstamp_ns, true);
++	skb_set_delivery_time(skb, tp->tcp_wstamp_ns, SKB_CLOCK_MONOTONIC);
+ 	if (clone_it) {
+ 		oskb = skb;
+ 
+@@ -1607,7 +1607,7 @@ int tcp_fragment(struct sock *sk, enum tcp_queue tcp_queue,
+ 
+ 	skb_split(skb, buff, len);
+ 
+-	skb_set_delivery_time(buff, skb->tstamp, true);
++	skb_set_delivery_time(buff, skb->tstamp, SKB_CLOCK_MONOTONIC);
+ 	tcp_fragment_tstamp(skb, buff);
+ 
+ 	old_factor = tcp_skb_pcount(skb);
+@@ -2703,7 +2703,7 @@ static bool tcp_write_xmit(struct sock *sk, unsigned int mss_now, int nonagle,
+ 		if (unlikely(tp->repair) && tp->repair_queue == TCP_SEND_QUEUE) {
+ 			/* "skb_mstamp_ns" is used as a start point for the retransmit timer */
+ 			tp->tcp_wstamp_ns = tp->tcp_clock_cache;
+-			skb_set_delivery_time(skb, tp->tcp_wstamp_ns, true);
++			skb_set_delivery_time(skb, tp->tcp_wstamp_ns, SKB_CLOCK_MONOTONIC);
+ 			list_move_tail(&skb->tcp_tsorted_anchor, &tp->tsorted_sent_queue);
+ 			tcp_init_tso_segs(skb, mss_now);
+ 			goto repair; /* Skip network transmission */
+@@ -3688,11 +3688,11 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
+ #ifdef CONFIG_SYN_COOKIES
+ 	if (unlikely(synack_type == TCP_SYNACK_COOKIE && ireq->tstamp_ok))
+ 		skb_set_delivery_time(skb, cookie_init_timestamp(req, now),
+-				      true);
++				      SKB_CLOCK_MONOTONIC);
+ 	else
+ #endif
+ 	{
+-		skb_set_delivery_time(skb, now, true);
++		skb_set_delivery_time(skb, now, SKB_CLOCK_MONOTONIC);
+ 		if (!tcp_rsk(req)->snt_synack) /* Timestamp first SYNACK */
+ 			tcp_rsk(req)->snt_synack = tcp_skb_timestamp_us(skb);
+ 	}
+@@ -3741,7 +3741,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
+ 	bpf_skops_write_hdr_opt((struct sock *)sk, skb, req, syn_skb,
+ 				synack_type, &opts);
+ 
+-	skb_set_delivery_time(skb, now, true);
++	skb_set_delivery_time(skb, now, SKB_CLOCK_MONOTONIC);
+ 	tcp_add_tx_delay(skb, tp);
+ 
+ 	return skb;
+@@ -3923,7 +3923,7 @@ static int tcp_send_syn_data(struct sock *sk, struct sk_buff *syn)
+ 
+ 	err = tcp_transmit_skb(sk, syn_data, 1, sk->sk_allocation);
+ 
+-	skb_set_delivery_time(syn, syn_data->skb_mstamp_ns, true);
++	skb_set_delivery_time(syn, syn_data->skb_mstamp_ns, SKB_CLOCK_MONOTONIC);
+ 
+ 	/* Now full SYN+DATA was cloned and sent (or not),
+ 	 * remove the SYN from the original skb (syn_data)
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index cd89a2b35dfb5..c86d5dca29df0 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -864,7 +864,7 @@ int ip6_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
+ 	struct rt6_info *rt = dst_rt6_info(skb_dst(skb));
+ 	struct ipv6_pinfo *np = skb->sk && !dev_recursion_level() ?
+ 				inet6_sk(skb->sk) : NULL;
+-	bool mono_delivery_time = skb->mono_delivery_time;
++	u8 tstamp_type = skb->tstamp_type;
+ 	struct ip6_frag_state state;
+ 	unsigned int mtu, hlen, nexthdr_offset;
+ 	ktime_t tstamp = skb->tstamp;
+@@ -958,7 +958,7 @@ int ip6_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
+ 			if (iter.frag)
+ 				ip6_fraglist_prepare(skb, &iter);
+ 
+-			skb_set_delivery_time(skb, tstamp, mono_delivery_time);
++			skb_set_delivery_time(skb, tstamp, tstamp_type);
+ 			err = output(net, sk, skb);
+ 			if (!err)
+ 				IP6_INC_STATS(net, ip6_dst_idev(&rt->dst),
+@@ -1019,7 +1019,7 @@ int ip6_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
+ 		/*
+ 		 *	Put this fragment into the sending queue.
+ 		 */
+-		skb_set_delivery_time(frag, tstamp, mono_delivery_time);
++		skb_set_delivery_time(frag, tstamp, tstamp_type);
+ 		err = output(net, sk, frag);
+ 		if (err)
+ 			goto fail;
+diff --git a/net/ipv6/netfilter.c b/net/ipv6/netfilter.c
+index 857713d7a38a5..7c4af48d529e1 100644
+--- a/net/ipv6/netfilter.c
++++ b/net/ipv6/netfilter.c
+@@ -126,7 +126,7 @@ int br_ip6_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
+ 				  struct sk_buff *))
  {
--	if (handle_dump_pkt_qca(hdev, skb))
--		return 0;
-+	if (evt_pkt_is_dump_qca(hdev, skb))
-+		return handle_dump_pkt_qca(hdev, skb);
- 	return hci_recv_frame(hdev, skb);
- }
+ 	int frag_max_size = BR_INPUT_SKB_CB(skb)->frag_max_size;
+-	bool mono_delivery_time = skb->mono_delivery_time;
++	u8 tstamp_type = skb->tstamp_type;
+ 	ktime_t tstamp = skb->tstamp;
+ 	struct ip6_frag_state state;
+ 	u8 *prevhdr, nexthdr = 0;
+@@ -192,7 +192,7 @@ int br_ip6_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
+ 			if (iter.frag)
+ 				ip6_fraglist_prepare(skb, &iter);
  
+-			skb_set_delivery_time(skb, tstamp, mono_delivery_time);
++			skb_set_delivery_time(skb, tstamp, tstamp_type);
+ 			err = output(net, sk, data, skb);
+ 			if (err || !iter.frag)
+ 				break;
+@@ -225,7 +225,7 @@ int br_ip6_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
+ 			goto blackhole;
+ 		}
+ 
+-		skb_set_delivery_time(skb2, tstamp, mono_delivery_time);
++		skb_set_delivery_time(skb2, tstamp, tstamp_type);
+ 		err = output(net, sk, data, skb2);
+ 		if (err)
+ 			goto blackhole;
+diff --git a/net/ipv6/netfilter/nf_conntrack_reasm.c b/net/ipv6/netfilter/nf_conntrack_reasm.c
+index c78b13ea5b196..82e51b2ec4f51 100644
+--- a/net/ipv6/netfilter/nf_conntrack_reasm.c
++++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
+@@ -268,7 +268,7 @@ static int nf_ct_frag6_queue(struct frag_queue *fq, struct sk_buff *skb,
+ 		fq->iif = dev->ifindex;
+ 
+ 	fq->q.stamp = skb->tstamp;
+-	fq->q.mono_delivery_time = skb->mono_delivery_time;
++	fq->q.tstamp_type = skb->tstamp_type;
+ 	fq->q.meat += skb->len;
+ 	fq->ecn |= ecn;
+ 	if (payload_len > fq->q.max_size)
+diff --git a/net/ipv6/reassembly.c b/net/ipv6/reassembly.c
+index 2af98edef87ee..cb219d4bdf25e 100644
+--- a/net/ipv6/reassembly.c
++++ b/net/ipv6/reassembly.c
+@@ -198,7 +198,7 @@ static int ip6_frag_queue(struct frag_queue *fq, struct sk_buff *skb,
+ 		fq->iif = dev->ifindex;
+ 
+ 	fq->q.stamp = skb->tstamp;
+-	fq->q.mono_delivery_time = skb->mono_delivery_time;
++	fq->q.tstamp_type = skb->tstamp_type;
+ 	fq->q.meat += skb->len;
+ 	fq->ecn |= ecn;
+ 	add_frag_mem_limit(fq->q.fqdir, skb->truesize);
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index f285e52b8b857..624ab1424eba7 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -934,7 +934,7 @@ static void tcp_v6_send_response(const struct sock *sk, struct sk_buff *skb, u32
+ 			mark = inet_twsk(sk)->tw_mark;
+ 		else
+ 			mark = READ_ONCE(sk->sk_mark);
+-		skb_set_delivery_time(buff, tcp_transmit_time(sk), true);
++		skb_set_delivery_time(buff, tcp_transmit_time(sk), SKB_CLOCK_MONOTONIC);
+ 	}
+ 	if (txhash) {
+ 		/* autoflowlabel/skb_get_hash_flowi6 rely on buff->hash */
+diff --git a/net/sched/act_bpf.c b/net/sched/act_bpf.c
+index b0455fda7d0ba..ac87fcff4795e 100644
+--- a/net/sched/act_bpf.c
++++ b/net/sched/act_bpf.c
+@@ -54,8 +54,8 @@ TC_INDIRECT_SCOPE int tcf_bpf_act(struct sk_buff *skb,
+ 		bpf_compute_data_pointers(skb);
+ 		filter_res = bpf_prog_run(filter, skb);
+ 	}
+-	if (unlikely(!skb->tstamp && skb->mono_delivery_time))
+-		skb->mono_delivery_time = 0;
++	if (unlikely(!skb->tstamp && skb->tstamp_type))
++		skb->tstamp_type = SKB_CLOCK_REALTIME;
+ 	if (skb_sk_is_prefetched(skb) && filter_res != TC_ACT_OK)
+ 		skb_orphan(skb);
+ 
+diff --git a/net/sched/cls_bpf.c b/net/sched/cls_bpf.c
+index 382c7a71f81f2..db7151c6b70b7 100644
+--- a/net/sched/cls_bpf.c
++++ b/net/sched/cls_bpf.c
+@@ -104,8 +104,8 @@ TC_INDIRECT_SCOPE int cls_bpf_classify(struct sk_buff *skb,
+ 			bpf_compute_data_pointers(skb);
+ 			filter_res = bpf_prog_run(prog->filter, skb);
+ 		}
+-		if (unlikely(!skb->tstamp && skb->mono_delivery_time))
+-			skb->mono_delivery_time = 0;
++		if (unlikely(!skb->tstamp && skb->tstamp_type))
++			skb->tstamp_type = SKB_CLOCK_REALTIME;
+ 
+ 		if (prog->exts_integrated) {
+ 			res->class   = 0;
 -- 
 2.39.5
 
