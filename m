@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3516D215766;
-	Wed,  7 May 2025 18:48:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CEAA1FF5EC;
+	Wed,  7 May 2025 18:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643691; cv=none; b=EKI30lZMvqcWnyltRDnovAtrntrToI6VvQGP92vI3gMdKthfM+QEvFZfCvxjWdKrgqwlS1hkqhQ6zPhFm9EXi5P1Oy5fx9dS6CtQRO/xf88vTuQeig854LdSKW4ycQXOs/xtFshmW0IqTOE/6q7CpRaGQJc/eEfQsLhrEMgMtR4=
+	t=1746643694; cv=none; b=be6Bjc+8huJ0IKmtcJ5K+8JCGnLIjjgRxB0xHLEmjwMVhD2V2/khNWsjAkwLaHt4xiNKiyIPFt0MlV3+8B6/jblID5iGLE8qDBvBTntsRcYjp9GkM5aQCUmunpOZNw388cKM0q6eY+XEOqnSJMlQ4mnuPG+oqMEkcpSwP3DVDHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643691; c=relaxed/simple;
-	bh=2AZJLiwHUhn2ou3gaWTK1/d/tJ684NDodbfOCOTMF8w=;
+	s=arc-20240116; t=1746643694; c=relaxed/simple;
+	bh=tjKaabpV/HwugREu3IZZXvl8lmUEhiaxIktx/m8OFG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z65a39QQCLFMifNO80tPwkSiJBX/3BgsE2PqS5l5VoL+fI1nHf2vTwPy4LaIxuatv6I4I4sfTrbZuQkngyDmReOdZjcCBZLd1kulpg2E9P0AqWCP7uq+OdE+yPsKv2OUx3d+F1Yueijo9GYkugZ5lH6ga8NRqb3blsDrWADa2Gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFUUxDKP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SVIz94m8oUyIrgX5oL5bVmW4HZctpMalHW9oPXzC7WRiykPHl/RQGL7ylJDbYrCNevXMADg2QjmjhHEqK2m3I8l3Juur9l6FWNYBg/zdpZcNCrKfEVm3rqQ+FyoTjnB62j/Eb+Ck0ux3H7bLdxYcaIT9Poma0wZonCJXj/tYI5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTXZYt2E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFUUxDKP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF7DC4CEE2;
-	Wed,  7 May 2025 18:48:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTXZYt2E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A20C4CEF5;
+	Wed,  7 May 2025 18:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643691;
-	bh=2AZJLiwHUhn2ou3gaWTK1/d/tJ684NDodbfOCOTMF8w=;
+	s=korg; t=1746643694;
+	bh=tjKaabpV/HwugREu3IZZXvl8lmUEhiaxIktx/m8OFG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OFUUxDKPgSkjRfxoHbCN7IGczQtkHIJVgvUz+4riSzjx+UZAtLGZ8joLzz1ZzYMQ8
-	 N/Hve2G500jCzUYAnj/vvLBsqc8qmVsHIjjMdib9FveDyYXwp4A+KNxxFWHQUpEPnT
-	 LP97XEE+5Ez5sCGjNKfQvApqnYBkRV/bYLUqLBKE=
+	b=vTXZYt2EY4u0Fnh4Co9K74kS4oT7f/KjxC8kxORlE1i1+vw8hW+NqnRKityblPqzy
+	 qfMFIyTgvnvjcRgU0D2SWNC97WtgzZDXYGXN4r9wKLR7mvrTJpwYhkUE5Mqt9v5Pp2
+	 +DmCGROuZ5XRXsipgsRbsqsRCZnLCbY/bYR9jupU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fiona Klute <fiona.klute@gmx.de>,
-	kernel-list@raspberrypi.com,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 83/97] net: phy: microchip: force IRQ polling mode for lan88xx
-Date: Wed,  7 May 2025 20:39:58 +0200
-Message-ID: <20250507183810.318613379@linuxfoundation.org>
+Subject: [PATCH 6.1 55/97] net: dlink: Correct endianness handling of led_mode
+Date: Wed,  7 May 2025 20:39:30 +0200
+Message-ID: <20250507183809.213183094@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183806.987408728@linuxfoundation.org>
 References: <20250507183806.987408728@linuxfoundation.org>
@@ -53,109 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fiona Klute <fiona.klute@gmx.de>
+From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit 30a41ed32d3088cd0d682a13d7f30b23baed7e93 ]
+[ Upstream commit e7e5ae71831c44d58627a991e603845a2fed2cab ]
 
-With lan88xx based devices the lan78xx driver can get stuck in an
-interrupt loop while bringing the device up, flooding the kernel log
-with messages like the following:
+As it's name suggests, parse_eeprom() parses EEPROM data.
 
-lan78xx 2-3:1.0 enp1s0u3: kevent 4 may have been dropped
+This is done by reading data, 16 bits at a time as follows:
 
-Removing interrupt support from the lan88xx PHY driver forces the
-driver to use polling instead, which avoids the problem.
+	for (i = 0; i < 128; i++)
+                ((__le16 *) sromdata)[i] = cpu_to_le16(read_eeprom(np, i));
 
-The issue has been observed with Raspberry Pi devices at least since
-4.14 (see [1], bug report for their downstream kernel), as well as
-with Nvidia devices [2] in 2020, where disabling interrupts was the
-vendor-suggested workaround (together with the claim that phylib
-changes in 4.9 made the interrupt handling in lan78xx incompatible).
+sromdata is at the same memory location as psrom.
+And the type of psrom is a pointer to struct t_SROM.
 
-Iperf reports well over 900Mbits/sec per direction with client in
---dualtest mode, so there does not seem to be a significant impact on
-throughput (lan88xx device connected via switch to the peer).
+As can be seen in the loop above, data is stored in sromdata, and thus psrom,
+as 16-bit little-endian values.
 
-[1] https://github.com/raspberrypi/linux/issues/2447
-[2] https://forums.developer.nvidia.com/t/jetson-xavier-and-lan7800-problem/142134/11
+However, the integer fields of t_SROM are host byte order integers.
+And in the case of led_mode this leads to a little endian value
+being incorrectly treated as host byte order.
 
-Link: https://lore.kernel.org/0901d90d-3f20-4a10-b680-9c978e04ddda@lunn.ch
-Fixes: 792aec47d59d ("add microchip LAN88xx phy driver")
-Signed-off-by: Fiona Klute <fiona.klute@gmx.de>
-Cc: kernel-list@raspberrypi.com
-Cc: stable@vger.kernel.org
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250416102413.30654-1-fiona.klute@gmx.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Looking at rio_set_led_mode, this does appear to be a bug as that code
+masks led_mode with 0x1, 0x2 and 0x8. Logic that would be effected by a
+reversed byte order.
+
+This problem would only manifest on big endian hosts.
+
+Found by inspection while investigating a sparse warning
+regarding the crc field of t_SROM.
+
+I believe that warning is a false positive. And although I plan
+to send a follow-up to use little-endian types for other the integer
+fields of PSROM_t I do not believe that will involve any bug fixes.
+
+Compile tested only.
+
+Fixes: c3f45d322cbd ("dl2k: Add support for IP1000A-based cards")
+Signed-off-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250425-dlink-led-mode-v1-1-6bae3c36e736@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/microchip.c | 46 +++----------------------------------
- 1 file changed, 3 insertions(+), 43 deletions(-)
+ drivers/net/ethernet/dlink/dl2k.c | 2 +-
+ drivers/net/ethernet/dlink/dl2k.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/microchip.c b/drivers/net/phy/microchip.c
-index 0b88635f4fbca..623607fd2cefd 100644
---- a/drivers/net/phy/microchip.c
-+++ b/drivers/net/phy/microchip.c
-@@ -31,47 +31,6 @@ static int lan88xx_write_page(struct phy_device *phydev, int page)
- 	return __phy_write(phydev, LAN88XX_EXT_PAGE_ACCESS, page);
- }
+diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
+index 2c67a857a42ff..71cb7fe63de3c 100644
+--- a/drivers/net/ethernet/dlink/dl2k.c
++++ b/drivers/net/ethernet/dlink/dl2k.c
+@@ -352,7 +352,7 @@ parse_eeprom (struct net_device *dev)
+ 	eth_hw_addr_set(dev, psrom->mac_addr);
  
--static int lan88xx_phy_config_intr(struct phy_device *phydev)
--{
--	int rc;
--
--	if (phydev->interrupts == PHY_INTERRUPT_ENABLED) {
--		/* unmask all source and clear them before enable */
--		rc = phy_write(phydev, LAN88XX_INT_MASK, 0x7FFF);
--		rc = phy_read(phydev, LAN88XX_INT_STS);
--		rc = phy_write(phydev, LAN88XX_INT_MASK,
--			       LAN88XX_INT_MASK_MDINTPIN_EN_ |
--			       LAN88XX_INT_MASK_LINK_CHANGE_);
--	} else {
--		rc = phy_write(phydev, LAN88XX_INT_MASK, 0);
--		if (rc)
--			return rc;
--
--		/* Ack interrupts after they have been disabled */
--		rc = phy_read(phydev, LAN88XX_INT_STS);
--	}
--
--	return rc < 0 ? rc : 0;
--}
--
--static irqreturn_t lan88xx_handle_interrupt(struct phy_device *phydev)
--{
--	int irq_status;
--
--	irq_status = phy_read(phydev, LAN88XX_INT_STS);
--	if (irq_status < 0) {
--		phy_error(phydev);
--		return IRQ_NONE;
--	}
--
--	if (!(irq_status & LAN88XX_INT_STS_LINK_CHANGE_))
--		return IRQ_NONE;
--
--	phy_trigger_machine(phydev);
--
--	return IRQ_HANDLED;
--}
--
- static int lan88xx_suspend(struct phy_device *phydev)
- {
- 	struct lan88xx_priv *priv = phydev->priv;
-@@ -392,8 +351,9 @@ static struct phy_driver microchip_phy_driver[] = {
- 	.config_aneg	= lan88xx_config_aneg,
- 	.link_change_notify = lan88xx_link_change_notify,
+ 	if (np->chip_id == CHIP_IP1000A) {
+-		np->led_mode = psrom->led_mode;
++		np->led_mode = le16_to_cpu(psrom->led_mode);
+ 		return 0;
+ 	}
  
--	.config_intr	= lan88xx_phy_config_intr,
--	.handle_interrupt = lan88xx_handle_interrupt,
-+	/* Interrupt handling is broken, do not define related
-+	 * functions to force polling.
-+	 */
- 
- 	.suspend	= lan88xx_suspend,
- 	.resume		= genphy_resume,
+diff --git a/drivers/net/ethernet/dlink/dl2k.h b/drivers/net/ethernet/dlink/dl2k.h
+index 195dc6cfd8955..0e33e2eaae960 100644
+--- a/drivers/net/ethernet/dlink/dl2k.h
++++ b/drivers/net/ethernet/dlink/dl2k.h
+@@ -335,7 +335,7 @@ typedef struct t_SROM {
+ 	u16 sub_system_id;	/* 0x06 */
+ 	u16 pci_base_1;		/* 0x08 (IP1000A only) */
+ 	u16 pci_base_2;		/* 0x0a (IP1000A only) */
+-	u16 led_mode;		/* 0x0c (IP1000A only) */
++	__le16 led_mode;	/* 0x0c (IP1000A only) */
+ 	u16 reserved1[9];	/* 0x0e-0x1f */
+ 	u8 mac_addr[6];		/* 0x20-0x25 */
+ 	u8 reserved2[10];	/* 0x26-0x2f */
 -- 
 2.39.5
 
