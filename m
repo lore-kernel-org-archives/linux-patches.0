@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509BE214813;
-	Wed,  7 May 2025 18:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038772116E9;
+	Wed,  7 May 2025 18:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644147; cv=none; b=AlXpJuiFQkdTvglQeE0SmPwJGYTTDzMjL08aCWkEYr0CsQxLE41GO80nFHg/XHuBuvwC26irpXiLlhwtOT7vjSTVd+Ix2ULsuFpuiedHLtTgDloYKeeGg/sjviP7gUGMr59p25XmR25n8qzZy/aSTPiBp0YydlT121ifaEzKAXM=
+	t=1746644150; cv=none; b=b4ztYaWYvfhHLZdd3lGHJi0oV9FDMxM2CE5R8B6KuQ7gAGkyAlDNuZpE+v+9vXBcgbzvCn3HVTSw/mQAWIxvKzFSkTBB1iaLWGHs4+CbZVzQDAOZyKoC49UVNlGInm2fmfecI8u/PVGwkEPfDAJLg3mQBXVwejc8Oh1XPeS6KT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644147; c=relaxed/simple;
-	bh=FBaBtMiGb8LLLyHn5S2/3Ibbp42PlYOcmYVRZSVgZJU=;
+	s=arc-20240116; t=1746644150; c=relaxed/simple;
+	bh=bhjD2MfMnQa/Zyid8rSjbIJ//fcMwR+ZCyS5MEhg+BU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gBRxidUQtQtSxHqsKwfEa1EgEZCq4FBKcrZDvgPke7/iXaUXX4TY2DcRkFe6qHTJtS9VnOIlBSOFAVV4tEoaw2eaNHMj+OOUMdau0/ZVB583cX2L4Kn5hgN/hXuFM8XTgAOv3rdqG8OxkQPoAkyrs08xKBFNeRvzS9spsix/t88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNbYy1Qo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=it+GGqSu35ldV0DADHV1dZ2//jCVy/h+FXkX0SMnD+ex2aMpbkAx5s57V1qWE5ZsTfBpjTh3ZuF1uRE4KAGW0IaVkd0fON7TjssYz7v5iTSLX/HIKURvs71FATZTw2MpCfgZy256wbBzlja4hJPyrit5Et3/+TkUuJR/jX2YDmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGg9/uYn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNbYy1Qo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52A0C4CEE2;
-	Wed,  7 May 2025 18:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGg9/uYn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA1CC4CEE2;
+	Wed,  7 May 2025 18:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644147;
-	bh=FBaBtMiGb8LLLyHn5S2/3Ibbp42PlYOcmYVRZSVgZJU=;
+	s=korg; t=1746644149;
+	bh=bhjD2MfMnQa/Zyid8rSjbIJ//fcMwR+ZCyS5MEhg+BU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QNbYy1QoXh3yswF7gB5oX/dlbRomEzHqp/PsYAgo4eAuCSzzqsrCqKkW/X7N9sAyz
-	 +svZlzUqY/56tfJCVxYmXTmp7bZMtQ8DCsWtmihhFbqA9PH36Go3VkdkLH1rtPCroL
-	 ILfS/Jc6yiheNc61Vjj0QSVyoGfWPdyuqa9nNYX4=
+	b=GGg9/uYnpc2+x81X3QY5mdYQjtZH6diu7+FZNvbgaAne2MMlgBINxJjV0n3xYEnuM
+	 JUdCwCoOYX8amW+MQWLxwe5+c0dmYHJurg4PjRZvuQ04BH8BiTiZhDYkiWZo7tNZWi
+	 msCGfOYzh2wB7ZR1+GBfdm8Lx8zqS+gDFDfB8Zn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taehee Yoo <ap420073@gmail.com>,
-	Vadim Fedorenko <vadfed@meta.com>,
+	Jibin Zhang <jibin.zhang@mediatek.com>,
+	Shiming Cheng <shiming.cheng@mediatek.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
-	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 134/183] bnxt_en: fix module unload sequence
-Date: Wed,  7 May 2025 20:39:39 +0200
-Message-ID: <20250507183830.246842719@linuxfoundation.org>
+Subject: [PATCH 6.14 135/183] net: use sock_gen_put() when sk_state is TCP_TIME_WAIT
+Date: Wed,  7 May 2025 20:39:40 +0200
+Message-ID: <20250507183830.285734550@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -54,45 +53,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vadim Fedorenko <vadfed@meta.com>
+From: Jibin Zhang <jibin.zhang@mediatek.com>
 
-[ Upstream commit 927069d5c40c1cfa7b2d13cfc6d7d58bc6f85c50 ]
+[ Upstream commit f920436a44295ca791ebb6dae3f4190142eec703 ]
 
-Recent updates to the PTP part of bnxt changed the way PTP FIFO is
-cleared, skbs waiting for TX timestamps are now cleared during
-ndo_close() call. To do clearing procedure, the ptp structure must
-exist and point to a valid address. Module destroy sequence had ptp
-clear code running before netdev close causing invalid memory access and
-kernel crash. Change the sequence to destroy ptp structure after device
-close.
+It is possible for a pointer of type struct inet_timewait_sock to be
+returned from the functions __inet_lookup_established() and
+__inet6_lookup_established(). This can cause a crash when the
+returned pointer is of type struct inet_timewait_sock and
+sock_put() is called on it. The following is a crash call stack that
+shows sk->sk_wmem_alloc being accessed in sk_free() during the call to
+sock_put() on a struct inet_timewait_sock pointer. To avoid this issue,
+use sock_gen_put() instead of sock_put() when sk->sk_state
+is TCP_TIME_WAIT.
 
-Fixes: 8f7ae5a85137 ("bnxt_en: improve TX timestamping FIFO configuration")
-Reported-by: Taehee Yoo <ap420073@gmail.com>
-Closes: https://lore.kernel.org/netdev/CAMArcTWDe2cd41=ub=zzvYifaYcYv-N-csxfqxUvejy_L0D6UQ@mail.gmail.com/
-Signed-off-by: Vadim Fedorenko <vadfed@meta.com>
+mrdump.ko        ipanic() + 120
+vmlinux          notifier_call_chain(nr_to_call=-1, nr_calls=0) + 132
+vmlinux          atomic_notifier_call_chain(val=0) + 56
+vmlinux          panic() + 344
+vmlinux          add_taint() + 164
+vmlinux          end_report() + 136
+vmlinux          kasan_report(size=0) + 236
+vmlinux          report_tag_fault() + 16
+vmlinux          do_tag_recovery() + 16
+vmlinux          __do_kernel_fault() + 88
+vmlinux          do_bad_area() + 28
+vmlinux          do_tag_check_fault() + 60
+vmlinux          do_mem_abort() + 80
+vmlinux          el1_abort() + 56
+vmlinux          el1h_64_sync_handler() + 124
+vmlinux        > 0xFFFFFFC080011294()
+vmlinux          __lse_atomic_fetch_add_release(v=0xF2FFFF82A896087C)
+vmlinux          __lse_atomic_fetch_sub_release(v=0xF2FFFF82A896087C)
+vmlinux          arch_atomic_fetch_sub_release(i=1, v=0xF2FFFF82A896087C)
++ 8
+vmlinux          raw_atomic_fetch_sub_release(i=1, v=0xF2FFFF82A896087C)
++ 8
+vmlinux          atomic_fetch_sub_release(i=1, v=0xF2FFFF82A896087C) + 8
+vmlinux          __refcount_sub_and_test(i=1, r=0xF2FFFF82A896087C,
+oldp=0) + 8
+vmlinux          __refcount_dec_and_test(r=0xF2FFFF82A896087C, oldp=0) + 8
+vmlinux          refcount_dec_and_test(r=0xF2FFFF82A896087C) + 8
+vmlinux          sk_free(sk=0xF2FFFF82A8960700) + 28
+vmlinux          sock_put() + 48
+vmlinux          tcp6_check_fraglist_gro() + 236
+vmlinux          tcp6_gro_receive() + 624
+vmlinux          ipv6_gro_receive() + 912
+vmlinux          dev_gro_receive() + 1116
+vmlinux          napi_gro_receive() + 196
+ccmni.ko         ccmni_rx_callback() + 208
+ccmni.ko         ccmni_queue_recv_skb() + 388
+ccci_dpmaif.ko   dpmaif_rxq_push_thread() + 1088
+vmlinux          kthread() + 268
+vmlinux          0xFFFFFFC08001F30C()
+
+Fixes: c9d1d23e5239 ("net: add heuristic for enabling TCP fraglist GRO")
+Signed-off-by: Jibin Zhang <jibin.zhang@mediatek.com>
+Signed-off-by: Shiming Cheng <shiming.cheng@mediatek.com>
 Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Tested-by: Taehee Yoo <ap420073@gmail.com>
-Link: https://patch.msgid.link/20250430170343.759126-1-vadfed@meta.com
+Link: https://patch.msgid.link/20250429020412.14163-1-shiming.cheng@mediatek.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_offload.c   | 2 +-
+ net/ipv6/tcpv6_offload.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index a414d7d721b20..bd8b9cb05ae98 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -15731,8 +15731,8 @@ static void bnxt_remove_one(struct pci_dev *pdev)
+diff --git a/net/ipv4/tcp_offload.c b/net/ipv4/tcp_offload.c
+index 2dfac79dc78b8..e04ebe651c334 100644
+--- a/net/ipv4/tcp_offload.c
++++ b/net/ipv4/tcp_offload.c
+@@ -435,7 +435,7 @@ static void tcp4_check_fraglist_gro(struct list_head *head, struct sk_buff *skb,
+ 				       iif, sdif);
+ 	NAPI_GRO_CB(skb)->is_flist = !sk;
+ 	if (sk)
+-		sock_put(sk);
++		sock_gen_put(sk);
+ }
  
- 	bnxt_rdma_aux_device_del(bp);
- 
--	bnxt_ptp_clear(bp);
- 	unregister_netdev(dev);
-+	bnxt_ptp_clear(bp);
- 
- 	bnxt_rdma_aux_device_uninit(bp);
+ INDIRECT_CALLABLE_SCOPE
+diff --git a/net/ipv6/tcpv6_offload.c b/net/ipv6/tcpv6_offload.c
+index ae2da28f9dfb1..5ab509a5fbdfc 100644
+--- a/net/ipv6/tcpv6_offload.c
++++ b/net/ipv6/tcpv6_offload.c
+@@ -42,7 +42,7 @@ static void tcp6_check_fraglist_gro(struct list_head *head, struct sk_buff *skb,
+ 					iif, sdif);
+ 	NAPI_GRO_CB(skb)->is_flist = !sk;
+ 	if (sk)
+-		sock_put(sk);
++		sock_gen_put(sk);
+ #endif /* IS_ENABLED(CONFIG_IPV6) */
+ }
  
 -- 
 2.39.5
