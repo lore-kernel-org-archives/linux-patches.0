@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546EF214813;
-	Wed,  7 May 2025 18:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BE41FF5EC;
+	Wed,  7 May 2025 18:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643900; cv=none; b=NjRL+8mLHS6Dp+5SUfOKMUGgPvha51YIk4IrjGXOxPAzcCcDq3kB3BNmb5aBIKaiKOYNfK3Jf/4pGu0Etq8Z1crJV3P908rflag1TqNaW7X1+siO8yoF6Q10ivQVuv53212SW+ZxRmvmNw1X/kBnux4FxNPTC5nhuSigZC2J3f0=
+	t=1746643903; cv=none; b=b4gj5jZhtPljvge6S3BkGZKjUyybGF5O2i+6NmU4abLKPm1tFT6YNgcENrBJByAb/aREEt9jKRdofqTsK2M2hECOXkN1aIXbUWCTfUVgAuhDfRI4VPFOWc0WBCtDulsgGwp+8PF2EoddupNtEMQbMR23Zn4i/oRZ5STTZwihPN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643900; c=relaxed/simple;
-	bh=/WvzxSC/autKE1PbIAnga3SW924c0KtTUkS9PX7vL9s=;
+	s=arc-20240116; t=1746643903; c=relaxed/simple;
+	bh=4TNxaNWm8WyNrEtqXrfPTBJWecbDt7MUhmYnlbBXW+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fK61AAPS4yV52v5wD3KlwrCU2LM35rv+C6VSTOuUFGDa6i8Qo7kCpQBDooxOyEuYSjbHQrv/cEhlnvRfeZm5FcYmIaJgYGYWjrFdBidQ/DfCc0S3YYWw92cPrmR6mJlj0EwLg7vxeZdQWNi5EDbPHajvWXgJqdR0f8YRXI+q2go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HnTN7cbR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ls0q2xMULuuoLY5mgCL37nBjdX0RFUgtad1mZ+aBLVjdTEDhQbFDEv47r7FV7r59Cx+uzfpWAtpGTYCTOxn9KOBnLokGqgeuX/cIN4PVavTnSzaYS0aoBYPh6L4HZY/KH4LokFGBZM6CqsFpMCo8dQbV36uvAPuMZ4wx3v8JI88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AK4WEKgV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HnTN7cbR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0CCC4AF0B;
-	Wed,  7 May 2025 18:51:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AK4WEKgV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D8FFC4CEE2;
+	Wed,  7 May 2025 18:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643900;
-	bh=/WvzxSC/autKE1PbIAnga3SW924c0KtTUkS9PX7vL9s=;
+	s=korg; t=1746643903;
+	bh=4TNxaNWm8WyNrEtqXrfPTBJWecbDt7MUhmYnlbBXW+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HnTN7cbR1yjmMN8F4VenZV4zQK6PQYfooxwTvy/rkLvHfzDc/X5cdfQMKhenDYk7O
-	 1BFRwRa066bejb+dacChsb9TqAFkmy89fBIcA3Htw12zuc2bkU+TItYXjAs0U6AxDi
-	 X9U1Oc8ECuAvmVUdqOGnr+4dM5HYWRsoDxGUGwdY=
+	b=AK4WEKgVP6xCFi7J/P5YJXJjTRO2MGZBcHpt5talUCebXcdbtU2+zAHmU6iKiB93O
+	 5YdoNbrU3rWLLPS0Y3FsFKUkiCFwiQdzRLLBDV54BOwEJG35SIs1NX19J8nnrGGG7+
+	 +1nlp2hLKARZR9pQnzRjFTRnnLn7Aha9aTL5GhJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Huang <mmpgouride@gmail.com>,
-	Kent Overstreet <kent.overstreet@linux.dev>
-Subject: [PATCH 6.14 047/183] bcachefs: Remove incorrect __counted_by annotation
-Date: Wed,  7 May 2025 20:38:12 +0200
-Message-ID: <20250507183826.599950705@linuxfoundation.org>
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.14 056/183] powerpc/boot: Check for ld-option support
+Date: Wed,  7 May 2025 20:38:21 +0200
+Message-ID: <20250507183826.956401989@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -50,45 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Huang <mmpgouride@gmail.com>
+From: Madhavan Srinivasan <maddy@linux.ibm.com>
 
-commit 6846100b00d97d3d6f05766ae86a0d821d849e78 upstream.
+[ Upstream commit b2accfe7ca5bc9f9af28e603b79bdd5ad8df5c0b ]
 
-This actually reverts 86e92eeeb237 ("bcachefs: Annotate struct bch_xattr
-with __counted_by()").
+Commit 579aee9fc594 ("powerpc: suppress some linker warnings in recent linker versions")
+enabled support to add linker option "--no-warn-rwx-segments",
+if the version is greater than 2.39. Similar build warning were
+reported recently from linker version 2.35.2.
 
-After the x_name, there is a value. According to the disscussion[1],
-__counted_by assumes that the flexible array member contains exactly
-the amount of elements that are specified. Now there are users came across
-a false positive detection of an out of bounds write caused by
-the __counted_by here[2], so revert that.
+ld: warning: arch/powerpc/boot/zImage.epapr has a LOAD segment with RWX permissions
+ld: warning: arch/powerpc/boot/zImage.pseries has a LOAD segment with RWX permissions
 
-[1] https://lore.kernel.org/lkml/Zv8VDKWN1GzLRT-_@archlinux/T/#m0ce9541c5070146320efd4f928cc1ff8de69e9b2
-[2] https://privatebin.net/?a0d4e97d590d71e1#9bLmp2Kb5NU6X6cZEucchDcu88HzUQwHUah8okKPReEt
+Fix the warning by checking for "--no-warn-rwx-segments"
+option support in linker to enable it, instead of checking
+for the version range.
 
-Signed-off-by: Alan Huang <mmpgouride@gmail.com>
-Signed-off-by: Kent Overstreet <kent.overstreet@linux.dev>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 579aee9fc594 ("powerpc: suppress some linker warnings in recent linker versions")
+Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Closes: https://lore.kernel.org/linuxppc-dev/61cf556c-4947-4bd6-af63-892fc0966dad@linux.ibm.com/
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250401004218.24869-1-maddy@linux.ibm.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/bcachefs/xattr_format.h |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/powerpc/boot/wrapper | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/fs/bcachefs/xattr_format.h
-+++ b/fs/bcachefs/xattr_format.h
-@@ -13,7 +13,13 @@ struct bch_xattr {
- 	__u8			x_type;
- 	__u8			x_name_len;
- 	__le16			x_val_len;
--	__u8			x_name[] __counted_by(x_name_len);
-+	/*
-+	 * x_name contains the name and value counted by
-+	 * x_name_len + x_val_len. The introduction of
-+	 * __counted_by(x_name_len) caused a false positive
-+	 * detection of an out of bounds write.
-+	 */
-+	__u8			x_name[];
- } __packed __aligned(8);
+diff --git a/arch/powerpc/boot/wrapper b/arch/powerpc/boot/wrapper
+index 1db60fe13802d..267ca6d4d9b38 100755
+--- a/arch/powerpc/boot/wrapper
++++ b/arch/powerpc/boot/wrapper
+@@ -234,10 +234,8 @@ fi
  
- #endif /* _BCACHEFS_XATTR_FORMAT_H */
+ # suppress some warnings in recent ld versions
+ nowarn="-z noexecstack"
+-if ! ld_is_lld; then
+-	if [ "$LD_VERSION" -ge "$(echo 2.39 | ld_version)" ]; then
+-		nowarn="$nowarn --no-warn-rwx-segments"
+-	fi
++if [ $(${CROSS}ld -v --no-warn-rwx-segments &>/dev/null; echo $?) -eq 0 ]; then
++	nowarn="$nowarn --no-warn-rwx-segments"
+ fi
+ 
+ platformo=$object/"$platform".o
+-- 
+2.39.5
+
 
 
