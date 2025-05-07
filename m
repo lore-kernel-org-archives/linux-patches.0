@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BAC41A2390;
-	Wed,  7 May 2025 18:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D8A1482F5;
+	Wed,  7 May 2025 18:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643548; cv=none; b=kZpI0Ef+ddLrzfoGWncwWz9GktC9AYiu8YbU0aJK8h+1xTeV770wlsUEurUCcYZRyyOdY1mT8hyq6eJV451LsL/aOpuTNU+r2zjrrfnK5xglURKOETGEmpvskiKwk3QgS9ZBK9ZFJNk+vG2NIQQ8wqck1/UEXe0SPblohQtVpEA=
+	t=1746643551; cv=none; b=ieFw8FAekdhSmrwP1KQtCltbQXTIZbZEVNe4NZ1vOI+ZfPEWKlnr5ArFTejPChuoklUBEUxMiT8MJpM/vNe/qNpPBs0hqwna2t+cG8/DQlCnjPYq7Gzzj4NJw+bJYUIestSmuhpZ9QO6mpfKuE0RBrH1LPxsenP1mSrx7DjZvgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643548; c=relaxed/simple;
-	bh=LXRUoogXz0LB076E4+7n2vhZ2Oj0nISAq28F+3E3nk8=;
+	s=arc-20240116; t=1746643551; c=relaxed/simple;
+	bh=oPxvuW8CJASj5j9sMaBELJTh1GYNS6PTkVGNW5AdYio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G5AMMVe7orhA7UFajTrQ2TnnhYbOVWqcmDfcvpsQ+dpHADqVY43YhBMaIHldm70m5jd8ifKwDslGyQ7MqAnKVF7rqTInvxzxfNpGtny3tjkgpe1a15b/y/7BFW2juVH1VDqDxBvSkVdSII9Am3PBJkqusX5xPeZqgSNBJwlqtKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQjZ/27k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oevNNTwm6FZb+yh66vZG7P8+X9rR7HbhMYIVrTqqlmDCa4C7v4fA150Dbu6Lj2UrgzBOcAJDXWNV7jrYO+4RYrHpMhQWobzKSp3rNxqC33aHlEJWi0bJtSCCH2I7VW4W5vmMrpoV/t2Au18xCafJvx5R/EJAXn9xJaSHSCzPihQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxBjO1G3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQjZ/27k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC433C4CEE2;
-	Wed,  7 May 2025 18:45:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxBjO1G3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D01C4CEE2;
+	Wed,  7 May 2025 18:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643548;
-	bh=LXRUoogXz0LB076E4+7n2vhZ2Oj0nISAq28F+3E3nk8=;
+	s=korg; t=1746643551;
+	bh=oPxvuW8CJASj5j9sMaBELJTh1GYNS6PTkVGNW5AdYio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mQjZ/27kMIlvP3gYvaRw8kP1HlOpUyWuxnLEyfUIX3DNGdxTW5ogcitNYN6ZfLtxx
-	 ASkoVb+GaW4/BbWNdGfppIfGUMLF+0dJTqAcRd95IrytAldcaSOL425IfWnW3PQ3kR
-	 W2HNIFI57B8rL+eK1Cc6Ym12PZh0XBm8naYT50vQ=
+	b=bxBjO1G37jupokOXtj3d3THsjuIP9zmhYwW5fN+uTWMV8bnUcxiUy6qRp58goA9OZ
+	 dDyFPsN6KQ2fANisktvOtRlL9ZB89RXBLpF81Gm+sFsjcthdJQldQFk87niUkoIDd+
+	 WthSEHgcVcz6gTiPCf8kz+E7Ml2Bi6yK3P3bhTiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Lifeng Zheng <zhenglifeng1@huawei.com>
-Subject: [PATCH 6.1 21/97] cpufreq: Fix setting policy limits when frequency tables are used
-Date: Wed,  7 May 2025 20:38:56 +0200
-Message-ID: <20250507183807.834562711@linuxfoundation.org>
+	John Stultz <jstultz@google.com>,
+	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	James Houghton <jthoughton@google.com>
+Subject: [PATCH 6.1 39/97] KVM: x86: Load DR6 with guest value only before entering .vcpu_run() loop
+Date: Wed,  7 May 2025 20:39:14 +0200
+Message-ID: <20250507183808.567190117@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183806.987408728@linuxfoundation.org>
 References: <20250507183806.987408728@linuxfoundation.org>
@@ -51,295 +52,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit b79028039f440e7d2c4df6ab243060c4e3803e84 upstream.
+commit c2fee09fc167c74a64adb08656cb993ea475197e upstream.
 
-Commit 7491cdf46b5c ("cpufreq: Avoid using inconsistent policy->min and
-policy->max") overlooked the fact that policy->min and policy->max were
-accessed directly in cpufreq_frequency_table_target() and in the
-functions called by it.  Consequently, the changes made by that commit
-led to problems with setting policy limits.
+Move the conditional loading of hardware DR6 with the guest's DR6 value
+out of the core .vcpu_run() loop to fix a bug where KVM can load hardware
+with a stale vcpu->arch.dr6.
 
-Address this by passing the target frequency limits to __resolve_freq()
-and cpufreq_frequency_table_target() and propagating them to the
-functions called by the latter.
+When the guest accesses a DR and host userspace isn't debugging the guest,
+KVM disables DR interception and loads the guest's values into hardware on
+VM-Enter and saves them on VM-Exit.  This allows the guest to access DRs
+at will, e.g. so that a sequence of DR accesses to configure a breakpoint
+only generates one VM-Exit.
 
-Fixes: 7491cdf46b5c ("cpufreq: Avoid using inconsistent policy->min and policy->max")
-Cc: 5.16+ <stable@vger.kernel.org> # 5.16+
-Closes: https://lore.kernel.org/linux-pm/aAplED3IA_J0eZN0@linaro.org/
-Reported-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Tested-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Reviewed-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Link: https://patch.msgid.link/5896780.DvuYhMxLoT@rjwysocki.net
+For DR0-DR3, the logic/behavior is identical between VMX and SVM, and also
+identical between KVM_DEBUGREG_BP_ENABLED (userspace debugging the guest)
+and KVM_DEBUGREG_WONT_EXIT (guest using DRs), and so KVM handles loading
+DR0-DR3 in common code, _outside_ of the core kvm_x86_ops.vcpu_run() loop.
+
+But for DR6, the guest's value doesn't need to be loaded into hardware for
+KVM_DEBUGREG_BP_ENABLED, and SVM provides a dedicated VMCB field whereas
+VMX requires software to manually load the guest value, and so loading the
+guest's value into DR6 is handled by {svm,vmx}_vcpu_run(), i.e. is done
+_inside_ the core run loop.
+
+Unfortunately, saving the guest values on VM-Exit is initiated by common
+x86, again outside of the core run loop.  If the guest modifies DR6 (in
+hardware, when DR interception is disabled), and then the next VM-Exit is
+a fastpath VM-Exit, KVM will reload hardware DR6 with vcpu->arch.dr6 and
+clobber the guest's actual value.
+
+The bug shows up primarily with nested VMX because KVM handles the VMX
+preemption timer in the fastpath, and the window between hardware DR6
+being modified (in guest context) and DR6 being read by guest software is
+orders of magnitude larger in a nested setup.  E.g. in non-nested, the
+VMX preemption timer would need to fire precisely between #DB injection
+and the #DB handler's read of DR6, whereas with a KVM-on-KVM setup, the
+window where hardware DR6 is "dirty" extends all the way from L1 writing
+DR6 to VMRESUME (in L1).
+
+    L1's view:
+    ==========
+    <L1 disables DR interception>
+           CPU 0/KVM-7289    [023] d....  2925.640961: kvm_entry: vcpu 0
+ A:  L1 Writes DR6
+           CPU 0/KVM-7289    [023] d....  2925.640963: <hack>: Set DRs, DR6 = 0xffff0ff1
+
+ B:        CPU 0/KVM-7289    [023] d....  2925.640967: kvm_exit: vcpu 0 reason EXTERNAL_INTERRUPT intr_info 0x800000ec
+
+ D: L1 reads DR6, arch.dr6 = 0
+           CPU 0/KVM-7289    [023] d....  2925.640969: <hack>: Sync DRs, DR6 = 0xffff0ff0
+
+           CPU 0/KVM-7289    [023] d....  2925.640976: kvm_entry: vcpu 0
+    L2 reads DR6, L1 disables DR interception
+           CPU 0/KVM-7289    [023] d....  2925.640980: kvm_exit: vcpu 0 reason DR_ACCESS info1 0x0000000000000216
+           CPU 0/KVM-7289    [023] d....  2925.640983: kvm_entry: vcpu 0
+
+           CPU 0/KVM-7289    [023] d....  2925.640983: <hack>: Set DRs, DR6 = 0xffff0ff0
+
+    L2 detects failure
+           CPU 0/KVM-7289    [023] d....  2925.640987: kvm_exit: vcpu 0 reason HLT
+    L1 reads DR6 (confirms failure)
+           CPU 0/KVM-7289    [023] d....  2925.640990: <hack>: Sync DRs, DR6 = 0xffff0ff0
+
+    L0's view:
+    ==========
+    L2 reads DR6, arch.dr6 = 0
+          CPU 23/KVM-5046    [001] d....  3410.005610: kvm_exit: vcpu 23 reason DR_ACCESS info1 0x0000000000000216
+          CPU 23/KVM-5046    [001] .....  3410.005610: kvm_nested_vmexit: vcpu 23 reason DR_ACCESS info1 0x0000000000000216
+
+    L2 => L1 nested VM-Exit
+          CPU 23/KVM-5046    [001] .....  3410.005610: kvm_nested_vmexit_inject: reason: DR_ACCESS ext_inf1: 0x0000000000000216
+
+          CPU 23/KVM-5046    [001] d....  3410.005610: kvm_entry: vcpu 23
+          CPU 23/KVM-5046    [001] d....  3410.005611: kvm_exit: vcpu 23 reason VMREAD
+          CPU 23/KVM-5046    [001] d....  3410.005611: kvm_entry: vcpu 23
+          CPU 23/KVM-5046    [001] d....  3410.005612: kvm_exit: vcpu 23 reason VMREAD
+          CPU 23/KVM-5046    [001] d....  3410.005612: kvm_entry: vcpu 23
+
+    L1 writes DR7, L0 disables DR interception
+          CPU 23/KVM-5046    [001] d....  3410.005612: kvm_exit: vcpu 23 reason DR_ACCESS info1 0x0000000000000007
+          CPU 23/KVM-5046    [001] d....  3410.005613: kvm_entry: vcpu 23
+
+    L0 writes DR6 = 0 (arch.dr6)
+          CPU 23/KVM-5046    [001] d....  3410.005613: <hack>: Set DRs, DR6 = 0xffff0ff0
+
+ A: <L1 writes DR6 = 1, no interception, arch.dr6 is still '0'>
+
+ B:       CPU 23/KVM-5046    [001] d....  3410.005614: kvm_exit: vcpu 23 reason PREEMPTION_TIMER
+          CPU 23/KVM-5046    [001] d....  3410.005614: kvm_entry: vcpu 23
+
+ C: L0 writes DR6 = 0 (arch.dr6)
+          CPU 23/KVM-5046    [001] d....  3410.005614: <hack>: Set DRs, DR6 = 0xffff0ff0
+
+    L1 => L2 nested VM-Enter
+          CPU 23/KVM-5046    [001] d....  3410.005616: kvm_exit: vcpu 23 reason VMRESUME
+
+    L0 reads DR6, arch.dr6 = 0
+
+Reported-by: John Stultz <jstultz@google.com>
+Closes: https://lkml.kernel.org/r/CANDhNCq5_F3HfFYABqFGCA1bPd_%2BxgNj-iDQhH4tDk%2Bwi8iZZg%40mail.gmail.com
+Fixes: 375e28ffc0cf ("KVM: X86: Set host DR6 only on VMX and for KVM_DEBUGREG_WONT_EXIT")
+Fixes: d67668e9dd76 ("KVM: x86, SVM: isolate vcpu->arch.dr6 from vmcb->save.dr6")
+Cc: stable@vger.kernel.org
+Cc: Jim Mattson <jmattson@google.com>
+Tested-by: John Stultz <jstultz@google.com>
+Link: https://lore.kernel.org/r/20250125011833.3644371-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[jth: Handled conflicts with kvm_x86_ops reshuffle]
+Signed-off-by: James Houghton <jthoughton@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cpufreq.c          |   22 ++++++---
- drivers/cpufreq/cpufreq_ondemand.c |    3 -
- drivers/cpufreq/freq_table.c       |    6 +-
- include/linux/cpufreq.h            |   83 ++++++++++++++++++++++++-------------
- 4 files changed, 73 insertions(+), 41 deletions(-)
+ arch/x86/include/asm/kvm-x86-ops.h |    1 +
+ arch/x86/include/asm/kvm_host.h    |    1 +
+ arch/x86/kvm/svm/svm.c             |   13 ++++++-------
+ arch/x86/kvm/vmx/vmx.c             |   11 +++++++----
+ arch/x86/kvm/x86.c                 |    3 +++
+ 5 files changed, 18 insertions(+), 11 deletions(-)
 
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -528,14 +528,18 @@ void cpufreq_disable_fast_switch(struct
- EXPORT_SYMBOL_GPL(cpufreq_disable_fast_switch);
- 
- static unsigned int __resolve_freq(struct cpufreq_policy *policy,
--		unsigned int target_freq, unsigned int relation)
-+				   unsigned int target_freq,
-+				   unsigned int min, unsigned int max,
-+				   unsigned int relation)
- {
- 	unsigned int idx;
- 
-+	target_freq = clamp_val(target_freq, min, max);
-+
- 	if (!policy->freq_table)
- 		return target_freq;
- 
--	idx = cpufreq_frequency_table_target(policy, target_freq, relation);
-+	idx = cpufreq_frequency_table_target(policy, target_freq, min, max, relation);
- 	policy->cached_resolved_idx = idx;
- 	policy->cached_target_freq = target_freq;
- 	return policy->freq_table[idx].frequency;
-@@ -569,8 +573,7 @@ unsigned int cpufreq_driver_resolve_freq
- 	if (unlikely(min > max))
- 		min = max;
- 
--	return __resolve_freq(policy, clamp_val(target_freq, min, max),
--			      CPUFREQ_RELATION_LE);
-+	return __resolve_freq(policy, target_freq, min, max, CPUFREQ_RELATION_LE);
+--- a/arch/x86/include/asm/kvm-x86-ops.h
++++ b/arch/x86/include/asm/kvm-x86-ops.h
+@@ -47,6 +47,7 @@ KVM_X86_OP(set_idt)
+ KVM_X86_OP(get_gdt)
+ KVM_X86_OP(set_gdt)
+ KVM_X86_OP(sync_dirty_debug_regs)
++KVM_X86_OP(set_dr6)
+ KVM_X86_OP(set_dr7)
+ KVM_X86_OP(cache_reg)
+ KVM_X86_OP(get_rflags)
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1499,6 +1499,7 @@ struct kvm_x86_ops {
+ 	void (*get_gdt)(struct kvm_vcpu *vcpu, struct desc_ptr *dt);
+ 	void (*set_gdt)(struct kvm_vcpu *vcpu, struct desc_ptr *dt);
+ 	void (*sync_dirty_debug_regs)(struct kvm_vcpu *vcpu);
++	void (*set_dr6)(struct kvm_vcpu *vcpu, unsigned long value);
+ 	void (*set_dr7)(struct kvm_vcpu *vcpu, unsigned long value);
+ 	void (*cache_reg)(struct kvm_vcpu *vcpu, enum kvm_reg reg);
+ 	unsigned long (*get_rflags)(struct kvm_vcpu *vcpu);
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -1920,11 +1920,11 @@ static void new_asid(struct vcpu_svm *sv
+ 	svm->asid = sd->next_asid++;
  }
- EXPORT_SYMBOL_GPL(cpufreq_driver_resolve_freq);
  
-@@ -2296,8 +2299,8 @@ int __cpufreq_driver_target(struct cpufr
- 	if (cpufreq_disabled())
- 		return -ENODEV;
+-static void svm_set_dr6(struct vcpu_svm *svm, unsigned long value)
++static void svm_set_dr6(struct kvm_vcpu *vcpu, unsigned long value)
+ {
+-	struct vmcb *vmcb = svm->vmcb;
++	struct vmcb *vmcb = to_svm(vcpu)->vmcb;
  
--	target_freq = clamp_val(target_freq, policy->min, policy->max);
--	target_freq = __resolve_freq(policy, target_freq, relation);
-+	target_freq = __resolve_freq(policy, target_freq, policy->min,
-+				     policy->max, relation);
+-	if (svm->vcpu.arch.guest_state_protected)
++	if (vcpu->arch.guest_state_protected)
+ 		return;
  
- 	pr_debug("target for CPU %u: %u kHz, relation %u, requested %u kHz\n",
- 		 policy->cpu, target_freq, relation, old_target_freq);
-@@ -2592,8 +2595,11 @@ static int cpufreq_set_policy(struct cpu
- 	 * compiler optimizations around them because they may be accessed
- 	 * concurrently by cpufreq_driver_resolve_freq() during the update.
+ 	if (unlikely(value != vmcb->save.dr6)) {
+@@ -4035,10 +4035,8 @@ static __no_kcsan fastpath_t svm_vcpu_ru
+ 	 * Run with all-zero DR6 unless needed, so that we can get the exact cause
+ 	 * of a #DB.
  	 */
--	WRITE_ONCE(policy->max, __resolve_freq(policy, new_data.max, CPUFREQ_RELATION_H));
--	new_data.min = __resolve_freq(policy, new_data.min, CPUFREQ_RELATION_L);
-+	WRITE_ONCE(policy->max, __resolve_freq(policy, new_data.max,
-+					       new_data.min, new_data.max,
-+					       CPUFREQ_RELATION_H));
-+	new_data.min = __resolve_freq(policy, new_data.min, new_data.min,
-+				      new_data.max, CPUFREQ_RELATION_L);
- 	WRITE_ONCE(policy->min, new_data.min > policy->max ? policy->max : new_data.min);
+-	if (unlikely(vcpu->arch.switch_db_regs & KVM_DEBUGREG_WONT_EXIT))
+-		svm_set_dr6(svm, vcpu->arch.dr6);
+-	else
+-		svm_set_dr6(svm, DR6_ACTIVE_LOW);
++	if (likely(!(vcpu->arch.switch_db_regs & KVM_DEBUGREG_WONT_EXIT)))
++		svm_set_dr6(vcpu, DR6_ACTIVE_LOW);
  
- 	trace_cpu_frequency_limits(policy);
---- a/drivers/cpufreq/cpufreq_ondemand.c
-+++ b/drivers/cpufreq/cpufreq_ondemand.c
-@@ -77,7 +77,8 @@ static unsigned int generic_powersave_bi
- 		return freq_next;
+ 	clgi();
+ 	kvm_load_guest_xsave_state(vcpu);
+@@ -4807,6 +4805,7 @@ static struct kvm_x86_ops svm_x86_ops __
+ 	.set_idt = svm_set_idt,
+ 	.get_gdt = svm_get_gdt,
+ 	.set_gdt = svm_set_gdt,
++	.set_dr6 = svm_set_dr6,
+ 	.set_dr7 = svm_set_dr7,
+ 	.sync_dirty_debug_regs = svm_sync_dirty_debug_regs,
+ 	.cache_reg = svm_cache_reg,
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -5536,6 +5536,12 @@ static void vmx_sync_dirty_debug_regs(st
+ 	set_debugreg(DR6_RESERVED, 6);
+ }
+ 
++static void vmx_set_dr6(struct kvm_vcpu *vcpu, unsigned long val)
++{
++	lockdep_assert_irqs_disabled();
++	set_debugreg(vcpu->arch.dr6, 6);
++}
++
+ static void vmx_set_dr7(struct kvm_vcpu *vcpu, unsigned long val)
+ {
+ 	vmcs_writel(GUEST_DR7, val);
+@@ -7220,10 +7226,6 @@ static fastpath_t vmx_vcpu_run(struct kv
+ 		vmx->loaded_vmcs->host_state.cr4 = cr4;
  	}
  
--	index = cpufreq_frequency_table_target(policy, freq_next, relation);
-+	index = cpufreq_frequency_table_target(policy, freq_next, policy->min,
-+					       policy->max, relation);
- 	freq_req = freq_table[index].frequency;
- 	freq_reduc = freq_req * od_tuners->powersave_bias / 1000;
- 	freq_avg = freq_req - freq_reduc;
---- a/drivers/cpufreq/freq_table.c
-+++ b/drivers/cpufreq/freq_table.c
-@@ -116,8 +116,8 @@ int cpufreq_generic_frequency_table_veri
- EXPORT_SYMBOL_GPL(cpufreq_generic_frequency_table_verify);
- 
- int cpufreq_table_index_unsorted(struct cpufreq_policy *policy,
--				 unsigned int target_freq,
--				 unsigned int relation)
-+				 unsigned int target_freq, unsigned int min,
-+				 unsigned int max, unsigned int relation)
- {
- 	struct cpufreq_frequency_table optimal = {
- 		.driver_data = ~0,
-@@ -148,7 +148,7 @@ int cpufreq_table_index_unsorted(struct
- 	cpufreq_for_each_valid_entry_idx(pos, table, i) {
- 		freq = pos->frequency;
- 
--		if ((freq < policy->min) || (freq > policy->max))
-+		if (freq < min || freq > max)
- 			continue;
- 		if (freq == target_freq) {
- 			optimal.driver_data = i;
---- a/include/linux/cpufreq.h
-+++ b/include/linux/cpufreq.h
-@@ -789,8 +789,8 @@ int cpufreq_frequency_table_verify(struc
- int cpufreq_generic_frequency_table_verify(struct cpufreq_policy_data *policy);
- 
- int cpufreq_table_index_unsorted(struct cpufreq_policy *policy,
--				 unsigned int target_freq,
--				 unsigned int relation);
-+				 unsigned int target_freq, unsigned int min,
-+				 unsigned int max, unsigned int relation);
- int cpufreq_frequency_table_get_index(struct cpufreq_policy *policy,
- 		unsigned int freq);
- 
-@@ -855,12 +855,12 @@ static inline int cpufreq_table_find_ind
- 	return best;
- }
- 
--/* Works only on sorted freq-tables */
--static inline int cpufreq_table_find_index_l(struct cpufreq_policy *policy,
--					     unsigned int target_freq,
--					     bool efficiencies)
-+static inline int find_index_l(struct cpufreq_policy *policy,
-+			       unsigned int target_freq,
-+			       unsigned int min, unsigned int max,
-+			       bool efficiencies)
- {
--	target_freq = clamp_val(target_freq, policy->min, policy->max);
-+	target_freq = clamp_val(target_freq, min, max);
- 
- 	if (policy->freq_table_sorted == CPUFREQ_TABLE_SORTED_ASCENDING)
- 		return cpufreq_table_find_index_al(policy, target_freq,
-@@ -870,6 +870,14 @@ static inline int cpufreq_table_find_ind
- 						   efficiencies);
- }
- 
-+/* Works only on sorted freq-tables */
-+static inline int cpufreq_table_find_index_l(struct cpufreq_policy *policy,
-+					     unsigned int target_freq,
-+					     bool efficiencies)
-+{
-+	return find_index_l(policy, target_freq, policy->min, policy->max, efficiencies);
-+}
-+
- /* Find highest freq at or below target in a table in ascending order */
- static inline int cpufreq_table_find_index_ah(struct cpufreq_policy *policy,
- 					      unsigned int target_freq,
-@@ -923,12 +931,12 @@ static inline int cpufreq_table_find_ind
- 	return best;
- }
- 
--/* Works only on sorted freq-tables */
--static inline int cpufreq_table_find_index_h(struct cpufreq_policy *policy,
--					     unsigned int target_freq,
--					     bool efficiencies)
-+static inline int find_index_h(struct cpufreq_policy *policy,
-+			       unsigned int target_freq,
-+			       unsigned int min, unsigned int max,
-+			       bool efficiencies)
- {
--	target_freq = clamp_val(target_freq, policy->min, policy->max);
-+	target_freq = clamp_val(target_freq, min, max);
- 
- 	if (policy->freq_table_sorted == CPUFREQ_TABLE_SORTED_ASCENDING)
- 		return cpufreq_table_find_index_ah(policy, target_freq,
-@@ -938,6 +946,14 @@ static inline int cpufreq_table_find_ind
- 						   efficiencies);
- }
- 
-+/* Works only on sorted freq-tables */
-+static inline int cpufreq_table_find_index_h(struct cpufreq_policy *policy,
-+					     unsigned int target_freq,
-+					     bool efficiencies)
-+{
-+	return find_index_h(policy, target_freq, policy->min, policy->max, efficiencies);
-+}
-+
- /* Find closest freq to target in a table in ascending order */
- static inline int cpufreq_table_find_index_ac(struct cpufreq_policy *policy,
- 					      unsigned int target_freq,
-@@ -1008,12 +1024,12 @@ static inline int cpufreq_table_find_ind
- 	return best;
- }
- 
--/* Works only on sorted freq-tables */
--static inline int cpufreq_table_find_index_c(struct cpufreq_policy *policy,
--					     unsigned int target_freq,
--					     bool efficiencies)
-+static inline int find_index_c(struct cpufreq_policy *policy,
-+			       unsigned int target_freq,
-+			       unsigned int min, unsigned int max,
-+			       bool efficiencies)
- {
--	target_freq = clamp_val(target_freq, policy->min, policy->max);
-+	target_freq = clamp_val(target_freq, min, max);
- 
- 	if (policy->freq_table_sorted == CPUFREQ_TABLE_SORTED_ASCENDING)
- 		return cpufreq_table_find_index_ac(policy, target_freq,
-@@ -1023,7 +1039,17 @@ static inline int cpufreq_table_find_ind
- 						   efficiencies);
- }
- 
--static inline bool cpufreq_is_in_limits(struct cpufreq_policy *policy, int idx)
-+/* Works only on sorted freq-tables */
-+static inline int cpufreq_table_find_index_c(struct cpufreq_policy *policy,
-+					     unsigned int target_freq,
-+					     bool efficiencies)
-+{
-+	return find_index_c(policy, target_freq, policy->min, policy->max, efficiencies);
-+}
-+
-+static inline bool cpufreq_is_in_limits(struct cpufreq_policy *policy,
-+					unsigned int min, unsigned int max,
-+					int idx)
- {
- 	unsigned int freq;
- 
-@@ -1032,11 +1058,13 @@ static inline bool cpufreq_is_in_limits(
- 
- 	freq = policy->freq_table[idx].frequency;
- 
--	return freq == clamp_val(freq, policy->min, policy->max);
-+	return freq == clamp_val(freq, min, max);
- }
- 
- static inline int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
- 						 unsigned int target_freq,
-+						 unsigned int min,
-+						 unsigned int max,
- 						 unsigned int relation)
- {
- 	bool efficiencies = policy->efficiencies_available &&
-@@ -1047,29 +1075,26 @@ static inline int cpufreq_frequency_tabl
- 	relation &= ~CPUFREQ_RELATION_E;
- 
- 	if (unlikely(policy->freq_table_sorted == CPUFREQ_TABLE_UNSORTED))
--		return cpufreq_table_index_unsorted(policy, target_freq,
--						    relation);
-+		return cpufreq_table_index_unsorted(policy, target_freq, min,
-+						    max, relation);
- retry:
- 	switch (relation) {
- 	case CPUFREQ_RELATION_L:
--		idx = cpufreq_table_find_index_l(policy, target_freq,
--						 efficiencies);
-+		idx = find_index_l(policy, target_freq, min, max, efficiencies);
- 		break;
- 	case CPUFREQ_RELATION_H:
--		idx = cpufreq_table_find_index_h(policy, target_freq,
--						 efficiencies);
-+		idx = find_index_h(policy, target_freq, min, max, efficiencies);
- 		break;
- 	case CPUFREQ_RELATION_C:
--		idx = cpufreq_table_find_index_c(policy, target_freq,
--						 efficiencies);
-+		idx = find_index_c(policy, target_freq, min, max, efficiencies);
- 		break;
- 	default:
- 		WARN_ON_ONCE(1);
- 		return 0;
- 	}
- 
--	/* Limit frequency index to honor policy->min/max */
--	if (!cpufreq_is_in_limits(policy, idx) && efficiencies) {
-+	/* Limit frequency index to honor min and max */
-+	if (!cpufreq_is_in_limits(policy, min, max, idx) && efficiencies) {
- 		efficiencies = false;
- 		goto retry;
+-	/* When KVM_DEBUGREG_WONT_EXIT, dr6 is accessible in guest. */
+-	if (unlikely(vcpu->arch.switch_db_regs & KVM_DEBUGREG_WONT_EXIT))
+-		set_debugreg(vcpu->arch.dr6, 6);
+-
+ 	/* When single-stepping over STI and MOV SS, we must clear the
+ 	 * corresponding interruptibility bits in the guest state. Otherwise
+ 	 * vmentry fails as it then expects bit 14 (BS) in pending debug
+@@ -8168,6 +8170,7 @@ static struct kvm_x86_ops vmx_x86_ops __
+ 	.set_idt = vmx_set_idt,
+ 	.get_gdt = vmx_get_gdt,
+ 	.set_gdt = vmx_set_gdt,
++	.set_dr6 = vmx_set_dr6,
+ 	.set_dr7 = vmx_set_dr7,
+ 	.sync_dirty_debug_regs = vmx_sync_dirty_debug_regs,
+ 	.cache_reg = vmx_cache_reg,
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -10841,6 +10841,9 @@ static int vcpu_enter_guest(struct kvm_v
+ 		set_debugreg(vcpu->arch.eff_db[1], 1);
+ 		set_debugreg(vcpu->arch.eff_db[2], 2);
+ 		set_debugreg(vcpu->arch.eff_db[3], 3);
++		/* When KVM_DEBUGREG_WONT_EXIT, dr6 is accessible in guest. */
++		if (unlikely(vcpu->arch.switch_db_regs & KVM_DEBUGREG_WONT_EXIT))
++			static_call(kvm_x86_set_dr6)(vcpu, vcpu->arch.dr6);
+ 	} else if (unlikely(hw_breakpoint_active())) {
+ 		set_debugreg(0, 7);
  	}
 
 
