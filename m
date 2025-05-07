@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D9C29A0;
-	Wed,  7 May 2025 19:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB33729A0;
+	Wed,  7 May 2025 19:03:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644614; cv=none; b=szZzHWAsOluSLhAjNtMdFt5BmhDfcSoMH4GLwofPjvmnW38kAKo6NH+6IVihXRC3P6NS4/nt8tfpeEr2eBFB4+u4d0KHfjjer46GRSdq+playzd9ytoZ4NFXCGn9nADW435roazwrwJnvyAVbH9eU6k9KG/MUeO/H6Q7sy/4XGI=
+	t=1746644617; cv=none; b=FelfIsgut4I6tc1mmEZ7zZ8VV2f6ykq6SrrCRhXU7ZHwhJww0iMBBEyFVw26YaF1TsLmAr9Ub3Vr/WLFM9Mp2dxHCPU7LoEZ6x52tquhpTbyHNtYi6W+2KyPK+0bGeKRXJFBskIJnB4Qc2TM9x99QPswgCR6DmEElIKoM53lCXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644614; c=relaxed/simple;
-	bh=26eTC2p2ZrAJtfWHA1+yE61usq+5vaabwMxfMAzUyes=;
+	s=arc-20240116; t=1746644617; c=relaxed/simple;
+	bh=p1guZmSKc5mGOmhOJtf0cRwD8o7yGIR6DMl8ofVrdqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ab3OwNb9utL0IB6eRvkuOlPHxWlTNE3f2ykkUfGIP/jhX8bscRQd3rCU0OFol3Anq44wqt+4iovaDk0iqMgjnwKX+dDKliUhYoXLL3lRUj4IaJSg3h40CxzgCvpQTeB5X0s0vsQaJrjfGTAOe0kwFdQ/APEo/heUVkn2nI1satA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kHGfK43+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SeU5ZlSriehmKhRTbWd7Eifvn9Roe5sKNwXQ6K0xgnRPikzTZWclXlCG2TM5Eotx31Uqq8LfsEmI+YLd8iFx9b6Nt4iTGRQ12Cu53qhyt70yVN74wM5KK5xsK8FiNv7gVVbBJs0AR8VOWbPHDZNh4yPMf+SYFaQVGHsIB/v1qQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T0w5UJku; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kHGfK43+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 390FAC4CEE2;
-	Wed,  7 May 2025 19:03:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0w5UJku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B42C4CEE2;
+	Wed,  7 May 2025 19:03:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644614;
-	bh=26eTC2p2ZrAJtfWHA1+yE61usq+5vaabwMxfMAzUyes=;
+	s=korg; t=1746644617;
+	bh=p1guZmSKc5mGOmhOJtf0cRwD8o7yGIR6DMl8ofVrdqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kHGfK43+yP1fdnScbBfQHdOGXFqeJuG0vDUW1tJJpzfg+WcTUqdtBDOh7ZEHdkzwz
-	 nFMVqO1yy0VF2m77a1MaAo3mHWOFx8A3yecFg7QpHuwZp/q9mxS1VSScYdKe6eQnPx
-	 gEY/qQptMMibb8cZnuMWRO4TzPn4bPavpEsN46gw=
+	b=T0w5UJkuQpockP6Ijr15rZNpvkM26jcMIANBFk4koewf8FJ+is1mkT57tZnEw+hBh
+	 9/Rd77NDN24RMl324RNdpsiavgYd/O0Ap1cXTu0P54gWOc4kWQkcWqQbHIOHQXqt9u
+	 ycDamKlSBZVAMrk1Pc4+ec+I15WOghNY1LI14i8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell Cloran <rcloran@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 101/164] drm/mipi-dbi: Fix blanking for non-16 bit formats
-Date: Wed,  7 May 2025 20:39:46 +0200
-Message-ID: <20250507183825.064618278@linuxfoundation.org>
+Subject: [PATCH 6.12 102/164] net: dlink: Correct endianness handling of led_mode
+Date: Wed,  7 May 2025 20:39:47 +0200
+Message-ID: <20250507183825.105986435@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -51,51 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell Cloran <rcloran@gmail.com>
+From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit 1a8bc0fe8039e1e57f68c4a588f0403d98bfeb1f ]
+[ Upstream commit e7e5ae71831c44d58627a991e603845a2fed2cab ]
 
-On r6x2b6x2g6x2 displays not enough blank data is sent to blank the
-entire screen. When support for these displays was added, the dirty
-function was updated to handle the different amount of data, but
-blanking was not, and remained hardcoded as 2 bytes per pixel.
+As it's name suggests, parse_eeprom() parses EEPROM data.
 
-This change applies almost the same algorithm used in the dirty function
-to the blank function, but there is no fb available at that point, and
-no concern about having to transform any data, so the dbidev pixel
-format is always used for calculating the length.
+This is done by reading data, 16 bits at a time as follows:
 
-Fixes: 4aebb79021f3 ("drm/mipi-dbi: Add support for DRM_FORMAT_RGB888")
-Signed-off-by: Russell Cloran <rcloran@gmail.com>
-Link: https://lore.kernel.org/r/20250415053259.79572-1-rcloran@gmail.com
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+	for (i = 0; i < 128; i++)
+                ((__le16 *) sromdata)[i] = cpu_to_le16(read_eeprom(np, i));
+
+sromdata is at the same memory location as psrom.
+And the type of psrom is a pointer to struct t_SROM.
+
+As can be seen in the loop above, data is stored in sromdata, and thus psrom,
+as 16-bit little-endian values.
+
+However, the integer fields of t_SROM are host byte order integers.
+And in the case of led_mode this leads to a little endian value
+being incorrectly treated as host byte order.
+
+Looking at rio_set_led_mode, this does appear to be a bug as that code
+masks led_mode with 0x1, 0x2 and 0x8. Logic that would be effected by a
+reversed byte order.
+
+This problem would only manifest on big endian hosts.
+
+Found by inspection while investigating a sparse warning
+regarding the crc field of t_SROM.
+
+I believe that warning is a false positive. And although I plan
+to send a follow-up to use little-endian types for other the integer
+fields of PSROM_t I do not believe that will involve any bug fixes.
+
+Compile tested only.
+
+Fixes: c3f45d322cbd ("dl2k: Add support for IP1000A-based cards")
+Signed-off-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250425-dlink-led-mode-v1-1-6bae3c36e736@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_mipi_dbi.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/dlink/dl2k.c | 2 +-
+ drivers/net/ethernet/dlink/dl2k.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_mipi_dbi.c b/drivers/gpu/drm/drm_mipi_dbi.c
-index 34bca75675766..3ea9f23b4f67a 100644
---- a/drivers/gpu/drm/drm_mipi_dbi.c
-+++ b/drivers/gpu/drm/drm_mipi_dbi.c
-@@ -404,12 +404,16 @@ static void mipi_dbi_blank(struct mipi_dbi_dev *dbidev)
- 	u16 height = drm->mode_config.min_height;
- 	u16 width = drm->mode_config.min_width;
- 	struct mipi_dbi *dbi = &dbidev->dbi;
--	size_t len = width * height * 2;
-+	const struct drm_format_info *dst_format;
-+	size_t len;
- 	int idx;
+diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
+index d0ea926078706..6bf8a7aeef908 100644
+--- a/drivers/net/ethernet/dlink/dl2k.c
++++ b/drivers/net/ethernet/dlink/dl2k.c
+@@ -352,7 +352,7 @@ parse_eeprom (struct net_device *dev)
+ 	eth_hw_addr_set(dev, psrom->mac_addr);
  
- 	if (!drm_dev_enter(drm, &idx))
- 		return;
+ 	if (np->chip_id == CHIP_IP1000A) {
+-		np->led_mode = psrom->led_mode;
++		np->led_mode = le16_to_cpu(psrom->led_mode);
+ 		return 0;
+ 	}
  
-+	dst_format = drm_format_info(dbidev->pixel_format);
-+	len = drm_format_info_min_pitch(dst_format, 0, width) * height;
-+
- 	memset(dbidev->tx_buf, 0, len);
- 
- 	mipi_dbi_set_window_address(dbidev, 0, width - 1, 0, height - 1);
+diff --git a/drivers/net/ethernet/dlink/dl2k.h b/drivers/net/ethernet/dlink/dl2k.h
+index 195dc6cfd8955..0e33e2eaae960 100644
+--- a/drivers/net/ethernet/dlink/dl2k.h
++++ b/drivers/net/ethernet/dlink/dl2k.h
+@@ -335,7 +335,7 @@ typedef struct t_SROM {
+ 	u16 sub_system_id;	/* 0x06 */
+ 	u16 pci_base_1;		/* 0x08 (IP1000A only) */
+ 	u16 pci_base_2;		/* 0x0a (IP1000A only) */
+-	u16 led_mode;		/* 0x0c (IP1000A only) */
++	__le16 led_mode;	/* 0x0c (IP1000A only) */
+ 	u16 reserved1[9];	/* 0x0e-0x1f */
+ 	u8 mac_addr[6];		/* 0x20-0x25 */
+ 	u8 reserved2[10];	/* 0x26-0x2f */
 -- 
 2.39.5
 
