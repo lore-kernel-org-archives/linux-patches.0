@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831D823DE;
-	Wed,  7 May 2025 19:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9249023DE;
+	Wed,  7 May 2025 19:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644521; cv=none; b=fmspY6o+W1vyB3LPZOZ4SPf14ZXqoerQ6RdMzx25Moj+mON82ftqeq0IDpqL1QUN9O2t+NX+oessJ0zNaoQiimi/tywYE59NvZXR8HaYL/P0e6q5Hd9d1cj8YGd2E9M+VUht/IZg5NEPazR3vbyk3zBzg3y5TvRGUMtnmg2Y73Y=
+	t=1746644524; cv=none; b=ZN1HIjjHGXu4yhvDgTaAQv0tWD7u3vvGFfCsTnGtsvnUDglTlKBQviVtA/dJcvTXlW83ugEB3mquJQLOg0R6BAugHbxu4mgYzwa2YYmFsFdq8g4cfw7EDQDxTV3wvIOm/NOMFQ6SQJUJ5EvXRmp4+CGlXsPyLpXB5Wt9wrs0crA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644521; c=relaxed/simple;
-	bh=GdhY7GWfVHtFjxF5UBVPOaWNXg1uqrbGq2AAT7+HYKQ=;
+	s=arc-20240116; t=1746644524; c=relaxed/simple;
+	bh=IzojUPivCJTEtsSNDxlTT+g0Dwt7XIG2TaI9/tkgLck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gg5qtmH1k+FqkdFYfpaqee5ESHKUY5J7Mr+OT27T8/q9NEkOD6asD1FPfzJM0Y/uXnr/Le+N+ox/yNwrljV4Tvz5Kj7nszHKXl2sPFFVDt4B3LUkV7ZU0Xq2gw/dZsdX3jOYAx1hlEIY2oAP1p1wXJGpwy3wMChn5XJMqjIRaTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jueYtOtq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gg3x2w/WMkb/FPOsI2A175QCPQcty8EzR1NVmWLYChRv1YtBnRzHGIo/63YeLv7kZpaowzZJYUnDJZ3p/40DEndqE84Qrw2+bz2b/zaZGokBxXuxZ+1H2GCQTpFSOaFDUM1EeOqsZ5xTM44bVBVbVVZ1G3dmp+e0TamzGBMZL9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iiUS0qlO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jueYtOtq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09699C4CEE2;
-	Wed,  7 May 2025 19:02:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iiUS0qlO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D932C4CEE2;
+	Wed,  7 May 2025 19:02:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644521;
-	bh=GdhY7GWfVHtFjxF5UBVPOaWNXg1uqrbGq2AAT7+HYKQ=;
+	s=korg; t=1746644524;
+	bh=IzojUPivCJTEtsSNDxlTT+g0Dwt7XIG2TaI9/tkgLck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jueYtOtqJgKLabQe1TviGQEewEZTFxomjWHPrJxHuM+PoZfZzCGtX6VbBRVxm58x7
-	 bMP6a9KW46zAtO2OMTq6MOYDSOg6SUNf5yJgLj5uV0M/AgDqBlwFalgj7ni6Qig+Jv
-	 fwEU5qeP1hstCUiSnsfEwH8qU7PUTVGsi75ay5Yg=
+	b=iiUS0qlO27TRWMkY7H1bd+v/w8ISjRDT0LnU23F9l1BNqofhpXJDl6/PWYyU4OuOe
+	 srgtWLlW5CKF118xo8jMZeyf0gYvqys8psaOmcOn1VloPapxmwqXUv79iUbK3UQm3N
+	 5GvYTZCF0uxIp2fV8l/kRq6O0DRa7CqKf3rPch4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mi <cmi@nvidia.com>,
-	Roi Dayan <roid@nvidia.com>,
-	Maor Gottlieb <maorg@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Karol Wachowski <karol.wachowski@intel.com>,
+	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 071/164] net/mlx5: E-switch, Fix error handling for enabling roce
-Date: Wed,  7 May 2025 20:39:16 +0200
-Message-ID: <20250507183823.834710141@linuxfoundation.org>
+Subject: [PATCH 6.12 072/164] accel/ivpu: Correct DCT interrupt handling
+Date: Wed,  7 May 2025 20:39:17 +0200
+Message-ID: <20250507183823.880577878@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -55,108 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mi <cmi@nvidia.com>
+From: Karol Wachowski <karol.wachowski@intel.com>
 
-[ Upstream commit 90538d23278a981e344d364e923162fce752afeb ]
+[ Upstream commit e53e004e346062e15df9511bd4b5a19e34701384 ]
 
-The cited commit assumes enabling roce always succeeds. But it is
-not true. Add error handling for it.
+Fix improper use of dct_active_percent field in DCT interrupt handler
+causing DCT to never get enabled. Set dct_active_percent internally before
+IPC to ensure correct driver value even if IPC fails.
+Set default DCT value to 30 accordingly to HW architecture specification.
 
-Fixes: 80f09dfc237f ("net/mlx5: Eswitch, enable RoCE loopback traffic")
-Signed-off-by: Chris Mi <cmi@nvidia.com>
-Reviewed-by: Roi Dayan <roid@nvidia.com>
-Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/20250423083611.324567-6-mbloch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a19bffb10c46 ("accel/ivpu: Implement DCT handling")
+Signed-off-by: Karol Wachowski <karol.wachowski@intel.com>
+Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Link: https://lore.kernel.org/r/20250416102616.384577-1-maciej.falkowski@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/eswitch_offloads.c   | 5 ++++-
- drivers/net/ethernet/mellanox/mlx5/core/rdma.c           | 9 +++++----
- drivers/net/ethernet/mellanox/mlx5/core/rdma.h           | 4 ++--
- 3 files changed, 11 insertions(+), 7 deletions(-)
+ drivers/accel/ivpu/ivpu_hw_btrs.h |  2 +-
+ drivers/accel/ivpu/ivpu_pm.c      | 18 ++++++++++--------
+ 2 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-index 3950b1d4b3d8e..988df7047b01d 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-@@ -3514,7 +3514,9 @@ int esw_offloads_enable(struct mlx5_eswitch *esw)
- 	int err;
+diff --git a/drivers/accel/ivpu/ivpu_hw_btrs.h b/drivers/accel/ivpu/ivpu_hw_btrs.h
+index 71792dab3c210..3855e2df1e0c8 100644
+--- a/drivers/accel/ivpu/ivpu_hw_btrs.h
++++ b/drivers/accel/ivpu/ivpu_hw_btrs.h
+@@ -14,7 +14,7 @@
+ #define PLL_PROFILING_FREQ_DEFAULT   38400000
+ #define PLL_PROFILING_FREQ_HIGH      400000000
  
- 	mutex_init(&esw->offloads.termtbl_mutex);
--	mlx5_rdma_enable_roce(esw->dev);
-+	err = mlx5_rdma_enable_roce(esw->dev);
-+	if (err)
-+		goto err_roce;
+-#define DCT_DEFAULT_ACTIVE_PERCENT 15u
++#define DCT_DEFAULT_ACTIVE_PERCENT 30u
+ #define DCT_PERIOD_US		   35300u
  
- 	err = mlx5_esw_host_number_init(esw);
- 	if (err)
-@@ -3575,6 +3577,7 @@ int esw_offloads_enable(struct mlx5_eswitch *esw)
- 	esw_offloads_metadata_uninit(esw);
- err_metadata:
- 	mlx5_rdma_disable_roce(esw->dev);
-+err_roce:
- 	mutex_destroy(&esw->offloads.termtbl_mutex);
- 	return err;
+ int ivpu_hw_btrs_info_init(struct ivpu_device *vdev);
+diff --git a/drivers/accel/ivpu/ivpu_pm.c b/drivers/accel/ivpu/ivpu_pm.c
+index fbb61a2c3b19c..d1fbad78f61ba 100644
+--- a/drivers/accel/ivpu/ivpu_pm.c
++++ b/drivers/accel/ivpu/ivpu_pm.c
+@@ -421,16 +421,17 @@ int ivpu_pm_dct_enable(struct ivpu_device *vdev, u8 active_percent)
+ 	active_us = (DCT_PERIOD_US * active_percent) / 100;
+ 	inactive_us = DCT_PERIOD_US - active_us;
+ 
++	vdev->pm->dct_active_percent = active_percent;
++
++	ivpu_dbg(vdev, PM, "DCT requested %u%% (D0: %uus, D0i2: %uus)\n",
++		 active_percent, active_us, inactive_us);
++
+ 	ret = ivpu_jsm_dct_enable(vdev, active_us, inactive_us);
+ 	if (ret) {
+ 		ivpu_err_ratelimited(vdev, "Filed to enable DCT: %d\n", ret);
+ 		return ret;
+ 	}
+ 
+-	vdev->pm->dct_active_percent = active_percent;
+-
+-	ivpu_dbg(vdev, PM, "DCT set to %u%% (D0: %uus, D0i2: %uus)\n",
+-		 active_percent, active_us, inactive_us);
+ 	return 0;
  }
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/rdma.c b/drivers/net/ethernet/mellanox/mlx5/core/rdma.c
-index f585ef5a34243..5c552b71e371c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/rdma.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/rdma.c
-@@ -140,17 +140,17 @@ void mlx5_rdma_disable_roce(struct mlx5_core_dev *dev)
- 	mlx5_nic_vport_disable_roce(dev);
- }
  
--void mlx5_rdma_enable_roce(struct mlx5_core_dev *dev)
-+int mlx5_rdma_enable_roce(struct mlx5_core_dev *dev)
+@@ -438,15 +439,16 @@ int ivpu_pm_dct_disable(struct ivpu_device *vdev)
  {
- 	int err;
+ 	int ret;
  
- 	if (!MLX5_CAP_GEN(dev, roce))
--		return;
-+		return 0;
- 
- 	err = mlx5_nic_vport_enable_roce(dev);
- 	if (err) {
- 		mlx5_core_err(dev, "Failed to enable RoCE: %d\n", err);
--		return;
-+		return err;
++	vdev->pm->dct_active_percent = 0;
++
++	ivpu_dbg(vdev, PM, "DCT requested to be disabled\n");
++
+ 	ret = ivpu_jsm_dct_disable(vdev);
+ 	if (ret) {
+ 		ivpu_err_ratelimited(vdev, "Filed to disable DCT: %d\n", ret);
+ 		return ret;
  	}
  
- 	err = mlx5_rdma_add_roce_addr(dev);
-@@ -165,10 +165,11 @@ void mlx5_rdma_enable_roce(struct mlx5_core_dev *dev)
- 		goto del_roce_addr;
- 	}
- 
--	return;
-+	return err;
- 
- del_roce_addr:
- 	mlx5_rdma_del_roce_addr(dev);
- disable_roce:
- 	mlx5_nic_vport_disable_roce(dev);
-+	return err;
+-	vdev->pm->dct_active_percent = 0;
+-
+-	ivpu_dbg(vdev, PM, "DCT disabled\n");
+ 	return 0;
  }
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/rdma.h b/drivers/net/ethernet/mellanox/mlx5/core/rdma.h
-index 750cff2a71a4b..3d9e76c3d42fb 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/rdma.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/rdma.h
-@@ -8,12 +8,12 @@
  
- #ifdef CONFIG_MLX5_ESWITCH
+@@ -458,7 +460,7 @@ void ivpu_pm_dct_irq_thread_handler(struct ivpu_device *vdev)
+ 	if (ivpu_hw_btrs_dct_get_request(vdev, &enable))
+ 		return;
  
--void mlx5_rdma_enable_roce(struct mlx5_core_dev *dev);
-+int mlx5_rdma_enable_roce(struct mlx5_core_dev *dev);
- void mlx5_rdma_disable_roce(struct mlx5_core_dev *dev);
- 
- #else /* CONFIG_MLX5_ESWITCH */
- 
--static inline void mlx5_rdma_enable_roce(struct mlx5_core_dev *dev) {}
-+static inline int mlx5_rdma_enable_roce(struct mlx5_core_dev *dev) { return 0; }
- static inline void mlx5_rdma_disable_roce(struct mlx5_core_dev *dev) {}
- 
- #endif /* CONFIG_MLX5_ESWITCH */
+-	if (vdev->pm->dct_active_percent)
++	if (enable)
+ 		ret = ivpu_pm_dct_enable(vdev, DCT_DEFAULT_ACTIVE_PERCENT);
+ 	else
+ 		ret = ivpu_pm_dct_disable(vdev);
 -- 
 2.39.5
 
