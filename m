@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9607C1FF5EC;
-	Wed,  7 May 2025 18:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FF01FF5EC;
+	Wed,  7 May 2025 18:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643974; cv=none; b=EwL7wRor8VCpD+569ehOf0GsXH3ZKzb8vUSXiaJ8xEjq9g88cSfi5XwuzJDyyNtNclSKYVdRAe+C5qVZQkwkzVLkNVK4FqThQXpGFeCNvdjj5Ts9QPtsOGEe5+VgM4fK1FxMkBvX+UdnNshP2N2lBH11VySM/YQiFzQOCMNdX1w=
+	t=1746643977; cv=none; b=Qg+DRA1PIuiB2TZqKGpSCwGnPsC46zV+Xu7rKYNBeoBfS+OAeg86nbkoQjyhJt/BA/2TiLqZT7E3acYr2M9rzbb8mNQ3I7xNfu+pUiKgsqI6BDM5C3QdkDVCrr7VhEaLWanh7THBBkSUBnUN49LHC9NfI+t1XB2xGhsNppjxkR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643974; c=relaxed/simple;
-	bh=41LGJQvqxI5N3x86JGozd+uGpSE42mijvbwCGEKfdnM=;
+	s=arc-20240116; t=1746643977; c=relaxed/simple;
+	bh=+YQxLNL4DAw+XCyvsM7i9YYmbU3jV9UgPTN/vl29d3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YxaxJPnrPzNgAx86ti9eq/bExWv0OFW0lr6ht+bfypdlSHkMts9a11tTPzpAREa0/UXHNuGRsKCm5up1eeQTboAd4rHlEckKUL4bar5yGaiVjb7yPZ181mfHl/CyHis2Sihw/iBzMHp5usjtv64Lb36PNmjE2FulQrUiqx9dTv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FdUG3kNr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=omOF6QBaYgboe3ifWb2P6TqC5FMSZeHq/74OHXAOMo6EQvzx/WnhB5HF4vHtUwSSgu8H693DDqjTXqJbeDlg4sFMwmxR6+zkA0m61Y7zQ9aNk46DnoGoWVUmG4ZjnCIF/Cgcz47T5BJ2BjRrogkMZwk0QliYGfxFeAtjVr1lwUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHJQXD18; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdUG3kNr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 046C9C4CEE2;
-	Wed,  7 May 2025 18:52:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHJQXD18"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D71C4CEE2;
+	Wed,  7 May 2025 18:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643974;
-	bh=41LGJQvqxI5N3x86JGozd+uGpSE42mijvbwCGEKfdnM=;
+	s=korg; t=1746643977;
+	bh=+YQxLNL4DAw+XCyvsM7i9YYmbU3jV9UgPTN/vl29d3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FdUG3kNrc3VK5kUxLufnRk7KVGYk+AV3nUP81ndfpb1yGtXINqSLmZrs52mLQy+eS
-	 5MVF88QCcZh/OKHalTfF/cksHTMX1MIpsX4o63YEZM8UnCCJn9SwAKn6i6fr0zNH0w
-	 6rS0R5C2AGzmqEABR78ff8lxBe+6ps7g45XbhYw0=
+	b=JHJQXD182vTtA1F4ZxYJwydVyoaqCeKEA6F5BH4ihxLEMPmdHeR4ODO3E2TXc20Yq
+	 S+MrHzdC2ItMUiPvVU0yLfVH00xykb0DK69pjLEB8W58Zbktl5vpt9Ugs63IoYA+ec
+	 YiFdOZ3KEyE8ah++IhAKkXeIVWsNstZEYHtvxwH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	David Gow <davidgow@google.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 077/183] cpufreq: Introduce policy->boost_supported flag
-Date: Wed,  7 May 2025 20:38:42 +0200
-Message-ID: <20250507183827.807134068@linuxfoundation.org>
+Subject: [PATCH 6.14 050/183] ASoC: cs-amp-lib-test: Dont select SND_SOC_CS_AMP_LIB
+Date: Wed,  7 May 2025 20:38:15 +0200
+Message-ID: <20250507183826.718190240@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -50,60 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viresh Kumar <viresh.kumar@linaro.org>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 1f7d1bab50e6ae517f8b6699e56d709d61ae13e5 ]
+[ Upstream commit 96014d91cffb335d3b396771524ff2aba3549865 ]
 
-It is possible to have a scenario where not all cpufreq policies support
-boost frequencies. And letting sysfs (or other parts of the kernel)
-enable boost feature for that policy isn't correct.
+Depend on SND_SOC_CS_AMP_LIB instead of selecting it.
 
-Add a new flag, boost_supported, which will be set to true by the
-cpufreq core only if the freq table contains valid boost frequencies.
+KUNIT_ALL_TESTS should only build tests for components that are
+already being built, it should not cause other stuff to be added
+to the build.
 
-Some cpufreq drivers though don't have boost frequencies in the
-freq-table, they can set this flag from their ->init() callbacks.
-
-Once all the drivers are updated to set the flag correctly, we can check
-it before enabling boost feature for a policy.
-
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Stable-dep-of: 3d59224947b0 ("cpufreq: ACPI: Re-sync CPU boost state on system resume")
+Fixes: 177862317a98 ("ASoC: cs-amp-lib: Add KUnit test for calibration helpers")
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250411123608.1676462-3-rf@opensource.cirrus.com
+Reviewed-by: David Gow <davidgow@google.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/freq_table.c | 4 ++++
- include/linux/cpufreq.h      | 3 +++
- 2 files changed, 7 insertions(+)
+ sound/soc/codecs/Kconfig | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/cpufreq/freq_table.c b/drivers/cpufreq/freq_table.c
-index 178e17009a16e..9db21ffc11979 100644
---- a/drivers/cpufreq/freq_table.c
-+++ b/drivers/cpufreq/freq_table.c
-@@ -367,6 +367,10 @@ int cpufreq_table_validate_and_sort(struct cpufreq_policy *policy)
- 	if (ret)
- 		return ret;
+diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
+index ee35f3aa55216..0138cfabbb038 100644
+--- a/sound/soc/codecs/Kconfig
++++ b/sound/soc/codecs/Kconfig
+@@ -763,10 +763,9 @@ config SND_SOC_CS_AMP_LIB
+ 	tristate
  
-+	/* Driver's may have set this field already */
-+	if (policy_has_boost_freq(policy))
-+		policy->boost_supported = true;
-+
- 	return set_freq_table_sorted(policy);
- }
- 
-diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
-index a604c54ae44da..73024830bd730 100644
---- a/include/linux/cpufreq.h
-+++ b/include/linux/cpufreq.h
-@@ -144,6 +144,9 @@ struct cpufreq_policy {
- 	/* Per policy boost enabled flag. */
- 	bool			boost_enabled;
- 
-+	/* Per policy boost supported flag. */
-+	bool			boost_supported;
-+
- 	 /* Cached frequency lookup from cpufreq_driver_resolve_freq. */
- 	unsigned int cached_target_freq;
- 	unsigned int cached_resolved_idx;
+ config SND_SOC_CS_AMP_LIB_TEST
+-	tristate "KUnit test for Cirrus Logic cs-amp-lib"
+-	depends on KUNIT
++	tristate "KUnit test for Cirrus Logic cs-amp-lib" if !KUNIT_ALL_TESTS
++	depends on SND_SOC_CS_AMP_LIB && KUNIT
+ 	default KUNIT_ALL_TESTS
+-	select SND_SOC_CS_AMP_LIB
+ 	help
+ 	  This builds KUnit tests for the Cirrus Logic common
+ 	  amplifier library.
 -- 
 2.39.5
 
