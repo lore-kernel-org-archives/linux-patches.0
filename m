@@ -1,98 +1,144 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74691218EBA
-	for <patches@lists.linux.dev>; Tue,  6 May 2025 22:22:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9419E155335;
+	Wed,  7 May 2025 02:37:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746570164; cv=none; b=WdNxqdH+BfXQt9agtTE44Hdlx8KNJxhhUa3bnr+s49A+lCG3RDKPTf9+cUu2SivlhPuPSM+xpSVpoKZiV1g7UePIaQmxen2Hu2AdQMlytzPciif0dx5InDnZRvjF2GKLX0IPETVLs//rhEcb8FpnWiT2DPznvkewu8djIaByDcQ=
+	t=1746585445; cv=none; b=Mwgux7heQdxgZmRIRihmtF4KIHqcs5UJbwtNrC47yPzMaCrfvYRS0R2FFnAs55ypVcHPKV7xyCCqK2txJTqcYzV4xOIbX/CPEGmpnILdNigBI/pDgZanPd9NekD9+bdpAXVpFPnLgxCnFREbIdEsEEg4VlxrKU5SMr3q50zAS9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746570164; c=relaxed/simple;
-	bh=Fjs8/oqdYEN5TLsTGrbw69UBcedciUbp7Y1O4mot1nw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QVIbwaF8/obEDypukufiEz8/7uUrr/HdqgaRIq2iJB/vFZKEKwo6SoTW3IxBp4yNTGEOEWqsSkbNTf/yGLg7J1QxCmB0yrX6gxwh6245Sq4EUM8dEMcsjwkSron4ocpzwtB4A1Kt7/0SxgrcteEWtmyEDXFrBLDmJ/YBZ1QTfWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i5mI2i2J; arc=none smtp.client-ip=209.85.216.50
+	s=arc-20240116; t=1746585445; c=relaxed/simple;
+	bh=gogz/kwTzl09lyXYhB0+fHtcF7vMgDw89ax0lZlRJFA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J5yBZWPq+xfGGudPHIkLr1qPMEl1QjIgop13oEITTmQCesZgPg7FTw6b6oeb1fgZRRyy+tPfqTFpcB3DM7imbyRsjk561Ys6tx/RN9PRyWgeT25SxsRj/ltA61nvFeB7tiunqPG1TiSdFt22vjeOSM+JJEkXP1x0Ew1NM2L0S6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bd1LgG3H; arc=none smtp.client-ip=209.85.166.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i5mI2i2J"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-30a80e3222fso208907a91.3
-        for <patches@lists.linux.dev>; Tue, 06 May 2025 15:22:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bd1LgG3H"
+Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-86135d11760so515502239f.2;
+        Tue, 06 May 2025 19:37:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746570161; x=1747174961; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EJu/VrmZH7dKgyhsnTdC5BHM2TwuIMvm6m0HjhtoteQ=;
-        b=i5mI2i2J27gAEmZysZuICaBj4l5e0e/uxw5i9Aklo+fDGMH1JD+WTZXH+Ddmgmj8i4
-         iXDbpYoIft6xEA1MxSGSkjyFf0ljmuOGBn2if508chlJ3X30nHneSXo2Mu1rI6QapqnG
-         sSFgOtmfIExqkI6z+FU4S47R0/2YV249tYmdyJn68PcPu3OYtS59qvuioTaj26DHdYUB
-         dcJLBq2xsFVi04gQgdAN8x9GqdRFZjc3QQtmXeTDUUs+hO3jPFcKOWXaOWBAJm93s31q
-         f/W6FBdIZCLVs75iVaHlBr/E1AZbNrUh39d72OJDzjkkA9SW5rwe517cOgOR3l9Re4h+
-         ebRQ==
+        d=gmail.com; s=20230601; t=1746585442; x=1747190242; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YqUzVFahOTWkOm+5toR1pBXsvwL7tjqr3UlY9YuFPvk=;
+        b=bd1LgG3HKReEalhAhr8hNZEG0HYGh5aSyJ5dcXC08srh1Jl+DjOpVflyVcuMY+QXzG
+         4MThMFzsUyFxYS66MnlnPCeTqhlovcmddz7K4mN/DkkDVXHMMab8nxjxRTKwRxcewg5d
+         jKMKKaqdPqkdXYpmKyGRet0NkZjo5DSuI6p4TfsV8i0RC+8XArdseobqbwJzGOe9w+aB
+         SDraEYOvZh39vBosKlOdmJpuxyZD+XC/R516T6yBOfA1Wq2giFVCbVcjafv+Fzy9FQMZ
+         o58ZzRQ6jH7X+zNGeze6EVpjrSkpdk1uuvvCs2JTJ+LuXVsObvVH0ZZhEr1JMbrL01D2
+         N6ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746570161; x=1747174961;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EJu/VrmZH7dKgyhsnTdC5BHM2TwuIMvm6m0HjhtoteQ=;
-        b=fwDlDSHjY4jcyC7UtVQ2Q1pxpO7Ft7wY4auAXbxF2R6flBXE9CMQiG7T+Ftxc0dwGI
-         mizzAT7PFewAFYMa6GiBifi7WbJLXja42gpn0L2ervMm7tqf9Ttvtg9Pfx6dlcQWXTGi
-         r3J4vCA4WboivODWAvJDz3Mc+/4IrJox+vWAytbQb+bpkG/sTxRiiHC4Wc6a5g+KDiQA
-         SQVrZ0ewtj+dBqb2a3tZ4DuoPAnQqbF0Ld1kxErnU9hFgy7xJ1AdRq0BQwVZaWQ937e3
-         H1e1QYSqPU59hkfwcPT00IXSklILWeOT3HUDTghKaUoHNwboej/Sq1D20qc7Dlck+RAT
-         Qi0Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUsDdcN3pOx6cQJJGR1d51L7Amaz+aNdv5PY7TiPIvtOlh8L74KJN5r49o5FWUujyqcoX0wO/MB@lists.linux.dev
-X-Gm-Message-State: AOJu0YxNc4izL3iHDz+2rMKB+7mPLqLLGTZHpm/tU/QJNjXX3nLSmhO0
-	+zPs8kNrX7Xz61gaM3iuJNQluFheQp7yZkgk1u0gKMI8y3JJXeHs4qBoSwd8Kk8JEpPhUBYWaXr
-	0Ud29G3v3Xkyk4a27sU+yAHD19bM=
-X-Gm-Gg: ASbGncs68acP1+5YHHgPByUMy+uPyCpwrrTm3h3sJ49q7AFGgpDB7TBTJN9XJ5V+ZWp
-	pSKMBEaRMQvhr44hb5rpBbCvd5piXPV2hIlnaspdlOR3XSxwynXeRbImtoQPm8APmuQiTeU4XlH
-	PYLOOm7mOaDZTVYjCKEgh8gg==
-X-Google-Smtp-Source: AGHT+IFVLfOMX/7uUSXM/y7pjZowtfQ1j0vsDZTjQNHCA4pIMb9jQEvGqs1TBHX2E5FSF2e0ZGIxAaTuGCDFxHIVLrs=
-X-Received: by 2002:a17:90b:33c1:b0:2ff:5759:549a with SMTP id
- 98e67ed59e1d1-30aac16c2e2mr652470a91.1.1746570160569; Tue, 06 May 2025
- 15:22:40 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1746585442; x=1747190242;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YqUzVFahOTWkOm+5toR1pBXsvwL7tjqr3UlY9YuFPvk=;
+        b=BMTfj1CpYgct4iXEtUt3lpCTFEur8fUoyxfNJeDuwW0laXu0kAQVRzEo5A0ai2H1xb
+         O2flMB7quvRbeHZ9V54mte7vIZjq33wwRhgsAVxbJeYwaR2AVEPi65gGS1BSAWFAsa4v
+         qRT8C1WKnBe4vrJnTkFuT9c/J6b7HG8iYF82fKaPi6SZp+cuTIEhuOSWvDj3oJhiYwra
+         5lrjiFCX/zM65rYlnKkqMfRjIHsNNayR9NunUwWhZN+74BaMe7Tax4CBr1evhV03VN5X
+         5Pbd2OAB96NdajH5f3rrsl4tRZPl9b9qM+Ltg75Sgrd0QexAhJ/yQ2scd3pVASkdRxH/
+         pf6w==
+X-Forwarded-Encrypted: i=1; AJvYcCUCiskOLT/AFCqVJvlNEt/IVQBYaQVLdq5T4TQpihvJiZ0CMZF3kdfR/Iq0DFR9Wbd1NBanG8xsow==@lists.linux.dev, AJvYcCUNM3ye3/TpSV82KU28MIkGSjsOlNKWRWOdaHhiaIcetisMrQr65CxCAfyBHdLY2ICJy3ED9A==@lists.linux.dev, AJvYcCViYx2cWw5tu6B2ngMaLBRivIlDPq86zElSWujiKxSkm/Cc0sTh2XHqYvBuuNVzGiw8NiEsTg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzP4cdaJTWTh1k0xx9Y+cy1VqmcpQmdNCadJpKdIW7/0PsSgb5x
+	dZkSmzLZoAflUa40ocVFrCUIIrAolI/MCSWpBR2U1B5oGGzkEw1y1zfFNQ==
+X-Gm-Gg: ASbGncsvT/w9acjUdYxbgAYzt6UDRlbTbKpZNmL9j+95R9d0jPifjdHKePDfxtz3v5t
+	MOsJSo/HhFzzOqZ/ClozNvK1z6CptkvSMl1pecHPJKnUf+c2IEVuo54FvhFzhqlYaDP7pXAZ+4t
+	EoFyi4ihQRp9SYhvtszH0sJZ5+XNYPp4slkOppUw4QPI7Kyr9rN4LYGD+cZLrC6CRbMDOTaezb2
+	8ziHxgOssbDUI8MEqaCZND2goLHMusXEqouC34uA+HUOClb4tPSyWMOenIOIfT7eGuXhYwyIa7q
+	0j11IeBGOxRrEXqSxVx//uLFRBDaQq7FJ4XSqbzA
+X-Google-Smtp-Source: AGHT+IGAGS5jySCLGYRIxZ6mcudp65e4oJqBqIYNLeIsf5XVwvZcmPdxBTh5M0+mbZlZhv0ROYBp4g==
+X-Received: by 2002:a05:6a00:4c07:b0:73f:eeb:84bb with SMTP id d2e1a72fcca58-7409cffb1femr2113575b3a.19.1746585432232;
+        Tue, 06 May 2025 19:37:12 -0700 (PDT)
+Received: from archie.me ([103.124.138.155])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74059020fb9sm9790293b3a.114.2025.05.06.19.37.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 May 2025 19:37:11 -0700 (PDT)
+Received: by archie.me (Postfix, from userid 1000)
+	id 41BF2423E4D9; Wed, 07 May 2025 09:37:07 +0700 (WIB)
+Date: Wed, 7 May 2025 09:37:07 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Jason Gunthorpe <jgg@nvidia.com>, Jonathan Corbet <corbet@lwn.net>,
+	iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	Justin Stitt <justinstitt@google.com>,
+	Kevin Tian <kevin.tian@intel.com>, linux-doc@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, llvm@lists.linux.dev,
+	Bill Wendling <morbo@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Will Deacon <will@kernel.org>
+Cc: Alexey Kardashevskiy <aik@amd.com>,
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	James Gowans <jgowans@amazon.com>,
+	Michael Roth <michael.roth@amd.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev
+Subject: Re: [PATCH v2 02/15] genpt: Add Documentation/ files
+Message-ID: <aBrHU-OGbfqk1DSq@archie.me>
+References: <0-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com>
+ <2-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250502140237.1659624-1-ojeda@kernel.org>
-In-Reply-To: <20250502140237.1659624-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 7 May 2025 00:22:27 +0200
-X-Gm-Features: ATxdqUHsnz3OpIfXfRrsahxajrnMcgxR0wuYrhnN4_-kpgUu_iZsj3JsP3IAULE
-Message-ID: <CANiq72kb69a8=2GR32_+NeJ0TsBM2XP2--tJf75+JDLjkaPZ5A@mail.gmail.com>
-Subject: Re: [PATCH 0/5] Rust beta (1.87) and nightly (1.88) lint cleanups
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="zxkMD/BAbmzfsfUI"
+Content-Disposition: inline
+In-Reply-To: <2-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com>
+
+
+--zxkMD/BAbmzfsfUI
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 2, 2025 at 4:03=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wrot=
-e:
->
-> Now that Rust 1.87.0 is close to release, clean up the new lints that app=
-eared.
->
-> It may be that one of the patches is not needed by the time it releases, =
-but
-> I prefer to not wait much longer since I would like to land this for -rc6=
- so
-> that it is clean for release.
->
-> In addition, clean some nightly (1.88.0) ones too.
+On Mon, May 05, 2025 at 11:18:32AM -0300, Jason Gunthorpe wrote:
+> +Since each compilation unit can only access one underlying format at a t=
+ime,
+> +code that is intended to be generic across multiple formats has to compi=
+le
+> +itself multiple times.
+> +
+> +In an implementation compilation unit the headers would normally be incl=
+uded as
+> +follows::
+> +
+> +	#include <linux/generic_pt/common.h>
+> +	#include "fmt/defs_amdv1.h"
+> +	#include "pt_defs.h"
+> +	#include "fmt/amdv1.h"
+> +	#include "pt_common.h"
+> +	#include "pt_iter.h"
 
-Applied to `rust-fixes` -- thanks everyone!
+What do you mean by compiling generic code multiple times? Including
+their headers at multiple places like above?
 
-    [ Converted to `allow`s since backport was confirmed. - Miguel ]
+> +
+> +Which will build up all the definitions to operate an AMDv1 page table t=
+ype.
 
-Cheers,
-Miguel
+"This will build up ..."
+
+Thanks.
+
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--zxkMD/BAbmzfsfUI
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCaBrHTQAKCRD2uYlJVVFO
+o9AuAQDK9i2u7JfunI+32q0hoOi2Y/Pvvttw15+KmB1nTp154AD+NPBUOqUnmgTp
+ezgVGaJVimmrDW8F1Zgi1EStXo4tPQA=
+=K/NH
+-----END PGP SIGNATURE-----
+
+--zxkMD/BAbmzfsfUI--
