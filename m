@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238AF1DDC23;
-	Wed,  7 May 2025 18:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0471DDC23;
+	Wed,  7 May 2025 18:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643760; cv=none; b=IDWi01P/C/ItoI4Q29PbZRwAOpOUQLyRZ6SiEyWWYrQzxw93zqTmB8XsK26ab3A96lyHAG1GPKzombiXGM2TvmsyFZq+t5/AtGvN+oKaYCz7qxAdY9Xh/ztry2Ec7+Ctv/9IfuwKHcXp5tNvIKxeSOQmcYMM3UCVtse5KGjpJqY=
+	t=1746643763; cv=none; b=cOvP24Mi7spyyJ4dCT9HzuduTK2xNj3AVKaUB9QPznc2NY2EGVe2sLB26u6aBdQs4KwJ9+WUoKc+a3IkCwi6iEmZPYegvK2Isba/zrHpsLCiZFp175lVfNUCMDIHdQxHd6859K02/pP04dOZT6Cf4AdQnpiy6uB3PscrtQ98CvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643760; c=relaxed/simple;
-	bh=U2S4aeme5OAJi5ei4hlgu1MYuzxusRwsqSkgBA9dRbc=;
+	s=arc-20240116; t=1746643763; c=relaxed/simple;
+	bh=lJ9S3oYh3v6h4NS1vrQ/rxXAhN9Epn+BKss9W/C9gbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lqgqI85T3Vm0THXZ8a8fztzf4EqHh7rU6ltzVNTgZm/qQ4eZcsrZpqtE2/sTsWH5p1sdW2A2vZSIQG4v/+opzk9K8nwFC0TwYQTP1hIviqpprDrq/mK5djlHXbbkqZMBNftfGF5em8TO7gMSfvE7zlyUnNXnJRF6uSCUM9L4bOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3xBLone; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mo0rkSJ+eJgMS6gZFon9g9Lt+98h0itRFGFBHxiDpJKo9pTarApRCa0McT6ltmd+HYPPH2ZS8BX8ilEvpi8iUOgrqT6buTStHoDZl14IAbUxudnRWL4oNS6MwanWnBcKFoXZup88rc4nuX6BDVN3Ig8Kiya6+zePkhf5750VccQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wt21hz+Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3xBLone"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13BBC4CEE2;
-	Wed,  7 May 2025 18:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wt21hz+Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 982BFC4CEE2;
+	Wed,  7 May 2025 18:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643760;
-	bh=U2S4aeme5OAJi5ei4hlgu1MYuzxusRwsqSkgBA9dRbc=;
+	s=korg; t=1746643763;
+	bh=lJ9S3oYh3v6h4NS1vrQ/rxXAhN9Epn+BKss9W/C9gbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U3xBLonekqZamjuVd9qM/lubxyrbqPEjw03eKRCk07Dr7r+rWak62c70SQR84s8nq
-	 xg9cew7Y6cieBRk/Z8TkEh0bOBj0X85F0b90Z+Xih/nD0MRXVX6I0sSJ9ENbJvPmjL
-	 DAQ/a4prTocgsuzn+oOPWisZqUNEl14sox/Ywun8=
+	b=wt21hz+YqH42LOPKo8Hl7oW0UDRcsLdj55n7Mrji7y4OqRcShcoEb5Kl+oMEL6FE4
+	 5vIGF5xp24nNh58V3b3m+I0BF11dEFLBgFa9ojtQ6SjBbVioQne3+XBaVSjhIrEv6q
+	 4tMTrVzHZWRAA4hN6c6ajRb5MojtR8E4fTjozUmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lubomir Rintel <lkundrak@v3.sk>,
-	Christian Heusel <christian@heusel.eu>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.14 001/183] Revert "rndis_host: Flag RNDIS modems as WWAN devices"
-Date: Wed,  7 May 2025 20:37:26 +0200
-Message-ID: <20250507183824.744350503@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Philipp Stanner <phasta@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.14 010/183] drm/nouveau: Fix WARN_ON in nouveau_fence_context_kill()
+Date: Wed,  7 May 2025 20:37:35 +0200
+Message-ID: <20250507183825.112259693@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -45,69 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Heusel <christian@heusel.eu>
+From: Philipp Stanner <phasta@kernel.org>
 
-commit 765f253e28909f161b0211f85cf0431cfee7d6df upstream.
+commit bbe5679f30d7690a9b6838a583b9690ea73fe0e9 upstream.
 
-This reverts commit 67d1a8956d2d62fe6b4c13ebabb57806098511d8. Since this
-commit has been proven to be problematic for the setup of USB-tethered
-ethernet connections and the related breakage is very noticeable for
-users it should be reverted until a fixed version of the change can be
-rolled out.
+Nouveau is mostly designed in a way that it's expected that fences only
+ever get signaled through nouveau_fence_signal(). However, in at least
+one other place, nouveau_fence_done(), can signal fences, too. If that
+happens (race) a signaled fence remains in the pending list for a while,
+until it gets removed by nouveau_fence_update().
 
-Closes: https://lore.kernel.org/all/e0df2d85-1296-4317-b717-bd757e3ab928@heusel.eu/
-Link: https://chaos.social/@gromit/114377862699921553
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220002
-Link: https://bugs.gentoo.org/953555
-Link: https://bbs.archlinux.org/viewtopic.php?id=304892
-Cc: stable@vger.kernel.org
-Acked-by: Lubomir Rintel <lkundrak@v3.sk>
-Signed-off-by: Christian Heusel <christian@heusel.eu>
-Link: https://patch.msgid.link/20250424-usb-tethering-fix-v1-1-b65cf97c740e@heusel.eu
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Should nouveau_fence_context_kill() run in the meantime, this would be
+a bug because the function would attempt to set an error code on an
+already signaled fence.
+
+Have nouveau_fence_context_kill() check for a fence being signaled.
+
+Cc: stable@vger.kernel.org # v5.10+
+Fixes: ea13e5abf807 ("drm/nouveau: signal pending fences when channel has been killed")
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Link: https://lore.kernel.org/r/20250415121900.55719-3-phasta@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/rndis_host.c |   16 ++--------------
- 1 file changed, 2 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_fence.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/usb/rndis_host.c
-+++ b/drivers/net/usb/rndis_host.c
-@@ -630,16 +630,6 @@ static const struct driver_info	zte_rndi
- 	.tx_fixup =	rndis_tx_fixup,
- };
+--- a/drivers/gpu/drm/nouveau/nouveau_fence.c
++++ b/drivers/gpu/drm/nouveau/nouveau_fence.c
+@@ -90,7 +90,7 @@ nouveau_fence_context_kill(struct nouvea
+ 	while (!list_empty(&fctx->pending)) {
+ 		fence = list_entry(fctx->pending.next, typeof(*fence), head);
  
--static const struct driver_info	wwan_rndis_info = {
--	.description =	"Mobile Broadband RNDIS device",
--	.flags =	FLAG_WWAN | FLAG_POINTTOPOINT | FLAG_FRAMING_RN | FLAG_NO_SETINT,
--	.bind =		rndis_bind,
--	.unbind =	rndis_unbind,
--	.status =	rndis_status,
--	.rx_fixup =	rndis_rx_fixup,
--	.tx_fixup =	rndis_tx_fixup,
--};
--
- /*-------------------------------------------------------------------------*/
+-		if (error)
++		if (error && !dma_fence_is_signaled_locked(&fence->base))
+ 			dma_fence_set_error(&fence->base, error);
  
- static const struct usb_device_id	products [] = {
-@@ -676,11 +666,9 @@ static const struct usb_device_id	produc
- 	USB_INTERFACE_INFO(USB_CLASS_WIRELESS_CONTROLLER, 1, 3),
- 	.driver_info = (unsigned long) &rndis_info,
- }, {
--	/* Mobile Broadband Modem, seen in Novatel Verizon USB730L and
--	 * Telit FN990A (RNDIS)
--	 */
-+	/* Novatel Verizon USB730L */
- 	USB_INTERFACE_INFO(USB_CLASS_MISC, 4, 1),
--	.driver_info = (unsigned long)&wwan_rndis_info,
-+	.driver_info = (unsigned long) &rndis_info,
- },
- 	{ },		// END
- };
+ 		if (nouveau_fence_signal(fence))
 
 
