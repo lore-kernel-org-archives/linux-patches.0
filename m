@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5BB214813;
-	Wed,  7 May 2025 19:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E639928B419;
+	Wed,  7 May 2025 19:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746645131; cv=none; b=oa9PVbCviWgM5AKPzGw9PFO8zvBAsxUOj6vEC+HhtWuzoJn4x3vFzRq9ZmqwiUW5dbWHL9viwcZy/kIAM0BG5jYQrLaNNn3UZIK5pmDFINCsFsAAeKBp1ehXu+N82xdmOu3W1bBbUQVaIE0r4rt+PaOivbpTdoDcTWA24zgR15Q=
+	t=1746645135; cv=none; b=YJra6J2nVx/gOSQHmbB2QzKCCFbM8CXet+2nPBDdiCLWb3D9iGsKBCPvyZpUgU9l7Lm8eRw9lueKGwwImn6jvhHX8wdUeffkcqXppdHW9ittj5y1yp1FL0BA9e8H62hI+ema0IL1pkwnewLos7Xn1bHV0lB/sHmZAvvCaWJwO7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746645131; c=relaxed/simple;
-	bh=jVEqo1XzsG6bajWvWIqWyJX94iF94wrDKZ9uKxtHi3s=;
+	s=arc-20240116; t=1746645135; c=relaxed/simple;
+	bh=jchfiaik0GZ6RCUmewhHtkLj0J/4J+CvhdU0lTMJYmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J3PZY3i2m1kTGl2aA6iXBz70iRUMLcqzrDEgzVaTrLD7UU43EfTVzePQQAFSrAf+Y+1FXSgz72OXLn5bvqlkFL27ZL2+pgr+u/APCllYjpTF1nRjw2jXMeA9vSW6B2bcgL/4tN43h7u0JTZ6f2CF0ozAiFfF9IoHJeTya0ZCxjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/Fc8D/i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CcZWvtocyFmzBeW+0iCutSJ4Vy4apZJbY/3hlUgOUXh+VHMfDEdrJ0/CrnfPbrwt8g9HzyTGLPzSuelZ+NyxcvvEEhLJ3nIuwmhdPkIiZr3/USI+N7jw2MNjH3BnhRDiw6ZrZ/pjp043pSbOmZVKa/XA0c056yrmtbM+RZvsCVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sVfmtgnA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/Fc8D/i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26974C4CEE2;
-	Wed,  7 May 2025 19:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVfmtgnA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C0C0C4CEE2;
+	Wed,  7 May 2025 19:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746645131;
-	bh=jVEqo1XzsG6bajWvWIqWyJX94iF94wrDKZ9uKxtHi3s=;
+	s=korg; t=1746645134;
+	bh=jchfiaik0GZ6RCUmewhHtkLj0J/4J+CvhdU0lTMJYmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p/Fc8D/iks4tmiuW0rUlQ++8U/xn3nvx1ihqkNev8FLYVjUZnnHd5lSXc9wlsHg19
-	 xwG02Ko6cvr/rBEaxTI/bj2ap5PsF9tW7YhQjLjJyN5tEah9nO5ark9+E/VJQHKOuk
-	 N8e2PxEQZsFbtSEeF031yUSKl+v9f0OEBFHPVsZ4=
+	b=sVfmtgnAhXUaUuut8yQrlz7kz3QtUXVl3L42B/TrResKj/OlHOb7y5V02+FRWqY8I
+	 CCAt+OqDz5EuBkNB0OavasmD//AKi9IZlKj55HJoe1Dh44MRhcTN3+aBqSnYjwfpuo
+	 j+2J9ylF+yIF6kb89ENG8V40qrw04w9YE4yioMe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerrard Tai <gerrard.tai@starlabs.sg>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 103/129] sch_ets: make est_qlen_notify() idempotent
-Date: Wed,  7 May 2025 20:40:39 +0200
-Message-ID: <20250507183817.671577376@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 104/129] firmware: arm_scmi: Balance device refcount when destroying devices
+Date: Wed,  7 May 2025 20:40:40 +0200
+Message-ID: <20250507183817.711944559@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -52,65 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <xiyou.wangcong@gmail.com>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-commit a7a15f39c682ac4268624da2abdb9114bdde96d5 upstream.
+[ Upstream commit 9ca67840c0ddf3f39407339624cef824a4f27599 ]
 
-est_qlen_notify() deletes its class from its active list with
-list_del() when qlen is 0, therefore, it is not idempotent and
-not friendly to its callers, like fq_codel_dequeue().
+Using device_find_child() to lookup the proper SCMI device to destroy
+causes an unbalance in device refcount, since device_find_child() calls an
+implicit get_device(): this, in turns, inhibits the call of the provided
+release methods upon devices destruction.
 
-Let's make it idempotent to ease qdisc_tree_reduce_backlog() callers'
-life. Also change other list_del()'s to list_del_init() just to be
-extra safe.
+As a consequence, one of the structures that is not freed properly upon
+destruction is the internal struct device_private dev->p populated by the
+drivers subsystem core.
 
-Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
-Link: https://patch.msgid.link/20250403211033.166059-6-xiyou.wangcong@gmail.com
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+KMemleak detects this situation since loading/unloding some SCMI driver
+causes related devices to be created/destroyed without calling any
+device_release method.
+
+unreferenced object 0xffff00000f583800 (size 512):
+  comm "insmod", pid 227, jiffies 4294912190
+  hex dump (first 32 bytes):
+    00 00 00 00 ad 4e ad de ff ff ff ff 00 00 00 00  .....N..........
+    ff ff ff ff ff ff ff ff 60 36 1d 8a 00 80 ff ff  ........`6......
+  backtrace (crc 114e2eed):
+    kmemleak_alloc+0xbc/0xd8
+    __kmalloc_cache_noprof+0x2dc/0x398
+    device_add+0x954/0x12d0
+    device_register+0x28/0x40
+    __scmi_device_create.part.0+0x1bc/0x380
+    scmi_device_create+0x2d0/0x390
+    scmi_create_protocol_devices+0x74/0xf8
+    scmi_device_request_notifier+0x1f8/0x2a8
+    notifier_call_chain+0x110/0x3b0
+    blocking_notifier_call_chain+0x70/0xb0
+    scmi_driver_register+0x350/0x7f0
+    0xffff80000a3b3038
+    do_one_initcall+0x12c/0x730
+    do_init_module+0x1dc/0x640
+    load_module+0x4b20/0x5b70
+    init_module_from_file+0xec/0x158
+
+$ ./scripts/faddr2line ./vmlinux device_add+0x954/0x12d0
+device_add+0x954/0x12d0:
+kmalloc_noprof at include/linux/slab.h:901
+(inlined by) kzalloc_noprof at include/linux/slab.h:1037
+(inlined by) device_private_init at drivers/base/core.c:3510
+(inlined by) device_add at drivers/base/core.c:3561
+
+Balance device refcount by issuing a put_device() on devices found via
+device_find_child().
+
+Reported-by: Alice Ryhl <aliceryhl@google.com>
+Closes: https://lore.kernel.org/linux-arm-kernel/Z8nK3uFkspy61yjP@arm.com/T/#mc1f73a0ea5e41014fa145147b7b839fc988ada8f
+CC: Sudeep Holla <sudeep.holla@arm.com>
+CC: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: d4f9dddd21f3 ("firmware: arm_scmi: Add dynamic scmi devices creation")
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Tested-by: Alice Ryhl <aliceryhl@google.com>
+Message-Id: <20250306185447.2039336-1-cristian.marussi@arm.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_ets.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/firmware/arm_scmi/bus.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/sched/sch_ets.c
-+++ b/net/sched/sch_ets.c
-@@ -298,7 +298,7 @@ static void ets_class_qlen_notify(struct
- 	 * to remove them.
- 	 */
- 	if (!ets_class_is_strict(q, cl) && sch->q.qlen)
--		list_del(&cl->alist);
-+		list_del_init(&cl->alist);
+diff --git a/drivers/firmware/arm_scmi/bus.c b/drivers/firmware/arm_scmi/bus.c
+index dcf774d3edfe4..51eeaf14367da 100644
+--- a/drivers/firmware/arm_scmi/bus.c
++++ b/drivers/firmware/arm_scmi/bus.c
+@@ -240,6 +240,9 @@ static struct scmi_device *scmi_child_dev_find(struct device *parent,
+ 	if (!dev)
+ 		return NULL;
+ 
++	/* Drop the refcnt bumped implicitly by device_find_child */
++	put_device(dev);
++
+ 	return to_scmi_dev(dev);
  }
  
- static int ets_class_dump(struct Qdisc *sch, unsigned long arg,
-@@ -491,7 +491,7 @@ static struct sk_buff *ets_qdisc_dequeue
- 			if (unlikely(!skb))
- 				goto out;
- 			if (cl->qdisc->q.qlen == 0)
--				list_del(&cl->alist);
-+				list_del_init(&cl->alist);
- 			return ets_qdisc_dequeue_skb(sch, skb);
- 		}
- 
-@@ -660,7 +660,7 @@ static int ets_qdisc_change(struct Qdisc
- 	}
- 	for (i = q->nbands; i < oldbands; i++) {
- 		if (i >= q->nstrict && q->classes[i].qdisc->q.qlen)
--			list_del(&q->classes[i].alist);
-+			list_del_init(&q->classes[i].alist);
- 		qdisc_tree_flush_backlog(q->classes[i].qdisc);
- 	}
- 	q->nstrict = nstrict;
-@@ -716,7 +716,7 @@ static void ets_qdisc_reset(struct Qdisc
- 
- 	for (band = q->nstrict; band < q->nbands; band++) {
- 		if (q->classes[band].qdisc->q.qlen)
--			list_del(&q->classes[band].alist);
-+			list_del_init(&q->classes[band].alist);
- 	}
- 	for (band = 0; band < q->nbands; band++)
- 		qdisc_reset(q->classes[band].qdisc);
+-- 
+2.39.5
+
 
 
