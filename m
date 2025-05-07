@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77322144C1;
-	Wed,  7 May 2025 18:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D172153C6;
+	Wed,  7 May 2025 18:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644176; cv=none; b=svkdTUvRvwOPSXY6cpRN/f3KqyNVziTU7qTq0pVcyGytnVBzTR+BiJuI8c+a9P4xHpW/zsoe8NpAf+y8qdM9zkGEQ3TFvszAsT5D2ZOGgHXozNLEl0sEpqIxAPSleoK6d77D38LPrhdQEDIeFZjo5Et4Re08MVWw4zHKelXEiKo=
+	t=1746644179; cv=none; b=RxdCCikegQyAxaD/l1EnCqE5z7cig7zOAHjgP3/6ko5wNamwtMeqCqik992toEvWeIRGFV88Ug8ngo+0rRnep+H5I8CNMBIYwEH+6GuhpXaciTuGWwboP2Vmul4VQXBxdyYKUI6LG2WB19ra9MB2W1kqiRuNbsk8eXRuWT19004=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644176; c=relaxed/simple;
-	bh=jXlDxNSau3lBwRSLqQh4Wk3q50OlGxOjt80qv/bA4XU=;
+	s=arc-20240116; t=1746644179; c=relaxed/simple;
+	bh=vGKOeHfRKsoXvUhVZOPot7URCwfGIU/5TGm1kOyHVw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GCJKWDu4C4xb8iN/bo3xYvGW8SuA1JLOIyDMICokreceSZAquW5+CmvKvphR7ue2tEZoqoLzsRbI2+yjTN3CidD5AxmmtuvRcSmoQqLN3JwYpvB1LqbD3ahFE5KEYlvnktAmOiUqBzHf4Vc7hHjOoXEbj9+q52XBvAmWyBbTAdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjOy9Wwt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PtF9RMNAM2iHmFmn2OdKE9+WaGLD+Asq/3dfHAyvBRItvq9aQd3Q6e0iViVNY5hqqYOzX5sGg0C2Wc3P7nfRHoVrlAz4c/50nApbsyXdhYRK/pZi/+XsOg2+i5l3znWx12Q7kRV4lvAIdXgSqy8LS+vU/yLyzdyIQm3lleF484A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x164vJfx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjOy9Wwt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D04C4CEE2;
-	Wed,  7 May 2025 18:56:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x164vJfx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E35C4CEE2;
+	Wed,  7 May 2025 18:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644176;
-	bh=jXlDxNSau3lBwRSLqQh4Wk3q50OlGxOjt80qv/bA4XU=;
+	s=korg; t=1746644179;
+	bh=vGKOeHfRKsoXvUhVZOPot7URCwfGIU/5TGm1kOyHVw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yjOy9WwtbU41LQUuvZonFLZpRBUH8SxYwGcxuCpxtytXYjpfCVS8L+EYH736hLpKF
-	 XR01wtasM3aLZmQ0vuMeHrU6/QvoaZAmuLxlFpvmXwGDj5KXgFtLDhMv4kZkTVfOEa
-	 QHEnWj1V9unUca1Z6ejLZXdL/DfaaFmSMBjLbfQg=
+	b=x164vJfxp2bIS1M0X0AtHUJrfnY23eR3CU2BDbJId6ViisJZnnQxdkDHzFewdX8BG
+	 GJ2D1bpwxiR7QVefwzvBOMOBC1YlHoQ2mhxWqNiNryoM4XpPS+f6yTH++nrNE1skTN
+	 HUBKZRq+Jrp5BsTOAMNHKyRad8TRUSjAwREGDNjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Lan <lanhao@huawei.com>,
-	Peiyang Wang <wangpeiyang1@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pavan Kumar Linga <pavan.kumar.linga@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Samuel Salin <Samuel.salin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 142/183] net: hns3: fixed debugfs tm_qset size
-Date: Wed,  7 May 2025 20:39:47 +0200
-Message-ID: <20250507183830.622600538@linuxfoundation.org>
+Subject: [PATCH 6.14 114/183] idpf: fix potential memory leak on kcalloc() failure
+Date: Wed,  7 May 2025 20:39:19 +0200
+Message-ID: <20250507183829.443457098@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -53,38 +55,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Lan <lanhao@huawei.com>
+From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 
-[ Upstream commit e317aebeefcb3b0c71f2305af3c22871ca6b3833 ]
+[ Upstream commit 8a558cbda51bef09773c72bf74a32047479110c7 ]
 
-The size of the tm_qset file of debugfs is limited to 64 KB,
-which is too small in the scenario with 1280 qsets.
-The size needs to be expanded to 1 MB.
+In case of failing on rss_data->rss_key allocation the function is
+freeing vport without freeing earlier allocated q_vector_idxs. Fix it.
 
-Fixes: 5e69ea7ee2a6 ("net: hns3: refactor the debugfs process")
-Signed-off-by: Hao Lan <lanhao@huawei.com>
-Signed-off-by: Peiyang Wang <wangpeiyang1@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://patch.msgid.link/20250430093052.2400464-4-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Move from freeing in error branch to goto scheme.
+
+Fixes: d4d558718266 ("idpf: initialize interrupts and enable vport")
+Reviewed-by: Pavan Kumar Linga <pavan.kumar.linga@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Suggested-by: Pavan Kumar Linga <pavan.kumar.linga@intel.com>
+Signed-off-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/idpf/idpf_lib.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
-index 9bbece25552b1..3d70c97a0bedf 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
-@@ -60,7 +60,7 @@ static struct hns3_dbg_cmd_info hns3_dbg_cmd[] = {
- 		.name = "tm_qset",
- 		.cmd = HNAE3_DBG_CMD_TM_QSET,
- 		.dentry = HNS3_DBG_DENTRY_TM,
--		.buf_len = HNS3_DBG_READ_LEN,
-+		.buf_len = HNS3_DBG_READ_LEN_1MB,
- 		.init = hns3_dbg_common_file_init,
- 	},
- 	{
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+index 78951d62f6171..6e8a82dae1628 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+@@ -1112,11 +1112,9 @@ static struct idpf_vport *idpf_vport_alloc(struct idpf_adapter *adapter,
+ 
+ 	num_max_q = max(max_q->max_txq, max_q->max_rxq);
+ 	vport->q_vector_idxs = kcalloc(num_max_q, sizeof(u16), GFP_KERNEL);
+-	if (!vport->q_vector_idxs) {
+-		kfree(vport);
++	if (!vport->q_vector_idxs)
++		goto free_vport;
+ 
+-		return NULL;
+-	}
+ 	idpf_vport_init(vport, max_q);
+ 
+ 	/* This alloc is done separate from the LUT because it's not strictly
+@@ -1126,11 +1124,9 @@ static struct idpf_vport *idpf_vport_alloc(struct idpf_adapter *adapter,
+ 	 */
+ 	rss_data = &adapter->vport_config[idx]->user_config.rss_data;
+ 	rss_data->rss_key = kzalloc(rss_data->rss_key_size, GFP_KERNEL);
+-	if (!rss_data->rss_key) {
+-		kfree(vport);
++	if (!rss_data->rss_key)
++		goto free_vector_idxs;
+ 
+-		return NULL;
+-	}
+ 	/* Initialize default rss key */
+ 	netdev_rss_key_fill((void *)rss_data->rss_key, rss_data->rss_key_size);
+ 
+@@ -1143,6 +1139,13 @@ static struct idpf_vport *idpf_vport_alloc(struct idpf_adapter *adapter,
+ 	adapter->next_vport = idpf_get_free_slot(adapter);
+ 
+ 	return vport;
++
++free_vector_idxs:
++	kfree(vport->q_vector_idxs);
++free_vport:
++	kfree(vport);
++
++	return NULL;
+ }
+ 
+ /**
 -- 
 2.39.5
 
