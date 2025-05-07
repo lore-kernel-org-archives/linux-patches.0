@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E010429A0;
-	Wed,  7 May 2025 19:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99EF29A0;
+	Wed,  7 May 2025 19:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644606; cv=none; b=URPiU7dFVkrXfjk0zIdTV3SNFTXDuyJ8ulrNuAPyW618SDw7a/AOiQjUx+6l0eDTTFqYOJS7YExJgMcQOkcO8GB418ULaS7Ln8A/twJIbG75Tw7PEugGFnZVcZziWhRNE0ZAp9y1lZu1R+gNvkoRr62SzUNex34Z+Oe0Dt974BU=
+	t=1746644608; cv=none; b=nHgx2ARVRWSCCX6z8E79wCrjPshBKvqcJGx3tMT3+vMRdkUaP1DgyaGLpNG7QCxR4zeISDEv32fizRPWT51gw+NoX6pO9WRVI83c/GTgAXTmaVDgNasW0qvWqTMHfJZU/SFY7J5fiSaNrLKR/uM8NtsN4BpbYbhu1W4egMpbxm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644606; c=relaxed/simple;
-	bh=XAhJjakkOazYlNPtPLslTW1n6NAXueyAD/s/05eRkEI=;
+	s=arc-20240116; t=1746644608; c=relaxed/simple;
+	bh=XMjGgpPlllw7xkie+P1K6DsfOptBMYHVpwc4IrV520k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OOwfSbaXzAi+dfFzxZ+KOUGXut5/isiPWmn473ANQBDKBLvUrThFBlFEm/oP9cS24ARPGKVZ5976n2qSBEM5HAnL5seuFlyS/jzi4Fr0J47Em9HkjQ6aFpKkc9M5DbAMeXrQW7969UE8+ie+lgkWSYUPPzJ6/J2YGkc6SNikecI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBIHH13M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WMdSfxGsbiPQCbU89MMKHpwh1or61GKYA6QSaQPSFBx9NBE7N71OAqeZuFhJu7HtFEVTLqlYBLJGXfkIeSl9R0Vwb/C0gKJBM/eJAAe4GoofdcBLmmqhcUL+Y5YYMJdPIaraJOkA5pvkASRULVq5Ae2l9FmWRaiVIr2ME3LxXD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FzBgpPOA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBIHH13M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F55C4CEE2;
-	Wed,  7 May 2025 19:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FzBgpPOA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17DC6C4CEE9;
+	Wed,  7 May 2025 19:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644605;
-	bh=XAhJjakkOazYlNPtPLslTW1n6NAXueyAD/s/05eRkEI=;
+	s=korg; t=1746644608;
+	bh=XMjGgpPlllw7xkie+P1K6DsfOptBMYHVpwc4IrV520k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NBIHH13MnyLHmSgdNkC8aKGRpSEwmCaLoLlAKFj34fmN1kVUDP7odFLZvcL4lxeLF
-	 mo5rZ5F6T0gVwCYAtI5khQeF09eRpRIlVzVc76zbFFh9vtbdsFGD6sXg3QSNqHb3cZ
-	 Aqj4T3Q/j9mfDMx3EkVIYuKrNVa/+xDr3q0GpwCs=
+	b=FzBgpPOAhCAojde4QKh6rHunTqUlYLHzUUHX5GB1Ii2dRXAiN1Wi39iDQexSMpXxU
+	 pZSQHNTQfdMx1QqK6VGY6yGCOii4A2BBqWTAfb3lY/0B78rQY378h4OEkzlUA54T0N
+	 X6FXk7hwJ2fbHz3CgeEIO6zSIeC7HzZOURyke/oM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Argusee <vr@darknavy.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Dhankaran Singh Ajravat <dhankaran@meta.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 098/164] ALSA: ump: Fix buffer overflow at UMP SysEx message conversion
-Date: Wed,  7 May 2025 20:39:43 +0200
-Message-ID: <20250507183824.943555302@linuxfoundation.org>
+Subject: [PATCH 6.12 099/164] nvme-pci: fix queue unquiesce check on slot_reset
+Date: Wed,  7 May 2025 20:39:44 +0200
+Message-ID: <20250507183824.982360773@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -51,43 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 56f1f30e6795b890463d9b20b11e576adf5a2f77 ]
+[ Upstream commit a75401227eeb827b1a162df1aa9d5b33da921c43 ]
 
-The conversion function from MIDI 1.0 to UMP packet contains an
-internal buffer to keep the incoming MIDI bytes, and its size is 4, as
-it was supposed to be the max size for a MIDI1 UMP packet data.
-However, the implementation overlooked that SysEx is handled in a
-different format, and it can be up to 6 bytes, as found in
-do_convert_to_ump().  It leads eventually to a buffer overflow, and
-may corrupt the memory when a longer SysEx message is received.
+A zero return means the reset was successfully scheduled. We don't want
+to unquiesce the queues while the reset_work is pending, as that will
+just flush out requeued requests to a failed completion.
 
-The fix is simply to extend the buffer size to 6 to fit with the SysEx
-UMP message.
-
-Fixes: 0b5288f5fe63 ("ALSA: ump: Add legacy raw MIDI support")
-Reported-by: Argusee <vr@darknavy.com>
-Link: https://patch.msgid.link/20250429124845.25128-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 71a5bb153be104 ("nvme: ensure disabling pairs with unquiesce")
+Reported-by: Dhankaran Singh Ajravat <dhankaran@meta.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/ump_convert.h | 2 +-
+ drivers/nvme/host/pci.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/sound/ump_convert.h b/include/sound/ump_convert.h
-index d099ae27f8491..682499b871eac 100644
---- a/include/sound/ump_convert.h
-+++ b/include/sound/ump_convert.h
-@@ -19,7 +19,7 @@ struct ump_cvt_to_ump_bank {
- /* context for converting from MIDI1 byte stream to UMP packet */
- struct ump_cvt_to_ump {
- 	/* MIDI1 intermediate buffer */
--	unsigned char buf[4];
-+	unsigned char buf[6]; /* up to 6 bytes for SysEx */
- 	int len;
- 	int cmd_bytes;
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index e70618e8d35eb..83ee433b69415 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3535,7 +3535,7 @@ static pci_ers_result_t nvme_slot_reset(struct pci_dev *pdev)
  
+ 	dev_info(dev->ctrl.device, "restart after slot reset\n");
+ 	pci_restore_state(pdev);
+-	if (!nvme_try_sched_reset(&dev->ctrl))
++	if (nvme_try_sched_reset(&dev->ctrl))
+ 		nvme_unquiesce_io_queues(&dev->ctrl);
+ 	return PCI_ERS_RESULT_RECOVERED;
+ }
 -- 
 2.39.5
 
