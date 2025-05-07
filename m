@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0640214813;
-	Wed,  7 May 2025 18:56:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A229D214813;
+	Wed,  7 May 2025 18:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644166; cv=none; b=YOcYsp2ADv595LHKYF36imQrG3BYk1SkSmUvVjkeUfO9w07ZH3T+P8yIFWBIxg2IkiWCFOVT0JjkvoPebZC4XKHFYLAEXVf8KPwu9WlVhxoY5QU6IxIqImXoyoYLZIMl1isOfezy/D05/6D8vPMYy9b1sXdgv4lRxe8QL0P3l2s=
+	t=1746644170; cv=none; b=l++xMi1Nx7qvNSs8+wk1krO8wIB5W/hRZni/r7BMo6z6tsVOVnJPlZCsy+gzeeck75xpJPr3tY14aV29YZaoGJW2AytlJj+Yv0lB4FOI4WeCctLu3XbzDvBTIM5kHJVGqvGPiD+CcfyJIUa7PY6mZoPcueKNkgLGERY6JhU1u8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644166; c=relaxed/simple;
-	bh=bbHFcL1BLWRoDcJ9a/IGyPBlePqtecCk8jgpbAKaXSE=;
+	s=arc-20240116; t=1746644170; c=relaxed/simple;
+	bh=K8uJBeRSXMp0aBHW8eCheMnQzvJYdgC+k9lntSfsaCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oWmYe0H3M+Klyoi8sBLePTcfHJzEDrwjXSh6mI2LyvXgv+XtdysgC3HyHUiLUpTjxH0KmpKJKGVL8wlqPDTh6S/ZaFlyTQyBc5eKEAiL06LGaYyidjlxnLTUS8u6mdyRygyaye9K31XuWfARfK6U3vq2MDGlH42SpcOSPdpfdkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Afa0oMiG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O48+nVxyENtTC55Latvt+YrtgERkk6H1VE/LUx0xJdNb/umwSq4Ut/EAH2HBA6Vrge4immkJdcCsApbaIf4Fx4X7EHwTunTZRgGZfF4O8HfpECT0JB5Z4Hiw2iiCK4snYCeU7Utq+xG2lJg+aR0V3arIKwK5n/o9msZhWSUucgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nDgLEERT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Afa0oMiG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6CE3C4CEE2;
-	Wed,  7 May 2025 18:56:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nDgLEERT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94397C4CEE2;
+	Wed,  7 May 2025 18:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644165;
-	bh=bbHFcL1BLWRoDcJ9a/IGyPBlePqtecCk8jgpbAKaXSE=;
+	s=korg; t=1746644170;
+	bh=K8uJBeRSXMp0aBHW8eCheMnQzvJYdgC+k9lntSfsaCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Afa0oMiGKYKa8d5F8Ex9+OlzXhR7usu8bg5AzTTPBU82ufNJe0gsjnSAaF+3hp0sI
-	 KdJ30mJiGLyeGGq1UjOpQ0bkRhMF+HeUONGQYLJd0Ra6OFxWINO/0JwKggxZDVEoR1
-	 MMDWEoczoZAVocDnQ2mEKEkMy7USiQIUf57F4oRk=
+	b=nDgLEERTmjE3NjqOGiccavf9QXmfBEH3CNehbwLpnLk7i+LHotVsF+GVZMuL9Wpc9
+	 1Cyj/npTrEOW0ysAyeCeAN0mqEqGX+uIBwVNJE6dQqnhEmMtgoLKCy6GmY1OgE3v0f
+	 xiUF9YpYkR5Zu52c7RKuQMODgrYETfs6rD4Gv0bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Da Xue <da@libre.computer>,
+	Jian Shen <shenjian15@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 113/183] net: mdio: mux-meson-gxl: set reversed bit when using internal phy
-Date: Wed,  7 May 2025 20:39:18 +0200
-Message-ID: <20250507183829.403467104@linuxfoundation.org>
+Subject: [PATCH 6.14 140/183] net: hns3: store rx VLAN tag offload state for VF
+Date: Wed,  7 May 2025 20:39:45 +0200
+Message-ID: <20250507183830.536929726@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183824.682671926@linuxfoundation.org>
 References: <20250507183824.682671926@linuxfoundation.org>
@@ -51,49 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Da Xue <da@libre.computer>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit b23285e93bef729e67519a5209d5b7fde3b4af50 ]
+[ Upstream commit ef2383d078edcbe3055032436b16cdf206f26de2 ]
 
-This bit is necessary to receive packets from the internal PHY.
-Without this bit set, no activity occurs on the interface.
+The VF driver missed to store the rx VLAN tag strip state when
+user change the rx VLAN tag offload state. And it will default
+to enable the rx vlan tag strip when re-init VF device after
+reset. So if user disable rx VLAN tag offload, and trig reset,
+then the HW will still strip the VLAN tag from packet nad fill
+into RX BD, but the VF driver will ignore it for rx VLAN tag
+offload disabled. It may cause the rx VLAN tag dropped.
 
-Normally u-boot sets this bit, but if u-boot is compiled without
-net support, the interface will be up but without any activity.
-If bit is set once, it will work until the IP is powered down or reset.
-
-The vendor SDK sets this bit along with the PHY_ID bits.
-
-Signed-off-by: Da Xue <da@libre.computer>
-Fixes: 9a24e1ff4326 ("net: mdio: add amlogic gxl mdio mux support")
-Link: https://patch.msgid.link/20250425192009.1439508-1-da@libre.computer
+Fixes: b2641e2ad456 ("net: hns3: Add support of hardware rx-vlan-offload to HNS3 VF driver")
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250430093052.2400464-2-shaojijie@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mdio/mdio-mux-meson-gxl.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../hisilicon/hns3/hns3vf/hclgevf_main.c      | 25 ++++++++++++++-----
+ .../hisilicon/hns3/hns3vf/hclgevf_main.h      |  1 +
+ 2 files changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/mdio/mdio-mux-meson-gxl.c b/drivers/net/mdio/mdio-mux-meson-gxl.c
-index 00c66240136b1..3dd12a8c8b03e 100644
---- a/drivers/net/mdio/mdio-mux-meson-gxl.c
-+++ b/drivers/net/mdio/mdio-mux-meson-gxl.c
-@@ -17,6 +17,7 @@
- #define  REG2_LEDACT		GENMASK(23, 22)
- #define  REG2_LEDLINK		GENMASK(25, 24)
- #define  REG2_DIV4SEL		BIT(27)
-+#define  REG2_REVERSED		BIT(28)
- #define  REG2_ADCBYPASS		BIT(30)
- #define  REG2_CLKINSEL		BIT(31)
- #define ETH_REG3		0x4
-@@ -65,7 +66,7 @@ static void gxl_enable_internal_mdio(struct gxl_mdio_mux *priv)
- 	 * The only constraint is that it must match the one in
- 	 * drivers/net/phy/meson-gxl.c to properly match the PHY.
- 	 */
--	writel(FIELD_PREP(REG2_PHYID, EPHY_GXL_ID),
-+	writel(REG2_REVERSED | FIELD_PREP(REG2_PHYID, EPHY_GXL_ID),
- 	       priv->regs + ETH_REG2);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+index 9ba767740a043..dada42e7e0ec9 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+@@ -1292,9 +1292,8 @@ static void hclgevf_sync_vlan_filter(struct hclgevf_dev *hdev)
+ 	rtnl_unlock();
+ }
  
- 	/* Enable the internal phy */
+-static int hclgevf_en_hw_strip_rxvtag(struct hnae3_handle *handle, bool enable)
++static int hclgevf_en_hw_strip_rxvtag_cmd(struct hclgevf_dev *hdev, bool enable)
+ {
+-	struct hclgevf_dev *hdev = hclgevf_ae_get_hdev(handle);
+ 	struct hclge_vf_to_pf_msg send_msg;
+ 
+ 	hclgevf_build_send_msg(&send_msg, HCLGE_MBX_SET_VLAN,
+@@ -1303,6 +1302,19 @@ static int hclgevf_en_hw_strip_rxvtag(struct hnae3_handle *handle, bool enable)
+ 	return hclgevf_send_mbx_msg(hdev, &send_msg, false, NULL, 0);
+ }
+ 
++static int hclgevf_en_hw_strip_rxvtag(struct hnae3_handle *handle, bool enable)
++{
++	struct hclgevf_dev *hdev = hclgevf_ae_get_hdev(handle);
++	int ret;
++
++	ret = hclgevf_en_hw_strip_rxvtag_cmd(hdev, enable);
++	if (ret)
++		return ret;
++
++	hdev->rxvtag_strip_en = enable;
++	return 0;
++}
++
+ static int hclgevf_reset_tqp(struct hnae3_handle *handle)
+ {
+ #define HCLGEVF_RESET_ALL_QUEUE_DONE	1U
+@@ -2204,12 +2216,13 @@ static int hclgevf_rss_init_hw(struct hclgevf_dev *hdev)
+ 					  tc_valid, tc_size);
+ }
+ 
+-static int hclgevf_init_vlan_config(struct hclgevf_dev *hdev)
++static int hclgevf_init_vlan_config(struct hclgevf_dev *hdev,
++				    bool rxvtag_strip_en)
+ {
+ 	struct hnae3_handle *nic = &hdev->nic;
+ 	int ret;
+ 
+-	ret = hclgevf_en_hw_strip_rxvtag(nic, true);
++	ret = hclgevf_en_hw_strip_rxvtag(nic, rxvtag_strip_en);
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed to enable rx vlan offload, ret = %d\n", ret);
+@@ -2879,7 +2892,7 @@ static int hclgevf_reset_hdev(struct hclgevf_dev *hdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = hclgevf_init_vlan_config(hdev);
++	ret = hclgevf_init_vlan_config(hdev, hdev->rxvtag_strip_en);
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed(%d) to initialize VLAN config\n", ret);
+@@ -2994,7 +3007,7 @@ static int hclgevf_init_hdev(struct hclgevf_dev *hdev)
+ 		goto err_config;
+ 	}
+ 
+-	ret = hclgevf_init_vlan_config(hdev);
++	ret = hclgevf_init_vlan_config(hdev, true);
+ 	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed(%d) to initialize VLAN config\n", ret);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
+index cccef32284616..0208425ab594f 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
+@@ -253,6 +253,7 @@ struct hclgevf_dev {
+ 	int *vector_irq;
+ 
+ 	bool gro_en;
++	bool rxvtag_strip_en;
+ 
+ 	unsigned long vlan_del_fail_bmap[BITS_TO_LONGS(VLAN_N_VID)];
+ 
 -- 
 2.39.5
 
