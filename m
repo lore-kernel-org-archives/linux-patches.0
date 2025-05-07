@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123D32144C1;
-	Wed,  7 May 2025 19:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949F221504D;
+	Wed,  7 May 2025 19:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746645091; cv=none; b=M3MOqj1r1ZhD2zwNG1jGezWQaihBzy9NY/tLbLD72/URnhw68AvMTAtLrXzWb12oqs2Wvw+7DmUwR5Z6yRtTrdUfT6EltX3xNENlmE+R7HYjcDrGdupr+/3gFkee8DBVODwPYAW0Gz7pgWn1ntT1ibTEAGiYcj8LFaW2eX1H8KQ=
+	t=1746645094; cv=none; b=d0xopY9p4uFm0HkZRgYcdUFK3LWKoTyB42puSSSYmU5F4zsL9u2RhTHnQ4k5QoWfQFepR+lL+Oe+2z8Q9Nu9Tt/TyA+/UhofjjnHlRY4KRmWo9jW0W+YqAmyhfvmwjfD9U/p1fjMwvpml1XPdtKVMerlJdC8eW1r6th6MxzGa/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746645091; c=relaxed/simple;
-	bh=dO0RxWdjCpuh3ntIuAJLRHgPGfaJzkUYOyTUmeeFUVA=;
+	s=arc-20240116; t=1746645094; c=relaxed/simple;
+	bh=Qk5tQnWfj0C5QdgcWKjRJ62BSGcGLMmNrjPnxtS2U7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ud85JSFpDE0Rd5dWNt5YjKpl02c1ekYsTMcBn4b9foHF3jE5nqUsGozFqAKlD+y2qgRgXa70A3Wjr5YnvwbV+migRtG4KqHFaMN75MIAFUK7Eoqd2jJa8vEg526lakr8aAfgAQcVgQMYC0IMpy8PEO+uFzHwM+oZpx2LLZA2k/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1f/2e4h3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ic8ICL/4r9HMWJPkfBTilvvIyR4AByCTkkkrwy28h1GHzNgJPcWPvA1JfEO8axim8u9xti5ZqIYcXibwPc4eWhgKSuvaKEvIB34jeTRNMbJQW8wCmmevFG/cnEwZIL0vttLvtlcJlIw+LbxCeMkq7s7QgOfYGznC3Laas9ZvkQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQmakYj3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1f/2e4h3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD48C4CEE2;
-	Wed,  7 May 2025 19:11:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQmakYj3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2529C4CEE2;
+	Wed,  7 May 2025 19:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746645091;
-	bh=dO0RxWdjCpuh3ntIuAJLRHgPGfaJzkUYOyTUmeeFUVA=;
+	s=korg; t=1746645094;
+	bh=Qk5tQnWfj0C5QdgcWKjRJ62BSGcGLMmNrjPnxtS2U7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1f/2e4h3E+mkYDD+1BrBvmKzTzZ32orlTTznvyYPybw8/g7jcqscfWh4e4x9S1bMO
-	 uLYTcEC0fsJTXD6XenZa+ZCtq+yfRK0xpkdGTwP8HQFiMAEWpLWsuoISJ6o+I4nv2N
-	 PBGFSQwbKYLRMoZugl/NeTzrpLZt4LH1/GFTI0wY=
+	b=BQmakYj3LF01I2kTQqeBDYh0FDvUw0PgI70iMaRv4gadcoHOwbOcSE6ArDQl212oW
+	 bdQkq0cOHTCeCuafa91ArWRbfOzodGCFCc8q7qtoeamJPOHrTZWcm25WKSbu3MBxim
+	 t8yDslfaCkwtdM6LGm8mOxh/67fm5VVl3MTobwHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shruti Parab <shruti.parab@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 083/129] bnxt_en: Fix ethtool -d byte order for 32-bit values
-Date: Wed,  7 May 2025 20:40:19 +0200
-Message-ID: <20250507183816.871675052@linuxfoundation.org>
+Subject: [PATCH 6.6 092/129] net: vertexcom: mse102x: Fix possible stuck of SPI interrupt
+Date: Wed,  7 May 2025 20:40:28 +0200
+Message-ID: <20250507183817.227157133@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -54,83 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit 02e8be5a032cae0f4ca33c6053c44d83cf4acc93 ]
+[ Upstream commit 55f362885951b2d00fd7fbb02ef0227deea572c2 ]
 
-For version 1 register dump that includes the PCIe stats, the existing
-code incorrectly assumes that all PCIe stats are 64-bit values.  Fix it
-by using an array containing the starting and ending index of the 32-bit
-values.  The loop in bnxt_get_regs() will use the array to do proper
-endian swap for the 32-bit values.
+The MSE102x doesn't provide any SPI commands for interrupt handling.
+So in case the interrupt fired before the driver requests the IRQ,
+the interrupt will never fire again. In order to fix this always poll
+for pending packets after opening the interface.
 
-Fixes: b5d600b027eb ("bnxt_en: Add support for 'ethtool -d'")
-Reviewed-by: Shruti Parab <shruti.parab@broadcom.com>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 2f207cbf0dd4 ("net: vertexcom: Add MSE102x SPI support")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250430133043.7722-2-wahrenst@gmx.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 38 ++++++++++++++++---
- 1 file changed, 32 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/vertexcom/mse102x.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-index 2e7ddbca9d53b..dcedafa4d2e14 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-@@ -1393,6 +1393,17 @@ static int bnxt_get_regs_len(struct net_device *dev)
- 	return reg_len;
- }
- 
-+#define BNXT_PCIE_32B_ENTRY(start, end)			\
-+	 { offsetof(struct pcie_ctx_hw_stats, start),	\
-+	   offsetof(struct pcie_ctx_hw_stats, end) }
-+
-+static const struct {
-+	u16 start;
-+	u16 end;
-+} bnxt_pcie_32b_entries[] = {
-+	BNXT_PCIE_32B_ENTRY(pcie_ltssm_histogram[0], pcie_ltssm_histogram[3]),
-+};
-+
- static void bnxt_get_regs(struct net_device *dev, struct ethtool_regs *regs,
- 			  void *_p)
+diff --git a/drivers/net/ethernet/vertexcom/mse102x.c b/drivers/net/ethernet/vertexcom/mse102x.c
+index 8f67c39f479ee..45f4d2cb5b31a 100644
+--- a/drivers/net/ethernet/vertexcom/mse102x.c
++++ b/drivers/net/ethernet/vertexcom/mse102x.c
+@@ -509,6 +509,7 @@ static irqreturn_t mse102x_irq(int irq, void *_mse)
+ static int mse102x_net_open(struct net_device *ndev)
  {
-@@ -1424,12 +1435,27 @@ static void bnxt_get_regs(struct net_device *dev, struct ethtool_regs *regs,
- 	req->pcie_stat_host_addr = cpu_to_le64(hw_pcie_stats_addr);
- 	rc = hwrm_req_send(bp, req);
- 	if (!rc) {
--		__le64 *src = (__le64 *)hw_pcie_stats;
--		u64 *dst = (u64 *)(_p + BNXT_PXP_REG_LEN);
--		int i;
--
--		for (i = 0; i < sizeof(*hw_pcie_stats) / sizeof(__le64); i++)
--			dst[i] = le64_to_cpu(src[i]);
-+		u8 *dst = (u8 *)(_p + BNXT_PXP_REG_LEN);
-+		u8 *src = (u8 *)hw_pcie_stats;
-+		int i, j;
+ 	struct mse102x_net *mse = netdev_priv(ndev);
++	struct mse102x_net_spi *mses = to_mse102x_spi(mse);
+ 	int ret;
+ 
+ 	ret = request_threaded_irq(ndev->irq, NULL, mse102x_irq, IRQF_ONESHOT,
+@@ -524,6 +525,13 @@ static int mse102x_net_open(struct net_device *ndev)
+ 
+ 	netif_carrier_on(ndev);
+ 
++	/* The SPI interrupt can stuck in case of pending packet(s).
++	 * So poll for possible packet(s) to re-arm the interrupt.
++	 */
++	mutex_lock(&mses->lock);
++	mse102x_rx_pkt_spi(mse);
++	mutex_unlock(&mses->lock);
 +
-+		for (i = 0, j = 0; i < sizeof(*hw_pcie_stats); ) {
-+			if (i >= bnxt_pcie_32b_entries[j].start &&
-+			    i <= bnxt_pcie_32b_entries[j].end) {
-+				u32 *dst32 = (u32 *)(dst + i);
-+
-+				*dst32 = le32_to_cpu(*(__le32 *)(src + i));
-+				i += 4;
-+				if (i > bnxt_pcie_32b_entries[j].end &&
-+				    j < ARRAY_SIZE(bnxt_pcie_32b_entries) - 1)
-+					j++;
-+			} else {
-+				u64 *dst64 = (u64 *)(dst + i);
-+
-+				*dst64 = le64_to_cpu(*(__le64 *)(src + i));
-+				i += 8;
-+			}
-+		}
- 	}
- 	hwrm_req_drop(bp, req);
- }
+ 	netif_dbg(mse, ifup, ndev, "network device up\n");
+ 
+ 	return 0;
 -- 
 2.39.5
 
