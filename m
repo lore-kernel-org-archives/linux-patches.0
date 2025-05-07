@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BBA29A0;
-	Wed,  7 May 2025 19:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCADC29A0;
+	Wed,  7 May 2025 19:03:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644596; cv=none; b=PME0gqYNDVqmh/kyOw1BDH0KP5OL8AGq+nJ5pU2TiHvNHVne9WCxsxtjiyRa2ybq+NFC+23u6ZhmxMVbnNaa2ySuZ1czEeAq3ZcGr4e6Fng/8QcDoKpLPMRZP0EvMlrTWqQCtK3fqE7iSqThm0AilvFNwUbbPcFKztkfT9/5lOc=
+	t=1746644599; cv=none; b=N0IN0C5CQ2uxubEO2t+KgnQuwEj8Q2yIiLAdcL59ielNq+Fog/0+jjNANJnzVC3MdxvrVCOndAKTPrtleBa/YJdHhZ17Y7KuVVJpne6wYc5b23J1RSYPjFmp57wCEu7Tyl8YF48hEWmAd+6mORNbyq7zomjxLBQXuSi9R8Sf9zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644596; c=relaxed/simple;
-	bh=5IQzfxbMrfI1Y/X08Oup7LkmK0eboDxM/rbZGDzlJtU=;
+	s=arc-20240116; t=1746644599; c=relaxed/simple;
+	bh=g/IfcBELyvLSgAYNm56umpOrumAJezdf88x59O5YgMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A1n9cbp6R85vh0oZbQ4k1UI63vHL0TrhP54R8Khc1iv6l7edjAKOSw9YwwaJo53sHScvLrjbFxTDUBPkfZ3fQe+MX8bRLFar7jKJGDbTvy5NPeV+Ykeyp9z8VX+t5JUIbvVnnFTU4Ruosa5yLtPuUcrz+eWkGhQLd69iHzEJels=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEm01S4/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mNWCBHxnCBexpn/BTdnF4NBiBDhsU5lWp8q65iAEtnDFb3lBAaBaFzj6x55AZEFBk1pkZJlbiO6AUyKf7Bo3tt0KCUOWOCaFVUsJEy+NVsJN3xDoK3gKRA4ikjh1upxq3RHiICWGcBRnwsYjVM23CKSXnlROQs4hQ4j9yYhHOmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TveQS/WA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEm01S4/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0467DC4CEE2;
-	Wed,  7 May 2025 19:03:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TveQS/WA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E2CC4CEE2;
+	Wed,  7 May 2025 19:03:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644596;
-	bh=5IQzfxbMrfI1Y/X08Oup7LkmK0eboDxM/rbZGDzlJtU=;
+	s=korg; t=1746644599;
+	bh=g/IfcBELyvLSgAYNm56umpOrumAJezdf88x59O5YgMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GEm01S4/NTuyJXQLdqJlTUJdbw5SEN4bCtNP/fYC54tEe79p3wX+aTQhs564LAn6H
-	 HeL9Cz8iQ981MJtbVApam6sE3NcG5v2O4fLbB9cDa1mDhcobBJs3mXXCv6FASal0S6
-	 dcL/mFqMbViZYpCKv+MwZ1qrPdoSBp3r4HYAOB5Q=
+	b=TveQS/WAArhy9LmkGvqVsHklS/8fzV0n2aMsNEvqO4P3GyYSZv5W4CYhJ6eEyhafy
+	 iYDUOEYN331kPnlnuOVL9F47KQwAEN+0pS2r1Z9uru3g4/sI8DUU+qRSlf1Q9NZWZ2
+	 izzgCdT6AyA6+JUfddbrF7/c3QocACYUpRustcJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Donet Tom <donettom@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 055/164] book3s64/radix : Align section vmemmap start address to PAGE_SIZE
-Date: Wed,  7 May 2025 20:39:00 +0200
-Message-ID: <20250507183823.163785255@linuxfoundation.org>
+Subject: [PATCH 6.12 088/164] pds_core: make pdsc_auxbus_dev_del() void
+Date: Wed,  7 May 2025 20:39:33 +0200
+Message-ID: <20250507183824.526183746@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -52,158 +55,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donet Tom <donettom@linux.ibm.com>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 9cf7e13fecbab0894f6986fc6986ab2eba8de52e ]
+[ Upstream commit e8562da829432d04a0de1830146984c89844f35e ]
 
-A vmemmap altmap is a device-provided region used to provide
-backing storage for struct pages. For each namespace, the altmap
-should belong to that same namespace. If the namespaces are
-created unaligned, there is a chance that the section vmemmap
-start address could also be unaligned. If the section vmemmap
-start address is unaligned, the altmap page allocated from the
-current namespace might be used by the previous namespace also.
-During the free operation, since the altmap is shared between two
-namespaces, the previous namespace may detect that the page does
-not belong to its altmap and incorrectly assume that the page is a
-normal page. It then attempts to free the normal page, which leads
-to a kernel crash.
+Since there really is no useful return, advertising a return value
+is rather misleading.  Make pdsc_auxbus_dev_del() a void function.
 
-Kernel attempted to read user page (18) - exploit attempt? (uid: 0)
-BUG: Kernel NULL pointer dereference on read at 0x00000018
-Faulting instruction address: 0xc000000000530c7c
-Oops: Kernel access of bad area, sig: 11 [#1]
-LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA pSeries
-CPU: 32 PID: 2104 Comm: ndctl Kdump: loaded Tainted: G        W
-NIP:  c000000000530c7c LR: c000000000530e00 CTR: 0000000000007ffe
-REGS: c000000015e57040 TRAP: 0300   Tainted: G        W
-MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 84482404
-CFAR: c000000000530dfc DAR: 0000000000000018 DSISR: 40000000 IRQMASK: 0
-GPR00: c000000000530e00 c000000015e572e0 c000000002c5cb00 c00c000101008040
-GPR04: 0000000000000000 0000000000000007 0000000000000001 000000000000001f
-GPR08: 0000000000000005 0000000000000000 0000000000000018 0000000000002000
-GPR12: c0000000001d2fb0 c0000060de6b0080 0000000000000000 c0000060dbf90020
-GPR16: c00c000101008000 0000000000000001 0000000000000000 c000000125b20f00
-GPR20: 0000000000000001 0000000000000000 ffffffffffffffff c00c000101007fff
-GPR24: 0000000000000001 0000000000000000 0000000000000000 0000000000000000
-GPR28: 0000000004040201 0000000000000001 0000000000000000 c00c000101008040
-NIP [c000000000530c7c] get_pfnblock_flags_mask+0x7c/0xd0
-LR [c000000000530e00] free_unref_page_prepare+0x130/0x4f0
-Call Trace:
-free_unref_page+0x50/0x1e0
-free_reserved_page+0x40/0x68
-free_vmemmap_pages+0x98/0xe0
-remove_pte_table+0x164/0x1e8
-remove_pmd_table+0x204/0x2c8
-remove_pud_table+0x1c4/0x288
-remove_pagetable+0x1c8/0x310
-vmemmap_free+0x24/0x50
-section_deactivate+0x28c/0x2a0
-__remove_pages+0x84/0x110
-arch_remove_memory+0x38/0x60
-memunmap_pages+0x18c/0x3d0
-devm_action_release+0x30/0x50
-release_nodes+0x68/0x140
-devres_release_group+0x100/0x190
-dax_pmem_compat_release+0x44/0x80 [dax_pmem_compat]
-device_for_each_child+0x8c/0x100
-[dax_pmem_compat_remove+0x2c/0x50 [dax_pmem_compat]
-nvdimm_bus_remove+0x78/0x140 [libnvdimm]
-device_remove+0x70/0xd0
-
-Another issue is that if there is no altmap, a PMD-sized vmemmap
-page will be allocated from RAM, regardless of the alignment of
-the section start address. If the section start address is not
-aligned to the PMD size, a VM_BUG_ON will be triggered when
-setting the PMD-sized page to page table.
-
-In this patch, we are aligning the section vmemmap start address
-to PAGE_SIZE. After alignment, the start address will not be
-part of the current namespace, and a normal page will be allocated
-for the vmemmap mapping of the current section. For the remaining
-sections, altmaps will be allocated. During the free operation,
-the normal page will be correctly freed.
-
-In the same way, a PMD_SIZE vmemmap page will be allocated only if
-the section start address is PMD_SIZE-aligned; otherwise, it will
-fall back to a PAGE-sized vmemmap allocation.
-
-Without this patch
-==================
-NS1 start               NS2 start
- _________________________________________________________
-|         NS1               |            NS2              |
- ---------------------------------------------------------
-| Altmap| Altmap | .....|Altmap| Altmap | ...........
-|  NS1  |  NS1   |      | NS2  |  NS2   |
-
-In the above scenario, NS1 and NS2 are two namespaces. The vmemmap
-for NS1 comes from Altmap NS1, which belongs to NS1, and the
-vmemmap for NS2 comes from Altmap NS2, which belongs to NS2.
-
-The vmemmap start for NS2 is not aligned, so Altmap NS2 is shared
-by both NS1 and NS2. During the free operation in NS1, Altmap NS2
-is not part of NS1's altmap, causing it to attempt to free an
-invalid page.
-
-With this patch
-===============
-NS1 start               NS2 start
- _________________________________________________________
-|         NS1               |            NS2              |
- ---------------------------------------------------------
-| Altmap| Altmap | .....| Normal | Altmap | Altmap |.......
-|  NS1  |  NS1   |      |  Page  |  NS2   |  NS2   |
-
-If the vmemmap start for NS2 is not aligned then we are allocating
-a normal page. NS1 and NS2 vmemmap will be freed correctly.
-
-Fixes: 368a0590d954 ("powerpc/book3s64/vmemmap: switch radix to use a different vmemmap handling function")
-Co-developed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Donet Tom <donettom@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/8f98ec2b442977c618f7256cec88eb17dde3f2b9.1741609795.git.donettom@linux.ibm.com
+Link: https://patch.msgid.link/r/20250320194412.67983-2-shannon.nelson@amd.com
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: dfd76010f8e8 ("pds_core: remove write-after-free of client_id")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/book3s64/radix_pgtable.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/amd/pds_core/auxbus.c  | 7 +------
+ drivers/net/ethernet/amd/pds_core/core.h    | 2 +-
+ drivers/net/ethernet/amd/pds_core/devlink.c | 6 ++++--
+ 3 files changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/arch/powerpc/mm/book3s64/radix_pgtable.c b/arch/powerpc/mm/book3s64/radix_pgtable.c
-index b0d927009af83..04189689c127e 100644
---- a/arch/powerpc/mm/book3s64/radix_pgtable.c
-+++ b/arch/powerpc/mm/book3s64/radix_pgtable.c
-@@ -1132,6 +1132,19 @@ int __meminit radix__vmemmap_populate(unsigned long start, unsigned long end, in
- 	pmd_t *pmd;
- 	pte_t *pte;
+diff --git a/drivers/net/ethernet/amd/pds_core/auxbus.c b/drivers/net/ethernet/amd/pds_core/auxbus.c
+index b76a9b7e0aed6..d53b2124b1498 100644
+--- a/drivers/net/ethernet/amd/pds_core/auxbus.c
++++ b/drivers/net/ethernet/amd/pds_core/auxbus.c
+@@ -172,13 +172,9 @@ static struct pds_auxiliary_dev *pdsc_auxbus_dev_register(struct pdsc *cf,
+ 	return padev;
+ }
  
-+	/*
-+	 * Make sure we align the start vmemmap addr so that we calculate
-+	 * the correct start_pfn in altmap boundary check to decided whether
-+	 * we should use altmap or RAM based backing memory allocation. Also
-+	 * the address need to be aligned for set_pte operation.
-+
-+	 * If the start addr is already PMD_SIZE aligned we will try to use
-+	 * a pmd mapping. We don't want to be too aggressive here beacause
-+	 * that will cause more allocations in RAM. So only if the namespace
-+	 * vmemmap start addr is PMD_SIZE aligned we will use PMD mapping.
-+	 */
-+
-+	start = ALIGN_DOWN(start, PAGE_SIZE);
- 	for (addr = start; addr < end; addr = next) {
- 		next = pmd_addr_end(addr, end);
+-int pdsc_auxbus_dev_del(struct pdsc *cf, struct pdsc *pf)
++void pdsc_auxbus_dev_del(struct pdsc *cf, struct pdsc *pf)
+ {
+ 	struct pds_auxiliary_dev *padev;
+-	int err = 0;
+-
+-	if (!cf)
+-		return -ENODEV;
  
-@@ -1157,8 +1170,8 @@ int __meminit radix__vmemmap_populate(unsigned long start, unsigned long end, in
- 			 * in altmap block allocation failures, in which case
- 			 * we fallback to RAM for vmemmap allocation.
- 			 */
--			if (altmap && (!IS_ALIGNED(addr, PMD_SIZE) ||
--				       altmap_cross_boundary(altmap, addr, PMD_SIZE))) {
-+			if (!IS_ALIGNED(addr, PMD_SIZE) || (altmap &&
-+			    altmap_cross_boundary(altmap, addr, PMD_SIZE))) {
- 				/*
- 				 * make sure we don't create altmap mappings
- 				 * covering things outside the device.
+ 	mutex_lock(&pf->config_lock);
+ 
+@@ -192,7 +188,6 @@ int pdsc_auxbus_dev_del(struct pdsc *cf, struct pdsc *pf)
+ 	pf->vfs[cf->vf_id].padev = NULL;
+ 
+ 	mutex_unlock(&pf->config_lock);
+-	return err;
+ }
+ 
+ int pdsc_auxbus_dev_add(struct pdsc *cf, struct pdsc *pf)
+diff --git a/drivers/net/ethernet/amd/pds_core/core.h b/drivers/net/ethernet/amd/pds_core/core.h
+index ec637dc4327a5..08b8280437dcf 100644
+--- a/drivers/net/ethernet/amd/pds_core/core.h
++++ b/drivers/net/ethernet/amd/pds_core/core.h
+@@ -304,7 +304,7 @@ int pdsc_register_notify(struct notifier_block *nb);
+ void pdsc_unregister_notify(struct notifier_block *nb);
+ void pdsc_notify(unsigned long event, void *data);
+ int pdsc_auxbus_dev_add(struct pdsc *cf, struct pdsc *pf);
+-int pdsc_auxbus_dev_del(struct pdsc *cf, struct pdsc *pf);
++void pdsc_auxbus_dev_del(struct pdsc *cf, struct pdsc *pf);
+ 
+ void pdsc_process_adminq(struct pdsc_qcq *qcq);
+ void pdsc_work_thread(struct work_struct *work);
+diff --git a/drivers/net/ethernet/amd/pds_core/devlink.c b/drivers/net/ethernet/amd/pds_core/devlink.c
+index ca23cde385e67..48a7c22fe3320 100644
+--- a/drivers/net/ethernet/amd/pds_core/devlink.c
++++ b/drivers/net/ethernet/amd/pds_core/devlink.c
+@@ -56,8 +56,10 @@ int pdsc_dl_enable_set(struct devlink *dl, u32 id,
+ 	for (vf_id = 0; vf_id < pdsc->num_vfs; vf_id++) {
+ 		struct pdsc *vf = pdsc->vfs[vf_id].vf;
+ 
+-		err = ctx->val.vbool ? pdsc_auxbus_dev_add(vf, pdsc) :
+-				       pdsc_auxbus_dev_del(vf, pdsc);
++		if (ctx->val.vbool)
++			err = pdsc_auxbus_dev_add(vf, pdsc);
++		else
++			pdsc_auxbus_dev_del(vf, pdsc);
+ 	}
+ 
+ 	return err;
 -- 
 2.39.5
 
