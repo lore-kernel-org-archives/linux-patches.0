@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E6428C024;
-	Wed,  7 May 2025 19:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8B328DF4C;
+	Wed,  7 May 2025 19:00:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644411; cv=none; b=D175zjLWxtUygaR2hbiHXYwSLIfIIypG0F+CSxprc+JwvKqoEswl0NiIO9OuAC+riOX3xpkssbVkGz4ny0/dtcZOS7bHwk0dZFxx3AkYg2r4/6Od9dtRq+4EJ4Dc1I/ndO0C9HayHJCyzHQg/B87ALy7+QunpsBqb8ob8D2Jd0I=
+	t=1746644414; cv=none; b=bMURApE/d2LihUPUlMIBVfgqRD478NWaFpT4p16DitB400MrqEZQxF09bBK5QGLqEtwaqigY9OKpt/1luNxabJ3ZGGwsoP1ZMoVHOYaUxfLF/8y05l/f9TjjfgAVbfY7s3HcqUN2KACpo5BLhrJ9tRWwcn4HwSwl4tDwYESuFB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644411; c=relaxed/simple;
-	bh=XdZBWymM8zTLllOxbbWw9XhouC9uEvcnGx/HKLEAFbE=;
+	s=arc-20240116; t=1746644414; c=relaxed/simple;
+	bh=eewazFdU/+nPPJKUS62Lk9tur6LRcy7hFVRXSH2Unno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+ZrJX/5ZIAbCWv4wQfVDGUL3G9L1m25RZIuJefBrmOZESeLrE/dR1Qsg/GigJQaypiMGUpd1fPMZoa8aRUi9Av2lZ9HtMg0A6giBQ+2YGczjVKb0oWNu9fxRxE4h6JlSvbRR0ugvnFiJmhANz2BCzG9Yf2f4wja043viK5JAMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gs1Fh+yQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YAkObihrmmmXmKDcoD88J1etjsAwMeb1CtsZY4SD9EQj3+IkB+xprUwb7wjFuwPeaiTTxtNn1nTKeCGrTbvL2Xy5tCfTb0faQ2TjGmW0jFb32zAZCpvGRLR0up5oI3w4uF/pVKR1M/vrNnIregPrhADVmnMndLhkZINKYjY6kCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rhRLozQ7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gs1Fh+yQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3A2C4CEE2;
-	Wed,  7 May 2025 19:00:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rhRLozQ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB577C4CEE2;
+	Wed,  7 May 2025 19:00:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644411;
-	bh=XdZBWymM8zTLllOxbbWw9XhouC9uEvcnGx/HKLEAFbE=;
+	s=korg; t=1746644414;
+	bh=eewazFdU/+nPPJKUS62Lk9tur6LRcy7hFVRXSH2Unno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gs1Fh+yQpXM82WyPUV1xWSZVUSbWlwpDw1MrKDLzIWJ85RHTt7lF0zPWeZzDU1p9Y
-	 tfI+rwUvqankL19T0mdr0jywnwUrzM6gFP466VVAPkmZ4ObbAfXmmKm9J+lIle+vza
-	 zQB7DhiB0DkkUQvfkGqZxsIngJf8qB5OqUWPeras=
+	b=rhRLozQ74PNCNAF4SGJdv7GKinFsiZtXnnLeabda9+EWOzVxFOBY9YVdh6BlNAYkd
+	 7F8m9TvGnNnduxHdR9vIwNsJWNWYkD63rKKBhxaZXTzkqGe/4iVAPCZ9ALWh1THGOF
+	 iGrLomPjuDa/I1ZihrJ02NbeFKkTHdmprZFtCTbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 035/164] drm/amdgpu: Fix offset for HDP remap in nbio v7.11
-Date: Wed,  7 May 2025 20:38:40 +0200
-Message-ID: <20250507183822.296544211@linuxfoundation.org>
+	Janne Grunau <j@jannau.net>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>
+Subject: [PATCH 6.12 036/164] drm: Select DRM_KMS_HELPER from DRM_DEBUG_DP_MST_TOPOLOGY_REFS
+Date: Wed,  7 May 2025 20:38:41 +0200
+Message-ID: <20250507183822.340467890@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -50,34 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Janne Grunau <j@jannau.net>
 
-commit 79af0604eb80ca1f86a1f265a0b1f9d4fccbc18f upstream.
+commit 32dce6b1949a696dc7abddc04de8cbe35c260217 upstream.
 
-APUs in passthrough mode use HDP flush. 0x7F000 offset used for
-remapping HDP flush is mapped to VPE space which could get power gated.
-Use another unused offset in BIF space.
+Using "depends on" and "select" for the same Kconfig symbol is known to
+cause circular dependencies (cmp. "Kconfig recursive dependency
+limitations" in Documentation/kbuild/kconfig-language.rst.
+DRM drivers are selecting drm helpers so do the same for
+DRM_DEBUG_DP_MST_TOPOLOGY_REFS.
+Fixes following circular dependency reported on x86 for the downstream
+Asahi Linux tree:
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d8116a32cdbe456c7f511183eb9ab187e3d590fb)
+error: recursive dependency detected!
+  symbol DRM_KMS_HELPER is selected by DRM_GEM_SHMEM_HELPER
+  symbol DRM_GEM_SHMEM_HELPER is selected by RUST_DRM_GEM_SHMEM_HELPER
+  symbol RUST_DRM_GEM_SHMEM_HELPER is selected by DRM_ASAHI
+  symbol DRM_ASAHI depends on RUST
+  symbol RUST depends on CALL_PADDING
+  symbol CALL_PADDING depends on OBJTOOL
+  symbol OBJTOOL is selected by STACK_VALIDATION
+  symbol STACK_VALIDATION depends on UNWINDER_FRAME_POINTER
+  symbol UNWINDER_FRAME_POINTER is part of choice block at arch/x86/Kconfig.debug:224
+  symbol <choice> unknown is visible depending on UNWINDER_GUESS
+  symbol UNWINDER_GUESS prompt is visible depending on STACKDEPOT
+  symbol STACKDEPOT is selected by DRM_DEBUG_DP_MST_TOPOLOGY_REFS
+  symbol DRM_DEBUG_DP_MST_TOPOLOGY_REFS depends on DRM_KMS_HELPER
+
+Fixes: 12a280c72868 ("drm/dp_mst: Add topology ref history tracking for debugging")
 Cc: stable@vger.kernel.org
+Signed-off-by: Janne Grunau <j@jannau.net>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://lore.kernel.org/r/20250304-drm_debug_dp_mst_topo_kconfig-v1-1-e16fd152f258@jannau.net
+Signed-off-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/nbio_v7_11.c |    2 +-
+ drivers/gpu/drm/Kconfig |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/nbio_v7_11.c
-+++ b/drivers/gpu/drm/amd/amdgpu/nbio_v7_11.c
-@@ -361,7 +361,7 @@ static void nbio_v7_11_get_clockgating_s
- 		*flags |= AMD_CG_SUPPORT_BIF_LS;
- }
- 
--#define MMIO_REG_HOLE_OFFSET (0x80000 - PAGE_SIZE)
-+#define MMIO_REG_HOLE_OFFSET 0x44000
- 
- static void nbio_v7_11_set_reg_remap(struct amdgpu_device *adev)
- {
+--- a/drivers/gpu/drm/Kconfig
++++ b/drivers/gpu/drm/Kconfig
+@@ -185,7 +185,7 @@ config DRM_DEBUG_DP_MST_TOPOLOGY_REFS
+         bool "Enable refcount backtrace history in the DP MST helpers"
+ 	depends on STACKTRACE_SUPPORT
+         select STACKDEPOT
+-        depends on DRM_KMS_HELPER
++        select DRM_KMS_HELPER
+         depends on DEBUG_KERNEL
+         depends on EXPERT
+         help
 
 
