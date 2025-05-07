@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1229823DE;
-	Wed,  7 May 2025 19:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C9023DE;
+	Wed,  7 May 2025 19:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746644506; cv=none; b=LKcomik0WR03acmZLDT9oIEgoE627HKA1+7VDPKgW85QFVYEy1KQLz6BqQaj1rIvG4xPlsC6YEULYwLf3vunBMpZwZumEqupH2Tf5Crygx/2lPeiMircyqeFeXSRC4nN4JzMF1+KgoeUS7DsyqsI6uYDQCbolQTOGXCGadTJ59Y=
+	t=1746644509; cv=none; b=iOcvISGyXK/UDCsWkf0Xy4kF6jLelT+vqoPLIZ6jBt1IfqH7gQZJwPFySzyo5/9BgsRBAA00+wMea4VHrbcSma+CQtXuwfPCkGGZ55OYVa7me4dfWZHzmibDZ7pEQei0m7GBOWIUD9Kqjo0j+k4mYnOzr6nr7Lg3DyI7ySr8dgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746644506; c=relaxed/simple;
-	bh=Vs/kmIiKfWJcB7mf/qNjFN+29Dt13Rc+CYCX0YwXAE0=;
+	s=arc-20240116; t=1746644509; c=relaxed/simple;
+	bh=qNBvpJbc1HnhEcUBoOwTm81RWPJg+3t1hpTP+71NoL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KLlNHp/9QCG3gC/DuLl7qPWzEAezoMyzpERlEp4uxdBwUFiG3b672PNCEPJ3cx+YdQHmjtUBGqdGIAYFyas5TwJfZO7gDREvsKslWdm3E88qlu/ffSQAZBXdjGQaUaxER+RKtYDpBuR30lxI1ICipoD61+GusPwBg5rG6fKDPrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YWmmVKoM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KpLnBdXRFSUuqmX05lHwY0kananupYzg0LqnvD4SuH/TETedCTXAI7ipUIGQvQcLolGKZGdQRbtWBAX5Rd+RkwIBNa8Uo9eaerUQZIZREz5tjCxgqYHJA+jl7QHkrk3kKMLuMMJnOP8yMC6Ds9c9ccTHrzxSIX7wgH5QNMtnZj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=112fkH0Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YWmmVKoM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861D2C4CEE9;
-	Wed,  7 May 2025 19:01:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="112fkH0Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D144C4CEE2;
+	Wed,  7 May 2025 19:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746644505;
-	bh=Vs/kmIiKfWJcB7mf/qNjFN+29Dt13Rc+CYCX0YwXAE0=;
+	s=korg; t=1746644508;
+	bh=qNBvpJbc1HnhEcUBoOwTm81RWPJg+3t1hpTP+71NoL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YWmmVKoM9i/QiXshPeyeDjU6jvXeARD+OVx8Nl3wpeo6/HYKj5VJq8ZZ9ihwUakMj
-	 B1dI2ek/uv2okcXOcRl7wGNA4vopTLxX+cygkO0TQUIIgvgsenHtqIiYbg4F8Jiwvt
-	 oaHWk0K2MRTL0zYeCvzHsQQKny1p2hZ5zqvW6WoY=
+	b=112fkH0YGxX/Dk1EPIWNCQ2OiaECzOv8iKz5C0QNEiFGm4uFxiSlhsEK2DzE4Q7pl
+	 GsklZJLUS4+d+RL/Om2VKIHpkjGzsFoPD9l5VLyzWl2X0ZETyvNqrRf+3L5rdobIOE
+	 g/CttQPcisiIhSZmA5KpcwOBwneFrZBYVbtT7+Tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eryk Kubanski <e.kubanski@partner.samsung.com>,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
+	Vlad Dogaru <vdogaru@nvidia.com>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 066/164] xsk: Fix race condition in AF_XDP generic RX path
-Date: Wed,  7 May 2025 20:39:11 +0200
-Message-ID: <20250507183823.622756264@linuxfoundation.org>
+Subject: [PATCH 6.12 067/164] net/mlx5e: Use custom tunnel header for vxlan gbp
+Date: Wed,  7 May 2025 20:39:12 +0200
+Message-ID: <20250507183823.663841991@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183820.781599563@linuxfoundation.org>
 References: <20250507183820.781599563@linuxfoundation.org>
@@ -52,120 +54,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: e.kubanski <e.kubanski@partner.samsung.com>
+From: Vlad Dogaru <vdogaru@nvidia.com>
 
-[ Upstream commit a1356ac7749cafc4e27aa62c0c4604b5dca4983e ]
+[ Upstream commit eacc77a73275895eca0e3655dc6c671853500e2e ]
 
-Move rx_lock from xsk_socket to xsk_buff_pool.
-Fix synchronization for shared umem mode in
-generic RX path where multiple sockets share
-single xsk_buff_pool.
+Symbolic (e.g. "vxlan") and custom (e.g. "tunnel_header_0") tunnels
+cannot be combined, but the match params interface does not have fields
+for matching on vxlan gbp. To match vxlan bgp, the tc_tun layer uses
+tunnel_header_0.
 
-RX queue is exclusive to xsk_socket, while FILL
-queue can be shared between multiple sockets.
-This could result in race condition where two
-CPU cores access RX path of two different sockets
-sharing the same umem.
+Allow matching on both VNI and GBP by matching the VNI with a custom
+tunnel header instead of the symbolic field name.
 
-Protect both queues by acquiring spinlock in shared
-xsk_buff_pool.
+Matching solely on the VNI continues to use the symbolic field name.
 
-Lock contention may be minimized in the future by some
-per-thread FQ buffering.
-
-It's safe and necessary to move spin_lock_bh(rx_lock)
-after xsk_rcv_check():
-* xs->pool and spinlock_init is synchronized by
-  xsk_bind() -> xsk_is_bound() memory barriers.
-* xsk_rcv_check() may return true at the moment
-  of xsk_release() or xsk_unbind_dev(),
-  however this will not cause any data races or
-  race conditions. xsk_unbind_dev() removes xdp
-  socket from all maps and waits for completion
-  of all outstanding rx operations. Packets in
-  RX path will either complete safely or drop.
-
-Signed-off-by: Eryk Kubanski <e.kubanski@partner.samsung.com>
-Fixes: bf0bdd1343efb ("xdp: fix race on generic receive path")
-Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Link: https://patch.msgid.link/20250416101908.10919-1-e.kubanski@partner.samsung.com
+Fixes: 74a778b4a63f ("net/mlx5: HWS, added definers handling")
+Signed-off-by: Vlad Dogaru <vdogaru@nvidia.com>
+Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/20250423083611.324567-2-mbloch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xdp_sock.h      | 3 ---
- include/net/xsk_buff_pool.h | 2 ++
- net/xdp/xsk.c               | 6 +++---
- net/xdp/xsk_buff_pool.c     | 1 +
- 4 files changed, 6 insertions(+), 6 deletions(-)
+ .../mellanox/mlx5/core/en/tc_tun_vxlan.c      | 32 +++++++++++++++++--
+ 1 file changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/xdp_sock.h b/include/net/xdp_sock.h
-index bfe625b55d55d..df3f5f07bc7c2 100644
---- a/include/net/xdp_sock.h
-+++ b/include/net/xdp_sock.h
-@@ -71,9 +71,6 @@ struct xdp_sock {
- 	 */
- 	u32 tx_budget_spent;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c
+index e4e487c8431b8..b9cf79e271244 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c
+@@ -165,9 +165,6 @@ static int mlx5e_tc_tun_parse_vxlan(struct mlx5e_priv *priv,
+ 	struct flow_match_enc_keyid enc_keyid;
+ 	void *misc_c, *misc_v;
  
--	/* Protects generic receive. */
--	spinlock_t rx_lock;
+-	misc_c = MLX5_ADDR_OF(fte_match_param, spec->match_criteria, misc_parameters);
+-	misc_v = MLX5_ADDR_OF(fte_match_param, spec->match_value, misc_parameters);
 -
- 	/* Statistics */
- 	u64 rx_dropped;
- 	u64 rx_queue_full;
-diff --git a/include/net/xsk_buff_pool.h b/include/net/xsk_buff_pool.h
-index bacb33f1e3e58..823fd5c7a3b18 100644
---- a/include/net/xsk_buff_pool.h
-+++ b/include/net/xsk_buff_pool.h
-@@ -55,6 +55,8 @@ struct xsk_buff_pool {
- 	refcount_t users;
- 	struct xdp_umem *umem;
- 	struct work_struct work;
-+	/* Protects generic receive in shared and non-shared umem mode. */
-+	spinlock_t rx_lock;
- 	struct list_head free_list;
- 	struct list_head xskb_list;
- 	u32 heads_cnt;
-diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index b57d5d2904eb4..f031b07baa57a 100644
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -338,13 +338,14 @@ int xsk_generic_rcv(struct xdp_sock *xs, struct xdp_buff *xdp)
- 	u32 len = xdp_get_buff_len(xdp);
- 	int err;
+ 	if (!flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_ENC_KEYID))
+ 		return 0;
  
--	spin_lock_bh(&xs->rx_lock);
- 	err = xsk_rcv_check(xs, xdp, len);
- 	if (!err) {
-+		spin_lock_bh(&xs->pool->rx_lock);
- 		err = __xsk_rcv(xs, xdp, len);
- 		xsk_flush(xs);
-+		spin_unlock_bh(&xs->pool->rx_lock);
- 	}
--	spin_unlock_bh(&xs->rx_lock);
+@@ -182,6 +179,30 @@ static int mlx5e_tc_tun_parse_vxlan(struct mlx5e_priv *priv,
+ 		err = mlx5e_tc_tun_parse_vxlan_gbp_option(priv, spec, f);
+ 		if (err)
+ 			return err;
 +
- 	return err;
- }
++		/* We can't mix custom tunnel headers with symbolic ones and we
++		 * don't have a symbolic field name for GBP, so we use custom
++		 * tunnel headers in this case. We need hardware support to
++		 * match on custom tunnel headers, but we already know it's
++		 * supported because the previous call successfully checked for
++		 * that.
++		 */
++		misc_c = MLX5_ADDR_OF(fte_match_param, spec->match_criteria,
++				      misc_parameters_5);
++		misc_v = MLX5_ADDR_OF(fte_match_param, spec->match_value,
++				      misc_parameters_5);
++
++		/* Shift by 8 to account for the reserved bits in the vxlan
++		 * header after the VNI.
++		 */
++		MLX5_SET(fte_match_set_misc5, misc_c, tunnel_header_1,
++			 be32_to_cpu(enc_keyid.mask->keyid) << 8);
++		MLX5_SET(fte_match_set_misc5, misc_v, tunnel_header_1,
++			 be32_to_cpu(enc_keyid.key->keyid) << 8);
++
++		spec->match_criteria_enable |= MLX5_MATCH_MISC_PARAMETERS_5;
++
++		return 0;
+ 	}
  
-@@ -1720,7 +1721,6 @@ static int xsk_create(struct net *net, struct socket *sock, int protocol,
- 	xs = xdp_sk(sk);
- 	xs->state = XSK_READY;
- 	mutex_init(&xs->mutex);
--	spin_lock_init(&xs->rx_lock);
+ 	/* match on VNI is required */
+@@ -195,6 +216,11 @@ static int mlx5e_tc_tun_parse_vxlan(struct mlx5e_priv *priv,
+ 		return -EOPNOTSUPP;
+ 	}
  
- 	INIT_LIST_HEAD(&xs->map_list);
- 	spin_lock_init(&xs->map_list_lock);
-diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
-index 87e865b9b83af..b69dbd8615fc4 100644
---- a/net/xdp/xsk_buff_pool.c
-+++ b/net/xdp/xsk_buff_pool.c
-@@ -87,6 +87,7 @@ struct xsk_buff_pool *xp_create_and_assign_umem(struct xdp_sock *xs,
- 	pool->addrs = umem->addrs;
- 	pool->tx_metadata_len = umem->tx_metadata_len;
- 	pool->tx_sw_csum = umem->flags & XDP_UMEM_TX_SW_CSUM;
-+	spin_lock_init(&pool->rx_lock);
- 	INIT_LIST_HEAD(&pool->free_list);
- 	INIT_LIST_HEAD(&pool->xskb_list);
- 	INIT_LIST_HEAD(&pool->xsk_tx_list);
++	misc_c = MLX5_ADDR_OF(fte_match_param, spec->match_criteria,
++			      misc_parameters);
++	misc_v = MLX5_ADDR_OF(fte_match_param, spec->match_value,
++			      misc_parameters);
++
+ 	MLX5_SET(fte_match_set_misc, misc_c, vxlan_vni,
+ 		 be32_to_cpu(enc_keyid.mask->keyid));
+ 	MLX5_SET(fte_match_set_misc, misc_v, vxlan_vni,
 -- 
 2.39.5
 
