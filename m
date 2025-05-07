@@ -1,124 +1,83 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDA828C862;
-	Wed,  7 May 2025 18:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD5628DF1B;
+	Wed,  7 May 2025 18:41:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746640812; cv=none; b=GQycDtgl1/TiTG4CCaBMUt7jKflDZGBLC5TZa/wuykSwRJOxLb4jjPq69vHLAcVIH57eHUtLcqALNPnuLBOs8vAelJvo6YJprK9HZkJg1TWGGL9GLem1FMMK3kTHX5aREt3i4c7+irA4/DSKAxvH1PPfXF4AtMByCbj6jKwP2sU=
+	t=1746643285; cv=none; b=jbbFjHAY1M2tC7FYM8kiO6wAghyylT/z8iNzvx0vJkbmdl02HpADgovAS5s/2ukI3/6YmKiFKNbJHfUz7aRxcCIicCcrzlBEIXp8ko3Cxwo/mcH+CPo+9/JtTFwwRgw5/NylBt4A6OeybIbpcSKIEf+SnkXfUaXFGEbyqzSYz5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746640812; c=relaxed/simple;
-	bh=O9c4zHMMjar77PSV4nlSZq5tG5VfvUp5AHlm0Gab6vY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cn9hgsHlKZ5MAnJtaJfhtUhDyCzb6Durya/wPt/mi+KKnOLYECjeEajdPEtk3dAGYv2MNZbzZd/8+HXTh1n4t+Gqa2iTfIeOtBzWIU6qnSBDOZmnOlSE8SStkXe5Tkplzeg4+xtIlZVJMfDS2cqPXLeK3Nw34Rb1nGZvnP+mY14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vIL2Z/MT; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1746643285; c=relaxed/simple;
+	bh=iO0bKtEsGPZbYFH0Hg4rL+BK0ex7cYz7G4lT2o9tPxw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=H6lwPiVl87KF+uZ+HVhRsZ3dCapbvh8dF6PKHc2+Y4hhTURCj61g7++zFmbIJDT/OF5HHdy7zto8bGhcouih4U/TKaiNjaI9WBI5MSPgKVBeqPdhKU//IzTpapZoC0mYXqh3GabYBb4aPBujfUYdXA0co3RwV79pOPaxfHeEweI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IzTvRk64; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vIL2Z/MT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF14C4CEE2;
-	Wed,  7 May 2025 18:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IzTvRk64"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8664CC4CEE2;
+	Wed,  7 May 2025 18:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746640810;
-	bh=O9c4zHMMjar77PSV4nlSZq5tG5VfvUp5AHlm0Gab6vY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=vIL2Z/MTTBN5AA+dfj/e5vNshsFvg/TvI3i/9hlDaVgujU3F76WXM/KdCs1DCG2TY
-	 WXIN2AwyRBvzpfOk9g7vKXLCBqLMsuEW6P+Hs5CuNtlSIj3GEHzkc8Ho5+zsuh9v5U
-	 TeQynncMmxg8hT4OTJEJlJun4Qq4l5QwxfUicsGk=
-Date: Wed, 7 May 2025 20:00:07 +0200
+	s=korg; t=1746643285;
+	bh=iO0bKtEsGPZbYFH0Hg4rL+BK0ex7cYz7G4lT2o9tPxw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=IzTvRk64+jVNNc4tjmFg02+0+WNHNpSEbBhJlc0UBEu+eNmljVO0mewiZ0UcfBJbn
+	 l4QxI/XRs8UvOlHmlvqJ0co3HCAHxxTUQbUkyLDGQ8fMoY++/VypPRjF+RUUwaT2Gp
+	 qHm4YKFzzZDMC+9Mqccqdfmcwg3uQ0TtjIH+7YE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Omar Sandoval <osandov@osandov.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Omar Sandoval <osandov@fb.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.14 102/311] sched/eevdf: Fix se->slice being set to
- U64_MAX and resulting crash
-Message-ID: <2025050749-refill-overfill-20cb@gregkh>
-References: <20250429161121.011111832@linuxfoundation.org>
- <20250429161125.215831187@linuxfoundation.org>
- <aBubqcsiWmEK0NRg@telecaster>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Joachim Priesner <joachim.priesner@web.de>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 01/55] ALSA: usb-audio: Add second USB ID for Jabra Evolve 65 headset
+Date: Wed,  7 May 2025 20:39:02 +0200
+Message-ID: <20250507183759.109735334@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250507183759.048732653@linuxfoundation.org>
+References: <20250507183759.048732653@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aBubqcsiWmEK0NRg@telecaster>
+Content-Transfer-Encoding: 8bit
 
-On Wed, May 07, 2025 at 10:43:05AM -0700, Omar Sandoval wrote:
-> On Tue, Apr 29, 2025 at 06:38:59PM +0200, Greg Kroah-Hartman wrote:
-> > 6.14-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Omar Sandoval <osandov@fb.com>
-> > 
-> > [ Upstream commit bbce3de72be56e4b5f68924b7da9630cc89aa1a8 ]
-> > 
-> > There is a code path in dequeue_entities() that can set the slice of a
-> > sched_entity to U64_MAX, which sometimes results in a crash.
-> > 
-> > The offending case is when dequeue_entities() is called to dequeue a
-> > delayed group entity, and then the entity's parent's dequeue is delayed.
-> > In that case:
-> > 
-> > 1. In the if (entity_is_task(se)) else block at the beginning of
-> >    dequeue_entities(), slice is set to
-> >    cfs_rq_min_slice(group_cfs_rq(se)). If the entity was delayed, then
-> >    it has no queued tasks, so cfs_rq_min_slice() returns U64_MAX.
-> > 2. The first for_each_sched_entity() loop dequeues the entity.
-> > 3. If the entity was its parent's only child, then the next iteration
-> >    tries to dequeue the parent.
-> > 4. If the parent's dequeue needs to be delayed, then it breaks from the
-> >    first for_each_sched_entity() loop _without updating slice_.
-> > 5. The second for_each_sched_entity() loop sets the parent's ->slice to
-> >    the saved slice, which is still U64_MAX.
-> > 
-> > This throws off subsequent calculations with potentially catastrophic
-> > results. A manifestation we saw in production was:
-> > 
-> > 6. In update_entity_lag(), se->slice is used to calculate limit, which
-> >    ends up as a huge negative number.
-> > 7. limit is used in se->vlag = clamp(vlag, -limit, limit). Because limit
-> >    is negative, vlag > limit, so se->vlag is set to the same huge
-> >    negative number.
-> > 8. In place_entity(), se->vlag is scaled, which overflows and results in
-> >    another huge (positive or negative) number.
-> > 9. The adjusted lag is subtracted from se->vruntime, which increases or
-> >    decreases se->vruntime by a huge number.
-> > 10. pick_eevdf() calls entity_eligible()/vruntime_eligible(), which
-> >     incorrectly returns false because the vruntime is so far from the
-> >     other vruntimes on the queue, causing the
-> >     (vruntime - cfs_rq->min_vruntime) * load calulation to overflow.
-> > 11. Nothing appears to be eligible, so pick_eevdf() returns NULL.
-> > 12. pick_next_entity() tries to dereference the return value of
-> >     pick_eevdf() and crashes.
-> > 
-> > Dumping the cfs_rq states from the core dumps with drgn showed tell-tale
-> > huge vruntime ranges and bogus vlag values, and I also traced se->slice
-> > being set to U64_MAX on live systems (which was usually "benign" since
-> > the rest of the runqueue needed to be in a particular state to crash).
-> > 
-> > Fix it in dequeue_entities() by always setting slice from the first
-> > non-empty cfs_rq.
-> > 
-> > Fixes: aef6987d8954 ("sched/eevdf: Propagate min_slice up the cgroup hierarchy")
-> > Signed-off-by: Omar Sandoval <osandov@fb.com>
-> > Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-> > Signed-off-by: Ingo Molnar <mingo@kernel.org>
-> > Link: https://lkml.kernel.org/r/f0c2d1072be229e1bdddc73c0703919a8b00c652.1745570998.git.osandov@fb.com
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > ---
-> >  kernel/sched/fair.c | 4 +---
-> >  1 file changed, 1 insertion(+), 3 deletions(-)
-> 
-> Hi,
-> 
-> I believe this fix should go in 6.12, too.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
-Great, can you submit a version that applies to 6.12.y?
+------------------
 
-thanks,
+From: Joachim Priesner <joachim.priesner@web.de>
 
-greg k-h
+commit 1149719442d28c96dc63cad432b5a6db7c300e1a upstream.
+
+There seem to be multiple USB device IDs used for these;
+the one I have reports as 0b0e:030c when powered on.
+(When powered off, it reports as 0b0e:0311.)
+
+Signed-off-by: Joachim Priesner <joachim.priesner@web.de>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250428053606.9237-1-joachim.priesner@web.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ sound/usb/format.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+--- a/sound/usb/format.c
++++ b/sound/usb/format.c
+@@ -263,7 +263,8 @@ static int parse_audio_format_rates_v1(s
+ 	}
+ 
+ 	/* Jabra Evolve 65 headset */
+-	if (chip->usb_id == USB_ID(0x0b0e, 0x030b)) {
++	if (chip->usb_id == USB_ID(0x0b0e, 0x030b) ||
++	    chip->usb_id == USB_ID(0x0b0e, 0x030c)) {
+ 		/* only 48kHz for playback while keeping 16kHz for capture */
+ 		if (fp->nr_rates != 1)
+ 			return set_fixed_rate(fp, 48000, SNDRV_PCM_RATE_48000);
+
+
