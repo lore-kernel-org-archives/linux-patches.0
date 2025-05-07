@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CA8155389;
-	Wed,  7 May 2025 18:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A2B2144CC;
+	Wed,  7 May 2025 18:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643579; cv=none; b=Pj1ecbKcdnkQlg+zjygHNcoAezhNoPDb3n91WtL9Gf1KmAeohgVpC9THkgJJfNTD+cf8EREYlnNUCPRC/ikdVSW6OYEd0ezTcd6tbOjHoXHb/5Hrb8nU4LqeTMorRjLdjy2Arxi5qWi+nWqiVpGaaGjpgDm5zqeQndAFaHlcai0=
+	t=1746643582; cv=none; b=tt9Dp+l6skGVqXwTv8NE+5arUAQJH7leAtLbthKjFc7doyhEJ21wVhaFlQQjAq2W8wi06MRxROKdsRGLPsuD4N/Oe9siBPbvIhOtgOb0WYnvchx8WjC0YRAf/dIsoQBOdZlal80cSwLcWSxZO5bxc4AZaEUUUuwyfUoSx4CDHF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643579; c=relaxed/simple;
-	bh=SlCTdepoirw9nwgPS7BqxmHgj19dEFZNR29OEIdYisI=;
+	s=arc-20240116; t=1746643582; c=relaxed/simple;
+	bh=DKHuALKgkKVt3vZ9SPFRjNajKJuvOYAvwPbbYnzJowI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MkvAJFNdWCD3clYySEPJMeGPQMXnnH25B+f7c8ke/M73WU9wm99AI27PDD5flO53WVJOYMSdk4UVX5HevJ/ML6tchgkOnHszqKIq2INqzm41RxZKFLW560yLHdtzUmCChsmz2Ck4cqud5KaUUhX7lq2q20d0lDEEVVmr8lOVyV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9wWc268; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rd9BdpdI9ehT7Cku9xF3pPfYtkxjgI9O8HzyJ3A6bEroph3P+u0MNy8lbZ3R6c0G7tlQ1Uzn8aUPRbd5gF4c2NEd8FEgo7of7Gxqk2+94PNwjyqZkKU9V5f68EcH4k0Vtx4cNkjVFojwREdy8vypyxu/i6C3KwNQPSt0jc7Pkqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2nnsMSEP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9wWc268"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F79BC4CEE2;
-	Wed,  7 May 2025 18:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2nnsMSEP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D673C4CEEB;
+	Wed,  7 May 2025 18:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746643579;
-	bh=SlCTdepoirw9nwgPS7BqxmHgj19dEFZNR29OEIdYisI=;
+	s=korg; t=1746643581;
+	bh=DKHuALKgkKVt3vZ9SPFRjNajKJuvOYAvwPbbYnzJowI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f9wWc268zvtHLMdCEd3ZZO1QRNEPNQL6viesl7IXHL1dB/nLQVPCJx5Pnt2aY/qcy
-	 /x9tm8SvBT8YsYyCOJ+kFAobnm+cGs7g7IeBlhIe5KMxVthXP/jdEtlVnowXbTCOG8
-	 jJPQwBdlW4/OnZCzCROKu2xF6HpiPwwG/3dZchN8=
+	b=2nnsMSEPqNBtj9dGnv+S3HZXpm0WCDl/4zEjqkzGQ6Cxo+5+HnQJ8cQHuZLXJthx5
+	 c4US5GzOeHzX6sO9+IuxlOHl66IoqbpMab0Sx7xUqFM5wfc/bB9fEH1JywlrVQG++u
+	 /iunyiwWjVH0SijMvhbiaXcdbnSeZ/GiXMjTW3a0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 48/97] net: ethernet: mtk-star-emac: fix spinlock recursion issues on rx/tx poll
-Date: Wed,  7 May 2025 20:39:23 +0200
-Message-ID: <20250507183808.932270467@linuxfoundation.org>
+	syzbot+c8cd2d2c412b868263fb@syzkaller.appspotmail.com,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Jeongjun Park <aha310510@gmail.com>
+Subject: [PATCH 6.1 22/97] tracing: Fix oob write in trace_seq_to_buffer()
+Date: Wed,  7 May 2025 20:38:57 +0200
+Message-ID: <20250507183807.875803678@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183806.987408728@linuxfoundation.org>
 References: <20250507183806.987408728@linuxfoundation.org>
@@ -53,123 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit 6fe0866014486736cc3ba1c6fd4606d3dbe55c9c ]
+commit f5178c41bb43444a6008150fe6094497135d07cb upstream.
 
-Use spin_lock_irqsave and spin_unlock_irqrestore instead of spin_lock
-and spin_unlock in mtk_star_emac driver to avoid spinlock recursion
-occurrence that can happen when enabling the DMA interrupts again in
-rx/tx poll.
+syzbot reported this bug:
+==================================================================
+BUG: KASAN: slab-out-of-bounds in trace_seq_to_buffer kernel/trace/trace.c:1830 [inline]
+BUG: KASAN: slab-out-of-bounds in tracing_splice_read_pipe+0x6be/0xdd0 kernel/trace/trace.c:6822
+Write of size 4507 at addr ffff888032b6b000 by task syz.2.320/7260
 
-```
-BUG: spinlock recursion on CPU#0, swapper/0/0
- lock: 0xffff00000db9cf20, .magic: dead4ead, .owner: swapper/0/0,
-    .owner_cpu: 0
-CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted
-    6.15.0-rc2-next-20250417-00001-gf6a27738686c-dirty #28 PREEMPT
-Hardware name: MediaTek MT8365 Open Platform EVK (DT)
-Call trace:
- show_stack+0x18/0x24 (C)
- dump_stack_lvl+0x60/0x80
- dump_stack+0x18/0x24
- spin_dump+0x78/0x88
- do_raw_spin_lock+0x11c/0x120
- _raw_spin_lock+0x20/0x2c
- mtk_star_handle_irq+0xc0/0x22c [mtk_star_emac]
- __handle_irq_event_percpu+0x48/0x140
- handle_irq_event+0x4c/0xb0
- handle_fasteoi_irq+0xa0/0x1bc
- handle_irq_desc+0x34/0x58
- generic_handle_domain_irq+0x1c/0x28
- gic_handle_irq+0x4c/0x120
- do_interrupt_handler+0x50/0x84
- el1_interrupt+0x34/0x68
- el1h_64_irq_handler+0x18/0x24
- el1h_64_irq+0x6c/0x70
- regmap_mmio_read32le+0xc/0x20 (P)
- _regmap_bus_reg_read+0x6c/0xac
- _regmap_read+0x60/0xdc
- regmap_read+0x4c/0x80
- mtk_star_rx_poll+0x2f4/0x39c [mtk_star_emac]
- __napi_poll+0x38/0x188
- net_rx_action+0x164/0x2c0
- handle_softirqs+0x100/0x244
- __do_softirq+0x14/0x20
- ____do_softirq+0x10/0x20
- call_on_irq_stack+0x24/0x64
- do_softirq_own_stack+0x1c/0x40
- __irq_exit_rcu+0xd4/0x10c
- irq_exit_rcu+0x10/0x1c
- el1_interrupt+0x38/0x68
- el1h_64_irq_handler+0x18/0x24
- el1h_64_irq+0x6c/0x70
- cpuidle_enter_state+0xac/0x320 (P)
- cpuidle_enter+0x38/0x50
- do_idle+0x1e4/0x260
- cpu_startup_entry+0x34/0x3c
- rest_init+0xdc/0xe0
- console_on_rootfs+0x0/0x6c
- __primary_switched+0x88/0x90
-```
+CPU: 1 UID: 0 PID: 7260 Comm: syz.2.320 Not tainted 6.15.0-rc1-syzkaller-00301-g3bde70a2c827 #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:408 [inline]
+ print_report+0xc3/0x670 mm/kasan/report.c:521
+ kasan_report+0xe0/0x110 mm/kasan/report.c:634
+ check_region_inline mm/kasan/generic.c:183 [inline]
+ kasan_check_range+0xef/0x1a0 mm/kasan/generic.c:189
+ __asan_memcpy+0x3c/0x60 mm/kasan/shadow.c:106
+ trace_seq_to_buffer kernel/trace/trace.c:1830 [inline]
+ tracing_splice_read_pipe+0x6be/0xdd0 kernel/trace/trace.c:6822
+ ....
+==================================================================
 
-Fixes: 0a8bd81fd6aa ("net: ethernet: mtk-star-emac: separate tx/rx handling with two NAPIs")
-Signed-off-by: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Link: https://patch.msgid.link/20250424-mtk_star_emac-fix-spinlock-recursion-issue-v2-1-f3fde2e529d8@collabora.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+It has been reported that trace_seq_to_buffer() tries to copy more data
+than PAGE_SIZE to buf. Therefore, to prevent this, we should use the
+smaller of trace_seq_used(&iter->seq) and PAGE_SIZE as an argument.
+
+Link: https://lore.kernel.org/20250422113026.13308-1-aha310510@gmail.com
+Reported-by: syzbot+c8cd2d2c412b868263fb@syzkaller.appspotmail.com
+Fixes: 3c56819b14b0 ("tracing: splice support for tracing_pipe")
+Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mediatek/mtk_star_emac.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ kernel/trace/trace.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_star_emac.c b/drivers/net/ethernet/mediatek/mtk_star_emac.c
-index ad27749c0931c..fd729469b29f4 100644
---- a/drivers/net/ethernet/mediatek/mtk_star_emac.c
-+++ b/drivers/net/ethernet/mediatek/mtk_star_emac.c
-@@ -1164,6 +1164,7 @@ static int mtk_star_tx_poll(struct napi_struct *napi, int budget)
- 	struct net_device *ndev = priv->ndev;
- 	unsigned int head = ring->head;
- 	unsigned int entry = ring->tail;
-+	unsigned long flags;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -7054,13 +7054,14 @@ static ssize_t tracing_splice_read_pipe(
+ 		/* Copy the data into the page, so we can start over. */
+ 		ret = trace_seq_to_buffer(&iter->seq,
+ 					  page_address(spd.pages[i]),
+-					  trace_seq_used(&iter->seq));
++					  min((size_t)trace_seq_used(&iter->seq),
++						  PAGE_SIZE));
+ 		if (ret < 0) {
+ 			__free_page(spd.pages[i]);
+ 			break;
+ 		}
+ 		spd.partial[i].offset = 0;
+-		spd.partial[i].len = trace_seq_used(&iter->seq);
++		spd.partial[i].len = ret;
  
- 	while (entry != head && count < (MTK_STAR_RING_NUM_DESCS - 1)) {
- 		ret = mtk_star_tx_complete_one(priv);
-@@ -1183,9 +1184,9 @@ static int mtk_star_tx_poll(struct napi_struct *napi, int budget)
- 		netif_wake_queue(ndev);
- 
- 	if (napi_complete(napi)) {
--		spin_lock(&priv->lock);
-+		spin_lock_irqsave(&priv->lock, flags);
- 		mtk_star_enable_dma_irq(priv, false, true);
--		spin_unlock(&priv->lock);
-+		spin_unlock_irqrestore(&priv->lock, flags);
+ 		trace_seq_init(&iter->seq);
  	}
- 
- 	return 0;
-@@ -1342,6 +1343,7 @@ static int mtk_star_rx(struct mtk_star_priv *priv, int budget)
- static int mtk_star_rx_poll(struct napi_struct *napi, int budget)
- {
- 	struct mtk_star_priv *priv;
-+	unsigned long flags;
- 	int work_done = 0;
- 
- 	priv = container_of(napi, struct mtk_star_priv, rx_napi);
-@@ -1349,9 +1351,9 @@ static int mtk_star_rx_poll(struct napi_struct *napi, int budget)
- 	work_done = mtk_star_rx(priv, budget);
- 	if (work_done < budget) {
- 		napi_complete_done(napi, work_done);
--		spin_lock(&priv->lock);
-+		spin_lock_irqsave(&priv->lock, flags);
- 		mtk_star_enable_dma_irq(priv, true, false);
--		spin_unlock(&priv->lock);
-+		spin_unlock_irqrestore(&priv->lock, flags);
- 	}
- 
- 	return work_done;
--- 
-2.39.5
-
 
 
