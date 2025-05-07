@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3707C2144C1;
-	Wed,  7 May 2025 19:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F052144C1;
+	Wed,  7 May 2025 19:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746645022; cv=none; b=Sb/LnaiFVmQU3zcQ79yv5/irNnrxBQAhv+kFciDJbj/FcdyHA9EJGLHeqTJYQgJabOKqLor9FWEQvJdA/W4EvCWPE+3mA4PmYq2Dr9efO26VSp8SuWzwxTHqCRd3a8jpFjzqGRyFVeFYLK1Y5Px142klpgmT8A+iVuod0tPTrQk=
+	t=1746645025; cv=none; b=MEvOCwxbTSr667dEXesbITuhtMlqfnS4ei6xXnKu4wj0u0dgGek1wcrYZ0cWyEFu/LpBCCVdXIzDSpcfx8EFMJdkypkuW7ERlwMb0fXw02Lkw5OWlXrLfpfVElfV8Cu6YtkC/LRWhYsMEQqanvLHZnMdVXOVIbcvyCY7o0RuEWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746645022; c=relaxed/simple;
-	bh=/y1i7yewZkHk/KyZnZl3kaA8la84BNf1BAPuec+0/LI=;
+	s=arc-20240116; t=1746645025; c=relaxed/simple;
+	bh=BI3bty+ulRHINAXhaehLIHsZbTO3w2cWVWRpggtYnNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W2ALJTYw3aEEfjxNOp/ZoCsnBP482p4Yf3YWCIqf3p5LM7ra7sq6jDRt0KzRSGYCWSRlBTlKnBXBrwUhGOIRpnCz8KzA70DzBW9/lGxhRWdrFSq+ouZGXpnJgJnxDC3J09O/gTFBu6MKXyrwQ6a6BMmJm3yvAAZowy2kpIyqfKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snFonUBX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eA6BgO1r++//Ak9k6GQeeeSOmgrC7skvnqNZrJDzNiA9FWSl8XvUtYO/z+VOt492F62Utm/oUdH2Nqd+aHwMhF0fd58Wl0T/ZflBzUOHz+DIjicOroV+3wiIPtRvCW20xsO8znjY7V62IKbVPWblQmMCdUeYJRNfidwWiQ8URDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XI5Esivi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snFonUBX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE96DC4CEE2;
-	Wed,  7 May 2025 19:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XI5Esivi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE2CC4CEE2;
+	Wed,  7 May 2025 19:10:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1746645022;
-	bh=/y1i7yewZkHk/KyZnZl3kaA8la84BNf1BAPuec+0/LI=;
+	s=korg; t=1746645024;
+	bh=BI3bty+ulRHINAXhaehLIHsZbTO3w2cWVWRpggtYnNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=snFonUBXBkXwyRhVTe5UE5wnVuOmaZpbSXBV+t13kEA7RX8OBFiUTwF+7+GNVHauD
-	 eD1g9GyBi/0/yvki7rvRPgczT6sJZzfxselvS6SnaugCV1k/h3swhbUanOufGelIbo
-	 gXR8IrcQz0fH1ogK3Q2Qeh2hrHb9hRunkaupGvX8=
+	b=XI5EsiviJadJVEnw7jR8jSMXZArdHP63PzdEs6V01NNje2wLuKhqSlq7IVYIU8wBM
+	 r3O6fDdT0I6R0vAChf6+eVeE+qwI0sfepmkRbGSOb03zyJSMIwq40DyzzNCD24NdnX
+	 SCasmSlHZmlI1p9uKkL0iQCa11zwU/9/QE2DlC+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/129] powerpc/boot: Fix dash warning
-Date: Wed,  7 May 2025 20:39:48 +0200
-Message-ID: <20250507183815.645458260@linuxfoundation.org>
+Subject: [PATCH 6.6 070/129] net_sched: ets: Fix double list add in class with netem as child qdisc
+Date: Wed,  7 May 2025 20:40:06 +0200
+Message-ID: <20250507183816.358343570@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507183813.500572371@linuxfoundation.org>
 References: <20250507183813.500572371@linuxfoundation.org>
@@ -52,51 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Madhavan Srinivasan <maddy@linux.ibm.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit e3f506b78d921e48a00d005bea5c45ec36a99240 ]
+[ Upstream commit 1a6d0c00fa07972384b0c308c72db091d49988b6 ]
 
-'commit b2accfe7ca5b ("powerpc/boot: Check for ld-option support")' suppressed
-linker warnings, but the expressed used did not go well with POSIX shell (dash)
-resulting with this warning
+As described in Gerrard's report [1], there are use cases where a netem
+child qdisc will make the parent qdisc's enqueue callback reentrant.
+In the case of ets, there won't be a UAF, but the code will add the same
+classifier to the list twice, which will cause memory corruption.
 
-arch/powerpc/boot/wrapper: 237: [: 0: unexpected operator
-ld: warning: arch/powerpc/boot/zImage.epapr has a LOAD segment with RWX permissions
+In addition to checking for qlen being zero, this patch checks whether
+the class was already added to the active_list (cl_is_active) before
+doing the addition to cater for the reentrant case.
 
-Fix the check to handle the reported warning. Patch also fixes
-couple of shellcheck reported errors for the same line.
+[1] https://lore.kernel.org/netdev/CAHcdcOm+03OD2j6R0=YHKqmy=VgJ8xEOKuP6c7mSgnp-TEJJbw@mail.gmail.com/
 
-In arch/powerpc/boot/wrapper line 237:
-if [ $(${CROSS}ld -v --no-warn-rwx-segments &>/dev/null; echo $?) -eq 0 ]; then
-     ^-- SC2046 (warning): Quote this to prevent word splitting.
-       ^------^ SC2086 (info): Double quote to prevent globbing and word splitting.
-                                            ^---------^ SC3020 (warning): In POSIX sh, &> is undefined.
-
-Fixes: b2accfe7ca5b ("powerpc/boot: Check for ld-option support")
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Suggested-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Reviewed-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250423082154.30625-1-maddy@linux.ibm.com
+Fixes: 37d9cf1a3ce3 ("sched: Fix detection of empty queues in child qdiscs")
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20250425220710.3964791-4-victor@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/boot/wrapper | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_ets.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/boot/wrapper b/arch/powerpc/boot/wrapper
-index fea9694f1047e..ddb02cf0caaf5 100755
---- a/arch/powerpc/boot/wrapper
-+++ b/arch/powerpc/boot/wrapper
-@@ -234,7 +234,7 @@ fi
+diff --git a/net/sched/sch_ets.c b/net/sched/sch_ets.c
+index 9fd70462b41d5..18269f86d21ef 100644
+--- a/net/sched/sch_ets.c
++++ b/net/sched/sch_ets.c
+@@ -74,6 +74,11 @@ static const struct nla_policy ets_class_policy[TCA_ETS_MAX + 1] = {
+ 	[TCA_ETS_QUANTA_BAND] = { .type = NLA_U32 },
+ };
  
- # suppress some warnings in recent ld versions
- nowarn="-z noexecstack"
--if [ $(${CROSS}ld -v --no-warn-rwx-segments &>/dev/null; echo $?) -eq 0 ]; then
-+if "${CROSS}ld" -v --no-warn-rwx-segments >/dev/null 2>&1; then
- 	nowarn="$nowarn --no-warn-rwx-segments"
- fi
++static bool cl_is_active(struct ets_class *cl)
++{
++	return !list_empty(&cl->alist);
++}
++
+ static int ets_quantum_parse(struct Qdisc *sch, const struct nlattr *attr,
+ 			     unsigned int *quantum,
+ 			     struct netlink_ext_ack *extack)
+@@ -416,7 +421,6 @@ static int ets_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 	struct ets_sched *q = qdisc_priv(sch);
+ 	struct ets_class *cl;
+ 	int err = 0;
+-	bool first;
  
+ 	cl = ets_classify(skb, sch, &err);
+ 	if (!cl) {
+@@ -426,7 +430,6 @@ static int ets_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		return err;
+ 	}
+ 
+-	first = !cl->qdisc->q.qlen;
+ 	err = qdisc_enqueue(skb, cl->qdisc, to_free);
+ 	if (unlikely(err != NET_XMIT_SUCCESS)) {
+ 		if (net_xmit_drop_count(err)) {
+@@ -436,7 +439,7 @@ static int ets_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		return err;
+ 	}
+ 
+-	if (first && !ets_class_is_strict(q, cl)) {
++	if (!cl_is_active(cl) && !ets_class_is_strict(q, cl)) {
+ 		list_add_tail(&cl->alist, &q->active);
+ 		cl->deficit = cl->quantum;
+ 	}
 -- 
 2.39.5
 
