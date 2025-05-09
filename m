@@ -1,138 +1,100 @@
-Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B99222576
-	for <patches@lists.linux.dev>; Fri,  9 May 2025 10:03:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BF9269AEE;
+	Fri,  9 May 2025 10:58:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746785013; cv=none; b=btQF+7dLls3uy8urANY1Rb7ZkCOwEAUUQgBm1kgGU1M7QC6OMug7yJBXFm00P40RRy5ceRsJTLxdIjYqs2HqrUCbhqQnxA1YGCSutb53be9I4a1+12PNqEfrBEF2W1F0irvLqE5hglbt5wvM8x95lNHA3KAF/XlU/1csryvEBmQ=
+	t=1746788287; cv=none; b=OJN+wSE0Kmz8HG0fbGqhC7NalYaW/RfVtpCRB/JXsYLlh447Y/bQIIZtusaEFbVnSmJhFgG2xaUj+9ypqZWH5vzDk6TBfjdytHbMStTeZFIt0IveHi4Eyvm/USQoPGAcSrB2xJERynkV8050U0mmB1D9sUqAS1INExgMAMRDQkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746785013; c=relaxed/simple;
-	bh=cJeBvAWk5V7QMXha8hOE8yPmQyzAgTiQwMe3aVFYiEo=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=pjwKLGBIukDcHyes1+xMjsrTH8ftCkfqaL3HoLV52EKEI1Ts+r3PPIVptiCFF2qn/4kf0uh9ZXHlaEiJhgxq+3t6fSDIvGHIzeMqjAXjWZGqwJAwvUcJwyq6wKlOqgt5h/lwX9HG9vFo8Bv3YbpK4zAPDNm6CzuK8JEGyQCytoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250810.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5498UaTs012563;
-	Fri, 9 May 2025 03:03:29 -0700
-Received: from ala-exchng02.corp.ad.wrs.com (ala-exchng02.wrs.com [147.11.82.254])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 46dee3f12s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Fri, 09 May 2025 03:03:29 -0700 (PDT)
-Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
- ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Fri, 9 May 2025 03:03:28 -0700
-Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
- ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Fri, 9 May 2025 03:03:26 -0700
-From: <jianqi.ren.cn@windriver.com>
-To: <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-        <jianqi.ren.cn@windriver.com>, <clm@fb.com>, <josef@toxicpanda.com>,
-        <dsterba@suse.com>, <linux-btrfs@vger.kernel.org>, <wqu@suse.com>,
-        <fdmanana@suse.com>
-Subject: [PATCH 5.10.y] btrfs: don't BUG_ON() when 0 reference count at btrfs_lookup_extent_info()
-Date: Fri, 9 May 2025 18:03:25 +0800
-Message-ID: <20250509100325.3246741-1-jianqi.ren.cn@windriver.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1746788287; c=relaxed/simple;
+	bh=Ob37pOMqnXBZIHadN4tX/Ro7PwfUMbXIaw5YzlFxD6k=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=uSqsmhpAJ/dm7aoLuDN67Unfdl1jMLE5qKD2Ubk2QF/qpOEwwyVVIhUkTp3B+XkzjSD1QgkD6iHs6WmVv0b0xRhaXKRrjKbkx/0Yb/oRe004ciskJLl3k0mBk0AjwGCQNUOaUyCpoA3hsGLaDIHlINPfVymQKH5+RHMA41MEjKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KOH4Ha+b; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KOH4Ha+b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E8D4C4CEE4;
+	Fri,  9 May 2025 10:58:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746788287;
+	bh=Ob37pOMqnXBZIHadN4tX/Ro7PwfUMbXIaw5YzlFxD6k=;
+	h=From:Date:Subject:To:Cc:From;
+	b=KOH4Ha+bXDRPcAccfce8JgYpzjoB9IckPltJqufP6ipaYC7wV2znMKVDfSWxpB2X4
+	 aP+nREyXBRC8wgB4TeWgNzvF+zJQgx3BBOAvlggQPGcKcUL0obkiznaY7Tu2oUjxJl
+	 oW1+DyJo4+FeSmliyd57DtJ6pSvET01XOEKk0L9E5+0DYYxjqEQgFsfRrRVggn/Dsu
+	 tCc/IoLuAfVN1kJrkgiicKrV5DNEpAXHo5vOKEYsXPh2T9Cv3Mvl40ri6cMFALetuh
+	 vebZmGXf+UFUEStB+ev3JxhFOP/BO9T31Uxk4Z4UVg7x1bCzpzYhT3xE7Wu/pR+NVp
+	 06rSPppUH+X6g==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 09 May 2025 11:58:01 +0100
+Subject: [PATCH] platform: mellanox: nvsw-sn2200: Fix .items in
+ nvsw_sn2201_busbar_hotplug
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Proofpoint-ORIG-GUID: lNkUu6k4qk0RmGKDbb333UEK1G6mz8lB
-X-Authority-Analysis: v=2.4 cv=Pd3/hjhd c=1 sm=1 tr=0 ts=681dd2f1 cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=dt9VzEwgFbYA:10 a=iox4zFpeAAAA:8 a=t7CeM3EgAAAA:8 a=cm_jlSa5FMeQIn3fhkUA:9 a=WzC6qhA0u3u7Ye7llzcV:22
- a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-GUID: lNkUu6k4qk0RmGKDbb333UEK1G6mz8lB
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA5MDA5NiBTYWx0ZWRfXy8SZi3Equ5Qe SvVqfI/Ec8V/EsXcJZcssPT6zSbzxqaQhGf4uB6b6/MbyC3r220FWglSnGJgsilA49eEXl5toV+ 4YSD6KHa8RZlzh8G030O+deYhdS8RyY68tmaqE90uGmMfuz3J60HZloePiyU3MvqWdJKt0asKZA
- VwZ1SxQFVNWZX/TnoEhB9mioo/U3ch4E9Go8AL8Hskk65G1UEefsl8SKlXGzNw+jqTvzpXrpmks MPbogws+RwTQm1KGelq/0hBReA49g16m007VAdgSREChqjsFK/d4MNGKI4ozXOxG/zvNB0ZKf4L OMDh87sFXizNuI6X8Iv7LTVBibBh2gLq2jizl1LnAZ2n4pAw1ApeGdwWch3ZNowgulizmYbkNsU
- 8QKGSL1kxuInkgHM/77ig4JAHcbaWv/DjBDclvR4mhrEk+qUj4hZk3O6rxWFx9gsw5fEychu
-X-Sensitive_Customer_Information: Yes
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-09_04,2025-05-08_04,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- priorityscore=1501 mlxscore=0 suspectscore=0 spamscore=0 malwarescore=0
- impostorscore=0 clxscore=1015 mlxlogscore=873 phishscore=0 bulkscore=0
- lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.21.0-2504070000
- definitions=main-2505090096
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250509-nvsw-sn2200-fix-items-busbar-hotplug-v1-1-8844fff38dc8@kernel.org>
+X-B4-Tracking: v=1; b=H4sIALnfHWgC/x2NQQqDQAwAvyI5NxBDt7V+pXhYNWrArrJRK4h/d
+ /E4MMwcYBJVDMrsgCibmk4hQf7IoBl86AW1TQxM7MjRB8Nmf7TATISd7qiL/Azr1WofcZiWeVx
+ 7fPPLEZEvnm0HKTVHSe69+VbneQHKAcObdgAAAA==
+X-Change-ID: 20250509-nvsw-sn2200-fix-items-busbar-hotplug-7265000a84df
+To: Hans de Goede <hdegoede@redhat.com>, 
+ =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+ Vadim Pasternak <vadimp@nvidia.com>
+Cc: Michael Shych <michaelsh@nvidia.com>, 
+ platform-driver-x86@vger.kernel.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1716; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=Ob37pOMqnXBZIHadN4tX/Ro7PwfUMbXIaw5YzlFxD6k=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDBmy9/eyhrKrSD968/nb4dx0b+6z6pPyfJnzxBc3z3jqP
+ 0Xl34XzHaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAiM+cyMry7/ObnNMmcG5/+
+ 7/qTy6K00WmeHcPafTuuMaia3e08HybF8E9ldu0Dk+s/tk5jyTRe9pzrA+8Knd/uAYt+KByX87D
+ lC2MFAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-From: Filipe Manana <fdmanana@suse.com>
+Clang warns (or errors with CONFIG_WERROR=y):
 
-[ Upstream commit 28cb13f29faf6290597b24b728dc3100c019356f ]
+  drivers/platform/mellanox/nvsw-sn2201.c:531:32: error: variable 'nvsw_sn2201_busbar_items' is not needed and will not be emitted [-Werror,-Wunneeded-internal-declaration]
+    531 | static struct mlxreg_core_item nvsw_sn2201_busbar_items[] = {
+        |                                ^~~~~~~~~~~~~~~~~~~~~~~~
 
-Instead of doing a BUG_ON() handle the error by returning -EUCLEAN,
-aborting the transaction and logging an error message.
+nvsw_sn2201_busbar_items is only used in ARRAY_SIZE(), which uses
+sizeof(), so this variable is only used at compile time. It appears that
+this may be a copy and paste issue, so use nvsw_sn2201_busbar_items as
+the .items member in nvsw_sn2201_busbar_hotplug, clearing up the
+warning.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[Minor conflict resolved due to code context change.]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
+Fixes: 56b0bb7f9069 ("platform: mellanox: nvsw-sn2200: Add support for new system flavour")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
-Verified the build test
----
- fs/btrfs/extent-tree.c | 25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ drivers/platform/mellanox/nvsw-sn2201.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index cf2b65be04b5..d652d4091b2b 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -174,6 +174,14 @@ int btrfs_lookup_extent_info(struct btrfs_trans_handle *trans,
- 			ei = btrfs_item_ptr(leaf, path->slots[0],
- 					    struct btrfs_extent_item);
- 			num_refs = btrfs_extent_refs(leaf, ei);
-+			if (unlikely(num_refs == 0)) {
-+				ret = -EUCLEAN;
-+				btrfs_err(fs_info,
-+			"unexpected zero reference count for extent item (%llu %u %llu)",
-+					  key.objectid, key.type, key.offset);
-+				btrfs_abort_transaction(trans, ret);
-+				goto out_free;
-+			}
- 			extent_flags = btrfs_extent_flags(leaf, ei);
- 		} else {
- 			ret = -EINVAL;
-@@ -185,8 +193,6 @@ int btrfs_lookup_extent_info(struct btrfs_trans_handle *trans,
+diff --git a/drivers/platform/mellanox/nvsw-sn2201.c b/drivers/platform/mellanox/nvsw-sn2201.c
+index 8c31189a94dd..db31c8bf2255 100644
+--- a/drivers/platform/mellanox/nvsw-sn2201.c
++++ b/drivers/platform/mellanox/nvsw-sn2201.c
+@@ -551,7 +551,7 @@ static struct mlxreg_core_item nvsw_sn2201_busbar_items[] = {
  
- 			goto out_free;
- 		}
--
--		BUG_ON(num_refs == 0);
- 	} else {
- 		num_refs = 0;
- 		extent_flags = 0;
-@@ -216,10 +222,19 @@ int btrfs_lookup_extent_info(struct btrfs_trans_handle *trans,
- 			goto search_again;
- 		}
- 		spin_lock(&head->lock);
--		if (head->extent_op && head->extent_op->update_flags)
-+		if (head->extent_op && head->extent_op->update_flags) {
- 			extent_flags |= head->extent_op->flags_to_set;
--		else
--			BUG_ON(num_refs == 0);
-+		} else if (unlikely(num_refs == 0)) {
-+			spin_unlock(&head->lock);
-+			mutex_unlock(&head->mutex);
-+			spin_unlock(&delayed_refs->lock);
-+			ret = -EUCLEAN;
-+			btrfs_err(fs_info,
-+			  "unexpected zero reference count for extent %llu (%s)",
-+				  bytenr, metadata ? "metadata" : "data");
-+			btrfs_abort_transaction(trans, ret);
-+			goto out_free;
-+		}
- 
- 		num_refs += head->ref_mod;
- 		spin_unlock(&head->lock);
+ static
+ struct mlxreg_core_hotplug_platform_data nvsw_sn2201_busbar_hotplug = {
+-	.items = nvsw_sn2201_items,
++	.items = nvsw_sn2201_busbar_items,
+ 	.count = ARRAY_SIZE(nvsw_sn2201_busbar_items),
+ 	.cell = NVSW_SN2201_SYS_INT_STATUS_OFFSET,
+ 	.mask = NVSW_SN2201_CPLD_AGGR_BUSBAR_MASK_DEF,
+
+---
+base-commit: 3c415b1df95c06ae4f9bdb166541ab366b862cc2
+change-id: 20250509-nvsw-sn2200-fix-items-busbar-hotplug-7265000a84df
+
+Best regards,
 -- 
-2.34.1
+Nathan Chancellor <nathan@kernel.org>
 
