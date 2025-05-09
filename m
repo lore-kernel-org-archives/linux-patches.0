@@ -1,44 +1,41 @@
 Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A1535976
-	for <patches@lists.linux.dev>; Fri,  9 May 2025 09:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DDE328C86D
+	for <patches@lists.linux.dev>; Fri,  9 May 2025 09:51:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.178.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746783554; cv=none; b=BaMRhmZYFEX1IMnP1tb6hHDmcyM6OmysGzHWQ0I/uswPYNvt5W1+xCaDIbxuOXx+RYA7nomBqMA/dH2uWI4MVip4w8ooE7M8geZ0VInZ8anlXoWyy7geVwcgfhnBhhnjMqr8HDyQP3JKXj+p8WoTMYDmYXmVNn1GjLXtPfIPW9c=
+	t=1746784284; cv=none; b=UoYt7SYaf+JA93SlmUXvmlkUOsSgYXKe2vCVMEe7kpDN+QDr/sgTfwtspN340DwVxaSpreDqQXaKe1rp73LgmZ2FwRr4DKD23R6qEFkH6/hbzuJWNRCSsQ1lOAzVIdYZwcTprpc6iNEMQdKLJQ3AQBqQiHKY+GR3eBGHvNgykYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746783554; c=relaxed/simple;
-	bh=Ctc2LlgT/TBtEZb9BwfLgoa2yV+uYDSFls2xwrat8Os=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=OvDBc90Ruh2fyN4hhc/GdW1Ddz9aXX/F6rhIPW3YAIZGP3QNjJ0DzMirB8lIE/K4N8BKVMDaGpc90Whettzd/kkN1yGt4dhUYzrn7DwLHy3W59FCrioNXDBB5fWLbeVbh4tfkjItVSUua7iGYYwXCs6kkQ3xf+z+qawf2v31EPo=
+	s=arc-20240116; t=1746784284; c=relaxed/simple;
+	bh=d+lSoU9WOMdXgvMp5Q1zAJQSs3xXOLPO8P24pOZXoKc=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=EB0JTMAJDek/SBt8QffmtxhEpYFmta0L6CpCFpoWrmsoU3z41NHOx6ODJ3sDkaz/UZkg98LTmNEf5RYqZ0WxLMGCJ9THLMuiUEA5oWHX9e+hzB1qHkBjFNHn4lG6lQgCowLbKtBKH+m+jXQBHQm/0XgLrTUT0Cfl0p+d627gGvU=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.178.238
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250812.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5499AZvK004245;
-	Fri, 9 May 2025 09:38:34 GMT
+Received: from pps.filterd (m0250811.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54970X4Q030883;
+	Fri, 9 May 2025 09:51:19 GMT
 Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 46e430pca6-1
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 46d8c175xd-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Fri, 09 May 2025 09:38:34 +0000 (GMT)
+	Fri, 09 May 2025 09:51:19 +0000 (GMT)
 Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
  ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Fri, 9 May 2025 02:38:33 -0700
+ 15.1.2507.43; Fri, 9 May 2025 02:51:18 -0700
 Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
  ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Fri, 9 May 2025 02:38:28 -0700
+ 15.1.2507.43 via Frontend Transport; Fri, 9 May 2025 02:51:15 -0700
 From: <jianqi.ren.cn@windriver.com>
 To: <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
 CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-        <jianqi.ren.cn@windriver.com>, <chuck.lever@oracle.com>,
-        <jlayton@kernel.org>, <trond.myklebust@hammerspace.com>,
-        <anna@kernel.org>, <davem@davemloft.net>, <edumazet@google.com>,
-        <kuba@kernel.org>, <pabeni@redhat.com>, <ebiederm@xmission.com>,
-        <linux-nfs@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <liujian56@huawei.com>, <kuniyu@amazon.com>
-Subject: [PATCH 6.1.y] sunrpc: fix one UAF issue caused by sunrpc kernel tcp socket
-Date: Fri, 9 May 2025 17:38:28 +0800
-Message-ID: <20250509093828.3243368-1-jianqi.ren.cn@windriver.com>
+        <jianqi.ren.cn@windriver.com>, <clm@fb.com>, <josef@toxicpanda.com>,
+        <dsterba@suse.com>, <linux-btrfs@vger.kernel.org>, <wqu@suse.com>,
+        <fdmanana@suse.com>
+Subject: [PATCH 6.6.y] btrfs: don't BUG_ON() when 0 reference count at btrfs_lookup_extent_info()
+Date: Fri, 9 May 2025 17:51:14 +0800
+Message-ID: <20250509095114.3245010-1-jianqi.ren.cn@windriver.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -48,186 +45,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Authority-Analysis: v=2.4 cv=BajY0qt2 c=1 sm=1 tr=0 ts=681dcd1a cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=dt9VzEwgFbYA:10 a=i0EeH86SAAAA:8 a=VwQbUJbxAAAA:8 a=vggBfdFIAAAA:8 a=SEtKQCMJAAAA:8 a=t7CeM3EgAAAA:8
- a=1f2QqqMRGjE1UMYEyBAA:9 a=kyTSok1ft720jgMXX5-3:22 a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-GUID: WASk0LQFlJwxy6C-Cknx7dsR8T8oJvlv
-X-Proofpoint-ORIG-GUID: WASk0LQFlJwxy6C-Cknx7dsR8T8oJvlv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA5MDA5MiBTYWx0ZWRfX+RG/N2dPGMh2 j1//+/kOAUg8zN2uXHGG9d8/9VJvmJ5mBMOGtlwXe3T47RjnaI0AJMm6yGv6B/2Vdnt38soIz9q WgU7xeC62TecBL8aqRaILiCaSpRRZVRecmXv+YiWkZYoZ1+mSXv7EFCQyPzX6n7WVpWN2eivLK8
- AFQPdvSP3yDbX27i7sbDR86n/EdPXevd7vcO8fXaElAGmV+FYFUZQ2HMb+hp143h4l2sKnQNGFI MSd2FXU2tO8+Uem5p+Ds9KM7Cp+FETCSuwvF/+wH1U+hYyJwL/IdLt5ORnosQrqqblBH28mkkIe BFe0K3O24hEIIrZlKUsAloM3WcG43YeKGnE1YGeA8fHKU6O8UZ4RmCdBThaZoR8CEIHBmcVSY/q
- TOS5kqXvNkoiRllesLRtM17jhLY+5hE6Fy9v4d8xCy8UR0TF/zhXV+NktlDPhjeY4ljmU1fk
+X-Authority-Analysis: v=2.4 cv=NIjV+16g c=1 sm=1 tr=0 ts=681dd017 cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=dt9VzEwgFbYA:10 a=iox4zFpeAAAA:8 a=t7CeM3EgAAAA:8 a=cm_jlSa5FMeQIn3fhkUA:9 a=WzC6qhA0u3u7Ye7llzcV:22
+ a=FdTzh2GWekK77mhwV6Dw:22
+X-Proofpoint-GUID: sOA-Ia8K_QMhNvex2gnJ07Tf4xbbIyYr
+X-Proofpoint-ORIG-GUID: sOA-Ia8K_QMhNvex2gnJ07Tf4xbbIyYr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA5MDA5NSBTYWx0ZWRfXx5zwhR94oQrT o2JRLFMhgwB7QSVCo2fTAE6V5ymDgVnonARq52L9djRLuA2Rk8D6M7qN3Xawc+DRNaLIGuhQm0v 8B7LKRmFV6BNoQDpft8JAY+d4XvO7ym+lwR9OTLFKVHaG8KRR6FMfgyxnH9ryXDv0N4VrloOta3
+ jiJpk4IaN+xSnmmcGoTNaLoqh6hgCVkQd/VavYNrU8O8SZaSr0WPqM/8rIp2lW4nEb8pxv9m+CW sk5qVA6g9gThHSgkJcLlZRAp0SVGNr01TdHa05z7pLzGc9CSaWZKimwWFtZCjGDlrYb2+0NhphH UbyzpexxCm0gCRMC+00FS8YQZgrT9bWahT6XTGk+scTjYagnRYLbOzBK4EFodVRzLVUMXynapGB
+ PiWXwsLv5WcDCNO0oI4SyQO2iZzmZBp51kLo+49EUQXNDCU7BqKAa306ARi/ej+mB7CQj9d5
 X-Sensitive_Customer_Information: Yes
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-09_03,2025-05-08_04,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
- lowpriorityscore=0 phishscore=0 spamscore=0 priorityscore=1501 mlxscore=0
- impostorscore=0 bulkscore=0 adultscore=0 malwarescore=0 mlxlogscore=999
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.21.0-2504070000
- definitions=main-2505090092
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ priorityscore=1501 bulkscore=0 mlxscore=0 spamscore=0 malwarescore=0
+ clxscore=1011 adultscore=0 impostorscore=0 mlxlogscore=861 phishscore=0
+ lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.21.0-2504070000
+ definitions=main-2505090095
 
-From: Liu Jian <liujian56@huawei.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 3f23f96528e8fcf8619895c4c916c52653892ec1 ]
+[ Upstream commit 28cb13f29faf6290597b24b728dc3100c019356f ]
 
-BUG: KASAN: slab-use-after-free in tcp_write_timer_handler+0x156/0x3e0
-Read of size 1 at addr ffff888111f322cd by task swapper/0/0
+Instead of doing a BUG_ON() handle the error by returning -EUCLEAN,
+aborting the transaction and logging an error message.
 
-CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.12.0-rc4-dirty #7
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1
-Call Trace:
- <IRQ>
- dump_stack_lvl+0x68/0xa0
- print_address_description.constprop.0+0x2c/0x3d0
- print_report+0xb4/0x270
- kasan_report+0xbd/0xf0
- tcp_write_timer_handler+0x156/0x3e0
- tcp_write_timer+0x66/0x170
- call_timer_fn+0xfb/0x1d0
- __run_timers+0x3f8/0x480
- run_timer_softirq+0x9b/0x100
- handle_softirqs+0x153/0x390
- __irq_exit_rcu+0x103/0x120
- irq_exit_rcu+0xe/0x20
- sysvec_apic_timer_interrupt+0x76/0x90
- </IRQ>
- <TASK>
- asm_sysvec_apic_timer_interrupt+0x1a/0x20
-RIP: 0010:default_idle+0xf/0x20
-Code: 4c 01 c7 4c 29 c2 e9 72 ff ff ff 90 90 90 90 90 90 90 90 90 90 90 90
- 90 90 90 90 f3 0f 1e fa 66 90 0f 00 2d 33 f8 25 00 fb f4 <fa> c3 cc cc cc
- cc 66 66 2e 0f 1f 84 00 00 00 00 00 90 90 90 90 90
-RSP: 0018:ffffffffa2007e28 EFLAGS: 00000242
-RAX: 00000000000f3b31 RBX: 1ffffffff4400fc7 RCX: ffffffffa09c3196
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffff9f00590f
-RBP: 0000000000000000 R08: 0000000000000001 R09: ffffed102360835d
-R10: ffff88811b041aeb R11: 0000000000000001 R12: 0000000000000000
-R13: ffffffffa202d7c0 R14: 0000000000000000 R15: 00000000000147d0
- default_idle_call+0x6b/0xa0
- cpuidle_idle_call+0x1af/0x1f0
- do_idle+0xbc/0x130
- cpu_startup_entry+0x33/0x40
- rest_init+0x11f/0x210
- start_kernel+0x39a/0x420
- x86_64_start_reservations+0x18/0x30
- x86_64_start_kernel+0x97/0xa0
- common_startup_64+0x13e/0x141
- </TASK>
-
-Allocated by task 595:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- __kasan_slab_alloc+0x87/0x90
- kmem_cache_alloc_noprof+0x12b/0x3f0
- copy_net_ns+0x94/0x380
- create_new_namespaces+0x24c/0x500
- unshare_nsproxy_namespaces+0x75/0xf0
- ksys_unshare+0x24e/0x4f0
- __x64_sys_unshare+0x1f/0x30
- do_syscall_64+0x70/0x180
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Freed by task 100:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3b/0x60
- __kasan_slab_free+0x54/0x70
- kmem_cache_free+0x156/0x5d0
- cleanup_net+0x5d3/0x670
- process_one_work+0x776/0xa90
- worker_thread+0x2e2/0x560
- kthread+0x1a8/0x1f0
- ret_from_fork+0x34/0x60
- ret_from_fork_asm+0x1a/0x30
-
-Reproduction script:
-
-mkdir -p /mnt/nfsshare
-mkdir -p /mnt/nfs/netns_1
-mkfs.ext4 /dev/sdb
-mount /dev/sdb /mnt/nfsshare
-systemctl restart nfs-server
-chmod 777 /mnt/nfsshare
-exportfs -i -o rw,no_root_squash *:/mnt/nfsshare
-
-ip netns add netns_1
-ip link add name veth_1_peer type veth peer veth_1
-ifconfig veth_1_peer 11.11.0.254 up
-ip link set veth_1 netns netns_1
-ip netns exec netns_1 ifconfig veth_1 11.11.0.1
-
-ip netns exec netns_1 /root/iptables -A OUTPUT -d 11.11.0.254 -p tcp \
-	--tcp-flags FIN FIN  -j DROP
-
-(note: In my environment, a DESTROY_CLIENTID operation is always sent
- immediately, breaking the nfs tcp connection.)
-ip netns exec netns_1 timeout -s 9 300 mount -t nfs -o proto=tcp,vers=4.1 \
-	11.11.0.254:/mnt/nfsshare /mnt/nfs/netns_1
-
-ip netns del netns_1
-
-The reason here is that the tcp socket in netns_1 (nfs side) has been
-shutdown and closed (done in xs_destroy), but the FIN message (with ack)
-is discarded, and the nfsd side keeps sending retransmission messages.
-As a result, when the tcp sock in netns_1 processes the received message,
-it sends the message (FIN message) in the sending queue, and the tcp timer
-is re-established. When the network namespace is deleted, the net structure
-accessed by tcp's timer handler function causes problems.
-
-To fix this problem, let's hold netns refcnt for the tcp kernel socket as
-done in other modules. This is an ugly hack which can easily be backported
-to earlier kernels. A proper fix which cleans up the interfaces will
-follow, but may not be so easy to backport.
-
-Fixes: 26abe14379f8 ("net: Modify sk_alloc to not reference count the netns of kernel sockets.")
-Signed-off-by: Liu Jian <liujian56@huawei.com>
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-[Routine __netns_tracker_free() is not supported in 6.1 and so using
-netns_tracker_free() instead.]
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[Minor conflict resolved due to code context change.]
 Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 ---
 Verified the build test
 ---
- net/sunrpc/svcsock.c  | 4 ++++
- net/sunrpc/xprtsock.c | 7 +++++++
- 2 files changed, 11 insertions(+)
+ fs/btrfs/extent-tree.c | 25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
-diff --git a/net/sunrpc/svcsock.c b/net/sunrpc/svcsock.c
-index 23b4c728de59..654579553edb 100644
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -1457,6 +1457,10 @@ static struct svc_xprt *svc_create_socket(struct svc_serv *serv,
- 	newlen = error;
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index af03a1c6ba76..ef77d4208510 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -164,6 +164,14 @@ int btrfs_lookup_extent_info(struct btrfs_trans_handle *trans,
+ 			ei = btrfs_item_ptr(leaf, path->slots[0],
+ 					    struct btrfs_extent_item);
+ 			num_refs = btrfs_extent_refs(leaf, ei);
++			if (unlikely(num_refs == 0)) {
++				ret = -EUCLEAN;
++				btrfs_err(fs_info,
++			"unexpected zero reference count for extent item (%llu %u %llu)",
++					  key.objectid, key.type, key.offset);
++				btrfs_abort_transaction(trans, ret);
++				goto out_free;
++			}
+ 			extent_flags = btrfs_extent_flags(leaf, ei);
+ 		} else {
+ 			ret = -EUCLEAN;
+@@ -177,8 +185,6 @@ int btrfs_lookup_extent_info(struct btrfs_trans_handle *trans,
  
- 	if (protocol == IPPROTO_TCP) {
-+		netns_tracker_free(net, &sock->sk->ns_tracker);
-+		sock->sk->sk_net_refcnt = 1;
-+		get_net_track(net, &sock->sk->ns_tracker, GFP_KERNEL);
-+		sock_inuse_add(net, 1);
- 		if ((error = kernel_listen(sock, 64)) < 0)
- 			goto bummer;
- 	}
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index b9dc8e197dde..181474105e4c 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -1855,6 +1855,13 @@ static struct socket *xs_create_sock(struct rpc_xprt *xprt,
- 		goto out;
- 	}
+ 			goto out_free;
+ 		}
+-
+-		BUG_ON(num_refs == 0);
+ 	} else {
+ 		num_refs = 0;
+ 		extent_flags = 0;
+@@ -208,10 +214,19 @@ int btrfs_lookup_extent_info(struct btrfs_trans_handle *trans,
+ 			goto search_again;
+ 		}
+ 		spin_lock(&head->lock);
+-		if (head->extent_op && head->extent_op->update_flags)
++		if (head->extent_op && head->extent_op->update_flags) {
+ 			extent_flags |= head->extent_op->flags_to_set;
+-		else
+-			BUG_ON(num_refs == 0);
++		} else if (unlikely(num_refs == 0)) {
++			spin_unlock(&head->lock);
++			mutex_unlock(&head->mutex);
++			spin_unlock(&delayed_refs->lock);
++			ret = -EUCLEAN;
++			btrfs_err(fs_info,
++			  "unexpected zero reference count for extent %llu (%s)",
++				  bytenr, metadata ? "metadata" : "data");
++			btrfs_abort_transaction(trans, ret);
++			goto out_free;
++		}
  
-+	if (protocol == IPPROTO_TCP) {
-+		netns_tracker_free(xprt->xprt_net, &sock->sk->ns_tracker);
-+		sock->sk->sk_net_refcnt = 1;
-+		get_net_track(xprt->xprt_net, &sock->sk->ns_tracker, GFP_KERNEL);
-+		sock_inuse_add(xprt->xprt_net, 1);
-+	}
-+
- 	filp = sock_alloc_file(sock, O_NONBLOCK, NULL);
- 	if (IS_ERR(filp))
- 		return ERR_CAST(filp);
+ 		num_refs += head->ref_mod;
+ 		spin_unlock(&head->lock);
 -- 
 2.34.1
 
