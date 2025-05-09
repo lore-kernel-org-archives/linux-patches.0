@@ -1,150 +1,231 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A891295D9E;
-	Fri,  9 May 2025 14:13:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA4D13C3CD
+	for <patches@lists.linux.dev>; Fri,  9 May 2025 14:46:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746800012; cv=none; b=bxkNwNRvA/8lOIv2Hy+BcM8id5UpVvvptvsGppcpivmtWr4bJ1ldRsfB/taUDDbCgS6nswHBHVqyqaPjFQIJKqkyVQks/xKx/FzUaHaC0jhEEINcORze7ZmvvbN8NY4ohAP4Sgs3fg2kbIl7RlIj7POh11Mvno1R9YBP7hqXwJk=
+	t=1746802005; cv=none; b=UJHE/Fxndm746KQz/vzN9mp5+psJmSRCVU128n68NyhFNd75SwAHco/l6ATDtswosq49xSYFxfQJ7UInlvuJGxhDYbpwBevfpI/LXqVQrHM9MhlpW2Na7wwR51poNeIavKoJC1S/4j5kOctDzMxF6x458FQXY5WmHKuSSbWg+zQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746800012; c=relaxed/simple;
-	bh=0/dtn/kdBfNqf/vszxB+yWxoYVNi1v0FvDrPLSfbTQY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AVO8MHxo40702NGjLBlgbcEywAqwpGjU+yimH75fdV+VeyM8OYthjGpPr5wd/aNcmpayzEm/VuAeZSXQOJ6VqfiHX+iJwM1sZawxGYtxbH2x73iNBqxby4elweqVmP8yb8z574kLvqqzG9LMtjlHJgSKXwdboHfJgU8sXbKIbOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nNTpvpLZ; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1746802005; c=relaxed/simple;
+	bh=tPVZPWNCOYoPgGgXeIIn2UbDqXC7SXYegkzLCHglCNk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SxkZr9KrozBDw+hocj1mxwmgtmfbRzc6g/t53M4oE7JOh2SGGvkCSsfcW4ZDVsEaoala8nRftxvx4e14IYsQML2Ek/ueIvj/0Z/QxqYoWIDzJqh6bSCzA8MxoaafFNZBf7d7Uy4JlpFML8wQJ5topc8Aawnj0KV3LQ4FgW7i9jY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=BVV9v3me; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nNTpvpLZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1746800011; x=1778336011;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=0/dtn/kdBfNqf/vszxB+yWxoYVNi1v0FvDrPLSfbTQY=;
-  b=nNTpvpLZyO2qudRsV2AjsWADPYqVkv93ka886VEZH+G1+r86+mK/dJJD
-   Zo3hv+sOhVQZzwHmyV9fi0lwGJrT2TFhU3RKk4S1zXH/NStD1KHfqcnp8
-   MYr9jbOb2ZLWKa6gGoZWvCnSCx6piGsq7rDXjaatFvLksCutL1vbl8D0l
-   IeYkk+H/x52bnVnsdpCQUi174YFgCS3lhXdjIS2C92OK6DVr83cgk36ta
-   B2rxX2Pm34U6GRdt2J6y5Z5axcrOxtF5X/nBtbMNfT6zdExCLcjkOXAaO
-   EiVbIRxWhWCYqmk+prcBhpvIrojotcL3R8nNtumSgAQX9VMQhFQVQTeYV
-   A==;
-X-CSE-ConnectionGUID: JEZEMVmAQ1Sqif/cZy33sw==
-X-CSE-MsgGUID: AIFfqj4KS4KFpFFHSJw/8A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="48782057"
-X-IronPort-AV: E=Sophos;i="6.15,275,1739865600"; 
-   d="scan'208";a="48782057"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 May 2025 07:13:28 -0700
-X-CSE-ConnectionGUID: H4zXQepxSMe8aX0MXumPvw==
-X-CSE-MsgGUID: RcgC4DNNQty3MbgoXScnBA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,275,1739865600"; 
-   d="scan'208";a="141580924"
-Received: from lkp-server01.sh.intel.com (HELO 1992f890471c) ([10.239.97.150])
-  by orviesa004.jf.intel.com with ESMTP; 09 May 2025 07:13:22 -0700
-Received: from kbuild by 1992f890471c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uDOTW-000C9N-2m;
-	Fri, 09 May 2025 14:13:18 +0000
-Date: Fri, 9 May 2025 22:13:04 +0800
-From: kernel test robot <lkp@intel.com>
-To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com,
-	kevin.tian@intel.com, corbet@lwn.net, will@kernel.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
-	thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
-	shuah@kernel.org, jsnitsel@redhat.com, nathan@kernel.org,
-	yi.l.liu@intel.com, mshavit@google.com, praan@google.com,
-	zhangzekun11@huawei.com, iommu@lists.linux.dev,
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
-	linux-kselftest@vger.kernel.org, patches@lists.linux.dev,
-	mochs@nvidia.com, alok.a.tiwari@oracle.com, vasant.hegde@amd.com
-Subject: Re: [PATCH v4 14/23] iommufd: Add mmap interface
-Message-ID: <202505092119.UALKhnIX-lkp@intel.com>
-References: <ee9ee287264fd75eb4fc64a63f20d03e9ba18161.1746757630.git.nicolinc@nvidia.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BVV9v3me"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-acb5ec407b1so386626066b.1
+        for <patches@lists.linux.dev>; Fri, 09 May 2025 07:46:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1746802002; x=1747406802; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RqPDd473ZQWcooUPNpRz+CKqf4hWlXZOHvbt8YRzn4w=;
+        b=BVV9v3meKlhUT7OTkn0yykhYkt2BQ3xq5cHxxCrL+Oc8CcxuQ34kFZA6Rgh39k2wxW
+         EwT3TFppRjXzmc8S+WEuchohHuqcjTamQFUm6eZPtmcapA6pEtU97P5wJx9WdRFpKx2c
+         b/H9R7Ry6gILzbpG1G1iw+hXErH/jstQsp8YwduOaKC5K2QiQQKU+mPU1Li8eC3o/4g6
+         +bxn9mQ+L7U6Alpp7wwg1lAoOcf9XShIJaww6QaX3W7aQlDzsDjwbSbTeMW2+AU5BhDV
+         f66miViDk6pVF6X0HcxpCJwnxm1alzxqzOfs/aGEOMM26k3OO40rN+AWyLYFWsWos1wn
+         aLjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746802002; x=1747406802;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RqPDd473ZQWcooUPNpRz+CKqf4hWlXZOHvbt8YRzn4w=;
+        b=remYyW9e/QznZ4LmbQ/FlHEm7s/Jm34jTzNDoP2NaerBS3TufBbydrGITGKwd6SGoU
+         vaGVTyvVrYbioTopd+IpPlV/sXhNpVHgRzTboBmR/Hjj4h7WI9AaDMp4QJ1p4eZKbaW7
+         Hmi8NyJ0IrVE6WhzJ1z9wxdASouErpK44Z1h0z2EvCCfKfY9GkpXJfuvfGqOGxWGGI9x
+         K8ls9brK9dg/xjd+8blHNpkFbVGbDWQYx58Op9kaMTSaHyocSYvgj0o/MdDZ1HykQClK
+         aUBtiHlQTL3LQJYaDR7W2XTxqntO2nDaGoQXiP0poNI249tHOenQxLLQcw0RkMO2kgKk
+         E/uQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUgfoiVYCsZ3i/4pTlXU8A6e6vkrO9yWreStY0Caqutcz5Dl/sAoCCzazygpP7bzuJXyFFr9dm8@lists.linux.dev
+X-Gm-Message-State: AOJu0YyyUtp5HPbyC0De8/C2JpfbnHvMLAgmI2uKRBOp9CHst+roM+6i
+	RGpegc3gj9RgyAmQaXJ+MLxQdHMo89M3B7lUHxmfve+ESQahjjJIuJ1jqjugopn+ELdtp5KCiNs
+	SFpDs04HitIVfkzi0AY/+EgE+HT97nIn5wIdt
+X-Gm-Gg: ASbGncsrOMP+CFHyl/iqI5z66ZgJxzKgjnxFOu+AXXbeDyO5p9u1KaQgwPxVvCP8DhP
+	3ZdOoOHAX76Dc6b+b/BpCd0wT0I8bdAzfgrl4/UlKILYTRT6qNY+NcGp+4MnUPM/aanTRXpFvHs
+	fAU9YaSifHkTIwDdXIWMRKoA8RBodsrmSRkebA+OcPDq+wIJ+Zg3Se
+X-Google-Smtp-Source: AGHT+IEA002KjzYuQN8mBsFnac//gQE6/nlAx3Qg4teok9k7rMWjTs5P9zd3QgSlRedEqT+71xQmXuZHnUh/98J3AIo=
+X-Received: by 2002:a17:907:7e82:b0:ad2:1870:24d6 with SMTP id
+ a640c23a62f3a-ad21915d80fmr422482966b.43.1746802001474; Fri, 09 May 2025
+ 07:46:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ee9ee287264fd75eb4fc64a63f20d03e9ba18161.1746757630.git.nicolinc@nvidia.com>
+References: <20250429003359.375508-1-tony.luck@intel.com> <20250429003359.375508-14-tony.luck@intel.com>
+ <4aa0904d-9332-4796-90d6-d858711fc611@intel.com> <aB0T_Ep2lJzfwjv5@agluck-desk3>
+ <2a19f63a-f9b4-4632-bca2-2f64f6fed57b@intel.com> <aB3nGDzW6pNNkYTB@e133380.arm.com>
+In-Reply-To: <aB3nGDzW6pNNkYTB@e133380.arm.com>
+From: Peter Newman <peternewman@google.com>
+Date: Fri, 9 May 2025 16:46:30 +0200
+X-Gm-Features: AX0GCFuwcP3gG12CJJi6nR0VSEns8QAaD3COAOIHvOl4j9Xoi_yyM4CZSm_PzaA
+Message-ID: <CALPaoCjzrGMTEYmTpH=9o_=N24apE0U057p6Mt6Knt9PoyFmzw@mail.gmail.com>
+Subject: Re: [PATCH v4 13/31] fs/resctrl: Add support for additional monitor
+ event display formats
+To: Dave Martin <Dave.Martin@arm.com>
+Cc: Reinette Chatre <reinette.chatre@intel.com>, "Luck, Tony" <tony.luck@intel.com>, 
+	Fenghua Yu <fenghuay@nvidia.com>, 
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>, James Morse <james.morse@arm.com>, 
+	Babu Moger <babu.moger@amd.com>, Drew Fustini <dfustini@baylibre.com>, 
+	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>, Chen Yu <yu.c.chen@intel.com>, x86@kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Nicolin,
+Hi Dave,
 
-kernel test robot noticed the following build warnings:
+On Fri, May 9, 2025 at 1:29=E2=80=AFPM Dave Martin <Dave.Martin@arm.com> wr=
+ote:
+>
+> Hi,
+>
+> (Backtrace retained for context -- see my comment at the end.)
+>
+> Cheers
+> ---Dave
+>
+> [...]
+>
+> On Thu, May 08, 2025 at 04:45:21PM -0700, Reinette Chatre wrote:
+> > Hi Tony,
+> >
+> > On 5/8/25 1:28 PM, Luck, Tony wrote:
+> > > On Thu, May 08, 2025 at 08:49:56AM -0700, Reinette Chatre wrote:
+> > >> On 4/28/25 5:33 PM, Tony Luck wrote:
+> > >>> Resctrl was written with the assumption that all monitor events
+> > >>> can be displayed as unsigned decimal integers.
+> > >>>
+> > >>> Some telemetry events provide greater precision where architecture =
+code
+> > >>> uses a fixed point format with 18 binary places.
+> > >>>
+> > >>> Add a "display_format" field to struct mon_evt which can specify
+> > >>> that the value for the event be displayed as an integer for legacy
+> > >>> events, or as a floating point value with six decimal places conver=
+ted
+> > >>> from the fixed point format received from architecture code.
+> > >>
+> > >> There was no discussion on this during the previous version.
+> > >> While this version addresses the issue of architecture changing the
+> > >> format it does not address the issue of how to handle different
+> > >> architecture formats. With this change any architecture that may
+> > >> want to support any of these events will be required to translate
+> > >> whatever format it uses into the one Intel uses to be translated
+> > >> again into format for user space. Do you think this is reasonable?
+> > >>
+> > >> Alternatively, resctrl could add additional file that contains the
+> > >> format so that if an architecture in the future needs to present dat=
+a
+> > >> differently, an interface will exist to guide userspace how to parse=
+ it.
+> > >> Creation of such user interface cannot be delayed until the time
+> > >> it is needed since then these formats would be ABI.
+> > >
+> > > What if resctrl filesystem allows architecture to supply the number
+> > > of binary places for fixed point values when enabling an event?
+> >
+> > This sounds good. I do not think we are in a position to come up with
+> > an ideal solution. That would require assumptions of what another
+> > architecture may or may not do and thus we do not have complete informa=
+tion.
+> >
+> > >
+> > > That would allow h/w implementations to pick an appropriate precision
+> > > for each new event. Different implementations of the same event
+> > > (e.g. "core_energy") may pick different precision across architecture=
+s
+> > > or between generations of the same architecture.
+> > >
+> > > File system code can then do:
+> > >
+> > >     if (binary_places =3D=3D 0)
+> > >             display as integer
+> > >     else
+> > >             convert to floating point (with one decimal place per
+> > >             three binary places)
+> >
+> > I do not think this problem needs to be solved in this work but there n=
+eeds
+> > to be a plan for how other architectures can be supported. When similar
+> > enabling needs to be done for that hypothetical architecture then it ca=
+n
+> > be implemented ... if it is still valid based on what that architecture=
+ actually
+> > supports.
+> > It may be sufficient for the "plan" (as above) to be in comments.
+> >
+> > >
+> > > Existing events are all integers and won't change (it would be weird
+> > > for an architecture to report "mbm_local_bytes" with a fixed point
+> > > rather than integer value).
+> > >
+> > > New events may report in either integer or floating point format
+> > > with varying amounts of precision. But I'm not sure that would be
+> >
+> > Partly this will depend on the unit of measurement that should form par=
+t of
+> > the definition of the event. For example, events reporting cycles or ti=
+cks
+> > should only be integer, no?
+> >
+> > > a burden for writing tools that can run on different architectures.
+> >
+> > Maybe just a comment in the docs then ... and now I see that you did
+> > so already. My apologies, I did not get to the last four patches.
+> >
+> > Reinette
+>
+> Just a thought, but I think that while it's not possible to be fully
+> generic, a parameter model along the lines of
+>
+>         quantity =3D raw_value * ((double)multiplier / divisor) * BASE_UN=
+IT
+>
+> would cover most things that we have or can reasonably foresee,
+> including memory bandwidth control values.
+> raw_value, multiplier and divisor would all be integers.
+>
+> Since raw_integer can be the value used by the hardware, its precision
+> can probably be fixed at 1, though we could still report it explicitly.
+>
+> Fundamental base units would be things like "byte", "bytes per second"
+> and "none" (i.e., dimensionless quantities).  (Are there others?)
+>
+>
+> Since we cannot guess for certain what userspace wants to do with the
+> values, it feels better to let userspace do any scaling calculations
+> itself, rather than trying to prettify the interface.
+>
+> For example: scaling memory bandwidth percentages for MPAM is a
+> nuisance because the hardware uses fixed-point values scaled by a power
+> of 2, not by 100: the two scales can never match up anywhere except at
+> multiples of 25%, leading to irregular increments when rounded to an
+> integer percentage value and uncertainty about what the bandwidth_gran
+> parameter means.  Round-trip conversions between the two
+> representations become error-prone due to repeated rounding -- this
+> proved quite fiddly to get right.  Precision beyond 1% increments may
+> also be available in the hardware, but is not accessible through the
+> resctrl interface.
 
-[auto build test WARNING on 92a09c47464d040866cf2b4cd052bc60555185fb]
+Google users got annoyed with these rounding errors very quickly and
+asked me to change the MBA interface to the raw, fixed-point value
+used by the MPAM register interface. (but at least shifted down, since
+the MBW_MIN/MAX fields are left-justified)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Nicolin-Chen/iommufd-viommu-Add-driver-allocated-vDEVICE-support/20250509-110521
-base:   92a09c47464d040866cf2b4cd052bc60555185fb
-patch link:    https://lore.kernel.org/r/ee9ee287264fd75eb4fc64a63f20d03e9ba18161.1746757630.git.nicolinc%40nvidia.com
-patch subject: [PATCH v4 14/23] iommufd: Add mmap interface
-config: i386-buildonly-randconfig-003-20250509 (https://download.01.org/0day-ci/archive/20250509/202505092119.UALKhnIX-lkp@intel.com/config)
-compiler: clang version 20.1.2 (https://github.com/llvm/llvm-project 58df0ef89dd64126512e4ee27b4ac3fd8ddf6247)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250509/202505092119.UALKhnIX-lkp@intel.com/reproduce)
+>
+> For backwards compatibility we probably shouldn't change that
+> particular interface, but if we can avoid new instances of the same
+> kind of problem then that would be a benefit: i.e., explicitly tell
+> userspace how to scale a given parameter.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202505092119.UALKhnIX-lkp@intel.com/
+MBA is not programmed by percentage on AMD, so I'm not sure why this
+is considered necessary for backwards compatibility.
 
-All warnings (new ones prefixed by >>):
-
->> drivers/iommu/iommufd/driver.c:91:6: warning: variable 'num_pfns' set but not used [-Wunused-but-set-variable]
-      91 |         int num_pfns, rc;
-         |             ^
-   1 warning generated.
-
-
-vim +/num_pfns +91 drivers/iommu/iommufd/driver.c
-
-    80	
-    81	/*
-    82	 * Allocate an @offset to return to user space to use for an mmap() syscall
-    83	 *
-    84	 * Driver should use a per-structure helper in include/linux/iommufd.h
-    85	 */
-    86	int _iommufd_alloc_mmap(struct iommufd_ctx *ictx, struct iommufd_object *owner,
-    87				phys_addr_t base, size_t length, unsigned long *offset)
-    88	{
-    89		struct iommufd_mmap *immap;
-    90		unsigned long startp;
-  > 91		int num_pfns, rc;
-    92	
-    93		if (WARN_ON_ONCE(!offset))
-    94			return -EINVAL;
-    95		if (!PAGE_ALIGNED(base))
-    96			return -EINVAL;
-    97		if (!length || !PAGE_ALIGNED(length))
-    98			return -EINVAL;
-    99		num_pfns = length >> PAGE_SHIFT;
-   100	
-   101		immap = kzalloc(sizeof(*immap), GFP_KERNEL);
-   102		if (!immap)
-   103			return -ENOMEM;
-   104		immap->owner = owner;
-   105		immap->base_pfn = base >> PAGE_SHIFT;
-   106		immap->num_pfns = length >> PAGE_SHIFT;
-   107	
-   108		rc = mtree_alloc_range(&ictx->mt_mmap, &startp, immap, immap->num_pfns,
-   109				       0, U32_MAX >> PAGE_SHIFT, GFP_KERNEL);
-   110		if (rc < 0) {
-   111			kfree(immap);
-   112			return rc;
-   113		}
-   114	
-   115		/* mmap() syscall will right-shift the offset in vma->vm_pgoff */
-   116		*offset = startp << PAGE_SHIFT;
-   117		return 0;
-   118	}
-   119	EXPORT_SYMBOL_NS_GPL(_iommufd_alloc_mmap, "IOMMUFD");
-   120	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+-Peter
