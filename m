@@ -1,213 +1,98 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx.denx.de (mx.denx.de [89.58.32.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA99A16F288;
-	Sun, 11 May 2025 03:50:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFEE14A09C
+	for <patches@lists.linux.dev>; Sun, 11 May 2025 08:04:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746935437; cv=none; b=GVd/8GUyRUpcz1Titi2ZBTgX0yr9ohayA1E3a98caRdkN07adONkB/WNVDo463y8HtFkSGUjZHGnlIwe6Y0SbTPSV6OzZG2xSXGkJyK/6XWDxvtOphv4OSIP3vrtgHNAA9bCPcwIqM+lNPJh6PtZmOZ+EpuefHw5Sio12vni6Ws=
+	t=1746950666; cv=none; b=cS50G0zj7QBg6AzU5Ug0KLtt/XwxXZ3Itl4dHnIkZH0APU3q/wKHaeqm2gjDmogu6U1/rkyHKzqGsoo6ATq2oXkqaoWG5Bvf0AbT0JDkRiFX9lNW62vGueuuCN4UdxFZl0G+oHMqdK42aHWSNpEkwHYxzsfu7lYcvnzl0TtcuPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746935437; c=relaxed/simple;
-	bh=J+A74QbLhwUdNkVkdHmAd6rUZ4XWtsuTF9rJXebCP84=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NId+RwChjfnyW2a3gzHA4oSd1/fLbjJxPAjEstNdMEMh2LJ4x3ljmEet7DnTejFvqJzl19LuQIDELNG4wb7U+u7Aexk7yb4cLe5d5ATbXVuUful6JbYoB/yw5AjkMshxNS/kMd+jQQob+O0iAjisBfxKjKy0vsn59hnle/zvRUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I3cpfDow; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1746950666; c=relaxed/simple;
+	bh=YWb2t8IBmufksPX1yCb1pll38Bg6jKtp9P+IlQaWEdQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iLEgdYuaVxdPBtT1mDCk9GEzLe4njnvGknb5jkvBbFHjRri8nCng2R6fSjXcR0jng2VwjyEYOdr7Ho0Etuvf9pytktN85jPcViNC1xKXV98n8/8UWNYKljgIuMAMPsgCXYJcn29nrzFiuHNxq4n5kr8YWrwm7EFTgiygazDWe34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=UDI8SM8w; arc=none smtp.client-ip=89.58.32.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I3cpfDow"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B79C4CEF3;
-	Sun, 11 May 2025 03:50:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746935437;
-	bh=J+A74QbLhwUdNkVkdHmAd6rUZ4XWtsuTF9rJXebCP84=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=I3cpfDowyrkk/YrzLCfJ6CUD45b0sKKj5nFZcfbZ6UFFLhOwFlRwBW2bINqxsF/Gl
-	 7x0xQJc+fNCO9FBEYGAMM4oBnFUCjolHKfp5ooz8wOsfn17VquHriO7p2DiDfsudsc
-	 4chivxQc5jglY+wYV9Fi29S2Li4Ea+wBgQh78OMNcJhucPZ/oG9yAzKcDmo9l/oGNU
-	 qlrcnLHVSElb0hFsx3Dqswt0OI0VUNfKsKKmt06M3CWSwMixWNa1viXfLsG9txCsYZ
-	 r3nA5XRbKlCqDWSXy/BRqqrgCjG/irjn+zTMLZ960B7fL6D+7eWkaZ2s7Wg88yCOd/
-	 bidrWSEdFGemw==
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-3104ddb8051so35234621fa.1;
-        Sat, 10 May 2025 20:50:37 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUt/PLmBQkvrwnA1HAs5r9CGKg10/OBHiekvI9wlcwxeToB3x7YNz+1IZFTm+9BCOqGvpNB@lists.linux.dev, AJvYcCWQ1YOeQG+N0xXDjpXDZ67Li9K3UBqssKI43OzFg86BIe/L5FfodHJAbASMLauyieI6Smb4M7T01Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz/fmM/uaDxBmbrC9927MK+aPmyobxHE3RoSbMdzSqz86jwO8iI
-	6414HhtObOXg9gCfOw3kLA1Sj4Fp+Jo4Df+AUop9CTC32NgtfDr1/lHw1MRLpgS6w4mOpyxN66I
-	gEtYCiOv5vmu9U8AbLIn17GnCujo=
-X-Google-Smtp-Source: AGHT+IEXi+y5bJZ2A+O8OdHl+jmFjBuQpNo/7w/wMarDXkz2eTJtgJkmyH6jLcNjLTeT8LLpfk3TN8cglWuAQNc3Q+o=
-X-Received: by 2002:a05:651c:1b05:b0:30c:5190:b264 with SMTP id
- 38308e7fff4ca-326c4579297mr35927931fa.20.1746935435907; Sat, 10 May 2025
- 20:50:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="UDI8SM8w"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id AB7CB1048C2EC;
+	Sun, 11 May 2025 10:04:07 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
+	t=1746950655; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=8dMO43m2NmTXCiptYlYWpF264PfUA4CZZdQaWxjjBcI=;
+	b=UDI8SM8w36xANrgdEYMHr0rC2uMoONObZnYMnuGUkcc7Su8M+ZOU7P+urr43qSVAHyX0uF
+	X4IQq752XEJxTzxrV7x2QJH6m2y7RUuI2rrrdTPaNZtvXKlSb24VlnS5q/hyhh+Q1aWdTj
+	/1+fRBOXEbu1l+QevGnHTEPdf59hHZtSJtCi1enzbXKPqFwUnLBrOFu/Mizi3S9uyy5n3L
+	O1iZStUa4VkuCwVUCaOjkWOS7JJQWtN6RBQiD3TiyVxFGuMt8hM5VRJlTYqgIuvnfNqZ7G
+	PL/fq4G4XlyQX/2CjN5fV3XIQ8G53FqpQ2WaoGXiLLVo3UIDXzNqZRDsFdU2Iw==
+Date: Sun, 11 May 2025 10:04:04 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, yukuai3@huawei.com
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+	tglx@linutronix.de, suzuki.poulose@arm.com, yukuai3@huawei.com
+Subject: Re: [PATCH 6.1 00/97] 6.1.138-rc2 review
+Message-ID: <aCBZ9Ie7/QLNWivS@duo.ucw.cz>
+References: <20250508112609.711621924@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250506-default-const-init-clang-v2-1-fcfb69703264@kernel.org>
- <CAK7LNATmW6SfUkF4uZBLVCDUK9NRpWUrmenat1HsSkLHDNmVTQ@mail.gmail.com> <20250509132805.GA4132662@ax162>
-In-Reply-To: <20250509132805.GA4132662@ax162>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Sun, 11 May 2025 12:49:59 +0900
-X-Gmail-Original-Message-ID: <CAK7LNAQn6tBZ9b4sO+eNOErpLcOC3X_fG4_QNcNs_ffQtkb2eg@mail.gmail.com>
-X-Gm-Features: AX0GCFsAAXQA2N6SPp0lLNhRvTGD-bocaHIXpy45mgccajjp7K3FEydyMEJrqBE
-Message-ID: <CAK7LNAQn6tBZ9b4sO+eNOErpLcOC3X_fG4_QNcNs_ffQtkb2eg@mail.gmail.com>
-Subject: Re: [PATCH v2] kbuild: Disable -Wdefault-const-init-unsafe
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Nicolas Schier <nicolas.schier@linux.dev>, 
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, Bill Wendling <morbo@google.com>, 
-	Justin Stitt <justinstitt@google.com>, Linus Torvalds <torvalds@linux-foundation.org>, 
-	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org, 
-	Linux Kernel Functional Testing <lkft@linaro.org>, Marcus Seyfarth <m.seyfarth@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="nIaulWZhoYdAc1QR"
+Content-Disposition: inline
+In-Reply-To: <20250508112609.711621924@linuxfoundation.org>
+X-Last-TLS-Session-Version: TLSv1.3
+
+
+--nIaulWZhoYdAc1QR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 9, 2025 at 10:28=E2=80=AFPM Nathan Chancellor <nathan@kernel.or=
-g> wrote:
->
-> On Fri, May 09, 2025 at 10:04:23PM +0900, Masahiro Yamada wrote:
-> > On Wed, May 7, 2025 at 6:06=E2=80=AFAM Nathan Chancellor <nathan@kernel=
-.org> wrote:
-> > >
-> > > A new on by default warning in clang [1] aims to flags instances wher=
-e
-> > > const variables without static or thread local storage or const membe=
-rs
-> > > in aggregate types are not initialized because it can lead to an
-> > > indeterminate value. This is quite noisy for the kernel due to
-> > > instances originating from header files such as:
-> > >
-> > >   drivers/gpu/drm/i915/gt/intel_ring.h:62:2: error: default initializ=
-ation of an object of type 'typeof (ring->size)' (aka 'const unsigned int')=
- leaves the object uninitialized [-Werror,-Wdefault-const-init-var-unsafe]
-> > >      62 |         typecheck(typeof(ring->size), next);
-> > >         |         ^
-> > >   include/linux/typecheck.h:10:9: note: expanded from macro 'typechec=
-k'
-> > >      10 | ({      type __dummy; \
-> > >         |              ^
-> > >
-> > >   include/net/ip.h:478:14: error: default initialization of an object=
- of type 'typeof (rt->dst.expires)' (aka 'const unsigned long') leaves the =
-object uninitialized [-Werror,-Wdefault-const-init-var-unsafe]
-> > >     478 |                 if (mtu && time_before(jiffies, rt->dst.exp=
-ires))
-> > >         |                            ^
-> > >   include/linux/jiffies.h:138:26: note: expanded from macro 'time_bef=
-ore'
-> > >     138 | #define time_before(a,b)        time_after(b,a)
-> > >         |                                 ^
-> > >   include/linux/jiffies.h:128:3: note: expanded from macro 'time_afte=
-r'
-> > >     128 |         (typecheck(unsigned long, a) && \
-> > >         |          ^
-> > >   include/linux/typecheck.h:11:12: note: expanded from macro 'typeche=
-ck'
-> > >      11 |         typeof(x) __dummy2; \
-> > >         |                   ^
-> > >
-> > >   include/linux/list.h:409:27: warning: default initialization of an =
-object of type 'union (unnamed union at include/linux/list.h:409:27)' with =
-const member leaves the object uninitialized [-Wdefault-const-init-field-un=
-safe]
-> > >     409 |         struct list_head *next =3D smp_load_acquire(&head->=
-next);
-> > >         |                                  ^
-> > >   include/asm-generic/barrier.h:176:29: note: expanded from macro 'sm=
-p_load_acquire'
-> > >     176 | #define smp_load_acquire(p) __smp_load_acquire(p)
-> > >         |                             ^
-> > >   arch/arm64/include/asm/barrier.h:164:59: note: expanded from macro =
-'__smp_load_acquire'
-> > >     164 |         union { __unqual_scalar_typeof(*p) __val; char __c[=
-1]; } __u;   \
-> > >         |                                                            =
-      ^
-> > >   include/linux/list.h:409:27: note: member '__val' declared 'const' =
-here
-> > >
-> > >   crypto/scatterwalk.c:66:22: error: default initialization of an obj=
-ect of type 'struct scatter_walk' with const member leaves the object unini=
-tialized [-Werror,-Wdefault-const-init-field-unsafe]
-> > >      66 |         struct scatter_walk walk;
-> > >         |                             ^
-> > >   include/crypto/algapi.h:112:15: note: member 'addr' declared 'const=
-' here
-> > >     112 |                 void *const addr;
-> > >         |                             ^
-> > >
-> > >   fs/hugetlbfs/inode.c:733:24: error: default initialization of an ob=
-ject of type 'struct vm_area_struct' with const member leaves the object un=
-initialized [-Werror,-Wdefault-const-init-field-unsafe]
-> > >     733 |         struct vm_area_struct pseudo_vma;
-> > >         |                               ^
-> > >   include/linux/mm_types.h:803:20: note: member 'vm_flags' declared '=
-const' here
-> > >     803 |                 const vm_flags_t vm_flags;
-> > >         |                                  ^
-> > >
-> > > Silencing the instances from typecheck.h is difficult because '=3D {}=
-' is
-> > > not available in older but supported compilers and '=3D {0}' would ca=
-use
-> > > warnings about a literal 0 being treated as NULL. While it might be
-> > > possible to come up with a local hack to silence the warning for
-> > > clang-21+, it may not be worth it since -Wuninitialized will still
-> > > trigger if an uninitialized const variable is actually used.
-> > >
-> > > In all audited cases of the "field" variant of the warning, the membe=
-rs
-> > > are either not used in the particular call path, modified through oth=
-er
-> > > means such as memset() / memcpy() because the containing object is no=
-t
-> > > const, or are within a union with other non-const members.
-> > >
-> > > Since this warning does not appear to have a high signal to noise rat=
-io,
-> > > just disable it.
-> > >
-> > > Cc: stable@vger.kernel.org
-> > > Link: https://github.com/llvm/llvm-project/commit/576161cb6069e2c7656=
-a8ef530727a0f4aefff30 [1]
-> > > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> > > Closes: https://lore.kernel.org/CA+G9fYuNjKcxFKS_MKPRuga32XbndkLGcY-P=
-VuoSwzv6VWbY=3Dw@mail.gmail.com/
-> > > Reported-by: Marcus Seyfarth <m.seyfarth@gmail.com>
-> > > Closes: https://github.com/ClangBuiltLinux/linux/issues/2088
-> > > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > > ---
-> > > Changes in v2:
-> > > - Disable -Wdefault-const-init-var-unsafe as well, as '=3D {}' does n=
-ot
-> > >   work in typecheck() for all supported compilers and it may not be
-> > >   worth a local hack.
-> > > - Link to v1: https://lore.kernel.org/r/20250501-default-const-init-c=
-lang-v1-0-3d2c6c185dbb@kernel.org
-> >
-> >
-> >
-> > Applied to linux-kbuild.
-> > Thanks.
-> >
-> > I fixed up the conflict with the -Wdefault-const-init-field-unsafe patc=
-h.
-> >
-> > Please check if it is correct.
->
-> This patch should replace the -Wdefault-const-init-field-unsafe patch,
-> not be applied on top. -Wdefault-const-init-unsafe contains both
-> -Wdefault-const-init-field-unsafe and -Wdefault-const-init-var-unsafe.
->
-> Cheers,
-> Nathan
+Hi!
 
-Sorry, you are right.
-I dropped the first one.
-Thanks.
+> This is the start of the stable review cycle for the 6.1.138 release.
+> There are 97 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
+> Thomas Gleixner <tglx@linutronix.de>
+>     irqchip/gic-v2m: Mark a few functions __init
 
+This is not a bugfix, and is itself buggy, needing the next
+patch. Just drop both.
 
+> Suzuki K Poulose <suzuki.poulose@arm.com>
+>     irqchip/gic-v2m: Prevent use after free of gicv2m_get_fwnode()
 
+> Yu Kuai <yukuai3@huawei.com>
+>     md: move initialization and destruction of 'io_acct_set' to md.c
+
+This seems to be preparation, not a bugfix.
+
+Best regards,
+								Pavel
 --=20
-Best Regards
-Masahiro Yamada
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--nIaulWZhoYdAc1QR
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaCBZ9AAKCRAw5/Bqldv6
+8jCMAJwJdbKdQ0F8TqG+Kot3gNSNeZoCjwCfYhyNHmEl5MgDwqC/BB6LFkdxJkg=
+=iTFO
+-----END PGP SIGNATURE-----
+
+--nIaulWZhoYdAc1QR--
