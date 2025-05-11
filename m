@@ -1,268 +1,149 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8894A1E7C16
-	for <patches@lists.linux.dev>; Sat, 10 May 2025 09:58:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746871132; cv=fail; b=rYySIVR8dVrkq7NY2LN5eUDGnTunnIUOqZtjOCGBXBj8NZLldbXSMA27PHAnKUGI7DII/RTNdlrGdjMdPcnzY69gqV/AUfH6rVqgPgBGKUaMhIrZO6qRDRRvu5tFvHnYM2nG3WdNfyCdr4JvwlZA8Bh4ylcbJvtmwQi3MShqkCc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746871132; c=relaxed/simple;
-	bh=AAdPnkJDt6p4xiEI5++AskY+gHXEoeEyaiHhlzB5Yo0=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=C+B9DY0PPWVoGxuD/jwdK/+TSDEJ5w+hQVmkZDB8kMZX3Kn6TYiJy0En4y3gHWhhTB7+IlDrmi+NtaAq6hBu+pMfurnbgcOdjmGnnWsV09YwF+l13QySf1yADrSBXFGYABEFP24HHkljWzWbnmLCuduvL02RUp5V0isp6jcO3G0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ABA2/lKk; arc=fail smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5110428F5;
+	Sun, 11 May 2025 01:33:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746927200; cv=none; b=sfD4nmGGBoUCOsSjNg47aSx97bwHerZ8BQtspUl8DMGRowQYxAnETdD6MaJ23Kx1BxInZMxY4m3VHAwWkGl+IH8oQwEeLFk+i5H79rNip+0uauC9fbh8TfmaeI07vuyFaJzFOY5xnm5mZgozX7PBStNj9d/yDO/UOI/vEg/w5zc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746927200; c=relaxed/simple;
+	bh=Deo/eI9+9XENJGSG6W/1LVzdL6Qtef7+y9Q2k/oAmxc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nygN5OYXIjyN/lpOoFL9vKe15g1pWEFpp3LdFSnaQEuUU/+j0H3vPBNm+GwbxwMxJrQWXWIy2Wb41yd9x02+CnukEFo5wRqgNaYFMRFh+XR0sTGczT0CsNFCHfJcWVCx1pqrUUnXajRcxDkmrdyUa4cYNBcK52KKmu3kNN3qg4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nYgZgeFr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ABA2/lKk"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1746871131; x=1778407131;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=AAdPnkJDt6p4xiEI5++AskY+gHXEoeEyaiHhlzB5Yo0=;
-  b=ABA2/lKkCLAAv+eHoeQssgYSk8WNpayj+vw1q9umQ6ys7cxmlOV1/LaH
-   WJ8BLjwHcwk2gSqqT//nWDjXCGp9WbhHzwk0bT8iskZfHJuyQHjFUAufT
-   ahQNc/y6vR+svdin3AXKT/KuTzpFjV5LheSasc9GaXMX7ywYb8PByrbzH
-   hBsIZ2CHmtU88dkb1D2otgkcQdT4Hnf8xa4ctq66k0Q0VzpJ05hXyAzfN
-   f7n4766rjYnXnWtLKfGmgni9EDNuAiogRwzfqCuLNgCSf6ljRGg1z/+Qu
-   I6bqkKR0y8/s6ObD07p7PSGZmpclESQfu5ZJE7wT1CSuq0nHM8Hj990WX
-   A==;
-X-CSE-ConnectionGUID: IwcrdyfVRJ2psP68lLgnxQ==
-X-CSE-MsgGUID: Tp4y8vdbQAuoTOD0LWScvw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="52510026"
-X-IronPort-AV: E=Sophos;i="6.15,276,1739865600"; 
-   d="scan'208";a="52510026"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2025 02:58:50 -0700
-X-CSE-ConnectionGUID: wkg7lU/yQAKEOW8mZf0oxw==
-X-CSE-MsgGUID: LaHW97kfSOeHK5VFZmW80A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,276,1739865600"; 
-   d="scan'208";a="136730585"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by orviesa010.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 May 2025 02:58:50 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Sat, 10 May 2025 02:58:49 -0700
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14 via Frontend Transport; Sat, 10 May 2025 02:58:49 -0700
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.49) by
- edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Sat, 10 May 2025 02:58:49 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fcymXagPbUbc5Z33Hjr+SbDtG9q2o6rttJHnZupcNkA055s7Dbo1CrTH4n9g5e1Ow9mKvP7aooCQgvSccf6kiou//PEbM3IapyvFAx4os7GmeUtIpPIgSdqC67X76wrKwMdEEXxvpcQiWWTRJVqNW/h5elf71MWIw5rvgwyIxlZgLYoG3Ca7cfhEk9OgItnOdu2tWPYdrTXDuxHV+DzjGAxra5BFIufeQSA1KybGUoF3IcQslebaYfG/euKavYdSR0ao53Kg8Kg16Mc2oCIF6kpBv+6dlxY1NSfopdaXQXxhNsu3Q5POB+LW+U+BsBNBxk94TofDICQZ8sY0nLJPaA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4GkVxcJLPKEfpFxUtRvtgNHhFxhfJpVi8BkUQoExgZI=;
- b=Xi552XWqvVw2T4LWNg9QmeaTWM0xXsbU3qCxec/D5z0Ekblt+fPt0zDhLPXO57QrjPnPxkPwb23iIVhSOw6EBHks7z3Z7iwZC/ag9A0YFGTQIxPDBbnGHqNJtnhmPI1pnj5/1Rb6YkDkQHCpEbqR7V19w5bkwmswMgcWeZbUw6hXZ7lAuYqnaTlcarhReb+Jk/VTLwjFpaAm1057y5Thmqo+96gjhP4uF8/HMtNQixxIr0jHJgtrXZhkQWc8KRI4RUfnjCi3TMzilbR+Btls611kW3X5ZIASEgBEOxFJteRLWsUQe4jYIxVh3vcWu8Jfg8xyssNWLTr/mIWeRC2Eew==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DM4PR11MB6020.namprd11.prod.outlook.com (2603:10b6:8:61::19) by
- DS0PR11MB7879.namprd11.prod.outlook.com (2603:10b6:8:f7::14) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8722.21; Sat, 10 May 2025 09:58:47 +0000
-Received: from DM4PR11MB6020.namprd11.prod.outlook.com
- ([fe80::4af6:d44e:b6b0:fdce]) by DM4PR11MB6020.namprd11.prod.outlook.com
- ([fe80::4af6:d44e:b6b0:fdce%6]) with mapi id 15.20.8722.027; Sat, 10 May 2025
- 09:58:47 +0000
-Message-ID: <621ff36f-eaa7-4dba-909a-e50977abf6dc@intel.com>
-Date: Sat, 10 May 2025 17:58:36 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 05/31] fs/resctrl: Set up Kconfig options for telemetry
- events
-To: Tony Luck <tony.luck@intel.com>
-CC: <x86@kernel.org>, <linux-kernel@vger.kernel.org>,
-	<patches@lists.linux.dev>, Peter Newman <peternewman@google.com>, James Morse
-	<james.morse@arm.com>, Dave Martin <Dave.Martin@arm.com>, Babu Moger
-	<babu.moger@amd.com>, Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
-	Drew Fustini <dfustini@baylibre.com>, Fenghua Yu <fenghuay@nvidia.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>, Reinette Chatre
-	<reinette.chatre@intel.com>
-References: <20250429003359.375508-1-tony.luck@intel.com>
- <20250429003359.375508-6-tony.luck@intel.com>
-Content-Language: en-US
-From: "Chen, Yu C" <yu.c.chen@intel.com>
-In-Reply-To: <20250429003359.375508-6-tony.luck@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: KU0P306CA0078.MYSP306.PROD.OUTLOOK.COM
- (2603:1096:d10:2b::10) To DM4PR11MB6020.namprd11.prod.outlook.com
- (2603:10b6:8:61::19)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nYgZgeFr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A730C4CEE2;
+	Sun, 11 May 2025 01:33:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746927196;
+	bh=Deo/eI9+9XENJGSG6W/1LVzdL6Qtef7+y9Q2k/oAmxc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nYgZgeFrZeii4Z7bEVcS5vpnsMNY1qZFp9NNI6wlbsMQcjf55OM1Z7yANSK223FR2
+	 2U4/5K8IGj4W+M/WuZPwXwTfz9um9BhkynvCpeuvlfB94l/ZbzlbXatnRtMU2dNasG
+	 OBNJ6eAmrEhgFVZAP8BeUbnI3dtMFI++HeGcXa4V1Ex08xudP3mBXTm0EBxwtFVJIf
+	 Ogn0K2lkx4uTpLtvxOBLX1H0vQwfefJm01z4GNj3nLbQYJO4BvE8DgL5lXV35lDN3K
+	 5nSBGKYAk0/Mrzb1pJInnw6WJ+80Jd8faVKyHcV/fhntGsQtBeX9ITa/zA3iOw3Raf
+	 fKGfa0skxoXlw==
+Date: Sun, 11 May 2025 10:33:13 +0900
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com
+Subject: Re: [PATCH 6.1 00/97] 6.1.138-rc2 review
+Message-ID: <aB_-WZgMn02vgjrN@finisterre.sirena.org.uk>
+References: <20250508112609.711621924@linuxfoundation.org>
+ <aB6uurX99AZWM9I1@finisterre.sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR11MB6020:EE_|DS0PR11MB7879:EE_
-X-MS-Office365-Filtering-Correlation-Id: b763fed4-dfe4-4697-64e3-08dd8fa94168
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?WnhDWXFXRzRLRmVqaHRBZU1Pc0xCWEZ1WXdlckpnR21VTDhqNU5zeERnRWJp?=
- =?utf-8?B?Skw3L2xXa0Z1U0QrWjRWNFBTRzViYWdOSkkwbzJyL2FncDExZzl6SldGQXU2?=
- =?utf-8?B?cG11LzNCYmZXak5Nc1pkNWMxR3Z5bVhTeUR1dTBLWUg1VGtIejI4NXpXZ05h?=
- =?utf-8?B?WTJnNnIrVXBoK29pUkIvS0s0MHVwcTR0SjZiaGtrajlPRnRoNjdGcms4MXgy?=
- =?utf-8?B?eE5wZVhCMkFnSXlSN2J6V09Hd3Y1Ym1IN0F0YXUyOFhEdjBuS0IrcEdBV2Z1?=
- =?utf-8?B?akdHZlFjUFRnR1FJREdxU29PaEZaSHJ2MHJFUlMvS1BzdCtRaUpaZ1Z2QkFj?=
- =?utf-8?B?c25MNGV1SHM3TVZ2ayt3T3JSTnVJUDE2ZEJrZnByc2FxYi8wYUNwRzdBQkVm?=
- =?utf-8?B?ZkkvU3VtZVlKcnV5bGVhUk82YTVSUDZrOWZKSEt0eURyc2p2amJFNXNTTVZy?=
- =?utf-8?B?UmpuVUFvaTVuRzN1ZkdtR0R0VU5sZWNHMjRMYWVpSHlyREdTY3pLVC9IVm9p?=
- =?utf-8?B?WGp5dktUN3ZCOEZHaW5zMUZoc3l1eUdVK1RndWo4N1hEeHdRcXpzRkcvRVZB?=
- =?utf-8?B?TmZPNzJXTDRrVnNJQW1KQVJvTkRHeklrWldvZnQvaU1WRnMvUThVNlRWYmtG?=
- =?utf-8?B?ZnJTVTBPVXI4cFNZNkRBajRSb0VTT1pyb2toanRMa0g5c1pZVVRKU095a1RG?=
- =?utf-8?B?NEExeXQrNWJ5ZmM1cCs4Um9pOEpONm1jY0tSdjNRNmxqZzRsVk8zdTVYL2JT?=
- =?utf-8?B?R05VZXFYSHc2RjhyaFFoa3FIT0ZWWWEwMFFPNkd4blhER1RXTTBMbEtNREhT?=
- =?utf-8?B?VDlnMFRWdWI1ODNyS1BwWEQvenBxKzMwc2VlSFdDMng0cVhZTFhzWFRWd3NC?=
- =?utf-8?B?WjZEdXhkUi9YN1NkdW5zWG42WlFjSzhyblZheEVxS0lXNXI3eDhBbm1ldklL?=
- =?utf-8?B?T1ZFdmlGRjVObmJKSXpUMUJaZ0gyaGlZNkNRNk9tamtqWmhMcUJPUUlMT2Z1?=
- =?utf-8?B?bitMeU5kWXBiL3JLSFVkeU4yWGFFWlpVVlR1Q1piTlcwOC90SWQ0UHZFTnpo?=
- =?utf-8?B?MzZOdVRad3FqUGZkMVNNc203Yzc0cld4Q1dDU2Zuc2t0RXgvRVQvWHFsRnA0?=
- =?utf-8?B?QTBQY3MxZDBoYmVPS3B0LzNWZzJrM09RZWlpSmttTkdXV0VMWlVWMEJiL2J2?=
- =?utf-8?B?OGdwbThKbGhxdG9EbHNHUWl4TFpIajR4V0JidGVqSnEzK2xXMFRJWDIzRTkx?=
- =?utf-8?B?NEtWa1ZaVG1USVIxY2o0aU85dUFDTWJpWnR0OHhjSDNVeHYyclRWaWw4UHpZ?=
- =?utf-8?B?RjdBQVZqc3VqTUxoL2laV0MvNEpEMWxaazVnRmluVFNpYmRyeEIwKzJGcG1t?=
- =?utf-8?B?SDFXaGo3b1dSaFpVaG00WXdKRGpMKzBOTXZFNlBQR24wZHpNQVZ3SDhzNjJE?=
- =?utf-8?B?dnhIM0JLSTV5MUVUSzFPaktMMEJkSEozc0FNVVNTZG5ZY1B1SFh6VnFsY0pS?=
- =?utf-8?B?MytERW5UTVpnK3k4c2RpY2JMU0Rpb3dZQWY3NDhvVVBvbTI5N21ISTZpSVJT?=
- =?utf-8?B?WUlkd1d2NWYzdytMcmxlRVRzS2RsOEowK2kzU2MzNGNmbXYxbTlpV3hLQTRW?=
- =?utf-8?B?NTlTM1lpVnhER1lvYVJSV3dNb0xxL0tLUk1MSUs1YzdKdnh3dG1uNFZIV1Fo?=
- =?utf-8?B?eDRJeVFuVHJpaHJsNlpXckZySmtjckVYNDZORVNaK3Jod2tkaUJNcEZGcXQ4?=
- =?utf-8?B?ZnRvdlVEc0w2dHZHamxzYzc4Q2p6aTQ0QytGUG1aelE0NVVLOUY1a0tBVnFD?=
- =?utf-8?B?NXlWTm9NaCt1RlYvYTlYTUdlSFRxWTN4RkpxL0VrODduQVJ2UFNPRHRwcVkw?=
- =?utf-8?B?S3M4ZmUrYVBESHdWRlhscEhtd2E0dHpXdmhRQjAxYTZyYTRNMzlGdFBVTWM4?=
- =?utf-8?Q?oZlOTdxwuGg=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR11MB6020.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?clRGb0JTMFJueXRPMEJEZk5HSTRmYWFtMGUrT1lYQUQ5SUM5TEhGY1g5eENo?=
- =?utf-8?B?bzVhNjgwS2kvdVZxR3lXa3NZRlVVNmRheWRPQURjZjlkODVlU1VhRjgwOGVi?=
- =?utf-8?B?SGJscVNnWlY2Tm5QSW9LZHRVN1h3UVhEMkZ0VHVCZk1RbHVESEZ0Q0lOUUhL?=
- =?utf-8?B?YUJ3dm1YR0FudmphMlNqa0FQSHhqSllGSDhBRUNTdlk5ZUNmSkhaVTVtOU9Q?=
- =?utf-8?B?VEh1ZXZXanYvcmdtU05GcUZlRThLYWJsVHJsaXE0bnlxMVIvMDgrZS9vSVh0?=
- =?utf-8?B?SUNxVWFnQzFUWHNwTjc4T01xZ2NsZ0NwOXROS3J6OEQ5eWhwMTduZmJNSXlF?=
- =?utf-8?B?U1krdVpTQU5uNXVCbFZ4dTB2ck1NUXVLUzNtcTZ3UkN2WmZmcFAzV2xZSjlT?=
- =?utf-8?B?OU5tOHExK3k0YjRhdklvd0hiL2xMcXZQTmpjczdjRG9sNDlhWVFQeVc2TW1V?=
- =?utf-8?B?UzBFOFRlMk5NNXo5MGM1N3N2U2hSb2pMdnN4Y2pMckVXbzBrMkYwUWNzK2FG?=
- =?utf-8?B?NDNxb2NDZVN6SFIzNHphNWZSSHQ3aFhWOHN4NzRkWnhyN09SdWUxU3JCaHRa?=
- =?utf-8?B?MW9jZVo0Q2VJV0hRNWIxYUtwSDdyRjBhTlBVa2JHY29tV01ZWVl5d2dYZzhq?=
- =?utf-8?B?TUtmU3dYMUFmNU1HalhocmZ3VVV5WGhiYUhXTVpIYjJFS1VZT2I5YnNQNEtl?=
- =?utf-8?B?V2hPSm92RFRhVGVEdDUxanZOaTJmR29tZVAwQlU5REVYcUk0cHovN0tTS3N6?=
- =?utf-8?B?QVV0VnJEd1NZK2dlYWEyb1A4ZVAzTWtvVUdVZ3U3aUFYVy8zQ2V0d1l6OWQ2?=
- =?utf-8?B?aWJxVFFTQXpGZytNazdPNDVaL2Fscno2NC8xaVRSbXpGbzViOS9hQWtJZ29G?=
- =?utf-8?B?SWRJYk4zRGt5N0lKQVhJVUZDbVlIWHN0cjlUWTkwank3a3dEMEVoZUU0cDFt?=
- =?utf-8?B?UGlTeXhiWTMvN2txcXV5TzM3QVpZUEZMUTJDZExtSkhjd01rY1VtaEJDeXBT?=
- =?utf-8?B?WG95TFhFTnd3SFV2Z00zeDFFNmZ6Ri9VUUVkR3pmSjdWL3ZLRnphMXU3dEhQ?=
- =?utf-8?B?WGoyeVljL1Mwc2QwYmRRZVlBa0dVUWJJQ0VDREtmQXVwa1BGSVJZbTBnNjJt?=
- =?utf-8?B?SmYwNnZZTUtVNXRBdFZBMmw4R1M1MkZkeWR6enBPRFpzMkNLcmRFUGl2b3ky?=
- =?utf-8?B?K1duWEVWYlFMYXh6VUZuSHV3Y09IZVluM1VyV0V2OGs5MDR5Q1VwTFQzcGh1?=
- =?utf-8?B?WHEzK1FDaHp2dGd5TlIzWUxReGdRelU1NU9obDJmZFZkaUp3dUpuYXhSbEhB?=
- =?utf-8?B?dzBhV2FPRVhyWXdFMS96MlcwY09DeFZjT2NwaWthc2NDUFNISzhmSEJaQzBn?=
- =?utf-8?B?dlVremVzb011Nm5GRkdLNU0vUnprY1lTWU54RXZqbzVQM0ROWEFJVkJyWnNW?=
- =?utf-8?B?TDBUK0o4R0RuWm5QaFhrK1E1bkZsZDgrUko3MWhkVWNpSUswb1lab29VSGZ5?=
- =?utf-8?B?SE4zamJ0Z1lkUGxBWkg2WlFicWh2b241aUxOV1V1ak1GU0VlQWFnM3N4cThY?=
- =?utf-8?B?dUFSK3pydlljL2t5UEEwQkdOWGdySWxIWHNFb3psclUrZnkvYnFxZDBMa3pK?=
- =?utf-8?B?T1R2SEM4azkybXIyYjdHQk5vQkN3a1F4aW9zMXZhejJ0RUNDWW5rZFhxZm1q?=
- =?utf-8?B?ZlBocDA1c3RObWFuUVh5cHN1VThhRHkrQ3ZuU2dXZDlSOEYwcCtYNk5xQi9x?=
- =?utf-8?B?ZTlFYzlTdnRqM0tqYWFwLzB1RWZLRWJUUi9DSmRWU0c3dC9vMTg0cUk5a3BN?=
- =?utf-8?B?bzJKa3BtVlFjVzdZVURVYVlXK3Z3dmJvZldRTlNYc3FQNXN5OGpTdVB6WW9h?=
- =?utf-8?B?dU1nRVpnczFrdGxETjRSOWJNSUwxYjJpN0dZTCtsQTgxKzBPMjFXa1RXODJY?=
- =?utf-8?B?THhvU0UxbHd4Wkx2TzU1ZHdYWStIWWg5RnUwWmdXNDlYR2dlSVNsTjYweHl5?=
- =?utf-8?B?UGdOZEkyQm52S3Z2aWZRS0NvSE9pd3NXdDRta0VOOGc1Y1N0b2l2bU9DeXRZ?=
- =?utf-8?B?aGYvVWk1di9SYmhYS3pCdkNWMHFEODdLdlFGRzBRbWRsTk12NVpISDVOSXo0?=
- =?utf-8?Q?jx8kCWNWDn6TpeHHcGk4mkruI?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: b763fed4-dfe4-4697-64e3-08dd8fa94168
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR11MB6020.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 May 2025 09:58:46.9539
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: hR06Wk9RpmGMXo6d5GIEjc/Vds9/OAIMgyheh3Kfc1YYZ4MnjppztU6UDYqV9n9MUjRDejRwQ8v8vnJZPnH4bw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB7879
-X-OriginatorOrg: intel.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="2kDnZ+WQa5pDWb7O"
+Content-Disposition: inline
+In-Reply-To: <aB6uurX99AZWM9I1@finisterre.sirena.org.uk>
+X-Cookie: Well begun is half done.
 
-Hi Tony,
 
-On 4/29/2025 8:33 AM, Tony Luck wrote:
-> Intel RMID based telemetry events are counted by each CPU core
-> and then aggregated by one or more per-socket micro controllers.
-> Enumeration support is provided by the Intel PMT subsystem.
-> 
-> N.B. Patches for the Intel PMT system are still in progress.
-> They will define an INTEL_PMT_DISCOVERY Kconfig symbol that
-> will be one of the dependencies. This is commented out for
-> now. Final version will include this dependency.
-> 
-> arch/x86 selects this option based on:
-> 
-> X86_64: Counter registers are in MMIO space. There is no readq()
-> function on 32-bit. Emulation is possible with readl(), but there
-> are races. Running 32-bit kernels on systems that support this
-> feature seems pointless.
-> 
-> CPU_SUP_INTEL: It is an Intel specific feature.
-> 
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> ---
->   arch/x86/Kconfig                       | 1 +
->   drivers/platform/x86/intel/pmt/Kconfig | 7 +++++++
->   2 files changed, 8 insertions(+)
-> 
-> diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-> index 5a09acf41c8e..19107fdb4264 100644
-> --- a/arch/x86/Kconfig
-> +++ b/arch/x86/Kconfig
-> @@ -508,6 +508,7 @@ config X86_CPU_RESCTRL
->   	bool "x86 CPU resource control support"
->   	depends on X86 && (CPU_SUP_INTEL || CPU_SUP_AMD)
->   	depends on MISC_FILESYSTEMS
-> +	select INTEL_AET_RESCTRL if (X86_64 && CPU_SUP_INTEL)
+--2kDnZ+WQa5pDWb7O
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Not sure if if it is expected, I got the following warning
-during compiling:
-WARNING: unmet direct dependencies detected for INTEL_AET_RESCTRL
-   Depends on [n]: X86_PLATFORM_DEVICES [=y] && INTEL_PMT_TELEMETRY [=n]
-   Selected by [y]:
-   - X86_CPU_RESCTRL [=y] && X86 [=y] && (CPU_SUP_INTEL [=y] || 
-CPU_SUP_AMD [=y]) && MISC_FILESYSTEMS [=y] && X86_64 [=y] && 
-CPU_SUP_INTEL [=y]
+On Sat, May 10, 2025 at 10:41:17AM +0900, Mark Brown wrote:
+> On Thu, May 08, 2025 at 01:30:23PM +0200, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.1.138 release.
+> > There are 97 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+>=20
+> This breaks NFS boot on Rasperry Pi 3B - it's the previously reported
+> issue with there apparently being no packets coming in that was seen on
+> some of the more recent stables (not finding the mails immediately).
+> Bisects didn't kick off automatically but I suspect it's:
+>=20
+>    net: phy: microchip: force IRQ polling mode for lan88xx
+>=20
+> This also seems to apply to v5.15.
 
-I think this is because the INTEL_PMT_TELEMETRY is disabled.
-Does it make sense to add the dependency of INTEL_PMT_TELEMETRY
-to auto-select for INTEL_AET_RESCTRL?
+The bisect completed, confirmed it's the above commit (though apparently
+it was already broken so something's screwy with my automation here...):
 
-select INTEL_AET_RESCTRL if (X86_64 && CPU_SUP_INTEL && INTEL_PMT_TELEMETRY)
+# bad: [02b72ccb5f9df707a763d9f7163d7918d3aff0b7] Linux 6.1.138
+# good: [535ec20c50273d81b2cc7985fed2108dee0e65d7] Linux 6.1.135
+# good: [ac7079a42ea58e77123b55f5e15f1b2679f799aa] Linux 6.1.137
+# good: [b6736e03756f42186840724eb38cb412dfb547be] Linux 6.1.136
+git bisect start '02b72ccb5f9df707a763d9f7163d7918d3aff0b7' '535ec20c50273d=
+81b2cc7985fed2108dee0e65d7' 'ac7079a42ea58e77123b55f5e15f1b2679f799aa' 'b67=
+36e03756f42186840724eb38cb412dfb547be'
+# test job: [ac7079a42ea58e77123b55f5e15f1b2679f799aa] https://lava.sirena.=
+org.uk/scheduler/job/1356125
+# test job: [b6736e03756f42186840724eb38cb412dfb547be] https://lava.sirena.=
+org.uk/scheduler/job/1349213
+# test job: [02b72ccb5f9df707a763d9f7163d7918d3aff0b7] https://lava.sirena.=
+org.uk/scheduler/job/1375898
+# bad: [02b72ccb5f9df707a763d9f7163d7918d3aff0b7] Linux 6.1.138
+git bisect bad 02b72ccb5f9df707a763d9f7163d7918d3aff0b7
+# test job: [94107259f972d2fd896dbbcaa176b3b2451ff9e5] https://lava.sirena.=
+org.uk/scheduler/job/1379135
+# good: [94107259f972d2fd896dbbcaa176b3b2451ff9e5] net: ethernet: mtk-star-=
+emac: fix spinlock recursion issues on rx/tx poll
+git bisect good 94107259f972d2fd896dbbcaa176b3b2451ff9e5
+# test job: [8dcd4981166aedda08410a329938b11a497c7d5d] https://lava.sirena.=
+org.uk/scheduler/job/1379203
+# good: [8dcd4981166aedda08410a329938b11a497c7d5d] md: move initialization =
+and destruction of 'io_acct_set' to md.c
+git bisect good 8dcd4981166aedda08410a329938b11a497c7d5d
+# test job: [36d4ce271b97d7d23a67e690b79e04ea853325b1] https://lava.sirena.=
+org.uk/scheduler/job/1379282
+# bad: [36d4ce271b97d7d23a67e690b79e04ea853325b1] Revert "drm/meson: vclk: =
+fix calculation of 59.94 fractional rates"
+git bisect bad 36d4ce271b97d7d23a67e690b79e04ea853325b1
+# test job: [be9e23028113446add10a9b66cf8f15c66a6257f] https://lava.sirena.=
+org.uk/scheduler/job/1379397
+# good: [be9e23028113446add10a9b66cf8f15c66a6257f] sch_ets: make est_qlen_n=
+otify() idempotent
+git bisect good be9e23028113446add10a9b66cf8f15c66a6257f
+# test job: [88d7fd2d4623b2cb13d056e1bde1861e4dec2408] https://lava.sirena.=
+org.uk/scheduler/job/1379447
+# good: [88d7fd2d4623b2cb13d056e1bde1861e4dec2408] firmware: arm_ffa: Skip =
+Rx buffer ownership release if not acquired
+git bisect good 88d7fd2d4623b2cb13d056e1bde1861e4dec2408
+# test job: [9b89102fbb8fc5393e2a0f981aafdb3cf43591ee] https://lava.sirena.=
+org.uk/scheduler/job/1379515
+# bad: [9b89102fbb8fc5393e2a0f981aafdb3cf43591ee] net: phy: microchip: forc=
+e IRQ polling mode for lan88xx
+git bisect bad 9b89102fbb8fc5393e2a0f981aafdb3cf43591ee
+# test job: [72a797facb50aeef98a9d56b6b49674dbf53f692] https://lava.sirena.=
+org.uk/scheduler/job/1379549
+# good: [72a797facb50aeef98a9d56b6b49674dbf53f692] ARM: dts: opos6ul: add k=
+sz8081 phy properties
+git bisect good 72a797facb50aeef98a9d56b6b49674dbf53f692
+# first bad commit: [9b89102fbb8fc5393e2a0f981aafdb3cf43591ee] net: phy: mi=
+crochip: force IRQ polling mode for lan88xx
 
-thanks，
-Chenyu
 
->   	select ARCH_HAS_CPU_RESCTRL
->   	select RESCTRL_FS
->   	select RESCTRL_FS_PSEUDO_LOCK
-> diff --git a/drivers/platform/x86/intel/pmt/Kconfig b/drivers/platform/x86/intel/pmt/Kconfig
-> index e916fc966221..3a8ce39d1004 100644
-> --- a/drivers/platform/x86/intel/pmt/Kconfig
-> +++ b/drivers/platform/x86/intel/pmt/Kconfig
-> @@ -38,3 +38,10 @@ config INTEL_PMT_CRASHLOG
->   
->   	  To compile this driver as a module, choose M here: the module
->   	  will be called intel_pmt_crashlog.
-> +
-> +config INTEL_AET_RESCTRL
-> +	depends on INTEL_PMT_TELEMETRY # && INTEL_PMT_DISCOVERY
-> +	bool
-> +	help
-> +	  Architecture config should "select" this option to enable
-> +	  support for RMID telemetry events in the resctrl file system.
+--2kDnZ+WQa5pDWb7O
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmgf/lgACgkQJNaLcl1U
+h9CG/wf9HB4pfEqgyC/RiRPPSfJK6k54J/8oC/Kai8I/RvYhuzUn1n0AI8tA2Eif
+1IcYkEhrW3UWvflrLSr1yRlsHRcGoBQC2CChgSKfN59NUHKHKGYcukJ1UzbFcMZS
+4WK/cY/D3eGG5W4eafdoOIJUBvcyfJeDFlaTu1x+xJu/SKFZ0DJwCb0HcP+Ki4kF
+tzWA53PV0ZWHgagwbCxMspPZP8zDvToX6xhQbHGPF9g2XydpiXmkkM/OvF4TEqOw
+PURpfC+XlUG7/5H1lZ863rA2whd28/U6EALGaR5aUrb9YvukwJ1fs91pXDXIgWFB
+46+mWL00yM4dgKULSYwFuoh5dNBXCQ==
+=iwrk
+-----END PGP SIGNATURE-----
+
+--2kDnZ+WQa5pDWb7O--
