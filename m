@@ -1,88 +1,96 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182401AB52D
-	for <patches@lists.linux.dev>; Sun, 11 May 2025 18:28:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F5719CD1B;
+	Sun, 11 May 2025 20:46:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746988127; cv=none; b=kQQOWz5fpUA8qvhyslckyXsvun5iuIJDTP7eOyMXffc/WQ/CEAEY6q8rTZqwtrg+rArHnJcPQim2YioO1o3X+ao1lWPilBGWZRTau+G8bAXWlEHgu5isuvhJ25cQrXVWBMZ5Putx+C5wM6E/iY1ozk3cNznEj/H1kHTAgibnxDE=
+	t=1746996378; cv=none; b=NjINNUwRk4QvYgCeABTfE2Jqu2+hwozsmm/IO150Tcb+Wv3J4nH8UWxq/DxD7scv4DrPbS+ZArYJ2+HFO4fIrBpb3y1co75VHFL6sCKnzbSKFjbCDE9QFlRVMUYS61911c2JPuEC5r6iE3bG1xy0FityojZes6e5VkWMeavYuk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746988127; c=relaxed/simple;
-	bh=mem0KBsBp2payG8qdvLsnklmRC11hWKx33t/iTDmQew=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Bjmc0/MkeshCG3qUKRgLe2TDf1igV/38GM0XMTiRZEnCKKDeUvThbqYdg/iRZT1VeUxmI17oetuW5zqthK8uPIo96OaF1/BC1+RNeIZRxbnoDTZVbWo8oLDpnwe2IeI+qBv/dk+lnIB7HvMZkktIolhxT1ugkyxJX3STxAsQHV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iVlIz75S; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746996378; c=relaxed/simple;
+	bh=iCjSfWpDxAtoOc8GvSfo01HZ5iHt42za8DP5zxzA8qg=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=o8b4KdMMwLO0cg3ersPxJwReFpNwqD5WmGCmwWg5wXHOluqDX14nwSlp7jSJUqwgjaAt6Qfg9LLoSbpYnsgveH5sBdGfhN4NYVklXbOloLrMKxmwy0FL2VXUP2J2icVKReoRzWSaepk87FRWfW3YBReSOsWKtSVNM5/9jU1gK/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kFBA19ZS; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iVlIz75S"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-30c1fe19b07so813886a91.2
-        for <patches@lists.linux.dev>; Sun, 11 May 2025 11:28:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746988125; x=1747592925; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mem0KBsBp2payG8qdvLsnklmRC11hWKx33t/iTDmQew=;
-        b=iVlIz75Sy3zc2l6JRPWs1BKdE0KH681yesdonFdo0m6XO2bUDWwEeXzq3rkrD6hztU
-         p5A0fodchCqXVIWpJ14rwo1kCyFNJ2lq+8gTeOnK7ZBKoxUsr9RhlcoN5YvBcrC9gZNa
-         ZR63WimUBKEhT4W5iGC8qc8z4RIhlb8gofkqREt5LKXjAVuag57u0IN22GIvJ7Gecb+X
-         Z1uZd3bSbQF5tL8K+LSvzAJU0RAmGzQqmYoUa4rteZn4pp3qTiJwUIDGCR4ykIzlf3dm
-         /a70Ql/TMbdVcblvRnSau2o5gOS24O3s0MgCLTtNS6a03Cm+aY/5hKSdk/Ago/DqXNsd
-         zQEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746988125; x=1747592925;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mem0KBsBp2payG8qdvLsnklmRC11hWKx33t/iTDmQew=;
-        b=M6rUN04cCUmUDg5kYjL+fI5c/bEGLgPJXvUrkpSvgre732PHJaPZeCGu/NVFCVGXTE
-         1Mv/XFccfnheG6V2l3dtuSNlYikVjQOPpGddFPAn8xjsIPdgKy5DCqep90Uj7+E7HvYD
-         WPWgB63OZExYhoyNtnB3Qj+ALk3IEeAOZP0EO3HIgiersWCPoV1+3wThE+PkY0oA43iu
-         tt9Guk7BzFwMn4pIaNo20TppaG5u4YQXDvSf+CAmXUU/wY+7kQWV+wRy4LaEzqXoyGpn
-         4hR4HLLUnq8t79C1FMgXeIWHQAKDU3iL/lVFgAfXx+ngp+3xWPzW1tH4X+7skRuHe8Ae
-         vbBA==
-X-Forwarded-Encrypted: i=1; AJvYcCUkOk6ny87Bg5Gyf9dx7KaF3QNovrvc1mze5jpEugji2xNdxFo2sHcM6pWjgNASsZeLMxYx9ymz@lists.linux.dev
-X-Gm-Message-State: AOJu0YxOfSujWG9w+qjthkl9hO7iiF0o2auSjgF+DWzUobqiZMhAkAZI
-	jqLE3caucFzOX99V0wlWTvlih0Wo0CKkObxiWY8VgHSZjNCBYKDA7ALpZf0TJRgH7oq8IjxOmk2
-	KHrhFcAL0S5lSc7SKoHW02LTDDjw=
-X-Gm-Gg: ASbGncuPTn/wmz6q+YTeObLgDYWCcsA4bPFZDL1YTP1nSG4NxyC7p0cXVj7k9uzPfPY
-	bBbP78V0PeXVL6U1P1vivfQBffwVY0MyMjdBWoV/Xh5fHf2CW7Efw6IrSyONCtmfmP+L0cNkz1L
-	kmSMsFeJW/TlCczEwTQhCzTgXDGAtPZJjz
-X-Google-Smtp-Source: AGHT+IGP4rBpL1L/R/JOyAFwAzchMSP5tWZAsxEut1AYIlcEPC9wAlnS/rSd+SYDLqun4ZCvuMoUm6Eds8E0cpqj0Cg=
-X-Received: by 2002:a17:903:2352:b0:223:659d:ac66 with SMTP id
- d9443c01a7336-22fc9188697mr63883405ad.12.1746988125325; Sun, 11 May 2025
- 11:28:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kFBA19ZS"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1746996376; x=1778532376;
+  h=from:to:cc:in-reply-to:references:subject:message-id:
+   date:mime-version:content-transfer-encoding;
+  bh=iCjSfWpDxAtoOc8GvSfo01HZ5iHt42za8DP5zxzA8qg=;
+  b=kFBA19ZSG4lRsWkhjcBqB5jFvOz3rtI51eIt+tbzfMn8PGhFX4fj+TgF
+   YVUnyRW4VUCHg5C0IQbsoKeweeim22ZjIvnKDCqexXGWbsC0pPn9zIbYe
+   91i7Rav/yBCpqPSvfJN2DfS/lxDrSdXpj1jN1ClYTidk0iDV1GePBPgEY
+   MPeA3yWF4It/9u8nl8VNVIqbMuhQEdIa88u0X+k9QktFvyrvSKCFISCtU
+   ZSpC+TXldsO1Bo9VVJvpu/jOVYqTmlytYRdsySw6tLoH8u20gO616bM83
+   D9PViq3cnqJNxRYhl64jqH2We0LVNcplzGfcTSiQfRA11ohWJAf3Obvjk
+   g==;
+X-CSE-ConnectionGUID: wRsUCxs0SxO/NGlA5/JX2A==
+X-CSE-MsgGUID: vs9m8y87SV+wnUOct+Fc+w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11430"; a="59444736"
+X-IronPort-AV: E=Sophos;i="6.15,281,1739865600"; 
+   d="scan'208";a="59444736"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2025 13:46:15 -0700
+X-CSE-ConnectionGUID: 1HQNhrMITiKnD6hSLyyWiQ==
+X-CSE-MsgGUID: 6RyRpZqGQLK+ROoUeFnN3w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,281,1739865600"; 
+   d="scan'208";a="137189074"
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.117])
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2025 13:46:13 -0700
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+To: Hans de Goede <hdegoede@redhat.com>, 
+ Vadim Pasternak <vadimp@nvidia.com>, Nathan Chancellor <nathan@kernel.org>
+Cc: Michael Shych <michaelsh@nvidia.com>, 
+ platform-driver-x86@vger.kernel.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev
+In-Reply-To: <20250509-nvsw-sn2200-fix-items-busbar-hotplug-v1-1-8844fff38dc8@kernel.org>
+References: <20250509-nvsw-sn2200-fix-items-busbar-hotplug-v1-1-8844fff38dc8@kernel.org>
+Subject: Re: [PATCH] platform: mellanox: nvsw-sn2200: Fix .items in
+ nvsw_sn2201_busbar_hotplug
+Message-Id: <174699636829.1989.8868622516931156810.b4-ty@linux.intel.com>
+Date: Sun, 11 May 2025 23:46:08 +0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250511182533.1016163-1-ojeda@kernel.org>
-In-Reply-To: <20250511182533.1016163-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sun, 11 May 2025 20:28:33 +0200
-X-Gm-Features: AX0GCFtE4MpER3Q2huYH2uKaee300aoT3sSh3P3I6FTNekp-TpF_BMnKM8eGask
-Message-ID: <CANiq72=FhkjUPjBVDakzo0SJ7=P+ab2r8Do1jExDaYeVMp-edw@mail.gmail.com>
-Subject: Re: [PATCH] rust: devres: fix doctest build under `!CONFIG_PCI`
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Danilo Krummrich <dakr@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
-On Sun, May 11, 2025 at 8:26=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> Thus conditionally compile it (which still checks the syntax).
+On Fri, 09 May 2025 11:58:01 +0100, Nathan Chancellor wrote:
 
-i.e. "...even when disabled)."
+> Clang warns (or errors with CONFIG_WERROR=y):
+> 
+>   drivers/platform/mellanox/nvsw-sn2201.c:531:32: error: variable 'nvsw_sn2201_busbar_items' is not needed and will not be emitted [-Werror,-Wunneeded-internal-declaration]
+>     531 | static struct mlxreg_core_item nvsw_sn2201_busbar_items[] = {
+>         |                                ^~~~~~~~~~~~~~~~~~~~~~~~
+> 
+> nvsw_sn2201_busbar_items is only used in ARRAY_SIZE(), which uses
+> sizeof(), so this variable is only used at compile time. It appears that
+> this may be a copy and paste issue, so use nvsw_sn2201_busbar_items as
+> the .items member in nvsw_sn2201_busbar_hotplug, clearing up the
+> warning.
+> 
+> [...]
 
-Cheers,
-Miguel
+
+Thank you for your contribution, it has been applied to my local
+review-ilpo-next branch. Note it will show up in the public
+platform-drivers-x86/review-ilpo-next branch only once I've pushed my
+local branch there, which might take a while.
+
+The list of commits applied:
+[1/1] platform: mellanox: nvsw-sn2200: Fix .items in nvsw_sn2201_busbar_hotplug
+      commit: 8e725ff0419ad74dc79abfbdcd4cfba936a5d167
+
+--
+ i.
+
