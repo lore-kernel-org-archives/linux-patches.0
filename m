@@ -1,94 +1,88 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7BCB7E105;
-	Sun, 11 May 2025 18:26:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182401AB52D
+	for <patches@lists.linux.dev>; Sun, 11 May 2025 18:28:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746987963; cv=none; b=sh+jNQkh8b5Iwz7jpb8Kb4I5Laq3cKSfdBW+BtBPADupEHLesf51bIMA3MlLT/8+hPunnpNTb2S2ART9g5VeORXr2ElSb2JAonPk+1t/FJY/CspDBndtdYSqsw6jDWv8gEEmZdCm9G+YeutZ58b0sFUy/OCeKsD+RHMgJomYqfg=
+	t=1746988127; cv=none; b=kQQOWz5fpUA8qvhyslckyXsvun5iuIJDTP7eOyMXffc/WQ/CEAEY6q8rTZqwtrg+rArHnJcPQim2YioO1o3X+ao1lWPilBGWZRTau+G8bAXWlEHgu5isuvhJ25cQrXVWBMZ5Putx+C5wM6E/iY1ozk3cNznEj/H1kHTAgibnxDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746987963; c=relaxed/simple;
-	bh=Vg6u9/IFXxBubadIvDcmyQ6DIw76avxYML9JI0CWC00=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=AzqOEVcRtpw+7dRAWyn0b3kh/IWUcArRhy7QbPJ//Nzl2t2+TsncpXogECxqCtP59jGMrlL5UXSDIE/6POZc0NSCnDGcvym/g1fOHsfITQ+SzZiTYcMolldb+Nu0WoYL9cDXwD181MlEPul8oi4oPjW+Oy19nlwctGuASDADOKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PNGUd5My; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1746988127; c=relaxed/simple;
+	bh=mem0KBsBp2payG8qdvLsnklmRC11hWKx33t/iTDmQew=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Bjmc0/MkeshCG3qUKRgLe2TDf1igV/38GM0XMTiRZEnCKKDeUvThbqYdg/iRZT1VeUxmI17oetuW5zqthK8uPIo96OaF1/BC1+RNeIZRxbnoDTZVbWo8oLDpnwe2IeI+qBv/dk+lnIB7HvMZkktIolhxT1ugkyxJX3STxAsQHV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iVlIz75S; arc=none smtp.client-ip=209.85.216.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PNGUd5My"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9586AC4CEE4;
-	Sun, 11 May 2025 18:25:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746987963;
-	bh=Vg6u9/IFXxBubadIvDcmyQ6DIw76avxYML9JI0CWC00=;
-	h=From:To:Cc:Subject:Date:From;
-	b=PNGUd5Myfp0PSafl2xeXQVwUusGITiPA+51T45C7gYLzlHNjoT3fVQXgk4BZSl0UA
-	 o0rcGC8r9QRLQqYrCdHGF+jbW8N3q0y0Z8EtiVBq9LbpvMvIJ8nk4mquFfDXczwKSb
-	 WSYHmsF7I5RxnUyyojeK6IMCUUqu/FTKIPRNImsef5t8PdVuNQFZHUAu9j7htyEUPh
-	 X70pE8l5iascLLWwJJi5hA9RhzLbAVWzQ3nw4ghWepR2V7qQ6bZRzCd32Z/QTjq5E/
-	 qpj6YPBmeErVxLZ6fZEtH7s0SZxkuWC1+MJxtTqgmYA8JU7kFdJdRDSpDv19m0aTQL
-	 6CtepYtBBYusg==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH] rust: devres: fix doctest build under `!CONFIG_PCI`
-Date: Sun, 11 May 2025 20:25:33 +0200
-Message-ID: <20250511182533.1016163-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iVlIz75S"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-30c1fe19b07so813886a91.2
+        for <patches@lists.linux.dev>; Sun, 11 May 2025 11:28:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746988125; x=1747592925; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mem0KBsBp2payG8qdvLsnklmRC11hWKx33t/iTDmQew=;
+        b=iVlIz75Sy3zc2l6JRPWs1BKdE0KH681yesdonFdo0m6XO2bUDWwEeXzq3rkrD6hztU
+         p5A0fodchCqXVIWpJ14rwo1kCyFNJ2lq+8gTeOnK7ZBKoxUsr9RhlcoN5YvBcrC9gZNa
+         ZR63WimUBKEhT4W5iGC8qc8z4RIhlb8gofkqREt5LKXjAVuag57u0IN22GIvJ7Gecb+X
+         Z1uZd3bSbQF5tL8K+LSvzAJU0RAmGzQqmYoUa4rteZn4pp3qTiJwUIDGCR4ykIzlf3dm
+         /a70Ql/TMbdVcblvRnSau2o5gOS24O3s0MgCLTtNS6a03Cm+aY/5hKSdk/Ago/DqXNsd
+         zQEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746988125; x=1747592925;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mem0KBsBp2payG8qdvLsnklmRC11hWKx33t/iTDmQew=;
+        b=M6rUN04cCUmUDg5kYjL+fI5c/bEGLgPJXvUrkpSvgre732PHJaPZeCGu/NVFCVGXTE
+         1Mv/XFccfnheG6V2l3dtuSNlYikVjQOPpGddFPAn8xjsIPdgKy5DCqep90Uj7+E7HvYD
+         WPWgB63OZExYhoyNtnB3Qj+ALk3IEeAOZP0EO3HIgiersWCPoV1+3wThE+PkY0oA43iu
+         tt9Guk7BzFwMn4pIaNo20TppaG5u4YQXDvSf+CAmXUU/wY+7kQWV+wRy4LaEzqXoyGpn
+         4hR4HLLUnq8t79C1FMgXeIWHQAKDU3iL/lVFgAfXx+ngp+3xWPzW1tH4X+7skRuHe8Ae
+         vbBA==
+X-Forwarded-Encrypted: i=1; AJvYcCUkOk6ny87Bg5Gyf9dx7KaF3QNovrvc1mze5jpEugji2xNdxFo2sHcM6pWjgNASsZeLMxYx9ymz@lists.linux.dev
+X-Gm-Message-State: AOJu0YxOfSujWG9w+qjthkl9hO7iiF0o2auSjgF+DWzUobqiZMhAkAZI
+	jqLE3caucFzOX99V0wlWTvlih0Wo0CKkObxiWY8VgHSZjNCBYKDA7ALpZf0TJRgH7oq8IjxOmk2
+	KHrhFcAL0S5lSc7SKoHW02LTDDjw=
+X-Gm-Gg: ASbGncuPTn/wmz6q+YTeObLgDYWCcsA4bPFZDL1YTP1nSG4NxyC7p0cXVj7k9uzPfPY
+	bBbP78V0PeXVL6U1P1vivfQBffwVY0MyMjdBWoV/Xh5fHf2CW7Efw6IrSyONCtmfmP+L0cNkz1L
+	kmSMsFeJW/TlCczEwTQhCzTgXDGAtPZJjz
+X-Google-Smtp-Source: AGHT+IGP4rBpL1L/R/JOyAFwAzchMSP5tWZAsxEut1AYIlcEPC9wAlnS/rSd+SYDLqun4ZCvuMoUm6Eds8E0cpqj0Cg=
+X-Received: by 2002:a17:903:2352:b0:223:659d:ac66 with SMTP id
+ d9443c01a7336-22fc9188697mr63883405ad.12.1746988125325; Sun, 11 May 2025
+ 11:28:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250511182533.1016163-1-ojeda@kernel.org>
+In-Reply-To: <20250511182533.1016163-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Sun, 11 May 2025 20:28:33 +0200
+X-Gm-Features: AX0GCFtE4MpER3Q2huYH2uKaee300aoT3sSh3P3I6FTNekp-TpF_BMnKM8eGask
+Message-ID: <CANiq72=FhkjUPjBVDakzo0SJ7=P+ab2r8Do1jExDaYeVMp-edw@mail.gmail.com>
+Subject: Re: [PATCH] rust: devres: fix doctest build under `!CONFIG_PCI`
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Danilo Krummrich <dakr@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The doctest requires `CONFIG_PCI`:
+On Sun, May 11, 2025 at 8:26=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> Thus conditionally compile it (which still checks the syntax).
 
-    error[E0432]: unresolved import `kernel::pci`
-        --> rust/doctests_kernel_generated.rs:2689:44
-         |
-    2689 | use kernel::{device::Core, devres::Devres, pci};
-         |                                            ^^^ no `pci` in the root
-         |
-    note: found an item that was configured out
-        --> rust/kernel/lib.rs:96:9
-    note: the item is gated here
-        --> rust/kernel/lib.rs:95:1
+i.e. "...even when disabled)."
 
-Thus conditionally compile it (which still checks the syntax).
-
-Fixes: f301cb978c06 ("rust: devres: implement Devres::access()")
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
-I noticed this in next-20250509 -- as usual, please feel free to fixup
-it (or not) as preferred. Thanks!
-
- rust/kernel/devres.rs | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/rust/kernel/devres.rs b/rust/kernel/devres.rs
-index b67247db92c7..0f79a2ec9474 100644
---- a/rust/kernel/devres.rs
-+++ b/rust/kernel/devres.rs
-@@ -195,6 +195,7 @@ pub fn new_foreign_owned(dev: &Device<Bound>, data: T, flags: Flags) -> Result {
-     /// # Example
-     ///
-     /// ```no_run
-+    /// # #![cfg(CONFIG_PCI)]
-     /// # use kernel::{device::Core, devres::Devres, pci};
-     ///
-     /// fn from_core(dev: &pci::Device<Core>, devres: Devres<pci::Bar<0x4>>) -> Result {
-
-base-commit: ed61cb3d78d585209ec775933078e268544fe9a4
---
-2.49.0
+Cheers,
+Miguel
