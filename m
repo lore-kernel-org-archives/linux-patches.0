@@ -1,98 +1,94 @@
-Received: from mx.denx.de (mx.denx.de [89.58.32.78])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFEE14A09C
-	for <patches@lists.linux.dev>; Sun, 11 May 2025 08:04:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7BCB7E105;
+	Sun, 11 May 2025 18:26:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746950666; cv=none; b=cS50G0zj7QBg6AzU5Ug0KLtt/XwxXZ3Itl4dHnIkZH0APU3q/wKHaeqm2gjDmogu6U1/rkyHKzqGsoo6ATq2oXkqaoWG5Bvf0AbT0JDkRiFX9lNW62vGueuuCN4UdxFZl0G+oHMqdK42aHWSNpEkwHYxzsfu7lYcvnzl0TtcuPo=
+	t=1746987963; cv=none; b=sh+jNQkh8b5Iwz7jpb8Kb4I5Laq3cKSfdBW+BtBPADupEHLesf51bIMA3MlLT/8+hPunnpNTb2S2ART9g5VeORXr2ElSb2JAonPk+1t/FJY/CspDBndtdYSqsw6jDWv8gEEmZdCm9G+YeutZ58b0sFUy/OCeKsD+RHMgJomYqfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746950666; c=relaxed/simple;
-	bh=YWb2t8IBmufksPX1yCb1pll38Bg6jKtp9P+IlQaWEdQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iLEgdYuaVxdPBtT1mDCk9GEzLe4njnvGknb5jkvBbFHjRri8nCng2R6fSjXcR0jng2VwjyEYOdr7Ho0Etuvf9pytktN85jPcViNC1xKXV98n8/8UWNYKljgIuMAMPsgCXYJcn29nrzFiuHNxq4n5kr8YWrwm7EFTgiygazDWe34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=UDI8SM8w; arc=none smtp.client-ip=89.58.32.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
+	s=arc-20240116; t=1746987963; c=relaxed/simple;
+	bh=Vg6u9/IFXxBubadIvDcmyQ6DIw76avxYML9JI0CWC00=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=AzqOEVcRtpw+7dRAWyn0b3kh/IWUcArRhy7QbPJ//Nzl2t2+TsncpXogECxqCtP59jGMrlL5UXSDIE/6POZc0NSCnDGcvym/g1fOHsfITQ+SzZiTYcMolldb+Nu0WoYL9cDXwD181MlEPul8oi4oPjW+Oy19nlwctGuASDADOKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PNGUd5My; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="UDI8SM8w"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id AB7CB1048C2EC;
-	Sun, 11 May 2025 10:04:07 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
-	t=1746950655; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=8dMO43m2NmTXCiptYlYWpF264PfUA4CZZdQaWxjjBcI=;
-	b=UDI8SM8w36xANrgdEYMHr0rC2uMoONObZnYMnuGUkcc7Su8M+ZOU7P+urr43qSVAHyX0uF
-	X4IQq752XEJxTzxrV7x2QJH6m2y7RUuI2rrrdTPaNZtvXKlSb24VlnS5q/hyhh+Q1aWdTj
-	/1+fRBOXEbu1l+QevGnHTEPdf59hHZtSJtCi1enzbXKPqFwUnLBrOFu/Mizi3S9uyy5n3L
-	O1iZStUa4VkuCwVUCaOjkWOS7JJQWtN6RBQiD3TiyVxFGuMt8hM5VRJlTYqgIuvnfNqZ7G
-	PL/fq4G4XlyQX/2CjN5fV3XIQ8G53FqpQ2WaoGXiLLVo3UIDXzNqZRDsFdU2Iw==
-Date: Sun, 11 May 2025 10:04:04 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, yukuai3@huawei.com
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
-	tglx@linutronix.de, suzuki.poulose@arm.com, yukuai3@huawei.com
-Subject: Re: [PATCH 6.1 00/97] 6.1.138-rc2 review
-Message-ID: <aCBZ9Ie7/QLNWivS@duo.ucw.cz>
-References: <20250508112609.711621924@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PNGUd5My"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9586AC4CEE4;
+	Sun, 11 May 2025 18:25:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746987963;
+	bh=Vg6u9/IFXxBubadIvDcmyQ6DIw76avxYML9JI0CWC00=;
+	h=From:To:Cc:Subject:Date:From;
+	b=PNGUd5Myfp0PSafl2xeXQVwUusGITiPA+51T45C7gYLzlHNjoT3fVQXgk4BZSl0UA
+	 o0rcGC8r9QRLQqYrCdHGF+jbW8N3q0y0Z8EtiVBq9LbpvMvIJ8nk4mquFfDXczwKSb
+	 WSYHmsF7I5RxnUyyojeK6IMCUUqu/FTKIPRNImsef5t8PdVuNQFZHUAu9j7htyEUPh
+	 X70pE8l5iascLLWwJJi5hA9RhzLbAVWzQ3nw4ghWepR2V7qQ6bZRzCd32Z/QTjq5E/
+	 qpj6YPBmeErVxLZ6fZEtH7s0SZxkuWC1+MJxtTqgmYA8JU7kFdJdRDSpDv19m0aTQL
+	 6CtepYtBBYusg==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH] rust: devres: fix doctest build under `!CONFIG_PCI`
+Date: Sun, 11 May 2025 20:25:33 +0200
+Message-ID: <20250511182533.1016163-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="nIaulWZhoYdAc1QR"
-Content-Disposition: inline
-In-Reply-To: <20250508112609.711621924@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
 
+The doctest requires `CONFIG_PCI`:
 
---nIaulWZhoYdAc1QR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+    error[E0432]: unresolved import `kernel::pci`
+        --> rust/doctests_kernel_generated.rs:2689:44
+         |
+    2689 | use kernel::{device::Core, devres::Devres, pci};
+         |                                            ^^^ no `pci` in the root
+         |
+    note: found an item that was configured out
+        --> rust/kernel/lib.rs:96:9
+    note: the item is gated here
+        --> rust/kernel/lib.rs:95:1
 
-Hi!
+Thus conditionally compile it (which still checks the syntax).
 
-> This is the start of the stable review cycle for the 6.1.138 release.
-> There are 97 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Fixes: f301cb978c06 ("rust: devres: implement Devres::access()")
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+I noticed this in next-20250509 -- as usual, please feel free to fixup
+it (or not) as preferred. Thanks!
 
-> Thomas Gleixner <tglx@linutronix.de>
->     irqchip/gic-v2m: Mark a few functions __init
+ rust/kernel/devres.rs | 1 +
+ 1 file changed, 1 insertion(+)
 
-This is not a bugfix, and is itself buggy, needing the next
-patch. Just drop both.
+diff --git a/rust/kernel/devres.rs b/rust/kernel/devres.rs
+index b67247db92c7..0f79a2ec9474 100644
+--- a/rust/kernel/devres.rs
++++ b/rust/kernel/devres.rs
+@@ -195,6 +195,7 @@ pub fn new_foreign_owned(dev: &Device<Bound>, data: T, flags: Flags) -> Result {
+     /// # Example
+     ///
+     /// ```no_run
++    /// # #![cfg(CONFIG_PCI)]
+     /// # use kernel::{device::Core, devres::Devres, pci};
+     ///
+     /// fn from_core(dev: &pci::Device<Core>, devres: Devres<pci::Bar<0x4>>) -> Result {
 
-> Suzuki K Poulose <suzuki.poulose@arm.com>
->     irqchip/gic-v2m: Prevent use after free of gicv2m_get_fwnode()
-
-> Yu Kuai <yukuai3@huawei.com>
->     md: move initialization and destruction of 'io_acct_set' to md.c
-
-This seems to be preparation, not a bugfix.
-
-Best regards,
-								Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---nIaulWZhoYdAc1QR
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaCBZ9AAKCRAw5/Bqldv6
-8jCMAJwJdbKdQ0F8TqG+Kot3gNSNeZoCjwCfYhyNHmEl5MgDwqC/BB6LFkdxJkg=
-=iTFO
------END PGP SIGNATURE-----
-
---nIaulWZhoYdAc1QR--
+base-commit: ed61cb3d78d585209ec775933078e268544fe9a4
+--
+2.49.0
