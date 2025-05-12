@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250F81E1A05;
-	Mon, 12 May 2025 17:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086BF1E1A05;
+	Mon, 12 May 2025 17:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072686; cv=none; b=RmRJ7iszixV8xGPWZ63ZUU7IgYpBbVl3KKFexzd6zR+GJCXorrjcQ/2h5lv3OIIiAZ6trEABr6oop8KA0YbfsZ75GsmU7/yQXCi3UmztpSzf3uZBn+qccP5vjpK2TiyNDucjnQZ++vtItcwMuiFxjPKkrVp4L6AM73leFxh1/g8=
+	t=1747072690; cv=none; b=o1Ri2dABbuvq1iNKcTR1zQ7ZTMKhWp5x8RVRyjGwU0NqwSO79+/eun3GFiYhhX8HigGdhhgPH01JVI4IFDoOrVLhVrKjtb48hUOhmzzFVCgzyGcnaH9zg5ep/4gKVt0/Njrj/brbqNbJyoTxiaguGHM76xi6tECXu1PLvWSicMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072686; c=relaxed/simple;
-	bh=rSXZthPjBQXr3yXnnG/ABS/+sCYjW5JJaez4lT/skuw=;
+	s=arc-20240116; t=1747072690; c=relaxed/simple;
+	bh=Sk1tUuJc/6dw2LQwSo9WsBZuf4f/iiB4ucq8vyHejIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CrJrlKVgOp6qYXWefHK20TgzTIQcutXT4+YDiJHSQ8ktbuclVhHOU8kCNwxMIy32Aas3f8fxKZEu8qctRBchpi9/R/NTnlB6l+xPuSpWsEQFAj5gGPVK83UTcaEHxfeIdiZnXAUkhrGyrJS9YpyiHPIR9ynk3ORIEMWv7LtnTO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kRraR2fw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PeOgtnr+QTGqBkWBtUKfqis6jCnvvNuIPHyUMd/pC2lZHg0IAoorgzWc6ZjAJrFzgIh/ukavJC0h8ATtQ6A1TkgHzUIG1HvngrkY7fgiBUYnnmALcGTAs1XBDY+UB0Ln4XTvv0+gafAFIMtq+sbF+VG+rrvnOMOTI3bQQwaK/Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iW3OPtw1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kRraR2fw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8206DC4CEE7;
-	Mon, 12 May 2025 17:58:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iW3OPtw1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18C3DC4CEE7;
+	Mon, 12 May 2025 17:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072686;
-	bh=rSXZthPjBQXr3yXnnG/ABS/+sCYjW5JJaez4lT/skuw=;
+	s=korg; t=1747072689;
+	bh=Sk1tUuJc/6dw2LQwSo9WsBZuf4f/iiB4ucq8vyHejIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kRraR2fwYDNfNSgXQN4HTnMT7e/mSy6UkbUBMgv0+QomBuulyUNOSPA2UD73TRUKs
-	 sCGb7TJxTHcq3yGI7pvssHwKKNxqSAC6b89HdCkVWMeI8/hXTHVxCg7PxNdt2KzcR9
-	 BoYMdgtwyqAE+zNSMN8B53XpMdoQsMybCFkCEwTI=
+	b=iW3OPtw14Foj1SZ/+zP50qTnYznpZmFgmtWntZThpvE28rlT2jLyo+zJnT+3JxDcH
+	 5J15F0k5HSYGBe7LK9DGvoNslYYyjp7Du13SksgmrxOVqVJ9yeauAv6toGxSyAZhL/
+	 lwurI9LR96v3B5yHPpvo6ErOTS3CHXQj7uLNbVLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Wunderlich <frank-w@public-files.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Antonios Salios <antonios@mwa.re>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 024/184] net: ethernet: mtk_eth_soc: do not reset PSE when setting FE
-Date: Mon, 12 May 2025 19:43:45 +0200
-Message-ID: <20250512172042.685343898@linuxfoundation.org>
+Subject: [PATCH 6.12 025/184] can: m_can: m_can_class_allocate_dev(): initialize spin lock on device probe
+Date: Mon, 12 May 2025 19:43:46 +0200
+Message-ID: <20250512172042.732020252@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -51,38 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Wunderlich <frank-w@public-files.de>
+From: Antonios Salios <antonios@mwa.re>
 
-[ Upstream commit e8716b5b0dff1b3d523b4a83fd5e94d57b887c5c ]
+[ Upstream commit dcaeeb8ae84c5506ebc574732838264f3887738c ]
 
-Remove redundant PSE reset.
-When setting FE register there is no need to reset PSE,
-doing so may cause FE to work abnormal.
+The spin lock tx_handling_spinlock in struct m_can_classdev is not
+being initialized. This leads the following spinlock bad magic
+complaint from the kernel, eg. when trying to send CAN frames with
+cansend from can-utils:
 
-Link: https://git01.mediatek.com/plugins/gitiles/openwrt/feeds/mtk-openwrt-feeds/+/3a5223473e086a4b54a2b9a44df7d9ddcc2bc75a
-Fixes: dee4dd10c79aa ("net: ethernet: mtk_eth_soc: ppe: add support for multiple PPEs")
-Signed-off-by: Frank Wunderlich <frank-w@public-files.de>
-Link: https://patch.msgid.link/18f0ac7d83f82defa3342c11ef0d1362f6b81e88.1746406763.git.daniel@makrotopia.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+| BUG: spinlock bad magic on CPU#0, cansend/95
+|  lock: 0xff60000002ec1010, .magic: 00000000, .owner: <none>/-1, .owner_cpu: 0
+| CPU: 0 UID: 0 PID: 95 Comm: cansend Not tainted 6.15.0-rc3-00032-ga79be02bba5c #5 NONE
+| Hardware name: MachineWare SIM-V (DT)
+| Call Trace:
+| [<ffffffff800133e0>] dump_backtrace+0x1c/0x24
+| [<ffffffff800022f2>] show_stack+0x28/0x34
+| [<ffffffff8000de3e>] dump_stack_lvl+0x4a/0x68
+| [<ffffffff8000de70>] dump_stack+0x14/0x1c
+| [<ffffffff80003134>] spin_dump+0x62/0x6e
+| [<ffffffff800883ba>] do_raw_spin_lock+0xd0/0x142
+| [<ffffffff807a6fcc>] _raw_spin_lock_irqsave+0x20/0x2c
+| [<ffffffff80536dba>] m_can_start_xmit+0x90/0x34a
+| [<ffffffff806148b0>] dev_hard_start_xmit+0xa6/0xee
+| [<ffffffff8065b730>] sch_direct_xmit+0x114/0x292
+| [<ffffffff80614e2a>] __dev_queue_xmit+0x3b0/0xaa8
+| [<ffffffff8073b8fa>] can_send+0xc6/0x242
+| [<ffffffff8073d1c0>] raw_sendmsg+0x1a8/0x36c
+| [<ffffffff805ebf06>] sock_write_iter+0x9a/0xee
+| [<ffffffff801d06ea>] vfs_write+0x184/0x3a6
+| [<ffffffff801d0a88>] ksys_write+0xa0/0xc0
+| [<ffffffff801d0abc>] __riscv_sys_write+0x14/0x1c
+| [<ffffffff8079ebf8>] do_trap_ecall_u+0x168/0x212
+| [<ffffffff807a830a>] handle_exception+0x146/0x152
+
+Initializing the spin lock in m_can_class_allocate_dev solves that
+problem.
+
+Fixes: 1fa80e23c150 ("can: m_can: Introduce a tx_fifo_in_flight counter")
+Signed-off-by: Antonios Salios <antonios@mwa.re>
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://patch.msgid.link/20250425111744.37604-2-antonios@mwa.re
+Reviewed-by: Markus Schneider-Pargmann <msp@baylibre.com>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/net/can/m_can/m_can.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index d50017012ca14..0a13f7c4684e0 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -3427,9 +3427,6 @@ static int mtk_open(struct net_device *dev)
- 			}
- 			mtk_gdm_config(eth, target_mac->id, gdm_config);
- 		}
--		/* Reset and enable PSE */
--		mtk_w32(eth, RST_GL_PSE, MTK_RST_GL);
--		mtk_w32(eth, 0, MTK_RST_GL);
+diff --git a/drivers/net/can/m_can/m_can.c b/drivers/net/can/m_can/m_can.c
+index 3c2c1db9866d4..dbd4d8796f9b0 100644
+--- a/drivers/net/can/m_can/m_can.c
++++ b/drivers/net/can/m_can/m_can.c
+@@ -2372,6 +2372,7 @@ struct m_can_classdev *m_can_class_allocate_dev(struct device *dev,
+ 	SET_NETDEV_DEV(net_dev, dev);
  
- 		napi_enable(&eth->tx_napi);
- 		napi_enable(&eth->rx_napi);
+ 	m_can_of_parse_mram(class_dev, mram_config_vals);
++	spin_lock_init(&class_dev->tx_handling_spinlock);
+ out:
+ 	return class_dev;
+ }
 -- 
 2.39.5
 
