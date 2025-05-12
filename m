@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00BC29711A;
-	Mon, 12 May 2025 18:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFD129B223;
+	Mon, 12 May 2025 18:12:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073549; cv=none; b=Ov8T8h7eUcXVJVuGjspFsUM50nL/B41XIWnj1jO93B3IQCBm4yNIcVgMb/IqUf14DJkFCUMzygnnBVNmNirqx9nElmGcdb7hXJgZ03b+zcEHx/iIdpC4lSSmaexpU6IYz8DcMqy+dDfMHi73+WrpbQpJdJlwpFhg6QCNXuoJOUA=
+	t=1747073552; cv=none; b=i7Jv/DjhXCSRygMQOQdT0s8TCSRHcbVfqkOseH5cSbFgre8olag3JXKl6rqpx6W6J5HdhtpiRo7Kt0TkUwy0DQBlpTzbOmWW8Wv8PPUUloTyCTr/le9vwSpTisuTxFUCBKw3spKE69LjTllXeFV0x3Fg1VV0V8JM7G7U9KAFhgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073549; c=relaxed/simple;
-	bh=bSURhbOxLYVZAIY+FhsGSY0IFc4uEQFlb8POPTc3Buk=;
+	s=arc-20240116; t=1747073552; c=relaxed/simple;
+	bh=Sv+KQaQAR/lSA5+s3foplaY8Nxg/FUj9/ndLgQWE42k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UnRVipEI+1p3DRlHH+8qGNasTIBAXmMsivbsSmLf54hVMMAD03f7TK2lmmSj685ECRaSnDe9P090ErFbhWmxXwFvcuBAfjFP/lJ2YUlTlZNkKdpSAMdxeceuI0thoGei0Z6tMiX90VKaGVfzhxdDBtNtKC5CzL4qEhl/o9CNgOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYgbrqaN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uKqx5obr4bLZsIhzX9FlFUcoiDoKh4allFt2kq/IzAdNoXqe5YdkXLG3FFVLlQEye4ZX+FphsFKpVE1xz1XeryhDRei5kt24p8w1xQralx9tg7DT2Nytrp7rHpq8K6niHCnsSvWcaZ5auHTWJLfimPwr55qkzH5eIRKwuuMkvDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ECOoEm4t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYgbrqaN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FBDCC4CEE9;
-	Mon, 12 May 2025 18:12:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ECOoEm4t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2807FC4CEE7;
+	Mon, 12 May 2025 18:12:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073549;
-	bh=bSURhbOxLYVZAIY+FhsGSY0IFc4uEQFlb8POPTc3Buk=;
+	s=korg; t=1747073552;
+	bh=Sv+KQaQAR/lSA5+s3foplaY8Nxg/FUj9/ndLgQWE42k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QYgbrqaN/7e4goQ7fXugrJcDcYwYSFWI4+WJZLS6RpmR7h3TlZ80RYn/4Tf1hsCjS
-	 5h6yB2LaI9EsDBv6OeOkkOFuKe/MFQ8Z/uLwXqh3tpXOgDvkT3/EHHgi8hobJBvxpK
-	 s3kK3oVBuf26T6ETWS4eWL+GS0/LxcBhnNpe0uco=
+	b=ECOoEm4teTPgN6gjR4ieoiM7RGmRgpYmL681rORtzJowaRcaSUylnxAMUlpLMPpRi
+	 gIoL99s1BadoCP3llhnKL5xueWu2DKfADeTwvH+b3D32rPl7jT6o5GQlHflYLybeWZ
+	 Z3zjzLF7+PVpE7D07kh96oODmyZHzNti0RhtFU1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
 	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Alexandre Chartre <alexandre.chartre@oracle.com>
-Subject: [PATCH 6.6 110/113] x86/its: Add support for RSB stuffing mitigation
-Date: Mon, 12 May 2025 19:46:39 +0200
-Message-ID: <20250512172032.152882365@linuxfoundation.org>
+Subject: [PATCH 6.6 111/113] x86/its: Align RETs in BHB clear sequence to avoid thunking
+Date: Mon, 12 May 2025 19:46:40 +0200
+Message-ID: <20250512172032.192736895@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172027.691520737@linuxfoundation.org>
 References: <20250512172027.691520737@linuxfoundation.org>
@@ -54,87 +54,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit facd226f7e0c8ca936ac114aba43cb3e8b94e41e upstream.
+commit f0cd7091cc5a032c8870b4285305d9172569d126 upstream.
 
-When retpoline mitigation is enabled for spectre-v2, enabling
-call-depth-tracking and RSB stuffing also mitigates ITS. Add cmdline option
-indirect_target_selection=stuff to allow enabling RSB stuffing mitigation.
+The software mitigation for BHI is to execute BHB clear sequence at syscall
+entry, and possibly after a cBPF program. ITS mitigation thunks RETs in the
+lower half of the cacheline. This causes the RETs in the BHB clear sequence
+to be thunked as well, adding unnecessary branches to the BHB clear
+sequence.
 
-When retpoline mitigation is not enabled, =stuff option is ignored, and
-default mitigation for ITS is deployed.
+Since the sequence is in hot path, align the RET instructions in the
+sequence to avoid thunking.
 
+This is how disassembly clear_bhb_loop() looks like after this change:
+
+   0x44 <+4>:     mov    $0x5,%ecx
+   0x49 <+9>:     call   0xffffffff81001d9b <clear_bhb_loop+91>
+   0x4e <+14>:    jmp    0xffffffff81001de5 <clear_bhb_loop+165>
+   0x53 <+19>:    int3
+   ...
+   0x9b <+91>:    call   0xffffffff81001dce <clear_bhb_loop+142>
+   0xa0 <+96>:    ret
+   0xa1 <+97>:    int3
+   ...
+   0xce <+142>:   mov    $0x5,%eax
+   0xd3 <+147>:   jmp    0xffffffff81001dd6 <clear_bhb_loop+150>
+   0xd5 <+149>:   nop
+   0xd6 <+150>:   sub    $0x1,%eax
+   0xd9 <+153>:   jne    0xffffffff81001dd3 <clear_bhb_loop+147>
+   0xdb <+155>:   sub    $0x1,%ecx
+   0xde <+158>:   jne    0xffffffff81001d9b <clear_bhb_loop+91>
+   0xe0 <+160>:   ret
+   0xe1 <+161>:   int3
+   0xe2 <+162>:   int3
+   0xe3 <+163>:   int3
+   0xe4 <+164>:   int3
+   0xe5 <+165>:   lfence
+   0xe8 <+168>:   pop    %rbp
+   0xe9 <+169>:   ret
+
+Suggested-by: Andrew Cooper <andrew.cooper3@citrix.com>
 Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Reviewed-by: Alexandre Chartre <alexandre.chartre@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt |    3 +++
- arch/x86/kernel/cpu/bugs.c                      |   21 +++++++++++++++++++++
- 2 files changed, 24 insertions(+)
+ arch/x86/entry/entry_64.S |   20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -2070,6 +2070,9 @@
- 				mitigation.
- 			vmexit: Only deploy mitigation if CPU is affected by
- 				guest/host isolation part of ITS.
-+			stuff:	Deploy RSB-fill mitigation when retpoline is
-+				also deployed. Otherwise, deploy the default
-+				mitigation.
- 
- 			For details see:
- 			Documentation/admin-guide/hw-vuln/indirect-target-selection.rst
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1189,6 +1189,7 @@ enum its_mitigation_cmd {
- 	ITS_CMD_OFF,
- 	ITS_CMD_ON,
- 	ITS_CMD_VMEXIT,
-+	ITS_CMD_RSB_STUFF,
- };
- 
- enum its_mitigation {
-@@ -1229,6 +1230,8 @@ static int __init its_parse_cmdline(char
- 		setup_force_cpu_bug(X86_BUG_ITS);
- 	} else if (!strcmp(str, "vmexit")) {
- 		its_cmd = ITS_CMD_VMEXIT;
-+	} else if (!strcmp(str, "stuff")) {
-+		its_cmd = ITS_CMD_RSB_STUFF;
- 	} else {
- 		pr_err("Ignoring unknown indirect_target_selection option (%s).", str);
- 	}
-@@ -1279,6 +1282,12 @@ static void __init its_select_mitigation
- 		goto out;
- 	}
- 
-+	if (cmd == ITS_CMD_RSB_STUFF &&
-+	    (!boot_cpu_has(X86_FEATURE_RETPOLINE) || !IS_ENABLED(CONFIG_CALL_DEPTH_TRACKING))) {
-+		pr_err("RSB stuff mitigation not supported, using default\n");
-+		cmd = ITS_CMD_ON;
-+	}
-+
- 	switch (cmd) {
- 	case ITS_CMD_OFF:
- 		its_mitigation = ITS_MITIGATION_OFF;
-@@ -1296,6 +1305,18 @@ static void __init its_select_mitigation
- 		setup_force_cpu_cap(X86_FEATURE_RETHUNK);
- 		set_return_thunk(its_return_thunk);
- 		break;
-+	case ITS_CMD_RSB_STUFF:
-+		its_mitigation = ITS_MITIGATION_RETPOLINE_STUFF;
-+		setup_force_cpu_cap(X86_FEATURE_RETHUNK);
-+		setup_force_cpu_cap(X86_FEATURE_CALL_DEPTH);
-+#ifdef CONFIG_CALL_DEPTH_TRACKING
-+		set_return_thunk(&__x86_return_skl);
-+#endif
-+		if (retbleed_mitigation == RETBLEED_MITIGATION_NONE) {
-+			retbleed_mitigation = RETBLEED_MITIGATION_STUFF;
-+			pr_info("Retbleed mitigation updated to stuffing\n");
-+		}
-+		break;
- 	}
- out:
- 	pr_info("%s\n", its_strings[its_mitigation]);
+--- a/arch/x86/entry/entry_64.S
++++ b/arch/x86/entry/entry_64.S
+@@ -1569,7 +1569,9 @@ SYM_CODE_END(rewind_stack_and_make_dead)
+  * ORC to unwind properly.
+  *
+  * The alignment is for performance and not for safety, and may be safely
+- * refactored in the future if needed.
++ * refactored in the future if needed. The .skips are for safety, to ensure
++ * that all RETs are in the second half of a cacheline to mitigate Indirect
++ * Target Selection, rather than taking the slowpath via its_return_thunk.
+  */
+ SYM_FUNC_START(clear_bhb_loop)
+ 	push	%rbp
+@@ -1579,10 +1581,22 @@ SYM_FUNC_START(clear_bhb_loop)
+ 	call	1f
+ 	jmp	5f
+ 	.align 64, 0xcc
++	/*
++	 * Shift instructions so that the RET is in the upper half of the
++	 * cacheline and don't take the slowpath to its_return_thunk.
++	 */
++	.skip 32 - (.Lret1 - 1f), 0xcc
+ 	ANNOTATE_INTRA_FUNCTION_CALL
+ 1:	call	2f
+-	RET
++.Lret1:	RET
+ 	.align 64, 0xcc
++	/*
++	 * As above shift instructions for RET at .Lret2 as well.
++	 *
++	 * This should be ideally be: .skip 32 - (.Lret2 - 2f), 0xcc
++	 * but some Clang versions (e.g. 18) don't like this.
++	 */
++	.skip 32 - 18, 0xcc
+ 2:	movl	$5, %eax
+ 3:	jmp	4f
+ 	nop
+@@ -1590,7 +1604,7 @@ SYM_FUNC_START(clear_bhb_loop)
+ 	jnz	3b
+ 	sub	$1, %ecx
+ 	jnz	1b
+-	RET
++.Lret2:	RET
+ 5:	lfence
+ 	pop	%rbp
+ 	RET
 
 
