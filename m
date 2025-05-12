@@ -1,123 +1,176 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A40F2989B0;
-	Mon, 12 May 2025 18:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A732989B2;
+	Mon, 12 May 2025 18:04:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073061; cv=none; b=r9nlFtdUfPvjatvM50DZ8yPKBJCuQaa3WybsMv4x0VAr9CTrN9ngySe3oSADYCeEKxRokpriYB2aWN1LUEUMj6TOIEjcvBixgJd+LABPxjxSnQ5Wu23oMJs8EAwqh0R7y9XEelCE8EG/13KXb75eZNM7nwGgVBFLfRAbkq6X4+s=
+	t=1747073061; cv=none; b=Jw3s48lYBbpk8XTf36K8G7JE461rVwohbz7lqdLhfbLLJWzbaTYQ1GNVWMp4MTQpSju57r9XjEeVV7M8+BMrROzvsBClx98N3ls9p6bFoKv6oDQS3RuJTPTYjnkQGoviKMbyUMW+ZoLLS48lhufLLTb/jHALdzFK/41KZGFmjW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1747073061; c=relaxed/simple;
-	bh=lCTxzM5mPtEqEUhqg9mBz2nbnDEbWNQdOwqtwsH/FcI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=GzT3VASYg6HT4oc0tfXk4gicARrPMjT/z6ojce0Po7tbS6twRx6SpNcQpqnKKyv7UPygv0xEerGAo5rO7U0DlSt4yca3kvPACD83IyX3LGCXnJs63+B30uGN7AhNoDaD1Mju3WrFfq+j4Glc/3kD2KjHrgLU4tuiiU5M7j1cI8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tdHFr2pl; arc=none smtp.client-ip=10.30.226.201
+	bh=yq93t+wQDRhOU6ht+Z5zQ1AWcbo7fRi1um1/XTqQrNs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=tCftYrHgFrTAqNYWfOF6iDabSiFYVUSRVSMDu18wH9e3YtMGkNFVkvfXdgmQgb61qha3KYj92doMV4XV4a8f1uhZcwwrTExNYbWMMajFasi1nhlTgD2KGmdiL05PDWtWYhzKvixw28KXqiXbU/0+Qj4kTGlyRw6cvLWSRJnM7SU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PfWxfaZW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tdHFr2pl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6195FC4CEFE;
-	Mon, 12 May 2025 18:04:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747073060;
-	bh=lCTxzM5mPtEqEUhqg9mBz2nbnDEbWNQdOwqtwsH/FcI=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PfWxfaZW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F9BC4CEE7;
+	Mon, 12 May 2025 18:04:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1747073059;
+	bh=yq93t+wQDRhOU6ht+Z5zQ1AWcbo7fRi1um1/XTqQrNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tdHFr2ple1FtQDh+eCd7ZUHmvPvs2hX5VFnQlrBdiUdrKgvYL92mJAAONDT9yD2Ua
-	 Pv8xqo17ABe2z4+MBtL4zc7yccQa/Y4ag/mrQYNqZiYRfphY9bdt1qHoXg9q+AbkEd
-	 Koae12c8mrNpA52TTCEi0J1Q0vGkXvbGrexzHkcSsDwKuiklCJKsf4E6k7lJK66gbp
-	 RTO7YkC/TmmYoipmFYURJY5FBNK69aYyGkreG06UYuWZyHu6NmcDYSoIK5EZZgWId6
-	 T9MaPbYDgMSyUa/bRTEbhMUaUYXz9K0l/6bTwbqU7b0sgBMY92DbVck0dHrM1KYIB2
-	 kYwg9wJ8Vy8XQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Jason Andryuk <jason.andryuk@amd.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Juergen Gross <jgross@suse.com>,
-	Sasha Levin <sashal@kernel.org>,
-	sumit.garg@kernel.org,
-	gregkh@linuxfoundation.org,
-	michal.orzel@amd.com,
-	xin.wang2@amd.com,
-	chenqiuji666@gmail.com,
-	xen-devel@lists.xenproject.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 13/15] xenbus: Allow PVH dom0 a non-local xenstore
-Date: Mon, 12 May 2025 14:03:48 -0400
-Message-Id: <20250512180352.437356-13-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250512180352.437356-1-sashal@kernel.org>
-References: <20250512180352.437356-1-sashal@kernel.org>
+	b=PfWxfaZWVQUPkqia9xMjNsrUcL/rCMBzuKvsI2t42ElqcIBJOTCefuqAG8YrF+ggx
+	 5kqX7GeNHMZARXuS5uLViWT60QKx7nmxVpokNi8WYP5bSjo0+qbclFssAUTnSE2dM4
+	 Gp/ZT0/5vxmVY6AM7qLtS1Y4Mq0+RytXsftdmHQA=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Christoph Hellwig <hch@lst.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 142/184] loop: refactor queue limits updates
+Date: Mon, 12 May 2025 19:45:43 +0200
+Message-ID: <20250512172047.589871280@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
+References: <20250512172041.624042835@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.14.6
 Content-Transfer-Encoding: 8bit
 
-From: Jason Andryuk <jason.andryuk@amd.com>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 90989869baae47ee2aa3bcb6f6eb9fbbe4287958 ]
+------------------
 
-Make xenbus_init() allow a non-local xenstore for a PVH dom0 - it is
-currently forced to XS_LOCAL.  With Hyperlaunch booting dom0 and a
-xenstore stubdom, dom0 can be handled as a regular XS_HVM following the
-late init path.
+From: Christoph Hellwig <hch@lst.de>
 
-Ideally we'd drop the use of xen_initial_domain() and just check for the
-event channel instead.  However, ARM has a xen,enhanced no-xenstore
-mode, where the event channel and PFN would both be 0.  Retain the
-xen_initial_domain() check, and use that for an additional check when
-the event channel is 0.
+[ Upstream commit b38c8be255e89ffcdeb817407222d2de0b573a41 ]
 
-Check the full 64bit HVM_PARAM_STORE_EVTCHN value to catch the off
-chance that high bits are set for the 32bit event channel.
+Replace loop_reconfigure_limits with a slightly less encompassing
+loop_update_limits that expects the caller to acquire and commit the
+queue limits to prepare for sorting out the freeze vs limits lock
+ordering.
 
-Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
-Change-Id: I5506da42e4c6b8e85079fefb2f193c8de17c7437
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20250506204456.5220-1-jason.andryuk@amd.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250110054726.1499538-11-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: f5c84eff634b ("loop: Add sanity check for read/write_iter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/xenbus/xenbus_probe.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/block/loop.c | 36 ++++++++++++++++++++----------------
+ 1 file changed, 20 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/xen/xenbus/xenbus_probe.c b/drivers/xen/xenbus/xenbus_probe.c
-index 6d32ffb011365..86fe6e7790566 100644
---- a/drivers/xen/xenbus/xenbus_probe.c
-+++ b/drivers/xen/xenbus/xenbus_probe.c
-@@ -966,9 +966,15 @@ static int __init xenbus_init(void)
- 	if (xen_pv_domain())
- 		xen_store_domain_type = XS_PV;
- 	if (xen_hvm_domain())
-+	{
- 		xen_store_domain_type = XS_HVM;
--	if (xen_hvm_domain() && xen_initial_domain())
--		xen_store_domain_type = XS_LOCAL;
-+		err = hvm_get_parameter(HVM_PARAM_STORE_EVTCHN, &v);
-+		if (err)
-+			goto out_error;
-+		xen_store_evtchn = (int)v;
-+		if (!v && xen_initial_domain())
-+			xen_store_domain_type = XS_LOCAL;
-+	}
- 	if (xen_pv_domain() && !xen_start_info->store_evtchn)
- 		xen_store_domain_type = XS_LOCAL;
- 	if (xen_pv_domain() && xen_start_info->store_evtchn)
-@@ -987,10 +993,6 @@ static int __init xenbus_init(void)
- 		xen_store_interface = gfn_to_virt(xen_store_gfn);
- 		break;
- 	case XS_HVM:
--		err = hvm_get_parameter(HVM_PARAM_STORE_EVTCHN, &v);
--		if (err)
--			goto out_error;
--		xen_store_evtchn = (int)v;
- 		err = hvm_get_parameter(HVM_PARAM_STORE_PFN, &v);
- 		if (err)
- 			goto out_error;
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index 27e4bd8ee9dc9..81995ebefc962 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -901,12 +901,12 @@ static unsigned int loop_default_blocksize(struct loop_device *lo,
+ 	return SECTOR_SIZE;
+ }
+ 
+-static int loop_reconfigure_limits(struct loop_device *lo, unsigned int bsize)
++static void loop_update_limits(struct loop_device *lo, struct queue_limits *lim,
++		unsigned int bsize)
+ {
+ 	struct file *file = lo->lo_backing_file;
+ 	struct inode *inode = file->f_mapping->host;
+ 	struct block_device *backing_bdev = NULL;
+-	struct queue_limits lim;
+ 	u32 granularity = 0, max_discard_sectors = 0;
+ 
+ 	if (S_ISBLK(inode->i_mode))
+@@ -919,22 +919,20 @@ static int loop_reconfigure_limits(struct loop_device *lo, unsigned int bsize)
+ 
+ 	loop_get_discard_config(lo, &granularity, &max_discard_sectors);
+ 
+-	lim = queue_limits_start_update(lo->lo_queue);
+-	lim.logical_block_size = bsize;
+-	lim.physical_block_size = bsize;
+-	lim.io_min = bsize;
+-	lim.features &= ~(BLK_FEAT_WRITE_CACHE | BLK_FEAT_ROTATIONAL);
++	lim->logical_block_size = bsize;
++	lim->physical_block_size = bsize;
++	lim->io_min = bsize;
++	lim->features &= ~(BLK_FEAT_WRITE_CACHE | BLK_FEAT_ROTATIONAL);
+ 	if (file->f_op->fsync && !(lo->lo_flags & LO_FLAGS_READ_ONLY))
+-		lim.features |= BLK_FEAT_WRITE_CACHE;
++		lim->features |= BLK_FEAT_WRITE_CACHE;
+ 	if (backing_bdev && !bdev_nonrot(backing_bdev))
+-		lim.features |= BLK_FEAT_ROTATIONAL;
+-	lim.max_hw_discard_sectors = max_discard_sectors;
+-	lim.max_write_zeroes_sectors = max_discard_sectors;
++		lim->features |= BLK_FEAT_ROTATIONAL;
++	lim->max_hw_discard_sectors = max_discard_sectors;
++	lim->max_write_zeroes_sectors = max_discard_sectors;
+ 	if (max_discard_sectors)
+-		lim.discard_granularity = granularity;
++		lim->discard_granularity = granularity;
+ 	else
+-		lim.discard_granularity = 0;
+-	return queue_limits_commit_update(lo->lo_queue, &lim);
++		lim->discard_granularity = 0;
+ }
+ 
+ static int loop_configure(struct loop_device *lo, blk_mode_t mode,
+@@ -943,6 +941,7 @@ static int loop_configure(struct loop_device *lo, blk_mode_t mode,
+ {
+ 	struct file *file = fget(config->fd);
+ 	struct address_space *mapping;
++	struct queue_limits lim;
+ 	int error;
+ 	loff_t size;
+ 	bool partscan;
+@@ -1014,7 +1013,9 @@ static int loop_configure(struct loop_device *lo, blk_mode_t mode,
+ 	lo->old_gfp_mask = mapping_gfp_mask(mapping);
+ 	mapping_set_gfp_mask(mapping, lo->old_gfp_mask & ~(__GFP_IO|__GFP_FS));
+ 
+-	error = loop_reconfigure_limits(lo, config->block_size);
++	lim = queue_limits_start_update(lo->lo_queue);
++	loop_update_limits(lo, &lim, config->block_size);
++	error = queue_limits_commit_update(lo->lo_queue, &lim);
+ 	if (error)
+ 		goto out_unlock;
+ 
+@@ -1382,6 +1383,7 @@ static int loop_set_dio(struct loop_device *lo, unsigned long arg)
+ 
+ static int loop_set_block_size(struct loop_device *lo, unsigned long arg)
+ {
++	struct queue_limits lim;
+ 	int err = 0;
+ 
+ 	if (lo->lo_state != Lo_bound)
+@@ -1394,7 +1396,9 @@ static int loop_set_block_size(struct loop_device *lo, unsigned long arg)
+ 	invalidate_bdev(lo->lo_device);
+ 
+ 	blk_mq_freeze_queue(lo->lo_queue);
+-	err = loop_reconfigure_limits(lo, arg);
++	lim = queue_limits_start_update(lo->lo_queue);
++	loop_update_limits(lo, &lim, arg);
++	err = queue_limits_commit_update(lo->lo_queue, &lim);
+ 	loop_update_dio(lo);
+ 	blk_mq_unfreeze_queue(lo->lo_queue);
+ 
 -- 
 2.39.5
+
+
 
