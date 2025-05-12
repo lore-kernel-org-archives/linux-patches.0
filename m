@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BCE1519B8;
-	Mon, 12 May 2025 18:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70FB1519B8;
+	Mon, 12 May 2025 18:01:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072877; cv=none; b=sgfAzP8p0EYMisu8xemdMSby48fhL2OHpH1EHF27hobzPh74OD/00M/zLgxACSvXxXpNQq8lj5+bG/bU3OPN97vP1WVEqxATyeFaFTilxfGmzs0+ZAi/L7+9iYRzudpYFudIMusxpohPysecv7uGPHVCvjf5ciSQY6mcQjT+eYs=
+	t=1747072879; cv=none; b=F6c0nnAeI/zoNKO9kWbrKSWK2E27BWKqve3VyRSKpZGxD5jahYMwr1hFCFM+4r3/H5pqKU7ElTRGYpqII4aQVE7lRTAi0ZqXjuWUEvcjZ/BypgchZYZaC9rxEqcWK6KBY6cmDT2rZs3Xrt4FmtxbhzX+/Za4GNxLRgx4N0eaO2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072877; c=relaxed/simple;
-	bh=jjdMqora2e5tWmSINpzoSveeEhBXhuIdIs9VAcrbm2c=;
+	s=arc-20240116; t=1747072879; c=relaxed/simple;
+	bh=6CKep5RKUAiMMv9I2KgDb7B/3gJ7If/Z6oouo48e8+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dJTcF5bT88sbb0l8J4S5bKIDoLVsUWP4/Puy1hIY0PrE2jZPnLoY4Z9FNvSjmF8yMKEs5xUQgdI5UWUNT6SOueDZvlQyuPkKV/P3u2TPc9YIcwUTUygv7rqqPRmtXVkVkdwSFfGgQLlFM1CP8WBBeL705jwx+effB7EKhIS+Cd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UmKNXiMS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UtFTHuAKYYvRJlZsB2Cq9BvGdNH+5qJz35rB75wW3iUkfVw9diPwk6Tu/Xv0GI3rZ+SxQIQtUr+VsbIORkD+vAuVVsJ/nETcI9J1LpSmlZMtFMM4Rcwkq9gqpDm2LG8vFGbGZTRlgJJEbqWuK69cw64thjMZwvkIelGstp4bcg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+8dLBIE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UmKNXiMS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD17C4CEE7;
-	Mon, 12 May 2025 18:01:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+8dLBIE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA71C4CEE7;
+	Mon, 12 May 2025 18:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072876;
-	bh=jjdMqora2e5tWmSINpzoSveeEhBXhuIdIs9VAcrbm2c=;
+	s=korg; t=1747072879;
+	bh=6CKep5RKUAiMMv9I2KgDb7B/3gJ7If/Z6oouo48e8+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UmKNXiMSujJ5OLWyNQQnNWUvWgMgCT50OCDhAbGFTu9Un78zswa9gdzqr/78yb864
-	 +QSUL6a6KW9E8sC8h1ORfuI1g1ihfDHZtuWaU2kzISMFh4BJBlhq34Hxt8D9fLQpyU
-	 8jiyOwccBqUPQtVfEcTduxlszxvT4R+xoSFjQscU=
+	b=k+8dLBIEbUAr7m59QTP+PIs4cwvvJrux1wJvll/qTpvrDcEUeS8rN3FUspMKtnN22
+	 sAKT1xIAnMr9ImsGjpLJQpb61wIlQlPNoPWa6Bg7uuN1iwnzfb7fqSIcm7a1Oe6les
+	 rbPS9niiTgTiXJ+sp6/KpWawKgQx720e2iANNzkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Xue <xxm@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Stable@vger.kernel.org,
+	Gabriel Shahrouzi <gshahrouzi@gmail.com>,
+	Marcelo Schmitt <marcelo.schmitt1@gmail.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 083/184] iio: adc: rockchip: Fix clock initialization sequence
-Date: Mon, 12 May 2025 19:44:44 +0200
-Message-ID: <20250512172045.205855047@linuxfoundation.org>
+Subject: [PATCH 6.12 084/184] iio: adis16201: Correct inclinometer channel resolution
+Date: Mon, 12 May 2025 19:44:45 +0200
+Message-ID: <20250512172045.245313811@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -52,55 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Xue <xxm@rock-chips.com>
+From: Gabriel Shahrouzi <gshahrouzi@gmail.com>
 
-commit 839f81de397019f55161c5982d670ac19d836173 upstream.
+commit 609bc31eca06c7408e6860d8b46311ebe45c1fef upstream.
 
-clock_set_rate should be executed after devm_clk_get_enabled.
+The inclinometer channels were previously defined with 14 realbits.
+However, the ADIS16201 datasheet states the resolution for these output
+channels is 12 bits (Page 14, text description; Page 15, table 7).
 
-Fixes: 97ad10bb2901 ("iio: adc: rockchip_saradc: Make use of devm_clk_get_enabled")
-Signed-off-by: Simon Xue <xxm@rock-chips.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patch.msgid.link/20250312062016.137821-1-xxm@rock-chips.com
-Cc: <Stable@vger.kernel.org>
+Correct the realbits value to 12 to accurately reflect the hardware.
+
+Fixes: f7fe1d1dd5a5 ("staging: iio: new adis16201 driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gabriel Shahrouzi <gshahrouzi@gmail.com>
+Reviewed-by: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
+Link: https://patch.msgid.link/20250421131539.912966-1-gshahrouzi@gmail.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/rockchip_saradc.c |   17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ drivers/iio/accel/adis16201.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/adc/rockchip_saradc.c
-+++ b/drivers/iio/adc/rockchip_saradc.c
-@@ -480,15 +480,6 @@ static int rockchip_saradc_probe(struct
- 	if (info->reset)
- 		rockchip_saradc_reset_controller(info->reset);
- 
--	/*
--	 * Use a default value for the converter clock.
--	 * This may become user-configurable in the future.
--	 */
--	ret = clk_set_rate(info->clk, info->data->clk_rate);
--	if (ret < 0)
--		return dev_err_probe(&pdev->dev, ret,
--				     "failed to set adc clk rate\n");
--
- 	ret = regulator_enable(info->vref);
- 	if (ret < 0)
- 		return dev_err_probe(&pdev->dev, ret,
-@@ -515,6 +506,14 @@ static int rockchip_saradc_probe(struct
- 	if (IS_ERR(info->clk))
- 		return dev_err_probe(&pdev->dev, PTR_ERR(info->clk),
- 				     "failed to get adc clock\n");
-+	/*
-+	 * Use a default value for the converter clock.
-+	 * This may become user-configurable in the future.
-+	 */
-+	ret = clk_set_rate(info->clk, info->data->clk_rate);
-+	if (ret < 0)
-+		return dev_err_probe(&pdev->dev, ret,
-+				     "failed to set adc clk rate\n");
- 
- 	platform_set_drvdata(pdev, indio_dev);
+--- a/drivers/iio/accel/adis16201.c
++++ b/drivers/iio/accel/adis16201.c
+@@ -211,9 +211,9 @@ static const struct iio_chan_spec adis16
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
+ 	ADIS_AUX_ADC_CHAN(ADIS16201_AUX_ADC_REG, ADIS16201_SCAN_AUX_ADC, 0, 12),
+ 	ADIS_INCLI_CHAN(X, ADIS16201_XINCL_OUT_REG, ADIS16201_SCAN_INCLI_X,
+-			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
++			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
+ 	ADIS_INCLI_CHAN(Y, ADIS16201_YINCL_OUT_REG, ADIS16201_SCAN_INCLI_Y,
+-			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
++			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
+ 	IIO_CHAN_SOFT_TIMESTAMP(7)
+ };
  
 
 
