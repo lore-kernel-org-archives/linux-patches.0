@@ -1,90 +1,119 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD00B297A61;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7EF297A62;
 	Mon, 12 May 2025 18:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073046; cv=none; b=O2L5tpQEReVp8u8wMbpAZZOuUTw+8PNcUuu6RumQ+T9AUevLIJ2JdeIZYuCOcdZm6n5syUfnfliH9hAbjkzCDiTyZzWlDe5SM6eH4PfiAkQOCtPRAMCJjSHQbtkh2PlGGaWDvGzNLgaElms4WPUXd0noYiAyqbobiq/Na55mS+o=
+	t=1747073047; cv=none; b=VOwp3Yfkr3anN9RiEBDwXVDSlP49BFA3y6uhNQe9HsYjBTqqVhMVpiE8VD5i3yeMFoECezu5hEzsZ2vEqMXBiUhqNIcxnjDyw/FbiC0eqYpx+vBi12C/o+ZNsFUMKmGW98VdpWFJ/DtPd1t6qkOk6J1ZPsyOU2zpnplGVeKG0gU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073046; c=relaxed/simple;
-	bh=KfslzzOhSDhXLF+0kIJzc6/p/RNxe9WfOgHTcGyODic=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=JHue/RBUlLWEeLSQLsJNJn48FC7FBY/4dsv6ieiQULHAWw0psEKkcoTw8g0EDfkjZS8ZU61UteyiDBoZqIXghBBWGhf5MlDtwW/v9lXWn1W3qHAZliZMfkt9DuJv5d7Zm9smKHziXp3IhlmQGIGNQiyGrzxRF+YnS2PbslV42AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tZ949Gct; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747073047; c=relaxed/simple;
+	bh=7AdmamawxFHQVl9sNZyBGg7z72bkK+K1M5B0fw/WG7c=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=iyMsaoxZyFi6xHogDfyERreNIaeSxyoXVI2+i0aTNjdRZaqALj4ob2+qar+rSQ7BxE3E/9/qM/nIB9cwxFc462OdT8Ik7j9Jt4YoMC044/y7COyPjnFt/rXaz6bahRzXNGl4MjAyk8PJnYT8lz/W+BBetzcKeARKY/OnZRwvwVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLELGVwV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tZ949Gct"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F1E9C4CEF2;
-	Mon, 12 May 2025 18:04:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747073046;
-	bh=KfslzzOhSDhXLF+0kIJzc6/p/RNxe9WfOgHTcGyODic=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLELGVwV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496D5C4CEE7;
+	Mon, 12 May 2025 18:04:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1747073046;
+	bh=7AdmamawxFHQVl9sNZyBGg7z72bkK+K1M5B0fw/WG7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tZ949GctLtBw71dJxp9irDYUd4mH97CzY55RSiedFK3y4TzKces41CXD4F/dtlX39
-	 F2yM9lSW8rhsEs2nPsqe7LEfi2IG+K2L2vSHxF2OBRanElzWMkFyCIePXWaYgK2MF2
-	 kUFD/gjhQvNVAe3WtkGrki5PjdbcHsZpyCyIYeOVBA4nu+UUZEQnOTRGgrwtMW/oO7
-	 OAmuMw0+TObzUqjfWcNcRwRQUAQbb9Tqi2KKF6r3umXu5lS0+2mGGcZDUzp5EPnYET
-	 GWWGtt/S8WZpCXmSDgVRIR468M406eh9zJJeaFY0W5HLgxkv16V8mzKA86qjXjz6bF
-	 gtyMSODer/6FQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	josef@toxicpanda.com,
-	linux-btrfs@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 06/15] btrfs: handle empty eb->folios in num_extent_folios()
-Date: Mon, 12 May 2025 14:03:41 -0400
-Message-Id: <20250512180352.437356-6-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250512180352.437356-1-sashal@kernel.org>
-References: <20250512180352.437356-1-sashal@kernel.org>
+	b=xLELGVwVC1UmcO8rA7v7ESzh9yG2gZhwdH5psuKpkaR7fomWYvCLF41LEYIMGw4+0
+	 F6+scQcs9H3H9qdU0+yeYsudEfhkl9A1zJf/1lAaeCtUtOI4F+XBPWCCTypkuS41cx
+	 YjrW8vD4+wsogf3iINktVtzDR/ADainjdUt2Ba+U=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Zong Li <zong.li@sifive.com>,
+	Nylon Chen <nylon.chen@sifive.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 138/184] riscv: misaligned: Add handling for ZCB instructions
+Date: Mon, 12 May 2025 19:45:39 +0200
+Message-ID: <20250512172047.434221281@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
+References: <20250512172041.624042835@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.14.6
 Content-Transfer-Encoding: 8bit
 
-From: Boris Burkov <boris@bur.io>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit d6fe0c69b3aa5c985380b794bdf8e6e9b1811e60 ]
+------------------
 
-num_extent_folios() unconditionally calls folio_order() on
-eb->folios[0]. If that is NULL this will be a segfault. It is reasonable
-for it to return 0 as the number of folios in the eb when the first
-entry is NULL, so do that instead.
+From: Nylon Chen <nylon.chen@sifive.com>
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+[ Upstream commit eb16b3727c05ed36420c90eca1e8f0e279514c1c ]
+
+Add support for the Zcb extension's compressed half-word instructions
+(C.LHU, C.LH, and C.SH) in the RISC-V misaligned access trap handler.
+
+Signed-off-by: Zong Li <zong.li@sifive.com>
+Signed-off-by: Nylon Chen <nylon.chen@sifive.com>
+Fixes: 956d705dd279 ("riscv: Unaligned load/store handling for M_MODE")
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20250411073850.3699180-2-nylon.chen@sifive.com
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.h | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/riscv/kernel/traps_misaligned.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/fs/btrfs/extent_io.h b/fs/btrfs/extent_io.h
-index 6c5328bfabc22..2aefc64cdd295 100644
---- a/fs/btrfs/extent_io.h
-+++ b/fs/btrfs/extent_io.h
-@@ -297,6 +297,8 @@ static inline int num_extent_pages(const struct extent_buffer *eb)
-  */
- static inline int num_extent_folios(const struct extent_buffer *eb)
- {
-+	if (!eb->folios[0])
-+		return 0;
- 	if (folio_order(eb->folios[0]))
- 		return 1;
- 	return num_extent_pages(eb);
+diff --git a/arch/riscv/kernel/traps_misaligned.c b/arch/riscv/kernel/traps_misaligned.c
+index 9a80a12f6b48f..d14bfc23e315b 100644
+--- a/arch/riscv/kernel/traps_misaligned.c
++++ b/arch/riscv/kernel/traps_misaligned.c
+@@ -87,6 +87,13 @@
+ #define INSN_MATCH_C_FSWSP		0xe002
+ #define INSN_MASK_C_FSWSP		0xe003
+ 
++#define INSN_MATCH_C_LHU		0x8400
++#define INSN_MASK_C_LHU			0xfc43
++#define INSN_MATCH_C_LH			0x8440
++#define INSN_MASK_C_LH			0xfc43
++#define INSN_MATCH_C_SH			0x8c00
++#define INSN_MASK_C_SH			0xfc43
++
+ #define INSN_LEN(insn)			((((insn) & 0x3) < 0x3) ? 2 : 4)
+ 
+ #if defined(CONFIG_64BIT)
+@@ -405,6 +412,13 @@ int handle_misaligned_load(struct pt_regs *regs)
+ 		fp = 1;
+ 		len = 4;
+ #endif
++	} else if ((insn & INSN_MASK_C_LHU) == INSN_MATCH_C_LHU) {
++		len = 2;
++		insn = RVC_RS2S(insn) << SH_RD;
++	} else if ((insn & INSN_MASK_C_LH) == INSN_MATCH_C_LH) {
++		len = 2;
++		shift = 8 * (sizeof(ulong) - len);
++		insn = RVC_RS2S(insn) << SH_RD;
+ 	} else {
+ 		regs->epc = epc;
+ 		return -1;
+@@ -504,6 +518,9 @@ int handle_misaligned_store(struct pt_regs *regs)
+ 		len = 4;
+ 		val.data_ulong = GET_F32_RS2C(insn, regs);
+ #endif
++	} else if ((insn & INSN_MASK_C_SH) == INSN_MATCH_C_SH) {
++		len = 2;
++		val.data_ulong = GET_RS2S(insn, regs);
+ 	} else {
+ 		regs->epc = epc;
+ 		return -1;
 -- 
 2.39.5
+
+
 
