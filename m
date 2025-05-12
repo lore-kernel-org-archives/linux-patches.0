@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683A721770B;
-	Mon, 12 May 2025 17:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1438321770B;
+	Mon, 12 May 2025 17:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071152; cv=none; b=r0Dfd+aVOEv7HjW1vGFi6p8Gvl42nq9VIL9/QXSoy8veh/rfnq6G9tFMCnUmcrgcR0k/ZZUQT30HvOS6pq3i6Llo2OjuoZVwllBlp73Qfkh3iRJAv2dkpuFYuz82qwOEd4Uj4JV9LQcTDirc8d9cYSsUb2YAshCPTTosBno9v3g=
+	t=1747071155; cv=none; b=hcLTG2b3KASY2YhlmVoD2nCQ8IfJyW7tcb7gYebbaPPnCEtspMU7zGf48z8ynRERMI3UWLUCACCUlP/dagpBAqw6JD2rHdvythtaMx198XTZFyXNECP+ZPiKTagr7R/fCTejayvZfjkkbuYf9hmAlKpmNxipoiEccmGRu64smwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071152; c=relaxed/simple;
-	bh=i0Ivke/pWomTesYJ63hC0DuhewI6KU/1/Lm0FtTL3kg=;
+	s=arc-20240116; t=1747071155; c=relaxed/simple;
+	bh=XtNcGN+SzjLBzocm2VpFgu3R4RIv8WHwJEg0+vo6gAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pym/QEEAC6z5HhKtD6GXIYeHF8bg7awVbFb0KKPdSfnkJFXHEfn/8rXwk4fgwXvIb7q8VT7UEunodchThXMijfKh9GpsPCdTweFLJuEo8SZZe5JbPaVESOxDIbUnKEWZwfRIIiet74Mm75j+X4GtkD1muZybdVwiCklaj2pva2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vofVDpes; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pWNGPuHxuIhyFeFhHpnPO969Ofzbi9fJdg/Us2qF+TX8B3WG20dLONjV0/kADJskAtJaxiLJrcV/c+anEnRvDe5+O9Bki4tejI2bTSpjL8FS7aG3y0GA5561l4eb6k9YRjU36H9wrhmsOPvY/rO+lEkXss7nBv0kVX3VXl6l8YU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6rvB9/m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vofVDpes"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF532C4CEE7;
-	Mon, 12 May 2025 17:32:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6rvB9/m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980C2C4CEE7;
+	Mon, 12 May 2025 17:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071152;
-	bh=i0Ivke/pWomTesYJ63hC0DuhewI6KU/1/Lm0FtTL3kg=;
+	s=korg; t=1747071155;
+	bh=XtNcGN+SzjLBzocm2VpFgu3R4RIv8WHwJEg0+vo6gAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vofVDpesw+dvjj+H66MSivvsVEUhd64naSikwXEGttrc/zmODQS//ynrY/zFwxDYb
-	 wflMsVELVbMFzlduhFTeenO5L2Gkuu6be9hjiMPo1Y8JaaypPUXxaTQOGlphoNg/ig
-	 fB+vHNgoXXlVoCtNfptG+SH4MGRnbUPMYeWzPCq8=
+	b=i6rvB9/mUC21O3MTz+rs5Kf/Ry0rHvNNicwt7MHH1V8dIsgy5JmFhhXG0hBwvH7OE
+	 inJbf48q4/Wgb9ITYyXK4aGgujjZp5idTRX6GlcoirMyZq9MDqX4IqElzil9JyE4iG
+	 UMp1C/3imgFSpmuSofYKdHGSOi3dP0h2/MEwsyK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Alexey Charkov <alchark@gmail.com>
-Subject: [PATCH 5.15 29/54] usb: uhci-platform: Make the clock really optional
-Date: Mon, 12 May 2025 19:29:41 +0200
-Message-ID: <20250512172016.817074509@linuxfoundation.org>
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
+	Jason Andryuk <jason.andryuk@amd.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 5.15 30/54] xenbus: Use kref to track req lifetime
+Date: Mon, 12 May 2025 19:29:42 +0200
+Message-ID: <20250512172016.856026684@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172015.643809034@linuxfoundation.org>
 References: <20250512172015.643809034@linuxfoundation.org>
@@ -44,45 +45,176 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexey Charkov <alchark@gmail.com>
+From: Jason Andryuk <jason.andryuk@amd.com>
 
-commit a5c7973539b010874a37a0e846e62ac6f00553ba upstream.
+commit 1f0304dfd9d217c2f8b04a9ef4b3258a66eedd27 upstream.
 
-Device tree bindings state that the clock is optional for UHCI platform
-controllers, and some existing device trees don't provide those - such
-as those for VIA/WonderMedia devices.
+Marek reported seeing a NULL pointer fault in the xenbus_thread
+callstack:
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+RIP: e030:__wake_up_common+0x4c/0x180
+Call Trace:
+ <TASK>
+ __wake_up_common_lock+0x82/0xd0
+ process_msg+0x18e/0x2f0
+ xenbus_thread+0x165/0x1c0
 
-The driver however fails to probe now if no clock is provided, because
-devm_clk_get returns an error pointer in such case.
+process_msg+0x18e is req->cb(req).  req->cb is set to xs_wake_up(), a
+thin wrapper around wake_up(), or xenbus_dev_queue_reply().  It seems
+like it was xs_wake_up() in this case.
 
-Switch to devm_clk_get_optional instead, so that it could probe again
-on those platforms where no clocks are given.
+It seems like req may have woken up the xs_wait_for_reply(), which
+kfree()ed the req.  When xenbus_thread resumes, it faults on the zero-ed
+data.
 
-Cc: stable <stable@kernel.org>
-Fixes: 26c502701c52 ("usb: uhci: Add clk support to uhci-platform")
-Signed-off-by: Alexey Charkov <alchark@gmail.com>
-Link: https://lore.kernel.org/r/20250425-uhci-clock-optional-v1-1-a1d462592f29@gmail.com
+Linux Device Drivers 2nd edition states:
+"Normally, a wake_up call can cause an immediate reschedule to happen,
+meaning that other processes might run before wake_up returns."
+... which would match the behaviour observed.
+
+Change to keeping two krefs on each request.  One for the caller, and
+one for xenbus_thread.  Each will kref_put() when finished, and the last
+will free it.
+
+This use of kref matches the description in
+Documentation/core-api/kref.rst
+
+Link: https://lore.kernel.org/xen-devel/ZO0WrR5J0xuwDIxW@mail-itl/
+Reported-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Fixes: fd8aa9095a95 ("xen: optimize xenbus driver for multiple concurrent xenstore accesses")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20250506210935.5607-1-jason.andryuk@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/uhci-platform.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/xen/xenbus/xenbus.h              |    2 ++
+ drivers/xen/xenbus/xenbus_comms.c        |    9 ++++-----
+ drivers/xen/xenbus/xenbus_dev_frontend.c |    2 +-
+ drivers/xen/xenbus/xenbus_xs.c           |   18 ++++++++++++++++--
+ 4 files changed, 23 insertions(+), 8 deletions(-)
 
---- a/drivers/usb/host/uhci-platform.c
-+++ b/drivers/usb/host/uhci-platform.c
-@@ -122,7 +122,7 @@ static int uhci_hcd_platform_probe(struc
+--- a/drivers/xen/xenbus/xenbus.h
++++ b/drivers/xen/xenbus/xenbus.h
+@@ -77,6 +77,7 @@ enum xb_req_state {
+ struct xb_req_data {
+ 	struct list_head list;
+ 	wait_queue_head_t wq;
++	struct kref kref;
+ 	struct xsd_sockmsg msg;
+ 	uint32_t caller_req_id;
+ 	enum xsd_sockmsg_type type;
+@@ -103,6 +104,7 @@ int xb_init_comms(void);
+ void xb_deinit_comms(void);
+ int xs_watch_msg(struct xs_watch_event *event);
+ void xs_request_exit(struct xb_req_data *req);
++void xs_free_req(struct kref *kref);
+ 
+ int xenbus_match(struct device *_dev, struct device_driver *_drv);
+ int xenbus_dev_probe(struct device *_dev);
+--- a/drivers/xen/xenbus/xenbus_comms.c
++++ b/drivers/xen/xenbus/xenbus_comms.c
+@@ -309,8 +309,8 @@ static int process_msg(void)
+ 			virt_wmb();
+ 			req->state = xb_req_state_got_reply;
+ 			req->cb(req);
+-		} else
+-			kfree(req);
++		}
++		kref_put(&req->kref, xs_free_req);
  	}
  
- 	/* Get and enable clock if any specified */
--	uhci->clk = devm_clk_get(&pdev->dev, NULL);
-+	uhci->clk = devm_clk_get_optional(&pdev->dev, NULL);
- 	if (IS_ERR(uhci->clk)) {
- 		ret = PTR_ERR(uhci->clk);
- 		goto err_rmr;
+ 	mutex_unlock(&xs_response_mutex);
+@@ -386,14 +386,13 @@ static int process_writes(void)
+ 	state.req->msg.type = XS_ERROR;
+ 	state.req->err = err;
+ 	list_del(&state.req->list);
+-	if (state.req->state == xb_req_state_aborted)
+-		kfree(state.req);
+-	else {
++	if (state.req->state != xb_req_state_aborted) {
+ 		/* write err, then update state */
+ 		virt_wmb();
+ 		state.req->state = xb_req_state_got_reply;
+ 		wake_up(&state.req->wq);
+ 	}
++	kref_put(&state.req->kref, xs_free_req);
+ 
+ 	mutex_unlock(&xb_write_mutex);
+ 
+--- a/drivers/xen/xenbus/xenbus_dev_frontend.c
++++ b/drivers/xen/xenbus/xenbus_dev_frontend.c
+@@ -406,7 +406,7 @@ void xenbus_dev_queue_reply(struct xb_re
+ 	mutex_unlock(&u->reply_mutex);
+ 
+ 	kfree(req->body);
+-	kfree(req);
++	kref_put(&req->kref, xs_free_req);
+ 
+ 	kref_put(&u->kref, xenbus_file_free);
+ 
+--- a/drivers/xen/xenbus/xenbus_xs.c
++++ b/drivers/xen/xenbus/xenbus_xs.c
+@@ -112,6 +112,12 @@ static void xs_suspend_exit(void)
+ 	wake_up_all(&xs_state_enter_wq);
+ }
+ 
++void xs_free_req(struct kref *kref)
++{
++	struct xb_req_data *req = container_of(kref, struct xb_req_data, kref);
++	kfree(req);
++}
++
+ static uint32_t xs_request_enter(struct xb_req_data *req)
+ {
+ 	uint32_t rq_id;
+@@ -237,6 +243,12 @@ static void xs_send(struct xb_req_data *
+ 	req->caller_req_id = req->msg.req_id;
+ 	req->msg.req_id = xs_request_enter(req);
+ 
++	/*
++	 * Take 2nd ref.  One for this thread, and the second for the
++	 * xenbus_thread.
++	 */
++	kref_get(&req->kref);
++
+ 	mutex_lock(&xb_write_mutex);
+ 	list_add_tail(&req->list, &xb_write_list);
+ 	notify = list_is_singular(&xb_write_list);
+@@ -261,8 +273,8 @@ static void *xs_wait_for_reply(struct xb
+ 	if (req->state == xb_req_state_queued ||
+ 	    req->state == xb_req_state_wait_reply)
+ 		req->state = xb_req_state_aborted;
+-	else
+-		kfree(req);
++
++	kref_put(&req->kref, xs_free_req);
+ 	mutex_unlock(&xb_write_mutex);
+ 
+ 	return ret;
+@@ -291,6 +303,7 @@ int xenbus_dev_request_and_reply(struct
+ 	req->cb = xenbus_dev_queue_reply;
+ 	req->par = par;
+ 	req->user_req = true;
++	kref_init(&req->kref);
+ 
+ 	xs_send(req, msg);
+ 
+@@ -319,6 +332,7 @@ static void *xs_talkv(struct xenbus_tran
+ 	req->num_vecs = num_vecs;
+ 	req->cb = xs_wake_up;
+ 	req->user_req = false;
++	kref_init(&req->kref);
+ 
+ 	msg.req_id = 0;
+ 	msg.tx_id = t.id;
 
 
