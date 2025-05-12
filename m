@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7844254863;
-	Mon, 12 May 2025 17:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C79295DAB;
+	Mon, 12 May 2025 17:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072440; cv=none; b=Y3SPOvj4QTBXbh24198+nt7NFsD7DWsvs9/zgtx+Qog+xno74MBPs9gHQo3dv1opuUhGGbDn3KPJzNMge/Ozy8hoqEpn7u+eHLyxkC94o+pULxIn6iAaxO9FQsZ3z/9kHk+JdtG+RnCDeJ2BbG1jhBfN1ziW59oYq9KpCAihWjQ=
+	t=1747072444; cv=none; b=VV38eXLd7vV6j6NA5NJMLZ69H56SlKoZAEzn/PGcwJLz5a2Y5b+vj/WvywLussrFtrvn79pazyepFRAUPg02GvS3yn92tURbpj0wUABGpe3Lu6g9fXhtodar6gh1YIGhnmNi2rLLbP0WovRxbnQFERYXiQSXOrUIyoE6B644dqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072440; c=relaxed/simple;
-	bh=rUWs6h94fMOLLCoebxLslrenjNOw+mNKb3V+A7QkYek=;
+	s=arc-20240116; t=1747072444; c=relaxed/simple;
+	bh=RS0QVrU7FpuIMpC+RQ0/VUozBcQesVV38Mkn9uCuHuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7DLxtrMLw8w5HopcS1ojOmFNknXkShZ/Tu6WXQvEE4m9je8K69LTM0vCxsU5NU+t3daRNjowtx7emuYz6XzMYSfa4M/vIhnuHNJsdzka9aaDT4T9h0oLuxwl2+XEC+fys6xZCR8v/ft0aChb8/FGbO9queg9pZcQlXU5zYvisk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkX+0Px2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j2z1SlZit8MsXsaBrTMI54Z/i3Y5ECSSJXWIkVOye9r16vIaoYTQQElAywSOnGLMSzK0VMJjKUhwvaUJuCNK01s2KjcUE+hJMXslHwY3VqJ+QeZguEWy7hVSYYB+FHhSjs8XTo8wX26+2ksFJ3rFEhE2tWQUTjPoiyat2MjvG5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zaZYBXhV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkX+0Px2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D71C4CEE7;
-	Mon, 12 May 2025 17:54:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zaZYBXhV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5868AC4CEE7;
+	Mon, 12 May 2025 17:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072440;
-	bh=rUWs6h94fMOLLCoebxLslrenjNOw+mNKb3V+A7QkYek=;
+	s=korg; t=1747072443;
+	bh=RS0QVrU7FpuIMpC+RQ0/VUozBcQesVV38Mkn9uCuHuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SkX+0Px2GvA2+m2b7tmgYS/9Y3siEWhU2G547EW7uJAo3ZzYhu9VJoGD4speMc7Qz
-	 OOazxLQQIAhBkWLv7Y41zVeaVayD5SeQTyQXsdMH7duJqif4qKALxt90cvwweJPHIM
-	 bydau4vCIJNerGNtmii9PgKN5NHP95EzPb/l1R1s=
+	b=zaZYBXhVrft+uwriZgMLERSO2ZpkyURr8PEk41E94Ac0e7Giv0oTXtbBB3BHlpyg6
+	 GF3qkKyO4CHY9fzt2i42NM4euG7d0zYsVbzcDFjQ1bNYOqZTPrlX+4YGSBT3yVx4WP
+	 9qSQlwWTqVduYPcW5pGBYLaZYfLPgWJTzBvUVQwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manuel Fombuena <fombuena@outlook.com>,
-	Aditya Garg <gargaditya08@live.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 24/92] Input: synaptics - enable InterTouch on Dynabook Portege X30-D
-Date: Mon, 12 May 2025 19:44:59 +0200
-Message-ID: <20250512172024.107065669@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.1 42/92] drm/amd/display: Copy AUX read reply data whenever length > 0
+Date: Mon, 12 May 2025 19:45:17 +0200
+Message-ID: <20250512172024.831867200@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -51,38 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manuel Fombuena <fombuena@outlook.com>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-commit 6d7ea0881000966607772451b789b5fb5766f11d upstream.
+commit 3924f45d4de7250a603fd7b50379237a6a0e5adf upstream.
 
-[    5.989588] psmouse serio1: synaptics: Your touchpad (PNP: TOS0213 PNP0f03) says it can support a different bus. If i2c-hid and hid-rmi are not used, you might want to try setting psmouse.synaptics_intertouch to 1 and report this to linux-input@vger.kernel.org.
-[    6.039923] psmouse serio1: synaptics: Touchpad model: 1, fw: 9.32, id: 0x1e2a1, caps: 0xf00223/0x840300/0x12e800/0x52d884, board id: 3322, fw id: 2658004
+[Why]
+amdgpu_dm_process_dmub_aux_transfer_sync() should return all exact data
+reply from the sink side. Don't do the analysis job in it.
 
-The board is labelled TM3322.
+[How]
+Remove unnecessary check condition AUX_TRANSACTION_REPLY_AUX_ACK.
 
-Present on the Toshiba / Dynabook Portege X30-D and possibly others.
-
-Confirmed working well with psmouse.synaptics_intertouch=1 and local build.
-
-Signed-off-by: Manuel Fombuena <fombuena@outlook.com>
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
-Link: https://lore.kernel.org/r/PN3PR01MB9597711E7933A08389FEC31DB888A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+Fixes: ead08b95fa50 ("drm/amd/display: Fix race condition in DPIA AUX transfer")
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Ray Wu <ray.wu@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 9b540e3fe6796fec4fb1344f3be8952fc2f084d4)
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/synaptics.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -194,6 +194,7 @@ static const char * const smbus_pnp_ids[
- 	"SYN3221", /* HP 15-ay000 */
- 	"SYN323d", /* HP Spectre X360 13-w013dx */
- 	"SYN3257", /* HP Envy 13-ad105ng */
-+	"TOS0213", /* Dynabook Portege X30-D */
- 	NULL
- };
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -10707,8 +10707,7 @@ int amdgpu_dm_process_dmub_aux_transfer_
+ 		/* The reply is stored in the top nibble of the command. */
+ 		payload->reply[0] = (adev->dm.dmub_notify->aux_reply.command >> 4) & 0xF;
+ 
+-	if (!payload->write && p_notify->aux_reply.length &&
+-			(payload->reply[0] == AUX_TRANSACTION_REPLY_AUX_ACK))
++	if (!payload->write && p_notify->aux_reply.length)
+ 		memcpy(payload->data, p_notify->aux_reply.data,
+ 				p_notify->aux_reply.length);
  
 
 
