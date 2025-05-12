@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8F1296D3C;
-	Mon, 12 May 2025 17:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68617296FD5;
+	Mon, 12 May 2025 17:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071767; cv=none; b=LcHcvtyJWz5bfQ3dYiXy1MUhhXV+DInYM7nZyMgVlGGjJvp614m2pwP2yzyXIcFRoi4XUojzAsPwPJSj1JkNdrpFqdpIp92vhf82i/igmCBzZHZ5BshRUg7qHSbK0zdanimYVJ+CbHNFeETFrVNxJHalU4YYZbC9YLTMiQnK4yU=
+	t=1747071770; cv=none; b=FtxzjfngjJMGLwkLPxJ4ShiV+ZBrGSB/BeMzvfcMj0y+i4Ouzv+ggLY5muB8fud17rIq205qRl3idvkHxAspFRdQP7RkIjMYsPz1EeL08suUaJe+JP1WH8Tyr951CQUgDC8Ktl+wfO7JCgWNS4K4gSqUCfAJzhHlJtUrspb333E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071767; c=relaxed/simple;
-	bh=7bgAWczTkDZsKezQ8pB8ukTG912n/RHOBJrcg2Jox/0=;
+	s=arc-20240116; t=1747071770; c=relaxed/simple;
+	bh=p3rZV13C7LKzdsdc8ZfMDjWOOSXDZ4rYcMCaHE8LFQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eu6/zN9o3rWzeRu3siLt98CVmT4ZZOn/Km/Se0ytXU2sXOgdv7dbxGlLZJc3heGvtICgzZIcontYURIwRg/gcgckQTwp0SqAe53c1etdTAFo9GjyprkLvAni3FFag8Zh+6OsB24in+586fklgfAWrcHcbcYw1+EeG7or7c3Z/+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZGWX1+Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V+PNEQSVi+Oz/d8KIMf+GUwjJK4C8uP5CCTDbTVdAyh3SxFZ2B0ETvmwrTkYsbP7taLjWF368N23bKLwueTX9Izak5RUsk4TOAkBj8vqW9lHNb0ty/VwC/4Mp8VByz+ZbQLLinbDdRn9exPiKLvCJmNaXni+/pDD47euM1M0oqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mEbJws+R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZGWX1+Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F2CC4CEE7;
-	Mon, 12 May 2025 17:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mEbJws+R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8469AC4CEE7;
+	Mon, 12 May 2025 17:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071767;
-	bh=7bgAWczTkDZsKezQ8pB8ukTG912n/RHOBJrcg2Jox/0=;
+	s=korg; t=1747071769;
+	bh=p3rZV13C7LKzdsdc8ZfMDjWOOSXDZ4rYcMCaHE8LFQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MZGWX1+ZsHix6HFz1R28gpRw2gMTB1G8mnqRVw4WiLyDXefFWFxNxqa4Yz5hVG1Gm
-	 NjG5Ec6X4zj6cD0z8oULcK8TLrpSx+DoeNG52pPcMWZgd5nfzO5Qk3cecNb+IRLBXy
-	 BitjTj7C6yb1tT6uAgDv68OPkHQth0dl2C5ZDfws=
+	b=mEbJws+RXAtjSw70L/MyourqAbx0mPIhL1t+ypRUsOcjUHIvRDsRAd47NYKac+YOI
+	 eGIugaFyv2xZUyoQxGj59IGYjKq9ejV534QQRtbJ0hh1K4S96VQdIY6cFf15jol9VA
+	 kmv1V68SlP0KMwF3DtN0roeeEL4az/zCFxf8E+JE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Gao Xiang <xiang@kernel.org>,
-	Hongbo Li <lihongbo22@huawei.com>
-Subject: [PATCH 6.14 002/197] fs/erofs/fileio: call erofs_onlinefolio_split() after bio_add_folio()
-Date: Mon, 12 May 2025 19:37:32 +0200
-Message-ID: <20250512172044.439910580@linuxfoundation.org>
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Bui Quang Minh <minhquangbui99@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.14 020/197] virtio-net: dont re-enable refill work too early when NAPI is disabled
+Date: Mon, 12 May 2025 19:37:50 +0200
+Message-ID: <20250512172045.168061492@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -51,65 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit bbfe756dc3062c1e934f06e5ba39c239aa953b92 upstream.
+[ Upstream commit 1e20324b23f0afba27997434fb978f1e4a1dbcb6 ]
 
-If bio_add_folio() fails (because it is full),
-erofs_fileio_scan_folio() needs to submit the I/O request via
-erofs_fileio_rq_submit() and allocate a new I/O request with an empty
-`struct bio`.  Then it retries the bio_add_folio() call.
+Commit 4bc12818b363 ("virtio-net: disable delayed refill when pausing rx")
+fixed a deadlock between reconfig paths and refill work trying to disable
+the same NAPI instance. The refill work can't run in parallel with reconfig
+because trying to double-disable a NAPI instance causes a stall under the
+instance lock, which the reconfig path needs to re-enable the NAPI and
+therefore unblock the stalled thread.
 
-However, at this point, erofs_onlinefolio_split() has already been
-called which increments `folio->private`; the retry will call
-erofs_onlinefolio_split() again, but there will never be a matching
-erofs_onlinefolio_end() call.  This leaves the folio locked forever
-and all waiters will be stuck in folio_wait_bit_common().
+There are two cases where we re-enable refill too early. One is in the
+virtnet_set_queues() handler. We call it when installing XDP:
 
-This bug has been added by commit ce63cb62d794 ("erofs: support
-unencoded inodes for fileio"), but was practically unreachable because
-there was room for 256 folios in the `struct bio` - until commit
-9f74ae8c9ac9 ("erofs: shorten bvecs[] for file-backed mounts") which
-reduced the array capacity to 16 folios.
+   virtnet_rx_pause_all(vi);
+   ...
+   virtnet_napi_tx_disable(..);
+   ...
+   virtnet_set_queues(..);
+   ...
+   virtnet_rx_resume_all(..);
 
-It was now trivial to trigger the bug by manually invoking readahead
-from userspace, e.g.:
+We want the work to be disabled until we call virtnet_rx_resume_all(),
+but virtnet_set_queues() kicks it before NAPIs were re-enabled.
 
- posix_fadvise(fd, 0, st.st_size, POSIX_FADV_WILLNEED);
+The other case is a more trivial case of mis-ordering in
+__virtnet_rx_resume() found by code inspection.
 
-This should be fixed by invoking erofs_onlinefolio_split() only after
-bio_add_folio() has succeeded.  This is safe: asynchronous completions
-invoking erofs_onlinefolio_end() will not unlock the folio because
-erofs_fileio_scan_folio() is still holding a reference to be released
-by erofs_onlinefolio_end() at the end.
+Taking the spin lock in virtnet_set_queues() (requested during review)
+may be unnecessary as we are under rtnl_lock and so are all paths writing
+to ->refill_enabled.
 
-Fixes: ce63cb62d794 ("erofs: support unencoded inodes for fileio")
-Fixes: 9f74ae8c9ac9 ("erofs: shorten bvecs[] for file-backed mounts")
-Cc: stable@vger.kernel.org
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Gao Xiang <xiang@kernel.org>
-Tested-by: Hongbo Li <lihongbo22@huawei.com>
-Link: https://lore.kernel.org/r/20250428230933.3422273-1-max.kellermann@ionos.com
-Signed-off-by: Gao Xiang <xiang@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Bui Quang Minh <minhquangbui99@gmail.com>
+Fixes: 4bc12818b363 ("virtio-net: disable delayed refill when pausing rx")
+Fixes: 413f0271f396 ("net: protect NAPI enablement with netdev_lock()")
+Link: https://patch.msgid.link/20250430163758.3029367-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/fileio.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/virtio_net.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/fs/erofs/fileio.c
-+++ b/fs/erofs/fileio.c
-@@ -150,10 +150,10 @@ io_retry:
- 				io->rq->bio.bi_iter.bi_sector = io->dev.m_pa >> 9;
- 				attached = 0;
- 			}
--			if (!attached++)
--				erofs_onlinefolio_split(folio);
- 			if (!bio_add_folio(&io->rq->bio, folio, len, cur))
- 				goto io_retry;
-+			if (!attached++)
-+				erofs_onlinefolio_split(folio);
- 			io->dev.m_pa += len;
- 		}
- 		cur += len;
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 3e4896d9537ee..2c3c6e8e3f35b 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3359,12 +3359,15 @@ static void __virtnet_rx_resume(struct virtnet_info *vi,
+ 				bool refill)
+ {
+ 	bool running = netif_running(vi->dev);
++	bool schedule_refill = false;
+ 
+ 	if (refill && !try_fill_recv(vi, rq, GFP_KERNEL))
+-		schedule_delayed_work(&vi->refill, 0);
+-
++		schedule_refill = true;
+ 	if (running)
+ 		virtnet_napi_enable(rq);
++
++	if (schedule_refill)
++		schedule_delayed_work(&vi->refill, 0);
+ }
+ 
+ static void virtnet_rx_resume_all(struct virtnet_info *vi)
+@@ -3699,8 +3702,10 @@ static int virtnet_set_queues(struct virtnet_info *vi, u16 queue_pairs)
+ succ:
+ 	vi->curr_queue_pairs = queue_pairs;
+ 	/* virtnet_open() will refill when device is going to up. */
+-	if (dev->flags & IFF_UP)
++	spin_lock_bh(&vi->refill_lock);
++	if (dev->flags & IFF_UP && vi->refill_enabled)
+ 		schedule_delayed_work(&vi->refill, 0);
++	spin_unlock_bh(&vi->refill_lock);
+ 
+ 	return 0;
+ }
+-- 
+2.39.5
+
 
 
