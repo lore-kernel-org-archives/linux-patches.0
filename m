@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364D41DC1A7;
-	Mon, 12 May 2025 17:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DAF1DC1A7;
+	Mon, 12 May 2025 17:32:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071131; cv=none; b=fGP/NhnPffzcT6lhDnq6PGPHc6UNnhbYr3sxaWx/Yko9dBAI1V98eP0w4EAaw+DpaV85ukzL0p6cqIMuJOifkrZTzQ0/8GDaCdFflOiSOdUbQCDpABwBK4NZH52wMVeDRn8F0rGeF05b3cczIfbOU7jVbbsxOMotc6EF2FPCEmg=
+	t=1747071133; cv=none; b=I37QvC/DPz5gRvP5yyXu1lbk4ZvfuXedGnHWzid2rOTU2LUpZTR1fMgU23B8K5Lo6L/3S61zOlBL9aILwVA67J0pj+scOu3a3lxLrXfFz4q9mr+QH9CQLs86HLbID5xoH6Nj3EzLK8M8xVtbqGMLByte/1QgVy23SkjmHCsj4dM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071131; c=relaxed/simple;
-	bh=RYia2EtB3EYH/mDcCnK8fqoMM7Lq3tegvU+eC2Np9ZQ=;
+	s=arc-20240116; t=1747071133; c=relaxed/simple;
+	bh=1HExZfiJ53Vv5AwbOfioAMHr7hUtOP6Mr66dsHEltbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QsNUJ6Mzqt7dx/uVSicwLReT8vAEYYBAJKPp0BqqXh8JzjRVYS3pPKvA26gM9OUXx/A4wlbfB6Jn5FQMIgb0t8rfU392ucXX0xKcQQDJBi6E5tXeDd3oO+h6cJ06eAnPUU8wMREbd8VgeqSCGgXUkrgjt9pv5HCYnq3etR0jlAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdSiWUiF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q843r4LyvcsPvEscmsLqJVHV05ncTECvBrZqjULZjre3KwS3PgljUS+IaThpDQ6fVLyefysVDLFwcmkO5GyEfZSaZXJSEGSyJJHDbEmskiMmFAsR9euIFRb5vpCvKNZuCgUYeLAm2cYGYDX3qJZrZbtE9JesmeSZTIbUACEQfRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mykR8MqV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdSiWUiF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B82C4CEE7;
-	Mon, 12 May 2025 17:32:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mykR8MqV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C1CC4CEE7;
+	Mon, 12 May 2025 17:32:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071130;
-	bh=RYia2EtB3EYH/mDcCnK8fqoMM7Lq3tegvU+eC2Np9ZQ=;
+	s=korg; t=1747071133;
+	bh=1HExZfiJ53Vv5AwbOfioAMHr7hUtOP6Mr66dsHEltbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EdSiWUiFTmVZjb++mSoHoPG8XyGmmP0S8FDSEw/DEttBGT/13EZdPXUMYEjqDLdWb
-	 jfLsp4fD6dN6oA2b21XrL4L2VKr7vZfwlRDsHNUD6y4BUKLbB0Y8qQ7PtNMJBIlEWt
-	 qGsgZjTugJaYJhFw+3STN98HHH8FXT3pl+Xg+UYQ=
+	b=mykR8MqV2vEnFv/5WvpmF935QNq0ZrGIsSgTnG/iK1LQOzPVBC+yZm50NSavzuvQ5
+	 rA9aimRYxQCK0NIFyKVSEzUxR4eF3lU3birL3FWPNTPVsUzRxo5GE487gXUDVUQ8zf
+	 Y/Z3F90V0mGUbdoxFPlfGh39+VbRCgMCG3TOD98Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 50/54] do_umount(): add missing barrier before refcount checks in sync case
-Date: Mon, 12 May 2025 19:30:02 +0200
-Message-ID: <20250512172017.657178832@linuxfoundation.org>
+	Fiona Klute <fiona.klute@gmx.de>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 51/54] Revert "net: phy: microchip: force IRQ polling mode for lan88xx"
+Date: Mon, 12 May 2025 19:30:03 +0200
+Message-ID: <20250512172017.696144288@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172015.643809034@linuxfoundation.org>
 References: <20250512172015.643809034@linuxfoundation.org>
@@ -51,50 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 65781e19dcfcb4aed1167d87a3ffcc2a0c071d47 ]
+This reverts commit 853e14cf36f6b16a372444a1eff54a3d7c6c1268 which is
+commit 30a41ed32d3088cd0d682a13d7f30b23baed7e93 upstream.
 
-do_umount() analogue of the race fixed in 119e1ef80ecf "fix
-__legitimize_mnt()/mntput() race".  Here we want to make sure that
-if __legitimize_mnt() doesn't notice our lock_mount_hash(), we will
-notice their refcount increment.  Harder to hit than mntput_no_expire()
-one, fortunately, and consequences are milder (sync umount acting
-like umount -l on a rare race with RCU pathwalk hitting at just the
-wrong time instead of use-after-free galore mntput_no_expire()
-counterpart used to be hit).  Still a bug...
+It is reported to cause NFS boot problems on a Raspberry Pi 3b so revert
+it from this branch for now.
 
-Fixes: 48a066e72d97 ("RCU'd vfsmounts")
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Fiona Klute <fiona.klute@gmx.de>
+Cc: Andrew Lunn <andrew@lunn.ch>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/aB6uurX99AZWM9I1@finisterre.sirena.org.uk
+Reported-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/phy/microchip.c |   46 +++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 43 insertions(+), 3 deletions(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 642baef4d9aaa..27ec6d0a68ff5 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -586,7 +586,7 @@ int __legitimize_mnt(struct vfsmount *bastard, unsigned seq)
- 		return 0;
- 	mnt = real_mount(bastard);
- 	mnt_add_count(mnt, 1);
--	smp_mb();			// see mntput_no_expire()
-+	smp_mb();		// see mntput_no_expire() and do_umount()
- 	if (likely(!read_seqretry(&mount_lock, seq)))
- 		return 0;
- 	if (bastard->mnt_flags & MNT_SYNC_UMOUNT) {
-@@ -1664,6 +1664,7 @@ static int do_umount(struct mount *mnt, int flags)
- 			umount_tree(mnt, UMOUNT_PROPAGATE);
- 		retval = 0;
- 	} else {
-+		smp_mb(); // paired with __legitimize_mnt()
- 		shrink_submounts(mnt);
- 		retval = -EBUSY;
- 		if (!propagate_mount_busy(mnt, 2)) {
--- 
-2.39.5
-
+--- a/drivers/net/phy/microchip.c
++++ b/drivers/net/phy/microchip.c
+@@ -31,6 +31,47 @@ static int lan88xx_write_page(struct phy
+ 	return __phy_write(phydev, LAN88XX_EXT_PAGE_ACCESS, page);
+ }
+ 
++static int lan88xx_phy_config_intr(struct phy_device *phydev)
++{
++	int rc;
++
++	if (phydev->interrupts == PHY_INTERRUPT_ENABLED) {
++		/* unmask all source and clear them before enable */
++		rc = phy_write(phydev, LAN88XX_INT_MASK, 0x7FFF);
++		rc = phy_read(phydev, LAN88XX_INT_STS);
++		rc = phy_write(phydev, LAN88XX_INT_MASK,
++			       LAN88XX_INT_MASK_MDINTPIN_EN_ |
++			       LAN88XX_INT_MASK_LINK_CHANGE_);
++	} else {
++		rc = phy_write(phydev, LAN88XX_INT_MASK, 0);
++		if (rc)
++			return rc;
++
++		/* Ack interrupts after they have been disabled */
++		rc = phy_read(phydev, LAN88XX_INT_STS);
++	}
++
++	return rc < 0 ? rc : 0;
++}
++
++static irqreturn_t lan88xx_handle_interrupt(struct phy_device *phydev)
++{
++	int irq_status;
++
++	irq_status = phy_read(phydev, LAN88XX_INT_STS);
++	if (irq_status < 0) {
++		phy_error(phydev);
++		return IRQ_NONE;
++	}
++
++	if (!(irq_status & LAN88XX_INT_STS_LINK_CHANGE_))
++		return IRQ_NONE;
++
++	phy_trigger_machine(phydev);
++
++	return IRQ_HANDLED;
++}
++
+ static int lan88xx_suspend(struct phy_device *phydev)
+ {
+ 	struct lan88xx_priv *priv = phydev->priv;
+@@ -347,9 +388,8 @@ static struct phy_driver microchip_phy_d
+ 	.config_aneg	= lan88xx_config_aneg,
+ 	.link_change_notify = lan88xx_link_change_notify,
+ 
+-	/* Interrupt handling is broken, do not define related
+-	 * functions to force polling.
+-	 */
++	.config_intr	= lan88xx_phy_config_intr,
++	.handle_interrupt = lan88xx_handle_interrupt,
+ 
+ 	.suspend	= lan88xx_suspend,
+ 	.resume		= genphy_resume,
 
 
