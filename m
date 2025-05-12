@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346161A08CA;
-	Mon, 12 May 2025 17:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFFEF1A08CA;
+	Mon, 12 May 2025 17:55:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072544; cv=none; b=rYyAJYgdRy0Jug7Pu1GFxPyQMJAT4lrBiCbsUMzDFXFdkrvN6TrJOmB9JNKLF5XEnNLOPNNvja1ROFF/v4I/VMrkujTGAQ2vh0/Jumpo5LTO3tVSG8wRiTW/fTwzC7JZbj9H/0KbaUMOgh4an9l32B8/KwJg+mgd+dFXqcgJnKk=
+	t=1747072547; cv=none; b=SOuiYOZxOr45VrAnNYq+m6AsZyLVkS4ZOxoV9NFRvTKy8Sje4M6O11cfN4GA8YMG3yiQC9p+MjsX9wx5rRGzwtO/aA2Ic+NGHjjJmTTeoAlYg1URGFOJw16DTbU7i2n5ZvGeXQ/dJUwT+V4cmMsW9sRPK5BLT3sHHUFCQGPjdJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072544; c=relaxed/simple;
-	bh=s9hkXwBICcsWSrYh0ngdtvoT3rzRPLw78lnkBLUC6cw=;
+	s=arc-20240116; t=1747072547; c=relaxed/simple;
+	bh=BZymYYfFjzMwLGPWRyUWKr6JmG9UN/iWQhCv7OcUiwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BPZyBFhJ3d1U9M4b0c9TyUoUrVLNZU2F4jWs2HPbLIVIPP9rfb5GIAUgEkJ6oKGSQ0R8PuxKhSScgMKTSRlFriS0nZscaellfLm4HkmFnl92S9KhNTzbZjT/x9aw0EOrfqwU85Zv2AyreLZCBmrVOxRUfdVosSWj6AaEKGEzSjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nwx5+vVo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RwIVo2bfewIwdV1KH71v3tHIPCrFcC/jEEgUQl0/yoWFhp/QZaTCkUP7DE0Chffw9QoNRD6qGkrLJdTVfBH/uqYC8rhJJCSGB04zymtByFr25ecgPXCvVeMU7TByVhEYXN6y7TfBdwtGAEUGienDkaKbS8la16Uc+lIdP4qs+yM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vKA0lZDa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nwx5+vVo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE8D3C4CEE9;
-	Mon, 12 May 2025 17:55:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKA0lZDa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8132CC4CEE7;
+	Mon, 12 May 2025 17:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072544;
-	bh=s9hkXwBICcsWSrYh0ngdtvoT3rzRPLw78lnkBLUC6cw=;
+	s=korg; t=1747072546;
+	bh=BZymYYfFjzMwLGPWRyUWKr6JmG9UN/iWQhCv7OcUiwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nwx5+vVoZ04hffPfAcfl8WRas7dZ9QiXvmwEdNc/TrHTaJH7nsc3LGdbYvpeM+rBJ
-	 h7BsfHFx/O0cZ9Lns1jFbMLCw8M7BO42meMI0f2LFgG1qstoSKW1bslZGw61idP1PV
-	 Rzu3w+s4AnIXAX33v4blr8eQ8Os1VJKYPxaawrP8=
+	b=vKA0lZDafkLdWs3tNntdHeYNP71WUKT4AWjq9IxCxk3F+DOqbApwbn5FDrdFfQvsq
+	 Ie+8tmA7jRYnhXlMkkpUZDpCKVNHuH1uwRXRhZTO3wVFjYxthIqAz9TgfWnhcEUbvx
+	 n2HItd9uMR7V4HMgdVRgVCzQ3OlhWhdNikbLwFqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Morse <james.morse@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.1 74/92] arm64: proton-pack: Expose whether the branchy loop k value
-Date: Mon, 12 May 2025 19:45:49 +0200
-Message-ID: <20250512172026.137668414@linuxfoundation.org>
+	Michael Katzmann <vk2bea@gmail.com>,
+	Dave Penkler <dpenkler@gmail.com>
+Subject: [PATCH 6.1 57/92] usb: usbtmc: Fix erroneous get_stb ioctl error returns
+Date: Mon, 12 May 2025 19:45:32 +0200
+Message-ID: <20250512172025.438343693@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -50,44 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Morse <james.morse@arm.com>
+From: Dave Penkler <dpenkler@gmail.com>
 
-commit a1152be30a043d2d4dcb1683415f328bf3c51978 upstream.
+commit cac01bd178d6a2a23727f138d647ce1a0e8a73a1 upstream.
 
-Add a helper to expose the k value of the branchy loop. This is needed
-by the BPF JIT to generate the mitigation sequence in BPF programs.
+wait_event_interruptible_timeout returns a long
+The return was being assigned to an int causing an integer overflow when
+the remaining jiffies > INT_MAX resulting in random error returns.
 
-Signed-off-by: James Morse <james.morse@arm.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Use a long return value and convert to int ioctl return only on error.
+
+When the return value of wait_event_interruptible_timeout was <= INT_MAX
+the number of remaining jiffies was returned which has no meaning for the
+user. Return 0 on success.
+
+Reported-by: Michael Katzmann <vk2bea@gmail.com>
+Fixes: dbf3e7f654c0 ("Implement an ioctl to support the USMTMC-USB488 READ_STATUS_BYTE operation.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dave Penkler <dpenkler@gmail.com>
+Link: https://lore.kernel.org/r/20250502070941.31819-2-dpenkler@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/spectre.h |    1 +
- arch/arm64/kernel/proton-pack.c  |    5 +++++
- 2 files changed, 6 insertions(+)
+ drivers/usb/class/usbtmc.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/include/asm/spectre.h
-+++ b/arch/arm64/include/asm/spectre.h
-@@ -96,6 +96,7 @@ enum mitigation_state arm64_get_meltdown
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -482,6 +482,7 @@ static int usbtmc_get_stb(struct usbtmc_
+ 	u8 *buffer;
+ 	u8 tag;
+ 	int rv;
++	long wait_rv;
  
- enum mitigation_state arm64_get_spectre_bhb_state(void);
- bool is_spectre_bhb_affected(const struct arm64_cpu_capabilities *entry, int scope);
-+u8 get_spectre_bhb_loop_value(void);
- bool is_spectre_bhb_fw_mitigated(void);
- void spectre_bhb_enable_mitigation(const struct arm64_cpu_capabilities *__unused);
- #endif	/* __ASSEMBLY__ */
---- a/arch/arm64/kernel/proton-pack.c
-+++ b/arch/arm64/kernel/proton-pack.c
-@@ -1010,6 +1010,11 @@ bool is_spectre_bhb_affected(const struc
- 	return true;
- }
+ 	dev_dbg(dev, "Enter ioctl_read_stb iin_ep_present: %d\n",
+ 		data->iin_ep_present);
+@@ -511,16 +512,17 @@ static int usbtmc_get_stb(struct usbtmc_
+ 	}
  
-+u8 get_spectre_bhb_loop_value(void)
-+{
-+	return max_bhb_k;
-+}
+ 	if (data->iin_ep_present) {
+-		rv = wait_event_interruptible_timeout(
++		wait_rv = wait_event_interruptible_timeout(
+ 			data->waitq,
+ 			atomic_read(&data->iin_data_valid) != 0,
+ 			file_data->timeout);
+-		if (rv < 0) {
+-			dev_dbg(dev, "wait interrupted %d\n", rv);
++		if (wait_rv < 0) {
++			dev_dbg(dev, "wait interrupted %ld\n", wait_rv);
++			rv = wait_rv;
+ 			goto exit;
+ 		}
+ 
+-		if (rv == 0) {
++		if (wait_rv == 0) {
+ 			dev_dbg(dev, "wait timed out\n");
+ 			rv = -ETIMEDOUT;
+ 			goto exit;
+@@ -539,6 +541,8 @@ static int usbtmc_get_stb(struct usbtmc_
+ 
+ 	dev_dbg(dev, "stb:0x%02x received %d\n", (unsigned int)*stb, rv);
+ 
++	rv = 0;
 +
- static void this_cpu_set_vectors(enum arm64_bp_harden_el1_vectors slot)
- {
- 	const char *v = arm64_get_bp_hardening_vector(slot);
+  exit:
+ 	/* bump interrupt bTag */
+ 	data->iin_bTag += 1;
 
 
