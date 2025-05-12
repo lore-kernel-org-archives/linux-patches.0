@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CBCE255222;
-	Mon, 12 May 2025 18:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA1B255222;
+	Mon, 12 May 2025 18:12:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073566; cv=none; b=GPDWR5ADCYX5NDM01Zg49JMQaXi0AF+3CYUOPKgZ4TRHI/9KYwukgV312ppDZUQn3gEesuZYn6mC6CgR9uGz3RyUGRQwbbaSjf4nx7sAFHZj2F6SRxJPtUYlhvdZfMOGedvIuY+t4f5SZOFmVyzlGhGsUV2Y8PStRqzo4EEuo1c=
+	t=1747073570; cv=none; b=KTyDe5kbGql83K/0Ue/BoB+UWNEKjaKGLjuIEf4Vy4Hs68/2ni/SsOCre3braV9sMlNCsiinf/ujGbkDjaleBpFzuWNJ48rdtjYnGIPkREYRHdmr2hqGuRBuqj0Jwi6Z3sEk57vjMQRM6hC9QpNbCA5n8XGVKSThqLaX4oaD5Ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073566; c=relaxed/simple;
-	bh=ahURLvkEyeujARys7BW5K9niz5+t3FBuk19S+vtI5Ps=;
+	s=arc-20240116; t=1747073570; c=relaxed/simple;
+	bh=lc34TpETbAcTQ4tkt6yjgM2Ui3pAUlRg87tETkGXO7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0Ojv2RUo2DTLNaRbH/Qs16Xe2EFrNf9WLJnv2wIJ4G/A9Lt/ZT5iLtlSCXkQbQxjSHb5nH+cCcdXrY+YD0SYfR5DmZRg9IIRM7E28DFAyET+ZvkzBQFwlXWzy1Hu2l9kMwSnCT+aZZKfUgIC5qNsTR4+Acs05xQJf6Ctcvqin8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ytszNKm8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T93+RApdUDP/Y/W2CmjlCk4dEjFt56At1YbZEackMOVb79Ubuu6EK4UTakFiNbFT35mq9PVNK0dnkfmYQPTW17ikNPeKarWHGMgqAiksj8SIkOcyWG0EUK+Q8MlhSAELHqo/Kfvbm8LndW917Sa5SIO3otPAxOTARn37EOG8RgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UxyxqdeZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ytszNKm8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F269CC4CEE7;
-	Mon, 12 May 2025 18:12:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UxyxqdeZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40712C4CEEF;
+	Mon, 12 May 2025 18:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073566;
-	bh=ahURLvkEyeujARys7BW5K9niz5+t3FBuk19S+vtI5Ps=;
+	s=korg; t=1747073569;
+	bh=lc34TpETbAcTQ4tkt6yjgM2Ui3pAUlRg87tETkGXO7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ytszNKm8ucdqNZdK5tcwId5z1XvzzLU45IDjn1Qmu/MTJdZAKKNg9D+UAN9mDJmlL
-	 LjyeuxjOiKTgWvwG4RNONpwU9TI82oEHerlG3tZQJlAmGaZ6LHvakqa52bAcNimb9S
-	 EpiVjGVda7tRL4h80vVtlC/yU64yl+Ub2tVpbwpc=
+	b=UxyxqdeZ9fpXODrFt4sl6rg9nuZ9Duhmd9Fwk8DVPfkQOzRgRohORSJpl6x/g7kxN
+	 c7y7kZTIb+00XPVx5CigyoQgswdrJ/HZuVMywsFBZhksPQ4AM4KHGPwVErhXLMIbjU
+	 K0HsiBnIfyf7U9hXl3IY4VQoh7+4gZjC23DzGifY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Baker <kevinb@ventureresearch.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Daniel Wagner <wagi@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 087/113] drm/panel: simple: Update timings for AUO G101EVN010
-Date: Mon, 12 May 2025 19:46:16 +0200
-Message-ID: <20250512172031.222713872@linuxfoundation.org>
+Subject: [PATCH 6.6 088/113] nvme: unblock ctrl state transition for firmware update
+Date: Mon, 12 May 2025 19:46:17 +0200
+Message-ID: <20250512172031.263243547@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172027.691520737@linuxfoundation.org>
 References: <20250512172027.691520737@linuxfoundation.org>
@@ -51,71 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Baker <kevinb@ventureresearch.com>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 7c6fa1797a725732981f2d77711c867166737719 ]
+[ Upstream commit 650415fca0a97472fdd79725e35152614d1aad76 ]
 
-Switch to panel timings based on datasheet for the AUO G101EVN01.0
-LVDS panel. Default timings were tested on the panel.
+The original nvme subsystem design didn't have a CONNECTING state; the
+state machine allowed transitions from RESETTING to LIVE directly.
 
-Previous mode-based timings resulted in horizontal display shift.
+With the introduction of nvme fabrics the CONNECTING state was
+introduce. Over time the nvme-pci started to use the CONNECTING state as
+well.
 
-Signed-off-by: Kevin Baker <kevinb@ventureresearch.com>
-Fixes: 4fb86404a977 ("drm/panel: simple: Add AUO G101EVN010 panel support")
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250505170256.1385113-1-kevinb@ventureresearch.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250505170256.1385113-1-kevinb@ventureresearch.com
+Eventually, a bug fix for the nvme-fc started to depend that the only
+valid transition to LIVE was from CONNECTING. Though this change didn't
+update the firmware update handler which was still depending on
+RESETTING to LIVE transition.
+
+The simplest way to address it for the time being is to switch into
+CONNECTING state before going to LIVE state.
+
+Fixes: d2fe192348f9 ("nvme: only allow entering LIVE from CONNECTING state")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Closes: https://lore.kernel.org/all/0134ea15-8d5f-41f7-9e9a-d7e6d82accaa@roeck-us.net
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ drivers/nvme/host/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 37fe54c34b141..0d69098eddd90 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -979,27 +979,28 @@ static const struct panel_desc auo_g070vvn01 = {
- 	},
- };
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index c6b0637e61deb..6e2d0fda3ba4a 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4156,7 +4156,8 @@ static void nvme_fw_act_work(struct work_struct *work)
+ 		msleep(100);
+ 	}
  
--static const struct drm_display_mode auo_g101evn010_mode = {
--	.clock = 68930,
--	.hdisplay = 1280,
--	.hsync_start = 1280 + 82,
--	.hsync_end = 1280 + 82 + 2,
--	.htotal = 1280 + 82 + 2 + 84,
--	.vdisplay = 800,
--	.vsync_start = 800 + 8,
--	.vsync_end = 800 + 8 + 2,
--	.vtotal = 800 + 8 + 2 + 6,
-+static const struct display_timing auo_g101evn010_timing = {
-+	.pixelclock = { 64000000, 68930000, 85000000 },
-+	.hactive = { 1280, 1280, 1280 },
-+	.hfront_porch = { 8, 64, 256 },
-+	.hback_porch = { 8, 64, 256 },
-+	.hsync_len = { 40, 168, 767 },
-+	.vactive = { 800, 800, 800 },
-+	.vfront_porch = { 4, 8, 100 },
-+	.vback_porch = { 4, 8, 100 },
-+	.vsync_len = { 8, 16, 223 },
- };
+-	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_LIVE))
++	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_CONNECTING) ||
++	    !nvme_change_ctrl_state(ctrl, NVME_CTRL_LIVE))
+ 		return;
  
- static const struct panel_desc auo_g101evn010 = {
--	.modes = &auo_g101evn010_mode,
--	.num_modes = 1,
-+	.timings = &auo_g101evn010_timing,
-+	.num_timings = 1,
- 	.bpc = 6,
- 	.size = {
- 		.width = 216,
- 		.height = 135,
- 	},
- 	.bus_format = MEDIA_BUS_FMT_RGB666_1X7X3_SPWG,
-+	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
- 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
- };
- 
+ 	nvme_unquiesce_io_queues(ctrl);
 -- 
 2.39.5
 
