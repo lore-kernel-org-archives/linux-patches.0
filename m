@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD0A251782;
-	Mon, 12 May 2025 17:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC662252908;
+	Mon, 12 May 2025 17:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072174; cv=none; b=jBrBOAtLZf1kEJubDhVSGew66LXtwknCATqv5AD65tNrpQRFbsyT++I4GGkcKU92hun4bLbhSSoaykgJT69rHW31gvXXj0hL6IeyTjnIBLM4iOjlMQLGCap0ZUaYXzCFCj71cjbwFtT3MOgTyrXvb97L+bCR3Wxh+AXP601jFp4=
+	t=1747072177; cv=none; b=qzhBiVpsf6thzsrQ91bTwSZsCowm7vNsSsBJjgQ0IX7swwGrQREOwfKAb/BhwgzyBJPzu/8RCKmoYwFTHneKrL9JByoTZqbq0LNNRk8Bp7/GzU5M0pxzJNPX8MqSHk08PRUWaoU34tBcv6aByTJxg59SbPA09Ak4u8eoxb+KCm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072174; c=relaxed/simple;
-	bh=VNAgG4bAb62GWEqMYCrI+Skk7WmfdVb0InTSn9SDsYY=;
+	s=arc-20240116; t=1747072177; c=relaxed/simple;
+	bh=QT5GPtse/Rw/jP6r9gyIRFtI6HaiFPcWbxgt74mTzJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N1G0WD5Q3ltjr0/PtavDmXMFovIiWWC9r0aYRObXjbGQt/Yd0QVHCiOrbmms/Acs+B6/ryTxhvqQAjePtKtV48CroXXAc6Rj+ssgVgvffZqe7QpXG94rQO35kjb6tX4e1I6KmwcURCgbrlUwq6IBV97NTzLB45I7W60ZK1y0//Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tI97hFbA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aw5zjHVuci5wnFaA7ip6EVSgpwy1ys85nCD6jyoNEOrD4izEIGFfhro400tpGmshcU41gPfx3r2SjFD3CNwRgLDTaFeraKSwscyDQqWC/EP7nEm39w3a4quyCelXoX5uz/ECAbhT2V/qgSnUABN/k9CnG2NJQXMcqZwT0mdfTgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZKfqhfF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tI97hFbA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EB58C4CEE7;
-	Mon, 12 May 2025 17:49:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZKfqhfF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 235CDC4CEE7;
+	Mon, 12 May 2025 17:49:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072174;
-	bh=VNAgG4bAb62GWEqMYCrI+Skk7WmfdVb0InTSn9SDsYY=;
+	s=korg; t=1747072177;
+	bh=QT5GPtse/Rw/jP6r9gyIRFtI6HaiFPcWbxgt74mTzJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tI97hFbA8TDJittA9VmrJ6S72LbAyQNn21HvlgaYHHKptUmAxvtwNPCZiCTIqHdQI
-	 30i2ABbHZv8a0B5f4KzTK5TCGITe8SmviurHJAqAMWOSfih6C4pG8o32WmaTrtZj9A
-	 DgP/kp4M/FTMgjIYiaKAflFzN1+LCLdhHQ9FBwHs=
+	b=EZKfqhfF7JbvKIxBnMSSQYJSg4zQoMqZOZLYzXfsNiKdOSisbcIsCio3vqsYp8DSX
+	 +qSDRZmaZZsUjS1DERp8iy93/xEuF8yScrL7M6NTGHLRTiA5qC6XWwbkU9HqTdW7qJ
+	 tc4K4mfXpSyiUqwsa+98q7vWCdaOO4jAgtGyiTV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,17 +30,17 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jan Kara <jack@suse.cz>,
 	Heming Zhao <heming.zhao@suse.com>,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
 	Changwei Ge <gechangwei@live.cn>,
+	Joel Becker <jlbec@evilplan.org>,
 	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
 	Murad Masimov <m.masimov@mt-integration.ru>,
 	Shichangkuo <shi.changkuo@h3c.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.14 131/197] ocfs2: switch osb->disable_recovery to enum
-Date: Mon, 12 May 2025 19:39:41 +0200
-Message-ID: <20250512172049.729046755@linuxfoundation.org>
+Subject: [PATCH 6.14 132/197] ocfs2: implement handshaking with ocfs2 recovery thread
+Date: Mon, 12 May 2025 19:39:42 +0200
+Message-ID: <20250512172049.769431811@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -61,105 +61,137 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-commit c0fb83088f0cc4ee4706e0495ee8b06f49daa716 upstream.
+commit 8f947e0fd595951460f5a6e1ac29baa82fa02eab upstream.
 
-Patch series "ocfs2: Fix deadlocks in quota recovery", v3.
+We will need ocfs2 recovery thread to acknowledge transitions of
+recovery_state when disabling particular types of recovery.  This is
+similar to what currently happens when disabling recovery completely, just
+more general.  Implement the handshake and use it for exit from recovery.
 
-This implements another approach to fixing quota recovery deadlocks.  We
-avoid grabbing sb->s_umount semaphore from ocfs2_finish_quota_recovery()
-and instead stop quota recovery early in ocfs2_dismount_volume().
-
-
-This patch (of 3):
-
-We will need more recovery states than just pure enable / disable to fix
-deadlocks with quota recovery.  Switch osb->disable_recovery to enum.
-
-Link: https://lkml.kernel.org/r/20250424134301.1392-1-jack@suse.cz
-Link: https://lkml.kernel.org/r/20250424134515.18933-4-jack@suse.cz
+Link: https://lkml.kernel.org/r/20250424134515.18933-5-jack@suse.cz
 Fixes: 5f530de63cfc ("ocfs2: Use s_umount for quota recovery protection")
 Signed-off-by: Jan Kara <jack@suse.cz>
 Reviewed-by: Heming Zhao <heming.zhao@suse.com>
 Tested-by: Heming Zhao <heming.zhao@suse.com>
 Acked-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
 Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Joel Becker <jlbec@evilplan.org>
 Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Murad Masimov <m.masimov@mt-integration.ru>
 Cc: Shichangkuo <shi.changkuo@h3c.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/journal.c |   14 ++++++++------
- fs/ocfs2/ocfs2.h   |    7 ++++++-
- 2 files changed, 14 insertions(+), 7 deletions(-)
+ fs/ocfs2/journal.c |   52 +++++++++++++++++++++++++++++++++++-----------------
+ fs/ocfs2/ocfs2.h   |    4 ++++
+ 2 files changed, 39 insertions(+), 17 deletions(-)
 
 --- a/fs/ocfs2/journal.c
 +++ b/fs/ocfs2/journal.c
-@@ -174,7 +174,7 @@ int ocfs2_recovery_init(struct ocfs2_sup
- 	struct ocfs2_recovery_map *rm;
+@@ -190,31 +190,48 @@ int ocfs2_recovery_init(struct ocfs2_sup
+ 	return 0;
+ }
  
- 	mutex_init(&osb->recovery_lock);
--	osb->disable_recovery = 0;
-+	osb->recovery_state = OCFS2_REC_ENABLED;
- 	osb->recovery_thread_task = NULL;
- 	init_waitqueue_head(&osb->recovery_event);
- 
-@@ -206,7 +206,7 @@ void ocfs2_recovery_exit(struct ocfs2_su
- 	/* disable any new recovery threads and wait for any currently
- 	 * running ones to exit. Do this before setting the vol_state. */
- 	mutex_lock(&osb->recovery_lock);
--	osb->disable_recovery = 1;
-+	osb->recovery_state = OCFS2_REC_DISABLED;
- 	mutex_unlock(&osb->recovery_lock);
- 	wait_event(osb->recovery_event, !ocfs2_recovery_thread_running(osb));
- 
-@@ -1582,14 +1582,16 @@ bail:
- 
- void ocfs2_recovery_thread(struct ocfs2_super *osb, int node_num)
+-/* we can't grab the goofy sem lock from inside wait_event, so we use
+- * memory barriers to make sure that we'll see the null task before
+- * being woken up */
+ static int ocfs2_recovery_thread_running(struct ocfs2_super *osb)
  {
-+	int was_set = -1;
-+
+-	mb();
+ 	return osb->recovery_thread_task != NULL;
+ }
+ 
+-void ocfs2_recovery_exit(struct ocfs2_super *osb)
++static void ocfs2_recovery_disable(struct ocfs2_super *osb,
++				   enum ocfs2_recovery_state state)
+ {
+-	struct ocfs2_recovery_map *rm;
+-
+-	/* disable any new recovery threads and wait for any currently
+-	 * running ones to exit. Do this before setting the vol_state. */
  	mutex_lock(&osb->recovery_lock);
-+	if (osb->recovery_state < OCFS2_REC_DISABLED)
-+		was_set = ocfs2_recovery_map_set(osb, node_num);
+-	osb->recovery_state = OCFS2_REC_DISABLED;
++	/*
++	 * If recovery thread is not running, we can directly transition to
++	 * final state.
++	 */
++	if (!ocfs2_recovery_thread_running(osb)) {
++		osb->recovery_state = state + 1;
++		goto out_lock;
++	}
++	osb->recovery_state = state;
++	/* Wait for recovery thread to acknowledge state transition */
++	wait_event_cmd(osb->recovery_event,
++		       !ocfs2_recovery_thread_running(osb) ||
++				osb->recovery_state >= state + 1,
++		       mutex_unlock(&osb->recovery_lock),
++		       mutex_lock(&osb->recovery_lock));
++out_lock:
+ 	mutex_unlock(&osb->recovery_lock);
+-	wait_event(osb->recovery_event, !ocfs2_recovery_thread_running(osb));
+ 
+-	/* At this point, we know that no more recovery threads can be
+-	 * launched, so wait for any recovery completion work to
+-	 * complete. */
++	/*
++	 * At this point we know that no more recovery work can be queued so
++	 * wait for any recovery completion work to complete.
++	 */
+ 	if (osb->ocfs2_wq)
+ 		flush_workqueue(osb->ocfs2_wq);
++}
++
++void ocfs2_recovery_exit(struct ocfs2_super *osb)
++{
++	struct ocfs2_recovery_map *rm;
++
++	/* disable any new recovery threads and wait for any currently
++	 * running ones to exit. Do this before setting the vol_state. */
++	ocfs2_recovery_disable(osb, OCFS2_REC_WANT_DISABLE);
+ 
+ 	/*
+ 	 * Now that recovery is shut down, and the osb is about to be
+@@ -1569,7 +1586,8 @@ bail:
+ 
+ 	ocfs2_free_replay_slots(osb);
+ 	osb->recovery_thread_task = NULL;
+-	mb(); /* sync with ocfs2_recovery_thread_running */
++	if (osb->recovery_state == OCFS2_REC_WANT_DISABLE)
++		osb->recovery_state = OCFS2_REC_DISABLED;
+ 	wake_up(&osb->recovery_event);
+ 
+ 	mutex_unlock(&osb->recovery_lock);
+@@ -1585,13 +1603,13 @@ void ocfs2_recovery_thread(struct ocfs2_
+ 	int was_set = -1;
+ 
+ 	mutex_lock(&osb->recovery_lock);
+-	if (osb->recovery_state < OCFS2_REC_DISABLED)
++	if (osb->recovery_state < OCFS2_REC_WANT_DISABLE)
+ 		was_set = ocfs2_recovery_map_set(osb, node_num);
  
  	trace_ocfs2_recovery_thread(node_num, osb->node_num,
--		osb->disable_recovery, osb->recovery_thread_task,
--		osb->disable_recovery ?
--		-1 : ocfs2_recovery_map_set(osb, node_num));
-+		osb->recovery_state, osb->recovery_thread_task, was_set);
+ 		osb->recovery_state, osb->recovery_thread_task, was_set);
  
--	if (osb->disable_recovery)
-+	if (osb->recovery_state == OCFS2_REC_DISABLED)
+-	if (osb->recovery_state == OCFS2_REC_DISABLED)
++	if (osb->recovery_state >= OCFS2_REC_WANT_DISABLE)
  		goto out;
  
  	if (osb->recovery_thread_task)
 --- a/fs/ocfs2/ocfs2.h
 +++ b/fs/ocfs2/ocfs2.h
-@@ -308,6 +308,11 @@ enum ocfs2_journal_trigger_type {
- void ocfs2_initialize_journal_triggers(struct super_block *sb,
- 				       struct ocfs2_triggers triggers[]);
+@@ -310,6 +310,10 @@ void ocfs2_initialize_journal_triggers(s
  
-+enum ocfs2_recovery_state {
-+	OCFS2_REC_ENABLED = 0,
-+	OCFS2_REC_DISABLED,
-+};
-+
- struct ocfs2_journal;
- struct ocfs2_slot_info;
- struct ocfs2_recovery_map;
-@@ -370,7 +375,7 @@ struct ocfs2_super
- 	struct ocfs2_recovery_map *recovery_map;
- 	struct ocfs2_replay_map *replay_map;
- 	struct task_struct *recovery_thread_task;
--	int disable_recovery;
-+	enum ocfs2_recovery_state recovery_state;
- 	wait_queue_head_t checkpoint_event;
- 	struct ocfs2_journal *journal;
- 	unsigned long osb_commit_interval;
+ enum ocfs2_recovery_state {
+ 	OCFS2_REC_ENABLED = 0,
++	OCFS2_REC_WANT_DISABLE,
++	/*
++	 * Must be OCFS2_REC_WANT_DISABLE + 1 for ocfs2_recovery_exit() to work
++	 */
+ 	OCFS2_REC_DISABLED,
+ };
+ 
 
 
