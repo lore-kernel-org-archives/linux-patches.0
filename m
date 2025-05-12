@@ -1,132 +1,95 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB4B298C1A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E27B298C1B;
 	Mon, 12 May 2025 18:04:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073066; cv=none; b=C3i76RMHkcbi2m+fQDkglVP4mjikKDwGJagooIiXZ1QdXKl7WQFgl+mXZHrE2a1MVc3zQi65vI82NOZIVPFcfXMPHegeekYRrftLKSz3810UPJxCwlNqIwwNAlzYRZZxAEPKDR/o5Cw0zhkErdsuSBZFZKb/r1KGlwcqan0x1So=
+	t=1747073066; cv=none; b=AE2hJyGNdd+i3N1upwih4Y9EShEQjEChDTq2BnP3q0Ek2Zm5FHPaFgvGMRpTCK7xN0QGGlsE7LWcRhSwPiDGZpsj1yrjGEypR/VCx3XKXT6MDHAJSOf8Usd/II4NbhNBsVH8+4A/euvtPSSWhvGnkyzseHYUFb16jDdP2o//Iks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1747073066; c=relaxed/simple;
-	bh=xe/yd5hY9F/c7KpezlLnUK454tNnJ0eM9dMDV1J9e/4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NohzNA55gspVOvBdfcG50/OrBNkpNVY0w8MKZcswc4TmdQjVzDEEdGqEzsNaD6W2SaTAJv3TJOYK0/jjBgJeeQ/+NN13GCnSEdo0jL/c04+LUD6ZOV0OnF0dbPjo47+deWJTLBTNXbiWsTGr62wbBnbfScJGf+HQwkBaR0NtLz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e93sx00j; arc=none smtp.client-ip=10.30.226.201
+	bh=UHCXy9jR8dSGqVN48aTVRaYvNMr8ifTKeSKvOn17H8w=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=IWJ0kwNXnOf2DAA27UogijYyEZToXkxD+Y/xCLsa7jvi/7Bg7JukGlJfBX7Le7QK/+50HydBMOM1wCXC/i157JXwnG5TZ7p+JEOii2pBtdfVHchNeWgX38RJx6lt/11YsPnQlIizg44QBpy617c46j3pGkSX6X5Apk6A27PEJgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GIy+h3cG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e93sx00j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D7AC4CEE7;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GIy+h3cG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A3CC4CEF0;
 	Mon, 12 May 2025 18:04:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073066;
-	bh=xe/yd5hY9F/c7KpezlLnUK454tNnJ0eM9dMDV1J9e/4=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747073066;
+	bh=UHCXy9jR8dSGqVN48aTVRaYvNMr8ifTKeSKvOn17H8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e93sx00jHOCFHGUIcDlVo9iUZMCFK5H8FXQmb0/+lL1A+D7UJEnq/dzIzFkJagBKJ
-	 C43diqkd3ustih7jvEH6sqOh3/Zl2l42cFh7JPtWymhcww/2rq7ie2Pl4KMnqPcuLG
-	 0rfOlwA9VUOOw7mftfD9NuQV5+X0pXqUb2MaJh0c=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	syzbot+6af973a3b8dfd2faefdc@syzkaller.appspotmail.com,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 144/184] loop: Add sanity check for read/write_iter
-Date: Mon, 12 May 2025 19:45:45 +0200
-Message-ID: <20250512172047.669780379@linuxfoundation.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
-References: <20250512172041.624042835@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=GIy+h3cGV028lDKoKPOQt8neYjnSnCIfJZL23jzQ2stNM3JIKGOIaG3qSXiQfRZM4
+	 NE8qeKGSAParA1fkMHvjPHOhwuyDESiRRCGoSdfdFMVq/vc+cqaI5PKmN6N83HZ6Mm
+	 K0wPGu8coC+QHd334uMmognyvfpr8vW+JC9nzocYlTq5qxFOabDsc5jj6CfLrJjCQF
+	 THcrcSZtpXr+0Sp8lA/2BP0OoylpEC0X0+6cQn1TaNCvWKpp0HbAG65wV5tKE+RtIk
+	 n8OhnCuYpe3oo4w4Xw9tKIKtPWFdRq7Pckp/5R5lIs+Smq9F9jGYk0NURyUK2mFlx0
+	 kBYIBi3Q9vVEQ==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Al Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 15/15] __legitimize_mnt(): check for MNT_SYNC_UMOUNT should be under mount_lock
+Date: Mon, 12 May 2025 14:03:50 -0400
+Message-Id: <20250512180352.437356-15-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250512180352.437356-1-sashal@kernel.org>
+References: <20250512180352.437356-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.14.6
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-------------------
+[ Upstream commit 250cf3693060a5f803c5f1ddc082bb06b16112a9 ]
 
-From: Lizhi Xu <lizhi.xu@windriver.com>
+... or we risk stealing final mntput from sync umount - raising mnt_count
+after umount(2) has verified that victim is not busy, but before it
+has set MNT_SYNC_UMOUNT; in that case __legitimize_mnt() doesn't see
+that it's safe to quietly undo mnt_count increment and leaves dropping
+the reference to caller, where it'll be a full-blown mntput().
 
-[ Upstream commit f5c84eff634ba003326aa034c414e2a9dcb7c6a7 ]
+Check under mount_lock is needed; leaving the current one done before
+taking that makes no sense - it's nowhere near common enough to bother
+with.
 
-Some file systems do not support read_iter/write_iter, such as selinuxfs
-in this issue.
-So before calling them, first confirm that the interface is supported and
-then call it.
-
-It is releavant in that vfs_iter_read/write have the check, and removal
-of their used caused szybot to be able to hit this issue.
-
-Fixes: f2fed441c69b ("loop: stop using vfs_iter__{read,write} for buffered I/O")
-Reported-by: syzbot+6af973a3b8dfd2faefdc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6af973a3b8dfd2faefdc
-Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20250428143626.3318717-1-lizhi.xu@windriver.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/loop.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ fs/namespace.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index e083099a01e29..6bd44ec2c9b1a 100644
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -501,6 +501,17 @@ static void loop_assign_backing_file(struct loop_device *lo, struct file *file)
- 			lo->old_gfp_mask & ~(__GFP_IO | __GFP_FS));
- }
- 
-+static int loop_check_backing_file(struct file *file)
-+{
-+	if (!file->f_op->read_iter)
-+		return -EINVAL;
-+
-+	if ((file->f_mode & FMODE_WRITE) && !file->f_op->write_iter)
-+		return -EINVAL;
-+
-+	return 0;
-+}
-+
- /*
-  * loop_change_fd switched the backing store of a loopback device to
-  * a new file. This is useful for operating system installers to free up
-@@ -521,6 +532,10 @@ static int loop_change_fd(struct loop_device *lo, struct block_device *bdev,
- 	if (!file)
- 		return -EBADF;
- 
-+	error = loop_check_backing_file(file);
-+	if (error)
-+		return error;
-+
- 	/* suppress uevents while reconfiguring the device */
- 	dev_set_uevent_suppress(disk_to_dev(lo->lo_disk), 1);
- 
-@@ -953,6 +968,14 @@ static int loop_configure(struct loop_device *lo, blk_mode_t mode,
- 
- 	if (!file)
- 		return -EBADF;
-+
-+	if ((mode & BLK_OPEN_WRITE) && !file->f_op->write_iter)
-+		return -EINVAL;
-+
-+	error = loop_check_backing_file(file);
-+	if (error)
-+		return error;
-+
- 	is_loop = is_loop_device(file);
- 
- 	/* This is safe, since we have a reference from open(). */
+diff --git a/fs/namespace.c b/fs/namespace.c
+index 280a6ebc46d93..6730ffb03da5b 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -781,12 +781,8 @@ int __legitimize_mnt(struct vfsmount *bastard, unsigned seq)
+ 	smp_mb();			// see mntput_no_expire()
+ 	if (likely(!read_seqretry(&mount_lock, seq)))
+ 		return 0;
+-	if (bastard->mnt_flags & MNT_SYNC_UMOUNT) {
+-		mnt_add_count(mnt, -1);
+-		return 1;
+-	}
+ 	lock_mount_hash();
+-	if (unlikely(bastard->mnt_flags & MNT_DOOMED)) {
++	if (unlikely(bastard->mnt_flags & (MNT_SYNC_UMOUNT | MNT_DOOMED))) {
+ 		mnt_add_count(mnt, -1);
+ 		unlock_mount_hash();
+ 		return 1;
 -- 
 2.39.5
-
-
 
