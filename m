@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD8B2505C5;
-	Mon, 12 May 2025 17:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A562505C5;
+	Mon, 12 May 2025 17:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072783; cv=none; b=XhAgOlX99WHuekngNS811qweye14yOLSXqCvDtH26sRpnSfmfpbLanmkuoMtzn1cW7KVcuGPvSw1o52SL1sq4319esC8RvH3/KO3ZWLcJSSUPluE33iCC0PgCNhYzg8cQuXNhfmBoXpWETyWKcHcvEBXtRGjK9vfJja7SDaE1iA=
+	t=1747072786; cv=none; b=Ho1B5Qjw/T+uA/975DVO/OUTE0Nv5xaWfsLqXnyij1uTwSTas/UoGmbT5eynSM7TWmJ3PeERH0+w1WTE98rdCaPeRhbV4B3h+Y5BYko2pJMNuWtvnTzsNk3wtI5619MWPYi720TP+ahRBSFfiPAWcCbjtV1I46up1ZFSozzDo6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072783; c=relaxed/simple;
-	bh=LMzi4THUSNGe7MkxzxXVvufxhw5O/XNRngyaEIsM5mM=;
+	s=arc-20240116; t=1747072786; c=relaxed/simple;
+	bh=vldq36FlZSlV3/Ae0/IGzVKOCmPXLWzOUg3I2H+7Dao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dE2PTgX2whuDqBIrlHZ7biAsv8poIq8uFqXk07u0vOczfAbjnlGv+kuoq2x4OwNQpxwSNWq0cXt0wMa9xgOL1+9YGfPSUMuA2xqUtifdhIUvmBxVY4tjWuVmRym3UmaLBeesh1JUeyot1RfHMs0JN34VCpSqlKvS3ZISLsjlbhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sG+LABlB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tLVlpZ+PMJ4WswAuFqG1dtuAuwezULkTSdCvzGKhskeFrO61fYPi6q6cKMu8MQmou/22VuBhPjXpni2id3SjKv6ejVgTeYlppZyWaHKv7sD7+kSm2GClbbUo2z2VbNk46g1z+hLQ5EU17Zge3UbYFkd3fsGprd1x3YUCoscDvm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z74wAv0Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sG+LABlB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E1FC4CEE7;
-	Mon, 12 May 2025 17:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z74wAv0Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311E0C4CEE7;
+	Mon, 12 May 2025 17:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072783;
-	bh=LMzi4THUSNGe7MkxzxXVvufxhw5O/XNRngyaEIsM5mM=;
+	s=korg; t=1747072786;
+	bh=vldq36FlZSlV3/Ae0/IGzVKOCmPXLWzOUg3I2H+7Dao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sG+LABlBjiIeA9hP7G/Tsj91BGg/bOQQepgGnDr1Wddd4G63g/l2QAXjbT6iQd2NY
-	 TlVTAbT6rITyU+AEjfhOMtwF3cK/ouVItvgUClpt0hwmqYfiSGnZ70pCXw/Fl+GrYJ
-	 z8k+pP5jsM+l50jxTzC4MwABzfJwZVfgrgQ1o0Rk=
+	b=z74wAv0Y4yNZ0/K18Ar8HqQ6z3lvGjjcHcDFLLYV6EVOh3cGa5HUSC8K0Y59nrbgs
+	 f8go/zf9afhVQg8haIvrtKqaw2foBxh9aVgvvTBy2rtisXUF4XBISp4dYeJ/qdrsF9
+	 2tzGmQAkb92nG78WE5SVf0dIkMwYfcnZl9yTdNd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikael Gonella-Bolduc <mgonellabolduc@dimonoff.com>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Alistair Francis <alistair@alistair23.me>,
+	Gary Bisson <bisson.gary@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 055/184] Input: cyttsp5 - fix power control issue on wakeup
-Date: Mon, 12 May 2025 19:44:16 +0200
-Message-ID: <20250512172043.977992150@linuxfoundation.org>
+Subject: [PATCH 6.12 056/184] Input: mtk-pmic-keys - fix possible null pointer dereference
+Date: Mon, 12 May 2025 19:44:17 +0200
+Message-ID: <20250512172044.018037249@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -52,39 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikael Gonella-Bolduc <mgonellabolduc@dimonoff.com>
+From: Gary Bisson <bisson.gary@gmail.com>
 
-commit 7675b5efd81fe6d524e29d5a541f43201e98afa8 upstream.
+commit 11cdb506d0fbf5ac05bf55f5afcb3a215c316490 upstream.
 
-The power control function ignores the "on" argument when setting the
-report ID, and thus is always sending HID_POWER_SLEEP. This causes a
-problem when trying to wakeup.
+In mtk_pmic_keys_probe, the regs parameter is only set if the button is
+parsed in the device tree. However, on hardware where the button is left
+floating, that node will most likely be removed not to enable that
+input. In that case the code will try to dereference a null pointer.
 
-Fix by sending the state variable, which contains the proper HID_POWER_ON or
-HID_POWER_SLEEP based on the "on" argument.
+Let's use the regs struct instead as it is defined for all supported
+platforms. Note that it is ok setting the key reg even if that latter is
+disabled as the interrupt won't be enabled anyway.
 
-Fixes: 3c98b8dbdced ("Input: cyttsp5 - implement proper sleep and wakeup procedures")
+Fixes: b581acb49aec ("Input: mtk-pmic-keys - transfer per-key bit in mtk_pmic_keys_regs")
+Signed-off-by: Gary Bisson <bisson.gary@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mikael Gonella-Bolduc <mgonellabolduc@dimonoff.com>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Reviewed-by: Alistair Francis <alistair@alistair23.me>
-Link: https://lore.kernel.org/r/20250423135243.1261460-1-hugo@hugovil.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/cyttsp5.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/keyboard/mtk-pmic-keys.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/input/touchscreen/cyttsp5.c
-+++ b/drivers/input/touchscreen/cyttsp5.c
-@@ -580,7 +580,7 @@ static int cyttsp5_power_control(struct
- 	int rc;
+--- a/drivers/input/keyboard/mtk-pmic-keys.c
++++ b/drivers/input/keyboard/mtk-pmic-keys.c
+@@ -147,8 +147,8 @@ static void mtk_pmic_keys_lp_reset_setup
+ 	u32 value, mask;
+ 	int error;
  
- 	SET_CMD_REPORT_TYPE(cmd[0], 0);
--	SET_CMD_REPORT_ID(cmd[0], HID_POWER_SLEEP);
-+	SET_CMD_REPORT_ID(cmd[0], state);
- 	SET_CMD_OPCODE(cmd[1], HID_CMD_SET_POWER);
+-	kregs_home = keys->keys[MTK_PMIC_HOMEKEY_INDEX].regs;
+-	kregs_pwr = keys->keys[MTK_PMIC_PWRKEY_INDEX].regs;
++	kregs_home = &regs->keys_regs[MTK_PMIC_HOMEKEY_INDEX];
++	kregs_pwr = &regs->keys_regs[MTK_PMIC_PWRKEY_INDEX];
  
- 	rc = cyttsp5_write(ts, HID_COMMAND_REG, cmd, sizeof(cmd));
+ 	error = of_property_read_u32(keys->dev->of_node, "power-off-time-sec",
+ 				     &long_press_debounce);
 
 
