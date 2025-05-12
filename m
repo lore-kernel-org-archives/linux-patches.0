@@ -1,108 +1,87 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1BF29711B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E185229A9DD;
 	Mon, 12 May 2025 18:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073082; cv=none; b=mnMnZ7CR/WKGa3P62nKUqjWWByiIhilJpZ1asYqBEsBsyfW14APvK3/wRid1I/pCt6j7qv+zdmndhxSxDX/Z8wq21CD0tnFJba3uNgkPbvWjNFGohtcMH4HxAd5lS62vVbkTd60Tt/sD8NMHu9uT/zdCXE2pyG7wlKAAe4VmZy4=
+	t=1747073083; cv=none; b=Z2wQNWJwd6QYi7L7DZMmQTprAMOCuhv7mBpcgjo2rZs28mlomDUjSL1SfRz0hCiYv5OHSBijvEOtBtG/IVNSbzAa7R5dSdxP3iGiAsoWlV/tAoJ2iU7913YxxH5BCGMijMre88RTVId2MHT215uAA5ikkV1mVdunLHG/1AoyToo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073082; c=relaxed/simple;
-	bh=2xEXV0MVWEJ1UQv5lCGBAte92AKwBCxBuDTezMvrEFQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Apkvh9EbhEkQVWgiSJRK0UbsltUimwua+aZ/o/Q7Pc3jTdXVF6H9AKDjptK9hh2SAg9wHy453dR6kpq6kJySqPQumZeBt0QSiLhO/C3owGHQuZtro9z9PLqXOuWAKx3Ub/hu2SLoSNhsgzMLhQmsWctI/seGSacaT8/mjFyJSgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FJ4/kiSD; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747073083; c=relaxed/simple;
+	bh=xb7FF4IAwqMmIelFbryrjSBpRZWqcQ2jQVXTGgKyM5k=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=JJRu7G7PBFNDl9fWlPgX9ux2M6f/JfNnBaEOaOhkcULiPAt0oM51wc6EHlaPEzK0Ahn1yNnrcdbZEV51z7yVoh3i6x9nPM960qi9t54jIbZR8xTNQu7YVFIs73sI3gusvAZD6O+UBNARg5xbbaLXTGIAae85WNX4loUvqN5TJkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aQskM/ky; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FJ4/kiSD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25DDC4CEF0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aQskM/ky"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9FDC4CEEF;
 	Mon, 12 May 2025 18:04:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073082;
-	bh=2xEXV0MVWEJ1UQv5lCGBAte92AKwBCxBuDTezMvrEFQ=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747073082;
+	bh=xb7FF4IAwqMmIelFbryrjSBpRZWqcQ2jQVXTGgKyM5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FJ4/kiSDYiPD749vcQuPfzd5Q06dALyIMAKEZJzrjYHfw5UsD4jmvf0Plmhrd8AJZ
-	 J8h6KuMusZA4GUUOd6hmN6QDp+2oBQ1sFimlkogasvZJlp5l1upYLL8t/CLRSogSIC
-	 Cxluh0W4uUPao9DUgbkiw0cPEsu96arFHRTmJ1dI=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 148/184] riscv: misaligned: enable IRQs while handling misaligned accesses
-Date: Mon, 12 May 2025 19:45:49 +0200
-Message-ID: <20250512172047.842502638@linuxfoundation.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
-References: <20250512172041.624042835@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=aQskM/kytyOkI2x9xtaSJkQ83oeXC716Tw1+fdaLnxfEg6IUWxCrAmYk/I+c9YclH
+	 mANmC38bIYIzXxkd0Hr62US0jSVVk4ErhnZQNbS+/c7KBteV279Mv4zB4vYGv3CmKJ
+	 j1k/9I+Y5miIgmPgZLEMCFGnThOlwrVsaBUYygwuFARRc2vHdwboLOUziu0FMRXDkj
+	 Lg0/MSl+5yabkQdhja9gwGBNWqyX9XDmlXMva0RLB6UjRzWAGnGMsXQBXcmk7FTsjG
+	 WaW94nkJGnpj+/8MSBjmiBySVQP75uudfGQgdM/l94AreSWURtw21B/XrxO9eS61xF
+	 +2NMnkfsS1ipg==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	miriam.rachel.korenblit@intel.com,
+	emmanuel.grumbach@intel.com,
+	somashekhar.puttagangaiah@intel.com,
+	golan.ben.ami@intel.com,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 07/11] wifi: iwlwifi: add support for Killer on MTL
+Date: Mon, 12 May 2025 14:04:22 -0400
+Message-Id: <20250512180426.437627-7-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250512180426.437627-1-sashal@kernel.org>
+References: <20250512180426.437627-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.12.28
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+From: Johannes Berg <johannes.berg@intel.com>
 
-------------------
+[ Upstream commit ebedf8b7f05b9c886d68d63025db8d1b12343157 ]
 
-From: Clément Léger <cleger@rivosinc.com>
+For now, we need another entry for these devices, this
+will be changed completely for 6.16.
 
-[ Upstream commit 453805f0a28fc5091e46145e6560c776f7c7a611 ]
-
-We can safely reenable IRQs if coming from userspace. This allows to
-access user memory that could potentially trigger a page fault.
-
-Fixes: b686ecdeacf6 ("riscv: misaligned: Restrict user access to kernel memory")
-Signed-off-by: Clément Léger <cleger@rivosinc.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20250422162324.956065-3-cleger@rivosinc.com
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219926
+Link: https://patch.msgid.link/20250506214258.2efbdc9e9a82.I31915ec252bd1c74bd53b89a0e214e42a74b6f2e@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/traps.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
-index b1d991c78a233..9c83848797a78 100644
---- a/arch/riscv/kernel/traps.c
-+++ b/arch/riscv/kernel/traps.c
-@@ -220,19 +220,23 @@ static void do_trap_misaligned(struct pt_regs *regs, enum misaligned_access_type
- {
- 	irqentry_state_t state;
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+index 9141ea57abfce..68989d183e82a 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+@@ -587,6 +587,8 @@ VISIBLE_IF_IWLWIFI_KUNIT const struct iwl_dev_info iwl_dev_info_table[] = {
+ 	IWL_DEV_INFO(0x7A70, 0x1692, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690i_name),
+ 	IWL_DEV_INFO(0x7AF0, 0x1691, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690s_name),
+ 	IWL_DEV_INFO(0x7AF0, 0x1692, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690i_name),
++	IWL_DEV_INFO(0x7F70, 0x1691, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690s_name),
++	IWL_DEV_INFO(0x7F70, 0x1692, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690i_name),
  
--	if (user_mode(regs))
-+	if (user_mode(regs)) {
- 		irqentry_enter_from_user_mode(regs);
--	else
-+		local_irq_enable();
-+	} else {
- 		state = irqentry_nmi_enter(regs);
-+	}
- 
- 	if (misaligned_handler[type].handler(regs))
- 		do_trap_error(regs, SIGBUS, BUS_ADRALN, regs->epc,
- 			      misaligned_handler[type].type_str);
- 
--	if (user_mode(regs))
-+	if (user_mode(regs)) {
-+		local_irq_disable();
- 		irqentry_exit_to_user_mode(regs);
--	else
-+	} else {
- 		irqentry_nmi_exit(regs, state);
-+	}
- }
- 
- asmlinkage __visible __trap_section void do_trap_load_misaligned(struct pt_regs *regs)
+ 	IWL_DEV_INFO(0x271C, 0x0214, iwl9260_2ac_cfg, iwl9260_1_name),
+ 	IWL_DEV_INFO(0x7E40, 0x1691, iwl_cfg_ma, iwl_ax411_killer_1690s_name),
 -- 
 2.39.5
-
-
 
