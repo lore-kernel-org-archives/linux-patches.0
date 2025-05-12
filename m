@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0B2295DAB;
-	Mon, 12 May 2025 17:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6272522A1D4;
+	Mon, 12 May 2025 17:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071772; cv=none; b=KhORGlP4eRHR081amO9DEj5O7ZTOz5MDRFmlEOlFqHkcFQrg7U4UL4m6YjjXie0NdfIM0gVKcw9WliOXttaGlvnloV7kWK7BXWC0becEG1dpaFwNsvlTq7t1hjL1Eekhkwa4GCZqyiQkmkd03diS40JmNIjNcqtzch72GMTU51g=
+	t=1747071775; cv=none; b=IUUCEToV+ymkZzAZfDU+WgYA7eD/yXPepBwAxduWB6PAHxUXV3BwtXm65vW91ElcxorJawapab32ar+GjTwsMoyICmrHx6C7CSw7wS9nElNzr5rIuLqd2eXLaQJyhh/r1hVnTEOp08NMKKZM9OXva0dZ832eanoid1B1GIv8sCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071772; c=relaxed/simple;
-	bh=B01VrlQhZGxLVMl8Z+ii1RwYLad+ZxOEnT2A/xZAGmg=;
+	s=arc-20240116; t=1747071775; c=relaxed/simple;
+	bh=mUcMgblFBmI4vh8mpReE9o8uwdcUTQAoG0U0yjuTaMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VqubtHOzlya//2zYD8KkyxHm4NvFeRV2c4ZjZw9P1iGBCWxRW/eOd6ZA/12+y9+PdQlA/s2Lva8ZWtacOhBdK6G4I+a2seigs7E0g0V2XtQzC0W47PI4lQgD8caAOSe+LEyKn8YBi0NO5UryQq24bU13NO0HDpWuqeBRzecInMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qYp5EHKz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uWYntJLKVpyviGLEqBHxj/Qbs4JCkgAk5mEds41pcenvZIqDrrfpc8p5gfk2TNWEgm9hkO56RwqnLs9spx1qIO5saCS6UocvWmxZvBdg8ost6rB0lVSs7Ujo0W3/63poO6Iz/QxptpSpm91rloZQpK2Z2m+cZZHwUP59h1U/EZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vF3B1Wah; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYp5EHKz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3AEC4CEE7;
-	Mon, 12 May 2025 17:42:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vF3B1Wah"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6E87C4CEE7;
+	Mon, 12 May 2025 17:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071772;
-	bh=B01VrlQhZGxLVMl8Z+ii1RwYLad+ZxOEnT2A/xZAGmg=;
+	s=korg; t=1747071775;
+	bh=mUcMgblFBmI4vh8mpReE9o8uwdcUTQAoG0U0yjuTaMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qYp5EHKzBrxjNy1e1ECCUmupgjxMVJXbXL1X3HOxUhZDqM3ipnS1c2/1eLrWdhER8
-	 DKJ1NoKB5Qbl/ml3bl8bWTHEMIE0pxKawyNBtLIHIPswo0EQWN1FUMTE3K3M8ZtaXW
-	 rq+Y4bboJmlJ1+zMCDNETcK2drtrqImH8nztGFRY=
+	b=vF3B1Wahqxcqm4tVBuzIj4WMX2BZYQcq0fnHwCMJfxAa11hTA2z5dVDJAY7lz71hn
+	 wpD7bmDB+x3Tg3+Zj5yrU/hWod/VlbRHHIAeg2AVV34okDisLDV14Cs+LA1mTOBhfr
+	 2Yi8zwNGnsTbs/Oq0qhmYvF8oUFNIq8tmzh1zucM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Wang <jasowang@redhat.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 021/197] virtio-net: free xsk_buffs on error in virtnet_xsk_pool_enable()
-Date: Mon, 12 May 2025 19:37:51 +0200
-Message-ID: <20250512172045.208759577@linuxfoundation.org>
+Subject: [PATCH 6.14 022/197] gre: Fix again IPv6 link-local address generation.
+Date: Mon, 12 May 2025 19:37:52 +0200
+Message-ID: <20250512172045.250518774@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -51,63 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit 4397684a292a71fbc1e815c3e283f7490ddce5ae ]
+[ Upstream commit 3e6a0243ff002ddbd7ee18a8974ae61d2e6ed00d ]
 
-The selftests added to our CI by Bui Quang Minh recently reveals
-that there is a mem leak on the error path of virtnet_xsk_pool_enable():
+Use addrconf_addr_gen() to generate IPv6 link-local addresses on GRE
+devices in most cases and fall back to using add_v4_addrs() only in
+case the GRE configuration is incompatible with addrconf_addr_gen().
 
-unreferenced object 0xffff88800a68a000 (size 2048):
-  comm "xdp_helper", pid 318, jiffies 4294692778
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace (crc 0):
-    __kvmalloc_node_noprof+0x402/0x570
-    virtnet_xsk_pool_enable+0x293/0x6a0 (drivers/net/virtio_net.c:5882)
-    xp_assign_dev+0x369/0x670 (net/xdp/xsk_buff_pool.c:226)
-    xsk_bind+0x6a5/0x1ae0
-    __sys_bind+0x15e/0x230
-    __x64_sys_bind+0x72/0xb0
-    do_syscall_64+0xc1/0x1d0
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+GRE used to use addrconf_addr_gen() until commit e5dd729460ca ("ip/ip6_gre:
+use the same logic as SIT interfaces when computing v6LL address")
+restricted this use to gretap and ip6gretap devices, and created
+add_v4_addrs() (borrowed from SIT) for non-Ethernet GRE ones.
 
-Acked-by: Jason Wang <jasowang@redhat.com>
-Fixes: e9f3962441c0 ("virtio_net: xsk: rx: support fill with xsk buffer")
-Link: https://patch.msgid.link/20250430163836.3029761-1-kuba@kernel.org
+The original problem came when commit 9af28511be10 ("addrconf: refuse
+isatap eui64 for INADDR_ANY") made __ipv6_isatap_ifid() fail when its
+addr parameter was 0. The commit says that this would create an invalid
+address, however, I couldn't find any RFC saying that the generated
+interface identifier would be wrong. Anyway, since gre over IPv4
+devices pass their local tunnel address to __ipv6_isatap_ifid(), that
+commit broke their IPv6 link-local address generation when the local
+address was unspecified.
+
+Then commit e5dd729460ca ("ip/ip6_gre: use the same logic as SIT
+interfaces when computing v6LL address") tried to fix that case by
+defining add_v4_addrs() and calling it to generate the IPv6 link-local
+address instead of using addrconf_addr_gen() (apart for gretap and
+ip6gretap devices, which would still use the regular
+addrconf_addr_gen(), since they have a MAC address).
+
+That broke several use cases because add_v4_addrs() isn't properly
+integrated into the rest of IPv6 Neighbor Discovery code. Several of
+these shortcomings have been fixed over time, but add_v4_addrs()
+remains broken on several aspects. In particular, it doesn't send any
+Router Sollicitations, so the SLAAC process doesn't start until the
+interface receives a Router Advertisement. Also, add_v4_addrs() mostly
+ignores the address generation mode of the interface
+(/proc/sys/net/ipv6/conf/*/addr_gen_mode), thus breaking the
+IN6_ADDR_GEN_MODE_RANDOM and IN6_ADDR_GEN_MODE_STABLE_PRIVACY cases.
+
+Fix the situation by using add_v4_addrs() only in the specific scenario
+where the normal method would fail. That is, for interfaces that have
+all of the following characteristics:
+
+  * run over IPv4,
+  * transport IP packets directly, not Ethernet (that is, not gretap
+    interfaces),
+  * tunnel endpoint is INADDR_ANY (that is, 0),
+  * device address generation mode is EUI64.
+
+In all other cases, revert back to the regular addrconf_addr_gen().
+
+Also, remove the special case for ip6gre interfaces in add_v4_addrs(),
+since ip6gre devices now always use addrconf_addr_gen() instead.
+
+Note:
+  This patch was originally applied as commit 183185a18ff9 ("gre: Fix
+  IPv6 link-local address generation."). However, it was then reverted
+  by commit fc486c2d060f ("Revert "gre: Fix IPv6 link-local address
+  generation."") because it uncovered another bug that ended up
+  breaking net/forwarding/ip6gre_custom_multipath_hash.sh. That other
+  bug has now been fixed by commit 4d0ab3a6885e ("ipv6: Start path
+  selection from the first nexthop"). Therefore we can now revive this
+  GRE patch (no changes since original commit 183185a18ff9 ("gre: Fix
+  IPv6 link-local address generation.").
+
+Fixes: e5dd729460ca ("ip/ip6_gre: use the same logic as SIT interfaces when computing v6LL address")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/a88cc5c4811af36007645d610c95102dccb360a6.1746225214.git.gnault@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/ipv6/addrconf.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 2c3c6e8e3f35b..54f883c962373 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -5870,8 +5870,10 @@ static int virtnet_xsk_pool_enable(struct net_device *dev,
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 54a8ea004da28..943ba80c9e4ff 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -3209,16 +3209,13 @@ static void add_v4_addrs(struct inet6_dev *idev)
+ 	struct in6_addr addr;
+ 	struct net_device *dev;
+ 	struct net *net = dev_net(idev->dev);
+-	int scope, plen, offset = 0;
++	int scope, plen;
+ 	u32 pflags = 0;
  
- 	hdr_dma = virtqueue_dma_map_single_attrs(sq->vq, &xsk_hdr, vi->hdr_len,
- 						 DMA_TO_DEVICE, 0);
--	if (virtqueue_dma_mapping_error(sq->vq, hdr_dma))
--		return -ENOMEM;
-+	if (virtqueue_dma_mapping_error(sq->vq, hdr_dma)) {
-+		err = -ENOMEM;
-+		goto err_free_buffs;
-+	}
+ 	ASSERT_RTNL();
  
- 	err = xsk_pool_dma_map(pool, dma_dev, 0);
- 	if (err)
-@@ -5899,6 +5901,8 @@ static int virtnet_xsk_pool_enable(struct net_device *dev,
- err_xsk_map:
- 	virtqueue_dma_unmap_single_attrs(rq->vq, hdr_dma, vi->hdr_len,
- 					 DMA_TO_DEVICE, 0);
-+err_free_buffs:
-+	kvfree(rq->xsk_buffs);
- 	return err;
- }
+ 	memset(&addr, 0, sizeof(struct in6_addr));
+-	/* in case of IP6GRE the dev_addr is an IPv6 and therefore we use only the last 4 bytes */
+-	if (idev->dev->addr_len == sizeof(struct in6_addr))
+-		offset = sizeof(struct in6_addr) - 4;
+-	memcpy(&addr.s6_addr32[3], idev->dev->dev_addr + offset, 4);
++	memcpy(&addr.s6_addr32[3], idev->dev->dev_addr, 4);
  
+ 	if (!(idev->dev->flags & IFF_POINTOPOINT) && idev->dev->type == ARPHRD_SIT) {
+ 		scope = IPV6_ADDR_COMPATv4;
+@@ -3529,7 +3526,13 @@ static void addrconf_gre_config(struct net_device *dev)
+ 		return;
+ 	}
+ 
+-	if (dev->type == ARPHRD_ETHER) {
++	/* Generate the IPv6 link-local address using addrconf_addr_gen(),
++	 * unless we have an IPv4 GRE device not bound to an IP address and
++	 * which is in EUI64 mode (as __ipv6_isatap_ifid() would fail in this
++	 * case). Such devices fall back to add_v4_addrs() instead.
++	 */
++	if (!(dev->type == ARPHRD_IPGRE && *(__be32 *)dev->dev_addr == 0 &&
++	      idev->cnf.addr_gen_mode == IN6_ADDR_GEN_MODE_EUI64)) {
+ 		addrconf_addr_gen(idev, true);
+ 		return;
+ 	}
 -- 
 2.39.5
 
