@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D183C252904;
-	Mon, 12 May 2025 17:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708C1252904;
+	Mon, 12 May 2025 17:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071917; cv=none; b=rc1vEfcQGEupqeRoK7FSas03EonHRAq0aE8mjcF+Cpmu69zLZp8iEGTTh+P0IoaasoR3r0ZFcGajs2wu9GC+wqU+YK+sSp8PelNTXJd4woDVfQIqJy1CABGgLm9iqPGAZvdBrp0WEwELY+VmgguhtTnJRdbgtjpLINb2+Ak8ZGA=
+	t=1747071920; cv=none; b=hk2yzun0aDNRUDjW1vlhmNzjE/kTTjioNhbnNehqT0cTpO0/IX/N8v6zMdqEj8b2tidFt95Lqjcpp9K77ib79tc2V7WqZGzkjCGEAOH+IyvxEpmFT0d7IPccvndfAx1k0Lh5BwPUmxjjG3B/dvOkPrlEyQorGTxjsSxuPsY7Nhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071917; c=relaxed/simple;
-	bh=+6q+/yKyMPqkWxNueuZ9PyyfUNP2YMv/P9VYOoYrb44=;
+	s=arc-20240116; t=1747071920; c=relaxed/simple;
+	bh=aS+GpbYR7pWUOwfF8GFWoVuln2qMVyabrewkxSV2sSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kgdKUa5FTDPbJSR4qnfkycSTs/H/9vsh5/l1pb6/I9UvLh4yL8gqMdFlgYvY76e3Lq2DBp4GKjEjLNKPIS7xI7OeSnQVnYsuCU3kDxhpXQt2gahukUtNYuNKDAvgNQomEebdPOgJW7yuiXOWeSsOv689/WMQCWzSt6q192bGT1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQRa/fa1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lfOKy5zoV6nbNBEFEa+sN38uY4iVwecP+TOeBA/DVCjBE5uHzfNNj/l9xaogxfyLUcCsqYb2RPGG7/76NxV/gFUkQ0jGSafQQ8tk8EyqTN6JE8JZPQ77qYPTpnPmM/TFS+HhF5KI793iKbF2AtjRI/QAv9VFyUbh3MhJfzyHng8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JasF7w4k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQRa/fa1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60994C4CEE7;
-	Mon, 12 May 2025 17:45:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JasF7w4k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03064C4CEE7;
+	Mon, 12 May 2025 17:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071917;
-	bh=+6q+/yKyMPqkWxNueuZ9PyyfUNP2YMv/P9VYOoYrb44=;
+	s=korg; t=1747071920;
+	bh=aS+GpbYR7pWUOwfF8GFWoVuln2qMVyabrewkxSV2sSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQRa/fa1v7C8icH0K9x+jc+X/wYG4QIufgj/ji5TrO9UKFzQTyE4y1pGPVM5ZRqcl
-	 l8XhV2omutTAGAVfNeiy8WmJcCJZhpBuDQLFeLxfuiUzjWNZZiPV//rKkLPKEwaqrT
-	 VAfxhq9Zc5xVfiI0bcuN3mjylfe/LiZIyGWkZv4E=
+	b=JasF7w4kL2vovDxjrGtTQ/JX6SvoqkWPIEI0M0XLb50UKz9gnuq+Z1XRiMoBLfrBN
+	 mkhAjCrRF66xu0J20nnwphyfvbIhjET6pj9jjIQhYtx9jEqXywJK4PXe3srIsfj2jy
+	 MIi0zodTcPSJ72F5t2mrYrU9ynXkcT5PDyBHBpbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Xu <peterx@redhat.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	David Hildenbrand <david@redhat.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Suren Baghdasaryan <surenb@google.com>,
+	Feng Tang <feng.tang@linux.alibaba.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Baolin Wang <baolin.wang@inux.alibaba.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Sri Jayaramappa <sjayaram@akamai.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.14 077/197] mm/userfaultfd: fix uninitialized output field for -EAGAIN race
-Date: Mon, 12 May 2025 19:38:47 +0200
-Message-ID: <20250512172047.512856480@linuxfoundation.org>
+Subject: [PATCH 6.14 078/197] selftests/mm: compaction_test: support platform with huge mount of memory
+Date: Mon, 12 May 2025 19:38:48 +0200
+Message-ID: <20250512172047.553355516@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -55,128 +55,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Xu <peterx@redhat.com>
+From: Feng Tang <feng.tang@linux.alibaba.com>
 
-commit 95567729173e62e0e60a1f8ad9eb2e1320a8ccac upstream.
+commit ab00ddd802f80e31fc9639c652d736fe3913feae upstream.
 
-While discussing some userfaultfd relevant issues recently, Andrea noticed
-a potential ABI breakage with -EAGAIN on almost all userfaultfd ioctl()s.
+When running mm selftest to verify mm patches, 'compaction_test' case
+failed on an x86 server with 1TB memory.  And the root cause is that it
+has too much free memory than what the test supports.
 
-Quote from Andrea, explaining how -EAGAIN was processed, and how this
-should fix it (taking example of UFFDIO_COPY ioctl):
+The test case tries to allocate 100000 huge pages, which is about 200 GB
+for that x86 server, and when it succeeds, it expects it's large than 1/3
+of 80% of the free memory in system.  This logic only works for platform
+with 750 GB ( 200 / (1/3) / 80% ) or less free memory, and may raise false
+alarm for others.
 
-  The "mmap_changing" and "stale pmd" conditions are already reported as
-  -EAGAIN written in the copy field, this does not change it. This change
-  removes the subnormal case that left copy.copy uninitialized and required
-  apps to explicitly set the copy field to get deterministic
-  behavior (which is a requirement contrary to the documentation in both
-  the manpage and source code). In turn there's no alteration to backwards
-  compatibility as result of this change because userland will find the
-  copy field consistently set to -EAGAIN, and not anymore sometime -EAGAIN
-  and sometime uninitialized.
+Fix it by changing the fixed page number to self-adjustable number
+according to the real number of free memory.
 
-  Even then the change only can make a difference to non cooperative users
-  of userfaultfd, so when UFFD_FEATURE_EVENT_* is enabled, which is not
-  true for the vast majority of apps using userfaultfd or this unintended
-  uninitialized field may have been noticed sooner.
-
-Meanwhile, since this bug existed for years, it also almost affects all
-ioctl()s that was introduced later.  Besides UFFDIO_ZEROPAGE, these also
-get affected in the same way:
-
-  - UFFDIO_CONTINUE
-  - UFFDIO_POISON
-  - UFFDIO_MOVE
-
-This patch should have fixed all of them.
-
-Link: https://lkml.kernel.org/r/20250424215729.194656-2-peterx@redhat.com
-Fixes: df2cc96e7701 ("userfaultfd: prevent non-cooperative events vs mcopy_atomic races")
-Fixes: f619147104c8 ("userfaultfd: add UFFDIO_CONTINUE ioctl")
-Fixes: fc71884a5f59 ("mm: userfaultfd: add new UFFDIO_POISON ioctl")
-Fixes: adef440691ba ("userfaultfd: UFFDIO_MOVE uABI")
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reported-by: Andrea Arcangeli <aarcange@redhat.com>
-Suggested-by: Andrea Arcangeli <aarcange@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
+Link: https://lkml.kernel.org/r/20250423103645.2758-1-feng.tang@linux.alibaba.com
+Fixes: bd67d5c15cc1 ("Test compaction of mlocked memory")
+Signed-off-by: Feng Tang <feng.tang@linux.alibaba.com>
+Acked-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Tested-by: Baolin Wang <baolin.wang@inux.alibaba.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Sri Jayaramappa <sjayaram@akamai.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/userfaultfd.c |   28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ tools/testing/selftests/mm/compaction_test.c |   19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
---- a/fs/userfaultfd.c
-+++ b/fs/userfaultfd.c
-@@ -1585,8 +1585,11 @@ static int userfaultfd_copy(struct userf
- 	user_uffdio_copy = (struct uffdio_copy __user *) arg;
+--- a/tools/testing/selftests/mm/compaction_test.c
++++ b/tools/testing/selftests/mm/compaction_test.c
+@@ -90,6 +90,8 @@ int check_compaction(unsigned long mem_f
+ 	int compaction_index = 0;
+ 	char nr_hugepages[20] = {0};
+ 	char init_nr_hugepages[24] = {0};
++	char target_nr_hugepages[24] = {0};
++	int slen;
  
- 	ret = -EAGAIN;
--	if (atomic_read(&ctx->mmap_changing))
-+	if (unlikely(atomic_read(&ctx->mmap_changing))) {
-+		if (unlikely(put_user(ret, &user_uffdio_copy->copy)))
-+			return -EFAULT;
+ 	snprintf(init_nr_hugepages, sizeof(init_nr_hugepages),
+ 		 "%lu", initial_nr_hugepages);
+@@ -106,11 +108,18 @@ int check_compaction(unsigned long mem_f
  		goto out;
-+	}
+ 	}
  
- 	ret = -EFAULT;
- 	if (copy_from_user(&uffdio_copy, user_uffdio_copy,
-@@ -1641,8 +1644,11 @@ static int userfaultfd_zeropage(struct u
- 	user_uffdio_zeropage = (struct uffdio_zeropage __user *) arg;
+-	/* Request a large number of huge pages. The Kernel will allocate
+-	   as much as it can */
+-	if (write(fd, "100000", (6*sizeof(char))) != (6*sizeof(char))) {
+-		ksft_print_msg("Failed to write 100000 to /proc/sys/vm/nr_hugepages: %s\n",
+-			       strerror(errno));
++	/*
++	 * Request huge pages for about half of the free memory. The Kernel
++	 * will allocate as much as it can, and we expect it will get at least 1/3
++	 */
++	nr_hugepages_ul = mem_free / hugepage_size / 2;
++	snprintf(target_nr_hugepages, sizeof(target_nr_hugepages),
++		 "%lu", nr_hugepages_ul);
++
++	slen = strlen(target_nr_hugepages);
++	if (write(fd, target_nr_hugepages, slen) != slen) {
++		ksft_print_msg("Failed to write %lu to /proc/sys/vm/nr_hugepages: %s\n",
++			       nr_hugepages_ul, strerror(errno));
+ 		goto close_fd;
+ 	}
  
- 	ret = -EAGAIN;
--	if (atomic_read(&ctx->mmap_changing))
-+	if (unlikely(atomic_read(&ctx->mmap_changing))) {
-+		if (unlikely(put_user(ret, &user_uffdio_zeropage->zeropage)))
-+			return -EFAULT;
- 		goto out;
-+	}
- 
- 	ret = -EFAULT;
- 	if (copy_from_user(&uffdio_zeropage, user_uffdio_zeropage,
-@@ -1744,8 +1750,11 @@ static int userfaultfd_continue(struct u
- 	user_uffdio_continue = (struct uffdio_continue __user *)arg;
- 
- 	ret = -EAGAIN;
--	if (atomic_read(&ctx->mmap_changing))
-+	if (unlikely(atomic_read(&ctx->mmap_changing))) {
-+		if (unlikely(put_user(ret, &user_uffdio_continue->mapped)))
-+			return -EFAULT;
- 		goto out;
-+	}
- 
- 	ret = -EFAULT;
- 	if (copy_from_user(&uffdio_continue, user_uffdio_continue,
-@@ -1801,8 +1810,11 @@ static inline int userfaultfd_poison(str
- 	user_uffdio_poison = (struct uffdio_poison __user *)arg;
- 
- 	ret = -EAGAIN;
--	if (atomic_read(&ctx->mmap_changing))
-+	if (unlikely(atomic_read(&ctx->mmap_changing))) {
-+		if (unlikely(put_user(ret, &user_uffdio_poison->updated)))
-+			return -EFAULT;
- 		goto out;
-+	}
- 
- 	ret = -EFAULT;
- 	if (copy_from_user(&uffdio_poison, user_uffdio_poison,
-@@ -1870,8 +1882,12 @@ static int userfaultfd_move(struct userf
- 
- 	user_uffdio_move = (struct uffdio_move __user *) arg;
- 
--	if (atomic_read(&ctx->mmap_changing))
--		return -EAGAIN;
-+	ret = -EAGAIN;
-+	if (unlikely(atomic_read(&ctx->mmap_changing))) {
-+		if (unlikely(put_user(ret, &user_uffdio_move->move)))
-+			return -EFAULT;
-+		goto out;
-+	}
- 
- 	if (copy_from_user(&uffdio_move, user_uffdio_move,
- 			   /* don't copy "move" last field */
 
 
