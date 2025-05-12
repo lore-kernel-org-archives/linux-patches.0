@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03094296FC0;
-	Mon, 12 May 2025 17:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941B7296D3F;
+	Mon, 12 May 2025 17:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071886; cv=none; b=BWHTAqmhQzBXVhH5WKZufb822nxyedKfQoEgf0akYPxRy2L27n2YiGTJ8pXLRdTQp+FNi4o8uN2JzAYJ8oGXQLu0o1qPcKHzriZpy2EpbhUavMjz4AfZXXXlJlo/z2pFaxRemQ++uWEYD0r4aP2q1+kcjxGHg+B5ZwBAD8QdMCc=
+	t=1747071888; cv=none; b=AqJsO45z3aMealO78OsZ7VHcTtNkS6TEpjvVx2JSl/6X18pX3oqAxvUyjLEOazwr4Il+eL4dQYGtgG/kFiXDX5r7xurA/yREd3uhz7HOszmA4CKt2leWhTAVtv0z5QBrVPdmBwBJP5zufFRwx99k0R6CibCe9zCU0q1nvQBwSAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071886; c=relaxed/simple;
-	bh=8jgWiysZf7eCRkZ9T8zSwLqt/RabwVMhaS5omMSjFK4=;
+	s=arc-20240116; t=1747071888; c=relaxed/simple;
+	bh=X7efPXCcxAY7SN6gv4go5jkidmeiIhxJF7TQ0PX4hCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W3F+TA+PBcPc7JjTH+4OYUPDt2brjoCjJv6iT136Ud1fTM2gNNvkkMIjqfcdnv9w2auYK4z+TATP65BKc/dAwzAcqS0EsVpDefYcwy1gWruPZO/30/1qwLnvdY0N5q+F04WUeqgM1J/zEH2xQMcddIh7sy4Wx7hCtMF6o34lv+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/cFgGPp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i9bkbiDvjU6c9OMzKJy26m1IVOYnyZT5wXskRZOrftf3XLdtgxt0FQqc0iSXAUF8gJsTffQ6sofdrnHaHf4CDcrPc+z++Pu9n+88AFtCn4Z+VDc4eWmjBpKZ3QZReQq/AMW8WvFudNMIW/U+wnFHiCiAPcNnWvCmNAkuRzgJ9lI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJsShRfz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/cFgGPp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8DBC4CEE9;
-	Mon, 12 May 2025 17:44:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJsShRfz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25EB5C4CEE9;
+	Mon, 12 May 2025 17:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071885;
-	bh=8jgWiysZf7eCRkZ9T8zSwLqt/RabwVMhaS5omMSjFK4=;
+	s=korg; t=1747071888;
+	bh=X7efPXCcxAY7SN6gv4go5jkidmeiIhxJF7TQ0PX4hCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R/cFgGPpjk54YsxRN2pUfxaEZgF5NlaT+g6piMdrpKLNcRYm7r1ucMlAkXf5yvgTx
-	 zhsKFkufhQYTPHksLCzoBZv4X6FQwOLJvLqw3yr8hq1SJ9rKF8ydMPAz9aQzVd5Hd+
-	 Y2fK8D1Rzbjpj3i+ptO10NcrefmtFLY8FOGWcUa8=
+	b=BJsShRfzOwTwxfCtKh8HYZZUblqF/4sX/3JhuwhRLOkAUTnQKdFgI7ydvgqiKyTgo
+	 C00X9QyUTM4+r7UqQBWIpHSYFdxejNhH/SCEBgbHQcNPoJzWCNgjQgOj1OyNMl4Ghe
+	 JnblW6NNng7cfXDBxbNmc9w8ggkALYkIKUhYDD3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 035/197] net: dsa: b53: keep CPU port always tagged again
-Date: Mon, 12 May 2025 19:38:05 +0200
-Message-ID: <20250512172045.800484927@linuxfoundation.org>
+Subject: [PATCH 6.14 036/197] net: dsa: b53: fix clearing PVID of a port
+Date: Mon, 12 May 2025 19:38:06 +0200
+Message-ID: <20250512172045.840304058@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -54,60 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 425f11d4cc9bd9e97e6825d9abb2c51a068ca7b5 ]
+[ Upstream commit f480851981043d9bb6447ca9883ade9247b9a0ad ]
 
-The Broadcom management header does not carry the original VLAN tag
-state information, just the ingress port, so for untagged frames we do
-not know from which VLAN they originated.
+Currently the PVID of ports are only set when adding/updating VLANs with
+PVID set or removing VLANs, but not when clearing the PVID flag of a
+VLAN.
 
-Therefore keep the CPU port always tagged except for VLAN 0.
-
-Fixes the following setup:
+E.g. the following flow
 
 $ ip link add br0 type bridge vlan_filtering 1
-$ ip link set sw1p1 master br0
-$ bridge vlan add dev br0 pvid untagged self
-$ ip link add sw1p2.10 link sw1p2 type vlan id 10
+$ ip link set sw1p1 master bridge
+$ bridge vlan add dev sw1p1 vid 10 pvid untagged
+$ bridge vlan add dev sw1p1 vid 10 untagged
 
-Where VID 10 would stay untagged on the CPU port.
+Would keep the PVID set as 10, despite the flag being cleared. Fix this
+by checking if we need to unset the PVID on vlan updates.
 
-Fixes: 2c32a3d3c233 ("net: dsa: b53: Do not force CPU to be always tagged")
+Fixes: a2482d2ce349 ("net: dsa: b53: Plug in VLAN support")
 Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
 Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20250429201710.330937-3-jonas.gorski@gmail.com
+Link: https://patch.msgid.link/20250429201710.330937-4-jonas.gorski@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/dsa/b53/b53_common.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index a152f632a290e..772f8954ddf43 100644
+index 772f8954ddf43..fb7560201d7a9 100644
 --- a/drivers/net/dsa/b53/b53_common.c
 +++ b/drivers/net/dsa/b53/b53_common.c
-@@ -1135,6 +1135,11 @@ static int b53_setup(struct dsa_switch *ds)
- 	 */
- 	ds->untag_bridge_pvid = dev->tag_protocol == DSA_TAG_PROTO_NONE;
+@@ -1537,12 +1537,21 @@ int b53_vlan_add(struct dsa_switch *ds, int port,
+ 	bool untagged = vlan->flags & BRIDGE_VLAN_INFO_UNTAGGED;
+ 	bool pvid = vlan->flags & BRIDGE_VLAN_INFO_PVID;
+ 	struct b53_vlan *vl;
++	u16 old_pvid, new_pvid;
+ 	int err;
  
-+	/* The switch does not tell us the original VLAN for untagged
-+	 * packets, so keep the CPU port always tagged.
-+	 */
-+	ds->untag_vlan_aware_bridge_pvid = true;
-+
- 	ret = b53_reset_switch(dev);
- 	if (ret) {
- 		dev_err(ds->dev, "failed to reset switch\n");
-@@ -1545,6 +1550,9 @@ int b53_vlan_add(struct dsa_switch *ds, int port,
- 	if (vlan->vid == 0 && vlan->vid == b53_default_pvid(dev))
- 		untagged = true;
+ 	err = b53_vlan_prepare(ds, port, vlan);
+ 	if (err)
+ 		return err;
  
-+	if (vlan->vid > 0 && dsa_is_cpu_port(ds, port))
-+		untagged = false;
++	b53_read16(dev, B53_VLAN_PAGE, B53_VLAN_PORT_DEF_TAG(port), &old_pvid);
++	if (pvid)
++		new_pvid = vlan->vid;
++	else if (!pvid && vlan->vid == old_pvid)
++		new_pvid = b53_default_pvid(dev);
++	else
++		new_pvid = old_pvid;
 +
- 	vl->members |= BIT(port);
- 	if (untagged && !b53_vlan_port_needs_forced_tagged(ds, port))
- 		vl->untag |= BIT(port);
+ 	vl = &dev->vlans[vlan->vid];
+ 
+ 	b53_get_vlan_entry(dev, vlan->vid, vl);
+@@ -1562,9 +1571,9 @@ int b53_vlan_add(struct dsa_switch *ds, int port,
+ 	b53_set_vlan_entry(dev, vlan->vid, vl);
+ 	b53_fast_age_vlan(dev, vlan->vid);
+ 
+-	if (pvid && !dsa_is_cpu_port(ds, port)) {
++	if (!dsa_is_cpu_port(ds, port) && new_pvid != old_pvid) {
+ 		b53_write16(dev, B53_VLAN_PAGE, B53_VLAN_PORT_DEF_TAG(port),
+-			    vlan->vid);
++			    new_pvid);
+ 		b53_fast_age_vlan(dev, vlan->vid);
+ 	}
+ 
 -- 
 2.39.5
 
