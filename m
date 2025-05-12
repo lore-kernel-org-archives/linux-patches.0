@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2277D254863;
-	Mon, 12 May 2025 17:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15E125742B;
+	Mon, 12 May 2025 17:57:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072618; cv=none; b=apDjmrf9qSYCstBcK3Z3Lqob+zS9GyXSKAts+53uwwBkTmwAVMpfcV9/1+oG3/h+iJKphaGWR9BQtt8j8p9BkiO47TGMmjapxh1trt+wk3ixKhzBGAiIaffO8XDhAl3dsBG5wCcKCg8heqINPdQklD59YHdMWHqA24Ggbbwm4L0=
+	t=1747072621; cv=none; b=TlYGfsIkhFkMUNd0/fmwCp1ZcsEGJq3jqdFKzysrQcDDiMR9im1WPp9djXMX1fszyTDBwG1fUaMw8xyolvtOxNsfbPGkhiUgf9qU5oX+OupM6Ps5WpZQntDtS3Cvm0510ruIrjtUFUu4mRC5DNOE6Q3pgumojA8Kefm4mNBLtZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072618; c=relaxed/simple;
-	bh=pm1CPS0hiUOMi+PmeqThGq/0H4SYBIYBPXeV+H7ABm4=;
+	s=arc-20240116; t=1747072621; c=relaxed/simple;
+	bh=1hXBpL3scASE5nBOhK2zBLURHSM3lRM/llM/zloL7/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c+BOBB12UaHzK1yln+dJ96hgGX5nTFFt/iJeXvzlPJ7B5TyS/LLozyAVsV+edOjQB5mx9NGQKJ1GQvKL0IO/MG74ArVCrOH0tzxnufPwHZhGLiYx7Td8hVd5K9d+Y3y408KS2R1K9gQVXLJzvci8LBj4IndwaTTujmJVSmwIbio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OoysOFoq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OICLG9Kcy2yK6YjUmPZUjhYhszmmtruhpsmyf+tOpS1YyF+1vD3ELpHrDs02Z7KleM2U6sjtwqzbuEQlSj0K9PiD+zUGYwd/14f2pQ0AqZam5KRqj5MWG/3NsObj5MzjTtFLq5Xb2vAUBaxfGb4nqYdmbu41MJb/+VKKfZCuhnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6OIu3EU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OoysOFoq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85CDFC4CEE7;
-	Mon, 12 May 2025 17:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6OIu3EU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723FDC4CEE7;
+	Mon, 12 May 2025 17:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072618;
-	bh=pm1CPS0hiUOMi+PmeqThGq/0H4SYBIYBPXeV+H7ABm4=;
+	s=korg; t=1747072620;
+	bh=1hXBpL3scASE5nBOhK2zBLURHSM3lRM/llM/zloL7/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OoysOFoqyGJbBCLNc+RKB6Sxx5cWyQmYP11uY1ZpNqrgpz+pW+ZNozte3/5B4IV8O
-	 t3Amke5HM9ZKAsvSlU3iFOGa03yTrne+u1rEmbcFuNjLyRNzWXRkBmFsPSrGn2GOot
-	 irMOuE9YxUoIsqiei0Vh/1zx7nuh/AlJIfJAZ+jQ=
+	b=m6OIu3EUH7peXE0Y4Rt+x31cKcu9Iv9vNDvKLJsb1cIQaFRl+IOXQDfIxCTq9AGLy
+	 UxaB6J2w/1g70wx7sYuIj6evYEtCxZJ9CxyiN5EJIhgVcmG8Jesh002yCq9vrIDtOa
+	 /ijKin2REyMxhLXTUT3big09Kaja4MKW+MBvQCgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
 	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Alexandre Chartre <alexandre.chartre@oracle.com>
-Subject: [PATCH 6.1 89/92] x86/its: Add "vmexit" option to skip mitigation on some CPUs
-Date: Mon, 12 May 2025 19:46:04 +0200
-Message-ID: <20250512172026.752268892@linuxfoundation.org>
+Subject: [PATCH 6.1 90/92] x86/its: Align RETs in BHB clear sequence to avoid thunking
+Date: Mon, 12 May 2025 19:46:05 +0200
+Message-ID: <20250512172026.792645108@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -54,137 +54,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit 2665281a07e19550944e8354a2024635a7b2714a upstream.
+commit f0cd7091cc5a032c8870b4285305d9172569d126 upstream.
 
-Ice Lake generation CPUs are not affected by guest/host isolation part of
-ITS. If a user is only concerned about KVM guests, they can now choose a
-new cmdline option "vmexit" that will not deploy the ITS mitigation when
-CPU is not affected by guest/host isolation. This saves the performance
-overhead of ITS mitigation on Ice Lake gen CPUs.
+The software mitigation for BHI is to execute BHB clear sequence at syscall
+entry, and possibly after a cBPF program. ITS mitigation thunks RETs in the
+lower half of the cacheline. This causes the RETs in the BHB clear sequence
+to be thunked as well, adding unnecessary branches to the BHB clear
+sequence.
 
-When "vmexit" option selected, if the CPU is affected by ITS guest/host
-isolation, the default ITS mitigation is deployed.
+Since the sequence is in hot path, align the RET instructions in the
+sequence to avoid thunking.
 
+This is how disassembly clear_bhb_loop() looks like after this change:
+
+   0x44 <+4>:     mov    $0x5,%ecx
+   0x49 <+9>:     call   0xffffffff81001d9b <clear_bhb_loop+91>
+   0x4e <+14>:    jmp    0xffffffff81001de5 <clear_bhb_loop+165>
+   0x53 <+19>:    int3
+   ...
+   0x9b <+91>:    call   0xffffffff81001dce <clear_bhb_loop+142>
+   0xa0 <+96>:    ret
+   0xa1 <+97>:    int3
+   ...
+   0xce <+142>:   mov    $0x5,%eax
+   0xd3 <+147>:   jmp    0xffffffff81001dd6 <clear_bhb_loop+150>
+   0xd5 <+149>:   nop
+   0xd6 <+150>:   sub    $0x1,%eax
+   0xd9 <+153>:   jne    0xffffffff81001dd3 <clear_bhb_loop+147>
+   0xdb <+155>:   sub    $0x1,%ecx
+   0xde <+158>:   jne    0xffffffff81001d9b <clear_bhb_loop+91>
+   0xe0 <+160>:   ret
+   0xe1 <+161>:   int3
+   0xe2 <+162>:   int3
+   0xe3 <+163>:   int3
+   0xe4 <+164>:   int3
+   0xe5 <+165>:   lfence
+   0xe8 <+168>:   pop    %rbp
+   0xe9 <+169>:   ret
+
+Suggested-by: Andrew Cooper <andrew.cooper3@citrix.com>
 Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Reviewed-by: Alexandre Chartre <alexandre.chartre@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt |    2 ++
- arch/x86/include/asm/cpufeatures.h              |    1 +
- arch/x86/kernel/cpu/bugs.c                      |   11 +++++++++++
- arch/x86/kernel/cpu/common.c                    |   19 ++++++++++++-------
- 4 files changed, 26 insertions(+), 7 deletions(-)
+ arch/x86/entry/entry_64.S |   20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -2033,6 +2033,8 @@
- 			off:    Disable mitigation.
- 			force:	Force the ITS bug and deploy default
- 				mitigation.
-+			vmexit: Only deploy mitigation if CPU is affected by
-+				guest/host isolation part of ITS.
- 
- 			For details see:
- 			Documentation/admin-guide/hw-vuln/indirect-target-selection.rst
---- a/arch/x86/include/asm/cpufeatures.h
-+++ b/arch/x86/include/asm/cpufeatures.h
-@@ -497,4 +497,5 @@
- #define X86_BUG_BHI			X86_BUG(1*32 + 3) /* CPU is affected by Branch History Injection */
- #define X86_BUG_IBPB_NO_RET		X86_BUG(1*32 + 4) /* "ibpb_no_ret" IBPB omits return target predictions */
- #define X86_BUG_ITS			X86_BUG(1*32 + 5) /* CPU is affected by Indirect Target Selection */
-+#define X86_BUG_ITS_NATIVE_ONLY		X86_BUG(1*32 + 6) /* CPU is affected by ITS, VMX is not affected */
- #endif /* _ASM_X86_CPUFEATURES_H */
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1158,15 +1158,18 @@ do_cmd_auto:
- enum its_mitigation_cmd {
- 	ITS_CMD_OFF,
- 	ITS_CMD_ON,
-+	ITS_CMD_VMEXIT,
- };
- 
- enum its_mitigation {
- 	ITS_MITIGATION_OFF,
-+	ITS_MITIGATION_VMEXIT_ONLY,
- 	ITS_MITIGATION_ALIGNED_THUNKS,
- };
- 
- static const char * const its_strings[] = {
- 	[ITS_MITIGATION_OFF]			= "Vulnerable",
-+	[ITS_MITIGATION_VMEXIT_ONLY]		= "Mitigation: Vulnerable, KVM: Not affected",
- 	[ITS_MITIGATION_ALIGNED_THUNKS]		= "Mitigation: Aligned branch/return thunks",
- };
- 
-@@ -1192,6 +1195,8 @@ static int __init its_parse_cmdline(char
- 	} else if (!strcmp(str, "force")) {
- 		its_cmd = ITS_CMD_ON;
- 		setup_force_cpu_bug(X86_BUG_ITS);
-+	} else if (!strcmp(str, "vmexit")) {
-+		its_cmd = ITS_CMD_VMEXIT;
- 	} else {
- 		pr_err("Ignoring unknown indirect_target_selection option (%s).", str);
- 	}
-@@ -1239,6 +1244,12 @@ static void __init its_select_mitigation
- 	case ITS_CMD_OFF:
- 		its_mitigation = ITS_MITIGATION_OFF;
- 		break;
-+	case ITS_CMD_VMEXIT:
-+		if (boot_cpu_has_bug(X86_BUG_ITS_NATIVE_ONLY)) {
-+			its_mitigation = ITS_MITIGATION_VMEXIT_ONLY;
-+			goto out;
-+		}
-+		fallthrough;
- 	case ITS_CMD_ON:
- 		its_mitigation = ITS_MITIGATION_ALIGNED_THUNKS;
- 		if (!boot_cpu_has(X86_FEATURE_RETPOLINE))
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -1253,6 +1253,8 @@ static const __initconst struct x86_cpu_
- #define RFDS		BIT(7)
- /* CPU is affected by Indirect Target Selection */
- #define ITS		BIT(8)
-+/* CPU is affected by Indirect Target Selection, but guest-host isolation is not affected */
-+#define ITS_NATIVE_ONLY	BIT(9)
- 
- static const struct x86_cpu_id cpu_vuln_blacklist[] __initconst = {
- 	VULNBL_INTEL_STEPPINGS(IVYBRIDGE,	X86_STEPPING_ANY,		SRBDS),
-@@ -1273,16 +1275,16 @@ static const struct x86_cpu_id cpu_vuln_
- 	VULNBL_INTEL_STEPPINGS(KABYLAKE,	X86_STEPPINGS(0x0, 0xc),	MMIO | RETBLEED | GDS | SRBDS),
- 	VULNBL_INTEL_STEPPINGS(KABYLAKE,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS | ITS),
- 	VULNBL_INTEL_STEPPINGS(CANNONLAKE_L,	X86_STEPPING_ANY,		RETBLEED),
--	VULNBL_INTEL_STEPPINGS(ICELAKE_L,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED | GDS | ITS),
--	VULNBL_INTEL_STEPPINGS(ICELAKE_D,	X86_STEPPING_ANY,		MMIO | GDS | ITS),
--	VULNBL_INTEL_STEPPINGS(ICELAKE_X,	X86_STEPPING_ANY,		MMIO | GDS | ITS),
-+	VULNBL_INTEL_STEPPINGS(ICELAKE_L,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED | GDS | ITS | ITS_NATIVE_ONLY),
-+	VULNBL_INTEL_STEPPINGS(ICELAKE_D,	X86_STEPPING_ANY,		MMIO | GDS | ITS | ITS_NATIVE_ONLY),
-+	VULNBL_INTEL_STEPPINGS(ICELAKE_X,	X86_STEPPING_ANY,		MMIO | GDS | ITS | ITS_NATIVE_ONLY),
- 	VULNBL_INTEL_STEPPINGS(COMETLAKE,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED | GDS | ITS),
- 	VULNBL_INTEL_STEPPINGS(COMETLAKE_L,	X86_STEPPINGS(0x0, 0x0),	MMIO | RETBLEED | ITS),
- 	VULNBL_INTEL_STEPPINGS(COMETLAKE_L,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED | GDS | ITS),
--	VULNBL_INTEL_STEPPINGS(TIGERLAKE_L,	X86_STEPPING_ANY,		GDS | ITS),
--	VULNBL_INTEL_STEPPINGS(TIGERLAKE,	X86_STEPPING_ANY,		GDS | ITS),
-+	VULNBL_INTEL_STEPPINGS(TIGERLAKE_L,	X86_STEPPING_ANY,		GDS | ITS | ITS_NATIVE_ONLY),
-+	VULNBL_INTEL_STEPPINGS(TIGERLAKE,	X86_STEPPING_ANY,		GDS | ITS | ITS_NATIVE_ONLY),
- 	VULNBL_INTEL_STEPPINGS(LAKEFIELD,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED),
--	VULNBL_INTEL_STEPPINGS(ROCKETLAKE,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | ITS),
-+	VULNBL_INTEL_STEPPINGS(ROCKETLAKE,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | ITS | ITS_NATIVE_ONLY),
- 	VULNBL_INTEL_STEPPINGS(ALDERLAKE,	X86_STEPPING_ANY,		RFDS),
- 	VULNBL_INTEL_STEPPINGS(ALDERLAKE_L,	X86_STEPPING_ANY,		RFDS),
- 	VULNBL_INTEL_STEPPINGS(RAPTORLAKE,	X86_STEPPING_ANY,		RFDS),
-@@ -1499,8 +1501,11 @@ static void __init cpu_set_bug_bits(stru
- 	if (cpu_has(c, X86_FEATURE_AMD_IBPB) && !cpu_has(c, X86_FEATURE_AMD_IBPB_RET))
- 		setup_force_cpu_bug(X86_BUG_IBPB_NO_RET);
- 
--	if (vulnerable_to_its(x86_arch_cap_msr))
-+	if (vulnerable_to_its(x86_arch_cap_msr)) {
- 		setup_force_cpu_bug(X86_BUG_ITS);
-+		if (cpu_matches(cpu_vuln_blacklist, ITS_NATIVE_ONLY))
-+			setup_force_cpu_bug(X86_BUG_ITS_NATIVE_ONLY);
-+	}
- 
- 	if (cpu_matches(cpu_vuln_whitelist, NO_MELTDOWN))
- 		return;
+--- a/arch/x86/entry/entry_64.S
++++ b/arch/x86/entry/entry_64.S
+@@ -1559,7 +1559,9 @@ SYM_CODE_END(rewind_stack_and_make_dead)
+  * ORC to unwind properly.
+  *
+  * The alignment is for performance and not for safety, and may be safely
+- * refactored in the future if needed.
++ * refactored in the future if needed. The .skips are for safety, to ensure
++ * that all RETs are in the second half of a cacheline to mitigate Indirect
++ * Target Selection, rather than taking the slowpath via its_return_thunk.
+  */
+ SYM_FUNC_START(clear_bhb_loop)
+ 	push	%rbp
+@@ -1569,10 +1571,22 @@ SYM_FUNC_START(clear_bhb_loop)
+ 	call	1f
+ 	jmp	5f
+ 	.align 64, 0xcc
++	/*
++	 * Shift instructions so that the RET is in the upper half of the
++	 * cacheline and don't take the slowpath to its_return_thunk.
++	 */
++	.skip 32 - (.Lret1 - 1f), 0xcc
+ 	ANNOTATE_INTRA_FUNCTION_CALL
+ 1:	call	2f
+-	RET
++.Lret1:	RET
+ 	.align 64, 0xcc
++	/*
++	 * As above shift instructions for RET at .Lret2 as well.
++	 *
++	 * This should be ideally be: .skip 32 - (.Lret2 - 2f), 0xcc
++	 * but some Clang versions (e.g. 18) don't like this.
++	 */
++	.skip 32 - 18, 0xcc
+ 2:	movl	$5, %eax
+ 3:	jmp	4f
+ 	nop
+@@ -1580,7 +1594,7 @@ SYM_FUNC_START(clear_bhb_loop)
+ 	jnz	3b
+ 	sub	$1, %ecx
+ 	jnz	1b
+-	RET
++.Lret2:	RET
+ 5:	lfence
+ 	pop	%rbp
+ 	RET
 
 
