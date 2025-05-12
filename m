@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D151D7E41;
-	Mon, 12 May 2025 18:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586BD1519B8;
+	Mon, 12 May 2025 18:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072826; cv=none; b=sER1a2OM7lqamIwM3V2tOPpnCYQFnRpSxJq9eoFkKK3eZimER5GLQJXQxqb4RswrReYXbkSLg53IvLJlZEUofs4YTjwpT50HuTKrcpFG6FSig1ZjYOmyHpx9vGqGUfYh5Ns3p1po9DcpuIRjZ/5CUEFprqyoeHE/AcnFMIkqzPo=
+	t=1747072829; cv=none; b=bZnnyqiHk6ke2EvD+oYNwblxjKiI03fMvBY6JXfZXfqMwVDF+zDFeJeZ05xx75t7pWPM9CdZ5PneRXQjinN3WWquz+w02t9PHUX/skezdrSwAgwSy8D8SYng5ekXGdZ3Fsz/jFbpM5fiXc/Sr2e/D8Hgi5j/DMHp0FHAeFyXA6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072826; c=relaxed/simple;
-	bh=0/MJtRJRhdO3ynq7XMaL8fRLPUNZaAkFCRU32KRgOPU=;
+	s=arc-20240116; t=1747072829; c=relaxed/simple;
+	bh=f/ruqs5DGqHwH+XZLrhAY641fvctPvxzT8/T+D+bals=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=awWuC+FSMUj9xlMoVf4VoFz12pMSh7IKCui6DMo2ITOjEwMC1UQiuiYqXtVV7oTQ7NY62P17HBfivn8ykpEJj+/ppKLPMVPA1ISwu+CcKPnWUxu9pWGrrWRk5dlvIUdeCJBwzJrSsK55sWAb7BLRWYJ/ok5QxW8A21IpbN/5pd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTG+cF/c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UrhB0ySn7ZYXJs3/Ei/Uha2S1ltZ41gFCbwNhumUPLVjmNUTAgxnoU3pyyNZJXvZgqNYh3W3FOf4HbYKxnfku/CJhd7zdJj8Tl+w8RnLF43EOXxm5l+6ADoIiy1261cYCbVZGUI809EyWhNjFwH7kOoGfJmVHZDQo3/2GtuNt5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hm2Fy6Hr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTG+cF/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB46C4CEE7;
-	Mon, 12 May 2025 18:00:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hm2Fy6Hr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC0FC4CEE9;
+	Mon, 12 May 2025 18:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072826;
-	bh=0/MJtRJRhdO3ynq7XMaL8fRLPUNZaAkFCRU32KRgOPU=;
+	s=korg; t=1747072829;
+	bh=f/ruqs5DGqHwH+XZLrhAY641fvctPvxzT8/T+D+bals=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dTG+cF/cF4agKSi7bvBGr60o0sGkCgl/W//aAIqecN+Kh+Eo68B1AE+8bBuPLgFCH
-	 fSQS8J/n2iq8K/uPKcyA0cmXn+BlQFQadWNNJDRuLFKZSJvsY2rr7x2OaaUCEfe+3W
-	 2JaPex9mWeOs4PVCrYnMChxFgb+gH1jSIXwYpe0Y=
+	b=Hm2Fy6HrAPGN4eeqgyOpBa1rAwhjNoShubqlKeSYM7ure/2L7P9Udg+pQZaUqzeJN
+	 XRBMcsULBemQemqOItaN46AnGn1MRd29Be76gSLXF+aENJXy2U1i5zyG7epfhT+JYD
+	 BDzsh194KkyvNkvjDzrkTMif8YBOkXfdkSNFfT1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael-CY Lee <michael-cy.lee@mediatek.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 028/184] wifi: mac80211: fix the type of status_code for negotiated TID to Link Mapping
-Date: Mon, 12 May 2025 19:43:49 +0200
-Message-ID: <20250512172042.860392400@linuxfoundation.org>
+	Xuntao Chi <chotaotao1qaz2wsx@gmail.com>,
+	Aditya Garg <gargaditya08@live.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.12 061/184] Input: synaptics - enable InterTouch on Dynabook Portege X30L-G
+Date: Mon, 12 May 2025 19:44:22 +0200
+Message-ID: <20250512172044.219643455@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -51,83 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael-CY Lee <michael-cy.lee@mediatek.com>
+From: Aditya Garg <gargaditya08@live.com>
 
-[ Upstream commit e12a42f64fc3d74872b349eedd47f90c6676b78a ]
+commit 47d768b32e644b56901bb4bbbdb1feb01ea86c85 upstream.
 
-The status code should be type of __le16.
+Enable InterTouch mode on Dynabook Portege X30L-G by adding "TOS01f6" to
+the list of SMBus-enabled variants.
 
-Fixes: 83e897a961b8 ("wifi: ieee80211: add definitions for negotiated TID to Link map")
-Fixes: 8f500fbc6c65 ("wifi: mac80211: process and save negotiated TID to Link mapping request")
-Signed-off-by: Michael-CY Lee <michael-cy.lee@mediatek.com>
-Link: https://patch.msgid.link/20250505081946.3927214-1-michael-cy.lee@mediatek.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Xuntao Chi <chotaotao1qaz2wsx@gmail.com>
+Tested-by: Xuntao Chi <chotaotao1qaz2wsx@gmail.com>
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
+Link: https://lore.kernel.org/r/PN3PR01MB959786E4AC797160CDA93012B888A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/ieee80211.h |  2 +-
- net/mac80211/mlme.c       | 12 ++++++------
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/input/mouse/synaptics.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
-index 3750e56bfcbb3..777f6aa8efa7b 100644
---- a/include/linux/ieee80211.h
-+++ b/include/linux/ieee80211.h
-@@ -1524,7 +1524,7 @@ struct ieee80211_mgmt {
- 				struct {
- 					u8 action_code;
- 					u8 dialog_token;
--					u8 status_code;
-+					__le16 status_code;
- 					u8 variable[];
- 				} __packed ttlm_res;
- 				struct {
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index ad0d040569dcd..cc8c5d18b130d 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -7177,6 +7177,7 @@ ieee80211_send_neg_ttlm_res(struct ieee80211_sub_if_data *sdata,
- 	int hdr_len = offsetofend(struct ieee80211_mgmt, u.action.u.ttlm_res);
- 	int ttlm_max_len = 2 + 1 + sizeof(struct ieee80211_ttlm_elem) + 1 +
- 		2 * 2 * IEEE80211_TTLM_NUM_TIDS;
-+	u16 status_code;
- 
- 	skb = dev_alloc_skb(local->tx_headroom + hdr_len + ttlm_max_len);
- 	if (!skb)
-@@ -7199,19 +7200,18 @@ ieee80211_send_neg_ttlm_res(struct ieee80211_sub_if_data *sdata,
- 		WARN_ON(1);
- 		fallthrough;
- 	case NEG_TTLM_RES_REJECT:
--		mgmt->u.action.u.ttlm_res.status_code =
--			WLAN_STATUS_DENIED_TID_TO_LINK_MAPPING;
-+		status_code = WLAN_STATUS_DENIED_TID_TO_LINK_MAPPING;
- 		break;
- 	case NEG_TTLM_RES_ACCEPT:
--		mgmt->u.action.u.ttlm_res.status_code = WLAN_STATUS_SUCCESS;
-+		status_code = WLAN_STATUS_SUCCESS;
- 		break;
- 	case NEG_TTLM_RES_SUGGEST_PREFERRED:
--		mgmt->u.action.u.ttlm_res.status_code =
--			WLAN_STATUS_PREF_TID_TO_LINK_MAPPING_SUGGESTED;
-+		status_code = WLAN_STATUS_PREF_TID_TO_LINK_MAPPING_SUGGESTED;
- 		ieee80211_neg_ttlm_add_suggested_map(skb, neg_ttlm);
- 		break;
- 	}
- 
-+	mgmt->u.action.u.ttlm_res.status_code = cpu_to_le16(status_code);
- 	ieee80211_tx_skb(sdata, skb);
- }
- 
-@@ -7377,7 +7377,7 @@ void ieee80211_process_neg_ttlm_res(struct ieee80211_sub_if_data *sdata,
- 	 * This can be better implemented in the future, to handle request
- 	 * rejections.
- 	 */
--	if (mgmt->u.action.u.ttlm_res.status_code != WLAN_STATUS_SUCCESS)
-+	if (le16_to_cpu(mgmt->u.action.u.ttlm_res.status_code) != WLAN_STATUS_SUCCESS)
- 		__ieee80211_disconnect(sdata);
- }
- 
--- 
-2.39.5
-
+--- a/drivers/input/mouse/synaptics.c
++++ b/drivers/input/mouse/synaptics.c
+@@ -194,6 +194,7 @@ static const char * const smbus_pnp_ids[
+ 	"SYN3221", /* HP 15-ay000 */
+ 	"SYN323d", /* HP Spectre X360 13-w013dx */
+ 	"SYN3257", /* HP Envy 13-ad105ng */
++	"TOS01f6", /* Dynabook Portege X30L-G */
+ 	"TOS0213", /* Dynabook Portege X30-D */
+ 	NULL
+ };
 
 
