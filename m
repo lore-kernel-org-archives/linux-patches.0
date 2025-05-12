@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B1A2550CF;
-	Mon, 12 May 2025 17:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1359C2566DD;
+	Mon, 12 May 2025 17:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071907; cv=none; b=MTrlFlk3a4TB0tf+m+NeveLvT3YWKObUu2a1kky2UypTUhWkbKnAui+FasYNtGoU29Li2tPlfgU4SLKORah3ylV326kjmZzh7WDNYlFtGHLSroYPn9qVLJgkm9j3PfQ9enU7BNw4zxIk6bIGrd5lrjkP2wAVTewxa8Rpye2VgIg=
+	t=1747071910; cv=none; b=TMtSaJXFhpcmDXof/ZQT5IOMhOdaVu1kKMOL7Gid+TNTNjDt5Dg5ryUZpREHNoT6cqpmkuTScr0YXjQanErHaGxfcwGXYahk/GBToskxa1gHDwIJLBsqXfzwru9OM6Mo4Zmn6YpQukBMHqVB31gwd3yQHkCcCYbWSbH025NBxLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071907; c=relaxed/simple;
-	bh=Zx2aB9Jc9g+vMK4pYfS7UEwoyPOTdX1dXzEuQJncUs8=;
+	s=arc-20240116; t=1747071910; c=relaxed/simple;
+	bh=kZBCh7z7YAKUDe1PdYHRur0B1USANsphHBWdmatTOck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KhspinJM75KjIl2Qh8uyJGCX7OiJWWRZLzYomHppGa6DY+5mWyHRYWwbku4yT3xPfmY7Urdxhj+v0RkZDdmdy+OVIQmLFE47J5z38FFf5dZ4Q1+sZsyNQ/2VpEVLeffPtQbTcYNxe7sh3D8xzpyPb/yJczL3HvB1RgJqcj8M0uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfKljrh7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Cj1Jrcv+wfQTFuM1fhIeNSqzo3PGCRLzSbuYhXCO3nQ5ZlownoW7xBmAsU3CCJ8ldi9mIDy57xI0RPLVWZn2HGcQPpiDgpMOvfWCIoE957kyu1c650Q0qUGEr6SC9K3Ub9Nr3+LvNdTUG8sX5+9M/A78W70MTyUp4LRFOoDsZUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GIGxrp7V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfKljrh7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED62C4CEE7;
-	Mon, 12 May 2025 17:45:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GIGxrp7V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D53C4CEE7;
+	Mon, 12 May 2025 17:45:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071906;
-	bh=Zx2aB9Jc9g+vMK4pYfS7UEwoyPOTdX1dXzEuQJncUs8=;
+	s=korg; t=1747071909;
+	bh=kZBCh7z7YAKUDe1PdYHRur0B1USANsphHBWdmatTOck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WfKljrh7cTv4allSCwtOD+NQele66caJB1ZN2pwSLBDEeVt7tUPvE9QJUOEJisgnJ
-	 mT9Wpv+nTucE87gVfeYC2merU+t67INkRI8izA2kwyiLTkoa+dpw59Lb3eudIKXZ/T
-	 T8WxqPUaotwKf44uIRLZ9A+tVsn/MQ7h09vKURI8=
+	b=GIGxrp7VL+wRRhi9l00/MmqWZuEtxNvRrFdhaaWWbwFLhouOUG977+W2ZWDunSXcG
+	 v1JfUN4wNRvB2n7QWZoFE0KR5vgRxOGSYElttuj608+vXVOs2ZhgYeieIhQ43nEiTg
+	 flM6eawapPjXhpZc4dQdoWXup/vI7CmyYTH9E4yU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Rik van Riel <riel@surriel.com>,
-	Stephen Dolan <sdolan@janestreet.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.14 073/197] x86/mm: Eliminate window where TLB flushes may be inadvertently skipped
-Date: Mon, 12 May 2025 19:38:43 +0200
-Message-ID: <20250512172047.351535861@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	=?UTF-8?q?Petr=20Van=C4=9Bk?= <arkamar@atlas.cz>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.14 074/197] mm: fix folio_pte_batch() on XEN PV
+Date: Mon, 12 May 2025 19:38:44 +0200
+Message-ID: <20250512172047.391479001@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -48,137 +46,157 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Hansen <dave.hansen@linux.intel.com>
+From: Petr Vaněk <arkamar@atlas.cz>
 
-commit fea4e317f9e7e1f449ce90dedc27a2d2a95bee5a upstream.
+commit 7b08b74f3d99f6b801250683c751d391128799ec upstream.
 
-tl;dr: There is a window in the mm switching code where the new CR3 is
-set and the CPU should be getting TLB flushes for the new mm.  But
-should_flush_tlb() has a bug and suppresses the flush.  Fix it by
-widening the window where should_flush_tlb() sends an IPI.
+On XEN PV, folio_pte_batch() can incorrectly batch beyond the end of a
+folio due to a corner case in pte_advance_pfn().  Specifically, when the
+PFN following the folio maps to an invalidated MFN,
 
-Long Version:
+	expected_pte = pte_advance_pfn(expected_pte, nr);
 
-=== History ===
+produces a pte_none().  If the actual next PTE in memory is also
+pte_none(), the pte_same() succeeds,
 
-There were a few things leading up to this.
+	if (!pte_same(pte, expected_pte))
+		break;
 
-First, updating mm_cpumask() was observed to be too expensive, so it was
-made lazier.  But being lazy caused too many unnecessary IPIs to CPUs
-due to the now-lazy mm_cpumask().  So code was added to cull
-mm_cpumask() periodically[2].  But that culling was a bit too aggressive
-and skipped sending TLB flushes to CPUs that need them.  So here we are
-again.
+the loop is not broken, and batching continues into unrelated memory.
 
-=== Problem ===
+For example, with a 4-page folio, the PTE layout might look like this:
 
-The too-aggressive code in should_flush_tlb() strikes in this window:
+[   53.465673] [ T2552] folio_pte_batch: printing PTE values at addr=0x7f1ac9dc5000
+[   53.465674] [ T2552]   PTE[453] = 000000010085c125
+[   53.465679] [ T2552]   PTE[454] = 000000010085d125
+[   53.465682] [ T2552]   PTE[455] = 000000010085e125
+[   53.465684] [ T2552]   PTE[456] = 000000010085f125
+[   53.465686] [ T2552]   PTE[457] = 0000000000000000 <-- not present
+[   53.465689] [ T2552]   PTE[458] = 0000000101da7125
 
-	// Turn on IPIs for this CPU/mm combination, but only
-	// if should_flush_tlb() agrees:
-	cpumask_set_cpu(cpu, mm_cpumask(next));
+pte_advance_pfn(PTE[456]) returns a pte_none() due to invalid PFN->MFN
+mapping.  The next actual PTE (PTE[457]) is also pte_none(), so the loop
+continues and includes PTE[457] in the batch, resulting in 5 batched
+entries for a 4-page folio.  This triggers the following warning:
 
-	next_tlb_gen = atomic64_read(&next->context.tlb_gen);
-	choose_new_asid(next, next_tlb_gen, &new_asid, &need_flush);
-	load_new_mm_cr3(need_flush);
-	// ^ After 'need_flush' is set to false, IPIs *MUST*
-	// be sent to this CPU and not be ignored.
+[   53.465751] [ T2552] page: refcount:85 mapcount:20 mapping:ffff88813ff4f6a8 index:0x110 pfn:0x10085c
+[   53.465754] [ T2552] head: order:2 mapcount:80 entire_mapcount:0 nr_pages_mapped:4 pincount:0
+[   53.465756] [ T2552] memcg:ffff888003573000
+[   53.465758] [ T2552] aops:0xffffffff8226fd20 ino:82467c dentry name(?):"libc.so.6"
+[   53.465761] [ T2552] flags: 0x2000000000416c(referenced|uptodate|lru|active|private|head|node=0|zone=2)
+[   53.465764] [ T2552] raw: 002000000000416c ffffea0004021f08 ffffea0004021908 ffff88813ff4f6a8
+[   53.465767] [ T2552] raw: 0000000000000110 ffff888133d8bd40 0000005500000013 ffff888003573000
+[   53.465768] [ T2552] head: 002000000000416c ffffea0004021f08 ffffea0004021908 ffff88813ff4f6a8
+[   53.465770] [ T2552] head: 0000000000000110 ffff888133d8bd40 0000005500000013 ffff888003573000
+[   53.465772] [ T2552] head: 0020000000000202 ffffea0004021701 000000040000004f 00000000ffffffff
+[   53.465774] [ T2552] head: 0000000300000003 8000000300000002 0000000000000013 0000000000000004
+[   53.465775] [ T2552] page dumped because: VM_WARN_ON_FOLIO((_Generic((page + nr_pages - 1), const struct page *: (const struct folio *)_compound_head(page + nr_pages - 1), struct page *: (struct folio *)_compound_head(page + nr_pages - 1))) != folio)
 
-        this_cpu_write(cpu_tlbstate.loaded_mm, next);
-	// ^ Not until this point does should_flush_tlb()
-	// become true!
+Original code works as expected everywhere, except on XEN PV, where
+pte_advance_pfn() can yield a pte_none() after balloon inflation due to
+MFNs invalidation.  In XEN, pte_advance_pfn() ends up calling
+__pte()->xen_make_pte()->pte_pfn_to_mfn(), which returns pte_none() when
+mfn == INVALID_P2M_ENTRY.
 
-should_flush_tlb() will suppress TLB flushes between load_new_mm_cr3()
-and writing to 'loaded_mm', which is a window where they should not be
-suppressed.  Whoops.
+The pte_pfn_to_mfn() documents that nastiness:
 
-=== Solution ===
+	If there's no mfn for the pfn, then just create an
+	empty non-present pte.  Unfortunately this loses
+	information about the original pfn, so
+	pte_mfn_to_pfn is asymmetric.
 
-Thankfully, the fuzzy "just about to write CR3" window is already marked
-with loaded_mm==LOADED_MM_SWITCHING.  Simply checking for that state in
-should_flush_tlb() is sufficient to ensure that the CPU is targeted with
-an IPI.
+While such hacks should certainly be removed, we can do better in
+folio_pte_batch() and simply check ahead of time how many PTEs we can
+possibly batch in our folio.
 
-This will cause more TLB flush IPIs.  But the window is relatively small
-and I do not expect this to cause any kind of measurable performance
-impact.
+This way, we can not only fix the issue but cleanup the code: removing the
+pte_pfn() check inside the loop body and avoiding end_ptr comparison +
+arithmetic.
 
-Update the comment where LOADED_MM_SWITCHING is written since it grew
-yet another user.
-
-Peter Z also raised a concern that should_flush_tlb() might not observe
-'loaded_mm' and 'is_lazy' in the same order that switch_mm_irqs_off()
-writes them.  Add a barrier to ensure that they are observed in the
-order they are written.
-
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Acked-by: Rik van Riel <riel@surriel.com>
-Link: https://lore.kernel.org/oe-lkp/202411282207.6bd28eae-lkp@intel.com/ [1]
-Fixes: 6db2526c1d69 ("x86/mm/tlb: Only trim the mm_cpumask once a second") [2]
-Reported-by: Stephen Dolan <sdolan@janestreet.com>
-Cc: stable@vger.kernel.org
-Acked-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lkml.kernel.org/r/20250502215019.822-2-arkamar@atlas.cz
+Fixes: f8d937761d65 ("mm/memory: optimize fork() with PTE-mapped THP")
+Co-developed-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Petr Vaněk <arkamar@atlas.cz>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/tlb.c |   23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ mm/internal.h |   27 +++++++++++----------------
+ 1 file changed, 11 insertions(+), 16 deletions(-)
 
---- a/arch/x86/mm/tlb.c
-+++ b/arch/x86/mm/tlb.c
-@@ -621,7 +621,11 @@ void switch_mm_irqs_off(struct mm_struct
- 
- 		choose_new_asid(next, next_tlb_gen, &new_asid, &need_flush);
- 
--		/* Let nmi_uaccess_okay() know that we're changing CR3. */
-+		/*
-+		 * Indicate that CR3 is about to change. nmi_uaccess_okay()
-+		 * and others are sensitive to the window where mm_cpumask(),
-+		 * CR3 and cpu_tlbstate.loaded_mm are not all in sync.
-+ 		 */
- 		this_cpu_write(cpu_tlbstate.loaded_mm, LOADED_MM_SWITCHING);
- 		barrier();
- 	}
-@@ -895,8 +899,16 @@ done:
- 
- static bool should_flush_tlb(int cpu, void *data)
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -205,11 +205,9 @@ static inline int folio_pte_batch(struct
+ 		pte_t *start_ptep, pte_t pte, int max_nr, fpb_t flags,
+ 		bool *any_writable, bool *any_young, bool *any_dirty)
  {
-+	struct mm_struct *loaded_mm = per_cpu(cpu_tlbstate.loaded_mm, cpu);
- 	struct flush_tlb_info *info = data;
+-	unsigned long folio_end_pfn = folio_pfn(folio) + folio_nr_pages(folio);
+-	const pte_t *end_ptep = start_ptep + max_nr;
+ 	pte_t expected_pte, *ptep;
+ 	bool writable, young, dirty;
+-	int nr;
++	int nr, cur_nr;
  
-+	/*
-+	 * Order the 'loaded_mm' and 'is_lazy' against their
-+	 * write ordering in switch_mm_irqs_off(). Ensure
-+	 * 'is_lazy' is at least as new as 'loaded_mm'.
-+	 */
-+	smp_rmb();
+ 	if (any_writable)
+ 		*any_writable = false;
+@@ -222,11 +220,15 @@ static inline int folio_pte_batch(struct
+ 	VM_WARN_ON_FOLIO(!folio_test_large(folio) || max_nr < 1, folio);
+ 	VM_WARN_ON_FOLIO(page_folio(pfn_to_page(pte_pfn(pte))) != folio, folio);
+ 
++	/* Limit max_nr to the actual remaining PFNs in the folio we could batch. */
++	max_nr = min_t(unsigned long, max_nr,
++		       folio_pfn(folio) + folio_nr_pages(folio) - pte_pfn(pte));
 +
- 	/* Lazy TLB will get flushed at the next context switch. */
- 	if (per_cpu(cpu_tlbstate_shared.is_lazy, cpu))
- 		return false;
-@@ -905,8 +917,15 @@ static bool should_flush_tlb(int cpu, vo
- 	if (!info->mm)
- 		return true;
+ 	nr = pte_batch_hint(start_ptep, pte);
+ 	expected_pte = __pte_batch_clear_ignored(pte_advance_pfn(pte, nr), flags);
+ 	ptep = start_ptep + nr;
  
-+	/*
-+	 * While switching, the remote CPU could have state from
-+	 * either the prev or next mm. Assume the worst and flush.
-+	 */
-+	if (loaded_mm == LOADED_MM_SWITCHING)
-+		return true;
-+
- 	/* The target mm is loaded, and the CPU is not lazy. */
--	if (per_cpu(cpu_tlbstate.loaded_mm, cpu) == info->mm)
-+	if (loaded_mm == info->mm)
- 		return true;
+-	while (ptep < end_ptep) {
++	while (nr < max_nr) {
+ 		pte = ptep_get(ptep);
+ 		if (any_writable)
+ 			writable = !!pte_write(pte);
+@@ -239,14 +241,6 @@ static inline int folio_pte_batch(struct
+ 		if (!pte_same(pte, expected_pte))
+ 			break;
  
- 	/* In cpumask, but not the loaded mm? Periodically remove by flushing. */
+-		/*
+-		 * Stop immediately once we reached the end of the folio. In
+-		 * corner cases the next PFN might fall into a different
+-		 * folio.
+-		 */
+-		if (pte_pfn(pte) >= folio_end_pfn)
+-			break;
+-
+ 		if (any_writable)
+ 			*any_writable |= writable;
+ 		if (any_young)
+@@ -254,12 +248,13 @@ static inline int folio_pte_batch(struct
+ 		if (any_dirty)
+ 			*any_dirty |= dirty;
+ 
+-		nr = pte_batch_hint(ptep, pte);
+-		expected_pte = pte_advance_pfn(expected_pte, nr);
+-		ptep += nr;
++		cur_nr = pte_batch_hint(ptep, pte);
++		expected_pte = pte_advance_pfn(expected_pte, cur_nr);
++		ptep += cur_nr;
++		nr += cur_nr;
+ 	}
+ 
+-	return min(ptep - start_ptep, max_nr);
++	return min(nr, max_nr);
+ }
+ 
+ /**
 
 
