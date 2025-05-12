@@ -1,95 +1,119 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E27B298C1B;
-	Mon, 12 May 2025 18:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A939298C1B;
+	Mon, 12 May 2025 18:04:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073066; cv=none; b=AE2hJyGNdd+i3N1upwih4Y9EShEQjEChDTq2BnP3q0Ek2Zm5FHPaFgvGMRpTCK7xN0QGGlsE7LWcRhSwPiDGZpsj1yrjGEypR/VCx3XKXT6MDHAJSOf8Usd/II4NbhNBsVH8+4A/euvtPSSWhvGnkyzseHYUFb16jDdP2o//Iks=
+	t=1747073069; cv=none; b=n+AiifCuUR7zuwGq6O+P5sJHatK4tDDqA8+h4M+5SlzeIfg7mxuj/yUAwVfnwPfDeB70jQXizT/NYlLnfzoDyO/B/pEVidBdYe8UEU9tJdXgoYRewT5RINR+Pa7V7BXIklSx4g+tXT/DeHsk4x/4c1cp0CZix47yHV8CR82y3iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073066; c=relaxed/simple;
-	bh=UHCXy9jR8dSGqVN48aTVRaYvNMr8ifTKeSKvOn17H8w=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=IWJ0kwNXnOf2DAA27UogijYyEZToXkxD+Y/xCLsa7jvi/7Bg7JukGlJfBX7Le7QK/+50HydBMOM1wCXC/i157JXwnG5TZ7p+JEOii2pBtdfVHchNeWgX38RJx6lt/11YsPnQlIizg44QBpy617c46j3pGkSX6X5Apk6A27PEJgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GIy+h3cG; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747073069; c=relaxed/simple;
+	bh=RXM9FUNDkpke0pd1IDKZmKfncN/LZJZ0695V5Ytskd8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=EwJsmuPKDrD9J8d2SbhK8k4vq6fIVHAY0jh08zqosGwwe8jgUbz3YQ/HEBl8dajj0f+1FJQCG53I9stIQnmac3dSm278TwIlmj9XqUa391QZh7MwiUYIZ8yGEsn9bIge6QY5vr8y/76n9ZBNWMxmySVKSjVLm/yefdATr+n5Mis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/EcoXg5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GIy+h3cG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A3CC4CEF0;
-	Mon, 12 May 2025 18:04:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747073066;
-	bh=UHCXy9jR8dSGqVN48aTVRaYvNMr8ifTKeSKvOn17H8w=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/EcoXg5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D8BC4CEE9;
+	Mon, 12 May 2025 18:04:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1747073069;
+	bh=RXM9FUNDkpke0pd1IDKZmKfncN/LZJZ0695V5Ytskd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GIy+h3cGV028lDKoKPOQt8neYjnSnCIfJZL23jzQ2stNM3JIKGOIaG3qSXiQfRZM4
-	 NE8qeKGSAParA1fkMHvjPHOhwuyDESiRRCGoSdfdFMVq/vc+cqaI5PKmN6N83HZ6Mm
-	 K0wPGu8coC+QHd334uMmognyvfpr8vW+JC9nzocYlTq5qxFOabDsc5jj6CfLrJjCQF
-	 THcrcSZtpXr+0Sp8lA/2BP0OoylpEC0X0+6cQn1TaNCvWKpp0HbAG65wV5tKE+RtIk
-	 n8OhnCuYpe3oo4w4Xw9tKIKtPWFdRq7Pckp/5R5lIs+Smq9F9jGYk0NURyUK2mFlx0
-	 kBYIBi3Q9vVEQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	linux-fsdevel@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 15/15] __legitimize_mnt(): check for MNT_SYNC_UMOUNT should be under mount_lock
-Date: Mon, 12 May 2025 14:03:50 -0400
-Message-Id: <20250512180352.437356-15-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250512180352.437356-1-sashal@kernel.org>
-References: <20250512180352.437356-1-sashal@kernel.org>
+	b=p/EcoXg5mygSmovphsCjCUxdWoPp1CR4+p3SJtBFf3VA94DNLfOryOH3YSEnMyrGD
+	 JLJ/VAfpvMcrIjE0Qk0jRs3dct0jiM/0urHu1Ma3V7xaaEIBqlh1HpDFnrGfATeBMD
+	 LgjU4fPiVx5p9EvGOppuPsZfGxxbdQzB5RP+x8P4=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Michael Katzmann <vk2bea@gmail.com>,
+	Dave Penkler <dpenkler@gmail.com>
+Subject: [PATCH 6.12 127/184] usb: usbtmc: Fix erroneous get_stb ioctl error returns
+Date: Mon, 12 May 2025 19:45:28 +0200
+Message-ID: <20250512172046.989682578@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
+References: <20250512172041.624042835@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.14.6
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 250cf3693060a5f803c5f1ddc082bb06b16112a9 ]
+------------------
 
-... or we risk stealing final mntput from sync umount - raising mnt_count
-after umount(2) has verified that victim is not busy, but before it
-has set MNT_SYNC_UMOUNT; in that case __legitimize_mnt() doesn't see
-that it's safe to quietly undo mnt_count increment and leaves dropping
-the reference to caller, where it'll be a full-blown mntput().
+From: Dave Penkler <dpenkler@gmail.com>
 
-Check under mount_lock is needed; leaving the current one done before
-taking that makes no sense - it's nowhere near common enough to bother
-with.
+commit cac01bd178d6a2a23727f138d647ce1a0e8a73a1 upstream.
 
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+wait_event_interruptible_timeout returns a long
+The return was being assigned to an int causing an integer overflow when
+the remaining jiffies > INT_MAX resulting in random error returns.
+
+Use a long return value and convert to int ioctl return only on error.
+
+When the return value of wait_event_interruptible_timeout was <= INT_MAX
+the number of remaining jiffies was returned which has no meaning for the
+user. Return 0 on success.
+
+Reported-by: Michael Katzmann <vk2bea@gmail.com>
+Fixes: dbf3e7f654c0 ("Implement an ioctl to support the USMTMC-USB488 READ_STATUS_BYTE operation.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dave Penkler <dpenkler@gmail.com>
+Link: https://lore.kernel.org/r/20250502070941.31819-2-dpenkler@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/usb/class/usbtmc.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 280a6ebc46d93..6730ffb03da5b 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -781,12 +781,8 @@ int __legitimize_mnt(struct vfsmount *bastard, unsigned seq)
- 	smp_mb();			// see mntput_no_expire()
- 	if (likely(!read_seqretry(&mount_lock, seq)))
- 		return 0;
--	if (bastard->mnt_flags & MNT_SYNC_UMOUNT) {
--		mnt_add_count(mnt, -1);
--		return 1;
--	}
- 	lock_mount_hash();
--	if (unlikely(bastard->mnt_flags & MNT_DOOMED)) {
-+	if (unlikely(bastard->mnt_flags & (MNT_SYNC_UMOUNT | MNT_DOOMED))) {
- 		mnt_add_count(mnt, -1);
- 		unlock_mount_hash();
- 		return 1;
--- 
-2.39.5
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -482,6 +482,7 @@ static int usbtmc_get_stb(struct usbtmc_
+ 	u8 *buffer;
+ 	u8 tag;
+ 	int rv;
++	long wait_rv;
+ 
+ 	dev_dbg(dev, "Enter ioctl_read_stb iin_ep_present: %d\n",
+ 		data->iin_ep_present);
+@@ -511,16 +512,17 @@ static int usbtmc_get_stb(struct usbtmc_
+ 	}
+ 
+ 	if (data->iin_ep_present) {
+-		rv = wait_event_interruptible_timeout(
++		wait_rv = wait_event_interruptible_timeout(
+ 			data->waitq,
+ 			atomic_read(&data->iin_data_valid) != 0,
+ 			file_data->timeout);
+-		if (rv < 0) {
+-			dev_dbg(dev, "wait interrupted %d\n", rv);
++		if (wait_rv < 0) {
++			dev_dbg(dev, "wait interrupted %ld\n", wait_rv);
++			rv = wait_rv;
+ 			goto exit;
+ 		}
+ 
+-		if (rv == 0) {
++		if (wait_rv == 0) {
+ 			dev_dbg(dev, "wait timed out\n");
+ 			rv = -ETIMEDOUT;
+ 			goto exit;
+@@ -539,6 +541,8 @@ static int usbtmc_get_stb(struct usbtmc_
+ 
+ 	dev_dbg(dev, "stb:0x%02x received %d\n", (unsigned int)*stb, rv);
+ 
++	rv = 0;
++
+  exit:
+ 	/* bump interrupt bTag */
+ 	data->iin_bTag += 1;
+
 
