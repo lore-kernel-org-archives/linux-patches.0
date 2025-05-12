@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B7B255222;
-	Mon, 12 May 2025 17:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476562528E6;
+	Mon, 12 May 2025 17:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072588; cv=none; b=DYhq+oFkXEb+eesQUZFvqMmPfSzaH2tWxLe4ujiRUwwQFlMC/B6KsWPxK+FzxIVNd9Y5NjJpNrhi29LXyi3EmsfD6qT+p9/Xgdh4e47g3yENZyBWyeSqdSA0Ye1DcGg/H5NYLrCP8V8bgByBpV2ub25byWyrXyl4IGn/6ZxBY5A=
+	t=1747072592; cv=none; b=OyRay6ETtwUU03rDWQJ44YPWEBLy/ETihFBe0BRCDhmHqH6D4d7keQCJ6DJjpdjhbs/x6xpO3nkGiyFByjh3txmKEnK54RvnOA80y1NAk2WYGSgs8IDMRg2yrZ1u74F0HQNC8a3iSLSSkFo9pt979WTbBM7hDUAm5qhtgO6Z7Ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072588; c=relaxed/simple;
-	bh=KCLRXINkg2nQKBuD4XyeU5kOTN/G9hW9uFTeeY/86sg=;
+	s=arc-20240116; t=1747072592; c=relaxed/simple;
+	bh=Xwo6ZCwkfbKUdgEvhdpLFRsTVxlVoskvkd2vNOXyI7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m5eXle9oLlZ86AaVoEFUl5HdRieox6VtCmJskoFvdl6BWw2ug/rU7BXbnRBvjJTn5XXsT6mezW7WPuKnTjjA/hSGVAUZUonX5BT+R8ID6ga7b/6xqxxBdyLYfkvBzEUXyfENFBJNHi56AWrdJWyUcr5yWddOrkTKQj3PZkVVLHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OkWTVDny; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WszREqCAOBQMcGBFeIMR+E6da41PauQC86YjQfRPv7Bn6PK4595lYr4qtvM58WrWiO4V2rBZNk58Tkdf/AXI85GzLi6xK5FK+i2/7j63HbO0BEyFpw1YzJt8dTQuzG6RkGq/WEt+Dq/+SLNI/GglTjjlCHr+OBT1CwJ2WAzZsY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqL+b3kv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OkWTVDny"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59759C4CEE7;
-	Mon, 12 May 2025 17:56:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqL+b3kv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E2FC4CEE9;
+	Mon, 12 May 2025 17:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072588;
-	bh=KCLRXINkg2nQKBuD4XyeU5kOTN/G9hW9uFTeeY/86sg=;
+	s=korg; t=1747072591;
+	bh=Xwo6ZCwkfbKUdgEvhdpLFRsTVxlVoskvkd2vNOXyI7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OkWTVDnyQpo06eZx+fgy4Wo2WLT1cjN2HwytJWusSwwSTbWn9HkrkVak64uR56KdW
-	 qQN6aLoD7k8A/e7cUtrwMK7J83RAuj6INl7ZxjUASGZi963aHOjZ9L8sXusjkXzQDv
-	 Fbxc2txWr/uBMr47J+m74M/gAhZcPRMFRXUTWXWY=
+	b=wqL+b3kvIYse+wkR8i/ipk92ov0XKA/G+qEZxY8piXlMik2mUJnbyU+Wg8f+jE5Ww
+	 YiVsroeI2AiD0hi9Kg0KoaZnQfKiV2zoqnTrzgIg8stE+bXy2eD6cABA5FYolt1SIY
+	 xGG9IMBpFNnid78j7MYti5TcMaJH1BeCLdRsN2RA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Alexandre Chartre <alexandre.chartre@oracle.com>
-Subject: [PATCH 6.1 86/92] x86/its: Add support for ITS-safe indirect thunk
-Date: Mon, 12 May 2025 19:46:01 +0200
-Message-ID: <20250512172026.629082438@linuxfoundation.org>
+	Dave Penkler <dpenkler@gmail.com>
+Subject: [PATCH 6.1 59/92] usb: usbtmc: Fix erroneous generic_read ioctl return
+Date: Mon, 12 May 2025 19:45:34 +0200
+Message-ID: <20250512172025.518383180@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -52,246 +49,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Dave Penkler <dpenkler@gmail.com>
 
-commit 8754e67ad4ac692c67ff1f99c0d07156f04ae40c upstream.
+commit 4e77d3ec7c7c0d9535ccf1138827cb9bb5480b9b upstream.
 
-Due to ITS, indirect branches in the lower half of a cacheline may be
-vulnerable to branch target injection attack.
+wait_event_interruptible_timeout returns a long
+The return value was being assigned to an int causing an integer overflow
+when the remaining jiffies > INT_MAX which resulted in random error
+returns.
 
-Introduce ITS-safe thunks to patch indirect branches in the lower half of
-cacheline with the thunk. Also thunk any eBPF generated indirect branches
-in emit_indirect_jump().
+Use a long return value, converting to the int ioctl return only on error.
 
-Below category of indirect branches are not mitigated:
-
-- Indirect branches in the .init section are not mitigated because they are
-  discarded after boot.
-- Indirect branches that are explicitly marked retpoline-safe.
-
-Note that retpoline also mitigates the indirect branches against ITS. This
-is because the retpoline sequence fills an RSB entry before RET, and it
-does not suffer from RSB-underflow part of the ITS.
-
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Reviewed-by: Alexandre Chartre <alexandre.chartre@oracle.com>
+Fixes: bb99794a4792 ("usb: usbtmc: Add ioctl for vendor specific read")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dave Penkler <dpenkler@gmail.com>
+Link: https://lore.kernel.org/r/20250502070941.31819-4-dpenkler@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/Kconfig                     |   11 +++++
- arch/x86/include/asm/cpufeatures.h   |    1 
- arch/x86/include/asm/nospec-branch.h |    4 +
- arch/x86/kernel/alternative.c        |   77 +++++++++++++++++++++++++++++++++++
- arch/x86/kernel/vmlinux.lds.S        |    6 ++
- arch/x86/lib/retpoline.S             |   28 ++++++++++++
- arch/x86/net/bpf_jit_comp.c          |    6 ++
- 7 files changed, 132 insertions(+), 1 deletion(-)
+ drivers/usb/class/usbtmc.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -2575,6 +2575,17 @@ config MITIGATION_SPECTRE_BHI
- 	  indirect branches.
- 	  See <file:Documentation/admin-guide/hw-vuln/spectre.rst>
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -833,6 +833,7 @@ static ssize_t usbtmc_generic_read(struc
+ 	unsigned long expire;
+ 	int bufcount = 1;
+ 	int again = 0;
++	long wait_rv;
  
-+config MITIGATION_ITS
-+	bool "Enable Indirect Target Selection mitigation"
-+	depends on CPU_SUP_INTEL && X86_64
-+	depends on RETPOLINE && RETHUNK
-+	default y
-+	help
-+	  Enable Indirect Target Selection (ITS) mitigation. ITS is a bug in
-+	  BPU on some Intel CPUs that may allow Spectre V2 style attacks. If
-+	  disabled, mitigation cannot be enabled via cmdline.
-+	  See <file:Documentation/admin-guide/hw-vuln/indirect-target-selection.rst>
-+
- endif
+ 	/* mutex already locked */
  
- config ARCH_HAS_ADD_PAGES
---- a/arch/x86/include/asm/cpufeatures.h
-+++ b/arch/x86/include/asm/cpufeatures.h
-@@ -445,6 +445,7 @@
- #define X86_FEATURE_BHI_CTRL		(21*32+ 2) /* "" BHI_DIS_S HW control available */
- #define X86_FEATURE_CLEAR_BHB_HW	(21*32+ 3) /* "" BHI_DIS_S HW control enabled */
- #define X86_FEATURE_CLEAR_BHB_LOOP_ON_VMEXIT (21*32+ 4) /* "" Clear branch history at vmexit using SW loop */
-+#define X86_FEATURE_INDIRECT_THUNK_ITS	(21*32 + 5) /* "" Use thunk for indirect branches in lower half of cacheline */
+@@ -945,19 +946,24 @@ static ssize_t usbtmc_generic_read(struc
+ 		if (!(flags & USBTMC_FLAG_ASYNC)) {
+ 			dev_dbg(dev, "%s: before wait time %lu\n",
+ 				__func__, expire);
+-			retval = wait_event_interruptible_timeout(
++			wait_rv = wait_event_interruptible_timeout(
+ 				file_data->wait_bulk_in,
+ 				usbtmc_do_transfer(file_data),
+ 				expire);
  
- /*
-  * BUG word(s)
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -244,8 +244,12 @@
- 	_ASM_PTR " 999b\n\t"					\
- 	".popsection\n\t"
+-			dev_dbg(dev, "%s: wait returned %d\n",
+-				__func__, retval);
++			dev_dbg(dev, "%s: wait returned %ld\n",
++				__func__, wait_rv);
  
-+#define ITS_THUNK_SIZE	64
+-			if (retval <= 0) {
+-				if (retval == 0)
+-					retval = -ETIMEDOUT;
++			if (wait_rv < 0) {
++				retval = wait_rv;
+ 				goto error;
+ 			}
 +
- typedef u8 retpoline_thunk_t[RETPOLINE_THUNK_SIZE];
-+typedef u8 its_thunk_t[ITS_THUNK_SIZE];
- extern retpoline_thunk_t __x86_indirect_thunk_array[];
-+extern its_thunk_t	 __x86_indirect_its_thunk_array[];
++			if (wait_rv == 0) {
++				retval = -ETIMEDOUT;
++				goto error;
++			}
++
+ 		}
  
- #ifdef CONFIG_RETHUNK
- extern void __x86_return_thunk(void);
---- a/arch/x86/kernel/alternative.c
-+++ b/arch/x86/kernel/alternative.c
-@@ -396,6 +396,74 @@ static int emit_indirect(int op, int reg
- 	return i;
- }
- 
-+#ifdef CONFIG_MITIGATION_ITS
-+
-+static int __emit_trampoline(void *addr, struct insn *insn, u8 *bytes,
-+			     void *call_dest, void *jmp_dest)
-+{
-+	u8 op = insn->opcode.bytes[0];
-+	int i = 0;
-+
-+	/*
-+	 * Clang does 'weird' Jcc __x86_indirect_thunk_r11 conditional
-+	 * tail-calls. Deal with them.
-+	 */
-+	if (is_jcc32(insn)) {
-+		bytes[i++] = op;
-+		op = insn->opcode.bytes[1];
-+		goto clang_jcc;
-+	}
-+
-+	if (insn->length == 6)
-+		bytes[i++] = 0x2e; /* CS-prefix */
-+
-+	switch (op) {
-+	case CALL_INSN_OPCODE:
-+		__text_gen_insn(bytes+i, op, addr+i,
-+				call_dest,
-+				CALL_INSN_SIZE);
-+		i += CALL_INSN_SIZE;
-+		break;
-+
-+	case JMP32_INSN_OPCODE:
-+clang_jcc:
-+		__text_gen_insn(bytes+i, op, addr+i,
-+				jmp_dest,
-+				JMP32_INSN_SIZE);
-+		i += JMP32_INSN_SIZE;
-+		break;
-+
-+	default:
-+		WARN(1, "%pS %px %*ph\n", addr, addr, 6, addr);
-+		return -1;
-+	}
-+
-+	WARN_ON_ONCE(i != insn->length);
-+
-+	return i;
-+}
-+
-+static int emit_its_trampoline(void *addr, struct insn *insn, int reg, u8 *bytes)
-+{
-+	return __emit_trampoline(addr, insn, bytes,
-+				 __x86_indirect_its_thunk_array[reg],
-+				 __x86_indirect_its_thunk_array[reg]);
-+}
-+
-+/* Check if an indirect branch is at ITS-unsafe address */
-+static bool cpu_wants_indirect_its_thunk_at(unsigned long addr, int reg)
-+{
-+	if (!cpu_feature_enabled(X86_FEATURE_INDIRECT_THUNK_ITS))
-+		return false;
-+
-+	/* Indirect branch opcode is 2 or 3 bytes depending on reg */
-+	addr += 1 + reg / 8;
-+
-+	/* Lower-half of the cacheline? */
-+	return !(addr & 0x20);
-+}
-+#endif
-+
- /*
-  * Rewrite the compiler generated retpoline thunk calls.
-  *
-@@ -466,6 +534,15 @@ static int patch_retpoline(void *addr, s
- 		bytes[i++] = 0xe8; /* LFENCE */
- 	}
- 
-+#ifdef CONFIG_MITIGATION_ITS
-+	/*
-+	 * Check if the address of last byte of emitted-indirect is in
-+	 * lower-half of the cacheline. Such branches need ITS mitigation.
-+	 */
-+	if (cpu_wants_indirect_its_thunk_at((unsigned long)addr + i, reg))
-+		return emit_its_trampoline(addr, insn, reg, bytes);
-+#endif
-+
- 	ret = emit_indirect(op, reg, bytes + i);
- 	if (ret < 0)
- 		return ret;
---- a/arch/x86/kernel/vmlinux.lds.S
-+++ b/arch/x86/kernel/vmlinux.lds.S
-@@ -528,6 +528,12 @@ INIT_PER_CPU(irq_stack_backing_store);
- 		"SRSO function pair won't alias");
- #endif
- 
-+#if defined(CONFIG_MITIGATION_ITS) && !defined(CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B)
-+. = ASSERT(__x86_indirect_its_thunk_rax & 0x20, "__x86_indirect_thunk_rax not in second half of cacheline");
-+. = ASSERT(((__x86_indirect_its_thunk_rcx - __x86_indirect_its_thunk_rax) % 64) == 0, "Indirect thunks are not cacheline apart");
-+. = ASSERT(__x86_indirect_its_thunk_array == __x86_indirect_its_thunk_rax, "Gap in ITS thunk array");
-+#endif
-+
- #endif /* CONFIG_X86_64 */
- 
- #ifdef CONFIG_KEXEC_CORE
---- a/arch/x86/lib/retpoline.S
-+++ b/arch/x86/lib/retpoline.S
-@@ -258,6 +258,34 @@ SYM_FUNC_START(entry_untrain_ret)
- SYM_FUNC_END(entry_untrain_ret)
- __EXPORT_THUNK(entry_untrain_ret)
- 
-+#ifdef CONFIG_MITIGATION_ITS
-+
-+.macro ITS_THUNK reg
-+
-+SYM_INNER_LABEL(__x86_indirect_its_thunk_\reg, SYM_L_GLOBAL)
-+	UNWIND_HINT_EMPTY
-+	ANNOTATE_NOENDBR
-+	ANNOTATE_RETPOLINE_SAFE
-+	jmp *%\reg
-+	int3
-+	.align 32, 0xcc		/* fill to the end of the line */
-+	.skip  32, 0xcc		/* skip to the next upper half */
-+.endm
-+
-+/* ITS mitigation requires thunks be aligned to upper half of cacheline */
-+.align 64, 0xcc
-+.skip 32, 0xcc
-+SYM_CODE_START(__x86_indirect_its_thunk_array)
-+
-+#define GEN(reg) ITS_THUNK reg
-+#include <asm/GEN-for-each-reg.h>
-+#undef GEN
-+
-+	.align 64, 0xcc
-+SYM_CODE_END(__x86_indirect_its_thunk_array)
-+
-+#endif
-+
- SYM_CODE_START(__x86_return_thunk)
- 	UNWIND_HINT_FUNC
- 	ANNOTATE_NOENDBR
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -464,7 +464,11 @@ static void emit_indirect_jump(u8 **ppro
- {
- 	u8 *prog = *pprog;
- 
--	if (cpu_feature_enabled(X86_FEATURE_RETPOLINE_LFENCE)) {
-+	if (IS_ENABLED(CONFIG_MITIGATION_ITS) &&
-+	    cpu_feature_enabled(X86_FEATURE_INDIRECT_THUNK_ITS)) {
-+		OPTIMIZER_HIDE_VAR(reg);
-+		emit_jump(&prog, &__x86_indirect_its_thunk_array[reg], ip);
-+	} else if (cpu_feature_enabled(X86_FEATURE_RETPOLINE_LFENCE)) {
- 		EMIT_LFENCE();
- 		EMIT2(0xFF, 0xE0 + reg);
- 	} else if (cpu_feature_enabled(X86_FEATURE_RETPOLINE)) {
+ 		urb = usb_get_from_anchor(&file_data->in_anchor);
 
 
