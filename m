@@ -1,108 +1,108 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEA81C4A0A
-	for <patches@lists.linux.dev>; Mon, 12 May 2025 13:49:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5145E1CAA66;
+	Mon, 12 May 2025 14:04:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747057793; cv=none; b=KpNt+Dd4+VagdnofN53JC5tehcZ8kLEUkxeblExHe3bsQK3lPe8Alf/vf7RQPCdeHdHxM1gcIx7PfjJ67ZnWND2zmWz+VEY48wEPYkiA+JoqexO0ZHKcsjHJ9ExYYi5bX8cq8UBevtgyXOQxvIBUQw9xdta9Bb6w4P5ur/u68kM=
+	t=1747058678; cv=none; b=NL7SmR0LFqWKD48SvDp9xJzBX/NBvIJ8gg/wvjnfq06zRWb3LU5fl6oiNu+76q87gJQNBejpaIRBp8xuIZ8HiKQIrhY+WyLIqEPQkJBQ0d6uaqu0soYOs3MafYOzSg5pFRX/rbwV+kVL6ZRUPfov3TFA0nOG/gq3G0Ra3n3Qk2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747057793; c=relaxed/simple;
-	bh=BwKMHNk46nx0iDLRjjsuetWJO7bT/ag+FjZ3BGd5c1M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ruArtR+lAC0EmcvUmiS/tPrYDWWqNuVX2HC9M48Dvfm/+G6Le63AUBXQbFA9NFy6yj/5XwkKCLQezfM2uy6g725rCOWXIE4B6IdznmVcdJtIujvBYdBklKjxNjCq8N+sZglAtxLmMQMyj8zgRkvCHX0/w6qCelIOyvNYTcr1TVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GqKiFadf; arc=none smtp.client-ip=209.85.215.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747058678; c=relaxed/simple;
+	bh=Uxj2PW0O1TTD2KNrrstcMRJzLo8Fs8+ZxH7LL/WrTU8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=evWeN40rKNqh6CLIlJ8IYR3KpeRxzt0FToQ0uoIBHFdAoFmPc7L6I3KeZ/beb82j6azJDqIKuAZTo12SXd4g3N59h3a4BrnuL5lg4JCfNN9oyUQKaLeJxNg/FEjrFwwZ4wqJi05/+WP/g6ZPiZfmrIpggmt8CRMie29AdUUbuDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbsaixxG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GqKiFadf"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-b2000b439e1so306382a12.3
-        for <patches@lists.linux.dev>; Mon, 12 May 2025 06:49:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747057791; x=1747662591; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ONr9pUwOkrrYsVUHFahI1KAKvWDR1kObJv/cAcfXBKs=;
-        b=GqKiFadf6yonWzbaRfoXwMXu447MbVih8+y49ULV7aKX20qnFqmmlSgNlZS+AE2DIY
-         TIPnUpjHEboeXsScwEL5A/zhELaxm1s1xXphByGX44T4IoztUvwrP1od6tczjP1c8bm+
-         bcfJz6mvrf4Xq/0je+Gn5EHHzGYVBUT71uhlZhO4+GhgyKm9xAiU+haPTyPs5NXJkCrG
-         CDpXhWgPOpJrdkzncpCVAbLqWfSAosCz5Zz4Sf/D0FfUsVDgoToRg0P/69hlw+VeiF2h
-         2fMhWclarpDcMcW96RbtJuyUp5tWF2/5Xg2TXJGOUw4Mvxag6NIjnTDdrWhl2KFz8Wid
-         Kzcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747057791; x=1747662591;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ONr9pUwOkrrYsVUHFahI1KAKvWDR1kObJv/cAcfXBKs=;
-        b=uI4TeOpBN3YCotT96nv05Z1labapQVCAg+6dep/X4K8bFrPg2UaBPdvGa9W8k1M+pH
-         BBkwqPznAqmYyheFXf95hoTyEL2/11Mn0tm1paySasUJthssuwSMr3LxGd8IW1z7cwxE
-         ywDnKXlUerEICJdMiQZaSU0+yUsAtU3CcyMDxOzJNznFfbvJXwdp/m648jh6tVAtJXbo
-         jfDthijGzamUZTtx+ktvksg/O+0wl7562DLjf6c6eL77FCemxvYRCguV+I44pZx4Age/
-         Pxmo0QUByLFA9tGiXpmB9bYcehpPFFtt8DAAhPUBY7CHJXJRayLfU5XuD96B8C+obwZV
-         47GQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWllyHvA9lkbTirZQS9KuyPTQffvD6xJKGldHoWpgkPAfnlE2sQnejDPRZrx7iBP8sKw2LZ7W8L@lists.linux.dev
-X-Gm-Message-State: AOJu0Yymd+QDykwhRuSUYxvZyPMeDBqNLkyLRx2d/PjgFDWu845XhCZI
-	LfVvz6G3aphTWacnzTp9mURI1ftiysHCS7MSiUgn36RWKcUpBBMiJhVhypYY+Q8u7TeQbkv5tIR
-	64Tb6xUOl2ca4XTYp+nqSzhO4kIQ=
-X-Gm-Gg: ASbGnctPkXGFHTZFrTqIhdY9LtGe8ZvGNvebFwknoBVtt3KAubJNtynzGMuyAmnixiV
-	l4d/gI6EtP/QD1ZyJKlV1RTkTViawTWox4cSl2Gf8sOSYGdcRxOQONozvSN3pkWfU4W14272Uyr
-	LAfqLCUo58sZ4WGyfQd/KjJHMm1ScDTPKMcdhX/QZ09AA=
-X-Google-Smtp-Source: AGHT+IHIl25ChJIz78mbrp/wCk/S79hnnperr7Lp/0TI4fOTmWRRNl7PkRoCoOqHLna78ZBwvPPDoZZ7qG9tueIxlM8=
-X-Received: by 2002:a17:902:d491:b0:223:5525:622f with SMTP id
- d9443c01a7336-22fc8b0b64cmr67620375ad.1.1747057790728; Mon, 12 May 2025
- 06:49:50 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbsaixxG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B72C4CEE7;
+	Mon, 12 May 2025 14:04:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1747058677;
+	bh=Uxj2PW0O1TTD2KNrrstcMRJzLo8Fs8+ZxH7LL/WrTU8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NbsaixxGigbnMLwffUpPJft3VjusVHvpIiUY16PpVh0brPxzKLEHfbx3X/2MeKl+U
+	 YSO3sjBY4IqaMZKPBafnJ9Dph62gu/0wXgM4Xkj2jWIQ1roQTweG+bAike6vc7C01D
+	 2HWSwUyrgLNH7YmtTgkxCeqDp9E16VLdkiMeCf1g=
+Date: Mon, 12 May 2025 16:04:34 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com
+Subject: Re: [PATCH 6.1 00/97] 6.1.138-rc2 review
+Message-ID: <2025051219-cubicle-battalion-8dfb@gregkh>
+References: <20250508112609.711621924@linuxfoundation.org>
+ <aB6uurX99AZWM9I1@finisterre.sirena.org.uk>
+ <aB_-WZgMn02vgjrN@finisterre.sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250327211302.286313-1-ojeda@kernel.org>
-In-Reply-To: <20250327211302.286313-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 12 May 2025 15:49:38 +0200
-X-Gm-Features: AX0GCFsycteckP67naBfmZSgXZjiR08AnYUU9QZvM7ex2TtZdM9R3s2AEMWWHjM
-Message-ID: <CANiq72=moB37Kj7kLrEe20hXXYe9q5A9==EyAy+SOPb5mY5HxQ@mail.gmail.com>
-Subject: Re: [PATCH] rust: clarify the language unstable features in use
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aB_-WZgMn02vgjrN@finisterre.sirena.org.uk>
 
-On Thu, Mar 27, 2025 at 10:13=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wr=
-ote:
->
-> We track the details of which Rust features we use at our usual "live
-> list" [1] (and its sub-lists), but in light of a discussion in the LWN
-> article [2], it would help to clarify it in the source code.
->
-> In particular, we are very close to rely only on stable Rust language-wis=
-e
-> -- essentially only two language features remain (including the `kernel`
-> crate).
->
-> Thus add some details in both the feature list of the `kernel` crate as
-> well as the list of allowed features.
->
-> This does not over every single feature, and there are quite a few
-> non-language features that we use too. To have the full picture, please
-> refer to [1].
->
-> Link: https://github.com/Rust-for-Linux/linux/issues/2 [1]
-> Link: https://lwn.net/Articles/1015409/ [2]
-> Suggested-by: Andreas Hindborg <a.hindborg@kernel.org>
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+On Sun, May 11, 2025 at 10:33:13AM +0900, Mark Brown wrote:
+> On Sat, May 10, 2025 at 10:41:17AM +0900, Mark Brown wrote:
+> > On Thu, May 08, 2025 at 01:30:23PM +0200, Greg Kroah-Hartman wrote:
+> > > This is the start of the stable review cycle for the 6.1.138 release.
+> > > There are 97 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > 
+> > This breaks NFS boot on Rasperry Pi 3B - it's the previously reported
+> > issue with there apparently being no packets coming in that was seen on
+> > some of the more recent stables (not finding the mails immediately).
+> > Bisects didn't kick off automatically but I suspect it's:
+> > 
+> >    net: phy: microchip: force IRQ polling mode for lan88xx
+> > 
+> > This also seems to apply to v5.15.
+> 
+> The bisect completed, confirmed it's the above commit (though apparently
+> it was already broken so something's screwy with my automation here...):
+> 
+> # bad: [02b72ccb5f9df707a763d9f7163d7918d3aff0b7] Linux 6.1.138
+> # good: [535ec20c50273d81b2cc7985fed2108dee0e65d7] Linux 6.1.135
+> # good: [ac7079a42ea58e77123b55f5e15f1b2679f799aa] Linux 6.1.137
+> # good: [b6736e03756f42186840724eb38cb412dfb547be] Linux 6.1.136
+> git bisect start '02b72ccb5f9df707a763d9f7163d7918d3aff0b7' '535ec20c50273d81b2cc7985fed2108dee0e65d7' 'ac7079a42ea58e77123b55f5e15f1b2679f799aa' 'b6736e03756f42186840724eb38cb412dfb547be'
+> # test job: [ac7079a42ea58e77123b55f5e15f1b2679f799aa] https://lava.sirena.org.uk/scheduler/job/1356125
+> # test job: [b6736e03756f42186840724eb38cb412dfb547be] https://lava.sirena.org.uk/scheduler/job/1349213
+> # test job: [02b72ccb5f9df707a763d9f7163d7918d3aff0b7] https://lava.sirena.org.uk/scheduler/job/1375898
+> # bad: [02b72ccb5f9df707a763d9f7163d7918d3aff0b7] Linux 6.1.138
+> git bisect bad 02b72ccb5f9df707a763d9f7163d7918d3aff0b7
+> # test job: [94107259f972d2fd896dbbcaa176b3b2451ff9e5] https://lava.sirena.org.uk/scheduler/job/1379135
+> # good: [94107259f972d2fd896dbbcaa176b3b2451ff9e5] net: ethernet: mtk-star-emac: fix spinlock recursion issues on rx/tx poll
+> git bisect good 94107259f972d2fd896dbbcaa176b3b2451ff9e5
+> # test job: [8dcd4981166aedda08410a329938b11a497c7d5d] https://lava.sirena.org.uk/scheduler/job/1379203
+> # good: [8dcd4981166aedda08410a329938b11a497c7d5d] md: move initialization and destruction of 'io_acct_set' to md.c
+> git bisect good 8dcd4981166aedda08410a329938b11a497c7d5d
+> # test job: [36d4ce271b97d7d23a67e690b79e04ea853325b1] https://lava.sirena.org.uk/scheduler/job/1379282
+> # bad: [36d4ce271b97d7d23a67e690b79e04ea853325b1] Revert "drm/meson: vclk: fix calculation of 59.94 fractional rates"
+> git bisect bad 36d4ce271b97d7d23a67e690b79e04ea853325b1
+> # test job: [be9e23028113446add10a9b66cf8f15c66a6257f] https://lava.sirena.org.uk/scheduler/job/1379397
+> # good: [be9e23028113446add10a9b66cf8f15c66a6257f] sch_ets: make est_qlen_notify() idempotent
+> git bisect good be9e23028113446add10a9b66cf8f15c66a6257f
+> # test job: [88d7fd2d4623b2cb13d056e1bde1861e4dec2408] https://lava.sirena.org.uk/scheduler/job/1379447
+> # good: [88d7fd2d4623b2cb13d056e1bde1861e4dec2408] firmware: arm_ffa: Skip Rx buffer ownership release if not acquired
+> git bisect good 88d7fd2d4623b2cb13d056e1bde1861e4dec2408
+> # test job: [9b89102fbb8fc5393e2a0f981aafdb3cf43591ee] https://lava.sirena.org.uk/scheduler/job/1379515
+> # bad: [9b89102fbb8fc5393e2a0f981aafdb3cf43591ee] net: phy: microchip: force IRQ polling mode for lan88xx
+> git bisect bad 9b89102fbb8fc5393e2a0f981aafdb3cf43591ee
+> # test job: [72a797facb50aeef98a9d56b6b49674dbf53f692] https://lava.sirena.org.uk/scheduler/job/1379549
+> # good: [72a797facb50aeef98a9d56b6b49674dbf53f692] ARM: dts: opos6ul: add ksz8081 phy properties
+> git bisect good 72a797facb50aeef98a9d56b6b49674dbf53f692
+> # first bad commit: [9b89102fbb8fc5393e2a0f981aafdb3cf43591ee] net: phy: microchip: force IRQ polling mode for lan88xx
+> 
 
-Applied to `rust-next` -- thanks everyone!
+Thank you for the bisection, I'll go revert this from the 6.1.y and
+5.15.y branches.
 
-    [ Improved comments with suggestions from the list. - Miguel ]
-
-Cheers,
-Miguel
+greg k-h
