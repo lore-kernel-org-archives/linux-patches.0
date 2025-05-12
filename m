@@ -1,99 +1,108 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABDB29A326;
-	Mon, 12 May 2025 18:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1BF29711B;
+	Mon, 12 May 2025 18:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073080; cv=none; b=QPWdMGG2g8fSuNBsRnHj1dA1M+0TBHxM654uGmLvHKXRmDG6OKJ/aWH69Ycpduc3NE7VTtjlEMqq+8NJAFJEa3YL7SxNCmsOHv3fZ/AzsMgnvjsONM9eZl7fkL7ge0midXAA5DT6RQMp5ghJCreLVtIpM2mynsGXS0/GFrOBb5o=
+	t=1747073082; cv=none; b=mnMnZ7CR/WKGa3P62nKUqjWWByiIhilJpZ1asYqBEsBsyfW14APvK3/wRid1I/pCt6j7qv+zdmndhxSxDX/Z8wq21CD0tnFJba3uNgkPbvWjNFGohtcMH4HxAd5lS62vVbkTd60Tt/sD8NMHu9uT/zdCXE2pyG7wlKAAe4VmZy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073080; c=relaxed/simple;
-	bh=q2GbhTnqw4HSKUD14vcZX5VevC9i7BETntU11kPDREM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=PuaFCRrjuSVeDASSG7L/kB/1GNlUnaHfMqfjp759MjwrRX4h1ez/2oxraRnC7/2Uw7EW3OoG2HT3wAdI4tp48UQ9RNue7SUxOYccCrL8IEPNh8CLS7AD1vTYVISKVzYQS+IvPA7vxcONiCj1XuZP52criaVV7ibyRI9ur1CoH2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CO7lEdgp; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747073082; c=relaxed/simple;
+	bh=2xEXV0MVWEJ1UQv5lCGBAte92AKwBCxBuDTezMvrEFQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Apkvh9EbhEkQVWgiSJRK0UbsltUimwua+aZ/o/Q7Pc3jTdXVF6H9AKDjptK9hh2SAg9wHy453dR6kpq6kJySqPQumZeBt0QSiLhO/C3owGHQuZtro9z9PLqXOuWAKx3Ub/hu2SLoSNhsgzMLhQmsWctI/seGSacaT8/mjFyJSgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FJ4/kiSD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CO7lEdgp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B2EC4CEF0;
-	Mon, 12 May 2025 18:04:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747073080;
-	bh=q2GbhTnqw4HSKUD14vcZX5VevC9i7BETntU11kPDREM=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FJ4/kiSD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25DDC4CEF0;
+	Mon, 12 May 2025 18:04:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1747073082;
+	bh=2xEXV0MVWEJ1UQv5lCGBAte92AKwBCxBuDTezMvrEFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CO7lEdgpABoI3UBXn8585HRIE5IrHNeF257GfqmKXgD+mcE2qT+h76iwlrIRwxZXG
-	 lFU2ndoDqcUAzVb44BSstxN5L1NLHCI9lpDgQforqIQ90FFyjVY/X3tp3lDo/yc2k3
-	 c03saBaapvFbQ+aS5HdMEH8XUca0UE4Od2dP01VAhbQhHZq/A540l25U3sTbxeuowu
-	 20/QEi/5A0ME++qDnQm81mr+BjWj5SQKDq/otLYmDsCdiTTNPYXOvjrWMTo7pmNCM/
-	 Y8/XUA/eeJs+hMMR7Cxr7zTAvsCwzy7BvjKWTQZY+6x6w9U5rS3naZNsWKmNS05+F9
-	 B4dpGquKYhlNw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>,
-	linux-block@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 06/11] block: only update request sector if needed
-Date: Mon, 12 May 2025 14:04:21 -0400
-Message-Id: <20250512180426.437627-6-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250512180426.437627-1-sashal@kernel.org>
-References: <20250512180426.437627-1-sashal@kernel.org>
+	b=FJ4/kiSDYiPD749vcQuPfzd5Q06dALyIMAKEZJzrjYHfw5UsD4jmvf0Plmhrd8AJZ
+	 J8h6KuMusZA4GUUOd6hmN6QDp+2oBQ1sFimlkogasvZJlp5l1upYLL8t/CLRSogSIC
+	 Cxluh0W4uUPao9DUgbkiw0cPEsu96arFHRTmJ1dI=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 148/184] riscv: misaligned: enable IRQs while handling misaligned accesses
+Date: Mon, 12 May 2025 19:45:49 +0200
+Message-ID: <20250512172047.842502638@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
+References: <20250512172041.624042835@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.12.28
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit db492e24f9b05547ba12b4783f09c9d943cf42fe ]
+------------------
 
-In case of a ZONE APPEND write, regardless of native ZONE APPEND or the
-emulation layer in the zone write plugging code, the sector the data got
-written to by the device needs to be updated in the bio.
+From: Clément Léger <cleger@rivosinc.com>
 
-At the moment, this is done for every native ZONE APPEND write and every
-request that is flagged with 'BIO_ZONE_WRITE_PLUGGING'. But thus
-superfluously updates the sector for regular writes to a zoned block
-device.
+[ Upstream commit 453805f0a28fc5091e46145e6560c776f7c7a611 ]
 
-Check if a bio is a native ZONE APPEND write or if the bio is flagged as
-'BIO_EMULATES_ZONE_APPEND', meaning the block layer's zone write plugging
-code handles the ZONE APPEND and translates it into a regular write and
-back. Only if one of these two criterion is met, update the sector in the
-bio upon completion.
+We can safely reenable IRQs if coming from userspace. This allows to
+access user memory that could potentially trigger a page fault.
 
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/dea089581cb6b777c1cd1500b38ac0b61df4b2d1.1746530748.git.jth@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: b686ecdeacf6 ("riscv: misaligned: Restrict user access to kernel memory")
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20250422162324.956065-3-cleger@rivosinc.com
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/riscv/kernel/traps.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/block/blk.h b/block/blk.h
-index 1426f9c281973..e91012247ff29 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -482,7 +482,8 @@ static inline void blk_zone_update_request_bio(struct request *rq,
- 	 * the original BIO sector so that blk_zone_write_plug_bio_endio() can
- 	 * lookup the zone write plug.
- 	 */
--	if (req_op(rq) == REQ_OP_ZONE_APPEND || bio_zone_write_plugging(bio))
-+	if (req_op(rq) == REQ_OP_ZONE_APPEND ||
-+	    bio_flagged(bio, BIO_EMULATES_ZONE_APPEND))
- 		bio->bi_iter.bi_sector = rq->__sector;
+diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
+index b1d991c78a233..9c83848797a78 100644
+--- a/arch/riscv/kernel/traps.c
++++ b/arch/riscv/kernel/traps.c
+@@ -220,19 +220,23 @@ static void do_trap_misaligned(struct pt_regs *regs, enum misaligned_access_type
+ {
+ 	irqentry_state_t state;
+ 
+-	if (user_mode(regs))
++	if (user_mode(regs)) {
+ 		irqentry_enter_from_user_mode(regs);
+-	else
++		local_irq_enable();
++	} else {
+ 		state = irqentry_nmi_enter(regs);
++	}
+ 
+ 	if (misaligned_handler[type].handler(regs))
+ 		do_trap_error(regs, SIGBUS, BUS_ADRALN, regs->epc,
+ 			      misaligned_handler[type].type_str);
+ 
+-	if (user_mode(regs))
++	if (user_mode(regs)) {
++		local_irq_disable();
+ 		irqentry_exit_to_user_mode(regs);
+-	else
++	} else {
+ 		irqentry_nmi_exit(regs, state);
++	}
  }
- void blk_zone_write_plug_bio_endio(struct bio *bio);
+ 
+ asmlinkage __visible __trap_section void do_trap_load_misaligned(struct pt_regs *regs)
 -- 
 2.39.5
+
+
 
