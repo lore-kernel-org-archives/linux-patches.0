@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1359C2566DD;
-	Mon, 12 May 2025 17:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC10296FD9;
+	Mon, 12 May 2025 17:45:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071910; cv=none; b=TMtSaJXFhpcmDXof/ZQT5IOMhOdaVu1kKMOL7Gid+TNTNjDt5Dg5ryUZpREHNoT6cqpmkuTScr0YXjQanErHaGxfcwGXYahk/GBToskxa1gHDwIJLBsqXfzwru9OM6Mo4Zmn6YpQukBMHqVB31gwd3yQHkCcCYbWSbH025NBxLc=
+	t=1747071912; cv=none; b=RfS8V9f+/dVOewD0xX/+mNncnqAJmbXzo6zE7q9eV3nvJuOYDc0QobborpOqcokwFOD/f+9bK4xitJwO+y1HCIzS+rT+sZs+fUEkRdtOQHKCv6PzuKfiV5XZVTzt5etU0AhGZjBP42kmS76S80OganPyOWRnG2NRdJKEL6jqKIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071910; c=relaxed/simple;
-	bh=kZBCh7z7YAKUDe1PdYHRur0B1USANsphHBWdmatTOck=;
+	s=arc-20240116; t=1747071912; c=relaxed/simple;
+	bh=Pv7KC3qNOsf4ETzKARlH1aDqgcyEkiAcl/lSCRKA9QY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Cj1Jrcv+wfQTFuM1fhIeNSqzo3PGCRLzSbuYhXCO3nQ5ZlownoW7xBmAsU3CCJ8ldi9mIDy57xI0RPLVWZn2HGcQPpiDgpMOvfWCIoE957kyu1c650Q0qUGEr6SC9K3Ub9Nr3+LvNdTUG8sX5+9M/A78W70MTyUp4LRFOoDsZUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GIGxrp7V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ETZm1BFL4/t2qs6uqa2kd505i+IH+rcSRipyptwdD3MI6/v66ZfyZaBdAdP5+egc8aEGS4jEr/EokchDejCulW4NwUI3LKHLbsX0rPyaTXQ/tmMs8xaIzKkdHFV8vixabGIZUcNNIFEtofV/yLrZvRyb599u5Aqwhu8WTuWwOQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJZgfkvH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GIGxrp7V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D53C4CEE7;
-	Mon, 12 May 2025 17:45:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJZgfkvH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD1EC4CEE9;
+	Mon, 12 May 2025 17:45:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071909;
-	bh=kZBCh7z7YAKUDe1PdYHRur0B1USANsphHBWdmatTOck=;
+	s=korg; t=1747071912;
+	bh=Pv7KC3qNOsf4ETzKARlH1aDqgcyEkiAcl/lSCRKA9QY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GIGxrp7VL+wRRhi9l00/MmqWZuEtxNvRrFdhaaWWbwFLhouOUG977+W2ZWDunSXcG
-	 v1JfUN4wNRvB2n7QWZoFE0KR5vgRxOGSYElttuj608+vXVOs2ZhgYeieIhQ43nEiTg
-	 flM6eawapPjXhpZc4dQdoWXup/vI7CmyYTH9E4yU=
+	b=CJZgfkvH5VYNIlJHAfbeT7OcQHFms88dtS/QFiA4otMJ9yE9pH2mTSZMERfw0F54i
+	 NowiYxOXXQ2LImq6vAki3ZqZ9kAP4kYJxCx9km/SAMpByoRdR0KSY1I/dhZCP0iAWN
+	 4KYrxYJMe2pbXjbezzpk1pyMKNpvdeUPn391+20E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	=?UTF-8?q?Petr=20Van=C4=9Bk?= <arkamar@atlas.cz>,
-	Ryan Roberts <ryan.roberts@arm.com>,
+	Kees Cook <kees@kernel.org>,
+	Erhard Furtner <erhard_f@mailbox.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.14 074/197] mm: fix folio_pte_batch() on XEN PV
-Date: Mon, 12 May 2025 19:38:44 +0200
-Message-ID: <20250512172047.391479001@linuxfoundation.org>
+Subject: [PATCH 6.14 075/197] mm: vmalloc: support more granular vrealloc() sizing
+Date: Mon, 12 May 2025 19:38:45 +0200
+Message-ID: <20250512172047.430607157@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -46,157 +49,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Petr Vaněk <arkamar@atlas.cz>
+From: Kees Cook <kees@kernel.org>
 
-commit 7b08b74f3d99f6b801250683c751d391128799ec upstream.
+commit a0309faf1cb0622cac7c820150b7abf2024acff5 upstream.
 
-On XEN PV, folio_pte_batch() can incorrectly batch beyond the end of a
-folio due to a corner case in pte_advance_pfn().  Specifically, when the
-PFN following the folio maps to an invalidated MFN,
+Introduce struct vm_struct::requested_size so that the requested
+(re)allocation size is retained separately from the allocated area size.
+This means that KASAN will correctly poison the correct spans of requested
+bytes.  This also means we can support growing the usable portion of an
+allocation that can already be supported by the existing area's existing
+allocation.
 
-	expected_pte = pte_advance_pfn(expected_pte, nr);
-
-produces a pte_none().  If the actual next PTE in memory is also
-pte_none(), the pte_same() succeeds,
-
-	if (!pte_same(pte, expected_pte))
-		break;
-
-the loop is not broken, and batching continues into unrelated memory.
-
-For example, with a 4-page folio, the PTE layout might look like this:
-
-[   53.465673] [ T2552] folio_pte_batch: printing PTE values at addr=0x7f1ac9dc5000
-[   53.465674] [ T2552]   PTE[453] = 000000010085c125
-[   53.465679] [ T2552]   PTE[454] = 000000010085d125
-[   53.465682] [ T2552]   PTE[455] = 000000010085e125
-[   53.465684] [ T2552]   PTE[456] = 000000010085f125
-[   53.465686] [ T2552]   PTE[457] = 0000000000000000 <-- not present
-[   53.465689] [ T2552]   PTE[458] = 0000000101da7125
-
-pte_advance_pfn(PTE[456]) returns a pte_none() due to invalid PFN->MFN
-mapping.  The next actual PTE (PTE[457]) is also pte_none(), so the loop
-continues and includes PTE[457] in the batch, resulting in 5 batched
-entries for a 4-page folio.  This triggers the following warning:
-
-[   53.465751] [ T2552] page: refcount:85 mapcount:20 mapping:ffff88813ff4f6a8 index:0x110 pfn:0x10085c
-[   53.465754] [ T2552] head: order:2 mapcount:80 entire_mapcount:0 nr_pages_mapped:4 pincount:0
-[   53.465756] [ T2552] memcg:ffff888003573000
-[   53.465758] [ T2552] aops:0xffffffff8226fd20 ino:82467c dentry name(?):"libc.so.6"
-[   53.465761] [ T2552] flags: 0x2000000000416c(referenced|uptodate|lru|active|private|head|node=0|zone=2)
-[   53.465764] [ T2552] raw: 002000000000416c ffffea0004021f08 ffffea0004021908 ffff88813ff4f6a8
-[   53.465767] [ T2552] raw: 0000000000000110 ffff888133d8bd40 0000005500000013 ffff888003573000
-[   53.465768] [ T2552] head: 002000000000416c ffffea0004021f08 ffffea0004021908 ffff88813ff4f6a8
-[   53.465770] [ T2552] head: 0000000000000110 ffff888133d8bd40 0000005500000013 ffff888003573000
-[   53.465772] [ T2552] head: 0020000000000202 ffffea0004021701 000000040000004f 00000000ffffffff
-[   53.465774] [ T2552] head: 0000000300000003 8000000300000002 0000000000000013 0000000000000004
-[   53.465775] [ T2552] page dumped because: VM_WARN_ON_FOLIO((_Generic((page + nr_pages - 1), const struct page *: (const struct folio *)_compound_head(page + nr_pages - 1), struct page *: (struct folio *)_compound_head(page + nr_pages - 1))) != folio)
-
-Original code works as expected everywhere, except on XEN PV, where
-pte_advance_pfn() can yield a pte_none() after balloon inflation due to
-MFNs invalidation.  In XEN, pte_advance_pfn() ends up calling
-__pte()->xen_make_pte()->pte_pfn_to_mfn(), which returns pte_none() when
-mfn == INVALID_P2M_ENTRY.
-
-The pte_pfn_to_mfn() documents that nastiness:
-
-	If there's no mfn for the pfn, then just create an
-	empty non-present pte.  Unfortunately this loses
-	information about the original pfn, so
-	pte_mfn_to_pfn is asymmetric.
-
-While such hacks should certainly be removed, we can do better in
-folio_pte_batch() and simply check ahead of time how many PTEs we can
-possibly batch in our folio.
-
-This way, we can not only fix the issue but cleanup the code: removing the
-pte_pfn() check inside the loop body and avoiding end_ptr comparison +
-arithmetic.
-
-Link: https://lkml.kernel.org/r/20250502215019.822-2-arkamar@atlas.cz
-Fixes: f8d937761d65 ("mm/memory: optimize fork() with PTE-mapped THP")
-Co-developed-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Petr Vaněk <arkamar@atlas.cz>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
+Link: https://lkml.kernel.org/r/20250426001105.it.679-kees@kernel.org
+Fixes: 3ddc2fefe6f3 ("mm: vmalloc: implement vrealloc()")
+Signed-off-by: Kees Cook <kees@kernel.org>
+Reported-by: Erhard Furtner <erhard_f@mailbox.org>
+Closes: https://lore.kernel.org/all/20250408192503.6149a816@outsider.home/
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/internal.h |   27 +++++++++++----------------
- 1 file changed, 11 insertions(+), 16 deletions(-)
+ include/linux/vmalloc.h |    1 +
+ mm/vmalloc.c            |   31 ++++++++++++++++++++++++-------
+ 2 files changed, 25 insertions(+), 7 deletions(-)
 
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -205,11 +205,9 @@ static inline int folio_pte_batch(struct
- 		pte_t *start_ptep, pte_t pte, int max_nr, fpb_t flags,
- 		bool *any_writable, bool *any_young, bool *any_dirty)
+--- a/include/linux/vmalloc.h
++++ b/include/linux/vmalloc.h
+@@ -61,6 +61,7 @@ struct vm_struct {
+ 	unsigned int		nr_pages;
+ 	phys_addr_t		phys_addr;
+ 	const void		*caller;
++	unsigned long		requested_size;
+ };
+ 
+ struct vmap_area {
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -1940,7 +1940,7 @@ static inline void setup_vmalloc_vm(stru
  {
--	unsigned long folio_end_pfn = folio_pfn(folio) + folio_nr_pages(folio);
--	const pte_t *end_ptep = start_ptep + max_nr;
- 	pte_t expected_pte, *ptep;
- 	bool writable, young, dirty;
--	int nr;
-+	int nr, cur_nr;
+ 	vm->flags = flags;
+ 	vm->addr = (void *)va->va_start;
+-	vm->size = va_size(va);
++	vm->size = vm->requested_size = va_size(va);
+ 	vm->caller = caller;
+ 	va->vm = vm;
+ }
+@@ -3133,6 +3133,7 @@ struct vm_struct *__get_vm_area_node(uns
  
- 	if (any_writable)
- 		*any_writable = false;
-@@ -222,11 +220,15 @@ static inline int folio_pte_batch(struct
- 	VM_WARN_ON_FOLIO(!folio_test_large(folio) || max_nr < 1, folio);
- 	VM_WARN_ON_FOLIO(page_folio(pfn_to_page(pte_pfn(pte))) != folio, folio);
+ 	area->flags = flags;
+ 	area->caller = caller;
++	area->requested_size = requested_size;
  
-+	/* Limit max_nr to the actual remaining PFNs in the folio we could batch. */
-+	max_nr = min_t(unsigned long, max_nr,
-+		       folio_pfn(folio) + folio_nr_pages(folio) - pte_pfn(pte));
-+
- 	nr = pte_batch_hint(start_ptep, pte);
- 	expected_pte = __pte_batch_clear_ignored(pte_advance_pfn(pte, nr), flags);
- 	ptep = start_ptep + nr;
+ 	va = alloc_vmap_area(size, align, start, end, node, gfp_mask, 0, area);
+ 	if (IS_ERR(va)) {
+@@ -4067,6 +4068,8 @@ EXPORT_SYMBOL(vzalloc_node_noprof);
+  */
+ void *vrealloc_noprof(const void *p, size_t size, gfp_t flags)
+ {
++	struct vm_struct *vm = NULL;
++	size_t alloced_size = 0;
+ 	size_t old_size = 0;
+ 	void *n;
  
--	while (ptep < end_ptep) {
-+	while (nr < max_nr) {
- 		pte = ptep_get(ptep);
- 		if (any_writable)
- 			writable = !!pte_write(pte);
-@@ -239,14 +241,6 @@ static inline int folio_pte_batch(struct
- 		if (!pte_same(pte, expected_pte))
- 			break;
- 
--		/*
--		 * Stop immediately once we reached the end of the folio. In
--		 * corner cases the next PFN might fall into a different
--		 * folio.
--		 */
--		if (pte_pfn(pte) >= folio_end_pfn)
--			break;
--
- 		if (any_writable)
- 			*any_writable |= writable;
- 		if (any_young)
-@@ -254,12 +248,13 @@ static inline int folio_pte_batch(struct
- 		if (any_dirty)
- 			*any_dirty |= dirty;
- 
--		nr = pte_batch_hint(ptep, pte);
--		expected_pte = pte_advance_pfn(expected_pte, nr);
--		ptep += nr;
-+		cur_nr = pte_batch_hint(ptep, pte);
-+		expected_pte = pte_advance_pfn(expected_pte, cur_nr);
-+		ptep += cur_nr;
-+		nr += cur_nr;
+@@ -4076,15 +4079,17 @@ void *vrealloc_noprof(const void *p, siz
  	}
  
--	return min(ptep - start_ptep, max_nr);
-+	return min(nr, max_nr);
- }
+ 	if (p) {
+-		struct vm_struct *vm;
+-
+ 		vm = find_vm_area(p);
+ 		if (unlikely(!vm)) {
+ 			WARN(1, "Trying to vrealloc() nonexistent vm area (%p)\n", p);
+ 			return NULL;
+ 		}
  
- /**
+-		old_size = get_vm_area_size(vm);
++		alloced_size = get_vm_area_size(vm);
++		old_size = vm->requested_size;
++		if (WARN(alloced_size < old_size,
++			 "vrealloc() has mismatched area vs requested sizes (%p)\n", p))
++			return NULL;
+ 	}
+ 
+ 	/*
+@@ -4092,14 +4097,26 @@ void *vrealloc_noprof(const void *p, siz
+ 	 * would be a good heuristic for when to shrink the vm_area?
+ 	 */
+ 	if (size <= old_size) {
+-		/* Zero out spare memory. */
+-		if (want_init_on_alloc(flags))
++		/* Zero out "freed" memory. */
++		if (want_init_on_free())
+ 			memset((void *)p + size, 0, old_size - size);
++		vm->requested_size = size;
+ 		kasan_poison_vmalloc(p + size, old_size - size);
+-		kasan_unpoison_vmalloc(p, size, KASAN_VMALLOC_PROT_NORMAL);
+ 		return (void *)p;
+ 	}
+ 
++	/*
++	 * We already have the bytes available in the allocation; use them.
++	 */
++	if (size <= alloced_size) {
++		kasan_unpoison_vmalloc(p + old_size, size - old_size,
++				       KASAN_VMALLOC_PROT_NORMAL);
++		/* Zero out "alloced" memory. */
++		if (want_init_on_alloc(flags))
++			memset((void *)p + old_size, 0, size - old_size);
++		vm->requested_size = size;
++	}
++
+ 	/* TODO: Grow the vm_area, i.e. allocate and map additional pages. */
+ 	n = __vmalloc_noprof(size, flags);
+ 	if (!n)
 
 
