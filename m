@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8BF175BF;
-	Mon, 12 May 2025 18:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7128C175BF;
+	Mon, 12 May 2025 18:02:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072964; cv=none; b=BI2mk5PScBxONuLjlb4IAya8l8cbu00NZ721LEYHzfqfE8cBICFcZbER6zCAkDa49l63g0Ub26UJTt44w99PHfzPH/rrk5IzZx3vGH1sme5KTbhBlSaYyx/lcFQhxf0pC3la+26CqdyouNW9aLVJJ5UJPVD9Z6+FPCL5Wg54bR4=
+	t=1747072967; cv=none; b=EMKe8DrIVLRlAH7xdvrRziijvBA9QInjDvPXgOe8DlNlO7BECl2NVyZ/rNuieaqDm774NPVIy6/ht34vX3mFnai+4sR+YTdbhPocSlsyWt3XNnwDeLOGn8GbSqMo8nCqV1ysGV495TpTHpZbY13RS0qBD1G/zj4ctz9cvd2udZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072964; c=relaxed/simple;
-	bh=KRAS6MjKiT8DyMU7hY9GW3i/0GTJxrHh++aJ7qK66hI=;
+	s=arc-20240116; t=1747072967; c=relaxed/simple;
+	bh=GYOq6omthO3ldesQqWuWssXL9ZSlTnOmYYzt2gyHESI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bLLZYL9yrIp3EYQBwNF0rqVqQYDivcbUydtW5dbvQzKLTM+T/wiMvxKKlPJ4bmhoO14i90jNJoO3Hi0wXpaW9pjr9uPd1DrHKi+WuvOoGWtejO1q0WaVgHoly874AVlXoc6OTwCYCpuV9N6seyyUv/WgJUO7QCaBzSpbhz+wdog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4/7ip87; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AIuxwwjVNHHJf0adGGSV3RnVjCvX79GnWAaCqMWyZ7AIzO6tlih2VqVXNOeaXTwZVO5t4gy7//OyzKUuM9AmCZz/o88RX39UJd8JUH1SKeGYkMv621rE6OWtAexcz2RdVsJmEKAmLSUyDvywCf3pEf+ebj4dqGYN/vwYkF5hkOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6iOMbV/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4/7ip87"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0134C4CEE7;
-	Mon, 12 May 2025 18:02:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6iOMbV/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC0E5C4CEE7;
+	Mon, 12 May 2025 18:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072964;
-	bh=KRAS6MjKiT8DyMU7hY9GW3i/0GTJxrHh++aJ7qK66hI=;
+	s=korg; t=1747072967;
+	bh=GYOq6omthO3ldesQqWuWssXL9ZSlTnOmYYzt2gyHESI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f4/7ip8734WVUkfAqDb4yH+BxzlY0QO9EQBKFeAJjY/VvRfM2+XQ+wHkC/0Pu0BjO
-	 9ywgY7a18pG8NAOlZKc9uZpDO0y02v/moR/9gEq7FI8v2XHOhyE7QPQDdC20n9/OPg
-	 vmFUXmGdbxXxu5ri1ufFST30ryfT79br8mA+olZU=
+	b=T6iOMbV/KYHxzx7fS5l6l4Ics7z+SSsjRuWDUJD8OxRImGq5Vwf5lBjM3FUeBC04E
+	 Qa4OXs6nf44bktuJWbRZY7aVIb19lYQgV9gkUZ+HTb5yURtPSiXCSdFhq/3tbZGuKc
+	 IBmx3x3ANzqFAYoMmpXD7xj3EV/xkZz8UVyNy2S0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heming Zhao <heming.zhao@suse.com>,
-	Gautham Ananthakrishna <gautham.ananthakrishna@oracle.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 112/184] ocfs2: fix the issue with discontiguous allocation in the global_bitmap
-Date: Mon, 12 May 2025 19:45:13 +0200
-Message-ID: <20250512172046.388565913@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.12 095/184] drm/amd/display: Fix wrong handling for AUX_DEFER case
+Date: Mon, 12 May 2025 19:44:56 +0200
+Message-ID: <20250512172045.695242416@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -57,173 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heming Zhao <heming.zhao@suse.com>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-commit bd1261b16d9131d79723d982d54295e7f309797a upstream.
+commit 65924ec69b29296845c7f628112353438e63ea56 upstream.
 
-commit 4eb7b93e0310 ("ocfs2: improve write IO performance when
-fragmentation is high") introduced another regression.
+[Why]
+We incorrectly ack all bytes get written when the reply actually is defer.
+When it's defer, means sink is not ready for the request. We should
+retry the request.
 
-The following ocfs2-test case can trigger this issue:
-> discontig_runner.sh => activate_discontig_bg.sh => resv_unwritten:
-> ${RESV_UNWRITTEN_BIN} -f ${WORK_PLACE}/large_testfile -s 0 -l \
-> $((${FILE_MAJOR_SIZE_M}*1024*1024))
+[How]
+Only reply all data get written when receive I2C_ACK|AUX_ACK. Otherwise,
+reply the number of actual written bytes received from the sink.
+Add some messages to facilitate debugging as well.
 
-In my env, test disk size (by "fdisk -l <dev>"):
-> 53687091200 bytes, 104857600 sectors.
-
-Above command is:
-> /usr/local/ocfs2-test/bin/resv_unwritten -f \
-> /mnt/ocfs2/ocfs2-activate-discontig-bg-dir/large_testfile -s 0 -l \
-> 53187969024
-
-Error log:
-> [*] Reserve 50724M space for a LARGE file, reserve 200M space for future test.
-> ioctl error 28: "No space left on device"
-> resv allocation failed Unknown error -1
-> reserve unwritten region from 0 to 53187969024.
-
-Call flow:
-__ocfs2_change_file_space //by ioctl OCFS2_IOC_RESVSP64
- ocfs2_allocate_unwritten_extents //start:0 len:53187969024
-  while()
-   + ocfs2_get_clusters //cpos:0, alloc_size:1623168 (cluster number)
-   + ocfs2_extend_allocation
-     + ocfs2_lock_allocators
-     |  + choose OCFS2_AC_USE_MAIN & ocfs2_cluster_group_search
-     |
-     + ocfs2_add_inode_data
-        ocfs2_add_clusters_in_btree
-         __ocfs2_claim_clusters
-          ocfs2_claim_suballoc_bits
-          + During the allocation of the final part of the large file
-	    (after ~47GB), no chain had the required contiguous
-            bits_wanted. Consequently, the allocation failed.
-
-How to fix:
-When OCFS2 is encountering fragmented allocation, the file system should
-stop attempting bits_wanted contiguous allocation and instead provide the
-largest available contiguous free bits from the cluster groups.
-
-Link: https://lkml.kernel.org/r/20250414060125.19938-2-heming.zhao@suse.com
-Fixes: 4eb7b93e0310 ("ocfs2: improve write IO performance when fragmentation is high")
-Signed-off-by: Heming Zhao <heming.zhao@suse.com>
-Reported-by: Gautham Ananthakrishna <gautham.ananthakrishna@oracle.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: ad6756b4d773 ("drm/amd/display: Shift dc link aux to aux_payload")
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Ray Wu <ray.wu@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 3637e457eb0000bc37d8bbbec95964aad2fb29fd)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/suballoc.c | 38 ++++++++++++++++++++++++++++++++------
- fs/ocfs2/suballoc.h |  1 +
- 2 files changed, 33 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |   28 ++++++++++--
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ocfs2/suballoc.c b/fs/ocfs2/suballoc.c
-index f7b483f0de2a..6ac4dcd54588 100644
---- a/fs/ocfs2/suballoc.c
-+++ b/fs/ocfs2/suballoc.c
-@@ -698,10 +698,12 @@ static int ocfs2_block_group_alloc(struct ocfs2_super *osb,
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -51,6 +51,9 @@
  
- 	bg_bh = ocfs2_block_group_alloc_contig(osb, handle, alloc_inode,
- 					       ac, cl);
--	if (PTR_ERR(bg_bh) == -ENOSPC)
-+	if (PTR_ERR(bg_bh) == -ENOSPC) {
-+		ac->ac_which = OCFS2_AC_USE_MAIN_DISCONTIG;
- 		bg_bh = ocfs2_block_group_alloc_discontig(handle,
- 							  alloc_inode,
- 							  ac, cl);
-+	}
- 	if (IS_ERR(bg_bh)) {
- 		status = PTR_ERR(bg_bh);
- 		bg_bh = NULL;
-@@ -1794,6 +1796,7 @@ static int ocfs2_search_chain(struct ocfs2_alloc_context *ac,
+ #define PEAK_FACTOR_X1000 1006
+ 
++/*
++ * This function handles both native AUX and I2C-Over-AUX transactions.
++ */
+ static ssize_t dm_dp_aux_transfer(struct drm_dp_aux *aux,
+ 				  struct drm_dp_aux_msg *msg)
  {
- 	int status;
- 	u16 chain;
-+	u32 contig_bits;
- 	u64 next_group;
- 	struct inode *alloc_inode = ac->ac_inode;
- 	struct buffer_head *group_bh = NULL;
-@@ -1819,10 +1822,21 @@ static int ocfs2_search_chain(struct ocfs2_alloc_context *ac,
- 	status = -ENOSPC;
- 	/* for now, the chain search is a bit simplistic. We just use
- 	 * the 1st group with any empty bits. */
--	while ((status = ac->ac_group_search(alloc_inode, group_bh,
--					     bits_wanted, min_bits,
--					     ac->ac_max_block,
--					     res)) == -ENOSPC) {
-+	while (1) {
-+		if (ac->ac_which == OCFS2_AC_USE_MAIN_DISCONTIG) {
-+			contig_bits = le16_to_cpu(bg->bg_contig_free_bits);
-+			if (!contig_bits)
-+				contig_bits = ocfs2_find_max_contig_free_bits(bg->bg_bitmap,
-+						le16_to_cpu(bg->bg_bits), 0);
-+			if (bits_wanted > contig_bits && contig_bits >= min_bits)
-+				bits_wanted = contig_bits;
-+		}
-+
-+		status = ac->ac_group_search(alloc_inode, group_bh,
-+				bits_wanted, min_bits,
-+				ac->ac_max_block, res);
-+		if (status != -ENOSPC)
-+			break;
- 		if (!bg->bg_next_group)
- 			break;
- 
-@@ -1982,6 +1996,7 @@ static int ocfs2_claim_suballoc_bits(struct ocfs2_alloc_context *ac,
- 	victim = ocfs2_find_victim_chain(cl);
- 	ac->ac_chain = victim;
- 
-+search:
- 	status = ocfs2_search_chain(ac, handle, bits_wanted, min_bits,
- 				    res, &bits_left);
- 	if (!status) {
-@@ -2022,6 +2037,16 @@ static int ocfs2_claim_suballoc_bits(struct ocfs2_alloc_context *ac,
+@@ -87,15 +90,25 @@ static ssize_t dm_dp_aux_transfer(struct
+ 	if (adev->dm.aux_hpd_discon_quirk) {
+ 		if (msg->address == DP_SIDEBAND_MSG_DOWN_REQ_BASE &&
+ 			operation_result == AUX_RET_ERROR_HPD_DISCON) {
+-			result = 0;
++			result = msg->size;
+ 			operation_result = AUX_RET_SUCCESS;
  		}
  	}
  
-+	/* Chains can't supply the bits_wanted contiguous space.
-+	 * We should switch to using every single bit when allocating
-+	 * from the global bitmap. */
-+	if (i == le16_to_cpu(cl->cl_next_free_rec) &&
-+	    status == -ENOSPC && ac->ac_which == OCFS2_AC_USE_MAIN) {
-+		ac->ac_which = OCFS2_AC_USE_MAIN_DISCONTIG;
-+		ac->ac_chain = victim;
-+		goto search;
+-	if (payload.write && result >= 0)
+-		result = msg->size;
++	/*
++	 * result equals to 0 includes the cases of AUX_DEFER/I2C_DEFER
++	 */
++	if (payload.write && result >= 0) {
++		if (result) {
++			/*one byte indicating partially written bytes. Force 0 to retry*/
++			drm_info(adev_to_drm(adev), "amdgpu: AUX partially written\n");
++			result = 0;
++		} else if (!payload.reply[0])
++			/*I2C_ACK|AUX_ACK*/
++			result = msg->size;
++	}
+ 
+-	if (result < 0)
++	if (result < 0) {
+ 		switch (operation_result) {
+ 		case AUX_RET_SUCCESS:
+ 			break;
+@@ -114,6 +127,13 @@ static ssize_t dm_dp_aux_transfer(struct
+ 			break;
+ 		}
+ 
++		drm_info(adev_to_drm(adev), "amdgpu: DP AUX transfer fail:%d\n", operation_result);
 +	}
 +
- set_hint:
- 	if (status != -ENOSPC) {
- 		/* If the next search of this group is not likely to
-@@ -2365,7 +2390,8 @@ int __ocfs2_claim_clusters(handle_t *handle,
- 	BUG_ON(ac->ac_bits_given >= ac->ac_bits_wanted);
++	if (payload.reply[0])
++		drm_info(adev_to_drm(adev), "amdgpu: AUX reply command not ACK: 0x%02x.",
++			payload.reply[0]);
++
+ 	return result;
+ }
  
- 	BUG_ON(ac->ac_which != OCFS2_AC_USE_LOCAL
--	       && ac->ac_which != OCFS2_AC_USE_MAIN);
-+	       && ac->ac_which != OCFS2_AC_USE_MAIN
-+	       && ac->ac_which != OCFS2_AC_USE_MAIN_DISCONTIG);
- 
- 	if (ac->ac_which == OCFS2_AC_USE_LOCAL) {
- 		WARN_ON(min_clusters > 1);
-diff --git a/fs/ocfs2/suballoc.h b/fs/ocfs2/suballoc.h
-index b481b834857d..bcf2ed4a8631 100644
---- a/fs/ocfs2/suballoc.h
-+++ b/fs/ocfs2/suballoc.h
-@@ -29,6 +29,7 @@ struct ocfs2_alloc_context {
- #define OCFS2_AC_USE_MAIN  2
- #define OCFS2_AC_USE_INODE 3
- #define OCFS2_AC_USE_META  4
-+#define OCFS2_AC_USE_MAIN_DISCONTIG  5
- 	u32    ac_which;
- 
- 	/* these are used by the chain search */
--- 
-2.49.0
-
 
 
