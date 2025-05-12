@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED3D2980C9;
-	Mon, 12 May 2025 18:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712A9245022;
+	Mon, 12 May 2025 18:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073225; cv=none; b=F2UGPhKNqsNXuIJ3/HESYU43RQUW/DzJOhZJhqLN/E+C+ZWpYDu0OZ8s2YndeaTIL494B1fC3jp0rHRVCKKtopH1zTogXQZ7aGC3fOnaGCx9XhrAgzwrei5SM2xLwOedZNVVy9ES7sVxHF41qwiH+DR6YsVtn5en7GrHc45iWK0=
+	t=1747073228; cv=none; b=M67NOvX94+AIHLL/QghBVbsWcTpZJCasLGzRZFkkkwtLjfjpzrE2x//uoSjFsqjP8KBXKYCxfZhvgyXRJBgeLK2sbIv7wBPMyTNgksd4w7d+Kn34WQNxgot31tWUgJuMKxqy2g5dim5FBQ00RZKKvFXjkFbtJ6VvwFhZhIKw2yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073225; c=relaxed/simple;
-	bh=A3IVMs7DpbJdD+J7VIWt/b8PsUkNMNzY8LfgI/g+D5g=;
+	s=arc-20240116; t=1747073228; c=relaxed/simple;
+	bh=u6eP6M+iAL4woru/NX2c8cf7J22c+eYBbxaVlMezdDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XiaY/2oDl6nE/mMPlZO7zAz6lu6iiMoQoSU7+yLuv48WUysS3GRMtR0LVyQ36GDRtNgcB2JlA/xO03bxUvBxc+aC7z4eXmQe9xfKArr9BjfydzdI+yPAmYx87oq4DkeI+xuA31YGahdathgE7mSxh27ZQHyx4+mw1mM2ge/iTjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Msg6Pd6Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VRNN0m729o+DVBznRJ422jFU+7tbN5uCFYB3ztitqfB2VYH7WM/tI0vRRfeQmopobQqne/aDrQrK/hZh2u4Fmpx922pd/q1Fytw+f1P+jtjcHLjfF/P0HOmbbk2RkybCpWOqFciR40b2p811KHKfqPktvH4tFcLng3o/m9eMsqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOMSFeV3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Msg6Pd6Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0CC4C4CEF3;
-	Mon, 12 May 2025 18:07:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOMSFeV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2252C4CEEF;
+	Mon, 12 May 2025 18:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073225;
-	bh=A3IVMs7DpbJdD+J7VIWt/b8PsUkNMNzY8LfgI/g+D5g=;
+	s=korg; t=1747073228;
+	bh=u6eP6M+iAL4woru/NX2c8cf7J22c+eYBbxaVlMezdDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Msg6Pd6QLQ+qhsR1u1b5/epF2beYyN2NKzOmNrzCUsOA4PcVVdee9mbDRg03PwfPI
-	 zatVlneLbSnlhD0AghsV2UEvyw6gsfmBrFnIx8fRA3POuOWUg7ELJlE9zacELg1GRn
-	 tJfqH9RumBvDtS/jbZpWXIvoudBTDqa+lN/wftmI=
+	b=uOMSFeV3tw0hcJhdvFWzB+SWvG4X8dP4IO9MEs34x/XB2yPn+M30wI5t9C3f6gOx/
+	 yWnTZRXEzSUmuyoC2mfXzT038wAYhc70N4qxA7zbYSEPVQL57mPqzsVGhK9bx8hhFW
+	 w54UIGv/x/EUde3FC1miRx5DtaiPrRbu0pGLjg18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.6 001/113] dm: add missing unlock on in dm_keyslot_evict()
-Date: Mon, 12 May 2025 19:44:50 +0200
-Message-ID: <20250512172027.755420206@linuxfoundation.org>
+	Wang Zhaolong <wangzhaolong1@huawei.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 010/113] ksmbd: fix memory leak in parse_lease_state()
+Date: Mon, 12 May 2025 19:44:59 +0200
+Message-ID: <20250512172028.117765219@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172027.691520737@linuxfoundation.org>
 References: <20250512172027.691520737@linuxfoundation.org>
@@ -50,40 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Wang Zhaolong <wangzhaolong1@huawei.com>
 
-commit 650266ac4c7230c89bcd1307acf5c9c92cfa85e2 upstream.
+[ Upstream commit eb4447bcce915b43b691123118893fca4f372a8f ]
 
-We need to call dm_put_live_table() even if dm_get_live_table() returns
-NULL.
+The previous patch that added bounds check for create lease context
+introduced a memory leak. When the bounds check fails, the function
+returns NULL without freeing the previously allocated lease_ctx_info
+structure.
 
-Fixes: 9355a9eb21a5 ("dm: support key eviction from keyslot managers of underlying devices")
-Cc: stable@vger.kernel.org	# v5.12+
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch fixes the issue by adding kfree(lreq) before returning NULL
+in both boundary check cases.
+
+Fixes: bab703ed8472 ("ksmbd: add bounds check for create lease context")
+Signed-off-by: Wang Zhaolong <wangzhaolong1@huawei.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-table.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/smb/server/oplock.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-table.c
-+++ b/drivers/md/dm-table.c
-@@ -1242,7 +1242,7 @@ static int dm_keyslot_evict(struct blk_c
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index 5a5277b4b53b1..72294764d4c20 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -1496,7 +1496,7 @@ struct lease_ctx_info *parse_lease_state(void *open_req)
  
- 	t = dm_get_live_table(md, &srcu_idx);
- 	if (!t)
--		return 0;
-+		goto put_live_table;
+ 		if (le16_to_cpu(cc->DataOffset) + le32_to_cpu(cc->DataLength) <
+ 		    sizeof(struct create_lease_v2) - 4)
+-			return NULL;
++			goto err_out;
  
- 	for (unsigned int i = 0; i < t->num_targets; i++) {
- 		struct dm_target *ti = dm_table_get_target(t, i);
-@@ -1253,6 +1253,7 @@ static int dm_keyslot_evict(struct blk_c
- 					  (void *)key);
+ 		memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
+ 		lreq->req_state = lc->lcontext.LeaseState;
+@@ -1512,7 +1512,7 @@ struct lease_ctx_info *parse_lease_state(void *open_req)
+ 
+ 		if (le16_to_cpu(cc->DataOffset) + le32_to_cpu(cc->DataLength) <
+ 		    sizeof(struct create_lease))
+-			return NULL;
++			goto err_out;
+ 
+ 		memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
+ 		lreq->req_state = lc->lcontext.LeaseState;
+@@ -1521,6 +1521,9 @@ struct lease_ctx_info *parse_lease_state(void *open_req)
+ 		lreq->version = 1;
  	}
- 
-+put_live_table:
- 	dm_put_live_table(md, srcu_idx);
- 	return 0;
+ 	return lreq;
++err_out:
++	kfree(lreq);
++	return NULL;
  }
+ 
+ /**
+-- 
+2.39.5
+
 
 
