@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1523E295DA6;
-	Mon, 12 May 2025 17:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B462528FC;
+	Mon, 12 May 2025 17:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072330; cv=none; b=okgvVzkYHO3hMGsTWG8CKRDJhD3vfo7Sm0Oq+zMA2XhJXWtrVtF9dMMoZ+ExCugGaacHMNkCnE7If6ikTXAsvisRS64cFxdp1+zlDY7INi0ulIVWoUV1ub+krKBq09LQL+66LrDdFFXGUpgjSMf76KteBW+d/bZwJFwqC/Vilc8=
+	t=1747072333; cv=none; b=C6kdc0JGWER2yo0OXkgBBk47J8e2qXmSCPdfaup3g6NRHcBWYq9jhJ4yfu12ptmw8sS02SKaARAlc5BlCsSPLjptD77lh2TX5o9KtoaovtIvzIkcsdvWPYGyxH755dqLuAP6n6jhh6nvAK0Xzp+KEGJQosyiStEUmvA4Z+T54Cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072330; c=relaxed/simple;
-	bh=d7gxCObdYuoN3LhRmORe6oixAdHPzJ4IBFWjCWqihBY=;
+	s=arc-20240116; t=1747072333; c=relaxed/simple;
+	bh=sbhTjTkjLteDE89W5yaan08cKR32mBLneMKAV5G/t7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZSOQ3A2FIXaxK7j0IGPvA18g7vKGu0vOHMgx0osHnR8ESFopvcNqFNCiGg+3knxGQP2RjpBXY9EdHtM80EfpNoeu9WSiRH9qMcaHi9xlZW9ZDCclbC2kxn/hWAn/EW605RfjksR9XtTRjf/vdML6fWHQ60Kw0r6UQQjBlbGwiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4L6EgNL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zt6OIPcTJSjrL6ccWSKtzbM0a94fdTn641SzaXbwCGYs1RRS0BlFSojjakGShMVtFvms7QC/qPIlOGcyMU5LnK5cxk0lsYDW4ez9qqPv85/QrpTnuNqt8vJR+8rRX4WGnNHErcykd2n13d0RL+590aSha4M8K/6WIfOjNLgkcoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2PiSwnNa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4L6EgNL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45680C4CEE7;
-	Mon, 12 May 2025 17:52:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2PiSwnNa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB1D5C4CEEF;
+	Mon, 12 May 2025 17:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072330;
-	bh=d7gxCObdYuoN3LhRmORe6oixAdHPzJ4IBFWjCWqihBY=;
+	s=korg; t=1747072333;
+	bh=sbhTjTkjLteDE89W5yaan08cKR32mBLneMKAV5G/t7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A4L6EgNL+gnYaBfQRfTw8X2gcQIV88DbCCfCYaY797c+F7YWWMxxz2CrVB+q/2fdj
-	 GMXs/whl79hOjC990AbL5MqS+IaXZywcxeysKZRRpwdvqxiLtU8Dycwn2z/zi2s9Dx
-	 OpHWZjtvu89FAuL2VFSVW04hC8mK9Q30N07cXhhc=
+	b=2PiSwnNaA0Fc+K1MsBG9LiLLLsjPnwDj6pddP+KGhdsL2ooVwz3n8UsziBqDfZSKg
+	 VnqlM2l7JHodvNpOvP+raGKSHqiPIaIxBdifN2ta09wqcPuNbgBxbCIVl8oxxclkDP
+	 eG4Ncfj9R0n/FdUSays0crql4NEHXbpCV19QIOS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Zhang <tao1.zhang@linux.intel.com>,
 	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 6.14 197/197] selftest/x86/bugs: Add selftests for ITS
-Date: Mon, 12 May 2025 19:40:47 +0200
-Message-ID: <20250512172052.439043944@linuxfoundation.org>
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Alexandre Chartre <alexandre.chartre@oracle.com>
+Subject: [PATCH 6.14 191/197] x86/its: Enable Indirect Target Selection mitigation
+Date: Mon, 12 May 2025 19:40:41 +0200
+Message-ID: <20250512172052.190567904@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -53,730 +54,353 @@ Content-Transfer-Encoding: 8bit
 
 From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit 7a9b709e7cc5ce1ffb84ce07bf6d157e1de758df upstream.
+commit f4818881c47fd91fcb6d62373c57c7844e3de1c0 upstream.
 
-Below are the tests added for Indirect Target Selection (ITS):
+Indirect Target Selection (ITS) is a bug in some pre-ADL Intel CPUs with
+eIBRS. It affects prediction of indirect branch and RETs in the
+lower half of cacheline. Due to ITS such branches may get wrongly predicted
+to a target of (direct or indirect) branch that is located in the upper
+half of the cacheline.
 
-- its_sysfs.py - Check if sysfs reflects the correct mitigation status for
-  the mitigation selected via the kernel cmdline.
+Scope of impact
+===============
 
-- its_permutations.py - tests mitigation selection with cmdline
-  permutations with other bugs like spectre_v2 and retbleed.
+Guest/host isolation
+--------------------
+When eIBRS is used for guest/host isolation, the indirect branches in the
+VMM may still be predicted with targets corresponding to branches in the
+guest.
 
-- its_indirect_alignment.py - verifies that for addresses in
-  .retpoline_sites section that belong to lower half of cacheline are
-  patched to ITS-safe thunk. Typical output looks like below:
+Intra-mode
+----------
+cBPF or other native gadgets can be used for intra-mode training and
+disclosure using ITS.
 
-  Site 49: function symbol: __x64_sys_restart_syscall+0x1f <0xffffffffbb1509af>
-  #     vmlinux: 0xffffffff813509af:    jmp     0xffffffff81f5a8e0
-  #     kcore:   0xffffffffbb1509af:    jmpq    *%rax
-  #     ITS thunk NOT expected for site 49
-  #     PASSED: Found *%rax
-  #
-  Site 50: function symbol: __resched_curr+0xb0 <0xffffffffbb181910>
-  #     vmlinux: 0xffffffff81381910:    jmp     0xffffffff81f5a8e0
-  #     kcore:   0xffffffffbb181910:    jmp     0xffffffffc02000fc
-  #     ITS thunk expected for site 50
-  #     PASSED: Found 0xffffffffc02000fc -> jmpq *%rax <scattered-thunk?>
+User/kernel isolation
+---------------------
+When eIBRS is enabled user/kernel isolation is not impacted.
 
-- its_ret_alignment.py - verifies that for addresses in .return_sites
-  section that belong to lower half of cacheline are patched to
-  its_return_thunk. Typical output looks like below:
+Indirect Branch Prediction Barrier (IBPB)
+-----------------------------------------
+After an IBPB, indirect branches may be predicted with targets
+corresponding to direct branches which were executed prior to IBPB. This is
+mitigated by a microcode update.
 
-  Site 97: function symbol: collect_event+0x48 <0xffffffffbb007f18>
-  #     vmlinux: 0xffffffff81207f18:    jmp     0xffffffff81f5b500
-  #     kcore:   0xffffffffbb007f18:    jmp     0xffffffffbbd5b560
-  #     PASSED: Found jmp 0xffffffffbbd5b560 <its_return_thunk>
-  #
-  Site 98: function symbol: collect_event+0xa4 <0xffffffffbb007f74>
-  #     vmlinux: 0xffffffff81207f74:    jmp     0xffffffff81f5b500
-  #     kcore:   0xffffffffbb007f74:    retq
-  #     PASSED: Found retq
+Add cmdline parameter indirect_target_selection=off|on|force to control the
+mitigation to relocate the affected branches to an ITS-safe thunk i.e.
+located in the upper half of cacheline. Also add the sysfs reporting.
 
-Some of these tests have dependency on tools like virtme-ng[1] and drgn[2].
-When the dependencies are not met, the test will be skipped.
+When retpoline mitigation is deployed, ITS safe-thunks are not needed,
+because retpoline sequence is already ITS-safe. Similarly, when call depth
+tracking (CDT) mitigation is deployed (retbleed=stuff), ITS safe return
+thunk is not used, as CDT prevents RSB-underflow.
 
-[1] https://github.com/arighi/virtme-ng
-[2] https://github.com/osandov/drgn
+To not overcomplicate things, ITS mitigation is not supported with
+spectre-v2 lfence;jmp mitigation. Moreover, it is less practical to deploy
+lfence;jmp mitigation on ITS affected parts anyways.
 
-Co-developed-by: Tao Zhang <tao1.zhang@linux.intel.com>
-Signed-off-by: Tao Zhang <tao1.zhang@linux.intel.com>
 Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Reviewed-by: Alexandre Chartre <alexandre.chartre@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/Makefile                           |    1 
- tools/testing/selftests/x86/bugs/Makefile                  |    3 
- tools/testing/selftests/x86/bugs/common.py                 |  164 +++++++++++++
- tools/testing/selftests/x86/bugs/its_indirect_alignment.py |  150 +++++++++++
- tools/testing/selftests/x86/bugs/its_permutations.py       |  109 ++++++++
- tools/testing/selftests/x86/bugs/its_ret_alignment.py      |  139 +++++++++++
- tools/testing/selftests/x86/bugs/its_sysfs.py              |   65 +++++
- 7 files changed, 631 insertions(+)
- create mode 100644 tools/testing/selftests/x86/bugs/Makefile
- create mode 100755 tools/testing/selftests/x86/bugs/common.py
- create mode 100755 tools/testing/selftests/x86/bugs/its_indirect_alignment.py
- create mode 100755 tools/testing/selftests/x86/bugs/its_permutations.py
- create mode 100755 tools/testing/selftests/x86/bugs/its_ret_alignment.py
- create mode 100755 tools/testing/selftests/x86/bugs/its_sysfs.py
+ Documentation/ABI/testing/sysfs-devices-system-cpu |    1 
+ Documentation/admin-guide/kernel-parameters.txt    |   13 +
+ arch/x86/kernel/cpu/bugs.c                         |  140 ++++++++++++++++++++-
+ drivers/base/cpu.c                                 |    3 
+ include/linux/cpu.h                                |    2 
+ 5 files changed, 155 insertions(+), 4 deletions(-)
 
---- a/tools/testing/selftests/Makefile
-+++ b/tools/testing/selftests/Makefile
-@@ -118,6 +118,7 @@ TARGETS += user_events
- TARGETS += vDSO
- TARGETS += mm
- TARGETS += x86
-+TARGETS += x86/bugs
- TARGETS += zram
- #Please keep the TARGETS list alphabetically sorted
- # Run "make quicktest=1 run_tests" or
---- /dev/null
-+++ b/tools/testing/selftests/x86/bugs/Makefile
-@@ -0,0 +1,3 @@
-+TEST_PROGS := its_sysfs.py its_permutations.py its_indirect_alignment.py its_ret_alignment.py
-+TEST_FILES := common.py
-+include ../../lib.mk
---- /dev/null
-+++ b/tools/testing/selftests/x86/bugs/common.py
-@@ -0,0 +1,164 @@
-+#!/usr/bin/env python3
-+# SPDX-License-Identifier: GPL-2.0
-+#
-+# Copyright (c) 2025 Intel Corporation
-+#
-+# This contains kselftest framework adapted common functions for testing
-+# mitigation for x86 bugs.
+--- a/Documentation/ABI/testing/sysfs-devices-system-cpu
++++ b/Documentation/ABI/testing/sysfs-devices-system-cpu
+@@ -511,6 +511,7 @@ Description:	information about CPUs hete
+ 
+ What:		/sys/devices/system/cpu/vulnerabilities
+ 		/sys/devices/system/cpu/vulnerabilities/gather_data_sampling
++		/sys/devices/system/cpu/vulnerabilities/indirect_target_selection
+ 		/sys/devices/system/cpu/vulnerabilities/itlb_multihit
+ 		/sys/devices/system/cpu/vulnerabilities/l1tf
+ 		/sys/devices/system/cpu/vulnerabilities/mds
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -2178,6 +2178,18 @@
+ 			different crypto accelerators. This option can be used
+ 			to achieve best performance for particular HW.
+ 
++	indirect_target_selection= [X86,Intel] Mitigation control for Indirect
++			Target Selection(ITS) bug in Intel CPUs. Updated
++			microcode is also required for a fix in IBPB.
 +
-+import os, sys, re, shutil
++			on:     Enable mitigation (default).
++			off:    Disable mitigation.
++			force:	Force the ITS bug and deploy default
++				mitigation.
 +
-+sys.path.insert(0, '../../kselftest')
-+import ksft
++			For details see:
++			Documentation/admin-guide/hw-vuln/indirect-target-selection.rst
 +
-+def read_file(path):
-+    if not os.path.exists(path):
-+        return None
-+    with open(path, 'r') as file:
-+        return file.read().strip()
+ 	init=		[KNL]
+ 			Format: <full_path>
+ 			Run specified binary instead of /sbin/init as init
+@@ -3666,6 +3678,7 @@
+ 				expose users to several CPU vulnerabilities.
+ 				Equivalent to: if nokaslr then kpti=0 [ARM64]
+ 					       gather_data_sampling=off [X86]
++					       indirect_target_selection=off [X86]
+ 					       kvm.nx_huge_pages=off [X86]
+ 					       l1tf=off [X86]
+ 					       mds=off [X86]
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -49,6 +49,7 @@ static void __init srbds_select_mitigati
+ static void __init l1d_flush_select_mitigation(void);
+ static void __init srso_select_mitigation(void);
+ static void __init gds_select_mitigation(void);
++static void __init its_select_mitigation(void);
+ 
+ /* The base value of the SPEC_CTRL MSR without task-specific bits set */
+ u64 x86_spec_ctrl_base;
+@@ -67,6 +68,14 @@ static DEFINE_MUTEX(spec_ctrl_mutex);
+ 
+ void (*x86_return_thunk)(void) __ro_after_init = __x86_return_thunk;
+ 
++static void __init set_return_thunk(void *thunk)
++{
++	if (x86_return_thunk != __x86_return_thunk)
++		pr_warn("x86/bugs: return thunk changed\n");
 +
-+def cpuinfo_has(arg):
-+    cpuinfo = read_file('/proc/cpuinfo')
-+    if arg in cpuinfo:
-+        return True
-+    return False
-+
-+def cmdline_has(arg):
-+    cmdline = read_file('/proc/cmdline')
-+    if arg in cmdline:
-+        return True
-+    return False
-+
-+def cmdline_has_either(args):
-+    cmdline = read_file('/proc/cmdline')
-+    for arg in args:
-+        if arg in cmdline:
-+            return True
-+    return False
-+
-+def cmdline_has_none(args):
-+    return not cmdline_has_either(args)
-+
-+def cmdline_has_all(args):
-+    cmdline = read_file('/proc/cmdline')
-+    for arg in args:
-+        if arg not in cmdline:
-+            return False
-+    return True
-+
-+def get_sysfs(bug):
-+    return read_file("/sys/devices/system/cpu/vulnerabilities/" + bug)
-+
-+def sysfs_has(bug, mitigation):
-+    status = get_sysfs(bug)
-+    if mitigation in status:
-+        return True
-+    return False
-+
-+def sysfs_has_either(bugs, mitigations):
-+    for bug in bugs:
-+        for mitigation in mitigations:
-+            if sysfs_has(bug, mitigation):
-+                return True
-+    return False
-+
-+def sysfs_has_none(bugs, mitigations):
-+    return not sysfs_has_either(bugs, mitigations)
-+
-+def sysfs_has_all(bugs, mitigations):
-+    for bug in bugs:
-+        for mitigation in mitigations:
-+            if not sysfs_has(bug, mitigation):
-+                return False
-+    return True
-+
-+def bug_check_pass(bug, found):
-+    ksft.print_msg(f"\nFound: {found}")
-+    # ksft.print_msg(f"\ncmdline: {read_file('/proc/cmdline')}")
-+    ksft.test_result_pass(f'{bug}: {found}')
-+
-+def bug_check_fail(bug, found, expected):
-+    ksft.print_msg(f'\nFound:\t {found}')
-+    ksft.print_msg(f'Expected:\t {expected}')
-+    ksft.print_msg(f"\ncmdline: {read_file('/proc/cmdline')}")
-+    ksft.test_result_fail(f'{bug}: {found}')
-+
-+def bug_status_unknown(bug, found):
-+    ksft.print_msg(f'\nUnknown status: {found}')
-+    ksft.print_msg(f"\ncmdline: {read_file('/proc/cmdline')}")
-+    ksft.test_result_fail(f'{bug}: {found}')
-+
-+def basic_checks_sufficient(bug, mitigation):
-+    if not mitigation:
-+        bug_status_unknown(bug, "None")
-+        return True
-+    elif mitigation == "Not affected":
-+        ksft.test_result_pass(bug)
-+        return True
-+    elif mitigation == "Vulnerable":
-+        if cmdline_has_either([f'{bug}=off', 'mitigations=off']):
-+            bug_check_pass(bug, mitigation)
-+            return True
-+    return False
-+
-+def get_section_info(vmlinux, section_name):
-+    from elftools.elf.elffile import ELFFile
-+    with open(vmlinux, 'rb') as f:
-+        elffile = ELFFile(f)
-+        section = elffile.get_section_by_name(section_name)
-+        if section is None:
-+            ksft.print_msg("Available sections in vmlinux:")
-+            for sec in elffile.iter_sections():
-+                ksft.print_msg(sec.name)
-+            raise ValueError(f"Section {section_name} not found in {vmlinux}")
-+        return section['sh_addr'], section['sh_offset'], section['sh_size']
-+
-+def get_patch_sites(vmlinux, offset, size):
-+    import struct
-+    output = []
-+    with open(vmlinux, 'rb') as f:
-+        f.seek(offset)
-+        i = 0
-+        while i < size:
-+            data = f.read(4)  # s32
-+            if not data:
-+                break
-+            sym_offset = struct.unpack('<i', data)[0] + i
-+            i += 4
-+            output.append(sym_offset)
-+    return output
-+
-+def get_instruction_from_vmlinux(elffile, section, virtual_address, target_address):
-+    from capstone import Cs, CS_ARCH_X86, CS_MODE_64
-+    section_start = section['sh_addr']
-+    section_end = section_start + section['sh_size']
-+
-+    if not (section_start <= target_address < section_end):
-+        return None
-+
-+    offset = target_address - section_start
-+    code = section.data()[offset:offset + 16]
-+
-+    cap = init_capstone()
-+    for instruction in cap.disasm(code, target_address):
-+        if instruction.address == target_address:
-+            return instruction
-+    return None
-+
-+def init_capstone():
-+    from capstone import Cs, CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT
-+    cap = Cs(CS_ARCH_X86, CS_MODE_64)
-+    cap.syntax = CS_OPT_SYNTAX_ATT
-+    return cap
-+
-+def get_runtime_kernel():
-+    import drgn
-+    return drgn.program_from_kernel()
-+
-+def check_dependencies_or_skip(modules, script_name="unknown test"):
-+    for mod in modules:
-+        try:
-+            __import__(mod)
-+        except ImportError:
-+            ksft.test_result_skip(f"Skipping {script_name}: missing module '{mod}'")
-+            ksft.finished()
---- /dev/null
-+++ b/tools/testing/selftests/x86/bugs/its_indirect_alignment.py
-@@ -0,0 +1,150 @@
-+#!/usr/bin/env python3
-+# SPDX-License-Identifier: GPL-2.0
-+#
-+# Copyright (c) 2025 Intel Corporation
-+#
-+# Test for indirect target selection (ITS) mitigation.
-+#
-+# Test if indirect CALL/JMP are correctly patched by evaluating
-+# the vmlinux .retpoline_sites in /proc/kcore.
-+
-+# Install dependencies
-+# add-apt-repository ppa:michel-slm/kernel-utils
-+# apt update
-+# apt install -y python3-drgn python3-pyelftools python3-capstone
-+#
-+# Best to copy the vmlinux at a standard location:
-+# mkdir -p /usr/lib/debug/lib/modules/$(uname -r)
-+# cp $VMLINUX /usr/lib/debug/lib/modules/$(uname -r)/vmlinux
-+#
-+# Usage: ./its_indirect_alignment.py [vmlinux]
-+
-+import os, sys, argparse
-+from pathlib import Path
-+
-+this_dir = os.path.dirname(os.path.realpath(__file__))
-+sys.path.insert(0, this_dir + '/../../kselftest')
-+import ksft
-+import common as c
-+
-+bug = "indirect_target_selection"
-+
-+mitigation = c.get_sysfs(bug)
-+if not mitigation or "Aligned branch/return thunks" not in mitigation:
-+    ksft.test_result_skip("Skipping its_indirect_alignment.py: Aligned branch/return thunks not enabled")
-+    ksft.finished()
-+
-+if c.sysfs_has("spectre_v2", "Retpolines"):
-+    ksft.test_result_skip("Skipping its_indirect_alignment.py: Retpolines deployed")
-+    ksft.finished()
-+
-+c.check_dependencies_or_skip(['drgn', 'elftools', 'capstone'], script_name="its_indirect_alignment.py")
-+
-+from elftools.elf.elffile import ELFFile
-+from drgn.helpers.common.memory import identify_address
-+
-+cap = c.init_capstone()
-+
-+if len(os.sys.argv) > 1:
-+    arg_vmlinux = os.sys.argv[1]
-+    if not os.path.exists(arg_vmlinux):
-+        ksft.test_result_fail(f"its_indirect_alignment.py: vmlinux not found at argument path: {arg_vmlinux}")
-+        ksft.exit_fail()
-+    os.makedirs(f"/usr/lib/debug/lib/modules/{os.uname().release}", exist_ok=True)
-+    os.system(f'cp {arg_vmlinux} /usr/lib/debug/lib/modules/$(uname -r)/vmlinux')
-+
-+vmlinux = f"/usr/lib/debug/lib/modules/{os.uname().release}/vmlinux"
-+if not os.path.exists(vmlinux):
-+    ksft.test_result_fail(f"its_indirect_alignment.py: vmlinux not found at {vmlinux}")
-+    ksft.exit_fail()
-+
-+ksft.print_msg(f"Using vmlinux: {vmlinux}")
-+
-+retpolines_start_vmlinux, retpolines_sec_offset, size = c.get_section_info(vmlinux, '.retpoline_sites')
-+ksft.print_msg(f"vmlinux: Section .retpoline_sites (0x{retpolines_start_vmlinux:x}) found at 0x{retpolines_sec_offset:x} with size 0x{size:x}")
-+
-+sites_offset = c.get_patch_sites(vmlinux, retpolines_sec_offset, size)
-+total_retpoline_tests = len(sites_offset)
-+ksft.print_msg(f"Found {total_retpoline_tests} retpoline sites")
-+
-+prog = c.get_runtime_kernel()
-+retpolines_start_kcore = prog.symbol('__retpoline_sites').address
-+ksft.print_msg(f'kcore: __retpoline_sites: 0x{retpolines_start_kcore:x}')
-+
-+x86_indirect_its_thunk_r15 = prog.symbol('__x86_indirect_its_thunk_r15').address
-+ksft.print_msg(f'kcore: __x86_indirect_its_thunk_r15: 0x{x86_indirect_its_thunk_r15:x}')
-+
-+tests_passed = 0
-+tests_failed = 0
-+tests_unknown = 0
-+
-+with open(vmlinux, 'rb') as f:
-+    elffile = ELFFile(f)
-+    text_section = elffile.get_section_by_name('.text')
-+
-+    for i in range(0, len(sites_offset)):
-+        site = retpolines_start_kcore + sites_offset[i]
-+        vmlinux_site = retpolines_start_vmlinux + sites_offset[i]
-+        passed = unknown = failed = False
-+        try:
-+            vmlinux_insn = c.get_instruction_from_vmlinux(elffile, text_section, text_section['sh_addr'], vmlinux_site)
-+            kcore_insn = list(cap.disasm(prog.read(site, 16), site))[0]
-+            operand = kcore_insn.op_str
-+            insn_end = site + kcore_insn.size - 1 # TODO handle Jcc.32 __x86_indirect_thunk_\reg
-+            safe_site = insn_end & 0x20
-+            site_status = "" if safe_site else "(unsafe)"
-+
-+            ksft.print_msg(f"\nSite {i}: {identify_address(prog, site)} <0x{site:x}> {site_status}")
-+            ksft.print_msg(f"\tvmlinux: 0x{vmlinux_insn.address:x}:\t{vmlinux_insn.mnemonic}\t{vmlinux_insn.op_str}")
-+            ksft.print_msg(f"\tkcore:   0x{kcore_insn.address:x}:\t{kcore_insn.mnemonic}\t{kcore_insn.op_str}")
-+
-+            if (site & 0x20) ^ (insn_end & 0x20):
-+                ksft.print_msg(f"\tSite at safe/unsafe boundary: {str(kcore_insn.bytes)} {kcore_insn.mnemonic} {operand}")
-+            if safe_site:
-+                tests_passed += 1
-+                passed = True
-+                ksft.print_msg(f"\tPASSED: At safe address")
-+                continue
-+
-+            if operand.startswith('0xffffffff'):
-+                thunk = int(operand, 16)
-+                if thunk > x86_indirect_its_thunk_r15:
-+                    insn_at_thunk = list(cap.disasm(prog.read(thunk, 16), thunk))[0]
-+                    operand += ' -> ' + insn_at_thunk.mnemonic + ' ' + insn_at_thunk.op_str + ' <dynamic-thunk?>'
-+                    if 'jmp' in insn_at_thunk.mnemonic and thunk & 0x20:
-+                        ksft.print_msg(f"\tPASSED: Found {operand} at safe address")
-+                        passed = True
-+                if not passed:
-+                    if kcore_insn.operands[0].type == capstone.CS_OP_IMM:
-+                        operand += ' <' + prog.symbol(int(operand, 16)) + '>'
-+                        if '__x86_indirect_its_thunk_' in operand:
-+                            ksft.print_msg(f"\tPASSED: Found {operand}")
-+                        else:
-+                            ksft.print_msg(f"\tPASSED: Found direct branch: {kcore_insn}, ITS thunk not required.")
-+                        passed = True
-+                    else:
-+                        unknown = True
-+            if passed:
-+                tests_passed += 1
-+            elif unknown:
-+                ksft.print_msg(f"UNKNOWN: unexpected operand: {kcore_insn}")
-+                tests_unknown += 1
-+            else:
-+                ksft.print_msg(f'\t************* FAILED *************')
-+                ksft.print_msg(f"\tFound {kcore_insn.bytes} {kcore_insn.mnemonic} {operand}")
-+                ksft.print_msg(f'\t**********************************')
-+                tests_failed += 1
-+        except Exception as e:
-+            ksft.print_msg(f"UNKNOWN: An unexpected error occurred: {e}")
-+            tests_unknown += 1
-+
-+ksft.print_msg(f"\n\nSummary:")
-+ksft.print_msg(f"PASS:    \t{tests_passed} \t/ {total_retpoline_tests}")
-+ksft.print_msg(f"FAIL:    \t{tests_failed} \t/ {total_retpoline_tests}")
-+ksft.print_msg(f"UNKNOWN: \t{tests_unknown} \t/ {total_retpoline_tests}")
-+
-+if tests_failed == 0:
-+    ksft.test_result_pass("All ITS return thunk sites passed")
-+else:
-+    ksft.test_result_fail(f"{tests_failed} ITS return thunk sites failed")
-+ksft.finished()
---- /dev/null
-+++ b/tools/testing/selftests/x86/bugs/its_permutations.py
-@@ -0,0 +1,109 @@
-+#!/usr/bin/env python3
-+# SPDX-License-Identifier: GPL-2.0
-+#
-+# Copyright (c) 2025 Intel Corporation
-+#
-+# Test for indirect target selection (ITS) cmdline permutations with other bugs
-+# like spectre_v2 and retbleed.
-+
-+import os, sys, subprocess, itertools, re, shutil
-+
-+test_dir = os.path.dirname(os.path.realpath(__file__))
-+sys.path.insert(0, test_dir + '/../../kselftest')
-+import ksft
-+import common as c
-+
-+bug = "indirect_target_selection"
-+mitigation = c.get_sysfs(bug)
-+
-+if not mitigation or "Not affected" in mitigation:
-+    ksft.test_result_skip("Skipping its_permutations.py: not applicable")
-+    ksft.finished()
-+
-+if shutil.which('vng') is None:
-+    ksft.test_result_skip("Skipping its_permutations.py: virtme-ng ('vng') not found in PATH.")
-+    ksft.finished()
-+
-+TEST = f"{test_dir}/its_sysfs.py"
-+default_kparam = ['clearcpuid=hypervisor', 'panic=5', 'panic_on_warn=1', 'oops=panic', 'nmi_watchdog=1', 'hung_task_panic=1']
-+
-+DEBUG = " -v "
-+
-+# Install dependencies
-+# https://github.com/arighi/virtme-ng
-+# apt install virtme-ng
-+BOOT_CMD = f"vng --run {test_dir}/../../../../../arch/x86/boot/bzImage "
-+#BOOT_CMD += DEBUG
-+
-+bug = "indirect_target_selection"
-+
-+input_options = {
-+    'indirect_target_selection'     : ['off', 'on', 'stuff', 'vmexit'],
-+    'retbleed'                      : ['off', 'stuff', 'auto'],
-+    'spectre_v2'                    : ['off', 'on', 'eibrs', 'retpoline', 'ibrs', 'eibrs,retpoline'],
++	x86_return_thunk = thunk;
 +}
 +
-+def pretty_print(output):
-+    OKBLUE = '\033[94m'
-+    OKGREEN = '\033[92m'
-+    WARNING = '\033[93m'
-+    FAIL = '\033[91m'
-+    ENDC = '\033[0m'
-+    BOLD = '\033[1m'
+ /* Update SPEC_CTRL MSR and its cached copy unconditionally */
+ static void update_spec_ctrl(u64 val)
+ {
+@@ -175,6 +184,7 @@ void __init cpu_select_mitigations(void)
+ 	 */
+ 	srso_select_mitigation();
+ 	gds_select_mitigation();
++	its_select_mitigation();
+ }
+ 
+ /*
+@@ -1104,7 +1114,7 @@ do_cmd_auto:
+ 		setup_force_cpu_cap(X86_FEATURE_RETHUNK);
+ 		setup_force_cpu_cap(X86_FEATURE_UNRET);
+ 
+-		x86_return_thunk = retbleed_return_thunk;
++		set_return_thunk(retbleed_return_thunk);
+ 
+ 		if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD &&
+ 		    boot_cpu_data.x86_vendor != X86_VENDOR_HYGON)
+@@ -1139,7 +1149,7 @@ do_cmd_auto:
+ 		setup_force_cpu_cap(X86_FEATURE_RETHUNK);
+ 		setup_force_cpu_cap(X86_FEATURE_CALL_DEPTH);
+ 
+-		x86_return_thunk = call_depth_return_thunk;
++		set_return_thunk(call_depth_return_thunk);
+ 		break;
+ 
+ 	default:
+@@ -1174,6 +1184,115 @@ do_cmd_auto:
+ }
+ 
+ #undef pr_fmt
++#define pr_fmt(fmt)     "ITS: " fmt
 +
-+    # Define patterns and their corresponding colors
-+    patterns = {
-+        r"^ok \d+": OKGREEN,
-+        r"^not ok \d+": FAIL,
-+        r"^# Testing .*": OKBLUE,
-+        r"^# Found: .*": WARNING,
-+        r"^# Totals: .*": BOLD,
-+        r"pass:([1-9]\d*)": OKGREEN,
-+        r"fail:([1-9]\d*)": FAIL,
-+        r"skip:([1-9]\d*)": WARNING,
-+    }
++enum its_mitigation_cmd {
++	ITS_CMD_OFF,
++	ITS_CMD_ON,
++};
 +
-+    # Apply colors based on patterns
-+    for pattern, color in patterns.items():
-+        output = re.sub(pattern, lambda match: f"{color}{match.group(0)}{ENDC}", output, flags=re.MULTILINE)
++enum its_mitigation {
++	ITS_MITIGATION_OFF,
++	ITS_MITIGATION_ALIGNED_THUNKS,
++	ITS_MITIGATION_RETPOLINE_STUFF,
++};
 +
-+    print(output)
++static const char * const its_strings[] = {
++	[ITS_MITIGATION_OFF]			= "Vulnerable",
++	[ITS_MITIGATION_ALIGNED_THUNKS]		= "Mitigation: Aligned branch/return thunks",
++	[ITS_MITIGATION_RETPOLINE_STUFF]	= "Mitigation: Retpolines, Stuffing RSB",
++};
 +
-+combinations = list(itertools.product(*input_options.values()))
-+ksft.print_header()
-+ksft.set_plan(len(combinations))
++static enum its_mitigation its_mitigation __ro_after_init = ITS_MITIGATION_ALIGNED_THUNKS;
 +
-+logs = ""
++static enum its_mitigation_cmd its_cmd __ro_after_init =
++	IS_ENABLED(CONFIG_MITIGATION_ITS) ? ITS_CMD_ON : ITS_CMD_OFF;
 +
-+for combination in combinations:
-+    append = ""
-+    log = ""
-+    for p in default_kparam:
-+        append += f' --append={p}'
-+    command = BOOT_CMD + append
-+    test_params = ""
-+    for i, key in enumerate(input_options.keys()):
-+        param = f'{key}={combination[i]}'
-+        test_params += f' {param}'
-+        command += f" --append={param}"
-+    command += f" -- {TEST}"
-+    test_name = f"{bug} {test_params}"
-+    pretty_print(f'# Testing {test_name}')
-+    t =  subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-+    t.wait()
-+    output, _ = t.communicate()
-+    if t.returncode == 0:
-+        ksft.test_result_pass(test_name)
-+    else:
-+        ksft.test_result_fail(test_name)
-+    output = output.decode()
-+    log += f" {output}"
-+    pretty_print(log)
-+    logs += output + "\n"
++static int __init its_parse_cmdline(char *str)
++{
++	if (!str)
++		return -EINVAL;
 +
-+# Optionally use tappy to parse the output
-+# apt install python3-tappy
-+with open("logs.txt", "w") as f:
-+    f.write(logs)
++	if (!IS_ENABLED(CONFIG_MITIGATION_ITS)) {
++		pr_err("Mitigation disabled at compile time, ignoring option (%s)", str);
++		return 0;
++	}
 +
-+ksft.finished()
---- /dev/null
-+++ b/tools/testing/selftests/x86/bugs/its_ret_alignment.py
-@@ -0,0 +1,139 @@
-+#!/usr/bin/env python3
-+# SPDX-License-Identifier: GPL-2.0
-+#
-+# Copyright (c) 2025 Intel Corporation
-+#
-+# Test for indirect target selection (ITS) mitigation.
-+#
-+# Tests if the RETs are correctly patched by evaluating the
-+# vmlinux .return_sites in /proc/kcore.
-+#
-+# Install dependencies
-+# add-apt-repository ppa:michel-slm/kernel-utils
-+# apt update
-+# apt install -y python3-drgn python3-pyelftools python3-capstone
-+#
-+# Run on target machine
-+# mkdir -p /usr/lib/debug/lib/modules/$(uname -r)
-+# cp $VMLINUX /usr/lib/debug/lib/modules/$(uname -r)/vmlinux
-+#
-+# Usage: ./its_ret_alignment.py
++	if (!strcmp(str, "off")) {
++		its_cmd = ITS_CMD_OFF;
++	} else if (!strcmp(str, "on")) {
++		its_cmd = ITS_CMD_ON;
++	} else if (!strcmp(str, "force")) {
++		its_cmd = ITS_CMD_ON;
++		setup_force_cpu_bug(X86_BUG_ITS);
++	} else {
++		pr_err("Ignoring unknown indirect_target_selection option (%s).", str);
++	}
 +
-+import os, sys, argparse
-+from pathlib import Path
++	return 0;
++}
++early_param("indirect_target_selection", its_parse_cmdline);
 +
-+this_dir = os.path.dirname(os.path.realpath(__file__))
-+sys.path.insert(0, this_dir + '/../../kselftest')
-+import ksft
-+import common as c
++static void __init its_select_mitigation(void)
++{
++	enum its_mitigation_cmd cmd = its_cmd;
 +
-+bug = "indirect_target_selection"
-+mitigation = c.get_sysfs(bug)
-+if not mitigation or "Aligned branch/return thunks" not in mitigation:
-+    ksft.test_result_skip("Skipping its_ret_alignment.py: Aligned branch/return thunks not enabled")
-+    ksft.finished()
++	if (!boot_cpu_has_bug(X86_BUG_ITS) || cpu_mitigations_off()) {
++		its_mitigation = ITS_MITIGATION_OFF;
++		return;
++	}
 +
-+c.check_dependencies_or_skip(['drgn', 'elftools', 'capstone'], script_name="its_ret_alignment.py")
++	/* Retpoline+CDT mitigates ITS, bail out */
++	if (boot_cpu_has(X86_FEATURE_RETPOLINE) &&
++	    boot_cpu_has(X86_FEATURE_CALL_DEPTH)) {
++		its_mitigation = ITS_MITIGATION_RETPOLINE_STUFF;
++		goto out;
++	}
 +
-+from elftools.elf.elffile import ELFFile
-+from drgn.helpers.common.memory import identify_address
++	/* Exit early to avoid irrelevant warnings */
++	if (cmd == ITS_CMD_OFF) {
++		its_mitigation = ITS_MITIGATION_OFF;
++		goto out;
++	}
++	if (spectre_v2_enabled == SPECTRE_V2_NONE) {
++		pr_err("WARNING: Spectre-v2 mitigation is off, disabling ITS\n");
++		its_mitigation = ITS_MITIGATION_OFF;
++		goto out;
++	}
++	if (!IS_ENABLED(CONFIG_MITIGATION_RETPOLINE) ||
++	    !IS_ENABLED(CONFIG_MITIGATION_RETHUNK)) {
++		pr_err("WARNING: ITS mitigation depends on retpoline and rethunk support\n");
++		its_mitigation = ITS_MITIGATION_OFF;
++		goto out;
++	}
++	if (IS_ENABLED(CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B)) {
++		pr_err("WARNING: ITS mitigation is not compatible with CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B\n");
++		its_mitigation = ITS_MITIGATION_OFF;
++		goto out;
++	}
++	if (boot_cpu_has(X86_FEATURE_RETPOLINE_LFENCE)) {
++		pr_err("WARNING: ITS mitigation is not compatible with lfence mitigation\n");
++		its_mitigation = ITS_MITIGATION_OFF;
++		goto out;
++	}
 +
-+cap = c.init_capstone()
++	switch (cmd) {
++	case ITS_CMD_OFF:
++		its_mitigation = ITS_MITIGATION_OFF;
++		break;
++	case ITS_CMD_ON:
++		its_mitigation = ITS_MITIGATION_ALIGNED_THUNKS;
++		if (!boot_cpu_has(X86_FEATURE_RETPOLINE))
++			setup_force_cpu_cap(X86_FEATURE_INDIRECT_THUNK_ITS);
++		setup_force_cpu_cap(X86_FEATURE_RETHUNK);
++		set_return_thunk(its_return_thunk);
++		break;
++	}
++out:
++	pr_info("%s\n", its_strings[its_mitigation]);
++}
 +
-+if len(os.sys.argv) > 1:
-+    arg_vmlinux = os.sys.argv[1]
-+    if not os.path.exists(arg_vmlinux):
-+        ksft.test_result_fail(f"its_ret_alignment.py: vmlinux not found at user-supplied path: {arg_vmlinux}")
-+        ksft.exit_fail()
-+    os.makedirs(f"/usr/lib/debug/lib/modules/{os.uname().release}", exist_ok=True)
-+    os.system(f'cp {arg_vmlinux} /usr/lib/debug/lib/modules/$(uname -r)/vmlinux')
++#undef pr_fmt
+ #define pr_fmt(fmt)     "Spectre V2 : " fmt
+ 
+ static enum spectre_v2_user_mitigation spectre_v2_user_stibp __ro_after_init =
+@@ -2627,10 +2746,10 @@ static void __init srso_select_mitigatio
+ 
+ 			if (boot_cpu_data.x86 == 0x19) {
+ 				setup_force_cpu_cap(X86_FEATURE_SRSO_ALIAS);
+-				x86_return_thunk = srso_alias_return_thunk;
++				set_return_thunk(srso_alias_return_thunk);
+ 			} else {
+ 				setup_force_cpu_cap(X86_FEATURE_SRSO);
+-				x86_return_thunk = srso_return_thunk;
++				set_return_thunk(srso_return_thunk);
+ 			}
+ 			if (has_microcode)
+ 				srso_mitigation = SRSO_MITIGATION_SAFE_RET;
+@@ -2806,6 +2925,11 @@ static ssize_t rfds_show_state(char *buf
+ 	return sysfs_emit(buf, "%s\n", rfds_strings[rfds_mitigation]);
+ }
+ 
++static ssize_t its_show_state(char *buf)
++{
++	return sysfs_emit(buf, "%s\n", its_strings[its_mitigation]);
++}
 +
-+vmlinux = f"/usr/lib/debug/lib/modules/{os.uname().release}/vmlinux"
-+if not os.path.exists(vmlinux):
-+    ksft.test_result_fail(f"its_ret_alignment.py: vmlinux not found at {vmlinux}")
-+    ksft.exit_fail()
+ static char *stibp_state(void)
+ {
+ 	if (spectre_v2_in_eibrs_mode(spectre_v2_enabled) &&
+@@ -2988,6 +3112,9 @@ static ssize_t cpu_show_common(struct de
+ 	case X86_BUG_RFDS:
+ 		return rfds_show_state(buf);
+ 
++	case X86_BUG_ITS:
++		return its_show_state(buf);
 +
-+ksft.print_msg(f"Using vmlinux: {vmlinux}")
+ 	default:
+ 		break;
+ 	}
+@@ -3067,6 +3194,11 @@ ssize_t cpu_show_reg_file_data_sampling(
+ {
+ 	return cpu_show_common(dev, attr, buf, X86_BUG_RFDS);
+ }
 +
-+rethunks_start_vmlinux, rethunks_sec_offset, size = c.get_section_info(vmlinux, '.return_sites')
-+ksft.print_msg(f"vmlinux: Section .return_sites (0x{rethunks_start_vmlinux:x}) found at 0x{rethunks_sec_offset:x} with size 0x{size:x}")
-+
-+sites_offset = c.get_patch_sites(vmlinux, rethunks_sec_offset, size)
-+total_rethunk_tests = len(sites_offset)
-+ksft.print_msg(f"Found {total_rethunk_tests} rethunk sites")
-+
-+prog = c.get_runtime_kernel()
-+rethunks_start_kcore = prog.symbol('__return_sites').address
-+ksft.print_msg(f'kcore: __rethunk_sites: 0x{rethunks_start_kcore:x}')
-+
-+its_return_thunk = prog.symbol('its_return_thunk').address
-+ksft.print_msg(f'kcore: its_return_thunk: 0x{its_return_thunk:x}')
-+
-+tests_passed = 0
-+tests_failed = 0
-+tests_unknown = 0
-+tests_skipped = 0
-+
-+with open(vmlinux, 'rb') as f:
-+    elffile = ELFFile(f)
-+    text_section = elffile.get_section_by_name('.text')
-+
-+    for i in range(len(sites_offset)):
-+        site = rethunks_start_kcore + sites_offset[i]
-+        vmlinux_site = rethunks_start_vmlinux + sites_offset[i]
-+        try:
-+            passed = unknown = failed = skipped = False
-+
-+            symbol = identify_address(prog, site)
-+            vmlinux_insn = c.get_instruction_from_vmlinux(elffile, text_section, text_section['sh_addr'], vmlinux_site)
-+            kcore_insn = list(cap.disasm(prog.read(site, 16), site))[0]
-+
-+            insn_end = site + kcore_insn.size - 1
-+
-+            safe_site = insn_end & 0x20
-+            site_status = "" if safe_site else "(unsafe)"
-+
-+            ksft.print_msg(f"\nSite {i}: {symbol} <0x{site:x}> {site_status}")
-+            ksft.print_msg(f"\tvmlinux: 0x{vmlinux_insn.address:x}:\t{vmlinux_insn.mnemonic}\t{vmlinux_insn.op_str}")
-+            ksft.print_msg(f"\tkcore:   0x{kcore_insn.address:x}:\t{kcore_insn.mnemonic}\t{kcore_insn.op_str}")
-+
-+            if safe_site:
-+                tests_passed += 1
-+                passed = True
-+                ksft.print_msg(f"\tPASSED: At safe address")
-+                continue
-+
-+            if "jmp" in kcore_insn.mnemonic:
-+                passed = True
-+            elif "ret" not in kcore_insn.mnemonic:
-+                skipped = True
-+
-+            if passed:
-+                ksft.print_msg(f"\tPASSED: Found {kcore_insn.mnemonic} {kcore_insn.op_str}")
-+                tests_passed += 1
-+            elif skipped:
-+                ksft.print_msg(f"\tSKIPPED: Found '{kcore_insn.mnemonic}'")
-+                tests_skipped += 1
-+            elif unknown:
-+                ksft.print_msg(f"UNKNOWN: An unknown instruction: {kcore_insn}")
-+                tests_unknown += 1
-+            else:
-+                ksft.print_msg(f'\t************* FAILED *************')
-+                ksft.print_msg(f"\tFound {kcore_insn.mnemonic} {kcore_insn.op_str}")
-+                ksft.print_msg(f'\t**********************************')
-+                tests_failed += 1
-+        except Exception as e:
-+            ksft.print_msg(f"UNKNOWN: An unexpected error occurred: {e}")
-+            tests_unknown += 1
-+
-+ksft.print_msg(f"\n\nSummary:")
-+ksft.print_msg(f"PASSED: \t{tests_passed} \t/ {total_rethunk_tests}")
-+ksft.print_msg(f"FAILED: \t{tests_failed} \t/ {total_rethunk_tests}")
-+ksft.print_msg(f"SKIPPED: \t{tests_skipped} \t/ {total_rethunk_tests}")
-+ksft.print_msg(f"UNKNOWN: \t{tests_unknown} \t/ {total_rethunk_tests}")
-+
-+if tests_failed == 0:
-+    ksft.test_result_pass("All ITS return thunk sites passed.")
-+else:
-+    ksft.test_result_fail(f"{tests_failed} failed sites need ITS return thunks.")
-+ksft.finished()
---- /dev/null
-+++ b/tools/testing/selftests/x86/bugs/its_sysfs.py
-@@ -0,0 +1,65 @@
-+#!/usr/bin/env python3
-+# SPDX-License-Identifier: GPL-2.0
-+#
-+# Copyright (c) 2025 Intel Corporation
-+#
-+# Test for Indirect Target Selection(ITS) mitigation sysfs status.
-+
-+import sys, os, re
-+this_dir = os.path.dirname(os.path.realpath(__file__))
-+sys.path.insert(0, this_dir + '/../../kselftest')
-+import ksft
-+
-+from common import *
-+
-+bug = "indirect_target_selection"
-+mitigation = get_sysfs(bug)
-+
-+ITS_MITIGATION_ALIGNED_THUNKS	= "Mitigation: Aligned branch/return thunks"
-+ITS_MITIGATION_RETPOLINE_STUFF	= "Mitigation: Retpolines, Stuffing RSB"
-+ITS_MITIGATION_VMEXIT_ONLY		= "Mitigation: Vulnerable, KVM: Not affected"
-+ITS_MITIGATION_VULNERABLE       = "Vulnerable"
-+
-+def check_mitigation():
-+    if mitigation == ITS_MITIGATION_ALIGNED_THUNKS:
-+        if cmdline_has(f'{bug}=stuff') and sysfs_has("spectre_v2", "Retpolines"):
-+            bug_check_fail(bug, ITS_MITIGATION_ALIGNED_THUNKS, ITS_MITIGATION_RETPOLINE_STUFF)
-+            return
-+        if cmdline_has(f'{bug}=vmexit') and cpuinfo_has('its_native_only'):
-+            bug_check_fail(bug, ITS_MITIGATION_ALIGNED_THUNKS, ITS_MITIGATION_VMEXIT_ONLY)
-+            return
-+        bug_check_pass(bug, ITS_MITIGATION_ALIGNED_THUNKS)
-+        return
-+
-+    if mitigation == ITS_MITIGATION_RETPOLINE_STUFF:
-+        if cmdline_has(f'{bug}=stuff') and sysfs_has("spectre_v2", "Retpolines"):
-+            bug_check_pass(bug, ITS_MITIGATION_RETPOLINE_STUFF)
-+            return
-+        if sysfs_has('retbleed', 'Stuffing'):
-+            bug_check_pass(bug, ITS_MITIGATION_RETPOLINE_STUFF)
-+            return
-+        bug_check_fail(bug, ITS_MITIGATION_RETPOLINE_STUFF, ITS_MITIGATION_ALIGNED_THUNKS)
-+
-+    if mitigation == ITS_MITIGATION_VMEXIT_ONLY:
-+        if cmdline_has(f'{bug}=vmexit') and cpuinfo_has('its_native_only'):
-+            bug_check_pass(bug, ITS_MITIGATION_VMEXIT_ONLY)
-+            return
-+        bug_check_fail(bug, ITS_MITIGATION_VMEXIT_ONLY, ITS_MITIGATION_ALIGNED_THUNKS)
-+
-+    if mitigation == ITS_MITIGATION_VULNERABLE:
-+        if sysfs_has("spectre_v2", "Vulnerable"):
-+            bug_check_pass(bug, ITS_MITIGATION_VULNERABLE)
-+        else:
-+            bug_check_fail(bug, "Mitigation", ITS_MITIGATION_VULNERABLE)
-+
-+    bug_status_unknown(bug, mitigation)
-+    return
-+
-+ksft.print_header()
-+ksft.set_plan(1)
-+ksft.print_msg(f'{bug}: {mitigation} ...')
-+
-+if not basic_checks_sufficient(bug, mitigation):
-+    check_mitigation()
-+
-+ksft.finished()
++ssize_t cpu_show_indirect_target_selection(struct device *dev, struct device_attribute *attr, char *buf)
++{
++	return cpu_show_common(dev, attr, buf, X86_BUG_ITS);
++}
+ #endif
+ 
+ void __warn_thunk(void)
+--- a/drivers/base/cpu.c
++++ b/drivers/base/cpu.c
+@@ -600,6 +600,7 @@ CPU_SHOW_VULN_FALLBACK(spec_rstack_overf
+ CPU_SHOW_VULN_FALLBACK(gds);
+ CPU_SHOW_VULN_FALLBACK(reg_file_data_sampling);
+ CPU_SHOW_VULN_FALLBACK(ghostwrite);
++CPU_SHOW_VULN_FALLBACK(indirect_target_selection);
+ 
+ static DEVICE_ATTR(meltdown, 0444, cpu_show_meltdown, NULL);
+ static DEVICE_ATTR(spectre_v1, 0444, cpu_show_spectre_v1, NULL);
+@@ -616,6 +617,7 @@ static DEVICE_ATTR(spec_rstack_overflow,
+ static DEVICE_ATTR(gather_data_sampling, 0444, cpu_show_gds, NULL);
+ static DEVICE_ATTR(reg_file_data_sampling, 0444, cpu_show_reg_file_data_sampling, NULL);
+ static DEVICE_ATTR(ghostwrite, 0444, cpu_show_ghostwrite, NULL);
++static DEVICE_ATTR(indirect_target_selection, 0444, cpu_show_indirect_target_selection, NULL);
+ 
+ static struct attribute *cpu_root_vulnerabilities_attrs[] = {
+ 	&dev_attr_meltdown.attr,
+@@ -633,6 +635,7 @@ static struct attribute *cpu_root_vulner
+ 	&dev_attr_gather_data_sampling.attr,
+ 	&dev_attr_reg_file_data_sampling.attr,
+ 	&dev_attr_ghostwrite.attr,
++	&dev_attr_indirect_target_selection.attr,
+ 	NULL
+ };
+ 
+--- a/include/linux/cpu.h
++++ b/include/linux/cpu.h
+@@ -78,6 +78,8 @@ extern ssize_t cpu_show_gds(struct devic
+ extern ssize_t cpu_show_reg_file_data_sampling(struct device *dev,
+ 					       struct device_attribute *attr, char *buf);
+ extern ssize_t cpu_show_ghostwrite(struct device *dev, struct device_attribute *attr, char *buf);
++extern ssize_t cpu_show_indirect_target_selection(struct device *dev,
++						  struct device_attribute *attr, char *buf);
+ 
+ extern __printf(4, 5)
+ struct device *cpu_device_create(struct device *parent, void *drvdata,
 
 
