@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0521E2602;
-	Mon, 12 May 2025 17:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8F1296D3C;
+	Mon, 12 May 2025 17:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071763; cv=none; b=F0vR3au+0WhnTcOayMwXzN3wdx9TJb9XLOI1BfapBRB+BEk1v+Np4ZQ0C5Nba183OtTNfB/grY7qsgZcznB12yddvjGGqRqxdjK/5C6jKTexEyhQcPF8Bb09ihBfu4c3P80tL4o9LYYUrdYYxtnRy9z0f/fvGDB8qzhjupZaJSs=
+	t=1747071767; cv=none; b=LcHcvtyJWz5bfQ3dYiXy1MUhhXV+DInYM7nZyMgVlGGjJvp614m2pwP2yzyXIcFRoi4XUojzAsPwPJSj1JkNdrpFqdpIp92vhf82i/igmCBzZHZ5BshRUg7qHSbK0zdanimYVJ+CbHNFeETFrVNxJHalU4YYZbC9YLTMiQnK4yU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071763; c=relaxed/simple;
-	bh=HJaM77pEbYy0KPA7qhZfdB2JQbLUZWEmO/cVTFdCZqE=;
+	s=arc-20240116; t=1747071767; c=relaxed/simple;
+	bh=7bgAWczTkDZsKezQ8pB8ukTG912n/RHOBJrcg2Jox/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JDpJCS+RQp+naUYcSoM0nu+WGe2C46jPFqUkdcr/e4N7T2ELyXhm8PWxW1LYEEBQYBBySyWAfVLRJiMp/6QAsVZMRNmYJng3B4xG6IP6vI/cpcPQLxScxY7Q1j2spu7z4zVbnhrhhXjVy4fneSq1baV8i3gxgZqPbTa9kDsKnvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iU7V33cY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eu6/zN9o3rWzeRu3siLt98CVmT4ZZOn/Km/Se0ytXU2sXOgdv7dbxGlLZJc3heGvtICgzZIcontYURIwRg/gcgckQTwp0SqAe53c1etdTAFo9GjyprkLvAni3FFag8Zh+6OsB24in+586fklgfAWrcHcbcYw1+EeG7or7c3Z/+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZGWX1+Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iU7V33cY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E68C4CEE7;
-	Mon, 12 May 2025 17:42:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZGWX1+Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F2CC4CEE7;
+	Mon, 12 May 2025 17:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071763;
-	bh=HJaM77pEbYy0KPA7qhZfdB2JQbLUZWEmO/cVTFdCZqE=;
+	s=korg; t=1747071767;
+	bh=7bgAWczTkDZsKezQ8pB8ukTG912n/RHOBJrcg2Jox/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iU7V33cY2ezpxz3PbH1Uckr18PwzVdFT3jK0tssjKfcLL9+B83ovrZ1v5gwa7A4am
-	 BvVrFdJ382mztnan2JcxbIDJtfyUgmg9HKm5BiWSlax7+aXHW7snYp4Xk+TG8dngS5
-	 F/8VkNEQrzqpux/oCwFbmgYktbB2oqJyoUm3dmLo=
+	b=MZGWX1+ZsHix6HFz1R28gpRw2gMTB1G8mnqRVw4WiLyDXefFWFxNxqa4Yz5hVG1Gm
+	 NjG5Ec6X4zj6cD0z8oULcK8TLrpSx+DoeNG52pPcMWZgd5nfzO5Qk3cecNb+IRLBXy
+	 BitjTj7C6yb1tT6uAgDv68OPkHQth0dl2C5ZDfws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alan J. Wylie" <alan@wylie.me.uk>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 019/197] sch_htb: make htb_deactivate() idempotent
-Date: Mon, 12 May 2025 19:37:49 +0200
-Message-ID: <20250512172045.127162910@linuxfoundation.org>
+	Max Kellermann <max.kellermann@ionos.com>,
+	Gao Xiang <xiang@kernel.org>,
+	Hongbo Li <lihongbo22@huawei.com>
+Subject: [PATCH 6.14 002/197] fs/erofs/fileio: call erofs_onlinefolio_split() after bio_add_folio()
+Date: Mon, 12 May 2025 19:37:32 +0200
+Message-ID: <20250512172044.439910580@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -52,105 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <xiyou.wangcong@gmail.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit 3769478610135e82b262640252d90f6efb05be71 ]
+commit bbfe756dc3062c1e934f06e5ba39c239aa953b92 upstream.
 
-Alan reported a NULL pointer dereference in htb_next_rb_node()
-after we made htb_qlen_notify() idempotent.
+If bio_add_folio() fails (because it is full),
+erofs_fileio_scan_folio() needs to submit the I/O request via
+erofs_fileio_rq_submit() and allocate a new I/O request with an empty
+`struct bio`.  Then it retries the bio_add_folio() call.
 
-It turns out in the following case it introduced some regression:
+However, at this point, erofs_onlinefolio_split() has already been
+called which increments `folio->private`; the retry will call
+erofs_onlinefolio_split() again, but there will never be a matching
+erofs_onlinefolio_end() call.  This leaves the folio locked forever
+and all waiters will be stuck in folio_wait_bit_common().
 
-htb_dequeue_tree():
-  |-> fq_codel_dequeue()
-    |-> qdisc_tree_reduce_backlog()
-      |-> htb_qlen_notify()
-        |-> htb_deactivate()
-  |-> htb_next_rb_node()
-  |-> htb_deactivate()
+This bug has been added by commit ce63cb62d794 ("erofs: support
+unencoded inodes for fileio"), but was practically unreachable because
+there was room for 256 folios in the `struct bio` - until commit
+9f74ae8c9ac9 ("erofs: shorten bvecs[] for file-backed mounts") which
+reduced the array capacity to 16 folios.
 
-For htb_next_rb_node(), after calling the 1st htb_deactivate(), the
-clprio[prio]->ptr could be already set to  NULL, which means
-htb_next_rb_node() is vulnerable here.
+It was now trivial to trigger the bug by manually invoking readahead
+from userspace, e.g.:
 
-For htb_deactivate(), although we checked qlen before calling it, in
-case of qlen==0 after qdisc_tree_reduce_backlog(), we may call it again
-which triggers the warning inside.
+ posix_fadvise(fd, 0, st.st_size, POSIX_FADV_WILLNEED);
 
-To fix the issues here, we need to:
+This should be fixed by invoking erofs_onlinefolio_split() only after
+bio_add_folio() has succeeded.  This is safe: asynchronous completions
+invoking erofs_onlinefolio_end() will not unlock the folio because
+erofs_fileio_scan_folio() is still holding a reference to be released
+by erofs_onlinefolio_end() at the end.
 
-1) Make htb_deactivate() idempotent, that is, simply return if we
-   already call it before.
-2) Make htb_next_rb_node() safe against ptr==NULL.
-
-Many thanks to Alan for testing and for the reproducer.
-
-Fixes: 5ba8b837b522 ("sch_htb: make htb_qlen_notify() idempotent")
-Reported-by: Alan J. Wylie <alan@wylie.me.uk>
-Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
-Link: https://patch.msgid.link/20250428232955.1740419-2-xiyou.wangcong@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ce63cb62d794 ("erofs: support unencoded inodes for fileio")
+Fixes: 9f74ae8c9ac9 ("erofs: shorten bvecs[] for file-backed mounts")
+Cc: stable@vger.kernel.org
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Gao Xiang <xiang@kernel.org>
+Tested-by: Hongbo Li <lihongbo22@huawei.com>
+Link: https://lore.kernel.org/r/20250428230933.3422273-1-max.kellermann@ionos.com
+Signed-off-by: Gao Xiang <xiang@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_htb.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ fs/erofs/fileio.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
-index 4b9a639b642e1..14bf71f570570 100644
---- a/net/sched/sch_htb.c
-+++ b/net/sched/sch_htb.c
-@@ -348,7 +348,8 @@ static void htb_add_to_wait_tree(struct htb_sched *q,
-  */
- static inline void htb_next_rb_node(struct rb_node **n)
- {
--	*n = rb_next(*n);
-+	if (*n)
-+		*n = rb_next(*n);
- }
- 
- /**
-@@ -609,8 +610,8 @@ static inline void htb_activate(struct htb_sched *q, struct htb_class *cl)
-  */
- static inline void htb_deactivate(struct htb_sched *q, struct htb_class *cl)
- {
--	WARN_ON(!cl->prio_activity);
--
-+	if (!cl->prio_activity)
-+		return;
- 	htb_deactivate_prios(q, cl);
- 	cl->prio_activity = 0;
- }
-@@ -1485,8 +1486,6 @@ static void htb_qlen_notify(struct Qdisc *sch, unsigned long arg)
- {
- 	struct htb_class *cl = (struct htb_class *)arg;
- 
--	if (!cl->prio_activity)
--		return;
- 	htb_deactivate(qdisc_priv(sch), cl);
- }
- 
-@@ -1740,8 +1739,7 @@ static int htb_delete(struct Qdisc *sch, unsigned long arg,
- 	if (cl->parent)
- 		cl->parent->children--;
- 
--	if (cl->prio_activity)
--		htb_deactivate(q, cl);
-+	htb_deactivate(q, cl);
- 
- 	if (cl->cmode != HTB_CAN_SEND)
- 		htb_safe_rb_erase(&cl->pq_node,
-@@ -1949,8 +1947,7 @@ static int htb_change_class(struct Qdisc *sch, u32 classid,
- 			/* turn parent into inner node */
- 			qdisc_purge_queue(parent->leaf.q);
- 			parent_qdisc = parent->leaf.q;
--			if (parent->prio_activity)
--				htb_deactivate(q, parent);
-+			htb_deactivate(q, parent);
- 
- 			/* remove from evt list because of level change */
- 			if (parent->cmode != HTB_CAN_SEND) {
--- 
-2.39.5
-
+--- a/fs/erofs/fileio.c
++++ b/fs/erofs/fileio.c
+@@ -150,10 +150,10 @@ io_retry:
+ 				io->rq->bio.bi_iter.bi_sector = io->dev.m_pa >> 9;
+ 				attached = 0;
+ 			}
+-			if (!attached++)
+-				erofs_onlinefolio_split(folio);
+ 			if (!bio_add_folio(&io->rq->bio, folio, len, cur))
+ 				goto io_retry;
++			if (!attached++)
++				erofs_onlinefolio_split(folio);
+ 			io->dev.m_pa += len;
+ 		}
+ 		cur += len;
 
 
