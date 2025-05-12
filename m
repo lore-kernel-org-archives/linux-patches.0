@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8732A2528FC;
-	Mon, 12 May 2025 17:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8400D23C4E5;
+	Mon, 12 May 2025 17:49:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072185; cv=none; b=MNZ0MNrgu34Q35P959IiXo89df09N19qpZ9nwRMZPDqHUpvn9n9jAHBCj8j5KoL0gUAjeLY75IEk9u+iImDp0cat/lQDo5s9mM4eNzh886begV2oioPG1dvDWi6g822m2SZSBxOW6oh4S2sdNV/2eOENxjv4f4XXEfUnOixNO88=
+	t=1747072190; cv=none; b=uCxcFAWVM3utXtjHwblBnoEIO8w50zYRVa5XQvG6mnF0lDZcFmtlsvd85t7JDbSFLXncwXUoGHltSl8fuDkUcUk0QFb+Ytpm3IcPu14KlM1R4ieKv3hLvE5J5P0OjNKxFprDyCR2x61lDRD8zBcQ0/9XVA7Qpi4OUi8tkVF8/30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072185; c=relaxed/simple;
-	bh=kBVE9deD4RRDcvzXyUQrvatENJTEFfvjLjyint973ss=;
+	s=arc-20240116; t=1747072190; c=relaxed/simple;
+	bh=VaiCU3H+K5jBXUNjU4vStMlntWj91EJoY2WPkh/TAPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IW+avCNjC6rGgl3dCqJz9q0yFv9rsJ8rbB7x0C0JpnRIxNO3cLFKrjN07E21zW5Zhm/wX6I3bQedUoDPOrds8UQ/uSim/DP00Ti3/SAOqIvFbV4DvGe3kJgvLj3Z+pP+U9PSsoq8T1b4M0oEeV3jmjocIQP1lx6kW02ZiAZxJlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kxuuLWAo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ekbItNk1ZcAhdzl6rwIWxHbgzcN2TmqUIyuq00k+DVkjiQ8AReohVSkkVSegXod4zLPGNbtfE22yn8ZAiW7NSkaOBKdQeaByHdSg8cII3DunfiI+6l1ZVn7ed2yCkbWTOTyBxymAP5QOuLWDVNdwuYv8BjocmvXEzV8AlhE6A8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PbmrRWOM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxuuLWAo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A03AC4CEE7;
-	Mon, 12 May 2025 17:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PbmrRWOM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54195C4CEE7;
+	Mon, 12 May 2025 17:49:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072185;
-	bh=kBVE9deD4RRDcvzXyUQrvatENJTEFfvjLjyint973ss=;
+	s=korg; t=1747072190;
+	bh=VaiCU3H+K5jBXUNjU4vStMlntWj91EJoY2WPkh/TAPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kxuuLWAoGoVoOnkxTR5W+tKU60ctPtzsSZonjXuB7/0J1mbiPUudNPTekzLR2F0I4
-	 tLFn4Bkiln5vd5iPW6GgC93PliGPSU1+5buI917b1Z6W2BcMiQ3p3P6gn1ciBEu+mz
-	 3UZ9kq7mMw1e1py1LszKuoaweUcViB4va/XUgEUc=
+	b=PbmrRWOMVGUTT67HCpidaTp2iIssRweyIbrnoHcjiPEM/JOqDeoT++ZoORWijm/Po
+	 /f5dyJ5CtOIrz3XJ+rPnTtaMuBwMuvNoUgvbgfYDgJL+Ieykyi2o/xukq2xUdf2cuo
+	 ghVXJzdCL/9eY+MAiwNynVjbmHv3q47ikyFPVUAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Prashanth K <prashanth.k@oss.qualcomm.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.14 134/197] usb: dwc3: gadget: Make gadget_wakeup asynchronous
-Date: Mon, 12 May 2025 19:39:44 +0200
-Message-ID: <20250512172049.847969510@linuxfoundation.org>
+	Pawel Laszczak <pawell@cadence.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 6.14 135/197] usb: cdnsp: Fix issue with resuming from L1
+Date: Mon, 12 May 2025 19:39:45 +0200
+Message-ID: <20250512172049.887230035@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -51,186 +51,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prashanth K <prashanth.k@oss.qualcomm.com>
+From: Pawel Laszczak <pawell@cadence.com>
 
-commit 2372f1caeca433c4c01c2482f73fbe057f5168ce upstream.
+commit 241e2ce88e5a494be7a5d44c0697592f1632fbee upstream.
 
-Currently gadget_wakeup() waits for U0 synchronously if it was
-called from func_wakeup(), this is because we need to send the
-function wakeup command soon after the link is active. And the
-call is made synchronous by polling DSTS continuosly for 20000
-times in __dwc3_gadget_wakeup(). But it observed that sometimes
-the link is not active even after polling 20K times, leading to
-remote wakeup failures. Adding a small delay between each poll
-helps, but that won't guarantee resolution in future. Hence make
-the gadget_wakeup completely asynchronous.
+In very rare cases after resuming controller from L1 to L0 it reads
+registers before the clock UTMI have been enabled and as the result
+driver reads incorrect value.
+Most of registers are in APB domain clock but some of them (e.g. PORTSC)
+are in UTMI domain clock.
+After entering to L1 state the UTMI clock can be disabled.
+When controller transition from L1 to L0 the port status change event is
+reported and in interrupt runtime function driver reads PORTSC.
+During this read operation controller synchronize UTMI and APB domain
+but UTMI clock is still disabled and in result it reads 0xFFFFFFFF value.
+To fix this issue driver increases APB timeout value.
 
-Since multiple interfaces can issue a function wakeup at once,
-add a new variable wakeup_pending_funcs which will indicate the
-functions that has issued func_wakup, this is represented in a
-bitmap format. If the link is in U3, dwc3_gadget_func_wakeup()
-will set the bit corresponding to interface_id and bail out.
-Once link comes back to U0, linksts_change irq is triggered,
-where the function wakeup command is sent based on bitmap.
+The issue is platform specific and if the default value of APB timeout
+is not sufficient then this time should be set Individually for each
+platform.
 
+Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
 Cc: stable <stable@kernel.org>
-Fixes: 92c08a84b53e ("usb: dwc3: Add function suspend and function wakeup support")
-Signed-off-by: Prashanth K <prashanth.k@oss.qualcomm.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20250422103231.1954387-4-prashanth.k@oss.qualcomm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/PH7PR07MB953846C57973E4DB134CAA71DDBF2@PH7PR07MB9538.namprd07.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.h   |    4 +++
- drivers/usb/dwc3/gadget.c |   60 +++++++++++++++++-----------------------------
- 2 files changed, 27 insertions(+), 37 deletions(-)
+ drivers/usb/cdns3/cdnsp-gadget.c |   29 +++++++++++++++++++++++++++++
+ drivers/usb/cdns3/cdnsp-gadget.h |    3 +++
+ drivers/usb/cdns3/cdnsp-pci.c    |   12 ++++++++++--
+ drivers/usb/cdns3/core.h         |    3 +++
+ 4 files changed, 45 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -1164,6 +1164,9 @@ struct dwc3_scratchpad_array {
-  * @gsbuscfg0_reqinfo: store GSBUSCFG0.DATRDREQINFO, DESRDREQINFO,
-  *		       DATWRREQINFO, and DESWRREQINFO value passed from
-  *		       glue driver.
-+ * @wakeup_pending_funcs: Indicates whether any interface has requested for
-+ *			 function wakeup in bitmap format where bit position
-+ *			 represents interface_id.
+--- a/drivers/usb/cdns3/cdnsp-gadget.c
++++ b/drivers/usb/cdns3/cdnsp-gadget.c
+@@ -139,6 +139,26 @@ static void cdnsp_clear_port_change_bit(
+ 	       (portsc & PORT_CHANGE_BITS), port_regs);
+ }
+ 
++static void cdnsp_set_apb_timeout_value(struct cdnsp_device *pdev)
++{
++	struct cdns *cdns = dev_get_drvdata(pdev->dev);
++	__le32 __iomem *reg;
++	void __iomem *base;
++	u32 offset = 0;
++	u32 val;
++
++	if (!cdns->override_apb_timeout)
++		return;
++
++	base = &pdev->cap_regs->hc_capbase;
++	offset = cdnsp_find_next_ext_cap(base, offset, D_XEC_PRE_REGS_CAP);
++	reg = base + offset + REG_CHICKEN_BITS_3_OFFSET;
++
++	val  = le32_to_cpu(readl(reg));
++	val = CHICKEN_APB_TIMEOUT_SET(val, cdns->override_apb_timeout);
++	writel(cpu_to_le32(val), reg);
++}
++
+ static void cdnsp_set_chicken_bits_2(struct cdnsp_device *pdev, u32 bit)
+ {
+ 	__le32 __iomem *reg;
+@@ -1798,6 +1818,15 @@ static int cdnsp_gen_setup(struct cdnsp_
+ 	pdev->hci_version = HC_VERSION(pdev->hcc_params);
+ 	pdev->hcc_params = readl(&pdev->cap_regs->hcc_params);
+ 
++	/*
++	 * Override the APB timeout value to give the controller more time for
++	 * enabling UTMI clock and synchronizing APB and UTMI clock domains.
++	 * This fix is platform specific and is required to fixes issue with
++	 * reading incorrect value from PORTSC register after resuming
++	 * from L1 state.
++	 */
++	cdnsp_set_apb_timeout_value(pdev);
++
+ 	cdnsp_get_rev_cap(pdev);
+ 
+ 	/* Make sure the Device Controller is halted. */
+--- a/drivers/usb/cdns3/cdnsp-gadget.h
++++ b/drivers/usb/cdns3/cdnsp-gadget.h
+@@ -520,6 +520,9 @@ struct cdnsp_rev_cap {
+ #define REG_CHICKEN_BITS_2_OFFSET	0x48
+ #define CHICKEN_XDMA_2_TP_CACHE_DIS	BIT(28)
+ 
++#define REG_CHICKEN_BITS_3_OFFSET       0x4C
++#define CHICKEN_APB_TIMEOUT_SET(p, val) (((p) & ~GENMASK(21, 0)) | (val))
++
+ /* XBUF Extended Capability ID. */
+ #define XBUF_CAP_ID			0xCB
+ #define XBUF_RX_TAG_MASK_0_OFFSET	0x1C
+--- a/drivers/usb/cdns3/cdnsp-pci.c
++++ b/drivers/usb/cdns3/cdnsp-pci.c
+@@ -28,6 +28,8 @@
+ #define PCI_DRIVER_NAME		"cdns-pci-usbssp"
+ #define PLAT_DRIVER_NAME	"cdns-usbssp"
+ 
++#define CHICKEN_APB_TIMEOUT_VALUE       0x1C20
++
+ static struct pci_dev *cdnsp_get_second_fun(struct pci_dev *pdev)
+ {
+ 	/*
+@@ -139,6 +141,14 @@ static int cdnsp_pci_probe(struct pci_de
+ 		cdnsp->otg_irq = pdev->irq;
+ 	}
+ 
++	/*
++	 * Cadence PCI based platform require some longer timeout for APB
++	 * to fixes domain clock synchronization issue after resuming
++	 * controller from L1 state.
++	 */
++	cdnsp->override_apb_timeout = CHICKEN_APB_TIMEOUT_VALUE;
++	pci_set_drvdata(pdev, cdnsp);
++
+ 	if (pci_is_enabled(func)) {
+ 		cdnsp->dev = dev;
+ 		cdnsp->gadget_init = cdnsp_gadget_init;
+@@ -148,8 +158,6 @@ static int cdnsp_pci_probe(struct pci_de
+ 			goto free_cdnsp;
+ 	}
+ 
+-	pci_set_drvdata(pdev, cdnsp);
+-
+ 	device_wakeup_enable(&pdev->dev);
+ 	if (pci_dev_run_wake(pdev))
+ 		pm_runtime_put_noidle(&pdev->dev);
+--- a/drivers/usb/cdns3/core.h
++++ b/drivers/usb/cdns3/core.h
+@@ -79,6 +79,8 @@ struct cdns3_platform_data {
+  * @pdata: platform data from glue layer
+  * @lock: spinlock structure
+  * @xhci_plat_data: xhci private data structure pointer
++ * @override_apb_timeout: hold value of APB timeout. For value 0 the default
++ *                        value in CHICKEN_BITS_3 will be preserved.
+  * @gadget_init: pointer to gadget initialization function
   */
- struct dwc3 {
- 	struct work_struct	drd_work;
-@@ -1394,6 +1397,7 @@ struct dwc3 {
- 	int			num_ep_resized;
- 	struct dentry		*debug_root;
- 	u32			gsbuscfg0_reqinfo;
-+	u32			wakeup_pending_funcs;
+ struct cdns {
+@@ -117,6 +119,7 @@ struct cdns {
+ 	struct cdns3_platform_data	*pdata;
+ 	spinlock_t			lock;
+ 	struct xhci_plat_priv		*xhci_plat_data;
++	u32                             override_apb_timeout;
+ 
+ 	int (*gadget_init)(struct cdns *cdns);
  };
- 
- #define INCRX_BURST_MODE 0
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -276,8 +276,6 @@ int dwc3_send_gadget_generic_command(str
- 	return ret;
- }
- 
--static int __dwc3_gadget_wakeup(struct dwc3 *dwc, bool async);
--
- /**
-  * dwc3_send_gadget_ep_cmd - issue an endpoint command
-  * @dep: the endpoint to which the command is going to be issued
-@@ -2359,10 +2357,8 @@ static int dwc3_gadget_get_frame(struct
- 	return __dwc3_gadget_get_frame(dwc);
- }
- 
--static int __dwc3_gadget_wakeup(struct dwc3 *dwc, bool async)
-+static int __dwc3_gadget_wakeup(struct dwc3 *dwc)
- {
--	int			retries;
--
- 	int			ret;
- 	u32			reg;
- 
-@@ -2390,8 +2386,7 @@ static int __dwc3_gadget_wakeup(struct d
- 		return -EINVAL;
- 	}
- 
--	if (async)
--		dwc3_gadget_enable_linksts_evts(dwc, true);
-+	dwc3_gadget_enable_linksts_evts(dwc, true);
- 
- 	ret = dwc3_gadget_set_link_state(dwc, DWC3_LINK_STATE_RECOV);
- 	if (ret < 0) {
-@@ -2410,27 +2405,8 @@ static int __dwc3_gadget_wakeup(struct d
- 
- 	/*
- 	 * Since link status change events are enabled we will receive
--	 * an U0 event when wakeup is successful. So bail out.
-+	 * an U0 event when wakeup is successful.
- 	 */
--	if (async)
--		return 0;
--
--	/* poll until Link State changes to ON */
--	retries = 20000;
--
--	while (retries--) {
--		reg = dwc3_readl(dwc->regs, DWC3_DSTS);
--
--		/* in HS, means ON */
--		if (DWC3_DSTS_USBLNKST(reg) == DWC3_LINK_STATE_U0)
--			break;
--	}
--
--	if (DWC3_DSTS_USBLNKST(reg) != DWC3_LINK_STATE_U0) {
--		dev_err(dwc->dev, "failed to send remote wakeup\n");
--		return -EINVAL;
--	}
--
- 	return 0;
- }
- 
-@@ -2451,7 +2427,7 @@ static int dwc3_gadget_wakeup(struct usb
- 		spin_unlock_irqrestore(&dwc->lock, flags);
- 		return -EINVAL;
- 	}
--	ret = __dwc3_gadget_wakeup(dwc, true);
-+	ret = __dwc3_gadget_wakeup(dwc);
- 
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-@@ -2479,14 +2455,10 @@ static int dwc3_gadget_func_wakeup(struc
- 	 */
- 	link_state = dwc3_gadget_get_link_state(dwc);
- 	if (link_state == DWC3_LINK_STATE_U3) {
--		ret = __dwc3_gadget_wakeup(dwc, false);
--		if (ret) {
--			spin_unlock_irqrestore(&dwc->lock, flags);
--			return -EINVAL;
--		}
--		dwc3_resume_gadget(dwc);
--		dwc->suspended = false;
--		dwc->link_state = DWC3_LINK_STATE_U0;
-+		dwc->wakeup_pending_funcs |= BIT(intf_id);
-+		ret = __dwc3_gadget_wakeup(dwc);
-+		spin_unlock_irqrestore(&dwc->lock, flags);
-+		return ret;
- 	}
- 
- 	ret = dwc3_send_gadget_generic_command(dwc, DWC3_DGCMD_DEV_NOTIFICATION,
-@@ -4314,6 +4286,8 @@ static void dwc3_gadget_linksts_change_i
- {
- 	enum dwc3_link_state	next = evtinfo & DWC3_LINK_STATE_MASK;
- 	unsigned int		pwropt;
-+	int			ret;
-+	int			intf_id;
- 
- 	/*
- 	 * WORKAROUND: DWC3 < 2.50a have an issue when configured without
-@@ -4389,7 +4363,7 @@ static void dwc3_gadget_linksts_change_i
- 
- 	switch (next) {
- 	case DWC3_LINK_STATE_U0:
--		if (dwc->gadget->wakeup_armed) {
-+		if (dwc->gadget->wakeup_armed || dwc->wakeup_pending_funcs) {
- 			dwc3_gadget_enable_linksts_evts(dwc, false);
- 			dwc3_resume_gadget(dwc);
- 			dwc->suspended = false;
-@@ -4412,6 +4386,18 @@ static void dwc3_gadget_linksts_change_i
- 	}
- 
- 	dwc->link_state = next;
-+
-+	/* Proceed with func wakeup if any interfaces that has requested */
-+	while (dwc->wakeup_pending_funcs && (next == DWC3_LINK_STATE_U0)) {
-+		intf_id = ffs(dwc->wakeup_pending_funcs) - 1;
-+		ret = dwc3_send_gadget_generic_command(dwc, DWC3_DGCMD_DEV_NOTIFICATION,
-+						       DWC3_DGCMDPAR_DN_FUNC_WAKE |
-+						       DWC3_DGCMDPAR_INTF_SEL(intf_id));
-+		if (ret)
-+			dev_err(dwc->dev, "Failed to send DN wake for intf %d\n", intf_id);
-+
-+		dwc->wakeup_pending_funcs &= ~BIT(intf_id);
-+	}
- }
- 
- static void dwc3_gadget_suspend_interrupt(struct dwc3 *dwc,
 
 
