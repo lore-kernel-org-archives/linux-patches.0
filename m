@@ -1,550 +1,417 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0813B29826A;
-	Mon, 12 May 2025 18:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D4D298279;
+	Mon, 12 May 2025 18:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073270; cv=none; b=MBP9dd83q468dh8+X1O8VD/Cp+csZchj57BseGKIKIhzzK/hSvphfOKfKNAn44iE/AyHiNYeE7XcdQTNoq/bNHPdOCfx6aRbKtG4N4oYn3dfisbIOLoOiKknttemhT7/XAl0cRyNQlekZRGaik4V+CWEXsHh+MwvoqEb4RMV3MU=
+	t=1747073273; cv=none; b=cjZ50EVYnILKpGRNe+ZRmbLdgickP711BF1ikGiDW3gPKwpWeBaxq1gFHuARwHpNCIynDioAWnCVDwu78OBayH/Y0VJBDnvILgacgeCvoHKhYHm+UOZC9ItwGfcH4rGzuYn+3fWCKyjsLLgiT3GPI1rQWnnnsjywrngJuPJGNOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073270; c=relaxed/simple;
-	bh=LsE6CKvrqpv/ZyS7E3ZPH7HtTZBHgVJru1jYnu0M1eI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=g4iFB7Uc8TcwpL6l2frBj0lme2cne8j5ITrAy2x0jNsJuIR80Ra9wSTExX7nJx+5Dp/RpfuD48HLV/CM8j0ecfvVgOBDg2c87atwQ4dC/F9ncYHLeDQ93lrVOdc23efCaXaSLjVzWlO0yr+y1KQiAlqswXIMA8v7NClCV3s+wUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aAMk9g/r; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747073273; c=relaxed/simple;
+	bh=3dLCDzdSeCKtGgqs2C7V2dHCykqp6PGtYMpiCiNqXDM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Waa7yxdCyq7mNTzone5mnw/u+X0grTnStobusg3vAv7hB+F/qkb5HZzjf1hmDrXosUe3Vt1GSnGe/sndVCKh+UMVyQB90eGlKZovshDlf7fVzCKY0mj/iMSSuL1uCm/uV5taocQh3i+WGyWvPty2dg2B/CcSC2O/03GLq2Xu7ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mB8pDfMV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aAMk9g/r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496AEC4CEE7;
-	Mon, 12 May 2025 18:07:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mB8pDfMV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD700C4CEEF;
+	Mon, 12 May 2025 18:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073269;
-	bh=LsE6CKvrqpv/ZyS7E3ZPH7HtTZBHgVJru1jYnu0M1eI=;
-	h=From:To:Cc:Subject:Date:From;
-	b=aAMk9g/r9k/wb2McmLjS2tEQGhTW/3xTe30eWCQS3ma9eFB4EERyGeMxIKZBQ6fhz
-	 NAFjqV1kOi5sT8fzzH85J7At2dpmfr8WeNfNMbPuqisEXgOpzUHyG1j7Gx4HApfy5U
-	 ndb63ARRKktH9WpTMeWTaXmp6EdXLyhTzNTXCV/E=
+	s=korg; t=1747073273;
+	bh=3dLCDzdSeCKtGgqs2C7V2dHCykqp6PGtYMpiCiNqXDM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=mB8pDfMVLatNCECSQbgcIAWY5ehJyX7+sYgSnd5E6zVef7412nOZr+vWwZxRy1Frk
+	 DtJfsDVseFoGXba/rnQ/u/Dy/w9r/1dtYIR/RkQweZyaNdalsj/apVmXqm20SkXKi+
+	 gTIsgWAlc/MAI4RgrsnSDbbJOO7hbP4/DwYqgJp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org
-Subject: [PATCH 6.6 000/113] 6.6.91-rc1 review
-Date: Mon, 12 May 2025 19:44:49 +0200
-Message-ID: <20250512172027.691520737@linuxfoundation.org>
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 016/113] can: gw: fix RCU/BH usage in cgw_create_job()
+Date: Mon, 12 May 2025 19:45:05 +0200
+Message-ID: <20250512172028.352171431@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250512172027.691520737@linuxfoundation.org>
+References: <20250512172027.691520737@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.91-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.6.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.6.91-rc1
-X-KernelTest-Deadline: 2025-05-14T17:20+00:00
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.6.91 release.
-There are 113 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+
+[ Upstream commit 511e64e13d8cc72853275832e3f372607466c18c ]
+
+As reported by Sebastian Andrzej Siewior the use of local_bh_disable()
+is only feasible in uni processor systems to update the modification rules.
+The usual use-case to update the modification rules is to update the data
+of the modifications but not the modification types (AND/OR/XOR/SET) or
+the checksum functions itself.
+
+To omit additional memory allocations to maintain fast modification
+switching times, the modification description space is doubled at gw-job
+creation time so that only the reference to the active modification
+description is changed under rcu protection.
+
+Rename cgw_job::mod to cf_mod and make it a RCU pointer. Allocate in
+cgw_create_job() and free it together with cgw_job in
+cgw_job_free_rcu(). Update all users to dereference cgw_job::cf_mod with
+a RCU accessor and if possible once.
+
+[bigeasy: Replace mod1/mod2 from the Oliver's original patch with dynamic
+allocation, use RCU annotation and accessor]
+
+Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Closes: https://lore.kernel.org/linux-can/20231031112349.y0aLoBrz@linutronix.de/
+Fixes: dd895d7f21b2 ("can: cangw: introduce optional uid to reference created routing jobs")
+Tested-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20250429070555.cs-7b_eZ@linutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/can/gw.c | 149 +++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 90 insertions(+), 59 deletions(-)
+
+diff --git a/net/can/gw.c b/net/can/gw.c
+index 37528826935e7..e65500c52bf5c 100644
+--- a/net/can/gw.c
++++ b/net/can/gw.c
+@@ -130,7 +130,7 @@ struct cgw_job {
+ 	u32 handled_frames;
+ 	u32 dropped_frames;
+ 	u32 deleted_frames;
+-	struct cf_mod mod;
++	struct cf_mod __rcu *cf_mod;
+ 	union {
+ 		/* CAN frame data source */
+ 		struct net_device *dev;
+@@ -459,6 +459,7 @@ static void can_can_gw_rcv(struct sk_buff *skb, void *data)
+ 	struct cgw_job *gwj = (struct cgw_job *)data;
+ 	struct canfd_frame *cf;
+ 	struct sk_buff *nskb;
++	struct cf_mod *mod;
+ 	int modidx = 0;
+ 
+ 	/* process strictly Classic CAN or CAN FD frames */
+@@ -506,7 +507,8 @@ static void can_can_gw_rcv(struct sk_buff *skb, void *data)
+ 	 * When there is at least one modification function activated,
+ 	 * we need to copy the skb as we want to modify skb->data.
+ 	 */
+-	if (gwj->mod.modfunc[0])
++	mod = rcu_dereference(gwj->cf_mod);
++	if (mod->modfunc[0])
+ 		nskb = skb_copy(skb, GFP_ATOMIC);
+ 	else
+ 		nskb = skb_clone(skb, GFP_ATOMIC);
+@@ -529,8 +531,8 @@ static void can_can_gw_rcv(struct sk_buff *skb, void *data)
+ 	cf = (struct canfd_frame *)nskb->data;
+ 
+ 	/* perform preprocessed modification functions if there are any */
+-	while (modidx < MAX_MODFUNCTIONS && gwj->mod.modfunc[modidx])
+-		(*gwj->mod.modfunc[modidx++])(cf, &gwj->mod);
++	while (modidx < MAX_MODFUNCTIONS && mod->modfunc[modidx])
++		(*mod->modfunc[modidx++])(cf, mod);
+ 
+ 	/* Has the CAN frame been modified? */
+ 	if (modidx) {
+@@ -546,11 +548,11 @@ static void can_can_gw_rcv(struct sk_buff *skb, void *data)
+ 		}
+ 
+ 		/* check for checksum updates */
+-		if (gwj->mod.csumfunc.crc8)
+-			(*gwj->mod.csumfunc.crc8)(cf, &gwj->mod.csum.crc8);
++		if (mod->csumfunc.crc8)
++			(*mod->csumfunc.crc8)(cf, &mod->csum.crc8);
+ 
+-		if (gwj->mod.csumfunc.xor)
+-			(*gwj->mod.csumfunc.xor)(cf, &gwj->mod.csum.xor);
++		if (mod->csumfunc.xor)
++			(*mod->csumfunc.xor)(cf, &mod->csum.xor);
+ 	}
+ 
+ 	/* clear the skb timestamp if not configured the other way */
+@@ -581,9 +583,20 @@ static void cgw_job_free_rcu(struct rcu_head *rcu_head)
+ {
+ 	struct cgw_job *gwj = container_of(rcu_head, struct cgw_job, rcu);
+ 
++	/* cgw_job::cf_mod is always accessed from the same cgw_job object within
++	 * the same RCU read section. Once cgw_job is scheduled for removal,
++	 * cf_mod can also be removed without mandating an additional grace period.
++	 */
++	kfree(rcu_access_pointer(gwj->cf_mod));
+ 	kmem_cache_free(cgw_cache, gwj);
+ }
+ 
++/* Return cgw_job::cf_mod with RTNL protected section */
++static struct cf_mod *cgw_job_cf_mod(struct cgw_job *gwj)
++{
++	return rcu_dereference_protected(gwj->cf_mod, rtnl_is_locked());
++}
++
+ static int cgw_notifier(struct notifier_block *nb,
+ 			unsigned long msg, void *ptr)
+ {
+@@ -616,6 +629,7 @@ static int cgw_put_job(struct sk_buff *skb, struct cgw_job *gwj, int type,
+ {
+ 	struct rtcanmsg *rtcan;
+ 	struct nlmsghdr *nlh;
++	struct cf_mod *mod;
+ 
+ 	nlh = nlmsg_put(skb, pid, seq, type, sizeof(*rtcan), flags);
+ 	if (!nlh)
+@@ -650,82 +664,83 @@ static int cgw_put_job(struct sk_buff *skb, struct cgw_job *gwj, int type,
+ 			goto cancel;
+ 	}
+ 
++	mod = cgw_job_cf_mod(gwj);
+ 	if (gwj->flags & CGW_FLAGS_CAN_FD) {
+ 		struct cgw_fdframe_mod mb;
+ 
+-		if (gwj->mod.modtype.and) {
+-			memcpy(&mb.cf, &gwj->mod.modframe.and, sizeof(mb.cf));
+-			mb.modtype = gwj->mod.modtype.and;
++		if (mod->modtype.and) {
++			memcpy(&mb.cf, &mod->modframe.and, sizeof(mb.cf));
++			mb.modtype = mod->modtype.and;
+ 			if (nla_put(skb, CGW_FDMOD_AND, sizeof(mb), &mb) < 0)
+ 				goto cancel;
+ 		}
+ 
+-		if (gwj->mod.modtype.or) {
+-			memcpy(&mb.cf, &gwj->mod.modframe.or, sizeof(mb.cf));
+-			mb.modtype = gwj->mod.modtype.or;
++		if (mod->modtype.or) {
++			memcpy(&mb.cf, &mod->modframe.or, sizeof(mb.cf));
++			mb.modtype = mod->modtype.or;
+ 			if (nla_put(skb, CGW_FDMOD_OR, sizeof(mb), &mb) < 0)
+ 				goto cancel;
+ 		}
+ 
+-		if (gwj->mod.modtype.xor) {
+-			memcpy(&mb.cf, &gwj->mod.modframe.xor, sizeof(mb.cf));
+-			mb.modtype = gwj->mod.modtype.xor;
++		if (mod->modtype.xor) {
++			memcpy(&mb.cf, &mod->modframe.xor, sizeof(mb.cf));
++			mb.modtype = mod->modtype.xor;
+ 			if (nla_put(skb, CGW_FDMOD_XOR, sizeof(mb), &mb) < 0)
+ 				goto cancel;
+ 		}
+ 
+-		if (gwj->mod.modtype.set) {
+-			memcpy(&mb.cf, &gwj->mod.modframe.set, sizeof(mb.cf));
+-			mb.modtype = gwj->mod.modtype.set;
++		if (mod->modtype.set) {
++			memcpy(&mb.cf, &mod->modframe.set, sizeof(mb.cf));
++			mb.modtype = mod->modtype.set;
+ 			if (nla_put(skb, CGW_FDMOD_SET, sizeof(mb), &mb) < 0)
+ 				goto cancel;
+ 		}
+ 	} else {
+ 		struct cgw_frame_mod mb;
+ 
+-		if (gwj->mod.modtype.and) {
+-			memcpy(&mb.cf, &gwj->mod.modframe.and, sizeof(mb.cf));
+-			mb.modtype = gwj->mod.modtype.and;
++		if (mod->modtype.and) {
++			memcpy(&mb.cf, &mod->modframe.and, sizeof(mb.cf));
++			mb.modtype = mod->modtype.and;
+ 			if (nla_put(skb, CGW_MOD_AND, sizeof(mb), &mb) < 0)
+ 				goto cancel;
+ 		}
+ 
+-		if (gwj->mod.modtype.or) {
+-			memcpy(&mb.cf, &gwj->mod.modframe.or, sizeof(mb.cf));
+-			mb.modtype = gwj->mod.modtype.or;
++		if (mod->modtype.or) {
++			memcpy(&mb.cf, &mod->modframe.or, sizeof(mb.cf));
++			mb.modtype = mod->modtype.or;
+ 			if (nla_put(skb, CGW_MOD_OR, sizeof(mb), &mb) < 0)
+ 				goto cancel;
+ 		}
+ 
+-		if (gwj->mod.modtype.xor) {
+-			memcpy(&mb.cf, &gwj->mod.modframe.xor, sizeof(mb.cf));
+-			mb.modtype = gwj->mod.modtype.xor;
++		if (mod->modtype.xor) {
++			memcpy(&mb.cf, &mod->modframe.xor, sizeof(mb.cf));
++			mb.modtype = mod->modtype.xor;
+ 			if (nla_put(skb, CGW_MOD_XOR, sizeof(mb), &mb) < 0)
+ 				goto cancel;
+ 		}
+ 
+-		if (gwj->mod.modtype.set) {
+-			memcpy(&mb.cf, &gwj->mod.modframe.set, sizeof(mb.cf));
+-			mb.modtype = gwj->mod.modtype.set;
++		if (mod->modtype.set) {
++			memcpy(&mb.cf, &mod->modframe.set, sizeof(mb.cf));
++			mb.modtype = mod->modtype.set;
+ 			if (nla_put(skb, CGW_MOD_SET, sizeof(mb), &mb) < 0)
+ 				goto cancel;
+ 		}
+ 	}
+ 
+-	if (gwj->mod.uid) {
+-		if (nla_put_u32(skb, CGW_MOD_UID, gwj->mod.uid) < 0)
++	if (mod->uid) {
++		if (nla_put_u32(skb, CGW_MOD_UID, mod->uid) < 0)
+ 			goto cancel;
+ 	}
+ 
+-	if (gwj->mod.csumfunc.crc8) {
++	if (mod->csumfunc.crc8) {
+ 		if (nla_put(skb, CGW_CS_CRC8, CGW_CS_CRC8_LEN,
+-			    &gwj->mod.csum.crc8) < 0)
++			    &mod->csum.crc8) < 0)
+ 			goto cancel;
+ 	}
+ 
+-	if (gwj->mod.csumfunc.xor) {
++	if (mod->csumfunc.xor) {
+ 		if (nla_put(skb, CGW_CS_XOR, CGW_CS_XOR_LEN,
+-			    &gwj->mod.csum.xor) < 0)
++			    &mod->csum.xor) < 0)
+ 			goto cancel;
+ 	}
+ 
+@@ -1059,7 +1074,7 @@ static int cgw_create_job(struct sk_buff *skb,  struct nlmsghdr *nlh,
+ 	struct net *net = sock_net(skb->sk);
+ 	struct rtcanmsg *r;
+ 	struct cgw_job *gwj;
+-	struct cf_mod mod;
++	struct cf_mod *mod;
+ 	struct can_can_gw ccgw;
+ 	u8 limhops = 0;
+ 	int err = 0;
+@@ -1078,37 +1093,48 @@ static int cgw_create_job(struct sk_buff *skb,  struct nlmsghdr *nlh,
+ 	if (r->gwtype != CGW_TYPE_CAN_CAN)
+ 		return -EINVAL;
+ 
+-	err = cgw_parse_attr(nlh, &mod, CGW_TYPE_CAN_CAN, &ccgw, &limhops);
++	mod = kmalloc(sizeof(*mod), GFP_KERNEL);
++	if (!mod)
++		return -ENOMEM;
++
++	err = cgw_parse_attr(nlh, mod, CGW_TYPE_CAN_CAN, &ccgw, &limhops);
+ 	if (err < 0)
+-		return err;
++		goto out_free_cf;
+ 
+-	if (mod.uid) {
++	if (mod->uid) {
+ 		ASSERT_RTNL();
+ 
+ 		/* check for updating an existing job with identical uid */
+ 		hlist_for_each_entry(gwj, &net->can.cgw_list, list) {
+-			if (gwj->mod.uid != mod.uid)
++			struct cf_mod *old_cf;
++
++			old_cf = cgw_job_cf_mod(gwj);
++			if (old_cf->uid != mod->uid)
+ 				continue;
+ 
+ 			/* interfaces & filters must be identical */
+-			if (memcmp(&gwj->ccgw, &ccgw, sizeof(ccgw)))
+-				return -EINVAL;
++			if (memcmp(&gwj->ccgw, &ccgw, sizeof(ccgw))) {
++				err = -EINVAL;
++				goto out_free_cf;
++			}
+ 
+-			/* update modifications with disabled softirq & quit */
+-			local_bh_disable();
+-			memcpy(&gwj->mod, &mod, sizeof(mod));
+-			local_bh_enable();
++			rcu_assign_pointer(gwj->cf_mod, mod);
++			kfree_rcu_mightsleep(old_cf);
+ 			return 0;
+ 		}
+ 	}
+ 
+ 	/* ifindex == 0 is not allowed for job creation */
+-	if (!ccgw.src_idx || !ccgw.dst_idx)
+-		return -ENODEV;
++	if (!ccgw.src_idx || !ccgw.dst_idx) {
++		err = -ENODEV;
++		goto out_free_cf;
++	}
+ 
+ 	gwj = kmem_cache_alloc(cgw_cache, GFP_KERNEL);
+-	if (!gwj)
+-		return -ENOMEM;
++	if (!gwj) {
++		err = -ENOMEM;
++		goto out_free_cf;
++	}
+ 
+ 	gwj->handled_frames = 0;
+ 	gwj->dropped_frames = 0;
+@@ -1118,7 +1144,7 @@ static int cgw_create_job(struct sk_buff *skb,  struct nlmsghdr *nlh,
+ 	gwj->limit_hops = limhops;
+ 
+ 	/* insert already parsed information */
+-	memcpy(&gwj->mod, &mod, sizeof(mod));
++	RCU_INIT_POINTER(gwj->cf_mod, mod);
+ 	memcpy(&gwj->ccgw, &ccgw, sizeof(ccgw));
+ 
+ 	err = -ENODEV;
+@@ -1152,9 +1178,11 @@ static int cgw_create_job(struct sk_buff *skb,  struct nlmsghdr *nlh,
+ 	if (!err)
+ 		hlist_add_head_rcu(&gwj->list, &net->can.cgw_list);
+ out:
+-	if (err)
++	if (err) {
+ 		kmem_cache_free(cgw_cache, gwj);
+-
++out_free_cf:
++		kfree(mod);
++	}
+ 	return err;
+ }
+ 
+@@ -1214,19 +1242,22 @@ static int cgw_remove_job(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 
+ 	/* remove only the first matching entry */
+ 	hlist_for_each_entry_safe(gwj, nx, &net->can.cgw_list, list) {
++		struct cf_mod *cf_mod;
++
+ 		if (gwj->flags != r->flags)
+ 			continue;
+ 
+ 		if (gwj->limit_hops != limhops)
+ 			continue;
+ 
++		cf_mod = cgw_job_cf_mod(gwj);
+ 		/* we have a match when uid is enabled and identical */
+-		if (gwj->mod.uid || mod.uid) {
+-			if (gwj->mod.uid != mod.uid)
++		if (cf_mod->uid || mod.uid) {
++			if (cf_mod->uid != mod.uid)
+ 				continue;
+ 		} else {
+ 			/* no uid => check for identical modifications */
+-			if (memcmp(&gwj->mod, &mod, sizeof(mod)))
++			if (memcmp(cf_mod, &mod, sizeof(mod)))
+ 				continue;
+ 		}
+ 
+-- 
+2.39.5
 
-Responses should be made by Wed, 14 May 2025 17:19:58 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.91-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.6.91-rc1
-
-Peter Zijlstra <peterz@infradead.org>
-    x86/its: Use dynamic thunks for indirect branches
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/ibt: Keep IBT disabled during alternative patching
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/its: Align RETs in BHB clear sequence to avoid thunking
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/its: Add support for RSB stuffing mitigation
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/its: Add "vmexit" option to skip mitigation on some CPUs
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/its: Enable Indirect Target Selection mitigation
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/its: Add support for ITS-safe return thunk
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/its: Add support for ITS-safe indirect thunk
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/its: Enumerate Indirect Target Selection (ITS) bug
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    Documentation: x86/bugs/its: Add ITS documentation
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/speculation: Remove the extra #ifdef around CALL_NOSPEC
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/speculation: Add a conditional CS prefix to CALL_NOSPEC
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/speculation: Simplify and make CALL_NOSPEC consistent
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/bhi: Do not set BHI_DIS_S in 32-bit mode
-
-Daniel Sneddon <daniel.sneddon@linux.intel.com>
-    x86/bpf: Add IBHF call at end of classic BPF
-
-Daniel Sneddon <daniel.sneddon@linux.intel.com>
-    x86/bpf: Call branch history clearing sequence on exit
-
-James Morse <james.morse@arm.com>
-    arm64: proton-pack: Add new CPUs 'k' values for branch mitigation
-
-James Morse <james.morse@arm.com>
-    arm64: bpf: Only mitigate cBPF programs loaded by unprivileged users
-
-James Morse <james.morse@arm.com>
-    arm64: bpf: Add BHB mitigation to the epilogue for cBPF programs
-
-James Morse <james.morse@arm.com>
-    arm64: proton-pack: Expose whether the branchy loop k value
-
-James Morse <james.morse@arm.com>
-    arm64: proton-pack: Expose whether the platform is mitigated by firmware
-
-James Morse <james.morse@arm.com>
-    arm64: insn: Add support for encoding DSB
-
-Jens Axboe <axboe@kernel.dk>
-    io_uring: ensure deferred completions are posted for multishot
-
-Jens Axboe <axboe@kernel.dk>
-    io_uring: always arm linked timeouts prior to issue
-
-Al Viro <viro@zeniv.linux.org.uk>
-    do_umount(): add missing barrier before refcount checks in sync case
-
-Daniel Wagner <wagi@kernel.org>
-    nvme: unblock ctrl state transition for firmware update
-
-Kevin Baker <kevinb@ventureresearch.com>
-    drm/panel: simple: Update timings for AUO G101EVN010
-
-Thorsten Blum <thorsten.blum@linux.dev>
-    MIPS: Fix MAX_REG_OFFSET
-
-Marco Crivellari <marco.crivellari@suse.com>
-    MIPS: Move r4k_wait() to .cpuidle.text section
-
-Marco Crivellari <marco.crivellari@suse.com>
-    MIPS: Fix idle VS timer enqueue
-
-Jonathan Cameron <Jonathan.Cameron@huawei.com>
-    iio: adc: dln2: Use aligned_s64 for timestamp
-
-Jonathan Cameron <Jonathan.Cameron@huawei.com>
-    iio: accel: adxl355: Make timestamp 64-bit aligned using aligned_s64
-
-Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-    types: Complement the aligned types with signed 64-bit one
-
-Jonathan Cameron <Jonathan.Cameron@huawei.com>
-    iio: temp: maxim-thermocouple: Fix potential lack of DMA safe buffer.
-
-Lothar Rubusch <l.rubusch@gmail.com>
-    iio: accel: adxl367: fix setting odr for activity time update
-
-Dave Penkler <dpenkler@gmail.com>
-    usb: usbtmc: Fix erroneous generic_read ioctl return
-
-Dave Penkler <dpenkler@gmail.com>
-    usb: usbtmc: Fix erroneous wait_srq ioctl return
-
-Dave Penkler <dpenkler@gmail.com>
-    usb: usbtmc: Fix erroneous get_stb ioctl error returns
-
-Oliver Neukum <oneukum@suse.com>
-    USB: usbtmc: use interruptible sleep in usbtmc_read
-
-Andrei Kuchynski <akuchynski@chromium.org>
-    usb: typec: ucsi: displayport: Fix NULL pointer access
-
-RD Babiera <rdbabiera@google.com>
-    usb: typec: tcpm: delay SNK_TRY_WAIT_DEBOUNCE to SRC_TRYWAIT transition
-
-Jim Lin <jilin@nvidia.com>
-    usb: host: tegra: Prevent host controller crash when OTG port is used
-
-Prashanth K <prashanth.k@oss.qualcomm.com>
-    usb: gadget: Use get_status callback to set remote wakeup capability
-
-Wayne Chang <waynec@nvidia.com>
-    usb: gadget: tegra-xudc: ACK ST_RC after clearing CTRL_RUN
-
-Prashanth K <prashanth.k@oss.qualcomm.com>
-    usb: gadget: f_ecm: Add get_status callback
-
-Pawel Laszczak <pawell@cadence.com>
-    usb: cdnsp: fix L1 resume issue for RTL_REVISION_NEW_LPM version
-
-Pawel Laszczak <pawell@cadence.com>
-    usb: cdnsp: Fix issue with resuming from L1
-
-Jan Kara <jack@suse.cz>
-    ocfs2: stop quota recovery before disabling quotas
-
-Jan Kara <jack@suse.cz>
-    ocfs2: implement handshaking with ocfs2 recovery thread
-
-Jan Kara <jack@suse.cz>
-    ocfs2: switch osb->disable_recovery to enum
-
-Borislav Petkov (AMD) <bp@alien8.de>
-    x86/microcode: Consolidate the loader enablement checking
-
-Dmitry Antipov <dmantipov@yandex.ru>
-    module: ensure that kobject_put() is safe for module type kobjects
-
-Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-    clocksource/i8253: Use raw_spinlock_irqsave() in clockevent_i8253_disable()
-
-Jason Andryuk <jason.andryuk@amd.com>
-    xenbus: Use kref to track req lifetime
-
-John Ernberg <john.ernberg@actia.se>
-    xen: swiotlb: Use swiotlb bouncing if kmalloc allocation demands it
-
-Paul Aurich <paul@darkrain42.org>
-    smb: client: Avoid race in open_cached_dir with lease breaks
-
-Alexey Charkov <alchark@gmail.com>
-    usb: uhci-platform: Make the clock really optional
-
-Alex Deucher <alexander.deucher@amd.com>
-    drm/amdgpu/hdp6: use memcfg register to post the write for HDP flush
-
-Alex Deucher <alexander.deucher@amd.com>
-    drm/amdgpu/hdp5: use memcfg register to post the write for HDP flush
-
-Alex Deucher <alexander.deucher@amd.com>
-    drm/amdgpu/hdp5.2: use memcfg register to post the write for HDP flush
-
-Alex Deucher <alexander.deucher@amd.com>
-    drm/amdgpu/hdp4: use memcfg register to post the write for HDP flush
-
-Wayne Lin <Wayne.Lin@amd.com>
-    drm/amd/display: Copy AUX read reply data whenever length > 0
-
-Wayne Lin <Wayne.Lin@amd.com>
-    drm/amd/display: Fix wrong handling for AUX_DEFER case
-
-Wayne Lin <Wayne.Lin@amd.com>
-    drm/amd/display: Remove incorrect checking in dmub aux handler
-
-Wayne Lin <Wayne.Lin@amd.com>
-    drm/amd/display: Fix the checking condition in dmub aux handling
-
-Aurabindo Pillai <aurabindo.pillai@amd.com>
-    drm/amd/display: more liberal vmin/vmax update for freesync
-
-Maíra Canal <mcanal@igalia.com>
-    drm/v3d: Add job to pending list if the reset was skipped
-
-Silvano Seva <s.seva@4sigma.it>
-    iio: imu: st_lsm6dsx: fix possible lockup in st_lsm6dsx_read_tagged_fifo
-
-Silvano Seva <s.seva@4sigma.it>
-    iio: imu: st_lsm6dsx: fix possible lockup in st_lsm6dsx_read_fifo
-
-Gabriel Shahrouzi <gshahrouzi@gmail.com>
-    iio: adis16201: Correct inclinometer channel resolution
-
-Simon Xue <xxm@rock-chips.com>
-    iio: adc: rockchip: Fix clock initialization sequence
-
-Angelo Dureghello <adureghello@baylibre.com>
-    iio: adc: ad7606: fix serial register access
-
-Wayne Lin <Wayne.Lin@amd.com>
-    drm/amd/display: Shift DMUB AUX reply command if necessary
-
-Dave Hansen <dave.hansen@linux.intel.com>
-    x86/mm: Eliminate window where TLB flushes may be inadvertently skipped
-
-Gabriel Shahrouzi <gshahrouzi@gmail.com>
-    staging: axis-fifo: Correct handling of tx_fifo_depth for size validation
-
-Gabriel Shahrouzi <gshahrouzi@gmail.com>
-    staging: axis-fifo: Remove hardware resets for user errors
-
-Gabriel Shahrouzi <gshahrouzi@gmail.com>
-    staging: iio: adc: ad7816: Correct conditional logic for store mode
-
-Aditya Garg <gargaditya08@live.com>
-    Input: synaptics - enable InterTouch on TUXEDO InfinityBook Pro 14 v5
-
-Dmitry Torokhov <dmitry.torokhov@gmail.com>
-    Input: synaptics - enable SMBus for HP Elitebook 850 G1
-
-Aditya Garg <gargaditya08@live.com>
-    Input: synaptics - enable InterTouch on Dell Precision M3800
-
-Aditya Garg <gargaditya08@live.com>
-    Input: synaptics - enable InterTouch on Dynabook Portege X30L-G
-
-Manuel Fombuena <fombuena@outlook.com>
-    Input: synaptics - enable InterTouch on Dynabook Portege X30-D
-
-Vicki Pfau <vi@endrift.com>
-    Input: xpad - fix two controller table values
-
-Lode Willems <me@lodewillems.com>
-    Input: xpad - add support for 8BitDo Ultimate 2 Wireless Controller
-
-Vicki Pfau <vi@endrift.com>
-    Input: xpad - fix Share button on Xbox One controllers
-
-Gary Bisson <bisson.gary@gmail.com>
-    Input: mtk-pmic-keys - fix possible null pointer dereference
-
-Mikael Gonella-Bolduc <mgonellabolduc@dimonoff.com>
-    Input: cyttsp5 - fix power control issue on wakeup
-
-Hugo Villeneuve <hvilleneuve@dimonoff.com>
-    Input: cyttsp5 - ensure minimum reset pulse width
-
-Jonas Gorski <jonas.gorski@gmail.com>
-    net: dsa: b53: fix learning on VLAN unaware bridges
-
-Jonas Gorski <jonas.gorski@gmail.com>
-    net: dsa: b53: always rejoin default untagged VLAN on bridge leave
-
-Jonas Gorski <jonas.gorski@gmail.com>
-    net: dsa: b53: fix VLAN ID for untagged vlan on bridge leave
-
-Jonas Gorski <jonas.gorski@gmail.com>
-    net: dsa: b53: fix flushing old pvid VLAN on pvid change
-
-Jonas Gorski <jonas.gorski@gmail.com>
-    net: dsa: b53: fix clearing PVID of a port
-
-Jonas Gorski <jonas.gorski@gmail.com>
-    net: dsa: b53: allow leaky reserved multicast
-
-Paul Chaignon <paul.chaignon@gmail.com>
-    bpf: Scrub packet on bpf_redirect_peer
-
-Jozsef Kadlecsik <kadlec@netfilter.org>
-    netfilter: ipset: fix region locking in hash types
-
-Julian Anastasov <ja@ssi.bg>
-    ipvs: fix uninit-value for saddr in do_output_route4
-
-Oliver Hartkopp <socketcan@hartkopp.net>
-    can: gw: fix RCU/BH usage in cgw_create_job()
-
-Kelsey Maes <kelsey@vpprocess.com>
-    can: mcp251xfd: fix TDC setting for low data bit rates
-
-Daniel Golle <daniel@makrotopia.org>
-    net: ethernet: mtk_eth_soc: reset all TX queues on DMA free
-
-Alexander Lobakin <aleksander.lobakin@intel.com>
-    netdevice: add netdev_tx_reset_subqueue() shorthand
-
-Guillaume Nault <gnault@redhat.com>
-    gre: Fix again IPv6 link-local address generation.
-
-Cong Wang <xiyou.wangcong@gmail.com>
-    sch_htb: make htb_deactivate() idempotent
-
-Wang Zhaolong <wangzhaolong1@huawei.com>
-    ksmbd: fix memory leak in parse_lease_state()
-
-Eelco Chaudron <echaudro@redhat.com>
-    openvswitch: Fix unsafe attribute parsing in output_userspace()
-
-Sean Heelan <seanheelan@gmail.com>
-    ksmbd: Fix UAF in __close_file_table_ids
-
-Norbert Szetei <norbert@doyensec.com>
-    ksmbd: prevent out-of-bounds stream writes by validating *pos
-
-Namjae Jeon <linkinjeon@kernel.org>
-    ksmbd: prevent rename with empty string
-
-Marc Kleine-Budde <mkl@pengutronix.de>
-    can: mcp251xfd: mcp251xfd_remove(): fix order of unregistration calls
-
-Veerendranath Jakkam <quic_vjakkam@quicinc.com>
-    wifi: cfg80211: fix out-of-bounds access during multi-link element defragmentation
-
-Marc Kleine-Budde <mkl@pengutronix.de>
-    can: mcan: m_can_class_unregister(): fix order of unregistration calls
-
-Wojciech Dubowik <Wojciech.Dubowik@mt.com>
-    arm64: dts: imx8mm-verdin: Link reg_usdhc2_vqmmc to usdhc2
-
-Dan Carpenter <dan.carpenter@linaro.org>
-    dm: add missing unlock on in dm_keyslot_evict()
-
-
--------------
-
-Diffstat:
-
- Documentation/ABI/testing/sysfs-devices-system-cpu |   1 +
- Documentation/admin-guide/hw-vuln/index.rst        |   1 +
- .../hw-vuln/indirect-target-selection.rst          | 168 +++++++++++++++++
- Documentation/admin-guide/kernel-parameters.txt    |  18 ++
- Makefile                                           |   4 +-
- arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi   |  25 ++-
- arch/arm64/include/asm/cputype.h                   |   2 +
- arch/arm64/include/asm/insn.h                      |   1 +
- arch/arm64/include/asm/spectre.h                   |   3 +
- arch/arm64/kernel/proton-pack.c                    |  13 +-
- arch/arm64/lib/insn.c                              |  76 ++++----
- arch/arm64/net/bpf_jit_comp.c                      |  57 +++++-
- arch/mips/include/asm/idle.h                       |   3 +-
- arch/mips/include/asm/ptrace.h                     |   3 +-
- arch/mips/kernel/genex.S                           |  63 ++++---
- arch/mips/kernel/idle.c                            |   7 -
- arch/x86/Kconfig                                   |  11 ++
- arch/x86/entry/entry_64.S                          |  20 ++-
- arch/x86/include/asm/alternative.h                 |  24 +++
- arch/x86/include/asm/cpufeatures.h                 |   3 +
- arch/x86/include/asm/microcode.h                   |   2 +
- arch/x86/include/asm/msr-index.h                   |   8 +
- arch/x86/include/asm/nospec-branch.h               |  44 +++--
- arch/x86/kernel/alternative.c                      | 198 ++++++++++++++++++++-
- arch/x86/kernel/cpu/bugs.c                         | 178 +++++++++++++++++-
- arch/x86/kernel/cpu/common.c                       |  72 ++++++--
- arch/x86/kernel/cpu/microcode/amd.c                |   6 +-
- arch/x86/kernel/cpu/microcode/core.c               |  60 ++++---
- arch/x86/kernel/cpu/microcode/intel.c              |   2 +-
- arch/x86/kernel/cpu/microcode/internal.h           |   1 -
- arch/x86/kernel/ftrace.c                           |   2 +-
- arch/x86/kernel/head32.c                           |   4 -
- arch/x86/kernel/module.c                           |   7 +
- arch/x86/kernel/static_call.c                      |   4 +-
- arch/x86/kernel/vmlinux.lds.S                      |  10 ++
- arch/x86/kvm/x86.c                                 |   4 +-
- arch/x86/lib/retpoline.S                           |  39 ++++
- arch/x86/mm/tlb.c                                  |  23 ++-
- arch/x86/net/bpf_jit_comp.c                        |  61 ++++++-
- drivers/base/cpu.c                                 |   3 +
- drivers/clocksource/i8253.c                        |   4 +-
- drivers/gpu/drm/amd/amdgpu/hdp_v4_0.c              |   7 +-
- drivers/gpu/drm/amd/amdgpu/hdp_v5_0.c              |   7 +-
- drivers/gpu/drm/amd/amdgpu/hdp_v5_2.c              |  12 +-
- drivers/gpu/drm/amd/amdgpu/hdp_v6_0.c              |   7 +-
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  |  36 ++--
- .../amd/display/amdgpu_dm/amdgpu_dm_mst_types.c    |  28 ++-
- drivers/gpu/drm/panel/panel-simple.c               |  25 +--
- drivers/gpu/drm/v3d/v3d_sched.c                    |  28 ++-
- drivers/iio/accel/adis16201.c                      |   4 +-
- drivers/iio/accel/adxl355_core.c                   |   2 +-
- drivers/iio/accel/adxl367.c                        |  10 +-
- drivers/iio/adc/ad7606_spi.c                       |   2 +-
- drivers/iio/adc/dln2-adc.c                         |   2 +-
- drivers/iio/adc/rockchip_saradc.c                  |  17 +-
- drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c     |   6 +
- drivers/iio/temperature/maxim_thermocouple.c       |   2 +-
- drivers/input/joystick/xpad.c                      |  40 +++--
- drivers/input/keyboard/mtk-pmic-keys.c             |   4 +-
- drivers/input/mouse/synaptics.c                    |   5 +
- drivers/input/touchscreen/cyttsp5.c                |   7 +-
- drivers/md/dm-table.c                              |   3 +-
- drivers/net/can/m_can/m_can.c                      |   2 +-
- drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c     |  42 ++++-
- drivers/net/dsa/b53/b53_common.c                   |  36 ++--
- drivers/net/ethernet/mediatek/mtk_eth_soc.c        |  16 +-
- drivers/nvme/host/core.c                           |   3 +-
- drivers/staging/axis-fifo/axis-fifo.c              |  14 +-
- drivers/staging/iio/adc/ad7816.c                   |   2 +-
- drivers/usb/cdns3/cdnsp-gadget.c                   |  31 ++++
- drivers/usb/cdns3/cdnsp-gadget.h                   |   6 +
- drivers/usb/cdns3/cdnsp-pci.c                      |  12 +-
- drivers/usb/cdns3/cdnsp-ring.c                     |   3 +-
- drivers/usb/cdns3/core.h                           |   3 +
- drivers/usb/class/usbtmc.c                         |  59 +++---
- drivers/usb/gadget/composite.c                     |  12 +-
- drivers/usb/gadget/function/f_ecm.c                |   7 +
- drivers/usb/gadget/udc/tegra-xudc.c                |   4 +
- drivers/usb/host/uhci-platform.c                   |   2 +-
- drivers/usb/host/xhci-tegra.c                      |   3 +
- drivers/usb/typec/tcpm/tcpm.c                      |   2 +-
- drivers/usb/typec/ucsi/displayport.c               |   2 +
- drivers/xen/swiotlb-xen.c                          |   1 +
- drivers/xen/xenbus/xenbus.h                        |   2 +
- drivers/xen/xenbus/xenbus_comms.c                  |   9 +-
- drivers/xen/xenbus/xenbus_dev_frontend.c           |   2 +-
- drivers/xen/xenbus/xenbus_xs.c                     |  18 +-
- fs/namespace.c                                     |   3 +-
- fs/ocfs2/journal.c                                 |  80 ++++++---
- fs/ocfs2/journal.h                                 |   1 +
- fs/ocfs2/ocfs2.h                                   |  17 +-
- fs/ocfs2/quota_local.c                             |   9 +-
- fs/ocfs2/super.c                                   |   3 +
- fs/smb/client/cached_dir.c                         |  10 +-
- fs/smb/server/oplock.c                             |   7 +-
- fs/smb/server/smb2pdu.c                            |   5 +
- fs/smb/server/vfs.c                                |   7 +
- fs/smb/server/vfs_cache.c                          |  33 +++-
- include/linux/cpu.h                                |   2 +
- include/linux/module.h                             |   5 +
- include/linux/netdevice.h                          |  13 +-
- include/linux/types.h                              |   3 +-
- include/uapi/linux/types.h                         |   1 +
- io_uring/io_uring.c                                |  61 +++----
- kernel/params.c                                    |   4 +-
- net/can/gw.c                                       | 151 +++++++++-------
- net/core/filter.c                                  |   1 +
- net/ipv6/addrconf.c                                |  15 +-
- net/netfilter/ipset/ip_set_hash_gen.h              |   2 +-
- net/netfilter/ipvs/ip_vs_xmit.c                    |  27 +--
- net/openvswitch/actions.c                          |   3 +-
- net/sched/sch_htb.c                                |  15 +-
- net/wireless/scan.c                                |   2 +-
- 113 files changed, 1733 insertions(+), 529 deletions(-)
 
 
