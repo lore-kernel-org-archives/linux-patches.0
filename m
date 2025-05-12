@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F552528E6;
-	Mon, 12 May 2025 17:55:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BDFB2528E6;
+	Mon, 12 May 2025 17:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072534; cv=none; b=r/fvgmFg6dMuUtwT6F+uKEL5/E/uFm9RTr8Y150LVliHGsvlMcGmRUs+HausS4kpl0UjoL9t/lxDiiiYMPSgKNoT2YC9xj5scAnAgSHBrKRw9NRNxf3TPU/PItuwkkcIzGq9L0bw1UD+cw0xk21MsPSu4HeUcNgTWAbJFvkFX58=
+	t=1747072537; cv=none; b=UQXKxMZ0xJ+hyR5HVgx4VGiMCErOO0NLRhD0YYGyQFNdT36/gzpGuoFYfOFzSgKAS0x2kzpTKTzrM+IKiLgxzqKDlq+voZAucA/megDLZqhG98f0TDVgAkZNkTWRDVSOED8Z7FfuUWxAKnZDHOzdaw9B8kzuGZCjFyPWYmcTYXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072534; c=relaxed/simple;
-	bh=Z0pp1w+oDbm9VTGXmy0J/hiTCKuKZcItt5spF+HK2Dg=;
+	s=arc-20240116; t=1747072537; c=relaxed/simple;
+	bh=3GmCSngLaUgy+S1dZ09tokPp2wPP0GMOMnHJT55r0dE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WAUBkr4sGBkW6GjmdMe3TG1ygX/PYIsQD/qBbeGuKz1o2vE2WLQPNeKfYrhbpKxyOmkjHw5Z1vQ9X4SQk4GnSN7rycHrofaRQl5bj5oeIy7v/32EGk6hS0mnDfsqHk8ejVa2kpegZQCp77E02vZAi1pEBweO5fEOUL6r+3YwrlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1C+W/WKh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a0TDYHwUhtt+y9Kw2Ta8OkPUpLyrXA5f5q15U0sd10eobXi7y4I5i4tqKCEvNUF3TtcUts858J7etBGCK3ZYXVXV4TxEnwsg+IV8nW9kgm5XAzkdlrguzzt7uyAwzfvAUmYaQomKs4va25vDE3ixU+paOMZBosXd9530eRKdzaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hz0TP47u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1C+W/WKh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7342BC4CEE7;
-	Mon, 12 May 2025 17:55:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hz0TP47u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C70C4CEE7;
+	Mon, 12 May 2025 17:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072534;
-	bh=Z0pp1w+oDbm9VTGXmy0J/hiTCKuKZcItt5spF+HK2Dg=;
+	s=korg; t=1747072537;
+	bh=3GmCSngLaUgy+S1dZ09tokPp2wPP0GMOMnHJT55r0dE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1C+W/WKhFb2fXV7Akp/djDoh0TaqhdeSpRaG+VUg28ZfcqDhEmCCLUBj38LKDU/7T
-	 3rpGYw3nC/qk92lklTLJ3aoc00Sp1AWmqfYPYkUmhdxcZDH6+kBD1AAaK8Sgt7+mRN
-	 bAahb7PUGcktYcUsfUA+heNk2kVrGK05vRN8vowk=
+	b=Hz0TP47u6xv+v0XVRIpRHhNOdTdLgP4bJNaC0zNOpFvnxuuRGOW7NUvJEqq2p2Jk2
+	 pB2Z3/Rqrvyuh4turuuuaGOj4qtixYKZrGaEcHnQecxKzToQPsqO+YMCMouijY4zNO
+	 aLF5JkHjJdbFOE8SUe/DITg/d/gWsbUzGWuMh5EY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fiona Klute <fiona.klute@gmx.de>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 71/92] Revert "net: phy: microchip: force IRQ polling mode for lan88xx"
-Date: Mon, 12 May 2025 19:45:46 +0200
-Message-ID: <20250512172026.017190631@linuxfoundation.org>
+	James Morse <james.morse@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.1 72/92] arm64: insn: Add support for encoding DSB
+Date: Mon, 12 May 2025 19:45:47 +0200
+Message-ID: <20250512172026.058236612@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -53,86 +50,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: James Morse <james.morse@arm.com>
 
-This reverts commit 9b89102fbb8fc5393e2a0f981aafdb3cf43591ee which is
-commit 30a41ed32d3088cd0d682a13d7f30b23baed7e93 upstream.
+commit 63de8abd97ddb9b758bd8f915ecbd18e1f1a87a0 upstream.
 
-It is reported to cause NFS boot problems on a Raspberry Pi 3b so revert
-it from this branch for now.
+To generate code in the eBPF epilogue that uses the DSB instruction,
+insn.c needs a heler to encode the type and domain.
 
-Cc: Fiona Klute <fiona.klute@gmx.de>
-Cc: Andrew Lunn <andrew@lunn.ch>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Sasha Levin <sashal@kernel.org>
-Link: https://lore.kernel.org/r/aB6uurX99AZWM9I1@finisterre.sirena.org.uk
-Reported-by: Mark Brown <broonie@kernel.org>
+Re-use the crm encoding logic from the DMB instruction.
+
+Signed-off-by: James Morse <james.morse@arm.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/microchip.c |   46 +++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 43 insertions(+), 3 deletions(-)
+ arch/arm64/include/asm/insn.h |    1 
+ arch/arm64/lib/insn.c         |   60 +++++++++++++++++++++++++-----------------
+ 2 files changed, 38 insertions(+), 23 deletions(-)
 
---- a/drivers/net/phy/microchip.c
-+++ b/drivers/net/phy/microchip.c
-@@ -31,6 +31,47 @@ static int lan88xx_write_page(struct phy
- 	return __phy_write(phydev, LAN88XX_EXT_PAGE_ACCESS, page);
+--- a/arch/arm64/include/asm/insn.h
++++ b/arch/arm64/include/asm/insn.h
+@@ -619,6 +619,7 @@ u32 aarch64_insn_gen_cas(enum aarch64_in
+ }
+ #endif
+ u32 aarch64_insn_gen_dmb(enum aarch64_insn_mb_type type);
++u32 aarch64_insn_gen_dsb(enum aarch64_insn_mb_type type);
+ 
+ s32 aarch64_get_branch_offset(u32 insn);
+ u32 aarch64_set_branch_offset(u32 insn, s32 offset);
+--- a/arch/arm64/lib/insn.c
++++ b/arch/arm64/lib/insn.c
+@@ -5,6 +5,7 @@
+  *
+  * Copyright (C) 2014-2016 Zi Shen Lim <zlim.lnx@gmail.com>
+  */
++#include <linux/bitfield.h>
+ #include <linux/bitops.h>
+ #include <linux/bug.h>
+ #include <linux/printk.h>
+@@ -1630,47 +1631,60 @@ u32 aarch64_insn_gen_extr(enum aarch64_i
+ 	return aarch64_insn_encode_register(AARCH64_INSN_REGTYPE_RM, insn, Rm);
  }
  
-+static int lan88xx_phy_config_intr(struct phy_device *phydev)
-+{
-+	int rc;
-+
-+	if (phydev->interrupts == PHY_INTERRUPT_ENABLED) {
-+		/* unmask all source and clear them before enable */
-+		rc = phy_write(phydev, LAN88XX_INT_MASK, 0x7FFF);
-+		rc = phy_read(phydev, LAN88XX_INT_STS);
-+		rc = phy_write(phydev, LAN88XX_INT_MASK,
-+			       LAN88XX_INT_MASK_MDINTPIN_EN_ |
-+			       LAN88XX_INT_MASK_LINK_CHANGE_);
-+	} else {
-+		rc = phy_write(phydev, LAN88XX_INT_MASK, 0);
-+		if (rc)
-+			return rc;
-+
-+		/* Ack interrupts after they have been disabled */
-+		rc = phy_read(phydev, LAN88XX_INT_STS);
-+	}
-+
-+	return rc < 0 ? rc : 0;
-+}
-+
-+static irqreturn_t lan88xx_handle_interrupt(struct phy_device *phydev)
-+{
-+	int irq_status;
-+
-+	irq_status = phy_read(phydev, LAN88XX_INT_STS);
-+	if (irq_status < 0) {
-+		phy_error(phydev);
-+		return IRQ_NONE;
-+	}
-+
-+	if (!(irq_status & LAN88XX_INT_STS_LINK_CHANGE_))
-+		return IRQ_NONE;
-+
-+	phy_trigger_machine(phydev);
-+
-+	return IRQ_HANDLED;
-+}
-+
- static int lan88xx_suspend(struct phy_device *phydev)
+-u32 aarch64_insn_gen_dmb(enum aarch64_insn_mb_type type)
++static u32 __get_barrier_crm_val(enum aarch64_insn_mb_type type)
  {
- 	struct lan88xx_priv *priv = phydev->priv;
-@@ -351,9 +392,8 @@ static struct phy_driver microchip_phy_d
- 	.config_aneg	= lan88xx_config_aneg,
- 	.link_change_notify = lan88xx_link_change_notify,
+-	u32 opt;
+-	u32 insn;
+-
+ 	switch (type) {
+ 	case AARCH64_INSN_MB_SY:
+-		opt = 0xf;
+-		break;
++		return 0xf;
+ 	case AARCH64_INSN_MB_ST:
+-		opt = 0xe;
+-		break;
++		return 0xe;
+ 	case AARCH64_INSN_MB_LD:
+-		opt = 0xd;
+-		break;
++		return 0xd;
+ 	case AARCH64_INSN_MB_ISH:
+-		opt = 0xb;
+-		break;
++		return 0xb;
+ 	case AARCH64_INSN_MB_ISHST:
+-		opt = 0xa;
+-		break;
++		return 0xa;
+ 	case AARCH64_INSN_MB_ISHLD:
+-		opt = 0x9;
+-		break;
++		return 0x9;
+ 	case AARCH64_INSN_MB_NSH:
+-		opt = 0x7;
+-		break;
++		return 0x7;
+ 	case AARCH64_INSN_MB_NSHST:
+-		opt = 0x6;
+-		break;
++		return 0x6;
+ 	case AARCH64_INSN_MB_NSHLD:
+-		opt = 0x5;
+-		break;
++		return 0x5;
+ 	default:
+-		pr_err("%s: unknown dmb type %d\n", __func__, type);
++		pr_err("%s: unknown barrier type %d\n", __func__, type);
+ 		return AARCH64_BREAK_FAULT;
+ 	}
++}
++
++u32 aarch64_insn_gen_dmb(enum aarch64_insn_mb_type type)
++{
++	u32 opt;
++	u32 insn;
++
++	opt = __get_barrier_crm_val(type);
++	if (opt == AARCH64_BREAK_FAULT)
++		return AARCH64_BREAK_FAULT;
  
--	/* Interrupt handling is broken, do not define related
--	 * functions to force polling.
--	 */
-+	.config_intr	= lan88xx_phy_config_intr,
-+	.handle_interrupt = lan88xx_handle_interrupt,
+ 	insn = aarch64_insn_get_dmb_value();
+ 	insn &= ~GENMASK(11, 8);
+ 	insn |= (opt << 8);
  
- 	.suspend	= lan88xx_suspend,
- 	.resume		= genphy_resume,
++	return insn;
++}
++
++u32 aarch64_insn_gen_dsb(enum aarch64_insn_mb_type type)
++{
++	u32 opt, insn;
++
++	opt = __get_barrier_crm_val(type);
++	if (opt == AARCH64_BREAK_FAULT)
++		return AARCH64_BREAK_FAULT;
++
++	insn = aarch64_insn_get_dsb_base_value();
++	insn &= ~GENMASK(11, 8);
++	insn |= (opt << 8);
++
+ 	return insn;
+ }
 
 
