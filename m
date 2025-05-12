@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECE4296FB0;
-	Mon, 12 May 2025 18:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE4B296FB0;
+	Mon, 12 May 2025 18:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073199; cv=none; b=ObF/3enQAA98Mz6Yf4d2CAEiU6gPCZnzFIrvuMQ698UfD5N6vHnAWLWnFUNlDxJqwAOY+nqZ/gBtCsUYmivGUu3TYcbBEHHh+9sX9ceq+fbCmcX4lJbL2fT9mtk4yeZsUCx5ppOTH7Q02bwSebwk2PbX7rhXgvyR/tPTtjylyn8=
+	t=1747073203; cv=none; b=UBK+VzlbBdwD8vDvHIXoYN4Yp5ZFY48VtC6xrhwqi+/36sFVDcB4UMiTHQSfLCvcXPI4I8wFPBM5LevAZjHz2p2ke4zJhQrdjsfTAKnOGB4nQwc3xBaKLWaA5ZnkiqZE1dzCOvDYqJXwoU7xUzPGvdRgqiNHwPUYsX0ye/7J1ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073199; c=relaxed/simple;
-	bh=bu919+QfE6lJ28se/W5U95Osm8y5hDu0cJs+7KegY2c=;
+	s=arc-20240116; t=1747073203; c=relaxed/simple;
+	bh=SU4FiphJE/y3+VaGhXN8BN1auITdiV8Y5oTLiGDiWFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=H+CuajgP6AbLC0AUFK6xC3h7QYO/mgurZxBjEQA6wKk+YZjHjuzP3E/izsK9AVmrbD/oNMZCf0EQ/sdkFk1EuqkUsN7g59I/F3TnqhOx5Vh123M/BvMRLnvXJ9OfXqN8jQ4fruER6eUSp160fhjv0y+x7MODcqf3HjoeilRVu4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwB+FbVG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fDOR2hBVjF5o7hU/XTojLr2bg9Rz4jw7s04/7a1fCBvIbuzGO59mVK8ODqd5H5SFpG+aAR0lyiTZHDBO3+8sNA8YdKYANivnv44wSgIeWR6WE0TpZ9QQoWOMVDyQh6XCKBa7cX3AhALGFBKW/ElN7GcKKzy/E0TDBNuptF8rlR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iqRBpK4U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwB+FbVG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18429C4CEE7;
-	Mon, 12 May 2025 18:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iqRBpK4U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3FF7C4CEE7;
+	Mon, 12 May 2025 18:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073198;
-	bh=bu919+QfE6lJ28se/W5U95Osm8y5hDu0cJs+7KegY2c=;
+	s=korg; t=1747073202;
+	bh=SU4FiphJE/y3+VaGhXN8BN1auITdiV8Y5oTLiGDiWFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LwB+FbVGM1XSK+DsnXg++2hybV7usGjzjs4bt7Gl/55wCWa6QutWEIaRmYE9PXCDa
-	 yz7vD6zXC6uO/xNm2e7eu4+KX/9oH1RcZiI7QQ/+CKE/0XcY6hk1tvEEIGgYTKS3Dp
-	 +fhILnI9GwFlBXOYX8JL41mJFzgXrZm1NNoWAqZg=
+	b=iqRBpK4U3BMQEU6WI9TCMcQL+Se28SlZMvOm2betypHUTeAL2GH0ergivjQf0O1Gk
+	 16ZwoIyj3gJY6O/ttnWdD8ZYr+nWelu8QpjBDRS/8F/T0SOfCcV2e8eiMb/fefZAkC
+	 lGQAAKAmF7BkG3nja/+sV+hqjD3TfJmniHm8M5Cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Brendan Jackman <jackmanb@google.com>,
-	kernel test robot <oliver.sang@intel.com>,
-	Carlos Song <carlos.song@nxp.com>,
-	Shivank Garg <shivankg@amd.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 160/184] mm: page_alloc: speed up fallbacks in rmqueue_bulk()
-Date: Mon, 12 May 2025 19:46:01 +0200
-Message-ID: <20250512172048.329431285@linuxfoundation.org>
+	Omar Sandoval <osandov@fb.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 6.12 161/184] sched/eevdf: Fix se->slice being set to U64_MAX and resulting crash
+Date: Mon, 12 May 2025 19:46:02 +0200
+Message-ID: <20250512172048.371001804@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -50,278 +45,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Weiner <hannes@cmpxchg.org>
+From: Omar Sandoval <osandov@fb.com>
 
-commit 90abee6d7895d5eef18c91d870d8168be4e76e9d upstream.
+commit bbce3de72be56e4b5f68924b7da9630cc89aa1a8 upstream.
 
-The test robot identified c2f6ea38fc1b ("mm: page_alloc: don't steal
-single pages from biggest buddy") as the root cause of a 56.4% regression
-in vm-scalability::lru-file-mmap-read.
+There is a code path in dequeue_entities() that can set the slice of a
+sched_entity to U64_MAX, which sometimes results in a crash.
 
-Carlos reports an earlier patch, c0cd6f557b90 ("mm: page_alloc: fix
-freelist movement during block conversion"), as the root cause for a
-regression in worst-case zone->lock+irqoff hold times.
+The offending case is when dequeue_entities() is called to dequeue a
+delayed group entity, and then the entity's parent's dequeue is delayed.
+In that case:
 
-Both of these patches modify the page allocator's fallback path to be less
-greedy in an effort to stave off fragmentation.  The flip side of this is
-that fallbacks are also less productive each time around, which means the
-fallback search can run much more frequently.
+1. In the if (entity_is_task(se)) else block at the beginning of
+   dequeue_entities(), slice is set to
+   cfs_rq_min_slice(group_cfs_rq(se)). If the entity was delayed, then
+   it has no queued tasks, so cfs_rq_min_slice() returns U64_MAX.
+2. The first for_each_sched_entity() loop dequeues the entity.
+3. If the entity was its parent's only child, then the next iteration
+   tries to dequeue the parent.
+4. If the parent's dequeue needs to be delayed, then it breaks from the
+   first for_each_sched_entity() loop _without updating slice_.
+5. The second for_each_sched_entity() loop sets the parent's ->slice to
+   the saved slice, which is still U64_MAX.
 
-Carlos' traces point to rmqueue_bulk() specifically, which tries to refill
-the percpu cache by allocating a large batch of pages in a loop.  It
-highlights how once the native freelists are exhausted, the fallback code
-first scans orders top-down for whole blocks to claim, then falls back to
-a bottom-up search for the smallest buddy to steal.  For the next batch
-page, it goes through the same thing again.
+This throws off subsequent calculations with potentially catastrophic
+results. A manifestation we saw in production was:
 
-This can be made more efficient.  Since rmqueue_bulk() holds the
-zone->lock over the entire batch, the freelists are not subject to outside
-changes; when the search for a block to claim has already failed, there is
-no point in trying again for the next page.
+6. In update_entity_lag(), se->slice is used to calculate limit, which
+   ends up as a huge negative number.
+7. limit is used in se->vlag = clamp(vlag, -limit, limit). Because limit
+   is negative, vlag > limit, so se->vlag is set to the same huge
+   negative number.
+8. In place_entity(), se->vlag is scaled, which overflows and results in
+   another huge (positive or negative) number.
+9. The adjusted lag is subtracted from se->vruntime, which increases or
+   decreases se->vruntime by a huge number.
+10. pick_eevdf() calls entity_eligible()/vruntime_eligible(), which
+    incorrectly returns false because the vruntime is so far from the
+    other vruntimes on the queue, causing the
+    (vruntime - cfs_rq->min_vruntime) * load calulation to overflow.
+11. Nothing appears to be eligible, so pick_eevdf() returns NULL.
+12. pick_next_entity() tries to dereference the return value of
+    pick_eevdf() and crashes.
 
-Modify __rmqueue() to remember the last successful fallback mode, and
-restart directly from there on the next rmqueue_bulk() iteration.
+Dumping the cfs_rq states from the core dumps with drgn showed tell-tale
+huge vruntime ranges and bogus vlag values, and I also traced se->slice
+being set to U64_MAX on live systems (which was usually "benign" since
+the rest of the runqueue needed to be in a particular state to crash).
 
-Oliver confirms that this improves beyond the regression that the test
-robot reported against c2f6ea38fc1b:
+Fix it in dequeue_entities() by always setting slice from the first
+non-empty cfs_rq.
 
-commit:
-  f3b92176f4 ("tools/selftests: add guard region test for /proc/$pid/pagemap")
-  c2f6ea38fc ("mm: page_alloc: don't steal single pages from biggest buddy")
-  acc4d5ff0b ("Merge tag 'net-6.15-rc0' of git://git.kernel.org/pub/scm/linux/kernel/git/netdev/net")
-  2c847f27c3 ("mm: page_alloc: speed up fallbacks in rmqueue_bulk()")   <--- your patch
-
-f3b92176f4f7100f c2f6ea38fc1b640aa7a2e155cc1 acc4d5ff0b61eb1715c498b6536 2c847f27c37da65a93d23c237c5
----------------- --------------------------- --------------------------- ---------------------------
-         %stddev     %change         %stddev     %change         %stddev     %change         %stddev
-             \          |                \          |                \          |                \
-  25525364 ±  3%     -56.4%   11135467           -57.8%   10779336           +31.6%   33581409        vm-scalability.throughput
-
-Carlos confirms that worst-case times are almost fully recovered
-compared to before the earlier culprit patch:
-
-  2dd482ba627d (before freelist hygiene):    1ms
-  c0cd6f557b90  (after freelist hygiene):   90ms
- next-20250319    (steal smallest buddy):  280ms
-    this patch                          :    8ms
-
-[jackmanb@google.com: comment updates]
-  Link: https://lkml.kernel.org/r/D92AC0P9594X.3BML64MUKTF8Z@google.com
-[hannes@cmpxchg.org: reset rmqueue_mode in rmqueue_buddy() error loop, per Yunsheng Lin]
-  Link: https://lkml.kernel.org/r/20250409140023.GA2313@cmpxchg.org
-Link: https://lkml.kernel.org/r/20250407180154.63348-1-hannes@cmpxchg.org
-Fixes: c0cd6f557b90 ("mm: page_alloc: fix freelist movement during block conversion")
-Fixes: c2f6ea38fc1b ("mm: page_alloc: don't steal single pages from biggest buddy")
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Signed-off-by: Brendan Jackman <jackmanb@google.com>
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Reported-by: Carlos Song <carlos.song@nxp.com>
-Tested-by: Carlos Song <carlos.song@nxp.com>
-Tested-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202503271547.fc08b188-lkp@intel.com
-Reviewed-by: Brendan Jackman <jackmanb@google.com>
-Tested-by: Shivank Garg <shivankg@amd.com>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>	[6.10+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Fixes: aef6987d8954 ("sched/eevdf: Propagate min_slice up the cgroup hierarchy")
+Signed-off-by: Omar Sandoval <osandov@fb.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lkml.kernel.org/r/f0c2d1072be229e1bdddc73c0703919a8b00c652.1745570998.git.osandov@fb.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |  113 +++++++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 80 insertions(+), 33 deletions(-)
+ kernel/sched/fair.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -2164,22 +2164,15 @@ static bool unreserve_highatomic_pageblo
- }
- 
- /*
-- * Try finding a free buddy page on the fallback list.
-- *
-- * This will attempt to steal a whole pageblock for the requested type
-- * to ensure grouping of such requests in the future.
-- *
-- * If a whole block cannot be stolen, regress to __rmqueue_smallest()
-- * logic to at least break up as little contiguity as possible.
-+ * Try to allocate from some fallback migratetype by claiming the entire block,
-+ * i.e. converting it to the allocation's start migratetype.
-  *
-  * The use of signed ints for order and current_order is a deliberate
-  * deviation from the rest of this file, to make the for loop
-  * condition simpler.
-- *
-- * Return the stolen page, or NULL if none can be found.
-  */
- static __always_inline struct page *
--__rmqueue_fallback(struct zone *zone, int order, int start_migratetype,
-+__rmqueue_claim(struct zone *zone, int order, int start_migratetype,
- 						unsigned int alloc_flags)
- {
- 	struct free_area *area;
-@@ -2216,14 +2209,29 @@ __rmqueue_fallback(struct zone *zone, in
- 		page = get_page_from_free_area(area, fallback_mt);
- 		page = try_to_steal_block(zone, page, current_order, order,
- 					  start_migratetype, alloc_flags);
--		if (page)
--			goto got_one;
-+		if (page) {
-+			trace_mm_page_alloc_extfrag(page, order, current_order,
-+						    start_migratetype, fallback_mt);
-+			return page;
-+		}
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -7182,9 +7182,6 @@ static int dequeue_entities(struct rq *r
+ 		idle_h_nr_running = task_has_idle_policy(p);
+ 		if (!task_sleep && !task_delayed)
+ 			h_nr_delayed = !!se->sched_delayed;
+-	} else {
+-		cfs_rq = group_cfs_rq(se);
+-		slice = cfs_rq_min_slice(cfs_rq);
  	}
  
--	if (alloc_flags & ALLOC_NOFRAGMENT)
--		return NULL;
-+	return NULL;
-+}
-+
-+/*
-+ * Try to steal a single page from some fallback migratetype. Leave the rest of
-+ * the block as its current migratetype, potentially causing fragmentation.
-+ */
-+static __always_inline struct page *
-+__rmqueue_steal(struct zone *zone, int order, int start_migratetype)
-+{
-+	struct free_area *area;
-+	int current_order;
-+	struct page *page;
-+	int fallback_mt;
-+	bool can_steal;
+ 	for_each_sched_entity(se) {
+@@ -7194,6 +7191,7 @@ static int dequeue_entities(struct rq *r
+ 			if (p && &p->se == se)
+ 				return -1;
  
--	/* No luck stealing blocks. Find the smallest fallback page */
- 	for (current_order = order; current_order < NR_PAGE_ORDERS; current_order++) {
- 		area = &(zone->free_area[current_order]);
- 		fallback_mt = find_suitable_fallback(area, current_order,
-@@ -2233,25 +2241,28 @@ __rmqueue_fallback(struct zone *zone, in
- 
- 		page = get_page_from_free_area(area, fallback_mt);
- 		page_del_and_expand(zone, page, order, current_order, fallback_mt);
--		goto got_one;
-+		trace_mm_page_alloc_extfrag(page, order, current_order,
-+					    start_migratetype, fallback_mt);
-+		return page;
- 	}
- 
- 	return NULL;
--
--got_one:
--	trace_mm_page_alloc_extfrag(page, order, current_order,
--		start_migratetype, fallback_mt);
--
--	return page;
- }
- 
-+enum rmqueue_mode {
-+	RMQUEUE_NORMAL,
-+	RMQUEUE_CMA,
-+	RMQUEUE_CLAIM,
-+	RMQUEUE_STEAL,
-+};
-+
- /*
-  * Do the hard work of removing an element from the buddy allocator.
-  * Call me with the zone->lock already held.
-  */
- static __always_inline struct page *
- __rmqueue(struct zone *zone, unsigned int order, int migratetype,
--						unsigned int alloc_flags)
-+	  unsigned int alloc_flags, enum rmqueue_mode *mode)
- {
- 	struct page *page;
- 
-@@ -2270,16 +2281,49 @@ __rmqueue(struct zone *zone, unsigned in
- 		}
- 	}
- 
--	page = __rmqueue_smallest(zone, order, migratetype);
--	if (unlikely(!page)) {
--		if (alloc_flags & ALLOC_CMA)
-+	/*
-+	 * First try the freelists of the requested migratetype, then try
-+	 * fallbacks modes with increasing levels of fragmentation risk.
-+	 *
-+	 * The fallback logic is expensive and rmqueue_bulk() calls in
-+	 * a loop with the zone->lock held, meaning the freelists are
-+	 * not subject to any outside changes. Remember in *mode where
-+	 * we found pay dirt, to save us the search on the next call.
-+	 */
-+	switch (*mode) {
-+	case RMQUEUE_NORMAL:
-+		page = __rmqueue_smallest(zone, order, migratetype);
-+		if (page)
-+			return page;
-+		fallthrough;
-+	case RMQUEUE_CMA:
-+		if (alloc_flags & ALLOC_CMA) {
- 			page = __rmqueue_cma_fallback(zone, order);
--
--		if (!page)
--			page = __rmqueue_fallback(zone, order, migratetype,
--						  alloc_flags);
-+			if (page) {
-+				*mode = RMQUEUE_CMA;
-+				return page;
-+			}
-+		}
-+		fallthrough;
-+	case RMQUEUE_CLAIM:
-+		page = __rmqueue_claim(zone, order, migratetype, alloc_flags);
-+		if (page) {
-+			/* Replenished preferred freelist, back to normal mode. */
-+			*mode = RMQUEUE_NORMAL;
-+			return page;
-+		}
-+		fallthrough;
-+	case RMQUEUE_STEAL:
-+		if (!(alloc_flags & ALLOC_NOFRAGMENT)) {
-+			page = __rmqueue_steal(zone, order, migratetype);
-+			if (page) {
-+				*mode = RMQUEUE_STEAL;
-+				return page;
-+			}
-+		}
- 	}
--	return page;
-+
-+	return NULL;
- }
- 
- /*
-@@ -2291,13 +2335,14 @@ static int rmqueue_bulk(struct zone *zon
- 			unsigned long count, struct list_head *list,
- 			int migratetype, unsigned int alloc_flags)
- {
-+	enum rmqueue_mode rmqm = RMQUEUE_NORMAL;
- 	unsigned long flags;
- 	int i;
- 
- 	spin_lock_irqsave(&zone->lock, flags);
- 	for (i = 0; i < count; ++i) {
- 		struct page *page = __rmqueue(zone, order, migratetype,
--								alloc_flags);
-+					      alloc_flags, &rmqm);
- 		if (unlikely(page == NULL))
++			slice = cfs_rq_min_slice(cfs_rq);
  			break;
+ 		}
  
-@@ -2898,7 +2943,9 @@ struct page *rmqueue_buddy(struct zone *
- 		if (alloc_flags & ALLOC_HIGHATOMIC)
- 			page = __rmqueue_smallest(zone, order, MIGRATE_HIGHATOMIC);
- 		if (!page) {
--			page = __rmqueue(zone, order, migratetype, alloc_flags);
-+			enum rmqueue_mode rmqm = RMQUEUE_NORMAL;
-+
-+			page = __rmqueue(zone, order, migratetype, alloc_flags, &rmqm);
- 
- 			/*
- 			 * If the allocation fails, allow OOM handling and
 
 
