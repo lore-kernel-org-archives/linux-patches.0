@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232131DC1A7;
-	Mon, 12 May 2025 17:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F76248F71;
+	Mon, 12 May 2025 17:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071029; cv=none; b=mBI6mqGhSTvpoweXLmfztOeF3Ls2LOyrkVMgSyvryT+txGfmnkFhLfU5SZ/uuZ4NxWMkQGbx3tglBbTY0c6KxO0dOs+X/xhRXaNw+qTBCJwYoJWOeYPAK2gbIgiZO3slAMcwT0/aKCiJd+9E0bkWdvhJ0jFaFWop4XK7Wggd0jE=
+	t=1747071031; cv=none; b=fgi6wRMjhokgHqQduhesnWtbXPgKjac027t5QazzpImLj1ysQQeK9wIHHAFUipfMxlBlpF/9eSdt3OiapSjsVm/dMnQr9m28FdUixiHPrRyHJbt/IycxQRfUzHAt68Vj+IbrFq8th6YmhHw56UFqdJ15b8asGyXZBIKWBneuEEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071029; c=relaxed/simple;
-	bh=l3N0Dv2hlZGIKea/beiRW2cL3DIu+MhwcHRfvlL2sv4=;
+	s=arc-20240116; t=1747071031; c=relaxed/simple;
+	bh=Ok09LN2FXtBZZ2zqSqp84ZrVjuHjozIJU+PrG4ij+QA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pXpRnFCCVlOh6GvoLzWlZPk03NkWvVF3/opfdGax2wWiPVlsrkwpkNYnksas1iZ7TLKtkzY6C5HSZAjo+KR4tagxddjmOmZ8RxeKb8HiKFu7Ush8n6a17MaB5taonFmzAyXk3wj97gbUkOa1CvzJW2dafvyBPQXmJGOhvl+tVb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zVVjz/Z9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z3ElfNlDPnFPC2sUBl7ztm7qooD1Dw6Xodr2VFp1Al4ZeL0r7vruUQvn2IAQKRWP0NtbrUFX+4/tzDrNz4WlLXIBWDXpwQSDUoMprNEu1uWEdbbnFZsLGiUMsdNjVmPEW5q5V/J9DfCrR2PN3Xo52LmmUUmn1bKou98xhhqQsVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GexRLCfP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zVVjz/Z9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F20C4CEE7;
-	Mon, 12 May 2025 17:30:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GexRLCfP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFAC7C4CEE7;
+	Mon, 12 May 2025 17:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071028;
-	bh=l3N0Dv2hlZGIKea/beiRW2cL3DIu+MhwcHRfvlL2sv4=;
+	s=korg; t=1747071031;
+	bh=Ok09LN2FXtBZZ2zqSqp84ZrVjuHjozIJU+PrG4ij+QA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zVVjz/Z9YSA8cm0uOvbbTHfwxk3W1Tju9IwDlfG35eOKu6tpkefar01WAPm5cF3ur
-	 pCyQpFpU6ypJIssKSU1pXE2+0xSiAJrtDXvo5ncJYfxh3ZzSzfNfsVQfC/TKEnYhbH
-	 IG8z+kkHQfjZFgj5dQ9eAMwR+7sWg6/lT2fjYTgs=
+	b=GexRLCfPpJnOaKuYAmYi/ZF6j9esW+FMH99dstZ2SQqBUtL58Gd/W/XxwWpdsWfhN
+	 GcW5SNYvOZZhRuLof0JBk1IWOTcDIe5IxPX/zIPJeWgbveorT/OEfNPIn64b0bvSBN
+	 ZjVwz4hbAUFmmjtrd1TUSnv6k4JpVSRXtV40jqF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 13/54] net: dsa: b53: always rejoin default untagged VLAN on bridge leave
-Date: Mon, 12 May 2025 19:29:25 +0200
-Message-ID: <20250512172016.184468195@linuxfoundation.org>
+Subject: [PATCH 5.15 14/54] net: dsa: b53: fix learning on VLAN unaware bridges
+Date: Mon, 12 May 2025 19:29:26 +0200
+Message-ID: <20250512172016.224218345@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172015.643809034@linuxfoundation.org>
 References: <20250512172015.643809034@linuxfoundation.org>
@@ -54,45 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 13b152ae40495966501697693f048f47430c50fd ]
+[ Upstream commit 9f34ad89bcf0e6df6f8b01f1bdab211493fc66d1 ]
 
-While JOIN_ALL_VLAN allows to join all VLANs, we still need to keep the
-default VLAN enabled so that untagged traffic stays untagged.
+When VLAN filtering is off, we configure the switch to forward, but not
+learn on VLAN table misses. This effectively disables learning while not
+filtering.
 
-So rejoin the default VLAN even for switches with JOIN_ALL_VLAN support.
+Fix this by switching to forward and learn. Setting the learning disable
+register will still control whether learning actually happens.
 
-Fixes: 48aea33a77ab ("net: dsa: b53: Add JOIN_ALL_VLAN support")
+Fixes: dad8d7c6452b ("net: dsa: b53: Properly account for VLAN filtering")
 Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
 Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20250429201710.330937-7-jonas.gorski@gmail.com
+Link: https://patch.msgid.link/20250429201710.330937-11-jonas.gorski@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/dsa/b53/b53_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 37b3a46b060f5..429ea5056235f 100644
+index 429ea5056235f..3bd0d1632b657 100644
 --- a/drivers/net/dsa/b53/b53_common.c
 +++ b/drivers/net/dsa/b53/b53_common.c
-@@ -1961,12 +1961,12 @@ void b53_br_leave(struct dsa_switch *ds, int port, struct net_device *br)
- 		if (!(reg & BIT(cpu_port)))
- 			reg |= BIT(cpu_port);
- 		b53_write16(dev, B53_VLAN_PAGE, B53_JOIN_ALL_VLAN_EN, reg);
--	} else {
--		b53_get_vlan_entry(dev, pvid, vl);
--		vl->members |= BIT(port) | BIT(cpu_port);
--		vl->untag |= BIT(port) | BIT(cpu_port);
--		b53_set_vlan_entry(dev, pvid, vl);
- 	}
-+
-+	b53_get_vlan_entry(dev, pvid, vl);
-+	vl->members |= BIT(port) | BIT(cpu_port);
-+	vl->untag |= BIT(port) | BIT(cpu_port);
-+	b53_set_vlan_entry(dev, pvid, vl);
- }
- EXPORT_SYMBOL(b53_br_leave);
+@@ -383,7 +383,7 @@ static void b53_enable_vlan(struct b53_device *dev, int port, bool enable,
+ 			vc4 |= VC4_ING_VID_VIO_DROP << VC4_ING_VID_CHECK_S;
+ 			vc5 |= VC5_DROP_VTABLE_MISS;
+ 		} else {
+-			vc4 |= VC4_ING_VID_VIO_FWD << VC4_ING_VID_CHECK_S;
++			vc4 |= VC4_NO_ING_VID_CHK << VC4_ING_VID_CHECK_S;
+ 			vc5 &= ~VC5_DROP_VTABLE_MISS;
+ 		}
  
 -- 
 2.39.5
