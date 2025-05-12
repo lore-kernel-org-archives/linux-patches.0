@@ -1,90 +1,105 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08323297109;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B62729992E;
 	Mon, 12 May 2025 18:04:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073075; cv=none; b=PiMxTfnAvnT7VQOVYvnUJMuqx9kxlsjHh+x3B98yzVxl11smCK9PPJ6/uyQ4NKG1bzCb9K1ouxMywh5pAmNUo3z+iV47MFUriVo2JLN+yvBDacTKyBZBetLLJCqhIE1UcKvaach6xbwA2OP4+iBKKhx8Viz0MGbZjUAvPZ7bvG4=
+	t=1747073076; cv=none; b=eG0cp2D8cV6TLymHDShzYTj8XANm7fbHns4ydDxhROmEip0j5QRGcDUrYgUrsNkt1rZcw0A0iuohwIBL2kc1wglelC/1JT3ZhLa9Lhcx2L8N7Ogha5InLf6qoM0tT37H5FrZ6g5g7jj67HsHiTXwFC23/AUqV/HF+pg5rkXjjO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073075; c=relaxed/simple;
-	bh=gF7jtwSWHDrtX0F77/is6sahyq41N8gbc93SoZnjKXI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=YEF5qXduKq3SYIEmkGkKyzShByjipZpB5tWHH10dbKjjvsQaTLbsj/SsQY504mSy0nfu5H4n4tbB03tC0jfE9s93g570PVfJK3KHmnnifkh1NCBGVPZZ+MUm5pkm4gZS2HJeePDAYvWT0PXa+F/3Otmts7lx7QeZ+SwZpddKPBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FydXKL0h; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747073076; c=relaxed/simple;
+	bh=nXTckhGudQMSiRqNspmo4uwcaKKSF+2RKoZbAxCgNA8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=SZ2lWMFPXn4o9uLTFkGZn+qM0RrymdbyC/TjdM9JtCIEa17hhK7jdOeE8OI/0p5a6Vn5RnghVQt6XKAdBShZTDxK81isscjM6hzcbQ7JH6YwNM60D/WVfvVo/h1xPyUjBeoXGqpy/eNCm0l4plj/K4GPgys7LCdfYttKILseWYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DDF26CCG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FydXKL0h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0676C4CEF2;
-	Mon, 12 May 2025 18:04:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747073074;
-	bh=gF7jtwSWHDrtX0F77/is6sahyq41N8gbc93SoZnjKXI=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDF26CCG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BDEFC4CEE9;
+	Mon, 12 May 2025 18:04:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1747073075;
+	bh=nXTckhGudQMSiRqNspmo4uwcaKKSF+2RKoZbAxCgNA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FydXKL0hVEoTxcWj75awZZhKUkw+d823EoVDjblchCLwmsB2oG6X52IImKnuWyk71
-	 LWAFoCTQ2z0qO2g980ml0B1wLQqbP6B3adw6fcVjxUH/uEYjtaApQN59bMbWfUn5Ay
-	 RgVryOfVMjO1tbS+jneG41MDh8fP/g56rqLLraV04NQj/VTRIM/MWZFk/FSqXJngPN
-	 VwjhZCKXI/ssMKLHKoepK9n5oOs8UHjFQP7F0pQMp9GkAUhESugn0gyaKqNFI4R3DL
-	 q6ru9jMFQIuy/SW/LtGYIyINbnpo4QmKbauFvhyQ0irIvMqgV5JZK7xvn4lYLaM3zO
-	 mMt/rpEKdENpw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	josef@toxicpanda.com,
-	linux-btrfs@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 03/11] btrfs: handle empty eb->folios in num_extent_folios()
-Date: Mon, 12 May 2025 14:04:18 -0400
-Message-Id: <20250512180426.437627-3-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250512180426.437627-1-sashal@kernel.org>
-References: <20250512180426.437627-1-sashal@kernel.org>
+	b=DDF26CCGh757TpTOBNiD8K/zwQL8EUGnQEn/IS0SAspl75LpsVLfG3/KvtAmWaNiA
+	 O1SVfXWElDvlLI870rF9TLKWahb95Gdx0nB1OBtHDbwFf2aOiAZvtT/7dyEAsFWOKp
+	 eCt+9Rf6sl7Cc6gPLwpBNRiLqIa7AHD5M/fqEG0o=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Guenter Roeck <linux@roeck-us.net>,
+	Daniel Wagner <wagi@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 146/184] nvme: unblock ctrl state transition for firmware update
+Date: Mon, 12 May 2025 19:45:47 +0200
+Message-ID: <20250512172047.760465704@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
+References: <20250512172041.624042835@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.12.28
 Content-Transfer-Encoding: 8bit
 
-From: Boris Burkov <boris@bur.io>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit d6fe0c69b3aa5c985380b794bdf8e6e9b1811e60 ]
+------------------
 
-num_extent_folios() unconditionally calls folio_order() on
-eb->folios[0]. If that is NULL this will be a segfault. It is reasonable
-for it to return 0 as the number of folios in the eb when the first
-entry is NULL, so do that instead.
+From: Daniel Wagner <wagi@kernel.org>
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+[ Upstream commit 650415fca0a97472fdd79725e35152614d1aad76 ]
+
+The original nvme subsystem design didn't have a CONNECTING state; the
+state machine allowed transitions from RESETTING to LIVE directly.
+
+With the introduction of nvme fabrics the CONNECTING state was
+introduce. Over time the nvme-pci started to use the CONNECTING state as
+well.
+
+Eventually, a bug fix for the nvme-fc started to depend that the only
+valid transition to LIVE was from CONNECTING. Though this change didn't
+update the firmware update handler which was still depending on
+RESETTING to LIVE transition.
+
+The simplest way to address it for the time being is to switch into
+CONNECTING state before going to LIVE state.
+
+Fixes: d2fe192348f9 ("nvme: only allow entering LIVE from CONNECTING state")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Closes: https://lore.kernel.org/all/0134ea15-8d5f-41f7-9e9a-d7e6d82accaa@roeck-us.net
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/nvme/host/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/extent_io.h b/fs/btrfs/extent_io.h
-index 8a36117ed4532..fcb60837d7dc6 100644
---- a/fs/btrfs/extent_io.h
-+++ b/fs/btrfs/extent_io.h
-@@ -293,6 +293,8 @@ static inline int num_extent_pages(const struct extent_buffer *eb)
-  */
- static inline int num_extent_folios(const struct extent_buffer *eb)
- {
-+	if (!eb->folios[0])
-+		return 0;
- 	if (folio_order(eb->folios[0]))
- 		return 1;
- 	return num_extent_pages(eb);
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index f19410723b179..98dad1bdff440 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4473,7 +4473,8 @@ static void nvme_fw_act_work(struct work_struct *work)
+ 		msleep(100);
+ 	}
+ 
+-	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_LIVE))
++	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_CONNECTING) ||
++	    !nvme_change_ctrl_state(ctrl, NVME_CTRL_LIVE))
+ 		return;
+ 
+ 	nvme_unquiesce_io_queues(ctrl);
 -- 
 2.39.5
+
+
 
