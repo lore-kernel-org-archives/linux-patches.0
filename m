@@ -1,102 +1,121 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857712BDC39;
-	Mon, 12 May 2025 18:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4742BE109;
+	Mon, 12 May 2025 18:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073124; cv=none; b=XA5LYx4EiuIgGlOFhSTYJYEKZPQiMoVozmk4N4jj15MbmoIjoO/R1XBd8/+ufHALvZT8TUibEy+gt6Sr/DhXB/puj4pm/XzFNau5tC8B3vfrYrrDe3Tuf6QfbDo8qBBS+1bnbnfVReLJQBo/zSXerPSpMNbiTdxiy1z8pxkkdAQ=
+	t=1747073126; cv=none; b=jb/G4RxJvN9JDls2oSPqHm2e32dW6Czm6PtF5PEC7D4/U/PoWvlQo3oPdqvnXKmoN5CNDzDxcVNwk+3ei7A/WxS1Yfi7B+69ZcJH80odMmg8CbeZbZjtsACL7zfj5XwEy2Y2y0PPBselpAuBnc3mhsWSkk3DSv9gRMKWXciLUcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073124; c=relaxed/simple;
-	bh=8l2IdlUqyWnCxeH7lAlgB2lQxQcOmC059AIDKD2W+Bc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ON9phy139I//UIBRHre1buWEBPDcIuQ7xafBBDFvbG6e9Y/1gt1hWGGyKS7gcbFlQQD/KFv1G87wZykKPjVfUJRADdlkmawutQCDrGJCYuaUE3CUbWNq2HL1NLurk3tdoGmJ4brl0H23kOTV4k409a0prlQRfWkZqWzIL0ojKtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJVtASV4; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747073126; c=relaxed/simple;
+	bh=3AksgRRmkoQ6fJIncxndRZkvy/I4Fxh5QPEmqwimDJo=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=V8S3aYZL2Gxnswg15TmfAcxck37ckDeAmdlr+V31pgubNcALyp5qai1uENom7aOitktnGisrECCuUYLD+LcLpNCh9TGaQm1vOXT5aFfbr5AFM7uCycmNPqQuIu5MflEgNm+jMQqLqVNtiCOBb4HbQaR80Yd70QLdV8CmDeWmrOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QPr255rB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJVtASV4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E57C4CEE9;
-	Mon, 12 May 2025 18:05:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073124;
-	bh=8l2IdlUqyWnCxeH7lAlgB2lQxQcOmC059AIDKD2W+Bc=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QPr255rB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41088C4CEEF;
+	Mon, 12 May 2025 18:05:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747073126;
+	bh=3AksgRRmkoQ6fJIncxndRZkvy/I4Fxh5QPEmqwimDJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lJVtASV4dEOXTrGkK95DiorPNkkT38TNINjmgedR+z4aa8OhVCVQSKYcFjYXRu6AT
-	 arS7/tiZVjy02n5zOgwHDd6Yx+gGzPpzgWuEy5o0nVxHHWocvbg+AhCY0KGkNhdgFV
-	 GpL5MaycJk/8zk+yweP7V535P+qL0j8zwsOKxPXg=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 132/184] types: Complement the aligned types with signed 64-bit one
-Date: Mon, 12 May 2025 19:45:33 +0200
-Message-ID: <20250512172047.192383977@linuxfoundation.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
-References: <20250512172041.624042835@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=QPr255rBlHWgPuVdnQtKzCGhYS41C3JKflJ0AIgmHnuaLPxtxrkg75Am93zlAQSIp
+	 HQWFb+OmaKKb8gQeMAjkFE2AXHBGEzzQIyX01rEv7GxWa56ALaPr563YhN1KcZdYKp
+	 XVMLuJRFe175hsPNbv0aRLJow5otDhfGnullY0odgnWA8nGu4r1cXh4BODtSd+MRsi
+	 S6pz67JVk0u8SHvVVX6ezMhV6jQRzo2Q8w3dz+gD5pfCchqjNXPNSe6IQ0f/nkMxh4
+	 Ktu8BoGVbGJNnLeOmjykWoQtGFAULAo6+ROW6MXsjAPo2BNGNaz6uL3xc5RuloqQIm
+	 8OQXiTJA1MetQ==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Jason Andryuk <jason.andryuk@amd.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
+	Sasha Levin <sashal@kernel.org>,
+	gregkh@linuxfoundation.org,
+	chenqiuji666@gmail.com,
+	xin.wang2@amd.com,
+	xen-devel@lists.xenproject.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.15 2/3] xenbus: Allow PVH dom0 a non-local xenstore
+Date: Mon, 12 May 2025 14:05:17 -0400
+Message-Id: <20250512180518.438085-2-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250512180518.438085-1-sashal@kernel.org>
+References: <20250512180518.438085-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 5.15.182
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+From: Jason Andryuk <jason.andryuk@amd.com>
 
-------------------
+[ Upstream commit 90989869baae47ee2aa3bcb6f6eb9fbbe4287958 ]
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Make xenbus_init() allow a non-local xenstore for a PVH dom0 - it is
+currently forced to XS_LOCAL.  With Hyperlaunch booting dom0 and a
+xenstore stubdom, dom0 can be handled as a regular XS_HVM following the
+late init path.
 
-[ Upstream commit e4ca0e59c39442546866f3dd514a3a5956577daf ]
+Ideally we'd drop the use of xen_initial_domain() and just check for the
+event channel instead.  However, ARM has a xen,enhanced no-xenstore
+mode, where the event channel and PFN would both be 0.  Retain the
+xen_initial_domain() check, and use that for an additional check when
+the event channel is 0.
 
-Some user may want to use aligned signed 64-bit type.
-Provide it for them.
+Check the full 64bit HVM_PARAM_STORE_EVTCHN value to catch the off
+chance that high bits are set for the 32bit event channel.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20240903180218.3640501-2-andriy.shevchenko@linux.intel.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 1bb942287e05 ("iio: accel: adxl355: Make timestamp 64-bit aligned using aligned_s64")
+Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
+Change-Id: I5506da42e4c6b8e85079fefb2f193c8de17c7437
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20250506204456.5220-1-jason.andryuk@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/types.h      | 3 ++-
- include/uapi/linux/types.h | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/xen/xenbus/xenbus_probe.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/types.h b/include/linux/types.h
-index 2bc8766ba20ca..2d7b9ae8714ce 100644
---- a/include/linux/types.h
-+++ b/include/linux/types.h
-@@ -115,8 +115,9 @@ typedef u64			u_int64_t;
- typedef s64			int64_t;
- #endif
- 
--/* this is a special 64bit data type that is 8-byte aligned */
-+/* These are the special 64-bit data types that are 8-byte aligned */
- #define aligned_u64		__aligned_u64
-+#define aligned_s64		__aligned_s64
- #define aligned_be64		__aligned_be64
- #define aligned_le64		__aligned_le64
- 
-diff --git a/include/uapi/linux/types.h b/include/uapi/linux/types.h
-index 6375a06840520..48b933938877d 100644
---- a/include/uapi/linux/types.h
-+++ b/include/uapi/linux/types.h
-@@ -53,6 +53,7 @@ typedef __u32 __bitwise __wsum;
-  * No conversions are necessary between 32-bit user-space and a 64-bit kernel.
-  */
- #define __aligned_u64 __u64 __attribute__((aligned(8)))
-+#define __aligned_s64 __s64 __attribute__((aligned(8)))
- #define __aligned_be64 __be64 __attribute__((aligned(8)))
- #define __aligned_le64 __le64 __attribute__((aligned(8)))
- 
+diff --git a/drivers/xen/xenbus/xenbus_probe.c b/drivers/xen/xenbus/xenbus_probe.c
+index e680bd1adf9c4..2068f83556b78 100644
+--- a/drivers/xen/xenbus/xenbus_probe.c
++++ b/drivers/xen/xenbus/xenbus_probe.c
+@@ -927,9 +927,15 @@ static int __init xenbus_init(void)
+ 	if (xen_pv_domain())
+ 		xen_store_domain_type = XS_PV;
+ 	if (xen_hvm_domain())
++	{
+ 		xen_store_domain_type = XS_HVM;
+-	if (xen_hvm_domain() && xen_initial_domain())
+-		xen_store_domain_type = XS_LOCAL;
++		err = hvm_get_parameter(HVM_PARAM_STORE_EVTCHN, &v);
++		if (err)
++			goto out_error;
++		xen_store_evtchn = (int)v;
++		if (!v && xen_initial_domain())
++			xen_store_domain_type = XS_LOCAL;
++	}
+ 	if (xen_pv_domain() && !xen_start_info->store_evtchn)
+ 		xen_store_domain_type = XS_LOCAL;
+ 	if (xen_pv_domain() && xen_start_info->store_evtchn)
+@@ -948,10 +954,6 @@ static int __init xenbus_init(void)
+ 		xen_store_interface = gfn_to_virt(xen_store_gfn);
+ 		break;
+ 	case XS_HVM:
+-		err = hvm_get_parameter(HVM_PARAM_STORE_EVTCHN, &v);
+-		if (err)
+-			goto out_error;
+-		xen_store_evtchn = (int)v;
+ 		err = hvm_get_parameter(HVM_PARAM_STORE_PFN, &v);
+ 		if (err)
+ 			goto out_error;
 -- 
 2.39.5
-
-
 
