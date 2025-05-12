@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9C71E505;
-	Mon, 12 May 2025 18:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACEB81E505;
+	Mon, 12 May 2025 18:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073500; cv=none; b=c4WE24x3BoBzVdzmjh5J2RNufs8cwvQICXvzNlNZuMF8q+YypSGzeLzxuWmqT16Vsg+W4G16y7vYKc1LV6C379RDTn620D1qc0jv7l5de4PMOasJDQuRP53xezKtLIpTQxy9xguKQtPN2ENUVIDbUUygSqqHyrI2j6H7r9RLkR8=
+	t=1747073503; cv=none; b=n/YlHvjj6q52YYNDRMr12CuqI49E9uFoBRZ+5orA8TZCC19Jt5z3BXpAns0ZxJwwvjy1kEEQJMImGPc/rEdHWWISYesmf3sH5LNDZl99pRD5mklohzkStyO5OYpEiyN7cCPMpy6F82W0ronp1dioBwCnoRo2eJClkVj1nygfe6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073500; c=relaxed/simple;
-	bh=cr/poBU0Yexf4tVYd3df5bSF6XSeveTsFE7bJF8dQKY=;
+	s=arc-20240116; t=1747073503; c=relaxed/simple;
+	bh=d8lit27Lm4G67sSrmCvml+jeuZGbV+bs8kZOazoKf/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IZ2F9s5eOMYy8dnXTqXeaBAoM8hnk1qEnjcU2lvx6oPsH++g2Yz+mJYABVjo90xNi63yepfs1XDR9tXPK5PXpMYXyNtjxUTjhOCw8RqlZQd4o1WR7Ix2zcu+6dFn4UKDhHbwV8OjgukeU8NfcJ87NZ8IvcdsqsQRQLUsHyf4N6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ViR6sZB+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bPx5gPCZd1aptJWCtubCYd9H1lxJ1gEZDgqCA9/uKXeQ1O/Q6TWHMJX0oUeRHgqtQ/RV2Rcx8HVqIVotXOhbqt0s+POezPhCqR6cZ60ERO8+NJ6e4zo4qz16AOcliiGIggvE3gEy5j9Y2UoM8+bVR1pZJDtmB9zO+AD0vzuhxmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLkyWWDn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ViR6sZB+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A077C4CEE7;
-	Mon, 12 May 2025 18:11:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLkyWWDn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071A1C4CEF8;
+	Mon, 12 May 2025 18:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073500;
-	bh=cr/poBU0Yexf4tVYd3df5bSF6XSeveTsFE7bJF8dQKY=;
+	s=korg; t=1747073503;
+	bh=d8lit27Lm4G67sSrmCvml+jeuZGbV+bs8kZOazoKf/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ViR6sZB+J0jT7Pmr6pyHB+553eB+c5Cju5VgB7C17pMY1afvQZ1NnfrubUvU5GtPB
-	 U1VoYB5fvXuJ7kstsd3DRbcHzb2zm+c6ahKn1MNabhK8kgy7DZkTEIXrfG3kdWavZR
-	 LLH4BibSYSluImvbRk3U7jv5zRWrPAX6fRV0YatU=
+	b=TLkyWWDnBlfrVHSZz5clVQ7mtvB7TqwrxDbGYd+3JuAgAlrn7cQkxom8x0TNkLeWC
+	 V/nDbqfrb8zI29iUOTnVnJe/l9zI2U6OZXgRj/dVQXgs6/fMzXoVx8VzxYe/Z8th+5
+	 JDZoYvkFO0LNiUv95+0W+C5+/wlUjN29/kaqZXFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	James Morse <james.morse@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Daniel Borkmann <daniel@iogearbox.net>
-Subject: [PATCH 6.6 096/113] arm64: bpf: Only mitigate cBPF programs loaded by unprivileged users
-Date: Mon, 12 May 2025 19:46:25 +0200
-Message-ID: <20250512172031.588213643@linuxfoundation.org>
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.6 097/113] arm64: proton-pack: Add new CPUs k values for branch mitigation
+Date: Mon, 12 May 2025 19:46:26 +0200
+Message-ID: <20250512172031.626643183@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172027.691520737@linuxfoundation.org>
 References: <20250512172027.691520737@linuxfoundation.org>
@@ -53,34 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 From: James Morse <james.morse@arm.com>
 
-commit f300769ead032513a68e4a02e806393402e626f8 upstream.
+commit efe676a1a7554219eae0b0dcfe1e0cdcc9ef9aef upstream.
 
-Support for eBPF programs loaded by unprivileged users is typically
-disabled. This means only cBPF programs need to be mitigated for BHB.
+Update the list of 'k' values for the branch mitigation from arm's
+website.
 
-In addition, only mitigate cBPF programs that were loaded by an
-unprivileged user. Privileged users can also load the same program
-via eBPF, making the mitigation pointless.
+Add the values for Cortex-X1C. The MIDR_EL1 value can be found here:
+https://developer.arm.com/documentation/101968/0002/Register-descriptions/AArch>
 
+Link: https://developer.arm.com/documentation/110280/2-0/?lang=en
 Signed-off-by: James Morse <james.morse@arm.com>
 Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/net/bpf_jit_comp.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/include/asm/cputype.h |    2 ++
+ arch/arm64/kernel/proton-pack.c  |    1 +
+ 2 files changed, 3 insertions(+)
 
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -666,6 +666,9 @@ static void __maybe_unused build_bhb_mit
- 	    arm64_get_spectre_v2_state() == SPECTRE_VULNERABLE)
- 		return;
- 
-+	if (capable(CAP_SYS_ADMIN))
-+		return;
-+
- 	if (supports_clearbhb(SCOPE_SYSTEM)) {
- 		emit(aarch64_insn_gen_hint(AARCH64_INSN_HINT_CLEARBHB), ctx);
- 		return;
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -81,6 +81,7 @@
+ #define ARM_CPU_PART_CORTEX_A78AE	0xD42
+ #define ARM_CPU_PART_CORTEX_X1		0xD44
+ #define ARM_CPU_PART_CORTEX_A510	0xD46
++#define ARM_CPU_PART_CORTEX_X1C		0xD4C
+ #define ARM_CPU_PART_CORTEX_A520	0xD80
+ #define ARM_CPU_PART_CORTEX_A710	0xD47
+ #define ARM_CPU_PART_CORTEX_A715	0xD4D
+@@ -166,6 +167,7 @@
+ #define MIDR_CORTEX_A78AE	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78AE)
+ #define MIDR_CORTEX_X1	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X1)
+ #define MIDR_CORTEX_A510 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A510)
++#define MIDR_CORTEX_X1C MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X1C)
+ #define MIDR_CORTEX_A520 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A520)
+ #define MIDR_CORTEX_A710 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A710)
+ #define MIDR_CORTEX_A715 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A715)
+--- a/arch/arm64/kernel/proton-pack.c
++++ b/arch/arm64/kernel/proton-pack.c
+@@ -891,6 +891,7 @@ static u8 spectre_bhb_loop_affected(void
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78AE),
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78C),
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_X1),
++		MIDR_ALL_VERSIONS(MIDR_CORTEX_X1C),
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
+ 		MIDR_ALL_VERSIONS(MIDR_CORTEX_X2),
+ 		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
 
 
