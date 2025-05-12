@@ -1,36 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628D9251782;
-	Mon, 12 May 2025 17:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B1A2550CF;
+	Mon, 12 May 2025 17:45:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071904; cv=none; b=Nq1EkEID+nJhLLkZEPv5akaVFJ76++u3ZXY1Ld9Nu0nT4dgoNoc7BhdCB7Rm8mKQpZpa5rFXnknG6wCKmndtHfvlIsz8oylTAVhqpVvuAqQIMAGVouBkZ2oVBb8UxU5gEIcfvclbDhE2xpCcvNVYDUC3SJItPyAMmcXX3gj9B+c=
+	t=1747071907; cv=none; b=MTrlFlk3a4TB0tf+m+NeveLvT3YWKObUu2a1kky2UypTUhWkbKnAui+FasYNtGoU29Li2tPlfgU4SLKORah3ylV326kjmZzh7WDNYlFtGHLSroYPn9qVLJgkm9j3PfQ9enU7BNw4zxIk6bIGrd5lrjkP2wAVTewxa8Rpye2VgIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071904; c=relaxed/simple;
-	bh=+owjlmNlPFWaXbBnnd4jVTOkKIZiZpadltErBq+Fomc=;
+	s=arc-20240116; t=1747071907; c=relaxed/simple;
+	bh=Zx2aB9Jc9g+vMK4pYfS7UEwoyPOTdX1dXzEuQJncUs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fWTbriij/ZRO+M2ZbbCGH8F2HkERekdH1lVDAPSwVk0P7FPQAQQ8ewTMXpHSmCLgbWSne6NYAaqk4le6wpNqafhRrJvqiLRDsZNKPCXQJBq5XzAgcPIh1bjUPHiSTyUBllqyMUi59wild2O3fJjI8yv6aPrlmAbuihMn5zGRhTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lq2Fexbg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KhspinJM75KjIl2Qh8uyJGCX7OiJWWRZLzYomHppGa6DY+5mWyHRYWwbku4yT3xPfmY7Urdxhj+v0RkZDdmdy+OVIQmLFE47J5z38FFf5dZ4Q1+sZsyNQ/2VpEVLeffPtQbTcYNxe7sh3D8xzpyPb/yJczL3HvB1RgJqcj8M0uM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfKljrh7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lq2Fexbg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D7FC4CEE9;
-	Mon, 12 May 2025 17:45:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfKljrh7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED62C4CEE7;
+	Mon, 12 May 2025 17:45:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071904;
-	bh=+owjlmNlPFWaXbBnnd4jVTOkKIZiZpadltErBq+Fomc=;
+	s=korg; t=1747071906;
+	bh=Zx2aB9Jc9g+vMK4pYfS7UEwoyPOTdX1dXzEuQJncUs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lq2FexbgnDUn+Z5dxaYMHmsRtFoGlR/6LaBjIjJOov3F0zWWnWCzFYBiNFA/3Dccm
-	 wKLyFWivAgj69/kXvRMDoUICETCiRJJuqSCgsutlZQ8KOT5jSP2+lX0+gA3erNXd5W
-	 tQmEBOegascMEmUlzlhVAkFwplwVijHcHk+x+MTk=
+	b=WfKljrh7cTv4allSCwtOD+NQele66caJB1ZN2pwSLBDEeVt7tUPvE9QJUOEJisgnJ
+	 mT9Wpv+nTucE87gVfeYC2merU+t67INkRI8izA2kwyiLTkoa+dpw59Lb3eudIKXZ/T
+	 T8WxqPUaotwKf44uIRLZ9A+tVsn/MQ7h09vKURI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Shahrouzi <gshahrouzi@gmail.com>
-Subject: [PATCH 6.14 072/197] staging: axis-fifo: Correct handling of tx_fifo_depth for size validation
-Date: Mon, 12 May 2025 19:38:42 +0200
-Message-ID: <20250512172047.312385246@linuxfoundation.org>
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Rik van Riel <riel@surriel.com>,
+	Stephen Dolan <sdolan@janestreet.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.14 073/197] x86/mm: Eliminate window where TLB flushes may be inadvertently skipped
+Date: Mon, 12 May 2025 19:38:43 +0200
+Message-ID: <20250512172047.351535861@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -49,38 +54,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Shahrouzi <gshahrouzi@gmail.com>
+From: Dave Hansen <dave.hansen@linux.intel.com>
 
-commit 2ca34b508774aaa590fc3698a54204706ecca4ba upstream.
+commit fea4e317f9e7e1f449ce90dedc27a2d2a95bee5a upstream.
 
-Remove erroneous subtraction of 4 from the total FIFO depth read from
-device tree. The stored depth is for checking against total capacity,
-not initial vacancy. This prevented writes near the FIFO's full size.
+tl;dr: There is a window in the mm switching code where the new CR3 is
+set and the CPU should be getting TLB flushes for the new mm.  But
+should_flush_tlb() has a bug and suppresses the flush.  Fix it by
+widening the window where should_flush_tlb() sends an IPI.
 
-The check performed just before data transfer, which uses live reads of
-the TDFV register to determine current vacancy, correctly handles the
-initial Depth - 4 hardware state and subsequent FIFO fullness.
+Long Version:
 
-Fixes: 4a965c5f89de ("staging: add driver for Xilinx AXI-Stream FIFO v4.1 IP core")
+=== History ===
+
+There were a few things leading up to this.
+
+First, updating mm_cpumask() was observed to be too expensive, so it was
+made lazier.  But being lazy caused too many unnecessary IPIs to CPUs
+due to the now-lazy mm_cpumask().  So code was added to cull
+mm_cpumask() periodically[2].  But that culling was a bit too aggressive
+and skipped sending TLB flushes to CPUs that need them.  So here we are
+again.
+
+=== Problem ===
+
+The too-aggressive code in should_flush_tlb() strikes in this window:
+
+	// Turn on IPIs for this CPU/mm combination, but only
+	// if should_flush_tlb() agrees:
+	cpumask_set_cpu(cpu, mm_cpumask(next));
+
+	next_tlb_gen = atomic64_read(&next->context.tlb_gen);
+	choose_new_asid(next, next_tlb_gen, &new_asid, &need_flush);
+	load_new_mm_cr3(need_flush);
+	// ^ After 'need_flush' is set to false, IPIs *MUST*
+	// be sent to this CPU and not be ignored.
+
+        this_cpu_write(cpu_tlbstate.loaded_mm, next);
+	// ^ Not until this point does should_flush_tlb()
+	// become true!
+
+should_flush_tlb() will suppress TLB flushes between load_new_mm_cr3()
+and writing to 'loaded_mm', which is a window where they should not be
+suppressed.  Whoops.
+
+=== Solution ===
+
+Thankfully, the fuzzy "just about to write CR3" window is already marked
+with loaded_mm==LOADED_MM_SWITCHING.  Simply checking for that state in
+should_flush_tlb() is sufficient to ensure that the CPU is targeted with
+an IPI.
+
+This will cause more TLB flush IPIs.  But the window is relatively small
+and I do not expect this to cause any kind of measurable performance
+impact.
+
+Update the comment where LOADED_MM_SWITCHING is written since it grew
+yet another user.
+
+Peter Z also raised a concern that should_flush_tlb() might not observe
+'loaded_mm' and 'is_lazy' in the same order that switch_mm_irqs_off()
+writes them.  Add a barrier to ensure that they are observed in the
+order they are written.
+
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Acked-by: Rik van Riel <riel@surriel.com>
+Link: https://lore.kernel.org/oe-lkp/202411282207.6bd28eae-lkp@intel.com/ [1]
+Fixes: 6db2526c1d69 ("x86/mm/tlb: Only trim the mm_cpumask once a second") [2]
+Reported-by: Stephen Dolan <sdolan@janestreet.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Gabriel Shahrouzi <gshahrouzi@gmail.com>
-Link: https://lore.kernel.org/r/20250419012937.674924-1-gshahrouzi@gmail.com
+Acked-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/axis-fifo/axis-fifo.c |    3 ---
- 1 file changed, 3 deletions(-)
+ arch/x86/mm/tlb.c |   23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
---- a/drivers/staging/axis-fifo/axis-fifo.c
-+++ b/drivers/staging/axis-fifo/axis-fifo.c
-@@ -770,9 +770,6 @@ static int axis_fifo_parse_dt(struct axi
- 		goto end;
- 	}
+--- a/arch/x86/mm/tlb.c
++++ b/arch/x86/mm/tlb.c
+@@ -621,7 +621,11 @@ void switch_mm_irqs_off(struct mm_struct
  
--	/* IP sets TDFV to fifo depth - 4 so we will do the same */
--	fifo->tx_fifo_depth -= 4;
--
- 	ret = get_dts_property(fifo, "xlnx,use-rx-data", &fifo->has_rx_fifo);
- 	if (ret) {
- 		dev_err(fifo->dt_device, "missing xlnx,use-rx-data property\n");
+ 		choose_new_asid(next, next_tlb_gen, &new_asid, &need_flush);
+ 
+-		/* Let nmi_uaccess_okay() know that we're changing CR3. */
++		/*
++		 * Indicate that CR3 is about to change. nmi_uaccess_okay()
++		 * and others are sensitive to the window where mm_cpumask(),
++		 * CR3 and cpu_tlbstate.loaded_mm are not all in sync.
++ 		 */
+ 		this_cpu_write(cpu_tlbstate.loaded_mm, LOADED_MM_SWITCHING);
+ 		barrier();
+ 	}
+@@ -895,8 +899,16 @@ done:
+ 
+ static bool should_flush_tlb(int cpu, void *data)
+ {
++	struct mm_struct *loaded_mm = per_cpu(cpu_tlbstate.loaded_mm, cpu);
+ 	struct flush_tlb_info *info = data;
+ 
++	/*
++	 * Order the 'loaded_mm' and 'is_lazy' against their
++	 * write ordering in switch_mm_irqs_off(). Ensure
++	 * 'is_lazy' is at least as new as 'loaded_mm'.
++	 */
++	smp_rmb();
++
+ 	/* Lazy TLB will get flushed at the next context switch. */
+ 	if (per_cpu(cpu_tlbstate_shared.is_lazy, cpu))
+ 		return false;
+@@ -905,8 +917,15 @@ static bool should_flush_tlb(int cpu, vo
+ 	if (!info->mm)
+ 		return true;
+ 
++	/*
++	 * While switching, the remote CPU could have state from
++	 * either the prev or next mm. Assume the worst and flush.
++	 */
++	if (loaded_mm == LOADED_MM_SWITCHING)
++		return true;
++
+ 	/* The target mm is loaded, and the CPU is not lazy. */
+-	if (per_cpu(cpu_tlbstate.loaded_mm, cpu) == info->mm)
++	if (loaded_mm == info->mm)
+ 		return true;
+ 
+ 	/* In cpumask, but not the loaded mm? Periodically remove by flushing. */
 
 
