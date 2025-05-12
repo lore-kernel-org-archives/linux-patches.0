@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F1A14658D;
-	Mon, 12 May 2025 17:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A03882512F1;
+	Mon, 12 May 2025 17:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071069; cv=none; b=VWDb8lMbfo8QddiduHCK/sI7tnGDDZ2BrBpX3ulLOa7KuM0oewS3oUk3IQHHXvNVgTfJYTIK2z8TAJSv/jP9lwSwve/lbsCCfi25MrDCXam37noMVwbujBFb9cr4c1onTAg7KvSKkawsiNMzl70jSCen9kNrSDwjCe2NYXU3zWk=
+	t=1747071071; cv=none; b=bHQZHhGnFMCRjwY8x54zcXf7+ZmLM7rDPgNXtSS18jU6fkFsoJ/xnhiRobABfX73JfRDWUv94QY5Y7CaA8Iut+nJmYIYjvtY//eIyWEjAWYXR1L7Rb31+YKFgpZU0dmNgEdSvFxxKS5Kcqtjxm9C1ssTF/6tdJclqfce6MXWeK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071069; c=relaxed/simple;
-	bh=FbnpSzklsfFAMf0Ka4mnnBMjBr/kUiabX+nLpg45MzI=;
+	s=arc-20240116; t=1747071071; c=relaxed/simple;
+	bh=qVltYILBjhvpYaS6+kME5DnjaZaLpRnNJeQv4f5la5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y8EJByKyej/dq7vPHe4ivS18Smd1+bZ3WuHutSZPzdstidTKFrerHa3xitTtaBXlVRdwtj/qd+OP/A11MRnIlYC2DvuJFXvpWuS76WcxLxP73Z0LQn8L6pvNaPY4X1r03l6/OToknnRB2b5Kx7oLVkNEYOplZC9GMb5xD7zToTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfUT80bg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dxKQJ+VXXuwgSkD1yF2oIjL1j4jIGu+4RUsxFcu6Rs3nCdsARbrf/3di7TWd/AUPZeaayLdEk9kuLoDwhUhIRQL/3yq075WqYAIeSGG8vgzEH7tWijUv4aAXOD8V81iCh9W3sHy2cA8W0pAQeTCQwvEEh4uftnhUTbLXFEVsFbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHukijHU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfUT80bg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85144C4CEE7;
-	Mon, 12 May 2025 17:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHukijHU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A819C4CEE9;
+	Mon, 12 May 2025 17:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071068;
-	bh=FbnpSzklsfFAMf0Ka4mnnBMjBr/kUiabX+nLpg45MzI=;
+	s=korg; t=1747071071;
+	bh=qVltYILBjhvpYaS6+kME5DnjaZaLpRnNJeQv4f5la5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UfUT80bgcA2qMQthgmum9LB2PfvIEt8Su2BpQ01XhrkJs2ASjga1tOG8fwTWL80qe
-	 T2YuuXOh4voTukzofHjFVhrQYOXbt46RzTvhjjHlcORhL1L0L0WeGc/Hy/9r+IrPjo
-	 PoqPVNkMDPv8vyz2qQigXo8qc3ObXAQbcK9Jnigk=
+	b=JHukijHUi9/vJ/0Q98Zo2Ih2x5VyKXErtrrHrQ8W7VXQk99qju6Z04SraX4cIl/Cm
+	 lfBJq8tOhLZsdZcq7vOfIxY+ny1U+7rhk97sZqcvlC0QFAaJswRXT+O3KCyWlo8fq6
+	 iTSSzcYa/ypwza0qkZhHBtOMY6umunifhrEIPjWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Kota Toda <kota.toda@gmo-cybersecurity.com>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 07/54] can: gw: fix RCU/BH usage in cgw_create_job()
-Date: Mon, 12 May 2025 19:29:19 +0200
-Message-ID: <20250512172015.943831980@linuxfoundation.org>
+Subject: [PATCH 5.15 08/54] netfilter: ipset: fix region locking in hash types
+Date: Mon, 12 May 2025 19:29:20 +0200
+Message-ID: <20250512172015.984519314@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172015.643809034@linuxfoundation.org>
 References: <20250512172015.643809034@linuxfoundation.org>
@@ -52,364 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Jozsef Kadlecsik <kadlec@netfilter.org>
 
-[ Upstream commit 511e64e13d8cc72853275832e3f372607466c18c ]
+[ Upstream commit 8478a729c0462273188263136880480729e9efca ]
 
-As reported by Sebastian Andrzej Siewior the use of local_bh_disable()
-is only feasible in uni processor systems to update the modification rules.
-The usual use-case to update the modification rules is to update the data
-of the modifications but not the modification types (AND/OR/XOR/SET) or
-the checksum functions itself.
+Region locking introduced in v5.6-rc4 contained three macros to handle
+the region locks: ahash_bucket_start(), ahash_bucket_end() which gave
+back the start and end hash bucket values belonging to a given region
+lock and ahash_region() which should give back the region lock belonging
+to a given hash bucket. The latter was incorrect which can lead to a
+race condition between the garbage collector and adding new elements
+when a hash type of set is defined with timeouts.
 
-To omit additional memory allocations to maintain fast modification
-switching times, the modification description space is doubled at gw-job
-creation time so that only the reference to the active modification
-description is changed under rcu protection.
-
-Rename cgw_job::mod to cf_mod and make it a RCU pointer. Allocate in
-cgw_create_job() and free it together with cgw_job in
-cgw_job_free_rcu(). Update all users to dereference cgw_job::cf_mod with
-a RCU accessor and if possible once.
-
-[bigeasy: Replace mod1/mod2 from the Oliver's original patch with dynamic
-allocation, use RCU annotation and accessor]
-
-Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Closes: https://lore.kernel.org/linux-can/20231031112349.y0aLoBrz@linutronix.de/
-Fixes: dd895d7f21b2 ("can: cangw: introduce optional uid to reference created routing jobs")
-Tested-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20250429070555.cs-7b_eZ@linutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: f66ee0410b1c ("netfilter: ipset: Fix "INFO: rcu detected stall in hash_xxx" reports")
+Reported-by: Kota Toda <kota.toda@gmo-cybersecurity.com>
+Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/gw.c | 149 +++++++++++++++++++++++++++++++--------------------
- 1 file changed, 90 insertions(+), 59 deletions(-)
+ net/netfilter/ipset/ip_set_hash_gen.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/can/gw.c b/net/can/gw.c
-index 20e74fe7d0906..c48e8cf5e6506 100644
---- a/net/can/gw.c
-+++ b/net/can/gw.c
-@@ -130,7 +130,7 @@ struct cgw_job {
- 	u32 handled_frames;
- 	u32 dropped_frames;
- 	u32 deleted_frames;
--	struct cf_mod mod;
-+	struct cf_mod __rcu *cf_mod;
- 	union {
- 		/* CAN frame data source */
- 		struct net_device *dev;
-@@ -459,6 +459,7 @@ static void can_can_gw_rcv(struct sk_buff *skb, void *data)
- 	struct cgw_job *gwj = (struct cgw_job *)data;
- 	struct canfd_frame *cf;
- 	struct sk_buff *nskb;
-+	struct cf_mod *mod;
- 	int modidx = 0;
- 
- 	/* process strictly Classic CAN or CAN FD frames */
-@@ -506,7 +507,8 @@ static void can_can_gw_rcv(struct sk_buff *skb, void *data)
- 	 * When there is at least one modification function activated,
- 	 * we need to copy the skb as we want to modify skb->data.
- 	 */
--	if (gwj->mod.modfunc[0])
-+	mod = rcu_dereference(gwj->cf_mod);
-+	if (mod->modfunc[0])
- 		nskb = skb_copy(skb, GFP_ATOMIC);
- 	else
- 		nskb = skb_clone(skb, GFP_ATOMIC);
-@@ -529,8 +531,8 @@ static void can_can_gw_rcv(struct sk_buff *skb, void *data)
- 	cf = (struct canfd_frame *)nskb->data;
- 
- 	/* perform preprocessed modification functions if there are any */
--	while (modidx < MAX_MODFUNCTIONS && gwj->mod.modfunc[modidx])
--		(*gwj->mod.modfunc[modidx++])(cf, &gwj->mod);
-+	while (modidx < MAX_MODFUNCTIONS && mod->modfunc[modidx])
-+		(*mod->modfunc[modidx++])(cf, mod);
- 
- 	/* Has the CAN frame been modified? */
- 	if (modidx) {
-@@ -546,11 +548,11 @@ static void can_can_gw_rcv(struct sk_buff *skb, void *data)
- 		}
- 
- 		/* check for checksum updates */
--		if (gwj->mod.csumfunc.crc8)
--			(*gwj->mod.csumfunc.crc8)(cf, &gwj->mod.csum.crc8);
-+		if (mod->csumfunc.crc8)
-+			(*mod->csumfunc.crc8)(cf, &mod->csum.crc8);
- 
--		if (gwj->mod.csumfunc.xor)
--			(*gwj->mod.csumfunc.xor)(cf, &gwj->mod.csum.xor);
-+		if (mod->csumfunc.xor)
-+			(*mod->csumfunc.xor)(cf, &mod->csum.xor);
- 	}
- 
- 	/* clear the skb timestamp if not configured the other way */
-@@ -581,9 +583,20 @@ static void cgw_job_free_rcu(struct rcu_head *rcu_head)
- {
- 	struct cgw_job *gwj = container_of(rcu_head, struct cgw_job, rcu);
- 
-+	/* cgw_job::cf_mod is always accessed from the same cgw_job object within
-+	 * the same RCU read section. Once cgw_job is scheduled for removal,
-+	 * cf_mod can also be removed without mandating an additional grace period.
-+	 */
-+	kfree(rcu_access_pointer(gwj->cf_mod));
- 	kmem_cache_free(cgw_cache, gwj);
- }
- 
-+/* Return cgw_job::cf_mod with RTNL protected section */
-+static struct cf_mod *cgw_job_cf_mod(struct cgw_job *gwj)
-+{
-+	return rcu_dereference_protected(gwj->cf_mod, rtnl_is_locked());
-+}
-+
- static int cgw_notifier(struct notifier_block *nb,
- 			unsigned long msg, void *ptr)
- {
-@@ -616,6 +629,7 @@ static int cgw_put_job(struct sk_buff *skb, struct cgw_job *gwj, int type,
- {
- 	struct rtcanmsg *rtcan;
- 	struct nlmsghdr *nlh;
-+	struct cf_mod *mod;
- 
- 	nlh = nlmsg_put(skb, pid, seq, type, sizeof(*rtcan), flags);
- 	if (!nlh)
-@@ -650,82 +664,83 @@ static int cgw_put_job(struct sk_buff *skb, struct cgw_job *gwj, int type,
- 			goto cancel;
- 	}
- 
-+	mod = cgw_job_cf_mod(gwj);
- 	if (gwj->flags & CGW_FLAGS_CAN_FD) {
- 		struct cgw_fdframe_mod mb;
- 
--		if (gwj->mod.modtype.and) {
--			memcpy(&mb.cf, &gwj->mod.modframe.and, sizeof(mb.cf));
--			mb.modtype = gwj->mod.modtype.and;
-+		if (mod->modtype.and) {
-+			memcpy(&mb.cf, &mod->modframe.and, sizeof(mb.cf));
-+			mb.modtype = mod->modtype.and;
- 			if (nla_put(skb, CGW_FDMOD_AND, sizeof(mb), &mb) < 0)
- 				goto cancel;
- 		}
- 
--		if (gwj->mod.modtype.or) {
--			memcpy(&mb.cf, &gwj->mod.modframe.or, sizeof(mb.cf));
--			mb.modtype = gwj->mod.modtype.or;
-+		if (mod->modtype.or) {
-+			memcpy(&mb.cf, &mod->modframe.or, sizeof(mb.cf));
-+			mb.modtype = mod->modtype.or;
- 			if (nla_put(skb, CGW_FDMOD_OR, sizeof(mb), &mb) < 0)
- 				goto cancel;
- 		}
- 
--		if (gwj->mod.modtype.xor) {
--			memcpy(&mb.cf, &gwj->mod.modframe.xor, sizeof(mb.cf));
--			mb.modtype = gwj->mod.modtype.xor;
-+		if (mod->modtype.xor) {
-+			memcpy(&mb.cf, &mod->modframe.xor, sizeof(mb.cf));
-+			mb.modtype = mod->modtype.xor;
- 			if (nla_put(skb, CGW_FDMOD_XOR, sizeof(mb), &mb) < 0)
- 				goto cancel;
- 		}
- 
--		if (gwj->mod.modtype.set) {
--			memcpy(&mb.cf, &gwj->mod.modframe.set, sizeof(mb.cf));
--			mb.modtype = gwj->mod.modtype.set;
-+		if (mod->modtype.set) {
-+			memcpy(&mb.cf, &mod->modframe.set, sizeof(mb.cf));
-+			mb.modtype = mod->modtype.set;
- 			if (nla_put(skb, CGW_FDMOD_SET, sizeof(mb), &mb) < 0)
- 				goto cancel;
- 		}
- 	} else {
- 		struct cgw_frame_mod mb;
- 
--		if (gwj->mod.modtype.and) {
--			memcpy(&mb.cf, &gwj->mod.modframe.and, sizeof(mb.cf));
--			mb.modtype = gwj->mod.modtype.and;
-+		if (mod->modtype.and) {
-+			memcpy(&mb.cf, &mod->modframe.and, sizeof(mb.cf));
-+			mb.modtype = mod->modtype.and;
- 			if (nla_put(skb, CGW_MOD_AND, sizeof(mb), &mb) < 0)
- 				goto cancel;
- 		}
- 
--		if (gwj->mod.modtype.or) {
--			memcpy(&mb.cf, &gwj->mod.modframe.or, sizeof(mb.cf));
--			mb.modtype = gwj->mod.modtype.or;
-+		if (mod->modtype.or) {
-+			memcpy(&mb.cf, &mod->modframe.or, sizeof(mb.cf));
-+			mb.modtype = mod->modtype.or;
- 			if (nla_put(skb, CGW_MOD_OR, sizeof(mb), &mb) < 0)
- 				goto cancel;
- 		}
- 
--		if (gwj->mod.modtype.xor) {
--			memcpy(&mb.cf, &gwj->mod.modframe.xor, sizeof(mb.cf));
--			mb.modtype = gwj->mod.modtype.xor;
-+		if (mod->modtype.xor) {
-+			memcpy(&mb.cf, &mod->modframe.xor, sizeof(mb.cf));
-+			mb.modtype = mod->modtype.xor;
- 			if (nla_put(skb, CGW_MOD_XOR, sizeof(mb), &mb) < 0)
- 				goto cancel;
- 		}
- 
--		if (gwj->mod.modtype.set) {
--			memcpy(&mb.cf, &gwj->mod.modframe.set, sizeof(mb.cf));
--			mb.modtype = gwj->mod.modtype.set;
-+		if (mod->modtype.set) {
-+			memcpy(&mb.cf, &mod->modframe.set, sizeof(mb.cf));
-+			mb.modtype = mod->modtype.set;
- 			if (nla_put(skb, CGW_MOD_SET, sizeof(mb), &mb) < 0)
- 				goto cancel;
- 		}
- 	}
- 
--	if (gwj->mod.uid) {
--		if (nla_put_u32(skb, CGW_MOD_UID, gwj->mod.uid) < 0)
-+	if (mod->uid) {
-+		if (nla_put_u32(skb, CGW_MOD_UID, mod->uid) < 0)
- 			goto cancel;
- 	}
- 
--	if (gwj->mod.csumfunc.crc8) {
-+	if (mod->csumfunc.crc8) {
- 		if (nla_put(skb, CGW_CS_CRC8, CGW_CS_CRC8_LEN,
--			    &gwj->mod.csum.crc8) < 0)
-+			    &mod->csum.crc8) < 0)
- 			goto cancel;
- 	}
- 
--	if (gwj->mod.csumfunc.xor) {
-+	if (mod->csumfunc.xor) {
- 		if (nla_put(skb, CGW_CS_XOR, CGW_CS_XOR_LEN,
--			    &gwj->mod.csum.xor) < 0)
-+			    &mod->csum.xor) < 0)
- 			goto cancel;
- 	}
- 
-@@ -1059,7 +1074,7 @@ static int cgw_create_job(struct sk_buff *skb,  struct nlmsghdr *nlh,
- 	struct net *net = sock_net(skb->sk);
- 	struct rtcanmsg *r;
- 	struct cgw_job *gwj;
--	struct cf_mod mod;
-+	struct cf_mod *mod;
- 	struct can_can_gw ccgw;
- 	u8 limhops = 0;
- 	int err = 0;
-@@ -1078,37 +1093,48 @@ static int cgw_create_job(struct sk_buff *skb,  struct nlmsghdr *nlh,
- 	if (r->gwtype != CGW_TYPE_CAN_CAN)
- 		return -EINVAL;
- 
--	err = cgw_parse_attr(nlh, &mod, CGW_TYPE_CAN_CAN, &ccgw, &limhops);
-+	mod = kmalloc(sizeof(*mod), GFP_KERNEL);
-+	if (!mod)
-+		return -ENOMEM;
-+
-+	err = cgw_parse_attr(nlh, mod, CGW_TYPE_CAN_CAN, &ccgw, &limhops);
- 	if (err < 0)
--		return err;
-+		goto out_free_cf;
- 
--	if (mod.uid) {
-+	if (mod->uid) {
- 		ASSERT_RTNL();
- 
- 		/* check for updating an existing job with identical uid */
- 		hlist_for_each_entry(gwj, &net->can.cgw_list, list) {
--			if (gwj->mod.uid != mod.uid)
-+			struct cf_mod *old_cf;
-+
-+			old_cf = cgw_job_cf_mod(gwj);
-+			if (old_cf->uid != mod->uid)
- 				continue;
- 
- 			/* interfaces & filters must be identical */
--			if (memcmp(&gwj->ccgw, &ccgw, sizeof(ccgw)))
--				return -EINVAL;
-+			if (memcmp(&gwj->ccgw, &ccgw, sizeof(ccgw))) {
-+				err = -EINVAL;
-+				goto out_free_cf;
-+			}
- 
--			/* update modifications with disabled softirq & quit */
--			local_bh_disable();
--			memcpy(&gwj->mod, &mod, sizeof(mod));
--			local_bh_enable();
-+			rcu_assign_pointer(gwj->cf_mod, mod);
-+			kfree_rcu_mightsleep(old_cf);
- 			return 0;
- 		}
- 	}
- 
- 	/* ifindex == 0 is not allowed for job creation */
--	if (!ccgw.src_idx || !ccgw.dst_idx)
--		return -ENODEV;
-+	if (!ccgw.src_idx || !ccgw.dst_idx) {
-+		err = -ENODEV;
-+		goto out_free_cf;
-+	}
- 
- 	gwj = kmem_cache_alloc(cgw_cache, GFP_KERNEL);
--	if (!gwj)
--		return -ENOMEM;
-+	if (!gwj) {
-+		err = -ENOMEM;
-+		goto out_free_cf;
-+	}
- 
- 	gwj->handled_frames = 0;
- 	gwj->dropped_frames = 0;
-@@ -1118,7 +1144,7 @@ static int cgw_create_job(struct sk_buff *skb,  struct nlmsghdr *nlh,
- 	gwj->limit_hops = limhops;
- 
- 	/* insert already parsed information */
--	memcpy(&gwj->mod, &mod, sizeof(mod));
-+	RCU_INIT_POINTER(gwj->cf_mod, mod);
- 	memcpy(&gwj->ccgw, &ccgw, sizeof(ccgw));
- 
- 	err = -ENODEV;
-@@ -1145,9 +1171,11 @@ static int cgw_create_job(struct sk_buff *skb,  struct nlmsghdr *nlh,
- 	if (!err)
- 		hlist_add_head_rcu(&gwj->list, &net->can.cgw_list);
- out:
--	if (err)
-+	if (err) {
- 		kmem_cache_free(cgw_cache, gwj);
--
-+out_free_cf:
-+		kfree(mod);
-+	}
- 	return err;
- }
- 
-@@ -1207,19 +1235,22 @@ static int cgw_remove_job(struct sk_buff *skb, struct nlmsghdr *nlh,
- 
- 	/* remove only the first matching entry */
- 	hlist_for_each_entry_safe(gwj, nx, &net->can.cgw_list, list) {
-+		struct cf_mod *cf_mod;
-+
- 		if (gwj->flags != r->flags)
- 			continue;
- 
- 		if (gwj->limit_hops != limhops)
- 			continue;
- 
-+		cf_mod = cgw_job_cf_mod(gwj);
- 		/* we have a match when uid is enabled and identical */
--		if (gwj->mod.uid || mod.uid) {
--			if (gwj->mod.uid != mod.uid)
-+		if (cf_mod->uid || mod.uid) {
-+			if (cf_mod->uid != mod.uid)
- 				continue;
- 		} else {
- 			/* no uid => check for identical modifications */
--			if (memcmp(&gwj->mod, &mod, sizeof(mod)))
-+			if (memcmp(cf_mod, &mod, sizeof(mod)))
- 				continue;
- 		}
- 
+diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
+index ef04e556aadb4..0bd6bf46f05f3 100644
+--- a/net/netfilter/ipset/ip_set_hash_gen.h
++++ b/net/netfilter/ipset/ip_set_hash_gen.h
+@@ -63,7 +63,7 @@ struct hbucket {
+ #define ahash_sizeof_regions(htable_bits)		\
+ 	(ahash_numof_locks(htable_bits) * sizeof(struct ip_set_region))
+ #define ahash_region(n, htable_bits)		\
+-	((n) % ahash_numof_locks(htable_bits))
++	((n) / jhash_size(HTABLE_REGION_BITS))
+ #define ahash_bucket_start(h,  htable_bits)	\
+ 	((htable_bits) < HTABLE_REGION_BITS ? 0	\
+ 		: (h) * jhash_size(HTABLE_REGION_BITS))
 -- 
 2.39.5
 
