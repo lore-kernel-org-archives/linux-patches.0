@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2690B296147;
-	Mon, 12 May 2025 18:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB9829AAE1;
+	Mon, 12 May 2025 18:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073446; cv=none; b=LCNk+5BBcFLsXhFx0jWN+9fkQ3x98T0mGPi54hRSk3wMN2qOt/xLcVYp6BvVYebiyLKOb35uVSTlL4DPBDhkKdS0rvRVEJ6ji7WqfdBmnvdmbNd38OA2BMY3tmCrv57y2dzRyLsDlc/6Z4EUKSoVe4maF7yVysd8vbdJDfKg5XQ=
+	t=1747073449; cv=none; b=PNOvsKm6nJEUwQf8kuloMG1GYusqaT6Hptd0xmduHhKiwrW0fpI7K9b6koS+LB4jY8KzaPQblQvbHPDYKTdBbcIWwEc+MH+FhcqzsCkI8lUAxXC4MrF3Ih31GzD1CFS+zxNnpFuyH1K1sY9ztiWzeG9azs30Hs55tyrG8cB+Sz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073446; c=relaxed/simple;
-	bh=Y6RDMYQ/Rew40lJivN8kNZrnHuTW76F2niKjpgqXlb8=;
+	s=arc-20240116; t=1747073449; c=relaxed/simple;
+	bh=2MLp8LeNJhAJVYohUSZzwX/Wshe+KOvpR7Y7NC9AHa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R47eogKzVbBrtGPZ4DNqRsS+FKHDAIecPdlX0uxmeQia9Bun2VNJyb/Av3bMPtzwx4zb4s+mX7xU03wZGa2MITkfH7UCmyVoPLYWuOhsw9ZObLWCkfpK+YbukHEvxuS1DX6EED0DFDb8Tg2EAR42/hy+bUOrHqfQk8wezb6Cj3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KbzG0Yff; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pN85KDTQarEyQN/55VgS8YrPJyLVfeJXLl3BdzA5uIJ0gUbySVvmWrESWyYvxE8hW/+RqQdQO5rroudTF9LQKU328lBblsWvZXEBlglJ1HyEnj7D/MOSL8IMG/CsE2DzeSRUjdecVytI9Sx9rEBIXWqpB11TV6J9bOValgOC3d8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xq0lfNcZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KbzG0Yff"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2815C4CEEF;
-	Mon, 12 May 2025 18:10:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xq0lfNcZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980E9C4CEE7;
+	Mon, 12 May 2025 18:10:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073446;
-	bh=Y6RDMYQ/Rew40lJivN8kNZrnHuTW76F2niKjpgqXlb8=;
+	s=korg; t=1747073448;
+	bh=2MLp8LeNJhAJVYohUSZzwX/Wshe+KOvpR7Y7NC9AHa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KbzG0YffRE2P945NqreL4Q+F3SoYwjh0eShBmFGYILJkq8q1CrDanvHxQxarZWZVt
-	 4GOvFpteY9QWZXgqcIHrnfieXpxKiOfFmbGQ0/Qi4sr2LWwuN6bDFGV+9L+esr11HJ
-	 uydoUYLN4QVkFUwo+RbtYlgnQiq8bCfqjS3vq1So=
+	b=xq0lfNcZpIlsYypnpuv0DfxgVjk8RZ9obKLDGVduU3ksZlCjCsKrJZ4R14Q8r535b
+	 K9MKdFkMq0m4+3oN4aLpwCF545RId2odvEhHsO2XYC9S/MR5BSaWv5kcnKBpbeJxHU
+	 nfapFW1CUxg8Zfb9Z8oMWxmBCqv+wG+YHq1zTaw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Penkler <dpenkler@gmail.com>
-Subject: [PATCH 6.6 077/113] usb: usbtmc: Fix erroneous wait_srq ioctl return
-Date: Mon, 12 May 2025 19:46:06 +0200
-Message-ID: <20250512172030.814868218@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.6 051/113] drm/amd/display: Fix wrong handling for AUX_DEFER case
+Date: Mon, 12 May 2025 19:45:40 +0200
+Message-ID: <20250512172029.751151755@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172027.691520737@linuxfoundation.org>
 References: <20250512172027.691520737@linuxfoundation.org>
@@ -49,74 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Penkler <dpenkler@gmail.com>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-commit a9747c9b8b59ab4207effd20eb91a890acb44e16 upstream.
+commit 65924ec69b29296845c7f628112353438e63ea56 upstream.
 
-wait_event_interruptible_timeout returns a long
-The return was being assigned to an int causing an integer overflow when
-the remaining jiffies > INT_MAX resulting in random error returns.
+[Why]
+We incorrectly ack all bytes get written when the reply actually is defer.
+When it's defer, means sink is not ready for the request. We should
+retry the request.
 
-Use a long return value,  converting to the int ioctl return only on
-error.
+[How]
+Only reply all data get written when receive I2C_ACK|AUX_ACK. Otherwise,
+reply the number of actual written bytes received from the sink.
+Add some messages to facilitate debugging as well.
 
-Fixes: 739240a9f6ac ("usb: usbtmc: Add ioctl USBTMC488_IOCTL_WAIT_SRQ")
+Fixes: ad6756b4d773 ("drm/amd/display: Shift dc link aux to aux_payload")
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Ray Wu <ray.wu@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 3637e457eb0000bc37d8bbbec95964aad2fb29fd)
 Cc: stable@vger.kernel.org
-Signed-off-by: Dave Penkler <dpenkler@gmail.com>
-Link: https://lore.kernel.org/r/20250502070941.31819-3-dpenkler@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/usbtmc.c |   23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |   28 ++++++++++--
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/class/usbtmc.c
-+++ b/drivers/usb/class/usbtmc.c
-@@ -606,9 +606,9 @@ static int usbtmc488_ioctl_wait_srq(stru
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -48,6 +48,9 @@
+ 
+ #define PEAK_FACTOR_X1000 1006
+ 
++/*
++ * This function handles both native AUX and I2C-Over-AUX transactions.
++ */
+ static ssize_t dm_dp_aux_transfer(struct drm_dp_aux *aux,
+ 				  struct drm_dp_aux_msg *msg)
  {
- 	struct usbtmc_device_data *data = file_data->data;
- 	struct device *dev = &data->intf->dev;
--	int rv;
- 	u32 timeout;
- 	unsigned long expire;
-+	long wait_rv;
- 
- 	if (!data->iin_ep_present) {
- 		dev_dbg(dev, "no interrupt endpoint present\n");
-@@ -622,25 +622,24 @@ static int usbtmc488_ioctl_wait_srq(stru
- 
- 	mutex_unlock(&data->io_mutex);
- 
--	rv = wait_event_interruptible_timeout(
--			data->waitq,
--			atomic_read(&file_data->srq_asserted) != 0 ||
--			atomic_read(&file_data->closing),
--			expire);
-+	wait_rv = wait_event_interruptible_timeout(
-+		data->waitq,
-+		atomic_read(&file_data->srq_asserted) != 0 ||
-+		atomic_read(&file_data->closing),
-+		expire);
- 
- 	mutex_lock(&data->io_mutex);
- 
- 	/* Note! disconnect or close could be called in the meantime */
- 	if (atomic_read(&file_data->closing) || data->zombie)
--		rv = -ENODEV;
-+		return -ENODEV;
- 
--	if (rv < 0) {
--		/* dev can be invalid now! */
--		pr_debug("%s - wait interrupted %d\n", __func__, rv);
--		return rv;
-+	if (wait_rv < 0) {
-+		dev_dbg(dev, "%s - wait interrupted %ld\n", __func__, wait_rv);
-+		return wait_rv;
+@@ -84,15 +87,25 @@ static ssize_t dm_dp_aux_transfer(struct
+ 	if (adev->dm.aux_hpd_discon_quirk) {
+ 		if (msg->address == DP_SIDEBAND_MSG_DOWN_REQ_BASE &&
+ 			operation_result == AUX_RET_ERROR_HPD_DISCON) {
+-			result = 0;
++			result = msg->size;
+ 			operation_result = AUX_RET_SUCCESS;
+ 		}
  	}
  
--	if (rv == 0) {
-+	if (wait_rv == 0) {
- 		dev_dbg(dev, "%s - wait timed out\n", __func__);
- 		return -ETIMEDOUT;
- 	}
+-	if (payload.write && result >= 0)
+-		result = msg->size;
++	/*
++	 * result equals to 0 includes the cases of AUX_DEFER/I2C_DEFER
++	 */
++	if (payload.write && result >= 0) {
++		if (result) {
++			/*one byte indicating partially written bytes. Force 0 to retry*/
++			drm_info(adev_to_drm(adev), "amdgpu: AUX partially written\n");
++			result = 0;
++		} else if (!payload.reply[0])
++			/*I2C_ACK|AUX_ACK*/
++			result = msg->size;
++	}
+ 
+-	if (result < 0)
++	if (result < 0) {
+ 		switch (operation_result) {
+ 		case AUX_RET_SUCCESS:
+ 			break;
+@@ -111,6 +124,13 @@ static ssize_t dm_dp_aux_transfer(struct
+ 			break;
+ 		}
+ 
++		drm_info(adev_to_drm(adev), "amdgpu: DP AUX transfer fail:%d\n", operation_result);
++	}
++
++	if (payload.reply[0])
++		drm_info(adev_to_drm(adev), "amdgpu: AUX reply command not ACK: 0x%02x.",
++			payload.reply[0]);
++
+ 	return result;
+ }
+ 
 
 
