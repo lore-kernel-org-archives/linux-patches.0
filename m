@@ -1,119 +1,124 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7EF297A62;
-	Mon, 12 May 2025 18:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCE6296D3F;
+	Mon, 12 May 2025 18:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073047; cv=none; b=VOwp3Yfkr3anN9RiEBDwXVDSlP49BFA3y6uhNQe9HsYjBTqqVhMVpiE8VD5i3yeMFoECezu5hEzsZ2vEqMXBiUhqNIcxnjDyw/FbiC0eqYpx+vBi12C/o+ZNsFUMKmGW98VdpWFJ/DtPd1t6qkOk6J1ZPsyOU2zpnplGVeKG0gU=
+	t=1747073048; cv=none; b=SIKJtCBZcIgosql+cRibKvxdPzXwDDxFcHa20rGI5mhlSUgEGdr6ETe6KTl6RdxtxkcABwJTr0JWvWjvfY5t+5Rg3oGB7zb7YQHYIK9ukgRvvbGWJQ1pasah3D/t5VnWjRmATQbGjxOfWXG3r3ZTl4i+yMnKso7jI/qkJT5/SmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073047; c=relaxed/simple;
-	bh=7AdmamawxFHQVl9sNZyBGg7z72bkK+K1M5B0fw/WG7c=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iyMsaoxZyFi6xHogDfyERreNIaeSxyoXVI2+i0aTNjdRZaqALj4ob2+qar+rSQ7BxE3E/9/qM/nIB9cwxFc462OdT8Ik7j9Jt4YoMC044/y7COyPjnFt/rXaz6bahRzXNGl4MjAyk8PJnYT8lz/W+BBetzcKeARKY/OnZRwvwVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLELGVwV; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747073048; c=relaxed/simple;
+	bh=dKqeAJXq/3/rZgFh2vJLxh7XbUeyoCvhR1C434bI6lQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=cgIdzUvhVb+ViTlcECrUFlxLhEud3hMfYQVcIo8ckZ+dxQLGg65H4MjeRlsATAQiB3aNrnJ8tnsFwYU5dyicp52FCbpVJsVtKZM3pLANoPa0eHXldevouGGnKQY2Cy2rGQBSWZXyvZFniQ3QcdwjDkfEAljNA8JhzkDOONRkmv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HU9HgGKY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLELGVwV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496D5C4CEE7;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HU9HgGKY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1005C4CEF4;
 	Mon, 12 May 2025 18:04:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073046;
-	bh=7AdmamawxFHQVl9sNZyBGg7z72bkK+K1M5B0fw/WG7c=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747073048;
+	bh=dKqeAJXq/3/rZgFh2vJLxh7XbUeyoCvhR1C434bI6lQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xLELGVwVC1UmcO8rA7v7ESzh9yG2gZhwdH5psuKpkaR7fomWYvCLF41LEYIMGw4+0
-	 F6+scQcs9H3H9qdU0+yeYsudEfhkl9A1zJf/1lAaeCtUtOI4F+XBPWCCTypkuS41cx
-	 YjrW8vD4+wsogf3iINktVtzDR/ADainjdUt2Ba+U=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Zong Li <zong.li@sifive.com>,
-	Nylon Chen <nylon.chen@sifive.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 138/184] riscv: misaligned: Add handling for ZCB instructions
-Date: Mon, 12 May 2025 19:45:39 +0200
-Message-ID: <20250512172047.434221281@linuxfoundation.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
-References: <20250512172041.624042835@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=HU9HgGKYRJQ1nWnmo+N4d92aHK+gdSmUgEElJCmMTL4B0m5J9Xb87tL5VLimiAD/O
+	 ejnhWGjci7p7qHjopJkALE8kxr83GhERrOhg4byoQ1bi2DWMnsPrggmtYpIzGwNoH/
+	 W+SOLqXi6Y1ASeMIkg9gLPI6wAGQV8UQ5zQhlZjJPDYGAn1uL16LcL3QPFxd368R+B
+	 yAiifcwI97CTYuTSA1urWGd0r2dR0DvHFIBsuyIGZ8bsBJUTB2725jSj/F7xccmY41
+	 O3wkaZ0EIkxGnJQEYGhczkxCgmklVUsKt8ciJrTvXYcicASoiGlX0RDp98oh/kFbCL
+	 NDTT46tjBQUJg==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Qu Wenruo <wqu@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>,
+	clm@fb.com,
+	josef@toxicpanda.com,
+	linux-btrfs@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 07/15] btrfs: avoid NULL pointer dereference if no valid csum tree
+Date: Mon, 12 May 2025 14:03:42 -0400
+Message-Id: <20250512180352.437356-7-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250512180352.437356-1-sashal@kernel.org>
+References: <20250512180352.437356-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.14.6
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+From: Qu Wenruo <wqu@suse.com>
 
-------------------
+[ Upstream commit f95d186255b319c48a365d47b69bd997fecb674e ]
 
-From: Nylon Chen <nylon.chen@sifive.com>
+[BUG]
+When trying read-only scrub on a btrfs with rescue=idatacsums mount
+option, it will crash with the following call trace:
 
-[ Upstream commit eb16b3727c05ed36420c90eca1e8f0e279514c1c ]
+  BUG: kernel NULL pointer dereference, address: 0000000000000208
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  CPU: 1 UID: 0 PID: 835 Comm: btrfs Tainted: G           O        6.15.0-rc3-custom+ #236 PREEMPT(full)
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
+  RIP: 0010:btrfs_lookup_csums_bitmap+0x49/0x480 [btrfs]
+  Call Trace:
+   <TASK>
+   scrub_find_fill_first_stripe+0x35b/0x3d0 [btrfs]
+   scrub_simple_mirror+0x175/0x290 [btrfs]
+   scrub_stripe+0x5f7/0x6f0 [btrfs]
+   scrub_chunk+0x9a/0x150 [btrfs]
+   scrub_enumerate_chunks+0x333/0x660 [btrfs]
+   btrfs_scrub_dev+0x23e/0x600 [btrfs]
+   btrfs_ioctl+0x1dcf/0x2f80 [btrfs]
+   __x64_sys_ioctl+0x97/0xc0
+   do_syscall_64+0x4f/0x120
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Add support for the Zcb extension's compressed half-word instructions
-(C.LHU, C.LH, and C.SH) in the RISC-V misaligned access trap handler.
+[CAUSE]
+Mount option "rescue=idatacsums" will completely skip loading the csum
+tree, so that any data read will not find any data csum thus we will
+ignore data checksum verification.
 
-Signed-off-by: Zong Li <zong.li@sifive.com>
-Signed-off-by: Nylon Chen <nylon.chen@sifive.com>
-Fixes: 956d705dd279 ("riscv: Unaligned load/store handling for M_MODE")
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20250411073850.3699180-2-nylon.chen@sifive.com
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Normally call sites utilizing csum tree will check the fs state flag
+NO_DATA_CSUMS bit, but unfortunately scrub does not check that bit at all.
+
+This results in scrub to call btrfs_search_slot() on a NULL pointer
+and triggered above crash.
+
+[FIX]
+Check both extent and csum tree root before doing any tree search.
+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/traps_misaligned.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ fs/btrfs/scrub.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/kernel/traps_misaligned.c b/arch/riscv/kernel/traps_misaligned.c
-index 9a80a12f6b48f..d14bfc23e315b 100644
---- a/arch/riscv/kernel/traps_misaligned.c
-+++ b/arch/riscv/kernel/traps_misaligned.c
-@@ -87,6 +87,13 @@
- #define INSN_MATCH_C_FSWSP		0xe002
- #define INSN_MASK_C_FSWSP		0xe003
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index 531312efee8df..5d0060eb8ff4c 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -1541,8 +1541,8 @@ static int scrub_find_fill_first_stripe(struct btrfs_block_group *bg,
+ 	u64 extent_gen;
+ 	int ret;
  
-+#define INSN_MATCH_C_LHU		0x8400
-+#define INSN_MASK_C_LHU			0xfc43
-+#define INSN_MATCH_C_LH			0x8440
-+#define INSN_MASK_C_LH			0xfc43
-+#define INSN_MATCH_C_SH			0x8c00
-+#define INSN_MASK_C_SH			0xfc43
-+
- #define INSN_LEN(insn)			((((insn) & 0x3) < 0x3) ? 2 : 4)
- 
- #if defined(CONFIG_64BIT)
-@@ -405,6 +412,13 @@ int handle_misaligned_load(struct pt_regs *regs)
- 		fp = 1;
- 		len = 4;
- #endif
-+	} else if ((insn & INSN_MASK_C_LHU) == INSN_MATCH_C_LHU) {
-+		len = 2;
-+		insn = RVC_RS2S(insn) << SH_RD;
-+	} else if ((insn & INSN_MASK_C_LH) == INSN_MATCH_C_LH) {
-+		len = 2;
-+		shift = 8 * (sizeof(ulong) - len);
-+		insn = RVC_RS2S(insn) << SH_RD;
- 	} else {
- 		regs->epc = epc;
- 		return -1;
-@@ -504,6 +518,9 @@ int handle_misaligned_store(struct pt_regs *regs)
- 		len = 4;
- 		val.data_ulong = GET_F32_RS2C(insn, regs);
- #endif
-+	} else if ((insn & INSN_MASK_C_SH) == INSN_MATCH_C_SH) {
-+		len = 2;
-+		val.data_ulong = GET_RS2S(insn, regs);
- 	} else {
- 		regs->epc = epc;
- 		return -1;
+-	if (unlikely(!extent_root)) {
+-		btrfs_err(fs_info, "no valid extent root for scrub");
++	if (unlikely(!extent_root || !csum_root)) {
++		btrfs_err(fs_info, "no valid extent or csum root for scrub");
+ 		return -EUCLEAN;
+ 	}
+ 	memset(stripe->sectors, 0, sizeof(struct scrub_sector_verification) *
 -- 
 2.39.5
-
-
 
