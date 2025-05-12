@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A435623C510;
-	Mon, 12 May 2025 17:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336DE24DFF3;
+	Mon, 12 May 2025 17:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071957; cv=none; b=k6hPbrBTdFHDGzH0fDAcwE90XOv3RFcMM0Q9DH9MMPfkez4PT8gAGEyr7WrM/q9dgBHKCtOW/5zYAJanTiu0L7ZAIpG3NNQs8CKv59HnrWYX+LKcvCQN8GP48ObsBB1aa+oxWTosJnVfACJTZteNZ3+UOAIkBtv7aBzJjgud5Tw=
+	t=1747071960; cv=none; b=cxj+fPP2oWotZDs118nt34GBHJq/cn9/8rRK4weKwlUZKvPUPeDLlE4n6Oh68wNWHOfdM0m8EO3cTHXUCogk/1T3HxKallPEN/hbsomxZxpYeBI+txf2OEaDvqm3Nq+b05v9oX9xOsF4IrcdZkHwWecK/RkJ2U8S7vAcfx1bC9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071957; c=relaxed/simple;
-	bh=VokVJiJtU7EMwUgiX6cMHEPeQjUzVAi1w9ZsxDyfxCY=;
+	s=arc-20240116; t=1747071960; c=relaxed/simple;
+	bh=eAE/GT6d8qswbowOoEsjd/4NZlmIEdtuY4VRfPX3iQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jXhD09msBRGzx3IAJi3i7DMUOmRc1dPYnJL6rJ6Xy6J5fVVtPJn7hOwXbFIRdylAbbo7rvaF4au0pNzQYPZ5nPbU+QGhPkge9rn3aWaOPQytOIgJTamLgGuFI+yl28qfotazthEu4yvGX1Gcf6g0nqxdP4RXneAW4H6Mh1Xj3cI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+/VEZxt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=X9TGhamJN2s3LByVBGd1yH88uRFzeahyHgNZyTPlyoFvEHP9o3FLzQ4du5CXEwyHlxEDacSnVvVhsyu4AS78/uVEdyoM72ESa58FZJ6wdhcDgH/YlJ79+PEtMihtKk7KUDNxC4/wAajFcYkPRQc0brwj1o/Eb11LCc50deMdrpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aSnoXx2c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+/VEZxt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0DCC4CEE7;
-	Mon, 12 May 2025 17:45:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aSnoXx2c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F3AC4CEEF;
+	Mon, 12 May 2025 17:45:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071957;
-	bh=VokVJiJtU7EMwUgiX6cMHEPeQjUzVAi1w9ZsxDyfxCY=;
+	s=korg; t=1747071960;
+	bh=eAE/GT6d8qswbowOoEsjd/4NZlmIEdtuY4VRfPX3iQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g+/VEZxth68yWRGH4Y/0omU7JJFgbzA9zVanrlgHqyCr8/lzbUsBYZtaL9SMxE6xc
-	 w91J3smotbe5bpa2vtnfLLYrjhD6oUJqFUG7HstZD+WmMiIvMnTfB7lERLv2FxvF5e
-	 CgyhJS/7nrNuJoasDJkwis3qL9nx4IOZwkTq/r+k=
+	b=aSnoXx2cMlDdVR1sdh08qNeXYMmRGYsIXxD28rE5U2lXGJfy25b+ghuCkfrMPXhfn
+	 CWkNXCIAAs6OiuAwbIE8G/pkfpZk7RUpqWVILw6Ledspfw+RBiGhXygpwosToQxdri
+	 QnaVg5MEXLPImJOkK44JmIo3qseDf+5Y98Xvill4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Shahrouzi <gshahrouzi@gmail.com>,
-	Marcelo Schmitt <marcelo.schmitt1@gmail.com>,
+	David Lechner <dlechner@baylibre.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.14 090/197] iio: adis16201: Correct inclinometer channel resolution
-Date: Mon, 12 May 2025 19:39:00 +0200
-Message-ID: <20250512172048.048928771@linuxfoundation.org>
+Subject: [PATCH 6.14 091/197] iio: chemical: sps30: use aligned_s64 for timestamp
+Date: Mon, 12 May 2025 19:39:01 +0200
+Message-ID: <20250512172048.090489540@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -45,46 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabriel Shahrouzi <gshahrouzi@gmail.com>
+From: David Lechner <dlechner@baylibre.com>
 
-commit 609bc31eca06c7408e6860d8b46311ebe45c1fef upstream.
+commit bb49d940344bcb8e2b19e69d7ac86f567887ea9a upstream.
 
-The inclinometer channels were previously defined with 14 realbits.
-However, the ADIS16201 datasheet states the resolution for these output
-channels is 12 bits (Page 14, text description; Page 15, table 7).
+Follow the pattern of other drivers and use aligned_s64 for the
+timestamp. This will ensure that the timestamp is correctly aligned on
+all architectures.
 
-Correct the realbits value to 12 to accurately reflect the hardware.
-
-Fixes: f7fe1d1dd5a5 ("staging: iio: new adis16201 driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gabriel Shahrouzi <gshahrouzi@gmail.com>
-Reviewed-by: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
-Link: https://patch.msgid.link/20250421131539.912966-1-gshahrouzi@gmail.com
+Fixes: a5bf6fdd19c3 ("iio:chemical:sps30: Fix timestamp alignment")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20250417-iio-more-timestamp-alignment-v1-5-eafac1e22318@baylibre.com
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/adis16201.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/chemical/sps30.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/accel/adis16201.c
-+++ b/drivers/iio/accel/adis16201.c
-@@ -211,9 +211,9 @@ static const struct iio_chan_spec adis16
- 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
- 	ADIS_AUX_ADC_CHAN(ADIS16201_AUX_ADC_REG, ADIS16201_SCAN_AUX_ADC, 0, 12),
- 	ADIS_INCLI_CHAN(X, ADIS16201_XINCL_OUT_REG, ADIS16201_SCAN_INCLI_X,
--			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
-+			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
- 	ADIS_INCLI_CHAN(Y, ADIS16201_YINCL_OUT_REG, ADIS16201_SCAN_INCLI_Y,
--			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
-+			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
- 	IIO_CHAN_SOFT_TIMESTAMP(7)
- };
+--- a/drivers/iio/chemical/sps30.c
++++ b/drivers/iio/chemical/sps30.c
+@@ -108,7 +108,7 @@ static irqreturn_t sps30_trigger_handler
+ 	int ret;
+ 	struct {
+ 		s32 data[4]; /* PM1, PM2P5, PM4, PM10 */
+-		s64 ts;
++		aligned_s64 ts;
+ 	} scan;
  
+ 	mutex_lock(&state->lock);
 
 
