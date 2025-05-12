@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD1B23C510;
-	Mon, 12 May 2025 17:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA51296FCC;
+	Mon, 12 May 2025 17:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071963; cv=none; b=VL3hUPOlnixS6qEWfv1Wx2a9hyjMoActORWANPPVLTBpmjYpy1VDKAZ/7Iwb+el8hq70JIqJXWbvLj0BN9SHdu0MCF5LDON7bXdpovRF1ls60aW8abh9xxmc3hgyPc/vNcnot+dXPCEKgf2j728gMlUSeDsJNIXspC+/15AvXHU=
+	t=1747071966; cv=none; b=MCeeZboH7W54OtGAKIQT2MWHF9P0Lnbm2o06ooK7GsKkNMgMUa8N7kJcLLo3ZWn/675xmQAZlofWKclIrjW9+vBTzCamDrCccxEtDBm1hGPpOBCnXSsNATDdeMuGI5dGnrn4ntJk3o5TQ5ag5H3T/OV1iR2kICU0ovpGQhXMTAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071963; c=relaxed/simple;
-	bh=SsPb6slv/52efQbBE4K7mVL9uA6XqHt0NuZ0mddkld0=;
+	s=arc-20240116; t=1747071966; c=relaxed/simple;
+	bh=OYOiXeg+XSGA9CBjebG5IX5OD+KSOFS+hPi2j+V5yzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sNL+EOqsyftjQz/XFrBD2B3spPG6J5hr0iIWOzgTwj6HBRMRn+cCVPdwLGkCDGle+nFbk2uhe8NhyiskksF8k1WUIGdwaMFfD6Y2o+Ri/8cdfrTckWiTg6GQlKaGTxYetnTkdq7GLb3y0uuWaSLaN0K4mpm8e+sf06Gb3XAJIaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPLvxV+w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XaPPN76MH+LRiM47/aPsFeuDpqhbKSnIxLWaCNhGL0aGixJhTX0vBMKa11Ox2g6EvithVYffPDxfK4XB55yfaATtA9uIIFmOlp1Nmiv+l0L/M6J3KWr5kq9oSsX0VdaMXgcseeQbIKDN9mvUFUpQS+DM1zMm+oV59DRqgn9iSm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCfN7URn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPLvxV+w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20823C4CEF0;
-	Mon, 12 May 2025 17:46:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCfN7URn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50951C4CEF0;
+	Mon, 12 May 2025 17:46:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071963;
-	bh=SsPb6slv/52efQbBE4K7mVL9uA6XqHt0NuZ0mddkld0=;
+	s=korg; t=1747071966;
+	bh=OYOiXeg+XSGA9CBjebG5IX5OD+KSOFS+hPi2j+V5yzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PPLvxV+w+hbz1whugjNQs8blVKjtXz6WRArsUdlubXqiz8YQtKI0jEiuozUi8gSCa
-	 K/T+Uu1ug381jyIVn25CnTkHvSgZfHRpSR8JT64BSmHkZnVT1QyFyi9SLca4JZXKLN
-	 To0Dl1030y/4rMnkV7OL8ncFpeVTAPDtCIfjwhFQ=
+	b=WCfN7URnZBIjJS9EgLKefaOCm5wye4l7QGAvAus1GC8xLum6D8ZVezrcZhakiVH3f
+	 fNsfNpoAOKQ2Gp7Q9BeGkGSxTPC0mPrGLDN70shpwEhwc4o55mZTZtgKrT8dppHqnv
+	 VRFW7NH783764LhkbPYPprIqnD1WFnHmtwtwX9VE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.14 065/197] rust: clean Rust 1.88.0s `unnecessary_transmutes` lint
-Date: Mon, 12 May 2025 19:38:35 +0200
-Message-ID: <20250512172047.027541352@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.14 092/197] iio: chemical: pms7003: use aligned_s64 for timestamp
+Date: Mon, 12 May 2025 19:39:02 +0200
+Message-ID: <20250512172048.130027413@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -44,80 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: David Lechner <dlechner@baylibre.com>
 
-commit 7129ea6e242b00938532537da41ddf5fa3e21471 upstream.
+commit 6ffa698674053e82e811520642db2650d00d2c01 upstream.
 
-Starting with Rust 1.88.0 (expected 2025-06-26) [1][2], `rustc` may
-introduce a new lint that catches unnecessary transmutes, e.g.:
+Follow the pattern of other drivers and use aligned_s64 for the
+timestamp. This will ensure that the timestamp is correctly aligned on
+all architectures.
 
-     error: unnecessary transmute
-         --> rust/uapi/uapi_generated.rs:23242:18
-          |
-    23242 |         unsafe { ::core::mem::transmute(self._bitfield_1.get(0usize, 1u8) as u8) }
-          |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: replace this with: `(self._bitfield_1.get(0usize, 1u8) as u8 == 1)`
-          |
-          = note: `-D unnecessary-transmutes` implied by `-D warnings`
-          = help: to override `-D warnings` add `#[allow(unnecessary_transmutes)]`
+Also move the unaligned.h header while touching this since it was the
+only one not in alphabetical order.
 
-There are a lot of them (at least 300), but luckily they are all in
-`bindgen`-generated code.
-
-Thus clean all up by allowing it there.
-
-Since unknown lints trigger a lint itself in older compilers, do it
-conditionally so that we can keep the `unknown_lints` lint enabled.
-
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Link: https://github.com/rust-lang/rust/pull/136083 [1]
-Link: https://github.com/rust-lang/rust/issues/136067 [2]
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/r/20250502140237.1659624-4-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 13e945631c2f ("iio:chemical:pms7003: Fix timestamp alignment and prevent data leak.")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20250417-iio-more-timestamp-alignment-v1-4-eafac1e22318@baylibre.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- init/Kconfig         |    3 +++
- rust/bindings/lib.rs |    1 +
- rust/uapi/lib.rs     |    1 +
- 3 files changed, 5 insertions(+)
+ drivers/iio/chemical/pms7003.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -137,6 +137,9 @@ config LD_CAN_USE_KEEP_IN_OVERLAY
- config RUSTC_HAS_COERCE_POINTEE
- 	def_bool RUSTC_VERSION >= 108400
+--- a/drivers/iio/chemical/pms7003.c
++++ b/drivers/iio/chemical/pms7003.c
+@@ -5,7 +5,6 @@
+  * Copyright (c) Tomasz Duszynski <tduszyns@gmail.com>
+  */
  
-+config RUSTC_HAS_UNNECESSARY_TRANSMUTES
-+	def_bool RUSTC_VERSION >= 108800
-+
- config PAHOLE_VERSION
- 	int
- 	default $(shell,$(srctree)/scripts/pahole-version.sh $(PAHOLE))
---- a/rust/bindings/lib.rs
-+++ b/rust/bindings/lib.rs
-@@ -26,6 +26,7 @@
+-#include <linux/unaligned.h>
+ #include <linux/completion.h>
+ #include <linux/device.h>
+ #include <linux/errno.h>
+@@ -19,6 +18,8 @@
+ #include <linux/module.h>
+ #include <linux/mutex.h>
+ #include <linux/serdev.h>
++#include <linux/types.h>
++#include <linux/unaligned.h>
  
- #[allow(dead_code)]
- #[allow(clippy::undocumented_unsafe_blocks)]
-+#[cfg_attr(CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES, allow(unnecessary_transmutes))]
- mod bindings_raw {
-     // Manual definition for blocklisted types.
-     type __kernel_size_t = usize;
---- a/rust/uapi/lib.rs
-+++ b/rust/uapi/lib.rs
-@@ -24,6 +24,7 @@
-     unreachable_pub,
-     unsafe_op_in_unsafe_fn
- )]
-+#![cfg_attr(CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES, allow(unnecessary_transmutes))]
+ #define PMS7003_DRIVER_NAME "pms7003"
  
- // Manual definition of blocklisted types.
- type __kernel_size_t = usize;
+@@ -76,7 +77,7 @@ struct pms7003_state {
+ 	/* Used to construct scan to push to the IIO buffer */
+ 	struct {
+ 		u16 data[3]; /* PM1, PM2P5, PM10 */
+-		s64 ts;
++		aligned_s64 ts;
+ 	} scan;
+ };
+ 
 
 
