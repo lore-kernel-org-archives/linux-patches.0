@@ -1,86 +1,81 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0689F1E87B;
-	Mon, 12 May 2025 06:41:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC62253929;
+	Mon, 12 May 2025 07:47:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747032089; cv=none; b=Czkxt1dpoY9NH96yJBzPV2cvNUDn+Fj+iJr0NG4fnYdxXuxfjyqQy8gN5boxbnYf/15niDpJ4zACkWmQtHYGbAI6je+i6tmSjuT5+xyUs5EKSzFgg10eZeiJsVtiLMg+KpGmy3Vg1Mp9wzN+jGF1I9IEWZbcQOcK1rpExSx0hO8=
+	t=1747036028; cv=none; b=FrPyeUkFhpq9388DK6NCp4VwdrpMk1M3/rYUKjLxi7AnV7xwgTa5a8BKtlpzcP2thn5dq4VhOemvZHiRY6+v3sKX850SYq7sYH/JEMogxgEE0gvPwfzEpjs2WxwlIT8kMy4AhYPKephAVMQTNkDNwcbcRY/h11fF4pKpzKCO6/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747032089; c=relaxed/simple;
-	bh=i5TNk7YR/rZX5iv052OQPX+7/Doigvu7KAe6p5UFrFI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sn0AlgvXdJng35PBsEcAF6jEVIdPV72T08i7tHbdeYT9LbRdxlXFUI06GdRS0JdR8aio9OWS63+w1shzpZOELwSMqkp1EgugAyBSASQqeuieqKAfS5SHJu7ojNFG725/cPi4+kooyxMC4WkqQIxbBNPAp+/nrkdxGtwlFkTbPlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GklW6pqy; arc=none smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1747036028; c=relaxed/simple;
+	bh=psmNOYtnv8pKbBB+YwR64a2qRy7BuUJnfYdP3LoWlLI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cfHnQeIahH0z3qNgWODYe1eHe7nuR1dR0nT0qB5vRsGg9sN1Rgu2MTMhg5pglQlfOXGIwGWkUh0mXmMlnjNCtsqfbhGpfoKNCpt8JiNd356UCutqADX3NXTzY+ZglNGnmevQd1SUbW7X9LKIs7NVyBVr95qchlGokVGE7D21vKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nGkwsk4D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GklW6pqy"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1747032088; x=1778568088;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=i5TNk7YR/rZX5iv052OQPX+7/Doigvu7KAe6p5UFrFI=;
-  b=GklW6pqyBnLzEtQ13Z9Cf1bU98AhTuI+Ecsc1NNqI++J878uizN+NZg4
-   VeyOEYDheEOXnoezh2FiTGRv0WiNhq3L+PwzjR+yom52Qc6etBw2lFur3
-   6VIb7fmJJLPUr4mRMO6Fgk4xa5GpoMxFBzwPYeJDkZznIvIfQ41RVWG1I
-   SByuY4e0QsQdAB/hqOqpSySaoaKhvCYBOdeXd2k4QTjZ2b5o7hbxBalhY
-   PKr3N2HJdhKPamZabqoJTXsV35fi9ZTr/QaYq6blOI8ALW5OX0Ckuc9CT
-   2jr6utfd+O/cv0/NUPmd3sVpTcyawNoxyuC1rQWC8ypu8Amr7F/DQS/qw
-   w==;
-X-CSE-ConnectionGUID: P/7JYw0uTIm6f2Ke3XeHYg==
-X-CSE-MsgGUID: QPxe18diRbmk9fTlEWi4dw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11430"; a="48678652"
-X-IronPort-AV: E=Sophos;i="6.15,281,1739865600"; 
-   d="scan'208";a="48678652"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2025 23:41:27 -0700
-X-CSE-ConnectionGUID: 1Az2Kca3TB+mvU6wMBtWYA==
-X-CSE-MsgGUID: UM96D9tkRTyRIis8u/43SA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,281,1739865600"; 
-   d="scan'208";a="142028303"
-Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2025 23:41:26 -0700
-Message-ID: <3934ac04-8dfc-4ed8-9c7d-7650d7d36999@linux.intel.com>
-Date: Mon, 12 May 2025 14:36:51 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nGkwsk4D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10D5EC4CEE7;
+	Mon, 12 May 2025 07:47:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747036027;
+	bh=psmNOYtnv8pKbBB+YwR64a2qRy7BuUJnfYdP3LoWlLI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nGkwsk4Df5QM0cMW34rfTLRaZflrp7vnp2y93vrsJ2NUZu1VeNEwOC10SNhdF0+PW
+	 KCO17KivRdceP11JmT50P9osJkMBz5SIvL+cVwQ+J6d+WnOIdaNPF+WZDcAzPwrv5v
+	 xaWt0L3hc/jT0zVOOsNI/crUP4KsfyIr/KbrHeUsb3TkoVRSDA0hf1SYLnC2SFd2O7
+	 Jb5HqacxB3rKMxJxUHVglxoUEyc7l4xrg5tJvR3j0p1gCXn8UkFqgCdWBKbkYMtVwP
+	 SVEePStefzo0+TdyiW8atRTs69cwANz9nMDrSj1ei7x/i5on76fORuUZOA/rPxi7cp
+	 VMAFwWdIZT9PQ==
+Date: Mon, 12 May 2025 09:47:02 +0200
+From: Danilo Krummrich <dakr@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] rust: devres: fix doctest build under `!CONFIG_PCI`
+Message-ID: <aCGndjmLQMXM76I3@pollux>
+References: <20250511182533.1016163-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] iommu/vt-d: Restore WO permissions on second-level paging
- entries
-To: Jason Gunthorpe <jgg@nvidia.com>, David Woodhouse <dwmw2@infradead.org>,
- iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>
-Cc: patches@lists.linux.dev
-References: <0-v1-c26553717e90+65f-iommu_vtd_ss_wo_jgg@nvidia.com>
-Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <0-v1-c26553717e90+65f-iommu_vtd_ss_wo_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250511182533.1016163-1-ojeda@kernel.org>
 
-On 4/30/25 00:12, Jason Gunthorpe wrote:
-> VT-D HW can do WO permissions on the second-stage but not the first-stage
-> page table formats. The commit eea53c581688 ("iommu/vt-d: Remove WO
-> permissions on second-level paging entries") wanted to make this uniform
-> for VT-D by disabling the support for WO permissions in the second-stage.
+On Sun, May 11, 2025 at 08:25:33PM +0200, Miguel Ojeda wrote:
+> The doctest requires `CONFIG_PCI`:
 > 
-> This isn't consistent with how other drivers are working. Instead if the
-> underlying HW can support WO, it should. For instance AMD already supports
-> WO on its second stage (v1) format and not its first (v2).
+>     error[E0432]: unresolved import `kernel::pci`
+>         --> rust/doctests_kernel_generated.rs:2689:44
+>          |
+>     2689 | use kernel::{device::Core, devres::Devres, pci};
+>          |                                            ^^^ no `pci` in the root
+>          |
+>     note: found an item that was configured out
+>         --> rust/kernel/lib.rs:96:9
+>     note: the item is gated here
+>         --> rust/kernel/lib.rs:95:1
 > 
-> If WO support needs to be discoverable it should be done through an
-> iommu_domain capability flag.
+> Thus conditionally compile it (which still checks the syntax).
 > 
-> Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
-> ---
->   drivers/iommu/intel/iommu.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
+> Fixes: f301cb978c06 ("rust: devres: implement Devres::access()")
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Queued for v6.16-rc1. Thank you!
+Good catch!
+
+Once we have the platform ioremap() abstractions [1], which are always built-in,
+we should use those for the doctests. Maybe this could be a good first issue.
+
+Applied to nova-next, thanks!
+
+[1] https://lore.kernel.org/rust-for-linux/20250509-topics-tyr-platform_iomem-v8-3-e9f1725a40da@collabora.com/
