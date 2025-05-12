@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F57578F52;
-	Mon, 12 May 2025 17:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F4114658D;
+	Mon, 12 May 2025 17:30:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071056; cv=none; b=IDz0YWRoo+fDVx3yB2vytH5dmrl3DroXAaimhQhUKhEDrmlwERr7GWi6xF4EaOuc7yQAotu0UeXmaiQaK9XSISi9YdVLxQbqD7JyuZsCST+BtIDPhYtK+faXHr+Q5by3jpIYzy1VLUqmZcZaAEn+f9wMxwRYdTIUB2GV2fr44Cs=
+	t=1747071058; cv=none; b=FiNMcE7h9URVseCvI3ZYfpOzirKooY94/Ux9fqU93PJd4bUjlK7dD1iJ7lvUYo91yZBze0xX1SDkiDqlHoAtUy7bO8CCjXEif2xdKObL9f6YtyDCrsqGeM9iiz6gAVzsf7tboVm+geREBji8TCQOn30k5lvKHwzQSYk2uknKP+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071056; c=relaxed/simple;
-	bh=3xX+zg97Xtih2FZZvzmCSijbbBmsdkBVBcjhwRLqkJE=;
+	s=arc-20240116; t=1747071058; c=relaxed/simple;
+	bh=E5gqgPoy62F6bXuADOgdKJlIbfc3tKZpbtnROhz8B+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bb5+vM2pfvIpp2tlMyRH7I9EHctGCmROsgFdoAGxYSRNVKbd3KdxVn256AdBvW36TiGODlDOlDKYOThi6ovxWAMeFJZnbVfHquVPwx0u0WO8rvnTMyp5O3U/Uf8291Yp/cnpzqfwhP8xB5qLHxjA/lgZornva0n4To5qJTHJACc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ww5Da3UI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DSXTfXzYV+ABgvnj36xEb824pIuontBAxkOo8i+5eDi/YgCUdpCAlgHS5BHWxyVz+i9Zlzx65wGg6YLGAuXE+YzzgQMXGdP+aQ+x6OqdAED5/v0x7RO0mM0TAAgfLVgpMtHazIrRkcjfWwTxYWN2HYcWf+LB8APkFgezeJIYHAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yG4G5WHm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ww5Da3UI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E4D1C4CEE7;
-	Mon, 12 May 2025 17:30:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yG4G5WHm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7071C4CEEF;
+	Mon, 12 May 2025 17:30:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071055;
-	bh=3xX+zg97Xtih2FZZvzmCSijbbBmsdkBVBcjhwRLqkJE=;
+	s=korg; t=1747071058;
+	bh=E5gqgPoy62F6bXuADOgdKJlIbfc3tKZpbtnROhz8B+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ww5Da3UIqcQuVvu7qoB/H4oWoT2IpltaiZyMjeDQNHdal1N/Rauh3d6ifCNy827YZ
-	 HcNKbtdgKDkjrUqc6+kwf2/GDhdMRUy66Q4vbGOGB9u5q0XQsrYTEBaELHUai0J6v9
-	 8AjipaESU/TLWNcCUw5zX9+ZSZrIScrCJwv4L0RU=
+	b=yG4G5WHmRR2Mq0bMp6Tnr4a53+MdEKNQEBNWGPSAQXVmDqai6Do2SFUB9/F30kf9d
+	 R/kXOLqfGHqZKVwTPZ5yQK7Txv62B5EgiuImbd9ey8kHcZrNnybGjSqrZ03G1DCV7H
+	 188b5Y89erO5gYqGhK6ODolr4lrcpmcTNVNYzBd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Shahrouzi <gshahrouzi@gmail.com>
-Subject: [PATCH 5.15 22/54] staging: axis-fifo: Correct handling of tx_fifo_depth for size validation
-Date: Mon, 12 May 2025 19:29:34 +0200
-Message-ID: <20250512172016.540672966@linuxfoundation.org>
+	Eelco Chaudron <echaudro@redhat.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 03/54] openvswitch: Fix unsafe attribute parsing in output_userspace()
+Date: Mon, 12 May 2025 19:29:15 +0200
+Message-ID: <20250512172015.783420631@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172015.643809034@linuxfoundation.org>
 References: <20250512172015.643809034@linuxfoundation.org>
@@ -49,38 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Shahrouzi <gshahrouzi@gmail.com>
+From: Eelco Chaudron <echaudro@redhat.com>
 
-commit 2ca34b508774aaa590fc3698a54204706ecca4ba upstream.
+commit 6beb6835c1fbb3f676aebb51a5fee6b77fed9308 upstream.
 
-Remove erroneous subtraction of 4 from the total FIFO depth read from
-device tree. The stored depth is for checking against total capacity,
-not initial vacancy. This prevented writes near the FIFO's full size.
+This patch replaces the manual Netlink attribute iteration in
+output_userspace() with nla_for_each_nested(), which ensures that only
+well-formed attributes are processed.
 
-The check performed just before data transfer, which uses live reads of
-the TDFV register to determine current vacancy, correctly handles the
-initial Depth - 4 hardware state and subsequent FIFO fullness.
-
-Fixes: 4a965c5f89de ("staging: add driver for Xilinx AXI-Stream FIFO v4.1 IP core")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gabriel Shahrouzi <gshahrouzi@gmail.com>
-Link: https://lore.kernel.org/r/20250419012937.674924-1-gshahrouzi@gmail.com
+Fixes: ccb1352e76cf ("net: Add Open vSwitch kernel components.")
+Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
+Acked-by: Ilya Maximets <i.maximets@ovn.org>
+Acked-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/0bd65949df61591d9171c0dc13e42cea8941da10.1746541734.git.echaudro@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/axis-fifo/axis-fifo.c |    3 ---
- 1 file changed, 3 deletions(-)
+ net/openvswitch/actions.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/staging/axis-fifo/axis-fifo.c
-+++ b/drivers/staging/axis-fifo/axis-fifo.c
-@@ -780,9 +780,6 @@ static int axis_fifo_parse_dt(struct axi
- 		goto end;
- 	}
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -954,8 +954,7 @@ static int output_userspace(struct datap
+ 	upcall.cmd = OVS_PACKET_CMD_ACTION;
+ 	upcall.mru = OVS_CB(skb)->mru;
  
--	/* IP sets TDFV to fifo depth - 4 so we will do the same */
--	fifo->tx_fifo_depth -= 4;
--
- 	ret = get_dts_property(fifo, "xlnx,use-rx-data", &fifo->has_rx_fifo);
- 	if (ret) {
- 		dev_err(fifo->dt_device, "missing xlnx,use-rx-data property\n");
+-	for (a = nla_data(attr), rem = nla_len(attr); rem > 0;
+-	     a = nla_next(a, &rem)) {
++	nla_for_each_nested(a, attr, rem) {
+ 		switch (nla_type(a)) {
+ 		case OVS_USERSPACE_ATTR_USERDATA:
+ 			upcall.userdata = a;
 
 
