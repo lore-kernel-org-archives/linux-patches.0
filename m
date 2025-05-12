@@ -1,43 +1,44 @@
 Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D3419F101
-	for <patches@lists.linux.dev>; Mon, 12 May 2025 03:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3ACC2F2;
+	Mon, 12 May 2025 03:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.178.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747019435; cv=none; b=fShw943prqsApU+aKlMUCQ71mn556CzT3muw4AuioLifq/sOJ/96PuXfoxQSKYBKTGJ87du9MsQpf6ktZRo3+KtOEFbdncNW9pZ1sSy0fTGzeZ1N4fogtdv63SsOIsskrmK2dfdRaWApMwJms21GLHWwdK0oYaDbnE1mmqgJP7E=
+	t=1747019970; cv=none; b=g2If08IEU+s8ctOdePVxUDyY6ts9trb25gzOtgLSE99afVIYBXyi3JTpm2255i576zPFKWif7sttDb0is2DsBhYnjb7Ze984Ref8r/oPg5fP5x1ZNANOx8SxJZ13n0tHKDfibuJJtcUaCdYqrcdzrBh1PqHNNMLoL+v4szOI8eQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747019435; c=relaxed/simple;
-	bh=7qg7Lp+zUb0A2yK2xfcoJwvg/SEjwY6DJI0FUBv47zk=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=LzTAHmV3gon95bWkNYyKO59NfvXOJAH/QFvjb1yL/U7uKkPItKSWzW4sm32DIHgvluCqzYtGgm/t5SLmeusDHxN5xvDC2HH0JDX1Q7mpW10Z8WoyptYiIwHaFVwcwJgk/0bXJyNkrNZc1U3YBvVM8eNzDJVKwlioSz1XVcrPFl8=
+	s=arc-20240116; t=1747019970; c=relaxed/simple;
+	bh=OA4Hw06E2Cdb16C5vZkhnOCcZQj4egfXWOx3Iqw3nlk=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bwAOXepv8Noe0k5d0puUKGoWfFlV3befTp8iYp9IN78BQ8SnqGCVOlFzBaFOE9DFyzPswPSd+RQKyP7f94vX7wFObJ0K26GW3SEZrC2BFJxpUMB+RoAt4ReMn+c/lV2x9NaMnWE93qZ5VTrATIbRvx4AGS4OZyU+d8tRkipo9C0=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.178.238
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
 Received: from pps.filterd (m0250812.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54C1wt9Y023882;
-	Mon, 12 May 2025 03:10:25 GMT
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54C27nYk004464;
+	Mon, 12 May 2025 03:18:55 GMT
 Received: from ala-exchng02.corp.ad.wrs.com (ala-exchng02.wrs.com [147.11.82.254])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 46hws89937-1
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 46hws89991-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Mon, 12 May 2025 03:10:25 +0000 (GMT)
+	Mon, 12 May 2025 03:18:54 +0000 (GMT)
 Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
  ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Sun, 11 May 2025 20:10:23 -0700
+ 15.1.2507.43; Sun, 11 May 2025 20:18:53 -0700
 Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
  ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Sun, 11 May 2025 20:10:20 -0700
+ 15.1.2507.43 via Frontend Transport; Sun, 11 May 2025 20:18:48 -0700
 From: <jianqi.ren.cn@windriver.com>
 To: <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
 CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-        <jianqi.ren.cn@windriver.com>, <pablo@netfilter.org>,
-        <kadlec@netfilter.org>, <fw@strlen.de>, <davem@davemloft.net>,
-        <edumazet@google.com>, <kuba@kernel.org>, <pabeni@redhat.com>,
-        <netfilter-devel@vger.kernel.org>, <coreteam@netfilter.org>,
-        <netdev@vger.kernel.org>
-Subject: [PATCH 5.10.y] netfilter: nf_tables: fix memleak in map from abort path
-Date: Mon, 12 May 2025 11:10:19 +0800
-Message-ID: <20250512031019.3330707-1-jianqi.ren.cn@windriver.com>
+        <jianqi.ren.cn@windriver.com>, <ast@kernel.org>,
+        <daniel@iogearbox.net>, <john.fastabend@gmail.com>,
+        <andrii@kernel.org>, <martin.lau@linux.dev>, <song@kernel.org>,
+        <yhs@fb.com>, <kpsingh@kernel.org>, <sdf@google.com>,
+        <haoluo@google.com>, <jolsa@kernel.org>, <rostedt@goodmis.org>,
+        <mhiramat@kernel.org>, <laoar.shao@gmail.com>, <bpf@vger.kernel.org>
+Subject: [PATCH 6.1.y] bpf: support deferring bpf_link dealloc to after RCU grace period
+Date: Mon, 12 May 2025 11:18:47 +0800
+Message-ID: <20250512031847.3331135-1-jianqi.ren.cn@windriver.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -47,12 +48,12 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Proofpoint-ORIG-GUID: UdS4JYDtrjvHeiB5aJtQspkaz271wt2i
-X-Proofpoint-GUID: UdS4JYDtrjvHeiB5aJtQspkaz271wt2i
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEyMDAzMSBTYWx0ZWRfX98GUb3Y6cKmQ xknrt52qnqu9E1jMzhHSC4lh7CGRQUehphVEmL5vkd1p6tTy3wXptNotbOgAP8nNwBm3wuNLOkI U2TVJCFEPSIwDyVkMnbGaCfoRTOZ3BKfBAIBNayXbzHl6Lrqi6Ty1lqJx7hW7Ha/Lbqosw8UEzB
- 5flUFdkWAWjovztCzn0Qjh0nIb6xo19P5VhhwUP/RSsYYytuNs9ECSHOdfcUkeauGMvheHzbt3t lUK6O+LgI30FkjGtgDCAYl7Bp54phocEWlZw+sGZi4ogMUGJgkyUCK8KzUVJHzqngjoZSYF9OgF qo6nuDt0DewHHcmAhkpVXUDr7TEUfnzAaT7J2fZ9iItVIxcgrEdXq/f4vdCXoBwV8Xx6XZADAyy
- gyORcJZeHtT7hfT8c2G5kX+CC3h9J8L+BCtHLM0GPTtzHCDeyYQd9j5YMoNHy3ZYOON8cdRR
-X-Authority-Analysis: v=2.4 cv=Q+HS452a c=1 sm=1 tr=0 ts=682166a1 cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=dt9VzEwgFbYA:10 a=3HDBlxybAAAA:8 a=t7CeM3EgAAAA:8 a=JvIdB4Z2PfN4shd601kA:9 a=laEoCiVfU_Unz3mSdgXN:22
+X-Proofpoint-ORIG-GUID: dYoj7KhBQdfsw-CznJjOh4EvUqLC69iQ
+X-Proofpoint-GUID: dYoj7KhBQdfsw-CznJjOh4EvUqLC69iQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEyMDAzMyBTYWx0ZWRfX6AXKM2FIPhlt OOb9cbfvvpb6LIEf2yGA5J+fKwr4sethcyhIVqiPCtGVENFLmWFVqOej4/Ui9ueDTRmNVZJ9H44 jZgEjKm8UWFUOc4pLo0g3MLtjfqZ+XjVGk5p2cylpxd2wsKV3/PN0Xyhc6qwGdS8MdtVnGPHnKD
+ 2il+SPuicbVf3OjRIjK+1wP4FWP0842LpiPSmbftzkl4+G2RYCjJZA97n1cRgLNyiNfosQ1o4Zu TSxVp7XA4KypMHgyMVGhUF8VL1Q4jzputCK18ZuSMXXiA6OJL1dD/oXB9S9YRFpAY6e7JtaGxPO uXIdePIdI7n+d7Ra4sdPxi/XFYKhEHTHrS2dk8cGcOiu38YjlkQ1Fg3YTHjCO/8ke8qNZq/r+CI
+ lCdZ8PlPe3pIl/XW496JvjqSZ9fFDKphjvqeZX1COJhJ3PF2eWsSmiGLxHAJsPSXoVJ+H5Lw
+X-Authority-Analysis: v=2.4 cv=Q+HS452a c=1 sm=1 tr=0 ts=6821689e cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=hSkVLCK3AAAA:8 a=t7CeM3EgAAAA:8 a=TqKKbRrxTIIqW3QnL98A:9 a=cQPPKAXgyycSBL8etih5:22
  a=FdTzh2GWekK77mhwV6Dw:22
 X-Sensitive_Customer_Information: Yes
 X-Proofpoint-Virus-Version: vendor=baseguard
@@ -60,107 +61,170 @@ X-Proofpoint-Virus-Version: vendor=baseguard
  definitions=2025-05-12_01,2025-05-09_01,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
  phishscore=0 mlxlogscore=999 bulkscore=0 lowpriorityscore=0 spamscore=0
- clxscore=1015 suspectscore=0 adultscore=0 malwarescore=0 impostorscore=0
+ clxscore=1011 suspectscore=0 adultscore=0 malwarescore=0 impostorscore=0
  mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
  adjust=0 reason=mlx scancount=1 engine=8.21.0-2504070000
- definitions=main-2505120031
+ definitions=main-2505120033
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 86a1471d7cde792941109b93b558b5dc078b9ee9 ]
+commit 1a80dbcb2dbaf6e4c216e62e30fa7d3daa8001ce upstream.
 
-The delete set command does not rely on the transaction object for
-element removal, therefore, a combination of delete element + delete set
-from the abort path could result in restoring twice the refcount of the
-mapping.
+BPF link for some program types is passed as a "context" which can be
+used by those BPF programs to look up additional information. E.g., for
+multi-kprobes and multi-uprobes, link is used to fetch BPF cookie values.
 
-Check for inactive element in the next generation for the delete element
-command in the abort path, skip restoring state if next generation bit
-has been already cleared. This is similar to the activate logic using
-the set walk iterator.
+Because of this runtime dependency, when bpf_link refcnt drops to zero
+there could still be active BPF programs running accessing link data.
 
-[ 6170.286929] ------------[ cut here ]------------
-[ 6170.286939] WARNING: CPU: 6 PID: 790302 at net/netfilter/nf_tables_api.c:2086 nf_tables_chain_destroy+0x1f7/0x220 [nf_tables]
-[ 6170.287071] Modules linked in: [...]
-[ 6170.287633] CPU: 6 PID: 790302 Comm: kworker/6:2 Not tainted 6.9.0-rc3+ #365
-[ 6170.287768] RIP: 0010:nf_tables_chain_destroy+0x1f7/0x220 [nf_tables]
-[ 6170.287886] Code: df 48 8d 7d 58 e8 69 2e 3b df 48 8b 7d 58 e8 80 1b 37 df 48 8d 7d 68 e8 57 2e 3b df 48 8b 7d 68 e8 6e 1b 37 df 48 89 ef eb c4 <0f> 0b 48 83 c4 08 5b 5d 41 5c 41 5d 41 5e 41 5f c3 cc cc cc cc 0f
-[ 6170.287895] RSP: 0018:ffff888134b8fd08 EFLAGS: 00010202
-[ 6170.287904] RAX: 0000000000000001 RBX: ffff888125bffb28 RCX: dffffc0000000000
-[ 6170.287912] RDX: 0000000000000003 RSI: ffffffffa20298ab RDI: ffff88811ebe4750
-[ 6170.287919] RBP: ffff88811ebe4700 R08: ffff88838e812650 R09: fffffbfff0623a55
-[ 6170.287926] R10: ffffffff8311d2af R11: 0000000000000001 R12: ffff888125bffb10
-[ 6170.287933] R13: ffff888125bffb10 R14: dead000000000122 R15: dead000000000100
-[ 6170.287940] FS:  0000000000000000(0000) GS:ffff888390b00000(0000) knlGS:0000000000000000
-[ 6170.287948] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 6170.287955] CR2: 00007fd31fc00710 CR3: 0000000133f60004 CR4: 00000000001706f0
-[ 6170.287962] Call Trace:
-[ 6170.287967]  <TASK>
-[ 6170.287973]  ? __warn+0x9f/0x1a0
-[ 6170.287986]  ? nf_tables_chain_destroy+0x1f7/0x220 [nf_tables]
-[ 6170.288092]  ? report_bug+0x1b1/0x1e0
-[ 6170.287986]  ? nf_tables_chain_destroy+0x1f7/0x220 [nf_tables]
-[ 6170.288092]  ? report_bug+0x1b1/0x1e0
-[ 6170.288104]  ? handle_bug+0x3c/0x70
-[ 6170.288112]  ? exc_invalid_op+0x17/0x40
-[ 6170.288120]  ? asm_exc_invalid_op+0x1a/0x20
-[ 6170.288132]  ? nf_tables_chain_destroy+0x2b/0x220 [nf_tables]
-[ 6170.288243]  ? nf_tables_chain_destroy+0x1f7/0x220 [nf_tables]
-[ 6170.288366]  ? nf_tables_chain_destroy+0x2b/0x220 [nf_tables]
-[ 6170.288483]  nf_tables_trans_destroy_work+0x588/0x590 [nf_tables]
+This patch adds generic support to defer bpf_link dealloc callback to
+after RCU GP, if requested. This is done by exposing two different
+deallocation callbacks, one synchronous and one deferred. If deferred
+one is provided, bpf_link_free() will schedule dealloc_deferred()
+callback to happen after RCU GP.
 
-Fixes: 591054469b3e ("netfilter: nf_tables: revisit chain/object refcounting from elements")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-[fixed conflicts due to missing commits
- aaa31047a6d25da0fa101da1ed544e1247949b40 ("netfilter: nftables: add
- catch-all set element support"),
- 0e1ea651c9717ddcd8e0648d8468477a31867b0a ("netfilter: nf_tables: shrink
- memory consumption of set elements") and
- 9dad402b89e81a0516bad5e0ac009b7a0a80898f ("netfilter: nf_tables: expose
- opaque set element as struct nft_elem_priv") so we pass the correct types
- and values to nft_setelem_active_next() + nft_set_elem_ext()]
+BPF is using two flavors of RCU: "classic" non-sleepable one and RCU
+tasks trace one. The latter is used when sleepable BPF programs are
+used. bpf_link_free() accommodates that by checking underlying BPF
+program's sleepable flag, and goes either through normal RCU GP only for
+non-sleepable, or through RCU tasks trace GP *and* then normal RCU GP
+(taking into account rcu_trace_implies_rcu_gp() optimization), if BPF
+program is sleepable.
+
+We use this for multi-kprobe and multi-uprobe links, which dereference
+link during program run. We also preventively switch raw_tp link to use
+deferred dealloc callback, as upcoming changes in bpf-next tree expose
+raw_tp link data (specifically, cookie value) to BPF program at runtime
+as well.
+
+Fixes: 0dcac2725406 ("bpf: Add multi kprobe link")
+Fixes: 89ae89f53d20 ("bpf: Add multi uprobe link")
+Reported-by: syzbot+981935d9485a560bfbcb@syzkaller.appspotmail.com
+Reported-by: syzbot+2cb5a6c573e98db598cc@syzkaller.appspotmail.com
+Reported-by: syzbot+62d8b26793e8a2bd0516@syzkaller.appspotmail.com
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20240328052426.3042617-2-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+[fixed conflicts due to missing commits 89ae89f53d20
+ ("bpf: Add multi uprobe link")]
 Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 ---
 Verified the build test
 ---
- net/netfilter/nf_tables_api.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ include/linux/bpf.h      | 16 +++++++++++++++-
+ kernel/bpf/syscall.c     | 35 ++++++++++++++++++++++++++++++++---
+ kernel/trace/bpf_trace.c |  2 +-
+ 3 files changed, 48 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 04fda8c14e04..5b4d5b882418 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -5933,6 +5933,16 @@ void nft_data_hold(const struct nft_data *data, enum nft_data_types type)
- 	}
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index e9c1338851e3..1cf8c7037289 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -1293,12 +1293,26 @@ struct bpf_link {
+ 	enum bpf_link_type type;
+ 	const struct bpf_link_ops *ops;
+ 	struct bpf_prog *prog;
+-	struct work_struct work;
++	/* rcu is used before freeing, work can be used to schedule that
++	 * RCU-based freeing before that, so they never overlap
++	 */
++	union {
++		struct rcu_head rcu;
++		struct work_struct work;
++	};
+ };
+ 
+ struct bpf_link_ops {
+ 	void (*release)(struct bpf_link *link);
++	/* deallocate link resources callback, called without RCU grace period
++	 * waiting
++	 */
+ 	void (*dealloc)(struct bpf_link *link);
++	/* deallocate link resources callback, called after RCU grace period;
++	 * if underlying BPF program is sleepable we go through tasks trace
++	 * RCU GP and then "classic" RCU GP
++	 */
++	void (*dealloc_deferred)(struct bpf_link *link);
+ 	int (*detach)(struct bpf_link *link);
+ 	int (*update_prog)(struct bpf_link *link, struct bpf_prog *new_prog,
+ 			   struct bpf_prog *old_prog);
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 27fdf1b2fc46..1cc9b28b065a 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -2750,17 +2750,46 @@ void bpf_link_inc(struct bpf_link *link)
+ 	atomic64_inc(&link->refcnt);
  }
  
-+static int nft_setelem_active_next(const struct net *net,
-+				   const struct nft_set *set,
-+				   struct nft_set_elem *elem)
++static void bpf_link_defer_dealloc_rcu_gp(struct rcu_head *rcu)
 +{
-+	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
-+	u8 genmask = nft_genmask_next(net);
++	struct bpf_link *link = container_of(rcu, struct bpf_link, rcu);
 +
-+	return nft_set_elem_active(ext, genmask);
++	/* free bpf_link and its containing memory */
++	link->ops->dealloc_deferred(link);
 +}
 +
- static void nft_setelem_data_activate(const struct net *net,
- 				      const struct nft_set *set,
- 				      struct nft_set_elem *elem)
-@@ -8990,8 +9000,10 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
- 		case NFT_MSG_DELSETELEM:
- 			te = (struct nft_trans_elem *)trans->data;
++static void bpf_link_defer_dealloc_mult_rcu_gp(struct rcu_head *rcu)
++{
++	if (rcu_trace_implies_rcu_gp())
++		bpf_link_defer_dealloc_rcu_gp(rcu);
++	else
++		call_rcu(rcu, bpf_link_defer_dealloc_rcu_gp);
++}
++
+ /* bpf_link_free is guaranteed to be called from process context */
+ static void bpf_link_free(struct bpf_link *link)
+ {
++	bool sleepable = false;
++
+ 	bpf_link_free_id(link->id);
+ 	if (link->prog) {
++		sleepable = link->prog->aux->sleepable;
+ 		/* detach BPF program, clean up used resources */
+ 		link->ops->release(link);
+ 		bpf_prog_put(link->prog);
+ 	}
+-	/* free bpf_link and its containing memory */
+-	link->ops->dealloc(link);
++	if (link->ops->dealloc_deferred) {
++		/* schedule BPF link deallocation; if underlying BPF program
++		 * is sleepable, we need to first wait for RCU tasks trace
++		 * sync, then go through "classic" RCU grace period
++		 */
++		if (sleepable)
++			call_rcu_tasks_trace(&link->rcu, bpf_link_defer_dealloc_mult_rcu_gp);
++		else
++			call_rcu(&link->rcu, bpf_link_defer_dealloc_rcu_gp);
++	}
++	if (link->ops->dealloc)
++		link->ops->dealloc(link);
+ }
  
--			nft_setelem_data_activate(net, te->set, &te->elem);
--			te->set->ops->activate(net, te->set, &te->elem);
-+			if (!nft_setelem_active_next(net, te->set, &te->elem)) {
-+				nft_setelem_data_activate(net, te->set, &te->elem);
-+				te->set->ops->activate(net, te->set, &te->elem);
-+			}
- 			te->set->ndeact--;
+ static void bpf_link_put_deferred(struct work_struct *work)
+@@ -3246,7 +3275,7 @@ static int bpf_raw_tp_link_fill_link_info(const struct bpf_link *link,
  
- 			if (te->set->ops->abort &&
+ static const struct bpf_link_ops bpf_raw_tp_link_lops = {
+ 	.release = bpf_raw_tp_link_release,
+-	.dealloc = bpf_raw_tp_link_dealloc,
++	.dealloc_deferred = bpf_raw_tp_link_dealloc,
+ 	.show_fdinfo = bpf_raw_tp_link_show_fdinfo,
+ 	.fill_link_info = bpf_raw_tp_link_fill_link_info,
+ };
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 7254c808b27c..989b6843069e 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -2564,7 +2564,7 @@ static void bpf_kprobe_multi_link_dealloc(struct bpf_link *link)
+ 
+ static const struct bpf_link_ops bpf_kprobe_multi_link_lops = {
+ 	.release = bpf_kprobe_multi_link_release,
+-	.dealloc = bpf_kprobe_multi_link_dealloc,
++	.dealloc_deferred = bpf_kprobe_multi_link_dealloc,
+ };
+ 
+ static void bpf_kprobe_multi_cookie_swap(void *a, void *b, int size, const void *priv)
 -- 
 2.34.1
 
