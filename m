@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15E125742B;
-	Mon, 12 May 2025 17:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C7F1DF72E;
+	Mon, 12 May 2025 17:57:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072621; cv=none; b=TlYGfsIkhFkMUNd0/fmwCp1ZcsEGJq3jqdFKzysrQcDDiMR9im1WPp9djXMX1fszyTDBwG1fUaMw8xyolvtOxNsfbPGkhiUgf9qU5oX+OupM6Ps5WpZQntDtS3Cvm0510ruIrjtUFUu4mRC5DNOE6Q3pgumojA8Kefm4mNBLtZQ=
+	t=1747072624; cv=none; b=PzcNPe9CmbHXmWffm8BpC3VwjhOSsOtgi5iBBwNuxxxn9duZ6n7zQRgs8MZAXqxU4N8+wfUR/quEafS9djaXw9a5zQhuk2N0nQgqIwdJ50lYeNENuNsLiX097XyYn8fxtd/uzemMEQ/N33YbOj3QLI/g+WzoV+SsOrtVPm4ll0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072621; c=relaxed/simple;
-	bh=1hXBpL3scASE5nBOhK2zBLURHSM3lRM/llM/zloL7/0=;
+	s=arc-20240116; t=1747072624; c=relaxed/simple;
+	bh=FRMrahg/en/iZMC/bCw123bHBnArI6uoURifufpLlK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OICLG9Kcy2yK6YjUmPZUjhYhszmmtruhpsmyf+tOpS1YyF+1vD3ELpHrDs02Z7KleM2U6sjtwqzbuEQlSj0K9PiD+zUGYwd/14f2pQ0AqZam5KRqj5MWG/3NsObj5MzjTtFLq5Xb2vAUBaxfGb4nqYdmbu41MJb/+VKKfZCuhnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6OIu3EU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T01iJJ3hiZ88nidgjsz3GrLHwGspmSiTNWzOqJGUYX3cei596A5F2mf7Wrbf7Rb057CnJ0BcPcY8QKQbzhUJhk3cShpT4MCSzmF9ErK8meHOzpC0ga6AqH9aqblth+nktAj2o4ehOWJthGd3pe2+tHi3wAYnVP8+LQQwFaiH+tI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xis13Vjw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6OIu3EU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723FDC4CEE7;
-	Mon, 12 May 2025 17:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xis13Vjw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E167C4CEE7;
+	Mon, 12 May 2025 17:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072620;
-	bh=1hXBpL3scASE5nBOhK2zBLURHSM3lRM/llM/zloL7/0=;
+	s=korg; t=1747072623;
+	bh=FRMrahg/en/iZMC/bCw123bHBnArI6uoURifufpLlK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m6OIu3EUH7peXE0Y4Rt+x31cKcu9Iv9vNDvKLJsb1cIQaFRl+IOXQDfIxCTq9AGLy
-	 UxaB6J2w/1g70wx7sYuIj6evYEtCxZJ9CxyiN5EJIhgVcmG8Jesh002yCq9vrIDtOa
-	 /ijKin2REyMxhLXTUT3big09Kaja4MKW+MBvQCgw=
+	b=Xis13Vjwjpat2ukv8qyxGCHdUd4u2esGFnhatP2KeYjNjqzRg8FmASrRzcmPsJEsU
+	 9XQR4GykM8Br2fKmw5NjLiuxUhhSOX9mYsT2pbYoG09ZD8XXtJxlKhdQMNTeYEMqdS
+	 9E1WQ786kizqE17xFAQgRWrfrai4mSzgbLB/EP3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
 	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Alexandre Chartre <alexandre.chartre@oracle.com>
-Subject: [PATCH 6.1 90/92] x86/its: Align RETs in BHB clear sequence to avoid thunking
-Date: Mon, 12 May 2025 19:46:05 +0200
-Message-ID: <20250512172026.792645108@linuxfoundation.org>
+Subject: [PATCH 6.1 91/92] x86/ibt: Keep IBT disabled during alternative patching
+Date: Mon, 12 May 2025 19:46:06 +0200
+Message-ID: <20250512172026.831224986@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -54,98 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit f0cd7091cc5a032c8870b4285305d9172569d126 upstream.
+commit ebebe30794d38c51f71fe4951ba6af4159d9837d upstream.
 
-The software mitigation for BHI is to execute BHB clear sequence at syscall
-entry, and possibly after a cBPF program. ITS mitigation thunks RETs in the
-lower half of the cacheline. This causes the RETs in the BHB clear sequence
-to be thunked as well, adding unnecessary branches to the BHB clear
-sequence.
+cfi_rewrite_callers() updates the fineIBT hash matching at the caller side,
+but except for paranoid-mode it relies on apply_retpoline() and friends for
+any ENDBR relocation. This could temporarily cause an indirect branch to
+land on a poisoned ENDBR.
 
-Since the sequence is in hot path, align the RET instructions in the
-sequence to avoid thunking.
+For instance, with para-virtualization enabled, a simple wrmsrl() could
+have an indirect branch pointing to native_write_msr() who's ENDBR has been
+relocated due to fineIBT:
 
-This is how disassembly clear_bhb_loop() looks like after this change:
+<wrmsrl>:
+       push   %rbp
+       mov    %rsp,%rbp
+       mov    %esi,%eax
+       mov    %rsi,%rdx
+       shr    $0x20,%rdx
+       mov    %edi,%edi
+       mov    %rax,%rsi
+       call   *0x21e65d0(%rip)        # <pv_ops+0xb8>
+       ^^^^^^^^^^^^^^^^^^^^^^^
 
-   0x44 <+4>:     mov    $0x5,%ecx
-   0x49 <+9>:     call   0xffffffff81001d9b <clear_bhb_loop+91>
-   0x4e <+14>:    jmp    0xffffffff81001de5 <clear_bhb_loop+165>
-   0x53 <+19>:    int3
-   ...
-   0x9b <+91>:    call   0xffffffff81001dce <clear_bhb_loop+142>
-   0xa0 <+96>:    ret
-   0xa1 <+97>:    int3
-   ...
-   0xce <+142>:   mov    $0x5,%eax
-   0xd3 <+147>:   jmp    0xffffffff81001dd6 <clear_bhb_loop+150>
-   0xd5 <+149>:   nop
-   0xd6 <+150>:   sub    $0x1,%eax
-   0xd9 <+153>:   jne    0xffffffff81001dd3 <clear_bhb_loop+147>
-   0xdb <+155>:   sub    $0x1,%ecx
-   0xde <+158>:   jne    0xffffffff81001d9b <clear_bhb_loop+91>
-   0xe0 <+160>:   ret
-   0xe1 <+161>:   int3
-   0xe2 <+162>:   int3
-   0xe3 <+163>:   int3
-   0xe4 <+164>:   int3
-   0xe5 <+165>:   lfence
-   0xe8 <+168>:   pop    %rbp
-   0xe9 <+169>:   ret
+Such an indirect call during the alternative patching could #CP if the
+caller is not *yet* adjusted for the new target ENDBR. To prevent a false
+ #CP, keep CET-IBT disabled until all callers are patched.
 
-Suggested-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Patching during the module load does not need to be guarded by IBT-disable
+because the module code is not executed until the patching is complete.
+
+  [ pawan: Since apply_paravirt() happens before __apply_fineibt()
+	   relocates the ENDBR, pv_ops in the example above is not relevant.
+	   It is still safer to keep this commit because missing an ENDBR
+	   means an oops. ]
+
 Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
 Reviewed-by: Alexandre Chartre <alexandre.chartre@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/entry/entry_64.S |   20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ arch/x86/kernel/alternative.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/arch/x86/entry/entry_64.S
-+++ b/arch/x86/entry/entry_64.S
-@@ -1559,7 +1559,9 @@ SYM_CODE_END(rewind_stack_and_make_dead)
-  * ORC to unwind properly.
-  *
-  * The alignment is for performance and not for safety, and may be safely
-- * refactored in the future if needed.
-+ * refactored in the future if needed. The .skips are for safety, to ensure
-+ * that all RETs are in the second half of a cacheline to mitigate Indirect
-+ * Target Selection, rather than taking the slowpath via its_return_thunk.
-  */
- SYM_FUNC_START(clear_bhb_loop)
- 	push	%rbp
-@@ -1569,10 +1571,22 @@ SYM_FUNC_START(clear_bhb_loop)
- 	call	1f
- 	jmp	5f
- 	.align 64, 0xcc
-+	/*
-+	 * Shift instructions so that the RET is in the upper half of the
-+	 * cacheline and don't take the slowpath to its_return_thunk.
-+	 */
-+	.skip 32 - (.Lret1 - 1f), 0xcc
- 	ANNOTATE_INTRA_FUNCTION_CALL
- 1:	call	2f
--	RET
-+.Lret1:	RET
- 	.align 64, 0xcc
-+	/*
-+	 * As above shift instructions for RET at .Lret2 as well.
-+	 *
-+	 * This should be ideally be: .skip 32 - (.Lret2 - 2f), 0xcc
-+	 * but some Clang versions (e.g. 18) don't like this.
-+	 */
-+	.skip 32 - 18, 0xcc
- 2:	movl	$5, %eax
- 3:	jmp	4f
- 	nop
-@@ -1580,7 +1594,7 @@ SYM_FUNC_START(clear_bhb_loop)
- 	jnz	3b
- 	sub	$1, %ecx
- 	jnz	1b
--	RET
-+.Lret2:	RET
- 5:	lfence
- 	pop	%rbp
- 	RET
+--- a/arch/x86/kernel/alternative.c
++++ b/arch/x86/kernel/alternative.c
+@@ -30,6 +30,7 @@
+ #include <asm/fixmap.h>
+ #include <asm/paravirt.h>
+ #include <asm/asm-prototypes.h>
++#include <asm/cfi.h>
+ 
+ int __read_mostly alternatives_patched;
+ 
+@@ -1006,6 +1007,8 @@ static noinline void __init int3_selftes
+ 
+ void __init alternative_instructions(void)
+ {
++	u64 ibt;
++
+ 	int3_selftest();
+ 
+ 	/*
+@@ -1043,6 +1046,9 @@ void __init alternative_instructions(voi
+ 	 */
+ 	paravirt_set_cap();
+ 
++	/* Keep CET-IBT disabled until caller/callee are patched */
++	ibt = ibt_save();
++
+ 	/*
+ 	 * First patch paravirt functions, such that we overwrite the indirect
+ 	 * call with the direct call.
+@@ -1064,6 +1070,8 @@ void __init alternative_instructions(voi
+ 
+ 	apply_ibt_endbr(__ibt_endbr_seal, __ibt_endbr_seal_end);
+ 
++	ibt_restore(ibt);
++
+ #ifdef CONFIG_SMP
+ 	/* Patch to UP if other cpus not imminent. */
+ 	if (!noreplace_smp && (num_present_cpus() == 1 || setup_max_cpus <= 1)) {
 
 
