@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A8E1DC1A7;
-	Mon, 12 May 2025 17:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A4E78F52;
+	Mon, 12 May 2025 17:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071034; cv=none; b=F95WpxD+t4Svlt0xCtOXMReNPxfxwVXJwj26RjMSXp1+dgP0BNZqtzCvqkOVyhxIXauJScYLym4+8JXDzVf6QQjXIjKY3xR/hZj4q+SmJKbe7PiyJkVd22SvTxIpzzs/lRX30Vg40B9wSCUirhwaOOm2g5KSOnguKU+Hw7FSP9w=
+	t=1747071036; cv=none; b=K/MNwSTAX48O4LFFeU3vqqAyq172WhVlxHt4coAQilBBTtaU44ok4mzAITGv8fItCDGa933xWJdVT8QqXwTtLP3yupjpy/qeiuAnICXXMWhKT/z9V2PQpyWhpkG4OFVd8skM7lpS3HHopTM+3fucXL9Wnww0/aBgQPEzicgx4ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071034; c=relaxed/simple;
-	bh=dVmOAlNDGEo+YLxyBDMk0Q/8ygaUMSQOCVlmS2MlJaw=;
+	s=arc-20240116; t=1747071036; c=relaxed/simple;
+	bh=x6+ksbR5vLQRBShNh8YJL/BPepu+Q3hQph8FhVCryio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kZgowBq9KQ5XZTo7Hx4zXF+rTuAdZw6cehLELxoVjgPKmUMDSQDf38iusnReCXwX6xEXxvlxx7AGkjD5O3mUI/ObmT2YlzNBzn7W9upxzT6Du8wtXy9oM8gCRUJrzbOjpN4vxZB7swt7d1oJN3cpcNflHzLRU2t2zChBccB/98U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4oyW3Gg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gp9sfZMNKmPoqBQ7FyjS0HRfVCUrFarMs9/wr/wJfcnUyj9vShEirICM5MWJsTxhLr/0LkxkGraNpMxM10bLh/f5cJrc1QEJ1MfYxJbIHLqPGNdnG/0zN97wLz9rsFJfK/s6Sf851Z7TYjCboo/z5jYvWXP5QHOE1zyDJsnxjYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dh9MsSwA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4oyW3Gg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75E18C4CEE7;
-	Mon, 12 May 2025 17:30:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dh9MsSwA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D6AC4CEE7;
+	Mon, 12 May 2025 17:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071033;
-	bh=dVmOAlNDGEo+YLxyBDMk0Q/8ygaUMSQOCVlmS2MlJaw=;
+	s=korg; t=1747071036;
+	bh=x6+ksbR5vLQRBShNh8YJL/BPepu+Q3hQph8FhVCryio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y4oyW3GgR7T41tTObQoKN6Znrj2Y0+fEO+CJaHGH+hpRZ3AIpaQjew+OOg/sMdSCJ
-	 PDflhzypVr9kZ3DgaXU1LnPDonOychTNm0inY1IZbiGy5Uqz9WotOnIP2RWVzdl7R3
-	 i9lDDH9GIjKap7L+z6n0v2m++Gb6UntxghDK36Bk=
+	b=dh9MsSwAeP0+bXvsuiUYvqSMlUL2D1+bTpiXa8WOLswSZXJnsb4Z45g5TfMT4U1Bb
+	 KfCTG0SFBUH4W17lIqsHA1GoV4/mqsBbB/fnrKVpUVcgKayk8u4IkUEHpUVCMfMThC
+	 g7DIpK7SFpihkgHfKcAw/n4GL1sr4QygNDA3RZFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manuel Fombuena <fombuena@outlook.com>,
+	Xuntao Chi <chotaotao1qaz2wsx@gmail.com>,
 	Aditya Garg <gargaditya08@live.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 15/54] Input: synaptics - enable InterTouch on Dynabook Portege X30-D
-Date: Mon, 12 May 2025 19:29:27 +0200
-Message-ID: <20250512172016.262978592@linuxfoundation.org>
+Subject: [PATCH 5.15 16/54] Input: synaptics - enable InterTouch on Dynabook Portege X30L-G
+Date: Mon, 12 May 2025 19:29:28 +0200
+Message-ID: <20250512172016.302603943@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172015.643809034@linuxfoundation.org>
 References: <20250512172015.643809034@linuxfoundation.org>
@@ -51,22 +51,17 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manuel Fombuena <fombuena@outlook.com>
+From: Aditya Garg <gargaditya08@live.com>
 
-commit 6d7ea0881000966607772451b789b5fb5766f11d upstream.
+commit 47d768b32e644b56901bb4bbbdb1feb01ea86c85 upstream.
 
-[    5.989588] psmouse serio1: synaptics: Your touchpad (PNP: TOS0213 PNP0f03) says it can support a different bus. If i2c-hid and hid-rmi are not used, you might want to try setting psmouse.synaptics_intertouch to 1 and report this to linux-input@vger.kernel.org.
-[    6.039923] psmouse serio1: synaptics: Touchpad model: 1, fw: 9.32, id: 0x1e2a1, caps: 0xf00223/0x840300/0x12e800/0x52d884, board id: 3322, fw id: 2658004
+Enable InterTouch mode on Dynabook Portege X30L-G by adding "TOS01f6" to
+the list of SMBus-enabled variants.
 
-The board is labelled TM3322.
-
-Present on the Toshiba / Dynabook Portege X30-D and possibly others.
-
-Confirmed working well with psmouse.synaptics_intertouch=1 and local build.
-
-Signed-off-by: Manuel Fombuena <fombuena@outlook.com>
+Reported-by: Xuntao Chi <chotaotao1qaz2wsx@gmail.com>
+Tested-by: Xuntao Chi <chotaotao1qaz2wsx@gmail.com>
 Signed-off-by: Aditya Garg <gargaditya08@live.com>
-Link: https://lore.kernel.org/r/PN3PR01MB9597711E7933A08389FEC31DB888A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+Link: https://lore.kernel.org/r/PN3PR01MB959786E4AC797160CDA93012B888A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -80,9 +75,9 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	"SYN3221", /* HP 15-ay000 */
  	"SYN323d", /* HP Spectre X360 13-w013dx */
  	"SYN3257", /* HP Envy 13-ad105ng */
-+	"TOS0213", /* Dynabook Portege X30-D */
++	"TOS01f6", /* Dynabook Portege X30L-G */
+ 	"TOS0213", /* Dynabook Portege X30-D */
  	NULL
  };
- 
 
 
