@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4551B2550C6;
-	Mon, 12 May 2025 17:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F68B2550C6;
+	Mon, 12 May 2025 17:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072453; cv=none; b=kzL/o3TTV5UODM6wdunjvzKUwRs4VMp/KY48P0kY3N5jna8oR8kdWG+pZD3BZVYECmbCCXX2p0Hv3imT+mlNuYkKpABod/XyXbre9RLmLMpk/cWcJZTLgKG51bfpLjZpYs/fpUnVnkWWjCX7R0XjiyLyaARgdPXI3muMNo8Lhek=
+	t=1747072456; cv=none; b=NPyoO55cYG2c7A/V6Kp8xu0W3Jxl8y5gAHBjzPj29envbFB+9QY6ASEt2bf964C6cXPdQ17FH8hMyFUp9AGsR9bpYjgzNt1B+M7pvD0phW1wV0tFlEFApl0/j8R9gxC11PalCaaZlhnAqICoFe7AK8bs6LJwtp9Fb3O4uGHbHuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072453; c=relaxed/simple;
-	bh=zbaXtcsmr+LRbDomClESy8UcsPLP5tJl/ZU1liJcr2o=;
+	s=arc-20240116; t=1747072456; c=relaxed/simple;
+	bh=RVl99WHpSOGkKteg7+TUuF+oarf9+mD15CMIb/9XEyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mDoKUIsqMXWMM82uUdqq/duPci2+Fcz6f9FKgVZCB7kryksMp46b2VHwAzFUmx01zONML7d0YHFCL3v9cOfnE8IYXDGHD61YnXXuhISIVbqjJpL4mDrz+RXSd8pZlAVfl1Yq/YGHwliWA2tmJyQDDa159ihMULsWmKjJOUuQ8OU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yg0TnbKO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oyr9mM+GDodFJuBiqVAzfsV3bW1mFBiMkQr+9XzzKA59O7S5RK/c/cA2gImGRNkR96ccpcSi5qUB+A5hycLUoCJ51ITbjK/AdbuHjkj3XKoDYYzLM22MNBChR7Gxn2rb1MJtX96D8azvJRQMQFC0ptp32Wj3RD6KeGPAAwzaoWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yEHpcMfx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yg0TnbKO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65CBC4CEE7;
-	Mon, 12 May 2025 17:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yEHpcMfx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E971EC4CEE7;
+	Mon, 12 May 2025 17:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072453;
-	bh=zbaXtcsmr+LRbDomClESy8UcsPLP5tJl/ZU1liJcr2o=;
+	s=korg; t=1747072456;
+	bh=RVl99WHpSOGkKteg7+TUuF+oarf9+mD15CMIb/9XEyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yg0TnbKOWJEObWEIvqbBavYDoEf3gYcy98BwpVplwe+lg+RF3Am/r4FMyM3v9PBX1
-	 2gGNSE8pW34PcP7zppmimIc56lar4254kF/YWWVZV72n+KvHM122WBmaC/n50QbgX+
-	 eXlAGRXwMoKH9+6Fd5EN+0BD4PuOKGoFIMY1LOfE=
+	b=yEHpcMfxmD0BgvjSaBNElIligX4BP/07vUai5wYjC271W1/sYVRwZ/GmDzDdtr7Za
+	 X0fomLzrREl3RWKxnI5XJx2z9BvkGf+vxLQ8KDJvNNBBfa6w2E806ahDZlUv4W/xYx
+	 V86xWcQtf8Jqx9Qjygx6XNX+3GGCzpRivJ3VJUHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
-	Jason Andryuk <jason.andryuk@amd.com>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 6.1 45/92] xenbus: Use kref to track req lifetime
-Date: Mon, 12 May 2025 19:45:20 +0200
-Message-ID: <20250512172024.951586497@linuxfoundation.org>
+	syzbot+7fb8a372e1f6add936dd@syzkaller.appspotmail.com,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>
+Subject: [PATCH 6.1 46/92] module: ensure that kobject_put() is safe for module type kobjects
+Date: Mon, 12 May 2025 19:45:21 +0200
+Message-ID: <20250512172024.994353387@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -45,176 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason Andryuk <jason.andryuk@amd.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-commit 1f0304dfd9d217c2f8b04a9ef4b3258a66eedd27 upstream.
+commit a6aeb739974ec73e5217c75a7c008a688d3d5cf1 upstream.
 
-Marek reported seeing a NULL pointer fault in the xenbus_thread
-callstack:
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-RIP: e030:__wake_up_common+0x4c/0x180
-Call Trace:
- <TASK>
- __wake_up_common_lock+0x82/0xd0
- process_msg+0x18e/0x2f0
- xenbus_thread+0x165/0x1c0
+In 'lookup_or_create_module_kobject()', an internal kobject is created
+using 'module_ktype'. So call to 'kobject_put()' on error handling
+path causes an attempt to use an uninitialized completion pointer in
+'module_kobject_release()'. In this scenario, we just want to release
+kobject without an extra synchronization required for a regular module
+unloading process, so adding an extra check whether 'complete()' is
+actually required makes 'kobject_put()' safe.
 
-process_msg+0x18e is req->cb(req).  req->cb is set to xs_wake_up(), a
-thin wrapper around wake_up(), or xenbus_dev_queue_reply().  It seems
-like it was xs_wake_up() in this case.
-
-It seems like req may have woken up the xs_wait_for_reply(), which
-kfree()ed the req.  When xenbus_thread resumes, it faults on the zero-ed
-data.
-
-Linux Device Drivers 2nd edition states:
-"Normally, a wake_up call can cause an immediate reschedule to happen,
-meaning that other processes might run before wake_up returns."
-... which would match the behaviour observed.
-
-Change to keeping two krefs on each request.  One for the caller, and
-one for xenbus_thread.  Each will kref_put() when finished, and the last
-will free it.
-
-This use of kref matches the description in
-Documentation/core-api/kref.rst
-
-Link: https://lore.kernel.org/xen-devel/ZO0WrR5J0xuwDIxW@mail-itl/
-Reported-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-Fixes: fd8aa9095a95 ("xen: optimize xenbus driver for multiple concurrent xenstore accesses")
+Reported-by: syzbot+7fb8a372e1f6add936dd@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7fb8a372e1f6add936dd
+Fixes: 942e443127e9 ("module: Fix mod->mkobj.kobj potentially freed too early")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20250506210935.5607-1-jason.andryuk@amd.com>
+Suggested-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Link: https://lore.kernel.org/r/20250507065044.86529-1-dmantipov@yandex.ru
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/xenbus/xenbus.h              |    2 ++
- drivers/xen/xenbus/xenbus_comms.c        |    9 ++++-----
- drivers/xen/xenbus/xenbus_dev_frontend.c |    2 +-
- drivers/xen/xenbus/xenbus_xs.c           |   18 ++++++++++++++++--
- 4 files changed, 23 insertions(+), 8 deletions(-)
+ kernel/params.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/xen/xenbus/xenbus.h
-+++ b/drivers/xen/xenbus/xenbus.h
-@@ -77,6 +77,7 @@ enum xb_req_state {
- struct xb_req_data {
- 	struct list_head list;
- 	wait_queue_head_t wq;
-+	struct kref kref;
- 	struct xsd_sockmsg msg;
- 	uint32_t caller_req_id;
- 	enum xsd_sockmsg_type type;
-@@ -103,6 +104,7 @@ int xb_init_comms(void);
- void xb_deinit_comms(void);
- int xs_watch_msg(struct xs_watch_event *event);
- void xs_request_exit(struct xb_req_data *req);
-+void xs_free_req(struct kref *kref);
- 
- int xenbus_match(struct device *_dev, struct device_driver *_drv);
- int xenbus_dev_probe(struct device *_dev);
---- a/drivers/xen/xenbus/xenbus_comms.c
-+++ b/drivers/xen/xenbus/xenbus_comms.c
-@@ -309,8 +309,8 @@ static int process_msg(void)
- 			virt_wmb();
- 			req->state = xb_req_state_got_reply;
- 			req->cb(req);
--		} else
--			kfree(req);
-+		}
-+		kref_put(&req->kref, xs_free_req);
- 	}
- 
- 	mutex_unlock(&xs_response_mutex);
-@@ -386,14 +386,13 @@ static int process_writes(void)
- 	state.req->msg.type = XS_ERROR;
- 	state.req->err = err;
- 	list_del(&state.req->list);
--	if (state.req->state == xb_req_state_aborted)
--		kfree(state.req);
--	else {
-+	if (state.req->state != xb_req_state_aborted) {
- 		/* write err, then update state */
- 		virt_wmb();
- 		state.req->state = xb_req_state_got_reply;
- 		wake_up(&state.req->wq);
- 	}
-+	kref_put(&state.req->kref, xs_free_req);
- 
- 	mutex_unlock(&xb_write_mutex);
- 
---- a/drivers/xen/xenbus/xenbus_dev_frontend.c
-+++ b/drivers/xen/xenbus/xenbus_dev_frontend.c
-@@ -406,7 +406,7 @@ void xenbus_dev_queue_reply(struct xb_re
- 	mutex_unlock(&u->reply_mutex);
- 
- 	kfree(req->body);
--	kfree(req);
-+	kref_put(&req->kref, xs_free_req);
- 
- 	kref_put(&u->kref, xenbus_file_free);
- 
---- a/drivers/xen/xenbus/xenbus_xs.c
-+++ b/drivers/xen/xenbus/xenbus_xs.c
-@@ -112,6 +112,12 @@ static void xs_suspend_exit(void)
- 	wake_up_all(&xs_state_enter_wq);
+--- a/kernel/params.c
++++ b/kernel/params.c
+@@ -945,7 +945,9 @@ int module_sysfs_initialized;
+ static void module_kobj_release(struct kobject *kobj)
+ {
+ 	struct module_kobject *mk = to_module_kobject(kobj);
+-	complete(mk->kobj_completion);
++
++	if (mk->kobj_completion)
++		complete(mk->kobj_completion);
  }
  
-+void xs_free_req(struct kref *kref)
-+{
-+	struct xb_req_data *req = container_of(kref, struct xb_req_data, kref);
-+	kfree(req);
-+}
-+
- static uint32_t xs_request_enter(struct xb_req_data *req)
- {
- 	uint32_t rq_id;
-@@ -237,6 +243,12 @@ static void xs_send(struct xb_req_data *
- 	req->caller_req_id = req->msg.req_id;
- 	req->msg.req_id = xs_request_enter(req);
- 
-+	/*
-+	 * Take 2nd ref.  One for this thread, and the second for the
-+	 * xenbus_thread.
-+	 */
-+	kref_get(&req->kref);
-+
- 	mutex_lock(&xb_write_mutex);
- 	list_add_tail(&req->list, &xb_write_list);
- 	notify = list_is_singular(&xb_write_list);
-@@ -261,8 +273,8 @@ static void *xs_wait_for_reply(struct xb
- 	if (req->state == xb_req_state_queued ||
- 	    req->state == xb_req_state_wait_reply)
- 		req->state = xb_req_state_aborted;
--	else
--		kfree(req);
-+
-+	kref_put(&req->kref, xs_free_req);
- 	mutex_unlock(&xb_write_mutex);
- 
- 	return ret;
-@@ -291,6 +303,7 @@ int xenbus_dev_request_and_reply(struct
- 	req->cb = xenbus_dev_queue_reply;
- 	req->par = par;
- 	req->user_req = true;
-+	kref_init(&req->kref);
- 
- 	xs_send(req, msg);
- 
-@@ -319,6 +332,7 @@ static void *xs_talkv(struct xenbus_tran
- 	req->num_vecs = num_vecs;
- 	req->cb = xs_wake_up;
- 	req->user_req = false;
-+	kref_init(&req->kref);
- 
- 	msg.req_id = 0;
- 	msg.tx_id = t.id;
+ struct kobj_type module_ktype = {
 
 
