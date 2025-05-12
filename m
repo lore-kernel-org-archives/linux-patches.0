@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E74E1519B8;
-	Mon, 12 May 2025 18:01:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F381EE03B;
+	Mon, 12 May 2025 18:01:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072898; cv=none; b=V9ismHsISi0zJJ2ivcX74iwLB24oFWXsogV6X98xeykm7WzhNE9Df/a/Nkzkq4P2nnEhS8MdfwWnwk2DhT6b0UGksm8gaiMOgFDO4FITilxqyoywm6D59HyoeaZaIrtkexD/hhRDgZZ2lgqFFjsM8Aotrsfa/32GiHcErteWpv4=
+	t=1747072901; cv=none; b=KdhNZwvLCM5fUXYKtcAfQeodzQdcrT03vt1ovGEXx0hlRCUCyyVLIzOp0jzFG1tXG5lJsRXYN7Qo/1rkbD1bwCQImQC2tMtyRIjZp0ZEnnMMUrqvN1ViPWs7aq9XuVQDxjuFpRR4nF6YDYHpkZ/e4zYPaA9ieH36wAUbxHatSvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072898; c=relaxed/simple;
-	bh=PGtPPNN1/ng4WOXQQWKpV5tFclkWq98l6rs44qHiOQQ=;
+	s=arc-20240116; t=1747072901; c=relaxed/simple;
+	bh=/86slEzPlnv/J5InxIn0cd+qpxDuARPknkWd31uR46s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u40CwMN5Gj4YUmYQwbHOKdGBpUBMxmJq/0LXSOqjjtQ/GQM/xIBF4z81wP7REMinOitW/1GcAPz1+YSXyTLZCYqKOaJtQWzI0u88jHzmh88hwMqoNW+Cb3ZOLVVjLlEvjfmjLaIF5S3hha3FfePtr1XEsqc4eQDOmLepIEZ74HA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LxApos15; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s3+Up1IbSeoInMNn9VrP/8TWRL81KKT4GgFtLRh8wHcmEwAIkIH3/jdD0yovikbtNL/sdd+sUvdxlTtOqUUfterCzbg8kOzEvrjAHt4oYKtwPOb+cE6E4mpYJdLLjSt06wZzPlB5XMcjxOlNgtalYt6dQRa/yr9NTnZPtSsKugw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2TIK14N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LxApos15"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D050C4CEE7;
-	Mon, 12 May 2025 18:01:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2TIK14N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0DCC4CEE7;
+	Mon, 12 May 2025 18:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072897;
-	bh=PGtPPNN1/ng4WOXQQWKpV5tFclkWq98l6rs44qHiOQQ=;
+	s=korg; t=1747072900;
+	bh=/86slEzPlnv/J5InxIn0cd+qpxDuARPknkWd31uR46s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LxApos156YILJEnffPl2bcoyv8ciJurYEYPSmwteTMYcd6ZjzInvwUg6tycj1d6v9
-	 aaYuCHRn8ZxL9vIqOH4njXHD6Jw3DSvaBoBUVsASxWCYvUc//5K+E02vk+pH5bezvg
-	 UspQP3Jt2faOnTsoh2n+3N7SnECgsnZX652Mmi0g=
+	b=S2TIK14NckJq3O6AqXfDFLWsG4zxB9Eui7DsZ8UkZn+TQY5u8pQ1V2S4ldPg6LixR
+	 ahIDlqmNe1cnTDMnKWKQ9KYVEWgFsCPaOjyihitSKtNkXSDttlRoBGRn34y3pfBH7R
+	 dZv6XczXTIOKbkDqG7vjF8w59TquYTKhACUtYpKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	jt <enopatch@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 063/184] Input: synaptics - enable SMBus for HP Elitebook 850 G1
-Date: Mon, 12 May 2025 19:44:24 +0200
-Message-ID: <20250512172044.402703751@linuxfoundation.org>
+	Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
+	Ruijing Dong <ruijing.dong@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 090/184] drm/amdgpu/vcn: using separate VCN1_AON_SOC offset
+Date: Mon, 12 May 2025 19:44:51 +0200
+Message-ID: <20250512172045.493498870@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -50,31 +52,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Ruijing Dong <ruijing.dong@amd.com>
 
-commit f04f03d3e99bc8f89b6af5debf07ff67d961bc23 upstream.
+commit b7e84fb708392b37e5dbb2a95db9b94a0e3f0aa2 upstream.
 
-The kernel reports that the touchpad for this device can support
-SMBus mode.
+VCN1_AON_SOC_ADDRESS_3_0 offset varies on different
+VCN generations, the issue in vcn4.0.5 is caused by
+a different VCN1_AON_SOC_ADDRESS_3_0 offset.
 
-Reported-by: jt <enopatch@gmail.com>
-Link: https://lore.kernel.org/r/iys5dbv3ldddsgobfkxldazxyp54kay4bozzmagga6emy45jop@2ebvuxgaui4u
+This patch does the following:
+
+    1. use the same offset for other VCN generations.
+    2. use the vcn4.0.5 special offset
+    3. update vcn_4_0 and vcn_5_0
+
+Acked-by: Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>
+Reviewed-by: Leo Liu <leo.liu@amd.com>
+Signed-off-by: Ruijing Dong <ruijing.dong@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 5c89ceda9984498b28716944633a9a01cbb2c90d)
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/synaptics.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.h |    1 -
+ drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c   |    1 +
+ drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c   |    1 +
+ drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c   |    1 +
+ drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c   |    4 +++-
+ drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c |    1 +
+ drivers/gpu/drm/amd/amdgpu/vcn_v4_0_5.c |    1 +
+ drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c |    3 ++-
+ 8 files changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -190,6 +190,7 @@ static const char * const smbus_pnp_ids[
- 	"LEN2054", /* E480 */
- 	"LEN2055", /* E580 */
- 	"LEN2068", /* T14 Gen 1 */
-+	"SYN3003", /* HP EliteBook 850 G1 */
- 	"SYN3015", /* HP EliteBook 840 G2 */
- 	"SYN3052", /* HP EliteBook 840 G4 */
- 	"SYN3221", /* HP 15-ay000 */
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.h
+@@ -66,7 +66,6 @@
+ #define VCN_ENC_CMD_REG_WAIT		0x0000000c
+ 
+ #define VCN_AON_SOC_ADDRESS_2_0 	0x1f800
+-#define VCN1_AON_SOC_ADDRESS_3_0 	0x48000
+ #define VCN_VID_IP_ADDRESS_2_0		0x0
+ #define VCN_AON_IP_ADDRESS_2_0		0x30000
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
+@@ -39,6 +39,7 @@
+ 
+ #define VCN_VID_SOC_ADDRESS_2_0					0x1fa00
+ #define VCN1_VID_SOC_ADDRESS_3_0				0x48200
++#define VCN1_AON_SOC_ADDRESS_3_0				0x48000
+ 
+ #define mmUVD_CONTEXT_ID_INTERNAL_OFFSET			0x1fd
+ #define mmUVD_GPCOM_VCPU_CMD_INTERNAL_OFFSET			0x503
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
+@@ -39,6 +39,7 @@
+ 
+ #define VCN_VID_SOC_ADDRESS_2_0					0x1fa00
+ #define VCN1_VID_SOC_ADDRESS_3_0				0x48200
++#define VCN1_AON_SOC_ADDRESS_3_0				0x48000
+ 
+ #define mmUVD_CONTEXT_ID_INTERNAL_OFFSET			0x27
+ #define mmUVD_GPCOM_VCPU_CMD_INTERNAL_OFFSET			0x0f
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
+@@ -40,6 +40,7 @@
+ 
+ #define VCN_VID_SOC_ADDRESS_2_0					0x1fa00
+ #define VCN1_VID_SOC_ADDRESS_3_0				0x48200
++#define VCN1_AON_SOC_ADDRESS_3_0				0x48000
+ 
+ #define mmUVD_CONTEXT_ID_INTERNAL_OFFSET			0x27
+ #define mmUVD_GPCOM_VCPU_CMD_INTERNAL_OFFSET			0x0f
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
+@@ -46,6 +46,7 @@
+ 
+ #define VCN_VID_SOC_ADDRESS_2_0							0x1fb00
+ #define VCN1_VID_SOC_ADDRESS_3_0						0x48300
++#define VCN1_AON_SOC_ADDRESS_3_0						0x48000
+ 
+ #define VCN_HARVEST_MMSCH								0
+ 
+@@ -575,7 +576,8 @@ static void vcn_v4_0_mc_resume_dpg_mode(
+ 
+ 	/* VCN global tiling registers */
+ 	WREG32_SOC15_DPG_MODE(inst_idx, SOC15_DPG_MODE_OFFSET(
+-		VCN, 0, regUVD_GFX10_ADDR_CONFIG), adev->gfx.config.gb_addr_config, 0, indirect);
++			VCN, inst_idx, regUVD_GFX10_ADDR_CONFIG),
++			adev->gfx.config.gb_addr_config, 0, indirect);
+ }
+ 
+ /**
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c
+@@ -44,6 +44,7 @@
+ 
+ #define VCN_VID_SOC_ADDRESS_2_0		0x1fb00
+ #define VCN1_VID_SOC_ADDRESS_3_0	0x48300
++#define VCN1_AON_SOC_ADDRESS_3_0	0x48000
+ 
+ static const struct amdgpu_hwip_reg_entry vcn_reg_list_4_0_3[] = {
+ 	SOC15_REG_ENTRY_STR(VCN, 0, regUVD_POWER_STATUS),
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_5.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_5.c
+@@ -46,6 +46,7 @@
+ 
+ #define VCN_VID_SOC_ADDRESS_2_0						0x1fb00
+ #define VCN1_VID_SOC_ADDRESS_3_0					(0x48300 + 0x38000)
++#define VCN1_AON_SOC_ADDRESS_3_0					(0x48000 + 0x38000)
+ 
+ #define VCN_HARVEST_MMSCH							0
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
+@@ -488,7 +488,8 @@ static void vcn_v5_0_0_mc_resume_dpg_mod
+ 
+ 	/* VCN global tiling registers */
+ 	WREG32_SOC24_DPG_MODE(inst_idx, SOC24_DPG_MODE_OFFSET(
+-		VCN, 0, regUVD_GFX10_ADDR_CONFIG), adev->gfx.config.gb_addr_config, 0, indirect);
++		VCN, inst_idx, regUVD_GFX10_ADDR_CONFIG),
++		adev->gfx.config.gb_addr_config, 0, indirect);
+ 
+ 	return;
+ }
 
 
