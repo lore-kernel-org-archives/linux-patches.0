@@ -1,90 +1,94 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979D5296FAD;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD61B297118;
 	Mon, 12 May 2025 18:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073043; cv=none; b=NtMutUURUCYKKa1kQV/29pP1VPqs0ZnY15zbeU8LxdWZ7y7mvZ3zF+xwsk1F6kYr5Nc5VvsBNtPxOTtakreKVnGroSDUgsm6KqBjJ11M4IOFr+k8Rp+PcJG8Jdo8a+B/2gfi9XNX8yIsK/NbEkzRtK1Gbn16JDxgIqcDR//kVMc=
+	t=1747073043; cv=none; b=gjLxA3uToRyyFKin52q28mm2H0glXxo+iPIIZe9g8HBcNm/E0eqonovYT4bexn/L+N5Jx1b0r9SBbgE1USQwiqFG0CpoE6RYzlWji+/+ez7V6gFAMXmWpFRQScyD2rb9xSMPR4d9bi0i1/WgKnDHWCoHMWB0wpgk/NlnaRXA1Lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1747073043; c=relaxed/simple;
-	bh=ZlUZfdVo+qewTvhYqENLtuR/7WNkQL4N68j/qzv2oow=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AOxWksUMlM3G3DCOMRGpOMIxq+O/h7uXeqXwZnWUxj1rmA9Q4nSa0HjF10tQOAWT77CHKQECe29NE8md61FbgVEugkexQC9yh2mdEMZGxdRab/cWyVgRSCWTehZVdpfI4NpQQHjWCX/+YVLLPKmYm58dDsJVE0l/ZTzJF3DjXmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tsux4j7w; arc=none smtp.client-ip=10.30.226.201
+	bh=9Y3YEnLLJXEj8uwqZEJhtuyKzP26zmYEx1wU24ofGj8=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=uO9Q6nU0vtOsRKftS51R9FfNuabUwS/xhkneqz6FfwujhkzJKBY4zQ1NzqrPnIJG1jX9yP8Y19D/7FC+bzqLNeKOogmpfsKqlwLirHTauA0a49pJOG1KE49+mUZX33kVDETpVFH+kx19uEDcvsvIhy96Y1T3RyJ5qrLjlbmSVjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O2rSVFbm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tsux4j7w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0759DC4CEE9;
-	Mon, 12 May 2025 18:04:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073043;
-	bh=ZlUZfdVo+qewTvhYqENLtuR/7WNkQL4N68j/qzv2oow=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O2rSVFbm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118B7C4CEF2;
+	Mon, 12 May 2025 18:04:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747073043;
+	bh=9Y3YEnLLJXEj8uwqZEJhtuyKzP26zmYEx1wU24ofGj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tsux4j7wd8f7cckxEaaODucSMgSB+/UNNJoR1HDEViDIT3omevr7N2DdbMe29UYu/
-	 icaZYcCav3yNom3V4emM0xiAzfKqp0tPQhRMg6XqS4hwR0vsHFVQ+7xYOrMhnscohC
-	 fOoAIsYM2B31WhwpmqjhrQ0FsBMS0e0hrPPKpiig=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 137/184] MIPS: Fix MAX_REG_OFFSET
-Date: Mon, 12 May 2025 19:45:38 +0200
-Message-ID: <20250512172047.394688649@linuxfoundation.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
-References: <20250512172041.624042835@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=O2rSVFbmY4QY55ZBjYix2kfitkV94Buycu8pnycBOsrspjnpYmzhe8gx6JBryjZWV
+	 MyEMswx+N6l+MLCyfdkc14OpxlFIjcx3cVpIrZj6sNCHlJNk0yWXHRMCKm2KM6QVDx
+	 jOsforTezXUuOrAtyYCIxD1S7PZVNlRLt8InChB34Grz9kg+OVkkWoKFQ+VkeWbTXo
+	 /2C3Mm6ZjtxNFb8YFYN+ekz9td0Ix7A7srV44lM83KUunCmY6eYYaKg8TL1UF/5u2z
+	 od+PBMCpQwt83n8YILBvjYNZtg8iHST8MDSQPPRgELJw6fZLVwguV5w8ZdXCkDWr7r
+	 LPcO0+SYIOtnA==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Kees Cook <kees@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>,
+	clm@fb.com,
+	josef@toxicpanda.com,
+	linux-btrfs@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 04/15] btrfs: compression: adjust cb->compressed_folios allocation type
+Date: Mon, 12 May 2025 14:03:39 -0400
+Message-Id: <20250512180352.437356-4-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250512180352.437356-1-sashal@kernel.org>
+References: <20250512180352.437356-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.14.6
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+From: Kees Cook <kees@kernel.org>
 
-------------------
+[ Upstream commit 6f9a8ab796c6528d22de3c504c81fce7dde63d8a ]
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+In preparation for making the kmalloc() family of allocators type aware,
+we need to make sure that the returned type from the allocation matches
+the type of the variable being assigned. (Before, the allocator would
+always return "void *", which can be implicitly cast to any pointer type.)
 
-[ Upstream commit c44572e0cc13c9afff83fd333135a0aa9b27ba26 ]
+The assigned type is "struct folio **" but the returned type will be
+"struct page **". These are the same allocation size (pointer size), but
+the types don't match. Adjust the allocation type to match the assignment.
 
-Fix MAX_REG_OFFSET to point to the last register in 'pt_regs' and not to
-the marker itself, which could allow regs_get_register() to return an
-invalid offset.
-
-Fixes: 40e084a506eb ("MIPS: Add uprobes support.")
-Suggested-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Kees Cook <kees@kernel.org>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/include/asm/ptrace.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/compression.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/include/asm/ptrace.h b/arch/mips/include/asm/ptrace.h
-index 4a2b40ce39e09..841612913f0d1 100644
---- a/arch/mips/include/asm/ptrace.h
-+++ b/arch/mips/include/asm/ptrace.h
-@@ -65,7 +65,8 @@ static inline void instruction_pointer_set(struct pt_regs *regs,
+diff --git a/fs/btrfs/compression.c b/fs/btrfs/compression.c
+index 0c4d486c3048d..18d2210dc7249 100644
+--- a/fs/btrfs/compression.c
++++ b/fs/btrfs/compression.c
+@@ -606,7 +606,7 @@ void btrfs_submit_compressed_read(struct btrfs_bio *bbio)
+ 	free_extent_map(em);
  
- /* Query offset/name of register from its name/offset */
- extern int regs_query_register_offset(const char *name);
--#define MAX_REG_OFFSET (offsetof(struct pt_regs, __last))
-+#define MAX_REG_OFFSET \
-+	(offsetof(struct pt_regs, __last) - sizeof(unsigned long))
- 
- /**
-  * regs_get_register() - get register value from its offset
+ 	cb->nr_folios = DIV_ROUND_UP(compressed_len, PAGE_SIZE);
+-	cb->compressed_folios = kcalloc(cb->nr_folios, sizeof(struct page *), GFP_NOFS);
++	cb->compressed_folios = kcalloc(cb->nr_folios, sizeof(struct folio *), GFP_NOFS);
+ 	if (!cb->compressed_folios) {
+ 		ret = BLK_STS_RESOURCE;
+ 		goto out_free_bio;
 -- 
 2.39.5
-
-
 
