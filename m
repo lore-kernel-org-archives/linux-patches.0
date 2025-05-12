@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E66293B6B;
-	Mon, 12 May 2025 17:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E22296FA7;
+	Mon, 12 May 2025 17:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072567; cv=none; b=Idc1T0H7w/d0+qKInmstz2KVb5izc3mUFsdtIK1wC8LfOLd/UEZ4kO6yAHKDaJjDFU9scRPLXGg+Yvf9sj99FCaSh0qi9JbuotBMJn/DO4JVle46FU9fh1Q7TloqdYI4yMjknXY5LK/pvaR2DqcKGBbWaCa/b6MwLO15hDqsrlg=
+	t=1747072570; cv=none; b=BNu5MtgsQy9kfCFbMvHfzi3v2oj0aOJknKZuE/wWWVro7+f0ZqQ6BhiBw9oFbwqiqkYEHdf+91sjwe8Ky9QuVrZyMlsIOaUL5nox+4ns8mbgRXP+MfXMhbu6CakLaehOk4CX4M6tN0zPMSABEN2DSPQl+IGDvz9YY7+6zqjpTQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072567; c=relaxed/simple;
-	bh=n2mzLF8u1gak5/rJsxVedZFG5/i4WxN2hFfb+rs/Cb4=;
+	s=arc-20240116; t=1747072570; c=relaxed/simple;
+	bh=/zsbAa8oIgKmIFPYRWKclbNLfPnjQybECQI6q3KTnF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r4VZSRQRj04p1hD00iih18D8YKmGMZpzVkckD0pK4qwZpfQIGAEqHvRBFrhfnAibwqHY18uyYuKm8joyZNJLEoGB25JCI3Rd6MBaWqmxf4r2THB3iV6hoSEIBZUZ5J5kEVk5tzyhymDGJr0cGkmW1S/jCl1k+AQcy6KAbnaRStA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vV/eZ8Bl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ggEP9+3tXmXCY1CGrhMX3TcrSfupx2cEqdiJWmmbBOVyXRufvFwhjYIgj4RF1PAr8z6gw1cjcUlBdT9KJEhPDDsVtVeg3+Uwtr6flWQiS87UmiTCWI36f/CiPNp7wga5pIffIDYK2TZlMwl3ktXmAyAMzCpyJfkCwfcQl478XIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JUvXcvde; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vV/eZ8Bl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A62AC4CEE9;
-	Mon, 12 May 2025 17:56:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUvXcvde"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D907C4CEE9;
+	Mon, 12 May 2025 17:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072566;
-	bh=n2mzLF8u1gak5/rJsxVedZFG5/i4WxN2hFfb+rs/Cb4=;
+	s=korg; t=1747072569;
+	bh=/zsbAa8oIgKmIFPYRWKclbNLfPnjQybECQI6q3KTnF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vV/eZ8BlXmE2WfeRsfuFqyfwdlpqWibzfVcZuWMEzw4d2hsOgtz+jAm43ZoeNSCpQ
-	 8FKgTkPyFGFAY2xWvbbIhw20oSdyg2Mxe3C/AtfppRX8CGmHMwsRfwduJY85Z+70bB
-	 5tNHrUuXksvjiTn9mNd0pBUq/JE5ZQdQkMsOwThY=
+	b=JUvXcvdesKMPY4pNVBm1bTsmCNc/68br1Xc6ulVDfmCdN8YbtfqEN3+Dpm0kGWJPs
+	 NXyJcfPxgwqn8wEV9yRKLXlz8XqOT2HxPe3GzwDlY0Ga2kx+KFTiUdSWiIYH6VcYMy
+	 XrOo5ttLaetN8VPzTg+xjgvOVqomSoQugSMDrISQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Alexandre Chartre <alexandre.chartre@oracle.com>
-Subject: [PATCH 6.1 80/92] x86/bhi: Do not set BHI_DIS_S in 32-bit mode
-Date: Mon, 12 May 2025 19:45:55 +0200
-Message-ID: <20250512172026.382342144@linuxfoundation.org>
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 6.1 81/92] x86/speculation: Simplify and make CALL_NOSPEC consistent
+Date: Mon, 12 May 2025 19:45:56 +0200
+Message-ID: <20250512172026.424293949@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -54,64 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit 073fdbe02c69c43fb7c0d547ec265c7747d4a646 upstream.
+commit cfceff8526a426948b53445c02bcb98453c7330d upstream.
 
-With the possibility of intra-mode BHI via cBPF, complete mitigation for
-BHI is to use IBHF (history fence) instruction with BHI_DIS_S set. Since
-this new instruction is only available in 64-bit mode, setting BHI_DIS_S in
-32-bit mode is only a partial mitigation.
+CALL_NOSPEC macro is used to generate Spectre-v2 mitigation friendly
+indirect branches. At compile time the macro defaults to indirect branch,
+and at runtime those can be patched to thunk based mitigations.
 
-Do not set BHI_DIS_S in 32-bit mode so as to avoid reporting misleading
-mitigated status. With this change IBHF won't be used in 32-bit mode, also
-remove the CONFIG_X86_64 check from emit_spectre_bhb_barrier().
+This approach is opposite of what is done for the rest of the kernel, where
+the compile time default is to replace indirect calls with retpoline thunk
+calls.
 
-Suggested-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Make CALL_NOSPEC consistent with the rest of the kernel, default to
+retpoline thunk at compile time when CONFIG_RETPOLINE is
+enabled.
+
+  [ pawan: s/CONFIG_MITIGATION_RETPOLINE/CONFIG_RETPOLINE/ ]
+
 Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Reviewed-by: Alexandre Chartre <alexandre.chartre@oracle.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Andrew Cooper <andrew.cooper3@citrix.com
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20250228-call-nospec-v3-1-96599fed0f33@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/bugs.c  |    5 +++--
- arch/x86/net/bpf_jit_comp.c |    5 +++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ arch/x86/include/asm/nospec-branch.h |   15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1656,10 +1656,11 @@ static void __init bhi_select_mitigation
- 			return;
- 	}
+--- a/arch/x86/include/asm/nospec-branch.h
++++ b/arch/x86/include/asm/nospec-branch.h
+@@ -284,16 +284,11 @@ extern void (*x86_return_thunk)(void);
+  * Inline asm uses the %V modifier which is only in newer GCC
+  * which is ensured when CONFIG_RETPOLINE is defined.
+  */
+-# define CALL_NOSPEC						\
+-	ALTERNATIVE_2(						\
+-	ANNOTATE_RETPOLINE_SAFE					\
+-	"call *%[thunk_target]\n",				\
+-	"call __x86_indirect_thunk_%V[thunk_target]\n",		\
+-	X86_FEATURE_RETPOLINE,					\
+-	"lfence;\n"						\
+-	ANNOTATE_RETPOLINE_SAFE					\
+-	"call *%[thunk_target]\n",				\
+-	X86_FEATURE_RETPOLINE_LFENCE)
++#ifdef CONFIG_RETPOLINE
++#define CALL_NOSPEC	"call __x86_indirect_thunk_%V[thunk_target]\n"
++#else
++#define CALL_NOSPEC	"call *%[thunk_target]\n"
++#endif
  
--	if (spec_ctrl_bhi_dis())
-+	if (!IS_ENABLED(CONFIG_X86_64))
- 		return;
+ # define THUNK_TARGET(addr) [thunk_target] "r" (addr)
  
--	if (!IS_ENABLED(CONFIG_X86_64))
-+	/* Mitigate in hardware if supported */
-+	if (spec_ctrl_bhi_dis())
- 		return;
- 
- 	/* Mitigate KVM by default */
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -971,8 +971,7 @@ static int emit_spectre_bhb_barrier(u8 *
- 	/* Insert IBHF instruction */
- 	if ((cpu_feature_enabled(X86_FEATURE_CLEAR_BHB_LOOP) &&
- 	     cpu_feature_enabled(X86_FEATURE_HYPERVISOR)) ||
--	    (cpu_feature_enabled(X86_FEATURE_CLEAR_BHB_HW) &&
--	     IS_ENABLED(CONFIG_X86_64))) {
-+	    cpu_feature_enabled(X86_FEATURE_CLEAR_BHB_HW)) {
- 		/*
- 		 * Add an Indirect Branch History Fence (IBHF). IBHF acts as a
- 		 * fence preventing branch history from before the fence from
-@@ -982,6 +981,8 @@ static int emit_spectre_bhb_barrier(u8 *
- 		 * hardware that doesn't need or support it.  The REP and REX.W
- 		 * prefixes are required by the microcode, and they also ensure
- 		 * that the NOP is unlikely to be used in existing code.
-+		 *
-+		 * IBHF is not a valid instruction in 32-bit mode.
- 		 */
- 		EMIT5(0xF3, 0x48, 0x0F, 0x1E, 0xF8); /* ibhf */
- 	}
 
 
