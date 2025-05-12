@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B070D1C3BE0;
-	Mon, 12 May 2025 17:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8625251782;
+	Mon, 12 May 2025 17:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072159; cv=none; b=WAFNVZSN5yipLAsB68w2tebRTlJHtODfNtHwaepuIDhHWu9FQio+uRU4O0l+ErDtYoEjzxZa52lZ/Gh+4Fb8YaQxtLWJtGcwpFyFhS27T6yoc61ejl0MTU3F59Cfkbuct/7avakoNE0FkDfRYbDoDNru42jTUjhWlQXvgj9NdQA=
+	t=1747072163; cv=none; b=r+sFeox0w/E13+RFvddvWRVDISZM2HbqK4dHCKzU71avqEUd076FM4zSp9ROR6uTbnikNnHolYpmHUs3Ne3vmlpkAvLLrslPBQMiLiaY+OCUPzx0/XS5wQ4xZlOuoBiHMBkrGO/ugLwPIiaPt9mltPswuhZlhFYpGQKYjv4DIZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072159; c=relaxed/simple;
-	bh=wfKBtaW0l7SGYLNDR1U6zm33OINQr1QLQI9mLIlAWdU=;
+	s=arc-20240116; t=1747072163; c=relaxed/simple;
+	bh=zqm5Pet0x07m+B/rmQPSwfCWTfaAxJ5TNADsJPb7zKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VBNq6DQN75/QNlGR9sBU9NG6o/UnqQAOkso+Ln0AahyHEpUhoEjunHLO3Lp08lSQOI/pZK0+H/CUaFODz2bYLSeqzB38YRc9qPXZCL/PK9E3AuinhDXbvZQwQ9YoBAKZFWkpWBEkzk5FypyALmqiE7SsG8icvJLJvq+HfU8Qd4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJrU8mj+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MyikbmiO+xGpD3geKieJAAinU+0pysbFYecFiSs5GCQp0qxBCtAqDY0gTWkekUqq67f6Rfc66usm84zRVDXx+clBx+OzgdVt5F90lAACCtJ0q+22K6RdvkoZt1s4SYCW0IObtORY2ZSUf1IhUJKGmo46fMBIP/4eYPfgKYPOk4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yaMBHyZh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJrU8mj+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C139FC4CEE7;
-	Mon, 12 May 2025 17:49:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yaMBHyZh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6746EC4CEF1;
+	Mon, 12 May 2025 17:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072158;
-	bh=wfKBtaW0l7SGYLNDR1U6zm33OINQr1QLQI9mLIlAWdU=;
+	s=korg; t=1747072163;
+	bh=zqm5Pet0x07m+B/rmQPSwfCWTfaAxJ5TNADsJPb7zKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rJrU8mj+ZzLZHOqaIStTwbgXPDh5cfvZylsNQzyKpxtyNi7QOGSqYzdI7Q4tvvmEC
-	 PIoQ7FGNzFOicJuf2MVwoHCqj3Lv66ANP81D/NzGeieer7Nqn3LhlvY83PsJBBRLpa
-	 IzeKXFaaSnqGmh/s77oICwfqyLYeJjptoeBynHdo=
+	b=yaMBHyZhezT8bt0nF0XXG2kvcOO0V99mWKPoYAYI+3ptiSeaVIvrkV2SwxDSpXgGU
+	 QmEZgUx0BPUAvi74UGkF1waEWcHon8PP+EGwTMgzgaE13wTO4yGW0aK2ZlMrfGaqMA
+	 7w1f3f3i64IaBl1GqeRXrTHBQ+6m1SNWqr75+giQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lei Chen <lei.chen@smartx.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	John Stultz <jstultz@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 156/197] timekeeping: Prevent coarse clocks going backwards
-Date: Mon, 12 May 2025 19:40:06 +0200
-Message-ID: <20250512172050.739583022@linuxfoundation.org>
+	Heming Zhao <heming.zhao@suse.com>,
+	Gautham Ananthakrishna <gautham.ananthakrishna@oracle.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.14 130/197] ocfs2: fix the issue with discontiguous allocation in the global_bitmap
+Date: Mon, 12 May 2025 19:39:40 +0200
+Message-ID: <20250512172049.688054581@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -53,316 +57,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Heming Zhao <heming.zhao@suse.com>
 
-[ Upstream commit b71f9804f66c2592d4c3a2397b7374a4039005a5 ]
+commit bd1261b16d9131d79723d982d54295e7f309797a upstream.
 
-Lei Chen raised an issue with CLOCK_MONOTONIC_COARSE seeing time
-inconsistencies. Lei tracked down that this was being caused by the
-adjustment:
+commit 4eb7b93e0310 ("ocfs2: improve write IO performance when
+fragmentation is high") introduced another regression.
 
-    tk->tkr_mono.xtime_nsec -= offset;
+The following ocfs2-test case can trigger this issue:
+> discontig_runner.sh => activate_discontig_bg.sh => resv_unwritten:
+> ${RESV_UNWRITTEN_BIN} -f ${WORK_PLACE}/large_testfile -s 0 -l \
+> $((${FILE_MAJOR_SIZE_M}*1024*1024))
 
-which is made to compensate for the unaccumulated cycles in offset when the
-multiplicator is adjusted forward, so that the non-_COARSE clockids don't
-see inconsistencies.
+In my env, test disk size (by "fdisk -l <dev>"):
+> 53687091200 bytes, 104857600 sectors.
 
-However, the _COARSE clockid getter functions use the adjusted xtime_nsec
-value directly and do not compensate the negative offset via the
-clocksource delta multiplied with the new multiplicator. In that case the
-caller can observe time going backwards in consecutive calls.
+Above command is:
+> /usr/local/ocfs2-test/bin/resv_unwritten -f \
+> /mnt/ocfs2/ocfs2-activate-discontig-bg-dir/large_testfile -s 0 -l \
+> 53187969024
 
-By design, this negative adjustment should be fine, because the logic run
-from timekeeping_adjust() is done after it accumulated approximately
+Error log:
+> [*] Reserve 50724M space for a LARGE file, reserve 200M space for future test.
+> ioctl error 28: "No space left on device"
+> resv allocation failed Unknown error -1
+> reserve unwritten region from 0 to 53187969024.
 
-     multiplicator * interval_cycles
+Call flow:
+__ocfs2_change_file_space //by ioctl OCFS2_IOC_RESVSP64
+ ocfs2_allocate_unwritten_extents //start:0 len:53187969024
+  while()
+   + ocfs2_get_clusters //cpos:0, alloc_size:1623168 (cluster number)
+   + ocfs2_extend_allocation
+     + ocfs2_lock_allocators
+     |  + choose OCFS2_AC_USE_MAIN & ocfs2_cluster_group_search
+     |
+     + ocfs2_add_inode_data
+        ocfs2_add_clusters_in_btree
+         __ocfs2_claim_clusters
+          ocfs2_claim_suballoc_bits
+          + During the allocation of the final part of the large file
+	    (after ~47GB), no chain had the required contiguous
+            bits_wanted. Consequently, the allocation failed.
 
-into xtime_nsec.  The accumulated value is always larger then the
+How to fix:
+When OCFS2 is encountering fragmented allocation, the file system should
+stop attempting bits_wanted contiguous allocation and instead provide the
+largest available contiguous free bits from the cluster groups.
 
-     mult_adj * offset
-
-value, which is subtracted from xtime_nsec. Both operations are done
-together under the tk_core.lock, so the net change to xtime_nsec is always
-always be positive.
-
-However, do_adjtimex() calls into timekeeping_advance() as well, to
-apply the NTP frequency adjustment immediately. In this case,
-timekeeping_advance() does not return early when the offset is smaller
-then interval_cycles. In that case there is no time accumulated into
-xtime_nsec. But the subsequent call into timekeeping_adjust(), which
-modifies the multiplicator, subtracts from xtime_nsec to correct for the
-new multiplicator.
-
-Here because there was no accumulation, xtime_nsec becomes smaller than
-before, which opens a window up to the next accumulation, where the
-_COARSE clockid getters, which don't compensate for the offset, can
-observe the inconsistency.
-
-This has been tried to be fixed by forwarding the timekeeper in the case
-that adjtimex() adjusts the multiplier, which resets the offset to zero:
-
-  757b000f7b93 ("timekeeping: Fix possible inconsistencies in _COARSE clockids")
-
-That works correctly, but unfortunately causes a regression on the
-adjtimex() side. There are two issues:
-
-   1) The forwarding of the base time moves the update out of the original
-      period and establishes a new one.
-
-   2) The clearing of the accumulated NTP error is changing the behaviour as
-      well.
-
-User-space expects that multiplier/frequency updates are in effect, when the
-syscall returns, so delaying the update to the next tick is not solving the
-problem either.
-
-Commit 757b000f7b93 was reverted so that the established expectations of
-user space implementations (ntpd, chronyd) are restored, but that obviously
-brought the inconsistencies back.
-
-One of the initial approaches to fix this was to establish a separate
-storage for the coarse time getter nanoseconds part by calculating it from
-the offset. That was dropped on the floor because not having yet another
-state to maintain was simpler. But given the result of the above exercise,
-this solution turns out to be the right one. Bring it back in a slightly
-modified form.
-
-Thus introduce timekeeper::coarse_nsec and store that nanoseconds part in
-it, switch the time getter functions and the VDSO update to use that value.
-coarse_nsec is set on operations which forward or initialize the timekeeper
-and after time was accumulated during a tick. If there is no accumulation
-the timestamp is unchanged.
-
-This leaves the adjtimex() behaviour unmodified and prevents coarse time
-from going backwards.
-
-[ jstultz: Simplified the coarse_nsec calculation and kept behavior so
-  	   coarse clockids aren't adjusted on each inter-tick adjtimex
-  	   call, slightly reworked the comments and commit message ]
-
-Fixes: da15cfdae033 ("time: Introduce CLOCK_REALTIME_COARSE")
-Reported-by: Lei Chen <lei.chen@smartx.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: John Stultz <jstultz@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/all/20250419054706.2319105-1-jstultz@google.com
-Closes: https://lore.kernel.org/lkml/20250310030004.3705801-1-lei.chen@smartx.com/
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20250414060125.19938-2-heming.zhao@suse.com
+Fixes: 4eb7b93e0310 ("ocfs2: improve write IO performance when fragmentation is high")
+Signed-off-by: Heming Zhao <heming.zhao@suse.com>
+Reported-by: Gautham Ananthakrishna <gautham.ananthakrishna@oracle.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/timekeeper_internal.h |  8 +++--
- kernel/time/timekeeping.c           | 50 ++++++++++++++++++++++++-----
- kernel/time/vsyscall.c              |  4 +--
- 3 files changed, 49 insertions(+), 13 deletions(-)
+ fs/ocfs2/suballoc.c |   38 ++++++++++++++++++++++++++++++++------
+ fs/ocfs2/suballoc.h |    1 +
+ 2 files changed, 33 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/timekeeper_internal.h b/include/linux/timekeeper_internal.h
-index e39d4d563b197..785048a3b3e60 100644
---- a/include/linux/timekeeper_internal.h
-+++ b/include/linux/timekeeper_internal.h
-@@ -51,7 +51,7 @@ struct tk_read_base {
-  * @offs_real:			Offset clock monotonic -> clock realtime
-  * @offs_boot:			Offset clock monotonic -> clock boottime
-  * @offs_tai:			Offset clock monotonic -> clock tai
-- * @tai_offset:			The current UTC to TAI offset in seconds
-+ * @coarse_nsec:		The nanoseconds part for coarse time getters
-  * @tkr_raw:			The readout base structure for CLOCK_MONOTONIC_RAW
-  * @raw_sec:			CLOCK_MONOTONIC_RAW  time in seconds
-  * @clock_was_set_seq:		The sequence number of clock was set events
-@@ -76,6 +76,7 @@ struct tk_read_base {
-  *				ntp shifted nano seconds.
-  * @ntp_err_mult:		Multiplication factor for scaled math conversion
-  * @skip_second_overflow:	Flag used to avoid updating NTP twice with same second
-+ * @tai_offset:			The current UTC to TAI offset in seconds
-  *
-  * Note: For timespec(64) based interfaces wall_to_monotonic is what
-  * we need to add to xtime (or xtime corrected for sub jiffy times)
-@@ -100,7 +101,7 @@ struct tk_read_base {
-  * which results in the following cacheline layout:
-  *
-  * 0:	seqcount, tkr_mono
-- * 1:	xtime_sec ... tai_offset
-+ * 1:	xtime_sec ... coarse_nsec
-  * 2:	tkr_raw, raw_sec
-  * 3,4: Internal variables
-  *
-@@ -121,7 +122,7 @@ struct timekeeper {
- 	ktime_t			offs_real;
- 	ktime_t			offs_boot;
- 	ktime_t			offs_tai;
--	s32			tai_offset;
-+	u32			coarse_nsec;
+--- a/fs/ocfs2/suballoc.c
++++ b/fs/ocfs2/suballoc.c
+@@ -698,10 +698,12 @@ static int ocfs2_block_group_alloc(struc
  
- 	/* Cacheline 2: */
- 	struct tk_read_base	tkr_raw;
-@@ -144,6 +145,7 @@ struct timekeeper {
- 	u32			ntp_error_shift;
- 	u32			ntp_err_mult;
- 	u32			skip_second_overflow;
-+	s32			tai_offset;
- };
- 
- #ifdef CONFIG_GENERIC_TIME_VSYSCALL
-diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
-index 1e67d076f1955..a009c91f7b05f 100644
---- a/kernel/time/timekeeping.c
-+++ b/kernel/time/timekeeping.c
-@@ -164,10 +164,34 @@ static inline struct timespec64 tk_xtime(const struct timekeeper *tk)
- 	return ts;
- }
- 
-+static inline struct timespec64 tk_xtime_coarse(const struct timekeeper *tk)
-+{
-+	struct timespec64 ts;
-+
-+	ts.tv_sec = tk->xtime_sec;
-+	ts.tv_nsec = tk->coarse_nsec;
-+	return ts;
-+}
-+
-+/*
-+ * Update the nanoseconds part for the coarse time keepers. They can't rely
-+ * on xtime_nsec because xtime_nsec could be adjusted by a small negative
-+ * amount when the multiplication factor of the clock is adjusted, which
-+ * could cause the coarse clocks to go slightly backwards. See
-+ * timekeeping_apply_adjustment(). Thus we keep a separate copy for the coarse
-+ * clockids which only is updated when the clock has been set or  we have
-+ * accumulated time.
-+ */
-+static inline void tk_update_coarse_nsecs(struct timekeeper *tk)
-+{
-+	tk->coarse_nsec = tk->tkr_mono.xtime_nsec >> tk->tkr_mono.shift;
-+}
-+
- static void tk_set_xtime(struct timekeeper *tk, const struct timespec64 *ts)
+ 	bg_bh = ocfs2_block_group_alloc_contig(osb, handle, alloc_inode,
+ 					       ac, cl);
+-	if (PTR_ERR(bg_bh) == -ENOSPC)
++	if (PTR_ERR(bg_bh) == -ENOSPC) {
++		ac->ac_which = OCFS2_AC_USE_MAIN_DISCONTIG;
+ 		bg_bh = ocfs2_block_group_alloc_discontig(handle,
+ 							  alloc_inode,
+ 							  ac, cl);
++	}
+ 	if (IS_ERR(bg_bh)) {
+ 		status = PTR_ERR(bg_bh);
+ 		bg_bh = NULL;
+@@ -1794,6 +1796,7 @@ static int ocfs2_search_chain(struct ocf
  {
- 	tk->xtime_sec = ts->tv_sec;
- 	tk->tkr_mono.xtime_nsec = (u64)ts->tv_nsec << tk->tkr_mono.shift;
-+	tk_update_coarse_nsecs(tk);
- }
+ 	int status;
+ 	u16 chain;
++	u32 contig_bits;
+ 	u64 next_group;
+ 	struct inode *alloc_inode = ac->ac_inode;
+ 	struct buffer_head *group_bh = NULL;
+@@ -1819,10 +1822,21 @@ static int ocfs2_search_chain(struct ocf
+ 	status = -ENOSPC;
+ 	/* for now, the chain search is a bit simplistic. We just use
+ 	 * the 1st group with any empty bits. */
+-	while ((status = ac->ac_group_search(alloc_inode, group_bh,
+-					     bits_wanted, min_bits,
+-					     ac->ac_max_block,
+-					     res)) == -ENOSPC) {
++	while (1) {
++		if (ac->ac_which == OCFS2_AC_USE_MAIN_DISCONTIG) {
++			contig_bits = le16_to_cpu(bg->bg_contig_free_bits);
++			if (!contig_bits)
++				contig_bits = ocfs2_find_max_contig_free_bits(bg->bg_bitmap,
++						le16_to_cpu(bg->bg_bits), 0);
++			if (bits_wanted > contig_bits && contig_bits >= min_bits)
++				bits_wanted = contig_bits;
++		}
++
++		status = ac->ac_group_search(alloc_inode, group_bh,
++				bits_wanted, min_bits,
++				ac->ac_max_block, res);
++		if (status != -ENOSPC)
++			break;
+ 		if (!bg->bg_next_group)
+ 			break;
  
- static void tk_xtime_add(struct timekeeper *tk, const struct timespec64 *ts)
-@@ -175,6 +199,7 @@ static void tk_xtime_add(struct timekeeper *tk, const struct timespec64 *ts)
- 	tk->xtime_sec += ts->tv_sec;
- 	tk->tkr_mono.xtime_nsec += (u64)ts->tv_nsec << tk->tkr_mono.shift;
- 	tk_normalize_xtime(tk);
-+	tk_update_coarse_nsecs(tk);
- }
+@@ -1982,6 +1996,7 @@ static int ocfs2_claim_suballoc_bits(str
+ 	victim = ocfs2_find_victim_chain(cl);
+ 	ac->ac_chain = victim;
  
- static void tk_set_wall_to_mono(struct timekeeper *tk, struct timespec64 wtm)
-@@ -708,6 +733,7 @@ static void timekeeping_forward_now(struct timekeeper *tk)
- 		tk_normalize_xtime(tk);
- 		delta -= incr;
++search:
+ 	status = ocfs2_search_chain(ac, handle, bits_wanted, min_bits,
+ 				    res, &bits_left);
+ 	if (!status) {
+@@ -2022,6 +2037,16 @@ static int ocfs2_claim_suballoc_bits(str
+ 		}
  	}
-+	tk_update_coarse_nsecs(tk);
- }
  
- /**
-@@ -804,8 +830,8 @@ EXPORT_SYMBOL_GPL(ktime_get_with_offset);
- ktime_t ktime_get_coarse_with_offset(enum tk_offsets offs)
- {
- 	struct timekeeper *tk = &tk_core.timekeeper;
--	unsigned int seq;
- 	ktime_t base, *offset = offsets[offs];
-+	unsigned int seq;
- 	u64 nsecs;
- 
- 	WARN_ON(timekeeping_suspended);
-@@ -813,7 +839,7 @@ ktime_t ktime_get_coarse_with_offset(enum tk_offsets offs)
- 	do {
- 		seq = read_seqcount_begin(&tk_core.seq);
- 		base = ktime_add(tk->tkr_mono.base, *offset);
--		nsecs = tk->tkr_mono.xtime_nsec >> tk->tkr_mono.shift;
-+		nsecs = tk->coarse_nsec;
- 
- 	} while (read_seqcount_retry(&tk_core.seq, seq));
- 
-@@ -2161,7 +2187,7 @@ static bool timekeeping_advance(enum timekeeping_adv_mode mode)
- 	struct timekeeper *real_tk = &tk_core.timekeeper;
- 	unsigned int clock_set = 0;
- 	int shift = 0, maxshift;
--	u64 offset;
-+	u64 offset, orig_offset;
- 
- 	guard(raw_spinlock_irqsave)(&tk_core.lock);
- 
-@@ -2172,7 +2198,7 @@ static bool timekeeping_advance(enum timekeeping_adv_mode mode)
- 	offset = clocksource_delta(tk_clock_read(&tk->tkr_mono),
- 				   tk->tkr_mono.cycle_last, tk->tkr_mono.mask,
- 				   tk->tkr_mono.clock->max_raw_delta);
--
-+	orig_offset = offset;
- 	/* Check if there's really nothing to do */
- 	if (offset < real_tk->cycle_interval && mode == TK_ADV_TICK)
- 		return false;
-@@ -2205,6 +2231,14 @@ static bool timekeeping_advance(enum timekeeping_adv_mode mode)
- 	 */
- 	clock_set |= accumulate_nsecs_to_secs(tk);
- 
-+	/*
-+	 * To avoid inconsistencies caused adjtimex TK_ADV_FREQ calls
-+	 * making small negative adjustments to the base xtime_nsec
-+	 * value, only update the coarse clocks if we accumulated time
-+	 */
-+	if (orig_offset != offset)
-+		tk_update_coarse_nsecs(tk);
++	/* Chains can't supply the bits_wanted contiguous space.
++	 * We should switch to using every single bit when allocating
++	 * from the global bitmap. */
++	if (i == le16_to_cpu(cl->cl_next_free_rec) &&
++	    status == -ENOSPC && ac->ac_which == OCFS2_AC_USE_MAIN) {
++		ac->ac_which = OCFS2_AC_USE_MAIN_DISCONTIG;
++		ac->ac_chain = victim;
++		goto search;
++	}
 +
- 	timekeeping_update_from_shadow(&tk_core, clock_set);
+ set_hint:
+ 	if (status != -ENOSPC) {
+ 		/* If the next search of this group is not likely to
+@@ -2365,7 +2390,8 @@ int __ocfs2_claim_clusters(handle_t *han
+ 	BUG_ON(ac->ac_bits_given >= ac->ac_bits_wanted);
  
- 	return !!clock_set;
-@@ -2248,7 +2282,7 @@ void ktime_get_coarse_real_ts64(struct timespec64 *ts)
- 	do {
- 		seq = read_seqcount_begin(&tk_core.seq);
+ 	BUG_ON(ac->ac_which != OCFS2_AC_USE_LOCAL
+-	       && ac->ac_which != OCFS2_AC_USE_MAIN);
++	       && ac->ac_which != OCFS2_AC_USE_MAIN
++	       && ac->ac_which != OCFS2_AC_USE_MAIN_DISCONTIG);
  
--		*ts = tk_xtime(tk);
-+		*ts = tk_xtime_coarse(tk);
- 	} while (read_seqcount_retry(&tk_core.seq, seq));
- }
- EXPORT_SYMBOL(ktime_get_coarse_real_ts64);
-@@ -2271,7 +2305,7 @@ void ktime_get_coarse_real_ts64_mg(struct timespec64 *ts)
+ 	if (ac->ac_which == OCFS2_AC_USE_LOCAL) {
+ 		WARN_ON(min_clusters > 1);
+--- a/fs/ocfs2/suballoc.h
++++ b/fs/ocfs2/suballoc.h
+@@ -29,6 +29,7 @@ struct ocfs2_alloc_context {
+ #define OCFS2_AC_USE_MAIN  2
+ #define OCFS2_AC_USE_INODE 3
+ #define OCFS2_AC_USE_META  4
++#define OCFS2_AC_USE_MAIN_DISCONTIG  5
+ 	u32    ac_which;
  
- 	do {
- 		seq = read_seqcount_begin(&tk_core.seq);
--		*ts = tk_xtime(tk);
-+		*ts = tk_xtime_coarse(tk);
- 		offset = tk_core.timekeeper.offs_real;
- 	} while (read_seqcount_retry(&tk_core.seq, seq));
- 
-@@ -2350,12 +2384,12 @@ void ktime_get_coarse_ts64(struct timespec64 *ts)
- 	do {
- 		seq = read_seqcount_begin(&tk_core.seq);
- 
--		now = tk_xtime(tk);
-+		now = tk_xtime_coarse(tk);
- 		mono = tk->wall_to_monotonic;
- 	} while (read_seqcount_retry(&tk_core.seq, seq));
- 
- 	set_normalized_timespec64(ts, now.tv_sec + mono.tv_sec,
--				now.tv_nsec + mono.tv_nsec);
-+				  now.tv_nsec + mono.tv_nsec);
- }
- EXPORT_SYMBOL(ktime_get_coarse_ts64);
- 
-diff --git a/kernel/time/vsyscall.c b/kernel/time/vsyscall.c
-index 05d3831431658..c9d946b012d8b 100644
---- a/kernel/time/vsyscall.c
-+++ b/kernel/time/vsyscall.c
-@@ -97,12 +97,12 @@ void update_vsyscall(struct timekeeper *tk)
- 	/* CLOCK_REALTIME_COARSE */
- 	vdso_ts		= &vdata[CS_HRES_COARSE].basetime[CLOCK_REALTIME_COARSE];
- 	vdso_ts->sec	= tk->xtime_sec;
--	vdso_ts->nsec	= tk->tkr_mono.xtime_nsec >> tk->tkr_mono.shift;
-+	vdso_ts->nsec	= tk->coarse_nsec;
- 
- 	/* CLOCK_MONOTONIC_COARSE */
- 	vdso_ts		= &vdata[CS_HRES_COARSE].basetime[CLOCK_MONOTONIC_COARSE];
- 	vdso_ts->sec	= tk->xtime_sec + tk->wall_to_monotonic.tv_sec;
--	nsec		= tk->tkr_mono.xtime_nsec >> tk->tkr_mono.shift;
-+	nsec		= tk->coarse_nsec;
- 	nsec		= nsec + tk->wall_to_monotonic.tv_nsec;
- 	vdso_ts->sec	+= __iter_div_u64_rem(nsec, NSEC_PER_SEC, &vdso_ts->nsec);
- 
--- 
-2.39.5
-
+ 	/* these are used by the chain search */
 
 
