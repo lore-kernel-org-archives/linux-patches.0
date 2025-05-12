@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB45E255F4D;
-	Mon, 12 May 2025 17:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83BEA255E47;
+	Mon, 12 May 2025 17:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072495; cv=none; b=JwWQZ83XFEPFNKgsYy+qTTO31dB3NWGZq5+dxk8ocb1cl+ulWzVLTuXoHUm1Qqz7PjT1cZBtjwuonHw/F4OcBMCITGDQSaZL2WMhwaDtOP4W/3APjQ5mw2b1O5OqCCq/ZayNOJlH6/j9C0ykvdrPtkQn/r7kTXJoDF1ZCqjEtNs=
+	t=1747072498; cv=none; b=oN3JUhtbuDH7cx5auoe8yvJIGsjpTJZ3AQlukXqMN7fT4t4YUQO37gO0eqwVYNVKo4Qpv9IYoa0SmYgV7gLKeUdpX3gr3U6GImO9cjuoJO49tIuHXqdbNFN2oXzQ8wIXp8oJMLEkl5ojlnlkgn+j/08T/JcoP5s97Vn4YefWeh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072495; c=relaxed/simple;
-	bh=wxKed310yA570lM3vXTSANHsVppJ1PyLOyDOfmcDVZg=;
+	s=arc-20240116; t=1747072498; c=relaxed/simple;
+	bh=HSTehoG2wpqCwNU1MkG0Tp4gSFgYrMJGhr5bgDI26TA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RON1eOS7CHSKtLnVl2EVGKmml4RUp/Yi+05Ul/Pg91+TBnWLrQO//s21wHCj5Qhbun5k1qR0zU++K+UPwHG0hzD+DoAw2liSTmx66Czy4z6tlFqXzgtWZVvj1XNLKRBabLhGbz2eY/Hiw0IXwv5WgFMmj4bvh8DlNppa3KSH5Aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXwvA6e0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KBucJQMkkgNlmtgd2iAnCHZLHJWoKtzW/IKJ9VFkHzQVjwbRcU5UoRtbnGHCRMNzzs5PFOWmVKGUHwtnD9gArIRtOJOJbi8OZfdQ5S2OHQh2trX49BbkgIVNI7sBMmcEAiIIY9vsSPNyvbIvweMbVFbDcU3wP3bGy1kvL7CBCy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JW/wDRla; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXwvA6e0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA857C4CEF4;
-	Mon, 12 May 2025 17:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JW/wDRla"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E553EC4CEE7;
+	Mon, 12 May 2025 17:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072495;
-	bh=wxKed310yA570lM3vXTSANHsVppJ1PyLOyDOfmcDVZg=;
+	s=korg; t=1747072498;
+	bh=HSTehoG2wpqCwNU1MkG0Tp4gSFgYrMJGhr5bgDI26TA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZXwvA6e0UASrUaOn+uZyrYv7CmMp1EMXvTUymvrqowjyBuK5IyJf3buSP3BRu4w6K
-	 nXq2pAuutZI4wlyINZj8/KhR3i1qSUhkf78E22bxaj89r4y0qHFUA/rDgiIzHJR8+z
-	 Plz5Vvg9lp9SKrOUgzzNGHFeaVLh8YtD6SM/EB2E=
+	b=JW/wDRlaiXvxSgyP3de+YfQal4vJuWP8mIgC8TGW+IRJJMReHzF3cd+C9NnP1Vbni
+	 KodWzlJMS4Rrm+oVwDMW/8kUUCRxA57qMV4S0U7qqMWH/BQQxx5NmTtaVzXGuy/vdy
+	 QZ5nF+JI3QLmAT3FFWrID45eSccmfsQCL9MREIcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Eilert <kernel.hias@eilert.tech>,
-	Aditya Garg <gargaditya08@live.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 28/92] Input: synaptics - enable InterTouch on TUXEDO InfinityBook Pro 14 v5
-Date: Mon, 12 May 2025 19:45:03 +0200
-Message-ID: <20250512172024.268593192@linuxfoundation.org>
+	Gabriel Shahrouzi <gshahrouzi@gmail.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 29/92] staging: iio: adc: ad7816: Correct conditional logic for store mode
+Date: Mon, 12 May 2025 19:45:04 +0200
+Message-ID: <20250512172024.310441868@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -45,42 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aditya Garg <gargaditya08@live.com>
+From: Gabriel Shahrouzi <gshahrouzi@gmail.com>
 
-commit 2abc698ac77314e0de5b33a6d96a39c5159d88e4 upstream.
+commit 2e922956277187655ed9bedf7b5c28906e51708f upstream.
 
-Enable InterTouch mode on TUXEDO InfinityBook Pro 14 v5 by adding
-"SYN1221" to the list of SMBus-enabled variants.
+The mode setting logic in ad7816_store_mode was reversed due to
+incorrect handling of the strcmp return value. strcmp returns 0 on
+match, so the `if (strcmp(buf, "full"))` block executed when the
+input was not "full".
 
-Add support for InterTouch on SYN1221 by adding it to the list of
-SMBus-enabled variants.
+This resulted in "full" setting the mode to AD7816_PD (power-down) and
+other inputs setting it to AD7816_FULL.
 
-Reported-by: Matthias Eilert <kernel.hias@eilert.tech>
-Tested-by: Matthias Eilert <kernel.hias@eilert.tech>
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
-Link: https://lore.kernel.org/r/PN3PR01MB9597C033C4BC20EE2A0C4543B888A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+Fix this by checking it against 0 to correctly check for "full" and
+"power-down", mapping them to AD7816_FULL and AD7816_PD respectively.
+
+Fixes: 7924425db04a ("staging: iio: adc: new driver for AD7816 devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Gabriel Shahrouzi <gshahrouzi@gmail.com>
+Acked-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://lore.kernel.org/stable/20250414152920.467505-1-gshahrouzi%40gmail.com
+Link: https://patch.msgid.link/20250414154050.469482-1-gshahrouzi@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/synaptics.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/iio/adc/ad7816.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -190,6 +190,7 @@ static const char * const smbus_pnp_ids[
- 	"LEN2054", /* E480 */
- 	"LEN2055", /* E580 */
- 	"LEN2068", /* T14 Gen 1 */
-+	"SYN1221", /* TUXEDO InfinityBook Pro 14 v5 */
- 	"SYN3003", /* HP EliteBook 850 G1 */
- 	"SYN3015", /* HP EliteBook 840 G2 */
- 	"SYN3052", /* HP EliteBook 840 G4 */
+--- a/drivers/staging/iio/adc/ad7816.c
++++ b/drivers/staging/iio/adc/ad7816.c
+@@ -136,7 +136,7 @@ static ssize_t ad7816_store_mode(struct
+ 	struct iio_dev *indio_dev = dev_to_iio_dev(dev);
+ 	struct ad7816_chip_info *chip = iio_priv(indio_dev);
+ 
+-	if (strcmp(buf, "full")) {
++	if (strcmp(buf, "full") == 0) {
+ 		gpiod_set_value(chip->rdwr_pin, 1);
+ 		chip->mode = AD7816_FULL;
+ 	} else {
 
 
