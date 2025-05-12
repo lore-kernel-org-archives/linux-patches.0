@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839B0296FA8;
-	Mon, 12 May 2025 17:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FFD296D3A;
+	Mon, 12 May 2025 17:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071804; cv=none; b=RE3aLMiurd8wswvsRvwFfjsbxkYw59jUIJsgdhHCwjwkqDJkjNg+MxEJdaLqAuFCGJmFFrwbOTQ8pRD3hFngoU6KXHeoMfxDrB+w6xR5lTrRvd7xUyjPWTB8T+Li3xnWKfpDLqCqH3J3E67tnHZrUzupqUAcFcEp2sqH8SQZ5B8=
+	t=1747071806; cv=none; b=GfEV0kAj5feHL+NXoHtIQ22AM37VxBxUswbNBEaL5guB1nD3i7A5Deo3XOo7ZDttL6InRhE6fc4hl2xK7NfwnWvONVXnHLvhkmvumAmTisKueAMZVk+gZYc/Thc/nBKedLoJ+a0kYbVPvGxirWkCye0zromSgQL4ua2Ysf2yw5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071804; c=relaxed/simple;
-	bh=wCvbxBzLYbXkUzcjyEMLjzfWy5EP6W35TRSzZ8cMIWw=;
+	s=arc-20240116; t=1747071806; c=relaxed/simple;
+	bh=+83AhmwS+im0Zx0MLGPfyXL5Vlq6aQjILc1abAKQ8BA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=frKSFr+qPBHNCsYu9F+D3NuDDwjjuQO19dlontjSAhUjrY9O2hs8LMTu+mtDayqHkIPNReF/BvR1BxwfW/xLMpKu+lfNsDDHyIIo4UgRPHrzltuQtYVJDThbD5ZnUnQHvCZEekp65xp8Jq5b90V9kbBTe9ADcFbgj3f+W0oFAbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uKxivoqu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oQnEOcmwiBwtdI22IxCj6SSX8UwtlrFh71GpDjWtnyTslmyWZGh3sWeOKMKYoq1XTNUaL+etFS5/eWpCTFxvvEo5MbbnXVrPpwxfVT6kvdsZsWK1aVsfVHjRgtHTD5zjh/8w387g76cB364i8BU+ZN8CIwoQqFC5VqNy9zRny3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wts5UjF+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uKxivoqu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDB9C4CEE7;
-	Mon, 12 May 2025 17:43:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wts5UjF+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45DBBC4CEE7;
+	Mon, 12 May 2025 17:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071804;
-	bh=wCvbxBzLYbXkUzcjyEMLjzfWy5EP6W35TRSzZ8cMIWw=;
+	s=korg; t=1747071806;
+	bh=+83AhmwS+im0Zx0MLGPfyXL5Vlq6aQjILc1abAKQ8BA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uKxivoquY22YRSyOs8b40eGPSCfAeLDn97OyQlyYVO1tEwo3DTqbiR606cS/PWnmV
-	 A0n2+SQEotoVnK2YCVPN3cmvzmdBpKZHpB4SsFX29B2UuhZdQvSZtuvDIUxZuGUCuV
-	 z9p1T97r6zVQLIaAIdQKZm2VVSVnCyKuFd0FZSlQ=
+	b=wts5UjF+ZVgzBvObV2nKqKUBRstYMD8F3hxxNxQvDilImyWJ467/+YH2iZAj0C1y0
+	 KwI46bYQ0f2Fa1FqpUmO3oXnZhPykVdF2I2ksxFuIHuEKLyQnBlMWjdagzo/c7+bF4
+	 09P78VdTYXoT9fHtjdFQe2xP8uW5c7UTbRzmXBps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.14 006/197] can: mcan: m_can_class_unregister(): fix order of unregistration calls
-Date: Mon, 12 May 2025 19:37:36 +0200
-Message-ID: <20250512172044.604002189@linuxfoundation.org>
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.14 007/197] s390/pci: Fix missing check for zpci_create_device() error return
+Date: Mon, 12 May 2025 19:37:37 +0200
+Message-ID: <20250512172044.645129400@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -50,45 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-commit 0713a1b3276b98c7dafbeefef00d7bc3a9119a84 upstream.
+commit 42420c50c68f3e95e90de2479464f420602229fc upstream.
 
-If a driver is removed, the driver framework invokes the driver's
-remove callback. A CAN driver's remove function calls
-unregister_candev(), which calls net_device_ops::ndo_stop further down
-in the call stack for interfaces which are in the "up" state.
+The zpci_create_device() function returns an error pointer that needs to
+be checked before dereferencing it as a struct zpci_dev pointer. Add the
+missing check in __clp_add() where it was missed when adding the
+scan_list in the fixed commit. Simply not adding the device to the scan
+list results in the previous behavior.
 
-The removal of the module causes a warning, as can_rx_offload_del()
-deletes the NAPI, while it is still active, because the interface is
-still up.
-
-To fix the warning, first unregister the network interface, which
-calls net_device_ops::ndo_stop, which disables the NAPI, and then call
-can_rx_offload_del().
-
-Fixes: 1be37d3b0414 ("can: m_can: fix periph RX path: use rx-offload to ensure skbs are sent from softirq context")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250502-can-rx-offload-del-v1-3-59a9b131589d@pengutronix.de
-Reviewed-by: Markus Schneider-Pargmann <msp@baylibre.com>
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 0467cdde8c43 ("s390/pci: Sort PCI functions prior to creating virtual busses")
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/m_can/m_can.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/pci/pci_clp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/can/m_can/m_can.c
-+++ b/drivers/net/can/m_can/m_can.c
-@@ -2463,9 +2463,9 @@ EXPORT_SYMBOL_GPL(m_can_class_register);
- 
- void m_can_class_unregister(struct m_can_classdev *cdev)
- {
-+	unregister_candev(cdev->net);
- 	if (cdev->is_peripheral)
- 		can_rx_offload_del(&cdev->offload);
--	unregister_candev(cdev->net);
+--- a/arch/s390/pci/pci_clp.c
++++ b/arch/s390/pci/pci_clp.c
+@@ -427,6 +427,8 @@ static void __clp_add(struct clp_fh_list
+ 		return;
+ 	}
+ 	zdev = zpci_create_device(entry->fid, entry->fh, entry->config_state);
++	if (IS_ERR(zdev))
++		return;
+ 	list_add_tail(&zdev->entry, scan_list);
  }
- EXPORT_SYMBOL_GPL(m_can_class_unregister);
  
 
 
