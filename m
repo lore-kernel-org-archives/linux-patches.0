@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B0F230BE8;
-	Mon, 12 May 2025 17:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E501E1A05;
+	Mon, 12 May 2025 17:58:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072679; cv=none; b=UCQedD7mtixsTxw09P0zozesV+uSMtqaXs4K6U5dic5Mutm6++LPEIOfC4AefL5AfTORDKyUg8xXBAEeiphwT2sXx0DbuoA4jLqQhFH/FojIaPcLsgn/e9lgmngUwl1CtgIpiiQLSZQozQZ1/bAakK1ouVVbiic2khJq+HgI5uI=
+	t=1747072682; cv=none; b=Z7fFXKSZSfvmElT5aAjYacPcD3Ak6lrNP7Iol/IhI82z10K15YEYEIPMkZTKOoua0fo7yPAtTEYCaCodIeiMvjykvqe0FVGKUm9Noi2ebZbMaGMmlhsY/pxLWuvFRolNJJfwr9LVTogumlUA0/IiiwIBfx3FvEs3skTzzgn6Fh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072679; c=relaxed/simple;
-	bh=MBPd/nLiDEUK0FxMjo+su3QH1S9/J4azE3FrvC09Go8=;
+	s=arc-20240116; t=1747072682; c=relaxed/simple;
+	bh=vTBS7yfjCcQjs9cWi6gT5SpI3IQo5DLVvI7VDal0nzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l7A2gVcwWM4vdFeQxJhp+2sy0+ZiCJg6DJ5ts/veEAEPqIts1DAO8UV3iYwX0ZEYGoGXUSL8cbTJPt0D6wY0n8AD0fBi4OVdFrhZdTV3LMT+rpDr8DTZEO0wO/R05E10hHZaNK+XHoolbuHMhS+XHpQov5mJvr51lwGFo+S441w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jULRDVHf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jZl6qoHJ9w88Q79TAKSDFawoIORM8K1T6qlxXD4NmbUcw03binq3uRrck9V3ePT1FiUaS/41JuSGG78lKK+M4a6nDfRzTEiEVcD2jp5HzQfHJ/ncBeQizX2rad+bcbVzGY8TlGKu/Acwbibn4Acs8puI+atapPA306SEEEHJA8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SrmY0D0/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jULRDVHf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AB8C4CEE7;
-	Mon, 12 May 2025 17:57:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SrmY0D0/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7E3C4CEE7;
+	Mon, 12 May 2025 17:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072679;
-	bh=MBPd/nLiDEUK0FxMjo+su3QH1S9/J4azE3FrvC09Go8=;
+	s=korg; t=1747072682;
+	bh=vTBS7yfjCcQjs9cWi6gT5SpI3IQo5DLVvI7VDal0nzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jULRDVHf+t10jdRK04EJ4OebirAkdJtzFlb51wn6qZUyNhXtGHxdLfB1ZmBUqf+O/
-	 uQ4Mwx4+zybtFxFa1Q4DEixyaE0oesjgw5UQ87YZk/zXcP5+uoBR2vU9tRNFa7wUtw
-	 o4xII3TG/rBtou0GZ7pWCRP9PjECn6BWS4j/X6uA=
+	b=SrmY0D0/CVN2HwcFXqILDpRWfTSJ/WoGnMhIP7H5/CeWh3ZZu/1qpUYB/iaFbjErc
+	 7FUTbDpCNy+l6dQdahPNfyBNic9YnKhHWYxlx7V1XMLMQcBkFchgq5Hpx9LhGCZCvG
+	 cWYTEtz0RHGif7pkRhJDFxMEdSC966xVZASUr/SI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 022/184] gre: Fix again IPv6 link-local address generation.
-Date: Mon, 12 May 2025 19:43:43 +0200
-Message-ID: <20250512172042.597176467@linuxfoundation.org>
+Subject: [PATCH 6.12 023/184] net: ethernet: mtk_eth_soc: reset all TX queues on DMA free
+Date: Mon, 12 May 2025 19:43:44 +0200
+Message-ID: <20250512172042.644878633@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -52,119 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 3e6a0243ff002ddbd7ee18a8974ae61d2e6ed00d ]
+[ Upstream commit 4db6c75124d871fbabf8243f947d34cc7e0697fc ]
 
-Use addrconf_addr_gen() to generate IPv6 link-local addresses on GRE
-devices in most cases and fall back to using add_v4_addrs() only in
-case the GRE configuration is incompatible with addrconf_addr_gen().
+The purpose of resetting the TX queue is to reset the byte and packet
+count as well as to clear the software flow control XOFF bit.
 
-GRE used to use addrconf_addr_gen() until commit e5dd729460ca ("ip/ip6_gre:
-use the same logic as SIT interfaces when computing v6LL address")
-restricted this use to gretap and ip6gretap devices, and created
-add_v4_addrs() (borrowed from SIT) for non-Ethernet GRE ones.
+MediaTek developers pointed out that netdev_reset_queue would only
+resets queue 0 of the network device.
 
-The original problem came when commit 9af28511be10 ("addrconf: refuse
-isatap eui64 for INADDR_ANY") made __ipv6_isatap_ifid() fail when its
-addr parameter was 0. The commit says that this would create an invalid
-address, however, I couldn't find any RFC saying that the generated
-interface identifier would be wrong. Anyway, since gre over IPv4
-devices pass their local tunnel address to __ipv6_isatap_ifid(), that
-commit broke their IPv6 link-local address generation when the local
-address was unspecified.
+Queues that are not reset may cause unexpected issues.
 
-Then commit e5dd729460ca ("ip/ip6_gre: use the same logic as SIT
-interfaces when computing v6LL address") tried to fix that case by
-defining add_v4_addrs() and calling it to generate the IPv6 link-local
-address instead of using addrconf_addr_gen() (apart for gretap and
-ip6gretap devices, which would still use the regular
-addrconf_addr_gen(), since they have a MAC address).
+Packets may stop being sent after reset and "transmit timeout" log may
+be displayed.
 
-That broke several use cases because add_v4_addrs() isn't properly
-integrated into the rest of IPv6 Neighbor Discovery code. Several of
-these shortcomings have been fixed over time, but add_v4_addrs()
-remains broken on several aspects. In particular, it doesn't send any
-Router Sollicitations, so the SLAAC process doesn't start until the
-interface receives a Router Advertisement. Also, add_v4_addrs() mostly
-ignores the address generation mode of the interface
-(/proc/sys/net/ipv6/conf/*/addr_gen_mode), thus breaking the
-IN6_ADDR_GEN_MODE_RANDOM and IN6_ADDR_GEN_MODE_STABLE_PRIVACY cases.
+Import fix from MediaTek's SDK to resolve this issue.
 
-Fix the situation by using add_v4_addrs() only in the specific scenario
-where the normal method would fail. That is, for interfaces that have
-all of the following characteristics:
-
-  * run over IPv4,
-  * transport IP packets directly, not Ethernet (that is, not gretap
-    interfaces),
-  * tunnel endpoint is INADDR_ANY (that is, 0),
-  * device address generation mode is EUI64.
-
-In all other cases, revert back to the regular addrconf_addr_gen().
-
-Also, remove the special case for ip6gre interfaces in add_v4_addrs(),
-since ip6gre devices now always use addrconf_addr_gen() instead.
-
-Note:
-  This patch was originally applied as commit 183185a18ff9 ("gre: Fix
-  IPv6 link-local address generation."). However, it was then reverted
-  by commit fc486c2d060f ("Revert "gre: Fix IPv6 link-local address
-  generation."") because it uncovered another bug that ended up
-  breaking net/forwarding/ip6gre_custom_multipath_hash.sh. That other
-  bug has now been fixed by commit 4d0ab3a6885e ("ipv6: Start path
-  selection from the first nexthop"). Therefore we can now revive this
-  GRE patch (no changes since original commit 183185a18ff9 ("gre: Fix
-  IPv6 link-local address generation.").
-
-Fixes: e5dd729460ca ("ip/ip6_gre: use the same logic as SIT interfaces when computing v6LL address")
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/a88cc5c4811af36007645d610c95102dccb360a6.1746225214.git.gnault@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://git01.mediatek.com/plugins/gitiles/openwrt/feeds/mtk-openwrt-feeds/+/319c0d9905579a46dc448579f892f364f1f84818
+Fixes: f63959c7eec31 ("net: ethernet: mtk_eth_soc: implement multi-queue support for per-port queues")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://patch.msgid.link/c9ff9adceac4f152239a0f65c397f13547639175.1746406763.git.daniel@makrotopia.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index f5d49162f7983..16ba3bb12fc4b 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -3237,16 +3237,13 @@ static void add_v4_addrs(struct inet6_dev *idev)
- 	struct in6_addr addr;
- 	struct net_device *dev;
- 	struct net *net = dev_net(idev->dev);
--	int scope, plen, offset = 0;
-+	int scope, plen;
- 	u32 pflags = 0;
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index c5d5b9ff8bc42..d50017012ca14 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -3140,11 +3140,19 @@ static int mtk_dma_init(struct mtk_eth *eth)
+ static void mtk_dma_free(struct mtk_eth *eth)
+ {
+ 	const struct mtk_soc_data *soc = eth->soc;
+-	int i;
++	int i, j, txqs = 1;
++
++	if (MTK_HAS_CAPS(eth->soc->caps, MTK_QDMA))
++		txqs = MTK_QDMA_NUM_QUEUES;
++
++	for (i = 0; i < MTK_MAX_DEVS; i++) {
++		if (!eth->netdev[i])
++			continue;
++
++		for (j = 0; j < txqs; j++)
++			netdev_tx_reset_subqueue(eth->netdev[i], j);
++	}
  
- 	ASSERT_RTNL();
- 
- 	memset(&addr, 0, sizeof(struct in6_addr));
--	/* in case of IP6GRE the dev_addr is an IPv6 and therefore we use only the last 4 bytes */
--	if (idev->dev->addr_len == sizeof(struct in6_addr))
--		offset = sizeof(struct in6_addr) - 4;
--	memcpy(&addr.s6_addr32[3], idev->dev->dev_addr + offset, 4);
-+	memcpy(&addr.s6_addr32[3], idev->dev->dev_addr, 4);
- 
- 	if (!(idev->dev->flags & IFF_POINTOPOINT) && idev->dev->type == ARPHRD_SIT) {
- 		scope = IPV6_ADDR_COMPATv4;
-@@ -3557,7 +3554,13 @@ static void addrconf_gre_config(struct net_device *dev)
- 		return;
- 	}
- 
--	if (dev->type == ARPHRD_ETHER) {
-+	/* Generate the IPv6 link-local address using addrconf_addr_gen(),
-+	 * unless we have an IPv4 GRE device not bound to an IP address and
-+	 * which is in EUI64 mode (as __ipv6_isatap_ifid() would fail in this
-+	 * case). Such devices fall back to add_v4_addrs() instead.
-+	 */
-+	if (!(dev->type == ARPHRD_IPGRE && *(__be32 *)dev->dev_addr == 0 &&
-+	      idev->cnf.addr_gen_mode == IN6_ADDR_GEN_MODE_EUI64)) {
- 		addrconf_addr_gen(idev, true);
- 		return;
- 	}
+-	for (i = 0; i < MTK_MAX_DEVS; i++)
+-		if (eth->netdev[i])
+-			netdev_reset_queue(eth->netdev[i]);
+ 	if (!MTK_HAS_CAPS(soc->caps, MTK_SRAM) && eth->scratch_ring) {
+ 		dma_free_coherent(eth->dma_dev,
+ 				  MTK_QDMA_RING_SIZE * soc->tx.desc_size,
 -- 
 2.39.5
 
