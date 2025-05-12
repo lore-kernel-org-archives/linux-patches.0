@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1251254863;
-	Mon, 12 May 2025 17:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DB826157B;
+	Mon, 12 May 2025 17:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072504; cv=none; b=M9jDf81wGDyZ35YrjJ4ny/WKZrI6dbgTfjnMLKeLAMBSgxEH2CsnRJZ71iCwv0Rc65AAKn0eJlFr2ffZqmF88Cn5vg7wJOaJlPacGjmqXj5Gy32Gd6TEApQKLe/HMrqygBePpEAVMSdL/rHTbHGPjSkoAKO0naliQTsPe6LKevA=
+	t=1747072507; cv=none; b=rNbABdUelaLdNw3rquiTEYHo41RLp8omP9aVEjs7/lP3F8ZvbUCM0uG4gSx2+8f4Cd5hfr9Lc9XXVRP/839wxWz8pF/1pV4djyoVbRQc7+p2UXnc9/tz7V9l23D5DTfB9AtVOa4rioyVHj4xjPOVtOVeb17ThiAQbB5QXUpxFs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072504; c=relaxed/simple;
-	bh=z2YuMkXhV4+T/vurvL3WO5b5HnpTMzYXXIu++uJPasg=;
+	s=arc-20240116; t=1747072507; c=relaxed/simple;
+	bh=35/Ct5Wb+XyiLUmEmUlOrLnK+ARfnX3RWWXwQju+6yI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BVL/EJlZLcMF1WBTbq8MxB13fIdkds1RUhRLtqG4t5MsQhSZGapj2c3hucr9/0N10GXDEsN1cXkfKbLsXPaRlxZu8UUtIRGaKETQUDREcLFz0Pmvi2AF6WKl9jn2VuLshA4s2kn+ki8eGtIMgqEFADrE8bDGbL2lUPnCF5xpFOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LLHrSQDG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qwTNy5fC0TzROnA8lhcEIZq76cfs+LgiepXCOyc54FpCpoZJuT1OKF0sFC2tBINxz9XfrIBalES0noeT/9L6etvah1BJS7HAyd8Q+Gnam2bL8OCrQ1MpKfva/wLLFzgfuGFh1oDMr7kUjNkWgTGUnONMpn8OnnIgmQbLXby8kjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/BBhnNW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLHrSQDG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A3B7C4CEE7;
-	Mon, 12 May 2025 17:55:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/BBhnNW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26630C4CEE7;
+	Mon, 12 May 2025 17:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072504;
-	bh=z2YuMkXhV4+T/vurvL3WO5b5HnpTMzYXXIu++uJPasg=;
+	s=korg; t=1747072507;
+	bh=35/Ct5Wb+XyiLUmEmUlOrLnK+ARfnX3RWWXwQju+6yI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LLHrSQDGT205ynLQTZKAgY9dvQonjPL9GelU9Y8EGOZyT4mM+Bh/Ow8h5vo3uCOaK
-	 iJTdavMgvArSeDy1UBzWlqDd9CBSGAoh9oQM0OcyvOsYmvbwHkujo9BhCp6jsgkdSI
-	 HQFKaGZsJJEmP15lb3kDwzucWf9MgrQCK0yxS78g=
+	b=D/BBhnNWEaYGSRUj82jr9IQamlbg2rA+xn8sZoE+TKvr+ilUw8h16ELfWEpIwJfea
+	 wa//+jSnjBiDic0wq2Qwxk0iHMM/HGlnHCKcqlnJTSV6N2+LThWY57K2oKXe8aqoaL
+	 R7+Wx4wSSaSXmfZSkAqoTbAIM/FmXMldHX0g88B0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Shahrouzi <gshahrouzi@gmail.com>
-Subject: [PATCH 6.1 31/92] staging: axis-fifo: Correct handling of tx_fifo_depth for size validation
-Date: Mon, 12 May 2025 19:45:06 +0200
-Message-ID: <20250512172024.402856348@linuxfoundation.org>
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 22/92] net: dsa: b53: fix learning on VLAN unaware bridges
+Date: Mon, 12 May 2025 19:44:57 +0200
+Message-ID: <20250512172024.025190955@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -49,38 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Shahrouzi <gshahrouzi@gmail.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-commit 2ca34b508774aaa590fc3698a54204706ecca4ba upstream.
+[ Upstream commit 9f34ad89bcf0e6df6f8b01f1bdab211493fc66d1 ]
 
-Remove erroneous subtraction of 4 from the total FIFO depth read from
-device tree. The stored depth is for checking against total capacity,
-not initial vacancy. This prevented writes near the FIFO's full size.
+When VLAN filtering is off, we configure the switch to forward, but not
+learn on VLAN table misses. This effectively disables learning while not
+filtering.
 
-The check performed just before data transfer, which uses live reads of
-the TDFV register to determine current vacancy, correctly handles the
-initial Depth - 4 hardware state and subsequent FIFO fullness.
+Fix this by switching to forward and learn. Setting the learning disable
+register will still control whether learning actually happens.
 
-Fixes: 4a965c5f89de ("staging: add driver for Xilinx AXI-Stream FIFO v4.1 IP core")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gabriel Shahrouzi <gshahrouzi@gmail.com>
-Link: https://lore.kernel.org/r/20250419012937.674924-1-gshahrouzi@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: dad8d7c6452b ("net: dsa: b53: Properly account for VLAN filtering")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20250429201710.330937-11-jonas.gorski@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/axis-fifo/axis-fifo.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/net/dsa/b53/b53_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/staging/axis-fifo/axis-fifo.c
-+++ b/drivers/staging/axis-fifo/axis-fifo.c
-@@ -777,9 +777,6 @@ static int axis_fifo_parse_dt(struct axi
- 		goto end;
- 	}
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index 9d410c21416f9..1a23fcc0445cb 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -383,7 +383,7 @@ static void b53_enable_vlan(struct b53_device *dev, int port, bool enable,
+ 			vc4 |= VC4_ING_VID_VIO_DROP << VC4_ING_VID_CHECK_S;
+ 			vc5 |= VC5_DROP_VTABLE_MISS;
+ 		} else {
+-			vc4 |= VC4_ING_VID_VIO_FWD << VC4_ING_VID_CHECK_S;
++			vc4 |= VC4_NO_ING_VID_CHK << VC4_ING_VID_CHECK_S;
+ 			vc5 &= ~VC5_DROP_VTABLE_MISS;
+ 		}
  
--	/* IP sets TDFV to fifo depth - 4 so we will do the same */
--	fifo->tx_fifo_depth -= 4;
--
- 	ret = get_dts_property(fifo, "xlnx,use-rx-data", &fifo->has_rx_fifo);
- 	if (ret) {
- 		dev_err(fifo->dt_device, "missing xlnx,use-rx-data property\n");
+-- 
+2.39.5
+
 
 
