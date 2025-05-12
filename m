@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47671519B8;
-	Mon, 12 May 2025 18:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68761519B8;
+	Mon, 12 May 2025 18:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072810; cv=none; b=Llrdd826la8b2oX9cWw6dJzfMdz4mGN5IGVZFuogJL48+NVDLpwo+aTDCfT+nPeisXo34O/BXLSZr3VxmydPoA/4cbcvTVh2jwB6kLx1qo6oob+9JbpwpxxY5sFHg6quzl9YPDN8XNvuKJKx3cek3hqWn76fNWVE2T1u+52+hhk=
+	t=1747072812; cv=none; b=G8bTJlX0ubH0B2SAF5mMSLhyGrZVU/K4vpJCQopmNGIRcCz0voxjoyI20IGmH5JxyU3E6msWHK6cY2eyhc7O8GEMWAjVlLwn9m0yr3dAeY0ip4p//UQGmYoONBMgDY38bXRvhYA21BwTE9Wz1TJx3YnY901GlhaALe0L4ICbqaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072810; c=relaxed/simple;
-	bh=k/Sr4m8zCKjIoYHzJeOA1YnSFOteCVrc4f2EGWwpx00=;
+	s=arc-20240116; t=1747072812; c=relaxed/simple;
+	bh=A7Pu36E0p8KH35miq2LLKphPOBkD2N6Tt6EZymANUak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jhLs49r9wmdfECQh8IPw/bJAzifFsNaggqKbVV8BuTDjvDAKqNND4KxpINfMiAHMhdUy8FuSXezm00POb9Nqght7DDSiAs4ExoGyLFoeHtKDstCRGJwOErEr66e7NCeddvklUlmVf7hQXNqH4EqABWotY9ZLkhgblh6aYTUjg70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUc9Yc43; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qODeEqGZLAoywALf/wK1WnFG/Wm3O2+EcNCvdLzNMf8ki3CFmy5cX3nTi5SsEkO2BA+BOIOLDiyasTWKPs07YxWOnjcXfZBhNwy8zZP3nJCOWMy2gSqSwHz+rbrglFN/RquGdnbZHPEXejHlLowDx0COIg2c8r+x7oaH5NQeZMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jYv8EbUj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUc9Yc43"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5538AC4CEE9;
-	Mon, 12 May 2025 18:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jYv8EbUj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E51FC4CEE7;
+	Mon, 12 May 2025 18:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072809;
-	bh=k/Sr4m8zCKjIoYHzJeOA1YnSFOteCVrc4f2EGWwpx00=;
+	s=korg; t=1747072812;
+	bh=A7Pu36E0p8KH35miq2LLKphPOBkD2N6Tt6EZymANUak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FUc9Yc43G/p9kuFvopziKRV+uBaHP9b7DgWxnxKCRYgRQNZJAUdQCIDuAVMbxAUq8
-	 45afXbHPBqQsjZ/ZcJNj9yszHHw3ssNFxOzQzku8wQ4vkpEvMzstnz0QJHINBg9bQZ
-	 g0eALIP/S0j5jsJ3k/EPfNXzcqKyxTgRqdPteiS8=
+	b=jYv8EbUjbGU970ubB+J6JDAx/SREpIQ45FpSgIFHtEFKVqQFrcw2t7DcoUUn4SmkB
+	 n4R8uDFjm9RODrnwdl9Pta/xM0YXSgvLJd94XKmH6SJijgJxclA636bm/hbZvbYY/i
+	 GzgyiMYp2W0HDEQ1l9THjKAQrv28/jMuNRbQgbwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 034/184] bpf: Scrub packet on bpf_redirect_peer
-Date: Mon, 12 May 2025 19:43:55 +0200
-Message-ID: <20250512172043.110812353@linuxfoundation.org>
+Subject: [PATCH 6.12 035/184] net: dsa: b53: allow leaky reserved multicast
+Date: Mon, 12 May 2025 19:43:56 +0200
+Message-ID: <20250512172043.154741005@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -53,83 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit c4327229948879814229b46aa26a750718888503 ]
+[ Upstream commit 5f93185a757ff38b36f849c659aeef368db15a68 ]
 
-When bpf_redirect_peer is used to redirect packets to a device in
-another network namespace, the skb isn't scrubbed. That can lead skb
-information from one namespace to be "misused" in another namespace.
+Allow reserved multicast to ignore VLAN membership so STP and other
+management protocols work without a PVID VLAN configured when using a
+vlan aware bridge.
 
-As one example, this is causing Cilium to drop traffic when using
-bpf_redirect_peer to redirect packets that just went through IPsec
-decryption to a container namespace. The following pwru trace shows (1)
-the packet path from the host's XFRM layer to the container's XFRM
-layer where it's dropped and (2) the number of active skb extensions at
-each function.
-
-    NETNS       MARK  IFACE  TUPLE                                FUNC
-    4026533547  d00   eth0   10.244.3.124:35473->10.244.2.158:53  xfrm_rcv_cb
-                             .active_extensions = (__u8)2,
-    4026533547  d00   eth0   10.244.3.124:35473->10.244.2.158:53  xfrm4_rcv_cb
-                             .active_extensions = (__u8)2,
-    4026533547  d00   eth0   10.244.3.124:35473->10.244.2.158:53  gro_cells_receive
-                             .active_extensions = (__u8)2,
-    [...]
-    4026533547  0     eth0   10.244.3.124:35473->10.244.2.158:53  skb_do_redirect
-                             .active_extensions = (__u8)2,
-    4026534999  0     eth0   10.244.3.124:35473->10.244.2.158:53  ip_rcv
-                             .active_extensions = (__u8)2,
-    4026534999  0     eth0   10.244.3.124:35473->10.244.2.158:53  ip_rcv_core
-                             .active_extensions = (__u8)2,
-    [...]
-    4026534999  0     eth0   10.244.3.124:35473->10.244.2.158:53  udp_queue_rcv_one_skb
-                             .active_extensions = (__u8)2,
-    4026534999  0     eth0   10.244.3.124:35473->10.244.2.158:53  __xfrm_policy_check
-                             .active_extensions = (__u8)2,
-    4026534999  0     eth0   10.244.3.124:35473->10.244.2.158:53  __xfrm_decode_session
-                             .active_extensions = (__u8)2,
-    4026534999  0     eth0   10.244.3.124:35473->10.244.2.158:53  security_xfrm_decode_session
-                             .active_extensions = (__u8)2,
-    4026534999  0     eth0   10.244.3.124:35473->10.244.2.158:53  kfree_skb_reason(SKB_DROP_REASON_XFRM_POLICY)
-                             .active_extensions = (__u8)2,
-
-In this case, there are no XFRM policies in the container's network
-namespace so the drop is unexpected. When we decrypt the IPsec packet,
-the XFRM state used for decryption is set in the skb extensions. This
-information is preserved across the netns switch. When we reach the
-XFRM policy check in the container's netns, __xfrm_policy_check drops
-the packet with LINUX_MIB_XFRMINNOPOLS because a (container-side) XFRM
-policy can't be found that matches the (host-side) XFRM state used for
-decryption.
-
-This patch fixes this by scrubbing the packet when using
-bpf_redirect_peer, as is done on typical netns switches via veth
-devices except skb->mark and skb->tstamp are not zeroed.
-
-Fixes: 9aa1206e8f482 ("bpf: Add redirect_peer helper")
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/1728ead5e0fe45e7a6542c36bd4e3ca07a73b7d6.1746460653.git.paul.chaignon@gmail.com
+Fixes: 967dd82ffc52 ("net: dsa: b53: Add support for Broadcom RoboSwitch")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20250429201710.330937-2-jonas.gorski@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/dsa/b53/b53_common.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 790345c2546b7..99b23fd2f509c 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2526,6 +2526,7 @@ int skb_do_redirect(struct sk_buff *skb)
- 			goto out_drop;
- 		skb->dev = dev;
- 		dev_sw_netstats_rx_add(dev, skb->len);
-+		skb_scrub_packet(skb, false);
- 		return -EAGAIN;
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index d4600ab0b70b3..f327fdeb81850 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -373,9 +373,11 @@ static void b53_enable_vlan(struct b53_device *dev, int port, bool enable,
+ 		b53_read8(dev, B53_VLAN_PAGE, B53_VLAN_CTRL5, &vc5);
  	}
- 	return flags & BPF_F_NEIGH ?
+ 
++	vc1 &= ~VC1_RX_MCST_FWD_EN;
++
+ 	if (enable) {
+ 		vc0 |= VC0_VLAN_EN | VC0_VID_CHK_EN | VC0_VID_HASH_VID;
+-		vc1 |= VC1_RX_MCST_UNTAG_EN | VC1_RX_MCST_FWD_EN;
++		vc1 |= VC1_RX_MCST_UNTAG_EN;
+ 		vc4 &= ~VC4_ING_VID_CHECK_MASK;
+ 		if (enable_filtering) {
+ 			vc4 |= VC4_ING_VID_VIO_DROP << VC4_ING_VID_CHECK_S;
+@@ -393,7 +395,7 @@ static void b53_enable_vlan(struct b53_device *dev, int port, bool enable,
+ 
+ 	} else {
+ 		vc0 &= ~(VC0_VLAN_EN | VC0_VID_CHK_EN | VC0_VID_HASH_VID);
+-		vc1 &= ~(VC1_RX_MCST_UNTAG_EN | VC1_RX_MCST_FWD_EN);
++		vc1 &= ~VC1_RX_MCST_UNTAG_EN;
+ 		vc4 &= ~VC4_ING_VID_CHECK_MASK;
+ 		vc5 &= ~VC5_DROP_VTABLE_MISS;
+ 
 -- 
 2.39.5
 
