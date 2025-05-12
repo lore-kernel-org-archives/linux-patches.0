@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DAF1DC1A7;
-	Mon, 12 May 2025 17:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B861DC1A7;
+	Mon, 12 May 2025 17:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071133; cv=none; b=I37QvC/DPz5gRvP5yyXu1lbk4ZvfuXedGnHWzid2rOTU2LUpZTR1fMgU23B8K5Lo6L/3S61zOlBL9aILwVA67J0pj+scOu3a3lxLrXfFz4q9mr+QH9CQLs86HLbID5xoH6Nj3EzLK8M8xVtbqGMLByte/1QgVy23SkjmHCsj4dM=
+	t=1747071136; cv=none; b=lOgAMrYeNwbQRqUSB+LxuGpxlwfVwGFWzi7Ublerr9MuU77xNTn0LCxyYF8pkJeBNyXRjDMwJwk3dcHHMRCWzsZmX4sp+MxXFLfOfQM/sd5HxvUjfVj8wP3EREyUEsvWV15YgRI+ZUx5eqWHGV3wcDeZGwpZuNPqi7sVGTz6wus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071133; c=relaxed/simple;
-	bh=1HExZfiJ53Vv5AwbOfioAMHr7hUtOP6Mr66dsHEltbw=;
+	s=arc-20240116; t=1747071136; c=relaxed/simple;
+	bh=rDJZr0wIIXOBDAnecFRQ7Ka75sSQk2au9QfOywJTNTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q843r4LyvcsPvEscmsLqJVHV05ncTECvBrZqjULZjre3KwS3PgljUS+IaThpDQ6fVLyefysVDLFwcmkO5GyEfZSaZXJSEGSyJJHDbEmskiMmFAsR9euIFRb5vpCvKNZuCgUYeLAm2cYGYDX3qJZrZbtE9JesmeSZTIbUACEQfRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mykR8MqV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kkJwfENh7tfn2fzOyXC68tiQtJQRWLVlozTIXtwoR9YBvpLqUUCiofrjVhyATmDu50+cUSKObnwJgS6/QqpKbZ4OfiyjQC5zS4P4cL/ZQTbhStWwiN5DHoaszXq/VvZ7db8ZwtqDFjCkuVII2Lg+gimFTGVRELd9z0Ld5loZv/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2gYocqI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mykR8MqV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C1CC4CEE7;
-	Mon, 12 May 2025 17:32:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2gYocqI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB974C4CEE7;
+	Mon, 12 May 2025 17:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071133;
-	bh=1HExZfiJ53Vv5AwbOfioAMHr7hUtOP6Mr66dsHEltbw=;
+	s=korg; t=1747071136;
+	bh=rDJZr0wIIXOBDAnecFRQ7Ka75sSQk2au9QfOywJTNTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mykR8MqV2vEnFv/5WvpmF935QNq0ZrGIsSgTnG/iK1LQOzPVBC+yZm50NSavzuvQ5
-	 rA9aimRYxQCK0NIFyKVSEzUxR4eF3lU3birL3FWPNTPVsUzRxo5GE487gXUDVUQ8zf
-	 Y/Z3F90V0mGUbdoxFPlfGh39+VbRCgMCG3TOD98Q=
+	b=E2gYocqIn1xWD76NrR84IHEJt4U0kHM9DNB52xEsOVR3CiCNgZkjeS72xYNKIdNlj
+	 lw7zYaIRfV7oCrFQ1IpVib8U+smoWXxMxDPKFPX9sbJesk8of9DR7rhRrInQvcXrIw
+	 MEZ0++kUiVGg0+xgYQZr9AXEI6yhO/BWeDAgDz/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fiona Klute <fiona.klute@gmx.de>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 51/54] Revert "net: phy: microchip: force IRQ polling mode for lan88xx"
-Date: Mon, 12 May 2025 19:30:03 +0200
-Message-ID: <20250512172017.696144288@linuxfoundation.org>
+	Daniel Sneddon <daniel.sneddon@linux.intel.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexandre Chartre <alexandre.chartre@oracle.com>
+Subject: [PATCH 5.15 52/54] x86/bpf: Call branch history clearing sequence on exit
+Date: Mon, 12 May 2025 19:30:04 +0200
+Message-ID: <20250512172017.737057329@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172015.643809034@linuxfoundation.org>
 References: <20250512172015.643809034@linuxfoundation.org>
@@ -53,86 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Daniel Sneddon <daniel.sneddon@linux.intel.com>
 
-This reverts commit 853e14cf36f6b16a372444a1eff54a3d7c6c1268 which is
-commit 30a41ed32d3088cd0d682a13d7f30b23baed7e93 upstream.
+commit d4e89d212d401672e9cdfe825d947ee3a9fbe3f5 upstream.
 
-It is reported to cause NFS boot problems on a Raspberry Pi 3b so revert
-it from this branch for now.
+Classic BPF programs have been identified as potential vectors for
+intra-mode Branch Target Injection (BTI) attacks. Classic BPF programs can
+be run by unprivileged users. They allow unprivileged code to execute
+inside the kernel. Attackers can use unprivileged cBPF to craft branch
+history in kernel mode that can influence the target of indirect branches.
 
-Cc: Fiona Klute <fiona.klute@gmx.de>
-Cc: Andrew Lunn <andrew@lunn.ch>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Sasha Levin <sashal@kernel.org>
-Link: https://lore.kernel.org/r/aB6uurX99AZWM9I1@finisterre.sirena.org.uk
-Reported-by: Mark Brown <broonie@kernel.org>
+Introduce a branch history buffer (BHB) clearing sequence during the JIT
+compilation of classic BPF programs. The clearing sequence is the same as
+is used in previous mitigations to protect syscalls. Since eBPF programs
+already have their own mitigations in place, only insert the call on
+classic programs that aren't run by privileged users.
+
+Signed-off-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Alexandre Chartre <alexandre.chartre@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/microchip.c |   46 +++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 43 insertions(+), 3 deletions(-)
+ arch/x86/net/bpf_jit_comp.c |   32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
---- a/drivers/net/phy/microchip.c
-+++ b/drivers/net/phy/microchip.c
-@@ -31,6 +31,47 @@ static int lan88xx_write_page(struct phy
- 	return __phy_write(phydev, LAN88XX_EXT_PAGE_ACCESS, page);
- }
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -932,6 +932,29 @@ static void emit_nops(u8 **pprog, int le
  
-+static int lan88xx_phy_config_intr(struct phy_device *phydev)
+ #define INSN_SZ_DIFF (((addrs[i] - addrs[i - 1]) - (prog - temp)))
+ 
++static int emit_spectre_bhb_barrier(u8 **pprog, u8 *ip,
++				    struct bpf_prog *bpf_prog)
 +{
-+	int rc;
++	u8 *prog = *pprog;
++	u8 *func;
 +
-+	if (phydev->interrupts == PHY_INTERRUPT_ENABLED) {
-+		/* unmask all source and clear them before enable */
-+		rc = phy_write(phydev, LAN88XX_INT_MASK, 0x7FFF);
-+		rc = phy_read(phydev, LAN88XX_INT_STS);
-+		rc = phy_write(phydev, LAN88XX_INT_MASK,
-+			       LAN88XX_INT_MASK_MDINTPIN_EN_ |
-+			       LAN88XX_INT_MASK_LINK_CHANGE_);
-+	} else {
-+		rc = phy_write(phydev, LAN88XX_INT_MASK, 0);
-+		if (rc)
-+			return rc;
++	if (cpu_feature_enabled(X86_FEATURE_CLEAR_BHB_LOOP)) {
++		/* The clearing sequence clobbers eax and ecx. */
++		EMIT1(0x50); /* push rax */
++		EMIT1(0x51); /* push rcx */
++		ip += 2;
 +
-+		/* Ack interrupts after they have been disabled */
-+		rc = phy_read(phydev, LAN88XX_INT_STS);
++		func = (u8 *)clear_bhb_loop;
++
++		if (emit_call(&prog, func, ip))
++			return -EINVAL;
++		EMIT1(0x59); /* pop rcx */
++		EMIT1(0x58); /* pop rax */
 +	}
-+
-+	return rc < 0 ? rc : 0;
++	*pprog = prog;
++	return 0;
 +}
 +
-+static irqreturn_t lan88xx_handle_interrupt(struct phy_device *phydev)
-+{
-+	int irq_status;
-+
-+	irq_status = phy_read(phydev, LAN88XX_INT_STS);
-+	if (irq_status < 0) {
-+		phy_error(phydev);
-+		return IRQ_NONE;
-+	}
-+
-+	if (!(irq_status & LAN88XX_INT_STS_LINK_CHANGE_))
-+		return IRQ_NONE;
-+
-+	phy_trigger_machine(phydev);
-+
-+	return IRQ_HANDLED;
-+}
-+
- static int lan88xx_suspend(struct phy_device *phydev)
+ static int do_jit(struct bpf_prog *bpf_prog, int *addrs, u8 *image,
+ 		  int oldproglen, struct jit_context *ctx, bool jmp_padding)
  {
- 	struct lan88xx_priv *priv = phydev->priv;
-@@ -347,9 +388,8 @@ static struct phy_driver microchip_phy_d
- 	.config_aneg	= lan88xx_config_aneg,
- 	.link_change_notify = lan88xx_link_change_notify,
- 
--	/* Interrupt handling is broken, do not define related
--	 * functions to force polling.
--	 */
-+	.config_intr	= lan88xx_phy_config_intr,
-+	.handle_interrupt = lan88xx_handle_interrupt,
- 
- 	.suspend	= lan88xx_suspend,
- 	.resume		= genphy_resume,
+@@ -1737,6 +1760,15 @@ emit_jmp:
+ 			seen_exit = true;
+ 			/* Update cleanup_addr */
+ 			ctx->cleanup_addr = proglen;
++
++			if (bpf_prog_was_classic(bpf_prog) &&
++			    !capable(CAP_SYS_ADMIN)) {
++				u8 *ip = image + addrs[i - 1];
++
++				if (emit_spectre_bhb_barrier(&prog, ip, bpf_prog))
++					return -EINVAL;
++			}
++
+ 			pop_callee_regs(&prog, callee_regs_used);
+ 			EMIT1(0xC9);         /* leave */
+ 			emit_return(&prog, image + addrs[i - 1] + (prog - temp));
 
 
