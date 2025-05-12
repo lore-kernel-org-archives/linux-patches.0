@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1091DDC07;
-	Mon, 12 May 2025 17:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF1B254863;
+	Mon, 12 May 2025 17:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072273; cv=none; b=ueryJZHDgqxWCi2AH2cS6IsoONtoFRRCb151ZpgTrTO4czI7N/fVyTrzFYF+btMOZ7SlYrLqZTZxqboA3nTkxN7f9HNhsREjZWSlvcK3c5jj1ow21tNK/Tfr76b+tFVwj8ZcVDu9C9BDi47KBu89DqA1QZk9Yew/fzeaDbPzWgw=
+	t=1747072276; cv=none; b=N7y3k3ercCqFkz5GlXkf0dYps9FQRwY0N6hP4gsC3HuqWg5b7DG08UpYNcc28u2JhC3FNbFWwUYtjYRdKFv+NLS/1sL5H8V1nKLOR4Z28OJ86WgVZf6cqRsTGIPx8ninuSxaM09/eQtj1mhqvksi64ua3cFYGlM2Sm4cDXTLdPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072273; c=relaxed/simple;
-	bh=aCQmzDqVhgZygBLFX1lgKFuFTrQgT8iKwvqR88C7Eew=;
+	s=arc-20240116; t=1747072276; c=relaxed/simple;
+	bh=NbstpcZVAeZapqjdeJVQRHVMX8BmtzKE0BOBZTkknxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A02SMFfDxLbk4pixCL3nr02JoSI6ZE4D1ShkVFNpv+bw4l+4aGSAHbunsi8wb6r0sT1EqRb31Sp3g0MJIK8Z3GpjsoXIUjRuwxSZmGEqVjgF0mQ+RglBdTzOCxLVGIRD6eqkgP5tMqqDob7q+q5/I6Hy4VGdnrtl9Pt+UqT6yss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5ReGyNA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VGBVXFvBpJXDbILe68ZO5q+CQURiPmb6UksU0DAvsj5FgE/cVnSVIvv0rGL1cnqBehViuig0e4EU7Bhc1k2UkmGHKxiYqA6RfvH4UrE3/Uu9OHZVCRSXtarJcTgGQdmwW2NGwr7Y5EQtQNq1K13LzKBpq2Sqsw7edAypDRddiHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UjRCuWDi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5ReGyNA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56191C4CEE7;
-	Mon, 12 May 2025 17:51:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UjRCuWDi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E45E5C4CEE7;
+	Mon, 12 May 2025 17:51:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072272;
-	bh=aCQmzDqVhgZygBLFX1lgKFuFTrQgT8iKwvqR88C7Eew=;
+	s=korg; t=1747072276;
+	bh=NbstpcZVAeZapqjdeJVQRHVMX8BmtzKE0BOBZTkknxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f5ReGyNA4f/34cxK8NnLokkrlY1K4z5fBmj4pPCI3AFKnGfkanMwJoH4J23Y0Wre9
-	 xeEgM2K52AMe0nxEHOj26mjECcW+EA/SG8sKzJTYWTEGSD8kiKY3f2AGp7tC35LbT1
-	 6cPF+hyhEH1YF8LyvMSenD8H0/1H78SmKzagLd9w=
+	b=UjRCuWDiWpjwJ5qeWux4ytIDwyJ0y/79oZF/0T4MldRx6S2NvxjKk9BFFGnBFU7yq
+	 34rfBXbHEFcANUWeRVuES4eat1US66uioE/gureruxuAHqhW66AlcQd0VxrtYygrKn
+	 49wMXTKao0gRi6iEgHN1B+GB7fn4Mvw4c3Rr+HBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Sneddon <daniel.sneddon@linux.intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
 	Alexandre Chartre <alexandre.chartre@oracle.com>
-Subject: [PATCH 6.14 185/197] x86/bpf: Add IBHF call at end of classic BPF
-Date: Mon, 12 May 2025 19:40:35 +0200
-Message-ID: <20250512172051.918477911@linuxfoundation.org>
+Subject: [PATCH 6.14 186/197] x86/bhi: Do not set BHI_DIS_S in 32-bit mode
+Date: Mon, 12 May 2025 19:40:36 +0200
+Message-ID: <20250512172051.958215563@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -53,99 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Sneddon <daniel.sneddon@linux.intel.com>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit 9f725eec8fc0b39bdc07dcc8897283c367c1a163 upstream.
+commit 073fdbe02c69c43fb7c0d547ec265c7747d4a646 upstream.
 
-Classic BPF programs can be run by unprivileged users, allowing
-unprivileged code to execute inside the kernel. Attackers can use this to
-craft branch history in kernel mode that can influence the target of
-indirect branches.
+With the possibility of intra-mode BHI via cBPF, complete mitigation for
+BHI is to use IBHF (history fence) instruction with BHI_DIS_S set. Since
+this new instruction is only available in 64-bit mode, setting BHI_DIS_S in
+32-bit mode is only a partial mitigation.
 
-BHI_DIS_S provides user-kernel isolation of branch history, but cBPF can be
-used to bypass this protection by crafting branch history in kernel mode.
-To stop intra-mode attacks via cBPF programs, Intel created a new
-instruction Indirect Branch History Fence (IBHF). IBHF prevents the
-predicted targets of subsequent indirect branches from being influenced by
-branch history prior to the IBHF. IBHF is only effective while BHI_DIS_S is
-enabled.
+Do not set BHI_DIS_S in 32-bit mode so as to avoid reporting misleading
+mitigated status. With this change IBHF won't be used in 32-bit mode, also
+remove the CONFIG_X86_64 check from emit_spectre_bhb_barrier().
 
-Add the IBHF instruction to cBPF jitted code's exit path. Add the new fence
-when the hardware mitigation is enabled (i.e., X86_FEATURE_CLEAR_BHB_HW is
-set) or after the software sequence (X86_FEATURE_CLEAR_BHB_LOOP) is being
-used in a virtual machine. Note that X86_FEATURE_CLEAR_BHB_HW and
-X86_FEATURE_CLEAR_BHB_LOOP are mutually exclusive, so the JIT compiler will
-only emit the new fence, not the SW sequence, when X86_FEATURE_CLEAR_BHB_HW
-is set.
-
-Hardware that enumerates BHI_NO basically has BHI_DIS_S protections always
-enabled, regardless of the value of BHI_DIS_S. Since BHI_DIS_S doesn't
-protect against intra-mode attacks, enumerate BHI bug on BHI_NO hardware as
-well.
-
-Signed-off-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
+Suggested-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Reviewed-by: Alexandre Chartre <alexandre.chartre@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/common.c |    9 ++++++---
- arch/x86/net/bpf_jit_comp.c  |   19 +++++++++++++++++++
- 2 files changed, 25 insertions(+), 3 deletions(-)
+ arch/x86/kernel/cpu/bugs.c  |    6 +++---
+ arch/x86/net/bpf_jit_comp.c |    5 +++--
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -1436,9 +1436,12 @@ static void __init cpu_set_bug_bits(stru
- 	if (vulnerable_to_rfds(x86_arch_cap_msr))
- 		setup_force_cpu_bug(X86_BUG_RFDS);
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1684,11 +1684,11 @@ static void __init bhi_select_mitigation
+ 			return;
+ 	}
  
--	/* When virtualized, eIBRS could be hidden, assume vulnerable */
--	if (!(x86_arch_cap_msr & ARCH_CAP_BHI_NO) &&
--	    !cpu_matches(cpu_vuln_whitelist, NO_BHI) &&
-+	/*
-+	 * Intel parts with eIBRS are vulnerable to BHI attacks. Parts with
-+	 * BHI_NO still need to use the BHI mitigation to prevent Intra-mode
-+	 * attacks.  When virtualized, eIBRS could be hidden, assume vulnerable.
-+	 */
-+	if (!cpu_matches(cpu_vuln_whitelist, NO_BHI) &&
- 	    (boot_cpu_has(X86_FEATURE_IBRS_ENHANCED) ||
- 	     boot_cpu_has(X86_FEATURE_HYPERVISOR)))
- 		setup_force_cpu_bug(X86_BUG_BHI);
+-	/* Mitigate in hardware if supported */
+-	if (spec_ctrl_bhi_dis())
++	if (!IS_ENABLED(CONFIG_X86_64))
+ 		return;
+ 
+-	if (!IS_ENABLED(CONFIG_X86_64))
++	/* Mitigate in hardware if supported */
++	if (spec_ctrl_bhi_dis())
+ 		return;
+ 
+ 	if (bhi_mitigation == BHI_MITIGATION_VMEXIT_ONLY) {
 --- a/arch/x86/net/bpf_jit_comp.c
 +++ b/arch/x86/net/bpf_jit_comp.c
-@@ -41,6 +41,8 @@ static u8 *emit_code(u8 *ptr, u32 bytes,
- #define EMIT2(b1, b2)		EMIT((b1) + ((b2) << 8), 2)
- #define EMIT3(b1, b2, b3)	EMIT((b1) + ((b2) << 8) + ((b3) << 16), 3)
- #define EMIT4(b1, b2, b3, b4)   EMIT((b1) + ((b2) << 8) + ((b3) << 16) + ((b4) << 24), 4)
-+#define EMIT5(b1, b2, b3, b4, b5) \
-+	do { EMIT1(b1); EMIT4(b2, b3, b4, b5); } while (0)
- 
- #define EMIT1_off32(b1, off) \
- 	do { EMIT1(b1); EMIT(off, 4); } while (0)
-@@ -1470,6 +1472,23 @@ static int emit_spectre_bhb_barrier(u8 *
- 		EMIT1(0x59); /* pop rcx */
- 		EMIT1(0x58); /* pop rax */
+@@ -1475,8 +1475,7 @@ static int emit_spectre_bhb_barrier(u8 *
+ 	/* Insert IBHF instruction */
+ 	if ((cpu_feature_enabled(X86_FEATURE_CLEAR_BHB_LOOP) &&
+ 	     cpu_feature_enabled(X86_FEATURE_HYPERVISOR)) ||
+-	    (cpu_feature_enabled(X86_FEATURE_CLEAR_BHB_HW) &&
+-	     IS_ENABLED(CONFIG_X86_64))) {
++	    cpu_feature_enabled(X86_FEATURE_CLEAR_BHB_HW)) {
+ 		/*
+ 		 * Add an Indirect Branch History Fence (IBHF). IBHF acts as a
+ 		 * fence preventing branch history from before the fence from
+@@ -1486,6 +1485,8 @@ static int emit_spectre_bhb_barrier(u8 *
+ 		 * hardware that doesn't need or support it.  The REP and REX.W
+ 		 * prefixes are required by the microcode, and they also ensure
+ 		 * that the NOP is unlikely to be used in existing code.
++		 *
++		 * IBHF is not a valid instruction in 32-bit mode.
+ 		 */
+ 		EMIT5(0xF3, 0x48, 0x0F, 0x1E, 0xF8); /* ibhf */
  	}
-+	/* Insert IBHF instruction */
-+	if ((cpu_feature_enabled(X86_FEATURE_CLEAR_BHB_LOOP) &&
-+	     cpu_feature_enabled(X86_FEATURE_HYPERVISOR)) ||
-+	    (cpu_feature_enabled(X86_FEATURE_CLEAR_BHB_HW) &&
-+	     IS_ENABLED(CONFIG_X86_64))) {
-+		/*
-+		 * Add an Indirect Branch History Fence (IBHF). IBHF acts as a
-+		 * fence preventing branch history from before the fence from
-+		 * affecting indirect branches after the fence. This is
-+		 * specifically used in cBPF jitted code to prevent Intra-mode
-+		 * BHI attacks. The IBHF instruction is designed to be a NOP on
-+		 * hardware that doesn't need or support it.  The REP and REX.W
-+		 * prefixes are required by the microcode, and they also ensure
-+		 * that the NOP is unlikely to be used in existing code.
-+		 */
-+		EMIT5(0xF3, 0x48, 0x0F, 0x1E, 0xF8); /* ibhf */
-+	}
- 	*pprog = prog;
- 	return 0;
- }
 
 
