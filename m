@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C79295DAB;
-	Mon, 12 May 2025 17:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA391255E47;
+	Mon, 12 May 2025 17:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072444; cv=none; b=VV38eXLd7vV6j6NA5NJMLZ69H56SlKoZAEzn/PGcwJLz5a2Y5b+vj/WvywLussrFtrvn79pazyepFRAUPg02GvS3yn92tURbpj0wUABGpe3Lu6g9fXhtodar6gh1YIGhnmNi2rLLbP0WovRxbnQFERYXiQSXOrUIyoE6B644dqU=
+	t=1747072446; cv=none; b=bH8sUKcpBPDlVNrtkQxTPwtUjHXrmSC55nqh9y2toua60zEd45+cUiFEJ4RIwm+8Qw3xgmOfNYd3w22/VrrH6e6s+1xxi5XLvNpxY775kn/FSGhOj3RlwQ8eFfE7/JbI3Fgcey3OWNi7okfUWbmUPjyouXFjTAq3YaAoTZQBrhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072444; c=relaxed/simple;
-	bh=RS0QVrU7FpuIMpC+RQ0/VUozBcQesVV38Mkn9uCuHuo=;
+	s=arc-20240116; t=1747072446; c=relaxed/simple;
+	bh=BepoGiemf9fkJpMyYQqMikdJfdUXRmAOisupUOmrdHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j2z1SlZit8MsXsaBrTMI54Z/i3Y5ECSSJXWIkVOye9r16vIaoYTQQElAywSOnGLMSzK0VMJjKUhwvaUJuCNK01s2KjcUE+hJMXslHwY3VqJ+QeZguEWy7hVSYYB+FHhSjs8XTo8wX26+2ksFJ3rFEhE2tWQUTjPoiyat2MjvG5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zaZYBXhV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o3B6RrgPqlRSTm1EBt2dRVXDL5OckE/4RHiTiT+JfEiUdfLyIWmg+zfUndAg8vf+TPRbA55xtXcbLyUbw09sWjzMGdbJmJngouq/tKg8Q6fXT55SKwm57XCl271BSvY0gC8Y2z5aPoDLZnC7XeXgMHDTbAaDVyTfkE2kS5tOV4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zsEfNQDB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zaZYBXhV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5868AC4CEE7;
-	Mon, 12 May 2025 17:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zsEfNQDB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50CC3C4CEE7;
+	Mon, 12 May 2025 17:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072443;
-	bh=RS0QVrU7FpuIMpC+RQ0/VUozBcQesVV38Mkn9uCuHuo=;
+	s=korg; t=1747072446;
+	bh=BepoGiemf9fkJpMyYQqMikdJfdUXRmAOisupUOmrdHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zaZYBXhVrft+uwriZgMLERSO2ZpkyURr8PEk41E94Ac0e7Giv0oTXtbBB3BHlpyg6
-	 GF3qkKyO4CHY9fzt2i42NM4euG7d0zYsVbzcDFjQ1bNYOqZTPrlX+4YGSBT3yVx4WP
-	 9qSQlwWTqVduYPcW5pGBYLaZYfLPgWJTzBvUVQwY=
+	b=zsEfNQDBPtyC01Op7YyZOKmaVmOKm51mbRscVMLfG6a0FKf8Novk+KpMRXWHIJgph
+	 UOVqwRMGW1rpBEBx0d7AWEsdFweZ1ROWAdpwJblJ2rG38FCRPeuFwRZrHoJ+TjEQnb
+	 Wm7oiYGqnVMKO4zJgwuovM/3sUuU0FtaTZk9q3/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Wayne Lin <Wayne.Lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.1 42/92] drm/amd/display: Copy AUX read reply data whenever length > 0
-Date: Mon, 12 May 2025 19:45:17 +0200
-Message-ID: <20250512172024.831867200@linuxfoundation.org>
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 43/92] drm/amdgpu/hdp5.2: use memcfg register to post the write for HDP flush
+Date: Mon, 12 May 2025 19:45:18 +0200
+Message-ID: <20250512172024.875246154@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -53,43 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 3924f45d4de7250a603fd7b50379237a6a0e5adf upstream.
+commit dbc988c689333faeeed44d5561f372ff20395304 upstream.
 
-[Why]
-amdgpu_dm_process_dmub_aux_transfer_sync() should return all exact data
-reply from the sink side. Don't do the analysis job in it.
+Reading back the remapped HDP flush register seems to cause
+problems on some platforms. All we need is a read, so read back
+the memcfg register.
 
-[How]
-Remove unnecessary check condition AUX_TRANSACTION_REPLY_AUX_ACK.
-
-Fixes: ead08b95fa50 ("drm/amd/display: Fix race condition in DPIA AUX transfer")
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Ray Wu <ray.wu@amd.com>
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Fixes: f756dbac1ce1 ("drm/amdgpu/hdp5.2: do a posting read when flushing HDP")
+Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
+Link: https://lists.freedesktop.org/archives/amd-gfx/2025-April/123150.html
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4119
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3908
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9b540e3fe6796fec4fb1344f3be8952fc2f084d4)
+(cherry picked from commit 4a89b7698e771914b4d5b571600c76e2fdcbe2a9)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/hdp_v5_2.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -10707,8 +10707,7 @@ int amdgpu_dm_process_dmub_aux_transfer_
- 		/* The reply is stored in the top nibble of the command. */
- 		payload->reply[0] = (adev->dm.dmub_notify->aux_reply.command >> 4) & 0xF;
- 
--	if (!payload->write && p_notify->aux_reply.length &&
--			(payload->reply[0] == AUX_TRANSACTION_REPLY_AUX_ACK))
-+	if (!payload->write && p_notify->aux_reply.length)
- 		memcpy(payload->data, p_notify->aux_reply.data,
- 				p_notify->aux_reply.length);
- 
+--- a/drivers/gpu/drm/amd/amdgpu/hdp_v5_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/hdp_v5_2.c
+@@ -34,7 +34,17 @@ static void hdp_v5_2_flush_hdp(struct am
+ 	if (!ring || !ring->funcs->emit_wreg) {
+ 		WREG32_NO_KIQ((adev->rmmio_remap.reg_offset + KFD_MMIO_REMAP_HDP_MEM_FLUSH_CNTL) >> 2,
+ 			0);
+-		RREG32_NO_KIQ((adev->rmmio_remap.reg_offset + KFD_MMIO_REMAP_HDP_MEM_FLUSH_CNTL) >> 2);
++		if (amdgpu_sriov_vf(adev)) {
++			/* this is fine because SR_IOV doesn't remap the register */
++			RREG32_NO_KIQ((adev->rmmio_remap.reg_offset + KFD_MMIO_REMAP_HDP_MEM_FLUSH_CNTL) >> 2);
++		} else {
++			/* We just need to read back a register to post the write.
++			 * Reading back the remapped register causes problems on
++			 * some platforms so just read back the memory size register.
++			 */
++			if (adev->nbio.funcs->get_memsize)
++				adev->nbio.funcs->get_memsize(adev);
++		}
+ 	} else {
+ 		amdgpu_ring_emit_wreg(ring,
+ 			(adev->rmmio_remap.reg_offset + KFD_MMIO_REMAP_HDP_MEM_FLUSH_CNTL) >> 2,
 
 
