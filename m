@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E70D1E2602;
-	Mon, 12 May 2025 17:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E1525178A;
+	Mon, 12 May 2025 17:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071854; cv=none; b=qNhq7mxf3iobUH2bJ+tALwgTvEfXSRF+XhPwokAK13Lli8QxF+0jvFbs692vSTxtqjJ0PRDNh+GRQ2xQDY23FjQ57EkQxOsDSBCeujchnhhtdfVbLvwQRUYMzK2IUeEu0WSiRe23AxRBlK3Rj/J8NJvGfyeoI/1BMi2fHYYVrKY=
+	t=1747071857; cv=none; b=efb214fq/eOwGIlDHd5mj5aZIQoLWCq9VPtNGj1Vk8ZJQ4KFefHqQULbvN2JhNaE3Vlf1TvfsJGavCE19EZH9HE5XTeTyjlu77LgPFSEbGk8ApaHpjJM+m8/gtJ5AeZVN1sIWIdbYkTiZ0w2OyPfRlNAVj2ZOZ6SZ7Te2B754+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071854; c=relaxed/simple;
-	bh=FBfa+fEPeg3Daj5+DioGfqhWA7KVNfHE9y/N0cTmdtc=;
+	s=arc-20240116; t=1747071857; c=relaxed/simple;
+	bh=XLYv7Gy4IfNRRFQUjRJHwgMs+6rEmOA4u9oBxJ42FZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q+McZUxIECaJs6SV4bFtACTitC/WNhfhp4H/OuijSC2xusscWQm3balJNz8uaWqofZ5xqx1GfeYZWPEaxqjMnL2x99otDfQjd91fUiBcIbCGpTNGlE2zitj4KfO5Ep2VLy43erBD3H7Tlo3aOW4lADGdjC+IfDTNO5w5mltYEQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J9FDVRC5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I/q8o96rguV57SNcTfz6a2nsVNtHtlCBbOIp1j8ss00IG54rpEp3XLWds/HGy8SppFM0bTNUJvUQgNq3FZEJtYyTj8uPLmg1c0VGH5z7Y9Lr7KnIdqgxY+MlLIcZ3/y2hZQC5HltIPVm7QIxHMWk+FmA8ov+AmdgmPxZH2Y43rQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/1Fxk3l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J9FDVRC5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DA1C4CEE7;
-	Mon, 12 May 2025 17:44:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/1Fxk3l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE5C0C4CEE7;
+	Mon, 12 May 2025 17:44:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071854;
-	bh=FBfa+fEPeg3Daj5+DioGfqhWA7KVNfHE9y/N0cTmdtc=;
+	s=korg; t=1747071857;
+	bh=XLYv7Gy4IfNRRFQUjRJHwgMs+6rEmOA4u9oBxJ42FZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J9FDVRC5SVM66q9/FvxWpQIRY6ycPfaGgRW072cP33TExRK58HqWStjhgFWe/Qi3K
-	 Plxh7tNTRgi50rzGIM2Vorms7FCxuokYSB4quaY7FLdl4dc1+ow1OVCEZghXqghNeV
-	 7TmDp9A51ccdi1M9DByU8LoZUkcZ381UShK2sOyw=
+	b=i/1Fxk3lTUZrw3ev2LaphYVxdZ5RQv6gtACn077Y0UHFp/eYdRlUu8r6aIyvSja+H
+	 PtmIFCWcfRaf9kPhBWSME08gbyei7BazZ+UupS+s7Q0cwElAd4cdem82nkTky0/yfb
+	 tU7AYwBkLah4wAw2DAXtqAmD5Kvv/oMxuPUH+VEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 052/197] net: export a helper for adding up queue stats
-Date: Mon, 12 May 2025 19:38:22 +0200
-Message-ID: <20250512172046.509623584@linuxfoundation.org>
+Subject: [PATCH 6.14 053/197] virtio-net: fix total qstat values
+Date: Mon, 12 May 2025 19:38:23 +0200
+Message-ID: <20250512172046.550659457@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -53,142 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 23fa6a23d97182d36ca3c71e43c804fa91e46a03 ]
+[ Upstream commit 001160ec8c59115efc39e197d40829bdafd4d7f5 ]
 
-Older drivers and drivers with lower queue counts often have a static
-array of queues, rather than allocating structs for each queue on demand.
-Add a helper for adding up qstats from a queue range. Expectation is
-that driver will pass a queue range [netdev->real_num_*x_queues, MAX).
-It was tempting to always use num_*x_queues as the end, but virtio
-seems to clamp its queue count after allocating the netdev. And this
-way we can trivaly reuse the helper for [0, real_..).
+NIPA tests report that the interface statistics reported
+via qstat are lower than those reported via ip link.
+Looks like this is because some tests flip the queue
+count up and down, and we end up with some of the traffic
+accounted on disabled queues.
 
+Add up counters from disabled queues.
+
+Fixes: d888f04c09bb ("virtio-net: support queue stat")
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://patch.msgid.link/20250507003221.823267-2-kuba@kernel.org
+Link: https://patch.msgid.link/20250507003221.823267-3-kuba@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 001160ec8c59 ("virtio-net: fix total qstat values")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netdev_queues.h |  6 ++++
- net/core/netdev-genl.c      | 69 +++++++++++++++++++++++++++----------
- 2 files changed, 56 insertions(+), 19 deletions(-)
+ drivers/net/virtio_net.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/net/netdev_queues.h b/include/net/netdev_queues.h
-index b02bb9f109d5e..88598e14ecfa4 100644
---- a/include/net/netdev_queues.h
-+++ b/include/net/netdev_queues.h
-@@ -102,6 +102,12 @@ struct netdev_stat_ops {
- 			       struct netdev_queue_stats_tx *tx);
- };
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 54f883c962373..8879af5292b49 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -5663,6 +5663,10 @@ static void virtnet_get_base_stats(struct net_device *dev,
  
-+void netdev_stat_queue_sum(struct net_device *netdev,
-+			   int rx_start, int rx_end,
-+			   struct netdev_queue_stats_rx *rx_sum,
-+			   int tx_start, int tx_end,
-+			   struct netdev_queue_stats_tx *tx_sum);
+ 	if (vi->device_stats_cap & VIRTIO_NET_STATS_TYPE_TX_SPEED)
+ 		tx->hw_drop_ratelimits = 0;
 +
- /**
-  * struct netdev_queue_mgmt_ops - netdev ops for queue management
-  *
-diff --git a/net/core/netdev-genl.c b/net/core/netdev-genl.c
-index 7832abc5ca6e2..9be2bdd2dca89 100644
---- a/net/core/netdev-genl.c
-+++ b/net/core/netdev-genl.c
-@@ -690,25 +690,66 @@ netdev_nl_stats_by_queue(struct net_device *netdev, struct sk_buff *rsp,
- 	return 0;
++	netdev_stat_queue_sum(dev,
++			      dev->real_num_rx_queues, vi->max_queue_pairs, rx,
++			      dev->real_num_tx_queues, vi->max_queue_pairs, tx);
  }
  
-+/**
-+ * netdev_stat_queue_sum() - add up queue stats from range of queues
-+ * @netdev:	net_device
-+ * @rx_start:	index of the first Rx queue to query
-+ * @rx_end:	index after the last Rx queue (first *not* to query)
-+ * @rx_sum:	output Rx stats, should be already initialized
-+ * @tx_start:	index of the first Tx queue to query
-+ * @tx_end:	index after the last Tx queue (first *not* to query)
-+ * @tx_sum:	output Tx stats, should be already initialized
-+ *
-+ * Add stats from [start, end) range of queue IDs to *x_sum structs.
-+ * The sum structs must be already initialized. Usually this
-+ * helper is invoked from the .get_base_stats callbacks of drivers
-+ * to account for stats of disabled queues. In that case the ranges
-+ * are usually [netdev->real_num_*x_queues, netdev->num_*x_queues).
-+ */
-+void netdev_stat_queue_sum(struct net_device *netdev,
-+			   int rx_start, int rx_end,
-+			   struct netdev_queue_stats_rx *rx_sum,
-+			   int tx_start, int tx_end,
-+			   struct netdev_queue_stats_tx *tx_sum)
-+{
-+	const struct netdev_stat_ops *ops;
-+	struct netdev_queue_stats_rx rx;
-+	struct netdev_queue_stats_tx tx;
-+	int i;
-+
-+	ops = netdev->stat_ops;
-+
-+	for (i = rx_start; i < rx_end; i++) {
-+		memset(&rx, 0xff, sizeof(rx));
-+		if (ops->get_queue_stats_rx)
-+			ops->get_queue_stats_rx(netdev, i, &rx);
-+		netdev_nl_stats_add(rx_sum, &rx, sizeof(rx));
-+	}
-+	for (i = tx_start; i < tx_end; i++) {
-+		memset(&tx, 0xff, sizeof(tx));
-+		if (ops->get_queue_stats_tx)
-+			ops->get_queue_stats_tx(netdev, i, &tx);
-+		netdev_nl_stats_add(tx_sum, &tx, sizeof(tx));
-+	}
-+}
-+EXPORT_SYMBOL(netdev_stat_queue_sum);
-+
- static int
- netdev_nl_stats_by_netdev(struct net_device *netdev, struct sk_buff *rsp,
- 			  const struct genl_info *info)
- {
--	struct netdev_queue_stats_rx rx_sum, rx;
--	struct netdev_queue_stats_tx tx_sum, tx;
--	const struct netdev_stat_ops *ops;
-+	struct netdev_queue_stats_rx rx_sum;
-+	struct netdev_queue_stats_tx tx_sum;
- 	void *hdr;
--	int i;
- 
--	ops = netdev->stat_ops;
- 	/* Netdev can't guarantee any complete counters */
--	if (!ops->get_base_stats)
-+	if (!netdev->stat_ops->get_base_stats)
- 		return 0;
- 
- 	memset(&rx_sum, 0xff, sizeof(rx_sum));
- 	memset(&tx_sum, 0xff, sizeof(tx_sum));
- 
--	ops->get_base_stats(netdev, &rx_sum, &tx_sum);
-+	netdev->stat_ops->get_base_stats(netdev, &rx_sum, &tx_sum);
- 
- 	/* The op was there, but nothing reported, don't bother */
- 	if (!memchr_inv(&rx_sum, 0xff, sizeof(rx_sum)) &&
-@@ -721,18 +762,8 @@ netdev_nl_stats_by_netdev(struct net_device *netdev, struct sk_buff *rsp,
- 	if (nla_put_u32(rsp, NETDEV_A_QSTATS_IFINDEX, netdev->ifindex))
- 		goto nla_put_failure;
- 
--	for (i = 0; i < netdev->real_num_rx_queues; i++) {
--		memset(&rx, 0xff, sizeof(rx));
--		if (ops->get_queue_stats_rx)
--			ops->get_queue_stats_rx(netdev, i, &rx);
--		netdev_nl_stats_add(&rx_sum, &rx, sizeof(rx));
--	}
--	for (i = 0; i < netdev->real_num_tx_queues; i++) {
--		memset(&tx, 0xff, sizeof(tx));
--		if (ops->get_queue_stats_tx)
--			ops->get_queue_stats_tx(netdev, i, &tx);
--		netdev_nl_stats_add(&tx_sum, &tx, sizeof(tx));
--	}
-+	netdev_stat_queue_sum(netdev, 0, netdev->real_num_rx_queues, &rx_sum,
-+			      0, netdev->real_num_tx_queues, &tx_sum);
- 
- 	if (netdev_nl_stats_write_rx(rsp, &rx_sum) ||
- 	    netdev_nl_stats_write_tx(rsp, &tx_sum))
+ static const struct netdev_stat_ops virtnet_stat_ops = {
 -- 
 2.39.5
 
