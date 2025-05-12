@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B384A1E1A05;
-	Mon, 12 May 2025 17:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60BA248F49;
+	Mon, 12 May 2025 17:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072758; cv=none; b=CnSrAotNbf9wwRAzBvQr9JOOc2eP39J1fK8oTi+tZKWwwc11uopf7R5lyk8NieyTGJfyoSwNUiG8rmlkv3EIotl4SHuq6yZKJAv1pSeeDkO0fuhxLjjzr8OeAHhprBt6Id/KS2cil09GRvhDdep4yZHBRW9qhz3FWVUHetKaR+E=
+	t=1747072762; cv=none; b=NBuem3HD9SYKtc+ze1mLkoX+uP/F0Qy4R7tasA1aNajz8ECtwUWG80QW3Z/sl6GarQGpbFLSTsJk1e3ccljL88L8rmWHZ7OzhHGfhX6rfUbs27xRCbr/J17kzj5hYFaP+IdkV7frY+qET56NBXs5y+BFLrilTDnn2BGhN3W90uA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072758; c=relaxed/simple;
-	bh=xH1/IwRK0v40zNJ4OA6G7f/yG8KvxLOYuYcaNeIRPu4=;
+	s=arc-20240116; t=1747072762; c=relaxed/simple;
+	bh=VrtHjBvs/Qbwe5Axyo+78Y03H2/y3ZuVKc4ptGOnzL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I8rn+BtHJ7EyKITCH2w4PvbwGadrpgwAVGBiQS5uw1RW47lnyALKQPz7XOPPaO7K4jKJVqxOsyw6CWYjCD6okuIPk80uC9jje9be7ktuq9juxF8RtJSriJuSZaEONdx6+Gs0YMGneKCioUD38TotQG69rmQrHVLW81mG/D5voes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hak2bPLr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xhzh8K5Wl0UogC2A84DyXaiesnoGWA0FG8Yt1Us8y2OkPI+wJmPX7GG/J5Yjd9fLiCAVCagnXYsu90LAo7WfbYUxNm6EVi4EWH4DxJXGHJiKPJGtTr+Qp2l8C3X6m1LDLko0ohFDBl9qCgNf0Mpqk1f6iJVjSbDRyI42Je/o13Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4hKn+g7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hak2bPLr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A553C4CEE7;
-	Mon, 12 May 2025 17:59:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4hKn+g7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D885C4CEEF;
+	Mon, 12 May 2025 17:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072758;
-	bh=xH1/IwRK0v40zNJ4OA6G7f/yG8KvxLOYuYcaNeIRPu4=;
+	s=korg; t=1747072761;
+	bh=VrtHjBvs/Qbwe5Axyo+78Y03H2/y3ZuVKc4ptGOnzL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hak2bPLrXGdge22LRmN/lspKtIoCGwsZfbuvoWFRQaWuR+C1wQpPSRbE6HVwIOfzv
-	 wFxyExy55CLNXq4CbXXqsYd1WSYs75PFhDEDgZs/1pYzqfmPxDO0ZgBJD9kGSFNi4P
-	 Zyz24FYzPPREtQyvltI7n5NasOD5w0HsbG76YVoM=
+	b=U4hKn+g7beZBZZCif65sqlBqI+HZEdaEYBhxM7oOCxNcW28KxXCfcbLgvyeMGz2q/
+	 AxD1IR6qNKALWF8sNZoy2lrwNq/AEBpB6MJLv4qPGF10/41doSgbTuZ71f9or4OYOg
+	 36Xh4rthyJsUbz0yjQqiCh3jHa1VH7GG3X9eVDjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Simon Horman <horms@kernel.org>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Jiri Pirko <jiri@resnulli.us>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.12 030/184] ice: use DSN instead of PCI BDF for ice_adapter index
-Date: Mon, 12 May 2025 19:43:51 +0200
-Message-ID: <20250512172042.942750173@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 048/184] fbnic: Actually flush_tx instead of stalling out
+Date: Mon, 12 May 2025 19:44:09 +0200
+Message-ID: <20250512172043.693346007@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -58,173 +54,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+From: Alexander Duyck <alexanderduyck@fb.com>
 
-[ Upstream commit 0093cb194a7511d1e68865fa35b763c72e44c2f0 ]
+[ Upstream commit 0f9a959a0addd9bbc47e5d16c36b3a7f97981915 ]
 
-Use Device Serial Number instead of PCI bus/device/function for
-the index of struct ice_adapter.
+The fbnic_mbx_flush_tx function had a number of issues.
 
-Functions on the same physical device should point to the very same
-ice_adapter instance, but with two PFs, when at least one of them is
-PCI-e passed-through to a VM, it is no longer the case - PFs will get
-seemingly random PCI BDF values, and thus indices, what finally leds to
-each of them being on their own instance of ice_adapter. That causes them
-to don't attempt any synchronization of the PTP HW clock usage, or any
-other future resources.
+First, we were waiting 200ms for the firmware to process the packets. We
+can drop this to 20ms and in almost all cases this should be more than
+enough time. So by changing this we can significantly reduce shutdown time.
 
-DSN works nicely in place of the index, as it is "immutable" in terms of
-virtualization.
+Second, we were not making sure that the Tx path was actually shut off. As
+such we could still have packets added while we were flushing the mailbox.
+To prevent that we can now clear the ready flag for the Tx side and it
+should stay down since the interrupt is disabled.
 
-Fixes: 0e2bddf9e5f9 ("ice: add ice_adapter for shared data across PFs on the same NIC")
-Suggested-by: Jacob Keller <jacob.e.keller@intel.com>
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Suggested-by: Jiri Pirko <jiri@resnulli.us>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Third, we kept re-reading the tail due to the second issue. The tail should
+not move after we have started the flush so we can just read it once while
+we are holding the mailbox Tx lock. By doing that we are guaranteed that
+the value should be consistent.
+
+Fourth, we were keeping a count of descriptors cleaned due to the second
+and third issues called out. That count is not a valid reason to be exiting
+the cleanup, and with the tail only being read once we shouldn't see any
+cases where the tail moves after the disable so the tracking of count can
+be dropped.
+
+Fifth, we were using attempts * sleep time to determine how long we would
+wait in our polling loop to flush out the Tx. This can be very imprecise.
+In order to tighten up the timing we are shifting over to using a jiffies
+value of jiffies + 10 * HZ + 1 to determine the jiffies value we should
+stop polling at as this should be accurate within once sleep cycle for the
+total amount of time spent polling.
+
+Fixes: da3cde08209e ("eth: fbnic: Add FW communication mechanism")
+Signed-off-by: Alexander Duyck <alexanderduyck@fb.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://patch.msgid.link/20250505161939.2083581-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/174654719929.499179.16406653096197423749.stgit@ahduyck-xeon-server.home.arpa
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_adapter.c | 47 ++++++++------------
- drivers/net/ethernet/intel/ice/ice_adapter.h |  6 ++-
- 2 files changed, 22 insertions(+), 31 deletions(-)
+ drivers/net/ethernet/meta/fbnic/fbnic_fw.c | 31 +++++++++++-----------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_adapter.c b/drivers/net/ethernet/intel/ice/ice_adapter.c
-index 01a08cfd0090a..66e070095d1bb 100644
---- a/drivers/net/ethernet/intel/ice/ice_adapter.c
-+++ b/drivers/net/ethernet/intel/ice/ice_adapter.c
-@@ -1,7 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
- // SPDX-FileCopyrightText: Copyright Red Hat
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
+index 7db68fe7df940..dd30f0cb02506 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
+@@ -797,35 +797,36 @@ int fbnic_mbx_poll_tx_ready(struct fbnic_dev *fbd)
  
--#include <linux/bitfield.h>
- #include <linux/cleanup.h>
- #include <linux/mutex.h>
- #include <linux/pci.h>
-@@ -14,32 +13,16 @@
- static DEFINE_XARRAY(ice_adapters);
- static DEFINE_MUTEX(ice_adapters_mutex);
- 
--/* PCI bus number is 8 bits. Slot is 5 bits. Domain can have the rest. */
--#define INDEX_FIELD_DOMAIN GENMASK(BITS_PER_LONG - 1, 13)
--#define INDEX_FIELD_DEV    GENMASK(31, 16)
--#define INDEX_FIELD_BUS    GENMASK(12, 5)
--#define INDEX_FIELD_SLOT   GENMASK(4, 0)
--
--static unsigned long ice_adapter_index(const struct pci_dev *pdev)
-+static unsigned long ice_adapter_index(u64 dsn)
+ void fbnic_mbx_flush_tx(struct fbnic_dev *fbd)
  {
--	unsigned int domain = pci_domain_nr(pdev->bus);
++	unsigned long timeout = jiffies + 10 * HZ + 1;
+ 	struct fbnic_fw_mbx *tx_mbx;
+-	int attempts = 50;
+-	u8 count = 0;
 -
--	WARN_ON(domain > FIELD_MAX(INDEX_FIELD_DOMAIN));
+-	/* Nothing to do if there is no mailbox */
+-	if (!fbnic_fw_present(fbd))
+-		return;
++	u8 tail;
+ 
+ 	/* Record current Rx stats */
+ 	tx_mbx = &fbd->mbx[FBNIC_IPC_MBX_TX_IDX];
+ 
+-	/* Nothing to do if mailbox never got to ready */
+-	if (!tx_mbx->ready)
+-		return;
++	spin_lock_irq(&fbd->fw_tx_lock);
++
++	/* Clear ready to prevent any further attempts to transmit */
++	tx_mbx->ready = false;
++
++	/* Read tail to determine the last tail state for the ring */
++	tail = tx_mbx->tail;
++
++	spin_unlock_irq(&fbd->fw_tx_lock);
+ 
+ 	/* Give firmware time to process packet,
+-	 * we will wait up to 10 seconds which is 50 waits of 200ms.
++	 * we will wait up to 10 seconds which is 500 waits of 20ms.
+ 	 */
+ 	do {
+ 		u8 head = tx_mbx->head;
+ 
+-		if (head == tx_mbx->tail)
++		/* Tx ring is empty once head == tail */
++		if (head == tail)
+ 			break;
+ 
+-		msleep(200);
++		msleep(20);
+ 		fbnic_mbx_process_tx_msgs(fbd);
 -
--	switch (pdev->device) {
--	case ICE_DEV_ID_E825C_BACKPLANE:
--	case ICE_DEV_ID_E825C_QSFP:
--	case ICE_DEV_ID_E825C_SFP:
--	case ICE_DEV_ID_E825C_SGMII:
--		return FIELD_PREP(INDEX_FIELD_DEV, pdev->device);
--	default:
--		return FIELD_PREP(INDEX_FIELD_DOMAIN, domain) |
--		       FIELD_PREP(INDEX_FIELD_BUS,    pdev->bus->number) |
--		       FIELD_PREP(INDEX_FIELD_SLOT,   PCI_SLOT(pdev->devfn));
--	}
-+#if BITS_PER_LONG == 64
-+	return dsn;
-+#else
-+	return (u32)dsn ^ (u32)(dsn >> 32);
-+#endif
+-		count += (tx_mbx->head - head) % FBNIC_IPC_MBX_DESC_LEN;
+-	} while (count < FBNIC_IPC_MBX_DESC_LEN && --attempts);
++	} while (time_is_after_jiffies(timeout));
  }
  
--static struct ice_adapter *ice_adapter_new(void)
-+static struct ice_adapter *ice_adapter_new(u64 dsn)
- {
- 	struct ice_adapter *adapter;
- 
-@@ -47,6 +30,7 @@ static struct ice_adapter *ice_adapter_new(void)
- 	if (!adapter)
- 		return NULL;
- 
-+	adapter->device_serial_number = dsn;
- 	spin_lock_init(&adapter->ptp_gltsyn_time_lock);
- 	refcount_set(&adapter->refcount, 1);
- 
-@@ -77,23 +61,26 @@ static void ice_adapter_free(struct ice_adapter *adapter)
-  * Return:  Pointer to ice_adapter on success.
-  *          ERR_PTR() on error. -ENOMEM is the only possible error.
-  */
--struct ice_adapter *ice_adapter_get(const struct pci_dev *pdev)
-+struct ice_adapter *ice_adapter_get(struct pci_dev *pdev)
- {
--	unsigned long index = ice_adapter_index(pdev);
-+	u64 dsn = pci_get_dsn(pdev);
- 	struct ice_adapter *adapter;
-+	unsigned long index;
- 	int err;
- 
-+	index = ice_adapter_index(dsn);
- 	scoped_guard(mutex, &ice_adapters_mutex) {
- 		err = xa_insert(&ice_adapters, index, NULL, GFP_KERNEL);
- 		if (err == -EBUSY) {
- 			adapter = xa_load(&ice_adapters, index);
- 			refcount_inc(&adapter->refcount);
-+			WARN_ON_ONCE(adapter->device_serial_number != dsn);
- 			return adapter;
- 		}
- 		if (err)
- 			return ERR_PTR(err);
- 
--		adapter = ice_adapter_new();
-+		adapter = ice_adapter_new(dsn);
- 		if (!adapter)
- 			return ERR_PTR(-ENOMEM);
- 		xa_store(&ice_adapters, index, adapter, GFP_KERNEL);
-@@ -110,11 +97,13 @@ struct ice_adapter *ice_adapter_get(const struct pci_dev *pdev)
-  *
-  * Context: Process, may sleep.
-  */
--void ice_adapter_put(const struct pci_dev *pdev)
-+void ice_adapter_put(struct pci_dev *pdev)
- {
--	unsigned long index = ice_adapter_index(pdev);
-+	u64 dsn = pci_get_dsn(pdev);
- 	struct ice_adapter *adapter;
-+	unsigned long index;
- 
-+	index = ice_adapter_index(dsn);
- 	scoped_guard(mutex, &ice_adapters_mutex) {
- 		adapter = xa_load(&ice_adapters, index);
- 		if (WARN_ON(!adapter))
-diff --git a/drivers/net/ethernet/intel/ice/ice_adapter.h b/drivers/net/ethernet/intel/ice/ice_adapter.h
-index e233225848b38..ac15c0d2bc1a4 100644
---- a/drivers/net/ethernet/intel/ice/ice_adapter.h
-+++ b/drivers/net/ethernet/intel/ice/ice_adapter.h
-@@ -32,6 +32,7 @@ struct ice_port_list {
-  * @refcount: Reference count. struct ice_pf objects hold the references.
-  * @ctrl_pf: Control PF of the adapter
-  * @ports: Ports list
-+ * @device_serial_number: DSN cached for collision detection on 32bit systems
-  */
- struct ice_adapter {
- 	refcount_t refcount;
-@@ -40,9 +41,10 @@ struct ice_adapter {
- 
- 	struct ice_pf *ctrl_pf;
- 	struct ice_port_list ports;
-+	u64 device_serial_number;
- };
- 
--struct ice_adapter *ice_adapter_get(const struct pci_dev *pdev);
--void ice_adapter_put(const struct pci_dev *pdev);
-+struct ice_adapter *ice_adapter_get(struct pci_dev *pdev);
-+void ice_adapter_put(struct pci_dev *pdev);
- 
- #endif /* _ICE_ADAPTER_H */
+ void fbnic_get_fw_ver_commit_str(struct fbnic_dev *fbd, char *fw_version,
 -- 
 2.39.5
 
