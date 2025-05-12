@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078C5296D3D;
-	Mon, 12 May 2025 17:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ADF0296FB6;
+	Mon, 12 May 2025 17:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071818; cv=none; b=O9pe+ResYZBS4OuveoF24c/69Je8YDuQVJb4i8VZDT7di9nJ0pNgsS2KRtOx+fq3nmfkMxyTApa2v7gtO23r5pkHuGwJAJeYljpSOHpZ0weIYtCV+gcUjrY7fxbcKX9KhLIjN15hP6oATqfOCq4T6jcDjj9diSTdi/F7FqoLbdw=
+	t=1747071820; cv=none; b=Cq7AdtSEkgCgW7HoV0DPLwxhmnU9BkC/8ADiKJDT+/pOR2W4QVKkrv8FHBYDf3tnNDT70/364ohioNkn4L1985EQIPNMP23OebVRv3U8HrFLdzsX1gTu/kQdz8id9WwjWz6U5HQ5Sq1Xz3n1hEffFHFiL3C62+S8OKK1wN67WEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071818; c=relaxed/simple;
-	bh=JvnTAlKElzkuG0bbMK45djU+mjcOis84llmbm4YXJ4w=;
+	s=arc-20240116; t=1747071820; c=relaxed/simple;
+	bh=l6+SoEALowo/hpDpY/58+sYVgm/7E5/CwW6idZ4Ew4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HzLwA83DCzL31UWul1fUY0u3riWkj9qHX07ETC7WC/b9c4K4pbYQnPJXJxAK4eEGH3Zsey2e96WA3P4TvF5Osd1VcEG27dK+tEBVPD6i/VFfb+ic3pnm3YwNNiNU2ID+cm2NwwkzNngX08fr9xgTYak8N1mUN+vMKqu/JECkSj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMJAXyxz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XA1aSiS3p90G5Saqist0AswM3OGDsB0Cr4uyoFncWRGuHnuyA1BXKto0q0LKP5VVscQcYPQmIy4h9jCEVXqbmis7JwIRMKkCrTk7wzbGspVRAzlstASRE+OnHXeSAUlJ6QKt8oOLoVI5e1loii9qMtmRKF2FiZkTb10tYFTLiPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gu5C6IiL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMJAXyxz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081C4C4CEE7;
-	Mon, 12 May 2025 17:43:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gu5C6IiL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC301C4CEE7;
+	Mon, 12 May 2025 17:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071817;
-	bh=JvnTAlKElzkuG0bbMK45djU+mjcOis84llmbm4YXJ4w=;
+	s=korg; t=1747071820;
+	bh=l6+SoEALowo/hpDpY/58+sYVgm/7E5/CwW6idZ4Ew4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XMJAXyxz64u9q6vICEA0HvKovJhJFbAuAJIQsW3Veme00p/dnvmUJpERjJWaYlB79
-	 HfAcmHPzYeL3fmkDsWeeWytitSxI6AcC3ny3bTLXwmddkxMvQ6sXDr+BETp4euwR+d
-	 ks77gXijJ4EvXSByIU/5iwAUM/YsZVFbGihK6+d4=
+	b=gu5C6IiLaMMzvk0ZbtdlYhC1jkrglu+ZA36lpsiqCynlAN1xvuKjBcWy+CKvXDXaz
+	 IbheVQKWQkbU21OD82e4BYWyqRWuhq+wx9DLxSAcTqaAen4b461r0cAYj8eH/lLgpo
+	 /Umwenjqx04ZYdwuk0+Zo0Ritfhm+K4ho8zQ82sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+04b9a82855c8aed20860@syzkaller.appspotmail.com,
-	Julian Anastasov <ja@ssi.bg>,
-	Simon Horman <horms@kernel.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 031/197] ipvs: fix uninit-value for saddr in do_output_route4
-Date: Mon, 12 May 2025 19:38:01 +0200
-Message-ID: <20250512172045.631030066@linuxfoundation.org>
+Subject: [PATCH 6.14 040/197] net: dsa: b53: do not allow to configure VLAN 0
+Date: Mon, 12 May 2025 19:38:10 +0200
+Message-ID: <20250512172046.007858643@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -53,165 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit e34090d7214e0516eb8722aee295cb2507317c07 ]
+[ Upstream commit 45e9d59d39503bb3e6ab4d258caea4ba6496e2dc ]
 
-syzbot reports for uninit-value for the saddr argument [1].
-commit 4754957f04f5 ("ipvs: do not use random local source address for
-tunnels") already implies that the input value of saddr
-should be ignored but the code is still reading it which can prevent
-to connect the route. Fix it by changing the argument to ret_saddr.
+Since we cannot set forwarding destinations per VLAN, we should not have
+a VLAN 0 configured, as it would allow untagged traffic to work across
+ports on VLAN aware bridges regardless if a PVID untagged VLAN exists.
 
-[1]
-BUG: KMSAN: uninit-value in do_output_route4+0x42c/0x4d0 net/netfilter/ipvs/ip_vs_xmit.c:147
- do_output_route4+0x42c/0x4d0 net/netfilter/ipvs/ip_vs_xmit.c:147
- __ip_vs_get_out_rt+0x403/0x21d0 net/netfilter/ipvs/ip_vs_xmit.c:330
- ip_vs_tunnel_xmit+0x205/0x2380 net/netfilter/ipvs/ip_vs_xmit.c:1136
- ip_vs_in_hook+0x1aa5/0x35b0 net/netfilter/ipvs/ip_vs_core.c:2063
- nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
- nf_hook_slow+0xf7/0x400 net/netfilter/core.c:626
- nf_hook include/linux/netfilter.h:269 [inline]
- __ip_local_out+0x758/0x7e0 net/ipv4/ip_output.c:118
- ip_local_out net/ipv4/ip_output.c:127 [inline]
- ip_send_skb+0x6a/0x3c0 net/ipv4/ip_output.c:1501
- udp_send_skb+0xfda/0x1b70 net/ipv4/udp.c:1195
- udp_sendmsg+0x2fe3/0x33c0 net/ipv4/udp.c:1483
- inet_sendmsg+0x1fc/0x280 net/ipv4/af_inet.c:851
- sock_sendmsg_nosec net/socket.c:712 [inline]
- __sock_sendmsg+0x267/0x380 net/socket.c:727
- ____sys_sendmsg+0x91b/0xda0 net/socket.c:2566
- ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2620
- __sys_sendmmsg+0x41d/0x880 net/socket.c:2702
- __compat_sys_sendmmsg net/compat.c:360 [inline]
- __do_compat_sys_sendmmsg net/compat.c:367 [inline]
- __se_compat_sys_sendmmsg net/compat.c:364 [inline]
- __ia32_compat_sys_sendmmsg+0xc8/0x140 net/compat.c:364
- ia32_sys_call+0x3ffa/0x41f0 arch/x86/include/generated/asm/syscalls_32.h:346
- do_syscall_32_irqs_on arch/x86/entry/syscall_32.c:83 [inline]
- __do_fast_syscall_32+0xb0/0x110 arch/x86/entry/syscall_32.c:306
- do_fast_syscall_32+0x38/0x80 arch/x86/entry/syscall_32.c:331
- do_SYSENTER_32+0x1f/0x30 arch/x86/entry/syscall_32.c:369
- entry_SYSENTER_compat_after_hwframe+0x84/0x8e
+So remove the VLAN 0 on join, an re-add it on leave. But only do so if
+we have a VLAN aware bridge, as without it, untagged traffic would
+become tagged with VID 0 on a VLAN unaware bridge.
 
-Uninit was created at:
- slab_post_alloc_hook mm/slub.c:4167 [inline]
- slab_alloc_node mm/slub.c:4210 [inline]
- __kmalloc_cache_noprof+0x8fa/0xe00 mm/slub.c:4367
- kmalloc_noprof include/linux/slab.h:905 [inline]
- ip_vs_dest_dst_alloc net/netfilter/ipvs/ip_vs_xmit.c:61 [inline]
- __ip_vs_get_out_rt+0x35d/0x21d0 net/netfilter/ipvs/ip_vs_xmit.c:323
- ip_vs_tunnel_xmit+0x205/0x2380 net/netfilter/ipvs/ip_vs_xmit.c:1136
- ip_vs_in_hook+0x1aa5/0x35b0 net/netfilter/ipvs/ip_vs_core.c:2063
- nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
- nf_hook_slow+0xf7/0x400 net/netfilter/core.c:626
- nf_hook include/linux/netfilter.h:269 [inline]
- __ip_local_out+0x758/0x7e0 net/ipv4/ip_output.c:118
- ip_local_out net/ipv4/ip_output.c:127 [inline]
- ip_send_skb+0x6a/0x3c0 net/ipv4/ip_output.c:1501
- udp_send_skb+0xfda/0x1b70 net/ipv4/udp.c:1195
- udp_sendmsg+0x2fe3/0x33c0 net/ipv4/udp.c:1483
- inet_sendmsg+0x1fc/0x280 net/ipv4/af_inet.c:851
- sock_sendmsg_nosec net/socket.c:712 [inline]
- __sock_sendmsg+0x267/0x380 net/socket.c:727
- ____sys_sendmsg+0x91b/0xda0 net/socket.c:2566
- ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2620
- __sys_sendmmsg+0x41d/0x880 net/socket.c:2702
- __compat_sys_sendmmsg net/compat.c:360 [inline]
- __do_compat_sys_sendmmsg net/compat.c:367 [inline]
- __se_compat_sys_sendmmsg net/compat.c:364 [inline]
- __ia32_compat_sys_sendmmsg+0xc8/0x140 net/compat.c:364
- ia32_sys_call+0x3ffa/0x41f0 arch/x86/include/generated/asm/syscalls_32.h:346
- do_syscall_32_irqs_on arch/x86/entry/syscall_32.c:83 [inline]
- __do_fast_syscall_32+0xb0/0x110 arch/x86/entry/syscall_32.c:306
- do_fast_syscall_32+0x38/0x80 arch/x86/entry/syscall_32.c:331
- do_SYSENTER_32+0x1f/0x30 arch/x86/entry/syscall_32.c:369
- entry_SYSENTER_compat_after_hwframe+0x84/0x8e
-
-CPU: 0 UID: 0 PID: 22408 Comm: syz.4.5165 Not tainted 6.15.0-rc3-syzkaller-00019-gbc3372351d0c #0 PREEMPT(undef)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
-
-Reported-by: syzbot+04b9a82855c8aed20860@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68138dfa.050a0220.14dd7d.0017.GAE@google.com/
-Fixes: 4754957f04f5 ("ipvs: do not use random local source address for tunnels")
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Acked-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: a2482d2ce349 ("net: dsa: b53: Plug in VLAN support")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20250429201710.330937-8-jonas.gorski@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_xmit.c | 27 ++++++++-------------------
- 1 file changed, 8 insertions(+), 19 deletions(-)
+ drivers/net/dsa/b53/b53_common.c | 36 ++++++++++++++++++++++++--------
+ 1 file changed, 27 insertions(+), 9 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
-index 3313bceb6cc99..014f077403695 100644
---- a/net/netfilter/ipvs/ip_vs_xmit.c
-+++ b/net/netfilter/ipvs/ip_vs_xmit.c
-@@ -119,13 +119,12 @@ __mtu_check_toobig_v6(const struct sk_buff *skb, u32 mtu)
- 	return false;
- }
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index 305e3b5c804a2..24d3d693086b2 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -1544,6 +1544,9 @@ int b53_vlan_add(struct dsa_switch *ds, int port,
+ 	if (err)
+ 		return err;
  
--/* Get route to daddr, update *saddr, optionally bind route to saddr */
-+/* Get route to daddr, optionally bind route to saddr */
- static struct rtable *do_output_route4(struct net *net, __be32 daddr,
--				       int rt_mode, __be32 *saddr)
-+				       int rt_mode, __be32 *ret_saddr)
- {
- 	struct flowi4 fl4;
- 	struct rtable *rt;
--	bool loop = false;
++	if (vlan->vid == 0)
++		return 0;
++
+ 	b53_read16(dev, B53_VLAN_PAGE, B53_VLAN_PORT_DEF_TAG(port), &old_pvid);
+ 	if (pvid)
+ 		new_pvid = vlan->vid;
+@@ -1556,10 +1559,7 @@ int b53_vlan_add(struct dsa_switch *ds, int port,
  
- 	memset(&fl4, 0, sizeof(fl4));
- 	fl4.daddr = daddr;
-@@ -135,23 +134,17 @@ static struct rtable *do_output_route4(struct net *net, __be32 daddr,
- retry:
- 	rt = ip_route_output_key(net, &fl4);
- 	if (IS_ERR(rt)) {
--		/* Invalid saddr ? */
--		if (PTR_ERR(rt) == -EINVAL && *saddr &&
--		    rt_mode & IP_VS_RT_MODE_CONNECT && !loop) {
--			*saddr = 0;
--			flowi4_update_output(&fl4, 0, daddr, 0);
--			goto retry;
--		}
- 		IP_VS_DBG_RL("ip_route_output error, dest: %pI4\n", &daddr);
- 		return NULL;
--	} else if (!*saddr && rt_mode & IP_VS_RT_MODE_CONNECT && fl4.saddr) {
-+	}
-+	if (rt_mode & IP_VS_RT_MODE_CONNECT && fl4.saddr) {
- 		ip_rt_put(rt);
--		*saddr = fl4.saddr;
- 		flowi4_update_output(&fl4, 0, daddr, fl4.saddr);
--		loop = true;
-+		rt_mode = 0;
- 		goto retry;
- 	}
--	*saddr = fl4.saddr;
-+	if (ret_saddr)
-+		*ret_saddr = fl4.saddr;
- 	return rt;
- }
+ 	b53_get_vlan_entry(dev, vlan->vid, vl);
  
-@@ -344,19 +337,15 @@ __ip_vs_get_out_rt(struct netns_ipvs *ipvs, int skb_af, struct sk_buff *skb,
- 		if (ret_saddr)
- 			*ret_saddr = dest_dst->dst_saddr.ip;
- 	} else {
--		__be32 saddr = htonl(INADDR_ANY);
+-	if (vlan->vid == 0 && vlan->vid == b53_default_pvid(dev))
+-		untagged = true;
 -
- 		noref = 0;
+-	if (vlan->vid > 0 && dsa_is_cpu_port(ds, port))
++	if (dsa_is_cpu_port(ds, port))
+ 		untagged = false;
  
- 		/* For such unconfigured boxes avoid many route lookups
- 		 * for performance reasons because we do not remember saddr
- 		 */
- 		rt_mode &= ~IP_VS_RT_MODE_CONNECT;
--		rt = do_output_route4(net, daddr, rt_mode, &saddr);
-+		rt = do_output_route4(net, daddr, rt_mode, ret_saddr);
- 		if (!rt)
- 			goto err_unreach;
--		if (ret_saddr)
--			*ret_saddr = saddr;
+ 	vl->members |= BIT(port);
+@@ -1589,6 +1589,9 @@ int b53_vlan_del(struct dsa_switch *ds, int port,
+ 	struct b53_vlan *vl;
+ 	u16 pvid;
+ 
++	if (vlan->vid == 0)
++		return 0;
++
+ 	b53_read16(dev, B53_VLAN_PAGE, B53_VLAN_PORT_DEF_TAG(port), &pvid);
+ 
+ 	vl = &dev->vlans[vlan->vid];
+@@ -1935,8 +1938,9 @@ int b53_br_join(struct dsa_switch *ds, int port, struct dsa_bridge bridge,
+ 		bool *tx_fwd_offload, struct netlink_ext_ack *extack)
+ {
+ 	struct b53_device *dev = ds->priv;
++	struct b53_vlan *vl;
+ 	s8 cpu_port = dsa_to_port(ds, port)->cpu_dp->index;
+-	u16 pvlan, reg;
++	u16 pvlan, reg, pvid;
+ 	unsigned int i;
+ 
+ 	/* On 7278, port 7 which connects to the ASP should only receive
+@@ -1945,6 +1949,9 @@ int b53_br_join(struct dsa_switch *ds, int port, struct dsa_bridge bridge,
+ 	if (dev->chip_id == BCM7278_DEVICE_ID && port == 7)
+ 		return -EINVAL;
+ 
++	pvid = b53_default_pvid(dev);
++	vl = &dev->vlans[pvid];
++
+ 	/* Make this port leave the all VLANs join since we will have proper
+ 	 * VLAN entries from now on
+ 	 */
+@@ -1956,6 +1963,15 @@ int b53_br_join(struct dsa_switch *ds, int port, struct dsa_bridge bridge,
+ 		b53_write16(dev, B53_VLAN_PAGE, B53_JOIN_ALL_VLAN_EN, reg);
  	}
  
- 	local = (rt->rt_flags & RTCF_LOCAL) ? 1 : 0;
++	if (ds->vlan_filtering) {
++		b53_get_vlan_entry(dev, pvid, vl);
++		vl->members &= ~BIT(port);
++		if (vl->members == BIT(cpu_port))
++			vl->members &= ~BIT(cpu_port);
++		vl->untag = vl->members;
++		b53_set_vlan_entry(dev, pvid, vl);
++	}
++
+ 	b53_read16(dev, B53_PVLAN_PAGE, B53_PVLAN_PORT_MASK(port), &pvlan);
+ 
+ 	b53_for_each_port(dev, i) {
+@@ -2023,10 +2039,12 @@ void b53_br_leave(struct dsa_switch *ds, int port, struct dsa_bridge bridge)
+ 		b53_write16(dev, B53_VLAN_PAGE, B53_JOIN_ALL_VLAN_EN, reg);
+ 	}
+ 
+-	b53_get_vlan_entry(dev, pvid, vl);
+-	vl->members |= BIT(port) | BIT(cpu_port);
+-	vl->untag |= BIT(port) | BIT(cpu_port);
+-	b53_set_vlan_entry(dev, pvid, vl);
++	if (ds->vlan_filtering) {
++		b53_get_vlan_entry(dev, pvid, vl);
++		vl->members |= BIT(port) | BIT(cpu_port);
++		vl->untag |= BIT(port) | BIT(cpu_port);
++		b53_set_vlan_entry(dev, pvid, vl);
++	}
+ }
+ EXPORT_SYMBOL(b53_br_leave);
+ 
 -- 
 2.39.5
 
