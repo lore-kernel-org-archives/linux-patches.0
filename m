@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DA2263F30;
-	Mon, 12 May 2025 17:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0608C2550C6;
+	Mon, 12 May 2025 17:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072427; cv=none; b=TjDertKxo+U5/KmV3xURjo00fyRXVAPN0/eJg7fT8dHKoLCSA7lA02Y3UNYP+xEhqAU0vXbO1GUIKN59/8nXcMTzvlmvKgNAYTPl6OnCfrD7NGTHdtnEMHXW75+2lj3TtL65csTln/X9XvpbRRMThci6aCYrv+5JvzJCWkJbL38=
+	t=1747072431; cv=none; b=MBlEOgYsD2IRiwlk1QIx6nQGF3b1RqVbq2u5visX1WrQs4HHUAGPDaZgf2x4NvWBhnSQYYtae+pgZIf0LUUi8kHB3F0Qc1Nt9NzrnL2QEjK1JXadQZlGxQh2VcNueC6QaTs22lXO8LQfuodyNdZdCh30v661NQdkC+gvs3HCLFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072427; c=relaxed/simple;
-	bh=U0WjejE8S0xdyTrUARfJH3IhIjF7mZsiyIBAdkcHuo4=;
+	s=arc-20240116; t=1747072431; c=relaxed/simple;
+	bh=Qb1QBJP/3BHahEkWrepvhpzTNKphih0GoW5L5SqWijQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PSaLw/1TX9EnYeSZqdwzqmT/n96s5bLBN6rK6MOwuJj0qE7ptTJsPAlYmn7HOzGDsesFNQliKrw7GwFK6zvephUZg+h0NIq1UHjbqx/Atiavbcqba/4TnuV6ifInbMU2bc1Ok4KcWRARItMLa4yC/sxq9mYZoblDsMT4B63Zv/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=frMZ6Krp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TsPvNTSb91SUD5psrj2TUwx831D7+ht2Q1IOUiPLFs1qqkdpfUV40cLOoqIX13ZFwOWl/c7ZlbP+UzfdaKkrKIUY9aEdUHPYtpb1GSfh3gq56hSoZhhJ8hL5YqyNgLGjqv+e8Uh/eW0UkgwXlY0wUhF7kUhvqk4gRuLmANJLe6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c40TEea/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="frMZ6Krp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1A8C4CEE7;
-	Mon, 12 May 2025 17:53:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c40TEea/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8979EC4CEE7;
+	Mon, 12 May 2025 17:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072427;
-	bh=U0WjejE8S0xdyTrUARfJH3IhIjF7mZsiyIBAdkcHuo4=;
+	s=korg; t=1747072430;
+	bh=Qb1QBJP/3BHahEkWrepvhpzTNKphih0GoW5L5SqWijQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=frMZ6KrpskVhKwfn3GdGuxDJMImPBMSRKUKG66YWsmsCBUg3HeQ41SsbNatVORNmP
-	 4kdNaOXb5VUEDZDfYxoaCiJrrx11NA29uoZPdO++XnV/ktV5R18Jgu+oBn5Znoqvpm
-	 g5pVuXboZeOa+koolDcrbq/88QULm9k8jew6I/M8=
+	b=c40TEea/uA1MHk+lB4TnCWKPDxxe41KWIOBA/2BCAsS86xLCvN0pWND6AENC3hORl
+	 3I9yC4Rpj81uPFoFjqF3ERyfQ8H/zaierufHFsAQJvJPgmlFumIwN5bjENxFQu7Uz5
+	 AORdGWnQl9VPGHxlxS9Jv7ze9bqBlyFCTuSHwBc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daivik Bhatia <dtgs1208@gmail.com>,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.1 38/92] drm/v3d: Add job to pending list if the reset was skipped
-Date: Mon, 12 May 2025 19:45:13 +0200
-Message-ID: <20250512172024.674446037@linuxfoundation.org>
+	Ray Wu <ray.wu@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 39/92] drm/amd/display: Fix the checking condition in dmub aux handling
+Date: Mon, 12 May 2025 19:45:14 +0200
+Message-ID: <20250512172024.715222640@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -46,102 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-commit 35e4079bf1a2570abffce6ababa631afcf8ea0e5 upstream.
+commit bc70e11b550d37fbd9eaed0f113ba560894f1609 upstream.
 
-When a CL/CSD job times out, we check if the GPU has made any progress
-since the last timeout. If so, instead of resetting the hardware, we skip
-the reset and let the timer get rearmed. This gives long-running jobs a
-chance to complete.
+[Why & How]
+Fix the checking condition for detecting AUX_RET_ERROR_PROTOCOL_ERROR.
+It was wrongly checking by "not equals to"
 
-However, when `timedout_job()` is called, the job in question is removed
-from the pending list, which means it won't be automatically freed through
-`free_job()`. Consequently, when we skip the reset and keep the job
-running, the job won't be freed when it finally completes.
-
-This situation leads to a memory leak, as exposed in [1] and [2].
-
-Similarly to commit 704d3d60fec4 ("drm/etnaviv: don't block scheduler when
-GPU is still active"), this patch ensures the job is put back on the
-pending list when extending the timeout.
-
-Cc: stable@vger.kernel.org # 6.0
-Reported-by: Daivik Bhatia <dtgs1208@gmail.com>
-Closes: https://gitlab.freedesktop.org/mesa/mesa/-/issues/12227 [1]
-Closes: https://github.com/raspberrypi/linux/issues/6817 [2]
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Acked-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Link: https://lore.kernel.org/r/20250430210643.57924-1-mcanal@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Reviewed-by: Ray Wu <ray.wu@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 1db6c9e9b62e1a8912f0a281c941099fca678da3)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/v3d/v3d_sched.c |   28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -289,11 +289,16 @@ v3d_gpu_reset_for_timeout(struct v3d_dev
- 	return DRM_GPU_SCHED_STAT_NOMINAL;
- }
- 
--/* If the current address or return address have changed, then the GPU
-- * has probably made progress and we should delay the reset.  This
-- * could fail if the GPU got in an infinite loop in the CL, but that
-- * is pretty unlikely outside of an i-g-t testcase.
-- */
-+static void
-+v3d_sched_skip_reset(struct drm_sched_job *sched_job)
-+{
-+	struct drm_gpu_scheduler *sched = sched_job->sched;
-+
-+	spin_lock(&sched->job_list_lock);
-+	list_add(&sched_job->list, &sched->pending_list);
-+	spin_unlock(&sched->job_list_lock);
-+}
-+
- static enum drm_gpu_sched_stat
- v3d_cl_job_timedout(struct drm_sched_job *sched_job, enum v3d_queue q,
- 		    u32 *timedout_ctca, u32 *timedout_ctra)
-@@ -303,9 +308,16 @@ v3d_cl_job_timedout(struct drm_sched_job
- 	u32 ctca = V3D_CORE_READ(0, V3D_CLE_CTNCA(q));
- 	u32 ctra = V3D_CORE_READ(0, V3D_CLE_CTNRA(q));
- 
-+	/* If the current address or return address have changed, then the GPU
-+	 * has probably made progress and we should delay the reset. This
-+	 * could fail if the GPU got in an infinite loop in the CL, but that
-+	 * is pretty unlikely outside of an i-g-t testcase.
-+	 */
- 	if (*timedout_ctca != ctca || *timedout_ctra != ctra) {
- 		*timedout_ctca = ctca;
- 		*timedout_ctra = ctra;
-+
-+		v3d_sched_skip_reset(sched_job);
- 		return DRM_GPU_SCHED_STAT_NOMINAL;
- 	}
- 
-@@ -345,11 +357,13 @@ v3d_csd_job_timedout(struct drm_sched_jo
- 	struct v3d_dev *v3d = job->base.v3d;
- 	u32 batches = V3D_CORE_READ(0, V3D_CSD_CURRENT_CFG4);
- 
--	/* If we've made progress, skip reset and let the timer get
--	 * rearmed.
-+	/* If we've made progress, skip reset, add the job to the pending
-+	 * list, and let the timer get rearmed.
- 	 */
- 	if (job->timedout_batches != batches) {
- 		job->timedout_batches = batches;
-+
-+		v3d_sched_skip_reset(sched_job);
- 		return DRM_GPU_SCHED_STAT_NOMINAL;
- 	}
- 
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -10693,7 +10693,7 @@ int amdgpu_dm_process_dmub_aux_transfer_
+ 		 * Transient states before tunneling is enabled could
+ 		 * lead to this error. We can ignore this for now.
+ 		 */
+-		if (p_notify->result != AUX_RET_ERROR_PROTOCOL_ERROR) {
++		if (p_notify->result == AUX_RET_ERROR_PROTOCOL_ERROR) {
+ 			DRM_WARN("DPIA AUX failed on 0x%x(%d), error %d\n",
+ 					payload->address, payload->length,
+ 					p_notify->result);
 
 
