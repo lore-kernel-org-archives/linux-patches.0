@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F3C2980C5;
-	Mon, 12 May 2025 18:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC65F29A33D;
+	Mon, 12 May 2025 18:10:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073419; cv=none; b=C6z+HwsnHzVkWV5KVF0pBKJoHRx685EC/dDev7uRkhuFik8S4OwZ7CCNZI4cCRFxL+BmwSwB6WrjnCBakRAL6c9u2sZvJaz/ICeWrYkbK/qWPgdanH4vemlbmQl9vqSzuMSQJNEXj1xsixbo+2bt+tFFqhuFwTXP1tvY5Nq7T4A=
+	t=1747073421; cv=none; b=U/3Z1Im+X/McCBqDp5XJ8lU2cMW6ELwZ7hxmIIpgqIl10k/cqlPIcnu10egAUAZZ7JWCVlSolJb6c7yWTeCV/NDAFzyrguv/J5Zu7kockIHGFbEyInHaNL/eH0DFhKL5odYtf7eOEIuIsrScezenQH23yFnlqxwY3sOfV0FglHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073419; c=relaxed/simple;
-	bh=bsgytnYn4ZanvM07XKl92fD5P21k5asvHXMa3dK9JiM=;
+	s=arc-20240116; t=1747073421; c=relaxed/simple;
+	bh=IalcmXnx7L+YgHCv4apm6GHcaXDrNTQ2L42VHF6WV7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DxXYB2+OF2guNv3/mKD0ZfDcLW0sEMxyGIfV7/D8ah38Z7THBuImLB7qzXgFPWtF+6FmkmPCbJhIwm6bTrREjmignWrowXHwpNJwMFrVvOz2pnsvJ8NVJ0Ct+HehKBQb2LF7cEL4kx0YHvxEURpOjTtUEbxF8jJuhtjlaG7Uqps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVommQoR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AA9G1AEy4IcjMDgPq78W0RPkHzc7BuXxzG+Js1xDHb5pZNOesZ8tToR2ILbx1xy9pUSCwod80CiYdk9FhYWabKZQKxaArWBBG+DTL/DqQh+lrdJM8gHo9sNxmHwSThj/jhfO6FRAHAH1IydEhegUg/O8QNQ+lPvK8xXPNDdhSao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oxHglmIM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVommQoR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6808AC4CEE7;
-	Mon, 12 May 2025 18:10:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxHglmIM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48AB5C4CEE7;
+	Mon, 12 May 2025 18:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073418;
-	bh=bsgytnYn4ZanvM07XKl92fD5P21k5asvHXMa3dK9JiM=;
+	s=korg; t=1747073421;
+	bh=IalcmXnx7L+YgHCv4apm6GHcaXDrNTQ2L42VHF6WV7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WVommQoRrhipmEgazwsja1YOX1FAwWCi9pty7GWwSPb731DmnUIUo20t5C8jXnGMW
-	 iRCl9n++3CNhbMh0dAwuvekh6M45RwOFVhtLU/dbIKKSKelT36wKMNg6ezE5yMm0WP
-	 jydnncjT7knp7yDZ4tu+WEv10qCc6stq71Vyy63c=
+	b=oxHglmIMmik0t4kdXPYEa/d3i7jzQHnwgsnJvhCc+nmlDoljfP1/L7IHB/OY+98ax
+	 D1pKk0SW8avx5/zmUWTznyO/SvbpK0MgX8ku47G51fL0+JB1UqN1MRuo62MInn37I/
+	 JA/u3aogcOYglFXCzOYPM9lSLK6BcqCMFqjYkHf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Pawel Laszczak <pawell@cadence.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.6 068/113] usb: cdnsp: fix L1 resume issue for RTL_REVISION_NEW_LPM version
-Date: Mon, 12 May 2025 19:45:57 +0200
-Message-ID: <20250512172030.449321607@linuxfoundation.org>
+	Prashanth K <prashanth.k@oss.qualcomm.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.6 069/113] usb: gadget: f_ecm: Add get_status callback
+Date: Mon, 12 May 2025 19:45:58 +0200
+Message-ID: <20250512172030.487165001@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172027.691520737@linuxfoundation.org>
 References: <20250512172027.691520737@linuxfoundation.org>
@@ -51,76 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Prashanth K <prashanth.k@oss.qualcomm.com>
 
-commit 8614ecdb1570e4fffe87ebdc62b613ed66f1f6a6 upstream.
+commit 8e3820271c517ceb89ab7442656ba49fa23ee1d0 upstream.
 
-The controllers with rtl version larger than
-RTL_REVISION_NEW_LPM (0x00002700) has bug which causes that controller
-doesn't resume from L1 state. It happens if after receiving LPM packet
-controller starts transitioning to L1 and in this moment the driver force
-resuming by write operation to PORTSC.PLS.
-It's corner case and happens when write operation to PORTSC occurs during
-device delay before transitioning to L1 after transmitting ACK
-time (TL1TokenRetry).
+When host sends GET_STATUS to ECM interface, handle the request
+from the function driver. Since the interface is wakeup capable,
+set the corresponding bit, and set RW bit if the function is
+already armed for wakeup by the host.
 
-Forcing transition from L1->L0 by driver for revision larger than
-RTL_REVISION_NEW_LPM is not needed, so driver can simply fix this issue
-through block call of cdnsp_force_l0_go function.
-
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/PH7PR07MB9538B55C3A6E71F9ED29E980DD842@PH7PR07MB9538.namprd07.prod.outlook.com
+Fixes: 481c225c4802 ("usb: gadget: Handle function suspend feature selector")
+Signed-off-by: Prashanth K <prashanth.k@oss.qualcomm.com>
+Reviewed-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20250422103231.1954387-2-prashanth.k@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-gadget.c |    2 ++
- drivers/usb/cdns3/cdnsp-gadget.h |    3 +++
- drivers/usb/cdns3/cdnsp-ring.c   |    3 ++-
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_ecm.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/usb/cdns3/cdnsp-gadget.c
-+++ b/drivers/usb/cdns3/cdnsp-gadget.c
-@@ -1796,6 +1796,8 @@ static void cdnsp_get_rev_cap(struct cdn
- 	reg += cdnsp_find_next_ext_cap(reg, 0, RTL_REV_CAP);
- 	pdev->rev_cap  = reg;
+--- a/drivers/usb/gadget/function/f_ecm.c
++++ b/drivers/usb/gadget/function/f_ecm.c
+@@ -892,6 +892,12 @@ static void ecm_resume(struct usb_functi
+ 	gether_resume(&ecm->port);
+ }
  
-+	pdev->rtl_revision = readl(&pdev->rev_cap->rtl_revision);
++static int ecm_get_status(struct usb_function *f)
++{
++	return (f->func_wakeup_armed ? USB_INTRF_STAT_FUNC_RW : 0) |
++		USB_INTRF_STAT_FUNC_RW_CAP;
++}
 +
- 	dev_info(pdev->dev, "Rev: %08x/%08x, eps: %08x, buff: %08x/%08x\n",
- 		 readl(&pdev->rev_cap->ctrl_revision),
- 		 readl(&pdev->rev_cap->rtl_revision),
---- a/drivers/usb/cdns3/cdnsp-gadget.h
-+++ b/drivers/usb/cdns3/cdnsp-gadget.h
-@@ -1362,6 +1362,7 @@ struct cdnsp_port {
-  * @rev_cap: Controller Capabilities Registers.
-  * @hcs_params1: Cached register copies of read-only HCSPARAMS1
-  * @hcc_params: Cached register copies of read-only HCCPARAMS1
-+ * @rtl_revision: Cached controller rtl revision.
-  * @setup: Temporary buffer for setup packet.
-  * @ep0_preq: Internal allocated request used during enumeration.
-  * @ep0_stage: ep0 stage during enumeration process.
-@@ -1416,6 +1417,8 @@ struct cdnsp_device {
- 	__u32 hcs_params1;
- 	__u32 hcs_params3;
- 	__u32 hcc_params;
-+	#define RTL_REVISION_NEW_LPM 0x2700
-+	__u32 rtl_revision;
- 	/* Lock used in interrupt thread context. */
- 	spinlock_t lock;
- 	struct usb_ctrlrequest setup;
---- a/drivers/usb/cdns3/cdnsp-ring.c
-+++ b/drivers/usb/cdns3/cdnsp-ring.c
-@@ -308,7 +308,8 @@ static bool cdnsp_ring_ep_doorbell(struc
+ static void ecm_free(struct usb_function *f)
+ {
+ 	struct f_ecm *ecm;
+@@ -960,6 +966,7 @@ static struct usb_function *ecm_alloc(st
+ 	ecm->port.func.disable = ecm_disable;
+ 	ecm->port.func.free_func = ecm_free;
+ 	ecm->port.func.suspend = ecm_suspend;
++	ecm->port.func.get_status = ecm_get_status;
+ 	ecm->port.func.resume = ecm_resume;
  
- 	writel(db_value, reg_addr);
- 
--	cdnsp_force_l0_go(pdev);
-+	if (pdev->rtl_revision < RTL_REVISION_NEW_LPM)
-+		cdnsp_force_l0_go(pdev);
- 
- 	/* Doorbell was set. */
- 	return true;
+ 	return &ecm->port.func;
 
 
