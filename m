@@ -1,176 +1,88 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F34F296FBD;
-	Mon, 12 May 2025 18:04:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3BA298242;
+	Mon, 12 May 2025 18:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073057; cv=none; b=Wc6em1PXb7/jS/btlR927LEWggAf/TDJvYHNqfYrTWbHkBmtw22dJElU0laqFzmkRwW5/ASrtCtbU+jxmw9SZyJNUyGCMNLLJpMWWUpzNRFSCBmnVEl7dDIKtAt3nU53EqUqW/Sgq0aKdVa+D3f4TwsAlJOEd3k0Dk2UQM0bcZA=
+	t=1747073057; cv=none; b=K0KQ2q4Ha7LwAO/RyUJb6R9yUjXBR+WWF8WYQLsFVEgHV+QbT1NZeHYcem1x+y5FRYSKnq0COKmu3GPFidzDjkNGsqSgl6jFemtlD/XcI0OAzMBfnvWt/hdQHQnqeLv3Ada+UO/n19ndOUPNvJ1NXDPHJ4fCvboz1Bqar7bjF5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1747073057; c=relaxed/simple;
-	bh=0RrDHPKBXyaRDEcdta9Mt+YcmvtP1RsMgsqgP1LVL78=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NxWr3KTxQK9MXPB//F3JkBdAQ7wwOonIpsTr/rlfVvdLtQUW6KZRebm407SdZyaCpB9iu20qQeLo24GKxoi27DbwEBKJnS28xLiQDiIYM8+AOh080qfw8YcaV2ntky9xD/SQEA2CEIPwV9XelaKAr/4Zz76uoheTFVNwM7nLhsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtmB5Ea/; arc=none smtp.client-ip=10.30.226.201
+	bh=B7MmUGyMEMUyla4md6J9bAqwlsP0cOIFyFAR4cdIpuI=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=P6rfSPYLKZREDjB/53oG6avx5mYp7YTIa56u4My4gL9I0cqV+i13mlxcDxCExnmwUIQxJVeShulx9UVonBXp+kAtiGjekfGG/pT0e4j6RzYXI99/ixn0wszuX3n3iHStMFk9J/mWEgCd3mLw5FK3ungpIeSwwFVIY7LGH0jCNQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XCXRrHsM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtmB5Ea/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3373DC4CEE7;
-	Mon, 12 May 2025 18:04:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073055;
-	bh=0RrDHPKBXyaRDEcdta9Mt+YcmvtP1RsMgsqgP1LVL78=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XCXRrHsM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B341AC4CEE9;
+	Mon, 12 May 2025 18:04:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747073055;
+	bh=B7MmUGyMEMUyla4md6J9bAqwlsP0cOIFyFAR4cdIpuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QtmB5Ea/mpUUugMgf9uyAkURfIj+I9zIH6INc6XW7UQ4r27nlEMUeCMwVHqwZcUZ2
-	 ONvtC8j9ojtu9gL2NSRrVw6zD0FI0Cy+Zrs98B3mhgTEU57+4AAjJPPyZTOzp9Swmi
-	 ltqan3TlFjXIrNQyO5kFw0lDCpjQHGEbOonza2b0=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	syzbot+a5d8c609c02f508672cc@syzkaller.appspotmail.com,
-	Ming Lei <ming.lei@redhat.com>,
-	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 141/184] loop: Fix ABBA locking race
-Date: Mon, 12 May 2025 19:45:42 +0200
-Message-ID: <20250512172047.550723864@linuxfoundation.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
-References: <20250512172041.624042835@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=XCXRrHsMgh5l4jXmcJQpAoKg4oKAXFw8UM9JrcngySg0oSB3PPQjtKROWe+eH5sQb
+	 X/o2zUhpM4sMhZ5Ju/U+/miA8UpX+OqKX7YUuNc4iTj1WFXHsIWtnrh6qjx0/5fqVk
+	 jsKHmzlwTq8x87UdjOx0bIrqlcFWJZOPCRd+hcnejShILH+1Gq5uNMdn9wcfPxV1IM
+	 Q5Xl1I512qlUbkspFykjgfc5PgzJd5kMKa84Z+1X90Y64TB7WRpqWuYiskjQ22Fxsk
+	 MlA4bGZHermoKcQjz1HF57PZK9wzjgk4BUjCpIpTD7iuOT4fM01UIPO7A4RMhlDK+S
+	 DTXIRyN7woOPA==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	miriam.rachel.korenblit@intel.com,
+	emmanuel.grumbach@intel.com,
+	somashekhar.puttagangaiah@intel.com,
+	pagadala.yesu.anjaneyulu@intel.com,
+	golan.ben.ami@intel.com,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 11/15] wifi: iwlwifi: add support for Killer on MTL
+Date: Mon, 12 May 2025 14:03:46 -0400
+Message-Id: <20250512180352.437356-11-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250512180352.437356-1-sashal@kernel.org>
+References: <20250512180352.437356-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.14.6
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+From: Johannes Berg <johannes.berg@intel.com>
 
-------------------
+[ Upstream commit ebedf8b7f05b9c886d68d63025db8d1b12343157 ]
 
-From: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+For now, we need another entry for these devices, this
+will be changed completely for 6.16.
 
-[ Upstream commit b49125574cae26458d4aa02ce8f4523ba9a2a328 ]
-
-Current loop calls vfs_statfs() while holding the q->limits_lock. If
-FS takes some locking in vfs_statfs callback, this may lead to ABBA
-locking bug (at least, FAT fs has this issue actually).
-
-So this patch calls vfs_statfs() outside q->limits_locks instead,
-because looks like no reason to hold q->limits_locks while getting
-discord configs.
-
-Chain exists of:
-  &sbi->fat_lock --> &q->q_usage_counter(io)#17 --> &q->limits_lock
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(&q->limits_lock);
-                               lock(&q->q_usage_counter(io)#17);
-                               lock(&q->limits_lock);
-  lock(&sbi->fat_lock);
-
- *** DEADLOCK ***
-
-Reported-by: syzbot+a5d8c609c02f508672cc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a5d8c609c02f508672cc
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: f5c84eff634b ("loop: Add sanity check for read/write_iter")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219926
+Link: https://patch.msgid.link/20250506214258.2efbdc9e9a82.I31915ec252bd1c74bd53b89a0e214e42a74b6f2e@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/loop.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index 1f55ddef53f3d..27e4bd8ee9dc9 100644
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -694,12 +694,11 @@ static void loop_sysfs_exit(struct loop_device *lo)
- 				   &loop_attribute_group);
- }
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+index d4c1bc20971fb..69cf46c79b4b3 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+@@ -587,6 +587,8 @@ VISIBLE_IF_IWLWIFI_KUNIT const struct iwl_dev_info iwl_dev_info_table[] = {
+ 	IWL_DEV_INFO(0x7A70, 0x1692, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690i_name),
+ 	IWL_DEV_INFO(0x7AF0, 0x1691, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690s_name),
+ 	IWL_DEV_INFO(0x7AF0, 0x1692, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690i_name),
++	IWL_DEV_INFO(0x7F70, 0x1691, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690s_name),
++	IWL_DEV_INFO(0x7F70, 0x1692, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690i_name),
  
--static void loop_config_discard(struct loop_device *lo,
--		struct queue_limits *lim)
-+static void loop_get_discard_config(struct loop_device *lo,
-+				    u32 *granularity, u32 *max_discard_sectors)
- {
- 	struct file *file = lo->lo_backing_file;
- 	struct inode *inode = file->f_mapping->host;
--	u32 granularity = 0, max_discard_sectors = 0;
- 	struct kstatfs sbuf;
- 
- 	/*
-@@ -712,24 +711,17 @@ static void loop_config_discard(struct loop_device *lo,
- 	if (S_ISBLK(inode->i_mode)) {
- 		struct block_device *bdev = I_BDEV(inode);
- 
--		max_discard_sectors = bdev_write_zeroes_sectors(bdev);
--		granularity = bdev_discard_granularity(bdev);
-+		*max_discard_sectors = bdev_write_zeroes_sectors(bdev);
-+		*granularity = bdev_discard_granularity(bdev);
- 
- 	/*
- 	 * We use punch hole to reclaim the free space used by the
- 	 * image a.k.a. discard.
- 	 */
- 	} else if (file->f_op->fallocate && !vfs_statfs(&file->f_path, &sbuf)) {
--		max_discard_sectors = UINT_MAX >> 9;
--		granularity = sbuf.f_bsize;
-+		*max_discard_sectors = UINT_MAX >> 9;
-+		*granularity = sbuf.f_bsize;
- 	}
--
--	lim->max_hw_discard_sectors = max_discard_sectors;
--	lim->max_write_zeroes_sectors = max_discard_sectors;
--	if (max_discard_sectors)
--		lim->discard_granularity = granularity;
--	else
--		lim->discard_granularity = 0;
- }
- 
- struct loop_worker {
-@@ -915,6 +907,7 @@ static int loop_reconfigure_limits(struct loop_device *lo, unsigned int bsize)
- 	struct inode *inode = file->f_mapping->host;
- 	struct block_device *backing_bdev = NULL;
- 	struct queue_limits lim;
-+	u32 granularity = 0, max_discard_sectors = 0;
- 
- 	if (S_ISBLK(inode->i_mode))
- 		backing_bdev = I_BDEV(inode);
-@@ -924,6 +917,8 @@ static int loop_reconfigure_limits(struct loop_device *lo, unsigned int bsize)
- 	if (!bsize)
- 		bsize = loop_default_blocksize(lo, backing_bdev);
- 
-+	loop_get_discard_config(lo, &granularity, &max_discard_sectors);
-+
- 	lim = queue_limits_start_update(lo->lo_queue);
- 	lim.logical_block_size = bsize;
- 	lim.physical_block_size = bsize;
-@@ -933,7 +928,12 @@ static int loop_reconfigure_limits(struct loop_device *lo, unsigned int bsize)
- 		lim.features |= BLK_FEAT_WRITE_CACHE;
- 	if (backing_bdev && !bdev_nonrot(backing_bdev))
- 		lim.features |= BLK_FEAT_ROTATIONAL;
--	loop_config_discard(lo, &lim);
-+	lim.max_hw_discard_sectors = max_discard_sectors;
-+	lim.max_write_zeroes_sectors = max_discard_sectors;
-+	if (max_discard_sectors)
-+		lim.discard_granularity = granularity;
-+	else
-+		lim.discard_granularity = 0;
- 	return queue_limits_commit_update(lo->lo_queue, &lim);
- }
- 
+ 	IWL_DEV_INFO(0x271C, 0x0214, iwl9260_2ac_cfg, iwl9260_1_name),
+ 	IWL_DEV_INFO(0x7E40, 0x1691, iwl_cfg_ma, iwl_ax411_killer_1690s_name),
 -- 
 2.39.5
-
-
 
