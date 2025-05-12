@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F9623C4E7;
-	Mon, 12 May 2025 18:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FEA299AA1;
+	Mon, 12 May 2025 18:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073392; cv=none; b=e/R2IQio1QuipWSah5iKKGo3EA+G2F/8Azcc5jaxG7/EhQCxsVtcaHj/VM4Zx1JZXD/BamueeJuwFaAnFWIO3Iu8hd+jpOPThjAwv8Z1jBqi3eLga+N0s0cA9x4lT73KEWlrXDFxJpKAsWb2rhZuUd/5K7/mI/OhtNumLqglI1U=
+	t=1747073396; cv=none; b=Wg1LmZlpd2oCxFU3TvZM6hHY4UgV0M/kSD3aXfWdcQmgfOAogIS1G6ldPFcK/SSLhOpkaYcFqFzCsknBz9o3ouUR2LN1qQFjcPbQMVhON0TJ4BtyxBqIXBfRRVLi6/3sc7Y260PLR+xWXOgbtF86BWHyZocR2l5Y1ERNW0fwEf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073392; c=relaxed/simple;
-	bh=4G4SSruSqBwo16D5PMlEHwXy4ky1b4eRHjKQHrYzDso=;
+	s=arc-20240116; t=1747073396; c=relaxed/simple;
+	bh=UMEuxHCw+7xz7hatRz7ZCJg7TKZ3Iw36I35zzhZbhuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OFlTR0DMCKU5/lutfLCP0sM9NNmpobQsDjXZ9WG+KUfRBHhiffXorVj01C5QWl+9ZHD0YidMa46dAAbMNvzoubVq62wxQk8DWAlv2XmGwcrRxaoOZq7RzqFYR5vYK20uUlN6Ie8d1rFpdySKqlwzTiRUUCl1eiYX6T7Ih5bhDZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3nhhwtW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=trebPp1i57EJXEHJvrMV2OOErKTvGLb/TZfhzF0LR2K0oxUpiq4kxC35YLmoQ3tepfdLxOvyXu+tF7RByDMR2OOJ2CJl1rUzNuk4A3WSVhw8tV5itZnlAx/P8TK1+apdCfvp4E1MiMvXQ49xiNV+P11WcQBSrqD5W/PRKnuoc/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGF2TVPX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3nhhwtW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78BE5C4CEE7;
-	Mon, 12 May 2025 18:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGF2TVPX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D29C4CEE7;
+	Mon, 12 May 2025 18:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073392;
-	bh=4G4SSruSqBwo16D5PMlEHwXy4ky1b4eRHjKQHrYzDso=;
+	s=korg; t=1747073396;
+	bh=UMEuxHCw+7xz7hatRz7ZCJg7TKZ3Iw36I35zzhZbhuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S3nhhwtWhlTiEJmXk7mE7c9A0F3OdICHQaimvn9jLabuLL0xcQEVY2D5UBIEtQOFF
-	 Mw1ijEtbtqvMSLPPFnpzSlGjnJjTa/9JsXHwOaujhOWd7j1z7GGrOJdNxRK1JzdgJ1
-	 sLxgXO976AGpfBJPwbPVPUd7WPsp3sqyDiccgfhs=
+	b=EGF2TVPX5ZRS5mpxEPCZ/YHGSdV60fwnlxYL968fz9dy6TcYj2w1Hb8FLKZ2HhtSW
+	 bxc/UVCFyjQlOtlX6TA0tspkk37WCb0SiQGOKvCFzj+6Y9MPoz7YFanv01Qi+nVriK
+	 DTXPDOI8dNamsbxHgDPDmc9Vb8WPG5+Pj6qvgYvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.6 061/113] clocksource/i8253: Use raw_spinlock_irqsave() in clockevent_i8253_disable()
-Date: Mon, 12 May 2025 19:45:50 +0200
-Message-ID: <20250512172030.162378225@linuxfoundation.org>
+	syzbot+7fb8a372e1f6add936dd@syzkaller.appspotmail.com,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>
+Subject: [PATCH 6.6 062/113] module: ensure that kobject_put() is safe for module type kobjects
+Date: Mon, 12 May 2025 19:45:51 +0200
+Message-ID: <20250512172030.205864579@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172027.691520737@linuxfoundation.org>
 References: <20250512172027.691520737@linuxfoundation.org>
@@ -50,53 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-commit 94cff94634e506a4a44684bee1875d2dbf782722 upstream.
+commit a6aeb739974ec73e5217c75a7c008a688d3d5cf1 upstream.
 
-On x86 during boot, clockevent_i8253_disable() can be invoked via
-x86_late_time_init -> hpet_time_init() -> pit_timer_init() which happens
-with enabled interrupts.
+In 'lookup_or_create_module_kobject()', an internal kobject is created
+using 'module_ktype'. So call to 'kobject_put()' on error handling
+path causes an attempt to use an uninitialized completion pointer in
+'module_kobject_release()'. In this scenario, we just want to release
+kobject without an extra synchronization required for a regular module
+unloading process, so adding an extra check whether 'complete()' is
+actually required makes 'kobject_put()' safe.
 
-If some of the old i8253 hardware is actually used then lockdep will notice
-that i8253_lock is used in hard interrupt context. This causes lockdep to
-complain because it observed the lock being acquired with interrupts
-enabled and in hard interrupt context.
-
-Make clockevent_i8253_disable() acquire the lock with
-raw_spinlock_irqsave() to cure this.
-
-[ tglx: Massage change log and use guard() ]
-
-Fixes: c8c4076723dac ("x86/timer: Skip PIT initialization on modern chipsets")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reported-by: syzbot+7fb8a372e1f6add936dd@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7fb8a372e1f6add936dd
+Fixes: 942e443127e9 ("module: Fix mod->mkobj.kobj potentially freed too early")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20250404133116.p-XRWJXf@linutronix.de
+Suggested-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Link: https://lore.kernel.org/r/20250507065044.86529-1-dmantipov@yandex.ru
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clocksource/i8253.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ kernel/params.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/clocksource/i8253.c
-+++ b/drivers/clocksource/i8253.c
-@@ -103,7 +103,7 @@ int __init clocksource_i8253_init(void)
- #ifdef CONFIG_CLKEVT_I8253
- void clockevent_i8253_disable(void)
+--- a/kernel/params.c
++++ b/kernel/params.c
+@@ -945,7 +945,9 @@ struct kset *module_kset;
+ static void module_kobj_release(struct kobject *kobj)
  {
--	raw_spin_lock(&i8253_lock);
-+	guard(raw_spinlock_irqsave)(&i8253_lock);
- 
- 	/*
- 	 * Writing the MODE register should stop the counter, according to
-@@ -132,8 +132,6 @@ void clockevent_i8253_disable(void)
- 	outb_p(0, PIT_CH0);
- 
- 	outb_p(0x30, PIT_MODE);
--
--	raw_spin_unlock(&i8253_lock);
+ 	struct module_kobject *mk = to_module_kobject(kobj);
+-	complete(mk->kobj_completion);
++
++	if (mk->kobj_completion)
++		complete(mk->kobj_completion);
  }
  
- static int pit_shutdown(struct clock_event_device *evt)
+ const struct kobj_type module_ktype = {
 
 
