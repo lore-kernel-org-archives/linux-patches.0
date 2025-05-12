@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860471DF72E;
-	Mon, 12 May 2025 17:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4F81DF72E;
+	Mon, 12 May 2025 17:47:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072027; cv=none; b=ecUCG5U+DDvXosFSK5hQKs0/H9iirojWLy7mjWTKI7h4wFo9B9udI+/+gwc/7Ut0rnN11E2P4+zeVB7GNJ1bxGYVMfn/YdCzBO43tNbHm5HpebJtFs6qTGqtOcvuXJU/tPqDaq60D/osK7ggN79nWV6C6q0u6IbDbceA2O9XPLQ=
+	t=1747072030; cv=none; b=dVM4KuObrVALJriroZNWZB1pwTsbcpNJTSCPi9R2A7dlwzrcvWXJBN1m1HKOV+R01bw6ZNv2LfXwyOSDphcsF3L4Sf8HakOsUSzqQNMJNPKAo0++cfN8N9jsVavh87h4NJ0teKy0w9+nOU8nC97tbYDru1emDpC9RbG7Knoa9pg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072027; c=relaxed/simple;
-	bh=meFr/xyj9qkPANaJx6i2ndIHe8idED7v7qVK+tb8ee0=;
+	s=arc-20240116; t=1747072030; c=relaxed/simple;
+	bh=+mACTxlWBxU3IECAl2kg3xeDNAu4exN/3DwU76KiDNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LkACscRKjHiUOODAMbuxLkBwSEkVavJD3ADnMDCta+YFVgPVsR+/bbc8R4/a41GLuAu2h/BS0WIObNYhV8lYLSUYOJYL92T4Brshs0Y2d8bl83hY/jS05TzoauZmPXIx9bEPKwiSWNr3i9v5sHGUybJcjiCSNTGtiZgPg2rz9uU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbICC6EI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hHM0yXlm9dibwTmvkj9uHDxQV2mpfqqFJIeS1F7Xu2zqdKdWNR0FP+5DHP9NQw2b/nVG4z8mUULzNxMECmAIPreZam+h9kawUrkWw2r+XBkmWkiXwYA2kPrFDvt9LqHtJNKpcJuME4P6r4jv4DUgja8cvjEwARxr6TrlCY9+Qd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvVklzzG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbICC6EI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16CDDC4CEE7;
-	Mon, 12 May 2025 17:47:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvVklzzG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA185C4CEE7;
+	Mon, 12 May 2025 17:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072027;
-	bh=meFr/xyj9qkPANaJx6i2ndIHe8idED7v7qVK+tb8ee0=;
+	s=korg; t=1747072030;
+	bh=+mACTxlWBxU3IECAl2kg3xeDNAu4exN/3DwU76KiDNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZbICC6EIePziYqK4YRC3C0WrSQubBOPWgiZj9oEeREyD5nCd+wsklTUX7gdakK+gm
-	 hpQpb2bcTHbz7jxCcixBBdcvIpisIglumgQVuG5zC0oh3hj2D5wyd7rG/igqOKO8HU
-	 Z0Sd2gYKmbnhh9EKZB3sOAjY6MMkKwIm0SfQth8w=
+	b=IvVklzzGByILLD355a9CSJyZUnKDIkv7tqo+0QiozWLQnA1Vh2jeOZgK8eXrd1fS3
+	 FSkAgAQk8gZiubXOE+1c0jOPYHb3rG0gNXdRQwOdvYRtJzelmmFS68u2Yk+4l/6lxj
+	 cj1n30tLFMe4N4xDWvJByeulVvU8rNMpNkSp9vl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.14 114/197] drm/amdgpu/hdp5: use memcfg register to post the write for HDP flush
-Date: Mon, 12 May 2025 19:39:24 +0200
-Message-ID: <20250512172049.020870068@linuxfoundation.org>
+	Silvano Seva <s.seva@4sigma.it>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.14 097/197] iio: imu: st_lsm6dsx: fix possible lockup in st_lsm6dsx_read_fifo
+Date: Mon, 12 May 2025 19:39:07 +0200
+Message-ID: <20250512172048.332665042@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -51,43 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Silvano Seva <s.seva@4sigma.it>
 
-commit 0e33e0f339b91eecd9558311449a3d1e728722d4 upstream.
+commit 159ca7f18129834b6f4c7eae67de48e96c752fc9 upstream.
 
-Reading back the remapped HDP flush register seems to cause
-problems on some platforms. All we need is a read, so read back
-the memcfg register.
+Prevent st_lsm6dsx_read_fifo from falling in an infinite loop in case
+pattern_len is equal to zero and the device FIFO is not empty.
 
-Fixes: cf424020e040 ("drm/amdgpu/hdp5.0: do a posting read when flushing HDP")
-Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
-Link: https://lists.freedesktop.org/archives/amd-gfx/2025-April/123150.html
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4119
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3908
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a5cb344033c7598762e89255e8ff52827abb57a4)
-Cc: stable@vger.kernel.org
+Fixes: 290a6ce11d93 ("iio: imu: add support to lsm6dsx driver")
+Signed-off-by: Silvano Seva <s.seva@4sigma.it>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20250311085030.3593-2-s.seva@4sigma.it
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/hdp_v5_0.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/hdp_v5_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/hdp_v5_0.c
-@@ -33,7 +33,12 @@ static void hdp_v5_0_flush_hdp(struct am
- {
- 	if (!ring || !ring->funcs->emit_wreg) {
- 		WREG32((adev->rmmio_remap.reg_offset + KFD_MMIO_REMAP_HDP_MEM_FLUSH_CNTL) >> 2, 0);
--		RREG32((adev->rmmio_remap.reg_offset + KFD_MMIO_REMAP_HDP_MEM_FLUSH_CNTL) >> 2);
-+		/* We just need to read back a register to post the write.
-+		 * Reading back the remapped register causes problems on
-+		 * some platforms so just read back the memory size register.
-+		 */
-+		if (adev->nbio.funcs->get_memsize)
-+			adev->nbio.funcs->get_memsize(adev);
- 	} else {
- 		amdgpu_ring_emit_wreg(ring, (adev->rmmio_remap.reg_offset + KFD_MMIO_REMAP_HDP_MEM_FLUSH_CNTL) >> 2, 0);
- 	}
+--- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
++++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
+@@ -392,6 +392,9 @@ int st_lsm6dsx_read_fifo(struct st_lsm6d
+ 	if (fifo_status & cpu_to_le16(ST_LSM6DSX_FIFO_EMPTY_MASK))
+ 		return 0;
+ 
++	if (!pattern_len)
++		pattern_len = ST_LSM6DSX_SAMPLE_SIZE;
++
+ 	fifo_len = (le16_to_cpu(fifo_status) & fifo_diff_mask) *
+ 		   ST_LSM6DSX_CHAN_SIZE;
+ 	fifo_len = (fifo_len / pattern_len) * pattern_len;
 
 
