@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A507B29E071;
-	Mon, 12 May 2025 18:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87BC29E04F;
+	Mon, 12 May 2025 18:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073108; cv=none; b=TL7WXzA3O4eIYwCleuYpEpr1Jbx4OxPeyOFqGaOjptJlEmEInJccIfsIAnxc3RjB68uI50hsYrtI+RzvdMK1U+jGy94RTk8dwyrqDq9c0+TupyGiE8jQ1yqW8LMIdCBFaTNhi8/3kE5FW/7faf/TOXkP0eTGuysByLLuN6aFYDA=
+	t=1747073111; cv=none; b=VpOycqMwQFutXtOR3ihku7PeaB8YDAwgKpeGe7q3LNVECwZ4aXESEwCs0aUf+pU5as0gQlg5oO2i7dVXHYxaC3BlgPSxx3XuQPJ7jnmoBcatYHKjmFVCe43+rYLotlgNIXYwIs1gUcgQd2guVHWlFGTBotHPp+qjsmm/CDtsnFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073108; c=relaxed/simple;
-	bh=8V9OkoNM4yHKEp/3HcmnunykYmvRWJmtdnFj0UjD16g=;
+	s=arc-20240116; t=1747073111; c=relaxed/simple;
+	bh=Ui/npbgSS/tq8IKw2Tuu5il/T7BEa3dczYtyDt3Neg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pF1MczvMDlFzUqYvSfvT8ghn2VJRlubLiL+Dn35Kb3JSKI7CNEEjRCdsziZ7L+56+T5SX/8GVIMLS8Vli/f60QDjZfXHYMtv5WFoJBU3kwVqahmPRHEIesaCCdlYasflj8ulbHyrBy1axucWgBG5+GH8MqnPcLbYEXWz8MG9eOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WHtubyb9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qILK0Sobstcp4zMPpu2BZwNotb9dUGiNQOtcnVyrxXHfrKdTUWWfjBV+3aSDDFncj4kG2P31vCcfztDGUanj7p/x+0+6x57cyWLL3l+T9CxFSBfop7Y25PhS8JZqGhwiLrEqiDmcnx9N7oVfeV2FKoHINyUYTOuuLtBll63SZiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eh/SoiZH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHtubyb9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE40FC4CEF1;
-	Mon, 12 May 2025 18:05:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eh/SoiZH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9E8C4CEF1;
+	Mon, 12 May 2025 18:05:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073108;
-	bh=8V9OkoNM4yHKEp/3HcmnunykYmvRWJmtdnFj0UjD16g=;
+	s=korg; t=1747073111;
+	bh=Ui/npbgSS/tq8IKw2Tuu5il/T7BEa3dczYtyDt3Neg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WHtubyb9gMvLxJWSK/oOGjmjuP5TFjsjr+VyZDB7nFwJGI4RM7XQIokb28mX/eigc
-	 PRJOyi8b7KCBcSA2W8wUQtsg9n0ctYjwkzNHZPqLGPjDjb+j1Px6gshb2EdhbUJ9RS
-	 yKE36GUO441B0oALUHQzqJXm8LcG/RSCHCpzO7mI=
+	b=Eh/SoiZH0EjpMZtnMJx0F80DgVi2DoDbatHqcLBsrJ6/nd4PPl9+LGyk7IAOw1QFL
+	 tagD4XfXGrBLNDTjf8o+g95kZ+vFZgDLVXKegaTiHU36rc01dxXfEJETysETQAfWU3
+	 HeTMyx8B/ukrFkTbqB+fiw4S1/odXUShcBPw8Z88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benno Lossin <lossin@kernel.org>,
-	Tamir Duberstein <tamird@gmail.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 155/184] rust: clean Rust 1.88.0s `clippy::uninlined_format_args` lint
-Date: Mon, 12 May 2025 19:45:56 +0200
-Message-ID: <20250512172048.130747668@linuxfoundation.org>
+	Chase Hiltz <chase@path.net>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 156/184] io_uring: always arm linked timeouts prior to issue
+Date: Mon, 12 May 2025 19:45:57 +0200
+Message-ID: <20250512172048.171659591@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -52,245 +50,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 211dcf77856db64c73e0c3b9ce0c624ec855daca upstream.
+Commit b53e523261bf058ea4a518b482222e7a277b186b upstream.
 
-Starting with Rust 1.88.0 (expected 2025-06-26) [1], `rustc` may move
-back the `uninlined_format_args` to `style` from `pedantic` (it was
-there waiting for rust-analyzer suppotr), and thus we will start to see
-lints like:
+There are a few spots where linked timeouts are armed, and not all of
+them adhere to the pre-arm, attempt issue, post-arm pattern. This can
+be problematic if the linked request returns that it will trigger a
+callback later, and does so before the linked timeout is fully armed.
 
-    warning: variables can be used directly in the `format!` string
-       --> rust/macros/kunit.rs:105:37
-        |
-    105 |         let kunit_wrapper_fn_name = format!("kunit_rust_wrapper_{}", test);
-        |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        |
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#uninlined_format_args
-    help: change this to
-        |
-    105 -         let kunit_wrapper_fn_name = format!("kunit_rust_wrapper_{}", test);
-    105 +         let kunit_wrapper_fn_name = format!("kunit_rust_wrapper_{test}");
+Consolidate all the linked timeout handling into __io_issue_sqe(),
+rather than have it spread throughout the various issue entry points.
 
-There is even a case that is a pure removal:
-
-    warning: variables can be used directly in the `format!` string
-      --> rust/macros/module.rs:51:13
-       |
-    51 |             format!("{field}={content}\0", field = field, content = content)
-       |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-       |
-       = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#uninlined_format_args
-    help: change this to
-       |
-    51 -             format!("{field}={content}\0", field = field, content = content)
-    51 +             format!("{field}={content}\0")
-
-The lints all seem like nice cleanups, thus just apply them.
-
-We may want to disable `allow-mixed-uninlined-format-args` in the future.
-
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Link: https://github.com/rust-lang/rust-clippy/pull/14160 [1]
-Acked-by: Benno Lossin <lossin@kernel.org>
-Reviewed-by: Tamir Duberstein <tamird@gmail.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/r/20250502140237.1659624-6-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://github.com/axboe/liburing/issues/1390
+Reported-by: Chase Hiltz <chase@path.net>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/str.rs         |   46 ++++++++++++++++++++++-----------------------
- rust/macros/module.rs      |   19 ++++--------------
- rust/macros/pinned_drop.rs |    3 --
- 3 files changed, 29 insertions(+), 39 deletions(-)
+ io_uring/io_uring.c |   50 +++++++++++++++-----------------------------------
+ 1 file changed, 15 insertions(+), 35 deletions(-)
 
---- a/rust/kernel/str.rs
-+++ b/rust/kernel/str.rs
-@@ -55,7 +55,7 @@ impl fmt::Display for BStr {
-                 b'\r' => f.write_str("\\r")?,
-                 // Printable characters.
-                 0x20..=0x7e => f.write_char(b as char)?,
--                _ => write!(f, "\\x{:02x}", b)?,
-+                _ => write!(f, "\\x{b:02x}")?,
-             }
-         }
-         Ok(())
-@@ -90,7 +90,7 @@ impl fmt::Debug for BStr {
-                 b'\\' => f.write_str("\\\\")?,
-                 // Printable characters.
-                 0x20..=0x7e => f.write_char(b as char)?,
--                _ => write!(f, "\\x{:02x}", b)?,
-+                _ => write!(f, "\\x{b:02x}")?,
-             }
-         }
-         f.write_char('"')
-@@ -397,7 +397,7 @@ impl fmt::Display for CStr {
-                 // Printable character.
-                 f.write_char(c as char)?;
-             } else {
--                write!(f, "\\x{:02x}", c)?;
-+                write!(f, "\\x{c:02x}")?;
-             }
-         }
-         Ok(())
-@@ -428,7 +428,7 @@ impl fmt::Debug for CStr {
-                 // Printable characters.
-                 b'\"' => f.write_str("\\\"")?,
-                 0x20..=0x7e => f.write_char(c as char)?,
--                _ => write!(f, "\\x{:02x}", c)?,
-+                _ => write!(f, "\\x{c:02x}")?,
-             }
-         }
-         f.write_str("\"")
-@@ -588,13 +588,13 @@ mod tests {
-     #[test]
-     fn test_cstr_display() {
-         let hello_world = CStr::from_bytes_with_nul(b"hello, world!\0").unwrap();
--        assert_eq!(format!("{}", hello_world), "hello, world!");
-+        assert_eq!(format!("{hello_world}"), "hello, world!");
-         let non_printables = CStr::from_bytes_with_nul(b"\x01\x09\x0a\0").unwrap();
--        assert_eq!(format!("{}", non_printables), "\\x01\\x09\\x0a");
-+        assert_eq!(format!("{non_printables}"), "\\x01\\x09\\x0a");
-         let non_ascii = CStr::from_bytes_with_nul(b"d\xe9j\xe0 vu\0").unwrap();
--        assert_eq!(format!("{}", non_ascii), "d\\xe9j\\xe0 vu");
-+        assert_eq!(format!("{non_ascii}"), "d\\xe9j\\xe0 vu");
-         let good_bytes = CStr::from_bytes_with_nul(b"\xf0\x9f\xa6\x80\0").unwrap();
--        assert_eq!(format!("{}", good_bytes), "\\xf0\\x9f\\xa6\\x80");
-+        assert_eq!(format!("{good_bytes}"), "\\xf0\\x9f\\xa6\\x80");
-     }
- 
-     #[test]
-@@ -605,47 +605,47 @@ mod tests {
-             bytes[i as usize] = i.wrapping_add(1);
-         }
-         let cstr = CStr::from_bytes_with_nul(&bytes).unwrap();
--        assert_eq!(format!("{}", cstr), ALL_ASCII_CHARS);
-+        assert_eq!(format!("{cstr}"), ALL_ASCII_CHARS);
-     }
- 
-     #[test]
-     fn test_cstr_debug() {
-         let hello_world = CStr::from_bytes_with_nul(b"hello, world!\0").unwrap();
--        assert_eq!(format!("{:?}", hello_world), "\"hello, world!\"");
-+        assert_eq!(format!("{hello_world:?}"), "\"hello, world!\"");
-         let non_printables = CStr::from_bytes_with_nul(b"\x01\x09\x0a\0").unwrap();
--        assert_eq!(format!("{:?}", non_printables), "\"\\x01\\x09\\x0a\"");
-+        assert_eq!(format!("{non_printables:?}"), "\"\\x01\\x09\\x0a\"");
-         let non_ascii = CStr::from_bytes_with_nul(b"d\xe9j\xe0 vu\0").unwrap();
--        assert_eq!(format!("{:?}", non_ascii), "\"d\\xe9j\\xe0 vu\"");
-+        assert_eq!(format!("{non_ascii:?}"), "\"d\\xe9j\\xe0 vu\"");
-         let good_bytes = CStr::from_bytes_with_nul(b"\xf0\x9f\xa6\x80\0").unwrap();
--        assert_eq!(format!("{:?}", good_bytes), "\"\\xf0\\x9f\\xa6\\x80\"");
-+        assert_eq!(format!("{good_bytes:?}"), "\"\\xf0\\x9f\\xa6\\x80\"");
-     }
- 
-     #[test]
-     fn test_bstr_display() {
-         let hello_world = BStr::from_bytes(b"hello, world!");
--        assert_eq!(format!("{}", hello_world), "hello, world!");
-+        assert_eq!(format!("{hello_world}"), "hello, world!");
-         let escapes = BStr::from_bytes(b"_\t_\n_\r_\\_\'_\"_");
--        assert_eq!(format!("{}", escapes), "_\\t_\\n_\\r_\\_'_\"_");
-+        assert_eq!(format!("{escapes}"), "_\\t_\\n_\\r_\\_'_\"_");
-         let others = BStr::from_bytes(b"\x01");
--        assert_eq!(format!("{}", others), "\\x01");
-+        assert_eq!(format!("{others}"), "\\x01");
-         let non_ascii = BStr::from_bytes(b"d\xe9j\xe0 vu");
--        assert_eq!(format!("{}", non_ascii), "d\\xe9j\\xe0 vu");
-+        assert_eq!(format!("{non_ascii}"), "d\\xe9j\\xe0 vu");
-         let good_bytes = BStr::from_bytes(b"\xf0\x9f\xa6\x80");
--        assert_eq!(format!("{}", good_bytes), "\\xf0\\x9f\\xa6\\x80");
-+        assert_eq!(format!("{good_bytes}"), "\\xf0\\x9f\\xa6\\x80");
-     }
- 
-     #[test]
-     fn test_bstr_debug() {
-         let hello_world = BStr::from_bytes(b"hello, world!");
--        assert_eq!(format!("{:?}", hello_world), "\"hello, world!\"");
-+        assert_eq!(format!("{hello_world:?}"), "\"hello, world!\"");
-         let escapes = BStr::from_bytes(b"_\t_\n_\r_\\_\'_\"_");
--        assert_eq!(format!("{:?}", escapes), "\"_\\t_\\n_\\r_\\\\_'_\\\"_\"");
-+        assert_eq!(format!("{escapes:?}"), "\"_\\t_\\n_\\r_\\\\_'_\\\"_\"");
-         let others = BStr::from_bytes(b"\x01");
--        assert_eq!(format!("{:?}", others), "\"\\x01\"");
-+        assert_eq!(format!("{others:?}"), "\"\\x01\"");
-         let non_ascii = BStr::from_bytes(b"d\xe9j\xe0 vu");
--        assert_eq!(format!("{:?}", non_ascii), "\"d\\xe9j\\xe0 vu\"");
-+        assert_eq!(format!("{non_ascii:?}"), "\"d\\xe9j\\xe0 vu\"");
-         let good_bytes = BStr::from_bytes(b"\xf0\x9f\xa6\x80");
--        assert_eq!(format!("{:?}", good_bytes), "\"\\xf0\\x9f\\xa6\\x80\"");
-+        assert_eq!(format!("{good_bytes:?}"), "\"\\xf0\\x9f\\xa6\\x80\"");
-     }
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -441,24 +441,6 @@ static struct io_kiocb *__io_prep_linked
+ 	return req->link;
  }
  
---- a/rust/macros/module.rs
-+++ b/rust/macros/module.rs
-@@ -48,7 +48,7 @@ impl<'a> ModInfoBuilder<'a> {
-             )
-         } else {
-             // Loadable modules' modinfo strings go as-is.
--            format!("{field}={content}\0", field = field, content = content)
-+            format!("{field}={content}\0")
-         };
+-static inline struct io_kiocb *io_prep_linked_timeout(struct io_kiocb *req)
+-{
+-	if (likely(!(req->flags & REQ_F_ARM_LTIMEOUT)))
+-		return NULL;
+-	return __io_prep_linked_timeout(req);
+-}
+-
+-static noinline void __io_arm_ltimeout(struct io_kiocb *req)
+-{
+-	io_queue_linked_timeout(__io_prep_linked_timeout(req));
+-}
+-
+-static inline void io_arm_ltimeout(struct io_kiocb *req)
+-{
+-	if (unlikely(req->flags & REQ_F_ARM_LTIMEOUT))
+-		__io_arm_ltimeout(req);
+-}
+-
+ static void io_prep_async_work(struct io_kiocb *req)
+ {
+ 	const struct io_issue_def *def = &io_issue_defs[req->opcode];
+@@ -511,7 +493,6 @@ static void io_prep_async_link(struct io
  
-         write!(
-@@ -124,10 +124,7 @@ impl ModuleInfo {
-             };
+ static void io_queue_iowq(struct io_kiocb *req)
+ {
+-	struct io_kiocb *link = io_prep_linked_timeout(req);
+ 	struct io_uring_task *tctx = req->task->io_uring;
  
-             if seen_keys.contains(&key) {
--                panic!(
--                    "Duplicated key \"{}\". Keys can only be specified once.",
--                    key
--                );
-+                panic!("Duplicated key \"{key}\". Keys can only be specified once.");
-             }
+ 	BUG_ON(!tctx);
+@@ -536,8 +517,6 @@ static void io_queue_iowq(struct io_kioc
  
-             assert_eq!(expect_punct(it), ':');
-@@ -140,10 +137,7 @@ impl ModuleInfo {
-                 "license" => info.license = expect_string_ascii(it),
-                 "alias" => info.alias = Some(expect_string_array(it)),
-                 "firmware" => info.firmware = Some(expect_string_array(it)),
--                _ => panic!(
--                    "Unknown key \"{}\". Valid keys are: {:?}.",
--                    key, EXPECTED_KEYS
--                ),
-+                _ => panic!("Unknown key \"{key}\". Valid keys are: {EXPECTED_KEYS:?}."),
-             }
+ 	trace_io_uring_queue_async_work(req, io_wq_is_hashed(&req->work));
+ 	io_wq_enqueue(tctx->io_wq, &req->work);
+-	if (link)
+-		io_queue_linked_timeout(link);
+ }
  
-             assert_eq!(expect_punct(it), ',');
-@@ -155,7 +149,7 @@ impl ModuleInfo {
+ static void io_req_queue_iowq_tw(struct io_kiocb *req, struct io_tw_state *ts)
+@@ -1731,17 +1710,24 @@ static bool io_assign_file(struct io_kio
+ 	return !!req->file;
+ }
  
-         for key in REQUIRED_KEYS {
-             if !seen_keys.iter().any(|e| e == key) {
--                panic!("Missing required key \"{}\".", key);
-+                panic!("Missing required key \"{key}\".");
-             }
-         }
++#define REQ_ISSUE_SLOW_FLAGS	(REQ_F_CREDS | REQ_F_ARM_LTIMEOUT)
++
+ static int io_issue_sqe(struct io_kiocb *req, unsigned int issue_flags)
+ {
+ 	const struct io_issue_def *def = &io_issue_defs[req->opcode];
+ 	const struct cred *creds = NULL;
++	struct io_kiocb *link = NULL;
+ 	int ret;
  
-@@ -167,10 +161,7 @@ impl ModuleInfo {
-         }
+ 	if (unlikely(!io_assign_file(req, def, issue_flags)))
+ 		return -EBADF;
  
-         if seen_keys != ordered_keys {
--            panic!(
--                "Keys are not ordered as expected. Order them like: {:?}.",
--                ordered_keys
--            );
-+            panic!("Keys are not ordered as expected. Order them like: {ordered_keys:?}.");
-         }
+-	if (unlikely((req->flags & REQ_F_CREDS) && req->creds != current_cred()))
+-		creds = override_creds(req->creds);
++	if (unlikely(req->flags & REQ_ISSUE_SLOW_FLAGS)) {
++		if ((req->flags & REQ_F_CREDS) && req->creds != current_cred())
++			creds = override_creds(req->creds);
++		if (req->flags & REQ_F_ARM_LTIMEOUT)
++			link = __io_prep_linked_timeout(req);
++	}
  
-         info
---- a/rust/macros/pinned_drop.rs
-+++ b/rust/macros/pinned_drop.rs
-@@ -25,8 +25,7 @@ pub(crate) fn pinned_drop(_args: TokenSt
-             // Found the end of the generics, this should be `PinnedDrop`.
-             assert!(
-                 matches!(tt, TokenTree::Ident(i) if i.to_string() == "PinnedDrop"),
--                "expected 'PinnedDrop', found: '{:?}'",
--                tt
-+                "expected 'PinnedDrop', found: '{tt:?}'"
-             );
-             pinned_drop_idx = Some(i);
-             break;
+ 	if (!def->audit_skip)
+ 		audit_uring_entry(req->opcode);
+@@ -1751,8 +1737,12 @@ static int io_issue_sqe(struct io_kiocb
+ 	if (!def->audit_skip)
+ 		audit_uring_exit(!ret, ret);
+ 
+-	if (creds)
+-		revert_creds(creds);
++	if (unlikely(creds || link)) {
++		if (creds)
++			revert_creds(creds);
++		if (link)
++			io_queue_linked_timeout(link);
++	}
+ 
+ 	if (ret == IOU_OK) {
+ 		if (issue_flags & IO_URING_F_COMPLETE_DEFER)
+@@ -1765,7 +1755,6 @@ static int io_issue_sqe(struct io_kiocb
+ 
+ 	if (ret == IOU_ISSUE_SKIP_COMPLETE) {
+ 		ret = 0;
+-		io_arm_ltimeout(req);
+ 
+ 		/* If the op doesn't have a file, we're not polling for it */
+ 		if ((req->ctx->flags & IORING_SETUP_IOPOLL) && def->iopoll_queue)
+@@ -1808,8 +1797,6 @@ void io_wq_submit_work(struct io_wq_work
+ 	else
+ 		req_ref_get(req);
+ 
+-	io_arm_ltimeout(req);
+-
+ 	/* either cancelled or io-wq is dying, so don't touch tctx->iowq */
+ 	if (atomic_read(&work->flags) & IO_WQ_WORK_CANCEL) {
+ fail:
+@@ -1929,15 +1916,11 @@ struct file *io_file_get_normal(struct i
+ static void io_queue_async(struct io_kiocb *req, int ret)
+ 	__must_hold(&req->ctx->uring_lock)
+ {
+-	struct io_kiocb *linked_timeout;
+-
+ 	if (ret != -EAGAIN || (req->flags & REQ_F_NOWAIT)) {
+ 		io_req_defer_failed(req, ret);
+ 		return;
+ 	}
+ 
+-	linked_timeout = io_prep_linked_timeout(req);
+-
+ 	switch (io_arm_poll_handler(req, 0)) {
+ 	case IO_APOLL_READY:
+ 		io_kbuf_recycle(req, 0);
+@@ -1950,9 +1933,6 @@ static void io_queue_async(struct io_kio
+ 	case IO_APOLL_OK:
+ 		break;
+ 	}
+-
+-	if (linked_timeout)
+-		io_queue_linked_timeout(linked_timeout);
+ }
+ 
+ static inline void io_queue_sqe(struct io_kiocb *req)
 
 
