@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B242D2C2FB2;
-	Mon, 12 May 2025 18:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEE0299A84;
+	Mon, 12 May 2025 18:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073347; cv=none; b=lAdtKcl6YFZNF8odfP+kpYw5sz1x61mhQRtf+1DihxQqvQogzZT/98dkz1DCUDDr6NQOzbS98m+dwHhLYOPpaQ4A5EWnxwHtndSLwDNJzGft4Hw0mMBpUJvaH3O0AaZ4xxihsMEi3hSWO8EcsUs6MArpQ/a7L/4ZEhDrdPbgcw0=
+	t=1747073351; cv=none; b=stM5bvCbiT6Dh0bsmu+sSIAuTOjNgKYcitYvgBZHyVTzpD2BYix33AeIAeJ+d7+BA+FDqqgGWWLxwPkFcSVUUSSG4XiVdc5qxORAGe7f8kLwy4CPgxgFE8E0JDTrQ5/YHi92YuHp7m7rEVrjG141C8nRUPnKx5LsTgrUF+sinWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073347; c=relaxed/simple;
-	bh=wvZk/b0K9dvf6+k+ahUOSZKKp8HF+8LFQxsEgovm8xY=;
+	s=arc-20240116; t=1747073351; c=relaxed/simple;
+	bh=0EBzElVCiXS+y6AK2VjwUPTKifwhoAiMFKeep75jzKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RJBEUGep1ul81HEaaYwthfr7ajzxDgF7T9UT0oHMbxtTfmBDa0P9+Q+odAen/ht9FOxjHq08tDlG8wpHxG29aCvwhE+58cd5eCtedSHSUi6MM8fdF8dtuD8jdr9Va8mfjQ9gDHRC8pSQvz3u2vc4ukpVL/sh6JkP6Bbxva0AHL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uNwPKCY6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SQJ5inz3sw44I301LWfXICtcprb8ageJ18BFKai3+bgDGJG6/JO0FbYp0nX9GnAGDgVxQjmr59wXJOyqg/2pEhh9U8hl30rSL4djTCGw7v010L/Sc1usrZEOEiutboZfiyNDWAx60nMnblh+fbE+pQP1pXlgnlpD0oXQiBw1WC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u0EXS9vd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNwPKCY6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B648AC4CEE9;
-	Mon, 12 May 2025 18:09:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u0EXS9vd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10ADC4CEFB;
+	Mon, 12 May 2025 18:09:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073347;
-	bh=wvZk/b0K9dvf6+k+ahUOSZKKp8HF+8LFQxsEgovm8xY=;
+	s=korg; t=1747073350;
+	bh=0EBzElVCiXS+y6AK2VjwUPTKifwhoAiMFKeep75jzKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uNwPKCY6IsLj+8QSMXzf9vUYT07frI5evI5CTjorawWceNzgmPFz7/czzcxBVYuOK
-	 +Uqw6xiytlvq3DtVDiaJM13rDcSEml52vWVqWm0oFIiBQWEcGR8dziNexD/9Tu4BGp
-	 Dqqb4J/Qnomn5nmzBZWqT21ONP1L3395bmgPHcaY=
+	b=u0EXS9vdNSIKfnfXEZhKtaiIBoMbZ0oxzz13u3KQijvyVGtbWTowJfawExr+uEcvQ
+	 qhuWuYM7dogapb1Qp2cEpQCD2qdoFLqZoBzYaaqbMzgVr3XbE6mbRi3RTIB3cvJOpm
+	 PDvC0rFWcCyo9aYlYDHTSezznOxKt+h1x5TcltFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 045/113] iio: imu: st_lsm6dsx: fix possible lockup in st_lsm6dsx_read_fifo
-Date: Mon, 12 May 2025 19:45:34 +0200
-Message-ID: <20250512172029.499887132@linuxfoundation.org>
+Subject: [PATCH 6.6 046/113] iio: imu: st_lsm6dsx: fix possible lockup in st_lsm6dsx_read_tagged_fifo
+Date: Mon, 12 May 2025 19:45:35 +0200
+Message-ID: <20250512172029.543296847@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172027.691520737@linuxfoundation.org>
 References: <20250512172027.691520737@linuxfoundation.org>
@@ -54,15 +54,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Silvano Seva <s.seva@4sigma.it>
 
-commit 159ca7f18129834b6f4c7eae67de48e96c752fc9 upstream.
+commit 8114ef86e2058e2554111b793596f17bee23fa15 upstream.
 
-Prevent st_lsm6dsx_read_fifo from falling in an infinite loop in case
-pattern_len is equal to zero and the device FIFO is not empty.
+Prevent st_lsm6dsx_read_tagged_fifo from falling in an infinite loop in
+case pattern_len is equal to zero and the device FIFO is not empty.
 
-Fixes: 290a6ce11d93 ("iio: imu: add support to lsm6dsx driver")
+Fixes: 801a6e0af0c6 ("iio: imu: st_lsm6dsx: add support to LSM6DSO")
 Signed-off-by: Silvano Seva <s.seva@4sigma.it>
 Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20250311085030.3593-2-s.seva@4sigma.it
+Link: https://patch.msgid.link/20250311085030.3593-4-s.seva@4sigma.it
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -72,15 +72,15 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
 +++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
-@@ -370,6 +370,9 @@ int st_lsm6dsx_read_fifo(struct st_lsm6d
- 	if (fifo_status & cpu_to_le16(ST_LSM6DSX_FIFO_EMPTY_MASK))
+@@ -604,6 +604,9 @@ int st_lsm6dsx_read_tagged_fifo(struct s
+ 	if (!fifo_len)
  		return 0;
  
 +	if (!pattern_len)
-+		pattern_len = ST_LSM6DSX_SAMPLE_SIZE;
++		pattern_len = ST_LSM6DSX_TAGGED_SAMPLE_SIZE;
 +
- 	fifo_len = (le16_to_cpu(fifo_status) & fifo_diff_mask) *
- 		   ST_LSM6DSX_CHAN_SIZE;
- 	fifo_len = (fifo_len / pattern_len) * pattern_len;
+ 	for (read_len = 0; read_len < fifo_len; read_len += pattern_len) {
+ 		err = st_lsm6dsx_read_block(hw,
+ 					    ST_LSM6DSX_REG_FIFO_OUT_TAG_ADDR,
 
 
