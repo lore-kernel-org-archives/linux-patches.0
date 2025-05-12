@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FF91DF72E;
-	Mon, 12 May 2025 17:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7E0245022;
+	Mon, 12 May 2025 17:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072233; cv=none; b=Qp7j1oYTNzBCT7DRLW6TSnT9BCZIDz7qoMwOOq2l9YVrvgf20WSb6hTaA4mhnlZ1CJAbBNtASdccFgWmHxYtPIUtS6zfIEL86qxQhLQyJnNADUYWxmZfg7ss4uR7cCc3DIfDbqNaiUw5UVTeMlyzAMXPXFBCZnSpj/w7G53+xsw=
+	t=1747072235; cv=none; b=W2tBi8P4Gazd6aIYBEZO+cv4JuXQtOzoJrO6afMNBpOTtLHPocTraWcktaFVSoE+7J05s7uFGYUtcWQVtIi35a9p+j1wWEYeYokMlmvg7UpzAmuh7YBN4nW0pFpDMDdELVOxCASN8ejmBwSxvup5PjXr4Zid7etrmTb/8zhtkpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072233; c=relaxed/simple;
-	bh=LJHRuCUr8er9t5hy2yXmrWrr2Djd5n0sYVqvUQE6X3s=;
+	s=arc-20240116; t=1747072235; c=relaxed/simple;
+	bh=frcxGWQfprTzoLE4/91BwW7ANSySnb+jF/9ac63oTiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdbs37CiDlgshY7X3q/RAtZ5aB0/dtlszZWanbX1fP8AcCiiMcGM1D5wmRuFiBZl1YoxiQavYNyVetFiBD9jVNsggmXsAV1bJyngkgUZlVgrGhUzKTGnY5mJNWy7pyBM5brs/j1IPJkU8ZOJJxyx3raWVVOjdX2j72LYldD4138=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGuQBt5K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ti3pzcoFw/JbdNS5Na8K91qDi3KA8TYq254/Si9cdxY9JM88BdE4ys+guzGclf5vVTbqjyShYiVf8kCHRjuZPO8PsFrhJs/4TlHnly4795lG+IB2cQO4gXDwrTRtDRckRyHKRKSeQP9U2bwrS0z6i/1mLlVi6rWZzV4VL072DOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wkX9kkf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGuQBt5K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CBB6C4CEE7;
-	Mon, 12 May 2025 17:50:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wkX9kkf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E736C4CEE7;
+	Mon, 12 May 2025 17:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072232;
-	bh=LJHRuCUr8er9t5hy2yXmrWrr2Djd5n0sYVqvUQE6X3s=;
+	s=korg; t=1747072235;
+	bh=frcxGWQfprTzoLE4/91BwW7ANSySnb+jF/9ac63oTiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jGuQBt5KThcysa6ypqwWJ9tk3jCLVFPxOP57Oo3s4XsITORoREVGivWEg1TEHtTYh
-	 D58toIx2Hxt23VwRIj4yWECbEtscUuk59ADRyGc/tJjWYXCY16JN/QaES2HLChq1/w
-	 YbLWvxU5khxVPMYQIdMLgTRF73PI7d8e4fVE5B58=
+	b=0wkX9kkfPvZaj/N30lIaR6ytRVriqKPEQBo6BSJ4Y3H7voc/AQLLVUZ3adeAKzEk8
+	 HhUCjyXoFdwkfiq2JOb0KlW3Zt3B//4OIBWjrR27l//PnGoJbtrjn4yrj2YB6UNywm
+	 uvBoPnksJmZ/BTXsT3fjWuj3r9AzP3hDMeo1kpzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johannes Weiner <hannes@cmpxchg.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
 	Brendan Jackman <jackmanb@google.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Carlos Song <carlos.song@nxp.com>,
+	Shivank Garg <shivankg@amd.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.14 176/197] mm: page_alloc: dont steal single pages from biggest buddy
-Date: Mon, 12 May 2025 19:40:26 +0200
-Message-ID: <20250512172051.554238423@linuxfoundation.org>
+Subject: [PATCH 6.14 177/197] mm: page_alloc: speed up fallbacks in rmqueue_bulk()
+Date: Mon, 12 May 2025 19:40:27 +0200
+Message-ID: <20250512172051.593510038@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -46,6 +50,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
@@ -54,218 +59,269 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Weiner <hannes@cmpxchg.org>
 
-commit c2f6ea38fc1b640aa7a2e155cc1c0410ff91afa2 upstream.
+commit 90abee6d7895d5eef18c91d870d8168be4e76e9d upstream.
 
-The fallback code searches for the biggest buddy first in an attempt to
-steal the whole block and encourage type grouping down the line.
+The test robot identified c2f6ea38fc1b ("mm: page_alloc: don't steal
+single pages from biggest buddy") as the root cause of a 56.4% regression
+in vm-scalability::lru-file-mmap-read.
 
-The approach used to be this:
+Carlos reports an earlier patch, c0cd6f557b90 ("mm: page_alloc: fix
+freelist movement during block conversion"), as the root cause for a
+regression in worst-case zone->lock+irqoff hold times.
 
-- Non-movable requests will split the largest buddy and steal the
-  remainder. This splits up contiguity, but it allows subsequent
-  requests of this type to fall back into adjacent space.
+Both of these patches modify the page allocator's fallback path to be less
+greedy in an effort to stave off fragmentation.  The flip side of this is
+that fallbacks are also less productive each time around, which means the
+fallback search can run much more frequently.
 
-- Movable requests go and look for the smallest buddy instead. The
-  thinking is that movable requests can be compacted, so grouping is
-  less important than retaining contiguity.
+Carlos' traces point to rmqueue_bulk() specifically, which tries to refill
+the percpu cache by allocating a large batch of pages in a loop.  It
+highlights how once the native freelists are exhausted, the fallback code
+first scans orders top-down for whole blocks to claim, then falls back to
+a bottom-up search for the smallest buddy to steal.  For the next batch
+page, it goes through the same thing again.
 
-c0cd6f557b90 ("mm: page_alloc: fix freelist movement during block
-conversion") enforces freelist type hygiene, which restricts stealing to
-either claiming the whole block or just taking the requested chunk; no
-additional pages or buddy remainders can be stolen any more.
+This can be made more efficient.  Since rmqueue_bulk() holds the
+zone->lock over the entire batch, the freelists are not subject to outside
+changes; when the search for a block to claim has already failed, there is
+no point in trying again for the next page.
 
-The patch mishandled when to switch to finding the smallest buddy in that
-new reality.  As a result, it may steal the exact request size, but from
-the biggest buddy.  This causes fracturing for no good reason.
+Modify __rmqueue() to remember the last successful fallback mode, and
+restart directly from there on the next rmqueue_bulk() iteration.
 
-Fix this by committing to the new behavior: either steal the whole block,
-or fall back to the smallest buddy.
+Oliver confirms that this improves beyond the regression that the test
+robot reported against c2f6ea38fc1b:
 
-Remove single-page stealing from steal_suitable_fallback().  Rename it to
-try_to_steal_block() to make the intentions clear.  If this fails, always
-fall back to the smallest buddy.
+commit:
+  f3b92176f4 ("tools/selftests: add guard region test for /proc/$pid/pagemap")
+  c2f6ea38fc ("mm: page_alloc: don't steal single pages from biggest buddy")
+  acc4d5ff0b ("Merge tag 'net-6.15-rc0' of git://git.kernel.org/pub/scm/linux/kernel/git/netdev/net")
+  2c847f27c3 ("mm: page_alloc: speed up fallbacks in rmqueue_bulk()")   <--- your patch
 
-The following is from 4 runs of mmtest's thpchallenge.  "Pollute" is
-single page fallback, "steal" is conversion of a partially used block.
-The numbers for free block conversions (omitted) are comparable.
+f3b92176f4f7100f c2f6ea38fc1b640aa7a2e155cc1 acc4d5ff0b61eb1715c498b6536 2c847f27c37da65a93d23c237c5
+---------------- --------------------------- --------------------------- ---------------------------
+         %stddev     %change         %stddev     %change         %stddev     %change         %stddev
+             \          |                \          |                \          |                \
+  25525364 ±  3%     -56.4%   11135467           -57.8%   10779336           +31.6%   33581409        vm-scalability.throughput
 
-				     vanilla	      patched
+Carlos confirms that worst-case times are almost fully recovered
+compared to before the earlier culprit patch:
 
-@pollute[unmovable from reclaimable]:	  27		  106
-@pollute[unmovable from movable]:	  82		   46
-@pollute[reclaimable from unmovable]:	 256		   83
-@pollute[reclaimable from movable]:	  46		    8
-@pollute[movable from unmovable]:	4841		  868
-@pollute[movable from reclaimable]:	5278		12568
+  2dd482ba627d (before freelist hygiene):    1ms
+  c0cd6f557b90  (after freelist hygiene):   90ms
+ next-20250319    (steal smallest buddy):  280ms
+    this patch                          :    8ms
 
-@steal[unmovable from reclaimable]:	  11		   12
-@steal[unmovable from movable]:		 113		   49
-@steal[reclaimable from unmovable]:	  19		   34
-@steal[reclaimable from movable]:	  47		   21
-@steal[movable from unmovable]:		 250		  183
-@steal[movable from reclaimable]:	  81		   93
-
-The allocator appears to do a better job at keeping stealing and polluting
-to the first fallback preference.  As a result, the numbers for "from
-movable" - the least preferred fallback option, and most detrimental to
-compactability - are down across the board.
-
-Link: https://lkml.kernel.org/r/20250225001023.1494422-2-hannes@cmpxchg.org
+[jackmanb@google.com: comment updates]
+  Link: https://lkml.kernel.org/r/D92AC0P9594X.3BML64MUKTF8Z@google.com
+[hannes@cmpxchg.org: reset rmqueue_mode in rmqueue_buddy() error loop, per Yunsheng Lin]
+  Link: https://lkml.kernel.org/r/20250409140023.GA2313@cmpxchg.org
+Link: https://lkml.kernel.org/r/20250407180154.63348-1-hannes@cmpxchg.org
 Fixes: c0cd6f557b90 ("mm: page_alloc: fix freelist movement during block conversion")
+Fixes: c2f6ea38fc1b ("mm: page_alloc: don't steal single pages from biggest buddy")
 Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Suggested-by: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Brendan Jackman <jackmanb@google.com>
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Reported-by: Carlos Song <carlos.song@nxp.com>
+Tested-by: Carlos Song <carlos.song@nxp.com>
+Tested-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202503271547.fc08b188-lkp@intel.com
 Reviewed-by: Brendan Jackman <jackmanb@google.com>
+Tested-by: Shivank Garg <shivankg@amd.com>
+Acked-by: Zi Yan <ziy@nvidia.com>
 Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>	[6.10+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |   80 +++++++++++++++++++++++---------------------------------
- 1 file changed, 34 insertions(+), 46 deletions(-)
+ mm/page_alloc.c |  113 +++++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 80 insertions(+), 33 deletions(-)
 
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -1908,13 +1908,12 @@ static inline bool boost_watermark(struc
-  * can claim the whole pageblock for the requested migratetype. If not, we check
-  * the pageblock for constituent pages; if at least half of the pages are free
-  * or compatible, we can still claim the whole block, so pages freed in the
-- * future will be put on the correct free list. Otherwise, we isolate exactly
-- * the order we need from the fallback block and leave its migratetype alone.
-+ * future will be put on the correct free list.
-  */
- static struct page *
--steal_suitable_fallback(struct zone *zone, struct page *page,
--			int current_order, int order, int start_type,
--			unsigned int alloc_flags, bool whole_block)
-+try_to_steal_block(struct zone *zone, struct page *page,
-+		   int current_order, int order, int start_type,
-+		   unsigned int alloc_flags)
- {
- 	int free_pages, movable_pages, alike_pages;
- 	unsigned long start_pfn;
-@@ -1927,7 +1926,7 @@ steal_suitable_fallback(struct zone *zon
- 	 * highatomic accounting.
- 	 */
- 	if (is_migrate_highatomic(block_type))
--		goto single_page;
-+		return NULL;
- 
- 	/* Take ownership for orders >= pageblock_order */
- 	if (current_order >= pageblock_order) {
-@@ -1948,14 +1947,10 @@ steal_suitable_fallback(struct zone *zon
- 	if (boost_watermark(zone) && (alloc_flags & ALLOC_KSWAPD))
- 		set_bit(ZONE_BOOSTED_WATERMARK, &zone->flags);
- 
--	/* We are not allowed to try stealing from the whole block */
--	if (!whole_block)
--		goto single_page;
--
- 	/* moving whole block can fail due to zone boundary conditions */
- 	if (!prep_move_freepages_block(zone, page, &start_pfn, &free_pages,
- 				       &movable_pages))
--		goto single_page;
-+		return NULL;
- 
- 	/*
- 	 * Determine how many pages are compatible with our allocation.
-@@ -1988,9 +1983,7 @@ steal_suitable_fallback(struct zone *zon
- 		return __rmqueue_smallest(zone, order, start_type);
- 	}
- 
--single_page:
--	page_del_and_expand(zone, page, order, current_order, block_type);
--	return page;
-+	return NULL;
+@@ -2165,22 +2165,15 @@ static bool unreserve_highatomic_pageblo
  }
  
  /*
-@@ -2172,14 +2165,19 @@ static bool unreserve_highatomic_pageblo
- }
- 
- /*
-- * Try finding a free buddy page on the fallback list and put it on the free
-- * list of requested migratetype, possibly along with other pages from the same
-- * block, depending on fragmentation avoidance heuristics. Returns true if
-- * fallback was found so that __rmqueue_smallest() can grab it.
-+ * Try finding a free buddy page on the fallback list.
-+ *
-+ * This will attempt to steal a whole pageblock for the requested type
-+ * to ensure grouping of such requests in the future.
-+ *
-+ * If a whole block cannot be stolen, regress to __rmqueue_smallest()
-+ * logic to at least break up as little contiguity as possible.
+- * Try finding a free buddy page on the fallback list.
+- *
+- * This will attempt to steal a whole pageblock for the requested type
+- * to ensure grouping of such requests in the future.
+- *
+- * If a whole block cannot be stolen, regress to __rmqueue_smallest()
+- * logic to at least break up as little contiguity as possible.
++ * Try to allocate from some fallback migratetype by claiming the entire block,
++ * i.e. converting it to the allocation's start migratetype.
   *
   * The use of signed ints for order and current_order is a deliberate
   * deviation from the rest of this file, to make the for loop
   * condition simpler.
-+ *
-+ * Return the stolen page, or NULL if none can be found.
+- *
+- * Return the stolen page, or NULL if none can be found.
   */
  static __always_inline struct page *
- __rmqueue_fallback(struct zone *zone, int order, int start_migratetype,
-@@ -2213,45 +2211,35 @@ __rmqueue_fallback(struct zone *zone, in
- 		if (fallback_mt == -1)
- 			continue;
- 
--		/*
--		 * We cannot steal all free pages from the pageblock and the
--		 * requested migratetype is movable. In that case it's better to
--		 * steal and split the smallest available page instead of the
--		 * largest available page, because even if the next movable
--		 * allocation falls back into a different pageblock than this
--		 * one, it won't cause permanent fragmentation.
--		 */
--		if (!can_steal && start_migratetype == MIGRATE_MOVABLE
--					&& current_order > order)
--			goto find_smallest;
-+		if (!can_steal)
-+			break;
- 
--		goto do_steal;
-+		page = get_page_from_free_area(area, fallback_mt);
-+		page = try_to_steal_block(zone, page, current_order, order,
-+					  start_migratetype, alloc_flags);
-+		if (page)
-+			goto got_one;
+-__rmqueue_fallback(struct zone *zone, int order, int start_migratetype,
++__rmqueue_claim(struct zone *zone, int order, int start_migratetype,
+ 						unsigned int alloc_flags)
+ {
+ 	struct free_area *area;
+@@ -2217,14 +2210,29 @@ __rmqueue_fallback(struct zone *zone, in
+ 		page = get_page_from_free_area(area, fallback_mt);
+ 		page = try_to_steal_block(zone, page, current_order, order,
+ 					  start_migratetype, alloc_flags);
+-		if (page)
+-			goto got_one;
++		if (page) {
++			trace_mm_page_alloc_extfrag(page, order, current_order,
++						    start_migratetype, fallback_mt);
++			return page;
++		}
  	}
  
--	return NULL;
-+	if (alloc_flags & ALLOC_NOFRAGMENT)
-+		return NULL;
+-	if (alloc_flags & ALLOC_NOFRAGMENT)
+-		return NULL;
++	return NULL;
++}
++
++/*
++ * Try to steal a single page from some fallback migratetype. Leave the rest of
++ * the block as its current migratetype, potentially causing fragmentation.
++ */
++static __always_inline struct page *
++__rmqueue_steal(struct zone *zone, int order, int start_migratetype)
++{
++	struct free_area *area;
++	int current_order;
++	struct page *page;
++	int fallback_mt;
++	bool can_steal;
  
--find_smallest:
-+	/* No luck stealing blocks. Find the smallest fallback page */
+-	/* No luck stealing blocks. Find the smallest fallback page */
  	for (current_order = order; current_order < NR_PAGE_ORDERS; current_order++) {
  		area = &(zone->free_area[current_order]);
  		fallback_mt = find_suitable_fallback(area, current_order,
- 				start_migratetype, false, &can_steal);
--		if (fallback_mt != -1)
--			break;
--	}
+@@ -2234,25 +2242,28 @@ __rmqueue_fallback(struct zone *zone, in
+ 
+ 		page = get_page_from_free_area(area, fallback_mt);
+ 		page_del_and_expand(zone, page, order, current_order, fallback_mt);
+-		goto got_one;
++		trace_mm_page_alloc_extfrag(page, order, current_order,
++					    start_migratetype, fallback_mt);
++		return page;
+ 	}
+ 
+ 	return NULL;
 -
--	/*
--	 * This should not happen - we already found a suitable fallback
--	 * when looking for the largest page.
--	 */
--	VM_BUG_ON(current_order > MAX_PAGE_ORDER);
-+		if (fallback_mt == -1)
-+			continue;
+-got_one:
+-	trace_mm_page_alloc_extfrag(page, order, current_order,
+-		start_migratetype, fallback_mt);
+-
+-	return page;
+ }
  
--do_steal:
--	page = get_page_from_free_area(area, fallback_mt);
-+		page = get_page_from_free_area(area, fallback_mt);
-+		page_del_and_expand(zone, page, order, current_order, fallback_mt);
-+		goto got_one;
-+	}
++enum rmqueue_mode {
++	RMQUEUE_NORMAL,
++	RMQUEUE_CMA,
++	RMQUEUE_CLAIM,
++	RMQUEUE_STEAL,
++};
++
+ /*
+  * Do the hard work of removing an element from the buddy allocator.
+  * Call me with the zone->lock already held.
+  */
+ static __always_inline struct page *
+ __rmqueue(struct zone *zone, unsigned int order, int migratetype,
+-						unsigned int alloc_flags)
++	  unsigned int alloc_flags, enum rmqueue_mode *mode)
+ {
+ 	struct page *page;
  
--	/* take off list, maybe claim block, expand remainder */
--	page = steal_suitable_fallback(zone, page, current_order, order,
--				       start_migratetype, alloc_flags, can_steal);
-+	return NULL;
+@@ -2271,16 +2282,49 @@ __rmqueue(struct zone *zone, unsigned in
+ 		}
+ 	}
  
-+got_one:
- 	trace_mm_page_alloc_extfrag(page, order, current_order,
- 		start_migratetype, fallback_mt);
+-	page = __rmqueue_smallest(zone, order, migratetype);
+-	if (unlikely(!page)) {
+-		if (alloc_flags & ALLOC_CMA)
++	/*
++	 * First try the freelists of the requested migratetype, then try
++	 * fallbacks modes with increasing levels of fragmentation risk.
++	 *
++	 * The fallback logic is expensive and rmqueue_bulk() calls in
++	 * a loop with the zone->lock held, meaning the freelists are
++	 * not subject to any outside changes. Remember in *mode where
++	 * we found pay dirt, to save us the search on the next call.
++	 */
++       switch (*mode) {
++       case RMQUEUE_NORMAL:
++               page = __rmqueue_smallest(zone, order, migratetype);
++               if (page)
++                       return page;
++               fallthrough;
++       case RMQUEUE_CMA:
++               if (alloc_flags & ALLOC_CMA) {
+ 			page = __rmqueue_cma_fallback(zone, order);
++			if (page) {
++				*mode = RMQUEUE_CMA;
++				return page;
++			}
++	       }
++	       fallthrough;
++       case RMQUEUE_CLAIM:
++	       page = __rmqueue_claim(zone, order, migratetype, alloc_flags);
++	       if (page) {
++                       /* Replenished preferred freelist, back to normal mode. */
++                       *mode = RMQUEUE_NORMAL;
++                       return page;
++               }
++               fallthrough;
++       case RMQUEUE_STEAL:
++               if (!(alloc_flags & ALLOC_NOFRAGMENT)) {
++                       page = __rmqueue_steal(zone, order, migratetype);
++                       if (page) {
++                               *mode = RMQUEUE_STEAL;
++                               return page;
++                       }
++               }
++       }
  
+-		if (!page)
+-			page = __rmqueue_fallback(zone, order, migratetype,
+-						  alloc_flags);
+-	}
+-	return page;
++       return NULL;
+ }
+ 
+ /*
+@@ -2292,13 +2336,14 @@ static int rmqueue_bulk(struct zone *zon
+ 			unsigned long count, struct list_head *list,
+ 			int migratetype, unsigned int alloc_flags)
+ {
++	enum rmqueue_mode rmqm = RMQUEUE_NORMAL;
+ 	unsigned long flags;
+ 	int i;
+ 
+ 	spin_lock_irqsave(&zone->lock, flags);
+ 	for (i = 0; i < count; ++i) {
+ 		struct page *page = __rmqueue(zone, order, migratetype,
+-								alloc_flags);
++					      alloc_flags, &rmqm);
+ 		if (unlikely(page == NULL))
+ 			break;
+ 
+@@ -2899,7 +2944,9 @@ struct page *rmqueue_buddy(struct zone *
+ 		if (alloc_flags & ALLOC_HIGHATOMIC)
+ 			page = __rmqueue_smallest(zone, order, MIGRATE_HIGHATOMIC);
+ 		if (!page) {
+-			page = __rmqueue(zone, order, migratetype, alloc_flags);
++			enum rmqueue_mode rmqm = RMQUEUE_NORMAL;
++
++			page = __rmqueue(zone, order, migratetype, alloc_flags, &rmqm);
+ 
+ 			/*
+ 			 * If the allocation fails, allow OOM handling and
 
 
