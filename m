@@ -1,100 +1,141 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5434C29B208;
-	Mon, 12 May 2025 18:04:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215D429B21F;
+	Mon, 12 May 2025 18:04:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073089; cv=none; b=IFessNuXTzsfuCtTT3V6l21PK9Pjf57VAbXQ82nB9nNzU7l04XzIq3wlzfd34+TpSVJJC095yJzLGK9jYx1z2mNZWtTpX+Tr6ElczXPyY+SRoQm4jTkBDGl+MZdDOQBvNGcfpYkiF/fbWE59UqVyEiBZ/xKOspHCiTYROUEv/Lc=
+	t=1747073091; cv=none; b=jgNA8A7cTPLyTNu5j9ckdzJD/naAWMTc+4XyRWq5z+A/nWcFVUA9Hm1cLHbMZHHLdfhqlcNMb1e+hOyesOItV+F7sm9z7CeM88SxomOjjJ64jBhrCiTxaOWWJFI1DB17BE1o+tmxqqJbYq3dwSRBCVIOTheRZATaeyjLqkUe5Iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073089; c=relaxed/simple;
-	bh=Xsn7VXA1+qAuRNr2RimgmYykg+ezMNctr/fEL9UZo4k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kmMf9mAPc8FO9ijPv8MvSQjdN3yP5CW6tqonTtQpCN2ctSwjlojwIguKIrC0X/9e19SA9UUka319QzMoGyJMGF6MBvVOZANnoCF/qhmhJpLUcRlTENwl1wmP547gN13XjCcLRR+SpZ2Vw7C8WiKBKzFF+6YZ5wsY2ao/UN+mDd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=djQkr1ex; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747073091; c=relaxed/simple;
+	bh=AESvUlPW8mv9wKVURiU6MMPiaUUCwGT2gGubYF9BAAg=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=Iz9to8G5AlppIMhCXZNxmvlgOEnOxbqM13aptI31phU0yb2kkySAiNovZCw3nH3oiU1ZaEkfsBs8LZGbauFQACiBmq6KhgaOgZb9NMkBk0xh+hgR4WvKjKineCK5naGnw83IGNDcfaHYx07OktPUvKRQ5Y/xjNm87dVX56ocbA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BwsM1eT3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="djQkr1ex"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9759C4CEEF;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BwsM1eT3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C564C4CEE7;
 	Mon, 12 May 2025 18:04:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073089;
-	bh=Xsn7VXA1+qAuRNr2RimgmYykg+ezMNctr/fEL9UZo4k=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747073091;
+	bh=AESvUlPW8mv9wKVURiU6MMPiaUUCwGT2gGubYF9BAAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=djQkr1exTMqk0+6AwbfGzz8PQmCD8/8CCwpoj3Q6OpftpVGs5EanW59Tcfh2svpNK
-	 /bYkeCr+V9+g5ND50GNOuqe/C+/UUAkGw7dVB5ClZiNA3uYA9EWl8z5bN70eYfL1sS
-	 0gTGpRrLt1ofV3/bUy8njmzBwY/CrWp/gUslGYJk=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 150/184] drm/xe/tests/mocs: Hold XE_FORCEWAKE_ALL for LNCF regs
-Date: Mon, 12 May 2025 19:45:51 +0200
-Message-ID: <20250512172047.923587570@linuxfoundation.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
-References: <20250512172041.624042835@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	b=BwsM1eT3Fpb4JXg297t2vWY/GgVkD96ukqHKjeil16HKnUQgCSBHkCnzPMUAxnj6m
+	 CsRyZ99lmxB9f5yIDS8t9TKbb+KQZcsRF28SOcrvRJwqyRQRaa1cutOdqZno4LrLNN
+	 MzBFy5TNkZms1X6v71FOup1McLz39aj0so2r70w3vhnRMRYw2Gpetn889nkL8giTPc
+	 ob8iZSnMlR4qYtSvVZM5YUtLnHoMLxgJ1zSQ2xo1ABd8vFN/+EyKAc7CCn+Ix/e+Ry
+	 5i1NdX3iRM+t7dJmGGpHMRSREXjrKaCH+wt5JH+1fCM1eLMBG+hX9FpNyHbrzOFfbf
+	 x3K9sEl2FGbgg==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Austin Zheng <Austin.Zheng@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	austin.zheng@amd.com,
+	jun.lei@amd.com,
+	harry.wentland@amd.com,
+	sunpeng.li@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dillon.varone@amd.com,
+	aurabindo.pillai@amd.com,
+	chenhuacai@kernel.org,
+	george.shen@amd.com,
+	rostrows@amd.com,
+	siqueira@igalia.com,
+	jerry.zuo@amd.com,
+	jiapeng.chong@linux.alibaba.com,
+	chris.park@amd.com,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 10/11] drm/amd/display: Call FP Protect Before Mode Programming/Mode Support
+Date: Mon, 12 May 2025 14:04:25 -0400
+Message-Id: <20250512180426.437627-10-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250512180426.437627-1-sashal@kernel.org>
+References: <20250512180426.437627-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.12.28
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+From: Austin Zheng <Austin.Zheng@amd.com>
 
-------------------
+[ Upstream commit eba692ca3abca258b3214a6e4126afefad1822f0 ]
 
-From: Tejas Upadhyay <tejas.upadhyay@intel.com>
+[Why]
+Memory allocation occurs within dml21_validate() for adding phantom planes.
+May cause kernel to be tainted due to usage of FP Start.
 
-[ Upstream commit 51c0ee84e4dc339287b2d7335f2b54d747794c83 ]
+[How]
+Move FP start from dml21_validate to before mode programming/mode support.
+Calculations requiring floating point are all done within mode programming
+or mode support.
 
-LNCF registers report wrong values when XE_FORCEWAKE_GT
-only is held. Holding XE_FORCEWAKE_ALL ensures correct
-operations on LNCF regs.
-
-V2(Himal):
- - Use xe_force_wake_ref_has_domain
-
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/1999
-Fixes: a6a4ea6d7d37 ("drm/xe: Add mocs kunit")
-Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250428082357.1730068-1-tejas.upadhyay@intel.com
-Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-(cherry picked from commit 70a2585e582058e94fe4381a337be42dec800337)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Signed-off-by: Austin Zheng <Austin.Zheng@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit fe3250f10819b411808ab9ae1d824c5fc9b59170)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/tests/xe_mocs.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/tests/xe_mocs.c b/drivers/gpu/drm/xe/tests/xe_mocs.c
-index 434e7c7e60883..61a7d20ce42bf 100644
---- a/drivers/gpu/drm/xe/tests/xe_mocs.c
-+++ b/drivers/gpu/drm/xe/tests/xe_mocs.c
-@@ -46,8 +46,11 @@ static void read_l3cc_table(struct xe_gt *gt,
- 	unsigned int fw_ref, i;
- 	u32 reg_val;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
+index e3e4f40bd4123..dcbe327209d5d 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
+@@ -221,7 +221,9 @@ static bool dml21_mode_check_and_programming(const struct dc *in_dc, struct dc_s
+ 	if (!result)
+ 		return false;
  
--	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FW_GT);
--	KUNIT_ASSERT_NE_MSG(test, fw_ref, 0, "Forcewake Failed.\n");
-+	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL);
-+	if (!xe_force_wake_ref_has_domain(fw_ref, XE_FORCEWAKE_ALL)) {
-+		xe_force_wake_put(gt_to_fw(gt), fw_ref);
-+		KUNIT_ASSERT_TRUE_MSG(test, true, "Forcewake Failed.\n");
-+	}
++	DC_FP_START();
+ 	result = dml2_build_mode_programming(mode_programming);
++	DC_FP_END();
+ 	if (!result)
+ 		return false;
  
- 	for (i = 0; i < info->num_mocs_regs; i++) {
- 		if (!(i & 1)) {
+@@ -271,7 +273,9 @@ static bool dml21_check_mode_support(const struct dc *in_dc, struct dc_state *co
+ 	mode_support->dml2_instance = dml_init->dml2_instance;
+ 	dml21_map_dc_state_into_dml_display_cfg(in_dc, context, dml_ctx);
+ 	dml_ctx->v21.mode_programming.dml2_instance->scratch.build_mode_programming_locals.mode_programming_params.programming = dml_ctx->v21.mode_programming.programming;
++	DC_FP_START();
+ 	is_supported = dml2_check_mode_supported(mode_support);
++	DC_FP_END();
+ 	if (!is_supported)
+ 		return false;
+ 
+@@ -282,16 +286,12 @@ bool dml21_validate(const struct dc *in_dc, struct dc_state *context, struct dml
+ {
+ 	bool out = false;
+ 
+-	DC_FP_START();
+-
+ 	/* Use dml_validate_only for fast_validate path */
+ 	if (fast_validate)
+ 		out = dml21_check_mode_support(in_dc, context, dml_ctx);
+ 	else
+ 		out = dml21_mode_check_and_programming(in_dc, context, dml_ctx);
+ 
+-	DC_FP_END();
+-
+ 	return out;
+ }
+ 
 -- 
 2.39.5
-
-
 
