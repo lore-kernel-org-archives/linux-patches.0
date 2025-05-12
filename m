@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8400D23C4E5;
-	Mon, 12 May 2025 17:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1607878F52;
+	Mon, 12 May 2025 17:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072190; cv=none; b=uCxcFAWVM3utXtjHwblBnoEIO8w50zYRVa5XQvG6mnF0lDZcFmtlsvd85t7JDbSFLXncwXUoGHltSl8fuDkUcUk0QFb+Ytpm3IcPu14KlM1R4ieKv3hLvE5J5P0OjNKxFprDyCR2x61lDRD8zBcQ0/9XVA7Qpi4OUi8tkVF8/30=
+	t=1747072197; cv=none; b=OSwCuPnMHB7JsPfgPJh6ftfE7u3cFXa1v8Or8A5wXxhdGZHyC1X3ryMtjeZV3KEyqFHugIlXLcFhNNYoVmnE1aSNcf3ncUJEQrUU2EIeS6GErVN3+yHhF1BFCkLszFfGhJaKyjFv8Qs3QSN2NWtqC8uWtobZsh2CSu4Xoud123I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072190; c=relaxed/simple;
-	bh=VaiCU3H+K5jBXUNjU4vStMlntWj91EJoY2WPkh/TAPQ=;
+	s=arc-20240116; t=1747072197; c=relaxed/simple;
+	bh=Tnf8aDyHbhMayNQosAmsPD9xlvP/NI7NsdfAGOn0Ys0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ekbItNk1ZcAhdzl6rwIWxHbgzcN2TmqUIyuq00k+DVkjiQ8AReohVSkkVSegXod4zLPGNbtfE22yn8ZAiW7NSkaOBKdQeaByHdSg8cII3DunfiI+6l1ZVn7ed2yCkbWTOTyBxymAP5QOuLWDVNdwuYv8BjocmvXEzV8AlhE6A8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PbmrRWOM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cyf4dul/F8MBs2o4/Llppi181UBA+raVfO9Zv9X1EuhHG8SeWe1Xu6m9xDj+FmKm1GJDCsi08XGRXMLDOVs3ZVqt2XXpBfq+guCSB6vVNqLPkZ2FlW8ZlEDbgatU/qb54qeYhvLK3Iwk1l0vBNrZZyBLIMGRK88CJ+Ny2O5xP+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRXfK3vI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PbmrRWOM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54195C4CEE7;
-	Mon, 12 May 2025 17:49:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRXfK3vI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21EEAC4CEE7;
+	Mon, 12 May 2025 17:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072190;
-	bh=VaiCU3H+K5jBXUNjU4vStMlntWj91EJoY2WPkh/TAPQ=;
+	s=korg; t=1747072196;
+	bh=Tnf8aDyHbhMayNQosAmsPD9xlvP/NI7NsdfAGOn0Ys0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PbmrRWOMVGUTT67HCpidaTp2iIssRweyIbrnoHcjiPEM/JOqDeoT++ZoORWijm/Po
-	 /f5dyJ5CtOIrz3XJ+rPnTtaMuBwMuvNoUgvbgfYDgJL+Ieykyi2o/xukq2xUdf2cuo
-	 ghVXJzdCL/9eY+MAiwNynVjbmHv3q47ikyFPVUAo=
+	b=XRXfK3vIevtcGDpUh+zS7s2IQDt1sXjm+mpfok7wVYcBaXKYEn8iTXB5urwOS0bob
+	 GBAOA5ob9Gmp9DoS6DzsKNSHsW6Ddpg7zbK3ttg0NCG17jlSiTjoAzABsqu/ywQ6wV
+	 pmLcv+IEEUt3A3mF/fjEKhtpebsOn87AB73Rz0uY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable <stable@kernel.org>,
 	Pawel Laszczak <pawell@cadence.com>,
 	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.14 135/197] usb: cdnsp: Fix issue with resuming from L1
-Date: Mon, 12 May 2025 19:39:45 +0200
-Message-ID: <20250512172049.887230035@linuxfoundation.org>
+Subject: [PATCH 6.14 136/197] usb: cdnsp: fix L1 resume issue for RTL_REVISION_NEW_LPM version
+Date: Mon, 12 May 2025 19:39:46 +0200
+Message-ID: <20250512172049.927264565@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -53,147 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Pawel Laszczak <pawell@cadence.com>
 
-commit 241e2ce88e5a494be7a5d44c0697592f1632fbee upstream.
+commit 8614ecdb1570e4fffe87ebdc62b613ed66f1f6a6 upstream.
 
-In very rare cases after resuming controller from L1 to L0 it reads
-registers before the clock UTMI have been enabled and as the result
-driver reads incorrect value.
-Most of registers are in APB domain clock but some of them (e.g. PORTSC)
-are in UTMI domain clock.
-After entering to L1 state the UTMI clock can be disabled.
-When controller transition from L1 to L0 the port status change event is
-reported and in interrupt runtime function driver reads PORTSC.
-During this read operation controller synchronize UTMI and APB domain
-but UTMI clock is still disabled and in result it reads 0xFFFFFFFF value.
-To fix this issue driver increases APB timeout value.
+The controllers with rtl version larger than
+RTL_REVISION_NEW_LPM (0x00002700) has bug which causes that controller
+doesn't resume from L1 state. It happens if after receiving LPM packet
+controller starts transitioning to L1 and in this moment the driver force
+resuming by write operation to PORTSC.PLS.
+It's corner case and happens when write operation to PORTSC occurs during
+device delay before transitioning to L1 after transmitting ACK
+time (TL1TokenRetry).
 
-The issue is platform specific and if the default value of APB timeout
-is not sufficient then this time should be set Individually for each
-platform.
+Forcing transition from L1->L0 by driver for revision larger than
+RTL_REVISION_NEW_LPM is not needed, so driver can simply fix this issue
+through block call of cdnsp_force_l0_go function.
 
 Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Pawel Laszczak <pawell@cadence.com>
 Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/PH7PR07MB953846C57973E4DB134CAA71DDBF2@PH7PR07MB9538.namprd07.prod.outlook.com
+Link: https://lore.kernel.org/r/PH7PR07MB9538B55C3A6E71F9ED29E980DD842@PH7PR07MB9538.namprd07.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-gadget.c |   29 +++++++++++++++++++++++++++++
+ drivers/usb/cdns3/cdnsp-gadget.c |    2 ++
  drivers/usb/cdns3/cdnsp-gadget.h |    3 +++
- drivers/usb/cdns3/cdnsp-pci.c    |   12 ++++++++++--
- drivers/usb/cdns3/core.h         |    3 +++
- 4 files changed, 45 insertions(+), 2 deletions(-)
+ drivers/usb/cdns3/cdnsp-ring.c   |    3 ++-
+ 3 files changed, 7 insertions(+), 1 deletion(-)
 
 --- a/drivers/usb/cdns3/cdnsp-gadget.c
 +++ b/drivers/usb/cdns3/cdnsp-gadget.c
-@@ -139,6 +139,26 @@ static void cdnsp_clear_port_change_bit(
- 	       (portsc & PORT_CHANGE_BITS), port_regs);
- }
+@@ -1793,6 +1793,8 @@ static void cdnsp_get_rev_cap(struct cdn
+ 	reg += cdnsp_find_next_ext_cap(reg, 0, RTL_REV_CAP);
+ 	pdev->rev_cap  = reg;
  
-+static void cdnsp_set_apb_timeout_value(struct cdnsp_device *pdev)
-+{
-+	struct cdns *cdns = dev_get_drvdata(pdev->dev);
-+	__le32 __iomem *reg;
-+	void __iomem *base;
-+	u32 offset = 0;
-+	u32 val;
++	pdev->rtl_revision = readl(&pdev->rev_cap->rtl_revision);
 +
-+	if (!cdns->override_apb_timeout)
-+		return;
-+
-+	base = &pdev->cap_regs->hc_capbase;
-+	offset = cdnsp_find_next_ext_cap(base, offset, D_XEC_PRE_REGS_CAP);
-+	reg = base + offset + REG_CHICKEN_BITS_3_OFFSET;
-+
-+	val  = le32_to_cpu(readl(reg));
-+	val = CHICKEN_APB_TIMEOUT_SET(val, cdns->override_apb_timeout);
-+	writel(cpu_to_le32(val), reg);
-+}
-+
- static void cdnsp_set_chicken_bits_2(struct cdnsp_device *pdev, u32 bit)
- {
- 	__le32 __iomem *reg;
-@@ -1798,6 +1818,15 @@ static int cdnsp_gen_setup(struct cdnsp_
- 	pdev->hci_version = HC_VERSION(pdev->hcc_params);
- 	pdev->hcc_params = readl(&pdev->cap_regs->hcc_params);
- 
-+	/*
-+	 * Override the APB timeout value to give the controller more time for
-+	 * enabling UTMI clock and synchronizing APB and UTMI clock domains.
-+	 * This fix is platform specific and is required to fixes issue with
-+	 * reading incorrect value from PORTSC register after resuming
-+	 * from L1 state.
-+	 */
-+	cdnsp_set_apb_timeout_value(pdev);
-+
- 	cdnsp_get_rev_cap(pdev);
- 
- 	/* Make sure the Device Controller is halted. */
+ 	dev_info(pdev->dev, "Rev: %08x/%08x, eps: %08x, buff: %08x/%08x\n",
+ 		 readl(&pdev->rev_cap->ctrl_revision),
+ 		 readl(&pdev->rev_cap->rtl_revision),
 --- a/drivers/usb/cdns3/cdnsp-gadget.h
 +++ b/drivers/usb/cdns3/cdnsp-gadget.h
-@@ -520,6 +520,9 @@ struct cdnsp_rev_cap {
- #define REG_CHICKEN_BITS_2_OFFSET	0x48
- #define CHICKEN_XDMA_2_TP_CACHE_DIS	BIT(28)
+@@ -1360,6 +1360,7 @@ struct cdnsp_port {
+  * @rev_cap: Controller Capabilities Registers.
+  * @hcs_params1: Cached register copies of read-only HCSPARAMS1
+  * @hcc_params: Cached register copies of read-only HCCPARAMS1
++ * @rtl_revision: Cached controller rtl revision.
+  * @setup: Temporary buffer for setup packet.
+  * @ep0_preq: Internal allocated request used during enumeration.
+  * @ep0_stage: ep0 stage during enumeration process.
+@@ -1414,6 +1415,8 @@ struct cdnsp_device {
+ 	__u32 hcs_params1;
+ 	__u32 hcs_params3;
+ 	__u32 hcc_params;
++	#define RTL_REVISION_NEW_LPM 0x2700
++	__u32 rtl_revision;
+ 	/* Lock used in interrupt thread context. */
+ 	spinlock_t lock;
+ 	struct usb_ctrlrequest setup;
+--- a/drivers/usb/cdns3/cdnsp-ring.c
++++ b/drivers/usb/cdns3/cdnsp-ring.c
+@@ -308,7 +308,8 @@ static bool cdnsp_ring_ep_doorbell(struc
  
-+#define REG_CHICKEN_BITS_3_OFFSET       0x4C
-+#define CHICKEN_APB_TIMEOUT_SET(p, val) (((p) & ~GENMASK(21, 0)) | (val))
-+
- /* XBUF Extended Capability ID. */
- #define XBUF_CAP_ID			0xCB
- #define XBUF_RX_TAG_MASK_0_OFFSET	0x1C
---- a/drivers/usb/cdns3/cdnsp-pci.c
-+++ b/drivers/usb/cdns3/cdnsp-pci.c
-@@ -28,6 +28,8 @@
- #define PCI_DRIVER_NAME		"cdns-pci-usbssp"
- #define PLAT_DRIVER_NAME	"cdns-usbssp"
+ 	writel(db_value, reg_addr);
  
-+#define CHICKEN_APB_TIMEOUT_VALUE       0x1C20
-+
- static struct pci_dev *cdnsp_get_second_fun(struct pci_dev *pdev)
- {
- 	/*
-@@ -139,6 +141,14 @@ static int cdnsp_pci_probe(struct pci_de
- 		cdnsp->otg_irq = pdev->irq;
- 	}
+-	cdnsp_force_l0_go(pdev);
++	if (pdev->rtl_revision < RTL_REVISION_NEW_LPM)
++		cdnsp_force_l0_go(pdev);
  
-+	/*
-+	 * Cadence PCI based platform require some longer timeout for APB
-+	 * to fixes domain clock synchronization issue after resuming
-+	 * controller from L1 state.
-+	 */
-+	cdnsp->override_apb_timeout = CHICKEN_APB_TIMEOUT_VALUE;
-+	pci_set_drvdata(pdev, cdnsp);
-+
- 	if (pci_is_enabled(func)) {
- 		cdnsp->dev = dev;
- 		cdnsp->gadget_init = cdnsp_gadget_init;
-@@ -148,8 +158,6 @@ static int cdnsp_pci_probe(struct pci_de
- 			goto free_cdnsp;
- 	}
- 
--	pci_set_drvdata(pdev, cdnsp);
--
- 	device_wakeup_enable(&pdev->dev);
- 	if (pci_dev_run_wake(pdev))
- 		pm_runtime_put_noidle(&pdev->dev);
---- a/drivers/usb/cdns3/core.h
-+++ b/drivers/usb/cdns3/core.h
-@@ -79,6 +79,8 @@ struct cdns3_platform_data {
-  * @pdata: platform data from glue layer
-  * @lock: spinlock structure
-  * @xhci_plat_data: xhci private data structure pointer
-+ * @override_apb_timeout: hold value of APB timeout. For value 0 the default
-+ *                        value in CHICKEN_BITS_3 will be preserved.
-  * @gadget_init: pointer to gadget initialization function
-  */
- struct cdns {
-@@ -117,6 +119,7 @@ struct cdns {
- 	struct cdns3_platform_data	*pdata;
- 	spinlock_t			lock;
- 	struct xhci_plat_priv		*xhci_plat_data;
-+	u32                             override_apb_timeout;
- 
- 	int (*gadget_init)(struct cdns *cdns);
- };
+ 	/* Doorbell was set. */
+ 	return true;
 
 
