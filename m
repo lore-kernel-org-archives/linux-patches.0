@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B20725A32E;
-	Mon, 12 May 2025 17:45:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A87296FA1;
+	Mon, 12 May 2025 17:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071936; cv=none; b=EFszhORDAQnkl5fs69IMfUBiIUCoMmXnj6qjc7JsmpCqCepNwwX6RZjw8rftDYN+hP5RcInDxAF88Y7XmvSekYQsNyjda0XnGrEkKW0wjsPNU7Z+G213gc/juHIwo77bOb29tJlR369ANHWM0dUyRaP8nTWdEytsZJLoxtalzNA=
+	t=1747071940; cv=none; b=VX+QzGppr8qs/bQ6N35iG0aBDp8G8mUCsb61i8B2gct5RYOB6xjg3Bj3MVD6ZdNSTLZsSm4idpn5/0Pf7pvHhVkq+dDbVSkfm/g2qkNkfPTVlrXwaIH6WwyQfFD8E+y8Zo3RCRv7xGrPjztVWBJG2VeJs61UvMc6+CXsyNP5CfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071936; c=relaxed/simple;
-	bh=8YpvweQlnPvFMf/NRsJ4t3jeJy4O9KqqYvKpjh+4cls=;
+	s=arc-20240116; t=1747071940; c=relaxed/simple;
+	bh=pqmYyzFPrMqkhIZ87DR8WfauUQ2CEv5hrJdmld/+G94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S9o0WtZOBv/X3h0ncNQlJi1uI+AFWqvK5GubSUQyC8wXJ8ql630ZZ4fRCMkAtZ+VNz7N9XWTrtiwCSB2ZxOmbl67CLrWGN9RDIuKobeLha9N0oTdzwSiB9mp9xlQBiubXqfboFZa0lJHeM7QAROkrZ2QiZeTaZFAXftbIip/i20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SGSNVPNi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bc9tb2y5DhwcY+EQrhJ5PYqrFSu5uRo7uGXhmO5CdZPsTsmsGowcTIcLjCBjRmlOc9rpI7x61pYmkr1tS6B4Dnk/DFZh4Bug80onOMPWRG6MF119OlOqC4uHSPU3D7cjK5FsLEREAfQh+CxmdHLWY0THKdCUUVs4CIB5YOHpWqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z9J+3k4V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SGSNVPNi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED639C4CEE7;
-	Mon, 12 May 2025 17:45:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z9J+3k4V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05487C4CEE9;
+	Mon, 12 May 2025 17:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071936;
-	bh=8YpvweQlnPvFMf/NRsJ4t3jeJy4O9KqqYvKpjh+4cls=;
+	s=korg; t=1747071940;
+	bh=pqmYyzFPrMqkhIZ87DR8WfauUQ2CEv5hrJdmld/+G94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SGSNVPNiHlwymzfKWpmAFTe3C8XoAy+fCBFWTCuyRoTTse0S96TQy9rUDnfGPhwFN
-	 sWJ1R4+2DUrZn1wPIWTC4xwjjZoh6Cjw9NwqE26lSDbzXp7Gb2faO6CoTI9VVNzW1W
-	 FvP3yUaCZvCdAMvyxESV8YPQ0GjjsFV/YfAhUDJE=
+	b=Z9J+3k4VTAXaJCpGvuUzJekk/L9nl4DR5AvN+Z6lKuCKVWaByMMnrp0sBQxwzqUDV
+	 Qckd5KjRdNSKuUvPFB3nhXD8AGBr/dpzWr+IGpMCnhwN5lvzEF8rGzCbpXg1yxuUon
+	 JVVns0i+8+qXtuPl/7OSZTu6ZNpmtTZ9WoeH/f4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Wayne Lin <Wayne.Lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.14 083/197] drm/amd/display: Shift DMUB AUX reply command if necessary
-Date: Mon, 12 May 2025 19:38:53 +0200
-Message-ID: <20250512172047.753528783@linuxfoundation.org>
+	Nam Cao <namcao@linutronix.de>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>
+Subject: [PATCH 6.14 084/197] riscv: Fix kernel crash due to PR_SET_TAGGED_ADDR_CTRL
+Date: Mon, 12 May 2025 19:38:54 +0200
+Message-ID: <20250512172047.792990126@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -53,47 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Nam Cao <namcao@linutronix.de>
 
-commit 5a3846648c0523fd850b7f0aec78c0139453ab8b upstream.
+commit ae08d55807c099357c047dba17624b09414635dd upstream.
 
-[Why]
-Defined value of dmub AUX reply command field get updated but didn't
-adjust dm receiving side accordingly.
+When userspace does PR_SET_TAGGED_ADDR_CTRL, but Supm extension is not
+available, the kernel crashes:
 
-[How]
-Check the received reply command value to see if it's updated version
-or not. Adjust it if necessary.
+Oops - illegal instruction [#1]
+    [snip]
+epc : set_tagged_addr_ctrl+0x112/0x15a
+ ra : set_tagged_addr_ctrl+0x74/0x15a
+epc : ffffffff80011ace ra : ffffffff80011a30 sp : ffffffc60039be10
+    [snip]
+status: 0000000200000120 badaddr: 0000000010a79073 cause: 0000000000000002
+    set_tagged_addr_ctrl+0x112/0x15a
+    __riscv_sys_prctl+0x352/0x73c
+    do_trap_ecall_u+0x17c/0x20c
+    andle_exception+0x150/0x15c
 
-Fixes: ead08b95fa50 ("drm/amd/display: Fix race condition in DPIA AUX transfer")
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Ray Wu <ray.wu@amd.com>
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d5c9ade755a9afa210840708a12a8f44c0d532f4)
+Fix it by checking if Supm is available.
+
+Fixes: 09d6775f503b ("riscv: Add support for userspace pointer masking")
+Signed-off-by: Nam Cao <namcao@linutronix.de>
 Cc: stable@vger.kernel.org
+Reviewed-by: Samuel Holland <samuel.holland@sifive.com>
+Link: https://lore.kernel.org/r/20250504101920.3393053-1-namcao@linutronix.de
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/riscv/kernel/process.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -12610,8 +12610,11 @@ int amdgpu_dm_process_dmub_aux_transfer_
- 		goto out;
- 	}
+diff --git a/arch/riscv/kernel/process.c b/arch/riscv/kernel/process.c
+index 7c244de77180..3db2c0c07acd 100644
+--- a/arch/riscv/kernel/process.c
++++ b/arch/riscv/kernel/process.c
+@@ -275,6 +275,9 @@ long set_tagged_addr_ctrl(struct task_struct *task, unsigned long arg)
+ 	unsigned long pmm;
+ 	u8 pmlen;
  
-+	payload->reply[0] = adev->dm.dmub_notify->aux_reply.command & 0xF;
-+	if (adev->dm.dmub_notify->aux_reply.command & 0xF0)
-+		/* The reply is stored in the top nibble of the command. */
-+		payload->reply[0] = (adev->dm.dmub_notify->aux_reply.command >> 4) & 0xF;
++	if (!riscv_has_extension_unlikely(RISCV_ISA_EXT_SUPM))
++		return -EINVAL;
++
+ 	if (is_compat_thread(ti))
+ 		return -EINVAL;
  
--	payload->reply[0] = adev->dm.dmub_notify->aux_reply.command;
- 	if (!payload->write && p_notify->aux_reply.length &&
- 			(payload->reply[0] == AUX_TRANSACTION_REPLY_AUX_ACK)) {
- 
+-- 
+2.49.0
+
 
 
