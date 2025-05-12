@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43668296153;
-	Mon, 12 May 2025 17:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF70296D3A;
+	Mon, 12 May 2025 17:42:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071751; cv=none; b=FTvPHAbY2eo69qt0wLoPMZ1s5wX4NzVMZxF/aqPawaOzW1bVVhF1ep+Zc8KqgHmuofEqY+jfhzCjxl2bMghq22pe4KQnFXxIZ+XAVAnI5CSO3hNu5zXHWl/V+Omg+mwwUPBFevQKbTBZwuNnCpVW1S6xYW/yYCTfowANvKcWGc0=
+	t=1747071754; cv=none; b=s68tzPNja3U2w5ffqtiZRCgHpHlzbdgTM91e/77gpkLvhM92QlV50nE9GbrG606dbvMHgBhZzlcopNMy//Tfh0N75EWDn30xjQv/QRsld/mDcy38qX1nZ/EWYQSgOLlWyWA5FBPRPkfHm5bEGT5OT29nfAWxi/bJR6+ezcM3uPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071751; c=relaxed/simple;
-	bh=D2edTVaPdWXwlfKbzD5qlSP5QpMFrsqwvEy3SSPDGHo=;
+	s=arc-20240116; t=1747071754; c=relaxed/simple;
+	bh=0F5tEMln5DUdNvjHVT+Bm9m54tHoA7VRBJmOcHKL9VE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GW7gRa6OkJxFMNU3A8OdR9hwuVjoT5DMo5gID01mEDizXhFRq079cLV+sEjHTM923cjWmIDMmzBvhB13EumfaiyPrxGNf6VLs+U9159dOWJrAXL3+i6xlsQbPeTRdBmoyzPQR1/ND6AOSgeAZMZxoV0fiVn0LB/+7y//a4Tk7e8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MK7cjGUM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZifJDxlVnHf9yJ2TKeiqenYd/rsxQ1+oayLKrsmF0tVNTnpBdg6RD3xiqtAqpmjIL6a+SuxIVL/KKzFuL1ZM1z3ooWOHG4gU2oDPkh11gtcFBnKPsaxxXdKnAUWmasapntndG/db+q6JovIRravDsTaxa+fTTOP5nL9ZBV9u3Ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lD2hO5nH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MK7cjGUM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7B5C4CEE7;
-	Mon, 12 May 2025 17:42:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lD2hO5nH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC59C4CEE7;
+	Mon, 12 May 2025 17:42:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071750;
-	bh=D2edTVaPdWXwlfKbzD5qlSP5QpMFrsqwvEy3SSPDGHo=;
+	s=korg; t=1747071754;
+	bh=0F5tEMln5DUdNvjHVT+Bm9m54tHoA7VRBJmOcHKL9VE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MK7cjGUMTllBYNn//Bf/uem4U4lAQXgyZfI/qYlQCdQFkSCkjL+jNDpzyS/AKjgg6
-	 XpfsWCZPpGomwzLjJ974Ru8RCaL2WS6KcwtBtUogtqZJGFAQRbtwk9peBrsNjU72ru
-	 WHLXdWfmHRoYQE7PQ1ngvBdkRBCFg0W1ZGYfs55w=
+	b=lD2hO5nHm/aa5zbehczoNVzChwCsCPESM4w+7SCENAiNjXc+ELSXOvTRuYc8jSfwA
+	 /I4uSdmV49swo7Gyc1A3Gh9PpBiTeT1TFNz2H2kebT5MhdQ9Ag45DGl1IOwiVzx5kM
+	 W7NYNla/uw/QO5PUSblfbaaPNscSunSbuYNJM0eY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Heelan <seanheelan@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.14 015/197] ksmbd: Fix UAF in __close_file_table_ids
-Date: Mon, 12 May 2025 19:37:45 +0200
-Message-ID: <20250512172044.965922210@linuxfoundation.org>
+	Eelco Chaudron <echaudro@redhat.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.14 016/197] openvswitch: Fix unsafe attribute parsing in output_userspace()
+Date: Mon, 12 May 2025 19:37:46 +0200
+Message-ID: <20250512172045.005161764@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -51,79 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Heelan <seanheelan@gmail.com>
+From: Eelco Chaudron <echaudro@redhat.com>
 
-commit 36991c1ccde2d5a521577c448ffe07fcccfe104d upstream.
+commit 6beb6835c1fbb3f676aebb51a5fee6b77fed9308 upstream.
 
-A use-after-free is possible if one thread destroys the file
-via __ksmbd_close_fd while another thread holds a reference to
-it. The existing checks on fp->refcount are not sufficient to
-prevent this.
+This patch replaces the manual Netlink attribute iteration in
+output_userspace() with nla_for_each_nested(), which ensures that only
+well-formed attributes are processed.
 
-The fix takes ft->lock around the section which removes the
-file from the file table. This prevents two threads acquiring the
-same file pointer via __close_file_table_ids, as well as the other
-functions which retrieve a file from the IDR and which already use
-this same lock.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Heelan <seanheelan@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: ccb1352e76cf ("net: Add Open vSwitch kernel components.")
+Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
+Acked-by: Ilya Maximets <i.maximets@ovn.org>
+Acked-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/0bd65949df61591d9171c0dc13e42cea8941da10.1746541734.git.echaudro@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/vfs_cache.c |   33 ++++++++++++++++++++++++++-------
- 1 file changed, 26 insertions(+), 7 deletions(-)
+ net/openvswitch/actions.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -661,21 +661,40 @@ __close_file_table_ids(struct ksmbd_file
- 		       bool (*skip)(struct ksmbd_tree_connect *tcon,
- 				    struct ksmbd_file *fp))
- {
--	unsigned int			id;
--	struct ksmbd_file		*fp;
--	int				num = 0;
-+	struct ksmbd_file *fp;
-+	unsigned int id = 0;
-+	int num = 0;
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -975,8 +975,7 @@ static int output_userspace(struct datap
+ 	upcall.cmd = OVS_PACKET_CMD_ACTION;
+ 	upcall.mru = OVS_CB(skb)->mru;
  
--	idr_for_each_entry(ft->idr, fp, id) {
--		if (skip(tcon, fp))
-+	while (1) {
-+		write_lock(&ft->lock);
-+		fp = idr_get_next(ft->idr, &id);
-+		if (!fp) {
-+			write_unlock(&ft->lock);
-+			break;
-+		}
-+
-+		if (skip(tcon, fp) ||
-+		    !atomic_dec_and_test(&fp->refcount)) {
-+			id++;
-+			write_unlock(&ft->lock);
- 			continue;
-+		}
- 
- 		set_close_state_blocked_works(fp);
-+		idr_remove(ft->idr, fp->volatile_id);
-+		fp->volatile_id = KSMBD_NO_FID;
-+		write_unlock(&ft->lock);
-+
-+		down_write(&fp->f_ci->m_lock);
-+		list_del_init(&fp->node);
-+		up_write(&fp->f_ci->m_lock);
- 
--		if (!atomic_dec_and_test(&fp->refcount))
--			continue;
- 		__ksmbd_close_fd(ft, fp);
-+
- 		num++;
-+		id++;
- 	}
-+
- 	return num;
- }
- 
+-	for (a = nla_data(attr), rem = nla_len(attr); rem > 0;
+-	     a = nla_next(a, &rem)) {
++	nla_for_each_nested(a, attr, rem) {
+ 		switch (nla_type(a)) {
+ 		case OVS_USERSPACE_ATTR_USERDATA:
+ 			upcall.userdata = a;
 
 
