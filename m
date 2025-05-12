@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DB826157B;
-	Mon, 12 May 2025 17:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1AD51A08CA;
+	Mon, 12 May 2025 17:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072507; cv=none; b=rNbABdUelaLdNw3rquiTEYHo41RLp8omP9aVEjs7/lP3F8ZvbUCM0uG4gSx2+8f4Cd5hfr9Lc9XXVRP/839wxWz8pF/1pV4djyoVbRQc7+p2UXnc9/tz7V9l23D5DTfB9AtVOa4rioyVHj4xjPOVtOVeb17ThiAQbB5QXUpxFs8=
+	t=1747072510; cv=none; b=dzxMSwE0kfuiM3597qsSPuqs/wlT36dWL526tBmg2rTUfj1teFJgBjBQa7oB4YZi7sdHXuS4I+0jjcf+PaVmGANPukQdZ5tVvMkryFNE6vY1c6HXv299iCfMpxXhQ0GYIp494L8N+mlc2L9ihsQrwhNU6HT6fdohUWu8mqSDPfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072507; c=relaxed/simple;
-	bh=35/Ct5Wb+XyiLUmEmUlOrLnK+ARfnX3RWWXwQju+6yI=;
+	s=arc-20240116; t=1747072510; c=relaxed/simple;
+	bh=zZDIVc1jRPyXh+o4Albut0Vuivg1ohqxvIyt1Ks04FU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qwTNy5fC0TzROnA8lhcEIZq76cfs+LgiepXCOyc54FpCpoZJuT1OKF0sFC2tBINxz9XfrIBalES0noeT/9L6etvah1BJS7HAyd8Q+Gnam2bL8OCrQ1MpKfva/wLLFzgfuGFh1oDMr7kUjNkWgTGUnONMpn8OnnIgmQbLXby8kjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/BBhnNW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WMgBI1/NvYc4KwvT0Ovc+MZWujeO7WZtDS2IlFV7OGN1FoviBCmrFR9Yw+Yr6ZY8lsOdn02AXeYEAAcpgc7a5G06eEmxoWQA2/N2MWUvn92byxEja5xH38fFD465P8EUxCh4p9I7+q4DtUvnmIIv2PVe0eJcBXCFJcnbj40pfLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fgoTiqrr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/BBhnNW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26630C4CEE7;
-	Mon, 12 May 2025 17:55:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fgoTiqrr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380ABC4CEE7;
+	Mon, 12 May 2025 17:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072507;
-	bh=35/Ct5Wb+XyiLUmEmUlOrLnK+ARfnX3RWWXwQju+6yI=;
+	s=korg; t=1747072510;
+	bh=zZDIVc1jRPyXh+o4Albut0Vuivg1ohqxvIyt1Ks04FU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D/BBhnNWEaYGSRUj82jr9IQamlbg2rA+xn8sZoE+TKvr+ilUw8h16ELfWEpIwJfea
-	 wa//+jSnjBiDic0wq2Qwxk0iHMM/HGlnHCKcqlnJTSV6N2+LThWY57K2oKXe8aqoaL
-	 R7+Wx4wSSaSXmfZSkAqoTbAIM/FmXMldHX0g88B0=
+	b=fgoTiqrrjV5nB53mqoH6UNH1iwmNYqE/AIrDHswBzpPcawxe3bVNvcxnKdvMpbyY5
+	 An/xEgm3/C2gm0MfXh31DNEzx6EH/nfmi+Pjy6IAEnYfuWpdtYfAQobPBno1f5HukQ
+	 cTlCcYVO1IlnwYp6twVrRQt2olE/PMWPLjFhQ+0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 22/92] net: dsa: b53: fix learning on VLAN unaware bridges
-Date: Mon, 12 May 2025 19:44:57 +0200
-Message-ID: <20250512172024.025190955@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 6.1 56/92] USB: usbtmc: use interruptible sleep in usbtmc_read
+Date: Mon, 12 May 2025 19:45:31 +0200
+Message-ID: <20250512172025.398684882@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -52,43 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 9f34ad89bcf0e6df6f8b01f1bdab211493fc66d1 ]
+commit 054c5145540e5ad5b80adf23a5e3e2fc281fb8aa upstream.
 
-When VLAN filtering is off, we configure the switch to forward, but not
-learn on VLAN table misses. This effectively disables learning while not
-filtering.
+usbtmc_read() calls usbtmc_generic_read()
+which uses interruptible sleep, but usbtmc_read()
+itself uses uninterruptble sleep for mutual exclusion
+between threads. That makes no sense.
+Both should use interruptible sleep.
 
-Fix this by switching to forward and learn. Setting the learning disable
-register will still control whether learning actually happens.
-
-Fixes: dad8d7c6452b ("net: dsa: b53: Properly account for VLAN filtering")
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20250429201710.330937-11-jonas.gorski@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 5b775f672cc99 ("USB: add USB test and measurement class driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/20250430134810.226015-1-oneukum@suse.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/class/usbtmc.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 9d410c21416f9..1a23fcc0445cb 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -383,7 +383,7 @@ static void b53_enable_vlan(struct b53_device *dev, int port, bool enable,
- 			vc4 |= VC4_ING_VID_VIO_DROP << VC4_ING_VID_CHECK_S;
- 			vc5 |= VC5_DROP_VTABLE_MISS;
- 		} else {
--			vc4 |= VC4_ING_VID_VIO_FWD << VC4_ING_VID_CHECK_S;
-+			vc4 |= VC4_NO_ING_VID_CHK << VC4_ING_VID_CHECK_S;
- 			vc5 &= ~VC5_DROP_VTABLE_MISS;
- 		}
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -1380,7 +1380,10 @@ static ssize_t usbtmc_read(struct file *
+ 	if (!buffer)
+ 		return -ENOMEM;
  
--- 
-2.39.5
-
+-	mutex_lock(&data->io_mutex);
++	retval = mutex_lock_interruptible(&data->io_mutex);
++	if (retval < 0)
++		goto exit_nolock;
++
+ 	if (data->zombie) {
+ 		retval = -ENODEV;
+ 		goto exit;
+@@ -1503,6 +1506,7 @@ static ssize_t usbtmc_read(struct file *
+ 
+ exit:
+ 	mutex_unlock(&data->io_mutex);
++exit_nolock:
+ 	kfree(buffer);
+ 	return retval;
+ }
 
 
