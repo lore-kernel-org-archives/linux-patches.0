@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF70296D3A;
-	Mon, 12 May 2025 17:42:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A546F296D3A;
+	Mon, 12 May 2025 17:42:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071754; cv=none; b=s68tzPNja3U2w5ffqtiZRCgHpHlzbdgTM91e/77gpkLvhM92QlV50nE9GbrG606dbvMHgBhZzlcopNMy//Tfh0N75EWDn30xjQv/QRsld/mDcy38qX1nZ/EWYQSgOLlWyWA5FBPRPkfHm5bEGT5OT29nfAWxi/bJR6+ezcM3uPQ=
+	t=1747071757; cv=none; b=nenlRgvk1vVr1UU+pGGBW8czdJtOuXM53h8IRt/C+SMlZPlsmEcgc5qTz9I1I6psR+eBPJd1aGg8Q1W1F+In1vmCJebYp8gaqhNHMH5pkCMMvo4yGaksS77Lc4f9FKE35CQtAqwkqZh6RP2reKZljXYPR5wMiw0JyRXMpu8/bbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071754; c=relaxed/simple;
-	bh=0F5tEMln5DUdNvjHVT+Bm9m54tHoA7VRBJmOcHKL9VE=;
+	s=arc-20240116; t=1747071757; c=relaxed/simple;
+	bh=aD9FK11sMzuQBOgw034GkM68wOa/fz8h/AqjZQy7g+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZifJDxlVnHf9yJ2TKeiqenYd/rsxQ1+oayLKrsmF0tVNTnpBdg6RD3xiqtAqpmjIL6a+SuxIVL/KKzFuL1ZM1z3ooWOHG4gU2oDPkh11gtcFBnKPsaxxXdKnAUWmasapntndG/db+q6JovIRravDsTaxa+fTTOP5nL9ZBV9u3Ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lD2hO5nH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fifLeJpCB4fxo0qZ3/P6AXqvZDv+AmpMqIbbJIu5irkbBzkpQxbnc/kh+GfcrP0xPasM92h0CVwhYMOwbFeqbIoLTko9c7sDLqBoxnupZq5Chbc0Q1zewmiUTKa45Vl7Umw3LxmynMj8dJJSd2hIIECNu/Fz7tLaSaDW5k2hpLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=frb3nDk/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lD2hO5nH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC59C4CEE7;
-	Mon, 12 May 2025 17:42:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="frb3nDk/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9CA2C4CEE7;
+	Mon, 12 May 2025 17:42:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071754;
-	bh=0F5tEMln5DUdNvjHVT+Bm9m54tHoA7VRBJmOcHKL9VE=;
+	s=korg; t=1747071757;
+	bh=aD9FK11sMzuQBOgw034GkM68wOa/fz8h/AqjZQy7g+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lD2hO5nHm/aa5zbehczoNVzChwCsCPESM4w+7SCENAiNjXc+ELSXOvTRuYc8jSfwA
-	 /I4uSdmV49swo7Gyc1A3Gh9PpBiTeT1TFNz2H2kebT5MhdQ9Ag45DGl1IOwiVzx5kM
-	 W7NYNla/uw/QO5PUSblfbaaPNscSunSbuYNJM0eY=
+	b=frb3nDk/bpTxx2bf5AKi0imcWBxB0sVB64r5wa7zvSiNRf3zfe0/ZYIjaZNf6RSB9
+	 9+GHXJwgZjSgwF2L03JAiHEN5VvTcsDxuEx8yrWn7gd48vyvYGCvnM89NZz7I80Pxh
+	 VkXjR16UxrHp2HXL+inNBo5kcEbNQeTqlopKxR5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.14 016/197] openvswitch: Fix unsafe attribute parsing in output_userspace()
-Date: Mon, 12 May 2025 19:37:46 +0200
-Message-ID: <20250512172045.005161764@linuxfoundation.org>
+	Wang Zhaolong <wangzhaolong1@huawei.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.14 017/197] ksmbd: fix memory leak in parse_lease_state()
+Date: Mon, 12 May 2025 19:37:47 +0200
+Message-ID: <20250512172045.045954789@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -52,36 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eelco Chaudron <echaudro@redhat.com>
+From: Wang Zhaolong <wangzhaolong1@huawei.com>
 
-commit 6beb6835c1fbb3f676aebb51a5fee6b77fed9308 upstream.
+[ Upstream commit eb4447bcce915b43b691123118893fca4f372a8f ]
 
-This patch replaces the manual Netlink attribute iteration in
-output_userspace() with nla_for_each_nested(), which ensures that only
-well-formed attributes are processed.
+The previous patch that added bounds check for create lease context
+introduced a memory leak. When the bounds check fails, the function
+returns NULL without freeing the previously allocated lease_ctx_info
+structure.
 
-Fixes: ccb1352e76cf ("net: Add Open vSwitch kernel components.")
-Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
-Acked-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/0bd65949df61591d9171c0dc13e42cea8941da10.1746541734.git.echaudro@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch fixes the issue by adding kfree(lreq) before returning NULL
+in both boundary check cases.
+
+Fixes: bab703ed8472 ("ksmbd: add bounds check for create lease context")
+Signed-off-by: Wang Zhaolong <wangzhaolong1@huawei.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/actions.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/smb/server/oplock.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -975,8 +975,7 @@ static int output_userspace(struct datap
- 	upcall.cmd = OVS_PACKET_CMD_ACTION;
- 	upcall.mru = OVS_CB(skb)->mru;
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index 81a29857b1e32..03f606afad93a 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -1496,7 +1496,7 @@ struct lease_ctx_info *parse_lease_state(void *open_req)
  
--	for (a = nla_data(attr), rem = nla_len(attr); rem > 0;
--	     a = nla_next(a, &rem)) {
-+	nla_for_each_nested(a, attr, rem) {
- 		switch (nla_type(a)) {
- 		case OVS_USERSPACE_ATTR_USERDATA:
- 			upcall.userdata = a;
+ 		if (le16_to_cpu(cc->DataOffset) + le32_to_cpu(cc->DataLength) <
+ 		    sizeof(struct create_lease_v2) - 4)
+-			return NULL;
++			goto err_out;
+ 
+ 		memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
+ 		lreq->req_state = lc->lcontext.LeaseState;
+@@ -1512,7 +1512,7 @@ struct lease_ctx_info *parse_lease_state(void *open_req)
+ 
+ 		if (le16_to_cpu(cc->DataOffset) + le32_to_cpu(cc->DataLength) <
+ 		    sizeof(struct create_lease))
+-			return NULL;
++			goto err_out;
+ 
+ 		memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
+ 		lreq->req_state = lc->lcontext.LeaseState;
+@@ -1521,6 +1521,9 @@ struct lease_ctx_info *parse_lease_state(void *open_req)
+ 		lreq->version = 1;
+ 	}
+ 	return lreq;
++err_out:
++	kfree(lreq);
++	return NULL;
+ }
+ 
+ /**
+-- 
+2.39.5
+
 
 
