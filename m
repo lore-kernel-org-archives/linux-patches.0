@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA4B175BF;
-	Mon, 12 May 2025 18:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378111A08CA;
+	Mon, 12 May 2025 18:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073002; cv=none; b=s+KztRjl8kA9/OKcDuSLvj+e7IWmVS2YEc7JMS5FvCC5IgVnGEisu8WCMgAznTrKDdYYnpWOvRLX3nh68dpBuGsrtHeiz4iVnKASKphNuHaSCUWfunSqqmZaCkcBz2LdTGbGylaj/sv0gcDa8TiIa2zN8WFf4G4G18L7i2+ljps=
+	t=1747073006; cv=none; b=VtR+jl8nNHkt8Vt+i4+tw/0/42IXnnkK6q7qC7saO/VwuEF+AXKGx7bRjiOfFAuB+hvJQlrCw1FRz1zp0sR4EwjhKZwyows3EiPQejsrklEx0aIDf+r3MtVAjmRt9JJbsEHL3GWQWxiRmGvRa5cy1RJUfq4KsXvvKyx6EEBPv3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073002; c=relaxed/simple;
-	bh=QV+BGyST/mqHZzbN30ATJut4lUXBtf6XLCsRQKcaHpA=;
+	s=arc-20240116; t=1747073006; c=relaxed/simple;
+	bh=ZRsK9NM+utPv5/xYEF1U6TrbzFpFgQfGUuQkI1K9KJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YUazHwiOOrOuOVvEyrbzq/PXYvtFOkWV6CyehQxv8fV7jUuq+LaCrt4pZD0VAU2Bg+IdikDzxvE8gFk3AVTDprxXo49k6QUp/1BbMdVDF7MKFDNMFnbIsKwusRu7Xv0Jl0Osm6G0N4iUErrTI4N3L8zequwichr44pMuzxtgQoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNkQXO1k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=adT/PxmNLry0fuufqUrhCZowqwEHeXZWU42PeXGjPLMi1Phkh6WC9gqBxFKAE+Yb2dRLHRYq3wx2Rc9+dHWdnWEYvDoOx/lb2GDIztCmZdEX9wXS5FUjY1CG6Q3BG5gsEIRkYO09zR3HBbMtjJ1Ym17GPN2WmjJs77igPHKFSlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+OLXii9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNkQXO1k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3BDAC4CEEF;
-	Mon, 12 May 2025 18:03:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+OLXii9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E4DC4CEE7;
+	Mon, 12 May 2025 18:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073002;
-	bh=QV+BGyST/mqHZzbN30ATJut4lUXBtf6XLCsRQKcaHpA=;
+	s=korg; t=1747073005;
+	bh=ZRsK9NM+utPv5/xYEF1U6TrbzFpFgQfGUuQkI1K9KJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lNkQXO1kDqwZ4Tevqbsdn9dM9I45meSyPuC2Lsp6/Y8myBbTDiq+98lfBm1ZGm3i7
-	 gjOzGLz0r4KOlbq9cKXp+TRBLic7h91WeFrqIBvd7W8DfTyikruOqdC3hlS9pnLzJs
-	 /dl3a0a0TTtbag6tPBrme/U/holUC7xpEfcXz1FQ=
+	b=g+OLXii9DtFeK3M6NmVV12e+/6iQCsL+1DCxhkorSij0iqYa+5tAW8QXX2RvGmiNk
+	 2ctqDK1/VDls4mqMD5Ml1wthKN6Q7UpGKHxQLZBJjHQcZGQKrTEnc0+uQvRdDF0nJ7
+	 V7HkhQgmw3p5qCi++axjbldfMNJtZQQZ5y15Wvjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Wayne Lin <Wayne.Lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.12 096/184] drm/amd/display: Copy AUX read reply data whenever length > 0
-Date: Mon, 12 May 2025 19:44:57 +0200
-Message-ID: <20250512172045.734863507@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
+Subject: [PATCH 6.12 123/184] usb: misc: onboard_usb_dev: fix support for Cypress HX3 hubs
+Date: Mon, 12 May 2025 19:45:24 +0200
+Message-ID: <20250512172046.830133067@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -53,43 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
 
-commit 3924f45d4de7250a603fd7b50379237a6a0e5adf upstream.
+commit 9f657a92805cfc98e11cf5da9e8f4e02ecff2260 upstream.
 
-[Why]
-amdgpu_dm_process_dmub_aux_transfer_sync() should return all exact data
-reply from the sink side. Don't do the analysis job in it.
+The Cypress HX3 USB3.0 hubs use different PID values depending
+on the product variant. The comment in compatibles table is
+misleading, as the currently used PIDs (0x6504 and 0x6506 for
+USB 3.0 and USB 2.0, respectively) are defaults for the CYUSB331x,
+while CYUSB330x and CYUSB332x variants use different values.
+Based on the datasheet [1], update the compatible usb devices table
+to handle different types of the hub.
+The change also includes vendor mode PIDs, which are used by the
+hub in I2C Master boot mode, if connected EEPROM contains invalid
+signature or is blank. This allows to correctly boot the hub even
+if the EEPROM will have broken content.
+Number of vcc supplies and timing requirements are the same for all
+HX variants, so the platform driver's match table does not have to
+be extended.
 
-[How]
-Remove unnecessary check condition AUX_TRANSACTION_REPLY_AUX_ACK.
+[1] https://www.infineon.com/dgdl/Infineon-HX3_USB_3_0_Hub_Consumer_Industrial-DataSheet-v22_00-EN.pdf?fileId=8ac78c8c7d0d8da4017d0ecb53f644b8
+    Table 9. PID Values
 
-Fixes: ead08b95fa50 ("drm/amd/display: Fix race condition in DPIA AUX transfer")
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Ray Wu <ray.wu@amd.com>
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9b540e3fe6796fec4fb1344f3be8952fc2f084d4)
-Cc: stable@vger.kernel.org
+Fixes: b43cd82a1a40 ("usb: misc: onboard-hub: add support for Cypress HX3 USB 3.0 family")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
+Link: https://lore.kernel.org/r/20250425-onboard_usb_dev-v2-1-4a76a474a010@thaumatec.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/misc/onboard_usb_dev.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -12546,8 +12546,7 @@ int amdgpu_dm_process_dmub_aux_transfer_
- 		/* The reply is stored in the top nibble of the command. */
- 		payload->reply[0] = (adev->dm.dmub_notify->aux_reply.command >> 4) & 0xF;
+--- a/drivers/usb/misc/onboard_usb_dev.c
++++ b/drivers/usb/misc/onboard_usb_dev.c
+@@ -569,8 +569,14 @@ static void onboard_dev_usbdev_disconnec
+ }
  
--	if (!payload->write && p_notify->aux_reply.length &&
--			(payload->reply[0] == AUX_TRANSACTION_REPLY_AUX_ACK))
-+	if (!payload->write && p_notify->aux_reply.length)
- 		memcpy(payload->data, p_notify->aux_reply.data,
- 				p_notify->aux_reply.length);
- 
+ static const struct usb_device_id onboard_dev_id_table[] = {
+-	{ USB_DEVICE(VENDOR_ID_CYPRESS, 0x6504) }, /* CYUSB33{0,1,2}x/CYUSB230x 3.0 HUB */
+-	{ USB_DEVICE(VENDOR_ID_CYPRESS, 0x6506) }, /* CYUSB33{0,1,2}x/CYUSB230x 2.0 HUB */
++	{ USB_DEVICE(VENDOR_ID_CYPRESS, 0x6500) }, /* CYUSB330x 3.0 HUB */
++	{ USB_DEVICE(VENDOR_ID_CYPRESS, 0x6502) }, /* CYUSB330x 2.0 HUB */
++	{ USB_DEVICE(VENDOR_ID_CYPRESS, 0x6503) }, /* CYUSB33{0,1}x 2.0 HUB, Vendor Mode */
++	{ USB_DEVICE(VENDOR_ID_CYPRESS, 0x6504) }, /* CYUSB331x 3.0 HUB */
++	{ USB_DEVICE(VENDOR_ID_CYPRESS, 0x6506) }, /* CYUSB331x 2.0 HUB */
++	{ USB_DEVICE(VENDOR_ID_CYPRESS, 0x6507) }, /* CYUSB332x 2.0 HUB, Vendor Mode */
++	{ USB_DEVICE(VENDOR_ID_CYPRESS, 0x6508) }, /* CYUSB332x 3.0 HUB */
++	{ USB_DEVICE(VENDOR_ID_CYPRESS, 0x650a) }, /* CYUSB332x 2.0 HUB */
+ 	{ USB_DEVICE(VENDOR_ID_CYPRESS, 0x6570) }, /* CY7C6563x 2.0 HUB */
+ 	{ USB_DEVICE(VENDOR_ID_GENESYS, 0x0608) }, /* Genesys Logic GL850G USB 2.0 HUB */
+ 	{ USB_DEVICE(VENDOR_ID_GENESYS, 0x0610) }, /* Genesys Logic GL852G USB 2.0 HUB */
 
 
