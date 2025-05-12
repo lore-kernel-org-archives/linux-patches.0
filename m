@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463CF296D1D;
-	Mon, 12 May 2025 17:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A38254863;
+	Mon, 12 May 2025 17:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072349; cv=none; b=TUjuP2IXLnRf8WrkKoIXyMoIz2zfmRqOI/ebYFs35+1qVBXMYj0Dd8Py6zl3SHZSeVP1icrphxO6wh8NC6A5JNLzgYfnMiS6VX8csC3lonUUVtU5dOXClJfEqxBw+GU8KyTDS870ZFoAkSzwRFdvPwzt25lXNiOwegGWJGoGPyQ=
+	t=1747072352; cv=none; b=KeDHZLXqHMmDFr32eMF96nPdJsOEER2O259hWscpsQjVrtp599m9FklfDNP0p0fSP9/ATFid+FPjWsqEHeDiG3T1YImzhbYM7svEuw5F45k/MetgVvk+9Y5d4mNHu+6nBTr/9AY2E5UnAepKaQaRN+0SEMfFIeSPd6NToXDo+GU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072349; c=relaxed/simple;
-	bh=9/P0cZEtN5cqMFywYain1RMdj0QTGzjx9JTc31RZmgs=;
+	s=arc-20240116; t=1747072352; c=relaxed/simple;
+	bh=kVVDe/ckEEFaCmhIoo0XNwEJ5QLP/z/bsfkYf3BrwTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZnoqM2vw6xQ3zwiWRp93w7UYoYEj1QXrHNoEW0hVqknG31QRbnVtCj16lk9t9FFQcMtZ/bxOJ/wu9Bs++4v+8JURD5qFTZLSIz9YvW5m7X2NDj7zKTu+xiy080mGdtLrJUFT203W+k8hPcCgxY7HkWfrZhfE05t4voQ0ajrJhSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1c2EmFo0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BxXQoKnoZISPXfBPm4KcvS1ZPIzHhW3qMsbiKM0gFd3vAbH+9hd8WZ2fQPXxLgCc0thl+Vqq5/oDUDfqF60DibkBuf+v+SlbXfmIBtq/qmQRmTiI3j85AAU875E0eL++8GB/7Z1/zfuxYgQx4X3Dw4zNxWNu1yeXmcjuDyDhuM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y7+0gzSt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1c2EmFo0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60093C4CEE7;
-	Mon, 12 May 2025 17:52:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y7+0gzSt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBBBC4CEE7;
+	Mon, 12 May 2025 17:52:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072348;
-	bh=9/P0cZEtN5cqMFywYain1RMdj0QTGzjx9JTc31RZmgs=;
+	s=korg; t=1747072352;
+	bh=kVVDe/ckEEFaCmhIoo0XNwEJ5QLP/z/bsfkYf3BrwTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1c2EmFo05Uh2oWJSl9A7R4cFRDviuetQsmeMBhu1gGjz5LgYfRcoHKk97+NB6RNaz
-	 OjzulmeKI64gHDpZ2ki34pxeXM5Us+5SxLdTt9CjYopbTi5a7CTYn61c/Umax6GMg/
-	 KK34qVbpNOEnSUlwuZLR5So1YUot0OFsFxkX/aFA=
+	b=y7+0gzStMVWPTqBv96HtxTnT8cV8CfbehsGqDcdwxMtFKrurIFTGiAZB/C37g5AfX
+	 5XwDB/+uY+boK0V9oE3X1h0Y8wMC9VfP2XSNAo3EJvkLIXkoL0MwyfsbGf5Ay3DRXR
+	 w+CFOhB22QX+jhFirSkKBJQrGLTNY30AHmQ07Hgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot+04b9a82855c8aed20860@syzkaller.appspotmail.com,
+	Julian Anastasov <ja@ssi.bg>,
+	Simon Horman <horms@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 13/92] ipv4: Drop tos parameter from flowi4_update_output()
-Date: Mon, 12 May 2025 19:44:48 +0200
-Message-ID: <20250512172023.664723552@linuxfoundation.org>
+Subject: [PATCH 6.1 14/92] ipvs: fix uninit-value for saddr in do_output_route4
+Date: Mon, 12 May 2025 19:44:49 +0200
+Message-ID: <20250512172023.705890472@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -51,127 +53,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit 3f06760c00f56c5fe6c7f3361c2cf64becee1174 ]
+[ Upstream commit e34090d7214e0516eb8722aee295cb2507317c07 ]
 
-Callers of flowi4_update_output() never try to update ->flowi4_tos:
+syzbot reports for uninit-value for the saddr argument [1].
+commit 4754957f04f5 ("ipvs: do not use random local source address for
+tunnels") already implies that the input value of saddr
+should be ignored but the code is still reading it which can prevent
+to connect the route. Fix it by changing the argument to ret_saddr.
 
-  * ip_route_connect() updates ->flowi4_tos with its own current
-    value.
+[1]
+BUG: KMSAN: uninit-value in do_output_route4+0x42c/0x4d0 net/netfilter/ipvs/ip_vs_xmit.c:147
+ do_output_route4+0x42c/0x4d0 net/netfilter/ipvs/ip_vs_xmit.c:147
+ __ip_vs_get_out_rt+0x403/0x21d0 net/netfilter/ipvs/ip_vs_xmit.c:330
+ ip_vs_tunnel_xmit+0x205/0x2380 net/netfilter/ipvs/ip_vs_xmit.c:1136
+ ip_vs_in_hook+0x1aa5/0x35b0 net/netfilter/ipvs/ip_vs_core.c:2063
+ nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+ nf_hook_slow+0xf7/0x400 net/netfilter/core.c:626
+ nf_hook include/linux/netfilter.h:269 [inline]
+ __ip_local_out+0x758/0x7e0 net/ipv4/ip_output.c:118
+ ip_local_out net/ipv4/ip_output.c:127 [inline]
+ ip_send_skb+0x6a/0x3c0 net/ipv4/ip_output.c:1501
+ udp_send_skb+0xfda/0x1b70 net/ipv4/udp.c:1195
+ udp_sendmsg+0x2fe3/0x33c0 net/ipv4/udp.c:1483
+ inet_sendmsg+0x1fc/0x280 net/ipv4/af_inet.c:851
+ sock_sendmsg_nosec net/socket.c:712 [inline]
+ __sock_sendmsg+0x267/0x380 net/socket.c:727
+ ____sys_sendmsg+0x91b/0xda0 net/socket.c:2566
+ ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2620
+ __sys_sendmmsg+0x41d/0x880 net/socket.c:2702
+ __compat_sys_sendmmsg net/compat.c:360 [inline]
+ __do_compat_sys_sendmmsg net/compat.c:367 [inline]
+ __se_compat_sys_sendmmsg net/compat.c:364 [inline]
+ __ia32_compat_sys_sendmmsg+0xc8/0x140 net/compat.c:364
+ ia32_sys_call+0x3ffa/0x41f0 arch/x86/include/generated/asm/syscalls_32.h:346
+ do_syscall_32_irqs_on arch/x86/entry/syscall_32.c:83 [inline]
+ __do_fast_syscall_32+0xb0/0x110 arch/x86/entry/syscall_32.c:306
+ do_fast_syscall_32+0x38/0x80 arch/x86/entry/syscall_32.c:331
+ do_SYSENTER_32+0x1f/0x30 arch/x86/entry/syscall_32.c:369
+ entry_SYSENTER_compat_after_hwframe+0x84/0x8e
 
-  * ip_route_newports() has two users: tcp_v4_connect() and
-    dccp_v4_connect. Both initialise fl4 with ip_route_connect(), which
-    in turn sets ->flowi4_tos with RT_TOS(inet_sk(sk)->tos) and
-    ->flowi4_scope based on SOCK_LOCALROUTE.
+Uninit was created at:
+ slab_post_alloc_hook mm/slub.c:4167 [inline]
+ slab_alloc_node mm/slub.c:4210 [inline]
+ __kmalloc_cache_noprof+0x8fa/0xe00 mm/slub.c:4367
+ kmalloc_noprof include/linux/slab.h:905 [inline]
+ ip_vs_dest_dst_alloc net/netfilter/ipvs/ip_vs_xmit.c:61 [inline]
+ __ip_vs_get_out_rt+0x35d/0x21d0 net/netfilter/ipvs/ip_vs_xmit.c:323
+ ip_vs_tunnel_xmit+0x205/0x2380 net/netfilter/ipvs/ip_vs_xmit.c:1136
+ ip_vs_in_hook+0x1aa5/0x35b0 net/netfilter/ipvs/ip_vs_core.c:2063
+ nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+ nf_hook_slow+0xf7/0x400 net/netfilter/core.c:626
+ nf_hook include/linux/netfilter.h:269 [inline]
+ __ip_local_out+0x758/0x7e0 net/ipv4/ip_output.c:118
+ ip_local_out net/ipv4/ip_output.c:127 [inline]
+ ip_send_skb+0x6a/0x3c0 net/ipv4/ip_output.c:1501
+ udp_send_skb+0xfda/0x1b70 net/ipv4/udp.c:1195
+ udp_sendmsg+0x2fe3/0x33c0 net/ipv4/udp.c:1483
+ inet_sendmsg+0x1fc/0x280 net/ipv4/af_inet.c:851
+ sock_sendmsg_nosec net/socket.c:712 [inline]
+ __sock_sendmsg+0x267/0x380 net/socket.c:727
+ ____sys_sendmsg+0x91b/0xda0 net/socket.c:2566
+ ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2620
+ __sys_sendmmsg+0x41d/0x880 net/socket.c:2702
+ __compat_sys_sendmmsg net/compat.c:360 [inline]
+ __do_compat_sys_sendmmsg net/compat.c:367 [inline]
+ __se_compat_sys_sendmmsg net/compat.c:364 [inline]
+ __ia32_compat_sys_sendmmsg+0xc8/0x140 net/compat.c:364
+ ia32_sys_call+0x3ffa/0x41f0 arch/x86/include/generated/asm/syscalls_32.h:346
+ do_syscall_32_irqs_on arch/x86/entry/syscall_32.c:83 [inline]
+ __do_fast_syscall_32+0xb0/0x110 arch/x86/entry/syscall_32.c:306
+ do_fast_syscall_32+0x38/0x80 arch/x86/entry/syscall_32.c:331
+ do_SYSENTER_32+0x1f/0x30 arch/x86/entry/syscall_32.c:369
+ entry_SYSENTER_compat_after_hwframe+0x84/0x8e
 
-    Then ip_route_newports() updates ->flowi4_tos with
-    RT_CONN_FLAGS(sk), which is the same as RT_TOS(inet_sk(sk)->tos),
-    unless SOCK_LOCALROUTE is set on the socket. In that case, the
-    lowest order bit is set to 1, to eventually inform
-    ip_route_output_key_hash() to restrict the scope to RT_SCOPE_LINK.
-    This is equivalent to properly setting ->flowi4_scope as
-    ip_route_connect() did.
+CPU: 0 UID: 0 PID: 22408 Comm: syz.4.5165 Not tainted 6.15.0-rc3-syzkaller-00019-gbc3372351d0c #0 PREEMPT(undef)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
 
-  * ip_vs_xmit.c initialises ->flowi4_tos with memset(0), then calls
-    flowi4_update_output() with tos=0.
-
-  * sctp_v4_get_dst() uses the same RT_CONN_FLAGS_TOS() when
-    initialising ->flowi4_tos and when calling flowi4_update_output().
-
-In the end, ->flowi4_tos never changes. So let's just drop the tos
-parameter. This will simplify the conversion of ->flowi4_tos from __u8
-to dscp_t.
-
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: e34090d7214e ("ipvs: fix uninit-value for saddr in do_output_route4")
+Reported-by: syzbot+04b9a82855c8aed20860@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68138dfa.050a0220.14dd7d.0017.GAE@google.com/
+Fixes: 4754957f04f5 ("ipvs: do not use random local source address for tunnels")
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Acked-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/flow.h              | 3 +--
- include/net/route.h             | 6 ++----
- net/netfilter/ipvs/ip_vs_xmit.c | 4 ++--
- net/sctp/protocol.c             | 4 +---
- 4 files changed, 6 insertions(+), 11 deletions(-)
+ net/netfilter/ipvs/ip_vs_xmit.c | 27 ++++++++-------------------
+ 1 file changed, 8 insertions(+), 19 deletions(-)
 
-diff --git a/include/net/flow.h b/include/net/flow.h
-index 079cc493fe67d..5a17fa6e016f8 100644
---- a/include/net/flow.h
-+++ b/include/net/flow.h
-@@ -115,11 +115,10 @@ static inline void flowi4_init_output(struct flowi4 *fl4, int oif,
- }
- 
- /* Reset some input parameters after previous lookup */
--static inline void flowi4_update_output(struct flowi4 *fl4, int oif, __u8 tos,
-+static inline void flowi4_update_output(struct flowi4 *fl4, int oif,
- 					__be32 daddr, __be32 saddr)
- {
- 	fl4->flowi4_oif = oif;
--	fl4->flowi4_tos = tos;
- 	fl4->daddr = daddr;
- 	fl4->saddr = saddr;
- }
-diff --git a/include/net/route.h b/include/net/route.h
-index 4185e6da9ef85..cdca622c5c6fe 100644
---- a/include/net/route.h
-+++ b/include/net/route.h
-@@ -325,8 +325,7 @@ static inline struct rtable *ip_route_connect(struct flowi4 *fl4, __be32 dst,
- 		if (IS_ERR(rt))
- 			return rt;
- 		ip_rt_put(rt);
--		flowi4_update_output(fl4, oif, fl4->flowi4_tos, fl4->daddr,
--				     fl4->saddr);
-+		flowi4_update_output(fl4, oif, fl4->daddr, fl4->saddr);
- 	}
- 	security_sk_classify_flow(sk, flowi4_to_flowi_common(fl4));
- 	return ip_route_output_flow(net, fl4, sk);
-@@ -341,8 +340,7 @@ static inline struct rtable *ip_route_newports(struct flowi4 *fl4, struct rtable
- 		fl4->fl4_dport = dport;
- 		fl4->fl4_sport = sport;
- 		ip_rt_put(rt);
--		flowi4_update_output(fl4, sk->sk_bound_dev_if,
--				     RT_CONN_FLAGS(sk), fl4->daddr,
-+		flowi4_update_output(fl4, sk->sk_bound_dev_if, fl4->daddr,
- 				     fl4->saddr);
- 		security_sk_classify_flow(sk, flowi4_to_flowi_common(fl4));
- 		return ip_route_output_flow(sock_net(sk), fl4, sk);
 diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
-index d40a4ca2b27f5..f9ae72122e343 100644
+index f9ae72122e343..e1437c72ca6e6 100644
 --- a/net/netfilter/ipvs/ip_vs_xmit.c
 +++ b/net/netfilter/ipvs/ip_vs_xmit.c
-@@ -139,7 +139,7 @@ static struct rtable *do_output_route4(struct net *net, __be32 daddr,
- 		if (PTR_ERR(rt) == -EINVAL && *saddr &&
- 		    rt_mode & IP_VS_RT_MODE_CONNECT && !loop) {
- 			*saddr = 0;
--			flowi4_update_output(&fl4, 0, 0, daddr, 0);
-+			flowi4_update_output(&fl4, 0, daddr, 0);
- 			goto retry;
- 		}
+@@ -119,13 +119,12 @@ __mtu_check_toobig_v6(const struct sk_buff *skb, u32 mtu)
+ 	return false;
+ }
+ 
+-/* Get route to daddr, update *saddr, optionally bind route to saddr */
++/* Get route to daddr, optionally bind route to saddr */
+ static struct rtable *do_output_route4(struct net *net, __be32 daddr,
+-				       int rt_mode, __be32 *saddr)
++				       int rt_mode, __be32 *ret_saddr)
+ {
+ 	struct flowi4 fl4;
+ 	struct rtable *rt;
+-	bool loop = false;
+ 
+ 	memset(&fl4, 0, sizeof(fl4));
+ 	fl4.daddr = daddr;
+@@ -135,23 +134,17 @@ static struct rtable *do_output_route4(struct net *net, __be32 daddr,
+ retry:
+ 	rt = ip_route_output_key(net, &fl4);
+ 	if (IS_ERR(rt)) {
+-		/* Invalid saddr ? */
+-		if (PTR_ERR(rt) == -EINVAL && *saddr &&
+-		    rt_mode & IP_VS_RT_MODE_CONNECT && !loop) {
+-			*saddr = 0;
+-			flowi4_update_output(&fl4, 0, daddr, 0);
+-			goto retry;
+-		}
  		IP_VS_DBG_RL("ip_route_output error, dest: %pI4\n", &daddr);
-@@ -147,7 +147,7 @@ static struct rtable *do_output_route4(struct net *net, __be32 daddr,
- 	} else if (!*saddr && rt_mode & IP_VS_RT_MODE_CONNECT && fl4.saddr) {
+ 		return NULL;
+-	} else if (!*saddr && rt_mode & IP_VS_RT_MODE_CONNECT && fl4.saddr) {
++	}
++	if (rt_mode & IP_VS_RT_MODE_CONNECT && fl4.saddr) {
  		ip_rt_put(rt);
- 		*saddr = fl4.saddr;
--		flowi4_update_output(&fl4, 0, 0, daddr, fl4.saddr);
-+		flowi4_update_output(&fl4, 0, daddr, fl4.saddr);
- 		loop = true;
+-		*saddr = fl4.saddr;
+ 		flowi4_update_output(&fl4, 0, daddr, fl4.saddr);
+-		loop = true;
++		rt_mode = 0;
  		goto retry;
  	}
-diff --git a/net/sctp/protocol.c b/net/sctp/protocol.c
-index bcd3384ab07a4..036dc574af4f9 100644
---- a/net/sctp/protocol.c
-+++ b/net/sctp/protocol.c
-@@ -497,9 +497,7 @@ static void sctp_v4_get_dst(struct sctp_transport *t, union sctp_addr *saddr,
- 			continue;
+-	*saddr = fl4.saddr;
++	if (ret_saddr)
++		*ret_saddr = fl4.saddr;
+ 	return rt;
+ }
  
- 		fl4->fl4_sport = laddr->a.v4.sin_port;
--		flowi4_update_output(fl4,
--				     asoc->base.sk->sk_bound_dev_if,
--				     RT_CONN_FLAGS_TOS(asoc->base.sk, tos),
-+		flowi4_update_output(fl4, asoc->base.sk->sk_bound_dev_if,
- 				     daddr->v4.sin_addr.s_addr,
- 				     laddr->a.v4.sin_addr.s_addr);
+@@ -344,19 +337,15 @@ __ip_vs_get_out_rt(struct netns_ipvs *ipvs, int skb_af, struct sk_buff *skb,
+ 		if (ret_saddr)
+ 			*ret_saddr = dest_dst->dst_saddr.ip;
+ 	} else {
+-		__be32 saddr = htonl(INADDR_ANY);
+-
+ 		noref = 0;
  
+ 		/* For such unconfigured boxes avoid many route lookups
+ 		 * for performance reasons because we do not remember saddr
+ 		 */
+ 		rt_mode &= ~IP_VS_RT_MODE_CONNECT;
+-		rt = do_output_route4(net, daddr, rt_mode, &saddr);
++		rt = do_output_route4(net, daddr, rt_mode, ret_saddr);
+ 		if (!rt)
+ 			goto err_unreach;
+-		if (ret_saddr)
+-			*ret_saddr = saddr;
+ 	}
+ 
+ 	local = (rt->rt_flags & RTCF_LOCAL) ? 1 : 0;
 -- 
 2.39.5
 
