@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B991A78F52;
-	Mon, 12 May 2025 17:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8437314658D;
+	Mon, 12 May 2025 17:31:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071111; cv=none; b=q6p+kKdg7LfwQ5WvMkj3OFw54D8hU5+AWEgJcHk7rrIrg/P5/oFKmHS8f/bdPJLDniRBzqEXMklCdT+gEMn0DVFd931JAJJ0KIwZAYsgZVIwXllDBfv5u5YQLDDY6hgngG0zlUPUoew1Akxq+7sY81IFDfDDGwL2BuQJs1OT+Qo=
+	t=1747071114; cv=none; b=GfV5hjLmd5JwvBW3YTB4yf5gQuP74+XDHHU/dlBFcPGS5A+GIGPqTEbx0E4x9ruIZcyJqDccgEiHM5s/noFsssz+HGYyv8heSy7NY8CaM5tM6Wx6UgJUFk+vLr7WvXBSNp4LfkQkMYaPzrPYw7QKobteRH7TiuENsItbv9Tjjys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071111; c=relaxed/simple;
-	bh=G6aL0jKwBWt/MBlS8pKb0ahTramTj5//viNnwj1bai4=;
+	s=arc-20240116; t=1747071114; c=relaxed/simple;
+	bh=FM8vCtR0+JCF4zTguLT+b6uUZmgx2Xm1wXCBUbRP7Ig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FGqufxcueiWaJzNsss5ykZMKmxCiMqkj/tFysFWNj+MTrqX+Sv/BW8kgxG0F/e9tzHOTr6DYSg0zhX9XW6H1ZlFYbOhhsbAT/lNqoOZ19WWjDdDbpDtpUk0UDwM26QbUpX6BYpnujsqqH0T1rw6kkzsyLSLQuqMOK7VopypJ+L0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMBXQNhT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NL0ZZf3J6ZfNxd7Jb86pqQ0FgfElhDLDUzvawiMq2roFxp/Q4DHCRK7B/Z/phHmeWJcOWUE7tWdeSgs+a4nh+dZOxQBSApsDNC7piTIG7WMeEMip35kPhzQxtsHdjkpT7CVS2JrnVJ2aCs9tRR8ZP0hck9vrvYwc886972BL5Mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=exHhdpeY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMBXQNhT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B64FC4CEE7;
-	Mon, 12 May 2025 17:31:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exHhdpeY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 152FCC4CEE7;
+	Mon, 12 May 2025 17:31:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071111;
-	bh=G6aL0jKwBWt/MBlS8pKb0ahTramTj5//viNnwj1bai4=;
+	s=korg; t=1747071114;
+	bh=FM8vCtR0+JCF4zTguLT+b6uUZmgx2Xm1wXCBUbRP7Ig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pMBXQNhTWv4Hm1xH4Y63MNnY6bMTkQh5gdqwQMnnWGhEFH0hWMltkofQeX9551Gr6
-	 Puz+X7zjQn05SvNu5mRai4Q9qyUPuVLK3d0pD8Gpc496Y0i5A4hpYEWPvMXaHHTJ1z
-	 JqhmmmAocfbZLMIbXwG9GZ7fsayskvVIXG9zocQE=
+	b=exHhdpeYedA1G/yGbTwWCj0lSOYMHotbsyO7M1ecKj54b9Uiq9jAkUg2koJ1KfhhJ
+	 aUwF8TY/u5iRpUQOK+TDOQB/lPT/5Ai+cpAJFJPGC5AHFoJ9lzmMGMrrySExLtZUW4
+	 dI13WzsiQ4HVuHJ2OQDd/evNZl4sDzBnr9y1MWn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dave Penkler <dpenkler@gmail.com>
-Subject: [PATCH 5.15 43/54] usb: usbtmc: Fix erroneous wait_srq ioctl return
-Date: Mon, 12 May 2025 19:29:55 +0200
-Message-ID: <20250512172017.375802104@linuxfoundation.org>
+Subject: [PATCH 5.15 44/54] usb: usbtmc: Fix erroneous generic_read ioctl return
+Date: Mon, 12 May 2025 19:29:56 +0200
+Message-ID: <20250512172017.416950614@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172015.643809034@linuxfoundation.org>
 References: <20250512172015.643809034@linuxfoundation.org>
@@ -51,72 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Penkler <dpenkler@gmail.com>
 
-commit a9747c9b8b59ab4207effd20eb91a890acb44e16 upstream.
+commit 4e77d3ec7c7c0d9535ccf1138827cb9bb5480b9b upstream.
 
 wait_event_interruptible_timeout returns a long
-The return was being assigned to an int causing an integer overflow when
-the remaining jiffies > INT_MAX resulting in random error returns.
+The return value was being assigned to an int causing an integer overflow
+when the remaining jiffies > INT_MAX which resulted in random error
+returns.
 
-Use a long return value,  converting to the int ioctl return only on
-error.
+Use a long return value, converting to the int ioctl return only on error.
 
-Fixes: 739240a9f6ac ("usb: usbtmc: Add ioctl USBTMC488_IOCTL_WAIT_SRQ")
+Fixes: bb99794a4792 ("usb: usbtmc: Add ioctl for vendor specific read")
 Cc: stable@vger.kernel.org
 Signed-off-by: Dave Penkler <dpenkler@gmail.com>
-Link: https://lore.kernel.org/r/20250502070941.31819-3-dpenkler@gmail.com
+Link: https://lore.kernel.org/r/20250502070941.31819-4-dpenkler@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/usbtmc.c |   23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ drivers/usb/class/usbtmc.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
 --- a/drivers/usb/class/usbtmc.c
 +++ b/drivers/usb/class/usbtmc.c
-@@ -606,9 +606,9 @@ static int usbtmc488_ioctl_wait_srq(stru
- {
- 	struct usbtmc_device_data *data = file_data->data;
- 	struct device *dev = &data->intf->dev;
--	int rv;
- 	u32 timeout;
+@@ -833,6 +833,7 @@ static ssize_t usbtmc_generic_read(struc
  	unsigned long expire;
+ 	int bufcount = 1;
+ 	int again = 0;
 +	long wait_rv;
  
- 	if (!data->iin_ep_present) {
- 		dev_dbg(dev, "no interrupt endpoint present\n");
-@@ -622,25 +622,24 @@ static int usbtmc488_ioctl_wait_srq(stru
+ 	/* mutex already locked */
  
- 	mutex_unlock(&data->io_mutex);
+@@ -945,19 +946,24 @@ static ssize_t usbtmc_generic_read(struc
+ 		if (!(flags & USBTMC_FLAG_ASYNC)) {
+ 			dev_dbg(dev, "%s: before wait time %lu\n",
+ 				__func__, expire);
+-			retval = wait_event_interruptible_timeout(
++			wait_rv = wait_event_interruptible_timeout(
+ 				file_data->wait_bulk_in,
+ 				usbtmc_do_transfer(file_data),
+ 				expire);
  
--	rv = wait_event_interruptible_timeout(
--			data->waitq,
--			atomic_read(&file_data->srq_asserted) != 0 ||
--			atomic_read(&file_data->closing),
--			expire);
-+	wait_rv = wait_event_interruptible_timeout(
-+		data->waitq,
-+		atomic_read(&file_data->srq_asserted) != 0 ||
-+		atomic_read(&file_data->closing),
-+		expire);
+-			dev_dbg(dev, "%s: wait returned %d\n",
+-				__func__, retval);
++			dev_dbg(dev, "%s: wait returned %ld\n",
++				__func__, wait_rv);
  
- 	mutex_lock(&data->io_mutex);
+-			if (retval <= 0) {
+-				if (retval == 0)
+-					retval = -ETIMEDOUT;
++			if (wait_rv < 0) {
++				retval = wait_rv;
+ 				goto error;
+ 			}
++
++			if (wait_rv == 0) {
++				retval = -ETIMEDOUT;
++				goto error;
++			}
++
+ 		}
  
- 	/* Note! disconnect or close could be called in the meantime */
- 	if (atomic_read(&file_data->closing) || data->zombie)
--		rv = -ENODEV;
-+		return -ENODEV;
- 
--	if (rv < 0) {
--		/* dev can be invalid now! */
--		pr_debug("%s - wait interrupted %d\n", __func__, rv);
--		return rv;
-+	if (wait_rv < 0) {
-+		dev_dbg(dev, "%s - wait interrupted %ld\n", __func__, wait_rv);
-+		return wait_rv;
- 	}
- 
--	if (rv == 0) {
-+	if (wait_rv == 0) {
- 		dev_dbg(dev, "%s - wait timed out\n", __func__);
- 		return -ETIMEDOUT;
- 	}
+ 		urb = usb_get_from_anchor(&file_data->in_anchor);
 
 
