@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3B322AE45;
-	Mon, 12 May 2025 18:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC3422AE45;
+	Mon, 12 May 2025 18:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073170; cv=none; b=uup5bn/am0PvhYxDRqoRwEJkCFll7yA0veuVsjYMmZZyVWN2m+1E0fnCfGm/ZhRuyW43O4WJbChZY5V3/QhcFu8AMv2t/wo00vektz0wFlZaNZDb62n2k42XTZjb36rU9hLJpFotScg5nJr0HxHPEmMujCCDdtamEZkG5nVaKk8=
+	t=1747073173; cv=none; b=oKSQyItGEupRSAkHFb7rItBJl0FIY4EqJutqqzLiqZtK2QseobaCHtdkYM3Do+GAaVP5FIcr4ozOm9LND26B/1axEc3m+e+UFlH7WphR44CnoVv4I6M2Aul9jIB4evlLi24id1LWaB2ICgamrdDiN/Ox5pmT2KbDaMhDv3IjMk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073170; c=relaxed/simple;
-	bh=k6wvs37uxu4P6eEG7NIXSeTx5Ru8XX/PtgRtsFfAGcU=;
+	s=arc-20240116; t=1747073173; c=relaxed/simple;
+	bh=qMprXEbnMX6zCe2DmRqFAA5Fc5PaOXsV/akb5j4KRs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQwXin2/Ry2Aw6Y249i/F/b/kXjB2NYbQT3B4HwmGZ7ENQ8j0kPAWJtugzac6RLZ7IF66NmmLh2pKf7ZpANoY45mqSTVVAef8m7s5xExiSsF0/VdythRct8GHVGvm3pfmbpocwOVjjNuISaAYoTz6Lhl8uO1e+c6XnixOcolVqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Evb7bv2G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aIujDnT68Iq6tG4z5Hxa7udopgxiR4F8Or3qHYnq3BR04wkjcW0xcAruvIumSK067XVfnqR909KuhR7XI72/dlm0H47LI2Q+tlmhk13m6X6GWmOzsqw4s8Y/XrhihG2zxuPK137nLwzl/4vv/PScOcpx3Z/qWOEVyOEG37v3/E8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IHjZMmV2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Evb7bv2G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90604C4CEE7;
-	Mon, 12 May 2025 18:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IHjZMmV2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2615C4CEE7;
+	Mon, 12 May 2025 18:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073170;
-	bh=k6wvs37uxu4P6eEG7NIXSeTx5Ru8XX/PtgRtsFfAGcU=;
+	s=korg; t=1747073173;
+	bh=qMprXEbnMX6zCe2DmRqFAA5Fc5PaOXsV/akb5j4KRs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Evb7bv2GZD1eXDrBWRm+YvA/eVu/rfg6Rl/hyMtHjIH0bQhcGkDuRRq3FNnWuD3Ot
-	 5G3GE7mg4pqXlkd/QE4305UAHLqG1UBPUVpc8/D/4mtQrmX1Bw4S7IIYlsbOZHrHz6
-	 s8XjJOiOfPNuvCDxeMUG701ne19Cljd4pLZ7O0yM=
+	b=IHjZMmV2cCm+E471IbsPujRVvqSsMULh93j8mNx1EUx2ZhsQC6LuOuOjWl/1oYQV4
+	 C1f7yAQ65epeTLzSNOQEolcp32ypAMw1wFqrJRPVp9msPX93KtazSYeO9PC+7TvpXe
+	 XCAx5841VYesOPI4zp/HWur82S/A+tEcVfUtW7Hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Brendan Jackman <jackmanb@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 159/184] mm: page_alloc: dont steal single pages from biggest buddy
-Date: Mon, 12 May 2025 19:46:00 +0200
-Message-ID: <20250512172048.290231670@linuxfoundation.org>
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Alexandre Chartre <alexandre.chartre@oracle.com>
+Subject: [PATCH 6.12 177/184] x86/its: Add support for ITS-safe return thunk
+Date: Mon, 12 May 2025 19:46:18 +0200
+Message-ID: <20250512172049.013982066@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -52,220 +52,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Weiner <hannes@cmpxchg.org>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit c2f6ea38fc1b640aa7a2e155cc1c0410ff91afa2 upstream.
+commit a75bf27fe41abe658c53276a0c486c4bf9adecfc upstream.
 
-The fallback code searches for the biggest buddy first in an attempt to
-steal the whole block and encourage type grouping down the line.
+RETs in the lower half of cacheline may be affected by ITS bug,
+specifically when the RSB-underflows. Use ITS-safe return thunk for such
+RETs.
 
-The approach used to be this:
+RETs that are not patched:
 
-- Non-movable requests will split the largest buddy and steal the
-  remainder. This splits up contiguity, but it allows subsequent
-  requests of this type to fall back into adjacent space.
+- RET in retpoline sequence does not need to be patched, because the
+  sequence itself fills an RSB before RET.
+- RET in Call Depth Tracking (CDT) thunks __x86_indirect_{call|jump}_thunk
+  and call_depth_return_thunk are not patched because CDT by design
+  prevents RSB-underflow.
+- RETs in .init section are not reachable after init.
+- RETs that are explicitly marked safe with ANNOTATE_UNRET_SAFE.
 
-- Movable requests go and look for the smallest buddy instead. The
-  thinking is that movable requests can be compacted, so grouping is
-  less important than retaining contiguity.
-
-c0cd6f557b90 ("mm: page_alloc: fix freelist movement during block
-conversion") enforces freelist type hygiene, which restricts stealing to
-either claiming the whole block or just taking the requested chunk; no
-additional pages or buddy remainders can be stolen any more.
-
-The patch mishandled when to switch to finding the smallest buddy in that
-new reality.  As a result, it may steal the exact request size, but from
-the biggest buddy.  This causes fracturing for no good reason.
-
-Fix this by committing to the new behavior: either steal the whole block,
-or fall back to the smallest buddy.
-
-Remove single-page stealing from steal_suitable_fallback().  Rename it to
-try_to_steal_block() to make the intentions clear.  If this fails, always
-fall back to the smallest buddy.
-
-The following is from 4 runs of mmtest's thpchallenge.  "Pollute" is
-single page fallback, "steal" is conversion of a partially used block.
-The numbers for free block conversions (omitted) are comparable.
-
-				     vanilla	      patched
-
-@pollute[unmovable from reclaimable]:	  27		  106
-@pollute[unmovable from movable]:	  82		   46
-@pollute[reclaimable from unmovable]:	 256		   83
-@pollute[reclaimable from movable]:	  46		    8
-@pollute[movable from unmovable]:	4841		  868
-@pollute[movable from reclaimable]:	5278		12568
-
-@steal[unmovable from reclaimable]:	  11		   12
-@steal[unmovable from movable]:		 113		   49
-@steal[reclaimable from unmovable]:	  19		   34
-@steal[reclaimable from movable]:	  47		   21
-@steal[movable from unmovable]:		 250		  183
-@steal[movable from reclaimable]:	  81		   93
-
-The allocator appears to do a better job at keeping stealing and polluting
-to the first fallback preference.  As a result, the numbers for "from
-movable" - the least preferred fallback option, and most detrimental to
-compactability - are down across the board.
-
-Link: https://lkml.kernel.org/r/20250225001023.1494422-2-hannes@cmpxchg.org
-Fixes: c0cd6f557b90 ("mm: page_alloc: fix freelist movement during block conversion")
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Suggested-by: Vlastimil Babka <vbabka@suse.cz>
-Reviewed-by: Brendan Jackman <jackmanb@google.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Reviewed-by: Alexandre Chartre <alexandre.chartre@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |   80 +++++++++++++++++++++++---------------------------------
- 1 file changed, 34 insertions(+), 46 deletions(-)
+ arch/x86/include/asm/alternative.h   |   14 ++++++++++++++
+ arch/x86/include/asm/nospec-branch.h |    6 ++++++
+ arch/x86/kernel/alternative.c        |   19 +++++++++++++++++--
+ arch/x86/kernel/ftrace.c             |    2 +-
+ arch/x86/kernel/static_call.c        |    4 ++--
+ arch/x86/kernel/vmlinux.lds.S        |    4 ++++
+ arch/x86/lib/retpoline.S             |   13 ++++++++++++-
+ arch/x86/net/bpf_jit_comp.c          |    2 +-
+ 8 files changed, 57 insertions(+), 7 deletions(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -1907,13 +1907,12 @@ static inline bool boost_watermark(struc
-  * can claim the whole pageblock for the requested migratetype. If not, we check
-  * the pageblock for constituent pages; if at least half of the pages are free
-  * or compatible, we can still claim the whole block, so pages freed in the
-- * future will be put on the correct free list. Otherwise, we isolate exactly
-- * the order we need from the fallback block and leave its migratetype alone.
-+ * future will be put on the correct free list.
-  */
- static struct page *
--steal_suitable_fallback(struct zone *zone, struct page *page,
--			int current_order, int order, int start_type,
--			unsigned int alloc_flags, bool whole_block)
-+try_to_steal_block(struct zone *zone, struct page *page,
-+		   int current_order, int order, int start_type,
-+		   unsigned int alloc_flags)
- {
- 	int free_pages, movable_pages, alike_pages;
- 	unsigned long start_pfn;
-@@ -1926,7 +1925,7 @@ steal_suitable_fallback(struct zone *zon
- 	 * highatomic accounting.
- 	 */
- 	if (is_migrate_highatomic(block_type))
--		goto single_page;
-+		return NULL;
- 
- 	/* Take ownership for orders >= pageblock_order */
- 	if (current_order >= pageblock_order) {
-@@ -1947,14 +1946,10 @@ steal_suitable_fallback(struct zone *zon
- 	if (boost_watermark(zone) && (alloc_flags & ALLOC_KSWAPD))
- 		set_bit(ZONE_BOOSTED_WATERMARK, &zone->flags);
- 
--	/* We are not allowed to try stealing from the whole block */
--	if (!whole_block)
--		goto single_page;
--
- 	/* moving whole block can fail due to zone boundary conditions */
- 	if (!prep_move_freepages_block(zone, page, &start_pfn, &free_pages,
- 				       &movable_pages))
--		goto single_page;
-+		return NULL;
- 
- 	/*
- 	 * Determine how many pages are compatible with our allocation.
-@@ -1987,9 +1982,7 @@ steal_suitable_fallback(struct zone *zon
- 		return __rmqueue_smallest(zone, order, start_type);
- 	}
- 
--single_page:
--	page_del_and_expand(zone, page, order, current_order, block_type);
--	return page;
-+	return NULL;
+--- a/arch/x86/include/asm/alternative.h
++++ b/arch/x86/include/asm/alternative.h
+@@ -134,6 +134,20 @@ static __always_inline int x86_call_dept
  }
+ #endif
  
- /*
-@@ -2171,14 +2164,19 @@ static bool unreserve_highatomic_pageblo
- }
++#if defined(CONFIG_MITIGATION_RETHUNK) && defined(CONFIG_OBJTOOL)
++extern bool cpu_wants_rethunk(void);
++extern bool cpu_wants_rethunk_at(void *addr);
++#else
++static __always_inline bool cpu_wants_rethunk(void)
++{
++	return false;
++}
++static __always_inline bool cpu_wants_rethunk_at(void *addr)
++{
++	return false;
++}
++#endif
++
+ #ifdef CONFIG_SMP
+ extern void alternatives_smp_module_add(struct module *mod, char *name,
+ 					void *locks, void *locks_end,
+--- a/arch/x86/include/asm/nospec-branch.h
++++ b/arch/x86/include/asm/nospec-branch.h
+@@ -386,6 +386,12 @@ static inline void srso_return_thunk(voi
+ static inline void srso_alias_return_thunk(void) {}
+ #endif
  
++#ifdef CONFIG_MITIGATION_ITS
++extern void its_return_thunk(void);
++#else
++static inline void its_return_thunk(void) {}
++#endif
++
+ extern void retbleed_return_thunk(void);
+ extern void srso_return_thunk(void);
+ extern void srso_alias_return_thunk(void);
+--- a/arch/x86/kernel/alternative.c
++++ b/arch/x86/kernel/alternative.c
+@@ -809,6 +809,21 @@ void __init_or_module noinline apply_ret
+ 
+ #ifdef CONFIG_MITIGATION_RETHUNK
+ 
++bool cpu_wants_rethunk(void)
++{
++	return cpu_feature_enabled(X86_FEATURE_RETHUNK);
++}
++
++bool cpu_wants_rethunk_at(void *addr)
++{
++	if (!cpu_feature_enabled(X86_FEATURE_RETHUNK))
++		return false;
++	if (x86_return_thunk != its_return_thunk)
++		return true;
++
++	return !((unsigned long)addr & 0x20);
++}
++
  /*
-- * Try finding a free buddy page on the fallback list and put it on the free
-- * list of requested migratetype, possibly along with other pages from the same
-- * block, depending on fragmentation avoidance heuristics. Returns true if
-- * fallback was found so that __rmqueue_smallest() can grab it.
-+ * Try finding a free buddy page on the fallback list.
-+ *
-+ * This will attempt to steal a whole pageblock for the requested type
-+ * to ensure grouping of such requests in the future.
-+ *
-+ * If a whole block cannot be stolen, regress to __rmqueue_smallest()
-+ * logic to at least break up as little contiguity as possible.
+  * Rewrite the compiler generated return thunk tail-calls.
   *
-  * The use of signed ints for order and current_order is a deliberate
-  * deviation from the rest of this file, to make the for loop
-  * condition simpler.
-+ *
-+ * Return the stolen page, or NULL if none can be found.
-  */
- static __always_inline struct page *
- __rmqueue_fallback(struct zone *zone, int order, int start_migratetype,
-@@ -2212,45 +2210,35 @@ __rmqueue_fallback(struct zone *zone, in
- 		if (fallback_mt == -1)
- 			continue;
+@@ -825,7 +840,7 @@ static int patch_return(void *addr, stru
+ 	int i = 0;
  
--		/*
--		 * We cannot steal all free pages from the pageblock and the
--		 * requested migratetype is movable. In that case it's better to
--		 * steal and split the smallest available page instead of the
--		 * largest available page, because even if the next movable
--		 * allocation falls back into a different pageblock than this
--		 * one, it won't cause permanent fragmentation.
--		 */
--		if (!can_steal && start_migratetype == MIGRATE_MOVABLE
--					&& current_order > order)
--			goto find_smallest;
-+		if (!can_steal)
-+			break;
+ 	/* Patch the custom return thunks... */
+-	if (cpu_feature_enabled(X86_FEATURE_RETHUNK)) {
++	if (cpu_wants_rethunk_at(addr)) {
+ 		i = JMP32_INSN_SIZE;
+ 		__text_gen_insn(bytes, JMP32_INSN_OPCODE, addr, x86_return_thunk, i);
+ 	} else {
+@@ -842,7 +857,7 @@ void __init_or_module noinline apply_ret
+ {
+ 	s32 *s;
  
--		goto do_steal;
-+		page = get_page_from_free_area(area, fallback_mt);
-+		page = try_to_steal_block(zone, page, current_order, order,
-+					  start_migratetype, alloc_flags);
-+		if (page)
-+			goto got_one;
- 	}
+-	if (cpu_feature_enabled(X86_FEATURE_RETHUNK))
++	if (cpu_wants_rethunk())
+ 		static_call_force_reinit();
  
--	return NULL;
-+	if (alloc_flags & ALLOC_NOFRAGMENT)
-+		return NULL;
+ 	for (s = start; s < end; s++) {
+--- a/arch/x86/kernel/ftrace.c
++++ b/arch/x86/kernel/ftrace.c
+@@ -354,7 +354,7 @@ create_trampoline(struct ftrace_ops *ops
+ 		goto fail;
  
--find_smallest:
-+	/* No luck stealing blocks. Find the smallest fallback page */
- 	for (current_order = order; current_order < NR_PAGE_ORDERS; current_order++) {
- 		area = &(zone->free_area[current_order]);
- 		fallback_mt = find_suitable_fallback(area, current_order,
- 				start_migratetype, false, &can_steal);
--		if (fallback_mt != -1)
--			break;
--	}
--
--	/*
--	 * This should not happen - we already found a suitable fallback
--	 * when looking for the largest page.
--	 */
--	VM_BUG_ON(current_order > MAX_PAGE_ORDER);
-+		if (fallback_mt == -1)
-+			continue;
+ 	ip = trampoline + size;
+-	if (cpu_feature_enabled(X86_FEATURE_RETHUNK))
++	if (cpu_wants_rethunk_at(ip))
+ 		__text_gen_insn(ip, JMP32_INSN_OPCODE, ip, x86_return_thunk, JMP32_INSN_SIZE);
+ 	else
+ 		memcpy(ip, retq, sizeof(retq));
+--- a/arch/x86/kernel/static_call.c
++++ b/arch/x86/kernel/static_call.c
+@@ -81,7 +81,7 @@ static void __ref __static_call_transfor
+ 		break;
  
--do_steal:
--	page = get_page_from_free_area(area, fallback_mt);
-+		page = get_page_from_free_area(area, fallback_mt);
-+		page_del_and_expand(zone, page, order, current_order, fallback_mt);
-+		goto got_one;
-+	}
+ 	case RET:
+-		if (cpu_feature_enabled(X86_FEATURE_RETHUNK))
++		if (cpu_wants_rethunk_at(insn))
+ 			code = text_gen_insn(JMP32_INSN_OPCODE, insn, x86_return_thunk);
+ 		else
+ 			code = &retinsn;
+@@ -90,7 +90,7 @@ static void __ref __static_call_transfor
+ 	case JCC:
+ 		if (!func) {
+ 			func = __static_call_return;
+-			if (cpu_feature_enabled(X86_FEATURE_RETHUNK))
++			if (cpu_wants_rethunk())
+ 				func = x86_return_thunk;
+ 		}
  
--	/* take off list, maybe claim block, expand remainder */
--	page = steal_suitable_fallback(zone, page, current_order, order,
--				       start_migratetype, alloc_flags, can_steal);
-+	return NULL;
+--- a/arch/x86/kernel/vmlinux.lds.S
++++ b/arch/x86/kernel/vmlinux.lds.S
+@@ -536,4 +536,8 @@ INIT_PER_CPU(irq_stack_backing_store);
+ . = ASSERT(__x86_indirect_its_thunk_array == __x86_indirect_its_thunk_rax, "Gap in ITS thunk array");
+ #endif
  
-+got_one:
- 	trace_mm_page_alloc_extfrag(page, order, current_order,
- 		start_migratetype, fallback_mt);
++#if defined(CONFIG_MITIGATION_ITS) && !defined(CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B)
++. = ASSERT(its_return_thunk & 0x20, "its_return_thunk not in second half of cacheline");
++#endif
++
+ #endif /* CONFIG_X86_64 */
+--- a/arch/x86/lib/retpoline.S
++++ b/arch/x86/lib/retpoline.S
+@@ -392,7 +392,18 @@ SYM_CODE_START(__x86_indirect_its_thunk_
+ 	.align 64, 0xcc
+ SYM_CODE_END(__x86_indirect_its_thunk_array)
  
+-#endif
++.align 64, 0xcc
++.skip 32, 0xcc
++SYM_CODE_START(its_return_thunk)
++	UNWIND_HINT_FUNC
++	ANNOTATE_NOENDBR
++	ANNOTATE_UNRET_SAFE
++	ret
++	int3
++SYM_CODE_END(its_return_thunk)
++EXPORT_SYMBOL(its_return_thunk)
++
++#endif /* CONFIG_MITIGATION_ITS */
+ 
+ /*
+  * This function name is magical and is used by -mfunction-return=thunk-extern
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -664,7 +664,7 @@ static void emit_return(u8 **pprog, u8 *
+ {
+ 	u8 *prog = *pprog;
+ 
+-	if (cpu_feature_enabled(X86_FEATURE_RETHUNK)) {
++	if (cpu_wants_rethunk()) {
+ 		emit_jump(&prog, x86_return_thunk, ip);
+ 	} else {
+ 		EMIT1(0xC3);		/* ret */
 
 
