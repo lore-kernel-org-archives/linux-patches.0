@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA4C296FA7;
-	Mon, 12 May 2025 17:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B20725A32E;
+	Mon, 12 May 2025 17:45:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071933; cv=none; b=MWGqEhIDDeLOCMKnZ2NlDqEtl16+bWg08/gYNL9+4THRpyFOrU/+XQDurKo46qoNXaMKX1t3tZR1rHI/onqcEpEUcDxK0ZDSVnk6U7nmBHfJ4w9JcK6y0GfMeNMxC4RqqgiQqx39bj4Hh+PXuEUgxRdzdQVCMbpStIALwNz5qeg=
+	t=1747071936; cv=none; b=EFszhORDAQnkl5fs69IMfUBiIUCoMmXnj6qjc7JsmpCqCepNwwX6RZjw8rftDYN+hP5RcInDxAF88Y7XmvSekYQsNyjda0XnGrEkKW0wjsPNU7Z+G213gc/juHIwo77bOb29tJlR369ANHWM0dUyRaP8nTWdEytsZJLoxtalzNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071933; c=relaxed/simple;
-	bh=RT6BzzrfjAmurJcIpuajXeNvzfhaymILWw8MaCsO5eg=;
+	s=arc-20240116; t=1747071936; c=relaxed/simple;
+	bh=8YpvweQlnPvFMf/NRsJ4t3jeJy4O9KqqYvKpjh+4cls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jCsy4DJ7bPWy0L+AUijnB3FGpsFvQTLf3XmPaGbBhrLw+t+cLsqUuVpsIzdpcrPL0toYDXkquiMz3CtapE2Zlcy8ZUeXItZDTN50rZJ5VLq+zg5d9ESKO9TRBaRPy+AtqdceGpIbIcx5ia9N10qMG2TlwUyMZbdwSmg7zlzHuB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4Ebel/O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S9o0WtZOBv/X3h0ncNQlJi1uI+AFWqvK5GubSUQyC8wXJ8ql630ZZ4fRCMkAtZ+VNz7N9XWTrtiwCSB2ZxOmbl67CLrWGN9RDIuKobeLha9N0oTdzwSiB9mp9xlQBiubXqfboFZa0lJHeM7QAROkrZ2QiZeTaZFAXftbIip/i20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SGSNVPNi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4Ebel/O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB62C4CEE7;
-	Mon, 12 May 2025 17:45:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SGSNVPNi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED639C4CEE7;
+	Mon, 12 May 2025 17:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071933;
-	bh=RT6BzzrfjAmurJcIpuajXeNvzfhaymILWw8MaCsO5eg=;
+	s=korg; t=1747071936;
+	bh=8YpvweQlnPvFMf/NRsJ4t3jeJy4O9KqqYvKpjh+4cls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X4Ebel/O50KlxVTQdxRgGMYMWDhZFfX8LOwdxRfgH5gUd3qBPcNOmpIa7tM6r5ill
-	 K1Du2t8jt242gOrDByIpeNMvZPyAOPUWiZtHdaQ5tI2mxAiRuoufgF8e8spJdocuzu
-	 /7dlXbWBjWalJb046mRPJ/wrRan9tKpyEHoOiotU=
+	b=SGSNVPNiHlwymzfKWpmAFTe3C8XoAy+fCBFWTCuyRoTTse0S96TQy9rUDnfGPhwFN
+	 sWJ1R4+2DUrZn1wPIWTC4xwjjZoh6Cjw9NwqE26lSDbzXp7Gb2faO6CoTI9VVNzW1W
+	 FvP3yUaCZvCdAMvyxESV8YPQ0GjjsFV/YfAhUDJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Mikhail Lobanov <m.lobanov@rosa.ru>
-Subject: [PATCH 6.14 082/197] KVM: SVM: Forcibly leave SMM mode on SHUTDOWN interception
-Date: Mon, 12 May 2025 19:38:52 +0200
-Message-ID: <20250512172047.713324064@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.14 083/197] drm/amd/display: Shift DMUB AUX reply command if necessary
+Date: Mon, 12 May 2025 19:38:53 +0200
+Message-ID: <20250512172047.753528783@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -50,97 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Lobanov <m.lobanov@rosa.ru>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-commit a2620f8932fa9fdabc3d78ed6efb004ca409019f upstream.
+commit 5a3846648c0523fd850b7f0aec78c0139453ab8b upstream.
 
-Previously, commit ed129ec9057f ("KVM: x86: forcibly leave nested mode
-on vCPU reset") addressed an issue where a triple fault occurring in
-nested mode could lead to use-after-free scenarios. However, the commit
-did not handle the analogous situation for System Management Mode (SMM).
+[Why]
+Defined value of dmub AUX reply command field get updated but didn't
+adjust dm receiving side accordingly.
 
-This omission results in triggering a WARN when KVM forces a vCPU INIT
-after SHUTDOWN interception while the vCPU is in SMM. This situation was
-reprodused using Syzkaller by:
+[How]
+Check the received reply command value to see if it's updated version
+or not. Adjust it if necessary.
 
-  1) Creating a KVM VM and vCPU
-  2) Sending a KVM_SMI ioctl to explicitly enter SMM
-  3) Executing invalid instructions causing consecutive exceptions and
-     eventually a triple fault
-
-The issue manifests as follows:
-
-  WARNING: CPU: 0 PID: 25506 at arch/x86/kvm/x86.c:12112
-  kvm_vcpu_reset+0x1d2/0x1530 arch/x86/kvm/x86.c:12112
-  Modules linked in:
-  CPU: 0 PID: 25506 Comm: syz-executor.0 Not tainted
-  6.1.130-syzkaller-00157-g164fe5dde9b6 #0
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
-  BIOS 1.12.0-1 04/01/2014
-  RIP: 0010:kvm_vcpu_reset+0x1d2/0x1530 arch/x86/kvm/x86.c:12112
-  Call Trace:
-   <TASK>
-   shutdown_interception+0x66/0xb0 arch/x86/kvm/svm/svm.c:2136
-   svm_invoke_exit_handler+0x110/0x530 arch/x86/kvm/svm/svm.c:3395
-   svm_handle_exit+0x424/0x920 arch/x86/kvm/svm/svm.c:3457
-   vcpu_enter_guest arch/x86/kvm/x86.c:10959 [inline]
-   vcpu_run+0x2c43/0x5a90 arch/x86/kvm/x86.c:11062
-   kvm_arch_vcpu_ioctl_run+0x50f/0x1cf0 arch/x86/kvm/x86.c:11283
-   kvm_vcpu_ioctl+0x570/0xf00 arch/x86/kvm/../../../virt/kvm/kvm_main.c:4122
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:870 [inline]
-   __se_sys_ioctl fs/ioctl.c:856 [inline]
-   __x64_sys_ioctl+0x19a/0x210 fs/ioctl.c:856
-   do_syscall_x64 arch/x86/entry/common.c:51 [inline]
-   do_syscall_64+0x35/0x80 arch/x86/entry/common.c:81
-   entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-Architecturally, INIT is blocked when the CPU is in SMM, hence KVM's WARN()
-in kvm_vcpu_reset() to guard against KVM bugs, e.g. to detect improper
-emulation of INIT.  SHUTDOWN on SVM is a weird edge case where KVM needs to
-do _something_ sane with the VMCB, since it's technically undefined, and
-INIT is the least awful choice given KVM's ABI.
-
-So, double down on stuffing INIT on SHUTDOWN, and force the vCPU out of
-SMM to avoid any weirdness (and the WARN).
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: ed129ec9057f ("KVM: x86: forcibly leave nested mode on vCPU reset")
+Fixes: ead08b95fa50 ("drm/amd/display: Fix race condition in DPIA AUX transfer")
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Ray Wu <ray.wu@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit d5c9ade755a9afa210840708a12a8f44c0d532f4)
 Cc: stable@vger.kernel.org
-Suggested-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Mikhail Lobanov <m.lobanov@rosa.ru>
-Link: https://lore.kernel.org/r/20250414171207.155121-1-m.lobanov@rosa.ru
-[sean: massage changelog, make it clear this isn't architectural behavior]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/smm.c     |    1 +
- arch/x86/kvm/svm/svm.c |    4 ++++
- 2 files changed, 5 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/smm.c
-+++ b/arch/x86/kvm/smm.c
-@@ -131,6 +131,7 @@ void kvm_smm_changed(struct kvm_vcpu *vc
- 
- 	kvm_mmu_reset_context(vcpu);
- }
-+EXPORT_SYMBOL_GPL(kvm_smm_changed);
- 
- void process_smi(struct kvm_vcpu *vcpu)
- {
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -2220,6 +2220,10 @@ static int shutdown_interception(struct
- 	 */
- 	if (!sev_es_guest(vcpu->kvm)) {
- 		clear_page(svm->vmcb);
-+#ifdef CONFIG_KVM_SMM
-+		if (is_smm(vcpu))
-+			kvm_smm_changed(vcpu, false);
-+#endif
- 		kvm_vcpu_reset(vcpu, true);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -12610,8 +12610,11 @@ int amdgpu_dm_process_dmub_aux_transfer_
+ 		goto out;
  	}
+ 
++	payload->reply[0] = adev->dm.dmub_notify->aux_reply.command & 0xF;
++	if (adev->dm.dmub_notify->aux_reply.command & 0xF0)
++		/* The reply is stored in the top nibble of the command. */
++		payload->reply[0] = (adev->dm.dmub_notify->aux_reply.command >> 4) & 0xF;
+ 
+-	payload->reply[0] = adev->dm.dmub_notify->aux_reply.command;
+ 	if (!payload->write && p_notify->aux_reply.length &&
+ 			(payload->reply[0] == AUX_TRANSACTION_REPLY_AUX_ACK)) {
  
 
 
