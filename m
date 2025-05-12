@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD721D7E5B;
-	Mon, 12 May 2025 18:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8BF175BF;
+	Mon, 12 May 2025 18:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072961; cv=none; b=V1yQGw3E+JcGIYl8f+dBZmt5AzBbSKY3it3BusDlbZvjewR6wlVMuHZhxLHxSwkHs3rkSLJI883sYdFkyre3fr1sbLpAtiQFvysioPcZLoI85Q3IYqv1s+VIseeAmA14gPhwDKvXZqPKMQoc7wutA6rjTWnLMZGsAy/X/C8Qtbo=
+	t=1747072964; cv=none; b=BI2mk5PScBxONuLjlb4IAya8l8cbu00NZ721LEYHzfqfE8cBICFcZbER6zCAkDa49l63g0Ub26UJTt44w99PHfzPH/rrk5IzZx3vGH1sme5KTbhBlSaYyx/lcFQhxf0pC3la+26CqdyouNW9aLVJJ5UJPVD9Z6+FPCL5Wg54bR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072961; c=relaxed/simple;
-	bh=lg9+x+rE2quRURNz4yWY04+3LmKfHTZcWQgpASh2Tl0=;
+	s=arc-20240116; t=1747072964; c=relaxed/simple;
+	bh=KRAS6MjKiT8DyMU7hY9GW3i/0GTJxrHh++aJ7qK66hI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BIdDt+DJ73jDlTqtIKbrSUV7aoaewhe1sae8+1OAZKKwjGy4lgWQxbLi5sKBrePDkwNZJvSEc2NUP2jMGA34kOQZzmoWgUEMS3gdm8itYnEqxW+zhD0Dt0nLXMci0UXC0JhgclVz8RmwzdyNVBNz7VF8lESWDEqWD8MLznRcVNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MeHwhgde; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bLLZYL9yrIp3EYQBwNF0rqVqQYDivcbUydtW5dbvQzKLTM+T/wiMvxKKlPJ4bmhoO14i90jNJoO3Hi0wXpaW9pjr9uPd1DrHKi+WuvOoGWtejO1q0WaVgHoly874AVlXoc6OTwCYCpuV9N6seyyUv/WgJUO7QCaBzSpbhz+wdog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4/7ip87; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeHwhgde"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FEAEC4CEE7;
-	Mon, 12 May 2025 18:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4/7ip87"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0134C4CEE7;
+	Mon, 12 May 2025 18:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072961;
-	bh=lg9+x+rE2quRURNz4yWY04+3LmKfHTZcWQgpASh2Tl0=;
+	s=korg; t=1747072964;
+	bh=KRAS6MjKiT8DyMU7hY9GW3i/0GTJxrHh++aJ7qK66hI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MeHwhgde7XUKkGFXMwb7VWLCmkD63WSJAYUFLCsAqg98UKSJFoLVDOSh3Yv7MbAut
-	 tD1JGByZsRaB1DLKU1oHXKLvJcFcHj/JprrNfiy5JJdHlw/5o8RCUHH+ZI6IrkRiNy
-	 DVDMFLIUGJfVsZd472P0mpO51/2sBdE5Lhrk+qvA=
+	b=f4/7ip8734WVUkfAqDb4yH+BxzlY0QO9EQBKFeAJjY/VvRfM2+XQ+wHkC/0Pu0BjO
+	 9ywgY7a18pG8NAOlZKc9uZpDO0y02v/moR/9gEq7FI8v2XHOhyE7QPQDdC20n9/OPg
+	 vmFUXmGdbxXxu5ri1ufFST30ryfT79br8mA+olZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.12 111/184] x86/microcode: Consolidate the loader enablement checking
-Date: Mon, 12 May 2025 19:45:12 +0200
-Message-ID: <20250512172046.348251815@linuxfoundation.org>
+	Heming Zhao <heming.zhao@suse.com>,
+	Gautham Ananthakrishna <gautham.ananthakrishna@oracle.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 112/184] ocfs2: fix the issue with discontiguous allocation in the global_bitmap
+Date: Mon, 12 May 2025 19:45:13 +0200
+Message-ID: <20250512172046.388565913@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -45,232 +51,179 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Heming Zhao <heming.zhao@suse.com>
 
-commit 5214a9f6c0f56644acb9d2cbb58facf1856d322b upstream.
+commit bd1261b16d9131d79723d982d54295e7f309797a upstream.
 
-Consolidate the whole logic which determines whether the microcode loader
-should be enabled or not into a single function and call it everywhere.
+commit 4eb7b93e0310 ("ocfs2: improve write IO performance when
+fragmentation is high") introduced another regression.
 
-Well, almost everywhere - not in mk_early_pgtbl_32() because there the kernel
-is running without paging enabled and checking dis_ucode_ldr et al would
-require physical addresses and uglification of the code.
+The following ocfs2-test case can trigger this issue:
+> discontig_runner.sh => activate_discontig_bg.sh => resv_unwritten:
+> ${RESV_UNWRITTEN_BIN} -f ${WORK_PLACE}/large_testfile -s 0 -l \
+> $((${FILE_MAJOR_SIZE_M}*1024*1024))
 
-But since this is 32-bit, the easier thing to do is to simply map the initrd
-unconditionally especially since that mapping is getting removed later anyway
-by zap_early_initrd_mapping() and avoid the uglification.
+In my env, test disk size (by "fdisk -l <dev>"):
+> 53687091200 bytes, 104857600 sectors.
 
-In doing so, address the issue of old 486er machines without CPUID
-support, not booting current kernels.
+Above command is:
+> /usr/local/ocfs2-test/bin/resv_unwritten -f \
+> /mnt/ocfs2/ocfs2-activate-discontig-bg-dir/large_testfile -s 0 -l \
+> 53187969024
 
-  [ mingo: Fix no previous prototype for ‘microcode_loader_disabled’ [-Wmissing-prototypes] ]
+Error log:
+> [*] Reserve 50724M space for a LARGE file, reserve 200M space for future test.
+> ioctl error 28: "No space left on device"
+> resv allocation failed Unknown error -1
+> reserve unwritten region from 0 to 53187969024.
 
-Fixes: 4c585af7180c1 ("x86/boot/32: Temporarily map initrd for microcode loading")
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/CANpbe9Wm3z8fy9HbgS8cuhoj0TREYEEkBipDuhgkWFvqX0UoVQ@mail.gmail.com
+Call flow:
+__ocfs2_change_file_space //by ioctl OCFS2_IOC_RESVSP64
+ ocfs2_allocate_unwritten_extents //start:0 len:53187969024
+  while()
+   + ocfs2_get_clusters //cpos:0, alloc_size:1623168 (cluster number)
+   + ocfs2_extend_allocation
+     + ocfs2_lock_allocators
+     |  + choose OCFS2_AC_USE_MAIN & ocfs2_cluster_group_search
+     |
+     + ocfs2_add_inode_data
+        ocfs2_add_clusters_in_btree
+         __ocfs2_claim_clusters
+          ocfs2_claim_suballoc_bits
+          + During the allocation of the final part of the large file
+	    (after ~47GB), no chain had the required contiguous
+            bits_wanted. Consequently, the allocation failed.
+
+How to fix:
+When OCFS2 is encountering fragmented allocation, the file system should
+stop attempting bits_wanted contiguous allocation and instead provide the
+largest available contiguous free bits from the cluster groups.
+
+Link: https://lkml.kernel.org/r/20250414060125.19938-2-heming.zhao@suse.com
+Fixes: 4eb7b93e0310 ("ocfs2: improve write IO performance when fragmentation is high")
+Signed-off-by: Heming Zhao <heming.zhao@suse.com>
+Reported-by: Gautham Ananthakrishna <gautham.ananthakrishna@oracle.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/microcode.h         |    2 +
- arch/x86/kernel/cpu/microcode/amd.c      |    6 ++-
- arch/x86/kernel/cpu/microcode/core.c     |   58 ++++++++++++++++++-------------
- arch/x86/kernel/cpu/microcode/intel.c    |    2 -
- arch/x86/kernel/cpu/microcode/internal.h |    1 
- arch/x86/kernel/head32.c                 |    4 --
- 6 files changed, 41 insertions(+), 32 deletions(-)
+ fs/ocfs2/suballoc.c | 38 ++++++++++++++++++++++++++++++++------
+ fs/ocfs2/suballoc.h |  1 +
+ 2 files changed, 33 insertions(+), 6 deletions(-)
 
---- a/arch/x86/include/asm/microcode.h
-+++ b/arch/x86/include/asm/microcode.h
-@@ -17,10 +17,12 @@ struct ucode_cpu_info {
- void load_ucode_bsp(void);
- void load_ucode_ap(void);
- void microcode_bsp_resume(void);
-+bool __init microcode_loader_disabled(void);
- #else
- static inline void load_ucode_bsp(void)	{ }
- static inline void load_ucode_ap(void) { }
- static inline void microcode_bsp_resume(void) { }
-+static inline bool __init microcode_loader_disabled(void) { return false; }
- #endif
+diff --git a/fs/ocfs2/suballoc.c b/fs/ocfs2/suballoc.c
+index f7b483f0de2a..6ac4dcd54588 100644
+--- a/fs/ocfs2/suballoc.c
++++ b/fs/ocfs2/suballoc.c
+@@ -698,10 +698,12 @@ static int ocfs2_block_group_alloc(struct ocfs2_super *osb,
  
- extern unsigned long initrd_start_early;
---- a/arch/x86/kernel/cpu/microcode/amd.c
-+++ b/arch/x86/kernel/cpu/microcode/amd.c
-@@ -1099,15 +1099,17 @@ static enum ucode_state load_microcode_a
- 
- static int __init save_microcode_in_initrd(void)
+ 	bg_bh = ocfs2_block_group_alloc_contig(osb, handle, alloc_inode,
+ 					       ac, cl);
+-	if (PTR_ERR(bg_bh) == -ENOSPC)
++	if (PTR_ERR(bg_bh) == -ENOSPC) {
++		ac->ac_which = OCFS2_AC_USE_MAIN_DISCONTIG;
+ 		bg_bh = ocfs2_block_group_alloc_discontig(handle,
+ 							  alloc_inode,
+ 							  ac, cl);
++	}
+ 	if (IS_ERR(bg_bh)) {
+ 		status = PTR_ERR(bg_bh);
+ 		bg_bh = NULL;
+@@ -1794,6 +1796,7 @@ static int ocfs2_search_chain(struct ocfs2_alloc_context *ac,
  {
--	unsigned int cpuid_1_eax = native_cpuid_eax(1);
- 	struct cpuinfo_x86 *c = &boot_cpu_data;
- 	struct cont_desc desc = { 0 };
-+	unsigned int cpuid_1_eax;
- 	enum ucode_state ret;
- 	struct cpio_data cp;
- 
--	if (dis_ucode_ldr || c->x86_vendor != X86_VENDOR_AMD || c->x86 < 0x10)
-+	if (microcode_loader_disabled() || c->x86_vendor != X86_VENDOR_AMD || c->x86 < 0x10)
- 		return 0;
- 
-+	cpuid_1_eax = native_cpuid_eax(1);
+ 	int status;
+ 	u16 chain;
++	u32 contig_bits;
+ 	u64 next_group;
+ 	struct inode *alloc_inode = ac->ac_inode;
+ 	struct buffer_head *group_bh = NULL;
+@@ -1819,10 +1822,21 @@ static int ocfs2_search_chain(struct ocfs2_alloc_context *ac,
+ 	status = -ENOSPC;
+ 	/* for now, the chain search is a bit simplistic. We just use
+ 	 * the 1st group with any empty bits. */
+-	while ((status = ac->ac_group_search(alloc_inode, group_bh,
+-					     bits_wanted, min_bits,
+-					     ac->ac_max_block,
+-					     res)) == -ENOSPC) {
++	while (1) {
++		if (ac->ac_which == OCFS2_AC_USE_MAIN_DISCONTIG) {
++			contig_bits = le16_to_cpu(bg->bg_contig_free_bits);
++			if (!contig_bits)
++				contig_bits = ocfs2_find_max_contig_free_bits(bg->bg_bitmap,
++						le16_to_cpu(bg->bg_bits), 0);
++			if (bits_wanted > contig_bits && contig_bits >= min_bits)
++				bits_wanted = contig_bits;
++		}
 +
- 	if (!find_blobs_in_containers(&cp))
- 		return -EINVAL;
++		status = ac->ac_group_search(alloc_inode, group_bh,
++				bits_wanted, min_bits,
++				ac->ac_max_block, res);
++		if (status != -ENOSPC)
++			break;
+ 		if (!bg->bg_next_group)
+ 			break;
  
---- a/arch/x86/kernel/cpu/microcode/core.c
-+++ b/arch/x86/kernel/cpu/microcode/core.c
-@@ -41,8 +41,8 @@
+@@ -1982,6 +1996,7 @@ static int ocfs2_claim_suballoc_bits(struct ocfs2_alloc_context *ac,
+ 	victim = ocfs2_find_victim_chain(cl);
+ 	ac->ac_chain = victim;
  
- #include "internal.h"
- 
--static struct microcode_ops	*microcode_ops;
--bool dis_ucode_ldr = true;
-+static struct microcode_ops *microcode_ops;
-+static bool dis_ucode_ldr = false;
- 
- bool force_minrev = IS_ENABLED(CONFIG_MICROCODE_LATE_FORCE_MINREV);
- module_param(force_minrev, bool, S_IRUSR | S_IWUSR);
-@@ -84,6 +84,9 @@ static bool amd_check_current_patch_leve
- 	u32 lvl, dummy, i;
- 	u32 *levels;
- 
-+	if (x86_cpuid_vendor() != X86_VENDOR_AMD)
-+		return false;
-+
- 	native_rdmsr(MSR_AMD64_PATCH_LEVEL, lvl, dummy);
- 
- 	levels = final_levels;
-@@ -95,27 +98,29 @@ static bool amd_check_current_patch_leve
- 	return false;
- }
- 
--static bool __init check_loader_disabled_bsp(void)
-+bool __init microcode_loader_disabled(void)
- {
--	static const char *__dis_opt_str = "dis_ucode_ldr";
--	const char *cmdline = boot_command_line;
--	const char *option  = __dis_opt_str;
-+	if (dis_ucode_ldr)
-+		return true;
- 
- 	/*
--	 * CPUID(1).ECX[31]: reserved for hypervisor use. This is still not
--	 * completely accurate as xen pv guests don't see that CPUID bit set but
--	 * that's good enough as they don't land on the BSP path anyway.
-+	 * Disable when:
-+	 *
-+	 * 1) The CPU does not support CPUID.
-+	 *
-+	 * 2) Bit 31 in CPUID[1]:ECX is clear
-+	 *    The bit is reserved for hypervisor use. This is still not
-+	 *    completely accurate as XEN PV guests don't see that CPUID bit
-+	 *    set, but that's good enough as they don't land on the BSP
-+	 *    path anyway.
-+	 *
-+	 * 3) Certain AMD patch levels are not allowed to be
-+	 *    overwritten.
- 	 */
--	if (native_cpuid_ecx(1) & BIT(31))
--		return true;
--
--	if (x86_cpuid_vendor() == X86_VENDOR_AMD) {
--		if (amd_check_current_patch_level())
--			return true;
--	}
--
--	if (cmdline_find_option_bool(cmdline, option) <= 0)
--		dis_ucode_ldr = false;
-+	if (!have_cpuid_p() ||
-+	    native_cpuid_ecx(1) & BIT(31) ||
-+	    amd_check_current_patch_level())
-+		dis_ucode_ldr = true;
- 
- 	return dis_ucode_ldr;
- }
-@@ -125,7 +130,10 @@ void __init load_ucode_bsp(void)
- 	unsigned int cpuid_1_eax;
- 	bool intel = true;
- 
--	if (!have_cpuid_p())
-+	if (cmdline_find_option_bool(boot_command_line, "dis_ucode_ldr") > 0)
-+		dis_ucode_ldr = true;
-+
-+	if (microcode_loader_disabled())
- 		return;
- 
- 	cpuid_1_eax = native_cpuid_eax(1);
-@@ -146,9 +154,6 @@ void __init load_ucode_bsp(void)
- 		return;
++search:
+ 	status = ocfs2_search_chain(ac, handle, bits_wanted, min_bits,
+ 				    res, &bits_left);
+ 	if (!status) {
+@@ -2022,6 +2037,16 @@ static int ocfs2_claim_suballoc_bits(struct ocfs2_alloc_context *ac,
+ 		}
  	}
  
--	if (check_loader_disabled_bsp())
--		return;
--
- 	if (intel)
- 		load_ucode_intel_bsp(&early_data);
- 	else
-@@ -159,6 +164,11 @@ void load_ucode_ap(void)
- {
- 	unsigned int cpuid_1_eax;
++	/* Chains can't supply the bits_wanted contiguous space.
++	 * We should switch to using every single bit when allocating
++	 * from the global bitmap. */
++	if (i == le16_to_cpu(cl->cl_next_free_rec) &&
++	    status == -ENOSPC && ac->ac_which == OCFS2_AC_USE_MAIN) {
++		ac->ac_which = OCFS2_AC_USE_MAIN_DISCONTIG;
++		ac->ac_chain = victim;
++		goto search;
++	}
++
+ set_hint:
+ 	if (status != -ENOSPC) {
+ 		/* If the next search of this group is not likely to
+@@ -2365,7 +2390,8 @@ int __ocfs2_claim_clusters(handle_t *handle,
+ 	BUG_ON(ac->ac_bits_given >= ac->ac_bits_wanted);
  
-+	/*
-+	 * Can't use microcode_loader_disabled() here - .init section
-+	 * hell. It doesn't have to either - the BSP variant must've
-+	 * parsed cmdline already anyway.
-+	 */
- 	if (dis_ucode_ldr)
- 		return;
+ 	BUG_ON(ac->ac_which != OCFS2_AC_USE_LOCAL
+-	       && ac->ac_which != OCFS2_AC_USE_MAIN);
++	       && ac->ac_which != OCFS2_AC_USE_MAIN
++	       && ac->ac_which != OCFS2_AC_USE_MAIN_DISCONTIG);
  
-@@ -810,7 +820,7 @@ static int __init microcode_init(void)
- 	struct cpuinfo_x86 *c = &boot_cpu_data;
- 	int error;
+ 	if (ac->ac_which == OCFS2_AC_USE_LOCAL) {
+ 		WARN_ON(min_clusters > 1);
+diff --git a/fs/ocfs2/suballoc.h b/fs/ocfs2/suballoc.h
+index b481b834857d..bcf2ed4a8631 100644
+--- a/fs/ocfs2/suballoc.h
++++ b/fs/ocfs2/suballoc.h
+@@ -29,6 +29,7 @@ struct ocfs2_alloc_context {
+ #define OCFS2_AC_USE_MAIN  2
+ #define OCFS2_AC_USE_INODE 3
+ #define OCFS2_AC_USE_META  4
++#define OCFS2_AC_USE_MAIN_DISCONTIG  5
+ 	u32    ac_which;
  
--	if (dis_ucode_ldr)
-+	if (microcode_loader_disabled())
- 		return -EINVAL;
- 
- 	if (c->x86_vendor == X86_VENDOR_INTEL)
---- a/arch/x86/kernel/cpu/microcode/intel.c
-+++ b/arch/x86/kernel/cpu/microcode/intel.c
-@@ -395,7 +395,7 @@ static int __init save_builtin_microcode
- 	if (xchg(&ucode_patch_va, NULL) != UCODE_BSP_LOADED)
- 		return 0;
- 
--	if (dis_ucode_ldr || boot_cpu_data.x86_vendor != X86_VENDOR_INTEL)
-+	if (microcode_loader_disabled() || boot_cpu_data.x86_vendor != X86_VENDOR_INTEL)
- 		return 0;
- 
- 	uci.mc = get_microcode_blob(&uci, true);
---- a/arch/x86/kernel/cpu/microcode/internal.h
-+++ b/arch/x86/kernel/cpu/microcode/internal.h
-@@ -94,7 +94,6 @@ static inline unsigned int x86_cpuid_fam
- 	return x86_family(eax);
- }
- 
--extern bool dis_ucode_ldr;
- extern bool force_minrev;
- 
- #ifdef CONFIG_CPU_SUP_AMD
---- a/arch/x86/kernel/head32.c
-+++ b/arch/x86/kernel/head32.c
-@@ -145,10 +145,6 @@ void __init __no_stack_protector mk_earl
- 	*ptr = (unsigned long)ptep + PAGE_OFFSET;
- 
- #ifdef CONFIG_MICROCODE_INITRD32
--	/* Running on a hypervisor? */
--	if (native_cpuid_ecx(1) & BIT(31))
--		return;
--
- 	params = (struct boot_params *)__pa_nodebug(&boot_params);
- 	if (!params->hdr.ramdisk_size || !params->hdr.ramdisk_image)
- 		return;
+ 	/* these are used by the chain search */
+-- 
+2.49.0
+
 
 
