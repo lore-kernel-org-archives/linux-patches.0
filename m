@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FDD296FAE;
-	Mon, 12 May 2025 18:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B2925335E;
+	Mon, 12 May 2025 18:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073189; cv=none; b=pxjaOw/tC4zqudJh0HguWSGlPUSUoqDlI4XXf0WYhIQyuQlWhEuFqOCRcGzzJdOwRHnvFTreaEvdabkBibSAB8i55Bc/8kDX9DYholvO03J6uVk/PQKmPgO9lu5JG/ERIkW0NSECsa9VX3vlLYeMiQPz0ast5+1or3ht238/Ni4=
+	t=1747073192; cv=none; b=hsP216olXQ1e8YIL70SJiXb4ybNK0hymxdzK29vQF+oAckl6IwgmNfSnLrbNS9HEC5RnzWcu09aCvrACFevdK+hsTc+ifBBhu96y344LYKeagfLVzejgFcqmV/IEIs9qjpjl0t0+ZuSauj3dkQyoOGr4szTgGwp/0YbdLEeIlzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073189; c=relaxed/simple;
-	bh=UKlkG/x4655gNgDINe2rmCY3Rr9t/AG0+E1vkT8dfK0=;
+	s=arc-20240116; t=1747073192; c=relaxed/simple;
+	bh=ubqpFPZLfnrDO3fgezuiOWKRB6ocoMahsBxkaVR7UmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+Z7whxRTFeBg5KRE+AroxYMZAeOHwEt4VSd9N4FtrLlNjjHl2VKlmj1KBGMJXzoFPxslZskRkB+5Uj5NoBnDoGSfCivPyHb2Uyle4ID6NQBp97xnoo/XCTMpDLQN47o28eJ8g0w42imPu8Z0miGxGg/NDbKII7l5EVuCeO6W4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=htv1Sy46; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p/pn2JsBvBLTn5TaoQks8ni1fULiKL+NKJgU0HmugQuiZ1IqP4HsvfZ3PojhEdfnqebQSaExNDQLJLLadHbxqIXqsuDBCCLQ4HJ7GCJ9/naSY0njG9nqptgolLQ2Z6cCaA3B34CDm2++ohX7wHsWfSbZrsME6zJWHW9oYxipPUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYlJX425; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="htv1Sy46"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C205C4CEE9;
-	Mon, 12 May 2025 18:06:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYlJX425"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DFEDC4CEEF;
+	Mon, 12 May 2025 18:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073189;
-	bh=UKlkG/x4655gNgDINe2rmCY3Rr9t/AG0+E1vkT8dfK0=;
+	s=korg; t=1747073192;
+	bh=ubqpFPZLfnrDO3fgezuiOWKRB6ocoMahsBxkaVR7UmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=htv1Sy4648OZU+BLViGdszmbwfwOGVVkPNNfZZ/FibdD5/0fBFyzjrv6gsxxwFYqC
-	 y19Fr2+tnj8OM0diFpbMiv/d22Un5cyF96y3mSUqsx5vJryHfVIGdA33gV+KAaMZyN
-	 JZkaISOo+2Xs6F0U3QtwYidN8gIPfXBdFqk6cwLo=
+	b=VYlJX4254O/Huu2m/Ye2J4cwPUA7/mZCdnCvEClrPXY9vjkUu+FTATJUXpjQEjyZi
+	 SSH7S/RQ256hSUWCOdr61/4BAbf8GTIa/3LHL3YImIO2FdC73cjJiCWp9cGnSBFska
+	 lai+6sxUe9fIsD+VQwaqBQrc0h35twpoj6czMoe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Alexandre Chartre <alexandre.chartre@oracle.com>
-Subject: [PATCH 6.12 182/184] x86/ibt: Keep IBT disabled during alternative patching
-Date: Mon, 12 May 2025 19:46:23 +0200
-Message-ID: <20250512172049.222397916@linuxfoundation.org>
+Subject: [PATCH 6.12 183/184] x86/its: Use dynamic thunks for indirect branches
+Date: Mon, 12 May 2025 19:46:24 +0200
+Message-ID: <20250512172049.263732536@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -51,82 +52,291 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit ebebe30794d38c51f71fe4951ba6af4159d9837d upstream.
+commit 872df34d7c51a79523820ea6a14860398c639b87 upstream.
 
-cfi_rewrite_callers() updates the fineIBT hash matching at the caller side,
-but except for paranoid-mode it relies on apply_retpoline() and friends for
-any ENDBR relocation. This could temporarily cause an indirect branch to
-land on a poisoned ENDBR.
+ITS mitigation moves the unsafe indirect branches to a safe thunk. This
+could degrade the prediction accuracy as the source address of indirect
+branches becomes same for different execution paths.
 
-For instance, with para-virtualization enabled, a simple wrmsrl() could
-have an indirect branch pointing to native_write_msr() who's ENDBR has been
-relocated due to fineIBT:
+To improve the predictions, and hence the performance, assign a separate
+thunk for each indirect callsite. This is also a defense-in-depth measure
+to avoid indirect branches aliasing with each other.
 
-<wrmsrl>:
-       push   %rbp
-       mov    %rsp,%rbp
-       mov    %esi,%eax
-       mov    %rsi,%rdx
-       shr    $0x20,%rdx
-       mov    %edi,%edi
-       mov    %rax,%rsi
-       call   *0x21e65d0(%rip)        # <pv_ops+0xb8>
-       ^^^^^^^^^^^^^^^^^^^^^^^
+As an example, 5000 dynamic thunks would utilize around 16 bits of the
+address space, thereby gaining entropy. For a BTB that uses
+32 bits for indexing, dynamic thunks could provide better prediction
+accuracy over fixed thunks.
 
-Such an indirect call during the alternative patching could #CP if the
-caller is not *yet* adjusted for the new target ENDBR. To prevent a false
- #CP, keep CET-IBT disabled until all callers are patched.
+Have ITS thunks be variable sized and use EXECMEM_MODULE_TEXT such that
+they are both more flexible (got to extend them later) and live in 2M TLBs,
+just like kernel code, avoiding undue TLB pressure.
 
-Patching during the module load does not need to be guarded by IBT-disable
-because the module code is not executed until the patching is complete.
+  [ pawan: CONFIG_EXECMEM_ROX is not supported on backport kernel, made
+	   adjustments to set memory to RW and ROX ]
 
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
 Reviewed-by: Alexandre Chartre <alexandre.chartre@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/alternative.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/x86/Kconfig                   |    1 
+ arch/x86/include/asm/alternative.h |   10 ++
+ arch/x86/kernel/alternative.c      |  129 ++++++++++++++++++++++++++++++++++++-
+ arch/x86/kernel/module.c           |    6 +
+ include/linux/execmem.h            |    3 
+ include/linux/module.h             |    5 +
+ 6 files changed, 151 insertions(+), 3 deletions(-)
 
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -2751,6 +2751,7 @@ config MITIGATION_ITS
+ 	bool "Enable Indirect Target Selection mitigation"
+ 	depends on CPU_SUP_INTEL && X86_64
+ 	depends on MITIGATION_RETPOLINE && MITIGATION_RETHUNK
++	select EXECMEM
+ 	default y
+ 	help
+ 	  Enable Indirect Target Selection (ITS) mitigation. ITS is a bug in
+--- a/arch/x86/include/asm/alternative.h
++++ b/arch/x86/include/asm/alternative.h
+@@ -134,6 +134,16 @@ static __always_inline int x86_call_dept
+ }
+ #endif
+ 
++#ifdef CONFIG_MITIGATION_ITS
++extern void its_init_mod(struct module *mod);
++extern void its_fini_mod(struct module *mod);
++extern void its_free_mod(struct module *mod);
++#else /* CONFIG_MITIGATION_ITS */
++static inline void its_init_mod(struct module *mod) { }
++static inline void its_fini_mod(struct module *mod) { }
++static inline void its_free_mod(struct module *mod) { }
++#endif
++
+ #if defined(CONFIG_MITIGATION_RETHUNK) && defined(CONFIG_OBJTOOL)
+ extern bool cpu_wants_rethunk(void);
+ extern bool cpu_wants_rethunk_at(void *addr);
 --- a/arch/x86/kernel/alternative.c
 +++ b/arch/x86/kernel/alternative.c
-@@ -31,6 +31,7 @@
- #include <asm/paravirt.h>
+@@ -18,6 +18,7 @@
+ #include <linux/mmu_context.h>
+ #include <linux/bsearch.h>
+ #include <linux/sync_core.h>
++#include <linux/execmem.h>
+ #include <asm/text-patching.h>
+ #include <asm/alternative.h>
+ #include <asm/sections.h>
+@@ -32,6 +33,7 @@
  #include <asm/asm-prototypes.h>
  #include <asm/cfi.h>
-+#include <asm/ibt.h>
+ #include <asm/ibt.h>
++#include <asm/set_memory.h>
  
  int __read_mostly alternatives_patched;
  
-@@ -1719,6 +1720,8 @@ static noinline void __init alt_reloc_se
+@@ -125,6 +127,123 @@ const unsigned char * const x86_nops[ASM
+ #endif
+ };
  
- void __init alternative_instructions(void)
++#ifdef CONFIG_MITIGATION_ITS
++
++static struct module *its_mod;
++static void *its_page;
++static unsigned int its_offset;
++
++/* Initialize a thunk with the "jmp *reg; int3" instructions. */
++static void *its_init_thunk(void *thunk, int reg)
++{
++	u8 *bytes = thunk;
++	int i = 0;
++
++	if (reg >= 8) {
++		bytes[i++] = 0x41; /* REX.B prefix */
++		reg -= 8;
++	}
++	bytes[i++] = 0xff;
++	bytes[i++] = 0xe0 + reg; /* jmp *reg */
++	bytes[i++] = 0xcc;
++
++	return thunk;
++}
++
++void its_init_mod(struct module *mod)
++{
++	if (!cpu_feature_enabled(X86_FEATURE_INDIRECT_THUNK_ITS))
++		return;
++
++	mutex_lock(&text_mutex);
++	its_mod = mod;
++	its_page = NULL;
++}
++
++void its_fini_mod(struct module *mod)
++{
++	if (!cpu_feature_enabled(X86_FEATURE_INDIRECT_THUNK_ITS))
++		return;
++
++	WARN_ON_ONCE(its_mod != mod);
++
++	its_mod = NULL;
++	its_page = NULL;
++	mutex_unlock(&text_mutex);
++
++	for (int i = 0; i < mod->its_num_pages; i++) {
++		void *page = mod->its_page_array[i];
++		set_memory_rox((unsigned long)page, 1);
++	}
++}
++
++void its_free_mod(struct module *mod)
++{
++	if (!cpu_feature_enabled(X86_FEATURE_INDIRECT_THUNK_ITS))
++		return;
++
++	for (int i = 0; i < mod->its_num_pages; i++) {
++		void *page = mod->its_page_array[i];
++		execmem_free(page);
++	}
++	kfree(mod->its_page_array);
++}
++
++static void *its_alloc(void)
++{
++	void *page __free(execmem) = execmem_alloc(EXECMEM_MODULE_TEXT, PAGE_SIZE);
++
++	if (!page)
++		return NULL;
++
++	if (its_mod) {
++		void *tmp = krealloc(its_mod->its_page_array,
++				     (its_mod->its_num_pages+1) * sizeof(void *),
++				     GFP_KERNEL);
++		if (!tmp)
++			return NULL;
++
++		its_mod->its_page_array = tmp;
++		its_mod->its_page_array[its_mod->its_num_pages++] = page;
++	}
++
++	return no_free_ptr(page);
++}
++
++static void *its_allocate_thunk(int reg)
++{
++	int size = 3 + (reg / 8);
++	void *thunk;
++
++	if (!its_page || (its_offset + size - 1) >= PAGE_SIZE) {
++		its_page = its_alloc();
++		if (!its_page) {
++			pr_err("ITS page allocation failed\n");
++			return NULL;
++		}
++		memset(its_page, INT3_INSN_OPCODE, PAGE_SIZE);
++		its_offset = 32;
++	}
++
++	/*
++	 * If the indirect branch instruction will be in the lower half
++	 * of a cacheline, then update the offset to reach the upper half.
++	 */
++	if ((its_offset + size - 1) % 64 < 32)
++		its_offset = ((its_offset - 1) | 0x3F) + 33;
++
++	thunk = its_page + its_offset;
++	its_offset += size;
++
++	set_memory_rw((unsigned long)its_page, 1);
++	thunk = its_init_thunk(thunk, reg);
++	set_memory_rox((unsigned long)its_page, 1);
++
++	return thunk;
++}
++
++#endif
++
+ /*
+  * Nomenclature for variable names to simplify and clarify this code and ease
+  * any potential staring at it:
+@@ -637,9 +756,13 @@ static int emit_call_track_retpoline(voi
+ #ifdef CONFIG_MITIGATION_ITS
+ static int emit_its_trampoline(void *addr, struct insn *insn, int reg, u8 *bytes)
  {
-+	u64 ibt;
+-	return __emit_trampoline(addr, insn, bytes,
+-				 __x86_indirect_its_thunk_array[reg],
+-				 __x86_indirect_its_thunk_array[reg]);
++	u8 *thunk = __x86_indirect_its_thunk_array[reg];
++	u8 *tmp = its_allocate_thunk(reg);
 +
- 	int3_selftest();
- 
- 	/*
-@@ -1745,6 +1748,9 @@ void __init alternative_instructions(voi
- 	 */
- 	paravirt_set_cap();
- 
-+	/* Keep CET-IBT disabled until caller/callee are patched */
-+	ibt = ibt_save(/*disable*/ true);
++	if (tmp)
++		thunk = tmp;
 +
- 	__apply_fineibt(__retpoline_sites, __retpoline_sites_end,
- 			__cfi_sites, __cfi_sites_end, true);
++	return __emit_trampoline(addr, insn, bytes, thunk, thunk);
+ }
  
-@@ -1768,6 +1774,8 @@ void __init alternative_instructions(voi
- 	 */
- 	apply_seal_endbr(__ibt_endbr_seal, __ibt_endbr_seal_end);
+ /* Check if an indirect branch is at ITS-unsafe address */
+--- a/arch/x86/kernel/module.c
++++ b/arch/x86/kernel/module.c
+@@ -251,6 +251,8 @@ int module_finalize(const Elf_Ehdr *hdr,
+ 			ibt_endbr = s;
+ 	}
  
-+	ibt_restore(ibt);
++	its_init_mod(me);
 +
- #ifdef CONFIG_SMP
- 	/* Patch to UP if other cpus not imminent. */
- 	if (!noreplace_smp && (num_present_cpus() == 1 || setup_max_cpus <= 1)) {
+ 	if (retpolines || cfi) {
+ 		void *rseg = NULL, *cseg = NULL;
+ 		unsigned int rsize = 0, csize = 0;
+@@ -271,6 +273,9 @@ int module_finalize(const Elf_Ehdr *hdr,
+ 		void *rseg = (void *)retpolines->sh_addr;
+ 		apply_retpolines(rseg, rseg + retpolines->sh_size);
+ 	}
++
++	its_fini_mod(me);
++
+ 	if (returns) {
+ 		void *rseg = (void *)returns->sh_addr;
+ 		apply_returns(rseg, rseg + returns->sh_size);
+@@ -318,4 +323,5 @@ int module_finalize(const Elf_Ehdr *hdr,
+ void module_arch_cleanup(struct module *mod)
+ {
+ 	alternatives_smp_module_del(mod);
++	its_free_mod(mod);
+ }
+--- a/include/linux/execmem.h
++++ b/include/linux/execmem.h
+@@ -4,6 +4,7 @@
+ 
+ #include <linux/types.h>
+ #include <linux/moduleloader.h>
++#include <linux/cleanup.h>
+ 
+ #if (defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)) && \
+ 		!defined(CONFIG_KASAN_VMALLOC)
+@@ -123,6 +124,8 @@ void *execmem_alloc(enum execmem_type ty
+  */
+ void execmem_free(void *ptr);
+ 
++DEFINE_FREE(execmem, void *, if (_T) execmem_free(_T));
++
+ #if defined(CONFIG_EXECMEM) && !defined(CONFIG_ARCH_WANTS_EXECMEM_LATE)
+ void execmem_init(void);
+ #else
+--- a/include/linux/module.h
++++ b/include/linux/module.h
+@@ -582,6 +582,11 @@ struct module {
+ 	atomic_t refcnt;
+ #endif
+ 
++#ifdef CONFIG_MITIGATION_ITS
++	int its_num_pages;
++	void **its_page_array;
++#endif
++
+ #ifdef CONFIG_CONSTRUCTORS
+ 	/* Constructor functions. */
+ 	ctor_fn_t *ctors;
 
 
