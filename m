@@ -1,122 +1,100 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D42E29ACDA;
-	Mon, 12 May 2025 18:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5434C29B208;
+	Mon, 12 May 2025 18:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073087; cv=none; b=Xo+ZYiSw9kSBkreMnd2j5UK6xAh5lv66vcl0sPRsC9SXdPNiadt7ArzSEOJ7q8RRyYc0U3hcY+VaDsNybde0YBmYupw+N2s8b0y44fej2aL4W2VqgLYjYf6x/MljOxY4TrGB7jZuWNJgQI2DPQ39ARuTxRL0yR+j9a14Ui4Rntk=
+	t=1747073089; cv=none; b=IFessNuXTzsfuCtTT3V6l21PK9Pjf57VAbXQ82nB9nNzU7l04XzIq3wlzfd34+TpSVJJC095yJzLGK9jYx1z2mNZWtTpX+Tr6ElczXPyY+SRoQm4jTkBDGl+MZdDOQBvNGcfpYkiF/fbWE59UqVyEiBZ/xKOspHCiTYROUEv/Lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073087; c=relaxed/simple;
-	bh=lCTxzM5mPtEqEUhqg9mBz2nbnDEbWNQdOwqtwsH/FcI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=qJRWeQ7LCDks61n7imdpMj7RfA7aTm5aPbWtVXrTumzPpOE+8u4Sjme6CoCyJtp/uEm4h7vxdBLm4+zqy5GRblGNWDX37ABHrt4CQxIfQJOeP/RbsybPeDqY0Df62rYWhR8j0V/KNG0n7uLAQtyBKMLmdNj1KiYz63LPqo1nTeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ENRtZKMX; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747073089; c=relaxed/simple;
+	bh=Xsn7VXA1+qAuRNr2RimgmYykg+ezMNctr/fEL9UZo4k=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=kmMf9mAPc8FO9ijPv8MvSQjdN3yP5CW6tqonTtQpCN2ctSwjlojwIguKIrC0X/9e19SA9UUka319QzMoGyJMGF6MBvVOZANnoCF/qhmhJpLUcRlTENwl1wmP547gN13XjCcLRR+SpZ2Vw7C8WiKBKzFF+6YZ5wsY2ao/UN+mDd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=djQkr1ex; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ENRtZKMX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6BCDC4CEF0;
-	Mon, 12 May 2025 18:04:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747073087;
-	bh=lCTxzM5mPtEqEUhqg9mBz2nbnDEbWNQdOwqtwsH/FcI=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="djQkr1ex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9759C4CEEF;
+	Mon, 12 May 2025 18:04:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1747073089;
+	bh=Xsn7VXA1+qAuRNr2RimgmYykg+ezMNctr/fEL9UZo4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ENRtZKMXwWza3chzqhxjc8H8mGmRL/Bz1M+Rr6NeobL0kj/Ew6VlWjTIwLk7lPd3p
-	 UC0yazS2b+t0Ha0lkfBb3NOOiwRlQMGlDZm1ZkL8XKB/gQoZxh/SJcBSMvZhfQ6dZK
-	 DHtUnayTofw+quRQn+/jY0mO0655OXvB1JM0+Tmh1tExm2gudfnWPjw1zwrj0mvNHq
-	 ngBI8UAjz/A5c65wJhRnhxClf85ZBKuV49Z80ejI/S43s4oEinsjoHcnU/GDZhK7FJ
-	 BlPkQp0ZVdkypn0N02ukbalB6cNmYZy06lG6h8RyjxCdo/1N8f4KaY2SNxYeetGfL+
-	 jS5RsK6iQH37Q==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Jason Andryuk <jason.andryuk@amd.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Juergen Gross <jgross@suse.com>,
-	Sasha Levin <sashal@kernel.org>,
-	chenqiuji666@gmail.com,
-	michal.orzel@amd.com,
-	xin.wang2@amd.com,
-	gregkh@linuxfoundation.org,
-	xen-devel@lists.xenproject.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 09/11] xenbus: Allow PVH dom0 a non-local xenstore
-Date: Mon, 12 May 2025 14:04:24 -0400
-Message-Id: <20250512180426.437627-9-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250512180426.437627-1-sashal@kernel.org>
-References: <20250512180426.437627-1-sashal@kernel.org>
+	b=djQkr1exTMqk0+6AwbfGzz8PQmCD8/8CCwpoj3Q6OpftpVGs5EanW59Tcfh2svpNK
+	 /bYkeCr+V9+g5ND50GNOuqe/C+/UUAkGw7dVB5ClZiNA3uYA9EWl8z5bN70eYfL1sS
+	 0gTGpRrLt1ofV3/bUy8njmzBwY/CrWp/gUslGYJk=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 150/184] drm/xe/tests/mocs: Hold XE_FORCEWAKE_ALL for LNCF regs
+Date: Mon, 12 May 2025 19:45:51 +0200
+Message-ID: <20250512172047.923587570@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
+References: <20250512172041.624042835@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.12.28
 Content-Transfer-Encoding: 8bit
 
-From: Jason Andryuk <jason.andryuk@amd.com>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 90989869baae47ee2aa3bcb6f6eb9fbbe4287958 ]
+------------------
 
-Make xenbus_init() allow a non-local xenstore for a PVH dom0 - it is
-currently forced to XS_LOCAL.  With Hyperlaunch booting dom0 and a
-xenstore stubdom, dom0 can be handled as a regular XS_HVM following the
-late init path.
+From: Tejas Upadhyay <tejas.upadhyay@intel.com>
 
-Ideally we'd drop the use of xen_initial_domain() and just check for the
-event channel instead.  However, ARM has a xen,enhanced no-xenstore
-mode, where the event channel and PFN would both be 0.  Retain the
-xen_initial_domain() check, and use that for an additional check when
-the event channel is 0.
+[ Upstream commit 51c0ee84e4dc339287b2d7335f2b54d747794c83 ]
 
-Check the full 64bit HVM_PARAM_STORE_EVTCHN value to catch the off
-chance that high bits are set for the 32bit event channel.
+LNCF registers report wrong values when XE_FORCEWAKE_GT
+only is held. Holding XE_FORCEWAKE_ALL ensures correct
+operations on LNCF regs.
 
-Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
-Change-Id: I5506da42e4c6b8e85079fefb2f193c8de17c7437
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20250506204456.5220-1-jason.andryuk@amd.com>
+V2(Himal):
+ - Use xe_force_wake_ref_has_domain
+
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/1999
+Fixes: a6a4ea6d7d37 ("drm/xe: Add mocs kunit")
+Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250428082357.1730068-1-tejas.upadhyay@intel.com
+Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+(cherry picked from commit 70a2585e582058e94fe4381a337be42dec800337)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/xenbus/xenbus_probe.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/xe/tests/xe_mocs.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/xen/xenbus/xenbus_probe.c b/drivers/xen/xenbus/xenbus_probe.c
-index 6d32ffb011365..86fe6e7790566 100644
---- a/drivers/xen/xenbus/xenbus_probe.c
-+++ b/drivers/xen/xenbus/xenbus_probe.c
-@@ -966,9 +966,15 @@ static int __init xenbus_init(void)
- 	if (xen_pv_domain())
- 		xen_store_domain_type = XS_PV;
- 	if (xen_hvm_domain())
-+	{
- 		xen_store_domain_type = XS_HVM;
--	if (xen_hvm_domain() && xen_initial_domain())
--		xen_store_domain_type = XS_LOCAL;
-+		err = hvm_get_parameter(HVM_PARAM_STORE_EVTCHN, &v);
-+		if (err)
-+			goto out_error;
-+		xen_store_evtchn = (int)v;
-+		if (!v && xen_initial_domain())
-+			xen_store_domain_type = XS_LOCAL;
+diff --git a/drivers/gpu/drm/xe/tests/xe_mocs.c b/drivers/gpu/drm/xe/tests/xe_mocs.c
+index 434e7c7e60883..61a7d20ce42bf 100644
+--- a/drivers/gpu/drm/xe/tests/xe_mocs.c
++++ b/drivers/gpu/drm/xe/tests/xe_mocs.c
+@@ -46,8 +46,11 @@ static void read_l3cc_table(struct xe_gt *gt,
+ 	unsigned int fw_ref, i;
+ 	u32 reg_val;
+ 
+-	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FW_GT);
+-	KUNIT_ASSERT_NE_MSG(test, fw_ref, 0, "Forcewake Failed.\n");
++	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL);
++	if (!xe_force_wake_ref_has_domain(fw_ref, XE_FORCEWAKE_ALL)) {
++		xe_force_wake_put(gt_to_fw(gt), fw_ref);
++		KUNIT_ASSERT_TRUE_MSG(test, true, "Forcewake Failed.\n");
 +	}
- 	if (xen_pv_domain() && !xen_start_info->store_evtchn)
- 		xen_store_domain_type = XS_LOCAL;
- 	if (xen_pv_domain() && xen_start_info->store_evtchn)
-@@ -987,10 +993,6 @@ static int __init xenbus_init(void)
- 		xen_store_interface = gfn_to_virt(xen_store_gfn);
- 		break;
- 	case XS_HVM:
--		err = hvm_get_parameter(HVM_PARAM_STORE_EVTCHN, &v);
--		if (err)
--			goto out_error;
--		xen_store_evtchn = (int)v;
- 		err = hvm_get_parameter(HVM_PARAM_STORE_PFN, &v);
- 		if (err)
- 			goto out_error;
+ 
+ 	for (i = 0; i < info->num_mocs_regs; i++) {
+ 		if (!(i & 1)) {
 -- 
 2.39.5
+
+
 
