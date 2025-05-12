@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD052C0320;
-	Mon, 12 May 2025 18:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819FC2BFC9F;
+	Mon, 12 May 2025 18:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073140; cv=none; b=hn6HGu9WULIcUraVIiB08BUE2OU8UdhSN288a/m0V+nYahT25/iaQ7hFBegyVCWA/9Dj+76Vmuj6sqrZ2yD7rbVJjnc+bCu7O6WkT1b2E7ddGcE+r6YLa1mZVe8r/3F4nCW7MZLVXTAN9jrbHPUUVuZpS4fcSZ9DeJUE38ivEA8=
+	t=1747073142; cv=none; b=Q8o1fYVNxq9xsbq6KOVyZMVA2pyMFC9wPwkCtPpRh+wg2RXAm1JqcyT/OyWwNmpT8R2bDK7wKFkTo/sqLAsXsr88Bdjs/XEHRvrUlJg0bjW9vLbEscQj2ZW5ZBgMZuNa42SCSrvn7dQolp3OCk+5ccYu2i7Bgb9a5v+2cEX4Lxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073140; c=relaxed/simple;
-	bh=sZHtw8Cf8o3Rl+ZjpFBT/A3rY838orpQP73sXYSLYAE=;
+	s=arc-20240116; t=1747073142; c=relaxed/simple;
+	bh=c4UwLIaiUrwAeBTn3QmvldHsJE9lNq5b66pkHrWTqVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b7IDODYGGwg1JLqDfcpRToKHKEDJajzX9aOIabZZFr+oQQ5jtuN7yjOxij/pBzvR3nf1S+RZ4A8R5N9I+bdbJ7wAFzMXpzHH6oWyEQxqHaJgWiIqI9pphEITb43FliXCfZYxoy+AQVdz1GJQCq78aPLWXIW9427Z0eWJcbBro2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRPQPI3a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oZOz0TCKIdxRnEVuB5PD8+78RcltL64X65WUvmd0FpZ+Ao37ddmmzW5151UZnnUilwz3oXuHBIB8quByDUv1PWSgv9+I03yLa4Wmw9iANuJ+rV86Dd+zle3pjdbxsEvtW/LJKOidLWKAAoCClZpNbS5fYe0RDhIzjSrAXTEClKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOJChlEh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRPQPI3a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128F1C4CEE7;
-	Mon, 12 May 2025 18:05:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOJChlEh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5F0C4CEE9;
+	Mon, 12 May 2025 18:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073139;
-	bh=sZHtw8Cf8o3Rl+ZjpFBT/A3rY838orpQP73sXYSLYAE=;
+	s=korg; t=1747073142;
+	bh=c4UwLIaiUrwAeBTn3QmvldHsJE9lNq5b66pkHrWTqVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eRPQPI3aLI8KCM1U6V8G5xbg3p6uhf5Tc6ci1Qav9OEuitRbj9RIK80Lie9+WziJR
-	 gxgPIRAhu4OD2hJ0yrn772jCyyBi+JJsRxYjrcwdG4rlWcvsgOgqxeab8WN1K8VAzf
-	 rkS+6QrlGHI5BGStofGvV/0uYHqVhMgIPUYoyJeg=
+	b=IOJChlEhvS7coRu0wb7ag1Ob+c0bSjx+BjinQGzp/bK01vnM+NJNb7zxdj8Di/RDD
+	 wLLm9zBc3YV8OIHXNBFI9091WmQMeJ9wiXsEzQZrfxtOp9apn6wpYNnxfJPE89YSgF
+	 GnkXf6k3N1pOO/YJFHlbOkHV5Wj3lMiqr34dM4Ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Morse <james.morse@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.12 167/184] arm64: proton-pack: Add new CPUs k values for branch mitigation
-Date: Mon, 12 May 2025 19:46:08 +0200
-Message-ID: <20250512172048.615123622@linuxfoundation.org>
+	Daniel Sneddon <daniel.sneddon@linux.intel.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexandre Chartre <alexandre.chartre@oracle.com>
+Subject: [PATCH 6.12 168/184] x86/bpf: Call branch history clearing sequence on exit
+Date: Mon, 12 May 2025 19:46:09 +0200
+Message-ID: <20250512172048.654310778@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -50,52 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Morse <james.morse@arm.com>
+From: Daniel Sneddon <daniel.sneddon@linux.intel.com>
 
-commit efe676a1a7554219eae0b0dcfe1e0cdcc9ef9aef upstream.
+commit d4e89d212d401672e9cdfe825d947ee3a9fbe3f5 upstream.
 
-Update the list of 'k' values for the branch mitigation from arm's
-website.
+Classic BPF programs have been identified as potential vectors for
+intra-mode Branch Target Injection (BTI) attacks. Classic BPF programs can
+be run by unprivileged users. They allow unprivileged code to execute
+inside the kernel. Attackers can use unprivileged cBPF to craft branch
+history in kernel mode that can influence the target of indirect branches.
 
-Add the values for Cortex-X1C. The MIDR_EL1 value can be found here:
-https://developer.arm.com/documentation/101968/0002/Register-descriptions/AArch>
+Introduce a branch history buffer (BHB) clearing sequence during the JIT
+compilation of classic BPF programs. The clearing sequence is the same as
+is used in previous mitigations to protect syscalls. Since eBPF programs
+already have their own mitigations in place, only insert the call on
+classic programs that aren't run by privileged users.
 
-Link: https://developer.arm.com/documentation/110280/2-0/?lang=en
-Signed-off-by: James Morse <james.morse@arm.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Alexandre Chartre <alexandre.chartre@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/cputype.h |    2 ++
- arch/arm64/kernel/proton-pack.c  |    1 +
- 2 files changed, 3 insertions(+)
+ arch/x86/net/bpf_jit_comp.c |   31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -81,6 +81,7 @@
- #define ARM_CPU_PART_CORTEX_A78AE	0xD42
- #define ARM_CPU_PART_CORTEX_X1		0xD44
- #define ARM_CPU_PART_CORTEX_A510	0xD46
-+#define ARM_CPU_PART_CORTEX_X1C		0xD4C
- #define ARM_CPU_PART_CORTEX_A520	0xD80
- #define ARM_CPU_PART_CORTEX_A710	0xD47
- #define ARM_CPU_PART_CORTEX_A715	0xD4D
-@@ -166,6 +167,7 @@
- #define MIDR_CORTEX_A78AE	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78AE)
- #define MIDR_CORTEX_X1	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X1)
- #define MIDR_CORTEX_A510 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A510)
-+#define MIDR_CORTEX_X1C MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X1C)
- #define MIDR_CORTEX_A520 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A520)
- #define MIDR_CORTEX_A710 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A710)
- #define MIDR_CORTEX_A715 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A715)
---- a/arch/arm64/kernel/proton-pack.c
-+++ b/arch/arm64/kernel/proton-pack.c
-@@ -891,6 +891,7 @@ static u8 spectre_bhb_loop_affected(void
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78AE),
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A78C),
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_X1),
-+		MIDR_ALL_VERSIONS(MIDR_CORTEX_X1C),
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_X2),
- 		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -1412,6 +1412,30 @@ static void emit_shiftx(u8 **pprog, u32
+ #define LOAD_TAIL_CALL_CNT_PTR(stack)				\
+ 	__LOAD_TCC_PTR(BPF_TAIL_CALL_CNT_PTR_STACK_OFF(stack))
+ 
++static int emit_spectre_bhb_barrier(u8 **pprog, u8 *ip,
++				    struct bpf_prog *bpf_prog)
++{
++	u8 *prog = *pprog;
++	u8 *func;
++
++	if (cpu_feature_enabled(X86_FEATURE_CLEAR_BHB_LOOP)) {
++		/* The clearing sequence clobbers eax and ecx. */
++		EMIT1(0x50); /* push rax */
++		EMIT1(0x51); /* push rcx */
++		ip += 2;
++
++		func = (u8 *)clear_bhb_loop;
++		ip += x86_call_depth_emit_accounting(&prog, func, ip);
++
++		if (emit_call(&prog, func, ip))
++			return -EINVAL;
++		EMIT1(0x59); /* pop rcx */
++		EMIT1(0x58); /* pop rax */
++	}
++	*pprog = prog;
++	return 0;
++}
++
+ static int do_jit(struct bpf_prog *bpf_prog, int *addrs, u8 *image, u8 *rw_image,
+ 		  int oldproglen, struct jit_context *ctx, bool jmp_padding)
+ {
+@@ -2402,6 +2426,13 @@ emit_jmp:
+ 			seen_exit = true;
+ 			/* Update cleanup_addr */
+ 			ctx->cleanup_addr = proglen;
++			if (bpf_prog_was_classic(bpf_prog) &&
++			    !capable(CAP_SYS_ADMIN)) {
++				u8 *ip = image + addrs[i - 1];
++
++				if (emit_spectre_bhb_barrier(&prog, ip, bpf_prog))
++					return -EINVAL;
++			}
+ 			if (bpf_prog->aux->exception_boundary) {
+ 				pop_callee_regs(&prog, all_callee_regs_used);
+ 				pop_r12(&prog);
 
 
