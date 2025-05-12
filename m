@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C042550C6;
-	Mon, 12 May 2025 17:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DA2263F30;
+	Mon, 12 May 2025 17:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072424; cv=none; b=j/pnTTC4QhLtYCiX8wX4voP19f7UTIbEAhjzHGg1H/dq0aQUYUxQclLSSnSocRihKXM2q5pk+E4HmsErt2b3wpwqWtNjKYhjltQw7ifzfw7ubUpvTYIyvVMAXOQNofgs7+DuTHjLUOPSWO7ARbaWyZx6gGq4JL4/IzqfDMgS7/Y=
+	t=1747072427; cv=none; b=TjDertKxo+U5/KmV3xURjo00fyRXVAPN0/eJg7fT8dHKoLCSA7lA02Y3UNYP+xEhqAU0vXbO1GUIKN59/8nXcMTzvlmvKgNAYTPl6OnCfrD7NGTHdtnEMHXW75+2lj3TtL65csTln/X9XvpbRRMThci6aCYrv+5JvzJCWkJbL38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072424; c=relaxed/simple;
-	bh=KSZtoJvLqrze0QuAuyzRfbwsma1tZxSoJKZ3kN1SDAk=;
+	s=arc-20240116; t=1747072427; c=relaxed/simple;
+	bh=U0WjejE8S0xdyTrUARfJH3IhIjF7mZsiyIBAdkcHuo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z2W/RKWRD5hfFB8L4xYZyL+wdr2pjZ9YsPTjTVEPj+TaqjXqIYHZ9yAAX23uxS43lDP+C41qBsmPAAPL4lHGMAUZB3N7s2QJA4kgpRKCNyz0RMarhlAqYDkv6NEKp0SQmzRt3F6GLZchvK0defgU+V545o8EUR8Hwx/lvedwvYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hoxUoSWC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PSaLw/1TX9EnYeSZqdwzqmT/n96s5bLBN6rK6MOwuJj0qE7ptTJsPAlYmn7HOzGDsesFNQliKrw7GwFK6zvephUZg+h0NIq1UHjbqx/Atiavbcqba/4TnuV6ifInbMU2bc1Ok4KcWRARItMLa4yC/sxq9mYZoblDsMT4B63Zv/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=frMZ6Krp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hoxUoSWC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460B7C4CEE7;
-	Mon, 12 May 2025 17:53:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="frMZ6Krp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1A8C4CEE7;
+	Mon, 12 May 2025 17:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072424;
-	bh=KSZtoJvLqrze0QuAuyzRfbwsma1tZxSoJKZ3kN1SDAk=;
+	s=korg; t=1747072427;
+	bh=U0WjejE8S0xdyTrUARfJH3IhIjF7mZsiyIBAdkcHuo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hoxUoSWCmlwHW4IVVvLug3lgiivKz7NH8X0/6/LYudhrPF66U5nKAAj5mM/Pqp7ox
-	 A3Yk4AadkyCOFY6MRG7335wN3IcLPJA3dEjrcRYx1mdSHQrSjK/hUmheGQl4UW7YD8
-	 kX8qNEByUwT6FhNfdxxeswoOWB07+Miy1DKNHtSs=
+	b=frMZ6KrpskVhKwfn3GdGuxDJMImPBMSRKUKG66YWsmsCBUg3HeQ41SsbNatVORNmP
+	 4kdNaOXb5VUEDZDfYxoaCiJrrx11NA29uoZPdO++XnV/ktV5R18Jgu+oBn5Znoqvpm
+	 g5pVuXboZeOa+koolDcrbq/88QULm9k8jew6I/M8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Silvano Seva <s.seva@4sigma.it>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 37/92] iio: imu: st_lsm6dsx: fix possible lockup in st_lsm6dsx_read_tagged_fifo
-Date: Mon, 12 May 2025 19:45:12 +0200
-Message-ID: <20250512172024.635678379@linuxfoundation.org>
+	Daivik Bhatia <dtgs1208@gmail.com>,
+	Iago Toral Quiroga <itoral@igalia.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
+Subject: [PATCH 6.1 38/92] drm/v3d: Add job to pending list if the reset was skipped
+Date: Mon, 12 May 2025 19:45:13 +0200
+Message-ID: <20250512172024.674446037@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -46,41 +46,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Silvano Seva <s.seva@4sigma.it>
+From: Maíra Canal <mcanal@igalia.com>
 
-commit 8114ef86e2058e2554111b793596f17bee23fa15 upstream.
+commit 35e4079bf1a2570abffce6ababa631afcf8ea0e5 upstream.
 
-Prevent st_lsm6dsx_read_tagged_fifo from falling in an infinite loop in
-case pattern_len is equal to zero and the device FIFO is not empty.
+When a CL/CSD job times out, we check if the GPU has made any progress
+since the last timeout. If so, instead of resetting the hardware, we skip
+the reset and let the timer get rearmed. This gives long-running jobs a
+chance to complete.
 
-Fixes: 801a6e0af0c6 ("iio: imu: st_lsm6dsx: add support to LSM6DSO")
-Signed-off-by: Silvano Seva <s.seva@4sigma.it>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20250311085030.3593-4-s.seva@4sigma.it
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+However, when `timedout_job()` is called, the job in question is removed
+from the pending list, which means it won't be automatically freed through
+`free_job()`. Consequently, when we skip the reset and keep the job
+running, the job won't be freed when it finally completes.
+
+This situation leads to a memory leak, as exposed in [1] and [2].
+
+Similarly to commit 704d3d60fec4 ("drm/etnaviv: don't block scheduler when
+GPU is still active"), this patch ensures the job is put back on the
+pending list when extending the timeout.
+
+Cc: stable@vger.kernel.org # 6.0
+Reported-by: Daivik Bhatia <dtgs1208@gmail.com>
+Closes: https://gitlab.freedesktop.org/mesa/mesa/-/issues/12227 [1]
+Closes: https://github.com/raspberrypi/linux/issues/6817 [2]
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Acked-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Link: https://lore.kernel.org/r/20250430210643.57924-1-mcanal@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/v3d/v3d_sched.c |   28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
---- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
-+++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
-@@ -590,6 +590,9 @@ int st_lsm6dsx_read_tagged_fifo(struct s
- 	if (!fifo_len)
- 		return 0;
+--- a/drivers/gpu/drm/v3d/v3d_sched.c
++++ b/drivers/gpu/drm/v3d/v3d_sched.c
+@@ -289,11 +289,16 @@ v3d_gpu_reset_for_timeout(struct v3d_dev
+ 	return DRM_GPU_SCHED_STAT_NOMINAL;
+ }
  
-+	if (!pattern_len)
-+		pattern_len = ST_LSM6DSX_TAGGED_SAMPLE_SIZE;
+-/* If the current address or return address have changed, then the GPU
+- * has probably made progress and we should delay the reset.  This
+- * could fail if the GPU got in an infinite loop in the CL, but that
+- * is pretty unlikely outside of an i-g-t testcase.
+- */
++static void
++v3d_sched_skip_reset(struct drm_sched_job *sched_job)
++{
++	struct drm_gpu_scheduler *sched = sched_job->sched;
 +
- 	for (read_len = 0; read_len < fifo_len; read_len += pattern_len) {
- 		err = st_lsm6dsx_read_block(hw,
- 					    ST_LSM6DSX_REG_FIFO_OUT_TAG_ADDR,
++	spin_lock(&sched->job_list_lock);
++	list_add(&sched_job->list, &sched->pending_list);
++	spin_unlock(&sched->job_list_lock);
++}
++
+ static enum drm_gpu_sched_stat
+ v3d_cl_job_timedout(struct drm_sched_job *sched_job, enum v3d_queue q,
+ 		    u32 *timedout_ctca, u32 *timedout_ctra)
+@@ -303,9 +308,16 @@ v3d_cl_job_timedout(struct drm_sched_job
+ 	u32 ctca = V3D_CORE_READ(0, V3D_CLE_CTNCA(q));
+ 	u32 ctra = V3D_CORE_READ(0, V3D_CLE_CTNRA(q));
+ 
++	/* If the current address or return address have changed, then the GPU
++	 * has probably made progress and we should delay the reset. This
++	 * could fail if the GPU got in an infinite loop in the CL, but that
++	 * is pretty unlikely outside of an i-g-t testcase.
++	 */
+ 	if (*timedout_ctca != ctca || *timedout_ctra != ctra) {
+ 		*timedout_ctca = ctca;
+ 		*timedout_ctra = ctra;
++
++		v3d_sched_skip_reset(sched_job);
+ 		return DRM_GPU_SCHED_STAT_NOMINAL;
+ 	}
+ 
+@@ -345,11 +357,13 @@ v3d_csd_job_timedout(struct drm_sched_jo
+ 	struct v3d_dev *v3d = job->base.v3d;
+ 	u32 batches = V3D_CORE_READ(0, V3D_CSD_CURRENT_CFG4);
+ 
+-	/* If we've made progress, skip reset and let the timer get
+-	 * rearmed.
++	/* If we've made progress, skip reset, add the job to the pending
++	 * list, and let the timer get rearmed.
+ 	 */
+ 	if (job->timedout_batches != batches) {
+ 		job->timedout_batches = batches;
++
++		v3d_sched_skip_reset(sched_job);
+ 		return DRM_GPU_SCHED_STAT_NOMINAL;
+ 	}
+ 
 
 
