@@ -1,92 +1,164 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E2929A302;
-	Mon, 12 May 2025 18:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DFF29A316;
+	Mon, 12 May 2025 18:04:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073079; cv=none; b=q05BzVlFpYvTVqUND9F6mpBw3J05+/64eeNge7p4Fv0Pt1RtggBFXewqJvJQn3SMHl+r9VTY0AgcNAj4S/ceUBnTwEOhDWlRmY0/y9emGEtqO1zidbeCGwH3LfTcuQZp1M8rOSALWhjg2xWuq69cM1tc7+BhuOQzQlvY3HHANVg=
+	t=1747073079; cv=none; b=Qu+TjVG2ZbyADMInHTULzfXbfvH60C/o3tOLKxGmb5vqDtu8pvEbYnei6SJpaIf/FjeTiGblZDq+TsQqULzqW3cMA85rS3mkYWWtgJ29vvLfJyl5JzfghYQTwVT4h8rcURYoQgRsKJ2RXC5WtxE1a7M8YazltQMED9s6IClvhwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1747073079; c=relaxed/simple;
-	bh=8d+MIh0ZJExvxWHnilQyk/lGhI/iKEiO0XS+vqKLqqo=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=tKlu5qHPcVyg1veZTu+SnplNhFvnYhb53JfTaKGOWzykTDvERau4HQtQ9HQR5c3izJoWRwmt6DJl0c80K5nBLRYimAJTDh9yI67Hp4Zae0e9+udxMPc71DsGMmoRtpyu/mUW7dquc+yCCHPRqybt7qdqlqtNytaUxb3GVOZT+4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l96ClnrO; arc=none smtp.client-ip=10.30.226.201
+	bh=Pk0mUCRODHL8qHD0uMwUn0I69qH9zP2bLxKkudZLGuw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=gN0xtuwC/hG9JiRx7dr+UsIpnQdHgVWwe+K+VVZ5MhtoAXANR97hPy/7s1L0w0rtOdS4D0wNxeAXcUCFEAxPMAK1DtHTP32a4ko1+E0SasMgIF4V1ziQurYsPYg22m7ZC+MYp3y0fjrdDwrgzPpE3Cx5VcsbM+9U5njHi4fpFYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrttF2kt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l96ClnrO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62CCFC4CEE7;
-	Mon, 12 May 2025 18:04:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747073078;
-	bh=8d+MIh0ZJExvxWHnilQyk/lGhI/iKEiO0XS+vqKLqqo=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrttF2kt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F35CC4CEE9;
+	Mon, 12 May 2025 18:04:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1747073078;
+	bh=Pk0mUCRODHL8qHD0uMwUn0I69qH9zP2bLxKkudZLGuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l96ClnrOe15fXvqtRziwmfo4fYHTSvvVR8aYQ/0K1j7gAEiGt+Xehn4R3g9mb2IJi
-	 8Pin9+Y2Fj5tZ22yZjH+MnZzX0+dJkvxkkwxfT7jZBRpNmeSOgnrcI3xcz1E48wVa8
-	 L833J7ngiMlxj4TfJyvjct9bNi1vPSM8TGZjF47WEWNPqydIgSw87Fu62DOW+J/Crg
-	 kdhWDu1t2oYeVo4dcsN2qTDflMGVoD2WTCp7lP0c1ogyPZsiVLSy88d6zUR1rjYxG7
-	 RovkxS1pGwTd4agNN8OtiL3MrnyeEFZ/XRYq9xPvVQn9yRLh8dYCQHmU7QuVuHOdQo
-	 qFX4A1TV8/syQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: David Wei <dw@davidwei.uk>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	donald.hunter@gmail.com,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	nicolas.dichtel@6wind.com,
-	colin.i.king@gmail.com,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 05/11] tools: ynl-gen: validate 0 len strings from kernel
-Date: Mon, 12 May 2025 14:04:20 -0400
-Message-Id: <20250512180426.437627-5-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250512180426.437627-1-sashal@kernel.org>
-References: <20250512180426.437627-1-sashal@kernel.org>
+	b=UrttF2ktodJoItIZkRKdAMDyOwrJ5YR+micpnb9t0/Nn9sl+hQuCnu8ANsdmO5+oa
+	 6HqSxhc3DT2QcQvt4MAEBcPK1W25+FdUzrtVqJixY14lo2gi/9+JxM28m8j6nOxUXc
+	 hSuefJI7dkDrVxoR3vu1rPMv20MPzO6fG+rR+rig=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 147/184] riscv: misaligned: factorize trap handling
+Date: Mon, 12 May 2025 19:45:48 +0200
+Message-ID: <20250512172047.802375711@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
+References: <20250512172041.624042835@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.12.28
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Wei <dw@davidwei.uk>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 4720f9707c783f642332dee3d56dccaefa850e42 ]
+------------------
 
-Strings from the kernel are guaranteed to be null terminated and
-ynl_attr_validate() checks for this. But it doesn't check if the string
-has a len of 0, which would cause problems when trying to access
-data[len - 1]. Fix this by checking that len is positive.
+From: Clément Léger <cleger@rivosinc.com>
 
-Signed-off-by: David Wei <dw@davidwei.uk>
-Link: https://patch.msgid.link/20250503043050.861238-1-dw@davidwei.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Upstream commit fd94de9f9e7aac11ec659e386b9db1203d502023 ]
+
+Since both load/store and user/kernel should use almost the same path and
+that we are going to add some code around that, factorize it.
+
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20250422162324.956065-2-cleger@rivosinc.com
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Stable-dep-of: 453805f0a28f ("riscv: misaligned: enable IRQs while handling misaligned accesses")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/net/ynl/lib/ynl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/kernel/traps.c | 66 +++++++++++++++++++++------------------
+ 1 file changed, 36 insertions(+), 30 deletions(-)
 
-diff --git a/tools/net/ynl/lib/ynl.c b/tools/net/ynl/lib/ynl.c
-index ce32cb35007d6..c4da34048ef85 100644
---- a/tools/net/ynl/lib/ynl.c
-+++ b/tools/net/ynl/lib/ynl.c
-@@ -364,7 +364,7 @@ int ynl_attr_validate(struct ynl_parse_arg *yarg, const struct nlattr *attr)
- 		     "Invalid attribute (binary %s)", policy->name);
- 		return -1;
- 	case YNL_PT_NUL_STR:
--		if ((!policy->len || len <= policy->len) && !data[len - 1])
-+		if (len && (!policy->len || len <= policy->len) && !data[len - 1])
- 			break;
- 		yerr(yarg->ys, YNL_ERROR_ATTR_INVALID,
- 		     "Invalid attribute (string %s)", policy->name);
+diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
+index 8ff8e8b36524b..b1d991c78a233 100644
+--- a/arch/riscv/kernel/traps.c
++++ b/arch/riscv/kernel/traps.c
+@@ -198,47 +198,53 @@ asmlinkage __visible __trap_section void do_trap_insn_illegal(struct pt_regs *re
+ DO_ERROR_INFO(do_trap_load_fault,
+ 	SIGSEGV, SEGV_ACCERR, "load access fault");
+ 
+-asmlinkage __visible __trap_section void do_trap_load_misaligned(struct pt_regs *regs)
++enum misaligned_access_type {
++	MISALIGNED_STORE,
++	MISALIGNED_LOAD,
++};
++static const struct {
++	const char *type_str;
++	int (*handler)(struct pt_regs *regs);
++} misaligned_handler[] = {
++	[MISALIGNED_STORE] = {
++		.type_str = "Oops - store (or AMO) address misaligned",
++		.handler = handle_misaligned_store,
++	},
++	[MISALIGNED_LOAD] = {
++		.type_str = "Oops - load address misaligned",
++		.handler = handle_misaligned_load,
++	},
++};
++
++static void do_trap_misaligned(struct pt_regs *regs, enum misaligned_access_type type)
+ {
+-	if (user_mode(regs)) {
++	irqentry_state_t state;
++
++	if (user_mode(regs))
+ 		irqentry_enter_from_user_mode(regs);
++	else
++		state = irqentry_nmi_enter(regs);
+ 
+-		if (handle_misaligned_load(regs))
+-			do_trap_error(regs, SIGBUS, BUS_ADRALN, regs->epc,
+-			      "Oops - load address misaligned");
++	if (misaligned_handler[type].handler(regs))
++		do_trap_error(regs, SIGBUS, BUS_ADRALN, regs->epc,
++			      misaligned_handler[type].type_str);
+ 
++	if (user_mode(regs))
+ 		irqentry_exit_to_user_mode(regs);
+-	} else {
+-		irqentry_state_t state = irqentry_nmi_enter(regs);
+-
+-		if (handle_misaligned_load(regs))
+-			do_trap_error(regs, SIGBUS, BUS_ADRALN, regs->epc,
+-			      "Oops - load address misaligned");
+-
++	else
+ 		irqentry_nmi_exit(regs, state);
+-	}
+ }
+ 
+-asmlinkage __visible __trap_section void do_trap_store_misaligned(struct pt_regs *regs)
++asmlinkage __visible __trap_section void do_trap_load_misaligned(struct pt_regs *regs)
+ {
+-	if (user_mode(regs)) {
+-		irqentry_enter_from_user_mode(regs);
+-
+-		if (handle_misaligned_store(regs))
+-			do_trap_error(regs, SIGBUS, BUS_ADRALN, regs->epc,
+-				"Oops - store (or AMO) address misaligned");
+-
+-		irqentry_exit_to_user_mode(regs);
+-	} else {
+-		irqentry_state_t state = irqentry_nmi_enter(regs);
+-
+-		if (handle_misaligned_store(regs))
+-			do_trap_error(regs, SIGBUS, BUS_ADRALN, regs->epc,
+-				"Oops - store (or AMO) address misaligned");
++	do_trap_misaligned(regs, MISALIGNED_LOAD);
++}
+ 
+-		irqentry_nmi_exit(regs, state);
+-	}
++asmlinkage __visible __trap_section void do_trap_store_misaligned(struct pt_regs *regs)
++{
++	do_trap_misaligned(regs, MISALIGNED_STORE);
+ }
++
+ DO_ERROR_INFO(do_trap_store_fault,
+ 	SIGSEGV, SEGV_ACCERR, "store (or AMO) access fault");
+ DO_ERROR_INFO(do_trap_ecall_s,
 -- 
 2.39.5
+
+
 
