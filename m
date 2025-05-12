@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476562528E6;
-	Mon, 12 May 2025 17:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4FA254863;
+	Mon, 12 May 2025 17:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072592; cv=none; b=OyRay6ETtwUU03rDWQJ44YPWEBLy/ETihFBe0BRCDhmHqH6D4d7keQCJ6DJjpdjhbs/x6xpO3nkGiyFByjh3txmKEnK54RvnOA80y1NAk2WYGSgs8IDMRg2yrZ1u74F0HQNC8a3iSLSSkFo9pt979WTbBM7hDUAm5qhtgO6Z7Ts=
+	t=1747072594; cv=none; b=C1HcAjkAFLK2pZx+gNowcu7j6Zd3Xmfy++cYPtYQp7wCZ977OIotGfpXhP7oh1yMPBNqwoX3NzLrkpDVvNPoV1VnGL5+RTUFkqtRaXP2yCfnS5/u1YqXasBLCnCVHFzBS2U7mtt+pcMQlW5G59M9FvEh6EMZN4mbAnViGqj9hM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072592; c=relaxed/simple;
-	bh=Xwo6ZCwkfbKUdgEvhdpLFRsTVxlVoskvkd2vNOXyI7s=;
+	s=arc-20240116; t=1747072594; c=relaxed/simple;
+	bh=W/cghf+fz8pahzwDEFiFIP3wsVY09sa8ZfHJ3X+YhTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WszREqCAOBQMcGBFeIMR+E6da41PauQC86YjQfRPv7Bn6PK4595lYr4qtvM58WrWiO4V2rBZNk58Tkdf/AXI85GzLi6xK5FK+i2/7j63HbO0BEyFpw1YzJt8dTQuzG6RkGq/WEt+Dq/+SLNI/GglTjjlCHr+OBT1CwJ2WAzZsY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqL+b3kv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qIzzvit+Z1iabA3FjJ0O+rhkH4Bb2rfj9RXe9hHkd7FcfG1/2AlK/PGn7Tpey0n86jZsHaHZQCry9r2qomA6OCsMJ8ZBz1CuRpNWK8v0J4eCgRyl4BzQAoUceRH3UY9BoyGYrhqLMe53li21X0i8E8LQZdMSSbmGrFWfspYDowo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrZq2rkh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqL+b3kv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E2FC4CEE9;
-	Mon, 12 May 2025 17:56:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrZq2rkh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B63C4CEE7;
+	Mon, 12 May 2025 17:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072591;
-	bh=Xwo6ZCwkfbKUdgEvhdpLFRsTVxlVoskvkd2vNOXyI7s=;
+	s=korg; t=1747072594;
+	bh=W/cghf+fz8pahzwDEFiFIP3wsVY09sa8ZfHJ3X+YhTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wqL+b3kvIYse+wkR8i/ipk92ov0XKA/G+qEZxY8piXlMik2mUJnbyU+Wg8f+jE5Ww
-	 YiVsroeI2AiD0hi9Kg0KoaZnQfKiV2zoqnTrzgIg8stE+bXy2eD6cABA5FYolt1SIY
-	 xGG9IMBpFNnid78j7MYti5TcMaJH1BeCLdRsN2RA=
+	b=WrZq2rkhM5b68mVXzldH+cAVkCbRij/d++2bQzFrxu0UrF/m/43UgOLMY9AcCvM/B
+	 Qj/MIsEqcxZftSGMLYP2oEfWTdbKLeOOEst326wQveMOuMa1zCSEni2394Gpa68YbU
+	 sXh2af3BosAIRaEyrAtjVsaMxM02bhSlv/I7ESVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Penkler <dpenkler@gmail.com>
-Subject: [PATCH 6.1 59/92] usb: usbtmc: Fix erroneous generic_read ioctl return
-Date: Mon, 12 May 2025 19:45:34 +0200
-Message-ID: <20250512172025.518383180@linuxfoundation.org>
+	Lothar Rubusch <l.rubusch@gmail.com>,
+	Marcelo Schmitt <marcelo.schmitt1@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 60/92] iio: accel: adxl367: fix setting odr for activity time update
+Date: Mon, 12 May 2025 19:45:35 +0200
+Message-ID: <20250512172025.558024722@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -49,66 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Penkler <dpenkler@gmail.com>
+From: Lothar Rubusch <l.rubusch@gmail.com>
 
-commit 4e77d3ec7c7c0d9535ccf1138827cb9bb5480b9b upstream.
+[ Upstream commit 38f67d0264929762e54ae5948703a21f841fe706 ]
 
-wait_event_interruptible_timeout returns a long
-The return value was being assigned to an int causing an integer overflow
-when the remaining jiffies > INT_MAX which resulted in random error
-returns.
+Fix setting the odr value to update activity time based on frequency
+derrived by recent odr, and not by obsolete odr value.
 
-Use a long return value, converting to the int ioctl return only on error.
+The [small] bug: When _adxl367_set_odr() is called with a new odr value,
+it first writes the new odr value to the hardware register
+ADXL367_REG_FILTER_CTL.
+Second, it calls _adxl367_set_act_time_ms(), which calls
+adxl367_time_ms_to_samples(). Here st->odr still holds the old odr value.
+This st->odr member is used to derrive a frequency value, which is
+applied to update ADXL367_REG_TIME_ACT. Hence, the idea is to update
+activity time, based on possibilities and power consumption by the
+current ODR rate.
+Finally, when the function calls return, again in _adxl367_set_odr() the
+new ODR is assigned to st->odr.
 
-Fixes: bb99794a4792 ("usb: usbtmc: Add ioctl for vendor specific read")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dave Penkler <dpenkler@gmail.com>
-Link: https://lore.kernel.org/r/20250502070941.31819-4-dpenkler@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The fix: When setting a new ODR value is set to ADXL367_REG_FILTER_CTL,
+also ADXL367_REG_TIME_ACT should probably be updated with a frequency
+based on the recent ODR value and not the old one. Changing the location
+of the assignment to st->odr fixes this.
+
+Fixes: cbab791c5e2a5 ("iio: accel: add ADXL367 driver")
+Signed-off-by: Lothar Rubusch <l.rubusch@gmail.com>
+Reviewed-by: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
+Link: https://patch.msgid.link/20250309193515.2974-1-l.rubusch@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/class/usbtmc.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/iio/accel/adxl367.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/class/usbtmc.c
-+++ b/drivers/usb/class/usbtmc.c
-@@ -833,6 +833,7 @@ static ssize_t usbtmc_generic_read(struc
- 	unsigned long expire;
- 	int bufcount = 1;
- 	int again = 0;
-+	long wait_rv;
+diff --git a/drivers/iio/accel/adxl367.c b/drivers/iio/accel/adxl367.c
+index f1a41b92543af..af0ad4e5e4a58 100644
+--- a/drivers/iio/accel/adxl367.c
++++ b/drivers/iio/accel/adxl367.c
+@@ -622,18 +622,14 @@ static int _adxl367_set_odr(struct adxl367_state *st, enum adxl367_odr odr)
+ 	if (ret)
+ 		return ret;
  
- 	/* mutex already locked */
- 
-@@ -945,19 +946,24 @@ static ssize_t usbtmc_generic_read(struc
- 		if (!(flags & USBTMC_FLAG_ASYNC)) {
- 			dev_dbg(dev, "%s: before wait time %lu\n",
- 				__func__, expire);
--			retval = wait_event_interruptible_timeout(
-+			wait_rv = wait_event_interruptible_timeout(
- 				file_data->wait_bulk_in,
- 				usbtmc_do_transfer(file_data),
- 				expire);
- 
--			dev_dbg(dev, "%s: wait returned %d\n",
--				__func__, retval);
-+			dev_dbg(dev, "%s: wait returned %ld\n",
-+				__func__, wait_rv);
- 
--			if (retval <= 0) {
--				if (retval == 0)
--					retval = -ETIMEDOUT;
-+			if (wait_rv < 0) {
-+				retval = wait_rv;
- 				goto error;
- 			}
++	st->odr = odr;
 +
-+			if (wait_rv == 0) {
-+				retval = -ETIMEDOUT;
-+				goto error;
-+			}
-+
- 		}
+ 	/* Activity timers depend on ODR */
+ 	ret = _adxl367_set_act_time_ms(st, st->act_time_ms);
+ 	if (ret)
+ 		return ret;
  
- 		urb = usb_get_from_anchor(&file_data->in_anchor);
+-	ret = _adxl367_set_inact_time_ms(st, st->inact_time_ms);
+-	if (ret)
+-		return ret;
+-
+-	st->odr = odr;
+-
+-	return 0;
++	return _adxl367_set_inact_time_ms(st, st->inact_time_ms);
+ }
+ 
+ static int adxl367_set_odr(struct iio_dev *indio_dev, enum adxl367_odr odr)
+-- 
+2.39.5
+
 
 
