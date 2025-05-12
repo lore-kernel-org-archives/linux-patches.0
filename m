@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E333A295DAB;
-	Mon, 12 May 2025 17:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722B929614D;
+	Mon, 12 May 2025 17:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072409; cv=none; b=c7j6tHrg/QbH7HGihmZBeMoGnY5/MaW2/9fnfqPZ2vFKoicDmKV0AeO7dyvLGdc/HwunZbfbZBJu0Ty3C2q4ExjCVrqj0H5G5TB6E6LX1guB1bTMP1hfQxEYvX8ZxzewzUDp+30kNnLoZ1xu1R8lvrk7jty0ZQGvDeQBiLrZAuo=
+	t=1747072412; cv=none; b=BJySzWZB23VSPUxBrUiKsAkQxBTCZ7g+RzUKgygtddsYfdohJqGs4jU57p7Bsu6414J18a6i0wtFdL12/M6YshuuXQAWF7VXpoX1jCG1eRmALzYqYeXb03ZfLv9vN/DqGibniMfsS6z6Inzv68bPrCyXdzkUe/DnMYhR4u5zBK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072409; c=relaxed/simple;
-	bh=+R2dQmVc4kr/3y5BJ3lisKAynpu9r8E1JNY1P/9lKL0=;
+	s=arc-20240116; t=1747072412; c=relaxed/simple;
+	bh=tgBcSKjSlyHfh78DCALbCNAlx7ERSKDGuz9WeQL0DqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ltfzuq6jFFiq0Lim9KuOQy9rVHwAJrGGUAsmljbUgeethvkPQbOkckhLVjpnLC8ocGARHCQFWwB6keXwccUxqFDes13n7LQoglVALJKxdeQYX8iaUwFsDRIh/NwcHSfyxwaEKpHGfERRXfcxoFfpH6+d/zfj6QXFXEBRyQ5ZQno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhj2t0a5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZpUGQSlQBPkoM6xrbU2kZHGDNnS5ZkG947P3YcGuRgzocZI1V1qh12pd9T4HYWpIzwqYYyqxRXvi0rN8ix3CqwAXcI1YVA8NCWP6QkXPiQWO6N3a4tS6w3bdn5CUuISESsEmS1HAvTW8YSscEiy7AsbunHYBxwyyoc0Bt2J0BtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADlXsms+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhj2t0a5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E5DC4CEE7;
-	Mon, 12 May 2025 17:53:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADlXsms+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64757C4CEE7;
+	Mon, 12 May 2025 17:53:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072408;
-	bh=+R2dQmVc4kr/3y5BJ3lisKAynpu9r8E1JNY1P/9lKL0=;
+	s=korg; t=1747072412;
+	bh=tgBcSKjSlyHfh78DCALbCNAlx7ERSKDGuz9WeQL0DqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zhj2t0a5Ta9Uyd/4jAsdXSlXT04jlNTg6vHKvE/YW0UtDfBD1nHX4npEWGLCJ1us8
-	 xu7KOETV4C8H/Qod/fngy5N7LBSvFfnWS5SX9uy297LOHqgLrzvOKLtY7nKEXzMLzt
-	 ub9Vhxm81uiFOrEMrrvsjLJc2H5aHXaMLs0UVFzM=
+	b=ADlXsms+wf76YPWCZXUCMnKTqVsd83KtpZ0xTpnuBZ6k2rkGSKXTAaZHZeLlt4f4Q
+	 392kxIw0jnb+kvtdQpwRuyjjH6/kIKwf5hT46H2u/SeBmzPIxrtIFQcqii0JiKWdDd
+	 pBGX2Ilzq33ncL1wF6YfK7KoUZYlbU4cWFLu/vXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Rik van Riel <riel@surriel.com>,
-	Stephen Dolan <sdolan@janestreet.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.1 32/92] x86/mm: Eliminate window where TLB flushes may be inadvertently skipped
-Date: Mon, 12 May 2025 19:45:07 +0200
-Message-ID: <20250512172024.444793053@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.1 33/92] drm/amd/display: Shift DMUB AUX reply command if necessary
+Date: Mon, 12 May 2025 19:45:08 +0200
+Message-ID: <20250512172024.482458928@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -54,131 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Hansen <dave.hansen@linux.intel.com>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-commit fea4e317f9e7e1f449ce90dedc27a2d2a95bee5a upstream.
+commit 5a3846648c0523fd850b7f0aec78c0139453ab8b upstream.
 
-tl;dr: There is a window in the mm switching code where the new CR3 is
-set and the CPU should be getting TLB flushes for the new mm.  But
-should_flush_tlb() has a bug and suppresses the flush.  Fix it by
-widening the window where should_flush_tlb() sends an IPI.
+[Why]
+Defined value of dmub AUX reply command field get updated but didn't
+adjust dm receiving side accordingly.
 
-Long Version:
+[How]
+Check the received reply command value to see if it's updated version
+or not. Adjust it if necessary.
 
-=== History ===
-
-There were a few things leading up to this.
-
-First, updating mm_cpumask() was observed to be too expensive, so it was
-made lazier.  But being lazy caused too many unnecessary IPIs to CPUs
-due to the now-lazy mm_cpumask().  So code was added to cull
-mm_cpumask() periodically[2].  But that culling was a bit too aggressive
-and skipped sending TLB flushes to CPUs that need them.  So here we are
-again.
-
-=== Problem ===
-
-The too-aggressive code in should_flush_tlb() strikes in this window:
-
-	// Turn on IPIs for this CPU/mm combination, but only
-	// if should_flush_tlb() agrees:
-	cpumask_set_cpu(cpu, mm_cpumask(next));
-
-	next_tlb_gen = atomic64_read(&next->context.tlb_gen);
-	choose_new_asid(next, next_tlb_gen, &new_asid, &need_flush);
-	load_new_mm_cr3(need_flush);
-	// ^ After 'need_flush' is set to false, IPIs *MUST*
-	// be sent to this CPU and not be ignored.
-
-        this_cpu_write(cpu_tlbstate.loaded_mm, next);
-	// ^ Not until this point does should_flush_tlb()
-	// become true!
-
-should_flush_tlb() will suppress TLB flushes between load_new_mm_cr3()
-and writing to 'loaded_mm', which is a window where they should not be
-suppressed.  Whoops.
-
-=== Solution ===
-
-Thankfully, the fuzzy "just about to write CR3" window is already marked
-with loaded_mm==LOADED_MM_SWITCHING.  Simply checking for that state in
-should_flush_tlb() is sufficient to ensure that the CPU is targeted with
-an IPI.
-
-This will cause more TLB flush IPIs.  But the window is relatively small
-and I do not expect this to cause any kind of measurable performance
-impact.
-
-Update the comment where LOADED_MM_SWITCHING is written since it grew
-yet another user.
-
-Peter Z also raised a concern that should_flush_tlb() might not observe
-'loaded_mm' and 'is_lazy' in the same order that switch_mm_irqs_off()
-writes them.  Add a barrier to ensure that they are observed in the
-order they are written.
-
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Acked-by: Rik van Riel <riel@surriel.com>
-Link: https://lore.kernel.org/oe-lkp/202411282207.6bd28eae-lkp@intel.com/ [1]
-Fixes: 6db2526c1d69 ("x86/mm/tlb: Only trim the mm_cpumask once a second") [2]
-Reported-by: Stephen Dolan <sdolan@janestreet.com>
+Fixes: ead08b95fa50 ("drm/amd/display: Fix race condition in DPIA AUX transfer")
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Ray Wu <ray.wu@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit d5c9ade755a9afa210840708a12a8f44c0d532f4)
 Cc: stable@vger.kernel.org
-Acked-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/tlb.c |   23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/x86/mm/tlb.c
-+++ b/arch/x86/mm/tlb.c
-@@ -617,7 +617,11 @@ void switch_mm_irqs_off(struct mm_struct
- 
- 		choose_new_asid(next, next_tlb_gen, &new_asid, &need_flush);
- 
--		/* Let nmi_uaccess_okay() know that we're changing CR3. */
-+		/*
-+		 * Indicate that CR3 is about to change. nmi_uaccess_okay()
-+		 * and others are sensitive to the window where mm_cpumask(),
-+		 * CR3 and cpu_tlbstate.loaded_mm are not all in sync.
-+ 		 */
- 		this_cpu_write(cpu_tlbstate.loaded_mm, LOADED_MM_SWITCHING);
- 		barrier();
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -10702,8 +10702,11 @@ int amdgpu_dm_process_dmub_aux_transfer_
+ 		goto out;
  	}
-@@ -880,8 +884,16 @@ done:
  
- static bool should_flush_tlb(int cpu, void *data)
- {
-+	struct mm_struct *loaded_mm = per_cpu(cpu_tlbstate.loaded_mm, cpu);
- 	struct flush_tlb_info *info = data;
++	payload->reply[0] = adev->dm.dmub_notify->aux_reply.command & 0xF;
++	if (adev->dm.dmub_notify->aux_reply.command & 0xF0)
++		/* The reply is stored in the top nibble of the command. */
++		payload->reply[0] = (adev->dm.dmub_notify->aux_reply.command >> 4) & 0xF;
  
-+	/*
-+	 * Order the 'loaded_mm' and 'is_lazy' against their
-+	 * write ordering in switch_mm_irqs_off(). Ensure
-+	 * 'is_lazy' is at least as new as 'loaded_mm'.
-+	 */
-+	smp_rmb();
-+
- 	/* Lazy TLB will get flushed at the next context switch. */
- 	if (per_cpu(cpu_tlbstate_shared.is_lazy, cpu))
- 		return false;
-@@ -890,8 +902,15 @@ static bool should_flush_tlb(int cpu, vo
- 	if (!info->mm)
- 		return true;
+-	payload->reply[0] = adev->dm.dmub_notify->aux_reply.command;
+ 	if (!payload->write && p_notify->aux_reply.length &&
+ 			(payload->reply[0] == AUX_TRANSACTION_REPLY_AUX_ACK)) {
  
-+	/*
-+	 * While switching, the remote CPU could have state from
-+	 * either the prev or next mm. Assume the worst and flush.
-+	 */
-+	if (loaded_mm == LOADED_MM_SWITCHING)
-+		return true;
-+
- 	/* The target mm is loaded, and the CPU is not lazy. */
--	if (per_cpu(cpu_tlbstate.loaded_mm, cpu) == info->mm)
-+	if (loaded_mm == info->mm)
- 		return true;
- 
- 	/* In cpumask, but not the loaded mm? Periodically remove by flushing. */
 
 
