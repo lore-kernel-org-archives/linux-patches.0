@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F8929B231;
-	Mon, 12 May 2025 18:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14531297134;
+	Mon, 12 May 2025 18:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073559; cv=none; b=D/g6essLA8U2cvquoxNZ9WDJTK1gCVQ3FTmaEQUvXbeuzKOk2RihlC7ihboDtsBKh6nMxhFwt0+l6+4MTzmLGVthuDYRhaGwEvxSkK9jP/A+FzA6ggwdjLr1E5FJK0V2xGyB40s5lVZZwEm0q32DFpTqB0NrANLtcj4ecV5KdWA=
+	t=1747073562; cv=none; b=t/Tx7MU0cVnpZgln8wYmsjj4GNNWQTEJcO5MYyOp4XEHpcUD6DA5buUL4meYEmR0RZumYAwVcb73Ufa5/z5KZ+/UneVzxGF+JFHYjQZ5qKMO9NkjBOo0Ye27IPgti4pT3/IeXCLSpy1/Enn92vZ6LRmjeR//GbRSp5fzF1sf8xY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073559; c=relaxed/simple;
-	bh=afG8tlM186MFOAFOmzSJHgot7Nehi2KluHpZG6BH8kE=;
+	s=arc-20240116; t=1747073562; c=relaxed/simple;
+	bh=ckVZvRquWpr0Y6iTfDq8Zg2eNItuXunFEx6/JQKQK+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uKNVLV5ATx0furp7HizFAmSE89R8DsT7YsrI3xIrlm0rHRhfvB7vAniUrNSTC1vD/IdcDrkWGlSd9Kk00aqsiG9bSRQe3DdlEJz5zJHaPAXYGm9gSLA2gYNRjV9QXkglKu+UP6LO5s27eySZzfxeYvYIY2lUlG7DF9I0aOe9S2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dOaBM42p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S2KesvfxQYLZxLpCh/CZ6joR/DODH/h2dkuVvYBFvJkvpk7v7/36cDuZbBj391nGCyeVzdnyJe2aYP2iYMMmdqxjFjmzGUBV1QKyV+JG3xVqqlsMAYb3aUREISawwTc1op9PMdpghcz7EGlV/msLF408uudaDmxrphhPPPlygzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZQ4TZn1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dOaBM42p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641F2C4CEE7;
-	Mon, 12 May 2025 18:12:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZQ4TZn1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E713C4CEE7;
+	Mon, 12 May 2025 18:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073558;
-	bh=afG8tlM186MFOAFOmzSJHgot7Nehi2KluHpZG6BH8kE=;
+	s=korg; t=1747073561;
+	bh=ckVZvRquWpr0Y6iTfDq8Zg2eNItuXunFEx6/JQKQK+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dOaBM42pxfHXM2MGNDzjY2clbvcRH//hD16cYH3eHhZT3OpsBs81BTclFKm0XeGyJ
-	 xnFIqkGdAkO8VM3MTJlh/JyFgfyT3cEcxGyYzvIo0+3v5q9pOd2AOUlHyvlebDiVnZ
-	 JAG6UU7Bl8C2lo+sCilyTZ6CR3cFynbAGfFAZgKs=
+	b=HZQ4TZn1IHfwE7zLWo6VDnVe6iYe56KVaZDJfqLzSEmYYHffr3ev4Li6ihnm6pEXf
+	 hyNlnPzXBP1lMIfr4cEmB/uQiu+QgksDWeberaFPowwrJ/7KMza5xfvRwffTEDHUFm
+	 wKSXqHgVdeDghVV9ioCjApIcUwxA9i8Nsqzd4JbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Crivellari <marco.crivellari@suse.com>,
 	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 085/113] MIPS: Move r4k_wait() to .cpuidle.text section
-Date: Mon, 12 May 2025 19:46:14 +0200
-Message-ID: <20250512172031.143637157@linuxfoundation.org>
+Subject: [PATCH 6.6 086/113] MIPS: Fix MAX_REG_OFFSET
+Date: Mon, 12 May 2025 19:46:15 +0200
+Message-ID: <20250512172031.183836745@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172027.691520737@linuxfoundation.org>
 References: <20250512172027.691520737@linuxfoundation.org>
@@ -53,35 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Crivellari <marco.crivellari@suse.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit b713f27e32d87c35737ec942dd6f5ed6b7475f48 ]
+[ Upstream commit c44572e0cc13c9afff83fd333135a0aa9b27ba26 ]
 
-Fix missing .cpuidle.text section assignment for r4k_wait() to correct
-backtracing with nmi_backtrace().
+Fix MAX_REG_OFFSET to point to the last register in 'pt_regs' and not to
+the marker itself, which could allow regs_get_register() to return an
+invalid offset.
 
-Fixes: 97c8580e85cf ("MIPS: Annotate cpu_wait implementations with __cpuidle")
-Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Acked-by: Frederic Weisbecker <frederic@kernel.org>
+Fixes: 40e084a506eb ("MIPS: Add uprobes support.")
+Suggested-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/kernel/genex.S | 1 +
- 1 file changed, 1 insertion(+)
+ arch/mips/include/asm/ptrace.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/mips/kernel/genex.S b/arch/mips/kernel/genex.S
-index 488275e4566d4..f4cf3fcd337e1 100644
---- a/arch/mips/kernel/genex.S
-+++ b/arch/mips/kernel/genex.S
-@@ -104,6 +104,7 @@ handle_vcei:
+diff --git a/arch/mips/include/asm/ptrace.h b/arch/mips/include/asm/ptrace.h
+index 4a2b40ce39e09..841612913f0d1 100644
+--- a/arch/mips/include/asm/ptrace.h
++++ b/arch/mips/include/asm/ptrace.h
+@@ -65,7 +65,8 @@ static inline void instruction_pointer_set(struct pt_regs *regs,
  
- 	__FINIT
+ /* Query offset/name of register from its name/offset */
+ extern int regs_query_register_offset(const char *name);
+-#define MAX_REG_OFFSET (offsetof(struct pt_regs, __last))
++#define MAX_REG_OFFSET \
++	(offsetof(struct pt_regs, __last) - sizeof(unsigned long))
  
-+	.section .cpuidle.text,"ax"
- 	/* Align to 32 bytes for the maximum idle interrupt region size. */
- 	.align	5
- LEAF(r4k_wait)
+ /**
+  * regs_get_register() - get register value from its offset
 -- 
 2.39.5
 
