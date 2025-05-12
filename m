@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487B82528E6;
-	Mon, 12 May 2025 17:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8732A2528FC;
+	Mon, 12 May 2025 17:49:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072183; cv=none; b=Ps4kP4yLCI3bvfUMwIkuRt4GnnUgZ6NKY6HI06IhSbvFYT2f8UrZNe1OHeklzaqnjNguLGdhbc12JyVBDKm7p2fDjumCyd19Trj3Z74haG32a1cyjRYe0mjEgjrJ2M161LmKH+W40AcHb+th7cw4gXQORaDVEmbwxOS/ecEwgvA=
+	t=1747072185; cv=none; b=MNZ0MNrgu34Q35P959IiXo89df09N19qpZ9nwRMZPDqHUpvn9n9jAHBCj8j5KoL0gUAjeLY75IEk9u+iImDp0cat/lQDo5s9mM4eNzh886begV2oioPG1dvDWi6g822m2SZSBxOW6oh4S2sdNV/2eOENxjv4f4XXEfUnOixNO88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072183; c=relaxed/simple;
-	bh=bMiZTJcTwGXm4DcarHt5kVT8oGwKW4FaJAwtW1J51ww=;
+	s=arc-20240116; t=1747072185; c=relaxed/simple;
+	bh=kBVE9deD4RRDcvzXyUQrvatENJTEFfvjLjyint973ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZU8E4/1nqLKUAquwvl6z83Gr1Zd6aYBuuvJrx6Fi3OmB1Dchp1UXWE8NrhXQBimpGD/WqGXceBMe03cgAYE9OCMGKAjsQeB9T5/gxP2Q9gbK8OmhJWUV/vf3HiJkV84OXIBPf00oTC60vQrXuJK8VdyYjaElX+dnCg5jqTIY6rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFAzTwLh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IW+avCNjC6rGgl3dCqJz9q0yFv9rsJ8rbB7x0C0JpnRIxNO3cLFKrjN07E21zW5Zhm/wX6I3bQedUoDPOrds8UQ/uSim/DP00Ti3/SAOqIvFbV4DvGe3kJgvLj3Z+pP+U9PSsoq8T1b4M0oEeV3jmjocIQP1lx6kW02ZiAZxJlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kxuuLWAo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFAzTwLh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22AB0C4CEE7;
-	Mon, 12 May 2025 17:49:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxuuLWAo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A03AC4CEE7;
+	Mon, 12 May 2025 17:49:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072182;
-	bh=bMiZTJcTwGXm4DcarHt5kVT8oGwKW4FaJAwtW1J51ww=;
+	s=korg; t=1747072185;
+	bh=kBVE9deD4RRDcvzXyUQrvatENJTEFfvjLjyint973ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rFAzTwLhvaNe5GwK3jbuuJ6RJnZNDF5YyQy6UKIHev4ob9yX5+2RPK3qaHM5ow3sq
-	 lNvlriABvnX3zrHI453uUz5FqTBLQIdC7AE3nOZuPkQ2sgdeLf8gi/mmqlrqFxaz1x
-	 YPiha3X9XYBYqHkFVDoA5fVFMFiQpcKVcPibMCf8=
+	b=kxuuLWAoGoVoOnkxTR5W+tKU60ctPtzsSZonjXuB7/0J1mbiPUudNPTekzLR2F0I4
+	 tLFn4Bkiln5vd5iPW6GgC93PliGPSU1+5buI917b1Z6W2BcMiQ3p3P6gn1ciBEu+mz
+	 3UZ9kq7mMw1e1py1LszKuoaweUcViB4va/XUgEUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Shichangkuo <shi.changkuo@h3c.com>,
-	Murad Masimov <m.masimov@mt-integration.ru>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Joel Becker <jlbec@evilplan.org>,
-	Jun Piao <piaojun@huawei.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.14 133/197] ocfs2: stop quota recovery before disabling quotas
-Date: Mon, 12 May 2025 19:39:43 +0200
-Message-ID: <20250512172049.807785842@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Prashanth K <prashanth.k@oss.qualcomm.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.14 134/197] usb: dwc3: gadget: Make gadget_wakeup asynchronous
+Date: Mon, 12 May 2025 19:39:44 +0200
+Message-ID: <20250512172049.847969510@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -59,171 +51,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Prashanth K <prashanth.k@oss.qualcomm.com>
 
-commit fcaf3b2683b05a9684acdebda706a12025a6927a upstream.
+commit 2372f1caeca433c4c01c2482f73fbe057f5168ce upstream.
 
-Currently quota recovery is synchronized with unmount using sb->s_umount
-semaphore.  That is however prone to deadlocks because
-flush_workqueue(osb->ocfs2_wq) called from umount code can wait for quota
-recovery to complete while ocfs2_finish_quota_recovery() waits for
-sb->s_umount semaphore.
+Currently gadget_wakeup() waits for U0 synchronously if it was
+called from func_wakeup(), this is because we need to send the
+function wakeup command soon after the link is active. And the
+call is made synchronous by polling DSTS continuosly for 20000
+times in __dwc3_gadget_wakeup(). But it observed that sometimes
+the link is not active even after polling 20K times, leading to
+remote wakeup failures. Adding a small delay between each poll
+helps, but that won't guarantee resolution in future. Hence make
+the gadget_wakeup completely asynchronous.
 
-Grabbing of sb->s_umount semaphore in ocfs2_finish_quota_recovery() is
-only needed to protect that function from disabling of quotas from
-ocfs2_dismount_volume().  Handle this problem by disabling quota recovery
-early during unmount in ocfs2_dismount_volume() instead so that we can
-drop acquisition of sb->s_umount from ocfs2_finish_quota_recovery().
+Since multiple interfaces can issue a function wakeup at once,
+add a new variable wakeup_pending_funcs which will indicate the
+functions that has issued func_wakup, this is represented in a
+bitmap format. If the link is in U3, dwc3_gadget_func_wakeup()
+will set the bit corresponding to interface_id and bail out.
+Once link comes back to U0, linksts_change irq is triggered,
+where the function wakeup command is sent based on bitmap.
 
-Link: https://lkml.kernel.org/r/20250424134515.18933-6-jack@suse.cz
-Fixes: 5f530de63cfc ("ocfs2: Use s_umount for quota recovery protection")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reported-by: Shichangkuo <shi.changkuo@h3c.com>
-Reported-by: Murad Masimov <m.masimov@mt-integration.ru>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Tested-by: Heming Zhao <heming.zhao@suse.com>
-Acked-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable <stable@kernel.org>
+Fixes: 92c08a84b53e ("usb: dwc3: Add function suspend and function wakeup support")
+Signed-off-by: Prashanth K <prashanth.k@oss.qualcomm.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20250422103231.1954387-4-prashanth.k@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/journal.c     |   20 ++++++++++++++++++--
- fs/ocfs2/journal.h     |    1 +
- fs/ocfs2/ocfs2.h       |    6 ++++++
- fs/ocfs2/quota_local.c |    9 ++-------
- fs/ocfs2/super.c       |    3 +++
- 5 files changed, 30 insertions(+), 9 deletions(-)
+ drivers/usb/dwc3/core.h   |    4 +++
+ drivers/usb/dwc3/gadget.c |   60 +++++++++++++++++-----------------------------
+ 2 files changed, 27 insertions(+), 37 deletions(-)
 
---- a/fs/ocfs2/journal.c
-+++ b/fs/ocfs2/journal.c
-@@ -225,6 +225,11 @@ out_lock:
- 		flush_workqueue(osb->ocfs2_wq);
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -1164,6 +1164,9 @@ struct dwc3_scratchpad_array {
+  * @gsbuscfg0_reqinfo: store GSBUSCFG0.DATRDREQINFO, DESRDREQINFO,
+  *		       DATWRREQINFO, and DESWRREQINFO value passed from
+  *		       glue driver.
++ * @wakeup_pending_funcs: Indicates whether any interface has requested for
++ *			 function wakeup in bitmap format where bit position
++ *			 represents interface_id.
+  */
+ struct dwc3 {
+ 	struct work_struct	drd_work;
+@@ -1394,6 +1397,7 @@ struct dwc3 {
+ 	int			num_ep_resized;
+ 	struct dentry		*debug_root;
+ 	u32			gsbuscfg0_reqinfo;
++	u32			wakeup_pending_funcs;
+ };
+ 
+ #define INCRX_BURST_MODE 0
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -276,8 +276,6 @@ int dwc3_send_gadget_generic_command(str
+ 	return ret;
  }
  
-+void ocfs2_recovery_disable_quota(struct ocfs2_super *osb)
-+{
-+	ocfs2_recovery_disable(osb, OCFS2_REC_QUOTA_WANT_DISABLE);
-+}
-+
- void ocfs2_recovery_exit(struct ocfs2_super *osb)
+-static int __dwc3_gadget_wakeup(struct dwc3 *dwc, bool async);
+-
+ /**
+  * dwc3_send_gadget_ep_cmd - issue an endpoint command
+  * @dep: the endpoint to which the command is going to be issued
+@@ -2359,10 +2357,8 @@ static int dwc3_gadget_get_frame(struct
+ 	return __dwc3_gadget_get_frame(dwc);
+ }
+ 
+-static int __dwc3_gadget_wakeup(struct dwc3 *dwc, bool async)
++static int __dwc3_gadget_wakeup(struct dwc3 *dwc)
  {
- 	struct ocfs2_recovery_map *rm;
-@@ -1489,6 +1494,18 @@ static int __ocfs2_recovery_thread(void
- 		}
+-	int			retries;
+-
+ 	int			ret;
+ 	u32			reg;
+ 
+@@ -2390,8 +2386,7 @@ static int __dwc3_gadget_wakeup(struct d
+ 		return -EINVAL;
  	}
- restart:
-+	if (quota_enabled) {
-+		mutex_lock(&osb->recovery_lock);
-+		/* Confirm that recovery thread will no longer recover quotas */
-+		if (osb->recovery_state == OCFS2_REC_QUOTA_WANT_DISABLE) {
-+			osb->recovery_state = OCFS2_REC_QUOTA_DISABLED;
-+			wake_up(&osb->recovery_event);
-+		}
-+		if (osb->recovery_state >= OCFS2_REC_QUOTA_DISABLED)
-+			quota_enabled = 0;
-+		mutex_unlock(&osb->recovery_lock);
-+	}
-+
- 	status = ocfs2_super_lock(osb, 1);
- 	if (status < 0) {
- 		mlog_errno(status);
-@@ -1592,8 +1609,7 @@ bail:
  
- 	mutex_unlock(&osb->recovery_lock);
+-	if (async)
+-		dwc3_gadget_enable_linksts_evts(dwc, true);
++	dwc3_gadget_enable_linksts_evts(dwc, true);
  
--	if (quota_enabled)
--		kfree(rm_quota);
-+	kfree(rm_quota);
- 
- 	return status;
- }
---- a/fs/ocfs2/journal.h
-+++ b/fs/ocfs2/journal.h
-@@ -148,6 +148,7 @@ void ocfs2_wait_for_recovery(struct ocfs
- 
- int ocfs2_recovery_init(struct ocfs2_super *osb);
- void ocfs2_recovery_exit(struct ocfs2_super *osb);
-+void ocfs2_recovery_disable_quota(struct ocfs2_super *osb);
- 
- int ocfs2_compute_replay_slots(struct ocfs2_super *osb);
- void ocfs2_free_replay_slots(struct ocfs2_super *osb);
---- a/fs/ocfs2/ocfs2.h
-+++ b/fs/ocfs2/ocfs2.h
-@@ -310,6 +310,12 @@ void ocfs2_initialize_journal_triggers(s
- 
- enum ocfs2_recovery_state {
- 	OCFS2_REC_ENABLED = 0,
-+	OCFS2_REC_QUOTA_WANT_DISABLE,
-+	/*
-+	 * Must be OCFS2_REC_QUOTA_WANT_DISABLE + 1 for
-+	 * ocfs2_recovery_disable_quota() to work.
-+	 */
-+	OCFS2_REC_QUOTA_DISABLED,
- 	OCFS2_REC_WANT_DISABLE,
- 	/*
- 	 * Must be OCFS2_REC_WANT_DISABLE + 1 for ocfs2_recovery_exit() to work
---- a/fs/ocfs2/quota_local.c
-+++ b/fs/ocfs2/quota_local.c
-@@ -453,8 +453,7 @@ out:
- 
- /* Sync changes in local quota file into global quota file and
-  * reinitialize local quota file.
-- * The function expects local quota file to be already locked and
-- * s_umount locked in shared mode. */
-+ * The function expects local quota file to be already locked. */
- static int ocfs2_recover_local_quota_file(struct inode *lqinode,
- 					  int type,
- 					  struct ocfs2_quota_recovery *rec)
-@@ -588,7 +587,6 @@ int ocfs2_finish_quota_recovery(struct o
- {
- 	unsigned int ino[OCFS2_MAXQUOTAS] = { LOCAL_USER_QUOTA_SYSTEM_INODE,
- 					      LOCAL_GROUP_QUOTA_SYSTEM_INODE };
--	struct super_block *sb = osb->sb;
- 	struct ocfs2_local_disk_dqinfo *ldinfo;
- 	struct buffer_head *bh;
- 	handle_t *handle;
-@@ -600,7 +598,6 @@ int ocfs2_finish_quota_recovery(struct o
- 	printk(KERN_NOTICE "ocfs2: Finishing quota recovery on device (%s) for "
- 	       "slot %u\n", osb->dev_str, slot_num);
- 
--	down_read(&sb->s_umount);
- 	for (type = 0; type < OCFS2_MAXQUOTAS; type++) {
- 		if (list_empty(&(rec->r_list[type])))
- 			continue;
-@@ -677,7 +674,6 @@ out_put:
- 			break;
- 	}
- out:
--	up_read(&sb->s_umount);
- 	kfree(rec);
- 	return status;
- }
-@@ -843,8 +839,7 @@ static int ocfs2_local_free_info(struct
- 	ocfs2_release_local_quota_bitmaps(&oinfo->dqi_chunk);
+ 	ret = dwc3_gadget_set_link_state(dwc, DWC3_LINK_STATE_RECOV);
+ 	if (ret < 0) {
+@@ -2410,27 +2405,8 @@ static int __dwc3_gadget_wakeup(struct d
  
  	/*
--	 * s_umount held in exclusive mode protects us against racing with
--	 * recovery thread...
-+	 * ocfs2_dismount_volume() has already aborted quota recovery...
+ 	 * Since link status change events are enabled we will receive
+-	 * an U0 event when wakeup is successful. So bail out.
++	 * an U0 event when wakeup is successful.
  	 */
- 	if (oinfo->dqi_rec) {
- 		ocfs2_free_quota_recovery(oinfo->dqi_rec);
---- a/fs/ocfs2/super.c
-+++ b/fs/ocfs2/super.c
-@@ -1812,6 +1812,9 @@ static void ocfs2_dismount_volume(struct
- 	/* Orphan scan should be stopped as early as possible */
- 	ocfs2_orphan_scan_stop(osb);
+-	if (async)
+-		return 0;
+-
+-	/* poll until Link State changes to ON */
+-	retries = 20000;
+-
+-	while (retries--) {
+-		reg = dwc3_readl(dwc->regs, DWC3_DSTS);
+-
+-		/* in HS, means ON */
+-		if (DWC3_DSTS_USBLNKST(reg) == DWC3_LINK_STATE_U0)
+-			break;
+-	}
+-
+-	if (DWC3_DSTS_USBLNKST(reg) != DWC3_LINK_STATE_U0) {
+-		dev_err(dwc->dev, "failed to send remote wakeup\n");
+-		return -EINVAL;
+-	}
+-
+ 	return 0;
+ }
  
-+	/* Stop quota recovery so that we can disable quotas */
-+	ocfs2_recovery_disable_quota(osb);
+@@ -2451,7 +2427,7 @@ static int dwc3_gadget_wakeup(struct usb
+ 		spin_unlock_irqrestore(&dwc->lock, flags);
+ 		return -EINVAL;
+ 	}
+-	ret = __dwc3_gadget_wakeup(dwc, true);
++	ret = __dwc3_gadget_wakeup(dwc);
+ 
+ 	spin_unlock_irqrestore(&dwc->lock, flags);
+ 
+@@ -2479,14 +2455,10 @@ static int dwc3_gadget_func_wakeup(struc
+ 	 */
+ 	link_state = dwc3_gadget_get_link_state(dwc);
+ 	if (link_state == DWC3_LINK_STATE_U3) {
+-		ret = __dwc3_gadget_wakeup(dwc, false);
+-		if (ret) {
+-			spin_unlock_irqrestore(&dwc->lock, flags);
+-			return -EINVAL;
+-		}
+-		dwc3_resume_gadget(dwc);
+-		dwc->suspended = false;
+-		dwc->link_state = DWC3_LINK_STATE_U0;
++		dwc->wakeup_pending_funcs |= BIT(intf_id);
++		ret = __dwc3_gadget_wakeup(dwc);
++		spin_unlock_irqrestore(&dwc->lock, flags);
++		return ret;
+ 	}
+ 
+ 	ret = dwc3_send_gadget_generic_command(dwc, DWC3_DGCMD_DEV_NOTIFICATION,
+@@ -4314,6 +4286,8 @@ static void dwc3_gadget_linksts_change_i
+ {
+ 	enum dwc3_link_state	next = evtinfo & DWC3_LINK_STATE_MASK;
+ 	unsigned int		pwropt;
++	int			ret;
++	int			intf_id;
+ 
+ 	/*
+ 	 * WORKAROUND: DWC3 < 2.50a have an issue when configured without
+@@ -4389,7 +4363,7 @@ static void dwc3_gadget_linksts_change_i
+ 
+ 	switch (next) {
+ 	case DWC3_LINK_STATE_U0:
+-		if (dwc->gadget->wakeup_armed) {
++		if (dwc->gadget->wakeup_armed || dwc->wakeup_pending_funcs) {
+ 			dwc3_gadget_enable_linksts_evts(dwc, false);
+ 			dwc3_resume_gadget(dwc);
+ 			dwc->suspended = false;
+@@ -4412,6 +4386,18 @@ static void dwc3_gadget_linksts_change_i
+ 	}
+ 
+ 	dwc->link_state = next;
 +
- 	ocfs2_disable_quotas(osb);
++	/* Proceed with func wakeup if any interfaces that has requested */
++	while (dwc->wakeup_pending_funcs && (next == DWC3_LINK_STATE_U0)) {
++		intf_id = ffs(dwc->wakeup_pending_funcs) - 1;
++		ret = dwc3_send_gadget_generic_command(dwc, DWC3_DGCMD_DEV_NOTIFICATION,
++						       DWC3_DGCMDPAR_DN_FUNC_WAKE |
++						       DWC3_DGCMDPAR_INTF_SEL(intf_id));
++		if (ret)
++			dev_err(dwc->dev, "Failed to send DN wake for intf %d\n", intf_id);
++
++		dwc->wakeup_pending_funcs &= ~BIT(intf_id);
++	}
+ }
  
- 	/* All dquots should be freed by now */
+ static void dwc3_gadget_suspend_interrupt(struct dwc3 *dwc,
 
 
