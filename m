@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116B5295DA6;
-	Mon, 12 May 2025 17:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9F4295DA6;
+	Mon, 12 May 2025 17:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071949; cv=none; b=E0Uomu4miocHGD+E3CnR5QAXx6rBk2gZQMdClCKhK37eFWbKlHey/EdBiNcJFjsny8bPDeKVFIJNAzh7F7u348TXMcmCNjrfhd+8rFv9L8Xaoy9EAU5rkf52nsF1HMDpg97H8pYW1N3gzKHWwKRCqWKP7hmti8qSOohNPRiEv/8=
+	t=1747071951; cv=none; b=sltKqZrIS0W4MyiMYrhKfXh9puHDAGKpsNsz8d6Kq8BjnYb9Nwy2J5J20PZ7ZoouUVXVwcYLY4Dp0fZQYEPBGRD3atKY9oz04Uavn9lGYP6mJrP283VhFt6QHZK0pCR/tw/B8l5PO7zq+FIsvV/6eypI8PiCg4Zld7OoN0Jo1Y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071949; c=relaxed/simple;
-	bh=gc6C0EuBw+0/Mcno1JOVvoUkSadhUc0vewS6bQwUEf0=;
+	s=arc-20240116; t=1747071951; c=relaxed/simple;
+	bh=NZHbX8RV4EYy4y4WjuobwxpeCfy6zOzCWrHBmr8Rnn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BiQC2eE7OJ9aUX1h8EDfQ2nUowYfX2GDoBhozUrFYpbP7J2OpSallYw+fSuU9zoaMyM2Gjo4nOY4PvoU52l6M1zgNJLQjEGMd5DRZ9woTAf/7x92XvMo5vWdpDk0X3+VPGJygPIlG9ExxN1WFeUUn3IvvIe02+nkcCKVZtYhiBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wW1+GqlT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QAyeBbulzdjZc7JO0BRacWkFjVZ7H4GlH3Iy1VsgbSBrGje/s0aoXeC9kBvXju2xS8OLWwAPIJ6nI+t76vf5wsExHe/cWVF33OWO8FdRiuzVO/dECRrlAkffC+6mfsL6X4bBLBXzSoPvTUHxs+5PZVQPiODq6Rrd6rlqY+NS23c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJBdnl2U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wW1+GqlT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953F2C4CEE7;
-	Mon, 12 May 2025 17:45:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJBdnl2U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F3FC4CEE7;
+	Mon, 12 May 2025 17:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071948;
-	bh=gc6C0EuBw+0/Mcno1JOVvoUkSadhUc0vewS6bQwUEf0=;
+	s=korg; t=1747071951;
+	bh=NZHbX8RV4EYy4y4WjuobwxpeCfy6zOzCWrHBmr8Rnn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wW1+GqlTsghTEq95aHFOpId5OxAEAkgVW/ISWRt/Epjk3DBzc4vmYaUFx4BQRLwqg
-	 CvlNgHgJXhPZQRDPhwzrEWXJEVTRPO94xjpUU09d1pmcJlzc5Nqf7nTLchT3M5IPTm
-	 p7KUJnzZ1yZR96BkFJGvEVxmkwGPUPyOiQaQ6w28=
+	b=nJBdnl2UGu4nssgi97RebTo/j7AfDNyBj5DjH2Cib/7QfsYjf63m0x+sI/PFKH9cM
+	 J07oyezF8dAEHTmlqVxqG5jTuczMPiPWWxbAVUFUCBAKGqLXM7+JIEdAUuyYcryQLa
+	 854k8ArJxXj2AnSy8tX1yKWfzANDVDCJbObJUIgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Lechner <dlechner@baylibre.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Angelo Dureghello <adureghello@baylibre.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.14 087/197] iio: adc: ad7266: Fix potential timestamp alignment issue.
-Date: Mon, 12 May 2025 19:38:57 +0200
-Message-ID: <20250512172047.918418046@linuxfoundation.org>
+Subject: [PATCH 6.14 088/197] iio: adc: ad7606: fix serial register access
+Date: Mon, 12 May 2025 19:38:58 +0200
+Message-ID: <20250512172047.957303894@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -46,44 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Angelo Dureghello <adureghello@baylibre.com>
 
-commit 52d349884738c346961e153f195f4c7fe186fcf4 upstream.
+commit f083f8a21cc785ebe3a33f756a3fa3660611f8db upstream.
 
-On architectures where an s64 is only 32-bit aligned insufficient padding
-would be left between the earlier elements and the timestamp. Use
-aligned_s64 to enforce the correct placement and ensure the storage is
-large enough.
+Fix register read/write routine as per datasheet.
 
-Fixes: 54e018da3141 ("iio:ad7266: Mark transfer buffer as __be16") # aligned_s64 is much newer.
-Reported-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+When reading multiple consecutive registers, only the first one is read
+properly. This is due to missing chip select deassert and assert again
+between first and second 16bit transfer, as shown in the datasheet
+AD7606C-16, rev 0, figure 110.
+
+Fixes: f2a22e1e172f ("iio: adc: ad7606: Add support for software mode for ad7616")
 Reviewed-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250413103443.2420727-2-jic23@kernel.org
+Signed-off-by: Angelo Dureghello <adureghello@baylibre.com>
+Link: https://patch.msgid.link/20250418-wip-bl-ad7606-fix-reg-access-v3-1-d5eeb440c738@baylibre.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7266.c |    2 +-
+ drivers/iio/adc/ad7606_spi.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ad7266.c
-+++ b/drivers/iio/adc/ad7266.c
-@@ -45,7 +45,7 @@ struct ad7266_state {
- 	 */
- 	struct {
- 		__be16 sample[2];
--		s64 timestamp;
-+		aligned_s64 timestamp;
- 	} data __aligned(IIO_DMA_MINALIGN);
- };
- 
+--- a/drivers/iio/adc/ad7606_spi.c
++++ b/drivers/iio/adc/ad7606_spi.c
+@@ -165,7 +165,7 @@ static int ad7606_spi_reg_read(struct ad
+ 		{
+ 			.tx_buf = &st->d16[0],
+ 			.len = 2,
+-			.cs_change = 0,
++			.cs_change = 1,
+ 		}, {
+ 			.rx_buf = &st->d16[1],
+ 			.len = 2,
 
 
