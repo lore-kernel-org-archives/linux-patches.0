@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82FA296D1D;
-	Mon, 12 May 2025 17:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC97295DA6;
+	Mon, 12 May 2025 17:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071891; cv=none; b=gRoUdgjr0nenPVuBA6SH2tAzwAra9j7QXQ4e6q85xWUpgoTgF74ZFcHw7kcZQ8QfPZpRqIFnhgQNnwUZ/tZTeYAmIs5saraG9vG13O1/FtuBqlo0IRFa+vNhvssOeLIy7OLRw6MMJuIVNg48smlnk1D5NwH6+DxHiFMyUoXi64k=
+	t=1747071893; cv=none; b=gYSEn/+hxnJInu/BOzm2ATPkyDwnl8QLzg5csSsS62tnvSjF1YgnXkDSF3KG6fFDglDH6Of8jBMKnwJaZIB2NL1LleaY3oJzYbq7A0hRi9/tt2zGZ5JgzOMV0iPVaCCtncCqfGNEo3vkm97yvahMdw9oXP8dQuUBrjlKvuE74hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071891; c=relaxed/simple;
-	bh=gWzUg250QMqWZeJBp1zxyOu9HVA+nxdgvZ3vHCTlGkg=;
+	s=arc-20240116; t=1747071893; c=relaxed/simple;
+	bh=sWs7NM9E+WPtbX0QpmTap3NdsTkBZp5MOM+HFNgoIgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F60S5VDngYtARgNEDNhK4R9Fx7y9mfvzNGChE9d9hul8+tM5OtQB1GEM6QIT4cRnuJafd21OLfyJqEHhL91VCKwtCKb6mU5gFYfQJ/LAtijXyO7mXPc24Pn9OK2wuSO0UUVVhfS5sYF5pTC+XAdkC1euFwgzo/Fm9vNINK43XKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wspixLJk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jRNiXrPvQVoVuVCHma8/7BV5htyC5m1zZHrvbz8Aqy1ON9xpTyEW6QpnFjJt44kxAWH9Vm2tjj6rlFOYng+uU0kZuZ4eo4Lhn927c07pUiCn9exKGBlk6oDIgI5qRhbtnwn8chZiEAXWk+wuBXbkQKUndlL7ETzJZzzeRoAePWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c3qA4YU5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wspixLJk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6CDC4CEE7;
-	Mon, 12 May 2025 17:44:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c3qA4YU5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AAABC4CEE7;
+	Mon, 12 May 2025 17:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071891;
-	bh=gWzUg250QMqWZeJBp1zxyOu9HVA+nxdgvZ3vHCTlGkg=;
+	s=korg; t=1747071893;
+	bh=sWs7NM9E+WPtbX0QpmTap3NdsTkBZp5MOM+HFNgoIgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wspixLJkNhyjErDcF42dv56jThiIhx9XGQrdagS9REoz5MLUr7waVreKmLblfBLvt
-	 L/Kq68UuxJCQTgptPvinFpvdGiLUM7eR3zbkoJgnCF7rZRLeNtJ1lLx5keQAq57KLI
-	 9xzEttYZG0U0gyBGmBGxCakvbxss92Rmx8b63SQE=
+	b=c3qA4YU5tSXSyuPCGLT7w/zYcCjuLwJPlpJMVqfqCmaK7IzaUxwoyEapgfF1dunVb
+	 2DtBRu6EmD6npjDYaMN59P2zpSWKV19tjLk13ZmwJrt5l7RcA5SkGwF5GZs5ewZnDZ
+	 8j++4UN/EYe8ABPO3D2lmg9+z0XJ1SQndSNN/ObQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 037/197] net: dsa: b53: fix flushing old pvid VLAN on pvid change
-Date: Mon, 12 May 2025 19:38:07 +0200
-Message-ID: <20250512172045.883522864@linuxfoundation.org>
+Subject: [PATCH 6.14 038/197] net: dsa: b53: fix VLAN ID for untagged vlan on bridge leave
+Date: Mon, 12 May 2025 19:38:08 +0200
+Message-ID: <20250512172045.923708793@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -54,35 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 083c6b28c0cbcd83b6af1a10f2c82937129b3438 ]
+[ Upstream commit a1c1901c5cc881425cc45992ab6c5418174e9e5a ]
 
-Presumably the intention here was to flush the VLAN of the old pvid, not
-the added VLAN again, which we already flushed before.
+The untagged default VLAN is added to the default vlan, which may be
+one, but we modify the VLAN 0 entry on bridge leave.
 
-Fixes: a2482d2ce349 ("net: dsa: b53: Plug in VLAN support")
+Fix this to use the correct VLAN entry for the default pvid.
+
+Fixes: fea83353177a ("net: dsa: b53: Fix default VLAN ID")
 Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
 Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20250429201710.330937-5-jonas.gorski@gmail.com
+Link: https://patch.msgid.link/20250429201710.330937-6-jonas.gorski@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/dsa/b53/b53_common.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index fb7560201d7a9..e75afba8b080a 100644
+index e75afba8b080a..9745713e0b10d 100644
 --- a/drivers/net/dsa/b53/b53_common.c
 +++ b/drivers/net/dsa/b53/b53_common.c
-@@ -1574,7 +1574,7 @@ int b53_vlan_add(struct dsa_switch *ds, int port,
- 	if (!dsa_is_cpu_port(ds, port) && new_pvid != old_pvid) {
- 		b53_write16(dev, B53_VLAN_PAGE, B53_VLAN_PORT_DEF_TAG(port),
- 			    new_pvid);
--		b53_fast_age_vlan(dev, vlan->vid);
-+		b53_fast_age_vlan(dev, old_pvid);
- 	}
+@@ -1986,7 +1986,7 @@ EXPORT_SYMBOL(b53_br_join);
+ void b53_br_leave(struct dsa_switch *ds, int port, struct dsa_bridge bridge)
+ {
+ 	struct b53_device *dev = ds->priv;
+-	struct b53_vlan *vl = &dev->vlans[0];
++	struct b53_vlan *vl;
+ 	s8 cpu_port = dsa_to_port(ds, port)->cpu_dp->index;
+ 	unsigned int i;
+ 	u16 pvlan, reg, pvid;
+@@ -2012,6 +2012,7 @@ void b53_br_leave(struct dsa_switch *ds, int port, struct dsa_bridge bridge)
+ 	dev->ports[port].vlan_ctl_mask = pvlan;
  
- 	return 0;
+ 	pvid = b53_default_pvid(dev);
++	vl = &dev->vlans[pvid];
+ 
+ 	/* Make this port join all VLANs without VLAN entries */
+ 	if (is58xx(dev)) {
 -- 
 2.39.5
 
