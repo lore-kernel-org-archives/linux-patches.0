@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B131252904;
-	Mon, 12 May 2025 17:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DB8254AF7;
+	Mon, 12 May 2025 17:45:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071926; cv=none; b=BvVGwZdDGT1hx5hyJAsxpaG7yJBYLVQ+mCSAyENxEZqqVpQxDlRHY0zVbFe61aAvW/4Pz0ueqpDQtG5hz+NQr6MeN03zOqvP+hD/rFlSM3rsJlaeA8mc1L5UnjdWNrt4ZZaoswkwHl7Fl0X3n94D9KIcuOzr37vUoa/akpmac98=
+	t=1747071928; cv=none; b=hQv+/Ycs5OMvXcSE6DJT6bVQunbLJUOF8lnrBrJb+1f1JvVMtI/uc2Zw+5yZ6skwCQ03aYqjDCUEVLbyNLswMtAk4EwHkmDJbJyBDs1UXxfaUNNWJXdghJ10TdewVxn5jIqTiif0zuUZdP6T2LawnKZWXF7szniNaABFDw9QUnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071926; c=relaxed/simple;
-	bh=BuPRXda+79L2yxGjdMB4eZajLlJHtJgzC6vxwZ9URyY=;
+	s=arc-20240116; t=1747071928; c=relaxed/simple;
+	bh=spRJZVCtJpkGWZnqRGV2/AmeOgjLOH4vrRtfvlMN2w0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SOwnJnuDE4vGHsOtTzWMbE2VQh3J0QofanpNNl2HnsjXyfWjhTyPy3keN55oEsQxjObai9r3+pRr9ZrM3LOLkH/Z2uHbuu+u/01Q8FjcYxRJcEkNKs/nuoIRs6PGIk9DOQdqgehAw1CmihEfHQDLiQ46jS3/vlNdrb5jK/WpXlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1oNsQUy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f9nCJ36fdpOo5aamdgO9/oVSLGzs3iLw6uxkPjIc9qztKS4e87OnKoSG6p3mT6NNRuEmIKW17M24WYlUbhJkUMbSfU7uoKzv1/NWM7zASCol7671F522XZrPvW548lY5izFUQ7T9azyrAGuQEHjdJRWnRYFUBUc5YefVFvFzIr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NcnTqs4K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1oNsQUy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4929AC4CEE7;
-	Mon, 12 May 2025 17:45:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NcnTqs4K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4CEC4CEE7;
+	Mon, 12 May 2025 17:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071925;
-	bh=BuPRXda+79L2yxGjdMB4eZajLlJHtJgzC6vxwZ9URyY=;
+	s=korg; t=1747071928;
+	bh=spRJZVCtJpkGWZnqRGV2/AmeOgjLOH4vrRtfvlMN2w0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m1oNsQUy21PSVOhRGDFvD+RXhs+tfDJL2t3lOL0IwzUzySBJklhEX4rRi2zlSzwoU
-	 /b6Hug2VQWxjxm+8DFDdoSKVPrw1SeIH5/0eio6R6Soqa7Au2+9Be1cNbL5EkVf0S6
-	 E9aoz/9YpEOQ9jh3NwAbKcvIqhbDicgSBNFTrCLA=
+	b=NcnTqs4KKW/pY9XcBNt8qobmvr8N7u7NXwavugkYcl/JsibJr3T7OnIMflm1ds1gB
+	 6298orop8UrifIk5+944+nyoWSkzejuAfy22rb5utGqvigOCGTUpBRe0PVTGpTMWAC
+	 HQXzVVJV8h2PeqkGUM8/AhwqND0+AfxO2QNzM2cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	"Nysal Jan K.A." <nysal@linux.ibm.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.14 080/197] selftests/mm: fix build break when compiling pkey_util.c
-Date: Mon, 12 May 2025 19:38:50 +0200
-Message-ID: <20250512172047.632292662@linuxfoundation.org>
+	Michael Roth <michael.roth@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.14 081/197] KVM: x86/mmu: Prevent installing hugepages when mem attributes are changing
+Date: Mon, 12 May 2025 19:38:51 +0200
+Message-ID: <20250512172047.672557340@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -52,75 +50,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Madhavan Srinivasan <maddy@linux.ibm.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 22adb528621ddc92f887882a658507fbf88a5214 upstream.
+commit 9129633d568edd36aa22bf703b12835153cec985 upstream.
 
-Commit 50910acd6f615 ("selftests/mm: use sys_pkey helpers consistently")
-added a pkey_util.c to refactor some of the protection_keys functions
-accessible by other tests.  But this broken the build in powerpc in two
-ways,
+When changing memory attributes on a subset of a potential hugepage, add
+the hugepage to the invalidation range tracking to prevent installing a
+hugepage until the attributes are fully updated.  Like the actual hugepage
+tracking updates in kvm_arch_post_set_memory_attributes(), process only
+the head and tail pages, as any potential hugepages that are entirely
+covered by the range will already be tracked.
 
-pkey-powerpc.h: In function `arch_is_powervm':
-pkey-powerpc.h:73:21: error: storage size of `buf' isn't known
-   73 |         struct stat buf;
-      |                     ^~~
-pkey-powerpc.h:75:14: error: implicit declaration of function `stat'; did you mean `strcat'? [-Wimplicit-function-declaration]
-   75 |         if ((stat("/sys/firmware/devicetree/base/ibm,partition-name", &buf) == 0) &&
-      |              ^~~~
-      |              strcat
+Note, only hugepage chunks whose current attributes are NOT mixed need to
+be added to the invalidation set, as mixed attributes already prevent
+installing a hugepage, and it's perfectly safe to install a smaller
+mapping for a gfn whose attributes aren't changing.
 
-Since pkey_util.c includes pkeys-helper.h, which in turn includes pkeys-powerpc.h,
-stat.h including is missing for "struct stat". This is fixed by adding "sys/stat.h"
-in pkeys-powerpc.h
-
-Secondly,
-
-pkey-powerpc.h:55:18: warning: format `%llx' expects argument of type `long long unsigned int', but argument 3 has type `u64' {aka `long unsigned int'} [-Wformat=]
-   55 |         dprintf4("%s() changing %016llx to %016llx\n",
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   56 |                          __func__, __read_pkey_reg(), pkey_reg);
-      |                                    ~~~~~~~~~~~~~~~~~
-      |                                    |
-      |                                    u64 {aka long unsigned int}
-pkey-helpers.h:63:32: note: in definition of macro `dprintf_level'
-   63 |                 sigsafe_printf(args);           \
-      |                                ^~~~
-
-These format specifier related warning are removed by adding
-"__SANE_USERSPACE_TYPES__" to pkeys_utils.c.
-
-Link: https://lkml.kernel.org/r/20250428131937.641989-1-nysal@linux.ibm.com
-Fixes: 50910acd6f61 ("selftests/mm: use sys_pkey helpers consistently")
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Signed-off-by: Nysal Jan K.A. <nysal@linux.ibm.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 8dd2eee9d526 ("KVM: x86/mmu: Handle page fault for private memory")
+Cc: stable@vger.kernel.org
+Reported-by: Michael Roth <michael.roth@amd.com>
+Tested-by: Michael Roth <michael.roth@amd.com>
+Link: https://lore.kernel.org/r/20250430220954.522672-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/pkey-powerpc.h |    2 ++
- tools/testing/selftests/mm/pkey_util.c    |    1 +
- 2 files changed, 3 insertions(+)
+ arch/x86/kvm/mmu/mmu.c |   69 +++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 53 insertions(+), 16 deletions(-)
 
---- a/tools/testing/selftests/mm/pkey-powerpc.h
-+++ b/tools/testing/selftests/mm/pkey-powerpc.h
-@@ -3,6 +3,8 @@
- #ifndef _PKEYS_POWERPC_H
- #define _PKEYS_POWERPC_H
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -7496,9 +7496,30 @@ void kvm_mmu_pre_destroy_vm(struct kvm *
+ }
  
-+#include <sys/stat.h>
+ #ifdef CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES
++static bool hugepage_test_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
++				int level)
++{
++	return lpage_info_slot(gfn, slot, level)->disallow_lpage & KVM_LPAGE_MIXED_FLAG;
++}
 +
- #ifndef SYS_pkey_alloc
- # define SYS_pkey_alloc		384
- # define SYS_pkey_free		385
---- a/tools/testing/selftests/mm/pkey_util.c
-+++ b/tools/testing/selftests/mm/pkey_util.c
-@@ -1,4 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0-only
-+#define __SANE_USERSPACE_TYPES__
- #include <sys/syscall.h>
- #include <unistd.h>
++static void hugepage_clear_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
++				 int level)
++{
++	lpage_info_slot(gfn, slot, level)->disallow_lpage &= ~KVM_LPAGE_MIXED_FLAG;
++}
++
++static void hugepage_set_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
++			       int level)
++{
++	lpage_info_slot(gfn, slot, level)->disallow_lpage |= KVM_LPAGE_MIXED_FLAG;
++}
++
+ bool kvm_arch_pre_set_memory_attributes(struct kvm *kvm,
+ 					struct kvm_gfn_range *range)
+ {
++	struct kvm_memory_slot *slot = range->slot;
++	int level;
++
+ 	/*
+ 	 * Zap SPTEs even if the slot can't be mapped PRIVATE.  KVM x86 only
+ 	 * supports KVM_MEMORY_ATTRIBUTE_PRIVATE, and so it *seems* like KVM
+@@ -7513,6 +7534,38 @@ bool kvm_arch_pre_set_memory_attributes(
+ 	if (WARN_ON_ONCE(!kvm_arch_has_private_mem(kvm)))
+ 		return false;
  
++	if (WARN_ON_ONCE(range->end <= range->start))
++		return false;
++
++	/*
++	 * If the head and tail pages of the range currently allow a hugepage,
++	 * i.e. reside fully in the slot and don't have mixed attributes, then
++	 * add each corresponding hugepage range to the ongoing invalidation,
++	 * e.g. to prevent KVM from creating a hugepage in response to a fault
++	 * for a gfn whose attributes aren't changing.  Note, only the range
++	 * of gfns whose attributes are being modified needs to be explicitly
++	 * unmapped, as that will unmap any existing hugepages.
++	 */
++	for (level = PG_LEVEL_2M; level <= KVM_MAX_HUGEPAGE_LEVEL; level++) {
++		gfn_t start = gfn_round_for_level(range->start, level);
++		gfn_t end = gfn_round_for_level(range->end - 1, level);
++		gfn_t nr_pages = KVM_PAGES_PER_HPAGE(level);
++
++		if ((start != range->start || start + nr_pages > range->end) &&
++		    start >= slot->base_gfn &&
++		    start + nr_pages <= slot->base_gfn + slot->npages &&
++		    !hugepage_test_mixed(slot, start, level))
++			kvm_mmu_invalidate_range_add(kvm, start, start + nr_pages);
++
++		if (end == start)
++			continue;
++
++		if ((end + nr_pages) > range->end &&
++		    (end + nr_pages) <= (slot->base_gfn + slot->npages) &&
++		    !hugepage_test_mixed(slot, end, level))
++			kvm_mmu_invalidate_range_add(kvm, end, end + nr_pages);
++	}
++
+ 	/* Unmap the old attribute page. */
+ 	if (range->arg.attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE)
+ 		range->attr_filter = KVM_FILTER_SHARED;
+@@ -7522,23 +7575,7 @@ bool kvm_arch_pre_set_memory_attributes(
+ 	return kvm_unmap_gfn_range(kvm, range);
+ }
+ 
+-static bool hugepage_test_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
+-				int level)
+-{
+-	return lpage_info_slot(gfn, slot, level)->disallow_lpage & KVM_LPAGE_MIXED_FLAG;
+-}
+-
+-static void hugepage_clear_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
+-				 int level)
+-{
+-	lpage_info_slot(gfn, slot, level)->disallow_lpage &= ~KVM_LPAGE_MIXED_FLAG;
+-}
+ 
+-static void hugepage_set_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
+-			       int level)
+-{
+-	lpage_info_slot(gfn, slot, level)->disallow_lpage |= KVM_LPAGE_MIXED_FLAG;
+-}
+ 
+ static bool hugepage_has_attrs(struct kvm *kvm, struct kvm_memory_slot *slot,
+ 			       gfn_t gfn, int level, unsigned long attrs)
 
 
