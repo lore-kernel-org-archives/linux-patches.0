@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F4114658D;
-	Mon, 12 May 2025 17:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BB21DE4E3;
+	Mon, 12 May 2025 17:31:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071058; cv=none; b=FiNMcE7h9URVseCvI3ZYfpOzirKooY94/Ux9fqU93PJd4bUjlK7dD1iJ7lvUYo91yZBze0xX1SDkiDqlHoAtUy7bO8CCjXEif2xdKObL9f6YtyDCrsqGeM9iiz6gAVzsf7tboVm+geREBji8TCQOn30k5lvKHwzQSYk2uknKP+Q=
+	t=1747071061; cv=none; b=NMfVKyK0Ln08BXxrInzR1OCUxAVZIHIddYiKMo2nykFhPs+LQHMwvO/Ar2wKTg7OqDM/Z/qcXSgM3eKhBiakrHQnkgss527np1ueKp6XuIVvri5W1dTpQ9WMDLMjwO3JW76vH0Kqkso77OaKJXwAH1Hu73Nh6Ix6ArZG11MxOtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071058; c=relaxed/simple;
-	bh=E5gqgPoy62F6bXuADOgdKJlIbfc3tKZpbtnROhz8B+8=;
+	s=arc-20240116; t=1747071061; c=relaxed/simple;
+	bh=vOQ6SwM0z6agcNIw8FaYaWqGY6T8hyACjr1LfyFDld0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DSXTfXzYV+ABgvnj36xEb824pIuontBAxkOo8i+5eDi/YgCUdpCAlgHS5BHWxyVz+i9Zlzx65wGg6YLGAuXE+YzzgQMXGdP+aQ+x6OqdAED5/v0x7RO0mM0TAAgfLVgpMtHazIrRkcjfWwTxYWN2HYcWf+LB8APkFgezeJIYHAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yG4G5WHm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bOujfhYpzdX8vGyw14ZFYE73Mis6U3/zZBva8DzeY5Gh8DB/1JOqLf/6IbJm3+Cd1yMhnZs1vbAe4p8xe7gSJM/0D0ZwFRkUTuQp9p7pKUNT5Tb+ApraIkGsWUZUxXbnfRUhhUNSlV0ThKi/0OWhG4jpYwXwvU2nD4iD50UE/Nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTf60mJT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yG4G5WHm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7071C4CEEF;
-	Mon, 12 May 2025 17:30:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTf60mJT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7D8C4CEE9;
+	Mon, 12 May 2025 17:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071058;
-	bh=E5gqgPoy62F6bXuADOgdKJlIbfc3tKZpbtnROhz8B+8=;
+	s=korg; t=1747071060;
+	bh=vOQ6SwM0z6agcNIw8FaYaWqGY6T8hyACjr1LfyFDld0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yG4G5WHmRR2Mq0bMp6Tnr4a53+MdEKNQEBNWGPSAQXVmDqai6Do2SFUB9/F30kf9d
-	 R/kXOLqfGHqZKVwTPZ5yQK7Txv62B5EgiuImbd9ey8kHcZrNnybGjSqrZ03G1DCV7H
-	 188b5Y89erO5gYqGhK6ODolr4lrcpmcTNVNYzBd8=
+	b=DTf60mJTZYGC2ekLGg3MDWXQImTEu6bY+lm/DhJg0Apog+km5hLDK6E5Iz6YCzm7Q
+	 jm3iLbb9azRiTG0Y4sMyjE07dU9m0pr/J/706iYQ5P76YWuyCHWH+TKCpOzaIaWUCf
+	 i/XGMCHg257y73jgMjvW/tYm+Lv/YSB8ux7DMd9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 03/54] openvswitch: Fix unsafe attribute parsing in output_userspace()
-Date: Mon, 12 May 2025 19:29:15 +0200
-Message-ID: <20250512172015.783420631@linuxfoundation.org>
+	Guillaume Nault <gnault@redhat.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 04/54] gre: Fix again IPv6 link-local address generation.
+Date: Mon, 12 May 2025 19:29:16 +0200
+Message-ID: <20250512172015.821826420@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172015.643809034@linuxfoundation.org>
 References: <20250512172015.643809034@linuxfoundation.org>
@@ -52,36 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eelco Chaudron <echaudro@redhat.com>
+From: Guillaume Nault <gnault@redhat.com>
 
-commit 6beb6835c1fbb3f676aebb51a5fee6b77fed9308 upstream.
+[ Upstream commit 3e6a0243ff002ddbd7ee18a8974ae61d2e6ed00d ]
 
-This patch replaces the manual Netlink attribute iteration in
-output_userspace() with nla_for_each_nested(), which ensures that only
-well-formed attributes are processed.
+Use addrconf_addr_gen() to generate IPv6 link-local addresses on GRE
+devices in most cases and fall back to using add_v4_addrs() only in
+case the GRE configuration is incompatible with addrconf_addr_gen().
 
-Fixes: ccb1352e76cf ("net: Add Open vSwitch kernel components.")
-Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
-Acked-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/0bd65949df61591d9171c0dc13e42cea8941da10.1746541734.git.echaudro@redhat.com
+GRE used to use addrconf_addr_gen() until commit e5dd729460ca ("ip/ip6_gre:
+use the same logic as SIT interfaces when computing v6LL address")
+restricted this use to gretap and ip6gretap devices, and created
+add_v4_addrs() (borrowed from SIT) for non-Ethernet GRE ones.
+
+The original problem came when commit 9af28511be10 ("addrconf: refuse
+isatap eui64 for INADDR_ANY") made __ipv6_isatap_ifid() fail when its
+addr parameter was 0. The commit says that this would create an invalid
+address, however, I couldn't find any RFC saying that the generated
+interface identifier would be wrong. Anyway, since gre over IPv4
+devices pass their local tunnel address to __ipv6_isatap_ifid(), that
+commit broke their IPv6 link-local address generation when the local
+address was unspecified.
+
+Then commit e5dd729460ca ("ip/ip6_gre: use the same logic as SIT
+interfaces when computing v6LL address") tried to fix that case by
+defining add_v4_addrs() and calling it to generate the IPv6 link-local
+address instead of using addrconf_addr_gen() (apart for gretap and
+ip6gretap devices, which would still use the regular
+addrconf_addr_gen(), since they have a MAC address).
+
+That broke several use cases because add_v4_addrs() isn't properly
+integrated into the rest of IPv6 Neighbor Discovery code. Several of
+these shortcomings have been fixed over time, but add_v4_addrs()
+remains broken on several aspects. In particular, it doesn't send any
+Router Sollicitations, so the SLAAC process doesn't start until the
+interface receives a Router Advertisement. Also, add_v4_addrs() mostly
+ignores the address generation mode of the interface
+(/proc/sys/net/ipv6/conf/*/addr_gen_mode), thus breaking the
+IN6_ADDR_GEN_MODE_RANDOM and IN6_ADDR_GEN_MODE_STABLE_PRIVACY cases.
+
+Fix the situation by using add_v4_addrs() only in the specific scenario
+where the normal method would fail. That is, for interfaces that have
+all of the following characteristics:
+
+  * run over IPv4,
+  * transport IP packets directly, not Ethernet (that is, not gretap
+    interfaces),
+  * tunnel endpoint is INADDR_ANY (that is, 0),
+  * device address generation mode is EUI64.
+
+In all other cases, revert back to the regular addrconf_addr_gen().
+
+Also, remove the special case for ip6gre interfaces in add_v4_addrs(),
+since ip6gre devices now always use addrconf_addr_gen() instead.
+
+Note:
+  This patch was originally applied as commit 183185a18ff9 ("gre: Fix
+  IPv6 link-local address generation."). However, it was then reverted
+  by commit fc486c2d060f ("Revert "gre: Fix IPv6 link-local address
+  generation."") because it uncovered another bug that ended up
+  breaking net/forwarding/ip6gre_custom_multipath_hash.sh. That other
+  bug has now been fixed by commit 4d0ab3a6885e ("ipv6: Start path
+  selection from the first nexthop"). Therefore we can now revive this
+  GRE patch (no changes since original commit 183185a18ff9 ("gre: Fix
+  IPv6 link-local address generation.").
+
+Fixes: e5dd729460ca ("ip/ip6_gre: use the same logic as SIT interfaces when computing v6LL address")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/a88cc5c4811af36007645d610c95102dccb360a6.1746225214.git.gnault@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/actions.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/ipv6/addrconf.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -954,8 +954,7 @@ static int output_userspace(struct datap
- 	upcall.cmd = OVS_PACKET_CMD_ACTION;
- 	upcall.mru = OVS_CB(skb)->mru;
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 07b3487e3ae97..47c4a3e72bcd9 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -3145,16 +3145,13 @@ static void add_v4_addrs(struct inet6_dev *idev)
+ 	struct in6_addr addr;
+ 	struct net_device *dev;
+ 	struct net *net = dev_net(idev->dev);
+-	int scope, plen, offset = 0;
++	int scope, plen;
+ 	u32 pflags = 0;
  
--	for (a = nla_data(attr), rem = nla_len(attr); rem > 0;
--	     a = nla_next(a, &rem)) {
-+	nla_for_each_nested(a, attr, rem) {
- 		switch (nla_type(a)) {
- 		case OVS_USERSPACE_ATTR_USERDATA:
- 			upcall.userdata = a;
+ 	ASSERT_RTNL();
+ 
+ 	memset(&addr, 0, sizeof(struct in6_addr));
+-	/* in case of IP6GRE the dev_addr is an IPv6 and therefore we use only the last 4 bytes */
+-	if (idev->dev->addr_len == sizeof(struct in6_addr))
+-		offset = sizeof(struct in6_addr) - 4;
+-	memcpy(&addr.s6_addr32[3], idev->dev->dev_addr + offset, 4);
++	memcpy(&addr.s6_addr32[3], idev->dev->dev_addr, 4);
+ 
+ 	if (!(idev->dev->flags & IFF_POINTOPOINT) && idev->dev->type == ARPHRD_SIT) {
+ 		scope = IPV6_ADDR_COMPATv4;
+@@ -3462,7 +3459,13 @@ static void addrconf_gre_config(struct net_device *dev)
+ 		return;
+ 	}
+ 
+-	if (dev->type == ARPHRD_ETHER) {
++	/* Generate the IPv6 link-local address using addrconf_addr_gen(),
++	 * unless we have an IPv4 GRE device not bound to an IP address and
++	 * which is in EUI64 mode (as __ipv6_isatap_ifid() would fail in this
++	 * case). Such devices fall back to add_v4_addrs() instead.
++	 */
++	if (!(dev->type == ARPHRD_IPGRE && *(__be32 *)dev->dev_addr == 0 &&
++	      idev->cnf.addr_gen_mode == IN6_ADDR_GEN_MODE_EUI64)) {
+ 		addrconf_addr_gen(idev, true);
+ 		return;
+ 	}
+-- 
+2.39.5
+
 
 
