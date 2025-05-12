@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5D9296D30;
-	Mon, 12 May 2025 18:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A380B1C3BEB;
+	Mon, 12 May 2025 18:00:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072803; cv=none; b=GjTt2lUynWVeyp73w3RopwSRmmYuk46wz2SH6Z3gnguuPySZDPPt379SkSU/UihguyPcwwGtItcQF1HO2OPKe42EfBLn0fnzFuppv7JyEeEl+5S/yyvxtC8o7ep5/3XQ7/y5Sxu1KcQ1oVZwKAtlSNccVxWMLce2OKzPDNFwV0A=
+	t=1747072806; cv=none; b=BheiyNnZUu692URYmFxuMBxs+hRHYbbtSglQzl90NFFP1pnlpevsODefnrywqEMMHu8EEzXp1zAmbb/rMLq5dpABctIhGxCwlv/T1xrCidP4vb0huJNBoMTHpDmcSCPPXPic11RgJ3aUh2W324m4QhgrN0Rcs2EwfuS8IZWuozc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072803; c=relaxed/simple;
-	bh=fHQ0cM5U3UNuX1jG7KUAyOxYsIJ+1u/fD8XjthWYuYM=;
+	s=arc-20240116; t=1747072806; c=relaxed/simple;
+	bh=1PWF4k0wwLW/W1sLfjFooB4D5fYC/7Q+XV8Cy8FuOYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZQZQqe2iKCoEOEUQ34bDhvPjoYCk1qB5+XAb5ofNA25IuAHzTDRyuzNwSt89FbBbggW0IVu6bTnRDsmOB5cLzeIkkQCqSCsz9OQkBQOMKYHb56Xtg69S8WdHQxeT9AHSabEbjq0jUILWv0oa6RWuqF4vQqpFg9oBJHpVZQ59z7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r00fXT5Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tCOv+OTfKCWp0Pwe2A9TFK/jmhvUBjQI1XHX0pPv9F6BB4gsRA58AmC6Mdj7n4QdmtxDGeQ5i3URQSMYHfAZSkzVUeVIamT6s/fMi8KHYGxi9wzSKxjtpJm7dNf5VBaExIAJWPVwSnDj/7YYQTyb9ckiPuoQOXMGk2vheQbx0/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qz8trQQ3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r00fXT5Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0858C4CEE9;
-	Mon, 12 May 2025 18:00:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qz8trQQ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF6DC4CEE7;
+	Mon, 12 May 2025 18:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072803;
-	bh=fHQ0cM5U3UNuX1jG7KUAyOxYsIJ+1u/fD8XjthWYuYM=;
+	s=korg; t=1747072806;
+	bh=1PWF4k0wwLW/W1sLfjFooB4D5fYC/7Q+XV8Cy8FuOYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r00fXT5YjWdA5Bwa4DvIovp7NIP9nVAisGcrgVM/AC5+Af6kARXuD7pylnjoIzVc+
-	 0OWZr4v3PiwlkpTl2HvxVQNH5X1RyiPg/u0KpnVAqFEj9KhC7msqhwTY/5J9pOM/yH
-	 0tOkxhcTRm1+AnIbfcLrr4fgmkbTuWRMAIcfLz6E=
+	b=qz8trQQ3vw7PeA/PT2vT9WQasAqSND8cu3rvLFiPJw+uffubhT0f5L7DJLQBfGMwn
+	 8SIDF2GV3eo/Knk4T/BvToZJZY2ohCKzMXh3EcLqOjeSu/QnriaUXsGdeXjriARuqT
+	 Zpq1Cpc4YCFzhFXaFu2Y4GA7wjh+dZbrwthgHeXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+04b9a82855c8aed20860@syzkaller.appspotmail.com,
-	Julian Anastasov <ja@ssi.bg>,
-	Simon Horman <horms@kernel.org>,
+	Kota Toda <kota.toda@gmo-cybersecurity.com>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/184] ipvs: fix uninit-value for saddr in do_output_route4
-Date: Mon, 12 May 2025 19:43:53 +0200
-Message-ID: <20250512172043.028463641@linuxfoundation.org>
+Subject: [PATCH 6.12 033/184] netfilter: ipset: fix region locking in hash types
+Date: Mon, 12 May 2025 19:43:54 +0200
+Message-ID: <20250512172043.069852281@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -53,165 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Jozsef Kadlecsik <kadlec@netfilter.org>
 
-[ Upstream commit e34090d7214e0516eb8722aee295cb2507317c07 ]
+[ Upstream commit 8478a729c0462273188263136880480729e9efca ]
 
-syzbot reports for uninit-value for the saddr argument [1].
-commit 4754957f04f5 ("ipvs: do not use random local source address for
-tunnels") already implies that the input value of saddr
-should be ignored but the code is still reading it which can prevent
-to connect the route. Fix it by changing the argument to ret_saddr.
+Region locking introduced in v5.6-rc4 contained three macros to handle
+the region locks: ahash_bucket_start(), ahash_bucket_end() which gave
+back the start and end hash bucket values belonging to a given region
+lock and ahash_region() which should give back the region lock belonging
+to a given hash bucket. The latter was incorrect which can lead to a
+race condition between the garbage collector and adding new elements
+when a hash type of set is defined with timeouts.
 
-[1]
-BUG: KMSAN: uninit-value in do_output_route4+0x42c/0x4d0 net/netfilter/ipvs/ip_vs_xmit.c:147
- do_output_route4+0x42c/0x4d0 net/netfilter/ipvs/ip_vs_xmit.c:147
- __ip_vs_get_out_rt+0x403/0x21d0 net/netfilter/ipvs/ip_vs_xmit.c:330
- ip_vs_tunnel_xmit+0x205/0x2380 net/netfilter/ipvs/ip_vs_xmit.c:1136
- ip_vs_in_hook+0x1aa5/0x35b0 net/netfilter/ipvs/ip_vs_core.c:2063
- nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
- nf_hook_slow+0xf7/0x400 net/netfilter/core.c:626
- nf_hook include/linux/netfilter.h:269 [inline]
- __ip_local_out+0x758/0x7e0 net/ipv4/ip_output.c:118
- ip_local_out net/ipv4/ip_output.c:127 [inline]
- ip_send_skb+0x6a/0x3c0 net/ipv4/ip_output.c:1501
- udp_send_skb+0xfda/0x1b70 net/ipv4/udp.c:1195
- udp_sendmsg+0x2fe3/0x33c0 net/ipv4/udp.c:1483
- inet_sendmsg+0x1fc/0x280 net/ipv4/af_inet.c:851
- sock_sendmsg_nosec net/socket.c:712 [inline]
- __sock_sendmsg+0x267/0x380 net/socket.c:727
- ____sys_sendmsg+0x91b/0xda0 net/socket.c:2566
- ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2620
- __sys_sendmmsg+0x41d/0x880 net/socket.c:2702
- __compat_sys_sendmmsg net/compat.c:360 [inline]
- __do_compat_sys_sendmmsg net/compat.c:367 [inline]
- __se_compat_sys_sendmmsg net/compat.c:364 [inline]
- __ia32_compat_sys_sendmmsg+0xc8/0x140 net/compat.c:364
- ia32_sys_call+0x3ffa/0x41f0 arch/x86/include/generated/asm/syscalls_32.h:346
- do_syscall_32_irqs_on arch/x86/entry/syscall_32.c:83 [inline]
- __do_fast_syscall_32+0xb0/0x110 arch/x86/entry/syscall_32.c:306
- do_fast_syscall_32+0x38/0x80 arch/x86/entry/syscall_32.c:331
- do_SYSENTER_32+0x1f/0x30 arch/x86/entry/syscall_32.c:369
- entry_SYSENTER_compat_after_hwframe+0x84/0x8e
-
-Uninit was created at:
- slab_post_alloc_hook mm/slub.c:4167 [inline]
- slab_alloc_node mm/slub.c:4210 [inline]
- __kmalloc_cache_noprof+0x8fa/0xe00 mm/slub.c:4367
- kmalloc_noprof include/linux/slab.h:905 [inline]
- ip_vs_dest_dst_alloc net/netfilter/ipvs/ip_vs_xmit.c:61 [inline]
- __ip_vs_get_out_rt+0x35d/0x21d0 net/netfilter/ipvs/ip_vs_xmit.c:323
- ip_vs_tunnel_xmit+0x205/0x2380 net/netfilter/ipvs/ip_vs_xmit.c:1136
- ip_vs_in_hook+0x1aa5/0x35b0 net/netfilter/ipvs/ip_vs_core.c:2063
- nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
- nf_hook_slow+0xf7/0x400 net/netfilter/core.c:626
- nf_hook include/linux/netfilter.h:269 [inline]
- __ip_local_out+0x758/0x7e0 net/ipv4/ip_output.c:118
- ip_local_out net/ipv4/ip_output.c:127 [inline]
- ip_send_skb+0x6a/0x3c0 net/ipv4/ip_output.c:1501
- udp_send_skb+0xfda/0x1b70 net/ipv4/udp.c:1195
- udp_sendmsg+0x2fe3/0x33c0 net/ipv4/udp.c:1483
- inet_sendmsg+0x1fc/0x280 net/ipv4/af_inet.c:851
- sock_sendmsg_nosec net/socket.c:712 [inline]
- __sock_sendmsg+0x267/0x380 net/socket.c:727
- ____sys_sendmsg+0x91b/0xda0 net/socket.c:2566
- ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2620
- __sys_sendmmsg+0x41d/0x880 net/socket.c:2702
- __compat_sys_sendmmsg net/compat.c:360 [inline]
- __do_compat_sys_sendmmsg net/compat.c:367 [inline]
- __se_compat_sys_sendmmsg net/compat.c:364 [inline]
- __ia32_compat_sys_sendmmsg+0xc8/0x140 net/compat.c:364
- ia32_sys_call+0x3ffa/0x41f0 arch/x86/include/generated/asm/syscalls_32.h:346
- do_syscall_32_irqs_on arch/x86/entry/syscall_32.c:83 [inline]
- __do_fast_syscall_32+0xb0/0x110 arch/x86/entry/syscall_32.c:306
- do_fast_syscall_32+0x38/0x80 arch/x86/entry/syscall_32.c:331
- do_SYSENTER_32+0x1f/0x30 arch/x86/entry/syscall_32.c:369
- entry_SYSENTER_compat_after_hwframe+0x84/0x8e
-
-CPU: 0 UID: 0 PID: 22408 Comm: syz.4.5165 Not tainted 6.15.0-rc3-syzkaller-00019-gbc3372351d0c #0 PREEMPT(undef)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
-
-Reported-by: syzbot+04b9a82855c8aed20860@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68138dfa.050a0220.14dd7d.0017.GAE@google.com/
-Fixes: 4754957f04f5 ("ipvs: do not use random local source address for tunnels")
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Acked-by: Simon Horman <horms@kernel.org>
+Fixes: f66ee0410b1c ("netfilter: ipset: Fix "INFO: rcu detected stall in hash_xxx" reports")
+Reported-by: Kota Toda <kota.toda@gmo-cybersecurity.com>
+Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_xmit.c | 27 ++++++++-------------------
- 1 file changed, 8 insertions(+), 19 deletions(-)
+ net/netfilter/ipset/ip_set_hash_gen.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
-index 3313bceb6cc99..014f077403695 100644
---- a/net/netfilter/ipvs/ip_vs_xmit.c
-+++ b/net/netfilter/ipvs/ip_vs_xmit.c
-@@ -119,13 +119,12 @@ __mtu_check_toobig_v6(const struct sk_buff *skb, u32 mtu)
- 	return false;
- }
- 
--/* Get route to daddr, update *saddr, optionally bind route to saddr */
-+/* Get route to daddr, optionally bind route to saddr */
- static struct rtable *do_output_route4(struct net *net, __be32 daddr,
--				       int rt_mode, __be32 *saddr)
-+				       int rt_mode, __be32 *ret_saddr)
- {
- 	struct flowi4 fl4;
- 	struct rtable *rt;
--	bool loop = false;
- 
- 	memset(&fl4, 0, sizeof(fl4));
- 	fl4.daddr = daddr;
-@@ -135,23 +134,17 @@ static struct rtable *do_output_route4(struct net *net, __be32 daddr,
- retry:
- 	rt = ip_route_output_key(net, &fl4);
- 	if (IS_ERR(rt)) {
--		/* Invalid saddr ? */
--		if (PTR_ERR(rt) == -EINVAL && *saddr &&
--		    rt_mode & IP_VS_RT_MODE_CONNECT && !loop) {
--			*saddr = 0;
--			flowi4_update_output(&fl4, 0, daddr, 0);
--			goto retry;
--		}
- 		IP_VS_DBG_RL("ip_route_output error, dest: %pI4\n", &daddr);
- 		return NULL;
--	} else if (!*saddr && rt_mode & IP_VS_RT_MODE_CONNECT && fl4.saddr) {
-+	}
-+	if (rt_mode & IP_VS_RT_MODE_CONNECT && fl4.saddr) {
- 		ip_rt_put(rt);
--		*saddr = fl4.saddr;
- 		flowi4_update_output(&fl4, 0, daddr, fl4.saddr);
--		loop = true;
-+		rt_mode = 0;
- 		goto retry;
- 	}
--	*saddr = fl4.saddr;
-+	if (ret_saddr)
-+		*ret_saddr = fl4.saddr;
- 	return rt;
- }
- 
-@@ -344,19 +337,15 @@ __ip_vs_get_out_rt(struct netns_ipvs *ipvs, int skb_af, struct sk_buff *skb,
- 		if (ret_saddr)
- 			*ret_saddr = dest_dst->dst_saddr.ip;
- 	} else {
--		__be32 saddr = htonl(INADDR_ANY);
--
- 		noref = 0;
- 
- 		/* For such unconfigured boxes avoid many route lookups
- 		 * for performance reasons because we do not remember saddr
- 		 */
- 		rt_mode &= ~IP_VS_RT_MODE_CONNECT;
--		rt = do_output_route4(net, daddr, rt_mode, &saddr);
-+		rt = do_output_route4(net, daddr, rt_mode, ret_saddr);
- 		if (!rt)
- 			goto err_unreach;
--		if (ret_saddr)
--			*ret_saddr = saddr;
- 	}
- 
- 	local = (rt->rt_flags & RTCF_LOCAL) ? 1 : 0;
+diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
+index cf3ce72c3de64..5251524b96afa 100644
+--- a/net/netfilter/ipset/ip_set_hash_gen.h
++++ b/net/netfilter/ipset/ip_set_hash_gen.h
+@@ -64,7 +64,7 @@ struct hbucket {
+ #define ahash_sizeof_regions(htable_bits)		\
+ 	(ahash_numof_locks(htable_bits) * sizeof(struct ip_set_region))
+ #define ahash_region(n, htable_bits)		\
+-	((n) % ahash_numof_locks(htable_bits))
++	((n) / jhash_size(HTABLE_REGION_BITS))
+ #define ahash_bucket_start(h,  htable_bits)	\
+ 	((htable_bits) < HTABLE_REGION_BITS ? 0	\
+ 		: (h) * jhash_size(HTABLE_REGION_BITS))
 -- 
 2.39.5
 
