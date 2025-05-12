@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55D628751B;
-	Mon, 12 May 2025 17:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE9A28751B;
+	Mon, 12 May 2025 17:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071809; cv=none; b=JzurIjYO5i5Pgx1rpzFQhGv41UGU6pY/JvAmCTTpDBefiHHwq+TSmi2QneGNRryjwWYJgPFv+pfnecAGLhrhq5urxqIP9GvmHNk+9JUWxRQ73cifgiZsfE62C5Mm5E+moNYJqbWRryZeq/d3TJS6mLaabm81Tv4Q3ARao/QThqw=
+	t=1747071812; cv=none; b=YKoYJukZgItAnYCsT2+Vnrx6hz+XkJ3erRtpy1Ij4TZijWyumpqcIXQknkrL8uK8B02yvLmazfn14zEWnp2nIMW2fugqt0nIBhqh+lBO0NX/yr+5yxohE1s8oMY2nZgqiL7mJVo205u9mk4Zao/mUlaniqSeGa50YbLrSsDRlGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071809; c=relaxed/simple;
-	bh=k+9ZcLoS0vZhOZC7iU8PjBdvWCayhN9Qr+xeMdjmrPw=;
+	s=arc-20240116; t=1747071812; c=relaxed/simple;
+	bh=TJcQbWXnLJIhs2dXuah2HEhXhlmexJaHIBF3t7kpAfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p5BX9UBMV1VIdpHIhkFxnfc4uoyCasWi+LAyZ1c4FxKNYLe5ecJi5MtW4RjArP3nH+va6xw8ETfPe/MMnFxgYa9LOz2dDlkBRugH6L1Suk1E0m2s7eiKElEHtZ4va7X5sRPUvp7doTw6a7RI4xMe1Vv2+6XSvsZSI1qsVLknfCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZJ8FUsnb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NbgE7yFoCKgP8XVTAAZ9y7RjapwrzRjb3CA1n4+0i2mUEG9ij46meNJguPu3U+uOC6biHK5T1Sr3DUT5DZhmdXTLsM4qZ+vVqif+knUFNV6P0MjhSo4qBBOm6+ztPLP8OOQ75gdHmPW+wVdkr7LZrXbTggJ64veOW+DgpWQAjCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0tzMBfFw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJ8FUsnb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB64DC4CEE7;
-	Mon, 12 May 2025 17:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0tzMBfFw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9225FC4CEE7;
+	Mon, 12 May 2025 17:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071809;
-	bh=k+9ZcLoS0vZhOZC7iU8PjBdvWCayhN9Qr+xeMdjmrPw=;
+	s=korg; t=1747071811;
+	bh=TJcQbWXnLJIhs2dXuah2HEhXhlmexJaHIBF3t7kpAfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZJ8FUsnbLy9xjz7TGBZK0ZDn9peRQgRATPGxnNm7j/eOgx9llgBq0q1AkksBbIbE+
-	 ftW9wPX/GQnWk3ymVxrpj2+RODokFivdDVVbKt3h78JkIIOU01bJ7ZBE/gqlb0rFka
-	 3hm5UjjKJ6NJ+0mjbIFKMDnbRS/zuV4is6y9xpFk=
+	b=0tzMBfFwZlnHRy+26h4aWDB1Ywe2xVqtdWLQMCh6edzMZw+GHYwZ/LnjvUpfmznTX
+	 pvc0Rx8zOdGd8sgCXEQTV5AY5EjoCz9MBwQAO7jdroB6xdCFvdkKAJGcCXLL7RR5Fc
+	 sti8aZ1qKZtjboJWgxPaR4C5tKQ1xhXpRSwukRy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Veerendranath Jakkam <quic_vjakkam@quicinc.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.14 008/197] wifi: cfg80211: fix out-of-bounds access during multi-link element defragmentation
-Date: Mon, 12 May 2025 19:37:38 +0200
-Message-ID: <20250512172044.686800428@linuxfoundation.org>
+	Adolfo <adolfotregosa@gmail.com>,
+	Peter Xu <peterx@redhat.com>,
+	Alex Williamson <alex.williamson@redhat.com>
+Subject: [PATCH 6.14 009/197] vfio/pci: Align huge faults to order
+Date: Mon, 12 May 2025 19:37:39 +0200
+Message-ID: <20250512172044.727230005@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -50,40 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Veerendranath Jakkam <quic_vjakkam@quicinc.com>
+From: Alex Williamson <alex.williamson@redhat.com>
 
-commit 023c1f2f0609218103cbcb48e0104b144d4a16dc upstream.
+commit c1d9dac0db168198b6f63f460665256dedad9b6e upstream.
 
-Currently during the multi-link element defragmentation process, the
-multi-link element length added to the total IEs length when calculating
-the length of remaining IEs after the multi-link element in
-cfg80211_defrag_mle(). This could lead to out-of-bounds access if the
-multi-link element or its corresponding fragment elements are the last
-elements in the IEs buffer.
+The vfio-pci huge_fault handler doesn't make any attempt to insert a
+mapping containing the faulting address, it only inserts mappings if the
+faulting address and resulting pfn are aligned.  This works in a lot of
+cases, particularly in conjunction with QEMU where DMA mappings linearly
+fault the mmap.  However, there are configurations where we don't get
+that linear faulting and pages are faulted on-demand.
 
-To address this issue, correctly calculate the remaining IEs length by
-deducting the multi-link element end offset from total IEs end offset.
+The scenario reported in the bug below is such a case, where the physical
+address width of the CPU is greater than that of the IOMMU, resulting in a
+VM where guest firmware has mapped device MMIO beyond the address width of
+the IOMMU.  In this configuration, the MMIO is faulted on demand and
+tracing indicates that occasionally the faults generate a VM_FAULT_OOM.
+Given the use case, this results in a "error: kvm run failed Bad address",
+killing the VM.
 
+The host is not under memory pressure in this test, therefore it's
+suspected that VM_FAULT_OOM is actually the result of a NULL return from
+__pte_offset_map_lock() in the get_locked_pte() path from insert_pfn().
+This suggests a potential race inserting a pte concurrent to a pmd, and
+maybe indicates some deficiency in the mm layer properly handling such a
+case.
+
+Nevertheless, Peter noted the inconsistency of vfio-pci's huge_fault
+handler where our mapping granularity depends on the alignment of the
+faulting address relative to the order rather than aligning the faulting
+address to the order to more consistently insert huge mappings.  This
+change not only uses the page tables more consistently and efficiently, but
+as any fault to an aligned page results in the same mapping, the race
+condition suspected in the VM_FAULT_OOM is avoided.
+
+Reported-by: Adolfo <adolfotregosa@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220057
+Fixes: 09dfc8a5f2ce ("vfio/pci: Fallback huge faults for unaligned pfn")
 Cc: stable@vger.kernel.org
-Fixes: 2481b5da9c6b ("wifi: cfg80211: handle BSS data contained in ML probe responses")
-Signed-off-by: Veerendranath Jakkam <quic_vjakkam@quicinc.com>
-Link: https://patch.msgid.link/20250424-fix_mle_defragmentation_oob_access-v1-1-84412a1743fa@quicinc.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Tested-by: Adolfo <adolfotregosa@gmail.com>
+Co-developed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/r/20250502224035.3183451-1-alex.williamson@redhat.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/scan.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/vfio/pci/vfio_pci_core.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2681,7 +2681,7 @@ cfg80211_defrag_mle(const struct element
- 	/* Required length for first defragmentation */
- 	buf_len = mle->datalen - 1;
- 	for_each_element(elem, mle->data + mle->datalen,
--			 ielen - sizeof(*mle) + mle->datalen) {
-+			 ie + ielen - mle->data - mle->datalen) {
- 		if (elem->id != WLAN_EID_FRAGMENT)
- 			break;
+--- a/drivers/vfio/pci/vfio_pci_core.c
++++ b/drivers/vfio/pci/vfio_pci_core.c
+@@ -1654,14 +1654,14 @@ static vm_fault_t vfio_pci_mmap_huge_fau
+ {
+ 	struct vm_area_struct *vma = vmf->vma;
+ 	struct vfio_pci_core_device *vdev = vma->vm_private_data;
+-	unsigned long pfn, pgoff = vmf->pgoff - vma->vm_pgoff;
++	unsigned long addr = vmf->address & ~((PAGE_SIZE << order) - 1);
++	unsigned long pgoff = (addr - vma->vm_start) >> PAGE_SHIFT;
++	unsigned long pfn = vma_to_pfn(vma) + pgoff;
+ 	vm_fault_t ret = VM_FAULT_SIGBUS;
  
+-	pfn = vma_to_pfn(vma) + pgoff;
+-
+-	if (order && (pfn & ((1 << order) - 1) ||
+-		      vmf->address & ((PAGE_SIZE << order) - 1) ||
+-		      vmf->address + (PAGE_SIZE << order) > vma->vm_end)) {
++	if (order && (addr < vma->vm_start ||
++		      addr + (PAGE_SIZE << order) > vma->vm_end ||
++		      pfn & ((1 << order) - 1))) {
+ 		ret = VM_FAULT_FALLBACK;
+ 		goto out;
+ 	}
 
 
