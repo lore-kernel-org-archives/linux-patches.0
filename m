@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04E2298999;
-	Mon, 12 May 2025 18:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4C12989AD;
+	Mon, 12 May 2025 18:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073279; cv=none; b=L2fbIa5uW0ddvVRYT7RzCay3X3w1F2QUeWS+5WfRtLP1L+tSk8fjaMJH4FK+1V+HTTWEbE15kDXlXFC29FDnNHrltqO9E3LPTRN1df4oWuYJC5wdrR6YON0V14qEXf4zw3YVwjrBo4jxCd7QAB3jFRtiNV79iD5uOJhtmQWyFzc=
+	t=1747073282; cv=none; b=spqa3kY+KK3C4V6XmhgM4ZxaCH+SV+v76wdISi4bMp6Fkl6+WGEHR3FRIv4c23VgxmZnXCSh6RLFycI8FteMAdszbjrDdsWIL6jUH3t/DdSxh/+Mh4tg5MDjoO7iavVoqY/H6LZcPAIjcTPH9Ey//1Hik5V2IAzVe94AvTbqvL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073279; c=relaxed/simple;
-	bh=4oXaeZaSVeR6Ixd1bvvpIUr0fhietUVbJvPbaz1qAfE=;
+	s=arc-20240116; t=1747073282; c=relaxed/simple;
+	bh=Wq6rOv6112fF0gYSzmTR1KwzvVp2DVmngV5JP0kXacE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NaePz2qafSSczsvUWS/QaHfzHFNiSNLHwViYJerSY8n1q/+VTwJphqqaQ2oObTyf35LjzSqc68iBY3fyLlFTQM8m5NLkT4wFlLQvfwFIcfYFM2fHoSvsmr+dC769ZJHPL+WoZ+ZPKXxLWzsnPnQKS0BxuOvepwkvLf5/7x8xXGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eaX/uzxD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T/H63ui3y1CGiso1Jl3at+UdjY3UZv5SiNMQ4+UMYCtJ5Mep+Rpg/n9jgM4d01ZPH6BCk2nviP7DL3gyVZRm/miYxW5fnMLUr0R+6sfgnoL+RUOkZNcL8ae8VdbM7xQYRRuFzAHMY+PI5VGWBFPrm4qOD38BBl0uScFqR8Lmoek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fDS2cmYQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eaX/uzxD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ECFEC4CEE7;
-	Mon, 12 May 2025 18:07:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fDS2cmYQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39001C4CEE7;
+	Mon, 12 May 2025 18:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073279;
-	bh=4oXaeZaSVeR6Ixd1bvvpIUr0fhietUVbJvPbaz1qAfE=;
+	s=korg; t=1747073282;
+	bh=Wq6rOv6112fF0gYSzmTR1KwzvVp2DVmngV5JP0kXacE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eaX/uzxD0o4mBPyrhpGlZATxsyoZYAkTP0a8YFN41BN0bvqx2ua8hVCCkoTwMHV66
-	 UlL3CBQUFyFPNxxvR9/n9oDsLseUjqmUeGZWm56ghQceRtNTxsRvDKW1tdND5Gwiiz
-	 vH0WT8SGHWKA7nYvG7FK+6+RgTa1ax6O+w9NrjwQ=
+	b=fDS2cmYQmqYtZnMtoZfv42VGclWc8KXEUJNPpK/ClEdJdPjs5fiJ5gujpcpSavAXp
+	 WkLUfLrfL7SESyWSIP//rgHO++5a8Hy1G/g+bWsiX6La0gEPfI2pNp5i0DkNqcBkxC
+	 n51Mft9ZfdXhjU+HJHnCKMe/n30H5JS5l4fBRlPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alistair Francis <alistair@alistair23.me>,
+	Mikael Gonella-Bolduc <mgonellabolduc@dimonoff.com>,
 	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Alistair Francis <alistair@alistair23.me>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 026/113] Input: cyttsp5 - ensure minimum reset pulse width
-Date: Mon, 12 May 2025 19:45:15 +0200
-Message-ID: <20250512172028.746862826@linuxfoundation.org>
+Subject: [PATCH 6.6 027/113] Input: cyttsp5 - fix power control issue on wakeup
+Date: Mon, 12 May 2025 19:45:16 +0200
+Message-ID: <20250512172028.786989524@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172027.691520737@linuxfoundation.org>
 References: <20250512172027.691520737@linuxfoundation.org>
@@ -51,48 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Mikael Gonella-Bolduc <mgonellabolduc@dimonoff.com>
 
-commit c6cb8bf79466ae66bd0d07338c7c505ce758e9d7 upstream.
+commit 7675b5efd81fe6d524e29d5a541f43201e98afa8 upstream.
 
-The current reset pulse width is measured to be 5us on a
-Renesas RZ/G2L SOM. The manufacturer's minimum reset pulse width is
-specified as 10us.
+The power control function ignores the "on" argument when setting the
+report ID, and thus is always sending HID_POWER_SLEEP. This causes a
+problem when trying to wakeup.
 
-Extend reset pulse width to make sure it is long enough on all platforms.
+Fix by sending the state variable, which contains the proper HID_POWER_ON or
+HID_POWER_SLEEP based on the "on" argument.
 
-Also reword confusing comments about reset pin assertion.
-
-Fixes: 5b0c03e24a06 ("Input: Add driver for Cypress Generation 5 touchscreen")
+Fixes: 3c98b8dbdced ("Input: cyttsp5 - implement proper sleep and wakeup procedures")
 Cc: stable@vger.kernel.org
-Acked-by: Alistair Francis <alistair@alistair23.me>
+Signed-off-by: Mikael Gonella-Bolduc <mgonellabolduc@dimonoff.com>
 Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20250410184633.1164837-1-hugo@hugovil.com
+Reviewed-by: Alistair Francis <alistair@alistair23.me>
+Link: https://lore.kernel.org/r/20250423135243.1261460-1-hugo@hugovil.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/cyttsp5.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/input/touchscreen/cyttsp5.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/drivers/input/touchscreen/cyttsp5.c b/drivers/input/touchscreen/cyttsp5.c
+index 14c43f0a6c21..071b7c9bf566 100644
 --- a/drivers/input/touchscreen/cyttsp5.c
 +++ b/drivers/input/touchscreen/cyttsp5.c
-@@ -865,13 +865,16 @@ static int cyttsp5_probe(struct device *
- 	ts->input->phys = ts->phys;
- 	input_set_drvdata(ts->input, ts);
+@@ -580,7 +580,7 @@ static int cyttsp5_power_control(struct cyttsp5 *ts, bool on)
+ 	int rc;
  
--	/* Reset the gpio to be in a reset state */
-+	/* Assert gpio to be in a reset state */
- 	ts->reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
- 	if (IS_ERR(ts->reset_gpio)) {
- 		error = PTR_ERR(ts->reset_gpio);
- 		dev_err(dev, "Failed to request reset gpio, error %d\n", error);
- 		return error;
- 	}
-+
-+	fsleep(10); /* Ensure long-enough reset pulse (minimum 10us). */
-+
- 	gpiod_set_value_cansleep(ts->reset_gpio, 0);
+ 	SET_CMD_REPORT_TYPE(cmd[0], 0);
+-	SET_CMD_REPORT_ID(cmd[0], HID_POWER_SLEEP);
++	SET_CMD_REPORT_ID(cmd[0], state);
+ 	SET_CMD_OPCODE(cmd[1], HID_CMD_SET_POWER);
  
- 	/* Need a delay to have device up */
+ 	rc = cyttsp5_write(ts, HID_COMMAND_REG, cmd, sizeof(cmd));
+-- 
+2.49.0
+
 
 
