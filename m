@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAF7175BF;
-	Mon, 12 May 2025 18:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA4B175BF;
+	Mon, 12 May 2025 18:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072999; cv=none; b=Wvkl4o+ouxXuMR66e5W0ZaBGsnPQnnAjfcGY22dtkhihtO/T/RBJwCeRamCNgl4atbU5IsxOLXz6z4XAPxAPbUpIzdfZApj88huYQv14sgdMA/9f1vAZpXY3ZHfERwdSHScQPM6hnShDDw9lHlWtJ3vGsGMzV0+SZelzp2YqJ8Y=
+	t=1747073002; cv=none; b=s+KztRjl8kA9/OKcDuSLvj+e7IWmVS2YEc7JMS5FvCC5IgVnGEisu8WCMgAznTrKDdYYnpWOvRLX3nh68dpBuGsrtHeiz4iVnKASKphNuHaSCUWfunSqqmZaCkcBz2LdTGbGylaj/sv0gcDa8TiIa2zN8WFf4G4G18L7i2+ljps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072999; c=relaxed/simple;
-	bh=tC2XpMqI2+tN9+I+AQn56hH3ObebI43LiHFUIWIMw0o=;
+	s=arc-20240116; t=1747073002; c=relaxed/simple;
+	bh=QV+BGyST/mqHZzbN30ATJut4lUXBtf6XLCsRQKcaHpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OOyQ6coxsK576+oEjHA2LFQl8LXCz+tQ75dENNkAMHIqOmV6FrcIctY9F6FTb98Q+l6DCEqDz8prEXUyYfQ1F2m3MPIQw4e1y2HI4G2bkZUq38PkVBgktbUwPHkPgLvg8vmwcplmleUyiNU7/KSLnLg+M7orY6Lh0K0gxZ8VIaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Kmgo2JL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YUazHwiOOrOuOVvEyrbzq/PXYvtFOkWV6CyehQxv8fV7jUuq+LaCrt4pZD0VAU2Bg+IdikDzxvE8gFk3AVTDprxXo49k6QUp/1BbMdVDF7MKFDNMFnbIsKwusRu7Xv0Jl0Osm6G0N4iUErrTI4N3L8zequwichr44pMuzxtgQoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNkQXO1k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Kmgo2JL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17392C4CEE7;
-	Mon, 12 May 2025 18:03:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNkQXO1k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3BDAC4CEEF;
+	Mon, 12 May 2025 18:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072999;
-	bh=tC2XpMqI2+tN9+I+AQn56hH3ObebI43LiHFUIWIMw0o=;
+	s=korg; t=1747073002;
+	bh=QV+BGyST/mqHZzbN30ATJut4lUXBtf6XLCsRQKcaHpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Kmgo2JLWAlEddbuRpLltQKQCCi8yOQgkZzc+aTLB0sR1XNMMZb17avl9+KYVPonm
-	 lAFnLonGlBFSDYxr+ojpijj9juh7Mivii0UYKysnTl9KV/mIsd1mwW/yUbbAodGnH6
-	 2v5fEZekcmcDPTpJ7rJpVm/H1bL6Ygiux4S9MT8w=
+	b=lNkQXO1kDqwZ4Tevqbsdn9dM9I45meSyPuC2Lsp6/Y8myBbTDiq+98lfBm1ZGm3i7
+	 gjOzGLz0r4KOlbq9cKXp+TRBLic7h91WeFrqIBvd7W8DfTyikruOqdC3hlS9pnLzJs
+	 /dl3a0a0TTtbag6tPBrme/U/holUC7xpEfcXz1FQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jim Lin <jilin@nvidia.com>,
-	Wayne Chang <waynec@nvidia.com>
-Subject: [PATCH 6.12 122/184] usb: host: tegra: Prevent host controller crash when OTG port is used
-Date: Mon, 12 May 2025 19:45:23 +0200
-Message-ID: <20250512172046.789713140@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.12 096/184] drm/amd/display: Copy AUX read reply data whenever length > 0
+Date: Mon, 12 May 2025 19:44:57 +0200
+Message-ID: <20250512172045.734863507@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -51,66 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jim Lin <jilin@nvidia.com>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-commit 732f35cf8bdfece582f6e4a9c659119036577308 upstream.
+commit 3924f45d4de7250a603fd7b50379237a6a0e5adf upstream.
 
-When a USB device is connected to the OTG port, the tegra_xhci_id_work()
-routine transitions the PHY to host mode and calls xhci_hub_control()
-with the SetPortFeature command to enable port power.
+[Why]
+amdgpu_dm_process_dmub_aux_transfer_sync() should return all exact data
+reply from the sink side. Don't do the analysis job in it.
 
-In certain cases, the XHCI controller may be in a low-power state
-when this operation occurs. If xhci_hub_control() is invoked while
-the controller is suspended, the PORTSC register may return 0xFFFFFFFF,
-indicating a read failure. This causes xhci_hc_died() to be triggered,
-leading to host controller shutdown.
+[How]
+Remove unnecessary check condition AUX_TRANSACTION_REPLY_AUX_ACK.
 
-Example backtrace:
-[  105.445736] Workqueue: events tegra_xhci_id_work
-[  105.445747]  dump_backtrace+0x0/0x1e8
-[  105.445759]  xhci_hc_died.part.48+0x40/0x270
-[  105.445769]  tegra_xhci_set_port_power+0xc0/0x240
-[  105.445774]  tegra_xhci_id_work+0x130/0x240
-
-To prevent this, ensure the controller is fully resumed before
-interacting with hardware registers by calling pm_runtime_get_sync()
-prior to the host mode transition and xhci_hub_control().
-
-Fixes: f836e7843036 ("usb: xhci-tegra: Add OTG support")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jim Lin <jilin@nvidia.com>
-Signed-off-by: Wayne Chang <waynec@nvidia.com>
-Link: https://lore.kernel.org/r/20250422114001.126367-1-waynec@nvidia.com
+Fixes: ead08b95fa50 ("drm/amd/display: Fix race condition in DPIA AUX transfer")
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Ray Wu <ray.wu@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 9b540e3fe6796fec4fb1344f3be8952fc2f084d4)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-tegra.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/usb/host/xhci-tegra.c
-+++ b/drivers/usb/host/xhci-tegra.c
-@@ -1363,6 +1363,7 @@ static void tegra_xhci_id_work(struct wo
- 	tegra->otg_usb3_port = tegra_xusb_padctl_get_usb3_companion(tegra->padctl,
- 								    tegra->otg_usb2_port);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -12546,8 +12546,7 @@ int amdgpu_dm_process_dmub_aux_transfer_
+ 		/* The reply is stored in the top nibble of the command. */
+ 		payload->reply[0] = (adev->dm.dmub_notify->aux_reply.command >> 4) & 0xF;
  
-+	pm_runtime_get_sync(tegra->dev);
- 	if (tegra->host_mode) {
- 		/* switch to host mode */
- 		if (tegra->otg_usb3_port >= 0) {
-@@ -1392,6 +1393,7 @@ static void tegra_xhci_id_work(struct wo
- 		}
+-	if (!payload->write && p_notify->aux_reply.length &&
+-			(payload->reply[0] == AUX_TRANSACTION_REPLY_AUX_ACK))
++	if (!payload->write && p_notify->aux_reply.length)
+ 		memcpy(payload->data, p_notify->aux_reply.data,
+ 				p_notify->aux_reply.length);
  
- 		tegra_xhci_set_port_power(tegra, true, true);
-+		pm_runtime_mark_last_busy(tegra->dev);
- 
- 	} else {
- 		if (tegra->otg_usb3_port >= 0)
-@@ -1399,6 +1401,7 @@ static void tegra_xhci_id_work(struct wo
- 
- 		tegra_xhci_set_port_power(tegra, true, false);
- 	}
-+	pm_runtime_put_autosuspend(tegra->dev);
- }
- 
- #if IS_ENABLED(CONFIG_PM) || IS_ENABLED(CONFIG_PM_SLEEP)
 
 
