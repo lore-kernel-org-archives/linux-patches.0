@@ -1,129 +1,86 @@
-Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBAE71E1E1F
-	for <patches@lists.linux.dev>; Mon, 12 May 2025 03:31:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0689F1E87B;
+	Mon, 12 May 2025 06:41:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747020704; cv=none; b=VtRxCHSAxw0qSt+gOWHYGuHKZTn5Na4VDDxTTBzlD6udPLSHwhWnmaWZqNGMF9mN9zvKPnitdL9k8nbn6nb9P1DSUDQPcjs6CAEJ2012srYk9WTA7ciXkYYRH7RWHFFaMpVAaNXJCAOs2yP0Qvl/1watBpPe2uTvd8kvsbzF66Y=
+	t=1747032089; cv=none; b=Czkxt1dpoY9NH96yJBzPV2cvNUDn+Fj+iJr0NG4fnYdxXuxfjyqQy8gN5boxbnYf/15niDpJ4zACkWmQtHYGbAI6je+i6tmSjuT5+xyUs5EKSzFgg10eZeiJsVtiLMg+KpGmy3Vg1Mp9wzN+jGF1I9IEWZbcQOcK1rpExSx0hO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747020704; c=relaxed/simple;
-	bh=1UfzN0drI/52aA/1kE18PAPZsjm6Wigacdpy3q4D0FY=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ZsayjBw8xUAVTf2AZ1H7RttmLysAWBSGgdLTD8G5n7v365JAeMD9PQS1qnQAJwQbvMfilKKkOvHviqNWqj4m7cRJbnZD0irTBAClzS0pj6+SRil9T6FK6khZijtLzmASH17fJTcvea5Q5bjDZiXOVRr2tmo6Rd0++yee6nejTEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54C20FUr026933;
-	Sun, 11 May 2025 20:31:35 -0700
-Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 46j6ajs10s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Sun, 11 May 2025 20:31:35 -0700 (PDT)
-Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
- ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Sun, 11 May 2025 20:31:34 -0700
-Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
- ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Sun, 11 May 2025 20:31:30 -0700
-From: <jianqi.ren.cn@windriver.com>
-To: <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-        <jianqi.ren.cn@windriver.com>, <robdclark@gmail.com>,
-        <quic_abhinavk@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        <sean@poorly.run>, <airlied@gmail.com>, <daniel@ffwll.ch>,
-        <sashal@kernel.org>, <quic_vpolimer@quicinc.com>,
-        <quic_jesszhan@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <quic_kalyant@quicinc.com>
-Subject: [PATCH 6.1.y 2/2] drm/msm/dpu: move dpu_encoder's connector assignment to atomic_enable()
-Date: Mon, 12 May 2025 11:31:29 +0800
-Message-ID: <20250512033129.3331690-1-jianqi.ren.cn@windriver.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1747032089; c=relaxed/simple;
+	bh=i5TNk7YR/rZX5iv052OQPX+7/Doigvu7KAe6p5UFrFI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sn0AlgvXdJng35PBsEcAF6jEVIdPV72T08i7tHbdeYT9LbRdxlXFUI06GdRS0JdR8aio9OWS63+w1shzpZOELwSMqkp1EgugAyBSASQqeuieqKAfS5SHJu7ojNFG725/cPi4+kooyxMC4WkqQIxbBNPAp+/nrkdxGtwlFkTbPlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GklW6pqy; arc=none smtp.client-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GklW6pqy"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1747032088; x=1778568088;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=i5TNk7YR/rZX5iv052OQPX+7/Doigvu7KAe6p5UFrFI=;
+  b=GklW6pqyBnLzEtQ13Z9Cf1bU98AhTuI+Ecsc1NNqI++J878uizN+NZg4
+   VeyOEYDheEOXnoezh2FiTGRv0WiNhq3L+PwzjR+yom52Qc6etBw2lFur3
+   6VIb7fmJJLPUr4mRMO6Fgk4xa5GpoMxFBzwPYeJDkZznIvIfQ41RVWG1I
+   SByuY4e0QsQdAB/hqOqpSySaoaKhvCYBOdeXd2k4QTjZ2b5o7hbxBalhY
+   PKr3N2HJdhKPamZabqoJTXsV35fi9ZTr/QaYq6blOI8ALW5OX0Ckuc9CT
+   2jr6utfd+O/cv0/NUPmd3sVpTcyawNoxyuC1rQWC8ypu8Amr7F/DQS/qw
+   w==;
+X-CSE-ConnectionGUID: P/7JYw0uTIm6f2Ke3XeHYg==
+X-CSE-MsgGUID: QPxe18diRbmk9fTlEWi4dw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11430"; a="48678652"
+X-IronPort-AV: E=Sophos;i="6.15,281,1739865600"; 
+   d="scan'208";a="48678652"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2025 23:41:27 -0700
+X-CSE-ConnectionGUID: 1Az2Kca3TB+mvU6wMBtWYA==
+X-CSE-MsgGUID: UM96D9tkRTyRIis8u/43SA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,281,1739865600"; 
+   d="scan'208";a="142028303"
+Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
+  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 May 2025 23:41:26 -0700
+Message-ID: <3934ac04-8dfc-4ed8-9c7d-7650d7d36999@linux.intel.com>
+Date: Mon, 12 May 2025 14:36:51 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Proofpoint-ORIG-GUID: jUe6BD8Shi0-jxbKpTp8lwmGI_5xvz9Z
-X-Authority-Analysis: v=2.4 cv=c8irQQ9l c=1 sm=1 tr=0 ts=68216b97 cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=dt9VzEwgFbYA:10 a=e5mUnYsNAAAA:8 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8 a=t7CeM3EgAAAA:8
- a=Il65ExNKTjwmHhc7HzsA:9 a=Vxmtnl_E_bksehYqCbjh:22 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22 a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEyMDAzNSBTYWx0ZWRfX4lurK13BdaPG fEReN2NNX/aSdG5vmDuTxPLaP+60ScXivK4QA8yWKzYrkQ2xlsr1M8pTV25ZshrX7jADPCS+0L8 TZaWdX9Y8LNRKQo2XwfWJDuMbr1hiwBXI+JjpYTz2nLfwwv1xduQswcNB7GDbt8T2uqx9sWO4X4
- 5XKrTzgLW8RqfhB86Xfylqggt6afs3I4AD2SqcZITEhO4/XPnBqW+ildly3IYx+0Ig5Kvx76X7H Rq3HuPgdI74NOA3vkaTcVNr81IIUg5K2rm3+a/O8/xpwLEkvrc7CFbuGCnxMVGuYqPMFzibnw7u AmGo3b1EqPiNWXuFEZF8j4BJv2HTwl0SN59y7l6iP2Gg6pO3UewZXTFLqRuXHbtrUZ3k83PylSp
- lQ99a38BIyEVQVRSlYYzsG/98gnbN5Kwqqp0yndqF9pa6fUXR8fgPEEN4VAhxiD9IDL8BCXu
-X-Proofpoint-GUID: jUe6BD8Shi0-jxbKpTp8lwmGI_5xvz9Z
-X-Sensitive_Customer_Information: Yes
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-12_01,2025-05-09_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 mlxscore=0 clxscore=1011 bulkscore=0 adultscore=0
- mlxlogscore=999 malwarescore=0 spamscore=0 priorityscore=1501
- suspectscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.21.0-2504070000
- definitions=main-2505120035
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] iommu/vt-d: Restore WO permissions on second-level paging
+ entries
+To: Jason Gunthorpe <jgg@nvidia.com>, David Woodhouse <dwmw2@infradead.org>,
+ iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+ Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>
+Cc: patches@lists.linux.dev
+References: <0-v1-c26553717e90+65f-iommu_vtd_ss_wo_jgg@nvidia.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <0-v1-c26553717e90+65f-iommu_vtd_ss_wo_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+On 4/30/25 00:12, Jason Gunthorpe wrote:
+> VT-D HW can do WO permissions on the second-stage but not the first-stage
+> page table formats. The commit eea53c581688 ("iommu/vt-d: Remove WO
+> permissions on second-level paging entries") wanted to make this uniform
+> for VT-D by disabling the support for WO permissions in the second-stage.
+> 
+> This isn't consistent with how other drivers are working. Instead if the
+> underlying HW can support WO, it should. For instance AMD already supports
+> WO on its second stage (v1) format and not its first (v2).
+> 
+> If WO support needs to be discoverable it should be done through an
+> iommu_domain capability flag.
+> 
+> Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
+> ---
+>   drivers/iommu/intel/iommu.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
 
-[ Upstream commit aedf02e46eb549dac8db4821a6b9f0c6bf6e3990 ]
-
-For cases where the crtc's connectors_changed was set without enable/active
-getting toggled , there is an atomic_enable() call followed by an
-atomic_disable() but without an atomic_mode_set().
-
-This results in a NULL ptr access for the dpu_encoder_get_drm_fmt() call in
-the atomic_enable() as the dpu_encoder's connector was cleared in the
-atomic_disable() but not re-assigned as there was no atomic_mode_set() call.
-
-Fix the NULL ptr access by moving the assignment for atomic_enable() and also
-use drm_atomic_get_new_connector_for_encoder() to get the connector from
-the atomic_state.
-
-Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/59
-Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # SM8350-HDK
-Patchwork: https://patchwork.freedesktop.org/patch/606729/
-Link: https://lore.kernel.org/r/20240731191723.3050932-1-quic_abhinavk@quicinc.com
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-[Minor conflict resolved due to code context change.]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
----
-Verified the build test
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index c7fcd617b48c..94f352253c74 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -1101,8 +1101,6 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
- 
- 	cstate->num_mixers = num_lm;
- 
--	dpu_enc->connector = conn_state->connector;
--
- 	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
- 		struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
- 
-@@ -1192,6 +1190,9 @@ static void dpu_encoder_virt_atomic_enable(struct drm_encoder *drm_enc,
- 	dpu_enc = to_dpu_encoder_virt(drm_enc);
- 
- 	mutex_lock(&dpu_enc->enc_lock);
-+
-+	dpu_enc->connector = drm_atomic_get_new_connector_for_encoder(state, drm_enc);
-+
- 	cur_mode = &dpu_enc->base.crtc->state->adjusted_mode;
- 
- 	trace_dpu_enc_enable(DRMID(drm_enc), cur_mode->hdisplay,
--- 
-2.34.1
-
+Queued for v6.16-rc1. Thank you!
