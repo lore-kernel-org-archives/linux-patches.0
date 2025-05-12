@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A477221770B;
-	Mon, 12 May 2025 17:48:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424551E505;
+	Mon, 12 May 2025 17:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072115; cv=none; b=YcXWK81VPIFLbHvfibMo3cTGrg3lLKkKNDD3Yn++mxR7lP715287Qs19wMrAKNe6sHYRPMXywSu0p9UCV9XCaL5q0UKUOP+tMn98Qali4jjYmhX2U4LHs6LnT0cQOgbYCN7nyTn5r5YOa4088SxKAgxe9zoGfe6MX1wXQafSJ6w=
+	t=1747072119; cv=none; b=hCJesoAGUkNA/Yc67duzDYy8/YLfP5CHf7wo3j3syrGg1FcILBLSktAIBBKuSjMuIQzS7pKGq9ijK6wCa/zmDu/4EbM3SjU6GuIJ39W7AMYxDyu3pZSVoObugsh0oDRNNUJ5POV157T03uHGkkdHmA6Jx9ybTwegArRlq7a3yI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072115; c=relaxed/simple;
-	bh=CpwWA09NVhPVu1wtHwud/oNED1wgAd70rP8eU/Ahiqg=;
+	s=arc-20240116; t=1747072119; c=relaxed/simple;
+	bh=+aVbTpES5CrNr/gS0wvjvxuDta2czleIPdB69sSy39Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o1PI7QAZZ8H0AfgWtfTUiXq7CCcd3c8CrraQRfZ11sUv2+sWwO1W/96nG4OBvg6vMjlImRFLm9I4Z9HKuoswHK4sB9ysR+zsqO5JN1VqyfOzX7PcFY5FPJLwazpxJm24HreL6TujisF2A+o+UGZuVt9OjEjRVD6JGSpOm5wSOmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUlbhg/z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eDhzSm+mBCJ7Vl+m/cEJ9S/7vRmdsCKzQpdiJdDSbN79AA/45D5hIy6v2gyGUHMtTqAEFQA4+pcvldqHDrY/qR5LWqclpRIKrvnHkbyOtnomEYjA4w9gaaqv8qGlMeD9+Kl1d8OsiVB/pbDhLfSB+yIOO7KFgLhCpTWz0VYhN7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4gzuI76; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUlbhg/z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E79C4CEE7;
-	Mon, 12 May 2025 17:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4gzuI76"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7085C4CEE7;
+	Mon, 12 May 2025 17:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072115;
-	bh=CpwWA09NVhPVu1wtHwud/oNED1wgAd70rP8eU/Ahiqg=;
+	s=korg; t=1747072119;
+	bh=+aVbTpES5CrNr/gS0wvjvxuDta2czleIPdB69sSy39Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FUlbhg/zzpRQzas5g3/jJD/Nmsu/sBMJN8tWRD9xb88etnKIQwaqLPRXMq/UkEs17
-	 OTGpZQ6m/yK8ZXcq/c8PU0AWmXvrhBLAAg6YwKwcb0be+zi0uZMK/DrYhbpfsv1yG5
-	 Ba5sN1dP3BDzR7Ofx6/b7c1PRsngs5Anw9G+5KKc=
+	b=r4gzuI76JNK5+flpL+qP2BOYnWnGH1yGIqQFtEVFUU6y/dnEw+9FNHPtNAc7qYZX0
+	 Pf3ZYL7tkB51dK2uqGjv/YIAx3IpXysgndDxw0i7hvcn6865v/F2R1u7+Uh5GSuICu
+	 XxWAamm4aVeL7wiP/qvmsH5pyfRjaQ+Av1/Ck9Zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Katzmann <vk2bea@gmail.com>,
-	Dave Penkler <dpenkler@gmail.com>
-Subject: [PATCH 6.14 146/197] usb: usbtmc: Fix erroneous get_stb ioctl error returns
-Date: Mon, 12 May 2025 19:39:56 +0200
-Message-ID: <20250512172050.338804080@linuxfoundation.org>
+	Mark Tinguely <mark.tinguely@oracle.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Changwei Ge <gechangwei@live.cn>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.14 129/197] ocfs2: fix panic in failed foilio allocation
+Date: Mon, 12 May 2025 19:39:39 +0200
+Message-ID: <20250512172049.646359574@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -50,70 +56,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Penkler <dpenkler@gmail.com>
+From: Mark Tinguely <mark.tinguely@oracle.com>
 
-commit cac01bd178d6a2a23727f138d647ce1a0e8a73a1 upstream.
+commit 31d4cd4eb2f8d9b87ebfa6a5e443a59e3b3d7b8c upstream.
 
-wait_event_interruptible_timeout returns a long
-The return was being assigned to an int causing an integer overflow when
-the remaining jiffies > INT_MAX resulting in random error returns.
+commit 7e119cff9d0a ("ocfs2: convert w_pages to w_folios") and commit
+9a5e08652dc4b ("ocfs2: use an array of folios instead of an array of
+pages") save -ENOMEM in the folio array upon allocation failure and call
+the folio array free code.
 
-Use a long return value and convert to int ioctl return only on error.
+The folio array free code expects either valid folio pointers or NULL.
+Finding the -ENOMEM will result in a panic.  Fix by NULLing the error
+folio entry.
 
-When the return value of wait_event_interruptible_timeout was <= INT_MAX
-the number of remaining jiffies was returned which has no meaning for the
-user. Return 0 on success.
-
-Reported-by: Michael Katzmann <vk2bea@gmail.com>
-Fixes: dbf3e7f654c0 ("Implement an ioctl to support the USMTMC-USB488 READ_STATUS_BYTE operation.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dave Penkler <dpenkler@gmail.com>
-Link: https://lore.kernel.org/r/20250502070941.31819-2-dpenkler@gmail.com
+Link: https://lkml.kernel.org/r/c879a52b-835c-4fa0-902b-8b2e9196dcbd@oracle.com
+Fixes: 7e119cff9d0a ("ocfs2: convert w_pages to w_folios")
+Fixes: 9a5e08652dc4b ("ocfs2: use an array of folios instead of an array of pages")
+Signed-off-by: Mark Tinguely <mark.tinguely@oracle.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/usbtmc.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ fs/ocfs2/alloc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/class/usbtmc.c
-+++ b/drivers/usb/class/usbtmc.c
-@@ -482,6 +482,7 @@ static int usbtmc_get_stb(struct usbtmc_
- 	u8 *buffer;
- 	u8 tag;
- 	int rv;
-+	long wait_rv;
- 
- 	dev_dbg(dev, "Enter ioctl_read_stb iin_ep_present: %d\n",
- 		data->iin_ep_present);
-@@ -511,16 +512,17 @@ static int usbtmc_get_stb(struct usbtmc_
- 	}
- 
- 	if (data->iin_ep_present) {
--		rv = wait_event_interruptible_timeout(
-+		wait_rv = wait_event_interruptible_timeout(
- 			data->waitq,
- 			atomic_read(&data->iin_data_valid) != 0,
- 			file_data->timeout);
--		if (rv < 0) {
--			dev_dbg(dev, "wait interrupted %d\n", rv);
-+		if (wait_rv < 0) {
-+			dev_dbg(dev, "wait interrupted %ld\n", wait_rv);
-+			rv = wait_rv;
- 			goto exit;
+--- a/fs/ocfs2/alloc.c
++++ b/fs/ocfs2/alloc.c
+@@ -6918,6 +6918,7 @@ static int ocfs2_grab_folios(struct inod
+ 		if (IS_ERR(folios[numfolios])) {
+ 			ret = PTR_ERR(folios[numfolios]);
+ 			mlog_errno(ret);
++			folios[numfolios] = NULL;
+ 			goto out;
  		}
  
--		if (rv == 0) {
-+		if (wait_rv == 0) {
- 			dev_dbg(dev, "wait timed out\n");
- 			rv = -ETIMEDOUT;
- 			goto exit;
-@@ -539,6 +541,8 @@ static int usbtmc_get_stb(struct usbtmc_
- 
- 	dev_dbg(dev, "stb:0x%02x received %d\n", (unsigned int)*stb, rv);
- 
-+	rv = 0;
-+
-  exit:
- 	/* bump interrupt bTag */
- 	data->iin_bTag += 1;
 
 
