@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE26140E34;
-	Mon, 12 May 2025 18:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7124D175BF;
+	Mon, 12 May 2025 18:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072923; cv=none; b=Ex5Odg9nqp/JOfTg1FDfrGXmVpey+mDEQqIGwPeuMnCG62ISlL2y+ftAhsLNj5ftjET5GLfQx9s+g392S+TkU4tt+JdJROzPo5h4jJWQd9kKwVlvfoZycGMwioJKEzi4Gf85espy/lOcfrLQh68IyRjWAyephKF21fLUtD/EQQY=
+	t=1747072926; cv=none; b=PA9vFNVLd6IHXWhE9tQkk3jaYcwna4hyqMnc2wG+DnySyep/9OUABBB90KfHsaCQ9o1EcWn7MqGq3BM6iRbFmdtS4MrTOgWQbJT5jPadMx8PiO8a9jLjwQlveqa1452oQ7260e4YSUOuWa07aARqfftsLpMCHETPAAJV9j0JG2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072923; c=relaxed/simple;
-	bh=Kt6SW8yEw84qX3jQ1iccvQU1s72Sp72s1Ie3/JQlBdo=;
+	s=arc-20240116; t=1747072926; c=relaxed/simple;
+	bh=N9a72ETdxXtnmcv2PR01/fKY2/JY4tnifqjZyHX1HJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Fi3BdeJSfE2i66bMzQ6p+nsLnZ66a1N93AR4YmkM2zwm86qy9ZEPR278Jhu39yFN2vP8D9kapNgD1A9f7TTnDdFOXEAfcVZoOQnWIVHr+uiZFDCpOr2U8d/f8aPPbNNfc4dOqT3DNj8ka91HSdqdXWCAZcpUJFZii78BobSLX7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/5+57S9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KIpzJznG0Zowyf91VhWG5HyLWhk+QnyeBGEp4DUok1jvLuFxU6q0sxBvK9w2sjQ4WvtkAqUgWAeSpL8wViGsZzC4dUPAb3cAiBrVCqh6OnLpQfyFSvGD8hsViNteCqLSWcnGKrdnw71Ed3hOkNUfxAr10v5JhFrtOW24BF35w14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QIHeig5X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/5+57S9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92962C4CEE7;
-	Mon, 12 May 2025 18:02:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QIHeig5X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D1CC4CEE7;
+	Mon, 12 May 2025 18:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072923;
-	bh=Kt6SW8yEw84qX3jQ1iccvQU1s72Sp72s1Ie3/JQlBdo=;
+	s=korg; t=1747072926;
+	bh=N9a72ETdxXtnmcv2PR01/fKY2/JY4tnifqjZyHX1HJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x/5+57S9N6BMvn3FxsE0i5GSS/1hht6INUUznXkv51PoQtA/6kGdk/UuHu1/YLCMk
-	 ZHKFAXH/TDA2IYzDLrTX96t88xo9OpkZXx1UwjBo93i5hc1NwkJ6QqbfQ6cCG1eiaX
-	 WwSWxOqDdcIU3zIg+OEzHnLuidsY7O17A27pkPt0=
+	b=QIHeig5X8k9iO4t724V6Oor1ajSEXe6Y3KN9G+ITZj9U6vhVr4lYhc1SEiHI+snV8
+	 m9LO7wdtxjvkTse2NYdfqMH+VM6P8b/tIdrpjKphN2mSKxCPDjpG8eSydl98LRlpy+
+	 qbyO6nos8+4fTn/EuyeQlZOIuROK8rlFsv83IJKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Shahrouzi <gshahrouzi@gmail.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 068/184] staging: iio: adc: ad7816: Correct conditional logic for store mode
-Date: Mon, 12 May 2025 19:44:29 +0200
-Message-ID: <20250512172044.605712127@linuxfoundation.org>
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Stefan Wahren <wahrenst@gmx.net>
+Subject: [PATCH 6.12 069/184] staging: bcm2835-camera: Initialise dev in v4l2_dev
+Date: Mon, 12 May 2025 19:44:30 +0200
+Message-ID: <20250512172044.646254972@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -45,50 +44,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabriel Shahrouzi <gshahrouzi@gmail.com>
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
 
-commit 2e922956277187655ed9bedf7b5c28906e51708f upstream.
+commit 98698ca0e58734bc5c1c24e5bbc7429f981cd186 upstream.
 
-The mode setting logic in ad7816_store_mode was reversed due to
-incorrect handling of the strcmp return value. strcmp returns 0 on
-match, so the `if (strcmp(buf, "full"))` block executed when the
-input was not "full".
+Commit 42a2f6664e18 ("staging: vc04_services: Move global g_state to
+vchiq_state") changed mmal_init to pass dev->v4l2_dev.dev to
+vchiq_mmal_init, however nothing iniitialised dev->v4l2_dev, so we got
+a NULL pointer dereference.
 
-This resulted in "full" setting the mode to AD7816_PD (power-down) and
-other inputs setting it to AD7816_FULL.
+Set dev->v4l2_dev.dev during bcm2835_mmal_probe. The device pointer
+could be passed into v4l2_device_register to set it, however that also
+has other effects that would need additional changes.
 
-Fix this by checking it against 0 to correctly check for "full" and
-"power-down", mapping them to AD7816_FULL and AD7816_PD respectively.
-
-Fixes: 7924425db04a ("staging: iio: adc: new driver for AD7816 devices")
+Fixes: 42a2f6664e18 ("staging: vc04_services: Move global g_state to vchiq_state")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gabriel Shahrouzi <gshahrouzi@gmail.com>
-Acked-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://lore.kernel.org/stable/20250414152920.467505-1-gshahrouzi%40gmail.com
-Link: https://patch.msgid.link/20250414154050.469482-1-gshahrouzi@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://lore.kernel.org/r/20250423-staging-bcm2835-v4l2-fix-v2-1-3227f0ba4700@raspberrypi.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/iio/adc/ad7816.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/vc04_services/bcm2835-camera/bcm2835-camera.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/staging/iio/adc/ad7816.c
-+++ b/drivers/staging/iio/adc/ad7816.c
-@@ -136,7 +136,7 @@ static ssize_t ad7816_store_mode(struct
- 	struct iio_dev *indio_dev = dev_to_iio_dev(dev);
- 	struct ad7816_chip_info *chip = iio_priv(indio_dev);
+--- a/drivers/staging/vc04_services/bcm2835-camera/bcm2835-camera.c
++++ b/drivers/staging/vc04_services/bcm2835-camera/bcm2835-camera.c
+@@ -1902,6 +1902,7 @@ static int bcm2835_mmal_probe(struct vch
+ 				__func__, ret);
+ 			goto free_dev;
+ 		}
++		dev->v4l2_dev.dev = &device->dev;
  
--	if (strcmp(buf, "full")) {
-+	if (strcmp(buf, "full") == 0) {
- 		gpiod_set_value(chip->rdwr_pin, 1);
- 		chip->mode = AD7816_FULL;
- 	} else {
+ 		/* setup v4l controls */
+ 		ret = bcm2835_mmal_init_controls(dev, &dev->ctrl_handler);
 
 
