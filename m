@@ -1,91 +1,123 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE99A297101;
-	Mon, 12 May 2025 18:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A19298CC4;
+	Mon, 12 May 2025 18:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073071; cv=none; b=A4QcPGMoXUP3arceUP2R8TS7Dj8FZDQjfHN+aipStX/IgaZEMDWBLnCoVMXVj4s+5Kw4m+SfYmZsToq5G5GBoQSIJWXVo7ynR2KVwv5RyaWQ0wYRernDgXsCOFZo7Z0NjKPM6MVDB84G3TYbapGf3W1YzFA7+PuW2sGAERRiru8=
+	t=1747073072; cv=none; b=O6fixWUfRlxcBRGX6tS/PrtMXaSHM/3U4O7DUUjw7Q40qFxZxw/pHzFlWz/zNDbI/4MABVImlHZPXtePugg1+lX0Z8Qo1eukbULY1u2pdBQJqJKIwjlQLk4dqEvXsrtKub3GGxlvX4x9wcmPVikOv+v+01we7VZqp+J08Ievoks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073071; c=relaxed/simple;
-	bh=6yGGThJp/v6xWSh4vMlnt3kWtvP0zME5v5Q+cE7cJYQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=F7FhWVz8ug5SK9Ac/k3P0m4D7edpiMHgOm63TVFohS/GolCLwL+BFG5kVmoXtRLu3ZMpOaus8j28AVp4u8q/SZLJzGHhahMqCryKBqtc+PCtin0Ss9hSzfZtX4jRDwQcUoZilRiP7BLx6ujcKT6ziTI1o9PoQanzOQHU5Qd3RXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tBzDKoys; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747073072; c=relaxed/simple;
+	bh=6UVnAcF7CuiDy1dIfaMC7Wp9pTazPt2j3D6QLR0+SQQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=JPODBY+i2ha4rMlVjLC7tuoDnOPHpetmRh7p3YC45T0Xtk24gDkO1mEj+BCaCatJ9ldQku4dCTm0BJHtbVhP5KwumorTOV4ZhNLap4tT1NrK9ABAaiQVtSlE7nk3a1uZWSK+aWACp0KlDE+h0uzStPUyRq0vd6PiCvc8Xvoo7KI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hiiRMLWe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tBzDKoys"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6436DC4CEF0;
-	Mon, 12 May 2025 18:04:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747073071;
-	bh=6yGGThJp/v6xWSh4vMlnt3kWtvP0zME5v5Q+cE7cJYQ=;
-	h=From:To:Cc:Subject:Date:From;
-	b=tBzDKoysDaTnoV5UXhZJbwHZw5RlI/kinmKfvVPTX8b07k2Ok5QaXZUhzHQ9KSDPE
-	 ySY/5g4vUj4qv2mhwz3xBIkYD7fK4sQXSOUKV0kYAPonGQ+c2P1XZDXmkra8Rc3H5k
-	 uQPPT0KLIYK7U+qeayTxhb727L+6q86HhjJ5n+io/4kRmFdZlaCjM9g34IDaSF5WxI
-	 W4aaDH3WgRWqHDJqhmq+xfT8d7SKDdW167ccA2UxjyY3foriuXYKgr3JcMgQ9t80it
-	 r2bc4Eppfs8KzdgukBLxTw58h/5MwcvjVCn6g2fk2oiwKxnRwpoYXkh00uO1i1fgq5
-	 vbyhr2zWM+dTA==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Kees Cook <kees@kernel.org>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	josef@toxicpanda.com,
-	linux-btrfs@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 01/11] btrfs: compression: adjust cb->compressed_folios allocation type
-Date: Mon, 12 May 2025 14:04:16 -0400
-Message-Id: <20250512180426.437627-1-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hiiRMLWe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99C4C4CEEF;
+	Mon, 12 May 2025 18:04:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1747073072;
+	bh=6UVnAcF7CuiDy1dIfaMC7Wp9pTazPt2j3D6QLR0+SQQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=hiiRMLWeeT1lRpKlKBVYOfw94PXY6s2QpAVT8oEBVVRANRi7+1CRxrh8xfRGzxode
+	 WPIYqtBKskm1sKgkS2/pmV2flZgr5hsayRoyOgGqKL83tsG3RnKSy/yOuazEzbRRnQ
+	 nCEsFqK3ppDtXiRjNEBP8s3okqSwgBGgn6Hsi+R0=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Kevin Baker <kevinb@ventureresearch.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 145/184] drm/panel: simple: Update timings for AUO G101EVN010
+Date: Mon, 12 May 2025 19:45:46 +0200
+Message-ID: <20250512172047.719308112@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
+References: <20250512172041.624042835@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.12.28
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <kees@kernel.org>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 6f9a8ab796c6528d22de3c504c81fce7dde63d8a ]
+------------------
 
-In preparation for making the kmalloc() family of allocators type aware,
-we need to make sure that the returned type from the allocation matches
-the type of the variable being assigned. (Before, the allocator would
-always return "void *", which can be implicitly cast to any pointer type.)
+From: Kevin Baker <kevinb@ventureresearch.com>
 
-The assigned type is "struct folio **" but the returned type will be
-"struct page **". These are the same allocation size (pointer size), but
-the types don't match. Adjust the allocation type to match the assignment.
+[ Upstream commit 7c6fa1797a725732981f2d77711c867166737719 ]
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Kees Cook <kees@kernel.org>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Switch to panel timings based on datasheet for the AUO G101EVN01.0
+LVDS panel. Default timings were tested on the panel.
+
+Previous mode-based timings resulted in horizontal display shift.
+
+Signed-off-by: Kevin Baker <kevinb@ventureresearch.com>
+Fixes: 4fb86404a977 ("drm/panel: simple: Add AUO G101EVN010 panel support")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250505170256.1385113-1-kevinb@ventureresearch.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250505170256.1385113-1-kevinb@ventureresearch.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/compression.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-simple.c | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/fs/btrfs/compression.c b/fs/btrfs/compression.c
-index 40332ab62f101..65d883da86c60 100644
---- a/fs/btrfs/compression.c
-+++ b/fs/btrfs/compression.c
-@@ -606,7 +606,7 @@ void btrfs_submit_compressed_read(struct btrfs_bio *bbio)
- 	free_extent_map(em);
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 06381c6282097..d041ff542a4ee 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -1027,27 +1027,28 @@ static const struct panel_desc auo_g070vvn01 = {
+ 	},
+ };
  
- 	cb->nr_folios = DIV_ROUND_UP(compressed_len, PAGE_SIZE);
--	cb->compressed_folios = kcalloc(cb->nr_folios, sizeof(struct page *), GFP_NOFS);
-+	cb->compressed_folios = kcalloc(cb->nr_folios, sizeof(struct folio *), GFP_NOFS);
- 	if (!cb->compressed_folios) {
- 		ret = BLK_STS_RESOURCE;
- 		goto out_free_bio;
+-static const struct drm_display_mode auo_g101evn010_mode = {
+-	.clock = 68930,
+-	.hdisplay = 1280,
+-	.hsync_start = 1280 + 82,
+-	.hsync_end = 1280 + 82 + 2,
+-	.htotal = 1280 + 82 + 2 + 84,
+-	.vdisplay = 800,
+-	.vsync_start = 800 + 8,
+-	.vsync_end = 800 + 8 + 2,
+-	.vtotal = 800 + 8 + 2 + 6,
++static const struct display_timing auo_g101evn010_timing = {
++	.pixelclock = { 64000000, 68930000, 85000000 },
++	.hactive = { 1280, 1280, 1280 },
++	.hfront_porch = { 8, 64, 256 },
++	.hback_porch = { 8, 64, 256 },
++	.hsync_len = { 40, 168, 767 },
++	.vactive = { 800, 800, 800 },
++	.vfront_porch = { 4, 8, 100 },
++	.vback_porch = { 4, 8, 100 },
++	.vsync_len = { 8, 16, 223 },
+ };
+ 
+ static const struct panel_desc auo_g101evn010 = {
+-	.modes = &auo_g101evn010_mode,
+-	.num_modes = 1,
++	.timings = &auo_g101evn010_timing,
++	.num_timings = 1,
+ 	.bpc = 6,
+ 	.size = {
+ 		.width = 216,
+ 		.height = 135,
+ 	},
+ 	.bus_format = MEDIA_BUS_FMT_RGB666_1X7X3_SPWG,
++	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
+ 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
+ };
+ 
 -- 
 2.39.5
+
+
 
