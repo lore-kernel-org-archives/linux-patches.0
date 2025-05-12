@@ -1,92 +1,90 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D91296FD0;
-	Mon, 12 May 2025 18:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979D5296FAD;
+	Mon, 12 May 2025 18:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073041; cv=none; b=klbhfwDVTrF/uufUgK2O8yg6fHXN9vOjCnIfGjEyXhnPSWXEZjE0FL/sXiJStWI4ovXXttHy+E30gzEBzO5DxrAz9FKQKG+NBHuCGOq3Yw4sLbuofh9d/mwcakTMLubetJMcnB9v0d0EGUIylXxDvIlZmEFIz6VGwLyAm2yVEV0=
+	t=1747073043; cv=none; b=NtMutUURUCYKKa1kQV/29pP1VPqs0ZnY15zbeU8LxdWZ7y7mvZ3zF+xwsk1F6kYr5Nc5VvsBNtPxOTtakreKVnGroSDUgsm6KqBjJ11M4IOFr+k8Rp+PcJG8Jdo8a+B/2gfi9XNX8yIsK/NbEkzRtK1Gbn16JDxgIqcDR//kVMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073041; c=relaxed/simple;
-	bh=cfwhkIvCUQq1I3YtpJwADzwcB+M6wGxuTXs51KteIBU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=j3eDHanZ+UKCFj5Bt+RTOE9i0/wWMB+rHyqaul+ZO+rpLHnHjt5oYT+UOdOUYM+vwvNxybOU6KX3qkW1N8Qn6dD17eAqoioZWxnk2xS4ME9Fw3RAfSbtKU1mjhr+M8l9TWAkGrPRHiDhGeCBx7PCyAtr3Qx3l0BNou/sc4xgWeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kF8f/kSs; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747073043; c=relaxed/simple;
+	bh=ZlUZfdVo+qewTvhYqENLtuR/7WNkQL4N68j/qzv2oow=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AOxWksUMlM3G3DCOMRGpOMIxq+O/h7uXeqXwZnWUxj1rmA9Q4nSa0HjF10tQOAWT77CHKQECe29NE8md61FbgVEugkexQC9yh2mdEMZGxdRab/cWyVgRSCWTehZVdpfI4NpQQHjWCX/+YVLLPKmYm58dDsJVE0l/ZTzJF3DjXmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tsux4j7w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kF8f/kSs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99736C4CEE9;
-	Mon, 12 May 2025 18:04:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747073041;
-	bh=cfwhkIvCUQq1I3YtpJwADzwcB+M6wGxuTXs51KteIBU=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tsux4j7w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0759DC4CEE9;
+	Mon, 12 May 2025 18:04:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1747073043;
+	bh=ZlUZfdVo+qewTvhYqENLtuR/7WNkQL4N68j/qzv2oow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kF8f/kSsCr0yy1WWXTFFeheCdUh+0r6iFw4qSJDMM1RotoOBdIgy9jvGtbSBp+swX
-	 qz2ZcOg7kI/gVexUbjpY//0AipxsCBVIT+21AcE8jW3keV0e1LnFyY0gydpy7ueS5I
-	 rmKgX5KQt/yNb80UQGVXF+jtQk1ImX8sqlhbQQv5OfxzfzSrrAZVu2myY+byXzB8Ou
-	 sPKxyMNJrELdcUOuh7nhY1wmxUQZjGoyULXh3u9tuhpPfgTQBMTSgGsgETZdoknW+d
-	 RilbdMGRHzCcVKAqPRSUOSyMg6fUJAb2XzqB5DVhGYKuL/HnYqPLatlNYfrdeIEyKR
-	 a28BUEN+bkBeg==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>,
-	jic23@kernel.org,
-	linux-iio@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 03/15] iio: imu: st_lsm6dsx: Fix wakeup source leaks on device unbind
-Date: Mon, 12 May 2025 14:03:38 -0400
-Message-Id: <20250512180352.437356-3-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250512180352.437356-1-sashal@kernel.org>
-References: <20250512180352.437356-1-sashal@kernel.org>
+	b=tsux4j7wd8f7cckxEaaODucSMgSB+/UNNJoR1HDEViDIT3omevr7N2DdbMe29UYu/
+	 icaZYcCav3yNom3V4emM0xiAzfKqp0tPQhRMg6XqS4hwR0vsHFVQ+7xYOrMhnscohC
+	 fOoAIsYM2B31WhwpmqjhrQ0FsBMS0e0hrPPKpiig=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 137/184] MIPS: Fix MAX_REG_OFFSET
+Date: Mon, 12 May 2025 19:45:38 +0200
+Message-ID: <20250512172047.394688649@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
+References: <20250512172041.624042835@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.14.6
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 4551383e78d59b34eea3f4ed28ad22df99e25d59 ]
+------------------
 
-Device can be unbound, so driver must also release memory for the wakeup
-source.
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20250406-b4-device-wakeup-leak-iio-v1-3-2d7d322a4a93@linaro.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+[ Upstream commit c44572e0cc13c9afff83fd333135a0aa9b27ba26 ]
+
+Fix MAX_REG_OFFSET to point to the last register in 'pt_regs' and not to
+the marker itself, which could allow regs_get_register() to return an
+invalid offset.
+
+Fixes: 40e084a506eb ("MIPS: Add uprobes support.")
+Suggested-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/mips/include/asm/ptrace.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
-index 4fdcc2acc94ed..96c6106b95eef 100644
---- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
-+++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
-@@ -2719,8 +2719,11 @@ int st_lsm6dsx_probe(struct device *dev, int irq, int hw_id,
- 	}
+diff --git a/arch/mips/include/asm/ptrace.h b/arch/mips/include/asm/ptrace.h
+index 4a2b40ce39e09..841612913f0d1 100644
+--- a/arch/mips/include/asm/ptrace.h
++++ b/arch/mips/include/asm/ptrace.h
+@@ -65,7 +65,8 @@ static inline void instruction_pointer_set(struct pt_regs *regs,
  
- 	if (device_property_read_bool(dev, "wakeup-source") ||
--	    (pdata && pdata->wakeup_source))
--		device_init_wakeup(dev, true);
-+	    (pdata && pdata->wakeup_source)) {
-+		err = devm_device_init_wakeup(dev);
-+		if (err)
-+			return dev_err_probe(dev, err, "Failed to init wakeup\n");
-+	}
+ /* Query offset/name of register from its name/offset */
+ extern int regs_query_register_offset(const char *name);
+-#define MAX_REG_OFFSET (offsetof(struct pt_regs, __last))
++#define MAX_REG_OFFSET \
++	(offsetof(struct pt_regs, __last) - sizeof(unsigned long))
  
- 	return 0;
- }
+ /**
+  * regs_get_register() - get register value from its offset
 -- 
 2.39.5
+
+
 
