@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D66B1A08CA;
-	Mon, 12 May 2025 17:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D551DDC07;
+	Mon, 12 May 2025 17:50:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072247; cv=none; b=olX0x5MzHNHUdNKZt+5pNSYnQOJJSH/Tdew8VqQWeqZUMOIsJDbP7qrsmicvLkjE6O2BhDWTKdW3d6d6iVqdP+Bdu8kY2/HrBTcr2pvvdPvtZQkt7/aulSs4kLd9CYpLDZEWKjabjevTBhwsm/sgLC/P/O3RrJLj1RCLKFIQEeY=
+	t=1747072253; cv=none; b=a9c4imwnX2TKXAnBqwSbKdfeqElX2SVO1oMTOf+s/35k9i1AZ4ouwnsJ7UX+Q0WdtkK/g+F6I0XAFYWDLovY0dSocY4NEgCX25NCsfW9HJcWWL5leg939YHb6JVt/y2sdVlVmZ7qX2pyGlxCKKDC+0peRLo2cV67HZGlk2hwCb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072247; c=relaxed/simple;
-	bh=Y8+PUHpD1S4ClIQpzGqURKsmafHf/+T4VEpyWZcYk3U=;
+	s=arc-20240116; t=1747072253; c=relaxed/simple;
+	bh=/7eH1nc7brvTOA+Bba9MN3qkA6CWZasP6fCrgJvc8W8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i7mntv+KAce0G3Zq3OMakCtht3Y0LbcFVpAvjYLRyW4fg13odM05JRrCCVZiaeX7NknRRsHCHEXsemdbVU4pob0UFlddHF6HlcWR6DOPxkUTdw4uzlYCqlGhUltv7QPvPT4eyyX4S1DyJ1WqwRn+/LbWWWCd3VtOTLA9ZTmjxEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tbbDWMpv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pi2FJB/2DQGAp2zw/LyOmb6CU2m4l9qij2ajyOdRRvgYeDBGw441WNj0jif5ZAsJvkoLx3SrIGzddAR0+/xkC17yDl7qiF75DOrkmVBG5N4FOsz7kMjDLtcocTvUz16fJc0Dzb9pn89l2BfcfQZPPpGCWU0J3ZRmH3I2K5tEFfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXTdOgGf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbbDWMpv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26B4FC4CEE7;
-	Mon, 12 May 2025 17:50:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXTdOgGf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 023BDC4CEE7;
+	Mon, 12 May 2025 17:50:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072247;
-	bh=Y8+PUHpD1S4ClIQpzGqURKsmafHf/+T4VEpyWZcYk3U=;
+	s=korg; t=1747072253;
+	bh=/7eH1nc7brvTOA+Bba9MN3qkA6CWZasP6fCrgJvc8W8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tbbDWMpvp2MRpJcvzNOkzgXbHOoB6zctG1/9gt89tvoDOX2Vb22x3Be/7qEvr6sLE
-	 2BlsTNEhNbtN4ZY4hYPYq/3n3WVLSWg5FmvmrgNBXJdjt0E+Jx3lhc0I7uH3oxUyEP
-	 7v72aBp6qo6k+lLvsrBr0uFLpQasGHoxRHGYdy1k=
+	b=xXTdOgGfy0mqoOrABMtsumQP2JLirZf4Y2pjIr5EJjiorZU/ehU4QyvOAWmKTnogq
+	 W8vvetdbVLrLO063orHWIncQtjIJ7si97HDTX+w58RKYgGE0fJ8L8kOaC44lIhck1q
+	 zqeFKDdY20a6J3mnWX1fKcx+yPQHVt3rrUYfqtTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	James Morse <james.morse@arm.com>,
 	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.14 179/197] arm64: proton-pack: Expose whether the platform is mitigated by firmware
-Date: Mon, 12 May 2025 19:40:29 +0200
-Message-ID: <20250512172051.678292583@linuxfoundation.org>
+Subject: [PATCH 6.14 180/197] arm64: proton-pack: Expose whether the branchy loop k value
+Date: Mon, 12 May 2025 19:40:30 +0200
+Message-ID: <20250512172051.718714130@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -52,23 +52,10 @@ Content-Transfer-Encoding: 8bit
 
 From: James Morse <james.morse@arm.com>
 
-commit e7956c92f396a44eeeb6eaf7a5b5e1ad24db6748 upstream.
+commit a1152be30a043d2d4dcb1683415f328bf3c51978 upstream.
 
-is_spectre_bhb_fw_affected() allows the caller to determine if the CPU
-is known to need a firmware mitigation. CPUs are either on the list
-of CPUs we know about, or firmware has been queried and reported that
-the platform is affected - and mitigated by firmware.
-
-This helper is not useful to determine if the platform is mitigated
-by firmware. A CPU could be on the know list, but the firmware may
-not be implemented. Its affected but not mitigated.
-
-spectre_bhb_enable_mitigation() handles this distinction by checking
-the firmware state before enabling the mitigation.
-
-Add a helper to expose this state. This will be used by the BPF JIT
-to determine if calling firmware for a mitigation is necessary and
-supported.
+Add a helper to expose the k value of the branchy loop. This is needed
+by the BPF JIT to generate the mitigation sequence in BPF programs.
 
 Signed-off-by: James Morse <james.morse@arm.com>
 Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
@@ -84,23 +71,23 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  enum mitigation_state arm64_get_spectre_bhb_state(void);
  bool is_spectre_bhb_affected(const struct arm64_cpu_capabilities *entry, int scope);
-+bool is_spectre_bhb_fw_mitigated(void);
++u8 get_spectre_bhb_loop_value(void);
+ bool is_spectre_bhb_fw_mitigated(void);
  void spectre_bhb_enable_mitigation(const struct arm64_cpu_capabilities *__unused);
  bool try_emulate_el1_ssbs(struct pt_regs *regs, u32 instr);
- 
 --- a/arch/arm64/kernel/proton-pack.c
 +++ b/arch/arm64/kernel/proton-pack.c
-@@ -1093,6 +1093,11 @@ void spectre_bhb_enable_mitigation(const
- 	update_mitigation_state(&spectre_bhb_state, state);
+@@ -998,6 +998,11 @@ bool is_spectre_bhb_affected(const struc
+ 	return true;
  }
  
-+bool is_spectre_bhb_fw_mitigated(void)
++u8 get_spectre_bhb_loop_value(void)
 +{
-+	return test_bit(BHB_FW, &system_bhb_mitigations);
++	return max_bhb_k;
 +}
 +
- /* Patched to NOP when enabled */
- void noinstr spectre_bhb_patch_loop_mitigation_enable(struct alt_instr *alt,
- 						     __le32 *origptr,
+ static void this_cpu_set_vectors(enum arm64_bp_harden_el1_vectors slot)
+ {
+ 	const char *v = arm64_get_bp_hardening_vector(slot);
 
 
