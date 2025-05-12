@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6739078F52;
-	Mon, 12 May 2025 17:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364D41DC1A7;
+	Mon, 12 May 2025 17:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071128; cv=none; b=Mer6CBfI778v5AtWzmWo2rvosd0P5RDysJpVbVM/PYZ9IiUcZ5ffSN+m0bFEo185m4DoXPg0kExFiSA0C8D29Um5s/+7nTzq9ueWTaQnzC0QuvWoRgIcmx6XPIBZtXXVyzK6XP3zPnBojZqKz51dAjtEGc34fa5nWaiijn4kooc=
+	t=1747071131; cv=none; b=fGP/NhnPffzcT6lhDnq6PGPHc6UNnhbYr3sxaWx/Yko9dBAI1V98eP0w4EAaw+DpaV85ukzL0p6cqIMuJOifkrZTzQ0/8GDaCdFflOiSOdUbQCDpABwBK4NZH52wMVeDRn8F0rGeF05b3cczIfbOU7jVbbsxOMotc6EF2FPCEmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071128; c=relaxed/simple;
-	bh=vLTHy1ewRMz/nKDaHd48c/0B9pbr99zuDxkpKqbZD+g=;
+	s=arc-20240116; t=1747071131; c=relaxed/simple;
+	bh=RYia2EtB3EYH/mDcCnK8fqoMM7Lq3tegvU+eC2Np9ZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=btKvtoFWDHEYWwVMeVv6xVS89NIw4VyNALISw1aoZrzdowhkEE4j8FeHA9R8sRokDm6zY4nM3UcNckseZj6avwDB7lxHhJw5Tz+iCtPdPpdUJT4+JJlYIsCKS3lHhUGbA4lA3bWaLp3rVrpKfQsxe6+GuQxq3IcrDKhaEDCTwcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IDocVX3a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QsNUJ6Mzqt7dx/uVSicwLReT8vAEYYBAJKPp0BqqXh8JzjRVYS3pPKvA26gM9OUXx/A4wlbfB6Jn5FQMIgb0t8rfU392ucXX0xKcQQDJBi6E5tXeDd3oO+h6cJ06eAnPUU8wMREbd8VgeqSCGgXUkrgjt9pv5HCYnq3etR0jlAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdSiWUiF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IDocVX3a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8FDC4CEE7;
-	Mon, 12 May 2025 17:32:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdSiWUiF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B82C4CEE7;
+	Mon, 12 May 2025 17:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747071128;
-	bh=vLTHy1ewRMz/nKDaHd48c/0B9pbr99zuDxkpKqbZD+g=;
+	s=korg; t=1747071130;
+	bh=RYia2EtB3EYH/mDcCnK8fqoMM7Lq3tegvU+eC2Np9ZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IDocVX3avv1yuPzYmTKru29m1+EpVa5yeB42NWrSbfWe0pw6qVV/OrQpN6CQ1ASHz
-	 oIv/mSnlGfTZ0ED6KFaFQJRFy7R7HscunFY/k0Rdbj5mfTqnp/hAmi+Z/lFvWsKkLV
-	 dJCzX7rFP0PkvYLOt6pMRsjjhy6g01izgYwYlhMU=
+	b=EdSiWUiFTmVZjb++mSoHoPG8XyGmmP0S8FDSEw/DEttBGT/13EZdPXUMYEjqDLdWb
+	 jfLsp4fD6dN6oA2b21XrL4L2VKr7vZfwlRDsHNUD6y4BUKLbB0Y8qQ7PtNMJBIlEWt
+	 qGsgZjTugJaYJhFw+3STN98HHH8FXT3pl+Xg+UYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Daniel Wagner <wagi@kernel.org>,
-	Keith Busch <kbusch@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
+	Christian Brauner <brauner@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 49/54] nvme: unblock ctrl state transition for firmware update
-Date: Mon, 12 May 2025 19:30:01 +0200
-Message-ID: <20250512172017.616633138@linuxfoundation.org>
+Subject: [PATCH 5.15 50/54] do_umount(): add missing barrier before refcount checks in sync case
+Date: Mon, 12 May 2025 19:30:02 +0200
+Message-ID: <20250512172017.657178832@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172015.643809034@linuxfoundation.org>
 References: <20250512172015.643809034@linuxfoundation.org>
@@ -53,51 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Wagner <wagi@kernel.org>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 650415fca0a97472fdd79725e35152614d1aad76 ]
+[ Upstream commit 65781e19dcfcb4aed1167d87a3ffcc2a0c071d47 ]
 
-The original nvme subsystem design didn't have a CONNECTING state; the
-state machine allowed transitions from RESETTING to LIVE directly.
+do_umount() analogue of the race fixed in 119e1ef80ecf "fix
+__legitimize_mnt()/mntput() race".  Here we want to make sure that
+if __legitimize_mnt() doesn't notice our lock_mount_hash(), we will
+notice their refcount increment.  Harder to hit than mntput_no_expire()
+one, fortunately, and consequences are milder (sync umount acting
+like umount -l on a rare race with RCU pathwalk hitting at just the
+wrong time instead of use-after-free galore mntput_no_expire()
+counterpart used to be hit).  Still a bug...
 
-With the introduction of nvme fabrics the CONNECTING state was
-introduce. Over time the nvme-pci started to use the CONNECTING state as
-well.
-
-Eventually, a bug fix for the nvme-fc started to depend that the only
-valid transition to LIVE was from CONNECTING. Though this change didn't
-update the firmware update handler which was still depending on
-RESETTING to LIVE transition.
-
-The simplest way to address it for the time being is to switch into
-CONNECTING state before going to LIVE state.
-
-Fixes: d2fe192348f9 ("nvme: only allow entering LIVE from CONNECTING state")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Daniel Wagner <wagi@kernel.org>
-Closes: https://lore.kernel.org/all/0134ea15-8d5f-41f7-9e9a-d7e6d82accaa@roeck-us.net
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 48a066e72d97 ("RCU'd vfsmounts")
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 3 ++-
+ fs/namespace.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index b9ba20f4048d1..7065f66ef8cf4 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4389,7 +4389,8 @@ static void nvme_fw_act_work(struct work_struct *work)
- 		msleep(100);
- 	}
- 
--	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_LIVE))
-+	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_CONNECTING) ||
-+	    !nvme_change_ctrl_state(ctrl, NVME_CTRL_LIVE))
- 		return;
- 
- 	nvme_start_queues(ctrl);
+diff --git a/fs/namespace.c b/fs/namespace.c
+index 642baef4d9aaa..27ec6d0a68ff5 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -586,7 +586,7 @@ int __legitimize_mnt(struct vfsmount *bastard, unsigned seq)
+ 		return 0;
+ 	mnt = real_mount(bastard);
+ 	mnt_add_count(mnt, 1);
+-	smp_mb();			// see mntput_no_expire()
++	smp_mb();		// see mntput_no_expire() and do_umount()
+ 	if (likely(!read_seqretry(&mount_lock, seq)))
+ 		return 0;
+ 	if (bastard->mnt_flags & MNT_SYNC_UMOUNT) {
+@@ -1664,6 +1664,7 @@ static int do_umount(struct mount *mnt, int flags)
+ 			umount_tree(mnt, UMOUNT_PROPAGATE);
+ 		retval = 0;
+ 	} else {
++		smp_mb(); // paired with __legitimize_mnt()
+ 		shrink_submounts(mnt);
+ 		retval = -EBUSY;
+ 		if (!propagate_mount_busy(mnt, 2)) {
 -- 
 2.39.5
 
