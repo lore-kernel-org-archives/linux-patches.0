@@ -1,99 +1,176 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D4D298242;
-	Mon, 12 May 2025 18:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F34F296FBD;
+	Mon, 12 May 2025 18:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073054; cv=none; b=fB6zlKIjP51vLfi2i17+Fxl7smkkNcn01g5nin2aXiYiIWJtlH4kwnXRjgPvolay90hhDG0khBxXEQoApDkoYFRou+FrtT7kx8fHHDZP1oJmidrDU9JM1bLZGfGXmFiEub3YeUaXIKQtQB/4PBOY1iFYzQjg4XXTSuK45nFVIek=
+	t=1747073057; cv=none; b=Wc6em1PXb7/jS/btlR927LEWggAf/TDJvYHNqfYrTWbHkBmtw22dJElU0laqFzmkRwW5/ASrtCtbU+jxmw9SZyJNUyGCMNLLJpMWWUpzNRFSCBmnVEl7dDIKtAt3nU53EqUqW/Sgq0aKdVa+D3f4TwsAlJOEd3k0Dk2UQM0bcZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073054; c=relaxed/simple;
-	bh=L2k7cRkMJazui1TkT/w4yjvjzTYhEraMo91sqqKHc0A=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=EfgsczNzdjvOYVFERi2VwArA7mhJS8jmKuPtqVwGu7NKlu0oG4ErImDIJ2yon5qcT2ej5/T4Ncnlx3a3wEMyptPhK/8UrY7XE9mapXuT54OFBs4Py0eDfxZJjg9XJsH4sDXbwDp5doAbOqhLNzlv6hV5v/ai1KEsMThgTe5/aVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tNib/Eek; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747073057; c=relaxed/simple;
+	bh=0RrDHPKBXyaRDEcdta9Mt+YcmvtP1RsMgsqgP1LVL78=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NxWr3KTxQK9MXPB//F3JkBdAQ7wwOonIpsTr/rlfVvdLtQUW6KZRebm407SdZyaCpB9iu20qQeLo24GKxoi27DbwEBKJnS28xLiQDiIYM8+AOh080qfw8YcaV2ntky9xD/SQEA2CEIPwV9XelaKAr/4Zz76uoheTFVNwM7nLhsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtmB5Ea/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tNib/Eek"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ACCAC4CEF0;
-	Mon, 12 May 2025 18:04:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747073053;
-	bh=L2k7cRkMJazui1TkT/w4yjvjzTYhEraMo91sqqKHc0A=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtmB5Ea/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3373DC4CEE7;
+	Mon, 12 May 2025 18:04:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1747073055;
+	bh=0RrDHPKBXyaRDEcdta9Mt+YcmvtP1RsMgsqgP1LVL78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tNib/Eekp66m5LPPzZWoExUbqNvHYCrju1FWqQ+HzyB1i4ux3iQteYIMX17slpdPC
-	 kdI5tAU2Dvi250OBMF04SaCcrPP6IVizJ35Li0k/IVxjJearTxJ8chnE/OFPMJGsda
-	 FEFP8Akzz4DgoLCg1yNdhpRdij1NiHnrRBVOh8NLbn/xTCX6VvB5uxRgWhO3ayv0lz
-	 qPseUQcTu0ZXr5XiiX++Eo7RE4dIMVmdjJpsv2+MnQpQ6KjD6Xl+ELgO0mMO02DrxH
-	 TC5L9H6QO9yU5DC1igvZsklFHTz+LGtOFGjK0kqxQ+GL5GWlF7+WEfXENcNp5uD7TP
-	 lCQ8mCWVS+sAQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
+	b=QtmB5Ea/mpUUugMgf9uyAkURfIj+I9zIH6INc6XW7UQ4r27nlEMUeCMwVHqwZcUZ2
+	 ONvtC8j9ojtu9gL2NSRrVw6zD0FI0Cy+Zrs98B3mhgTEU57+4AAjJPPyZTOzp9Swmi
+	 ltqan3TlFjXIrNQyO5kFw0lDCpjQHGEbOonza2b0=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	syzbot+a5d8c609c02f508672cc@syzkaller.appspotmail.com,
+	Ming Lei <ming.lei@redhat.com>,
+	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
 	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>,
-	linux-block@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 10/15] block: only update request sector if needed
-Date: Mon, 12 May 2025 14:03:45 -0400
-Message-Id: <20250512180352.437356-10-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250512180352.437356-1-sashal@kernel.org>
-References: <20250512180352.437356-1-sashal@kernel.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 141/184] loop: Fix ABBA locking race
+Date: Mon, 12 May 2025 19:45:42 +0200
+Message-ID: <20250512172047.550723864@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
+References: <20250512172041.624042835@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.14.6
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit db492e24f9b05547ba12b4783f09c9d943cf42fe ]
+------------------
 
-In case of a ZONE APPEND write, regardless of native ZONE APPEND or the
-emulation layer in the zone write plugging code, the sector the data got
-written to by the device needs to be updated in the bio.
+From: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
 
-At the moment, this is done for every native ZONE APPEND write and every
-request that is flagged with 'BIO_ZONE_WRITE_PLUGGING'. But thus
-superfluously updates the sector for regular writes to a zoned block
-device.
+[ Upstream commit b49125574cae26458d4aa02ce8f4523ba9a2a328 ]
 
-Check if a bio is a native ZONE APPEND write or if the bio is flagged as
-'BIO_EMULATES_ZONE_APPEND', meaning the block layer's zone write plugging
-code handles the ZONE APPEND and translates it into a regular write and
-back. Only if one of these two criterion is met, update the sector in the
-bio upon completion.
+Current loop calls vfs_statfs() while holding the q->limits_lock. If
+FS takes some locking in vfs_statfs callback, this may lead to ABBA
+locking bug (at least, FAT fs has this issue actually).
 
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/dea089581cb6b777c1cd1500b38ac0b61df4b2d1.1746530748.git.jth@kernel.org
+So this patch calls vfs_statfs() outside q->limits_locks instead,
+because looks like no reason to hold q->limits_locks while getting
+discord configs.
+
+Chain exists of:
+  &sbi->fat_lock --> &q->q_usage_counter(io)#17 --> &q->limits_lock
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  lock(&q->limits_lock);
+                               lock(&q->q_usage_counter(io)#17);
+                               lock(&q->limits_lock);
+  lock(&sbi->fat_lock);
+
+ *** DEADLOCK ***
+
+Reported-by: syzbot+a5d8c609c02f508672cc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a5d8c609c02f508672cc
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: f5c84eff634b ("loop: Add sanity check for read/write_iter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/block/loop.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/block/blk.h b/block/blk.h
-index 9dcc92c7f2b50..c14f415de5228 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -480,7 +480,8 @@ static inline void blk_zone_update_request_bio(struct request *rq,
- 	 * the original BIO sector so that blk_zone_write_plug_bio_endio() can
- 	 * lookup the zone write plug.
- 	 */
--	if (req_op(rq) == REQ_OP_ZONE_APPEND || bio_zone_write_plugging(bio))
-+	if (req_op(rq) == REQ_OP_ZONE_APPEND ||
-+	    bio_flagged(bio, BIO_EMULATES_ZONE_APPEND))
- 		bio->bi_iter.bi_sector = rq->__sector;
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index 1f55ddef53f3d..27e4bd8ee9dc9 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -694,12 +694,11 @@ static void loop_sysfs_exit(struct loop_device *lo)
+ 				   &loop_attribute_group);
  }
- void blk_zone_write_plug_bio_endio(struct bio *bio);
+ 
+-static void loop_config_discard(struct loop_device *lo,
+-		struct queue_limits *lim)
++static void loop_get_discard_config(struct loop_device *lo,
++				    u32 *granularity, u32 *max_discard_sectors)
+ {
+ 	struct file *file = lo->lo_backing_file;
+ 	struct inode *inode = file->f_mapping->host;
+-	u32 granularity = 0, max_discard_sectors = 0;
+ 	struct kstatfs sbuf;
+ 
+ 	/*
+@@ -712,24 +711,17 @@ static void loop_config_discard(struct loop_device *lo,
+ 	if (S_ISBLK(inode->i_mode)) {
+ 		struct block_device *bdev = I_BDEV(inode);
+ 
+-		max_discard_sectors = bdev_write_zeroes_sectors(bdev);
+-		granularity = bdev_discard_granularity(bdev);
++		*max_discard_sectors = bdev_write_zeroes_sectors(bdev);
++		*granularity = bdev_discard_granularity(bdev);
+ 
+ 	/*
+ 	 * We use punch hole to reclaim the free space used by the
+ 	 * image a.k.a. discard.
+ 	 */
+ 	} else if (file->f_op->fallocate && !vfs_statfs(&file->f_path, &sbuf)) {
+-		max_discard_sectors = UINT_MAX >> 9;
+-		granularity = sbuf.f_bsize;
++		*max_discard_sectors = UINT_MAX >> 9;
++		*granularity = sbuf.f_bsize;
+ 	}
+-
+-	lim->max_hw_discard_sectors = max_discard_sectors;
+-	lim->max_write_zeroes_sectors = max_discard_sectors;
+-	if (max_discard_sectors)
+-		lim->discard_granularity = granularity;
+-	else
+-		lim->discard_granularity = 0;
+ }
+ 
+ struct loop_worker {
+@@ -915,6 +907,7 @@ static int loop_reconfigure_limits(struct loop_device *lo, unsigned int bsize)
+ 	struct inode *inode = file->f_mapping->host;
+ 	struct block_device *backing_bdev = NULL;
+ 	struct queue_limits lim;
++	u32 granularity = 0, max_discard_sectors = 0;
+ 
+ 	if (S_ISBLK(inode->i_mode))
+ 		backing_bdev = I_BDEV(inode);
+@@ -924,6 +917,8 @@ static int loop_reconfigure_limits(struct loop_device *lo, unsigned int bsize)
+ 	if (!bsize)
+ 		bsize = loop_default_blocksize(lo, backing_bdev);
+ 
++	loop_get_discard_config(lo, &granularity, &max_discard_sectors);
++
+ 	lim = queue_limits_start_update(lo->lo_queue);
+ 	lim.logical_block_size = bsize;
+ 	lim.physical_block_size = bsize;
+@@ -933,7 +928,12 @@ static int loop_reconfigure_limits(struct loop_device *lo, unsigned int bsize)
+ 		lim.features |= BLK_FEAT_WRITE_CACHE;
+ 	if (backing_bdev && !bdev_nonrot(backing_bdev))
+ 		lim.features |= BLK_FEAT_ROTATIONAL;
+-	loop_config_discard(lo, &lim);
++	lim.max_hw_discard_sectors = max_discard_sectors;
++	lim.max_write_zeroes_sectors = max_discard_sectors;
++	if (max_discard_sectors)
++		lim.discard_granularity = granularity;
++	else
++		lim.discard_granularity = 0;
+ 	return queue_limits_commit_update(lo->lo_queue, &lim);
+ }
+ 
 -- 
 2.39.5
+
+
 
