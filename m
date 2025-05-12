@@ -1,96 +1,89 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BDB319049B;
-	Mon, 12 May 2025 18:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58AE0296FA9;
+	Mon, 12 May 2025 18:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073038; cv=none; b=dstpg1Ir6jtc+12SKrSRaAoFrvvTQYq0kcROS/VVhiZxw/IlUPXxegLqxFa/fIHwr13bqq8H3wxKYKDV8kJytVjlJFYZW7rC6FCCJZic6/bsBiudABquUHKXes1flYiAJis6FLOmUZNj5NXIV2ogujlfjNop8nYxDON2+p48wig=
+	t=1747073040; cv=none; b=YC9C1y9bUoq02jd+xiH1XB6PpdZlfo+MFBibp2aFSGCDlEEh00HTfQm3c2lV1njEkUWJ0KQYWQpEacCDMIE8rq3kEpYMbZG4izHyS/P4FpVfOiYwWOniZOzj4+EmNStAiyeYdN7qhwMn54yRUTG32vIsYFPz4Nb5ZSf9zz49JWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073038; c=relaxed/simple;
-	bh=XiRHC2t043NnSSGBWQQnSJasI7hGGZVVUaHhNOhQFEk=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=aq5JDWM1k/vBtj4dazlJaus9xrcAwnA38mnixtADz/U+iY+84M12Jwl6wu4L8lDL+ck1PJYlY5e61AKy1gJtYWF4GwDcM7d1iu7s9K5qxh1kbqm6ZbdTgMKkk5CzfiC90+hWdOU3aRgPd3vc/ZZVq+bkeoDcgzzvy2JlLAqJxQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZXm+8JkR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747073040; c=relaxed/simple;
+	bh=p/Z09czsGq2gi3IdwLjGuVW8WE8fiKek0J6/EseWBn0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=SWkiswu22/9LNkbFm1zf0oYfX/I+RnNlv+k3kUuDwEf1CppJJHJ4OmVcwcVbn3pROicAgIhgAU/zGxgoi2ntkGdiw0hTivoii06M6uhdFc2rLkGLpWOxZRA4qMXHKJsTpBgnwJN1or2KyMmL/xwb0wUmmmU8vf8/7HzRsyDKBz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLPageqa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZXm+8JkR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A95C4CEEF;
-	Mon, 12 May 2025 18:03:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747073038;
-	bh=XiRHC2t043NnSSGBWQQnSJasI7hGGZVVUaHhNOhQFEk=;
-	h=From:To:Cc:Subject:Date:From;
-	b=ZXm+8JkRbQykCAmP+VlflsFkYqkA0cQxXQvQx+yAfrVreqK/qFsH2aED27vHWKB5x
-	 RJEvXBfAjnTVSwbNHu5RBck00e6fWx0O/zFYRCysSVhrAR80jmI45BruQQ0Bs8SMWN
-	 umJFY9rPUOyr45udt4hQKrvug3Mt0E3DbbX2Zp/C+nCAGGOZ0vRs/jYlyreRlcUBiR
-	 1rIGsJzpt7+PpTZDjH7UzyByTf8RFE6mGJrpi0ymC3u1/BvtDs+CkktcLCJydeS5Js
-	 iu1FvQwYUYIfWeJ5RSlK69Pr22IGgT5pTbv5geJ8F2fiUhie4Catks8XaDmAfDaQ01
-	 NGtBFeLw5OqGw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>,
-	jic23@kernel.org,
-	sean@geanix.com,
-	andriy.shevchenko@linux.intel.com,
-	Frank.Li@nxp.com,
-	nuno.sa@analog.com,
-	haibo.chen@nxp.com,
-	jstephan@baylibre.com,
-	tgamblin@baylibre.com,
-	han.xu@nxp.com,
-	peterz@infradead.org,
-	linux-iio@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 01/15] iio: accel: fxls8962af: Fix wakeup source leaks on device unbind
-Date: Mon, 12 May 2025 14:03:36 -0400
-Message-Id: <20250512180352.437356-1-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLPageqa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A4FC4CEE7;
+	Mon, 12 May 2025 18:03:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1747073040;
+	bh=p/Z09czsGq2gi3IdwLjGuVW8WE8fiKek0J6/EseWBn0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=GLPageqapXQNeoTnu1mbnH7/AzzZbDqVXjdiFjSg09z4G7yRlV5BuFHeeVsJcaD8T
+	 ASfcuEoMjBvndYXQJeG9En0N591cUK/g/eRg5fwp30hcDrDVCQNvYQUWZa7RMM3eE2
+	 p44iDtf6qtp3K73zfn9Krv0kiCiCV/egIxqXG5ZY=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Marco Crivellari <marco.crivellari@suse.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 136/184] MIPS: Move r4k_wait() to .cpuidle.text section
+Date: Mon, 12 May 2025 19:45:37 +0200
+Message-ID: <20250512172047.351932848@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
+References: <20250512172041.624042835@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.14.6
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-[ Upstream commit 0cd34d98dfd4f2b596415b8f12faf7b946613458 ]
+------------------
 
-Device can be unbound, so driver must also release memory for the wakeup
-source.
+From: Marco Crivellari <marco.crivellari@suse.com>
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20250406-b4-device-wakeup-leak-iio-v1-1-2d7d322a4a93@linaro.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+[ Upstream commit b713f27e32d87c35737ec942dd6f5ed6b7475f48 ]
+
+Fix missing .cpuidle.text section assignment for r4k_wait() to correct
+backtracing with nmi_backtrace().
+
+Fixes: 97c8580e85cf ("MIPS: Annotate cpu_wait implementations with __cpuidle")
+Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Acked-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/fxls8962af-core.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/mips/kernel/genex.S | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iio/accel/fxls8962af-core.c b/drivers/iio/accel/fxls8962af-core.c
-index 987212a7c038e..a0ae30c86687a 100644
---- a/drivers/iio/accel/fxls8962af-core.c
-+++ b/drivers/iio/accel/fxls8962af-core.c
-@@ -1229,8 +1229,11 @@ int fxls8962af_core_probe(struct device *dev, struct regmap *regmap, int irq)
- 	if (ret)
- 		return ret;
+diff --git a/arch/mips/kernel/genex.S b/arch/mips/kernel/genex.S
+index 46d975d00298d..2cf312d9a3b09 100644
+--- a/arch/mips/kernel/genex.S
++++ b/arch/mips/kernel/genex.S
+@@ -104,6 +104,7 @@ handle_vcei:
  
--	if (device_property_read_bool(dev, "wakeup-source"))
--		device_init_wakeup(dev, true);
-+	if (device_property_read_bool(dev, "wakeup-source")) {
-+		ret = devm_device_init_wakeup(dev);
-+		if (ret)
-+			return dev_err_probe(dev, ret, "Failed to init wakeup\n");
-+	}
+ 	__FINIT
  
- 	return devm_iio_device_register(dev, indio_dev);
- }
++	.section .cpuidle.text,"ax"
+ 	/* Align to 32 bytes for the maximum idle interrupt region size. */
+ 	.align	5
+ LEAF(r4k_wait)
 -- 
 2.39.5
+
+
 
