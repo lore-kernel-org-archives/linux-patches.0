@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476372980CC;
-	Mon, 12 May 2025 18:07:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2392123C510;
+	Mon, 12 May 2025 18:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073238; cv=none; b=kJyF5AkxUAgCvyFrQlOnA9DkqZ1MPpc2UFcVxwklgQkS8k6Z11hKYCYyaytqapDeRRT8SG2EYfmUE8/Yz1lv9TfljyL0cPPHnmp2SrI2ceVvT0/b8PHGwt8OqKOUHqT3dclhTm7qCd/AQrbNEuvvnF9lhFfDYSW3kfdn+Uue+iI=
+	t=1747073241; cv=none; b=kBzyh3lWfKFab682e8goKwL6wMK/mSJj/muXfJ2wJKcBykQRg2rLLO7w31jkrmByXcfD690tmtkqq+Lfvi3u3jP9DPsIkCIICd7pTM/b4MbP8FXVeOjxjtFBi/vmsQBRJ0Y6eor+wPffzyA+df8TbBdxI1C4a0n1ijyxolqt1EE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073238; c=relaxed/simple;
-	bh=1jI/YXC+9wzb4S/edgwU6hlenGfHHUY5LtyaKTHFyPE=;
+	s=arc-20240116; t=1747073241; c=relaxed/simple;
+	bh=aANv5vi9jWyqvIe0CrhHuKejHUP56R0UkvXDwp5YLbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uoWLnlAAH/bN13y6SSLoM+k+p4PrbQicBm8UrKhvDQjIuOOZVQFxR3ciWUp8PnpQL9J4rPH0F7R75wBjv1eilpP+MkSSSaDx6TRBjKLtkledN8WHytnnFFnkbkHHa9kW7W0Q7GjoGvGZcYTFpl/fjgWcPhEzRWuQxavSOgb51+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FnXJNkSA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KirZF/OU7ZgILMvMHrDZTGMRTxXMfv6ffWYxEzQtaRHray+OpA/Ew174k2+dX3XcvAYNSMUoUK/lqB06mG9Y30opquo88sRiAwlP3NW5BJ0gT5JSuihT7CLow6gP4ncwzMr7V9eA11+YarFK5ru+SdzwhBG9lfYVPRD1MBrHaa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ooERXTAs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FnXJNkSA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDEE1C4CEE9;
-	Mon, 12 May 2025 18:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ooERXTAs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7612CC4CEF0;
+	Mon, 12 May 2025 18:07:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073237;
-	bh=1jI/YXC+9wzb4S/edgwU6hlenGfHHUY5LtyaKTHFyPE=;
+	s=korg; t=1747073241;
+	bh=aANv5vi9jWyqvIe0CrhHuKejHUP56R0UkvXDwp5YLbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FnXJNkSAkm6GYOHkoosBjnlq/aVoC/GYoM8U6woN4gS1oCHvoZkABwaUQM9uJ8HY4
-	 PoBdhdHXxUb/10mUV4aUAeJf8gnYa4AHKX6edfk2yexeted50/nZvyVN4vc59GDTNy
-	 suaLQecUBgyDFbgl+GKKqlBV8oxmNevn3QsSJrhU=
+	b=ooERXTAsPZsiHBBOExeUdImXSgzZkr91TPO+HJnGwXQRWJ2tFiXkR43IDai0+woIo
+	 ccLqgDj3cRjBFV5+vqhvvbioAigar53X42Huvp1GMklGhEmHiVAM/lO/suAsAnapFv
+	 h09c7EfCTKqJCuhTx/f626iuxPmRw6ujSP+6EMXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 013/113] netdevice: add netdev_tx_reset_subqueue() shorthand
-Date: Mon, 12 May 2025 19:45:02 +0200
-Message-ID: <20250512172028.234762486@linuxfoundation.org>
+Subject: [PATCH 6.6 014/113] net: ethernet: mtk_eth_soc: reset all TX queues on DMA free
+Date: Mon, 12 May 2025 19:45:03 +0200
+Message-ID: <20250512172028.272901878@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172027.691520737@linuxfoundation.org>
 References: <20250512172027.691520737@linuxfoundation.org>
@@ -52,54 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Lobakin <aleksander.lobakin@intel.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 3dc95a3edd0a86b4a59670b3fafcc64c7d83e2e7 ]
+[ Upstream commit 4db6c75124d871fbabf8243f947d34cc7e0697fc ]
 
-Add a shorthand similar to other net*_subqueue() helpers for resetting
-the queue by its index w/o obtaining &netdev_tx_queue beforehand
-manually.
+The purpose of resetting the TX queue is to reset the byte and packet
+count as well as to clear the software flow control XOFF bit.
 
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: 4db6c75124d8 ("net: ethernet: mtk_eth_soc: reset all TX queues on DMA free")
+MediaTek developers pointed out that netdev_reset_queue would only
+resets queue 0 of the network device.
+
+Queues that are not reset may cause unexpected issues.
+
+Packets may stop being sent after reset and "transmit timeout" log may
+be displayed.
+
+Import fix from MediaTek's SDK to resolve this issue.
+
+Link: https://git01.mediatek.com/plugins/gitiles/openwrt/feeds/mtk-openwrt-feeds/+/319c0d9905579a46dc448579f892f364f1f84818
+Fixes: f63959c7eec31 ("net: ethernet: mtk_eth_soc: implement multi-queue support for per-port queues")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://patch.msgid.link/c9ff9adceac4f152239a0f65c397f13547639175.1746406763.git.daniel@makrotopia.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 337a9d1c558f3..0b0a172337dba 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -3614,6 +3614,17 @@ static inline void netdev_tx_reset_queue(struct netdev_queue *q)
- #endif
- }
- 
-+/**
-+ * netdev_tx_reset_subqueue - reset the BQL stats and state of a netdev queue
-+ * @dev: network device
-+ * @qid: stack index of the queue to reset
-+ */
-+static inline void netdev_tx_reset_subqueue(const struct net_device *dev,
-+					    u32 qid)
-+{
-+	netdev_tx_reset_queue(netdev_get_tx_queue(dev, qid));
-+}
-+
- /**
-  * 	netdev_reset_queue - reset the packets and bytes count of a network device
-  * 	@dev_queue: network device
-@@ -3623,7 +3634,7 @@ static inline void netdev_tx_reset_queue(struct netdev_queue *q)
-  */
- static inline void netdev_reset_queue(struct net_device *dev_queue)
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index d2ec8f642c2fa..c6ccfbd422657 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -3117,11 +3117,19 @@ static int mtk_dma_init(struct mtk_eth *eth)
+ static void mtk_dma_free(struct mtk_eth *eth)
  {
--	netdev_tx_reset_queue(netdev_get_tx_queue(dev_queue, 0));
-+	netdev_tx_reset_subqueue(dev_queue, 0);
- }
+ 	const struct mtk_soc_data *soc = eth->soc;
+-	int i;
++	int i, j, txqs = 1;
++
++	if (MTK_HAS_CAPS(eth->soc->caps, MTK_QDMA))
++		txqs = MTK_QDMA_NUM_QUEUES;
++
++	for (i = 0; i < MTK_MAX_DEVS; i++) {
++		if (!eth->netdev[i])
++			continue;
++
++		for (j = 0; j < txqs; j++)
++			netdev_tx_reset_subqueue(eth->netdev[i], j);
++	}
  
- /**
+-	for (i = 0; i < MTK_MAX_DEVS; i++)
+-		if (eth->netdev[i])
+-			netdev_reset_queue(eth->netdev[i]);
+ 	if (!MTK_HAS_CAPS(soc->caps, MTK_SRAM) && eth->scratch_ring) {
+ 		dma_free_coherent(eth->dma_dev,
+ 				  MTK_QDMA_RING_SIZE * soc->txrx.txd_size,
 -- 
 2.39.5
 
