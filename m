@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D9C29AAF8;
-	Mon, 12 May 2025 18:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B947297120;
+	Mon, 12 May 2025 18:10:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073455; cv=none; b=jXEQ8PmE3DOhx4wl3ON1sjBM9BXomylUjz1N2/Uvs82bStKVbt1/sOKh6BTthgBn8wkOEX3MjUmdFqba0gsjfVzHF6n4bKVrgOV8pCjMNvoUbS5LZgEIk9XaUk4WLCjy7PRWSqj5wuBaCEXZnMa9b5vyWPmCMreB60bDxxvQLEk=
+	t=1747073458; cv=none; b=e2l8M40kje4QLgPdED0jPYBp3CQVJ4B1Hvb0cTsrcAE9F8wuUCNeLrrSRk+xhPVn/JdS9ZlCDnX8WPEPbNcp6s5guLiiHbR8u5SnUepRIopqVLHpvWGgEXM6zUXugZT5Tf+C7EtUid5h5x3YSQBR6nE0Kzg14BzBJR40TIJB7xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073455; c=relaxed/simple;
-	bh=1cJ9nsDzMjaoETvOHgocUSgEw6pe0f/nr+fAAAhiiZM=;
+	s=arc-20240116; t=1747073458; c=relaxed/simple;
+	bh=lncpuXMfDXVet1nq9vsfZaVE656a1kKtvyO7bAnVy3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sb5ZGj7rFmbjZVCTJrcc2O7XPtwdhNmso9zg/xv9bT9tMxlCGPz6rpF/wtZ2smhY5EjD24cpnmeD9XO6YD3nzHeUe16dRkssmjasdiE+GRnYkYeNkSiykNH8TWjFsnr/J5JnN1x/pRmcsrCdLbRCFNA9zZPQSVwYgrGkSj0+JE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GX2Nci3J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XbRg3Ck9PUyH5eiw7+ulB6FUHnsPCPGFF3UACJga2vp/XSAhxRivpDQBLRA9X8fBuxdjzqXkm/oLsytyTYW94Kznvl4OEYPGD6VIYFeXi+INczLmpWMERWe+42fhhK+7NK+RwpKd6YyWJK5Xij+onW9u1AWu/9NgxwpYQwoOqts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ORqnG66; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GX2Nci3J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C232C4CEE7;
-	Mon, 12 May 2025 18:10:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ORqnG66"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89996C4CEE7;
+	Mon, 12 May 2025 18:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073455;
-	bh=1cJ9nsDzMjaoETvOHgocUSgEw6pe0f/nr+fAAAhiiZM=;
+	s=korg; t=1747073457;
+	bh=lncpuXMfDXVet1nq9vsfZaVE656a1kKtvyO7bAnVy3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GX2Nci3J7gcInjUmQ+8owHDtCpjWcyDrbS8W32nNJH4tnm4+ZcZ0OZNVs6E7vi6t4
-	 JPr9bYNIR+FDo45sV3kXL7lN890i7F6MFWBLld7joSr53fPgMwU/F5ndIawVka3kmK
-	 6mokV/HfrcExiXy40S1A/xJgRHJsyX2bJnMW8l+8=
+	b=1ORqnG66fFmwAyZSttwwnw2Q3GgpaHQHrFg9A6q0LSy33GNfg924eM/lcxoh645/s
+	 H1ry6WKH5V6Ld7pXjoxaVAQLdcYRqCDAH8eAq79Pc8DYgcg9zx191VJPcW3UHT5BY4
+	 SdvBO6V2g5FGy/wRrfWHCfw7RUVlB7sAbl9GQyKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lothar Rubusch <l.rubusch@gmail.com>,
-	Marcelo Schmitt <marcelo.schmitt1@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/113] iio: accel: adxl367: fix setting odr for activity time update
-Date: Mon, 12 May 2025 19:46:08 +0200
-Message-ID: <20250512172030.901246641@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.6 052/113] drm/amd/display: Copy AUX read reply data whenever length > 0
+Date: Mon, 12 May 2025 19:45:41 +0200
+Message-ID: <20250512172029.789728844@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172027.691520737@linuxfoundation.org>
 References: <20250512172027.691520737@linuxfoundation.org>
@@ -52,68 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lothar Rubusch <l.rubusch@gmail.com>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-[ Upstream commit 38f67d0264929762e54ae5948703a21f841fe706 ]
+commit 3924f45d4de7250a603fd7b50379237a6a0e5adf upstream.
 
-Fix setting the odr value to update activity time based on frequency
-derrived by recent odr, and not by obsolete odr value.
+[Why]
+amdgpu_dm_process_dmub_aux_transfer_sync() should return all exact data
+reply from the sink side. Don't do the analysis job in it.
 
-The [small] bug: When _adxl367_set_odr() is called with a new odr value,
-it first writes the new odr value to the hardware register
-ADXL367_REG_FILTER_CTL.
-Second, it calls _adxl367_set_act_time_ms(), which calls
-adxl367_time_ms_to_samples(). Here st->odr still holds the old odr value.
-This st->odr member is used to derrive a frequency value, which is
-applied to update ADXL367_REG_TIME_ACT. Hence, the idea is to update
-activity time, based on possibilities and power consumption by the
-current ODR rate.
-Finally, when the function calls return, again in _adxl367_set_odr() the
-new ODR is assigned to st->odr.
+[How]
+Remove unnecessary check condition AUX_TRANSACTION_REPLY_AUX_ACK.
 
-The fix: When setting a new ODR value is set to ADXL367_REG_FILTER_CTL,
-also ADXL367_REG_TIME_ACT should probably be updated with a frequency
-based on the recent ODR value and not the old one. Changing the location
-of the assignment to st->odr fixes this.
-
-Fixes: cbab791c5e2a5 ("iio: accel: add ADXL367 driver")
-Signed-off-by: Lothar Rubusch <l.rubusch@gmail.com>
-Reviewed-by: Marcelo Schmitt <marcelo.schmitt1@gmail.com>
-Link: https://patch.msgid.link/20250309193515.2974-1-l.rubusch@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ead08b95fa50 ("drm/amd/display: Fix race condition in DPIA AUX transfer")
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Ray Wu <ray.wu@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 9b540e3fe6796fec4fb1344f3be8952fc2f084d4)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/adxl367.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/iio/accel/adxl367.c b/drivers/iio/accel/adxl367.c
-index 484fe2e9fb174..3a55475691de3 100644
---- a/drivers/iio/accel/adxl367.c
-+++ b/drivers/iio/accel/adxl367.c
-@@ -620,18 +620,14 @@ static int _adxl367_set_odr(struct adxl367_state *st, enum adxl367_odr odr)
- 	if (ret)
- 		return ret;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -11069,8 +11069,7 @@ int amdgpu_dm_process_dmub_aux_transfer_
+ 		/* The reply is stored in the top nibble of the command. */
+ 		payload->reply[0] = (adev->dm.dmub_notify->aux_reply.command >> 4) & 0xF;
  
-+	st->odr = odr;
-+
- 	/* Activity timers depend on ODR */
- 	ret = _adxl367_set_act_time_ms(st, st->act_time_ms);
- 	if (ret)
- 		return ret;
+-	if (!payload->write && p_notify->aux_reply.length &&
+-			(payload->reply[0] == AUX_TRANSACTION_REPLY_AUX_ACK))
++	if (!payload->write && p_notify->aux_reply.length)
+ 		memcpy(payload->data, p_notify->aux_reply.data,
+ 				p_notify->aux_reply.length);
  
--	ret = _adxl367_set_inact_time_ms(st, st->inact_time_ms);
--	if (ret)
--		return ret;
--
--	st->odr = odr;
--
--	return 0;
-+	return _adxl367_set_inact_time_ms(st, st->inact_time_ms);
- }
- 
- static int adxl367_set_odr(struct iio_dev *indio_dev, enum adxl367_odr odr)
--- 
-2.39.5
-
 
 
