@@ -1,214 +1,96 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B0319049B;
-	Mon, 12 May 2025 18:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BDB319049B;
+	Mon, 12 May 2025 18:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073037; cv=none; b=sPStmICy9k1C8LaXnQFmOKNh5HrC18czemAeNY2KcBOkghqz5IipiaVXdjFDYbNbAr9OMqdrRzzQi8GIQlKHDTKB0y7yEDSfLAzlKNoYPLJ9oi7tCZXNtzq8Q9Yhh2ko61Uidb2x/nj5uFsyzm8PCk4j0yN99cv3nxzpTW7/+GY=
+	t=1747073038; cv=none; b=dstpg1Ir6jtc+12SKrSRaAoFrvvTQYq0kcROS/VVhiZxw/IlUPXxegLqxFa/fIHwr13bqq8H3wxKYKDV8kJytVjlJFYZW7rC6FCCJZic6/bsBiudABquUHKXes1flYiAJis6FLOmUZNj5NXIV2ogujlfjNop8nYxDON2+p48wig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073037; c=relaxed/simple;
-	bh=fw/+jUg+FYR1ixpnuLKv+i39YzeO8R5Gde0u+5bTEBs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DvruqOJgXlwInb7XtE77MCxUHkuxPy0K+nlWMEKHhcG9aT8f8ZL0VIWLWmJ7absrf3wXDr08PlZ241VnM6JESbchrvV9nV9jG7fHfsOHK5YV3VRepgpqlnVRQdq94AIUpx7nh6yQdumDbCJyVk8feUl+imGP0X0jHT+77JNUTJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JbolqRMg; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747073038; c=relaxed/simple;
+	bh=XiRHC2t043NnSSGBWQQnSJasI7hGGZVVUaHhNOhQFEk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=aq5JDWM1k/vBtj4dazlJaus9xrcAwnA38mnixtADz/U+iY+84M12Jwl6wu4L8lDL+ck1PJYlY5e61AKy1gJtYWF4GwDcM7d1iu7s9K5qxh1kbqm6ZbdTgMKkk5CzfiC90+hWdOU3aRgPd3vc/ZZVq+bkeoDcgzzvy2JlLAqJxQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZXm+8JkR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JbolqRMg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F6FC4CEE7;
-	Mon, 12 May 2025 18:03:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073037;
-	bh=fw/+jUg+FYR1ixpnuLKv+i39YzeO8R5Gde0u+5bTEBs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JbolqRMgIYaQyedaobQfu6e416HVIX8jHqZjKYsyg8k8STR8iCjVGYg1g9pPysrAs
-	 JpS43fFMioHx1INsvQ9/Ff7r0KaBe29YmxccvdPFQ/CHvcV+L/x8fY4APfVxd4DPhm
-	 8iKmZh817Uz/Bdqb3cCSJ/9+6cyvoy48JXidSlpw=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Marco Crivellari <marco.crivellari@suse.com>,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 135/184] MIPS: Fix idle VS timer enqueue
-Date: Mon, 12 May 2025 19:45:36 +0200
-Message-ID: <20250512172047.313152780@linuxfoundation.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
-References: <20250512172041.624042835@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZXm+8JkR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A95C4CEEF;
+	Mon, 12 May 2025 18:03:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747073038;
+	bh=XiRHC2t043NnSSGBWQQnSJasI7hGGZVVUaHhNOhQFEk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ZXm+8JkRbQykCAmP+VlflsFkYqkA0cQxXQvQx+yAfrVreqK/qFsH2aED27vHWKB5x
+	 RJEvXBfAjnTVSwbNHu5RBck00e6fWx0O/zFYRCysSVhrAR80jmI45BruQQ0Bs8SMWN
+	 umJFY9rPUOyr45udt4hQKrvug3Mt0E3DbbX2Zp/C+nCAGGOZ0vRs/jYlyreRlcUBiR
+	 1rIGsJzpt7+PpTZDjH7UzyByTf8RFE6mGJrpi0ymC3u1/BvtDs+CkktcLCJydeS5Js
+	 iu1FvQwYUYIfWeJ5RSlK69Pr22IGgT5pTbv5geJ8F2fiUhie4Catks8XaDmAfDaQ01
+	 NGtBFeLw5OqGw==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>,
+	jic23@kernel.org,
+	sean@geanix.com,
+	andriy.shevchenko@linux.intel.com,
+	Frank.Li@nxp.com,
+	nuno.sa@analog.com,
+	haibo.chen@nxp.com,
+	jstephan@baylibre.com,
+	tgamblin@baylibre.com,
+	han.xu@nxp.com,
+	peterz@infradead.org,
+	linux-iio@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 01/15] iio: accel: fxls8962af: Fix wakeup source leaks on device unbind
+Date: Mon, 12 May 2025 14:03:36 -0400
+Message-Id: <20250512180352.437356-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.14.6
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-------------------
+[ Upstream commit 0cd34d98dfd4f2b596415b8f12faf7b946613458 ]
 
-From: Marco Crivellari <marco.crivellari@suse.com>
+Device can be unbound, so driver must also release memory for the wakeup
+source.
 
-[ Upstream commit 56651128e2fbad80f632f388d6bf1f39c928267a ]
-
-MIPS re-enables interrupts on its idle routine and performs
-a TIF_NEED_RESCHED check afterwards before putting the CPU to sleep.
-
-The IRQs firing between the check and the 'wait' instruction may set the
-TIF_NEED_RESCHED flag. In order to deal with this possible race, IRQs
-interrupting __r4k_wait() rollback their return address to the
-beginning of __r4k_wait() so that TIF_NEED_RESCHED is checked
-again before going back to sleep.
-
-However idle IRQs can also queue timers that may require a tick
-reprogramming through a new generic idle loop iteration but those timers
-would go unnoticed here because __r4k_wait() only checks
-TIF_NEED_RESCHED. It doesn't check for pending timers.
-
-Fix this with fast-forwarding idle IRQs return address to the end of the
-idle routine instead of the beginning, so that the generic idle loop
-handles both TIF_NEED_RESCHED and pending timers.
-
-CONFIG_CPU_MICROMIPS has been removed along with the nop instructions.
-There, NOPs are 2 byte in size, so change the code with 3 _ssnop which are
-always 4 byte and remove the ifdef. Added ehb to make sure the hazard
-is always cleared.
-
-Fixes: c65a5480ff29 ("[MIPS] Fix potential latency problem due to non-atomic cpu_wait.")
-Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Acked-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20250406-b4-device-wakeup-leak-iio-v1-1-2d7d322a4a93@linaro.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/include/asm/idle.h |  3 +-
- arch/mips/kernel/genex.S     | 62 +++++++++++++++++++++---------------
- arch/mips/kernel/idle.c      |  7 ----
- 3 files changed, 37 insertions(+), 35 deletions(-)
+ drivers/iio/accel/fxls8962af-core.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/mips/include/asm/idle.h b/arch/mips/include/asm/idle.h
-index 0992cad9c632e..2bc3678455ed0 100644
---- a/arch/mips/include/asm/idle.h
-+++ b/arch/mips/include/asm/idle.h
-@@ -6,8 +6,7 @@
- #include <linux/linkage.h>
+diff --git a/drivers/iio/accel/fxls8962af-core.c b/drivers/iio/accel/fxls8962af-core.c
+index 987212a7c038e..a0ae30c86687a 100644
+--- a/drivers/iio/accel/fxls8962af-core.c
++++ b/drivers/iio/accel/fxls8962af-core.c
+@@ -1229,8 +1229,11 @@ int fxls8962af_core_probe(struct device *dev, struct regmap *regmap, int irq)
+ 	if (ret)
+ 		return ret;
  
- extern void (*cpu_wait)(void);
--extern void r4k_wait(void);
--extern asmlinkage void __r4k_wait(void);
-+extern asmlinkage void r4k_wait(void);
- extern void r4k_wait_irqoff(void);
+-	if (device_property_read_bool(dev, "wakeup-source"))
+-		device_init_wakeup(dev, true);
++	if (device_property_read_bool(dev, "wakeup-source")) {
++		ret = devm_device_init_wakeup(dev);
++		if (ret)
++			return dev_err_probe(dev, ret, "Failed to init wakeup\n");
++	}
  
- static inline int using_rollback_handler(void)
-diff --git a/arch/mips/kernel/genex.S b/arch/mips/kernel/genex.S
-index a572ce36a24f2..46d975d00298d 100644
---- a/arch/mips/kernel/genex.S
-+++ b/arch/mips/kernel/genex.S
-@@ -104,42 +104,52 @@ handle_vcei:
- 
- 	__FINIT
- 
--	.align	5	/* 32 byte rollback region */
--LEAF(__r4k_wait)
--	.set	push
--	.set	noreorder
--	/* start of rollback region */
--	LONG_L	t0, TI_FLAGS($28)
--	nop
--	andi	t0, _TIF_NEED_RESCHED
--	bnez	t0, 1f
--	 nop
--	nop
--	nop
--#ifdef CONFIG_CPU_MICROMIPS
--	nop
--	nop
--	nop
--	nop
--#endif
-+	/* Align to 32 bytes for the maximum idle interrupt region size. */
-+	.align	5
-+LEAF(r4k_wait)
-+	/* Keep the ISA bit clear for calculations on local labels here. */
-+0:	.fill 	0
-+	/* Start of idle interrupt region. */
-+	local_irq_enable
-+	/*
-+	 * If an interrupt lands here, before going idle on the next
-+	 * instruction, we must *NOT* go idle since the interrupt could
-+	 * have set TIF_NEED_RESCHED or caused a timer to need resched.
-+	 * Fall through -- see rollback_handler below -- and have the
-+	 * idle loop take care of things.
-+	 */
-+1:	.fill	0
-+	/* The R2 EI/EHB sequence takes 8 bytes, otherwise pad up.  */
-+	.if		1b - 0b > 32
-+	.error	"overlong idle interrupt region"
-+	.elseif	1b - 0b > 8
-+	.align	4
-+	.endif
-+2:	.fill	0
-+	.equ	r4k_wait_idle_size, 2b - 0b
-+	/* End of idle interrupt region; size has to be a power of 2. */
- 	.set	MIPS_ISA_ARCH_LEVEL_RAW
-+r4k_wait_insn:
- 	wait
--	/* end of rollback region (the region size must be power of two) */
--1:
-+r4k_wait_exit:
-+	.set	mips0
-+	local_irq_disable
- 	jr	ra
--	 nop
--	.set	pop
--	END(__r4k_wait)
-+	END(r4k_wait)
-+	.previous
- 
- 	.macro	BUILD_ROLLBACK_PROLOGUE handler
- 	FEXPORT(rollback_\handler)
- 	.set	push
- 	.set	noat
- 	MFC0	k0, CP0_EPC
--	PTR_LA	k1, __r4k_wait
--	ori	k0, 0x1f	/* 32 byte rollback region */
--	xori	k0, 0x1f
-+	/* Subtract/add 2 to let the ISA bit propagate through the mask.  */
-+	PTR_LA	k1, r4k_wait_insn - 2
-+	ori 	k0, r4k_wait_idle_size - 2
-+	.set	noreorder
- 	bne	k0, k1, \handler
-+	PTR_ADDIU 	k0, r4k_wait_exit - r4k_wait_insn + 2
-+	.set	reorder
- 	MTC0	k0, CP0_EPC
- 	.set pop
- 	.endm
-diff --git a/arch/mips/kernel/idle.c b/arch/mips/kernel/idle.c
-index 5abc8b7340f88..80e8a04a642e0 100644
---- a/arch/mips/kernel/idle.c
-+++ b/arch/mips/kernel/idle.c
-@@ -35,13 +35,6 @@ static void __cpuidle r3081_wait(void)
- 	write_c0_conf(cfg | R30XX_CONF_HALT);
+ 	return devm_iio_device_register(dev, indio_dev);
  }
- 
--void __cpuidle r4k_wait(void)
--{
--	raw_local_irq_enable();
--	__r4k_wait();
--	raw_local_irq_disable();
--}
--
- /*
-  * This variant is preferable as it allows testing need_resched and going to
-  * sleep depending on the outcome atomically.  Unfortunately the "It is
 -- 
 2.39.5
-
-
 
