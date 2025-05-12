@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C5F2505C5;
-	Mon, 12 May 2025 17:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A5B2505C5;
+	Mon, 12 May 2025 17:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072791; cv=none; b=J84iwlTRwkvKgIrScCu+2ySroc0+fzsSz5zwKyhwPeQvki3DXE3iTXmj0Myk8YJJSe0H4OJbDMRq7jMsS6trM5o1RigrvxXJ7vjvb3MXabmRYoc+hrC4a2I5Al2Ph9dkC4R54/XVD5HznnI2e+xN3ZPxiyiBTdQnauk/FOCMqAc=
+	t=1747072793; cv=none; b=iglLG5EWSVSJiUY3207Ynue/dp0a6S8WKs/VmVe3ajLbzFdthLuFs+D5HxQI5M7Sb75anXCQiiLoTQPyXdlC2xoGQSnjML7e9ilKE9kjWaJWXKWygD5f6AMrhEHcydqiYFK9dtTqO3/6xjR8ptGRk3QKmIOhM8a6EBOeQydy0pU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072791; c=relaxed/simple;
-	bh=Pm1RmMdKPXv4TvImGHgid8qyN9Mdswkjmx4m+AssvS8=;
+	s=arc-20240116; t=1747072793; c=relaxed/simple;
+	bh=RDEoO7GDq7DSEb+MRcALcwhQaZD4/d3cNqt4hxYWxgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F2q4xFO0Vph3yo3/iUBTFFYRlDyxPj8YUcCVk/eMbYefByZ9cyI2+QSdjjAyThC0rsyc6z0yEhmcSjSqpmSzUMBVdTMYa5Ck/OHFY2V4Wz+TL0nYZqakU4iVrgjfL7EguhGEk1XQg7G8wT5M3fdUA+Q/m21MFBTLYil3XexqK00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hq1QIbZh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=scmZRsdy3QTqmdIaQrJ4oUwvKTbPuPSF83H12weoCnayvXGEM9DmlLZ3i8A+uqgeY7gfIzTanopO0Ue303gTtHusMivNZ1JDJN4J7mNxjHyF28u45LVAH0XMHO26QEh5XCk+7kpc5QDQKUQAC8tH3S4JKnLF/wUIkh6JdGPc34g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqTFqunL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hq1QIbZh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1BD8C4CEE7;
-	Mon, 12 May 2025 17:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqTFqunL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27BEEC4CEE7;
+	Mon, 12 May 2025 17:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072790;
-	bh=Pm1RmMdKPXv4TvImGHgid8qyN9Mdswkjmx4m+AssvS8=;
+	s=korg; t=1747072793;
+	bh=RDEoO7GDq7DSEb+MRcALcwhQaZD4/d3cNqt4hxYWxgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hq1QIbZhHrAbnMbcE4vTW+8L0fuIwAGtPHjeW7/IfleJvysf0C2Kx84N+84L6tfNW
-	 wKwPxOE5QSQPrLp3/yP//LQSTdz3NbknM2BrC+ymJCPQCfAmT5WcUMlADFPcycVB+N
-	 ZKXzntnt/3iaaA51M7M/BxMSTB+Nq1iqqz7NEMyo=
+	b=QqTFqunLESoFb+6O5jgusDEYTXmehwYLrAq3dUiI0NWiYduuwWkNoc8ArFdzWJmHX
+	 w4oBL5LiQJjW6YUJzjYSut3CkbmvEHY3CZOIHdC69jbuVIV/lxZ9dBMG0j95B4ig3K
+	 0qg0pIWt3+2kQ5HKlCXyDCZWvmiF6AsL99mObnUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vicki Pfau <vi@endrift.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 057/184] Input: xpad - fix Share button on Xbox One controllers
-Date: Mon, 12 May 2025 19:44:18 +0200
-Message-ID: <20250512172044.057944629@linuxfoundation.org>
+	Hongbo Li <lihongbo22@huawei.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 031/184] erofs: ensure the extra temporary copy is valid for shortened bvecs
+Date: Mon, 12 May 2025 19:43:52 +0200
+Message-ID: <20250512172042.984844127@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -50,128 +51,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vicki Pfau <vi@endrift.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-commit 4ef46367073b107ec22f46fe5f12176e87c238e8 upstream.
+[ Upstream commit 35076d2223c731f7be75af61e67f90807384d030 ]
 
-The Share button, if present, is always one of two offsets from the end of the
-file, depending on the presence of a specific interface. As we lack parsing for
-the identify packet we can't automatically determine the presence of that
-interface, but we can hardcode which of these offsets is correct for a given
-controller.
+When compressed data deduplication is enabled, multiple logical extents
+may reference the same compressed physical cluster.
 
-More controllers are probably fixable by adding the MAP_SHARE_BUTTON in the
-future, but for now I only added the ones that I have the ability to test
-directly.
+The previous commit 94c43de73521 ("erofs: fix wrong primary bvec
+selection on deduplicated extents") already avoids using shortened
+bvecs.  However, in such cases, the extra temporary buffers also
+need to be preserved for later use in z_erofs_fill_other_copies() to
+to prevent data corruption.
 
-Signed-off-by: Vicki Pfau <vi@endrift.com>
-Link: https://lore.kernel.org/r/20250328234345.989761-2-vi@endrift.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+IOWs, extra temporary buffers have to be retained not only due to
+varying start relative offsets (`pageofs_out`, as indicated by
+`pcl->multibases`) but also because of shortened bvecs.
+
+android.hardware.graphics.composer@2.1.so : 270696 bytes
+   0:        0..  204185 |  204185 :  628019200.. 628084736 |   65536
+-> 1:   204185..  225536 |   21351 :  544063488.. 544129024 |   65536
+   2:   225536..  270696 |   45160 :          0..         0 |       0
+
+com.android.vndk.v28.apex : 93814897 bytes
+...
+   364: 53869896..54095257 |  225361 :  543997952.. 544063488 |   65536
+-> 365: 54095257..54309344 |  214087 :  544063488.. 544129024 |   65536
+   366: 54309344..54514557 |  205213 :  544129024.. 544194560 |   65536
+...
+
+Both 204185 and 54095257 have the same start relative offset of 3481,
+but the logical page 55 of `android.hardware.graphics.composer@2.1.so`
+ranges from 225280 to 229632, forming a shortened bvec [225280, 225536)
+that cannot be used for decompressing the range from 54095257 to
+54309344 of `com.android.vndk.v28.apex`.
+
+Since `pcl->multibases` is already meaningless, just mark `be->keepxcpy`
+on demand for simplicity.
+
+Again, this issue can only lead to data corruption if `-Ededupe` is on.
+
+Fixes: 94c43de73521 ("erofs: fix wrong primary bvec selection on deduplicated extents")
+Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20250506101850.191506-1-hsiangkao@linux.alibaba.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/joystick/xpad.c |   35 ++++++++++++++++++++---------------
- 1 file changed, 20 insertions(+), 15 deletions(-)
+ fs/erofs/zdata.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -77,12 +77,13 @@
-  * xbox d-pads should map to buttons, as is required for DDR pads
-  * but we map them to axes when possible to simplify things
-  */
--#define MAP_DPAD_TO_BUTTONS		(1 << 0)
--#define MAP_TRIGGERS_TO_BUTTONS		(1 << 1)
--#define MAP_STICKS_TO_NULL		(1 << 2)
--#define MAP_SELECT_BUTTON		(1 << 3)
--#define MAP_PADDLES			(1 << 4)
--#define MAP_PROFILE_BUTTON		(1 << 5)
-+#define MAP_DPAD_TO_BUTTONS		BIT(0)
-+#define MAP_TRIGGERS_TO_BUTTONS		BIT(1)
-+#define MAP_STICKS_TO_NULL		BIT(2)
-+#define MAP_SHARE_BUTTON		BIT(3)
-+#define MAP_PADDLES			BIT(4)
-+#define MAP_PROFILE_BUTTON		BIT(5)
-+#define MAP_SHARE_OFFSET		BIT(6)
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index a8fb4b525f544..e5e94afc5af88 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -82,9 +82,6 @@ struct z_erofs_pcluster {
+ 	/* L: whether partial decompression or not */
+ 	bool partial;
  
- #define DANCEPAD_MAP_CONFIG	(MAP_DPAD_TO_BUTTONS |			\
- 				MAP_TRIGGERS_TO_BUTTONS | MAP_STICKS_TO_NULL)
-@@ -135,7 +136,7 @@ static const struct xpad_device {
- 	{ 0x03f0, 0x048D, "HyperX Clutch", 0, XTYPE_XBOX360 },			/* wireless */
- 	{ 0x03f0, 0x0495, "HyperX Clutch Gladiate", 0, XTYPE_XBOXONE },
- 	{ 0x03f0, 0x07A0, "HyperX Clutch Gladiate RGB", 0, XTYPE_XBOXONE },
--	{ 0x03f0, 0x08B6, "HyperX Clutch Gladiate", 0, XTYPE_XBOXONE },		/* v2 */
-+	{ 0x03f0, 0x08B6, "HyperX Clutch Gladiate", MAP_SHARE_BUTTON, XTYPE_XBOXONE },		/* v2 */
- 	{ 0x03f0, 0x09B4, "HyperX Clutch Tanto", 0, XTYPE_XBOXONE },
- 	{ 0x044f, 0x0f00, "Thrustmaster Wheel", 0, XTYPE_XBOX },
- 	{ 0x044f, 0x0f03, "Thrustmaster Wheel", 0, XTYPE_XBOX },
-@@ -159,7 +160,7 @@ static const struct xpad_device {
- 	{ 0x045e, 0x0719, "Xbox 360 Wireless Receiver", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360W },
- 	{ 0x045e, 0x0b00, "Microsoft X-Box One Elite 2 pad", MAP_PADDLES, XTYPE_XBOXONE },
- 	{ 0x045e, 0x0b0a, "Microsoft X-Box Adaptive Controller", MAP_PROFILE_BUTTON, XTYPE_XBOXONE },
--	{ 0x045e, 0x0b12, "Microsoft Xbox Series S|X Controller", MAP_SELECT_BUTTON, XTYPE_XBOXONE },
-+	{ 0x045e, 0x0b12, "Microsoft Xbox Series S|X Controller", MAP_SHARE_BUTTON | MAP_SHARE_OFFSET, XTYPE_XBOXONE },
- 	{ 0x046d, 0xc21d, "Logitech Gamepad F310", 0, XTYPE_XBOX360 },
- 	{ 0x046d, 0xc21e, "Logitech Gamepad F510", 0, XTYPE_XBOX360 },
- 	{ 0x046d, 0xc21f, "Logitech Gamepad F710", 0, XTYPE_XBOX360 },
-@@ -211,7 +212,7 @@ static const struct xpad_device {
- 	{ 0x0738, 0xcb29, "Saitek Aviator Stick AV8R02", 0, XTYPE_XBOX360 },
- 	{ 0x0738, 0xf738, "Super SFIV FightStick TE S", 0, XTYPE_XBOX360 },
- 	{ 0x07ff, 0xffff, "Mad Catz GamePad", 0, XTYPE_XBOX360 },
--	{ 0x0b05, 0x1a38, "ASUS ROG RAIKIRI", 0, XTYPE_XBOXONE },
-+	{ 0x0b05, 0x1a38, "ASUS ROG RAIKIRI", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
- 	{ 0x0b05, 0x1abb, "ASUS ROG RAIKIRI PRO", 0, XTYPE_XBOXONE },
- 	{ 0x0c12, 0x0005, "Intec wireless", 0, XTYPE_XBOX },
- 	{ 0x0c12, 0x8801, "Nyko Xbox Controller", 0, XTYPE_XBOX },
-@@ -390,7 +391,7 @@ static const struct xpad_device {
- 	{ 0x2dc8, 0x6001, "8BitDo SN30 Pro", 0, XTYPE_XBOX360 },
- 	{ 0x2e24, 0x0652, "Hyperkin Duke X-Box One pad", 0, XTYPE_XBOXONE },
- 	{ 0x2e24, 0x1688, "Hyperkin X91 X-Box One pad", 0, XTYPE_XBOXONE },
--	{ 0x2e95, 0x0504, "SCUF Gaming Controller", MAP_SELECT_BUTTON, XTYPE_XBOXONE },
-+	{ 0x2e95, 0x0504, "SCUF Gaming Controller", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
- 	{ 0x31e3, 0x1100, "Wooting One", 0, XTYPE_XBOX360 },
- 	{ 0x31e3, 0x1200, "Wooting Two", 0, XTYPE_XBOX360 },
- 	{ 0x31e3, 0x1210, "Wooting Lekker", 0, XTYPE_XBOX360 },
-@@ -1027,7 +1028,7 @@ static void xpad360w_process_packet(stru
-  *	The report format was gleaned from
-  *	https://github.com/kylelemons/xbox/blob/master/xbox.go
-  */
--static void xpadone_process_packet(struct usb_xpad *xpad, u16 cmd, unsigned char *data)
-+static void xpadone_process_packet(struct usb_xpad *xpad, u16 cmd, unsigned char *data, u32 len)
+-	/* L: indicate several pageofs_outs or not */
+-	bool multibases;
+-
+ 	/* L: whether extra buffer allocations are best-effort */
+ 	bool besteffort;
+ 
+@@ -1073,8 +1070,6 @@ static int z_erofs_scan_folio(struct z_erofs_decompress_frontend *f,
+ 				break;
+ 
+ 			erofs_onlinefolio_split(folio);
+-			if (f->pcl->pageofs_out != (map->m_la & ~PAGE_MASK))
+-				f->pcl->multibases = true;
+ 			if (f->pcl->length < offset + end - map->m_la) {
+ 				f->pcl->length = offset + end - map->m_la;
+ 				f->pcl->pageofs_out = map->m_la & ~PAGE_MASK;
+@@ -1120,7 +1115,6 @@ struct z_erofs_decompress_backend {
+ 	struct page *onstack_pages[Z_EROFS_ONSTACK_PAGES];
+ 	struct super_block *sb;
+ 	struct z_erofs_pcluster *pcl;
+-
+ 	/* pages with the longest decompressed length for deduplication */
+ 	struct page **decompressed_pages;
+ 	/* pages to keep the compressed data */
+@@ -1129,6 +1123,8 @@ struct z_erofs_decompress_backend {
+ 	struct list_head decompressed_secondary_bvecs;
+ 	struct page **pagepool;
+ 	unsigned int onstack_used, nr_pages;
++	/* indicate if temporary copies should be preserved for later use */
++	bool keepxcpy;
+ };
+ 
+ struct z_erofs_bvec_item {
+@@ -1139,18 +1135,20 @@ struct z_erofs_bvec_item {
+ static void z_erofs_do_decompressed_bvec(struct z_erofs_decompress_backend *be,
+ 					 struct z_erofs_bvec *bvec)
  {
- 	struct input_dev *dev = xpad->dev;
- 	bool do_sync = false;
-@@ -1068,8 +1069,12 @@ static void xpadone_process_packet(struc
- 		/* menu/view buttons */
- 		input_report_key(dev, BTN_START,  data[4] & BIT(2));
- 		input_report_key(dev, BTN_SELECT, data[4] & BIT(3));
--		if (xpad->mapping & MAP_SELECT_BUTTON)
--			input_report_key(dev, KEY_RECORD, data[22] & BIT(0));
-+		if (xpad->mapping & MAP_SHARE_BUTTON) {
-+			if (xpad->mapping & MAP_SHARE_OFFSET)
-+				input_report_key(dev, KEY_RECORD, data[len - 26] & BIT(0));
-+			else
-+				input_report_key(dev, KEY_RECORD, data[len - 18] & BIT(0));
-+		}
++	int poff = bvec->offset + be->pcl->pageofs_out;
+ 	struct z_erofs_bvec_item *item;
+-	unsigned int pgnr;
+-
+-	if (!((bvec->offset + be->pcl->pageofs_out) & ~PAGE_MASK) &&
+-	    (bvec->end == PAGE_SIZE ||
+-	     bvec->offset + bvec->end == be->pcl->length)) {
+-		pgnr = (bvec->offset + be->pcl->pageofs_out) >> PAGE_SHIFT;
+-		DBG_BUGON(pgnr >= be->nr_pages);
+-		if (!be->decompressed_pages[pgnr]) {
+-			be->decompressed_pages[pgnr] = bvec->page;
++	struct page **page;
++
++	if (!(poff & ~PAGE_MASK) && (bvec->end == PAGE_SIZE ||
++			bvec->offset + bvec->end == be->pcl->length)) {
++		DBG_BUGON((poff >> PAGE_SHIFT) >= be->nr_pages);
++		page = be->decompressed_pages + (poff >> PAGE_SHIFT);
++		if (!*page) {
++			*page = bvec->page;
+ 			return;
+ 		}
++	} else {
++		be->keepxcpy = true;
+ 	}
  
- 		/* buttons A,B,X,Y */
- 		input_report_key(dev, BTN_A,	data[4] & BIT(4));
-@@ -1217,7 +1222,7 @@ static void xpad_irq_in(struct urb *urb)
- 		xpad360w_process_packet(xpad, 0, xpad->idata);
- 		break;
- 	case XTYPE_XBOXONE:
--		xpadone_process_packet(xpad, 0, xpad->idata);
-+		xpadone_process_packet(xpad, 0, xpad->idata, urb->actual_length);
- 		break;
- 	default:
- 		xpad_process_packet(xpad, 0, xpad->idata);
-@@ -1974,7 +1979,7 @@ static int xpad_init_input(struct usb_xp
- 	    xpad->xtype == XTYPE_XBOXONE) {
- 		for (i = 0; xpad360_btn[i] >= 0; i++)
- 			input_set_capability(input_dev, EV_KEY, xpad360_btn[i]);
--		if (xpad->mapping & MAP_SELECT_BUTTON)
-+		if (xpad->mapping & MAP_SHARE_BUTTON)
- 			input_set_capability(input_dev, EV_KEY, KEY_RECORD);
- 	} else {
- 		for (i = 0; xpad_btn[i] >= 0; i++)
+ 	/* (cold path) one pcluster is requested multiple times */
+@@ -1316,7 +1314,7 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
+ 					.alg = pcl->algorithmformat,
+ 					.inplace_io = overlapped,
+ 					.partial_decoding = pcl->partial,
+-					.fillgaps = pcl->multibases,
++					.fillgaps = be->keepxcpy,
+ 					.gfp = pcl->besteffort ? GFP_KERNEL :
+ 						GFP_NOWAIT | __GFP_NORETRY
+ 				 }, be->pagepool);
+@@ -1370,7 +1368,6 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
+ 
+ 	pcl->length = 0;
+ 	pcl->partial = true;
+-	pcl->multibases = false;
+ 	pcl->besteffort = false;
+ 	pcl->bvset.nextpage = NULL;
+ 	pcl->vcnt = 0;
+-- 
+2.39.5
+
 
 
