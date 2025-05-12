@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B6C29A304;
-	Mon, 12 May 2025 18:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE651E505;
+	Mon, 12 May 2025 18:11:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747073485; cv=none; b=JMRtO3aVnS4WRHwWsctC5brfxPS/FGWKLbIA+sxZeObuBL3zVUz1xCPXQsmaPhF2xEglLCibp0DWP7OYs3E1mkgScbqDgQAbp4UyX49HIFLldf8RnmJ03mNn2KwQfRlzlqsT90BawUwqsyahm4BFBvCjKiCbUuTUJxBOvY9pfZ0=
+	t=1747073489; cv=none; b=L8wcIONTaf/LO0omWkiiTPYLDqfKh1IDgFe1ieo9FsZVTA47BFh0pHnIYjJukshhH7tucjLiA5grF10Fuz+EVvcyNMeZefbchduzWg2Z8PmS0Q5t40E9eRDuUTg6SN6Fmq+B2VoB43ZdrBzBbRYrG06tlWk+KSjMi2lI5C6UBwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747073485; c=relaxed/simple;
-	bh=2GrB2pF2gPzuM6J1tK4oMS6CTwI8jT7bH3gQjVIqpr8=;
+	s=arc-20240116; t=1747073489; c=relaxed/simple;
+	bh=nShFgQ+vNLFW6rf3IumLgJhiiXXupwdMRycOcKZyPmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KhD265q7ZLhIefkilnBUl0ublJPVVPBZDbzvu6cKnmeFuKtMJEKzdwnGAHIgqk9t60TJFrLb12dReKNpApq1Pisgvx555sypvqVbg2d5c7knOPQEHdc8tRua+iyzn17iul2VNMRMHs6FzAkE/wl6xvJRCP4p5S3/Xf0j8Vse2VA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Chno9U9j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uuRVCxK63k4ucnn9VSCV+j/PC357XMGLmz2hQEMsFbdr40PFXZl7ZXUckHnb9IW+lw/9fjM2SxFLDvA0WQ8z1A4UsUauFeZf3y7Ng8SuQpkA7K+KFqDBhhnZQZFLElkh2Yjxy55D+MTHIVULI15UnKrDVhnK16LcTURXFo0VCSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GC6WEIEq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Chno9U9j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89F4C4CEE9;
-	Mon, 12 May 2025 18:11:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GC6WEIEq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E48C4CEE7;
+	Mon, 12 May 2025 18:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747073485;
-	bh=2GrB2pF2gPzuM6J1tK4oMS6CTwI8jT7bH3gQjVIqpr8=;
+	s=korg; t=1747073488;
+	bh=nShFgQ+vNLFW6rf3IumLgJhiiXXupwdMRycOcKZyPmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Chno9U9j9QNpkraA5b702OwMgu5v43ZKGMBlZFbgAjAbrIoMqKZNu+3nPbJFFereU
-	 fT8f2VcJkIfinC12w5fMKI56xsdZ0+qKxlvZmMjAN5ovuuj6M/1AXHHVJukiw3bVn5
-	 1TDypIsBOiWEs411LmrPIaQiYxNlXKRJGRm2Hyg0=
+	b=GC6WEIEqxbz6pQx5Ec3ZWKDqh8q1sD79RcDTLNo4+5TZQwt3OcgqFAPmNyAV1en7D
+	 xrOixki1p0jpHlWC/zgtlDPG90zCX2BTAwFHgY7uxuGyTeI2Y3bN7+t1MyhTlD/1kr
+	 bXVk1ux+5eK3xzDmc0O7UZ/n2AJruP08wOV9+2+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norman Maurer <norman_maurer@apple.com>,
-	Christian Mazakas <christian.mazakas@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 091/113] io_uring: ensure deferred completions are posted for multishot
-Date: Mon, 12 May 2025 19:46:20 +0200
-Message-ID: <20250512172031.386636019@linuxfoundation.org>
+	James Morse <james.morse@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.6 092/113] arm64: insn: Add support for encoding DSB
+Date: Mon, 12 May 2025 19:46:21 +0200
+Message-ID: <20250512172031.427622732@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172027.691520737@linuxfoundation.org>
 References: <20250512172027.691520737@linuxfoundation.org>
@@ -51,44 +50,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: James Morse <james.morse@arm.com>
 
-Commit 687b2bae0efff9b25e071737d6af5004e6e35af5 upstream.
+commit 63de8abd97ddb9b758bd8f915ecbd18e1f1a87a0 upstream.
 
-Multishot normally uses io_req_post_cqe() to post completions, but when
-stopping it, it may finish up with a deferred completion. This is fine,
-except if another multishot event triggers before the deferred completions
-get flushed. If this occurs, then CQEs may get reordered in the CQ ring,
-and cause confusion on the application side.
+To generate code in the eBPF epilogue that uses the DSB instruction,
+insn.c needs a heler to encode the type and domain.
 
-When multishot posting via io_req_post_cqe(), flush any pending deferred
-completions first, if any.
+Re-use the crm encoding logic from the DMB instruction.
 
-Cc: stable@vger.kernel.org # 6.1+
-Reported-by: Norman Maurer <norman_maurer@apple.com>
-Reported-by: Christian Mazakas <christian.mazakas@gmail.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: James Morse <james.morse@arm.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm64/include/asm/insn.h |    1 
+ arch/arm64/lib/insn.c         |   60 +++++++++++++++++++++++++-----------------
+ 2 files changed, 38 insertions(+), 23 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -919,6 +919,14 @@ static bool __io_post_aux_cqe(struct io_
- {
- 	bool filled;
+--- a/arch/arm64/include/asm/insn.h
++++ b/arch/arm64/include/asm/insn.h
+@@ -687,6 +687,7 @@ u32 aarch64_insn_gen_cas(enum aarch64_in
+ }
+ #endif
+ u32 aarch64_insn_gen_dmb(enum aarch64_insn_mb_type type);
++u32 aarch64_insn_gen_dsb(enum aarch64_insn_mb_type type);
  
-+	/*
-+	 * If multishot has already posted deferred completions, ensure that
-+	 * those are flushed first before posting this one. If not, CQEs
-+	 * could get reordered.
-+	 */
-+	if (!wq_list_empty(&ctx->submit_state.compl_reqs))
-+		__io_submit_flush_completions(ctx);
+ s32 aarch64_get_branch_offset(u32 insn);
+ u32 aarch64_set_branch_offset(u32 insn, s32 offset);
+--- a/arch/arm64/lib/insn.c
++++ b/arch/arm64/lib/insn.c
+@@ -5,6 +5,7 @@
+  *
+  * Copyright (C) 2014-2016 Zi Shen Lim <zlim.lnx@gmail.com>
+  */
++#include <linux/bitfield.h>
+ #include <linux/bitops.h>
+ #include <linux/bug.h>
+ #include <linux/printk.h>
+@@ -1471,47 +1472,60 @@ u32 aarch64_insn_gen_extr(enum aarch64_i
+ 	return aarch64_insn_encode_register(AARCH64_INSN_REGTYPE_RM, insn, Rm);
+ }
+ 
+-u32 aarch64_insn_gen_dmb(enum aarch64_insn_mb_type type)
++static u32 __get_barrier_crm_val(enum aarch64_insn_mb_type type)
+ {
+-	u32 opt;
+-	u32 insn;
+-
+ 	switch (type) {
+ 	case AARCH64_INSN_MB_SY:
+-		opt = 0xf;
+-		break;
++		return 0xf;
+ 	case AARCH64_INSN_MB_ST:
+-		opt = 0xe;
+-		break;
++		return 0xe;
+ 	case AARCH64_INSN_MB_LD:
+-		opt = 0xd;
+-		break;
++		return 0xd;
+ 	case AARCH64_INSN_MB_ISH:
+-		opt = 0xb;
+-		break;
++		return 0xb;
+ 	case AARCH64_INSN_MB_ISHST:
+-		opt = 0xa;
+-		break;
++		return 0xa;
+ 	case AARCH64_INSN_MB_ISHLD:
+-		opt = 0x9;
+-		break;
++		return 0x9;
+ 	case AARCH64_INSN_MB_NSH:
+-		opt = 0x7;
+-		break;
++		return 0x7;
+ 	case AARCH64_INSN_MB_NSHST:
+-		opt = 0x6;
+-		break;
++		return 0x6;
+ 	case AARCH64_INSN_MB_NSHLD:
+-		opt = 0x5;
+-		break;
++		return 0x5;
+ 	default:
+-		pr_err("%s: unknown dmb type %d\n", __func__, type);
++		pr_err("%s: unknown barrier type %d\n", __func__, type);
+ 		return AARCH64_BREAK_FAULT;
+ 	}
++}
 +
- 	io_cq_lock(ctx);
- 	filled = io_fill_cqe_aux(ctx, user_data, res, cflags);
- 	if (!filled && allow_overflow)
++u32 aarch64_insn_gen_dmb(enum aarch64_insn_mb_type type)
++{
++	u32 opt;
++	u32 insn;
++
++	opt = __get_barrier_crm_val(type);
++	if (opt == AARCH64_BREAK_FAULT)
++		return AARCH64_BREAK_FAULT;
+ 
+ 	insn = aarch64_insn_get_dmb_value();
+ 	insn &= ~GENMASK(11, 8);
+ 	insn |= (opt << 8);
+ 
++	return insn;
++}
++
++u32 aarch64_insn_gen_dsb(enum aarch64_insn_mb_type type)
++{
++	u32 opt, insn;
++
++	opt = __get_barrier_crm_val(type);
++	if (opt == AARCH64_BREAK_FAULT)
++		return AARCH64_BREAK_FAULT;
++
++	insn = aarch64_insn_get_dsb_base_value();
++	insn &= ~GENMASK(11, 8);
++	insn |= (opt << 8);
++
+ 	return insn;
+ }
 
 
