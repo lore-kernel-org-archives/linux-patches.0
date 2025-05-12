@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C4A1E505;
-	Mon, 12 May 2025 17:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D82F1E505;
+	Mon, 12 May 2025 17:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072696; cv=none; b=KkWIe6QkAqEUiKt9aCaAXPOOKEikcFggdJetWjOF+K28qooq5adQcdUUUqQHRhZjw2NADz+EEw+/yxAmsBlrePmI9FTMJDbb23FtAE6fuAj41zL4quAWMreuu+zrbj3bAtbK6e9wMA5Zaj5Vgf/wo3zSTRFLoogPOMgMO0phdS4=
+	t=1747072699; cv=none; b=pxDEX9CE+kNBvkVeJ1G6pvLDwQEXgT1Cr8W4k7yXk8CJjoskg9DaxI6yA3fLP5nqx8CRqHAEqGn8PYXqNyJl5WjoaWEufYFzdiJZCkQ/rHjI2FX0wo+a6w3fTrXhUVBEONwFam3lVbnGxImFlhdqxZWPR7iL+c03XWs9kqVs0xI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072696; c=relaxed/simple;
-	bh=r0bfkwMIIFxB/zA11TQBumM8vDkI1ePM8iUKbV/KcX8=;
+	s=arc-20240116; t=1747072699; c=relaxed/simple;
+	bh=VhEkZy+mH6XfucqvqU/QaK2kG0l6VpLavT6O/EzOUNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JAg73zGBkfOpmlabdMUimlzzZ5okW1LlhWetbtQ4KGVVwKQbsqkykKQM0eFEsxyp4vtqjtFNUDAZYFnUwzWpnE7PWjuRJKMBl2cGiO39TxqAMdW31FCBRj7y/yxMlghPjNf7cVkVtewYvu/I9OGl9BDr1BJFS+0Kns4ehPSiJTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/H3JoFz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GdK8ew7PRhFpD3sUiC2KThAzrvowQV8wJSDUBPWTFsiMXyqcm7bsUamCbXGe1Dc1YFjGa/3SUciojEXTcs/YwLW3pfD2dhnE6Sjlbd/d/nuiwDaEFozV6YfRJaGqsctKWCR0sIIpgaTKvep9Cw7gjH1UOTa2T1TtkhkCA2kWRS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aeoAdEtt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/H3JoFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D189C4CEE7;
-	Mon, 12 May 2025 17:58:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aeoAdEtt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D04F1C4CEE9;
+	Mon, 12 May 2025 17:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072696;
-	bh=r0bfkwMIIFxB/zA11TQBumM8vDkI1ePM8iUKbV/KcX8=;
+	s=korg; t=1747072699;
+	bh=VhEkZy+mH6XfucqvqU/QaK2kG0l6VpLavT6O/EzOUNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x/H3JoFzmC46RNApUZTyrjgB4xADTLV2A/sh4W907BLHuzxDi/iPSFsNb0JraJyHy
-	 3T5djBWQoTZ6OSzR+8usmpSSbEYQldIpQJl8lzTJLgug2CJuoYAf9Rl0k2OKrP5gzA
-	 anWzI7AjNQBcUlEZNrrqN6kpvPOa1pjeH8WA1NyQ=
+	b=aeoAdEttmuo0yOxZvLK1WaieoIdJz0h4H4gp2K/q71X8GOD/tkGI90WkUQU7Y3Zdy
+	 9SCJYpgQCuQ+WsLmIJ+8ninFctVjJUfJgIoKvunajWGCoiBANqlBO3JPvf/TrSRbmk
+	 Z0FvYbVRvMKw9Acybxe+lN+pcmodIvVL6pfYVI2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 027/184] can: gw: fix RCU/BH usage in cgw_create_job()
-Date: Mon, 12 May 2025 19:43:48 +0200
-Message-ID: <20250512172042.819742356@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.12 003/184] Revert "btrfs: canonicalize the device path before adding it"
+Date: Mon, 12 May 2025 19:43:24 +0200
+Message-ID: <20250512172041.784103493@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 References: <20250512172041.624042835@linuxfoundation.org>
@@ -52,366 +51,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 511e64e13d8cc72853275832e3f372607466c18c ]
+commit 8fb1dcbbcc1ffe6ed7cf3f0f96d2737491dd1fbf upstream.
 
-As reported by Sebastian Andrzej Siewior the use of local_bh_disable()
-is only feasible in uni processor systems to update the modification rules.
-The usual use-case to update the modification rules is to update the data
-of the modifications but not the modification types (AND/OR/XOR/SET) or
-the checksum functions itself.
+This reverts commit 7e06de7c83a746e58d4701e013182af133395188.
 
-To omit additional memory allocations to maintain fast modification
-switching times, the modification description space is doubled at gw-job
-creation time so that only the reference to the active modification
-description is changed under rcu protection.
+Commit 7e06de7c83a7 ("btrfs: canonicalize the device path before adding
+it") tries to make btrfs to use "/dev/mapper/*" name first, then any
+filename inside "/dev/" as the device path.
 
-Rename cgw_job::mod to cf_mod and make it a RCU pointer. Allocate in
-cgw_create_job() and free it together with cgw_job in
-cgw_job_free_rcu(). Update all users to dereference cgw_job::cf_mod with
-a RCU accessor and if possible once.
+This is mostly fine when there is only the root namespace involved, but
+when multiple namespace are involved, things can easily go wrong for the
+d_path() usage.
 
-[bigeasy: Replace mod1/mod2 from the Oliver's original patch with dynamic
-allocation, use RCU annotation and accessor]
+As d_path() returns a file path that is namespace dependent, the
+resulted string may not make any sense in another namespace.
 
-Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Closes: https://lore.kernel.org/linux-can/20231031112349.y0aLoBrz@linutronix.de/
-Fixes: dd895d7f21b2 ("can: cangw: introduce optional uid to reference created routing jobs")
-Tested-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20250429070555.cs-7b_eZ@linutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Furthermore, the "/dev/" prefix checks itself is not reliable, one can
+still make a valid initramfs without devtmpfs, and fill all needed
+device nodes manually.
+
+Overall the userspace has all its might to pass whatever device path for
+mount, and we are not going to win the war trying to cover every corner
+case.
+
+So just revert that commit, and do no extra d_path() based file path
+sanity check.
+
+CC: stable@vger.kernel.org # 6.12+
+Link: https://lore.kernel.org/linux-fsdevel/20250115185608.GA2223535@zen.localdomain/
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/gw.c | 149 +++++++++++++++++++++++++++++++--------------------
- 1 file changed, 90 insertions(+), 59 deletions(-)
+ fs/btrfs/volumes.c |   91 -----------------------------------------------------
+ 1 file changed, 1 insertion(+), 90 deletions(-)
 
-diff --git a/net/can/gw.c b/net/can/gw.c
-index 37528826935e7..e65500c52bf5c 100644
---- a/net/can/gw.c
-+++ b/net/can/gw.c
-@@ -130,7 +130,7 @@ struct cgw_job {
- 	u32 handled_frames;
- 	u32 dropped_frames;
- 	u32 deleted_frames;
--	struct cf_mod mod;
-+	struct cf_mod __rcu *cf_mod;
- 	union {
- 		/* CAN frame data source */
- 		struct net_device *dev;
-@@ -459,6 +459,7 @@ static void can_can_gw_rcv(struct sk_buff *skb, void *data)
- 	struct cgw_job *gwj = (struct cgw_job *)data;
- 	struct canfd_frame *cf;
- 	struct sk_buff *nskb;
-+	struct cf_mod *mod;
- 	int modidx = 0;
- 
- 	/* process strictly Classic CAN or CAN FD frames */
-@@ -506,7 +507,8 @@ static void can_can_gw_rcv(struct sk_buff *skb, void *data)
- 	 * When there is at least one modification function activated,
- 	 * we need to copy the skb as we want to modify skb->data.
- 	 */
--	if (gwj->mod.modfunc[0])
-+	mod = rcu_dereference(gwj->cf_mod);
-+	if (mod->modfunc[0])
- 		nskb = skb_copy(skb, GFP_ATOMIC);
- 	else
- 		nskb = skb_clone(skb, GFP_ATOMIC);
-@@ -529,8 +531,8 @@ static void can_can_gw_rcv(struct sk_buff *skb, void *data)
- 	cf = (struct canfd_frame *)nskb->data;
- 
- 	/* perform preprocessed modification functions if there are any */
--	while (modidx < MAX_MODFUNCTIONS && gwj->mod.modfunc[modidx])
--		(*gwj->mod.modfunc[modidx++])(cf, &gwj->mod);
-+	while (modidx < MAX_MODFUNCTIONS && mod->modfunc[modidx])
-+		(*mod->modfunc[modidx++])(cf, mod);
- 
- 	/* Has the CAN frame been modified? */
- 	if (modidx) {
-@@ -546,11 +548,11 @@ static void can_can_gw_rcv(struct sk_buff *skb, void *data)
- 		}
- 
- 		/* check for checksum updates */
--		if (gwj->mod.csumfunc.crc8)
--			(*gwj->mod.csumfunc.crc8)(cf, &gwj->mod.csum.crc8);
-+		if (mod->csumfunc.crc8)
-+			(*mod->csumfunc.crc8)(cf, &mod->csum.crc8);
- 
--		if (gwj->mod.csumfunc.xor)
--			(*gwj->mod.csumfunc.xor)(cf, &gwj->mod.csum.xor);
-+		if (mod->csumfunc.xor)
-+			(*mod->csumfunc.xor)(cf, &mod->csum.xor);
- 	}
- 
- 	/* clear the skb timestamp if not configured the other way */
-@@ -581,9 +583,20 @@ static void cgw_job_free_rcu(struct rcu_head *rcu_head)
- {
- 	struct cgw_job *gwj = container_of(rcu_head, struct cgw_job, rcu);
- 
-+	/* cgw_job::cf_mod is always accessed from the same cgw_job object within
-+	 * the same RCU read section. Once cgw_job is scheduled for removal,
-+	 * cf_mod can also be removed without mandating an additional grace period.
-+	 */
-+	kfree(rcu_access_pointer(gwj->cf_mod));
- 	kmem_cache_free(cgw_cache, gwj);
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -732,82 +732,6 @@ const u8 *btrfs_sb_fsid_ptr(const struct
+ 	return has_metadata_uuid ? sb->metadata_uuid : sb->fsid;
  }
  
-+/* Return cgw_job::cf_mod with RTNL protected section */
-+static struct cf_mod *cgw_job_cf_mod(struct cgw_job *gwj)
-+{
-+	return rcu_dereference_protected(gwj->cf_mod, rtnl_is_locked());
-+}
-+
- static int cgw_notifier(struct notifier_block *nb,
- 			unsigned long msg, void *ptr)
- {
-@@ -616,6 +629,7 @@ static int cgw_put_job(struct sk_buff *skb, struct cgw_job *gwj, int type,
- {
- 	struct rtcanmsg *rtcan;
- 	struct nlmsghdr *nlh;
-+	struct cf_mod *mod;
- 
- 	nlh = nlmsg_put(skb, pid, seq, type, sizeof(*rtcan), flags);
- 	if (!nlh)
-@@ -650,82 +664,83 @@ static int cgw_put_job(struct sk_buff *skb, struct cgw_job *gwj, int type,
- 			goto cancel;
- 	}
- 
-+	mod = cgw_job_cf_mod(gwj);
- 	if (gwj->flags & CGW_FLAGS_CAN_FD) {
- 		struct cgw_fdframe_mod mb;
- 
--		if (gwj->mod.modtype.and) {
--			memcpy(&mb.cf, &gwj->mod.modframe.and, sizeof(mb.cf));
--			mb.modtype = gwj->mod.modtype.and;
-+		if (mod->modtype.and) {
-+			memcpy(&mb.cf, &mod->modframe.and, sizeof(mb.cf));
-+			mb.modtype = mod->modtype.and;
- 			if (nla_put(skb, CGW_FDMOD_AND, sizeof(mb), &mb) < 0)
- 				goto cancel;
- 		}
- 
--		if (gwj->mod.modtype.or) {
--			memcpy(&mb.cf, &gwj->mod.modframe.or, sizeof(mb.cf));
--			mb.modtype = gwj->mod.modtype.or;
-+		if (mod->modtype.or) {
-+			memcpy(&mb.cf, &mod->modframe.or, sizeof(mb.cf));
-+			mb.modtype = mod->modtype.or;
- 			if (nla_put(skb, CGW_FDMOD_OR, sizeof(mb), &mb) < 0)
- 				goto cancel;
- 		}
- 
--		if (gwj->mod.modtype.xor) {
--			memcpy(&mb.cf, &gwj->mod.modframe.xor, sizeof(mb.cf));
--			mb.modtype = gwj->mod.modtype.xor;
-+		if (mod->modtype.xor) {
-+			memcpy(&mb.cf, &mod->modframe.xor, sizeof(mb.cf));
-+			mb.modtype = mod->modtype.xor;
- 			if (nla_put(skb, CGW_FDMOD_XOR, sizeof(mb), &mb) < 0)
- 				goto cancel;
- 		}
- 
--		if (gwj->mod.modtype.set) {
--			memcpy(&mb.cf, &gwj->mod.modframe.set, sizeof(mb.cf));
--			mb.modtype = gwj->mod.modtype.set;
-+		if (mod->modtype.set) {
-+			memcpy(&mb.cf, &mod->modframe.set, sizeof(mb.cf));
-+			mb.modtype = mod->modtype.set;
- 			if (nla_put(skb, CGW_FDMOD_SET, sizeof(mb), &mb) < 0)
- 				goto cancel;
- 		}
- 	} else {
- 		struct cgw_frame_mod mb;
- 
--		if (gwj->mod.modtype.and) {
--			memcpy(&mb.cf, &gwj->mod.modframe.and, sizeof(mb.cf));
--			mb.modtype = gwj->mod.modtype.and;
-+		if (mod->modtype.and) {
-+			memcpy(&mb.cf, &mod->modframe.and, sizeof(mb.cf));
-+			mb.modtype = mod->modtype.and;
- 			if (nla_put(skb, CGW_MOD_AND, sizeof(mb), &mb) < 0)
- 				goto cancel;
- 		}
- 
--		if (gwj->mod.modtype.or) {
--			memcpy(&mb.cf, &gwj->mod.modframe.or, sizeof(mb.cf));
--			mb.modtype = gwj->mod.modtype.or;
-+		if (mod->modtype.or) {
-+			memcpy(&mb.cf, &mod->modframe.or, sizeof(mb.cf));
-+			mb.modtype = mod->modtype.or;
- 			if (nla_put(skb, CGW_MOD_OR, sizeof(mb), &mb) < 0)
- 				goto cancel;
- 		}
- 
--		if (gwj->mod.modtype.xor) {
--			memcpy(&mb.cf, &gwj->mod.modframe.xor, sizeof(mb.cf));
--			mb.modtype = gwj->mod.modtype.xor;
-+		if (mod->modtype.xor) {
-+			memcpy(&mb.cf, &mod->modframe.xor, sizeof(mb.cf));
-+			mb.modtype = mod->modtype.xor;
- 			if (nla_put(skb, CGW_MOD_XOR, sizeof(mb), &mb) < 0)
- 				goto cancel;
- 		}
- 
--		if (gwj->mod.modtype.set) {
--			memcpy(&mb.cf, &gwj->mod.modframe.set, sizeof(mb.cf));
--			mb.modtype = gwj->mod.modtype.set;
-+		if (mod->modtype.set) {
-+			memcpy(&mb.cf, &mod->modframe.set, sizeof(mb.cf));
-+			mb.modtype = mod->modtype.set;
- 			if (nla_put(skb, CGW_MOD_SET, sizeof(mb), &mb) < 0)
- 				goto cancel;
- 		}
- 	}
- 
--	if (gwj->mod.uid) {
--		if (nla_put_u32(skb, CGW_MOD_UID, gwj->mod.uid) < 0)
-+	if (mod->uid) {
-+		if (nla_put_u32(skb, CGW_MOD_UID, mod->uid) < 0)
- 			goto cancel;
- 	}
- 
--	if (gwj->mod.csumfunc.crc8) {
-+	if (mod->csumfunc.crc8) {
- 		if (nla_put(skb, CGW_CS_CRC8, CGW_CS_CRC8_LEN,
--			    &gwj->mod.csum.crc8) < 0)
-+			    &mod->csum.crc8) < 0)
- 			goto cancel;
- 	}
- 
--	if (gwj->mod.csumfunc.xor) {
-+	if (mod->csumfunc.xor) {
- 		if (nla_put(skb, CGW_CS_XOR, CGW_CS_XOR_LEN,
--			    &gwj->mod.csum.xor) < 0)
-+			    &mod->csum.xor) < 0)
- 			goto cancel;
- 	}
- 
-@@ -1059,7 +1074,7 @@ static int cgw_create_job(struct sk_buff *skb,  struct nlmsghdr *nlh,
- 	struct net *net = sock_net(skb->sk);
- 	struct rtcanmsg *r;
- 	struct cgw_job *gwj;
--	struct cf_mod mod;
-+	struct cf_mod *mod;
- 	struct can_can_gw ccgw;
- 	u8 limhops = 0;
- 	int err = 0;
-@@ -1078,37 +1093,48 @@ static int cgw_create_job(struct sk_buff *skb,  struct nlmsghdr *nlh,
- 	if (r->gwtype != CGW_TYPE_CAN_CAN)
- 		return -EINVAL;
- 
--	err = cgw_parse_attr(nlh, &mod, CGW_TYPE_CAN_CAN, &ccgw, &limhops);
-+	mod = kmalloc(sizeof(*mod), GFP_KERNEL);
-+	if (!mod)
-+		return -ENOMEM;
-+
-+	err = cgw_parse_attr(nlh, mod, CGW_TYPE_CAN_CAN, &ccgw, &limhops);
- 	if (err < 0)
--		return err;
-+		goto out_free_cf;
- 
--	if (mod.uid) {
-+	if (mod->uid) {
- 		ASSERT_RTNL();
- 
- 		/* check for updating an existing job with identical uid */
- 		hlist_for_each_entry(gwj, &net->can.cgw_list, list) {
--			if (gwj->mod.uid != mod.uid)
-+			struct cf_mod *old_cf;
-+
-+			old_cf = cgw_job_cf_mod(gwj);
-+			if (old_cf->uid != mod->uid)
- 				continue;
- 
- 			/* interfaces & filters must be identical */
--			if (memcmp(&gwj->ccgw, &ccgw, sizeof(ccgw)))
--				return -EINVAL;
-+			if (memcmp(&gwj->ccgw, &ccgw, sizeof(ccgw))) {
-+				err = -EINVAL;
-+				goto out_free_cf;
-+			}
- 
--			/* update modifications with disabled softirq & quit */
--			local_bh_disable();
--			memcpy(&gwj->mod, &mod, sizeof(mod));
--			local_bh_enable();
-+			rcu_assign_pointer(gwj->cf_mod, mod);
-+			kfree_rcu_mightsleep(old_cf);
- 			return 0;
- 		}
- 	}
- 
- 	/* ifindex == 0 is not allowed for job creation */
--	if (!ccgw.src_idx || !ccgw.dst_idx)
--		return -ENODEV;
-+	if (!ccgw.src_idx || !ccgw.dst_idx) {
-+		err = -ENODEV;
-+		goto out_free_cf;
-+	}
- 
- 	gwj = kmem_cache_alloc(cgw_cache, GFP_KERNEL);
--	if (!gwj)
--		return -ENOMEM;
-+	if (!gwj) {
-+		err = -ENOMEM;
-+		goto out_free_cf;
-+	}
- 
- 	gwj->handled_frames = 0;
- 	gwj->dropped_frames = 0;
-@@ -1118,7 +1144,7 @@ static int cgw_create_job(struct sk_buff *skb,  struct nlmsghdr *nlh,
- 	gwj->limit_hops = limhops;
- 
- 	/* insert already parsed information */
--	memcpy(&gwj->mod, &mod, sizeof(mod));
-+	RCU_INIT_POINTER(gwj->cf_mod, mod);
- 	memcpy(&gwj->ccgw, &ccgw, sizeof(ccgw));
- 
- 	err = -ENODEV;
-@@ -1152,9 +1178,11 @@ static int cgw_create_job(struct sk_buff *skb,  struct nlmsghdr *nlh,
- 	if (!err)
- 		hlist_add_head_rcu(&gwj->list, &net->can.cgw_list);
- out:
--	if (err)
-+	if (err) {
- 		kmem_cache_free(cgw_cache, gwj);
+-/*
+- * We can have very weird soft links passed in.
+- * One example is "/proc/self/fd/<fd>", which can be a soft link to
+- * a block device.
+- *
+- * But it's never a good idea to use those weird names.
+- * Here we check if the path (not following symlinks) is a good one inside
+- * "/dev/".
+- */
+-static bool is_good_dev_path(const char *dev_path)
+-{
+-	struct path path = { .mnt = NULL, .dentry = NULL };
+-	char *path_buf = NULL;
+-	char *resolved_path;
+-	bool is_good = false;
+-	int ret;
 -
-+out_free_cf:
-+		kfree(mod);
-+	}
- 	return err;
+-	if (!dev_path)
+-		goto out;
+-
+-	path_buf = kmalloc(PATH_MAX, GFP_KERNEL);
+-	if (!path_buf)
+-		goto out;
+-
+-	/*
+-	 * Do not follow soft link, just check if the original path is inside
+-	 * "/dev/".
+-	 */
+-	ret = kern_path(dev_path, 0, &path);
+-	if (ret)
+-		goto out;
+-	resolved_path = d_path(&path, path_buf, PATH_MAX);
+-	if (IS_ERR(resolved_path))
+-		goto out;
+-	if (strncmp(resolved_path, "/dev/", strlen("/dev/")))
+-		goto out;
+-	is_good = true;
+-out:
+-	kfree(path_buf);
+-	path_put(&path);
+-	return is_good;
+-}
+-
+-static int get_canonical_dev_path(const char *dev_path, char *canonical)
+-{
+-	struct path path = { .mnt = NULL, .dentry = NULL };
+-	char *path_buf = NULL;
+-	char *resolved_path;
+-	int ret;
+-
+-	if (!dev_path) {
+-		ret = -EINVAL;
+-		goto out;
+-	}
+-
+-	path_buf = kmalloc(PATH_MAX, GFP_KERNEL);
+-	if (!path_buf) {
+-		ret = -ENOMEM;
+-		goto out;
+-	}
+-
+-	ret = kern_path(dev_path, LOOKUP_FOLLOW, &path);
+-	if (ret)
+-		goto out;
+-	resolved_path = d_path(&path, path_buf, PATH_MAX);
+-	if (IS_ERR(resolved_path)) {
+-		ret = PTR_ERR(resolved_path);
+-		goto out;
+-	}
+-	ret = strscpy(canonical, resolved_path, PATH_MAX);
+-out:
+-	kfree(path_buf);
+-	path_put(&path);
+-	return ret;
+-}
+-
+ static bool is_same_device(struct btrfs_device *device, const char *new_path)
+ {
+ 	struct path old = { .mnt = NULL, .dentry = NULL };
+@@ -1495,23 +1419,12 @@ struct btrfs_device *btrfs_scan_one_devi
+ 	bool new_device_added = false;
+ 	struct btrfs_device *device = NULL;
+ 	struct file *bdev_file;
+-	char *canonical_path = NULL;
+ 	u64 bytenr;
+ 	dev_t devt;
+ 	int ret;
+ 
+ 	lockdep_assert_held(&uuid_mutex);
+ 
+-	if (!is_good_dev_path(path)) {
+-		canonical_path = kmalloc(PATH_MAX, GFP_KERNEL);
+-		if (canonical_path) {
+-			ret = get_canonical_dev_path(path, canonical_path);
+-			if (ret < 0) {
+-				kfree(canonical_path);
+-				canonical_path = NULL;
+-			}
+-		}
+-	}
+ 	/*
+ 	 * Avoid an exclusive open here, as the systemd-udev may initiate the
+ 	 * device scan which may race with the user's mount or mkfs command,
+@@ -1556,8 +1469,7 @@ struct btrfs_device *btrfs_scan_one_devi
+ 		goto free_disk_super;
+ 	}
+ 
+-	device = device_list_add(canonical_path ? : path, disk_super,
+-				 &new_device_added);
++	device = device_list_add(path, disk_super, &new_device_added);
+ 	if (!IS_ERR(device) && new_device_added)
+ 		btrfs_free_stale_devices(device->devt, device);
+ 
+@@ -1566,7 +1478,6 @@ free_disk_super:
+ 
+ error_bdev_put:
+ 	fput(bdev_file);
+-	kfree(canonical_path);
+ 
+ 	return device;
  }
- 
-@@ -1214,19 +1242,22 @@ static int cgw_remove_job(struct sk_buff *skb, struct nlmsghdr *nlh,
- 
- 	/* remove only the first matching entry */
- 	hlist_for_each_entry_safe(gwj, nx, &net->can.cgw_list, list) {
-+		struct cf_mod *cf_mod;
-+
- 		if (gwj->flags != r->flags)
- 			continue;
- 
- 		if (gwj->limit_hops != limhops)
- 			continue;
- 
-+		cf_mod = cgw_job_cf_mod(gwj);
- 		/* we have a match when uid is enabled and identical */
--		if (gwj->mod.uid || mod.uid) {
--			if (gwj->mod.uid != mod.uid)
-+		if (cf_mod->uid || mod.uid) {
-+			if (cf_mod->uid != mod.uid)
- 				continue;
- 		} else {
- 			/* no uid => check for identical modifications */
--			if (memcmp(&gwj->mod, &mod, sizeof(mod)))
-+			if (memcmp(cf_mod, &mod, sizeof(mod)))
- 				continue;
- 		}
- 
--- 
-2.39.5
-
 
 
