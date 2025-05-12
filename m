@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C7F1DF72E;
-	Mon, 12 May 2025 17:57:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 239CE1DF72E;
+	Mon, 12 May 2025 17:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072624; cv=none; b=PzcNPe9CmbHXmWffm8BpC3VwjhOSsOtgi5iBBwNuxxxn9duZ6n7zQRgs8MZAXqxU4N8+wfUR/quEafS9djaXw9a5zQhuk2N0nQgqIwdJ50lYeNENuNsLiX097XyYn8fxtd/uzemMEQ/N33YbOj3QLI/g+WzoV+SsOrtVPm4ll0E=
+	t=1747072627; cv=none; b=btyyyenc+azjVD2lguVj3aKtHAj0YoO9qvBgthlqd0rJ+BDdTDhG8FSFmXMf4cq64JD2rv2BtpEReIkzrBj8upl0/QIvebfyCp3a6r7rsoNm9tEUCeBOr5kC9POk8bCMctejZyzA7xhryyhvRrqVZGNoC/10J7wSHcGULMSEz0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072624; c=relaxed/simple;
-	bh=FRMrahg/en/iZMC/bCw123bHBnArI6uoURifufpLlK8=;
+	s=arc-20240116; t=1747072627; c=relaxed/simple;
+	bh=Gt5zX0kKVMC1tLVU8MUrLpqB7Ob4YcmL39UdFq8e5cQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T01iJJ3hiZ88nidgjsz3GrLHwGspmSiTNWzOqJGUYX3cei596A5F2mf7Wrbf7Rb057CnJ0BcPcY8QKQbzhUJhk3cShpT4MCSzmF9ErK8meHOzpC0ga6AqH9aqblth+nktAj2o4ehOWJthGd3pe2+tHi3wAYnVP8+LQQwFaiH+tI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xis13Vjw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XF+l+tMIQgxaVtWh/qmfpyXdMglItQjmgSE/p2FoGaYzrQlSwk6obtfOHN3X4VrcJzjDDYJxbZJbjqfsWBNnuSpEopVN2Q7Le5q53QdzHpKzdW4LmJvhlGQalfhgYD1YgO3bAJ1HumEvk35LPg5E2SC428xJe9btSw/lps/uJdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MfmLqXhR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xis13Vjw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E167C4CEE7;
-	Mon, 12 May 2025 17:57:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MfmLqXhR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D22C4CEE7;
+	Mon, 12 May 2025 17:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072623;
-	bh=FRMrahg/en/iZMC/bCw123bHBnArI6uoURifufpLlK8=;
+	s=korg; t=1747072627;
+	bh=Gt5zX0kKVMC1tLVU8MUrLpqB7Ob4YcmL39UdFq8e5cQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xis13Vjwjpat2ukv8qyxGCHdUd4u2esGFnhatP2KeYjNjqzRg8FmASrRzcmPsJEsU
-	 9XQR4GykM8Br2fKmw5NjLiuxUhhSOX9mYsT2pbYoG09ZD8XXtJxlKhdQMNTeYEMqdS
-	 9E1WQ786kizqE17xFAQgRWrfrai4mSzgbLB/EP3o=
+	b=MfmLqXhRTleceLOeWFPdm5N4C1DE2uSHAqJc4hJizTslVC/E6GqLUbYb8NZSLqJBB
+	 MJKEKyXLb3Q4Rc3Hy5g9MH9FD/Mc07gjZljHHevRsDkOiYPiGm5hmcG6tTS5ELIWAU
+	 Yjp6HZXiFVyvQVW3rXdfbw0qu9x44YE6qiN7MBWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>,
 	Alexandre Chartre <alexandre.chartre@oracle.com>
-Subject: [PATCH 6.1 91/92] x86/ibt: Keep IBT disabled during alternative patching
-Date: Mon, 12 May 2025 19:46:06 +0200
-Message-ID: <20250512172026.831224986@linuxfoundation.org>
+Subject: [PATCH 6.1 92/92] x86/its: Use dynamic thunks for indirect branches
+Date: Mon, 12 May 2025 19:46:07 +0200
+Message-ID: <20250512172026.871306124@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
 References: <20250512172023.126467649@linuxfoundation.org>
@@ -51,87 +52,260 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit ebebe30794d38c51f71fe4951ba6af4159d9837d upstream.
+commit 872df34d7c51a79523820ea6a14860398c639b87 upstream.
 
-cfi_rewrite_callers() updates the fineIBT hash matching at the caller side,
-but except for paranoid-mode it relies on apply_retpoline() and friends for
-any ENDBR relocation. This could temporarily cause an indirect branch to
-land on a poisoned ENDBR.
+ITS mitigation moves the unsafe indirect branches to a safe thunk. This
+could degrade the prediction accuracy as the source address of indirect
+branches becomes same for different execution paths.
 
-For instance, with para-virtualization enabled, a simple wrmsrl() could
-have an indirect branch pointing to native_write_msr() who's ENDBR has been
-relocated due to fineIBT:
+To improve the predictions, and hence the performance, assign a separate
+thunk for each indirect callsite. This is also a defense-in-depth measure
+to avoid indirect branches aliasing with each other.
 
-<wrmsrl>:
-       push   %rbp
-       mov    %rsp,%rbp
-       mov    %esi,%eax
-       mov    %rsi,%rdx
-       shr    $0x20,%rdx
-       mov    %edi,%edi
-       mov    %rax,%rsi
-       call   *0x21e65d0(%rip)        # <pv_ops+0xb8>
-       ^^^^^^^^^^^^^^^^^^^^^^^
+As an example, 5000 dynamic thunks would utilize around 16 bits of the
+address space, thereby gaining entropy. For a BTB that uses
+32 bits for indexing, dynamic thunks could provide better prediction
+accuracy over fixed thunks.
 
-Such an indirect call during the alternative patching could #CP if the
-caller is not *yet* adjusted for the new target ENDBR. To prevent a false
- #CP, keep CET-IBT disabled until all callers are patched.
+Have ITS thunks be variable sized and use EXECMEM_MODULE_TEXT such that
+they are both more flexible (got to extend them later) and live in 2M TLBs,
+just like kernel code, avoiding undue TLB pressure.
 
-Patching during the module load does not need to be guarded by IBT-disable
-because the module code is not executed until the patching is complete.
+  [ pawan: CONFIG_EXECMEM and CONFIG_EXECMEM_ROX are not supported on
+	   backport kernel, made changes to use module_alloc() and
+	   set_memory_*() for dynamic thunks. ]
 
-  [ pawan: Since apply_paravirt() happens before __apply_fineibt()
-	   relocates the ENDBR, pv_ops in the example above is not relevant.
-	   It is still safer to keep this commit because missing an ENDBR
-	   means an oops. ]
-
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
 Reviewed-by: Alexandre Chartre <alexandre.chartre@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/alternative.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/x86/include/asm/alternative.h |   10 ++
+ arch/x86/kernel/alternative.c      |  130 ++++++++++++++++++++++++++++++++++++-
+ arch/x86/kernel/module.c           |    7 +
+ include/linux/module.h             |    5 +
+ 4 files changed, 149 insertions(+), 3 deletions(-)
 
+--- a/arch/x86/include/asm/alternative.h
++++ b/arch/x86/include/asm/alternative.h
+@@ -81,6 +81,16 @@ extern void apply_ibt_endbr(s32 *start,
+ 
+ struct module;
+ 
++#ifdef CONFIG_MITIGATION_ITS
++extern void its_init_mod(struct module *mod);
++extern void its_fini_mod(struct module *mod);
++extern void its_free_mod(struct module *mod);
++#else /* CONFIG_MITIGATION_ITS */
++static inline void its_init_mod(struct module *mod) { }
++static inline void its_fini_mod(struct module *mod) { }
++static inline void its_free_mod(struct module *mod) { }
++#endif
++
+ #if defined(CONFIG_RETHUNK) && defined(CONFIG_OBJTOOL)
+ extern bool cpu_wants_rethunk(void);
+ extern bool cpu_wants_rethunk_at(void *addr);
 --- a/arch/x86/kernel/alternative.c
 +++ b/arch/x86/kernel/alternative.c
-@@ -30,6 +30,7 @@
- #include <asm/fixmap.h>
+@@ -18,6 +18,8 @@
+ #include <linux/mmu_context.h>
+ #include <linux/bsearch.h>
+ #include <linux/sync_core.h>
++#include <linux/moduleloader.h>
++#include <linux/cleanup.h>
+ #include <asm/text-patching.h>
+ #include <asm/alternative.h>
+ #include <asm/sections.h>
+@@ -31,6 +33,7 @@
  #include <asm/paravirt.h>
  #include <asm/asm-prototypes.h>
-+#include <asm/cfi.h>
+ #include <asm/cfi.h>
++#include <asm/set_memory.h>
  
  int __read_mostly alternatives_patched;
  
-@@ -1006,6 +1007,8 @@ static noinline void __init int3_selftes
+@@ -399,6 +402,123 @@ static int emit_indirect(int op, int reg
  
- void __init alternative_instructions(void)
+ #ifdef CONFIG_MITIGATION_ITS
+ 
++static struct module *its_mod;
++static void *its_page;
++static unsigned int its_offset;
++
++/* Initialize a thunk with the "jmp *reg; int3" instructions. */
++static void *its_init_thunk(void *thunk, int reg)
++{
++	u8 *bytes = thunk;
++	int i = 0;
++
++	if (reg >= 8) {
++		bytes[i++] = 0x41; /* REX.B prefix */
++		reg -= 8;
++	}
++	bytes[i++] = 0xff;
++	bytes[i++] = 0xe0 + reg; /* jmp *reg */
++	bytes[i++] = 0xcc;
++
++	return thunk;
++}
++
++void its_init_mod(struct module *mod)
++{
++	if (!cpu_feature_enabled(X86_FEATURE_INDIRECT_THUNK_ITS))
++		return;
++
++	mutex_lock(&text_mutex);
++	its_mod = mod;
++	its_page = NULL;
++}
++
++void its_fini_mod(struct module *mod)
++{
++	if (!cpu_feature_enabled(X86_FEATURE_INDIRECT_THUNK_ITS))
++		return;
++
++	WARN_ON_ONCE(its_mod != mod);
++
++	its_mod = NULL;
++	its_page = NULL;
++	mutex_unlock(&text_mutex);
++
++	for (int i = 0; i < mod->its_num_pages; i++) {
++		void *page = mod->its_page_array[i];
++		set_memory_ro((unsigned long)page, 1);
++		set_memory_x((unsigned long)page, 1);
++	}
++}
++
++void its_free_mod(struct module *mod)
++{
++	if (!cpu_feature_enabled(X86_FEATURE_INDIRECT_THUNK_ITS))
++		return;
++
++	for (int i = 0; i < mod->its_num_pages; i++) {
++		void *page = mod->its_page_array[i];
++		module_memfree(page);
++	}
++	kfree(mod->its_page_array);
++}
++
++DEFINE_FREE(its_execmem, void *, if (_T) module_memfree(_T));
++
++static void *its_alloc(void)
++{
++	void *page __free(its_execmem) = module_alloc(PAGE_SIZE);
++
++	if (!page)
++		return NULL;
++
++	if (its_mod) {
++		void *tmp = krealloc(its_mod->its_page_array,
++				     (its_mod->its_num_pages+1) * sizeof(void *),
++				     GFP_KERNEL);
++		if (!tmp)
++			return NULL;
++
++		its_mod->its_page_array = tmp;
++		its_mod->its_page_array[its_mod->its_num_pages++] = page;
++	}
++
++	return no_free_ptr(page);
++}
++
++static void *its_allocate_thunk(int reg)
++{
++	int size = 3 + (reg / 8);
++	void *thunk;
++
++	if (!its_page || (its_offset + size - 1) >= PAGE_SIZE) {
++		its_page = its_alloc();
++		if (!its_page) {
++			pr_err("ITS page allocation failed\n");
++			return NULL;
++		}
++		memset(its_page, INT3_INSN_OPCODE, PAGE_SIZE);
++		its_offset = 32;
++	}
++
++	/*
++	 * If the indirect branch instruction will be in the lower half
++	 * of a cacheline, then update the offset to reach the upper half.
++	 */
++	if ((its_offset + size - 1) % 64 < 32)
++		its_offset = ((its_offset - 1) | 0x3F) + 33;
++
++	thunk = its_page + its_offset;
++	its_offset += size;
++
++	set_memory_rw((unsigned long)its_page, 1);
++	thunk = its_init_thunk(thunk, reg);
++	set_memory_ro((unsigned long)its_page, 1);
++	set_memory_x((unsigned long)its_page, 1);
++
++	return thunk;
++}
++
+ static int __emit_trampoline(void *addr, struct insn *insn, u8 *bytes,
+ 			     void *call_dest, void *jmp_dest)
  {
-+	u64 ibt;
+@@ -446,9 +566,13 @@ clang_jcc:
+ 
+ static int emit_its_trampoline(void *addr, struct insn *insn, int reg, u8 *bytes)
+ {
+-	return __emit_trampoline(addr, insn, bytes,
+-				 __x86_indirect_its_thunk_array[reg],
+-				 __x86_indirect_its_thunk_array[reg]);
++	u8 *thunk = __x86_indirect_its_thunk_array[reg];
++	u8 *tmp = its_allocate_thunk(reg);
 +
- 	int3_selftest();
- 
- 	/*
-@@ -1043,6 +1046,9 @@ void __init alternative_instructions(voi
- 	 */
- 	paravirt_set_cap();
- 
-+	/* Keep CET-IBT disabled until caller/callee are patched */
-+	ibt = ibt_save();
++	if (tmp)
++		thunk = tmp;
 +
- 	/*
- 	 * First patch paravirt functions, such that we overwrite the indirect
- 	 * call with the direct call.
-@@ -1064,6 +1070,8 @@ void __init alternative_instructions(voi
++	return __emit_trampoline(addr, insn, bytes, thunk, thunk);
+ }
  
- 	apply_ibt_endbr(__ibt_endbr_seal, __ibt_endbr_seal_end);
- 
-+	ibt_restore(ibt);
+ /* Check if an indirect branch is at ITS-unsafe address */
+--- a/arch/x86/kernel/module.c
++++ b/arch/x86/kernel/module.c
+@@ -285,10 +285,16 @@ int module_finalize(const Elf_Ehdr *hdr,
+ 		void *pseg = (void *)para->sh_addr;
+ 		apply_paravirt(pseg, pseg + para->sh_size);
+ 	}
 +
- #ifdef CONFIG_SMP
- 	/* Patch to UP if other cpus not imminent. */
- 	if (!noreplace_smp && (num_present_cpus() == 1 || setup_max_cpus <= 1)) {
++	its_init_mod(me);
++
+ 	if (retpolines) {
+ 		void *rseg = (void *)retpolines->sh_addr;
+ 		apply_retpolines(rseg, rseg + retpolines->sh_size);
+ 	}
++
++	its_fini_mod(me);
++
+ 	if (returns) {
+ 		void *rseg = (void *)returns->sh_addr;
+ 		apply_returns(rseg, rseg + returns->sh_size);
+@@ -320,4 +326,5 @@ int module_finalize(const Elf_Ehdr *hdr,
+ void module_arch_cleanup(struct module *mod)
+ {
+ 	alternatives_smp_module_del(mod);
++	its_free_mod(mod);
+ }
+--- a/include/linux/module.h
++++ b/include/linux/module.h
+@@ -536,6 +536,11 @@ struct module {
+ 	atomic_t refcnt;
+ #endif
+ 
++#ifdef CONFIG_MITIGATION_ITS
++	int its_num_pages;
++	void **its_page_array;
++#endif
++
+ #ifdef CONFIG_CONSTRUCTORS
+ 	/* Constructor functions. */
+ 	ctor_fn_t *ctors;
 
 
