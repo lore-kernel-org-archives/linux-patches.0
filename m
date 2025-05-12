@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63251A08CA;
-	Mon, 12 May 2025 17:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931DB1A08CA;
+	Mon, 12 May 2025 17:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747072206; cv=none; b=rKieD4XKu4Lpl2UlD5V8KfEx2KsdjjgHml/EknT5Ub38uxWB3wchD8Xa92MToxnZd1njWESY0HcLUTMEupoqB1lxNvEpa2pV65jPEi94TFn5tlEPN5lNXHl0XS/t4fQ5KLkBp2XjVPI0P5KtoKTq5FL0I8K73FL75BzbbHYwN9M=
+	t=1747072209; cv=none; b=q0/mxMHhb579ActGEqtinJCi9GjGPGUdWp4kfOO60gta9NdOnTMP7eAcdUbf0aSuX9M+w6ssmyCBWd5wpQ8vl1sji2vvCFCWJ5766E6Z7MPwNAnmvZxnsLzCYFINs5AjM3aFXTSxyslTGURFd4+BIARD6h08S+xk964wlv7T0QY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747072206; c=relaxed/simple;
-	bh=em2ICtvT8Su2mznLks5GNO/JEvlJNxcv0J63PtJNb34=;
+	s=arc-20240116; t=1747072209; c=relaxed/simple;
+	bh=TTz5V1sXApHb/9foLHtyo6LGHKU6bK4x21JhmxgLPiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XtKYiRRJ9cQeJJFmctdu+9J/VbxdGiRnJWHMP96p/30wrM1MpchZu26X+CxgXgexcOfEwZ1Lr+SWtd65iRAusYQavkRcQ64y89FAJSm+2on4UPMuAoTIbAcYBcW3tWSZT/p3m+v2WiTdP12qjpiAOnojfmfZpEfkSHryb818NaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=05rO1lJp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V8kA0GTYOMioDeWp5U4pFKScWZKT1Rc+QF0a44+89QQm0NV0j7GWN6Xaxry3aayG1f8+Lk+0n56QTAEUDSLGcQgfjq6XMeu5Z5jwp6I3GKNmbigYQQii8ThoIzL0GsEdXsUjRFfokm8Vzv3cMzBPbf16MVs5dK3VIXyA+ZTHH1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8eP7aPy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="05rO1lJp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C26C4CEE7;
-	Mon, 12 May 2025 17:50:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8eP7aPy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD53C4CEE7;
+	Mon, 12 May 2025 17:50:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747072206;
-	bh=em2ICtvT8Su2mznLks5GNO/JEvlJNxcv0J63PtJNb34=;
+	s=korg; t=1747072209;
+	bh=TTz5V1sXApHb/9foLHtyo6LGHKU6bK4x21JhmxgLPiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=05rO1lJpNTgqNKCyP+fhT6MJPQYn4IAxpeCPEow7uw/7J0mZCcL60fWottR5QgU+T
-	 NZxsqK3NkLuCRMQ3mwzIK3KDrIP8pXXzcmKnwmzbpRa63nRdz02Il/b5NAOrRVEV/Y
-	 JJKzYgvnDYTw75lMB91JwGehZsY5t7kTeRohWHW8=
+	b=r8eP7aPyQ/mqtOLtzlbCDV49P1P4KGv1dxv+MlR5sDKVdnnTw0RgsojCND5OZ/Er9
+	 +uPf4SzE/NmhzWEWOyvUvL7WuZ1nPb//qbPanJasalCowSDnlRFDYQjVtfx6odhLxq
+	 tcNvADDE/uFrC7bs9YsEX9phJtTeZmcgLHdGQdkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zong Li <zong.li@sifive.com>,
-	Nylon Chen <nylon.chen@sifive.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 160/197] riscv: misaligned: Add handling for ZCB instructions
-Date: Mon, 12 May 2025 19:40:10 +0200
-Message-ID: <20250512172050.898823596@linuxfoundation.org>
+Subject: [PATCH 6.14 169/197] drm/xe: Release force wake first then runtime power
+Date: Mon, 12 May 2025 19:40:19 +0200
+Message-ID: <20250512172051.266470290@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
 References: <20250512172044.326436266@linuxfoundation.org>
@@ -52,66 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nylon Chen <nylon.chen@sifive.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit eb16b3727c05ed36420c90eca1e8f0e279514c1c ]
+[ Upstream commit 9d271a4f5ba52520e448ab223b1a91c6e35f17c7 ]
 
-Add support for the Zcb extension's compressed half-word instructions
-(C.LHU, C.LH, and C.SH) in the RISC-V misaligned access trap handler.
+xe_force_wake_get() is dependent on xe_pm_runtime_get(), so for
+the release path, xe_force_wake_put() should be called first then
+xe_pm_runtime_put().
+Combine the error path and normal path together with goto.
 
-Signed-off-by: Zong Li <zong.li@sifive.com>
-Signed-off-by: Nylon Chen <nylon.chen@sifive.com>
-Fixes: 956d705dd279 ("riscv: Unaligned load/store handling for M_MODE")
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20250411073850.3699180-2-nylon.chen@sifive.com
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Fixes: 85d547608ef5 ("drm/xe/xe_gt_debugfs: Update handling of xe_force_wake_get return")
+Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Link: https://lore.kernel.org/r/20250507022302.2187527-1-shuicheng.lin@intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit 432cd94efdca06296cc5e76d673546f58aa90ee1)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/traps_misaligned.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/gpu/drm/xe/xe_gt_debugfs.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/arch/riscv/kernel/traps_misaligned.c b/arch/riscv/kernel/traps_misaligned.c
-index 4354c87c0376f..dde5d11dc1b50 100644
---- a/arch/riscv/kernel/traps_misaligned.c
-+++ b/arch/riscv/kernel/traps_misaligned.c
-@@ -88,6 +88,13 @@
- #define INSN_MATCH_C_FSWSP		0xe002
- #define INSN_MASK_C_FSWSP		0xe003
+diff --git a/drivers/gpu/drm/xe/xe_gt_debugfs.c b/drivers/gpu/drm/xe/xe_gt_debugfs.c
+index 2d63a69cbfa38..f7005a3643e62 100644
+--- a/drivers/gpu/drm/xe/xe_gt_debugfs.c
++++ b/drivers/gpu/drm/xe/xe_gt_debugfs.c
+@@ -92,22 +92,23 @@ static int hw_engines(struct xe_gt *gt, struct drm_printer *p)
+ 	struct xe_hw_engine *hwe;
+ 	enum xe_hw_engine_id id;
+ 	unsigned int fw_ref;
++	int ret = 0;
  
-+#define INSN_MATCH_C_LHU		0x8400
-+#define INSN_MASK_C_LHU			0xfc43
-+#define INSN_MATCH_C_LH			0x8440
-+#define INSN_MASK_C_LH			0xfc43
-+#define INSN_MATCH_C_SH			0x8c00
-+#define INSN_MASK_C_SH			0xfc43
-+
- #define INSN_LEN(insn)			((((insn) & 0x3) < 0x3) ? 2 : 4)
+ 	xe_pm_runtime_get(xe);
+ 	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL);
+ 	if (!xe_force_wake_ref_has_domain(fw_ref, XE_FORCEWAKE_ALL)) {
+-		xe_pm_runtime_put(xe);
+-		xe_force_wake_put(gt_to_fw(gt), fw_ref);
+-		return -ETIMEDOUT;
++		ret = -ETIMEDOUT;
++		goto fw_put;
+ 	}
  
- #if defined(CONFIG_64BIT)
-@@ -431,6 +438,13 @@ static int handle_scalar_misaligned_load(struct pt_regs *regs)
- 		fp = 1;
- 		len = 4;
- #endif
-+	} else if ((insn & INSN_MASK_C_LHU) == INSN_MATCH_C_LHU) {
-+		len = 2;
-+		insn = RVC_RS2S(insn) << SH_RD;
-+	} else if ((insn & INSN_MASK_C_LH) == INSN_MATCH_C_LH) {
-+		len = 2;
-+		shift = 8 * (sizeof(ulong) - len);
-+		insn = RVC_RS2S(insn) << SH_RD;
- 	} else {
- 		regs->epc = epc;
- 		return -1;
-@@ -530,6 +544,9 @@ static int handle_scalar_misaligned_store(struct pt_regs *regs)
- 		len = 4;
- 		val.data_ulong = GET_F32_RS2C(insn, regs);
- #endif
-+	} else if ((insn & INSN_MASK_C_SH) == INSN_MATCH_C_SH) {
-+		len = 2;
-+		val.data_ulong = GET_RS2S(insn, regs);
- 	} else {
- 		regs->epc = epc;
- 		return -1;
+ 	for_each_hw_engine(hwe, gt, id)
+ 		xe_hw_engine_print(hwe, p);
+ 
++fw_put:
+ 	xe_force_wake_put(gt_to_fw(gt), fw_ref);
+ 	xe_pm_runtime_put(xe);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int powergate_info(struct xe_gt *gt, struct drm_printer *p)
 -- 
 2.39.5
 
