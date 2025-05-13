@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20024150997;
-	Tue, 13 May 2025 09:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F362623C4E0;
+	Tue, 13 May 2025 09:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747129705; cv=none; b=dC/9Af3GChWGLYf71VZiJVUZhl6heWlEhQti52UMG90nEpD/kmNPVRGt08Vj+iMEkiVJc7JsA8ch1mfBDh0V5+ocUVYGeWIXohWJN4w+i3s+pIh90p9bI970uX8Qg+D02Ug5XGsCqU3YUhiyXfeRzS0Z77gJF7akY9o02a4Yb4A=
+	t=1747129737; cv=none; b=GBOaZJGzUfzAoIExFbeOVUUq1PEQRV982TmOyfkTrtFi3TGqpNqjMi7zK5dtpRmu9JSbISDWJ7adPShO27n2YvIm7XL5J7sBQSCg3hlpaCVlYjBopTSbdAgUOYghsv5Snr3ss/GQBKGw848X1HnT/D8aOfb5woAa5NQRK4Wheec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747129705; c=relaxed/simple;
-	bh=VCClFDmWn98t6LGY59WiqwTKlWQSpuTu+3dions5oYk=;
+	s=arc-20240116; t=1747129737; c=relaxed/simple;
+	bh=uKwYnFuHz7TTvcxRA2Fcqy3gQzrtdstyxl3+kZeaQ+M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iWe/vbGqaVbikE+Xoj1jCU8HUXt0KzXqgtuGR5romAgIjfr13MuFILq9ImiWsiwhlNeQ6urLA1hiO3J2naI7WRN0XcZcOw5PjKRoLhZ+1FD8rfHRCk2J/ghKyzigmf3jfU4++vyvRGdS3snNkzIIhl6Ke+GseLUTvdNL43OamUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ks3xn8mh; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=HWxSBXnJvBAeRvR3SjGzWpVrcz8pva2aD10l1IrqRIt3BcShnuuHf6zXLjBNScCjV3y1lVPaJFwgsYxROhFcA3MkHDTytG+uN+iTRz7pjPpVYsOCtbVqkmDIjgjWCunTm5ndqUZEOHFGuH00DA3MttdSu9FYeA0cq5uW33JOFhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YtyLN6eo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ks3xn8mh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38C44C4CEE4;
-	Tue, 13 May 2025 09:48:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YtyLN6eo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15EBDC4CEEF;
+	Tue, 13 May 2025 09:48:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747129704;
-	bh=VCClFDmWn98t6LGY59WiqwTKlWQSpuTu+3dions5oYk=;
+	s=k20201202; t=1747129736;
+	bh=uKwYnFuHz7TTvcxRA2Fcqy3gQzrtdstyxl3+kZeaQ+M=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ks3xn8mh1X7cSFC1KOwcVIF+OO+y6b0Ag8d68qQn04X5kW7CMKhoM4lWd0o4yG+kc
-	 E2xeVPxbRc3SdnUPCky7X/XtlfEF/hLjGqWe7OL5VjKCtO7Qzd7IT0UuRNRQ7RmqeX
-	 1Z2RVvP9KAMHJwTndwxWw4KFhhj/QpSDPB6zcG1FhBtl3A1m+sZxIkbpPqy8lgH/sG
-	 JNsFw7sZo2CBD7k3Un3DH7UpQPVIwyLb6Mfos5Fh7PvJqOrPbrX0LCMPr0K/LERuF5
-	 3SP9kCFoogsdCNSZgueWGFi1Y5fmKpEB9R9aqs7s50yewlWBh+2LFz123uqyh4ndmD
-	 EzgWPsF1CgMSg==
-Date: Tue, 13 May 2025 11:48:19 +0200
+	b=YtyLN6eoSjRcb4WRQiDx8FhIFGv8Ueblqwszk5bHIbduvEJMX/H9HsTD6lpKP6E8W
+	 F+JnVLT6K4AcvjQ3w9vFH+JZHkSwGx/tNbt5L63cOc1j0xVKn781r0xY97mUwy8RaL
+	 P/gFalMgcl3g+9WCyJzPr/fo2wLIlyaCCkffIg7UEncmSZe4XCv/9INL67AADc68N+
+	 d6OAP2uggs+baDjQC/KBhYWski0J7xw6wFnMC1MN8FOd/HGiQ8Wm6N+HwWQ795ABtt
+	 GnVR+cldpJ2uOh6rkREwUjJZsE4Hl1uL76ZwpRHK46ytCQnzEhE2O8/CtKk1JMgxH0
+	 gnF4v1N33Vm5A==
+Date: Tue, 13 May 2025 11:48:50 +0200
 From: Mark Brown <broonie@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -36,9 +36,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
 	conor@kernel.org, hargar@microsoft.com
-Subject: Re: [PATCH 6.1 00/92] 6.1.139-rc1 review
-Message-ID: <aCMVYwGTloaYW2u_@finisterre.sirena.org.uk>
-References: <20250512172023.126467649@linuxfoundation.org>
+Subject: Re: [PATCH 5.15 00/54] 5.15.183-rc1 review
+Message-ID: <aCMVgh9S881so98S@finisterre.sirena.org.uk>
+References: <20250512172015.643809034@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,37 +46,37 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="HvTXniaQ6ThjIWnf"
+	protocol="application/pgp-signature"; boundary="t8BDZHYXv9Q7SgfL"
 Content-Disposition: inline
-In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
+In-Reply-To: <20250512172015.643809034@linuxfoundation.org>
 X-Cookie: Well begun is half done.
 
 
---HvTXniaQ6ThjIWnf
+--t8BDZHYXv9Q7SgfL
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Mon, May 12, 2025 at 07:44:35PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.139 release.
-> There are 92 patches in this series, all will be posted as a response
+On Mon, May 12, 2025 at 07:29:12PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.183 release.
+> There are 54 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
 Tested-by: Mark Brown <broonie@kernel.org>
 
---HvTXniaQ6ThjIWnf
+--t8BDZHYXv9Q7SgfL
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmgjFWIACgkQJNaLcl1U
-h9BCUwf5AcQUMQH/YoT7PfcB4JFLTtR79WhEs4DtSX8Tg6MHnFGqnSuIKAzM/ERp
-Z9fz0awCn92QKzQTH8WLkZTBwMBVj1Qbg4KNBFJo5kLC3wsDHVsJGNVjHjiVOLkq
-XGfAODKABAXVVXKrCW11kkUuWl9GR7B7XcLOM59CBZSKUB3xd9ULZ2yVMkjoKC41
-A0Gygov8pWj30B+HpdB7YIx4ZehGruyBy/OP13qdW1n8OhcnvkbNV+HIGuVn/UeV
-RJ/b9er2k+AQVth7ZHX3K3zDILi8/ztd0GqbT1c2XU6GauXcCwe63cR3g6+mSXJR
-uwvU1ub5KkBwTOOEJRiLbHGh3yPgzQ==
-=AhpQ
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmgjFYEACgkQJNaLcl1U
+h9BHMAf8Cde+H1Dv5PUTEO7jJKG4AHRo4dOH4c3DRiyxocNVy/G7HJTdUXU+78o5
+UmV6wupcOIwLesU+4JCw1J6c2zTuDXevw/Mr0iY1Gd2ojVhfbWFTedXI9ev/ISyh
+FcwyrS8lfctI/6IL7GLhEqRcMV2nzVEhAe/qMP2b5uplODblmR/b5sENTw1wq7e4
+PoKqRqPGh6zuzH5qPESNN1rFEbP8sCjsiQJHg6gQWhZGSA9VyNj4Md0hdWm4wxkt
+xm4GDstIRklcFsNjEiQHds+LbJG6CvuC5nODiBV+YgBkrgf9+xxdNxaP334CIBbI
+rlVK+oloQ7gLhMTVoQ5l5OB2hzbfcA==
+=ckCS
 -----END PGP SIGNATURE-----
 
---HvTXniaQ6ThjIWnf--
+--t8BDZHYXv9Q7SgfL--
