@@ -1,213 +1,191 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578E9171CD
-	for <patches@lists.linux.dev>; Tue, 13 May 2025 16:17:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354E52BEC3D
+	for <patches@lists.linux.dev>; Tue, 13 May 2025 16:20:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747153059; cv=none; b=SWbofOZytoF28t7cHJxduQTRTtXenkd0OLOW5XrN7bL1J9c3teOVAipqA1a1wIQOENjLeVBZaVLOHWfTeiptnoCz/c4kdmtGpfuCuLbvW4+V8tZTN0szP35+cNeXQ7D0G6uo9zy1/q0nmTejyaruepyjsLVDhWAi+1uB6WIhgpw=
+	t=1747153232; cv=none; b=tCEV8raDhTici8+aUFLhfj7z2YYbG+qs+5nC8nW3/PyPlv35E4mhyhKVmKfFJDgCkHOkGJoyw7DsAC54gGnyn6rgOzqxvWYmMQej+3jd3ptkZ3D8k3Hk5sM8qZQPzIkgmWUWLymHpcvdMkVYwRxV8fnPn/1DEyB5TadTvFeKeAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747153059; c=relaxed/simple;
-	bh=/k6EH3Fc/zb3rtylgyq4u/RSFENEtTcwHkK59WGtR7U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GBsqA2ym+QvOp/tO6iS19ZzPElO40kg/nNogImYMK77PbRmeBZDrSxMYAiQYYG8WK+tPOXBCk1/+NJeVGntwFrUajqyx5WlkRkucSjQ3I9+5dUdaq7srnqESrFdEQW3a5z+mhJvz2HGMrFAbsEU30aJVMAc0+Tm304RHVYbW36s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GMk+5Hgn; arc=none smtp.client-ip=209.85.219.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1747153232; c=relaxed/simple;
+	bh=p6PCSkSdSaZ/NJpmcH4VjI/9YpSMDFDuXD6Vn7ggxi4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Jrb3APCehcLG6fHQJzN3xnrgRyZmDMLhEVr1TaZsa2RAlw0WdUqtQewcPCyUBpUKY+qGgnivHTjgl8naQVW+uOqESJBZDmjNSpvhcvSf8QOogfoMsG5qjREWHPS8iNPdGIdSGDqfTWdT72CkniJEDNGxQKinE1tMtr1+SWGAtYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=BQr27ZOk; arc=none smtp.client-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GMk+5Hgn"
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-6f6e398767eso62079596d6.1
-        for <patches@lists.linux.dev>; Tue, 13 May 2025 09:17:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1747153056; x=1747757856; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6KYGCCD9QtETURvM4SFF+hSR2hHupYk+lugy2F+Fvto=;
-        b=GMk+5HgnX17Ez6eccklAgbEyG1LWlpYdm9+0UwKdB2egSqjm490rNs/fAgtB2zN7+c
-         VqFV/tqgfR2c24eKuQK4+BMRcNQXiZb6mRFULKqL2fwqloUkUgTm9aQPt+QBGqUC8TZ7
-         STgPQxX0SAOall9nvQXORoCjNDwhuJFQGL7eryqi/Y3NEuiq7XBJ/BJIaZ0sDAPi6Q/Q
-         QLzQx5foTOOYsG409sKnwAHwcy5l99K4Ncy+PnomUYcgaxvbUnEBcFtWCZ5RlvRjiQrf
-         8jpW6+DXtecm54o/UKTdARFmLVeu7Eg1aXORAKCPjPJGH2IPlndYJ15VVdK25KhtdoR0
-         COjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747153056; x=1747757856;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6KYGCCD9QtETURvM4SFF+hSR2hHupYk+lugy2F+Fvto=;
-        b=htDdxmC7w9Ru+wKd6rdPj2+IDoXte1qNKrG6m7mWo9yBqyl8IfdF0OX7JdMVEkoxc8
-         d+WxrLo9H++dKuaSZGGonsvTiVmHzW/WKkJR2CZRJ1JggIbU368VXQuoT3LyOaog2pr3
-         pXzUVLfax28stLvjpbXEhSoHGgDZttDl25lL0FQ6TwSRcTs46HIGj7S7LQC6gPKKxSdO
-         yg6PNFY6oispJQKOgeIXT0toT1lYrDPwlZCEshXK577ICutsw1rstFr+BfnIhluMn+SQ
-         gy/aCBGe5AVmX6A/6ej+1FSznYFWXIxrfwzSFMMOROo3El/T6iTW+jD69YmDM/wxOsPh
-         4Dvg==
-X-Forwarded-Encrypted: i=1; AJvYcCWc+PtRrijahHOttL6ndbqwC4ETX4Gm18fzQ+eO9PsFyNS1bVMNLNcmfzuQlU7PwO5hzuRuRa3y@lists.linux.dev
-X-Gm-Message-State: AOJu0YxVQtzoFVDqgntLPapdt50knEA36BsbGyolgcB3niWjMk9E6E4V
-	+lAQXluML0lGUI0X1AGz4J6jR7cqJ362huB6L6CbVf3ruwqPzr6avh5AMai9OsnaFtIK5Y6nzTq
-	anOWJeWz2PNMo5+fP91a1zYg+Qkta0R4CbgN9Lw==
-X-Gm-Gg: ASbGncsoFngNsIAUbtEGU9f5lxcjia6Zb3DVcHOfd5/V/GAjj/IKIobnGuMHQwPdYGQ
-	eR1RX1QO1z6tm9gKXZdrtYukWzwCNVvobvf7tIUEd/DYAsdMZoESeWBEnuSsDvNyQ0K9T9QATO/
-	F8b2RCwFPOfwNlquNIu4s2i0BjsnJV9Fs=
-X-Google-Smtp-Source: AGHT+IGYtyQXfctZatQi1ETEYQsyfcieEa/w22127hAJNNi/hZ6sMfmmqVsyG0iIkzuDvFKRJBUHtQq63iAMg8rxyso=
-X-Received: by 2002:a05:620a:6006:b0:7be:73f6:9e86 with SMTP id
- af79cd13be357-7cd1debe7e7mr658324285a.20.1747153056207; Tue, 13 May 2025
- 09:17:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BQr27ZOk"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1747153231; x=1778689231;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=p6PCSkSdSaZ/NJpmcH4VjI/9YpSMDFDuXD6Vn7ggxi4=;
+  b=BQr27ZOkoK4raFM7M3toAS4kvy17SaX2pQdpzXL7T4KPzlteqE43ltKX
+   4omoc4/cJH1t+CBHdV92ctUx89cqdNLHiYlUVzQuHJ8YUn6L2rrgkefhS
+   ApgWINyiZs5eBRQzIlN61xk4LGEzRtlTC3PMPLlKCeEgORmhqrYa3yGI3
+   k2ZCsSdI97W/D0BEDm0thEEW0RZ/FmUJapEZCSRhYK9gtmsZi20FKCqh8
+   BdXFXv8kg6jZWAzjHLErKWmNQuxvVGodcvD98wRDHsDWfGC5fo5VK3QYB
+   VmL+/rz3H0XdD5XLfEm06QgujZCO44B/TWl2tdydZOy53CHaJVC0QhsvN
+   w==;
+X-CSE-ConnectionGUID: SOw2gMdDRVaPYGUogCQpPA==
+X-CSE-MsgGUID: vS5r/OAHQlGvpbKIZYZjig==
+X-IronPort-AV: E=McAfee;i="6700,10204,11432"; a="48887652"
+X-IronPort-AV: E=Sophos;i="6.15,285,1739865600"; 
+   d="scan'208";a="48887652"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 May 2025 09:20:29 -0700
+X-CSE-ConnectionGUID: tVCcoLQWSXuG6JUNJY1H9Q==
+X-CSE-MsgGUID: 2H6nEzQwRmqkphMJf6o3/g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,285,1739865600"; 
+   d="scan'208";a="142712431"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.103.51])
+  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 May 2025 09:20:28 -0700
+Date: Tue, 13 May 2025 09:20:26 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: "Chen, Yu C" <yu.c.chen@intel.com>
+Cc: Reinette Chatre <reinette.chatre@intel.com>, x86@kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Fenghua Yu <fenghuay@nvidia.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Drew Fustini <dfustini@baylibre.com>
+Subject: Re: [PATCH v4 12/31] fs/resctrl: Improve handling for events that
+ can be read from any CPU
+Message-ID: <aCNxSjUEFREUS8zG@agluck-desk3>
+References: <20250429003359.375508-1-tony.luck@intel.com>
+ <20250429003359.375508-13-tony.luck@intel.com>
+ <e818906f-b03a-474b-8a6b-d291cf1a74fe@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250512172015.643809034@linuxfoundation.org>
-In-Reply-To: <20250512172015.643809034@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 13 May 2025 17:17:25 +0100
-X-Gm-Features: AX0GCFv7Gkug46vmMqzunGkj5qmL-HDap1Yz3dTHGpAw2W-izrUW9GWapqpKAMs
-Message-ID: <CA+G9fYtR4d2AF4BGDJ+7iYS8kA26J0sQWmUTJjj4DWdX4wFBGw@mail.gmail.com>
-Subject: Re: [PATCH 5.15 00/54] 5.15.183-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e818906f-b03a-474b-8a6b-d291cf1a74fe@intel.com>
 
-On Mon, 12 May 2025 at 18:31, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 5.15.183 release.
-> There are 54 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 14 May 2025 17:19:58 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.15.183-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.15.y
-> and the diffstat can be found below.
->
+On Tue, May 13, 2025 at 11:19:23AM +0800, Chen, Yu C wrote:
+
+Thanks for the bug report.
+
+> get warning like below:
+> BUG: using smp_processor_id() in preemptible [00000000] code: mount/1595
+> caller is __mon_event_count+0x2e/0x1e0
+> 2483 [ 2095.332850] Call Trace:
+> 2484 [ 2095.332861]  <TASK>
+> 2485 [ 2095.332872]  dump_stack_lvl+0x55/0x70
+> 2486 [ 2095.332887]  check_preemption_disabled+0xbf/0xe0
+> 2487 [ 2095.332902]  __mon_event_count+0x2e/0x1e0
+> 2488 [ 2095.332918]  mon_event_count+0x2a/0xa0
+> 2489 [ 2095.332934]  mon_add_all_files+0x202/0x270
+> 2490 [ 2095.332953]  mkdir_mondata_subdir+0x1bf/0x1e0
+> 2491 [ 2095.332970]  ? kcore_update_ram.isra.0+0x270/0x270
+> 2492 [ 2095.332985]  mkdir_mondata_all+0x9d/0x100
+> 2493 [ 2095.333000]  rdt_get_tree+0x336/0x5d0
+> 2494 [ 2095.333014]  vfs_get_tree+0x26/0xf0
+> 2495 [ 2095.333028]  do_new_mount+0x186/0x350
+> 2496 [ 2095.333044]  __x64_sys_mount+0x101/0x130
+> 2497 [ 2095.333061]  do_syscall_64+0x54/0xd70
+> 2498 [ 2095.333075]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Hmmm. You are right, but I didn't see this. Perhaps it only shows
+if CONFIG_DEBUG_PREEMPT is set?
+
+> Maybe avoid getting the CPU at all in __mon_event_count() if
+> evt->any_cpu is true?
+> 
 > thanks,
->
-> greg k-h
+> Chenyu
+> diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+> index d9364bee486e..32385c811a92 100644
+> --- a/fs/resctrl/monitor.c
+> +++ b/fs/resctrl/monitor.c
+> @@ -358,12 +358,15 @@ static struct mbm_state *get_mbm_state(struct
+> rdt_l3_mon_domain *d, u32 closid,
+> 
+>  static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
+>  {
+> -       int cpu = smp_processor_id();
+>         struct rdt_l3_mon_domain *d;
+>         struct mbm_state *m;
+> -       int err, ret;
+> +       int err, ret, cpu;
+>         u64 tval = 0;
+> 
+> +       /*only CPU sensitive event read cares about which CPU to read from
+> */
+> +       if (!rr->evt->any_cpu)
+> +               cpu = smp_processor_id();
+> 
+> tele
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
+I might fix with a helper just in case some compiler doesn't keep track
+and issues a "may be used before set" warning.
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+-Tony
 
-## Build
-* kernel: 5.15.183-rc1
-* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
-rc.git
-* git commit: 5aa355897d1bc9d3ec5947e4242c939d117e9f3d
-* git describe: v5.15.182-55-g5aa355897d1b
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
-.182-55-g5aa355897d1b
 
-## Test Regressions (compared to v5.15.181-56-g364c50bdd7d2)
-
-## Metric Regressions (compared to v5.15.181-56-g364c50bdd7d2)
-
-## Test Fixes (compared to v5.15.181-56-g364c50bdd7d2)
-
-## Metric Fixes (compared to v5.15.181-56-g364c50bdd7d2)
-
-## Test result summary
-total: 60455, pass: 46917, fail: 2089, skip: 11091, xfail: 358
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 101 total, 101 passed, 0 failed
-* arm64: 28 total, 28 passed, 0 failed
-* i386: 20 total, 18 passed, 2 failed
-* mips: 22 total, 22 passed, 0 failed
-* parisc: 3 total, 3 passed, 0 failed
-* powerpc: 22 total, 22 passed, 0 failed
-* riscv: 8 total, 8 passed, 0 failed
-* s390: 9 total, 9 passed, 0 failed
-* sh: 10 total, 10 passed, 0 failed
-* sparc: 6 total, 6 passed, 0 failed
-* x86_64: 24 total, 24 passed, 0 failed
-
-## Test suites summary
-* boot
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-exec
-* kselftest-fpu
-* kselftest-futex
-* kselftest-intel_pstate
-* kselftest-kcmp
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-mincore
-* kselftest-mm
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-mptcp
-* kselftest-openat2
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-tc-testing
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-x86
-* kunit
-* kvm-unit-tests
-* lava
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-build-clang
-* log-parser-build-gcc
-* log-parser-test
-* ltp-capability
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-hugetlb
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* perf
-* rcutorture
-
---
-Linaro LKFT
-https://lkft.linaro.org
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index ddfc1c5f60d6..6041cb304624 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -356,9 +356,24 @@ static struct mbm_state *get_mbm_state(struct rdt_l3_mon_domain *d, u32 closid,
+ 	return states ? &states[idx] : NULL;
+ }
+ 
++static bool cpu_on_wrong_domain(struct rmid_read *rr)
++{
++	cpumask_t *mask;
++
++	if (rr->evt->any_cpu)
++		return false;
++
++	/*
++	 * When reading from a specific domain the CPU must be in that
++	 * domain. Otherwise the CPU must be one that shares the cache.
++	 */
++	mask = rr->d ? &rr->d->hdr.cpu_mask : &rr->ci->shared_cpu_map;
++
++	return !cpumask_test_cpu(smp_processor_id(), mask);
++}
++
+ static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
+ {
+-	int cpu = smp_processor_id();
+ 	struct rdt_l3_mon_domain *d;
+ 	struct mbm_state *m;
+ 	int err, ret;
+@@ -373,11 +388,7 @@ static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
+ 	}
+ 
+ 	if (rr->d) {
+-		/*
+-		 * Unless this event can be read from any CPU, check
+-		 * that execution is on a CPU in the domain.
+-		 */
+-		if (!rr->evt->any_cpu && !cpumask_test_cpu(cpu, &rr->d->hdr.cpu_mask))
++		if (cpu_on_wrong_domain(rr))
+ 			return -EINVAL;
+ 		rr->err = resctrl_arch_rmid_read(rr->r, rr->d, closid, rmid,
+ 						 rr->evt->evtid, &tval, rr->arch_mon_ctx);
+@@ -389,11 +400,7 @@ static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
+ 		return 0;
+ 	}
+ 
+-	/*
+-	 * Unless this event can be read from any CPU, check that
+-	 * execution is on a CPU that shares the cache.
+-	 */
+-	if (!rr->evt->any_cpu && !cpumask_test_cpu(cpu, &rr->ci->shared_cpu_map))
++	if (cpu_on_wrong_domain(rr))
+ 		return -EINVAL;
+ 
+ 	/*
