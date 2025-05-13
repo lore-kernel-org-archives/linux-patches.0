@@ -1,118 +1,145 @@
-Received: from mx.denx.de (mx.denx.de [89.58.32.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3305618EAB
-	for <patches@lists.linux.dev>; Tue, 13 May 2025 06:45:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F8F20E03C
+	for <patches@lists.linux.dev>; Tue, 13 May 2025 09:29:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747118748; cv=none; b=NEuqIgypMBVe/Jqd50FFoUpcOP0feWXfVT2V/NK8ELUuTOrfl5o47TH7hss6jZtZgraNg/6Y9KgdBBuVjZWWNupvi/0lE7EeZLHdyeLGMbBh5Q3MMd6NtQcoBvBgyYNv5SiezAi8/8e6JH9Oce5jEvwQfCy/OXSLFT15EYh2nf4=
+	t=1747128592; cv=none; b=lJP1gln4y67KoT3i2tRnSK4kYQEDL5RjQc9j73/+yiuCPofEmKRNKSHgUrGNFgCGL8iK+p8e2jfw7etfH2Zm+FYHXQVu1ejxYPMxtqx/9QOZ5e5QKfW3DbuaNR5zVZNhOdyVcRwQj0JHjEX4ASN+9Alg7q+AnUz9JrsvX3M3fC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747118748; c=relaxed/simple;
-	bh=fj2ri2Wp/bpF018s3Z5QWNmJKfl+cJBrIQMhNjHTIxE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I/ygP4YHL+alwYmicgnSkPs4ED/EIZO5+KkFIXbUbfdsRZ6oO8o5KJFTecFRNdT88H5jsEVCzp7GUG9Qx/OfGooaXOvCcVEip7mm+rshi0GnSI5X7dJ+SFD4o35M19vsrghDEvAZ5+HHF+TTeQqjOvD3zP69x3o0J7f9Xlv+eh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=E0KHtZbV; arc=none smtp.client-ip=89.58.32.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
+	s=arc-20240116; t=1747128592; c=relaxed/simple;
+	bh=lwuNQzkVZY+r3BjYV69YcvGsn1lcu7z4FuHiHAtN86Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nCLI80sOik6eLMuVubliYvW19Ck9/1+0ozsrG2svG7S4Gq+SfVvWvBZqChd4b2/G9bI6Khb0rDmgWVcp94WlIySiGYmm3YA5IC7jAUlWD8cysVZmY4WMJ9BpfmD40b6dkgg7GwXXan+AUhM6VrNwRm3Gn1DoujXaYr3QmTI/edM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HCnal39V; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="E0KHtZbV"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 9794A101F54F9;
-	Tue, 13 May 2025 08:45:38 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
-	t=1747118743; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=Qn06Auz3g3uXaj4CpFAyQVtsbCU17ojJiIvRQnIdr2E=;
-	b=E0KHtZbVqjvstXfX48X+jmcyH/BFx/UtsRsUVlYmqfx2VZ5MOWI2qjXET2vFV9a8L/EmC8
-	USh4JJx/Ik+qXY6xcsB3W2IFzo2KXKS7EDHFQu4yR7YG0SI3yvCB0ZmmTbVWlruXs+CXcl
-	/FP8Pc1TwvZJa+fEQiGojMoiDH2Kef2JIPqAQiaR3/8KbeuAXPZ19P6Z3qICQHMLLR9jtX
-	JRMRksIooA1nFH2PaiarFa1jVH76EeQFfUG2OlNzf1RZgKUz0cfioHzKpehcEcy3GZW8Vh
-	4hotqsD8V9JwcToSaUn3cSnLR/9j+HSTQYflvG79iFkzvtjg1w7ZFFtEaoH0Vg==
-Date: Tue, 13 May 2025 08:45:35 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.1 00/92] 6.1.139-rc1 review
-Message-ID: <aCLqj2SHnne6U1sG@duo.ucw.cz>
-References: <20250512172023.126467649@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HCnal39V"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-23035b3edf1so16169195ad.3
+        for <patches@lists.linux.dev>; Tue, 13 May 2025 02:29:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747128591; x=1747733391; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=g0FbxF4j+yV005ArDJfZEQRtUEXUG2HW1Azh2TjM6qQ=;
+        b=HCnal39VyDxMafdEZOtzCEn9tlFznUyweHGKs+ZxuHa6jW1RRV2CyWoZMbMO+8YvJM
+         PtASY0d6aAbFyTvVlqGlWznrhAOOrd9/DulmKAtb4Np/Bwe6qaPT6GSN53eBeayUB7+P
+         KMJFcF/nWjSqYoiR7pRPUqA9TpgbEnz7c8ZQIe7DStKR7/DT/Zar4sc1LlF+Cl6SIQOd
+         OPpIYc5yaeGNdohGesCdjRpQHL5JBrp+uWxx0KtwX/qsN6g3ctuESfMj9q7yqCJAw63s
+         9ME6ECzM+fTmF7XRPCAhGVsjAC9Bxk9DRfLBqS28q+kd3Bxh1pvEbOSWd+rISoaZNJkq
+         nXvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747128591; x=1747733391;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=g0FbxF4j+yV005ArDJfZEQRtUEXUG2HW1Azh2TjM6qQ=;
+        b=WCZEmS2eDxjNu96QWDkL7Va5CnymBJv7qXKVRyB/6N1QxMcvwrzOndsKUOrcMEm3LY
+         2T5QnQTtHFVF2K6G1uZMu6IwDDmw7z6gj2H0TK/BcG/UdI/bhEWV+PNBpzEjFcNhXxrn
+         Oenx5uuEn7c8PFYel5j6+RwA8ej5Zjr/dKFE6djjPvilwizEYf9O33cChknEgO6w1D2m
+         F9SdC6YLAToku0LAcZI8IjArsM1d7XaHKf74QqPSjFv+/4INoUY6Rg50O1R3047WUkOP
+         SL5oOevofK7URMmfyq15tMSpetxJwCDivfLqIp7eF0O/NwR6JG4BUiQjopflldSomwl9
+         SVrA==
+X-Gm-Message-State: AOJu0YygYjqZrUuPE9+THE6pJiZEdSpHOkDJHXNIQO7FL+Gc+ZO9HgbC
+	JIQFPy9F3QrZL2I6Vzv9x6nnL4dtnz3e3AwKLjxiZ5AcaZyAPtaH
+X-Gm-Gg: ASbGncu2CV0yFwXfFyVtMBcMSFnGu1UYzd2McHr1GF2WXiv/gTA1gSZD5IcOZvNlMHR
+	nvVZt0Rlp1FTB+r/eVU7PFZsN9UeUkrQilhtbKnuDdMyTo5utLFKuXhszxMvVUj/pe0EKN1JFWi
+	7JVmkLmelOvktxKj358IIW1eNoKqefg7DolSoLBybD7arhC+8inH4ENfaGYCy7//cLGQVNXTLVi
+	ksWMm+/BVh89+NRtP6cOVskvF/jyIaycpH8Y6uDnkq/k5XPwBDgiDdcARqdHW93j+cc7E3rDAle
+	Y0b7IDQH9jQ/OkmeHSCBcmr9UJlxu2kVDlMJw0THeesZRu+JGTrRikF/fLRcu/hJD2TMxd5J2Jf
+	EsVKceBXmywGv5IeB4rWH1HQv4PijBGCo3drc7w==
+X-Google-Smtp-Source: AGHT+IFajfHqbu4LbEcFiAzWJeLvYPulEit9SQtbrCnulAq3KRzKom7xG3bcmHEz+/YVp29nrxS5BQ==
+X-Received: by 2002:a17:902:ced1:b0:22e:4db0:6b2 with SMTP id d9443c01a7336-22fc8b107f4mr214961565ad.9.1747128590674;
+        Tue, 13 May 2025 02:29:50 -0700 (PDT)
+Received: from [192.168.1.24] (90-47-60-187.ftth.fr.orangecustomers.net. [90.47.60.187])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22fc7742e1dsm76849965ad.78.2025.05.13.02.29.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 May 2025 02:29:49 -0700 (PDT)
+Message-ID: <ef73c998-fa93-4681-a87c-ef9dcd70034f@gmail.com>
+Date: Tue, 13 May 2025 11:29:45 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="m4fjbYD3mk7Y4lHf"
-Content-Disposition: inline
-In-Reply-To: <20250512172023.126467649@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.15 00/54] 5.15.183-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250512172015.643809034@linuxfoundation.org>
+Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
+Autocrypt: addr=f.fainelli@gmail.com; keydata=
+ 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
+ WlfRzlpjIPmdjgoicA==
+In-Reply-To: <20250512172015.643809034@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
---m4fjbYD3mk7Y4lHf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hi!
-
-> This is the start of the stable review cycle for the 6.1.139 release.
-> There are 92 patches in this series, all will be posted as a response
+On 5/12/2025 7:29 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.183 release.
+> There are 54 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+> 
+> Responses should be made by Wed, 14 May 2025 17:19:58 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.183-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-We see same failure as the other kernels here:
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/1=
-813565657
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/100111=
-61709
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
 
-arch/x86/kernel/alternative.c: In function 'its_fini_mod':
-1163
-arch/x86/kernel/alternative.c:447:32: error: invalid use of undefined type =
-'struct module'
-1164
-  447 |         for (int i =3D 0; i < mod->its_num_pages; i++) {
-1165
-      |                                ^~
-1166
-arch/x86/kernel/alternative.c:448:33: error: invalid use of undefined type =
-'struct module'
-1167
-  448 |                 void *page =3D mod->its_page_array[i];
-1168
-      |                                 ^~
-1169
-arch/x86/kernel/alternative.c: In function 'its_free_mod':
-1170
-arch/x86/kernel/alternative.c:459:32: error: invalid use of undefined type =
-'struct module'
-1171
-  459 |         for (int i =3D 0; i < mod->its_num_pages; i++) {
-1172
-      |                                ^~
-1173
-
-Reported-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-								Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---m4fjbYD3mk7Y4lHf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaCLqjwAKCRAw5/Bqldv6
-8lWlAJ9ZtbtZM+Yg+1e2lZxFQ566hyU5WQCghwSwtJj9siRvUnrYIhhLZXr+3ZE=
-=kBwF
------END PGP SIGNATURE-----
-
---m4fjbYD3mk7Y4lHf--
