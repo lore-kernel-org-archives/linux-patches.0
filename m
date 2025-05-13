@@ -1,128 +1,107 @@
-Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316EA1A3155
-	for <patches@lists.linux.dev>; Tue, 13 May 2025 02:09:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A881C2437;
+	Tue, 13 May 2025 02:49:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.165.32
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747102190; cv=none; b=KnO4lUZNcd78w9H/rzVClUR24leS82UWvmVL5cgkY/INBkKpayal5O6Ihd/Q6dT1plUjZdjiHCpKfTNsZ64m2YbPgQlzRV2fis4kwkIfA4ZTqMF9gZ6o1usfB3f1lnxUQKxc2gEsHNWPADr6ePJf3AJmi5psQdJyE2nmC4H9DN8=
+	t=1747104545; cv=none; b=de2ZZkEdSl3cTr73EmPhXWHZjIGEDc3XwX8fhtV+/V+9YuOQ2vmyBMUwJATcPrMOqoj+jDPq2jAFNm3WgQ6rH50RZmyyAvpYr75AQR0j8PCUOcyFo6W/Vx7uzvH1vjCWk52H/Y6Z/DW6sKTvq4Q/DiR39FsusFfbtX27E3zVoHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747102190; c=relaxed/simple;
-	bh=CNUHkt67UtuoRyMOScLNUcMEjQj2NOYzghsKilvulV0=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Xe7J0ekn7bTis/eWrneNsxXvJtpX1u68rr5jJbjAUlDyygNzjKQ2AbKpXCZ9znro5b9Pt+qCVSoNfrX/YBkvLZnjsOqB8PMndpwGLD7Xn3NCLVKX0PCT96dMqRnJCuw6/ESiMnB8RvNEk7XktwMRQRWDKtgBJpwd0e9IOqcCNU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54D1a69g013504;
-	Mon, 12 May 2025 19:09:42 -0700
-Received: from ala-exchng02.corp.ad.wrs.com (ala-exchng02.wrs.com [147.11.82.254])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 46j6ajt6gv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Mon, 12 May 2025 19:09:42 -0700 (PDT)
-Received: from ala-exchng01.corp.ad.wrs.com (147.11.82.252) by
- ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Mon, 12 May 2025 19:09:41 -0700
-Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
- ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Mon, 12 May 2025 19:09:39 -0700
-From: <jianqi.ren.cn@windriver.com>
-To: <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-        <jianqi.ren.cn@windriver.com>, <johannes@sipsolutions.net>,
-        <davem@davemloft.net>, <kuba@kernel.org>,
-        <linux-wireless@vger.kernel.org>, <netdev@vger.kernel.or>,
-        <johannes.berg@intel.com>
-Subject: [PATCH 5.15.y] wifi: cfg80211: check A-MSDU format more carefully
-Date: Tue, 13 May 2025 10:09:38 +0800
-Message-ID: <20250513020938.3361430-1-jianqi.ren.cn@windriver.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1747104545; c=relaxed/simple;
+	bh=qg88ZZVxpFt8GgXZhKrergpXPJ98ycQczjU8aRH0/Zw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=CVzJU+wzJWn1ELKUD4r+UBRB0Wc7DcM2L5l/geq6P8tZwdkKaXuY/tnnwzjBkoXiZ6RmuDbbbKkC0r3Mu9YB2Z+X8UxNnN/cFYBrE1XY2QXMH2bkJfsF+ew0xB102+ZBbIfX8nwQDky59VxYQHdwukdWJpHzfhRrpycJWeZe80c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=n3Lksjlq; arc=none smtp.client-ip=205.220.165.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="n3Lksjlq"
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54D1BuA9007570;
+	Tue, 13 May 2025 02:49:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	corp-2025-04-25; bh=kG78jM8gUMf0ii/e4dbCJc7ii/b1TnYWDx6NeWCpJ2w=; b=
+	n3LksjlqzEra0BQ84azNRkvBjeSkwsbiqth8jAv97T2sloJE91ENbROmLNoFY7zg
+	v6SHCHvNTDGZ7+LKaojEBJskWKPJ20BLPXzydP5SF+W2IHoswe+54X+qHeu7V5CF
+	8q1OGn/VQ3HdwgPmu8GO3ZzGNQkGFdsjYSWs8w2JLAo1pI75dT3MRwdhZL3VpCsG
+	2Q0PkH696luUPYYBdSNrbVIf8iZVHILTE5ytyF29uzc0cECiIfjI7c6IelDNi6yJ
+	ixvNdIPIGfX+IUD7IL2eN2rEdiMs78rGS1Pc1FGekKXC2mMbHpeJ+ADaaUzu4Ww3
+	TpKYGQtvszo30ZAo6a568Q==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46j1663uuq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 13 May 2025 02:49:00 +0000 (GMT)
+Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 54D2gEDR016012;
+	Tue, 13 May 2025 02:49:00 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 46hw8841hn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 13 May 2025 02:49:00 +0000
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54D2muXA003994;
+	Tue, 13 May 2025 02:48:59 GMT
+Received: from ca-mkp2.ca.oracle.com.com (mpeterse-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com [100.100.251.135])
+	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id 46hw8841cw-4;
+	Tue, 13 May 2025 02:48:59 +0000
+From: "Martin K. Petersen" <martin.petersen@oracle.com>
+To: Oliver Neukum <oneukum@suse.com>, Ali Akcaagac <aliakc@web.de>,
+        Jamie Lenehan <lenehan@twibble.org>,
+        Nathan Chancellor <nathan@kernel.org>
+Cc: "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Colin Ian King <colin.i.king@gmail.com>, linux-scsi@vger.kernel.org,
+        llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH] scsi: dc395x: Remove leftover if statement in reselect()
+Date: Mon, 12 May 2025 22:48:13 -0400
+Message-ID: <174710241019.4089939.13582359968111970288.b4-ty@oracle.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250429-scsi-dc395x-fix-uninit-var-v1-1-25215d481020@kernel.org>
+References: <20250429-scsi-dc395x-fix-uninit-var-v1-1-25215d481020@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Proofpoint-ORIG-GUID: sy68rH0rsLNH2Wxxt1FbCNwJQ_g1xihz
-X-Authority-Analysis: v=2.4 cv=c8irQQ9l c=1 sm=1 tr=0 ts=6822a9e6 cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=dt9VzEwgFbYA:10 a=bC-a23v3AAAA:8 a=QyXUC8HyAAAA:8 a=hSkVLCK3AAAA:8 a=t7CeM3EgAAAA:8 a=bq9goISz1wTSU3ywWP0A:9
- a=-FEs8UIgK8oA:10 a=FO4_E8m0qiDe52t0p3_H:22 a=cQPPKAXgyycSBL8etih5:22 a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEzMDAxOCBTYWx0ZWRfX5vleoji/wkxF e0BS2KuKdnJSZouTgb0QpDKdwFtGkpY+unpJZLUWy/UjSEgU+WTxPOYQE3e+AvGOqVdN7YjkBet oXOzZnCevK2ZK8c6uvggAyRfBNiuNqFR8PeXpK0pbH6VFTisgr3V69MwJFjbi7y37V6lYemmwJq
- 5YuH2JASw2wLmuTYWSh/HyXde/F4PDPxfFtpOk6+RsEmy2MRXZEEfKSgWB0ywxT5cVWxtVtnara zXX8VSYsHZfnGRhTbikbaUnqjrrACt1BnkmipdN/y76yMKnpnZb2dRkvJ/G4NV91+MvX26nAuKC 5Z+KRn5/gxGD5eprM3Bfz3GldUYAxRvE4bdFfeDZWCLD8zlU1YlHCXlqhgPVXwD1myNXNdQyG4j
- 3GHYZGMElvQG9H6W4AIa+qhg+dgDqxOewAw02t6MC4eyjVYnTUd0enCXcwXo6QUGrYez/MRK
-X-Proofpoint-GUID: sy68rH0rsLNH2Wxxt1FbCNwJQ_g1xihz
-X-Sensitive_Customer_Information: Yes
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-12_07,2025-05-09_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 mlxscore=0 clxscore=1011 bulkscore=0 adultscore=0
- mlxlogscore=945 malwarescore=0 spamscore=0 priorityscore=1501
- suspectscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.21.0-2504070000
- definitions=main-2505130018
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 adultscore=0
+ suspectscore=0 spamscore=0 malwarescore=0 mlxscore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2504070000 definitions=main-2505130025
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEzMDAyNCBTYWx0ZWRfX0w66UhKiW5vU Vhv3BXCSQZMQj3MiTY/yJ+njyTAfR9hE1y6zgiNVvBBKywAHJD1M79AMMMaQ/xZDk0XPTtRQKqd cKaRL3dlF/eW/BekBvDewr6s8+snEAlSzZRtsqs8DpKWXq/bASLQq/lI9s9AOXDF5qMZ+zE/snF
+ 7d0aIlOg7RLE8sK9paeHJrN2NW5NIACttoIiqT0SMnFJF3hB86Qf+CERwQodlZgOq4/vCAPwzD8 MrawQiCcjqXIdOvOTwt4Z+/ehshzp5tVqfWzAC2Ha/bTjo8jSzg6PBsZ4k8gRhdkCCJRRfGPlJk 8OCaSD7bRlUu5AnyeIkaFUWn+i5+djy6eNjUmNi5KWBn6Yho2QrRHnhfQJ3w0zsYDZfWv0Egr28
+ FeumjUB57nZxgOVQu/a2aqbAexrrj1uym7ai5TjJKHPQcl+xLW9vlS9jP/uCov/ZtJlvgsWj
+X-Authority-Analysis: v=2.4 cv=VMDdn8PX c=1 sm=1 tr=0 ts=6822b31c cx=c_pps a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17 a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VwQbUJbxAAAA:8 a=nScL1aOB0x_2kgwzweYA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: ezbPkgPuUCRHnAxAh80yvmh2xOy9neC3
+X-Proofpoint-GUID: ezbPkgPuUCRHnAxAh80yvmh2xOy9neC3
 
-From: Johannes Berg <johannes.berg@intel.com>
+On Tue, 29 Apr 2025 17:46:49 -0700, Nathan Chancellor wrote:
 
-[ Upstream commit 9ad7974856926129f190ffbe3beea78460b3b7cc ]
+> Clang warns (or errors with CONFIG_WERROR=y):
+> 
+>   drivers/scsi/dc395x.c:2553:6: error: variable 'id' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
+>    2553 |         if (!(rsel_tar_lun_id & (IDENTIFY_BASE << 8)))
+>         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>   drivers/scsi/dc395x.c:2556:22: note: uninitialized use occurs here
+>    2556 |         dcb = find_dcb(acb, id, lun);
+>         |                             ^~
+>   drivers/scsi/dc395x.c:2553:2: note: remove the 'if' if its condition is always true
+>    2553 |         if (!(rsel_tar_lun_id & (IDENTIFY_BASE << 8)))
+>         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>    2554 |         id = rsel_tar_lun_id & 0xff;
+> 
+> [...]
 
-If it looks like there's another subframe in the A-MSDU
-but the header isn't fully there, we can end up reading
-data out of bounds, only to discard later. Make this a
-bit more careful and check if the subframe header can
-even be present.
+Applied to 6.16/scsi-queue, thanks!
 
-Reported-by: syzbot+d050d437fe47d479d210@syzkaller.appspotmail.com
-Link: https://msgid.link/20240226203405.a731e2c95e38.I82ce7d8c0cc8970ce29d0a39fdc07f1ffc425be4@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[Minor conflict resolved due to code context change. And routine
-ieee80211_is_valid_amsdu is introduced by commit fe4a6d2db3ba
- ("wifi: mac80211: implement support for yet another mesh A-MSDU format")
- after 6.4.]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
----
-Verified the build test
----
- net/wireless/util.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+[1/1] scsi: dc395x: Remove leftover if statement in reselect()
+      https://git.kernel.org/mkp/scsi/c/bf6971a2b3ee
 
-diff --git a/net/wireless/util.c b/net/wireless/util.c
-index 6ebc6567b287..0fd48361e3e1 100644
---- a/net/wireless/util.c
-+++ b/net/wireless/util.c
-@@ -751,24 +751,27 @@ void ieee80211_amsdu_to_8023s(struct sk_buff *skb, struct sk_buff_head *list,
- 	struct sk_buff *frame = NULL;
- 	u16 ethertype;
- 	u8 *payload;
--	int offset = 0, remaining;
-+	int offset = 0;
- 	struct ethhdr eth;
- 	bool reuse_frag = skb->head_frag && !skb_has_frag_list(skb);
- 	bool reuse_skb = false;
- 	bool last = false;
- 
- 	while (!last) {
-+		int remaining = skb->len - offset;
- 		unsigned int subframe_len;
- 		int len;
- 		u8 padding;
- 
-+		if (sizeof(eth) > remaining)
-+			goto purge;
-+
- 		skb_copy_bits(skb, offset, &eth, sizeof(eth));
- 		len = ntohs(eth.h_proto);
- 		subframe_len = sizeof(struct ethhdr) + len;
- 		padding = (4 - subframe_len) & 0x3;
- 
- 		/* the last MSDU has no padding */
--		remaining = skb->len - offset;
- 		if (subframe_len > remaining)
- 			goto purge;
- 		/* mitigate A-MSDU aggregation injection attacks */
 -- 
-2.34.1
-
+Martin K. Petersen	Oracle Linux Engineering
