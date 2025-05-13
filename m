@@ -1,32 +1,32 @@
 Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA0E1C84A0
-	for <patches@lists.linux.dev>; Tue, 13 May 2025 02:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316EA1A3155
+	for <patches@lists.linux.dev>; Tue, 13 May 2025 02:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747102031; cv=none; b=CGS+BSHjog2lm7OEDsSmzsI0zeBqx+gf7Q9ujAXO0Mt/ihdjy7ZIf33ShymEIimTCyw1hYgRw0HD+7jceO1eJ9EwJJkxbtvC5llawYQVxqx8YtI2ta1OeE9YLYUsbmh4wBlwYsDVkSlPE0/P6HVFjyhjiaKzJeiWip5SKUL5tu8=
+	t=1747102190; cv=none; b=KnO4lUZNcd78w9H/rzVClUR24leS82UWvmVL5cgkY/INBkKpayal5O6Ihd/Q6dT1plUjZdjiHCpKfTNsZ64m2YbPgQlzRV2fis4kwkIfA4ZTqMF9gZ6o1usfB3f1lnxUQKxc2gEsHNWPADr6ePJf3AJmi5psQdJyE2nmC4H9DN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747102031; c=relaxed/simple;
+	s=arc-20240116; t=1747102190; c=relaxed/simple;
 	bh=CNUHkt67UtuoRyMOScLNUcMEjQj2NOYzghsKilvulV0=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=BbydZADqRgexG44bTvana/EmNVoKPraHADkbsddDcUMJD+ZCladOffhj+4zQ37Mws2y/R6cxLXPBiM4CH+OY1Xogfx8RZyv7MLyQeOGUwOKhFcX3ABwYtEjuuSj/AOa04ztOOWH1xkR8ZI14Q6CtEh/3iWKruHD2UYHh9/OIFA0=
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Xe7J0ekn7bTis/eWrneNsxXvJtpX1u68rr5jJbjAUlDyygNzjKQ2AbKpXCZ9znro5b9Pt+qCVSoNfrX/YBkvLZnjsOqB8PMndpwGLD7Xn3NCLVKX0PCT96dMqRnJCuw6/ESiMnB8RvNEk7XktwMRQRWDKtgBJpwd0e9IOqcCNU0=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
 Received: from pps.filterd (m0250809.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54D1x28u014990;
-	Mon, 12 May 2025 19:06:46 -0700
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54D1a69g013504;
+	Mon, 12 May 2025 19:09:42 -0700
 Received: from ala-exchng02.corp.ad.wrs.com (ala-exchng02.wrs.com [147.11.82.254])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 46j6ajt6ew-1
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 46j6ajt6gv-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Mon, 12 May 2025 19:06:46 -0700 (PDT)
+	Mon, 12 May 2025 19:09:42 -0700 (PDT)
 Received: from ala-exchng01.corp.ad.wrs.com (147.11.82.252) by
  ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Mon, 12 May 2025 19:06:45 -0700
+ 15.1.2507.43; Mon, 12 May 2025 19:09:41 -0700
 Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
  ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Mon, 12 May 2025 19:06:42 -0700
+ 15.1.2507.43 via Frontend Transport; Mon, 12 May 2025 19:09:39 -0700
 From: <jianqi.ren.cn@windriver.com>
 To: <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
 CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
@@ -35,8 +35,8 @@ CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
         <linux-wireless@vger.kernel.org>, <netdev@vger.kernel.or>,
         <johannes.berg@intel.com>
 Subject: [PATCH 5.15.y] wifi: cfg80211: check A-MSDU format more carefully
-Date: Tue, 13 May 2025 10:06:42 +0800
-Message-ID: <20250513020642.3361140-1-jianqi.ren.cn@windriver.com>
+Date: Tue, 13 May 2025 10:09:38 +0800
+Message-ID: <20250513020938.3361430-1-jianqi.ren.cn@windriver.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -46,13 +46,13 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Proofpoint-ORIG-GUID: lPlt57WDfABipqFRRiMvBqyZODW62Qi6
-X-Authority-Analysis: v=2.4 cv=c8irQQ9l c=1 sm=1 tr=0 ts=6822a936 cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=dt9VzEwgFbYA:10 a=bC-a23v3AAAA:8 a=QyXUC8HyAAAA:8 a=hSkVLCK3AAAA:8 a=t7CeM3EgAAAA:8 a=bq9goISz1wTSU3ywWP0A:9
+X-Proofpoint-ORIG-GUID: sy68rH0rsLNH2Wxxt1FbCNwJQ_g1xihz
+X-Authority-Analysis: v=2.4 cv=c8irQQ9l c=1 sm=1 tr=0 ts=6822a9e6 cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=dt9VzEwgFbYA:10 a=bC-a23v3AAAA:8 a=QyXUC8HyAAAA:8 a=hSkVLCK3AAAA:8 a=t7CeM3EgAAAA:8 a=bq9goISz1wTSU3ywWP0A:9
  a=-FEs8UIgK8oA:10 a=FO4_E8m0qiDe52t0p3_H:22 a=cQPPKAXgyycSBL8etih5:22 a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEzMDAxOCBTYWx0ZWRfX5x1XsH80Tdwp 3EQMqolUNG3vG4v8eFIEK/fs62TEp9mx6v4tQw4N/nmfkCbFz9Ll75Rdc58lfBea9K328Ky4+Q5 OG3YJNIlf5g7jjlDmBAL/w+Kk3qvV1NBf5IClbFU7hA/AMF1bjrdLcGnOUdehra0wfiNVhJUq5B
- gADPUuokUoZ72jIg/M5jQDkLqq5JiRtezTaAOXT3UhXpMQhcBeAdTFAazb5KzCYkSryRaVWnS7B EI79gMBQHjNuH7EX/l9UhnxqxXbDk7Nsq1JysUbzNrub9suLGlNAaZPbCVyGDccx0L2yXvx/zFD +YJ1qx4qIjM4K41ovgsBMvrIkE7mhVZdXkt52DCIoxehMyDQ+FJRpp+zXWsame6hPuyp1vxZNyH
- J0QRzOoKElxxkVFW8S1TudQslfIcUhATbf++rA8kGJYhTkGMxE5x1DKURtDg74P8ZgaSbEg7
-X-Proofpoint-GUID: lPlt57WDfABipqFRRiMvBqyZODW62Qi6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEzMDAxOCBTYWx0ZWRfX5vleoji/wkxF e0BS2KuKdnJSZouTgb0QpDKdwFtGkpY+unpJZLUWy/UjSEgU+WTxPOYQE3e+AvGOqVdN7YjkBet oXOzZnCevK2ZK8c6uvggAyRfBNiuNqFR8PeXpK0pbH6VFTisgr3V69MwJFjbi7y37V6lYemmwJq
+ 5YuH2JASw2wLmuTYWSh/HyXde/F4PDPxfFtpOk6+RsEmy2MRXZEEfKSgWB0ywxT5cVWxtVtnara zXX8VSYsHZfnGRhTbikbaUnqjrrACt1BnkmipdN/y76yMKnpnZb2dRkvJ/G4NV91+MvX26nAuKC 5Z+KRn5/gxGD5eprM3Bfz3GldUYAxRvE4bdFfeDZWCLD8zlU1YlHCXlqhgPVXwD1myNXNdQyG4j
+ 3GHYZGMElvQG9H6W4AIa+qhg+dgDqxOewAw02t6MC4eyjVYnTUd0enCXcwXo6QUGrYez/MRK
+X-Proofpoint-GUID: sy68rH0rsLNH2Wxxt1FbCNwJQ_g1xihz
 X-Sensitive_Customer_Information: Yes
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
