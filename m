@@ -1,104 +1,197 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2058.outbound.protection.outlook.com [40.107.92.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2829321A43D;
-	Wed, 14 May 2025 19:14:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747250072; cv=none; b=SeIpfhiZG/Swmcls27KythF1T8SoTR6qhohDHkXkStkpqKn91xMSSC49ox4G0oME1Mpeht/6ExFac0U4sVKDKAMvc6UWS2+fJm6MS/mFVrrFA6VzwNPeEyWhJLXu75To0l8gq1i7RpeJeiRlF2VuWQId18PJrdBKowrNWXgN2ag=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747250072; c=relaxed/simple;
-	bh=lOa0LK4b8qZWlQ7JnonxWFPgOHkWrQ9weNETFEnVwo8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gaoIuPR4P8cz9BzQWL1KHtluaW3ePYRu+rpk8EcKw7IlinB55CZTrzPjZfYIzLcU12PGHS5pmDzfTC/6smgFqVX9YGis/jSq4uNuWubiqzAtoJbg3yuNTC6+n3gkMO0AbZ9Qu2CnWBqLuNDTh6a7dwIMt/wDThYuWcoG3iDtwRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R5gwmOzO; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A40D28C2A0;
+	Wed, 14 May 2025 19:21:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.92.58
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747250517; cv=fail; b=VCZtjLMDjx/ngxbezu2Fz++qH1DQLWg9EmACD4BNoXzJsWz0gOgq5ZEuTjKNjPbDATq2fM5vpYTiAP6/A5mRTsL5uDjlQXdYlrzEsriUHHzj4fbvDsW3xMqHRKwXYs1Rm605nyBTvFcHg3HOiXkCIbGj90Jtz50o9iv9sWT+aNw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747250517; c=relaxed/simple;
+	bh=5pYgFN63fLOiz/ZoZ/fI/ThqtCmaHxlFABFiM1km1gk=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rOm7eTLbMpM3k5zNY88zrqjw/TFQKSmrUK9bgbkwbPee8IO+7DGaH9bt6PHEfsDYgvIHk8jAukyq6RToT376C0iVSKEpUVoUkejmBYuuyfkRx6CLq1crGYQPO8uQAINB0UUw/TFmfY1lfIk69zzfyVuZ+vsNZx7ugPNieQeTSOg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Y4836qgO; arc=fail smtp.client-ip=40.107.92.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R5gwmOzO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81568C4CEE3;
-	Wed, 14 May 2025 19:14:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747250070;
-	bh=lOa0LK4b8qZWlQ7JnonxWFPgOHkWrQ9weNETFEnVwo8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=R5gwmOzOVsYI8gjDNNv0WY9HKizp9D1CBX90KWUjAeSeruXtRb+UkvQ8cY6VVViYg
-	 6UlaTcqXAKCtiOE4fmk/fDDRHpQn1XXhD/u42yvkIvmE3EaT8SLzITvHRnDzum4QHY
-	 /PCvkTDQX8R2pFZdlpnjCn6ib/DEmk/wxGLlup2yETyGUv5A/IbET5W3VjVD6jRhek
-	 i+HwV2TRWG8LhGqjhKIn0hTqnn9sNjDNLJHMB8ZAM5fzPkR6dtIpmc2A9DtWYGzssH
-	 s5aP00EN1EKYor2uGoPQ3ah8YnNBEsrgtv+iUwhNZfjir16U5N0EungQOwlhMwwoRU
-	 ki6yLUIVoZmGA==
-Date: Wed, 14 May 2025 12:14:27 -0700
-From: Josh Poimboeuf <jpoimboe@kernel.org>
-To: Joel Fernandes <joelagnelf@nvidia.com>
-Cc: Timur Tabi <ttabi@nvidia.com>, "ojeda@kernel.org" <ojeda@kernel.org>, 
-	John Hubbard <jhubbard@nvidia.com>, "dakr@kernel.org" <dakr@kernel.org>, 
-	"a.hindborg@kernel.org" <a.hindborg@kernel.org>, "boqun.feng@gmail.com" <boqun.feng@gmail.com>, 
-	"patches@lists.linux.dev" <patches@lists.linux.dev>, "tmgross@umich.edu" <tmgross@umich.edu>, 
-	"stable@vger.kernel.org" <stable@vger.kernel.org>, "alex.gaynor@gmail.com" <alex.gaynor@gmail.com>, 
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "benno.lossin@proton.me" <benno.lossin@proton.me>, 
-	"rust-for-linux@vger.kernel.org" <rust-for-linux@vger.kernel.org>, "bjorn3_gh@protonmail.com" <bjorn3_gh@protonmail.com>, 
-	"peterz@infradead.org" <peterz@infradead.org>, "aliceryhl@google.com" <aliceryhl@google.com>, 
-	Alexandre Courbot <acourbot@nvidia.com>, "gary@garyguo.net" <gary@garyguo.net>, 
-	Alistair Popple <apopple@nvidia.com>
-Subject: Re: [PATCH 1/5] objtool/rust: add one more `noreturn` Rust function
- for Rust 1.87.0
-Message-ID: <grdfkevm4nnovdefhn7thydixjtdt2w2aybuvnrtot2jolyte3@pmvcv3vbmmll>
-References: <20250502140237.1659624-1-ojeda@kernel.org>
- <20250502140237.1659624-2-ojeda@kernel.org>
- <20250513180757.GA1295002@joelnvbox>
- <20250513215833.GA1353208@joelnvbox>
- <38a7d3f8-3e75-4a1f-bc93-9b301330d898@nvidia.com>
- <f4c946b2988d63a26aff2d03fe73fbfe1f52f31b.camel@nvidia.com>
- <723f7ae8-bb36-4a4c-a1d8-733d131ca222@nvidia.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Y4836qgO"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=U+j1+69MVjlzwdyGhPijla77bXxxIT270QrwoOliP9NH63NOzHjtFFZhcZbkOEPIfg4aJPSrheR9qGLDC7kYaHl+97tEjv5CNdzx8hGf06IO6llR+qq06zoEEPQTPrI+hbLNvvGT6i2fhq35RzblVnqmaYyUpUqWbCEXvR9YUL7vpJTHyEVM7zHzQpk0UELUHCq3Cftq5CPozzCl3qhwprCtaPe+gobyRoRtNvbffmV40a0pHFUwjaQCOaSubyAYG+k9CB1YtIfGy9rO1keyxzdb00NNGBUfF84YHrQqV30VTg9xLtidN6MfvO37zrRi/dWgIKhZuFug0DlMrU45jQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SlUQ7ww5romtO3zpOEtoUdPbNKeBCexbThMXmYa1M80=;
+ b=XLmnKLSVzasouTlyrZagkExqYMcflXFZunidsRdQ04pcILH0ZgjvGhSX3YW5xH/aqRoGVEpAxB46e49QQ1OoxvlEAK+kuqk4b3CK7KW/Rmg50dt5srCeMxmoNk8MLZFFMdxHU+8XP+RObhDQCS9BdqRPYzGUnY2woZ/zYrcuTdj5YBzS/hHR4MVlbv935HfafragIlXtM+U51sF7y+Y0XE+oF46CEwLMfLuwtBPtpLS43PRP0iJzCwW10HTHCzgXo6X5feFWJBRaTGLWgs6F7gk9GY709T9iTTHY5epEFmckH7rzXCVHCykPQBfOQLVhAJrKGIvtYhflV6tg9yi54g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SlUQ7ww5romtO3zpOEtoUdPbNKeBCexbThMXmYa1M80=;
+ b=Y4836qgOjAk6H6ReXtCa3DFi4uHNclsRvgT7ajUOs3GcKLdg6Z7TvqiRHS9JC7xU702Xl+EuJfteg8ydKiQoPI6DyejoJqQ6Nc+f4gn96E/kga4jEZ4OPiucVlF6PnGLWg3n0h+qpcQgZVJWD+yB/cpfSbPqMJA6+aLF06PTMrcmJiqg7X+AVkCeG4Te/O4yjNj+j17XCRcZV4CBOR4FfO8yxaEeFB4z4wp/lQI37iEIUtE+jBAR/2+W0PFk+YOLhJnqWbVKbHAD8tGnO8v/RLcCKuG2cyRM/m+hJ5DlU231U24tn/Ddeg1MdeEMVwBr2kP2m6Ha+RR8Jv8ZS0Xw0Q==
+Received: from SN7PR04CA0183.namprd04.prod.outlook.com (2603:10b6:806:126::8)
+ by IA0PR12MB8981.namprd12.prod.outlook.com (2603:10b6:208:484::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.28; Wed, 14 May
+ 2025 19:21:52 +0000
+Received: from SA2PEPF00001506.namprd04.prod.outlook.com
+ (2603:10b6:806:126:cafe::f0) by SN7PR04CA0183.outlook.office365.com
+ (2603:10b6:806:126::8) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8722.25 via Frontend Transport; Wed,
+ 14 May 2025 19:21:51 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ SA2PEPF00001506.mail.protection.outlook.com (10.167.242.38) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8722.18 via Frontend Transport; Wed, 14 May 2025 19:21:51 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 14 May
+ 2025 12:21:40 -0700
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Wed, 14 May 2025 12:21:39 -0700
+Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com
+ (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Wed, 14 May 2025 12:21:38 -0700
+Date: Wed, 14 May 2025 12:21:37 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: <kevin.tian@intel.com>, <corbet@lwn.net>, <will@kernel.org>,
+	<bagasdotme@gmail.com>, <robin.murphy@arm.com>, <joro@8bytes.org>,
+	<thierry.reding@gmail.com>, <vdumpa@nvidia.com>, <jonathanh@nvidia.com>,
+	<shuah@kernel.org>, <jsnitsel@redhat.com>, <nathan@kernel.org>,
+	<peterz@infradead.org>, <yi.l.liu@intel.com>, <mshavit@google.com>,
+	<praan@google.com>, <zhangzekun11@huawei.com>, <iommu@lists.linux.dev>,
+	<linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-tegra@vger.kernel.org>,
+	<linux-kselftest@vger.kernel.org>, <patches@lists.linux.dev>,
+	<mochs@nvidia.com>, <alok.a.tiwari@oracle.com>, <vasant.hegde@amd.com>
+Subject: Re: [PATCH v4 06/23] iommufd/driver: Add iommufd_struct_destroy to
+ revert iommufd_viommu_alloc
+Message-ID: <aCTtQXQ61LLbHk6U@Asurada-Nvidia>
+References: <cover.1746757630.git.nicolinc@nvidia.com>
+ <fd387a4e4efda1905e270d28986e4563dfee52d5.1746757630.git.nicolinc@nvidia.com>
+ <20250514182600.GF382960@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <723f7ae8-bb36-4a4c-a1d8-733d131ca222@nvidia.com>
+In-Reply-To: <20250514182600.GF382960@nvidia.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA2PEPF00001506:EE_|IA0PR12MB8981:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7fef8514-9d52-4e1f-de71-08dd931c946b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700013|1800799024|82310400026|7416014|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?1YwI4wero+cSlo4TbMwOjCUrIkBM2k1TtDwzLSOKLR/fMRC5XOitgtr7TMBn?=
+ =?us-ascii?Q?Gfr5FnNZW4v4hZl2VzKn4dltcSy8PiWWGDMyDERYVbjvjkeo+XAWVGyePEvz?=
+ =?us-ascii?Q?rwpQZD2JUsdaSi2IDbGF0aeeWTDM42hpodpfXQF5PIYd1nRZJIZ4OyC2ixcU?=
+ =?us-ascii?Q?pXM2PV1K5VTCHRu+cNELaz3OZuVjFDzzrpuHMZapZuU+ZsgRSbVu6pho0VP8?=
+ =?us-ascii?Q?nMIwi4c1wwOygCneLBME1I4E0907q1aMtSVD2uKYysdHYIOx57Lg0NHXbfSw?=
+ =?us-ascii?Q?/mNjb6bZXOzBCD7qrcQkzySul9j9M9yREFqc6My2KP04+TI+K+2+2earHoy6?=
+ =?us-ascii?Q?pV4N8pFTEx2vYjR3oWtA58/5zRAjvMoJmvghAVjluKUBO4LG5VCdqxzH6O/G?=
+ =?us-ascii?Q?W9sLM8H2fxbDx+DygtJSkDSfRMOIzaXpSN9/NA2pQKJaWWdgAcBWk449TFWT?=
+ =?us-ascii?Q?nD8ZEQsipSeUjUN7MumB+s6ZU06gp6EjAKu/olwYlCLjiUOHKSLgfEnMOneu?=
+ =?us-ascii?Q?H39qwGuCEsIzju4Mk9BdPh7y6Mc2CY5NP261w1vUdWuTK2qbeR983r/bKryn?=
+ =?us-ascii?Q?9egYy7+BIpc+MZNaOYF8JDwulakY75hIUlxrFozF6yVbp7/buHkss1vfjQIk?=
+ =?us-ascii?Q?olEjeZlPOz1QttVe+NxP4YR5ZbSaIL0VLrXTjFvd6BvWIC+oK/E7JWxYDP0T?=
+ =?us-ascii?Q?vCE7lQlzaBG2ZXUFBWInLkQ5FHkjyAWWclSYhZMMRxwBUE71Fq/TOyuMqOKe?=
+ =?us-ascii?Q?b78A2Rki4MawUAwNw1lY8gNEeUfkl82mP+gSdAOnm1XuWLQ6OjUXc1tmxH/+?=
+ =?us-ascii?Q?u373jbExTWBVGen2DI9FzJghtnqsWtsrLcF6awPg8x+eHRS7TDyfj5TS4gWZ?=
+ =?us-ascii?Q?vxxx6rRu55tPmiPPEU1nYX+VjQQZYhUADysdd18cNVCn1JQ3se05XidbEF14?=
+ =?us-ascii?Q?MpYEZZ09GZnYiJVU4fj0n+wdDLyCEhCG0mPjyv7TWcB4fvXeoWzQXzwAmtfb?=
+ =?us-ascii?Q?e+42ByurHtSCZEvE9gnfaIuMGv56reudttUN+QDIHGqUF9pQ7Y6sAjvLIxzb?=
+ =?us-ascii?Q?AwyQRNElEomDoqlQ85XwVkfXqyGZWieqQf23ZuSgs0hl/HrsZ0KsyyrIoE+S?=
+ =?us-ascii?Q?gDC1bNO3GgzdyVmzTyuppL/+8AM51gLSxNxza0yMYdVUeHATQSpaqRK9286R?=
+ =?us-ascii?Q?65l8x4N2DnQF7L7dKgBOCjhPIia3YIuQw5r+QYGh0KrueCk1ajYSAOyOem4l?=
+ =?us-ascii?Q?phsEwOdAoacmyVBVmAa3Wxwqb7XGWAwLope8W3VenypY6AEuroo7SSmUJmoO?=
+ =?us-ascii?Q?AnfBN+8TuXrhLLhBRSZMNDbyfsbnMNpPkzM/LHnqrQmjhKybFzHW9k5Zp/Ce?=
+ =?us-ascii?Q?nla+3lHcqrUkUg87aFFoHR+RIBKSGY5SYsV+FjnY9TZFrD6TJAFbsnxxPCvu?=
+ =?us-ascii?Q?bM32spWHJP9BLqZGLyBHIpuIWSYSfWA+zU8R0APxg8LgpT/55rjkfahe0hzt?=
+ =?us-ascii?Q?BJLU+fwrI6ggvhhrhIi2PuRG+tIaFTmcLTKn?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(1800799024)(82310400026)(7416014)(376014);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 May 2025 19:21:51.2137
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7fef8514-9d52-4e1f-de71-08dd931c946b
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SA2PEPF00001506.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8981
 
-On Wed, May 14, 2025 at 10:52:17AM -0400, Joel Fernandes wrote:
-> On 5/13/2025 8:43 PM, Timur Tabi wrote:
-> > On Tue, 2025-05-13 at 17:22 -0700, John Hubbard wrote:
-> >> On 5/13/25 2:58 PM, Joel Fernandes wrote:
-> >>> On Tue, May 13, 2025 at 02:07:57PM -0400, Joel Fernandes wrote:
-> >>>> On Fri, May 02, 2025 at 04:02:33PM +0200, Miguel Ojeda wrote:
-> >>>>> Starting with Rust 1.87.0 (expected 2025-05-15), `objtool` may report:
-> >> ...
-> >>> Btw, Danilo mentioned to me the latest Rust compiler (1.86?) does not give
-> >>> this warning for that patch.
-> >>
-> >> I'm sorry to burst this happy bubble, but I just upgraded to rustc 1.86 and did
-> >> a clean build, and I *am* setting these warnings:
+On Wed, May 14, 2025 at 03:26:00PM -0300, Jason Gunthorpe wrote:
+> On Thu, May 08, 2025 at 08:02:27PM -0700, Nicolin Chen wrote:
+> > An IOMMU driver that allocated a vIOMMU may want to revert the allocation,
+> > if it encounters an internal error after the allocation. So, there needs a
+> > destroy helper for drivers to use. For instance:
 > > 
-> > I see these warnings with .c code also:
+> > static my_viommu_alloc()
+> > {
+> > 	...
+> > 	my_viommu = iommufd_viommu_alloc(viomm, struct my_viommu, core);
+> > 	...
+> > 	ret = init_my_viommu();
+> > 	if (ret) {
+> > 		/* Need to destroy the my_viommu->core */
+> > 		return ERR_PTR(ret);
+> > 	}
+> > 	return &my_viommu->core;
+> > }
 > > 
-> >   CHK     kernel/kheaders_data.tar.xz
-> > drivers/media/pci/solo6x10/solo6x10-tw28.o: error: objtool: tw28_set_ctrl_val() falls through to
-> > next function tw28_get_ctrl_val()
-> > make[9]: *** [scripts/Makefile.build:203: drivers/media/pci/solo6x10/solo6x10-tw28.o] Error 1
+> > Move iommufd_object_abort() to the driver.c file and the public header, to
+> > introduce common iommufd_struct_destroy() helper that will abort all kinds
+> > of driver structures, not confined to iommufd_viommu but also the new ones
+> > being added in the future.
 > > 
-> > I think it's an objtool bug and not a rustc bug.
+> > Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+> > Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+> > Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> > ---
+> >  drivers/iommu/iommufd/iommufd_private.h |  1 -
+> >  include/linux/iommufd.h                 | 16 ++++++++++++++++
+> >  drivers/iommu/iommufd/driver.c          | 14 ++++++++++++++
+> >  drivers/iommu/iommufd/main.c            | 13 -------------
+> >  4 files changed, 30 insertions(+), 14 deletions(-)
 > 
-> Thanks John and Timur.
-> And sigh, fwiw I pulled the latest rust nightly build and I see the warning as well:
+> One idea that struck me when I was looking at this was to copy the
+> technique from rdma.
 > 
-> rustc --version
-> rustc 1.89.0-nightly (414482f6a 2025-05-13)
+> When an object is allocated we keep track of it in the struct
+> iommufd_ucmd.
 > 
-> I am leaning more towards Timur's opinion that this is more than likely an
-> objtool issue.
+> Then when the command is over the core code either aborts or finalizes
+> the objects in the iommufd_ucmd. This way you don't have to expose
+> abort and related to drivers.
 
-The above warning is in completely different code from the Rust one, so
-they're likely unrelated.
+I see! Do you want this to apply to the all objects or just driver
+allocated ones?
 
-The fallthrough warnings are typically caused by either Clang undefined
-behavior (usually potential divide by zero or negative shift), or a call
-to an unannotated noreturn function.
+We would need a bigger preparatory series to roll out that to all
+the allocators, and need to be careful at the existing abort() that
+intertwines with other steps like an unlock().
 
-Timur, can you share your .config and compiler version?
-
--- 
-Josh
+Thanks
+Nicolin
