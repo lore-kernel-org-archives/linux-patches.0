@@ -1,308 +1,305 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 046C327A461
-	for <patches@lists.linux.dev>; Wed, 14 May 2025 17:14:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747242871; cv=none; b=RPYgcXs7KqJGKSAFBdib6Wv0KwtsZhL5XJYvFnTA8KqPZIms4+8CMcnfRmVf2zXLu5nEEpafsnTIt6XiFf2Mljn6f/+sO7+p7cD3aeZQiQM5XsW/5X6OybuVK2ZHA0UK4pzkwj9huKW2hDPgfc98WX+7x0ngFSmAkbEuGIcZUR4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747242871; c=relaxed/simple;
-	bh=S/K1zsUF7eLsrRUFZOdB1YfAGqHwutjswN+i2l4kwXk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=macF1/8EQrbOTXCeiYVvGe2sze2HBXJ8ZR0sIbL0WFarBIzIHi5QEd2O6i8sU0HOw8Grb1ASPgdeL0T52v+8gmLzmu/ewlJIZ4LdbPyk0FdYKUt9wDgWRsIBXzXXzkphzTEfcnMSxoDv3VP41HihYBqbHF6p0ys+aoMAUwEVQoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=RaOwWc91; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2067.outbound.protection.outlook.com [40.107.237.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D9428136E;
+	Wed, 14 May 2025 18:26:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.67
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747247168; cv=fail; b=LV9CqX92kT7Hp7K02YZ3fM/w74pnXa6swm4/yo4d2b23aibP1BNhp6IRWsdTINquUIC/BIoRNh9G8iMr5Foc0+tRhYlGvvHDxJF1eIb8nstarXTKFHmGB9mc0SmIs1+CQVpj4M/fEmPI+ubbMQA5Yc5KZMOE3F+BihhvThr+2o4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747247168; c=relaxed/simple;
+	bh=0K1p5r+2WyWM7O/Mgm6oAGrC/kTH7kwomXDs3QCtdUc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=nT2huAcJsXruF8YJe5ezPnLu8X9CfoqRKy8ELTGjUQ6WoANZvNFt8v1V3fqaOluFmTbjieCQ3I3IrfALv1KlyAp1qtW6VrVOBeZoNKN664M29f584jyE2kk+11tMDNYeIjBNnkR9If/0gT81fKlMRglWQw+T2vYWr64dkxSb07w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Xr9UuwF+; arc=fail smtp.client-ip=40.107.237.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="RaOwWc91"
-Received: from [100.65.162.40] (unknown [20.236.11.69])
-	by linux.microsoft.com (Postfix) with ESMTPSA id F05C5211B7AC;
-	Wed, 14 May 2025 10:14:28 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com F05C5211B7AC
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1747242869;
-	bh=vhVY/JQGbSryNshzZz8qJI1/wNOosPR4nvGb9r2ZXLI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RaOwWc914e5RgadGPG6SCxAen6STpf/HWDyAPrkvuF7Ctrk+un2ZJnqOU46sOoxLO
-	 /EpgvM6BunyNJJe+5Kr/KMDP1PngmEJz4xKCP7QHPwkEfHO9BcaOucDK4AVlAHAykz
-	 bigP6ObOIB0tCMbRvmXg6nay+bzxiDLeiPOBtN8s=
-Message-ID: <51587714-f363-43a5-96e0-9071c0cac8d6@linux.microsoft.com>
-Date: Wed, 14 May 2025 10:14:27 -0700
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Xr9UuwF+"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=tUfOtMMt9SXKqRPIOOzJc48T+yrVfjUrSZzTYqe9//HZSlVCHiF80714TVhRGd0vq7RtSrQ8JL2dt2LUlJ0RlEKoZoM1MLY6qBr1IWKrPK3827kWkqoG2l1K/h8X0eIQfjp6abN44ND4naKtj7kre8LUixT6/Un0cNzvKp3DABAUucQ5LX3MJqNMLXLYltoe187GPlmzd+0pMYAFLatC7sPnLhwICCo/32daYfv2gEOUKExH01ipXbYkiIU+bE0gpo8pko0pLX3AIlAyKm78hAHiZY9WAoSqZcAVpMMV/eCHc9902SZlrNXmHceIikLTPmyExWBc9X95e6TGiRLyKw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Eu8bFObBj+haMxNUguP+f/nkoiU54kn7JFVy4YKbt2Y=;
+ b=FS/+Eu+kaOovVd6S/uilQHxEe50szd+mEm/+yqgNKMgLiuNsSlNvVGq2lPdkmKQFGhGW83hJR3Y9H0hIeMxmdGuNF0xOkc+eYJDknkXaqLd8bndd1eMkoX4ioEJTuoB4xkRwfCEctNBU7hLLvmuHgA3OfTi5xQT+gc2Kkb5CBQ+BHC+qrCajaErfDVjQnUcGgmmK8dZUKIuKhoU0X1amUx1bxUwyZ0p3sL7uGHroEeLDt5OWa5VDY3pISeJye5Hr/zlLjdJJu4914bs5HIYraFS9VDTBwBIteOe/acd7IQTao78BTSljCjLl+sRrZ0unDjvylRTofft9+9S415wMfA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Eu8bFObBj+haMxNUguP+f/nkoiU54kn7JFVy4YKbt2Y=;
+ b=Xr9UuwF+H09Evikkq/1f9M1lV+4sigz7vSWjrB0eNKxZNYw6GUB3irmOmHh8KKZGlLZapCe6SbISJ8aA9FvpE8pt9UNea4q8TgmLo/1mGPvRnLkbSyGU33ibs1yHqepwgFweAJQTbsquYaXu/P2AOrfE2tcWlbsd3aUndTtyDFsxMmRZHxuCSYuEMCXloJyjzgvqsIsodL9wKT+U3BYQLiSuhX4QcUt/n4JVC3OeKnloWEaBsGN3la8m8NtRkTsgqtEpHoC+5AAWEs+WZ8YyBzqoFgvhQsOROre61UgHNjnGOcKRbn8FXA6ysOjwIWfI9BVToLY9TU4Ry4dGMKdsiQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by CY5PR12MB6033.namprd12.prod.outlook.com (2603:10b6:930:2f::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.23; Wed, 14 May
+ 2025 18:26:02 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8722.027; Wed, 14 May 2025
+ 18:26:02 +0000
+Date: Wed, 14 May 2025 15:26:00 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
+	bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
+	thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
+	shuah@kernel.org, jsnitsel@redhat.com, nathan@kernel.org,
+	peterz@infradead.org, yi.l.liu@intel.com, mshavit@google.com,
+	praan@google.com, zhangzekun11@huawei.com, iommu@lists.linux.dev,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, patches@lists.linux.dev,
+	mochs@nvidia.com, alok.a.tiwari@oracle.com, vasant.hegde@amd.com
+Subject: Re: [PATCH v4 06/23] iommufd/driver: Add iommufd_struct_destroy to
+ revert iommufd_viommu_alloc
+Message-ID: <20250514182600.GF382960@nvidia.com>
+References: <cover.1746757630.git.nicolinc@nvidia.com>
+ <fd387a4e4efda1905e270d28986e4563dfee52d5.1746757630.git.nicolinc@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fd387a4e4efda1905e270d28986e4563dfee52d5.1746757630.git.nicolinc@nvidia.com>
+X-ClientProxiedBy: BL1PR13CA0068.namprd13.prod.outlook.com
+ (2603:10b6:208:2b8::13) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 00/54] 5.15.183-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250512172015.643809034@linuxfoundation.org>
-Content-Language: en-US
-From: Hardik Garg <hargar@linux.microsoft.com>
-In-Reply-To: <20250512172015.643809034@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|CY5PR12MB6033:EE_
+X-MS-Office365-Filtering-Correlation-Id: c12ef82a-395c-404c-fc65-08dd9314c7db
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|366016|376014|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?B+QXQZhI1zgI8cv+QkQVtHIFyQmTxvg1748KPMD5vPttv7FDJKrI9zGZQffO?=
+ =?us-ascii?Q?uUKQlqBja9jUo54HnuBXwYVRL9GqOFEShcbVEviztyOUVBUdkYFg7f3VVrD8?=
+ =?us-ascii?Q?X+AUqTZMi6CxOCID3/91KX9llWuf3IKVEbDhu152U6TkCXRIneEsRgm7rSli?=
+ =?us-ascii?Q?gpwwsP7lvmYRI9nR9TakhUfbOQEiIeCdoolarFgZu/U6JjidR8k6IcSOPXiJ?=
+ =?us-ascii?Q?BlSyMsOZ189csn1IV+HP+HaPGPy9RmiJ2prYNsEOO5rfyH/2GAghGO5hXDYz?=
+ =?us-ascii?Q?ZJ4IkILbEPRuP1BS8hrc1zBLaGN5ghuvBTnaIxN2qSVnljOHL2tfv0w4ctw2?=
+ =?us-ascii?Q?8u0rQuPS+MWDJoAPVeK6YzSp0fhOJQns3oigFY4bPGAgeMEQ0xQ41nryvg7o?=
+ =?us-ascii?Q?NEdboDXp+oXN9SSQEYH9Qp3IWG9dJpkLDOg0DUgSW6hy5LFwWmYmCmtNQ48P?=
+ =?us-ascii?Q?KXvNvRxEZFPzkDJEbhtpRtenpy2gJfDXSTjHIE4/gF5Y4V0BuaItRE5DTQ5q?=
+ =?us-ascii?Q?0W4ee8mY8G7+TKhbtuNTkd/UBdSgFXTFCOK8+Zqxv0MR+h3LAYT0wnBZlIYx?=
+ =?us-ascii?Q?QLgVP66vFgFI46T1PpyiIVpm+nSE3WWoVkJGGfpWo+25Y/I0qFEWWLWb1pv5?=
+ =?us-ascii?Q?Kvv86FDjk1lQHPvTDE1VzgMql4Ntmm9blwhTMMD3s/626LRCPFhoFG8n6wJd?=
+ =?us-ascii?Q?nO3VvkOnndRsZ9ezo2KPt8J49FndHzrW/4S3ji2UDxpUSEwWl8ZPCcxkqERC?=
+ =?us-ascii?Q?lgHx7+qoaah0p9LanZqCfPk+E++pkWcUX7A012BEnT7SZNMQ1xIyH+9OPKlh?=
+ =?us-ascii?Q?+s76eKeaI0Te+t/UV0nrVAypR5DFvJNlM3zZdTm2UX/XDZNnoU/sT0p9ZQYs?=
+ =?us-ascii?Q?Of9TG92IiRq1NaX2yqO9zvyLMzebdnMbBnTup0fqoMU6OJsl+YYZlh9xDtIb?=
+ =?us-ascii?Q?PJQa5SPMvjkf8c0qkBS+9bnCX6vOqQJdGL42SyE7yTI+f9p/7TIBjCcQ5sYw?=
+ =?us-ascii?Q?B5w2cV9CJr/c/wAg39WSarcbKSbyeO2sT+CkDY7lAGD+BHbpKnVwOvIIm2Aa?=
+ =?us-ascii?Q?WuWxxDgpZFq6huAA0rO7/ddSgUNvkZ68YYaCBPF2Vyg7q69+jcz2nSgOmjro?=
+ =?us-ascii?Q?njvLWxbxv4PrvhJLmtqGKyV/JSdkwlinEbBs+BarL/NKuwSG9Tj8AyxzIoCe?=
+ =?us-ascii?Q?0xyejMfWFYJaPHrzFKllPGrcNNRQOKPDOOp45w+9D47LPdHp7zmjydi5D2gn?=
+ =?us-ascii?Q?B1k+0vprVkcxKoUWWFPBj0z/F2G38BMUHpcZ04+q1AkRRgJBLZsog5pg+RKh?=
+ =?us-ascii?Q?X4Uzy8jt9Fdzgei37lf7oOarot7Wa5PDE+SF/fgm8mWfRcIgY0XimHbXgk1l?=
+ =?us-ascii?Q?RMIx7mzS8CKP52s6hhP8tIceVPOMbLGhSfF6kMNrCn9ufVV0aw=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(366016)(376014)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?cd7e/Cr8MQ3Cxe1bLYlKMBFoe2er16xufz6V/QRlCxLM8iRudm5nDLT/8szw?=
+ =?us-ascii?Q?zTUaV7oA4bi73IfALrzzNQnZ60pOyuvBTw2u6icKT71cCOvpAVMwVf1UVWBw?=
+ =?us-ascii?Q?RRKWLkhuy3n2xTU4VoFFFkNmHFd6hQX8Go4RK60Zh6Q44EXbGEQi+Tn9EGhG?=
+ =?us-ascii?Q?s0b5bKQ5R4SbbsVJ8defzenld1SaNHKwdSZn7r7HPGg192W9HP9o1m0bvVSR?=
+ =?us-ascii?Q?D3WecEXVz3ITM67PN22iNsb+rkFTYx8FIuyC2jjAGy8FZyhNUPV8Jy5wS2p7?=
+ =?us-ascii?Q?V6zX+cxW9hnWPyxFfKmcOudTZ62SPOddxlAGepSRCNZBse2cSlu4iPe4Lxkl?=
+ =?us-ascii?Q?WKBxosF4m5W2xCjotIaw9lmH1Cmfj5WZyT6y3ilXgSzYw3dalu2Q6cfPAH8G?=
+ =?us-ascii?Q?gi1ocwHJjFwi8KE9gdtXFuSPG8Tw382B1VT5xHU7iUcT9bwi4WE1OJZDLiSE?=
+ =?us-ascii?Q?geBJbqcpipACnud0IdoBQrBG9yfFH5Dg/d7tkUG///HFProQwZTTJ7KSTl0v?=
+ =?us-ascii?Q?guHFmdzOA9B3KASmZQkGv4mluILxkL7NBfdd0o9O9l6RD3REJowo/jSqF8qA?=
+ =?us-ascii?Q?dMIR5rXSovfbX0Qs78VYjr1Y+qiA1hJXG1RDkmboBOJQh58mDTzMZY0uPXVz?=
+ =?us-ascii?Q?IHhrZgz+94SNktfhvY7Z1/YbNlABZZRwZJ1q0myziWtbxAt2UD2FxKw6jN8h?=
+ =?us-ascii?Q?FVer9e966KhPHEokEkbJjYR0mb0jQ/AP6rjtk+RHXTAAyZ8Kw6jP6VBfIN93?=
+ =?us-ascii?Q?umJJ/pQ0tOzjMJXprLbKFODjlL5NAvSfq6IEhR9K4nDtNnmDVxXEAUVTd3tS?=
+ =?us-ascii?Q?xB3p9NiE6uGOi/yymFzq17T0YCf0xjRn3o14OJ7dI5N73RbqTklHjpy18FYO?=
+ =?us-ascii?Q?9GgQvxhpas0it9KtTAkAqHxv07huOsEreVyYgxX0jcoLcG0nrtL5krSh2DjP?=
+ =?us-ascii?Q?D2+QwKmMtRlsPMYMRoFp/nAdfY8T7X5SfaO99S7ggHwd8CN6+7Hlpa+9frxw?=
+ =?us-ascii?Q?JCEPxzVTrIN8nDHJ82ZG9/uh8X5M5d/lhsb4FqOi+4wHWf3K/e6XOO02gwOs?=
+ =?us-ascii?Q?W8VNgyOMlzDBvAiHT0eJeUi8sTEa+0bEmKzSiM7DNLDEfRJ81Z5A3OzVoIxR?=
+ =?us-ascii?Q?y7RkSaeFBg04hHLyldRW8X4Nup1wZ8JCRLtSjygDicvDT+k3ICfJ6Q9QDOVE?=
+ =?us-ascii?Q?TE2nUuH4f6w38qgU4ZHuYyD/Yehyy/YBigKIJYfMHUFD6Yuz02GCSVKEW7C7?=
+ =?us-ascii?Q?15f6ax2ijTcK9l673aZv9HkgBE8fVPWY9VUV+uoYy8sViZQCFvxvjtym0x69?=
+ =?us-ascii?Q?VFTKlkOgpQatBiXPCJNm+C+yiWV3zwDjeXyIWqWIPQTRGZs/WbB18Oud02pa?=
+ =?us-ascii?Q?ZIAQR2OGR7djgbvxnAuhFNFaT8imjjGGSxwVL7gDmUwJ//XHn3jvqJ5E88AJ?=
+ =?us-ascii?Q?SDZy+1qhUCnRgdpsfe8B4GrCKGbrmwpkyffhGkpCdL8E6fTqwl2Cfh1mJALB?=
+ =?us-ascii?Q?Df+/fTEAR+F6KnCM6pYrqTS83q6gEirmbCHUUcBb06e6o7ZoFwzNupClW44O?=
+ =?us-ascii?Q?z/Zi2SmUUtVQQWj94NxdjBgrJtje43f5dXZlQnv0?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c12ef82a-395c-404c-fc65-08dd9314c7db
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 May 2025 18:26:02.1112
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: kyXjWbZufhTyed3RULG5xk6WIxKTuURFkIRnVhcz8rK/g3wRAjLdrzpFOG76Lr9Z
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6033
 
-The kernel, bpf tool and perf tool builds fine for v5.15.183-rc1 on x86
-and arm64 Azure VM.
+On Thu, May 08, 2025 at 08:02:27PM -0700, Nicolin Chen wrote:
+> An IOMMU driver that allocated a vIOMMU may want to revert the allocation,
+> if it encounters an internal error after the allocation. So, there needs a
+> destroy helper for drivers to use. For instance:
+> 
+> static my_viommu_alloc()
+> {
+> 	...
+> 	my_viommu = iommufd_viommu_alloc(viomm, struct my_viommu, core);
+> 	...
+> 	ret = init_my_viommu();
+> 	if (ret) {
+> 		/* Need to destroy the my_viommu->core */
+> 		return ERR_PTR(ret);
+> 	}
+> 	return &my_viommu->core;
+> }
+> 
+> Move iommufd_object_abort() to the driver.c file and the public header, to
+> introduce common iommufd_struct_destroy() helper that will abort all kinds
+> of driver structures, not confined to iommufd_viommu but also the new ones
+> being added in the future.
+> 
+> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+> Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> ---
+>  drivers/iommu/iommufd/iommufd_private.h |  1 -
+>  include/linux/iommufd.h                 | 16 ++++++++++++++++
+>  drivers/iommu/iommufd/driver.c          | 14 ++++++++++++++
+>  drivers/iommu/iommufd/main.c            | 13 -------------
+>  4 files changed, 30 insertions(+), 14 deletions(-)
 
-KernelCI with LTP and kselftest results: Tree: stable/linux-5.15.y 
-<https://dashboard.kernelci.org/tree/3b8db0e4f2631c030ab86f78d199ec0b198578f3?o=microsoft&p=t&ti%7Cc=v5.15.182&ti%7Cch=3b8db0e4f2631c030ab86f78d199ec0b198578f3&ti%7Cgb=linux-5.15.y&ti%7Cgu=https%3A%2F%2Fgit.kernel.org%2Fpub%2Fscm%2Flinux%2Fkernel%2Fgit%2Fstable%2Flinux.git&ti%7Ct=stable>
+One idea that struck me when I was looking at this was to copy the
+technique from rdma.
 
+When an object is allocated we keep track of it in the struct
+iommufd_ucmd.
 
-Tested-by: Hardik Garg <hargar@linux.microsoft.com>
+Then when the command is over the core code either aborts or finalizes
+the objects in the iommufd_ucmd. This way you don't have to expose
+abort and related to drivers.
 
+Something like this:
 
-Thanks,
-Hardik
-
-On 5/12/2025 10:29 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.183 release.
-> There are 54 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 14 May 2025 17:19:58 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.183-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-> -------------
-> Pseudo-Shortlog of commits:
->
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->      Linux 5.15.183-rc1
->
-> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
->      x86/bhi: Do not set BHI_DIS_S in 32-bit mode
->
-> Daniel Sneddon <daniel.sneddon@linux.intel.com>
->      x86/bpf: Add IBHF call at end of classic BPF
->
-> Daniel Sneddon <daniel.sneddon@linux.intel.com>
->      x86/bpf: Call branch history clearing sequence on exit
->
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->      Revert "net: phy: microchip: force IRQ polling mode for lan88xx"
->
-> Al Viro <viro@zeniv.linux.org.uk>
->      do_umount(): add missing barrier before refcount checks in sync case
->
-> Daniel Wagner <wagi@kernel.org>
->      nvme: unblock ctrl state transition for firmware update
->
-> Kevin Baker <kevinb@ventureresearch.com>
->      drm/panel: simple: Update timings for AUO G101EVN010
->
-> Thorsten Blum <thorsten.blum@linux.dev>
->      MIPS: Fix MAX_REG_OFFSET
->
-> Jonathan Cameron <Jonathan.Cameron@huawei.com>
->      iio: adc: dln2: Use aligned_s64 for timestamp
->
-> Andy Shevchenko <andriy.shevchenko@linux.intel.com>
->      types: Complement the aligned types with signed 64-bit one
->
-> Dave Penkler <dpenkler@gmail.com>
->      usb: usbtmc: Fix erroneous generic_read ioctl return
->
-> Dave Penkler <dpenkler@gmail.com>
->      usb: usbtmc: Fix erroneous wait_srq ioctl return
->
-> Dave Penkler <dpenkler@gmail.com>
->      usb: usbtmc: Fix erroneous get_stb ioctl error returns
->
-> Oliver Neukum <oneukum@suse.com>
->      USB: usbtmc: use interruptible sleep in usbtmc_read
->
-> Andrei Kuchynski <akuchynski@chromium.org>
->      usb: typec: ucsi: displayport: Fix NULL pointer access
->
-> RD Babiera <rdbabiera@google.com>
->      usb: typec: tcpm: delay SNK_TRY_WAIT_DEBOUNCE to SRC_TRYWAIT transition
->
-> Jim Lin <jilin@nvidia.com>
->      usb: host: tegra: Prevent host controller crash when OTG port is used
->
-> Wayne Chang <waynec@nvidia.com>
->      usb: gadget: tegra-xudc: ACK ST_RC after clearing CTRL_RUN
->
-> Pawel Laszczak <pawell@cadence.com>
->      usb: cdnsp: fix L1 resume issue for RTL_REVISION_NEW_LPM version
->
-> Pawel Laszczak <pawell@cadence.com>
->      usb: cdnsp: Fix issue with resuming from L1
->
-> Jan Kara <jack@suse.cz>
->      ocfs2: stop quota recovery before disabling quotas
->
-> Jan Kara <jack@suse.cz>
->      ocfs2: implement handshaking with ocfs2 recovery thread
->
-> Jan Kara <jack@suse.cz>
->      ocfs2: switch osb->disable_recovery to enum
->
-> Dmitry Antipov <dmantipov@yandex.ru>
->      module: ensure that kobject_put() is safe for module type kobjects
->
-> Jason Andryuk <jason.andryuk@amd.com>
->      xenbus: Use kref to track req lifetime
->
-> Alexey Charkov <alchark@gmail.com>
->      usb: uhci-platform: Make the clock really optional
->
-> Wayne Lin <Wayne.Lin@amd.com>
->      drm/amd/display: Fix wrong handling for AUX_DEFER case
->
-> Silvano Seva <s.seva@4sigma.it>
->      iio: imu: st_lsm6dsx: fix possible lockup in st_lsm6dsx_read_tagged_fifo
->
-> Silvano Seva <s.seva@4sigma.it>
->      iio: imu: st_lsm6dsx: fix possible lockup in st_lsm6dsx_read_fifo
->
-> Gabriel Shahrouzi <gshahrouzi@gmail.com>
->      iio: adis16201: Correct inclinometer channel resolution
->
-> Angelo Dureghello <adureghello@baylibre.com>
->      iio: adc: ad7606: fix serial register access
->
-> Dave Hansen <dave.hansen@linux.intel.com>
->      x86/mm: Eliminate window where TLB flushes may be inadvertently skipped
->
-> Gabriel Shahrouzi <gshahrouzi@gmail.com>
->      staging: axis-fifo: Correct handling of tx_fifo_depth for size validation
->
-> Gabriel Shahrouzi <gshahrouzi@gmail.com>
->      staging: axis-fifo: Remove hardware resets for user errors
->
-> Gabriel Shahrouzi <gshahrouzi@gmail.com>
->      staging: iio: adc: ad7816: Correct conditional logic for store mode
->
-> Aditya Garg <gargaditya08@live.com>
->      Input: synaptics - enable InterTouch on TUXEDO InfinityBook Pro 14 v5
->
-> Dmitry Torokhov <dmitry.torokhov@gmail.com>
->      Input: synaptics - enable SMBus for HP Elitebook 850 G1
->
-> Aditya Garg <gargaditya08@live.com>
->      Input: synaptics - enable InterTouch on Dell Precision M3800
->
-> Aditya Garg <gargaditya08@live.com>
->      Input: synaptics - enable InterTouch on Dynabook Portege X30L-G
->
-> Manuel Fombuena <fombuena@outlook.com>
->      Input: synaptics - enable InterTouch on Dynabook Portege X30-D
->
-> Jonas Gorski <jonas.gorski@gmail.com>
->      net: dsa: b53: fix learning on VLAN unaware bridges
->
-> Jonas Gorski <jonas.gorski@gmail.com>
->      net: dsa: b53: always rejoin default untagged VLAN on bridge leave
->
-> Jonas Gorski <jonas.gorski@gmail.com>
->      net: dsa: b53: fix VLAN ID for untagged vlan on bridge leave
->
-> Jonas Gorski <jonas.gorski@gmail.com>
->      net: dsa: b53: fix flushing old pvid VLAN on pvid change
->
-> Jonas Gorski <jonas.gorski@gmail.com>
->      net: dsa: b53: fix clearing PVID of a port
->
-> Jonas Gorski <jonas.gorski@gmail.com>
->      net: dsa: b53: allow leaky reserved multicast
->
-> Jozsef Kadlecsik <kadlec@netfilter.org>
->      netfilter: ipset: fix region locking in hash types
->
-> Oliver Hartkopp <socketcan@hartkopp.net>
->      can: gw: fix RCU/BH usage in cgw_create_job()
->
-> Uladzislau Rezki (Sony) <urezki@gmail.com>
->      rcu/kvfree: Add kvfree_rcu_mightsleep() and kfree_rcu_mightsleep()
->
-> Eric Dumazet <edumazet@google.com>
->      can: gw: use call_rcu() instead of costly synchronize_rcu()
->
-> Guillaume Nault <gnault@redhat.com>
->      gre: Fix again IPv6 link-local address generation.
->
-> Eelco Chaudron <echaudro@redhat.com>
->      openvswitch: Fix unsafe attribute parsing in output_userspace()
->
-> Marc Kleine-Budde <mkl@pengutronix.de>
->      can: mcp251xfd: mcp251xfd_remove(): fix order of unregistration calls
->
-> Marc Kleine-Budde <mkl@pengutronix.de>
->      can: mcan: m_can_class_unregister(): fix order of unregistration calls
->
->
-> -------------
->
-> Diffstat:
->
->   Makefile                                           |   4 +-
->   arch/mips/include/asm/ptrace.h                     |   3 +-
->   arch/x86/kernel/cpu/bugs.c                         |   5 +-
->   arch/x86/kernel/cpu/common.c                       |   9 +-
->   arch/x86/mm/tlb.c                                  |  23 ++-
->   arch/x86/net/bpf_jit_comp.c                        |  52 +++++++
->   .../amd/display/amdgpu_dm/amdgpu_dm_mst_types.c    |  28 +++-
->   drivers/gpu/drm/panel/panel-simple.c               |  25 +--
->   drivers/iio/accel/adis16201.c                      |   4 +-
->   drivers/iio/adc/ad7606_spi.c                       |   2 +-
->   drivers/iio/adc/dln2-adc.c                         |   2 +-
->   drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c     |   6 +
->   drivers/input/mouse/synaptics.c                    |   5 +
->   drivers/net/can/m_can/m_can.c                      |   2 +-
->   drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c     |   2 +-
->   drivers/net/dsa/b53/b53_common.c                   |  36 +++--
->   drivers/net/phy/microchip.c                        |  46 +++++-
->   drivers/nvme/host/core.c                           |   3 +-
->   drivers/staging/axis-fifo/axis-fifo.c              |  14 +-
->   drivers/staging/iio/adc/ad7816.c                   |   2 +-
->   drivers/usb/cdns3/cdnsp-gadget.c                   |  31 ++++
->   drivers/usb/cdns3/cdnsp-gadget.h                   |   6 +
->   drivers/usb/cdns3/cdnsp-pci.c                      |  12 +-
->   drivers/usb/cdns3/cdnsp-ring.c                     |   3 +-
->   drivers/usb/cdns3/core.h                           |   3 +
->   drivers/usb/class/usbtmc.c                         |  59 +++++---
->   drivers/usb/gadget/udc/tegra-xudc.c                |   4 +
->   drivers/usb/host/uhci-platform.c                   |   2 +-
->   drivers/usb/host/xhci-tegra.c                      |   3 +
->   drivers/usb/typec/tcpm/tcpm.c                      |   2 +-
->   drivers/usb/typec/ucsi/displayport.c               |   2 +
->   drivers/xen/xenbus/xenbus.h                        |   2 +
->   drivers/xen/xenbus/xenbus_comms.c                  |   9 +-
->   drivers/xen/xenbus/xenbus_dev_frontend.c           |   2 +-
->   drivers/xen/xenbus/xenbus_xs.c                     |  18 ++-
->   fs/namespace.c                                     |   3 +-
->   fs/ocfs2/journal.c                                 |  80 +++++++---
->   fs/ocfs2/journal.h                                 |   1 +
->   fs/ocfs2/ocfs2.h                                   |  17 ++-
->   fs/ocfs2/quota_local.c                             |   9 +-
->   fs/ocfs2/super.c                                   |   3 +
->   include/linux/rcupdate.h                           |   3 +
->   include/linux/types.h                              |   3 +-
->   include/uapi/linux/types.h                         |   1 +
->   kernel/params.c                                    |   4 +-
->   net/can/gw.c                                       | 167 +++++++++++++--------
->   net/ipv6/addrconf.c                                |  15 +-
->   net/netfilter/ipset/ip_set_hash_gen.h              |   2 +-
->   net/openvswitch/actions.c                          |   3 +-
->   49 files changed, 538 insertions(+), 204 deletions(-)
->
->
+diff --git a/drivers/iommu/iommufd/driver.c b/drivers/iommu/iommufd/driver.c
+index 2d2695e2562d02..289dd19eec90f1 100644
+--- a/drivers/iommu/iommufd/driver.c
++++ b/drivers/iommu/iommufd/driver.c
+@@ -36,6 +36,16 @@ struct iommufd_object *_iommufd_object_alloc(struct iommufd_ctx *ictx,
+ }
+ EXPORT_SYMBOL_NS_GPL(_iommufd_object_alloc, "IOMMUFD");
+ 
++struct iommufd_object *_iommufd_object_alloc_ucmd(struct iommufd_ucmd *ucmd,
++						  size_t size,
++						  enum iommufd_object_type type)
++{
++	if (ucmd->alloced_obj)
++		return ERR_PTR(-EBUSY);
++	ucmd->alloced_obj = _iommufd_object_alloc(ucmd->ictx, size, type);
++	return ucmd->alloced_obj;
++}
++
+ /* Undo _iommufd_object_alloc() if iommufd_object_finalize() was not called */
+ void iommufd_object_abort(struct iommufd_ctx *ictx, struct iommufd_object *obj)
+ {
+diff --git a/drivers/iommu/iommufd/eventq.c b/drivers/iommu/iommufd/eventq.c
+index f39cf079734769..f109948a81ac8c 100644
+--- a/drivers/iommu/iommufd/eventq.c
++++ b/drivers/iommu/iommufd/eventq.c
+@@ -473,7 +473,7 @@ int iommufd_fault_alloc(struct iommufd_ucmd *ucmd)
+ 	if (cmd->flags)
+ 		return -EOPNOTSUPP;
+ 
+-	fault = __iommufd_object_alloc(ucmd->ictx, fault, IOMMUFD_OBJ_FAULT,
++	fault = __iommufd_object_alloc_ucmd(ucmd, fault, IOMMUFD_OBJ_FAULT,
+ 				       common.obj);
+ 	if (IS_ERR(fault))
+ 		return PTR_ERR(fault);
+@@ -483,10 +483,8 @@ int iommufd_fault_alloc(struct iommufd_ucmd *ucmd)
+ 
+ 	fdno = iommufd_eventq_init(&fault->common, "[iommufd-pgfault]",
+ 				   ucmd->ictx, &iommufd_fault_fops);
+-	if (fdno < 0) {
+-		rc = fdno;
+-		goto out_abort;
+-	}
++	if (fdno < 0)
++		return fdno;
+ 
+ 	cmd->out_fault_id = fault->common.obj.id;
+ 	cmd->out_fault_fd = fdno;
+@@ -494,7 +492,6 @@ int iommufd_fault_alloc(struct iommufd_ucmd *ucmd)
+ 	rc = iommufd_ucmd_respond(ucmd, sizeof(*cmd));
+ 	if (rc)
+ 		goto out_put_fdno;
+-	iommufd_object_finalize(ucmd->ictx, &fault->common.obj);
+ 
+ 	fd_install(fdno, fault->common.filep);
+ 
+@@ -502,9 +499,6 @@ int iommufd_fault_alloc(struct iommufd_ucmd *ucmd)
+ out_put_fdno:
+ 	put_unused_fd(fdno);
+ 	fput(fault->common.filep);
+-out_abort:
+-	iommufd_object_abort_and_destroy(ucmd->ictx, &fault->common.obj);
+-
+ 	return rc;
+ }
+ 
+diff --git a/drivers/iommu/iommufd/iommufd_private.h b/drivers/iommu/iommufd/iommufd_private.h
+index c87326d7ecfccb..94cafae86d271c 100644
+--- a/drivers/iommu/iommufd/iommufd_private.h
++++ b/drivers/iommu/iommufd/iommufd_private.h
+@@ -152,6 +152,7 @@ struct iommufd_ucmd {
+ 	void __user *ubuffer;
+ 	u32 user_size;
+ 	void *cmd;
++	struct iommufd_object *alloced_obj;
+ };
+ 
+ int iommufd_vfio_ioctl(struct iommufd_ctx *ictx, unsigned int cmd,
+@@ -258,6 +259,15 @@ iommufd_object_put_and_try_destroy(struct iommufd_ctx *ictx,
+ #define iommufd_object_alloc(ictx, ptr, type) \
+ 	__iommufd_object_alloc(ictx, ptr, type, obj)
+ 
++#define __iommufd_object_alloc_uctx(uctx, ptr, type, obj)                      \
++	container_of(_iommufd_object_alloc_ucmd(                               \
++			     uctx,                                             \
++			     sizeof(*(ptr)) + BUILD_BUG_ON_ZERO(               \
++						      offsetof(typeof(*(ptr)), \
++							       obj) != 0),     \
++			     type),                                            \
++		     typeof(*(ptr)), obj)
++
+ /*
+  * The IO Address Space (IOAS) pagetable is a virtual page table backed by the
+  * io_pagetable object. It is a user controlled mapping of IOVA -> PFNs. The
+diff --git a/drivers/iommu/iommufd/main.c b/drivers/iommu/iommufd/main.c
+index 1d7f3584aea0f7..0bc9c02f6bfc4f 100644
+--- a/drivers/iommu/iommufd/main.c
++++ b/drivers/iommu/iommufd/main.c
+@@ -408,6 +408,14 @@ static long iommufd_fops_ioctl(struct file *filp, unsigned int cmd,
+ 	if (ret)
+ 		return ret;
+ 	ret = op->execute(&ucmd);
++
++	if (ucmd.alloced_obj) {
++		if (ret)
++			iommufd_object_abort_and_destroy(ictx,
++							 ucmd.alloced_obj);
++		else
++			iommufd_object_finalize(ictx, ucmd.alloced_obj);
++	}
+ 	return ret;
+ }
+ 
