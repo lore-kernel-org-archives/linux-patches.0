@@ -1,211 +1,479 @@
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2068.outbound.protection.outlook.com [40.107.94.68])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05691202990;
-	Wed, 14 May 2025 12:49:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.68
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747226942; cv=fail; b=rrD+gssNZgrC5Fx7acYIpIJHLf8v8tu0uyMc/7sokktc+e/7P7s7DnjWhMzWB1hGX174EQ0/mTTeeVuNBF+Ntkukr7oso8dG/yNsh+IswWi+Ix3q5HVJNC4tx/ZgCJnikqpdsNZCPvEQ/wTCjKXbI1jIAzYyuSUcI/OQ/MhhKNA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747226942; c=relaxed/simple;
-	bh=4cvoqe+fhvo+fbJE0w4hFuqK1Fobst4enmNV2AZVV0g=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=I+HQeX4AxH0h5aFXGRCsKvpNS/aIszABK7v1nMtu2gIk0xa5HOyXBVZaF8/d8byBOodR8tRxIwEr+whK3iMY5kPQqnr41+pYnwA7itnLzasenDh/8WjiLiQKAmm/nllI/Ru1HSMCk7YQf6DEkk45ToThz9ZIn2Zuaq5cg0Ds3+w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=B7rzxeeV; arc=fail smtp.client-ip=40.107.94.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C1327A112;
+	Wed, 14 May 2025 13:05:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747227936; cv=none; b=mzNQb6OuMO+SBamVkcRNfn7FG59Yp0YudYIhP6sL+orJEGxGe4MdDAhN/OnDVljG64Jxbg90suHcVliRa2xsZxjrPpY3laeZd5qXIsxvi6/fNvRH2kdySipwU9DOIRjjlc0vMjUWuwFO1SR2wZe7oXOdWpmmDgFTOCOg9vhU0DQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747227936; c=relaxed/simple;
+	bh=xd/365WgAdYb+IKCfnQ7lig6bhUBzS6yO814llDJ4o0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=tI9qOUmW0fK1Y2kAwmWkEG6q2lmYXRWm07AzO/dinko34u+wsJkrmT98eafx3H7m2f2MGccTb30HPOqecMQAjksOAPx5HVgNUiAnLfyBbQzEiTsHambPuOiQ3VOPO8kMhAYl9ANK3qBOdrlhjyJn36aAyh+rTy+n2BYbVphsHxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qlA1FWAS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="B7rzxeeV"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=J7ahF9nUTJiKkH1vaU0MaFYaIZNJ3NGOxmYXRrk3T7OXApOwImdZPflWNBeIE5P9pXU88E0fYncdkUnMNZbYIhv+rmH4oI9cP61jFgBR1yfTrhbs4qyTQRyEMY1iesanaAXK2p5P1SWzBuEXplVBlHp54KX+DJhauaKLDce3ITFYxOpcfdrRA4DZIiAGcH96osLByz/x1qIUvbCRbWGg0No7UBb/1WjFhOuhK9pG3XRKAig3waWHwxtSO3UGjb9Snov3IvcX0Kz1qD21twFgl3j2cthtuVvFzMZKkVn4sE3hx7xt84XhHS+5LIRZr2ha3/6uPo78bqy3JQD961oTyQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7PDp0Aw/RoswancuynmxMnnSzqUBuDo889pp6Sg6oaQ=;
- b=XpRqcc+qCe8P82UBfAfuNv0fBNNkRQ3F4VFWmDM6ON4kV8HycsiEPivsyYqTwzg1lbEj55EmuZIvXWNSgvxSaLCnrIWCDRF0E10EmBVPD972EbhwilbFo77ouEKWACV4zUDOvZFHrEs9IEyqUX7KWugjRMS+89wqBBFJQzORylUHm78WUP7qvyqc3QkV1hJOCrg5zG+4afVKEHCoVfbMlxYS2wma7HSoyexVzaja/lpRaHJArx5l/vf0LNet3EK4lvYKR8Vvsa7rqHDl8IsSMWMinVZNv9KGSP/WiXKR7uup8M9gPMInf+RIRYq7r7uySeRAriN0rk5Wq3JMqKzWGw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7PDp0Aw/RoswancuynmxMnnSzqUBuDo889pp6Sg6oaQ=;
- b=B7rzxeeVk6ihT3958ADmprEMxYXk8jbaGe0CKmQPzbvn3/5vKXvni+sap4zVNunv14JE069BZmZfhy6+NMl1EaH3908eWhYYr7YR8iNzbo6oTFdN+7F0H6RqfS7U8R96r+b5XhbNVw1LS9D4JgFLY60CXlQDJMUA4u/ey/gT47jIDKHysR6cLewnsMc9fNTQMTLhnTu6F8VFaQE4q5KkCiXaanRldfkdbT582lwegM8aHb+WI24UeLugNzJXMPyL1VQgYQZ0VjZmVoMyd6XGUPWSjQBPq8byg/iJsCKXLji5mH/KqiLfAC2x8FkLtKXOb8JssgcO4KpN5ZnlwRzhBg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by DM6PR12MB4138.namprd12.prod.outlook.com (2603:10b6:5:220::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.33; Wed, 14 May
- 2025 12:48:56 +0000
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8722.027; Wed, 14 May 2025
- 12:48:56 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Alexandre Ghiti <alex@ghiti.fr>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>
-Cc: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
-	"Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	patches@lists.linux.dev
-Subject: [PATCH] iommu: Clear the freelist after iommu_put_pages_list()
-Date: Wed, 14 May 2025 09:48:55 -0300
-Message-ID: <0-v1-7d4dfa6140f7+11f04-iommu_freelist_init_jgg@nvidia.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BL1PR13CA0135.namprd13.prod.outlook.com
- (2603:10b6:208:2bb::20) To CH3PR12MB8659.namprd12.prod.outlook.com
- (2603:10b6:610:17c::13)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qlA1FWAS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC08CC4CEE9;
+	Wed, 14 May 2025 13:05:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1747227935;
+	bh=xd/365WgAdYb+IKCfnQ7lig6bhUBzS6yO814llDJ4o0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=qlA1FWASe8iNwyWfDNs9pSxOt0Y6oIcB6sDftu1GtbN5JyEksGyusSzING/AoctPx
+	 P2bEe6ZVvfa610khmfnbUT1fpDicBgGMv4IiFeeNHV2ifroUXVz2muFTZIWlpOFeLA
+	 5FgTm7UoRAoCXmVpw6HR4xVr6JxVMXBHnrxhw/PU=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org
+Subject: [PATCH 6.1 00/96] 6.1.139-rc2 review
+Date: Wed, 14 May 2025 15:03:45 +0200
+Message-ID: <20250514125614.705014741@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|DM6PR12MB4138:EE_
-X-MS-Office365-Filtering-Correlation-Id: a0c13df9-c97a-4ca9-8828-08dd92e5b091
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?vdA1AmQiuEkbWrNwzlvSplQAH8llpJ0IAu5r/IGTksO9wURON5tA9whvZb4K?=
- =?us-ascii?Q?VnnwO7rUka7Cex0ukxpWFsn6GuxQVNomsZv8roA/AKigvjsQ9fhPcZKIuB2r?=
- =?us-ascii?Q?SjGU1siYb1lPjTRd5xsthvxQMnJcgGsI8kOU1pbDFlZ89vX81h5n5CvHVUHi?=
- =?us-ascii?Q?foto1dsrim+5b1kyTxguZ5tR0fUsMvEKU92v4rfdJldbQgxSOKegMa+N8i7W?=
- =?us-ascii?Q?t0dBi8/vrUMUsepDQKiMNjCq64Tf+/qXukL/jSXj0PU7YlTaa7TssfU2GTp2?=
- =?us-ascii?Q?AwgROX6ceHotnx+f6CpCUlmNhhqSM7vDnXz9wxDKnskftYFdU1MHHwq+KLGe?=
- =?us-ascii?Q?2gQX1IKqLVbGjMMrbEextaVf8cLzXDMfC6+erfIgaOuU7UN464k8m08D3HOt?=
- =?us-ascii?Q?XNIfRgFHh+DEVpJd4NCg/yB0TuSEhmr4mSn6sLzmfYLBPAKIz1ZNUSZfCDh9?=
- =?us-ascii?Q?3oqBegL/MPEHM5yMQJltcfrnD79hL9LpKNBhtT5x3RCtUoSQ4GXVc/iZileH?=
- =?us-ascii?Q?UBlBqM14x8u21ktEhSc4xF+m1TTwtlh+MAxRdCZOA3md7NI/9ya5w5Eakbp9?=
- =?us-ascii?Q?jJevbAytaBH7b6CWBuTjqfpU9VcOoOgFHGa/OFyEMfW2Uhh4jvrvtyXk4iq6?=
- =?us-ascii?Q?asoKGLhu8BBU9gMjz+nCSzGHSGUTwdQb4rlz37LTWr8PPqIqWNBqQJtM/BrJ?=
- =?us-ascii?Q?Z/1BnPvy+hd+cXW4gk22/KAvgOf2+5jWZ8NL5ysrKFPLMZu2pxBc1kAGtQ7V?=
- =?us-ascii?Q?MkYpHZjIT/Z0u57QZBEhLwMlnYwiErXYO9e8+cfE34NXDWm6vx216aLZLTGn?=
- =?us-ascii?Q?LzGWlIzdpQmZg/w3KPVM6CkPNek8x+du526YoDV3dwxQRgGgw9YZe7PIG13w?=
- =?us-ascii?Q?yxJFigAYLDyARQ7Lf14vl5FeXjbUiDVEgW3nElsnA0K2BzPcKTwLW3x+xdYx?=
- =?us-ascii?Q?t3eEe/ehJ2lY7mgmWCTSdDN3gOhzO/uLCcz+mWZuHe15DHWYqVjqyvN0mryn?=
- =?us-ascii?Q?cJYXKyUBJ/b1zYcAhE0g8ZixgwN6LxD5DGveAHU8njlFO2Q7z0ebPShXhjyb?=
- =?us-ascii?Q?RiVNGtXFsHAPC7/ZuuNfpFJWmaxIPzDS5k4TG0vGvSZxKpRDCDoBOmQlV84d?=
- =?us-ascii?Q?5pw/HUX9ud8vkl0CwNX/o0+bx8yOw9T1cINT4X5jUndhkJV42LFTI+UyiY70?=
- =?us-ascii?Q?vp/s4V3mef82Xs87kvBWd01sye6AjDt93wXG8BKGiQOQGv28wzi/o0hZsj7a?=
- =?us-ascii?Q?9gtT4wrqaoXvj/a1IEQB/EwfDbjs7ciHfPnXuNZe20k3p/KNJ9w0BEas0AHs?=
- =?us-ascii?Q?U1acruZKKqdH3Hec1NlKleB/y/zXiZ5K71HPZntaItYwNJd7NUVp2hh9S6Li?=
- =?us-ascii?Q?Jj2emG93+OqS3/YkDEmAPmdP7Ll+IbiOJoxfblrqaczLb8CDwBItWkGqzjGz?=
- =?us-ascii?Q?BeVZ/nmNwTw=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?N5v7+WWGACpjYLIz4xHGbhYTljc24Q8yEjyw6Y2FuXiWDa+Dj3z/HaPEcd2/?=
- =?us-ascii?Q?vKMjufdU42ryzCGVQgqoac7F7/CqiV2h7+k/wSusncc2DoUUqKJGxfKWA43I?=
- =?us-ascii?Q?e4uYps7z4oy87PaH5wAj5hJLWH+PnyN+UjfLvM1SUIarlfno+1Vxed67kK6/?=
- =?us-ascii?Q?Pn4eQMUahdav3zF5Yi8e+/f1CHHCwnAvz8KtPF+OvSTvvuzSpWMfG0CGsiTW?=
- =?us-ascii?Q?ReCvFlNobb4XJA7pbbGXiUg2PDCto4eRNmy2TpjLgiz4v8uEORWKoHQl8GED?=
- =?us-ascii?Q?GjlGAj8YUPsDBa8KQc6xymbMh3cHp2Bsvi65wW0wrn8OTrBFx13LXZRMxr3J?=
- =?us-ascii?Q?+K9SY8kN3LNj3SOdxZtzmulgKGyd3QFfIu7YocvRZ7lUIEPRyZEFAoVrG1Ia?=
- =?us-ascii?Q?56KP1yiPVOtlYOOjelO3LaPzUn+0/6CtpG1EzH6IKUaH4lKTLjSEN+ZNxvL5?=
- =?us-ascii?Q?HYOTa4YYo7P42GzrHc5wZ6xZHRFcSkvQ57z178LYQKAZgCpJ/TQUOy04wjgs?=
- =?us-ascii?Q?N842kFJdPX0bR1mnw4ZsnLWTuPCY6Q7/UV6gzuU2Yj4Eq2e/g7CxM3NtrmN8?=
- =?us-ascii?Q?Wv/Z6fQC37YZ2L+kn0PBRnUxP9X3jmt/93XYgUNGpztb/JmmdD38FZeoqLJg?=
- =?us-ascii?Q?nUfCOYJpa5FGrKev0NKHQz0bk9IFsF0R3cQ7Z3urkAAEdE2+AF0ho0T+2jWS?=
- =?us-ascii?Q?B/S6iI4ITJha1IonfTR7ZoJDlzd9pVuYhgAE9CF7hupRczsDsiJvDrcfRWGu?=
- =?us-ascii?Q?AM2M8hLU1DapSo2CBivS5YeEP8zBUyQctpXNAvh1Sk8r3PBC3Ns1ndQAa1gV?=
- =?us-ascii?Q?A/bSrAbeQWGmpc/C6pkcSMc9z7HejpFiNSl1dzqSF4uHtjMGMNgR2BfQkNjM?=
- =?us-ascii?Q?f/EUxf8lElkDAVwo004kuQvYCb4Oderd43le98QcBg+Mgn9OWnO3GYFwRTN/?=
- =?us-ascii?Q?IUKEouRXCS8k97wiGU0S236MJCe5kwwEg8R3RnBxaBDanvY0FT+85JRAARa2?=
- =?us-ascii?Q?nQsecZNKqc8y3B+e10UW+lpBI3JBvDn7+R0SHp2Ua5orJ3xX4V3cHqgUHGH8?=
- =?us-ascii?Q?Io0dwnci4tnrWeSf6RlHTHMqne8bl4GOB9ycwTYzxZWAcQSmzi2jpbolDmfK?=
- =?us-ascii?Q?oUzu7HF1YyQS5/Kl6oiDA/f+6eqwSUUEQPBV071W9Qcc+DCc8dtu1dYKoHdn?=
- =?us-ascii?Q?KmB2WSKeP8+KQ9w1B4nOV37pvKs+A9m3E4LQq/fcfSyjrncPmVECRkTjjeVE?=
- =?us-ascii?Q?qqZ2X1NMi3c9E4qKYr2UjvL1R39Qi76L86poxIsp/RwfIbsfYSnKKYnRPQZn?=
- =?us-ascii?Q?tnJSxZePjSs1yNYFPsjLpeUvLXdPHoUcQn8k1aG/fKQeyKg0ed0c6oyzsVxm?=
- =?us-ascii?Q?9AXD6RMHN9Hhcd7oCgJfjCoy4rBlHdnIvxcrgZKSALofplYcnIdFLkxQ3cPb?=
- =?us-ascii?Q?coeSoC1umdgn4c7+mwph8YxcuHR8mUgAYQEs2gf1/sXBOzTr6zwKsyEe1rUD?=
- =?us-ascii?Q?9csIkJNniAmR/8g6KcG34yPgsxgWajyBEGrhtpFXh7nFoSYuSjCmOxbuAw9I?=
- =?us-ascii?Q?UJ3Agya+MgIf3fhNNMOz9bFpQ1EXBsU2dsxw9uEs?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a0c13df9-c97a-4ca9-8828-08dd92e5b091
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 May 2025 12:48:56.6486
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 0j6G7Y06MjIjG0Fk3LG77XjlCZxwPJBaf80JsszyfjRNVBYTFLqteY7Y9XpSl+xx
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4138
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.139-rc2.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.1.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.1.139-rc2
+X-KernelTest-Deadline: 2025-05-16T12:56+00:00
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-The commit below reworked how iommu_put_pages_list() worked to not do
-list_del() on every entry. This was done expecting all the callers to
-already re-init the the list so doing a per-item deletion is not
-efficient.
+This is the start of the stable review cycle for the 6.1.139 release.
+There are 96 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-It was missed that fq_ring_free_locked() re-uses its list after calling
-iomomu_put_pages_list() and so the leftover list reaches free'd struct
-pages and will crash or WARN/BUG/etc.
+Responses should be made by Fri, 16 May 2025 12:55:38 +0000.
+Anything received after that time might be too late.
 
-Reinit the list to empty in fq_ring_free_locked() after calling
-iommu_put_pages_list().
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.139-rc2.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+and the diffstat can be found below.
 
-Audit to see if any other callers of iommu_put_pages_list() need the list
-to be empty:
+thanks,
 
- - iommu_dma_free_fq_single() and iommu_dma_free_fq_percpu() immediately
-   frees the memory
+greg k-h
 
- - iommu_v1_map_pages(), v1_free_pgtable(), domain_exit(),
-   riscv_iommu_map_pages() uses a stack variable which goes out of scope
+-------------
+Pseudo-Shortlog of commits:
 
- - intel_iommu_tlb_sync() uses a gather in a iotlb_sync() callback, the
-   caller re-inits the gather
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.1.139-rc2
 
-Fixes: 13f43d7cf3e0 ("iommu/pages: Formalize the freelist API")
-Reported-by: "Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>
-Closes: https://lore.kernel.org/r/SJ1PR11MB61292CE72D7BE06B8810021CB997A@SJ1PR11MB6129.namprd11.prod.outlook.com
-Tested-by: "Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- drivers/iommu/dma-iommu.c   | 2 ++
- drivers/iommu/iommu-pages.c | 4 +++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+Peter Zijlstra <peterz@infradead.org>
+    x86/its: FineIBT-paranoid vs ITS
 
-diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-index 0af1ab36283cba..7d2b51a890c75a 100644
---- a/drivers/iommu/dma-iommu.c
-+++ b/drivers/iommu/dma-iommu.c
-@@ -154,6 +154,8 @@ static void fq_ring_free_locked(struct iommu_dma_cookie *cookie, struct iova_fq
- 			       fq->entries[idx].iova_pfn,
- 			       fq->entries[idx].pages);
- 
-+		fq->entries[idx].freelist =
-+			IOMMU_PAGES_LIST_INIT(fq->entries[idx].freelist);
- 		fq->head = (fq->head + 1) & fq->mod_mask;
- 	}
- }
-diff --git a/drivers/iommu/iommu-pages.c b/drivers/iommu/iommu-pages.c
-index 4cc77fddfeeb47..238c09e5166b4d 100644
---- a/drivers/iommu/iommu-pages.c
-+++ b/drivers/iommu/iommu-pages.c
-@@ -105,7 +105,9 @@ EXPORT_SYMBOL_GPL(iommu_free_pages);
-  * iommu_put_pages_list - free a list of pages.
-  * @list: The list of pages to be freed
-  *
-- * Frees a list of pages allocated by iommu_alloc_pages_node_sz().
-+ * Frees a list of pages allocated by iommu_alloc_pages_node_sz(). On return the
-+ * passed list is invalid, the caller must use IOMMU_PAGES_LIST_INIT to reinit
-+ * the list if it expects to use it again.
-  */
- void iommu_put_pages_list(struct iommu_pages_list *list)
- {
+Josh Poimboeuf <jpoimboe@kernel.org>
+    x86/alternatives: Remove faulty optimization
 
-base-commit: 53a79ce36c832fc4832a9c2c730a9b0f2a07189e
--- 
-2.43.0
+Borislav Petkov (AMD) <bp@alien8.de>
+    x86/alternative: Optimize returns patching
+
+Eric Biggers <ebiggers@google.com>
+    x86/its: Fix build errors when CONFIG_MODULES=n
+
+Peter Zijlstra <peterz@infradead.org>
+    x86/its: Use dynamic thunks for indirect branches
+
+Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+    x86/ibt: Keep IBT disabled during alternative patching
+
+Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+    x86/its: Align RETs in BHB clear sequence to avoid thunking
+
+Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+    x86/its: Add "vmexit" option to skip mitigation on some CPUs
+
+Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+    x86/its: Enable Indirect Target Selection mitigation
+
+Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+    x86/its: Add support for ITS-safe return thunk
+
+Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+    x86/its: Add support for ITS-safe indirect thunk
+
+Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+    x86/its: Enumerate Indirect Target Selection (ITS) bug
+
+Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+    Documentation: x86/bugs/its: Add ITS documentation
+
+Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+    x86/speculation: Remove the extra #ifdef around CALL_NOSPEC
+
+Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+    x86/speculation: Add a conditional CS prefix to CALL_NOSPEC
+
+Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+    x86/speculation: Simplify and make CALL_NOSPEC consistent
+
+Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+    x86/bhi: Do not set BHI_DIS_S in 32-bit mode
+
+Daniel Sneddon <daniel.sneddon@linux.intel.com>
+    x86/bpf: Add IBHF call at end of classic BPF
+
+Daniel Sneddon <daniel.sneddon@linux.intel.com>
+    x86/bpf: Call branch history clearing sequence on exit
+
+James Morse <james.morse@arm.com>
+    arm64: proton-pack: Add new CPUs 'k' values for branch mitigation
+
+James Morse <james.morse@arm.com>
+    arm64: bpf: Only mitigate cBPF programs loaded by unprivileged users
+
+James Morse <james.morse@arm.com>
+    arm64: bpf: Add BHB mitigation to the epilogue for cBPF programs
+
+James Morse <james.morse@arm.com>
+    arm64: proton-pack: Expose whether the branchy loop k value
+
+James Morse <james.morse@arm.com>
+    arm64: proton-pack: Expose whether the platform is mitigated by firmware
+
+James Morse <james.morse@arm.com>
+    arm64: insn: Add support for encoding DSB
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "net: phy: microchip: force IRQ polling mode for lan88xx"
+
+Jens Axboe <axboe@kernel.dk>
+    io_uring: ensure deferred completions are posted for multishot
+
+Jens Axboe <axboe@kernel.dk>
+    io_uring: always arm linked timeouts prior to issue
+
+Al Viro <viro@zeniv.linux.org.uk>
+    do_umount(): add missing barrier before refcount checks in sync case
+
+Daniel Wagner <wagi@kernel.org>
+    nvme: unblock ctrl state transition for firmware update
+
+Kevin Baker <kevinb@ventureresearch.com>
+    drm/panel: simple: Update timings for AUO G101EVN010
+
+Thorsten Blum <thorsten.blum@linux.dev>
+    MIPS: Fix MAX_REG_OFFSET
+
+Jonathan Cameron <Jonathan.Cameron@huawei.com>
+    iio: adc: dln2: Use aligned_s64 for timestamp
+
+Jonathan Cameron <Jonathan.Cameron@huawei.com>
+    iio: accel: adxl355: Make timestamp 64-bit aligned using aligned_s64
+
+Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+    types: Complement the aligned types with signed 64-bit one
+
+Jonathan Cameron <Jonathan.Cameron@huawei.com>
+    iio: temp: maxim-thermocouple: Fix potential lack of DMA safe buffer.
+
+Lothar Rubusch <l.rubusch@gmail.com>
+    iio: accel: adxl367: fix setting odr for activity time update
+
+Dave Penkler <dpenkler@gmail.com>
+    usb: usbtmc: Fix erroneous generic_read ioctl return
+
+Dave Penkler <dpenkler@gmail.com>
+    usb: usbtmc: Fix erroneous wait_srq ioctl return
+
+Dave Penkler <dpenkler@gmail.com>
+    usb: usbtmc: Fix erroneous get_stb ioctl error returns
+
+Oliver Neukum <oneukum@suse.com>
+    USB: usbtmc: use interruptible sleep in usbtmc_read
+
+Andrei Kuchynski <akuchynski@chromium.org>
+    usb: typec: ucsi: displayport: Fix NULL pointer access
+
+RD Babiera <rdbabiera@google.com>
+    usb: typec: tcpm: delay SNK_TRY_WAIT_DEBOUNCE to SRC_TRYWAIT transition
+
+Jim Lin <jilin@nvidia.com>
+    usb: host: tegra: Prevent host controller crash when OTG port is used
+
+Wayne Chang <waynec@nvidia.com>
+    usb: gadget: tegra-xudc: ACK ST_RC after clearing CTRL_RUN
+
+Pawel Laszczak <pawell@cadence.com>
+    usb: cdnsp: fix L1 resume issue for RTL_REVISION_NEW_LPM version
+
+Pawel Laszczak <pawell@cadence.com>
+    usb: cdnsp: Fix issue with resuming from L1
+
+Jan Kara <jack@suse.cz>
+    ocfs2: stop quota recovery before disabling quotas
+
+Jan Kara <jack@suse.cz>
+    ocfs2: implement handshaking with ocfs2 recovery thread
+
+Jan Kara <jack@suse.cz>
+    ocfs2: switch osb->disable_recovery to enum
+
+Dmitry Antipov <dmantipov@yandex.ru>
+    module: ensure that kobject_put() is safe for module type kobjects
+
+Jason Andryuk <jason.andryuk@amd.com>
+    xenbus: Use kref to track req lifetime
+
+Alexey Charkov <alchark@gmail.com>
+    usb: uhci-platform: Make the clock really optional
+
+Alex Deucher <alexander.deucher@amd.com>
+    drm/amdgpu/hdp5.2: use memcfg register to post the write for HDP flush
+
+Wayne Lin <Wayne.Lin@amd.com>
+    drm/amd/display: Copy AUX read reply data whenever length > 0
+
+Wayne Lin <Wayne.Lin@amd.com>
+    drm/amd/display: Fix wrong handling for AUX_DEFER case
+
+Wayne Lin <Wayne.Lin@amd.com>
+    drm/amd/display: Remove incorrect checking in dmub aux handler
+
+Wayne Lin <Wayne.Lin@amd.com>
+    drm/amd/display: Fix the checking condition in dmub aux handling
+
+Maíra Canal <mcanal@igalia.com>
+    drm/v3d: Add job to pending list if the reset was skipped
+
+Silvano Seva <s.seva@4sigma.it>
+    iio: imu: st_lsm6dsx: fix possible lockup in st_lsm6dsx_read_tagged_fifo
+
+Silvano Seva <s.seva@4sigma.it>
+    iio: imu: st_lsm6dsx: fix possible lockup in st_lsm6dsx_read_fifo
+
+Gabriel Shahrouzi <gshahrouzi@gmail.com>
+    iio: adis16201: Correct inclinometer channel resolution
+
+Angelo Dureghello <adureghello@baylibre.com>
+    iio: adc: ad7606: fix serial register access
+
+Wayne Lin <Wayne.Lin@amd.com>
+    drm/amd/display: Shift DMUB AUX reply command if necessary
+
+Dave Hansen <dave.hansen@linux.intel.com>
+    x86/mm: Eliminate window where TLB flushes may be inadvertently skipped
+
+Gabriel Shahrouzi <gshahrouzi@gmail.com>
+    staging: axis-fifo: Correct handling of tx_fifo_depth for size validation
+
+Gabriel Shahrouzi <gshahrouzi@gmail.com>
+    staging: axis-fifo: Remove hardware resets for user errors
+
+Gabriel Shahrouzi <gshahrouzi@gmail.com>
+    staging: iio: adc: ad7816: Correct conditional logic for store mode
+
+Aditya Garg <gargaditya08@live.com>
+    Input: synaptics - enable InterTouch on TUXEDO InfinityBook Pro 14 v5
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: synaptics - enable SMBus for HP Elitebook 850 G1
+
+Aditya Garg <gargaditya08@live.com>
+    Input: synaptics - enable InterTouch on Dell Precision M3800
+
+Aditya Garg <gargaditya08@live.com>
+    Input: synaptics - enable InterTouch on Dynabook Portege X30L-G
+
+Manuel Fombuena <fombuena@outlook.com>
+    Input: synaptics - enable InterTouch on Dynabook Portege X30-D
+
+Gary Bisson <bisson.gary@gmail.com>
+    Input: mtk-pmic-keys - fix possible null pointer dereference
+
+Jonas Gorski <jonas.gorski@gmail.com>
+    net: dsa: b53: fix learning on VLAN unaware bridges
+
+Jonas Gorski <jonas.gorski@gmail.com>
+    net: dsa: b53: always rejoin default untagged VLAN on bridge leave
+
+Jonas Gorski <jonas.gorski@gmail.com>
+    net: dsa: b53: fix VLAN ID for untagged vlan on bridge leave
+
+Jonas Gorski <jonas.gorski@gmail.com>
+    net: dsa: b53: fix flushing old pvid VLAN on pvid change
+
+Jonas Gorski <jonas.gorski@gmail.com>
+    net: dsa: b53: fix clearing PVID of a port
+
+Jonas Gorski <jonas.gorski@gmail.com>
+    net: dsa: b53: allow leaky reserved multicast
+
+Paul Chaignon <paul.chaignon@gmail.com>
+    bpf: Scrub packet on bpf_redirect_peer
+
+Jozsef Kadlecsik <kadlec@netfilter.org>
+    netfilter: ipset: fix region locking in hash types
+
+Julian Anastasov <ja@ssi.bg>
+    ipvs: fix uninit-value for saddr in do_output_route4
+
+Guillaume Nault <gnault@redhat.com>
+    ipv4: Drop tos parameter from flowi4_update_output()
+
+Oliver Hartkopp <socketcan@hartkopp.net>
+    can: gw: fix RCU/BH usage in cgw_create_job()
+
+Uladzislau Rezki (Sony) <urezki@gmail.com>
+    rcu/kvfree: Add kvfree_rcu_mightsleep() and kfree_rcu_mightsleep()
+
+Kelsey Maes <kelsey@vpprocess.com>
+    can: mcp251xfd: fix TDC setting for low data bit rates
+
+Guillaume Nault <gnault@redhat.com>
+    gre: Fix again IPv6 link-local address generation.
+
+Cong Wang <xiyou.wangcong@gmail.com>
+    sch_htb: make htb_deactivate() idempotent
+
+Wang Zhaolong <wangzhaolong1@huawei.com>
+    ksmbd: fix memory leak in parse_lease_state()
+
+Eelco Chaudron <echaudro@redhat.com>
+    openvswitch: Fix unsafe attribute parsing in output_userspace()
+
+Norbert Szetei <norbert@doyensec.com>
+    ksmbd: prevent out-of-bounds stream writes by validating *pos
+
+Marc Kleine-Budde <mkl@pengutronix.de>
+    can: mcp251xfd: mcp251xfd_remove(): fix order of unregistration calls
+
+Marc Kleine-Budde <mkl@pengutronix.de>
+    can: mcan: m_can_class_unregister(): fix order of unregistration calls
+
+Wojciech Dubowik <Wojciech.Dubowik@mt.com>
+    arm64: dts: imx8mm-verdin: Link reg_usdhc2_vqmmc to usdhc2
+
+Dan Carpenter <dan.carpenter@linaro.org>
+    dm: add missing unlock on in dm_keyslot_evict()
+
+
+-------------
+
+Diffstat:
+
+ Documentation/ABI/testing/sysfs-devices-system-cpu |   1 +
+ Documentation/admin-guide/hw-vuln/index.rst        |   1 +
+ .../hw-vuln/indirect-target-selection.rst          | 156 +++++++++++++
+ Documentation/admin-guide/kernel-parameters.txt    |  15 ++
+ Makefile                                           |   4 +-
+ arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi   |  25 ++-
+ arch/arm64/include/asm/cputype.h                   |   2 +
+ arch/arm64/include/asm/insn.h                      |   1 +
+ arch/arm64/include/asm/spectre.h                   |   3 +
+ arch/arm64/kernel/proton-pack.c                    |  13 +-
+ arch/arm64/lib/insn.c                              |  76 ++++---
+ arch/arm64/net/bpf_jit_comp.c                      |  57 ++++-
+ arch/mips/include/asm/ptrace.h                     |   3 +-
+ arch/x86/Kconfig                                   |  11 +
+ arch/x86/entry/entry_64.S                          |  20 +-
+ arch/x86/include/asm/alternative.h                 |  32 +++
+ arch/x86/include/asm/cpufeatures.h                 |   3 +
+ arch/x86/include/asm/msr-index.h                   |   8 +
+ arch/x86/include/asm/nospec-branch.h               |  38 ++--
+ arch/x86/kernel/alternative.c                      | 245 ++++++++++++++++++++-
+ arch/x86/kernel/cpu/bugs.c                         | 144 +++++++++++-
+ arch/x86/kernel/cpu/common.c                       |  72 ++++--
+ arch/x86/kernel/ftrace.c                           |   2 +-
+ arch/x86/kernel/module.c                           |   7 +
+ arch/x86/kernel/static_call.c                      |   2 +-
+ arch/x86/kernel/vmlinux.lds.S                      |  10 +
+ arch/x86/kvm/x86.c                                 |   4 +-
+ arch/x86/lib/retpoline.S                           |  39 ++++
+ arch/x86/mm/tlb.c                                  |  23 +-
+ arch/x86/net/bpf_jit_comp.c                        |  60 ++++-
+ drivers/base/cpu.c                                 |   8 +
+ drivers/gpu/drm/amd/amdgpu/hdp_v5_2.c              |  12 +-
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  |  20 +-
+ .../amd/display/amdgpu_dm/amdgpu_dm_mst_types.c    |  28 ++-
+ drivers/gpu/drm/panel/panel-simple.c               |  25 ++-
+ drivers/gpu/drm/v3d/v3d_sched.c                    |  28 ++-
+ drivers/iio/accel/adis16201.c                      |   4 +-
+ drivers/iio/accel/adxl355_core.c                   |   2 +-
+ drivers/iio/accel/adxl367.c                        |  10 +-
+ drivers/iio/adc/ad7606_spi.c                       |   2 +-
+ drivers/iio/adc/dln2-adc.c                         |   2 +-
+ drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c     |   6 +
+ drivers/iio/temperature/maxim_thermocouple.c       |   2 +-
+ drivers/input/keyboard/mtk-pmic-keys.c             |   4 +-
+ drivers/input/mouse/synaptics.c                    |   5 +
+ drivers/md/dm-table.c                              |   3 +-
+ drivers/net/can/m_can/m_can.c                      |   2 +-
+ drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c     |  42 +++-
+ drivers/net/dsa/b53/b53_common.c                   |  36 ++-
+ drivers/net/phy/microchip.c                        |  46 +++-
+ drivers/nvme/host/core.c                           |   3 +-
+ drivers/staging/axis-fifo/axis-fifo.c              |  14 +-
+ drivers/staging/iio/adc/ad7816.c                   |   2 +-
+ drivers/usb/cdns3/cdnsp-gadget.c                   |  31 +++
+ drivers/usb/cdns3/cdnsp-gadget.h                   |   6 +
+ drivers/usb/cdns3/cdnsp-pci.c                      |  12 +-
+ drivers/usb/cdns3/cdnsp-ring.c                     |   3 +-
+ drivers/usb/cdns3/core.h                           |   3 +
+ drivers/usb/class/usbtmc.c                         |  59 +++--
+ drivers/usb/gadget/udc/tegra-xudc.c                |   4 +
+ drivers/usb/host/uhci-platform.c                   |   2 +-
+ drivers/usb/host/xhci-tegra.c                      |   3 +
+ drivers/usb/typec/tcpm/tcpm.c                      |   2 +-
+ drivers/usb/typec/ucsi/displayport.c               |   2 +
+ drivers/xen/xenbus/xenbus.h                        |   2 +
+ drivers/xen/xenbus/xenbus_comms.c                  |   9 +-
+ drivers/xen/xenbus/xenbus_dev_frontend.c           |   2 +-
+ drivers/xen/xenbus/xenbus_xs.c                     |  18 +-
+ fs/namespace.c                                     |   3 +-
+ fs/ocfs2/journal.c                                 |  80 +++++--
+ fs/ocfs2/journal.h                                 |   1 +
+ fs/ocfs2/ocfs2.h                                   |  17 +-
+ fs/ocfs2/quota_local.c                             |   9 +-
+ fs/ocfs2/super.c                                   |   3 +
+ fs/smb/server/oplock.c                             |   7 +-
+ fs/smb/server/vfs.c                                |   7 +
+ include/linux/cpu.h                                |   2 +
+ include/linux/module.h                             |   5 +
+ include/linux/rcupdate.h                           |   3 +
+ include/linux/types.h                              |   3 +-
+ include/net/flow.h                                 |   3 +-
+ include/net/route.h                                |   6 +-
+ include/uapi/linux/types.h                         |   1 +
+ io_uring/io_uring.c                                |  61 ++---
+ kernel/params.c                                    |   4 +-
+ net/can/gw.c                                       | 151 ++++++++-----
+ net/core/filter.c                                  |   1 +
+ net/ipv6/addrconf.c                                |  15 +-
+ net/netfilter/ipset/ip_set_hash_gen.h              |   2 +-
+ net/netfilter/ipvs/ip_vs_xmit.c                    |  29 +--
+ net/openvswitch/actions.c                          |   3 +-
+ net/sched/sch_htb.c                                |  15 +-
+ net/sctp/protocol.c                                |   4 +-
+ 93 files changed, 1578 insertions(+), 398 deletions(-)
+
 
