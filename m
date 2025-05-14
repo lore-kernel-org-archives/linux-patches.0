@@ -1,839 +1,180 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFE851EE00B
-	for <patches@lists.linux.dev>; Wed, 14 May 2025 16:58:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747241901; cv=none; b=To1ALA37+5UhcaTs5SCy+29nwoqgkaV8NdQLKg102yM8qBxna7X7k1X7CaXnL/km3KjvHJNnT+L6UTpLhsi5TEiT/hoJxRx2qUCOHojEpY2Qav6iAuPikthFTDL9G+c4Xd+mxXtEXYXAHAh+aWzeasCHiHEz8bX5Mn3Jo0i0hhw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747241901; c=relaxed/simple;
-	bh=ujOUgSTSBjCG9kpG0VnXKqB27KVIDgWRgVgmUR9LtIw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lYv2RtAMwc0p/3EkTSP1GssAfJuxc7rk9ZI8EHINYJHCJoIWw9OJ6TooLicTMS4+iZvXPk7GlVC/auaMr+jUylw3WOYfGcyv4oG9vxx8V7abKB5JyYiqwDe5jD/FmDorERF8C855bXsuGxc5etVZwI2dHGO0yWWc/Z1bBD6/r7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=J4cHxIMm; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2042.outbound.protection.outlook.com [40.107.223.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB8A2AD2F;
+	Wed, 14 May 2025 17:06:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747242405; cv=fail; b=jBDTtqTMaMeF1X/IsnH2zAuncRwQ3HChntlwKgs9N7/AQBoKdvTOIb4rTydh8sh0KFLsn29MYYeTddigYo4Q19lAQ8lHN6kfSrLH8EjJxt2+luPa2ZGzAEF3YI5wo1lXYFP2Yph2/lxuyrh4iWiCXMAA30wVLUgxXwXTVfPL13I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747242405; c=relaxed/simple;
+	bh=L9MT8dENLO3qYBPaPRm3TcheXbE5wqRlH34x/1cXGU0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Hu6auVOKG1lG9nhlLXZMWAANSAYCJbM44SWnaLyKuO4J9/IQ80DiS3HHjf74gtrHSmkDnd19uhAYoivsuI5PVvbqC7ODlUyA0j+s4aEL0bjaEIEqTsTxO+zHe4WEZqVt+D1v4gmcveHJhwYK4zSVFDhtHJv8q82aDWd3MLSZE/4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=g4yZ8YQa; arc=fail smtp.client-ip=40.107.223.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="J4cHxIMm"
-Received: from [100.65.162.40] (unknown [20.236.11.29])
-	by linux.microsoft.com (Postfix) with ESMTPSA id C0F77211B7C7;
-	Wed, 14 May 2025 09:58:17 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C0F77211B7C7
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1747241898;
-	bh=RtUCrglD4hIBi0v8liGdPlvOfrQe3YtMnc/3+3RwPWo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=J4cHxIMmG2snqbZBwiVLES2WKW4bmvmYLWY1LPUqqB0s+WvcTyLlG5TZGXelkRbmk
-	 JTB+VbW81MLxRwEITORhVNY5ONIU8ZBt2kJwrhOk05eiVfjM/9iI4+GtTYS2LUw2rk
-	 IATIOUeJMhPy/oCO0WOiiSxX6B5aYAqBcTGnYORc=
-Message-ID: <6bfd58d4-55bc-48e3-8cd6-e5444306bad9@linux.microsoft.com>
-Date: Wed, 14 May 2025 09:58:15 -0700
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="g4yZ8YQa"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pgdFkVcaLmFHpbxPgHz4jhU6GQhflTjaFkd3p808Q4UiTxqNurbb52B6fUrXJU6wV2IUVAKiWqWTxJwVVg8lNDFW5Mhm+Q11RnW15+vISbQyey/vinJMQqIqRtP3haw8StvDdVsXILBL7IyRsOSWew+NvYCK+phvVeff75ZIrUPZg1RsL8FtN80LhEhPa7Y0hmAlAzvT/5/6OcbDsr1XHDPuGOtT+rWRa30iDUeP7b47GXnsaX0OuzW8gZu8QrmoYo1IIsY3QIjNjbh4y2xeSn660CYuG1ryd6IiStXwRaGpqz3yc1aZrYad/M7K8tnX+RKczJJ3ACj5OQ9prB7Iaw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=boDTYex1lGVFUTPNG/sgRHlgfXXJKbL9Vs7B81Qt9yQ=;
+ b=SmtkniDa0eARU97X3h/hdMxgvjcnbpkTvvdVLWYtzA82tmT/YHldBswz/490Ex+0ZlQef69Lg0wOoX0d0gmsIACashFzWtX79GPCDwEJEIkTdeSHcPkKeHfZwWxn5IeHSgJJ+B/44ZVcKO7KHU3DcxKADrseEDhvgFvnnEmTDgmLHsBNZRa+xxEHyrJ8dVfov6TNlMUjXMxj1QjeDUyDfJb59ecjrBWO8g/dAvnEFaNZsYCvhB9GR+ebeWdfYJVpwvKeedqh4uDsXoHErwTWWuW1bC52OkYCVA0ib6C8Zdzsgb6s1NQoW1MpysfjwT4+Kr42hqHhw9xLZ5SNxGh5EQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=boDTYex1lGVFUTPNG/sgRHlgfXXJKbL9Vs7B81Qt9yQ=;
+ b=g4yZ8YQazJ9c0z95vlTdFsquZj405ERW6YOO4eWvdlpmxnPrKhH6Eh26o77gdd/obmKzjjkE9sKeMQ63jqya1lJofEfQIuLccYceMybqBCkTOzoyXuD7dTVWgQkp21DqbVagbJUKH0jjnzTwkQmMR1OLj5CWEqwREsV9en24mjlf7a/6ktgfGQHzBQ9Dw0GGOVwsUSCEVApw5cH69lM0+tKBrR2buH4ELCgNEGGX2/kb9sW0Sv7tuqCrfpMVWsIqJqSKeS7DUIjQV9Ks0un4hDTMz8/3Dw/kN7u/d8RrxpCNNQquFcjh62y5J+u7cPcvetpZAhVM+XI1cNFc3PXfxw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by DM4PR12MB6088.namprd12.prod.outlook.com (2603:10b6:8:af::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.32; Wed, 14 May
+ 2025 17:06:39 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8722.027; Wed, 14 May 2025
+ 17:06:39 +0000
+Date: Wed, 14 May 2025 14:06:37 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
+	bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
+	thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
+	shuah@kernel.org, jsnitsel@redhat.com, nathan@kernel.org,
+	peterz@infradead.org, yi.l.liu@intel.com, mshavit@google.com,
+	praan@google.com, zhangzekun11@huawei.com, iommu@lists.linux.dev,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, patches@lists.linux.dev,
+	mochs@nvidia.com, alok.a.tiwari@oracle.com, vasant.hegde@amd.com
+Subject: Re: [PATCH v4 05/23] iommufd/driver: Let iommufd_viommu_alloc helper
+ save ictx to viommu->ictx
+Message-ID: <20250514170637.GE382960@nvidia.com>
+References: <cover.1746757630.git.nicolinc@nvidia.com>
+ <5288cec9804e7e394be3b7de6b246d8ca9c4792a.1746757630.git.nicolinc@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5288cec9804e7e394be3b7de6b246d8ca9c4792a.1746757630.git.nicolinc@nvidia.com>
+X-ClientProxiedBy: BN0PR07CA0002.namprd07.prod.outlook.com
+ (2603:10b6:408:141::17) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 000/184] 6.12.29-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250512172041.624042835@linuxfoundation.org>
-Content-Language: en-US
-From: Hardik Garg <hargar@linux.microsoft.com>
-In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|DM4PR12MB6088:EE_
+X-MS-Office365-Filtering-Correlation-Id: d12614a0-92e9-4f02-9da9-08dd9309b125
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?e7nP6Aujz5RyM0yAf6IofbyfE48ng15JZwjAOMgtPXt32GcaDpVkuQUJw8NR?=
+ =?us-ascii?Q?1/lkEGeLi9Zps17SSQV0/w+LU+1LlA3VtZs/AALz8+/lLg+KF49p67gDdJZG?=
+ =?us-ascii?Q?re34pW/vu5wWRUF28AMf4l4a1Pf1+SJ4o9JdT/UmRmnBx68XdPsUUqf8U68z?=
+ =?us-ascii?Q?PmiQsco7aMO4rmcLfsSCNfjtjl0tPb07f6wJrOIcjR4PLn8Jk642vuhU+IPM?=
+ =?us-ascii?Q?qNNNrkKwuCUorrjdNS/lwXeDK7eFzCWK7AzK3KD1ODS7E1jPPolYE/zVL5lh?=
+ =?us-ascii?Q?l7AymGtusaKMDtwCfuYjxrtTcCm76Lrjcijogvs71mBYkvlXt9TrCkNqECPX?=
+ =?us-ascii?Q?rhotg0IVnu5aZA6SEvJHu18/yeZp7BBRE8oEfyeTFfqbs86kedXjg4GNDizP?=
+ =?us-ascii?Q?slsbmwFvzcuPih7OBHXDK0vk2vW3QVjhiLP0wyToDVD/V/QtqntwGbZ3T/j9?=
+ =?us-ascii?Q?oUxfZyf7yce1qnDTezqiO2oNyDgVCN79fkQMU0DF1OucMiVbfA3AzHYpq7Nt?=
+ =?us-ascii?Q?gI66wS5Y6fK3Dx52rX4Vo2bbCtEg4pppJCLghwJ1J1Ms71ObtGXSrdq+Phrr?=
+ =?us-ascii?Q?lkYAH0p4558DTm9qCXZWyrCgL5gw1J2xD7tXVliBs8qFebeLQF96/BPCNtvn?=
+ =?us-ascii?Q?Z9myijHTA0O19azWbqB9Vl3LdSSunvo/GmHkD5zeftTsK7dcqpgTQnhl3qFt?=
+ =?us-ascii?Q?j7hbHG/ME5ANKKFwNo0ns4x8cowyftlMfmXJNs0EtBDMXOODvwNvZ6pWOSm6?=
+ =?us-ascii?Q?cOviBmbp/8VIL5Mi+eOHryrisWj0dxp8ZpyR+PlxJy6x7gpQR2y44qRTNHTt?=
+ =?us-ascii?Q?L9C/EuBXJ3NI5h4Yj8b0BUgFuoA11XrshNheR2hdc2/n/edk4yAh8fLzgjAF?=
+ =?us-ascii?Q?fy0k6uciAffEj686jSnAIvf/uIg/SN/5y+4p+akGXKrWIfu4bSDzOJNXo0w3?=
+ =?us-ascii?Q?7mDv/HK3hEPWYBFSwlBoLJDKel/3cF5b3HyyL3k4IJkfelVfXQ06rwxIu09n?=
+ =?us-ascii?Q?sX+yOYZd8g+7adA/+vxuTlAISEDxgNwnEqWE6wEKi/SCjWBPPi5QhoyWe1h1?=
+ =?us-ascii?Q?xnX1tQfIXMwcie9pWTxKw2T3jmthajxVratDoT54W9Q/y+tOxPWxeXT2GKG1?=
+ =?us-ascii?Q?AlMHLAeKhFVjimPfMSc0mUlhblok/BRfnCVGh3HxKd6xBL8E7QWZ1xFFsxBb?=
+ =?us-ascii?Q?KTmKUEWJ9opOuullYt93dPJKQ7jpU+8bnwwW8IPb17HI2IIgrTdTcXP0Ad3v?=
+ =?us-ascii?Q?oYgKVlTxwPdK4dOyIH7Jx+SnzjiOBfuOSF1C+eDK95WCmdkbiX2xzzwUb4Ll?=
+ =?us-ascii?Q?P61KV3hL/uew/3gM4gcdcIOrKRg/gJrRk4zLCKnHo+S/xW7vr5iujQtBBDvD?=
+ =?us-ascii?Q?Ppe3WkvBgOH70M/TwfWfj56YiHZ0R5KOHfCrRcVRz6tSKbJAixize0S2cweO?=
+ =?us-ascii?Q?ET5aOSXwf5Q=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?YS81NMjnu+/uWDW9OO4IMIGLVOaA6cxflTMoExJH2o7aWZZifpeKkgEKucUk?=
+ =?us-ascii?Q?jGN6Ljm1bqI8D/G/31QQ7hRJddwEYN9YzzXi0jxHtFpS0w49u4qXUIO6fKcD?=
+ =?us-ascii?Q?C2hxpgtjFSIXmBUQO0h8u6lEYyyuZMxOK6Kc7WmpN6qYXRg5119Xq66hTpzl?=
+ =?us-ascii?Q?GTyd8IZHuflMfu4hNfZhRis93D0J1FvG0QGoPBSaPEmb6nEIIJB1g3EoKSqJ?=
+ =?us-ascii?Q?DErnHRMkV1dqqBpUFtEXAOPi0epDuMpOKCLsCaKY10H/sITESUiQZYmrZdFX?=
+ =?us-ascii?Q?H5mwkQ56CQa1zJUdbo0ZtS7UFB8ZwqtBkOCiwGMl+vJMrltjxDZ17N7WWj+t?=
+ =?us-ascii?Q?9O74ksJVTl+PinXjscXEC0DYw8qwHhJ/NEZQNkgGL374b7568s/e9WytwgUs?=
+ =?us-ascii?Q?xTUAxhJ2Rd1xy9y9fxj9TK9nLFLAUTJsIqWVIgxHfDxIoTA52O4UauXSoeCE?=
+ =?us-ascii?Q?u5/+0KAEC324SA4Y0UueGgpm/F9FcBZamnPvxRJ8ogG1WswgAzIVt4MRvyh3?=
+ =?us-ascii?Q?zfROSxxQn73upTeGwd5GsR7z6zdbNgOEKfmdSKnUSv9lwxvu+7wpwJ28z3UD?=
+ =?us-ascii?Q?c9A3p9uKcYyZoAm3c/N6KUrTfB6p5d6RUlpb7U9Rt36I/OQ1fywYoQS/K2lS?=
+ =?us-ascii?Q?JWRkU6DsjBr9Pk50fDSU6AGOF2Fswg/nk4cGZRsPK/r9bwfmRqOcRuNYTH+x?=
+ =?us-ascii?Q?n0lXbQkgkCPVaTz//ijuxIUZn0ckxemm/JsyzvcMr0UWV+kZTZ0s038ebsTl?=
+ =?us-ascii?Q?qes4SKLRhLP5Rz3GJLY2IvKHj5Cw345XQOL3dV73ggY8OZmIJks+XN/DYk0B?=
+ =?us-ascii?Q?/ldzMV1RZHs/nypxJAr40zloKx2i7k+ZqPm01QH7GwV+kcTrgEPIheLZiMfi?=
+ =?us-ascii?Q?gK8igLEKAkLiI+QU3LHrI95/2+K9YQYlG5Om8DwhCRNST8euwjteF8s0Uq5b?=
+ =?us-ascii?Q?mqLIfdR4uxXhQI2QBCM88Vcq9VQ35oXX7xU08yOoQbBKqiFjpb6DjmR9A2V1?=
+ =?us-ascii?Q?xAjLTto2o2JQw1ab9G2rWpvPfkqIVqLZdbT465NrFEsPSipDYlFz3zGLYcMS?=
+ =?us-ascii?Q?r82oQpDurmdYhWZNflB7LiDGT4H10dQv23DNs03XK5v5CNYOgaAUeB1whrVw?=
+ =?us-ascii?Q?BbxOwhQrquZWhtMrBr0svP6ViWIoeIXbWKpYHwiW3XqWrE02pK6TcQDhcmoF?=
+ =?us-ascii?Q?MzhfWb8C375tr6MatXLiZYYo4EijxInWWPf1ODQusY+JNh6lYd036yK/HadZ?=
+ =?us-ascii?Q?mhGzZBUrjamwnPhT7h4NA8sZNi8huwZ1sbr/FJUuvN7SBd/yo50oks8XxlCV?=
+ =?us-ascii?Q?K7yO7w5dwBTL4FKYteyhVGXFBLM59AmHA7i8V50REGHewEcNGfZlr0D0buzw?=
+ =?us-ascii?Q?xKlOerCkRyzhSASUnFC+mS2m3wtYO3BNOhLizHatPxweFFyukNx+HD0LieG9?=
+ =?us-ascii?Q?ibqVezBheeIDF6SXhAmfLOh3UtksVFPBYneRl2yhoFlJhrpG858it9cGaUzm?=
+ =?us-ascii?Q?Av1AMIX7ebLn5k20GyKyIVaUM0+uKYv7Dq0LLFvtxbAU+ZV2ExYeLlujwvAh?=
+ =?us-ascii?Q?wAWgiHKAZU7RN70ozdM5cwSGCuzGGEC2frhETn3G?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d12614a0-92e9-4f02-9da9-08dd9309b125
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 May 2025 17:06:39.5201
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: jTz9RWbXeOt625LIqVe8FC3dbULJlnm8Tk60SeVoEO5mbhLau85lt0Yzr6CdBEFg
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6088
 
-The kernel, bpf tool and perf tool builds fine for v6.12.29-rc1 on x86
-and arm64 Azure VM.
+On Thu, May 08, 2025 at 08:02:26PM -0700, Nicolin Chen wrote:
+> When an IOMMU driver calls iommufd_viommu_alloc(), it must pass in an ictx
+> pointer as the underlying _iommufd_object_alloc() helper function requires
+> that to allocate a new object. However, neither the iommufd_viommu_alloc()
+> nor its underlying _iommufd_object_alloc() saves the ictx in the allocated
+> viommu object, although viommu could hold an ictx pointer.
+> 
+> When the IOMMU driver wants to use another iommufd function passing in the
+> allocated viommu, it could have avoided passing in the ictx pointer again,
+> if viommu->ictx is valid.
+> 
+> Save ictx to viommu->ictx in the iommufd_viommu_alloc(), in order to ease
+> a new vIOMMU-based helper that would then get the ictx from viommu->ictx.
+> 
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> ---
+>  include/linux/iommufd.h | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 
-KernelCI with LTP and selftest results: Tree: stable/linux-6.12.y 
-<https://dashboard.kernelci.org/tree/f08cdc6cc92e3d23a05745f0f12f8caa348a27b4?o=microsoft&p=t&ti%7Cc=v6.12.28&ti%7Cch=f08cdc6cc92e3d23a05745f0f12f8caa348a27b4&ti%7Cgb=linux-6.12.y&ti%7Cgu=https%3A%2F%2Fgit.kernel.org%2Fpub%2Fscm%2Flinux%2Fkernel%2Fgit%2Fstable%2Flinux.git&ti%7Ct=stable>
+It is OK, but please think carefully if the ictx is actually
+needed. The reason most objects don't have an ictx in them is because
+their contexts are always inside an ioctl so they get the ictx from
+there.
 
-Tested-by: Hardik Garg <hargar@linux.microsoft.com>
+We don't have a lot of viommu allocations so it isn't such a big deal,
+but just generally that is how it was built that the ictx comes from
+the ioctl not the object.
 
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 
-Thanks,
-Hardik
-
-On 5/12/2025 10:43 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.29 release.
-> There are 184 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 14 May 2025 17:19:58 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.29-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-> -------------
-> Pseudo-Shortlog of commits:
->
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->      Linux 6.12.29-rc1
->
-> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
->      selftest/x86/bugs: Add selftests for ITS
->
-> Peter Zijlstra <peterz@infradead.org>
->      x86/its: Use dynamic thunks for indirect branches
->
-> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
->      x86/ibt: Keep IBT disabled during alternative patching
->
-> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
->      x86/its: Align RETs in BHB clear sequence to avoid thunking
->
-> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
->      x86/its: Add support for RSB stuffing mitigation
->
-> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
->      x86/its: Add "vmexit" option to skip mitigation on some CPUs
->
-> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
->      x86/its: Enable Indirect Target Selection mitigation
->
-> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
->      x86/its: Add support for ITS-safe return thunk
->
-> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
->      x86/its: Add support for ITS-safe indirect thunk
->
-> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
->      x86/its: Enumerate Indirect Target Selection (ITS) bug
->
-> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
->      Documentation: x86/bugs/its: Add ITS documentation
->
-> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
->      x86/speculation: Remove the extra #ifdef around CALL_NOSPEC
->
-> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
->      x86/speculation: Add a conditional CS prefix to CALL_NOSPEC
->
-> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
->      x86/speculation: Simplify and make CALL_NOSPEC consistent
->
-> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
->      x86/bhi: Do not set BHI_DIS_S in 32-bit mode
->
-> Daniel Sneddon <daniel.sneddon@linux.intel.com>
->      x86/bpf: Add IBHF call at end of classic BPF
->
-> Daniel Sneddon <daniel.sneddon@linux.intel.com>
->      x86/bpf: Call branch history clearing sequence on exit
->
-> James Morse <james.morse@arm.com>
->      arm64: proton-pack: Add new CPUs 'k' values for branch mitigation
->
-> James Morse <james.morse@arm.com>
->      arm64: bpf: Only mitigate cBPF programs loaded by unprivileged users
->
-> James Morse <james.morse@arm.com>
->      arm64: bpf: Add BHB mitigation to the epilogue for cBPF programs
->
-> James Morse <james.morse@arm.com>
->      arm64: proton-pack: Expose whether the branchy loop k value
->
-> James Morse <james.morse@arm.com>
->      arm64: proton-pack: Expose whether the platform is mitigated by firmware
->
-> James Morse <james.morse@arm.com>
->      arm64: insn: Add support for encoding DSB
->
-> Omar Sandoval <osandov@fb.com>
->      sched/eevdf: Fix se->slice being set to U64_MAX and resulting crash
->
-> Johannes Weiner <hannes@cmpxchg.org>
->      mm: page_alloc: speed up fallbacks in rmqueue_bulk()
->
-> Johannes Weiner <hannes@cmpxchg.org>
->      mm: page_alloc: don't steal single pages from biggest buddy
->
-> Hao Qin <hao.qin@mediatek.com>
->      Bluetooth: btmtk: Remove the resetting step before downloading the fw
->
-> Hao Qin <hao.qin@mediatek.com>
->      Bluetooth: btmtk: Remove resetting mt7921 before downloading the fw
->
-> Jens Axboe <axboe@kernel.dk>
->      io_uring: always arm linked timeouts prior to issue
->
-> Miguel Ojeda <ojeda@kernel.org>
->      rust: clean Rust 1.88.0's `clippy::uninlined_format_args` lint
->
-> Miguel Ojeda <ojeda@kernel.org>
->      rust: allow Rust 1.87.0's `clippy::ptr_eq` lint
->
-> Christian Lamparter <chunkeey@gmail.com>
->      Revert "um: work around sched_yield not yielding in time-travel mode"
->
-> Al Viro <viro@zeniv.linux.org.uk>
->      do_umount(): add missing barrier before refcount checks in sync case
->
-> Gabriel Krisman Bertazi <krisman@suse.de>
->      io_uring/sqpoll: Increase task_work submission batch size
->
-> Tejas Upadhyay <tejas.upadhyay@intel.com>
->      drm/xe/tests/mocs: Hold XE_FORCEWAKE_ALL for LNCF regs
->
-> Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
->      drm/xe/tests/mocs: Update xe_force_wake_get() return handling
->
-> Clément Léger <cleger@rivosinc.com>
->      riscv: misaligned: enable IRQs while handling misaligned accesses
->
-> Clément Léger <cleger@rivosinc.com>
->      riscv: misaligned: factorize trap handling
->
-> Daniel Wagner <wagi@kernel.org>
->      nvme: unblock ctrl state transition for firmware update
->
-> Kevin Baker <kevinb@ventureresearch.com>
->      drm/panel: simple: Update timings for AUO G101EVN010
->
-> Lizhi Xu <lizhi.xu@windriver.com>
->      loop: Add sanity check for read/write_iter
->
-> Christoph Hellwig <hch@lst.de>
->      loop: factor out a loop_assign_backing_file helper
->
-> Christoph Hellwig <hch@lst.de>
->      loop: refactor queue limits updates
->
-> OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
->      loop: Fix ABBA locking race
->
-> John Garry <john.g.garry@oracle.com>
->      loop: Simplify discard granularity calc
->
-> John Garry <john.g.garry@oracle.com>
->      loop: Use bdev limit helpers for configuring discard
->
-> Nylon Chen <nylon.chen@sifive.com>
->      riscv: misaligned: Add handling for ZCB instructions
->
-> Thorsten Blum <thorsten.blum@linux.dev>
->      MIPS: Fix MAX_REG_OFFSET
->
-> Marco Crivellari <marco.crivellari@suse.com>
->      MIPS: Move r4k_wait() to .cpuidle.text section
->
-> Marco Crivellari <marco.crivellari@suse.com>
->      MIPS: Fix idle VS timer enqueue
->
-> Jonathan Cameron <Jonathan.Cameron@huawei.com>
->      iio: adc: dln2: Use aligned_s64 for timestamp
->
-> Jonathan Cameron <Jonathan.Cameron@huawei.com>
->      iio: accel: adxl355: Make timestamp 64-bit aligned using aligned_s64
->
-> Andy Shevchenko <andriy.shevchenko@linux.intel.com>
->      types: Complement the aligned types with signed 64-bit one
->
-> Jonathan Cameron <Jonathan.Cameron@huawei.com>
->      iio: temp: maxim-thermocouple: Fix potential lack of DMA safe buffer.
->
-> Lothar Rubusch <l.rubusch@gmail.com>
->      iio: accel: adxl367: fix setting odr for activity time update
->
-> Dave Penkler <dpenkler@gmail.com>
->      usb: usbtmc: Fix erroneous generic_read ioctl return
->
-> Dave Penkler <dpenkler@gmail.com>
->      usb: usbtmc: Fix erroneous wait_srq ioctl return
->
-> Dave Penkler <dpenkler@gmail.com>
->      usb: usbtmc: Fix erroneous get_stb ioctl error returns
->
-> Oliver Neukum <oneukum@suse.com>
->      USB: usbtmc: use interruptible sleep in usbtmc_read
->
-> Andrei Kuchynski <akuchynski@chromium.org>
->      usb: typec: ucsi: displayport: Fix NULL pointer access
->
-> RD Babiera <rdbabiera@google.com>
->      usb: typec: tcpm: delay SNK_TRY_WAIT_DEBOUNCE to SRC_TRYWAIT transition
->
-> Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
->      usb: misc: onboard_usb_dev: fix support for Cypress HX3 hubs
->
-> Jim Lin <jilin@nvidia.com>
->      usb: host: tegra: Prevent host controller crash when OTG port is used
->
-> Prashanth K <prashanth.k@oss.qualcomm.com>
->      usb: gadget: Use get_status callback to set remote wakeup capability
->
-> Wayne Chang <waynec@nvidia.com>
->      usb: gadget: tegra-xudc: ACK ST_RC after clearing CTRL_RUN
->
-> Prashanth K <prashanth.k@oss.qualcomm.com>
->      usb: gadget: f_ecm: Add get_status callback
->
-> Pawel Laszczak <pawell@cadence.com>
->      usb: cdnsp: fix L1 resume issue for RTL_REVISION_NEW_LPM version
->
-> Pawel Laszczak <pawell@cadence.com>
->      usb: cdnsp: Fix issue with resuming from L1
->
-> Prashanth K <prashanth.k@oss.qualcomm.com>
->      usb: dwc3: gadget: Make gadget_wakeup asynchronous
->
-> Jan Kara <jack@suse.cz>
->      ocfs2: stop quota recovery before disabling quotas
->
-> Jan Kara <jack@suse.cz>
->      ocfs2: implement handshaking with ocfs2 recovery thread
->
-> Jan Kara <jack@suse.cz>
->      ocfs2: switch osb->disable_recovery to enum
->
-> Heming Zhao <heming.zhao@suse.com>
->      ocfs2: fix the issue with discontiguous allocation in the global_bitmap
->
-> Borislav Petkov (AMD) <bp@alien8.de>
->      x86/microcode: Consolidate the loader enablement checking
->
-> Dmitry Antipov <dmantipov@yandex.ru>
->      module: ensure that kobject_put() is safe for module type kobjects
->
-> Tom Lendacky <thomas.lendacky@amd.com>
->      memblock: Accept allocated memory before use in memblock_double_array()
->
-> Sebastian Andrzej Siewior <bigeasy@linutronix.de>
->      clocksource/i8253: Use raw_spinlock_irqsave() in clockevent_i8253_disable()
->
-> Yeoreum Yun <yeoreum.yun@arm.com>
->      arm64: cpufeature: Move arm64_use_ng_mappings to the .data section to prevent wrong idmap generation
->
-> Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
->      accel/ivpu: Increase state dump msg timeout
->
-> Jason Andryuk <jason.andryuk@amd.com>
->      xenbus: Use kref to track req lifetime
->
-> John Ernberg <john.ernberg@actia.se>
->      xen: swiotlb: Use swiotlb bouncing if kmalloc allocation demands it
->
-> Paul Aurich <paul@darkrain42.org>
->      smb: client: Avoid race in open_cached_dir with lease breaks
->
-> Alexey Charkov <alchark@gmail.com>
->      usb: uhci-platform: Make the clock really optional
->
-> Alex Deucher <alexander.deucher@amd.com>
->      drm/amdgpu/hdp7: use memcfg register to post the write for HDP flush
->
-> Alex Deucher <alexander.deucher@amd.com>
->      drm/amdgpu/hdp6: use memcfg register to post the write for HDP flush
->
-> Alex Deucher <alexander.deucher@amd.com>
->      drm/amdgpu/hdp5: use memcfg register to post the write for HDP flush
->
-> Alex Deucher <alexander.deucher@amd.com>
->      drm/amdgpu/hdp5.2: use memcfg register to post the write for HDP flush
->
-> Alex Deucher <alexander.deucher@amd.com>
->      drm/amdgpu/hdp4: use memcfg register to post the write for HDP flush
->
-> Wayne Lin <Wayne.Lin@amd.com>
->      drm/amd/display: Copy AUX read reply data whenever length > 0
->
-> Wayne Lin <Wayne.Lin@amd.com>
->      drm/amd/display: Fix wrong handling for AUX_DEFER case
->
-> Wayne Lin <Wayne.Lin@amd.com>
->      drm/amd/display: Remove incorrect checking in dmub aux handler
->
-> Wayne Lin <Wayne.Lin@amd.com>
->      drm/amd/display: Fix the checking condition in dmub aux handling
->
-> Aurabindo Pillai <aurabindo.pillai@amd.com>
->      drm/amd/display: more liberal vmin/vmax update for freesync
->
-> Roman Li <Roman.Li@amd.com>
->      drm/amd/display: Fix invalid context error in dml helper
->
-> Ruijing Dong <ruijing.dong@amd.com>
->      drm/amdgpu/vcn: using separate VCN1_AON_SOC offset
->
-> Matthew Brost <matthew.brost@intel.com>
->      drm/xe: Add page queue multiplier
->
-> Maíra Canal <mcanal@igalia.com>
->      drm/v3d: Add job to pending list if the reset was skipped
->
-> Silvano Seva <s.seva@4sigma.it>
->      iio: imu: st_lsm6dsx: fix possible lockup in st_lsm6dsx_read_tagged_fifo
->
-> Silvano Seva <s.seva@4sigma.it>
->      iio: imu: st_lsm6dsx: fix possible lockup in st_lsm6dsx_read_fifo
->
-> David Lechner <dlechner@baylibre.com>
->      iio: imu: inv_mpu6050: align buffer for timestamp
->
-> Gabriel Shahrouzi <gshahrouzi@gmail.com>
->      iio: adis16201: Correct inclinometer channel resolution
->
-> Simon Xue <xxm@rock-chips.com>
->      iio: adc: rockchip: Fix clock initialization sequence
->
-> Angelo Dureghello <adureghello@baylibre.com>
->      iio: adc: ad7606: fix serial register access
->
-> Jens Axboe <axboe@kernel.dk>
->      io_uring: ensure deferred completions are flushed for multishot
->
-> Wayne Lin <Wayne.Lin@amd.com>
->      drm/amd/display: Shift DMUB AUX reply command if necessary
->
-> Mikhail Lobanov <m.lobanov@rosa.ru>
->      KVM: SVM: Forcibly leave SMM mode on SHUTDOWN interception
->
-> Nysal Jan K.A. <nysal@linux.ibm.com>
->      selftests/mm: fix a build failure on powerpc
->
-> Feng Tang <feng.tang@linux.alibaba.com>
->      selftests/mm: compaction_test: support platform with huge mount of memory
->
-> Peter Xu <peterx@redhat.com>
->      mm/userfaultfd: fix uninitialized output field for -EAGAIN race
->
-> Gavin Guo <gavinguo@igalia.com>
->      mm/huge_memory: fix dereferencing invalid pmd migration entry
->
-> Kees Cook <kees@kernel.org>
->      mm: vmalloc: support more granular vrealloc() sizing
->
-> Petr Vaněk <arkamar@atlas.cz>
->      mm: fix folio_pte_batch() on XEN PV
->
-> Dave Hansen <dave.hansen@linux.intel.com>
->      x86/mm: Eliminate window where TLB flushes may be inadvertently skipped
->
-> Gabriel Shahrouzi <gshahrouzi@gmail.com>
->      staging: axis-fifo: Correct handling of tx_fifo_depth for size validation
->
-> Gabriel Shahrouzi <gshahrouzi@gmail.com>
->      staging: axis-fifo: Remove hardware resets for user errors
->
-> Dave Stevenson <dave.stevenson@raspberrypi.com>
->      staging: bcm2835-camera: Initialise dev in v4l2_dev
->
-> Gabriel Shahrouzi <gshahrouzi@gmail.com>
->      staging: iio: adc: ad7816: Correct conditional logic for store mode
->
-> Miguel Ojeda <ojeda@kernel.org>
->      rust: clean Rust 1.88.0's warning about `clippy::disallowed_macros` configuration
->
-> Miguel Ojeda <ojeda@kernel.org>
->      objtool/rust: add one more `noreturn` Rust function for Rust 1.87.0
->
-> Miguel Ojeda <ojeda@kernel.org>
->      rust: clean Rust 1.88.0's `unnecessary_transmutes` lint
->
-> Aditya Garg <gargaditya08@live.com>
->      Input: synaptics - enable InterTouch on TUXEDO InfinityBook Pro 14 v5
->
-> Dmitry Torokhov <dmitry.torokhov@gmail.com>
->      Input: synaptics - enable SMBus for HP Elitebook 850 G1
->
-> Aditya Garg <gargaditya08@live.com>
->      Input: synaptics - enable InterTouch on Dell Precision M3800
->
-> Aditya Garg <gargaditya08@live.com>
->      Input: synaptics - enable InterTouch on Dynabook Portege X30L-G
->
-> Manuel Fombuena <fombuena@outlook.com>
->      Input: synaptics - enable InterTouch on Dynabook Portege X30-D
->
-> Vicki Pfau <vi@endrift.com>
->      Input: xpad - fix two controller table values
->
-> Lode Willems <me@lodewillems.com>
->      Input: xpad - add support for 8BitDo Ultimate 2 Wireless Controller
->
-> Vicki Pfau <vi@endrift.com>
->      Input: xpad - fix Share button on Xbox One controllers
->
-> Gary Bisson <bisson.gary@gmail.com>
->      Input: mtk-pmic-keys - fix possible null pointer dereference
->
-> Mikael Gonella-Bolduc <mgonellabolduc@dimonoff.com>
->      Input: cyttsp5 - fix power control issue on wakeup
->
-> Hugo Villeneuve <hvilleneuve@dimonoff.com>
->      Input: cyttsp5 - ensure minimum reset pulse width
->
-> Jakub Kicinski <kuba@kernel.org>
->      virtio-net: fix total qstat values
->
-> Jakub Kicinski <kuba@kernel.org>
->      net: export a helper for adding up queue stats
->
-> Alexander Duyck <alexanderduyck@fb.com>
->      fbnic: Do not allow mailbox to toggle to ready outside fbnic_mbx_poll_tx_ready
->
-> Alexander Duyck <alexanderduyck@fb.com>
->      fbnic: Pull fbnic_fw_xmit_cap_msg use out of interrupt context
->
-> Alexander Duyck <alexanderduyck@fb.com>
->      fbnic: Improve responsiveness of fbnic_mbx_poll_tx_ready
->
-> Alexander Duyck <alexanderduyck@fb.com>
->      fbnic: Actually flush_tx instead of stalling out
->
-> Alexander Duyck <alexanderduyck@fb.com>
->      fbnic: Gate AXI read/write enabling on FW mailbox
->
-> Alexander Duyck <alexanderduyck@fb.com>
->      fbnic: Fix initialization of mailbox descriptor rings
->
-> Jonas Gorski <jonas.gorski@gmail.com>
->      net: dsa: b53: do not set learning and unicast/multicast on up
->
-> Jonas Gorski <jonas.gorski@gmail.com>
->      net: dsa: b53: fix learning on VLAN unaware bridges
->
-> Jonas Gorski <jonas.gorski@gmail.com>
->      net: dsa: b53: fix toggling vlan_filtering
->
-> Jonas Gorski <jonas.gorski@gmail.com>
->      net: dsa: b53: do not program vlans when vlan filtering is off
->
-> Jonas Gorski <jonas.gorski@gmail.com>
->      net: dsa: b53: do not allow to configure VLAN 0
->
-> Jonas Gorski <jonas.gorski@gmail.com>
->      net: dsa: b53: always rejoin default untagged VLAN on bridge leave
->
-> Jonas Gorski <jonas.gorski@gmail.com>
->      net: dsa: b53: fix VLAN ID for untagged vlan on bridge leave
->
-> Jonas Gorski <jonas.gorski@gmail.com>
->      net: dsa: b53: fix flushing old pvid VLAN on pvid change
->
-> Jonas Gorski <jonas.gorski@gmail.com>
->      net: dsa: b53: fix clearing PVID of a port
->
-> Jonas Gorski <jonas.gorski@gmail.com>
->      net: dsa: b53: keep CPU port always tagged again
->
-> Jonas Gorski <jonas.gorski@gmail.com>
->      net: dsa: b53: allow leaky reserved multicast
->
-> Paul Chaignon <paul.chaignon@gmail.com>
->      bpf: Scrub packet on bpf_redirect_peer
->
-> Jozsef Kadlecsik <kadlec@netfilter.org>
->      netfilter: ipset: fix region locking in hash types
->
-> Julian Anastasov <ja@ssi.bg>
->      ipvs: fix uninit-value for saddr in do_output_route4
->
-> Gao Xiang <xiang@kernel.org>
->      erofs: ensure the extra temporary copy is valid for shortened bvecs
->
-> Przemek Kitszel <przemyslaw.kitszel@intel.com>
->      ice: use DSN instead of PCI BDF for ice_adapter index
->
-> Sergey Temerkhanov <sergey.temerkhanov@intel.com>
->      ice: Initial support for E825C hardware in ice_adapter
->
-> Michael-CY Lee <michael-cy.lee@mediatek.com>
->      wifi: mac80211: fix the type of status_code for negotiated TID to Link Mapping
->
-> Oliver Hartkopp <socketcan@hartkopp.net>
->      can: gw: fix RCU/BH usage in cgw_create_job()
->
-> Kelsey Maes <kelsey@vpprocess.com>
->      can: mcp251xfd: fix TDC setting for low data bit rates
->
-> Antonios Salios <antonios@mwa.re>
->      can: m_can: m_can_class_allocate_dev(): initialize spin lock on device probe
->
-> Frank Wunderlich <frank-w@public-files.de>
->      net: ethernet: mtk_eth_soc: do not reset PSE when setting FE
->
-> Daniel Golle <daniel@makrotopia.org>
->      net: ethernet: mtk_eth_soc: reset all TX queues on DMA free
->
-> Guillaume Nault <gnault@redhat.com>
->      gre: Fix again IPv6 link-local address generation.
->
-> Jakub Kicinski <kuba@kernel.org>
->      virtio-net: free xsk_buffs on error in virtnet_xsk_pool_enable()
->
-> Xuan Zhuo <xuanzhuo@linux.alibaba.com>
->      virtio_net: xsk: bind/unbind xsk for tx
->
-> Cong Wang <xiyou.wangcong@gmail.com>
->      sch_htb: make htb_deactivate() idempotent
->
-> Heiko Carstens <hca@linux.ibm.com>
->      s390/entry: Fix last breaking event handling in case of stack corruption
->
-> Wang Zhaolong <wangzhaolong1@huawei.com>
->      ksmbd: fix memory leak in parse_lease_state()
->
-> Eelco Chaudron <echaudro@redhat.com>
->      openvswitch: Fix unsafe attribute parsing in output_userspace()
->
-> Sean Heelan <seanheelan@gmail.com>
->      ksmbd: Fix UAF in __close_file_table_ids
->
-> Norbert Szetei <norbert@doyensec.com>
->      ksmbd: prevent out-of-bounds stream writes by validating *pos
->
-> Namjae Jeon <linkinjeon@kernel.org>
->      ksmbd: prevent rename with empty string
->
-> Marc Kleine-Budde <mkl@pengutronix.de>
->      can: rockchip_canfd: rkcanfd_remove(): fix order of unregistration calls
->
-> Marc Kleine-Budde <mkl@pengutronix.de>
->      can: mcp251xfd: mcp251xfd_remove(): fix order of unregistration calls
->
-> Niklas Schnelle <schnelle@linux.ibm.com>
->      s390/pci: Fix duplicate pci_dev_put() in disable_slot() when PF has child VFs
->
-> Alex Williamson <alex.williamson@redhat.com>
->      vfio/pci: Align huge faults to order
->
-> Veerendranath Jakkam <quic_vjakkam@quicinc.com>
->      wifi: cfg80211: fix out-of-bounds access during multi-link element defragmentation
->
-> Niklas Schnelle <schnelle@linux.ibm.com>
->      s390/pci: Fix missing check for zpci_create_device() error return
->
-> Marc Kleine-Budde <mkl@pengutronix.de>
->      can: mcan: m_can_class_unregister(): fix order of unregistration calls
->
-> Cristian Marussi <cristian.marussi@arm.com>
->      firmware: arm_scmi: Fix timeout checks on polling path
->
-> Wojciech Dubowik <Wojciech.Dubowik@mt.com>
->      arm64: dts: imx8mm-verdin: Link reg_usdhc2_vqmmc to usdhc2
->
-> Qu Wenruo <wqu@suse.com>
->      Revert "btrfs: canonicalize the device path before adding it"
->
-> Max Kellermann <max.kellermann@ionos.com>
->      fs/erofs/fileio: call erofs_onlinefolio_split() after bio_add_folio()
->
-> Dan Carpenter <dan.carpenter@linaro.org>
->      dm: add missing unlock on in dm_keyslot_evict()
->
->
-> -------------
->
-> Diffstat:
->
->   .clippy.toml                                       |   2 +-
->   Documentation/ABI/testing/sysfs-devices-system-cpu |   1 +
->   Documentation/admin-guide/hw-vuln/index.rst        |   1 +
->   .../hw-vuln/indirect-target-selection.rst          | 168 ++++++++++++++++
->   Documentation/admin-guide/kernel-parameters.txt    |  18 ++
->   Makefile                                           |   4 +-
->   arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi   |  25 ++-
->   arch/arm64/include/asm/cputype.h                   |   2 +
->   arch/arm64/include/asm/insn.h                      |   1 +
->   arch/arm64/include/asm/spectre.h                   |   3 +
->   arch/arm64/kernel/cpufeature.c                     |   9 +-
->   arch/arm64/kernel/proton-pack.c                    |  13 +-
->   arch/arm64/lib/insn.c                              |  76 +++++---
->   arch/arm64/net/bpf_jit_comp.c                      |  57 +++++-
->   arch/mips/include/asm/idle.h                       |   3 +-
->   arch/mips/include/asm/ptrace.h                     |   3 +-
->   arch/mips/kernel/genex.S                           |  63 +++---
->   arch/mips/kernel/idle.c                            |   7 -
->   arch/riscv/kernel/traps.c                          |  64 ++++---
->   arch/riscv/kernel/traps_misaligned.c               |  17 ++
->   arch/s390/kernel/entry.S                           |   3 +-
->   arch/s390/pci/pci_clp.c                            |   2 +
->   arch/um/include/linux/time-internal.h              |   2 -
->   arch/um/kernel/skas/syscall.c                      |  11 --
->   arch/x86/Kconfig                                   |  12 ++
->   arch/x86/entry/entry_64.S                          |  20 +-
->   arch/x86/include/asm/alternative.h                 |  24 +++
->   arch/x86/include/asm/cpufeatures.h                 |   3 +
->   arch/x86/include/asm/microcode.h                   |   2 +
->   arch/x86/include/asm/msr-index.h                   |   8 +
->   arch/x86/include/asm/nospec-branch.h               |  38 ++--
->   arch/x86/kernel/alternative.c                      | 195 ++++++++++++++++++-
->   arch/x86/kernel/cpu/bugs.c                         | 176 ++++++++++++++++-
->   arch/x86/kernel/cpu/common.c                       |  72 +++++--
->   arch/x86/kernel/cpu/microcode/amd.c                |   6 +-
->   arch/x86/kernel/cpu/microcode/core.c               |  60 +++---
->   arch/x86/kernel/cpu/microcode/intel.c              |   2 +-
->   arch/x86/kernel/cpu/microcode/internal.h           |   1 -
->   arch/x86/kernel/ftrace.c                           |   2 +-
->   arch/x86/kernel/head32.c                           |   4 -
->   arch/x86/kernel/module.c                           |   6 +
->   arch/x86/kernel/static_call.c                      |   4 +-
->   arch/x86/kernel/vmlinux.lds.S                      |  10 +
->   arch/x86/kvm/smm.c                                 |   1 +
->   arch/x86/kvm/svm/svm.c                             |   4 +
->   arch/x86/kvm/x86.c                                 |   4 +-
->   arch/x86/lib/retpoline.S                           |  39 ++++
->   arch/x86/mm/tlb.c                                  |  23 ++-
->   arch/x86/net/bpf_jit_comp.c                        |  58 +++++-
->   drivers/accel/ivpu/ivpu_hw.c                       |   2 +-
->   drivers/base/cpu.c                                 |   3 +
->   drivers/block/loop.c                               | 104 ++++++----
->   drivers/bluetooth/btmtk.c                          |  12 +-
->   drivers/clocksource/i8253.c                        |   4 +-
->   drivers/firmware/arm_scmi/driver.c                 |  13 +-
->   drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.h            |   1 -
->   drivers/gpu/drm/amd/amdgpu/hdp_v4_0.c              |   7 +-
->   drivers/gpu/drm/amd/amdgpu/hdp_v5_0.c              |   7 +-
->   drivers/gpu/drm/amd/amdgpu/hdp_v5_2.c              |  12 +-
->   drivers/gpu/drm/amd/amdgpu/hdp_v6_0.c              |   7 +-
->   drivers/gpu/drm/amd/amdgpu/hdp_v7_0.c              |   7 +-
->   drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c              |   1 +
->   drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c              |   1 +
->   drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c              |   1 +
->   drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c              |   4 +-
->   drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c            |   1 +
->   drivers/gpu/drm/amd/amdgpu/vcn_v4_0_5.c            |   1 +
->   drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c            |   3 +-
->   drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  |  36 ++--
->   .../amd/display/amdgpu_dm/amdgpu_dm_mst_types.c    |  28 ++-
->   .../amd/display/dc/dml2/dml2_translation_helper.c  |  14 +-
->   drivers/gpu/drm/panel/panel-simple.c               |  25 +--
->   drivers/gpu/drm/v3d/v3d_sched.c                    |  28 ++-
->   drivers/gpu/drm/xe/tests/xe_mocs.c                 |  21 +-
->   drivers/gpu/drm/xe/xe_gt_pagefault.c               |  11 +-
->   drivers/iio/accel/adis16201.c                      |   4 +-
->   drivers/iio/accel/adxl355_core.c                   |   2 +-
->   drivers/iio/accel/adxl367.c                        |  10 +-
->   drivers/iio/adc/ad7606_spi.c                       |   2 +-
->   drivers/iio/adc/dln2-adc.c                         |   2 +-
->   drivers/iio/adc/rockchip_saradc.c                  |  17 +-
->   drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c         |   2 +-
->   drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c     |   6 +
->   drivers/iio/temperature/maxim_thermocouple.c       |   2 +-
->   drivers/input/joystick/xpad.c                      |  40 ++--
->   drivers/input/keyboard/mtk-pmic-keys.c             |   4 +-
->   drivers/input/mouse/synaptics.c                    |   5 +
->   drivers/input/touchscreen/cyttsp5.c                |   7 +-
->   drivers/md/dm-table.c                              |   3 +-
->   drivers/net/can/m_can/m_can.c                      |   3 +-
->   drivers/net/can/rockchip/rockchip_canfd-core.c     |   2 +-
->   drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c     |  42 +++-
->   drivers/net/dsa/b53/b53_common.c                   | 213 +++++++++++++++------
->   drivers/net/dsa/b53/b53_priv.h                     |   3 +
->   drivers/net/dsa/bcm_sf2.c                          |   1 +
->   drivers/net/ethernet/intel/ice/ice_adapter.c       |  39 ++--
->   drivers/net/ethernet/intel/ice/ice_adapter.h       |   6 +-
->   drivers/net/ethernet/mediatek/mtk_eth_soc.c        |  19 +-
->   drivers/net/ethernet/meta/fbnic/fbnic_csr.h        |   2 +
->   drivers/net/ethernet/meta/fbnic/fbnic_fw.c         | 180 +++++++++--------
->   drivers/net/ethernet/meta/fbnic/fbnic_mac.c        |   6 -
->   drivers/net/virtio_net.c                           |  61 ++++++
->   drivers/nvme/host/core.c                           |   3 +-
->   drivers/pci/hotplug/s390_pci_hpc.c                 |   1 -
->   drivers/staging/axis-fifo/axis-fifo.c              |  14 +-
->   drivers/staging/iio/adc/ad7816.c                   |   2 +-
->   .../vc04_services/bcm2835-camera/bcm2835-camera.c  |   1 +
->   drivers/usb/cdns3/cdnsp-gadget.c                   |  31 +++
->   drivers/usb/cdns3/cdnsp-gadget.h                   |   6 +
->   drivers/usb/cdns3/cdnsp-pci.c                      |  12 +-
->   drivers/usb/cdns3/cdnsp-ring.c                     |   3 +-
->   drivers/usb/cdns3/core.h                           |   3 +
->   drivers/usb/class/usbtmc.c                         |  59 +++---
->   drivers/usb/dwc3/core.h                            |   4 +
->   drivers/usb/dwc3/gadget.c                          |  60 +++---
->   drivers/usb/gadget/composite.c                     |  12 +-
->   drivers/usb/gadget/function/f_ecm.c                |   7 +
->   drivers/usb/gadget/udc/tegra-xudc.c                |   4 +
->   drivers/usb/host/uhci-platform.c                   |   2 +-
->   drivers/usb/host/xhci-tegra.c                      |   3 +
->   drivers/usb/misc/onboard_usb_dev.c                 |  10 +-
->   drivers/usb/typec/tcpm/tcpm.c                      |   2 +-
->   drivers/usb/typec/ucsi/displayport.c               |   2 +
->   drivers/vfio/pci/vfio_pci_core.c                   |  12 +-
->   drivers/xen/swiotlb-xen.c                          |   1 +
->   drivers/xen/xenbus/xenbus.h                        |   2 +
->   drivers/xen/xenbus/xenbus_comms.c                  |   9 +-
->   drivers/xen/xenbus/xenbus_dev_frontend.c           |   2 +-
->   drivers/xen/xenbus/xenbus_xs.c                     |  18 +-
->   fs/btrfs/volumes.c                                 |  91 +--------
->   fs/erofs/fileio.c                                  |   4 +-
->   fs/erofs/zdata.c                                   |  29 ++-
->   fs/namespace.c                                     |   3 +-
->   fs/ocfs2/journal.c                                 |  80 +++++---
->   fs/ocfs2/journal.h                                 |   1 +
->   fs/ocfs2/ocfs2.h                                   |  17 +-
->   fs/ocfs2/quota_local.c                             |   9 +-
->   fs/ocfs2/suballoc.c                                |  38 +++-
->   fs/ocfs2/suballoc.h                                |   1 +
->   fs/ocfs2/super.c                                   |   3 +
->   fs/smb/client/cached_dir.c                         |  10 +-
->   fs/smb/server/oplock.c                             |   7 +-
->   fs/smb/server/smb2pdu.c                            |   5 +
->   fs/smb/server/vfs.c                                |   7 +
->   fs/smb/server/vfs_cache.c                          |  33 +++-
->   fs/userfaultfd.c                                   |  28 ++-
->   include/linux/cpu.h                                |   2 +
->   include/linux/execmem.h                            |   3 +
->   include/linux/ieee80211.h                          |   2 +-
->   include/linux/module.h                             |   5 +
->   include/linux/types.h                              |   3 +-
->   include/linux/vmalloc.h                            |   1 +
->   include/net/netdev_queues.h                        |   6 +
->   include/uapi/linux/types.h                         |   1 +
->   init/Kconfig                                       |   3 +
->   io_uring/io_uring.c                                |  58 +++---
->   io_uring/sqpoll.c                                  |   2 +-
->   kernel/params.c                                    |   4 +-
->   kernel/sched/fair.c                                |   4 +-
->   mm/huge_memory.c                                   |  11 +-
->   mm/internal.h                                      |  27 ++-
->   mm/memblock.c                                      |   9 +-
->   mm/page_alloc.c                                    | 159 +++++++++------
->   mm/vmalloc.c                                       |  31 ++-
->   net/can/gw.c                                       | 151 +++++++++------
->   net/core/filter.c                                  |   1 +
->   net/core/netdev-genl.c                             |  69 +++++--
->   net/ipv6/addrconf.c                                |  15 +-
->   net/mac80211/mlme.c                                |  12 +-
->   net/netfilter/ipset/ip_set_hash_gen.h              |   2 +-
->   net/netfilter/ipvs/ip_vs_xmit.c                    |  27 +--
->   net/openvswitch/actions.c                          |   3 +-
->   net/sched/sch_htb.c                                |  15 +-
->   net/wireless/scan.c                                |   2 +-
->   rust/bindings/lib.rs                               |   1 +
->   rust/kernel/alloc/kvec.rs                          |   3 +
->   rust/kernel/list.rs                                |   3 +
->   rust/kernel/str.rs                                 |  46 ++---
->   rust/macros/module.rs                              |  19 +-
->   rust/macros/pinned_drop.rs                         |   3 +-
->   rust/uapi/lib.rs                                   |   1 +
->   tools/objtool/check.c                              |   1 +
->   tools/testing/selftests/Makefile                   |   1 +
->   tools/testing/selftests/mm/compaction_test.c       |  19 +-
->   tools/testing/selftests/mm/pkey-powerpc.h          |  12 +-
->   tools/testing/selftests/x86/bugs/Makefile          |   3 +
->   tools/testing/selftests/x86/bugs/common.py         | 164 ++++++++++++++++
->   .../selftests/x86/bugs/its_indirect_alignment.py   | 150 +++++++++++++++
->   .../testing/selftests/x86/bugs/its_permutations.py | 109 +++++++++++
->   .../selftests/x86/bugs/its_ret_alignment.py        | 139 ++++++++++++++
->   tools/testing/selftests/x86/bugs/its_sysfs.py      |  65 +++++++
->   191 files changed, 3250 insertions(+), 1134 deletions(-)
->
->
+Jason
