@@ -1,32 +1,32 @@
 Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 796FD135A53
-	for <patches@lists.linux.dev>; Wed, 14 May 2025 16:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFE851EE00B
+	for <patches@lists.linux.dev>; Wed, 14 May 2025 16:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747241149; cv=none; b=ZdQd+Pk0z+fiY13YffO83CMHmensRS9NjzRABfEhiQibuh9vuSjr2MyZNheOfhy+kkT5K+vIqdyLBgFse/b/gsrnjzv50ao3O8WWf6H/Iy21Bj0D0qcX4PrkJQ1x0aoYUUyTxOR7fUNcNiqh6CqivHYgvuJrA3Gz5dHTLWCSU+Y=
+	t=1747241901; cv=none; b=To1ALA37+5UhcaTs5SCy+29nwoqgkaV8NdQLKg102yM8qBxna7X7k1X7CaXnL/km3KjvHJNnT+L6UTpLhsi5TEiT/hoJxRx2qUCOHojEpY2Qav6iAuPikthFTDL9G+c4Xd+mxXtEXYXAHAh+aWzeasCHiHEz8bX5Mn3Jo0i0hhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747241149; c=relaxed/simple;
-	bh=HHvgjfIHWimMFA5CzikGaktSTsOcOlRbmY0BmlZ5tLE=;
+	s=arc-20240116; t=1747241901; c=relaxed/simple;
+	bh=ujOUgSTSBjCG9kpG0VnXKqB27KVIDgWRgVgmUR9LtIw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SVj6Rakcm5cFCLKSXZoV/g2SsYmF885mFfQevrDrHr4CaUMVxl/x3UAvS7EeCqyKdvz6oa6Z+K8KgZswArNJYqz/AuF85PhWDz5FdNUupg3xM8ZiDybw0YleqWEkiNNr/WJsrLyIjVman6HPzvyqgABu47eldPFJcUl64F+WTIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=Spf7t4M6; arc=none smtp.client-ip=13.77.154.182
+	 In-Reply-To:Content-Type; b=lYv2RtAMwc0p/3EkTSP1GssAfJuxc7rk9ZI8EHINYJHCJoIWw9OJ6TooLicTMS4+iZvXPk7GlVC/auaMr+jUylw3WOYfGcyv4oG9vxx8V7abKB5JyYiqwDe5jD/FmDorERF8C855bXsuGxc5etVZwI2dHGO0yWWc/Z1bBD6/r7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=J4cHxIMm; arc=none smtp.client-ip=13.77.154.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="Spf7t4M6"
-Received: from [100.65.162.40] (unknown [20.236.11.42])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 876A1211B7C5;
-	Wed, 14 May 2025 09:45:45 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 876A1211B7C5
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="J4cHxIMm"
+Received: from [100.65.162.40] (unknown [20.236.11.29])
+	by linux.microsoft.com (Postfix) with ESMTPSA id C0F77211B7C7;
+	Wed, 14 May 2025 09:58:17 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C0F77211B7C7
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1747241145;
-	bh=GbCl3n5yxZ2hHKAnvEHr/qhTOB08vAFoYRVJUYHs+r4=;
+	s=default; t=1747241898;
+	bh=RtUCrglD4hIBi0v8liGdPlvOfrQe3YtMnc/3+3RwPWo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Spf7t4M6Clki22iN3nb6ghueI/l7jgq/t29H8G4QF3Xaq+oNdhPszmHfJ1NbOgRd7
-	 hwCCIHRS4Gql5yjDTF31HAYBGRHvVH/Qw4Ns19A2ZMag4EV4YPtpdSL/GRwie+a7BU
-	 Wb6DLGg+L+eslb99l7CjijJcRJNUc7qNDw3q/4Cw=
-Message-ID: <43fc46c7-47e2-49d9-94cf-2f1bc0a8bc14@linux.microsoft.com>
-Date: Wed, 14 May 2025 09:45:37 -0700
+	b=J4cHxIMmG2snqbZBwiVLES2WKW4bmvmYLWY1LPUqqB0s+WvcTyLlG5TZGXelkRbmk
+	 JTB+VbW81MLxRwEITORhVNY5ONIU8ZBt2kJwrhOk05eiVfjM/9iI4+GtTYS2LUw2rk
+	 IATIOUeJMhPy/oCO0WOiiSxX6B5aYAqBcTGnYORc=
+Message-ID: <6bfd58d4-55bc-48e3-8cd6-e5444306bad9@linux.microsoft.com>
+Date: Wed, 14 May 2025 09:58:15 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,7 +34,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.14 000/197] 6.14.7-rc1 review
+Subject: Re: [PATCH 6.12 000/184] 6.12.29-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -42,23 +42,18 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
  rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250512172044.326436266@linuxfoundation.org>
+References: <20250512172041.624042835@linuxfoundation.org>
 Content-Language: en-US
 From: Hardik Garg <hargar@linux.microsoft.com>
-In-Reply-To: <20250512172044.326436266@linuxfoundation.org>
+In-Reply-To: <20250512172041.624042835@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-The kernel, bpf tool and perf tool builds fine for v6.14.7-rc1 on x86
+The kernel, bpf tool and perf tool builds fine for v6.12.29-rc1 on x86
 and arm64 Azure VM.
 
-Kernel binary size for x86 build:
-text             data          bss            dec hex           filename
-29157383  7863882  1384280  38405545  24a05a9  vmlinux
-
-Kernel binary size for arm64 build:
-text             data            bss          dec hex           filename
-28427162  18477511  762704  47667377  2d758b1  vmlinux
+KernelCI with LTP and selftest results: Tree: stable/linux-6.12.y 
+<https://dashboard.kernelci.org/tree/f08cdc6cc92e3d23a05745f0f12f8caa348a27b4?o=microsoft&p=t&ti%7Cc=v6.12.28&ti%7Cch=f08cdc6cc92e3d23a05745f0f12f8caa348a27b4&ti%7Cgb=linux-6.12.y&ti%7Cgu=https%3A%2F%2Fgit.kernel.org%2Fpub%2Fscm%2Flinux%2Fkernel%2Fgit%2Fstable%2Flinux.git&ti%7Ct=stable>
 
 Tested-by: Hardik Garg <hargar@linux.microsoft.com>
 
@@ -66,9 +61,9 @@ Tested-by: Hardik Garg <hargar@linux.microsoft.com>
 Thanks,
 Hardik
 
-On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.14.7 release.
-> There are 197 patches in this series, all will be posted as a response
+On 5/12/2025 10:43 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.29 release.
+> There are 184 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -76,9 +71,9 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.14.7-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.29-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.14.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
 > and the diffstat can be found below.
 >
 > thanks,
@@ -89,7 +84,7 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 > Pseudo-Shortlog of commits:
 >
 > Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->      Linux 6.14.7-rc1
+>      Linux 6.12.29-rc1
 >
 > Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 >      selftest/x86/bugs: Add selftests for ITS
@@ -125,6 +120,15 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 >      Documentation: x86/bugs/its: Add ITS documentation
 >
 > Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+>      x86/speculation: Remove the extra #ifdef around CALL_NOSPEC
+>
+> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+>      x86/speculation: Add a conditional CS prefix to CALL_NOSPEC
+>
+> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+>      x86/speculation: Simplify and make CALL_NOSPEC consistent
+>
+> Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 >      x86/bhi: Do not set BHI_DIS_S in 32-bit mode
 >
 > Daniel Sneddon <daniel.sneddon@linux.intel.com>
@@ -151,6 +155,9 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 > James Morse <james.morse@arm.com>
 >      arm64: insn: Add support for encoding DSB
 >
+> Omar Sandoval <osandov@fb.com>
+>      sched/eevdf: Fix se->slice being set to U64_MAX and resulting crash
+>
 > Johannes Weiner <hannes@cmpxchg.org>
 >      mm: page_alloc: speed up fallbacks in rmqueue_bulk()
 >
@@ -159,6 +166,9 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 >
 > Hao Qin <hao.qin@mediatek.com>
 >      Bluetooth: btmtk: Remove the resetting step before downloading the fw
+>
+> Hao Qin <hao.qin@mediatek.com>
+>      Bluetooth: btmtk: Remove resetting mt7921 before downloading the fw
 >
 > Jens Axboe <axboe@kernel.dk>
 >      io_uring: always arm linked timeouts prior to issue
@@ -169,20 +179,20 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 > Miguel Ojeda <ojeda@kernel.org>
 >      rust: allow Rust 1.87.0's `clippy::ptr_eq` lint
 >
+> Christian Lamparter <chunkeey@gmail.com>
+>      Revert "um: work around sched_yield not yielding in time-travel mode"
+>
 > Al Viro <viro@zeniv.linux.org.uk>
 >      do_umount(): add missing barrier before refcount checks in sync case
 >
 > Gabriel Krisman Bertazi <krisman@suse.de>
 >      io_uring/sqpoll: Increase task_work submission batch size
 >
-> Shuicheng Lin <shuicheng.lin@intel.com>
->      drm/xe: Release force wake first then runtime power
->
 > Tejas Upadhyay <tejas.upadhyay@intel.com>
 >      drm/xe/tests/mocs: Hold XE_FORCEWAKE_ALL for LNCF regs
 >
-> Samuel Holland <samuel.holland@sifive.com>
->      riscv: Disallow PR_GET_TAGGED_ADDR_CTRL without Supm
+> Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+>      drm/xe/tests/mocs: Update xe_force_wake_get() return handling
 >
 > Clément Léger <cleger@rivosinc.com>
 >      riscv: misaligned: enable IRQs while handling misaligned accesses
@@ -202,20 +212,23 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 > Christoph Hellwig <hch@lst.de>
 >      loop: factor out a loop_assign_backing_file helper
 >
+> Christoph Hellwig <hch@lst.de>
+>      loop: refactor queue limits updates
+>
+> OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+>      loop: Fix ABBA locking race
+>
+> John Garry <john.g.garry@oracle.com>
+>      loop: Simplify discard granularity calc
+>
+> John Garry <john.g.garry@oracle.com>
+>      loop: Use bdev limit helpers for configuring discard
+>
 > Nylon Chen <nylon.chen@sifive.com>
 >      riscv: misaligned: Add handling for ZCB instructions
 >
 > Thorsten Blum <thorsten.blum@linux.dev>
 >      MIPS: Fix MAX_REG_OFFSET
->
-> Karol Wachowski <karol.wachowski@intel.com>
->      accel/ivpu: Correct mutex unlock order in job submission
->
-> Karol Wachowski <karol.wachowski@intel.com>
->      accel/ivpu: Separate DB ID and CMDQ ID allocations from CMDQ allocation
->
-> Thomas Gleixner <tglx@linutronix.de>
->      timekeeping: Prevent coarse clocks going backwards
 >
 > Marco Crivellari <marco.crivellari@suse.com>
 >      MIPS: Move r4k_wait() to .cpuidle.text section
@@ -229,14 +242,14 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 > Jonathan Cameron <Jonathan.Cameron@huawei.com>
 >      iio: accel: adxl355: Make timestamp 64-bit aligned using aligned_s64
 >
+> Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+>      types: Complement the aligned types with signed 64-bit one
+>
 > Jonathan Cameron <Jonathan.Cameron@huawei.com>
 >      iio: temp: maxim-thermocouple: Fix potential lack of DMA safe buffer.
 >
 > Lothar Rubusch <l.rubusch@gmail.com>
 >      iio: accel: adxl367: fix setting odr for activity time update
->
-> Gustavo Silva <gustavograzs@gmail.com>
->      iio: imu: bmi270: fix initial sampling frequency configuration
 >
 > Dave Penkler <dpenkler@gmail.com>
 >      usb: usbtmc: Fix erroneous generic_read ioctl return
@@ -252,9 +265,6 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 >
 > Andrei Kuchynski <akuchynski@chromium.org>
 >      usb: typec: ucsi: displayport: Fix NULL pointer access
->
-> Andrei Kuchynski <akuchynski@chromium.org>
->      usb: typec: ucsi: displayport: Fix deadlock
 >
 > RD Babiera <rdbabiera@google.com>
 >      usb: typec: tcpm: delay SNK_TRY_WAIT_DEBOUNCE to SRC_TRYWAIT transition
@@ -295,9 +305,6 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 > Heming Zhao <heming.zhao@suse.com>
 >      ocfs2: fix the issue with discontiguous allocation in the global_bitmap
 >
-> Mark Tinguely <mark.tinguely@oracle.com>
->      ocfs2: fix panic in failed foilio allocation
->
 > Borislav Petkov (AMD) <bp@alien8.de>
 >      x86/microcode: Consolidate the loader enablement checking
 >
@@ -306,9 +313,6 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 >
 > Tom Lendacky <thomas.lendacky@amd.com>
 >      memblock: Accept allocated memory before use in memblock_double_array()
->
-> Sebastian Ott <sebott@redhat.com>
->      KVM: arm64: Fix uninitialized memcache pointer in user_mem_abort()
 >
 > Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 >      clocksource/i8253: Use raw_spinlock_irqsave() in clockevent_i8253_disable()
@@ -330,9 +334,6 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 >
 > Alexey Charkov <alchark@gmail.com>
 >      usb: uhci-platform: Make the clock really optional
->
-> Mathias Nyman <mathias.nyman@linux.intel.com>
->      xhci: dbc: Avoid event polling busyloop if pending rx transfers are inactive.
 >
 > Alex Deucher <alexander.deucher@amd.com>
 >      drm/amdgpu/hdp7: use memcfg register to post the write for HDP flush
@@ -370,23 +371,11 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 > Ruijing Dong <ruijing.dong@amd.com>
 >      drm/amdgpu/vcn: using separate VCN1_AON_SOC offset
 >
-> Alex Deucher <alexander.deucher@amd.com>
->      drm/amdgpu: fix pm notifier handling
->
 > Matthew Brost <matthew.brost@intel.com>
 >      drm/xe: Add page queue multiplier
 >
 > Maíra Canal <mcanal@igalia.com>
 >      drm/v3d: Add job to pending list if the reset was skipped
->
-> Alex Deucher <alexander.deucher@amd.com>
->      Revert "drm/amd: Stop evicting resources on APUs in suspend"
->
-> David Lechner <dlechner@baylibre.com>
->      iio: pressure: mprls0025pa: use aligned_s64 for timestamp
->
-> Luca Ceresoli <luca.ceresoli@bootlin.com>
->      iio: light: opt3001: fix deadlock due to concurrent flag access
 >
 > Silvano Seva <s.seva@4sigma.it>
 >      iio: imu: st_lsm6dsx: fix possible lockup in st_lsm6dsx_read_tagged_fifo
@@ -397,21 +386,6 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 > David Lechner <dlechner@baylibre.com>
 >      iio: imu: inv_mpu6050: align buffer for timestamp
 >
-> Zhang Lixu <lixu.zhang@intel.com>
->      iio: hid-sensor-prox: Fix incorrect OFFSET calculation
->
-> Zhang Lixu <lixu.zhang@intel.com>
->      iio: hid-sensor-prox: support multi-channel SCALE calculation
->
-> Zhang Lixu <lixu.zhang@intel.com>
->      iio: hid-sensor-prox: Restore lost scale assignments
->
-> David Lechner <dlechner@baylibre.com>
->      iio: chemical: pms7003: use aligned_s64 for timestamp
->
-> David Lechner <dlechner@baylibre.com>
->      iio: chemical: sps30: use aligned_s64 for timestamp
->
 > Gabriel Shahrouzi <gshahrouzi@gmail.com>
 >      iio: adis16201: Correct inclinometer channel resolution
 >
@@ -421,29 +395,14 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 > Angelo Dureghello <adureghello@baylibre.com>
 >      iio: adc: ad7606: fix serial register access
 >
-> Jonathan Cameron <Jonathan.Cameron@huawei.com>
->      iio: adc: ad7266: Fix potential timestamp alignment issue.
->
-> Jonathan Cameron <Jonathan.Cameron@huawei.com>
->      iio: adc: ad7768-1: Fix insufficient alignment of timestamp.
->
 > Jens Axboe <axboe@kernel.dk>
 >      io_uring: ensure deferred completions are flushed for multishot
->
-> Nam Cao <namcao@linutronix.de>
->      riscv: Fix kernel crash due to PR_SET_TAGGED_ADDR_CTRL
 >
 > Wayne Lin <Wayne.Lin@amd.com>
 >      drm/amd/display: Shift DMUB AUX reply command if necessary
 >
 > Mikhail Lobanov <m.lobanov@rosa.ru>
 >      KVM: SVM: Forcibly leave SMM mode on SHUTDOWN interception
->
-> Sean Christopherson <seanjc@google.com>
->      KVM: x86/mmu: Prevent installing hugepages when mem attributes are changing
->
-> Madhavan Srinivasan <maddy@linux.ibm.com>
->      selftests/mm: fix build break when compiling pkey_util.c
 >
 > Nysal Jan K.A. <nysal@linux.ibm.com>
 >      selftests/mm: fix a build failure on powerpc
@@ -477,9 +436,6 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 >
 > Gabriel Shahrouzi <gshahrouzi@gmail.com>
 >      staging: iio: adc: ad7816: Correct conditional logic for store mode
->
-> Naman Jain <namjain@linux.microsoft.com>
->      uio_hv_generic: Fix sysfs creation path for ring buffer
 >
 > Miguel Ojeda <ojeda@kernel.org>
 >      rust: clean Rust 1.88.0's warning about `clippy::disallowed_macros` configuration
@@ -539,9 +495,6 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 >      fbnic: Improve responsiveness of fbnic_mbx_poll_tx_ready
 >
 > Alexander Duyck <alexanderduyck@fb.com>
->      fbnic: Cleanup handling of completions
->
-> Alexander Duyck <alexanderduyck@fb.com>
 >      fbnic: Actually flush_tx instead of stalling out
 >
 > Alexander Duyck <alexanderduyck@fb.com>
@@ -598,6 +551,9 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 > Przemek Kitszel <przemyslaw.kitszel@intel.com>
 >      ice: use DSN instead of PCI BDF for ice_adapter index
 >
+> Sergey Temerkhanov <sergey.temerkhanov@intel.com>
+>      ice: Initial support for E825C hardware in ice_adapter
+>
 > Michael-CY Lee <michael-cy.lee@mediatek.com>
 >      wifi: mac80211: fix the type of status_code for negotiated TID to Link Mapping
 >
@@ -622,8 +578,8 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 > Jakub Kicinski <kuba@kernel.org>
 >      virtio-net: free xsk_buffs on error in virtnet_xsk_pool_enable()
 >
-> Jakub Kicinski <kuba@kernel.org>
->      virtio-net: don't re-enable refill work too early when NAPI is disabled
+> Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+>      virtio_net: xsk: bind/unbind xsk for tx
 >
 > Cong Wang <xiyou.wangcong@gmail.com>
 >      sch_htb: make htb_deactivate() idempotent
@@ -699,25 +655,25 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 >   arch/arm64/include/asm/spectre.h                   |   3 +
 >   arch/arm64/kernel/cpufeature.c                     |   9 +-
 >   arch/arm64/kernel/proton-pack.c                    |  13 +-
->   arch/arm64/kvm/mmu.c                               |  13 +-
 >   arch/arm64/lib/insn.c                              |  76 +++++---
 >   arch/arm64/net/bpf_jit_comp.c                      |  57 +++++-
 >   arch/mips/include/asm/idle.h                       |   3 +-
 >   arch/mips/include/asm/ptrace.h                     |   3 +-
 >   arch/mips/kernel/genex.S                           |  63 +++---
 >   arch/mips/kernel/idle.c                            |   7 -
->   arch/riscv/kernel/process.c                        |   6 +
 >   arch/riscv/kernel/traps.c                          |  64 ++++---
 >   arch/riscv/kernel/traps_misaligned.c               |  17 ++
 >   arch/s390/kernel/entry.S                           |   3 +-
 >   arch/s390/pci/pci_clp.c                            |   2 +
+>   arch/um/include/linux/time-internal.h              |   2 -
+>   arch/um/kernel/skas/syscall.c                      |  11 --
 >   arch/x86/Kconfig                                   |  12 ++
 >   arch/x86/entry/entry_64.S                          |  20 +-
 >   arch/x86/include/asm/alternative.h                 |  24 +++
 >   arch/x86/include/asm/cpufeatures.h                 |   3 +
 >   arch/x86/include/asm/microcode.h                   |   2 +
 >   arch/x86/include/asm/msr-index.h                   |   8 +
->   arch/x86/include/asm/nospec-branch.h               |  10 +
+>   arch/x86/include/asm/nospec-branch.h               |  38 ++--
 >   arch/x86/kernel/alternative.c                      | 195 ++++++++++++++++++-
 >   arch/x86/kernel/cpu/bugs.c                         | 176 ++++++++++++++++-
 >   arch/x86/kernel/cpu/common.c                       |  72 +++++--
@@ -730,7 +686,6 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 >   arch/x86/kernel/module.c                           |   6 +
 >   arch/x86/kernel/static_call.c                      |   4 +-
 >   arch/x86/kernel/vmlinux.lds.S                      |  10 +
->   arch/x86/kvm/mmu/mmu.c                             |  89 ++++++---
 >   arch/x86/kvm/smm.c                                 |   1 +
 >   arch/x86/kvm/svm/svm.c                             |   4 +
 >   arch/x86/kvm/x86.c                                 |   4 +-
@@ -738,16 +693,11 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 >   arch/x86/mm/tlb.c                                  |  23 ++-
 >   arch/x86/net/bpf_jit_comp.c                        |  58 +++++-
 >   drivers/accel/ivpu/ivpu_hw.c                       |   2 +-
->   drivers/accel/ivpu/ivpu_job.c                      |  90 ++++++---
 >   drivers/base/cpu.c                                 |   3 +
->   drivers/block/loop.c                               |  43 ++++-
->   drivers/bluetooth/btmtk.c                          |  10 -
+>   drivers/block/loop.c                               | 104 ++++++----
+>   drivers/bluetooth/btmtk.c                          |  12 +-
 >   drivers/clocksource/i8253.c                        |   4 +-
 >   drivers/firmware/arm_scmi/driver.c                 |  13 +-
->   drivers/gpu/drm/amd/amdgpu/amdgpu.h                |   2 -
->   drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c           |  18 --
->   drivers/gpu/drm/amd/amdgpu/amdgpu_device.c         |  29 +--
->   drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c            |  10 +-
 >   drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.h            |   1 -
 >   drivers/gpu/drm/amd/amdgpu/hdp_v4_0.c              |   7 +-
 >   drivers/gpu/drm/amd/amdgpu/hdp_v5_0.c              |   7 +-
@@ -766,28 +716,16 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 >   .../amd/display/dc/dml2/dml2_translation_helper.c  |  14 +-
 >   drivers/gpu/drm/panel/panel-simple.c               |  25 +--
 >   drivers/gpu/drm/v3d/v3d_sched.c                    |  28 ++-
->   drivers/gpu/drm/xe/tests/xe_mocs.c                 |   7 +-
->   drivers/gpu/drm/xe/xe_gt_debugfs.c                 |   9 +-
+>   drivers/gpu/drm/xe/tests/xe_mocs.c                 |  21 +-
 >   drivers/gpu/drm/xe/xe_gt_pagefault.c               |  11 +-
->   drivers/hv/hyperv_vmbus.h                          |   6 +
->   drivers/hv/vmbus_drv.c                             | 100 +++++++++-
 >   drivers/iio/accel/adis16201.c                      |   4 +-
 >   drivers/iio/accel/adxl355_core.c                   |   2 +-
 >   drivers/iio/accel/adxl367.c                        |  10 +-
->   drivers/iio/adc/ad7266.c                           |   2 +-
 >   drivers/iio/adc/ad7606_spi.c                       |   2 +-
->   drivers/iio/adc/ad7768-1.c                         |   2 +-
 >   drivers/iio/adc/dln2-adc.c                         |   2 +-
 >   drivers/iio/adc/rockchip_saradc.c                  |  17 +-
->   drivers/iio/chemical/pms7003.c                     |   5 +-
->   drivers/iio/chemical/sps30.c                       |   2 +-
->   .../iio/common/hid-sensors/hid-sensor-attributes.c |   4 +
->   drivers/iio/imu/bmi270/bmi270_core.c               |   6 +-
 >   drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c         |   2 +-
 >   drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c     |   6 +
->   drivers/iio/light/hid-sensor-prox.c                |  22 ++-
->   drivers/iio/light/opt3001.c                        |   5 +-
->   drivers/iio/pressure/mprls0025pa.h                 |  17 +-
 >   drivers/iio/temperature/maxim_thermocouple.c       |   2 +-
 >   drivers/input/joystick/xpad.c                      |  40 ++--
 >   drivers/input/keyboard/mtk-pmic-keys.c             |   4 +-
@@ -800,19 +738,18 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 >   drivers/net/dsa/b53/b53_common.c                   | 213 +++++++++++++++------
 >   drivers/net/dsa/b53/b53_priv.h                     |   3 +
 >   drivers/net/dsa/bcm_sf2.c                          |   1 +
->   drivers/net/ethernet/intel/ice/ice_adapter.c       |  47 ++---
+>   drivers/net/ethernet/intel/ice/ice_adapter.c       |  39 ++--
 >   drivers/net/ethernet/intel/ice/ice_adapter.h       |   6 +-
 >   drivers/net/ethernet/mediatek/mtk_eth_soc.c        |  19 +-
 >   drivers/net/ethernet/meta/fbnic/fbnic_csr.h        |   2 +
->   drivers/net/ethernet/meta/fbnic/fbnic_fw.c         | 197 +++++++++++--------
+>   drivers/net/ethernet/meta/fbnic/fbnic_fw.c         | 180 +++++++++--------
 >   drivers/net/ethernet/meta/fbnic/fbnic_mac.c        |   6 -
->   drivers/net/virtio_net.c                           |  23 ++-
+>   drivers/net/virtio_net.c                           |  61 ++++++
 >   drivers/nvme/host/core.c                           |   3 +-
 >   drivers/pci/hotplug/s390_pci_hpc.c                 |   1 -
 >   drivers/staging/axis-fifo/axis-fifo.c              |  14 +-
 >   drivers/staging/iio/adc/ad7816.c                   |   2 +-
 >   .../vc04_services/bcm2835-camera/bcm2835-camera.c  |   1 +
->   drivers/uio/uio_hv_generic.c                       |  39 ++--
 >   drivers/usb/cdns3/cdnsp-gadget.c                   |  31 +++
 >   drivers/usb/cdns3/cdnsp-gadget.h                   |   6 +
 >   drivers/usb/cdns3/cdnsp-pci.c                      |  12 +-
@@ -825,14 +762,10 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 >   drivers/usb/gadget/function/f_ecm.c                |   7 +
 >   drivers/usb/gadget/udc/tegra-xudc.c                |   4 +
 >   drivers/usb/host/uhci-platform.c                   |   2 +-
->   drivers/usb/host/xhci-dbgcap.c                     |  19 +-
->   drivers/usb/host/xhci-dbgcap.h                     |   3 +
 >   drivers/usb/host/xhci-tegra.c                      |   3 +
 >   drivers/usb/misc/onboard_usb_dev.c                 |  10 +-
 >   drivers/usb/typec/tcpm/tcpm.c                      |   2 +-
->   drivers/usb/typec/ucsi/displayport.c               |  21 +-
->   drivers/usb/typec/ucsi/ucsi.c                      |  34 ++++
->   drivers/usb/typec/ucsi/ucsi.h                      |   2 +
+>   drivers/usb/typec/ucsi/displayport.c               |   2 +
 >   drivers/vfio/pci/vfio_pci_core.c                   |  12 +-
 >   drivers/xen/swiotlb-xen.c                          |   1 +
 >   drivers/xen/xenbus/xenbus.h                        |   2 +
@@ -843,7 +776,6 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 >   fs/erofs/fileio.c                                  |   4 +-
 >   fs/erofs/zdata.c                                   |  29 ++-
 >   fs/namespace.c                                     |   3 +-
->   fs/ocfs2/alloc.c                                   |   1 +
 >   fs/ocfs2/journal.c                                 |  80 +++++---
 >   fs/ocfs2/journal.h                                 |   1 +
 >   fs/ocfs2/ocfs2.h                                   |  17 +-
@@ -859,18 +791,17 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 >   fs/userfaultfd.c                                   |  28 ++-
 >   include/linux/cpu.h                                |   2 +
 >   include/linux/execmem.h                            |   3 +
->   include/linux/hyperv.h                             |   6 +
 >   include/linux/ieee80211.h                          |   2 +-
 >   include/linux/module.h                             |   5 +
->   include/linux/timekeeper_internal.h                |   8 +-
+>   include/linux/types.h                              |   3 +-
 >   include/linux/vmalloc.h                            |   1 +
 >   include/net/netdev_queues.h                        |   6 +
+>   include/uapi/linux/types.h                         |   1 +
 >   init/Kconfig                                       |   3 +
 >   io_uring/io_uring.c                                |  58 +++---
 >   io_uring/sqpoll.c                                  |   2 +-
 >   kernel/params.c                                    |   4 +-
->   kernel/time/timekeeping.c                          |  50 ++++-
->   kernel/time/vsyscall.c                             |   4 +-
+>   kernel/sched/fair.c                                |   4 +-
 >   mm/huge_memory.c                                   |  11 +-
 >   mm/internal.h                                      |  27 ++-
 >   mm/memblock.c                                      |   9 +-
@@ -891,20 +822,18 @@ On 5/12/2025 10:37 AM, Greg Kroah-Hartman wrote:
 >   rust/kernel/list.rs                                |   3 +
 >   rust/kernel/str.rs                                 |  46 ++---
 >   rust/macros/module.rs                              |  19 +-
->   rust/macros/paste.rs                               |   2 +-
 >   rust/macros/pinned_drop.rs                         |   3 +-
 >   rust/uapi/lib.rs                                   |   1 +
 >   tools/objtool/check.c                              |   1 +
 >   tools/testing/selftests/Makefile                   |   1 +
 >   tools/testing/selftests/mm/compaction_test.c       |  19 +-
->   tools/testing/selftests/mm/pkey-powerpc.h          |  14 +-
->   tools/testing/selftests/mm/pkey_util.c             |   1 +
+>   tools/testing/selftests/mm/pkey-powerpc.h          |  12 +-
 >   tools/testing/selftests/x86/bugs/Makefile          |   3 +
 >   tools/testing/selftests/x86/bugs/common.py         | 164 ++++++++++++++++
 >   .../selftests/x86/bugs/its_indirect_alignment.py   | 150 +++++++++++++++
 >   .../testing/selftests/x86/bugs/its_permutations.py | 109 +++++++++++
 >   .../selftests/x86/bugs/its_ret_alignment.py        | 139 ++++++++++++++
 >   tools/testing/selftests/x86/bugs/its_sysfs.py      |  65 +++++++
->   218 files changed, 3603 insertions(+), 1269 deletions(-)
+>   191 files changed, 3250 insertions(+), 1134 deletions(-)
 >
 >
