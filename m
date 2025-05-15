@@ -1,116 +1,139 @@
-Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com [209.85.221.67])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D5B372
-	for <patches@lists.linux.dev>; Thu, 15 May 2025 12:32:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3928298C14
+	for <patches@lists.linux.dev>; Thu, 15 May 2025 12:34:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747312347; cv=none; b=IedzJm3ICMPCQVmitxzA4wgK4XcKPZ0Xzq+tgskzb0wZ8xnHzUCM5NstKWwjq0gDZ6pP/eO2L7MSKavIAVp5hNjv+uqrDy7PCug82/OGmLEp6LDkxweb3CQtF/V1tGgn270st9ocs5tWyr0qC/fLHntopzPy5PWvw/dmnWAWLg0=
+	t=1747312485; cv=none; b=D1NMaCuvalUtwjPU3kjtaojHcTorraGuinPuKnwl2S8B1WKt+9gzVv1n58CZ0Jpv/3nQK2ydcu8NNEh57Bz97xvMxi2YIxxRsK/K07FgPbiYvZsR8HqKZBaBc/59GTQEGlLsc2o3e2G/qRfaPXsxDExRHR3IP0foyxclsN/Uje8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747312347; c=relaxed/simple;
-	bh=mXtV/p3tpIeC0QGepjYirCNduEcmDED53SaEZc2lIx4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jU3mdX6yG5g8UCUpOs+fDrNaymNhqeCzu7CnJ93fifZPtpEFDt9lpAExRXW86n4MnRYQKZetPAyWwMFvr9pm/l2aa+3k8VgisXAL21Ta4ITCW6I9ThejVGP6xePBUZuFK3WrNuuSppsWeApKwwYtqE7KuW1AUf0FUV5mYal0d1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=gCMaDhn7; arc=none smtp.client-ip=209.85.221.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	s=arc-20240116; t=1747312485; c=relaxed/simple;
+	bh=TuMvFeK/rCaVdJKjJAwerHfl5Z00/hhg+xzHSyAPKjY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ut8mZnkPd+10zY7IBo4iFWtQwIEfrVOG5tlS5FzJera1al63qGIhUpZeSf9SJMY8fL8uMHrpj631unpVEplZYq5BRU6d6NEPWuuNX/e0F2+oVKebZyLOpI7WCZhEOP2b/qjy2rv3Ku7C/ByO1hNy3GL9u20kYD4uzemxDxzmkFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FtOA2bEH; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="gCMaDhn7"
-Received: by mail-wr1-f67.google.com with SMTP id ffacd0b85a97d-3a0ac853894so683285f8f.3
-        for <patches@lists.linux.dev>; Thu, 15 May 2025 05:32:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FtOA2bEH"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-22e6880d106so6147865ad.1
+        for <patches@lists.linux.dev>; Thu, 15 May 2025 05:34:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1747312343; x=1747917143; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0DHCqe2ELkkc+UlPf3xD1LiX/49qcNMEoSzXRssIhGY=;
-        b=gCMaDhn7lug9j0evODkc7PpY+01CwyW2JKhi70eaRPtUtGNpHhL3T9CWWTxAXNsEgS
-         pNgtfjW8Qd8kFnsbXcrQBK2votLYVHoJxTrSKIDOOjcZUEKOzKsMV88Igec9HeUkrQoJ
-         KDeQWXMpTuv5mTdlYplGdXCfLVJV3WZMmwZicHsdtkdeJvncIX7icsqaGbFN3TYGeoP8
-         m0sN0d2eIxCiAKJ2rQwkmXJarAb+eidekyHlQhevYnxQnySCy35TPiAdMVMeYmTdGWYw
-         pUhTDWiEgFvG2singNdOHm++8RDsEadopCHPunbBcB2lFhmZqJextndkO+vQ90nxdkzQ
-         L00g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747312343; x=1747917143;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1747312481; x=1747917281; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0DHCqe2ELkkc+UlPf3xD1LiX/49qcNMEoSzXRssIhGY=;
-        b=cQCW7wtTdU6Mw2BGGbQQM8M3J+a3tZh1O2vAiBW8S0SIIQlIZLRebm+VwIBsk9M7ZE
-         /yvBkeCQraXOCHOijYRTW8ULLeMcaM+KRymcwTAJw1Z/8vu0QsI5/phrBRa6+83NDNkH
-         kwAoWVIBgpZatqnpt4UK/AlS2TOP52b3x9FmcWU8xz3GKT7UyAKD3YMp/bE0ewq8b/U+
-         h9UWPZ+Uc+39jXEhGReb1Ho+i70tZ/L0cQiXKRqcI5ClmUyPvZAN/ncVIDFOGfgWNiYG
-         rKCw09yGxlzRUEqqUdNrnSlMSobR1ax6/8+1OimTmTMiQ3U+3tDjiYCdUA3Iy/iSiCLT
-         jM7g==
-X-Forwarded-Encrypted: i=1; AJvYcCVXDHb9a2m2A4FrTUPZnSjdwUkLKuYlQt5qIiXaVULOWFafwF2RyXHGNpen0GKS/B16H5/8E/oZ@lists.linux.dev
-X-Gm-Message-State: AOJu0YwLcKzCDbsK/EOry7j+z9vSEwkK5DZPB3vumlu+am985JMs2/d2
-	5Ilffiof6hryGWsDTn7xhy81djvxUmjlvDAHueXmPzOlYA1nqy8r8IG0OGhJMCo=
-X-Gm-Gg: ASbGncvYThr5yFPx+OrRNuJJxiqO8T8ZGKMlofij0brR6q3y4+KyOUxTmUYH1gyfp8V
-	RkmiTGlLnl018/4wM67NhQNhk802m0tx3NwfiHnaIG0bf5LHBwECIk+UgJKknnSXfS2SyzF48hz
-	jiEOXMAjGpZNcR7OEfqqKnPfmVWJXER3FlpD5LiuO0u44u7Nz0ohn8LKNU6TUB4uXQ3iRPRUMEq
-	JLY23t7rbLQ4md+eZ4fre+zwLzRK3qF69wap+hMB5pl/IxbTQDFaGS/LWBfP6Gl8fpph/SydY9n
-	IvUrPVFSFy2u32rBYFrNWnsa1rj8AySnvR4velI9zKvmgJxq6ieu8nRCO+gTGanWGKazUqvt8Wl
-	5hxsAWnkE0Q==
-X-Google-Smtp-Source: AGHT+IHsBfMKfF7WyoADO+426AhNanVPeH/8DogvNYGecOtbesvKzwVwHUFljsLKdXD2rqKBnqJh+g==
-X-Received: by 2002:a05:6000:250d:b0:39e:cc5e:147 with SMTP id ffacd0b85a97d-3a34994ef3dmr6026464f8f.55.1747312343270;
-        Thu, 15 May 2025 05:32:23 -0700 (PDT)
-Received: from u94a (1-174-3-124.dynamic-ip.hinet.net. [1.174.3.124])
-        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-4dfa297ee11sm195636137.12.2025.05.15.05.32.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 May 2025 05:32:22 -0700 (PDT)
-Date: Thu, 15 May 2025 20:32:08 +0800
-From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	hargar@microsoft.com, broonie@kernel.org, kees@kernel.org
-Subject: Re: [PATCH 6.14 000/197] 6.14.7-rc2 review
-Message-ID: <2rlf4aoqeekjwcupepf6zkdkthhfwneeobiqeb3ujyz7ami5zb@eg5litfe4a7n>
-References: <20250514125625.496402993@linuxfoundation.org>
- <vrvefaimjqkseuoyuhgg6omt2ypgp5v6xwwuxihj2t5jidizyr@ir5w67k4kl36>
- <2025051529-mulled-cubicle-b1cd@gregkh>
+        bh=8g14WITKUispC4svi3eKXIDjFz402ZwoIsie5uvpbTs=;
+        b=FtOA2bEHObwhnVgQP3n35EMqVHZ2UGFDz2Wyep1KZ8hCo3un7p+a2JIrJ62yOU7J5r
+         /f2F/G9cbZ9/tGNKgDxC+8dgLjXdP9dVvFc0Nm6NppF0ip7xpf6FwrdYd39USiG2wkob
+         FkfwQy8HwXWy5+9jtd3z2p7OApB2fk9csBjfv36LLi1MpRLW2l0YjPnw8wLHRW5JItcX
+         VSB+H2OuyUr16f2PJLnm0lcpQRWsNMk+cRtdrTmi+6VGIUk5jFkdi7Ob0wTwwnmMVchi
+         Hy+yD+qLgMRgvZKwtauX+zxmRwny/fcu/XwOU0x+A407MzWkCnnDkVX8Ib4PeMDsTsr/
+         3u2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747312481; x=1747917281;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8g14WITKUispC4svi3eKXIDjFz402ZwoIsie5uvpbTs=;
+        b=K6NJj1a04AjlmavzaJhtBiaA2hgi5DAE1Yy/QsH5QsRR5qs0nZ2k0mcw3cOz2sXvN6
+         eptQg+khIa7xzXUGmxXF2pT7tYPfsHctMHSXXN79+eeOM9ROUTAGgilL/qbEml2hY1k0
+         14S+EropePoFqUIG5ghi3qIKiq+GYdsrEDCT5yL62hrYTK9QYi2xPytm20amCklXBIt6
+         DX8EFPVWO/uWvK4joU8Ur9XoVuJSVGX5v3ugN1+/AmTSMjfvfZtTvL5prnSiAA0oRE9a
+         iHqRefPjc1jWuFcBzDzaCDYsydshiste44/NGHtPlsV7d6kBC6cNpUY3UWStUl0VI/5x
+         0cpQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWD4fDm5XMwvNl/5cJXfN55rYaOJbwiWbiP+jNsvTPRT97a77CrrLuHd58tTYRmqLPmmBhWHLGp@lists.linux.dev
+X-Gm-Message-State: AOJu0Yze2ejs7b3SEyK1Q4eUqLHL1WfeyMMreaS41hxA+lEyj8qHelzW
+	txGbkFpdqwcWwcUIdFgPvIpLfHVtbbjBvNPUWKE+yD8ELSC3GohZ5xCXAm3oLi+Xbsnc12mxF/z
+	CMmSxme2DI+gA8rn4Q678/xWyVMQ=
+X-Gm-Gg: ASbGncvEql0KwWe7Yxuwh3T4TLC7yOmmMf+Jd3nncfD7X7LmtOj+It17PJxNQAOpT+3
+	WsUoR8tZvksI1YAmarauiLSuaRK7cRHg9e5HmkBpiwelEqtCzBYBJcDC/OIPGQgCL+iEevkadL0
+	X3Zfk4Ia0+Jl1Mxg0mtaHyBVbM9rqmSQmbRR1lY9BUaDHjj9EvF+golaFqHg==
+X-Google-Smtp-Source: AGHT+IHXGOzKeRRJE9zCbbAu4uWsVkFOc5cXh630pg+5rvqSiHBSlbECsaOkM/ZnkgB8uWM5JjirYQ87jqOKcJCGzEM=
+X-Received: by 2002:a17:903:191:b0:215:b473:1dc9 with SMTP id
+ d9443c01a7336-231b601e84fmr31085845ad.46.1747312480861; Thu, 15 May 2025
+ 05:34:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2025051529-mulled-cubicle-b1cd@gregkh>
+References: <20250512172044.326436266@linuxfoundation.org> <32c592ea-0afd-4753-a81d-73021b8e193c@heusel.eu>
+In-Reply-To: <32c592ea-0afd-4753-a81d-73021b8e193c@heusel.eu>
+From: Luna Jernberg <droidbittin@gmail.com>
+Date: Thu, 15 May 2025 14:34:27 +0200
+X-Gm-Features: AX0GCFuQNAmSsVkTFc4Edf3mppYs7UrTKvOfYgP_G21yvSE2cDUBtmgakrnqAXw
+Message-ID: <CADo9pHgq2jzeVO4PFW6ObBj2bT9FSWcJUC5fRA9kVjMVah0J0g@mail.gmail.com>
+Subject: Re: [PATCH 6.14 000/197] 6.14.7-rc1 review
+To: Christian Heusel <christian@heusel.eu>, Luna Jernberg <droidbittin@gmail.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	Mario Limonciello <mario.limonciello@amd.com>, Alex Deucher <alexander.deucher@amd.com>, 
+	Ray Wu <ray.wu@amd.com>, Wayne Lin <Wayne.Lin@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 15, 2025 at 02:25:50PM +0200, Greg Kroah-Hartman wrote:
-> On Thu, May 15, 2025 at 08:15:32PM +0800, Shung-Hsi Yu wrote:
-> > On Wed, May 14, 2025 at 03:04:16PM +0200, Greg Kroah-Hartman wrote:
-> > > This is the start of the stable review cycle for the 6.14.7 release.
-> > > There are 197 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > ...
-> > > Kees Cook <kees@kernel.org>
-> > >     mm: vmalloc: support more granular vrealloc() sizing
-> > 
-> > The above is causing a slow down in BPF verifier[1]. Assuming BPF
-> > selftests are somewhat representing of real world BPF programs, the slow
-> > down would be around 2x on average, but for an unrealistic worth-case it
-> > could go as high as 40x[2].
-> > 
-> > 1: https://lore.kernel.org/stable/20250515041659.smhllyarxdwp7cav@desk/
-> > 2: https://lore.kernel.org/stable/g4fpslyse2s6hnprgkbp23ykxn67q5wabbkpivuc3rro5bivo4@sj2o3nd5vwwm/
-> 
-> Is this slowdown also in 6.15-rc right now?
+Same problem in rc2 just tested
 
-Yes
-
-> If so, let's work on fixing
-> it there first.
-
-Okay, will send out a regression report shortly.
-
-Shung-Hsi
-
-> thanks,
-> 
-> greg k-h
+Den tis 13 maj 2025 kl 07:26 skrev Christian Heusel <christian@heusel.eu>:
+>
+> On 25/05/12 07:37PM, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.14.7 release.
+> > There are 197 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Wed, 14 May 2025 17:19:58 +0000.
+> > Anything received after that time might be too late.
+>
+> Hello everyone,
+>
+> I have noticed that the following commit produces a whole bunch of lines
+> in my journal, which looks like an error for me:
+>
+> > Wayne Lin <Wayne.Lin@amd.com>
+> >     drm/amd/display: Fix wrong handling for AUX_DEFER case
+>
+> amdgpu 0000:04:00.0: amdgpu: [drm] amdgpu: AUX reply command not ACK: 0x0=
+1.
+> amdgpu 0000:04:00.0: amdgpu: [drm] amdgpu: AUX partially written
+> amdgpu 0000:04:00.0: amdgpu: [drm] amdgpu: AUX reply command not ACK: 0x0=
+1.
+> amdgpu 0000:04:00.0: amdgpu: [drm] amdgpu: AUX partially written
+> amdgpu 0000:04:00.0: amdgpu: [drm] amdgpu: AUX reply command not ACK: 0x0=
+1.
+> amdgpu 0000:04:00.0: amdgpu: [drm] amdgpu: AUX partially written
+> amdgpu 0000:04:00.0: amdgpu: [drm] amdgpu: AUX reply command not ACK: 0x0=
+1.
+> amdgpu 0000:04:00.0: amdgpu: [drm] amdgpu: AUX partially written
+> amdgpu 0000:04:00.0: amdgpu: [drm] amdgpu: AUX reply command not ACK: 0x0=
+1.
+> amdgpu 0000:04:00.0: amdgpu: [drm] amdgpu: AUX partially written
+> amdgpu 0000:04:00.0: amdgpu: [drm] amdgpu: AUX reply command not ACK: 0x0=
+1.
+> amdgpu 0000:04:00.0: amdgpu: [drm] amdgpu: AUX partially written
+> amdgpu 0000:04:00.0: amdgpu: [drm] amdgpu: AUX reply command not ACK: 0x0=
+1.
+> amdgpu 0000:04:00.0: amdgpu: [drm] amdgpu: AUX partially written
+> amdgpu 0000:04:00.0: amdgpu: [drm] amdgpu: AUX reply command not ACK: 0x0=
+1.
+> amdgpu 0000:04:00.0: amdgpu: [drm] amdgpu: AUX partially written
+>
+> this does not seem to be serious, i.e. the system otherwise works as
+> intended but it's still noteworthy. Is there a dependency commit missing
+> maybe? From the code it looks like it was meant to be this way =F0=9F=A4=
+=94
+>
+> You can find a full journal here, with the logspammed parts in
+> highlight:
+> https://gist.github.com/christian-heusel/e8418bbdca097871489a31d79ed166d6=
+#file-dmesg-log-L854-L981
+>
+> Cheers,
+> Chris
