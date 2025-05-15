@@ -1,130 +1,107 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4A929B8C0
-	for <patches@lists.linux.dev>; Thu, 15 May 2025 21:12:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3EADB664
+	for <patches@lists.linux.dev>; Thu, 15 May 2025 21:37:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747343572; cv=none; b=O+IeEyShug9ORyACKSL8+hcsZ5DetZdHVGfGzzA3GaNE+EAvLbah0j2cVN0tjqQlG0CiUjcc3Ofrai6wwNx1CYsGqWky/oMF5eFpqe5P+b9SkYf5PRpDtXVIFQ0S6BICgrQhOObyx3YU/tnCs+wf0F0Qh5y6UKd4v7sEW+0C/e8=
+	t=1747345035; cv=none; b=atx9owvy/fTUMnjZ6PDwWsn8mUfNi6ZhBZqNCuFVQFWtSdeK0AzpaVDt2b+x0wk2BcUoNi7NsbjpVjMZSiY9VVKs5nlPFCsoHnw/DtGJmOBIWCGzxmT4i2cv0pRpmcUWa+9jBck6KrgtTj9P/xes59ZdLarppIaAgc/GbZiL/rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747343572; c=relaxed/simple;
-	bh=q3PDrZM6G8zDDRhj4QwvJtG8rSqiKqS/I3flXIXrZeU=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=riXmeNEbzADRhWQ8fE1Nju9DWtcMUczRsE/Hn59g526yPPRjlbDOCMarotghDWf8SKezLVrvC0pZnukGRvzvMF10XrD4tVUyol4PIRJTxCt9WcK1k6FRrNqdEGZ+xLU3yhY/3zEJAHNLg1egcdA6Ha59OB5aLZsgee5HJq7jaMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GUb1VMCA; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747345035; c=relaxed/simple;
+	bh=6uepYIsSs6iVLsyaTwSMa1emoHWojyYAxnIzLLnYpno=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GyKFZQgp5p51xz4GKGUvJCrc5LV8v9cEd8gGnSIyWbTsvWgVBomaWfX4ltFA3Yd1BM/v7WywHQDaILZSMGoCBOqKidSxGUURFrvf+31rdVjjxHyMc+JM8Yeu/D9QwRzSIWwgCO3ZG6QZgazglmLbc7rGVcYVucQIA65F9g3cYms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=O7alAdka; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GUb1VMCA"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43cfdc2c8c9so7528395e9.2
-        for <patches@lists.linux.dev>; Thu, 15 May 2025 14:12:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="O7alAdka"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-442f4a3a4d6so9465155e9.0
+        for <patches@lists.linux.dev>; Thu, 15 May 2025 14:37:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747343569; x=1747948369; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=opuvm8FKWBIYNRf90PxXi7sMcW0qx9YAX9FlKAsACPA=;
-        b=GUb1VMCACibCsv3ejvg+pEEnlcU6YFmkyE7aEyKcY3IbKN0hNS3Ab3lywpS1v8iojm
-         ePIlmLmIBHxP+4QP/Q2yYanlpO86ND8ZAM8jwv4ncw98VCbPq5e0CCIygiCo/Utqm9vC
-         +mOWOvscXBbnAeYrB0Zx2RyjXZTilJ72ajXFaQf3f1cW5IrAFxaMsgNtb3RW95mr298y
-         8ozAc7pyD54IHbRiYq+jEQ7nDYsGF4k4qLX1AUtUZAGE7omBQj5b00riLenRq2Hgcrl/
-         bYGI7zmhEVAExrmu1uBARGbXYo33jaE1rwrCwahs3nO3SveyeCZu3hqE+ySqgf8claZ7
-         RH2g==
+        d=googlemail.com; s=20230601; t=1747345032; x=1747949832; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cmT5q5U5QpFLoxGl0O1NThy+g8rCMO4busNalB/ZFBI=;
+        b=O7alAdkaIdiMzNGx/LU5ARSgqXsijPWGM8F+ivEudtPakhkDFlcowD0sdCToLcM99Y
+         DxtqggZ19T/whF6Bbf9zhsa632cWGGTSpGDGTshVmoodKGk+uk9bXRoZHc7xuO2ngcvm
+         /OIvIa+iQtlYmnz9cjaNOc8GG+HeTfA9cPF1+3dBkGcdvQAx9qKGuOppVhgXtYKkrraf
+         wU35vkSev68cVDu/H7Qy5dKNdMdD3QiJugkTIAQUtp9oOZMA9IuMZ+e4aJaj29EWQ37K
+         0gtFctz0OPYRTcyAMGzO64YHS8wd3aPEZKNkxcxAPQfovWYwWLyCzLiYQdfj8G5cVlGt
+         Ms8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747343569; x=1747948369;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=opuvm8FKWBIYNRf90PxXi7sMcW0qx9YAX9FlKAsACPA=;
-        b=jWmRWg9sOSJkDPUaQ1we30uCns9EnrD9RU4PgHh61Vo/8tYNHxg3JZkn9zCQnUooSJ
-         0WqcWlxA36/HtgGf0ltjq8kT1qioSJxoY5RAYJEdCNb7lYbBFcJIGZ68pEnx6EAf01Q6
-         B2unplJfMSWdvuhXcj2kSobFEncMuuqeXIPRP2P9eIAUAUOtadma/McZTnGzfGPeQqSb
-         LTjoyL+CD42nVoRUufXDdoYKc82jI0gN9bWAmRr6PD0jZbUcyqEicBvCaVpelmZO/xyi
-         WRSlVO5JyNrwce5FquDmVVj3j5IaKdRABFBuxcVFQF8scQRDwJUiU3dq0U1zwxemhRtG
-         DsBQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWzoO004pOSBSkU6yYM0L/o5kbFmsnIh0IUm+rmxWRP5gcFCFpy1ccW/0VS6aM+jzEqfwIPm7S6@lists.linux.dev
-X-Gm-Message-State: AOJu0YwL9pqvJBnQZoZILPiCK31U5GNrVpwkc2tgo5uD4voKUIEFz84K
-	zxaAczIapaJ8TVdN4dt0jZuIg/gRx/gmGhNFRt90yZn5AqUNbzyWqXJcX04q+XlZA/e4FP35IGu
-	or3q9f+2KdbvL9wZveIeHXxPkvFTFT74=
-X-Gm-Gg: ASbGncvicc6W68DqiO6689C/eP62TZeCKvcbVaCdr+H6zA1NMAImSfggqnAKZF3Y4P1
-	F6LVy1lHenIO63DteamE4Py/x4WdnJoKPUTCK29xjdHWL7N83vzc4lrFep3juwUzTJooefDIOps
-	pomvbgzooEvmwE7NpRdI9ZgG58o0eGm4QxPw==
-X-Google-Smtp-Source: AGHT+IEYoK6f7wP0SPm/gfKqdWjWZ4HX90FKs87O0UBgxajWhbvIOpj9PHkIZ8r7babBAps9G/Ln4njRTceq0nIyQp0=
-X-Received: by 2002:a5d:5c84:0:b0:3a2:12a:e637 with SMTP id
- ffacd0b85a97d-3a35c8542a6mr1195017f8f.56.1747343568560; Thu, 15 May 2025
- 14:12:48 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 15 May 2025 14:12:48 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 15 May 2025 14:12:48 -0700
-From: Kane York <kanepyork@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <097a4926cebc9030469d42cc7a3392b39dfd703d.camel@nvidia.com>
-References: <097a4926cebc9030469d42cc7a3392b39dfd703d.camel@nvidia.com>
+        d=1e100.net; s=20230601; t=1747345032; x=1747949832;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cmT5q5U5QpFLoxGl0O1NThy+g8rCMO4busNalB/ZFBI=;
+        b=NERxm64q3m6OM4H5eIeyfkX7neqPPwObT7YHuGuUHMbL6XADqybyezkWq1Q3f0yeVx
+         NPLv4aBZqUS9Q107CS7TycjOCf/Vk4RbxkVeyH4X8+ir1e1D5nx775rWRFa7vvm9Mb+u
+         bLDtmg7l1vH7JL90q6uRoEpLC59TnP+sj11vKeLQtJJjliGHGfJCZoMDqyPd9b1p2vFw
+         6sY7+4mUCpX3fb0k1NYzIB9F/3aMUhzyw4M/EGHxOz2AXs3qrMnTUUmgE+rvLzzraE4k
+         arPtC9Jd6MyGdKI3Dhri85yAZQu4F9nNmRg81I08vvOZSnYjm+kyeTwtbIgVweKZY32J
+         jVmA==
+X-Gm-Message-State: AOJu0YxFnmj3CbcIrkYWV7O7b+CQnopJwJnnwZE8HRXKFMJYYGNckjw8
+	PVlME6HbK17nxZz+is+RCAA0dgm4nBlUk6JbIiiMJdaiugeLB9C/9hE=
+X-Gm-Gg: ASbGnctqJ49I1PM4d1B53PX/ej/PRAqe87GD9tY4UA+mEQ85bRiiDByPG+4hytG1Q1y
+	afG2p3EZ4le2QvwRIOeF4P2rmOW2wrE/F0wqdoNi1efTjuOEqlXFbS0kiMcMy8Zdc4pihUN8KCz
+	uXLOU9aukOWgjo0NzJfcwrrCE9oz63S7c3yQfv7JuSaUCNPhtwd+YtJ7+qVTudl2vgOtwOZk87D
+	uFzyosJu0kKyYvJaWm/P2ui1+zBLLKctsLsnpnPujEcyFa7+3vz9ptYgOKGuEiKHbRnRz0hadJ9
+	ZxD6sukf9pxUPUlrXmoZ3dJNJFgrSjvNvZ8/2QOoXILTdRkZux299OY/k5RN7zXJxSsQJyAGOOJ
+	QrUeZug2rK74JMGbLM9wzXVE69vfpxHQLtCFR
+X-Google-Smtp-Source: AGHT+IGrVCsAbOfF2Z57AhIYHZhANi6KSxXgDZjVUW14yWJvdn190w6JMajAW56Qg1tsRmwVdCyqiQ==
+X-Received: by 2002:a05:600c:4506:b0:43d:fa5f:7d30 with SMTP id 5b1f17b1804b1-442fd9a2be1mr6494175e9.16.1747345031811;
+        Thu, 15 May 2025 14:37:11 -0700 (PDT)
+Received: from [192.168.1.3] (p5b057603.dip0.t-ipconnect.de. [91.5.118.3])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442ebdc362fsm78870425e9.1.2025.05.15.14.37.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 May 2025 14:37:10 -0700 (PDT)
+Message-ID: <d77efcd5-4b38-46b9-977f-226c53a7aadf@googlemail.com>
+Date: Thu, 15 May 2025 23:37:11 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Thu, 15 May 2025 14:12:48 -0700
-X-Gm-Features: AX0GCFslEILHetAnpjY2QFEJ9SocrJkFvcA9OUfU-AXwwAPQyRsjmsYuQT8ABk4
-Message-ID: <CABeNrKVfCHww2k_W-0s4GQE=2bA+wjje=FEH=gL8FhNbFB1tOw@mail.gmail.com>
-Subject: Re: [PATCH 1/5] objtool/rust: add one more `noreturn` Rust function
- for Rust 1.87.0
-To: ttabi@nvidia.com
-Cc: a.hindborg@kernel.org, acourbot@nvidia.com, alex.gaynor@gmail.com, 
-	aliceryhl@google.com, apopple@nvidia.com, benno.lossin@proton.me, 
-	bjorn3_gh@protonmail.com, boqun.feng@gmail.com, dakr@kernel.org, 
-	gary@garyguo.net, jhubbard@nvidia.com, joelagnelf@nvidia.com, 
-	jpoimboe@kernel.org, linux-kernel@vger.kernel.org, ojeda@kernel.org, 
-	patches@lists.linux.dev, peterz@infradead.org, rust-for-linux@vger.kernel.org, 
-	stable@vger.kernel.org, tmgross@umich.edu
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.14 000/197] 6.14.7-rc2 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250514125625.496402993@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20250514125625.496402993@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Thu, 15 May 2025 19:06:10 +0000, Timur Tabi <ttabi@nvidia.com> wrote:
-> On Thu, 2025-05-15 at 09:18 -0700, Josh Poimboeuf wrote:
-> > > Since I build with LLVM=1, I'm assuming the answer is 18.1.3
-> >
-> > I'm not able to recreate, can you run with OBJTOOL_VERBOSE=1 and paste
-> > the output?
->
-> You probably can't repro because it includes code that hasn't been merged upstream yet.  Try this:
->
-> https://github.com/ttabi/linux/commits/alex
->
->   CHK     kernel/kheaders_data.tar.xz
-> drivers/gpu/nova-core/nova_core.o: warning: objtool:
-> _RNvXsa_NtCs8S3917Wilyo_9nova_core5vbiosNtB5_14PciAtBiosImageINtNtCsgK88DPai1lC_4core7convert7TryFro
-> mNtB5_13BiosImageBaseE8try_from() falls through to next function
+Am 14.05.2025 um 15:04 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.14.7 release.
+> There are 197 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-...
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
+oddities or regressions found.
 
-> 011b     634b:	e8 00 00 00 00       	call   6350 <.Ltmp38>	634c:
-> R_X86_64_PLT32
-> _RNvNtNtCsgK88DPai1lC_4core5slice5index26slice_start_index_len_fail-0x4
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-Yup, that's an unrecognized noreturn function.
 
-src/core/slice/index.rs:
-> #[cfg_attr(not(feature = "panic_immediate_abort"), inline(never), cold)]
-> #[cfg_attr(feature = "panic_immediate_abort", inline)]
-> #[track_caller]
-> #[rustc_const_unstable(feature = "const_slice_index", issue = "none")]
-> const fn slice_start_index_len_fail(index: usize, len: usize) -> ! {
->     // SAFETY: we are just panicking here
->     unsafe {
->         const_eval_select(
->             (index, len),
->             slice_start_index_len_fail_ct,
->             slice_start_index_len_fail_rt,
->         )
->     }
-> }
->
-> // FIXME const-hack
-> #[inline]
-> #[track_caller]
-> fn slice_start_index_len_fail_rt(index: usize, len: usize) -> ! {
->     panic!("range start index {index} out of range for slice of length {len}");
-> }
+Beste Grüße,
+Peter Schneider
 
-The return is at offset 0093 (x62c3) with a jump to __x86_return_thunk.
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
