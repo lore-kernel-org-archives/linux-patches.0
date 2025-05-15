@@ -1,255 +1,195 @@
-Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A0B6D17
-	for <patches@lists.linux.dev>; Thu, 15 May 2025 00:49:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.178.238
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54691AD51
+	for <patches@lists.linux.dev>; Thu, 15 May 2025 04:17:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747270175; cv=none; b=kcMxj41eSUzgsLZxRshQh55eJkQROeYIxuVUo4SnmYustL7+OlWtzfupXLC6bgq83s+WjiCvqy9EGQcSmj+2ei5u2zGYT/Cff91FKFpQTSFVOEqIaywqrFjLa9Mkc6wlJ431g9IsHCA2giv55wVa0y4UueKIucrXBaEaQ1ko6/U=
+	t=1747282678; cv=none; b=AUxP9DMJUpJeDSS2Q2gTreEhvtavO3nKlkmWpeDft8vfvU3gWbIdNn53O6MbJCUnV97wiblYkwerdw8rHisxQFKTq7kmtcYx8HICKOD/PH/mH5D3+2UDbYD7rqn78zBbtz8GhCwthzk75AyO+tzptaxmt/06eRSjoeDjdwTKQrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747270175; c=relaxed/simple;
-	bh=CTBGn+FAblEG8xDs0u55dsuE1wYtE1s9QGMT0UlaHwM=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=J8LVHKns9w5j/SSj6D1Jp8fOpzUZR77CHLvmdoniKUkeD0mHrTi0q1X7F5yvso8F2pLkXwxPN1xft/yQuqimzZC5rbG/ZC0zouMPugmtRjqaFHLU+XONbKgfoApD2yELVt7ZA0LLiTmG/5FD5X7MD/WX7/yDjm6UoC37bWMoqqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.178.238
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250812.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54F0k3U7016375;
-	Thu, 15 May 2025 00:49:25 GMT
-Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 46mbc8sxgb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Thu, 15 May 2025 00:49:24 +0000 (GMT)
-Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
- ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Wed, 14 May 2025 17:49:20 -0700
-Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
- ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Wed, 14 May 2025 17:49:16 -0700
-From: <jianqi.ren.cn@windriver.com>
-To: <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-        <jianqi.ren.cn@windriver.com>, <idosch@nvidia.com>,
-        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
-        <pabeni@redhat.com>, <jhs@mojatatu.com>, <xiyou.wangcong@gmail.com>,
-        <jiri@resnulli.us>, <vladbu@mellanox.com>, <netdev@vger.kernel.org>
-Subject: [PATCH 5.10.y] net/sched: flower: Fix chain template offload
-Date: Thu, 15 May 2025 08:49:13 +0800
-Message-ID: <20250515004913.3611901-1-jianqi.ren.cn@windriver.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1747282678; c=relaxed/simple;
+	bh=oYorAIMsBDyyCSG+trKuqWYvEHEl39Ax0nS9WpLJvGg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cUjuK8PFQjOdHkcWVLU+W2e67ECj/xt2m2b1vcLwzWgyb3Ak8CIHgpBZud69lYOZGrrdMsIvmcDua4vFzZ+kmijEhWOGCM8S0SQ2NurBL2cU5XJdrHdnWwr5jYJTUQ5W72slGkmX6KZ6hbdXhKGPxIP2K+C9kNHfIO6Hc1G1v70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZutQC7pC; arc=none smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZutQC7pC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1747282677; x=1778818677;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=oYorAIMsBDyyCSG+trKuqWYvEHEl39Ax0nS9WpLJvGg=;
+  b=ZutQC7pCIDjvJL2OF2K4Y2yWkGjJemWDy9e0V7j2Tl/3jcLVGH5Zzord
+   0Zn/qnj8kJBroVmv5FSitojAx6G1hcD1wp3K+VsT/NkiTgBIzIk4M1Q+k
+   ZldVVbaEsWil5yxh9SJko7cvyQmXHbTDXWEM7pLutS3vOj0u1LGusICov
+   hMVSqY052S/SsyP7TD37o4ENVqErIRiYocyCQlcmN2co5fA8P+IwBBdhI
+   N378yLy3f+kkc4406XpMBEbfX985nVHeiPS0hc4XWTXylX/RfJuEo2dq8
+   1XsgxkYy1GOLkxjIbgXwyJemLSBF7DiuftqJs6FYSU6qrC904XSk1k3l1
+   g==;
+X-CSE-ConnectionGUID: oLa3nahWTkGf/6Ky3pNw3g==
+X-CSE-MsgGUID: m1zTO8xpRZq9Imsk2B9pPQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11433"; a="48888927"
+X-IronPort-AV: E=Sophos;i="6.15,290,1739865600"; 
+   d="scan'208";a="48888927"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 May 2025 21:17:56 -0700
+X-CSE-ConnectionGUID: lgV6WdT2TR2+c0kFV7wCrA==
+X-CSE-MsgGUID: +/WX806LRQOc0jxdd26R1Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,290,1739865600"; 
+   d="scan'208";a="143003801"
+Received: from mfrick-mobl2.amr.corp.intel.com (HELO desk) ([10.125.146.12])
+  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 May 2025 21:17:55 -0700
+Date: Wed, 14 May 2025 21:17:45 -0700
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+To: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org,
+	Andrii Nakryiko <andrii@kernel.org>, bpf@vger.kernel.org,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	Kees Cook <kees@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: Re: [PATCH 6.14 000/197] 6.14.7-rc1 review
+Message-ID: <20250515041659.smhllyarxdwp7cav@desk>
+References: <20250512172044.326436266@linuxfoundation.org>
+ <g4fpslyse2s6hnprgkbp23ykxn67q5wabbkpivuc3rro5bivo4@sj2o3nd5vwwm>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Proofpoint-GUID: 4rEBOr7PsorjKeEQ0GcwI45B7qS8RyVX
-X-Proofpoint-ORIG-GUID: 4rEBOr7PsorjKeEQ0GcwI45B7qS8RyVX
-X-Authority-Analysis: v=2.4 cv=IIACChvG c=1 sm=1 tr=0 ts=68253a15 cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=dt9VzEwgFbYA:10 a=Ikd4Dj_1AAAA:8 a=J1Y8HTJGAAAA:8 a=t7CeM3EgAAAA:8 a=uSdy2bKQw3vfi-H1j0oA:9 a=y1Q9-5lHfBjTkpIzbSAN:22
- a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDAwNSBTYWx0ZWRfX8Z/iYC9pUWTF BWO0+I1GOyFjkwM5N39aFOgQ+yJHv4H1Sk8j5OdQBjMYQoB7Rktvs9x8QIZ1mvfL6bHoyc02vVl lEkRYrbtpWRIlfwqkS/sS93U+k01p8JjAcbtDr4L/lOp+TqK+5awtMLyCAHGC5a3UphZtceyEml
- P4wFCDQveFiVKG5C7BK9UniFS83obmYa0M1ZKQYFV1dxR5sosayn45NM8m3QsnkjEaa4UxtrCdf G8VkICH9izbUQe4ZcIfxQ3zbCbpexV2BAsh8c+Qhk13+H/aODDSCCbG1gYpbsnyJ5FK2t57UTiQ e7vN7FarFzf9XyAv37rGRRZtAksTG9xP6+i9FDeTqizpkMGgsJNrB0azeyN36VDYk2y7R4CCpeM
- KcWQxm9hwU5DSREA1Lh2G2+abvUiraxotZKpaPJsfzFAUow/GC108eCmkj+IUFsxR3Lh/L6N
-X-Sensitive_Customer_Information: Yes
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-14_05,2025-05-14_03,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- spamscore=0 mlxscore=0 suspectscore=0 malwarescore=0 phishscore=0
- bulkscore=0 impostorscore=0 mlxlogscore=999 priorityscore=1501
- clxscore=1015 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.21.0-2505070000
- definitions=main-2505150005
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <g4fpslyse2s6hnprgkbp23ykxn67q5wabbkpivuc3rro5bivo4@sj2o3nd5vwwm>
 
-From: Ido Schimmel <idosch@nvidia.com>
+On Wed, May 14, 2025 at 07:49:29PM +0800, Shung-Hsi Yu wrote:
+> On Mon, May 12, 2025 at 07:37:30PM +0200, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.14.7 release.
+> > There are 197 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> 
+> Running included BPF selftests with a BPF CI fork (i.e. running on
+> GitHub Action x86-64 machines), I observe that that running the BPF
+> selftests now takes about 2x the time (from ~25m to ~50m), and
+> verif_scale_loop3_fail is timing out, taking more than 6 minutes to run
+> compare to the usual single digit second runtime. See [1] for the log.
+> 
+>   07:59:38.2908767Z #449     verif_scale_loop2:OK
+>   07:59:48.2920046Z WATCHDOG: test case verif_scale_loop3_fail executes for 10 seconds...
+>   08:01:38.2921924Z WATCHDOG: test case verif_scale_loop3_fail executes for 120 seconds, terminating with SIGSEGV
+>   08:01:38.2973073Z #450     verif_scale_loop3_fail:FAIL
+>   08:01:38.2973500Z Caught signal #11!
+>   08:01:38.2973808Z Stack trace:
+>   08:01:38.2974148Z ./test_progs(crash_handler+0x38)[0x564524d62f5c]
+>   08:01:38.2974682Z /lib/x86_64-linux-gnu/libc.so.6(+0x45330)[0x7f696f47d330]
+>   08:01:38.2975847Z /lib/x86_64-linux-gnu/libc.so.6(syscall+0x1d)[0x7f696f55f25d]
+>   08:01:38.2976387Z ./test_progs(+0x41a7cd)[0x564524d9d7cd]
+>   08:01:38.2976822Z ./test_progs(+0x41a7f5)[0x564524d9d7f5]
+>   08:01:38.2977236Z ./test_progs(+0x41a82e)[0x564524d9d82e]
+>   08:01:38.2980004Z ./test_progs(bpf_prog_load+0x681)[0x564524d9e555]
+>   08:01:38.2980570Z ./test_progs(+0x408ccc)[0x564524d8bccc]
+>   08:01:38.2980969Z ./test_progs(+0x409b89)[0x564524d8cb89]
+>   08:01:38.2981337Z ./test_progs(+0x40b87a)[0x564524d8e87a]
+>   08:01:38.2981674Z ./test_progs(bpf_object__load+0x26)[0x564524d8eb24]
+>   08:01:38.2981943Z ./test_progs(+0x8c160)[0x564524a0f160]
+>   08:01:38.2982173Z ./test_progs(+0x8c1c8)[0x564524a0f1c8]
+>   08:01:38.2982467Z ./test_progs(test_verif_scale_loop3_fail+0x21)[0x564524a0f59b]
+>   08:01:38.2982752Z ./test_progs(+0x3e0500)[0x564524d63500]
+>   08:01:38.2982983Z ./test_progs(main+0x5cd)[0x564524d65248]
+>   08:01:38.2983261Z /lib/x86_64-linux-gnu/libc.so.6(+0x2a1ca)[0x7f696f4621ca]
+>   08:01:38.2983651Z /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x8b)[0x7f696f46228b]
+>   08:01:38.2983998Z ./test_progs(_start+0x25)[0x5645249ba4a5]
+>   08:08:01.6898496Z libbpf: prog 'while_true': BPF program load failed: -E2BIG
+>   08:08:01.6898956Z libbpf: prog 'while_true': -- BEGIN PROG LOAD LOG --
+>   08:08:01.6899443Z BPF program is too large. Processed 1000001 insn
+>   08:08:01.6899823Z verification time 383390707 usec
+>   08:08:01.6900045Z stack depth 16
+>   08:08:01.6900621Z processed 1000001 insns (limit 1000000) max_states_per_insn 4 total_states 12347 peak_states 12347 mark_read 1
+>   08:08:01.6901359Z -- END PROG LOAD LOG --
+>   08:08:01.6901824Z libbpf: prog 'while_true': failed to load: -E2BIG
+>   08:08:01.6902368Z libbpf: failed to load object 'loop3.bpf.o'
+>   08:08:01.6902858Z scale_test:PASS:expect_error 0 nsec
+>   08:08:01.6903248Z #450     verif_scale_loop3_fail:FAIL
+> 
+> Compare to a day before when such behavior wasn't observed[2], the main
+> difference being these additional patches:
+> 
+>   input-cyttsp5-ensure-minimum-reset-pulse-width.patch
+>   input-cyttsp5-fix-power-control-issue-on-wakeup.patch
+>   input-mtk-pmic-keys-fix-possible-null-pointer-dereference.patch
+>   input-xpad-fix-share-button-on-xbox-one-controllers.patch
+>   input-xpad-add-support-for-8bitdo-ultimate-2-wireless-controller.patch
+>   input-xpad-fix-two-controller-table-values.patch
+>   input-synaptics-enable-intertouch-on-dynabook-portege-x30-d.patch
+>   input-synaptics-enable-intertouch-on-dynabook-portege-x30l-g.patch
+>   input-synaptics-enable-intertouch-on-dell-precision-m3800.patch
+>   input-synaptics-enable-smbus-for-hp-elitebook-850-g1.patch
+>   input-synaptics-enable-intertouch-on-tuxedo-infinitybook-pro-14-v5.patch
+>   rust-clean-rust-1.88.0-s-unnecessary_transmutes-lint.patch
+>   objtool-rust-add-one-more-noreturn-rust-function-for-rust-1.87.0.patch
+>   rust-clean-rust-1.88.0-s-warning-about-clippy-disallowed_macros-configuration.patch
+>   uio_hv_generic-fix-sysfs-creation-path-for-ring-buffer.patch
+>   staging-iio-adc-ad7816-correct-conditional-logic-for-store-mode.patch
+>   staging-bcm2835-camera-initialise-dev-in-v4l2_dev.patch
+>   staging-axis-fifo-remove-hardware-resets-for-user-errors.patch
+>   staging-axis-fifo-correct-handling-of-tx_fifo_depth-for-size-validation.patch
+>   x86-mm-eliminate-window-where-tlb-flushes-may-be-inadvertently-skipped.patch
+>   mm-fix-folio_pte_batch-on-xen-pv.patch
+>   mm-vmalloc-support-more-granular-vrealloc-sizing.patch
 
-[ Upstream commit 32f2a0afa95fae0d1ceec2ff06e0e816939964b8 ]
+Not sure why but this commit seems to related to the failure.
 
-When a qdisc is deleted from a net device the stack instructs the
-underlying driver to remove its flow offload callback from the
-associated filter block using the 'FLOW_BLOCK_UNBIND' command. The stack
-then continues to replay the removal of the filters in the block for
-this driver by iterating over the chains in the block and invoking the
-'reoffload' operation of the classifier being used. In turn, the
-classifier in its 'reoffload' operation prepares and emits a
-'FLOW_CLS_DESTROY' command for each filter.
+Below is log of bisecting v6.14.6 and v6.14.7-rc2 with the test:
 
-However, the stack does not do the same for chain templates and the
-underlying driver never receives a 'FLOW_CLS_TMPLT_DESTROY' command when
-a qdisc is deleted. This results in a memory leak [1] which can be
-reproduced using [2].
+  ./tools/testing/selftests/bpf/vmtest.sh -i -- timeout 20 ./test_progs -t verif_scale_loop3_fail
 
-Fix by introducing a 'tmplt_reoffload' operation and have the stack
-invoke it with the appropriate arguments as part of the replay.
-Implement the operation in the sole classifier that supports chain
-templates (flower) by emitting the 'FLOW_CLS_TMPLT_{CREATE,DESTROY}'
-command based on whether a flow offload callback is being bound to a
-filter block or being unbound from one.
+# good: [e2d3e1fdb530198317501eb7ded4f3a5fb6c881c] Linux 6.14.6
+git bisect good e2d3e1fdb530198317501eb7ded4f3a5fb6c881c
+# status: waiting for bad commit, 1 good commit known
+# bad: [6f7a299729d3dff3ffade04ad8fbddb3b172d637] Linux 6.14.7-rc2
+git bisect bad 6f7a299729d3dff3ffade04ad8fbddb3b172d637
+# bad: [572ca62a1e819e1ebd317e7c0e35cf7ff382aec6] iio: light: opt3001: fix deadlock due to concurrent flag access
+git bisect bad 572ca62a1e819e1ebd317e7c0e35cf7ff382aec6
+# good: [5b1202a1e881c45d4500afa3f1f67f2fc3cbae10] fbnic: Improve responsiveness of fbnic_mbx_poll_tx_ready
+git bisect good 5b1202a1e881c45d4500afa3f1f67f2fc3cbae10
+# good: [3eabb5db037e216e2e9a67a36e989c5f13ae7170] mm: fix folio_pte_batch() on XEN PV
+git bisect good 3eabb5db037e216e2e9a67a36e989c5f13ae7170
+# bad: [93511db927bafab3499f6fb61061779ddd68f20f] iio: adc: ad7768-1: Fix insufficient alignment of timestamp.
+git bisect bad 93511db927bafab3499f6fb61061779ddd68f20f
+# bad: [569b32a0099bc2b2a8c827b2238bf785f2632fa7] selftests/mm: fix build break when compiling pkey_util.c
+git bisect bad 569b32a0099bc2b2a8c827b2238bf785f2632fa7
+# bad: [3d5ccf6020b22773d265ecd6f905d19498af9a4e] mm/userfaultfd: fix uninitialized output field for -EAGAIN race
+git bisect bad 3d5ccf6020b22773d265ecd6f905d19498af9a4e
+# bad: [336f780075f36e0d1181ce44d6d4197e4a22babc] mm/huge_memory: fix dereferencing invalid pmd migration entry
+git bisect bad 336f780075f36e0d1181ce44d6d4197e4a22babc
+# bad: [665f26e5de2325e3bca107b632bc2ccac1b9806a] mm: vmalloc: support more granular vrealloc() sizing
+git bisect bad 665f26e5de2325e3bca107b632bc2ccac1b9806a
+# first bad commit: [665f26e5de2325e3bca107b632bc2ccac1b9806a] mm: vmalloc: support more granular vrealloc() sizing
 
-As far as I can tell, the issue happens since cited commit which
-reordered tcf_block_offload_unbind() before tcf_block_flush_all_chains()
-in __tcf_block_put(). The order cannot be reversed as the filter block
-is expected to be freed after flushing all the chains.
+...
+> No patches touch BPF's core component, and while the
+> verif_scale_loop3_fail test did time out, the verifier is still
+> correctly rejecting it, so shouldn't have anything to do with
+> kernel/bpf/. The x86/arm64 BPF patches only affect JIT output, and only
+> for cBPF.
+> 
+> In comparison, with 6.12.29-rc1 I don't observe any timeout or increase
+> in runtime[3]. Below is a diff comparing the applied patches in
+> 6.12.29-rc1 and 6.14.7-rc1. Seems like 6.14.7-rc1 does not have the
+> CALL_NOSPEC patches, but I cannot tell whether that is what makes the
+> difference.
 
-[1]
-unreferenced object 0xffff888107e28800 (size 2048):
-  comm "tc", pid 1079, jiffies 4294958525 (age 3074.287s)
-  hex dump (first 32 bytes):
-    b1 a6 7c 11 81 88 ff ff e0 5b b3 10 81 88 ff ff  ..|......[......
-    01 00 00 00 00 00 00 00 e0 aa b0 84 ff ff ff ff  ................
-  backtrace:
-    [<ffffffff81c06a68>] __kmem_cache_alloc_node+0x1e8/0x320
-    [<ffffffff81ab374e>] __kmalloc+0x4e/0x90
-    [<ffffffff832aec6d>] mlxsw_sp_acl_ruleset_get+0x34d/0x7a0
-    [<ffffffff832bc195>] mlxsw_sp_flower_tmplt_create+0x145/0x180
-    [<ffffffff832b2e1a>] mlxsw_sp_flow_block_cb+0x1ea/0x280
-    [<ffffffff83a10613>] tc_setup_cb_call+0x183/0x340
-    [<ffffffff83a9f85a>] fl_tmplt_create+0x3da/0x4c0
-    [<ffffffff83a22435>] tc_ctl_chain+0xa15/0x1170
-    [<ffffffff838a863c>] rtnetlink_rcv_msg+0x3cc/0xed0
-    [<ffffffff83ac87f0>] netlink_rcv_skb+0x170/0x440
-    [<ffffffff83ac6270>] netlink_unicast+0x540/0x820
-    [<ffffffff83ac6e28>] netlink_sendmsg+0x8d8/0xda0
-    [<ffffffff83793def>] ____sys_sendmsg+0x30f/0xa80
-    [<ffffffff8379d29a>] ___sys_sendmsg+0x13a/0x1e0
-    [<ffffffff8379d50c>] __sys_sendmsg+0x11c/0x1f0
-    [<ffffffff843b9ce0>] do_syscall_64+0x40/0xe0
-unreferenced object 0xffff88816d2c0400 (size 1024):
-  comm "tc", pid 1079, jiffies 4294958525 (age 3074.287s)
-  hex dump (first 32 bytes):
-    40 00 00 00 00 00 00 00 57 f6 38 be 00 00 00 00  @.......W.8.....
-    10 04 2c 6d 81 88 ff ff 10 04 2c 6d 81 88 ff ff  ..,m......,m....
-  backtrace:
-    [<ffffffff81c06a68>] __kmem_cache_alloc_node+0x1e8/0x320
-    [<ffffffff81ab36c1>] __kmalloc_node+0x51/0x90
-    [<ffffffff81a8ed96>] kvmalloc_node+0xa6/0x1f0
-    [<ffffffff82827d03>] bucket_table_alloc.isra.0+0x83/0x460
-    [<ffffffff82828d2b>] rhashtable_init+0x43b/0x7c0
-    [<ffffffff832aed48>] mlxsw_sp_acl_ruleset_get+0x428/0x7a0
-    [<ffffffff832bc195>] mlxsw_sp_flower_tmplt_create+0x145/0x180
-    [<ffffffff832b2e1a>] mlxsw_sp_flow_block_cb+0x1ea/0x280
-    [<ffffffff83a10613>] tc_setup_cb_call+0x183/0x340
-    [<ffffffff83a9f85a>] fl_tmplt_create+0x3da/0x4c0
-    [<ffffffff83a22435>] tc_ctl_chain+0xa15/0x1170
-    [<ffffffff838a863c>] rtnetlink_rcv_msg+0x3cc/0xed0
-    [<ffffffff83ac87f0>] netlink_rcv_skb+0x170/0x440
-    [<ffffffff83ac6270>] netlink_unicast+0x540/0x820
-    [<ffffffff83ac6e28>] netlink_sendmsg+0x8d8/0xda0
-    [<ffffffff83793def>] ____sys_sendmsg+0x30f/0xa80
-
-[2]
- # tc qdisc add dev swp1 clsact
- # tc chain add dev swp1 ingress proto ip chain 1 flower dst_ip 0.0.0.0/32
- # tc qdisc del dev swp1 clsact
- # devlink dev reload pci/0000:06:00.0
-
-Fixes: bbf73830cd48 ("net: sched: traverse chains in block with tcf_get_next_chain()")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-[Minor conflict resolved due to code context change.]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
----
-Verified the build test
----
- include/net/sch_generic.h |  4 ++++
- net/sched/cls_api.c       |  9 ++++++++-
- net/sched/cls_flower.c    | 23 +++++++++++++++++++++++
- 3 files changed, 35 insertions(+), 1 deletion(-)
-
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index 4db11c4695cf..22d2f739692a 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -361,6 +361,10 @@ struct tcf_proto_ops {
- 						struct nlattr **tca,
- 						struct netlink_ext_ack *extack);
- 	void			(*tmplt_destroy)(void *tmplt_priv);
-+	void			(*tmplt_reoffload)(struct tcf_chain *chain,
-+						   bool add,
-+						   flow_setup_cb_t *cb,
-+						   void *cb_priv);
- 
- 	/* rtnetlink specific */
- 	int			(*dump)(struct net*, struct tcf_proto*, void *,
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index beedd0d2b509..521fd4d6eb31 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -1413,6 +1413,9 @@ tcf_block_playback_offloads(struct tcf_block *block, flow_setup_cb_t *cb,
- 	     chain_prev = chain,
- 		     chain = __tcf_get_next_chain(block, chain),
- 		     tcf_chain_put(chain_prev)) {
-+		if (chain->tmplt_ops && add)
-+			chain->tmplt_ops->tmplt_reoffload(chain, true, cb,
-+							  cb_priv);
- 		for (tp = __tcf_get_next_proto(chain, NULL); tp;
- 		     tp_prev = tp,
- 			     tp = __tcf_get_next_proto(chain, tp),
-@@ -1428,6 +1431,9 @@ tcf_block_playback_offloads(struct tcf_block *block, flow_setup_cb_t *cb,
- 				goto err_playback_remove;
- 			}
- 		}
-+		if (chain->tmplt_ops && !add)
-+			chain->tmplt_ops->tmplt_reoffload(chain, false, cb,
-+							  cb_priv);
- 	}
- 
- 	return 0;
-@@ -2772,7 +2778,8 @@ static int tc_chain_tmplt_add(struct tcf_chain *chain, struct net *net,
- 	ops = tcf_proto_lookup_ops(name, true, extack);
- 	if (IS_ERR(ops))
- 		return PTR_ERR(ops);
--	if (!ops->tmplt_create || !ops->tmplt_destroy || !ops->tmplt_dump) {
-+	if (!ops->tmplt_create || !ops->tmplt_destroy || !ops->tmplt_dump ||
-+	    !ops->tmplt_reoffload) {
- 		NL_SET_ERR_MSG(extack, "Chain templates are not supported with specified classifier");
- 		module_put(ops->owner);
- 		return -EOPNOTSUPP;
-diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
-index 9f6f8430d037..6c9d2afd91fe 100644
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -2409,6 +2409,28 @@ static void fl_tmplt_destroy(void *tmplt_priv)
- 	kfree(tmplt);
- }
- 
-+static void fl_tmplt_reoffload(struct tcf_chain *chain, bool add,
-+			       flow_setup_cb_t *cb, void *cb_priv)
-+{
-+	struct fl_flow_tmplt *tmplt = chain->tmplt_priv;
-+	struct flow_cls_offload cls_flower = {};
-+
-+	cls_flower.rule = flow_rule_alloc(0);
-+	if (!cls_flower.rule)
-+		return;
-+
-+	cls_flower.common.chain_index = chain->index;
-+	cls_flower.command = add ? FLOW_CLS_TMPLT_CREATE :
-+				   FLOW_CLS_TMPLT_DESTROY;
-+	cls_flower.cookie = (unsigned long) tmplt;
-+	cls_flower.rule->match.dissector = &tmplt->dissector;
-+	cls_flower.rule->match.mask = &tmplt->mask;
-+	cls_flower.rule->match.key = &tmplt->dummy_key;
-+
-+	cb(TC_SETUP_CLSFLOWER, &cls_flower, cb_priv);
-+	kfree(cls_flower.rule);
-+}
-+
- static int fl_dump_key_val(struct sk_buff *skb,
- 			   void *val, int val_type,
- 			   void *mask, int mask_type, int len)
-@@ -3214,6 +3236,7 @@ static struct tcf_proto_ops cls_fl_ops __read_mostly = {
- 	.bind_class	= fl_bind_class,
- 	.tmplt_create	= fl_tmplt_create,
- 	.tmplt_destroy	= fl_tmplt_destroy,
-+	.tmplt_reoffload = fl_tmplt_reoffload,
- 	.tmplt_dump	= fl_tmplt_dump,
- 	.owner		= THIS_MODULE,
- 	.flags		= TCF_PROTO_OPS_DOIT_UNLOCKED,
--- 
-2.34.1
-
+Thats because CALL_NOSPEC patches were already part of v6.14.
