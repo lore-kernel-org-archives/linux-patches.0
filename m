@@ -1,187 +1,184 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2074.outbound.protection.outlook.com [40.107.243.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5A6217663
-	for <patches@lists.linux.dev>; Thu, 15 May 2025 15:29:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747322950; cv=none; b=fiQRA1Eth5fN4rWeLJQrSwvJUrX2sNMLHSssnr8pLHjWoep/+ET1qd05f7noCbMdeL8i5ZhAjWCF/XqF6ulWGmHWqcZr0VHUXE9PxQ3QPdC0FxXvmLM5Fv+Dt9R37FmykZ0N5xLERUkMPSyulygJOjzpIL7kezCT3uUfIAvyRhc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747322950; c=relaxed/simple;
-	bh=wzY+6d/sGnmcDJMn4ZDQ5jNioYD2ve8+ymqCu8LJxn4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bmBH2V3VClJ3LDrAyMYEY0TV30J+0YnXUExjKQ3SlfnZPQ/RAfVrR2ob1mAWTVvK48nlaPrNOaTU4fEc+8o7yjp/l8WhEdAuyjAvWv8szCPEMvwpYqfNrDdPiPniJSrSb11YFHTC9RHqhhfO0GuDvaeB0hG526l/gmT3bMAg2ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=H0/eBXaN; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADD31F8753;
+	Thu, 15 May 2025 15:39:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.74
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747323550; cv=fail; b=Py+df8lwkE0DzqikMaYgTaqfcr6wpSGbkeHkrhs+Fsbc6Yrsy5lXbQtYx0ewaXzcPYZuGXAJcsa6MNhl6u+VogpZfZlQz1e5hybYRjgK615m62ZDNJOLsBNL1lNa3oVl9qUBxfRAfEr0oWAyzfHdD5TxtCWLLLDDJhFaiS6czE0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747323550; c=relaxed/simple;
+	bh=RLfJagRcPfe7TjX12AIZFxIoouAtvcDl0kxC4+0Wh7g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=o5t36mRaR5AIL8dO7gu3ZoccnDH1u9hPgisR7oFXEOV1r5zWwXtJhHwUpGSGtLuZ0O+Xl8NHwGJfhhSW0r+J/Vxhw6RVC2gSS7b14YI4HLG4Q13sZ/XsBBU7YLh8xrKZbxUBVXPRDjTn7/sTjG3beSTzvQuUyMQv/dJlWXrR9c8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=CZYY/kb6; arc=fail smtp.client-ip=40.107.243.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="H0/eBXaN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1747322949; x=1778858949;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=wzY+6d/sGnmcDJMn4ZDQ5jNioYD2ve8+ymqCu8LJxn4=;
-  b=H0/eBXaNAe89FwXAo0V0150EZYTueLMfQnPn9v295MchETBw3PhVW9mE
-   sTWhzd1BklwSPB6cOUf5OwBCXMGiG67H8R4V8yiJ1fd48ZZaaxgxOGxB6
-   hVl8buTtJEIt3cSD49EZL2sWKd29v/1asR7IKgC4AZXzgRVx8WaCdsXw9
-   WpcckqNicjnOn/twLRjp4h/u9j9ES6I75Wx0tQvND0optiomS1HMwcJd9
-   Aa8yLpQBqnzufXvBao0BLCcoWSnmCMHb2WkV/qxir2kWQKcGaQnxQn/nq
-   b4ydOQHl/l0FtYQOrryZdT69ltuKvuXGGYfBcgifmqslHZHcD2TdpIrKq
-   w==;
-X-CSE-ConnectionGUID: UtDWCRURRuGQPP+1TmGg4g==
-X-CSE-MsgGUID: DXeUOL2MQhyRnXk1srC5uw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11434"; a="60285044"
-X-IronPort-AV: E=Sophos;i="6.15,291,1739865600"; 
-   d="scan'208";a="60285044"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2025 08:29:08 -0700
-X-CSE-ConnectionGUID: IgnFK8KoTEyhykzgNMormA==
-X-CSE-MsgGUID: XE+ntt9zSKCmZ8lx6SbkdQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,291,1739865600"; 
-   d="scan'208";a="138940815"
-Received: from gkhatri-mobl.amr.corp.intel.com (HELO desk) ([10.125.146.13])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2025 08:29:07 -0700
-Date: Thu, 15 May 2025 08:29:00 -0700
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Guenter Roeck <linux@roeck-us.net>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org,
-	Darren Kenny <darren.kenny@oracle.com>
-Subject: Re: [PATCH 6.6 000/113] 6.6.91-rc2 review
-Message-ID: <20250515152900.vk3vbotiedv2temq@desk>
-References: <20250514125617.240903002@linuxfoundation.org>
- <861004b4-e036-4306-b129-252b9cb983c7@oracle.com>
- <2025051440-sturdily-dragging-3843@gregkh>
- <9af6afb1-9d91-48ea-a212-bcd6d1a47203@oracle.com>
- <e1ea37bd-ea7d-4e8a-bb2f-6be709eb99f4@roeck-us.net>
- <2025051527-travesty-shape-0e3b@gregkh>
- <20250515152557.a4q2cqab4uvhnpia@desk>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="CZYY/kb6"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=nJNMIm6W3gucFcxqwICUmhmXbxr2Rnr0pFyLqqK59EAXmbCGEzYMvD4wOAy2Nxq5aeVOc+bT0MwqQlUVF3PI+he+LE+0gh0l1+HxIWQAfOBiNp44rUQIwRN9bFA4XLqF0Jk/h6FZqwN7MBuXAu8Qbp+QoJc7tmjylSM4ijHPm8wNHm3AKYh6n1DFv9FzNQdqtbYUk+uyE/7NyQXkCRX8WFP7RcEOBgdHZrnfRsEiT2D7gMJ+rpGqZ8B8uH568B1wSBujASX3XcL5G9zLP6nrwYgfdInY382ZJwquUcxhv9qehVSkA2MyiaPD+HTCBja9YBJYBHhxAcOGBDSISgmlgA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1zITZIhVP3HHsz2zhQzalhOP+fE343sw8OlKE0+4V3E=;
+ b=K6E1cxASb/EO/vuoJrSwT5AUFyK2opzbl7JLGqS/4ldvh7zxz94OEkuV1twV/KJY8hpnFC34qDNvr5CI0gu3tCGqh0K/5f7E+ZNJiDXg5HoCKoJgcWdDm5Wlmuv4QhtUTlJ/nO7vEk3wRJ9yM/20caQxCGTCCuRTEu84N1loOrqByzitCQsWzoat10yt0uo11q3xANlMNogd3WMMzoTqBR4IsvAlbHf1R++uqaEhJzDp5NdCCRz0vTFux+g/PrjaBK+YWArev+Mf5yIuzBFfRdOaX3meEwaK9nsgVan4PNq6YwhVx09yC2Yp+bmBhnyn9qQ50+3rTJE+ZiPS/c50ww==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1zITZIhVP3HHsz2zhQzalhOP+fE343sw8OlKE0+4V3E=;
+ b=CZYY/kb6f+AYhIuVlg87xzAHsGJz/7ysAXWkxf0LuSIxRKX0cOtDX5nKX+kuLmQHeBuxn1RRtVd3Eh7xDR3c6PPTju1QKyDYopBOTBIFq7EsEn/xsCVXUY4hde683w3JAgiAKqJDO2SJcGApwz73US2FJAo7pIKhnv1TgZRkrfb9gsdQ+VpDxV0MuMbUj+51dWpunb68rum45F01alz+9ospuQ19NIHvB8w8jsUGfI3TZ2p5HLWAiq2Wj1LGIlA67t7i87f7IDXuLkOm6KnwXeOyd5+nu4n+9gGPogYnq4UXm7k4mjBUBjcJQTka7ovnCeAORuddwr27cZUfB64AyQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by PH7PR12MB8122.namprd12.prod.outlook.com (2603:10b6:510:2b7::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.29; Thu, 15 May
+ 2025 15:39:05 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8722.031; Thu, 15 May 2025
+ 15:39:05 +0000
+Date: Thu, 15 May 2025 12:39:03 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
+	bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
+	thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
+	shuah@kernel.org, jsnitsel@redhat.com, nathan@kernel.org,
+	peterz@infradead.org, yi.l.liu@intel.com, mshavit@google.com,
+	praan@google.com, zhangzekun11@huawei.com, iommu@lists.linux.dev,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, patches@lists.linux.dev,
+	mochs@nvidia.com, alok.a.tiwari@oracle.com, vasant.hegde@amd.com
+Subject: Re: [PATCH v4 10/23] iommufd/viommu: Introduce IOMMUFD_OBJ_HW_QUEUE
+ and its related struct
+Message-ID: <20250515153903.GI382960@nvidia.com>
+References: <cover.1746757630.git.nicolinc@nvidia.com>
+ <bedd9de4e24bb89f18f4b13b52c5fdb6db6bd889.1746757630.git.nicolinc@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bedd9de4e24bb89f18f4b13b52c5fdb6db6bd889.1746757630.git.nicolinc@nvidia.com>
+X-ClientProxiedBy: YQXPR0101CA0057.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:c00:14::34) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250515152557.a4q2cqab4uvhnpia@desk>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|PH7PR12MB8122:EE_
+X-MS-Office365-Filtering-Correlation-Id: a0ddf9ac-c473-48f3-86eb-08dd93c69fef
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?dzBBoCERQLG4OQDhpPX3XNjHo9/8yacqpQUHMTwPE/ZjkYyEUhIOfiFRIZ1h?=
+ =?us-ascii?Q?51wzlhMYMQLLVMQCZxBJC7X3IcHrHjzNJ4iguRrIRg4uEzdfz1+4yw5iKqLU?=
+ =?us-ascii?Q?dCmFP7/CHQ2gI2svgJhYIE9jh+w1Wjfa8hCDmvUFZA/JEsOgy1q8/A1HUdiB?=
+ =?us-ascii?Q?MgJf7nU+0FjELgMkBk8NxAiVss08irbs/eQ1Yanl1BNX+6zMgMgBIFH+fLTZ?=
+ =?us-ascii?Q?zThTgKRl9ljg3OHl6RhcIlq0kpEqTxw0kqYUtDA28qAFmba5PY3Whfwqd8lm?=
+ =?us-ascii?Q?kZol8GQayv4GF7Zl0tTclwy1SAjpAZVz9cYxTehFAdpMN5XVSU8sTRGxFNKK?=
+ =?us-ascii?Q?+UkWlLxnvtb/dGM2HSQIPjU3ycW4hIxQcCn2BdJAWMTvSWq613cdh5WUSh/Y?=
+ =?us-ascii?Q?ketq0okatnOMVYC+l2OoQTtBhfmRAsQkzlxgL6yo8HiN2PrLVM3z6UfqIosN?=
+ =?us-ascii?Q?HlcgbSwPJWKzQ8+F4Awf8BMdJIuD4IGBImyr5EG7Ec95q4vuzmdhV6mJLNPL?=
+ =?us-ascii?Q?hZ/U8yzUdkMXwbZyBlQc+XcGe+mm28QwNGQjIVvDS9rQFl6+9qYN346J9tN6?=
+ =?us-ascii?Q?MqFYpRDFtlCd5/oFtYYAP2oikDU99aZBVVTkrRPromo4tXJls3JB9DD762Ya?=
+ =?us-ascii?Q?LZWDRgKIuVWpnMZyJdCobQ6d/nhrlVCIaj/zddDMPYEaVHN/9WAn+0sGI9PV?=
+ =?us-ascii?Q?JkMPOlWWuqJhTY/rXThdrpoylnyylyN3BEYIAy5uDQc7mvIF8DOY/hrpZpYA?=
+ =?us-ascii?Q?MbBCSY9tt+icgXJqEA0oe1bssCxC/5Akn4v+ocqZ7/Psfa7miN/k9Jv9pXxR?=
+ =?us-ascii?Q?DsHi2Si4rMaWuU3E2zfMBmkEM+5c3TGDIP/iHZ20KHcacDh9EFs5cW81DMRS?=
+ =?us-ascii?Q?M0SXuD89j0qS5tKnr1FjF3dFZUbG1igYMnYr4By97mGDepboTSrVYQfUht0j?=
+ =?us-ascii?Q?17CvLxJuRCAmu+aciKY6F9NqLUtxidnpdqKXQmu3/eOXpqHhPjEh6edT8ux2?=
+ =?us-ascii?Q?FOJZg0r2w0A8aCfaysfgi6w6uRZStwkOILY1jyR3X34mgfwqaUUFfpRJOFTX?=
+ =?us-ascii?Q?pKBf/S3AS41nAFEBs1d6e2agFKKy7jxdntpskVXtYNFI/YzBdIysgBgs0xTr?=
+ =?us-ascii?Q?LnjNQ2yF7D1oQCRxs6Iy8Trpw9JHqi1jdnizs6rUz2LOHCLDzxocvj76XlD0?=
+ =?us-ascii?Q?z2caUZuvanM0Va0/8Fn26Oc761Mm3Ww2iGIUWy+0eutrnBWZve3Q1wbKKooV?=
+ =?us-ascii?Q?CCLh4i/Nft9J9rvG/JIpbfvBt6lXVN5qlruJZMW24v0Y8k5svSbl9XFMD/24?=
+ =?us-ascii?Q?+vVVbwtV4oBGXxXK4YzcmmWu0Bo/HLgWIj9AW1ksoODpi36Y3qjxEJ8wqgav?=
+ =?us-ascii?Q?ZRLZFT4AZxcJ7mE1uhmlPMOl3r9qTyvrlzKSmk+JiL2YrB3OpUu6/qUb7jaY?=
+ =?us-ascii?Q?kQVTn3Aw+3U=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?+tJAulyhJ5hf9CePsfgphuX7wFcIgviDtsLijzHNmwrXJvZ9gFJJdVurTMQ1?=
+ =?us-ascii?Q?XtKnCixmsbad8V03+d0qYDq5rV5Dw9gfBMSTaWhh15/RzfqM86lZVvj5xhms?=
+ =?us-ascii?Q?dxPux8Ct7K92GaKQ9NYspLx2T16SjStj93Ahe4mwrpusa4If9YAhzQIqp+/j?=
+ =?us-ascii?Q?OVgdcL6r/bYRFpFOcoX3o98+xmWn4I1oro8I4SLVUriN4X1JRBEXCx/2Rje+?=
+ =?us-ascii?Q?z8F/qpdTtx/1KiWyoVvWJZr9+Z8vzRgFdDVoF9/12KPWSAHsSiAtg8I23KgU?=
+ =?us-ascii?Q?Z13wdB6jyHIb0+LN7TsVuD6UPFc9FdG6FfJsGcYTggWgffNmGHdE1x3yi+0H?=
+ =?us-ascii?Q?Lt0GfWcJE++V0sPDrVmZHayW+eTzPDt07dBusm2XiollLAE30sJfqJm+aBp6?=
+ =?us-ascii?Q?wOiddkmPvBtgWGzeq6qM1Qya7/Gr6ir3mwr2f1JuBFP5AOa5c/9PMBCoM+r4?=
+ =?us-ascii?Q?e3mF28DapROEXTj3vsGxVswoRAltDbEKYjMSVbX3sxg4TKY/1vBv9nP76Rj0?=
+ =?us-ascii?Q?JhPChEO9b/nVy5DuqyXPPXZf8mgmblpoNEgnExDKI4uCY7dgpPh1jr72eciu?=
+ =?us-ascii?Q?DvoRW3GR2GW4rWct6yiwj+N9ZBw24M+59V1wsYvJppHwHYfKRJT/7saj0Txb?=
+ =?us-ascii?Q?xslbQHSzyYpKCp46+LI0ofKWxYaHGOtEkF5WmGPfsxH/9ljyWiU+t15aC1N3?=
+ =?us-ascii?Q?oZkMfE9CLS+8CpcWmNfoarewovpFU2VOnJhaJaKI3tco398mt/u2i0yDPZzE?=
+ =?us-ascii?Q?PbomfNCZJwjGrTVwi/YYn6l9jZ4JO7u/+YJ4zsRCgbdCn3TAXp2uov+hMk+V?=
+ =?us-ascii?Q?evf8x1KpxMmV9HMW7kn2f1MxLKymW3+jWUkSsbFHCM9D7/SMS5w6Yiyk5bL4?=
+ =?us-ascii?Q?dYQG7FNf5OLCh/qiVRB6mqWBC+ObSdFcearW9RICxpx6JyN49YZ6JHNImAK+?=
+ =?us-ascii?Q?IETeIiLhsUOpQax4oP90Xj9GGCkG7v7u5x2zu5KKrzpxFSwqnJC2MZIuqgw7?=
+ =?us-ascii?Q?6huEHSWy3YwjBvK9oqIZ+M5KAxezlIHBn3w6+VLjAnqo24STpapPShkKgp/x?=
+ =?us-ascii?Q?0H/e7Zfn6KAGhm9XbS2NhhM6q7EYFG252mL0eBnufYPw7viMKT3Sf9/Wqr9c?=
+ =?us-ascii?Q?VwCmQIwKXfyFyPLTrHCnUaFZADD4OGYfGRCWbJHThsBASlDF/CdTgEF2omIF?=
+ =?us-ascii?Q?lCDC4moka/TJAB0rfcRJDS5wCw7TCkgPLODIB9LdTUog6fps2nxxJ5NJaRig?=
+ =?us-ascii?Q?Qamlm+xXusjCc6+q0nhulzIV3d2K6mWFPH2sJn30XOPyIBeg2CfGrmplIwyd?=
+ =?us-ascii?Q?C54L4DHxRQHlRU6xEYqSjezcvGe7PT/F8ohgTjU2CNZGRA8NrbRAb5YZyWgg?=
+ =?us-ascii?Q?G89lGP39/zD8dQYX4j9AK70aFS2ujQLCxv1ynv5O9cMYwh4K9n9Q0CDe2IT9?=
+ =?us-ascii?Q?HE0f25XraJ+WXE87sskDTWtXPj+Oe6FVOSPRm92jm70wPGRjz1+n44CSssa8?=
+ =?us-ascii?Q?S3VLJ4KP7hGf0CiDCcVB6H35/Qgdi4ztCK8dKt8EHEV6hODeZ8YXA8K7xzNf?=
+ =?us-ascii?Q?dMH1NZp2164d6tTdHK2du1WbUKAV7qEP7fedEzoZ?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a0ddf9ac-c473-48f3-86eb-08dd93c69fef
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 May 2025 15:39:05.4285
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: IaPMn73LV6N1A5tqC4KFQYQtZHezvFgxNOxQKJgzB8PfMDI9vixs02jGFGv1JlBH
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB8122
 
-On Thu, May 15, 2025 at 08:26:04AM -0700, Pawan Gupta wrote:
-> On Thu, May 15, 2025 at 07:35:26AM +0200, Greg Kroah-Hartman wrote:
-> > On Wed, May 14, 2025 at 01:49:06PM -0700, Guenter Roeck wrote:
-> > > On 5/14/25 13:33, Harshit Mogalapalli wrote:
-> > > > Hi Greg,
-> > > > 
-> > > > On 15/05/25 01:35, Greg Kroah-Hartman wrote:
-> > > > > On Thu, May 15, 2025 at 12:29:40AM +0530, Harshit Mogalapalli wrote:
-> > > > > > Hi Greg,
-> > > > > > On 14/05/25 18:34, Greg Kroah-Hartman wrote:
-> > > > > > > This is the start of the stable review cycle for the 6.6.91 release.
-> > > > > > > There are 113 patches in this series, all will be posted as a response
-> > > > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > > > let me know.
-> > > > > > > 
-> > > > > > > Responses should be made by Fri, 16 May 2025 12:55:38 +0000.
-> > > > > > > Anything received after that time might be too late.
-> > > > > > 
-> > > > > > ld: vmlinux.o: in function `patch_retpoline':
-> > > > > > alternative.c:(.text+0x3b6f1): undefined reference to `module_alloc'
-> > > > > > make[2]: *** [scripts/Makefile.vmlinux:37: vmlinux] Error 1
-> > > > > > 
-> > > > > > We see this build error in 6.6.91-rc2 tag.
-> > > > > 
-> > > > > What is odd about your .config?  Have a link to it?  I can't duplicate
-> > > > > it here on my builds.
-> > > > > 
-> > > > 
-> > > > So this is a config where CONFIG_MODULES is unset(!=y) -- with that we could reproduce it on defconfig + disabling CONFIG_MODULES as well.
-> > > > 
-> > > 
-> > > Key is the combination of CONFIG_MODULES=n with CONFIG_MITIGATION_ITS=y.
-> > 
-> > Ah, this is due to the change in its_alloc() for 6.6.y and 6.1.y by the
-> > call to module_alloc() instead of execmem_alloc() in the backport of
-> > 872df34d7c51 ("x86/its: Use dynamic thunks for indirect branches").
-> 
-> Sorry for the trouble. I wish I had a test to catch problems like this. The
-> standard config targets defconfig, allyesconfig, allnoconfig, etc. do not
-> expose such issues. The only thing that comes close is randconfig.
-> 
-> CONFIG_MODULES=n is not a common setting, I wonder how people find such
-> issues? (trying to figure out how to prevent such issues in future).
-> 
-> > Pawan, any hints on what should be done here instead?
-> 
-> Since dynamic thunks are not possible without CONFIG_MODULES, one option is
-> to adjust the already in 6.6.91-rc2 patch 9f35e331144a (x86/its: Fix build
-> errors when CONFIG_MODULES=n) to also bring the ITS thunk allocation under
-> CONFIG_MODULES.
-> 
-> I am not seeing any issue with below build and boot test:
-> 
->   #!/bin/bash -ex
-> 
->   ./scripts/config --disable CONFIG_MODULES
->   ./scripts/config --disable CONFIG_MITIGATION_ITS
->   # https://github.com/arighi/virtme-ng
->   vng -b
->   vng -- lscpu
-> 
->   # main test
->   ./scripts/config --disable CONFIG_MODULES
->   ./scripts/config --enable CONFIG_MITIGATION_ITS
->   vng -b
->   vng -- lscpu
-> 
->   ./scripts/config --enable CONFIG_MODULES
->   ./scripts/config --disable CONFIG_MITIGATION_ITS
->   vng -b
->   vng -- lscpu
-> 
->   ./scripts/config --enable CONFIG_MODULES
->   ./scripts/config --enable CONFIG_MITIGATION_ITS
->   vng -b
->   vng -- lscpu
-> 
->   echo "PASS"
-> 
-> Similar change is required for 6.1 and 5.15 as well. 6.12 is fine because
-> it uses execmem_alloc().
-> 
-> --- 8< ---
-> From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-> Subject: [PATCH 6.6] x86/its: Fix build errors when CONFIG_MODULES=n
-> 
-> From: Eric Biggers <ebiggers@google.com>
-> 
-> commit 9f35e33144ae5377d6a8de86dd3bd4d995c6ac65 upstream.
-> 
-> Fix several build errors when CONFIG_MODULES=n, including the following:
-> 
-> ../arch/x86/kernel/alternative.c:195:25: error: incomplete definition of type 'struct module'
->   195 |         for (int i = 0; i < mod->its_num_pages; i++) {
-> 
->   [ pawan: backport: Bring ITS dynamic thunk code under CONFIG_MODULES ]
-> 
-> Fixes: 872df34d7c51 ("x86/its: Use dynamic thunks for indirect branches")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Eric Biggers <ebiggers@google.com>
-> Acked-by: Dave Hansen <dave.hansen@intel.com>
-> Tested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-> Reviewed-by: Alexandre Chartre <alexandre.chartre@oracle.com>
-> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+On Thu, May 08, 2025 at 08:02:31PM -0700, Nicolin Chen wrote:
+> +#define iommufd_hw_queue_alloc(viommu, drv_struct, member)                     \
+> +	({                                                                     \
+> +		drv_struct *ret;                                               \
+> +									       \
+> +		static_assert(__same_type(struct iommufd_viommu, *viommu));    \
+> +		static_assert(__same_type(struct iommufd_hw_queue,             \
+> +					  ((drv_struct *)NULL)->member));      \
+> +		static_assert(offsetof(drv_struct, member.obj) == 0);          \
+> +		ret = (drv_struct *)_iommufd_object_alloc(                     \
+> +			viommu->ictx, sizeof(drv_struct),                      \
+> +			IOMMUFD_OBJ_HW_QUEUE);                                 \
+> +		if (!IS_ERR(ret)) {                                            \
+> +			ret->member.viommu = viommu;                           \
+> +			ret->member.ictx = viommu->ictx;                       \
+> +		}                                                              \
+> +		ret;                                                           \
+> +	})
 
-Agh!
+This should just call 
 
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+__iommufd_object_alloc(viommu->ictx, ret, IOMMUFD_OBJ_HW_QUEUE member.obj)
+
+And all the casting and asserts should be in that macro, move it to
+this header
+
+>  /* Helper for IOMMU driver to destroy structures created by allocators above */
+>  #define iommufd_struct_destroy(drv_struct, member)                             \
+>  	({                                                                     \
+
+This is abort not destroy, the names should be consistent. But looking
+more at the series I think it will be better to do the little rework I
+suggested and not give this function to the driver in the first place.
+
+Jason
