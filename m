@@ -1,166 +1,255 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04DB5C2F2
-	for <patches@lists.linux.dev>; Wed, 14 May 2025 20:49:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D3B1CD1F
+	for <patches@lists.linux.dev>; Thu, 15 May 2025 00:49:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747255751; cv=none; b=HG+Kh+FKm9BL3UzXJ0G6ZnzzzHKsq/eoZEhtUCWQ3ePrrPSU44uY3/FCiMNs1H0iw+bKN4WfOrwqvVtJ9XTegjgHVRoduY9SJLa7uYtkul+W7oYGAEFL+trrqXjZxFFVOP0VgYF3ixOmtu67Zu6wl0ylsKMlq2GFZlqXt0DqntU=
+	t=1747270167; cv=none; b=d/E6GabBqfxEKKUkF0UfsebBp5YkQturP1csgExau15h5e7JmWFzeTsA/UhqFLNt/OC/91zAyawI7ornzgMX/ahPzXbTjAAntppJ+qHzA/L5jtpvnMPKyaYUT1BLENnuYy5LEFKGErfLogFepVNHTWiu9eiol2JOAzPvjWQkjBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747255751; c=relaxed/simple;
-	bh=rE0nme3UR6JGtve/bdvTfkT3GlbF/KK2HGPbSK/ETxQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CrPVu+FmHGJyjxQ1VUoqiLcRVBwEuwuAAjTFoKUjYwqICqC2RRuFNNaC6SQsjcj2XZd9VaIyd/L0xE36rwZRpyxAoIwKKLkbmgL7zS/oJ4DghvgtDwf2YT+q8zh/Uq928+j4Pkpk3h83ZpNKEFtC3nCdR+rL+BMyod2exVf2Lss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HYyTM74M; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HYyTM74M"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-af523f4511fso118384a12.0
-        for <patches@lists.linux.dev>; Wed, 14 May 2025 13:49:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747255749; x=1747860549; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=4TWkm4Axk1iyu7DwZESVkMnCOkvF4ymCsQoRNABC9NQ=;
-        b=HYyTM74MPkSo7V7ZTCNsCTBKH64n1ChWdErQJlit5jczEXvLy9RveZ8vxg8ZY2w5I+
-         3lklpWMRu6Ei8ullYlkDJKcpQlCpg4yhovirxkZZMYK7QZV8fM2OEuTzfdDw5atknAmb
-         nkZqqeUWlB98zu5qsaXfn0CwTM1ONZIeEkuwoydU6kE7kvDTKO0bnjfwiw7Zax67LcYR
-         S6DC3hsPvDbYCBuP+0qmEx/NgyCLtp15MQI6fGbQeJZ9BhLwUHTOu6mWVT5EggaB1UVH
-         7BhAxJDmQOWr5etSKyuFEPVVO0so3vXc1h37jFHL+8lcwJu7MdFz307u4lFKNlvj8Woc
-         7z7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747255749; x=1747860549;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4TWkm4Axk1iyu7DwZESVkMnCOkvF4ymCsQoRNABC9NQ=;
-        b=hv82BbCDzlldCrOZDlnBCpdILZE4dBGzbUKHir9+PW2uYO9TTWef3UcnVw0DLgZ4SH
-         039MrNcfdFCGbpm4G276DGGo9v3+bBUoGAtPCJLW0XS9nV56teNbb5fi3nNdIVtifwu2
-         Qqlz9DGq2dnlxL9EYw8abzKTrnDXDdMTzJfHaiJ4mWIwefDMI6gAO+WkYxs8GRUsBPMk
-         B2PLIkSVOAQCgajXG9+nK8WpMjouHYTtHI6lMy5nbz7fYnvrphU5SA29xDT+i6z9vN9X
-         hNXt5UGBDbCzDO4wjLkafYd+MP8Iei/CREFPTB0tbeWdHJUT7qwCqp0J/nKU38sew0by
-         jVLg==
-X-Forwarded-Encrypted: i=1; AJvYcCW8xJjcVMbU3m1dLg3lQ7MeGNG98DLiTNsOsstjt22pLaK1pghsTenfU9ubUd0DNQv5DIeCEAbi@lists.linux.dev
-X-Gm-Message-State: AOJu0YwpfrOu6zOJ8s6MYRbcOUb5eX+0nibadYmd4sutnuctazv4JZ3w
-	2SSy1k33wwkQ3JAN89y25/QQ3jN8Q1icodWWt1Z/QdEusuoUwDJ2
-X-Gm-Gg: ASbGncsWCFCYOsTncxOsVsiA5h9ashrybiOtD2nu5kfNr1objd2V4uRz19VurtkbGPZ
-	hAtWC7oM7Vnca+F99G7JezqOOIJs64ccmxg/F04ca8omqoLP/M1mNmCsIa3nKVKkyrOyw+hXP8W
-	QS2fiD5ttKb0PjiqJ5t8TQzAzkJnEygr2X1pivrdQMDd26O22LcBiKJJBQGrKHhiMczRq4zE6Yi
-	DwhWQyiDLlnsBCF5RESvN1uc9RIIzCbvMSnl+VhB72iLNOUwNNg/E9vX5wk7FZM96UOpi5qHBj6
-	FItpfFS41GnDoDfInMhnZc1x89O9TBZRo5BlO6A6pyIkpPgy0TxCO+6RY50PKqorycy2OwsLgKs
-	GkC5+3nOhGuTp9F+2vU/5LuasJlWvu4EiG2U=
-X-Google-Smtp-Source: AGHT+IG8Hz3dWZ+uZdxCOMvGwrsDdFLZhyO0aJQKCEOYGQQtHCAhGk7ylVgss5kOv8QeH5p7lhEMFQ==
-X-Received: by 2002:a17:90b:288b:b0:2ff:693a:7590 with SMTP id 98e67ed59e1d1-30e2e62ff9emr8877929a91.33.1747255749050;
-        Wed, 14 May 2025 13:49:09 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30e3340194asm2019137a91.5.2025.05.14.13.49.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 May 2025 13:49:08 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <e1ea37bd-ea7d-4e8a-bb2f-6be709eb99f4@roeck-us.net>
-Date: Wed, 14 May 2025 13:49:06 -0700
+	s=arc-20240116; t=1747270167; c=relaxed/simple;
+	bh=P9u51Aq46XScFXBQ7P2XjgOqcaD4Min7LreEYNSkMpk=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Du+50X2Hj+GEXq0LTeEqdDbYiyrHF3WHbFEEUuVj8j2YUzNpmXF7G1eZapjRl0o6shB1KExAkmumanfhRl/0b7o26GWCc0ppveyVi9j2c4gBpYMZYEFL6uv6eVFwmaJ6hBr/2xEJ7jHhAIFfasO0yTZoOtSnkpKiFxyhXvviOdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
+Received: from pps.filterd (m0250810.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54F0mAOt020677;
+	Wed, 14 May 2025 17:49:01 -0700
+Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 46mbcb9y3f-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+	Wed, 14 May 2025 17:49:00 -0700 (PDT)
+Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
+ ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.43; Wed, 14 May 2025 17:48:57 -0700
+Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
+ ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
+ 15.1.2507.43 via Frontend Transport; Wed, 14 May 2025 17:48:51 -0700
+From: <jianqi.ren.cn@windriver.com>
+To: <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
+CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+        <jianqi.ren.cn@windriver.com>, <idosch@nvidia.com>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <jhs@mojatatu.com>, <xiyou.wangcong@gmail.com>,
+        <jiri@resnulli.us>, <vladbu@mellanox.com>, <netdev@vger.kernel.org>
+Subject: [PATCH 6.1.y] net/sched: flower: Fix chain template offload
+Date: Thu, 15 May 2025 08:48:50 +0800
+Message-ID: <20250515004850.3611876-1-jianqi.ren.cn@windriver.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 000/113] 6.6.91-rc2 review
-To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- Darren Kenny <darren.kenny@oracle.com>
-References: <20250514125617.240903002@linuxfoundation.org>
- <861004b4-e036-4306-b129-252b9cb983c7@oracle.com>
- <2025051440-sturdily-dragging-3843@gregkh>
- <9af6afb1-9d91-48ea-a212-bcd6d1a47203@oracle.com>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <9af6afb1-9d91-48ea-a212-bcd6d1a47203@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTE1MDAwNSBTYWx0ZWRfX7C1B/r43fQig oK70+d3q7r4WhJaQwngNr7Df+yLH/xu16DtY4u+xlPtb2JNsZDYx9KbR2qsey3d1b7R1EDTbd+d rmF0YnLa0biDqEkCz6Q4FuQI24Jm1p7bv0HvaymPj1tdbawI/FWOSTvdVvLzjnadNO7vVcJ7k3U
+ cbc1g73jKYXXfFdrUf5Lflel4rkN0UZ/Rto3x84tS4Fwi2BjON9XztSQx3DVBxq958a5qFhhX3c qvlbYjpmyM6+fWsjRwu5uPB3zEV1Sk7MnY3cwgJ4txnXYIHUV3xmb0shN0v21JNrWWdO2T5Jzpn zZvUlhv7ZkIeorkEoAT2WUn/E2zbakbxijRIL0umxyOWb68tPNDUfcYC2EeiLMLyJS58IedcnaS
+ QNoTlD+mJjWObZXzp4IvS/0Ni2NnwopZB8ROgWVAy0hJIn57UVdS9gNTnmi/qKQI0UnmLCR2
+X-Proofpoint-GUID: 3xnH6m0oX0tsBvgiOKNi-Y-G9z9T0P8P
+X-Proofpoint-ORIG-GUID: 3xnH6m0oX0tsBvgiOKNi-Y-G9z9T0P8P
+X-Authority-Analysis: v=2.4 cv=LpWSymdc c=1 sm=1 tr=0 ts=682539fc cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=dt9VzEwgFbYA:10 a=Ikd4Dj_1AAAA:8 a=J1Y8HTJGAAAA:8 a=t7CeM3EgAAAA:8 a=uSdy2bKQw3vfi-H1j0oA:9 a=y1Q9-5lHfBjTkpIzbSAN:22
+ a=FdTzh2GWekK77mhwV6Dw:22
+X-Sensitive_Customer_Information: Yes
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-14_05,2025-05-14_03,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 clxscore=1011 malwarescore=0 mlxscore=0 bulkscore=0
+ spamscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
+ priorityscore=1501 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.21.0-2505070000 definitions=main-2505150005
 
-On 5/14/25 13:33, Harshit Mogalapalli wrote:
-> Hi Greg,
-> 
-> On 15/05/25 01:35, Greg Kroah-Hartman wrote:
->> On Thu, May 15, 2025 at 12:29:40AM +0530, Harshit Mogalapalli wrote:
->>> Hi Greg,
->>> On 14/05/25 18:34, Greg Kroah-Hartman wrote:
->>>> This is the start of the stable review cycle for the 6.6.91 release.
->>>> There are 113 patches in this series, all will be posted as a response
->>>> to this one.  If anyone has any issues with these being applied, please
->>>> let me know.
->>>>
->>>> Responses should be made by Fri, 16 May 2025 12:55:38 +0000.
->>>> Anything received after that time might be too late.
->>>
->>> ld: vmlinux.o: in function `patch_retpoline':
->>> alternative.c:(.text+0x3b6f1): undefined reference to `module_alloc'
->>> make[2]: *** [scripts/Makefile.vmlinux:37: vmlinux] Error 1
->>>
->>> We see this build error in 6.6.91-rc2 tag.
->>
->> What is odd about your .config?  Have a link to it?  I can't duplicate
->> it here on my builds.
->>
-> 
-> So this is a config where CONFIG_MODULES is unset(!=y) -- with that we could reproduce it on defconfig + disabling CONFIG_MODULES as well.
-> 
+From: Ido Schimmel <idosch@nvidia.com>
 
-Key is the combination of CONFIG_MODULES=n with CONFIG_MITIGATION_ITS=y.
+[ Upstream commit 32f2a0afa95fae0d1ceec2ff06e0e816939964b8 ]
 
-Guenter
+When a qdisc is deleted from a net device the stack instructs the
+underlying driver to remove its flow offload callback from the
+associated filter block using the 'FLOW_BLOCK_UNBIND' command. The stack
+then continues to replay the removal of the filters in the block for
+this driver by iterating over the chains in the block and invoking the
+'reoffload' operation of the classifier being used. In turn, the
+classifier in its 'reoffload' operation prepares and emits a
+'FLOW_CLS_DESTROY' command for each filter.
+
+However, the stack does not do the same for chain templates and the
+underlying driver never receives a 'FLOW_CLS_TMPLT_DESTROY' command when
+a qdisc is deleted. This results in a memory leak [1] which can be
+reproduced using [2].
+
+Fix by introducing a 'tmplt_reoffload' operation and have the stack
+invoke it with the appropriate arguments as part of the replay.
+Implement the operation in the sole classifier that supports chain
+templates (flower) by emitting the 'FLOW_CLS_TMPLT_{CREATE,DESTROY}'
+command based on whether a flow offload callback is being bound to a
+filter block or being unbound from one.
+
+As far as I can tell, the issue happens since cited commit which
+reordered tcf_block_offload_unbind() before tcf_block_flush_all_chains()
+in __tcf_block_put(). The order cannot be reversed as the filter block
+is expected to be freed after flushing all the chains.
+
+[1]
+unreferenced object 0xffff888107e28800 (size 2048):
+  comm "tc", pid 1079, jiffies 4294958525 (age 3074.287s)
+  hex dump (first 32 bytes):
+    b1 a6 7c 11 81 88 ff ff e0 5b b3 10 81 88 ff ff  ..|......[......
+    01 00 00 00 00 00 00 00 e0 aa b0 84 ff ff ff ff  ................
+  backtrace:
+    [<ffffffff81c06a68>] __kmem_cache_alloc_node+0x1e8/0x320
+    [<ffffffff81ab374e>] __kmalloc+0x4e/0x90
+    [<ffffffff832aec6d>] mlxsw_sp_acl_ruleset_get+0x34d/0x7a0
+    [<ffffffff832bc195>] mlxsw_sp_flower_tmplt_create+0x145/0x180
+    [<ffffffff832b2e1a>] mlxsw_sp_flow_block_cb+0x1ea/0x280
+    [<ffffffff83a10613>] tc_setup_cb_call+0x183/0x340
+    [<ffffffff83a9f85a>] fl_tmplt_create+0x3da/0x4c0
+    [<ffffffff83a22435>] tc_ctl_chain+0xa15/0x1170
+    [<ffffffff838a863c>] rtnetlink_rcv_msg+0x3cc/0xed0
+    [<ffffffff83ac87f0>] netlink_rcv_skb+0x170/0x440
+    [<ffffffff83ac6270>] netlink_unicast+0x540/0x820
+    [<ffffffff83ac6e28>] netlink_sendmsg+0x8d8/0xda0
+    [<ffffffff83793def>] ____sys_sendmsg+0x30f/0xa80
+    [<ffffffff8379d29a>] ___sys_sendmsg+0x13a/0x1e0
+    [<ffffffff8379d50c>] __sys_sendmsg+0x11c/0x1f0
+    [<ffffffff843b9ce0>] do_syscall_64+0x40/0xe0
+unreferenced object 0xffff88816d2c0400 (size 1024):
+  comm "tc", pid 1079, jiffies 4294958525 (age 3074.287s)
+  hex dump (first 32 bytes):
+    40 00 00 00 00 00 00 00 57 f6 38 be 00 00 00 00  @.......W.8.....
+    10 04 2c 6d 81 88 ff ff 10 04 2c 6d 81 88 ff ff  ..,m......,m....
+  backtrace:
+    [<ffffffff81c06a68>] __kmem_cache_alloc_node+0x1e8/0x320
+    [<ffffffff81ab36c1>] __kmalloc_node+0x51/0x90
+    [<ffffffff81a8ed96>] kvmalloc_node+0xa6/0x1f0
+    [<ffffffff82827d03>] bucket_table_alloc.isra.0+0x83/0x460
+    [<ffffffff82828d2b>] rhashtable_init+0x43b/0x7c0
+    [<ffffffff832aed48>] mlxsw_sp_acl_ruleset_get+0x428/0x7a0
+    [<ffffffff832bc195>] mlxsw_sp_flower_tmplt_create+0x145/0x180
+    [<ffffffff832b2e1a>] mlxsw_sp_flow_block_cb+0x1ea/0x280
+    [<ffffffff83a10613>] tc_setup_cb_call+0x183/0x340
+    [<ffffffff83a9f85a>] fl_tmplt_create+0x3da/0x4c0
+    [<ffffffff83a22435>] tc_ctl_chain+0xa15/0x1170
+    [<ffffffff838a863c>] rtnetlink_rcv_msg+0x3cc/0xed0
+    [<ffffffff83ac87f0>] netlink_rcv_skb+0x170/0x440
+    [<ffffffff83ac6270>] netlink_unicast+0x540/0x820
+    [<ffffffff83ac6e28>] netlink_sendmsg+0x8d8/0xda0
+    [<ffffffff83793def>] ____sys_sendmsg+0x30f/0xa80
+
+[2]
+ # tc qdisc add dev swp1 clsact
+ # tc chain add dev swp1 ingress proto ip chain 1 flower dst_ip 0.0.0.0/32
+ # tc qdisc del dev swp1 clsact
+ # devlink dev reload pci/0000:06:00.0
+
+Fixes: bbf73830cd48 ("net: sched: traverse chains in block with tcf_get_next_chain()")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+[Minor conflict resolved due to code context change.]
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
+---
+Verified the build test
+---
+ include/net/sch_generic.h |  4 ++++
+ net/sched/cls_api.c       |  9 ++++++++-
+ net/sched/cls_flower.c    | 23 +++++++++++++++++++++++
+ 3 files changed, 35 insertions(+), 1 deletion(-)
+
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index 80f657bf2e04..d7b76f486c44 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -377,6 +377,10 @@ struct tcf_proto_ops {
+ 						struct nlattr **tca,
+ 						struct netlink_ext_ack *extack);
+ 	void			(*tmplt_destroy)(void *tmplt_priv);
++	void			(*tmplt_reoffload)(struct tcf_chain *chain,
++						   bool add,
++						   flow_setup_cb_t *cb,
++						   void *cb_priv);
+ 
+ 	/* rtnetlink specific */
+ 	int			(*dump)(struct net*, struct tcf_proto*, void *,
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 89da596be1b8..8548220b6112 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -1431,6 +1431,9 @@ tcf_block_playback_offloads(struct tcf_block *block, flow_setup_cb_t *cb,
+ 	     chain_prev = chain,
+ 		     chain = __tcf_get_next_chain(block, chain),
+ 		     tcf_chain_put(chain_prev)) {
++		if (chain->tmplt_ops && add)
++			chain->tmplt_ops->tmplt_reoffload(chain, true, cb,
++							  cb_priv);
+ 		for (tp = __tcf_get_next_proto(chain, NULL); tp;
+ 		     tp_prev = tp,
+ 			     tp = __tcf_get_next_proto(chain, tp),
+@@ -1446,6 +1449,9 @@ tcf_block_playback_offloads(struct tcf_block *block, flow_setup_cb_t *cb,
+ 				goto err_playback_remove;
+ 			}
+ 		}
++		if (chain->tmplt_ops && !add)
++			chain->tmplt_ops->tmplt_reoffload(chain, false, cb,
++							  cb_priv);
+ 	}
+ 
+ 	return 0;
+@@ -2832,7 +2838,8 @@ static int tc_chain_tmplt_add(struct tcf_chain *chain, struct net *net,
+ 	ops = tcf_proto_lookup_ops(name, true, extack);
+ 	if (IS_ERR(ops))
+ 		return PTR_ERR(ops);
+-	if (!ops->tmplt_create || !ops->tmplt_destroy || !ops->tmplt_dump) {
++	if (!ops->tmplt_create || !ops->tmplt_destroy || !ops->tmplt_dump ||
++	    !ops->tmplt_reoffload) {
+ 		NL_SET_ERR_MSG(extack, "Chain templates are not supported with specified classifier");
+ 		module_put(ops->owner);
+ 		return -EOPNOTSUPP;
+diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
+index a40a9e84c75f..42234a0101e7 100644
+--- a/net/sched/cls_flower.c
++++ b/net/sched/cls_flower.c
+@@ -2596,6 +2596,28 @@ static void fl_tmplt_destroy(void *tmplt_priv)
+ 	kfree(tmplt);
+ }
+ 
++static void fl_tmplt_reoffload(struct tcf_chain *chain, bool add,
++			       flow_setup_cb_t *cb, void *cb_priv)
++{
++	struct fl_flow_tmplt *tmplt = chain->tmplt_priv;
++	struct flow_cls_offload cls_flower = {};
++
++	cls_flower.rule = flow_rule_alloc(0);
++	if (!cls_flower.rule)
++		return;
++
++	cls_flower.common.chain_index = chain->index;
++	cls_flower.command = add ? FLOW_CLS_TMPLT_CREATE :
++				   FLOW_CLS_TMPLT_DESTROY;
++	cls_flower.cookie = (unsigned long) tmplt;
++	cls_flower.rule->match.dissector = &tmplt->dissector;
++	cls_flower.rule->match.mask = &tmplt->mask;
++	cls_flower.rule->match.key = &tmplt->dummy_key;
++
++	cb(TC_SETUP_CLSFLOWER, &cls_flower, cb_priv);
++	kfree(cls_flower.rule);
++}
++
+ static int fl_dump_key_val(struct sk_buff *skb,
+ 			   void *val, int val_type,
+ 			   void *mask, int mask_type, int len)
+@@ -3452,6 +3474,7 @@ static struct tcf_proto_ops cls_fl_ops __read_mostly = {
+ 	.bind_class	= fl_bind_class,
+ 	.tmplt_create	= fl_tmplt_create,
+ 	.tmplt_destroy	= fl_tmplt_destroy,
++	.tmplt_reoffload = fl_tmplt_reoffload,
+ 	.tmplt_dump	= fl_tmplt_dump,
+ 	.owner		= THIS_MODULE,
+ 	.flags		= TCF_PROTO_OPS_DOIT_UNLOCKED,
+-- 
+2.34.1
 
