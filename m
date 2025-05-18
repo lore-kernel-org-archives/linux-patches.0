@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B781EDA16;
-	Sun, 18 May 2025 03:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0231F4CA2;
+	Sun, 18 May 2025 03:23:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747538612; cv=none; b=bBFXdDePS/S0ZO5tMzxNL/TCU5gm4Zj5PaQlOjzXwh+6nLqblgBZVMH8J2Cqvu6F5J8R0Ut66zNhCmk/M7as8PYNEJiXEvcMHR2d/lnnmZHDFQR6StPYF2dQkMpto59QiAL78MmXoYew9RFbIpCoway57lMXrbEajH1nCWRl8QU=
+	t=1747538613; cv=none; b=Vp4yz18eyMWJef3WKoahWOy2w8U6iDmT954y5Xs97B2d8bo6UwpI97xmptk8zJo+r1VECu1+/R/husT1QAfDFKC2/giHVXSR878r0q64641kGUEKpdMrwmIUo9Dv+7Wb19niYyntFxXlKmAO02KSH3GcRJX//EcVtIikF+uC01w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747538612; c=relaxed/simple;
-	bh=lbr5wL+92LVBRR+N8Bth9V0wydnYvFssqxK7fVYkjVI=;
+	s=arc-20240116; t=1747538613; c=relaxed/simple;
+	bh=y4qZ5PgPqfrqLauHxeiDUnntRxq6bNaPzr7H+iuk3FI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LRKczHaefaFL5W6x+yrgfxstPLtGCp4zHx7zgp51KWYvnD5w0GR6XTHI1u01yLseoizH7dBgi55537ZjJ7X3oku1eZyy5XQXnMyNi2m4YXfRm9/pQ6WKgNcZURG6qhmsNharipcJRlry8ZCOBAfsRNDIeqVkBiCJ4l/aybCRJsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=meZE3p9e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H9YmIFY0K0bSvAnZwys2xG827EA3fTiUXUIFRtAqFG5Fy0R0nRVXBf7PeHbEq4SM92nHfqezadvY8xELlfSRBcF0pvPPpt2KeEnfNs2ODQc1gkEHI9YvCE6dIJ9DEUORGdHWUi5GkLXgfwLoomrA1uyOL+9l1eSnlAZXz+sRfY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pMjq/M+z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="meZE3p9e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298A6C4CEEF;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pMjq/M+z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA13C4CEED;
 	Sun, 18 May 2025 03:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1747538612;
-	bh=lbr5wL+92LVBRR+N8Bth9V0wydnYvFssqxK7fVYkjVI=;
+	bh=y4qZ5PgPqfrqLauHxeiDUnntRxq6bNaPzr7H+iuk3FI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=meZE3p9eCnLhNild8l3ZWxMm3y3ctSnnQcXr4k6pDoGfxRzFLLvzMwxBYoxuN4sD1
-	 RuQ8RhappdiwmMm4bjcnqopZFhxEAw5xPPFuvsLHz0fI/LBsOIpYD3Fw1+ywliCAOu
-	 sNExAqXCR3QgxOd+1CNDlu2NrXW9UFray86tF+valB1omW/q3qNYMZFB1fg1+SRwZL
-	 T7VofNoR1uE69hj0/QESfPOI0SDUFXQNH6NlOpu/PsqAUHL4VdOWmIvyRzWRRYirUy
-	 KVY5vbjnP/YN41vAYWk4C6Xiio9LiK3VqCA3nh0FT3NMJckpaO+R6mDiPMr87WC0sx
-	 syId/ohwkZF1A==
+	b=pMjq/M+zgjJh0u4ldT2Iv6c3hjeuGG4+lfwwSBd8kfKNEK00sBnbZv/u6/zsnM6Mj
+	 EDmitq03HDbf32b3c/Y17AVMyi1OK8jPn06YZjyQcf+hhsmMhfQDnGye8IzZJ1PyiJ
+	 UWLPt/wlL1mi2CgLQDKSGDKWI4dPcbO2Iq5oKkawEc/Z/h4lqzczuCBB1fLtJTzEa+
+	 axx2t09eHFZDhVnXuvHBF+V1NA0GPibIa9twgAhNnxeVRA2jdrvgoxsNwcBouIMIjC
+	 smuyWOiXApBJm3ypt8zboTmkhTZ0ooJeUCzbpK2CIXkRKHswoPI0lsi30ifi0Tb9Hm
+	 onLbIrBhWbbMA==
 From: Stephen Boyd <sboyd@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: WangYuli <wangyuli@uniontech.com>,
+Cc: Sasha Finkelstein <fnkl.kernel@gmail.com>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Wentao Guan <guanwentao@uniontech.com>
-Subject: [PATCH 1/4] spmi: Only use Hikey 970 SPMI controller driver when ARM64
-Date: Sat, 17 May 2025 20:23:26 -0700
-Message-ID: <20250518032330.2959766-2-sboyd@kernel.org>
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Sven Peter <sven@svenpeter.dev>,
+	Neal Gompa <neal@gompa.dev>
+Subject: [PATCH 2/4] dt-bindings: spmi: Add Apple SPMI controller
+Date: Sat, 17 May 2025 20:23:27 -0700
+Message-ID: <20250518032330.2959766-3-sboyd@kernel.org>
 X-Mailer: git-send-email 2.49.0.1101.gccaa498523-goog
 In-Reply-To: <20250518032330.2959766-1-sboyd@kernel.org>
 References: <20250518032330.2959766-1-sboyd@kernel.org>
@@ -46,36 +48,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Sasha Finkelstein <fnkl.kernel@gmail.com>
 
-SPMI_HISI3670, the Hikey 970 SPMI controller driver, is only
-required to use the Kirin 970 SPMI bus.
+Add bindings for the SPMI controller present on most Apple SoCs
 
-And the Kirin 970 is an ARM64-based SoC, it cannot be used on
-platforms of other architectures.
-
-Link: https://lore.kernel.org/all/b4810f476e41e7de4efdf28b42472ae4ffe7defe.1597647359.git.mchehab+huawei@kernel.org/
-Reported-by: Wentao Guan <guanwentao@uniontech.com>
-Closes: https://github.com/deepin-community/kernel/pull/604
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Link: https://lore.kernel.org/r/23BAA675A75EF4F5+20250218050552.57711-1-wangyuli@uniontech.com
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Sven Peter <sven@svenpeter.dev>
+Signed-off-by: Sasha Finkelstein <fnkl.kernel@gmail.com>
+Link: https://lore.kernel.org/r/20250409-spmi-v4-1-eb81ecfd1f64@gmail.com
+Reviewed-by: Neal Gompa <neal@gompa.dev>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 ---
- drivers/spmi/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ .../devicetree/bindings/spmi/apple,spmi.yaml  | 49 +++++++++++++++++++
+ MAINTAINERS                                   |  1 +
+ 2 files changed, 50 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/spmi/apple,spmi.yaml
 
-diff --git a/drivers/spmi/Kconfig b/drivers/spmi/Kconfig
-index 737802046314..4ee496491c74 100644
---- a/drivers/spmi/Kconfig
-+++ b/drivers/spmi/Kconfig
-@@ -14,6 +14,7 @@ if SPMI
- config SPMI_HISI3670
- 	tristate "Hisilicon 3670 SPMI Controller"
- 	select IRQ_DOMAIN_HIERARCHY
-+	depends on ARM64 || COMPILE_TEST
- 	depends on HAS_IOMEM
- 	help
- 	  If you say yes to this option, support will be included for the
+diff --git a/Documentation/devicetree/bindings/spmi/apple,spmi.yaml b/Documentation/devicetree/bindings/spmi/apple,spmi.yaml
+new file mode 100644
+index 000000000000..16bd7eb2b7af
+--- /dev/null
++++ b/Documentation/devicetree/bindings/spmi/apple,spmi.yaml
+@@ -0,0 +1,49 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/spmi/apple,spmi.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Apple SPMI controller
++
++maintainers:
++  - Sasha Finkelstein <fnkl.kernel@gmail.com>
++
++description: A SPMI controller present on most Apple SoCs
++
++allOf:
++  - $ref: spmi.yaml#
++
++properties:
++  compatible:
++    items:
++      - enum:
++          - apple,t8103-spmi
++          - apple,t6000-spmi
++          - apple,t8112-spmi
++      - const: apple,spmi
++
++  reg:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/spmi/spmi.h>
++
++    spmi@920a1300 {
++        compatible = "apple,t6000-spmi", "apple,spmi";
++        reg = <0x920a1300 0x100>;
++        #address-cells = <2>;
++        #size-cells = <0>;
++
++        pmic@f {
++            reg = <0xf SPMI_USID>;
++            /* PMIC-specific properties */
++        };
++    };
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 96b827049501..5f348736ea0b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2282,6 +2282,7 @@ F:	Documentation/devicetree/bindings/pinctrl/apple,pinctrl.yaml
+ F:	Documentation/devicetree/bindings/power/apple*
+ F:	Documentation/devicetree/bindings/pwm/apple,s5l-fpwm.yaml
+ F:	Documentation/devicetree/bindings/spi/apple,spi.yaml
++F:	Documentation/devicetree/bindings/spmi/apple,spmi.yaml
+ F:	Documentation/devicetree/bindings/watchdog/apple,wdt.yaml
+ F:	arch/arm64/boot/dts/apple/
+ F:	drivers/bluetooth/hci_bcm4377.c
 -- 
 https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
 https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
