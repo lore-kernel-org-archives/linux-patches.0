@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75408220F30;
-	Mon, 19 May 2025 21:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF347220F55;
+	Mon, 19 May 2025 21:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747689704; cv=none; b=Z/iuJgKOTlH4Kmn0qOGFEAlJj/mnxL6UZFKREo1xRdCu64SpzbGJW5Vkx8vB6dEdvRguwRBh3yCFOuEF8dN4JaPClWn4Qs8ARUvy39p9+cRi0NOMCjjuxlYibsQQsbXxtAiqngWntY6WTyZGuhAcvFCzLGSZQHs57lDBEzWZMRI=
+	t=1747689706; cv=none; b=gZAb8CIfswJIbe207WHo9tGx/a/fBXGdYMYpLl7EIdMs21d3pEe1Itx5tLXsixwoGPoXBu5n/Ri47CMcaKmrISJ429DMvCC4tDpfnCYBPObCytWKlXCqTmv6bSFplGFlt3HwZJJazHGXjAea36PjrgdnN9pkSXH27vB8bud6i0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747689704; c=relaxed/simple;
-	bh=8eoPs6kGfUHklSE/0zBqDnlRCHuVPwGUq6nnsbtYVDI=;
+	s=arc-20240116; t=1747689706; c=relaxed/simple;
+	bh=Z+yB0flMSft2uwS0zLLzDtNhD6mSwuSDI2LoEPob+kM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=GvKKGs71ZyQ3PkT8tP0CRKLq6JUU3faPIIstVuPU9KoMXKl0tiCgEpt7c33fwtkNj0cXa6L7v+A4IZE/QFFxjalM8E1g+CdkD+2sjwRCFA1UzB3Q3S84N8IVFgwdfh7IrfzMu6zcePLd5vPOuORgghsV8mCbF6sEIonWjIRQZIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HjeR1hnF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xplg0/hmCp0anNCeX47YHy370/aBtObYsoMYNtBAHY7+1qwaJsO4TS4OOwV/QMlEjnM8evs2ZMgt8RUB8jipvQ++kR5LSmhfMOUs/leop7CLCkss80j5nDlaRR7dTnnJ1BWDNLCJaWH6cpvjYTjKRnSuuhy82f2wlTUn6Qpp7jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kMuQ64Mw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HjeR1hnF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035E1C4CEE4;
-	Mon, 19 May 2025 21:21:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kMuQ64Mw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577ACC4CEF4;
+	Mon, 19 May 2025 21:21:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747689704;
-	bh=8eoPs6kGfUHklSE/0zBqDnlRCHuVPwGUq6nnsbtYVDI=;
+	s=k20201202; t=1747689705;
+	bh=Z+yB0flMSft2uwS0zLLzDtNhD6mSwuSDI2LoEPob+kM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HjeR1hnFebAsewwGL2PEGUKuNNRyhVyFks2g0B0VzYfWgj+h8rWlaD2K1LM1EqCOy
-	 fDZchaa9zySwf0r1+HD2pQYK41XEFx/bV0Fm6zh+b4xYVlEXHLiUrTn/72vVrkWg7l
-	 bke4+iA0cNqKAnIpvMeEhNipuozfCdyVnpHiraEm6d0yBQOA9biLUnVquwHhIv9lpw
-	 WK+S/z7JUR/nQlM80Ixrh7WNOeJ3nQ9AvZhdpbONIEd+wFh/ptsQS1uOd4+I8w/ACR
-	 YuMRueaeio7K2CDYYBY5uEwZYGFBb8pK2ISGulfTAZlO10dA4OGGDNke20gtSa1PKN
-	 CMKbDZbe8Humg==
+	b=kMuQ64MwuKAaw4wyu8lgpFgyubKJQW1Ul54ZsOsYbZphUNgwoVWZ2TijvOeB2wj9Q
+	 R9SzFOe1FVZxejJEqlB1K3Wnjxc8jqljI4viy+QCp+BjqSOodMVF7K9CDDcAjXWxeC
+	 Wl4wFtEIQEBiGct0gtL6veipoEE0iDKVmvEhhkcsmDUCivq7uBdoB26LAjndiGQWFB
+	 UY1ChzBlLOvBIeaNNt57YYquPkZBf7XGu9X2emGeURSmau0IQ4fy5chGiVHmaN26Wl
+	 TveeIt40GZzA6lqbC6wSUzuUn+2Eb5lwI58F4rV3JwV1ndOZQ+CKcEwRA90NjNfvm3
+	 ZXKK4AI4Om2eg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+Cc: Markus Burri <markus.burri@mt.com>,
+	kernel test robot <lkp@intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	sagi@grimberg.me,
-	linux-nvme@lists.infradead.org,
+	linus.walleij@linaro.org,
+	bgolaszewski@baylibre.com,
+	linux-gpio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 08/23] nvmet: pci-epf: cleanup nvmet_pci_epf_raise_irq()
-Date: Mon, 19 May 2025 17:21:15 -0400
-Message-Id: <20250519212131.1985647-8-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.14 09/23] gpio: virtuser: fix potential out-of-bound write
+Date: Mon, 19 May 2025 17:21:16 -0400
+Message-Id: <20250519212131.1985647-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250519212131.1985647-1-sashal@kernel.org>
 References: <20250519212131.1985647-1-sashal@kernel.org>
@@ -53,63 +54,63 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.7
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Markus Burri <markus.burri@mt.com>
 
-[ Upstream commit 4236e600bf902202214aa6277e84c4738c56f762 ]
+[ Upstream commit 7118be7c6072f40391923543fdd1563b8d56377c ]
 
-There is no point in taking the controller irq_lock and calling
-nvmet_pci_epf_should_raise_irq() for a completion queue which does not
-have IRQ enabled (NVMET_PCI_EPF_Q_IRQ_ENABLED flag is not set).
-Move the test for the NVMET_PCI_EPF_Q_IRQ_ENABLED flag out of
-nvmet_pci_epf_should_raise_irq() to the top of nvmet_pci_epf_raise_irq()
-to return early when no IRQ should be raised.
+If the caller wrote more characters, count is truncated to the max
+available space in "simple_write_to_buffer". Check that the input
+size does not exceed the buffer size. Write a zero termination
+afterwards.
 
-Also, use dev_err_ratelimited() to avoid a message storm under load when
-raising IRQs is failing.
-
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202505091754.285hHbr2-lkp@intel.com/
+Signed-off-by: Markus Burri <markus.burri@mt.com>
+Link: https://lore.kernel.org/r/20250509150459.115489-1-markus.burri@mt.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/pci-epf.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpio/gpio-virtuser.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/pci-epf.c b/drivers/nvme/target/pci-epf.c
-index bc1daa9aede9d..80d857798bddd 100644
---- a/drivers/nvme/target/pci-epf.c
-+++ b/drivers/nvme/target/pci-epf.c
-@@ -596,9 +596,6 @@ static bool nvmet_pci_epf_should_raise_irq(struct nvmet_pci_epf_ctrl *ctrl,
- 	struct nvmet_pci_epf_irq_vector *iv = cq->iv;
- 	bool ret;
+diff --git a/drivers/gpio/gpio-virtuser.c b/drivers/gpio/gpio-virtuser.c
+index e89f299f21400..dcecb7a259117 100644
+--- a/drivers/gpio/gpio-virtuser.c
++++ b/drivers/gpio/gpio-virtuser.c
+@@ -400,10 +400,15 @@ static ssize_t gpio_virtuser_direction_do_write(struct file *file,
+ 	char buf[32], *trimmed;
+ 	int ret, dir, val = 0;
  
--	if (!test_bit(NVMET_PCI_EPF_Q_IRQ_ENABLED, &cq->flags))
--		return false;
--
- 	/* IRQ coalescing for the admin queue is not allowed. */
- 	if (!cq->qid)
- 		return true;
-@@ -625,7 +622,8 @@ static void nvmet_pci_epf_raise_irq(struct nvmet_pci_epf_ctrl *ctrl,
- 	struct pci_epf *epf = nvme_epf->epf;
- 	int ret = 0;
+-	ret = simple_write_to_buffer(buf, sizeof(buf), ppos, user_buf, count);
++	if (count >= sizeof(buf))
++		return -EINVAL;
++
++	ret = simple_write_to_buffer(buf, sizeof(buf) - 1, ppos, user_buf, count);
+ 	if (ret < 0)
+ 		return ret;
  
--	if (!test_bit(NVMET_PCI_EPF_Q_LIVE, &cq->flags))
-+	if (!test_bit(NVMET_PCI_EPF_Q_LIVE, &cq->flags) ||
-+	    !test_bit(NVMET_PCI_EPF_Q_IRQ_ENABLED, &cq->flags))
- 		return;
++	buf[ret] = '\0';
++
+ 	trimmed = strim(buf);
  
- 	mutex_lock(&ctrl->irq_lock);
-@@ -656,7 +654,9 @@ static void nvmet_pci_epf_raise_irq(struct nvmet_pci_epf_ctrl *ctrl,
- 	}
+ 	if (strcmp(trimmed, "input") == 0) {
+@@ -622,12 +627,15 @@ static ssize_t gpio_virtuser_consumer_write(struct file *file,
+ 	char buf[GPIO_VIRTUSER_NAME_BUF_LEN + 2];
+ 	int ret;
  
++	if (count >= sizeof(buf))
++		return -EINVAL;
++
+ 	ret = simple_write_to_buffer(buf, GPIO_VIRTUSER_NAME_BUF_LEN, ppos,
+ 				     user_buf, count);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	buf[strlen(buf) - 1] = '\0';
++	buf[ret] = '\0';
+ 
+ 	ret = gpiod_set_consumer_name(data->ad.desc, buf);
  	if (ret)
--		dev_err(ctrl->dev, "Failed to raise IRQ (err=%d)\n", ret);
-+		dev_err_ratelimited(ctrl->dev,
-+				    "CQ[%u]: Failed to raise IRQ (err=%d)\n",
-+				    cq->qid, ret);
- 
- unlock:
- 	mutex_unlock(&ctrl->irq_lock);
 -- 
 2.39.5
 
