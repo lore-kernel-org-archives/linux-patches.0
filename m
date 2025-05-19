@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B812C22F77C;
-	Mon, 19 May 2025 21:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4197823026D;
+	Mon, 19 May 2025 21:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747689757; cv=none; b=hz4Q+UTigFTWsLnG1cuyVC41Il+8jbN05DxgVsq349xUdKaohUBUutBSKw4mqUnZUL6s+2SWJSsDUHZpDa6Cka8K8okFRajLPHhEupGdrf3Y0tQ8WPKiOR1fT2rfWcdvknXdAtGadm37bkqcaarP8GP1K9Ad7R2kSClxYUKlYe4=
+	t=1747689760; cv=none; b=nC7PH7Spa/TPbTGUN663emqYl208Ap3TTUe3wpBjcnRwEbxnHIV0kJi9IOdNK3IOJarwtyDQLBHSVHkwCdylQESXHoNMB3orjsazccb6R9E2aTJSJUducHmFOxY0B1NnoDbP+8qOwkUmXsDxP4sKnABN94I6OOCeVv5PU5r2Rts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747689757; c=relaxed/simple;
-	bh=OSHl4uIWKgidVRiDssKehTz/7YhiYGoiz41vfgNOFzc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=p1uXi21Zu9E4WyOOPbPPyiA4CcZtM11XLvLPPaO66YspGw5v9tQjZFw5UsMV6j7Fy1/LkDIIxmVWyMlWruKEa9YYRn3cz2gl8RwM0yGSODEp9A9UqPcDU8x2Y1jtuHmtuGjgxkbUAPFPfoGdhG2LyrSW7qUybukqmD7l233c8D8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d6IqIWWx; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747689760; c=relaxed/simple;
+	bh=2V44KfSjal0zLIh4J5jLlsVYG828vtvc+wIo6JOzW1Y=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=FjU/DnyA/djePN5QK5FseE02PB/vLIrgZFZnV3o24lvI4hRNpOYLjJ2zoeu5hBO5kZQCO7BpSFfk/MBImEw1KZw9+Xy2hhgu6PiRuVOOxjrfC9v5M2tR2mlKZrGbgIQdzl7y54kF5StnW8WnAEkeQDPhGX7UGGDMW3Y+7hUrwlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Aly5Y7Ex; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d6IqIWWx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4403CC4CEEB;
-	Mon, 19 May 2025 21:22:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Aly5Y7Ex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F6FC4CEED;
+	Mon, 19 May 2025 21:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747689757;
-	bh=OSHl4uIWKgidVRiDssKehTz/7YhiYGoiz41vfgNOFzc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d6IqIWWxIQT6OZ3Iyj0jnHKK7z8rnxHY7752EFBb4LL9pBPhNlMOejtTncrj2QV3E
-	 37HoBaidgF16dylVAQwosjTKUdEQsRgIVVHoyGzs0UFym97W/TJBLiauXEepxfIv/c
-	 H9oYHaueIj6KbeBUF9Fc5SZB6z8tRaSPkvhWfiwOtBme8wVJKhxbTiI5OdYBE6bWG5
-	 I0ngyGffcrk3kXi/tGa3/CObnf4eM64GED/BojDrypTaMTjx5W4Rp831gbLulG6vfO
-	 GQcKibNC0QGGRBe0YtgA/KqeNOnBe0LsMl+iAuCdhHx8c1JwPg/PLAoLgaLPFUpS4L
-	 b2A7OG+MEVIqg==
+	s=k20201202; t=1747689760;
+	bh=2V44KfSjal0zLIh4J5jLlsVYG828vtvc+wIo6JOzW1Y=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Aly5Y7ExzNOkB3+y88L9lOu/z+irPCVughm+bjiWvU/KsZs1cWcfLc38fmEs0Xs/W
+	 QjB4Y3Oy9NeA3p3MGEXeWprYNG571a3R9zP1lw6Q4wi7tRNuJgKGsGg/biCsnI56AZ
+	 L4y+3sfZjRPVblWiPkMRmgDEw/j3YjBEjpZXJrtlGPSKAMHJUgInlAZp+JAXv4i4D6
+	 wU9WG03z5LFApLk/XO8ARQR0lJW5T9Fj5nJDsbbGY39nFD2GeHarP736f/53Wvt8KN
+	 2oS2CTw5F4X4DwP/H/Y0CxHO+PziYbUh0G5oqEAQNqi/r3AgSCj250nrdPdsWwCAz5
+	 YwfoDAs5sH7GA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Jeff Layton <jlayton@kernel.org>,
+Cc: Purva Yeshi <purvayeshi550@gmail.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	anna.schumaker@netapp.com,
-	linux-nfs@vger.kernel.org,
+	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 18/18] NFS: Avoid flushing data while holding directory locks in nfs_rename()
-Date: Mon, 19 May 2025 17:22:07 -0400
-Message-Id: <20250519212208.1986028-18-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 01/11] dmaengine: idxd: cdev: Fix uninitialized use of sva in idxd_cdev_open
+Date: Mon, 19 May 2025 17:22:27 -0400
+Message-Id: <20250519212237.1986368-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250519212208.1986028-1-sashal@kernel.org>
-References: <20250519212208.1986028-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,110 +47,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.12.29
+X-stable-base: Linux 6.6.91
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Purva Yeshi <purvayeshi550@gmail.com>
 
-[ Upstream commit dcd21b609d4abc7303f8683bce4f35d78d7d6830 ]
+[ Upstream commit 97994333de2b8062d2df4e6ce0dc65c2dc0f40dc ]
 
-The Linux client assumes that all filehandles are non-volatile for
-renames within the same directory (otherwise sillyrename cannot work).
-However, the existence of the Linux 'subtree_check' export option has
-meant that nfs_rename() has always assumed it needs to flush writes
-before attempting to rename.
+Fix Smatch-detected issue:
+drivers/dma/idxd/cdev.c:321 idxd_cdev_open() error:
+uninitialized symbol 'sva'.
 
-Since NFSv4 does allow the client to query whether or not the server
-exhibits this behaviour, and since knfsd does actually set the
-appropriate flag when 'subtree_check' is enabled on an export, it
-should be OK to optimise away the write flushing behaviour in the cases
-where it is clearly not needed.
+'sva' pointer may be used uninitialized in error handling paths.
+Specifically, if PASID support is enabled and iommu_sva_bind_device()
+returns an error, the code jumps to the cleanup label and attempts to
+call iommu_sva_unbind_device(sva) without ensuring that sva was
+successfully assigned. This triggers a Smatch warning about an
+uninitialized symbol.
 
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Initialize sva to NULL at declaration and add a check using
+IS_ERR_OR_NULL() before unbinding the device. This ensures the
+function does not use an invalid or uninitialized pointer during
+cleanup.
+
+Signed-off-by: Purva Yeshi <purvayeshi550@gmail.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Link: https://lore.kernel.org/r/20250410110216.21592-1-purvayeshi550@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/client.c           |  2 ++
- fs/nfs/dir.c              | 15 ++++++++++++++-
- include/linux/nfs_fs_sb.h | 12 +++++++++---
- 3 files changed, 25 insertions(+), 4 deletions(-)
+ drivers/dma/idxd/cdev.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfs/client.c b/fs/nfs/client.c
-index 03ecc77656151..4503758e9594b 100644
---- a/fs/nfs/client.c
-+++ b/fs/nfs/client.c
-@@ -1096,6 +1096,8 @@ struct nfs_server *nfs_create_server(struct fs_context *fc)
- 		if (server->namelen == 0 || server->namelen > NFS2_MAXNAMLEN)
- 			server->namelen = NFS2_MAXNAMLEN;
- 	}
-+	/* Linux 'subtree_check' borkenness mandates this setting */
-+	server->fh_expire_type = NFS_FH_VOL_RENAME;
+diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
+index c18633ad8455f..c9eea639a749e 100644
+--- a/drivers/dma/idxd/cdev.c
++++ b/drivers/dma/idxd/cdev.c
+@@ -225,7 +225,7 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
+ 	struct idxd_wq *wq;
+ 	struct device *dev, *fdev;
+ 	int rc = 0;
+-	struct iommu_sva *sva;
++	struct iommu_sva *sva = NULL;
+ 	unsigned int pasid;
+ 	struct idxd_cdev *idxd_cdev;
  
- 	if (!(fattr->valid & NFS_ATTR_FATTR)) {
- 		error = ctx->nfs_mod->rpc_ops->getattr(server, ctx->mntfh,
-diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
-index 492cffd9d3d84..f9f4a92f63e92 100644
---- a/fs/nfs/dir.c
-+++ b/fs/nfs/dir.c
-@@ -2690,6 +2690,18 @@ nfs_unblock_rename(struct rpc_task *task, struct nfs_renamedata *data)
- 	unblock_revalidate(new_dentry);
- }
- 
-+static bool nfs_rename_is_unsafe_cross_dir(struct dentry *old_dentry,
-+					   struct dentry *new_dentry)
-+{
-+	struct nfs_server *server = NFS_SB(old_dentry->d_sb);
-+
-+	if (old_dentry->d_parent != new_dentry->d_parent)
-+		return false;
-+	if (server->fh_expire_type & NFS_FH_RENAME_UNSAFE)
-+		return !(server->fh_expire_type & NFS_FH_NOEXPIRE_WITH_OPEN);
-+	return true;
-+}
-+
- /*
-  * RENAME
-  * FIXME: Some nfsds, like the Linux user space nfsd, may generate a
-@@ -2777,7 +2789,8 @@ int nfs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
- 
- 	}
- 
--	if (S_ISREG(old_inode->i_mode))
-+	if (S_ISREG(old_inode->i_mode) &&
-+	    nfs_rename_is_unsafe_cross_dir(old_dentry, new_dentry))
- 		nfs_sync_inode(old_inode);
- 	task = nfs_async_rename(old_dir, new_dir, old_dentry, new_dentry,
- 				must_unblock ? nfs_unblock_rename : NULL);
-diff --git a/include/linux/nfs_fs_sb.h b/include/linux/nfs_fs_sb.h
-index 81ab18658d72d..2cff5cafbaa78 100644
---- a/include/linux/nfs_fs_sb.h
-+++ b/include/linux/nfs_fs_sb.h
-@@ -211,6 +211,15 @@ struct nfs_server {
- 	char			*fscache_uniq;	/* Uniquifier (or NULL) */
- #endif
- 
-+	/* The following #defines numerically match the NFSv4 equivalents */
-+#define NFS_FH_NOEXPIRE_WITH_OPEN (0x1)
-+#define NFS_FH_VOLATILE_ANY (0x2)
-+#define NFS_FH_VOL_MIGRATION (0x4)
-+#define NFS_FH_VOL_RENAME (0x8)
-+#define NFS_FH_RENAME_UNSAFE (NFS_FH_VOLATILE_ANY | NFS_FH_VOL_RENAME)
-+	u32			fh_expire_type;	/* V4 bitmask representing file
-+						   handle volatility type for
-+						   this filesystem */
- 	u32			pnfs_blksize;	/* layout_blksize attr */
- #if IS_ENABLED(CONFIG_NFS_V4)
- 	u32			attr_bitmask[3];/* V4 bitmask representing the set
-@@ -234,9 +243,6 @@ struct nfs_server {
- 	u32			acl_bitmask;	/* V4 bitmask representing the ACEs
- 						   that are supported on this
- 						   filesystem */
--	u32			fh_expire_type;	/* V4 bitmask representing file
--						   handle volatility type for
--						   this filesystem */
- 	struct pnfs_layoutdriver_type  *pnfs_curr_ld; /* Active layout driver */
- 	struct rpc_wait_queue	roc_rpcwaitq;
- 	void			*pnfs_ld_data;	/* per mount point data */
+@@ -322,7 +322,7 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
+ 	if (device_user_pasid_enabled(idxd))
+ 		idxd_xa_pasid_remove(ctx);
+ failed_get_pasid:
+-	if (device_user_pasid_enabled(idxd))
++	if (device_user_pasid_enabled(idxd) && !IS_ERR_OR_NULL(sva))
+ 		iommu_sva_unbind_device(sva);
+ failed:
+ 	mutex_unlock(&wq->wq_lock);
 -- 
 2.39.5
 
