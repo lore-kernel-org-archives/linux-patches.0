@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4197823026D;
-	Mon, 19 May 2025 21:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89299230981;
+	Mon, 19 May 2025 21:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747689760; cv=none; b=nC7PH7Spa/TPbTGUN663emqYl208Ap3TTUe3wpBjcnRwEbxnHIV0kJi9IOdNK3IOJarwtyDQLBHSVHkwCdylQESXHoNMB3orjsazccb6R9E2aTJSJUducHmFOxY0B1NnoDbP+8qOwkUmXsDxP4sKnABN94I6OOCeVv5PU5r2Rts=
+	t=1747689761; cv=none; b=AfuuJSTg8HjvqGa7gzVQBr+xAAYjNyTH4iDl0nEJqIgiOj38XtXubyYwUUSSc+cyaCcdyqZA7vrXC1PrUjtsFiUPf7Z5JQKLl1A6izDsYZFbFPMq4nK4pc2Ptxes7h9BmnpBJuKziiQcuiYFE+MvXfWAkouIb1QfXqa2g6IDrmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747689760; c=relaxed/simple;
-	bh=2V44KfSjal0zLIh4J5jLlsVYG828vtvc+wIo6JOzW1Y=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=FjU/DnyA/djePN5QK5FseE02PB/vLIrgZFZnV3o24lvI4hRNpOYLjJ2zoeu5hBO5kZQCO7BpSFfk/MBImEw1KZw9+Xy2hhgu6PiRuVOOxjrfC9v5M2tR2mlKZrGbgIQdzl7y54kF5StnW8WnAEkeQDPhGX7UGGDMW3Y+7hUrwlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Aly5Y7Ex; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747689761; c=relaxed/simple;
+	bh=CNTNM1cPeuOfMM2ToKgThw8wIV99A7ZxJ14R4tCeuSo=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=hZm/OeTNqfyio6zeRCt8ZlZo3AhZHjmnutYCFZWEuVau0tFjCsc5vGcV5lWm33lmh1VRONEOwM7w1/adq8nTQ7LFeZ5QjssNTGMht8wBkpRhySWOuR0BB6TPB6bT+1ZQ9A5/EgwIs4NGK87QqzDPt8Q9Ley6CKce3BADlBt4oA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S1Uw0Tom; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Aly5Y7Ex"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F6FC4CEED;
-	Mon, 19 May 2025 21:22:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S1Uw0Tom"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB4CC4CEF2;
+	Mon, 19 May 2025 21:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747689760;
-	bh=2V44KfSjal0zLIh4J5jLlsVYG828vtvc+wIo6JOzW1Y=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Aly5Y7ExzNOkB3+y88L9lOu/z+irPCVughm+bjiWvU/KsZs1cWcfLc38fmEs0Xs/W
-	 QjB4Y3Oy9NeA3p3MGEXeWprYNG571a3R9zP1lw6Q4wi7tRNuJgKGsGg/biCsnI56AZ
-	 L4y+3sfZjRPVblWiPkMRmgDEw/j3YjBEjpZXJrtlGPSKAMHJUgInlAZp+JAXv4i4D6
-	 wU9WG03z5LFApLk/XO8ARQR0lJW5T9Fj5nJDsbbGY39nFD2GeHarP736f/53Wvt8KN
-	 2oS2CTw5F4X4DwP/H/Y0CxHO+PziYbUh0G5oqEAQNqi/r3AgSCj250nrdPdsWwCAz5
-	 YwfoDAs5sH7GA==
+	s=k20201202; t=1747689761;
+	bh=CNTNM1cPeuOfMM2ToKgThw8wIV99A7ZxJ14R4tCeuSo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=S1Uw0TomKxW8hOcY7lpeh4yrQhDsomK0mdHXBXlChdsyBYom90wHZXeHsnT8ysPgn
+	 CbYrDc+ZCeSNaDWN7Ms9qXH6rXfeaZcx0eo3PUuJexwl+VUk/JqyzNb/j115g8WNI/
+	 YdIdcx7ipw6ftF9cmvsPSLDIssFciD7PaR8pSjJw0KGaE+UvZvb5u6rw7qCi4g7NN6
+	 gAVZoVJe1d4lLszmWtPb5rjvsWGvjT4JhQf2mojH1T0bsg5hmuLNNqZ7JKrVxm1zMM
+	 CuoMut0yUzyIulVOPtHStk28i1cOhCPPeIlljLI6i/4Ut9A+HEX96t37ctqFIfh223
+	 LO79gXwUwcJcg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Purva Yeshi <purvayeshi550@gmail.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: Milton Barrera <miltonjosue2001@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	dmaengine@vger.kernel.org,
+	jikos@kernel.org,
+	benjamin.tissoires@redhat.com,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 01/11] dmaengine: idxd: cdev: Fix uninitialized use of sva in idxd_cdev_open
-Date: Mon, 19 May 2025 17:22:27 -0400
-Message-Id: <20250519212237.1986368-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 02/11] HID: quirks: Add ADATA XPG alpha wireless mouse support
+Date: Mon, 19 May 2025 17:22:28 -0400
+Message-Id: <20250519212237.1986368-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250519212237.1986368-1-sashal@kernel.org>
+References: <20250519212237.1986368-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,58 +53,48 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.91
 Content-Transfer-Encoding: 8bit
 
-From: Purva Yeshi <purvayeshi550@gmail.com>
+From: Milton Barrera <miltonjosue2001@gmail.com>
 
-[ Upstream commit 97994333de2b8062d2df4e6ce0dc65c2dc0f40dc ]
+[ Upstream commit fa9fdeea1b7d6440c22efa6d59a769eae8bc89f1 ]
 
-Fix Smatch-detected issue:
-drivers/dma/idxd/cdev.c:321 idxd_cdev_open() error:
-uninitialized symbol 'sva'.
+This patch adds HID_QUIRK_ALWAYS_POLL for the ADATA XPG wireless gaming mouse (USB ID 125f:7505) and its USB dongle (USB ID 125f:7506). Without this quirk, the device does not generate input events properly.
 
-'sva' pointer may be used uninitialized in error handling paths.
-Specifically, if PASID support is enabled and iommu_sva_bind_device()
-returns an error, the code jumps to the cleanup label and attempts to
-call iommu_sva_unbind_device(sva) without ensuring that sva was
-successfully assigned. This triggers a Smatch warning about an
-uninitialized symbol.
-
-Initialize sva to NULL at declaration and add a check using
-IS_ERR_OR_NULL() before unbinding the device. This ensures the
-function does not use an invalid or uninitialized pointer during
-cleanup.
-
-Signed-off-by: Purva Yeshi <purvayeshi550@gmail.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Link: https://lore.kernel.org/r/20250410110216.21592-1-purvayeshi550@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Milton Barrera <miltonjosue2001@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/cdev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/hid-ids.h    | 4 ++++
+ drivers/hid/hid-quirks.c | 2 ++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-index c18633ad8455f..c9eea639a749e 100644
---- a/drivers/dma/idxd/cdev.c
-+++ b/drivers/dma/idxd/cdev.c
-@@ -225,7 +225,7 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
- 	struct idxd_wq *wq;
- 	struct device *dev, *fdev;
- 	int rc = 0;
--	struct iommu_sva *sva;
-+	struct iommu_sva *sva = NULL;
- 	unsigned int pasid;
- 	struct idxd_cdev *idxd_cdev;
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 8e721ec3faaff..a8665d57094b2 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -41,6 +41,10 @@
+ #define USB_VENDOR_ID_ACTIONSTAR	0x2101
+ #define USB_DEVICE_ID_ACTIONSTAR_1011	0x1011
  
-@@ -322,7 +322,7 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
- 	if (device_user_pasid_enabled(idxd))
- 		idxd_xa_pasid_remove(ctx);
- failed_get_pasid:
--	if (device_user_pasid_enabled(idxd))
-+	if (device_user_pasid_enabled(idxd) && !IS_ERR_OR_NULL(sva))
- 		iommu_sva_unbind_device(sva);
- failed:
- 	mutex_unlock(&wq->wq_lock);
++#define USB_VENDOR_ID_ADATA_XPG 0x125f
++#define USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE 0x7505
++#define USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE_DONGLE 0x7506
++
+ #define USB_VENDOR_ID_ADS_TECH		0x06e1
+ #define USB_DEVICE_ID_ADS_TECH_RADIO_SI470X	0xa155
+ 
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 5d7a418ccdbec..73979643315bf 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -27,6 +27,8 @@
+ static const struct hid_device_id hid_quirks[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_AASHIMA, USB_DEVICE_ID_AASHIMA_GAMEPAD), HID_QUIRK_BADPAD },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_AASHIMA, USB_DEVICE_ID_AASHIMA_PREDATOR), HID_QUIRK_BADPAD },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_ADATA_XPG, USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE), HID_QUIRK_ALWAYS_POLL },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_ADATA_XPG, USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE_DONGLE), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_AFATECH, USB_DEVICE_ID_AFATECH_AF9016), HID_QUIRK_FULLSPEED_INTERVAL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_AIREN, USB_DEVICE_ID_AIREN_SLIMPLUS), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_AKAI_09E8, USB_DEVICE_ID_AKAI_09E8_MIDIMIX), HID_QUIRK_NO_INIT_REPORTS },
 -- 
 2.39.5
 
