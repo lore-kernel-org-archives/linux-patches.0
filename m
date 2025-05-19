@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A6D2459E0;
-	Mon, 19 May 2025 21:23:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA9224677C;
+	Mon, 19 May 2025 21:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747689815; cv=none; b=aqjJfLsX48K56yK1d+a6q/aUdkew2ifq+pEFQAEnE6UZvV3jGk4548izSUnZx77RyrMEmhwHhRjs9/hP5Z5YyNqYmqeIM3Tjee8JgRFYMKI10HKT8DtSN9XOCFkWmI/XabBpBxIMh9JziwgClOrfjF508aSimO2mVBD9xDXausA=
+	t=1747689816; cv=none; b=NZveKBZpMIx/o6Aa/UHHWDQoKrblZQxp6awDyG8+z/DP2r0ErhjeIiTq4EPpGllFdSu2bhB4tiY02iW4hj6zmTsvDh8j8znd0WSeAEmquO8vbbfobWzKOZf9PcwqSKIDP+jK+nDLf+a+xo5oLkNzcXAgzy1b0LU4xRt5jbKPWh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747689815; c=relaxed/simple;
-	bh=uP9UgC02hn6qmbiczDBUbBXOmhkkOC3BNHf9VGvqYMM=;
+	s=arc-20240116; t=1747689816; c=relaxed/simple;
+	bh=2RMri0FdnfsCKeLtSP/6sX1Db4Warqq7c6YVHqrHFc0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=dcjFjp++o7LeYmPNRTmhI4/KykNmpWncZ0RTorLdHFyMBntV0MLaGDHSakaeDNw+yLYT+a2pDovUjBMlARXvH5hoyCEp8WztKLAZfY8tRH4pqNi7KDSsMyK4GhVffazUTwLqMsdbg3MRStjNQ9ysgIXCMr9jWqa2xEMVKvcvers=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bk+9B6pU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ee50ZyA0I94gHOY79idUfn9dMzypZJuTrjL71QUYVUNo1iWTX9n8u4pvCef6Mo2xAGZUkpFrGylAiyUq3XzppwipyUmXh+1uMBYkN/eP/GI9pzljfos5i8EyWsWUKVLdrDjNycysHNg3StyV5gmZY8M9A7tOz/cOGpknkjnqXk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j7vM2DP8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bk+9B6pU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B61EC4CEEB;
-	Mon, 19 May 2025 21:23:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j7vM2DP8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AC5C4CEE4;
+	Mon, 19 May 2025 21:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747689815;
-	bh=uP9UgC02hn6qmbiczDBUbBXOmhkkOC3BNHf9VGvqYMM=;
+	s=k20201202; t=1747689816;
+	bh=2RMri0FdnfsCKeLtSP/6sX1Db4Warqq7c6YVHqrHFc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bk+9B6pUZxn0y6AA4x5mAJT2s2RBdb9C0a3BjlLy6YmsfmGMkV7xe1IazQhTfimNf
-	 NrgBSBzH2aGlNa/7JVO2WAFgx7x8iTiXulQwMgm6WxYE+fI5c6Uabw79W28S5DG+be
-	 9VF+XHzO2zcHCozmL+n7djb7e//7s3TACD34KCgE5vN4sksROtxyGzSpn29dVW8nby
-	 owSYT/+F8jojbE8w4QrZ8gutNzQN4aurgsZpTf22i9UHY3wDlIQjTOQosfYKVk0bMI
-	 0sPyaALza53rtb+uhBN/6vPPCehSRJRo6d7Vs4jey4UJCqYwGNIxoHTr0+9O+FdvbR
-	 DJRySTeaNPWJQ==
+	b=j7vM2DP8r8l2f843mM7MNstqaRcYninJYH8Adi56frmA2BOqY70hle9e2bHfsp5Vf
+	 ALD7AwJC9dgCDgGM/ARB9w00rC0ghhizehWnkp6vGlrSkRwPl6uR/1v45S3asicefr
+	 gVDS0rjJphfWtZYAy5IXIAl4OqfGfY8iJi4jB/X1Q0lGc4a2WhjCruEaKXIKnncU1l
+	 WTV8jw1/67ty8kVEo0BfBtbKiJZdyV7j32Aj/g1ZOeMtp9xJFSM/NzyPbklN/jg/j0
+	 DIzDAYjM8G1Qqk3NKydeuTv0BGB7tgJs5olmX7yUbuNUuyJ98p+3HMB1PXgyO5PSnC
+	 JyTXFPls5kBnQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jeff Layton <jlayton@kernel.org>,
-	Omar Sandoval <osandov@osandov.com>,
-	Sargun Dillon <sargun@sargun.me>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+Cc: John Chau <johnchau@0atlas.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	anna.schumaker@netapp.com,
-	linux-nfs@vger.kernel.org,
+	ibm-acpi@hmh.eng.br,
+	dvhart@infradead.org,
+	andy@infradead.org,
+	ibm-acpi-devel@lists.sourceforge.net,
+	platform-driver-x86@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 2/5] nfs: don't share pNFS DS connections between net namespaces
-Date: Mon, 19 May 2025 17:23:28 -0400
-Message-Id: <20250519212331.1986865-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 3/5] platform/x86: thinkpad_acpi: Support also NEC Lavie X1475JAS
+Date: Mon, 19 May 2025 17:23:29 -0400
+Message-Id: <20250519212331.1986865-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250519212331.1986865-1-sashal@kernel.org>
 References: <20250519212331.1986865-1-sashal@kernel.org>
@@ -50,169 +50,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.4.293
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: John Chau <johnchau@0atlas.com>
 
-[ Upstream commit 6b9785dc8b13d9fb75ceec8cf4ea7ec3f3b1edbc ]
+[ Upstream commit a032f29a15412fab9f4352e0032836d51420a338 ]
 
-Currently, different NFS clients can share the same DS connections, even
-when they are in different net namespaces. If a containerized client
-creates a DS connection, another container can find and use it. When the
-first client exits, the connection will close which can lead to stalls
-in other clients.
+Change get_thinkpad_model_data() to check for additional vendor name
+"NEC" in order to support NEC Lavie X1475JAS notebook (and perhaps
+more).
 
-Add a net namespace pointer to struct nfs4_pnfs_ds, and compare those
-value to the caller's netns in _data_server_lookup_locked() when
-searching for a nfs4_pnfs_ds to match.
+The reason of this works with minimal changes is because NEC Lavie
+X1475JAS is a Thinkpad inside. ACPI dumps reveals its OEM ID to be
+"LENOVO", BIOS version "R2PET30W" matches typical Lenovo BIOS version,
+the existence of HKEY of LEN0268, with DMI fw string is "R2PHT24W".
 
-Reported-by: Omar Sandoval <osandov@osandov.com>
-Reported-by: Sargun Dillon <sargun@sargun.me>
-Closes: https://lore.kernel.org/linux-nfs/Z_ArpQC_vREh_hEA@telecaster/
-Tested-by: Sargun Dillon <sargun@sargun.me>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Link: https://lore.kernel.org/r/20250410-nfs-ds-netns-v2-1-f80b7979ba80@kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+I compiled and tested with my own machine, attached the dmesg
+below as proof of work:
+[    6.288932] thinkpad_acpi: ThinkPad ACPI Extras v0.26
+[    6.288937] thinkpad_acpi: http://ibm-acpi.sf.net/
+[    6.288938] thinkpad_acpi: ThinkPad BIOS R2PET30W (1.11 ), EC R2PHT24W
+[    6.307000] thinkpad_acpi: radio switch found; radios are enabled
+[    6.307030] thinkpad_acpi: This ThinkPad has standard ACPI backlight brightness control, supported by the ACPI video driver
+[    6.307033] thinkpad_acpi: Disabling thinkpad-acpi brightness events by default...
+[    6.320322] thinkpad_acpi: rfkill switch tpacpi_bluetooth_sw: radio is unblocked
+[    6.371963] thinkpad_acpi: secondary fan control detected & enabled
+[    6.391922] thinkpad_acpi: battery 1 registered (start 0, stop 85, behaviours: 0x7)
+[    6.398375] input: ThinkPad Extra Buttons as /devices/platform/thinkpad_acpi/input/input13
+
+Signed-off-by: John Chau <johnchau@0atlas.com>
+Link: https://lore.kernel.org/r/20250504165513.295135-1-johnchau@0atlas.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/filelayout/filelayoutdev.c         | 6 +++---
- fs/nfs/flexfilelayout/flexfilelayoutdev.c | 6 +++---
- fs/nfs/pnfs.h                             | 4 +++-
- fs/nfs/pnfs_nfs.c                         | 9 +++++----
- 4 files changed, 14 insertions(+), 11 deletions(-)
+ drivers/platform/x86/thinkpad_acpi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/nfs/filelayout/filelayoutdev.c b/fs/nfs/filelayout/filelayoutdev.c
-index d913e818858f3..82bba1ede717c 100644
---- a/fs/nfs/filelayout/filelayoutdev.c
-+++ b/fs/nfs/filelayout/filelayoutdev.c
-@@ -75,6 +75,7 @@ nfs4_fl_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
- 	struct page *scratch;
- 	struct list_head dsaddrs;
- 	struct nfs4_pnfs_ds_addr *da;
-+	struct net *net = server->nfs_client->cl_net;
+diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
+index fbb9a5c7f8b82..441b7fb6b37af 100644
+--- a/drivers/platform/x86/thinkpad_acpi.c
++++ b/drivers/platform/x86/thinkpad_acpi.c
+@@ -10112,6 +10112,8 @@ static int __must_check __init get_thinkpad_model_data(
+ 		tp->vendor = PCI_VENDOR_ID_IBM;
+ 	else if (dmi_name_in_vendors("LENOVO"))
+ 		tp->vendor = PCI_VENDOR_ID_LENOVO;
++	else if (dmi_name_in_vendors("NEC"))
++		tp->vendor = PCI_VENDOR_ID_LENOVO;
+ 	else
+ 		return 0;
  
- 	/* set up xdr stream */
- 	scratch = alloc_page(gfp_flags);
-@@ -160,8 +161,7 @@ nfs4_fl_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
- 
- 		mp_count = be32_to_cpup(p); /* multipath count */
- 		for (j = 0; j < mp_count; j++) {
--			da = nfs4_decode_mp_ds_addr(server->nfs_client->cl_net,
--						    &stream, gfp_flags);
-+			da = nfs4_decode_mp_ds_addr(net, &stream, gfp_flags);
- 			if (da)
- 				list_add_tail(&da->da_node, &dsaddrs);
- 		}
-@@ -171,7 +171,7 @@ nfs4_fl_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
- 			goto out_err_free_deviceid;
- 		}
- 
--		dsaddr->ds_list[i] = nfs4_pnfs_ds_add(&dsaddrs, gfp_flags);
-+		dsaddr->ds_list[i] = nfs4_pnfs_ds_add(net, &dsaddrs, gfp_flags);
- 		if (!dsaddr->ds_list[i])
- 			goto out_err_drain_dsaddrs;
- 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayoutdev.c b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-index 1f12297109b41..e6d7473e1a32a 100644
---- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-@@ -49,6 +49,7 @@ nfs4_ff_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
- 	struct nfs4_pnfs_ds_addr *da;
- 	struct nfs4_ff_layout_ds *new_ds = NULL;
- 	struct nfs4_ff_ds_version *ds_versions = NULL;
-+	struct net *net = server->nfs_client->cl_net;
- 	u32 mp_count;
- 	u32 version_count;
- 	__be32 *p;
-@@ -80,8 +81,7 @@ nfs4_ff_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
- 
- 	for (i = 0; i < mp_count; i++) {
- 		/* multipath ds */
--		da = nfs4_decode_mp_ds_addr(server->nfs_client->cl_net,
--					    &stream, gfp_flags);
-+		da = nfs4_decode_mp_ds_addr(net, &stream, gfp_flags);
- 		if (da)
- 			list_add_tail(&da->da_node, &dsaddrs);
- 	}
-@@ -147,7 +147,7 @@ nfs4_ff_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
- 	new_ds->ds_versions = ds_versions;
- 	new_ds->ds_versions_cnt = version_count;
- 
--	new_ds->ds = nfs4_pnfs_ds_add(&dsaddrs, gfp_flags);
-+	new_ds->ds = nfs4_pnfs_ds_add(net, &dsaddrs, gfp_flags);
- 	if (!new_ds->ds)
- 		goto out_err_drain_dsaddrs;
- 
-diff --git a/fs/nfs/pnfs.h b/fs/nfs/pnfs.h
-index 68339680bb7d1..a73566d365028 100644
---- a/fs/nfs/pnfs.h
-+++ b/fs/nfs/pnfs.h
-@@ -57,6 +57,7 @@ struct nfs4_pnfs_ds {
- 	struct list_head	ds_node;  /* nfs4_pnfs_dev_hlist dev_dslist */
- 	char			*ds_remotestr;	/* comma sep list of addrs */
- 	struct list_head	ds_addrs;
-+	const struct net	*ds_net;
- 	struct nfs_client	*ds_clp;
- 	refcount_t		ds_count;
- 	unsigned long		ds_state;
-@@ -377,7 +378,8 @@ int pnfs_generic_commit_pagelist(struct inode *inode,
- int pnfs_generic_scan_commit_lists(struct nfs_commit_info *cinfo, int max);
- void pnfs_generic_write_commit_done(struct rpc_task *task, void *data);
- void nfs4_pnfs_ds_put(struct nfs4_pnfs_ds *ds);
--struct nfs4_pnfs_ds *nfs4_pnfs_ds_add(struct list_head *dsaddrs,
-+struct nfs4_pnfs_ds *nfs4_pnfs_ds_add(const struct net *net,
-+				      struct list_head *dsaddrs,
- 				      gfp_t gfp_flags);
- void nfs4_pnfs_v3_ds_connect_unload(void);
- int nfs4_pnfs_ds_connect(struct nfs_server *mds_srv, struct nfs4_pnfs_ds *ds,
-diff --git a/fs/nfs/pnfs_nfs.c b/fs/nfs/pnfs_nfs.c
-index aff44a7b98f86..e2d90239d042d 100644
---- a/fs/nfs/pnfs_nfs.c
-+++ b/fs/nfs/pnfs_nfs.c
-@@ -414,12 +414,12 @@ _same_data_server_addrs_locked(const struct list_head *dsaddrs1,
-  * Lookup DS by addresses.  nfs4_ds_cache_lock is held
-  */
- static struct nfs4_pnfs_ds *
--_data_server_lookup_locked(const struct list_head *dsaddrs)
-+_data_server_lookup_locked(const struct net *net, const struct list_head *dsaddrs)
- {
- 	struct nfs4_pnfs_ds *ds;
- 
- 	list_for_each_entry(ds, &nfs4_data_server_cache, ds_node)
--		if (_same_data_server_addrs_locked(&ds->ds_addrs, dsaddrs))
-+		if (ds->ds_net == net && _same_data_server_addrs_locked(&ds->ds_addrs, dsaddrs))
- 			return ds;
- 	return NULL;
- }
-@@ -512,7 +512,7 @@ nfs4_pnfs_remotestr(struct list_head *dsaddrs, gfp_t gfp_flags)
-  * uncached and return cached struct nfs4_pnfs_ds.
-  */
- struct nfs4_pnfs_ds *
--nfs4_pnfs_ds_add(struct list_head *dsaddrs, gfp_t gfp_flags)
-+nfs4_pnfs_ds_add(const struct net *net, struct list_head *dsaddrs, gfp_t gfp_flags)
- {
- 	struct nfs4_pnfs_ds *tmp_ds, *ds = NULL;
- 	char *remotestr;
-@@ -530,13 +530,14 @@ nfs4_pnfs_ds_add(struct list_head *dsaddrs, gfp_t gfp_flags)
- 	remotestr = nfs4_pnfs_remotestr(dsaddrs, gfp_flags);
- 
- 	spin_lock(&nfs4_ds_cache_lock);
--	tmp_ds = _data_server_lookup_locked(dsaddrs);
-+	tmp_ds = _data_server_lookup_locked(net, dsaddrs);
- 	if (tmp_ds == NULL) {
- 		INIT_LIST_HEAD(&ds->ds_addrs);
- 		list_splice_init(dsaddrs, &ds->ds_addrs);
- 		ds->ds_remotestr = remotestr;
- 		refcount_set(&ds->ds_count, 1);
- 		INIT_LIST_HEAD(&ds->ds_node);
-+		ds->ds_net = net;
- 		ds->ds_clp = NULL;
- 		list_add(&ds->ds_node, &nfs4_data_server_cache);
- 		dprintk("%s add new data server %s\n", __func__,
 -- 
 2.39.5
 
