@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF5322CBC0;
-	Mon, 19 May 2025 21:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F9C21D584;
+	Mon, 19 May 2025 21:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747689748; cv=none; b=pflO5qGzf0SsKdZO0zwUISGdVkGHqfY40mDYYxCDuubTmzlvtNZ9SDTXJx5a5U+Suwpec+MaMBI8NJVLpwkGaeDD779a9dT2iWvk7whpdPSbLuvvNZxzESwqlk1ER1zzumnp+cDVHbd6F2cLaBj/3O6ZjFkqBT93G/m46LxjIo0=
+	t=1747689750; cv=none; b=hEmjK/kD4l9tR6TceM92Z1D2NogayogVMU2djGtH2DwJiUeT3cNkn/Y7oV9Cg4LbBhejoTsPBMls5T3VLbye4qRKeDW29ZnZOVuzKR0BYtBfW6OKgq3LqNEDmK8bSk2tGihIws7tFuSCKcAlDNBMwJgs+JBEroEE4YwByjIxLWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747689748; c=relaxed/simple;
-	bh=KmA8jCFf5wgKs8AacqHiyE5+DoPuK5qaOwszsl4RZcc=;
+	s=arc-20240116; t=1747689750; c=relaxed/simple;
+	bh=dZyFCARnSEGITE3TmTBboOfTWmLSUHWZzVwCmlaSCtg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=DGnJ+t+m519CBVfGHNZ23v/oxXCgGgCRKxb/HDp65HLs6MlPYmWU3OUuLzJEgxC50BqyVh2yjc1EngQnNg57BEDK2LC7Vo8u9oJ87cggZscQaNZ8mqp5FuwZU4w3e9TrVpDG6rRabRXbrUY7esEBvYmexiZgx5noLOCH1F3l8Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bV/KV3vm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=novvxBMDpjkU+kMKXbzond8kPwPFipNBIGJQwYkPWjFn1hB2mUG1L24vziySrhAgd3sOlt0r0zejPPL15yMh61YUJoxp38fOZmmVzCmuVyjwWFRBl+BNqrNfL+SDYB/9+QGvfFMxvw3epGKWmYM7jG7k/3PSStm6TltGTLukzT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SvjeLzJP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bV/KV3vm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E594EC4CEED;
-	Mon, 19 May 2025 21:22:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SvjeLzJP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC38C4CEEB;
+	Mon, 19 May 2025 21:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747689748;
-	bh=KmA8jCFf5wgKs8AacqHiyE5+DoPuK5qaOwszsl4RZcc=;
+	s=k20201202; t=1747689749;
+	bh=dZyFCARnSEGITE3TmTBboOfTWmLSUHWZzVwCmlaSCtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bV/KV3vm+dMzETTmF3MUzcGCyg/ZSTUSKHzAdPxC1VtvWhSgbIm6gs4hLvxZ+BXCo
-	 BxhtPmFwXcltDkICZB+vP2pVkWdoL0tWda2WWCk6QTHrbgb/911RIuPv0N8v0zw215
-	 O5tASTEdmJjanb3N8QQEqUZG/9g+OUixT0+9dqpKB4RTwxXssw+ZZ0nZjIFLp4cWXh
-	 AEOyrFolZxZXNMxhrVb7ZWiGMeMK829vwXVq9KXkQCPYchlvmdodE1/vYw92BDLZqs
-	 aBnRbbLNjcb99qy97oEiaCFPUphc4AteoVtx+26eQkFmxAj4vXAizmZqBgUwdm3AGF
-	 Bt5TE+IDphJag==
+	b=SvjeLzJP3aWKeDlXuAWmUqslDIhvvJHiTwyxFBD1M85vkRNjHYNTNmWM2Qb5ZtZGe
+	 hZE9we+CE09WabmH/Yvm8PSzD9CdHznoXnqQ/FwT+9ABSbmKuqXRCp8e9DdjA2pMaw
+	 hfKOW68ql5DsOj1VtnRTeppW/RkT9Y5FJhmgVkb4X9WFpXo1krZ6NvthUFFtFEoLhS
+	 Jf0ChaRY39z+q+zn91kSN9q8x/UMm3ZMDrlsmeTo9xxw7yI2DIzklXShtPDHDJQJqr
+	 YvygkADgc4vwkaptklumyVOUaOwVNuWhYNc5yuuqe1REx6S+r22SIdMXrR/RAdVHX1
+	 A5jWh2o3qCdfg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: Ilya Guterman <amfernusus@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>,
-	kishon@ti.com,
-	linux-renesas-soc@vger.kernel.org,
+	kbusch@kernel.org,
+	axboe@fb.com,
+	sagi@grimberg.me,
+	linux-nvme@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 12/18] phy: renesas: rcar-gen3-usb2: Move IRQ request in probe
-Date: Mon, 19 May 2025 17:22:01 -0400
-Message-Id: <20250519212208.1986028-12-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 13/18] nvme-pci: add NVME_QUIRK_NO_DEEPEST_PS quirk for SOLIDIGM P44 Pro
+Date: Mon, 19 May 2025 17:22:02 -0400
+Message-Id: <20250519212208.1986028-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250519212208.1986028-1-sashal@kernel.org>
 References: <20250519212208.1986028-1-sashal@kernel.org>
@@ -54,141 +54,39 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.29
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Ilya Guterman <amfernusus@gmail.com>
 
-[ Upstream commit de76809f60cc938d3580bbbd5b04b7d12af6ce3a ]
+[ Upstream commit e765bf89f42b5c82132a556b630affeb82b2a21f ]
 
-Commit 08b0ad375ca6 ("phy: renesas: rcar-gen3-usb2: move IRQ registration
-to init") moved the IRQ request operation from probe to
-struct phy_ops::phy_init API to avoid triggering interrupts (which lead to
-register accesses) while the PHY clocks (enabled through runtime PM APIs)
-are not active. If this happens, it results in a synchronous abort.
+This commit adds the NVME_QUIRK_NO_DEEPEST_PS quirk for device
+[126f:2262], which belongs to device SOLIDIGM P44 Pro SSDPFKKW020X7
 
-One way to reproduce this issue is by enabling CONFIG_DEBUG_SHIRQ, which
-calls free_irq() on driver removal.
+The device frequently have trouble exiting the deepest power state (5),
+resulting in the entire disk being unresponsive.
 
-Move the IRQ request and free operations back to probe, and take the
-runtime PM state into account in IRQ handler. This commit is preparatory
-for the subsequent fixes in this series.
+Verified by setting nvme_core.default_ps_max_latency_us=10000 and
+observing the expected behavior.
 
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250507125032.565017-3-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Ilya Guterman <amfernusus@gmail.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/renesas/phy-rcar-gen3-usb2.c | 46 +++++++++++++-----------
- 1 file changed, 26 insertions(+), 20 deletions(-)
+ drivers/nvme/host/pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/phy/renesas/phy-rcar-gen3-usb2.c b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-index 58e1233051526..d4490af122a9a 100644
---- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-+++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-@@ -121,7 +121,6 @@ struct rcar_gen3_chan {
- 	struct work_struct work;
- 	struct mutex lock;	/* protects rphys[...].powered */
- 	enum usb_dr_mode dr_mode;
--	int irq;
- 	u32 obint_enable_bits;
- 	bool extcon_host;
- 	bool is_otg_channel;
-@@ -427,16 +426,25 @@ static irqreturn_t rcar_gen3_phy_usb2_irq(int irq, void *_ch)
- {
- 	struct rcar_gen3_chan *ch = _ch;
- 	void __iomem *usb2_base = ch->base;
--	u32 status = readl(usb2_base + USB2_OBINTSTA);
-+	struct device *dev = ch->dev;
- 	irqreturn_t ret = IRQ_NONE;
-+	u32 status;
- 
-+	pm_runtime_get_noresume(dev);
-+
-+	if (pm_runtime_suspended(dev))
-+		goto rpm_put;
-+
-+	status = readl(usb2_base + USB2_OBINTSTA);
- 	if (status & ch->obint_enable_bits) {
--		dev_vdbg(ch->dev, "%s: %08x\n", __func__, status);
-+		dev_vdbg(dev, "%s: %08x\n", __func__, status);
- 		writel(ch->obint_enable_bits, usb2_base + USB2_OBINTSTA);
- 		rcar_gen3_device_recognition(ch);
- 		ret = IRQ_HANDLED;
- 	}
- 
-+rpm_put:
-+	pm_runtime_put_noidle(dev);
- 	return ret;
- }
- 
-@@ -446,17 +454,6 @@ static int rcar_gen3_phy_usb2_init(struct phy *p)
- 	struct rcar_gen3_chan *channel = rphy->ch;
- 	void __iomem *usb2_base = channel->base;
- 	u32 val;
--	int ret;
--
--	if (!rcar_gen3_is_any_rphy_initialized(channel) && channel->irq >= 0) {
--		INIT_WORK(&channel->work, rcar_gen3_phy_usb2_work);
--		ret = request_irq(channel->irq, rcar_gen3_phy_usb2_irq,
--				  IRQF_SHARED, dev_name(channel->dev), channel);
--		if (ret < 0) {
--			dev_err(channel->dev, "No irq handler (%d)\n", channel->irq);
--			return ret;
--		}
--	}
- 
- 	/* Initialize USB2 part */
- 	val = readl(usb2_base + USB2_INT_ENABLE);
-@@ -495,9 +492,6 @@ static int rcar_gen3_phy_usb2_exit(struct phy *p)
- 		val &= ~USB2_INT_ENABLE_UCOM_INTEN;
- 	writel(val, usb2_base + USB2_INT_ENABLE);
- 
--	if (channel->irq >= 0 && !rcar_gen3_is_any_rphy_initialized(channel))
--		free_irq(channel->irq, channel);
--
- 	return 0;
- }
- 
-@@ -703,7 +697,7 @@ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
- 	struct device *dev = &pdev->dev;
- 	struct rcar_gen3_chan *channel;
- 	struct phy_provider *provider;
--	int ret = 0, i;
-+	int ret = 0, i, irq;
- 
- 	if (!dev->of_node) {
- 		dev_err(dev, "This driver needs device tree\n");
-@@ -719,8 +713,6 @@ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
- 		return PTR_ERR(channel->base);
- 
- 	channel->obint_enable_bits = USB2_OBINT_BITS;
--	/* get irq number here and request_irq for OTG in phy_init */
--	channel->irq = platform_get_irq_optional(pdev, 0);
- 	channel->dr_mode = rcar_gen3_get_dr_mode(dev->of_node);
- 	if (channel->dr_mode != USB_DR_MODE_UNKNOWN) {
- 		channel->is_otg_channel = true;
-@@ -789,6 +781,20 @@ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
- 		channel->vbus = NULL;
- 	}
- 
-+	irq = platform_get_irq_optional(pdev, 0);
-+	if (irq < 0 && irq != -ENXIO) {
-+		ret = irq;
-+		goto error;
-+	} else if (irq > 0) {
-+		INIT_WORK(&channel->work, rcar_gen3_phy_usb2_work);
-+		ret = devm_request_irq(dev, irq, rcar_gen3_phy_usb2_irq,
-+				       IRQF_SHARED, dev_name(dev), channel);
-+		if (ret < 0) {
-+			dev_err(dev, "Failed to request irq (%d)\n", irq);
-+			goto error;
-+		}
-+	}
-+
- 	provider = devm_of_phy_provider_register(dev, rcar_gen3_phy_usb2_xlate);
- 	if (IS_ERR(provider)) {
- 		dev_err(dev, "Failed to register PHY provider\n");
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 83ee433b69415..8fc9a7e38daba 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3693,6 +3693,8 @@ static const struct pci_device_id nvme_id_table[] = {
+ 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
+ 	{ PCI_DEVICE(0x1e49, 0x0041),   /* ZHITAI TiPro7000 NVMe SSD */
+ 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
++	{ PCI_DEVICE(0x025e, 0xf1ac),   /* SOLIDIGM  P44 pro SSDPFKKW020X7  */
++		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
+ 	{ PCI_DEVICE(0xc0a9, 0x540a),   /* Crucial P2 */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1d97, 0x2263), /* Lexar NM610 */
 -- 
 2.39.5
 
