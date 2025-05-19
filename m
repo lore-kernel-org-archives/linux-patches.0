@@ -1,210 +1,247 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2079.outbound.protection.outlook.com [40.107.223.79])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9D22820BC;
-	Mon, 19 May 2025 15:27:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747668454; cv=none; b=QmATNAAGLmw0oIQl0Fnoxs+Iz+KY0TGMQ8GCMYAl7ixomDKgZTThttm4tCzLxNaCbdAaOWixklNNHd0IFHAY2nw7cyTQJj4k/FzTC4Mq7N9Xu0P4eaMCvJ9U9nnUbNWsP06v+Z+Lt8d7QpbyjSZBFwHm6bVdzO5zn8VU8YQRVHM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747668454; c=relaxed/simple;
-	bh=t+V18x9K5U3txXXfD8+PUaO/b5cpwqu1b7n9tWAOFPM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M0WT6XKrBbkCWhlVJ/8aLgQ1XimkI+lLL7JeJ+rTEzgWiL2ZSFIkHGd4MJWB9MUA63dbcbnzrDhlVhtbz2UEJ0ekGKQkEicsUXR5znaCKoT+Ud+LXUT/qfKrfhgT5P0LUpNhVb0YdkyyA8FASyfgWKboTqoYO+N6eojKbDZ+QoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wz+6uRX0; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313932874F8;
+	Mon, 19 May 2025 17:05:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.79
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747674328; cv=fail; b=cHQ7I6tCHrD/GfAWh1AbZO/ZFeWSgEFxdP6hquyBpxlWZQ76mk+2+tEhe0YpX5hYeMU+onrYUAyY+c4vJ9xL2b7pTlfID8TdmNx2H5zX1E8A00c949mTm4u5p8exE4xoUtO9q5wAIHXH4j1ZcXn8SbkZXYap67nDQl/SN5cO++o=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747674328; c=relaxed/simple;
+	bh=+gaZCykeH3Ve0bDCDh2ARCsolM3rpSiZEk+eqt19L5w=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=qFMvse/sdbVPkMVRB7tjFPe0jnK5ZKWqPnLs3oUGYMlulZkXrrGRPsjLRNBvWasrmFG2Vq+swc9oQustjumPN4BOVlMr0r7U93Qtwe8UthQZZJ+61C2DFgLRtc43r/R+Y7nRpTgDwPpjRP4PQy4WyuKhSq+ZB1lCOOqoz29TFKE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=mKt5Jq25; arc=fail smtp.client-ip=40.107.223.79
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wz+6uRX0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F26C4CEE4;
-	Mon, 19 May 2025 15:27:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747668453;
-	bh=t+V18x9K5U3txXXfD8+PUaO/b5cpwqu1b7n9tWAOFPM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=wz+6uRX0un26SiQI4WLnR7eoKrHilQeIdCP3yUyIP5wyq8PMHyQV4mxaxyaiyg+QZ
-	 5fOSpYU9hlHSVPVq/3HXij8x9xlYI69sTdFWSzoMfEDxsDp8mMbVTzfq3aNJZnEWkZ
-	 GhB5Nb4pdGlBlGDbZGwm2/nICqffO4CBqxcd4RCM=
-Date: Mon, 19 May 2025 17:27:30 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Cc: Natanael Copa <ncopa@alpinelinux.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org,
-	Darren Kenny <darren.kenny@oracle.com>
-Subject: Re: [PATCH 6.6 000/113] 6.6.91-rc2 review
-Message-ID: <2025051931-hardy-had-44a3@gregkh>
-References: <20250514125617.240903002@linuxfoundation.org>
- <861004b4-e036-4306-b129-252b9cb983c7@oracle.com>
- <2025051440-sturdily-dragging-3843@gregkh>
- <9af6afb1-9d91-48ea-a212-bcd6d1a47203@oracle.com>
- <e1ea37bd-ea7d-4e8a-bb2f-6be709eb99f4@roeck-us.net>
- <2025051527-travesty-shape-0e3b@gregkh>
- <20250515152557.a4q2cqab4uvhnpia@desk>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="mKt5Jq25"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=s6hB6TVg9t4Xz0UHrtZqrPOqrZxNPdDQAM3MaM5feQrmbDnsGbEmdIgLbrTyFCoXoH2nWNu+uHpt9FZwTV6/jbLrSSkBDzQOZh+wvjVzI5t8lRSZLcZz9OErb+qrRE7cQQ7JyW8xyQYKj4Xhzb8i2XHaIauMsUzDwtX/I7zU8NY4w0SX+d9cqK3OIBZHHWE2pstpKBeAvySRyPjDkYLkAWJZf2te2c0FT+9rKY7I+cEZ3pmCwKMirnNXKn4ylwzwBb0d4462g3diIPoqp1fBX6mabfPDtZ8u7dd4O7cyI0a4OEl0fAxhF5+LhoIa/OIgPd2HYMGM1KmOhYPBmls9ZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/5BArQx0hRBlgBGAB+Rnop+oLO8pn80ii8FzIJcNt34=;
+ b=mXA6lbh7QwES/c/vXLw689iIPq5m0tiXthhU5ZXG7O2hlDMFMft2wTQzizs8asr/mo8ZqO5XjQu2GVogvt02lA++MLDzkmZ/XjciAIJjOwmPmvsoOQDiJN7F/rMKogy2fJqM9pl4T2Ndi8trhjyIoJ54/y/+s6uiuHVqMkUCx0+Au1svPohxZnLORvjN99OZcppmho261fDCiGXVCZJv3/MDglc75W6RAqT5afmIdbHABEFLJtowYf10Q0uCvCkcxuiwXQ5Hs8KuBPv/JKXN6DREa9kY/Yn5oYe2Uxpacvtyaa/ANFq792SKtmsUyoqezcIDw1DfCFjId8nlsZOrUw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/5BArQx0hRBlgBGAB+Rnop+oLO8pn80ii8FzIJcNt34=;
+ b=mKt5Jq25UUKZv0FOwdBEvEYRiTate9lHoYyUhcgkaUSMYwQR17iPcj4gmLJri2yB42f7DvyhIlxq7nHkVYGPTo6ChxOsHfSWMfYs2m+/kDC/RT9sd1qlRA40r6DGNCZD18/WQ7FpkMzflW9lPTNSlsHftnTv3nwqhV4thjLx1ZY=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from IA1PR12MB6043.namprd12.prod.outlook.com (2603:10b6:208:3d5::20)
+ by PH7PR12MB6540.namprd12.prod.outlook.com (2603:10b6:510:213::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.33; Mon, 19 May
+ 2025 17:05:24 +0000
+Received: from IA1PR12MB6043.namprd12.prod.outlook.com
+ ([fe80::73e4:a06a:f737:e9be]) by IA1PR12MB6043.namprd12.prod.outlook.com
+ ([fe80::73e4:a06a:f737:e9be%4]) with mapi id 15.20.8746.029; Mon, 19 May 2025
+ 17:05:24 +0000
+Message-ID: <c0af7aa9-a991-4d20-a2bd-c6065f04fc3d@amd.com>
+Date: Mon, 19 May 2025 22:35:11 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 10/23] iommufd/viommu: Introduce IOMMUFD_OBJ_HW_QUEUE
+ and its related struct
+To: "Tian, Kevin" <kevin.tian@intel.com>, Nicolin Chen <nicolinc@nvidia.com>
+Cc: "jgg@nvidia.com" <jgg@nvidia.com>, "corbet@lwn.net" <corbet@lwn.net>,
+ "will@kernel.org" <will@kernel.org>,
+ "bagasdotme@gmail.com" <bagasdotme@gmail.com>,
+ "robin.murphy@arm.com" <robin.murphy@arm.com>,
+ "joro@8bytes.org" <joro@8bytes.org>,
+ "thierry.reding@gmail.com" <thierry.reding@gmail.com>,
+ "vdumpa@nvidia.com" <vdumpa@nvidia.com>,
+ "jonathanh@nvidia.com" <jonathanh@nvidia.com>,
+ "shuah@kernel.org" <shuah@kernel.org>,
+ "jsnitsel@redhat.com" <jsnitsel@redhat.com>,
+ "nathan@kernel.org" <nathan@kernel.org>,
+ "peterz@infradead.org" <peterz@infradead.org>, "Liu, Yi L"
+ <yi.l.liu@intel.com>, "mshavit@google.com" <mshavit@google.com>,
+ "praan@google.com" <praan@google.com>,
+ "zhangzekun11@huawei.com" <zhangzekun11@huawei.com>,
+ "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
+ "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>,
+ "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
+ "linux-kselftest@vger.kernel.org" <linux-kselftest@vger.kernel.org>,
+ "patches@lists.linux.dev" <patches@lists.linux.dev>,
+ "mochs@nvidia.com" <mochs@nvidia.com>,
+ "alok.a.tiwari@oracle.com" <alok.a.tiwari@oracle.com>
+References: <cover.1746757630.git.nicolinc@nvidia.com>
+ <bedd9de4e24bb89f18f4b13b52c5fdb6db6bd889.1746757630.git.nicolinc@nvidia.com>
+ <BN9PR11MB52765915FACBF590E09EC46E8C90A@BN9PR11MB5276.namprd11.prod.outlook.com>
+ <aCajRTEU3vPQAzpD@Asurada-Nvidia>
+ <BN9PR11MB527678D4598D453EE1EBF4588C93A@BN9PR11MB5276.namprd11.prod.outlook.com>
+Content-Language: en-US
+From: Vasant Hegde <vasant.hegde@amd.com>
+In-Reply-To: <BN9PR11MB527678D4598D453EE1EBF4588C93A@BN9PR11MB5276.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN4PR01CA0011.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:272::6) To IA1PR12MB6043.namprd12.prod.outlook.com
+ (2603:10b6:208:3d5::20)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250515152557.a4q2cqab4uvhnpia@desk>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR12MB6043:EE_|PH7PR12MB6540:EE_
+X-MS-Office365-Filtering-Correlation-Id: 87102a01-aa2a-4805-c279-08dd96f75841
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?RDRxKy95OHlacEc2eWlvZ0ZoQVlvZDFYcFBhN1FjWFphTkxCYnkxRWFOZDRm?=
+ =?utf-8?B?dkNyWHJyQ2YrcjBRaE9oOUljai9CbDNmSjZDdFowc293UVUweHZEazdyU0do?=
+ =?utf-8?B?eXR5bUZqbEo2RWpzMDRLM1I2SVJKZXRMY05XWnJFc3ZwK2xaRjZMU3VoVTY1?=
+ =?utf-8?B?QU9pOVdNTG1uUXp6MHBtL1RicjlwQ1RwMEJQSGZGK2lYUXdyQzRYb3l2VVQ1?=
+ =?utf-8?B?ZllFYUVrd1praTBXRzNxUnVDbFlxM1dmbFVPUGxhb0NYMFlkQkM2YkZjVlFp?=
+ =?utf-8?B?cmdIQm1sUDVjbWV6dFF6MGtTSDNWYkoyTFV4RytQQlFGNklkSVFGT0d1MmlQ?=
+ =?utf-8?B?YzJNUGhTL2ZHOFhHYXcvWkpuODBSY3BDdTArMXRGWG1FTmdjYTRIc21hZnpS?=
+ =?utf-8?B?elZuNlo2bWZOTFFTeWN2ejdFZHVVWnd6NkhRc3BzWVZ0bVpFSm9VZVVldTNQ?=
+ =?utf-8?B?SFphWjBiZW45Qmh6cld2VlBDMUF3RlJFU1hXT1VNYkllYWtXSStVcGRlaW1Z?=
+ =?utf-8?B?ZVlEL0tZS2NRbk5FSG1MVldLWFZadmcwZnMvelArdkJaK1ZOMlMwbjYwMWFL?=
+ =?utf-8?B?dEZnNlFmcVZCWWdXUlVXMjBSZWlaNlRlaGYwSjZNZ3Zyc2JGbTkrVG81MEwz?=
+ =?utf-8?B?VFN1YzhVSHo1OS93WVdFRlBvUTg0Smh3L0hySFJBdHRsQk4yYXdWZEJyMFF3?=
+ =?utf-8?B?dEFCazJ6cXB4SGtpUFZhR1JWQlB4UE1wcUZuOThEZThlaUZaa0l6czRoaUtn?=
+ =?utf-8?B?ZGhHTkthd0R6UEN4WFplV3cvZHBXdVRlMDl6bFZnZWRSN054dHIzV2MvWGlQ?=
+ =?utf-8?B?NVp5QnFUcjFibVd6TUc1RjRsd0RvSXE2TTJBRXlab2k4TzNnWFRUOEVobmph?=
+ =?utf-8?B?UnA5dEtNcEg5aGJJVWxucndBenhnUTBlMTZDZTRhT0pVc1pVa0tRQ0U4c21G?=
+ =?utf-8?B?aTd5U1lqT2ZZeFRXL0VqNllCVDUraThmUHVaTzM1NTAwUjZuTUJ5bWpSZnpZ?=
+ =?utf-8?B?VGMyRmRHWHJXZS81V1RNeEJUbUJkZFRoZVpDRGg0MjVUNm9pRkFoSG9hQ0ky?=
+ =?utf-8?B?OGpHZ3AydU5nNklad2VvVXVwUFZMMWh0SjhxdWxkM3VrK3lRUTVIUnBKaFM4?=
+ =?utf-8?B?bnJ3SjI3VCtTMG5tNVdqUHYxbzYyaXdyUmtSbmpzNW9xOW5rQXdpd1JYWUtl?=
+ =?utf-8?B?bFMyNE1WWkUzS0JLV2dIbkFaeUVVVWpqaVhaWDVoVGZ2UU8xdDFaUEJnRGE3?=
+ =?utf-8?B?ZTl3ZnlWNjNkaFdGUGlsSVVPRmRBbDFITjF6bDRxZGNDQjAybXJ4Wnl4QWpB?=
+ =?utf-8?B?QTFDcENpdk1rNUJ4SDJ6TFIwTmhubWtiSElkeklYazI4QVEya1NUeTdHN0Rn?=
+ =?utf-8?B?RjhicFEwSTgxSUNDdDFRQWRySkNUcGV1MmladFB3bExKVXZTTDQ1UnVQbkg0?=
+ =?utf-8?B?bmppUkJ0YThwVHJjNkZEWUFtTGszM3J1dTFSMDdJNU5CYUJNWHZwNWN5bklW?=
+ =?utf-8?B?Qy9zTTk2bFIvYTQ2bGNnRWs2L2xMK2xtU3JWTnhRd1dxc1VsMDdlS2FudlZD?=
+ =?utf-8?B?NEJNa0dDNDY2WFZKUnRJMUxrWmlTNTc3dlVPVlJKdm1EenY2N1NkUEczdVZG?=
+ =?utf-8?B?NWxZc244RFhJVGYyV0Zyc2lyQ3NuWDgyWUh2MmV5cTVsbys2dHA4N1RuRzJN?=
+ =?utf-8?B?a3UxbXl4YW1VRjQyVW9JS3hpV0dJdjAvZGovTUFwRUtTR2pRQ1BiamVFazVa?=
+ =?utf-8?B?NHhlSjF0Y1R3VnZnblVCSnpEaGlQQmdEVVU4bnovbEU2WlBDWjNMZmxGNWlQ?=
+ =?utf-8?B?OWp5Nks1c1MrUEF0SU5aSHE2UGJPWGdWR0ozMCs0ZkQ0RFlXNDA1VGtpSnFv?=
+ =?utf-8?Q?Jbeo6UvO49BXL?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR12MB6043.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?M3lnbHVWK1NBQ0xTNTE4VkwzOHY5SXRyUmpacnFaNERHVUlWVTlzK20yY2N4?=
+ =?utf-8?B?L1p3UmV6QXgzeHRVMHU5SGVuNFRyOE0yUW04dktwd0hEYTB4c05PZWFCVVR1?=
+ =?utf-8?B?YnYrUEtVN0ZlbFJ6czR3eUs5Ty9uUDFrWkRmVC9qNTRtaUxlOVpZc0E5aHR3?=
+ =?utf-8?B?TTJlRnJMVUJVYUo3OUloVlJRSVR5SVdKS3ZiSGpjcmhIa0lSWFhwUW1QY0p0?=
+ =?utf-8?B?c2lURlVONHdPUjRQQjE2cyt6OElpYTF2OC93MmF3ckVwMGZuOFpsTVhTSGhs?=
+ =?utf-8?B?ankyQ2J6TUs5eDVPYS9pbTRGZGg4SXlKK3AwdEJ6Z0hpNEQwcW1aUERJdURx?=
+ =?utf-8?B?NndrWiticnIrQ1pNcnJneTlrTVZPWTl3SmtQZEU2UHFsZS9zZndBaXJjc1NG?=
+ =?utf-8?B?Y0syUmxDK3h4aTVyR2hOYnRkWkhVaDhGRnJBamV2dXRETFd6b0tOc2laVzNz?=
+ =?utf-8?B?VFROQWxyRzNMcm9jQ1hWWFdpTUVyU2lrYVN4dFhLVFlLeENsUkgxOUdKck5L?=
+ =?utf-8?B?d2R2ZkF0NzJXV2o4YVFnZTNoVXJVcW1Xb2tuL0paNm5IcllZM01tam9TelVM?=
+ =?utf-8?B?YmJET3BncFk1dk9iRU45S1JVVWdGNDFWMzNucnREMldKb0JwSndIR013REtv?=
+ =?utf-8?B?TGJNUEphc2ZMOXRHTkI5RnJYUzR0U1orUU1TVnVMNzcrL1RLemhrKzdybUlY?=
+ =?utf-8?B?TW9jN0o3MWFRL2VHZVNsMHBzRFJRZmt0ajRPUitpOGUvaW5pdnhxWWlwdWo0?=
+ =?utf-8?B?dThWcStXVG9qaHNDb1VkeWNtRVVKSjdxVmo2NHluZmlkdVJRM1J1T3NGNklM?=
+ =?utf-8?B?V05BcmNxL2lWZnNBbmZFL2w3RGltWERrZWpRYU1BbnZnVFJTUmJUZzdrSmFQ?=
+ =?utf-8?B?dmluaUR0d0p0RzRRRWxwQUpCTWJnVGtoaUNwV0dxaXFSYmM0ZFVnOUJKbnZ6?=
+ =?utf-8?B?cnM5cVBYVWtSaXl2bDJvTVFQdDZMK29idEdabmhXVFJld2hNMmN5Q0hKd2hp?=
+ =?utf-8?B?TWhTTHVxNEZ1MTZTeG1kMlNHbU8yVHpacUZlc1lBT3NyMWMvRHR2b1NteUpV?=
+ =?utf-8?B?cFJqSUdpYzhGcEYyYm1rNVFFeHdYbHB4eFBKOHowV0RLVHprY1dlYUJ0amo3?=
+ =?utf-8?B?R2pHU08zaVhyZkxORG9wK3oxYmFRQThYdFlaOUFNbEp1MUxYclJOR1k0Mmpz?=
+ =?utf-8?B?M0FhMk8rQjNwTTh1amQvb1pSbDVMNkN4VzNjWGQ3dUFISkNMd0JhNVlGV1Z0?=
+ =?utf-8?B?dXpCYW5jdmMvR09nUm1ZM1FrdVBGa2tGb3ZyMHdsV1FZU1Y1WjNLT2pOTnY1?=
+ =?utf-8?B?T0taVGNUZXExMVpLOGllQy9BR1g1cWM4bkZOdDJOQUdTM0dlV3BScitPY0Fo?=
+ =?utf-8?B?QnpQWWoxSnpORnc2Ulp0ajJNOTJsSGVURVA1Q2hwZ083Ym1FUzUxQ0p1SU9n?=
+ =?utf-8?B?UG1tN3VFMDBMZ0djcnhqQ0E3anBGY2ZuTEZXbnJmWkhjNWFlWHVJOXJhNFhp?=
+ =?utf-8?B?R3hLbnNuY1pZRW9KMmU3QUhJdEY2OUhkaGJ5UE9FbTZGL2tpb2QzSmNkOUJW?=
+ =?utf-8?B?QUxReER3cE1NWUo4SzVINkVWREZIdXk1UEl2VHVlaHBDRkg2NWcyR1BjcVlK?=
+ =?utf-8?B?S3BmUnY0MEp5ai9iNUxsdmhQbHM2Q2JJcUdhTzAyRm5rZXRYT1VYVnMrUC9h?=
+ =?utf-8?B?WC9kaFZxVmtYbFB0Y3JlUnRqdWRoaVFqa3VEUnhEVWFEZUZnb0Q2UGFKT3Nt?=
+ =?utf-8?B?ZXRJbGpnSmtHb1NlVmFwQmlUQ1V3Vk84d0MxaSt4L2pieDQyUTZzSk9NT1E3?=
+ =?utf-8?B?dHNDMHpMek56V0Z5R2lnOGVCbkpFN1hvd25RYW9mN20yajNLQ3pVM0poV1ky?=
+ =?utf-8?B?Y3FyMzRleHdDUkd0aEVUem5Na3I5TGQwVWVScFRzNVlJUUpPYWxRTkhGU0w5?=
+ =?utf-8?B?d256Q2xnMTNiQldtNXlNZVAxdjlmSUZNQ2w1NHl3bWgyRjJHODVpa2hhMnB4?=
+ =?utf-8?B?SjJoU1RmUGluK2NOcVQxSXRBZ2xzOXRPNHlwdVpHdTdlUTA5UGFmRzNkaTd6?=
+ =?utf-8?B?N3ZSWXliWmp6b3RNZ3IzQ00xOEVKeDNkdkxJSTl6TDFRL20vb1BISzk4Wm4y?=
+ =?utf-8?Q?Afr27TJyAi0ne0y4YLc4e14CE?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 87102a01-aa2a-4805-c279-08dd96f75841
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB6043.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 May 2025 17:05:24.1841
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: +6paPEi7pG64LXccT4GlfXsyGMpp18+KJr3HFvBS5MaT7DSKxBpU1bXYBSrH0/b/HzS9wAohgH45CF0Vt7a1Lw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6540
 
-On Thu, May 15, 2025 at 08:25:57AM -0700, Pawan Gupta wrote:
-> On Thu, May 15, 2025 at 07:35:26AM +0200, Greg Kroah-Hartman wrote:
-> > On Wed, May 14, 2025 at 01:49:06PM -0700, Guenter Roeck wrote:
-> > > On 5/14/25 13:33, Harshit Mogalapalli wrote:
-> > > > Hi Greg,
-> > > > 
-> > > > On 15/05/25 01:35, Greg Kroah-Hartman wrote:
-> > > > > On Thu, May 15, 2025 at 12:29:40AM +0530, Harshit Mogalapalli wrote:
-> > > > > > Hi Greg,
-> > > > > > On 14/05/25 18:34, Greg Kroah-Hartman wrote:
-> > > > > > > This is the start of the stable review cycle for the 6.6.91 release.
-> > > > > > > There are 113 patches in this series, all will be posted as a response
-> > > > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > > > let me know.
-> > > > > > > 
-> > > > > > > Responses should be made by Fri, 16 May 2025 12:55:38 +0000.
-> > > > > > > Anything received after that time might be too late.
-> > > > > > 
-> > > > > > ld: vmlinux.o: in function `patch_retpoline':
-> > > > > > alternative.c:(.text+0x3b6f1): undefined reference to `module_alloc'
-> > > > > > make[2]: *** [scripts/Makefile.vmlinux:37: vmlinux] Error 1
-> > > > > > 
-> > > > > > We see this build error in 6.6.91-rc2 tag.
-> > > > > 
-> > > > > What is odd about your .config?  Have a link to it?  I can't duplicate
-> > > > > it here on my builds.
-> > > > > 
-> > > > 
-> > > > So this is a config where CONFIG_MODULES is unset(!=y) -- with that we could reproduce it on defconfig + disabling CONFIG_MODULES as well.
-> > > > 
-> > > 
-> > > Key is the combination of CONFIG_MODULES=n with CONFIG_MITIGATION_ITS=y.
-> > 
-> > Ah, this is due to the change in its_alloc() for 6.6.y and 6.1.y by the
-> > call to module_alloc() instead of execmem_alloc() in the backport of
-> > 872df34d7c51 ("x86/its: Use dynamic thunks for indirect branches").
-> 
-> Sorry for the trouble. I wish I had a test to catch problems like this. The
-> standard config targets defconfig, allyesconfig, allnoconfig, etc. do not
-> expose such issues. The only thing that comes close is randconfig.
-> 
-> CONFIG_MODULES=n is not a common setting, I wonder how people find such
-> issues? (trying to figure out how to prevent such issues in future).
-> 
-> > Pawan, any hints on what should be done here instead?
-> 
-> Since dynamic thunks are not possible without CONFIG_MODULES, one option is
-> to adjust the already in 6.6.91-rc2 patch 9f35e331144a (x86/its: Fix build
-> errors when CONFIG_MODULES=n) to also bring the ITS thunk allocation under
-> CONFIG_MODULES.
-> 
-> I am not seeing any issue with below build and boot test:
-> 
->   #!/bin/bash -ex
-> 
->   ./scripts/config --disable CONFIG_MODULES
->   ./scripts/config --disable CONFIG_MITIGATION_ITS
->   # https://github.com/arighi/virtme-ng
->   vng -b
->   vng -- lscpu
-> 
->   # main test
->   ./scripts/config --disable CONFIG_MODULES
->   ./scripts/config --enable CONFIG_MITIGATION_ITS
->   vng -b
->   vng -- lscpu
-> 
->   ./scripts/config --enable CONFIG_MODULES
->   ./scripts/config --disable CONFIG_MITIGATION_ITS
->   vng -b
->   vng -- lscpu
-> 
->   ./scripts/config --enable CONFIG_MODULES
->   ./scripts/config --enable CONFIG_MITIGATION_ITS
->   vng -b
->   vng -- lscpu
-> 
->   echo "PASS"
-> 
-> Similar change is required for 6.1 and 5.15 as well. 6.12 is fine because
-> it uses execmem_alloc().
-> 
-> --- 8< ---
-> From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-> Subject: [PATCH 6.6] x86/its: Fix build errors when CONFIG_MODULES=n
-> 
-> From: Eric Biggers <ebiggers@google.com>
-> 
-> commit 9f35e33144ae5377d6a8de86dd3bd4d995c6ac65 upstream.
-> 
-> Fix several build errors when CONFIG_MODULES=n, including the following:
-> 
-> ../arch/x86/kernel/alternative.c:195:25: error: incomplete definition of type 'struct module'
->   195 |         for (int i = 0; i < mod->its_num_pages; i++) {
-> 
->   [ pawan: backport: Bring ITS dynamic thunk code under CONFIG_MODULES ]
-> 
-> Fixes: 872df34d7c51 ("x86/its: Use dynamic thunks for indirect branches")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Eric Biggers <ebiggers@google.com>
-> Acked-by: Dave Hansen <dave.hansen@intel.com>
-> Tested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-> Reviewed-by: Alexandre Chartre <alexandre.chartre@oracle.com>
-> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->  arch/x86/kernel/alternative.c | 12 +++++++++++-
->  1 file changed, 11 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/x86/kernel/alternative.c b/arch/x86/kernel/alternative.c
-> index 6085919d3b3e..c6d9a3882ec8 100644
-> --- a/arch/x86/kernel/alternative.c
-> +++ b/arch/x86/kernel/alternative.c
-> @@ -129,6 +129,7 @@ const unsigned char * const x86_nops[ASM_NOP_MAX+1] =
->  
->  #ifdef CONFIG_MITIGATION_ITS
->  
-> +#ifdef CONFIG_MODULES
->  static struct module *its_mod;
->  static void *its_page;
->  static unsigned int its_offset;
-> @@ -244,7 +245,16 @@ static void *its_allocate_thunk(int reg)
->  	return thunk;
->  }
->  
-> -#endif
-> +#else /* CONFIG_MODULES */
-> +
-> +static void *its_allocate_thunk(int reg)
-> +{
-> +	return NULL;
-> +}
-> +
-> +#endif /* CONFIG_MODULES */
-> +
-> +#endif /* CONFIG_MITIGATION_ITS */
->  
->  /*
->   * Fill the buffer with a single effective instruction of size @len.
-> -- 
-> 2.34.1
-> 
+Kevin, Nicolin,
 
-This looks to still be causing problems, see these two reports of build
-problems with the latest 6.1 and 6.6 releases with this commit in it:
-	https://lore.kernel.org/r/20250519164717.18738b4e@ncopa-desktop
-	https://lore.kernel.org/r/2f1ae598-0339-4e17-8156-03e8525a213d@roeck-us.net
 
-thanks,
+On 5/16/2025 8:29 AM, Tian, Kevin wrote:
+>> From: Nicolin Chen <nicolinc@nvidia.com>
+>> Sent: Friday, May 16, 2025 10:30 AM
+>>
+>> On Thu, May 15, 2025 at 05:58:41AM +0000, Tian, Kevin wrote:
+>>>> From: Nicolin Chen <nicolinc@nvidia.com>
+>>>> Sent: Friday, May 9, 2025 11:03 AM
+>>>>
+>>>> Add IOMMUFD_OBJ_HW_QUEUE with an iommufd_hw_queue structure,
+>>>> representing
+>>>> a HW-accelerated queue type of IOMMU's physical queue that can be
+>> passed
+>>>> through to a user space VM for direct hardware control, such as:
+>>>>  - NVIDIA's Virtual Command Queue
+>>>>  - AMD vIOMMU's Command Buffer, Event Log Buffer, and PPR Log Buffer
+>>>>
+>>>> Introduce an allocator iommufd_hw_queue_alloc(). And add a pair of
+>>>> viommu
+>>>> ops for iommufd to forward user space ioctls to IOMMU drivers.
+>>>>
+>>>> Given that the first user of this HW QUEUE (tegra241-cmdqv) will need to
+>>>> ensure the queue memory to be physically contiguous, add a flag
+>> property
+>>>> in iommufd_viommu_ops and
+>>>> IOMMUFD_VIOMMU_FLAG_HW_QUEUE_READS_PA to allow
+>>>> driver to flag it so that the core will validate the physical pages of a
+>>>> given guest queue.
+>>>
+>>> 'READS' is confusing here. What about xxx_CONTIG_PAS?
+>>
+>> Combining Jason's first comments here:
+>> https://lore.kernel.org/linux-
+>> iommu/20250515160620.GJ382960@nvidia.com/
+>>
+>> So, pinning should be optional too. And I think there would be
+>> unlikely a case where HW needs contiguous physical pages while
+>> not requiring to pin the pages, right?
 
-greg k-h
+AMD IOMMU needs contiguous GPA space for buffer (like command buffer), not
+contiguous physical address.
+
+
+>>
+>> So, we need an flag that could indicate to do both tests. Yet,
+>> "xxx_CONTIG_PAS" doesn't sound very fitting, compared to this
+>> "IOMMUFD_VIOMMU_FLAG_HW_QUEUE_READS_PA".
+>>
+>> Perhaps, we should just add some comments to clarify a bit. Or
+>> do you have some better naming?
+>>
+> 
+> let's wait until that open is closed, i.e. whether we still let the core
+> manage it and whether AMD requires pinning even when IOVA
+> is used.
+
+I think we may still want to pin those buffer address.
+
+-Vasant
+
+
