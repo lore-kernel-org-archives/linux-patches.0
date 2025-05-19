@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5CE23F413;
-	Mon, 19 May 2025 21:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E85324110F;
+	Mon, 19 May 2025 21:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747689799; cv=none; b=WXFO4tZAL9eiYV3TvbQoyvF/fxaqdcChv7bEO+/ZVgmiPv41cVPlz/hnhYg3mBE1smUzrUZIW5W+aRZmlMOh6ZwXKsbiLzcNpUQI098QQC/ZcM+udz1ba/YOLYvqPxwnXPrbxvxVhFIcDqoxlFycgVTO1RqxgHt40BzuvxvO1jk=
+	t=1747689800; cv=none; b=bFQWV1zVetjaitlGEPMefwnGTC6Mc+oMzwlAQAPj8h+5kMkFIhUGd6xpEbkaZybXL5QmP2RNjlOvLWSPrWBf16JOfg+HVHCXRMB8YCwGloAHigGqxLdDshDkHg9st12cQRkdDhQCQxHWhaHhTI/CoAUiqx36xovVWeR1JS0ak4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747689799; c=relaxed/simple;
-	bh=Bb9S9RrPEnkTAetITz9CuJIrUWdR9A9NoHlCGB9OVhs=;
+	s=arc-20240116; t=1747689800; c=relaxed/simple;
+	bh=Bk4HScsX6dMMIRV2eHPtcIh3oN/Gp9o6FmcIgx+RUVk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Tq1bWgfbgHq6cyIp9zjZc6TEtkutj8JMvnrufFx5GdIcfOWN/3myxIZM6l1XZ7ppPHhwO3GLmXOmV8V8jr1C3i6bwYtRQyqTWvLVzcXVwTnpTG6IL26N0ntPJXLNkLx99RgDHmKJfCpT8tO60IykAxdpNwaFM9eAbnrMkVUKe4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=efu54CJh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ml4OwkM3GK2eYUan9mRV7SmVe26t1GKGB8aMsLPZezQDNLebVoOkCLzjlx//lrkOcChNL4BTVvHp0RevHNubf1nFf7hdFu37kO3ZMWab8c4dNTxA0tHD2ut7t7w0tqv6FKkiUg8qt4df1h41CtbRNhZPX7SoGIBxaXWcz07a65c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a/VFhxnV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="efu54CJh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C9FC4CEE4;
-	Mon, 19 May 2025 21:23:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a/VFhxnV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A80C4CEE4;
+	Mon, 19 May 2025 21:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747689798;
-	bh=Bb9S9RrPEnkTAetITz9CuJIrUWdR9A9NoHlCGB9OVhs=;
+	s=k20201202; t=1747689800;
+	bh=Bk4HScsX6dMMIRV2eHPtcIh3oN/Gp9o6FmcIgx+RUVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=efu54CJhjZGwwMY3PTZLZR1mLFvbOMmGczTO7iUzsKBg9vxUj+TbmXOPB4whw9Xqr
-	 4u4Rpvw6jjGi3JQzN35MltQpu9vj/gQFm3Ztx87mlW03NARiHRDNtpdKGdWkFHApuP
-	 3iZDMn3qiMjZBhBmKo26cGWaYzHnnbLYa+6gWULYt8WSNJQ46zOXMie/59zTcSN8pM
-	 YwNB0vC/ThnMPa4U9nYi0NkH9stAOitS/hOHBE8b8xit8ECq/c8yVC4Jv/CWVvFPUk
-	 Oav7UOpPzPYWH2sXv0h1EZgtqH2YK4oGg8qD/jKM0TDSqOEjxRXvYmPj2vbhk9xdrt
-	 CD07SwyDnR5Rg==
+	b=a/VFhxnVQknzbdXVFga7D8gC5W/EvXUu8HniF8u7tM+RMJx6QPUamgR4QWA4vOsvm
+	 ubFUWN4CBLNfxPhxGju9vcxSCqPl5vsc5A302R8edc+LeAssV1QD01PFL/FnRQOZ+H
+	 h1FcD/E/v59A41uZdsxFgTBVEkcFf+lvT79oo9qQfct3FGTQwtnMNgTdWsUDDPqIIx
+	 JfHnN+WgtAJp7ocqX/L4oFjp/Se5tIbB33yYXafCsaURiFVRapdJuKa6MuZV5j4yNp
+	 VETye1A1hTQ6N//oEglJzdnEShjFUXDsCrTw8n/f88sqZ7sIhVlodnzj/x0oIn3moL
+	 YN/tYaEcIa/LA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ilya Guterman <amfernusus@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
+Cc: Michal Suchanek <msuchanek@suse.de>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	kbusch@kernel.org,
-	axboe@fb.com,
-	sagi@grimberg.me,
-	linux-nvme@lists.infradead.org,
+	peterhuewe@gmx.de,
+	jarkko.sakkinen@linux.intel.com,
+	gregkh@linuxfoundation.org,
+	linux-integrity@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 6/7] nvme-pci: add NVME_QUIRK_NO_DEEPEST_PS quirk for SOLIDIGM P44 Pro
-Date: Mon, 19 May 2025 17:23:07 -0400
-Message-Id: <20250519212308.1986645-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 7/7] tpm: tis: Double the timeout B to 4s
+Date: Mon, 19 May 2025 17:23:08 -0400
+Message-Id: <20250519212308.1986645-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250519212308.1986645-1-sashal@kernel.org>
 References: <20250519212308.1986645-1-sashal@kernel.org>
@@ -54,39 +54,74 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.183
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Guterman <amfernusus@gmail.com>
+From: Michal Suchanek <msuchanek@suse.de>
 
-[ Upstream commit e765bf89f42b5c82132a556b630affeb82b2a21f ]
+[ Upstream commit 2f661f71fda1fc0c42b7746ca5b7da529eb6b5be ]
 
-This commit adds the NVME_QUIRK_NO_DEEPEST_PS quirk for device
-[126f:2262], which belongs to device SOLIDIGM P44 Pro SSDPFKKW020X7
+With some Infineon chips the timeouts in tpm_tis_send_data (both B and
+C) can reach up to about 2250 ms.
 
-The device frequently have trouble exiting the deepest power state (5),
-resulting in the entire disk being unresponsive.
+Timeout C is retried since
+commit de9e33df7762 ("tpm, tpm_tis: Workaround failed command reception on Infineon devices")
 
-Verified by setting nvme_core.default_ps_max_latency_us=10000 and
-observing the expected behavior.
+Timeout B still needs to be extended.
 
-Signed-off-by: Ilya Guterman <amfernusus@gmail.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+The problem is most commonly encountered with context related operation
+such as load context/save context. These are issued directly by the
+kernel, and there is no retry logic for them.
+
+When a filesystem is set up to use the TPM for unlocking the boot fails,
+and restarting the userspace service is ineffective. This is likely
+because ignoring a load context/save context result puts the real TPM
+state and the TPM state expected by the kernel out of sync.
+
+Chips known to be affected:
+tpm_tis IFX1522:00: 2.0 TPM (device-id 0x1D, rev-id 54)
+Description: SLB9672
+Firmware Revision: 15.22
+
+tpm_tis MSFT0101:00: 2.0 TPM (device-id 0x1B, rev-id 22)
+Firmware Revision: 7.83
+
+tpm_tis MSFT0101:00: 2.0 TPM (device-id 0x1A, rev-id 16)
+Firmware Revision: 5.63
+
+Link: https://lore.kernel.org/linux-integrity/Z5pI07m0Muapyu9w@kitsune.suse.cz/
+Signed-off-by: Michal Suchanek <msuchanek@suse.de>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/char/tpm/tpm_tis_core.h | 2 +-
+ include/linux/tpm.h             | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index a3c5af95e8f3e..5f60a6ca247fe 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3448,6 +3448,8 @@ static const struct pci_device_id nvme_id_table[] = {
- 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
- 	{ PCI_DEVICE(0x1e49, 0x0041),   /* ZHITAI TiPro7000 NVMe SSD */
- 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
-+	{ PCI_DEVICE(0x025e, 0xf1ac),   /* SOLIDIGM  P44 pro SSDPFKKW020X7  */
-+		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
- 	{ PCI_DEVICE(0xc0a9, 0x540a),   /* Crucial P2 */
- 		.driver_data = NVME_QUIRK_BOGUS_NID, },
- 	{ PCI_DEVICE(0x1d97, 0x2263), /* Lexar NM610 */
+diff --git a/drivers/char/tpm/tpm_tis_core.h b/drivers/char/tpm/tpm_tis_core.h
+index 464ed352ab2e8..ed7b2caa9ebbd 100644
+--- a/drivers/char/tpm/tpm_tis_core.h
++++ b/drivers/char/tpm/tpm_tis_core.h
+@@ -53,7 +53,7 @@ enum tis_int_flags {
+ enum tis_defaults {
+ 	TIS_MEM_LEN = 0x5000,
+ 	TIS_SHORT_TIMEOUT = 750,	/* ms */
+-	TIS_LONG_TIMEOUT = 2000,	/* 2 sec */
++	TIS_LONG_TIMEOUT = 4000,	/* 4 secs */
+ 	TIS_TIMEOUT_MIN_ATML = 14700,	/* usecs */
+ 	TIS_TIMEOUT_MAX_ATML = 15000,	/* usecs */
+ };
+diff --git a/include/linux/tpm.h b/include/linux/tpm.h
+index 12d827734686d..2652de93e97b2 100644
+--- a/include/linux/tpm.h
++++ b/include/linux/tpm.h
+@@ -181,7 +181,7 @@ enum tpm2_const {
+ 
+ enum tpm2_timeouts {
+ 	TPM2_TIMEOUT_A          =    750,
+-	TPM2_TIMEOUT_B          =   2000,
++	TPM2_TIMEOUT_B          =   4000,
+ 	TPM2_TIMEOUT_C          =    200,
+ 	TPM2_TIMEOUT_D          =     30,
+ 	TPM2_DURATION_SHORT     =     20,
 -- 
 2.39.5
 
