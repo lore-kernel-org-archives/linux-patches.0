@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E4323496F;
-	Mon, 19 May 2025 21:22:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25F1235364;
+	Mon, 19 May 2025 21:22:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747689771; cv=none; b=kDr8ygPwl7wUW1gmWdJcrUonE/zi6YpRlQjcpa3xreRc/tamp8XtMA9IMiyzz/86rb5BgMDstbdpptIE/JkeF3VYB1CxDmV8SrHB0buVII0t4uajTxYWaoDesQ58siR3FSbNBpB/1k6x3T8MnBEv6+3arufeTvFvIMUa+fpwipM=
+	t=1747689773; cv=none; b=asZLwBRdqvPJF4ng8o4KeQ7GLRkkE5A+LR7EEovgq10CzzI316opoWC0FsPYkQGNn42xBnR7KE3FdUik0XgQeroDDFWsdZw0XU9hTt701kNXOfsy7IQTSXF2EB+PL4zrKg4Mp5pceZiBXUdtCtlqUJ3IGPaQ9KSOvL94cFlK0e8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747689771; c=relaxed/simple;
-	bh=D7IBcVOI+yPkwGYr35IJjIYa1iRv9LBRLXIHo2RAt/c=;
+	s=arc-20240116; t=1747689773; c=relaxed/simple;
+	bh=OdAFbaqqvqqn0JoN+30LNaAJcQ6twsERV993d5E2HwI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=hHgzTwvvVWj+kLKKYpuR+2DCmiTHUQw/mFmDZtdB2K4rzUflLjj7uCNIkrnCnzXFWVnpfRslVxD7L+k6ADU6GPJ84BKDhGKQoF1CPzQNGBzt9RXPK64yEtkfgFW8/Knlyy67ZqWZdW/5U82MEDk6sL37kUjNfO5mfPU/TtXZBvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=guL1eDFN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PhoDQcD9pwzzZF5Hk8TAfNU3rK6xvoK0S/lZL2YATR61I1PLW370NVUUuFCpWQeEhWd/nHcJfyPEtGPZesvCQiSx4qwZre5uAJcZUy9kCawtYCYtKqOWk97UUoAyLJJgglomyDD3hE/qOPcKs6wPOpRqxpLEAtoO9pC+J2HB5NM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kWnBFA8j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="guL1eDFN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4374C4CEE4;
-	Mon, 19 May 2025 21:22:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kWnBFA8j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C74C4CEE9;
+	Mon, 19 May 2025 21:22:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747689770;
-	bh=D7IBcVOI+yPkwGYr35IJjIYa1iRv9LBRLXIHo2RAt/c=;
+	s=k20201202; t=1747689772;
+	bh=OdAFbaqqvqqn0JoN+30LNaAJcQ6twsERV993d5E2HwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=guL1eDFNIKRtaBNuiuxhOr6ObFUgfWKK+PzlaoM8mA4ukHV7llx4ZN3KCqOr0iaVa
-	 PXiNKGRW0Co6C2yL8cI96uBdTtC2LfHbfJQZZxbkpF/SVRs45C5Wvarx//J1EzMVer
-	 Ri8MdXJA3xQbk1TDQnh2gM7I+zFA0sA/ujKVD5eK7bNqGZE+vjgDloMetLk4U/s1iL
-	 1nLo3c8THNh/MT3XhBrBodkq2AGd2Xi3+ZvMfhFpeJMFDSV48wXzNyvap4Zc4CGJz7
-	 hx/ZnAK1lNghfOm80w3q+UX9rIy19nzAXSn7dnQya6pO1Y+6iQQDJQp85oFp8Ij0KA
-	 jhrq+8IPNPYgQ==
+	b=kWnBFA8jtTCdFTrnFRY0ewz5HeEc7XmpAyi1lDl+u4nPLYFQwET4tvfpyLwsRoDKN
+	 GOWdKIQDYx8vP4I9JMYmANxxCsvCyZ0HiumjB0i5r23EvaemjENHemHJK7VhlFJNM0
+	 Dp4O8hF0C6E/+vXPKvfc1rRcAJuhqS9bEZVROPntBUbCss5M3OMl+rf1SFoHJfk2aj
+	 +ldMkggWVMIIvPWz2tFx2a98XaTXPI0gxU2N8m6WQxE/caaVqF1WVOpy8UmXcGFXFv
+	 7F+SDXL+Nre+oit7k1xJDrLLssbE/hO3CfiMdc2H4m7Zyiz4mWAVRaiMqALv6I8GOj
+	 4PIbPJMIMYy5g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alessandro Grassi <alessandro.grassi@mailbox.org>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Ilya Guterman <amfernusus@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>,
-	mripard@kernel.org,
-	wens@csie.org,
-	linux-spi@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
+	kbusch@kernel.org,
+	axboe@fb.com,
+	sagi@grimberg.me,
+	linux-nvme@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 08/11] spi: spi-sun4i: fix early activation
-Date: Mon, 19 May 2025 17:22:34 -0400
-Message-Id: <20250519212237.1986368-8-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 09/11] nvme-pci: add NVME_QUIRK_NO_DEEPEST_PS quirk for SOLIDIGM P44 Pro
+Date: Mon, 19 May 2025 17:22:35 -0400
+Message-Id: <20250519212237.1986368-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250519212237.1986368-1-sashal@kernel.org>
 References: <20250519212237.1986368-1-sashal@kernel.org>
@@ -54,50 +54,39 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.91
 Content-Transfer-Encoding: 8bit
 
-From: Alessandro Grassi <alessandro.grassi@mailbox.org>
+From: Ilya Guterman <amfernusus@gmail.com>
 
-[ Upstream commit fb98bd0a13de2c9d96cb5c00c81b5ca118ac9d71 ]
+[ Upstream commit e765bf89f42b5c82132a556b630affeb82b2a21f ]
 
-The SPI interface is activated before the CPOL setting is applied. In
-that moment, the clock idles high and CS goes low. After a short delay,
-CPOL and other settings are applied, which may cause the clock to change
-state and idle low. This transition is not part of a clock cycle, and it
-can confuse the receiving device.
+This commit adds the NVME_QUIRK_NO_DEEPEST_PS quirk for device
+[126f:2262], which belongs to device SOLIDIGM P44 Pro SSDPFKKW020X7
 
-To prevent this unexpected transition, activate the interface while CPOL
-and the other settings are being applied.
+The device frequently have trouble exiting the deepest power state (5),
+resulting in the entire disk being unresponsive.
 
-Signed-off-by: Alessandro Grassi <alessandro.grassi@mailbox.org>
-Link: https://patch.msgid.link/20250502095520.13825-1-alessandro.grassi@mailbox.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Verified by setting nvme_core.default_ps_max_latency_us=10000 and
+observing the expected behavior.
+
+Signed-off-by: Ilya Guterman <amfernusus@gmail.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sun4i.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/nvme/host/pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
-index b8947265d329e..5b2cb225a4198 100644
---- a/drivers/spi/spi-sun4i.c
-+++ b/drivers/spi/spi-sun4i.c
-@@ -263,6 +263,9 @@ static int sun4i_spi_transfer_one(struct spi_master *master,
- 	else
- 		reg |= SUN4I_CTL_DHB;
- 
-+	/* Now that the settings are correct, enable the interface */
-+	reg |= SUN4I_CTL_ENABLE;
-+
- 	sun4i_spi_write(sspi, SUN4I_CTL_REG, reg);
- 
- 	/* Ensure that we have a parent clock fast enough */
-@@ -403,7 +406,7 @@ static int sun4i_spi_runtime_resume(struct device *dev)
- 	}
- 
- 	sun4i_spi_write(sspi, SUN4I_CTL_REG,
--			SUN4I_CTL_ENABLE | SUN4I_CTL_MASTER | SUN4I_CTL_TP);
-+			SUN4I_CTL_MASTER | SUN4I_CTL_TP);
- 
- 	return 0;
- 
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index fdde38903ebcd..3773230c09d4f 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3533,6 +3533,8 @@ static const struct pci_device_id nvme_id_table[] = {
+ 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
+ 	{ PCI_DEVICE(0x1e49, 0x0041),   /* ZHITAI TiPro7000 NVMe SSD */
+ 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
++	{ PCI_DEVICE(0x025e, 0xf1ac),   /* SOLIDIGM  P44 pro SSDPFKKW020X7  */
++		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
+ 	{ PCI_DEVICE(0xc0a9, 0x540a),   /* Crucial P2 */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1d97, 0x2263), /* Lexar NM610 */
 -- 
 2.39.5
 
