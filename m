@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449772147E3;
-	Mon, 19 May 2025 21:21:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16B421B191;
+	Mon, 19 May 2025 21:21:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747689695; cv=none; b=q47Bs4KwPuDgx9mVMWAgHkt8CTzl6VkQf8Qjq+fwVjPZ9vCVJ8P4A03YuolfoF5u6npfkm+moitjpg6a57Aw7Wq6pg35EWHfScRFLB4tVF7rXLO49/5dfggBz3niQxn2qI7CVbYCq2az0w74lk0qJ3RGbc3hXHcznonAEO+XYn8=
+	t=1747689696; cv=none; b=CMyxyeluVZfhYS8PybuJqDr/dfAqKV5JHclhWHJ8bRpEIYvYCdSMexfEax2MHZEmkt2bq7eDJ2uq09rHNqxqyYP/uIxuecM1huzIDWNVdpGvTGLCK9OpD02xIazQQtNUT87UgsjNTTNBFterHLAZWNcD+iASa1w7clES7K4RCMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747689695; c=relaxed/simple;
-	bh=bDtecZjKTbaLHO+lu0f0b899YCLPuy/seha4FHlWQdk=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=nEoxOQP0y5E2WoBhXTAcjiAQPk+6VxsnVg8zox/SRfEWokTB1qN2mjz+YA5wx7lORvXWsoKGzKvTWILuaGwhS1MCg6I7WoWgU7lFCjEMj3Mba9P8tBHIV85xk1NZffVPDLqAxdkivIjGjyKU7n8kV5VtXlCOdAeSnFT3DvkiTVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cx4QMIwj; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747689696; c=relaxed/simple;
+	bh=lH9zdZaEdr9+33s1ibwmkHyGg80s3IuWQrjin8eGuNc=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=ht0KX2WIRyP7ZGQx3LQW3kvWellsrlM/OUyt62ZAtH9mt/ct7t6emg1n82eWp5+9DY9we8AxBdsDjptqgAft+uCH0BMrsHrRflK3yoF+yrAMxN10OVcZ1+4fkTlThgCNnNWmwEDyEtMqBcC7YdDJd/nWhku7jv+vZy2c+Khzju0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tU4NTW0j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cx4QMIwj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82F7C4CEE9;
-	Mon, 19 May 2025 21:21:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tU4NTW0j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EAD2C4CEE4;
+	Mon, 19 May 2025 21:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747689693;
-	bh=bDtecZjKTbaLHO+lu0f0b899YCLPuy/seha4FHlWQdk=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Cx4QMIwjrDo0MesJYT7yYMiSKsds9vvLKzlw71BgjmOoMlEzqtMzi8FtMmVlRa/xI
-	 oJ1FajLFDz5m0qDWxmvS6lZeni8C/iLkuiR8iDjh0VxphPBDTqwwgivoWSGIglaDMv
-	 n5a6uSs0ttgTGavcUUVII4WMS4UemY/CUb40FyPw/AtmopRwXsG+BvnUIihj3UnxrZ
-	 r42gpYnijkb8ebBs0+zDogZxGFJetn0QLD0ZXsVObjRGYRBpQtR0mI6ZiwrHmzB2K/
-	 TjUuaN0mmyPYkDvze5uCIFM7pYShxQ/o07b51wPW/rWTHEJCD6zN9PqxKBze0p82g+
-	 Z+D3yUQwaBSVw==
+	s=k20201202; t=1747689695;
+	bh=lH9zdZaEdr9+33s1ibwmkHyGg80s3IuWQrjin8eGuNc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=tU4NTW0jCjF5KtS2DuLafxGP1600IFe4wEsl5oYad51aOvZ/XOtJhVyhirKu9IKxW
+	 P3w6P5RJpMG7DDoKVRRa4wRxuW0vCSEZeAqLRMxYGqCFe059rKrdhc5oGMoA65zBUq
+	 hXjuwwVJAhXE21QG0+iN9uC8qcC70KwzDbltjqy+ZAZxUbnvl9SAumB9th9TFHFYQl
+	 rE9NADQ7oofttL1tRDfuQI89Axn/eFxrzDIPrHgSTKtelr4jpmpaynWn2UcuanhTra
+	 0TwF58M9fv+hVVqam2Y/ki31So1lbghI9rYrJABVpXFF9/4C+BADbVB1zpkRVGlOBe
+	 sVgzf2VcZNSpw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Purva Yeshi <purvayeshi550@gmail.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: Mario Limonciello <mario.limonciello@amd.com>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	dmaengine@vger.kernel.org,
+	jikos@kernel.org,
+	benjamin.tissoires@redhat.com,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 01/23] dmaengine: idxd: cdev: Fix uninitialized use of sva in idxd_cdev_open
-Date: Mon, 19 May 2025 17:21:08 -0400
-Message-Id: <20250519212131.1985647-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.14 02/23] HID: amd_sfh: Avoid clearing reports for SRA sensor
+Date: Mon, 19 May 2025 17:21:09 -0400
+Message-Id: <20250519212131.1985647-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250519212131.1985647-1-sashal@kernel.org>
+References: <20250519212131.1985647-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,58 +54,45 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.7
 Content-Transfer-Encoding: 8bit
 
-From: Purva Yeshi <purvayeshi550@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 97994333de2b8062d2df4e6ce0dc65c2dc0f40dc ]
+[ Upstream commit f32e8c8095490152b5bc5f467d5034387a4bbd1b ]
 
-Fix Smatch-detected issue:
-drivers/dma/idxd/cdev.c:321 idxd_cdev_open() error:
-uninitialized symbol 'sva'.
+SRA sensor doesn't allocate any memory for reports.  Skip
+trying to clear memory for that sensor in cleanup path.
 
-'sva' pointer may be used uninitialized in error handling paths.
-Specifically, if PASID support is enabled and iommu_sva_bind_device()
-returns an error, the code jumps to the cleanup label and attempts to
-call iommu_sva_unbind_device(sva) without ensuring that sva was
-successfully assigned. This triggers a Smatch warning about an
-uninitialized symbol.
-
-Initialize sva to NULL at declaration and add a check using
-IS_ERR_OR_NULL() before unbinding the device. This ensures the
-function does not use an invalid or uninitialized pointer during
-cleanup.
-
-Signed-off-by: Purva Yeshi <purvayeshi550@gmail.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Link: https://lore.kernel.org/r/20250410110216.21592-1-purvayeshi550@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Suggested-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Acked-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/cdev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-index ff94ee892339d..7bd031a608943 100644
---- a/drivers/dma/idxd/cdev.c
-+++ b/drivers/dma/idxd/cdev.c
-@@ -222,7 +222,7 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
- 	struct idxd_wq *wq;
- 	struct device *dev, *fdev;
- 	int rc = 0;
--	struct iommu_sva *sva;
-+	struct iommu_sva *sva = NULL;
- 	unsigned int pasid;
- 	struct idxd_cdev *idxd_cdev;
+diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
+index e9929c4aa72eb..fc48b256fc0de 100644
+--- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
++++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
+@@ -83,6 +83,9 @@ static int amd_sfh_hid_client_deinit(struct amd_mp2_dev *privdata)
+ 		case ALS_IDX:
+ 			privdata->dev_en.is_als_present = false;
+ 			break;
++		case SRA_IDX:
++			privdata->dev_en.is_sra_present = false;
++			break;
+ 		}
  
-@@ -317,7 +317,7 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
- 	if (device_user_pasid_enabled(idxd))
- 		idxd_xa_pasid_remove(ctx);
- failed_get_pasid:
--	if (device_user_pasid_enabled(idxd))
-+	if (device_user_pasid_enabled(idxd) && !IS_ERR_OR_NULL(sva))
- 		iommu_sva_unbind_device(sva);
- failed:
- 	mutex_unlock(&wq->wq_lock);
+ 		if (cl_data->sensor_sts[i] == SENSOR_ENABLED) {
+@@ -236,6 +239,8 @@ static int amd_sfh1_1_hid_client_init(struct amd_mp2_dev *privdata)
+ cleanup:
+ 	amd_sfh_hid_client_deinit(privdata);
+ 	for (i = 0; i < cl_data->num_hid_devices; i++) {
++		if (cl_data->sensor_idx[i] == SRA_IDX)
++			continue;
+ 		devm_kfree(dev, cl_data->feature_report[i]);
+ 		devm_kfree(dev, in_data->input_report[i]);
+ 		devm_kfree(dev, cl_data->report_descr[i]);
 -- 
 2.39.5
 
