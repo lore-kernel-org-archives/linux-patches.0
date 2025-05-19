@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E17221E097;
-	Mon, 19 May 2025 21:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDAC3217679;
+	Mon, 19 May 2025 21:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747689701; cv=none; b=laszKx869fYR5pzxpZ8G0cIJM0tXLqvq2c/7gFysrfKcctDhJUUWG0E9P41Tij+4xyy8+q4oLv8oHMSWD79QCb5iHLmimk6aKbAczqKeQvOkavfSP0HwX7tDrifcpK/aebm7XqMFmeJWiG0L0DwRzQR44MA667ctRZYQKs/9sSk=
+	t=1747689702; cv=none; b=l3vECAhS+cICRKkcAxAWDThC9yiftjAynaMs8K2H4DDbzizDtMaJRXOQsphrQXhnhswxvJ/hM45LR//46UxAMT6AI4qkSInpjsivKPNFeNFVzkaqvWUAF9MxFQmo8maSAH0niSgsILF9xyb6US8xk/JhCGoVy3b9ZlBxuOHHzx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747689701; c=relaxed/simple;
-	bh=30rj3aT4x2mhiXGF1zXj6be4OgmvOdtpHNcNpqUTl/g=;
+	s=arc-20240116; t=1747689702; c=relaxed/simple;
+	bh=KYLe2AhfSV9Xk4BDZ17de7Uw/ON1XQ1IFlFIrYLsaaE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Ov3CkAJFVKO7bTFaC08Ws7fw9SWwJ/Vdal/GgqvEjSj8NiTLMsubJATZMCiyjXIwEBmdSLx0mACEHBdncChR11lmTC9BYgToIzm1uUPQv4v14kckLwJL65ews7JabckCOAk43Em6VNjQskRHbVeNGDlZAsKU83jVR4objOPHu4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aonjhItK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hNoGdag+grrqZ0PkwpeQc6ipmj53rZl8oP0Y9cQIinvaBDtG0KTrvo/pHe6z8nWduucT19PngazEiQ9GOymMJc03fctfutaQwrVrjDdYtZ510svKL10ywn9ekbjcN9HMmkPGYpH8QeRopDo+gQhGw3PMfPnU3ESMO09o9q52X4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mnktO4p7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aonjhItK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31153C4CEE4;
-	Mon, 19 May 2025 21:21:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mnktO4p7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54678C4CEE9;
+	Mon, 19 May 2025 21:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747689701;
-	bh=30rj3aT4x2mhiXGF1zXj6be4OgmvOdtpHNcNpqUTl/g=;
+	s=k20201202; t=1747689702;
+	bh=KYLe2AhfSV9Xk4BDZ17de7Uw/ON1XQ1IFlFIrYLsaaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aonjhItKF83GGcv8B7Z4WA4RTRxT1RziRn3wAXSHvxdK6Sm0LiaSxqRURK79dIB3h
-	 q7FVUDDhVvyRyQoxz95gsbnW8ubYH7xQ5hlZdoHxN3gDjM9C/OhpWXBrKogdIjfCDP
-	 AA58LPSu5LZB4ENLdispfYqUVLgYp95Jvb04IwlXCS8FoKHX6rFuORoM048qSmgP8s
-	 8WBv/5rMqo1VH7Q71yg7JU7n7n7lagDBKZdO5kmM+wXLn6x4/hQXsBv87VqaiqnZ8w
-	 hUEDQbHel8AmmUF/rLdSYpES7hLJYs7MtB5FjSAaqdKlTX9uIFPLaeYTv6saUBZWmc
-	 g4gzOqTNkSpow==
+	b=mnktO4p7jYkCLPA/j/1pJYX7XVHlzNSGhtYiTmrysDZdLnmQBkbOcZvAAfJWwZoq9
+	 4G4bXxMx6s3PoeTb+ASal3OVwJO3YG3Z6Yj2gGFsZxD8063tNoDihu3E71sSnJq7Pk
+	 VfrKm3fDHRXptAOwqSe2LwIX6exfrzNFrbP9VcH+d9YiYhU/jDGsl/ikoa6MUjlG+J
+	 lQPEJM++w1sjwWzw4qPGFLwnbHNInn1KiRBF1UQjXryiNcn6mIV/vEp4gtmbnh6m/f
+	 nMTg5QMhGcVQWNv0U34M5AMfqPc29kxDmIfBVf2pvO30uoCIX308cjKFIifyfSueSC
+	 iePWuR6cyvV9w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sami Tolvanen <samitolvanen@google.com>,
-	Paolo Pisati <paolo.pisati@canonical.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+Cc: Masahiro Yamada <masahiroy@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	David Gow <davidgow@google.com>,
 	Sasha Levin <sashal@kernel.org>,
+	jdike@addtoit.com,
+	richard@nod.at,
+	anton.ivanov@cambridgegreys.com,
+	linux-um@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 06/23] kbuild: Require pahole <v1.28 or >v1.29 with GENDWARFKSYMS on X86
-Date: Mon, 19 May 2025 17:21:13 -0400
-Message-Id: <20250519212131.1985647-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.14 07/23] um: let 'make clean' properly clean underlying SUBARCH as well
+Date: Mon, 19 May 2025 17:21:14 -0400
+Message-Id: <20250519212131.1985647-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250519212131.1985647-1-sashal@kernel.org>
 References: <20250519212131.1985647-1-sashal@kernel.org>
@@ -51,56 +56,57 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.7
 Content-Transfer-Encoding: 8bit
 
-From: Sami Tolvanen <samitolvanen@google.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 9520a2b3f0b5e182f73410e45b9b92ea51d9b828 ]
+[ Upstream commit ab09da75700e9d25c7dfbc7f7934920beb5e39b9 ]
 
-With CONFIG_GENDWARFKSYMS, __gendwarfksyms_ptr variables are
-added to the kernel in EXPORT_SYMBOL() to ensure DWARF type
-information is available for exported symbols in the TUs where
-they're actually exported. These symbols are dropped when linking
-vmlinux, but dangling references to them remain in DWARF.
+Building the kernel with O= is affected by stale in-tree build artifacts.
 
-With CONFIG_DEBUG_INFO_BTF enabled on X86, pahole versions after
-commit 47dcb534e253 ("btf_encoder: Stop indexing symbols for
-VARs") and before commit 9810758003ce ("btf_encoder: Verify 0
-address DWARF variables are in ELF section") place these symbols
-in the .data..percpu section, which results in an "Invalid
-offset" error in btf_datasec_check_meta() during boot, as all
-the variables are at zero offset and have non-zero size. If
-CONFIG_DEBUG_INFO_BTF_MODULES is enabled, this also results in a
-failure to load modules with:
+So, if the source tree is not clean, Kbuild displays the following:
 
-  failed to validate module [$module] BTF: -22
+  $ make ARCH=um O=build defconfig
+  make[1]: Entering directory '/.../linux/build'
+  ***
+  *** The source tree is not clean, please run 'make ARCH=um mrproper'
+  *** in /.../linux
+  ***
+  make[2]: *** [/.../linux/Makefile:673: outputmakefile] Error 1
+  make[1]: *** [/.../linux/Makefile:248: __sub-make] Error 2
+  make[1]: Leaving directory '/.../linux/build'
+  make: *** [Makefile:248: __sub-make] Error 2
 
-As the issue occurs in pahole v1.28 and the fix was merged
-after v1.29 was released, require pahole <v1.28 or >v1.29 when
-GENDWARFKSYMS is enabled with DEBUG_INFO_BTF on X86.
+Usually, running 'make mrproper' is sufficient for cleaning the source
+tree for out-of-tree builds.
 
-Reported-by: Paolo Pisati <paolo.pisati@canonical.com>
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+However, building UML generates build artifacts not only in arch/um/,
+but also in the SUBARCH directory (i.e., arch/x86/). If in-tree stale
+files remain under arch/x86/, Kbuild will reuse them instead of creating
+new ones under the specified build directory.
+
+This commit makes 'make ARCH=um clean' recurse into the SUBARCH directory.
+
+Reported-by: Shuah Khan <skhan@linuxfoundation.org>
+Closes: https://lore.kernel.org/lkml/20250502172459.14175-1-skhan@linuxfoundation.org/
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Acked-by: Johannes Berg <johannes@sipsolutions.net>
+Reviewed-by: David Gow <davidgow@google.com>
+Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/Kconfig | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/um/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/module/Kconfig b/kernel/module/Kconfig
-index d7762ef5949a2..39278737bb68f 100644
---- a/kernel/module/Kconfig
-+++ b/kernel/module/Kconfig
-@@ -192,6 +192,11 @@ config GENDWARFKSYMS
- 	depends on !DEBUG_INFO_REDUCED && !DEBUG_INFO_SPLIT
- 	# Requires ELF object files.
- 	depends on !LTO
-+	# To avoid conflicts with the discarded __gendwarfksyms_ptr symbols on
-+	# X86, requires pahole before commit 47dcb534e253 ("btf_encoder: Stop
-+	# indexing symbols for VARs") or after commit 9810758003ce ("btf_encoder:
-+	# Verify 0 address DWARF variables are in ELF section").
-+	depends on !X86 || !DEBUG_INFO_BTF || PAHOLE_VERSION < 128 || PAHOLE_VERSION > 129
- 	help
- 	  Calculate symbol versions from DWARF debugging information using
- 	  gendwarfksyms. Requires DEBUG_INFO to be enabled.
+diff --git a/arch/um/Makefile b/arch/um/Makefile
+index 1d36a613aad83..9ed792e565c91 100644
+--- a/arch/um/Makefile
++++ b/arch/um/Makefile
+@@ -154,5 +154,6 @@ MRPROPER_FILES += $(HOST_DIR)/include/generated
+ archclean:
+ 	@find . \( -name '*.bb' -o -name '*.bbg' -o -name '*.da' \
+ 		-o -name '*.gcov' \) -type f -print | xargs rm -f
++	$(Q)$(MAKE) -f $(srctree)/Makefile ARCH=$(HEADER_ARCH) clean
+ 
+ export HEADER_ARCH SUBARCH USER_CFLAGS CFLAGS_NO_HARDENING DEV_NULL_PATH
 -- 
 2.39.5
 
