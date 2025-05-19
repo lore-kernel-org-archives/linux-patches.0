@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4099922256A;
-	Mon, 19 May 2025 21:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59A622257D;
+	Mon, 19 May 2025 21:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747689720; cv=none; b=AhjGfFaSOIUt2/dPtoceZ9q0+kRhATbqBy+fZvYfuGOSU+SPwWie+6j4Ytl/Sn4w872nh1zbruCJV15HT8Ab5QBW1hKe/g1dwuYTE4SF8O+o3CTw2rxpXIrcLPIqss31C+BAn2klijXdAlqJYgdFYNNE8UiSINRP8fkGQIgDxOU=
+	t=1747689722; cv=none; b=TnSbIQeXAV7szquGv+UyI+DxH1k8qX2az+gvbpnZ2+bVDIyaJACU7CtuVzPP/FewUVu/1jl3t9JacOMcr0RjqOouC/P5ZXnCRf3KmdJIjCKeSkLLrP6JjHXhYuu7kZnohJj6lWWhs7lNwXTJ2pVDHVQDng1iL38el+ZV/6ZDL6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747689720; c=relaxed/simple;
-	bh=WCKkJdBWCioLO8FQG9u8oom9Dd0HozzpkWeDZzzGoBY=;
+	s=arc-20240116; t=1747689722; c=relaxed/simple;
+	bh=OL9uX6XWCNIhFu+QC1BZNccZr8I8iotFPDBJYOKGEPU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=obCy9L4Y1SeYBsf7f4l1TtHEhbC9ZlqQugxM6mRjMQTG2iNPzMnhUpHkuD/NTFo8w/ZgKgo8vWA/khzC0YYO6xBLVNv6tUTXBYj8/4oGYDerJEjDeOPRj5ePSryUu3UXzp1n5l5dtft+U7dDnMRCvDn8rL6UQ88cc3rAgIC+KNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XzmZu4HN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mU5VKHL1KIT1TefC5FnPCb8/FD3FNOyGABqq5c3FZ1IN+TGEysoLPDaoPW/cHEs2HYoxu+Ap1d7eT33oLJaqE78dRXAjhgpuP39BYCrBa9z2uGHht8kTtYVqHWHVs/c3FHRSbzP+GBSzL/mJARCcNn9rd+wVbn5n123yQ5htm4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XkZDV/dd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XzmZu4HN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EC30C4CEE4;
-	Mon, 19 May 2025 21:21:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XkZDV/dd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36AC4C4CEEB;
+	Mon, 19 May 2025 21:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747689719;
-	bh=WCKkJdBWCioLO8FQG9u8oom9Dd0HozzpkWeDZzzGoBY=;
+	s=k20201202; t=1747689721;
+	bh=OL9uX6XWCNIhFu+QC1BZNccZr8I8iotFPDBJYOKGEPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XzmZu4HNI0laCDwu/VYEjZmiEfQMsD/WAUSt7rton/J7LugwP00gn6IaGmd9yTAA7
-	 cGVld4oppLJtQwly6j4P8x1SM+qCQR9ESlgppLD8k98VdhffAxd0Jy/tUSLwHwCw0Y
-	 xzWHgQTkqVEnGH/SdBipQxFiGZ7eY+tsDc4LGzSHMyrLsn7IzBXNFug9fRxK9AmdDI
-	 l5uHfgafJNS9kZFxePHYUNsJNGQavuEe5/NZmHDN+zoSL65l15L/IrxmB6UqPzB0fT
-	 h0P/jzsK6XhbpAaeBEUoNhew+inCrg3zat/takSweWy3wZM7eQ0BQ0AkENosEt38XO
-	 XcjY7fmABdoVw==
+	b=XkZDV/ddErizL3Aqftqbbg+6iGdtptAx3NKWO53BkerNHxMh+ZisNkBZW5VqLie8f
+	 9rmdnizjXepZ+RVdFolvnVYs3x1ggCdMOQuycjRSbdkwakSY8yIFLaynzEplrEatfg
+	 S7HEmHVRCnraUaSkXPyKV8kkLILuHJ2HAwxmA0QM/y3mV4OUCPVyY32wxKUnsxKi3A
+	 b+FJh85ayX3IOgfg7eRFlrm+jYotG/3ey9mwBPZdRFOItcVuUdpZHcezqkIedAs7Lv
+	 gKt5+EPEJR6Vm77+mxsha3YcWUTJOUpH818RLnX6dagJZDZ3kYpfCTBtUPcb5hDSD7
+	 49PrmkZYScv4g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ilya Guterman <amfernusus@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
+Cc: Aradhya Bhatia <aradhya.bhatia@intel.com>,
+	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	kbusch@kernel.org,
-	axboe@fb.com,
-	sagi@grimberg.me,
-	linux-nvme@lists.infradead.org,
+	airlied@linux.ie,
+	daniel@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 18/23] nvme-pci: add NVME_QUIRK_NO_DEEPEST_PS quirk for SOLIDIGM P44 Pro
-Date: Mon, 19 May 2025 17:21:25 -0400
-Message-Id: <20250519212131.1985647-18-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.14 19/23] drm/xe/xe2hpg: Add Wa_22021007897
+Date: Mon, 19 May 2025 17:21:26 -0400
+Message-Id: <20250519212131.1985647-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250519212131.1985647-1-sashal@kernel.org>
 References: <20250519212131.1985647-1-sashal@kernel.org>
@@ -54,39 +56,53 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.7
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Guterman <amfernusus@gmail.com>
+From: Aradhya Bhatia <aradhya.bhatia@intel.com>
 
-[ Upstream commit e765bf89f42b5c82132a556b630affeb82b2a21f ]
+[ Upstream commit b1f704107cf27906a9cea542b626b96019104663 ]
 
-This commit adds the NVME_QUIRK_NO_DEEPEST_PS quirk for device
-[126f:2262], which belongs to device SOLIDIGM P44 Pro SSDPFKKW020X7
+Add Wa_22021007897 for the Xe2_HPG (graphics version: 20.01) IP. It is
+a permanent workaround, and applicable on all the steppings.
 
-The device frequently have trouble exiting the deepest power state (5),
-resulting in the entire disk being unresponsive.
-
-Verified by setting nvme_core.default_ps_max_latency_us=10000 and
-observing the expected behavior.
-
-Signed-off-by: Ilya Guterman <amfernusus@gmail.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
+Reviewed-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+Signed-off-by: Aradhya Bhatia <aradhya.bhatia@intel.com>
+Link: https://lore.kernel.org/r/20250512065004.2576-1-aradhya.bhatia@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit e5c13e2c505b73a8667ef9a0fd5cbd4227e483e6)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/xe/regs/xe_gt_regs.h | 1 +
+ drivers/gpu/drm/xe/xe_wa.c           | 4 ++++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index d49b69565d04c..d62fef76cc078 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3734,6 +3734,8 @@ static const struct pci_device_id nvme_id_table[] = {
- 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
- 	{ PCI_DEVICE(0x1e49, 0x0041),   /* ZHITAI TiPro7000 NVMe SSD */
- 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
-+	{ PCI_DEVICE(0x025e, 0xf1ac),   /* SOLIDIGM  P44 pro SSDPFKKW020X7  */
-+		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
- 	{ PCI_DEVICE(0xc0a9, 0x540a),   /* Crucial P2 */
- 		.driver_data = NVME_QUIRK_BOGUS_NID, },
- 	{ PCI_DEVICE(0x1d97, 0x2263), /* Lexar NM610 */
+diff --git a/drivers/gpu/drm/xe/regs/xe_gt_regs.h b/drivers/gpu/drm/xe/regs/xe_gt_regs.h
+index d0ea8a55fd9c2..ab95d3545a72c 100644
+--- a/drivers/gpu/drm/xe/regs/xe_gt_regs.h
++++ b/drivers/gpu/drm/xe/regs/xe_gt_regs.h
+@@ -157,6 +157,7 @@
+ #define XEHPG_SC_INSTDONE_EXTRA2		XE_REG_MCR(0x7108)
+ 
+ #define COMMON_SLICE_CHICKEN4			XE_REG(0x7300, XE_REG_OPTION_MASKED)
++#define   SBE_PUSH_CONSTANT_BEHIND_FIX_ENABLE	REG_BIT(12)
+ #define   DISABLE_TDC_LOAD_BALANCING_CALC	REG_BIT(6)
+ 
+ #define COMMON_SLICE_CHICKEN3				XE_REG(0x7304, XE_REG_OPTION_MASKED)
+diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
+index 65bfb2f894d00..56257430b3642 100644
+--- a/drivers/gpu/drm/xe/xe_wa.c
++++ b/drivers/gpu/drm/xe/xe_wa.c
+@@ -801,6 +801,10 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
+ 	  XE_RTP_RULES(GRAPHICS_VERSION(2001), ENGINE_CLASS(RENDER)),
+ 	  XE_RTP_ACTIONS(SET(CHICKEN_RASTER_1, DIS_CLIP_NEGATIVE_BOUNDING_BOX))
+ 	},
++	{ XE_RTP_NAME("22021007897"),
++	  XE_RTP_RULES(GRAPHICS_VERSION(2001), ENGINE_CLASS(RENDER)),
++	  XE_RTP_ACTIONS(SET(COMMON_SLICE_CHICKEN4, SBE_PUSH_CONSTANT_BEHIND_FIX_ENABLE))
++	},
+ 
+ 	/* Xe3_LPG */
+ 	{ XE_RTP_NAME("14021490052"),
 -- 
 2.39.5
 
