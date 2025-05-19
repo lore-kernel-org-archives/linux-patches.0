@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7DB21D3E2;
-	Mon, 19 May 2025 21:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E17221E097;
+	Mon, 19 May 2025 21:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747689700; cv=none; b=V3TZQJHFpwga2p0P5x83dXMKsfk+dPNWwD0cBHOZuTdnAKOhIQwQSXfr9fPkC1weNSzorZBBXKsSRokiNIc7CbnSLMYawXng2JL5X9GMAqXzMTVsqUk/S+ROHI+uZ6F8ySry3RMwEMtgFLcEdjiRJi8Tg4wwLzaTE2t3P22kxg0=
+	t=1747689701; cv=none; b=laszKx869fYR5pzxpZ8G0cIJM0tXLqvq2c/7gFysrfKcctDhJUUWG0E9P41Tij+4xyy8+q4oLv8oHMSWD79QCb5iHLmimk6aKbAczqKeQvOkavfSP0HwX7tDrifcpK/aebm7XqMFmeJWiG0L0DwRzQR44MA667ctRZYQKs/9sSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747689700; c=relaxed/simple;
-	bh=NxzYm3xGbnfG5Wu8vNM0wvIDnieCXReM6L6CtJSvII8=;
+	s=arc-20240116; t=1747689701; c=relaxed/simple;
+	bh=30rj3aT4x2mhiXGF1zXj6be4OgmvOdtpHNcNpqUTl/g=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=khC7wScbWpodpEdwzZIboAQL+IFwzgZaK7kLLsJrAEuf9kruGnrHYGo7PYRcA8FT4tnIMuy50AMIPuoged1MtEcTKM3ih1CUG1cVlleEZJDklb+cC1vhlEDkpi8gPoBIpeEQaD1dJuLQqkm98lt5MioKnPT1551x4GJd90Q5U/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WnexzgqD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ov3CkAJFVKO7bTFaC08Ws7fw9SWwJ/Vdal/GgqvEjSj8NiTLMsubJATZMCiyjXIwEBmdSLx0mACEHBdncChR11lmTC9BYgToIzm1uUPQv4v14kckLwJL65ews7JabckCOAk43Em6VNjQskRHbVeNGDlZAsKU83jVR4objOPHu4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aonjhItK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WnexzgqD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9965EC4CEE9;
-	Mon, 19 May 2025 21:21:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aonjhItK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31153C4CEE4;
+	Mon, 19 May 2025 21:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747689699;
-	bh=NxzYm3xGbnfG5Wu8vNM0wvIDnieCXReM6L6CtJSvII8=;
+	s=k20201202; t=1747689701;
+	bh=30rj3aT4x2mhiXGF1zXj6be4OgmvOdtpHNcNpqUTl/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WnexzgqDXH3nccAirRRX1aZTPIYHgSkKsMzw178ZEa3O40bdMdwLW5Wn+Kz+57Ez4
-	 +69RDajjXaLO7tZobCJSaL+3YuArljHekNRz870FWjOE11SbysBnXBElaABUykDa6b
-	 3ZkrwGE1hI6GEG+lZBhWE0E/te0ZUVTXDuZi6vkDuGUjZaCWVpCf0qiXS7Ilpp7V1/
-	 G0lkK/Qo45r3OPDB7nG7nnAXW5w8h2EzaAyIqY12syaOC+lxgBwLiTFFQ47c5Y2Iol
-	 loievawHCQR6DNpM9qc6ZvifIGSZnip/He/azGcVLeV6WtisUkAfxUb+BRSXc14q9s
-	 roMHXLEt/QPyg==
+	b=aonjhItKF83GGcv8B7Z4WA4RTRxT1RziRn3wAXSHvxdK6Sm0LiaSxqRURK79dIB3h
+	 q7FVUDDhVvyRyQoxz95gsbnW8ubYH7xQ5hlZdoHxN3gDjM9C/OhpWXBrKogdIjfCDP
+	 AA58LPSu5LZB4ENLdispfYqUVLgYp95Jvb04IwlXCS8FoKHX6rFuORoM048qSmgP8s
+	 8WBv/5rMqo1VH7Q71yg7JU7n7n7lagDBKZdO5kmM+wXLn6x4/hQXsBv87VqaiqnZ8w
+	 hUEDQbHel8AmmUF/rLdSYpES7hLJYs7MtB5FjSAaqdKlTX9uIFPLaeYTv6saUBZWmc
+	 g4gzOqTNkSpow==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: John Chau <johnchau@0atlas.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Sami Tolvanen <samitolvanen@google.com>,
+	Paolo Pisati <paolo.pisati@canonical.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	ibm-acpi@hmh.eng.br,
-	dvhart@infradead.org,
-	andy@infradead.org,
-	ibm-acpi-devel@lists.sourceforge.net,
-	platform-driver-x86@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 05/23] platform/x86: thinkpad_acpi: Support also NEC Lavie X1475JAS
-Date: Mon, 19 May 2025 17:21:12 -0400
-Message-Id: <20250519212131.1985647-5-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.14 06/23] kbuild: Require pahole <v1.28 or >v1.29 with GENDWARFKSYMS on X86
+Date: Mon, 19 May 2025 17:21:13 -0400
+Message-Id: <20250519212131.1985647-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250519212131.1985647-1-sashal@kernel.org>
 References: <20250519212131.1985647-1-sashal@kernel.org>
@@ -50,60 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.7
 Content-Transfer-Encoding: 8bit
 
-From: John Chau <johnchau@0atlas.com>
+From: Sami Tolvanen <samitolvanen@google.com>
 
-[ Upstream commit a032f29a15412fab9f4352e0032836d51420a338 ]
+[ Upstream commit 9520a2b3f0b5e182f73410e45b9b92ea51d9b828 ]
 
-Change get_thinkpad_model_data() to check for additional vendor name
-"NEC" in order to support NEC Lavie X1475JAS notebook (and perhaps
-more).
+With CONFIG_GENDWARFKSYMS, __gendwarfksyms_ptr variables are
+added to the kernel in EXPORT_SYMBOL() to ensure DWARF type
+information is available for exported symbols in the TUs where
+they're actually exported. These symbols are dropped when linking
+vmlinux, but dangling references to them remain in DWARF.
 
-The reason of this works with minimal changes is because NEC Lavie
-X1475JAS is a Thinkpad inside. ACPI dumps reveals its OEM ID to be
-"LENOVO", BIOS version "R2PET30W" matches typical Lenovo BIOS version,
-the existence of HKEY of LEN0268, with DMI fw string is "R2PHT24W".
+With CONFIG_DEBUG_INFO_BTF enabled on X86, pahole versions after
+commit 47dcb534e253 ("btf_encoder: Stop indexing symbols for
+VARs") and before commit 9810758003ce ("btf_encoder: Verify 0
+address DWARF variables are in ELF section") place these symbols
+in the .data..percpu section, which results in an "Invalid
+offset" error in btf_datasec_check_meta() during boot, as all
+the variables are at zero offset and have non-zero size. If
+CONFIG_DEBUG_INFO_BTF_MODULES is enabled, this also results in a
+failure to load modules with:
 
-I compiled and tested with my own machine, attached the dmesg
-below as proof of work:
-[    6.288932] thinkpad_acpi: ThinkPad ACPI Extras v0.26
-[    6.288937] thinkpad_acpi: http://ibm-acpi.sf.net/
-[    6.288938] thinkpad_acpi: ThinkPad BIOS R2PET30W (1.11 ), EC R2PHT24W
-[    6.307000] thinkpad_acpi: radio switch found; radios are enabled
-[    6.307030] thinkpad_acpi: This ThinkPad has standard ACPI backlight brightness control, supported by the ACPI video driver
-[    6.307033] thinkpad_acpi: Disabling thinkpad-acpi brightness events by default...
-[    6.320322] thinkpad_acpi: rfkill switch tpacpi_bluetooth_sw: radio is unblocked
-[    6.371963] thinkpad_acpi: secondary fan control detected & enabled
-[    6.391922] thinkpad_acpi: battery 1 registered (start 0, stop 85, behaviours: 0x7)
-[    6.398375] input: ThinkPad Extra Buttons as /devices/platform/thinkpad_acpi/input/input13
+  failed to validate module [$module] BTF: -22
 
-Signed-off-by: John Chau <johnchau@0atlas.com>
-Link: https://lore.kernel.org/r/20250504165513.295135-1-johnchau@0atlas.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+As the issue occurs in pahole v1.28 and the fix was merged
+after v1.29 was released, require pahole <v1.28 or >v1.29 when
+GENDWARFKSYMS is enabled with DEBUG_INFO_BTF on X86.
+
+Reported-by: Paolo Pisati <paolo.pisati@canonical.com>
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/thinkpad_acpi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/module/Kconfig | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
-index 2ff38ca9ddb40..ace1cd14d4ba3 100644
---- a/drivers/platform/x86/thinkpad_acpi.c
-+++ b/drivers/platform/x86/thinkpad_acpi.c
-@@ -11481,6 +11481,8 @@ static int __must_check __init get_thinkpad_model_data(
- 		tp->vendor = PCI_VENDOR_ID_IBM;
- 	else if (dmi_name_in_vendors("LENOVO"))
- 		tp->vendor = PCI_VENDOR_ID_LENOVO;
-+	else if (dmi_name_in_vendors("NEC"))
-+		tp->vendor = PCI_VENDOR_ID_LENOVO;
- 	else
- 		return 0;
- 
+diff --git a/kernel/module/Kconfig b/kernel/module/Kconfig
+index d7762ef5949a2..39278737bb68f 100644
+--- a/kernel/module/Kconfig
++++ b/kernel/module/Kconfig
+@@ -192,6 +192,11 @@ config GENDWARFKSYMS
+ 	depends on !DEBUG_INFO_REDUCED && !DEBUG_INFO_SPLIT
+ 	# Requires ELF object files.
+ 	depends on !LTO
++	# To avoid conflicts with the discarded __gendwarfksyms_ptr symbols on
++	# X86, requires pahole before commit 47dcb534e253 ("btf_encoder: Stop
++	# indexing symbols for VARs") or after commit 9810758003ce ("btf_encoder:
++	# Verify 0 address DWARF variables are in ELF section").
++	depends on !X86 || !DEBUG_INFO_BTF || PAHOLE_VERSION < 128 || PAHOLE_VERSION > 129
+ 	help
+ 	  Calculate symbol versions from DWARF debugging information using
+ 	  gendwarfksyms. Requires DEBUG_INFO to be enabled.
 -- 
 2.39.5
 
