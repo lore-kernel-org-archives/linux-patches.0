@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDAC3217679;
-	Mon, 19 May 2025 21:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75408220F30;
+	Mon, 19 May 2025 21:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747689702; cv=none; b=l3vECAhS+cICRKkcAxAWDThC9yiftjAynaMs8K2H4DDbzizDtMaJRXOQsphrQXhnhswxvJ/hM45LR//46UxAMT6AI4qkSInpjsivKPNFeNFVzkaqvWUAF9MxFQmo8maSAH0niSgsILF9xyb6US8xk/JhCGoVy3b9ZlBxuOHHzx8=
+	t=1747689704; cv=none; b=Z/iuJgKOTlH4Kmn0qOGFEAlJj/mnxL6UZFKREo1xRdCu64SpzbGJW5Vkx8vB6dEdvRguwRBh3yCFOuEF8dN4JaPClWn4Qs8ARUvy39p9+cRi0NOMCjjuxlYibsQQsbXxtAiqngWntY6WTyZGuhAcvFCzLGSZQHs57lDBEzWZMRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747689702; c=relaxed/simple;
-	bh=KYLe2AhfSV9Xk4BDZ17de7Uw/ON1XQ1IFlFIrYLsaaE=;
+	s=arc-20240116; t=1747689704; c=relaxed/simple;
+	bh=8eoPs6kGfUHklSE/0zBqDnlRCHuVPwGUq6nnsbtYVDI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=hNoGdag+grrqZ0PkwpeQc6ipmj53rZl8oP0Y9cQIinvaBDtG0KTrvo/pHe6z8nWduucT19PngazEiQ9GOymMJc03fctfutaQwrVrjDdYtZ510svKL10ywn9ekbjcN9HMmkPGYpH8QeRopDo+gQhGw3PMfPnU3ESMO09o9q52X4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mnktO4p7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GvKKGs71ZyQ3PkT8tP0CRKLq6JUU3faPIIstVuPU9KoMXKl0tiCgEpt7c33fwtkNj0cXa6L7v+A4IZE/QFFxjalM8E1g+CdkD+2sjwRCFA1UzB3Q3S84N8IVFgwdfh7IrfzMu6zcePLd5vPOuORgghsV8mCbF6sEIonWjIRQZIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HjeR1hnF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mnktO4p7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54678C4CEE9;
-	Mon, 19 May 2025 21:21:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HjeR1hnF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035E1C4CEE4;
+	Mon, 19 May 2025 21:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747689702;
-	bh=KYLe2AhfSV9Xk4BDZ17de7Uw/ON1XQ1IFlFIrYLsaaE=;
+	s=k20201202; t=1747689704;
+	bh=8eoPs6kGfUHklSE/0zBqDnlRCHuVPwGUq6nnsbtYVDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mnktO4p7jYkCLPA/j/1pJYX7XVHlzNSGhtYiTmrysDZdLnmQBkbOcZvAAfJWwZoq9
-	 4G4bXxMx6s3PoeTb+ASal3OVwJO3YG3Z6Yj2gGFsZxD8063tNoDihu3E71sSnJq7Pk
-	 VfrKm3fDHRXptAOwqSe2LwIX6exfrzNFrbP9VcH+d9YiYhU/jDGsl/ikoa6MUjlG+J
-	 lQPEJM++w1sjwWzw4qPGFLwnbHNInn1KiRBF1UQjXryiNcn6mIV/vEp4gtmbnh6m/f
-	 nMTg5QMhGcVQWNv0U34M5AMfqPc29kxDmIfBVf2pvO30uoCIX308cjKFIifyfSueSC
-	 iePWuR6cyvV9w==
+	b=HjeR1hnFebAsewwGL2PEGUKuNNRyhVyFks2g0B0VzYfWgj+h8rWlaD2K1LM1EqCOy
+	 fDZchaa9zySwf0r1+HD2pQYK41XEFx/bV0Fm6zh+b4xYVlEXHLiUrTn/72vVrkWg7l
+	 bke4+iA0cNqKAnIpvMeEhNipuozfCdyVnpHiraEm6d0yBQOA9biLUnVquwHhIv9lpw
+	 WK+S/z7JUR/nQlM80Ixrh7WNOeJ3nQ9AvZhdpbONIEd+wFh/ptsQS1uOd4+I8w/ACR
+	 YuMRueaeio7K2CDYYBY5uEwZYGFBb8pK2ISGulfTAZlO10dA4OGGDNke20gtSa1PKN
+	 CMKbDZbe8Humg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Masahiro Yamada <masahiroy@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	David Gow <davidgow@google.com>,
+Cc: Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>,
-	jdike@addtoit.com,
-	richard@nod.at,
-	anton.ivanov@cambridgegreys.com,
-	linux-um@lists.infradead.org,
+	sagi@grimberg.me,
+	linux-nvme@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 07/23] um: let 'make clean' properly clean underlying SUBARCH as well
-Date: Mon, 19 May 2025 17:21:14 -0400
-Message-Id: <20250519212131.1985647-7-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.14 08/23] nvmet: pci-epf: cleanup nvmet_pci_epf_raise_irq()
+Date: Mon, 19 May 2025 17:21:15 -0400
+Message-Id: <20250519212131.1985647-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250519212131.1985647-1-sashal@kernel.org>
 References: <20250519212131.1985647-1-sashal@kernel.org>
@@ -56,57 +53,63 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.7
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit ab09da75700e9d25c7dfbc7f7934920beb5e39b9 ]
+[ Upstream commit 4236e600bf902202214aa6277e84c4738c56f762 ]
 
-Building the kernel with O= is affected by stale in-tree build artifacts.
+There is no point in taking the controller irq_lock and calling
+nvmet_pci_epf_should_raise_irq() for a completion queue which does not
+have IRQ enabled (NVMET_PCI_EPF_Q_IRQ_ENABLED flag is not set).
+Move the test for the NVMET_PCI_EPF_Q_IRQ_ENABLED flag out of
+nvmet_pci_epf_should_raise_irq() to the top of nvmet_pci_epf_raise_irq()
+to return early when no IRQ should be raised.
 
-So, if the source tree is not clean, Kbuild displays the following:
+Also, use dev_err_ratelimited() to avoid a message storm under load when
+raising IRQs is failing.
 
-  $ make ARCH=um O=build defconfig
-  make[1]: Entering directory '/.../linux/build'
-  ***
-  *** The source tree is not clean, please run 'make ARCH=um mrproper'
-  *** in /.../linux
-  ***
-  make[2]: *** [/.../linux/Makefile:673: outputmakefile] Error 1
-  make[1]: *** [/.../linux/Makefile:248: __sub-make] Error 2
-  make[1]: Leaving directory '/.../linux/build'
-  make: *** [Makefile:248: __sub-make] Error 2
-
-Usually, running 'make mrproper' is sufficient for cleaning the source
-tree for out-of-tree builds.
-
-However, building UML generates build artifacts not only in arch/um/,
-but also in the SUBARCH directory (i.e., arch/x86/). If in-tree stale
-files remain under arch/x86/, Kbuild will reuse them instead of creating
-new ones under the specified build directory.
-
-This commit makes 'make ARCH=um clean' recurse into the SUBARCH directory.
-
-Reported-by: Shuah Khan <skhan@linuxfoundation.org>
-Closes: https://lore.kernel.org/lkml/20250502172459.14175-1-skhan@linuxfoundation.org/
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Acked-by: Johannes Berg <johannes@sipsolutions.net>
-Reviewed-by: David Gow <davidgow@google.com>
-Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/target/pci-epf.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/um/Makefile b/arch/um/Makefile
-index 1d36a613aad83..9ed792e565c91 100644
---- a/arch/um/Makefile
-+++ b/arch/um/Makefile
-@@ -154,5 +154,6 @@ MRPROPER_FILES += $(HOST_DIR)/include/generated
- archclean:
- 	@find . \( -name '*.bb' -o -name '*.bbg' -o -name '*.da' \
- 		-o -name '*.gcov' \) -type f -print | xargs rm -f
-+	$(Q)$(MAKE) -f $(srctree)/Makefile ARCH=$(HEADER_ARCH) clean
+diff --git a/drivers/nvme/target/pci-epf.c b/drivers/nvme/target/pci-epf.c
+index bc1daa9aede9d..80d857798bddd 100644
+--- a/drivers/nvme/target/pci-epf.c
++++ b/drivers/nvme/target/pci-epf.c
+@@ -596,9 +596,6 @@ static bool nvmet_pci_epf_should_raise_irq(struct nvmet_pci_epf_ctrl *ctrl,
+ 	struct nvmet_pci_epf_irq_vector *iv = cq->iv;
+ 	bool ret;
  
- export HEADER_ARCH SUBARCH USER_CFLAGS CFLAGS_NO_HARDENING DEV_NULL_PATH
+-	if (!test_bit(NVMET_PCI_EPF_Q_IRQ_ENABLED, &cq->flags))
+-		return false;
+-
+ 	/* IRQ coalescing for the admin queue is not allowed. */
+ 	if (!cq->qid)
+ 		return true;
+@@ -625,7 +622,8 @@ static void nvmet_pci_epf_raise_irq(struct nvmet_pci_epf_ctrl *ctrl,
+ 	struct pci_epf *epf = nvme_epf->epf;
+ 	int ret = 0;
+ 
+-	if (!test_bit(NVMET_PCI_EPF_Q_LIVE, &cq->flags))
++	if (!test_bit(NVMET_PCI_EPF_Q_LIVE, &cq->flags) ||
++	    !test_bit(NVMET_PCI_EPF_Q_IRQ_ENABLED, &cq->flags))
+ 		return;
+ 
+ 	mutex_lock(&ctrl->irq_lock);
+@@ -656,7 +654,9 @@ static void nvmet_pci_epf_raise_irq(struct nvmet_pci_epf_ctrl *ctrl,
+ 	}
+ 
+ 	if (ret)
+-		dev_err(ctrl->dev, "Failed to raise IRQ (err=%d)\n", ret);
++		dev_err_ratelimited(ctrl->dev,
++				    "CQ[%u]: Failed to raise IRQ (err=%d)\n",
++				    cq->qid, ret);
+ 
+ unlock:
+ 	mutex_unlock(&ctrl->irq_lock);
 -- 
 2.39.5
 
