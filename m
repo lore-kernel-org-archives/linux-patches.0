@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02B824888A;
-	Tue, 20 May 2025 14:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1262472AE;
+	Tue, 20 May 2025 14:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750131; cv=none; b=CGVeW5f48H1LXbdu0ZP2SPIH/yT4QHQO4QUfNYaG+cHuatfoQFnAFsLCzWZzk0+q0yCdYQSi1L8xEnM7KPioxhP/hUaeSxaxkVZjD9sqS0b2O5Fp7qEZyu/IG/X6d3Th0+0KaHi4MPJ1LLfV8FfEsaS1NLsgicuDsLgZhLC1SKk=
+	t=1747750134; cv=none; b=nC/k5+rSA1BAB+Z6pvGW8tT6/XYMdGqVCKkpFTlXytAS7gQ6d7VlvI+ocVV2H0afKt4P8LGUcE9t8Rah/gkm0XSH2xmC2W/ZNJYS9GzPh2q6cSBwcayFtg2MrVBTtek7C32XIHenK4mkqt45nvSx7akOMzxs2RleGC08sYm4eUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750131; c=relaxed/simple;
-	bh=TsVCdENJPdoJpDk/EecBTngIQ2X+PCx7OC20U19vP2k=;
+	s=arc-20240116; t=1747750134; c=relaxed/simple;
+	bh=aSMFghdKlqkE0OhI0y1/FYwV+au38lilB0+IExLeE54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R6CBaVzLwzS6eDV04fHgecN4I32wRcmcVnzjGFYlk0JRxtPF1uISGjQxoNiTqWhjxM48nDnnvWzsgmncMQ//eknskXJIlO/Q4/ekdjBbjoVPUklUCcBrPGMJnGUkAaOj/dSNBs6RO/4xK/G02lNIMC5oQm59vzQZ/92dRYsVc1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZF2AagZc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BFHZO6c3xXdksKMCkkjhzNpp+KlfdQVby7dVs+orcoCPwT4NUPxRuxbM9zc2/dR1MOH2f2/3R+8kDdRNVvI8vZddckr/WgKcQKbkN7qP4xzdGPznP5Z8PRBQl3kq/RxCjSXPQOuqDopqyH2TIvdbEceW72xOnytopuXfPguzlYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hNCAtjz7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZF2AagZc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AE4CC4CEE9;
-	Tue, 20 May 2025 14:08:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hNCAtjz7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EE51C4CEEA;
+	Tue, 20 May 2025 14:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750131;
-	bh=TsVCdENJPdoJpDk/EecBTngIQ2X+PCx7OC20U19vP2k=;
+	s=korg; t=1747750134;
+	bh=aSMFghdKlqkE0OhI0y1/FYwV+au38lilB0+IExLeE54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZF2AagZc9X+wxNIDsJUsm9FU2Ljqn2ao1P9hFF5YK8Yqug7X7GSY3Lx6s3HcyE1DA
-	 wP9lGx5GZZ1zDCcW0O5Dgqpj1Sz0Ma7WbWWI1lIIvGsB0uIvdS3t5VDhzDsk2dMyDZ
-	 mH3ztGSiNnvBiHupFABfaQ93VI4XfBdhrUd9B9xg=
+	b=hNCAtjz7/gaLn1z7zrMsZhE+SUtDFhjvSAV8eie6bs589boOnjafIR3keHTIt2Ht1
+	 cfbH9roR9bFCss45UhAQgoG5l84J1KgyfZ64ZZPGA3fUCBNUVyJ73aGnLH49dpdYhc
+	 OhOccfUB9qJhWPYvFhIK4gh43BQtg/PYwewjTV7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Shkolnyy <kshk@linux.ibm.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 053/143] vsock/test: Fix occasional failure in SIOCOUTQ tests
-Date: Tue, 20 May 2025 15:50:08 +0200
-Message-ID: <20250520125812.133858679@linuxfoundation.org>
+Subject: [PATCH 6.12 054/143] net/mlx5e: Disable MACsec offload for uplink representor profile
+Date: Tue, 20 May 2025 15:50:09 +0200
+Message-ID: <20250520125812.172374054@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -52,78 +55,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 7fd7ad6f36af36f30a06d165eff3780cb139fa79 ]
+[ Upstream commit 588431474eb7572e57a927fa8558c9ba2f8af143 ]
 
-These tests:
-    "SOCK_STREAM ioctl(SIOCOUTQ) 0 unsent bytes"
-    "SOCK_SEQPACKET ioctl(SIOCOUTQ) 0 unsent bytes"
-output: "Unexpected 'SIOCOUTQ' value, expected 0, got 64 (CLIENT)".
+MACsec offload is not supported in switchdev mode for uplink
+representors. When switching to the uplink representor profile, the
+MACsec offload feature must be cleared from the netdevice's features.
 
-They test that the SIOCOUTQ ioctl reports 0 unsent bytes after the data
-have been received by the other side. However, sometimes there is a delay
-in updating this "unsent bytes" counter, and the test fails even though
-the counter properly goes to 0 several milliseconds later.
+If left enabled, attempts to add offloads result in a null pointer
+dereference, as the uplink representor does not support MACsec offload
+even though the feature bit remains set.
 
-The delay occurs in the kernel because the used buffer notification
-callback virtio_vsock_tx_done(), called upon receipt of the data by the
-other side, doesn't update the counter itself. It delegates that to
-a kernel thread (via vsock->tx_work). Sometimes that thread is delayed
-more than the test expects.
+Clear NETIF_F_HW_MACSEC in mlx5e_fix_uplink_rep_features().
 
-Change the test to poll SIOCOUTQ until it returns 0 or a timeout occurs.
+Kernel log:
 
-Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Fixes: 18ee44ce97c1 ("test/vsock: add ioctl unsent bytes test")
-Link: https://patch.msgid.link/20250507151456.2577061-1-kshk@linux.ibm.com
+Oops: general protection fault, probably for non-canonical address 0xdffffc000000000f: 0000 [#1] SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000078-0x000000000000007f]
+CPU: 29 UID: 0 PID: 4714 Comm: ip Not tainted 6.14.0-rc4_for_upstream_debug_2025_03_02_17_35 #1
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+RIP: 0010:__mutex_lock+0x128/0x1dd0
+Code: d0 7c 08 84 d2 0f 85 ad 15 00 00 8b 35 91 5c fe 03 85 f6 75 29 49 8d 7e 60 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 a6 15 00 00 4d 3b 76 60 0f 85 fd 0b 00 00 65 ff
+RSP: 0018:ffff888147a4f160 EFLAGS: 00010206
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000001
+RDX: 000000000000000f RSI: 0000000000000000 RDI: 0000000000000078
+RBP: ffff888147a4f2e0 R08: ffffffffa05d2c19 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000000
+R13: dffffc0000000000 R14: 0000000000000018 R15: ffff888152de0000
+FS:  00007f855e27d800(0000) GS:ffff88881ee80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000004e5768 CR3: 000000013ae7c005 CR4: 0000000000372eb0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ ? die_addr+0x3d/0xa0
+ ? exc_general_protection+0x144/0x220
+ ? asm_exc_general_protection+0x22/0x30
+ ? mlx5e_macsec_add_secy+0xf9/0x700 [mlx5_core]
+ ? __mutex_lock+0x128/0x1dd0
+ ? lockdep_set_lock_cmp_fn+0x190/0x190
+ ? mlx5e_macsec_add_secy+0xf9/0x700 [mlx5_core]
+ ? mutex_lock_io_nested+0x1ae0/0x1ae0
+ ? lock_acquire+0x1c2/0x530
+ ? macsec_upd_offload+0x145/0x380
+ ? lockdep_hardirqs_on_prepare+0x400/0x400
+ ? kasan_save_stack+0x30/0x40
+ ? kasan_save_stack+0x20/0x40
+ ? kasan_save_track+0x10/0x30
+ ? __kasan_kmalloc+0x77/0x90
+ ? __kmalloc_noprof+0x249/0x6b0
+ ? genl_family_rcv_msg_attrs_parse.constprop.0+0xb5/0x240
+ ? mlx5e_macsec_add_secy+0xf9/0x700 [mlx5_core]
+ mlx5e_macsec_add_secy+0xf9/0x700 [mlx5_core]
+ ? mlx5e_macsec_add_rxsa+0x11a0/0x11a0 [mlx5_core]
+ macsec_update_offload+0x26c/0x820
+ ? macsec_set_mac_address+0x4b0/0x4b0
+ ? lockdep_hardirqs_on_prepare+0x284/0x400
+ ? _raw_spin_unlock_irqrestore+0x47/0x50
+ macsec_upd_offload+0x2c8/0x380
+ ? macsec_update_offload+0x820/0x820
+ ? __nla_parse+0x22/0x30
+ ? genl_family_rcv_msg_attrs_parse.constprop.0+0x15e/0x240
+ genl_family_rcv_msg_doit+0x1cc/0x2a0
+ ? genl_family_rcv_msg_attrs_parse.constprop.0+0x240/0x240
+ ? cap_capable+0xd4/0x330
+ genl_rcv_msg+0x3ea/0x670
+ ? genl_family_rcv_msg_dumpit+0x2a0/0x2a0
+ ? lockdep_set_lock_cmp_fn+0x190/0x190
+ ? macsec_update_offload+0x820/0x820
+ netlink_rcv_skb+0x12b/0x390
+ ? genl_family_rcv_msg_dumpit+0x2a0/0x2a0
+ ? netlink_ack+0xd80/0xd80
+ ? rwsem_down_read_slowpath+0xf90/0xf90
+ ? netlink_deliver_tap+0xcd/0xac0
+ ? netlink_deliver_tap+0x155/0xac0
+ ? _copy_from_iter+0x1bb/0x12c0
+ genl_rcv+0x24/0x40
+ netlink_unicast+0x440/0x700
+ ? netlink_attachskb+0x760/0x760
+ ? lock_acquire+0x1c2/0x530
+ ? __might_fault+0xbb/0x170
+ netlink_sendmsg+0x749/0xc10
+ ? netlink_unicast+0x700/0x700
+ ? __might_fault+0xbb/0x170
+ ? netlink_unicast+0x700/0x700
+ __sock_sendmsg+0xc5/0x190
+ ____sys_sendmsg+0x53f/0x760
+ ? import_iovec+0x7/0x10
+ ? kernel_sendmsg+0x30/0x30
+ ? __copy_msghdr+0x3c0/0x3c0
+ ? filter_irq_stacks+0x90/0x90
+ ? stack_depot_save_flags+0x28/0xa30
+ ___sys_sendmsg+0xeb/0x170
+ ? kasan_save_stack+0x30/0x40
+ ? copy_msghdr_from_user+0x110/0x110
+ ? do_syscall_64+0x6d/0x140
+ ? lock_acquire+0x1c2/0x530
+ ? __virt_addr_valid+0x116/0x3b0
+ ? __virt_addr_valid+0x1da/0x3b0
+ ? lock_downgrade+0x680/0x680
+ ? __delete_object+0x21/0x50
+ __sys_sendmsg+0xf7/0x180
+ ? __sys_sendmsg_sock+0x20/0x20
+ ? kmem_cache_free+0x14c/0x4e0
+ ? __x64_sys_close+0x78/0xd0
+ do_syscall_64+0x6d/0x140
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+RIP: 0033:0x7f855e113367
+Code: 0e 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b9 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 89 54 24 1c 48 89 74 24 10
+RSP: 002b:00007ffd15e90c88 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 0000000000000002 RCX: 00007f855e113367
+RDX: 0000000000000000 RSI: 00007ffd15e90cf0 RDI: 0000000000000004
+RBP: 00007ffd15e90dbc R08: 0000000000000028 R09: 000000000045d100
+R10: 00007f855e011dd8 R11: 0000000000000246 R12: 0000000000000019
+R13: 0000000067c6b785 R14: 00000000004a1e80 R15: 0000000000000000
+ </TASK>
+Modules linked in: 8021q garp mrp sch_ingress openvswitch nsh mlx5_ib mlx5_fwctl mlx5_dpll mlx5_core rpcrdma rdma_ucm ib_iser libiscsi scsi_transport_iscsi ib_umad rdma_cm ib_ipoib iw_cm ib_cm ib_uverbs ib_core xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xt_addrtype iptable_nat nf_nat br_netfilter rpcsec_gss_krb5 auth_rpcgss oid_registry overlay zram zsmalloc fuse [last unloaded: mlx5_core]
+---[ end trace 0000000000000000 ]---
+
+Fixes: 8ff0ac5be144 ("net/mlx5: Add MACsec offload Tx command support")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/1746958552-561295-1-git-send-email-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/vsock/vsock_test.c | 28 ++++++++++++++++------------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/testing/vsock/vsock_test.c b/tools/testing/vsock/vsock_test.c
-index 0b7f5bf546da5..0c22ff7a8de2a 100644
---- a/tools/testing/vsock/vsock_test.c
-+++ b/tools/testing/vsock/vsock_test.c
-@@ -1283,21 +1283,25 @@ static void test_unsent_bytes_client(const struct test_opts *opts, int type)
- 	send_buf(fd, buf, sizeof(buf), 0, sizeof(buf));
- 	control_expectln("RECEIVED");
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 1c087fa1ca269..3e9ad3cb8121d 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -4344,6 +4344,10 @@ static netdev_features_t mlx5e_fix_uplink_rep_features(struct net_device *netdev
+ 	if (netdev->features & NETIF_F_HW_VLAN_CTAG_FILTER)
+ 		netdev_warn(netdev, "Disabling HW_VLAN CTAG FILTERING, not supported in switchdev mode\n");
  
--	ret = ioctl(fd, SIOCOUTQ, &sock_bytes_unsent);
--	if (ret < 0) {
--		if (errno == EOPNOTSUPP) {
--			fprintf(stderr, "Test skipped, SIOCOUTQ not supported.\n");
--		} else {
-+	/* SIOCOUTQ isn't guaranteed to instantly track sent data. Even though
-+	 * the "RECEIVED" message means that the other side has received the
-+	 * data, there can be a delay in our kernel before updating the "unsent
-+	 * bytes" counter. Repeat SIOCOUTQ until it returns 0.
-+	 */
-+	timeout_begin(TIMEOUT);
-+	do {
-+		ret = ioctl(fd, SIOCOUTQ, &sock_bytes_unsent);
-+		if (ret < 0) {
-+			if (errno == EOPNOTSUPP) {
-+				fprintf(stderr, "Test skipped, SIOCOUTQ not supported.\n");
-+				break;
-+			}
- 			perror("ioctl");
- 			exit(EXIT_FAILURE);
- 		}
--	} else if (ret == 0 && sock_bytes_unsent != 0) {
--		fprintf(stderr,
--			"Unexpected 'SIOCOUTQ' value, expected 0, got %i\n",
--			sock_bytes_unsent);
--		exit(EXIT_FAILURE);
--	}
--
-+		timeout_check("SIOCOUTQ");
-+	} while (sock_bytes_unsent != 0);
-+	timeout_end();
- 	close(fd);
++	features &= ~NETIF_F_HW_MACSEC;
++	if (netdev->features & NETIF_F_HW_MACSEC)
++		netdev_warn(netdev, "Disabling HW MACsec offload, not supported in switchdev mode\n");
++
+ 	return features;
  }
  
 -- 
