@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA940242D73;
-	Tue, 20 May 2025 14:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DAA242D73;
+	Tue, 20 May 2025 14:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750497; cv=none; b=X7RSZNaotaEz9Mx/gsgcRuoTV0oFZEYClnirArA64IvczeqTTpgLsUReJm3iw8ag9617+59M5lTVHY5WQ9Sicj70ZlBIQI10X3h+Tn8hEwNQn3KM/h9AwdCQaj4ah/SyAOaF9UjzxK780rmKr/ENr30Zh/dCplgTJlOYkfL5s0s=
+	t=1747750501; cv=none; b=mI00pm3onDId7rUTdniyKXb5KcpM6gTcfr7ZNm+0akEfX4osxg42cu/phVuXM5VMegCUxuOBhybkmb41J1MgJmophV7kmoviVt2Wt0nK7JoGzqsD/hFRzWCXCkeL3A/Zq4g3m8SGNA3F+VwkrreWxAv1JFh+aPJ2tNMFOeUCtX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750497; c=relaxed/simple;
-	bh=VjlLOxbFDBu3i+tcmVDOdfZaKjx8fZaGOYiwPV9D0sA=;
+	s=arc-20240116; t=1747750501; c=relaxed/simple;
+	bh=wif6lSBP6qvGIoBTfFp1Cl7oKKuOIUfJTOcmcE/A7hc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rrQlbdX3PxzIkePp/t7oT9PsnuiVyEdRl734fHtjc4lJtxo24vYva/b84sMzgp6+nFcjiYWscQ7Zrxu2JTjokMC/KWe90f3eiOZFaIpeCEC5kCjvDCuvha03CaKM1UL8RhqLN19b+r+X3pfxQYssMQN14Es/EsziEN4Hy74hYcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szpmkqHX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RkWEMpYI/CTD18f+DCVZuc0qVqUFCTIW76pAkPUeKIoiAxtPCI9ewWBCK4yUdRog9PTOjRFlHujnBmEWlXbW1BxoudOEhMSgd6dLHy3yfYEEk1YtBQIghNQDsSugcVEoyFsY/HZqUddHRoaDSd4ZvJexE/5JAfkgN3fwST6EZBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szlpVEdU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szpmkqHX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45630C4CEE9;
-	Tue, 20 May 2025 14:14:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szlpVEdU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F63C4CEE9;
+	Tue, 20 May 2025 14:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750497;
-	bh=VjlLOxbFDBu3i+tcmVDOdfZaKjx8fZaGOYiwPV9D0sA=;
+	s=korg; t=1747750501;
+	bh=wif6lSBP6qvGIoBTfFp1Cl7oKKuOIUfJTOcmcE/A7hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=szpmkqHXpmDnqXgzUptLMT5cJEFCn+ZgDuXV/hNRC4gH0ET3T1G9E8VA0ssRc3aIg
-	 YwsgzhAGWYFhLegm/Le1hIpryrDkGCy6F3N7TSJPxyL3ts42fBT6p01TO0zM63ETff
-	 r4y7bO6SVjtkM9Ke+3GfjzPDRIGwnJeOsrdJhROY=
+	b=szlpVEdUnwqeHAaolinmr9tgKd88JtAO7CdR4ymw9K0wHJH3Oh+rU8myHbK1Tfmz3
+	 biRoFijuYdCYrLhQ0uw+E0DIQyevt6GZQVyFFug+3bSt85CmM7xi5hffZO8+eu5qNM
+	 MSFI42iW46BYRlMC3yRzZ2LqJ82y+aFFui8CDXP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will <willsroot@protonmail.com>,
-	Savy <savy@syst3mfailure.io>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 028/145] net_sched: Flush gso_skb list too during ->change()
-Date: Tue, 20 May 2025 15:49:58 +0200
-Message-ID: <20250520125811.662538697@linuxfoundation.org>
+Subject: [PATCH 6.14 011/145] platform/x86: asus-wmi: Fix wlan_ctrl_by_user detection
+Date: Tue, 20 May 2025 15:49:41 +0200
+Message-ID: <20250520125810.988813961@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -47,151 +46,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cong Wang <xiyou.wangcong@gmail.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 2d3cbfd6d54a2c39ce3244f33f85c595844bd7b8 ]
+[ Upstream commit bfcfe6d335a967f8ea0c1980960e6f0205b5de6e ]
 
-Previously, when reducing a qdisc's limit via the ->change() operation, only
-the main skb queue was trimmed, potentially leaving packets in the gso_skb
-list. This could result in NULL pointer dereference when we only check
-sch->limit against sch->q.qlen.
+The wlan_ctrl_by_user detection was introduced by commit a50bd128f28c
+("asus-wmi: record wlan status while controlled by userapp").
 
-This patch introduces a new helper, qdisc_dequeue_internal(), which ensures
-both the gso_skb list and the main queue are properly flushed when trimming
-excess packets. All relevant qdiscs (codel, fq, fq_codel, fq_pie, hhf, pie)
-are updated to use this helper in their ->change() routines.
+Quoting from that commit's commit message:
 
-Fixes: 76e3cc126bb2 ("codel: Controlled Delay AQM")
-Fixes: 4b549a2ef4be ("fq_codel: Fair Queue Codel AQM")
-Fixes: afe4fd062416 ("pkt_sched: fq: Fair Queue packet scheduler")
-Fixes: ec97ecf1ebe4 ("net: sched: add Flow Queue PIE packet scheduler")
-Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
-Fixes: d4b36210c2e6 ("net: pkt_sched: PIE AQM scheme")
-Reported-by: Will <willsroot@protonmail.com>
-Reported-by: Savy <savy@syst3mfailure.io>
-Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+"""
+When you call WMIMethod(DSTS, 0x00010011) to get WLAN status, it may return
+
+(1) 0x00050001 (On)
+(2) 0x00050000 (Off)
+(3) 0x00030001 (On)
+(4) 0x00030000 (Off)
+(5) 0x00000002 (Unknown)
+
+(1), (2) means that the model has hardware GPIO for WLAN, you can call
+WMIMethod(DEVS, 0x00010011, 1 or 0) to turn WLAN on/off.
+(3), (4) means that the model doesn’t have hardware GPIO, you need to use
+API or driver library to turn WLAN on/off, and call
+WMIMethod(DEVS, 0x00010012, 1 or 0) to set WLAN LED status.
+After you set WLAN LED status, you can see the WLAN status is changed with
+WMIMethod(DSTS, 0x00010011). Because the status is recorded lastly
+(ex: Windows), you can use it for synchronization.
+(5) means that the model doesn’t have WLAN device.
+
+WLAN is the ONLY special case with upper rule.
+"""
+
+The wlan_ctrl_by_user flag should be set on 0x0003000? ((3), (4) above)
+return values, but the flag mistakenly also gets set on laptops with
+0x0005000? ((1), (2)) return values. This is causing rfkill problems on
+laptops where 0x0005000? is returned.
+
+Fix the check to only set the wlan_ctrl_by_user flag for 0x0003000?
+return values.
+
+Fixes: a50bd128f28c ("asus-wmi: record wlan status while controlled by userapp")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219786
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20250501131702.103360-2-hdegoede@redhat.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sch_generic.h | 15 +++++++++++++++
- net/sched/sch_codel.c     |  2 +-
- net/sched/sch_fq.c        |  2 +-
- net/sched/sch_fq_codel.c  |  2 +-
- net/sched/sch_fq_pie.c    |  2 +-
- net/sched/sch_hhf.c       |  2 +-
- net/sched/sch_pie.c       |  2 +-
- 7 files changed, 21 insertions(+), 6 deletions(-)
+ drivers/platform/x86/asus-wmi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index d48c657191cd0..1c05fed05f2bc 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -1031,6 +1031,21 @@ static inline struct sk_buff *__qdisc_dequeue_head(struct qdisc_skb_head *qh)
- 	return skb;
- }
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index 38ef778e8c19b..f66d152e265da 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -4777,7 +4777,8 @@ static int asus_wmi_add(struct platform_device *pdev)
+ 		goto fail_leds;
  
-+static inline struct sk_buff *qdisc_dequeue_internal(struct Qdisc *sch, bool direct)
-+{
-+	struct sk_buff *skb;
-+
-+	skb = __skb_dequeue(&sch->gso_skb);
-+	if (skb) {
-+		sch->q.qlen--;
-+		return skb;
-+	}
-+	if (direct)
-+		return __qdisc_dequeue_head(&sch->q);
-+	else
-+		return sch->dequeue(sch);
-+}
-+
- static inline struct sk_buff *qdisc_dequeue_head(struct Qdisc *sch)
- {
- 	struct sk_buff *skb = __qdisc_dequeue_head(&sch->q);
-diff --git a/net/sched/sch_codel.c b/net/sched/sch_codel.c
-index 12dd71139da39..c93761040c6e7 100644
---- a/net/sched/sch_codel.c
-+++ b/net/sched/sch_codel.c
-@@ -144,7 +144,7 @@ static int codel_change(struct Qdisc *sch, struct nlattr *opt,
+ 	asus_wmi_get_devstate(asus, ASUS_WMI_DEVID_WLAN, &result);
+-	if (result & (ASUS_WMI_DSTS_PRESENCE_BIT | ASUS_WMI_DSTS_USER_BIT))
++	if ((result & (ASUS_WMI_DSTS_PRESENCE_BIT | ASUS_WMI_DSTS_USER_BIT)) ==
++	    (ASUS_WMI_DSTS_PRESENCE_BIT | ASUS_WMI_DSTS_USER_BIT))
+ 		asus->driver->wlan_ctrl_by_user = 1;
  
- 	qlen = sch->q.qlen;
- 	while (sch->q.qlen > sch->limit) {
--		struct sk_buff *skb = __qdisc_dequeue_head(&sch->q);
-+		struct sk_buff *skb = qdisc_dequeue_internal(sch, true);
- 
- 		dropped += qdisc_pkt_len(skb);
- 		qdisc_qstats_backlog_dec(sch, skb);
-diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
-index 2ca5332cfcc5c..902ff54706072 100644
---- a/net/sched/sch_fq.c
-+++ b/net/sched/sch_fq.c
-@@ -1136,7 +1136,7 @@ static int fq_change(struct Qdisc *sch, struct nlattr *opt,
- 		sch_tree_lock(sch);
- 	}
- 	while (sch->q.qlen > sch->limit) {
--		struct sk_buff *skb = fq_dequeue(sch);
-+		struct sk_buff *skb = qdisc_dequeue_internal(sch, false);
- 
- 		if (!skb)
- 			break;
-diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
-index 6c9029f71e88d..2a0f3a513bfaa 100644
---- a/net/sched/sch_fq_codel.c
-+++ b/net/sched/sch_fq_codel.c
-@@ -441,7 +441,7 @@ static int fq_codel_change(struct Qdisc *sch, struct nlattr *opt,
- 
- 	while (sch->q.qlen > sch->limit ||
- 	       q->memory_usage > q->memory_limit) {
--		struct sk_buff *skb = fq_codel_dequeue(sch);
-+		struct sk_buff *skb = qdisc_dequeue_internal(sch, false);
- 
- 		q->cstats.drop_len += qdisc_pkt_len(skb);
- 		rtnl_kfree_skbs(skb, skb);
-diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
-index 93c36afbf5762..67f437c170582 100644
---- a/net/sched/sch_fq_pie.c
-+++ b/net/sched/sch_fq_pie.c
-@@ -366,7 +366,7 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
- 
- 	/* Drop excess packets if new limit is lower */
- 	while (sch->q.qlen > sch->limit) {
--		struct sk_buff *skb = fq_pie_qdisc_dequeue(sch);
-+		struct sk_buff *skb = qdisc_dequeue_internal(sch, false);
- 
- 		len_dropped += qdisc_pkt_len(skb);
- 		num_dropped += 1;
-diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
-index 44d9efe1a96a8..5aa434b467073 100644
---- a/net/sched/sch_hhf.c
-+++ b/net/sched/sch_hhf.c
-@@ -564,7 +564,7 @@ static int hhf_change(struct Qdisc *sch, struct nlattr *opt,
- 	qlen = sch->q.qlen;
- 	prev_backlog = sch->qstats.backlog;
- 	while (sch->q.qlen > sch->limit) {
--		struct sk_buff *skb = hhf_dequeue(sch);
-+		struct sk_buff *skb = qdisc_dequeue_internal(sch, false);
- 
- 		rtnl_kfree_skbs(skb, skb);
- 	}
-diff --git a/net/sched/sch_pie.c b/net/sched/sch_pie.c
-index bb1fa9aa530b2..97f71b6dbf5b5 100644
---- a/net/sched/sch_pie.c
-+++ b/net/sched/sch_pie.c
-@@ -195,7 +195,7 @@ static int pie_change(struct Qdisc *sch, struct nlattr *opt,
- 	/* Drop excess packets if new limit is lower */
- 	qlen = sch->q.qlen;
- 	while (sch->q.qlen > sch->limit) {
--		struct sk_buff *skb = __qdisc_dequeue_head(&sch->q);
-+		struct sk_buff *skb = qdisc_dequeue_internal(sch, true);
- 
- 		dropped += qdisc_pkt_len(skb);
- 		qdisc_qstats_backlog_dec(sch, skb);
+ 	if (!(asus->driver->wlan_ctrl_by_user && ashs_present())) {
 -- 
 2.39.5
 
