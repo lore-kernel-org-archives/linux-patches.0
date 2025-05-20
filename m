@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947B0247289;
-	Tue, 20 May 2025 14:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974A62459ED;
+	Tue, 20 May 2025 14:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749720; cv=none; b=MyKrF7KScbc4PZp+2UQyq2A5+SKNSBWHP5GAK44eCzHA5GEWP/A5BQThSJgx72UIX66XybGVcZYyM9ldqVjcjZaCL1Bfdmw3BivVKCfIce5hy7tbAii5yR3v0Jie9GnG7D8gN/EK4EsW/cKU+7Y3srWppMTnO2KNcR98uxXV80w=
+	t=1747749723; cv=none; b=dnCpeJQqizLxn8YjBPvljb/S4NQiKpTE7RY+dpz2xH3tnlg0EhWCTIyV0/G7DdEbElXXyMQJHBNJhQ1YvsNVhr2YPkc+I9Cli7B8OqC9P1OBrDi2cf8o6bTLR5BiqliUEtNHlBR4SHU8McWgzSw1Avf9K+rhw9kaVpOHX+yf1kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749720; c=relaxed/simple;
-	bh=Ed4FtVhTZ1yWuQn1nS37wJWt6NcFbIWF/KSHJGP7srI=;
+	s=arc-20240116; t=1747749723; c=relaxed/simple;
+	bh=W6IUm+FRbrQYOImJ1m1bJihZb/0kOkgVznkiy97f0B4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jtbudu7nfgCstSOEfVG/blIX90Qz2Ud0ic9i/sp5z5HcKr7mbw8a/H8AQ+Sgyj/3D2qvuSWyx6Yqy1Uk0hO7mqEmBwI95qOHkdEU3sQI+uvuavFSbOtVoC5NEoH7fDznlio8vFiCCJ7zSacVKEQu/D4f4U0IfPhqB+S/tcNTAds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xaJLKCD6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lCLTqOZqwgtPusn9dBC+xzryRy7tQjo1FY7eHH18FoGBStAKiwcUiK6TexPcyuMkj+7hxBzW0eOWfso2uFz1vT/3WINLMDrovgCBnI3csgTKmEHsCu4u8BBYJB1cL12CkXYdNQrFeUb1y4i1v6Si9SaalqqKbcOQY0SZSzb4NKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTNpoUlQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xaJLKCD6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA18C4CEEB;
-	Tue, 20 May 2025 14:01:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTNpoUlQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F894C4CEEF;
+	Tue, 20 May 2025 14:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749720;
-	bh=Ed4FtVhTZ1yWuQn1nS37wJWt6NcFbIWF/KSHJGP7srI=;
+	s=korg; t=1747749723;
+	bh=W6IUm+FRbrQYOImJ1m1bJihZb/0kOkgVznkiy97f0B4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xaJLKCD6qSrevjpuCgmE3SE8ntcnLm7271PT7CgsYzECoDlVD0o9gGKa1wfUTywgu
-	 XeT3iJaO+LGx2oQoa9g2MCoEmRtoNcH+FiiT0sZsZgWo1ho1In35XZAvFEqwX8YTJb
-	 h8l8t/bvRrH25F8D669COKmtSi5qygcbi8ADrM+4=
+	b=RTNpoUlQ6b2oSlV3Z5vHaBP+4HereoSVfH8nZjViUrUxiu15ZTokuYwb+AL4qVjRZ
+	 Xuz5jepiTJcFQeYqRN/rRcWP56qoIsONHMzNa1TQ5dZMAunbvqdXvzQzr9s0LKh+kY
+	 04b0Z5Nla4wSklaQg+k4tRkkwIsAVsLHpHbVPoLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
+	Eric Dumazet <edumazet@google.com>,
+	Matt Johnston <matt@codeconstruct.com.au>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 038/117] tools/net/ynl: ethtool: fix crash when Hardware Clock info is missing
-Date: Tue, 20 May 2025 15:50:03 +0200
-Message-ID: <20250520125805.502145014@linuxfoundation.org>
+Subject: [PATCH 6.6 039/117] mctp: no longer rely on net->dev_index_head[]
+Date: Tue, 20 May 2025 15:50:04 +0200
+Message-ID: <20250520125805.540508961@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -52,69 +54,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 45375814eb3f4245956c0c85092a4eee4441d167 ]
+[ Upstream commit 2d20773aec14996b6cc4db92d885028319be683d ]
 
-Fix a crash in the ethtool YNL implementation when Hardware Clock information
-is not present in the response. This ensures graceful handling of devices or
-drivers that do not provide this optional field. e.g.
+mctp_dump_addrinfo() is one of the last users of
+net->dev_index_head[] in the control path.
 
-  Traceback (most recent call last):
-    File "/net/tools/net/ynl/pyynl/./ethtool.py", line 438, in <module>
-      main()
-      ~~~~^^
-    File "/net/tools/net/ynl/pyynl/./ethtool.py", line 341, in main
-      print(f'PTP Hardware Clock: {tsinfo["phc-index"]}')
-                                   ~~~~~~^^^^^^^^^^^^^
-  KeyError: 'phc-index'
+Switch to for_each_netdev_dump() for better scalability.
 
-Fixes: f3d07b02b2b8 ("tools: ynl: ethtool testing tool")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20250508035414.82974-1-liuhangbin@gmail.com
+Use C99 for mctp_device_rtnl_msg_handlers[] to prepare
+future RTNL removal from mctp_dump_addrinfo()
+
+(mdev->addrs is not yet RCU protected)
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Matt Johnston <matt@codeconstruct.com.au>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Link: https://patch.msgid.link/20241206223811.1343076-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: f11cf946c0a9 ("net: mctp: Don't access ifa_index when missing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/net/ynl/ethtool.py | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ net/mctp/device.c | 50 ++++++++++++++++++-----------------------------
+ 1 file changed, 19 insertions(+), 31 deletions(-)
 
-diff --git a/tools/net/ynl/ethtool.py b/tools/net/ynl/ethtool.py
-index 47264ae20036b..ffd8eb6d19048 100755
---- a/tools/net/ynl/ethtool.py
-+++ b/tools/net/ynl/ethtool.py
-@@ -333,16 +333,24 @@ def main():
-         print('Capabilities:')
-         [print(f'\t{v}') for v in bits_to_dict(tsinfo['timestamping'])]
+diff --git a/net/mctp/device.c b/net/mctp/device.c
+index 85cc5f31f1e7c..cdb18da96c4bc 100644
+--- a/net/mctp/device.c
++++ b/net/mctp/device.c
+@@ -20,8 +20,7 @@
+ #include <net/sock.h>
  
--        print(f'PTP Hardware Clock: {tsinfo["phc-index"]}')
-+        print(f'PTP Hardware Clock: {tsinfo.get("phc-index", "none")}')
+ struct mctp_dump_cb {
+-	int h;
+-	int idx;
++	unsigned long ifindex;
+ 	size_t a_idx;
+ };
  
--        print('Hardware Transmit Timestamp Modes:')
--        [print(f'\t{v}') for v in bits_to_dict(tsinfo['tx-types'])]
-+        if 'tx-types' in tsinfo:
-+            print('Hardware Transmit Timestamp Modes:')
-+            [print(f'\t{v}') for v in bits_to_dict(tsinfo['tx-types'])]
-+        else:
-+            print('Hardware Transmit Timestamp Modes: none')
-+
-+        if 'rx-filters' in tsinfo:
-+            print('Hardware Receive Filter Modes:')
-+            [print(f'\t{v}') for v in bits_to_dict(tsinfo['rx-filters'])]
-+        else:
-+            print('Hardware Receive Filter Modes: none')
+@@ -115,43 +114,29 @@ static int mctp_dump_addrinfo(struct sk_buff *skb, struct netlink_callback *cb)
+ {
+ 	struct mctp_dump_cb *mcb = (void *)cb->ctx;
+ 	struct net *net = sock_net(skb->sk);
+-	struct hlist_head *head;
+ 	struct net_device *dev;
+ 	struct ifaddrmsg *hdr;
+ 	struct mctp_dev *mdev;
+-	int ifindex;
+-	int idx = 0, rc;
++	int ifindex, rc;
  
--        print('Hardware Receive Filter Modes:')
--        [print(f'\t{v}') for v in bits_to_dict(tsinfo['rx-filters'])]
-+        if 'stats' in tsinfo and tsinfo['stats']:
-+            print('Statistics:')
-+            [print(f'\t{k}: {v}') for k, v in tsinfo['stats'].items()]
+ 	hdr = nlmsg_data(cb->nlh);
+ 	// filter by ifindex if requested
+ 	ifindex = hdr->ifa_index;
  
--        print('Statistics:')
--        [print(f'\t{k}: {v}') for k, v in tsinfo['stats'].items()]
-         return
+ 	rcu_read_lock();
+-	for (; mcb->h < NETDEV_HASHENTRIES; mcb->h++, mcb->idx = 0) {
+-		idx = 0;
+-		head = &net->dev_index_head[mcb->h];
+-		hlist_for_each_entry_rcu(dev, head, index_hlist) {
+-			if (idx >= mcb->idx &&
+-			    (ifindex == 0 || ifindex == dev->ifindex)) {
+-				mdev = __mctp_dev_get(dev);
+-				if (mdev) {
+-					rc = mctp_dump_dev_addrinfo(mdev,
+-								    skb, cb);
+-					mctp_dev_put(mdev);
+-					// Error indicates full buffer, this
+-					// callback will get retried.
+-					if (rc < 0)
+-						goto out;
+-				}
+-			}
+-			idx++;
+-			// reset for next iteration
+-			mcb->a_idx = 0;
+-		}
++	for_each_netdev_dump(net, dev, mcb->ifindex) {
++		if (ifindex && ifindex != dev->ifindex)
++			continue;
++		mdev = __mctp_dev_get(dev);
++		if (!mdev)
++			continue;
++		rc = mctp_dump_dev_addrinfo(mdev, skb, cb);
++		mctp_dev_put(mdev);
++		if (rc < 0)
++			break;
++		mcb->a_idx = 0;
+ 	}
+-out:
+ 	rcu_read_unlock();
+-	mcb->idx = idx;
  
-     print(f'Settings for {args.device}:')
+ 	return skb->len;
+ }
+@@ -525,9 +510,12 @@ static struct notifier_block mctp_dev_nb = {
+ };
+ 
+ static const struct rtnl_msg_handler mctp_device_rtnl_msg_handlers[] = {
+-	{THIS_MODULE, PF_MCTP, RTM_NEWADDR, mctp_rtm_newaddr, NULL, 0},
+-	{THIS_MODULE, PF_MCTP, RTM_DELADDR, mctp_rtm_deladdr, NULL, 0},
+-	{THIS_MODULE, PF_MCTP, RTM_GETADDR, NULL, mctp_dump_addrinfo, 0},
++	{.owner = THIS_MODULE, .protocol = PF_MCTP, .msgtype = RTM_NEWADDR,
++	 .doit = mctp_rtm_newaddr},
++	{.owner = THIS_MODULE, .protocol = PF_MCTP, .msgtype = RTM_DELADDR,
++	 .doit = mctp_rtm_deladdr},
++	{.owner = THIS_MODULE, .protocol = PF_MCTP, .msgtype = RTM_GETADDR,
++	 .dumpit = mctp_dump_addrinfo},
+ };
+ 
+ int __init mctp_device_init(void)
 -- 
 2.39.5
 
