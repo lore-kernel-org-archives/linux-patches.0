@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D31522C325;
-	Tue, 20 May 2025 13:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F3A1922ED;
+	Tue, 20 May 2025 13:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749352; cv=none; b=ZDoi16EqcIxSJ65FPoEa34f7IhbvJrp6OKjUKTCxY/hlP0bKOHaXPpQtLbGvAL3oR7sGXpPWztkuIGFcNfHhmqmdwRBowi4msHK+jST1Cg/pAhOe2tpEctBLvnlHJSsbw58X88VMLiIlCPQkC8FWOgkr2j5cchbMke5nmNwNyso=
+	t=1747749355; cv=none; b=AdO1+vb5esDfk6ZfB39lDd1viu0+L8UH9okT2uu/Q5h3gPhfyC8KglBUWpC1fll50x2t/bRUYpVeO+91BKpFEVdyxtjYOLuipFvybwvJOEquvn6+5hyxbqCiTN+1BYC2z0G4p/PRFY/KmIQ37li6nFVTKkrI1EKnewnkoTW9XbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749352; c=relaxed/simple;
-	bh=iKv360UFb1pn7vWuNJDCbvFhTVOqmO1oZ1eX2Sy6qLA=;
+	s=arc-20240116; t=1747749355; c=relaxed/simple;
+	bh=VlZz0VebZCjMzf1JedDiaDjpFwBfHS+GF1ZZwSDJL1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W828JhwNhT3+ZRV8d6mRMlhfOdNYq/6T/5/Rvj73Al4c8vhOMYeLgtIxqpP6vFWHvBGZxLLqf7pM3QM78hu6PlJfilefMARswmUd0t2yBuxX7C16r/dGsHDwRBNiF54fdL4r9ROEcL+JDa86jydwar5MweinZ52Dcd3r1GY/o5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAIP2IsR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q9mUkNCBRltrm5dIjbWiZDAXeolxOfE1YOo8ACOppSCFLfSA3W7H7l4cDAUmb0XvQf7KvYFs9RoKpoDl0R0gN1VpSOcc4ZvPT/vPtp2AgLLmVKaIct8Zm0SqFgsh+cSli0dls/3syR9WDle7sMbxc4u/V5jYZ+iNSJT+u9pnI68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aH4ykDqu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAIP2IsR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97146C4CEE9;
-	Tue, 20 May 2025 13:55:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aH4ykDqu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1090C4CEE9;
+	Tue, 20 May 2025 13:55:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749352;
-	bh=iKv360UFb1pn7vWuNJDCbvFhTVOqmO1oZ1eX2Sy6qLA=;
+	s=korg; t=1747749355;
+	bh=VlZz0VebZCjMzf1JedDiaDjpFwBfHS+GF1ZZwSDJL1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OAIP2IsRjLLFl05H9d91L5+JmM6GuHhMEQyJVvtk7Hx5pSs3SX9K+6hzHwctV0G+S
-	 o86dkdKxdFo3y5hsqw+IKXhrY9NbfRI0wWbIVgZ5WTXagKq47NeWsJOngRFriuR7PO
-	 CBUbRq9uZpHI5HnxmcRDIfm8/3wdWTiW7vDYCWi4=
+	b=aH4ykDquDcGMAEKpyHGEbaN1Bk7rHOBgVwlT2I923MWOji1Uwdn6O8GKyqrKhH6qb
+	 2KGCJhEA6DWf2pD9a+KSESQRVYhRHK4k9hDLPZ3V1h5zEhLDhcDTszzNg4m3XVaou8
+	 Xo0cwQ1MWWkQZF+ZPP7tWcIXoNTLLCH+JMCpqHRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 17/97] drm/amd: Add Suspend/Hibernate notification callback support
-Date: Tue, 20 May 2025 15:49:42 +0200
-Message-ID: <20250520125801.342954780@linuxfoundation.org>
+Subject: [PATCH 6.1 18/97] Revert "drm/amd: Stop evicting resources on APUs in suspend"
+Date: Tue, 20 May 2025 15:49:43 +0200
+Message-ID: <20250520125801.384590366@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -52,147 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 2965e6355dcdf157b5fafa25a2715f00064da8bf ]
+[ Upstream commit d0ce1aaa8531a4a4707711cab5721374751c51b0 ]
 
-As part of the suspend sequence VRAM needs to be evicted on dGPUs.
-In order to make suspend/resume more reliable we moved this into
-the pmops prepare() callback so that the suspend sequence would fail
-but the system could remain operational under high memory usage suspend.
+This reverts commit 3a9626c816db901def438dc2513622e281186d39.
 
-Another class of issues exist though where due to memory fragementation
-there isn't a large enough contiguous space and swap isn't accessible.
+This breaks S4 because we end up setting the s3/s0ix flags
+even when we are entering s4 since prepare is used by both
+flows.  The causes both the S3/s0ix and s4 flags to be set
+which breaks several checks in the driver which assume they
+are mutually exclusive.
 
-Add support for a suspend/hibernate notification callback that could
-evict VRAM before tasks are frozen. This should allow paging out to swap
-if necessary.
-
-Link: https://github.com/ROCm/ROCK-Kernel-Driver/issues/174
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/3476
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2362
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3781
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Link: https://lore.kernel.org/r/20241128032656.2090059-2-superm1@kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3634
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: d0ce1aaa8531 ("Revert "drm/amd: Stop evicting resources on APUs in suspend"")
+(cherry picked from commit ce8f7d95899c2869b47ea6ce0b3e5bf304b2fff4)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu.h        |  1 +
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 46 +++++++++++++++++++++-
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c    |  1 -
- 3 files changed, 46 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h        |  2 --
+ drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c   | 18 ------------------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 11 ++---------
+ 3 files changed, 2 insertions(+), 29 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu.h b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-index 705703bab2fdd..019a83c7170d4 100644
+index 019a83c7170d4..af86402c70a9f 100644
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-@@ -781,6 +781,7 @@ struct amdgpu_device {
- 	bool				need_swiotlb;
- 	bool				accel_working;
- 	struct notifier_block		acpi_nb;
-+	struct notifier_block		pm_nb;
- 	struct amdgpu_i2c_chan		*i2c_bus[AMDGPU_MAX_I2C_BUS];
- 	struct debugfs_blob_wrapper     debugfs_vbios_blob;
- 	struct debugfs_blob_wrapper     debugfs_discovery_blob;
+@@ -1409,11 +1409,9 @@ static inline int amdgpu_acpi_smart_shift_update(struct drm_device *dev,
+ #if defined(CONFIG_ACPI) && defined(CONFIG_SUSPEND)
+ bool amdgpu_acpi_is_s3_active(struct amdgpu_device *adev);
+ bool amdgpu_acpi_is_s0ix_active(struct amdgpu_device *adev);
+-void amdgpu_choose_low_power_state(struct amdgpu_device *adev);
+ #else
+ static inline bool amdgpu_acpi_is_s0ix_active(struct amdgpu_device *adev) { return false; }
+ static inline bool amdgpu_acpi_is_s3_active(struct amdgpu_device *adev) { return false; }
+-static inline void amdgpu_choose_low_power_state(struct amdgpu_device *adev) { }
+ #endif
+ 
+ #if defined(CONFIG_DRM_AMD_DC)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
+index 46916680f044b..5fa7f6d8aa309 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
+@@ -1118,22 +1118,4 @@ bool amdgpu_acpi_is_s0ix_active(struct amdgpu_device *adev)
+ #endif /* CONFIG_AMD_PMC */
+ }
+ 
+-/**
+- * amdgpu_choose_low_power_state
+- *
+- * @adev: amdgpu_device_pointer
+- *
+- * Choose the target low power state for the GPU
+- */
+-void amdgpu_choose_low_power_state(struct amdgpu_device *adev)
+-{
+-	if (adev->in_runpm)
+-		return;
+-
+-	if (amdgpu_acpi_is_s0ix_active(adev))
+-		adev->in_s0ix = true;
+-	else if (amdgpu_acpi_is_s3_active(adev))
+-		adev->in_s3 = true;
+-}
+-
+ #endif /* CONFIG_SUSPEND */
 diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index aac0e49f77c7f..32c571e9288ae 100644
+index 32c571e9288ae..57a7f72f366f7 100644
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -140,6 +140,8 @@ const char *amdgpu_asic_name[] = {
- };
+@@ -4241,15 +4241,13 @@ int amdgpu_device_prepare(struct drm_device *dev)
+ 	struct amdgpu_device *adev = drm_to_adev(dev);
+ 	int i, r;
  
- static inline void amdgpu_device_stop_pending_resets(struct amdgpu_device *adev);
-+static int amdgpu_device_pm_notifier(struct notifier_block *nb, unsigned long mode,
-+				     void *data);
+-	amdgpu_choose_low_power_state(adev);
+-
+ 	if (dev->switch_power_state == DRM_SWITCH_POWER_OFF)
+ 		return 0;
  
- /**
-  * DOC: pcie_replay_count
-@@ -3992,6 +3994,11 @@ int amdgpu_device_init(struct amdgpu_device *adev,
- 
- 	amdgpu_device_check_iommu_direct_map(adev);
- 
-+	adev->pm_nb.notifier_call = amdgpu_device_pm_notifier;
-+	r = register_pm_notifier(&adev->pm_nb);
-+	if (r)
-+		goto failed;
-+
- 	return 0;
- 
- release_ras_con:
-@@ -4053,6 +4060,8 @@ void amdgpu_device_fini_hw(struct amdgpu_device *adev)
- 	flush_delayed_work(&adev->delayed_init_work);
- 	adev->shutdown = true;
- 
-+	unregister_pm_notifier(&adev->pm_nb);
-+
- 	/* make sure IB test finished before entering exclusive mode
- 	 * to avoid preemption on IB test
- 	 * */
-@@ -4183,6 +4192,41 @@ static int amdgpu_device_evict_resources(struct amdgpu_device *adev)
- /*
-  * Suspend & resume.
-  */
-+/**
-+ * amdgpu_device_pm_notifier - Notification block for Suspend/Hibernate events
-+ * @nb: notifier block
-+ * @mode: suspend mode
-+ * @data: data
-+ *
-+ * This function is called when the system is about to suspend or hibernate.
-+ * It is used to evict resources from the device before the system goes to
-+ * sleep while there is still access to swap.
-+ */
-+static int amdgpu_device_pm_notifier(struct notifier_block *nb, unsigned long mode,
-+				     void *data)
-+{
-+	struct amdgpu_device *adev = container_of(nb, struct amdgpu_device, pm_nb);
-+	int r;
-+
-+	switch (mode) {
-+	case PM_HIBERNATION_PREPARE:
-+		adev->in_s4 = true;
-+		fallthrough;
-+	case PM_SUSPEND_PREPARE:
-+		r = amdgpu_device_evict_resources(adev);
-+		/*
-+		 * This is considered non-fatal at this time because
-+		 * amdgpu_device_prepare() will also fatally evict resources.
-+		 * See https://gitlab.freedesktop.org/drm/amd/-/issues/3781
-+		 */
-+		if (r)
-+			drm_warn(adev_to_drm(adev), "Failed to evict resources, freeze active processes if problems occur: %d\n", r);
-+		break;
-+	}
-+
-+	return NOTIFY_DONE;
-+}
-+
- /**
-  * amdgpu_device_prepare - prepare for device suspend
-  *
-@@ -4222,7 +4266,7 @@ int amdgpu_device_prepare(struct drm_device *dev)
- 	return 0;
- 
- unprepare:
--	adev->in_s0ix = adev->in_s3 = false;
-+	adev->in_s0ix = adev->in_s3 = adev->in_s4 = false;
- 
- 	return r;
- }
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-index 0a85a59519cac..06958608c9849 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2468,7 +2468,6 @@ static int amdgpu_pmops_freeze(struct device *dev)
- 	struct amdgpu_device *adev = drm_to_adev(drm_dev);
- 	int r;
- 
--	adev->in_s4 = true;
- 	r = amdgpu_device_suspend(drm_dev, true);
+ 	/* Evict the majority of BOs before starting suspend sequence */
+ 	r = amdgpu_device_evict_resources(adev);
  	if (r)
- 		return r;
+-		goto unprepare;
++		return r;
+ 
+ 	flush_delayed_work(&adev->gfx.gfx_off_delay_work);
+ 
+@@ -4260,15 +4258,10 @@ int amdgpu_device_prepare(struct drm_device *dev)
+ 			continue;
+ 		r = adev->ip_blocks[i].version->funcs->prepare_suspend((void *)adev);
+ 		if (r)
+-			goto unprepare;
++			return r;
+ 	}
+ 
+ 	return 0;
+-
+-unprepare:
+-	adev->in_s0ix = adev->in_s3 = adev->in_s4 = false;
+-
+-	return r;
+ }
+ 
+ /**
 -- 
 2.39.5
 
