@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A132512E5;
-	Tue, 20 May 2025 14:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33F72512E9;
+	Tue, 20 May 2025 14:19:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750739; cv=none; b=pyrwqsb1gyFBS/z1o6Zkk8fIPqnFQsM2zmAD6Mts4tbNdipK7cNl/fhDEzgZ7CZe6iKaTvEpYgLt5jhoeytKtGxiKh9DoFGUnwqy7OEbNcfG9xpr5ZsPyvGuYAmP5BQCAhESP9uZsox8B4rWftxnkTKOjep80l53aPq/V/YLUSU=
+	t=1747750742; cv=none; b=XXmvLk55erd1b92yn38AvXFfUWM/MMLcubU33HriY2c0sNoVdL2dzwBuK8NC6vOpsWOOFZVrugoQJgpfp9a76b8f8ltw2h2Yc0vO8FAyNxcm2yfFTjn4duN0xZLF0Zf/5kDMg5ho+vW5kEfVtxwPTdLyj5KRIXz3fArIMMch1Tg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750739; c=relaxed/simple;
-	bh=kEtp4KiAVcH85sfCaTtSl/ZS4fhQCkjcKW4qKyrcQ18=;
+	s=arc-20240116; t=1747750742; c=relaxed/simple;
+	bh=8bdRJ4oLSxq76BQvy8tMflB/oevOc4yb3VOIlib820w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cnzliu7dCEvN56DaoeB9EkG4d6AccHvGKfDdveDlDmCYLO0qR0sJW7hOh13IIk/lixY120e1i8RBo2PWSijZXyJej+L6CzpxptNWwU69r3zuA70Vzo4BWtvL0PEW3mvsimaa2T5VNMW8bPyMbP7IsHR37kI4XFvhcnPUyjuQpWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Et90fBTM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qq3+N42FG61ZGyl2mG0+7eIHUxJwdyiLQeqLCKCfjiNtAHxNiKj5yboosY4kG0lfZXv6MI5Q1HhjA4M4wRW9hFoutnPLQGccozSddeo22t1JE3LeAuH8I2waFk/Cnxai4FU0SYGI0Ba4SvlQl1O4K9Skf7eNpZSx4v5OEJi+xwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1PMLQx23; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Et90fBTM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3504AC4CEE9;
-	Tue, 20 May 2025 14:18:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1PMLQx23"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 510B0C4CEEA;
+	Tue, 20 May 2025 14:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750739;
-	bh=kEtp4KiAVcH85sfCaTtSl/ZS4fhQCkjcKW4qKyrcQ18=;
+	s=korg; t=1747750742;
+	bh=8bdRJ4oLSxq76BQvy8tMflB/oevOc4yb3VOIlib820w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Et90fBTMqFTHcF6DqeygNuNhMyqDy9dI19aGHAt3NIX4dskUV8tq3NDWKpgBJ/Oh/
-	 7htI6DWkubguUZzkB3U7dOrZ52790D1eyzGvM3d6R8qtivf68l0aD/bcpchKAgQlaJ
-	 Ed9IhV2EqCN5J/mr/qJh+h+KD2j6jXGMzszmMh1Y=
+	b=1PMLQx23MEzyLXjS2j9C+uMwN6DK83ma3C3Oy3SI3I6XCrqjQ1EF/XW4/d0ITOhYD
+	 T97SsJv+tiqDnk9XYRn9Mpj2LfPlG8cC/m1jti3VkScapwc8XzHNDgoSqA1925IuuL
+	 EEybPifl3FPwUH5ma0R6PeMGsRTiWYsM/eg5PW2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michel=20D=C3=A4nzer?= <michel.daenzer@mailbox.org>,
-	Melissa Wen <mwen@igalia.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.14 078/145] Revert "drm/amd/display: Hardware cursor changes color when switched to software cursor"
-Date: Tue, 20 May 2025 15:50:48 +0200
-Message-ID: <20250520125813.640658311@linuxfoundation.org>
+	Ashish Kalra <ashish.kalra@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Srikanth Aithal <sraithal@amd.com>
+Subject: [PATCH 6.14 105/145] x86/sev: Make sure pages are not skipped during kdump
+Date: Tue, 20 May 2025 15:51:15 +0200
+Message-ID: <20250520125814.673418179@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -46,56 +46,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Melissa Wen <mwen@igalia.com>
+From: Ashish Kalra <ashish.kalra@amd.com>
 
-commit fe14c0f096f58d2569e587e9f4b05d772272bbb4 upstream.
+commit 82b7f88f2316c5442708daeb0b5ec5aa54c8ff7f upstream.
 
-This reverts commit 272e6aab14bbf98d7a06b2b1cd6308a02d4a10a1.
+When shared pages are being converted to private during kdump, additional
+checks are performed. They include handling the case of a GHCB page being
+contained within a huge page.
 
-Applying degamma curve to the cursor by default breaks Linux userspace
-expectation.
+Currently, this check incorrectly skips a page just below the GHCB page from
+being transitioned back to private during kdump preparation.
 
-On Linux, AMD display manager enables cursor degamma ROM just for
-implict sRGB on HW versions where degamma is split into two blocks:
-degamma ROM for pre-defined TFs and `gamma correction` for user/custom
-curves, and degamma ROM settings doesn't apply to cursor plane.
+This skipped page causes a 0x404 #VC exception when it is accessed later while
+dumping guest memory for vmcore generation.
 
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/1513
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2803
-Reported-by: Michel Dänzer <michel.daenzer@mailbox.org>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4144
-Signed-off-by: Melissa Wen <mwen@igalia.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f6a305d4748801a6c799ae9375b2ecff3aed094b)
+Correct the range to be checked for GHCB contained in a huge page.  Also,
+ensure that the skipped huge page containing the GHCB page is transitioned
+back to private by applying the correct address mask later when changing GHCBs
+to private at end of kdump preparation.
+
+  [ bp: Massage commit message. ]
+
+Fixes: 3074152e56c9 ("x86/sev: Convert shared memory back to private on kexec")
+Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Tested-by: Srikanth Aithal <sraithal@amd.com>
 Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/20250506183529.289549-1-Ashish.Kalra@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp_cm.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/x86/coco/sev/core.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp_cm.c
-+++ b/drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp_cm.c
-@@ -120,10 +120,11 @@ void dpp401_set_cursor_attributes(
- 	enum dc_cursor_color_format color_format = cursor_attributes->color_format;
- 	int cur_rom_en = 0;
+diff --git a/arch/x86/coco/sev/core.c b/arch/x86/coco/sev/core.c
+index 41060ba41b5c..36beaac713c1 100644
+--- a/arch/x86/coco/sev/core.c
++++ b/arch/x86/coco/sev/core.c
+@@ -1101,7 +1101,8 @@ static void unshare_all_memory(void)
+ 			data = per_cpu(runtime_data, cpu);
+ 			ghcb = (unsigned long)&data->ghcb_page;
  
--	// DCN4 should always do Cursor degamma for Cursor Color modes
- 	if (color_format == CURSOR_MODE_COLOR_PRE_MULTIPLIED_ALPHA ||
- 		color_format == CURSOR_MODE_COLOR_UN_PRE_MULTIPLIED_ALPHA) {
--		cur_rom_en = 1;
-+		if (cursor_attributes->attribute_flags.bits.ENABLE_CURSOR_DEGAMMA) {
-+			cur_rom_en = 1;
-+		}
+-			if (addr <= ghcb && ghcb <= addr + size) {
++			/* Handle the case of a huge page containing the GHCB page */
++			if (addr <= ghcb && ghcb < addr + size) {
+ 				skipped_addr = true;
+ 				break;
+ 			}
+@@ -1213,8 +1214,8 @@ static void shutdown_all_aps(void)
+ void snp_kexec_finish(void)
+ {
+ 	struct sev_es_runtime_data *data;
++	unsigned long size, addr;
+ 	unsigned int level, cpu;
+-	unsigned long size;
+ 	struct ghcb *ghcb;
+ 	pte_t *pte;
+ 
+@@ -1242,8 +1243,10 @@ void snp_kexec_finish(void)
+ 		ghcb = &data->ghcb_page;
+ 		pte = lookup_address((unsigned long)ghcb, &level);
+ 		size = page_level_size(level);
+-		set_pte_enc(pte, level, (void *)ghcb);
+-		snp_set_memory_private((unsigned long)ghcb, (size / PAGE_SIZE));
++		/* Handle the case of a huge page containing the GHCB page */
++		addr = (unsigned long)ghcb & page_level_mask(level);
++		set_pte_enc(pte, level, (void *)addr);
++		snp_set_memory_private(addr, (size / PAGE_SIZE));
  	}
+ }
  
- 	REG_UPDATE_3(CURSOR0_CONTROL,
+-- 
+2.49.0
+
 
 
