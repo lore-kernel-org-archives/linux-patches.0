@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4456224677D;
-	Tue, 20 May 2025 14:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5818F2472BA;
+	Tue, 20 May 2025 14:06:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749982; cv=none; b=Qlc2UwOVHPOSJv5rzmfle6Blvfu6Vy029HpZvBo/wRRTMBcZDUqGGxD/dEVXy/nrmfMUO+Y3fwNAUYw7nodi2WAIkTDuLEc5QON3AKop9BwPm8qJDbbiOw8l2hYqVMu6CjzQD8VW47xm6/UGn78vzNB3ARYkyZWyZVXWHNe5U58=
+	t=1747749984; cv=none; b=RP/NK0qRPrkdwcd5kY7FSbRp+Oh8HSFKagJ4D5Q7toPEApcopephVYKq5BGB+tLgAe/VFwsEGBabUW5effwg7sdT6vIrKVDw9R58mvCSbKsZNpqBIXE+wdip8hNKvKdzbYjGUtQE+wXVAVgunOn4veif4kNl6uG7a3SwSeHZF44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749982; c=relaxed/simple;
-	bh=4Z3NQ9tTBdBu3OQL5eN/buZqrG6+4S/EoNUPYSjaB/Q=;
+	s=arc-20240116; t=1747749984; c=relaxed/simple;
+	bh=FNhHK+vIU626XLH9xWgj5KHoVOtz0RNejOxNugX8W3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tf2lapU6wMLpVT+KaLAOyx0d/XfFigVvj5MVVuWWuFWyvTCsQQeWiCX1nahYuj2OKs96BpyvHS+kaJsz326irPad/NGGOF7PLFXYdtwIIgkfbx3UeuRtvBH5HwNRbZ0TXumfytD6oSwR/Bb/tcLLEpAynpzW8dfhynVtpOuWi/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N7C5DX6N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s2hk1X+EaJsDTeiLHM2jq2+sOxTgz9r68uvSIBJICIeCkJ0QxwxNHXEdlXPQ001ACg+U+lJWtNiM31KETeUIRJUTyYbpJBS6we41dxjrrNpOYi4WsR1li6cfh7szi9I28dOksx/22dthqoMQ7ZjgeejwSLlbl6C4k1QLU+/zxTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bDpeh/jK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N7C5DX6N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7ACC4CEE9;
-	Tue, 20 May 2025 14:06:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bDpeh/jK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9EB5C4CEF1;
+	Tue, 20 May 2025 14:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749980;
-	bh=4Z3NQ9tTBdBu3OQL5eN/buZqrG6+4S/EoNUPYSjaB/Q=;
+	s=korg; t=1747749984;
+	bh=FNhHK+vIU626XLH9xWgj5KHoVOtz0RNejOxNugX8W3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N7C5DX6NyWn8y0JgD/cAV/S/bDHPrh9Pbrqq4uXiy9CaOBGCivEYtkqLKBOzkXvLS
-	 Ld1Z26WStXDInErGYeSLIvxQNpKACeKlM7s8qEmW7nSBytQDBIWu+hoYPs2QHu7z4H
-	 1gu3a/g/l3tcwtPeLQUmrT3IO6c4FEnI/UWMZzCA=
+	b=bDpeh/jKnX3KpNAzgRyR+h0aL7unk3RNa3tmTXThiT4Y7qNqAJDBzMQKYq7sU82Q8
+	 bqxfRNkVbWqDTJFXEFRZwSdrkaHX32ly2Zr/f6yxZcy1lz7+opWmpuEy/eGrxYkOct
+	 h8iXlzS8Si08FTNV1k60zdMwdKJ3GmLCn67FKyIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 091/117] net: qede: Initialize qede_ll_ops with designated initializer
-Date: Tue, 20 May 2025 15:50:56 +0200
-Message-ID: <20250520125807.600303437@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Divya Indi <divya.indi@oracle.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.6 082/117] tracing: samples: Initialize trace_array_printk() with the correct function
+Date: Tue, 20 May 2025 15:50:47 +0200
+Message-ID: <20250520125807.248591976@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -50,43 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 6b3ab7f2cbfaeb6580709cd8ef4d72cfd01bfde4 upstream.
+commit 1b0c192c92ea1fe2dcb178f84adf15fe37c3e7c8 upstream.
 
-After a recent change [1] in clang's randstruct implementation to
-randomize structures that only contain function pointers, there is an
-error because qede_ll_ops get randomized but does not use a designated
-initializer for the first member:
+When using trace_array_printk() on a created instance, the correct
+function to use to initialize it is:
 
-  drivers/net/ethernet/qlogic/qede/qede_main.c:206:2: error: a randomized struct can only be initialized with a designated initializer
-    206 |         {
-        |         ^
+  trace_array_init_printk()
 
-Explicitly initialize the common member using a designated initializer
-to fix the build.
+Not
+
+  trace_printk_init_buffer()
+
+The former is a proper function to use, the latter is for initializing
+trace_printk() and causes the NOTICE banner to be displayed.
 
 Cc: stable@vger.kernel.org
-Fixes: 035f7f87b729 ("randstruct: Enable Clang support")
-Link: https://github.com/llvm/llvm-project/commit/04364fb888eea6db9811510607bed4b200bcb082 [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20250507-qede-fix-clang-randstruct-v1-1-5ccc15626fba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Divya Indi <divya.indi@oracle.com>
+Link: https://lore.kernel.org/20250509152657.0f6744d9@gandalf.local.home
+Fixes: 89ed42495ef4a ("tracing: Sample module to demonstrate kernel access to Ftrace instances.")
+Fixes: 38ce2a9e33db6 ("tracing: Add trace_array_init_printk() to initialize instance trace_printk() buffers")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_main.c |    2 +-
+ samples/ftrace/sample-trace-array.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/qlogic/qede/qede_main.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_main.c
-@@ -203,7 +203,7 @@ static struct pci_driver qede_pci_driver
- };
+--- a/samples/ftrace/sample-trace-array.c
++++ b/samples/ftrace/sample-trace-array.c
+@@ -112,7 +112,7 @@ static int __init sample_trace_array_ini
+ 	/*
+ 	 * If context specific per-cpu buffers havent already been allocated.
+ 	 */
+-	trace_printk_init_buffers();
++	trace_array_init_printk(tr);
  
- static struct qed_eth_cb_ops qede_ll_ops = {
--	{
-+	.common = {
- #ifdef CONFIG_RFS_ACCEL
- 		.arfs_filter_op = qede_arfs_filter_op,
- #endif
+ 	simple_tsk = kthread_run(simple_thread, NULL, "sample-instance");
+ 	if (IS_ERR(simple_tsk)) {
 
 
