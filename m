@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBEA22D7A8;
-	Tue, 20 May 2025 13:53:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4781222D7A8;
+	Tue, 20 May 2025 13:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749214; cv=none; b=KASvziucpU/C07J2DcjpoGyiuSSG7EpqcDWR/CTDJs96URApwDFVSMEymtOvG2xTtjF29Z7GhqJ/xuOIpzzA7UKYmTNPfoo7b2OGe8/+o9JSpLctJ9V56bv7WggUDta6vqIe/8t9ogf/YuMCgIxaheLArArKS5MtpQ6hngN3xPU=
+	t=1747749217; cv=none; b=L6cmzN+tm1cwiVk2NPKP7yp/BWTO+LC/8N+VXfdnxX8ApaQAHxMUCzk1lrPl51Xpp5KMtd+T91/CLCGGZt99KUPRCTo4I6WEyl/Qb9o6SkQZTGZMU0DtD+esi/2LKRHNgFHBDSuJ1fGGsqck4vVAlNyDaT6EqI/KURE5/46ojYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749214; c=relaxed/simple;
-	bh=4bR1gmzwuN7qoos+9RfozyTSuoXFsG1/qafzL3ZWtGY=;
+	s=arc-20240116; t=1747749217; c=relaxed/simple;
+	bh=EU5RDjjZtF2mJ/8BqfbTB47IG9F8HRrqo/8ojE3fcKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ERadNSCrM5Gy9Iy33cD7r4iXCEKWxJFlm8Ch8dXKt1r+E07lgml2aLnFfu2axZBNtee6FlDux+VMnTFxWSrkWchZ19UN+iLIvLTeDcjU6B0gm/CBxko/qbc+6f1dHGG3EdMVIExAzM4uCgeoyhVL5olayzZOQLf2g3j3FLkSFm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8vOiTf/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NrSq/1bysm5eQM3SKuZGSrmlDtydfe0IGHhoH+x+T0GQq/b+ygHrYzii++M4ekZ3RMiKUbx76nVJTS4kR6ac0JEe4Orn+yN56WrneLeEz8jxrjnAgLE0F6n6iUQTIvUSByqUz/eCU1iZLG2lNSRFqjklruV74iCwCmbCjvCfyWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZatbKa0A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8vOiTf/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EFC7C4CEE9;
-	Tue, 20 May 2025 13:53:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZatbKa0A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53893C4CEE9;
+	Tue, 20 May 2025 13:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749214;
-	bh=4bR1gmzwuN7qoos+9RfozyTSuoXFsG1/qafzL3ZWtGY=;
+	s=korg; t=1747749216;
+	bh=EU5RDjjZtF2mJ/8BqfbTB47IG9F8HRrqo/8ojE3fcKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F8vOiTf/6xk1qmsOgvjFQSwuvjFV6Jx6BH0/ONbGCXrqL8KhDB0WPEco4pVx7O71z
-	 e68dnkmx313OCT+xBlByUAOtKBOWyLZZD93r083pBjdYrSeOuj0ZCYWh/4lIlNZDUQ
-	 pyHP99uAws71Dq/NROR2vi74vjdFJd+PcUrOEpiE=
+	b=ZatbKa0A2sx0BD6z2hyTJFu0HVsSN/kyXt3yFXpcpBxeCjbSnkfZNqAKOnxkQg0Ew
+	 KgUVk6vUONLcv4bXkOR/KJ/fYBWnbTLfOCOTxXESB4BvQD6vSgjCKpRqCWgHmje+vt
+	 if5M5qvCd94X9042eCJ0G/nfEfQsZy3zLnt9L9gI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	liuyi <liuy22@mails.tsinghua.edu.cn>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Daisuke Matsuda <matsuda-daisuke@fujitsu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 05/59] RDMA/rxe: Fix slab-use-after-free Read in rxe_queue_cleanup bug
-Date: Tue, 20 May 2025 15:49:56 +0200
-Message-ID: <20250520125754.051293258@linuxfoundation.org>
+Subject: [PATCH 5.15 06/59] nfs: handle failure of nfs_get_lock_context in unlock path
+Date: Tue, 20 May 2025 15:49:57 +0200
+Message-ID: <20250520125754.090484799@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
 References: <20250520125753.836407405@linuxfoundation.org>
@@ -53,67 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Li Lingfeng <lilingfeng3@huawei.com>
 
-[ Upstream commit f81b33582f9339d2dc17c69b92040d3650bb4bae ]
+[ Upstream commit c457dc1ec770a22636b473ce5d35614adfe97636 ]
 
+When memory is insufficient, the allocation of nfs_lock_context in
+nfs_get_lock_context() fails and returns -ENOMEM. If we mistakenly treat
+an nfs4_unlockdata structure (whose l_ctx member has been set to -ENOMEM)
+as valid and proceed to execute rpc_run_task(), this will trigger a NULL
+pointer dereference in nfs4_locku_prepare. For example:
+
+BUG: kernel NULL pointer dereference, address: 000000000000000c
+PGD 0 P4D 0
+Oops: Oops: 0000 [#1] SMP PTI
+CPU: 15 UID: 0 PID: 12 Comm: kworker/u64:0 Not tainted 6.15.0-rc2-dirty #60
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-2.fc40
+Workqueue: rpciod rpc_async_schedule
+RIP: 0010:nfs4_locku_prepare+0x35/0xc2
+Code: 89 f2 48 89 fd 48 c7 c7 68 69 ef b5 53 48 8b 8e 90 00 00 00 48 89 f3
+RSP: 0018:ffffbbafc006bdb8 EFLAGS: 00010246
+RAX: 000000000000004b RBX: ffff9b964fc1fa00 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: fffffffffffffff4 RDI: ffff9ba53fddbf40
+RBP: ffff9ba539934000 R08: 0000000000000000 R09: ffffbbafc006bc38
+R10: ffffffffb6b689c8 R11: 0000000000000003 R12: ffff9ba539934030
+R13: 0000000000000001 R14: 0000000004248060 R15: ffffffffb56d1c30
+FS: 0000000000000000(0000) GS:ffff9ba5881f0000(0000) knlGS:00000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000000000000000c CR3: 000000093f244000 CR4: 00000000000006f0
 Call Trace:
  <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x7d/0xa0 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xcf/0x610 mm/kasan/report.c:489
- kasan_report+0xb5/0xe0 mm/kasan/report.c:602
- rxe_queue_cleanup+0xd0/0xe0 drivers/infiniband/sw/rxe/rxe_queue.c:195
- rxe_cq_cleanup+0x3f/0x50 drivers/infiniband/sw/rxe/rxe_cq.c:132
- __rxe_cleanup+0x168/0x300 drivers/infiniband/sw/rxe/rxe_pool.c:232
- rxe_create_cq+0x22e/0x3a0 drivers/infiniband/sw/rxe/rxe_verbs.c:1109
- create_cq+0x658/0xb90 drivers/infiniband/core/uverbs_cmd.c:1052
- ib_uverbs_create_cq+0xc7/0x120 drivers/infiniband/core/uverbs_cmd.c:1095
- ib_uverbs_write+0x969/0xc90 drivers/infiniband/core/uverbs_main.c:679
- vfs_write fs/read_write.c:677 [inline]
- vfs_write+0x26a/0xcc0 fs/read_write.c:659
- ksys_write+0x1b8/0x200 fs/read_write.c:731
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xaa/0x1b0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ __rpc_execute+0xbc/0x480
+ rpc_async_schedule+0x2f/0x40
+ process_one_work+0x232/0x5d0
+ worker_thread+0x1da/0x3d0
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0x10d/0x240
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x34/0x50
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+Modules linked in:
+CR2: 000000000000000c
+---[ end trace 0000000000000000 ]---
 
-In the function rxe_create_cq, when rxe_cq_from_init fails, the function
-rxe_cleanup will be called to handle the allocated resources. In fact,
-some memory resources have already been freed in the function
-rxe_cq_from_init. Thus, this problem will occur.
+Free the allocated nfs4_unlockdata when nfs_get_lock_context() fails and
+return NULL to terminate subsequent rpc_run_task, preventing NULL pointer
+dereference.
 
-The solution is to let rxe_cleanup do all the work.
-
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Link: https://paste.ubuntu.com/p/tJgC42wDf6/
-Tested-by: liuyi <liuy22@mails.tsinghua.edu.cn>
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://patch.msgid.link/20250412075714.3257358-1-yanjun.zhu@linux.dev
-Reviewed-by: Daisuke Matsuda <matsuda-daisuke@fujitsu.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: f30cb757f680 ("NFS: Always wait for I/O completion before unlock")
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://lore.kernel.org/r/20250417072508.3850532-1-lilingfeng3@huawei.com
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_cq.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ fs/nfs/nfs4proc.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_cq.c b/drivers/infiniband/sw/rxe/rxe_cq.c
-index 4eedaa0244b39..f22f8e950baef 100644
---- a/drivers/infiniband/sw/rxe/rxe_cq.c
-+++ b/drivers/infiniband/sw/rxe/rxe_cq.c
-@@ -71,11 +71,8 @@ int rxe_cq_from_init(struct rxe_dev *rxe, struct rxe_cq *cq, int cqe,
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 4a0691aeb7c1d..e4b3f25bb8e48 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -6835,10 +6835,18 @@ static struct nfs4_unlockdata *nfs4_alloc_unlockdata(struct file_lock *fl,
+ 	struct nfs4_unlockdata *p;
+ 	struct nfs4_state *state = lsp->ls_state;
+ 	struct inode *inode = state->inode;
++	struct nfs_lock_context *l_ctx;
  
- 	err = do_mmap_info(rxe, uresp ? &uresp->mi : NULL, udata,
- 			   cq->queue->buf, cq->queue->buf_size, &cq->queue->ip);
--	if (err) {
--		vfree(cq->queue->buf);
--		kfree(cq->queue);
-+	if (err)
- 		return err;
--	}
- 
- 	if (uresp)
- 		cq->is_user = 1;
+ 	p = kzalloc(sizeof(*p), GFP_KERNEL);
+ 	if (p == NULL)
+ 		return NULL;
++	l_ctx = nfs_get_lock_context(ctx);
++	if (!IS_ERR(l_ctx)) {
++		p->l_ctx = l_ctx;
++	} else {
++		kfree(p);
++		return NULL;
++	}
+ 	p->arg.fh = NFS_FH(inode);
+ 	p->arg.fl = &p->fl;
+ 	p->arg.seqid = seqid;
+@@ -6846,7 +6854,6 @@ static struct nfs4_unlockdata *nfs4_alloc_unlockdata(struct file_lock *fl,
+ 	p->lsp = lsp;
+ 	/* Ensure we don't close file until we're done freeing locks! */
+ 	p->ctx = get_nfs_open_context(ctx);
+-	p->l_ctx = nfs_get_lock_context(ctx);
+ 	locks_init_lock(&p->fl);
+ 	locks_copy_lock(&p->fl, fl);
+ 	p->server = NFS_SERVER(inode);
 -- 
 2.39.5
 
