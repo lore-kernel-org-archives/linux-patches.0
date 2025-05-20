@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E0C24EF83;
-	Tue, 20 May 2025 14:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28E5242D7C;
+	Tue, 20 May 2025 14:11:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750280; cv=none; b=GWBN+uV/LSMDjxO+VkBUh0IEt8c+dI3XRhYcprkXfkHf8/BHYRcKOAAwsZbhUzO99JQl25k9w5ToRPwgppFhvQAO803Tv/lxV2wcOqdA0hYROi+1SG4XD1e1QSdEjTL0994Vk5lhbWhxeR9VO9YxoiuZHeVAvXJy3KXPwqXXtDs=
+	t=1747750283; cv=none; b=qJF4NBe+xqX81glNyDub5pxwU0O3RYT2rtcm+xy3KR7OZPn8Y0G0Klkf384W8H1ro2V+A3qVjQPS+wCrLul2Inozw1a4BJ79NGmbMtCfxVR4UXP6odXZ6Vq/MYkFDsuc9JMF9wEyGDJc4V63R4RbkuhM8eh45rxHjgQuCR29+Vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750280; c=relaxed/simple;
-	bh=Oph6A+SSwSOEI1y/9MEw8CE+D3zB7tRdPRlPJTZyJCg=;
+	s=arc-20240116; t=1747750283; c=relaxed/simple;
+	bh=AKcpQmC5t9EaHsSu97TVXdWsBVD1JHPalepaUo0AqCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kbXzK6l8lPvbISa8KLkjY5wUehfNJtM3V2DPR9msSkJLClZHL1fpGwb3AUwNKIb4yQHcTcMzt+MB3FSJu+Ad/RifmMrzsavUTqgdWDTJE876PaoLfR0kLZN3mrfbInV0aRi3TaThsnONKlcA2nf6ttYkJGRTjBYlC2fLXbyBVug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNwV4p5Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nUTgDGwUusry9ypCvnpogn1qOJEy/waSIZBjLv3Xlh3Svf5qrVvtDfvu2avBLTVpYMBSwfJ8jOfcmfNmSD9/SUx8XTYfqYBQ0byA3GtY9RHKFVptoA5SG6dylevX0Sws8VQAP/ac+ePzwFRRzeJEsCAqMZgFODdQ4iIXwn+kZuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=simq6ScU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNwV4p5Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D551C4CEE9;
-	Tue, 20 May 2025 14:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="simq6ScU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C2CC4CEE9;
+	Tue, 20 May 2025 14:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750279;
-	bh=Oph6A+SSwSOEI1y/9MEw8CE+D3zB7tRdPRlPJTZyJCg=;
+	s=korg; t=1747750282;
+	bh=AKcpQmC5t9EaHsSu97TVXdWsBVD1JHPalepaUo0AqCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NNwV4p5QBCftJHGtjp/U7tn5/HYKI/4ybnCN9fD6qKAKN54MYBJdtuflC9GHrnv61
-	 IYxdAkfkYWiFPCNhglvYCEx7osQlNQlnXxR4klUKbuUlcfGaYQeqA6ZekNb26suqUN
-	 cf4S7ZQp3Hky8VnkHt98/BozEivnnU2UOQTGnK5M=
+	b=simq6ScU+hSyeBnmqn5h/CScCZ2g9ylezPrytk03xPyNaN95+rfJDwSdwNgebVqhm
+	 XU9/UM6VkZfHKmyhBFppR4ZJPxSoEQXyJavpe6Sf2zSi5UcRBkuB46SXredYcv7HM7
+	 eQpCgY8ykBBaKMtnS3v94mLlHWhlgJ1g+R83PD5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianyang Zhang <zhangtianyang@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.12 073/143] LoongArch: Prevent cond_resched() occurring within kernel-fpu
-Date: Tue, 20 May 2025 15:50:28 +0200
-Message-ID: <20250520125812.937057872@linuxfoundation.org>
+	Michael Kelley <mhklinux@outlook.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 100/143] Drivers: hv: Allow vmbus_sendpacket_mpb_desc() to create multiple ranges
+Date: Tue, 20 May 2025 15:50:55 +0200
+Message-ID: <20250520125813.982532166@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -50,84 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianyang Zhang <zhangtianyang@loongson.cn>
+From: Michael Kelley <mhklinux@outlook.com>
 
-commit 2468b0e3d5659dfde77f081f266e1111a981efb8 upstream.
+commit 380b75d3078626aadd0817de61f3143f5db6e393 upstream.
 
-When CONFIG_PREEMPT_COUNT is not configured (i.e. CONFIG_PREEMPT_NONE/
-CONFIG_PREEMPT_VOLUNTARY), preempt_disable() / preempt_enable() merely
-acts as a barrier(). However, in these cases cond_resched() can still
-trigger a context switch and modify the CSR.EUEN, resulting in do_fpu()
-exception being activated within the kernel-fpu critical sections, as
-demonstrated in the following path:
+vmbus_sendpacket_mpb_desc() is currently used only by the storvsc driver
+and is hardcoded to create a single GPA range. To allow it to also be
+used by the netvsc driver to create multiple GPA ranges, no longer
+hardcode as having a single GPA range. Allow the calling driver to
+specify the rangecount in the supplied descriptor.
 
-dcn32_calculate_wm_and_dlg()
-    DC_FP_START()
-	dcn32_calculate_wm_and_dlg_fpu()
-	    dcn32_find_dummy_latency_index_for_fw_based_mclk_switch()
-		dcn32_internal_validate_bw()
-		    dcn32_enable_phantom_stream()
-			dc_create_stream_for_sink()
-			   kzalloc(GFP_KERNEL)
-				__kmem_cache_alloc_node()
-				    __cond_resched()
-    DC_FP_END()
+Update the storvsc driver to reflect this new approach.
 
-This patch is similar to commit d02198550423a0b (x86/fpu: Improve crypto
-performance by making kernel-mode FPU reliably usable in softirqs).  It
-uses local_bh_disable() instead of preempt_disable() for non-RT kernels
-so it can avoid the cond_resched() issue, and also extend the kernel-fpu
-application scenarios to the softirq context.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Cc: <stable@vger.kernel.org> # 6.1.x
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://patch.msgid.link/20250513000604.1396-2-mhklinux@outlook.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/kfpu.c |   22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ drivers/hv/channel.c       |    6 +++---
+ drivers/scsi/storvsc_drv.c |    1 +
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
---- a/arch/loongarch/kernel/kfpu.c
-+++ b/arch/loongarch/kernel/kfpu.c
-@@ -18,11 +18,28 @@ static unsigned int euen_mask = CSR_EUEN
- static DEFINE_PER_CPU(bool, in_kernel_fpu);
- static DEFINE_PER_CPU(unsigned int, euen_current);
+--- a/drivers/hv/channel.c
++++ b/drivers/hv/channel.c
+@@ -1136,9 +1136,10 @@ int vmbus_sendpacket_pagebuffer(struct v
+ EXPORT_SYMBOL_GPL(vmbus_sendpacket_pagebuffer);
  
-+static inline void fpregs_lock(void)
-+{
-+	if (IS_ENABLED(CONFIG_PREEMPT_RT))
-+		preempt_disable();
-+	else
-+		local_bh_disable();
-+}
-+
-+static inline void fpregs_unlock(void)
-+{
-+	if (IS_ENABLED(CONFIG_PREEMPT_RT))
-+		preempt_enable();
-+	else
-+		local_bh_enable();
-+}
-+
- void kernel_fpu_begin(void)
- {
- 	unsigned int *euen_curr;
+ /*
+- * vmbus_sendpacket_multipagebuffer - Send a multi-page buffer packet
++ * vmbus_sendpacket_mpb_desc - Send one or more multi-page buffer packets
+  * using a GPADL Direct packet type.
+- * The buffer includes the vmbus descriptor.
++ * The desc argument must include space for the VMBus descriptor. The
++ * rangecount field must already be set.
+  */
+ int vmbus_sendpacket_mpb_desc(struct vmbus_channel *channel,
+ 			      struct vmbus_packet_mpb_array *desc,
+@@ -1160,7 +1161,6 @@ int vmbus_sendpacket_mpb_desc(struct vmb
+ 	desc->length8 = (u16)(packetlen_aligned >> 3);
+ 	desc->transactionid = VMBUS_RQST_ERROR; /* will be updated in hv_ringbuffer_write() */
+ 	desc->reserved = 0;
+-	desc->rangecount = 1;
  
--	preempt_disable();
-+	if (!irqs_disabled())
-+		fpregs_lock();
+ 	bufferlist[0].iov_base = desc;
+ 	bufferlist[0].iov_len = desc_size;
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -1819,6 +1819,7 @@ static int storvsc_queuecommand(struct S
+ 				return SCSI_MLQUEUE_DEVICE_BUSY;
+ 		}
  
- 	WARN_ON(this_cpu_read(in_kernel_fpu));
- 
-@@ -73,7 +90,8 @@ void kernel_fpu_end(void)
- 
- 	this_cpu_write(in_kernel_fpu, false);
- 
--	preempt_enable();
-+	if (!irqs_disabled())
-+		fpregs_unlock();
- }
- EXPORT_SYMBOL_GPL(kernel_fpu_end);
++		payload->rangecount = 1;
+ 		payload->range.len = length;
+ 		payload->range.offset = offset_in_hvpg;
  
 
 
