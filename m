@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA55DDA9;
-	Tue, 20 May 2025 13:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADF724676D;
+	Tue, 20 May 2025 13:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749548; cv=none; b=k69LJlo7xwStg1pVWDs+8tlrkWB/Ea69ewOWx0+32iPUrbKfXxZKMij/CUkRlFPvZ1DjYfbcbxzgfOeHuFkJAs8Hq3JCi/X6tvKRnkZlh20OfxUonlZUAIeR6UOrwk5fYFF1+5KwfSXhsbGH62qLVXH7NPw5Ya5L8lIM1JU7dw0=
+	t=1747749551; cv=none; b=g/KZM5lnx7tBNfph6G+Oga/JLxo3tFNYdvYRmpwbAqGQP4Bgw5eviLPhZ8uZkmF96m7nC0cdF97YDkQf/GRmqrSKjtLhymsDF5X7t5j1FIx9WIgOcvihocJIo6C4UoBDZ2PnDTP95AAiTXS5ih9r9E2lWKwyv0Xy0hpRZjXyWTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749548; c=relaxed/simple;
-	bh=B3N/qrFleAVWvlD0u8fYtgeXPOXLwvSaoElmElQwPpY=;
+	s=arc-20240116; t=1747749551; c=relaxed/simple;
+	bh=swU1ICKZaV3+lrFWbchn54Ct0yOFYePk3ZSMyPsb2ks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ch6MEzRSyETXO6HnzhzwAZyMGJWsL9Sp60IREELEh5RMeyWnOFp7r02ctbdGABgye6ofirJlMz61pIDhJKxH0gCmzFfs0Pb12rb4qpV+aneFFIS0P/k1e1fxV2Ds3MI2fNef7n81EeEuQhS2hOx/3X420Jf5t+semWm5jBngRJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7VvFKIB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UQcmaUnMktyKETUcZM9iA6IRps14e46+hix7BjZBNQK/MW1ims7aJqlnDfqjTWmrbDsi7hNhZmuqvRBEVPlZJY49Ox/EachG5DhI6Pzu5v2jdlMFvc+qFwvvp9y33p+qBHtuYXFzE7eoD51AB+Bfp9+ihqPVt1aRiF58uzH93us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8cSjNDH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7VvFKIB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96EF9C4CEE9;
-	Tue, 20 May 2025 13:59:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8cSjNDH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34D6C4CEE9;
+	Tue, 20 May 2025 13:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749548;
-	bh=B3N/qrFleAVWvlD0u8fYtgeXPOXLwvSaoElmElQwPpY=;
+	s=korg; t=1747749551;
+	bh=swU1ICKZaV3+lrFWbchn54Ct0yOFYePk3ZSMyPsb2ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n7VvFKIB02/SJvvU6lCm5ETgoApGei+omBGMXKpOLhD9jl6f9Vm1NVz2wRktskArx
-	 M8xZnhN0/Bev+Ye4eZHS2inCuZkM9S2aCba/a/3IPQKH/4Te2f9/tgoGlr3onIWFLC
-	 edAhBNuzkOtNWlyDtH1nXdsCwde3fXlmpM4dnyRI=
+	b=M8cSjNDHjVC4XKr+3TXdEmWAEx05uUUG1QquAyYKSDgCSwLYCf6pN8oXG7+/wGAWo
+	 NzBZV4kmmGpMdiv0CeK9gGjzSJseUnfR2AzZFVWrgCRE+E/TMT9dlUCdqprJKbcr7s
+	 wdu7xg8Xam9TK9I2bK9Wk1S0ausAJl4DxxcoNZDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Tang <feng.tang@linux.alibaba.com>,
-	Dev Jain <dev.jain@arm.com>,
+	Byungchul Park <byungchul@sk.com>,
+	Hyeongtak Ji <hyeongtak.ji@sk.com>,
+	Oscar Salvador <osalvador@suse.de>,
 	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Baolin Wang <baolin.wang@inux.alibaba.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Sri Jayaramappa <sjayaram@akamai.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 79/97] selftests/mm: compaction_test: support platform with huge mount of memory
-Date: Tue, 20 May 2025 15:50:44 +0200
-Message-ID: <20250520125803.737204953@linuxfoundation.org>
+	"Huang, Ying" <ying.huang@intel.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 6.1 80/97] mm/vmscan: fix a bug calling wakeup_kswapd() with a wrong zone index
+Date: Tue, 20 May 2025 15:50:45 +0200
+Message-ID: <20250520125803.774042930@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -55,72 +57,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Tang <feng.tang@linux.alibaba.com>
+From: Byungchul Park <byungchul@sk.com>
 
-commit ab00ddd802f80e31fc9639c652d736fe3913feae upstream.
+commit 2774f256e7c0219e2b0a0894af1c76bdabc4f974 upstream.
 
-When running mm selftest to verify mm patches, 'compaction_test' case
-failed on an x86 server with 1TB memory.  And the root cause is that it
-has too much free memory than what the test supports.
+With numa balancing on, when a numa system is running where a numa node
+doesn't have its local memory so it has no managed zones, the following
+oops has been observed.  It's because wakeup_kswapd() is called with a
+wrong zone index, -1.  Fixed it by checking the index before calling
+wakeup_kswapd().
 
-The test case tries to allocate 100000 huge pages, which is about 200 GB
-for that x86 server, and when it succeeds, it expects it's large than 1/3
-of 80% of the free memory in system.  This logic only works for platform
-with 750 GB ( 200 / (1/3) / 80% ) or less free memory, and may raise false
-alarm for others.
+> BUG: unable to handle page fault for address: 00000000000033f3
+> #PF: supervisor read access in kernel mode
+> #PF: error_code(0x0000) - not-present page
+> PGD 0 P4D 0
+> Oops: 0000 [#1] PREEMPT SMP NOPTI
+> CPU: 2 PID: 895 Comm: masim Not tainted 6.6.0-dirty #255
+> Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+>    rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+> RIP: 0010:wakeup_kswapd (./linux/mm/vmscan.c:7812)
+> Code: (omitted)
+> RSP: 0000:ffffc90004257d58 EFLAGS: 00010286
+> RAX: ffffffffffffffff RBX: ffff88883fff0480 RCX: 0000000000000003
+> RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff88883fff0480
+> RBP: ffffffffffffffff R08: ff0003ffffffffff R09: ffffffffffffffff
+> R10: ffff888106c95540 R11: 0000000055555554 R12: 0000000000000003
+> R13: 0000000000000000 R14: 0000000000000000 R15: ffff88883fff0940
+> FS:  00007fc4b8124740(0000) GS:ffff888827c00000(0000) knlGS:0000000000000000
+> CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+> CR2: 00000000000033f3 CR3: 000000026cc08004 CR4: 0000000000770ee0
+> DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+> DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+> PKRU: 55555554
+> Call Trace:
+>  <TASK>
+> ? __die
+> ? page_fault_oops
+> ? __pte_offset_map_lock
+> ? exc_page_fault
+> ? asm_exc_page_fault
+> ? wakeup_kswapd
+> migrate_misplaced_page
+> __handle_mm_fault
+> handle_mm_fault
+> do_user_addr_fault
+> exc_page_fault
+> asm_exc_page_fault
+> RIP: 0033:0x55b897ba0808
+> Code: (omitted)
+> RSP: 002b:00007ffeefa821a0 EFLAGS: 00010287
+> RAX: 000055b89983acd0 RBX: 00007ffeefa823f8 RCX: 000055b89983acd0
+> RDX: 00007fc2f8122010 RSI: 0000000000020000 RDI: 000055b89983acd0
+> RBP: 00007ffeefa821a0 R08: 0000000000000037 R09: 0000000000000075
+> R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000000
+> R13: 00007ffeefa82410 R14: 000055b897ba5dd8 R15: 00007fc4b8340000
+>  </TASK>
 
-Fix it by changing the fixed page number to self-adjustable number
-according to the real number of free memory.
-
-Link: https://lkml.kernel.org/r/20250423103645.2758-1-feng.tang@linux.alibaba.com
-Fixes: bd67d5c15cc1 ("Test compaction of mlocked memory")
-Signed-off-by: Feng Tang <feng.tang@linux.alibaba.com>
-Acked-by: Dev Jain <dev.jain@arm.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Tested-by: Baolin Wang <baolin.wang@inux.alibaba.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Sri Jayaramappa <sjayaram@akamai.com>
+Link: https://lkml.kernel.org/r/20240216111502.79759-1-byungchul@sk.com
+Signed-off-by: Byungchul Park <byungchul@sk.com>
+Reported-by: Hyeongtak Ji <hyeongtak.ji@sk.com>
+Fixes: c574bbe917036 ("NUMA balancing: optimize page placement for memory tiering system")
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: "Huang, Ying" <ying.huang@intel.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/vm/compaction_test.c |   19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ mm/migrate.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/tools/testing/selftests/vm/compaction_test.c
-+++ b/tools/testing/selftests/vm/compaction_test.c
-@@ -89,6 +89,8 @@ int check_compaction(unsigned long mem_f
- 	int compaction_index = 0;
- 	char initial_nr_hugepages[20] = {0};
- 	char nr_hugepages[20] = {0};
-+	char target_nr_hugepages[24] = {0};
-+	int slen;
- 
- 	/* We want to test with 80% of available memory. Else, OOM killer comes
- 	   in to play */
-@@ -119,11 +121,18 @@ int check_compaction(unsigned long mem_f
- 
- 	lseek(fd, 0, SEEK_SET);
- 
--	/* Request a large number of huge pages. The Kernel will allocate
--	   as much as it can */
--	if (write(fd, "100000", (6*sizeof(char))) != (6*sizeof(char))) {
--		ksft_print_msg("Failed to write 100000 to /proc/sys/vm/nr_hugepages: %s\n",
--			       strerror(errno));
-+	/*
-+	 * Request huge pages for about half of the free memory. The Kernel
-+	 * will allocate as much as it can, and we expect it will get at least 1/3
-+	 */
-+	nr_hugepages_ul = mem_free / hugepage_size / 2;
-+	snprintf(target_nr_hugepages, sizeof(target_nr_hugepages),
-+		 "%lu", nr_hugepages_ul);
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -2422,6 +2422,14 @@ static int numamigrate_isolate_page(pg_d
+ 			if (managed_zone(pgdat->node_zones + z))
+ 				break;
+ 		}
 +
-+	slen = strlen(target_nr_hugepages);
-+	if (write(fd, target_nr_hugepages, slen) != slen) {
-+		ksft_print_msg("Failed to write %lu to /proc/sys/vm/nr_hugepages: %s\n",
-+			       nr_hugepages_ul, strerror(errno));
- 		goto close_fd;
++		/*
++		 * If there are no managed zones, it should not proceed
++		 * further.
++		 */
++		if (z < 0)
++			return 0;
++
+ 		wakeup_kswapd(pgdat->node_zones + z, 0, order, ZONE_MOVABLE);
+ 		return 0;
  	}
- 
 
 
