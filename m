@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775B824290D;
-	Tue, 20 May 2025 14:07:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28CD242907;
+	Tue, 20 May 2025 14:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750031; cv=none; b=E0gDt0wu6UJ4a6dZqIgEUbeUoHCS/IJH/nXgcTHJ9NCq29FMZqfTFb9+ahBLsIQ4lBk4USXoH4SiS+j+DILf+yCzE80RrjsNJh2SPtKw5llvyCGvpeMsxUpeijdRVEErcjytek3fHMq/rrOnGhyaHM2KgxPTtiTMzsWR4p8l3GE=
+	t=1747750034; cv=none; b=RrcX7PKRLJ+VXl6L3MsaObhusTHC67sY/X7nrvzWzo7bOk2CKZ3+o437StgN78h5xeQIQB9L42aVGNAEp8hJC2b66d6VuL7BTyO0g+BIaj2lB740h0Fx9dqj2PyjPgISMYUu2ezBpdXtj76zYZe0lWr2bLuqs5VU20QWvJI0+Ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750031; c=relaxed/simple;
-	bh=mE6G6Zg6QrHyfFTEXqMKv1zA4tUXm7Tnh4tCIiu4nL0=;
+	s=arc-20240116; t=1747750034; c=relaxed/simple;
+	bh=uDC30n3SAollFF5UrP+CLspnfRrvheieKqrQnnIptsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZdUA+rTciVS3hKDH6fz4KaW0UWgm5Wvv45Jty7ELByY0HeOAebfDYiRRbPfO1FOLkAgPil0JYp1tGeBFbTySiVux8SSCyyKehNNCFeORv8WCKWI8YQsA4dXZxJIVuchqLnR55GvDPg/uBRYuwOtMDqfHuUMY63NyvnIRZ7Wommo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l20DtrS5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ni0CROfuq1ThKvUCBjNeiV8Xa69PWmDgrsFbSqDxu6GdLAHe7cY17a7j7IK7AFWw36Jr+OSFKhvrhb7mmTiShahNlg4xnUnIs63VWVYc0iXOR4SGW67dKJ6YmWK+Kxyq3Y5qPOurxqJZMHWFQe1LFoLC6NeOu3zs2xfdYg5+4yI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=btBhoUVw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l20DtrS5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50F51C4CEE9;
-	Tue, 20 May 2025 14:07:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btBhoUVw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62E66C4CEEA;
+	Tue, 20 May 2025 14:07:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750030;
-	bh=mE6G6Zg6QrHyfFTEXqMKv1zA4tUXm7Tnh4tCIiu4nL0=;
+	s=korg; t=1747750033;
+	bh=uDC30n3SAollFF5UrP+CLspnfRrvheieKqrQnnIptsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l20DtrS5cotbl2apUpbx+qx3Wr13N22k14nNwy2rqBb/6i0JkYJKn5PPrrBTTy2zY
-	 LMLnH1J9pvFUwYpclUUFJr+DFGHGGG9S/td6sWawQJNomrzPKYP0ANDf8Xl9H19aKQ
-	 W6OejTW8xefhqg2ogw7cyVEve2xkYpq4/pNLPj5E=
+	b=btBhoUVw8c9veSbcB4HOli/ca4TnbCO04KG+bS5rsGHPMHUXb2R2m6tafMM0gaxax
+	 uJxfXc1INFfq/4/w9y8U7AUdj9gSgM4cqqWddrcwsUyViDIJB0x4/fD1lu3AIsHlvX
+	 dm4B1/4ZFytSOQeV5aPCjOASAqX4/Ki0G/X/fmXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 020/143] Revert "drm/amd: Stop evicting resources on APUs in suspend"
-Date: Tue, 20 May 2025 15:49:35 +0200
-Message-ID: <20250520125810.851728274@linuxfoundation.org>
+Subject: [PATCH 6.12 021/143] xhci: dbc: Improve performance by removing delay in transfer event polling.
+Date: Tue, 20 May 2025 15:49:36 +0200
+Message-ID: <20250520125810.889634705@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -45,118 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit d0ce1aaa8531a4a4707711cab5721374751c51b0 ]
+[ Upstream commit 03e3d9c2bd85cda941b3cf78e895c1498ac05c5f ]
 
-This reverts commit 3a9626c816db901def438dc2513622e281186d39.
+Queue event polling work with 0 delay in case there are pending transfers
+queued up. This is part 2 of a 3 part series that roughly triples dbc
+performace when using adb push and pull over dbc.
 
-This breaks S4 because we end up setting the s3/s0ix flags
-even when we are entering s4 since prepare is used by both
-flows.  The causes both the S3/s0ix and s4 flags to be set
-which breaks several checks in the driver which assume they
-are mutually exclusive.
+Max/min push rate after patches is 210/118 MB/s, pull rate 171/133 MB/s,
+tested with large files (300MB-9GB) by Łukasz Bartosik
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3634
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ce8f7d95899c2869b47ea6ce0b3e5bf304b2fff4)
-Cc: stable@vger.kernel.org
+First performance improvement patch was commit 31128e7492dc
+("xhci: dbc: add dbgtty request to end of list once it completes")
+
+Cc: Łukasz Bartosik <ukaszb@chromium.org>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20241227120142.1035206-2-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: cab63934c33b ("xhci: dbc: Avoid event polling busyloop if pending rx transfers are inactive.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu.h        |  2 --
- drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c   | 18 ------------------
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 11 ++---------
- 3 files changed, 2 insertions(+), 29 deletions(-)
+ drivers/usb/host/xhci-dbgcap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu.h b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-index 8050e0960f5e2..7edf8d67a0fa5 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-@@ -1571,11 +1571,9 @@ static inline void amdgpu_acpi_get_backlight_caps(struct amdgpu_dm_backlight_cap
- #if defined(CONFIG_ACPI) && defined(CONFIG_SUSPEND)
- bool amdgpu_acpi_is_s3_active(struct amdgpu_device *adev);
- bool amdgpu_acpi_is_s0ix_active(struct amdgpu_device *adev);
--void amdgpu_choose_low_power_state(struct amdgpu_device *adev);
- #else
- static inline bool amdgpu_acpi_is_s0ix_active(struct amdgpu_device *adev) { return false; }
- static inline bool amdgpu_acpi_is_s3_active(struct amdgpu_device *adev) { return false; }
--static inline void amdgpu_choose_low_power_state(struct amdgpu_device *adev) { }
- #endif
- 
- void amdgpu_register_gpu_instance(struct amdgpu_device *adev);
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-index b8d4e07d2043e..bebfbc1497d8e 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-@@ -1533,22 +1533,4 @@ bool amdgpu_acpi_is_s0ix_active(struct amdgpu_device *adev)
- #endif /* CONFIG_AMD_PMC */
- }
- 
--/**
-- * amdgpu_choose_low_power_state
-- *
-- * @adev: amdgpu_device_pointer
-- *
-- * Choose the target low power state for the GPU
-- */
--void amdgpu_choose_low_power_state(struct amdgpu_device *adev)
--{
--	if (adev->in_runpm)
--		return;
--
--	if (amdgpu_acpi_is_s0ix_active(adev))
--		adev->in_s0ix = true;
--	else if (amdgpu_acpi_is_s3_active(adev))
--		adev->in_s3 = true;
--}
--
- #endif /* CONFIG_SUSPEND */
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index e6c8426fa06ec..1ed84648733ee 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4770,15 +4770,13 @@ int amdgpu_device_prepare(struct drm_device *dev)
- 	struct amdgpu_device *adev = drm_to_adev(dev);
- 	int i, r;
- 
--	amdgpu_choose_low_power_state(adev);
--
- 	if (dev->switch_power_state == DRM_SWITCH_POWER_OFF)
- 		return 0;
- 
- 	/* Evict the majority of BOs before starting suspend sequence */
- 	r = amdgpu_device_evict_resources(adev);
- 	if (r)
--		goto unprepare;
-+		return r;
- 
- 	flush_delayed_work(&adev->gfx.gfx_off_delay_work);
- 
-@@ -4789,15 +4787,10 @@ int amdgpu_device_prepare(struct drm_device *dev)
- 			continue;
- 		r = adev->ip_blocks[i].version->funcs->prepare_suspend((void *)adev);
- 		if (r)
--			goto unprepare;
-+			return r;
- 	}
- 
- 	return 0;
--
--unprepare:
--	adev->in_s0ix = adev->in_s3 = adev->in_s4 = false;
--
--	return r;
- }
- 
- /**
+diff --git a/drivers/usb/host/xhci-dbgcap.c b/drivers/usb/host/xhci-dbgcap.c
+index 241d7aa1fbc20..6b239b3770d15 100644
+--- a/drivers/usb/host/xhci-dbgcap.c
++++ b/drivers/usb/host/xhci-dbgcap.c
+@@ -954,7 +954,7 @@ static void xhci_dbc_handle_events(struct work_struct *work)
+ 		/* set fast poll rate if there are pending data transfers */
+ 		if (!list_empty(&dbc->eps[BULK_OUT].list_pending) ||
+ 		    !list_empty(&dbc->eps[BULK_IN].list_pending))
+-			poll_interval = 1;
++			poll_interval = 0;
+ 		break;
+ 	default:
+ 		dev_info(dbc->dev, "stop handling dbc events\n");
 -- 
 2.39.5
 
