@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC022F37;
-	Tue, 20 May 2025 14:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9893924886C;
+	Tue, 20 May 2025 14:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749990; cv=none; b=p81S4yyitaUc42Zuq1/0bc171Vh5n1rO/RfEDDv/H0F1sBdUDawHIoVSeNJ17s6hFI1Ps74qg0FZ0pDUpD/oZ4BsKA7V+SmsI7E7VEvTn0yDBUQ6NUcs7Sh/ZGFdyirovDruPoJX2QMoenoQlAJOn+B97muqRLyvDWQoncMDUbA=
+	t=1747749993; cv=none; b=IhEWsROOnNZhZBP0G8YWkgzGTLsz9WPuyLuiRJGkOKiDd1Sravf8uUiGesy8bOKM39E3jXSM3GPKGJOoqmVtIXhU9Z58ylWf64mpC8O1h1KoNjPBzDTOdD87/rkYVikaAyyqkzfM/zzjV6MHAbwu8DpgGSwConaOnf/nu3xCNhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749990; c=relaxed/simple;
-	bh=nJctjtODrgE9/l7oYR1Mfmtmvx6UO/67q6WCHW1BVsw=;
+	s=arc-20240116; t=1747749993; c=relaxed/simple;
+	bh=q9os8dGTUmC158sRDeE+69vm0ZVGWThWwzQeYWZ8ANs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FDKHiW8/bFC8ggTxLNuIUkyZ4FcZJuGaRvcFcllHshOJoRJUYJUcwm7WbIABWIzWAldXKTX/MwO6F+KkG5NCslOWi5yiDX4EXA+fodVTf3LQxDgQALqm2/nvjbLDQ/F1YXIfZza12Aihqt490f/5VEej3Mdt/vn+r3iC5sYcKdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YWKlnZXM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cFDOCiNQvOmN5VKKIH8vvNTgU+4jYdv6+d6sJyUFPq0iPGCXCGAF+SQ3i8f66XTPVTtXvHJFqMvvI6lY21t05tcI/Usl/oviIviBAlg5J2n/a81VtPO5QYf91OaWJQb8lf3AetOkeo/564VuPKEHYqGfE0jcik05+VeMbaXbY5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOuVeK1v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YWKlnZXM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7102C4CEE9;
-	Tue, 20 May 2025 14:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOuVeK1v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B852BC4CEE9;
+	Tue, 20 May 2025 14:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749990;
-	bh=nJctjtODrgE9/l7oYR1Mfmtmvx6UO/67q6WCHW1BVsw=;
+	s=korg; t=1747749993;
+	bh=q9os8dGTUmC158sRDeE+69vm0ZVGWThWwzQeYWZ8ANs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YWKlnZXM/qOWCN7UANWjbaY4tKhVGfB8J53El7Sxh9WLOGZ2aEeBczWMFKFNgs4kO
-	 mVLEz9N81ca+CDp8EeH5DUKY6lsoX23COxXr2CC8V1BXiHmyVxErpKqdnJFxVHP/Cx
-	 F1a0teEU+npoPOFtb3mwi+f2FXeEODG/4Xy+UhOY=
+	b=oOuVeK1vHk3d4/086U8MuuXGob202I3ivbh8e679lX7qr4yp3xSmErWnBECSuFfXs
+	 7cVb1el4o1uEdWOdnZmOOgKC+vw6PRFD0rmtSn8FUGGAh7v80QLZCD5hFrBEQfZdrc
+	 uUhsDrAumSfY0bHuKwqRP4ol0QwNa/JIM01g1huQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 117/117] drm/amdgpu: fix pm notifier handling
-Date: Tue, 20 May 2025 15:51:22 +0200
-Message-ID: <20250520125808.640070911@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 6.6 115/117] btrfs: dont BUG_ON() when 0 reference count at btrfs_lookup_extent_info()
+Date: Tue, 20 May 2025 15:51:20 +0200
+Message-ID: <20250520125808.561425319@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -50,94 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 4aaffc85751da5722e858e4333e8cf0aa4b6c78f upstream.
+commit 28cb13f29faf6290597b24b728dc3100c019356f upstream.
 
-Set the s3/s0ix and s4 flags in the pm notifier so that we can skip
-the resource evictions properly in pm prepare based on whether
-we are suspending or hibernating.  Drop the eviction as processes
-are not frozen at this time, we we can end up getting stuck trying
-to evict VRAM while applications continue to submit work which
-causes the buffers to get pulled back into VRAM.
+Instead of doing a BUG_ON() handle the error by returning -EUCLEAN,
+aborting the transaction and logging an error message.
 
-v2: Move suspend flags out of pm notifier (Mario)
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4178
-Fixes: 2965e6355dcd ("drm/amd: Add Suspend/Hibernate notification callback support")
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 06f2dcc241e7e5c681f81fbc46cacdf4bfd7d6d7)
-Cc: stable@vger.kernel.org
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[Minor conflict resolved due to code context change.]
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   18 +++++-------------
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c    |   10 +---------
- 2 files changed, 6 insertions(+), 22 deletions(-)
+ fs/btrfs/extent-tree.c |   25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4125,28 +4125,20 @@ static int amdgpu_device_evict_resources
-  * @data: data
-  *
-  * This function is called when the system is about to suspend or hibernate.
-- * It is used to evict resources from the device before the system goes to
-- * sleep while there is still access to swap.
-+ * It is used to set the appropriate flags so that eviction can be optimized
-+ * in the pm prepare callback.
-  */
- static int amdgpu_device_pm_notifier(struct notifier_block *nb, unsigned long mode,
- 				     void *data)
- {
- 	struct amdgpu_device *adev = container_of(nb, struct amdgpu_device, pm_nb);
--	int r;
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -164,6 +164,14 @@ search_again:
+ 			ei = btrfs_item_ptr(leaf, path->slots[0],
+ 					    struct btrfs_extent_item);
+ 			num_refs = btrfs_extent_refs(leaf, ei);
++			if (unlikely(num_refs == 0)) {
++				ret = -EUCLEAN;
++				btrfs_err(fs_info,
++			"unexpected zero reference count for extent item (%llu %u %llu)",
++					  key.objectid, key.type, key.offset);
++				btrfs_abort_transaction(trans, ret);
++				goto out_free;
++			}
+ 			extent_flags = btrfs_extent_flags(leaf, ei);
+ 		} else {
+ 			ret = -EUCLEAN;
+@@ -177,8 +185,6 @@ search_again:
  
- 	switch (mode) {
- 	case PM_HIBERNATION_PREPARE:
- 		adev->in_s4 = true;
--		fallthrough;
--	case PM_SUSPEND_PREPARE:
--		r = amdgpu_device_evict_resources(adev);
--		/*
--		 * This is considered non-fatal at this time because
--		 * amdgpu_device_prepare() will also fatally evict resources.
--		 * See https://gitlab.freedesktop.org/drm/amd/-/issues/3781
--		 */
--		if (r)
--			drm_warn(adev_to_drm(adev), "Failed to evict resources, freeze active processes if problems occur: %d\n", r);
-+		break;
-+	case PM_POST_HIBERNATION:
-+		adev->in_s4 = false;
- 		break;
- 	}
- 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2475,13 +2475,8 @@ static int amdgpu_pmops_freeze(struct de
- static int amdgpu_pmops_thaw(struct device *dev)
- {
- 	struct drm_device *drm_dev = dev_get_drvdata(dev);
--	struct amdgpu_device *adev = drm_to_adev(drm_dev);
--	int r;
- 
--	r = amdgpu_device_resume(drm_dev, true);
--	adev->in_s4 = false;
+ 			goto out_free;
+ 		}
 -
--	return r;
-+	return amdgpu_device_resume(drm_dev, true);
- }
+-		BUG_ON(num_refs == 0);
+ 	} else {
+ 		num_refs = 0;
+ 		extent_flags = 0;
+@@ -208,10 +214,19 @@ search_again:
+ 			goto search_again;
+ 		}
+ 		spin_lock(&head->lock);
+-		if (head->extent_op && head->extent_op->update_flags)
++		if (head->extent_op && head->extent_op->update_flags) {
+ 			extent_flags |= head->extent_op->flags_to_set;
+-		else
+-			BUG_ON(num_refs == 0);
++		} else if (unlikely(num_refs == 0)) {
++			spin_unlock(&head->lock);
++			mutex_unlock(&head->mutex);
++			spin_unlock(&delayed_refs->lock);
++			ret = -EUCLEAN;
++			btrfs_err(fs_info,
++			  "unexpected zero reference count for extent %llu (%s)",
++				  bytenr, metadata ? "metadata" : "data");
++			btrfs_abort_transaction(trans, ret);
++			goto out_free;
++		}
  
- static int amdgpu_pmops_poweroff(struct device *dev)
-@@ -2494,9 +2489,6 @@ static int amdgpu_pmops_poweroff(struct
- static int amdgpu_pmops_restore(struct device *dev)
- {
- 	struct drm_device *drm_dev = dev_get_drvdata(dev);
--	struct amdgpu_device *adev = drm_to_adev(drm_dev);
--
--	adev->in_s4 = false;
- 
- 	return amdgpu_device_resume(drm_dev, true);
- }
+ 		num_refs += head->ref_mod;
+ 		spin_unlock(&head->lock);
 
 
