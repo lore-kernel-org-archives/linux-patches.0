@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019002459DA;
-	Tue, 20 May 2025 14:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9F5242D7C;
+	Tue, 20 May 2025 14:09:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750141; cv=none; b=dlCFYY/q/lqtQYEpprppWtdzsheXCBTjbgeT35Zk0qPJiREu6tA4wCoJnNeH6mPK+sjygHHKR7SQRLEBlPuZFa8CtLxD1Yo79+EsC19Qm5pcXq4vAKngootH44/4jCUw/NkKa4vo9jLFRXzvryYEwepuRHDfoDsQ9bnrpEW6gxY=
+	t=1747750144; cv=none; b=vBMuzS193NXnKvg6pJ2GjjoWYoAH/CO+xbFv7gBRIPotPyFSepRRyIzEHaHPgtKJWycqU66YeWy02ydZaZVRN6nmSEgQIdXM4Z1crDq30FBSlT8lSSWxo4J+MUi4rGmCCVAbj2333YZDV0fYcqj8luj6MsrM11alRg6s4OOsT44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750141; c=relaxed/simple;
-	bh=2CIrRS4sbjou7qHhe6ubT3dka9OL0rrejPNNCMRE4zM=;
+	s=arc-20240116; t=1747750144; c=relaxed/simple;
+	bh=EFTkiE/sn8hvqFqKuf32t1sHkPSmgr2MkHpg2zn+Gi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qJyFe3lgtWjhK8Ls/8ySKcqHQxqid2aLPbOCFiTNR/KjqFsypCLq7X6fkyKF4h5k7QWjjnP8PbYOyoOIhzEfrAprA4VlHJ6HA8LT//0plqCE+q3R9ijSeSCzkIdW2W2bpO//1lifGiGS0oMOBcInsLcZxQiSn6tbcWK8y4+5f2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IuriOXQh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cQb2W1KOtaRZi81VHY+QNs1d1Lqf3xDs369RCVep3WXegmcvnmDZ+hhTlfvM5+HCk3r+HihZK6x/rjMpUXDXy9bgswOmRCP9xRYAlZS8yQ2ZMvSQOfjfY2o8LIhlppex1S3XlO5l3v6YMu6eJyTFsIkTHkjl1aAhMtw8TlCQ/xE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOabGrFV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IuriOXQh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E99EC4CEEB;
-	Tue, 20 May 2025 14:09:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOabGrFV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 765A6C4CEE9;
+	Tue, 20 May 2025 14:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750140;
-	bh=2CIrRS4sbjou7qHhe6ubT3dka9OL0rrejPNNCMRE4zM=;
+	s=korg; t=1747750143;
+	bh=EFTkiE/sn8hvqFqKuf32t1sHkPSmgr2MkHpg2zn+Gi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IuriOXQhMJK/gJyLWr57UHXBz084Gf43HTKtZFCVwSuzVEKdU+vI7F72Q+qGbx0PZ
-	 jA5qBk2T1/vez+GDiNP7eMy+UFRC43BRTBnG17EcOcTZkMCPUiadJCz4pmtKawcFx8
-	 09JM8XvkQ/i1++SQkF9/49L/KoksysWQJ/6SsTqg=
+	b=kOabGrFVQ/skOYldGupbwftpITJB3gPWfsmlXisiwqLvmJ98oO6zJf8t/cMU8ER8F
+	 tw5HvMgKR9UlSjZgQ+CCYk0ZZOJmWY+j6lUkeIpihBxeQPuRTWK7no7Qza1wvseu48
+	 aFULOBiswe1kSXXMjh34Sd5yGxC2b8yaUuEDsqWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mina Almasry <almasrymina@google.com>,
-	Joe Damato <jdamato@fastly.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cosmin Tanislav <demonsingur@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 038/143] selftests: ncdevmem: Redirect all non-payload output to stderr
-Date: Tue, 20 May 2025 15:49:53 +0200
-Message-ID: <20250520125811.555587063@linuxfoundation.org>
+Subject: [PATCH 6.12 056/143] regulator: max20086: fix invalid memory access
+Date: Tue, 20 May 2025 15:50:11 +0200
+Message-ID: <20250520125812.258921224@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -53,220 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Fomichev <sdf@fomichev.me>
+From: Cosmin Tanislav <demonsingur@gmail.com>
 
-[ Upstream commit 6891f0b523e1ef452523ba43d67ca2a654760e78 ]
+[ Upstream commit 6b0cd72757c69bc2d45da42b41023e288d02e772 ]
 
-That should make it possible to do expected payload validation on
-the caller side.
+max20086_parse_regulators_dt() calls of_regulator_match() using an
+array of struct of_regulator_match allocated on the stack for the
+matches argument.
 
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Reviewed-by: Joe Damato <jdamato@fastly.com>
-Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20241107181211.3934153-2-sdf@fomichev.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 97c4e094a4b2 ("tests/ncdevmem: Fix double-free of queue array")
+of_regulator_match() calls devm_of_regulator_put_matches(), which calls
+devres_alloc() to allocate a struct devm_of_regulator_matches which will
+be de-allocated using devm_of_regulator_put_matches().
+
+struct devm_of_regulator_matches is populated with the stack allocated
+matches array.
+
+If the device fails to probe, devm_of_regulator_put_matches() will be
+called and will try to call of_node_put() on that stack pointer,
+generating the following dmesg entries:
+
+max20086 6-0028: Failed to read DEVICE_ID reg: -121
+kobject: '\xc0$\xa5\x03' (000000002cebcb7a): is not initialized, yet
+kobject_put() is being called.
+
+Followed by a stack trace matching the call flow described above.
+
+Switch to allocating the matches array using devm_kcalloc() to
+avoid accessing the stack pointer long after it's out of scope.
+
+This also has the advantage of allowing multiple max20086 to probe
+without overriding the data stored inside the global of_regulator_match.
+
+Fixes: bfff546aae50 ("regulator: Add MAX20086-MAX20089 driver")
+Signed-off-by: Cosmin Tanislav <demonsingur@gmail.com>
+Link: https://patch.msgid.link/20250508064947.2567255-1-demonsingur@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/ncdevmem.c | 61 +++++++++++++-------------
- 1 file changed, 30 insertions(+), 31 deletions(-)
+ drivers/regulator/max20086-regulator.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/ncdevmem.c b/tools/testing/selftests/net/ncdevmem.c
-index 64d6805381c50..9245d3f158dd3 100644
---- a/tools/testing/selftests/net/ncdevmem.c
-+++ b/tools/testing/selftests/net/ncdevmem.c
-@@ -88,7 +88,6 @@ void print_nonzero_bytes(void *ptr, size_t size)
+diff --git a/drivers/regulator/max20086-regulator.c b/drivers/regulator/max20086-regulator.c
+index 59eb23d467ec0..198d45f8e8849 100644
+--- a/drivers/regulator/max20086-regulator.c
++++ b/drivers/regulator/max20086-regulator.c
+@@ -132,7 +132,7 @@ static int max20086_regulators_register(struct max20086 *chip)
  
- 	for (i = 0; i < size; i++)
- 		putchar(p[i]);
--	printf("\n");
- }
- 
- void validate_buffer(void *line, size_t size)
-@@ -120,7 +119,7 @@ void validate_buffer(void *line, size_t size)
- 		char command[256];                                      \
- 		memset(command, 0, sizeof(command));                    \
- 		snprintf(command, sizeof(command), cmd, ##__VA_ARGS__); \
--		printf("Running: %s\n", command);                       \
-+		fprintf(stderr, "Running: %s\n", command);                       \
- 		system(command);                                        \
- 	})
- 
-@@ -128,22 +127,22 @@ static int reset_flow_steering(void)
+ static int max20086_parse_regulators_dt(struct max20086 *chip, bool *boot_on)
  {
- 	int ret = 0;
- 
--	ret = run_command("sudo ethtool -K %s ntuple off", ifname);
-+	ret = run_command("sudo ethtool -K %s ntuple off >&2", ifname);
- 	if (ret)
- 		return ret;
- 
--	return run_command("sudo ethtool -K %s ntuple on", ifname);
-+	return run_command("sudo ethtool -K %s ntuple on >&2", ifname);
- }
- 
- static int configure_headersplit(bool on)
- {
--	return run_command("sudo ethtool -G %s tcp-data-split %s", ifname,
-+	return run_command("sudo ethtool -G %s tcp-data-split %s >&2", ifname,
- 			   on ? "on" : "off");
- }
- 
- static int configure_rss(void)
- {
--	return run_command("sudo ethtool -X %s equal %d", ifname, start_queue);
-+	return run_command("sudo ethtool -X %s equal %d >&2", ifname, start_queue);
- }
- 
- static int configure_channels(unsigned int rx, unsigned int tx)
-@@ -153,7 +152,7 @@ static int configure_channels(unsigned int rx, unsigned int tx)
- 
- static int configure_flow_steering(void)
- {
--	return run_command("sudo ethtool -N %s flow-type tcp4 src-ip %s dst-ip %s src-port %s dst-port %s queue %d",
-+	return run_command("sudo ethtool -N %s flow-type tcp4 src-ip %s dst-ip %s src-port %s dst-port %s queue %d >&2",
- 			   ifname, client_ip, server_ip, port, port, start_queue);
- }
- 
-@@ -187,7 +186,7 @@ static int bind_rx_queue(unsigned int ifindex, unsigned int dmabuf_fd,
- 		goto err_close;
+-	struct of_regulator_match matches[MAX20086_MAX_REGULATORS] = { };
++	struct of_regulator_match *matches;
+ 	struct device_node *node;
+ 	unsigned int i;
+ 	int ret;
+@@ -143,6 +143,11 @@ static int max20086_parse_regulators_dt(struct max20086 *chip, bool *boot_on)
+ 		return -ENODEV;
  	}
  
--	printf("got dmabuf id=%d\n", rsp->id);
-+	fprintf(stderr, "got dmabuf id=%d\n", rsp->id);
- 	dmabuf_id = rsp->id;
- 
- 	netdev_bind_rx_req_free(req);
-@@ -314,8 +313,8 @@ int do_server(void)
- 	if (ret)
- 		error(errno, errno, "%s: [FAIL, set sock opt]\n", TEST_PREFIX);
- 
--	printf("binding to address %s:%d\n", server_ip,
--	       ntohs(server_sin.sin_port));
-+	fprintf(stderr, "binding to address %s:%d\n", server_ip,
-+		ntohs(server_sin.sin_port));
- 
- 	ret = bind(socket_fd, &server_sin, sizeof(server_sin));
- 	if (ret)
-@@ -329,14 +328,14 @@ int do_server(void)
- 
- 	inet_ntop(server_sin.sin_family, &server_sin.sin_addr, buffer,
- 		  sizeof(buffer));
--	printf("Waiting or connection on %s:%d\n", buffer,
--	       ntohs(server_sin.sin_port));
-+	fprintf(stderr, "Waiting or connection on %s:%d\n", buffer,
-+		ntohs(server_sin.sin_port));
- 	client_fd = accept(socket_fd, &client_addr, &client_addr_len);
- 
- 	inet_ntop(client_addr.sin_family, &client_addr.sin_addr, buffer,
- 		  sizeof(buffer));
--	printf("Got connection from %s:%d\n", buffer,
--	       ntohs(client_addr.sin_port));
-+	fprintf(stderr, "Got connection from %s:%d\n", buffer,
-+		ntohs(client_addr.sin_port));
- 
- 	while (1) {
- 		struct iovec iov = { .iov_base = iobuf,
-@@ -349,14 +348,13 @@ int do_server(void)
- 		ssize_t ret;
- 
- 		is_devmem = false;
--		printf("\n\n");
- 
- 		msg.msg_iov = &iov;
- 		msg.msg_iovlen = 1;
- 		msg.msg_control = ctrl_data;
- 		msg.msg_controllen = sizeof(ctrl_data);
- 		ret = recvmsg(client_fd, &msg, MSG_SOCK_DEVMEM);
--		printf("recvmsg ret=%ld\n", ret);
-+		fprintf(stderr, "recvmsg ret=%ld\n", ret);
- 		if (ret < 0 && (errno == EAGAIN || errno == EWOULDBLOCK))
- 			continue;
- 		if (ret < 0) {
-@@ -364,7 +362,7 @@ int do_server(void)
- 			continue;
- 		}
- 		if (ret == 0) {
--			printf("client exited\n");
-+			fprintf(stderr, "client exited\n");
- 			goto cleanup;
- 		}
- 
-@@ -373,7 +371,7 @@ int do_server(void)
- 			if (cm->cmsg_level != SOL_SOCKET ||
- 			    (cm->cmsg_type != SCM_DEVMEM_DMABUF &&
- 			     cm->cmsg_type != SCM_DEVMEM_LINEAR)) {
--				fprintf(stdout, "skipping non-devmem cmsg\n");
-+				fprintf(stderr, "skipping non-devmem cmsg\n");
- 				continue;
- 			}
- 
-@@ -384,7 +382,7 @@ int do_server(void)
- 				/* TODO: process data copied from skb's linear
- 				 * buffer.
- 				 */
--				fprintf(stdout,
-+				fprintf(stderr,
- 					"SCM_DEVMEM_LINEAR. dmabuf_cmsg->frag_size=%u\n",
- 					dmabuf_cmsg->frag_size);
- 
-@@ -395,12 +393,13 @@ int do_server(void)
- 			token.token_count = 1;
- 
- 			total_received += dmabuf_cmsg->frag_size;
--			printf("received frag_page=%llu, in_page_offset=%llu, frag_offset=%llu, frag_size=%u, token=%u, total_received=%lu, dmabuf_id=%u\n",
--			       dmabuf_cmsg->frag_offset >> PAGE_SHIFT,
--			       dmabuf_cmsg->frag_offset % getpagesize(),
--			       dmabuf_cmsg->frag_offset, dmabuf_cmsg->frag_size,
--			       dmabuf_cmsg->frag_token, total_received,
--			       dmabuf_cmsg->dmabuf_id);
-+			fprintf(stderr,
-+				"received frag_page=%llu, in_page_offset=%llu, frag_offset=%llu, frag_size=%u, token=%u, total_received=%lu, dmabuf_id=%u\n",
-+				dmabuf_cmsg->frag_offset >> PAGE_SHIFT,
-+				dmabuf_cmsg->frag_offset % getpagesize(),
-+				dmabuf_cmsg->frag_offset,
-+				dmabuf_cmsg->frag_size, dmabuf_cmsg->frag_token,
-+				total_received, dmabuf_cmsg->dmabuf_id);
- 
- 			if (dmabuf_cmsg->dmabuf_id != dmabuf_id)
- 				error(1, 0,
-@@ -438,15 +437,15 @@ int do_server(void)
- 		if (!is_devmem)
- 			error(1, 0, "flow steering error\n");
- 
--		printf("total_received=%lu\n", total_received);
-+		fprintf(stderr, "total_received=%lu\n", total_received);
- 	}
- 
--	fprintf(stdout, "%s: ok\n", TEST_PREFIX);
-+	fprintf(stderr, "%s: ok\n", TEST_PREFIX);
- 
--	fprintf(stdout, "page_aligned_frags=%lu, non_page_aligned_frags=%lu\n",
-+	fprintf(stderr, "page_aligned_frags=%lu, non_page_aligned_frags=%lu\n",
- 		page_aligned_frags, non_page_aligned_frags);
- 
--	fprintf(stdout, "page_aligned_frags=%lu, non_page_aligned_frags=%lu\n",
-+	fprintf(stderr, "page_aligned_frags=%lu, non_page_aligned_frags=%lu\n",
- 		page_aligned_frags, non_page_aligned_frags);
- 
- cleanup:
-@@ -551,7 +550,7 @@ int main(int argc, char *argv[])
- 			ifname = optarg;
- 			break;
- 		case '?':
--			printf("unknown option: %c\n", optopt);
-+			fprintf(stderr, "unknown option: %c\n", optopt);
- 			break;
- 		}
- 	}
-@@ -559,7 +558,7 @@ int main(int argc, char *argv[])
- 	ifindex = if_nametoindex(ifname);
- 
- 	for (; optind < argc; optind++)
--		printf("extra arguments: %s\n", argv[optind]);
-+		fprintf(stderr, "extra arguments: %s\n", argv[optind]);
- 
- 	run_devmem_tests();
++	matches = devm_kcalloc(chip->dev, chip->info->num_outputs,
++			       sizeof(*matches), GFP_KERNEL);
++	if (!matches)
++		return -ENOMEM;
++
+ 	for (i = 0; i < chip->info->num_outputs; ++i)
+ 		matches[i].name = max20086_output_names[i];
  
 -- 
 2.39.5
