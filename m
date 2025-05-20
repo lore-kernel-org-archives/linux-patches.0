@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1C819F137;
-	Tue, 20 May 2025 13:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4600822D78C;
+	Tue, 20 May 2025 13:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749255; cv=none; b=HjVBBfhrC83QVA62Q4a+DvuFVftA+WNVZYZfvtldT0XGALodTHXv3lqQDECcNOlhIgbMh/D/R62p9PUvRZibzPhz1Jq0wh3Ug2rREkFYsi4CV0ykObvITuWyih+IM0gMcGaTqdy9uxFMvdAMSF+yoa+Snu93Z3whfSgnFJVPrMU=
+	t=1747749257; cv=none; b=aGVdDx3D0cVRdgzlg0LGkPOpaNd4a3j8229StzpQbivrXBJBLoywpGZEJJXc8a2Fjh0T2d8mpoNQ2kZmEBPfhe9kD7bVyzohcQb86+ddar4IQCpbkaBbHqi9H7a/M+yG/DrdgRwDoZJCc6cGyEwc33mtgnkHswPf3HuBWdz1yRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749255; c=relaxed/simple;
-	bh=+tBx2R5yLNxtN1vc1hUfuyQ6Rj0o+O/Z56szf3e+OLk=;
+	s=arc-20240116; t=1747749257; c=relaxed/simple;
+	bh=ZtmbbANvrtgmnMURulRnXfv8oYoZVDJM/oIKMOlZMxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qAKNuLH5eu43RkBCQAy23b44Z81ewMNC1VGif/v30fh6tNtbh0kE7AZyciT5P0eBkO8LNOM3VkER1cjT+mrFyFFoRCvsrsiAbOtNtiucfDXJs9LCtKPbEubWsR+sC/zcIJ4xwiMP8ZaNjFBr2nZHHomctYNL+tHrA/RridAm5mE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KspfqqZp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CS8a9XT/UCVlKQeNqT/Oyds5knx/7XEwTPIBQbdNYZLpjnu+dde2fvMnkFN0u4MB8C4VzpnbzrHRAlJZfDdnI9GmbzlL0TYPlpFnAZ4fMzia6ZbhrYsmhOtxUKp43RzP9GVkBF5m2iMClctw7ar6n7DqLn8E3kdDPV5IOGCUJlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1Hnu4+B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KspfqqZp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C45C4CEE9;
-	Tue, 20 May 2025 13:54:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1Hnu4+B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C145EC4CEE9;
+	Tue, 20 May 2025 13:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749254;
-	bh=+tBx2R5yLNxtN1vc1hUfuyQ6Rj0o+O/Z56szf3e+OLk=;
+	s=korg; t=1747749257;
+	bh=ZtmbbANvrtgmnMURulRnXfv8oYoZVDJM/oIKMOlZMxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KspfqqZpZpj0NPO5/lzeZz5RY7s6ZMgqw1gPP5YY93s5bKmbduFdVMuAXWEQX2Cfq
-	 Xt/hAgTUgeSsUVtbOm6GMHm2Eep5/eod+xxqH81R8t9s+4l+2oO5QgDxnFY4GXiCqg
-	 651MhcJ/lcuTttO6XPNZBpVd+Tov8RiT/etWqTl0=
+	b=r1Hnu4+BUoc34Rv88k6mpouB3BwRdkZkQg27izuVhdK9eWtbvaV8+Xo3j76KjDPEZ
+	 XUdL8qKmt/zH5NAFiSnOY/V9cY2GPyLrjQT/w5PMFMgk8AB9QLzQLmPX1EUTZOVvPc
+	 m3QM4te28WaXe3Qk8SXcR2iQA9jffpWgtgRkWDLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Fenghua Yu <fenghuay@nvidia.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 45/59] dmaengine: idxd: fix memory leak in error handling path of idxd_setup_groups
-Date: Tue, 20 May 2025 15:50:36 +0200
-Message-ID: <20250520125755.634281711@linuxfoundation.org>
+	"stable@vger.kernel.org, Fengnan Chang" <changfengnan@bytedance.com>,
+	Fengnan Chang <changfengnan@bytedance.com>
+Subject: [PATCH 5.15 46/59] block: fix direct io NOWAIT flag not work
+Date: Tue, 20 May 2025 15:50:37 +0200
+Message-ID: <20250520125755.671687774@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
 References: <20250520125753.836407405@linuxfoundation.org>
@@ -52,46 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Fengnan Chang <changfengnan@bytedance.com>
 
-commit aa6f4f945b10eac57aed46154ae7d6fada7fccc7 upstream.
+commit 8b44b4d81598 ("block: don't allow multiple bios for IOCB_NOWAIT
+issue") backport a upstream fix, but miss commit b77c88c2100c ("block:
+pass a block_device and opf to bio_alloc_kiocb"), and introduce this bug.
+commit b77c88c2100c ("block: pass a block_device and opf to
+bio_alloc_kiocb") have other depend patch, so just fix it.
 
-Memory allocated for groups is not freed if an error occurs during
-idxd_setup_groups(). To fix it, free the allocated memory in the reverse
-order of allocation before exiting the function in case of an error.
-
-Fixes: defe49f96012 ("dmaengine: idxd: fix group conf_dev lifetime")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Fenghua Yu <fenghuay@nvidia.com>
-Link: https://lore.kernel.org/r/20250404120217.48772-4-xueshuai@linux.alibaba.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 8b44b4d81598 ("block: don't allow multiple bios for IOCB_NOWAIT issue")
+Signed-off-by: Fengnan Chang <changfengnan@bytedance.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/idxd/init.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ block/fops.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -340,6 +340,7 @@ static int idxd_setup_groups(struct idxd
- 		rc = dev_set_name(conf_dev, "group%d.%d", idxd->id, group->id);
- 		if (rc < 0) {
- 			put_device(conf_dev);
-+			kfree(group);
- 			goto err;
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -259,7 +259,6 @@ static ssize_t __blkdev_direct_IO(struct
+ 				blk_finish_plug(&plug);
+ 				return -EAGAIN;
+ 			}
+-			bio->bi_opf |= REQ_NOWAIT;
  		}
  
-@@ -359,7 +360,10 @@ static int idxd_setup_groups(struct idxd
- 	while (--i >= 0) {
- 		group = idxd->groups[i];
- 		put_device(group_confdev(group));
-+		kfree(group);
- 	}
-+	kfree(idxd->groups);
+ 		if (is_read) {
+@@ -270,6 +269,10 @@ static ssize_t __blkdev_direct_IO(struct
+ 			bio->bi_opf = dio_bio_write_op(iocb);
+ 			task_io_account_write(bio->bi_iter.bi_size);
+ 		}
 +
- 	return rc;
- }
++		if (iocb->ki_flags & IOCB_NOWAIT)
++			bio->bi_opf |= REQ_NOWAIT;
++
+ 		dio->size += bio->bi_iter.bi_size;
+ 		pos += bio->bi_iter.bi_size;
  
 
 
