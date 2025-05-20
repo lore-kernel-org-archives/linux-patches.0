@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB66F242907;
-	Tue, 20 May 2025 14:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA0F246775;
+	Tue, 20 May 2025 14:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749955; cv=none; b=a0B6nwRZtaRPis9veVZ8KJUJpA+neVe9Fm3yZeanBYDYdMxYe9ei+9SflZjf07ItDWq/+/qJ3YYTCqtz2xat9gMPBjzI5DrmoMxCM+GPT62OHpqeQBq+MXF/wFvka650iW0zudldrCsQAHVTnGCJRv3XGjkTpvtT8Z5cCw7FsuU=
+	t=1747749958; cv=none; b=loiHQkEv05tn1PVhjOQg8x3L4KZCDBFsDO4TSx8GmVs/BP0rS1BcL0korwrwa/EUAJTDO3aoNBHB4Nuur88ReIlRErNzTmO2Fgqi3tGhQ0T+2APVV/0cYOgEMJWSkS9AyGGnQPm10N8eEVxN3mxE5z0+PtYhNZxtpAPcUCbutK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749955; c=relaxed/simple;
-	bh=bgQ0W7L9igsBdnBQXOr40EiX4HMfDhjJN2NK1SypqtA=;
+	s=arc-20240116; t=1747749958; c=relaxed/simple;
+	bh=eO8TLMg1PdzJ4Z8rcif98zeQh+i23BIS213GxZaOum0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IgWW0KaPokGGnd3kqSf2SHm9HI5DBOIxSVq2QOAub2NB0OgAe8OV1bH6qbZ8rtcauUwVL5tIHWXI9+9bdHbfecnpsS5ZVCqJQh0ndNRE5u9L3QiiYkEYmwUbJcYWgpgWxvIsnSrbR3PNP7ehR0nrB6NlCR5mwOFaz4Hzdei81fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1xjtk6RZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CJrG0FLtxGyGjsyVQssq+A7rqC1+HGjWIy29Eo3mpJRWu6NATKy2kPJ/PwMd7H+qWhb6aG9Ck9HAAbJZT6WkwPzhQ2XkgCHGwC7WtsyUNAoKb4uzFxQV1XG7c9hey1wt1PcqjRxOnDK2ii+79p/t8IgH/DOjOxmoy8YkcYUVoB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GrUzcmUS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1xjtk6RZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A34C4CEE9;
-	Tue, 20 May 2025 14:05:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GrUzcmUS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A69C4CEE9;
+	Tue, 20 May 2025 14:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749955;
-	bh=bgQ0W7L9igsBdnBQXOr40EiX4HMfDhjJN2NK1SypqtA=;
+	s=korg; t=1747749958;
+	bh=eO8TLMg1PdzJ4Z8rcif98zeQh+i23BIS213GxZaOum0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1xjtk6RZZJxrOiPzw0zHChFuWMjMYrGG3wm0kjNKlQLeRj8vagF8zt/2f2AxPOKFy
-	 j3br7ros2bYO2/iIbAmt5tFB12XmtEmNq/vwaVJR7gzbBqvImxBuToj68PCbNPg3as
-	 clyeh+O0YUHQr+zAyW5/VCLs6saCZr77XhDZbS/o=
+	b=GrUzcmUSwAVDYH6850m0yK36B0h/SIfcCgds44LAOr87ZVjFg0QtIYZPlWcnhpLdw
+	 l0oH1gaAtDPq7xjzz4Yz8Kaax+t9HdC28GjknTGhaKjoin/a/1M8KC9ainfM8ktCeh
+	 glhhIBpyxg0lzAS6vkQ0QPINVTZcQ8UVvZDUxFmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>
-Subject: [PATCH 6.6 112/117] memblock: Accept allocated memory before use in memblock_double_array()
-Date: Tue, 20 May 2025 15:51:17 +0200
-Message-ID: <20250520125808.444075823@linuxfoundation.org>
+	Ma Wupeng <mawupeng1@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 6.6 113/117] hwpoison, memory_hotplug: lock folio before unmap hwpoisoned folio
+Date: Tue, 20 May 2025 15:51:18 +0200
+Message-ID: <20250520125808.484492307@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -50,72 +57,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Lendacky <thomas.lendacky@amd.com>
+From: Ma Wupeng <mawupeng1@huawei.com>
 
-commit da8bf5daa5e55a6af2b285ecda460d6454712ff4 upstream.
+commit af288a426c3e3552b62595c6138ec6371a17dbba upstream.
 
-When increasing the array size in memblock_double_array() and the slab
-is not yet available, a call to memblock_find_in_range() is used to
-reserve/allocate memory. However, the range returned may not have been
-accepted, which can result in a crash when booting an SNP guest:
+Commit b15c87263a69 ("hwpoison, memory_hotplug: allow hwpoisoned pages to
+be offlined) add page poison checks in do_migrate_range in order to make
+offline hwpoisoned page possible by introducing isolate_lru_page and
+try_to_unmap for hwpoisoned page.  However folio lock must be held before
+calling try_to_unmap.  Add it to fix this problem.
 
-  RIP: 0010:memcpy_orig+0x68/0x130
-  Code: ...
-  RSP: 0000:ffffffff9cc03ce8 EFLAGS: 00010006
-  RAX: ff11001ff83e5000 RBX: 0000000000000000 RCX: fffffffffffff000
-  RDX: 0000000000000bc0 RSI: ffffffff9dba8860 RDI: ff11001ff83e5c00
-  RBP: 0000000000002000 R08: 0000000000000000 R09: 0000000000002000
-  R10: 000000207fffe000 R11: 0000040000000000 R12: ffffffff9d06ef78
-  R13: ff11001ff83e5000 R14: ffffffff9dba7c60 R15: 0000000000000c00
-  memblock_double_array+0xff/0x310
-  memblock_add_range+0x1fb/0x2f0
-  memblock_reserve+0x4f/0xa0
-  memblock_alloc_range_nid+0xac/0x130
-  memblock_alloc_internal+0x53/0xc0
-  memblock_alloc_try_nid+0x3d/0xa0
-  swiotlb_init_remap+0x149/0x2f0
-  mem_init+0xb/0xb0
-  mm_core_init+0x8f/0x350
-  start_kernel+0x17e/0x5d0
-  x86_64_start_reservations+0x14/0x30
-  x86_64_start_kernel+0x92/0xa0
-  secondary_startup_64_no_verify+0x194/0x19b
+Warning will be produced if folio is not locked during unmap:
 
-Mitigate this by calling accept_memory() on the memory range returned
-before the slab is available.
+  ------------[ cut here ]------------
+  kernel BUG at ./include/linux/swapops.h:400!
+  Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
+  Modules linked in:
+  CPU: 4 UID: 0 PID: 411 Comm: bash Tainted: G        W          6.13.0-rc1-00016-g3c434c7ee82a-dirty #41
+  Tainted: [W]=WARN
+  Hardware name: QEMU QEMU Virtual Machine, BIOS 0.0.0 02/06/2015
+  pstate: 40400005 (nZcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  pc : try_to_unmap_one+0xb08/0xd3c
+  lr : try_to_unmap_one+0x3dc/0xd3c
+  Call trace:
+   try_to_unmap_one+0xb08/0xd3c (P)
+   try_to_unmap_one+0x3dc/0xd3c (L)
+   rmap_walk_anon+0xdc/0x1f8
+   rmap_walk+0x3c/0x58
+   try_to_unmap+0x88/0x90
+   unmap_poisoned_folio+0x30/0xa8
+   do_migrate_range+0x4a0/0x568
+   offline_pages+0x5a4/0x670
+   memory_block_action+0x17c/0x374
+   memory_subsys_offline+0x3c/0x78
+   device_offline+0xa4/0xd0
+   state_store+0x8c/0xf0
+   dev_attr_store+0x18/0x2c
+   sysfs_kf_write+0x44/0x54
+   kernfs_fop_write_iter+0x118/0x1a8
+   vfs_write+0x3a8/0x4bc
+   ksys_write+0x6c/0xf8
+   __arm64_sys_write+0x1c/0x28
+   invoke_syscall+0x44/0x100
+   el0_svc_common.constprop.0+0x40/0xe0
+   do_el0_svc+0x1c/0x28
+   el0_svc+0x30/0xd0
+   el0t_64_sync_handler+0xc8/0xcc
+   el0t_64_sync+0x198/0x19c
+  Code: f9407be0 b5fff320 d4210000 17ffff97 (d4210000)
+  ---[ end trace 0000000000000000 ]---
 
-Prior to v6.12, the accept_memory() interface used a 'start' and 'end'
-parameter instead of 'start' and 'size', therefore the accept_memory()
-call must be adjusted to specify 'start + size' for 'end' when applying
-to kernels prior to v6.12.
-
-Cc: stable@vger.kernel.org # see patch description, needs adjustments for <= 6.11
-Fixes: dcdfdd40fa82 ("mm: Add support for unaccepted memory")
-Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://lore.kernel.org/r/da1ac73bf4ded761e21b4e4bb5178382a580cd73.1746725050.git.thomas.lendacky@amd.com
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Link: https://lkml.kernel.org/r/20250217014329.3610326-4-mawupeng1@huawei.com
+Fixes: b15c87263a69 ("hwpoison, memory_hotplug: allow hwpoisoned pages to be offlined")
+Signed-off-by: Ma Wupeng <mawupeng1@huawei.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memblock.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ mm/memory_hotplug.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/mm/memblock.c
-+++ b/mm/memblock.c
-@@ -460,7 +460,14 @@ static int __init_memblock memblock_doub
- 				min(new_area_start, memblock.current_limit),
- 				new_alloc_size, PAGE_SIZE);
- 
--		new_array = addr ? __va(addr) : NULL;
-+		if (addr) {
-+			/* The memory may not have been accepted, yet. */
-+			accept_memory(addr, addr + new_alloc_size);
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1735,8 +1735,12 @@ static void do_migrate_range(unsigned lo
+ 		if (PageHWPoison(page)) {
+ 			if (WARN_ON(folio_test_lru(folio)))
+ 				folio_isolate_lru(folio);
+-			if (folio_mapped(folio))
++			if (folio_mapped(folio)) {
++				folio_lock(folio);
+ 				try_to_unmap(folio, TTU_IGNORE_MLOCK);
++				folio_unlock(folio);
++			}
 +
-+			new_array = __va(addr);
-+		} else {
-+			new_array = NULL;
-+		}
- 	}
- 	if (!addr) {
- 		pr_err("memblock: Failed to double %s array from %ld to %ld entries !\n",
+ 			continue;
+ 		}
+ 
 
 
