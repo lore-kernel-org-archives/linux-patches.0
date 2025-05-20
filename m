@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8262F2472AB;
-	Tue, 20 May 2025 14:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0AC288D6;
+	Tue, 20 May 2025 14:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750015; cv=none; b=ScvQDjjK9T3baYgebuslQEebsPAJ6v017lWjNPN1QHFHbSe8ClwcwDDBvWHp6Sc726wQDmkHpv6g0FLbSeU/I+2i+p6eSyWcOSD4yhmBvm+ZKzSoIMV4oJdfGgmop91niINSmnWgblp0KSnADF1GnvydxPZMaiJhsgg0fqDIP3o=
+	t=1747750018; cv=none; b=DJFwQDf649aUVWKLRRRVOiYRZiQ1Pb23EvRCpyrTaQ8rKHrewLB0cAOfdseqkfxr14yaKg63Y+HTLN1qmAQOq9wvLIRBkvPJdO+NHj9vzQ7esqS/+qq92IHHreNr3Dx3uktV5SZpomZwni10TKKAIOu9nBJ8oCOofbqW9g1s80Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750015; c=relaxed/simple;
-	bh=7URMDdW2CmOLsVIhjytDL1gqe3H2VIqALY7KMjWSuis=;
+	s=arc-20240116; t=1747750018; c=relaxed/simple;
+	bh=LRZ2PAzQ6Sa+6gOyVUAC+1tTbGB9IdjXDG8gNwC4kNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=brSOBN/XsPEjr+Voq9dgwvIZ1ozn4cfET7TX9yTcJDcz2R8FLFtMtGv0REEGED5t4LDz8KTAFdJENLZSgGWqZsyZiLCZRGr93CvTjudODaADmleEJpmHL6MAWquD/RLdX0Wz8xTs+NOSltXdHnOvEUO/BTreCDlyljhBy3x6Pus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUmG2KAq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oj32RdKqrNzTbFdapTWhZ89kc+Lk33RB9YfgC8/KyBRuLXVLqx4cVQuE2M8j5URIC6HcZ6RERVzJlLjkqZLa6oZnsHcE9dpNDZw6hf6hQ0vCnE+xwan6TAt+2A6AObRPJKrZ3RghXHvtIeVTr2LfRVNDEx0RWiiwfu1Z8H0mFsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sbNFT26N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUmG2KAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A801C4CEE9;
-	Tue, 20 May 2025 14:06:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sbNFT26N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3EB7C4CEE9;
+	Tue, 20 May 2025 14:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750014;
-	bh=7URMDdW2CmOLsVIhjytDL1gqe3H2VIqALY7KMjWSuis=;
+	s=korg; t=1747750018;
+	bh=LRZ2PAzQ6Sa+6gOyVUAC+1tTbGB9IdjXDG8gNwC4kNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XUmG2KAqg+AS3J7q5gvpSUgY2zViKB7w/HmBYat9tDfVgiai41PIGUFznSM/g1WR1
-	 Xw1MlQNfUuKPuWGb7L5JwrSEGMpH+8mUc8lmS++CCC4ZKedwtaxEfpUBqO6LQ/a4iM
-	 4173YS9nz0/ruuLb0dJOX8uwvpKrJ4bup94h5J1I=
+	b=sbNFT26NKolWu3GQuNi0zCHv21gvVPRN2hsB0B5DbDz+zW8X9h9JEYAWrq2nZyiiN
+	 2cEJGyoXEGnx+eQRrwPa9G664lRAZOJnH+QqeCetZyG54XlDwVpd066ObY79DS0Bv2
+	 QYFGmnNGCCW7sLpPrauYsovGDqcJK1yt5YikQT0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Roth <michael.roth@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
+	David Lechner <dlechner@baylibre.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 015/143] KVM: x86/mmu: Prevent installing hugepages when mem attributes are changing
-Date: Tue, 20 May 2025 15:49:30 +0200
-Message-ID: <20250520125810.660748724@linuxfoundation.org>
+Subject: [PATCH 6.12 016/143] iio: adc: ad7266: Fix potential timestamp alignment issue.
+Date: Tue, 20 May 2025 15:49:31 +0200
+Message-ID: <20250520125810.698675484@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -45,137 +47,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit 9129633d568edd36aa22bf703b12835153cec985 ]
+[ Upstream commit 52d349884738c346961e153f195f4c7fe186fcf4 ]
 
-When changing memory attributes on a subset of a potential hugepage, add
-the hugepage to the invalidation range tracking to prevent installing a
-hugepage until the attributes are fully updated.  Like the actual hugepage
-tracking updates in kvm_arch_post_set_memory_attributes(), process only
-the head and tail pages, as any potential hugepages that are entirely
-covered by the range will already be tracked.
+On architectures where an s64 is only 32-bit aligned insufficient padding
+would be left between the earlier elements and the timestamp. Use
+aligned_s64 to enforce the correct placement and ensure the storage is
+large enough.
 
-Note, only hugepage chunks whose current attributes are NOT mixed need to
-be added to the invalidation set, as mixed attributes already prevent
-installing a hugepage, and it's perfectly safe to install a smaller
-mapping for a gfn whose attributes aren't changing.
-
-Fixes: 8dd2eee9d526 ("KVM: x86/mmu: Handle page fault for private memory")
-Cc: stable@vger.kernel.org
-Reported-by: Michael Roth <michael.roth@amd.com>
-Tested-by: Michael Roth <michael.roth@amd.com>
-Link: https://lore.kernel.org/r/20250430220954.522672-1-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 54e018da3141 ("iio:ad7266: Mark transfer buffer as __be16") # aligned_s64 is much newer.
+Reported-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20250413103443.2420727-2-jic23@kernel.org
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu/mmu.c | 69 ++++++++++++++++++++++++++++++++----------
- 1 file changed, 53 insertions(+), 16 deletions(-)
+ drivers/iio/adc/ad7266.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 4943732e07cd7..4607610ef0628 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -7616,9 +7616,30 @@ void kvm_mmu_pre_destroy_vm(struct kvm *kvm)
- }
+diff --git a/drivers/iio/adc/ad7266.c b/drivers/iio/adc/ad7266.c
+index 7949b076fb87e..d4c9b85135f58 100644
+--- a/drivers/iio/adc/ad7266.c
++++ b/drivers/iio/adc/ad7266.c
+@@ -45,7 +45,7 @@ struct ad7266_state {
+ 	 */
+ 	struct {
+ 		__be16 sample[2];
+-		s64 timestamp;
++		aligned_s64 timestamp;
+ 	} data __aligned(IIO_DMA_MINALIGN);
+ };
  
- #ifdef CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES
-+static bool hugepage_test_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
-+				int level)
-+{
-+	return lpage_info_slot(gfn, slot, level)->disallow_lpage & KVM_LPAGE_MIXED_FLAG;
-+}
-+
-+static void hugepage_clear_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
-+				 int level)
-+{
-+	lpage_info_slot(gfn, slot, level)->disallow_lpage &= ~KVM_LPAGE_MIXED_FLAG;
-+}
-+
-+static void hugepage_set_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
-+			       int level)
-+{
-+	lpage_info_slot(gfn, slot, level)->disallow_lpage |= KVM_LPAGE_MIXED_FLAG;
-+}
-+
- bool kvm_arch_pre_set_memory_attributes(struct kvm *kvm,
- 					struct kvm_gfn_range *range)
- {
-+	struct kvm_memory_slot *slot = range->slot;
-+	int level;
-+
- 	/*
- 	 * Zap SPTEs even if the slot can't be mapped PRIVATE.  KVM x86 only
- 	 * supports KVM_MEMORY_ATTRIBUTE_PRIVATE, and so it *seems* like KVM
-@@ -7633,6 +7654,38 @@ bool kvm_arch_pre_set_memory_attributes(struct kvm *kvm,
- 	if (WARN_ON_ONCE(!kvm_arch_has_private_mem(kvm)))
- 		return false;
- 
-+	if (WARN_ON_ONCE(range->end <= range->start))
-+		return false;
-+
-+	/*
-+	 * If the head and tail pages of the range currently allow a hugepage,
-+	 * i.e. reside fully in the slot and don't have mixed attributes, then
-+	 * add each corresponding hugepage range to the ongoing invalidation,
-+	 * e.g. to prevent KVM from creating a hugepage in response to a fault
-+	 * for a gfn whose attributes aren't changing.  Note, only the range
-+	 * of gfns whose attributes are being modified needs to be explicitly
-+	 * unmapped, as that will unmap any existing hugepages.
-+	 */
-+	for (level = PG_LEVEL_2M; level <= KVM_MAX_HUGEPAGE_LEVEL; level++) {
-+		gfn_t start = gfn_round_for_level(range->start, level);
-+		gfn_t end = gfn_round_for_level(range->end - 1, level);
-+		gfn_t nr_pages = KVM_PAGES_PER_HPAGE(level);
-+
-+		if ((start != range->start || start + nr_pages > range->end) &&
-+		    start >= slot->base_gfn &&
-+		    start + nr_pages <= slot->base_gfn + slot->npages &&
-+		    !hugepage_test_mixed(slot, start, level))
-+			kvm_mmu_invalidate_range_add(kvm, start, start + nr_pages);
-+
-+		if (end == start)
-+			continue;
-+
-+		if ((end + nr_pages) > range->end &&
-+		    (end + nr_pages) <= (slot->base_gfn + slot->npages) &&
-+		    !hugepage_test_mixed(slot, end, level))
-+			kvm_mmu_invalidate_range_add(kvm, end, end + nr_pages);
-+	}
-+
- 	/* Unmap the old attribute page. */
- 	if (range->arg.attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE)
- 		range->attr_filter = KVM_FILTER_SHARED;
-@@ -7642,23 +7695,7 @@ bool kvm_arch_pre_set_memory_attributes(struct kvm *kvm,
- 	return kvm_unmap_gfn_range(kvm, range);
- }
- 
--static bool hugepage_test_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
--				int level)
--{
--	return lpage_info_slot(gfn, slot, level)->disallow_lpage & KVM_LPAGE_MIXED_FLAG;
--}
--
--static void hugepage_clear_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
--				 int level)
--{
--	lpage_info_slot(gfn, slot, level)->disallow_lpage &= ~KVM_LPAGE_MIXED_FLAG;
--}
- 
--static void hugepage_set_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
--			       int level)
--{
--	lpage_info_slot(gfn, slot, level)->disallow_lpage |= KVM_LPAGE_MIXED_FLAG;
--}
- 
- static bool hugepage_has_attrs(struct kvm *kvm, struct kvm_memory_slot *slot,
- 			       gfn_t gfn, int level, unsigned long attrs)
 -- 
 2.39.5
 
