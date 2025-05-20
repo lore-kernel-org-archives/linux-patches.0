@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0558E2F37;
-	Tue, 20 May 2025 14:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A10242D9A;
+	Tue, 20 May 2025 14:04:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749877; cv=none; b=rE+ICG/KpDDdS84L56VGgEs+DDnj5oadSmbKmSFb9LhI+fxwQQEWBGDTZa0AQ4QWvaPgs6H+btANACf4orVXj2KZJxwzhQLQh+tjCPsjOGGoBf9sRx7PJp1/jLAoKpc7xzUzg3S5ELeJwm/TR5kkZ9Hn5pddOoBZjA2o7g6fTig=
+	t=1747749879; cv=none; b=tJ3o5k9V2IwcCSnUUQP+HY3ZxjQduKdXH0bueWwJlc+QM2/eWl15B1DK2yPEqDgrGakI6hOHjwkTCG7kdwHSt91HARjjkL1xT5lZhT9uckXzoLnd21kb/E2O3LQRTSnQNbJRmi/H32dnFf21nbfD1t0K5HFyN2vjxhxlr0DzyH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749877; c=relaxed/simple;
-	bh=1uvANhScLtHxOKoMhScjC/c3XbdM65lvSGkBmvJlPeY=;
+	s=arc-20240116; t=1747749879; c=relaxed/simple;
+	bh=mXz4Fu/n/70eHt/MIRd1YOLU07Cr1T6HEKgcqkP4I5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SCXe0KZDulP7ulZDh9XZ5REWFJtSngTzmMWK/neL/URo6giDc7VULuumNMIYGORx572p/4LC0wzo9/8jDn7vBkiwSSCCuDTkBWkuotYjjxnq3a3Cqb56ZNIh9iHDAmgF0UQm48ei0gAVjilUlCjEJg/zmHKsKXVCwVKD4lMCTV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YMTqRKPz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZwZocUd7sU3GZXxdHiQ/toyeyXZUG0Eru9gsr8Pp+NmIuRatMivH4dZ79PFVLJow6gg44fFCtfxgnX1RH3PUorUCfy+a8OWqEmhdFRBgN+yfjMrZ96QamCJMNiFC1hm83lj+OuI+gyt8hGBU59YPiysuv24lxSH7wxHeE7t6sxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jraFe3dX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YMTqRKPz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE530C4CEE9;
-	Tue, 20 May 2025 14:04:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jraFe3dX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14BAFC4CEE9;
+	Tue, 20 May 2025 14:04:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749876;
-	bh=1uvANhScLtHxOKoMhScjC/c3XbdM65lvSGkBmvJlPeY=;
+	s=korg; t=1747749879;
+	bh=mXz4Fu/n/70eHt/MIRd1YOLU07Cr1T6HEKgcqkP4I5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YMTqRKPzkGyxWTS+fiGjpGV01isqG+h4UKkmcJvSDW78uotrEbHeqCArycsYOVB2t
-	 NbiZ6EiEwaRF2krXG2w8Tfz7sLOUU2+bwZP9dfFhcZmsHTQKgbWDDNjV8pvJwAn2sz
-	 Kf66jceRoR8OjHC+i4nLI6efL9BDqqwCsVmXwPSY=
+	b=jraFe3dXUPR5aanG1MOp0TRZZUjjlfFmsYyWsD4yE0i6Pc+2uZsKXmZslceiMMF11
+	 DQsedy7hW9uKJSI6pwimIgE6zDQyEIqBgXLBgE5YIApS4y1mJF+wDiIsfNEmwOW1ns
+	 jIOdWFF8XXTHQxwZh8fG45glRn4XwVAnVPo7o/SM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengtao He <hept.hept.hept@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/117] net/tls: fix kernel panic when alloc_page failed
-Date: Tue, 20 May 2025 15:50:22 +0200
-Message-ID: <20250520125806.248549731@linuxfoundation.org>
+Subject: [PATCH 6.6 048/117] ALSA: sh: SND_AICA should depend on SH_DMA_API
+Date: Tue, 20 May 2025 15:50:13 +0200
+Message-ID: <20250520125805.898418970@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -51,59 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengtao He <hept.hept.hept@gmail.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 491deb9b8c4ad12fe51d554a69b8165b9ef9429f ]
+[ Upstream commit 66e48ef6ef506c89ec1b3851c6f9f5f80b5835ff ]
 
-We cannot set frag_list to NULL pointer when alloc_page failed.
-It will be used in tls_strp_check_queue_ok when the next time
-tls_strp_read_sock is called.
+If CONFIG_SH_DMA_API=n:
 
-This is because we don't reset full_len in tls_strp_flush_anchor_copy()
-so the recv path will try to continue handling the partial record
-on the next call but we dettached the rcvq from the frag list.
-Alternative fix would be to reset full_len.
+    WARNING: unmet direct dependencies detected for G2_DMA
+      Depends on [n]: SH_DREAMCAST [=y] && SH_DMA_API [=n]
+      Selected by [y]:
+      - SND_AICA [=y] && SOUND [=y] && SND [=y] && SND_SUPERH [=y] && SH_DREAMCAST [=y]
 
-Unable to handle kernel NULL pointer dereference
-at virtual address 0000000000000028
- Call trace:
- tls_strp_check_rcv+0x128/0x27c
- tls_strp_data_ready+0x34/0x44
- tls_data_ready+0x3c/0x1f0
- tcp_data_ready+0x9c/0xe4
- tcp_data_queue+0xf6c/0x12d0
- tcp_rcv_established+0x52c/0x798
+SND_AICA selects G2_DMA.  As the latter depends on SH_DMA_API, the
+former should depend on SH_DMA_API, too.
 
-Fixes: 84c61fe1a75b ("tls: rx: do not use the standard strparser")
-Signed-off-by: Pengtao He <hept.hept.hept@gmail.com>
-Link: https://patch.msgid.link/20250514132013.17274-1-hept.hept.hept@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f477a538c14d07f8 ("sh: dma: fix kconfig dependency for G2_DMA")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202505131320.PzgTtl9H-lkp@intel.com/
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/b90625f8a9078d0d304bafe862cbe3a3fab40082.1747121335.git.geert+renesas@glider.be
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_strp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/sh/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tls/tls_strp.c b/net/tls/tls_strp.c
-index 5df08d848b5c9..1852fac3e72b7 100644
---- a/net/tls/tls_strp.c
-+++ b/net/tls/tls_strp.c
-@@ -395,7 +395,6 @@ static int tls_strp_read_copy(struct tls_strparser *strp, bool qshort)
- 		return 0;
+diff --git a/sound/sh/Kconfig b/sound/sh/Kconfig
+index b75fbb3236a7b..f5fa09d740b4c 100644
+--- a/sound/sh/Kconfig
++++ b/sound/sh/Kconfig
+@@ -14,7 +14,7 @@ if SND_SUPERH
  
- 	shinfo = skb_shinfo(strp->anchor);
--	shinfo->frag_list = NULL;
- 
- 	/* If we don't know the length go max plus page for cipher overhead */
- 	need_spc = strp->stm.full_len ?: TLS_MAX_PAYLOAD_SIZE + PAGE_SIZE;
-@@ -411,6 +410,8 @@ static int tls_strp_read_copy(struct tls_strparser *strp, bool qshort)
- 				   page, 0, 0);
- 	}
- 
-+	shinfo->frag_list = NULL;
-+
- 	strp->copy_mode = 1;
- 	strp->stm.offset = 0;
- 
+ config SND_AICA
+ 	tristate "Dreamcast Yamaha AICA sound"
+-	depends on SH_DREAMCAST
++	depends on SH_DREAMCAST && SH_DMA_API
+ 	select SND_PCM
+ 	select G2_DMA
+ 	help
 -- 
 2.39.5
 
