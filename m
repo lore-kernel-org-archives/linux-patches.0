@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5818F2472BA;
-	Tue, 20 May 2025 14:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDEA2F37;
+	Tue, 20 May 2025 14:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749984; cv=none; b=RP/NK0qRPrkdwcd5kY7FSbRp+Oh8HSFKagJ4D5Q7toPEApcopephVYKq5BGB+tLgAe/VFwsEGBabUW5effwg7sdT6vIrKVDw9R58mvCSbKsZNpqBIXE+wdip8hNKvKdzbYjGUtQE+wXVAVgunOn4veif4kNl6uG7a3SwSeHZF44=
+	t=1747749987; cv=none; b=ogDmvo+n77dbu+yJUElmjKQcOeQmjUm1g1/ZAt4PGUoJgWMMgonbmbtd2Oq9zERfqbsTi9GjHLE1w+rn/JknLUwlLjf6yZjhCeuBuuyWtGw1MPvZ4pkOlmofkJYS2W65vogELQ/srp3CJCO46akQTb1t9S/kNl/V5zS16qLjZhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749984; c=relaxed/simple;
-	bh=FNhHK+vIU626XLH9xWgj5KHoVOtz0RNejOxNugX8W3E=;
+	s=arc-20240116; t=1747749987; c=relaxed/simple;
+	bh=29KATQd/TCHDHC2K7O61J+F0CeZSbFXuUI4P2OzWFPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s2hk1X+EaJsDTeiLHM2jq2+sOxTgz9r68uvSIBJICIeCkJ0QxwxNHXEdlXPQ001ACg+U+lJWtNiM31KETeUIRJUTyYbpJBS6we41dxjrrNpOYi4WsR1li6cfh7szi9I28dOksx/22dthqoMQ7ZjgeejwSLlbl6C4k1QLU+/zxTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bDpeh/jK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jb5gZYcgkq131yhuV/qx0D5NgvHQSoCR8HouM7tuPlUbWCclL3cv1dy2owwdaLR5XS5G8xCqNd3f3P9MGMY7gLdHVfslZw9uGKYA4oS2YXsLGnjwxupzImIZzmy1F4WCl7F/+S5hZBZiRSGpUGOhI/grvDYxPKObYcMwNHF0Kag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NDurpC48; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bDpeh/jK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9EB5C4CEF1;
-	Tue, 20 May 2025 14:06:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDurpC48"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE69C4CEEB;
+	Tue, 20 May 2025 14:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749984;
-	bh=FNhHK+vIU626XLH9xWgj5KHoVOtz0RNejOxNugX8W3E=;
+	s=korg; t=1747749987;
+	bh=29KATQd/TCHDHC2K7O61J+F0CeZSbFXuUI4P2OzWFPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bDpeh/jKnX3KpNAzgRyR+h0aL7unk3RNa3tmTXThiT4Y7qNqAJDBzMQKYq7sU82Q8
-	 bqxfRNkVbWqDTJFXEFRZwSdrkaHX32ly2Zr/f6yxZcy1lz7+opWmpuEy/eGrxYkOct
-	 h8iXlzS8Si08FTNV1k60zdMwdKJ3GmLCn67FKyIU=
+	b=NDurpC48HPK1lQTartnS7Pcio2gq6ha3P2vjWn6LgbwI6sDmjgSk+6CWvz3HGOPPp
+	 sJmaqc6FjCOjvcwCyLfBzsFwEo70Z88l9ouNwDSAB2GWPMP4IVhs3WN51tvDN6lxMp
+	 ViF3yrjn9fRL4NNQt52MIrf2486xYOoSP2nT6glo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Divya Indi <divya.indi@oracle.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 082/117] tracing: samples: Initialize trace_array_printk() with the correct function
-Date: Tue, 20 May 2025 15:50:47 +0200
-Message-ID: <20250520125807.248591976@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.6 116/117] phy: tegra: xusb: remove a stray unlock
+Date: Tue, 20 May 2025 15:51:21 +0200
+Message-ID: <20250520125808.599291309@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -52,45 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 1b0c192c92ea1fe2dcb178f84adf15fe37c3e7c8 upstream.
+commit 83c178470e0bf690d34c8c08440f2421b82e881c upstream.
 
-When using trace_array_printk() on a created instance, the correct
-function to use to initialize it is:
+We used to take a lock in tegra186_utmi_bias_pad_power_on() but now we
+have moved the lock into the caller.  Unfortunately, when we moved the
+lock this unlock was left behind and it results in a double unlock.
+Delete it now.
 
-  trace_array_init_printk()
-
-Not
-
-  trace_printk_init_buffer()
-
-The former is a proper function to use, the latter is for initializing
-trace_printk() and causes the NOTICE banner to be displayed.
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Divya Indi <divya.indi@oracle.com>
-Link: https://lore.kernel.org/20250509152657.0f6744d9@gandalf.local.home
-Fixes: 89ed42495ef4a ("tracing: Sample module to demonstrate kernel access to Ftrace instances.")
-Fixes: 38ce2a9e33db6 ("tracing: Add trace_array_init_printk() to initialize instance trace_printk() buffers")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: b47158fb4295 ("phy: tegra: xusb: Use a bitmask for UTMI pad power state tracking")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://lore.kernel.org/r/aAjmR6To4EnvRl4G@stanley.mountain
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- samples/ftrace/sample-trace-array.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/tegra/xusb-tegra186.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/samples/ftrace/sample-trace-array.c
-+++ b/samples/ftrace/sample-trace-array.c
-@@ -112,7 +112,7 @@ static int __init sample_trace_array_ini
- 	/*
- 	 * If context specific per-cpu buffers havent already been allocated.
- 	 */
--	trace_printk_init_buffers();
-+	trace_array_init_printk(tr);
+--- a/drivers/phy/tegra/xusb-tegra186.c
++++ b/drivers/phy/tegra/xusb-tegra186.c
+@@ -656,8 +656,6 @@ static void tegra186_utmi_bias_pad_power
+ 	} else {
+ 		clk_disable_unprepare(priv->usb2_trk_clk);
+ 	}
+-
+-	mutex_unlock(&padctl->lock);
+ }
  
- 	simple_tsk = kthread_run(simple_thread, NULL, "sample-instance");
- 	if (IS_ERR(simple_tsk)) {
+ static void tegra186_utmi_bias_pad_power_off(struct tegra_xusb_padctl *padctl)
 
 
