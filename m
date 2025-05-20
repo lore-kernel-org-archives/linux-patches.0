@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27C724337C;
-	Tue, 20 May 2025 13:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D370422DF87;
+	Tue, 20 May 2025 13:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749594; cv=none; b=ehuudt5YQBQr6J+5SvDC+DlKoSimld/dr5ug0SUBHofekNtD0grKoIF2X+gCJtuSYcQ8vmXUT9HZMFjMRWn1D7A/FfS8MqfB1GUy8aPAnzhLhiF698+TmtntwLb2x2seth3xh+iyqghUeq7fEOOxhpT5lVUH9IJ9h9CNdiwA4lg=
+	t=1747749597; cv=none; b=DG36VzPgshP7p0P/bWglqxQkRr9rLF2EWixMP5pIn9XYyOY8xm/wmX3gNiQ/hhdtz0qf7QCxSFos0uuafR3Be0bW9VbnDKsoyy/TEeVMViUMfwPjRkzjlhoayE5TLnAylbmyPicAIBt+WBGwMMRwvoFtrtV85fP+FMNyHPq9KCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749594; c=relaxed/simple;
-	bh=1XWSK+aVLEua948AZpPZwEnMYTMsn2Vi+gGKo74UYGI=;
+	s=arc-20240116; t=1747749597; c=relaxed/simple;
+	bh=JbMVGMqvemKbJECI9vxZUDar+D71ghpKvuEUqaSnzuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QhUHK/5bjEd2lgBC3COzB4HiI44Q/70XwOUsq0eXLaHHcaV9CQr1HUvFzTfpolyhGgej6eJTI2KHlK9ThUMx/cKp9TFJk45ZqiarqGuXxBIm0K9af/G7ph+gw9/NKNyqD+tH8L5zcJNFmfQ19kyw3cNvfi2oIxk1kT/GsTGUzoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/6/H6R6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IHm/kFLd1xZxOXr7q0J3rlWFmxNXLXhmCZVrm3jVu+/AFL360vUQhIEhX2O0gDamr+SFvyR2pB6QqcE9Wx0hDh0PTMrl6hwH/e4cIHkRVjRUuwvLCD/BUzF6r5ARNi4n7LLwUzrjQfZno0w4hLDMowUPcyhGwghqeP5Ze2JmPfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zy5yAIR7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/6/H6R6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4246CC4CEEA;
-	Tue, 20 May 2025 13:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zy5yAIR7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5421EC4CEE9;
+	Tue, 20 May 2025 13:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749594;
-	bh=1XWSK+aVLEua948AZpPZwEnMYTMsn2Vi+gGKo74UYGI=;
+	s=korg; t=1747749597;
+	bh=JbMVGMqvemKbJECI9vxZUDar+D71ghpKvuEUqaSnzuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A/6/H6R6AS8I86Ytdyd0sVI87S4yI5+LJelR0CPxgawSHKA3g2WQIjKmzso+8FTos
-	 9WCWNwXN2LDZWdJs3TvNC7vxg9POJkt0MOMdQcX2DzO3ISK477mMhQUIy6yiSrmqa1
-	 YWjVr5CcDx5ZU6cU2U3r8cpRlpepi2CHYe21c9+4=
+	b=Zy5yAIR7tVbNOLeIeMETikzagJ54ftrXErnRR4Mul/OjHKPhtAIwBiGM38dGyUPkg
+	 RfMUBRD6sF1BkJwprCd843dCoLbqT13G7Qq97cO7gGdLIvAklgnrZdCUhVxumDs83k
+	 uCxt5mLSySLPUrzbdN578Zq/r+79/Q/EZYU+wOCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 64/97] net: qede: Initialize qede_ll_ops with designated initializer
-Date: Tue, 20 May 2025 15:50:29 +0200
-Message-ID: <20250520125803.158548759@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	dmaengine@vger.kernel.org,
+	Ronald Wahl <ronald.wahl@legrand.com>
+Subject: [PATCH 6.1 65/97] dmaengine: ti: k3-udma: Add missing locking
+Date: Tue, 20 May 2025 15:50:30 +0200
+Message-ID: <20250520125803.197726240@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -50,43 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Ronald Wahl <ronald.wahl@legrand.com>
 
-commit 6b3ab7f2cbfaeb6580709cd8ef4d72cfd01bfde4 upstream.
+commit fca280992af8c2fbd511bc43f65abb4a17363f2f upstream.
 
-After a recent change [1] in clang's randstruct implementation to
-randomize structures that only contain function pointers, there is an
-error because qede_ll_ops get randomized but does not use a designated
-initializer for the first member:
+Recent kernels complain about a missing lock in k3-udma.c when the lock
+validator is enabled:
 
-  drivers/net/ethernet/qlogic/qede/qede_main.c:206:2: error: a randomized struct can only be initialized with a designated initializer
-    206 |         {
-        |         ^
+[    4.128073] WARNING: CPU: 0 PID: 746 at drivers/dma/ti/../virt-dma.h:169 udma_start.isra.0+0x34/0x238
+[    4.137352] CPU: 0 UID: 0 PID: 746 Comm: kworker/0:3 Not tainted 6.12.9-arm64 #28
+[    4.144867] Hardware name: pp-v12 (DT)
+[    4.148648] Workqueue: events udma_check_tx_completion
+[    4.153841] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    4.160834] pc : udma_start.isra.0+0x34/0x238
+[    4.165227] lr : udma_start.isra.0+0x30/0x238
+[    4.169618] sp : ffffffc083cabcf0
+[    4.172963] x29: ffffffc083cabcf0 x28: 0000000000000000 x27: ffffff800001b005
+[    4.180167] x26: ffffffc0812f0000 x25: 0000000000000000 x24: 0000000000000000
+[    4.187370] x23: 0000000000000001 x22: 00000000e21eabe9 x21: ffffff8000fa0670
+[    4.194571] x20: ffffff8001b6bf00 x19: ffffff8000fa0430 x18: ffffffc083b95030
+[    4.201773] x17: 0000000000000000 x16: 00000000f0000000 x15: 0000000000000048
+[    4.208976] x14: 0000000000000048 x13: 0000000000000000 x12: 0000000000000001
+[    4.216179] x11: ffffffc08151a240 x10: 0000000000003ea1 x9 : ffffffc08046ab68
+[    4.223381] x8 : ffffffc083cabac0 x7 : ffffffc081df3718 x6 : 0000000000029fc8
+[    4.230583] x5 : ffffffc0817ee6d8 x4 : 0000000000000bc0 x3 : 0000000000000000
+[    4.237784] x2 : 0000000000000000 x1 : 00000000001fffff x0 : 0000000000000000
+[    4.244986] Call trace:
+[    4.247463]  udma_start.isra.0+0x34/0x238
+[    4.251509]  udma_check_tx_completion+0xd0/0xdc
+[    4.256076]  process_one_work+0x244/0x3fc
+[    4.260129]  process_scheduled_works+0x6c/0x74
+[    4.264610]  worker_thread+0x150/0x1dc
+[    4.268398]  kthread+0xd8/0xe8
+[    4.271492]  ret_from_fork+0x10/0x20
+[    4.275107] irq event stamp: 220
+[    4.278363] hardirqs last  enabled at (219): [<ffffffc080a27c7c>] _raw_spin_unlock_irq+0x38/0x50
+[    4.287183] hardirqs last disabled at (220): [<ffffffc080a1c154>] el1_dbg+0x24/0x50
+[    4.294879] softirqs last  enabled at (182): [<ffffffc080037e68>] handle_softirqs+0x1c0/0x3cc
+[    4.303437] softirqs last disabled at (177): [<ffffffc080010170>] __do_softirq+0x1c/0x28
+[    4.311559] ---[ end trace 0000000000000000 ]---
 
-Explicitly initialize the common member using a designated initializer
-to fix the build.
+This commit adds the missing locking.
 
+Fixes: 25dcb5dd7b7c ("dmaengine: ti: New driver for K3 UDMA")
+Cc: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Cc: Vignesh Raghavendra <vigneshr@ti.com>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: dmaengine@vger.kernel.org
 Cc: stable@vger.kernel.org
-Fixes: 035f7f87b729 ("randstruct: Enable Clang support")
-Link: https://github.com/llvm/llvm-project/commit/04364fb888eea6db9811510607bed4b200bcb082 [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20250507-qede-fix-clang-randstruct-v1-1-5ccc15626fba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ronald Wahl <ronald.wahl@legrand.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Link: https://lore.kernel.org/r/20250414173113.80677-1-rwahl@gmx.de
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/ti/k3-udma.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/net/ethernet/qlogic/qede/qede_main.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_main.c
-@@ -204,7 +204,7 @@ static struct pci_driver qede_pci_driver
- };
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -1088,8 +1088,11 @@ static void udma_check_tx_completion(str
+ 	u32 residue_diff;
+ 	ktime_t time_diff;
+ 	unsigned long delay;
++	unsigned long flags;
  
- static struct qed_eth_cb_ops qede_ll_ops = {
--	{
-+	.common = {
- #ifdef CONFIG_RFS_ACCEL
- 		.arfs_filter_op = qede_arfs_filter_op,
- #endif
+ 	while (1) {
++		spin_lock_irqsave(&uc->vc.lock, flags);
++
+ 		if (uc->desc) {
+ 			/* Get previous residue and time stamp */
+ 			residue_diff = uc->tx_drain.residue;
+@@ -1124,6 +1127,8 @@ static void udma_check_tx_completion(str
+ 				break;
+ 			}
+ 
++			spin_unlock_irqrestore(&uc->vc.lock, flags);
++
+ 			usleep_range(ktime_to_us(delay),
+ 				     ktime_to_us(delay) + 10);
+ 			continue;
+@@ -1140,6 +1145,8 @@ static void udma_check_tx_completion(str
+ 
+ 		break;
+ 	}
++
++	spin_unlock_irqrestore(&uc->vc.lock, flags);
+ }
+ 
+ static irqreturn_t udma_ring_irq_handler(int irq, void *data)
 
 
