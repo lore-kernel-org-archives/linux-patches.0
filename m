@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D13AEC4;
-	Tue, 20 May 2025 13:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AEEE24169B;
+	Tue, 20 May 2025 13:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749503; cv=none; b=h/wxXnHmi4jt98fNYH2Nu9jBgvqwDX48CY2eYQXKbhM6hv0kcQ6JjNKL9usdn5AufwVjWbFz+dffCgv1DF+jbrNydgBJwZ8ezMI+X+GIO/fp84YKBbRTBAMSI3J/S0VgzBb3QfYy0mU/xNXjq8OjL17haCOv1XPzWXln48N7h8A=
+	t=1747749506; cv=none; b=pVWQFmjFF//uLBt7hCnV0Tb3Hxvzmy3nXs7jV44G4Vvjkib2CkEvnQmENZFRfNABzSIbftg9/E6/J05Ba7sglejR4c2nxS2zxV6t1fj8VKXSy6S5ikYsJRMmodUwtrmFV+LSNokrGmT85tAN+bPy/Qn2k0MuEA7v9mS6ZZMggr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749503; c=relaxed/simple;
-	bh=6EGn5U4JfgfczSaG02sjgyR2U7TefjPE7WtBEhqb06k=;
+	s=arc-20240116; t=1747749506; c=relaxed/simple;
+	bh=Bncx0pvxE/1OYgKOSZbH4/ZfMxotMB9k9I/32QTIOXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q4bGyLTX1zEV6Fuho/eVhgEObwfzWqny464Fi96q2KqezrKZw2R85WJfTFSSLoa0k6NhuU2ebWkgQHKlJpoQ5Ir+uD3h55AtGu+vmsxSPOHfO1l9HiifFLKGvaymNDhGeDIpHp9xxLXmM1Wi6J7lNhYiAF5n65DikTAWBXe5mYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCyGfK8C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C0xDHU/nm7Fm5ssqd0iSlwFlWQa/TLj9z4FaciAvJwyAvALh4BlP+D+8i4hDnKpxkaHa6uDHFyXoQj3RbI7DvTzp57YQ6dJpHAXhfAj+wNCL1rRLjR4olwXCfCryu5IbwoPT//4czm3+5hxTK+mK2aNnPjFb76A9W6vFRh+4PXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LLNbfmM8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCyGfK8C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF625C4CEE9;
-	Tue, 20 May 2025 13:58:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLNbfmM8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3BCC4CEE9;
+	Tue, 20 May 2025 13:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749503;
-	bh=6EGn5U4JfgfczSaG02sjgyR2U7TefjPE7WtBEhqb06k=;
+	s=korg; t=1747749506;
+	bh=Bncx0pvxE/1OYgKOSZbH4/ZfMxotMB9k9I/32QTIOXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CCyGfK8CFjbcsn9HR36Pu/QvpKxT7hPYZf4ISFmOdVwj7qjbWufyjPr7F48S0EpSz
-	 GV/DFswG+WSIKNHFkykkOx9aK/5UwOQ6oRoiCe5gH9vP285lucvftPQjruc8zNpDsr
-	 U0nHhRzQAgsqIMb2d81rKa4kHU7Q1rwTrA4LSPec=
+	b=LLNbfmM8DpvlvCU7K1XRbaG47GRtEPY9ZwGUxLjDbB8IHjuG0JZJVmd+q9kkOq3YD
+	 oKtp+pfCJbE90sGAz/AqrWpU0m0fBc46iWPyAyuoxQeRmEVsvLTyFCzWzbwRtzjRg0
+	 UI+HTrichbgh2t1ZgmciYzrHlyDX6IuJgwBGe2lQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <abdun.nihaal@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 35/97] qlcnic: fix memory leak in qlcnic_sriov_channel_cfg_cmd()
-Date: Tue, 20 May 2025 15:50:00 +0200
-Message-ID: <20250520125802.035823781@linuxfoundation.org>
+Subject: [PATCH 6.1 26/97] spi: loopback-test: Do not split 1024-byte hexdumps
+Date: Tue, 20 May 2025 15:49:51 +0200
+Message-ID: <20250520125801.688819740@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -52,43 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <abdun.nihaal@gmail.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 9d8a99c5a7c7f4f7eca2c168a4ec254409670035 ]
+[ Upstream commit a73fa3690a1f3014d6677e368dce4e70767a6ba2 ]
 
-In one of the error paths in qlcnic_sriov_channel_cfg_cmd(), the memory
-allocated in qlcnic_sriov_alloc_bc_mbx_args() for mailbox arguments is
-not freed. Fix that by jumping to the error path that frees them, by
-calling qlcnic_free_mbx_args(). This was found using static analysis.
+spi_test_print_hex_dump() prints buffers holding less than 1024 bytes in
+full.  Larger buffers are truncated: only the first 512 and the last 512
+bytes are printed, separated by a truncation message.  The latter is
+confusing in case the buffer holds exactly 1024 bytes, as all data is
+printed anyway.
 
-Fixes: f197a7aa6288 ("qlcnic: VF-PF communication channel implementation")
-Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250512044829.36400-1-abdun.nihaal@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by printing buffers holding up to and including 1024 bytes in
+full.
+
+Fixes: 84e0c4e5e2c4ef42 ("spi: add loopback test driver to allow for spi_master regression tests")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/37ee1bc90c6554c9347040adabf04188c8f704aa.1746184171.git.geert+renesas@glider.be
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/spi/spi-loopback-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-index 28d24d59efb84..d57b976b90409 100644
---- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-+++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-@@ -1484,8 +1484,11 @@ static int qlcnic_sriov_channel_cfg_cmd(struct qlcnic_adapter *adapter, u8 cmd_o
- 	}
- 
- 	cmd_op = (cmd.rsp.arg[0] & 0xff);
--	if (cmd.rsp.arg[0] >> 25 == 2)
--		return 2;
-+	if (cmd.rsp.arg[0] >> 25 == 2) {
-+		ret = 2;
-+		goto out;
-+	}
-+
- 	if (cmd_op == QLCNIC_BC_CMD_CHANNEL_INIT)
- 		set_bit(QLC_BC_VF_STATE, &vf->state);
- 	else
+diff --git a/drivers/spi/spi-loopback-test.c b/drivers/spi/spi-loopback-test.c
+index dd7de8fa37d04..ab29ae463f677 100644
+--- a/drivers/spi/spi-loopback-test.c
++++ b/drivers/spi/spi-loopback-test.c
+@@ -410,7 +410,7 @@ MODULE_LICENSE("GPL");
+ static void spi_test_print_hex_dump(char *pre, const void *ptr, size_t len)
+ {
+ 	/* limit the hex_dump */
+-	if (len < 1024) {
++	if (len <= 1024) {
+ 		print_hex_dump(KERN_INFO, pre,
+ 			       DUMP_PREFIX_OFFSET, 16, 1,
+ 			       ptr, len, 0);
 -- 
 2.39.5
 
