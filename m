@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 493732459F2;
-	Tue, 20 May 2025 14:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5522A24676B;
+	Tue, 20 May 2025 14:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750040; cv=none; b=ktyWdib3Xq5yhxvPYfLVdQt1oylXJsA4UbH0XMBUx8nxlby3rnxh2CIyBKI/RdSRWE5AC3zI4eEn3tx5axW2XI4Aukliv3YcBTsKUj5xq3YlflYssH9e/1MITxOKktFsQQXOhwRwyiFXqov4jX806300kq5+2LLvI8ozM1Ryto0=
+	t=1747750040; cv=none; b=IiyD74rhG4fEXMtW9lkC8Pe2wXN6J97HdBBhZaGZNJQL+6XkG/qbgdjP2OdCvR3dKDeXCaWCGCeC4IxLbCk4V8rG+NAekZfGMjU3pa20K0NXyBud8caPq1JLiJ+7Q8C6S+ACBT/ntCH3FmmkqRq8CLkuBRnvVJp88lA0F48CisA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1747750040; c=relaxed/simple;
-	bh=wyRutWzuzGn05KCxp9ZaFRS0hDKe25cusLjX5NPMXKA=;
+	bh=ZbdOn6b0R5TnAGG8oOMD/K5YSDVoj0xn2tci/5/zbt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HNIDyGjz/8eTUFvcqpySOhb3jaw2PzdWxl4VxxNgdXDkF9L5HKVo0WpNDIqxQuSS/Ujx+9L9t5BLooOgkxt1vz6kdRx4NNfFL1ElabntXZe/rt9wO0J4AHJ5fBGj+MmdHa6dvum3WfCrOxvnS6YFZGR5QFBICc6f362Nivk5Ndc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rCYdUqiQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=F8cYg39FwEvsSIp/dyhWcq3+kCZO/UCT6WesPW+ztgN2yA0RU2MZooVgJElcwoLLXRNzp6+pBCGOslaXkHMS9nsAUr2f1Gq2dWux6P8pymiMcJQCGvVgMsig0Um+RTBerFrXClgaeSnhBxAZP8ijELKpgIxEjiux8w7fwpoSJwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FAZjTIUT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCYdUqiQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9DDC4CEEA;
-	Tue, 20 May 2025 14:07:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FAZjTIUT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA6EC4CEE9;
+	Tue, 20 May 2025 14:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750040;
-	bh=wyRutWzuzGn05KCxp9ZaFRS0hDKe25cusLjX5NPMXKA=;
+	s=korg; t=1747750036;
+	bh=ZbdOn6b0R5TnAGG8oOMD/K5YSDVoj0xn2tci/5/zbt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rCYdUqiQruastXrBRQQj8M6YcUR+FyZ7n3MzGwiVFLldxEMiwDBWhKYaUuto5YGMH
-	 3Vhyse7o3/b7QWiQtIXWVCUeNLVgsomltLw2jTlrDvHBUPMwKixUMQ+o+WA0MdDy5f
-	 jIMPPtdx2sa9+O3tuVUFl9oQsR/TuLcfHY8NV6F8=
+	b=FAZjTIUTp/x3OWqDLgfE3/9zhkrcfpLfi8eWp1Cbh15qdkClT/39wYtcbiaAoSyty
+	 b0qdkf2ZNn/5JwqEdQnlvYICJyM062EEuk5jWCSl2yjlDrZr/ni8rvG3eHXGUFKXxZ
+	 3z+TWI2b7p343FAtw82s3E7EppmZ1ClXISY35xaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Yuan <yu.yuan@sjtu.edu.cn>,
-	Ze Huang <huangze@whut.edu.cn>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Chen Wang <wangchen20@iscas.ac.cn>,
+	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 005/143] riscv: dts: sophgo: fix DMA data-width configuration for CV18xx
-Date: Tue, 20 May 2025 15:49:20 +0200
-Message-ID: <20250520125810.256887338@linuxfoundation.org>
+Subject: [PATCH 6.12 022/143] xhci: dbc: Avoid event polling busyloop if pending rx transfers are inactive.
+Date: Tue, 20 May 2025 15:49:37 +0200
+Message-ID: <20250520125810.930165218@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -55,52 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ze Huang <huangze@whut.edu.cn>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 3e6244429ba38f8dee3336b8b805948276b281ab ]
+[ Upstream commit cab63934c33b12c0d1e9f4da7450928057f2c142 ]
 
-The "snps,data-width" property[1] defines the AXI data width of the DMA
-controller as:
+Event polling delay is set to 0 if there are any pending requests in
+either rx or tx requests lists. Checking for pending requests does
+not work well for "IN" transfers as the tty driver always queues
+requests to the list and TRBs to the ring, preparing to receive data
+from the host.
 
-    width = 8 × (2^n) bits
+This causes unnecessary busylooping and cpu hogging.
 
-(0 = 8 bits, 1 = 16 bits, 2 = 32 bits, ..., 6 = 512 bits)
-where "n" is the value of "snps,data-width".
+Only set the event polling delay to 0 if there are pending tx "write"
+transfers, or if it was less than 10ms since last active data transfer
+in any direction.
 
-For the CV18xx DMA controller, the correct AXI data width is 32 bits,
-corresponding to "snps,data-width = 2".
-
-Test results on Milkv Duo S can be found here [2].
-
-Link: https://github.com/torvalds/linux/blob/master/Documentation/devicetree/bindings/dma/snps%2Cdw-axi-dmac.yaml#L74 [1]
-Link: https://gist.github.com/Sutter099/4fa99bb2d89e5af975983124704b3861 [2]
-
-Fixes: 514951a81a5e ("riscv: dts: sophgo: cv18xx: add DMA controller")
-Co-developed-by: Yu Yuan <yu.yuan@sjtu.edu.cn>
-Signed-off-by: Yu Yuan <yu.yuan@sjtu.edu.cn>
-Signed-off-by: Ze Huang <huangze@whut.edu.cn>
-Link: https://lore.kernel.org/r/20250428-duo-dma-config-v1-1-eb6ad836ca42@whut.edu.cn
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
-Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>
+Cc: Łukasz Bartosik <ukaszb@chromium.org>
+Fixes: fb18e5bb9660 ("xhci: dbc: poll at different rate depending on data transfer activity")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250505125630.561699-3-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/boot/dts/sophgo/cv18xx.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/xhci-dbgcap.c | 19 ++++++++++++++++---
+ drivers/usb/host/xhci-dbgcap.h |  3 +++
+ 2 files changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
-index b724fb6d9689e..b8063ba6d6d7f 100644
---- a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
-@@ -309,7 +309,7 @@
- 					   1024 1024 1024 1024>;
- 			snps,priority = <0 1 2 3 4 5 6 7>;
- 			snps,dma-masters = <2>;
--			snps,data-width = <4>;
-+			snps,data-width = <2>;
- 			status = "disabled";
- 		};
+diff --git a/drivers/usb/host/xhci-dbgcap.c b/drivers/usb/host/xhci-dbgcap.c
+index 6b239b3770d15..d35f3a18dd13b 100644
+--- a/drivers/usb/host/xhci-dbgcap.c
++++ b/drivers/usb/host/xhci-dbgcap.c
+@@ -822,6 +822,7 @@ static enum evtreturn xhci_dbc_do_handle_events(struct xhci_dbc *dbc)
+ {
+ 	dma_addr_t		deq;
+ 	union xhci_trb		*evt;
++	enum evtreturn		ret = EVT_DONE;
+ 	u32			ctrl, portsc;
+ 	bool			update_erdp = false;
  
+@@ -906,6 +907,7 @@ static enum evtreturn xhci_dbc_do_handle_events(struct xhci_dbc *dbc)
+ 			break;
+ 		case TRB_TYPE(TRB_TRANSFER):
+ 			dbc_handle_xfer_event(dbc, evt);
++			ret = EVT_XFER_DONE;
+ 			break;
+ 		default:
+ 			break;
+@@ -924,7 +926,7 @@ static enum evtreturn xhci_dbc_do_handle_events(struct xhci_dbc *dbc)
+ 		lo_hi_writeq(deq, &dbc->regs->erdp);
+ 	}
+ 
+-	return EVT_DONE;
++	return ret;
+ }
+ 
+ static void xhci_dbc_handle_events(struct work_struct *work)
+@@ -933,6 +935,7 @@ static void xhci_dbc_handle_events(struct work_struct *work)
+ 	struct xhci_dbc		*dbc;
+ 	unsigned long		flags;
+ 	unsigned int		poll_interval;
++	unsigned long		busypoll_timelimit;
+ 
+ 	dbc = container_of(to_delayed_work(work), struct xhci_dbc, event_work);
+ 	poll_interval = dbc->poll_interval;
+@@ -951,11 +954,21 @@ static void xhci_dbc_handle_events(struct work_struct *work)
+ 			dbc->driver->disconnect(dbc);
+ 		break;
+ 	case EVT_DONE:
+-		/* set fast poll rate if there are pending data transfers */
++		/*
++		 * Set fast poll rate if there are pending out transfers, or
++		 * a transfer was recently processed
++		 */
++		busypoll_timelimit = dbc->xfer_timestamp +
++			msecs_to_jiffies(DBC_XFER_INACTIVITY_TIMEOUT);
++
+ 		if (!list_empty(&dbc->eps[BULK_OUT].list_pending) ||
+-		    !list_empty(&dbc->eps[BULK_IN].list_pending))
++		    time_is_after_jiffies(busypoll_timelimit))
+ 			poll_interval = 0;
+ 		break;
++	case EVT_XFER_DONE:
++		dbc->xfer_timestamp = jiffies;
++		poll_interval = 0;
++		break;
+ 	default:
+ 		dev_info(dbc->dev, "stop handling dbc events\n");
+ 		return;
+diff --git a/drivers/usb/host/xhci-dbgcap.h b/drivers/usb/host/xhci-dbgcap.h
+index 9dc8f4d8077cc..47ac72c2286d9 100644
+--- a/drivers/usb/host/xhci-dbgcap.h
++++ b/drivers/usb/host/xhci-dbgcap.h
+@@ -96,6 +96,7 @@ struct dbc_ep {
+ #define DBC_WRITE_BUF_SIZE		8192
+ #define DBC_POLL_INTERVAL_DEFAULT	64	/* milliseconds */
+ #define DBC_POLL_INTERVAL_MAX		5000	/* milliseconds */
++#define DBC_XFER_INACTIVITY_TIMEOUT	10	/* milliseconds */
+ /*
+  * Private structure for DbC hardware state:
+  */
+@@ -142,6 +143,7 @@ struct xhci_dbc {
+ 	enum dbc_state			state;
+ 	struct delayed_work		event_work;
+ 	unsigned int			poll_interval;	/* ms */
++	unsigned long			xfer_timestamp;
+ 	unsigned			resume_required:1;
+ 	struct dbc_ep			eps[2];
+ 
+@@ -187,6 +189,7 @@ struct dbc_request {
+ enum evtreturn {
+ 	EVT_ERR	= -1,
+ 	EVT_DONE,
++	EVT_XFER_DONE,
+ 	EVT_GSER,
+ 	EVT_DISC,
+ };
 -- 
 2.39.5
 
