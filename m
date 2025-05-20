@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0346198845;
-	Tue, 20 May 2025 14:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30226EEDE;
+	Tue, 20 May 2025 14:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749696; cv=none; b=hNPszHdKzWo4D/jq2rtmqgiCjALwWMv/Uvr38riLtRB9C4SipaQaDjiXSl7n+mvvctS0QJHghmGS0YLbITkTjD2lxo0vo9RQxb6RJ/4YSdhncvZb7Bb2DnaC2oB5ufpQu2vaRm8+fb0rFzhD5doKl02yo03/K7dt3ocArZZPAOw=
+	t=1747749700; cv=none; b=akymUq5729jHcx033suCssyj/e7lK1yJH0biIITUFjnnxaZ+QOYtJTdK434ZgUDrsNEmgCCP98G7msQtxmJVCHxUoQezYQ7vfRDiEevGsfWgVR+BBakDoJHDXlNWFAg9+9jKHogrNmTalndX/P/HKbU+scyj5lS09SZ85J3lRTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749696; c=relaxed/simple;
-	bh=Wda9TnTRhXyqgsx3vThtcOxCIGkrjtKbDKi6W7I2ACc=;
+	s=arc-20240116; t=1747749700; c=relaxed/simple;
+	bh=SW1SidAaStpsAWn4FK0WKBwjr8qgsNJh1rm9Gjp7KPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pm9sghPeMKrdI9VRsmN2FDAocA/9ityS3f1OFaHNxiq4yayO2lW7pB782aJFiFdhWlP/ZpK25qwMa/DbVcZn9xNqRuRqZQcntbstatpNbtv+/e4Y2Azn6YpJjDVDcEES2xXKJOIKlVm/7pmBYz713JKQ1qYoZ75uBGiEq1ed+Sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RcuLz0ZW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ernHg9aNHuvZSjI0wZxJAa0Kj5hq0FjEYHrqJM/a5iD/A1b7iAhBmvdz2GoK9afpdp/NtRIwrjZJtQc42xULT62ImG3CFaYptkM5zG/TT/ZlTvYBa4M5feEYF4gHTj+PXmzpmrsQwUbGRTO3JG952S+op9g8TmkPupU7F73tPL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4hAbAqJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RcuLz0ZW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 656D8C4CEE9;
-	Tue, 20 May 2025 14:01:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4hAbAqJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA66C4CEE9;
+	Tue, 20 May 2025 14:01:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749696;
-	bh=Wda9TnTRhXyqgsx3vThtcOxCIGkrjtKbDKi6W7I2ACc=;
+	s=korg; t=1747749699;
+	bh=SW1SidAaStpsAWn4FK0WKBwjr8qgsNJh1rm9Gjp7KPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RcuLz0ZWDzFlMJUKJw0wjPycLkNMOZ2hfyMpZ3u/XaOvspoRLQwep+pXRginJQ/sU
-	 Gwjv33YOJuvykIjebOk0vQmHMtiEyGZn3eM0JXwR1148uA/IYKtn+XNftBKmyvaH4Q
-	 t6ZNoo1M3iozBmjUmSHdYD9jCz0gOZof0XDKhG0o=
+	b=g4hAbAqJ6bnFot1JBslNPcvbb0EeYh55Sy76Wp/lZOUhZQ+mGrqzdzREMP66KXOWB
+	 H4rSId/IYaeNQCUJSRUZbQVATI7G2y34ccWOqH4aGJF4wmGGyfUqQrLrkI0LH78PX7
+	 OM4vLgUP8SUsQ/oEw7k0hcMO9hvXXUdhrglFigNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qasim Ijaz <qasdev00@gmail.com>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 031/117] HID: thrustmaster: fix memory leak in thrustmaster_interrupts()
-Date: Tue, 20 May 2025 15:49:56 +0200
-Message-ID: <20250520125805.220934639@linuxfoundation.org>
+Subject: [PATCH 6.6 032/117] HID: uclogic: Add NULL check in uclogic_input_configured()
+Date: Tue, 20 May 2025 15:49:57 +0200
+Message-ID: <20250520125805.258465020@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -51,37 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qasim Ijaz <qasdev00@gmail.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 09d546303b370113323bfff456c4e8cff8756005 ]
+[ Upstream commit bd07f751208ba190f9b0db5e5b7f35d5bb4a8a1e ]
 
-In thrustmaster_interrupts(), the allocated send_buf is not
-freed if the usb_check_int_endpoints() check fails, leading
-to a memory leak.
+devm_kasprintf() returns NULL when memory allocation fails. Currently,
+uclogic_input_configured() does not check for this case, which results
+in a NULL pointer dereference.
 
-Fix this by ensuring send_buf is freed before returning in
-the error path.
+Add NULL check after devm_kasprintf() to prevent this issue.
 
-Fixes: 50420d7c79c3 ("HID: hid-thrustmaster: Fix warning in thrustmaster_probe by adding endpoint check")
-Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Fixes: dd613a4e45f8 ("HID: uclogic: Correct devm device reference for hidinput input_dev name")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-thrustmaster.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-uclogic-core.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-thrustmaster.c b/drivers/hid/hid-thrustmaster.c
-index 3b81468a1df29..0bf70664c35ee 100644
---- a/drivers/hid/hid-thrustmaster.c
-+++ b/drivers/hid/hid-thrustmaster.c
-@@ -174,6 +174,7 @@ static void thrustmaster_interrupts(struct hid_device *hdev)
- 	u8 ep_addr[2] = {b_ep, 0};
+diff --git a/drivers/hid/hid-uclogic-core.c b/drivers/hid/hid-uclogic-core.c
+index ad74cbc9a0aa5..45de01dea4b1c 100644
+--- a/drivers/hid/hid-uclogic-core.c
++++ b/drivers/hid/hid-uclogic-core.c
+@@ -142,11 +142,12 @@ static int uclogic_input_configured(struct hid_device *hdev,
+ 			suffix = "System Control";
+ 			break;
+ 		}
+-	}
+-
+-	if (suffix)
++	} else {
+ 		hi->input->name = devm_kasprintf(&hdev->dev, GFP_KERNEL,
+ 						 "%s %s", hdev->name, suffix);
++		if (!hi->input->name)
++			return -ENOMEM;
++	}
  
- 	if (!usb_check_int_endpoints(usbif, ep_addr)) {
-+		kfree(send_buf);
- 		hid_err(hdev, "Unexpected non-int endpoint\n");
- 		return;
- 	}
+ 	return 0;
+ }
 -- 
 2.39.5
 
