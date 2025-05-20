@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DA22459C4;
-	Tue, 20 May 2025 13:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B248B1922ED;
+	Tue, 20 May 2025 13:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749381; cv=none; b=I5+U+Qo3ZFuudmqIirizUdSuVScWKACmCB+VvVPibzg14hjSpq1a4dHMAGZohWRb/P5w4HY9wQy4j23ikMcKRVLn2B0I3hH86SaMsVHeDPWhXmj/2AU5ZLhS/yxe49o3jNx+PKHtv3eMuYPVvY7LdwscC58xxTqH2GiG0ofzmWo=
+	t=1747749384; cv=none; b=TAQqgxG5fkSG8OXgF9p0JfSbkzdQy03qAXKAp6eTiwJmiYJUQjY53q1DnN7Z3Q5U5OTKbTXU7TobXMrMqy4lUfgkSvHMy6kG/+rCpwk4bkQQFMo9CiRWNCwUitq7qqXdoTjl9x3+HXwdc4pE34omoWmMTO9UkswytFU3wepa8RQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749381; c=relaxed/simple;
-	bh=4ubUthK49Sp3mkO7AL+/eHYpZMlPHY4R02bVOtJrYCA=;
+	s=arc-20240116; t=1747749384; c=relaxed/simple;
+	bh=9poz58b06UY5p/ec1+lMJnbX5fLzncMIsEpQa0r8lWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nRRupivHq5IBrogbeZnN3toH90UMxtt7pzWM6cWpqXmR40+qBvgBNPiBE+3HNzJNqKg1lBiaS71BUDNB7vDANE8OXIh7YTnxof8x5f24dyDhq/1b5yS4WZ3AscQ6o0iA44twgYsn+kGhlwbyPeAlK0DOVTonj8t5fTGEw9IwvTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IzQaXQ3O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=by4h3CwX5MkJUQQL7OvZRiRvkwWeQt7CXhOFwLaFKlxuJJ1VYZqsmc3tsBtMmxE06LGL7HsdzaRlhvDBWqsji6NPbTMwMmpfiMG68aU3qIt7DBZjz/wEnCQYIxgKKIKVblv4JQhB9gqFXULnd3ZGuV090o9XeXCQaOn8L3Kp01o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jpaWGD/k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IzQaXQ3O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B043C4CEEB;
-	Tue, 20 May 2025 13:56:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jpaWGD/k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B0DC4CEE9;
+	Tue, 20 May 2025 13:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749381;
-	bh=4ubUthK49Sp3mkO7AL+/eHYpZMlPHY4R02bVOtJrYCA=;
+	s=korg; t=1747749384;
+	bh=9poz58b06UY5p/ec1+lMJnbX5fLzncMIsEpQa0r8lWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IzQaXQ3O2KGu3o7/TBPDSZfF6JA/Z32HCSdXYlYpv7dsEpLVV0rvFwNnoTYq7w/2P
-	 /Jl1BIkLn7470rZsOKTOVTC/kQRBfzdJLOEaU5l9PGDIogavNfkn2WYtYsgDnLYrgj
-	 csDibiWF269PSXqigdv0m4wTTQutC8Hf7BVZDeFA=
+	b=jpaWGD/kWGM6snoWNToSJlQw+JXrr6mNjw6RX64mpsV40nE9vJ9/XZgVg/5WT6X5V
+	 AAU2yFL4vV71RF+0/pWG2eoUiNWshOlJNLzKlf1Ov93X1gbD31WPuX4EsCBgnb2LC/
+	 CaDDxID4ui1sejzcLIljd2Pv2mWK31eJx0Bm0vQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biederman <ebiederm@xmission.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	linux-fsdevel@vger.kernel.org,
-	linux-mm@kvack.org,
-	Pedro Falcato <pedro.falcato@gmail.com>,
-	Sebastian Ott <sebott@redhat.com>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
 	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 03/97] binfmt_elf: elf_bss no longer used by load_elf_binary()
-Date: Tue, 20 May 2025 15:49:28 +0200
-Message-ID: <20250520125800.798369981@linuxfoundation.org>
+Subject: [PATCH 6.1 04/97] selftests/exec: load_address: conform test to TAP format output
+Date: Tue, 20 May 2025 15:49:29 +0200
+Message-ID: <20250520125800.836643079@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -57,68 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-[ Upstream commit 8ed2ef21ff564cf4a25c098ace510ee6513c9836 ]
+[ Upstream commit c4095067736b7ed50316a2bc7c9577941e87ad45 ]
 
-With the BSS handled generically via the new filesz/memsz mismatch
-handling logic in elf_load(), elf_bss no longer needs to be tracked.
-Drop the variable.
+Conform the layout, informational and status messages to TAP. No
+functional change is intended other than the layout of output messages.
 
-Cc: Eric Biederman <ebiederm@xmission.com>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: linux-fsdevel@vger.kernel.org
-Cc: linux-mm@kvack.org
-Suggested-by: Eric Biederman <ebiederm@xmission.com>
-Tested-by: Pedro Falcato <pedro.falcato@gmail.com>
-Signed-off-by: Sebastian Ott <sebott@redhat.com>
-Link: https://lore.kernel.org/r/20230929032435.2391507-2-keescook@chromium.org
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Link: https://lore.kernel.org/r/20240304155928.1818928-2-usama.anjum@collabora.com
 Signed-off-by: Kees Cook <keescook@chromium.org>
 Stable-dep-of: 11854fe263eb ("binfmt_elf: Move brk for static PIE even if ASLR disabled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/binfmt_elf.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ tools/testing/selftests/exec/load_address.c | 34 +++++++++------------
+ 1 file changed, 15 insertions(+), 19 deletions(-)
 
-diff --git a/fs/binfmt_elf.c b/fs/binfmt_elf.c
-index ea2968d343bb6..2672b9dca1af0 100644
---- a/fs/binfmt_elf.c
-+++ b/fs/binfmt_elf.c
-@@ -855,7 +855,7 @@ static int load_elf_binary(struct linux_binprm *bprm)
- 	unsigned long error;
- 	struct elf_phdr *elf_ppnt, *elf_phdata, *interp_elf_phdata = NULL;
- 	struct elf_phdr *elf_property_phdata = NULL;
--	unsigned long elf_bss, elf_brk;
-+	unsigned long elf_brk;
- 	int retval, i;
- 	unsigned long elf_entry;
- 	unsigned long e_entry;
-@@ -1047,7 +1047,6 @@ static int load_elf_binary(struct linux_binprm *bprm)
- 	if (retval < 0)
- 		goto out_free_dentry;
+diff --git a/tools/testing/selftests/exec/load_address.c b/tools/testing/selftests/exec/load_address.c
+index d487c2f6a6150..17e3207d34ae7 100644
+--- a/tools/testing/selftests/exec/load_address.c
++++ b/tools/testing/selftests/exec/load_address.c
+@@ -5,6 +5,7 @@
+ #include <link.h>
+ #include <stdio.h>
+ #include <stdlib.h>
++#include "../kselftest.h"
  
--	elf_bss = 0;
- 	elf_brk = 0;
+ struct Statistics {
+ 	unsigned long long load_address;
+@@ -41,28 +42,23 @@ int main(int argc, char **argv)
+ 	unsigned long long misalign;
+ 	int ret;
  
- 	start_code = ~0UL;
-@@ -1210,8 +1209,6 @@ static int load_elf_binary(struct linux_binprm *bprm)
++	ksft_print_header();
++	ksft_set_plan(1);
++
+ 	ret = dl_iterate_phdr(ExtractStatistics, &extracted);
+-	if (ret != 1) {
+-		fprintf(stderr, "FAILED\n");
+-		return 1;
+-	}
++	if (ret != 1)
++		ksft_exit_fail_msg("FAILED: dl_iterate_phdr\n");
  
- 		k = elf_ppnt->p_vaddr + elf_ppnt->p_filesz;
+-	if (extracted.alignment == 0) {
+-		fprintf(stderr, "No alignment found\n");
+-		return 1;
+-	} else if (extracted.alignment & (extracted.alignment - 1)) {
+-		fprintf(stderr, "Alignment is not a power of 2\n");
+-		return 1;
+-	}
++	if (extracted.alignment == 0)
++		ksft_exit_fail_msg("FAILED: No alignment found\n");
++	else if (extracted.alignment & (extracted.alignment - 1))
++		ksft_exit_fail_msg("FAILED: Alignment is not a power of 2\n");
  
--		if (k > elf_bss)
--			elf_bss = k;
- 		if ((elf_ppnt->p_flags & PF_X) && end_code < k)
- 			end_code = k;
- 		if (end_data < k)
-@@ -1223,7 +1220,6 @@ static int load_elf_binary(struct linux_binprm *bprm)
+ 	misalign = extracted.load_address & (extracted.alignment - 1);
+-	if (misalign) {
+-		printf("alignment = %llu, load_address = %llu\n",
+-			extracted.alignment, extracted.load_address);
+-		fprintf(stderr, "FAILED\n");
+-		return 1;
+-	}
++	if (misalign)
++		ksft_exit_fail_msg("FAILED: alignment = %llu, load_address = %llu\n",
++				   extracted.alignment, extracted.load_address);
  
- 	e_entry = elf_ex->e_entry + load_bias;
- 	phdr_addr += load_bias;
--	elf_bss += load_bias;
- 	elf_brk += load_bias;
- 	start_code += load_bias;
- 	end_code += load_bias;
+-	fprintf(stderr, "PASS\n");
+-	return 0;
++	ksft_test_result_pass("Completed\n");
++	ksft_finished();
+ }
 -- 
 2.39.5
 
