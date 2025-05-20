@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E68C1F4622;
-	Tue, 20 May 2025 14:02:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C1522C325;
+	Tue, 20 May 2025 14:02:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749736; cv=none; b=kWohKVlEPL6Zm3AnINEZer02QraTQp+0W1D7NGswLhM6JP6JmRvGKIpolPzYcCco6F+wlnzz7yUv0ogz7JUAzz4ZemBOaRyrJQzkEnRATacfcqpgcFLQ0tTiiET7QjpDo8rScew3usr1IvL4cxrg0R/fRcu6RyYEntxGShm8vpk=
+	t=1747749739; cv=none; b=minZxOapXpyNVPp3Lwgjyg4MoQ+aNkBNidbsGfq2YfPdlbuiwZiW/D0UNIMQSVBP4jsOlQdOiMHrLTYvbua1/oyFCc3pKWeXLhslncYzzl8cPunitWbUMC4LbBkxpMWH+A4PWh0JcbU9Sn4m+sBYBrxQ8vO0U69QEYufapl+rbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749736; c=relaxed/simple;
-	bh=uB8peaiDoh0VApPeckSFkDQFR6JyQYvTfRvvBqBH0Fc=;
+	s=arc-20240116; t=1747749739; c=relaxed/simple;
+	bh=MA6Du0K6xcvZTgJloq9uI2AbAdwjqNL2qFXLgME0m5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QWeoIDeRE04Eh6ehX/IhdlGWPnQzby4tjokQTX3VAICtDxcgXoNiOXkNMiwqOkZYRQ/HXAhLSGzezdNed9fU2L/E5yxBRibU+P7MYyFtV4OE92BL+MW4+P6e05H/Yu3qiAg+ajnyKNhYLOfhOmURriQp3xiBxLha1HvPWB3nsCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oyf+B6BQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B4ILv6HV2/dZkz6dy3Tl/MoWvPkWgqYro/Pa/Yf7W7VvZ5ccDr53lRosGUG2bektkT4Pcv1Ow2BbmAtmHp+GQjBtv3R9JwNCf0jfJi0sXAZgZO30WMi9YitdekBzZlyCGfzp3t4dnZ3Paj34avgRIicHpb85e8IniRJucRM1L20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5JqLe1H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oyf+B6BQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E360BC4CEE9;
-	Tue, 20 May 2025 14:02:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5JqLe1H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DADF6C4CEE9;
+	Tue, 20 May 2025 14:02:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749736;
-	bh=uB8peaiDoh0VApPeckSFkDQFR6JyQYvTfRvvBqBH0Fc=;
+	s=korg; t=1747749739;
+	bh=MA6Du0K6xcvZTgJloq9uI2AbAdwjqNL2qFXLgME0m5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oyf+B6BQ+dhIcfYGRFwiX7TypOm4mE/bAniRKsO5HPS6EIVbkwiHk0YxpFZCgjtIt
-	 3sJNmhvzQIqzKrf5+gFYBngtZDRNHgZyq630bvkDyCCqPkEtqiA4ZIuuLk4eKgxkhD
-	 LNNiyEtAi2slcvwPQXB44CNcfqHGYbFK1qczKfw8=
+	b=P5JqLe1H+0vNKxeKzdeXWCCSVnhOD0EUsV3KssvbpBuizMR0dv/DmnQsGhhNFw9Wc
+	 nwzGoN/J9j0lO7wBTvT352FXg+4Olli58EPLEyLIQXAvsemlxaI5/Kz7qIO+a/wSGN
+	 m7L1h5KgEwxIx+/hel8DMHLQUtIcy8vt6Y/7vn0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Mathieu Othacehe <othacehe@gnu.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 043/117] ALSA: ump: Fix a typo of snd_ump_stream_msg_device_info
-Date: Tue, 20 May 2025 15:50:08 +0200
-Message-ID: <20250520125805.697436066@linuxfoundation.org>
+Subject: [PATCH 6.6 044/117] net: cadence: macb: Fix a possible deadlock in macb_halt_tx.
+Date: Tue, 20 May 2025 15:50:09 +0200
+Message-ID: <20250520125805.737598361@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -50,59 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Mathieu Othacehe <othacehe@gnu.org>
 
-[ Upstream commit dd33993a9721ab1dae38bd37c9f665987d554239 ]
+[ Upstream commit c92d6089d8ad7d4d815ebcedee3f3907b539ff1f ]
 
-s/devince/device/
+There is a situation where after THALT is set high, TGO stays high as
+well. Because jiffies are never updated, as we are in a context with
+interrupts disabled, we never exit that loop and have a deadlock.
 
-It's used only internally, so no any behavior changes.
+That deadlock was noticed on a sama5d4 device that stayed locked for days.
 
-Fixes: 37e0e14128e0 ("ALSA: ump: Support UMP Endpoint and Function Block parsing")
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20250511141147.10246-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Use retries instead of jiffies so that the timeout really works and we do
+not have a deadlock anymore.
+
+Fixes: e86cd53afc590 ("net/macb: better manage tx errors")
+Signed-off-by: Mathieu Othacehe <othacehe@gnu.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250509121935.16282-1-othacehe@gnu.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_midi2.c | 2 +-
- include/sound/ump_msg.h               | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c | 19 ++++++-------------
+ 1 file changed, 6 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_midi2.c b/drivers/usb/gadget/function/f_midi2.c
-index b7dada064890b..90536f47906c3 100644
---- a/drivers/usb/gadget/function/f_midi2.c
-+++ b/drivers/usb/gadget/function/f_midi2.c
-@@ -475,7 +475,7 @@ static void reply_ump_stream_ep_info(struct f_midi2_ep *ep)
- /* reply a UMP EP device info */
- static void reply_ump_stream_ep_device(struct f_midi2_ep *ep)
- {
--	struct snd_ump_stream_msg_devince_info rep = {
-+	struct snd_ump_stream_msg_device_info rep = {
- 		.type = UMP_MSG_TYPE_STREAM,
- 		.status = UMP_STREAM_MSG_STATUS_DEVICE_INFO,
- 		.manufacture_id = ep->info.manufacturer,
-diff --git a/include/sound/ump_msg.h b/include/sound/ump_msg.h
-index 72f60ddfea753..9556b4755a1ed 100644
---- a/include/sound/ump_msg.h
-+++ b/include/sound/ump_msg.h
-@@ -604,7 +604,7 @@ struct snd_ump_stream_msg_ep_info {
- } __packed;
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index 4325d0ace1f26..6f45f4d9fba71 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -1016,22 +1016,15 @@ static void macb_update_stats(struct macb *bp)
  
- /* UMP Stream Message: Device Info Notification (128bit) */
--struct snd_ump_stream_msg_devince_info {
-+struct snd_ump_stream_msg_device_info {
- #ifdef __BIG_ENDIAN_BITFIELD
- 	/* 0 */
- 	u32 type:4;
-@@ -754,7 +754,7 @@ struct snd_ump_stream_msg_fb_name {
- union snd_ump_stream_msg {
- 	struct snd_ump_stream_msg_ep_discovery ep_discovery;
- 	struct snd_ump_stream_msg_ep_info ep_info;
--	struct snd_ump_stream_msg_devince_info device_info;
-+	struct snd_ump_stream_msg_device_info device_info;
- 	struct snd_ump_stream_msg_stream_cfg stream_cfg;
- 	struct snd_ump_stream_msg_fb_discovery fb_discovery;
- 	struct snd_ump_stream_msg_fb_info fb_info;
+ static int macb_halt_tx(struct macb *bp)
+ {
+-	unsigned long	halt_time, timeout;
+-	u32		status;
++	u32 status;
+ 
+ 	macb_writel(bp, NCR, macb_readl(bp, NCR) | MACB_BIT(THALT));
+ 
+-	timeout = jiffies + usecs_to_jiffies(MACB_HALT_TIMEOUT);
+-	do {
+-		halt_time = jiffies;
+-		status = macb_readl(bp, TSR);
+-		if (!(status & MACB_BIT(TGO)))
+-			return 0;
+-
+-		udelay(250);
+-	} while (time_before(halt_time, timeout));
+-
+-	return -ETIMEDOUT;
++	/* Poll TSR until TGO is cleared or timeout. */
++	return read_poll_timeout_atomic(macb_readl, status,
++					!(status & MACB_BIT(TGO)),
++					250, MACB_HALT_TIMEOUT, false,
++					bp, TSR);
+ }
+ 
+ static void macb_tx_unmap(struct macb *bp, struct macb_tx_skb *tx_skb, int budget)
 -- 
 2.39.5
 
