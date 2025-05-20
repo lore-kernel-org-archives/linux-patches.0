@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FF724BBFB;
-	Tue, 20 May 2025 14:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C15B21D5BE;
+	Tue, 20 May 2025 14:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750633; cv=none; b=eboMnVPdr+4dZuMeb29bwkvXgWsUEnmo0H5gM7Z3cHi1mrnDCOkWTG+gmQE6MifEoEJxLlpizb62316/DUM6WcVSidiDFmLK40YmONxWGLz7ndUm0J78JE5jyUNXFUHQi4Is3nhXdah+MmJqGC43BpDOm2JrzeYC6M8Ppn4X6Sw=
+	t=1747750636; cv=none; b=F251Kl7U0b7M5s8lsa9UMBrHmXgaIAMIItNwL2vYG+fSbs4WQwWaZe2RX3GZChCRjPLCCnurPYhWLKlfSLM88EwTdZXjGFh8i1sUHrEA43H/tZNooBVuKJaI72DIjLO8MwzIxpr7gvj4ZaxmzjoNzadRioWvhImNMegqJIpKOaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750633; c=relaxed/simple;
-	bh=lOPGASBPMePfakbbnYhiCIy3/lp4R+oi2nAuG4E2JmE=;
+	s=arc-20240116; t=1747750636; c=relaxed/simple;
+	bh=vncJMeIXYIcJrPKIE+kBGhQDRGf0fcmG2HoHGtTbAdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TaI2o15ikGYspokk9Iwp8XR20c3RPGW8fzCcHT09rgm4vljqAPIxSAsNncPXSioquurLBVVnO+IwVpqyRUb7QjvmKuYHGUVK7rD7ORSAlxfHtkmIUGteM7OQvUFdclrcFYfhkgy6pu3XSb7TBpcRA+bZwsUxbhsgfqc6p7CEy9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9/2or0Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nFaUbpqfUufdihb4CQm6U8yKliZNNeRLzS2ZAR98SnMa1GIF3fgqsgPo7FKKdwJo1JPRayfod7T5L/OWMHKCalH6UzIh4Le1Yv3+ehFkOMhfvLp2AWJQ23NnGOY9ZvZTV5I2x3pLjeajKoa1spHfRgI+H/6S/kaHy9GKiuiqFIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKCs/LFt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9/2or0Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA10DC4CEE9;
-	Tue, 20 May 2025 14:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKCs/LFt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF7EC4CEE9;
+	Tue, 20 May 2025 14:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750633;
-	bh=lOPGASBPMePfakbbnYhiCIy3/lp4R+oi2nAuG4E2JmE=;
+	s=korg; t=1747750636;
+	bh=vncJMeIXYIcJrPKIE+kBGhQDRGf0fcmG2HoHGtTbAdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t9/2or0Ynj2a/QGxYph5QMvJL8bCduzOnVJH2HV3Vj+diaCe6ocbct3jacH8M+W3A
-	 2T9cUsCTCJ6GTN2RQcr4Ng6FQB8oOSVl7LsE0FnlTSpUI5p5BmIlNtycqDAWbKZacE
-	 urB3l7+sDwXrHO45jhMWYa/i/1B7Be+etYkRx/Q8=
+	b=iKCs/LFt5B12Y9qyotoM1aFG+fBAL0WRox/tOwIrYQm36jn8WJ2ok3LLapYUsFYyH
+	 2Aa0qgNPN2FqAc1Y/WLjalY3gEpW6V7rYLgkfULPjGgSFSa4Hussi4QH2/Mm44rMzH
+	 mKyGPZDt8pOuMLVFJ9HpUMoeW47VdSWLohJWg4WY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xianglai Li <lixianglai@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.14 071/145] LoongArch: Save and restore CSR.CNTC for hibernation
-Date: Tue, 20 May 2025 15:50:41 +0200
-Message-ID: <20250520125813.369647118@linuxfoundation.org>
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.14 045/145] qlcnic: fix memory leak in qlcnic_sriov_channel_cfg_cmd()
+Date: Tue, 20 May 2025 15:50:15 +0200
+Message-ID: <20250520125812.339489652@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -50,71 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-commit ceb9155d058a11242aa0572875c44e9713b1a2be upstream.
+[ Upstream commit 9d8a99c5a7c7f4f7eca2c168a4ec254409670035 ]
 
-Save and restore CSR.CNTC for hibernation which is similar to suspend.
+In one of the error paths in qlcnic_sriov_channel_cfg_cmd(), the memory
+allocated in qlcnic_sriov_alloc_bc_mbx_args() for mailbox arguments is
+not freed. Fix that by jumping to the error path that frees them, by
+calling qlcnic_free_mbx_args(). This was found using static analysis.
 
-For host this is unnecessary because sched clock is ensured continuous,
-but for kvm guest sched clock isn't enough because rdtime.d should also
-be continuous.
-
-Host::rdtime.d = Host::CSR.CNTC + counter
-Guest::rdtime.d = Host::CSR.CNTC + Host::CSR.GCNTC + Guest::CSR.CNTC + counter
-
-so,
-
-Guest::rdtime.d = Host::rdtime.d + Host::CSR.GCNTC + Guest::CSR.CNTC
-
-To ensure Guest::rdtime.d continuous, Host::rdtime.d should be at first
-continuous, while Host::CSR.GCNTC / Guest::CSR.CNTC is maintained by KVM.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f197a7aa6288 ("qlcnic: VF-PF communication channel implementation")
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250512044829.36400-1-abdun.nihaal@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/time.c     |    2 +-
- arch/loongarch/power/hibernate.c |    3 +++
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/arch/loongarch/kernel/time.c
-+++ b/arch/loongarch/kernel/time.c
-@@ -111,7 +111,7 @@ static unsigned long __init get_loops_pe
- 	return lpj;
- }
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
+index 28d24d59efb84..d57b976b90409 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
+@@ -1484,8 +1484,11 @@ static int qlcnic_sriov_channel_cfg_cmd(struct qlcnic_adapter *adapter, u8 cmd_o
+ 	}
  
--static long init_offset __nosavedata;
-+static long init_offset;
- 
- void save_counter(void)
- {
---- a/arch/loongarch/power/hibernate.c
-+++ b/arch/loongarch/power/hibernate.c
-@@ -2,6 +2,7 @@
- #include <asm/fpu.h>
- #include <asm/loongson.h>
- #include <asm/sections.h>
-+#include <asm/time.h>
- #include <asm/tlbflush.h>
- #include <linux/suspend.h>
- 
-@@ -14,6 +15,7 @@ struct pt_regs saved_regs;
- 
- void save_processor_state(void)
- {
-+	save_counter();
- 	saved_crmd = csr_read32(LOONGARCH_CSR_CRMD);
- 	saved_prmd = csr_read32(LOONGARCH_CSR_PRMD);
- 	saved_euen = csr_read32(LOONGARCH_CSR_EUEN);
-@@ -26,6 +28,7 @@ void save_processor_state(void)
- 
- void restore_processor_state(void)
- {
-+	sync_counter();
- 	csr_write32(saved_crmd, LOONGARCH_CSR_CRMD);
- 	csr_write32(saved_prmd, LOONGARCH_CSR_PRMD);
- 	csr_write32(saved_euen, LOONGARCH_CSR_EUEN);
+ 	cmd_op = (cmd.rsp.arg[0] & 0xff);
+-	if (cmd.rsp.arg[0] >> 25 == 2)
+-		return 2;
++	if (cmd.rsp.arg[0] >> 25 == 2) {
++		ret = 2;
++		goto out;
++	}
++
+ 	if (cmd_op == QLCNIC_BC_CMD_CHANNEL_INIT)
+ 		set_bit(QLC_BC_VF_STATE, &vf->state);
+ 	else
+-- 
+2.39.5
+
 
 
