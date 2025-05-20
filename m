@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1E91A3A80;
-	Tue, 20 May 2025 14:21:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F5B1A3A80;
+	Tue, 20 May 2025 14:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750866; cv=none; b=NhsUjxz4xw4xQpgoII2hoNHviry4zNzaSIQneYdo/onMhXDiKdX8gr1ke1joXyBT5cz8HVEx5m/SC8pf0Eos/mm8Lf7t5qzVuxMRgoo/EqIpdJ/EnpL80YrSxhRewTH9UyyCjtybEkg9kQBGhT5aDsx7Dx9kcpUYKCsrdoi8Qb8=
+	t=1747750869; cv=none; b=Tw3/2dTNiEGUoc4uIzV0yJnossCBGkYXqWTruCPgjUgNa6t83zZLchSM56No7MqHDFvvXExe9M6U8Tw8nje1/5Vb7FMMmBZWfuMG1uTpWB5jLt88oyX19l9z+IR8eEUY/tVHail8hMospWiJnK15pEOSbeqrX5wLKxoAa3T69WY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750866; c=relaxed/simple;
-	bh=k4ywCbHZYqfa/1XY+zWnfCR2Kn1NVInb22iLwd8JLZA=;
+	s=arc-20240116; t=1747750869; c=relaxed/simple;
+	bh=bEgIgVHvCvZUOT4i8an3DednSG0HDWw2KxtlTrD+nYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EXfN48mUaTV+l4abiJfyMdLnz1jOA3UL7y2s6zywFjnWikk7YhFc3fW2TGbTjMWU9gG9gONEDfKK43RMkMkYFpplHP3qhpB3PqvyaBgGa6TZaugrIRmVoJISbAMcHKo909qHNoMtVXPt+IU5cqfdTGyotugBr/sQwQrDg0Fo6nA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVnHxwbA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gsIfSerfW370LbZsIPBMhn9uQiSS+WYRsOdHKnfyvk2lnE9Bj3R+IN3DLONR8LIb6RmrNPmHmKjLQp/aoEK3N6aJx1Hz25b9FnnqLmJVYJr45wtUqpOYcPuQSvlUnwaQC4Gp+G8ZishyZncW/1kb7FkYvESw+GiC3iGfj7JMMI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s98VnyLY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVnHxwbA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 979CBC4CEE9;
-	Tue, 20 May 2025 14:21:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s98VnyLY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D689C4CEE9;
+	Tue, 20 May 2025 14:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750866;
-	bh=k4ywCbHZYqfa/1XY+zWnfCR2Kn1NVInb22iLwd8JLZA=;
+	s=korg; t=1747750868;
+	bh=bEgIgVHvCvZUOT4i8an3DednSG0HDWw2KxtlTrD+nYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wVnHxwbAuIVWgmj5L2pD5rGcezz03+pDK0/IKQa6YbECN2sTA2LrzevuR/6qbr9yS
-	 kLLtJStpunN2snEEwsBKKppVbhmfbICMR83icwiLh362YGLPR0JE/q74ZaGFzlQje7
-	 ja/ZyokgDAgFU7BbZhWrdZPRMkXM2CUIj9QyowW4=
+	b=s98VnyLYAUEzKx1uKY7E1IbcshgS0WRcWAHuPzm9BfCw3hhkU9FLyaZw0Jph2BE4z
+	 Y+dpIeqdriDcibHoRDtjSOx2hhR0JIT3+fSO6wILti4VpCTqoNHsX+6CzBUI+8xs9w
+	 2BfYL+XbZYmtzjKgcAlGKn8QRjwY/fRbGu01JXWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.14 117/145] wifi: mt76: disable napi on driver removal
-Date: Tue, 20 May 2025 15:51:27 +0200
-Message-ID: <20250520125815.133532295@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Thierry Reding <treding@nvidia.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.14 108/145] phy: Fix error handling in tegra_xusb_port_init
+Date: Tue, 20 May 2025 15:51:18 +0200
+Message-ID: <20250520125814.786662233@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -51,59 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 78ab4be549533432d97ea8989d2f00b508fa68d8 upstream.
+commit b2ea5f49580c0762d17d80d8083cb89bc3acf74f upstream.
 
-A warning on driver removal started occurring after commit 9dd05df8403b
-("net: warn if NAPI instance wasn't shut down"). Disable tx napi before
-deleting it in mt76_dma_cleanup().
+If device_add() fails, do not use device_unregister() for error
+handling. device_unregister() consists two functions: device_del() and
+put_device(). device_unregister() should only be called after
+device_add() succeeded because device_del() undoes what device_add()
+does if successful. Change device_unregister() to put_device() call
+before returning from the function.
 
- WARNING: CPU: 4 PID: 18828 at net/core/dev.c:7288 __netif_napi_del_locked+0xf0/0x100
- CPU: 4 UID: 0 PID: 18828 Comm: modprobe Not tainted 6.15.0-rc4 #4 PREEMPT(lazy)
- Hardware name: ASUS System Product Name/PRIME X670E-PRO WIFI, BIOS 3035 09/05/2024
- RIP: 0010:__netif_napi_del_locked+0xf0/0x100
- Call Trace:
- <TASK>
- mt76_dma_cleanup+0x54/0x2f0 [mt76]
- mt7921_pci_remove+0xd5/0x190 [mt7921e]
- pci_device_remove+0x47/0xc0
- device_release_driver_internal+0x19e/0x200
- driver_detach+0x48/0x90
- bus_remove_driver+0x6d/0xf0
- pci_unregister_driver+0x2e/0xb0
- __do_sys_delete_module.isra.0+0x197/0x2e0
- do_syscall_64+0x7b/0x160
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+As comment of device_add() says, 'if device_add() succeeds, you should
+call device_del() when you want to get rid of it. If device_add() has
+not succeeded, use only put_device() to drop the reference count'.
 
-Tested with mt7921e but the same pattern can be actually applied to other
-mt76 drivers calling mt76_dma_cleanup() during removal. Tx napi is enabled
-in their *_dma_init() functions and only toggled off and on again inside
-their suspend/resume/reset paths. So it should be okay to disable tx
-napi in such a generic way.
+Found by code review.
 
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: 2ac515a5d74f ("mt76: mt76x02: use napi polling for tx cleanup")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Tested-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20250506115540.19045-1-pchelkin@ispras.ru
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 53d2a715c240 ("phy: Add Tegra XUSB pad controller support")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20250303072739.3874987-1-make24@iscas.ac.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/dma.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/phy/tegra/xusb.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/dma.c
-+++ b/drivers/net/wireless/mediatek/mt76/dma.c
-@@ -1011,6 +1011,7 @@ void mt76_dma_cleanup(struct mt76_dev *d
- 	int i;
+--- a/drivers/phy/tegra/xusb.c
++++ b/drivers/phy/tegra/xusb.c
+@@ -548,16 +548,16 @@ static int tegra_xusb_port_init(struct t
  
- 	mt76_worker_disable(&dev->tx_worker);
-+	napi_disable(&dev->tx_napi);
- 	netif_napi_del(&dev->tx_napi);
+ 	err = dev_set_name(&port->dev, "%s-%u", name, index);
+ 	if (err < 0)
+-		goto unregister;
++		goto put_device;
  
- 	for (i = 0; i < ARRAY_SIZE(dev->phys); i++) {
+ 	err = device_add(&port->dev);
+ 	if (err < 0)
+-		goto unregister;
++		goto put_device;
+ 
+ 	return 0;
+ 
+-unregister:
+-	device_unregister(&port->dev);
++put_device:
++	put_device(&port->dev);
+ 	return err;
+ }
+ 
 
 
