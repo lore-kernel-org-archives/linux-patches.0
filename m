@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956AF2505D7;
-	Tue, 20 May 2025 14:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DFE246773;
+	Tue, 20 May 2025 14:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750168; cv=none; b=J0V4KwanUyEo3zz8+udHQN6Qqau1adWF8b4Ftzhy/n7fudMk+Cs04a7p7IxAIO3eRefc86oZbNXaLr67SHCjIK0zS1GrIA0ckgISmgnRV81X50f2w8oXYhSuFH5usDJCoe8gUUoMsNb0Ln1BzIKMlAH+xhF0CFeb0IxnxKawtX4=
+	t=1747750172; cv=none; b=MqNgN9ChuXlTWjpCw8yULbuB2JhHG+7WlX4t138b4/+hZ9QCojVYhd6AppPnjB3SUG7HSWkdEh5fgHyzaX4ETXikb+lyS3DI8IUtcTsTyjQ6R2SKMQ20888ugXqrrRoQot3tPzibYszVRcIC08R6gKvarKV5OPZ0VAh3xIg1xAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750168; c=relaxed/simple;
-	bh=9HrgRlUpAUStfa+TVyPXW5oUdBnGurdbH8ltom8FrMw=;
+	s=arc-20240116; t=1747750172; c=relaxed/simple;
+	bh=u5hW4uXgFDoJqSchFMayRE1nrPF8drJ1TUvqO0Qz98M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S15hXdd9424fmLAYQvpuIrhKBTvpcqBF0jhkp7gGP2ROXa77DeAfe1/xMf1zoOXkwZECpXEFLBcbGLy4f/wrghfd1hNc3zYO2GuMrMBN7D9/G6NMKzihfnDy/tQ6Rwa9wssDiagLljpwOfHTMWW3VjiAro7rCNrP6RYVjhkPF7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ufkf1QQ2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bN1GxldpE+CxRJNe4fd87MPtEgg05pecYPNgIcH/uj3+XSdIPvOjzpcVkZU1iTVDpflypHqmnrPupCtyuEAjt9Uy4vv+XXKFWVXORhVGOipD5apuQLm7PBo5uga+3ZDKafsOvMZBWoDAKAjZ0Ij0jVItk3QJGKil+nt4Py/IHpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJMceRXz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ufkf1QQ2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F158C4CEEA;
-	Tue, 20 May 2025 14:09:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJMceRXz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D01DC4CEE9;
+	Tue, 20 May 2025 14:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750168;
-	bh=9HrgRlUpAUStfa+TVyPXW5oUdBnGurdbH8ltom8FrMw=;
+	s=korg; t=1747750171;
+	bh=u5hW4uXgFDoJqSchFMayRE1nrPF8drJ1TUvqO0Qz98M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ufkf1QQ2UImh/P7qE0vf6HVcIttvIdB7zQONfCNwOACIFi3QJPqtJMa3s4WKY3TrH
-	 PFyVPrJeYizpj4PMxjIMU/L0NY8azPCQgqkbNzURKT7zcT93kus0lJ1TwNZQfvCq3d
-	 LyAsYShAGP9Uws5MdS0uSvgrwOBL36ByKOCwqKRc=
+	b=NJMceRXzWnZw49m9o1d7yPIQzdVrft18/G6eXEGr+hvi6UgxhYADSdi+xdRA/XCMo
+	 aCbkIlDO/GUZYwmA78Fv6Pwa3FqUFeLTTAmRPWcgCkXP7EVgLPKd4Yciko818BoKvy
+	 ya3oxnnQEYPOy6dDU2aUXL32kzwdqK3zMBhD8DOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4bcdddd48bb6f0be0da1@syzkaller.appspotmail.com,
-	Kees Cook <kees@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 064/143] wifi: mac80211: Set n_channels after allocating struct cfg80211_scan_request
-Date: Tue, 20 May 2025 15:50:19 +0200
-Message-ID: <20250520125812.581204208@linuxfoundation.org>
+Subject: [PATCH 6.12 065/143] mlxsw: spectrum_router: Fix use-after-free when deleting GRE net devices
+Date: Tue, 20 May 2025 15:50:20 +0200
+Message-ID: <20250520125812.618674402@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -53,52 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 82bbe02b2500ef0a62053fe2eb84773fe31c5a0a ]
+[ Upstream commit 92ec4855034b2c4d13f117558dc73d20581fa9ff ]
 
-Make sure that n_channels is set after allocating the
-struct cfg80211_registered_device::int_scan_req member. Seen with
-syzkaller:
+The driver only offloads neighbors that are constructed on top of net
+devices registered by it or their uppers (which are all Ethernet). The
+device supports GRE encapsulation and decapsulation of forwarded
+traffic, but the driver will not offload dummy neighbors constructed on
+top of GRE net devices as they are not uppers of its net devices:
 
-UBSAN: array-index-out-of-bounds in net/mac80211/scan.c:1208:5
-index 0 is out of range for type 'struct ieee80211_channel *[] __counted_by(n_channels)' (aka 'struct ieee80211_channel *[]')
+ # ip link add name gre1 up type gre tos inherit local 192.0.2.1 remote 198.51.100.1
+ # ip neigh add 0.0.0.0 lladdr 0.0.0.0 nud noarp dev gre1
+ $ ip neigh show dev gre1 nud noarp
+ 0.0.0.0 lladdr 0.0.0.0 NOARP
 
-This was missed in the initial conversions because I failed to locate
-the allocation likely due to the "sizeof(void *)" not matching the
-"channels" array type.
+(Note that the neighbor is not marked with 'offload')
 
-Reported-by: syzbot+4bcdddd48bb6f0be0da1@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/lkml/680fd171.050a0220.2b69d1.045e.GAE@google.com/
-Fixes: e3eac9f32ec0 ("wifi: cfg80211: Annotate struct cfg80211_scan_request with __counted_by")
-Signed-off-by: Kees Cook <kees@kernel.org>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://patch.msgid.link/20250509184641.work.542-kees@kernel.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+When the driver is reloaded and the existing configuration is replayed,
+the driver does not perform the same check regarding existing neighbors
+and offloads the previously added one:
+
+ # devlink dev reload pci/0000:01:00.0
+ $ ip neigh show dev gre1 nud noarp
+ 0.0.0.0 lladdr 0.0.0.0 offload NOARP
+
+If the neighbor is later deleted, the driver will ignore the
+notification (given the GRE net device is not its upper) and will
+therefore keep referencing freed memory, resulting in a use-after-free
+[1] when the net device is deleted:
+
+ # ip neigh del 0.0.0.0 lladdr 0.0.0.0 dev gre1
+ # ip link del dev gre1
+
+Fix by skipping neighbor replay if the net device for which the replay
+is performed is not our upper.
+
+[1]
+BUG: KASAN: slab-use-after-free in mlxsw_sp_neigh_entry_update+0x1ea/0x200
+Read of size 8 at addr ffff888155b0e420 by task ip/2282
+[...]
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x6f/0xa0
+ print_address_description.constprop.0+0x6f/0x350
+ print_report+0x108/0x205
+ kasan_report+0xdf/0x110
+ mlxsw_sp_neigh_entry_update+0x1ea/0x200
+ mlxsw_sp_router_rif_gone_sync+0x2a8/0x440
+ mlxsw_sp_rif_destroy+0x1e9/0x750
+ mlxsw_sp_netdevice_ipip_ol_event+0x3c9/0xdc0
+ mlxsw_sp_router_netdevice_event+0x3ac/0x15e0
+ notifier_call_chain+0xca/0x150
+ call_netdevice_notifiers_info+0x7f/0x100
+ unregister_netdevice_many_notify+0xc8c/0x1d90
+ rtnl_dellink+0x34e/0xa50
+ rtnetlink_rcv_msg+0x6fb/0xb70
+ netlink_rcv_skb+0x131/0x360
+ netlink_unicast+0x426/0x710
+ netlink_sendmsg+0x75a/0xc20
+ __sock_sendmsg+0xc1/0x150
+ ____sys_sendmsg+0x5aa/0x7b0
+ ___sys_sendmsg+0xfc/0x180
+ __sys_sendmsg+0x121/0x1b0
+ do_syscall_64+0xbb/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+Fixes: 8fdb09a7674c ("mlxsw: spectrum_router: Replay neighbours when RIF is made")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Link: https://patch.msgid.link/c53c02c904fde32dad484657be3b1477884e9ad6.1747225701.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/main.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/mac80211/main.c b/net/mac80211/main.c
-index ee1211a213d70..caedc939eea19 100644
---- a/net/mac80211/main.c
-+++ b/net/mac80211/main.c
-@@ -1344,10 +1344,12 @@ int ieee80211_register_hw(struct ieee80211_hw *hw)
- 	hw->wiphy->software_iftypes |= BIT(NL80211_IFTYPE_MONITOR);
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
+index 7d6d859cef3f9..511cd92e0e3e7 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
+@@ -3014,6 +3014,9 @@ static int mlxsw_sp_neigh_rif_made_sync(struct mlxsw_sp *mlxsw_sp,
+ 		.rif = rif,
+ 	};
  
- 
--	local->int_scan_req = kzalloc(sizeof(*local->int_scan_req) +
--				      sizeof(void *) * channels, GFP_KERNEL);
-+	local->int_scan_req = kzalloc(struct_size(local->int_scan_req,
-+						  channels, channels),
-+				      GFP_KERNEL);
- 	if (!local->int_scan_req)
- 		return -ENOMEM;
-+	local->int_scan_req->n_channels = channels;
- 
- 	eth_broadcast_addr(local->int_scan_req->bssid);
- 
++	if (!mlxsw_sp_dev_lower_is_port(mlxsw_sp_rif_dev(rif)))
++		return 0;
++
+ 	neigh_for_each(&arp_tbl, mlxsw_sp_neigh_rif_made_sync_each, &rms);
+ 	if (rms.err)
+ 		goto err_arp;
 -- 
 2.39.5
 
