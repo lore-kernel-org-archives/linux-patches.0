@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974A62459ED;
-	Tue, 20 May 2025 14:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D07246327;
+	Tue, 20 May 2025 14:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749723; cv=none; b=dnCpeJQqizLxn8YjBPvljb/S4NQiKpTE7RY+dpz2xH3tnlg0EhWCTIyV0/G7DdEbElXXyMQJHBNJhQ1YvsNVhr2YPkc+I9Cli7B8OqC9P1OBrDi2cf8o6bTLR5BiqliUEtNHlBR4SHU8McWgzSw1Avf9K+rhw9kaVpOHX+yf1kg=
+	t=1747749726; cv=none; b=Si+eJrGh6CLyqNw8wqN34s98TbNilg9a1Rrgu8e4mXvr0TjzMlHb8XxKebnaIwf6cZJGxhG8tUekGxbQWUWAd0CLEv5y9IRYYwHwip9Fh53Mw5aYxig3jW7qOpl3imQ65hyjqNox1ZzbbYsNExPOTzdU6cAGdKEgKAh+nkODuKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749723; c=relaxed/simple;
-	bh=W6IUm+FRbrQYOImJ1m1bJihZb/0kOkgVznkiy97f0B4=;
+	s=arc-20240116; t=1747749726; c=relaxed/simple;
+	bh=h8W0i1EiJttlsTtiFOa6bEijITD1ttdfhsSAdRcwu+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lCLTqOZqwgtPusn9dBC+xzryRy7tQjo1FY7eHH18FoGBStAKiwcUiK6TexPcyuMkj+7hxBzW0eOWfso2uFz1vT/3WINLMDrovgCBnI3csgTKmEHsCu4u8BBYJB1cL12CkXYdNQrFeUb1y4i1v6Si9SaalqqKbcOQY0SZSzb4NKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTNpoUlQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WWUvkbfd0k/4PauZSUMzNdvAdrY6PgcNyP/I3Z0xaN+wCP3NLEe5lkQ8w3VUzu5hCBlWB6geF1g6Vc4UdyZDXNkDnmchU05Tx4eUZ+n7czDlvnZ/bc5Xjc+N6kuYGOIFy+C8sE7+dQ2zEPtXImckysjMwnzfFTwILO39orj/sgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIIio+yF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTNpoUlQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F894C4CEEF;
-	Tue, 20 May 2025 14:02:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIIio+yF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30153C4CEE9;
+	Tue, 20 May 2025 14:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749723;
-	bh=W6IUm+FRbrQYOImJ1m1bJihZb/0kOkgVznkiy97f0B4=;
+	s=korg; t=1747749726;
+	bh=h8W0i1EiJttlsTtiFOa6bEijITD1ttdfhsSAdRcwu+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RTNpoUlQ6b2oSlV3Z5vHaBP+4HereoSVfH8nZjViUrUxiu15ZTokuYwb+AL4qVjRZ
-	 Xuz5jepiTJcFQeYqRN/rRcWP56qoIsONHMzNa1TQ5dZMAunbvqdXvzQzr9s0LKh+kY
-	 04b0Z5Nla4wSklaQg+k4tRkkwIsAVsLHpHbVPoLs=
+	b=yIIio+yFjJsmy/l40BXxb9bglC6KroVxcHP6+1jFe+vgeWSoN+/QutC8zJFgFOkCA
+	 w3SIRUiyyQ7f3niZlb4fjCQiS5Q4KOXTFe4JVDuRzj/By0JVjhBhbBUk9GB7M/EhGQ
+	 DT25/qvEj1peyNlCo62xJAAQ2lfa/eg9BnGMdrL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	syzbot+e76d52dadc089b9d197f@syzkaller.appspotmail.com,
+	syzbot+1065a199625a388fce60@syzkaller.appspotmail.com,
 	Matt Johnston <matt@codeconstruct.com.au>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 039/117] mctp: no longer rely on net->dev_index_head[]
-Date: Tue, 20 May 2025 15:50:04 +0200
-Message-ID: <20250520125805.540508961@linuxfoundation.org>
+Subject: [PATCH 6.6 040/117] net: mctp: Dont access ifa_index when missing
+Date: Tue, 20 May 2025 15:50:05 +0200
+Message-ID: <20250520125805.579489334@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -54,118 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Matt Johnston <matt@codeconstruct.com.au>
 
-[ Upstream commit 2d20773aec14996b6cc4db92d885028319be683d ]
+[ Upstream commit f11cf946c0a92c560a890d68e4775723353599e1 ]
 
-mctp_dump_addrinfo() is one of the last users of
-net->dev_index_head[] in the control path.
+In mctp_dump_addrinfo, ifa_index can be used to filter interfaces, but
+only when the struct ifaddrmsg is provided. Otherwise it will be
+comparing to uninitialised memory - reproducible in the syzkaller case from
+dhcpd, or busybox "ip addr show".
 
-Switch to for_each_netdev_dump() for better scalability.
+The kernel MCTP implementation has always filtered by ifa_index, so
+existing userspace programs expecting to dump MCTP addresses must
+already be passing a valid ifa_index value (either 0 or a real index).
 
-Use C99 for mctp_device_rtnl_msg_handlers[] to prepare
-future RTNL removal from mctp_dump_addrinfo()
+BUG: KMSAN: uninit-value in mctp_dump_addrinfo+0x208/0xac0 net/mctp/device.c:128
+ mctp_dump_addrinfo+0x208/0xac0 net/mctp/device.c:128
+ rtnl_dump_all+0x3ec/0x5b0 net/core/rtnetlink.c:4380
+ rtnl_dumpit+0xd5/0x2f0 net/core/rtnetlink.c:6824
+ netlink_dump+0x97b/0x1690 net/netlink/af_netlink.c:2309
 
-(mdev->addrs is not yet RCU protected)
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Matt Johnston <matt@codeconstruct.com.au>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Link: https://patch.msgid.link/20241206223811.1343076-1-edumazet@google.com
+Fixes: 583be982d934 ("mctp: Add device handling and netlink interface")
+Reported-by: syzbot+e76d52dadc089b9d197f@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68135815.050a0220.3a872c.000e.GAE@google.com/
+Reported-by: syzbot+1065a199625a388fce60@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/681357d6.050a0220.14dd7d.000d.GAE@google.com/
+Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
+Link: https://patch.msgid.link/20250508-mctp-addr-dump-v2-1-c8a53fd2dd66@codeconstruct.com.au
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: f11cf946c0a9 ("net: mctp: Don't access ifa_index when missing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/device.c | 50 ++++++++++++++++++-----------------------------
- 1 file changed, 19 insertions(+), 31 deletions(-)
+ net/mctp/device.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
 diff --git a/net/mctp/device.c b/net/mctp/device.c
-index 85cc5f31f1e7c..cdb18da96c4bc 100644
+index cdb18da96c4bc..8d1386601bbe0 100644
 --- a/net/mctp/device.c
 +++ b/net/mctp/device.c
-@@ -20,8 +20,7 @@
- #include <net/sock.h>
- 
- struct mctp_dump_cb {
--	int h;
--	int idx;
-+	unsigned long ifindex;
- 	size_t a_idx;
- };
- 
-@@ -115,43 +114,29 @@ static int mctp_dump_addrinfo(struct sk_buff *skb, struct netlink_callback *cb)
- {
- 	struct mctp_dump_cb *mcb = (void *)cb->ctx;
- 	struct net *net = sock_net(skb->sk);
--	struct hlist_head *head;
+@@ -117,11 +117,18 @@ static int mctp_dump_addrinfo(struct sk_buff *skb, struct netlink_callback *cb)
  	struct net_device *dev;
  	struct ifaddrmsg *hdr;
  	struct mctp_dev *mdev;
--	int ifindex;
--	int idx = 0, rc;
-+	int ifindex, rc;
- 
- 	hdr = nlmsg_data(cb->nlh);
- 	// filter by ifindex if requested
- 	ifindex = hdr->ifa_index;
+-	int ifindex, rc;
+-
+-	hdr = nlmsg_data(cb->nlh);
+-	// filter by ifindex if requested
+-	ifindex = hdr->ifa_index;
++	int ifindex = 0, rc;
++
++	/* Filter by ifindex if a header is provided */
++	if (cb->nlh->nlmsg_len >= nlmsg_msg_size(sizeof(*hdr))) {
++		hdr = nlmsg_data(cb->nlh);
++		ifindex = hdr->ifa_index;
++	} else {
++		if (cb->strict_check) {
++			NL_SET_ERR_MSG(cb->extack, "mctp: Invalid header for addr dump request");
++			return -EINVAL;
++		}
++	}
  
  	rcu_read_lock();
--	for (; mcb->h < NETDEV_HASHENTRIES; mcb->h++, mcb->idx = 0) {
--		idx = 0;
--		head = &net->dev_index_head[mcb->h];
--		hlist_for_each_entry_rcu(dev, head, index_hlist) {
--			if (idx >= mcb->idx &&
--			    (ifindex == 0 || ifindex == dev->ifindex)) {
--				mdev = __mctp_dev_get(dev);
--				if (mdev) {
--					rc = mctp_dump_dev_addrinfo(mdev,
--								    skb, cb);
--					mctp_dev_put(mdev);
--					// Error indicates full buffer, this
--					// callback will get retried.
--					if (rc < 0)
--						goto out;
--				}
--			}
--			idx++;
--			// reset for next iteration
--			mcb->a_idx = 0;
--		}
-+	for_each_netdev_dump(net, dev, mcb->ifindex) {
-+		if (ifindex && ifindex != dev->ifindex)
-+			continue;
-+		mdev = __mctp_dev_get(dev);
-+		if (!mdev)
-+			continue;
-+		rc = mctp_dump_dev_addrinfo(mdev, skb, cb);
-+		mctp_dev_put(mdev);
-+		if (rc < 0)
-+			break;
-+		mcb->a_idx = 0;
- 	}
--out:
- 	rcu_read_unlock();
--	mcb->idx = idx;
- 
- 	return skb->len;
- }
-@@ -525,9 +510,12 @@ static struct notifier_block mctp_dev_nb = {
- };
- 
- static const struct rtnl_msg_handler mctp_device_rtnl_msg_handlers[] = {
--	{THIS_MODULE, PF_MCTP, RTM_NEWADDR, mctp_rtm_newaddr, NULL, 0},
--	{THIS_MODULE, PF_MCTP, RTM_DELADDR, mctp_rtm_deladdr, NULL, 0},
--	{THIS_MODULE, PF_MCTP, RTM_GETADDR, NULL, mctp_dump_addrinfo, 0},
-+	{.owner = THIS_MODULE, .protocol = PF_MCTP, .msgtype = RTM_NEWADDR,
-+	 .doit = mctp_rtm_newaddr},
-+	{.owner = THIS_MODULE, .protocol = PF_MCTP, .msgtype = RTM_DELADDR,
-+	 .doit = mctp_rtm_deladdr},
-+	{.owner = THIS_MODULE, .protocol = PF_MCTP, .msgtype = RTM_GETADDR,
-+	 .dumpit = mctp_dump_addrinfo},
- };
- 
- int __init mctp_device_init(void)
+ 	for_each_netdev_dump(net, dev, mcb->ifindex) {
 -- 
 2.39.5
 
