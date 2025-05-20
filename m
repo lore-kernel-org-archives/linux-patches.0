@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A4E24886F;
-	Tue, 20 May 2025 14:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58139248F71;
+	Tue, 20 May 2025 14:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750187; cv=none; b=c/xUPYlZtaS79UKu0B0Oulc29J1uJB6iJYGk0MYpYwyVSkl5q07VCHxo5sTSp4Mwi3prqW7JRS3arwhwFz4V+Rzi95GWuiyjYuLCNFCiNzHbj8p/KCMU7jdlRTBqlDfFFga7H8llOvZD1BP74f5u4kdphNWkgi5L8bWsXUFTkMg=
+	t=1747750190; cv=none; b=lZFa7CodxL2WP2rulsYgiTP1FcySanpfScL7nC2HoSGKvtB6Jv8ujdOzxp77NwQh9CUe0kBHx2wCEDBpmINdA2B5cAVt7n8KvRDIpggVh4G++pFjnFSXkBXRclOeFUhN/6vWLeTSIFfMo1Hv6z6R41VPZUFvIY72hF6uW/tluAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750187; c=relaxed/simple;
-	bh=dldcpI9yjuu+6ETfjCA3wSJIsqXwVG9xfF1mFznKXJg=;
+	s=arc-20240116; t=1747750190; c=relaxed/simple;
+	bh=bnNtpdaYhSTu0AHgTNIQQgd5EocLQ1oPFbjp6LL9e8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RvCdyEHOu5EBKFKuqO/3v/QA5t8LVyOvDEXIjRiiq8/d28oeUOBmNy/19I1AUayvBNYag8bNABDCAdgYQwuM9nPrPGhsnTQVypSjJnwEPNCy8vrPR8jq4H96w90f6BUnXDmuWG8+IuguowFBCNRRWOLIDs0y4II7r7NloxXBX2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fk46oB4h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lo3KrFwVma5opAXR2GX6hkIz82cbtSBVrCxZa4ogmdynV+gkI1WLTkoViLnBYI4TCHbh1C7b4z5lSgCKMXsuSJLpGDnrOMmM2RvOZqBh7LwhXCPBMB+iqw5OeIjw+NXvE2l2YpZlnBG/RGzY4tYyzFbxFNIbfD0xReCBkomH5aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lgVy6s2K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fk46oB4h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C86C4CEE9;
-	Tue, 20 May 2025 14:09:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgVy6s2K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC047C4CEE9;
+	Tue, 20 May 2025 14:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750187;
-	bh=dldcpI9yjuu+6ETfjCA3wSJIsqXwVG9xfF1mFznKXJg=;
+	s=korg; t=1747750190;
+	bh=bnNtpdaYhSTu0AHgTNIQQgd5EocLQ1oPFbjp6LL9e8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fk46oB4hYxe+oPLqpgrClwjf3GjXHUX9su3dH73QeCYBbXUH1g9YWLW+T44gDDh/a
-	 w4SqiqPbua0ogA/XB2LVzeemWot1DCZe96QLMTszMwWm0lw0VkOpZwxvsX+AmPft3s
-	 QlbatQUMFCiGUsRASwQwZd6MmKPUIpV3tc/+ldFU=
+	b=lgVy6s2KNhTo/QoBQ53Bawtgx84wi3vdt0RpTPe46vxheuCKdsLJuX3+LGbKH3Tk3
+	 9LHBkD9UARnQ9jIAe46SEsx921mLyoqM+OK7fFFuqE27VL4dU5Q92+EBwtmEXWpgPR
+	 8HwH1FHnDJN5eLVwUi3GvmTDOK8YZnITxQBgg+OQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathan.lynch@amd.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 069/143] dmaengine: Revert "dmaengine: dmatest: Fix dmatest waiting less when interrupted"
-Date: Tue, 20 May 2025 15:50:24 +0200
-Message-ID: <20250520125812.782502430@linuxfoundation.org>
+	Mina Almasry <almasrymina@google.com>,
+	Joe Damato <jdamato@fastly.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 040/143] selftests: ncdevmem: Unify error handling
+Date: Tue, 20 May 2025 15:49:55 +0200
+Message-ID: <20250520125811.630278170@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -50,51 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Lynch <nathan.lynch@amd.com>
+From: Stanislav Fomichev <sdf@fomichev.me>
 
-commit df180e65305f8c1e020d54bfc2132349fd693de1 upstream.
+[ Upstream commit bfccbaac1b45f9af7d76589d7e31ad921b50c0d7 ]
 
-Several issues with this change:
+There is a bunch of places where error() calls look out of place.
+Use the same error(1, errno, ...) pattern everywhere.
 
-* The analysis is flawed and it's unclear what problem is being
-  fixed. There is no difference between wait_event_freezable_timeout()
-  and wait_event_timeout() with respect to device interrupts. And of
-  course "the interrupt notifying the finish of an operation happens
-  during wait_event_freezable_timeout()" -- that's how it's supposed
-  to work.
-
-* The link at the "Closes:" tag appears to be an unrelated
-  use-after-free in idxd.
-
-* It introduces a regression: dmatest threads are meant to be
-  freezable and this change breaks that.
-
-See discussion here:
-https://lore.kernel.org/dmaengine/878qpa13fe.fsf@AUSNATLYNCH.amd.com/
-
-Fixes: e87ca16e9911 ("dmaengine: dmatest: Fix dmatest waiting less when interrupted")
-Signed-off-by: Nathan Lynch <nathan.lynch@amd.com>
-Link: https://lore.kernel.org/r/20250403-dmaengine-dmatest-revert-waiting-less-v1-1-8227c5a3d7c8@amd.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Reviewed-by: Joe Damato <jdamato@fastly.com>
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20241107181211.3934153-4-sdf@fomichev.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 97c4e094a4b2 ("tests/ncdevmem: Fix double-free of queue array")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dmatest.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/net/ncdevmem.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/dma/dmatest.c
-+++ b/drivers/dma/dmatest.c
-@@ -841,9 +841,9 @@ static int dmatest_func(void *data)
- 		} else {
- 			dma_async_issue_pending(chan);
+diff --git a/tools/testing/selftests/net/ncdevmem.c b/tools/testing/selftests/net/ncdevmem.c
+index 3e7ef2eedd60b..4733d1a0aab5d 100644
+--- a/tools/testing/selftests/net/ncdevmem.c
++++ b/tools/testing/selftests/net/ncdevmem.c
+@@ -339,33 +339,33 @@ int do_server(struct memory_buffer *mem)
+ 	server_sin.sin_port = htons(atoi(port));
  
--			wait_event_timeout(thread->done_wait,
--					   done->done,
--					   msecs_to_jiffies(params->timeout));
-+			wait_event_freezable_timeout(thread->done_wait,
-+					done->done,
-+					msecs_to_jiffies(params->timeout));
+ 	ret = inet_pton(server_sin.sin_family, server_ip, &server_sin.sin_addr);
+-	if (socket < 0)
+-		error(79, 0, "%s: [FAIL, create socket]\n", TEST_PREFIX);
++	if (ret < 0)
++		error(1, errno, "%s: [FAIL, create socket]\n", TEST_PREFIX);
  
- 			status = dma_async_is_tx_complete(chan, cookie, NULL,
- 							  NULL);
+ 	socket_fd = socket(server_sin.sin_family, SOCK_STREAM, 0);
+-	if (socket < 0)
+-		error(errno, errno, "%s: [FAIL, create socket]\n", TEST_PREFIX);
++	if (socket_fd < 0)
++		error(1, errno, "%s: [FAIL, create socket]\n", TEST_PREFIX);
+ 
+ 	ret = setsockopt(socket_fd, SOL_SOCKET, SO_REUSEPORT, &opt,
+ 			 sizeof(opt));
+ 	if (ret)
+-		error(errno, errno, "%s: [FAIL, set sock opt]\n", TEST_PREFIX);
++		error(1, errno, "%s: [FAIL, set sock opt]\n", TEST_PREFIX);
+ 
+ 	ret = setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &opt,
+ 			 sizeof(opt));
+ 	if (ret)
+-		error(errno, errno, "%s: [FAIL, set sock opt]\n", TEST_PREFIX);
++		error(1, errno, "%s: [FAIL, set sock opt]\n", TEST_PREFIX);
+ 
+ 	fprintf(stderr, "binding to address %s:%d\n", server_ip,
+ 		ntohs(server_sin.sin_port));
+ 
+ 	ret = bind(socket_fd, &server_sin, sizeof(server_sin));
+ 	if (ret)
+-		error(errno, errno, "%s: [FAIL, bind]\n", TEST_PREFIX);
++		error(1, errno, "%s: [FAIL, bind]\n", TEST_PREFIX);
+ 
+ 	ret = listen(socket_fd, 1);
+ 	if (ret)
+-		error(errno, errno, "%s: [FAIL, listen]\n", TEST_PREFIX);
++		error(1, errno, "%s: [FAIL, listen]\n", TEST_PREFIX);
+ 
+ 	client_addr_len = sizeof(client_addr);
+ 
+-- 
+2.39.5
+
 
 
