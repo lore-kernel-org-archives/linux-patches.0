@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29DF22D78C;
-	Tue, 20 May 2025 13:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927C3241103;
+	Tue, 20 May 2025 13:52:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749171; cv=none; b=A1TgyKHsgDNcLxbjjYCW7q9TnB4Ij1J4om4qZtY1NGlDd0kXGUzYI8bGpv2WiIJN2890ArV0jGrpFD9KbA6cH3X/Zq5dkjhqPv6KAElp01rbtWA0E+xrLkzuBIUmmffUhry0i44I6CFhtaGSgZCS8QP9Hh9WOlPdkJGB7QYsYUA=
+	t=1747749176; cv=none; b=MyB8yaUx1LCjUelwyn1aYHqPMw1IMW+7R6T5cbU6Hevts4AU1p2PJHfefWqfvg6OLMZ4r97zowCcqCOR/oPlpdZjeWexC7c44AxkKub7ZuAYgbAQq7Hh6uIDKSag16JuyWvIs31t/9abYibKIk5+31pN+jOZ+s6dYYay247UnYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749171; c=relaxed/simple;
-	bh=9qFE7NNfcgNcv3vPRc+I5oVF6z0Q+IO95aolzmijCbA=;
+	s=arc-20240116; t=1747749176; c=relaxed/simple;
+	bh=2cGgVZ8GGDJX55T20NdeHJUHqUmhJnJnokvOYBxf3fA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XHtn8Jf/9iWnfqXvP0tTrqcHofEwvwyqL6HwTtEwXYcDcTAw+yzHQ1wlxD8wQeEUUzAoYNPnrS5HaLcIhRrzNQbWSu70KzmH8a7vavgAtDqXZIS46F+DmZeXDqlV7RBAL6qPCfU6XuEAo3aS3quSo7v2T9DsFC206ZaN2vetdPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VShyuWIh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bO0wphfy17hSARtn2CMZZ4M1PpiJC+AnQkNDCXyapO+HrE4Ag28kyiykLWWMYsYJ0c7MnU6U0EfQ0ALUDJpFDsGMM3tq5MAWJMJ/GrV0jEPxAaDK7d8GahdekvxPm4nOe7al4/UjN3zffl9lOoykCvCoZEW4oGNnAfK6GehaMaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxbkHQdP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VShyuWIh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63A0C4CEE9;
-	Tue, 20 May 2025 13:52:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxbkHQdP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326BCC4CEE9;
+	Tue, 20 May 2025 13:52:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749171;
-	bh=9qFE7NNfcgNcv3vPRc+I5oVF6z0Q+IO95aolzmijCbA=;
+	s=korg; t=1747749176;
+	bh=2cGgVZ8GGDJX55T20NdeHJUHqUmhJnJnokvOYBxf3fA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VShyuWIhyZ8DvC6/0T2Xp18EInnZ8cjNtIyTlPTcppGfDro+rcWy23Ywq2Tyik+0Q
-	 U8LBD2dsaQ94PMXyDoJoLJfiVP6/3Mt9B4GTbStiFbqpI8YoZyVhCxJR3j2xFz+tgS
-	 G48omPfdjgPuLWdgfSXAoy+jNbuGeKS3PUlTB6II=
+	b=dxbkHQdPLzhMy8teq3BZWnKT5lte7qffdW1X14S/CjSq1kD2FiRCbul6BPO/FE0bd
+	 Aiea/jT/9rUp6bFf2Ycy0XFUrFEJzvUDVDlxkK4s0XUnbfLy6vmf7F3s3Lu+ulqaFj
+	 HuIYIEMPb7M4G/A31hmh45RVAa6o5+LuWPisROiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Alexandre Chartre <alexandre.chartre@oracle.com>
-Subject: [PATCH 5.15 19/59] x86/its: Enumerate Indirect Target Selection (ITS) bug
-Date: Tue, 20 May 2025 15:50:10 +0200
-Message-ID: <20250520125754.614191646@linuxfoundation.org>
+	Paul Cacheux <paulcacheux@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 02/59] tracing: probes: Fix a possible race in trace_probe_log APIs
+Date: Tue, 20 May 2025 15:49:53 +0200
+Message-ID: <20250520125753.936384265@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
 References: <20250520125753.836407405@linuxfoundation.org>
@@ -52,164 +51,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 159013a7ca18c271ff64192deb62a689b622d860 upstream.
+[ Upstream commit fd837de3c9cb1a162c69bc1fb1f438467fe7f2f5 ]
 
-ITS bug in some pre-Alderlake Intel CPUs may allow indirect branches in the
-first half of a cache line get predicted to a target of a branch located in
-the second half of the cache line.
+Since the shared trace_probe_log variable can be accessed and
+modified via probe event create operation of kprobe_events,
+uprobe_events, and dynamic_events, it should be protected.
+In the dynamic_events, all operations are serialized by
+`dyn_event_ops_mutex`. But kprobe_events and uprobe_events
+interfaces are not serialized.
 
-Set X86_BUG_ITS on affected CPUs. Mitigation to follow in later commits.
+To solve this issue, introduces dyn_event_create(), which runs
+create() operation under the mutex, for kprobe_events and
+uprobe_events. This also uses lockdep to check the mutex is
+held when using trace_probe_log* APIs.
 
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Reviewed-by: Alexandre Chartre <alexandre.chartre@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/all/174684868120.551552.3068655787654268804.stgit@devnote2/
+
+Reported-by: Paul Cacheux <paulcacheux@gmail.com>
+Closes: https://lore.kernel.org/all/20250510074456.805a16872b591e2971a4d221@kernel.org/
+Fixes: ab105a4fb894 ("tracing: Use tracing error_log with probe events")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/cpufeatures.h |    1 
- arch/x86/include/asm/msr-index.h   |    8 +++++
- arch/x86/kernel/cpu/common.c       |   58 +++++++++++++++++++++++++++++--------
- arch/x86/kvm/x86.c                 |    4 +-
- 4 files changed, 58 insertions(+), 13 deletions(-)
+ kernel/trace/trace_dynevent.c | 16 +++++++++++++++-
+ kernel/trace/trace_dynevent.h |  1 +
+ kernel/trace/trace_kprobe.c   |  2 +-
+ kernel/trace/trace_probe.c    |  9 +++++++++
+ kernel/trace/trace_uprobe.c   |  2 +-
+ 5 files changed, 27 insertions(+), 3 deletions(-)
 
---- a/arch/x86/include/asm/cpufeatures.h
-+++ b/arch/x86/include/asm/cpufeatures.h
-@@ -483,4 +483,5 @@
- #define X86_BUG_RFDS			X86_BUG(1*32 + 2) /* CPU is vulnerable to Register File Data Sampling */
- #define X86_BUG_BHI			X86_BUG(1*32 + 3) /* CPU is affected by Branch History Injection */
- #define X86_BUG_IBPB_NO_RET		X86_BUG(1*32 + 4) /* "ibpb_no_ret" IBPB omits return target predictions */
-+#define X86_BUG_ITS			X86_BUG(1*32 + 5) /* CPU is affected by Indirect Target Selection */
- #endif /* _ASM_X86_CPUFEATURES_H */
---- a/arch/x86/include/asm/msr-index.h
-+++ b/arch/x86/include/asm/msr-index.h
-@@ -183,6 +183,14 @@
- 						 * VERW clears CPU Register
- 						 * File.
- 						 */
-+#define ARCH_CAP_ITS_NO			BIT_ULL(62) /*
-+						     * Not susceptible to
-+						     * Indirect Target Selection.
-+						     * This bit is not set by
-+						     * HW, but is synthesized by
-+						     * VMMs for guests to know
-+						     * their affected status.
-+						     */
+diff --git a/kernel/trace/trace_dynevent.c b/kernel/trace/trace_dynevent.c
+index d4f7137233234..6d0e9f869ad68 100644
+--- a/kernel/trace/trace_dynevent.c
++++ b/kernel/trace/trace_dynevent.c
+@@ -16,7 +16,7 @@
+ #include "trace_output.h"	/* for trace_event_sem */
+ #include "trace_dynevent.h"
  
- #define MSR_IA32_FLUSH_CMD		0x0000010b
- #define L1D_FLUSH			BIT(0)	/*
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -1141,6 +1141,8 @@ static const __initconst struct x86_cpu_
- #define GDS		BIT(6)
- /* CPU is affected by Register File Data Sampling */
- #define RFDS		BIT(7)
-+/* CPU is affected by Indirect Target Selection */
-+#define ITS		BIT(8)
+-static DEFINE_MUTEX(dyn_event_ops_mutex);
++DEFINE_MUTEX(dyn_event_ops_mutex);
+ static LIST_HEAD(dyn_event_ops_list);
  
- static const struct x86_cpu_id cpu_vuln_blacklist[] __initconst = {
- 	VULNBL_INTEL_STEPPINGS(IVYBRIDGE,	X86_STEPPING_ANY,		SRBDS),
-@@ -1152,22 +1154,25 @@ static const struct x86_cpu_id cpu_vuln_
- 	VULNBL_INTEL_STEPPINGS(BROADWELL_G,	X86_STEPPING_ANY,		SRBDS),
- 	VULNBL_INTEL_STEPPINGS(BROADWELL_X,	X86_STEPPING_ANY,		MMIO),
- 	VULNBL_INTEL_STEPPINGS(BROADWELL,	X86_STEPPING_ANY,		SRBDS),
--	VULNBL_INTEL_STEPPINGS(SKYLAKE_X,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS),
-+	VULNBL_INTEL_STEPPINGS(SKYLAKE_X,	X86_STEPPINGS(0x0, 0x5),	MMIO | RETBLEED | GDS),
-+	VULNBL_INTEL_STEPPINGS(SKYLAKE_X,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | ITS),
- 	VULNBL_INTEL_STEPPINGS(SKYLAKE_L,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS),
- 	VULNBL_INTEL_STEPPINGS(SKYLAKE,		X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS),
--	VULNBL_INTEL_STEPPINGS(KABYLAKE_L,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS),
--	VULNBL_INTEL_STEPPINGS(KABYLAKE,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS),
-+	VULNBL_INTEL_STEPPINGS(KABYLAKE_L,	X86_STEPPINGS(0x0, 0xb),	MMIO | RETBLEED | GDS | SRBDS),
-+	VULNBL_INTEL_STEPPINGS(KABYLAKE_L,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS | ITS),
-+	VULNBL_INTEL_STEPPINGS(KABYLAKE,	X86_STEPPINGS(0x0, 0xc),	MMIO | RETBLEED | GDS | SRBDS),
-+	VULNBL_INTEL_STEPPINGS(KABYLAKE,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | SRBDS | ITS),
- 	VULNBL_INTEL_STEPPINGS(CANNONLAKE_L,	X86_STEPPING_ANY,		RETBLEED),
--	VULNBL_INTEL_STEPPINGS(ICELAKE_L,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED | GDS),
--	VULNBL_INTEL_STEPPINGS(ICELAKE_D,	X86_STEPPING_ANY,		MMIO | GDS),
--	VULNBL_INTEL_STEPPINGS(ICELAKE_X,	X86_STEPPING_ANY,		MMIO | GDS),
--	VULNBL_INTEL_STEPPINGS(COMETLAKE,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED | GDS),
--	VULNBL_INTEL_STEPPINGS(COMETLAKE_L,	X86_STEPPINGS(0x0, 0x0),	MMIO | RETBLEED),
--	VULNBL_INTEL_STEPPINGS(COMETLAKE_L,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED | GDS),
--	VULNBL_INTEL_STEPPINGS(TIGERLAKE_L,	X86_STEPPING_ANY,		GDS),
--	VULNBL_INTEL_STEPPINGS(TIGERLAKE,	X86_STEPPING_ANY,		GDS),
-+	VULNBL_INTEL_STEPPINGS(ICELAKE_L,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED | GDS | ITS),
-+	VULNBL_INTEL_STEPPINGS(ICELAKE_D,	X86_STEPPING_ANY,		MMIO | GDS | ITS),
-+	VULNBL_INTEL_STEPPINGS(ICELAKE_X,	X86_STEPPING_ANY,		MMIO | GDS | ITS),
-+	VULNBL_INTEL_STEPPINGS(COMETLAKE,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED | GDS | ITS),
-+	VULNBL_INTEL_STEPPINGS(COMETLAKE_L,	X86_STEPPINGS(0x0, 0x0),	MMIO | RETBLEED | ITS),
-+	VULNBL_INTEL_STEPPINGS(COMETLAKE_L,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED | GDS | ITS),
-+	VULNBL_INTEL_STEPPINGS(TIGERLAKE_L,	X86_STEPPING_ANY,		GDS | ITS),
-+	VULNBL_INTEL_STEPPINGS(TIGERLAKE,	X86_STEPPING_ANY,		GDS | ITS),
- 	VULNBL_INTEL_STEPPINGS(LAKEFIELD,	X86_STEPPING_ANY,		MMIO | MMIO_SBDS | RETBLEED),
--	VULNBL_INTEL_STEPPINGS(ROCKETLAKE,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS),
-+	VULNBL_INTEL_STEPPINGS(ROCKETLAKE,	X86_STEPPING_ANY,		MMIO | RETBLEED | GDS | ITS),
- 	VULNBL_INTEL_STEPPINGS(ALDERLAKE,	X86_STEPPING_ANY,		RFDS),
- 	VULNBL_INTEL_STEPPINGS(ALDERLAKE_L,	X86_STEPPING_ANY,		RFDS),
- 	VULNBL_INTEL_STEPPINGS(RAPTORLAKE,	X86_STEPPING_ANY,		RFDS),
-@@ -1231,6 +1236,32 @@ static bool __init vulnerable_to_rfds(u6
- 	return cpu_matches(cpu_vuln_blacklist, RFDS);
+ bool trace_event_dyn_try_get_ref(struct trace_event_call *dyn_call)
+@@ -125,6 +125,20 @@ int dyn_event_release(const char *raw_command, struct dyn_event_operations *type
+ 	return ret;
  }
  
-+static bool __init vulnerable_to_its(u64 x86_arch_cap_msr)
++/*
++ * Locked version of event creation. The event creation must be protected by
++ * dyn_event_ops_mutex because of protecting trace_probe_log.
++ */
++int dyn_event_create(const char *raw_command, struct dyn_event_operations *type)
 +{
-+	/* The "immunity" bit trumps everything else: */
-+	if (x86_arch_cap_msr & ARCH_CAP_ITS_NO)
-+		return false;
-+	if (boot_cpu_data.x86_vendor != X86_VENDOR_INTEL)
-+		return false;
++	int ret;
 +
-+	/* None of the affected CPUs have BHI_CTRL */
-+	if (boot_cpu_has(X86_FEATURE_BHI_CTRL))
-+		return false;
-+
-+	/*
-+	 * If a VMM did not expose ITS_NO, assume that a guest could
-+	 * be running on a vulnerable hardware or may migrate to such
-+	 * hardware.
-+	 */
-+	if (boot_cpu_has(X86_FEATURE_HYPERVISOR))
-+		return true;
-+
-+	if (cpu_matches(cpu_vuln_blacklist, ITS))
-+		return true;
-+
-+	return false;
++	mutex_lock(&dyn_event_ops_mutex);
++	ret = type->create(raw_command);
++	mutex_unlock(&dyn_event_ops_mutex);
++	return ret;
 +}
 +
- static void __init cpu_set_bug_bits(struct cpuinfo_x86 *c)
+ static int create_dyn_event(const char *raw_command)
  {
- 	u64 x86_arch_cap_msr = x86_read_arch_cap_msr();
-@@ -1358,6 +1389,9 @@ static void __init cpu_set_bug_bits(stru
- 	if (cpu_has(c, X86_FEATURE_AMD_IBPB) && !cpu_has(c, X86_FEATURE_AMD_IBPB_RET))
- 		setup_force_cpu_bug(X86_BUG_IBPB_NO_RET);
+ 	struct dyn_event_operations *ops;
+diff --git a/kernel/trace/trace_dynevent.h b/kernel/trace/trace_dynevent.h
+index 936477a111d3e..beee3f8d75444 100644
+--- a/kernel/trace/trace_dynevent.h
++++ b/kernel/trace/trace_dynevent.h
+@@ -100,6 +100,7 @@ void *dyn_event_seq_next(struct seq_file *m, void *v, loff_t *pos);
+ void dyn_event_seq_stop(struct seq_file *m, void *v);
+ int dyn_events_release_all(struct dyn_event_operations *type);
+ int dyn_event_release(const char *raw_command, struct dyn_event_operations *type);
++int dyn_event_create(const char *raw_command, struct dyn_event_operations *type);
  
-+	if (vulnerable_to_its(x86_arch_cap_msr))
-+		setup_force_cpu_bug(X86_BUG_ITS);
+ /*
+  * for_each_dyn_event	-	iterate over the dyn_event list
+diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
+index 3a1c54c9918b4..e062f4efec8d0 100644
+--- a/kernel/trace/trace_kprobe.c
++++ b/kernel/trace/trace_kprobe.c
+@@ -971,7 +971,7 @@ static int create_or_delete_trace_kprobe(const char *raw_command)
+ 	if (raw_command[0] == '-')
+ 		return dyn_event_release(raw_command, &trace_kprobe_ops);
+ 
+-	ret = trace_kprobe_create(raw_command);
++	ret = dyn_event_create(raw_command, &trace_kprobe_ops);
+ 	return ret == -ECANCELED ? -EINVAL : ret;
+ }
+ 
+diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
+index d2a1b7f030685..38fa6cc118daf 100644
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -143,9 +143,12 @@ static const struct fetch_type *find_fetch_type(const char *type)
+ }
+ 
+ static struct trace_probe_log trace_probe_log;
++extern struct mutex dyn_event_ops_mutex;
+ 
+ void trace_probe_log_init(const char *subsystem, int argc, const char **argv)
+ {
++	lockdep_assert_held(&dyn_event_ops_mutex);
 +
- 	if (cpu_matches(cpu_vuln_whitelist, NO_MELTDOWN))
+ 	trace_probe_log.subsystem = subsystem;
+ 	trace_probe_log.argc = argc;
+ 	trace_probe_log.argv = argv;
+@@ -154,11 +157,15 @@ void trace_probe_log_init(const char *subsystem, int argc, const char **argv)
+ 
+ void trace_probe_log_clear(void)
+ {
++	lockdep_assert_held(&dyn_event_ops_mutex);
++
+ 	memset(&trace_probe_log, 0, sizeof(trace_probe_log));
+ }
+ 
+ void trace_probe_log_set_index(int index)
+ {
++	lockdep_assert_held(&dyn_event_ops_mutex);
++
+ 	trace_probe_log.index = index;
+ }
+ 
+@@ -167,6 +174,8 @@ void __trace_probe_log_err(int offset, int err_type)
+ 	char *command, *p;
+ 	int i, len = 0, pos = 0;
+ 
++	lockdep_assert_held(&dyn_event_ops_mutex);
++
+ 	if (!trace_probe_log.argv)
  		return;
  
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -1499,7 +1499,7 @@ static unsigned int num_msr_based_featur
- 	 ARCH_CAP_PSCHANGE_MC_NO | ARCH_CAP_TSX_CTRL_MSR | ARCH_CAP_TAA_NO | \
- 	 ARCH_CAP_SBDR_SSDP_NO | ARCH_CAP_FBSDP_NO | ARCH_CAP_PSDP_NO | \
- 	 ARCH_CAP_FB_CLEAR | ARCH_CAP_RRSBA | ARCH_CAP_PBRSB_NO | ARCH_CAP_GDS_NO | \
--	 ARCH_CAP_RFDS_NO | ARCH_CAP_RFDS_CLEAR | ARCH_CAP_BHI_NO)
-+	 ARCH_CAP_RFDS_NO | ARCH_CAP_RFDS_CLEAR | ARCH_CAP_BHI_NO | ARCH_CAP_ITS_NO)
+diff --git a/kernel/trace/trace_uprobe.c b/kernel/trace/trace_uprobe.c
+index 720b46b34ab94..322d56661d04a 100644
+--- a/kernel/trace/trace_uprobe.c
++++ b/kernel/trace/trace_uprobe.c
+@@ -729,7 +729,7 @@ static int create_or_delete_trace_uprobe(const char *raw_command)
+ 	if (raw_command[0] == '-')
+ 		return dyn_event_release(raw_command, &trace_uprobe_ops);
  
- static u64 kvm_get_arch_capabilities(void)
- {
-@@ -1538,6 +1538,8 @@ static u64 kvm_get_arch_capabilities(voi
- 		data |= ARCH_CAP_MDS_NO;
- 	if (!boot_cpu_has_bug(X86_BUG_RFDS))
- 		data |= ARCH_CAP_RFDS_NO;
-+	if (!boot_cpu_has_bug(X86_BUG_ITS))
-+		data |= ARCH_CAP_ITS_NO;
+-	ret = trace_uprobe_create(raw_command);
++	ret = dyn_event_create(raw_command, &trace_uprobe_ops);
+ 	return ret == -ECANCELED ? -EINVAL : ret;
+ }
  
- 	if (!boot_cpu_has(X86_FEATURE_RTM)) {
- 		/*
+-- 
+2.39.5
+
 
 
