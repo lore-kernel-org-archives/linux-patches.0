@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B69BEEDE;
-	Tue, 20 May 2025 14:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4ED157487;
+	Tue, 20 May 2025 14:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749792; cv=none; b=E2GJKog+yzuXWL6P1wuz05rt9MeY0nq7WOEUGJ3NYA5JH9WDCfWOjf4W0uMtk8R3flJjj9ejQTizfb/V2xAECqc7lDxIckqiXjqKiDBc62udWb6n7jKGLsbo0g2i85QNXQbQGTiinJaxCxxfnVPYalvCbrTNNCf5HNuQK02m1PI=
+	t=1747749795; cv=none; b=A+j8f4DwPtC5rXRnsM0xo9q098hdJRy3PSSXiAXZwl0ONeRym8HXTmY4winC+29bZub0XDgncy/II/3DATBHJaJl6unxk/rWwkE/fgEnlTOtwlNZPCh3Ta7Ycd7VnnFYYPFb0EdsZjHYEsUjmXnI6UHNjWqpRE3OfOnCUTlw30M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749792; c=relaxed/simple;
-	bh=enUK7xH7+T5ze+1pJE9l/SDwP+ciaNx+rur4Vg+vPtE=;
+	s=arc-20240116; t=1747749795; c=relaxed/simple;
+	bh=4IH8fg0SMhERJp95wleRpH2jAVD5VBZzIN4LxpPXsnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oijGzAJYrvrPjgHUwdbCEtiTTW0GiMq8iPtColXbEvw5eP7UQnQWxPF+PJVNi2CV3qcLpuMgGwNaYNvJmUdMPNUbVxovqzk4bF+t5TOlY0CvVCW/QTPxIyiNbDCkkXW+xI5WjNmogREZnMnrLnJgj/yrDha9NugKFtMSuly3+7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KyPvtIlr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YbR0RKpoIzhN4FrnvAR/gxG21i9ib0mX+rzRkjjeXFw7bPBh5QEHRwraLXSSAGvTfUSTzVomDDaZ2uSy6U9/ZWKckiijeT8J5KFsE2xZZWno8Yx/3IU52xROIcfnwoonC14zMKIKckgVEovntLyMIC5u2p1fFgqeLd5NZmcx2/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IjGieyVj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KyPvtIlr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B30AC4CEE9;
-	Tue, 20 May 2025 14:03:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjGieyVj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5A9C4CEE9;
+	Tue, 20 May 2025 14:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749792;
-	bh=enUK7xH7+T5ze+1pJE9l/SDwP+ciaNx+rur4Vg+vPtE=;
+	s=korg; t=1747749795;
+	bh=4IH8fg0SMhERJp95wleRpH2jAVD5VBZzIN4LxpPXsnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KyPvtIlrdwOLMSpnshKKqCaj0HE8HbODPhy1j+9skGtFbkVSS4oc5HADxSDXCk5Sh
-	 eu+XsVP5dsCcrJtwdx92RyTIOVxIhpO+PWQSX+7GCy7WxHzpT5cZed7xqt6U01JrlY
-	 2k4P6PGn8Km9pUdyjAfIZ+83A7syU60c+eyTZn+Y=
+	b=IjGieyVjalqbqeYr7Ugzov0YTVtSEkN7Lj9O6tBbkM1weiGdEfr52yyjEj53khqT0
+	 Y0I6OXZIey0KziCDpAaoajDlGi4/iY+TzFp/KRB3eexxBa1dgGmGAIVEGIJntOeyN2
+	 Tnz9KMyz7oIeNN0ICneWuDnWUOzBk7jOpOp4yM2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.6 062/117] udf: Make sure i_lenExtents is uptodate on inode eviction
-Date: Tue, 20 May 2025 15:50:27 +0200
-Message-ID: <20250520125806.448097315@linuxfoundation.org>
+	Tianyang Zhang <zhangtianyang@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 063/117] LoongArch: Prevent cond_resched() occurring within kernel-fpu
+Date: Tue, 20 May 2025 15:50:28 +0200
+Message-ID: <20250520125806.487096599@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -49,40 +50,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Tianyang Zhang <zhangtianyang@loongson.cn>
 
-commit 55dd5b4db3bf04cf077a8d1712f6295d4517c337 upstream.
+commit 2468b0e3d5659dfde77f081f266e1111a981efb8 upstream.
 
-UDF maintains total length of all extents in i_lenExtents. Generally we
-keep extent lengths (and thus i_lenExtents) block aligned because it
-makes the file appending logic simpler. However the standard mandates
-that the inode size must match the length of all extents and thus we
-trim the last extent when closing the file. To catch possible bugs we
-also verify that i_lenExtents matches i_size when evicting inode from
-memory. Commit b405c1e58b73 ("udf: refactor udf_next_aext() to handle
-error") however broke the code updating i_lenExtents and thus
-udf_evict_inode() ended up spewing lots of errors about incorrectly
-sized extents although the extents were actually sized properly. Fix the
-updating of i_lenExtents to silence the errors.
+When CONFIG_PREEMPT_COUNT is not configured (i.e. CONFIG_PREEMPT_NONE/
+CONFIG_PREEMPT_VOLUNTARY), preempt_disable() / preempt_enable() merely
+acts as a barrier(). However, in these cases cond_resched() can still
+trigger a context switch and modify the CSR.EUEN, resulting in do_fpu()
+exception being activated within the kernel-fpu critical sections, as
+demonstrated in the following path:
 
-Fixes: b405c1e58b73 ("udf: refactor udf_next_aext() to handle error")
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
+dcn32_calculate_wm_and_dlg()
+    DC_FP_START()
+	dcn32_calculate_wm_and_dlg_fpu()
+	    dcn32_find_dummy_latency_index_for_fw_based_mclk_switch()
+		dcn32_internal_validate_bw()
+		    dcn32_enable_phantom_stream()
+			dc_create_stream_for_sink()
+			   kzalloc(GFP_KERNEL)
+				__kmem_cache_alloc_node()
+				    __cond_resched()
+    DC_FP_END()
+
+This patch is similar to commit d02198550423a0b (x86/fpu: Improve crypto
+performance by making kernel-mode FPU reliably usable in softirqs).  It
+uses local_bh_disable() instead of preempt_disable() for non-RT kernels
+so it can avoid the cond_resched() issue, and also extend the kernel-fpu
+application scenarios to the softirq context.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/truncate.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/kernel/kfpu.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/fs/udf/truncate.c
-+++ b/fs/udf/truncate.c
-@@ -115,7 +115,7 @@ void udf_truncate_tail_extent(struct ino
- 	}
- 	/* This inode entry is in-memory only and thus we don't have to mark
- 	 * the inode dirty */
--	if (ret == 0)
-+	if (ret >= 0)
- 		iinfo->i_lenExtents = inode->i_size;
- 	brelse(epos.bh);
+--- a/arch/loongarch/kernel/kfpu.c
++++ b/arch/loongarch/kernel/kfpu.c
+@@ -18,11 +18,28 @@ static unsigned int euen_mask = CSR_EUEN
+ static DEFINE_PER_CPU(bool, in_kernel_fpu);
+ static DEFINE_PER_CPU(unsigned int, euen_current);
+ 
++static inline void fpregs_lock(void)
++{
++	if (IS_ENABLED(CONFIG_PREEMPT_RT))
++		preempt_disable();
++	else
++		local_bh_disable();
++}
++
++static inline void fpregs_unlock(void)
++{
++	if (IS_ENABLED(CONFIG_PREEMPT_RT))
++		preempt_enable();
++	else
++		local_bh_enable();
++}
++
+ void kernel_fpu_begin(void)
+ {
+ 	unsigned int *euen_curr;
+ 
+-	preempt_disable();
++	if (!irqs_disabled())
++		fpregs_lock();
+ 
+ 	WARN_ON(this_cpu_read(in_kernel_fpu));
+ 
+@@ -73,7 +90,8 @@ void kernel_fpu_end(void)
+ 
+ 	this_cpu_write(in_kernel_fpu, false);
+ 
+-	preempt_enable();
++	if (!irqs_disabled())
++		fpregs_unlock();
  }
+ EXPORT_SYMBOL_GPL(kernel_fpu_end);
+ 
 
 
