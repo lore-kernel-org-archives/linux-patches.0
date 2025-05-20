@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50619247DEA;
-	Tue, 20 May 2025 14:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DAA247DEA;
+	Tue, 20 May 2025 14:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750325; cv=none; b=GBFrbW3/N0iCTDwHZQFzdoS5WUOSICk74oAvuB8O1B/NE/QvKdyj4WvYrZ3PqTvQ47O9QhqRDp+Uv3XByP2cOF463Rqs2bQtlULJwqAbavgM6nPcmxOfidD2BNcgiPz8DzZqQjL4kE4stfDwiX3xZKEtMLPGlXoj3nf3Oq/xaVU=
+	t=1747750328; cv=none; b=SH/7lj9n7AhPEx633yMqckztQDLOKATUOS9Bqw74uYE3i7ThCVtG+7p7HBNTs23qxjJz9i/z7yP2mTQyp/tcT4shYGW3082Y7FEprXxncQVdM75g/q9OGSBpaar7/ahBVY39XSr+1VUmgBwB+J71y/tpoj+wHPRAtrze7fDomHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750325; c=relaxed/simple;
-	bh=zHObVoiILrErZdHErEQTsGoXh4dHvwksDHDgcZJ1wSs=;
+	s=arc-20240116; t=1747750328; c=relaxed/simple;
+	bh=+MHXeWTCx/qxnBchXhrngBCwMnj/AV3Jd9wI3/0Bqcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N2nVLJBJffGZz51wPuCmvnFc95uVTCEFn7y/bJZ+AW6QflwaPfp066z03FieB06HEsva4J1vFEzxL7lOtWwcTAhn/at7mMNM2weyomlflug2h1bLc0ztLZZ2eYfHG6Bo/euW7EQu7PavDLsMGbyToPlEAiqyf4VijNIVyxEOcCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I38XtTwl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qftIAnTxjSM9QRe+6lcr/WNk8a7D/lGphmv123JjwYg0Y7ADOB0oL3DKVnB/bBP9pNZ3M4O8k+kSctakZ3mNBB68kzpXLU+cYTGlcoZb9ALek+aOUGkaJyAKdeWN0406ZRLsYdcdEs2GmTGSKp/MG2ATPWT83j27Po5N2j7Yz10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=glC45yFl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I38XtTwl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9348C4CEE9;
-	Tue, 20 May 2025 14:12:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="glC45yFl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51C1C4CEE9;
+	Tue, 20 May 2025 14:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750325;
-	bh=zHObVoiILrErZdHErEQTsGoXh4dHvwksDHDgcZJ1wSs=;
+	s=korg; t=1747750328;
+	bh=+MHXeWTCx/qxnBchXhrngBCwMnj/AV3Jd9wI3/0Bqcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I38XtTwlNK4yZcX6p+YUyJGpi5f0yVo23ggtJDAKCuVbowLgWllrpMvkgsErdiv9e
-	 8c4OuHqHAM1u9l+/3nSsZBS3+EbPkhRcCA52Qo8qbW7Qerm4lGQbZUznRmiFka3CJX
-	 XfXhE7fKFaAIz5tpir5tu5HowbBSUqe4Hi/Z3aKc=
+	b=glC45yFl8ubHo/6eEUwr1Z64sxnZPnkOIRAKxaBLnc2rPOYX9xRg37iwyEiQxWZDP
+	 4jBDx0pBp4ND+t0qV4rE/KtwK2AdpMBL+RKXJRa8RN0gjhlRQDKSszQXfeFpzNd6Je
+	 XmZ9jk9Nww8PZzcYcCJOsfyPY1UqhdnAqQVh/+3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 116/143] net: qede: Initialize qede_ll_ops with designated initializer
-Date: Tue, 20 May 2025 15:51:11 +0200
-Message-ID: <20250520125814.594883617@linuxfoundation.org>
+	Barry Song <v-songbaohua@oppo.com>,
+	David Hildenbrand <david@redhat.com>,
+	Peter Xu <peterx@redhat.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Lokesh Gidra <lokeshgidra@google.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 117/143] mm: userfaultfd: correct dirty flags set for both present and swap pte
+Date: Tue, 20 May 2025 15:51:12 +0200
+Message-ID: <20250520125814.631002399@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -44,49 +49,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Barry Song <v-songbaohua@oppo.com>
 
-commit 6b3ab7f2cbfaeb6580709cd8ef4d72cfd01bfde4 upstream.
+commit 75cb1cca2c880179a11c7dd9380b6f14e41a06a4 upstream.
 
-After a recent change [1] in clang's randstruct implementation to
-randomize structures that only contain function pointers, there is an
-error because qede_ll_ops get randomized but does not use a designated
-initializer for the first member:
+As David pointed out, what truly matters for mremap and userfaultfd move
+operations is the soft dirty bit.  The current comment and
+implementation—which always sets the dirty bit for present PTEs and
+fails to set the soft dirty bit for swap PTEs—are incorrect.  This could
+break features like Checkpoint-Restore in Userspace (CRIU).
 
-  drivers/net/ethernet/qlogic/qede/qede_main.c:206:2: error: a randomized struct can only be initialized with a designated initializer
-    206 |         {
-        |         ^
+This patch updates the behavior to correctly set the soft dirty bit for
+both present and swap PTEs in accordance with mremap.
 
-Explicitly initialize the common member using a designated initializer
-to fix the build.
-
-Cc: stable@vger.kernel.org
-Fixes: 035f7f87b729 ("randstruct: Enable Clang support")
-Link: https://github.com/llvm/llvm-project/commit/04364fb888eea6db9811510607bed4b200bcb082 [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20250507-qede-fix-clang-randstruct-v1-1-5ccc15626fba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20250508220912.7275-1-21cnbao@gmail.com
+Fixes: adef440691ba ("userfaultfd: UFFDIO_MOVE uABI")
+Signed-off-by: Barry Song <v-songbaohua@oppo.com>
+Reported-by: David Hildenbrand <david@redhat.com>
+Closes: https://lore.kernel.org/linux-mm/02f14ee1-923f-47e3-a994-4950afb9afcc@redhat.com/
+Acked-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Cc: Lokesh Gidra <lokeshgidra@google.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/userfaultfd.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/qlogic/qede/qede_main.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_main.c
-@@ -203,7 +203,7 @@ static struct pci_driver qede_pci_driver
- };
+--- a/mm/userfaultfd.c
++++ b/mm/userfaultfd.c
+@@ -1059,8 +1059,13 @@ static int move_present_pte(struct mm_st
+ 	src_folio->index = linear_page_index(dst_vma, dst_addr);
  
- static struct qed_eth_cb_ops qede_ll_ops = {
--	{
-+	.common = {
- #ifdef CONFIG_RFS_ACCEL
- 		.arfs_filter_op = qede_arfs_filter_op,
- #endif
+ 	orig_dst_pte = mk_pte(&src_folio->page, dst_vma->vm_page_prot);
+-	/* Follow mremap() behavior and treat the entry dirty after the move */
+-	orig_dst_pte = pte_mkwrite(pte_mkdirty(orig_dst_pte), dst_vma);
++	/* Set soft dirty bit so userspace can notice the pte was moved */
++#ifdef CONFIG_MEM_SOFT_DIRTY
++	orig_dst_pte = pte_mksoft_dirty(orig_dst_pte);
++#endif
++	if (pte_dirty(orig_src_pte))
++		orig_dst_pte = pte_mkdirty(orig_dst_pte);
++	orig_dst_pte = pte_mkwrite(orig_dst_pte, dst_vma);
+ 
+ 	set_pte_at(mm, dst_addr, dst_pte, orig_dst_pte);
+ out:
+@@ -1094,6 +1099,9 @@ static int move_swap_pte(struct mm_struc
+ 	}
+ 
+ 	orig_src_pte = ptep_get_and_clear(mm, src_addr, src_pte);
++#ifdef CONFIG_MEM_SOFT_DIRTY
++	orig_src_pte = pte_swp_mksoft_dirty(orig_src_pte);
++#endif
+ 	set_pte_at(mm, dst_addr, dst_pte, orig_src_pte);
+ 	double_pt_unlock(dst_ptl, src_ptl);
+ 
 
 
