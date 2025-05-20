@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1317E24E4D2;
-	Tue, 20 May 2025 14:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441D9253F25;
+	Tue, 20 May 2025 14:14:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750467; cv=none; b=aLnBxY18fS4i1L0vTdQgxDRAMwgaD20KnLCjGdsLYR+5HX0kqLOfEunK7kPJKzxCKT+UgpoaOTgiXjJIfwCdmVnti7NUoog6yNGRuj6OLuEKNKudIp5d1S9LUH/Lg6ivBb45ZyjALUIYgFgxgEetOWZkQWEqgaW92M7m67416SI=
+	t=1747750470; cv=none; b=qO6E43JWESISEAOYK5xyxWw0qKd0wa4xHwCOZ2pt+fqNQRbVVSix1b/2z5IaCyBlfDs/4BxJoTDpi5/PscFHa9oXerEKC63J4auHCLFGJs7jMG98dcGWBMb9VoUGpdJEInlBrAgGCiDx0BiEtFZlBxwksbXTAGVOLT1h4ufPjTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750467; c=relaxed/simple;
-	bh=h0TPl0pgEVJNQMBbS+b2WL68bS+NIFa8b/MDPwSe1U0=;
+	s=arc-20240116; t=1747750470; c=relaxed/simple;
+	bh=3pXymaAZX/YIEUkfApLWcZaimpsgjdmT3DQEI3H3qVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AMEAtu2rBEn+UiWfD7TFDUn1vHOfUe/XSNfGe9FKRn0y24vqrkpUZb6l/bJNdLqD9067f46V8wxMewwydDX8pszungm75wKCghymAZZ2/L4E/XmfNpqtcrL9MWhVCh3/cmwYCaDtZauPHg7qMgZ4YZ2OjVjtu94PxkhCEl5NHvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KiebiHMv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=S2AU+aQDj4rGpANle1gK9xzcN9OtnXIIApdkuEegX2CT5pvy706NRNh03AYtz7Jiz0EdUNagUwoxfvhJbZVmxfzTZMmWUCIihQQisqPBPAgCqbKt0OKo7QdBmfuFw5ggaXqucRIL4Gd/OVUdKs2n0VJ2AJJFGC3NvtqCRCVHiw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2tI+93w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KiebiHMv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70B63C4CEE9;
-	Tue, 20 May 2025 14:14:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2tI+93w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78EA1C4CEE9;
+	Tue, 20 May 2025 14:14:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750466;
-	bh=h0TPl0pgEVJNQMBbS+b2WL68bS+NIFa8b/MDPwSe1U0=;
+	s=korg; t=1747750470;
+	bh=3pXymaAZX/YIEUkfApLWcZaimpsgjdmT3DQEI3H3qVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KiebiHMvx9ZN1RacErS33O7XR57oe92d7J+rR/8XYhaV3SJnqwYDHmB7OWV9+RUoX
-	 /7uSitRYf4+hs3mQshm28/APtqioIMbupdZjl5gkHAqa3kWa+2HXkRZoXOLij3+Bqv
-	 Ao3CjdCZTZLeRgDqypU5sHJTA9wL5cGfHjAP0WF8=
+	b=e2tI+93wfUTEFSl24u/J64llOFCcjBaPrDUBfWxxDyfOHreX+qpoimIBGvwhRv2VU
+	 QocCx9mC5L3OONOCgMALLnYG0XIE2IW+lCYC7g9k4ASJ76AViCeYz4irB+ZXaKfA1T
+	 uXkQgOQaSABmg0G52U999pvCX7MlvKuVsVaoQ658=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingcong Bai <jeffbai@aosc.io>,
-	Xinhui Yang <cyan@cyano.uk>,
-	Rong Zhang <i@rong.moe>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Yemu Lu <prcups@krgm.moe>,
-	Runhua He <hua@aosc.io>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 010/145] platform/x86/amd/pmc: Declare quirk_spurious_8042 for MECHREVO Wujie 14XA (GX4HRXL)
-Date: Tue, 20 May 2025 15:49:40 +0200
-Message-ID: <20250520125810.950492313@linuxfoundation.org>
+Subject: [PATCH 6.14 019/145] iio: adc: ad7606: check for NULL before calling sw_mode_config()
+Date: Tue, 20 May 2025 15:49:49 +0200
+Message-ID: <20250520125811.306905853@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -57,62 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runhua He <hua@aosc.io>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit 0887817e4953885fbd6a5c1bec2fdd339261eb19 ]
+[ Upstream commit 5257d80e22bf27009d6742e4c174f42cfe54e425 ]
 
-MECHREVO Wujie 14XA (GX4HRXL) wakes up immediately after s2idle entry.
-This happens regardless of whether the laptop is plugged into AC power,
-or whether any peripheral is plugged into the laptop.
+Check that the sw_mode_config function pointer is not NULL before
+calling it. Not all buses define this callback, which resulted in a NULL
+pointer dereference.
 
-Similar to commit a55bdad5dfd1 ("platform/x86/amd/pmc: Disable keyboard
-wakeup on AMD Framework 13"), the MECHREVO Wujie 14XA wakes up almost
-instantly after s2idle suspend entry (IRQ1 is the keyboard):
-
-2025-04-18 17:23:57,588 DEBUG:  PM: Triggering wakeup from IRQ 9
-2025-04-18 17:23:57,588 DEBUG:  PM: Triggering wakeup from IRQ 1
-
-Add this model to the spurious_8042 quirk to workaround this.
-
-This patch does not affect the wake-up function of the built-in keyboard.
-Because the firmware of this machine adds an insurance for keyboard
-wake-up events, as it always triggers an additional IRQ 9 to wake up the
-system.
-
-Suggested-by: Mingcong Bai <jeffbai@aosc.io>
-Suggested-by: Xinhui Yang <cyan@cyano.uk>
-Suggested-by: Rong Zhang <i@rong.moe>
-Fixes: a55bdad5dfd1 ("platform/x86/amd/pmc: Disable keyboard wakeup on AMD Framework 13")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4166
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://zhuanldan.zhihu.com/p/730538041
-Tested-by: Yemu Lu <prcups@krgm.moe>
-Signed-off-by: Runhua He <hua@aosc.io>
-Link: https://lore.kernel.org/r/20250507100103.995395-1-hua@aosc.io
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: e571c1902116 ("iio: adc: ad7606: move scale_setup as function pointer on chip-info")
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20250318-iio-adc-ad7606-improvements-v2-1-4b605427774c@baylibre.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmc/pmc-quirks.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/iio/adc/ad7606.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-index b4f49720c87f6..2e3f6fc67c568 100644
---- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
-+++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-@@ -217,6 +217,13 @@ static const struct dmi_system_id fwbug_list[] = {
- 			DMI_MATCH(DMI_BIOS_VERSION, "03.05"),
- 		}
- 	},
-+	{
-+		.ident = "MECHREVO Wujie 14X (GX4HRXL)",
-+		.driver_data = &quirk_spurious_8042,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_NAME, "WUJIE14-GX4HRXL"),
-+		}
-+	},
- 	{}
- };
+diff --git a/drivers/iio/adc/ad7606.c b/drivers/iio/adc/ad7606.c
+index 7985570ed1521..0339e27f92c32 100644
+--- a/drivers/iio/adc/ad7606.c
++++ b/drivers/iio/adc/ad7606.c
+@@ -1228,9 +1228,11 @@ static int ad7616_sw_mode_setup(struct iio_dev *indio_dev)
+ 	st->write_scale = ad7616_write_scale_sw;
+ 	st->write_os = &ad7616_write_os_sw;
+ 
+-	ret = st->bops->sw_mode_config(indio_dev);
+-	if (ret)
+-		return ret;
++	if (st->bops->sw_mode_config) {
++		ret = st->bops->sw_mode_config(indio_dev);
++		if (ret)
++			return ret;
++	}
+ 
+ 	/* Activate Burst mode and SEQEN MODE */
+ 	return ad7606_write_mask(st, AD7616_CONFIGURATION_REGISTER,
+@@ -1261,6 +1263,9 @@ static int ad7606b_sw_mode_setup(struct iio_dev *indio_dev)
+ 	st->write_scale = ad7606_write_scale_sw;
+ 	st->write_os = &ad7606_write_os_sw;
+ 
++	if (!st->bops->sw_mode_config)
++		return 0;
++
+ 	return st->bops->sw_mode_config(indio_dev);
+ }
  
 -- 
 2.39.5
