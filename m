@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAEB024C06A;
-	Tue, 20 May 2025 14:13:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129DD24C06A;
+	Tue, 20 May 2025 14:13:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750394; cv=none; b=X+V1lLH3vY42v9cZexfH2WbQzYei8UK/fIXllieeo3TN7V8XcRkjdQN+WpK7qLA4/TX3qtWkAo2wiNs2dry/7D/gjUhkuV/Sksu3S8o0YziIy/ZQDSCeUdG84Fv6bjuV2oZu03jzvRH+AVtKAxt+agLF62pp8jY7ncyd6d8U88E=
+	t=1747750400; cv=none; b=gzOwWVXiS86YJ6fJUp0FCwpfqt64TmrQLGhzExjs7o43NtoGwgPn2B790OtSeQ5oxbR8NoHmcsnRl7YOSmDOd2Qz5/xrH9Cc3CPEDdwdb4qWz/MScWpHKl84Z9DE0V8q9vgMu3ZWgXeesu96ZUCw9tAT3a5zvuD7KzsEOO+XXoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750394; c=relaxed/simple;
-	bh=IzbdcJZNKpyZcrxQ+Si1UIis4SYzkF5MPu7iP6e6kmA=;
+	s=arc-20240116; t=1747750400; c=relaxed/simple;
+	bh=RUgaxgGdGnCe2f1bV2kTSVN3cJvuj5urce0NVDmd5zk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FN0bScc0hqSjnNbDEZpMNzOSxnWgiQxjtI8ZE+sib19VhP6LuUKoMFi8shPb1dVYeGcnvFFuKnTgKKOY2NUVi3/ozoqx7tqFtQhTZZNq3wdniU4pmCKE5aNJrf+KYa7KUInosGzlw3WKjmXzGPno2LBYteyu+QEOi6SMKd2MV2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kYxJryia; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l4SBZlv7xTiA9jdpfRDL7f2B7KdR0IkhDnVzgni769hsG/DJ3oly9kAeBysnCgbhUxqlHftX1rP1kF91XWR+0/XKvBnqMMfjrZ1XWxQOo2E3gD7ZXkUD+AkT0LkQ2JsZpQQK7rvdRfoJ9WBzzKygQRel2ipuMQeHLPtuuxBoBfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFM36FCg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kYxJryia"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFA6C4CEE9;
-	Tue, 20 May 2025 14:13:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFM36FCg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7805EC4CEEB;
+	Tue, 20 May 2025 14:13:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750393;
-	bh=IzbdcJZNKpyZcrxQ+Si1UIis4SYzkF5MPu7iP6e6kmA=;
+	s=korg; t=1747750400;
+	bh=RUgaxgGdGnCe2f1bV2kTSVN3cJvuj5urce0NVDmd5zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kYxJryiaKbpPrU5WzeHJsH/eicJOhfD1vPRFl/yCzgD1Hr8FsFkdZtornW7saXQao
-	 bpX5wg/QfWqyLAVKkb3bREUP4zIbvgueKU/PG81H9FOoh1yH4kH/KNb1KhxaQ940K6
-	 pD3nYy9mS9+O+zfgIjszFZalY1ldO2GltyvgrKR0=
+	b=nFM36FCgENXbxv+HclusKF2R+jIcT3sDdmske9YgKQhpPXFDyT3coWR5VwAt2iqU7
+	 7yuzrSKgxkKWOM6vZPrRYpKhg8e8jUZxIP4RpgxMduZU72M9jJz2ZY49rYpN7lwvce
+	 LcvJ3sBqd9YHaCa382TazbP5I5wX08b5y9ZSaKGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 108/143] phy: renesas: rcar-gen3-usb2: Fix role detection on unbind/bind
-Date: Tue, 20 May 2025 15:51:03 +0200
-Message-ID: <20250520125814.287162027@linuxfoundation.org>
+	Steve Siwinski <ssiwinski@atto.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.12 110/143] scsi: sd_zbc: block: Respect bio vector limits for REPORT ZONES buffer
+Date: Tue, 20 May 2025 15:51:05 +0200
+Message-ID: <20250520125814.364511577@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -52,122 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Steve Siwinski <ssiwinski@atto.com>
 
-commit 54c4c58713aaff76c2422ff5750e557ab3b100d7 upstream.
+commit e8007fad5457ea547ca63bb011fdb03213571c7e upstream.
 
-It has been observed on the Renesas RZ/G3S SoC that unbinding and binding
-the PHY driver leads to role autodetection failures. This issue occurs when
-PHY 3 is the first initialized PHY. PHY 3 does not have an interrupt
-associated with the USB2_INT_ENABLE register (as
-rcar_gen3_int_enable[3] = 0). As a result, rcar_gen3_init_otg() is called
-to initialize OTG without enabling PHY interrupts.
+The REPORT ZONES buffer size is currently limited by the HBA's maximum
+segment count to ensure the buffer can be mapped. However, the block
+layer further limits the number of iovec entries to 1024 when allocating
+a bio.
 
-To resolve this, add rcar_gen3_is_any_otg_rphy_initialized() and call it in
-role_store(), role_show(), and rcar_gen3_init_otg(). At the same time,
-rcar_gen3_init_otg() is only called when initialization for a PHY with
-interrupt bits is in progress. As a result, the
-struct rcar_gen3_phy::otg_initialized is no longer needed.
+To avoid allocation of buffers too large to be mapped, further restrict
+the maximum buffer size to BIO_MAX_INLINE_VECS.
 
-Fixes: 549b6b55b005 ("phy: renesas: rcar-gen3-usb2: enable/disable independent irqs")
+Replace the UIO_MAXIOV symbolic name with the more contextually
+appropriate BIO_MAX_INLINE_VECS.
+
+Fixes: b091ac616846 ("sd_zbc: Fix report zones buffer allocation")
 Cc: stable@vger.kernel.org
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250507125032.565017-2-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Steve Siwinski <ssiwinski@atto.com>
+Link: https://lore.kernel.org/r/20250508200122.243129-1-ssiwinski@atto.com
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/renesas/phy-rcar-gen3-usb2.c |   33 +++++++++++++------------------
- 1 file changed, 14 insertions(+), 19 deletions(-)
+ block/bio.c           |    2 +-
+ drivers/scsi/sd_zbc.c |    6 +++++-
+ include/linux/bio.h   |    1 +
+ 3 files changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-+++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-@@ -107,7 +107,6 @@ struct rcar_gen3_phy {
- 	struct rcar_gen3_chan *ch;
- 	u32 int_enable_bits;
- 	bool initialized;
--	bool otg_initialized;
- 	bool powered;
- };
- 
-@@ -320,16 +319,15 @@ static bool rcar_gen3_is_any_rphy_initia
- 	return false;
- }
- 
--static bool rcar_gen3_needs_init_otg(struct rcar_gen3_chan *ch)
-+static bool rcar_gen3_is_any_otg_rphy_initialized(struct rcar_gen3_chan *ch)
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -611,7 +611,7 @@ struct bio *bio_kmalloc(unsigned short n
  {
--	int i;
--
--	for (i = 0; i < NUM_OF_PHYS; i++) {
--		if (ch->rphys[i].otg_initialized)
--			return false;
-+	for (enum rcar_gen3_phy_index i = PHY_INDEX_BOTH_HC; i <= PHY_INDEX_EHCI;
-+	     i++) {
-+		if (ch->rphys[i].initialized)
-+			return true;
- 	}
+ 	struct bio *bio;
  
--	return true;
-+	return false;
+-	if (nr_vecs > UIO_MAXIOV)
++	if (nr_vecs > BIO_MAX_INLINE_VECS)
+ 		return NULL;
+ 	return kmalloc(struct_size(bio, bi_inline_vecs, nr_vecs), gfp_mask);
  }
- 
- static bool rcar_gen3_are_all_rphys_power_off(struct rcar_gen3_chan *ch)
-@@ -351,7 +349,7 @@ static ssize_t role_store(struct device
- 	bool is_b_device;
- 	enum phy_mode cur_mode, new_mode;
- 
--	if (!ch->is_otg_channel || !rcar_gen3_is_any_rphy_initialized(ch))
-+	if (!ch->is_otg_channel || !rcar_gen3_is_any_otg_rphy_initialized(ch))
- 		return -EIO;
- 
- 	if (sysfs_streq(buf, "host"))
-@@ -389,7 +387,7 @@ static ssize_t role_show(struct device *
+--- a/drivers/scsi/sd_zbc.c
++++ b/drivers/scsi/sd_zbc.c
+@@ -169,6 +169,7 @@ static void *sd_zbc_alloc_report_buffer(
+ 					unsigned int nr_zones, size_t *buflen)
  {
- 	struct rcar_gen3_chan *ch = dev_get_drvdata(dev);
+ 	struct request_queue *q = sdkp->disk->queue;
++	unsigned int max_segments;
+ 	size_t bufsize;
+ 	void *buf;
  
--	if (!ch->is_otg_channel || !rcar_gen3_is_any_rphy_initialized(ch))
-+	if (!ch->is_otg_channel || !rcar_gen3_is_any_otg_rphy_initialized(ch))
- 		return -EIO;
+@@ -180,12 +181,15 @@ static void *sd_zbc_alloc_report_buffer(
+ 	 * Furthermore, since the report zone command cannot be split, make
+ 	 * sure that the allocated buffer can always be mapped by limiting the
+ 	 * number of pages allocated to the HBA max segments limit.
++	 * Since max segments can be larger than the max inline bio vectors,
++	 * further limit the allocated buffer to BIO_MAX_INLINE_VECS.
+ 	 */
+ 	nr_zones = min(nr_zones, sdkp->zone_info.nr_zones);
+ 	bufsize = roundup((nr_zones + 1) * 64, SECTOR_SIZE);
+ 	bufsize = min_t(size_t, bufsize,
+ 			queue_max_hw_sectors(q) << SECTOR_SHIFT);
+-	bufsize = min_t(size_t, bufsize, queue_max_segments(q) << PAGE_SHIFT);
++	max_segments = min(BIO_MAX_INLINE_VECS, queue_max_segments(q));
++	bufsize = min_t(size_t, bufsize, max_segments << PAGE_SHIFT);
  
- 	return sprintf(buf, "%s\n", rcar_gen3_is_host(ch) ? "host" :
-@@ -402,6 +400,9 @@ static void rcar_gen3_init_otg(struct rc
- 	void __iomem *usb2_base = ch->base;
- 	u32 val;
+ 	while (bufsize >= SECTOR_SIZE) {
+ 		buf = kvzalloc(bufsize, GFP_KERNEL | __GFP_NORETRY);
+--- a/include/linux/bio.h
++++ b/include/linux/bio.h
+@@ -11,6 +11,7 @@
+ #include <linux/uio.h>
  
-+	if (!ch->is_otg_channel || rcar_gen3_is_any_otg_rphy_initialized(ch))
-+		return;
-+
- 	/* Should not use functions of read-modify-write a register */
- 	val = readl(usb2_base + USB2_LINECTRL1);
- 	val = (val & ~USB2_LINECTRL1_DP_RPD) | USB2_LINECTRL1_DPRPD_EN |
-@@ -465,12 +466,9 @@ static int rcar_gen3_phy_usb2_init(struc
- 	writel(USB2_SPD_RSM_TIMSET_INIT, usb2_base + USB2_SPD_RSM_TIMSET);
- 	writel(USB2_OC_TIMSET_INIT, usb2_base + USB2_OC_TIMSET);
+ #define BIO_MAX_VECS		256U
++#define BIO_MAX_INLINE_VECS	UIO_MAXIOV
  
--	/* Initialize otg part */
--	if (channel->is_otg_channel) {
--		if (rcar_gen3_needs_init_otg(channel))
--			rcar_gen3_init_otg(channel);
--		rphy->otg_initialized = true;
--	}
-+	/* Initialize otg part (only if we initialize a PHY with IRQs). */
-+	if (rphy->int_enable_bits)
-+		rcar_gen3_init_otg(channel);
+ struct queue_limits;
  
- 	rphy->initialized = true;
- 
-@@ -486,9 +484,6 @@ static int rcar_gen3_phy_usb2_exit(struc
- 
- 	rphy->initialized = false;
- 
--	if (channel->is_otg_channel)
--		rphy->otg_initialized = false;
--
- 	val = readl(usb2_base + USB2_INT_ENABLE);
- 	val &= ~rphy->int_enable_bits;
- 	if (!rcar_gen3_is_any_rphy_initialized(channel))
 
 
