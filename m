@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902E62472A4;
-	Tue, 20 May 2025 14:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F9E2F37;
+	Tue, 20 May 2025 14:06:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750009; cv=none; b=mKgfJ04qSaaRDc9GDWC6EcZmOFdDlNYSgMBWhxmpRaPhorGtRpA0j/XfUJvAwbcCMFfzE2Zr4rBwMM+cbunlKdgrUQ77xwTup+KP7AHwYJ8AvQJavpWRdHDbGFX0wN9q0wKQ0COrrHw5mvTWdARAAt4gDb1hbbp25guZYUPz4pQ=
+	t=1747750012; cv=none; b=Umz3ethJYCU8IQsrY0MA9f1rhO8BOC8qUaUWK0ZUG4Z36yDMt0KxyJ/3t8V14psWXZvJ+YY82Ayd425m/WVFgfNS6sC5LFRiIWZ9+wZSZsPkz1934G1ym/8hLr1l7FqBh9LKayNwEgs75CxCOqcNfv43YWn6pbF4ONzblbjrlU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750009; c=relaxed/simple;
-	bh=W5tOF7biWhD8V7f9Lz4Dni404fro70h136nQXRTnG5c=;
+	s=arc-20240116; t=1747750012; c=relaxed/simple;
+	bh=pwx3ODVa5J6LOeSVg0WhrH+TOWam2lGp1Wt01xVH/uc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rcgTckTe3lqBAp2nMG/xOeBa8MUY3MhNPF57lCg4C3JnrBEXlxeTzl5wFYqoMX7fwt6wZFdwVW12pZWiNQS569Qnc7DRr0OQVaiycpa6QtXEVHGNWBgM7YTcN7QgxNWgI9qdKrlnWJs4IMFceSicH80OUP38BaI/2/0QEFETsfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5rCSIxG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HHW21jTl0OlXC8w5DuFAzy2AKs9sVwUdLDK6tBHtCf8MkO50nDLdYdvHAlFogoZY56e9if3+snocavlHBKsX1IgGKb5pniTNPrt/3sfFFHwu70bBhlRW4uptzq3U9+sQCzK6n0pqLm7cdVr0V2eXwaj+InNg4sK54Om00nkBsHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiaBRADi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5rCSIxG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC52C4CEE9;
-	Tue, 20 May 2025 14:06:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiaBRADi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92ED2C4CEE9;
+	Tue, 20 May 2025 14:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750008;
-	bh=W5tOF7biWhD8V7f9Lz4Dni404fro70h136nQXRTnG5c=;
+	s=korg; t=1747750012;
+	bh=pwx3ODVa5J6LOeSVg0WhrH+TOWam2lGp1Wt01xVH/uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r5rCSIxGfLctSBfCJHPOgjF3LeyB+9Zp0KXePRmmd3p6uqJG3icXPe4u3IgvZOsO8
-	 pnE5AasAnJN7XwoRZ4Kf8Y5F/FrYFeB90iGYj8riF0JhWgqtszFyj87jZV8lnEphFf
-	 uaeW24akRroYF6NwwYpKy/8BqCHjIMtCRbZWN7zM=
+	b=UiaBRADif4BkyPrwF3jIFuag4mOALfuz/1yaJM6Adzd9fe1020i10FVPgzzR7biab
+	 aR979AT6hgJeiGBcoyRnv7Ua4b3sIWLtPk9IFqH9lBdaURk6LSpNSIa9YWH6qqoqCG
+	 6vPoR5S5ndL0LOEzZmXosyYjaTK/LaC673vqevtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Dexuan Cui <decui@microsoft.com>,
-	Naman Jain <namjain@linux.microsoft.com>,
+	Isaku Yamahata <isaku.yamahata@intel.com>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 013/143] uio_hv_generic: Fix sysfs creation path for ring buffer
-Date: Tue, 20 May 2025 15:49:28 +0200
-Message-ID: <20250520125810.584158809@linuxfoundation.org>
+Subject: [PATCH 6.12 014/143] KVM: Add member to struct kvm_gfn_range to indicate private/shared
+Date: Tue, 20 May 2025 15:49:29 +0200
+Message-ID: <20250520125810.621798301@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -54,300 +52,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naman Jain <namjain@linux.microsoft.com>
+From: Isaku Yamahata <isaku.yamahata@intel.com>
 
-[ Upstream commit f31fe8165d365379d858c53bef43254c7d6d1cfd ]
+[ Upstream commit dca6c88532322830d5d92486467fcc91b67a9ad8 ]
 
-On regular bootup, devices get registered to VMBus first, so when
-uio_hv_generic driver for a particular device type is probed,
-the device is already initialized and added, so sysfs creation in
-hv_uio_probe() works fine. However, when the device is removed
-and brought back, the channel gets rescinded and the device again gets
-registered to VMBus. However this time, the uio_hv_generic driver is
-already registered to probe for that device and in this case sysfs
-creation is tried before the device's kobject gets initialized
-completely.
+Add new members to strut kvm_gfn_range to indicate which mapping
+(private-vs-shared) to operate on: enum kvm_gfn_range_filter
+attr_filter. Update the core zapping operations to set them appropriately.
 
-Fix this by moving the core logic of sysfs creation of ring buffer,
-from uio_hv_generic to HyperV's VMBus driver, where the rest of the
-sysfs attributes for the channels are defined. While doing that, make
-use of attribute groups and macros, instead of creating sysfs
-directly, to ensure better error handling and code flow.
+TDX utilizes two GPA aliases for the same memslots, one for memory that is
+for private memory and one that is for shared. For private memory, KVM
+cannot always perform the same operations it does on memory for default
+VMs, such as zapping pages and having them be faulted back in, as this
+requires guest coordination. However, some operations such as guest driven
+conversion of memory between private and shared should zap private memory.
 
-Problematic path:
-vmbus_process_offer (A new offer comes for the VMBus device)
-  vmbus_add_channel_work
-    vmbus_device_register
-      |-> device_register
-      |     |...
-      |     |-> hv_uio_probe
-      |           |...
-      |           |-> sysfs_create_bin_file (leads to a warning as
-      |                 the primary channel's kobject, which is used to
-      |                 create the sysfs file, is not yet initialized)
-      |-> kset_create_and_add
-      |-> vmbus_add_channel_kobj (initialization of the primary
-                                  channel's kobject happens later)
+Internally to the MMU, private and shared mappings are tracked on separate
+roots. Mapping and zapping operations will operate on the respective GFN
+alias for each root (private or shared). So zapping operations will by
+default zap both aliases. Add fields in struct kvm_gfn_range to allow
+callers to specify which aliases so they can only target the aliases
+appropriate for their specific operation.
 
-Above code flow is sequential and the warning is always reproducible in
-this path.
+There was feedback that target aliases should be specified such that the
+default value (0) is to operate on both aliases. Several options were
+considered. Several variations of having separate bools defined such
+that the default behavior was to process both aliases. They either allowed
+nonsensical configurations, or were confusing for the caller. A simple
+enum was also explored and was close, but was hard to process in the
+caller. Instead, use an enum with the default value (0) reserved as a
+disallowed value. Catch ranges that didn't have the target aliases
+specified by looking for that specific value.
 
-Fixes: 9ab877a6ccf8 ("uio_hv_generic: make ring buffer attribute for primary channel")
-Cc: stable@kernel.org
-Suggested-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Suggested-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Dexuan Cui <decui@microsoft.com>
-Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20250502074811.2022-2-namjain@linux.microsoft.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Set target alias with enum appropriately for these MMU operations:
+ - For KVM's mmu notifier callbacks, zap shared pages only because private
+   pages won't have a userspace mapping
+ - For setting memory attributes, kvm_arch_pre_set_memory_attributes()
+   chooses the aliases based on the attribute.
+ - For guest_memfd invalidations, zap private only.
+
+Link: https://lore.kernel.org/kvm/ZivIF9vjKcuGie3s@google.com/
+Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
+Co-developed-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Message-ID: <20240718211230.1492011-3-rick.p.edgecombe@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Stable-dep-of: 9129633d568e ("KVM: x86/mmu: Prevent installing hugepages when mem attributes are changing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/hyperv_vmbus.h    |    6 ++
- drivers/hv/vmbus_drv.c       |  100 ++++++++++++++++++++++++++++++++++++++++++-
- drivers/uio/uio_hv_generic.c |   39 +++++++---------
- include/linux/hyperv.h       |    6 ++
- 4 files changed, 128 insertions(+), 23 deletions(-)
+ arch/x86/kvm/mmu/mmu.c   |  6 ++++++
+ include/linux/kvm_host.h |  6 ++++++
+ virt/kvm/guest_memfd.c   |  2 ++
+ virt/kvm/kvm_main.c      | 14 ++++++++++++++
+ 4 files changed, 28 insertions(+)
 
---- a/drivers/hv/hyperv_vmbus.h
-+++ b/drivers/hv/hyperv_vmbus.h
-@@ -485,4 +485,10 @@ static inline int hv_debug_add_dev_dir(s
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index 9242c0649adf1..4943732e07cd7 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -7633,6 +7633,12 @@ bool kvm_arch_pre_set_memory_attributes(struct kvm *kvm,
+ 	if (WARN_ON_ONCE(!kvm_arch_has_private_mem(kvm)))
+ 		return false;
  
- #endif /* CONFIG_HYPERV_TESTING */
- 
-+/* Create and remove sysfs entry for memory mapped ring buffers for a channel */
-+int hv_create_ring_sysfs(struct vmbus_channel *channel,
-+			 int (*hv_mmap_ring_buffer)(struct vmbus_channel *channel,
-+						    struct vm_area_struct *vma));
-+int hv_remove_ring_sysfs(struct vmbus_channel *channel);
++	/* Unmap the old attribute page. */
++	if (range->arg.attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE)
++		range->attr_filter = KVM_FILTER_SHARED;
++	else
++		range->attr_filter = KVM_FILTER_PRIVATE;
 +
- #endif /* _HYPERV_VMBUS_H */
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -1792,6 +1792,27 @@ static ssize_t subchannel_id_show(struct
+ 	return kvm_unmap_gfn_range(kvm, range);
  }
- static VMBUS_CHAN_ATTR_RO(subchannel_id);
  
-+static int hv_mmap_ring_buffer_wrapper(struct file *filp, struct kobject *kobj,
-+				       struct bin_attribute *attr,
-+				       struct vm_area_struct *vma)
-+{
-+	struct vmbus_channel *channel = container_of(kobj, struct vmbus_channel, kobj);
-+
-+	/*
-+	 * hv_(create|remove)_ring_sysfs implementation ensures that mmap_ring_buffer
-+	 * is not NULL.
-+	 */
-+	return channel->mmap_ring_buffer(channel, vma);
-+}
-+
-+static struct bin_attribute chan_attr_ring_buffer = {
-+	.attr = {
-+		.name = "ring",
-+		.mode = 0600,
-+	},
-+	.size = 2 * SZ_2M,
-+	.mmap = hv_mmap_ring_buffer_wrapper,
-+};
- static struct attribute *vmbus_chan_attrs[] = {
- 	&chan_attr_out_mask.attr,
- 	&chan_attr_in_mask.attr,
-@@ -1811,6 +1832,11 @@ static struct attribute *vmbus_chan_attr
- 	NULL
+diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+index 15206450929d5..2e836d44f7386 100644
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -260,11 +260,17 @@ union kvm_mmu_notifier_arg {
+ 	unsigned long attributes;
  };
  
-+static struct bin_attribute *vmbus_chan_bin_attrs[] = {
-+	&chan_attr_ring_buffer,
-+	NULL
++enum kvm_gfn_range_filter {
++	KVM_FILTER_SHARED		= BIT(0),
++	KVM_FILTER_PRIVATE		= BIT(1),
 +};
 +
- /*
-  * Channel-level attribute_group callback function. Returns the permission for
-  * each attribute, and returns 0 if an attribute is not visible.
-@@ -1831,9 +1857,24 @@ static umode_t vmbus_chan_attr_is_visibl
- 	return attr->mode;
- }
- 
-+static umode_t vmbus_chan_bin_attr_is_visible(struct kobject *kobj,
-+					      struct bin_attribute *attr, int idx)
-+{
-+	const struct vmbus_channel *channel =
-+		container_of(kobj, struct vmbus_channel, kobj);
-+
-+	/* Hide ring attribute if channel's ring_sysfs_visible is set to false */
-+	if (attr ==  &chan_attr_ring_buffer && !channel->ring_sysfs_visible)
-+		return 0;
-+
-+	return attr->attr.mode;
-+}
-+
- static const struct attribute_group vmbus_chan_group = {
- 	.attrs = vmbus_chan_attrs,
--	.is_visible = vmbus_chan_attr_is_visible
-+	.bin_attrs = vmbus_chan_bin_attrs,
-+	.is_visible = vmbus_chan_attr_is_visible,
-+	.is_bin_visible = vmbus_chan_bin_attr_is_visible,
+ struct kvm_gfn_range {
+ 	struct kvm_memory_slot *slot;
+ 	gfn_t start;
+ 	gfn_t end;
+ 	union kvm_mmu_notifier_arg arg;
++	enum kvm_gfn_range_filter attr_filter;
+ 	bool may_block;
  };
+ bool kvm_unmap_gfn_range(struct kvm *kvm, struct kvm_gfn_range *range);
+diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+index 8f079a61a56db..bb062d3d24572 100644
+--- a/virt/kvm/guest_memfd.c
++++ b/virt/kvm/guest_memfd.c
+@@ -118,6 +118,8 @@ static void kvm_gmem_invalidate_begin(struct kvm_gmem *gmem, pgoff_t start,
+ 			.end = slot->base_gfn + min(pgoff + slot->npages, end) - pgoff,
+ 			.slot = slot,
+ 			.may_block = true,
++			/* guest memfd is relevant to only private mappings. */
++			.attr_filter = KVM_FILTER_PRIVATE,
+ 		};
  
- static const struct kobj_type vmbus_chan_ktype = {
-@@ -1841,6 +1882,63 @@ static const struct kobj_type vmbus_chan
- 	.release = vmbus_chan_release,
- };
+ 		if (!found_memslot) {
+diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+index 279e03029ce14..b99de3b5ffbc0 100644
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -632,6 +632,11 @@ static __always_inline kvm_mn_ret_t __kvm_handle_hva_range(struct kvm *kvm,
+ 			 */
+ 			gfn_range.arg = range->arg;
+ 			gfn_range.may_block = range->may_block;
++			/*
++			 * HVA-based notifications aren't relevant to private
++			 * mappings as they don't have a userspace mapping.
++			 */
++			gfn_range.attr_filter = KVM_FILTER_SHARED;
  
-+/**
-+ * hv_create_ring_sysfs() - create "ring" sysfs entry corresponding to ring buffers for a channel.
-+ * @channel: Pointer to vmbus_channel structure
-+ * @hv_mmap_ring_buffer: function pointer for initializing the function to be called on mmap of
-+ *                       channel's "ring" sysfs node, which is for the ring buffer of that channel.
-+ *                       Function pointer is of below type:
-+ *                       int (*hv_mmap_ring_buffer)(struct vmbus_channel *channel,
-+ *                                                  struct vm_area_struct *vma))
-+ *                       This has a pointer to the channel and a pointer to vm_area_struct,
-+ *                       used for mmap, as arguments.
-+ *
-+ * Sysfs node for ring buffer of a channel is created along with other fields, however its
-+ * visibility is disabled by default. Sysfs creation needs to be controlled when the use-case
-+ * is running.
-+ * For example, HV_NIC device is used either by uio_hv_generic or hv_netvsc at any given point of
-+ * time, and "ring" sysfs is needed only when uio_hv_generic is bound to that device. To avoid
-+ * exposing the ring buffer by default, this function is reponsible to enable visibility of
-+ * ring for userspace to use.
-+ * Note: Race conditions can happen with userspace and it is not encouraged to create new
-+ * use-cases for this. This was added to maintain backward compatibility, while solving
-+ * one of the race conditions in uio_hv_generic while creating sysfs.
-+ *
-+ * Returns 0 on success or error code on failure.
-+ */
-+int hv_create_ring_sysfs(struct vmbus_channel *channel,
-+			 int (*hv_mmap_ring_buffer)(struct vmbus_channel *channel,
-+						    struct vm_area_struct *vma))
-+{
-+	struct kobject *kobj = &channel->kobj;
-+
-+	channel->mmap_ring_buffer = hv_mmap_ring_buffer;
-+	channel->ring_sysfs_visible = true;
-+
-+	return sysfs_update_group(kobj, &vmbus_chan_group);
-+}
-+EXPORT_SYMBOL_GPL(hv_create_ring_sysfs);
-+
-+/**
-+ * hv_remove_ring_sysfs() - remove ring sysfs entry corresponding to ring buffers for a channel.
-+ * @channel: Pointer to vmbus_channel structure
-+ *
-+ * Hide "ring" sysfs for a channel by changing its is_visible attribute and updating sysfs group.
-+ *
-+ * Returns 0 on success or error code on failure.
-+ */
-+int hv_remove_ring_sysfs(struct vmbus_channel *channel)
-+{
-+	struct kobject *kobj = &channel->kobj;
-+	int ret;
-+
-+	channel->ring_sysfs_visible = false;
-+	ret = sysfs_update_group(kobj, &vmbus_chan_group);
-+	channel->mmap_ring_buffer = NULL;
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(hv_remove_ring_sysfs);
-+
- /*
-  * vmbus_add_channel_kobj - setup a sub-directory under device/channels
-  */
---- a/drivers/uio/uio_hv_generic.c
-+++ b/drivers/uio/uio_hv_generic.c
-@@ -131,15 +131,12 @@ static void hv_uio_rescind(struct vmbus_
- 	vmbus_device_unregister(channel->device_obj);
- }
+ 			/*
+ 			 * {gfn(page) | page intersects with [hva_start, hva_end)} =
+@@ -2454,6 +2459,14 @@ static __always_inline void kvm_handle_gfn_range(struct kvm *kvm,
+ 	gfn_range.arg = range->arg;
+ 	gfn_range.may_block = range->may_block;
  
--/* Sysfs API to allow mmap of the ring buffers
-+/* Function used for mmap of ring buffer sysfs interface.
-  * The ring buffer is allocated as contiguous memory by vmbus_open
-  */
--static int hv_uio_ring_mmap(struct file *filp, struct kobject *kobj,
--			    struct bin_attribute *attr,
--			    struct vm_area_struct *vma)
-+static int
-+hv_uio_ring_mmap(struct vmbus_channel *channel, struct vm_area_struct *vma)
- {
--	struct vmbus_channel *channel
--		= container_of(kobj, struct vmbus_channel, kobj);
- 	void *ring_buffer = page_address(channel->ringbuffer_page);
- 
- 	if (channel->state != CHANNEL_OPENED_STATE)
-@@ -149,15 +146,6 @@ static int hv_uio_ring_mmap(struct file
- 			       channel->ringbuffer_pagecount << PAGE_SHIFT);
- }
- 
--static const struct bin_attribute ring_buffer_bin_attr = {
--	.attr = {
--		.name = "ring",
--		.mode = 0600,
--	},
--	.size = 2 * SZ_2M,
--	.mmap = hv_uio_ring_mmap,
--};
--
- /* Callback from VMBUS subsystem when new channel created. */
- static void
- hv_uio_new_channel(struct vmbus_channel *new_sc)
-@@ -178,8 +166,7 @@ hv_uio_new_channel(struct vmbus_channel
- 	/* Disable interrupts on sub channel */
- 	new_sc->inbound.ring_buffer->interrupt_mask = 1;
- 	set_channel_read_mode(new_sc, HV_CALL_ISR);
--
--	ret = sysfs_create_bin_file(&new_sc->kobj, &ring_buffer_bin_attr);
-+	ret = hv_create_ring_sysfs(new_sc, hv_uio_ring_mmap);
- 	if (ret) {
- 		dev_err(device, "sysfs create ring bin file failed; %d\n", ret);
- 		vmbus_close(new_sc);
-@@ -350,10 +337,18 @@ hv_uio_probe(struct hv_device *dev,
- 		goto fail_close;
- 	}
- 
--	ret = sysfs_create_bin_file(&channel->kobj, &ring_buffer_bin_attr);
--	if (ret)
--		dev_notice(&dev->device,
--			   "sysfs create ring bin file failed; %d\n", ret);
 +	/*
-+	 * This internally calls sysfs_update_group, which returns a non-zero value if it executes
-+	 * before sysfs_create_group. This is expected as the 'ring' will be created later in
-+	 * vmbus_device_register() -> vmbus_add_channel_kobj(). Thus, no need to check the return
-+	 * value and print warning.
-+	 *
-+	 * Creating/exposing sysfs in driver probe is not encouraged as it can lead to race
-+	 * conditions with userspace. For backward compatibility, "ring" sysfs could not be removed
-+	 * or decoupled from uio_hv_generic probe. Userspace programs can make use of inotify
-+	 * APIs to make sure that ring is created.
++	 * If/when KVM supports more attributes beyond private .vs shared, this
++	 * _could_ set KVM_FILTER_{SHARED,PRIVATE} appropriately if the entire target
++	 * range already has the desired private vs. shared state (it's unclear
++	 * if that is a net win).  For now, KVM reaches this point if and only
++	 * if the private flag is being toggled, i.e. all mappings are in play.
 +	 */
-+	hv_create_ring_sysfs(channel, hv_uio_ring_mmap);
- 
- 	hv_set_drvdata(dev, pdata);
- 
-@@ -375,7 +370,7 @@ hv_uio_remove(struct hv_device *dev)
- 	if (!pdata)
- 		return;
- 
--	sysfs_remove_bin_file(&dev->channel->kobj, &ring_buffer_bin_attr);
-+	hv_remove_ring_sysfs(dev->channel);
- 	uio_unregister_device(&pdata->info);
- 	hv_uio_cleanup(dev, pdata);
- 
---- a/include/linux/hyperv.h
-+++ b/include/linux/hyperv.h
-@@ -1067,6 +1067,12 @@ struct vmbus_channel {
- 
- 	/* The max size of a packet on this channel */
- 	u32 max_pkt_size;
 +
-+	/* function to mmap ring buffer memory to the channel's sysfs ring attribute */
-+	int (*mmap_ring_buffer)(struct vmbus_channel *channel, struct vm_area_struct *vma);
-+
-+	/* boolean to control visibility of sysfs for ring buffer */
-+	bool ring_sysfs_visible;
- };
+ 	for (i = 0; i < kvm_arch_nr_memslot_as_ids(kvm); i++) {
+ 		slots = __kvm_memslots(kvm, i);
  
- #define lock_requestor(channel, flags)					\
+@@ -2510,6 +2523,7 @@ static int kvm_vm_set_mem_attributes(struct kvm *kvm, gfn_t start, gfn_t end,
+ 	struct kvm_mmu_notifier_range pre_set_range = {
+ 		.start = start,
+ 		.end = end,
++		.arg.attributes = attributes,
+ 		.handler = kvm_pre_set_memory_attributes,
+ 		.on_lock = kvm_mmu_invalidate_begin,
+ 		.flush_on_ret = true,
+-- 
+2.39.5
+
 
 
