@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0532472A5;
-	Tue, 20 May 2025 14:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A4424A07C;
+	Tue, 20 May 2025 14:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750372; cv=none; b=CjtMwsjBDhjNlv5t86ba9SU85si2lzGBw0GowFhdIJNVSJ8tTYssd90ueDzYNkuFYmITXOwa5mgQ6H35gnQYBkcmn6jZNhIchjm/AI0kmd/mGpkn+6dUsmrDu6JQJF1mwoXrp3Fm6Bl/NKQduat29r3r+MSzzRYYlWAo39jItFY=
+	t=1747750375; cv=none; b=Qgl0mTyCpBLKB7KA2nufNnXZY9M3MT7BG9r9PckWfrqBPlnjTkctoT64SHaUu++DilrmMKlvL5tZQOf4v6Zn03LFRL4nON7NY3k31g8SCffsQbRez2erB9DuML3KCRiwG50sRholMdUIGehx5heSvsjAFRR4HxubIn9RGb+1Oq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750372; c=relaxed/simple;
-	bh=/mF2QeXjFb7XujuhQirbwcKnoGIII7R8Zr5GzZ2cO9Y=;
+	s=arc-20240116; t=1747750375; c=relaxed/simple;
+	bh=7E8Lw9EqEXiWSITftJ9tgJas7bWqsNrWYeezIKnR4mk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g6IUCTXlB69NH8UoUvZntpdIMfepDTut4yaqhc4mgDRr+Fq0Uj4txwmDOooCVBPkwSfL7qe+haHfIGdOrQcUjncFFShjLcZ3x8qXJ9uckThv/+qOvfpee4mxLVNfmRUl0JFpFijbc2x/Eqwb4s5DG50c/XNwodgRhE6W+iTaCt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R10ux++y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W6+rlnJX+ZjHFc4Ig9E6me15ezmt0fAy56seWux3JrpNM7KhKx3lfa72FYbPPrVYg1AC1Zva53aD3b9Hj8Gn1OQQTL+AWB5/GYYEVIPP629XgBZQ+n+UoQp/02UouYstkkUmzy1Jnx+qbAR2lsPQsg0TRNjsROJGCnEpRsjP8Uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tFakrdBY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R10ux++y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB23C4CEE9;
-	Tue, 20 May 2025 14:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tFakrdBY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94FBAC4CEE9;
+	Tue, 20 May 2025 14:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750372;
-	bh=/mF2QeXjFb7XujuhQirbwcKnoGIII7R8Zr5GzZ2cO9Y=;
+	s=korg; t=1747750375;
+	bh=7E8Lw9EqEXiWSITftJ9tgJas7bWqsNrWYeezIKnR4mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R10ux++yKAnzOo0Qy3eXx9uzTMpyqBltPNHwmDOgnp7RFRShSz1eZOcWs5RChpeeh
-	 NSBVByaP3lU8wn1JL6LTPmY0+jHlRlPBrqJTzK3BM5z4LohraPIj2IT2/EEZB5lCyw
-	 bJ+y8WMn2EEuQZdkeKecOhna6AYlGpsEuuPTzIvs=
+	b=tFakrdBYfktAZlJlHXcpTvEqRFAeQgEjvVDiFt4D8qBcGO9yecX608XMCSppbRWKb
+	 rdZwmSo4bTtao4/sJNCn2dA8qQkNojohSsQGvM4ff9CdPNWP8Zu6h7viQrcEwJ1WwB
+	 bKxXSHh+eb3VBWRmRy/8yjoPunsUGgbq7c4mF5h4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Alan Previn <alan.previn.teres.alexis@intel.com>,
-	Julia Filipchuk <julia.filipchuk@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.12 130/143] drm/xe/gsc: do not flush the GSC worker from the reset path
-Date: Tue, 20 May 2025 15:51:25 +0200
-Message-ID: <20250520125815.131401459@linuxfoundation.org>
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Brendan Jackman <jackmanb@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 131/143] mm/page_alloc: fix race condition in unaccepted memory handling
+Date: Tue, 20 May 2025 15:51:26 +0200
+Message-ID: <20250520125815.169021780@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -53,179 +57,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-commit 03552d8ac0afcc080c339faa0b726e2c0e9361cb upstream.
+commit fefc075182275057ce607effaa3daa9e6e3bdc73 upstream.
 
-The workqueue used for the reset worker is marked as WQ_MEM_RECLAIM,
-while the GSC one isn't (and can't be as we need to do memory
-allocations in the gsc worker). Therefore, we can't flush the latter
-from the former.
+The page allocator tracks the number of zones that have unaccepted memory
+using static_branch_enc/dec() and uses that static branch in hot paths to
+determine if it needs to deal with unaccepted memory.
 
-The reason why we had such a flush was to avoid interrupting either
-the GSC FW load or in progress GSC proxy operations. GSC proxy
-operations fall into 2 categories:
+Borislav and Thomas pointed out that the tracking is racy: operations on
+static_branch are not serialized against adding/removing unaccepted pages
+to/from the zone.
 
-1) GSC proxy init: this only happens once immediately after GSC FW load
-   and does not support being interrupted. The only way to recover from
-   an interruption of the proxy init is to do an FLR and re-load the GSC.
+Sanity checks inside static_branch machinery detects it:
 
-2) GSC proxy request: this can happen in response to a request that
-   the driver sends to the GSC. If this is interrupted, the GSC FW will
-   timeout and the driver request will be failed, but overall the GSC
-   will keep working fine.
+WARNING: CPU: 0 PID: 10 at kernel/jump_label.c:276 __static_key_slow_dec_cpuslocked+0x8e/0xa0
 
-Flushing the work allowed us to avoid interruption in both cases (unless
-the hang came from the GSC engine itself, in which case we're toast
-anyway). However, a failure on a proxy request is tolerable if we're in
-a scenario where we're triggering a GT reset (i.e., something is already
-gone pretty wrong), so what we really need to avoid is interrupting
-the init flow, which we can do by polling on the register that reports
-when the proxy init is complete (as that ensure us that all the load and
-init operations have been completed).
+The comment around the WARN() explains the problem:
 
-Note that during suspend we still want to do a flush of the worker to
-make sure it completes any operations involving the HW before the power
-is cut.
+	/*
+	 * Warn about the '-1' case though; since that means a
+	 * decrement is concurrent with a first (0->1) increment. IOW
+	 * people are trying to disable something that wasn't yet fully
+	 * enabled. This suggests an ordering problem on the user side.
+	 */
 
-v2: fix spelling in commit msg, rename waiter function (Julia)
+The effect of this static_branch optimization is only visible on
+microbenchmark.
 
-Fixes: dd0e89e5edc2 ("drm/xe/gsc: GSC FW load")
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/4830
-Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: John Harrison <John.C.Harrison@Intel.com>
-Cc: Alan Previn <alan.previn.teres.alexis@intel.com>
-Cc: <stable@vger.kernel.org> # v6.8+
-Reviewed-by: Julia Filipchuk <julia.filipchuk@intel.com>
-Link: https://lore.kernel.org/r/20250502155104.2201469-1-daniele.ceraolospurio@intel.com
-(cherry picked from commit 12370bfcc4f0bdf70279ec5b570eb298963422b5)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Instead of adding more complexity around it, remove it altogether.
+
+Link: https://lkml.kernel.org/r/20250506133207.1009676-1-kirill.shutemov@linux.intel.com
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Fixes: dcdfdd40fa82 ("mm: Add support for unaccepted memory")
+Link: https://lore.kernel.org/all/20250506092445.GBaBnVXXyvnazly6iF@fat_crate.local
+Reported-by: Borislav Petkov <bp@alien8.de>
+Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reported-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Brendan Jackman <jackmanb@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: <stable@vger.kernel.org>	[6.5+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_gsc.c       |   22 ++++++++++++++++++++++
- drivers/gpu/drm/xe/xe_gsc.h       |    1 +
- drivers/gpu/drm/xe/xe_gsc_proxy.c |   11 +++++++++++
- drivers/gpu/drm/xe/xe_gsc_proxy.h |    1 +
- drivers/gpu/drm/xe/xe_gt.c        |    2 +-
- drivers/gpu/drm/xe/xe_uc.c        |    8 +++++++-
- drivers/gpu/drm/xe/xe_uc.h        |    1 +
- 7 files changed, 44 insertions(+), 2 deletions(-)
+ mm/page_alloc.c |   23 -----------------------
+ 1 file changed, 23 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_gsc.c
-+++ b/drivers/gpu/drm/xe/xe_gsc.c
-@@ -564,6 +564,28 @@ void xe_gsc_remove(struct xe_gsc *gsc)
- 	xe_gsc_proxy_remove(gsc);
- }
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -7041,9 +7041,6 @@ bool has_managed_dma(void)
  
-+void xe_gsc_stop_prepare(struct xe_gsc *gsc)
-+{
-+	struct xe_gt *gt = gsc_to_gt(gsc);
-+	int ret;
-+
-+	if (!xe_uc_fw_is_loadable(&gsc->fw) || xe_uc_fw_is_in_error_state(&gsc->fw))
-+		return;
-+
-+	xe_force_wake_assert_held(gt_to_fw(gt), XE_FW_GSC);
-+
-+	/*
-+	 * If the GSC FW load or the proxy init are interrupted, the only way
-+	 * to recover it is to do an FLR and reload the GSC from scratch.
-+	 * Therefore, let's wait for the init to complete before stopping
-+	 * operations. The proxy init is the last step, so we can just wait on
-+	 * that
-+	 */
-+	ret = xe_gsc_wait_for_proxy_init_done(gsc);
-+	if (ret)
-+		xe_gt_err(gt, "failed to wait for GSC init completion before uc stop\n");
-+}
-+
- /*
-  * wa_14015076503: if the GSC FW is loaded, we need to alert it before doing a
-  * GSC engine reset by writing a notification bit in the GS1 register and then
---- a/drivers/gpu/drm/xe/xe_gsc.h
-+++ b/drivers/gpu/drm/xe/xe_gsc.h
-@@ -16,6 +16,7 @@ struct xe_hw_engine;
- int xe_gsc_init(struct xe_gsc *gsc);
- int xe_gsc_init_post_hwconfig(struct xe_gsc *gsc);
- void xe_gsc_wait_for_worker_completion(struct xe_gsc *gsc);
-+void xe_gsc_stop_prepare(struct xe_gsc *gsc);
- void xe_gsc_load_start(struct xe_gsc *gsc);
- void xe_gsc_remove(struct xe_gsc *gsc);
- void xe_gsc_hwe_irq_handler(struct xe_hw_engine *hwe, u16 intr_vec);
---- a/drivers/gpu/drm/xe/xe_gsc_proxy.c
-+++ b/drivers/gpu/drm/xe/xe_gsc_proxy.c
-@@ -71,6 +71,17 @@ bool xe_gsc_proxy_init_done(struct xe_gs
- 	       HECI1_FWSTS1_PROXY_STATE_NORMAL;
- }
+ #ifdef CONFIG_UNACCEPTED_MEMORY
  
-+int xe_gsc_wait_for_proxy_init_done(struct xe_gsc *gsc)
-+{
-+	struct xe_gt *gt = gsc_to_gt(gsc);
-+
-+	/* Proxy init can take up to 500ms, so wait double that for safety */
-+	return xe_mmio_wait32(gt, HECI_FWSTS1(MTL_GSC_HECI1_BASE),
-+			      HECI1_FWSTS1_CURRENT_STATE,
-+			      HECI1_FWSTS1_PROXY_STATE_NORMAL,
-+			      USEC_PER_SEC, NULL, false);
-+}
-+
- static void __gsc_proxy_irq_rmw(struct xe_gsc *gsc, u32 clr, u32 set)
+-/* Counts number of zones with unaccepted pages. */
+-static DEFINE_STATIC_KEY_FALSE(zones_with_unaccepted_pages);
+-
+ static bool lazy_accept = true;
+ 
+ static int __init accept_memory_parse(char *p)
+@@ -7070,11 +7067,7 @@ static bool page_contains_unaccepted(str
+ static void __accept_page(struct zone *zone, unsigned long *flags,
+ 			  struct page *page)
  {
- 	struct xe_gt *gt = gsc_to_gt(gsc);
---- a/drivers/gpu/drm/xe/xe_gsc_proxy.h
-+++ b/drivers/gpu/drm/xe/xe_gsc_proxy.h
-@@ -13,6 +13,7 @@ struct xe_gsc;
- int xe_gsc_proxy_init(struct xe_gsc *gsc);
- bool xe_gsc_proxy_init_done(struct xe_gsc *gsc);
- void xe_gsc_proxy_remove(struct xe_gsc *gsc);
-+int xe_gsc_wait_for_proxy_init_done(struct xe_gsc *gsc);
- int xe_gsc_proxy_start(struct xe_gsc *gsc);
+-	bool last;
+-
+ 	list_del(&page->lru);
+-	last = list_empty(&zone->unaccepted_pages);
+-
+ 	account_freepages(zone, -MAX_ORDER_NR_PAGES, MIGRATE_MOVABLE);
+ 	__mod_zone_page_state(zone, NR_UNACCEPTED, -MAX_ORDER_NR_PAGES);
+ 	__ClearPageUnaccepted(page);
+@@ -7083,9 +7076,6 @@ static void __accept_page(struct zone *z
+ 	accept_memory(page_to_phys(page), PAGE_SIZE << MAX_PAGE_ORDER);
  
- int xe_gsc_proxy_request_handler(struct xe_gsc *gsc);
---- a/drivers/gpu/drm/xe/xe_gt.c
-+++ b/drivers/gpu/drm/xe/xe_gt.c
-@@ -828,7 +828,7 @@ void xe_gt_suspend_prepare(struct xe_gt
- {
- 	XE_WARN_ON(xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL));
- 
--	xe_uc_stop_prepare(&gt->uc);
-+	xe_uc_suspend_prepare(&gt->uc);
- 
- 	XE_WARN_ON(xe_force_wake_put(gt_to_fw(gt), XE_FORCEWAKE_ALL));
- }
---- a/drivers/gpu/drm/xe/xe_uc.c
-+++ b/drivers/gpu/drm/xe/xe_uc.c
-@@ -241,7 +241,7 @@ void xe_uc_gucrc_disable(struct xe_uc *u
- 
- void xe_uc_stop_prepare(struct xe_uc *uc)
- {
--	xe_gsc_wait_for_worker_completion(&uc->gsc);
-+	xe_gsc_stop_prepare(&uc->gsc);
- 	xe_guc_stop_prepare(&uc->guc);
+ 	__free_pages_ok(page, MAX_PAGE_ORDER, FPI_TO_TAIL);
+-
+-	if (last)
+-		static_branch_dec(&zones_with_unaccepted_pages);
  }
  
-@@ -275,6 +275,12 @@ again:
- 		goto again;
+ void accept_page(struct page *page)
+@@ -7122,19 +7112,11 @@ static bool try_to_accept_memory_one(str
+ 	return true;
  }
  
-+void xe_uc_suspend_prepare(struct xe_uc *uc)
-+{
-+	xe_gsc_wait_for_worker_completion(&uc->gsc);
-+	xe_guc_stop_prepare(&uc->guc);
-+}
-+
- int xe_uc_suspend(struct xe_uc *uc)
+-static inline bool has_unaccepted_memory(void)
+-{
+-	return static_branch_unlikely(&zones_with_unaccepted_pages);
+-}
+-
+ static bool cond_accept_memory(struct zone *zone, unsigned int order)
  {
- 	/* GuC submission not enabled, nothing to do */
---- a/drivers/gpu/drm/xe/xe_uc.h
-+++ b/drivers/gpu/drm/xe/xe_uc.h
-@@ -18,6 +18,7 @@ int xe_uc_reset_prepare(struct xe_uc *uc
- void xe_uc_stop_prepare(struct xe_uc *uc);
- void xe_uc_stop(struct xe_uc *uc);
- int xe_uc_start(struct xe_uc *uc);
-+void xe_uc_suspend_prepare(struct xe_uc *uc);
- int xe_uc_suspend(struct xe_uc *uc);
- int xe_uc_sanitize_reset(struct xe_uc *uc);
- void xe_uc_remove(struct xe_uc *uc);
+ 	long to_accept, wmark;
+ 	bool ret = false;
+ 
+-	if (!has_unaccepted_memory())
+-		return false;
+-
+ 	if (list_empty(&zone->unaccepted_pages))
+ 		return false;
+ 
+@@ -7168,22 +7150,17 @@ static bool __free_unaccepted(struct pag
+ {
+ 	struct zone *zone = page_zone(page);
+ 	unsigned long flags;
+-	bool first = false;
+ 
+ 	if (!lazy_accept)
+ 		return false;
+ 
+ 	spin_lock_irqsave(&zone->lock, flags);
+-	first = list_empty(&zone->unaccepted_pages);
+ 	list_add_tail(&page->lru, &zone->unaccepted_pages);
+ 	account_freepages(zone, MAX_ORDER_NR_PAGES, MIGRATE_MOVABLE);
+ 	__mod_zone_page_state(zone, NR_UNACCEPTED, MAX_ORDER_NR_PAGES);
+ 	__SetPageUnaccepted(page);
+ 	spin_unlock_irqrestore(&zone->lock, flags);
+ 
+-	if (first)
+-		static_branch_inc(&zones_with_unaccepted_pages);
+-
+ 	return true;
+ }
+ 
 
 
