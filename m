@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B21621E0BB;
-	Tue, 20 May 2025 14:03:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC54A1D8E07;
+	Tue, 20 May 2025 14:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749811; cv=none; b=W2G7Raj3HWPTpOpgG8SqCvAVOwO7u+RzBOXiqDzHTfyQHdSUQ2rdQUn1oD6GU7P6KXYotxrnseQAuQ9CK3E8rbrb3XnvoSIb7B4htWbjHRkukBFYLuyZTnJb3kAl23P6eCNLCMYKmLTDieG82dREH54/ogfBtrg8G9Ps1OFenhk=
+	t=1747749814; cv=none; b=QiYFaOAI2EDnGiNiHSKuJVQ1/gLL97eq8Opz8diXlq3QaSuikAC98MDFMKUQ6pJ5yN0SOU4MDl5zT/PkRsw5fo9pr1l13p536QXe5hEZ95WyCbChsHHj6yxpB7z02VRhev09nNlnAaY72DLQEr6OrowddCmcgG0nUlOymqEcGec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749811; c=relaxed/simple;
-	bh=axR3kXiBTpYxTfuT9Wcm6wIi/6aERCuXTsYEHjnIbiE=;
+	s=arc-20240116; t=1747749814; c=relaxed/simple;
+	bh=VVptbzpPR80Xv+hjzF4jqEYToy0qJYt2QS7fjPsTt7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pDOzs76ukll/Z+uuyz9kwZLG3RT43ndRs/2Z+VrsArxot5pAw8ihrNw7ettmaiK9Ql3JNGe3CEkTcYV+k2K1izmJoCJG7PCaQLcXXHCto3OHmXBeL4MX5tjNJnzjeKRIyWhbk9cQd+yav7o3iVW2u5rl0K9J7cVSJb/a65J4FtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2AF7g6lv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k1pL9zmz3x9yfD4+M2Xnl2f8AYKRg9HaPTDwHLnrCa1Z8db74dlRZEwm0wbaLXS+NMRTpPGhfz3Ul9QAAyn9ZAro8iqEK6N3zNoGrTqyq9ukcRgEXVDpM4d1ViDfdPPuofx5IQ2PUUiVh7nvu9uxTAPOGh+va2dB1AZtcq89JBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HyqOs+Fz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AF7g6lv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9618DC4CEE9;
-	Tue, 20 May 2025 14:03:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HyqOs+Fz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D72EC4CEE9;
+	Tue, 20 May 2025 14:03:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749810;
-	bh=axR3kXiBTpYxTfuT9Wcm6wIi/6aERCuXTsYEHjnIbiE=;
+	s=korg; t=1747749813;
+	bh=VVptbzpPR80Xv+hjzF4jqEYToy0qJYt2QS7fjPsTt7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2AF7g6lvbwqcfuMh/poVOiCB8gvMzvYrB7gBIDQItvYfL2R1HNYJBlT4MOiC342eR
-	 T+bqX5oxbMB5d52BKTIXCmdo7mVcrodeKdi9Ys1S6crMqx6vDoOH/lvzsPu9xzCd0S
-	 iWx6+Q8Niqd0zjXpqII+OIb/JEXmn6DGpglYGNhU=
+	b=HyqOs+FzHxLbXh9Lz42KYoU9KBB4QWP++QoiHm+HFtJvLOrXM+IdFdH6rtOXAVWkO
+	 gQ2ufv5wsdC92ah+3+qJ2ClWvDG+lTCwJXBsvWaIJjcFsK3jwPWQI4x/tshFEI/Jj0
+	 p2y/W6gPrUGWY+8YEqro6rqiLZvoaeMVtP9ejGdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <abdun.nihaal@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 050/117] qlcnic: fix memory leak in qlcnic_sriov_channel_cfg_cmd()
-Date: Tue, 20 May 2025 15:50:15 +0200
-Message-ID: <20250520125805.976812224@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.6 068/117] drm/amd/display: Correct the reply value when AUX write incomplete
+Date: Tue, 20 May 2025 15:50:33 +0200
+Message-ID: <20250520125806.693154540@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -52,45 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <abdun.nihaal@gmail.com>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-[ Upstream commit 9d8a99c5a7c7f4f7eca2c168a4ec254409670035 ]
+commit d433981385c62c72080e26f1c00a961d18b233be upstream.
 
-In one of the error paths in qlcnic_sriov_channel_cfg_cmd(), the memory
-allocated in qlcnic_sriov_alloc_bc_mbx_args() for mailbox arguments is
-not freed. Fix that by jumping to the error path that frees them, by
-calling qlcnic_free_mbx_args(). This was found using static analysis.
+[Why]
+Now forcing aux->transfer to return 0 when incomplete AUX write is
+inappropriate. It should return bytes have been transferred.
 
-Fixes: f197a7aa6288 ("qlcnic: VF-PF communication channel implementation")
-Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250512044829.36400-1-abdun.nihaal@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[How]
+aux->transfer is asked not to change original msg except reply field of
+drm_dp_aux_msg structure. Copy the msg->buffer when it's write request,
+and overwrite the first byte when sink reply 1 byte indicating partially
+written byte number. Then we can return the correct value without
+changing the original msg.
+
+Fixes: 3637e457eb00 ("drm/amd/display: Fix wrong handling for AUX_DEFER case")
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Ray Wu <ray.wu@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 7ac37f0dcd2e0b729fa7b5513908dc8ab802b540)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c           |    3 ++-
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |   10 ++++++++--
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-index 28d24d59efb84..d57b976b90409 100644
---- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-+++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-@@ -1484,8 +1484,11 @@ static int qlcnic_sriov_channel_cfg_cmd(struct qlcnic_adapter *adapter, u8 cmd_o
- 	}
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -11069,7 +11069,8 @@ int amdgpu_dm_process_dmub_aux_transfer_
+ 		/* The reply is stored in the top nibble of the command. */
+ 		payload->reply[0] = (adev->dm.dmub_notify->aux_reply.command >> 4) & 0xF;
  
- 	cmd_op = (cmd.rsp.arg[0] & 0xff);
--	if (cmd.rsp.arg[0] >> 25 == 2)
--		return 2;
-+	if (cmd.rsp.arg[0] >> 25 == 2) {
-+		ret = 2;
-+		goto out;
+-	if (!payload->write && p_notify->aux_reply.length)
++	/*write req may receive a byte indicating partially written number as well*/
++	if (p_notify->aux_reply.length)
+ 		memcpy(payload->data, p_notify->aux_reply.data,
+ 				p_notify->aux_reply.length);
+ 
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -59,6 +59,7 @@ static ssize_t dm_dp_aux_transfer(struct
+ 	enum aux_return_code_type operation_result;
+ 	struct amdgpu_device *adev;
+ 	struct ddc_service *ddc;
++	uint8_t copy[16];
+ 
+ 	if (WARN_ON(msg->size > 16))
+ 		return -E2BIG;
+@@ -74,6 +75,11 @@ static ssize_t dm_dp_aux_transfer(struct
+ 			(msg->request & DP_AUX_I2C_WRITE_STATUS_UPDATE) != 0;
+ 	payload.defer_delay = 0;
+ 
++	if (payload.write) {
++		memcpy(copy, msg->buffer, msg->size);
++		payload.data = copy;
 +	}
 +
- 	if (cmd_op == QLCNIC_BC_CMD_CHANNEL_INIT)
- 		set_bit(QLC_BC_VF_STATE, &vf->state);
- 	else
--- 
-2.39.5
-
+ 	result = dc_link_aux_transfer_raw(TO_DM_AUX(aux)->ddc_service, &payload,
+ 				      &operation_result);
+ 
+@@ -97,9 +103,9 @@ static ssize_t dm_dp_aux_transfer(struct
+ 	 */
+ 	if (payload.write && result >= 0) {
+ 		if (result) {
+-			/*one byte indicating partially written bytes. Force 0 to retry*/
++			/*one byte indicating partially written bytes*/
+ 			drm_info(adev_to_drm(adev), "amdgpu: AUX partially written\n");
+-			result = 0;
++			result = payload.data[0];
+ 		} else if (!payload.reply[0])
+ 			/*I2C_ACK|AUX_ACK*/
+ 			result = msg->size;
 
 
