@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E0E2F37;
-	Tue, 20 May 2025 14:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A76222570;
+	Tue, 20 May 2025 14:04:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749864; cv=none; b=eQY2LYmccpf6PjvbZqVVYix1ex6D6FfO7y6Cy1gzMYBHdW+zrtb4e6kqsC3Bk2Cfdv5ZAvHXSaXV9Wpfc/9YocvYkypjHLDL9wJsaYs/P83hhBfbVvrcXbpjXfCUp47mzvR4yhc1zke/IFw5K/TCsZQxHNNIJAhbHcovEUiyJxU=
+	t=1747749867; cv=none; b=twJegSwtsbLVf9Pk7yJg9dIC7KUYx5kQTx1oEY3pvXILKAjMCw7GqunF6q9egGBn8DpJJUMGVNakp9kwEYs1mRV2R+sFMuZaJiAYZNuXzrFQ7biblhfhJCFv74teH2pziuRwh7bZ/hnj8eE82RJMsqrfP5YQsN2jWiTjP7Vg/5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749864; c=relaxed/simple;
-	bh=4pML+GInZwV1W22sl4nWjH8979wokNU7qPWCb0rgVxw=;
+	s=arc-20240116; t=1747749867; c=relaxed/simple;
+	bh=80u4pUaKRopfhW3HDmvpuKjQaCs2OI/fqcWQV3tvN84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rs3Lgeqdo7UA/MGlXirqnrZiRo+T5sua3Gieqn6mApLFEnBAbKQ/+n4xl0bla1TeDSzTHUcJZu6Yc4BslHKO0rc/Z2D7JFTMwj1KAghzxzW1fBEovWUPtizxSVoqmeuD3Y4XuqxeGjXFHrJ2Ja67FzpP1uzmm4X6rZqDVxt3qY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NOy+kxsc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NnXrb4dE4xQch2H9aHGmNuzLX8fG871DW2uTd5to3Hrh3tAr9R2wHRX8K7misTzGELybI1P4T0SllPS8fnZr8UcEah0KMpWHzMTZBfSdA8S4pp3Vl+RLQBr7vvV6VGYVq3y7zsPsdcp8DrRqOZdpZaVa5lsBw9z0Mi+t2YByDHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKnnkunm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NOy+kxsc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC2EC4CEEA;
-	Tue, 20 May 2025 14:04:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKnnkunm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E7CC4CEE9;
+	Tue, 20 May 2025 14:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749863;
-	bh=4pML+GInZwV1W22sl4nWjH8979wokNU7qPWCb0rgVxw=;
+	s=korg; t=1747749866;
+	bh=80u4pUaKRopfhW3HDmvpuKjQaCs2OI/fqcWQV3tvN84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NOy+kxscIBxRNaVlctwCJJYNz7+I6fL5JpXOGwuFpFvLt+q/uqOMeEHSavHMBeQ99
-	 R0+1+1fu6ZRTGdaLGpjw9lpUhNRPXTVVCVnUPDi2GN4r5K6pma8sNy1rrUC0RBx9mb
-	 p7ucjPnHPRSWtrIy9NiXrUXw4FaYQPWB4g1kan88=
+	b=OKnnkunm0bxLrpjVA1hwi6WFGpvbXdRklOo2+aCv+CWA+A3hExJ+Y8WyNxROyGUYq
+	 VDLcl/WS329Q/igbBMhcdJ3vgMsxjZxTAdBIOFentGAnl+A6XPqpiAg0G5xIophPvV
+	 ojuIui/LR0AXdRttajrSPyLrwUfi4AzegRrmmY7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bo-Cun Chen <bc-bocun.chen@mediatek.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 053/117] net: ethernet: mtk_eth_soc: fix typo for declaration MT7988 ESW capability
-Date: Tue, 20 May 2025 15:50:18 +0200
-Message-ID: <20250520125806.098172903@linuxfoundation.org>
+Subject: [PATCH 6.6 054/117] octeontx2-af: Fix CGX Receive counters
+Date: Tue, 20 May 2025 15:50:19 +0200
+Message-ID: <20250520125806.134901652@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -53,38 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bo-Cun Chen <bc-bocun.chen@mediatek.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit 1bdea6fad6fb985ff13828373c48e337c4e939f9 ]
+[ Upstream commit bf449f35e77fd44017abf991fac1f9ab7705bbe0 ]
 
-Since MTK_ESW_BIT is a bit number rather than a bitmap, it causes
-MTK_HAS_CAPS to produce incorrect results. This leads to the ETH
-driver not declaring MAC capabilities correctly for the MT7988 ESW.
+Each CGX block supports 4 logical MACs (LMACS). Receive
+counters CGX_CMR_RX_STAT0-8 are per LMAC and CGX_CMR_RX_STAT9-12
+are per CGX.
 
-Fixes: 445eb6448ed3 ("net: ethernet: mtk_eth_soc: add basic support for MT7988 SoC")
-Signed-off-by: Bo-Cun Chen <bc-bocun.chen@mediatek.com>
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/b8b37f409d1280fad9c4d32521e6207f63cd3213.1747110258.git.daniel@makrotopia.org
+Due a bug in previous patch, stale Per CGX counters values observed.
+
+Fixes: 66208910e57a ("octeontx2-af: Support to retrieve CGX LMAC stats")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Link: https://patch.msgid.link/20250513071554.728922-1-hkelam@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/af/cgx.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index c6ccfbd422657..cb8efc952dfda 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -4628,7 +4628,7 @@ static int mtk_add_mac(struct mtk_eth *eth, struct device_node *np)
- 	}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+index 52792546fe00d..339be6950c039 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+@@ -707,6 +707,11 @@ int cgx_get_rx_stats(void *cgxd, int lmac_id, int idx, u64 *rx_stat)
  
- 	if (mtk_is_netsys_v3_or_greater(mac->hw) &&
--	    MTK_HAS_CAPS(mac->hw->soc->caps, MTK_ESW_BIT) &&
-+	    MTK_HAS_CAPS(mac->hw->soc->caps, MTK_ESW) &&
- 	    id == MTK_GMAC1_ID) {
- 		mac->phylink_config.mac_capabilities = MAC_ASYM_PAUSE |
- 						       MAC_SYM_PAUSE |
+ 	if (!is_lmac_valid(cgx, lmac_id))
+ 		return -ENODEV;
++
++	/* pass lmac as 0 for CGX_CMR_RX_STAT9-12 */
++	if (idx >= CGX_RX_STAT_GLOBAL_INDEX)
++		lmac_id = 0;
++
+ 	*rx_stat =  cgx_read(cgx, lmac_id, CGXX_CMRX_RX_STAT0 + (idx * 8));
+ 	return 0;
+ }
 -- 
 2.39.5
 
