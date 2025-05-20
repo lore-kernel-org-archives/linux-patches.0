@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADF724676D;
-	Tue, 20 May 2025 13:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5470624169B;
+	Tue, 20 May 2025 13:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749551; cv=none; b=g/KZM5lnx7tBNfph6G+Oga/JLxo3tFNYdvYRmpwbAqGQP4Bgw5eviLPhZ8uZkmF96m7nC0cdF97YDkQf/GRmqrSKjtLhymsDF5X7t5j1FIx9WIgOcvihocJIo6C4UoBDZ2PnDTP95AAiTXS5ih9r9E2lWKwyv0Xy0hpRZjXyWTI=
+	t=1747749554; cv=none; b=i1+aPwmGmec2kabVfXrPDsQvlcu63TJ0Q3+RtDHqGylyve5T/MItp1+xpRTH1ioim4AfODKX+WHwmwrIJKYDgb6shWQ8pMrgshTgVZtp7VFpBHbQ/vP3zVH/vfA9C5df+nRxncKmsUS+2pvayhcLTI7qylGcERjlc6iSmIBwnys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749551; c=relaxed/simple;
-	bh=swU1ICKZaV3+lrFWbchn54Ct0yOFYePk3ZSMyPsb2ks=;
+	s=arc-20240116; t=1747749554; c=relaxed/simple;
+	bh=vjEbisoty+OYEpZ4lZrGGxud/t9N5b2XklgqRvRzQlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UQcmaUnMktyKETUcZM9iA6IRps14e46+hix7BjZBNQK/MW1ims7aJqlnDfqjTWmrbDsi7hNhZmuqvRBEVPlZJY49Ox/EachG5DhI6Pzu5v2jdlMFvc+qFwvvp9y33p+qBHtuYXFzE7eoD51AB+Bfp9+ihqPVt1aRiF58uzH93us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8cSjNDH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XvyLRp2PSUnThcivaEd2RJiui83M5LRDaZfiU4pg2FWe9PTZLHx8OeX7Vl+85Iq2eqLodqLKBErWsLYV8nSImjHyalzKZUvkebjer+84EFN+XlMczOwl6jSLjtAEJZpxz9xPU+ZNn09ZugRTSdUhGYVf7bh7sYzEV8Wx1z4W/fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxH3ul5U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8cSjNDH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34D6C4CEE9;
-	Tue, 20 May 2025 13:59:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxH3ul5U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7778C4CEE9;
+	Tue, 20 May 2025 13:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749551;
-	bh=swU1ICKZaV3+lrFWbchn54Ct0yOFYePk3ZSMyPsb2ks=;
+	s=korg; t=1747749554;
+	bh=vjEbisoty+OYEpZ4lZrGGxud/t9N5b2XklgqRvRzQlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M8cSjNDHjVC4XKr+3TXdEmWAEx05uUUG1QquAyYKSDgCSwLYCf6pN8oXG7+/wGAWo
-	 NzBZV4kmmGpMdiv0CeK9gGjzSJseUnfR2AzZFVWrgCRE+E/TMT9dlUCdqprJKbcr7s
-	 wdu7xg8Xam9TK9I2bK9Wk1S0ausAJl4DxxcoNZDE=
+	b=dxH3ul5Us94eSajDxiBjFW6TtLdghNVP0K7KQkUO+7UDXQCn1bZppwiTbrMs3q1HG
+	 Q0ygNIa2UrmWwhGreFOCm20zvIYPQ46XftRvLmq044hZvCtQY1+wmhEvoBOj7g3npI
+	 /Hoi2MFRhsps1mN1qtCH/3SOOw2YzIToALTWLaWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Byungchul Park <byungchul@sk.com>,
-	Hyeongtak Ji <hyeongtak.ji@sk.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 6.1 80/97] mm/vmscan: fix a bug calling wakeup_kswapd() with a wrong zone index
-Date: Tue, 20 May 2025 15:50:45 +0200
-Message-ID: <20250520125803.774042930@linuxfoundation.org>
+	Xu Lu <luxu.kernel@bytedance.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Zhaoyang Li <lizy04@hust.edu.cn>
+Subject: [PATCH 6.1 81/97] riscv: mm: Fix the out of bound issue of vmemmap address
+Date: Tue, 20 May 2025 15:50:46 +0200
+Message-ID: <20250520125803.813630568@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -51,101 +47,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Byungchul Park <byungchul@sk.com>
+From: Xu Lu <luxu.kernel@bytedance.com>
 
-commit 2774f256e7c0219e2b0a0894af1c76bdabc4f974 upstream.
+commit f754f27e98f88428aaf6be6e00f5cbce97f62d4b upstream.
 
-With numa balancing on, when a numa system is running where a numa node
-doesn't have its local memory so it has no managed zones, the following
-oops has been observed.  It's because wakeup_kswapd() is called with a
-wrong zone index, -1.  Fixed it by checking the index before calling
-wakeup_kswapd().
+In sparse vmemmap model, the virtual address of vmemmap is calculated as:
+((struct page *)VMEMMAP_START - (phys_ram_base >> PAGE_SHIFT)).
+And the struct page's va can be calculated with an offset:
+(vmemmap + (pfn)).
 
-> BUG: unable to handle page fault for address: 00000000000033f3
-> #PF: supervisor read access in kernel mode
-> #PF: error_code(0x0000) - not-present page
-> PGD 0 P4D 0
-> Oops: 0000 [#1] PREEMPT SMP NOPTI
-> CPU: 2 PID: 895 Comm: masim Not tainted 6.6.0-dirty #255
-> Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
->    rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-> RIP: 0010:wakeup_kswapd (./linux/mm/vmscan.c:7812)
-> Code: (omitted)
-> RSP: 0000:ffffc90004257d58 EFLAGS: 00010286
-> RAX: ffffffffffffffff RBX: ffff88883fff0480 RCX: 0000000000000003
-> RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff88883fff0480
-> RBP: ffffffffffffffff R08: ff0003ffffffffff R09: ffffffffffffffff
-> R10: ffff888106c95540 R11: 0000000055555554 R12: 0000000000000003
-> R13: 0000000000000000 R14: 0000000000000000 R15: ffff88883fff0940
-> FS:  00007fc4b8124740(0000) GS:ffff888827c00000(0000) knlGS:0000000000000000
-> CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> CR2: 00000000000033f3 CR3: 000000026cc08004 CR4: 0000000000770ee0
-> DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-> DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-> PKRU: 55555554
-> Call Trace:
->  <TASK>
-> ? __die
-> ? page_fault_oops
-> ? __pte_offset_map_lock
-> ? exc_page_fault
-> ? asm_exc_page_fault
-> ? wakeup_kswapd
-> migrate_misplaced_page
-> __handle_mm_fault
-> handle_mm_fault
-> do_user_addr_fault
-> exc_page_fault
-> asm_exc_page_fault
-> RIP: 0033:0x55b897ba0808
-> Code: (omitted)
-> RSP: 002b:00007ffeefa821a0 EFLAGS: 00010287
-> RAX: 000055b89983acd0 RBX: 00007ffeefa823f8 RCX: 000055b89983acd0
-> RDX: 00007fc2f8122010 RSI: 0000000000020000 RDI: 000055b89983acd0
-> RBP: 00007ffeefa821a0 R08: 0000000000000037 R09: 0000000000000075
-> R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000000
-> R13: 00007ffeefa82410 R14: 000055b897ba5dd8 R15: 00007fc4b8340000
->  </TASK>
+However, when initializing struct pages, kernel actually starts from the
+first page from the same section that phys_ram_base belongs to. If the
+first page's physical address is not (phys_ram_base >> PAGE_SHIFT), then
+we get an va below VMEMMAP_START when calculating va for it's struct page.
 
-Link: https://lkml.kernel.org/r/20240216111502.79759-1-byungchul@sk.com
-Signed-off-by: Byungchul Park <byungchul@sk.com>
-Reported-by: Hyeongtak Ji <hyeongtak.ji@sk.com>
-Fixes: c574bbe917036 ("NUMA balancing: optimize page placement for memory tiering system")
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: "Huang, Ying" <ying.huang@intel.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
+For example, if phys_ram_base starts from 0x82000000 with pfn 0x82000, the
+first page in the same section is actually pfn 0x80000. During
+init_unavailable_range(), we will initialize struct page for pfn 0x80000
+with virtual address ((struct page *)VMEMMAP_START - 0x2000), which is
+below VMEMMAP_START as well as PCI_IO_END.
+
+This commit fixes this bug by introducing a new variable
+'vmemmap_start_pfn' which is aligned with memory section size and using
+it to calculate vmemmap address instead of phys_ram_base.
+
+Fixes: a11dd49dcb93 ("riscv: Sparse-Memory/vmemmap out-of-bounds fix")
+Signed-off-by: Xu Lu <luxu.kernel@bytedance.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Tested-by: Björn Töpel <bjorn@rivosinc.com>
+Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
+Link: https://lore.kernel.org/r/20241209122617.53341-1-luxu.kernel@bytedance.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Zhaoyang Li <lizy04@hust.edu.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/migrate.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/riscv/include/asm/page.h    |    1 +
+ arch/riscv/include/asm/pgtable.h |    2 +-
+ arch/riscv/mm/init.c             |   17 ++++++++++++++++-
+ 3 files changed, 18 insertions(+), 2 deletions(-)
 
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -2422,6 +2422,14 @@ static int numamigrate_isolate_page(pg_d
- 			if (managed_zone(pgdat->node_zones + z))
- 				break;
- 		}
+--- a/arch/riscv/include/asm/page.h
++++ b/arch/riscv/include/asm/page.h
+@@ -115,6 +115,7 @@ struct kernel_mapping {
+ 
+ extern struct kernel_mapping kernel_map;
+ extern phys_addr_t phys_ram_base;
++extern unsigned long vmemmap_start_pfn;
+ 
+ #define is_kernel_mapping(x)	\
+ 	((x) >= kernel_map.virt_addr && (x) < (kernel_map.virt_addr + kernel_map.size))
+--- a/arch/riscv/include/asm/pgtable.h
++++ b/arch/riscv/include/asm/pgtable.h
+@@ -79,7 +79,7 @@
+  * Define vmemmap for pfn_to_page & page_to_pfn calls. Needed if kernel
+  * is configured with CONFIG_SPARSEMEM_VMEMMAP enabled.
+  */
+-#define vmemmap		((struct page *)VMEMMAP_START - (phys_ram_base >> PAGE_SHIFT))
++#define vmemmap		((struct page *)VMEMMAP_START - vmemmap_start_pfn)
+ 
+ #define PCI_IO_SIZE      SZ_16M
+ #define PCI_IO_END       VMEMMAP_START
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -22,6 +22,7 @@
+ #include <linux/hugetlb.h>
+ 
+ #include <asm/fixmap.h>
++#include <asm/sparsemem.h>
+ #include <asm/tlbflush.h>
+ #include <asm/sections.h>
+ #include <asm/soc.h>
+@@ -52,6 +53,13 @@ EXPORT_SYMBOL(pgtable_l5_enabled);
+ phys_addr_t phys_ram_base __ro_after_init;
+ EXPORT_SYMBOL(phys_ram_base);
+ 
++#ifdef CONFIG_SPARSEMEM_VMEMMAP
++#define VMEMMAP_ADDR_ALIGN	(1ULL << SECTION_SIZE_BITS)
 +
-+		/*
-+		 * If there are no managed zones, it should not proceed
-+		 * further.
-+		 */
-+		if (z < 0)
-+			return 0;
++unsigned long vmemmap_start_pfn __ro_after_init;
++EXPORT_SYMBOL(vmemmap_start_pfn);
++#endif
 +
- 		wakeup_kswapd(pgdat->node_zones + z, 0, order, ZONE_MOVABLE);
- 		return 0;
- 	}
+ unsigned long empty_zero_page[PAGE_SIZE / sizeof(unsigned long)]
+ 							__page_aligned_bss;
+ EXPORT_SYMBOL(empty_zero_page);
+@@ -210,8 +218,12 @@ static void __init setup_bootmem(void)
+ 	memblock_reserve(vmlinux_start, vmlinux_end - vmlinux_start);
+ 
+ 	phys_ram_end = memblock_end_of_DRAM();
+-	if (!IS_ENABLED(CONFIG_XIP_KERNEL))
++	if (!IS_ENABLED(CONFIG_XIP_KERNEL)) {
+ 		phys_ram_base = memblock_start_of_DRAM();
++#ifdef CONFIG_SPARSEMEM_VMEMMAP
++		vmemmap_start_pfn = round_down(phys_ram_base, VMEMMAP_ADDR_ALIGN) >> PAGE_SHIFT;
++#endif
++}
+ 	/*
+ 	 * Reserve physical address space that would be mapped to virtual
+ 	 * addresses greater than (void *)(-PAGE_SIZE) because:
+@@ -946,6 +958,9 @@ asmlinkage void __init setup_vm(uintptr_
+ 	kernel_map.xiprom_sz = (uintptr_t)(&_exiprom) - (uintptr_t)(&_xiprom);
+ 
+ 	phys_ram_base = CONFIG_PHYS_RAM_BASE;
++#ifdef CONFIG_SPARSEMEM_VMEMMAP
++	vmemmap_start_pfn = round_down(phys_ram_base, VMEMMAP_ADDR_ALIGN) >> PAGE_SHIFT;
++#endif
+ 	kernel_map.phys_addr = (uintptr_t)CONFIG_PHYS_RAM_BASE;
+ 	kernel_map.size = (uintptr_t)(&_end) - (uintptr_t)(&_start);
+ 
 
 
