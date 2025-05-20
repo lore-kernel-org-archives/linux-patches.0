@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527D624886F;
-	Tue, 20 May 2025 14:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68EB221D5BE;
+	Tue, 20 May 2025 14:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750642; cv=none; b=LvzAL3+0Vd4jgnubv9e8aVkPCRh7f+jMce/KX19h96c+dtcg1S0OAj6R804lmJtkUhwmtx6x7YXhVPBVbhF+aNC7lYL6WSGQztYnDZIsLX9yIL5jdVQiAbsD/o1I3sFy1NWngeoy8zMyEy/gbBAZUnHX1wDGcJncvrRcjUTQ3AU=
+	t=1747750645; cv=none; b=P87NWRVLqywBi9YPDmdDUlMABT9V9+4ahfVuDsbezUA+3c6rulj/p96+S/xBgpKLgYVZBHMYVT7K+RBSziYPtf1YWkfW/KviardV6cU4UvIvba9WXAKplNl3mAPapD8c000RVFRfidwe4OAWTNaWGAwoNQOGJBfK2cqoc4n/oMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750642; c=relaxed/simple;
-	bh=38usTZq/Ov/wFqnGjq2rMDTOum/AMTxNarGIIX22Y6g=;
+	s=arc-20240116; t=1747750645; c=relaxed/simple;
+	bh=/+KwpTaFKcfNuNOYkUUDyw/aee0cmVaaG1McJ7Aa4YY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YX59rQvW3YNMqM8mG6IkUJYZYyFka+dsFUNtbHVL555tLEYQUAUJ+QzfsSjPaVjVLT31OMjkxJc3RZi9sliPG21Rq7h2xEIv9QkRYnPvcf0jStNKr5Ic2HJe+2QR8J7eHO+zuixtTbVwoqLlrBgM/I/AXpiw12VmCJ2qcj6svMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ioWUrwrK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ClcyrESggAMNubtWq8QmcjlVt+/0Na+leyyhdktbg7M6e2nih2a+DTh2ePVsa0KrRB8/ilv2ohsrXCB7T6kiWfrkXBZMtNOpNLtZOkdVWyse28QdagUqn7jTh3r66fcPeWaH2Qt7IbIiILYUFqJqQW5Y229ygGdzhJX+fjWPYFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G24lAxtV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ioWUrwrK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B9AC4CEEB;
-	Tue, 20 May 2025 14:17:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G24lAxtV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB70C4CEE9;
+	Tue, 20 May 2025 14:17:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750642;
-	bh=38usTZq/Ov/wFqnGjq2rMDTOum/AMTxNarGIIX22Y6g=;
+	s=korg; t=1747750645;
+	bh=/+KwpTaFKcfNuNOYkUUDyw/aee0cmVaaG1McJ7Aa4YY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ioWUrwrKZo9JpElDodEL7rAAyVqjD6/NQzukAs1gahJpeGY27CIAeuUqSx4np5Fz2
-	 Fql/15oQ5CslRcIMY+pyjY3W1RrO2Cy7CgGXqZO485A/+ZLmPFW6eMCQvxoeWyzMWX
-	 lAB5zocGKNZ77Z/EfITgXEPsviEcCwCXURQMBvNE=
+	b=G24lAxtV5sMLGg+kmB2tei3wIRgNr91FI9SvJnC+DTJwHHs81OZMGvXzIdWBuB27q
+	 ho4MSYtgSAx9G+UR0x++5zn8Kej4QAc0r6ytCTyFjJW36q0PIbvNjlyoG8vSKSmuXh
+	 ea3yVBTR8YnWmN8pcQO5KWv/g3kkTPj9I8an2Ry0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tiezhu Yang <yangtiezhu@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.14 073/145] LoongArch: uprobes: Remove user_{en,dis}able_single_step()
-Date: Tue, 20 May 2025 15:50:43 +0200
-Message-ID: <20250520125813.444394056@linuxfoundation.org>
+Subject: [PATCH 6.14 074/145] LoongArch: uprobes: Remove redundant code about resume_era
+Date: Tue, 20 May 2025 15:50:44 +0200
+Message-ID: <20250520125813.483781795@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -52,23 +52,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit 0b326b2371f94e798137cc1a3c5c2eef2bc69061 upstream.
+commit 12614f794274f63fbdfe76771b2b332077d63848 upstream.
 
-When executing the "perf probe" and "perf stat" test cases about some
-cryptographic algorithm, the output shows that "Trace/breakpoint trap".
-This is because it uses the software singlestep breakpoint for uprobes
-on LoongArch, and no need to use the hardware singlestep. So just remove
-the related function call to user_{en,dis}able_single_step() for uprobes
-on LoongArch.
-
-How to reproduce:
-
-Please make sure CONFIG_UPROBE_EVENTS is set and openssl supports sm2
-algorithm, then execute the following command.
-
-cd tools/perf && make
-./perf probe -x /usr/lib64/libcrypto.so BN_mod_mul_montgomery
-./perf stat -e probe_libcrypto:BN_mod_mul_montgomery openssl speed sm2
+arch_uprobe_skip_sstep() returns true if instruction was emulated, that
+is to say, there is no need to single step for the emulated instructions.
+regs->csr_era will point to the destination address directly after the
+exception, so the resume_era related code is redundant, just remove them.
 
 Cc: stable@vger.kernel.org
 Fixes: 19bc6cb64092 ("LoongArch: Add uprobes support")
@@ -76,35 +65,42 @@ Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/uprobes.c |    4 ----
- 1 file changed, 4 deletions(-)
+ arch/loongarch/include/asm/uprobes.h |    1 -
+ arch/loongarch/kernel/uprobes.c      |    7 +------
+ 2 files changed, 1 insertion(+), 7 deletions(-)
 
+--- a/arch/loongarch/include/asm/uprobes.h
++++ b/arch/loongarch/include/asm/uprobes.h
+@@ -15,7 +15,6 @@ typedef u32 uprobe_opcode_t;
+ #define UPROBE_XOLBP_INSN	__emit_break(BRK_UPROBE_XOLBP)
+ 
+ struct arch_uprobe {
+-	unsigned long	resume_era;
+ 	u32	insn[2];
+ 	u32	ixol[2];
+ 	bool	simulate;
 --- a/arch/loongarch/kernel/uprobes.c
 +++ b/arch/loongarch/kernel/uprobes.c
-@@ -42,7 +42,6 @@ int arch_uprobe_pre_xol(struct arch_upro
- 	utask->autask.saved_trap_nr = current->thread.trap_nr;
- 	current->thread.trap_nr = UPROBE_TRAP_NR;
- 	instruction_pointer_set(regs, utask->xol_vaddr);
--	user_enable_single_step(current);
+@@ -52,11 +52,7 @@ int arch_uprobe_post_xol(struct arch_upr
  
- 	return 0;
- }
-@@ -59,8 +58,6 @@ int arch_uprobe_post_xol(struct arch_upr
- 	else
- 		instruction_pointer_set(regs, utask->vaddr + LOONGARCH_INSN_SIZE);
- 
--	user_disable_single_step(current);
--
- 	return 0;
- }
- 
-@@ -70,7 +67,6 @@ void arch_uprobe_abort_xol(struct arch_u
- 
+ 	WARN_ON_ONCE(current->thread.trap_nr != UPROBE_TRAP_NR);
  	current->thread.trap_nr = utask->autask.saved_trap_nr;
- 	instruction_pointer_set(regs, utask->vaddr);
--	user_disable_single_step(current);
- }
+-
+-	if (auprobe->simulate)
+-		instruction_pointer_set(regs, auprobe->resume_era);
+-	else
+-		instruction_pointer_set(regs, utask->vaddr + LOONGARCH_INSN_SIZE);
++	instruction_pointer_set(regs, utask->vaddr + LOONGARCH_INSN_SIZE);
  
- bool arch_uprobe_xol_was_trapped(struct task_struct *t)
+ 	return 0;
+ }
+@@ -86,7 +82,6 @@ bool arch_uprobe_skip_sstep(struct arch_
+ 
+ 	insn.word = auprobe->insn[0];
+ 	arch_simulate_insn(insn, regs);
+-	auprobe->resume_era = regs->csr_era;
+ 
+ 	return true;
+ }
 
 
