@@ -1,58 +1,58 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5341B281539
-	for <patches@lists.linux.dev>; Tue, 20 May 2025 19:56:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDA5286D6A
+	for <patches@lists.linux.dev>; Tue, 20 May 2025 20:09:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747770973; cv=none; b=r6AO8CMhMZbl384Dq1nYlsBNi0oRmgb4iEPq/qDOS+mz1Eatg8et0hX3LuUUmJk9xBySypw/6qGPX4MOxXfe2HuNSSUOmHVCYB2p5Q63nfPzO2q+aEZ5EraduhFV2qs/HOlTxQ8dJ37vEJIPhOf32w0f6aMvmgwptcgBmyKBPjQ=
+	t=1747771763; cv=none; b=CpSX/o3Wj+bkvEC+mioV3WQkqP6r2mHT1v+iWED6h4lnGyYK6kYXPdWnXJ+bU+mVbZt0mOqVTbzzXrxSxsebfpTyvG5eB7l8PvnmTeXenGC/JPfolUOd7YJHIAVaHiPQyD7vkhoMeMuKrI0wKxtofD36k9DxZzjT4pccZCmydcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747770973; c=relaxed/simple;
-	bh=5rxbJNyob37QGi62KumFHH2u1FmRDF19BAX10oWgC7g=;
+	s=arc-20240116; t=1747771763; c=relaxed/simple;
+	bh=V4N2yfPT4vLArvTmMIGEmcZ/2fv5s912zQIeD+Vi+50=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AC6zKf2vNE6shVf+US1E/s14V0DWR1rW8Dsle5IOb53bvpKNBWIRdr14Gk0zhE7SLzWpMTOES7oDne8V6vanZD2Jiqm9gbDqgpognhEyZx8QGfqdGgWtp4MQWqru8rhrFEYc4aZ64PecEXbpp+woRCJFahoNGpoXF6pnFUYMeZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gOJVky8x; arc=none smtp.client-ip=209.85.215.178
+	 To:Cc:Content-Type; b=AQTgDnRHx1AU814cjqJs/ZjbjbItjo8cniRcQRlkmegBd72HzScsK0cDx4vxZXyO86HM6UCy6uF1b4pAgTzRN2u6GG3itgNXhMdzRmiBMFle6PEJEx868kGwxOZ1s/ehMKouNNDOf8wDlSgAXDtUrcmi1l+CAvhqOgqq0PwZgpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h3AuyMcq; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gOJVky8x"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-af90510be2eso481891a12.3
-        for <patches@lists.linux.dev>; Tue, 20 May 2025 12:56:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h3AuyMcq"
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-54afb5fcebaso7106454e87.3
+        for <patches@lists.linux.dev>; Tue, 20 May 2025 13:09:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747770971; x=1748375771; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1747771759; x=1748376559; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yRXK3+jUaFquyfrpafb1v4VMZEAhC0R7dGXYOJ0ETTQ=;
-        b=gOJVky8x5Z2EkaetsM9IGjtxvelr+/DElb/7xFtqEJzD4FgavUtCJUYlimxn0SuMWU
-         +2yX1bC8F5AAUbE1ToA27PWcLKtP47wHW0016siZRVlSnytiCN7mcW8ubWwZQTp2Ie7P
-         2lsqa/IvnKFraX+ICn0MpA4tVrxW+NaHPut0VEw08ORvNwzm0xBdwL7yN5Mn4PxIpCwo
-         ujk/N66cvKaH78Km2EEtPM634kMbRaqAdKxGk/b9S8fPJC1h41w2vO9UARdbT2NzAjXt
-         hVh32G+xW0NGS7X8XjLt4iP0Qx6ZVFaPjrtgAURVm+fNOrLuUFvtdA7nLHw7EGvfLT+N
-         dBUA==
+        bh=XuyoTXp3MODuWVPPgdIVH6d5EFlhvXCFhKmlk5Ftb7c=;
+        b=h3AuyMcqj+5A4yIOUPBJkn2Mn8zrXwfbR8RaqE9Nuk9msbVLGG5gFoMiJMG/RXy5OV
+         smxheZdx56hkpyzkWG+R8oKTW5ZEUID29jcH2H9gEuLJwLczEwrJD9You92YrgqAs4GL
+         G2r0hTiimyZ3DidxoW/SYagjH8THBu1KglUXBMEDaISMiUyJ8R6EJdGzKRqODI4cNOWO
+         eQYm4CPCmPU/pUbBSg0xgJW1dOH0NMZYP3FS5h8rUYcwVp1IxXFETyxrNKX+/1nfqDCE
+         3qsT+ahAzTm2SmZAfNG8t+o5Msmia/JAD0tzohOloigb01m9YvH+z/uXTJkz/K6WxA85
+         61TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747770971; x=1748375771;
+        d=1e100.net; s=20230601; t=1747771759; x=1748376559;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yRXK3+jUaFquyfrpafb1v4VMZEAhC0R7dGXYOJ0ETTQ=;
-        b=VhjsFA8PTCEIo+lWL5yLYWcFehLQJki+YUFcDQVjDStmZ2GfGZPkoaAii4QhLC7KuE
-         wJ7EBdI0qg5t6MeUxQQ1Q5ZEUg54JcdYlymLkY8xF+C5M+Xumd4hyN5EDLCakbR6n4yI
-         JaJ3V6uClQV/+c4BYCmFmeX+JzYKQvqEw7rMSwRJxdPTLSvq/iM8SxHyPxqMJELiQpck
-         dj4fmWpcnWalcaIhTHTibBnFKnZR/TZ4jYYm2fvXBDab1eqE5hzp6J1f7AOTx+S/DtU5
-         grcTgZZ8IvJ0+MuQrjyeaLRLvyCim8Imm9SJYIfTTwEt8VLGBS9JwAG7xR6nDiqOw4HV
-         QwPg==
-X-Forwarded-Encrypted: i=1; AJvYcCXi8uL7m1cwyvCrtFCXkSUh38oO8GxOXgCY1+Z4fVIRtTVDw5yV7ZRr6mSTHGgw9ZhwrEh0zWBS@lists.linux.dev
-X-Gm-Message-State: AOJu0YzdQSgvsL85HLk+gdbq0RvENOOXgr3OLqN0aPlSJVSbiht/vYuE
-	YAxiO7cqWKs4AQFTCLUl6hPdSAxaRGCA5wWDbNXYcLleCoRonWz8Ezlm+oUOIf0NZgg+BtTORIh
-	eQM/4VCk5wdw9ILSJ6k4GEO96fEqXa/U=
-X-Gm-Gg: ASbGncsxJWypMGB0xoV9rsvYSPzW1GYnMukThPvQQlPEGVELXepcNI0MgVNBf5FnFMx
-	0rIOhPZwtYz5ljSmRkfTOR5JEtWALdgD7kVP1SE2wIHuo84J/7xlAb1RDqCAkK3qnRoX2rMEkiw
-	sT9BZnvQgIn9AuvZVDDgWM0FKTKbiZysOr
-X-Google-Smtp-Source: AGHT+IHMBgCvJ0ltoJP8XtyEBtuP89NjkLllHvz/zazFd2sBhpBWXHheguiDfnpgLDlesaU0sRxIYGwKHYkjm3yfw88=
-X-Received: by 2002:a17:902:ea0d:b0:224:1579:b347 with SMTP id
- d9443c01a7336-231d43c6220mr96308575ad.7.1747770971470; Tue, 20 May 2025
- 12:56:11 -0700 (PDT)
+        bh=XuyoTXp3MODuWVPPgdIVH6d5EFlhvXCFhKmlk5Ftb7c=;
+        b=c4oejatCg44xLdEDRt/J1gqlw/oJPKtkvFKTTxT4o/ssiw8+1cP5JWFatwCk4eOmRB
+         vEPzbbg+0oTVqB+rNdU77mcj7Tk3hAN+RQr5os8g0BwaiyKi49HS8gdURJkJZq4dvt3v
+         rvKgWnGtSkGmK25rxEB7VQQSo3rFZwBDumLZZZwz1zPznMzWK5f3JYys8n2wLnS/R5+h
+         FDMGkvlTXlH2SnZ+1NNdBf6zns8fvBnE1ozQG5rxb4yQ9SLYalVy9EvMoJswlc+RwthD
+         VBAvlUjhXm5z02gQJPYB1TWk8MwxPHzYovigrOWhhMmApIS6bDzQgAov/T5scMWTKflC
+         f4YA==
+X-Forwarded-Encrypted: i=1; AJvYcCVWEalbXmeiq6B8IopTdjSlOIj9MGj31vDuvRtwCGC2pseY6wi25bZMzG36rIiyzue/Isc/+mDJ@lists.linux.dev
+X-Gm-Message-State: AOJu0YzTkO5gh8UbV2srOM4ktyNiSxaFE0/cfKIAW5llykXSqT6odtzw
+	SGvHqgeapvuGUXtMMIwb21eGFnXM1NGhVfqbMJonA7TO9SprMjQOE/25KEuDl8hXrPx//xkoCR3
+	iXXqVqt7OCoW0E3VSkj2FH6aG3ztgicQ=
+X-Gm-Gg: ASbGncvY2btwv/p1QArVBtSCg4cgb/RGG4eX0KjKEMRe4e/ZmwXu3XWG0NDouldlQ7Z
+	Cpf3af8qdDYd3OwnsiCkzy0eGHXGLlWFKm1VEGu1Sx8czyKdlRRL/TEcoScDE1dAxVeWMEqH3mp
+	4HgDCKv40R9208wSN56w5WMOB7n2FAaxP3B45aht73cHKOklk8mfIvD75ISYTBn3dBWA==
+X-Google-Smtp-Source: AGHT+IFf0lnQCFWkFCfdxrk+JO5rkXC6xmEqU21o1BjXv2ej3TB/usiYBL0/wQcTYaIG0NmijVMU13ndZBXFAgFK5yo=
+X-Received: by 2002:a05:6512:6289:b0:54f:bd1b:a556 with SMTP id
+ 2adb3069b0e04-550e71c96d3mr6396517e87.21.1747771759405; Tue, 20 May 2025
+ 13:09:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,10 +61,10 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20250520195345.905374-1-ojeda@kernel.org>
 In-Reply-To: <20250520195345.905374-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 20 May 2025 21:55:58 +0200
-X-Gm-Features: AX0GCFslC1rHS0JBz-WpDnFZ7XYTlMemOVnCBI8Wl1ZLSvxJ1ZydC6LVz9_6R4g
-Message-ID: <CANiq72krCWthBMDe8XEJP6knDS9dHn3jSkTBhF-CPBUgmL4oDQ@mail.gmail.com>
+From: Tamir Duberstein <tamird@gmail.com>
+Date: Tue, 20 May 2025 16:08:43 -0400
+X-Gm-Features: AX0GCFuYtYwPuzH1amM1oKvd4aiYFppH2qm_DIkyK8s7rHnx32DMa7RGwsTYPAo
+Message-ID: <CAJ-ks9=mrZnvME=6++fMNaLFZ8a5DXib5ZLuaYorFZv01GBMWQ@mail.gmail.com>
 Subject: Re: [PATCH v2] rust: kbuild: rebuild if `.clippy.toml` changes
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Alex Gaynor <alex.gaynor@gmail.com>, Masahiro Yamada <masahiroy@kernel.org>, 
@@ -74,24 +74,79 @@ Cc: Alex Gaynor <alex.gaynor@gmail.com>, Masahiro Yamada <masahiroy@kernel.org>,
 	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
 	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
 	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org, 
-	Tamir Duberstein <tamird@gmail.com>
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 20, 2025 at 9:53=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+On Tue, May 20, 2025 at 3:53=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
 te:
+>
+> We rarely modify `.clippy.toml`, but currently we do not rebuild if that
+> happens, thus it is easy to miss possible changes in lints.
+>
+> Thus rebuild in case of changes.
+>
+> Cc: stable@vger.kernel.org
+> Reported-by: Tamir Duberstein <tamird@gmail.com>
+> Closes: https://github.com/Rust-for-Linux/linux/issues/1151
+> Fixes: 7d56786edcbd ("rust: introduce `.clippy.toml`")
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+>  rust/Makefile | 12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
+>
+> diff --git a/rust/Makefile b/rust/Makefile
+> index 3aca903a7d08..107299c32065 100644
+> --- a/rust/Makefile
+> +++ b/rust/Makefile
+> @@ -57,6 +57,10 @@ rustdoc_test_quiet=3D--test-args -q
+>  rustdoc_test_kernel_quiet=3D>/dev/null
+>  endif
 >
 > +ifeq ($(KBUILD_CLIPPY),1)
 > +       clippy_toml :=3D $(srctree)/.clippy.toml
 > +endif
+> +
+>  core-cfgs =3D \
+>      --cfg no_fp_fmt_parse
+>
+> @@ -405,11 +409,12 @@ quiet_cmd_rustc_procmacro =3D $(RUSTC_OR_CLIPPY_QUI=
+ET) P $@
+>                 --crate-name $(patsubst lib%.$(libmacros_extension),%,$(n=
+otdir $@)) $<
+>
+>  # Procedural macros can only be used with the `rustc` that compiled it.
+> -$(obj)/$(libmacros_name): $(src)/macros/lib.rs FORCE
+> +$(obj)/$(libmacros_name): $(src)/macros/lib.rs $(clippy_toml) FORCE
+>         +$(call if_changed_dep,rustc_procmacro)
+>
+>  $(obj)/$(libpin_init_internal_name): private rustc_target_flags =3D --cf=
+g kernel
+> -$(obj)/$(libpin_init_internal_name): $(src)/pin-init/internal/src/lib.rs=
+ FORCE
+> +$(obj)/$(libpin_init_internal_name): $(src)/pin-init/internal/src/lib.rs=
+ \
+> +    $(clippy_toml) FORCE
+>         +$(call if_changed_dep,rustc_procmacro)
+>
+>  quiet_cmd_rustc_library =3D $(if $(skip_clippy),RUSTC,$(RUSTC_OR_CLIPPY_=
+QUIET)) L $@
+> @@ -495,7 +500,8 @@ endif
+>
+>  $(obj)/compiler_builtins.o: private skip_gendwarfksyms =3D 1
+>  $(obj)/compiler_builtins.o: private rustc_objcopy =3D -w -W '__*'
+> -$(obj)/compiler_builtins.o: $(src)/compiler_builtins.rs $(obj)/core.o FO=
+RCE
+> +$(obj)/compiler_builtins.o: $(src)/compiler_builtins.rs $(obj)/core.o \
+> +    $(clippy_toml) FORCE
+>         +$(call if_changed_rule,rustc_library)
+>
+>  $(obj)/pin_init.o: private skip_gendwarfksyms =3D 1
 
-Not sure if this is worth it (see v1), but I think it works, at least
-from light testing.
+This is only changing 3 targets, right? libmacros, libpin_init, and
+compiler_builtins. Can you help me understand why only these need to
+change? Is it because these are leaf nodes in the graph?
 
-More testing for v2 is welcome (v1 is "obviously correct").
-
-Thanks!
-
-Cheers,
-Miguel
+The `rusttest` target wouldn't rebuild properly, I think? Is it
+possible to apply this rule to all rust targets, rather than
+individual ones?
