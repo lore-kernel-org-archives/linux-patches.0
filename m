@@ -1,142 +1,106 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A664258CC0
-	for <patches@lists.linux.dev>; Tue, 20 May 2025 18:57:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C54E424C692;
+	Tue, 20 May 2025 19:20:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747767441; cv=none; b=BNHyy1LVJlYsCcaYqYOUem6o3qykXH6NtKdwUnGynIZvBFpTlBLOpfgrtEx+Of4zfVYN9ZQr8bH7+jmsgBlRopB/FowfL+2pNLbhm4joUSRESEwMRw4AKVDomqvvnHoFaR/S5J+jjHQqsd+Ji0P8PkoGpCuEttVpCuirDHOVElU=
+	t=1747768846; cv=none; b=mc4hN4BbxVlXMZx5vmA/DZV1z+pXyWzObnmgtT9PXeXyBojLhg/LCXZFJoLECgM8zMjbRSwzkUmQ1UWFFHs1IPGnpQcfc95NCVOBOZILGFqyecvYCO3dwoSKHDxWeKVuf0eUntOiL70PaA6bNpfY2m7IMQ6iiV1lyB346e4OSas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747767441; c=relaxed/simple;
-	bh=Iu+EBt1ey8793zxc0OaK6I5nCsHR5WA1JAXchlguGGA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HJtiQ+vy8h7wh+PJ4gdXXjehBYsbSdMEzkvIpQUl6H2THIh1xC+Gje7lyKse8KR+/KkOxUHnQUiTmF1fnZ33n6buvp0IbpAxrvZ+3e1VIKLwOTmYADiPFf3OFlws4TzDbwyTT7p1cFBCyKA6CX7B8S0mlcodkx+RRDmMlTeAyEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bnCXYrSj; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747768846; c=relaxed/simple;
+	bh=WL+oZ2MYQpnuVlpx+GohcQq+F1xhZWw9zI0Bz3ifrss=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OeNB3EvAEX/i3F/R72mtTdtAJ7YiFz5Si1f9oMmvgWiUzyN/UAGYFZRt2CWhs0EK1Wsl2w3c2ZeGYl4HVrzdHDcXGDWMhjDKIFywqMQcvb+/kwNNmtl22Kr7Cr8sT0JzudIaAo07nWBI8jOUaWABs2DClyYDiDJnWEM340g+tP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ki3b9EtO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bnCXYrSj"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-74267c68c11so5209561b3a.0
-        for <patches@lists.linux.dev>; Tue, 20 May 2025 11:57:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747767439; x=1748372239; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=AK3bjHmIwSweZcXCzDyi7zWqw9eq+X3ekc7onIFfKAg=;
-        b=bnCXYrSjf8MlUspxv3IPSxsm2IWlaXYX9g3o9Xa/VKpl3DL32a04dBY4828LVUJ1lJ
-         ZagPQUCglyK44wNhzumTSWi4Bcn6uoziZPyu50lmvCaoyCJrXO0yi38zKWGevQwc+IcB
-         fRPA5PKnwrKwCa2069YcBvVtQoNLCHVOVfWOdcu4T/Sfyf8CiVZUyMy4Aa8sOrsYZAhn
-         3m3rAYM9apP4Bn6NpgWpg/RSzw9zEH5ayoNJTh194fsyi4HX7uC9kfjGSGXIrHOTrAJg
-         r/khtULNx4f/VdkMlbgS82vaR8We9Kdb9BLFKu1p0Wi3/xtcSFFChgtmMUeZ/yn2uLhL
-         xd3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747767439; x=1748372239;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AK3bjHmIwSweZcXCzDyi7zWqw9eq+X3ekc7onIFfKAg=;
-        b=tPFs0CKm1HB8bFAcoYRy6gpt8AzNVUCeFwM80Y3TLsCP7XYjWvCjgmarXctJWnCrJb
-         XuGlIEdc3JDoNZUdVcRUMpGgRhNLdHDzNZ/s+kOV8KIwZtekZSTF087n2wcJcBEPXEsJ
-         T7howAkiYdoFAtuxFt6tPQJZNUT/1HL0st9fAaMxUOJGCmWTeDUK95O5pjJN4bWcqkKO
-         oSGXFKwAVbM3a8lcqnYpdfM1yOpMlw24oMge94sz/9MbFKyobC4fpm9sOsCEW/tN9xGk
-         VBqP3qeiTc8WngvNmCtrXOmSvbgBDsXFbrNx5ibyBwJc62x4bDz5xOWp6RIDu0t4wiEc
-         IoYw==
-X-Gm-Message-State: AOJu0YxvNdfuhdXooLJnDwOjJT262v9xjJNU4wPija5i/T7g9PbxQNFC
-	wuNj0JG6F3FZ+48fQmCCwecbqKVfkkQ79rK6gRxaqNtNj4AU4vZU9T/z
-X-Gm-Gg: ASbGncvfeOg3awt7P7BApWGz48Z3v85GpuaSjAmN/FFc2n2A1Wf+J/qLCTfQLLaWhOw
-	01itIHnb7m/u3YrENseVy9jJ5c837j6dfHDMGr3Y2/yNbY/xlsx2vpZsfhsEFYxMCjEvLPFp/2C
-	4AEiqgZfwfA2aVO6DcbIu7qBD1T7Fd/aCf09gdcLJlRgYjzc5Eu2JU05/p8eloW+6yuKzmqQpME
-	1NfeJz+OjG23xIiosY/AN0hPx1rUwyewIXuU0l3+9ZlDSJWzYnEYNdangI1RW889427Mrked8+l
-	Xb1/epL1Zy6p3rAwCScHGRMksOIzeNhpJ8zWO9EtfYtWagV9ccOEgoa+ioAFzZdTrwepG1FQEIP
-	LCr0=
-X-Google-Smtp-Source: AGHT+IHO41jYR+8sMJWPwVnYqu464iXdLnM80a5AO2hVfo6uTCsl9lkpD95stZdqefaGEzFyqtPWqw==
-X-Received: by 2002:a05:6a00:391a:b0:734:b136:9c39 with SMTP id d2e1a72fcca58-742acd509f2mr23053388b3a.19.1747767439431;
-        Tue, 20 May 2025 11:57:19 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a9829ce8sm8206496b3a.118.2025.05.20.11.57.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 May 2025 11:57:18 -0700 (PDT)
-Message-ID: <a611296a-93ce-49fc-82a4-17442bb1c233@gmail.com>
-Date: Tue, 20 May 2025 11:57:17 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ki3b9EtO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9674C4CEE9;
+	Tue, 20 May 2025 19:20:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747768846;
+	bh=WL+oZ2MYQpnuVlpx+GohcQq+F1xhZWw9zI0Bz3ifrss=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Ki3b9EtO356CV2lvoGptrYkmyv1YUM6PUNwvQk1U8gfzwobfXVrSNDvAM2ZjSlgdY
+	 jfzBKouPVA0tntG14HPwl4QhVIsG1vCv40iM8rPMxkWzD8x7ldddiNSdrw3zYCNtAb
+	 EBz31sRg25d1HO6NI1kPSnN6AGxyD+B5DBhNm3PvaAUY2mdPYNAQCynd0zwlN9LbFw
+	 qb0Hz4peSUVJjfiIeFqGQ+DbuHg7L5GiXqtQwx/oXSvqVD4WMFGYRbzvNwGKZCiODG
+	 iKGeYUzz9B2kMl03rygLWEgipoFRRKCDyOvZMIe61BOSRTKq0fmrPFUKR6njaQ0r7Y
+	 PIZQAs9BDlMFg==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>,
+	rust-for-linux@vger.kernel.org,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	stable@vger.kernel.org,
+	Tamir Duberstein <tamird@gmail.com>
+Subject: [PATCH] rust: kbuild: rebuild if `.clippy.toml` changes
+Date: Tue, 20 May 2025 21:20:34 +0200
+Message-ID: <20250520192034.889415-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.14 000/145] 6.14.8-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250520125810.535475500@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-Autocrypt: addr=f.fainelli@gmail.com; keydata=
- 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
- WlfRzlpjIPmdjgoicA==
-In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 5/20/25 06:49, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.14.8 release.
-> There are 145 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 22 May 2025 12:57:37 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.14.8-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.14.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+We rarely modify `.clippy.toml`, but currently we do not rebuild if that
+happens, thus it is easy to miss possible changes in lints.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Thus rebuild in case of changes.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: stable@vger.kernel.org
+Reported-by: Tamir Duberstein <tamird@gmail.com>
+Closes: https://github.com/Rust-for-Linux/linux/issues/1151
+Fixes: 7d56786edcbd ("rust: introduce `.clippy.toml`")
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ rust/Makefile | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/rust/Makefile b/rust/Makefile
+index 3aca903a7d08..0dcc9ba0d225 100644
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -405,11 +405,12 @@ quiet_cmd_rustc_procmacro = $(RUSTC_OR_CLIPPY_QUIET) P $@
+ 		--crate-name $(patsubst lib%.$(libmacros_extension),%,$(notdir $@)) $<
+ 
+ # Procedural macros can only be used with the `rustc` that compiled it.
+-$(obj)/$(libmacros_name): $(src)/macros/lib.rs FORCE
++$(obj)/$(libmacros_name): $(src)/macros/lib.rs $(srctree)/.clippy.toml FORCE
+ 	+$(call if_changed_dep,rustc_procmacro)
+ 
+ $(obj)/$(libpin_init_internal_name): private rustc_target_flags = --cfg kernel
+-$(obj)/$(libpin_init_internal_name): $(src)/pin-init/internal/src/lib.rs FORCE
++$(obj)/$(libpin_init_internal_name): $(src)/pin-init/internal/src/lib.rs \
++    $(srctree)/.clippy.toml FORCE
+ 	+$(call if_changed_dep,rustc_procmacro)
+ 
+ quiet_cmd_rustc_library = $(if $(skip_clippy),RUSTC,$(RUSTC_OR_CLIPPY_QUIET)) L $@
+@@ -495,7 +496,8 @@ endif
+ 
+ $(obj)/compiler_builtins.o: private skip_gendwarfksyms = 1
+ $(obj)/compiler_builtins.o: private rustc_objcopy = -w -W '__*'
+-$(obj)/compiler_builtins.o: $(src)/compiler_builtins.rs $(obj)/core.o FORCE
++$(obj)/compiler_builtins.o: $(src)/compiler_builtins.rs $(obj)/core.o \
++    $(srctree)/.clippy.toml FORCE
+ 	+$(call if_changed_rule,rustc_library)
+ 
+ $(obj)/pin_init.o: private skip_gendwarfksyms = 1
+
+base-commit: 22c3335c5dcd33063fe1894676a3a6ff1008d506
 -- 
-Florian
+2.49.0
+
