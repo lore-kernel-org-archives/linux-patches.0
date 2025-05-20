@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28039242D89;
-	Tue, 20 May 2025 13:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48F9244196;
+	Tue, 20 May 2025 13:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749139; cv=none; b=Lwm2HbQFMYfQFxfIk7sRxupCRbY9TDmezn3zNoYphPsJDBuENeR9VYXHxDl3UdbbVK+ppCiUmVPlXySSpaoaFtCwsKsFRijiJbPX5py1lSI2kSWIPY60QtfLFdsxltT3uZPnVLO1kTsxYgqte0CR88ULoDsW+CgyGGR7niZ8TMY=
+	t=1747749142; cv=none; b=L6kPOug7aYgl+sD0zhKx4NV5O5L8Th/fAo9xTm0g3x8rdm3PeAiBUc1M+j9KKt01oBPH0nTnGK8anzUVvxNDrqRSyM72b5a7EE58U9/b/gUqqXuqqDRT23nF8UuV6shpJGaNW5INy6cItE9PZhw+uiYUz11rxNebiKnru46X11c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749139; c=relaxed/simple;
-	bh=Yge/m4wQaVb57P1AVgdR5pPcS03bqChYaBEAObyw7iA=;
+	s=arc-20240116; t=1747749142; c=relaxed/simple;
+	bh=/NbC48qfcBX2MoebWKzDncK+byxSSWjOD55MGLxZWXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cNbgrKfhE+4oL7MDAJc8/q8DCf9RBStiOGhD3HX1lAcZq2FoxJUOE+4ZDNKFJ2KiQnUPRA1c4obC//hq4uKmeuqzdhUJvj+ipLHtJWHDIc0S8yRED8cH6T9seMR4Wv61M5ywJx7I/exaDZ1/+1oQAv/ar4ORnmrZLV/962SLM9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axgrXHyt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TS0grWVVbgl6KluxxB1jsFhdnbUgn2UquHf26+d+/EWjLG8SAYNhpR7B8o0YeLIBEN0dKBqM1ygwzsEq/VUw60p4pwLZ3/YYWl6bM3ZvH5Ie6m+1vFpyz8s131fLvt1TO4b/5Hm0sefU5sF+yzStRlL3Eifb9HZclBr9/43t9UE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XcZ6A7+/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axgrXHyt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5C6C4CEEA;
-	Tue, 20 May 2025 13:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XcZ6A7+/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84348C4CEE9;
+	Tue, 20 May 2025 13:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749138;
-	bh=Yge/m4wQaVb57P1AVgdR5pPcS03bqChYaBEAObyw7iA=;
+	s=korg; t=1747749142;
+	bh=/NbC48qfcBX2MoebWKzDncK+byxSSWjOD55MGLxZWXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=axgrXHytleziEPkIlMrTsyzblrfpuSIRMAQcLrVlxn0TmQYhtfEb+pXAnZrbVRG0T
-	 +MysLPUZhhMCLZMXIhl989oFMakMV6zDw+MMbUWwV8yp7KmOZqi68+6pACnc89Df+g
-	 iUfvFLtYYiCHdnLsOG9vrWaOaaiUtnDmMle5wRmE=
+	b=XcZ6A7+/Dqs1h5kymV/PiyPjk/QpCiD2RnsAJ9v7xeOWGla+XkJRc0CQk1KF3UqyG
+	 avm7wVOkn4SqYXiAkA4YkW89z+PXtPj6utNWbHzGYWhPAi1JNnz4ZMeFgyl5GM3gku
+	 uTAdgL/o8tB2DxYx0PfdGkGxrEjj7NBzqLGJbWMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 10/59] net: dsa: sja1105: discard incoming frames in BR_STATE_LISTENING
-Date: Tue, 20 May 2025 15:50:01 +0200
-Message-ID: <20250520125754.244287175@linuxfoundation.org>
+Subject: [PATCH 5.15 11/59] ALSA: sh: SND_AICA should depend on SH_DMA_API
+Date: Tue, 20 May 2025 15:50:02 +0200
+Message-ID: <20250520125754.281104692@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
 References: <20250520125753.836407405@linuxfoundation.org>
@@ -51,90 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 498625a8ab2c8e1c9ab5105744310e8d6952cc01 ]
+[ Upstream commit 66e48ef6ef506c89ec1b3851c6f9f5f80b5835ff ]
 
-It has been reported that when under a bridge with stp_state=1, the logs
-get spammed with this message:
+If CONFIG_SH_DMA_API=n:
 
-[  251.734607] fsl_dpaa2_eth dpni.5 eth0: Couldn't decode source port
+    WARNING: unmet direct dependencies detected for G2_DMA
+      Depends on [n]: SH_DREAMCAST [=y] && SH_DMA_API [=n]
+      Selected by [y]:
+      - SND_AICA [=y] && SOUND [=y] && SND [=y] && SND_SUPERH [=y] && SH_DREAMCAST [=y]
 
-Further debugging shows the following info associated with packets:
-source_port=-1, switch_id=-1, vid=-1, vbid=1
+SND_AICA selects G2_DMA.  As the latter depends on SH_DMA_API, the
+former should depend on SH_DMA_API, too.
 
-In other words, they are data plane packets which are supposed to be
-decoded by dsa_tag_8021q_find_port_by_vbid(), but the latter (correctly)
-refuses to do so, because no switch port is currently in
-BR_STATE_LEARNING or BR_STATE_FORWARDING - so the packet is effectively
-unexpected.
-
-The error goes away after the port progresses to BR_STATE_LEARNING in 15
-seconds (the default forward_time of the bridge), because then,
-dsa_tag_8021q_find_port_by_vbid() can correctly associate the data plane
-packets with a plausible bridge port in a plausible STP state.
-
-Re-reading IEEE 802.1D-1990, I see the following:
-
-"4.4.2 Learning: (...) The Forwarding Process shall discard received
-frames."
-
-IEEE 802.1D-2004 further clarifies:
-
-"DISABLED, BLOCKING, LISTENING, and BROKEN all correspond to the
-DISCARDING port state. While those dot1dStpPortStates serve to
-distinguish reasons for discarding frames, the operation of the
-Forwarding and Learning processes is the same for all of them. (...)
-LISTENING represents a port that the spanning tree algorithm has
-selected to be part of the active topology (computing a Root Port or
-Designated Port role) but is temporarily discarding frames to guard
-against loops or incorrect learning."
-
-Well, this is not what the driver does - instead it sets
-mac[port].ingress = true.
-
-To get rid of the log spam, prevent unexpected data plane packets to
-be received by software by discarding them on ingress in the LISTENING
-state.
-
-In terms of blame attribution: the prints only date back to commit
-d7f9787a763f ("net: dsa: tag_8021q: add support for imprecise RX based
-on the VBID"). However, the settings would permit a LISTENING port to
-forward to a FORWARDING port, and the standard suggests that's not OK.
-
-Fixes: 640f763f98c2 ("net: dsa: sja1105: Add support for Spanning Tree Protocol")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250509113816.2221992-1-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f477a538c14d07f8 ("sh: dma: fix kconfig dependency for G2_DMA")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202505131320.PzgTtl9H-lkp@intel.com/
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/b90625f8a9078d0d304bafe862cbe3a3fab40082.1747121335.git.geert+renesas@glider.be
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/sja1105/sja1105_main.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ sound/sh/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
-index 888f10d93b9ab..ec1c0ad591184 100644
---- a/drivers/net/dsa/sja1105/sja1105_main.c
-+++ b/drivers/net/dsa/sja1105/sja1105_main.c
-@@ -1969,6 +1969,7 @@ static void sja1105_bridge_stp_state_set(struct dsa_switch *ds, int port,
- 	switch (state) {
- 	case BR_STATE_DISABLED:
- 	case BR_STATE_BLOCKING:
-+	case BR_STATE_LISTENING:
- 		/* From UM10944 description of DRPDTAG (why put this there?):
- 		 * "Management traffic flows to the port regardless of the state
- 		 * of the INGRESS flag". So BPDUs are still be allowed to pass.
-@@ -1978,11 +1979,6 @@ static void sja1105_bridge_stp_state_set(struct dsa_switch *ds, int port,
- 		mac[port].egress    = false;
- 		mac[port].dyn_learn = false;
- 		break;
--	case BR_STATE_LISTENING:
--		mac[port].ingress   = true;
--		mac[port].egress    = false;
--		mac[port].dyn_learn = false;
--		break;
- 	case BR_STATE_LEARNING:
- 		mac[port].ingress   = true;
- 		mac[port].egress    = false;
+diff --git a/sound/sh/Kconfig b/sound/sh/Kconfig
+index b75fbb3236a7b..f5fa09d740b4c 100644
+--- a/sound/sh/Kconfig
++++ b/sound/sh/Kconfig
+@@ -14,7 +14,7 @@ if SND_SUPERH
+ 
+ config SND_AICA
+ 	tristate "Dreamcast Yamaha AICA sound"
+-	depends on SH_DREAMCAST
++	depends on SH_DREAMCAST && SH_DMA_API
+ 	select SND_PCM
+ 	select G2_DMA
+ 	help
 -- 
 2.39.5
 
