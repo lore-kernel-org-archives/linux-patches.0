@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DE72459E5;
-	Tue, 20 May 2025 14:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D4F22D9E3;
+	Tue, 20 May 2025 14:02:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749773; cv=none; b=V/0uyrQ17jpl6MGTaXRfU6PQmBgKwrXq8TtaoPPZovxKrElDbW9wnTYhKxy2L2DiK+NBP0UfiG05eAB1A2iPzmWyJIqYVPJmwadOCmXZCikfTlDJ5aH+aXd//rY38a6CrjmvCM1tbWl/n0vMKSdayAkXzHL3KWQeRDzo4VGQlCE=
+	t=1747749777; cv=none; b=c9kYrH3jG0OKf3uHMJcEqS6akmEjEBx1uo1/HXmPRhKyg24hxIGb0pLEnsfdo2zbi3H6ynTRSH7/Z+NUbcQfcarwes0Wjyy7G0gmA+dlq6djV99E85D/BDT524gNb4n7Wpajew2MFPlktWbrr2RVGEP0+mmJCAlJP6sv02sU8oA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749773; c=relaxed/simple;
-	bh=gAtjiDEf3DVfev6ldemrV9uV/jyiVPErqpl+u8cwO9s=;
+	s=arc-20240116; t=1747749777; c=relaxed/simple;
+	bh=rkHo5qPTSb4lz1STJKJ9BpMVEmo1XyY2EF7zgqf93ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mj8lB64DyPge6gtBn6JoBGLa82AZxqrx0Sq7lIsqVrRcrwDG/DJ1Xuipanh/CEz8kU4xqaKgY/8hkfBd1fEFTsZzxLFMd6OuzZdoEp5LwHvlhp3hTLgb601V6TBa0CpzqX9Nd5b3W3/sMbGsNgqWvpZXXqlSK2Mmqw+ydR/0fvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImjlEqae; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uyd/ltM9arF6hytseujitYTDj8ajKFfaOE3BuCfRf8kD5oCDjDF65ATwJccsgy5sMvN6JMMadziaroDYjQSnHsiuaWHdeOQP/xTDWWz+7HwxP+fCAOp8Q68dc4o549ACMmFHmtQPg08pBt+/ulFStyw4MV0jQ1vPI1KmxVzuLR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UIPP5jS9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImjlEqae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424BAC4CEEF;
-	Tue, 20 May 2025 14:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UIPP5jS9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BCB1C4CEEA;
+	Tue, 20 May 2025 14:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749773;
-	bh=gAtjiDEf3DVfev6ldemrV9uV/jyiVPErqpl+u8cwO9s=;
+	s=korg; t=1747749776;
+	bh=rkHo5qPTSb4lz1STJKJ9BpMVEmo1XyY2EF7zgqf93ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ImjlEqaeyo3WZm3PEBvjj2s6h72VKV8OptBMvhkslCIh2Xgifv+BfxXUK6OtrPFrt
-	 UaIUml4hM9h3liIVwyq3JPkYs0ioNY/HtQqcmebUcjHfUYz7Z8Q+eGi7XRWS21wFwn
-	 6HnkXQs3Mcf+kPl+VNXJ4dHawyoHbOUMeOyKrI0M=
+	b=UIPP5jS94Ts/Yue6ypt2ezjUNfUeJiBR6+i0CcUqPKNSLtfPM1EVC6vD2CaNCxFcB
+	 kaegc5aRh8fNy1F/Ok/iinBnurnEZ2ClaJd8fYrC9xXbPXtgh0YwqxMrJYzdy1Oam1
+	 ol72CLsm12jOXVwHTuRUzqXz9VuwF0lwZnfJRrWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 015/117] firmware: arm_scmi: Add helper to trace bad messages
-Date: Tue, 20 May 2025 15:49:40 +0200
-Message-ID: <20250520125804.588539159@linuxfoundation.org>
+Subject: [PATCH 6.6 049/117] net/mlx5e: Disable MACsec offload for uplink representor profile
+Date: Tue, 20 May 2025 15:50:14 +0200
+Message-ID: <20250520125805.938216448@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -51,99 +55,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 5dc0e0b1f0ea2b55031f84a365962b9b45869b98 ]
+[ Upstream commit 588431474eb7572e57a927fa8558c9ba2f8af143 ]
 
-Upon reception of malformed and unexpected timed-out SCMI messages, it is
-not possible to trace those bad messages in their entirety, because usually
-we cannot even retrieve the payload, or it is just not reliable.
+MACsec offload is not supported in switchdev mode for uplink
+representors. When switching to the uplink representor profile, the
+MACsec offload feature must be cleared from the netdevice's features.
 
-Add a helper to trace at least the content of the header of the received
-message while associating a meaningful tag and error code.
+If left enabled, attempts to add offloads result in a null pointer
+dereference, as the uplink representor does not support MACsec offload
+even though the feature bit remains set.
 
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20240325204620.1437237-3-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Stable-dep-of: c23c03bf1faa ("firmware: arm_scmi: Fix timeout checks on polling path")
+Clear NETIF_F_HW_MACSEC in mlx5e_fix_uplink_rep_features().
+
+Kernel log:
+
+Oops: general protection fault, probably for non-canonical address 0xdffffc000000000f: 0000 [#1] SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000078-0x000000000000007f]
+CPU: 29 UID: 0 PID: 4714 Comm: ip Not tainted 6.14.0-rc4_for_upstream_debug_2025_03_02_17_35 #1
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+RIP: 0010:__mutex_lock+0x128/0x1dd0
+Code: d0 7c 08 84 d2 0f 85 ad 15 00 00 8b 35 91 5c fe 03 85 f6 75 29 49 8d 7e 60 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 a6 15 00 00 4d 3b 76 60 0f 85 fd 0b 00 00 65 ff
+RSP: 0018:ffff888147a4f160 EFLAGS: 00010206
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000001
+RDX: 000000000000000f RSI: 0000000000000000 RDI: 0000000000000078
+RBP: ffff888147a4f2e0 R08: ffffffffa05d2c19 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000000
+R13: dffffc0000000000 R14: 0000000000000018 R15: ffff888152de0000
+FS:  00007f855e27d800(0000) GS:ffff88881ee80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000004e5768 CR3: 000000013ae7c005 CR4: 0000000000372eb0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ ? die_addr+0x3d/0xa0
+ ? exc_general_protection+0x144/0x220
+ ? asm_exc_general_protection+0x22/0x30
+ ? mlx5e_macsec_add_secy+0xf9/0x700 [mlx5_core]
+ ? __mutex_lock+0x128/0x1dd0
+ ? lockdep_set_lock_cmp_fn+0x190/0x190
+ ? mlx5e_macsec_add_secy+0xf9/0x700 [mlx5_core]
+ ? mutex_lock_io_nested+0x1ae0/0x1ae0
+ ? lock_acquire+0x1c2/0x530
+ ? macsec_upd_offload+0x145/0x380
+ ? lockdep_hardirqs_on_prepare+0x400/0x400
+ ? kasan_save_stack+0x30/0x40
+ ? kasan_save_stack+0x20/0x40
+ ? kasan_save_track+0x10/0x30
+ ? __kasan_kmalloc+0x77/0x90
+ ? __kmalloc_noprof+0x249/0x6b0
+ ? genl_family_rcv_msg_attrs_parse.constprop.0+0xb5/0x240
+ ? mlx5e_macsec_add_secy+0xf9/0x700 [mlx5_core]
+ mlx5e_macsec_add_secy+0xf9/0x700 [mlx5_core]
+ ? mlx5e_macsec_add_rxsa+0x11a0/0x11a0 [mlx5_core]
+ macsec_update_offload+0x26c/0x820
+ ? macsec_set_mac_address+0x4b0/0x4b0
+ ? lockdep_hardirqs_on_prepare+0x284/0x400
+ ? _raw_spin_unlock_irqrestore+0x47/0x50
+ macsec_upd_offload+0x2c8/0x380
+ ? macsec_update_offload+0x820/0x820
+ ? __nla_parse+0x22/0x30
+ ? genl_family_rcv_msg_attrs_parse.constprop.0+0x15e/0x240
+ genl_family_rcv_msg_doit+0x1cc/0x2a0
+ ? genl_family_rcv_msg_attrs_parse.constprop.0+0x240/0x240
+ ? cap_capable+0xd4/0x330
+ genl_rcv_msg+0x3ea/0x670
+ ? genl_family_rcv_msg_dumpit+0x2a0/0x2a0
+ ? lockdep_set_lock_cmp_fn+0x190/0x190
+ ? macsec_update_offload+0x820/0x820
+ netlink_rcv_skb+0x12b/0x390
+ ? genl_family_rcv_msg_dumpit+0x2a0/0x2a0
+ ? netlink_ack+0xd80/0xd80
+ ? rwsem_down_read_slowpath+0xf90/0xf90
+ ? netlink_deliver_tap+0xcd/0xac0
+ ? netlink_deliver_tap+0x155/0xac0
+ ? _copy_from_iter+0x1bb/0x12c0
+ genl_rcv+0x24/0x40
+ netlink_unicast+0x440/0x700
+ ? netlink_attachskb+0x760/0x760
+ ? lock_acquire+0x1c2/0x530
+ ? __might_fault+0xbb/0x170
+ netlink_sendmsg+0x749/0xc10
+ ? netlink_unicast+0x700/0x700
+ ? __might_fault+0xbb/0x170
+ ? netlink_unicast+0x700/0x700
+ __sock_sendmsg+0xc5/0x190
+ ____sys_sendmsg+0x53f/0x760
+ ? import_iovec+0x7/0x10
+ ? kernel_sendmsg+0x30/0x30
+ ? __copy_msghdr+0x3c0/0x3c0
+ ? filter_irq_stacks+0x90/0x90
+ ? stack_depot_save_flags+0x28/0xa30
+ ___sys_sendmsg+0xeb/0x170
+ ? kasan_save_stack+0x30/0x40
+ ? copy_msghdr_from_user+0x110/0x110
+ ? do_syscall_64+0x6d/0x140
+ ? lock_acquire+0x1c2/0x530
+ ? __virt_addr_valid+0x116/0x3b0
+ ? __virt_addr_valid+0x1da/0x3b0
+ ? lock_downgrade+0x680/0x680
+ ? __delete_object+0x21/0x50
+ __sys_sendmsg+0xf7/0x180
+ ? __sys_sendmsg_sock+0x20/0x20
+ ? kmem_cache_free+0x14c/0x4e0
+ ? __x64_sys_close+0x78/0xd0
+ do_syscall_64+0x6d/0x140
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+RIP: 0033:0x7f855e113367
+Code: 0e 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b9 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 89 54 24 1c 48 89 74 24 10
+RSP: 002b:00007ffd15e90c88 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 0000000000000002 RCX: 00007f855e113367
+RDX: 0000000000000000 RSI: 00007ffd15e90cf0 RDI: 0000000000000004
+RBP: 00007ffd15e90dbc R08: 0000000000000028 R09: 000000000045d100
+R10: 00007f855e011dd8 R11: 0000000000000246 R12: 0000000000000019
+R13: 0000000067c6b785 R14: 00000000004a1e80 R15: 0000000000000000
+ </TASK>
+Modules linked in: 8021q garp mrp sch_ingress openvswitch nsh mlx5_ib mlx5_fwctl mlx5_dpll mlx5_core rpcrdma rdma_ucm ib_iser libiscsi scsi_transport_iscsi ib_umad rdma_cm ib_ipoib iw_cm ib_cm ib_uverbs ib_core xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xt_addrtype iptable_nat nf_nat br_netfilter rpcsec_gss_krb5 auth_rpcgss oid_registry overlay zram zsmalloc fuse [last unloaded: mlx5_core]
+---[ end trace 0000000000000000 ]---
+
+Fixes: 8ff0ac5be144 ("net/mlx5: Add MACsec offload Tx command support")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/1746958552-561295-1-git-send-email-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/common.h | 11 +++++++++
- drivers/firmware/arm_scmi/driver.c | 39 ++++++++++++++++++++++++++++++
- 2 files changed, 50 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/firmware/arm_scmi/common.h b/drivers/firmware/arm_scmi/common.h
-index 039f686f4580d..e26a2856a0e3d 100644
---- a/drivers/firmware/arm_scmi/common.h
-+++ b/drivers/firmware/arm_scmi/common.h
-@@ -303,6 +303,17 @@ extern const struct scmi_desc scmi_optee_desc;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 8a892614015cd..d9dc7280302eb 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -4136,6 +4136,10 @@ static netdev_features_t mlx5e_fix_uplink_rep_features(struct net_device *netdev
+ 	if (netdev->features & NETIF_F_HW_VLAN_CTAG_FILTER)
+ 		netdev_warn(netdev, "Disabling HW_VLAN CTAG FILTERING, not supported in switchdev mode\n");
  
- void scmi_rx_callback(struct scmi_chan_info *cinfo, u32 msg_hdr, void *priv);
- 
-+enum scmi_bad_msg {
-+	MSG_UNEXPECTED = -1,
-+	MSG_INVALID = -2,
-+	MSG_UNKNOWN = -3,
-+	MSG_NOMEM = -4,
-+	MSG_MBOX_SPURIOUS = -5,
-+};
++	features &= ~NETIF_F_HW_MACSEC;
++	if (netdev->features & NETIF_F_HW_MACSEC)
++		netdev_warn(netdev, "Disabling HW MACsec offload, not supported in switchdev mode\n");
 +
-+void scmi_bad_message_trace(struct scmi_chan_info *cinfo, u32 msg_hdr,
-+			    enum scmi_bad_msg err);
-+
- /* shmem related declarations */
- struct scmi_shared_mem;
- 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index efa9698c876a0..b3c2a199b2afb 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -687,6 +687,45 @@ scmi_xfer_lookup_unlocked(struct scmi_xfers_info *minfo, u16 xfer_id)
- 	return xfer ?: ERR_PTR(-EINVAL);
+ 	return features;
  }
  
-+/**
-+ * scmi_bad_message_trace  - A helper to trace weird messages
-+ *
-+ * @cinfo: A reference to the channel descriptor on which the message was
-+ *	   received
-+ * @msg_hdr: Message header to track
-+ * @err: A specific error code used as a status value in traces.
-+ *
-+ * This helper can be used to trace any kind of weird, incomplete, unexpected,
-+ * timed-out message that arrives and as such, can be traced only referring to
-+ * the header content, since the payload is missing/unreliable.
-+ */
-+void scmi_bad_message_trace(struct scmi_chan_info *cinfo, u32 msg_hdr,
-+			    enum scmi_bad_msg err)
-+{
-+	char *tag;
-+	struct scmi_info *info = handle_to_scmi_info(cinfo->handle);
-+
-+	switch (MSG_XTRACT_TYPE(msg_hdr)) {
-+	case MSG_TYPE_COMMAND:
-+		tag = "!RESP";
-+		break;
-+	case MSG_TYPE_DELAYED_RESP:
-+		tag = "!DLYD";
-+		break;
-+	case MSG_TYPE_NOTIFICATION:
-+		tag = "!NOTI";
-+		break;
-+	default:
-+		tag = "!UNKN";
-+		break;
-+	}
-+
-+	trace_scmi_msg_dump(info->id, cinfo->id,
-+			    MSG_XTRACT_PROT_ID(msg_hdr),
-+			    MSG_XTRACT_ID(msg_hdr), tag,
-+			    MSG_XTRACT_TOKEN(msg_hdr), err, NULL, 0);
-+}
-+
- /**
-  * scmi_msg_response_validate  - Validate message type against state of related
-  * xfer
 -- 
 2.39.5
 
