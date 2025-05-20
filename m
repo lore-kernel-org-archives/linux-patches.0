@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330A71D8E07;
-	Tue, 20 May 2025 14:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B21621E0BB;
+	Tue, 20 May 2025 14:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749808; cv=none; b=ULvkZmaEGXMuLmVM13zI9muZ9Qac5kfPJfUr646BwRMzWQNjZgfnLm9G3LJdob3/iLpvU1VLARgJ26wcgGCpBPnSPe87phKI/PU2uarytKeayJZwaUlQLi6OEVOHKH3L3IkZJph3/KBvZ1OER6z2Z/Drh58w2FdTnVx7MJhS++A=
+	t=1747749811; cv=none; b=W2G7Raj3HWPTpOpgG8SqCvAVOwO7u+RzBOXiqDzHTfyQHdSUQ2rdQUn1oD6GU7P6KXYotxrnseQAuQ9CK3E8rbrb3XnvoSIb7B4htWbjHRkukBFYLuyZTnJb3kAl23P6eCNLCMYKmLTDieG82dREH54/ogfBtrg8G9Ps1OFenhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749808; c=relaxed/simple;
-	bh=W81/0/9W1q5vm6073iwDaj9kMlzfwTTT3c6fU9O1E4I=;
+	s=arc-20240116; t=1747749811; c=relaxed/simple;
+	bh=axR3kXiBTpYxTfuT9Wcm6wIi/6aERCuXTsYEHjnIbiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X3D/Ydwoyc3kOjOZjJeah6saa5XnpKM0lvhXBlAaLVulLxJyV4olt+/Rme35tQpwgBEx/zN6VCnzO/AsKNGJuUL+9SJF27ppgafcnWb2VGcLzjonQbzN6PNmgQYQslRpu1K18mMeeBj0NKyVnv2ll0hSZFQe84h0YKYSNtApLVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gl5HsXHF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pDOzs76ukll/Z+uuyz9kwZLG3RT43ndRs/2Z+VrsArxot5pAw8ihrNw7ettmaiK9Ql3JNGe3CEkTcYV+k2K1izmJoCJG7PCaQLcXXHCto3OHmXBeL4MX5tjNJnzjeKRIyWhbk9cQd+yav7o3iVW2u5rl0K9J7cVSJb/a65J4FtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2AF7g6lv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gl5HsXHF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95137C4CEEA;
-	Tue, 20 May 2025 14:03:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AF7g6lv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9618DC4CEE9;
+	Tue, 20 May 2025 14:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749808;
-	bh=W81/0/9W1q5vm6073iwDaj9kMlzfwTTT3c6fU9O1E4I=;
+	s=korg; t=1747749810;
+	bh=axR3kXiBTpYxTfuT9Wcm6wIi/6aERCuXTsYEHjnIbiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gl5HsXHFX+HFc5P6UFObcjq0jkBwxBeDgQgig5foRvCPf7jIwP1znqjLCDDV/rAvM
-	 7WwBIWmzRFB9s5WkUus4WKc7kIuhOpbzEaVpzrn8e7HpC+9JBSRwVPnuVh6regwtd1
-	 wF8i+/QhyFbuSJRiCFTCpNDUGaAVG60gpUdMHFcg=
+	b=2AF7g6lvbwqcfuMh/poVOiCB8gvMzvYrB7gBIDQItvYfL2R1HNYJBlT4MOiC342eR
+	 T+bqX5oxbMB5d52BKTIXCmdo7mVcrodeKdi9Ys1S6crMqx6vDoOH/lvzsPu9xzCd0S
+	 iWx6+Q8Niqd0zjXpqII+OIb/JEXmn6DGpglYGNhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.6 067/117] LoongArch: uprobes: Remove redundant code about resume_era
-Date: Tue, 20 May 2025 15:50:32 +0200
-Message-ID: <20250520125806.652028981@linuxfoundation.org>
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 050/117] qlcnic: fix memory leak in qlcnic_sriov_channel_cfg_cmd()
+Date: Tue, 20 May 2025 15:50:15 +0200
+Message-ID: <20250520125805.976812224@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -50,57 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-commit 12614f794274f63fbdfe76771b2b332077d63848 upstream.
+[ Upstream commit 9d8a99c5a7c7f4f7eca2c168a4ec254409670035 ]
 
-arch_uprobe_skip_sstep() returns true if instruction was emulated, that
-is to say, there is no need to single step for the emulated instructions.
-regs->csr_era will point to the destination address directly after the
-exception, so the resume_era related code is redundant, just remove them.
+In one of the error paths in qlcnic_sriov_channel_cfg_cmd(), the memory
+allocated in qlcnic_sriov_alloc_bc_mbx_args() for mailbox arguments is
+not freed. Fix that by jumping to the error path that frees them, by
+calling qlcnic_free_mbx_args(). This was found using static analysis.
 
-Cc: stable@vger.kernel.org
-Fixes: 19bc6cb64092 ("LoongArch: Add uprobes support")
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f197a7aa6288 ("qlcnic: VF-PF communication channel implementation")
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250512044829.36400-1-abdun.nihaal@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/uprobes.h |    1 -
- arch/loongarch/kernel/uprobes.c      |    7 +------
- 2 files changed, 1 insertion(+), 7 deletions(-)
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/arch/loongarch/include/asm/uprobes.h
-+++ b/arch/loongarch/include/asm/uprobes.h
-@@ -15,7 +15,6 @@ typedef u32 uprobe_opcode_t;
- #define UPROBE_XOLBP_INSN	larch_insn_gen_break(BRK_UPROBE_XOLBP)
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
+index 28d24d59efb84..d57b976b90409 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
+@@ -1484,8 +1484,11 @@ static int qlcnic_sriov_channel_cfg_cmd(struct qlcnic_adapter *adapter, u8 cmd_o
+ 	}
  
- struct arch_uprobe {
--	unsigned long	resume_era;
- 	u32	insn[2];
- 	u32	ixol[2];
- 	bool	simulate;
---- a/arch/loongarch/kernel/uprobes.c
-+++ b/arch/loongarch/kernel/uprobes.c
-@@ -52,11 +52,7 @@ int arch_uprobe_post_xol(struct arch_upr
- 
- 	WARN_ON_ONCE(current->thread.trap_nr != UPROBE_TRAP_NR);
- 	current->thread.trap_nr = utask->autask.saved_trap_nr;
--
--	if (auprobe->simulate)
--		instruction_pointer_set(regs, auprobe->resume_era);
--	else
--		instruction_pointer_set(regs, utask->vaddr + LOONGARCH_INSN_SIZE);
-+	instruction_pointer_set(regs, utask->vaddr + LOONGARCH_INSN_SIZE);
- 
- 	return 0;
- }
-@@ -86,7 +82,6 @@ bool arch_uprobe_skip_sstep(struct arch_
- 
- 	insn.word = auprobe->insn[0];
- 	arch_simulate_insn(insn, regs);
--	auprobe->resume_era = regs->csr_era;
- 
- 	return true;
- }
+ 	cmd_op = (cmd.rsp.arg[0] & 0xff);
+-	if (cmd.rsp.arg[0] >> 25 == 2)
+-		return 2;
++	if (cmd.rsp.arg[0] >> 25 == 2) {
++		ret = 2;
++		goto out;
++	}
++
+ 	if (cmd_op == QLCNIC_BC_CMD_CHANNEL_INIT)
+ 		set_bit(QLC_BC_VF_STATE, &vf->state);
+ 	else
+-- 
+2.39.5
+
 
 
