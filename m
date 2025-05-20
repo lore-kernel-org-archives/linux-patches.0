@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1D3242D9A;
-	Tue, 20 May 2025 13:55:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E7524501D;
+	Tue, 20 May 2025 13:55:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749330; cv=none; b=Er6+XNyWAvKcXeFMchvkD7KeeKLSpgPeSb1Rv0YpRmaPO/pmBBI3umxBfJEi64eXSmnhfWoSjYAyhBEHzXwv+KkeZ4YLPmXJvNNhtiu7pAg8powi3RrfwEOBBToTi83tlXv8bA5EOhjRG5ekEJMuHzplsiTWPkxMTZWqYTHare4=
+	t=1747749331; cv=none; b=DciXotOCwdnWVw99YIOoLmnSk1q7hfCtBpZodAd+z/ZdSaad0U+2UgC3k6Skuh6/TJv/lh6o8YzHZMGnWdxcw8Qey03ItGMx0PQb4wJUh/ryfbXqudErP+h8HQmeNvhdG+eJyOWYdUJ3UXTj+q6zvp8NklurzrrD7Hk+Ra0JbiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749330; c=relaxed/simple;
-	bh=708s2A/GAiTFxCJ5ww+8glg7QM9WzXzBaNesx7c/BLY=;
+	s=arc-20240116; t=1747749331; c=relaxed/simple;
+	bh=A67XdX1gDQp0h3TZZHSCv0tuc6uk825WBpcE31LCVvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V7P+WKy8iMJyzGjFCSAAUNvDdh+0E9aOOh4cHlrCdQ6Ej+cly7hAgPRFe3UjzT1wVDSyRvm4IlVfphcxgxtRW7Dgu3V/a48xtIi0lHGLCGuQY5fkNZ5JxrWOqgNYnqLNvbmWFJswZ9P4q4p2tnFs/CE/F22HR7ej5TkiiG9ElxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gxkw8zcp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MSj529sZ5V2TW0dZMzbCjHvlyfRwUMqQK3uCHBAa/EDRhj7vIpXtyRjMb0JcN+Xkymty455eOrr98f0QpbEM0+ViiZBkSf89UrpmSLIoGU11bzag4ScvKlNxH6xu4iEXFDxy0TVRrQvvGAab3slnVveU5tFn5Nij9v+zkpPLZdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2twYdTf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gxkw8zcp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED53DC4CEE9;
-	Tue, 20 May 2025 13:55:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2twYdTf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F10C4CEEA;
+	Tue, 20 May 2025 13:55:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749328;
-	bh=708s2A/GAiTFxCJ5ww+8glg7QM9WzXzBaNesx7c/BLY=;
+	s=korg; t=1747749331;
+	bh=A67XdX1gDQp0h3TZZHSCv0tuc6uk825WBpcE31LCVvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gxkw8zcpTAJcAwEUl31acxSbHZBsnCKxwaCXL043+XRxuaPy2eWsgsvui+A8LhwVe
-	 r5qpchfHodgyxspiecGDnQcygoB117sz2MUwQqp1pZ4NUXf/E283vPQ1yVgToUED4x
-	 oR8Hwv3SBxm0Th0rpVlMZ0lntaft5/GlMBF8ySW4=
+	b=m2twYdTf1gISuBvUSTNVLyUNS44aMmmoHyJvOCZbP3w5MCxb7kGDV6LjLTgdIqek7
+	 lJAQ/PqeTjgIrXIaGvwSQkHFV82ktrH1dwjTGmMFKlsjMw4K+oRNod8a5ht4HftIS8
+	 zWnYxS4E24L+d+5PtYC+nJgBR67FDne/T6CEAb1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 01/97] binfmt: Fix whitespace issues
-Date: Tue, 20 May 2025 15:49:26 +0200
-Message-ID: <20250520125800.721573657@linuxfoundation.org>
+Subject: [PATCH 6.1 10/97] platform/x86: asus-wmi: Fix wlan_ctrl_by_user detection
+Date: Tue, 20 May 2025 15:49:35 +0200
+Message-ID: <20250520125801.073014720@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -46,131 +46,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 8f6e3f9e5a0f58e458a348b7e36af11d0e9702af ]
+[ Upstream commit bfcfe6d335a967f8ea0c1980960e6f0205b5de6e ]
 
-Fix the annoying whitespace issues that have been following these files
-around for years.
+The wlan_ctrl_by_user detection was introduced by commit a50bd128f28c
+("asus-wmi: record wlan status while controlled by userapp").
 
-Cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Acked-by: Christian Brauner (Microsoft) <brauner@kernel.org>
-Link: https://lore.kernel.org/r/20221018071350.never.230-kees@kernel.org
-Stable-dep-of: 11854fe263eb ("binfmt_elf: Move brk for static PIE even if ASLR disabled")
+Quoting from that commit's commit message:
+
+"""
+When you call WMIMethod(DSTS, 0x00010011) to get WLAN status, it may return
+
+(1) 0x00050001 (On)
+(2) 0x00050000 (Off)
+(3) 0x00030001 (On)
+(4) 0x00030000 (Off)
+(5) 0x00000002 (Unknown)
+
+(1), (2) means that the model has hardware GPIO for WLAN, you can call
+WMIMethod(DEVS, 0x00010011, 1 or 0) to turn WLAN on/off.
+(3), (4) means that the model doesn’t have hardware GPIO, you need to use
+API or driver library to turn WLAN on/off, and call
+WMIMethod(DEVS, 0x00010012, 1 or 0) to set WLAN LED status.
+After you set WLAN LED status, you can see the WLAN status is changed with
+WMIMethod(DSTS, 0x00010011). Because the status is recorded lastly
+(ex: Windows), you can use it for synchronization.
+(5) means that the model doesn’t have WLAN device.
+
+WLAN is the ONLY special case with upper rule.
+"""
+
+The wlan_ctrl_by_user flag should be set on 0x0003000? ((3), (4) above)
+return values, but the flag mistakenly also gets set on laptops with
+0x0005000? ((1), (2)) return values. This is causing rfkill problems on
+laptops where 0x0005000? is returned.
+
+Fix the check to only set the wlan_ctrl_by_user flag for 0x0003000?
+return values.
+
+Fixes: a50bd128f28c ("asus-wmi: record wlan status while controlled by userapp")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219786
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20250501131702.103360-2-hdegoede@redhat.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/binfmt_elf.c          | 14 +++++++-------
- fs/binfmt_elf_fdpic.c    |  2 +-
- fs/exec.c                |  2 +-
- include/uapi/linux/elf.h |  2 +-
- 4 files changed, 10 insertions(+), 10 deletions(-)
+ drivers/platform/x86/asus-wmi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/binfmt_elf.c b/fs/binfmt_elf.c
-index 89e7e4826efce..d1cf3d25da4b6 100644
---- a/fs/binfmt_elf.c
-+++ b/fs/binfmt_elf.c
-@@ -248,7 +248,7 @@ create_elf_tables(struct linux_binprm *bprm, const struct elfhdr *exec,
- 	} while (0)
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index 296150eaef929..33eacb4fc4c45 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -3804,7 +3804,8 @@ static int asus_wmi_add(struct platform_device *pdev)
+ 		goto fail_leds;
  
- #ifdef ARCH_DLINFO
--	/* 
-+	/*
- 	 * ARCH_DLINFO must come first so PPC can do its special alignment of
- 	 * AUXV.
- 	 * update AT_VECTOR_SIZE_ARCH if the number of NEW_AUX_ENT() in
-@@ -1021,7 +1021,7 @@ static int load_elf_binary(struct linux_binprm *bprm)
- 				 executable_stack);
- 	if (retval < 0)
- 		goto out_free_dentry;
--	
-+
- 	elf_bss = 0;
- 	elf_brk = 0;
+ 	asus_wmi_get_devstate(asus, ASUS_WMI_DEVID_WLAN, &result);
+-	if (result & (ASUS_WMI_DSTS_PRESENCE_BIT | ASUS_WMI_DSTS_USER_BIT))
++	if ((result & (ASUS_WMI_DSTS_PRESENCE_BIT | ASUS_WMI_DSTS_USER_BIT)) ==
++	    (ASUS_WMI_DSTS_PRESENCE_BIT | ASUS_WMI_DSTS_USER_BIT))
+ 		asus->driver->wlan_ctrl_by_user = 1;
  
-@@ -1044,7 +1044,7 @@ static int load_elf_binary(struct linux_binprm *bprm)
- 
- 		if (unlikely (elf_brk > elf_bss)) {
- 			unsigned long nbyte;
--	            
-+
- 			/* There was a PT_LOAD segment with p_memsz > p_filesz
- 			   before this one. Map anonymous pages, if needed,
- 			   and clear the area.  */
-@@ -1522,7 +1522,7 @@ static void fill_elf_note_phdr(struct elf_phdr *phdr, int sz, loff_t offset)
- 	phdr->p_align = 0;
- }
- 
--static void fill_note(struct memelfnote *note, const char *name, int type, 
-+static void fill_note(struct memelfnote *note, const char *name, int type,
- 		unsigned int sz, void *data)
- {
- 	note->name = name;
-@@ -2005,8 +2005,8 @@ static int elf_dump_thread_status(long signr, struct elf_thread_status *t)
- 	t->num_notes = 0;
- 
- 	fill_prstatus(&t->prstatus.common, p, signr);
--	elf_core_copy_task_regs(p, &t->prstatus.pr_reg);	
--	
-+	elf_core_copy_task_regs(p, &t->prstatus.pr_reg);
-+
- 	fill_note(&t->notes[0], "CORE", NT_PRSTATUS, sizeof(t->prstatus),
- 		  &(t->prstatus));
- 	t->num_notes++;
-@@ -2296,7 +2296,7 @@ static int elf_core_dump(struct coredump_params *cprm)
- 	if (!elf_core_write_extra_phdrs(cprm, offset))
- 		goto end_coredump;
- 
-- 	/* write out the notes section */
-+	/* write out the notes section */
- 	if (!write_note_info(&info, cprm))
- 		goto end_coredump;
- 
-diff --git a/fs/binfmt_elf_fdpic.c b/fs/binfmt_elf_fdpic.c
-index c71a409273150..b2d3b6e43bb56 100644
---- a/fs/binfmt_elf_fdpic.c
-+++ b/fs/binfmt_elf_fdpic.c
-@@ -1603,7 +1603,7 @@ static int elf_fdpic_core_dump(struct coredump_params *cprm)
- 	if (!elf_core_write_extra_phdrs(cprm, offset))
- 		goto end_coredump;
- 
-- 	/* write out the notes section */
-+	/* write out the notes section */
- 	if (!writenote(thread_list->notes, cprm))
- 		goto end_coredump;
- 	if (!writenote(&psinfo_note, cprm))
-diff --git a/fs/exec.c b/fs/exec.c
-index 2039414cc6621..b65af8f9a4f9b 100644
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -169,7 +169,7 @@ SYSCALL_DEFINE1(uselib, const char __user *, library)
- exit:
- 	fput(file);
- out:
--  	return error;
-+	return error;
- }
- #endif /* #ifdef CONFIG_USELIB */
- 
-diff --git a/include/uapi/linux/elf.h b/include/uapi/linux/elf.h
-index c7b056af9ef0a..3e5f07be26fc8 100644
---- a/include/uapi/linux/elf.h
-+++ b/include/uapi/linux/elf.h
-@@ -91,7 +91,7 @@ typedef __s64	Elf64_Sxword;
- #define DT_INIT		12
- #define DT_FINI		13
- #define DT_SONAME	14
--#define DT_RPATH 	15
-+#define DT_RPATH	15
- #define DT_SYMBOLIC	16
- #define DT_REL	        17
- #define DT_RELSZ	18
+ 	if (!(asus->driver->wlan_ctrl_by_user && ashs_present())) {
 -- 
 2.39.5
 
