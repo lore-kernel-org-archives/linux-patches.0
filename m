@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2209EC4;
-	Tue, 20 May 2025 13:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD85DDA9;
+	Tue, 20 May 2025 13:58:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749479; cv=none; b=hIrHaWmtw5EE5hbsczW+SKHS9TrWHu2RoFu+CJnAEwOk2zv2vrYl15jq2YSn3V0ugbP+Y4fA7gCGF0i6q2O45+UoOYyb5IJ7inGw7AmmGF6cWNAKQKzcw37A3ChOT2JkfRXVPp2wceoPZ+ua3aova7qFxU97r2nKn7e7t5Gmqh8=
+	t=1747749484; cv=none; b=EbdwBLC/KZ7SLmYMSIGFtGMH795r0NfBVqKAnN/Y5VzzUTBJoE8fyemP24NpB4TGWXO92q1bpx+LrL91eeiBrR8esmeBqIwrJ5ZHzaa5sP2bEMVzjm6XGTIxON5mpmkOPO/ipB5tccdnRLrdhkfwnzllPSCHUqudkORo46RNqmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749479; c=relaxed/simple;
-	bh=sIcKH49H0s6jWp2+ZTY/em5/Knc3pd+T4b5X17eAhdE=;
+	s=arc-20240116; t=1747749484; c=relaxed/simple;
+	bh=GDeFuFcR/QRSKyeooZyP6jEGYpE+mmv5KD606OITWhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uheb9fXpHDlJHAPbC9UqCJ3zHBtsn2aV5M9f87r5JonHTF1pmvEK+txmSisaFFSKfNKUfcpPEHA/5f0jDqGXeHe48rZTNYrJh+wnzv0yTSdeyYFeAzvQJC32bVGXVw3Ez4VtC/x99/Te/aK+ATepP+P5w4WZ3F8TlbRHreUXkHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPNHHlXN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A50hFB4XNErErZvy6LdPmz1yP1wkk5tjiZgg1YS4JKYooZMy3lXuAsegHETonIEW2kSNj4ohwqaZxIxA8hAIXfc5vJ2QUHawI9R/AHWe+jPP7+yRbJANhAC4U2KKC14qHdNuk4H6gtUV/bQ0at9wTmAadr9OJ8GCwIQeHwprMv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BRueOz0n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPNHHlXN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651A2C4CEE9;
-	Tue, 20 May 2025 13:57:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BRueOz0n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6322AC4CEE9;
+	Tue, 20 May 2025 13:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749479;
-	bh=sIcKH49H0s6jWp2+ZTY/em5/Knc3pd+T4b5X17eAhdE=;
+	s=korg; t=1747749484;
+	bh=GDeFuFcR/QRSKyeooZyP6jEGYpE+mmv5KD606OITWhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lPNHHlXNV+wLtLfYC4CkqEAeL3mWNTM2utyC+OvqrUN/Kg7rVcI0RhqVWM4I5KO2A
-	 AD5b9SFm2tXpq0svNZcjhSAZtklHY38muyQ+3MgdS7P9U6JRsooLGkDbtQlswaU0gK
-	 h723olgrTTKxuTCjcFGEcmznzIvB46SSFnnIKvCI=
+	b=BRueOz0n6y3woGYc00FZwcFNmtSm9rrFYyw3VcXtMheoLm62frsjnKGuFzgDe7dSv
+	 8fRzaGati2bQGe/fES+WSjN5dpHjtiHzvNG5RxQOt3GPhJ94se6Hy4iYfS0YYuC/dU
+	 6OrSgQQD0SkfvYgXm5J0NWKUictWv8jrc5RlHUv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Divya Indi <divya.indi@oracle.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 57/97] tracing: samples: Initialize trace_array_printk() with the correct function
-Date: Tue, 20 May 2025 15:50:22 +0200
-Message-ID: <20250520125802.889110435@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Thierry Reding <treding@nvidia.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.1 58/97] phy: Fix error handling in tegra_xusb_port_init
+Date: Tue, 20 May 2025 15:50:23 +0200
+Message-ID: <20250520125802.929165661@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -52,45 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 1b0c192c92ea1fe2dcb178f84adf15fe37c3e7c8 upstream.
+commit b2ea5f49580c0762d17d80d8083cb89bc3acf74f upstream.
 
-When using trace_array_printk() on a created instance, the correct
-function to use to initialize it is:
+If device_add() fails, do not use device_unregister() for error
+handling. device_unregister() consists two functions: device_del() and
+put_device(). device_unregister() should only be called after
+device_add() succeeded because device_del() undoes what device_add()
+does if successful. Change device_unregister() to put_device() call
+before returning from the function.
 
-  trace_array_init_printk()
+As comment of device_add() says, 'if device_add() succeeds, you should
+call device_del() when you want to get rid of it. If device_add() has
+not succeeded, use only put_device() to drop the reference count'.
 
-Not
-
-  trace_printk_init_buffer()
-
-The former is a proper function to use, the latter is for initializing
-trace_printk() and causes the NOTICE banner to be displayed.
+Found by code review.
 
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Divya Indi <divya.indi@oracle.com>
-Link: https://lore.kernel.org/20250509152657.0f6744d9@gandalf.local.home
-Fixes: 89ed42495ef4a ("tracing: Sample module to demonstrate kernel access to Ftrace instances.")
-Fixes: 38ce2a9e33db6 ("tracing: Add trace_array_init_printk() to initialize instance trace_printk() buffers")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 53d2a715c240 ("phy: Add Tegra XUSB pad controller support")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20250303072739.3874987-1-make24@iscas.ac.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- samples/ftrace/sample-trace-array.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/tegra/xusb.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/samples/ftrace/sample-trace-array.c
-+++ b/samples/ftrace/sample-trace-array.c
-@@ -112,7 +112,7 @@ static int __init sample_trace_array_ini
- 	/*
- 	 * If context specific per-cpu buffers havent already been allocated.
- 	 */
--	trace_printk_init_buffers();
-+	trace_array_init_printk(tr);
+--- a/drivers/phy/tegra/xusb.c
++++ b/drivers/phy/tegra/xusb.c
+@@ -542,16 +542,16 @@ static int tegra_xusb_port_init(struct t
  
- 	simple_tsk = kthread_run(simple_thread, NULL, "sample-instance");
- 	if (IS_ERR(simple_tsk)) {
+ 	err = dev_set_name(&port->dev, "%s-%u", name, index);
+ 	if (err < 0)
+-		goto unregister;
++		goto put_device;
+ 
+ 	err = device_add(&port->dev);
+ 	if (err < 0)
+-		goto unregister;
++		goto put_device;
+ 
+ 	return 0;
+ 
+-unregister:
+-	device_unregister(&port->dev);
++put_device:
++	put_device(&port->dev);
+ 	return err;
+ }
+ 
 
 
