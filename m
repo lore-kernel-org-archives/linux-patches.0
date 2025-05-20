@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D0F19F137;
-	Tue, 20 May 2025 13:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699B9242922;
+	Tue, 20 May 2025 13:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749288; cv=none; b=cJ2/WWzNVsH0yiJztkCsj9C55HtdpVy6HBPKFy3GaTKtbYCWIm517g/BZwjilW2hxYnwqdgJIcv4Cuk9oAXK/IR25uCOntI2mgm6c/9Ie57zrI3YwDYxYS8GtiImGpkkq9BnxIsrKrTIAXZwhHor0qyX3O5Ko42R9phNGq5liK0=
+	t=1747749291; cv=none; b=bLS9rF2YozULT86Qslr+hsMh6LfvkKVGKD/8wHXNqfIb+OBf4l9moInKf/R6g+MkCQt0FjJsxPsEdHnYny9MBXdpT+uj55z7VZn+0+Rq5dqjgsn2pW+QpYm31Y5bl8jsntWZGXmAlCTl2BOTYgoXqHghrVHHQrRA2VnUELBNjro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749288; c=relaxed/simple;
-	bh=JYVXJBlHLAmsmONZxjqIp9oCWWVU++IJ7ikq2/o//PA=;
+	s=arc-20240116; t=1747749291; c=relaxed/simple;
+	bh=Blga8I4UNvldV1XM+CJdXzvVwKArdp+B7B/gswf+wr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UQO1vC8bYk2tjmzwLfql2YyOm4W/Mf6Zi09qYxKX7hykgAlem1Bt3jid0qfX3qxS0h6c1XF3R/QmZx4xDejyr4rHmzHgvZMzfOY78mbgOX0Qhg0HbaOoMATeNggmhqueyZ96Jibykvn7eXCovsLSJDcbvcRZFXr6hN8yb58trPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzVTIBbF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L2FrK6QMzprSy8cTlVyVUjVqP47uk2fzHFdQbQxw8KNsS59BZD47dt9t0eptANHnGSYZYWr0LjzLuFifAj3FO9W7EsyxtwjXRbsadGPJpJBUxDo4Q/QPmAJV2RjRLfwOAWrMo522IoyxC5kQ78IuWA0+uD4zRfIKtOa8knLGzdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efb1wHvf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzVTIBbF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06372C4CEE9;
-	Tue, 20 May 2025 13:54:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efb1wHvf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0BAAC4CEE9;
+	Tue, 20 May 2025 13:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749288;
-	bh=JYVXJBlHLAmsmONZxjqIp9oCWWVU++IJ7ikq2/o//PA=;
+	s=korg; t=1747749291;
+	bh=Blga8I4UNvldV1XM+CJdXzvVwKArdp+B7B/gswf+wr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vzVTIBbFSguP5bfF1ZZRemPOtwR8VfLtZqDKsMJB4Lpd2pWA38dwkhjw4YuDZ9dzY
-	 4knEyTFm35V7ZvLO73Wuv4/27y9+d4dRnmq45kzIg0LXeCc4ByqU/lHEjXRA7NaVpn
-	 wYBDYnkGfXmZIcrxGp6crdnzmgo65gqgXnRL8eZE=
+	b=efb1wHvf37F7V8+HOpmWe+sSaAQQdq11TA7m/Xl3xmF9yBRJhwMJqcW8y9GQntrfX
+	 LUacBbBx7UcXeiurzFK/YjFkrFuraoF0ILA/mmBVtf1PQk81OTEm/6Tx7YdElRkR8i
+	 tOHIipBcJDzqogd6R/+XcrkKOTpKRg7RRol4lB9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	netfilter-devel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>,
-	Bin Lan <bin.lan.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.15 55/59] btrfs: do not clean up repair bio if submit fails
-Date: Tue, 20 May 2025 15:50:46 +0200
-Message-ID: <20250520125756.030382239@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.15 56/59] netfilter: nf_tables: pass nft_chain to destroy function, not nft_ctx
+Date: Tue, 20 May 2025 15:50:47 +0200
+Message-ID: <20250520125756.068868875@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
 References: <20250520125753.836407405@linuxfoundation.org>
@@ -53,59 +51,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit 8cbc3001a3264d998d6b6db3e23f935c158abd4d upstream.
+commit 8965d42bcf54d42cbc72fe34a9d0ec3f8527debd upstream.
 
-The submit helper will always run bio_endio() on the bio if it fails to
-submit, so cleaning up the bio just leads to a variety of use-after-free
-and NULL pointer dereference bugs because we race with the endio
-function that is cleaning up the bio.  Instead just return BLK_STS_OK as
-the repair function has to continue to process the rest of the pages,
-and the endio for the repair bio will do the appropriate cleanup for the
-page that it was given.
+It would be better to not store nft_ctx inside nft_trans object,
+the netlink ctx strucutre is huge and most of its information is
+never needed in places that use trans->ctx.
 
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[Minor context change fixed.]
-Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
+Avoid/reduce its usage if possible, no runtime behaviour change
+intended.
+
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ include/net/netfilter/nf_tables.h |    2 +-
+ net/netfilter/nf_tables_api.c     |   17 ++++++++---------
+ net/netfilter/nft_immediate.c     |    2 +-
+ 3 files changed, 10 insertions(+), 11 deletions(-)
 
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -2624,7 +2624,6 @@ int btrfs_repair_one_sector(struct inode
- 	const int icsum = bio_offset >> fs_info->sectorsize_bits;
- 	struct bio *repair_bio;
- 	struct btrfs_io_bio *repair_io_bio;
--	blk_status_t status;
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -1088,7 +1088,7 @@ static inline bool nft_chain_is_bound(st
  
- 	btrfs_debug(fs_info,
- 		   "repair read error: read error at %llu", start);
-@@ -2664,13 +2663,13 @@ int btrfs_repair_one_sector(struct inode
- 		    "repair read error: submitting new read to mirror %d",
- 		    failrec->this_mirror);
+ int nft_chain_add(struct nft_table *table, struct nft_chain *chain);
+ void nft_chain_del(struct nft_chain *chain);
+-void nf_tables_chain_destroy(struct nft_ctx *ctx);
++void nf_tables_chain_destroy(struct nft_chain *chain);
  
--	status = submit_bio_hook(inode, repair_bio, failrec->this_mirror,
--				 failrec->bio_flags);
--	if (status) {
--		free_io_failure(failure_tree, tree, failrec);
--		bio_put(repair_bio);
--	}
--	return blk_status_to_errno(status);
-+	/*
-+	 * At this point we have a bio, so any errors from submit_bio_hook()
-+	 * will be handled by the endio on the repair_bio, so we can't return an
-+	 * error here.
-+	 */
-+	submit_bio_hook(inode, repair_bio, failrec->this_mirror, failrec->bio_flags);
-+	return BLK_STS_OK;
+ struct nft_stats {
+ 	u64			bytes;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -1981,9 +1981,9 @@ static void nf_tables_chain_free_chain_r
+ 	kvfree(chain->rules_next);
  }
  
- static void end_page_read(struct page *page, bool uptodate, u64 start, u32 len)
+-void nf_tables_chain_destroy(struct nft_ctx *ctx)
++void nf_tables_chain_destroy(struct nft_chain *chain)
+ {
+-	struct nft_chain *chain = ctx->chain;
++	const struct nft_table *table = chain->table;
+ 	struct nft_hook *hook, *next;
+ 
+ 	if (WARN_ON(chain->use > 0))
+@@ -1995,7 +1995,7 @@ void nf_tables_chain_destroy(struct nft_
+ 	if (nft_is_base_chain(chain)) {
+ 		struct nft_base_chain *basechain = nft_base_chain(chain);
+ 
+-		if (nft_base_chain_netdev(ctx->family, basechain->ops.hooknum)) {
++		if (nft_base_chain_netdev(table->family, basechain->ops.hooknum)) {
+ 			list_for_each_entry_safe(hook, next,
+ 						 &basechain->hook_list, list) {
+ 				list_del_rcu(&hook->list);
+@@ -2445,7 +2445,7 @@ err_unregister_hook:
+ err_use:
+ 	nf_tables_unregister_hook(net, table, chain);
+ err_destroy_chain:
+-	nf_tables_chain_destroy(ctx);
++	nf_tables_chain_destroy(chain);
+ 
+ 	return err;
+ }
+@@ -8809,7 +8809,7 @@ static void nft_commit_release(struct nf
+ 		kfree(nft_trans_chain_name(trans));
+ 		break;
+ 	case NFT_MSG_DELCHAIN:
+-		nf_tables_chain_destroy(&trans->ctx);
++		nf_tables_chain_destroy(nft_trans_chain(trans));
+ 		break;
+ 	case NFT_MSG_DELRULE:
+ 		nf_tables_rule_destroy(&trans->ctx, nft_trans_rule(trans));
+@@ -9721,7 +9721,7 @@ static void nf_tables_abort_release(stru
+ 		nf_tables_table_destroy(&trans->ctx);
+ 		break;
+ 	case NFT_MSG_NEWCHAIN:
+-		nf_tables_chain_destroy(&trans->ctx);
++		nf_tables_chain_destroy(nft_trans_chain(trans));
+ 		break;
+ 	case NFT_MSG_NEWRULE:
+ 		nf_tables_rule_destroy(&trans->ctx, nft_trans_rule(trans));
+@@ -10443,7 +10443,7 @@ int __nft_release_basechain(struct nft_c
+ 	}
+ 	nft_chain_del(ctx->chain);
+ 	nft_use_dec(&ctx->table->use);
+-	nf_tables_chain_destroy(ctx);
++	nf_tables_chain_destroy(ctx->chain);
+ 
+ 	return 0;
+ }
+@@ -10519,10 +10519,9 @@ static void __nft_release_table(struct n
+ 		nft_obj_destroy(&ctx, obj);
+ 	}
+ 	list_for_each_entry_safe(chain, nc, &table->chains, list) {
+-		ctx.chain = chain;
+ 		nft_chain_del(chain);
+ 		nft_use_dec(&table->use);
+-		nf_tables_chain_destroy(&ctx);
++		nf_tables_chain_destroy(chain);
+ 	}
+ 	nf_tables_table_destroy(&ctx);
+ }
+--- a/net/netfilter/nft_immediate.c
++++ b/net/netfilter/nft_immediate.c
+@@ -221,7 +221,7 @@ static void nft_immediate_destroy(const
+ 			list_del(&rule->list);
+ 			nf_tables_rule_destroy(&chain_ctx, rule);
+ 		}
+-		nf_tables_chain_destroy(&chain_ctx);
++		nf_tables_chain_destroy(chain);
+ 		break;
+ 	default:
+ 		break;
 
 
