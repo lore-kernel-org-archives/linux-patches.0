@@ -1,53 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C54E424C692;
-	Tue, 20 May 2025 19:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6F22620E5;
+	Tue, 20 May 2025 19:23:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747768846; cv=none; b=mc4hN4BbxVlXMZx5vmA/DZV1z+pXyWzObnmgtT9PXeXyBojLhg/LCXZFJoLECgM8zMjbRSwzkUmQ1UWFFHs1IPGnpQcfc95NCVOBOZILGFqyecvYCO3dwoSKHDxWeKVuf0eUntOiL70PaA6bNpfY2m7IMQ6iiV1lyB346e4OSas=
+	t=1747769006; cv=none; b=DCVbKM0mQ02cNK8jIo0Haeeaw5DX9BxW/L3Md93Hg7dA1OpAu3vSJEN4poZL5YPkIUNJS0uFx/bR+cYIq9ebmpWlQ9t3jTwACkzoSKUEM9umpdfyDj3gQ5kTXRYhtKFndH6hl8An6Fo2WFm8VjhzxRTXQzIm5DL20QG37FMkm2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747768846; c=relaxed/simple;
-	bh=WL+oZ2MYQpnuVlpx+GohcQq+F1xhZWw9zI0Bz3ifrss=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OeNB3EvAEX/i3F/R72mtTdtAJ7YiFz5Si1f9oMmvgWiUzyN/UAGYFZRt2CWhs0EK1Wsl2w3c2ZeGYl4HVrzdHDcXGDWMhjDKIFywqMQcvb+/kwNNmtl22Kr7Cr8sT0JzudIaAo07nWBI8jOUaWABs2DClyYDiDJnWEM340g+tP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ki3b9EtO; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747769006; c=relaxed/simple;
+	bh=aMN6ArfGvBy1UBJLtxcWD5AdjBrLm6dMrbJQ6p1GdS0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=FSsKq7A1CtH324YOOz3K1TYXSl2bTC1XuyOhk36S47gUZF8WGXe3E8Up08WAoUCahc55AdGEfIlr2zFAJI31fb/cRjzGBqxgoMLb+S4F5ISgIJv52hb0AtQICDi4OuM52VvOYRe8ySuBdhpSrVokU6lbLwOKmWGUDWnOVSQdfDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TS79f4eK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ki3b9EtO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9674C4CEE9;
-	Tue, 20 May 2025 19:20:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TS79f4eK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806A5C4CEEF;
+	Tue, 20 May 2025 19:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747768846;
-	bh=WL+oZ2MYQpnuVlpx+GohcQq+F1xhZWw9zI0Bz3ifrss=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Ki3b9EtO356CV2lvoGptrYkmyv1YUM6PUNwvQk1U8gfzwobfXVrSNDvAM2ZjSlgdY
-	 jfzBKouPVA0tntG14HPwl4QhVIsG1vCv40iM8rPMxkWzD8x7ldddiNSdrw3zYCNtAb
-	 EBz31sRg25d1HO6NI1kPSnN6AGxyD+B5DBhNm3PvaAUY2mdPYNAQCynd0zwlN9LbFw
-	 qb0Hz4peSUVJjfiIeFqGQ+DbuHg7L5GiXqtQwx/oXSvqVD4WMFGYRbzvNwGKZCiODG
-	 iKGeYUzz9B2kMl03rygLWEgipoFRRKCDyOvZMIe61BOSRTKq0fmrPFUKR6njaQ0r7Y
-	 PIZQAs9BDlMFg==
+	s=k20201202; t=1747769006;
+	bh=aMN6ArfGvBy1UBJLtxcWD5AdjBrLm6dMrbJQ6p1GdS0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=TS79f4eKq1TC0al3v5u4S6INf//eo0Cpyj8AGPhrlhGOZsN3jJkbGYk8cH4Qaopkt
+	 vmFa+9ef9Ft343P07O6/IYkH+trUDYXCQTUjKmSS36B3/IB37K8wZvs1SFi0PSuRAa
+	 RzD5E4Ch91HwN6hMPgwBoppKwYp0uHQu0COVm3po/Dvxr7reySMbUfFc8nvPbDXOcT
+	 hTfiKOjmR5eSQqxKMlptgVLPs1oJeXcsWKmPr4S5+lDLae65k6BNXpyxx1NQ/fYNQH
+	 /uL788HFQDxpS++mrywEqs05QHjFgQdse+POnMXHryL/FskUY0Rp7+YrNTrOfcYDuE
+	 P064dEH7WMEpw==
 From: Miguel Ojeda <ojeda@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Cc: Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>,
-	rust-for-linux@vger.kernel.org,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	linux-kbuild@vger.kernel.org,
+To: gregkh@linuxfoundation.org
+Cc: akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
 	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
 	patches@lists.linux.dev,
+	pavel@denx.de,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	srw@sladewatkins.net,
 	stable@vger.kernel.org,
-	Tamir Duberstein <tamird@gmail.com>
-Subject: [PATCH] rust: kbuild: rebuild if `.clippy.toml` changes
-Date: Tue, 20 May 2025 21:20:34 +0200
-Message-ID: <20250520192034.889415-1-ojeda@kernel.org>
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: Re: [PATCH 6.6 000/117] 6.6.92-rc1 review
+Date: Tue, 20 May 2025 21:23:13 +0200
+Message-ID: <20250520192313.889970-1-ojeda@kernel.org>
+In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
+References: <20250520125803.981048184@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -56,51 +60,21 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-We rarely modify `.clippy.toml`, but currently we do not rebuild if that
-happens, thus it is easy to miss possible changes in lints.
+On Tue, 20 May 2025 15:49:25 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.6.92 release.
+> There are 117 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 22 May 2025 12:57:37 +0000.
+> Anything received after that time might be too late.
 
-Thus rebuild in case of changes.
+Boot-tested under QEMU for Rust x86_64:
 
-Cc: stable@vger.kernel.org
-Reported-by: Tamir Duberstein <tamird@gmail.com>
-Closes: https://github.com/Rust-for-Linux/linux/issues/1151
-Fixes: 7d56786edcbd ("rust: introduce `.clippy.toml`")
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
- rust/Makefile | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+Tested-by: Miguel Ojeda <ojeda@kernel.org>
 
-diff --git a/rust/Makefile b/rust/Makefile
-index 3aca903a7d08..0dcc9ba0d225 100644
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -405,11 +405,12 @@ quiet_cmd_rustc_procmacro = $(RUSTC_OR_CLIPPY_QUIET) P $@
- 		--crate-name $(patsubst lib%.$(libmacros_extension),%,$(notdir $@)) $<
- 
- # Procedural macros can only be used with the `rustc` that compiled it.
--$(obj)/$(libmacros_name): $(src)/macros/lib.rs FORCE
-+$(obj)/$(libmacros_name): $(src)/macros/lib.rs $(srctree)/.clippy.toml FORCE
- 	+$(call if_changed_dep,rustc_procmacro)
- 
- $(obj)/$(libpin_init_internal_name): private rustc_target_flags = --cfg kernel
--$(obj)/$(libpin_init_internal_name): $(src)/pin-init/internal/src/lib.rs FORCE
-+$(obj)/$(libpin_init_internal_name): $(src)/pin-init/internal/src/lib.rs \
-+    $(srctree)/.clippy.toml FORCE
- 	+$(call if_changed_dep,rustc_procmacro)
- 
- quiet_cmd_rustc_library = $(if $(skip_clippy),RUSTC,$(RUSTC_OR_CLIPPY_QUIET)) L $@
-@@ -495,7 +496,8 @@ endif
- 
- $(obj)/compiler_builtins.o: private skip_gendwarfksyms = 1
- $(obj)/compiler_builtins.o: private rustc_objcopy = -w -W '__*'
--$(obj)/compiler_builtins.o: $(src)/compiler_builtins.rs $(obj)/core.o FORCE
-+$(obj)/compiler_builtins.o: $(src)/compiler_builtins.rs $(obj)/core.o \
-+    $(srctree)/.clippy.toml FORCE
- 	+$(call if_changed_rule,rustc_library)
- 
- $(obj)/pin_init.o: private skip_gendwarfksyms = 1
+Thanks!
 
-base-commit: 22c3335c5dcd33063fe1894676a3a6ff1008d506
--- 
-2.49.0
-
+Cheers,
+Miguel
