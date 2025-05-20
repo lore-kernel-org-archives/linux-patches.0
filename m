@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB072441B4;
-	Tue, 20 May 2025 13:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27C724337C;
+	Tue, 20 May 2025 13:59:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749591; cv=none; b=HFXgvLbBUb6FfX03SkW4UtsihnSKaHuPMT6TwL/KYnrCDGuFovwiA0n6b64k+DfplOtXmOucvoTDmps6y6dmTPnP1uLEvK66/Q5Ta7zOvXWhGv60s+oVEEbECQzIbKot3cB7Q8qM6KMt4SdgEAzBiaEbb/0NE9sFMjW8tU6lZ9s=
+	t=1747749594; cv=none; b=ehuudt5YQBQr6J+5SvDC+DlKoSimld/dr5ug0SUBHofekNtD0grKoIF2X+gCJtuSYcQ8vmXUT9HZMFjMRWn1D7A/FfS8MqfB1GUy8aPAnzhLhiF698+TmtntwLb2x2seth3xh+iyqghUeq7fEOOxhpT5lVUH9IJ9h9CNdiwA4lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749591; c=relaxed/simple;
-	bh=gKRpU9/XXGH0yiCw/hCN5EzeKhNx4Pg+qpGP+KxYZ/w=;
+	s=arc-20240116; t=1747749594; c=relaxed/simple;
+	bh=1XWSK+aVLEua948AZpPZwEnMYTMsn2Vi+gGKo74UYGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AIiK3aQxQCtxOPW91RqgBs8MYAOQ4G3qBivdFDfs5SvyVP2SOOQuDVXRBvW0+gxYVHPPfvTUpJbBCLQAFDYPvR1JbTanyQrmKVVcsBchTGVZjGKsZv3LTMYNngP3Sp1+n8hZTb7tyBheHpiexij0aniOZ5torGEg9TWnqdmthcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0iafncq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QhUHK/5bjEd2lgBC3COzB4HiI44Q/70XwOUsq0eXLaHHcaV9CQr1HUvFzTfpolyhGgej6eJTI2KHlK9ThUMx/cKp9TFJk45ZqiarqGuXxBIm0K9af/G7ph+gw9/NKNyqD+tH8L5zcJNFmfQ19kyw3cNvfi2oIxk1kT/GsTGUzoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/6/H6R6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0iafncq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 075D0C4CEE9;
-	Tue, 20 May 2025 13:59:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/6/H6R6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4246CC4CEEA;
+	Tue, 20 May 2025 13:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749591;
-	bh=gKRpU9/XXGH0yiCw/hCN5EzeKhNx4Pg+qpGP+KxYZ/w=;
+	s=korg; t=1747749594;
+	bh=1XWSK+aVLEua948AZpPZwEnMYTMsn2Vi+gGKo74UYGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W0iafncqWIdYgCOl3FDfsKgU+Ox7xUy96pWL+9ojYuoXkJ4lxTW2kP9MvaRQ+HZK5
-	 9zUI2Jurek1EpjscdzyGN9OuVyeu9rweSm8G8HpMuq3h0qXHa2NVtvNdxXKxINwM8o
-	 rRDD16R8n8iIEGPqYaJtycqUkOgvX7ee8Xk03yHI=
+	b=A/6/H6R6AS8I86Ytdyd0sVI87S4yI5+LJelR0CPxgawSHKA3g2WQIjKmzso+8FTos
+	 9WCWNwXN2LDZWdJs3TvNC7vxg9POJkt0MOMdQcX2DzO3ISK477mMhQUIy6yiSrmqa1
+	 YWjVr5CcDx5ZU6cU2U3r8cpRlpepi2CHYe21c9+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.1 63/97] wifi: mt76: disable napi on driver removal
-Date: Tue, 20 May 2025 15:50:28 +0200
-Message-ID: <20250520125803.119787954@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 64/97] net: qede: Initialize qede_ll_ops with designated initializer
+Date: Tue, 20 May 2025 15:50:29 +0200
+Message-ID: <20250520125803.158548759@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -51,59 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 78ab4be549533432d97ea8989d2f00b508fa68d8 upstream.
+commit 6b3ab7f2cbfaeb6580709cd8ef4d72cfd01bfde4 upstream.
 
-A warning on driver removal started occurring after commit 9dd05df8403b
-("net: warn if NAPI instance wasn't shut down"). Disable tx napi before
-deleting it in mt76_dma_cleanup().
+After a recent change [1] in clang's randstruct implementation to
+randomize structures that only contain function pointers, there is an
+error because qede_ll_ops get randomized but does not use a designated
+initializer for the first member:
 
- WARNING: CPU: 4 PID: 18828 at net/core/dev.c:7288 __netif_napi_del_locked+0xf0/0x100
- CPU: 4 UID: 0 PID: 18828 Comm: modprobe Not tainted 6.15.0-rc4 #4 PREEMPT(lazy)
- Hardware name: ASUS System Product Name/PRIME X670E-PRO WIFI, BIOS 3035 09/05/2024
- RIP: 0010:__netif_napi_del_locked+0xf0/0x100
- Call Trace:
- <TASK>
- mt76_dma_cleanup+0x54/0x2f0 [mt76]
- mt7921_pci_remove+0xd5/0x190 [mt7921e]
- pci_device_remove+0x47/0xc0
- device_release_driver_internal+0x19e/0x200
- driver_detach+0x48/0x90
- bus_remove_driver+0x6d/0xf0
- pci_unregister_driver+0x2e/0xb0
- __do_sys_delete_module.isra.0+0x197/0x2e0
- do_syscall_64+0x7b/0x160
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  drivers/net/ethernet/qlogic/qede/qede_main.c:206:2: error: a randomized struct can only be initialized with a designated initializer
+    206 |         {
+        |         ^
 
-Tested with mt7921e but the same pattern can be actually applied to other
-mt76 drivers calling mt76_dma_cleanup() during removal. Tx napi is enabled
-in their *_dma_init() functions and only toggled off and on again inside
-their suspend/resume/reset paths. So it should be okay to disable tx
-napi in such a generic way.
+Explicitly initialize the common member using a designated initializer
+to fix the build.
 
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: 2ac515a5d74f ("mt76: mt76x02: use napi polling for tx cleanup")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Tested-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20250506115540.19045-1-pchelkin@ispras.ru
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 035f7f87b729 ("randstruct: Enable Clang support")
+Link: https://github.com/llvm/llvm-project/commit/04364fb888eea6db9811510607bed4b200bcb082 [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20250507-qede-fix-clang-randstruct-v1-1-5ccc15626fba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/dma.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/qlogic/qede/qede_main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/dma.c
-+++ b/drivers/net/wireless/mediatek/mt76/dma.c
-@@ -789,6 +789,7 @@ void mt76_dma_cleanup(struct mt76_dev *d
- 	int i;
+--- a/drivers/net/ethernet/qlogic/qede/qede_main.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_main.c
+@@ -204,7 +204,7 @@ static struct pci_driver qede_pci_driver
+ };
  
- 	mt76_worker_disable(&dev->tx_worker);
-+	napi_disable(&dev->tx_napi);
- 	netif_napi_del(&dev->tx_napi);
- 
- 	for (i = 0; i < ARRAY_SIZE(dev->phys); i++) {
+ static struct qed_eth_cb_ops qede_ll_ops = {
+-	{
++	.common = {
+ #ifdef CONFIG_RFS_ACCEL
+ 		.arfs_filter_op = qede_arfs_filter_op,
+ #endif
 
 
