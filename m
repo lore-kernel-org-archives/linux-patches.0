@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7ED242907;
-	Tue, 20 May 2025 14:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F214248895;
+	Tue, 20 May 2025 14:08:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750083; cv=none; b=J1tcfYEsxtRkFcYXWD4tslvTueYVdjhSbpjRO3yRkjIx3G3ptNGA/VBNLouD5UGSMXFyr39kMYVlC4P8YhPObuRjqS/c6MM55A8iFU/hc407BtiIRR7460nBqDWSC2J/JjU0uxvgtXoGk/3MRHutJ58kfvglL0iDSz2tjalAYi4=
+	t=1747750086; cv=none; b=BAJf75rqJ3cf9sv+r9vdug/92kmSlOT1APtMOfESz+eZjWQKIVGDe0rrLBC0lzOWpNaMhhjQM3WkmfW5PUCujUYYx5uWI8qpTfq1IbD/XGtmcgNV6x2uPM8PeEnhFG9IaTaWvQXbiOsLWniuTZ40YEL8nmsGt/W4rZ1JIxpwwqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750083; c=relaxed/simple;
-	bh=UaVMNLLrlXf9VYGH2XJVV+uk8mOVLVnD8kzKwoSgNfs=;
+	s=arc-20240116; t=1747750086; c=relaxed/simple;
+	bh=a5JAN5KWEX6bN7ODKMIh7Sjjd5nwiSjuEh82CDTjPX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rRaVJWBdHHWfMev3r8OCLU9kdt4tzQ1L+XS4eFrQCgqoQ+2HmqnXyeDNRQXasfoDPpevKha456CYMbzLLbZA6QjmMobgxN+vltG71DcgmOnB+PwHJ8VV4mC7Y811IHEJzAosrU5y8Pe/v7qvEuF08x6E8vSnlbGCxQmrJOtivgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=er/P8X9L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qGMsFJvDV8e26R5+JiHfVSNKtuGfTgZ/hqKkmkK+wPNYx1jM9fbjBSdq5BWRR1l7Rbexknt1AotQbxxfw2wW4uJI2/LmhXn3tugglsOLmF7wzuVJ2EzBuKJgnwrdHg+JRvi+PJM0NreO5xndNRM/3AfD+YSKbn8dvh11znFNGHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BhOPVhjP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="er/P8X9L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26887C4CEE9;
-	Tue, 20 May 2025 14:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BhOPVhjP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EFFDC4CEF6;
+	Tue, 20 May 2025 14:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750082;
-	bh=UaVMNLLrlXf9VYGH2XJVV+uk8mOVLVnD8kzKwoSgNfs=;
+	s=korg; t=1747750085;
+	bh=a5JAN5KWEX6bN7ODKMIh7Sjjd5nwiSjuEh82CDTjPX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=er/P8X9Lw71vMigo9i8G15MJwOmeEJSn+02wOhVOatbJxRt/6ePo2CuM7WxpUsqbJ
-	 eqBNrtMBxJxAZc24JtfiD+0rMvvgDEvTXoU+mzTqj8BzVvpZBg1En51kLy3YafiMA7
-	 4z2a6cZE5oZ5Mrb4k0ikUqpM8acHIJmwGqWRUyt0=
+	b=BhOPVhjPeMveBWw0COzX1BhdhMI5lx6wUkxKEYXFGpyWJJE6Tnxi0NJaYp1j4VBvb
+	 tUHi+CyiucponnzBsaKyH+OezZpXHK2d1bLSJcCnyGxlCwTccPxVXj8O9eySOiIuoB
+	 JiPHETw9qVMdGbUFT//KCdS8kpDeTxydY3HAfCHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mingcong Bai <jeffbai@aosc.io>,
+	Xinhui Yang <cyan@cyano.uk>,
+	Rong Zhang <i@rong.moe>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Yemu Lu <prcups@krgm.moe>,
+	Runhua He <hua@aosc.io>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 035/143] tools/net/ynl: ethtool: fix crash when Hardware Clock info is missing
-Date: Tue, 20 May 2025 15:49:50 +0200
-Message-ID: <20250520125811.439362270@linuxfoundation.org>
+Subject: [PATCH 6.12 007/143] platform/x86/amd/pmc: Declare quirk_spurious_8042 for MECHREVO Wujie 14XA (GX4HRXL)
+Date: Tue, 20 May 2025 15:49:22 +0200
+Message-ID: <20250520125810.333638892@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -46,75 +50,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Runhua He <hua@aosc.io>
 
-[ Upstream commit 45375814eb3f4245956c0c85092a4eee4441d167 ]
+[ Upstream commit 0887817e4953885fbd6a5c1bec2fdd339261eb19 ]
 
-Fix a crash in the ethtool YNL implementation when Hardware Clock information
-is not present in the response. This ensures graceful handling of devices or
-drivers that do not provide this optional field. e.g.
+MECHREVO Wujie 14XA (GX4HRXL) wakes up immediately after s2idle entry.
+This happens regardless of whether the laptop is plugged into AC power,
+or whether any peripheral is plugged into the laptop.
 
-  Traceback (most recent call last):
-    File "/net/tools/net/ynl/pyynl/./ethtool.py", line 438, in <module>
-      main()
-      ~~~~^^
-    File "/net/tools/net/ynl/pyynl/./ethtool.py", line 341, in main
-      print(f'PTP Hardware Clock: {tsinfo["phc-index"]}')
-                                   ~~~~~~^^^^^^^^^^^^^
-  KeyError: 'phc-index'
+Similar to commit a55bdad5dfd1 ("platform/x86/amd/pmc: Disable keyboard
+wakeup on AMD Framework 13"), the MECHREVO Wujie 14XA wakes up almost
+instantly after s2idle suspend entry (IRQ1 is the keyboard):
 
-Fixes: f3d07b02b2b8 ("tools: ynl: ethtool testing tool")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20250508035414.82974-1-liuhangbin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+2025-04-18 17:23:57,588 DEBUG:  PM: Triggering wakeup from IRQ 9
+2025-04-18 17:23:57,588 DEBUG:  PM: Triggering wakeup from IRQ 1
+
+Add this model to the spurious_8042 quirk to workaround this.
+
+This patch does not affect the wake-up function of the built-in keyboard.
+Because the firmware of this machine adds an insurance for keyboard
+wake-up events, as it always triggers an additional IRQ 9 to wake up the
+system.
+
+Suggested-by: Mingcong Bai <jeffbai@aosc.io>
+Suggested-by: Xinhui Yang <cyan@cyano.uk>
+Suggested-by: Rong Zhang <i@rong.moe>
+Fixes: a55bdad5dfd1 ("platform/x86/amd/pmc: Disable keyboard wakeup on AMD Framework 13")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4166
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://zhuanldan.zhihu.com/p/730538041
+Tested-by: Yemu Lu <prcups@krgm.moe>
+Signed-off-by: Runhua He <hua@aosc.io>
+Link: https://lore.kernel.org/r/20250507100103.995395-1-hua@aosc.io
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/net/ynl/ethtool.py | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ drivers/platform/x86/amd/pmc/pmc-quirks.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/tools/net/ynl/ethtool.py b/tools/net/ynl/ethtool.py
-index 63c471f075abf..7e8342f914816 100755
---- a/tools/net/ynl/ethtool.py
-+++ b/tools/net/ynl/ethtool.py
-@@ -337,16 +337,24 @@ def main():
-         print('Capabilities:')
-         [print(f'\t{v}') for v in bits_to_dict(tsinfo['timestamping'])]
+diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+index b4f49720c87f6..2e3f6fc67c568 100644
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -217,6 +217,13 @@ static const struct dmi_system_id fwbug_list[] = {
+ 			DMI_MATCH(DMI_BIOS_VERSION, "03.05"),
+ 		}
+ 	},
++	{
++		.ident = "MECHREVO Wujie 14X (GX4HRXL)",
++		.driver_data = &quirk_spurious_8042,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "WUJIE14-GX4HRXL"),
++		}
++	},
+ 	{}
+ };
  
--        print(f'PTP Hardware Clock: {tsinfo["phc-index"]}')
-+        print(f'PTP Hardware Clock: {tsinfo.get("phc-index", "none")}')
- 
--        print('Hardware Transmit Timestamp Modes:')
--        [print(f'\t{v}') for v in bits_to_dict(tsinfo['tx-types'])]
-+        if 'tx-types' in tsinfo:
-+            print('Hardware Transmit Timestamp Modes:')
-+            [print(f'\t{v}') for v in bits_to_dict(tsinfo['tx-types'])]
-+        else:
-+            print('Hardware Transmit Timestamp Modes: none')
-+
-+        if 'rx-filters' in tsinfo:
-+            print('Hardware Receive Filter Modes:')
-+            [print(f'\t{v}') for v in bits_to_dict(tsinfo['rx-filters'])]
-+        else:
-+            print('Hardware Receive Filter Modes: none')
- 
--        print('Hardware Receive Filter Modes:')
--        [print(f'\t{v}') for v in bits_to_dict(tsinfo['rx-filters'])]
-+        if 'stats' in tsinfo and tsinfo['stats']:
-+            print('Statistics:')
-+            [print(f'\t{k}: {v}') for k, v in tsinfo['stats'].items()]
- 
--        print('Statistics:')
--        [print(f'\t{k}: {v}') for k, v in tsinfo['stats'].items()]
-         return
- 
-     print(f'Settings for {args.device}:')
 -- 
 2.39.5
 
