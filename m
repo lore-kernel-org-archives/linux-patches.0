@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E7524501D;
-	Tue, 20 May 2025 13:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1710EC4;
+	Tue, 20 May 2025 13:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749331; cv=none; b=DciXotOCwdnWVw99YIOoLmnSk1q7hfCtBpZodAd+z/ZdSaad0U+2UgC3k6Skuh6/TJv/lh6o8YzHZMGnWdxcw8Qey03ItGMx0PQb4wJUh/ryfbXqudErP+h8HQmeNvhdG+eJyOWYdUJ3UXTj+q6zvp8NklurzrrD7Hk+Ra0JbiY=
+	t=1747749333; cv=none; b=E8dIjMMIfiM9vB8TXg/t4AbvLFBJjNo1U1UJDK7FevliMHcQ55kk75nvD5pZjlxGzIHJd32/Sk78fc4rnN5H7OnAgUCQPrUZCAQuCMkpJgQRKV8gaKaoshqetS1wkWmwS7L2qA5czRL4mqdUxPDeQJgHZzbrqwLHHSRDbPE1m0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749331; c=relaxed/simple;
-	bh=A67XdX1gDQp0h3TZZHSCv0tuc6uk825WBpcE31LCVvo=;
+	s=arc-20240116; t=1747749333; c=relaxed/simple;
+	bh=9JERdFs/LFZmXJVZFsxHReYdJYB/wkqyUO2S8TBC5Y0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MSj529sZ5V2TW0dZMzbCjHvlyfRwUMqQK3uCHBAa/EDRhj7vIpXtyRjMb0JcN+Xkymty455eOrr98f0QpbEM0+ViiZBkSf89UrpmSLIoGU11bzag4ScvKlNxH6xu4iEXFDxy0TVRrQvvGAab3slnVveU5tFn5Nij9v+zkpPLZdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2twYdTf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hGnDA6JI47agpcXejqDZL3r+a7N2J9R5OUt9wqmRH+vLXnX5ohJFkRU7PQCXO7sbsC0xfSuoLDiOFiIPkYYSii5j2eUH9h3XfgdApvrvd+Vk3S+twFJRt3f/hcQ8yGiv5MALs0mKNiMuLnDJVDHE4sRpQX0SRjqxcHnZXxp10v8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=meZz1B6t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2twYdTf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F10C4CEEA;
-	Tue, 20 May 2025 13:55:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="meZz1B6t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62188C4CEEA;
+	Tue, 20 May 2025 13:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749331;
-	bh=A67XdX1gDQp0h3TZZHSCv0tuc6uk825WBpcE31LCVvo=;
+	s=korg; t=1747749333;
+	bh=9JERdFs/LFZmXJVZFsxHReYdJYB/wkqyUO2S8TBC5Y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m2twYdTf1gISuBvUSTNVLyUNS44aMmmoHyJvOCZbP3w5MCxb7kGDV6LjLTgdIqek7
-	 lJAQ/PqeTjgIrXIaGvwSQkHFV82ktrH1dwjTGmMFKlsjMw4K+oRNod8a5ht4HftIS8
-	 zWnYxS4E24L+d+5PtYC+nJgBR67FDne/T6CEAb1o=
+	b=meZz1B6t8lhuUh2XLcxo3KQxqyETZwaXLjRv1ZvbgYPYLuzvohc4edQ2MIjkV2l/B
+	 IK5uSD9WWLoHh1RziplZA8aTEAd+XzPLoQ0hT2cD1RLKicsSVUeUDL3AsQ6xx3VCu5
+	 uA2Hwo/G2gpB5FPCH+Pq8th9JfvhEAfh902jZx6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Paul Cacheux <paulcacheux@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 10/97] platform/x86: asus-wmi: Fix wlan_ctrl_by_user detection
-Date: Tue, 20 May 2025 15:49:35 +0200
-Message-ID: <20250520125801.073014720@linuxfoundation.org>
+Subject: [PATCH 6.1 11/97] tracing: probes: Fix a possible race in trace_probe_log APIs
+Date: Tue, 20 May 2025 15:49:36 +0200
+Message-ID: <20250520125801.110970560@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -46,78 +45,157 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit bfcfe6d335a967f8ea0c1980960e6f0205b5de6e ]
+[ Upstream commit fd837de3c9cb1a162c69bc1fb1f438467fe7f2f5 ]
 
-The wlan_ctrl_by_user detection was introduced by commit a50bd128f28c
-("asus-wmi: record wlan status while controlled by userapp").
+Since the shared trace_probe_log variable can be accessed and
+modified via probe event create operation of kprobe_events,
+uprobe_events, and dynamic_events, it should be protected.
+In the dynamic_events, all operations are serialized by
+`dyn_event_ops_mutex`. But kprobe_events and uprobe_events
+interfaces are not serialized.
 
-Quoting from that commit's commit message:
+To solve this issue, introduces dyn_event_create(), which runs
+create() operation under the mutex, for kprobe_events and
+uprobe_events. This also uses lockdep to check the mutex is
+held when using trace_probe_log* APIs.
 
-"""
-When you call WMIMethod(DSTS, 0x00010011) to get WLAN status, it may return
+Link: https://lore.kernel.org/all/174684868120.551552.3068655787654268804.stgit@devnote2/
 
-(1) 0x00050001 (On)
-(2) 0x00050000 (Off)
-(3) 0x00030001 (On)
-(4) 0x00030000 (Off)
-(5) 0x00000002 (Unknown)
-
-(1), (2) means that the model has hardware GPIO for WLAN, you can call
-WMIMethod(DEVS, 0x00010011, 1 or 0) to turn WLAN on/off.
-(3), (4) means that the model doesn’t have hardware GPIO, you need to use
-API or driver library to turn WLAN on/off, and call
-WMIMethod(DEVS, 0x00010012, 1 or 0) to set WLAN LED status.
-After you set WLAN LED status, you can see the WLAN status is changed with
-WMIMethod(DSTS, 0x00010011). Because the status is recorded lastly
-(ex: Windows), you can use it for synchronization.
-(5) means that the model doesn’t have WLAN device.
-
-WLAN is the ONLY special case with upper rule.
-"""
-
-The wlan_ctrl_by_user flag should be set on 0x0003000? ((3), (4) above)
-return values, but the flag mistakenly also gets set on laptops with
-0x0005000? ((1), (2)) return values. This is causing rfkill problems on
-laptops where 0x0005000? is returned.
-
-Fix the check to only set the wlan_ctrl_by_user flag for 0x0003000?
-return values.
-
-Fixes: a50bd128f28c ("asus-wmi: record wlan status while controlled by userapp")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219786
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20250501131702.103360-2-hdegoede@redhat.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reported-by: Paul Cacheux <paulcacheux@gmail.com>
+Closes: https://lore.kernel.org/all/20250510074456.805a16872b591e2971a4d221@kernel.org/
+Fixes: ab105a4fb894 ("tracing: Use tracing error_log with probe events")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-wmi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/trace_dynevent.c | 16 +++++++++++++++-
+ kernel/trace/trace_dynevent.h |  1 +
+ kernel/trace/trace_kprobe.c   |  2 +-
+ kernel/trace/trace_probe.c    |  9 +++++++++
+ kernel/trace/trace_uprobe.c   |  2 +-
+ 5 files changed, 27 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
-index 296150eaef929..33eacb4fc4c45 100644
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -3804,7 +3804,8 @@ static int asus_wmi_add(struct platform_device *pdev)
- 		goto fail_leds;
+diff --git a/kernel/trace/trace_dynevent.c b/kernel/trace/trace_dynevent.c
+index 4376887e0d8aa..c9b0533407ede 100644
+--- a/kernel/trace/trace_dynevent.c
++++ b/kernel/trace/trace_dynevent.c
+@@ -16,7 +16,7 @@
+ #include "trace_output.h"	/* for trace_event_sem */
+ #include "trace_dynevent.h"
  
- 	asus_wmi_get_devstate(asus, ASUS_WMI_DEVID_WLAN, &result);
--	if (result & (ASUS_WMI_DSTS_PRESENCE_BIT | ASUS_WMI_DSTS_USER_BIT))
-+	if ((result & (ASUS_WMI_DSTS_PRESENCE_BIT | ASUS_WMI_DSTS_USER_BIT)) ==
-+	    (ASUS_WMI_DSTS_PRESENCE_BIT | ASUS_WMI_DSTS_USER_BIT))
- 		asus->driver->wlan_ctrl_by_user = 1;
+-static DEFINE_MUTEX(dyn_event_ops_mutex);
++DEFINE_MUTEX(dyn_event_ops_mutex);
+ static LIST_HEAD(dyn_event_ops_list);
  
- 	if (!(asus->driver->wlan_ctrl_by_user && ashs_present())) {
+ bool trace_event_dyn_try_get_ref(struct trace_event_call *dyn_call)
+@@ -125,6 +125,20 @@ int dyn_event_release(const char *raw_command, struct dyn_event_operations *type
+ 	return ret;
+ }
+ 
++/*
++ * Locked version of event creation. The event creation must be protected by
++ * dyn_event_ops_mutex because of protecting trace_probe_log.
++ */
++int dyn_event_create(const char *raw_command, struct dyn_event_operations *type)
++{
++	int ret;
++
++	mutex_lock(&dyn_event_ops_mutex);
++	ret = type->create(raw_command);
++	mutex_unlock(&dyn_event_ops_mutex);
++	return ret;
++}
++
+ static int create_dyn_event(const char *raw_command)
+ {
+ 	struct dyn_event_operations *ops;
+diff --git a/kernel/trace/trace_dynevent.h b/kernel/trace/trace_dynevent.h
+index 936477a111d3e..beee3f8d75444 100644
+--- a/kernel/trace/trace_dynevent.h
++++ b/kernel/trace/trace_dynevent.h
+@@ -100,6 +100,7 @@ void *dyn_event_seq_next(struct seq_file *m, void *v, loff_t *pos);
+ void dyn_event_seq_stop(struct seq_file *m, void *v);
+ int dyn_events_release_all(struct dyn_event_operations *type);
+ int dyn_event_release(const char *raw_command, struct dyn_event_operations *type);
++int dyn_event_create(const char *raw_command, struct dyn_event_operations *type);
+ 
+ /*
+  * for_each_dyn_event	-	iterate over the dyn_event list
+diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
+index 72655d81b37d3..cc155c4117684 100644
+--- a/kernel/trace/trace_kprobe.c
++++ b/kernel/trace/trace_kprobe.c
+@@ -975,7 +975,7 @@ static int create_or_delete_trace_kprobe(const char *raw_command)
+ 	if (raw_command[0] == '-')
+ 		return dyn_event_release(raw_command, &trace_kprobe_ops);
+ 
+-	ret = trace_kprobe_create(raw_command);
++	ret = dyn_event_create(raw_command, &trace_kprobe_ops);
+ 	return ret == -ECANCELED ? -EINVAL : ret;
+ }
+ 
+diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
+index ba48b5e270e1f..3888a59c9dfe9 100644
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -143,9 +143,12 @@ static const struct fetch_type *find_fetch_type(const char *type)
+ }
+ 
+ static struct trace_probe_log trace_probe_log;
++extern struct mutex dyn_event_ops_mutex;
+ 
+ void trace_probe_log_init(const char *subsystem, int argc, const char **argv)
+ {
++	lockdep_assert_held(&dyn_event_ops_mutex);
++
+ 	trace_probe_log.subsystem = subsystem;
+ 	trace_probe_log.argc = argc;
+ 	trace_probe_log.argv = argv;
+@@ -154,11 +157,15 @@ void trace_probe_log_init(const char *subsystem, int argc, const char **argv)
+ 
+ void trace_probe_log_clear(void)
+ {
++	lockdep_assert_held(&dyn_event_ops_mutex);
++
+ 	memset(&trace_probe_log, 0, sizeof(trace_probe_log));
+ }
+ 
+ void trace_probe_log_set_index(int index)
+ {
++	lockdep_assert_held(&dyn_event_ops_mutex);
++
+ 	trace_probe_log.index = index;
+ }
+ 
+@@ -167,6 +174,8 @@ void __trace_probe_log_err(int offset, int err_type)
+ 	char *command, *p;
+ 	int i, len = 0, pos = 0;
+ 
++	lockdep_assert_held(&dyn_event_ops_mutex);
++
+ 	if (!trace_probe_log.argv)
+ 		return;
+ 
+diff --git a/kernel/trace/trace_uprobe.c b/kernel/trace/trace_uprobe.c
+index a6a3ff2a441ed..53ef3cb65098d 100644
+--- a/kernel/trace/trace_uprobe.c
++++ b/kernel/trace/trace_uprobe.c
+@@ -732,7 +732,7 @@ static int create_or_delete_trace_uprobe(const char *raw_command)
+ 	if (raw_command[0] == '-')
+ 		return dyn_event_release(raw_command, &trace_uprobe_ops);
+ 
+-	ret = trace_uprobe_create(raw_command);
++	ret = dyn_event_create(raw_command, &trace_uprobe_ops);
+ 	return ret == -ECANCELED ? -EINVAL : ret;
+ }
+ 
 -- 
 2.39.5
 
