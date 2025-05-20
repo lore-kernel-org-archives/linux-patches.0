@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45AE724468C;
-	Tue, 20 May 2025 14:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535BD24418D;
+	Tue, 20 May 2025 14:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750783; cv=none; b=Vs87wgZa1PJhqYpqSLL9sAFrbZIU+YWEVN2QfE24LS9pCBnHvcZJ2fBONNGDh/HZIFk8RzEXz1z1Y1DmcfnfwVdSenk7/KuIgyW48zT8GvP2Z9OP1H1nzsSFwB30mPgvQ1mTjn/5dm/sQN1L+UipRi1gtWEPIwh9CSY3vzTmbFU=
+	t=1747750786; cv=none; b=cMr6raUT6jhP/q1uEu4ImRH8WmzY3VvsbHg42zwXEf+Q0Qii+mz2gpFP12VZpnVxgvzkFbGf+wyZOk9DfedGzU2lo1hJlnXqxLOjY3x99WkqDLlkX5JLMmHMTJdcNcd2FIMyL9olkY34R2+EfBubyRQMB3/jg5UAnB2I2M+Lnug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750783; c=relaxed/simple;
-	bh=k5GBe7YWOo9ZVMbg+VB61eN7en+hKkm3do64RCxZyD0=;
+	s=arc-20240116; t=1747750786; c=relaxed/simple;
+	bh=j5nWYrck52xAsuc8r7hxTLRyroppZT5kv4OfK6Wc/n8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K86ijGZohpsjAhn6Xgi/dcaaciWlLSynemEjB4W/t7Vtcv04chio8Hvh8ylaHd29lGFs3JlbojjMdpHZruQKDdBCHeMcxL0fv/5VkpDaj/MmnqqrPeti7sShMPKw29Wk4a79fz9nEwK+9qk+/703gbGWsE/VrlLLWEU/neSZ/2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GTVxr23i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uDY9Ic1Iv8UM6mH2ykP2t7/laQ81gPeR9BnbecSXbe/p78E8OUmzuonMXKO74oGtohPV95CZtSfSVIYmSZfnbKKIIBwoOvS8S0Y6AFxvlf5x4J4bKvyvKpWFIcn6I5fhI2rp2zbJpFx9enm/PfEJzay3Iyg57yXjnQ7VLiiHcTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18RhOrpK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GTVxr23i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B508AC4CEF1;
-	Tue, 20 May 2025 14:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18RhOrpK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6DBAC4CEE9;
+	Tue, 20 May 2025 14:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750783;
-	bh=k5GBe7YWOo9ZVMbg+VB61eN7en+hKkm3do64RCxZyD0=;
+	s=korg; t=1747750786;
+	bh=j5nWYrck52xAsuc8r7hxTLRyroppZT5kv4OfK6Wc/n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GTVxr23i+h1/JpPeSvsXUebWnISgJj3McGmNYrpw9fRzsAyDYoSJvfXvW6X2DO27n
-	 hDkWsWZCOZ2cIuTLrxBVzuDvJN9viscsPt2mT8U+kz+s2UEu74CS29vZVd6n2Mm/o7
-	 qL63gOD3mP6qsKnd3xpXeZzYSNUHoLrMeudj9Vb0=
+	b=18RhOrpK9ns8dbS5p1PQ+C4utVLfK2ryM8jR6Xozq4Vd00nrD1hvrrz6MlU9P24ng
+	 DOhxRXyvEX8Wdgb5f851BPO89YtGELUIKbhcPNGuycl/Tosdy0WjAOUUPpgpuX8KVb
+	 4QtrJdv/zguPVRzlStFDKiOrHlplvKKzTU1orMUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.14 120/145] net: qede: Initialize qede_ll_ops with designated initializer
-Date: Tue, 20 May 2025 15:51:30 +0200
-Message-ID: <20250520125815.252646459@linuxfoundation.org>
+	syzbot+5b8c4abafcb1d791ccfc@syzkaller.appspotmail.com,
+	syzbot+6456a99dfdc2e78c4feb@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.14 121/145] io_uring/memmap: dont use page_address() on a highmem page
+Date: Tue, 20 May 2025 15:51:31 +0200
+Message-ID: <20250520125815.291795901@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -50,43 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 6b3ab7f2cbfaeb6580709cd8ef4d72cfd01bfde4 upstream.
+commit f446c6311e86618a1f81eb576b56a6266307238f upstream.
 
-After a recent change [1] in clang's randstruct implementation to
-randomize structures that only contain function pointers, there is an
-error because qede_ll_ops get randomized but does not use a designated
-initializer for the first member:
-
-  drivers/net/ethernet/qlogic/qede/qede_main.c:206:2: error: a randomized struct can only be initialized with a designated initializer
-    206 |         {
-        |         ^
-
-Explicitly initialize the common member using a designated initializer
-to fix the build.
+For older/32-bit systems with highmem, don't assume that the pages in
+a mapped region are always going to be mapped. If io_region_init_ptr()
+finds that the pages are coalescable, also check if the first page is
+a HighMem page or not. If it is, fall through to the usual vmap()
+mapping rather than attempt to get the unmapped page address.
 
 Cc: stable@vger.kernel.org
-Fixes: 035f7f87b729 ("randstruct: Enable Clang support")
-Link: https://github.com/llvm/llvm-project/commit/04364fb888eea6db9811510607bed4b200bcb082 [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20250507-qede-fix-clang-randstruct-v1-1-5ccc15626fba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c4d0ac1c1567 ("io_uring/memmap: optimise single folio regions")
+Link: https://lore.kernel.org/all/681fe2fb.050a0220.f2294.001a.GAE@google.com/
+Reported-by: syzbot+5b8c4abafcb1d791ccfc@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/681fed0a.050a0220.f2294.001c.GAE@google.com/
+Reported-by: syzbot+6456a99dfdc2e78c4feb@syzkaller.appspotmail.com
+Tested-by: syzbot+6456a99dfdc2e78c4feb@syzkaller.appspotmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_main.c |    2 +-
+ io_uring/memmap.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/qlogic/qede/qede_main.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_main.c
-@@ -203,7 +203,7 @@ static struct pci_driver qede_pci_driver
- };
+diff --git a/io_uring/memmap.c b/io_uring/memmap.c
+index 76fcc79656b0..07f8a5cbd37e 100644
+--- a/io_uring/memmap.c
++++ b/io_uring/memmap.c
+@@ -116,7 +116,7 @@ static int io_region_init_ptr(struct io_mapped_region *mr)
+ 	void *ptr;
  
- static struct qed_eth_cb_ops qede_ll_ops = {
--	{
-+	.common = {
- #ifdef CONFIG_RFS_ACCEL
- 		.arfs_filter_op = qede_arfs_filter_op,
- #endif
+ 	if (io_check_coalesce_buffer(mr->pages, mr->nr_pages, &ifd)) {
+-		if (ifd.nr_folios == 1) {
++		if (ifd.nr_folios == 1 && !PageHighMem(mr->pages[0])) {
+ 			mr->ptr = page_address(mr->pages[0]);
+ 			return 0;
+ 		}
+-- 
+2.49.0
+
 
 
