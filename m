@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCDA24679E;
-	Tue, 20 May 2025 14:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBBB248195;
+	Tue, 20 May 2025 14:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750562; cv=none; b=WHoYqtjcxV7G8AFRkPMVAdOTw0FJrqWfD0hIfQc/5R9aekFchOi11URszi6ZRGVOO3BhaTg3E+GuvklKJJ6/bLvHoMsn7144csgRIfwm69iUjk27OFaRALDKvVhO4OXwCPmfTOLNN5r+BFzr2a5ec6tfpGSKhs4oEX1+GlvPLoY=
+	t=1747750565; cv=none; b=BAqNu/OTrQQ+5Du3t3hojiEixzu2Jzqr/FEqhkxbYCIa6ZfpmjfxPPcDsnXDLeZaiuvdrf6vlu1rbZDgsjCvwEI3OrllJYKymtMRtISWLn6C0CkPnIjpr/nUL0XULWrUdBdpDHskg/W/JlYpPRflwKwd4hDnuGZrwqOlWKee4SM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750562; c=relaxed/simple;
-	bh=/+aWDRyB7CC/fhU4GWQ/wmqimgY8Jrqns50j+4+VYbY=;
+	s=arc-20240116; t=1747750565; c=relaxed/simple;
+	bh=QwnNR05s9lJ5w07NzOKZ3WZFbfxleSrO3xo2PdkwqS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EgykLfuaRlEDxCDJ/oETVx4QJYBT1cVpzJfC6MXgG03FLmW6FkLs5lciWR4AncFMDzl8MGxMMIYHwg1Frhyq9yyLbYPIzR1fa1TMIzh1gdZYte0rOnPPdAgDDuXVCsVm4EIUrzccRmlNJ2LIneuzTrDHhIfnPy/Q4m0FKM4fcZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0AI1Bs4x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VB4QDcBi83+xYA/koFiQOfXAQRhJm7SEhJ2yKutTRdyoU1p/KL2a4TYv2U2GvdfksZXIuF3EWxXV/KPTmvfimpHPQzIbZwXJNLEdmTh5q6A8pCl2Wn9ZCouh1g5K30d4a8xvQl7LJJk8mSVfYC3Tgvzi3WSNYUwHXwIK4pBoI+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhGOSkTf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0AI1Bs4x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F42C4CEE9;
-	Tue, 20 May 2025 14:16:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhGOSkTf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9814EC4CEE9;
+	Tue, 20 May 2025 14:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750562;
-	bh=/+aWDRyB7CC/fhU4GWQ/wmqimgY8Jrqns50j+4+VYbY=;
+	s=korg; t=1747750565;
+	bh=QwnNR05s9lJ5w07NzOKZ3WZFbfxleSrO3xo2PdkwqS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0AI1Bs4x9FDBM+czZj0n7DCnSm6IdheIaVJzQGS2mc2YBEUnPYCRNdqDbgHvKtCoo
-	 Elc6gz/g747hnQhDTtmHNi70ZLXZCo2R0tX8UuwpEf+6YCAcTncA0vWypBG0bWxiUi
-	 +jGtMOPvbc5e8jvNs3cKb8h9+i+z1w1itaNwQQ28=
+	b=UhGOSkTf2UQtGiZblRba7TsFVYMLxABJ3MvPVUW9s0U5WgPRffmt4gBnt+2ymCznF
+	 z57GuJS2ecb1hr14zJirVNQDq2mxtV64gZsUC0Qi4xvOLRkbeyze2YtXJe8Caj5Caf
+	 bsXfx5t2AgfSHpG08WXIxkRFCxZtXxe4poAWheVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Stols <gstols@baylibre.com>,
-	Angelo Dureghello <adureghello@baylibre.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 018/145] iio: adc: ad7606: move software functions into common file
-Date: Tue, 20 May 2025 15:49:48 +0200
-Message-ID: <20250520125811.266167311@linuxfoundation.org>
+Subject: [PATCH 6.14 009/145] binfmt_elf: Move brk for static PIE even if ASLR disabled
+Date: Tue, 20 May 2025 15:49:39 +0200
+Message-ID: <20250520125810.912212826@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -52,496 +51,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Stols <gstols@baylibre.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit d2477887f6677de0675e600f1590378a5fb52909 ]
+[ Upstream commit 11854fe263eb1b9a8efa33b0c087add7719ea9b4 ]
 
-Since the register are always the same, whatever bus is used, moving the
-software functions into the main file avoids the code to be duplicated
-in both SPI and parallel version of the driver.
+In commit bbdc6076d2e5 ("binfmt_elf: move brk out of mmap when doing
+direct loader exec"), the brk was moved out of the mmap region when
+loading static PIE binaries (ET_DYN without INTERP). The common case
+for these binaries was testing new ELF loaders, so the brk needed to
+be away from mmap to avoid colliding with stack, future mmaps (of the
+loader-loaded binary), etc. But this was only done when ASLR was enabled,
+in an attempt to minimize changes to memory layouts.
 
-Signed-off-by: Guillaume Stols <gstols@baylibre.com>
-Co-developed-by: Angelo Dureghello <adureghello@baylibre.com>
-Signed-off-by: Angelo Dureghello <adureghello@baylibre.com>
-Link: https://patch.msgid.link/20250210-wip-bl-ad7606_add_backend_sw_mode-v4-3-160df18b1da7@baylibre.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 5257d80e22bf ("iio: adc: ad7606: check for NULL before calling sw_mode_config()")
+After adding support to respect alignment requirements for static PIE
+binaries in commit 3545deff0ec7 ("binfmt_elf: Honor PT_LOAD alignment
+for static PIE"), it became possible to have a large gap after the
+final PT_LOAD segment and the top of the mmap region. This means that
+future mmap allocations might go after the last PT_LOAD segment (where
+brk might be if ASLR was disabled) instead of before them (where they
+traditionally ended up).
+
+On arm64, running with ASLR disabled, Ubuntu 22.04's "ldconfig" binary,
+a static PIE, has alignment requirements that leaves a gap large enough
+after the last PT_LOAD segment to fit the vdso and vvar, but still leave
+enough space for the brk (which immediately follows the last PT_LOAD
+segment) to be allocated by the binary.
+
+fffff7f20000-fffff7fde000 r-xp 00000000 fe:02 8110426 /sbin/ldconfig.real
+fffff7fee000-fffff7ff5000 rw-p 000be000 fe:02 8110426 /sbin/ldconfig.real
+fffff7ff5000-fffff7ffa000 rw-p 00000000 00:00 0
+***[brk will go here at fffff7ffa000]***
+fffff7ffc000-fffff7ffe000 r--p 00000000 00:00 0       [vvar]
+fffff7ffe000-fffff8000000 r-xp 00000000 00:00 0       [vdso]
+fffffffdf000-1000000000000 rw-p 00000000 00:00 0      [stack]
+
+After commit 0b3bc3354eb9 ("arm64: vdso: Switch to generic storage
+implementation"), the arm64 vvar grew slightly, and suddenly the brk
+collided with the allocation.
+
+fffff7f20000-fffff7fde000 r-xp 00000000 fe:02 8110426 /sbin/ldconfig.real
+fffff7fee000-fffff7ff5000 rw-p 000be000 fe:02 8110426 /sbin/ldconfig.real
+fffff7ff5000-fffff7ffa000 rw-p 00000000 00:00 0
+***[oops, no room any more, vvar is at fffff7ffa000!]***
+fffff7ffa000-fffff7ffe000 r--p 00000000 00:00 0       [vvar]
+fffff7ffe000-fffff8000000 r-xp 00000000 00:00 0       [vdso]
+fffffffdf000-1000000000000 rw-p 00000000 00:00 0      [stack]
+
+The solution is to unconditionally move the brk out of the mmap region
+for static PIE binaries. Whether ASLR is enabled or not does not change if
+there may be future mmap allocation collisions with a growing brk region.
+
+Update memory layout comments (with kernel-doc headings), consolidate
+the setting of mm->brk to later (it isn't needed early), move static PIE
+brk out of mmap unconditionally, and make sure brk(2) knows to base brk
+position off of mm->start_brk not mm->end_data no matter what the cause of
+moving it is (via current->brk_randomized).
+
+For the CONFIG_COMPAT_BRK case, though, leave the logic unchanged, as we
+can never safely move the brk. These systems, however, are not using
+specially aligned static PIE binaries.
+
+Reported-by: Ryan Roberts <ryan.roberts@arm.com>
+Closes: https://lore.kernel.org/lkml/f93db308-4a0e-4806-9faf-98f890f5a5e6@arm.com/
+Fixes: bbdc6076d2e5 ("binfmt_elf: move brk out of mmap when doing direct loader exec")
+Link: https://lore.kernel.org/r/20250425224502.work.520-kees@kernel.org
+Reviewed-by: Ryan Roberts <ryan.roberts@arm.com>
+Tested-by: Ryan Roberts <ryan.roberts@arm.com>
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7606.c     | 133 +++++++++++++++++++++++++++++++---
- drivers/iio/adc/ad7606.h     |  37 +++++++++-
- drivers/iio/adc/ad7606_spi.c | 137 +----------------------------------
- 3 files changed, 158 insertions(+), 149 deletions(-)
+ fs/binfmt_elf.c | 71 ++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 47 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/iio/adc/ad7606.c b/drivers/iio/adc/ad7606.c
-index 376c808df11c7..7985570ed1521 100644
---- a/drivers/iio/adc/ad7606.c
-+++ b/drivers/iio/adc/ad7606.c
-@@ -85,6 +85,10 @@ static const unsigned int ad7606_oversampling_avail[7] = {
- 	1, 2, 4, 8, 16, 32, 64,
- };
+diff --git a/fs/binfmt_elf.c b/fs/binfmt_elf.c
+index 8054f44d39cf7..855ef79561062 100644
+--- a/fs/binfmt_elf.c
++++ b/fs/binfmt_elf.c
+@@ -831,6 +831,7 @@ static int load_elf_binary(struct linux_binprm *bprm)
+ 	struct elf_phdr *elf_ppnt, *elf_phdata, *interp_elf_phdata = NULL;
+ 	struct elf_phdr *elf_property_phdata = NULL;
+ 	unsigned long elf_brk;
++	bool brk_moved = false;
+ 	int retval, i;
+ 	unsigned long elf_entry;
+ 	unsigned long e_entry;
+@@ -1098,15 +1099,19 @@ static int load_elf_binary(struct linux_binprm *bprm)
+ 			/* Calculate any requested alignment. */
+ 			alignment = maximum_alignment(elf_phdata, elf_ex->e_phnum);
  
-+static const unsigned int ad7606b_oversampling_avail[9] = {
-+	1, 2, 4, 8, 16, 32, 64, 128, 256,
-+};
-+
- static const unsigned int ad7616_oversampling_avail[8] = {
- 	1, 2, 4, 8, 16, 32, 64, 128,
- };
-@@ -187,6 +191,8 @@ static int ad7608_chan_scale_setup(struct iio_dev *indio_dev,
- 				   struct iio_chan_spec *chan, int ch);
- static int ad7609_chan_scale_setup(struct iio_dev *indio_dev,
- 				   struct iio_chan_spec *chan, int ch);
-+static int ad7616_sw_mode_setup(struct iio_dev *indio_dev);
-+static int ad7606b_sw_mode_setup(struct iio_dev *indio_dev);
+-			/*
+-			 * There are effectively two types of ET_DYN
+-			 * binaries: programs (i.e. PIE: ET_DYN with PT_INTERP)
+-			 * and loaders (ET_DYN without PT_INTERP, since they
+-			 * _are_ the ELF interpreter). The loaders must
+-			 * be loaded away from programs since the program
+-			 * may otherwise collide with the loader (especially
+-			 * for ET_EXEC which does not have a randomized
+-			 * position). For example to handle invocations of
++			/**
++			 * DOC: PIE handling
++			 *
++			 * There are effectively two types of ET_DYN ELF
++			 * binaries: programs (i.e. PIE: ET_DYN with
++			 * PT_INTERP) and loaders (i.e. static PIE: ET_DYN
++			 * without PT_INTERP, usually the ELF interpreter
++			 * itself). Loaders must be loaded away from programs
++			 * since the program may otherwise collide with the
++			 * loader (especially for ET_EXEC which does not have
++			 * a randomized position).
++			 *
++			 * For example, to handle invocations of
+ 			 * "./ld.so someprog" to test out a new version of
+ 			 * the loader, the subsequent program that the
+ 			 * loader loads must avoid the loader itself, so
+@@ -1119,6 +1124,9 @@ static int load_elf_binary(struct linux_binprm *bprm)
+ 			 * ELF_ET_DYN_BASE and loaders are loaded into the
+ 			 * independently randomized mmap region (0 load_bias
+ 			 * without MAP_FIXED nor MAP_FIXED_NOREPLACE).
++			 *
++			 * See below for "brk" handling details, which is
++			 * also affected by program vs loader and ASLR.
+ 			 */
+ 			if (interpreter) {
+ 				/* On ET_DYN with PT_INTERP, we do the ASLR. */
+@@ -1235,8 +1243,6 @@ static int load_elf_binary(struct linux_binprm *bprm)
+ 	start_data += load_bias;
+ 	end_data += load_bias;
  
- const struct ad7606_chip_info ad7605_4_info = {
- 	.channels = ad7605_channels,
-@@ -239,6 +245,7 @@ const struct ad7606_chip_info ad7606b_info = {
- 	.oversampling_avail = ad7606_oversampling_avail,
- 	.oversampling_num = ARRAY_SIZE(ad7606_oversampling_avail),
- 	.scale_setup_cb = ad7606_16bit_chan_scale_setup,
-+	.sw_setup_cb = ad7606b_sw_mode_setup,
- };
- EXPORT_SYMBOL_NS_GPL(ad7606b_info, "IIO_AD7606");
+-	current->mm->start_brk = current->mm->brk = ELF_PAGEALIGN(elf_brk);
+-
+ 	if (interpreter) {
+ 		elf_entry = load_elf_interp(interp_elf_ex,
+ 					    interpreter,
+@@ -1292,27 +1298,44 @@ static int load_elf_binary(struct linux_binprm *bprm)
+ 	mm->end_data = end_data;
+ 	mm->start_stack = bprm->p;
  
-@@ -250,6 +257,7 @@ const struct ad7606_chip_info ad7606c_16_info = {
- 	.oversampling_avail = ad7606_oversampling_avail,
- 	.oversampling_num = ARRAY_SIZE(ad7606_oversampling_avail),
- 	.scale_setup_cb = ad7606c_16bit_chan_scale_setup,
-+	.sw_setup_cb = ad7606b_sw_mode_setup,
- };
- EXPORT_SYMBOL_NS_GPL(ad7606c_16_info, "IIO_AD7606");
- 
-@@ -294,6 +302,7 @@ const struct ad7606_chip_info ad7606c_18_info = {
- 	.oversampling_avail = ad7606_oversampling_avail,
- 	.oversampling_num = ARRAY_SIZE(ad7606_oversampling_avail),
- 	.scale_setup_cb = ad7606c_18bit_chan_scale_setup,
-+	.sw_setup_cb = ad7606b_sw_mode_setup,
- };
- EXPORT_SYMBOL_NS_GPL(ad7606c_18_info, "IIO_AD7606");
- 
-@@ -307,6 +316,7 @@ const struct ad7606_chip_info ad7616_info = {
- 	.oversampling_num = ARRAY_SIZE(ad7616_oversampling_avail),
- 	.os_req_reset = true,
- 	.scale_setup_cb = ad7606_16bit_chan_scale_setup,
-+	.sw_setup_cb = ad7616_sw_mode_setup,
- };
- EXPORT_SYMBOL_NS_GPL(ad7616_info, "IIO_AD7606");
- 
-@@ -1138,16 +1148,118 @@ static const struct iio_trigger_ops ad7606_trigger_ops = {
- 	.validate_device = iio_trigger_validate_own_device,
- };
- 
--static int ad7606_sw_mode_setup(struct iio_dev *indio_dev)
-+static int ad7606_write_mask(struct ad7606_state *st, unsigned int addr,
-+			     unsigned long mask, unsigned int val)
-+{
-+	int readval;
-+
-+	readval = st->bops->reg_read(st, addr);
-+	if (readval < 0)
-+		return readval;
-+
-+	readval &= ~mask;
-+	readval |= val;
-+
-+	return st->bops->reg_write(st, addr, readval);
-+}
-+
-+static int ad7616_write_scale_sw(struct iio_dev *indio_dev, int ch, int val)
- {
- 	struct ad7606_state *st = iio_priv(indio_dev);
-+	unsigned int ch_addr, mode, ch_index;
- 
--	st->sw_mode_en = st->bops->sw_mode_config &&
--			 device_property_present(st->dev, "adi,sw-mode");
--	if (!st->sw_mode_en)
--		return 0;
-+	/*
-+	 * Ad7616 has 16 channels divided in group A and group B.
-+	 * The range of channels from A are stored in registers with address 4
-+	 * while channels from B are stored in register with address 6.
-+	 * The last bit from channels determines if it is from group A or B
-+	 * because the order of channels in iio is 0A, 0B, 1A, 1B...
+-	if ((current->flags & PF_RANDOMIZE) && (snapshot_randomize_va_space > 1)) {
++	/**
++	 * DOC: "brk" handling
++	 *
++	 * For architectures with ELF randomization, when executing a
++	 * loader directly (i.e. static PIE: ET_DYN without PT_INTERP),
++	 * move the brk area out of the mmap region and into the unused
++	 * ELF_ET_DYN_BASE region. Since "brk" grows up it may collide
++	 * early with the stack growing down or other regions being put
++	 * into the mmap region by the kernel (e.g. vdso).
++	 *
++	 * In the CONFIG_COMPAT_BRK case, though, everything is turned
++	 * off because we're not allowed to move the brk at all.
 +	 */
-+	ch_index = ch >> 1;
-+
-+	ch_addr = AD7616_RANGE_CH_ADDR(ch_index);
-+
-+	if ((ch & 0x1) == 0) /* channel A */
-+		ch_addr += AD7616_RANGE_CH_A_ADDR_OFF;
-+	else	/* channel B */
-+		ch_addr += AD7616_RANGE_CH_B_ADDR_OFF;
-+
-+	/* 0b01 for 2.5v, 0b10 for 5v and 0b11 for 10v */
-+	mode = AD7616_RANGE_CH_MODE(ch_index, ((val + 1) & 0b11));
- 
--	indio_dev->info = &ad7606_info_sw_mode;
-+	return ad7606_write_mask(st, ch_addr, AD7616_RANGE_CH_MSK(ch_index),
-+				 mode);
-+}
-+
-+static int ad7616_write_os_sw(struct iio_dev *indio_dev, int val)
-+{
-+	struct ad7606_state *st = iio_priv(indio_dev);
-+
-+	return ad7606_write_mask(st, AD7616_CONFIGURATION_REGISTER,
-+				 AD7616_OS_MASK, val << 2);
-+}
-+
-+static int ad7606_write_scale_sw(struct iio_dev *indio_dev, int ch, int val)
-+{
-+	struct ad7606_state *st = iio_priv(indio_dev);
-+
-+	return ad7606_write_mask(st, AD7606_RANGE_CH_ADDR(ch),
-+				 AD7606_RANGE_CH_MSK(ch),
-+				 AD7606_RANGE_CH_MODE(ch, val));
-+}
-+
-+static int ad7606_write_os_sw(struct iio_dev *indio_dev, int val)
-+{
-+	struct ad7606_state *st = iio_priv(indio_dev);
-+
-+	return st->bops->reg_write(st, AD7606_OS_MODE, val);
-+}
-+
-+static int ad7616_sw_mode_setup(struct iio_dev *indio_dev)
-+{
-+	struct ad7606_state *st = iio_priv(indio_dev);
-+	int ret;
-+
-+	/*
-+	 * Scale can be configured individually for each channel
-+	 * in software mode.
-+	 */
-+
-+	st->write_scale = ad7616_write_scale_sw;
-+	st->write_os = &ad7616_write_os_sw;
-+
-+	ret = st->bops->sw_mode_config(indio_dev);
-+	if (ret)
-+		return ret;
-+
-+	/* Activate Burst mode and SEQEN MODE */
-+	return ad7606_write_mask(st, AD7616_CONFIGURATION_REGISTER,
-+				 AD7616_BURST_MODE | AD7616_SEQEN_MODE,
-+				 AD7616_BURST_MODE | AD7616_SEQEN_MODE);
-+}
-+
-+static int ad7606b_sw_mode_setup(struct iio_dev *indio_dev)
-+{
-+	struct ad7606_state *st = iio_priv(indio_dev);
-+	DECLARE_BITMAP(os, 3);
-+
-+	bitmap_fill(os, 3);
-+	/*
-+	 * Software mode is enabled when all three oversampling
-+	 * pins are set to high. If oversampling gpios are defined
-+	 * in the device tree, then they need to be set to high,
-+	 * otherwise, they must be hardwired to VDD
-+	 */
-+	if (st->gpio_os) {
-+		gpiod_set_array_value(st->gpio_os->ndescs, st->gpio_os->desc,
-+				      st->gpio_os->info, os);
++	if (!IS_ENABLED(CONFIG_COMPAT_BRK) &&
++	    IS_ENABLED(CONFIG_ARCH_HAS_ELF_RANDOMIZE) &&
++	    elf_ex->e_type == ET_DYN && !interpreter) {
++		elf_brk = ELF_ET_DYN_BASE;
++		/* This counts as moving the brk, so let brk(2) know. */
++		brk_moved = true;
 +	}
-+	/* OS of 128 and 256 are available only in software mode */
-+	st->oversampling_avail = ad7606b_oversampling_avail;
-+	st->num_os_ratios = ARRAY_SIZE(ad7606b_oversampling_avail);
++	mm->start_brk = mm->brk = ELF_PAGEALIGN(elf_brk);
 +
-+	st->write_scale = ad7606_write_scale_sw;
-+	st->write_os = &ad7606_write_os_sw;
++	if ((current->flags & PF_RANDOMIZE) && snapshot_randomize_va_space > 1) {
+ 		/*
+-		 * For architectures with ELF randomization, when executing
+-		 * a loader directly (i.e. no interpreter listed in ELF
+-		 * headers), move the brk area out of the mmap region
+-		 * (since it grows up, and may collide early with the stack
+-		 * growing down), and into the unused ELF_ET_DYN_BASE region.
++		 * If we didn't move the brk to ELF_ET_DYN_BASE (above),
++		 * leave a gap between .bss and brk.
+ 		 */
+-		if (IS_ENABLED(CONFIG_ARCH_HAS_ELF_RANDOMIZE) &&
+-		    elf_ex->e_type == ET_DYN && !interpreter) {
+-			mm->brk = mm->start_brk = ELF_ET_DYN_BASE;
+-		} else {
+-			/* Otherwise leave a gap between .bss and brk. */
++		if (!brk_moved)
+ 			mm->brk = mm->start_brk = mm->brk + PAGE_SIZE;
+-		}
  
- 	return st->bops->sw_mode_config(indio_dev);
- }
-@@ -1326,9 +1438,12 @@ int ad7606_probe(struct device *dev, int irq, void __iomem *base_address,
- 	st->write_scale = ad7606_write_scale_hw;
- 	st->write_os = ad7606_write_os_hw;
- 
--	ret = ad7606_sw_mode_setup(indio_dev);
--	if (ret)
--		return ret;
-+	st->sw_mode_en = st->chip_info->sw_setup_cb &&
-+			 device_property_present(st->dev, "adi,sw-mode");
-+	if (st->sw_mode_en) {
-+		indio_dev->info = &ad7606_info_sw_mode;
-+		st->chip_info->sw_setup_cb(indio_dev);
+ 		mm->brk = mm->start_brk = arch_randomize_brk(mm);
++		brk_moved = true;
 +	}
- 
- 	ret = ad7606_chan_scales_setup(indio_dev);
- 	if (ret)
-diff --git a/drivers/iio/adc/ad7606.h b/drivers/iio/adc/ad7606.h
-index 8778ffe515b30..7a044b499cfe1 100644
---- a/drivers/iio/adc/ad7606.h
-+++ b/drivers/iio/adc/ad7606.h
-@@ -10,6 +10,36 @@
- 
- #define AD760X_MAX_CHANNELS	16
- 
-+#define AD7616_CONFIGURATION_REGISTER	0x02
-+#define AD7616_OS_MASK			GENMASK(4, 2)
-+#define AD7616_BURST_MODE		BIT(6)
-+#define AD7616_SEQEN_MODE		BIT(5)
-+#define AD7616_RANGE_CH_A_ADDR_OFF	0x04
-+#define AD7616_RANGE_CH_B_ADDR_OFF	0x06
-+/*
-+ * Range of channels from a group are stored in 2 registers.
-+ * 0, 1, 2, 3 in a register followed by 4, 5, 6, 7 in second register.
-+ * For channels from second group(8-15) the order is the same, only with
-+ * an offset of 2 for register address.
-+ */
-+#define AD7616_RANGE_CH_ADDR(ch)	((ch) >> 2)
-+/* The range of the channel is stored in 2 bits */
-+#define AD7616_RANGE_CH_MSK(ch)		(0b11 << (((ch) & 0b11) * 2))
-+#define AD7616_RANGE_CH_MODE(ch, mode)	((mode) << ((((ch) & 0b11)) * 2))
 +
-+#define AD7606_CONFIGURATION_REGISTER	0x02
-+#define AD7606_SINGLE_DOUT		0x00
-+
-+/*
-+ * Range for AD7606B channels are stored in registers starting with address 0x3.
-+ * Each register stores range for 2 channels(4 bits per channel).
-+ */
-+#define AD7606_RANGE_CH_MSK(ch)		(GENMASK(3, 0) << (4 * ((ch) & 0x1)))
-+#define AD7606_RANGE_CH_MODE(ch, mode)	\
-+	((GENMASK(3, 0) & (mode)) << (4 * ((ch) & 0x1)))
-+#define AD7606_RANGE_CH_ADDR(ch)	(0x03 + ((ch) >> 1))
-+#define AD7606_OS_MODE			0x08
-+
- #define AD760X_CHANNEL(num, mask_sep, mask_type, mask_all, bits) {	\
- 		.type = IIO_VOLTAGE,				\
- 		.indexed = 1,					\
-@@ -71,6 +101,7 @@ struct ad7606_state;
- 
- typedef int (*ad7606_scale_setup_cb_t)(struct iio_dev *indio_dev,
- 				       struct iio_chan_spec *chan, int ch);
-+typedef int (*ad7606_sw_setup_cb_t)(struct iio_dev *indio_dev);
- 
- /**
-  * struct ad7606_chip_info - chip specific information
-@@ -80,6 +111,7 @@ typedef int (*ad7606_scale_setup_cb_t)(struct iio_dev *indio_dev,
-  * @num_channels:	number of channels
-  * @num_adc_channels	the number of channels the ADC actually inputs.
-  * @scale_setup_cb:	callback to setup the scales for each channel
-+ * @sw_setup_cb:	callback to setup the software mode if available.
-  * @oversampling_avail	pointer to the array which stores the available
-  *			oversampling ratios.
-  * @oversampling_num	number of elements stored in oversampling_avail array
-@@ -94,6 +126,7 @@ struct ad7606_chip_info {
- 	unsigned int			num_adc_channels;
- 	unsigned int			num_channels;
- 	ad7606_scale_setup_cb_t		scale_setup_cb;
-+	ad7606_sw_setup_cb_t		sw_setup_cb;
- 	const unsigned int		*oversampling_avail;
- 	unsigned int			oversampling_num;
- 	bool				os_req_reset;
-@@ -206,10 +239,6 @@ struct ad7606_bus_ops {
- 	int (*reg_write)(struct ad7606_state *st,
- 				unsigned int addr,
- 				unsigned int val);
--	int (*write_mask)(struct ad7606_state *st,
--				 unsigned int addr,
--				 unsigned long mask,
--				 unsigned int val);
- 	int (*update_scan_mode)(struct iio_dev *indio_dev, const unsigned long *scan_mask);
- 	u16 (*rd_wr_cmd)(int addr, char isWriteOp);
- };
-diff --git a/drivers/iio/adc/ad7606_spi.c b/drivers/iio/adc/ad7606_spi.c
-index c8bc9e772dfc2..179115e909888 100644
---- a/drivers/iio/adc/ad7606_spi.c
-+++ b/drivers/iio/adc/ad7606_spi.c
-@@ -15,36 +15,6 @@
- 
- #define MAX_SPI_FREQ_HZ		23500000	/* VDRIVE above 4.75 V */
- 
--#define AD7616_CONFIGURATION_REGISTER	0x02
--#define AD7616_OS_MASK			GENMASK(4, 2)
--#define AD7616_BURST_MODE		BIT(6)
--#define AD7616_SEQEN_MODE		BIT(5)
--#define AD7616_RANGE_CH_A_ADDR_OFF	0x04
--#define AD7616_RANGE_CH_B_ADDR_OFF	0x06
--/*
-- * Range of channels from a group are stored in 2 registers.
-- * 0, 1, 2, 3 in a register followed by 4, 5, 6, 7 in second register.
-- * For channels from second group(8-15) the order is the same, only with
-- * an offset of 2 for register address.
-- */
--#define AD7616_RANGE_CH_ADDR(ch)	((ch) >> 2)
--/* The range of the channel is stored in 2 bits */
--#define AD7616_RANGE_CH_MSK(ch)		(0b11 << (((ch) & 0b11) * 2))
--#define AD7616_RANGE_CH_MODE(ch, mode)	((mode) << ((((ch) & 0b11)) * 2))
--
--#define AD7606_CONFIGURATION_REGISTER	0x02
--#define AD7606_SINGLE_DOUT		0x00
--
--/*
-- * Range for AD7606B channels are stored in registers starting with address 0x3.
-- * Each register stores range for 2 channels(4 bits per channel).
-- */
--#define AD7606_RANGE_CH_MSK(ch)		(GENMASK(3, 0) << (4 * ((ch) & 0x1)))
--#define AD7606_RANGE_CH_MODE(ch, mode)	\
--	((GENMASK(3, 0) & mode) << (4 * ((ch) & 0x1)))
--#define AD7606_RANGE_CH_ADDR(ch)	(0x03 + ((ch) >> 1))
--#define AD7606_OS_MODE			0x08
--
- static const struct iio_chan_spec ad7616_sw_channels[] = {
- 	IIO_CHAN_SOFT_TIMESTAMP(16),
- 	AD7616_CHANNEL(0),
-@@ -89,10 +59,6 @@ static const struct iio_chan_spec ad7606c_18_sw_channels[] = {
- 	AD7606_SW_CHANNEL(7, 18),
- };
- 
--static const unsigned int ad7606B_oversampling_avail[9] = {
--	1, 2, 4, 8, 16, 32, 64, 128, 256
--};
--
- static u16 ad7616_spi_rd_wr_cmd(int addr, char isWriteOp)
- {
- 	/*
-@@ -194,118 +160,20 @@ static int ad7606_spi_reg_write(struct ad7606_state *st,
- 	return spi_write(spi, &st->d16[0], sizeof(st->d16[0]));
- }
- 
--static int ad7606_spi_write_mask(struct ad7606_state *st,
--				 unsigned int addr,
--				 unsigned long mask,
--				 unsigned int val)
--{
--	int readval;
--
--	readval = st->bops->reg_read(st, addr);
--	if (readval < 0)
--		return readval;
--
--	readval &= ~mask;
--	readval |= val;
--
--	return st->bops->reg_write(st, addr, readval);
--}
--
--static int ad7616_write_scale_sw(struct iio_dev *indio_dev, int ch, int val)
--{
--	struct ad7606_state *st = iio_priv(indio_dev);
--	unsigned int ch_addr, mode, ch_index;
--
--
--	/*
--	 * Ad7616 has 16 channels divided in group A and group B.
--	 * The range of channels from A are stored in registers with address 4
--	 * while channels from B are stored in register with address 6.
--	 * The last bit from channels determines if it is from group A or B
--	 * because the order of channels in iio is 0A, 0B, 1A, 1B...
--	 */
--	ch_index = ch >> 1;
--
--	ch_addr = AD7616_RANGE_CH_ADDR(ch_index);
--
--	if ((ch & 0x1) == 0) /* channel A */
--		ch_addr += AD7616_RANGE_CH_A_ADDR_OFF;
--	else	/* channel B */
--		ch_addr += AD7616_RANGE_CH_B_ADDR_OFF;
--
--	/* 0b01 for 2.5v, 0b10 for 5v and 0b11 for 10v */
--	mode = AD7616_RANGE_CH_MODE(ch_index, ((val + 1) & 0b11));
--	return st->bops->write_mask(st, ch_addr, AD7616_RANGE_CH_MSK(ch_index),
--				     mode);
--}
--
--static int ad7616_write_os_sw(struct iio_dev *indio_dev, int val)
--{
--	struct ad7606_state *st = iio_priv(indio_dev);
--
--	return st->bops->write_mask(st, AD7616_CONFIGURATION_REGISTER,
--				     AD7616_OS_MASK, val << 2);
--}
--
--static int ad7606_write_scale_sw(struct iio_dev *indio_dev, int ch, int val)
--{
--	struct ad7606_state *st = iio_priv(indio_dev);
--
--	return ad7606_spi_write_mask(st,
--				     AD7606_RANGE_CH_ADDR(ch),
--				     AD7606_RANGE_CH_MSK(ch),
--				     AD7606_RANGE_CH_MODE(ch, val));
--}
--
--static int ad7606_write_os_sw(struct iio_dev *indio_dev, int val)
--{
--	struct ad7606_state *st = iio_priv(indio_dev);
--
--	return ad7606_spi_reg_write(st, AD7606_OS_MODE, val);
--}
--
- static int ad7616_sw_mode_config(struct iio_dev *indio_dev)
- {
--	struct ad7606_state *st = iio_priv(indio_dev);
--
- 	/*
- 	 * Scale can be configured individually for each channel
- 	 * in software mode.
- 	 */
- 	indio_dev->channels = ad7616_sw_channels;
- 
--	st->write_scale = ad7616_write_scale_sw;
--	st->write_os = &ad7616_write_os_sw;
--
--	/* Activate Burst mode and SEQEN MODE */
--	return st->bops->write_mask(st,
--			      AD7616_CONFIGURATION_REGISTER,
--			      AD7616_BURST_MODE | AD7616_SEQEN_MODE,
--			      AD7616_BURST_MODE | AD7616_SEQEN_MODE);
-+	return 0;
- }
- 
- static int ad7606B_sw_mode_config(struct iio_dev *indio_dev)
- {
- 	struct ad7606_state *st = iio_priv(indio_dev);
--	DECLARE_BITMAP(os, 3);
--
--	bitmap_fill(os, 3);
--	/*
--	 * Software mode is enabled when all three oversampling
--	 * pins are set to high. If oversampling gpios are defined
--	 * in the device tree, then they need to be set to high,
--	 * otherwise, they must be hardwired to VDD
--	 */
--	if (st->gpio_os) {
--		gpiod_set_array_value(st->gpio_os->ndescs,
--				      st->gpio_os->desc, st->gpio_os->info, os);
+ #ifdef compat_brk_randomized
++	if (brk_moved)
+ 		current->brk_randomized = 1;
+ #endif
 -	}
--	/* OS of 128 and 256 are available only in software mode */
--	st->oversampling_avail = ad7606B_oversampling_avail;
--	st->num_os_ratios = ARRAY_SIZE(ad7606B_oversampling_avail);
--
--	st->write_scale = ad7606_write_scale_sw;
--	st->write_os = &ad7606_write_os_sw;
  
- 	/* Configure device spi to output on a single channel */
- 	st->bops->reg_write(st,
-@@ -350,7 +218,6 @@ static const struct ad7606_bus_ops ad7616_spi_bops = {
- 	.read_block = ad7606_spi_read_block,
- 	.reg_read = ad7606_spi_reg_read,
- 	.reg_write = ad7606_spi_reg_write,
--	.write_mask = ad7606_spi_write_mask,
- 	.rd_wr_cmd = ad7616_spi_rd_wr_cmd,
- 	.sw_mode_config = ad7616_sw_mode_config,
- };
-@@ -359,7 +226,6 @@ static const struct ad7606_bus_ops ad7606b_spi_bops = {
- 	.read_block = ad7606_spi_read_block,
- 	.reg_read = ad7606_spi_reg_read,
- 	.reg_write = ad7606_spi_reg_write,
--	.write_mask = ad7606_spi_write_mask,
- 	.rd_wr_cmd = ad7606B_spi_rd_wr_cmd,
- 	.sw_mode_config = ad7606B_sw_mode_config,
- };
-@@ -368,7 +234,6 @@ static const struct ad7606_bus_ops ad7606c_18_spi_bops = {
- 	.read_block = ad7606_spi_read_block18to32,
- 	.reg_read = ad7606_spi_reg_read,
- 	.reg_write = ad7606_spi_reg_write,
--	.write_mask = ad7606_spi_write_mask,
- 	.rd_wr_cmd = ad7606B_spi_rd_wr_cmd,
- 	.sw_mode_config = ad7606c_18_sw_mode_config,
- };
+ 	if (current->personality & MMAP_PAGE_ZERO) {
+ 		/* Why this, you ask???  Well SVr4 maps page 0 as read-only,
 -- 
 2.39.5
 
