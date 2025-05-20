@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0102472AE;
-	Tue, 20 May 2025 14:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37D024888A;
+	Tue, 20 May 2025 14:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750436; cv=none; b=K2tCRnduOxIcTgqhrZ9pRjls3lot7P5lBSaQYeQJ6IOx3GTyAvq2cug5qAlN122Tkv+9Pd3nHVhCyRRllXwauJ5jjDb2P5dkzMll1/OPUAT3owvT1XrlIgiwXUsPKhhELOIRg41eTqFucM86aexCo69FH5wEsn4kruRV5UsA2zM=
+	t=1747750439; cv=none; b=pq+tSD07Ch9wZVDo2iCsIHtBtpbkWd6ukD0XszkGbQ4/+TO94PUD8rcB6XMdyqGXoB2qT0nwqo68SbNjBgW+3DknSPmyIX6N8Ez4yVb+lXBk54rULi9LCS5VceO/O0B3QiGuqKUN9jPO7j75uEnyZZlgvAuVNmksxluTPb71nrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750436; c=relaxed/simple;
-	bh=2ysceANjiXDDwni/D09KKLSKmgJITSyynl2eWalLQ88=;
+	s=arc-20240116; t=1747750439; c=relaxed/simple;
+	bh=xEzw+xGbp6EQ9N21IhdS7V2AKlGUl6KvyYIqyw41gVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EjgxSyMEQS9WJSH9CPQ45B6vWan5gGeH5KH7R9cvS0zFckoAdlHnLno1ufQltAZTHaBfT2OJlvf+37L+48fm+rxZqPNn4sZVSr6sRANZ8G8cn2xJIA5FtTGN2OnZIbf3vjbvgOIqQZMNDkKSXrnbwuNEKo8v6ieUllRECNtVX7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFJsbY15; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QZp+au+SIRE27SQjL+3zLPqjmZw/PpoPafKZbI/nPbHSQh9OwLnW4Z1D79Dd3VOoIbIIcmvTwaVOWGwysJsdsomwYl1BPju8XO/CfFGzaHVwVT47rG5ZFS3WQvup2z9R9iBoFrqFBzEHu0SWVyWtq089ngu/DMiDKXRuUxmq8lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=odBAS5Xx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFJsbY15"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD354C4CEEA;
-	Tue, 20 May 2025 14:13:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="odBAS5Xx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF95FC4CEE9;
+	Tue, 20 May 2025 14:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750436;
-	bh=2ysceANjiXDDwni/D09KKLSKmgJITSyynl2eWalLQ88=;
+	s=korg; t=1747750439;
+	bh=xEzw+xGbp6EQ9N21IhdS7V2AKlGUl6KvyYIqyw41gVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pFJsbY152Do4wHfR4oHiCLd6kGJV8y1WvK7d8l4Q35+cpXX0ZHxQw2THNnCfs83I9
-	 Mnb7vloBpQRZdX6HwyZESAN/WQgg7BEv1K9CitCf0RvpU/hGdVwYtPodY6HoUjHRhd
-	 Z9BQbVAo/j1bikLjYtjneh+tBpfo22gH5qYrpvOg=
+	b=odBAS5XxYs8Pe5E3dX8HiB1dhwPbxqW3sDWfzC9irF8lcmWU+WlF1YmqBF9OWzHg+
+	 CRlW8IkoHTiahQgQNXbpm3WJA5d4snDKRaZOSZ8h/vHeRWn9MtTPr4ShWcGcfbG2cm
+	 fzKpQTu5ZxrPFWKx3uBrkR1BW/C2muwK49W+juP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Subject: [PATCH 6.12 135/143] accel/ivpu: Fix fw log printing
-Date: Tue, 20 May 2025 15:51:30 +0200
-Message-ID: <20250520125815.326961719@linuxfoundation.org>
+	Tom Vincent <linux@tlvince.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.14 001/145] arm64: dts: rockchip: Assign RT5616 MCLK rate on rk3588-friendlyelec-cm3588
+Date: Tue, 20 May 2025 15:49:31 +0200
+Message-ID: <20250520125810.598200447@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
-References: <20250520125810.036375422@linuxfoundation.org>
+In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
+References: <20250520125810.535475500@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,121 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+From: Tom Vincent <linux@tlvince.com>
 
-commit 4bc988b47019536b3b1f7d9c5b83893c712d94d6 upstream.
+[ Upstream commit 5e6a4ee9799b202fefa8c6264647971f892f0264 ]
 
-  - Fix empty log detection that couldn't work without read_wrap_count
-  - Start printing wrapped log from correct position (log_start)
-  - Properly handle logs that are wrapped multiple times in reference
-    to reader position
-  - Don't add a newline when log buffer is wrapped
-  - Always add a newline after printing a log buffer in case log does
-    not end with one
+The Realtek RT5616 audio codec on the FriendlyElec CM3588 module fails
+to probe correctly due to the missing clock properties. This results
+in distorted analogue audio output.
 
-Reviewed-by: Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240930195322.461209-6-jacek.lawrynowicz@linux.intel.com
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Assign MCLK to 12.288 MHz, which allows the codec to advertise most of
+the standard sample rates per other RK3588 devices.
+
+Fixes: e23819cf273c ("arm64: dts: rockchip: Add FriendlyElec CM3588 NAS board")
+Signed-off-by: Tom Vincent <linux@tlvince.com>
+Link: https://lore.kernel.org/r/20250417081753.644950-1-linux@tlvince.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_fw_log.c |   49 +++++++++++++++++++++++++--------------
- 1 file changed, 32 insertions(+), 17 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3588-friendlyelec-cm3588.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/accel/ivpu/ivpu_fw_log.c
-+++ b/drivers/accel/ivpu/ivpu_fw_log.c
-@@ -87,7 +87,7 @@ static void fw_log_print_lines(char *buf
- 	}
- 	line[index] = 0;
- 	if (index != 0)
--		drm_printf(p, "%s\n", line);
-+		drm_printf(p, "%s", line);
- }
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588-friendlyelec-cm3588.dtsi b/arch/arm64/boot/dts/rockchip/rk3588-friendlyelec-cm3588.dtsi
+index e3a9598b99fca..cacffc851584f 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588-friendlyelec-cm3588.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3588-friendlyelec-cm3588.dtsi
+@@ -222,6 +222,10 @@
+ 		compatible = "realtek,rt5616";
+ 		reg = <0x1b>;
+ 		#sound-dai-cells = <0>;
++		assigned-clocks = <&cru I2S0_8CH_MCLKOUT>;
++		assigned-clock-rates = <12288000>;
++		clocks = <&cru I2S0_8CH_MCLKOUT>;
++		clock-names = "mclk";
+ 	};
+ };
  
- static void fw_log_print_buffer(struct vpu_tracing_buffer_header *log, const char *prefix,
-@@ -95,23 +95,29 @@ static void fw_log_print_buffer(struct v
- {
- 	char *log_data = (void *)log + log->header_size;
- 	u32 data_size = log->size - log->header_size;
--	u32 log_start = log->read_index;
--	u32 log_end = log->write_index;
-+	u32 log_start = only_new_msgs ? READ_ONCE(log->read_index) : 0;
-+	u32 log_end = READ_ONCE(log->write_index);
- 
--	if (!(log->write_index || log->wrap_count) ||
--	    (log->write_index == log->read_index && only_new_msgs)) {
--		drm_printf(p, "==== %s \"%s\" log empty ====\n", prefix, log->name);
--		return;
-+	if (log->wrap_count == log->read_wrap_count) {
-+		if (log_end <= log_start) {
-+			drm_printf(p, "==== %s \"%s\" log empty ====\n", prefix, log->name);
-+			return;
-+		}
-+	} else if (log->wrap_count == log->read_wrap_count + 1) {
-+		if (log_end > log_start)
-+			log_start = log_end;
-+	} else {
-+		log_start = log_end;
- 	}
- 
- 	drm_printf(p, "==== %s \"%s\" log start ====\n", prefix, log->name);
--	if (log->write_index > log->read_index) {
-+	if (log_end > log_start) {
- 		fw_log_print_lines(log_data + log_start, log_end - log_start, p);
- 	} else {
--		fw_log_print_lines(log_data + log_end, data_size - log_end, p);
-+		fw_log_print_lines(log_data + log_start, data_size - log_start, p);
- 		fw_log_print_lines(log_data, log_end, p);
- 	}
--	drm_printf(p, "\x1b[0m");
-+	drm_printf(p, "\n\x1b[0m"); /* add new line and clear formatting */
- 	drm_printf(p, "==== %s \"%s\" log end   ====\n", prefix, log->name);
- }
- 
-@@ -135,14 +141,19 @@ void ivpu_fw_log_print(struct ivpu_devic
- void ivpu_fw_log_mark_read(struct ivpu_device *vdev)
- {
- 	struct vpu_tracing_buffer_header *log;
--	u32 next = 0;
-+	u32 next;
- 
--	while (fw_log_from_bo(vdev, vdev->fw->mem_log_crit, &next, &log) == 0)
--		log->read_index = log->write_index;
-+	next = 0;
-+	while (fw_log_from_bo(vdev, vdev->fw->mem_log_crit, &next, &log) == 0) {
-+		log->read_index = READ_ONCE(log->write_index);
-+		log->read_wrap_count = READ_ONCE(log->wrap_count);
-+	}
- 
- 	next = 0;
--	while (fw_log_from_bo(vdev, vdev->fw->mem_log_verb, &next, &log) == 0)
--		log->read_index = log->write_index;
-+	while (fw_log_from_bo(vdev, vdev->fw->mem_log_verb, &next, &log) == 0) {
-+		log->read_index = READ_ONCE(log->write_index);
-+		log->read_wrap_count = READ_ONCE(log->wrap_count);
-+	}
- }
- 
- void ivpu_fw_log_reset(struct ivpu_device *vdev)
-@@ -151,10 +162,14 @@ void ivpu_fw_log_reset(struct ivpu_devic
- 	u32 next;
- 
- 	next = 0;
--	while (fw_log_from_bo(vdev, vdev->fw->mem_log_crit, &next, &log) == 0)
-+	while (fw_log_from_bo(vdev, vdev->fw->mem_log_crit, &next, &log) == 0) {
- 		log->read_index = 0;
-+		log->read_wrap_count = 0;
-+	}
- 
- 	next = 0;
--	while (fw_log_from_bo(vdev, vdev->fw->mem_log_verb, &next, &log) == 0)
-+	while (fw_log_from_bo(vdev, vdev->fw->mem_log_verb, &next, &log) == 0) {
- 		log->read_index = 0;
-+		log->read_wrap_count = 0;
-+	}
- }
+-- 
+2.39.5
+
 
 
