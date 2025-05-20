@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCB92441A7;
-	Tue, 20 May 2025 13:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C4222D78C;
+	Tue, 20 May 2025 13:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749297; cv=none; b=DFjoeoSpuJnHfLd13F+sbVjKbyKAa009c5temyfeasR2PIrZ5/z9pNjPmvpoga1oQLMbO2NTqycaXmaCPmQwZba+VYX9S4scp9eieuxKtcxTGIfEZIxonjgOIuzl1yi8KvCtO9Kq8BkuBL350TVYxRFf8Pb1rdL2i5grbXWPIqU=
+	t=1747749300; cv=none; b=aJJKr4LHJtFcKqcHWBG6tklHFGKcTNuDVSV1Nk4C8bvB5N1CY9ngGL90VyM7a/dClsl5S6hCm/8f9f/UvqBEeTqYUAU/Oanu68gWMDbvYsOu8lgubFReuzP9Yk2xa2pqDkAyLYUhDpTbXkJ7DDS+xTGuWt9gaWjzTW1r7BIhG3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749297; c=relaxed/simple;
-	bh=2EW5TUqZx1ccwk9Rxj4imTGlZq5CtzKm5pUsLogdbvY=;
+	s=arc-20240116; t=1747749300; c=relaxed/simple;
+	bh=ai74d7Tjk9pfLwyRQyZ+JRUkzYGoG88tmm20BpWCZXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RXSlxakjqfnOFJqDEykwr7hfQLqVShHaHlEN9LcYd8P5NAQydXZLiOuau0l6/7uP6fjXD1gWit7zCfIPvVKe35YfjT/VI7ss2Fyy5PH/PQtvnP7PIhs9cXbRZjT58kXQcRJ7eG2eb2JJcHwusvfmqYhqOAWTAqf2asyeOriDcKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kaotmcZq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hoCXu8L2aerAqwjRUSYEfSjSUVlno34E1/IVd3rX/YaqR9xnUx/s1g7UJKsrFkWX3Y7lBVa9E5X3DANZpMsIjO778VLLcxnnZgkHzUbkM8mS+BvuJO09jBnpPEGBRFJjVAqmz/6za5GQqIfSc8q7TdyebeoReP3NnWAaMO6vQd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agZ6sl7I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kaotmcZq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DFDC4CEE9;
-	Tue, 20 May 2025 13:54:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agZ6sl7I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ABC0C4CEE9;
+	Tue, 20 May 2025 13:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749297;
-	bh=2EW5TUqZx1ccwk9Rxj4imTGlZq5CtzKm5pUsLogdbvY=;
+	s=korg; t=1747749300;
+	bh=ai74d7Tjk9pfLwyRQyZ+JRUkzYGoG88tmm20BpWCZXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kaotmcZqM98OeyGqDNB3uGSUhY4nMq4qgB8taRGhehCNJqEggIb3o7wJWaEROy686
-	 7l/e84RQZwDO/ldRM4Hx9Hb6WqwjmjY4uZPfiBZq5mE+c1aYraOHro8KVLiLgxn4WG
-	 xiUqt6GKbQBaAAkglTCd9JDFOMXrQ6g8qoeWan5M=
+	b=agZ6sl7IrQ9xttug8si3Kw0gWsxqbTwz+AetsR3GMqHBxvO3XMIvnrBFMpCuUCwyZ
+	 fgve/G4dy8Po0JCB6JIS7mQzq1PbGJwXLfgCX3y4+cK4cP9ZKHSZ7nz0TTeJlOIjNt
+	 jU4fCgYb8HXc0eSqF9hvGJUK1ooUQetVZDIkAUHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	netfilter-devel@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b26935466701e56cfdc2@syzkaller.appspotmail.com,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.15 58/59] netfilter: nf_tables: do not defer rule destruction via call_rcu
-Date: Tue, 20 May 2025 15:50:49 +0200
-Message-ID: <20250520125756.144291818@linuxfoundation.org>
+	Maximilian Heyne <mheyne@amazon.de>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Jeremy Linton <jeremy.linton@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.15 32/59] ACPI: PPTT: Fix processor subtable walk
+Date: Tue, 20 May 2025 15:50:23 +0200
+Message-ID: <20250520125755.134904103@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
 References: <20250520125753.836407405@linuxfoundation.org>
@@ -52,152 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Jeremy Linton <jeremy.linton@arm.com>
 
-commit b04df3da1b5c6f6dc7cdccc37941740c078c4043 upstream.
+commit adfab6b39202481bb43286fff94def4953793fdb upstream.
 
-nf_tables_chain_destroy can sleep, it can't be used from call_rcu
-callbacks.
+The original PPTT code had a bug where the processor subtable length
+was not correctly validated when encountering a truncated
+acpi_pptt_processor node.
 
-Moreover, nf_tables_rule_release() is only safe for error unwinding,
-while transaction mutex is held and the to-be-desroyed rule was not
-exposed to either dataplane or dumps, as it deactives+frees without
-the required synchronize_rcu() in-between.
+Commit 7ab4f0e37a0f4 ("ACPI PPTT: Fix coding mistakes in a couple of
+sizeof() calls") attempted to fix this by validating the size is as
+large as the acpi_pptt_processor node structure. This introduced a
+regression where the last processor node in the PPTT table is ignored
+if it doesn't contain any private resources. That results errors like:
 
-nft_rule_expr_deactivate() callbacks will change ->use counters
-of other chains/sets, see e.g. nft_lookup .deactivate callback, these
-must be serialized via transaction mutex.
+  ACPI PPTT: PPTT table found, but unable to locate core XX (XX)
+  ACPI: SPE must be homogeneous
 
-Also add a few lockdep asserts to make this more explicit.
+Furthermore, it fails in a common case where the node length isn't
+equal to the acpi_pptt_processor structure size, leaving the original
+bug in a modified form.
 
-Calling synchronize_rcu() isn't ideal, but fixing this without is hard
-and way more intrusive.  As-is, we can get:
+Correct the regression by adjusting the loop termination conditions as
+suggested by the bug reporters. An additional check performed after
+the subtable node type is detected, validates the acpi_pptt_processor
+node is fully contained in the PPTT table. Repeating the check in
+acpi_pptt_leaf_node() is largely redundant as the node is already
+known to be fully contained in the table.
 
-WARNING: .. net/netfilter/nf_tables_api.c:5515 nft_set_destroy+0x..
-Workqueue: events nf_tables_trans_destroy_work
-RIP: 0010:nft_set_destroy+0x3fe/0x5c0
-Call Trace:
- <TASK>
- nf_tables_trans_destroy_work+0x6b7/0xad0
- process_one_work+0x64a/0xce0
- worker_thread+0x613/0x10d0
+The case where a final truncated node's parent property is accepted,
+but the node itself is rejected should not be considered a bug.
 
-In case the synchronize_rcu becomes an issue, we can explore alternatives.
-
-One way would be to allocate nft_trans_rule objects + one nft_trans_chain
-object, deactivate the rules + the chain and then defer the freeing to the
-nft destroy workqueue.  We'd still need to keep the synchronize_rcu path as
-a fallback to handle -ENOMEM corner cases though.
-
-Reported-by: syzbot+b26935466701e56cfdc2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/67478d92.050a0220.253251.0062.GAE@google.com/T/
-Fixes: c03d278fdf35 ("netfilter: nf_tables: wait for rcu grace period on net_device removal")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 7ab4f0e37a0f4 ("ACPI PPTT: Fix coding mistakes in a couple of sizeof() calls")
+Reported-by: Maximilian Heyne <mheyne@amazon.de>
+Closes: https://lore.kernel.org/linux-acpi/20250506-draco-taped-15f475cd@mheyne-amazon/
+Reported-by: Yicong Yang <yangyicong@hisilicon.com>
+Closes: https://lore.kernel.org/linux-acpi/20250507035124.28071-1-yangyicong@huawei.com/
+Signed-off-by: Jeremy Linton <jeremy.linton@arm.com>
+Tested-by: Yicong Yang <yangyicong@hisilicon.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Tested-by: Maximilian Heyne <mheyne@amazon.de>
+Cc: All applicable <stable@vger.kernel.org> # 7ab4f0e37a0f4: ACPI PPTT: Fix coding mistakes ...
+Link: https://patch.msgid.link/20250508023025.1301030-1-jeremy.linton@arm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_tables.h |    3 ---
- net/netfilter/nf_tables_api.c     |   32 +++++++++++++++-----------------
- 2 files changed, 15 insertions(+), 20 deletions(-)
+ drivers/acpi/pptt.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1028,7 +1028,6 @@ struct nft_chain {
- 	char				*name;
- 	u16				udlen;
- 	u8				*udata;
--	struct rcu_head			rcu_head;
+--- a/drivers/acpi/pptt.c
++++ b/drivers/acpi/pptt.c
+@@ -219,16 +219,18 @@ static int acpi_pptt_leaf_node(struct ac
+ 			     sizeof(struct acpi_table_pptt));
+ 	proc_sz = sizeof(struct acpi_pptt_processor);
  
- 	/* Only used during control plane commit phase: */
- 	struct nft_rule			**rules_next;
-@@ -1171,7 +1170,6 @@ static inline void nft_use_inc_restore(u
-  *	@sets: sets in the table
-  *	@objects: stateful objects in the table
-  *	@flowtables: flow tables in the table
-- *	@net: netnamespace this table belongs to
-  *	@hgenerator: handle generator state
-  *	@handle: table handle
-  *	@use: number of chain references to this table
-@@ -1187,7 +1185,6 @@ struct nft_table {
- 	struct list_head		sets;
- 	struct list_head		objects;
- 	struct list_head		flowtables;
--	possible_net_t			net;
- 	u64				hgenerator;
- 	u64				handle;
- 	u32				use;
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -1360,7 +1360,6 @@ static int nf_tables_newtable(struct sk_
- 	INIT_LIST_HEAD(&table->sets);
- 	INIT_LIST_HEAD(&table->objects);
- 	INIT_LIST_HEAD(&table->flowtables);
--	write_pnet(&table->net, net);
- 	table->family = family;
- 	table->flags = flags;
- 	table->handle = ++nft_net->table_handle;
-@@ -3441,8 +3440,11 @@ void nf_tables_rule_destroy(const struct
- 	kfree(rule);
- }
- 
-+/* can only be used if rule is no longer visible to dumps */
- static void nf_tables_rule_release(const struct nft_ctx *ctx, struct nft_rule *rule)
- {
-+	lockdep_commit_lock_is_held(ctx->net);
+-	while ((unsigned long)entry + proc_sz < table_end) {
++	/* ignore subtable types that are smaller than a processor node */
++	while ((unsigned long)entry + proc_sz <= table_end) {
+ 		cpu_node = (struct acpi_pptt_processor *)entry;
 +
- 	nft_rule_expr_deactivate(ctx, rule, NFT_TRANS_RELEASE);
- 	nf_tables_rule_destroy(ctx, rule);
- }
-@@ -5178,6 +5180,8 @@ void nf_tables_deactivate_set(const stru
- 			      struct nft_set_binding *binding,
- 			      enum nft_trans_phase phase)
- {
-+	lockdep_commit_lock_is_held(ctx->net);
+ 		if (entry->type == ACPI_PPTT_TYPE_PROCESSOR &&
+ 		    cpu_node->parent == node_entry)
+ 			return 0;
+ 		if (entry->length == 0)
+ 			return 0;
 +
- 	switch (phase) {
- 	case NFT_TRANS_PREPARE_ERROR:
- 		nft_set_trans_unbind(ctx, set);
-@@ -10440,19 +10444,6 @@ static void __nft_release_basechain_now(
- 	nf_tables_chain_destroy(ctx->chain);
- }
- 
--static void nft_release_basechain_rcu(struct rcu_head *head)
--{
--	struct nft_chain *chain = container_of(head, struct nft_chain, rcu_head);
--	struct nft_ctx ctx = {
--		.family	= chain->table->family,
--		.chain	= chain,
--		.net	= read_pnet(&chain->table->net),
--	};
+ 		entry = ACPI_ADD_PTR(struct acpi_subtable_header, entry,
+ 				     entry->length);
 -
--	__nft_release_basechain_now(&ctx);
--	put_net(ctx.net);
--}
--
- int __nft_release_basechain(struct nft_ctx *ctx)
- {
- 	struct nft_rule *rule;
-@@ -10467,11 +10458,18 @@ int __nft_release_basechain(struct nft_c
- 	nft_chain_del(ctx->chain);
- 	nft_use_dec(&ctx->table->use);
- 
--	if (maybe_get_net(ctx->net))
--		call_rcu(&ctx->chain->rcu_head, nft_release_basechain_rcu);
--	else
-+	if (!maybe_get_net(ctx->net)) {
- 		__nft_release_basechain_now(ctx);
-+		return 0;
-+	}
-+
-+	/* wait for ruleset dumps to complete.  Owning chain is no longer in
-+	 * lists, so new dumps can't find any of these rules anymore.
-+	 */
-+	synchronize_rcu();
- 
-+	__nft_release_basechain_now(ctx);
-+	put_net(ctx->net);
- 	return 0;
+ 	}
+ 	return 1;
  }
- EXPORT_SYMBOL_GPL(__nft_release_basechain);
+@@ -261,15 +263,18 @@ static struct acpi_pptt_processor *acpi_
+ 	proc_sz = sizeof(struct acpi_pptt_processor);
+ 
+ 	/* find the processor structure associated with this cpuid */
+-	while ((unsigned long)entry + proc_sz < table_end) {
++	while ((unsigned long)entry + proc_sz <= table_end) {
+ 		cpu_node = (struct acpi_pptt_processor *)entry;
+ 
+ 		if (entry->length == 0) {
+ 			pr_warn("Invalid zero length subtable\n");
+ 			break;
+ 		}
++		/* entry->length may not equal proc_sz, revalidate the processor structure length */
+ 		if (entry->type == ACPI_PPTT_TYPE_PROCESSOR &&
+ 		    acpi_cpu_id == cpu_node->acpi_processor_id &&
++		    (unsigned long)entry + entry->length <= table_end &&
++		    entry->length == proc_sz + cpu_node->number_of_priv_resources * sizeof(u32) &&
+ 		     acpi_pptt_leaf_node(table_hdr, cpu_node)) {
+ 			return (struct acpi_pptt_processor *)entry;
+ 		}
 
 
