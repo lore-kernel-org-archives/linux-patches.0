@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F9E2F37;
-	Tue, 20 May 2025 14:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8262F2472AB;
+	Tue, 20 May 2025 14:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750012; cv=none; b=Umz3ethJYCU8IQsrY0MA9f1rhO8BOC8qUaUWK0ZUG4Z36yDMt0KxyJ/3t8V14psWXZvJ+YY82Ayd425m/WVFgfNS6sC5LFRiIWZ9+wZSZsPkz1934G1ym/8hLr1l7FqBh9LKayNwEgs75CxCOqcNfv43YWn6pbF4ONzblbjrlU8=
+	t=1747750015; cv=none; b=ScvQDjjK9T3baYgebuslQEebsPAJ6v017lWjNPN1QHFHbSe8ClwcwDDBvWHp6Sc726wQDmkHpv6g0FLbSeU/I+2i+p6eSyWcOSD4yhmBvm+ZKzSoIMV4oJdfGgmop91niINSmnWgblp0KSnADF1GnvydxPZMaiJhsgg0fqDIP3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750012; c=relaxed/simple;
-	bh=pwx3ODVa5J6LOeSVg0WhrH+TOWam2lGp1Wt01xVH/uc=;
+	s=arc-20240116; t=1747750015; c=relaxed/simple;
+	bh=7URMDdW2CmOLsVIhjytDL1gqe3H2VIqALY7KMjWSuis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HHW21jTl0OlXC8w5DuFAzy2AKs9sVwUdLDK6tBHtCf8MkO50nDLdYdvHAlFogoZY56e9if3+snocavlHBKsX1IgGKb5pniTNPrt/3sfFFHwu70bBhlRW4uptzq3U9+sQCzK6n0pqLm7cdVr0V2eXwaj+InNg4sK54Om00nkBsHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiaBRADi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=brSOBN/XsPEjr+Voq9dgwvIZ1ozn4cfET7TX9yTcJDcz2R8FLFtMtGv0REEGED5t4LDz8KTAFdJENLZSgGWqZsyZiLCZRGr93CvTjudODaADmleEJpmHL6MAWquD/RLdX0Wz8xTs+NOSltXdHnOvEUO/BTreCDlyljhBy3x6Pus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUmG2KAq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiaBRADi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92ED2C4CEE9;
-	Tue, 20 May 2025 14:06:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUmG2KAq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A801C4CEE9;
+	Tue, 20 May 2025 14:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750012;
-	bh=pwx3ODVa5J6LOeSVg0WhrH+TOWam2lGp1Wt01xVH/uc=;
+	s=korg; t=1747750014;
+	bh=7URMDdW2CmOLsVIhjytDL1gqe3H2VIqALY7KMjWSuis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UiaBRADif4BkyPrwF3jIFuag4mOALfuz/1yaJM6Adzd9fe1020i10FVPgzzR7biab
-	 aR979AT6hgJeiGBcoyRnv7Ua4b3sIWLtPk9IFqH9lBdaURk6LSpNSIa9YWH6qqoqCG
-	 6vPoR5S5ndL0LOEzZmXosyYjaTK/LaC673vqevtc=
+	b=XUmG2KAqg+AS3J7q5gvpSUgY2zViKB7w/HmBYat9tDfVgiai41PIGUFznSM/g1WR1
+	 Xw1MlQNfUuKPuWGb7L5JwrSEGMpH+8mUc8lmS++CCC4ZKedwtaxEfpUBqO6LQ/a4iM
+	 4173YS9nz0/ruuLb0dJOX8uwvpKrJ4bup94h5J1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Isaku Yamahata <isaku.yamahata@intel.com>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Michael Roth <michael.roth@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 014/143] KVM: Add member to struct kvm_gfn_range to indicate private/shared
-Date: Tue, 20 May 2025 15:49:29 +0200
-Message-ID: <20250520125810.621798301@linuxfoundation.org>
+Subject: [PATCH 6.12 015/143] KVM: x86/mmu: Prevent installing hugepages when mem attributes are changing
+Date: Tue, 20 May 2025 15:49:30 +0200
+Message-ID: <20250520125810.660748724@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -52,151 +51,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Isaku Yamahata <isaku.yamahata@intel.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit dca6c88532322830d5d92486467fcc91b67a9ad8 ]
+[ Upstream commit 9129633d568edd36aa22bf703b12835153cec985 ]
 
-Add new members to strut kvm_gfn_range to indicate which mapping
-(private-vs-shared) to operate on: enum kvm_gfn_range_filter
-attr_filter. Update the core zapping operations to set them appropriately.
+When changing memory attributes on a subset of a potential hugepage, add
+the hugepage to the invalidation range tracking to prevent installing a
+hugepage until the attributes are fully updated.  Like the actual hugepage
+tracking updates in kvm_arch_post_set_memory_attributes(), process only
+the head and tail pages, as any potential hugepages that are entirely
+covered by the range will already be tracked.
 
-TDX utilizes two GPA aliases for the same memslots, one for memory that is
-for private memory and one that is for shared. For private memory, KVM
-cannot always perform the same operations it does on memory for default
-VMs, such as zapping pages and having them be faulted back in, as this
-requires guest coordination. However, some operations such as guest driven
-conversion of memory between private and shared should zap private memory.
+Note, only hugepage chunks whose current attributes are NOT mixed need to
+be added to the invalidation set, as mixed attributes already prevent
+installing a hugepage, and it's perfectly safe to install a smaller
+mapping for a gfn whose attributes aren't changing.
 
-Internally to the MMU, private and shared mappings are tracked on separate
-roots. Mapping and zapping operations will operate on the respective GFN
-alias for each root (private or shared). So zapping operations will by
-default zap both aliases. Add fields in struct kvm_gfn_range to allow
-callers to specify which aliases so they can only target the aliases
-appropriate for their specific operation.
-
-There was feedback that target aliases should be specified such that the
-default value (0) is to operate on both aliases. Several options were
-considered. Several variations of having separate bools defined such
-that the default behavior was to process both aliases. They either allowed
-nonsensical configurations, or were confusing for the caller. A simple
-enum was also explored and was close, but was hard to process in the
-caller. Instead, use an enum with the default value (0) reserved as a
-disallowed value. Catch ranges that didn't have the target aliases
-specified by looking for that specific value.
-
-Set target alias with enum appropriately for these MMU operations:
- - For KVM's mmu notifier callbacks, zap shared pages only because private
-   pages won't have a userspace mapping
- - For setting memory attributes, kvm_arch_pre_set_memory_attributes()
-   chooses the aliases based on the attribute.
- - For guest_memfd invalidations, zap private only.
-
-Link: https://lore.kernel.org/kvm/ZivIF9vjKcuGie3s@google.com/
-Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
-Co-developed-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Message-ID: <20240718211230.1492011-3-rick.p.edgecombe@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: 9129633d568e ("KVM: x86/mmu: Prevent installing hugepages when mem attributes are changing")
+Fixes: 8dd2eee9d526 ("KVM: x86/mmu: Handle page fault for private memory")
+Cc: stable@vger.kernel.org
+Reported-by: Michael Roth <michael.roth@amd.com>
+Tested-by: Michael Roth <michael.roth@amd.com>
+Link: https://lore.kernel.org/r/20250430220954.522672-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu/mmu.c   |  6 ++++++
- include/linux/kvm_host.h |  6 ++++++
- virt/kvm/guest_memfd.c   |  2 ++
- virt/kvm/kvm_main.c      | 14 ++++++++++++++
- 4 files changed, 28 insertions(+)
+ arch/x86/kvm/mmu/mmu.c | 69 ++++++++++++++++++++++++++++++++----------
+ 1 file changed, 53 insertions(+), 16 deletions(-)
 
 diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 9242c0649adf1..4943732e07cd7 100644
+index 4943732e07cd7..4607610ef0628 100644
 --- a/arch/x86/kvm/mmu/mmu.c
 +++ b/arch/x86/kvm/mmu/mmu.c
-@@ -7633,6 +7633,12 @@ bool kvm_arch_pre_set_memory_attributes(struct kvm *kvm,
+@@ -7616,9 +7616,30 @@ void kvm_mmu_pre_destroy_vm(struct kvm *kvm)
+ }
+ 
+ #ifdef CONFIG_KVM_GENERIC_MEMORY_ATTRIBUTES
++static bool hugepage_test_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
++				int level)
++{
++	return lpage_info_slot(gfn, slot, level)->disallow_lpage & KVM_LPAGE_MIXED_FLAG;
++}
++
++static void hugepage_clear_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
++				 int level)
++{
++	lpage_info_slot(gfn, slot, level)->disallow_lpage &= ~KVM_LPAGE_MIXED_FLAG;
++}
++
++static void hugepage_set_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
++			       int level)
++{
++	lpage_info_slot(gfn, slot, level)->disallow_lpage |= KVM_LPAGE_MIXED_FLAG;
++}
++
+ bool kvm_arch_pre_set_memory_attributes(struct kvm *kvm,
+ 					struct kvm_gfn_range *range)
+ {
++	struct kvm_memory_slot *slot = range->slot;
++	int level;
++
+ 	/*
+ 	 * Zap SPTEs even if the slot can't be mapped PRIVATE.  KVM x86 only
+ 	 * supports KVM_MEMORY_ATTRIBUTE_PRIVATE, and so it *seems* like KVM
+@@ -7633,6 +7654,38 @@ bool kvm_arch_pre_set_memory_attributes(struct kvm *kvm,
  	if (WARN_ON_ONCE(!kvm_arch_has_private_mem(kvm)))
  		return false;
  
-+	/* Unmap the old attribute page. */
-+	if (range->arg.attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE)
-+		range->attr_filter = KVM_FILTER_SHARED;
-+	else
-+		range->attr_filter = KVM_FILTER_PRIVATE;
++	if (WARN_ON_ONCE(range->end <= range->start))
++		return false;
 +
++	/*
++	 * If the head and tail pages of the range currently allow a hugepage,
++	 * i.e. reside fully in the slot and don't have mixed attributes, then
++	 * add each corresponding hugepage range to the ongoing invalidation,
++	 * e.g. to prevent KVM from creating a hugepage in response to a fault
++	 * for a gfn whose attributes aren't changing.  Note, only the range
++	 * of gfns whose attributes are being modified needs to be explicitly
++	 * unmapped, as that will unmap any existing hugepages.
++	 */
++	for (level = PG_LEVEL_2M; level <= KVM_MAX_HUGEPAGE_LEVEL; level++) {
++		gfn_t start = gfn_round_for_level(range->start, level);
++		gfn_t end = gfn_round_for_level(range->end - 1, level);
++		gfn_t nr_pages = KVM_PAGES_PER_HPAGE(level);
++
++		if ((start != range->start || start + nr_pages > range->end) &&
++		    start >= slot->base_gfn &&
++		    start + nr_pages <= slot->base_gfn + slot->npages &&
++		    !hugepage_test_mixed(slot, start, level))
++			kvm_mmu_invalidate_range_add(kvm, start, start + nr_pages);
++
++		if (end == start)
++			continue;
++
++		if ((end + nr_pages) > range->end &&
++		    (end + nr_pages) <= (slot->base_gfn + slot->npages) &&
++		    !hugepage_test_mixed(slot, end, level))
++			kvm_mmu_invalidate_range_add(kvm, end, end + nr_pages);
++	}
++
+ 	/* Unmap the old attribute page. */
+ 	if (range->arg.attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE)
+ 		range->attr_filter = KVM_FILTER_SHARED;
+@@ -7642,23 +7695,7 @@ bool kvm_arch_pre_set_memory_attributes(struct kvm *kvm,
  	return kvm_unmap_gfn_range(kvm, range);
  }
  
-diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-index 15206450929d5..2e836d44f7386 100644
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -260,11 +260,17 @@ union kvm_mmu_notifier_arg {
- 	unsigned long attributes;
- };
+-static bool hugepage_test_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
+-				int level)
+-{
+-	return lpage_info_slot(gfn, slot, level)->disallow_lpage & KVM_LPAGE_MIXED_FLAG;
+-}
+-
+-static void hugepage_clear_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
+-				 int level)
+-{
+-	lpage_info_slot(gfn, slot, level)->disallow_lpage &= ~KVM_LPAGE_MIXED_FLAG;
+-}
  
-+enum kvm_gfn_range_filter {
-+	KVM_FILTER_SHARED		= BIT(0),
-+	KVM_FILTER_PRIVATE		= BIT(1),
-+};
-+
- struct kvm_gfn_range {
- 	struct kvm_memory_slot *slot;
- 	gfn_t start;
- 	gfn_t end;
- 	union kvm_mmu_notifier_arg arg;
-+	enum kvm_gfn_range_filter attr_filter;
- 	bool may_block;
- };
- bool kvm_unmap_gfn_range(struct kvm *kvm, struct kvm_gfn_range *range);
-diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-index 8f079a61a56db..bb062d3d24572 100644
---- a/virt/kvm/guest_memfd.c
-+++ b/virt/kvm/guest_memfd.c
-@@ -118,6 +118,8 @@ static void kvm_gmem_invalidate_begin(struct kvm_gmem *gmem, pgoff_t start,
- 			.end = slot->base_gfn + min(pgoff + slot->npages, end) - pgoff,
- 			.slot = slot,
- 			.may_block = true,
-+			/* guest memfd is relevant to only private mappings. */
-+			.attr_filter = KVM_FILTER_PRIVATE,
- 		};
+-static void hugepage_set_mixed(struct kvm_memory_slot *slot, gfn_t gfn,
+-			       int level)
+-{
+-	lpage_info_slot(gfn, slot, level)->disallow_lpage |= KVM_LPAGE_MIXED_FLAG;
+-}
  
- 		if (!found_memslot) {
-diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-index 279e03029ce14..b99de3b5ffbc0 100644
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -632,6 +632,11 @@ static __always_inline kvm_mn_ret_t __kvm_handle_hva_range(struct kvm *kvm,
- 			 */
- 			gfn_range.arg = range->arg;
- 			gfn_range.may_block = range->may_block;
-+			/*
-+			 * HVA-based notifications aren't relevant to private
-+			 * mappings as they don't have a userspace mapping.
-+			 */
-+			gfn_range.attr_filter = KVM_FILTER_SHARED;
- 
- 			/*
- 			 * {gfn(page) | page intersects with [hva_start, hva_end)} =
-@@ -2454,6 +2459,14 @@ static __always_inline void kvm_handle_gfn_range(struct kvm *kvm,
- 	gfn_range.arg = range->arg;
- 	gfn_range.may_block = range->may_block;
- 
-+	/*
-+	 * If/when KVM supports more attributes beyond private .vs shared, this
-+	 * _could_ set KVM_FILTER_{SHARED,PRIVATE} appropriately if the entire target
-+	 * range already has the desired private vs. shared state (it's unclear
-+	 * if that is a net win).  For now, KVM reaches this point if and only
-+	 * if the private flag is being toggled, i.e. all mappings are in play.
-+	 */
-+
- 	for (i = 0; i < kvm_arch_nr_memslot_as_ids(kvm); i++) {
- 		slots = __kvm_memslots(kvm, i);
- 
-@@ -2510,6 +2523,7 @@ static int kvm_vm_set_mem_attributes(struct kvm *kvm, gfn_t start, gfn_t end,
- 	struct kvm_mmu_notifier_range pre_set_range = {
- 		.start = start,
- 		.end = end,
-+		.arg.attributes = attributes,
- 		.handler = kvm_pre_set_memory_attributes,
- 		.on_lock = kvm_mmu_invalidate_begin,
- 		.flush_on_ret = true,
+ static bool hugepage_has_attrs(struct kvm *kvm, struct kvm_memory_slot *slot,
+ 			       gfn_t gfn, int level, unsigned long attrs)
 -- 
 2.39.5
 
