@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2541B222570;
-	Tue, 20 May 2025 14:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA47E24679A;
+	Tue, 20 May 2025 14:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749974; cv=none; b=izBG4TKpZFiB7bawXFF/V3/JNWyGbKv70hXB9hJfGshirbV5WDTsqAybvxJSx/XJ+0NI2V4rJ/d7/wcllnGH4pFwWL8RYa6TqJnZ2ByTxc2wrnR0/Cxqrm2cAt91tCu6klbNT+cncNJnVPx1ELU87MP0H4DSIcngTiFc5HrYhrA=
+	t=1747749976; cv=none; b=AUXBBH+9FIeRzsVmhfmYksmfqWQCA+OTGhdX2jiRkUjC3xTd9wdYuSnVTb0qx5s1fUYH2Lug7SF12ISRPrjJAiS17JtuZDd3Qz6KmRpFa9TxmNu5qambtEFgsNnQPIUqhM4s5ix95JwbPYcghwi0doWiYNJblJ5C+rMWa/ylPDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749974; c=relaxed/simple;
-	bh=dKvhh4Z46PVf1/5dKzNUHF8YWUzBPJeJOSfNdB+4ffk=;
+	s=arc-20240116; t=1747749976; c=relaxed/simple;
+	bh=spLELE+g4sf92xRl0tBCvkZdE1/p5QBcFLNH5lf1cYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fLoJOscimfz9m+NobTP+WqPOHH+7FrljuhZqreX9cPvT+rxxmFR67B813jCMW53pfhQVx66DMkUou3ufu67ZfrdAqzp+HQmTJ314iHYUYr/Xn6nKpGFFlgqwurTebHx1KSwyUEdYHuva+i4iTCJVNF1lvlIEwQhq+XOZEN6htzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GOa0zfy4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kB/rfgUN8SDGX/hg9bUW8cOX1VNK0TrQ4UQwtGMUh8bK/oO6wcki18KKWhXuRX2ha76Xym7qdhTTR93G4Yuu8URhM5ajFeDXvtw3KXOYE6SZEKlUNMSUMOUjoMNzVuTYfTU5HBG+dRaV2uzC9jv1SL25l3c+w5qcbWC4Wk7/bHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdzcQ/wF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GOa0zfy4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 369D2C4CEE9;
-	Tue, 20 May 2025 14:06:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdzcQ/wF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40776C4CEEB;
+	Tue, 20 May 2025 14:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749973;
-	bh=dKvhh4Z46PVf1/5dKzNUHF8YWUzBPJeJOSfNdB+4ffk=;
+	s=korg; t=1747749976;
+	bh=spLELE+g4sf92xRl0tBCvkZdE1/p5QBcFLNH5lf1cYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GOa0zfy4Tuut3vxTyH5PdOnwc17Uersbuwh67dCb3dvmUYl85d/x8IvwLarrre/Az
-	 NXyo3KbMOdUGKZ3TOiY9w2TZnkD1r/gEa/MihP/cAUZXXh0AnKt050HV7LZLap/imy
-	 T52zvAvYgaEt00k2EYzxo/7MaTodl+KAza/d7PMY=
+	b=CdzcQ/wFSeHewd9asp+8wjjBdITXmQtXj0MOlwoMyyYIAf9TFU5WwKQ9bEEoORxg2
+	 rJLEQVoTK389fsj9NVPFHInztN8rapW+hP6Qcxlqjdy2apR64fr0zT9s58++gmkCi5
+	 UYW/e1Eu3XIze2SfEdUv4N7Qb0tLr8Fn6gTiz2hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Kling <webgeek1234@gmail.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 089/117] spi: tegra114: Use value to check for invalid delays
-Date: Tue, 20 May 2025 15:50:54 +0200
-Message-ID: <20250520125807.526074287@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.6 090/117] wifi: mt76: disable napi on driver removal
+Date: Tue, 20 May 2025 15:50:55 +0200
+Message-ID: <20250520125807.563333131@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -51,39 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Kling <webgeek1234@gmail.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit e979a7c79fbc706f6dac913af379ef4caa04d3d5 upstream.
+commit 78ab4be549533432d97ea8989d2f00b508fa68d8 upstream.
 
-A delay unit of 0 is a valid entry, thus it is not valid to check for
-unused delays. Instead, check the value field; if that is zero, the
-given delay is unset.
+A warning on driver removal started occurring after commit 9dd05df8403b
+("net: warn if NAPI instance wasn't shut down"). Disable tx napi before
+deleting it in mt76_dma_cleanup().
 
-Fixes: 4426e6b4ecf6 ("spi: tegra114: Don't fail set_cs_timing when delays are zero")
+ WARNING: CPU: 4 PID: 18828 at net/core/dev.c:7288 __netif_napi_del_locked+0xf0/0x100
+ CPU: 4 UID: 0 PID: 18828 Comm: modprobe Not tainted 6.15.0-rc4 #4 PREEMPT(lazy)
+ Hardware name: ASUS System Product Name/PRIME X670E-PRO WIFI, BIOS 3035 09/05/2024
+ RIP: 0010:__netif_napi_del_locked+0xf0/0x100
+ Call Trace:
+ <TASK>
+ mt76_dma_cleanup+0x54/0x2f0 [mt76]
+ mt7921_pci_remove+0xd5/0x190 [mt7921e]
+ pci_device_remove+0x47/0xc0
+ device_release_driver_internal+0x19e/0x200
+ driver_detach+0x48/0x90
+ bus_remove_driver+0x6d/0xf0
+ pci_unregister_driver+0x2e/0xb0
+ __do_sys_delete_module.isra.0+0x197/0x2e0
+ do_syscall_64+0x7b/0x160
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Tested with mt7921e but the same pattern can be actually applied to other
+mt76 drivers calling mt76_dma_cleanup() during removal. Tx napi is enabled
+in their *_dma_init() functions and only toggled off and on again inside
+their suspend/resume/reset paths. So it should be okay to disable tx
+napi in such a generic way.
+
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: 2ac515a5d74f ("mt76: mt76x02: use napi polling for tx cleanup")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20250506-spi-tegra114-fixup-v1-1-136dc2f732f3@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Tested-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Link: https://patch.msgid.link/20250506115540.19045-1-pchelkin@ispras.ru
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-tegra114.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/dma.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/spi/spi-tegra114.c
-+++ b/drivers/spi/spi-tegra114.c
-@@ -728,9 +728,9 @@ static int tegra_spi_set_hw_cs_timing(st
- 	u32 inactive_cycles;
- 	u8 cs_state;
+--- a/drivers/net/wireless/mediatek/mt76/dma.c
++++ b/drivers/net/wireless/mediatek/mt76/dma.c
+@@ -957,6 +957,7 @@ void mt76_dma_cleanup(struct mt76_dev *d
+ 	int i;
  
--	if ((setup->unit && setup->unit != SPI_DELAY_UNIT_SCK) ||
--	    (hold->unit && hold->unit != SPI_DELAY_UNIT_SCK) ||
--	    (inactive->unit && inactive->unit != SPI_DELAY_UNIT_SCK)) {
-+	if ((setup->value && setup->unit != SPI_DELAY_UNIT_SCK) ||
-+	    (hold->value && hold->unit != SPI_DELAY_UNIT_SCK) ||
-+	    (inactive->value && inactive->unit != SPI_DELAY_UNIT_SCK)) {
- 		dev_err(&spi->dev,
- 			"Invalid delay unit %d, should be SPI_DELAY_UNIT_SCK\n",
- 			SPI_DELAY_UNIT_SCK);
+ 	mt76_worker_disable(&dev->tx_worker);
++	napi_disable(&dev->tx_napi);
+ 	netif_napi_del(&dev->tx_napi);
+ 
+ 	for (i = 0; i < ARRAY_SIZE(dev->phys); i++) {
 
 
