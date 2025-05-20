@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C774C24501D;
-	Tue, 20 May 2025 14:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CA2EEDE;
+	Tue, 20 May 2025 14:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749679; cv=none; b=n1BQRoZnKEQYNH84bENioicu72uTThKp/g+I7LxBbI18smpcpU+Y72GyhUYOaVds/8bX2+Auan/soe9+1v4ThGsQHQ7iN8BHP+9wp7VX/rMb5owyzu6STKxd3fT/oL5wz4mKiBsDi4hgP1PP9gJz3CA3TEtcGvWBcP0PjZUqvyM=
+	t=1747749683; cv=none; b=WcJLNEVJCeMSPMZ7OXpiyqBPTbTZjKE4xmLMw38E1KFvcYsA8Z5yETJvCMnE51yBbrSSyjr3bBI1IxVx+oya3W2SLwqBjNXCt1puMbqIX22E/GFl7TqOGYBPEdho/KrIFObd8pUys4VYgxaJIKy7dZi36bB+N6o2Ipq0sX7zpFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749679; c=relaxed/simple;
-	bh=geeSJupQ98p3Jm9R1aPa2wWIrpge5ut0JmorjO1I5h0=;
+	s=arc-20240116; t=1747749683; c=relaxed/simple;
+	bh=7kBqGwVhgtl2q3LdZxdGccHGnp8h9BjpXCftVYkzIc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tDO+7ozTT0Wb6MHfB5O4kPJShe+DWhtrtzHm+m+DsSCUtOyCac/qcxW6l8OjG9r16Ey24sH45GBVwUu3iNTQf9nxL9G0O/zPfeUbQxrlIGhRPkpRqVgbp1ZofTztmI8Mi7M4NgVZCP4KZf/PpiGJaPt4LWu79GwKsYiOTBut0ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=djby4Wek; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dH7K3fVC8Ecu6aT9jkCR8cZS9OJQh0uj6hI2ptMwYr6wlFLx21nQISR7a/IcFNWMtKZ3QLA7aS4RQYeUpkWJAOTsZJhUqFmGdgsV8czAhTn726T+MZDpabpfOY/6h76SKMDT31qFQkofMyPlRiFHUBCdTgueC3T3yATjiHdZnzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WT3LLoa5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="djby4Wek"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59197C4CEEB;
-	Tue, 20 May 2025 14:01:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WT3LLoa5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457EEC4CEE9;
+	Tue, 20 May 2025 14:01:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749679;
-	bh=geeSJupQ98p3Jm9R1aPa2wWIrpge5ut0JmorjO1I5h0=;
+	s=korg; t=1747749682;
+	bh=7kBqGwVhgtl2q3LdZxdGccHGnp8h9BjpXCftVYkzIc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=djby4WekSLhIK7AlufV4FWZHJzuff58M9tcs9QDOEoHhuGP7V1oHKPTcHnDot0/42
-	 o8K2b/kM4AfPWc8wqY5zaFvOj3EUGOul3YIWtq0+xrhY/I4om0N0BO8iZU2BAoOc0+
-	 b4ZMESyLWS356x9umMbj5zY4JWQ6jTX76lXSIpQA=
+	b=WT3LLoa5JZauD4uhkfPNzKJHsWghiosMwJVpNnkewizE7r+/VUGrsUzepTOlWk08C
+	 h1h3zQ66rNk/PbcsIb4mNRKWeljfvmg1+2DFYtWTdIUIfu4fDA/4tS8t1rVmte8vGF
+	 IHjMHgiakSMrk3P8zZu+F0gaT17JIdPv8opwvw5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhigang Luo <Zhigang.Luo@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 025/117] drm/amdgpu: trigger flr_work if reading pf2vf data failed
-Date: Tue, 20 May 2025 15:49:50 +0200
-Message-ID: <20250520125804.977034647@linuxfoundation.org>
+Subject: [PATCH 6.6 026/117] drm/amd: Add Suspend/Hibernate notification callback support
+Date: Tue, 20 May 2025 15:49:51 +0200
+Message-ID: <20250520125805.019804465@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -52,200 +52,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhigang Luo <Zhigang.Luo@amd.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit ab66c832847fcdffc97d4591ba5547e3990d9d33 ]
+[ Upstream commit 2965e6355dcdf157b5fafa25a2715f00064da8bf ]
 
-if reading pf2vf data failed 30 times continuously, it means something is
-wrong. Need to trigger flr_work to recover the issue.
+As part of the suspend sequence VRAM needs to be evicted on dGPUs.
+In order to make suspend/resume more reliable we moved this into
+the pmops prepare() callback so that the suspend sequence would fail
+but the system could remain operational under high memory usage suspend.
 
-also use dev_err to print the error message to get which device has
-issue and add warning message if waiting IDH_FLR_NOTIFICATION_CMPL
-timeout.
+Another class of issues exist though where due to memory fragementation
+there isn't a large enough contiguous space and swap isn't accessible.
 
-Signed-off-by: Zhigang Luo <Zhigang.Luo@amd.com>
-Acked-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Add support for a suspend/hibernate notification callback that could
+evict VRAM before tasks are frozen. This should allow paging out to swap
+if necessary.
+
+Link: https://github.com/ROCm/ROCK-Kernel-Driver/issues/174
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/3476
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2362
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3781
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Link: https://lore.kernel.org/r/20241128032656.2090059-2-superm1@kernel.org
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: d0ce1aaa8531 ("Revert "drm/amd: Stop evicting resources on APUs in suspend"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 15 +++++++----
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c   | 29 ++++++++++++++++++----
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h   |  3 +++
- drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c      |  2 ++
- drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c      |  2 ++
- 5 files changed, 41 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h        |  1 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 46 +++++++++++++++++++++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c    |  1 -
+ 3 files changed, 46 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu.h b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+index ed4ebc6d32695..9cda2ecaf69b5 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -788,6 +788,7 @@ struct amdgpu_device {
+ 	bool				need_swiotlb;
+ 	bool				accel_working;
+ 	struct notifier_block		acpi_nb;
++	struct notifier_block		pm_nb;
+ 	struct amdgpu_i2c_chan		*i2c_bus[AMDGPU_MAX_I2C_BUS];
+ 	struct debugfs_blob_wrapper     debugfs_vbios_blob;
+ 	struct debugfs_blob_wrapper     debugfs_discovery_blob;
 diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index b2056228e8699..e22e2a1df730c 100644
+index e22e2a1df730c..9fd9424ec8f71 100644
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -141,6 +141,8 @@ const char *amdgpu_asic_name[] = {
- 	"LAST",
+@@ -142,6 +142,8 @@ const char *amdgpu_asic_name[] = {
  };
  
-+static inline void amdgpu_device_stop_pending_resets(struct amdgpu_device *adev);
-+
+ static inline void amdgpu_device_stop_pending_resets(struct amdgpu_device *adev);
++static int amdgpu_device_pm_notifier(struct notifier_block *nb, unsigned long mode,
++				     void *data);
+ 
  /**
   * DOC: pcie_replay_count
-  *
-@@ -4558,6 +4560,8 @@ static int amdgpu_device_reset_sriov(struct amdgpu_device *adev,
- retry:
- 	amdgpu_amdkfd_pre_reset(adev);
+@@ -3922,6 +3924,11 @@ int amdgpu_device_init(struct amdgpu_device *adev,
  
-+	amdgpu_device_stop_pending_resets(adev);
+ 	amdgpu_device_check_iommu_direct_map(adev);
+ 
++	adev->pm_nb.notifier_call = amdgpu_device_pm_notifier;
++	r = register_pm_notifier(&adev->pm_nb);
++	if (r)
++		goto failed;
 +
- 	if (from_hypervisor)
- 		r = amdgpu_virt_request_full_gpu(adev, true);
- 	else
-@@ -5354,11 +5358,12 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
- 			tmp_adev->asic_reset_res = r;
- 		}
+ 	return 0;
  
--		/*
--		 * Drop all pending non scheduler resets. Scheduler resets
--		 * were already dropped during drm_sched_stop
--		 */
--		amdgpu_device_stop_pending_resets(tmp_adev);
-+		if (!amdgpu_sriov_vf(tmp_adev))
-+			/*
-+			* Drop all pending non scheduler resets. Scheduler resets
-+			* were already dropped during drm_sched_stop
-+			*/
-+			amdgpu_device_stop_pending_resets(tmp_adev);
- 	}
+ release_ras_con:
+@@ -3983,6 +3990,8 @@ void amdgpu_device_fini_hw(struct amdgpu_device *adev)
+ 	flush_delayed_work(&adev->delayed_init_work);
+ 	adev->shutdown = true;
  
- 	/* Actual ASIC resets if needed.*/
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-index 22575422ca7ec..7cb4b4118335a 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-@@ -32,6 +32,7 @@
- 
- #include "amdgpu.h"
- #include "amdgpu_ras.h"
-+#include "amdgpu_reset.h"
- #include "vi.h"
- #include "soc15.h"
- #include "nv.h"
-@@ -468,7 +469,7 @@ static int amdgpu_virt_read_pf2vf_data(struct amdgpu_device *adev)
- 		return -EINVAL;
- 
- 	if (pf2vf_info->size > 1024) {
--		DRM_ERROR("invalid pf2vf message size\n");
-+		dev_err(adev->dev, "invalid pf2vf message size: 0x%x\n", pf2vf_info->size);
- 		return -EINVAL;
- 	}
- 
-@@ -479,7 +480,9 @@ static int amdgpu_virt_read_pf2vf_data(struct amdgpu_device *adev)
- 			adev->virt.fw_reserve.p_pf2vf, pf2vf_info->size,
- 			adev->virt.fw_reserve.checksum_key, checksum);
- 		if (checksum != checkval) {
--			DRM_ERROR("invalid pf2vf message\n");
-+			dev_err(adev->dev,
-+				"invalid pf2vf message: header checksum=0x%x calculated checksum=0x%x\n",
-+				checksum, checkval);
- 			return -EINVAL;
- 		}
- 
-@@ -493,7 +496,9 @@ static int amdgpu_virt_read_pf2vf_data(struct amdgpu_device *adev)
- 			adev->virt.fw_reserve.p_pf2vf, pf2vf_info->size,
- 			0, checksum);
- 		if (checksum != checkval) {
--			DRM_ERROR("invalid pf2vf message\n");
-+			dev_err(adev->dev,
-+				"invalid pf2vf message: header checksum=0x%x calculated checksum=0x%x\n",
-+				checksum, checkval);
- 			return -EINVAL;
- 		}
- 
-@@ -529,7 +534,7 @@ static int amdgpu_virt_read_pf2vf_data(struct amdgpu_device *adev)
- 			((struct amd_sriov_msg_pf2vf_info *)pf2vf_info)->uuid;
- 		break;
- 	default:
--		DRM_ERROR("invalid pf2vf version\n");
-+		dev_err(adev->dev, "invalid pf2vf version: 0x%x\n", pf2vf_info->version);
- 		return -EINVAL;
- 	}
- 
-@@ -628,8 +633,21 @@ static void amdgpu_virt_update_vf2pf_work_item(struct work_struct *work)
- 	int ret;
- 
- 	ret = amdgpu_virt_read_pf2vf_data(adev);
--	if (ret)
-+	if (ret) {
-+		adev->virt.vf2pf_update_retry_cnt++;
-+		if ((adev->virt.vf2pf_update_retry_cnt >= AMDGPU_VF2PF_UPDATE_MAX_RETRY_LIMIT) &&
-+		    amdgpu_sriov_runtime(adev) && !amdgpu_in_reset(adev)) {
-+			if (amdgpu_reset_domain_schedule(adev->reset_domain,
-+							  &adev->virt.flr_work))
-+				return;
-+			else
-+				dev_err(adev->dev, "Failed to queue work! at %s", __func__);
-+		}
++	unregister_pm_notifier(&adev->pm_nb);
 +
- 		goto out;
+ 	/* make sure IB test finished before entering exclusive mode
+ 	 * to avoid preemption on IB test
+ 	 */
+@@ -4109,6 +4118,41 @@ static int amdgpu_device_evict_resources(struct amdgpu_device *adev)
+ /*
+  * Suspend & resume.
+  */
++/**
++ * amdgpu_device_pm_notifier - Notification block for Suspend/Hibernate events
++ * @nb: notifier block
++ * @mode: suspend mode
++ * @data: data
++ *
++ * This function is called when the system is about to suspend or hibernate.
++ * It is used to evict resources from the device before the system goes to
++ * sleep while there is still access to swap.
++ */
++static int amdgpu_device_pm_notifier(struct notifier_block *nb, unsigned long mode,
++				     void *data)
++{
++	struct amdgpu_device *adev = container_of(nb, struct amdgpu_device, pm_nb);
++	int r;
++
++	switch (mode) {
++	case PM_HIBERNATION_PREPARE:
++		adev->in_s4 = true;
++		fallthrough;
++	case PM_SUSPEND_PREPARE:
++		r = amdgpu_device_evict_resources(adev);
++		/*
++		 * This is considered non-fatal at this time because
++		 * amdgpu_device_prepare() will also fatally evict resources.
++		 * See https://gitlab.freedesktop.org/drm/amd/-/issues/3781
++		 */
++		if (r)
++			drm_warn(adev_to_drm(adev), "Failed to evict resources, freeze active processes if problems occur: %d\n", r);
++		break;
 +	}
 +
-+	adev->virt.vf2pf_update_retry_cnt = 0;
- 	amdgpu_virt_write_vf2pf_data(adev);
- 
- out:
-@@ -650,6 +668,7 @@ void amdgpu_virt_init_data_exchange(struct amdgpu_device *adev)
- 	adev->virt.fw_reserve.p_pf2vf = NULL;
- 	adev->virt.fw_reserve.p_vf2pf = NULL;
- 	adev->virt.vf2pf_update_interval_ms = 0;
-+	adev->virt.vf2pf_update_retry_cnt = 0;
- 
- 	if (adev->mman.fw_vram_usage_va && adev->mman.drv_vram_usage_va) {
- 		DRM_WARN("Currently fw_vram and drv_vram should not have values at the same time!");
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-index 23b6efa9d25df..891713757a8f5 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-@@ -51,6 +51,8 @@
- /* tonga/fiji use this offset */
- #define mmBIF_IOV_FUNC_IDENTIFIER 0x1503
- 
-+#define AMDGPU_VF2PF_UPDATE_MAX_RETRY_LIMIT 30
++	return NOTIFY_DONE;
++}
 +
- enum amdgpu_sriov_vf_mode {
- 	SRIOV_VF_MODE_BARE_METAL = 0,
- 	SRIOV_VF_MODE_ONE_VF,
-@@ -253,6 +255,7 @@ struct amdgpu_virt {
- 	/* vf2pf message */
- 	struct delayed_work vf2pf_work;
- 	uint32_t vf2pf_update_interval_ms;
-+	int vf2pf_update_retry_cnt;
+ /**
+  * amdgpu_device_prepare - prepare for device suspend
+  *
+@@ -4148,7 +4192,7 @@ int amdgpu_device_prepare(struct drm_device *dev)
+ 	return 0;
  
- 	/* multimedia bandwidth config */
- 	bool     is_mm_bw_enabled;
-diff --git a/drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c b/drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c
-index 63725b2ebc037..37ac6d8ff8136 100644
---- a/drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c
-@@ -276,6 +276,8 @@ static void xgpu_ai_mailbox_flr_work(struct work_struct *work)
- 		timeout -= 10;
- 	} while (timeout > 1);
+ unprepare:
+-	adev->in_s0ix = adev->in_s3 = false;
++	adev->in_s0ix = adev->in_s3 = adev->in_s4 = false;
  
-+	dev_warn(adev->dev, "waiting IDH_FLR_NOTIFICATION_CMPL timeout\n");
-+
- flr_done:
- 	atomic_set(&adev->reset_domain->in_gpu_reset, 0);
- 	up_write(&adev->reset_domain->sem);
-diff --git a/drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c b/drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c
-index 6a68ee946f1cc..96edd5d11326d 100644
---- a/drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c
-@@ -298,6 +298,8 @@ static void xgpu_nv_mailbox_flr_work(struct work_struct *work)
- 		timeout -= 10;
- 	} while (timeout > 1);
+ 	return r;
+ }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index bacf2e5de2abc..c5727c0e6ce1c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -2463,7 +2463,6 @@ static int amdgpu_pmops_freeze(struct device *dev)
+ 	struct amdgpu_device *adev = drm_to_adev(drm_dev);
+ 	int r;
  
-+	dev_warn(adev->dev, "waiting IDH_FLR_NOTIFICATION_CMPL timeout\n");
-+
- flr_done:
- 	atomic_set(&adev->reset_domain->in_gpu_reset, 0);
- 	up_write(&adev->reset_domain->sem);
+-	adev->in_s4 = true;
+ 	r = amdgpu_device_suspend(drm_dev, true);
+ 	if (r)
+ 		return r;
 -- 
 2.39.5
 
