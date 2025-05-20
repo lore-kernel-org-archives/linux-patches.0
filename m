@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4600822D78C;
-	Tue, 20 May 2025 13:54:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597DB242D93;
+	Tue, 20 May 2025 13:54:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749257; cv=none; b=aGVdDx3D0cVRdgzlg0LGkPOpaNd4a3j8229StzpQbivrXBJBLoywpGZEJJXc8a2Fjh0T2d8mpoNQ2kZmEBPfhe9kD7bVyzohcQb86+ddar4IQCpbkaBbHqi9H7a/M+yG/DrdgRwDoZJCc6cGyEwc33mtgnkHswPf3HuBWdz1yRQ=
+	t=1747749260; cv=none; b=o8x9u2ayAkPdw+6yTq6Wtf3diT/N6+/5vdbzQRI3HHa16EtEmnIGvznFmy957EMKzfZdzyE7lTx4GoWfG+iDLIfiYD4hVJxi88FcZR78IMRcRxhuyktSwK13nEWgmTq8K7YOA6fJvsxrZwfyasr1stBWZp5WZQdvobk5lXnccIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749257; c=relaxed/simple;
-	bh=ZtmbbANvrtgmnMURulRnXfv8oYoZVDJM/oIKMOlZMxk=;
+	s=arc-20240116; t=1747749260; c=relaxed/simple;
+	bh=O6hE7KXVfsbBo2yIecqXjeaK7JdXxPI8z1BujHOkIl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CS8a9XT/UCVlKQeNqT/Oyds5knx/7XEwTPIBQbdNYZLpjnu+dde2fvMnkFN0u4MB8C4VzpnbzrHRAlJZfDdnI9GmbzlL0TYPlpFnAZ4fMzia6ZbhrYsmhOtxUKp43RzP9GVkBF5m2iMClctw7ar6n7DqLn8E3kdDPV5IOGCUJlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1Hnu4+B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mrnqxuT1ADgfabMXqyPdYyN4oRL6cwFX5+0frmH8AUVaqYrHc4Np/K3O5Fzeheffh8shtXy8PiArmdkfc5ott385rYo78fknqggoUEZ3/6uZdz7HoneTiNEF4s8JUUb14TRvdMb5sQHJeovEzdjHSm2TvsaMBPJndz1cwTsdkcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2vOP5kqt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1Hnu4+B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C145EC4CEE9;
-	Tue, 20 May 2025 13:54:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vOP5kqt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF95CC4CEE9;
+	Tue, 20 May 2025 13:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749257;
-	bh=ZtmbbANvrtgmnMURulRnXfv8oYoZVDJM/oIKMOlZMxk=;
+	s=korg; t=1747749260;
+	bh=O6hE7KXVfsbBo2yIecqXjeaK7JdXxPI8z1BujHOkIl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r1Hnu4+BUoc34Rv88k6mpouB3BwRdkZkQg27izuVhdK9eWtbvaV8+Xo3j76KjDPEZ
-	 XUdL8qKmt/zH5NAFiSnOY/V9cY2GPyLrjQT/w5PMFMgk8AB9QLzQLmPX1EUTZOVvPc
-	 m3QM4te28WaXe3Qk8SXcR2iQA9jffpWgtgRkWDLI=
+	b=2vOP5kqtpkZEhNzpwfDDA4CohegWtaLQRDzR/V2qwb8RzTF+GJl3sXmH/+00VKJck
+	 c5GnnpQEs48fIdzwbpFX8Mh9c4QJv2yeeODg8wwEBrAhLUk7jciNTlvk72t8bga6bp
+	 KHdAzvsg3wEWR7fmGw7b8257mrYsK3eBvT3palmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"stable@vger.kernel.org, Fengnan Chang" <changfengnan@bytedance.com>,
-	Fengnan Chang <changfengnan@bytedance.com>
-Subject: [PATCH 5.15 46/59] block: fix direct io NOWAIT flag not work
-Date: Tue, 20 May 2025 15:50:37 +0200
-Message-ID: <20250520125755.671687774@linuxfoundation.org>
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.15 47/59] clocksource/i8253: Use raw_spinlock_irqsave() in clockevent_i8253_disable()
+Date: Tue, 20 May 2025 15:50:38 +0200
+Message-ID: <20250520125755.712144707@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
 References: <20250520125753.836407405@linuxfoundation.org>
@@ -50,41 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fengnan Chang <changfengnan@bytedance.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit 8b44b4d81598 ("block: don't allow multiple bios for IOCB_NOWAIT
-issue") backport a upstream fix, but miss commit b77c88c2100c ("block:
-pass a block_device and opf to bio_alloc_kiocb"), and introduce this bug.
-commit b77c88c2100c ("block: pass a block_device and opf to
-bio_alloc_kiocb") have other depend patch, so just fix it.
+commit 94cff94634e506a4a44684bee1875d2dbf782722 upstream.
 
-Fixes: 8b44b4d81598 ("block: don't allow multiple bios for IOCB_NOWAIT issue")
-Signed-off-by: Fengnan Chang <changfengnan@bytedance.com>
+On x86 during boot, clockevent_i8253_disable() can be invoked via
+x86_late_time_init -> hpet_time_init() -> pit_timer_init() which happens
+with enabled interrupts.
+
+If some of the old i8253 hardware is actually used then lockdep will notice
+that i8253_lock is used in hard interrupt context. This causes lockdep to
+complain because it observed the lock being acquired with interrupts
+enabled and in hard interrupt context.
+
+Make clockevent_i8253_disable() acquire the lock with
+raw_spinlock_irqsave() to cure this.
+
+[ tglx: Massage change log and use guard() ]
+
+Fixes: c8c4076723dac ("x86/timer: Skip PIT initialization on modern chipsets")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20250404133116.p-XRWJXf@linutronix.de
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/fops.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/clocksource/i8253.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/block/fops.c
-+++ b/block/fops.c
-@@ -259,7 +259,6 @@ static ssize_t __blkdev_direct_IO(struct
- 				blk_finish_plug(&plug);
- 				return -EAGAIN;
- 			}
--			bio->bi_opf |= REQ_NOWAIT;
- 		}
- 
- 		if (is_read) {
-@@ -270,6 +269,10 @@ static ssize_t __blkdev_direct_IO(struct
- 			bio->bi_opf = dio_bio_write_op(iocb);
- 			task_io_account_write(bio->bi_iter.bi_size);
- 		}
+--- a/drivers/clocksource/i8253.c
++++ b/drivers/clocksource/i8253.c
+@@ -103,7 +103,9 @@ int __init clocksource_i8253_init(void)
+ #ifdef CONFIG_CLKEVT_I8253
+ void clockevent_i8253_disable(void)
+ {
+-	raw_spin_lock(&i8253_lock);
++	unsigned long flags;
 +
-+		if (iocb->ki_flags & IOCB_NOWAIT)
-+			bio->bi_opf |= REQ_NOWAIT;
-+
- 		dio->size += bio->bi_iter.bi_size;
- 		pos += bio->bi_iter.bi_size;
++	raw_spin_lock_irqsave(&i8253_lock, flags);
  
+ 	/*
+ 	 * Writing the MODE register should stop the counter, according to
+@@ -133,7 +135,7 @@ void clockevent_i8253_disable(void)
+ 
+ 	outb_p(0x30, PIT_MODE);
+ 
+-	raw_spin_unlock(&i8253_lock);
++	raw_spin_unlock_irqrestore(&i8253_lock, flags);
+ }
+ 
+ static int pit_shutdown(struct clock_event_device *evt)
 
 
