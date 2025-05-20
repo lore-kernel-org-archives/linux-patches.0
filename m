@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A3422D9E3;
-	Tue, 20 May 2025 14:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1E91A3A80;
+	Tue, 20 May 2025 14:21:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750863; cv=none; b=QHb70kfuJymF9T/dm77dgrAMyMfPbHbXOkRLshpDhR36ipMlkfnsoF16x9uoYYzjCeE9INPGOUHj8bqRv7zepj3KV8LA/USZ4F29upavS5KaFI8Jp5b/Q8dwQIOFn8sa8Xk1T8sDlZwmOuNxR10xaIPNk1W+D+qZVfq3oNE0taQ=
+	t=1747750866; cv=none; b=NhsUjxz4xw4xQpgoII2hoNHviry4zNzaSIQneYdo/onMhXDiKdX8gr1ke1joXyBT5cz8HVEx5m/SC8pf0Eos/mm8Lf7t5qzVuxMRgoo/EqIpdJ/EnpL80YrSxhRewTH9UyyCjtybEkg9kQBGhT5aDsx7Dx9kcpUYKCsrdoi8Qb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750863; c=relaxed/simple;
-	bh=5RtPbhvBVF1XKokD8c5QuHUJ7g3s0fdaBxauY9Y8j8A=;
+	s=arc-20240116; t=1747750866; c=relaxed/simple;
+	bh=k4ywCbHZYqfa/1XY+zWnfCR2Kn1NVInb22iLwd8JLZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=msjgMAObZsADlpmyF307folssElj5XQvfjTHM3QeVt0ujx6iKCHZSbPZgVv0AbhTFLHPp1436FtoN905O2r873Obc3Vtf+9a+E2mzjEvx831KHx3xVYqY95dZ3VWZ5ZrmLOQtJkHWlRW6SWJ0/virtg6HqH1L2XauKD/Z68WYLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDB/MT1g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EXfN48mUaTV+l4abiJfyMdLnz1jOA3UL7y2s6zywFjnWikk7YhFc3fW2TGbTjMWU9gG9gONEDfKK43RMkMkYFpplHP3qhpB3PqvyaBgGa6TZaugrIRmVoJISbAMcHKo909qHNoMtVXPt+IU5cqfdTGyotugBr/sQwQrDg0Fo6nA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVnHxwbA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDB/MT1g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8740AC4CEE9;
-	Tue, 20 May 2025 14:21:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVnHxwbA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 979CBC4CEE9;
+	Tue, 20 May 2025 14:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750862;
-	bh=5RtPbhvBVF1XKokD8c5QuHUJ7g3s0fdaBxauY9Y8j8A=;
+	s=korg; t=1747750866;
+	bh=k4ywCbHZYqfa/1XY+zWnfCR2Kn1NVInb22iLwd8JLZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eDB/MT1gkku3bQRMF7tme250Q9mWZnn9o7lFhamXBI5ULdn4tnHNWWazp8KNp81nb
-	 N4LQzs25QjWk+8FX0XRrBHlAgzHadfeKGQLZdneyKUgbu3ccALmxhgo2x6wKbrnDSQ
-	 rCBNClkmjNqQKZqLdJNQjCsraooEEI2K83RTVW8g=
+	b=wVnHxwbAuIVWgmj5L2pD5rGcezz03+pDK0/IKQa6YbECN2sTA2LrzevuR/6qbr9yS
+	 kLLtJStpunN2snEEwsBKKppVbhmfbICMR83icwiLh362YGLPR0JE/q74ZaGFzlQje7
+	 ja/ZyokgDAgFU7BbZhWrdZPRMkXM2CUIj9QyowW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.14 116/145] tpm: Mask TPM RC in tpm2_start_auth_session()
-Date: Tue, 20 May 2025 15:51:26 +0200
-Message-ID: <20250520125815.092210567@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.14 117/145] wifi: mt76: disable napi on driver removal
+Date: Tue, 20 May 2025 15:51:27 +0200
+Message-ID: <20250520125815.133532295@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -51,108 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 539fbab37881e32ba6a708a100de6db19e1e7e7d upstream.
+commit 78ab4be549533432d97ea8989d2f00b508fa68d8 upstream.
 
-tpm2_start_auth_session() does not mask TPM RC correctly from the callers:
+A warning on driver removal started occurring after commit 9dd05df8403b
+("net: warn if NAPI instance wasn't shut down"). Disable tx napi before
+deleting it in mt76_dma_cleanup().
 
-[   28.766528] tpm tpm0: A TPM error (2307) occurred start auth session
+ WARNING: CPU: 4 PID: 18828 at net/core/dev.c:7288 __netif_napi_del_locked+0xf0/0x100
+ CPU: 4 UID: 0 PID: 18828 Comm: modprobe Not tainted 6.15.0-rc4 #4 PREEMPT(lazy)
+ Hardware name: ASUS System Product Name/PRIME X670E-PRO WIFI, BIOS 3035 09/05/2024
+ RIP: 0010:__netif_napi_del_locked+0xf0/0x100
+ Call Trace:
+ <TASK>
+ mt76_dma_cleanup+0x54/0x2f0 [mt76]
+ mt7921_pci_remove+0xd5/0x190 [mt7921e]
+ pci_device_remove+0x47/0xc0
+ device_release_driver_internal+0x19e/0x200
+ driver_detach+0x48/0x90
+ bus_remove_driver+0x6d/0xf0
+ pci_unregister_driver+0x2e/0xb0
+ __do_sys_delete_module.isra.0+0x197/0x2e0
+ do_syscall_64+0x7b/0x160
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Process TPM RCs inside tpm2_start_auth_session(), and map them to POSIX
-error codes.
+Tested with mt7921e but the same pattern can be actually applied to other
+mt76 drivers calling mt76_dma_cleanup() during removal. Tx napi is enabled
+in their *_dma_init() functions and only toggled off and on again inside
+their suspend/resume/reset paths. So it should be okay to disable tx
+napi in such a generic way.
 
-Cc: stable@vger.kernel.org # v6.10+
-Fixes: 699e3efd6c64 ("tpm: Add HMAC session start and end functions")
-Reported-by: Herbert Xu <herbert@gondor.apana.org.au>
-Closes: https://lore.kernel.org/linux-integrity/Z_NgdRHuTKP6JK--@gondor.apana.org.au/
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: 2ac515a5d74f ("mt76: mt76x02: use napi polling for tx cleanup")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Tested-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Link: https://patch.msgid.link/20250506115540.19045-1-pchelkin@ispras.ru
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm2-sessions.c |   20 ++++++--------------
- include/linux/tpm.h              |   19 +++++++++++++++++++
- 2 files changed, 25 insertions(+), 14 deletions(-)
+ drivers/net/wireless/mediatek/mt76/dma.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/char/tpm/tpm2-sessions.c
-+++ b/drivers/char/tpm/tpm2-sessions.c
-@@ -40,11 +40,6 @@
-  *
-  * These are the usage functions:
-  *
-- * tpm2_start_auth_session() which allocates the opaque auth structure
-- *	and gets a session from the TPM.  This must be called before
-- *	any of the following functions.  The session is protected by a
-- *	session_key which is derived from a random salt value
-- *	encrypted to the NULL seed.
-  * tpm2_end_auth_session() kills the session and frees the resources.
-  *	Under normal operation this function is done by
-  *	tpm_buf_check_hmac_response(), so this is only to be used on
-@@ -963,16 +958,13 @@ err:
- }
+--- a/drivers/net/wireless/mediatek/mt76/dma.c
++++ b/drivers/net/wireless/mediatek/mt76/dma.c
+@@ -1011,6 +1011,7 @@ void mt76_dma_cleanup(struct mt76_dev *d
+ 	int i;
  
- /**
-- * tpm2_start_auth_session() - create a HMAC authentication session with the TPM
-- * @chip: the TPM chip structure to create the session with
-+ * tpm2_start_auth_session() - Create an a HMAC authentication session
-+ * @chip:	A TPM chip
-  *
-- * This function loads the NULL seed from its saved context and starts
-- * an authentication session on the null seed, fills in the
-- * @chip->auth structure to contain all the session details necessary
-- * for performing the HMAC, encrypt and decrypt operations and
-- * returns.  The NULL seed is flushed before this function returns.
-+ * Loads the ephemeral key (null seed), and starts an HMAC authenticated
-+ * session. The null seed is flushed before the return.
-  *
-- * Return: zero on success or actual error encountered.
-+ * Returns zero on success, or a POSIX error code.
-  */
- int tpm2_start_auth_session(struct tpm_chip *chip)
- {
-@@ -1024,7 +1016,7 @@ int tpm2_start_auth_session(struct tpm_c
- 	/* hash algorithm for session */
- 	tpm_buf_append_u16(&buf, TPM_ALG_SHA256);
+ 	mt76_worker_disable(&dev->tx_worker);
++	napi_disable(&dev->tx_napi);
+ 	netif_napi_del(&dev->tx_napi);
  
--	rc = tpm_transmit_cmd(chip, &buf, 0, "start auth session");
-+	rc = tpm_ret_to_err(tpm_transmit_cmd(chip, &buf, 0, "StartAuthSession"));
- 	tpm2_flush_context(chip, null_key);
- 
- 	if (rc == TPM2_RC_SUCCESS)
---- a/include/linux/tpm.h
-+++ b/include/linux/tpm.h
-@@ -257,6 +257,7 @@ enum tpm2_return_codes {
- 	TPM2_RC_TESTING		= 0x090A, /* RC_WARN */
- 	TPM2_RC_REFERENCE_H0	= 0x0910,
- 	TPM2_RC_RETRY		= 0x0922,
-+	TPM2_RC_SESSION_MEMORY	= 0x0903,
- };
- 
- enum tpm2_command_codes {
-@@ -437,6 +438,24 @@ static inline u32 tpm2_rc_value(u32 rc)
- 	return (rc & BIT(7)) ? rc & 0xbf : rc;
- }
- 
-+/*
-+ * Convert a return value from tpm_transmit_cmd() to POSIX error code.
-+ */
-+static inline ssize_t tpm_ret_to_err(ssize_t ret)
-+{
-+	if (ret < 0)
-+		return ret;
-+
-+	switch (tpm2_rc_value(ret)) {
-+	case TPM2_RC_SUCCESS:
-+		return 0;
-+	case TPM2_RC_SESSION_MEMORY:
-+		return -ENOMEM;
-+	default:
-+		return -EFAULT;
-+	}
-+}
-+
- #if defined(CONFIG_TCG_TPM) || defined(CONFIG_TCG_TPM_MODULE)
- 
- extern int tpm_is_tpm2(struct tpm_chip *chip);
+ 	for (i = 0; i < ARRAY_SIZE(dev->phys); i++) {
 
 
