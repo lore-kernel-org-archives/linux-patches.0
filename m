@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8168815855C;
-	Tue, 20 May 2025 14:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2BB22D7A8;
+	Tue, 20 May 2025 14:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750092; cv=none; b=rf/xrfsZXLJKkWjBbx0xFhIIqCGR8INtu+azpL/1DYNzuyT3BMOB/VRLWvcRwPZiOlOqGFUkyIokeqgnmJTEiHjAMIhVC4R4w6GNIOB2SY1kheIsZzUr8HHXMP+7FZ09G5sBmQTwtl96+SFZvOg/RYx6Fmegta/4VTs9AlhcBFI=
+	t=1747750095; cv=none; b=MRH3FTUs6pVDNNMSUZ3VbnEfoFKGPcOR9gNbRD5q7OhnboHbOW/+oXg28frlBBf1dz0OXh4dOh+hd2VNuGjBWWloaGf4QTw9G4wL8JJOD33oijqoCewRadeqRO0zLe7+gK0vo2UU+Xh39cVk85+BVj3u4TDkku0TO0l7dNFUD0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750092; c=relaxed/simple;
-	bh=RYglXd+X24gHBxhw0MJRgoW19FyoC+3OSr46LG8vDL8=;
+	s=arc-20240116; t=1747750095; c=relaxed/simple;
+	bh=GSQqL9Kauw2w0XShKF1nAncE+ppkjFkHlgpGfqOmc7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=APdwL0ftmxFlRI2oggtk0Mj2BqPOQk5ApPyOdtJnesEE6MEtoI4LldDbtxCq3Qz+dJJoDHza+zhQOoLoEI/54qQH5s0pxNjqK5s9om13ag2NdW9zfHMRYHleZYg7Cni3uMCULEuqjF/dZYRe1LcVxp+Z7Lid0A8nkZA1YTBKwB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OU3rE0X/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gucTpBSOJMDf5lDi9zB3oCfjtPWDYElSGrDFCO/11XIZVXW+n4Me5CaQ9OO/5s61AxQcHiTRr6beeaB++Z1Yy6xlDayGkCCelFS8gFdqhFXEJXUMYPYWNYAT+nu/v1O3z2HQSUhtFx6gv97Edgy8fcdZtMl6sA1Ct1ECb99pCwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPf1G4EB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OU3rE0X/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F92C4CEE9;
-	Tue, 20 May 2025 14:08:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPf1G4EB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5A74C4CEE9;
+	Tue, 20 May 2025 14:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750092;
-	bh=RYglXd+X24gHBxhw0MJRgoW19FyoC+3OSr46LG8vDL8=;
+	s=korg; t=1747750095;
+	bh=GSQqL9Kauw2w0XShKF1nAncE+ppkjFkHlgpGfqOmc7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OU3rE0X/sRiyHH2T546MoVPQFaspRTFBWD/xXdebJcdQ6CRXeYuhJY9dwiQwWo098
-	 2b+xGZKFu0fURxAhMzusduHzBHkdqOqpJoIv7s2yICshH5MgxWqgzX0XWqcrCyzegl
-	 360vC/12lF/x5TSX0gVz59h/CsRBpVo+wPgUCWa4=
+	b=NPf1G4EBG80gfOYcuYhtCO11RTWgFWUWHvXfHzIWW41+h2d5X1liBNJDzugOKKXJO
+	 dJyerNzrLJC6mizP8TSBhg2kr43DlGVsnDxRZkpBCuvXCmykGATDOvujc+4QWlxOy7
+	 aXxc0MIBw1feJFedu+E05lQRuT24XxNHQj3uqCNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>,
-	Tarang Raval <tarang.raval@siliconsignals.io>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 009/143] arm64: dts: imx8mp-var-som: Fix LDO5 shutdown causing SD card timeout
-Date: Tue, 20 May 2025 15:49:24 +0200
-Message-ID: <20250520125810.416445276@linuxfoundation.org>
+Subject: [PATCH 6.12 010/143] cgroup/cpuset: Extend kthread_is_per_cpu() check to all PF_NO_SETAFFINITY tasks
+Date: Tue, 20 May 2025 15:49:25 +0200
+Message-ID: <20250520125810.455314609@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -52,68 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit c6888983134e2ccc2db8ffd2720b0d4826d952e4 ]
+[ Upstream commit 39b5ef791d109dd54c7c2e6e87933edfcc0ad1ac ]
 
-Fix SD card timeout issue caused by LDO5 regulator getting disabled
-after boot.
+Commit ec5fbdfb99d1 ("cgroup/cpuset: Enable update_tasks_cpumask()
+on top_cpuset") enabled us to pull CPUs dedicated to child partitions
+from tasks in top_cpuset by ignoring per cpu kthreads. However, there
+can be other kthreads that are not per cpu but have PF_NO_SETAFFINITY
+flag set to indicate that we shouldn't mess with their CPU affinity.
+For other kthreads, their affinity will be changed to skip CPUs dedicated
+to child partitions whether it is an isolating or a scheduling one.
 
-The kernel log shows LDO5 being disabled, which leads to a timeout
-on USDHC2:
-[   33.760561] LDO5: disabling
-[   81.119861] mmc1: Timeout waiting for hardware interrupt.
+As all the per cpu kthreads have PF_NO_SETAFFINITY set, the
+PF_NO_SETAFFINITY tasks are essentially a superset of per cpu kthreads.
+Fix this issue by dropping the kthread_is_per_cpu() check and checking
+the PF_NO_SETAFFINITY flag instead.
 
-To prevent this, set regulator-boot-on and regulator-always-on for
-LDO5. Also add the vqmmc regulator to properly support 1.8V/3.3V
-signaling for USDHC2 using a GPIO-controlled regulator.
-
-Fixes: 6c2a1f4f71258 ("arm64: dts: imx8mp-var-som-symphony: Add Variscite Symphony board and VAR-SOM-MX8MP SoM")
-Signed-off-by: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
-Acked-by: Tarang Raval <tarang.raval@siliconsignals.io>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: ec5fbdfb99d1 ("cgroup/cpuset: Enable update_tasks_cpumask() on top_cpuset")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Acked-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-var-som.dtsi | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ kernel/cgroup/cpuset.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-var-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-var-som.dtsi
-index b2ac2583a5929..b59da91fdd041 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-var-som.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-var-som.dtsi
-@@ -35,7 +35,6 @@
- 		      <0x1 0x00000000 0 0xc0000000>;
- 	};
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index c709a05023cd9..d1fb4bfbbd4c3 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1100,9 +1100,11 @@ void cpuset_update_tasks_cpumask(struct cpuset *cs, struct cpumask *new_cpus)
  
--
- 	reg_usdhc2_vmmc: regulator-usdhc2-vmmc {
- 	        compatible = "regulator-fixed";
- 	        regulator-name = "VSD_3V3";
-@@ -46,6 +45,16 @@
- 	        startup-delay-us = <100>;
- 	        off-on-delay-us = <12000>;
- 	};
-+
-+	reg_usdhc2_vqmmc: regulator-usdhc2-vqmmc {
-+		compatible = "regulator-gpio";
-+		regulator-name = "VSD_VSEL";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+		gpios = <&gpio2 12 GPIO_ACTIVE_HIGH>;
-+		states = <3300000 0x0 1800000 0x1>;
-+		vin-supply = <&ldo5>;
-+	};
- };
- 
- &A53_0 {
-@@ -205,6 +214,7 @@
-         pinctrl-2 = <&pinctrl_usdhc2_200mhz>, <&pinctrl_usdhc2_gpio>;
-         cd-gpios = <&gpio1 14 GPIO_ACTIVE_LOW>;
-         vmmc-supply = <&reg_usdhc2_vmmc>;
-+	vqmmc-supply = <&reg_usdhc2_vqmmc>;
-         bus-width = <4>;
-         status = "okay";
- };
+ 		if (top_cs) {
+ 			/*
+-			 * Percpu kthreads in top_cpuset are ignored
++			 * PF_NO_SETAFFINITY tasks are ignored.
++			 * All per cpu kthreads should have PF_NO_SETAFFINITY
++			 * flag set, see kthread_set_per_cpu().
+ 			 */
+-			if (kthread_is_per_cpu(task))
++			if (task->flags & PF_NO_SETAFFINITY)
+ 				continue;
+ 			cpumask_andnot(new_cpus, possible_mask, subpartitions_cpus);
+ 		} else {
 -- 
 2.39.5
 
