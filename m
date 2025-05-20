@@ -1,91 +1,97 @@
 Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0043A250C06
-	for <patches@lists.linux.dev>; Tue, 20 May 2025 19:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6A325CC45
+	for <patches@lists.linux.dev>; Tue, 20 May 2025 19:50:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747769833; cv=none; b=RUu3+hGH9hc5B4v5Tb/Waf9i+0dFSrcFNVMF/qoFD6oqkVojcWICVAkIpiJZQwva0UujGoFovh11PYDGs8I8pUK/b9SBmmLBZSmLpwrU4/Ta8vSq5FZTbmRKIYY1ZXNE9Y/F7rist7rwpoRgqFRUuSbYfEx4dvALyLr4dCylx6s=
+	t=1747770614; cv=none; b=jtPQpZK4y9pBA7IqwiK/WHaxw8Q+9YLhE4hC9k9eQBWLt8M62Xpo+WBeP5pmBOOohnros4nfHXcunZWcATEj7wONniTxjDthACt2dBidDzpz6Q9Knvr/1jDMRsdJUwM4bFUBubdB6kFsXWr/CiFhUC64Cw0k/PqTRagABZzsVm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747769833; c=relaxed/simple;
-	bh=yJmrJvk+batnwnKet1/z0D18l948QTmCnCbwr2N/m5I=;
+	s=arc-20240116; t=1747770614; c=relaxed/simple;
+	bh=SwiwaSdg4eQ4oxNyBzoukE5k+V15JbB2nsJEKxCXjVE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uhleKY+cyiWnMKUft1dpJv/XbKIT8PgOPwVKpdRn452kjCsl7LkBpxefyaVM6Z/1URVl1zddIyj4Ta6b6r2FzeY5o5tIe5xZzoQ+m1WvtfnOif13HTYQIeHiYi9087C45chphCXUkyrhFlDr36NnkPwAKBNST4CWq+X/+VvKevQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rdn3ZDUb; arc=none smtp.client-ip=209.85.215.175
+	 To:Cc:Content-Type; b=lz4EYzOyS9pQAoE/mMWGvTyBEhU4SJlt04Q9IRRpx4D4QDfy30tjXwAqRnUxJ7aC+/mWh6NbqUf36rcFEvEs+RKbwsnNu/RQshT0VqQbpVLmaKCA3XKpdwgmlwo6kjS9jFKjSwcC0IDov+COFXCYxBA/MF3u0wrPUyMMG3hyYzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J6GtMfJN; arc=none smtp.client-ip=209.85.215.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rdn3ZDUb"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-b1276984386so604545a12.0
-        for <patches@lists.linux.dev>; Tue, 20 May 2025 12:37:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J6GtMfJN"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-b26e6c551f8so509873a12.1
+        for <patches@lists.linux.dev>; Tue, 20 May 2025 12:50:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747769831; x=1748374631; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1747770612; x=1748375412; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yJmrJvk+batnwnKet1/z0D18l948QTmCnCbwr2N/m5I=;
-        b=Rdn3ZDUboE4noyNyOxWMNx2uZKiHmT48uCl8tMCer6otuP4n4cnb2oJgAytXJVlNKB
-         wENpgdtlZaF3fATnv4uAsQzCrqWgtvOXifPSTm4k8DnHTPStLvrIKEzy9fZilUfQ3GkV
-         0zItrKKikPccXrhKcYQcxx+wdRyYMVkA3NFm7ZmykBWBCXHkJa3CPlPNyn24xhq4Nsp7
-         zSEBHiLkgOdSccr9zj30OkBIzeZUVuPbqUBb54BwbtoK490iNmtjRLgPcTmcxF11FvNF
-         tvs7Ms8KYn3FqZwyYt9+u4LEe3qw9ZPuyFpD4H9pJcnOsSfcFvOycddncQZARGPFvop/
-         8j5w==
+        bh=SwiwaSdg4eQ4oxNyBzoukE5k+V15JbB2nsJEKxCXjVE=;
+        b=J6GtMfJNplE8sXrBIUu/LSGxeXZBeKQuPAQHAWEY2J1wBCfpnHgr29KfJTr4Yt+jf+
+         +tl0feBJRsEGos9bCUmKYDwUM68Lcy1EHuIyu8XJwypCSELgZFZBDGaOzQ3lnI6jqeqN
+         WcHS6uW6saqJVVQTAuTUMNhO51hVAfRMWmBe0lbYniqRG0Fm7hCCoBwwCb8txurLkLyf
+         DELkRnFqEbyNRARqIrwRKNAqzj0MdweN/HbcoXbYbOuXEIifT/fsV5sHTS3krpJBAcw5
+         dzvHk4HxXmTIaM2iMTTbWacY6XMgGsHuCPjuNupZbulqeOqIV6i/TphyeRlDS3ipp81h
+         N7FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747769831; x=1748374631;
+        d=1e100.net; s=20230601; t=1747770612; x=1748375412;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yJmrJvk+batnwnKet1/z0D18l948QTmCnCbwr2N/m5I=;
-        b=TcVZnaEDVeT+N4B88YDLajbIbSNGtHlaY3RYKo+Z/byvbwfIkSbW6e3rrUVbmMNj9K
-         YwAm896pht5ffwj62zL3llf6GYO4nLRcQgZDSFrxpJV96QmZ1Gwx+SQk9XZyZw75+ztz
-         YRws3rnnwF/akks6fK2aa6ornpDVc2GLmWrn38soO2LhaFuhaICsHVQ2rbraZs2/wa+R
-         HQfpbzhTInoOg3VHHbZ9ncZUXOJWyxTSt55/nRBwfasd9vdbZRLQgUyxBorXdbhXvtA3
-         /Y0guYP3qg/rQRJBEHQBB+AQu7O8XDu4iIWqbqhH305FaNxz31S7sZSzqkZEpFPTncqL
-         LJ1w==
-X-Forwarded-Encrypted: i=1; AJvYcCUVGkJdB4d37LZlHA9fGI8m4VZeHVKssuS37mVSZWh5xU3P0Qdn/in5aT3cdGAiRSUWu4LdixBE@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx1DA1Hh7MMwsztE8fGabe43MwY2qBjbtEImSdwI+mWb3LhKgHb
-	HpBvnl9w8vpYEPGKNpx5BLEhnSDno+KFA1+YU4LqE1/8DSH2/gUWiAEG5FtzCCckP6hmnlwWcLg
-	ZoNWh5PAuR6CVgB2IXc7YNrSCy7Q+Qmo=
-X-Gm-Gg: ASbGncsN2rhqH130WCUqCE2o8mvv2zEZZsmpx0VUkx4CcODp9C2w+95ra4ri1Ehn8QJ
-	+Ld5iWLNSR+EuiuO/lBynWhM9l6RWInI6JaSlbzBKje0ZQGR32lDcTZdluQe8ts9uYKMIkfV+DV
-	hlIWM2sdQltIf2aWRGYj9JnUN1IAahpnwL
-X-Google-Smtp-Source: AGHT+IHRYWQO+o6MeHbMj6f06qEP8DvM7w1Xe2r2Fhyflg1I5VaCbhW3BSNMk/qJJgj1bw9CC+AcMMksSMpaZZLrGkA=
-X-Received: by 2002:a17:903:1aa7:b0:224:1212:7da1 with SMTP id
- d9443c01a7336-231d454c962mr86733025ad.13.1747769831293; Tue, 20 May 2025
- 12:37:11 -0700 (PDT)
+        bh=SwiwaSdg4eQ4oxNyBzoukE5k+V15JbB2nsJEKxCXjVE=;
+        b=AegZTA0RYW1mdd3+eP4IQou24wMJfMpqNfDodXYzzHiTSjFTE+FcnIjdbkbDDQpUJr
+         2uUAIr9MO23gtpUyRvvC6rD7s0yXzFqf2vv7JMIkAj125RT/wIrNrjgs7bRfs196/WaL
+         suHHenHkxl77zQTSu3Gj553gmJrZPkf+Q0vdvLPxZyGPdJwDMYR/p/FrfipsHqrwBFRG
+         W+LthCAQrClVCW4cikJGtI5tmjdbMmVjTcBAPcpm8jHOaDkU+iJZOoFw/mbFGM3D4RIz
+         HTiJD6ipPOxR7PUigXrjtb7afmivkoUaC9MRH7V6eqYnvxJwE5wiJ6BGjyUTbm3w9jhP
+         W2jQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXg86M7rMh3f7ky2QptBLCiSFVbs+zFzJAoxeRmbxZoko+mRKxkqdEIheSlXRvPjSZDlY3ygbAK@lists.linux.dev
+X-Gm-Message-State: AOJu0YwwXGWEb1O6VAOGQqRiTzi9CQYi4cAc7vGO3YnVkL+MHZgNJFfm
+	Z5OjVF+7IFsUYN0nGks5edskkzl16VBcaR5D39pF5V80+zBMkTOzsRzrJ2pyfioW2fdA6xbzO5f
+	7LjLDWdWPqQrCG5dqO4xD62KnsS2DQlA=
+X-Gm-Gg: ASbGncvh2p5JouljRH/crgdjOUAQxU9P+5Jb6qrdIWVQWUhr1pu6HkFuBwIA9lfRCto
+	wtf1FEh7uFx4hq7e2s4ZZNeLL9UKtXPUItexYShhrR0vcs8b3XmIKWnkuUDJl4n0jqEqKT98C77
+	Ru3hXSZ+zRPfF7Dj86VJEzZEZE/FladNik
+X-Google-Smtp-Source: AGHT+IH/GtxXV7pO420TBwvo67pv/+vuSvNQns2cFPY0rjC4suXw7a7ox5Jd3eZobSFtn1EIW9pudsE+oeNIvVQpERQ=
+X-Received: by 2002:a17:902:cf07:b0:220:e1e6:446e with SMTP id
+ d9443c01a7336-231d437f0damr92624395ad.1.1747770612110; Tue, 20 May 2025
+ 12:50:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250520192034.889415-1-ojeda@kernel.org> <CAJ-ks9=4DJdbUBiy_45wWPviOs48NEK1DmeqWnDaFSpkoda_GQ@mail.gmail.com>
-In-Reply-To: <CAJ-ks9=4DJdbUBiy_45wWPviOs48NEK1DmeqWnDaFSpkoda_GQ@mail.gmail.com>
+References: <20250502140237.1659624-1-ojeda@kernel.org> <20250502140237.1659624-2-ojeda@kernel.org>
+ <20250513180757.GA1295002@joelnvbox>
+In-Reply-To: <20250513180757.GA1295002@joelnvbox>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 20 May 2025 21:36:57 +0200
-X-Gm-Features: AX0GCFv7GwY_uuzeDx4i5uB4OAE_8m-4VXTRgK6xXtbANDNefPefyVLnTkVFpw0
-Message-ID: <CANiq72mZafMsLOnLHGTsn_2yfYy4xf=OrTVHR68EqAx+6OBdww@mail.gmail.com>
-Subject: Re: [PATCH] rust: kbuild: rebuild if `.clippy.toml` changes
-To: Tamir Duberstein <tamird@gmail.com>
+Date: Tue, 20 May 2025 21:49:58 +0200
+X-Gm-Features: AX0GCFuOY7Kz9DRWzUOglkPbmrM_Bcksvg1f806Qs5Umb82adzvopIRqYuPJnhw
+Message-ID: <CANiq72=kkejAwQJLYNjN=25Qf7qr801_Gr9zCZXJTEF9Ou54gQ@mail.gmail.com>
+Subject: Re: [PATCH 1/5] objtool/rust: add one more `noreturn` Rust function
+ for Rust 1.87.0
+To: Joel Fernandes <joelagnelf@nvidia.com>
 Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Masahiro Yamada <masahiroy@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
 	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
 	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
 	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
 	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org, 
+	Josh Poimboeuf <jpoimboe@kernel.org>, Peter Zijlstra <peterz@infradead.org>, ttabi@nvidia.com, 
+	acourbot@nvidia.com, jhubbard@nvidia.com, apopple@nvidia.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 20, 2025 at 9:24=E2=80=AFPM Tamir Duberstein <tamird@gmail.com>=
- wrote:
+On Tue, May 13, 2025 at 8:08=E2=80=AFPM Joel Fernandes <joelagnelf@nvidia.c=
+om> wrote:
 >
-> It is possible to do this only if CLIPPY=3D1?
+> Any thoughts on how to fix the warning?
 
-I kept it simple on purpose, since we will not save much (changing
-`.clippy.toml` is quite rare to begin with), but I can add a
-conditional (likely in a variable). Not sure if it is worth it.
+For future reference, this gets fixed with
+https://lore.kernel.org/rust-for-linux/20250520185555.825242-1-ojeda@kernel=
+.org/
+
+I hope that helps (and apologies for the delay, a bunch of us were in
+RustWeek :)
 
 Cheers,
 Miguel
