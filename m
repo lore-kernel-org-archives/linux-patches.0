@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7285C22D794;
-	Tue, 20 May 2025 14:18:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E0C288D6;
+	Tue, 20 May 2025 14:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750705; cv=none; b=U7daskmexGFVUHs4qC7BZ/uwUf2TFnDDFCTU98KHHiGsrpflZyKt9R/E/Mgkc6Y+xNjG3f7n0dLWKbSvBJEJz46SYqlGHG9BU6NQBX0Sf+G7Djx5Ar0IQe5NbYb+MDxhgZ2hEpQy3N2OuGQ3TjMvv5MeJVY1nfAWtZmX9EW642I=
+	t=1747750708; cv=none; b=Ckz3JvHJ5x3oswANHDWAGnd4GUuoalTHxzIHChz0MzXzDKv7qigHoO/5bVy7Pe8nhf2HUwFLuNMNrD+JcvIFcm9gBBGCn9L51zg8cFm6SsW2pbQZ4yjnH/xQo5re7IwEq5AEWsxqZDeCofx7+auBP/rl7+91F1rt5DjCsfGJcPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750705; c=relaxed/simple;
-	bh=urYACN+rCu6oi1U41MLFrc9A5LzDvTtSlppj04qtr2k=;
+	s=arc-20240116; t=1747750708; c=relaxed/simple;
+	bh=qKx8MjN7zqIzLWhVPg7p9H/budcGD5TjZrC0yGUamg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mjk+nQNdo+8zQRUUAI/uhFKOeFmbsnQMIuPqxT3TgsCeqckrzdZobZvA7BJ5MzudAbGw4t0TZ4H7PTgFiatV3O7sOu607dkKtCG9b7HqKrYTu56X6SgtzHrruTZuets1W8M8yPHVRla6pWsapBMoz65YazDZqHqRkh5zMGs/reg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGOO/50x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LXB6WJCZcGZfYM9BN+F1F7nUx7amzUBH98tIRndBLQJlJGx+Nuk2wMyPGeKBQBUdQB6J4yXYnj7qBH4aLUUxbAODu+xg+naogPHMSs5/9JwxXEVaxclMsNLPP4rGlfR3TqyvqRoAvNtShitvBERVgSAXSOSenrEFSt3kAYTYwgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3I2fDkd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGOO/50x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE0AEC4CEE9;
-	Tue, 20 May 2025 14:18:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3I2fDkd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF1EC4CEE9;
+	Tue, 20 May 2025 14:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750705;
-	bh=urYACN+rCu6oi1U41MLFrc9A5LzDvTtSlppj04qtr2k=;
+	s=korg; t=1747750708;
+	bh=qKx8MjN7zqIzLWhVPg7p9H/budcGD5TjZrC0yGUamg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kGOO/50xwjdDjOEYsWvy0m/QGF298yVR3C0vt2SrOttAlP+yEglJbmbo2EKBdjdTV
-	 GhM4/F2RCpNtAJcCvmCBfR2JkqUIB20b8t2QClIN7HS3mXfniHRaJu3GaWcyZzJVSw
-	 f0m/fYcjfN+Ogr248t7pDKT1mdpBAM7W8Elief6Q=
+	b=b3I2fDkdavqJ108MNkv+S0JdsI6RXGeUiA6EVO9SaaeCTvH9AtKkL17S48E1a42OT
+	 0cD+EebJBsY1zctXsLG3XeWEf3pjONJAynFoug2UJXPOQEEJw8M3HdFJTxdK68ONIk
+	 BlFaBGWS/lU8VgaclEi1UrV9l4k8RA62i1WnqrLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	Kyoji Ogasawara <sawara04.o@gmail.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.14 077/145] btrfs: add back warning for mount option commit values exceeding 300
-Date: Tue, 20 May 2025 15:50:47 +0200
-Message-ID: <20250520125813.602163824@linuxfoundation.org>
+	Michael Kelley <mhklinux@outlook.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.14 095/145] hv_netvsc: Use vmbus_sendpacket_mpb_desc() to send VMBus messages
+Date: Tue, 20 May 2025 15:51:05 +0200
+Message-ID: <20250520125814.285688947@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -52,49 +50,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyoji Ogasawara <sawara04.o@gmail.com>
+From: Michael Kelley <mhklinux@outlook.com>
 
-commit 4ce2affc6ef9f84b4aebbf18bd5c57397b6024eb upstream.
+commit 4f98616b855cb0e3b5917918bb07b44728eb96ea upstream.
 
-The Btrfs documentation states that if the commit value is greater than
-300 a warning should be issued. The warning was accidentally lost in the
-new mount API update.
+netvsc currently uses vmbus_sendpacket_pagebuffer() to send VMBus
+messages. This function creates a series of GPA ranges, each of which
+contains a single PFN. However, if the rndis header in the VMBus
+message crosses a page boundary, the netvsc protocol with the host
+requires that both PFNs for the rndis header must be in a single "GPA
+range" data structure, which isn't possible with
+vmbus_sendpacket_pagebuffer(). As the first step in fixing this, add a
+new function netvsc_build_mpb_array() to build a VMBus message with
+multiple GPA ranges, each of which may contain multiple PFNs. Use
+vmbus_sendpacket_mpb_desc() to send this VMBus message to the host.
 
-Fixes: 6941823cc878 ("btrfs: remove old mount API code")
-CC: stable@vger.kernel.org # 6.12+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Kyoji Ogasawara <sawara04.o@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+There's no functional change since higher levels of netvsc don't
+maintain or propagate knowledge of contiguous PFNs. Based on its
+input, netvsc_build_mpb_array() still produces a separate GPA range
+for each PFN and the behavior is the same as with
+vmbus_sendpacket_pagebuffer(). But the groundwork is laid for a
+subsequent patch to provide the necessary grouping.
+
+Cc: <stable@vger.kernel.org> # 6.1.x
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://patch.msgid.link/20250513000604.1396-3-mhklinux@outlook.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/fs.h    |    1 +
- fs/btrfs/super.c |    4 ++++
- 2 files changed, 5 insertions(+)
+ drivers/net/hyperv/netvsc.c |   50 +++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 45 insertions(+), 5 deletions(-)
 
---- a/fs/btrfs/fs.h
-+++ b/fs/btrfs/fs.h
-@@ -285,6 +285,7 @@ enum {
- #define BTRFS_FEATURE_INCOMPAT_SAFE_CLEAR		0ULL
+--- a/drivers/net/hyperv/netvsc.c
++++ b/drivers/net/hyperv/netvsc.c
+@@ -1055,6 +1055,42 @@ static int netvsc_dma_map(struct hv_devi
+ 	return 0;
+ }
  
- #define BTRFS_DEFAULT_COMMIT_INTERVAL	(30)
-+#define BTRFS_WARNING_COMMIT_INTERVAL	(300)
- #define BTRFS_DEFAULT_MAX_INLINE	(2048)
++/* Build an "array" of mpb entries describing the data to be transferred
++ * over VMBus. After the desc header fields, each "array" entry is variable
++ * size, and each entry starts after the end of the previous entry. The
++ * "offset" and "len" fields for each entry imply the size of the entry.
++ *
++ * The pfns are in HV_HYP_PAGE_SIZE, because all communication with Hyper-V
++ * uses that granularity, even if the system page size of the guest is larger.
++ * Each entry in the input "pb" array must describe a contiguous range of
++ * guest physical memory so that the pfns are sequential if the range crosses
++ * a page boundary. The offset field must be < HV_HYP_PAGE_SIZE.
++ */
++static inline void netvsc_build_mpb_array(struct hv_page_buffer *pb,
++				u32 page_buffer_count,
++				struct vmbus_packet_mpb_array *desc,
++				u32 *desc_size)
++{
++	struct hv_mpb_array *mpb_entry = &desc->range;
++	int i, j;
++
++	for (i = 0; i < page_buffer_count; i++) {
++		u32 offset = pb[i].offset;
++		u32 len = pb[i].len;
++
++		mpb_entry->offset = offset;
++		mpb_entry->len = len;
++
++		for (j = 0; j < HVPFN_UP(offset + len); j++)
++			mpb_entry->pfn_array[j] = pb[i].pfn + j;
++
++		mpb_entry = (struct hv_mpb_array *)&mpb_entry->pfn_array[j];
++	}
++
++	desc->rangecount = page_buffer_count;
++	*desc_size = (char *)mpb_entry - (char *)desc;
++}
++
+ static inline int netvsc_send_pkt(
+ 	struct hv_device *device,
+ 	struct hv_netvsc_packet *packet,
+@@ -1097,6 +1133,9 @@ static inline int netvsc_send_pkt(
  
- struct btrfs_dev_replace {
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -569,6 +569,10 @@ static int btrfs_parse_param(struct fs_c
- 		break;
- 	case Opt_commit_interval:
- 		ctx->commit_interval = result.uint_32;
-+		if (ctx->commit_interval > BTRFS_WARNING_COMMIT_INTERVAL) {
-+			btrfs_warn(NULL, "excessive commit interval %u, use with care",
-+				   ctx->commit_interval);
-+		}
- 		if (ctx->commit_interval == 0)
- 			ctx->commit_interval = BTRFS_DEFAULT_COMMIT_INTERVAL;
- 		break;
+ 	packet->dma_range = NULL;
+ 	if (packet->page_buf_cnt) {
++		struct vmbus_channel_packet_page_buffer desc;
++		u32 desc_size;
++
+ 		if (packet->cp_partial)
+ 			pb += packet->rmsg_pgcnt;
+ 
+@@ -1106,11 +1145,12 @@ static inline int netvsc_send_pkt(
+ 			goto exit;
+ 		}
+ 
+-		ret = vmbus_sendpacket_pagebuffer(out_channel,
+-						  pb, packet->page_buf_cnt,
+-						  &nvmsg, sizeof(nvmsg),
+-						  req_id);
+-
++		netvsc_build_mpb_array(pb, packet->page_buf_cnt,
++				(struct vmbus_packet_mpb_array *)&desc,
++				 &desc_size);
++		ret = vmbus_sendpacket_mpb_desc(out_channel,
++				(struct vmbus_packet_mpb_array *)&desc,
++				desc_size, &nvmsg, sizeof(nvmsg), req_id);
+ 		if (ret)
+ 			netvsc_dma_unmap(ndev_ctx->device_ctx, packet);
+ 	} else {
 
 
