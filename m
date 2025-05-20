@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535BD24418D;
-	Tue, 20 May 2025 14:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B86624503E;
+	Tue, 20 May 2025 14:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750786; cv=none; b=cMr6raUT6jhP/q1uEu4ImRH8WmzY3VvsbHg42zwXEf+Q0Qii+mz2gpFP12VZpnVxgvzkFbGf+wyZOk9DfedGzU2lo1hJlnXqxLOjY3x99WkqDLlkX5JLMmHMTJdcNcd2FIMyL9olkY34R2+EfBubyRQMB3/jg5UAnB2I2M+Lnug=
+	t=1747750789; cv=none; b=u+bqFHmpo2Nlqn7Q9GNOjEdkLqfMh7A3qE2BmNw94654xeXOkp89obFPyRZoyiYt1nEHIf6bqW/3mkJGDFMC9+jAckRr1wxkAodXEnVVr27vsPNQcJ5ybp5HsBhAO3dXoAN/RRDKpZ/akS5m2zouZ3xctdpi7ajPssm0jZG6ktY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750786; c=relaxed/simple;
-	bh=j5nWYrck52xAsuc8r7hxTLRyroppZT5kv4OfK6Wc/n8=;
+	s=arc-20240116; t=1747750789; c=relaxed/simple;
+	bh=7EdhwFgIOwDZ+bo3y3mID6OLMeDvmwl0aoWD0tFfHeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uDY9Ic1Iv8UM6mH2ykP2t7/laQ81gPeR9BnbecSXbe/p78E8OUmzuonMXKO74oGtohPV95CZtSfSVIYmSZfnbKKIIBwoOvS8S0Y6AFxvlf5x4J4bKvyvKpWFIcn6I5fhI2rp2zbJpFx9enm/PfEJzay3Iyg57yXjnQ7VLiiHcTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18RhOrpK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iVquvlYVGhbcZxeB9r0ErbjRocvWswdl+V+5K1uDoR2obOgaCFBcuI9Sga9wxoHdBp2HQEchdpMG2rvkrxCa4IXiwJyTf//wyK9AeVbE/3Pm9qHoHmArQflFFiThTXbqIDQ+TzuHoKvj5Ir3sLpt1CAuJfdVSRmXpjOV5XwuWpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYES5Gsp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18RhOrpK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6DBAC4CEE9;
-	Tue, 20 May 2025 14:19:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYES5Gsp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0615DC4CEE9;
+	Tue, 20 May 2025 14:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750786;
-	bh=j5nWYrck52xAsuc8r7hxTLRyroppZT5kv4OfK6Wc/n8=;
+	s=korg; t=1747750789;
+	bh=7EdhwFgIOwDZ+bo3y3mID6OLMeDvmwl0aoWD0tFfHeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=18RhOrpK9ns8dbS5p1PQ+C4utVLfK2ryM8jR6Xozq4Vd00nrD1hvrrz6MlU9P24ng
-	 DOhxRXyvEX8Wdgb5f851BPO89YtGELUIKbhcPNGuycl/Tosdy0WjAOUUPpgpuX8KVb
-	 4QtrJdv/zguPVRzlStFDKiOrHlplvKKzTU1orMUU=
+	b=gYES5GspZSCD4BWU+W81wyLn54ijVjuMRwC2SItolX1Wg9Bh2QwWtSgh2yAp05qnb
+	 utl/azCZ8aBO7Lnnun9YyrYZOIzn6zKae904PCRuSLEuoT1NvxvYClnvTYwfcZNukb
+	 jd/muZtvHLPvxe09lMMNkzzf7qwFTsLfurzTDdgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5b8c4abafcb1d791ccfc@syzkaller.appspotmail.com,
-	syzbot+6456a99dfdc2e78c4feb@syzkaller.appspotmail.com,
+	hexue <xue01.he@samsung.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.14 121/145] io_uring/memmap: dont use page_address() on a highmem page
-Date: Tue, 20 May 2025 15:51:31 +0200
-Message-ID: <20250520125815.291795901@linuxfoundation.org>
+Subject: [PATCH 6.14 122/145] io_uring/uring_cmd: fix hybrid polling initialization issue
+Date: Tue, 20 May 2025 15:51:32 +0200
+Message-ID: <20250520125815.329168625@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -51,44 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: hexue <xue01.he@samsung.com>
 
-commit f446c6311e86618a1f81eb576b56a6266307238f upstream.
+commit 63166b815dc163b2e46426cecf707dc5923d6d13 upstream.
 
-For older/32-bit systems with highmem, don't assume that the pages in
-a mapped region are always going to be mapped. If io_region_init_ptr()
-finds that the pages are coalescable, also check if the first page is
-a HighMem page or not. If it is, fall through to the usual vmap()
-mapping rather than attempt to get the unmapped page address.
+Modify the check for whether the timer is initialized during IO transfer
+when passthrough is used with hybrid polling, to ensure that it's always
+setup correctly.
 
 Cc: stable@vger.kernel.org
-Fixes: c4d0ac1c1567 ("io_uring/memmap: optimise single folio regions")
-Link: https://lore.kernel.org/all/681fe2fb.050a0220.f2294.001a.GAE@google.com/
-Reported-by: syzbot+5b8c4abafcb1d791ccfc@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/all/681fed0a.050a0220.f2294.001c.GAE@google.com/
-Reported-by: syzbot+6456a99dfdc2e78c4feb@syzkaller.appspotmail.com
-Tested-by: syzbot+6456a99dfdc2e78c4feb@syzkaller.appspotmail.com
+Fixes: 01ee194d1aba ("io_uring: add support for hybrid IOPOLL")
+Signed-off-by: hexue <xue01.he@samsung.com>
+Link: https://lore.kernel.org/r/20250512052025.293031-1-xue01.he@samsung.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/memmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/uring_cmd.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/io_uring/memmap.c b/io_uring/memmap.c
-index 76fcc79656b0..07f8a5cbd37e 100644
---- a/io_uring/memmap.c
-+++ b/io_uring/memmap.c
-@@ -116,7 +116,7 @@ static int io_region_init_ptr(struct io_mapped_region *mr)
- 	void *ptr;
+--- a/io_uring/uring_cmd.c
++++ b/io_uring/uring_cmd.c
+@@ -244,6 +244,11 @@ int io_uring_cmd(struct io_kiocb *req, u
+ 			return -EOPNOTSUPP;
+ 		issue_flags |= IO_URING_F_IOPOLL;
+ 		req->iopoll_completed = 0;
++		if (ctx->flags & IORING_SETUP_HYBRID_IOPOLL) {
++			/* make sure every req only blocks once */
++			req->flags &= ~REQ_F_IOPOLL_STATE;
++			req->iopoll_start = ktime_get_ns();
++		}
+ 	}
  
- 	if (io_check_coalesce_buffer(mr->pages, mr->nr_pages, &ifd)) {
--		if (ifd.nr_folios == 1) {
-+		if (ifd.nr_folios == 1 && !PageHighMem(mr->pages[0])) {
- 			mr->ptr = page_address(mr->pages[0]);
- 			return 0;
- 		}
--- 
-2.49.0
-
+ 	ret = file->f_op->uring_cmd(ioucmd, issue_flags);
 
 
