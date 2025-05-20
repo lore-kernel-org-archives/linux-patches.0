@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC58241103;
-	Tue, 20 May 2025 13:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE11C1922ED;
+	Tue, 20 May 2025 13:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749358; cv=none; b=N3v/Psi9pXBEMkoqT16NObFlWNhyCZB6jA1roZtmPZMzKpsWJezgWONysPzxxOHc/2b0jB/5KCY6Hkti9QZI/ghECMG2u8YHwLNVC2FPCWRM+R0Cz2W9fMgRR5MJPW8yAIKq+R7tu5Lr+eA/Sxc7i4Sj7/dbBUKMcPREXayz1rc=
+	t=1747749360; cv=none; b=MvXjZHX2VGOEk+4WdF6IBULeoNKdZRrPXLqYfZUWUZIsBExSvM2LO49ALG7C3Blk0uemtsIbT6gaRiqAYgOgo4VeUWpQGur94JPLWxIaoEILCPW/aq66A8wZ6nXLtw5o86qGwk+fcOOHKQohW6CY9PACb1eD9DVYzy+lsaELhQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749358; c=relaxed/simple;
-	bh=rQixnpYafH5pVJi3raHCjPvw2oFOdrX3Ho2A8/RWWhk=;
+	s=arc-20240116; t=1747749360; c=relaxed/simple;
+	bh=AgosMMnL72Htp8ezFbyA71tw5pQ4EtptAQKS3+nM7cM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u/hzcDb40wx24TFs/ePDW0s2oQA0WieTaGoyXXTc3vIsyAa6vERNHxgkWI5IbCSRMRHBohD7YbHAJIJgxGVZWJC4XU/vlxa2ypD1kPTHTBp21rPZl0LVscQ+DC/Kb8SHRSlkqUn5TehB9K7/cPdfUXK2POWAAR7thSMsHEWEUIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z3yxHjpv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=O6+C9wOirkKgi/FS53oeqCObpXkkUXznGihX2pVFBUVFAmESu9HNQcud5fWGLpVCY95/pYpG4hkABSL++YPUo/K39QvYZhZTxOogX95xD9TAkavBm2VORv7/F0iSLzReYa/HB7qrzEE6TwcCUusBHkrriJ/HAYsgF5ssMEMkxbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UbZm5zEm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z3yxHjpv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A32AC4CEE9;
-	Tue, 20 May 2025 13:55:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UbZm5zEm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55D53C4CEE9;
+	Tue, 20 May 2025 13:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749358;
-	bh=rQixnpYafH5pVJi3raHCjPvw2oFOdrX3Ho2A8/RWWhk=;
+	s=korg; t=1747749360;
+	bh=AgosMMnL72Htp8ezFbyA71tw5pQ4EtptAQKS3+nM7cM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z3yxHjpveYLT/tLYiaJ3TCtg244g/+sv8Rn8sL2A9z3E4++nachQI+ddDs2aaRQfp
-	 F8cgeIRtZbIYGDtQYWxzFXeUKarYttburVVJpD/Kdc9aAsK3i8vjUbhicZxnknf1aX
-	 BJEHnfJHqvcPYqJ9Qh7/MuWvAV0BdbsmJKmZhiN4=
+	b=UbZm5zEm2wHfkIl/+ua8naRCCheb+5PR7u4Ge/zwZasib+qN2ARM5W3xZOxuRX3LA
+	 Il5lRP1vZQIMzcaVBpTRKBW/WMOh88eNXwDyJVfPo1tj6xvjZCIWd2tOMWaEjE4wZ6
+	 D72re3JInistjDUlFhCLPt1C+25MBIXCOcwd6c3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sebastian Ott <sebott@redhat.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Pedro Falcato <pedro.falcato@gmail.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 19/97] iio: adc: ad7768-1: Fix insufficient alignment of timestamp.
-Date: Tue, 20 May 2025 15:49:44 +0200
-Message-ID: <20250520125801.422517306@linuxfoundation.org>
+Subject: [PATCH 6.1 02/97] binfmt_elf: Support segments with 0 filesz and misaligned starts
+Date: Tue, 20 May 2025 15:49:27 +0200
+Message-ID: <20250520125800.760636100@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -54,39 +55,240 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Eric W. Biederman <ebiederm@xmission.com>
 
-[ Upstream commit ffbc26bc91c1f1eb3dcf5d8776e74cbae21ee13a ]
+[ Upstream commit 585a018627b4d7ed37387211f667916840b5c5ea ]
 
-On architectures where an s64 is not 64-bit aligned, this may result
-insufficient alignment of the timestamp and the structure being too small.
-Use aligned_s64 to force the alignment.
+Implement a helper elf_load() that wraps elf_map() and performs all
+of the necessary work to ensure that when "memsz > filesz" the bytes
+described by "memsz > filesz" are zeroed.
 
-Fixes: a1caeebab07e ("iio: adc: ad7768-1: Fix too small buffer passed to iio_push_to_buffers_with_timestamp()") # aligned_s64 newer
-Reported-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250413103443.2420727-3-jic23@kernel.org
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+An outstanding issue is if the first segment has filesz 0, and has a
+randomized location. But that is the same as today.
+
+In this change I replaced an open coded padzero() that did not clear
+all of the way to the end of the page, with padzero() that does.
+
+I also stopped checking the return of padzero() as there is at least
+one known case where testing for failure is the wrong thing to do.
+It looks like binfmt_elf_fdpic may have the proper set of tests
+for when error handling can be safely completed.
+
+I found a couple of commits in the old history
+https://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git,
+that look very interesting in understanding this code.
+
+commit 39b56d902bf3 ("[PATCH] binfmt_elf: clearing bss may fail")
+commit c6e2227e4a3e ("[SPARC64]: Missing user access return value checks in fs/binfmt_elf.c and fs/compat.c")
+commit 5bf3be033f50 ("v2.4.10.1 -> v2.4.10.2")
+
+Looking at commit 39b56d902bf3 ("[PATCH] binfmt_elf: clearing bss may fail"):
+>  commit 39b56d902bf35241e7cba6cc30b828ed937175ad
+>  Author: Pavel Machek <pavel@ucw.cz>
+>  Date:   Wed Feb 9 22:40:30 2005 -0800
+>
+>     [PATCH] binfmt_elf: clearing bss may fail
+>
+>     So we discover that Borland's Kylix application builder emits weird elf
+>     files which describe a non-writeable bss segment.
+>
+>     So remove the clear_user() check at the place where we zero out the bss.  I
+>     don't _think_ there are any security implications here (plus we've never
+>     checked that clear_user() return value, so whoops if it is a problem).
+>
+>     Signed-off-by: Pavel Machek <pavel@suse.cz>
+>     Signed-off-by: Andrew Morton <akpm@osdl.org>
+>     Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+
+It seems pretty clear that binfmt_elf_fdpic with skipping clear_user() for
+non-writable segments and otherwise calling clear_user(), aka padzero(),
+and checking it's return code is the right thing to do.
+
+I just skipped the error checking as that avoids breaking things.
+
+And notably, it looks like Borland's Kylix died in 2005 so it might be
+safe to just consider read-only segments with memsz > filesz an error.
+
+Reported-by: Sebastian Ott <sebott@redhat.com>
+Reported-by: Thomas Weißschuh <linux@weissschuh.net>
+Closes: https://lkml.kernel.org/r/20230914-bss-alloc-v1-1-78de67d2c6dd@weissschuh.net
+Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+Link: https://lore.kernel.org/r/87sf71f123.fsf@email.froward.int.ebiederm.org
+Tested-by: Pedro Falcato <pedro.falcato@gmail.com>
+Signed-off-by: Sebastian Ott <sebott@redhat.com>
+Link: https://lore.kernel.org/r/20230929032435.2391507-1-keescook@chromium.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Stable-dep-of: 11854fe263eb ("binfmt_elf: Move brk for static PIE even if ASLR disabled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7768-1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/binfmt_elf.c | 111 +++++++++++++++++++++---------------------------
+ 1 file changed, 48 insertions(+), 63 deletions(-)
 
-diff --git a/drivers/iio/adc/ad7768-1.c b/drivers/iio/adc/ad7768-1.c
-index 74b0c85944bd6..967f06cd3f94e 100644
---- a/drivers/iio/adc/ad7768-1.c
-+++ b/drivers/iio/adc/ad7768-1.c
-@@ -169,7 +169,7 @@ struct ad7768_state {
- 	union {
- 		struct {
- 			__be32 chan;
--			s64 timestamp;
-+			aligned_s64 timestamp;
- 		} scan;
- 		__be32 d32;
- 		u8 d8[2];
+diff --git a/fs/binfmt_elf.c b/fs/binfmt_elf.c
+index d1cf3d25da4b6..ea2968d343bb6 100644
+--- a/fs/binfmt_elf.c
++++ b/fs/binfmt_elf.c
+@@ -109,25 +109,6 @@ static struct linux_binfmt elf_format = {
+ 
+ #define BAD_ADDR(x) (unlikely((unsigned long)(x) >= TASK_SIZE))
+ 
+-static int set_brk(unsigned long start, unsigned long end, int prot)
+-{
+-	start = ELF_PAGEALIGN(start);
+-	end = ELF_PAGEALIGN(end);
+-	if (end > start) {
+-		/*
+-		 * Map the last of the bss segment.
+-		 * If the header is requesting these pages to be
+-		 * executable, honour that (ppc32 needs this).
+-		 */
+-		int error = vm_brk_flags(start, end - start,
+-				prot & PROT_EXEC ? VM_EXEC : 0);
+-		if (error)
+-			return error;
+-	}
+-	current->mm->start_brk = current->mm->brk = end;
+-	return 0;
+-}
+-
+ /* We need to explicitly zero any fractional pages
+    after the data section (i.e. bss).  This would
+    contain the junk from the file that should not
+@@ -401,6 +382,51 @@ static unsigned long elf_map(struct file *filep, unsigned long addr,
+ 	return(map_addr);
+ }
+ 
++static unsigned long elf_load(struct file *filep, unsigned long addr,
++		const struct elf_phdr *eppnt, int prot, int type,
++		unsigned long total_size)
++{
++	unsigned long zero_start, zero_end;
++	unsigned long map_addr;
++
++	if (eppnt->p_filesz) {
++		map_addr = elf_map(filep, addr, eppnt, prot, type, total_size);
++		if (BAD_ADDR(map_addr))
++			return map_addr;
++		if (eppnt->p_memsz > eppnt->p_filesz) {
++			zero_start = map_addr + ELF_PAGEOFFSET(eppnt->p_vaddr) +
++				eppnt->p_filesz;
++			zero_end = map_addr + ELF_PAGEOFFSET(eppnt->p_vaddr) +
++				eppnt->p_memsz;
++
++			/* Zero the end of the last mapped page */
++			padzero(zero_start);
++		}
++	} else {
++		map_addr = zero_start = ELF_PAGESTART(addr);
++		zero_end = zero_start + ELF_PAGEOFFSET(eppnt->p_vaddr) +
++			eppnt->p_memsz;
++	}
++	if (eppnt->p_memsz > eppnt->p_filesz) {
++		/*
++		 * Map the last of the segment.
++		 * If the header is requesting these pages to be
++		 * executable, honour that (ppc32 needs this).
++		 */
++		int error;
++
++		zero_start = ELF_PAGEALIGN(zero_start);
++		zero_end = ELF_PAGEALIGN(zero_end);
++
++		error = vm_brk_flags(zero_start, zero_end - zero_start,
++				     prot & PROT_EXEC ? VM_EXEC : 0);
++		if (error)
++			map_addr = error;
++	}
++	return map_addr;
++}
++
++
+ static unsigned long total_mapping_size(const struct elf_phdr *phdr, int nr)
+ {
+ 	elf_addr_t min_addr = -1;
+@@ -830,7 +856,6 @@ static int load_elf_binary(struct linux_binprm *bprm)
+ 	struct elf_phdr *elf_ppnt, *elf_phdata, *interp_elf_phdata = NULL;
+ 	struct elf_phdr *elf_property_phdata = NULL;
+ 	unsigned long elf_bss, elf_brk;
+-	int bss_prot = 0;
+ 	int retval, i;
+ 	unsigned long elf_entry;
+ 	unsigned long e_entry;
+@@ -1042,33 +1067,6 @@ static int load_elf_binary(struct linux_binprm *bprm)
+ 		if (elf_ppnt->p_type != PT_LOAD)
+ 			continue;
+ 
+-		if (unlikely (elf_brk > elf_bss)) {
+-			unsigned long nbyte;
+-
+-			/* There was a PT_LOAD segment with p_memsz > p_filesz
+-			   before this one. Map anonymous pages, if needed,
+-			   and clear the area.  */
+-			retval = set_brk(elf_bss + load_bias,
+-					 elf_brk + load_bias,
+-					 bss_prot);
+-			if (retval)
+-				goto out_free_dentry;
+-			nbyte = ELF_PAGEOFFSET(elf_bss);
+-			if (nbyte) {
+-				nbyte = ELF_MIN_ALIGN - nbyte;
+-				if (nbyte > elf_brk - elf_bss)
+-					nbyte = elf_brk - elf_bss;
+-				if (clear_user((void __user *)elf_bss +
+-							load_bias, nbyte)) {
+-					/*
+-					 * This bss-zeroing can fail if the ELF
+-					 * file specifies odd protections. So
+-					 * we don't check the return value
+-					 */
+-				}
+-			}
+-		}
+-
+ 		elf_prot = make_prot(elf_ppnt->p_flags, &arch_state,
+ 				     !!interpreter, false);
+ 
+@@ -1164,7 +1162,7 @@ static int load_elf_binary(struct linux_binprm *bprm)
+ 			}
+ 		}
+ 
+-		error = elf_map(bprm->file, load_bias + vaddr, elf_ppnt,
++		error = elf_load(bprm->file, load_bias + vaddr, elf_ppnt,
+ 				elf_prot, elf_flags, total_size);
+ 		if (BAD_ADDR(error)) {
+ 			retval = IS_ERR((void *)error) ?
+@@ -1219,10 +1217,8 @@ static int load_elf_binary(struct linux_binprm *bprm)
+ 		if (end_data < k)
+ 			end_data = k;
+ 		k = elf_ppnt->p_vaddr + elf_ppnt->p_memsz;
+-		if (k > elf_brk) {
+-			bss_prot = elf_prot;
++		if (k > elf_brk)
+ 			elf_brk = k;
+-		}
+ 	}
+ 
+ 	e_entry = elf_ex->e_entry + load_bias;
+@@ -1234,18 +1230,7 @@ static int load_elf_binary(struct linux_binprm *bprm)
+ 	start_data += load_bias;
+ 	end_data += load_bias;
+ 
+-	/* Calling set_brk effectively mmaps the pages that we need
+-	 * for the bss and break sections.  We must do this before
+-	 * mapping in the interpreter, to make sure it doesn't wind
+-	 * up getting placed where the bss needs to go.
+-	 */
+-	retval = set_brk(elf_bss, elf_brk, bss_prot);
+-	if (retval)
+-		goto out_free_dentry;
+-	if (likely(elf_bss != elf_brk) && unlikely(padzero(elf_bss))) {
+-		retval = -EFAULT; /* Nobody gets to see this, but.. */
+-		goto out_free_dentry;
+-	}
++	current->mm->start_brk = current->mm->brk = ELF_PAGEALIGN(elf_brk);
+ 
+ 	if (interpreter) {
+ 		elf_entry = load_elf_interp(interp_elf_ex,
 -- 
 2.39.5
 
