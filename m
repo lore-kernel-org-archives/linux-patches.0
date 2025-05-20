@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F5B1A3A80;
-	Tue, 20 May 2025 14:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD58C1A3A80;
+	Tue, 20 May 2025 14:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750869; cv=none; b=Tw3/2dTNiEGUoc4uIzV0yJnossCBGkYXqWTruCPgjUgNa6t83zZLchSM56No7MqHDFvvXExe9M6U8Tw8nje1/5Vb7FMMmBZWfuMG1uTpWB5jLt88oyX19l9z+IR8eEUY/tVHail8hMospWiJnK15pEOSbeqrX5wLKxoAa3T69WY=
+	t=1747750871; cv=none; b=szH4DwghCfH9WHGel6qFix8cRtr3XEMky5yzx96i6vD00Cx85+zUawtLk7D+e37tIVXu6rY5l8ZndjcNvtOpDAvpKaXUqmbiS+gw5+xzOPRvQ3fjfqA5jBbOzZkwQZfqqz+2r1hRr7qw64w6YkrjTVj1IHeNCFQr5hfdJrHbx78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750869; c=relaxed/simple;
-	bh=bEgIgVHvCvZUOT4i8an3DednSG0HDWw2KxtlTrD+nYE=;
+	s=arc-20240116; t=1747750871; c=relaxed/simple;
+	bh=+43pptpJu+1dMVHPOtiP1EsP3t/7458m8/qYgvYShIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gsIfSerfW370LbZsIPBMhn9uQiSS+WYRsOdHKnfyvk2lnE9Bj3R+IN3DLONR8LIb6RmrNPmHmKjLQp/aoEK3N6aJx1Hz25b9FnnqLmJVYJr45wtUqpOYcPuQSvlUnwaQC4Gp+G8ZishyZncW/1kb7FkYvESw+GiC3iGfj7JMMI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s98VnyLY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kd+YnLDm07PAYsDQ2De9k6xIc7V+cWaD7SaThmjniTRzU3zefsRPIVL3b6CcHGFdn/Um8UEFqFj+EutvYo1wWEomlx/g/c136lyKmTo0BKHh/r4Q2dJVx08flzIa0yInKwWD44rsaVjAj/w0qF9LBp3Wthpe8B4SEOTEVpPq+fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=odk3/3gN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s98VnyLY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D689C4CEE9;
-	Tue, 20 May 2025 14:21:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="odk3/3gN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577B8C4CEE9;
+	Tue, 20 May 2025 14:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750868;
-	bh=bEgIgVHvCvZUOT4i8an3DednSG0HDWw2KxtlTrD+nYE=;
+	s=korg; t=1747750871;
+	bh=+43pptpJu+1dMVHPOtiP1EsP3t/7458m8/qYgvYShIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s98VnyLYAUEzKx1uKY7E1IbcshgS0WRcWAHuPzm9BfCw3hhkU9FLyaZw0Jph2BE4z
-	 Y+dpIeqdriDcibHoRDtjSOx2hhR0JIT3+fSO6wILti4VpCTqoNHsX+6CzBUI+8xs9w
-	 2BfYL+XbZYmtzjKgcAlGKn8QRjwY/fRbGu01JXWI=
+	b=odk3/3gNkwv/CM+yuE4JS1LB0d0b0gAj4s/k5ZnMA/zGXu8boGX44zNoXTbNGzBI0
+	 pwvZeVLxYzbqahB9IjmGcKDHYgrVnfHGNZUTqE36dJclTXawWnhvuj5W/6YvDPZzln
+	 UqxePeDDE/uU+RowK6aN+Wu96oXpdIxGveo1sf6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Thierry Reding <treding@nvidia.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.14 108/145] phy: Fix error handling in tegra_xusb_port_init
-Date: Tue, 20 May 2025 15:51:18 +0200
-Message-ID: <20250520125814.786662233@linuxfoundation.org>
+	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Subject: [PATCH 6.14 141/145] accel/ivpu: Flush pending jobs of devices workqueues
+Date: Tue, 20 May 2025 15:51:51 +0200
+Message-ID: <20250520125816.065304088@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -51,56 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Maciej Falkowski <maciej.falkowski@linux.intel.com>
 
-commit b2ea5f49580c0762d17d80d8083cb89bc3acf74f upstream.
+commit 683e9fa1c885a0cffbc10b459a7eee9df92af1c1 upstream.
 
-If device_add() fails, do not use device_unregister() for error
-handling. device_unregister() consists two functions: device_del() and
-put_device(). device_unregister() should only be called after
-device_add() succeeded because device_del() undoes what device_add()
-does if successful. Change device_unregister() to put_device() call
-before returning from the function.
+Use flush_work() instead of cancel_work_sync() for driver IRQ
+workqueues to guarantee that remaining pending work
+will be handled.
 
-As comment of device_add() says, 'if device_add() succeeds, you should
-call device_del() when you want to get rid of it. If device_add() has
-not succeeded, use only put_device() to drop the reference count'.
+This resolves two issues that were encountered where a driver was left
+in an incorrect state as the bottom-half was canceled:
 
-Found by code review.
+1. Cancelling context-abort of a job that is still executing and
+   is causing translation faults which is going to cause additional TDRs
 
-Cc: stable@vger.kernel.org
-Fixes: 53d2a715c240 ("phy: Add Tegra XUSB pad controller support")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Link: https://lore.kernel.org/r/20250303072739.3874987-1-make24@iscas.ac.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+2. Cancelling bottom-half of a DCT (duty-cycle throttling) request
+   which will cause a device to not be adjusted to an external frequency
+   request.
+
+Fixes: bc3e5f48b7ee ("accel/ivpu: Use workqueue for IRQ handling")
+Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Link: https://lore.kernel.org/r/20250401155755.4049156-1-maciej.falkowski@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/tegra/xusb.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/accel/ivpu/ivpu_drv.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/phy/tegra/xusb.c
-+++ b/drivers/phy/tegra/xusb.c
-@@ -548,16 +548,16 @@ static int tegra_xusb_port_init(struct t
- 
- 	err = dev_set_name(&port->dev, "%s-%u", name, index);
- 	if (err < 0)
--		goto unregister;
-+		goto put_device;
- 
- 	err = device_add(&port->dev);
- 	if (err < 0)
--		goto unregister;
-+		goto put_device;
- 
- 	return 0;
- 
--unregister:
--	device_unregister(&port->dev);
-+put_device:
-+	put_device(&port->dev);
- 	return err;
+--- a/drivers/accel/ivpu/ivpu_drv.c
++++ b/drivers/accel/ivpu/ivpu_drv.c
+@@ -420,9 +420,9 @@ void ivpu_prepare_for_reset(struct ivpu_
+ {
+ 	ivpu_hw_irq_disable(vdev);
+ 	disable_irq(vdev->irq);
+-	cancel_work_sync(&vdev->irq_ipc_work);
+-	cancel_work_sync(&vdev->irq_dct_work);
+-	cancel_work_sync(&vdev->context_abort_work);
++	flush_work(&vdev->irq_ipc_work);
++	flush_work(&vdev->irq_dct_work);
++	flush_work(&vdev->context_abort_work);
+ 	ivpu_ipc_disable(vdev);
+ 	ivpu_mmu_disable(vdev);
  }
- 
 
 
