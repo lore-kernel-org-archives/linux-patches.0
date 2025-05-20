@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8901D19F137;
-	Tue, 20 May 2025 13:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1B124337C;
+	Tue, 20 May 2025 13:55:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749319; cv=none; b=FZ43aYr5JZTJ4s27yG193MGXyi+y3enyxJhQjsZxqG3T8MhEzCu9Hi0gbiW8T7vv40NKOPGqG+btMnEtvNtoWX6zBciOPXbnZoKcTJGwPbnkRbvOrOz8W7enpo7MD/13qA+kKvrhG1PdQBRm2IeDle/JIikZzL/95n6IKdFnxIw=
+	t=1747749322; cv=none; b=Lio2ZOmCd5/M6GJsCxlCQ7Q7/ph7hGbhfZWP+XgWTwjkJtdgjkTCmwjaAThRgL71imuB63i3fsVMuQOiNgxYfZPyW262kHKyLCfxPXRPyKING/xjVuFFjB0/5DKXJysGpV1H30wp6wht0OSMVUUIdHsxPZq1OVG8k7EugNRgfcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749319; c=relaxed/simple;
-	bh=B01F6HrdMkRGLQkjGFWOz9KohssRjlzcQV3P9Gm6Z/4=;
+	s=arc-20240116; t=1747749322; c=relaxed/simple;
+	bh=CDXOXUDE7167CAsX3b8jBkC/cDfA/qwRXb68xwQTf14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ojF1MC0QVYOf4n8ahfP+jh6KhV8RPT06VVzJmPEfspaCHQa6w1IN9/fE5CKVzVQnXv+d7qFSfIesAJvCCQAnqCpIS+N+Nv3Nj2Qj4YgE4Mah1NTm18w8CNMlqAVOFOS88X6jouo1lsOASkYSwHUOigrRI7zeeW7QjQp++KWinuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BqooVte5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L3tOAcF84EHARnXDzUiPzo8VewlJhscGSA6y/UDRl9WdM6laic1ut6Q0gPGSY8WPzANXymyO5T2W7jfkSKhOkVcOGz9BwGoH49BC7DBR+8D55tI8/meQe3wuodX5KzONItZB/yiX/g7C9PW35pRNjW0fHZZgGbmXtfcMgFCQiKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqrinhJP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BqooVte5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C4CC4CEE9;
-	Tue, 20 May 2025 13:55:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqrinhJP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CD4C4CEE9;
+	Tue, 20 May 2025 13:55:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749319;
-	bh=B01F6HrdMkRGLQkjGFWOz9KohssRjlzcQV3P9Gm6Z/4=;
+	s=korg; t=1747749322;
+	bh=CDXOXUDE7167CAsX3b8jBkC/cDfA/qwRXb68xwQTf14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BqooVte5SsSV4LIPM4GOHfY4Moh89qNT+XN48QyvDxq6ogjjw1Q/HwWXtwP2ZWK02
-	 dZ5KWpcvgCPbiN9dE8J6E0pBAz4YKE2xgx4SS1nYsQGAmZ8ogAVLBhjDXJTKH5rHag
-	 xLn35L3awNb9ZoXOQcNF4V4gucr9soVcGOrS3kMI=
+	b=bqrinhJP8Wmk2z/yh2krJBXOPLPxQZCB3mvFkqn/s10tns0T3uRkEmAZBPo7ez6hM
+	 45WfvUCce9xoj44Bg4IWI7Xq3zz5qm/wvNJhugA+a+h9Y8RyHje6KN52mF4DTmUc+1
+	 PGxAToVCUyvTHDxp8de0hi5E6EY21TDrHaHNZs5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	pengdonglin <dolinux.peng@gmail.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Divya Indi <divya.indi@oracle.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 37/59] ftrace: Fix preemption accounting for stacktrace filter command
-Date: Tue, 20 May 2025 15:50:28 +0200
-Message-ID: <20250520125755.327060667@linuxfoundation.org>
+Subject: [PATCH 5.15 38/59] tracing: samples: Initialize trace_array_printk() with the correct function
+Date: Tue, 20 May 2025 15:50:29 +0200
+Message-ID: <20250520125755.365863150@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
 References: <20250520125753.836407405@linuxfoundation.org>
@@ -50,61 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: pengdonglin <pengdonglin@xiaomi.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 11aff32439df6ca5b3b891b43032faf88f4a6a29 upstream.
+commit 1b0c192c92ea1fe2dcb178f84adf15fe37c3e7c8 upstream.
 
-The preemption count of the stacktrace filter command to trace ksys_read
-is consistently incorrect:
+When using trace_array_printk() on a created instance, the correct
+function to use to initialize it is:
 
-$ echo ksys_read:stacktrace > set_ftrace_filter
+  trace_array_init_printk()
 
-   <...>-453     [004] ...1.    38.308956: <stack trace>
-=> ksys_read
-=> do_syscall_64
-=> entry_SYSCALL_64_after_hwframe
+Not
 
-The root cause is that the trace framework disables preemption when
-invoking the filter command callback in function_trace_probe_call:
+  trace_printk_init_buffer()
 
-   preempt_disable_notrace();
-   probe_ops->func(ip, parent_ip, probe_opsbe->tr, probe_ops, probe->data);
-   preempt_enable_notrace();
-
-Use tracing_gen_ctx_dec() to account for the preempt_disable_notrace(),
-which will output the correct preemption count:
-
-$ echo ksys_read:stacktrace > set_ftrace_filter
-
-   <...>-410     [006] .....    31.420396: <stack trace>
-=> ksys_read
-=> do_syscall_64
-=> entry_SYSCALL_64_after_hwframe
+The former is a proper function to use, the latter is for initializing
+trace_printk() and causes the NOTICE banner to be displayed.
 
 Cc: stable@vger.kernel.org
-Fixes: 36590c50b2d07 ("tracing: Merge irqflags + preempt counter.")
-Link: https://lore.kernel.org/20250512094246.1167956-2-dolinux.peng@gmail.com
-Signed-off-by: pengdonglin <dolinux.peng@gmail.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Divya Indi <divya.indi@oracle.com>
+Link: https://lore.kernel.org/20250509152657.0f6744d9@gandalf.local.home
+Fixes: 89ed42495ef4a ("tracing: Sample module to demonstrate kernel access to Ftrace instances.")
+Fixes: 38ce2a9e33db6 ("tracing: Add trace_array_init_printk() to initialize instance trace_printk() buffers")
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_functions.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ samples/ftrace/sample-trace-array.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/trace_functions.c
-+++ b/kernel/trace/trace_functions.c
-@@ -568,11 +568,7 @@ ftrace_traceoff(unsigned long ip, unsign
+--- a/samples/ftrace/sample-trace-array.c
++++ b/samples/ftrace/sample-trace-array.c
+@@ -112,7 +112,7 @@ static int __init sample_trace_array_ini
+ 	/*
+ 	 * If context specific per-cpu buffers havent already been allocated.
+ 	 */
+-	trace_printk_init_buffers();
++	trace_array_init_printk(tr);
  
- static __always_inline void trace_stack(struct trace_array *tr)
- {
--	unsigned int trace_ctx;
--
--	trace_ctx = tracing_gen_ctx();
--
--	__trace_stack(tr, trace_ctx, FTRACE_STACK_SKIP);
-+	__trace_stack(tr, tracing_gen_ctx_dec(), FTRACE_STACK_SKIP);
- }
- 
- static void
+ 	simple_tsk = kthread_run(simple_thread, NULL, "sample-instance");
+ 	if (IS_ERR(simple_tsk)) {
 
 
