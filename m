@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97FAEEDE;
-	Tue, 20 May 2025 14:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C43CEEDE;
+	Tue, 20 May 2025 14:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749742; cv=none; b=ohE/avFH+KUB3cEEw533Hkxdy1dWMl4uLgEh/XhKGLlNCqLSboNepSQqgJTiYj7o3qNz5mMzYyaia6Dtxgp4kbMbvKBcMZOPf/+OkqHEJ+xJcZdoD20IawuR/vjmz++vk25N1CXbAom8T6C2eRTYp1mjVG7o8Fs6Yn3N2x21BI8=
+	t=1747749746; cv=none; b=EAlN4Kzsnw87ntBp89tgRLJo1I03Q8+546ZbnI044u1i3x2u+/FmtErAKWPoYGrkpX9hRdAFkTkAa8EDJoFp/5PVuFI5kYJgrQ1+rEPH24fygPgUBUfnmTHNf4NM5OXEZ0xGyNYqFabYVy1YXNPAMI/bo9U/J6VIGeb63Jj5BQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749742; c=relaxed/simple;
-	bh=w5SDU04gWgxqivugwUu2KpCu5vXf4njL3ACIOPpspQ0=;
+	s=arc-20240116; t=1747749746; c=relaxed/simple;
+	bh=9SPc8xcWZbQy9LIgHBUPvCCK42hgFJoNZM0uAJOecbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V2o9SjQiI7m4F6646RTqsaBMFpGfgOWxDTYvV24vSqh9VQWKI7tl6QQJnX9Fl5My1Nq+oKXBs+xJ/cPAlCKfPcVophOeXk0D1R3AcfbsoKVuBILFE7AnhpWxEoC0c6uM7IXAsigcgmUNfBIVFKsY8PCdVdiW7mIVfm6doopeLO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aFAYSsIk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mm8IH72L71pbwrH93h9MTgvBH9dthm4X4m2Vym0vfWovT9P6v0m81BPZ8ABiDuF5LglGzBLd8hyeMjwTXSQ5yfWiebED0hl4Dr8GPCEqy08wbHiG+JEd+8SBq2GsGJJ9hq6aLX9V+jfPqu71doDYFnH8pXXQmgXunqwZOovoNhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIfaAwBv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aFAYSsIk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF2EC4CEE9;
-	Tue, 20 May 2025 14:02:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIfaAwBv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 877EBC4CEE9;
+	Tue, 20 May 2025 14:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749742;
-	bh=w5SDU04gWgxqivugwUu2KpCu5vXf4njL3ACIOPpspQ0=;
+	s=korg; t=1747749745;
+	bh=9SPc8xcWZbQy9LIgHBUPvCCK42hgFJoNZM0uAJOecbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aFAYSsIkmrAeYUk1kGvibpyocH6mGhZurL79hRItgN5nsawcI3Wsx6sODEjoxlFuP
-	 ZbBLnxH7belJn9qaXXOLWfsG6W45v76X7fRYPLP2olPUtbPT4Mu10RxXx+9z8M6YAk
-	 n9plnsW7yhhzzAut13wvHGbdx/wuoMLlPWA/Q4uE=
+	b=dIfaAwBvC7ABme4P+F+vXSUSGIUxc7jkvYODIMciHZT6T5fmFsgeShGPjz2NfOe2M
+	 syW+6PeDXBldJddIuzEc/CUGLziiXXpmyGft7S8REavcrlaev8VtYLbO7fOAQDCdrq
+	 DBBrZmG0YHTR8nMr4AsjIv/hQ2Lz/NTZPbf2TR5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luke Parkin <luke.parkin@arm.com>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 018/117] firmware: arm_scmi: Track basic SCMI communication debug metrics
-Date: Tue, 20 May 2025 15:49:43 +0200
-Message-ID: <20250520125804.705376048@linuxfoundation.org>
+Subject: [PATCH 6.6 045/117] net: dsa: sja1105: discard incoming frames in BR_STATE_LISTENING
+Date: Tue, 20 May 2025 15:50:10 +0200
+Message-ID: <20250520125805.780214610@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -52,184 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luke Parkin <luke.parkin@arm.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 0b3d48c4726e1b20dffd2ff81a9d94d5d930220b ]
+[ Upstream commit 498625a8ab2c8e1c9ab5105744310e8d6952cc01 ]
 
-Add the support for counting some of the SCMI communication debug metrics
-like how many were sent successfully or with some errors, responses
-received, notifications and delayed responses, transfer timeouts and
-errors from the firmware/platform.
+It has been reported that when under a bridge with stp_state=1, the logs
+get spammed with this message:
 
-In many cases, the traces exists. But the traces are not always necessarily
-enabled and getting such cumulative SCMI communication debug metrics helps
-in understanding if there are any possible improvements that can be made
-on either side of SCMI communication.
+[  251.734607] fsl_dpaa2_eth dpni.5 eth0: Couldn't decode source port
 
-Signed-off-by: Luke Parkin <luke.parkin@arm.com>
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-Tested-by: Cristian Marussi <cristian.marussi@arm.com>
-Message-Id: <20240805131013.587016-4-sudeep.holla@arm.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Stable-dep-of: c23c03bf1faa ("firmware: arm_scmi: Fix timeout checks on polling path")
+Further debugging shows the following info associated with packets:
+source_port=-1, switch_id=-1, vid=-1, vbid=1
+
+In other words, they are data plane packets which are supposed to be
+decoded by dsa_tag_8021q_find_port_by_vbid(), but the latter (correctly)
+refuses to do so, because no switch port is currently in
+BR_STATE_LEARNING or BR_STATE_FORWARDING - so the packet is effectively
+unexpected.
+
+The error goes away after the port progresses to BR_STATE_LEARNING in 15
+seconds (the default forward_time of the bridge), because then,
+dsa_tag_8021q_find_port_by_vbid() can correctly associate the data plane
+packets with a plausible bridge port in a plausible STP state.
+
+Re-reading IEEE 802.1D-1990, I see the following:
+
+"4.4.2 Learning: (...) The Forwarding Process shall discard received
+frames."
+
+IEEE 802.1D-2004 further clarifies:
+
+"DISABLED, BLOCKING, LISTENING, and BROKEN all correspond to the
+DISCARDING port state. While those dot1dStpPortStates serve to
+distinguish reasons for discarding frames, the operation of the
+Forwarding and Learning processes is the same for all of them. (...)
+LISTENING represents a port that the spanning tree algorithm has
+selected to be part of the active topology (computing a Root Port or
+Designated Port role) but is temporarily discarding frames to guard
+against loops or incorrect learning."
+
+Well, this is not what the driver does - instead it sets
+mac[port].ingress = true.
+
+To get rid of the log spam, prevent unexpected data plane packets to
+be received by software by discarding them on ingress in the LISTENING
+state.
+
+In terms of blame attribution: the prints only date back to commit
+d7f9787a763f ("net: dsa: tag_8021q: add support for imprecise RX based
+on the VBID"). However, the settings would permit a LISTENING port to
+forward to a FORWARDING port, and the standard suggests that's not OK.
+
+Fixes: 640f763f98c2 ("net: dsa: sja1105: Add support for Spanning Tree Protocol")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250509113816.2221992-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/common.h | 14 ++++++++++++++
- drivers/firmware/arm_scmi/driver.c | 25 ++++++++++++++++++++-----
- 2 files changed, 34 insertions(+), 5 deletions(-)
+ drivers/net/dsa/sja1105/sja1105_main.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/common.h b/drivers/firmware/arm_scmi/common.h
-index e3a9217f29d39..6c22348712154 100644
---- a/drivers/firmware/arm_scmi/common.h
-+++ b/drivers/firmware/arm_scmi/common.h
-@@ -304,6 +304,20 @@ extern const struct scmi_desc scmi_optee_desc;
- void scmi_rx_callback(struct scmi_chan_info *cinfo, u32 msg_hdr, void *priv);
- 
- enum debug_counters {
-+	SENT_OK,
-+	SENT_FAIL,
-+	SENT_FAIL_POLLING_UNSUPPORTED,
-+	SENT_FAIL_CHANNEL_NOT_FOUND,
-+	RESPONSE_OK,
-+	NOTIFICATION_OK,
-+	DELAYED_RESPONSE_OK,
-+	XFERS_RESPONSE_TIMEOUT,
-+	XFERS_RESPONSE_POLLED_TIMEOUT,
-+	RESPONSE_POLLED_OK,
-+	ERR_MSG_UNEXPECTED,
-+	ERR_MSG_INVALID,
-+	ERR_MSG_NOMEM,
-+	ERR_PROTOCOL,
- 	SCMI_DEBUG_COUNTERS_LAST
- };
- 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index 3bc41a9920294..09aaad6dce043 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -856,6 +856,7 @@ scmi_xfer_command_acquire(struct scmi_chan_info *cinfo, u32 msg_hdr)
- 		spin_unlock_irqrestore(&minfo->xfer_lock, flags);
- 
- 		scmi_bad_message_trace(cinfo, msg_hdr, MSG_UNEXPECTED);
-+		scmi_inc_count(info->dbg->counters, ERR_MSG_UNEXPECTED);
- 
- 		return xfer;
- 	}
-@@ -883,6 +884,8 @@ scmi_xfer_command_acquire(struct scmi_chan_info *cinfo, u32 msg_hdr)
- 			msg_type, xfer_id, msg_hdr, xfer->state);
- 
- 		scmi_bad_message_trace(cinfo, msg_hdr, MSG_INVALID);
-+		scmi_inc_count(info->dbg->counters, ERR_MSG_INVALID);
-+
- 
- 		/* On error the refcount incremented above has to be dropped */
- 		__scmi_xfer_put(minfo, xfer);
-@@ -927,6 +930,7 @@ static void scmi_handle_notification(struct scmi_chan_info *cinfo,
- 			PTR_ERR(xfer));
- 
- 		scmi_bad_message_trace(cinfo, msg_hdr, MSG_NOMEM);
-+		scmi_inc_count(info->dbg->counters, ERR_MSG_NOMEM);
- 
- 		scmi_clear_channel(info, cinfo);
- 		return;
-@@ -942,6 +946,7 @@ static void scmi_handle_notification(struct scmi_chan_info *cinfo,
- 	trace_scmi_msg_dump(info->id, cinfo->id, xfer->hdr.protocol_id,
- 			    xfer->hdr.id, "NOTI", xfer->hdr.seq,
- 			    xfer->hdr.status, xfer->rx.buf, xfer->rx.len);
-+	scmi_inc_count(info->dbg->counters, NOTIFICATION_OK);
- 
- 	scmi_notify(cinfo->handle, xfer->hdr.protocol_id,
- 		    xfer->hdr.id, xfer->rx.buf, xfer->rx.len, ts);
-@@ -1001,8 +1006,10 @@ static void scmi_handle_response(struct scmi_chan_info *cinfo,
- 	if (xfer->hdr.type == MSG_TYPE_DELAYED_RESP) {
- 		scmi_clear_channel(info, cinfo);
- 		complete(xfer->async_done);
-+		scmi_inc_count(info->dbg->counters, DELAYED_RESPONSE_OK);
- 	} else {
- 		complete(&xfer->done);
-+		scmi_inc_count(info->dbg->counters, RESPONSE_OK);
- 	}
- 
- 	if (IS_ENABLED(CONFIG_ARM_SCMI_RAW_MODE_SUPPORT)) {
-@@ -1086,6 +1093,7 @@ static int scmi_wait_for_reply(struct device *dev, const struct scmi_desc *desc,
- 			       struct scmi_xfer *xfer, unsigned int timeout_ms)
- {
- 	int ret = 0;
-+	struct scmi_info *info = handle_to_scmi_info(cinfo->handle);
- 
- 	if (xfer->hdr.poll_completion) {
- 		/*
-@@ -1106,13 +1114,12 @@ static int scmi_wait_for_reply(struct device *dev, const struct scmi_desc *desc,
- 					"timed out in resp(caller: %pS) - polling\n",
- 					(void *)_RET_IP_);
- 				ret = -ETIMEDOUT;
-+				scmi_inc_count(info->dbg->counters, XFERS_RESPONSE_POLLED_TIMEOUT);
- 			}
- 		}
- 
- 		if (!ret) {
- 			unsigned long flags;
--			struct scmi_info *info =
--				handle_to_scmi_info(cinfo->handle);
- 
- 			/*
- 			 * Do not fetch_response if an out-of-order delayed
-@@ -1132,6 +1139,7 @@ static int scmi_wait_for_reply(struct device *dev, const struct scmi_desc *desc,
- 					    "RESP" : "resp",
- 					    xfer->hdr.seq, xfer->hdr.status,
- 					    xfer->rx.buf, xfer->rx.len);
-+			scmi_inc_count(info->dbg->counters, RESPONSE_POLLED_OK);
- 
- 			if (IS_ENABLED(CONFIG_ARM_SCMI_RAW_MODE_SUPPORT)) {
- 				struct scmi_info *info =
-@@ -1149,6 +1157,7 @@ static int scmi_wait_for_reply(struct device *dev, const struct scmi_desc *desc,
- 			dev_err(dev, "timed out in resp(caller: %pS)\n",
- 				(void *)_RET_IP_);
- 			ret = -ETIMEDOUT;
-+			scmi_inc_count(info->dbg->counters, XFERS_RESPONSE_TIMEOUT);
- 		}
- 	}
- 
-@@ -1232,13 +1241,15 @@ static int do_xfer(const struct scmi_protocol_handle *ph,
- 	    !is_transport_polling_capable(info->desc)) {
- 		dev_warn_once(dev,
- 			      "Polling mode is not supported by transport.\n");
-+		scmi_inc_count(info->dbg->counters, SENT_FAIL_POLLING_UNSUPPORTED);
- 		return -EINVAL;
- 	}
- 
- 	cinfo = idr_find(&info->tx_idr, pi->proto->id);
--	if (unlikely(!cinfo))
-+	if (unlikely(!cinfo)) {
-+		scmi_inc_count(info->dbg->counters, SENT_FAIL_CHANNEL_NOT_FOUND);
- 		return -EINVAL;
--
-+	}
- 	/* True ONLY if also supported by transport. */
- 	if (is_polling_enabled(cinfo, info->desc))
- 		xfer->hdr.poll_completion = true;
-@@ -1270,16 +1281,20 @@ static int do_xfer(const struct scmi_protocol_handle *ph,
- 	ret = info->desc->ops->send_message(cinfo, xfer);
- 	if (ret < 0) {
- 		dev_dbg(dev, "Failed to send message %d\n", ret);
-+		scmi_inc_count(info->dbg->counters, SENT_FAIL);
- 		return ret;
- 	}
- 
- 	trace_scmi_msg_dump(info->id, cinfo->id, xfer->hdr.protocol_id,
- 			    xfer->hdr.id, "CMND", xfer->hdr.seq,
- 			    xfer->hdr.status, xfer->tx.buf, xfer->tx.len);
-+	scmi_inc_count(info->dbg->counters, SENT_OK);
- 
- 	ret = scmi_wait_for_message_response(cinfo, xfer);
--	if (!ret && xfer->hdr.status)
-+	if (!ret && xfer->hdr.status) {
- 		ret = scmi_to_linux_errno(xfer->hdr.status);
-+		scmi_inc_count(info->dbg->counters, ERR_PROTOCOL);
-+	}
- 
- 	if (info->desc->ops->mark_txdone)
- 		info->desc->ops->mark_txdone(cinfo, ret, xfer);
+diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
+index 1a367e64bc3b1..843e50b5a0ec5 100644
+--- a/drivers/net/dsa/sja1105/sja1105_main.c
++++ b/drivers/net/dsa/sja1105/sja1105_main.c
+@@ -2076,6 +2076,7 @@ static void sja1105_bridge_stp_state_set(struct dsa_switch *ds, int port,
+ 	switch (state) {
+ 	case BR_STATE_DISABLED:
+ 	case BR_STATE_BLOCKING:
++	case BR_STATE_LISTENING:
+ 		/* From UM10944 description of DRPDTAG (why put this there?):
+ 		 * "Management traffic flows to the port regardless of the state
+ 		 * of the INGRESS flag". So BPDUs are still be allowed to pass.
+@@ -2085,11 +2086,6 @@ static void sja1105_bridge_stp_state_set(struct dsa_switch *ds, int port,
+ 		mac[port].egress    = false;
+ 		mac[port].dyn_learn = false;
+ 		break;
+-	case BR_STATE_LISTENING:
+-		mac[port].ingress   = true;
+-		mac[port].egress    = false;
+-		mac[port].dyn_learn = false;
+-		break;
+ 	case BR_STATE_LEARNING:
+ 		mac[port].ingress   = true;
+ 		mac[port].egress    = false;
 -- 
 2.39.5
 
