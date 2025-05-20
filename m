@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A76222570;
-	Tue, 20 May 2025 14:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6B12F37;
+	Tue, 20 May 2025 14:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749867; cv=none; b=twJegSwtsbLVf9Pk7yJg9dIC7KUYx5kQTx1oEY3pvXILKAjMCw7GqunF6q9egGBn8DpJJUMGVNakp9kwEYs1mRV2R+sFMuZaJiAYZNuXzrFQ7biblhfhJCFv74teH2pziuRwh7bZ/hnj8eE82RJMsqrfP5YQsN2jWiTjP7Vg/5w=
+	t=1747749870; cv=none; b=Nk3JKWPZkg2EAH9MPY5mEpE/093su20a/7KoQIqtw7KdLvqjCQUJX+UjLWaue0awf395BIZNdpBITmeUjTtt+X/pNoTJOy9kElnniNOx4eZz7tEnJ6N2CcSNGTd1yc4gnHef0oYQGX5S6Nq3r4t8jo/5phYf4IZvbqSo2zQlxs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749867; c=relaxed/simple;
-	bh=80u4pUaKRopfhW3HDmvpuKjQaCs2OI/fqcWQV3tvN84=;
+	s=arc-20240116; t=1747749870; c=relaxed/simple;
+	bh=LV7k+mnu8GRa/QqKT8KVTU+tSHMry0B7Vc2HUO6KWzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NnXrb4dE4xQch2H9aHGmNuzLX8fG871DW2uTd5to3Hrh3tAr9R2wHRX8K7misTzGELybI1P4T0SllPS8fnZr8UcEah0KMpWHzMTZBfSdA8S4pp3Vl+RLQBr7vvV6VGYVq3y7zsPsdcp8DrRqOZdpZaVa5lsBw9z0Mi+t2YByDHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKnnkunm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Su+thAbfoQAYMTtPTcaojJ7HAj5ZVJViqvZmrgS71toaY8z/xXKDdm+tFQ7pAJKQPtWxMk5mEnUguQktQn433PmHmhOIVlIHRgtXejvZNyKKo9kchBhQJN38NKaqOk7wSdBN8z0A5LxonSE/cuojARCWI53JjbBdoKxVGQU2n8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2PeNseFj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKnnkunm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E7CC4CEE9;
-	Tue, 20 May 2025 14:04:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2PeNseFj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D5DC4CEE9;
+	Tue, 20 May 2025 14:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749866;
-	bh=80u4pUaKRopfhW3HDmvpuKjQaCs2OI/fqcWQV3tvN84=;
+	s=korg; t=1747749869;
+	bh=LV7k+mnu8GRa/QqKT8KVTU+tSHMry0B7Vc2HUO6KWzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OKnnkunm0bxLrpjVA1hwi6WFGpvbXdRklOo2+aCv+CWA+A3hExJ+Y8WyNxROyGUYq
-	 VDLcl/WS329Q/igbBMhcdJ3vgMsxjZxTAdBIOFentGAnl+A6XPqpiAg0G5xIophPvV
-	 ojuIui/LR0AXdRttajrSPyLrwUfi4AzegRrmmY7Y=
+	b=2PeNseFjjh7zGv7atAluHiONKRsfL+mzpAFUKlGsE8FIWCQShwlORxtPBRzPe8Igl
+	 xzX2cw3vfTrjToCEQT0tM4Nl41KoGkRUwVRQTbE7ZuyJrVFdZgyog0ZDbxXr9HWaLd
+	 GscoPZ0RKIx2V6v0C+Gz9knFkRiJUPn2kbUoVO0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+4bcdddd48bb6f0be0da1@syzkaller.appspotmail.com,
+	Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 054/117] octeontx2-af: Fix CGX Receive counters
-Date: Tue, 20 May 2025 15:50:19 +0200
-Message-ID: <20250520125806.134901652@linuxfoundation.org>
+Subject: [PATCH 6.6 055/117] wifi: mac80211: Set n_channels after allocating struct cfg80211_scan_request
+Date: Tue, 20 May 2025 15:50:20 +0200
+Message-ID: <20250520125806.173100889@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -51,41 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit bf449f35e77fd44017abf991fac1f9ab7705bbe0 ]
+[ Upstream commit 82bbe02b2500ef0a62053fe2eb84773fe31c5a0a ]
 
-Each CGX block supports 4 logical MACs (LMACS). Receive
-counters CGX_CMR_RX_STAT0-8 are per LMAC and CGX_CMR_RX_STAT9-12
-are per CGX.
+Make sure that n_channels is set after allocating the
+struct cfg80211_registered_device::int_scan_req member. Seen with
+syzkaller:
 
-Due a bug in previous patch, stale Per CGX counters values observed.
+UBSAN: array-index-out-of-bounds in net/mac80211/scan.c:1208:5
+index 0 is out of range for type 'struct ieee80211_channel *[] __counted_by(n_channels)' (aka 'struct ieee80211_channel *[]')
 
-Fixes: 66208910e57a ("octeontx2-af: Support to retrieve CGX LMAC stats")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Link: https://patch.msgid.link/20250513071554.728922-1-hkelam@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This was missed in the initial conversions because I failed to locate
+the allocation likely due to the "sizeof(void *)" not matching the
+"channels" array type.
+
+Reported-by: syzbot+4bcdddd48bb6f0be0da1@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/lkml/680fd171.050a0220.2b69d1.045e.GAE@google.com/
+Fixes: e3eac9f32ec0 ("wifi: cfg80211: Annotate struct cfg80211_scan_request with __counted_by")
+Signed-off-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://patch.msgid.link/20250509184641.work.542-kees@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/cgx.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/mac80211/main.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-index 52792546fe00d..339be6950c039 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-@@ -707,6 +707,11 @@ int cgx_get_rx_stats(void *cgxd, int lmac_id, int idx, u64 *rx_stat)
+diff --git a/net/mac80211/main.c b/net/mac80211/main.c
+index d1046f495e63f..3a6fff98748b8 100644
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -1186,10 +1186,12 @@ int ieee80211_register_hw(struct ieee80211_hw *hw)
+ 				return -EINVAL;
+ 	}
  
- 	if (!is_lmac_valid(cgx, lmac_id))
- 		return -ENODEV;
-+
-+	/* pass lmac as 0 for CGX_CMR_RX_STAT9-12 */
-+	if (idx >= CGX_RX_STAT_GLOBAL_INDEX)
-+		lmac_id = 0;
-+
- 	*rx_stat =  cgx_read(cgx, lmac_id, CGXX_CMRX_RX_STAT0 + (idx * 8));
- 	return 0;
- }
+-	local->int_scan_req = kzalloc(sizeof(*local->int_scan_req) +
+-				      sizeof(void *) * channels, GFP_KERNEL);
++	local->int_scan_req = kzalloc(struct_size(local->int_scan_req,
++						  channels, channels),
++				      GFP_KERNEL);
+ 	if (!local->int_scan_req)
+ 		return -ENOMEM;
++	local->int_scan_req->n_channels = channels;
+ 
+ 	eth_broadcast_addr(local->int_scan_req->bssid);
+ 
 -- 
 2.39.5
 
