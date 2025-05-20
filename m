@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC3B245012;
-	Tue, 20 May 2025 13:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FA2244686;
+	Tue, 20 May 2025 13:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749279; cv=none; b=OFH6nkCcJ6p3KtaNL9dxEl+pIN1gwfdl95M+qBu/vDBBtiGv/spodzll75BT7nTNQ/wJM/sTUwXnfO9fw3QiJXZRY/DlJxC/lGdVNtcAe9KmbLO99xqVy9/9rLXlxhLRe8V9bbZbTB1ylLIqu5fX8BnoQ/j2vErOxBB5Vm1Mkgs=
+	t=1747749282; cv=none; b=gjReMyG2reuKmk5rnS5v3/fItgmXgTyz1o88EohOYb3JfjMmM2A1BpZBb+tPEB2KxYgqXcoKqfBPHreOMuNfdYWRXJBJ81P6QJW9E4/QQyzaNWLjgjxIEEMEvAZlWJP+UfvwQD1CypidO8fbUPZnqWTfrzSI/0kLmO13DhkY77A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749279; c=relaxed/simple;
-	bh=NBfHMqe1Euq/EeoxYqM7ENLlynANNTmeSvEKIJ2+iBg=;
+	s=arc-20240116; t=1747749282; c=relaxed/simple;
+	bh=sZF1VIix2TMd44gVPpzShfN8Y6BoGVNvXhVAmjswxqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iMaRwz46hZK+vF36b8Y1GFltZGyZrSSov3xnBaRq9v/DnBuX3LVMCeBoJNTVGfCtfDligwLbrOk/Fr7qpSqqxY9z0vV57KjdpElN6OXL0RzTtQqk7V2GkZf4SPDETQIOcN8GsKTr/K0ik6p4mVHkzj8l/CjdQvU/4qq18xrlDZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylJbNde/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gp/hxpHr+sQq3yFs6+sZzYQIEcDkyHkf3IPcvQHbQX/hW8kMZnXtSjptE0V+SWQ5GP5/fTemnThHhcVG9UI0/G3jAw6sfoV5QiKZDB3hhdQAdjMFp+mnovJP5B+BScgR1L1rf8ZaqTf3ec6nM7YBJNIi9FjtBUhpaUQ/LIl+LfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UsoC0E5Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylJbNde/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C631CC4CEE9;
-	Tue, 20 May 2025 13:54:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UsoC0E5Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D902BC4CEE9;
+	Tue, 20 May 2025 13:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749279;
-	bh=NBfHMqe1Euq/EeoxYqM7ENLlynANNTmeSvEKIJ2+iBg=;
+	s=korg; t=1747749282;
+	bh=sZF1VIix2TMd44gVPpzShfN8Y6BoGVNvXhVAmjswxqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ylJbNde/dd6sn4q79hWQ9/D5NJTGpbW/eWNbwDY9s5z45Gmhlstt2vlIHBy4sxehj
-	 UfkLF258rkC9tnX62oCGdS0xnTi1eVvBA+cPJJa30O2EHgXcC7PQeTWfqifc5rv+rL
-	 e1n4epD9/Xyuehsl4u2/4UXJvYZYRAFolXaLxUY8=
+	b=UsoC0E5QWscC6HDGqY4R8bP7gm3SeSD8Gek/IYM4luGRUUfaLhZ+HCRgMAXVH5ZWb
+	 qjCURge/oNUiYqEgB1RnAW7gwGFOUQgEg9XK836fgh5yJ5rl2kPBWT2Goxyq2ViVCH
+	 B4Hie/7mzq/sgqW5nFYWPXOQyqXs+mm8XVOJyLc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Tang <feng.tang@linux.alibaba.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Baolin Wang <baolin.wang@inux.alibaba.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Sri Jayaramappa <sjayaram@akamai.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 52/59] selftests/mm: compaction_test: support platform with huge mount of memory
-Date: Tue, 20 May 2025 15:50:43 +0200
-Message-ID: <20250520125755.913075093@linuxfoundation.org>
+	syzbot+fae49d997eb56fa7c74d@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 5.15 53/59] sctp: add mutual exclusion in proc_sctp_do_udp_port()
+Date: Tue, 20 May 2025 15:50:44 +0200
+Message-ID: <20250520125755.953991683@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
 References: <20250520125753.836407405@linuxfoundation.org>
@@ -55,72 +55,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Tang <feng.tang@linux.alibaba.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit ab00ddd802f80e31fc9639c652d736fe3913feae upstream.
+commit 10206302af856791fbcc27a33ed3c3eb09b2793d upstream.
 
-When running mm selftest to verify mm patches, 'compaction_test' case
-failed on an x86 server with 1TB memory.  And the root cause is that it
-has too much free memory than what the test supports.
+We must serialize calls to sctp_udp_sock_stop() and sctp_udp_sock_start()
+or risk a crash as syzbot reported:
 
-The test case tries to allocate 100000 huge pages, which is about 200 GB
-for that x86 server, and when it succeeds, it expects it's large than 1/3
-of 80% of the free memory in system.  This logic only works for platform
-with 750 GB ( 200 / (1/3) / 80% ) or less free memory, and may raise false
-alarm for others.
+Oops: general protection fault, probably for non-canonical address 0xdffffc000000000d: 0000 [#1] SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000068-0x000000000000006f]
+CPU: 1 UID: 0 PID: 6551 Comm: syz.1.44 Not tainted 6.14.0-syzkaller-g7f2ff7b62617 #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
+ RIP: 0010:kernel_sock_shutdown+0x47/0x70 net/socket.c:3653
+Call Trace:
+ <TASK>
+  udp_tunnel_sock_release+0x68/0x80 net/ipv4/udp_tunnel_core.c:181
+  sctp_udp_sock_stop+0x71/0x160 net/sctp/protocol.c:930
+  proc_sctp_do_udp_port+0x264/0x450 net/sctp/sysctl.c:553
+  proc_sys_call_handler+0x3d0/0x5b0 fs/proc/proc_sysctl.c:601
+  iter_file_splice_write+0x91c/0x1150 fs/splice.c:738
+  do_splice_from fs/splice.c:935 [inline]
+  direct_splice_actor+0x18f/0x6c0 fs/splice.c:1158
+  splice_direct_to_actor+0x342/0xa30 fs/splice.c:1102
+  do_splice_direct_actor fs/splice.c:1201 [inline]
+  do_splice_direct+0x174/0x240 fs/splice.c:1227
+  do_sendfile+0xafd/0xe50 fs/read_write.c:1368
+  __do_sys_sendfile64 fs/read_write.c:1429 [inline]
+  __se_sys_sendfile64 fs/read_write.c:1415 [inline]
+  __x64_sys_sendfile64+0x1d8/0x220 fs/read_write.c:1415
+  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
 
-Fix it by changing the fixed page number to self-adjustable number
-according to the real number of free memory.
-
-Link: https://lkml.kernel.org/r/20250423103645.2758-1-feng.tang@linux.alibaba.com
-Fixes: bd67d5c15cc1 ("Test compaction of mlocked memory")
-Signed-off-by: Feng Tang <feng.tang@linux.alibaba.com>
-Acked-by: Dev Jain <dev.jain@arm.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Tested-by: Baolin Wang <baolin.wang@inux.alibaba.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Sri Jayaramappa <sjayaram@akamai.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 046c052b475e ("sctp: enable udp tunneling socks")
+Reported-by: syzbot+fae49d997eb56fa7c74d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/67ea5c01.050a0220.1547ec.012b.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20250331091532.224982-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[Minor conflict resolved due to code context change.]
+Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/vm/compaction_test.c |   19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ net/sctp/sysctl.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/tools/testing/selftests/vm/compaction_test.c
-+++ b/tools/testing/selftests/vm/compaction_test.c
-@@ -89,6 +89,8 @@ int check_compaction(unsigned long mem_f
- 	int compaction_index = 0;
- 	char initial_nr_hugepages[20] = {0};
- 	char nr_hugepages[20] = {0};
-+	char target_nr_hugepages[24] = {0};
-+	int slen;
+--- a/net/sctp/sysctl.c
++++ b/net/sctp/sysctl.c
+@@ -518,6 +518,8 @@ static int proc_sctp_do_auth(struct ctl_
+ 	return ret;
+ }
  
- 	/* We want to test with 80% of available memory. Else, OOM killer comes
- 	   in to play */
-@@ -118,11 +120,18 @@ int check_compaction(unsigned long mem_f
- 
- 	lseek(fd, 0, SEEK_SET);
- 
--	/* Request a large number of huge pages. The Kernel will allocate
--	   as much as it can */
--	if (write(fd, "100000", (6*sizeof(char))) != (6*sizeof(char))) {
--		ksft_test_result_fail("Failed to write 100000 to /proc/sys/vm/nr_hugepages: %s\n",
--				      strerror(errno));
-+	/*
-+	 * Request huge pages for about half of the free memory. The Kernel
-+	 * will allocate as much as it can, and we expect it will get at least 1/3
-+	 */
-+	nr_hugepages_ul = mem_free / hugepage_size / 2;
-+	snprintf(target_nr_hugepages, sizeof(target_nr_hugepages),
-+		 "%lu", nr_hugepages_ul);
++static DEFINE_MUTEX(sctp_sysctl_mutex);
 +
-+	slen = strlen(target_nr_hugepages);
-+	if (write(fd, target_nr_hugepages, slen) != slen) {
-+		ksft_test_result_fail("Failed to write %lu to /proc/sys/vm/nr_hugepages: %s\n",
-+			       nr_hugepages_ul, strerror(errno));
- 		goto close_fd;
+ static int proc_sctp_do_udp_port(struct ctl_table *ctl, int write,
+ 				 void *buffer, size_t *lenp, loff_t *ppos)
+ {
+@@ -542,6 +544,7 @@ static int proc_sctp_do_udp_port(struct
+ 		if (new_value > max || new_value < min)
+ 			return -EINVAL;
+ 
++		mutex_lock(&sctp_sysctl_mutex);
+ 		net->sctp.udp_port = new_value;
+ 		sctp_udp_sock_stop(net);
+ 		if (new_value) {
+@@ -554,6 +557,7 @@ static int proc_sctp_do_udp_port(struct
+ 		lock_sock(sk);
+ 		sctp_sk(sk)->udp_port = htons(net->sctp.udp_port);
+ 		release_sock(sk);
++		mutex_unlock(&sctp_sysctl_mutex);
  	}
  
+ 	return ret;
 
 
