@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51331B0F17;
-	Tue, 20 May 2025 14:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E0E2F37;
+	Tue, 20 May 2025 14:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749860; cv=none; b=I1uc9agLOuo2t/O8kGLUSTFy29WLC76wz5ZG/8bDZ/gCnDV7qSb9NftzQqXy0g0hgZqgRsd3OLmfsG9g7DAlA/MXHzyacdOohvbA3+mtBjdeQwf1uuK0YjApzNB2qPHKzaqpi2/xlApa4tjuNZxsTqx85p93IZgE+6qJFvC5Xv8=
+	t=1747749864; cv=none; b=eQY2LYmccpf6PjvbZqVVYix1ex6D6FfO7y6Cy1gzMYBHdW+zrtb4e6kqsC3Bk2Cfdv5ZAvHXSaXV9Wpfc/9YocvYkypjHLDL9wJsaYs/P83hhBfbVvrcXbpjXfCUp47mzvR4yhc1zke/IFw5K/TCsZQxHNNIJAhbHcovEUiyJxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749860; c=relaxed/simple;
-	bh=aEu0NEoPS1Qs42ch8wsODhX+6Ycx8dhdNVIl3MPk0h4=;
+	s=arc-20240116; t=1747749864; c=relaxed/simple;
+	bh=4pML+GInZwV1W22sl4nWjH8979wokNU7qPWCb0rgVxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O+l0yC2VBYzxZui/jdCBAMpu5uWPYEdu3KsLaarmrnxeaLqBVzE1+Hd6/dk2B1yHz0fmIFDskVhp5FML84yEk7JYNdDDYzzkrGBzYd7Nm6niJnNV0O9dastMxKgk85rxj9lyTuSbNWrPJgsnmBDeiMT6zPpx8GKXem4H3cIdVRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/LL+eTj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rs3Lgeqdo7UA/MGlXirqnrZiRo+T5sua3Gieqn6mApLFEnBAbKQ/+n4xl0bla1TeDSzTHUcJZu6Yc4BslHKO0rc/Z2D7JFTMwj1KAghzxzW1fBEovWUPtizxSVoqmeuD3Y4XuqxeGjXFHrJ2Ja67FzpP1uzmm4X6rZqDVxt3qY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NOy+kxsc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/LL+eTj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423E7C4CEE9;
-	Tue, 20 May 2025 14:04:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NOy+kxsc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC2EC4CEEA;
+	Tue, 20 May 2025 14:04:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749860;
-	bh=aEu0NEoPS1Qs42ch8wsODhX+6Ycx8dhdNVIl3MPk0h4=;
+	s=korg; t=1747749863;
+	bh=4pML+GInZwV1W22sl4nWjH8979wokNU7qPWCb0rgVxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y/LL+eTjBv3v8LguRIlBYzZI9k+GnfYgz1tH8dAPvpDatqR2rRTt1BektBTLfwNsR
-	 lvA0kb8CEknHmaSUOJJXa6H7bd8MWi2s2HTbDPdJsrIEy0IsxCYLuNdWEuW8Q8z2os
-	 R4pL5DTWDfSHTMawIJCAIoar6ijI2qKw08H6iLdI=
+	b=NOy+kxscIBxRNaVlctwCJJYNz7+I6fL5JpXOGwuFpFvLt+q/uqOMeEHSavHMBeQ99
+	 R0+1+1fu6ZRTGdaLGpjw9lpUhNRPXTVVCVnUPDi2GN4r5K6pma8sNy1rrUC0RBx9mb
+	 p7ucjPnHPRSWtrIy9NiXrUXw4FaYQPWB4g1kan88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Simon Horman <horms@kernel.org>,
+	Bo-Cun Chen <bc-bocun.chen@mediatek.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/117] octeontx2-pf: macsec: Fix incorrect max transmit size in TX secy
-Date: Tue, 20 May 2025 15:50:17 +0200
-Message-ID: <20250520125806.059308030@linuxfoundation.org>
+Subject: [PATCH 6.6 053/117] net: ethernet: mtk_eth_soc: fix typo for declaration MT7988 ESW capability
+Date: Tue, 20 May 2025 15:50:18 +0200
+Message-ID: <20250520125806.098172903@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -52,45 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Subbaraya Sundeep <sbhatta@marvell.com>
+From: Bo-Cun Chen <bc-bocun.chen@mediatek.com>
 
-[ Upstream commit 865ab2461375e3a5a2526f91f9a9f17b8931bc9e ]
+[ Upstream commit 1bdea6fad6fb985ff13828373c48e337c4e939f9 ]
 
-MASCEC hardware block has a field called maximum transmit size for
-TX secy. Max packet size going out of MCS block has be programmed
-taking into account full packet size which has L2 header,SecTag
-and ICV. MACSEC offload driver is configuring max transmit size as
-macsec interface MTU which is incorrect. Say with 1500 MTU of real
-device, macsec interface created on top of real device will have MTU of
-1468(1500 - (SecTag + ICV)). This is causing packets from macsec
-interface of size greater than or equal to 1468 are not getting
-transmitted out because driver programmed max transmit size as 1468
-instead of 1514(1500 + ETH_HDR_LEN).
+Since MTK_ESW_BIT is a bit number rather than a bitmap, it causes
+MTK_HAS_CAPS to produce incorrect results. This leads to the ETH
+driver not declaring MAC capabilities correctly for the MT7988 ESW.
 
-Fixes: c54ffc73601c ("octeontx2-pf: mcs: Introduce MACSEC hardware offloading")
-Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/1747053756-4529-1-git-send-email-sbhatta@marvell.com
+Fixes: 445eb6448ed3 ("net: ethernet: mtk_eth_soc: add basic support for MT7988 SoC")
+Signed-off-by: Bo-Cun Chen <bc-bocun.chen@mediatek.com>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/b8b37f409d1280fad9c4d32521e6207f63cd3213.1747110258.git.daniel@makrotopia.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-index 6cc7a78968fc1..74953f67a2bf9 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-@@ -533,7 +533,8 @@ static int cn10k_mcs_write_tx_secy(struct otx2_nic *pfvf,
- 	if (sw_tx_sc->encrypt)
- 		sectag_tci |= (MCS_TCI_E | MCS_TCI_C);
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index c6ccfbd422657..cb8efc952dfda 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -4628,7 +4628,7 @@ static int mtk_add_mac(struct mtk_eth *eth, struct device_node *np)
+ 	}
  
--	policy = FIELD_PREP(MCS_TX_SECY_PLCY_MTU, secy->netdev->mtu);
-+	policy = FIELD_PREP(MCS_TX_SECY_PLCY_MTU,
-+			    pfvf->netdev->mtu + OTX2_ETH_HLEN);
- 	/* Write SecTag excluding AN bits(1..0) */
- 	policy |= FIELD_PREP(MCS_TX_SECY_PLCY_ST_TCI, sectag_tci >> 2);
- 	policy |= FIELD_PREP(MCS_TX_SECY_PLCY_ST_OFFSET, tag_offset);
+ 	if (mtk_is_netsys_v3_or_greater(mac->hw) &&
+-	    MTK_HAS_CAPS(mac->hw->soc->caps, MTK_ESW_BIT) &&
++	    MTK_HAS_CAPS(mac->hw->soc->caps, MTK_ESW) &&
+ 	    id == MTK_GMAC1_ID) {
+ 		mac->phylink_config.mac_capabilities = MAC_ASYM_PAUSE |
+ 						       MAC_SYM_PAUSE |
 -- 
 2.39.5
 
