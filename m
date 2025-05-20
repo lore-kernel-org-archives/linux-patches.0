@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DAF24A049;
-	Tue, 20 May 2025 14:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1CC24A056;
+	Tue, 20 May 2025 14:09:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750197; cv=none; b=uqD/E4PhECR50gj/MwNi9u1DspxlblvCDq0D4MSmH0Lr9RC5h3CssoiT3EeEK1LJL2OpAx+oUl9sRZ8Kf1FsylRCuXjb8iucKutbKaYqRxu501cvqmHq+rq+Vyr0ZlccUFK2Xffghx2Bl13ge2UcmIGD3A4iC06QZQ4MEO3dj/w=
+	t=1747750199; cv=none; b=HLpBJrYRxR0UKf9uibiJEzaMYHXlMncAchk+v/IyBe5wzui0XbKFusCFu73oeuB2+ldXbNJSOfWLsQrBXiVx+5rjB/8QfZSSUfOwXmWNTif7ZA7hjSXze0zClj4XSTIPtw8CX/wV5OxzEzcYaGtZf3iQYmtVCbmUcXqPI85cHMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750197; c=relaxed/simple;
-	bh=YTQnHi5IRbdCqD/6t0lYsAnd9Vjmc5lNT1NpFv0xEio=;
+	s=arc-20240116; t=1747750199; c=relaxed/simple;
+	bh=jNNqcFm4v/uU2dC75mSiIkbEuHnXaoADElSzId11wJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/6n/X3LD3zZ0plJmCFY82DTtLrbutwAFM/c2djXh0rLO6DLrBFrAExu7hIJ25dnJGkTWJimTLVXXmOJ89+P/mzwm7COUzGa4PtTCMwxzkd2zXK/1uOwihtHKd7sg+eW4gCe8Wll09MP3zQGubvP0+DBiRRdLsJJswia767Q8zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fmjAaPKv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VbuxZv/mAcSoXpzuWy5PZ5gIMO3tZrX6RIDe7fg0i23mr3fqTbmnuYLmkfTfaUuxH68/qUgbRBh2qGdE6fg/zAW1BjYgzrkJBTZdCS8dLQjN8MRWRbzPzfi2oiG8pSsfSKg4gPwBP4cVmQZNQw2pCBpVOAkcW+x1euTGLEEouPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZ4VVPxV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fmjAaPKv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36371C4CEE9;
-	Tue, 20 May 2025 14:09:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZ4VVPxV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483C6C4CEE9;
+	Tue, 20 May 2025 14:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750196;
-	bh=YTQnHi5IRbdCqD/6t0lYsAnd9Vjmc5lNT1NpFv0xEio=;
+	s=korg; t=1747750199;
+	bh=jNNqcFm4v/uU2dC75mSiIkbEuHnXaoADElSzId11wJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fmjAaPKvAnnEk2MFyr+wjw5dkJtRsPAO3ZeenWkYini9L5Mlp1rv7w9qF45MvCEm3
-	 MzbLdOG7xM7sZTPreyKw3vDLgR7nmDdK3T/rxtPQdmB7Dy+XK7W7ySnshuo/NUM+KN
-	 yx+Wpkjcma6fOLT95Uk+TZmqGWQ8Tz5ACA7ZPdaw=
+	b=DZ4VVPxVvxkhdeGRDhLNMu6fT9R9SyRtT2WjPp63ZsDSZQFGBPOMsQdXPHAVY98Fj
+	 lQIeesyNqc70eRAJhAdDhwKaX/myuWMEc5Kj3ZSBj9MTHl0bdmjHglTHzjbgDHjy5a
+	 Ru/Rp8X/TUsQtx1L0m+F29DopnVm1OUJNP8Xeg4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mina Almasry <almasrymina@google.com>,
-	Joe Damato <jdamato@fastly.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
 	Stanislav Fomichev <sdf@fomichev.me>,
+	Joe Damato <jdamato@fastly.com>,
+	Mina Almasry <almasrymina@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 042/143] selftests: ncdevmem: Switch to AF_INET6
-Date: Tue, 20 May 2025 15:49:57 +0200
-Message-ID: <20250520125811.705205517@linuxfoundation.org>
+Subject: [PATCH 6.12 043/143] tests/ncdevmem: Fix double-free of queue array
+Date: Tue, 20 May 2025 15:49:58 +0200
+Message-ID: <20250520125811.743776061@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -53,189 +54,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Fomichev <sdf@fomichev.me>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit 933056357a8cf0c9b3fb2ecc4d2d8d142614f0a3 ]
+[ Upstream commit 97c4e094a4b2edbb4fffeda718f8e806f825a18f ]
 
-Use dualstack socket to support both v4 and v6. v4-mapped-v6 address
-can be used to do v4.
+netdev_bind_rx takes ownership of the queue array passed as parameter
+and frees it, so a queue array buffer cannot be reused across multiple
+netdev_bind_rx calls.
 
-Reviewed-by: Mina Almasry <almasrymina@google.com>
+This commit fixes that by always passing in a newly created queue array
+to all netdev_bind_rx calls in ncdevmem.
+
+Fixes: 85585b4bc8d8 ("selftests: add ncdevmem, netcat for devmem TCP")
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
 Reviewed-by: Joe Damato <jdamato@fastly.com>
-Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20241107181211.3934153-7-sdf@fomichev.me
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/20250508084434.1933069-1-cratiu@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 97c4e094a4b2 ("tests/ncdevmem: Fix double-free of queue array")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/ncdevmem.c | 97 ++++++++++++++++++--------
- 1 file changed, 68 insertions(+), 29 deletions(-)
+ tools/testing/selftests/net/ncdevmem.c | 55 +++++++++++---------------
+ 1 file changed, 22 insertions(+), 33 deletions(-)
 
 diff --git a/tools/testing/selftests/net/ncdevmem.c b/tools/testing/selftests/net/ncdevmem.c
-index faa9dce121c72..7c671b246d80f 100644
+index 7c671b246d80f..8617e6d7698de 100644
 --- a/tools/testing/selftests/net/ncdevmem.c
 +++ b/tools/testing/selftests/net/ncdevmem.c
-@@ -234,13 +234,26 @@ static int configure_channels(unsigned int rx, unsigned int tx)
- 	return run_command("sudo ethtool -L %s rx %u tx %u", ifname, rx, tx);
+@@ -342,6 +342,22 @@ static int parse_address(const char *str, int port, struct sockaddr_in6 *sin6)
+ 	return 0;
  }
  
--static int configure_flow_steering(void)
-+static int configure_flow_steering(struct sockaddr_in6 *server_sin)
- {
--	return run_command("sudo ethtool -N %s flow-type tcp4 %s %s dst-ip %s %s %s dst-port %s queue %d >&2",
-+	const char *type = "tcp6";
-+	const char *server_addr;
-+	char buf[40];
++static struct netdev_queue_id *create_queues(void)
++{
++	struct netdev_queue_id *queues;
++	size_t i = 0;
 +
-+	inet_ntop(AF_INET6, &server_sin->sin6_addr, buf, sizeof(buf));
-+	server_addr = buf;
-+
-+	if (IN6_IS_ADDR_V4MAPPED(&server_sin->sin6_addr)) {
-+		type = "tcp4";
-+		server_addr = strrchr(server_addr, ':') + 1;
++	queues = calloc(num_queues, sizeof(*queues));
++	for (i = 0; i < num_queues; i++) {
++		queues[i]._present.type = 1;
++		queues[i]._present.id = 1;
++		queues[i].type = NETDEV_QUEUE_TYPE_RX;
++		queues[i].id = start_queue + i;
 +	}
 +
-+	return run_command("sudo ethtool -N %s flow-type %s %s %s dst-ip %s %s %s dst-port %s queue %d >&2",
- 			   ifname,
-+			   type,
- 			   client_ip ? "src-ip" : "",
- 			   client_ip ?: "",
--			   server_ip,
-+			   server_addr,
- 			   client_ip ? "src-port" : "",
- 			   client_ip ? port : "",
- 			   port, start_queue);
-@@ -291,13 +304,51 @@ static int bind_rx_queue(unsigned int ifindex, unsigned int dmabuf_fd,
- 	return -1;
- }
- 
-+static void enable_reuseaddr(int fd)
-+{
-+	int opt = 1;
-+	int ret;
-+
-+	ret = setsockopt(fd, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt));
-+	if (ret)
-+		error(1, errno, "%s: [FAIL, SO_REUSEPORT]\n", TEST_PREFIX);
-+
-+	ret = setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
-+	if (ret)
-+		error(1, errno, "%s: [FAIL, SO_REUSEADDR]\n", TEST_PREFIX);
-+}
-+
-+static int parse_address(const char *str, int port, struct sockaddr_in6 *sin6)
-+{
-+	int ret;
-+
-+	sin6->sin6_family = AF_INET6;
-+	sin6->sin6_port = htons(port);
-+
-+	ret = inet_pton(sin6->sin6_family, str, &sin6->sin6_addr);
-+	if (ret != 1) {
-+		/* fallback to plain IPv4 */
-+		ret = inet_pton(AF_INET, str, &sin6->sin6_addr.s6_addr32[3]);
-+		if (ret != 1)
-+			return -1;
-+
-+		/* add ::ffff prefix */
-+		sin6->sin6_addr.s6_addr32[0] = 0;
-+		sin6->sin6_addr.s6_addr32[1] = 0;
-+		sin6->sin6_addr.s6_addr16[4] = 0;
-+		sin6->sin6_addr.s6_addr16[5] = 0xffff;
-+	}
-+
-+	return 0;
++	return queues;
 +}
 +
  int do_server(struct memory_buffer *mem)
  {
  	char ctrl_data[sizeof(int) * 20000];
- 	struct netdev_queue_id *queues;
- 	size_t non_page_aligned_frags = 0;
--	struct sockaddr_in client_addr;
--	struct sockaddr_in server_sin;
-+	struct sockaddr_in6 client_addr;
-+	struct sockaddr_in6 server_sin;
- 	size_t page_aligned_frags = 0;
- 	size_t total_received = 0;
- 	socklen_t client_addr_len;
-@@ -309,9 +360,12 @@ int do_server(struct memory_buffer *mem)
+@@ -359,7 +375,6 @@ int do_server(struct memory_buffer *mem)
+ 	char buffer[256];
  	int socket_fd;
  	int client_fd;
- 	size_t i = 0;
--	int opt = 1;
+-	size_t i = 0;
  	int ret;
  
-+	ret = parse_address(server_ip, atoi(port), &server_sin);
-+	if (ret < 0)
-+		error(1, 0, "parse server address");
-+
- 	if (reset_flow_steering())
- 		error(1, 0, "Failed to reset flow steering\n");
- 
-@@ -320,7 +374,7 @@ int do_server(struct memory_buffer *mem)
- 		error(1, 0, "Failed to configure rss\n");
- 
- 	/* Flow steer our devmem flows to start_queue */
--	if (configure_flow_steering())
-+	if (configure_flow_steering(&server_sin))
- 		error(1, 0, "Failed to configure flow steering\n");
+ 	ret = parse_address(server_ip, atoi(port), &server_sin);
+@@ -379,16 +394,7 @@ int do_server(struct memory_buffer *mem)
  
  	sleep(1);
-@@ -341,29 +395,14 @@ int do_server(struct memory_buffer *mem)
- 	if (!tmp_mem)
- 		error(1, ENOMEM, "malloc failed");
  
--	server_sin.sin_family = AF_INET;
--	server_sin.sin_port = htons(atoi(port));
+-	queues = malloc(sizeof(*queues) * num_queues);
 -
--	ret = inet_pton(server_sin.sin_family, server_ip, &server_sin.sin_addr);
--	if (ret < 0)
--		error(1, errno, "%s: [FAIL, create socket]\n", TEST_PREFIX);
+-	for (i = 0; i < num_queues; i++) {
+-		queues[i]._present.type = 1;
+-		queues[i]._present.id = 1;
+-		queues[i].type = NETDEV_QUEUE_TYPE_RX;
+-		queues[i].id = start_queue + i;
+-	}
 -
--	socket_fd = socket(server_sin.sin_family, SOCK_STREAM, 0);
-+	socket_fd = socket(AF_INET6, SOCK_STREAM, 0);
- 	if (socket_fd < 0)
- 		error(1, errno, "%s: [FAIL, create socket]\n", TEST_PREFIX);
+-	if (bind_rx_queue(ifindex, mem->fd, queues, num_queues, &ys))
++	if (bind_rx_queue(ifindex, mem->fd, create_queues(), num_queues, &ys))
+ 		error(1, 0, "Failed to bind\n");
  
--	ret = setsockopt(socket_fd, SOL_SOCKET, SO_REUSEPORT, &opt,
--			 sizeof(opt));
--	if (ret)
--		error(1, errno, "%s: [FAIL, set sock opt]\n", TEST_PREFIX);
+ 	tmp_mem = malloc(mem->size);
+@@ -453,7 +459,6 @@ int do_server(struct memory_buffer *mem)
+ 			goto cleanup;
+ 		}
+ 
+-		i++;
+ 		for (cm = CMSG_FIRSTHDR(&msg); cm; cm = CMSG_NXTHDR(&msg, cm)) {
+ 			if (cm->cmsg_level != SOL_SOCKET ||
+ 			    (cm->cmsg_type != SCM_DEVMEM_DMABUF &&
+@@ -541,10 +546,8 @@ int do_server(struct memory_buffer *mem)
+ 
+ void run_devmem_tests(void)
+ {
+-	struct netdev_queue_id *queues;
+ 	struct memory_buffer *mem;
+ 	struct ynl_sock *ys;
+-	size_t i = 0;
+ 
+ 	mem = provider->alloc(getpagesize() * NUM_PAGES);
+ 
+@@ -552,38 +555,24 @@ void run_devmem_tests(void)
+ 	if (configure_rss())
+ 		error(1, 0, "rss error\n");
+ 
+-	queues = calloc(num_queues, sizeof(*queues));
 -
--	ret = setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &opt,
--			 sizeof(opt));
--	if (ret)
--		error(1, errno, "%s: [FAIL, set sock opt]\n", TEST_PREFIX);
-+	enable_reuseaddr(socket_fd);
+ 	if (configure_headersplit(1))
+ 		error(1, 0, "Failed to configure header split\n");
  
- 	fprintf(stderr, "binding to address %s:%d\n", server_ip,
--		ntohs(server_sin.sin_port));
-+		ntohs(server_sin.sin6_port));
+-	if (!bind_rx_queue(ifindex, mem->fd, queues, num_queues, &ys))
++	if (!bind_rx_queue(ifindex, mem->fd,
++			   calloc(num_queues, sizeof(struct netdev_queue_id)),
++			   num_queues, &ys))
+ 		error(1, 0, "Binding empty queues array should have failed\n");
  
- 	ret = bind(socket_fd, &server_sin, sizeof(server_sin));
- 	if (ret)
-@@ -375,16 +414,16 @@ int do_server(struct memory_buffer *mem)
+-	for (i = 0; i < num_queues; i++) {
+-		queues[i]._present.type = 1;
+-		queues[i]._present.id = 1;
+-		queues[i].type = NETDEV_QUEUE_TYPE_RX;
+-		queues[i].id = start_queue + i;
+-	}
+-
+ 	if (configure_headersplit(0))
+ 		error(1, 0, "Failed to configure header split\n");
  
- 	client_addr_len = sizeof(client_addr);
+-	if (!bind_rx_queue(ifindex, mem->fd, queues, num_queues, &ys))
++	if (!bind_rx_queue(ifindex, mem->fd, create_queues(), num_queues, &ys))
+ 		error(1, 0, "Configure dmabuf with header split off should have failed\n");
  
--	inet_ntop(server_sin.sin_family, &server_sin.sin_addr, buffer,
-+	inet_ntop(AF_INET6, &server_sin.sin6_addr, buffer,
- 		  sizeof(buffer));
- 	fprintf(stderr, "Waiting or connection on %s:%d\n", buffer,
--		ntohs(server_sin.sin_port));
-+		ntohs(server_sin.sin6_port));
- 	client_fd = accept(socket_fd, &client_addr, &client_addr_len);
+ 	if (configure_headersplit(1))
+ 		error(1, 0, "Failed to configure header split\n");
  
--	inet_ntop(client_addr.sin_family, &client_addr.sin_addr, buffer,
-+	inet_ntop(AF_INET6, &client_addr.sin6_addr, buffer,
- 		  sizeof(buffer));
- 	fprintf(stderr, "Got connection from %s:%d\n", buffer,
--		ntohs(client_addr.sin_port));
-+		ntohs(client_addr.sin6_port));
+-	for (i = 0; i < num_queues; i++) {
+-		queues[i]._present.type = 1;
+-		queues[i]._present.id = 1;
+-		queues[i].type = NETDEV_QUEUE_TYPE_RX;
+-		queues[i].id = start_queue + i;
+-	}
+-
+-	if (bind_rx_queue(ifindex, mem->fd, queues, num_queues, &ys))
++	if (bind_rx_queue(ifindex, mem->fd, create_queues(), num_queues, &ys))
+ 		error(1, 0, "Failed to bind\n");
  
- 	while (1) {
- 		struct iovec iov = { .iov_base = iobuf,
+ 	/* Deactivating a bound queue should not be legal */
 -- 
 2.39.5
 
