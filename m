@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360E91D8E07;
-	Tue, 20 May 2025 14:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B23419F137;
+	Tue, 20 May 2025 14:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749783; cv=none; b=svhokAevuycNqursjLmV8lNr+KsXqb9VKh7gVLpiirC18I7TR4VX7YBaDzxpwKjcb14jR2BdBlNaom36rO1ttZ6U5csEmZUUOKSZoPaJMxdqgHw7p1Fa+QzLmIWBbHlfHLCc+q5wp9R7KKb4bNzPHAYAtYqE6LYUN4noPiEPhu8=
+	t=1747749786; cv=none; b=Axln3aEPVonaI6zlicV527QuT721eO4xtJxOIdPL85rpEDhs95NqwuRfbRcY/V53/RokACO8jFhj2LkS0+4/4MPhAlXVSdodwue4X4NH7grqLbXjLfqSu5ynJDA1ME3wv1Lgj0ueJVnkoUktHwC1S9LVQmN0wrWxI6EHb/cNE1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749783; c=relaxed/simple;
-	bh=IIuj0Q5XXif1945BnylO5ENZAP27z+uGzK1MjIlBxyE=;
+	s=arc-20240116; t=1747749786; c=relaxed/simple;
+	bh=7RbzkqKlwK315JGDFJIXCsfZkRG+Ta3LblttXNJVEJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJXypf6PBSdel2E946hM+4+tddU/9sR6jIAufeIxYJtBOuUWHig67slJ1Jj8vLyixTw3IvZNCZFsJPvjsIjm/eWrrr7i9mp2X5cnyd9VrlNNxofxAvPakC0g+cEP0GSNK4nbm7upYaMxdZa2a1/vRRx16J5LX2a5/wZktAIX++U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bGTmgY93; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vEa4LHdF0dmc84rt+aTAhsH5c/uwHzEBBzL29c/xkMQCaJPIznLhrS9MBwo1mYOcMl6iVbWY61nqb3hnC5WcO9Xm8uL/JsuU1Z/nE+WRQgTJE/ORhXU/CSQQ2c1oQwq//JYd9jZwdjQnlpVaKvP0B0op8J4YUzVO/7FIbwBC4kY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFEWEJvY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bGTmgY93"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B19C8C4CEE9;
-	Tue, 20 May 2025 14:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFEWEJvY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC2AAC4CEE9;
+	Tue, 20 May 2025 14:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749783;
-	bh=IIuj0Q5XXif1945BnylO5ENZAP27z+uGzK1MjIlBxyE=;
+	s=korg; t=1747749786;
+	bh=7RbzkqKlwK315JGDFJIXCsfZkRG+Ta3LblttXNJVEJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bGTmgY93GJboWcTJVcVNjKQMBqnL6vcdSCP6STDZTzOHhefmbhDOjyWzEoY5UoJcQ
-	 hrPO1TrCkPJERLwB35hAUvbJlzdbxVl2w2xxprG6TZW3WUU3LXDC7UvV0C720EexWM
-	 z9VdpzYIxeZHrRjCy9VpYt39uLc4qzCqRz6SCDOc=
+	b=fFEWEJvYNxXvPDcjdeK3sW5Xsq7LVjRKQVAd/Op4HSvtACZz3qMFiP7xdPZUXID7f
+	 9Ha5COu2bBRHOnyztN2N22rkWB6L4TdtY8x7MK3oNxtl8kKvmueJ4/eKHb2bXi6kG2
+	 S+yra+tRlI1Xz5JYOOYv07W2/7kiIigmo9q/GIRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Gerhard Engleder <gerhard@engleder-embedded.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 059/117] tsnep: fix timestamping with a stacked DSA driver
-Date: Tue, 20 May 2025 15:50:24 +0200
-Message-ID: <20250520125806.325631814@linuxfoundation.org>
+Subject: [PATCH 6.6 060/117] NFSv4/pnfs: Reset the layout state after a layoutreturn
+Date: Tue, 20 May 2025 15:50:25 +0200
+Message-ID: <20250520125806.365889708@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -52,133 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerhard Engleder <gerhard@engleder-embedded.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit b3ca9eef6646576ad506a96d941d87a69f66732a ]
+[ Upstream commit 6d6d7f91cc8c111d40416ac9240a3bb9396c5235 ]
 
-This driver is susceptible to a form of the bug explained in commit
-c26a2c2ddc01 ("gianfar: Fix TX timestamping with a stacked DSA driver")
-and in Documentation/networking/timestamping.rst section "Other caveats
-for MAC drivers", specifically it timestamps any skb which has
-SKBTX_HW_TSTAMP, and does not consider if timestamping has been enabled
-in adapter->hwtstamp_config.tx_type.
+If there are still layout segments in the layout plh_return_lsegs list
+after a layout return, we should be resetting the state to ensure they
+eventually get returned as well.
 
-Evaluate the proper TX timestamping condition only once on the TX
-path (in tsnep_xmit_frame_ring()) and store the result in an additional
-TX entry flag. Evaluate the new TX entry flag in the TX confirmation path
-(in tsnep_tx_poll()).
-
-This way SKBTX_IN_PROGRESS is set by the driver as required, but never
-evaluated. SKBTX_IN_PROGRESS shall not be evaluated as it can be set
-by a stacked DSA driver and evaluating it would lead to unwanted
-timestamps.
-
-Fixes: 403f69bbdbad ("tsnep: Add TSN endpoint Ethernet MAC driver")
-Suggested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: Gerhard Engleder <gerhard@engleder-embedded.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250514195657.25874-1-gerhard@engleder-embedded.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 68f744797edd ("pNFS: Do not free layout segments that are marked for return")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/engleder/tsnep_main.c | 30 ++++++++++++++--------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ fs/nfs/pnfs.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/engleder/tsnep_main.c b/drivers/net/ethernet/engleder/tsnep_main.c
-index d8711e1511e47..215ae6745932a 100644
---- a/drivers/net/ethernet/engleder/tsnep_main.c
-+++ b/drivers/net/ethernet/engleder/tsnep_main.c
-@@ -67,6 +67,8 @@
- #define TSNEP_TX_TYPE_XDP_NDO_MAP_PAGE	(TSNEP_TX_TYPE_XDP_NDO | TSNEP_TX_TYPE_MAP_PAGE)
- #define TSNEP_TX_TYPE_XDP		(TSNEP_TX_TYPE_XDP_TX | TSNEP_TX_TYPE_XDP_NDO)
- #define TSNEP_TX_TYPE_XSK		BIT(12)
-+#define TSNEP_TX_TYPE_TSTAMP		BIT(13)
-+#define TSNEP_TX_TYPE_SKB_TSTAMP	(TSNEP_TX_TYPE_SKB | TSNEP_TX_TYPE_TSTAMP)
- 
- #define TSNEP_XDP_TX		BIT(0)
- #define TSNEP_XDP_REDIRECT	BIT(1)
-@@ -385,8 +387,7 @@ static void tsnep_tx_activate(struct tsnep_tx *tx, int index, int length,
- 	if (entry->skb) {
- 		entry->properties = length & TSNEP_DESC_LENGTH_MASK;
- 		entry->properties |= TSNEP_DESC_INTERRUPT_FLAG;
--		if ((entry->type & TSNEP_TX_TYPE_SKB) &&
--		    (skb_shinfo(entry->skb)->tx_flags & SKBTX_IN_PROGRESS))
-+		if ((entry->type & TSNEP_TX_TYPE_SKB_TSTAMP) == TSNEP_TX_TYPE_SKB_TSTAMP)
- 			entry->properties |= TSNEP_DESC_EXTENDED_WRITEBACK_FLAG;
- 
- 		/* toggle user flag to prevent false acknowledge
-@@ -478,7 +479,8 @@ static int tsnep_tx_map_frag(skb_frag_t *frag, struct tsnep_tx_entry *entry,
- 	return mapped;
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -732,6 +732,14 @@ pnfs_mark_matching_lsegs_invalid(struct
+ 	return remaining;
  }
  
--static int tsnep_tx_map(struct sk_buff *skb, struct tsnep_tx *tx, int count)
-+static int tsnep_tx_map(struct sk_buff *skb, struct tsnep_tx *tx, int count,
-+			bool do_tstamp)
- {
- 	struct device *dmadev = tx->adapter->dmadev;
- 	struct tsnep_tx_entry *entry;
-@@ -504,6 +506,9 @@ static int tsnep_tx_map(struct sk_buff *skb, struct tsnep_tx *tx, int count)
- 				entry->type = TSNEP_TX_TYPE_SKB_INLINE;
- 				mapped = 0;
- 			}
++static void pnfs_reset_return_info(struct pnfs_layout_hdr *lo)
++{
++	struct pnfs_layout_segment *lseg;
 +
-+			if (do_tstamp)
-+				entry->type |= TSNEP_TX_TYPE_TSTAMP;
- 		} else {
- 			skb_frag_t *frag = &skb_shinfo(skb)->frags[i - 1];
- 
-@@ -557,11 +562,12 @@ static int tsnep_tx_unmap(struct tsnep_tx *tx, int index, int count)
- static netdev_tx_t tsnep_xmit_frame_ring(struct sk_buff *skb,
- 					 struct tsnep_tx *tx)
- {
--	int count = 1;
- 	struct tsnep_tx_entry *entry;
-+	bool do_tstamp = false;
-+	int count = 1;
- 	int length;
--	int i;
- 	int retval;
-+	int i;
- 
- 	if (skb_shinfo(skb)->nr_frags > 0)
- 		count += skb_shinfo(skb)->nr_frags;
-@@ -578,7 +584,13 @@ static netdev_tx_t tsnep_xmit_frame_ring(struct sk_buff *skb,
- 	entry = &tx->entry[tx->write];
- 	entry->skb = skb;
- 
--	retval = tsnep_tx_map(skb, tx, count);
-+	if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP) &&
-+	    tx->adapter->hwtstamp_config.tx_type == HWTSTAMP_TX_ON) {
-+		skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
-+		do_tstamp = true;
-+	}
++	list_for_each_entry(lseg, &lo->plh_return_segs, pls_list)
++		pnfs_set_plh_return_info(lo, lseg->pls_range.iomode, 0);
++}
 +
-+	retval = tsnep_tx_map(skb, tx, count, do_tstamp);
- 	if (retval < 0) {
- 		tsnep_tx_unmap(tx, tx->write, count);
- 		dev_kfree_skb_any(entry->skb);
-@@ -590,9 +602,6 @@ static netdev_tx_t tsnep_xmit_frame_ring(struct sk_buff *skb,
- 	}
- 	length = retval;
- 
--	if (skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP)
--		skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
--
- 	for (i = 0; i < count; i++)
- 		tsnep_tx_activate(tx, (tx->write + i) & TSNEP_RING_MASK, length,
- 				  i == count - 1);
-@@ -843,8 +852,7 @@ static bool tsnep_tx_poll(struct tsnep_tx *tx, int napi_budget)
- 
- 		length = tsnep_tx_unmap(tx, tx->read, count);
- 
--		if ((entry->type & TSNEP_TX_TYPE_SKB) &&
--		    (skb_shinfo(entry->skb)->tx_flags & SKBTX_IN_PROGRESS) &&
-+		if (((entry->type & TSNEP_TX_TYPE_SKB_TSTAMP) == TSNEP_TX_TYPE_SKB_TSTAMP) &&
- 		    (__le32_to_cpu(entry->desc_wb->properties) &
- 		     TSNEP_DESC_EXTENDED_WRITEBACK_FLAG)) {
- 			struct skb_shared_hwtstamps hwtstamps;
--- 
-2.39.5
-
+ static void
+ pnfs_free_returned_lsegs(struct pnfs_layout_hdr *lo,
+ 		struct list_head *free_me,
+@@ -1180,6 +1188,7 @@ void pnfs_layoutreturn_free_lsegs(struct
+ 		pnfs_mark_matching_lsegs_invalid(lo, &freeme, range, seq);
+ 		pnfs_free_returned_lsegs(lo, &freeme, range, seq);
+ 		pnfs_set_layout_stateid(lo, stateid, NULL, true);
++		pnfs_reset_return_info(lo);
+ 	} else
+ 		pnfs_mark_layout_stateid_invalid(lo, &freeme);
+ out_unlock:
 
 
