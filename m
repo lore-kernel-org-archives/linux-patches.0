@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DACF2459CD;
-	Tue, 20 May 2025 13:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D682459C9;
+	Tue, 20 May 2025 13:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749156; cv=none; b=UdDtaSfBf5k9QcHGfO5+BGLh7+4SxnoHh0ao/gBCR2srDPk/bcTHHOSlLlQY4h446nZY1XHGdHPD0pbpR1v78Fi7idzekRZqGGtn9Ii5adOsuAo877Irl9WJlFMmf4ZmLn+mm4Cg4a1xlBd45sAoZKyZoqcdT/n3N/Rqd1L+QIo=
+	t=1747749160; cv=none; b=YwzMRqA7C10f0eXvZlSRNK97YFvKepkyremuES8nI3Bikrr+WRUggUhWNBSf7ftBfnZP0z43szrwT4Eirg1zJSPZBEo+ezayyw5OygOBEYecA0wDQVQ0z1BZep8XEwyqIEWf4SNVAtLusCavn5bp7uhfZNl7/R/6YWNMAh0Bqao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749156; c=relaxed/simple;
-	bh=mtu/WJWRmVJIw8POt/2+/7ZdVLH8Q4sAz1CNNJGgTiY=;
+	s=arc-20240116; t=1747749160; c=relaxed/simple;
+	bh=+kujDUrDI0UQGawFYxm0yWwvcwHtRdkSOuf3ApHBpZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AkHz6OgBxKZyvYdIf7o6L0YneR9lXb0apgzIkMybWxMm51JM+B6Gju3K4u3PhHDAG3J9Cz6HHvdDMiFG9sv2coPAuuOcUpooQiVxGMsSBGqIPQLetsVepP13rNIzZ1w1cKKsEdwx8nriIcZ8NBt1Dfe4Q8dwHDdq0adpdxaW34c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ts5BF6O3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HHVPdvNQr6/GOlAbOwZF0NSUbt5AicDnL9zaF+697/cY0z5GuQ5xDyFbJP4irpOtraDGec9QqK711Rrg5s3Qj5w4RvAZacxrdTC6NO4pqHLeQ6HCFaeKSbOBYyghmCwDQMc9/9Gl/Ga/8QreDwlRQgeYv9bLXiBb/7LfuBWWyS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UA9z5NNp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ts5BF6O3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F0CAC4CEE9;
-	Tue, 20 May 2025 13:52:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UA9z5NNp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83432C4CEE9;
+	Tue, 20 May 2025 13:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749155;
-	bh=mtu/WJWRmVJIw8POt/2+/7ZdVLH8Q4sAz1CNNJGgTiY=;
+	s=korg; t=1747749159;
+	bh=+kujDUrDI0UQGawFYxm0yWwvcwHtRdkSOuf3ApHBpZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ts5BF6O3wn6Gzjbe1mLkU6D9KYbVEI8M/XSoHifICVBmwQ5V+dl9nm3GRdyRBlmLg
-	 mnDT5jeOPZGOXZttUr5uuIIiUp2x5RRvlEDNCLI8QkEZ/q1jmCdNNiJlTS25VuMBEV
-	 sIf1HMoEGUgWRMdKG6KJeNNDZdtbrbN5/p+EPDDY=
+	b=UA9z5NNpqdag9WSRGdeXwv3GOirwaSY/OFLB/gFyOpBOPJWwNJv8C+aNpQJjdTxML
+	 c3Oc4MY3O3VngvVLqGIoELgY9T1bLLg1bCTO3AsNbMZw89tFw9CgSkgnaSBvJzfbNi
+	 52uSSgIV52TA+XkPixG6ZOLOehvi1S5bLtjq4Y5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
 	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.15 15/59] x86/speculation: Simplify and make CALL_NOSPEC consistent
-Date: Tue, 20 May 2025 15:50:06 +0200
-Message-ID: <20250520125754.437733640@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 5.15 16/59] x86/speculation: Add a conditional CS prefix to CALL_NOSPEC
+Date: Tue, 20 May 2025 15:50:07 +0200
+Message-ID: <20250520125754.479883612@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
 References: <20250520125753.836407405@linuxfoundation.org>
@@ -54,56 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit cfceff8526a426948b53445c02bcb98453c7330d upstream.
+commit 052040e34c08428a5a388b85787e8531970c0c67 upstream.
 
-CALL_NOSPEC macro is used to generate Spectre-v2 mitigation friendly
-indirect branches. At compile time the macro defaults to indirect branch,
-and at runtime those can be patched to thunk based mitigations.
+Retpoline mitigation for spectre-v2 uses thunks for indirect branches. To
+support this mitigation compilers add a CS prefix with
+-mindirect-branch-cs-prefix. For an indirect branch in asm, this needs to
+be added manually.
 
-This approach is opposite of what is done for the rest of the kernel, where
-the compile time default is to replace indirect calls with retpoline thunk
-calls.
+CS prefix is already being added to indirect branches in asm files, but not
+in inline asm. Add CS prefix to CALL_NOSPEC for inline asm as well. There
+is no JMP_NOSPEC for inline asm.
 
-Make CALL_NOSPEC consistent with the rest of the kernel, default to
-retpoline thunk at compile time when CONFIG_RETPOLINE is
-enabled.
-
-  [ pawan: s/CONFIG_MITIGATION_RETPOLINE/CONFIG_RETPOLINE/ ]
-
+Reported-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Cc: Andrew Cooper <andrew.cooper3@citrix.com
 Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250228-call-nospec-v3-1-96599fed0f33@linux.intel.com
+Link: https://lore.kernel.org/r/20250228-call-nospec-v3-2-96599fed0f33@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/nospec-branch.h |   15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ arch/x86/include/asm/nospec-branch.h |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
 --- a/arch/x86/include/asm/nospec-branch.h
 +++ b/arch/x86/include/asm/nospec-branch.h
-@@ -285,16 +285,11 @@ extern retpoline_thunk_t __x86_indirect_
+@@ -119,9 +119,8 @@
+ .endm
+ 
+ /*
+- * Equivalent to -mindirect-branch-cs-prefix; emit the 5 byte jmp/call
+- * to the retpoline thunk with a CS prefix when the register requires
+- * a RAX prefix byte to encode. Also see apply_retpolines().
++ * Emits a conditional CS prefix that is compatible with
++ * -mindirect-branch-cs-prefix.
+  */
+ .macro __CS_PREFIX reg:req
+ 	.irp rs,r8,r9,r10,r11,r12,r13,r14,r15
+@@ -282,11 +281,23 @@ extern retpoline_thunk_t __x86_indirect_
+ #ifdef CONFIG_X86_64
+ 
+ /*
++ * Emits a conditional CS prefix that is compatible with
++ * -mindirect-branch-cs-prefix.
++ */
++#define __CS_PREFIX(reg)				\
++	".irp rs,r8,r9,r10,r11,r12,r13,r14,r15\n"	\
++	".ifc \\rs," reg "\n"				\
++	".byte 0x2e\n"					\
++	".endif\n"					\
++	".endr\n"
++
++/*
   * Inline asm uses the %V modifier which is only in newer GCC
   * which is ensured when CONFIG_RETPOLINE is defined.
   */
--# define CALL_NOSPEC						\
--	ALTERNATIVE_2(						\
--	ANNOTATE_RETPOLINE_SAFE					\
--	"call *%[thunk_target]\n",				\
--	"call __x86_indirect_thunk_%V[thunk_target]\n",		\
--	X86_FEATURE_RETPOLINE,					\
--	"lfence;\n"						\
--	ANNOTATE_RETPOLINE_SAFE					\
--	"call *%[thunk_target]\n",				\
--	X86_FEATURE_RETPOLINE_LFENCE)
-+#ifdef CONFIG_RETPOLINE
-+#define CALL_NOSPEC	"call __x86_indirect_thunk_%V[thunk_target]\n"
-+#else
-+#define CALL_NOSPEC	"call *%[thunk_target]\n"
-+#endif
- 
- # define THUNK_TARGET(addr) [thunk_target] "r" (addr)
- 
+ #ifdef CONFIG_RETPOLINE
+-#define CALL_NOSPEC	"call __x86_indirect_thunk_%V[thunk_target]\n"
++#define CALL_NOSPEC	__CS_PREFIX("%V[thunk_target]")	\
++			"call __x86_indirect_thunk_%V[thunk_target]\n"
+ #else
+ #define CALL_NOSPEC	"call *%[thunk_target]\n"
+ #endif
 
 
