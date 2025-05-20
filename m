@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A46524728B;
-	Tue, 20 May 2025 14:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10854288D6;
+	Tue, 20 May 2025 14:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750415; cv=none; b=bB5Ii4Rlevm1ocPzStO7R8aIBmpbrIeIG2jqfVS65R1HMQ+5/GqLnemBNwT1uFTwb//n9TJhv/sjL4s79YfEZVdyRZ6f+tbcgAfHNsMI6xjZRGzvxwxYm8n2rwDNjQUsm+poW6E2yCEM0IpQVsBm13scua26IjJ3/S2CjTpi/qo=
+	t=1747750418; cv=none; b=FfT6PvO5L1fPei45ePrbIx++Bzx1ticl/D+ak0LOdTp+57l1xwuRoTmeaesGZEz79BXC0tp+DNvo7fvWGJtcfHTRpLilmteLITDT4tBs5qXkZecp5CulW9FnrVPjb3lrYd23HxTlMRpdeP0KQ1m+4G9iXre5e+0dQFn9Uf1QZuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750415; c=relaxed/simple;
-	bh=l2/ds8e2lXtmw98OIdWMIPo/JWHDoRgsM5qdO3exGEI=;
+	s=arc-20240116; t=1747750418; c=relaxed/simple;
+	bh=J6x5ViGPIDWlBxGpXpO3PpEVtZNOFUgJjq0ZpoRHoXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OYsBn0oeeiLEROvPaG5tMSWZiO2GtFpyRW9PWEUFjt1m728O39t4mGl/2nbp1Qr2Fi5jnG73zdHskQ7w2vf98ETNjzz+ZvHlbHIZ+6jdKC+qxA5bVVIW2HSpEpwqWgdGu7+/Z1puavAYM8iPdg/GFO20YHdtO67HStjO5044GKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FjGwEMGx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lgJ5CsMqD4QFW9DdiB8NuUImBsJrhDpJlUZwMNhWGjNGa4vuI+e5s98BiHgdo8YvKOnz9kwCDkyFTbJPDBaJro3k6mpF+HjP+xbX4zPW/2GCLAUtbMrrFtcpzTcykDJse9eCehw0AY3HziMB6gLbp/CAla4wWmLB25y2WzzuLWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlTONdHv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FjGwEMGx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84357C4CEE9;
-	Tue, 20 May 2025 14:13:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlTONdHv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9697CC4CEE9;
+	Tue, 20 May 2025 14:13:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750415;
-	bh=l2/ds8e2lXtmw98OIdWMIPo/JWHDoRgsM5qdO3exGEI=;
+	s=korg; t=1747750417;
+	bh=J6x5ViGPIDWlBxGpXpO3PpEVtZNOFUgJjq0ZpoRHoXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FjGwEMGxDhacMzE3Rbu536HJ59pSEP/aIIj6yKAMHTPwfCa5tapjIJQUrDt2XqdUu
-	 z91b6Wxdz2ly/kDtVyqvN3FZ+oNV9yKMlUpPs/4zYJ4AjkVNwyRR0wKhoP4Ny4bXT5
-	 5UN1f0dCNKPbs/mBBOXHEWI1cQ91iQTOZU4W6H2o=
+	b=LlTONdHvYZFsEK4h1WR7PppjNMlEcsaOlsfewaE2f5l+AE1452MJ3zt3E2ngrfHug
+	 TD6BFIMidjDkSyqn8M6JVUoANfm1q3qXtRrPIHaXKrrgE+dXz++UWulXQ+cQ1An1IV
+	 QJhyKu9E1wfklJWcBYOafzV9knQpC6MFjSOGzHdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Bin Lan <bin.lan.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 6.12 137/143] Bluetooth: btnxpuart: Fix kernel panic during FW release
-Date: Tue, 20 May 2025 15:51:32 +0200
-Message-ID: <20250520125815.403976611@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Fabio Estevam <festevam@denx.de>
+Subject: [PATCH 6.12 138/143] drm/fbdev-dma: Support struct drm_driver.fbdev_probe
+Date: Tue, 20 May 2025 15:51:33 +0200
+Message-ID: <20250520125815.441736462@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -52,85 +51,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 1f77c05408c96bc0b58ae476a9cadc9e5b9cfd0f upstream.
+commit 8998eedda2539d2528cfebdc7c17eed0ad35b714 upstream.
 
-This fixes a kernel panic seen during release FW in a stress test
-scenario where WLAN and BT FW download occurs simultaneously, and due to
-a HW bug, chip sends out only 1 bootloader signatures.
+Rework fbdev probing to support fbdev_probe in struct drm_driver
+and reimplement the old fb_probe callback on top of it. Provide an
+initializer macro for struct drm_driver that sets the callback
+according to the kernel configuration.
 
-When driver receives the bootloader signature, it enters FW download
-mode, but since no consequtive bootloader signatures seen, FW file is
-not requested.
+This change allows the common fbdev client to run on top of DMA-
+based DRM drivers.
 
-After 60 seconds, when FW download times out, release_firmware causes a
-kernel panic.
-
-[ 2601.949184] Unable to handle kernel paging request at virtual address 0000312e6f006573
-[ 2601.992076] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000111802000
-[ 2601.992080] [0000312e6f006573] pgd=0000000000000000, p4d=0000000000000000
-[ 2601.992087] Internal error: Oops: 0000000096000021 [#1] PREEMPT SMP
-[ 2601.992091] Modules linked in: algif_hash algif_skcipher af_alg btnxpuart(O) pciexxx(O) mlan(O) overlay fsl_jr_uio caam_jr caamkeyblob_desc caamhash_desc caamalg_desc crypto_engine authenc libdes crct10dif_ce polyval_ce snd_soc_fsl_easrc snd_soc_fsl_asoc_card imx8_media_dev(C) snd_soc_fsl_micfil polyval_generic snd_soc_fsl_xcvr snd_soc_fsl_sai snd_soc_imx_audmux snd_soc_fsl_asrc snd_soc_imx_card snd_soc_imx_hdmi snd_soc_fsl_aud2htx snd_soc_fsl_utils imx_pcm_dma dw_hdmi_cec flexcan can_dev
-[ 2602.001825] CPU: 2 PID: 20060 Comm: hciconfig Tainted: G         C O       6.6.23-lts-next-06236-gb586a521770e #1
-[ 2602.010182] Hardware name: NXP i.MX8MPlus EVK board (DT)
-[ 2602.010185] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[ 2602.010191] pc : _raw_spin_lock+0x34/0x68
-[ 2602.010201] lr : free_fw_priv+0x20/0xfc
-[ 2602.020561] sp : ffff800089363b30
-[ 2602.020563] x29: ffff800089363b30 x28: ffff0000d0eb5880 x27: 0000000000000000
-[ 2602.020570] x26: 0000000000000000 x25: ffff0000d728b330 x24: 0000000000000000
-[ 2602.020577] x23: ffff0000dc856f38
-[ 2602.033797] x22: ffff800089363b70 x21: ffff0000dc856000
-[ 2602.033802] x20: ff00312e6f006573 x19: ffff0000d0d9ea80 x18: 0000000000000000
-[ 2602.033809] x17: 0000000000000000 x16: 0000000000000000 x15: 0000aaaad80dd480
-[ 2602.083320] x14: 0000000000000000 x13: 00000000000001b9 x12: 0000000000000002
-[ 2602.083326] x11: 0000000000000000 x10: 0000000000000a60 x9 : ffff800089363a30
-[ 2602.083333] x8 : ffff0001793d75c0 x7 : ffff0000d6dbc400 x6 : 0000000000000000
-[ 2602.083339] x5 : 00000000410fd030 x4 : 0000000000000000 x3 : 0000000000000001
-[ 2602.083346] x2 : 0000000000000000 x1 : 0000000000000001 x0 : ff00312e6f006573
-[ 2602.083354] Call trace:
-[ 2602.083356]  _raw_spin_lock+0x34/0x68
-[ 2602.083364]  release_firmware+0x48/0x6c
-[ 2602.083370]  nxp_setup+0x3c4/0x540 [btnxpuart]
-[ 2602.083383]  hci_dev_open_sync+0xf0/0xa34
-[ 2602.083391]  hci_dev_open+0xd8/0x178
-[ 2602.083399]  hci_sock_ioctl+0x3b0/0x590
-[ 2602.083405]  sock_do_ioctl+0x60/0x118
-[ 2602.083413]  sock_ioctl+0x2f4/0x374
-[ 2602.091430]  __arm64_sys_ioctl+0xac/0xf0
-[ 2602.091437]  invoke_syscall+0x48/0x110
-[ 2602.091445]  el0_svc_common.constprop.0+0xc0/0xe0
-[ 2602.091452]  do_el0_svc+0x1c/0x28
-[ 2602.091457]  el0_svc+0x40/0xe4
-[ 2602.091465]  el0t_64_sync_handler+0x120/0x12c
-[ 2602.091470]  el0t_64_sync+0x190/0x194
-
-Fixes: e3c4891098c8 ("Bluetooth: btnxpuart: Handle FW Download Abort scenario")
-Fixes: 689ca16e5232 ("Bluetooth: NXP: Add protocol support for NXP Bluetooth chipsets")
-Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240924071734.98201-6-tzimmermann@suse.de
+Signed-off-by: Fabio Estevam <festevam@denx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btnxpuart.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_fbdev_dma.c |   60 ++++++++++++++++++++++++----------------
+ include/drm/drm_fbdev_dma.h     |   12 ++++++++
+ 2 files changed, 48 insertions(+), 24 deletions(-)
 
---- a/drivers/bluetooth/btnxpuart.c
-+++ b/drivers/bluetooth/btnxpuart.c
-@@ -612,8 +612,10 @@ static int nxp_download_firmware(struct
- 							 &nxpdev->tx_state),
- 					       msecs_to_jiffies(60000));
- 
--	release_firmware(nxpdev->fw);
--	memset(nxpdev->fw_name, 0, sizeof(nxpdev->fw_name));
-+	if (nxpdev->fw && strlen(nxpdev->fw_name)) {
-+		release_firmware(nxpdev->fw);
-+		memset(nxpdev->fw_name, 0, sizeof(nxpdev->fw_name));
+--- a/drivers/gpu/drm/drm_fbdev_dma.c
++++ b/drivers/gpu/drm/drm_fbdev_dma.c
+@@ -106,6 +106,40 @@ static const struct fb_ops drm_fbdev_dma
+ static int drm_fbdev_dma_helper_fb_probe(struct drm_fb_helper *fb_helper,
+ 					 struct drm_fb_helper_surface_size *sizes)
+ {
++	return drm_fbdev_dma_driver_fbdev_probe(fb_helper, sizes);
++}
++
++static int drm_fbdev_dma_helper_fb_dirty(struct drm_fb_helper *helper,
++					 struct drm_clip_rect *clip)
++{
++	struct drm_device *dev = helper->dev;
++	int ret;
++
++	/* Call damage handlers only if necessary */
++	if (!(clip->x1 < clip->x2 && clip->y1 < clip->y2))
++		return 0;
++
++	if (helper->fb->funcs->dirty) {
++		ret = helper->fb->funcs->dirty(helper->fb, NULL, 0, 0, clip, 1);
++		if (drm_WARN_ONCE(dev, ret, "Dirty helper failed: ret=%d\n", ret))
++			return ret;
 +	}
++
++	return 0;
++}
++
++static const struct drm_fb_helper_funcs drm_fbdev_dma_helper_funcs = {
++	.fb_probe = drm_fbdev_dma_helper_fb_probe,
++	.fb_dirty = drm_fbdev_dma_helper_fb_dirty,
++};
++
++/*
++ * struct drm_fb_helper
++ */
++
++int drm_fbdev_dma_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
++				     struct drm_fb_helper_surface_size *sizes)
++{
+ 	struct drm_client_dev *client = &fb_helper->client;
+ 	struct drm_device *dev = fb_helper->dev;
+ 	bool use_deferred_io = false;
+@@ -148,6 +182,7 @@ static int drm_fbdev_dma_helper_fb_probe
+ 		goto err_drm_client_buffer_delete;
+ 	}
  
- 	if (err == 0) {
- 		bt_dev_err(hdev, "FW Download Timeout. offset: %d",
++	fb_helper->funcs = &drm_fbdev_dma_helper_funcs;
+ 	fb_helper->buffer = buffer;
+ 	fb_helper->fb = fb;
+ 
+@@ -211,30 +246,7 @@ err_drm_client_buffer_delete:
+ 	drm_client_framebuffer_delete(buffer);
+ 	return ret;
+ }
+-
+-static int drm_fbdev_dma_helper_fb_dirty(struct drm_fb_helper *helper,
+-					 struct drm_clip_rect *clip)
+-{
+-	struct drm_device *dev = helper->dev;
+-	int ret;
+-
+-	/* Call damage handlers only if necessary */
+-	if (!(clip->x1 < clip->x2 && clip->y1 < clip->y2))
+-		return 0;
+-
+-	if (helper->fb->funcs->dirty) {
+-		ret = helper->fb->funcs->dirty(helper->fb, NULL, 0, 0, clip, 1);
+-		if (drm_WARN_ONCE(dev, ret, "Dirty helper failed: ret=%d\n", ret))
+-			return ret;
+-	}
+-
+-	return 0;
+-}
+-
+-static const struct drm_fb_helper_funcs drm_fbdev_dma_helper_funcs = {
+-	.fb_probe = drm_fbdev_dma_helper_fb_probe,
+-	.fb_dirty = drm_fbdev_dma_helper_fb_dirty,
+-};
++EXPORT_SYMBOL(drm_fbdev_dma_driver_fbdev_probe);
+ 
+ /*
+  * struct drm_client_funcs
+--- a/include/drm/drm_fbdev_dma.h
++++ b/include/drm/drm_fbdev_dma.h
+@@ -4,12 +4,24 @@
+ #define DRM_FBDEV_DMA_H
+ 
+ struct drm_device;
++struct drm_fb_helper;
++struct drm_fb_helper_surface_size;
+ 
+ #ifdef CONFIG_DRM_FBDEV_EMULATION
++int drm_fbdev_dma_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
++				     struct drm_fb_helper_surface_size *sizes);
++
++#define DRM_FBDEV_DMA_DRIVER_OPS \
++	.fbdev_probe = drm_fbdev_dma_driver_fbdev_probe
++
+ void drm_fbdev_dma_setup(struct drm_device *dev, unsigned int preferred_bpp);
+ #else
+ static inline void drm_fbdev_dma_setup(struct drm_device *dev, unsigned int preferred_bpp)
+ { }
++
++#define DRM_FBDEV_DMA_DRIVER_OPS \
++	.fbdev_probe = NULL
++
+ #endif
+ 
+ #endif
 
 
