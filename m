@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2C025A645;
-	Tue, 20 May 2025 14:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6D91CAA79;
+	Tue, 20 May 2025 14:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750838; cv=none; b=aEADYQXsqQrpLColmFdeMtikIfHkf9yD3987M9eQfNWWUE30w/kuuq4Kutn4fHUAFqX3nU2tdIqQve+8l6U58/D0EvkcV7l0TjmK1Pckmbwh6GlyQwHhOqafbH6jEf8da6d78KRj+AeoqNSyBLGjUi1OQZeP4MnAWyhbGo7xdf0=
+	t=1747750841; cv=none; b=i1W9QZoGHBxaCTZ2BlP8kmQzmc+ayqaMVsmGRHDrc+H1XOa5hd2YSzkz1v9aeAybt8OfR1jobVPGMN+LnapKZ2g35rWgmHUItZ13osFZs0P3duo8kw8E5yYm0SG+zsye9Ei/lNyqJFwtSj2KhtvMt30L4h3vqS97GfKMfj5aJIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750838; c=relaxed/simple;
-	bh=I0WkhPhgbWoU9udYPE6tJOksiPFaOW+yZ7XlLWYEbew=;
+	s=arc-20240116; t=1747750841; c=relaxed/simple;
+	bh=jBEvZqPrVTwtOFbn1T52w7Zj2O012prgDflBBGIkLjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YPEcGWNT6Q8aNX66aelGdgJsGcFwpC12KR4/xqBskZOtNloU2+u7vAs9sFoIZmnsAmhHZIQr34HznKdrT/zYEtt95dshpb3jERqdPqC5NRFmyfG8OK5YE5zexkGixVOt0fUQ56ZZ53MAX2HnxrCN6yTHnMwQsQe4wq8DempEwFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQy7lsoY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U2mKJTgf9sEQelVYrM0irmjQ+j95kvyArtqp2D8A1PufJ+yD0vJR14wDzEu/egfFMKkr/mFbrzHHBOUSz2ZLkCe5dgV8dzUbMjg+w1YCCyz8Zr83k5xlyY8X4K56zBcv5EdozLbtSwlWaXjmeFhNXx7TPGcMkVjJGcvFP3dh6wE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+L7u8Zu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQy7lsoY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14EEC4CEE9;
-	Tue, 20 May 2025 14:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+L7u8Zu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18304C4CEE9;
+	Tue, 20 May 2025 14:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750838;
-	bh=I0WkhPhgbWoU9udYPE6tJOksiPFaOW+yZ7XlLWYEbew=;
+	s=korg; t=1747750841;
+	bh=jBEvZqPrVTwtOFbn1T52w7Zj2O012prgDflBBGIkLjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vQy7lsoYQacO+On67fGvgHmKsBzVWPHnsDAOgDxuo1ilyUeARuVOT15wJHw6dJmuK
-	 ZrxoXUTaaZrHdV65Zq8tIJzBtnAPwIxHaAD3a0oBDNLrPZMxGhOsczpy4gjCVLZUJn
-	 nYQfslLQBM81Gk/iEoq1M5WxLLjasMK1NFNJhelk=
+	b=t+L7u8ZuPJiodKgZ2YWmhVGp8EJIpDyErDGl7mx9/k5lyxOGaPFmwTJwceaDNlWoP
+	 Pi9I2VfMAsKn3ShegeWph7kVN8+BNOTlde27Krq1nrTcSse++ed0wF6Dz5MKxpC+16
+	 WaWqKZppVJlHc2EtMtGmClZs4SS+z1RaO6+azgOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karol Wachowski <karol.wachowski@intel.com>,
-	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Subject: [PATCH 6.14 137/145] accel/ivpu: Dump only first MMU fault from single context
-Date: Tue, 20 May 2025 15:51:47 +0200
-Message-ID: <20250520125815.907462730@linuxfoundation.org>
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.14 111/145] phy: renesas: rcar-gen3-usb2: Fix role detection on unbind/bind
+Date: Tue, 20 May 2025 15:51:21 +0200
+Message-ID: <20250520125814.901645015@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -51,135 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karol Wachowski <karol.wachowski@intel.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit 0240fa18d247c99a1967f2fed025296a89a1c5f5 upstream.
+commit 54c4c58713aaff76c2422ff5750e557ab3b100d7 upstream.
 
-Stop dumping consecutive faults from an already faulty context immediately,
-instead of waiting for the context abort thread handler (IRQ handler bottom
-half) to abort currently executing jobs.
+It has been observed on the Renesas RZ/G3S SoC that unbinding and binding
+the PHY driver leads to role autodetection failures. This issue occurs when
+PHY 3 is the first initialized PHY. PHY 3 does not have an interrupt
+associated with the USB2_INT_ENABLE register (as
+rcar_gen3_int_enable[3] = 0). As a result, rcar_gen3_init_otg() is called
+to initialize OTG without enabling PHY interrupts.
 
-Remove 'R' (record events) bit from context descriptor of a faulty
-context to prevent future faults generation.
+To resolve this, add rcar_gen3_is_any_otg_rphy_initialized() and call it in
+role_store(), role_show(), and rcar_gen3_init_otg(). At the same time,
+rcar_gen3_init_otg() is only called when initialization for a PHY with
+interrupt bits is in progress. As a result, the
+struct rcar_gen3_phy::otg_initialized is no longer needed.
 
-This change speeds up the IRQ handler by eliminating the need to print the
-fault content repeatedly. Additionally, it prevents flooding dmesg with
-errors, which was occurring due to the delay in the bottom half of the
-handler stopping fault-generating jobs.
-
-Signed-off-by: Karol Wachowski <karol.wachowski@intel.com>
-Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
-Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250107173238.381120-7-maciej.falkowski@linux.intel.com
+Fixes: 549b6b55b005 ("phy: renesas: rcar-gen3-usb2: enable/disable independent irqs")
+Cc: stable@vger.kernel.org
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250507125032.565017-2-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_mmu.c         |   51 ++++++++++++++++++++++++++++++----
- drivers/accel/ivpu/ivpu_mmu_context.c |   13 --------
- drivers/accel/ivpu/ivpu_mmu_context.h |    2 -
- 3 files changed, 46 insertions(+), 20 deletions(-)
+ drivers/phy/renesas/phy-rcar-gen3-usb2.c |   33 +++++++++++++------------------
+ 1 file changed, 14 insertions(+), 19 deletions(-)
 
---- a/drivers/accel/ivpu/ivpu_mmu.c
-+++ b/drivers/accel/ivpu/ivpu_mmu.c
-@@ -870,23 +870,64 @@ static u32 *ivpu_mmu_get_event(struct iv
- 	return evt;
+--- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
++++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+@@ -107,7 +107,6 @@ struct rcar_gen3_phy {
+ 	struct rcar_gen3_chan *ch;
+ 	u32 int_enable_bits;
+ 	bool initialized;
+-	bool otg_initialized;
+ 	bool powered;
+ };
+ 
+@@ -320,16 +319,15 @@ static bool rcar_gen3_is_any_rphy_initia
+ 	return false;
  }
  
-+static int ivpu_mmu_disable_events(struct ivpu_device *vdev, u32 ssid)
-+{
-+	struct ivpu_mmu_info *mmu = vdev->mmu;
-+	struct ivpu_mmu_cdtab *cdtab = &mmu->cdtab;
-+	u64 *entry;
-+	u64 val;
-+
-+	if (ssid > IVPU_MMU_CDTAB_ENT_COUNT)
-+		return -EINVAL;
-+
-+	entry = cdtab->base + (ssid * IVPU_MMU_CDTAB_ENT_SIZE);
-+
-+	val = READ_ONCE(entry[0]);
-+	val &= ~IVPU_MMU_CD_0_R;
-+	WRITE_ONCE(entry[0], val);
-+
-+	if (!ivpu_is_force_snoop_enabled(vdev))
-+		clflush_cache_range(entry, IVPU_MMU_CDTAB_ENT_SIZE);
-+
-+	ivpu_mmu_cmdq_write_cfgi_all(vdev);
-+
-+	return 0;
-+}
-+
- void ivpu_mmu_irq_evtq_handler(struct ivpu_device *vdev)
+-static bool rcar_gen3_needs_init_otg(struct rcar_gen3_chan *ch)
++static bool rcar_gen3_is_any_otg_rphy_initialized(struct rcar_gen3_chan *ch)
  {
-+	struct ivpu_file_priv *file_priv;
-+	u32 last_ssid = -1;
- 	u32 *event;
- 	u32 ssid;
- 
- 	ivpu_dbg(vdev, IRQ, "MMU event queue\n");
- 
--	while ((event = ivpu_mmu_get_event(vdev)) != NULL) {
--		ivpu_mmu_dump_event(vdev, event);
+-	int i;
 -
-+	while ((event = ivpu_mmu_get_event(vdev))) {
- 		ssid = FIELD_GET(IVPU_MMU_EVT_SSID_MASK, event[0]);
-+
-+		if (ssid == last_ssid)
-+			continue;
-+
-+		xa_lock(&vdev->context_xa);
-+		file_priv = xa_load(&vdev->context_xa, ssid);
-+		if (file_priv) {
-+			if (file_priv->has_mmu_faults) {
-+				event = NULL;
-+			} else {
-+				ivpu_mmu_disable_events(vdev, ssid);
-+				file_priv->has_mmu_faults = true;
-+			}
-+		}
-+		xa_unlock(&vdev->context_xa);
-+
-+		if (event)
-+			ivpu_mmu_dump_event(vdev, event);
-+
- 		if (ssid == IVPU_GLOBAL_CONTEXT_MMU_SSID) {
- 			ivpu_pm_trigger_recovery(vdev, "MMU event");
- 			return;
- 		}
--
--		ivpu_mmu_user_context_mark_invalid(vdev, ssid);
- 		REGV_WR32(IVPU_MMU_REG_EVTQ_CONS_SEC, vdev->mmu->evtq.cons);
+-	for (i = 0; i < NUM_OF_PHYS; i++) {
+-		if (ch->rphys[i].otg_initialized)
+-			return false;
++	for (enum rcar_gen3_phy_index i = PHY_INDEX_BOTH_HC; i <= PHY_INDEX_EHCI;
++	     i++) {
++		if (ch->rphys[i].initialized)
++			return true;
  	}
  
---- a/drivers/accel/ivpu/ivpu_mmu_context.c
-+++ b/drivers/accel/ivpu/ivpu_mmu_context.c
-@@ -635,16 +635,3 @@ void ivpu_mmu_reserved_context_fini(stru
- 	ivpu_mmu_cd_clear(vdev, vdev->rctx.id);
- 	ivpu_mmu_context_fini(vdev, &vdev->rctx);
+-	return true;
++	return false;
  }
--
--void ivpu_mmu_user_context_mark_invalid(struct ivpu_device *vdev, u32 ssid)
--{
--	struct ivpu_file_priv *file_priv;
--
--	xa_lock(&vdev->context_xa);
--
--	file_priv = xa_load(&vdev->context_xa, ssid);
--	if (file_priv)
--		file_priv->has_mmu_faults = true;
--
--	xa_unlock(&vdev->context_xa);
--}
---- a/drivers/accel/ivpu/ivpu_mmu_context.h
-+++ b/drivers/accel/ivpu/ivpu_mmu_context.h
-@@ -37,8 +37,6 @@ void ivpu_mmu_global_context_fini(struct
- int ivpu_mmu_reserved_context_init(struct ivpu_device *vdev);
- void ivpu_mmu_reserved_context_fini(struct ivpu_device *vdev);
  
--void ivpu_mmu_user_context_mark_invalid(struct ivpu_device *vdev, u32 ssid);
+ static bool rcar_gen3_are_all_rphys_power_off(struct rcar_gen3_chan *ch)
+@@ -351,7 +349,7 @@ static ssize_t role_store(struct device
+ 	bool is_b_device;
+ 	enum phy_mode cur_mode, new_mode;
+ 
+-	if (!ch->is_otg_channel || !rcar_gen3_is_any_rphy_initialized(ch))
++	if (!ch->is_otg_channel || !rcar_gen3_is_any_otg_rphy_initialized(ch))
+ 		return -EIO;
+ 
+ 	if (sysfs_streq(buf, "host"))
+@@ -389,7 +387,7 @@ static ssize_t role_show(struct device *
+ {
+ 	struct rcar_gen3_chan *ch = dev_get_drvdata(dev);
+ 
+-	if (!ch->is_otg_channel || !rcar_gen3_is_any_rphy_initialized(ch))
++	if (!ch->is_otg_channel || !rcar_gen3_is_any_otg_rphy_initialized(ch))
+ 		return -EIO;
+ 
+ 	return sprintf(buf, "%s\n", rcar_gen3_is_host(ch) ? "host" :
+@@ -402,6 +400,9 @@ static void rcar_gen3_init_otg(struct rc
+ 	void __iomem *usb2_base = ch->base;
+ 	u32 val;
+ 
++	if (!ch->is_otg_channel || rcar_gen3_is_any_otg_rphy_initialized(ch))
++		return;
++
+ 	/* Should not use functions of read-modify-write a register */
+ 	val = readl(usb2_base + USB2_LINECTRL1);
+ 	val = (val & ~USB2_LINECTRL1_DP_RPD) | USB2_LINECTRL1_DPRPD_EN |
+@@ -465,12 +466,9 @@ static int rcar_gen3_phy_usb2_init(struc
+ 	writel(USB2_SPD_RSM_TIMSET_INIT, usb2_base + USB2_SPD_RSM_TIMSET);
+ 	writel(USB2_OC_TIMSET_INIT, usb2_base + USB2_OC_TIMSET);
+ 
+-	/* Initialize otg part */
+-	if (channel->is_otg_channel) {
+-		if (rcar_gen3_needs_init_otg(channel))
+-			rcar_gen3_init_otg(channel);
+-		rphy->otg_initialized = true;
+-	}
++	/* Initialize otg part (only if we initialize a PHY with IRQs). */
++	if (rphy->int_enable_bits)
++		rcar_gen3_init_otg(channel);
+ 
+ 	rphy->initialized = true;
+ 
+@@ -486,9 +484,6 @@ static int rcar_gen3_phy_usb2_exit(struc
+ 
+ 	rphy->initialized = false;
+ 
+-	if (channel->is_otg_channel)
+-		rphy->otg_initialized = false;
 -
- int ivpu_mmu_context_insert_node(struct ivpu_mmu_context *ctx, const struct ivpu_addr_range *range,
- 				 u64 size, struct drm_mm_node *node);
- void ivpu_mmu_context_remove_node(struct ivpu_mmu_context *ctx, struct drm_mm_node *node);
+ 	val = readl(usb2_base + USB2_INT_ENABLE);
+ 	val &= ~rphy->int_enable_bits;
+ 	if (!rcar_gen3_is_any_rphy_initialized(channel))
 
 
