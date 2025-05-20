@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61E72528F0;
-	Tue, 20 May 2025 14:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0532472A5;
+	Tue, 20 May 2025 14:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750369; cv=none; b=jsYYyMpgok01nZG2/2FApPyyGoTlPphqIlcdTJXEqMy2QZKKhiNqrFCR2p4SR8xIod8S1jzebB7ddVaYvboITrB6LbvsXYjJcJ4LPBymvlx4csM9kpmxYlEEKmVQ8kw5E/hPchQHSUTdVXdaJVOfoaVv+niI98huI7hvBdTa5XA=
+	t=1747750372; cv=none; b=CjtMwsjBDhjNlv5t86ba9SU85si2lzGBw0GowFhdIJNVSJ8tTYssd90ueDzYNkuFYmITXOwa5mgQ6H35gnQYBkcmn6jZNhIchjm/AI0kmd/mGpkn+6dUsmrDu6JQJF1mwoXrp3Fm6Bl/NKQduat29r3r+MSzzRYYlWAo39jItFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750369; c=relaxed/simple;
-	bh=/J20561KZdhRPoTpoiL6mRl3k1o5S6Xz1/a1xYClCOc=;
+	s=arc-20240116; t=1747750372; c=relaxed/simple;
+	bh=/mF2QeXjFb7XujuhQirbwcKnoGIII7R8Zr5GzZ2cO9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W6vHZNaG98CNzRM5x8oOEhngjzRMg6sZ/Qf2+1YOHSVlRRLL/7tEWxky8SCW2xq4zvEdf1IH4IWRNrlFS21/mmtTmDy5Og9EwV1Hx0+/0qN47q8iuQe3YXZXh0k4qUCSoiwk5G7PVp/N/kkwUhSGvR0G06UeCD9RKohvLKzm2bA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKkkT4iS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g6IUCTXlB69NH8UoUvZntpdIMfepDTut4yaqhc4mgDRr+Fq0Uj4txwmDOooCVBPkwSfL7qe+haHfIGdOrQcUjncFFShjLcZ3x8qXJ9uckThv/+qOvfpee4mxLVNfmRUl0JFpFijbc2x/Eqwb4s5DG50c/XNwodgRhE6W+iTaCt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R10ux++y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKkkT4iS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577F7C4CEE9;
-	Tue, 20 May 2025 14:12:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R10ux++y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB23C4CEE9;
+	Tue, 20 May 2025 14:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750368;
-	bh=/J20561KZdhRPoTpoiL6mRl3k1o5S6Xz1/a1xYClCOc=;
+	s=korg; t=1747750372;
+	bh=/mF2QeXjFb7XujuhQirbwcKnoGIII7R8Zr5GzZ2cO9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AKkkT4iSwlHLvBiGlHjmQxAoWHeWiZJa6k57kxDWMKvoejtyYwD9PeGUrM99OQ007
-	 mQ2xmuuMId6XtXKPShHgxk8bS4KRIS0FWb1zx/Z8OWckLiO6RAVu8zdpmmUejv2hGG
-	 fJXkUufojIa4w3MwFRAVmqSCaid78+IkszixTMIg=
+	b=R10ux++yKAnzOo0Qy3eXx9uzTMpyqBltPNHwmDOgnp7RFRShSz1eZOcWs5RChpeeh
+	 NSBVByaP3lU8wn1JL6LTPmY0+jHlRlPBrqJTzK3BM5z4LohraPIj2IT2/EEZB5lCyw
+	 bJ+y8WMn2EEuQZdkeKecOhna6AYlGpsEuuPTzIvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad <shyam.prasad@microsoft.com>,
-	Bharath S M <bharathsm@microsoft.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Ritvik Budhiraja <rbudhiraja@microsoft.com>,
-	Steve French <stfrench@microsoft.com>,
-	Salvatore Bonaccorso <carnil@debian.org>
-Subject: [PATCH 6.12 129/143] CIFS: New mount option for cifs.upcall namespace resolution
-Date: Tue, 20 May 2025 15:51:24 +0200
-Message-ID: <20250520125815.093635018@linuxfoundation.org>
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Alan Previn <alan.previn.teres.alexis@intel.com>,
+	Julia Filipchuk <julia.filipchuk@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.12 130/143] drm/xe/gsc: do not flush the GSC worker from the reset path
+Date: Tue, 20 May 2025 15:51:25 +0200
+Message-ID: <20250520125815.131401459@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -54,296 +53,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ritvik Budhiraja <rbudhiraja@microsoft.com>
+From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
 
-commit db363b0a1d9e6b9dc556296f1b1007aeb496a8cf upstream.
+commit 03552d8ac0afcc080c339faa0b726e2c0e9361cb upstream.
 
-In the current implementation, the SMB filesystem on a mount point can
-trigger upcalls from the kernel to the userspace to enable certain
-functionalities like spnego, dns_resolution, amongst others. These upcalls
-usually either happen in the context of the mount or in the context of an
-application/user. The upcall handler for cifs, cifs.upcall already has
-existing code which switches the namespaces to the caller's namespace
-before handling the upcall. This behaviour is expected for scenarios like
-multiuser mounts, but might not cover all single user scenario with
-services such as Kubernetes, where the mount can happen from different
-locations such as on the host, from an app container, or a driver pod
-which does the mount on behalf of a different pod.
+The workqueue used for the reset worker is marked as WQ_MEM_RECLAIM,
+while the GSC one isn't (and can't be as we need to do memory
+allocations in the gsc worker). Therefore, we can't flush the latter
+from the former.
 
-This patch introduces a new mount option called upcall_target, to
-customise the upcall behaviour. upcall_target can take 'mount' and 'app'
-as possible values. This aids use cases like Kubernetes where the mount
-happens on behalf of the application in another container altogether.
-Having this new mount option allows the mount command to specify where the
-upcall should happen: 'mount' for resolving the upcall to the host
-namespace, and 'app' for resolving the upcall to the ns of the calling
-thread. This will enable both the scenarios where the Kerberos credentials
-can be found on the application namespace or the host namespace to which
-just the mount operation is "delegated".
+The reason why we had such a flush was to avoid interrupting either
+the GSC FW load or in progress GSC proxy operations. GSC proxy
+operations fall into 2 categories:
 
-Reviewed-by: Shyam Prasad <shyam.prasad@microsoft.com>
-Reviewed-by: Bharath S M <bharathsm@microsoft.com>
-Reviewed-by: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Signed-off-by: Ritvik Budhiraja <rbudhiraja@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Cc: Salvatore Bonaccorso <carnil@debian.org>
+1) GSC proxy init: this only happens once immediately after GSC FW load
+   and does not support being interrupted. The only way to recover from
+   an interruption of the proxy init is to do an FLR and re-load the GSC.
+
+2) GSC proxy request: this can happen in response to a request that
+   the driver sends to the GSC. If this is interrupted, the GSC FW will
+   timeout and the driver request will be failed, but overall the GSC
+   will keep working fine.
+
+Flushing the work allowed us to avoid interruption in both cases (unless
+the hang came from the GSC engine itself, in which case we're toast
+anyway). However, a failure on a proxy request is tolerable if we're in
+a scenario where we're triggering a GT reset (i.e., something is already
+gone pretty wrong), so what we really need to avoid is interrupting
+the init flow, which we can do by polling on the register that reports
+when the proxy init is complete (as that ensure us that all the load and
+init operations have been completed).
+
+Note that during suspend we still want to do a flush of the worker to
+make sure it completes any operations involving the HW before the power
+is cut.
+
+v2: fix spelling in commit msg, rename waiter function (Julia)
+
+Fixes: dd0e89e5edc2 ("drm/xe/gsc: GSC FW load")
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/4830
+Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Cc: John Harrison <John.C.Harrison@Intel.com>
+Cc: Alan Previn <alan.previn.teres.alexis@intel.com>
+Cc: <stable@vger.kernel.org> # v6.8+
+Reviewed-by: Julia Filipchuk <julia.filipchuk@intel.com>
+Link: https://lore.kernel.org/r/20250502155104.2201469-1-daniele.ceraolospurio@intel.com
+(cherry picked from commit 12370bfcc4f0bdf70279ec5b570eb298963422b5)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifs_spnego.c |   16 ++++++++++++++++
- fs/smb/client/cifsfs.c      |   25 +++++++++++++++++++++++++
- fs/smb/client/cifsglob.h    |    7 +++++++
- fs/smb/client/connect.c     |   20 ++++++++++++++++++++
- fs/smb/client/fs_context.c  |   39 +++++++++++++++++++++++++++++++++++++++
- fs/smb/client/fs_context.h  |   10 ++++++++++
- 6 files changed, 117 insertions(+)
+ drivers/gpu/drm/xe/xe_gsc.c       |   22 ++++++++++++++++++++++
+ drivers/gpu/drm/xe/xe_gsc.h       |    1 +
+ drivers/gpu/drm/xe/xe_gsc_proxy.c |   11 +++++++++++
+ drivers/gpu/drm/xe/xe_gsc_proxy.h |    1 +
+ drivers/gpu/drm/xe/xe_gt.c        |    2 +-
+ drivers/gpu/drm/xe/xe_uc.c        |    8 +++++++-
+ drivers/gpu/drm/xe/xe_uc.h        |    1 +
+ 7 files changed, 44 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/cifs_spnego.c
-+++ b/fs/smb/client/cifs_spnego.c
-@@ -82,6 +82,9 @@ struct key_type cifs_spnego_key_type = {
- /* strlen of ";pid=0x" */
- #define PID_KEY_LEN		7
- 
-+/* strlen of ";upcall_target=" */
-+#define UPCALL_TARGET_KEY_LEN	15
-+
- /* get a key struct with a SPNEGO security blob, suitable for session setup */
- struct key *
- cifs_get_spnego_key(struct cifs_ses *sesInfo,
-@@ -108,6 +111,11 @@ cifs_get_spnego_key(struct cifs_ses *ses
- 	if (sesInfo->user_name)
- 		desc_len += USER_KEY_LEN + strlen(sesInfo->user_name);
- 
-+	if (sesInfo->upcall_target == UPTARGET_MOUNT)
-+		desc_len += UPCALL_TARGET_KEY_LEN + 5; // strlen("mount")
-+	else
-+		desc_len += UPCALL_TARGET_KEY_LEN + 3; // strlen("app")
-+
- 	spnego_key = ERR_PTR(-ENOMEM);
- 	description = kzalloc(desc_len, GFP_KERNEL);
- 	if (description == NULL)
-@@ -158,6 +166,14 @@ cifs_get_spnego_key(struct cifs_ses *ses
- 	dp = description + strlen(description);
- 	sprintf(dp, ";pid=0x%x", current->pid);
- 
-+	if (sesInfo->upcall_target == UPTARGET_MOUNT) {
-+		dp = description + strlen(description);
-+		sprintf(dp, ";upcall_target=mount");
-+	} else {
-+		dp = description + strlen(description);
-+		sprintf(dp, ";upcall_target=app");
-+	}
-+
- 	cifs_dbg(FYI, "key description = %s\n", description);
- 	saved_cred = override_creds(spnego_cred);
- 	spnego_key = request_key(&cifs_spnego_key_type, description, "");
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -547,6 +547,30 @@ static int cifs_show_devname(struct seq_
- 	return 0;
+--- a/drivers/gpu/drm/xe/xe_gsc.c
++++ b/drivers/gpu/drm/xe/xe_gsc.c
+@@ -564,6 +564,28 @@ void xe_gsc_remove(struct xe_gsc *gsc)
+ 	xe_gsc_proxy_remove(gsc);
  }
  
-+static void
-+cifs_show_upcall_target(struct seq_file *s, struct cifs_sb_info *cifs_sb)
++void xe_gsc_stop_prepare(struct xe_gsc *gsc)
 +{
-+	if (cifs_sb->ctx->upcall_target == UPTARGET_UNSPECIFIED) {
-+		seq_puts(s, ",upcall_target=app");
++	struct xe_gt *gt = gsc_to_gt(gsc);
++	int ret;
++
++	if (!xe_uc_fw_is_loadable(&gsc->fw) || xe_uc_fw_is_in_error_state(&gsc->fw))
 +		return;
-+	}
 +
-+	seq_puts(s, ",upcall_target=");
++	xe_force_wake_assert_held(gt_to_fw(gt), XE_FW_GSC);
 +
-+	switch (cifs_sb->ctx->upcall_target) {
-+	case UPTARGET_APP:
-+		seq_puts(s, "app");
-+		break;
-+	case UPTARGET_MOUNT:
-+		seq_puts(s, "mount");
-+		break;
-+	default:
-+		/* shouldn't ever happen */
-+		seq_puts(s, "unknown");
-+		break;
-+	}
++	/*
++	 * If the GSC FW load or the proxy init are interrupted, the only way
++	 * to recover it is to do an FLR and reload the GSC from scratch.
++	 * Therefore, let's wait for the init to complete before stopping
++	 * operations. The proxy init is the last step, so we can just wait on
++	 * that
++	 */
++	ret = xe_gsc_wait_for_proxy_init_done(gsc);
++	if (ret)
++		xe_gt_err(gt, "failed to wait for GSC init completion before uc stop\n");
 +}
 +
  /*
-  * cifs_show_options() is for displaying mount options in /proc/mounts.
-  * Not all settable options are displayed but most of the important
-@@ -563,6 +587,7 @@ cifs_show_options(struct seq_file *s, st
- 	seq_show_option(s, "vers", tcon->ses->server->vals->version_string);
- 	cifs_show_security(s, tcon->ses);
- 	cifs_show_cache_flavor(s, cifs_sb);
-+	cifs_show_upcall_target(s, cifs_sb);
- 
- 	if (tcon->no_lease)
- 		seq_puts(s, ",nolease");
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -154,6 +154,12 @@ enum securityEnum {
- 	IAKerb,			/* Kerberos proxy */
- };
- 
-+enum upcall_target_enum {
-+	UPTARGET_UNSPECIFIED, /* not specified, defaults to app */
-+	UPTARGET_MOUNT, /* upcall to the mount namespace */
-+	UPTARGET_APP, /* upcall to the application namespace which did the mount */
-+};
-+
- enum cifs_reparse_type {
- 	CIFS_REPARSE_TYPE_NFS,
- 	CIFS_REPARSE_TYPE_WSL,
-@@ -1085,6 +1091,7 @@ struct cifs_ses {
- 	struct session_key auth_key;
- 	struct ntlmssp_auth *ntlmssp; /* ciphertext, flags, server challenge */
- 	enum securityEnum sectype; /* what security flavor was specified? */
-+	enum upcall_target_enum upcall_target; /* what upcall target was specified? */
- 	bool sign;		/* is signing required? */
- 	bool domainAuto:1;
- 	bool expired_pwd;  /* track if access denied or expired pwd so can know if need to update */
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -2381,6 +2381,26 @@ retry_old_session:
- 
- 	ses->sectype = ctx->sectype;
- 	ses->sign = ctx->sign;
-+
-+	/*
-+	 *Explicitly marking upcall_target mount option for easier handling
-+	 * by cifs_spnego.c and eventually cifs.upcall.c
-+	 */
-+
-+	switch (ctx->upcall_target) {
-+	case UPTARGET_UNSPECIFIED: /* default to app */
-+	case UPTARGET_APP:
-+		ses->upcall_target = UPTARGET_APP;
-+		break;
-+	case UPTARGET_MOUNT:
-+		ses->upcall_target = UPTARGET_MOUNT;
-+		break;
-+	default:
-+		// should never happen
-+		ses->upcall_target = UPTARGET_APP;
-+		break;
-+	}
-+
- 	ses->local_nls = load_nls(ctx->local_nls->charset);
- 
- 	/* add server as first channel */
---- a/fs/smb/client/fs_context.c
-+++ b/fs/smb/client/fs_context.c
-@@ -67,6 +67,12 @@ static const match_table_t cifs_secflavo
- 	{ Opt_sec_err, NULL }
- };
- 
-+static const match_table_t cifs_upcall_target = {
-+	{ Opt_upcall_target_mount, "mount" },
-+	{ Opt_upcall_target_application, "app" },
-+	{ Opt_upcall_target_err, NULL }
-+};
-+
- const struct fs_parameter_spec smb3_fs_parameters[] = {
- 	/* Mount options that take no arguments */
- 	fsparam_flag_no("user_xattr", Opt_user_xattr),
-@@ -179,6 +185,7 @@ const struct fs_parameter_spec smb3_fs_p
- 	fsparam_string("sec", Opt_sec),
- 	fsparam_string("cache", Opt_cache),
- 	fsparam_string("reparse", Opt_reparse),
-+	fsparam_string("upcall_target", Opt_upcalltarget),
- 
- 	/* Arguments that should be ignored */
- 	fsparam_flag("guest", Opt_ignore),
-@@ -249,6 +256,29 @@ cifs_parse_security_flavors(struct fs_co
- 	return 0;
+  * wa_14015076503: if the GSC FW is loaded, we need to alert it before doing a
+  * GSC engine reset by writing a notification bit in the GS1 register and then
+--- a/drivers/gpu/drm/xe/xe_gsc.h
++++ b/drivers/gpu/drm/xe/xe_gsc.h
+@@ -16,6 +16,7 @@ struct xe_hw_engine;
+ int xe_gsc_init(struct xe_gsc *gsc);
+ int xe_gsc_init_post_hwconfig(struct xe_gsc *gsc);
+ void xe_gsc_wait_for_worker_completion(struct xe_gsc *gsc);
++void xe_gsc_stop_prepare(struct xe_gsc *gsc);
+ void xe_gsc_load_start(struct xe_gsc *gsc);
+ void xe_gsc_remove(struct xe_gsc *gsc);
+ void xe_gsc_hwe_irq_handler(struct xe_hw_engine *hwe, u16 intr_vec);
+--- a/drivers/gpu/drm/xe/xe_gsc_proxy.c
++++ b/drivers/gpu/drm/xe/xe_gsc_proxy.c
+@@ -71,6 +71,17 @@ bool xe_gsc_proxy_init_done(struct xe_gs
+ 	       HECI1_FWSTS1_PROXY_STATE_NORMAL;
  }
  
-+static int
-+cifs_parse_upcall_target(struct fs_context *fc, char *value, struct smb3_fs_context *ctx)
++int xe_gsc_wait_for_proxy_init_done(struct xe_gsc *gsc)
 +{
-+	substring_t args[MAX_OPT_ARGS];
++	struct xe_gt *gt = gsc_to_gt(gsc);
 +
-+	ctx->upcall_target = UPTARGET_UNSPECIFIED;
-+
-+	switch (match_token(value, cifs_upcall_target, args)) {
-+	case Opt_upcall_target_mount:
-+		ctx->upcall_target = UPTARGET_MOUNT;
-+		break;
-+	case Opt_upcall_target_application:
-+		ctx->upcall_target = UPTARGET_APP;
-+		break;
-+
-+	default:
-+		cifs_errorf(fc, "bad upcall target: %s\n", value);
-+		return 1;
-+	}
-+
-+	return 0;
++	/* Proxy init can take up to 500ms, so wait double that for safety */
++	return xe_mmio_wait32(gt, HECI_FWSTS1(MTL_GSC_HECI1_BASE),
++			      HECI1_FWSTS1_CURRENT_STATE,
++			      HECI1_FWSTS1_PROXY_STATE_NORMAL,
++			      USEC_PER_SEC, NULL, false);
 +}
 +
- static const match_table_t cifs_cacheflavor_tokens = {
- 	{ Opt_cache_loose, "loose" },
- 	{ Opt_cache_strict, "strict" },
-@@ -1526,6 +1556,10 @@ static int smb3_fs_context_parse_param(s
- 		if (cifs_parse_security_flavors(fc, param->string, ctx) != 0)
- 			goto cifs_parse_mount_err;
- 		break;
-+	case Opt_upcalltarget:
-+		if (cifs_parse_upcall_target(fc, param->string, ctx) != 0)
-+			goto cifs_parse_mount_err;
-+		break;
- 	case Opt_cache:
- 		if (cifs_parse_cache_flavor(fc, param->string, ctx) != 0)
- 			goto cifs_parse_mount_err;
-@@ -1703,6 +1737,11 @@ static int smb3_fs_context_parse_param(s
- 	}
- 	/* case Opt_ignore: - is ignored as expected ... */
+ static void __gsc_proxy_irq_rmw(struct xe_gsc *gsc, u32 clr, u32 set)
+ {
+ 	struct xe_gt *gt = gsc_to_gt(gsc);
+--- a/drivers/gpu/drm/xe/xe_gsc_proxy.h
++++ b/drivers/gpu/drm/xe/xe_gsc_proxy.h
+@@ -13,6 +13,7 @@ struct xe_gsc;
+ int xe_gsc_proxy_init(struct xe_gsc *gsc);
+ bool xe_gsc_proxy_init_done(struct xe_gsc *gsc);
+ void xe_gsc_proxy_remove(struct xe_gsc *gsc);
++int xe_gsc_wait_for_proxy_init_done(struct xe_gsc *gsc);
+ int xe_gsc_proxy_start(struct xe_gsc *gsc);
  
-+	if (ctx->multiuser && ctx->upcall_target == UPTARGET_MOUNT) {
-+		cifs_errorf(fc, "multiuser mount option not supported with upcalltarget set as 'mount'\n");
-+		goto cifs_parse_mount_err;
-+	}
+ int xe_gsc_proxy_request_handler(struct xe_gsc *gsc);
+--- a/drivers/gpu/drm/xe/xe_gt.c
++++ b/drivers/gpu/drm/xe/xe_gt.c
+@@ -828,7 +828,7 @@ void xe_gt_suspend_prepare(struct xe_gt
+ {
+ 	XE_WARN_ON(xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL));
+ 
+-	xe_uc_stop_prepare(&gt->uc);
++	xe_uc_suspend_prepare(&gt->uc);
+ 
+ 	XE_WARN_ON(xe_force_wake_put(gt_to_fw(gt), XE_FORCEWAKE_ALL));
+ }
+--- a/drivers/gpu/drm/xe/xe_uc.c
++++ b/drivers/gpu/drm/xe/xe_uc.c
+@@ -241,7 +241,7 @@ void xe_uc_gucrc_disable(struct xe_uc *u
+ 
+ void xe_uc_stop_prepare(struct xe_uc *uc)
+ {
+-	xe_gsc_wait_for_worker_completion(&uc->gsc);
++	xe_gsc_stop_prepare(&uc->gsc);
+ 	xe_guc_stop_prepare(&uc->guc);
+ }
+ 
+@@ -275,6 +275,12 @@ again:
+ 		goto again;
+ }
+ 
++void xe_uc_suspend_prepare(struct xe_uc *uc)
++{
++	xe_gsc_wait_for_worker_completion(&uc->gsc);
++	xe_guc_stop_prepare(&uc->guc);
++}
 +
- 	return 0;
- 
-  cifs_parse_mount_err:
---- a/fs/smb/client/fs_context.h
-+++ b/fs/smb/client/fs_context.h
-@@ -61,6 +61,12 @@ enum cifs_sec_param {
- 	Opt_sec_err
- };
- 
-+enum cifs_upcall_target_param {
-+	Opt_upcall_target_mount,
-+	Opt_upcall_target_application,
-+	Opt_upcall_target_err
-+};
-+
- enum cifs_param {
- 	/* Mount options that take no arguments */
- 	Opt_user_xattr,
-@@ -114,6 +120,8 @@ enum cifs_param {
- 	Opt_multichannel,
- 	Opt_compress,
- 	Opt_witness,
-+	Opt_is_upcall_target_mount,
-+	Opt_is_upcall_target_application,
- 
- 	/* Mount options which take numeric value */
- 	Opt_backupuid,
-@@ -157,6 +165,7 @@ enum cifs_param {
- 	Opt_sec,
- 	Opt_cache,
- 	Opt_reparse,
-+	Opt_upcalltarget,
- 
- 	/* Mount options to be ignored */
- 	Opt_ignore,
-@@ -198,6 +207,7 @@ struct smb3_fs_context {
- 	umode_t file_mode;
- 	umode_t dir_mode;
- 	enum securityEnum sectype; /* sectype requested via mnt opts */
-+	enum upcall_target_enum upcall_target; /* where to upcall for mount */
- 	bool sign; /* was signing requested via mnt opts? */
- 	bool ignore_signature:1;
- 	bool retry:1;
+ int xe_uc_suspend(struct xe_uc *uc)
+ {
+ 	/* GuC submission not enabled, nothing to do */
+--- a/drivers/gpu/drm/xe/xe_uc.h
++++ b/drivers/gpu/drm/xe/xe_uc.h
+@@ -18,6 +18,7 @@ int xe_uc_reset_prepare(struct xe_uc *uc
+ void xe_uc_stop_prepare(struct xe_uc *uc);
+ void xe_uc_stop(struct xe_uc *uc);
+ int xe_uc_start(struct xe_uc *uc);
++void xe_uc_suspend_prepare(struct xe_uc *uc);
+ int xe_uc_suspend(struct xe_uc *uc);
+ int xe_uc_sanitize_reset(struct xe_uc *uc);
+ void xe_uc_remove(struct xe_uc *uc);
 
 
