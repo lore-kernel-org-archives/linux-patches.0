@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AECC21D5BE;
-	Tue, 20 May 2025 14:17:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5823247290;
+	Tue, 20 May 2025 14:17:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750658; cv=none; b=e2oLcStOsRF2ja6EN3cZ2as+UJWqk0qg1CpuElhRG7eNtoqpe9mHC6HmNENk2j1K5MwfYdfNijGst0+Y3z/tvhjFei2UH4PELpfgnHCkQ0E0bJ3VdwZyB/cYXpJ9W9LLGSHrV5Zc30N8O3e97FKRzSeqtGKsXhPE90E65R875BE=
+	t=1747750661; cv=none; b=XkqB6ho3IzK0jg555gq16TonYsFnkg4WnjjfJ5OxCUpQ/g8hH6o6+Rov+1nVSq6dca9erswqNlaQhOqzqG7Z7p4F4igjA0vP13jvftqiZ76BsE2DMM+MxeJlcmODHTaL5IoI9XPuGVPgTQL5BdJlJ5yrpcmuKasgwBxuaLwT2tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750658; c=relaxed/simple;
-	bh=K7MOZd7mVAfUDBv79tdR90Zuj6cu+Lv4R0RGeS0a8Ec=;
+	s=arc-20240116; t=1747750661; c=relaxed/simple;
+	bh=GLav4X2DOJZfm1YCMP458BEm1jZQW794rdRKsHqQBEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oaQx6ZQI6YnySgdYI02kc6wU48TlAo2R0EKRpDFfBfhz93fMqdHjSZWqURnKK0LV3vICLYZl67VKftuf+bPPCVE/sCtX4Z4osDINFV/LnTKo5GvsQD2krtZoOUV4HviBRqIl3fQZ0kIV7UVqhjTzneYTZePB/3huYi3MlnV6Z1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ed/OLBpp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aPJeHtyHxgbBZ+FBbbDtg2OUM+FGa/sSKHCS8p9nWquYW3b1tD4eaWxwIpuFGm5Yg4yHYaGiBkloQRca+JHAQpyTUom5qCHeEP6yH1C8xBvgBBqCuHLAL7x8jVagMnoKCmhnYbEeQ6w5n23aswp44RP20AX7hR/bBFNB6k3uDdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6r/9GC+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ed/OLBpp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D77DC4CEEA;
-	Tue, 20 May 2025 14:17:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6r/9GC+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B032BC4CEEA;
+	Tue, 20 May 2025 14:17:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750658;
-	bh=K7MOZd7mVAfUDBv79tdR90Zuj6cu+Lv4R0RGeS0a8Ec=;
+	s=korg; t=1747750661;
+	bh=GLav4X2DOJZfm1YCMP458BEm1jZQW794rdRKsHqQBEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ed/OLBppxB6CT0vxcB1+Ub/NxqbNfSnblUAaV5oVa6G8UjzMmMorBs9uCMdu0WyOr
-	 MqtZifu8HvRBX0E55xXTuavFO0UxFkDrpNfU9WOqCC6NnDL8qCavOm8xShtfxgsYd7
-	 wTNQLPW8dwd34Gq2wwdSse0oqeJVkHPNTucxCXqU=
+	b=U6r/9GC+BX8xnbvl8eXaJCy5KAKdYUJsMGWFogQxGD9rVoEsqeRBk81oZYOykXnUY
+	 9I8AOL0ijMfSROl1S2vX3/ztwjVumrVETy9+ae/ivPZwRK//P8HaWic612RLoOjlQU
+	 y1TCbFoYra0AXX8CqsZAceACURWPqT+q2FS6eQ1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 049/145] drm/xe: Save CTX_TIMESTAMP mmio value instead of LRC value
-Date: Tue, 20 May 2025 15:50:19 +0200
-Message-ID: <20250520125812.498345804@linuxfoundation.org>
+Subject: [PATCH 6.14 050/145] netlink: specs: tc: fix a couple of attribute names
+Date: Tue, 20 May 2025 15:50:20 +0200
+Message-ID: <20250520125812.536303485@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -52,79 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 66c8f7b435bddb7d8577ac8a57e175a6cb147227 ]
+[ Upstream commit a9fb87b8b86918e34ef6bf3316311f41bc1a5b1f ]
 
-For determining actual job execution time, save the current value of the
-CTX_TIMESTAMP register rather than the value saved in LRC since the
-current register value is the closest to the start time of the job.
+Fix up spelling of two attribute names. These are clearly typoes
+and will prevent C codegen from working. Let's treat this as
+a fix to get the correction into users' hands ASAP, and prevent
+anyone depending on the wrong names.
 
-v2: Define MI_STORE_REGISTER_MEM to fix compile error
-v3: Place MI_STORE_REGISTER_MEM sorted by MI_INSTR (Lucas)
-
-Fixes: 65921374c48f ("drm/xe: Emit ctx timestamp copy in ring ops")
-Signed-off-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://lore.kernel.org/r/20250509161159.2173069-6-umesh.nerlige.ramappa@intel.com
-(cherry picked from commit 38b14233e5deff51db8faec287b4acd227152246)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Fixes: a1bcfde83669 ("doc/netlink/specs: Add a spec for tc")
+Link: https://patch.msgid.link/20250513221316.841700-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/instructions/xe_mi_commands.h | 4 ++++
- drivers/gpu/drm/xe/xe_lrc.c                      | 2 +-
- drivers/gpu/drm/xe/xe_ring_ops.c                 | 7 ++-----
- 3 files changed, 7 insertions(+), 6 deletions(-)
+ Documentation/netlink/specs/tc.yaml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/instructions/xe_mi_commands.h b/drivers/gpu/drm/xe/instructions/xe_mi_commands.h
-index 10ec2920d31b3..d4033278be9fc 100644
---- a/drivers/gpu/drm/xe/instructions/xe_mi_commands.h
-+++ b/drivers/gpu/drm/xe/instructions/xe_mi_commands.h
-@@ -47,6 +47,10 @@
- #define   MI_LRI_FORCE_POSTED		REG_BIT(12)
- #define   MI_LRI_LEN(x)			(((x) & 0xff) + 1)
- 
-+#define MI_STORE_REGISTER_MEM		(__MI_INSTR(0x24) | XE_INSTR_NUM_DW(4))
-+#define   MI_SRM_USE_GGTT		REG_BIT(22)
-+#define   MI_SRM_ADD_CS_OFFSET		REG_BIT(19)
-+
- #define MI_FLUSH_DW			__MI_INSTR(0x26)
- #define   MI_FLUSH_DW_STORE_INDEX	REG_BIT(21)
- #define   MI_INVALIDATE_TLB		REG_BIT(18)
-diff --git a/drivers/gpu/drm/xe/xe_lrc.c b/drivers/gpu/drm/xe/xe_lrc.c
-index bbb9ffbf63672..2a953c4f7d5dd 100644
---- a/drivers/gpu/drm/xe/xe_lrc.c
-+++ b/drivers/gpu/drm/xe/xe_lrc.c
-@@ -684,7 +684,7 @@ static inline u32 __xe_lrc_start_seqno_offset(struct xe_lrc *lrc)
- 
- static u32 __xe_lrc_ctx_job_timestamp_offset(struct xe_lrc *lrc)
- {
--	/* The start seqno is stored in the driver-defined portion of PPHWSP */
-+	/* This is stored in the driver-defined portion of PPHWSP */
- 	return xe_lrc_pphwsp_offset(lrc) + LRC_CTX_JOB_TIMESTAMP_OFFSET;
- }
- 
-diff --git a/drivers/gpu/drm/xe/xe_ring_ops.c b/drivers/gpu/drm/xe/xe_ring_ops.c
-index 8d1fb33d923f4..3493177947680 100644
---- a/drivers/gpu/drm/xe/xe_ring_ops.c
-+++ b/drivers/gpu/drm/xe/xe_ring_ops.c
-@@ -234,13 +234,10 @@ static u32 get_ppgtt_flag(struct xe_sched_job *job)
- 
- static int emit_copy_timestamp(struct xe_lrc *lrc, u32 *dw, int i)
- {
--	dw[i++] = MI_COPY_MEM_MEM | MI_COPY_MEM_MEM_SRC_GGTT |
--		MI_COPY_MEM_MEM_DST_GGTT;
-+	dw[i++] = MI_STORE_REGISTER_MEM | MI_SRM_USE_GGTT | MI_SRM_ADD_CS_OFFSET;
-+	dw[i++] = RING_CTX_TIMESTAMP(0).addr;
- 	dw[i++] = xe_lrc_ctx_job_timestamp_ggtt_addr(lrc);
- 	dw[i++] = 0;
--	dw[i++] = xe_lrc_ctx_timestamp_ggtt_addr(lrc);
--	dw[i++] = 0;
--	dw[i++] = MI_NOOP;
- 
- 	return i;
- }
+diff --git a/Documentation/netlink/specs/tc.yaml b/Documentation/netlink/specs/tc.yaml
+index aacccea5dfe42..5e1ff04f51f26 100644
+--- a/Documentation/netlink/specs/tc.yaml
++++ b/Documentation/netlink/specs/tc.yaml
+@@ -2745,7 +2745,7 @@ attribute-sets:
+         type: u16
+         byte-order: big-endian
+       -
+-        name: key-l2-tpv3-sid
++        name: key-l2tpv3-sid
+         type: u32
+         byte-order: big-endian
+       -
+@@ -3504,7 +3504,7 @@ attribute-sets:
+         name: rate64
+         type: u64
+       -
+-        name: prate4
++        name: prate64
+         type: u64
+       -
+         name: burst
 -- 
 2.39.5
 
