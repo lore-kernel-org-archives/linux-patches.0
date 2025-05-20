@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4F61D5CFE;
-	Tue, 20 May 2025 14:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E0A270542;
+	Tue, 20 May 2025 14:16:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750610; cv=none; b=pQ8RjNPgg4deWrcK4oR63rPsIrQeCbTe/aLG7MuV6hBc4nV/Radb939VNPtt6FbHW5JfInvY/PeZOaMhsL4Xunn2dOzJ6WV3vXnHfI0xArx6x1ILKfLdkuuIcQXPKyDGlchzGkjpLYrEzh+dsT6nSgMwPbzIWcIbzw7jrvpQtXc=
+	t=1747750613; cv=none; b=KTObg2YJHFp9O8oj5optzvYqlE0k/W/d41zocYXZHhQRMD6rS9cieit03aLupM4zdNR5/PJxk4JazSSBcoHG9T2QNyDRT5q97MHvhSEeCh6ISOoa2HkzqIdljFotYphZZq2Cn4tkw5kTQ6yV1A4yDKj8+A8m3NyyJRPDYK98RO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750610; c=relaxed/simple;
-	bh=uc3qGyPx1EDDTmwhe0JyBKNGlmgmr5OzL20DQLXwwdw=;
+	s=arc-20240116; t=1747750613; c=relaxed/simple;
+	bh=DPIknEWvtsbJZ8MLhCBBtx4vsZfR5+07jW77C9oIi68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CNjZVghwZk+bVPnBAjWfVxLNRhPP0VwQDTJ+RqyPGtEts9qnj5txlQhv4pnT4sQhzGPImUZEdkBUFcCFv5uJDje6XxZ0hUC3L0I8KjTk1QLROBg5U0gZNvzuogKWxDfwXLOajG+jAwkplbR0lseawoL45qQK+qrt0fzF6H2akhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZPyUHMm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TSWz3g3SK5qx3GlutHc3/PVAMzs9h50AVh9skxZuM69TjcyZu/LYx9Whv90Eo9bSuRz5AUWk/iCkaJOM1H6zPGZ0RDLaxz1dJnBlenx+P87X4aXZy4qup2w+32RvhQNYGdX30ZsddDpiRWXhPL/X4fUOlrD87FDo59hoLpx7lb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UTz2GZYG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZPyUHMm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D247C4CEEA;
-	Tue, 20 May 2025 14:16:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTz2GZYG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B05EC4CEE9;
+	Tue, 20 May 2025 14:16:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750609;
-	bh=uc3qGyPx1EDDTmwhe0JyBKNGlmgmr5OzL20DQLXwwdw=;
+	s=korg; t=1747750612;
+	bh=DPIknEWvtsbJZ8MLhCBBtx4vsZfR5+07jW77C9oIi68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aZPyUHMmsYuw3duy28QZZq2zGS8DC3lNYxrWKoN05tgjRrinANYOP8KS9yMv/934e
-	 d7DIYVtB5/SLx1ANexj/Qpf1ijK+p3cTXk9oGbXVaRIRSMYlnBMhXZgKXhwH++UHqs
-	 iHoNux+qA4zxIGtIcUbGd/uFJ7WaNOTuLIMCrdaw=
+	b=UTz2GZYGXQJVa3er62ph2nbNEx08BBK6thpIAJ7X/YaJr4yPIq5jdemmAwA09ZBSa
+	 zgQSMtC0lDijiJ+svXED9TymIWS6K6XhQL0N3tmxOJQJBnsfASM41RDuJTAO28HxGU
+	 rxlYU7Bqrv0Dlm8S+at7JXpZHKWAERjOn5VXzOts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>
-Subject: [PATCH 6.14 064/145] sched_ext: bpf_iter_scx_dsq_new() should always initialize iterator
-Date: Tue, 20 May 2025 15:50:34 +0200
-Message-ID: <20250520125813.085614982@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.14 065/145] udf: Make sure i_lenExtents is uptodate on inode eviction
+Date: Tue, 20 May 2025 15:50:35 +0200
+Message-ID: <20250520125813.127968482@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -50,40 +49,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Jan Kara <jack@suse.cz>
 
-commit 428dc9fc0873989d73918d4a9cc22745b7bbc799 upstream.
+commit 55dd5b4db3bf04cf077a8d1712f6295d4517c337 upstream.
 
-BPF programs may call next() and destroy() on BPF iterators even after new()
-returns an error value (e.g. bpf_for_each() macro ignores error returns from
-new()). bpf_iter_scx_dsq_new() could leave the iterator in an uninitialized
-state after an error return causing bpf_iter_scx_dsq_next() to dereference
-garbage data. Make bpf_iter_scx_dsq_new() always clear $kit->dsq so that
-next() and destroy() become noops.
+UDF maintains total length of all extents in i_lenExtents. Generally we
+keep extent lengths (and thus i_lenExtents) block aligned because it
+makes the file appending logic simpler. However the standard mandates
+that the inode size must match the length of all extents and thus we
+trim the last extent when closing the file. To catch possible bugs we
+also verify that i_lenExtents matches i_size when evicting inode from
+memory. Commit b405c1e58b73 ("udf: refactor udf_next_aext() to handle
+error") however broke the code updating i_lenExtents and thus
+udf_evict_inode() ended up spewing lots of errors about incorrectly
+sized extents although the extents were actually sized properly. Fix the
+updating of i_lenExtents to silence the errors.
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Fixes: 650ba21b131e ("sched_ext: Implement DSQ iterator")
-Cc: stable@vger.kernel.org # v6.12+
-Acked-by: Andrea Righi <arighi@nvidia.com>
+Fixes: b405c1e58b73 ("udf: refactor udf_next_aext() to handle error")
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/udf/truncate.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -7173,6 +7173,12 @@ __bpf_kfunc int bpf_iter_scx_dsq_new(str
- 	BUILD_BUG_ON(__alignof__(struct bpf_iter_scx_dsq_kern) !=
- 		     __alignof__(struct bpf_iter_scx_dsq));
- 
-+	/*
-+	 * next() and destroy() will be called regardless of the return value.
-+	 * Always clear $kit->dsq.
-+	 */
-+	kit->dsq = NULL;
-+
- 	if (flags & ~__SCX_DSQ_ITER_USER_FLAGS)
- 		return -EINVAL;
- 
+--- a/fs/udf/truncate.c
++++ b/fs/udf/truncate.c
+@@ -115,7 +115,7 @@ void udf_truncate_tail_extent(struct ino
+ 	}
+ 	/* This inode entry is in-memory only and thus we don't have to mark
+ 	 * the inode dirty */
+-	if (ret == 0)
++	if (ret >= 0)
+ 		iinfo->i_lenExtents = inode->i_size;
+ 	brelse(epos.bh);
+ }
 
 
