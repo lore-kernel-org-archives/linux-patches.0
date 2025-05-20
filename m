@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634461A08DF;
-	Tue, 20 May 2025 14:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE0F1A08DF;
+	Tue, 20 May 2025 14:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750556; cv=none; b=CEm2nR5Cjev3AbXISq3FdmvtXGLGTLHbxjLJVdaGV/PXnZVyXuVhebZfKPeZCXSwpNIrewFV3A9ZZ9ApKoAr1Es0EPfRQFuJKHPb/o6txwMUOH6Vr1HXvVP1hadH7n6K/8F/PIX2Ex7t3VYQiyxzLs9UhdodqV93KyB1roWJ5/E=
+	t=1747750559; cv=none; b=JTiGRoGWOum7TiuHQ74kOrlz/rwu7tZsFyg0smNeDCmsRuhCRCwKHDDqDhXzMcLVPHCliqPNeW6qR8wERIQQcAXS1Y0oHPKRMjH0cJuIXVbJEVmfxnG3SMrn/ITtymHwtwx5Mk1pKvEPnW+gOX25cKEdArKAdmDCCzggqaZIoZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750556; c=relaxed/simple;
-	bh=e2aXxmdL00gFHPwRONS8/Opp7U+bvxBl21J8fT7vJjc=;
+	s=arc-20240116; t=1747750559; c=relaxed/simple;
+	bh=xMLYj0o4f+dpedmnMi1rdm+0koh+BX1nabav4SSn0cs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TtGNFrKoY3fXYLvgHJHxTrikFHFGCXWPVno9P3I6LqHzvsI9An3Pz51f1JaWSvJBvT3BIpXAp+1IOTMVk7CNDRvGK6VkzSqIidBFiLCu/WASuRqmv4uToWujJojPrxMMmgUhRD52uSG8OYgZauXLKxfdw64ka8fA/OLKMwc8jz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJ5gVPUS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WUNCpZSOij4ZARLv6oACwmZ6MI9zj+NtyDpw2SmFF9epChIifDEWP2fw32sdYj3qXCmxgIQckCBET8tHhOM1FYVV6dupm++1epNDwPnsuXiKFnT0fSESvq10ojcua5Mw44RTfMrujAyNpWSQHCeAZFGAbvZmBYF3FIJKpeWKR9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zGkPl9uv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJ5gVPUS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEEECC4CEE9;
-	Tue, 20 May 2025 14:15:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zGkPl9uv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F0FC4CEE9;
+	Tue, 20 May 2025 14:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750556;
-	bh=e2aXxmdL00gFHPwRONS8/Opp7U+bvxBl21J8fT7vJjc=;
+	s=korg; t=1747750559;
+	bh=xMLYj0o4f+dpedmnMi1rdm+0koh+BX1nabav4SSn0cs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TJ5gVPUS6Oo4NWzFdm5o1HgF528U5SVlySOOon6CEUGj5+Kn9LI+/Z5J+nbbklNmT
-	 GbHKYp5O0uX07KEEvHNMriHFByzje8Yz8x9qNaho/u9rN6BwPQ/xS86XVmyo1uG0dv
-	 g5KuQHXue1Oi1x3TkbgqshEOtHlqC2yx6o5SWpOg=
+	b=zGkPl9uvCnITnQQoOwzTQWcG0ftHlOFdH+ZbYUr9xTE1FnUq3InPaKDuxIwKZkwlA
+	 74ugYyL7TnbkYXk1BS6ER9DpAPZyRy3D7PNxIJPplxseOTUdb5LdSs8CuTzdCWVq8j
+	 Df32PO/74vXKDCxWueJAbvbqBLhQoZ8xyz/dIa/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Suchanek <msuchanek@suse.de>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Guillaume Stols <gstols@baylibre.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 016/145] tpm: tis: Double the timeout B to 4s
-Date: Tue, 20 May 2025 15:49:46 +0200
-Message-ID: <20250520125811.190469151@linuxfoundation.org>
+Subject: [PATCH 6.14 017/145] iio: adc: ad7606: move the software mode configuration
+Date: Tue, 20 May 2025 15:49:47 +0200
+Message-ID: <20250520125811.228953296@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -51,74 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Suchanek <msuchanek@suse.de>
+From: Guillaume Stols <gstols@baylibre.com>
 
-[ Upstream commit 2f661f71fda1fc0c42b7746ca5b7da529eb6b5be ]
+[ Upstream commit f2a62931b39478c98f977caf299df5bc072f38e0 ]
 
-With some Infineon chips the timeouts in tpm_tis_send_data (both B and
-C) can reach up to about 2250 ms.
+This is a preparation for the intoduction of the sofware functions in
+the iio backend version of the driver.
+The software mode configuration must be executed once the channels are
+configured, and the number of channels is known. This is not the case
+before iio-backend's configuration is called, and iio backend version of
+the driver does not have a timestamp channel.
+Also the sw_mode_config callback is configured during the iio-backend
+configuration.
+For clarity purpose, I moved the entire block instead of just the
+concerned function calls.
 
-Timeout C is retried since
-commit de9e33df7762 ("tpm, tpm_tis: Workaround failed command reception on Infineon devices")
-
-Timeout B still needs to be extended.
-
-The problem is most commonly encountered with context related operation
-such as load context/save context. These are issued directly by the
-kernel, and there is no retry logic for them.
-
-When a filesystem is set up to use the TPM for unlocking the boot fails,
-and restarting the userspace service is ineffective. This is likely
-because ignoring a load context/save context result puts the real TPM
-state and the TPM state expected by the kernel out of sync.
-
-Chips known to be affected:
-tpm_tis IFX1522:00: 2.0 TPM (device-id 0x1D, rev-id 54)
-Description: SLB9672
-Firmware Revision: 15.22
-
-tpm_tis MSFT0101:00: 2.0 TPM (device-id 0x1B, rev-id 22)
-Firmware Revision: 7.83
-
-tpm_tis MSFT0101:00: 2.0 TPM (device-id 0x1A, rev-id 16)
-Firmware Revision: 5.63
-
-Link: https://lore.kernel.org/linux-integrity/Z5pI07m0Muapyu9w@kitsune.suse.cz/
-Signed-off-by: Michal Suchanek <msuchanek@suse.de>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Guillaume Stols <gstols@baylibre.com>
+Link: https://patch.msgid.link/20250210-wip-bl-ad7606_add_backend_sw_mode-v4-2-160df18b1da7@baylibre.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 5257d80e22bf ("iio: adc: ad7606: check for NULL before calling sw_mode_config()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_core.h | 2 +-
- include/linux/tpm.h             | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/adc/ad7606.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm_tis_core.h b/drivers/char/tpm/tpm_tis_core.h
-index 970d02c337c7f..6c3aa480396b6 100644
---- a/drivers/char/tpm/tpm_tis_core.h
-+++ b/drivers/char/tpm/tpm_tis_core.h
-@@ -54,7 +54,7 @@ enum tis_int_flags {
- enum tis_defaults {
- 	TIS_MEM_LEN = 0x5000,
- 	TIS_SHORT_TIMEOUT = 750,	/* ms */
--	TIS_LONG_TIMEOUT = 2000,	/* 2 sec */
-+	TIS_LONG_TIMEOUT = 4000,	/* 4 secs */
- 	TIS_TIMEOUT_MIN_ATML = 14700,	/* usecs */
- 	TIS_TIMEOUT_MAX_ATML = 15000,	/* usecs */
- };
-diff --git a/include/linux/tpm.h b/include/linux/tpm.h
-index 6c3125300c009..3db0b6a87d454 100644
---- a/include/linux/tpm.h
-+++ b/include/linux/tpm.h
-@@ -224,7 +224,7 @@ enum tpm2_const {
+diff --git a/drivers/iio/adc/ad7606.c b/drivers/iio/adc/ad7606.c
+index d39354afd5394..376c808df11c7 100644
+--- a/drivers/iio/adc/ad7606.c
++++ b/drivers/iio/adc/ad7606.c
+@@ -1246,17 +1246,6 @@ int ad7606_probe(struct device *dev, int irq, void __iomem *base_address,
+ 			return -ERESTARTSYS;
+ 	}
  
- enum tpm2_timeouts {
- 	TPM2_TIMEOUT_A          =    750,
--	TPM2_TIMEOUT_B          =   2000,
-+	TPM2_TIMEOUT_B          =   4000,
- 	TPM2_TIMEOUT_C          =    200,
- 	TPM2_TIMEOUT_D          =     30,
- 	TPM2_DURATION_SHORT     =     20,
+-	st->write_scale = ad7606_write_scale_hw;
+-	st->write_os = ad7606_write_os_hw;
+-
+-	ret = ad7606_sw_mode_setup(indio_dev);
+-	if (ret)
+-		return ret;
+-
+-	ret = ad7606_chan_scales_setup(indio_dev);
+-	if (ret)
+-		return ret;
+-
+ 	/* If convst pin is not defined, setup PWM. */
+ 	if (!st->gpio_convst) {
+ 		st->cnvst_pwm = devm_pwm_get(dev, NULL);
+@@ -1334,6 +1323,17 @@ int ad7606_probe(struct device *dev, int irq, void __iomem *base_address,
+ 			return ret;
+ 	}
+ 
++	st->write_scale = ad7606_write_scale_hw;
++	st->write_os = ad7606_write_os_hw;
++
++	ret = ad7606_sw_mode_setup(indio_dev);
++	if (ret)
++		return ret;
++
++	ret = ad7606_chan_scales_setup(indio_dev);
++	if (ret)
++		return ret;
++
+ 	return devm_iio_device_register(dev, indio_dev);
+ }
+ EXPORT_SYMBOL_NS_GPL(ad7606_probe, "IIO_AD7606");
 -- 
 2.39.5
 
