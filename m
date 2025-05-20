@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A83B24EABF;
-	Tue, 20 May 2025 14:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AFE24728F;
+	Tue, 20 May 2025 14:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750832; cv=none; b=mEtuRnlLoH41qiKr/6Oa9gHdP7cxU+fLVhIyLDss1mMcCoUz/8A/eRbvlBLgUzJfffPsaW0itLLxXn4hoWuO8I/bB1OdCBlCPYm9CaKyoItFrO0PnV05R9mbRDPeO+JaeUlCxZF7EXWoGq1NOVd1xOR5iSANgJlx+hMoAuWplck=
+	t=1747750835; cv=none; b=qtfuYv7I2qqc56HZnv35qgT9jkRjkrxDP+WtS8ZHmXRFQZQJxOtQwuK5Ox6PlVBPkyaxxlYOnYFufirsequEHgi2xcrM9tTwaJ1r3Gz6Wi3zjNeHjbAoTW10T039Tnkf8mZnox7FuPF0NjKWz9FRU9//LqpRigoXgOmcux3gieM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750832; c=relaxed/simple;
-	bh=n+/zfRBOGJQdwC/Zq95SVXEcKc1I1jraC0/w21iMQNY=;
+	s=arc-20240116; t=1747750835; c=relaxed/simple;
+	bh=7MYaQoznbUdyZT9c8enJykplLf9v/iwJo6hSCR3SoHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eotmx7sIcFxr4PZiKPKHU2eVIs5cMVk7UbzfaDo+FsWm47QJkB4xWGgnS7Jh4dT/uydne9tNdq4fJziGZxyq+bdQ4DA0lPZa/sAYV6GZCVLs32/OjOXE+4Wp3z+6i6vDQJQR3iMvHRJVVTBIT0CHP6VThuxMVN5uw7Gpygn2C1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XwhEFC1J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=px8KLK0MmVHxarDeET07kP3f+yFcjKdT93PMERGddGfx3kc3TbCsgiit1Ge6qCMnBcE+dG/k/R4c/sYDDJi8dOoZ1u2yA50nGsTcbP0yXedODENHaZNRs+OP1ttWEp8F8aa52VUSamZVpXIo3wMSEjQYtNRDOqgbMShDBEN7wxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NkKGLmJI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwhEFC1J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20EDCC4CEE9;
-	Tue, 20 May 2025 14:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NkKGLmJI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE69C4CEE9;
+	Tue, 20 May 2025 14:20:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750832;
-	bh=n+/zfRBOGJQdwC/Zq95SVXEcKc1I1jraC0/w21iMQNY=;
+	s=korg; t=1747750835;
+	bh=7MYaQoznbUdyZT9c8enJykplLf9v/iwJo6hSCR3SoHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XwhEFC1JBRC1jv5vz1qMU5beovCt0CbZSEL4/jUaRfeP/mz424RbzDP81E6q8pGWo
-	 qUyAaxy3c8w+tvhuRZcX8yQedUtw18//8DSvO/iI+R6DnrBnPefpbZCacgSHG/vB90
-	 k4Rm7HdLNT4frbToI28kg//3MHppkGAX+8mDMrIA=
+	b=NkKGLmJIg918QDESsGjNvU5FeIXSc1futj/JtrmZbVxsu1jQJM7GreVd39h/KX5SY
+	 rgMsrBprKFsGVvLOpSNvfiBZ3rIZqNxRp+YuG9VEne2uuplemYTHjHK5KCFHKer4Oa
+	 4zP4TMhN3XW4MgKx809QUId049XxUnkprhoXLUpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Fenghua Yu <fenghuay@nvidia.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.14 135/145] dmaengine: idxd: Refactor remove call with idxd_cleanup() helper
-Date: Tue, 20 May 2025 15:51:45 +0200
-Message-ID: <20250520125815.825372392@linuxfoundation.org>
+	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Subject: [PATCH 6.14 136/145] accel/ivpu: Use workqueue for IRQ handling
+Date: Tue, 20 May 2025 15:51:46 +0200
+Message-ID: <20250520125815.863258242@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -53,61 +50,277 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Maciej Falkowski <maciej.falkowski@linux.intel.com>
 
-commit a409e919ca321cc0e28f8abf96fde299f0072a81 upstream.
+commit bc3e5f48b7ee021371dc37297678f7089be6ce28 upstream.
 
-The idxd_cleanup() helper cleans up perfmon, interrupts, internals and
-so on. Refactor remove call with the idxd_cleanup() helper to avoid code
-duplication. Note, this also fixes the missing put_device() for idxd
-groups, enginces and wqs.
+Convert IRQ bottom half from the thread handler into workqueue.
+This increases a stability in rare scenarios where driver on
+debugging/hardening kernels processes IRQ too slow and misses
+some interrupts due to it.
+Workqueue handler also gives a very minor performance increase.
 
-Fixes: bfe1d56091c1 ("dmaengine: idxd: Init and probe for Intel data accelerators")
-Cc: stable@vger.kernel.org
-Suggested-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Fenghua Yu <fenghuay@nvidia.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20250404120217.48772-10-xueshuai@linux.alibaba.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
+Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250107173238.381120-6-maciej.falkowski@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/idxd/init.c |   14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ drivers/accel/ivpu/ivpu_drv.c     |   39 +++++++++-----------------------------
+ drivers/accel/ivpu/ivpu_drv.h     |    5 +++-
+ drivers/accel/ivpu/ivpu_hw.c      |    5 ----
+ drivers/accel/ivpu/ivpu_hw.h      |    9 --------
+ drivers/accel/ivpu/ivpu_hw_btrs.c |    3 --
+ drivers/accel/ivpu/ivpu_ipc.c     |    7 ++----
+ drivers/accel/ivpu/ivpu_ipc.h     |    2 -
+ drivers/accel/ivpu/ivpu_job.c     |    2 -
+ drivers/accel/ivpu/ivpu_job.h     |    2 -
+ drivers/accel/ivpu/ivpu_pm.c      |    3 +-
+ drivers/accel/ivpu/ivpu_pm.h      |    2 -
+ 11 files changed, 24 insertions(+), 55 deletions(-)
 
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -1309,7 +1309,6 @@ static void idxd_shutdown(struct pci_dev
- static void idxd_remove(struct pci_dev *pdev)
- {
- 	struct idxd_device *idxd = pci_get_drvdata(pdev);
--	struct idxd_irq_entry *irq_entry;
+--- a/drivers/accel/ivpu/ivpu_drv.c
++++ b/drivers/accel/ivpu/ivpu_drv.c
+@@ -7,6 +7,7 @@
+ #include <linux/module.h>
+ #include <linux/pci.h>
+ #include <linux/pm_runtime.h>
++#include <linux/workqueue.h>
+ #include <generated/utsrelease.h>
  
- 	idxd_unregister_devices(idxd);
- 	/*
-@@ -1322,21 +1321,12 @@ static void idxd_remove(struct pci_dev *
- 	get_device(idxd_confdev(idxd));
- 	device_unregister(idxd_confdev(idxd));
- 	idxd_shutdown(pdev);
--	if (device_pasid_enabled(idxd))
--		idxd_disable_system_pasid(idxd);
- 	idxd_device_remove_debugfs(idxd);
+ #include <drm/drm_accel.h>
+@@ -419,6 +420,9 @@ void ivpu_prepare_for_reset(struct ivpu_
+ {
+ 	ivpu_hw_irq_disable(vdev);
+ 	disable_irq(vdev->irq);
++	cancel_work_sync(&vdev->irq_ipc_work);
++	cancel_work_sync(&vdev->irq_dct_work);
++	cancel_work_sync(&vdev->context_abort_work);
+ 	ivpu_ipc_disable(vdev);
+ 	ivpu_mmu_disable(vdev);
+ }
+@@ -463,31 +467,6 @@ static const struct drm_driver driver =
+ 	.major = 1,
+ };
+ 
+-static irqreturn_t ivpu_irq_thread_handler(int irq, void *arg)
+-{
+-	struct ivpu_device *vdev = arg;
+-	u8 irq_src;
 -
--	irq_entry = idxd_get_ie(idxd, 0);
--	free_irq(irq_entry->vector, irq_entry);
--	pci_free_irq_vectors(pdev);
-+	idxd_cleanup(idxd);
- 	pci_iounmap(pdev, idxd->reg_base);
--	if (device_user_pasid_enabled(idxd))
--		idxd_disable_sva(pdev);
--	pci_disable_device(pdev);
--	destroy_workqueue(idxd->wq);
--	perfmon_pmu_remove(idxd);
- 	put_device(idxd_confdev(idxd));
- 	idxd_free(idxd);
-+	pci_disable_device(pdev);
+-	if (kfifo_is_empty(&vdev->hw->irq.fifo))
+-		return IRQ_NONE;
+-
+-	while (kfifo_get(&vdev->hw->irq.fifo, &irq_src)) {
+-		switch (irq_src) {
+-		case IVPU_HW_IRQ_SRC_IPC:
+-			ivpu_ipc_irq_thread_handler(vdev);
+-			break;
+-		case IVPU_HW_IRQ_SRC_DCT:
+-			ivpu_pm_dct_irq_thread_handler(vdev);
+-			break;
+-		default:
+-			ivpu_err_ratelimited(vdev, "Unknown IRQ source: %u\n", irq_src);
+-			break;
+-		}
+-	}
+-
+-	return IRQ_HANDLED;
+-}
+-
+ static int ivpu_irq_init(struct ivpu_device *vdev)
+ {
+ 	struct pci_dev *pdev = to_pci_dev(vdev->drm.dev);
+@@ -499,12 +478,16 @@ static int ivpu_irq_init(struct ivpu_dev
+ 		return ret;
+ 	}
+ 
++	INIT_WORK(&vdev->irq_ipc_work, ivpu_ipc_irq_work_fn);
++	INIT_WORK(&vdev->irq_dct_work, ivpu_pm_irq_dct_work_fn);
++	INIT_WORK(&vdev->context_abort_work, ivpu_context_abort_work_fn);
++
+ 	ivpu_irq_handlers_init(vdev);
+ 
+ 	vdev->irq = pci_irq_vector(pdev, 0);
+ 
+-	ret = devm_request_threaded_irq(vdev->drm.dev, vdev->irq, ivpu_hw_irq_handler,
+-					ivpu_irq_thread_handler, IRQF_NO_AUTOEN, DRIVER_NAME, vdev);
++	ret = devm_request_irq(vdev->drm.dev, vdev->irq, ivpu_hw_irq_handler,
++			       IRQF_NO_AUTOEN, DRIVER_NAME, vdev);
+ 	if (ret)
+ 		ivpu_err(vdev, "Failed to request an IRQ %d\n", ret);
+ 
+@@ -597,8 +580,6 @@ static int ivpu_dev_init(struct ivpu_dev
+ 	vdev->db_limit.min = IVPU_MIN_DB;
+ 	vdev->db_limit.max = IVPU_MAX_DB;
+ 
+-	INIT_WORK(&vdev->context_abort_work, ivpu_context_abort_thread_handler);
+-
+ 	ret = drmm_mutex_init(&vdev->drm, &vdev->context_list_lock);
+ 	if (ret)
+ 		goto err_xa_destroy;
+--- a/drivers/accel/ivpu/ivpu_drv.h
++++ b/drivers/accel/ivpu/ivpu_drv.h
+@@ -137,12 +137,15 @@ struct ivpu_device {
+ 	struct mutex context_list_lock; /* Protects user context addition/removal */
+ 	struct xarray context_xa;
+ 	struct xa_limit context_xa_limit;
+-	struct work_struct context_abort_work;
+ 
+ 	struct xarray db_xa;
+ 	struct xa_limit db_limit;
+ 	u32 db_next;
+ 
++	struct work_struct irq_ipc_work;
++	struct work_struct irq_dct_work;
++	struct work_struct context_abort_work;
++
+ 	struct mutex bo_list_lock; /* Protects bo_list */
+ 	struct list_head bo_list;
+ 
+--- a/drivers/accel/ivpu/ivpu_hw.c
++++ b/drivers/accel/ivpu/ivpu_hw.c
+@@ -285,8 +285,6 @@ void ivpu_hw_profiling_freq_drive(struct
+ 
+ void ivpu_irq_handlers_init(struct ivpu_device *vdev)
+ {
+-	INIT_KFIFO(vdev->hw->irq.fifo);
+-
+ 	if (ivpu_hw_ip_gen(vdev) == IVPU_HW_IP_37XX)
+ 		vdev->hw->irq.ip_irq_handler = ivpu_hw_ip_irq_handler_37xx;
+ 	else
+@@ -300,7 +298,6 @@ void ivpu_irq_handlers_init(struct ivpu_
+ 
+ void ivpu_hw_irq_enable(struct ivpu_device *vdev)
+ {
+-	kfifo_reset(&vdev->hw->irq.fifo);
+ 	ivpu_hw_ip_irq_enable(vdev);
+ 	ivpu_hw_btrs_irq_enable(vdev);
+ }
+@@ -327,8 +324,6 @@ irqreturn_t ivpu_hw_irq_handler(int irq,
+ 	/* Re-enable global interrupts to re-trigger MSI for pending interrupts */
+ 	ivpu_hw_btrs_global_int_enable(vdev);
+ 
+-	if (!kfifo_is_empty(&vdev->hw->irq.fifo))
+-		return IRQ_WAKE_THREAD;
+ 	if (ip_handled || btrs_handled)
+ 		return IRQ_HANDLED;
+ 	return IRQ_NONE;
+--- a/drivers/accel/ivpu/ivpu_hw.h
++++ b/drivers/accel/ivpu/ivpu_hw.h
+@@ -6,18 +6,10 @@
+ #ifndef __IVPU_HW_H__
+ #define __IVPU_HW_H__
+ 
+-#include <linux/kfifo.h>
+-
+ #include "ivpu_drv.h"
+ #include "ivpu_hw_btrs.h"
+ #include "ivpu_hw_ip.h"
+ 
+-#define IVPU_HW_IRQ_FIFO_LENGTH 1024
+-
+-#define IVPU_HW_IRQ_SRC_IPC 1
+-#define IVPU_HW_IRQ_SRC_MMU_EVTQ 2
+-#define IVPU_HW_IRQ_SRC_DCT 3
+-
+ struct ivpu_addr_range {
+ 	resource_size_t start;
+ 	resource_size_t end;
+@@ -27,7 +19,6 @@ struct ivpu_hw_info {
+ 	struct {
+ 		bool (*btrs_irq_handler)(struct ivpu_device *vdev, int irq);
+ 		bool (*ip_irq_handler)(struct ivpu_device *vdev, int irq);
+-		DECLARE_KFIFO(fifo, u8, IVPU_HW_IRQ_FIFO_LENGTH);
+ 	} irq;
+ 	struct {
+ 		struct ivpu_addr_range global;
+--- a/drivers/accel/ivpu/ivpu_hw_btrs.c
++++ b/drivers/accel/ivpu/ivpu_hw_btrs.c
+@@ -666,8 +666,7 @@ bool ivpu_hw_btrs_irq_handler_lnl(struct
+ 
+ 	if (REG_TEST_FLD(VPU_HW_BTRS_LNL_INTERRUPT_STAT, SURV_ERR, status)) {
+ 		ivpu_dbg(vdev, IRQ, "Survivability IRQ\n");
+-		if (!kfifo_put(&vdev->hw->irq.fifo, IVPU_HW_IRQ_SRC_DCT))
+-			ivpu_err_ratelimited(vdev, "IRQ FIFO full\n");
++		queue_work(system_wq, &vdev->irq_dct_work);
+ 	}
+ 
+ 	if (REG_TEST_FLD(VPU_HW_BTRS_LNL_INTERRUPT_STAT, FREQ_CHANGE, status)) {
+--- a/drivers/accel/ivpu/ivpu_ipc.c
++++ b/drivers/accel/ivpu/ivpu_ipc.c
+@@ -460,13 +460,12 @@ void ivpu_ipc_irq_handler(struct ivpu_de
+ 		}
+ 	}
+ 
+-	if (!list_empty(&ipc->cb_msg_list))
+-		if (!kfifo_put(&vdev->hw->irq.fifo, IVPU_HW_IRQ_SRC_IPC))
+-			ivpu_err_ratelimited(vdev, "IRQ FIFO full\n");
++	queue_work(system_wq, &vdev->irq_ipc_work);
  }
  
- static struct pci_driver idxd_pci_driver = {
+-void ivpu_ipc_irq_thread_handler(struct ivpu_device *vdev)
++void ivpu_ipc_irq_work_fn(struct work_struct *work)
+ {
++	struct ivpu_device *vdev = container_of(work, struct ivpu_device, irq_ipc_work);
+ 	struct ivpu_ipc_info *ipc = vdev->ipc;
+ 	struct ivpu_ipc_rx_msg *rx_msg, *r;
+ 	struct list_head cb_msg_list;
+--- a/drivers/accel/ivpu/ivpu_ipc.h
++++ b/drivers/accel/ivpu/ivpu_ipc.h
+@@ -90,7 +90,7 @@ void ivpu_ipc_disable(struct ivpu_device
+ void ivpu_ipc_reset(struct ivpu_device *vdev);
+ 
+ void ivpu_ipc_irq_handler(struct ivpu_device *vdev);
+-void ivpu_ipc_irq_thread_handler(struct ivpu_device *vdev);
++void ivpu_ipc_irq_work_fn(struct work_struct *work);
+ 
+ void ivpu_ipc_consumer_add(struct ivpu_device *vdev, struct ivpu_ipc_consumer *cons,
+ 			   u32 channel, ivpu_ipc_rx_callback_t callback);
+--- a/drivers/accel/ivpu/ivpu_job.c
++++ b/drivers/accel/ivpu/ivpu_job.c
+@@ -845,7 +845,7 @@ void ivpu_job_done_consumer_fini(struct
+ 	ivpu_ipc_consumer_del(vdev, &vdev->job_done_consumer);
+ }
+ 
+-void ivpu_context_abort_thread_handler(struct work_struct *work)
++void ivpu_context_abort_work_fn(struct work_struct *work)
+ {
+ 	struct ivpu_device *vdev = container_of(work, struct ivpu_device, context_abort_work);
+ 	struct ivpu_file_priv *file_priv;
+--- a/drivers/accel/ivpu/ivpu_job.h
++++ b/drivers/accel/ivpu/ivpu_job.h
+@@ -66,7 +66,7 @@ void ivpu_cmdq_reset_all_contexts(struct
+ 
+ void ivpu_job_done_consumer_init(struct ivpu_device *vdev);
+ void ivpu_job_done_consumer_fini(struct ivpu_device *vdev);
+-void ivpu_context_abort_thread_handler(struct work_struct *work);
++void ivpu_context_abort_work_fn(struct work_struct *work);
+ 
+ void ivpu_jobs_abort_all(struct ivpu_device *vdev);
+ 
+--- a/drivers/accel/ivpu/ivpu_pm.c
++++ b/drivers/accel/ivpu/ivpu_pm.c
+@@ -464,8 +464,9 @@ int ivpu_pm_dct_disable(struct ivpu_devi
+ 	return 0;
+ }
+ 
+-void ivpu_pm_dct_irq_thread_handler(struct ivpu_device *vdev)
++void ivpu_pm_irq_dct_work_fn(struct work_struct *work)
+ {
++	struct ivpu_device *vdev = container_of(work, struct ivpu_device, irq_dct_work);
+ 	bool enable;
+ 	int ret;
+ 
+--- a/drivers/accel/ivpu/ivpu_pm.h
++++ b/drivers/accel/ivpu/ivpu_pm.h
+@@ -45,6 +45,6 @@ void ivpu_stop_job_timeout_detection(str
+ int ivpu_pm_dct_init(struct ivpu_device *vdev);
+ int ivpu_pm_dct_enable(struct ivpu_device *vdev, u8 active_percent);
+ int ivpu_pm_dct_disable(struct ivpu_device *vdev);
+-void ivpu_pm_dct_irq_thread_handler(struct ivpu_device *vdev);
++void ivpu_pm_irq_dct_work_fn(struct work_struct *work);
+ 
+ #endif /* __IVPU_PM_H__ */
 
 
