@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AEEE24169B;
-	Tue, 20 May 2025 13:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207B122097;
+	Tue, 20 May 2025 13:58:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749506; cv=none; b=pVWQFmjFF//uLBt7hCnV0Tb3Hxvzmy3nXs7jV44G4Vvjkib2CkEvnQmENZFRfNABzSIbftg9/E6/J05Ba7sglejR4c2nxS2zxV6t1fj8VKXSy6S5ikYsJRMmodUwtrmFV+LSNokrGmT85tAN+bPy/Qn2k0MuEA7v9mS6ZZMggr0=
+	t=1747749510; cv=none; b=I2nmEegJVUMQeXOleuRoAGishUlpmFqio/ErwjonNUSrl5L7SmLXKHYP3W4v7W6Ymsh7jJcQB2+SVDzAyxujeJDruiPuarwNxtnvXUoshX/qqoJXtwlTJMO+oBu1YJ1YXT5q5B0S9CDZ1MOdWZeQCOUH+ApNphg68UFCHpU/V9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749506; c=relaxed/simple;
-	bh=Bncx0pvxE/1OYgKOSZbH4/ZfMxotMB9k9I/32QTIOXY=;
+	s=arc-20240116; t=1747749510; c=relaxed/simple;
+	bh=mz7kRJ7/WRSAjwriYvABx0S/cfTq1nBbjD3ToXNudzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C0xDHU/nm7Fm5ssqd0iSlwFlWQa/TLj9z4FaciAvJwyAvALh4BlP+D+8i4hDnKpxkaHa6uDHFyXoQj3RbI7DvTzp57YQ6dJpHAXhfAj+wNCL1rRLjR4olwXCfCryu5IbwoPT//4czm3+5hxTK+mK2aNnPjFb76A9W6vFRh+4PXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LLNbfmM8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=prnjVUawL+DlrK5QcxODVmKrPN1UgKcgFHrjWw2K52fBIw60cLKYHFfca1CZzLvmU4uQKefrPa4ydVmVfek8QONNo+b7qFMAeKIc1vbs6G0jnRuFhpxNiTawRTcWTROtt9f3q15j2PfxJCjj4cHDb7jr6awXXvxaakcQvb7YoCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJEBms9p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLNbfmM8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3BCC4CEE9;
-	Tue, 20 May 2025 13:58:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJEBms9p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0156AC4CEE9;
+	Tue, 20 May 2025 13:58:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749506;
-	bh=Bncx0pvxE/1OYgKOSZbH4/ZfMxotMB9k9I/32QTIOXY=;
+	s=korg; t=1747749509;
+	bh=mz7kRJ7/WRSAjwriYvABx0S/cfTq1nBbjD3ToXNudzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LLNbfmM8DpvlvCU7K1XRbaG47GRtEPY9ZwGUxLjDbB8IHjuG0JZJVmd+q9kkOq3YD
-	 oKtp+pfCJbE90sGAz/AqrWpU0m0fBc46iWPyAyuoxQeRmEVsvLTyFCzWzbwRtzjRg0
-	 UI+HTrichbgh2t1ZgmciYzrHlyDX6IuJgwBGe2lQ=
+	b=nJEBms9pFNTfAZwDbn1yJWTZHj5V/KmdTlLYLey/6+RgV4JnfTts7MU7iYhFTy2dh
+	 j71U+DJcqjdApqq80tTFELyn0DNEeWwxeHvHCUahSsK1LjHgtyujgg7PmcNrLLXt6B
+	 xRinRB9TyI8vZEbWkCxnA5m25v3FjUfjSL7HiUQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 26/97] spi: loopback-test: Do not split 1024-byte hexdumps
-Date: Tue, 20 May 2025 15:49:51 +0200
-Message-ID: <20250520125801.688819740@linuxfoundation.org>
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.1 60/97] phy: renesas: rcar-gen3-usb2: Set timing registers only once
+Date: Tue, 20 May 2025 15:50:25 +0200
+Message-ID: <20250520125803.005069830@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -51,43 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit a73fa3690a1f3014d6677e368dce4e70767a6ba2 ]
+commit 86e70849f4b2b4597ac9f7c7931f2a363774be25 upstream.
 
-spi_test_print_hex_dump() prints buffers holding less than 1024 bytes in
-full.  Larger buffers are truncated: only the first 512 and the last 512
-bytes are printed, separated by a truncation message.  The latter is
-confusing in case the buffer holds exactly 1024 bytes, as all data is
-printed anyway.
+phy-rcar-gen3-usb2 driver exports 4 PHYs. The timing registers are common
+to all PHYs. There is no need to set them every time a PHY is initialized.
+Set timing register only when the 1st PHY is initialized.
 
-Fix this by printing buffers holding up to and including 1024 bytes in
-full.
-
-Fixes: 84e0c4e5e2c4ef42 ("spi: add loopback test driver to allow for spi_master regression tests")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/37ee1bc90c6554c9347040adabf04188c8f704aa.1746184171.git.geert+renesas@glider.be
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f3b5a8d9b50d ("phy: rcar-gen3-usb2: Add R-Car Gen3 USB2 PHY driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250507125032.565017-6-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-loopback-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/renesas/phy-rcar-gen3-usb2.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-loopback-test.c b/drivers/spi/spi-loopback-test.c
-index dd7de8fa37d04..ab29ae463f677 100644
---- a/drivers/spi/spi-loopback-test.c
-+++ b/drivers/spi/spi-loopback-test.c
-@@ -410,7 +410,7 @@ MODULE_LICENSE("GPL");
- static void spi_test_print_hex_dump(char *pre, const void *ptr, size_t len)
- {
- 	/* limit the hex_dump */
--	if (len < 1024) {
-+	if (len <= 1024) {
- 		print_hex_dump(KERN_INFO, pre,
- 			       DUMP_PREFIX_OFFSET, 16, 1,
- 			       ptr, len, 0);
--- 
-2.39.5
-
+--- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
++++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+@@ -454,8 +454,11 @@ static int rcar_gen3_phy_usb2_init(struc
+ 	val = readl(usb2_base + USB2_INT_ENABLE);
+ 	val |= USB2_INT_ENABLE_UCOM_INTEN | rphy->int_enable_bits;
+ 	writel(val, usb2_base + USB2_INT_ENABLE);
+-	writel(USB2_SPD_RSM_TIMSET_INIT, usb2_base + USB2_SPD_RSM_TIMSET);
+-	writel(USB2_OC_TIMSET_INIT, usb2_base + USB2_OC_TIMSET);
++
++	if (!rcar_gen3_is_any_rphy_initialized(channel)) {
++		writel(USB2_SPD_RSM_TIMSET_INIT, usb2_base + USB2_SPD_RSM_TIMSET);
++		writel(USB2_OC_TIMSET_INIT, usb2_base + USB2_OC_TIMSET);
++	}
+ 
+ 	/* Initialize otg part (only if we initialize a PHY with IRQs). */
+ 	if (rphy->int_enable_bits)
 
 
