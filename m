@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12F12459FA;
-	Tue, 20 May 2025 14:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0186F22DF87;
+	Tue, 20 May 2025 14:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749882; cv=none; b=IdokAdkcMZ48+dzs9CiVh0YLcLqohto4UEeDS+4Oh84AumKMfzqs5Ym3lobbloU+VRWXc8fXMGguIMbz2SkIOm/JHkX+Pierstx2idm4NStMDQQKloEyNZbPTrTwLXalGXO70n9uU//Rf7Vcs28Zv7lj5KklBHrAVPAQ0akrI8A=
+	t=1747749886; cv=none; b=Jn30cVJhlQ0rm+NfHc6N4dv+Fg/EdhVYIa0+8snuOg+DT2ur5x3l2m8QoBvgyHl8whTZI5OcsWQbHsE5bUdqGgRfwa88Y2ZXHtOnSx9FQjjgVbP+v1zEjTuUjJfCkk2KFozC+6lCJI2omTh36wR0f7eeC8ehgKVwCkZAiLVBGSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749882; c=relaxed/simple;
-	bh=nHXPgfmAB0HNeb1rEDXgMbt6PPqaCMe3jbVjJ1a5fLQ=;
+	s=arc-20240116; t=1747749886; c=relaxed/simple;
+	bh=0SLkKG1eEqu9XI5Q/lghF+flNTA4tjofVYEFIukv30c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g0QsRctTKCoOrpr6lgSIYGqLUKcTjxPIFJRUmg71Wp7VRsTl+Vk+FbFlmL1g+EH/OBMe+h82aYBphz5J2/0EFtzDJvuKVi7ahtiLu23Qf/IG1PWbGvuYvZAzycYbQlZoHKUZv/79Bd9T5W6PS4DEP4sUBRRwaHSQZxoDaGiD/4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1llz8dBd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ih9WfFDifS19ScRk/px12EoEoKTYaXhvGVtgU9L7Wp0Z31Cawbo1wRGWfyKkTicRGJVU3sf4Qa3Dkv4aah+PZRLM1JOaV1Y6uTlmWKiup9uWlSoGMnBzkuPtw7MKNnj2Rk0crvLlRNLH1rCtBYk8gnjedZcZZ4Ge3sRonSzuTFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b1Wq9lmp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1llz8dBd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F813C4CEEA;
-	Tue, 20 May 2025 14:04:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b1Wq9lmp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D73CC4CEE9;
+	Tue, 20 May 2025 14:04:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749882;
-	bh=nHXPgfmAB0HNeb1rEDXgMbt6PPqaCMe3jbVjJ1a5fLQ=;
+	s=korg; t=1747749885;
+	bh=0SLkKG1eEqu9XI5Q/lghF+flNTA4tjofVYEFIukv30c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1llz8dBdd/3s9VXwDX7gtxrZgq8TLaQ3HakBICN2Ccf3Z4TriQwkGAppQzcdkiZnD
-	 or22pHz4O5ojumngxUaicsrBOhZb6IXLMEi/CmKkiPUgXZtq4VnzXcgjiwnDniJy+1
-	 vjqyCcFttVr1QVp7IB6cMVyn4gDfA1ufvK97auB0=
+	b=b1Wq9lmp52VwbIPfqnbPsVGYUR66zjNtd/KjeJPy2LjaJejvgLrpzLt6QW0pxkq5t
+	 e7K49POGEpdWoV6jCK+UniLCoN9m9ovUwRaHK60BN74n01SN+SkOxDjTldFC9KAjvx
+	 9oCNlgS2SkAKfW753lgKLxOr0NsBPcAvy2Ie8HSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Chang <waynec@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.6 083/117] phy: tegra: xusb: Use a bitmask for UTMI pad power state tracking
-Date: Tue, 20 May 2025 15:50:48 +0200
-Message-ID: <20250520125807.286893024@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	dmaengine@vger.kernel.org,
+	Ronald Wahl <ronald.wahl@legrand.com>
+Subject: [PATCH 6.6 092/117] dmaengine: ti: k3-udma: Add missing locking
+Date: Tue, 20 May 2025 15:50:57 +0200
+Message-ID: <20250520125807.640409243@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -51,191 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Chang <waynec@nvidia.com>
+From: Ronald Wahl <ronald.wahl@legrand.com>
 
-commit b47158fb42959c417ff2662075c0d46fb783d5d1 upstream.
+commit fca280992af8c2fbd511bc43f65abb4a17363f2f upstream.
 
-The current implementation uses bias_pad_enable as a reference count to
-manage the shared bias pad for all UTMI PHYs. However, during system
-suspension with connected USB devices, multiple power-down requests for
-the UTMI pad result in a mismatch in the reference count, which in turn
-produces warnings such as:
+Recent kernels complain about a missing lock in k3-udma.c when the lock
+validator is enabled:
 
-[  237.762967] WARNING: CPU: 10 PID: 1618 at tegra186_utmi_pad_power_down+0x160/0x170
-[  237.763103] Call trace:
-[  237.763104]  tegra186_utmi_pad_power_down+0x160/0x170
-[  237.763107]  tegra186_utmi_phy_power_off+0x10/0x30
-[  237.763110]  phy_power_off+0x48/0x100
-[  237.763113]  tegra_xusb_enter_elpg+0x204/0x500
-[  237.763119]  tegra_xusb_suspend+0x48/0x140
-[  237.763122]  platform_pm_suspend+0x2c/0xb0
-[  237.763125]  dpm_run_callback.isra.0+0x20/0xa0
-[  237.763127]  __device_suspend+0x118/0x330
-[  237.763129]  dpm_suspend+0x10c/0x1f0
-[  237.763130]  dpm_suspend_start+0x88/0xb0
-[  237.763132]  suspend_devices_and_enter+0x120/0x500
-[  237.763135]  pm_suspend+0x1ec/0x270
+[    4.128073] WARNING: CPU: 0 PID: 746 at drivers/dma/ti/../virt-dma.h:169 udma_start.isra.0+0x34/0x238
+[    4.137352] CPU: 0 UID: 0 PID: 746 Comm: kworker/0:3 Not tainted 6.12.9-arm64 #28
+[    4.144867] Hardware name: pp-v12 (DT)
+[    4.148648] Workqueue: events udma_check_tx_completion
+[    4.153841] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    4.160834] pc : udma_start.isra.0+0x34/0x238
+[    4.165227] lr : udma_start.isra.0+0x30/0x238
+[    4.169618] sp : ffffffc083cabcf0
+[    4.172963] x29: ffffffc083cabcf0 x28: 0000000000000000 x27: ffffff800001b005
+[    4.180167] x26: ffffffc0812f0000 x25: 0000000000000000 x24: 0000000000000000
+[    4.187370] x23: 0000000000000001 x22: 00000000e21eabe9 x21: ffffff8000fa0670
+[    4.194571] x20: ffffff8001b6bf00 x19: ffffff8000fa0430 x18: ffffffc083b95030
+[    4.201773] x17: 0000000000000000 x16: 00000000f0000000 x15: 0000000000000048
+[    4.208976] x14: 0000000000000048 x13: 0000000000000000 x12: 0000000000000001
+[    4.216179] x11: ffffffc08151a240 x10: 0000000000003ea1 x9 : ffffffc08046ab68
+[    4.223381] x8 : ffffffc083cabac0 x7 : ffffffc081df3718 x6 : 0000000000029fc8
+[    4.230583] x5 : ffffffc0817ee6d8 x4 : 0000000000000bc0 x3 : 0000000000000000
+[    4.237784] x2 : 0000000000000000 x1 : 00000000001fffff x0 : 0000000000000000
+[    4.244986] Call trace:
+[    4.247463]  udma_start.isra.0+0x34/0x238
+[    4.251509]  udma_check_tx_completion+0xd0/0xdc
+[    4.256076]  process_one_work+0x244/0x3fc
+[    4.260129]  process_scheduled_works+0x6c/0x74
+[    4.264610]  worker_thread+0x150/0x1dc
+[    4.268398]  kthread+0xd8/0xe8
+[    4.271492]  ret_from_fork+0x10/0x20
+[    4.275107] irq event stamp: 220
+[    4.278363] hardirqs last  enabled at (219): [<ffffffc080a27c7c>] _raw_spin_unlock_irq+0x38/0x50
+[    4.287183] hardirqs last disabled at (220): [<ffffffc080a1c154>] el1_dbg+0x24/0x50
+[    4.294879] softirqs last  enabled at (182): [<ffffffc080037e68>] handle_softirqs+0x1c0/0x3cc
+[    4.303437] softirqs last disabled at (177): [<ffffffc080010170>] __do_softirq+0x1c/0x28
+[    4.311559] ---[ end trace 0000000000000000 ]---
 
-The root cause was traced back to the dynamic power-down changes
-introduced in commit a30951d31b25 ("xhci: tegra: USB2 pad power controls"),
-where the UTMI pad was being powered down without verifying its current
-state. This unbalanced behavior led to discrepancies in the reference
-count.
+This commit adds the missing locking.
 
-To rectify this issue, this patch replaces the single reference counter
-with a bitmask, renamed to utmi_pad_enabled. Each bit in the mask
-corresponds to one of the four USB2 PHYs, allowing us to track each pad's
-enablement status individually.
-
-With this change:
-  - The bias pad is powered on only when the mask is clear.
-  - Each UTMI pad is powered on or down based on its corresponding bit
-    in the mask, preventing redundant operations.
-  - The overall power state of the shared bias pad is maintained
-    correctly during suspend/resume cycles.
-
-The mutex used to prevent race conditions during UTMI pad enable/disable
-operations has been moved from the tegra186_utmi_bias_pad_power_on/off
-functions to the parent functions tegra186_utmi_pad_power_on/down. This
-change ensures that there are no race conditions when updating the bitmask.
-
+Fixes: 25dcb5dd7b7c ("dmaengine: ti: New driver for K3 UDMA")
+Cc: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Cc: Vignesh Raghavendra <vigneshr@ti.com>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: dmaengine@vger.kernel.org
 Cc: stable@vger.kernel.org
-Fixes: a30951d31b25 ("xhci: tegra: USB2 pad power controls")
-Signed-off-by: Wayne Chang <waynec@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://lore.kernel.org/r/20250408030905.990474-1-waynec@nvidia.com
+Signed-off-by: Ronald Wahl <ronald.wahl@legrand.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Link: https://lore.kernel.org/r/20250414173113.80677-1-rwahl@gmx.de
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/tegra/xusb-tegra186.c |   44 +++++++++++++++++++++++---------------
- 1 file changed, 27 insertions(+), 17 deletions(-)
+ drivers/dma/ti/k3-udma.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/phy/tegra/xusb-tegra186.c
-+++ b/drivers/phy/tegra/xusb-tegra186.c
-@@ -237,6 +237,8 @@
- #define   DATA0_VAL_PD				BIT(1)
- #define   USE_XUSB_AO				BIT(4)
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -1091,8 +1091,11 @@ static void udma_check_tx_completion(str
+ 	u32 residue_diff;
+ 	ktime_t time_diff;
+ 	unsigned long delay;
++	unsigned long flags;
  
-+#define TEGRA_UTMI_PAD_MAX 4
+ 	while (1) {
++		spin_lock_irqsave(&uc->vc.lock, flags);
 +
- #define TEGRA186_LANE(_name, _offset, _shift, _mask, _type)		\
- 	{								\
- 		.name = _name,						\
-@@ -269,7 +271,7 @@ struct tegra186_xusb_padctl {
+ 		if (uc->desc) {
+ 			/* Get previous residue and time stamp */
+ 			residue_diff = uc->tx_drain.residue;
+@@ -1127,6 +1130,8 @@ static void udma_check_tx_completion(str
+ 				break;
+ 			}
  
- 	/* UTMI bias and tracking */
- 	struct clk *usb2_trk_clk;
--	unsigned int bias_pad_enable;
-+	DECLARE_BITMAP(utmi_pad_enabled, TEGRA_UTMI_PAD_MAX);
++			spin_unlock_irqrestore(&uc->vc.lock, flags);
++
+ 			usleep_range(ktime_to_us(delay),
+ 				     ktime_to_us(delay) + 10);
+ 			continue;
+@@ -1143,6 +1148,8 @@ static void udma_check_tx_completion(str
  
- 	/* padctl context */
- 	struct tegra186_xusb_padctl_context context;
-@@ -603,12 +605,8 @@ static void tegra186_utmi_bias_pad_power
- 	u32 value;
- 	int err;
- 
--	mutex_lock(&padctl->lock);
--
--	if (priv->bias_pad_enable++ > 0) {
--		mutex_unlock(&padctl->lock);
-+	if (!bitmap_empty(priv->utmi_pad_enabled, TEGRA_UTMI_PAD_MAX))
- 		return;
--	}
- 
- 	err = clk_prepare_enable(priv->usb2_trk_clk);
- 	if (err < 0)
-@@ -667,17 +665,8 @@ static void tegra186_utmi_bias_pad_power
- 	struct tegra186_xusb_padctl *priv = to_tegra186_xusb_padctl(padctl);
- 	u32 value;
- 
--	mutex_lock(&padctl->lock);
--
--	if (WARN_ON(priv->bias_pad_enable == 0)) {
--		mutex_unlock(&padctl->lock);
--		return;
--	}
--
--	if (--priv->bias_pad_enable > 0) {
--		mutex_unlock(&padctl->lock);
-+	if (!bitmap_empty(priv->utmi_pad_enabled, TEGRA_UTMI_PAD_MAX))
- 		return;
--	}
- 
- 	value = padctl_readl(padctl, XUSB_PADCTL_USB2_BIAS_PAD_CTL1);
- 	value |= USB2_PD_TRK;
-@@ -690,13 +679,13 @@ static void tegra186_utmi_bias_pad_power
- 		clk_disable_unprepare(priv->usb2_trk_clk);
+ 		break;
  	}
- 
--	mutex_unlock(&padctl->lock);
++
++	spin_unlock_irqrestore(&uc->vc.lock, flags);
  }
  
- static void tegra186_utmi_pad_power_on(struct phy *phy)
- {
- 	struct tegra_xusb_lane *lane = phy_get_drvdata(phy);
- 	struct tegra_xusb_padctl *padctl = lane->pad->padctl;
-+	struct tegra186_xusb_padctl *priv = to_tegra186_xusb_padctl(padctl);
- 	struct tegra_xusb_usb2_port *port;
- 	struct device *dev = padctl->dev;
- 	unsigned int index = lane->index;
-@@ -705,9 +694,16 @@ static void tegra186_utmi_pad_power_on(s
- 	if (!phy)
- 		return;
- 
-+	mutex_lock(&padctl->lock);
-+	if (test_bit(index, priv->utmi_pad_enabled)) {
-+		mutex_unlock(&padctl->lock);
-+		return;
-+	}
-+
- 	port = tegra_xusb_find_usb2_port(padctl, index);
- 	if (!port) {
- 		dev_err(dev, "no port found for USB2 lane %u\n", index);
-+		mutex_unlock(&padctl->lock);
- 		return;
- 	}
- 
-@@ -724,18 +720,28 @@ static void tegra186_utmi_pad_power_on(s
- 	value = padctl_readl(padctl, XUSB_PADCTL_USB2_OTG_PADX_CTL1(index));
- 	value &= ~USB2_OTG_PD_DR;
- 	padctl_writel(padctl, value, XUSB_PADCTL_USB2_OTG_PADX_CTL1(index));
-+
-+	set_bit(index, priv->utmi_pad_enabled);
-+	mutex_unlock(&padctl->lock);
- }
- 
- static void tegra186_utmi_pad_power_down(struct phy *phy)
- {
- 	struct tegra_xusb_lane *lane = phy_get_drvdata(phy);
- 	struct tegra_xusb_padctl *padctl = lane->pad->padctl;
-+	struct tegra186_xusb_padctl *priv = to_tegra186_xusb_padctl(padctl);
- 	unsigned int index = lane->index;
- 	u32 value;
- 
- 	if (!phy)
- 		return;
- 
-+	mutex_lock(&padctl->lock);
-+	if (!test_bit(index, priv->utmi_pad_enabled)) {
-+		mutex_unlock(&padctl->lock);
-+		return;
-+	}
-+
- 	dev_dbg(padctl->dev, "power down UTMI pad %u\n", index);
- 
- 	value = padctl_readl(padctl, XUSB_PADCTL_USB2_OTG_PADX_CTL0(index));
-@@ -748,7 +754,11 @@ static void tegra186_utmi_pad_power_down
- 
- 	udelay(2);
- 
-+	clear_bit(index, priv->utmi_pad_enabled);
-+
- 	tegra186_utmi_bias_pad_power_off(padctl);
-+
-+	mutex_unlock(&padctl->lock);
- }
- 
- static int tegra186_xusb_padctl_vbus_override(struct tegra_xusb_padctl *padctl,
+ static irqreturn_t udma_ring_irq_handler(int irq, void *data)
 
 
