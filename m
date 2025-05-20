@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448812907;
-	Tue, 20 May 2025 14:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0621D242D79;
+	Tue, 20 May 2025 14:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750536; cv=none; b=IS3zaLdb5V11QN4fUzd0DSjFun157uRfzMLizcmSX1jemiAarzSGaXOCM3v06vx4JPKYT2GyMT9l+kM0ad0nhZ3IJdZ2pyw7PzTqS86Jkl+1W/o+9J3Dip788kC2hhfZmtHB28GXsfsSMKa3blStOrgEM8UrviNk2EYmD5FfPxQ=
+	t=1747750538; cv=none; b=b9dNA4SjuCzrHlreqnRgng6MPhBaCcSgtUo3lQBqSQd9bqKVXuSPobIKdjZ8dHN09AJIbgaAwEVngGNPYE/0jBYmwruTujNwAulZu6Cho3sFICNna7hv8qMjShYnzeRezVGw15Qt9ECKHCDIDTcSAaD1syWRU0cuqwwCbAoEm+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750536; c=relaxed/simple;
-	bh=bd5XWma4wdvAKosyW75jDKI4hSN6sWkLtqj8lO3sagI=;
+	s=arc-20240116; t=1747750538; c=relaxed/simple;
+	bh=6WOQfei03eqs6iVpkDMt+a86L4ahhc3ZlPTI3jUMsfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nFU28RRJ7NiZCE6GrVM3HxfBFfu2DkwVp/dJSbn9zsaWnmZBFWBGOpYj+fqYEVllCdUvf+ourtAbEVTmWjz5iy0SyRkQhidDVpMuUkPvBglRq6o9aecS2+e7uBNT7BHP5n6S9cH7doFeBi5gHisL1zA1VKHHQ+3goclcLy5QydU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6EZZ9ig; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o72JG6aomGiJEHX49Ts/PUWiDpns1eEAWvcoSg/eOt21Vp217RYe+9PibWaQmmfcqnqaswW2+u4D3DX96uc2H6kphApvQ/2/AfGp+0F0p4PeXZsK324oKrZe5JDHbCS+yS57TQHN1vaoaoh+7j2ZD+jprudY3EFKEuRipzxahYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZvrK3NFq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6EZZ9ig"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1599C4CEE9;
-	Tue, 20 May 2025 14:15:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvrK3NFq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DDFDC4CEE9;
+	Tue, 20 May 2025 14:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750535;
-	bh=bd5XWma4wdvAKosyW75jDKI4hSN6sWkLtqj8lO3sagI=;
+	s=korg; t=1747750537;
+	bh=6WOQfei03eqs6iVpkDMt+a86L4ahhc3ZlPTI3jUMsfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E6EZZ9igWpwiB+dxYgCBYEJaRWNXlo01kKAoi8Ky7wDo3Epv8cBmRT3f8xUzyfLE4
-	 r2LHAC9ExOAK/XNu4CMPFD3sxVpZf9Cv5naoFQW8A8rjJvuZi24PqXZKVTNPl7MjgY
-	 lQ86O50PwnZXSRcLkcADY5me1SwHjbBkQebmHo+Y=
+	b=ZvrK3NFqJ8hV8y+UbE9BxS9AygbFAYbz0uiYlDSsZm5GXg9e1W0fHhOGS51zTsN/g
+	 Zkx6DAJd6fjhTc+m6D4u610BBYji6boVvagwXeF7zEBqbexHZCwGflt/XUfdnWffjD
+	 SD0iwVcEv3nxlRXkKGH8c+GC09Bcznzdi/AacL/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>,
-	Tarang Raval <tarang.raval@siliconsignals.io>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
+	Daniel Wagner <wagi@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 012/145] arm64: dts: imx8mp-var-som: Fix LDO5 shutdown causing SD card timeout
-Date: Tue, 20 May 2025 15:49:42 +0200
-Message-ID: <20250520125811.027929853@linuxfoundation.org>
+Subject: [PATCH 6.14 039/145] nvme-pci: acquire cq_poll_lock in nvme_poll_irqdisable
+Date: Tue, 20 May 2025 15:50:09 +0200
+Message-ID: <20250520125812.096530765@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -52,68 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit c6888983134e2ccc2db8ffd2720b0d4826d952e4 ]
+[ Upstream commit 3d8932133dcecbd9bef1559533c1089601006f45 ]
 
-Fix SD card timeout issue caused by LDO5 regulator getting disabled
-after boot.
+We need to lock this queue for that condition because the timeout work
+executes per-namespace and can poll the poll CQ.
 
-The kernel log shows LDO5 being disabled, which leads to a timeout
-on USDHC2:
-[   33.760561] LDO5: disabling
-[   81.119861] mmc1: Timeout waiting for hardware interrupt.
-
-To prevent this, set regulator-boot-on and regulator-always-on for
-LDO5. Also add the vqmmc regulator to properly support 1.8V/3.3V
-signaling for USDHC2 using a GPIO-controlled regulator.
-
-Fixes: 6c2a1f4f71258 ("arm64: dts: imx8mp-var-som-symphony: Add Variscite Symphony board and VAR-SOM-MX8MP SoM")
-Signed-off-by: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
-Acked-by: Tarang Raval <tarang.raval@siliconsignals.io>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Reported-by: Hannes Reinecke <hare@kernel.org>
+Closes: https://lore.kernel.org/all/20240902130728.1999-1-hare@kernel.org/
+Fixes: a0fa9647a54e ("NVMe: add blk polling support")
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-var-som.dtsi | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/nvme/host/pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-var-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-var-som.dtsi
-index b2ac2583a5929..b59da91fdd041 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-var-som.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-var-som.dtsi
-@@ -35,7 +35,6 @@
- 		      <0x1 0x00000000 0 0xc0000000>;
- 	};
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 7fdf7f24d46e6..00bd21b5c641e 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -1205,7 +1205,9 @@ static void nvme_poll_irqdisable(struct nvme_queue *nvmeq)
+ 	WARN_ON_ONCE(test_bit(NVMEQ_POLLED, &nvmeq->flags));
  
--
- 	reg_usdhc2_vmmc: regulator-usdhc2-vmmc {
- 	        compatible = "regulator-fixed";
- 	        regulator-name = "VSD_3V3";
-@@ -46,6 +45,16 @@
- 	        startup-delay-us = <100>;
- 	        off-on-delay-us = <12000>;
- 	};
-+
-+	reg_usdhc2_vqmmc: regulator-usdhc2-vqmmc {
-+		compatible = "regulator-gpio";
-+		regulator-name = "VSD_VSEL";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+		gpios = <&gpio2 12 GPIO_ACTIVE_HIGH>;
-+		states = <3300000 0x0 1800000 0x1>;
-+		vin-supply = <&ldo5>;
-+	};
- };
+ 	disable_irq(pci_irq_vector(pdev, nvmeq->cq_vector));
++	spin_lock(&nvmeq->cq_poll_lock);
+ 	nvme_poll_cq(nvmeq, NULL);
++	spin_unlock(&nvmeq->cq_poll_lock);
+ 	enable_irq(pci_irq_vector(pdev, nvmeq->cq_vector));
+ }
  
- &A53_0 {
-@@ -205,6 +214,7 @@
-         pinctrl-2 = <&pinctrl_usdhc2_200mhz>, <&pinctrl_usdhc2_gpio>;
-         cd-gpios = <&gpio1 14 GPIO_ACTIVE_LOW>;
-         vmmc-supply = <&reg_usdhc2_vmmc>;
-+	vqmmc-supply = <&reg_usdhc2_vqmmc>;
-         bus-width = <4>;
-         status = "okay";
- };
 -- 
 2.39.5
 
