@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C19A1B0F17;
-	Tue, 20 May 2025 14:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8E81B0F17;
+	Tue, 20 May 2025 14:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749845; cv=none; b=pkTFFdE+q+OC25+ij0N+hTiMueM25Mo/6F6toig/EfsTMparatGEM5GyeNXfYL9xZCC2oZ6tqDiC7fK0LugJLxcOqCZkszklHvvHdjsxCTVeba9w+i0D2tHjrnI97Rf2LJfILJrSjZxtlJsGvJIycdUuB51ybVLAcOt1AZssczY=
+	t=1747749848; cv=none; b=EJppDCIQDTs9rqHII+9oHaPbUv+1qKmbj/LN5bX8TjssqEvaIC6I8+QiFJmZLOKHZc5HNbjE2g51K3PGW8leKhlao2Tey+jrq/YMp+Po6e/tJS5Aef4qctUXs3l03HTn1Ndu59MekQBEcf3vtRNVB4XiV3qGOrq4MPuXOD14fUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749845; c=relaxed/simple;
-	bh=8iqytRMN+xB3c9uZojlfA579HXov28Z3e4kykckPSGk=;
+	s=arc-20240116; t=1747749848; c=relaxed/simple;
+	bh=Myk26n8igdC2z5AADPyFL8mvNuwQvvsAwu+DcjP/vC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eRyciI5jIFAgLHoiNcIrIP31UANWRyqwzjvH/kG85RtUo53g4w0QkbyW3pFWVRbIBcYRc4FjGp9NYK+gEypvqapz3+si/qZD4MZZHE60pMxYSWymPf5oSE3IJ4g0QuRfuDFOZTImeB9d3QZRJPncQXUF1DHMd7axBzGPmvGJJII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1cFU88nY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jsnhzaf935GwbPXSeXWDs8YAdyLyi0ZaVf+U6kmyiyfRCK6V94rfIRK842pVP8EKkmNDJw7AXjw+ERTPr+hfh3e67CbVpA5eAz0iUKpFkDeLRnwq+OK1Xenw+W9+M/eAjv/YaoQHbRFNvhfoMxjKb55eVkuunRNk3zpjpKl8K+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyRfqK0S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cFU88nY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F947C4CEE9;
-	Tue, 20 May 2025 14:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyRfqK0S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B72C4CEEB;
+	Tue, 20 May 2025 14:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749845;
-	bh=8iqytRMN+xB3c9uZojlfA579HXov28Z3e4kykckPSGk=;
+	s=korg; t=1747749848;
+	bh=Myk26n8igdC2z5AADPyFL8mvNuwQvvsAwu+DcjP/vC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1cFU88nY1QPMdBhJQmVjLlLo6UmQ6p9FhNzTMIkX+QzFwBkGlRIUcNrZ4bSGxTLL4
-	 6dScJVKqXU4VqvvtOtxSp7MLmcQFuFMw2aEJqYN4TXuFNBL5lZTd2XZXUghhxIq+66
-	 cqNupm+0eQCE7N8niNSFQ2XSMyrksPU0KRHKEbsI=
+	b=CyRfqK0S/KCZDH/ehWTyn4TazEJ+GLIIGQbH0mok6qbYCDDWjgUnqCWUEfcWiGcqO
+	 uYjDlNzpooj9LZZvcuy2rC5Q3maTfvx1BzIeOoAriVIfylE54F0e9QTqbOLhiiYVwO
+	 fXfzR9647GWgQcIVaEKYmgvFvUE57NM2iERQ8cKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Tanislav <demonsingur@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 051/117] regulator: max20086: fix invalid memory access
-Date: Tue, 20 May 2025 15:50:16 +0200
-Message-ID: <20250520125806.020145708@linuxfoundation.org>
+	Michael Kelley <mhklinux@outlook.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 078/117] Drivers: hv: Allow vmbus_sendpacket_mpb_desc() to create multiple ranges
+Date: Tue, 20 May 2025 15:50:43 +0200
+Message-ID: <20250520125807.094870571@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -51,73 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Tanislav <demonsingur@gmail.com>
+From: Michael Kelley <mhklinux@outlook.com>
 
-[ Upstream commit 6b0cd72757c69bc2d45da42b41023e288d02e772 ]
+commit 380b75d3078626aadd0817de61f3143f5db6e393 upstream.
 
-max20086_parse_regulators_dt() calls of_regulator_match() using an
-array of struct of_regulator_match allocated on the stack for the
-matches argument.
+vmbus_sendpacket_mpb_desc() is currently used only by the storvsc driver
+and is hardcoded to create a single GPA range. To allow it to also be
+used by the netvsc driver to create multiple GPA ranges, no longer
+hardcode as having a single GPA range. Allow the calling driver to
+specify the rangecount in the supplied descriptor.
 
-of_regulator_match() calls devm_of_regulator_put_matches(), which calls
-devres_alloc() to allocate a struct devm_of_regulator_matches which will
-be de-allocated using devm_of_regulator_put_matches().
+Update the storvsc driver to reflect this new approach.
 
-struct devm_of_regulator_matches is populated with the stack allocated
-matches array.
-
-If the device fails to probe, devm_of_regulator_put_matches() will be
-called and will try to call of_node_put() on that stack pointer,
-generating the following dmesg entries:
-
-max20086 6-0028: Failed to read DEVICE_ID reg: -121
-kobject: '\xc0$\xa5\x03' (000000002cebcb7a): is not initialized, yet
-kobject_put() is being called.
-
-Followed by a stack trace matching the call flow described above.
-
-Switch to allocating the matches array using devm_kcalloc() to
-avoid accessing the stack pointer long after it's out of scope.
-
-This also has the advantage of allowing multiple max20086 to probe
-without overriding the data stored inside the global of_regulator_match.
-
-Fixes: bfff546aae50 ("regulator: Add MAX20086-MAX20089 driver")
-Signed-off-by: Cosmin Tanislav <demonsingur@gmail.com>
-Link: https://patch.msgid.link/20250508064947.2567255-1-demonsingur@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.1.x
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://patch.msgid.link/20250513000604.1396-2-mhklinux@outlook.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/max20086-regulator.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/hv/channel.c       |    6 +++---
+ drivers/scsi/storvsc_drv.c |    1 +
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/regulator/max20086-regulator.c b/drivers/regulator/max20086-regulator.c
-index 32f47b896fd1e..ebfbcadbca529 100644
---- a/drivers/regulator/max20086-regulator.c
-+++ b/drivers/regulator/max20086-regulator.c
-@@ -132,7 +132,7 @@ static int max20086_regulators_register(struct max20086 *chip)
+--- a/drivers/hv/channel.c
++++ b/drivers/hv/channel.c
+@@ -1172,9 +1172,10 @@ int vmbus_sendpacket_pagebuffer(struct v
+ EXPORT_SYMBOL_GPL(vmbus_sendpacket_pagebuffer);
  
- static int max20086_parse_regulators_dt(struct max20086 *chip, bool *boot_on)
- {
--	struct of_regulator_match matches[MAX20086_MAX_REGULATORS] = { };
-+	struct of_regulator_match *matches;
- 	struct device_node *node;
- 	unsigned int i;
- 	int ret;
-@@ -143,6 +143,11 @@ static int max20086_parse_regulators_dt(struct max20086 *chip, bool *boot_on)
- 		return -ENODEV;
- 	}
+ /*
+- * vmbus_sendpacket_multipagebuffer - Send a multi-page buffer packet
++ * vmbus_sendpacket_mpb_desc - Send one or more multi-page buffer packets
+  * using a GPADL Direct packet type.
+- * The buffer includes the vmbus descriptor.
++ * The desc argument must include space for the VMBus descriptor. The
++ * rangecount field must already be set.
+  */
+ int vmbus_sendpacket_mpb_desc(struct vmbus_channel *channel,
+ 			      struct vmbus_packet_mpb_array *desc,
+@@ -1196,7 +1197,6 @@ int vmbus_sendpacket_mpb_desc(struct vmb
+ 	desc->length8 = (u16)(packetlen_aligned >> 3);
+ 	desc->transactionid = VMBUS_RQST_ERROR; /* will be updated in hv_ringbuffer_write() */
+ 	desc->reserved = 0;
+-	desc->rangecount = 1;
  
-+	matches = devm_kcalloc(chip->dev, chip->info->num_outputs,
-+			       sizeof(*matches), GFP_KERNEL);
-+	if (!matches)
-+		return -ENOMEM;
-+
- 	for (i = 0; i < chip->info->num_outputs; ++i)
- 		matches[i].name = max20086_output_names[i];
+ 	bufferlist[0].iov_base = desc;
+ 	bufferlist[0].iov_len = desc_size;
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -1819,6 +1819,7 @@ static int storvsc_queuecommand(struct S
+ 				return SCSI_MLQUEUE_DEVICE_BUSY;
+ 		}
  
--- 
-2.39.5
-
++		payload->rangecount = 1;
+ 		payload->range.len = length;
+ 		payload->range.offset = offset_in_hvpg;
+ 
 
 
