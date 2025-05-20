@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58139248F71;
-	Tue, 20 May 2025 14:09:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32D9248879;
+	Tue, 20 May 2025 14:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750190; cv=none; b=lZFa7CodxL2WP2rulsYgiTP1FcySanpfScL7nC2HoSGKvtB6Jv8ujdOzxp77NwQh9CUe0kBHx2wCEDBpmINdA2B5cAVt7n8KvRDIpggVh4G++pFjnFSXkBXRclOeFUhN/6vWLeTSIFfMo1Hv6z6R41VPZUFvIY72hF6uW/tluAw=
+	t=1747750193; cv=none; b=CnxGN/XxLgFlDJR2kcpBitOxIys4meozbsMrvWTuwLA1aN8hp35kONo31s+YBVwTOsB63q7KLf9fGL6tmfzuEene0CTblkWxnqxSmwmtaBbqvzUglvCs++vYY4Kb51qDMoorAfRlu6dvtbhWcJZ11/BugzrqIHRxsnHW4wQMQOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750190; c=relaxed/simple;
-	bh=bnNtpdaYhSTu0AHgTNIQQgd5EocLQ1oPFbjp6LL9e8k=;
+	s=arc-20240116; t=1747750193; c=relaxed/simple;
+	bh=RDcYXyEPGUP4SLKOB1mt4ItBqC/nM70mum8VAoAidyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lo3KrFwVma5opAXR2GX6hkIz82cbtSBVrCxZa4ogmdynV+gkI1WLTkoViLnBYI4TCHbh1C7b4z5lSgCKMXsuSJLpGDnrOMmM2RvOZqBh7LwhXCPBMB+iqw5OeIjw+NXvE2l2YpZlnBG/RGzY4tYyzFbxFNIbfD0xReCBkomH5aU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lgVy6s2K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TfxR2OdWec0bMUif+o5o56efg52ufU0yId+mDaGpziN/DQJ+wl8LemlegWJY7oNul3lj50t1r32ZpYBBdvfED3lCkWf0jKpzBvFzG4JdlyCLXiZj5quAe1347KqjADWOLyYd5ZBb/JtnL7LdKrN9ZeBoya6ZvqYo311Tn3e8zrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpV1wNao; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgVy6s2K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC047C4CEE9;
-	Tue, 20 May 2025 14:09:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpV1wNao"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E152EC4CEE9;
+	Tue, 20 May 2025 14:09:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750190;
-	bh=bnNtpdaYhSTu0AHgTNIQQgd5EocLQ1oPFbjp6LL9e8k=;
+	s=korg; t=1747750193;
+	bh=RDcYXyEPGUP4SLKOB1mt4ItBqC/nM70mum8VAoAidyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lgVy6s2KNhTo/QoBQ53Bawtgx84wi3vdt0RpTPe46vxheuCKdsLJuX3+LGbKH3Tk3
-	 9LHBkD9UARnQ9jIAe46SEsx921mLyoqM+OK7fFFuqE27VL4dU5Q92+EBwtmEXWpgPR
-	 8HwH1FHnDJN5eLVwUi3GvmTDOK8YZnITxQBgg+OQ=
+	b=cpV1wNaoCDaV7y/DFUeMyfJAgffGC8iGGil9qyzFzfWnss/SOLh0v6pjWC5JMvWC+
+	 piE/7ddlwMOdTeacGVegnVR5DnOnEIA2ZBt9P8uLT7sOmPlpVD1f2/yfBHx8opbkfR
+	 QvYxzcDCWdQrT/pL8PwP68UotdMf7WcUp5fYSU4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stanislav Fomichev <sdf@fomichev.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 040/143] selftests: ncdevmem: Unify error handling
-Date: Tue, 20 May 2025 15:49:55 +0200
-Message-ID: <20250520125811.630278170@linuxfoundation.org>
+Subject: [PATCH 6.12 041/143] selftests: ncdevmem: Make client_ip optional
+Date: Tue, 20 May 2025 15:49:56 +0200
+Message-ID: <20250520125811.667116307@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -55,68 +55,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Stanislav Fomichev <sdf@fomichev.me>
 
-[ Upstream commit bfccbaac1b45f9af7d76589d7e31ad921b50c0d7 ]
+[ Upstream commit 0ebd75f5f2392c2ada04c6e11447415911fe1506 ]
 
-There is a bunch of places where error() calls look out of place.
-Use the same error(1, errno, ...) pattern everywhere.
+Support 3-tuple filtering by making client_ip optional. When -c is
+not passed, don't specify src-ip/src-port in the filter.
 
 Reviewed-by: Mina Almasry <almasrymina@google.com>
 Reviewed-by: Joe Damato <jdamato@fastly.com>
 Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20241107181211.3934153-4-sdf@fomichev.me
+Link: https://patch.msgid.link/20241107181211.3934153-5-sdf@fomichev.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 97c4e094a4b2 ("tests/ncdevmem: Fix double-free of queue array")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/ncdevmem.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ tools/testing/selftests/net/ncdevmem.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/tools/testing/selftests/net/ncdevmem.c b/tools/testing/selftests/net/ncdevmem.c
-index 3e7ef2eedd60b..4733d1a0aab5d 100644
+index 4733d1a0aab5d..faa9dce121c72 100644
 --- a/tools/testing/selftests/net/ncdevmem.c
 +++ b/tools/testing/selftests/net/ncdevmem.c
-@@ -339,33 +339,33 @@ int do_server(struct memory_buffer *mem)
- 	server_sin.sin_port = htons(atoi(port));
+@@ -62,7 +62,7 @@
+  */
  
- 	ret = inet_pton(server_sin.sin_family, server_ip, &server_sin.sin_addr);
--	if (socket < 0)
--		error(79, 0, "%s: [FAIL, create socket]\n", TEST_PREFIX);
-+	if (ret < 0)
-+		error(1, errno, "%s: [FAIL, create socket]\n", TEST_PREFIX);
+ static char *server_ip = "192.168.1.4";
+-static char *client_ip = "192.168.1.2";
++static char *client_ip;
+ static char *port = "5201";
+ static size_t do_validation;
+ static int start_queue = 8;
+@@ -236,8 +236,14 @@ static int configure_channels(unsigned int rx, unsigned int tx)
  
- 	socket_fd = socket(server_sin.sin_family, SOCK_STREAM, 0);
--	if (socket < 0)
--		error(errno, errno, "%s: [FAIL, create socket]\n", TEST_PREFIX);
-+	if (socket_fd < 0)
-+		error(1, errno, "%s: [FAIL, create socket]\n", TEST_PREFIX);
+ static int configure_flow_steering(void)
+ {
+-	return run_command("sudo ethtool -N %s flow-type tcp4 src-ip %s dst-ip %s src-port %s dst-port %s queue %d >&2",
+-			   ifname, client_ip, server_ip, port, port, start_queue);
++	return run_command("sudo ethtool -N %s flow-type tcp4 %s %s dst-ip %s %s %s dst-port %s queue %d >&2",
++			   ifname,
++			   client_ip ? "src-ip" : "",
++			   client_ip ?: "",
++			   server_ip,
++			   client_ip ? "src-port" : "",
++			   client_ip ? port : "",
++			   port, start_queue);
+ }
  
- 	ret = setsockopt(socket_fd, SOL_SOCKET, SO_REUSEPORT, &opt,
- 			 sizeof(opt));
- 	if (ret)
--		error(errno, errno, "%s: [FAIL, set sock opt]\n", TEST_PREFIX);
-+		error(1, errno, "%s: [FAIL, set sock opt]\n", TEST_PREFIX);
- 
- 	ret = setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &opt,
- 			 sizeof(opt));
- 	if (ret)
--		error(errno, errno, "%s: [FAIL, set sock opt]\n", TEST_PREFIX);
-+		error(1, errno, "%s: [FAIL, set sock opt]\n", TEST_PREFIX);
- 
- 	fprintf(stderr, "binding to address %s:%d\n", server_ip,
- 		ntohs(server_sin.sin_port));
- 
- 	ret = bind(socket_fd, &server_sin, sizeof(server_sin));
- 	if (ret)
--		error(errno, errno, "%s: [FAIL, bind]\n", TEST_PREFIX);
-+		error(1, errno, "%s: [FAIL, bind]\n", TEST_PREFIX);
- 
- 	ret = listen(socket_fd, 1);
- 	if (ret)
--		error(errno, errno, "%s: [FAIL, listen]\n", TEST_PREFIX);
-+		error(1, errno, "%s: [FAIL, listen]\n", TEST_PREFIX);
- 
- 	client_addr_len = sizeof(client_addr);
- 
+ static int bind_rx_queue(unsigned int ifindex, unsigned int dmabuf_fd,
 -- 
 2.39.5
 
