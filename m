@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC6FDDA9;
-	Tue, 20 May 2025 14:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13572459D4;
+	Tue, 20 May 2025 14:00:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749600; cv=none; b=lhuCzU0fu55AFZ0ityCOWdedm+o6C32riLynNrqmOoEkS4uC0iIfwgDg/H/WnIaHZYATA5vdWdNc3yIwvpjZLVteQP5ryQXY/xbOrUaVr/Y9PIBR51fwDmI6webWs/5RZCKw0FoJOxXio6iRie3tNuCTVqaB34RJBFNl1uMPIQ0=
+	t=1747749604; cv=none; b=IjyUdM2fxe67GWnbT2Wmr9kF9LVXxhny3AEg9hPlFeWTDK4dU7VmrC/jP7q7kSSeGyyeuezWgfTF5/uLtRt+VOdPTVViqELNHbWNCydWmP7k85qgjZEQCiR/thgLcBKDJjyw4w84Cg5SkrmqMqL6LN2bMrdAdAer2SP6TygnwZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749600; c=relaxed/simple;
-	bh=uCTzTRDQnVHWPrFlgnb3i/cxn/T6gdhLKwnHvu0wZG0=;
+	s=arc-20240116; t=1747749604; c=relaxed/simple;
+	bh=rivoi/t1PjZbBSN7qpIrYy7zTJbdxTvZkn/8p7r2qIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SenIZtHuqfbRSIcIi9pDIco+P9ionYCtAgmO4I0RL15LIq0yTNzC+kHOhfa4kaVRHyacKZeDtZ10ZrcfhVHSfY3hUxxRDpUmvPGnwG9ymF4CE+wNPsT+OmTMkKwj8x2Am6ugJ5761lX4188fuv/tFi8tUcjfXOO/UqGqe8GuNfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t8FF93rw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C0oCuNrFK9jYTmzPZv2qqfgA/GyFupD5GZ91Ak/oV6zJRGRsRSneGr/VXR9Ze2lMIWzjpDVGpjSa6436g2vKNlLSEpB5sTLUBLDJ5Jcc/sjjsUxt1xw1MCD0NfWui4mErDPtSSAsALP6dZftsXoeELzi9i5eFBsNxrWm1FJ/4d4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icTGICKs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t8FF93rw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5590DC4CEE9;
-	Tue, 20 May 2025 14:00:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icTGICKs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD44C4CEE9;
+	Tue, 20 May 2025 14:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749600;
-	bh=uCTzTRDQnVHWPrFlgnb3i/cxn/T6gdhLKwnHvu0wZG0=;
+	s=korg; t=1747749603;
+	bh=rivoi/t1PjZbBSN7qpIrYy7zTJbdxTvZkn/8p7r2qIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t8FF93rwfLaqIXk0CuokncivqIbAASkaT1dOycDRRNBRPY1Ws61tzFWsuRly4T2lL
-	 WSiuOi35Dx+N47vbmF4cHDx2VdDHBFjHYo1hA8YXS09dAWXbtca8Dv7MilXudTXW/L
-	 Ehun8GuiOOXZPSj8EjDbZPhZk8yqm7pq6UyovYu0=
+	b=icTGICKswLOnRF2xiJPNVMnkelkgMBPddVh7Q6OLKZ8u5zk28LPcmDcBFM2BliuGW
+	 wO+/rhRqL5jQ1nJI/+6s2REcp5t1FROOLv9JIqZJ8EG391Mgh2II0yGWiR5WMEn3WN
+	 c1LROlp/B2yqcAP8RnexIQ6Hv+gK+9PSVaGR7CZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vaishnav Achath <vaishnav.a@ti.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Udit Kumar <u-kumar1@ti.com>,
-	Yemike Abhilash Chandra <y-abhilashchandra@ti.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Fenghua Yu <fenghuay@nvidia.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 66/97] dmaengine: ti: k3-udma: Use cap_mask directly from dma_device structure instead of a local copy
-Date: Tue, 20 May 2025 15:50:31 +0200
-Message-ID: <20250520125803.238315352@linuxfoundation.org>
+Subject: [PATCH 6.1 67/97] dmaengine: idxd: fix memory leak in error handling path of idxd_setup_wqs
+Date: Tue, 20 May 2025 15:50:32 +0200
+Message-ID: <20250520125803.277219276@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -53,49 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-commit 8ca9590c39b69b55a8de63d2b21b0d44f523b43a upstream.
+commit 3fd2f4bc010cdfbc07dd21018dc65bd9370eb7a4 upstream.
 
-Currently, a local dma_cap_mask_t variable is used to store device
-cap_mask within udma_of_xlate(). However, the DMA_PRIVATE flag in
-the device cap_mask can get cleared when the last channel is released.
-This can happen right after storing the cap_mask locally in
-udma_of_xlate(), and subsequent dma_request_channel() can fail due to
-mismatch in the cap_mask. Fix this by removing the local dma_cap_mask_t
-variable and directly using the one from the dma_device structure.
+Memory allocated for wqs is not freed if an error occurs during
+idxd_setup_wqs(). To fix it, free the allocated memory in the reverse
+order of allocation before exiting the function in case of an error.
 
-Fixes: 25dcb5dd7b7c ("dmaengine: ti: New driver for K3 UDMA")
+Fixes: 7c5dd23e57c1 ("dmaengine: idxd: fix wq conf_dev 'struct device' lifetime")
+Fixes: 700af3a0a26c ("dmaengine: idxd: add 'struct idxd_dev' as wrapper for conf_dev")
+Fixes: de5819b99489 ("dmaengine: idxd: track enabled workqueues in bitmap")
+Fixes: b0325aefd398 ("dmaengine: idxd: add WQ operation cap restriction support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vaishnav Achath <vaishnav.a@ti.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Reviewed-by: Udit Kumar <u-kumar1@ti.com>
-Signed-off-by: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
-Link: https://lore.kernel.org/r/20250417075521.623651-1-y-abhilashchandra@ti.com
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Fenghua Yu <fenghuay@nvidia.com>
+Link: https://lore.kernel.org/r/20250404120217.48772-2-xueshuai@linux.alibaba.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/ti/k3-udma.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/dma/idxd/init.c |   30 +++++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
 
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -4216,7 +4216,6 @@ static struct dma_chan *udma_of_xlate(st
- 				      struct of_dma *ofdma)
- {
- 	struct udma_dev *ud = ofdma->of_dma_data;
--	dma_cap_mask_t mask = ud->ddev.cap_mask;
- 	struct udma_filter_param filter_param;
- 	struct dma_chan *chan;
+--- a/drivers/dma/idxd/init.c
++++ b/drivers/dma/idxd/init.c
+@@ -155,8 +155,8 @@ static int idxd_setup_wqs(struct idxd_de
  
-@@ -4248,7 +4247,7 @@ static struct dma_chan *udma_of_xlate(st
- 		}
+ 	idxd->wq_enable_map = bitmap_zalloc_node(idxd->max_wqs, GFP_KERNEL, dev_to_node(dev));
+ 	if (!idxd->wq_enable_map) {
+-		kfree(idxd->wqs);
+-		return -ENOMEM;
++		rc = -ENOMEM;
++		goto err_bitmap;
  	}
  
--	chan = __dma_request_channel(&mask, udma_dma_filter_fn, &filter_param,
-+	chan = __dma_request_channel(&ud->ddev.cap_mask, udma_dma_filter_fn, &filter_param,
- 				     ofdma->of_node);
- 	if (!chan) {
- 		dev_err(ud->dev, "get channel fail in %s.\n", __func__);
+ 	for (i = 0; i < idxd->max_wqs; i++) {
+@@ -175,10 +175,8 @@ static int idxd_setup_wqs(struct idxd_de
+ 		conf_dev->bus = &dsa_bus_type;
+ 		conf_dev->type = &idxd_wq_device_type;
+ 		rc = dev_set_name(conf_dev, "wq%d.%d", idxd->id, wq->id);
+-		if (rc < 0) {
+-			put_device(conf_dev);
++		if (rc < 0)
+ 			goto err;
+-		}
+ 
+ 		mutex_init(&wq->wq_lock);
+ 		init_waitqueue_head(&wq->err_queue);
+@@ -189,7 +187,6 @@ static int idxd_setup_wqs(struct idxd_de
+ 		wq->enqcmds_retries = IDXD_ENQCMDS_RETRIES;
+ 		wq->wqcfg = kzalloc_node(idxd->wqcfg_size, GFP_KERNEL, dev_to_node(dev));
+ 		if (!wq->wqcfg) {
+-			put_device(conf_dev);
+ 			rc = -ENOMEM;
+ 			goto err;
+ 		}
+@@ -197,9 +194,8 @@ static int idxd_setup_wqs(struct idxd_de
+ 		if (idxd->hw.wq_cap.op_config) {
+ 			wq->opcap_bmap = bitmap_zalloc(IDXD_MAX_OPCAP_BITS, GFP_KERNEL);
+ 			if (!wq->opcap_bmap) {
+-				put_device(conf_dev);
+ 				rc = -ENOMEM;
+-				goto err;
++				goto err_opcap_bmap;
+ 			}
+ 			bitmap_copy(wq->opcap_bmap, idxd->opcap_bmap, IDXD_MAX_OPCAP_BITS);
+ 		}
+@@ -208,12 +204,28 @@ static int idxd_setup_wqs(struct idxd_de
+ 
+ 	return 0;
+ 
+- err:
++err_opcap_bmap:
++	kfree(wq->wqcfg);
++
++err:
++	put_device(conf_dev);
++	kfree(wq);
++
+ 	while (--i >= 0) {
+ 		wq = idxd->wqs[i];
++		if (idxd->hw.wq_cap.op_config)
++			bitmap_free(wq->opcap_bmap);
++		kfree(wq->wqcfg);
+ 		conf_dev = wq_confdev(wq);
+ 		put_device(conf_dev);
++		kfree(wq);
++
+ 	}
++	bitmap_free(idxd->wq_enable_map);
++
++err_bitmap:
++	kfree(idxd->wqs);
++
+ 	return rc;
+ }
+ 
 
 
