@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9408E2528E5;
-	Tue, 20 May 2025 14:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B60250C0E;
+	Tue, 20 May 2025 14:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750597; cv=none; b=XolH9Jg7Rtjbo/ELqHEF1D/HObiH7RJRbpOeVDOV2RDDfB65LPEGIJXaa6cCxSlbYmvFwxSmEqd/KFZBq8d8TXEtkf05BnLqD7QyluqYW064NLUwKgDGwd16ACpnAWtyyXQ7LCtvAQ58H7UrLQZUeJEF9XRyR3MkAITSD1C07iI=
+	t=1747750600; cv=none; b=P2xUL3i1p6+E457qWVtJhBHgO3JU7hk927f6hnWDsS6WrqxAEQyGjw5Sc7ZOM8jU6aU4PhX5t0hJw2ZSJVz0Y+RxhfxpVHWHayRANo7nrLEANy4nqDgh/E00ax8H+H6wPaXVot7lP0jSfii2MwXi7jM77vVoms7w8ZVYReLNkU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750597; c=relaxed/simple;
-	bh=Bt+1yRnOnOtgaIMjlh2p0mSp9cRbImM6MOnJZIC77lY=;
+	s=arc-20240116; t=1747750600; c=relaxed/simple;
+	bh=QgKoEmz4IX3GoVN0G2cz5bl+hlqc51SlVFVaIA/gkAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cI0L4aOOgOIi6gi0S8eTNCcq/0auXCQ1i3b7Fq2/Nydj6SUY7/DEDptNBWEqzJpqPizd3EB79UVHF5U2mf0Oa+J8pYydmc7MFf8LNWFMkQX/1Chaiv+lg1yCGmSroOr25qwSf0DaxQbj0RHPx75vShFx42k9tb0D8nPUPTpYcsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0yaLAg0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y3ZXUydpRDYWR5MmcWdPoLOZaoCrQ1ypKsX6CCY08CCYNcw33/abQuOHjmD+nItyxHi7hzvtlhh5ASM4S1MJ7RuL0THsQJcPyPxaCjCZf3GqUbVyBqtkrYpVn/V2IFnHEtGNoCvk7DNkJFVs9ju3jGOm9RxrqScQJkM4DvvCK0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qtgSmROX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0yaLAg0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB4EC4CEE9;
-	Tue, 20 May 2025 14:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtgSmROX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC38AC4CEE9;
+	Tue, 20 May 2025 14:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750597;
-	bh=Bt+1yRnOnOtgaIMjlh2p0mSp9cRbImM6MOnJZIC77lY=;
+	s=korg; t=1747750600;
+	bh=QgKoEmz4IX3GoVN0G2cz5bl+hlqc51SlVFVaIA/gkAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q0yaLAg0+E0hr7aYjfvx4h3S2m7Wy4H0l0VKrnuZ5fawlL7A9nymUPI/pxHs8z83l
-	 lMlNllXkeuU8sYbRbiTmFcYBtZtdY5mIcqKW2aoS4AlX/nm11eKu8CWVIBlicdyAPu
-	 w9Ca5f9IDQizLzOmrlmF+tmgkNPCKhrIWbplqOpA=
+	b=qtgSmROXEbgHY7pJj1Crw2g8TneQ2Saxf9CPQUpKkc3R9LH39Pah8tmbXFTgTzu29
+	 oyiCgyApAdjNrmWFA6ZBAApAT06wjuV18nEX951X1clxtG/ccp2bigQD/8nXIAFF+L
+	 LPQ1WRCJmetF4DhePIZ/oFg7muaRla3Bifq1yBFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 061/145] NFSv4/pnfs: Reset the layout state after a layoutreturn
-Date: Tue, 20 May 2025 15:50:31 +0200
-Message-ID: <20250520125812.971771613@linuxfoundation.org>
+Subject: [PATCH 6.14 044/145] net/mlx5e: Disable MACsec offload for uplink representor profile
+Date: Tue, 20 May 2025 15:50:14 +0200
+Message-ID: <20250520125812.301573673@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -50,45 +55,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 6d6d7f91cc8c111d40416ac9240a3bb9396c5235 ]
+[ Upstream commit 588431474eb7572e57a927fa8558c9ba2f8af143 ]
 
-If there are still layout segments in the layout plh_return_lsegs list
-after a layout return, we should be resetting the state to ensure they
-eventually get returned as well.
+MACsec offload is not supported in switchdev mode for uplink
+representors. When switching to the uplink representor profile, the
+MACsec offload feature must be cleared from the netdevice's features.
 
-Fixes: 68f744797edd ("pNFS: Do not free layout segments that are marked for return")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+If left enabled, attempts to add offloads result in a null pointer
+dereference, as the uplink representor does not support MACsec offload
+even though the feature bit remains set.
+
+Clear NETIF_F_HW_MACSEC in mlx5e_fix_uplink_rep_features().
+
+Kernel log:
+
+Oops: general protection fault, probably for non-canonical address 0xdffffc000000000f: 0000 [#1] SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000078-0x000000000000007f]
+CPU: 29 UID: 0 PID: 4714 Comm: ip Not tainted 6.14.0-rc4_for_upstream_debug_2025_03_02_17_35 #1
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+RIP: 0010:__mutex_lock+0x128/0x1dd0
+Code: d0 7c 08 84 d2 0f 85 ad 15 00 00 8b 35 91 5c fe 03 85 f6 75 29 49 8d 7e 60 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 a6 15 00 00 4d 3b 76 60 0f 85 fd 0b 00 00 65 ff
+RSP: 0018:ffff888147a4f160 EFLAGS: 00010206
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000001
+RDX: 000000000000000f RSI: 0000000000000000 RDI: 0000000000000078
+RBP: ffff888147a4f2e0 R08: ffffffffa05d2c19 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000000
+R13: dffffc0000000000 R14: 0000000000000018 R15: ffff888152de0000
+FS:  00007f855e27d800(0000) GS:ffff88881ee80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000004e5768 CR3: 000000013ae7c005 CR4: 0000000000372eb0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ ? die_addr+0x3d/0xa0
+ ? exc_general_protection+0x144/0x220
+ ? asm_exc_general_protection+0x22/0x30
+ ? mlx5e_macsec_add_secy+0xf9/0x700 [mlx5_core]
+ ? __mutex_lock+0x128/0x1dd0
+ ? lockdep_set_lock_cmp_fn+0x190/0x190
+ ? mlx5e_macsec_add_secy+0xf9/0x700 [mlx5_core]
+ ? mutex_lock_io_nested+0x1ae0/0x1ae0
+ ? lock_acquire+0x1c2/0x530
+ ? macsec_upd_offload+0x145/0x380
+ ? lockdep_hardirqs_on_prepare+0x400/0x400
+ ? kasan_save_stack+0x30/0x40
+ ? kasan_save_stack+0x20/0x40
+ ? kasan_save_track+0x10/0x30
+ ? __kasan_kmalloc+0x77/0x90
+ ? __kmalloc_noprof+0x249/0x6b0
+ ? genl_family_rcv_msg_attrs_parse.constprop.0+0xb5/0x240
+ ? mlx5e_macsec_add_secy+0xf9/0x700 [mlx5_core]
+ mlx5e_macsec_add_secy+0xf9/0x700 [mlx5_core]
+ ? mlx5e_macsec_add_rxsa+0x11a0/0x11a0 [mlx5_core]
+ macsec_update_offload+0x26c/0x820
+ ? macsec_set_mac_address+0x4b0/0x4b0
+ ? lockdep_hardirqs_on_prepare+0x284/0x400
+ ? _raw_spin_unlock_irqrestore+0x47/0x50
+ macsec_upd_offload+0x2c8/0x380
+ ? macsec_update_offload+0x820/0x820
+ ? __nla_parse+0x22/0x30
+ ? genl_family_rcv_msg_attrs_parse.constprop.0+0x15e/0x240
+ genl_family_rcv_msg_doit+0x1cc/0x2a0
+ ? genl_family_rcv_msg_attrs_parse.constprop.0+0x240/0x240
+ ? cap_capable+0xd4/0x330
+ genl_rcv_msg+0x3ea/0x670
+ ? genl_family_rcv_msg_dumpit+0x2a0/0x2a0
+ ? lockdep_set_lock_cmp_fn+0x190/0x190
+ ? macsec_update_offload+0x820/0x820
+ netlink_rcv_skb+0x12b/0x390
+ ? genl_family_rcv_msg_dumpit+0x2a0/0x2a0
+ ? netlink_ack+0xd80/0xd80
+ ? rwsem_down_read_slowpath+0xf90/0xf90
+ ? netlink_deliver_tap+0xcd/0xac0
+ ? netlink_deliver_tap+0x155/0xac0
+ ? _copy_from_iter+0x1bb/0x12c0
+ genl_rcv+0x24/0x40
+ netlink_unicast+0x440/0x700
+ ? netlink_attachskb+0x760/0x760
+ ? lock_acquire+0x1c2/0x530
+ ? __might_fault+0xbb/0x170
+ netlink_sendmsg+0x749/0xc10
+ ? netlink_unicast+0x700/0x700
+ ? __might_fault+0xbb/0x170
+ ? netlink_unicast+0x700/0x700
+ __sock_sendmsg+0xc5/0x190
+ ____sys_sendmsg+0x53f/0x760
+ ? import_iovec+0x7/0x10
+ ? kernel_sendmsg+0x30/0x30
+ ? __copy_msghdr+0x3c0/0x3c0
+ ? filter_irq_stacks+0x90/0x90
+ ? stack_depot_save_flags+0x28/0xa30
+ ___sys_sendmsg+0xeb/0x170
+ ? kasan_save_stack+0x30/0x40
+ ? copy_msghdr_from_user+0x110/0x110
+ ? do_syscall_64+0x6d/0x140
+ ? lock_acquire+0x1c2/0x530
+ ? __virt_addr_valid+0x116/0x3b0
+ ? __virt_addr_valid+0x1da/0x3b0
+ ? lock_downgrade+0x680/0x680
+ ? __delete_object+0x21/0x50
+ __sys_sendmsg+0xf7/0x180
+ ? __sys_sendmsg_sock+0x20/0x20
+ ? kmem_cache_free+0x14c/0x4e0
+ ? __x64_sys_close+0x78/0xd0
+ do_syscall_64+0x6d/0x140
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+RIP: 0033:0x7f855e113367
+Code: 0e 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b9 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 89 54 24 1c 48 89 74 24 10
+RSP: 002b:00007ffd15e90c88 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 0000000000000002 RCX: 00007f855e113367
+RDX: 0000000000000000 RSI: 00007ffd15e90cf0 RDI: 0000000000000004
+RBP: 00007ffd15e90dbc R08: 0000000000000028 R09: 000000000045d100
+R10: 00007f855e011dd8 R11: 0000000000000246 R12: 0000000000000019
+R13: 0000000067c6b785 R14: 00000000004a1e80 R15: 0000000000000000
+ </TASK>
+Modules linked in: 8021q garp mrp sch_ingress openvswitch nsh mlx5_ib mlx5_fwctl mlx5_dpll mlx5_core rpcrdma rdma_ucm ib_iser libiscsi scsi_transport_iscsi ib_umad rdma_cm ib_ipoib iw_cm ib_cm ib_uverbs ib_core xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xt_addrtype iptable_nat nf_nat br_netfilter rpcsec_gss_krb5 auth_rpcgss oid_registry overlay zram zsmalloc fuse [last unloaded: mlx5_core]
+---[ end trace 0000000000000000 ]---
+
+Fixes: 8ff0ac5be144 ("net/mlx5: Add MACsec offload Tx command support")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/1746958552-561295-1-git-send-email-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/pnfs.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -745,6 +745,14 @@ pnfs_mark_matching_lsegs_invalid(struct
- 	return remaining;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 8fcaee381b0e0..01f6a60308cb7 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -4373,6 +4373,10 @@ static netdev_features_t mlx5e_fix_uplink_rep_features(struct net_device *netdev
+ 	if (netdev->features & NETIF_F_HW_VLAN_CTAG_FILTER)
+ 		netdev_warn(netdev, "Disabling HW_VLAN CTAG FILTERING, not supported in switchdev mode\n");
+ 
++	features &= ~NETIF_F_HW_MACSEC;
++	if (netdev->features & NETIF_F_HW_MACSEC)
++		netdev_warn(netdev, "Disabling HW MACsec offload, not supported in switchdev mode\n");
++
+ 	return features;
  }
  
-+static void pnfs_reset_return_info(struct pnfs_layout_hdr *lo)
-+{
-+	struct pnfs_layout_segment *lseg;
-+
-+	list_for_each_entry(lseg, &lo->plh_return_segs, pls_list)
-+		pnfs_set_plh_return_info(lo, lseg->pls_range.iomode, 0);
-+}
-+
- static void
- pnfs_free_returned_lsegs(struct pnfs_layout_hdr *lo,
- 		struct list_head *free_me,
-@@ -1292,6 +1300,7 @@ void pnfs_layoutreturn_free_lsegs(struct
- 		pnfs_mark_matching_lsegs_invalid(lo, &freeme, range, seq);
- 		pnfs_free_returned_lsegs(lo, &freeme, range, seq);
- 		pnfs_set_layout_stateid(lo, stateid, NULL, true);
-+		pnfs_reset_return_info(lo);
- 	} else
- 		pnfs_mark_layout_stateid_invalid(lo, &freeme);
- out_unlock:
+-- 
+2.39.5
+
 
 
