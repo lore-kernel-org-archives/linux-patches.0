@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4154224887D;
-	Tue, 20 May 2025 14:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16BE419ABB6;
+	Tue, 20 May 2025 14:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750409; cv=none; b=NQW5rCQN53wmrrjW7/4ySGi54M9XJ82+TNgRhVdcDAx/VwEP1Y5lm8cfaQfyU6iOrYhxOcqj8Sfkv9IxtupIrtkBgARct5dzW3qXa+L8+Ih95YG9Syw+JGX+62uB9CEvzZb5X34qFamn11pIDcfg27kPEQ9ARVhOY9mrhID+6ns=
+	t=1747750412; cv=none; b=NNTT8XHgdfcoQLGH6dIJs7rvuSUuBQterAYQw2MboqUizpMcQR813g1RKOs+IJ6jXsH4hK5CeQu7Dp22r9w6/3SHl1JokEZAgrK5UVEAImEAAfhAV+9tNh22n9LBzzulvZTl+y2Rx1vgfg2Udi7HMVsncM/iRVyoqwXYiFmUGCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750409; c=relaxed/simple;
-	bh=tN3hhz6s9nFMFUbEf44hSMe28osXB0lHkbdd8MEj4p8=;
+	s=arc-20240116; t=1747750412; c=relaxed/simple;
+	bh=9CglWsqmuiU4HB4xrO1cTgbWWX277Fk1Jopi0h0lAlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kRti2xgdppTO84QzsHfzfM628sJRfH5xWcAsivfGvr8Z8unB6OrsfoPpT/WKJh0aDDNk78PiXdchnW+aLqL2hRK0pZxDt31kz9vC62Ip0LjdVWXlHUyZthXy7vygQ0VNaimWWUxATu+3VnyzqPlpG2aRDkW8bVoO7/RMFhU7w/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dAMSCOmu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NcNlmiMdIEh/Nx8wQvW8SrZi23+z5Q6v/UCR4ahLNE4nH+DDSR6Kr064bReIZeXNx7U6mVaDBRf0FJ5fYC7cCZRJko+C6dLrK2rbBqyDJE4p4bpTdrlcceCrkTqE94s6JXh1MczsueoYmjG4C0OwRw9du0reDziAhm2tvUnbuXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yWl5AG7Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dAMSCOmu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC6CC4CEE9;
-	Tue, 20 May 2025 14:13:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yWl5AG7Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932B8C4CEE9;
+	Tue, 20 May 2025 14:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750409;
-	bh=tN3hhz6s9nFMFUbEf44hSMe28osXB0lHkbdd8MEj4p8=;
+	s=korg; t=1747750411;
+	bh=9CglWsqmuiU4HB4xrO1cTgbWWX277Fk1Jopi0h0lAlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dAMSCOmuyQDFlJT9j7QL7N1pUz+r+udx341Bb2R+8LVwaqVCGFnh6YTDf51MttBy/
-	 4Xf1bdmtAxjBX9PLoJsHfy12aXfKSEcOy25dvHP0435A9MiJF++dPFhjoSzzeG31sf
-	 d3XwYJXEZholzPR65YGlkZtp16ayXF7ocYs0yhBc=
+	b=yWl5AG7QZSKjpPMGk9ry2aAEZlDsIueTBnQwIX3v73kMz+v9hK5j+yxRSG/7s8E5R
+	 iPTwTiAtRcNdeIrqd8SioJ7J8UBmWZIHq431adB+nFKu54g3Wp5sB2f5BEL2FLj+CY
+	 4/38Ajzo5au5xM+Jo2cvPA1P4gjPGGOzNa52uOMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	pengdonglin <dolinux.peng@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.12 103/143] ftrace: Fix preemption accounting for stacktrace trigger command
-Date: Tue, 20 May 2025 15:50:58 +0200
-Message-ID: <20250520125814.096950681@linuxfoundation.org>
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.12 136/143] iio: light: opt3001: fix deadlock due to concurrent flag access
+Date: Tue, 20 May 2025 15:51:31 +0200
+Message-ID: <20250520125815.365307546@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -50,61 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: pengdonglin <pengdonglin@xiaomi.com>
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-commit e333332657f615ac2b55aa35565c4a882018bbe9 upstream.
+commit f063a28002e3350088b4577c5640882bf4ea17ea upstream.
 
-When using the stacktrace trigger command to trace syscalls, the
-preemption count was consistently reported as 1 when the system call
-event itself had 0 (".").
+The threaded IRQ function in this driver is reading the flag twice: once to
+lock a mutex and once to unlock it. Even though the code setting the flag
+is designed to prevent it, there are subtle cases where the flag could be
+true at the mutex_lock stage and false at the mutex_unlock stage. This
+results in the mutex not being unlocked, resulting in a deadlock.
 
-For example:
+Fix it by making the opt3001_irq() code generally more robust, reading the
+flag into a variable and using the variable value at both stages.
 
-root@ubuntu22-vm:/sys/kernel/tracing/events/syscalls/sys_enter_read
-$ echo stacktrace > trigger
-$ echo 1 > enable
-
-    sshd-416     [002] .....   232.864910: sys_read(fd: a, buf: 556b1f3221d0, count: 8000)
-    sshd-416     [002] ...1.   232.864913: <stack trace>
- => ftrace_syscall_enter
- => syscall_trace_enter
- => do_syscall_64
- => entry_SYSCALL_64_after_hwframe
-
-The root cause is that the trace framework disables preemption in __DO_TRACE before
-invoking the trigger callback.
-
-Use the tracing_gen_ctx_dec() that will accommodate for the increase of
-the preemption count in __DO_TRACE when calling the callback. The result
-is the accurate reporting of:
-
-    sshd-410     [004] .....   210.117660: sys_read(fd: 4, buf: 559b725ba130, count: 40000)
-    sshd-410     [004] .....   210.117662: <stack trace>
- => ftrace_syscall_enter
- => syscall_trace_enter
- => do_syscall_64
- => entry_SYSCALL_64_after_hwframe
-
+Fixes: 94a9b7b1809f ("iio: light: add support for TI's opt3001 light sensor")
 Cc: stable@vger.kernel.org
-Fixes: ce33c845b030c ("tracing: Dump stacktrace trigger to the corresponding instance")
-Link: https://lore.kernel.org/20250512094246.1167956-1-dolinux.peng@gmail.com
-Signed-off-by: pengdonglin <dolinux.peng@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Link: https://patch.msgid.link/20250321-opt3001-irq-fix-v1-1-6c520d851562@bootlin.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+[Fixed conflict while applying on 6.12]
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_trigger.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/light/opt3001.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_events_trigger.c
-+++ b/kernel/trace/trace_events_trigger.c
-@@ -1581,7 +1581,7 @@ stacktrace_trigger(struct event_trigger_
- 	struct trace_event_file *file = data->private_data;
+--- a/drivers/iio/light/opt3001.c
++++ b/drivers/iio/light/opt3001.c
+@@ -692,8 +692,9 @@ static irqreturn_t opt3001_irq(int irq,
+ 	struct opt3001 *opt = iio_priv(iio);
+ 	int ret;
+ 	bool wake_result_ready_queue = false;
++	bool ok_to_ignore_lock = opt->ok_to_ignore_lock;
  
- 	if (file)
--		__trace_stack(file->tr, tracing_gen_ctx(), STACK_SKIP);
-+		__trace_stack(file->tr, tracing_gen_ctx_dec(), STACK_SKIP);
- 	else
- 		trace_dump_stack(STACK_SKIP);
- }
+-	if (!opt->ok_to_ignore_lock)
++	if (!ok_to_ignore_lock)
+ 		mutex_lock(&opt->lock);
+ 
+ 	ret = i2c_smbus_read_word_swapped(opt->client, OPT3001_CONFIGURATION);
+@@ -730,7 +731,7 @@ static irqreturn_t opt3001_irq(int irq,
+ 	}
+ 
+ out:
+-	if (!opt->ok_to_ignore_lock)
++	if (!ok_to_ignore_lock)
+ 		mutex_unlock(&opt->lock);
+ 
+ 	if (wake_result_ready_queue)
 
 
