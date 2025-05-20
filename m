@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1609F242D7D;
-	Tue, 20 May 2025 13:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851C7242D93;
+	Tue, 20 May 2025 13:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749147; cv=none; b=MneNXqr3DaCLNw56cr30XMgphmC5RniPJGZqAiFFOzjpYCFs4yMLOuUhE9Y2QVwyleXkYIuBPxLrLfOG8Yl6hgVAuYvT4wWGlZZVhDbd6OwVN41f1iI52VHCx27g56VsmJfvlul7ZRdUpZED4vjsZfDg4wjFXA67hQBm33EwJAk=
+	t=1747749150; cv=none; b=Lf70eBFXMuntsQvJn0rK6iUaBW/5vQ2V8LEcE0S9OAgXgBQaGniY142ZjTcI11MCx6KPTWvBq/miFckg467iGy4OLzw4x1G1dxNIDCH+JU+jRXIURpz+x8Fio/NnjhJUJ6uMb+muNwAFhdNGHFMOxWXY+3GwNvWSRDdE7Rh7buE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749147; c=relaxed/simple;
-	bh=F/2onW47zNjmBkuJUNXtdK5O3r6yKcu7bog2ObPgK9Q=;
+	s=arc-20240116; t=1747749150; c=relaxed/simple;
+	bh=OvanAK6dQS3Y5OTM9QBRTPllcQrUYSma0jpgmLimEPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dS40M+lu0Od1gyQ+x1dTF78FOO31krsWy9lYPldJkMQLmq8bfj/RD803qaivGvtX3JX070EHgbzjLV6jtjJ2xu/V45N8T6ANF2t2S84ovUuNi3NMwk72cpmg/adHts78lYd6w4OIR1TkQH1PUL7GD60Xk6IDgavsNQVuKgDAcz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIgjscvn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LNdINOy896whcce+SFjTc0YxuDPx1UNUO6iQlKG14fELBQbI31JXwBJpECcbcFpHvwTK2Apn6PVLmfFLrH5OVDNOXUxc04HeHROo4HYJamaNzijmRK7ZcEG/Ik04Vr1XDSSQIXjXDX0Q5GPzl8H/r5cmUQui6207K6m0tZPwnYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AyUWLWhX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIgjscvn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18211C4CEE9;
-	Tue, 20 May 2025 13:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AyUWLWhX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F907C4CEE9;
+	Tue, 20 May 2025 13:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749146;
-	bh=F/2onW47zNjmBkuJUNXtdK5O3r6yKcu7bog2ObPgK9Q=;
+	s=korg; t=1747749149;
+	bh=OvanAK6dQS3Y5OTM9QBRTPllcQrUYSma0jpgmLimEPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tIgjscvnwzs/nfeO2OEiuxu1XXS0lc118ygZ2QGuYkwRltpvR5gIihMjTJnxAsmKq
-	 ls+5DcUz092MRYeP6iRaCuMkoyiYMbVXZHrktJ+ZWBIRh4KswNJLlKmKPfFINOPHRY
-	 h691Pr8zjc92mB31Lcu/FHf+BwD1542AUJrcETTI=
+	b=AyUWLWhXjDoHicQsxJDLWqSBer+4oR7ZqC391xAt8jIxBSIBtudIJdvQ8IUR3tvrJ
+	 zhP/NG6ZR7VJnrhNjkALAXzDwjxf7+x9BJsdKcZCLkWvhd9g9kCMfZxEu/7b9Jr5ap
+	 EfTzFNvIboGPPSU8EiP974E3Wl25Z2a5GvqOm+6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <abdun.nihaal@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 12/59] qlcnic: fix memory leak in qlcnic_sriov_channel_cfg_cmd()
-Date: Tue, 20 May 2025 15:50:03 +0200
-Message-ID: <20250520125754.319639728@linuxfoundation.org>
+Subject: [PATCH 5.15 13/59] NFSv4/pnfs: Reset the layout state after a layoutreturn
+Date: Tue, 20 May 2025 15:50:04 +0200
+Message-ID: <20250520125754.360088841@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
 References: <20250520125753.836407405@linuxfoundation.org>
@@ -52,43 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <abdun.nihaal@gmail.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 9d8a99c5a7c7f4f7eca2c168a4ec254409670035 ]
+[ Upstream commit 6d6d7f91cc8c111d40416ac9240a3bb9396c5235 ]
 
-In one of the error paths in qlcnic_sriov_channel_cfg_cmd(), the memory
-allocated in qlcnic_sriov_alloc_bc_mbx_args() for mailbox arguments is
-not freed. Fix that by jumping to the error path that frees them, by
-calling qlcnic_free_mbx_args(). This was found using static analysis.
+If there are still layout segments in the layout plh_return_lsegs list
+after a layout return, we should be resetting the state to ensure they
+eventually get returned as well.
 
-Fixes: f197a7aa6288 ("qlcnic: VF-PF communication channel implementation")
-Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250512044829.36400-1-abdun.nihaal@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 68f744797edd ("pNFS: Do not free layout segments that are marked for return")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/nfs/pnfs.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-index d7c93c409a776..3bc2f83176d03 100644
---- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-+++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-@@ -1485,8 +1485,11 @@ static int qlcnic_sriov_channel_cfg_cmd(struct qlcnic_adapter *adapter, u8 cmd_o
- 	}
+diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
+index 4016cc5316230..83935bb1719ad 100644
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -729,6 +729,14 @@ pnfs_mark_matching_lsegs_invalid(struct pnfs_layout_hdr *lo,
+ 	return remaining;
+ }
  
- 	cmd_op = (cmd.rsp.arg[0] & 0xff);
--	if (cmd.rsp.arg[0] >> 25 == 2)
--		return 2;
-+	if (cmd.rsp.arg[0] >> 25 == 2) {
-+		ret = 2;
-+		goto out;
-+	}
++static void pnfs_reset_return_info(struct pnfs_layout_hdr *lo)
++{
++	struct pnfs_layout_segment *lseg;
 +
- 	if (cmd_op == QLCNIC_BC_CMD_CHANNEL_INIT)
- 		set_bit(QLC_BC_VF_STATE, &vf->state);
- 	else
++	list_for_each_entry(lseg, &lo->plh_return_segs, pls_list)
++		pnfs_set_plh_return_info(lo, lseg->pls_range.iomode, 0);
++}
++
+ static void
+ pnfs_free_returned_lsegs(struct pnfs_layout_hdr *lo,
+ 		struct list_head *free_me,
+@@ -1177,6 +1185,7 @@ void pnfs_layoutreturn_free_lsegs(struct pnfs_layout_hdr *lo,
+ 		pnfs_mark_matching_lsegs_invalid(lo, &freeme, range, seq);
+ 		pnfs_free_returned_lsegs(lo, &freeme, range, seq);
+ 		pnfs_set_layout_stateid(lo, stateid, NULL, true);
++		pnfs_reset_return_info(lo);
+ 	} else
+ 		pnfs_mark_layout_stateid_invalid(lo, &freeme);
+ out_unlock:
 -- 
 2.39.5
 
