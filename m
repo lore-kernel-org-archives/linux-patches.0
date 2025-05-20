@@ -1,81 +1,68 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B519B2701B6;
-	Tue, 20 May 2025 10:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB0F20C038;
+	Tue, 20 May 2025 11:18:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747737157; cv=none; b=BS5mpnKo6BQ1AyW+5JUqqo3RSE17BfYFLU+DZNtb5LVFTKU0M6rGelzPC/90NfX4BSBIHZW64a/1rw9FSDcBXc7GzDRlWjCGz5svfUs6J/H/ReKQmgP8Srk8EG2QUejExIhw7J3sWb9UFH0cePtL2Ux3LjzHrmgOQo0c9/fH7Xo=
+	t=1747739923; cv=none; b=XdNwtfkW5HyREqQZEC4WlN3IqKtxTetuRsyUNYpYcjbKfg0y6xuXiQFOK7vAfQGZvMfnuf21XY9+a9GDpWveEHhPHISbhstCoJvtS81gh4TiOHWEipxDLwBNQKhRx8gGC9YEdZsWRtNLOke0upmSbw5r3Bk9wO4ZjzL065tnwhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747737157; c=relaxed/simple;
-	bh=zDpmgNIk0KgV9mLpwYhAEJqLphnW13jDgqbiqxHvUZM=;
+	s=arc-20240116; t=1747739923; c=relaxed/simple;
+	bh=qjYvdvfya/ilgDwMe8hIoPpTxDFUOlZyCkJtQZaKTVs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k2s3ogxH4EgRmOEa5PiiTB98BmZ1hxg2NhxPaAoMvpzXRUUk75V1EEDA6+kR1qi6uJIJcII7OAujEcgz4zcgaB2prcc2gEiKZ4ykMIcYjyJp16h983PycJJIyia/qPsDE8l6/2tuUguE+dUu5zgboC2E1IiV25VWoNCBajkjQT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tjX2seFj; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=VP3Y0vCP9NYgrjIN5n+veEooBgq1IHWa45nCTW5lJ4WyP0PnJAdbvxPhGA1fzOfA1hEjeUAl2Jk5enwTx5r05O4uiFAaZ9nsNWuGkHCI0tpLQGUd++ofvCN48jX0TmkpCBj7IH/tV+Lm1K4OZvd09veBxWE0hezRzaq7lycI3j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I2HxntDq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tjX2seFj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692E5C4CEE9;
-	Tue, 20 May 2025 10:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I2HxntDq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C29CC4CEE9;
+	Tue, 20 May 2025 11:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747737157;
-	bh=zDpmgNIk0KgV9mLpwYhAEJqLphnW13jDgqbiqxHvUZM=;
+	s=korg; t=1747739920;
+	bh=qjYvdvfya/ilgDwMe8hIoPpTxDFUOlZyCkJtQZaKTVs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tjX2seFj28kVM1MCXRY+f4rM7a6JeGQTg5sZWiT7PoHTMpa7d71V2Vyq6JSvj9t8a
-	 E5o3GukKw7ov8CeHsC+2FgCmGihirW/DYnQRdJxylygaMBXon3pi+ttHqJWjCT5fCY
-	 SBHmeb4L7oIBVDXPiE2VyuQ3avQck5Tm14PYsAWs=
-Date: Tue, 20 May 2025 12:32:34 +0200
+	b=I2HxntDqMnDxdlcyjmxyLHFLDg6rgXYZKChTiKXcZIkPOXGpwDNUEAtI6FIT0399u
+	 cQIKl9y7us9c7ymMZKOpcBnSobJJRVc956jMIwfsKnWNQwrNJdi6KZWEF4tx69rbRp
+	 W+/G4yKroxaoPrVy0viEDtdksqrJqzGBAKq49bbI=
+Date: Tue, 20 May 2025 13:18:37 +0200
 From: Greg KH <gregkh@linuxfoundation.org>
 To: jianqi.ren.cn@windriver.com
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, robdclark@gmail.com,
-	quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
-	sean@poorly.run, airlied@gmail.com, daniel@ffwll.ch,
-	sashal@kernel.org, quic_vpolimer@quicinc.com,
-	quic_jesszhan@quicinc.com, linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	quic_kalyant@quicinc.com
-Subject: Re: [PATCH 6.1.y 1/2] drm/msm/disp/dpu: use atomic enable/disable
- callbacks for encoder functions
-Message-ID: <2025052007-penalize-gummy-61e2@gregkh>
-References: <20250512033116.3331668-1-jianqi.ren.cn@windriver.com>
+Cc: stable@vger.kernel.org, paul@paul-moore.com,
+	stephen.smalley.work@gmail.com, eparis@parisplace.org,
+	selinux@vger.kernel.org, cgzones@googlemail.com,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 6.1.y] selinux: avoid dereference of garbage after mount
+ failure
+Message-ID: <2025052025-alias-sublime-c6b0@gregkh>
+References: <20250512014400.3326099-1-jianqi.ren.cn@windriver.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250512033116.3331668-1-jianqi.ren.cn@windriver.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250512014400.3326099-1-jianqi.ren.cn@windriver.com>
 
-On Mon, May 12, 2025 at 11:31:16AM +0800, jianqi.ren.cn@windriver.com wrote:
-> From: Vinod Polimera <quic_vpolimer@quicinc.com>
+On Mon, May 12, 2025 at 09:44:00AM +0800, jianqi.ren.cn@windriver.com wrote:
+> From: Christian Göttsche <cgzones@googlemail.com>
 > 
-> [ Upstream commit c0cd12a5d29fa36a8e2ebac7b8bec50c1a41fb57 ]
+> commit 37801a36b4d68892ce807264f784d818f8d0d39b upstream.
 > 
-> Use atomic variants for encoder callback functions such that
-> certain states like self-refresh can be accessed as part of
-> enable/disable sequence.
+> In case kern_mount() fails and returns an error pointer return in the
+> error branch instead of continuing and dereferencing the error pointer.
 > 
-> Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
-> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Patchwork: https://patchwork.freedesktop.org/patch/524738/
-> Link: https://lore.kernel.org/r/1677774797-31063-12-git-send-email-quic_vpolimer@quicinc.com
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> While on it drop the never read static variable selinuxfs_mount.
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: 0619f0f5e36f ("selinux: wrap selinuxfs state")
+> Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
+> Signed-off-by: Paul Moore <paul@paul-moore.com>
 > Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 > Signed-off-by: He Zhe <zhe.he@windriver.com>
 > ---
 > Verified the build test
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
 
-If patches are ment to be in a series, please properly send them as a
-series, not as individual emails like you did here :(
+No you did not :(
 
-Please fix up and resend.
-
-thanks,
-
-greg k-h
