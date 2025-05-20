@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8BB250C18;
-	Tue, 20 May 2025 14:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B916B24BD02;
+	Tue, 20 May 2025 14:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750212; cv=none; b=sM7K2cQYIS1a9U6bee9Z41KV6LegwuzhcTnU1QHdkTJRZhDYNNz2/t7dY7rK5tPyPo7MYDKTUKg6WNJK06qW5UDS9IZVhBSv3b9Vor3xGFmJJW8SYYspA7yEH0tS2iy3v79eHbds54mpfNJotXNtX7oRKcKZLdLjGnvZG1uy460=
+	t=1747750215; cv=none; b=Mo3Oo5GL9p/HtvUK1IjqZi3RkdxORYiFTr27p4St/miFsVe9CCXGjIc9gu7uQ/2XGFXmUXbFEvcIjooYctgAv8m7wTmXdCbhTdUqfM8TawvHzHQcoJY0siuIc+zcYS05RVctpwTkpGv+jjQDgcBlAQVpqGOhFQ/3SbXQB58DzmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750212; c=relaxed/simple;
-	bh=5eJJW0LkTccGthSezKm7risl34GhLu3OH7WfC+V5osg=;
+	s=arc-20240116; t=1747750215; c=relaxed/simple;
+	bh=psgV00cFV9VVWvtohu0yk7YrABqCGN3HvtLvmv0KgX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JOewvsxUlxU6YLORtqE+ctOnSRNZ2DT2rnRu1eYKbI10SKj+RJHHaJi/2N74C862m2FVmfp9er6gkbblbiT93tZZkNpaRDCtYlQCKbxiJXU6pPWAgucvPMA3b1fJ7HwYil7hGjV3t4PIbGIJ7B1OasQLQhPB2TV40JNL4dsHsrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Znnv7U0C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T0y4fdydr+55sNsEi7cpH5L2O77CySDl7TSmelgug7G8KT6reUG0x+bo5qxbazcrTIW7bASBy9PzfQiMhvH26WliFgnnhZ9KRRN3X2b6tig9Vn8phmv68aChm2aSv/u5SmISF+pgRYwqzrlQv7byUPkEGpJMIzoNju4YHvBqkEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMH4JKyf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Znnv7U0C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F86C4CEE9;
-	Tue, 20 May 2025 14:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMH4JKyf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42032C4CEE9;
+	Tue, 20 May 2025 14:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750212;
-	bh=5eJJW0LkTccGthSezKm7risl34GhLu3OH7WfC+V5osg=;
+	s=korg; t=1747750215;
+	bh=psgV00cFV9VVWvtohu0yk7YrABqCGN3HvtLvmv0KgX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Znnv7U0CPVmm7VX/y9tBU4CAiBOPAWxUOS7Q0YysAMAc4bOy2wqowX+fAWZWaJ5gd
-	 KusAWww8LcjLtYC0UceYkP9FKVYHg96bHqE05xlfA+28caTUmf+atUHRAoUSkFp2La
-	 U/iGBKwNuyhM3xPVChgrpw8qzy0i10NTfoNaUrX8=
+	b=oMH4JKyfwg31FoAxuqGg/1grXWzPYCDToGbNBW/P06NumKh1eds36G2xu3prETVHq
+	 8iOpnuMfPG7qw4fSyOeSe+KM5CAVc8ZmHWUa+tycTs5BCokOWKIoXFDnS/L35z1Q6P
+	 3K3VZneiDNtks9Ivgmymw2h8k8veIflACfFWpLGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.12 071/143] udf: Make sure i_lenExtents is uptodate on inode eviction
-Date: Tue, 20 May 2025 15:50:26 +0200
-Message-ID: <20250520125812.859749722@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
+	Josef Bacik <josef@toxicpanda.com>
+Subject: [PATCH 6.12 080/143] btrfs: fix folio leak in submit_one_async_extent()
+Date: Tue, 20 May 2025 15:50:35 +0200
+Message-ID: <20250520125813.215429215@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -49,40 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Boris Burkov <boris@bur.io>
 
-commit 55dd5b4db3bf04cf077a8d1712f6295d4517c337 upstream.
+commit a0fd1c6098633f9a95fc2f636383546c82b704c3 upstream.
 
-UDF maintains total length of all extents in i_lenExtents. Generally we
-keep extent lengths (and thus i_lenExtents) block aligned because it
-makes the file appending logic simpler. However the standard mandates
-that the inode size must match the length of all extents and thus we
-trim the last extent when closing the file. To catch possible bugs we
-also verify that i_lenExtents matches i_size when evicting inode from
-memory. Commit b405c1e58b73 ("udf: refactor udf_next_aext() to handle
-error") however broke the code updating i_lenExtents and thus
-udf_evict_inode() ended up spewing lots of errors about incorrectly
-sized extents although the extents were actually sized properly. Fix the
-updating of i_lenExtents to silence the errors.
+If btrfs_reserve_extent() fails while submitting an async_extent for a
+compressed write, then we fail to call free_async_extent_pages() on the
+async_extent and leak its folios. A likely cause for such a failure
+would be btrfs_reserve_extent() failing to find a large enough
+contiguous free extent for the compressed extent.
 
-Fixes: b405c1e58b73 ("udf: refactor udf_next_aext() to handle error")
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
+I was able to reproduce this by:
+
+1. mount with compress-force=zstd:3
+2. fallocating most of a filesystem to a big file
+3. fragmenting the remaining free space
+4. trying to copy in a file which zstd would generate large compressed
+   extents for (vmlinux worked well for this)
+
+Step 4. hits the memory leak and can be repeated ad nauseam to
+eventually exhaust the system memory.
+
+Fix this by detecting the case where we fallback to uncompressed
+submission for a compressed async_extent and ensuring that we call
+free_async_extent_pages().
+
+Fixes: 131a821a243f ("btrfs: fallback if compressed IO fails for ENOSPC")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Co-developed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/truncate.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/inode.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/udf/truncate.c
-+++ b/fs/udf/truncate.c
-@@ -115,7 +115,7 @@ void udf_truncate_tail_extent(struct ino
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -1187,6 +1187,7 @@ static void submit_one_async_extent(stru
+ 	struct extent_state *cached = NULL;
+ 	struct extent_map *em;
+ 	int ret = 0;
++	bool free_pages = false;
+ 	u64 start = async_extent->start;
+ 	u64 end = async_extent->start + async_extent->ram_size - 1;
+ 
+@@ -1207,7 +1208,10 @@ static void submit_one_async_extent(stru
  	}
- 	/* This inode entry is in-memory only and thus we don't have to mark
- 	 * the inode dirty */
--	if (ret == 0)
-+	if (ret >= 0)
- 		iinfo->i_lenExtents = inode->i_size;
- 	brelse(epos.bh);
- }
+ 
+ 	if (async_extent->compress_type == BTRFS_COMPRESS_NONE) {
++		ASSERT(!async_extent->folios);
++		ASSERT(async_extent->nr_folios == 0);
+ 		submit_uncompressed_range(inode, async_extent, locked_folio);
++		free_pages = true;
+ 		goto done;
+ 	}
+ 
+@@ -1223,6 +1227,7 @@ static void submit_one_async_extent(stru
+ 		 * fall back to uncompressed.
+ 		 */
+ 		submit_uncompressed_range(inode, async_extent, locked_folio);
++		free_pages = true;
+ 		goto done;
+ 	}
+ 
+@@ -1264,6 +1269,8 @@ static void submit_one_async_extent(stru
+ done:
+ 	if (async_chunk->blkcg_css)
+ 		kthread_associate_blkcg(NULL);
++	if (free_pages)
++		free_async_extent_pages(async_extent);
+ 	kfree(async_extent);
+ 	return;
+ 
 
 
