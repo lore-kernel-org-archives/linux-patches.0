@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5522A24676B;
-	Tue, 20 May 2025 14:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C08C24290D;
+	Tue, 20 May 2025 14:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750040; cv=none; b=IiyD74rhG4fEXMtW9lkC8Pe2wXN6J97HdBBhZaGZNJQL+6XkG/qbgdjP2OdCvR3dKDeXCaWCGCeC4IxLbCk4V8rG+NAekZfGMjU3pa20K0NXyBud8caPq1JLiJ+7Q8C6S+ACBT/ntCH3FmmkqRq8CLkuBRnvVJp88lA0F48CisA=
+	t=1747750043; cv=none; b=t2pFyZ91c5qJAV22u8jWX5eLK7tJhpDwHDBQPapw8v6Hon7DAPVy3pheTtuqqATb5PQeJBbMOAAqP26nT1Sil844eCS6ZXm+E7/xF2ZNw3OO9VlFxk+EokZN4/iLExtDc7vzq17QXiu6SXWFzr1URwryCSvHxplCm6VkTYdqROQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750040; c=relaxed/simple;
-	bh=ZbdOn6b0R5TnAGG8oOMD/K5YSDVoj0xn2tci/5/zbt0=;
+	s=arc-20240116; t=1747750043; c=relaxed/simple;
+	bh=dQ8SjjJUS4pulirghH5tANv8QAUrWdjOy/Wc1c/sftc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=F8cYg39FwEvsSIp/dyhWcq3+kCZO/UCT6WesPW+ztgN2yA0RU2MZooVgJElcwoLLXRNzp6+pBCGOslaXkHMS9nsAUr2f1Gq2dWux6P8pymiMcJQCGvVgMsig0Um+RTBerFrXClgaeSnhBxAZP8ijELKpgIxEjiux8w7fwpoSJwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FAZjTIUT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dBXsIsYeK45GiziTmRwQaCn9V+4+i5dG9wQO7+WPerI4mJCjpV3OaUIF/Wzio8Dou8vLEEEXn9Cm94BI1M2XqOgcmLxc3oFfhKQiW1DNY8WbHUA84BP+aoo5Mp7QlHzQ6A4ACgNXvcV9vDG10KGhx946uyWg29XlhKiHd43zk4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4WhlAuB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FAZjTIUT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA6EC4CEE9;
-	Tue, 20 May 2025 14:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4WhlAuB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA313C4CEE9;
+	Tue, 20 May 2025 14:07:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750036;
-	bh=ZbdOn6b0R5TnAGG8oOMD/K5YSDVoj0xn2tci/5/zbt0=;
+	s=korg; t=1747750043;
+	bh=dQ8SjjJUS4pulirghH5tANv8QAUrWdjOy/Wc1c/sftc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FAZjTIUTp/x3OWqDLgfE3/9zhkrcfpLfi8eWp1Cbh15qdkClT/39wYtcbiaAoSyty
-	 b0qdkf2ZNn/5JwqEdQnlvYICJyM062EEuk5jWCSl2yjlDrZr/ni8rvG3eHXGUFKXxZ
-	 3z+TWI2b7p343FAtw82s3E7EppmZ1ClXISY35xaM=
+	b=l4WhlAuBHcji1SOd9xsfGsubO+S20OqQvKBhek4RxwR9pabfMikw3zof+QlWkgUZp
+	 dlVa5VXwAnawH+SrPebywGTA4dBuyoX+hat5AKWU0ohxQB9ouZxyJA9RikHpxDtuj2
+	 g5vh97rbD0Ng8CFSntW1TszIeXa8/goLVmOmYybQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	David Lechner <dlechner@baylibre.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 022/143] xhci: dbc: Avoid event polling busyloop if pending rx transfers are inactive.
-Date: Tue, 20 May 2025 15:49:37 +0200
-Message-ID: <20250520125810.930165218@linuxfoundation.org>
+Subject: [PATCH 6.12 023/143] iio: adc: ad7768-1: Fix insufficient alignment of timestamp.
+Date: Tue, 20 May 2025 15:49:38 +0200
+Message-ID: <20250520125810.968755602@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -52,123 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit cab63934c33b12c0d1e9f4da7450928057f2c142 ]
+[ Upstream commit ffbc26bc91c1f1eb3dcf5d8776e74cbae21ee13a ]
 
-Event polling delay is set to 0 if there are any pending requests in
-either rx or tx requests lists. Checking for pending requests does
-not work well for "IN" transfers as the tty driver always queues
-requests to the list and TRBs to the ring, preparing to receive data
-from the host.
+On architectures where an s64 is not 64-bit aligned, this may result
+insufficient alignment of the timestamp and the structure being too small.
+Use aligned_s64 to force the alignment.
 
-This causes unnecessary busylooping and cpu hogging.
-
-Only set the event polling delay to 0 if there are pending tx "write"
-transfers, or if it was less than 10ms since last active data transfer
-in any direction.
-
-Cc: Łukasz Bartosik <ukaszb@chromium.org>
-Fixes: fb18e5bb9660 ("xhci: dbc: poll at different rate depending on data transfer activity")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250505125630.561699-3-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a1caeebab07e ("iio: adc: ad7768-1: Fix too small buffer passed to iio_push_to_buffers_with_timestamp()") # aligned_s64 newer
+Reported-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20250413103443.2420727-3-jic23@kernel.org
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-dbgcap.c | 19 ++++++++++++++++---
- drivers/usb/host/xhci-dbgcap.h |  3 +++
- 2 files changed, 19 insertions(+), 3 deletions(-)
+ drivers/iio/adc/ad7768-1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci-dbgcap.c b/drivers/usb/host/xhci-dbgcap.c
-index 6b239b3770d15..d35f3a18dd13b 100644
---- a/drivers/usb/host/xhci-dbgcap.c
-+++ b/drivers/usb/host/xhci-dbgcap.c
-@@ -822,6 +822,7 @@ static enum evtreturn xhci_dbc_do_handle_events(struct xhci_dbc *dbc)
- {
- 	dma_addr_t		deq;
- 	union xhci_trb		*evt;
-+	enum evtreturn		ret = EVT_DONE;
- 	u32			ctrl, portsc;
- 	bool			update_erdp = false;
- 
-@@ -906,6 +907,7 @@ static enum evtreturn xhci_dbc_do_handle_events(struct xhci_dbc *dbc)
- 			break;
- 		case TRB_TYPE(TRB_TRANSFER):
- 			dbc_handle_xfer_event(dbc, evt);
-+			ret = EVT_XFER_DONE;
- 			break;
- 		default:
- 			break;
-@@ -924,7 +926,7 @@ static enum evtreturn xhci_dbc_do_handle_events(struct xhci_dbc *dbc)
- 		lo_hi_writeq(deq, &dbc->regs->erdp);
- 	}
- 
--	return EVT_DONE;
-+	return ret;
- }
- 
- static void xhci_dbc_handle_events(struct work_struct *work)
-@@ -933,6 +935,7 @@ static void xhci_dbc_handle_events(struct work_struct *work)
- 	struct xhci_dbc		*dbc;
- 	unsigned long		flags;
- 	unsigned int		poll_interval;
-+	unsigned long		busypoll_timelimit;
- 
- 	dbc = container_of(to_delayed_work(work), struct xhci_dbc, event_work);
- 	poll_interval = dbc->poll_interval;
-@@ -951,11 +954,21 @@ static void xhci_dbc_handle_events(struct work_struct *work)
- 			dbc->driver->disconnect(dbc);
- 		break;
- 	case EVT_DONE:
--		/* set fast poll rate if there are pending data transfers */
-+		/*
-+		 * Set fast poll rate if there are pending out transfers, or
-+		 * a transfer was recently processed
-+		 */
-+		busypoll_timelimit = dbc->xfer_timestamp +
-+			msecs_to_jiffies(DBC_XFER_INACTIVITY_TIMEOUT);
-+
- 		if (!list_empty(&dbc->eps[BULK_OUT].list_pending) ||
--		    !list_empty(&dbc->eps[BULK_IN].list_pending))
-+		    time_is_after_jiffies(busypoll_timelimit))
- 			poll_interval = 0;
- 		break;
-+	case EVT_XFER_DONE:
-+		dbc->xfer_timestamp = jiffies;
-+		poll_interval = 0;
-+		break;
- 	default:
- 		dev_info(dbc->dev, "stop handling dbc events\n");
- 		return;
-diff --git a/drivers/usb/host/xhci-dbgcap.h b/drivers/usb/host/xhci-dbgcap.h
-index 9dc8f4d8077cc..47ac72c2286d9 100644
---- a/drivers/usb/host/xhci-dbgcap.h
-+++ b/drivers/usb/host/xhci-dbgcap.h
-@@ -96,6 +96,7 @@ struct dbc_ep {
- #define DBC_WRITE_BUF_SIZE		8192
- #define DBC_POLL_INTERVAL_DEFAULT	64	/* milliseconds */
- #define DBC_POLL_INTERVAL_MAX		5000	/* milliseconds */
-+#define DBC_XFER_INACTIVITY_TIMEOUT	10	/* milliseconds */
- /*
-  * Private structure for DbC hardware state:
-  */
-@@ -142,6 +143,7 @@ struct xhci_dbc {
- 	enum dbc_state			state;
- 	struct delayed_work		event_work;
- 	unsigned int			poll_interval;	/* ms */
-+	unsigned long			xfer_timestamp;
- 	unsigned			resume_required:1;
- 	struct dbc_ep			eps[2];
- 
-@@ -187,6 +189,7 @@ struct dbc_request {
- enum evtreturn {
- 	EVT_ERR	= -1,
- 	EVT_DONE,
-+	EVT_XFER_DONE,
- 	EVT_GSER,
- 	EVT_DISC,
- };
+diff --git a/drivers/iio/adc/ad7768-1.c b/drivers/iio/adc/ad7768-1.c
+index 157a0df97f971..a9248a85466ea 100644
+--- a/drivers/iio/adc/ad7768-1.c
++++ b/drivers/iio/adc/ad7768-1.c
+@@ -169,7 +169,7 @@ struct ad7768_state {
+ 	union {
+ 		struct {
+ 			__be32 chan;
+-			s64 timestamp;
++			aligned_s64 timestamp;
+ 		} scan;
+ 		__be32 d32;
+ 		u8 d8[2];
 -- 
 2.39.5
 
