@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DFE246773;
-	Tue, 20 May 2025 14:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F32246773;
+	Tue, 20 May 2025 14:09:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750172; cv=none; b=MqNgN9ChuXlTWjpCw8yULbuB2JhHG+7WlX4t138b4/+hZ9QCojVYhd6AppPnjB3SUG7HSWkdEh5fgHyzaX4ETXikb+lyS3DI8IUtcTsTyjQ6R2SKMQ20888ugXqrrRoQot3tPzibYszVRcIC08R6gKvarKV5OPZ0VAh3xIg1xAA=
+	t=1747750174; cv=none; b=Swp/MdzSwOe7MTpie90lGbl4vaVqfwdbQWa5ZVUqSBaL3GKAQnccfGHCJiCF1rZn5KcKJ++b2gIoXGEsc7FTIkRoEuxoYvtetoDVKNtUvWJCYXVoPvM49NdNMuGn9cUZGxRA08Kg4ncFRSFW8NLDmEBKEBPYzOAvUhZtvRfWTe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750172; c=relaxed/simple;
-	bh=u5hW4uXgFDoJqSchFMayRE1nrPF8drJ1TUvqO0Qz98M=;
+	s=arc-20240116; t=1747750174; c=relaxed/simple;
+	bh=TSgic43cVTYHedK/OECEC4ThcRAhNgxl9K+ltHEGYng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bN1GxldpE+CxRJNe4fd87MPtEgg05pecYPNgIcH/uj3+XSdIPvOjzpcVkZU1iTVDpflypHqmnrPupCtyuEAjt9Uy4vv+XXKFWVXORhVGOipD5apuQLm7PBo5uga+3ZDKafsOvMZBWoDAKAjZ0Ij0jVItk3QJGKil+nt4Py/IHpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJMceRXz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RdpvUN2ube5HCO+ETwDKk4oQTtE63wx6+k4R2gF999nwYZc37zlUACHxHUzfN+cp15VVtVlbXpXHSff8llxMIt/vb2d+0ah2UrilrQR/+P3/Zh0Z+/Xhgsxi2orxdD2WradybxedId7nEI+3n5j0xALf2XCxgqa3oz4y6vGJaNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4bdA2Mu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJMceRXz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D01DC4CEE9;
-	Tue, 20 May 2025 14:09:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4bdA2Mu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E648CC4CEE9;
+	Tue, 20 May 2025 14:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750171;
-	bh=u5hW4uXgFDoJqSchFMayRE1nrPF8drJ1TUvqO0Qz98M=;
+	s=korg; t=1747750174;
+	bh=TSgic43cVTYHedK/OECEC4ThcRAhNgxl9K+ltHEGYng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NJMceRXzWnZw49m9o1d7yPIQzdVrft18/G6eXEGr+hvi6UgxhYADSdi+xdRA/XCMo
-	 aCbkIlDO/GUZYwmA78Fv6Pwa3FqUFeLTTAmRPWcgCkXP7EVgLPKd4Yciko818BoKvy
-	 ya3oxnnQEYPOy6dDU2aUXL32kzwdqK3zMBhD8DOM=
+	b=V4bdA2MuhMmQPlNRnO4EXrBBgUcc08RbO78Pa3m/bOn/8DDr7Ihx5AbAGDdKQByUX
+	 TSW2h9kw8XXBzXnElL/brWqptoZzKfSBSlPx0QaX6Nzu09ntj51EKv1bM8czzbgne5
+	 zxmf+uxVNHHbLWWD7Tq7duD7CmsfmV96fFTlKscM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Joe Damato <jdamato@fastly.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 065/143] mlxsw: spectrum_router: Fix use-after-free when deleting GRE net devices
-Date: Tue, 20 May 2025 15:50:20 +0200
-Message-ID: <20250520125812.618674402@linuxfoundation.org>
+Subject: [PATCH 6.12 039/143] selftests: ncdevmem: Separate out dmabuf provider
+Date: Tue, 20 May 2025 15:49:54 +0200
+Message-ID: <20250520125811.592894526@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -52,97 +53,349 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Stanislav Fomichev <sdf@fomichev.me>
 
-[ Upstream commit 92ec4855034b2c4d13f117558dc73d20581fa9ff ]
+[ Upstream commit 8b9049af8066b4705d83bb7847ee3c960fc58d09 ]
 
-The driver only offloads neighbors that are constructed on top of net
-devices registered by it or their uppers (which are all Ethernet). The
-device supports GRE encapsulation and decapsulation of forwarded
-traffic, but the driver will not offload dummy neighbors constructed on
-top of GRE net devices as they are not uppers of its net devices:
+So we can plug the other ones in the future if needed.
 
- # ip link add name gre1 up type gre tos inherit local 192.0.2.1 remote 198.51.100.1
- # ip neigh add 0.0.0.0 lladdr 0.0.0.0 nud noarp dev gre1
- $ ip neigh show dev gre1 nud noarp
- 0.0.0.0 lladdr 0.0.0.0 NOARP
-
-(Note that the neighbor is not marked with 'offload')
-
-When the driver is reloaded and the existing configuration is replayed,
-the driver does not perform the same check regarding existing neighbors
-and offloads the previously added one:
-
- # devlink dev reload pci/0000:01:00.0
- $ ip neigh show dev gre1 nud noarp
- 0.0.0.0 lladdr 0.0.0.0 offload NOARP
-
-If the neighbor is later deleted, the driver will ignore the
-notification (given the GRE net device is not its upper) and will
-therefore keep referencing freed memory, resulting in a use-after-free
-[1] when the net device is deleted:
-
- # ip neigh del 0.0.0.0 lladdr 0.0.0.0 dev gre1
- # ip link del dev gre1
-
-Fix by skipping neighbor replay if the net device for which the replay
-is performed is not our upper.
-
-[1]
-BUG: KASAN: slab-use-after-free in mlxsw_sp_neigh_entry_update+0x1ea/0x200
-Read of size 8 at addr ffff888155b0e420 by task ip/2282
-[...]
-Call Trace:
- <TASK>
- dump_stack_lvl+0x6f/0xa0
- print_address_description.constprop.0+0x6f/0x350
- print_report+0x108/0x205
- kasan_report+0xdf/0x110
- mlxsw_sp_neigh_entry_update+0x1ea/0x200
- mlxsw_sp_router_rif_gone_sync+0x2a8/0x440
- mlxsw_sp_rif_destroy+0x1e9/0x750
- mlxsw_sp_netdevice_ipip_ol_event+0x3c9/0xdc0
- mlxsw_sp_router_netdevice_event+0x3ac/0x15e0
- notifier_call_chain+0xca/0x150
- call_netdevice_notifiers_info+0x7f/0x100
- unregister_netdevice_many_notify+0xc8c/0x1d90
- rtnl_dellink+0x34e/0xa50
- rtnetlink_rcv_msg+0x6fb/0xb70
- netlink_rcv_skb+0x131/0x360
- netlink_unicast+0x426/0x710
- netlink_sendmsg+0x75a/0xc20
- __sock_sendmsg+0xc1/0x150
- ____sys_sendmsg+0x5aa/0x7b0
- ___sys_sendmsg+0xfc/0x180
- __sys_sendmsg+0x121/0x1b0
- do_syscall_64+0xbb/0x1d0
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-Fixes: 8fdb09a7674c ("mlxsw: spectrum_router: Replay neighbours when RIF is made")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/c53c02c904fde32dad484657be3b1477884e9ad6.1747225701.git.petrm@nvidia.com
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Reviewed-by: Joe Damato <jdamato@fastly.com>
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20241107181211.3934153-3-sdf@fomichev.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 97c4e094a4b2 ("tests/ncdevmem: Fix double-free of queue array")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/net/ncdevmem.c | 203 +++++++++++++++----------
+ 1 file changed, 119 insertions(+), 84 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-index 7d6d859cef3f9..511cd92e0e3e7 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
-@@ -3014,6 +3014,9 @@ static int mlxsw_sp_neigh_rif_made_sync(struct mlxsw_sp *mlxsw_sp,
- 		.rif = rif,
- 	};
+diff --git a/tools/testing/selftests/net/ncdevmem.c b/tools/testing/selftests/net/ncdevmem.c
+index 9245d3f158dd3..3e7ef2eedd60b 100644
+--- a/tools/testing/selftests/net/ncdevmem.c
++++ b/tools/testing/selftests/net/ncdevmem.c
+@@ -71,17 +71,101 @@ static char *ifname = "eth1";
+ static unsigned int ifindex;
+ static unsigned int dmabuf_id;
  
-+	if (!mlxsw_sp_dev_lower_is_port(mlxsw_sp_rif_dev(rif)))
-+		return 0;
+-void print_bytes(void *ptr, size_t size)
++struct memory_buffer {
++	int fd;
++	size_t size;
 +
- 	neigh_for_each(&arp_tbl, mlxsw_sp_neigh_rif_made_sync_each, &rms);
- 	if (rms.err)
- 		goto err_arp;
++	int devfd;
++	int memfd;
++	char *buf_mem;
++};
++
++struct memory_provider {
++	struct memory_buffer *(*alloc)(size_t size);
++	void (*free)(struct memory_buffer *ctx);
++	void (*memcpy_from_device)(void *dst, struct memory_buffer *src,
++				   size_t off, int n);
++};
++
++static struct memory_buffer *udmabuf_alloc(size_t size)
+ {
+-	unsigned char *p = ptr;
+-	int i;
++	struct udmabuf_create create;
++	struct memory_buffer *ctx;
++	int ret;
+ 
+-	for (i = 0; i < size; i++)
+-		printf("%02hhX ", p[i]);
+-	printf("\n");
++	ctx = malloc(sizeof(*ctx));
++	if (!ctx)
++		error(1, ENOMEM, "malloc failed");
++
++	ctx->size = size;
++
++	ctx->devfd = open("/dev/udmabuf", O_RDWR);
++	if (ctx->devfd < 0)
++		error(1, errno,
++		      "%s: [skip,no-udmabuf: Unable to access DMA buffer device file]\n",
++		      TEST_PREFIX);
++
++	ctx->memfd = memfd_create("udmabuf-test", MFD_ALLOW_SEALING);
++	if (ctx->memfd < 0)
++		error(1, errno, "%s: [skip,no-memfd]\n", TEST_PREFIX);
++
++	ret = fcntl(ctx->memfd, F_ADD_SEALS, F_SEAL_SHRINK);
++	if (ret < 0)
++		error(1, errno, "%s: [skip,fcntl-add-seals]\n", TEST_PREFIX);
++
++	ret = ftruncate(ctx->memfd, size);
++	if (ret == -1)
++		error(1, errno, "%s: [FAIL,memfd-truncate]\n", TEST_PREFIX);
++
++	memset(&create, 0, sizeof(create));
++
++	create.memfd = ctx->memfd;
++	create.offset = 0;
++	create.size = size;
++	ctx->fd = ioctl(ctx->devfd, UDMABUF_CREATE, &create);
++	if (ctx->fd < 0)
++		error(1, errno, "%s: [FAIL, create udmabuf]\n", TEST_PREFIX);
++
++	ctx->buf_mem = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED,
++			    ctx->fd, 0);
++	if (ctx->buf_mem == MAP_FAILED)
++		error(1, errno, "%s: [FAIL, map udmabuf]\n", TEST_PREFIX);
++
++	return ctx;
++}
++
++static void udmabuf_free(struct memory_buffer *ctx)
++{
++	munmap(ctx->buf_mem, ctx->size);
++	close(ctx->fd);
++	close(ctx->memfd);
++	close(ctx->devfd);
++	free(ctx);
+ }
+ 
+-void print_nonzero_bytes(void *ptr, size_t size)
++static void udmabuf_memcpy_from_device(void *dst, struct memory_buffer *src,
++				       size_t off, int n)
++{
++	struct dma_buf_sync sync = {};
++
++	sync.flags = DMA_BUF_SYNC_START;
++	ioctl(src->fd, DMA_BUF_IOCTL_SYNC, &sync);
++
++	memcpy(dst, src->buf_mem + off, n);
++
++	sync.flags = DMA_BUF_SYNC_END;
++	ioctl(src->fd, DMA_BUF_IOCTL_SYNC, &sync);
++}
++
++static struct memory_provider udmabuf_memory_provider = {
++	.alloc = udmabuf_alloc,
++	.free = udmabuf_free,
++	.memcpy_from_device = udmabuf_memcpy_from_device,
++};
++
++static struct memory_provider *provider = &udmabuf_memory_provider;
++
++static void print_nonzero_bytes(void *ptr, size_t size)
+ {
+ 	unsigned char *p = ptr;
+ 	unsigned int i;
+@@ -201,42 +285,7 @@ static int bind_rx_queue(unsigned int ifindex, unsigned int dmabuf_fd,
+ 	return -1;
+ }
+ 
+-static void create_udmabuf(int *devfd, int *memfd, int *buf, size_t dmabuf_size)
+-{
+-	struct udmabuf_create create;
+-	int ret;
+-
+-	*devfd = open("/dev/udmabuf", O_RDWR);
+-	if (*devfd < 0) {
+-		error(70, 0,
+-		      "%s: [skip,no-udmabuf: Unable to access DMA buffer device file]\n",
+-		      TEST_PREFIX);
+-	}
+-
+-	*memfd = memfd_create("udmabuf-test", MFD_ALLOW_SEALING);
+-	if (*memfd < 0)
+-		error(70, 0, "%s: [skip,no-memfd]\n", TEST_PREFIX);
+-
+-	/* Required for udmabuf */
+-	ret = fcntl(*memfd, F_ADD_SEALS, F_SEAL_SHRINK);
+-	if (ret < 0)
+-		error(73, 0, "%s: [skip,fcntl-add-seals]\n", TEST_PREFIX);
+-
+-	ret = ftruncate(*memfd, dmabuf_size);
+-	if (ret == -1)
+-		error(74, 0, "%s: [FAIL,memfd-truncate]\n", TEST_PREFIX);
+-
+-	memset(&create, 0, sizeof(create));
+-
+-	create.memfd = *memfd;
+-	create.offset = 0;
+-	create.size = dmabuf_size;
+-	*buf = ioctl(*devfd, UDMABUF_CREATE, &create);
+-	if (*buf < 0)
+-		error(75, 0, "%s: [FAIL, create udmabuf]\n", TEST_PREFIX);
+-}
+-
+-int do_server(void)
++int do_server(struct memory_buffer *mem)
+ {
+ 	char ctrl_data[sizeof(int) * 20000];
+ 	struct netdev_queue_id *queues;
+@@ -244,23 +293,18 @@ int do_server(void)
+ 	struct sockaddr_in client_addr;
+ 	struct sockaddr_in server_sin;
+ 	size_t page_aligned_frags = 0;
+-	int devfd, memfd, buf, ret;
+ 	size_t total_received = 0;
+ 	socklen_t client_addr_len;
+ 	bool is_devmem = false;
+-	char *buf_mem = NULL;
++	char *tmp_mem = NULL;
+ 	struct ynl_sock *ys;
+-	size_t dmabuf_size;
+ 	char iobuf[819200];
+ 	char buffer[256];
+ 	int socket_fd;
+ 	int client_fd;
+ 	size_t i = 0;
+ 	int opt = 1;
+-
+-	dmabuf_size = getpagesize() * NUM_PAGES;
+-
+-	create_udmabuf(&devfd, &memfd, &buf, dmabuf_size);
++	int ret;
+ 
+ 	if (reset_flow_steering())
+ 		error(1, 0, "Failed to reset flow steering\n");
+@@ -284,13 +328,12 @@ int do_server(void)
+ 		queues[i].id = start_queue + i;
+ 	}
+ 
+-	if (bind_rx_queue(ifindex, buf, queues, num_queues, &ys))
++	if (bind_rx_queue(ifindex, mem->fd, queues, num_queues, &ys))
+ 		error(1, 0, "Failed to bind\n");
+ 
+-	buf_mem = mmap(NULL, dmabuf_size, PROT_READ | PROT_WRITE, MAP_SHARED,
+-		       buf, 0);
+-	if (buf_mem == MAP_FAILED)
+-		error(1, 0, "mmap()");
++	tmp_mem = malloc(mem->size);
++	if (!tmp_mem)
++		error(1, ENOMEM, "malloc failed");
+ 
+ 	server_sin.sin_family = AF_INET;
+ 	server_sin.sin_port = htons(atoi(port));
+@@ -341,7 +384,6 @@ int do_server(void)
+ 		struct iovec iov = { .iov_base = iobuf,
+ 				     .iov_len = sizeof(iobuf) };
+ 		struct dmabuf_cmsg *dmabuf_cmsg = NULL;
+-		struct dma_buf_sync sync = { 0 };
+ 		struct cmsghdr *cm = NULL;
+ 		struct msghdr msg = { 0 };
+ 		struct dmabuf_token token;
+@@ -410,22 +452,16 @@ int do_server(void)
+ 			else
+ 				page_aligned_frags++;
+ 
+-			sync.flags = DMA_BUF_SYNC_READ | DMA_BUF_SYNC_START;
+-			ioctl(buf, DMA_BUF_IOCTL_SYNC, &sync);
++			provider->memcpy_from_device(tmp_mem, mem,
++						     dmabuf_cmsg->frag_offset,
++						     dmabuf_cmsg->frag_size);
+ 
+ 			if (do_validation)
+-				validate_buffer(
+-					((unsigned char *)buf_mem) +
+-						dmabuf_cmsg->frag_offset,
+-					dmabuf_cmsg->frag_size);
++				validate_buffer(tmp_mem,
++						dmabuf_cmsg->frag_size);
+ 			else
+-				print_nonzero_bytes(
+-					((unsigned char *)buf_mem) +
+-						dmabuf_cmsg->frag_offset,
+-					dmabuf_cmsg->frag_size);
+-
+-			sync.flags = DMA_BUF_SYNC_READ | DMA_BUF_SYNC_END;
+-			ioctl(buf, DMA_BUF_IOCTL_SYNC, &sync);
++				print_nonzero_bytes(tmp_mem,
++						    dmabuf_cmsg->frag_size);
+ 
+ 			ret = setsockopt(client_fd, SOL_SOCKET,
+ 					 SO_DEVMEM_DONTNEED, &token,
+@@ -450,12 +486,9 @@ int do_server(void)
+ 
+ cleanup:
+ 
+-	munmap(buf_mem, dmabuf_size);
++	free(tmp_mem);
+ 	close(client_fd);
+ 	close(socket_fd);
+-	close(buf);
+-	close(memfd);
+-	close(devfd);
+ 	ynl_sock_destroy(ys);
+ 
+ 	return 0;
+@@ -464,14 +497,11 @@ int do_server(void)
+ void run_devmem_tests(void)
+ {
+ 	struct netdev_queue_id *queues;
+-	int devfd, memfd, buf;
++	struct memory_buffer *mem;
+ 	struct ynl_sock *ys;
+-	size_t dmabuf_size;
+ 	size_t i = 0;
+ 
+-	dmabuf_size = getpagesize() * NUM_PAGES;
+-
+-	create_udmabuf(&devfd, &memfd, &buf, dmabuf_size);
++	mem = provider->alloc(getpagesize() * NUM_PAGES);
+ 
+ 	/* Configure RSS to divert all traffic from our devmem queues */
+ 	if (configure_rss())
+@@ -482,7 +512,7 @@ void run_devmem_tests(void)
+ 	if (configure_headersplit(1))
+ 		error(1, 0, "Failed to configure header split\n");
+ 
+-	if (!bind_rx_queue(ifindex, buf, queues, num_queues, &ys))
++	if (!bind_rx_queue(ifindex, mem->fd, queues, num_queues, &ys))
+ 		error(1, 0, "Binding empty queues array should have failed\n");
+ 
+ 	for (i = 0; i < num_queues; i++) {
+@@ -495,7 +525,7 @@ void run_devmem_tests(void)
+ 	if (configure_headersplit(0))
+ 		error(1, 0, "Failed to configure header split\n");
+ 
+-	if (!bind_rx_queue(ifindex, buf, queues, num_queues, &ys))
++	if (!bind_rx_queue(ifindex, mem->fd, queues, num_queues, &ys))
+ 		error(1, 0, "Configure dmabuf with header split off should have failed\n");
+ 
+ 	if (configure_headersplit(1))
+@@ -508,7 +538,7 @@ void run_devmem_tests(void)
+ 		queues[i].id = start_queue + i;
+ 	}
+ 
+-	if (bind_rx_queue(ifindex, buf, queues, num_queues, &ys))
++	if (bind_rx_queue(ifindex, mem->fd, queues, num_queues, &ys))
+ 		error(1, 0, "Failed to bind\n");
+ 
+ 	/* Deactivating a bound queue should not be legal */
+@@ -517,11 +547,15 @@ void run_devmem_tests(void)
+ 
+ 	/* Closing the netlink socket does an implicit unbind */
+ 	ynl_sock_destroy(ys);
++
++	provider->free(mem);
+ }
+ 
+ int main(int argc, char *argv[])
+ {
++	struct memory_buffer *mem;
+ 	int is_server = 0, opt;
++	int ret;
+ 
+ 	while ((opt = getopt(argc, argv, "ls:c:p:v:q:t:f:")) != -1) {
+ 		switch (opt) {
+@@ -562,8 +596,9 @@ int main(int argc, char *argv[])
+ 
+ 	run_devmem_tests();
+ 
+-	if (is_server)
+-		return do_server();
++	mem = provider->alloc(getpagesize() * NUM_PAGES);
++	ret = is_server ? do_server(mem) : 1;
++	provider->free(mem);
+ 
+-	return 0;
++	return ret;
+ }
 -- 
 2.39.5
 
