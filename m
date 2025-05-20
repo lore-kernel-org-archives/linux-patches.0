@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D88019ABB6;
-	Tue, 20 May 2025 14:10:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E92124677D;
+	Tue, 20 May 2025 14:10:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750237; cv=none; b=mulKSwpLgkGMcu+A+J4SYeK4DWaKheET3nADaDoIxgEDYIQIiaTa0X9U4be8pXSN7bo2N5C2cC6pz2CQ2YkaMIb5ru47gmUQzx5GFYOjG3pZvdXXXIw5lXTzrP6AX6VJ7YJLyLnp0vh9IKUKHNnfw5w6QrOBLfsmg8biuaHK8DE=
+	t=1747750240; cv=none; b=K5K38vO0RtT/jl451hf7cRc3VC/+MtASsEVoIX0DsmXzI2ZomGs58HdfH1ARF1enYrrtH6zjqBr9n3jj3+iz/SJM41LfWRemn8+VmfekRehsDWj2fDAIqttrxAAmAg0VmSXmGnFMAnV1P6UzOTPCvCSBJyMN57nvaC1yt5JUh/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750237; c=relaxed/simple;
-	bh=cExWMK8nPMoA3Tpe0Ib3jcl/ArLqNl3WlSoaax1pOgA=;
+	s=arc-20240116; t=1747750240; c=relaxed/simple;
+	bh=8R3CPSv9S/Ytf+sSA04ymiLWZVYJrefIq+EdGJtDATQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=urHOEOB0PnBFgzxRQF7wAUA3i11TCHlizhUB5ImKxFftyjz0z2+d5fB+VcobmdgZOnG7tDKLZ5V6ME1wLsv7bqUnY3aw8b7+N2BjhIK/GrGJVFPYa5lJIov+HPFmaLmBYLRBirfp7YzPfRLTS8c81p+KcJ2UAd5AjGbaU4ubgqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ka1GE/QO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ncxZyrigzyZUfTOBSv7RATz5KTU8A1FK2/8c9JrFjvMtdB6U5eolStlOCdCHQbLy4803VUaAMxOSST9Ja6nJyC4DPfOQUOtzBfBlXmB+bO3X4GAYFcN0MFdcA0eXlXxVF2ACfYhHmEDWGsExXtY6syRu10+FvTvdW6eoKCJAyzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ByWLokrj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ka1GE/QO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB6FC4CEE9;
-	Tue, 20 May 2025 14:10:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ByWLokrj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C430C4CEE9;
+	Tue, 20 May 2025 14:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750237;
-	bh=cExWMK8nPMoA3Tpe0Ib3jcl/ArLqNl3WlSoaax1pOgA=;
+	s=korg; t=1747750240;
+	bh=8R3CPSv9S/Ytf+sSA04ymiLWZVYJrefIq+EdGJtDATQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ka1GE/QOHDA5UcOpRAUx/Z99G4tPKM2J+iFUIjdT7k6H1xfNqNnRWYO3h5Nzzh/41
-	 atBHJtIsrsGLGAkvi/ee5Uf/ZM96ttziMGv70L2cki/2WhuXnM5q0iWkHqNluTfP2W
-	 GqJt+s6HESVopu0ZBtAMoPxUQxSDbsJDvSlXE6z0=
+	b=ByWLokrjizafJhJxCjaWZJkPTZOe7c3EqjVJTlc84pGDO3krbM27iRFKgxJ2vh+v9
+	 L7Z4hhQ2iTXLAw/33PYasinbd8odBgKmJNtiyIFG23gG5G3VItMrAcMT9eC5te5wGz
+	 lD1jFCbW34h+XShSD4natXrJyJ/sBMp7L4pDGQnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Wayne Lin <Wayne.Lin@amd.com>
-Subject: [PATCH 6.12 087/143] drm/amd/display: Avoid flooding unnecessary info messages
-Date: Tue, 20 May 2025 15:50:42 +0200
-Message-ID: <20250520125813.481920728@linuxfoundation.org>
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	Juergen Gross <jgross@suse.com>,
+	Alexey Makhalov <alexey.makhalov@broadcom.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.12 088/143] MAINTAINERS: Update Alexey Makhalovs email address
+Date: Tue, 20 May 2025 15:50:43 +0200
+Message-ID: <20250520125813.519478500@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -51,53 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Alexey Makhalov <alexey.makhalov@broadcom.com>
 
-commit d33724ffb743d3d2698bd969e29253ae0cff9739 upstream.
+commit 386cd3dcfd63491619b4034b818737fc0219e128 upstream.
 
-It's expected that we'll encounter temporary exceptions
-during aux transactions. Adjust logging from drm_info to
-drm_dbg_dp to prevent flooding with unnecessary log messages.
+Fix a typo in an email address.
 
-Fixes: 3637e457eb00 ("drm/amd/display: Fix wrong handling for AUX_DEFER case")
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Link: https://lore.kernel.org/r/20250513032026.838036-1-Wayne.Lin@amd.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9a9c3e1fe5256da14a0a307dff0478f90c55fc8c)
+Closes: https://lore.kernel.org/all/20240925-rational-succinct-vulture-cca9fb@lemur/T/
+Reported-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Reported-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Alexey Makhalov <alexey.makhalov@broadcom.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/20250318004031.2703923-1-alexey.makhalov@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |    6 +++---
+ MAINTAINERS |    6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -107,7 +107,7 @@ static ssize_t dm_dp_aux_transfer(struct
- 	if (payload.write && result >= 0) {
- 		if (result) {
- 			/*one byte indicating partially written bytes*/
--			drm_info(adev_to_drm(adev), "amdgpu: AUX partially written\n");
-+			drm_dbg_dp(adev_to_drm(adev), "amdgpu: AUX partially written\n");
- 			result = payload.data[0];
- 		} else if (!payload.reply[0])
- 			/*I2C_ACK|AUX_ACK*/
-@@ -133,11 +133,11 @@ static ssize_t dm_dp_aux_transfer(struct
- 			break;
- 		}
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -17503,7 +17503,7 @@ F:	include/uapi/linux/ppdev.h
+ PARAVIRT_OPS INTERFACE
+ M:	Juergen Gross <jgross@suse.com>
+ R:	Ajay Kaher <ajay.kaher@broadcom.com>
+-R:	Alexey Makhalov <alexey.amakhalov@broadcom.com>
++R:	Alexey Makhalov <alexey.makhalov@broadcom.com>
+ R:	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+ L:	virtualization@lists.linux.dev
+ L:	x86@kernel.org
+@@ -24729,7 +24729,7 @@ F:	drivers/misc/vmw_balloon.c
  
--		drm_info(adev_to_drm(adev), "amdgpu: DP AUX transfer fail:%d\n", operation_result);
-+		drm_dbg_dp(adev_to_drm(adev), "amdgpu: DP AUX transfer fail:%d\n", operation_result);
- 	}
- 
- 	if (payload.reply[0])
--		drm_info(adev_to_drm(adev), "amdgpu: AUX reply command not ACK: 0x%02x.",
-+		drm_dbg_dp(adev_to_drm(adev), "amdgpu: AUX reply command not ACK: 0x%02x.",
- 			payload.reply[0]);
- 
- 	return result;
+ VMWARE HYPERVISOR INTERFACE
+ M:	Ajay Kaher <ajay.kaher@broadcom.com>
+-M:	Alexey Makhalov <alexey.amakhalov@broadcom.com>
++M:	Alexey Makhalov <alexey.makhalov@broadcom.com>
+ R:	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+ L:	virtualization@lists.linux.dev
+ L:	x86@kernel.org
+@@ -24757,7 +24757,7 @@ F:	drivers/scsi/vmw_pvscsi.h
+ VMWARE VIRTUAL PTP CLOCK DRIVER
+ M:	Nick Shi <nick.shi@broadcom.com>
+ R:	Ajay Kaher <ajay.kaher@broadcom.com>
+-R:	Alexey Makhalov <alexey.amakhalov@broadcom.com>
++R:	Alexey Makhalov <alexey.makhalov@broadcom.com>
+ R:	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+ L:	netdev@vger.kernel.org
+ S:	Supported
 
 
