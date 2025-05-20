@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B49924679A;
-	Tue, 20 May 2025 14:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956AF2505D7;
+	Tue, 20 May 2025 14:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750165; cv=none; b=oyI/jmjaR5PchH0qcqL68TnPBJxAwVPgfVXJZ32/6JDyL1n8JtG/HfrjUnlJryQyPY7qPh5abozmFJs3bemmThQsVrkEyXGeWQg/CmSRPLOx3D9NPoLxgaN7hrq3VFm+9wRZ9empmWdAl/NwVn1Utfit9YkLS5WV5CAGdvTWZq0=
+	t=1747750168; cv=none; b=J0V4KwanUyEo3zz8+udHQN6Qqau1adWF8b4Ftzhy/n7fudMk+Cs04a7p7IxAIO3eRefc86oZbNXaLr67SHCjIK0zS1GrIA0ckgISmgnRV81X50f2w8oXYhSuFH5usDJCoe8gUUoMsNb0Ln1BzIKMlAH+xhF0CFeb0IxnxKawtX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750165; c=relaxed/simple;
-	bh=Xyyg4F/R/O0K2Fy5MYEwYrsXIfCG50Gn3Jtx8Q+0ESw=;
+	s=arc-20240116; t=1747750168; c=relaxed/simple;
+	bh=9HrgRlUpAUStfa+TVyPXW5oUdBnGurdbH8ltom8FrMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R8GYPi6kS83VC/EXFXZ8fCNQ/Vs1P2lmKUNQk5lsVm6ucDUXDuCBtuyzl1S9RZ4aEmRFuagg6hzpEZqX0PEeQ9FtQU5SKQA8b5eENFLvPNbFxvOjYXDb65tUtcfdcn9YbXnCqn69yetWfbNY54MsrBLcr6gTp1TjjUhtvP1MOtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n0fYFglp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S15hXdd9424fmLAYQvpuIrhKBTvpcqBF0jhkp7gGP2ROXa77DeAfe1/xMf1zoOXkwZECpXEFLBcbGLy4f/wrghfd1hNc3zYO2GuMrMBN7D9/G6NMKzihfnDy/tQ6Rwa9wssDiagLljpwOfHTMWW3VjiAro7rCNrP6RYVjhkPF7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ufkf1QQ2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n0fYFglp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE68C4CEF1;
-	Tue, 20 May 2025 14:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ufkf1QQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F158C4CEEA;
+	Tue, 20 May 2025 14:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750165;
-	bh=Xyyg4F/R/O0K2Fy5MYEwYrsXIfCG50Gn3Jtx8Q+0ESw=;
+	s=korg; t=1747750168;
+	bh=9HrgRlUpAUStfa+TVyPXW5oUdBnGurdbH8ltom8FrMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n0fYFglpvjwiK+dAcj6zVsLp3kA6ua8bMehtiRFRoKUxVIJsRBDcop0klKIeJ2rXO
-	 j5wc6DVUoxy5MQk/xGrZAeMQAYLBnMZqf8kPX2yKUoNwIWiVW6t0EO3SvHP/Ixkasz
-	 7jht61hc4X3eATMmtUKFz/ruhD3I/8d2oTyovvFw=
+	b=Ufkf1QQ2UImh/P7qE0vf6HVcIttvIdB7zQONfCNwOACIFi3QJPqtJMa3s4WKY3TrH
+	 PFyVPrJeYizpj4PMxjIMU/L0NY8azPCQgqkbNzURKT7zcT93kus0lJ1TwNZQfvCq3d
+	 LyAsYShAGP9Uws5MdS0uSvgrwOBL36ByKOCwqKRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot+4bcdddd48bb6f0be0da1@syzkaller.appspotmail.com,
+	Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 063/143] octeontx2-pf: Do not reallocate all ntuple filters
-Date: Tue, 20 May 2025 15:50:18 +0200
-Message-ID: <20250520125812.542570584@linuxfoundation.org>
+Subject: [PATCH 6.12 064/143] wifi: mac80211: Set n_channels after allocating struct cfg80211_scan_request
+Date: Tue, 20 May 2025 15:50:19 +0200
+Message-ID: <20250520125812.581204208@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -52,76 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Subbaraya Sundeep <sbhatta@marvell.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit dcb479fde00be9a151c047d0a7c0626b64eb0019 ]
+[ Upstream commit 82bbe02b2500ef0a62053fe2eb84773fe31c5a0a ]
 
-If ntuple filters count is modified followed by
-unicast filters count using devlink then the ntuple count
-set by user is ignored and all the ntuple filters are
-being reallocated. Fix this by storing the ntuple count
-set by user. Without this patch, say if user tries
-to modify ntuple count as 8 followed by ucast filter count as 4
-using devlink commands then ntuple count is being reverted to
-default value 16 i.e, not retaining user set value 8.
+Make sure that n_channels is set after allocating the
+struct cfg80211_registered_device::int_scan_req member. Seen with
+syzkaller:
 
-Fixes: 39c469188b6d ("octeontx2-pf: Add ucast filter count configurability via devlink.")
-Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/1747054357-5850-1-git-send-email-sbhatta@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+UBSAN: array-index-out-of-bounds in net/mac80211/scan.c:1208:5
+index 0 is out of range for type 'struct ieee80211_channel *[] __counted_by(n_channels)' (aka 'struct ieee80211_channel *[]')
+
+This was missed in the initial conversions because I failed to locate
+the allocation likely due to the "sizeof(void *)" not matching the
+"channels" array type.
+
+Reported-by: syzbot+4bcdddd48bb6f0be0da1@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/lkml/680fd171.050a0220.2b69d1.045e.GAE@google.com/
+Fixes: e3eac9f32ec0 ("wifi: cfg80211: Annotate struct cfg80211_scan_request with __counted_by")
+Signed-off-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://patch.msgid.link/20250509184641.work.542-kees@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h  | 1 +
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_devlink.c | 1 +
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c   | 3 ++-
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ net/mac80211/main.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-index f27a3456ae64f..5b45fd78d2825 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-@@ -364,6 +364,7 @@ struct otx2_flow_config {
- 	struct list_head	flow_list_tc;
- 	u8			ucast_flt_cnt;
- 	bool			ntuple;
-+	u16			ntuple_cnt;
- };
+diff --git a/net/mac80211/main.c b/net/mac80211/main.c
+index ee1211a213d70..caedc939eea19 100644
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -1344,10 +1344,12 @@ int ieee80211_register_hw(struct ieee80211_hw *hw)
+ 	hw->wiphy->software_iftypes |= BIT(NL80211_IFTYPE_MONITOR);
  
- struct dev_hw_ops {
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_devlink.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_devlink.c
-index 53f14aa944bdb..aaea19345750e 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_devlink.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_devlink.c
-@@ -41,6 +41,7 @@ static int otx2_dl_mcam_count_set(struct devlink *devlink, u32 id,
- 	if (!pfvf->flow_cfg)
- 		return 0;
  
-+	pfvf->flow_cfg->ntuple_cnt = ctx->val.vu16;
- 	otx2_alloc_mcam_entries(pfvf, ctx->val.vu16);
+-	local->int_scan_req = kzalloc(sizeof(*local->int_scan_req) +
+-				      sizeof(void *) * channels, GFP_KERNEL);
++	local->int_scan_req = kzalloc(struct_size(local->int_scan_req,
++						  channels, channels),
++				      GFP_KERNEL);
+ 	if (!local->int_scan_req)
+ 		return -ENOMEM;
++	local->int_scan_req->n_channels = channels;
  
- 	return 0;
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-index 58720a161ee24..2750326bfcf8b 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-@@ -252,7 +252,7 @@ int otx2_mcam_entry_init(struct otx2_nic *pfvf)
- 	mutex_unlock(&pfvf->mbox.lock);
+ 	eth_broadcast_addr(local->int_scan_req->bssid);
  
- 	/* Allocate entries for Ntuple filters */
--	count = otx2_alloc_mcam_entries(pfvf, OTX2_DEFAULT_FLOWCOUNT);
-+	count = otx2_alloc_mcam_entries(pfvf, flow_cfg->ntuple_cnt);
- 	if (count <= 0) {
- 		otx2_clear_ntuple_flow_info(pfvf, flow_cfg);
- 		return 0;
-@@ -312,6 +312,7 @@ int otx2_mcam_flow_init(struct otx2_nic *pf)
- 	INIT_LIST_HEAD(&pf->flow_cfg->flow_list_tc);
- 
- 	pf->flow_cfg->ucast_flt_cnt = OTX2_DEFAULT_UNICAST_FLOWS;
-+	pf->flow_cfg->ntuple_cnt = OTX2_DEFAULT_FLOWCOUNT;
- 
- 	/* Allocate bare minimum number of MCAM entries needed for
- 	 * unicast and ntuple filters.
 -- 
 2.39.5
 
