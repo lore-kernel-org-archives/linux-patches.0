@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1B124337C;
-	Tue, 20 May 2025 13:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB8C22C325;
+	Tue, 20 May 2025 13:55:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749322; cv=none; b=Lio2ZOmCd5/M6GJsCxlCQ7Q7/ph7hGbhfZWP+XgWTwjkJtdgjkTCmwjaAThRgL71imuB63i3fsVMuQOiNgxYfZPyW262kHKyLCfxPXRPyKING/xjVuFFjB0/5DKXJysGpV1H30wp6wht0OSMVUUIdHsxPZq1OVG8k7EugNRgfcY=
+	t=1747749325; cv=none; b=lBRnKjFmEVF2cjITcrtWPcf40zv6Ia7a0CqJDtm+H5pGqW6aK0Mw8e1zliz72wLu51cvonPjLDbhwrvA1R6idL+Lt9uG91b+dBJaq3uXqZqwTTs/bdNHl7AGEcVyC+wZ3hzwOEq3mnQZcse8ifQ7G0e30DmMimRV6DYIDriYpaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749322; c=relaxed/simple;
-	bh=CDXOXUDE7167CAsX3b8jBkC/cDfA/qwRXb68xwQTf14=;
+	s=arc-20240116; t=1747749325; c=relaxed/simple;
+	bh=x291YV/c/VQHEBW3zFJGi123AyRu+tvs0thH6n4gXqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L3tOAcF84EHARnXDzUiPzo8VewlJhscGSA6y/UDRl9WdM6laic1ut6Q0gPGSY8WPzANXymyO5T2W7jfkSKhOkVcOGz9BwGoH49BC7DBR+8D55tI8/meQe3wuodX5KzONItZB/yiX/g7C9PW35pRNjW0fHZZgGbmXtfcMgFCQiKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqrinhJP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZgQ10KehpjWwyQJI2W7nDski+/lkrdjDLN15IxBdMgEKHMd1AGTyXPvciyXca+7yF4bxZQQ3FDR9DVBbT9b5UuUNk2idVK8ol3LGvDXkExubcoY1B/k2QARsbJ8H57u5Ot2QJe7XDD2hdoU2A2MjLlOqKPfniK8J4MVvjSlO7n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c5wMEwIC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqrinhJP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CD4C4CEE9;
-	Tue, 20 May 2025 13:55:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c5wMEwIC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A49C4CEE9;
+	Tue, 20 May 2025 13:55:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749322;
-	bh=CDXOXUDE7167CAsX3b8jBkC/cDfA/qwRXb68xwQTf14=;
+	s=korg; t=1747749325;
+	bh=x291YV/c/VQHEBW3zFJGi123AyRu+tvs0thH6n4gXqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bqrinhJP8Wmk2z/yh2krJBXOPLPxQZCB3mvFkqn/s10tns0T3uRkEmAZBPo7ez6hM
-	 45WfvUCce9xoj44Bg4IWI7Xq3zz5qm/wvNJhugA+a+h9Y8RyHje6KN52mF4DTmUc+1
-	 PGxAToVCUyvTHDxp8de0hi5E6EY21TDrHaHNZs5k=
+	b=c5wMEwICrKpPK+9QyMYNbm3BSuJ09KuPAyNqWhmPW/wBdghbdCbkexQyWgZqecY/f
+	 QLfkMcEEhjofvE+gk70HIJAxGkbXujrEd/Q3PvTqm4pPOVNY4GKqcA5wXSW+es0BOD
+	 PGcokwO68BSyNOzk4/z4h1u8u59UEZq5tfeb8qOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Divya Indi <divya.indi@oracle.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 38/59] tracing: samples: Initialize trace_array_printk() with the correct function
-Date: Tue, 20 May 2025 15:50:29 +0200
-Message-ID: <20250520125755.365863150@linuxfoundation.org>
+	Peter Zijlstra <peterz@infradead.org>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Alexandre Chartre <alexandre.chartre@oracle.com>,
+	=?UTF-8?q?Holger=20Hoffst=C3=A4tte?= <holger@applied-asynchrony.com>
+Subject: [PATCH 5.15 29/59] x86/its: FineIBT-paranoid vs ITS
+Date: Tue, 20 May 2025 15:50:20 +0200
+Message-ID: <20250520125755.018498241@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
 References: <20250520125753.836407405@linuxfoundation.org>
@@ -46,51 +47,124 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 1b0c192c92ea1fe2dcb178f84adf15fe37c3e7c8 upstream.
+commit e52c1dc7455d32c8a55f9949d300e5e87d011fa6 upstream.
 
-When using trace_array_printk() on a created instance, the correct
-function to use to initialize it is:
+FineIBT-paranoid was using the retpoline bytes for the paranoid check,
+disabling retpolines, because all parts that have IBT also have eIBRS
+and thus don't need no stinking retpolines.
 
-  trace_array_init_printk()
+Except... ITS needs the retpolines for indirect calls must not be in
+the first half of a cacheline :-/
 
-Not
+So what was the paranoid call sequence:
 
-  trace_printk_init_buffer()
+  <fineibt_paranoid_start>:
+   0:   41 ba 78 56 34 12       mov    $0x12345678, %r10d
+   6:   45 3b 53 f7             cmp    -0x9(%r11), %r10d
+   a:   4d 8d 5b <f0>           lea    -0x10(%r11), %r11
+   e:   75 fd                   jne    d <fineibt_paranoid_start+0xd>
+  10:   41 ff d3                call   *%r11
+  13:   90                      nop
 
-The former is a proper function to use, the latter is for initializing
-trace_printk() and causes the NOTICE banner to be displayed.
+Now becomes:
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Divya Indi <divya.indi@oracle.com>
-Link: https://lore.kernel.org/20250509152657.0f6744d9@gandalf.local.home
-Fixes: 89ed42495ef4a ("tracing: Sample module to demonstrate kernel access to Ftrace instances.")
-Fixes: 38ce2a9e33db6 ("tracing: Add trace_array_init_printk() to initialize instance trace_printk() buffers")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+  <fineibt_paranoid_start>:
+   0:   41 ba 78 56 34 12       mov    $0x12345678, %r10d
+   6:   45 3b 53 f7             cmp    -0x9(%r11), %r10d
+   a:   4d 8d 5b f0             lea    -0x10(%r11), %r11
+   e:   2e e8 XX XX XX XX	cs call __x86_indirect_paranoid_thunk_r11
+
+  Where the paranoid_thunk looks like:
+
+   1d:  <ea>                    (bad)
+   __x86_indirect_paranoid_thunk_r11:
+   1e:  75 fd                   jne 1d
+   __x86_indirect_its_thunk_r11:
+   20:  41 ff eb                jmp *%r11
+   23:  cc                      int3
+
+[ dhansen: remove initialization to false ]
+
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Alexandre Chartre <alexandre.chartre@oracle.com>
+[ Just a portion of the original commit, in order to fix a build issue
+  in stable kernels due to backports ]
+Tested-by: Holger Hoffstätte <holger@applied-asynchrony.com>
+Link: https://lore.kernel.org/r/20250514113952.GB16434@noisy.programming.kicks-ass.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- samples/ftrace/sample-trace-array.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/alternative.h |    8 ++++++++
+ arch/x86/kernel/alternative.c      |    8 ++++++++
+ arch/x86/net/bpf_jit_comp.c        |    2 +-
+ 3 files changed, 17 insertions(+), 1 deletion(-)
 
---- a/samples/ftrace/sample-trace-array.c
-+++ b/samples/ftrace/sample-trace-array.c
-@@ -112,7 +112,7 @@ static int __init sample_trace_array_ini
- 	/*
- 	 * If context specific per-cpu buffers havent already been allocated.
- 	 */
--	trace_printk_init_buffers();
-+	trace_array_init_printk(tr);
+--- a/arch/x86/include/asm/alternative.h
++++ b/arch/x86/include/asm/alternative.h
+@@ -5,6 +5,7 @@
+ #include <linux/types.h>
+ #include <linux/stringify.h>
+ #include <asm/asm.h>
++#include <asm/bug.h>
  
- 	simple_tsk = kthread_run(simple_thread, NULL, "sample-instance");
- 	if (IS_ERR(simple_tsk)) {
+ #define ALTINSTR_FLAG_INV	(1 << 15)
+ #define ALT_NOT(feat)		((feat) | ALTINSTR_FLAG_INV)
+@@ -84,10 +85,17 @@ struct module;
+ extern void its_init_mod(struct module *mod);
+ extern void its_fini_mod(struct module *mod);
+ extern void its_free_mod(struct module *mod);
++extern u8 *its_static_thunk(int reg);
+ #else /* CONFIG_MITIGATION_ITS */
+ static inline void its_init_mod(struct module *mod) { }
+ static inline void its_fini_mod(struct module *mod) { }
+ static inline void its_free_mod(struct module *mod) { }
++static inline u8 *its_static_thunk(int reg)
++{
++	WARN_ONCE(1, "ITS not compiled in");
++
++	return NULL;
++}
+ #endif
+ 
+ #ifdef CONFIG_RETHUNK
+--- a/arch/x86/kernel/alternative.c
++++ b/arch/x86/kernel/alternative.c
+@@ -597,6 +597,14 @@ static bool cpu_wants_indirect_its_thunk
+ 	/* Lower-half of the cacheline? */
+ 	return !(addr & 0x20);
+ }
++
++u8 *its_static_thunk(int reg)
++{
++	u8 *thunk = __x86_indirect_its_thunk_array[reg];
++
++	return thunk;
++}
++
+ #endif
+ 
+ /*
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -449,7 +449,7 @@ static void emit_indirect_jump(u8 **ppro
+ 	if (IS_ENABLED(CONFIG_MITIGATION_ITS) &&
+ 	    cpu_feature_enabled(X86_FEATURE_INDIRECT_THUNK_ITS)) {
+ 		OPTIMIZER_HIDE_VAR(reg);
+-		emit_jump(&prog, &__x86_indirect_its_thunk_array[reg], ip);
++		emit_jump(&prog, its_static_thunk(reg), ip);
+ 	} else if (cpu_feature_enabled(X86_FEATURE_RETPOLINE_LFENCE)) {
+ 		EMIT_LFENCE();
+ 		EMIT2(0xFF, 0xE0 + reg);
 
 
