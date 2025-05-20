@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149F92505CB;
-	Tue, 20 May 2025 14:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9408E2528E5;
+	Tue, 20 May 2025 14:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750595; cv=none; b=U0FTb/4zK1U3lu6YOtZ9iKtUIewPwka1KwcESaruf8aktAVbXSFWGTdSHxwzhPNTX4drx9wIaBihd+JyeO1Mfw8jfMDqcEXFBpHk496vuSRTqLQga5UbTtOkJmxg9S/VNrLEj1jvoUU3X/S9FETf0BCrt3lHbmoNFtWpgVRVocs=
+	t=1747750597; cv=none; b=XolH9Jg7Rtjbo/ELqHEF1D/HObiH7RJRbpOeVDOV2RDDfB65LPEGIJXaa6cCxSlbYmvFwxSmEqd/KFZBq8d8TXEtkf05BnLqD7QyluqYW064NLUwKgDGwd16ACpnAWtyyXQ7LCtvAQ58H7UrLQZUeJEF9XRyR3MkAITSD1C07iI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750595; c=relaxed/simple;
-	bh=1Kg8oiLF1/RfXjC1OqXmVJhzRf0XbQEe+JEui980py4=;
+	s=arc-20240116; t=1747750597; c=relaxed/simple;
+	bh=Bt+1yRnOnOtgaIMjlh2p0mSp9cRbImM6MOnJZIC77lY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gQdQySbBgPjVr5mxjFDnmtDW1QDDGpzLbhCgIMRBr6DUJ84T9WSDtNMWefdpozJdK89M9xb75PgglkZ/qfOWhchQknj1D+zq9Kv3ijp8quwxWx7SjWfM5OstAFJXbNsnSxtJf6L4dJ9Pi4zJKOOjznLHfIEe+uKISNrXHrvTLoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h+AbXkIh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cI0L4aOOgOIi6gi0S8eTNCcq/0auXCQ1i3b7Fq2/Nydj6SUY7/DEDptNBWEqzJpqPizd3EB79UVHF5U2mf0Oa+J8pYydmc7MFf8LNWFMkQX/1Chaiv+lg1yCGmSroOr25qwSf0DaxQbj0RHPx75vShFx42k9tb0D8nPUPTpYcsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0yaLAg0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+AbXkIh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26046C4AF09;
-	Tue, 20 May 2025 14:16:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0yaLAg0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB4EC4CEE9;
+	Tue, 20 May 2025 14:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750594;
-	bh=1Kg8oiLF1/RfXjC1OqXmVJhzRf0XbQEe+JEui980py4=;
+	s=korg; t=1747750597;
+	bh=Bt+1yRnOnOtgaIMjlh2p0mSp9cRbImM6MOnJZIC77lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h+AbXkIh2qLL4zUOgicF0+n5jISeWoBrPD+xnhG9Om+DcUXms2vunqcH5h8MReRBz
-	 Uc+RLbNY7hAjaQMEUw+qBYyrUEmZzBtQ2LU4gRTw0uMoZkz8Kt9SXRwKGmTG5CzqZS
-	 XRHjy0bRpWpqQJ5pEwP02rraj4hD+x0V+Ig+28dU=
+	b=q0yaLAg0+E0hr7aYjfvx4h3S2m7Wy4H0l0VKrnuZ5fawlL7A9nymUPI/pxHs8z83l
+	 lMlNllXkeuU8sYbRbiTmFcYBtZtdY5mIcqKW2aoS4AlX/nm11eKu8CWVIBlicdyAPu
+	 w9Ca5f9IDQizLzOmrlmF+tmgkNPCKhrIWbplqOpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 060/145] ublk: fix dead loop when canceling io command
-Date: Tue, 20 May 2025 15:50:30 +0200
-Message-ID: <20250520125812.933318416@linuxfoundation.org>
+Subject: [PATCH 6.14 061/145] NFSv4/pnfs: Reset the layout state after a layoutreturn
+Date: Tue, 20 May 2025 15:50:31 +0200
+Message-ID: <20250520125812.971771613@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -52,56 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit dd24f87f65c957f30e605e44961d2fd53a44c780 ]
+[ Upstream commit 6d6d7f91cc8c111d40416ac9240a3bb9396c5235 ]
 
-Commit:
+If there are still layout segments in the layout plh_return_lsegs list
+after a layout return, we should be resetting the state to ensure they
+eventually get returned as well.
 
-f40139fde527 ("ublk: fix race between io_uring_cmd_complete_in_task and
-		ublk_cancel_cmd")
-
-adds a request state check in ublk_cancel_cmd(), and if the request is
-started, skips canceling this uring_cmd.
-
-However, the current uring_cmd may be in ACTIVE state, without block
-request coming to the uring command. Meantime, if the cached request in
-tag_set.tags[tag] has been delivered to ublk server and reycycled, then
-this uring_cmd can't be canceled.
-
-ublk requests are aborted in ublk char device release handler, which
-depends on canceling all ACTIVE uring_cmd. So it causes a dead loop.
-
-Fix this issue by not taking a stale request into account when canceling
-uring_cmd in ublk_cancel_cmd().
-
-Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Closes: https://lore.kernel.org/linux-block/mruqwpf4tqenkbtgezv5oxwq7ngyq24jzeyqy4ixzvivatbbxv@4oh2wzz4e6qn/
-Fixes: f40139fde527 ("ublk: fix race between io_uring_cmd_complete_in_task and ublk_cancel_cmd")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20250515162601.77346-1-ming.lei@redhat.com
-[axboe: rewording of commit message]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 68f744797edd ("pNFS: Do not free layout segments that are marked for return")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/pnfs.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 348c4feb7a2df..7bbfc20f116a4 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -1677,7 +1677,7 @@ static void ublk_cancel_cmd(struct ublk_queue *ubq, unsigned tag,
- 	 * that ublk_dispatch_req() is always called
- 	 */
- 	req = blk_mq_tag_to_rq(ub->tag_set.tags[ubq->q_id], tag);
--	if (req && blk_mq_request_started(req))
-+	if (req && blk_mq_request_started(req) && req->tag == tag)
- 		return;
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -745,6 +745,14 @@ pnfs_mark_matching_lsegs_invalid(struct
+ 	return remaining;
+ }
  
- 	spin_lock(&ubq->cancel_lock);
--- 
-2.39.5
-
++static void pnfs_reset_return_info(struct pnfs_layout_hdr *lo)
++{
++	struct pnfs_layout_segment *lseg;
++
++	list_for_each_entry(lseg, &lo->plh_return_segs, pls_list)
++		pnfs_set_plh_return_info(lo, lseg->pls_range.iomode, 0);
++}
++
+ static void
+ pnfs_free_returned_lsegs(struct pnfs_layout_hdr *lo,
+ 		struct list_head *free_me,
+@@ -1292,6 +1300,7 @@ void pnfs_layoutreturn_free_lsegs(struct
+ 		pnfs_mark_matching_lsegs_invalid(lo, &freeme, range, seq);
+ 		pnfs_free_returned_lsegs(lo, &freeme, range, seq);
+ 		pnfs_set_layout_stateid(lo, stateid, NULL, true);
++		pnfs_reset_return_info(lo);
+ 	} else
+ 		pnfs_mark_layout_stateid_invalid(lo, &freeme);
+ out_unlock:
 
 
