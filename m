@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D2724337B;
-	Tue, 20 May 2025 13:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78887242D7D;
+	Tue, 20 May 2025 13:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749473; cv=none; b=StXITLMExockAx/yjA0OriFjaZvGrp/v+H9IPl9REPoh5527hDbxPjj9uc7SEKq6yJaCy2n5WOU/VaFBl91Tnb1EzlRupVQjonUzLCccNDnEbBA/2uGKtB7XS9o0PT296S41R+P/qmPtdMRevDUjrggVazSiK5WFzMXhOxjBhok=
+	t=1747749476; cv=none; b=cdS928lpTS1Qti/K9d/wb14sKpZIgc+x5b+jaTqeBTGxhDBqHvMpmmHWeLYh7XjZgpC67XE/ChXUm7yA0c5TFH8FOwbiJE7s0Q/8Oy1Dwa025fJSO8/E9/JBj7GWmJsPch0iafWZHGrrOJASdvMNQArBLcMv3uihHvR0KRtXMqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749473; c=relaxed/simple;
-	bh=ZMxceUHv7SnoB4j/kisHr4LFfXZeDiuwBBfbV9owozM=;
+	s=arc-20240116; t=1747749476; c=relaxed/simple;
+	bh=YaX/z0HixTmk3VchSbi9c7VfuvwnUl9XwV6LDwHJF9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iksZxF4BhqboG3FAS0anR9l+S1p92N0oMnjfhVzb36iOazdAgjtjUXL4RrXaXLx8TUbJjJS/Cu18bHGwCNeajOD0lCqLf+FPYL1+atjVTBLIij0p6hgvoP331sHHXLQbeYg9gyRDDZzKEhiwlBDdTJkXIH3Xo34UYuVJPCDU798=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryDFQVVX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yw4RdSxE2kVEsOFIe/gOuZkwkzhrc1s5jxqwEkuDfw7NmJD6Hjy1Vc+dhMUdh1ogwrfgK5UFGFVQVa33yjqhW4y9LxdTNrmZDg0yxIFb/Q13Rd6pzhLZA1MVqRXooj4ThlMuSlCYoyi58nNXk4GrhNKTANUUpa0Kp/eDRqLodu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DOsVwXG3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryDFQVVX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E01C4CEE9;
-	Tue, 20 May 2025 13:57:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DOsVwXG3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37D4C4CEE9;
+	Tue, 20 May 2025 13:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749473;
-	bh=ZMxceUHv7SnoB4j/kisHr4LFfXZeDiuwBBfbV9owozM=;
+	s=korg; t=1747749476;
+	bh=YaX/z0HixTmk3VchSbi9c7VfuvwnUl9XwV6LDwHJF9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ryDFQVVXbJvhjkeQ8x6p0n9l0XPffb363XILB8z3iGEArcFv7ETdplNBsfgqi959C
-	 b9Hy9UABZEGlKgv1FmRaqE3MbgSAItYYxyNCzvAZi2O1EMIJt7s9qUIvgNLsGDTMzB
-	 gYOz4733WxX0/GSP21oipcQUBlPndln0XEDjkUUU=
+	b=DOsVwXG3LW+O0mA7s1TmNapqY3WwhAxvaP1ZuQ9C3bNFcf2+feCNlZFzhdIKma46J
+	 3InaW0eVk/SkQSR1jvz6aUq81r7JLmK2Gi0+b4ddE242sF32+FsPsYvp4XMd1jCmLK
+	 7B/03OtUkzkEP5nBPk289KbpSTZwXvtkrnTe++v4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Othacehe <othacehe@gnu.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 29/97] net: cadence: macb: Fix a possible deadlock in macb_halt_tx.
-Date: Tue, 20 May 2025 15:49:54 +0200
-Message-ID: <20250520125801.802466350@linuxfoundation.org>
+	pengdonglin <dolinux.peng@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 56/97] ftrace: Fix preemption accounting for stacktrace filter command
+Date: Tue, 20 May 2025 15:50:21 +0200
+Message-ID: <20250520125802.851841291@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -52,64 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathieu Othacehe <othacehe@gnu.org>
+From: pengdonglin <pengdonglin@xiaomi.com>
 
-[ Upstream commit c92d6089d8ad7d4d815ebcedee3f3907b539ff1f ]
+commit 11aff32439df6ca5b3b891b43032faf88f4a6a29 upstream.
 
-There is a situation where after THALT is set high, TGO stays high as
-well. Because jiffies are never updated, as we are in a context with
-interrupts disabled, we never exit that loop and have a deadlock.
+The preemption count of the stacktrace filter command to trace ksys_read
+is consistently incorrect:
 
-That deadlock was noticed on a sama5d4 device that stayed locked for days.
+$ echo ksys_read:stacktrace > set_ftrace_filter
 
-Use retries instead of jiffies so that the timeout really works and we do
-not have a deadlock anymore.
+   <...>-453     [004] ...1.    38.308956: <stack trace>
+=> ksys_read
+=> do_syscall_64
+=> entry_SYSCALL_64_after_hwframe
 
-Fixes: e86cd53afc590 ("net/macb: better manage tx errors")
-Signed-off-by: Mathieu Othacehe <othacehe@gnu.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250509121935.16282-1-othacehe@gnu.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The root cause is that the trace framework disables preemption when
+invoking the filter command callback in function_trace_probe_call:
+
+   preempt_disable_notrace();
+   probe_ops->func(ip, parent_ip, probe_opsbe->tr, probe_ops, probe->data);
+   preempt_enable_notrace();
+
+Use tracing_gen_ctx_dec() to account for the preempt_disable_notrace(),
+which will output the correct preemption count:
+
+$ echo ksys_read:stacktrace > set_ftrace_filter
+
+   <...>-410     [006] .....    31.420396: <stack trace>
+=> ksys_read
+=> do_syscall_64
+=> entry_SYSCALL_64_after_hwframe
+
+Cc: stable@vger.kernel.org
+Fixes: 36590c50b2d07 ("tracing: Merge irqflags + preempt counter.")
+Link: https://lore.kernel.org/20250512094246.1167956-2-dolinux.peng@gmail.com
+Signed-off-by: pengdonglin <dolinux.peng@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 19 ++++++-------------
- 1 file changed, 6 insertions(+), 13 deletions(-)
+ kernel/trace/trace_functions.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index fc3342944dbcc..d2f4709dee0de 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -962,22 +962,15 @@ static void macb_update_stats(struct macb *bp)
+--- a/kernel/trace/trace_functions.c
++++ b/kernel/trace/trace_functions.c
+@@ -561,11 +561,7 @@ ftrace_traceoff(unsigned long ip, unsign
  
- static int macb_halt_tx(struct macb *bp)
+ static __always_inline void trace_stack(struct trace_array *tr)
  {
--	unsigned long	halt_time, timeout;
--	u32		status;
-+	u32 status;
- 
- 	macb_writel(bp, NCR, macb_readl(bp, NCR) | MACB_BIT(THALT));
- 
--	timeout = jiffies + usecs_to_jiffies(MACB_HALT_TIMEOUT);
--	do {
--		halt_time = jiffies;
--		status = macb_readl(bp, TSR);
--		if (!(status & MACB_BIT(TGO)))
--			return 0;
+-	unsigned int trace_ctx;
 -
--		udelay(250);
--	} while (time_before(halt_time, timeout));
+-	trace_ctx = tracing_gen_ctx();
 -
--	return -ETIMEDOUT;
-+	/* Poll TSR until TGO is cleared or timeout. */
-+	return read_poll_timeout_atomic(macb_readl, status,
-+					!(status & MACB_BIT(TGO)),
-+					250, MACB_HALT_TIMEOUT, false,
-+					bp, TSR);
+-	__trace_stack(tr, trace_ctx, FTRACE_STACK_SKIP);
++	__trace_stack(tr, tracing_gen_ctx_dec(), FTRACE_STACK_SKIP);
  }
  
- static void macb_tx_unmap(struct macb *bp, struct macb_tx_skb *tx_skb, int budget)
--- 
-2.39.5
-
+ static void
 
 
