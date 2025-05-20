@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A541245012;
-	Tue, 20 May 2025 13:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D0F19F137;
+	Tue, 20 May 2025 13:54:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749285; cv=none; b=ckei8cjfeFPzno9uBA8FLrOtQchq/5VNIk7JUel0jvlLHn3xCoxEt7dYAmcbYewlT69uxL3MGScRl0Ondi+hBawOMcn13XCclZgiln2Ux5WqNbr8jMR1GehWyZ0J/pfV5BDp0ALTSI8JwIs9K5AF3W8iTJMIMXcHv5YaiCE+NmY=
+	t=1747749288; cv=none; b=cJ2/WWzNVsH0yiJztkCsj9C55HtdpVy6HBPKFy3GaTKtbYCWIm517g/BZwjilW2hxYnwqdgJIcv4Cuk9oAXK/IR25uCOntI2mgm6c/9Ie57zrI3YwDYxYS8GtiImGpkkq9BnxIsrKrTIAXZwhHor0qyX3O5Ko42R9phNGq5liK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749285; c=relaxed/simple;
-	bh=Ck0fvk3Mk7DdRfg0uENpsowPo4kEG36ZfR96EilDYcg=;
+	s=arc-20240116; t=1747749288; c=relaxed/simple;
+	bh=JYVXJBlHLAmsmONZxjqIp9oCWWVU++IJ7ikq2/o//PA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HMsUWNuJHb25PNr9mzpchtEcAGfp1gaCWruYrize4vXUnE0pnpAuYHOj8TGnvTJi6I5ybuWAigKrRJiu8VLP7ioVVzIKFcgD458Dy3AHb8WMqoRG34InPAlmh19R3PramUd8RScdjB+QQhPFNlgATSSIFGOtCS1ZcawJhrU07iI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gs2Nmunl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UQO1vC8bYk2tjmzwLfql2YyOm4W/Mf6Zi09qYxKX7hykgAlem1Bt3jid0qfX3qxS0h6c1XF3R/QmZx4xDejyr4rHmzHgvZMzfOY78mbgOX0Qhg0HbaOoMATeNggmhqueyZ96Jibykvn7eXCovsLSJDcbvcRZFXr6hN8yb58trPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzVTIBbF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gs2Nmunl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8313C4CEE9;
-	Tue, 20 May 2025 13:54:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzVTIBbF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06372C4CEE9;
+	Tue, 20 May 2025 13:54:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749285;
-	bh=Ck0fvk3Mk7DdRfg0uENpsowPo4kEG36ZfR96EilDYcg=;
+	s=korg; t=1747749288;
+	bh=JYVXJBlHLAmsmONZxjqIp9oCWWVU++IJ7ikq2/o//PA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gs2Nmunlb8SjRQ+GBNpiZlTSsP+QO0wCTWUQLW7ByKNJiYVslrb4aZTMFon87eKrt
-	 Y7d8YCAeLYdlbGnAfwWDYvBoKVURzKmYs95NKEMBpdBEfLLhiX0F8u2Sm1YNW+u7yN
-	 X6CskNM9wuGUHBOy/l/fP8HJ8bhi/klREEU5vIhs=
+	b=vzVTIBbFSguP5bfF1ZZRemPOtwR8VfLtZqDKsMJB4Lpd2pWA38dwkhjw4YuDZ9dzY
+	 4knEyTFm35V7ZvLO73Wuv4/27y9+d4dRnmq45kzIg0LXeCc4ByqU/lHEjXRA7NaVpn
+	 wYBDYnkGfXmZIcrxGp6crdnzmgo65gqgXnRL8eZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	Josef Bacik <josef@toxicpanda.com>,
 	David Sterba <dsterba@suse.com>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	Bin Lan <bin.lan.cn@windriver.com>,
 	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.15 54/59] btrfs: dont BUG_ON() when 0 reference count at btrfs_lookup_extent_info()
-Date: Tue, 20 May 2025 15:50:45 +0200
-Message-ID: <20250520125755.992719538@linuxfoundation.org>
+Subject: [PATCH 5.15 55/59] btrfs: do not clean up repair bio if submit fails
+Date: Tue, 20 May 2025 15:50:46 +0200
+Message-ID: <20250520125756.030382239@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
 References: <20250520125753.836407405@linuxfoundation.org>
@@ -53,72 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 28cb13f29faf6290597b24b728dc3100c019356f upstream.
+commit 8cbc3001a3264d998d6b6db3e23f935c158abd4d upstream.
 
-Instead of doing a BUG_ON() handle the error by returning -EUCLEAN,
-aborting the transaction and logging an error message.
+The submit helper will always run bio_endio() on the bio if it fails to
+submit, so cleaning up the bio just leads to a variety of use-after-free
+and NULL pointer dereference bugs because we race with the endio
+function that is cleaning up the bio.  Instead just return BLK_STS_OK as
+the repair function has to continue to process the rest of the pages,
+and the endio for the repair bio will do the appropriate cleanup for the
+page that it was given.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-[Minor conflict resolved due to code context change.]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+[Minor context change fixed.]
+Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent-tree.c |   25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ fs/btrfs/extent_io.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -176,6 +176,14 @@ search_again:
- 			ei = btrfs_item_ptr(leaf, path->slots[0],
- 					    struct btrfs_extent_item);
- 			num_refs = btrfs_extent_refs(leaf, ei);
-+			if (unlikely(num_refs == 0)) {
-+				ret = -EUCLEAN;
-+				btrfs_err(fs_info,
-+			"unexpected zero reference count for extent item (%llu %u %llu)",
-+					  key.objectid, key.type, key.offset);
-+				btrfs_abort_transaction(trans, ret);
-+				goto out_free;
-+			}
- 			extent_flags = btrfs_extent_flags(leaf, ei);
- 		} else {
- 			ret = -EINVAL;
-@@ -187,8 +195,6 @@ search_again:
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -2624,7 +2624,6 @@ int btrfs_repair_one_sector(struct inode
+ 	const int icsum = bio_offset >> fs_info->sectorsize_bits;
+ 	struct bio *repair_bio;
+ 	struct btrfs_io_bio *repair_io_bio;
+-	blk_status_t status;
  
- 			goto out_free;
- 		}
--
--		BUG_ON(num_refs == 0);
- 	} else {
- 		num_refs = 0;
- 		extent_flags = 0;
-@@ -218,10 +224,19 @@ search_again:
- 			goto search_again;
- 		}
- 		spin_lock(&head->lock);
--		if (head->extent_op && head->extent_op->update_flags)
-+		if (head->extent_op && head->extent_op->update_flags) {
- 			extent_flags |= head->extent_op->flags_to_set;
--		else
--			BUG_ON(num_refs == 0);
-+		} else if (unlikely(num_refs == 0)) {
-+			spin_unlock(&head->lock);
-+			mutex_unlock(&head->mutex);
-+			spin_unlock(&delayed_refs->lock);
-+			ret = -EUCLEAN;
-+			btrfs_err(fs_info,
-+			  "unexpected zero reference count for extent %llu (%s)",
-+				  bytenr, metadata ? "metadata" : "data");
-+			btrfs_abort_transaction(trans, ret);
-+			goto out_free;
-+		}
+ 	btrfs_debug(fs_info,
+ 		   "repair read error: read error at %llu", start);
+@@ -2664,13 +2663,13 @@ int btrfs_repair_one_sector(struct inode
+ 		    "repair read error: submitting new read to mirror %d",
+ 		    failrec->this_mirror);
  
- 		num_refs += head->ref_mod;
- 		spin_unlock(&head->lock);
+-	status = submit_bio_hook(inode, repair_bio, failrec->this_mirror,
+-				 failrec->bio_flags);
+-	if (status) {
+-		free_io_failure(failure_tree, tree, failrec);
+-		bio_put(repair_bio);
+-	}
+-	return blk_status_to_errno(status);
++	/*
++	 * At this point we have a bio, so any errors from submit_bio_hook()
++	 * will be handled by the endio on the repair_bio, so we can't return an
++	 * error here.
++	 */
++	submit_bio_hook(inode, repair_bio, failrec->this_mirror, failrec->bio_flags);
++	return BLK_STS_OK;
+ }
+ 
+ static void end_page_read(struct page *page, bool uptodate, u64 start, u32 len)
 
 
