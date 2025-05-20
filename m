@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666702512FC;
-	Tue, 20 May 2025 14:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0102472AE;
+	Tue, 20 May 2025 14:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750433; cv=none; b=NXFa3XaL6qADOUNRO6YH9aHYEmE0YwZmg58b7nXSUbVn7YQWnsEsuG+bR8gQOHgcpgcjDvVZgZmkRTxU2G7sYQoBWE+/+FRdp8YpAJkkEt5reQtsr82DYKeZ8uok6j91AKb0JFhB1BH1oM/iHwy8MByE7om4B+aHtBM6pF2NUxE=
+	t=1747750436; cv=none; b=K2tCRnduOxIcTgqhrZ9pRjls3lot7P5lBSaQYeQJ6IOx3GTyAvq2cug5qAlN122Tkv+9Pd3nHVhCyRRllXwauJ5jjDb2P5dkzMll1/OPUAT3owvT1XrlIgiwXUsPKhhELOIRg41eTqFucM86aexCo69FH5wEsn4kruRV5UsA2zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750433; c=relaxed/simple;
-	bh=M7UQWvkQYTwMSMDIEP808gFuKISnM5ztMglLVvZZY1Q=;
+	s=arc-20240116; t=1747750436; c=relaxed/simple;
+	bh=2ysceANjiXDDwni/D09KKLSKmgJITSyynl2eWalLQ88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MPMcOQ3rcpeE+3QqKKpriJBr4hn5wQztdZktg3S5blmmslpcBAs4Km0Ua98cl5l6eK+VZV2figyrik3iW/J415Bs67IgiCIKqXrXMw3blAulvVPh1Lbpo4bE5PpZc8Ycad0HASc3PNIbyKxoEy3xUwVyA12hm8jufYwa9qck9Zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/J87h94; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EjgxSyMEQS9WJSH9CPQ45B6vWan5gGeH5KH7R9cvS0zFckoAdlHnLno1ufQltAZTHaBfT2OJlvf+37L+48fm+rxZqPNn4sZVSr6sRANZ8G8cn2xJIA5FtTGN2OnZIbf3vjbvgOIqQZMNDkKSXrnbwuNEKo8v6ieUllRECNtVX7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFJsbY15; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/J87h94"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0293C4CEEB;
-	Tue, 20 May 2025 14:13:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFJsbY15"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD354C4CEEA;
+	Tue, 20 May 2025 14:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750433;
-	bh=M7UQWvkQYTwMSMDIEP808gFuKISnM5ztMglLVvZZY1Q=;
+	s=korg; t=1747750436;
+	bh=2ysceANjiXDDwni/D09KKLSKmgJITSyynl2eWalLQ88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m/J87h94a5H2e7BsMIBKZvktJiCMfbQsrOKAAKnbKCNVY/NtzWwT4N9z8laHJB54c
-	 OSrRMpU38LsaCtfpmeZuQBKqs/XkcMr4/3NEOOKXlzRJLgv0euVbjC1M9mNkOCewXz
-	 VSZA9WFnGyQ2bnhflsKPi5DepuJdouc0jHgr70yk=
+	b=pFJsbY152Do4wHfR4oHiCLd6kGJV8y1WvK7d8l4Q35+cpXX0ZHxQw2THNnCfs83I9
+	 Mnb7vloBpQRZdX6HwyZESAN/WQgg7BEv1K9CitCf0RvpU/hGdVwYtPodY6HoUjHRhd
+	 Z9BQbVAo/j1bikLjYtjneh+tBpfo22gH5qYrpvOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 143/143] drm/amdgpu: fix pm notifier handling
-Date: Tue, 20 May 2025 15:51:38 +0200
-Message-ID: <20250520125815.632496384@linuxfoundation.org>
+	Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Subject: [PATCH 6.12 135/143] accel/ivpu: Fix fw log printing
+Date: Tue, 20 May 2025 15:51:30 +0200
+Message-ID: <20250520125815.326961719@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -50,94 +50,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
 
-commit 4aaffc85751da5722e858e4333e8cf0aa4b6c78f upstream.
+commit 4bc988b47019536b3b1f7d9c5b83893c712d94d6 upstream.
 
-Set the s3/s0ix and s4 flags in the pm notifier so that we can skip
-the resource evictions properly in pm prepare based on whether
-we are suspending or hibernating.  Drop the eviction as processes
-are not frozen at this time, we we can end up getting stuck trying
-to evict VRAM while applications continue to submit work which
-causes the buffers to get pulled back into VRAM.
+  - Fix empty log detection that couldn't work without read_wrap_count
+  - Start printing wrapped log from correct position (log_start)
+  - Properly handle logs that are wrapped multiple times in reference
+    to reader position
+  - Don't add a newline when log buffer is wrapped
+  - Always add a newline after printing a log buffer in case log does
+    not end with one
 
-v2: Move suspend flags out of pm notifier (Mario)
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4178
-Fixes: 2965e6355dcd ("drm/amd: Add Suspend/Hibernate notification callback support")
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 06f2dcc241e7e5c681f81fbc46cacdf4bfd7d6d7)
-Cc: stable@vger.kernel.org
+Reviewed-by: Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240930195322.461209-6-jacek.lawrynowicz@linux.intel.com
+Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   18 +++++-------------
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c    |   10 +---------
- 2 files changed, 6 insertions(+), 22 deletions(-)
+ drivers/accel/ivpu/ivpu_fw_log.c |   49 +++++++++++++++++++++++++--------------
+ 1 file changed, 32 insertions(+), 17 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4728,28 +4728,20 @@ static int amdgpu_device_evict_resources
-  * @data: data
-  *
-  * This function is called when the system is about to suspend or hibernate.
-- * It is used to evict resources from the device before the system goes to
-- * sleep while there is still access to swap.
-+ * It is used to set the appropriate flags so that eviction can be optimized
-+ * in the pm prepare callback.
-  */
- static int amdgpu_device_pm_notifier(struct notifier_block *nb, unsigned long mode,
- 				     void *data)
- {
- 	struct amdgpu_device *adev = container_of(nb, struct amdgpu_device, pm_nb);
--	int r;
- 
- 	switch (mode) {
- 	case PM_HIBERNATION_PREPARE:
- 		adev->in_s4 = true;
--		fallthrough;
--	case PM_SUSPEND_PREPARE:
--		r = amdgpu_device_evict_resources(adev);
--		/*
--		 * This is considered non-fatal at this time because
--		 * amdgpu_device_prepare() will also fatally evict resources.
--		 * See https://gitlab.freedesktop.org/drm/amd/-/issues/3781
--		 */
--		if (r)
--			drm_warn(adev_to_drm(adev), "Failed to evict resources, freeze active processes if problems occur: %d\n", r);
-+		break;
-+	case PM_POST_HIBERNATION:
-+		adev->in_s4 = false;
- 		break;
+--- a/drivers/accel/ivpu/ivpu_fw_log.c
++++ b/drivers/accel/ivpu/ivpu_fw_log.c
+@@ -87,7 +87,7 @@ static void fw_log_print_lines(char *buf
  	}
- 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2647,13 +2647,8 @@ static int amdgpu_pmops_freeze(struct de
- static int amdgpu_pmops_thaw(struct device *dev)
- {
- 	struct drm_device *drm_dev = dev_get_drvdata(dev);
--	struct amdgpu_device *adev = drm_to_adev(drm_dev);
--	int r;
- 
--	r = amdgpu_device_resume(drm_dev, true);
--	adev->in_s4 = false;
--
--	return r;
-+	return amdgpu_device_resume(drm_dev, true);
+ 	line[index] = 0;
+ 	if (index != 0)
+-		drm_printf(p, "%s\n", line);
++		drm_printf(p, "%s", line);
  }
  
- static int amdgpu_pmops_poweroff(struct device *dev)
-@@ -2666,9 +2661,6 @@ static int amdgpu_pmops_poweroff(struct
- static int amdgpu_pmops_restore(struct device *dev)
+ static void fw_log_print_buffer(struct vpu_tracing_buffer_header *log, const char *prefix,
+@@ -95,23 +95,29 @@ static void fw_log_print_buffer(struct v
  {
- 	struct drm_device *drm_dev = dev_get_drvdata(dev);
--	struct amdgpu_device *adev = drm_to_adev(drm_dev);
--
--	adev->in_s4 = false;
+ 	char *log_data = (void *)log + log->header_size;
+ 	u32 data_size = log->size - log->header_size;
+-	u32 log_start = log->read_index;
+-	u32 log_end = log->write_index;
++	u32 log_start = only_new_msgs ? READ_ONCE(log->read_index) : 0;
++	u32 log_end = READ_ONCE(log->write_index);
  
- 	return amdgpu_device_resume(drm_dev, true);
+-	if (!(log->write_index || log->wrap_count) ||
+-	    (log->write_index == log->read_index && only_new_msgs)) {
+-		drm_printf(p, "==== %s \"%s\" log empty ====\n", prefix, log->name);
+-		return;
++	if (log->wrap_count == log->read_wrap_count) {
++		if (log_end <= log_start) {
++			drm_printf(p, "==== %s \"%s\" log empty ====\n", prefix, log->name);
++			return;
++		}
++	} else if (log->wrap_count == log->read_wrap_count + 1) {
++		if (log_end > log_start)
++			log_start = log_end;
++	} else {
++		log_start = log_end;
+ 	}
+ 
+ 	drm_printf(p, "==== %s \"%s\" log start ====\n", prefix, log->name);
+-	if (log->write_index > log->read_index) {
++	if (log_end > log_start) {
+ 		fw_log_print_lines(log_data + log_start, log_end - log_start, p);
+ 	} else {
+-		fw_log_print_lines(log_data + log_end, data_size - log_end, p);
++		fw_log_print_lines(log_data + log_start, data_size - log_start, p);
+ 		fw_log_print_lines(log_data, log_end, p);
+ 	}
+-	drm_printf(p, "\x1b[0m");
++	drm_printf(p, "\n\x1b[0m"); /* add new line and clear formatting */
+ 	drm_printf(p, "==== %s \"%s\" log end   ====\n", prefix, log->name);
+ }
+ 
+@@ -135,14 +141,19 @@ void ivpu_fw_log_print(struct ivpu_devic
+ void ivpu_fw_log_mark_read(struct ivpu_device *vdev)
+ {
+ 	struct vpu_tracing_buffer_header *log;
+-	u32 next = 0;
++	u32 next;
+ 
+-	while (fw_log_from_bo(vdev, vdev->fw->mem_log_crit, &next, &log) == 0)
+-		log->read_index = log->write_index;
++	next = 0;
++	while (fw_log_from_bo(vdev, vdev->fw->mem_log_crit, &next, &log) == 0) {
++		log->read_index = READ_ONCE(log->write_index);
++		log->read_wrap_count = READ_ONCE(log->wrap_count);
++	}
+ 
+ 	next = 0;
+-	while (fw_log_from_bo(vdev, vdev->fw->mem_log_verb, &next, &log) == 0)
+-		log->read_index = log->write_index;
++	while (fw_log_from_bo(vdev, vdev->fw->mem_log_verb, &next, &log) == 0) {
++		log->read_index = READ_ONCE(log->write_index);
++		log->read_wrap_count = READ_ONCE(log->wrap_count);
++	}
+ }
+ 
+ void ivpu_fw_log_reset(struct ivpu_device *vdev)
+@@ -151,10 +162,14 @@ void ivpu_fw_log_reset(struct ivpu_devic
+ 	u32 next;
+ 
+ 	next = 0;
+-	while (fw_log_from_bo(vdev, vdev->fw->mem_log_crit, &next, &log) == 0)
++	while (fw_log_from_bo(vdev, vdev->fw->mem_log_crit, &next, &log) == 0) {
+ 		log->read_index = 0;
++		log->read_wrap_count = 0;
++	}
+ 
+ 	next = 0;
+-	while (fw_log_from_bo(vdev, vdev->fw->mem_log_verb, &next, &log) == 0)
++	while (fw_log_from_bo(vdev, vdev->fw->mem_log_verb, &next, &log) == 0) {
+ 		log->read_index = 0;
++		log->read_wrap_count = 0;
++	}
  }
 
 
