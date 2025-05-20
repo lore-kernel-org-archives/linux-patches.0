@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD85DDA9;
-	Tue, 20 May 2025 13:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1C422D7A8;
+	Tue, 20 May 2025 13:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749484; cv=none; b=EbdwBLC/KZ7SLmYMSIGFtGMH795r0NfBVqKAnN/Y5VzzUTBJoE8fyemP24NpB4TGWXO92q1bpx+LrL91eeiBrR8esmeBqIwrJ5ZHzaa5sP2bEMVzjm6XGTIxON5mpmkOPO/ipB5tccdnRLrdhkfwnzllPSCHUqudkORo46RNqmg=
+	t=1747749488; cv=none; b=VgL5eS9Z1TeNg5uCm/fhv1i3LPGpVNLjhBPEqT6lUbMYTMrRxwEWM0GlI1KqhmiIjb35k1iVXqGrWyRyPUCNDRzQZHYlvaTwHLeOBI/XAmUyu3QLcBmim8HGYmInG2gLh6bD0R9bycGSfwMIQDkKTks/Nca4tqOVkcW22NyBoUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749484; c=relaxed/simple;
-	bh=GDeFuFcR/QRSKyeooZyP6jEGYpE+mmv5KD606OITWhM=;
+	s=arc-20240116; t=1747749488; c=relaxed/simple;
+	bh=rg+K04/zpmt7rgDjPlWE/2A7o0oAWL43tsqcxEqRCN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A50hFB4XNErErZvy6LdPmz1yP1wkk5tjiZgg1YS4JKYooZMy3lXuAsegHETonIEW2kSNj4ohwqaZxIxA8hAIXfc5vJ2QUHawI9R/AHWe+jPP7+yRbJANhAC4U2KKC14qHdNuk4H6gtUV/bQ0at9wTmAadr9OJ8GCwIQeHwprMv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BRueOz0n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JziQsK7FD+Y+v/AvTEvQokXxCmhWVDJW0cAUrlNAecXTUXXOy6Dt/OSD4Goh3vWKZc1YzJCsYZPnjkf1Kdbh4xT4V/B9/GG2XWLE/AhINamscm53vu3bmCVrAcRC68XtZB+MAwg/pVV/AP5MP5cnKvnzRH6Qk/MXVKxsIvo4OcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hOQV7Qe5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BRueOz0n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6322AC4CEE9;
-	Tue, 20 May 2025 13:58:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOQV7Qe5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93EA7C4CEE9;
+	Tue, 20 May 2025 13:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749484;
-	bh=GDeFuFcR/QRSKyeooZyP6jEGYpE+mmv5KD606OITWhM=;
+	s=korg; t=1747749488;
+	bh=rg+K04/zpmt7rgDjPlWE/2A7o0oAWL43tsqcxEqRCN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BRueOz0n6y3woGYc00FZwcFNmtSm9rrFYyw3VcXtMheoLm62frsjnKGuFzgDe7dSv
-	 8fRzaGati2bQGe/fES+WSjN5dpHjtiHzvNG5RxQOt3GPhJ94se6Hy4iYfS0YYuC/dU
-	 6OrSgQQD0SkfvYgXm5J0NWKUictWv8jrc5RlHUv4=
+	b=hOQV7Qe5tPf0ARye96+IYJ3HhC+YY/dnKsQOiLL7W4D/7CpYLgyTfTrQRACWUROMm
+	 dk3JMMUkMBX0vkHM5dcF1zX2/jaq6hRiiJjdDQTmFJpuJO3DllmfCqLvnZvsP0XE9N
+	 pvhwrtmq1FKHHhNR9wFnxD3rx/8Gcjq3wgJg9+7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Thierry Reding <treding@nvidia.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 58/97] phy: Fix error handling in tegra_xusb_port_init
-Date: Tue, 20 May 2025 15:50:23 +0200
-Message-ID: <20250520125802.929165661@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 30/97] net: dsa: sja1105: discard incoming frames in BR_STATE_LISTENING
+Date: Tue, 20 May 2025 15:49:55 +0200
+Message-ID: <20250520125801.840675708@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -51,56 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-commit b2ea5f49580c0762d17d80d8083cb89bc3acf74f upstream.
+[ Upstream commit 498625a8ab2c8e1c9ab5105744310e8d6952cc01 ]
 
-If device_add() fails, do not use device_unregister() for error
-handling. device_unregister() consists two functions: device_del() and
-put_device(). device_unregister() should only be called after
-device_add() succeeded because device_del() undoes what device_add()
-does if successful. Change device_unregister() to put_device() call
-before returning from the function.
+It has been reported that when under a bridge with stp_state=1, the logs
+get spammed with this message:
 
-As comment of device_add() says, 'if device_add() succeeds, you should
-call device_del() when you want to get rid of it. If device_add() has
-not succeeded, use only put_device() to drop the reference count'.
+[  251.734607] fsl_dpaa2_eth dpni.5 eth0: Couldn't decode source port
 
-Found by code review.
+Further debugging shows the following info associated with packets:
+source_port=-1, switch_id=-1, vid=-1, vbid=1
 
-Cc: stable@vger.kernel.org
-Fixes: 53d2a715c240 ("phy: Add Tegra XUSB pad controller support")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Link: https://lore.kernel.org/r/20250303072739.3874987-1-make24@iscas.ac.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In other words, they are data plane packets which are supposed to be
+decoded by dsa_tag_8021q_find_port_by_vbid(), but the latter (correctly)
+refuses to do so, because no switch port is currently in
+BR_STATE_LEARNING or BR_STATE_FORWARDING - so the packet is effectively
+unexpected.
+
+The error goes away after the port progresses to BR_STATE_LEARNING in 15
+seconds (the default forward_time of the bridge), because then,
+dsa_tag_8021q_find_port_by_vbid() can correctly associate the data plane
+packets with a plausible bridge port in a plausible STP state.
+
+Re-reading IEEE 802.1D-1990, I see the following:
+
+"4.4.2 Learning: (...) The Forwarding Process shall discard received
+frames."
+
+IEEE 802.1D-2004 further clarifies:
+
+"DISABLED, BLOCKING, LISTENING, and BROKEN all correspond to the
+DISCARDING port state. While those dot1dStpPortStates serve to
+distinguish reasons for discarding frames, the operation of the
+Forwarding and Learning processes is the same for all of them. (...)
+LISTENING represents a port that the spanning tree algorithm has
+selected to be part of the active topology (computing a Root Port or
+Designated Port role) but is temporarily discarding frames to guard
+against loops or incorrect learning."
+
+Well, this is not what the driver does - instead it sets
+mac[port].ingress = true.
+
+To get rid of the log spam, prevent unexpected data plane packets to
+be received by software by discarding them on ingress in the LISTENING
+state.
+
+In terms of blame attribution: the prints only date back to commit
+d7f9787a763f ("net: dsa: tag_8021q: add support for imprecise RX based
+on the VBID"). However, the settings would permit a LISTENING port to
+forward to a FORWARDING port, and the standard suggests that's not OK.
+
+Fixes: 640f763f98c2 ("net: dsa: sja1105: Add support for Spanning Tree Protocol")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250509113816.2221992-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/tegra/xusb.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/dsa/sja1105/sja1105_main.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/drivers/phy/tegra/xusb.c
-+++ b/drivers/phy/tegra/xusb.c
-@@ -542,16 +542,16 @@ static int tegra_xusb_port_init(struct t
- 
- 	err = dev_set_name(&port->dev, "%s-%u", name, index);
- 	if (err < 0)
--		goto unregister;
-+		goto put_device;
- 
- 	err = device_add(&port->dev);
- 	if (err < 0)
--		goto unregister;
-+		goto put_device;
- 
- 	return 0;
- 
--unregister:
--	device_unregister(&port->dev);
-+put_device:
-+	put_device(&port->dev);
- 	return err;
- }
- 
+diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
+index f1f1368e8146f..d51d982c4bc01 100644
+--- a/drivers/net/dsa/sja1105/sja1105_main.c
++++ b/drivers/net/dsa/sja1105/sja1105_main.c
+@@ -2083,6 +2083,7 @@ static void sja1105_bridge_stp_state_set(struct dsa_switch *ds, int port,
+ 	switch (state) {
+ 	case BR_STATE_DISABLED:
+ 	case BR_STATE_BLOCKING:
++	case BR_STATE_LISTENING:
+ 		/* From UM10944 description of DRPDTAG (why put this there?):
+ 		 * "Management traffic flows to the port regardless of the state
+ 		 * of the INGRESS flag". So BPDUs are still be allowed to pass.
+@@ -2092,11 +2093,6 @@ static void sja1105_bridge_stp_state_set(struct dsa_switch *ds, int port,
+ 		mac[port].egress    = false;
+ 		mac[port].dyn_learn = false;
+ 		break;
+-	case BR_STATE_LISTENING:
+-		mac[port].ingress   = true;
+-		mac[port].egress    = false;
+-		mac[port].dyn_learn = false;
+-		break;
+ 	case BR_STATE_LEARNING:
+ 		mac[port].ingress   = true;
+ 		mac[port].egress    = false;
+-- 
+2.39.5
+
 
 
