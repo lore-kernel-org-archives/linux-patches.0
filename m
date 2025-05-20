@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8AE22DF87;
-	Tue, 20 May 2025 13:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDD422DF87;
+	Tue, 20 May 2025 13:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749434; cv=none; b=WHbNvnWEPzoHqpWGSaF4CoUxW5gHBzk2AjMlbiE2vr4nwUBZtX0VQtwIHahRGraLA+cZNKjf2BNtX/CFelhsGmWMKJ9doyvn8K8JpXdzqroEl+nAQx/pBCnQDqrb6jJFYJggNIVHG7tI7t8Cyow26PByeXEgxf4f5Ym+1Z/fsCQ=
+	t=1747749437; cv=none; b=OVwm9pwmPSV5t4XadORhNhY/2dkGCuTuwBEXPimsfYZIfDrJJmbi5p7SN2tDZsyv7lXUHr0D6LNv/oGfPdhtQJatxL7s/BkwZoNUlAjZSaWHBUulOEKTOJ6ZV+PtNf/gXUM/BdeVE2sfc2+YF2zWBh7fe/P9j8r8cpor/maW2II=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749434; c=relaxed/simple;
-	bh=p6Mmf+s5Cs4QyK/6jzSCidz+7X7l9v97VeCvZ0fJW9I=;
+	s=arc-20240116; t=1747749437; c=relaxed/simple;
+	bh=WyLB7zqwmjaaab7tcPHNA+GkdnL/nWoPpzNGr8d0jYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sAAtflug/4SMasVF1XJk8ykkQo/7CqLyQvauSw6DzZ8st8qk1VLyY2viMOOlFuhLbvBwTBPk161Lrzz9wuGHz2uGn10V6jMvKEobRkh+Zym0iZv+C6mQtm118PtGG8RtTkxAlGZ89+tVg8I0bJ7ipiz/TkdzHQHprHMQQE5OmxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1twopu9I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X5jPhNQOF5JxsoVCBDZZfqzjk+X1jloCJfTG/BvQ9bkGtCGlR5W7BIm6Fz/UEoto3fjt3yQE3NjdC62gYNPEz4TCGuP7XoBGSVauLo1BaqdLaeJl22WeX0iswAfAtDKNsHSF/zuzlkrB8IpSG7HtOQhaDu2AGKiMXqmuegwHO+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aoOSDPL1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1twopu9I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3697C4CEE9;
-	Tue, 20 May 2025 13:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aoOSDPL1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFEC6C4CEE9;
+	Tue, 20 May 2025 13:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749434;
-	bh=p6Mmf+s5Cs4QyK/6jzSCidz+7X7l9v97VeCvZ0fJW9I=;
+	s=korg; t=1747749437;
+	bh=WyLB7zqwmjaaab7tcPHNA+GkdnL/nWoPpzNGr8d0jYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1twopu9It9WN+4cpmqQqvlTgPiC3s7cNrNAa9CINMw5SlD/erziMNFHSriv7AqnoY
-	 ub7vT4Lb4E8mraHszA3V4qkvLEmO2sA7TJ5mi5iqr7bJXrsdtp3xdXFFJemXpNIWz4
-	 SrfzLTYfnsBhd/jvl0ZQgTDCzWfvsHfxYgDsTLy4=
+	b=aoOSDPL1W72/F4/tbgJwx3NIX+ulaq63B/y1DJ+hHsbQARvwE6eC3wJNFb3tSrfdb
+	 CLLGgSts9a5G3f8NbuD9UezYkUhLHVlpxjDs6wycHro6EUTzrbo7GfgRSIlwjvuqXY
+	 9yZHVpxuZmFVZBqsRAYJboxUUbyRj2Z7VnZjsy9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Wayne Lin <Wayne.Lin@amd.com>
-Subject: [PATCH 6.1 44/97] drm/amd/display: Avoid flooding unnecessary info messages
-Date: Tue, 20 May 2025 15:50:09 +0200
-Message-ID: <20250520125802.386427920@linuxfoundation.org>
+	Maximilian Heyne <mheyne@amazon.de>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Jeremy Linton <jeremy.linton@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.1 45/97] ACPI: PPTT: Fix processor subtable walk
+Date: Tue, 20 May 2025 15:50:10 +0200
+Message-ID: <20250520125802.423962072@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -51,53 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Jeremy Linton <jeremy.linton@arm.com>
 
-commit d33724ffb743d3d2698bd969e29253ae0cff9739 upstream.
+commit adfab6b39202481bb43286fff94def4953793fdb upstream.
 
-It's expected that we'll encounter temporary exceptions
-during aux transactions. Adjust logging from drm_info to
-drm_dbg_dp to prevent flooding with unnecessary log messages.
+The original PPTT code had a bug where the processor subtable length
+was not correctly validated when encountering a truncated
+acpi_pptt_processor node.
 
-Fixes: 3637e457eb00 ("drm/amd/display: Fix wrong handling for AUX_DEFER case")
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Link: https://lore.kernel.org/r/20250513032026.838036-1-Wayne.Lin@amd.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9a9c3e1fe5256da14a0a307dff0478f90c55fc8c)
-Cc: stable@vger.kernel.org
+Commit 7ab4f0e37a0f4 ("ACPI PPTT: Fix coding mistakes in a couple of
+sizeof() calls") attempted to fix this by validating the size is as
+large as the acpi_pptt_processor node structure. This introduced a
+regression where the last processor node in the PPTT table is ignored
+if it doesn't contain any private resources. That results errors like:
+
+  ACPI PPTT: PPTT table found, but unable to locate core XX (XX)
+  ACPI: SPE must be homogeneous
+
+Furthermore, it fails in a common case where the node length isn't
+equal to the acpi_pptt_processor structure size, leaving the original
+bug in a modified form.
+
+Correct the regression by adjusting the loop termination conditions as
+suggested by the bug reporters. An additional check performed after
+the subtable node type is detected, validates the acpi_pptt_processor
+node is fully contained in the PPTT table. Repeating the check in
+acpi_pptt_leaf_node() is largely redundant as the node is already
+known to be fully contained in the table.
+
+The case where a final truncated node's parent property is accepted,
+but the node itself is rejected should not be considered a bug.
+
+Fixes: 7ab4f0e37a0f4 ("ACPI PPTT: Fix coding mistakes in a couple of sizeof() calls")
+Reported-by: Maximilian Heyne <mheyne@amazon.de>
+Closes: https://lore.kernel.org/linux-acpi/20250506-draco-taped-15f475cd@mheyne-amazon/
+Reported-by: Yicong Yang <yangyicong@hisilicon.com>
+Closes: https://lore.kernel.org/linux-acpi/20250507035124.28071-1-yangyicong@huawei.com/
+Signed-off-by: Jeremy Linton <jeremy.linton@arm.com>
+Tested-by: Yicong Yang <yangyicong@hisilicon.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Tested-by: Maximilian Heyne <mheyne@amazon.de>
+Cc: All applicable <stable@vger.kernel.org> # 7ab4f0e37a0f4: ACPI PPTT: Fix coding mistakes ...
+Link: https://patch.msgid.link/20250508023025.1301030-1-jeremy.linton@arm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/acpi/pptt.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -111,7 +111,7 @@ static ssize_t dm_dp_aux_transfer(struct
- 	if (payload.write && result >= 0) {
- 		if (result) {
- 			/*one byte indicating partially written bytes*/
--			drm_info(adev_to_drm(adev), "amdgpu: AUX partially written\n");
-+			drm_dbg_dp(adev_to_drm(adev), "amdgpu: AUX partially written\n");
- 			result = payload.data[0];
- 		} else if (!payload.reply[0])
- 			/*I2C_ACK|AUX_ACK*/
-@@ -137,11 +137,11 @@ static ssize_t dm_dp_aux_transfer(struct
+--- a/drivers/acpi/pptt.c
++++ b/drivers/acpi/pptt.c
+@@ -219,16 +219,18 @@ static int acpi_pptt_leaf_node(struct ac
+ 			     sizeof(struct acpi_table_pptt));
+ 	proc_sz = sizeof(struct acpi_pptt_processor);
+ 
+-	while ((unsigned long)entry + proc_sz < table_end) {
++	/* ignore subtable types that are smaller than a processor node */
++	while ((unsigned long)entry + proc_sz <= table_end) {
+ 		cpu_node = (struct acpi_pptt_processor *)entry;
++
+ 		if (entry->type == ACPI_PPTT_TYPE_PROCESSOR &&
+ 		    cpu_node->parent == node_entry)
+ 			return 0;
+ 		if (entry->length == 0)
+ 			return 0;
++
+ 		entry = ACPI_ADD_PTR(struct acpi_subtable_header, entry,
+ 				     entry->length);
+-
+ 	}
+ 	return 1;
+ }
+@@ -261,15 +263,18 @@ static struct acpi_pptt_processor *acpi_
+ 	proc_sz = sizeof(struct acpi_pptt_processor);
+ 
+ 	/* find the processor structure associated with this cpuid */
+-	while ((unsigned long)entry + proc_sz < table_end) {
++	while ((unsigned long)entry + proc_sz <= table_end) {
+ 		cpu_node = (struct acpi_pptt_processor *)entry;
+ 
+ 		if (entry->length == 0) {
+ 			pr_warn("Invalid zero length subtable\n");
  			break;
  		}
- 
--		drm_info(adev_to_drm(adev), "amdgpu: DP AUX transfer fail:%d\n", operation_result);
-+		drm_dbg_dp(adev_to_drm(adev), "amdgpu: DP AUX transfer fail:%d\n", operation_result);
- 	}
- 
- 	if (payload.reply[0])
--		drm_info(adev_to_drm(adev), "amdgpu: AUX reply command not ACK: 0x%02x.",
-+		drm_dbg_dp(adev_to_drm(adev), "amdgpu: AUX reply command not ACK: 0x%02x.",
- 			payload.reply[0]);
- 
- 	return result;
++		/* entry->length may not equal proc_sz, revalidate the processor structure length */
+ 		if (entry->type == ACPI_PPTT_TYPE_PROCESSOR &&
+ 		    acpi_cpu_id == cpu_node->acpi_processor_id &&
++		    (unsigned long)entry + entry->length <= table_end &&
++		    entry->length == proc_sz + cpu_node->number_of_priv_resources * sizeof(u32) &&
+ 		     acpi_pptt_leaf_node(table_hdr, cpu_node)) {
+ 			return (struct acpi_pptt_processor *)entry;
+ 		}
 
 
