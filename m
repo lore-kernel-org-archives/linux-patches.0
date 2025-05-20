@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F8F2F37;
-	Tue, 20 May 2025 14:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B81D2F37;
+	Tue, 20 May 2025 14:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749915; cv=none; b=uEjaidYFLEHT/ZXubHtU0a1aZNkwQit9yBuS7nDusAfDkJeLfXmG38K1Yvv0EL3N6Ni1Ima5nbocw+/ZaLdYnprV9sJybXj+ZCh7V4WpfGXbJNOuh3fms4QRGVKoAq7igL2lm+Faicl6eHWhb0bzRo6cXvmqkWCvzPTWXS1/T6Y=
+	t=1747749918; cv=none; b=KT0M6II3vBClX3R+NM1voTqzVk7YwiaVP72f/Ivwd4uIJAnxctJlUH1+YJzomkBEBJcrjkiFYsGcGILwDcCmAPfPE98TOik0p00gtsy3OOtIze2iGa7+9P08Hl3PY4zgLE5+nOq+x/yQsemVBNRU87vwpYhrf9vzpgKgfjzJvTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749915; c=relaxed/simple;
-	bh=4HMnH92tgsO+USQdwrLb6KX1a3wbBTcHetlt+6TgSJs=;
+	s=arc-20240116; t=1747749918; c=relaxed/simple;
+	bh=KfLDOKBVKzJpLR5Kv/Ie9qSjsQxQCGnmiNpPw4HEMJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qh1R76cbxMF0ySJggeWT451JJDSdaXUlKeVXx7AB6tydjr0kejQtGeYi08X/Sv7i6tUzvOtHXxnrufTrkGxJktbwu+GG8i+3/gMa35GIqotUFMXF58KtkhRwkNdDotUddbI1IhyxNUeAT3t1k7F0peIi+R9z0XDacAOoIwviAIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZpsUjER5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f17P0xTxfO/QkAWWsKUWu3MQg0EX5m/V/hn1nhiWJ6V3wLJnm/elFYvGs61wDkZK8Vj9hQzPI+v6Ss45hbUhBXkh5Yp4P7U8j9naC1JeRVOVcGMfvG2T3DlFQUviyZudlxo8sHYD1frhzqtGhjR3n1Y0TP/8MWWsAob3QiR+n1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tmvhxlp3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZpsUjER5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD22C4CEE9;
-	Tue, 20 May 2025 14:05:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tmvhxlp3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBFEC4CEE9;
+	Tue, 20 May 2025 14:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749914;
-	bh=4HMnH92tgsO+USQdwrLb6KX1a3wbBTcHetlt+6TgSJs=;
+	s=korg; t=1747749918;
+	bh=KfLDOKBVKzJpLR5Kv/Ie9qSjsQxQCGnmiNpPw4HEMJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZpsUjER5CaH/wnEjuDqSypCsjxGsyZGP0xM9IJOEGMrOMFhaYWjt5yva3EZAGQ+L3
-	 ZdafoncCtihdOCKAaGRooP8zknG5EnH6UQXN7ADVo9O0CfbqxWDqbyU3AirGTdS2qO
-	 Ve94u4NRGsfqEv3FUyIgBzyJEfnCcrXrJFRDqRPE=
+	b=Tmvhxlp3A51UivuzRxBnApRWHN2rnaiYPbYwcwqGSHkqD+2McBvXNgqPM30XDGzvB
+	 cXTTRdpXKClP4NEETiOb3qiXSducOx5NIk4W/MelzN8r5yS/wi2lpoy2ajuoN3S38N
+	 Ac7dapq04s8bbBlalkeFhYdE0A4FO8b55wA/xaUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Fenghua Yu <fenghuay@nvidia.com>,
+	Ma Ke <make24@iscas.ac.cn>,
+	Thierry Reding <treding@nvidia.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.6 101/117] dmaengine: idxd: fix memory leak in error handling path of idxd_pci_probe
-Date: Tue, 20 May 2025 15:51:06 +0200
-Message-ID: <20250520125807.995067824@linuxfoundation.org>
+Subject: [PATCH 6.6 084/117] phy: Fix error handling in tegra_xusb_port_init
+Date: Tue, 20 May 2025 15:50:49 +0200
+Message-ID: <20250520125807.328232642@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
 References: <20250520125803.981048184@linuxfoundation.org>
@@ -52,54 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 90022b3a6981ec234902be5dbf0f983a12c759fc upstream.
+commit b2ea5f49580c0762d17d80d8083cb89bc3acf74f upstream.
 
-Memory allocated for idxd is not freed if an error occurs during
-idxd_pci_probe(). To fix it, free the allocated memory in the reverse
-order of allocation before exiting the function in case of an error.
+If device_add() fails, do not use device_unregister() for error
+handling. device_unregister() consists two functions: device_del() and
+put_device(). device_unregister() should only be called after
+device_add() succeeded because device_del() undoes what device_add()
+does if successful. Change device_unregister() to put_device() call
+before returning from the function.
 
-Fixes: bfe1d56091c1 ("dmaengine: idxd: Init and probe for Intel data accelerators")
+As comment of device_add() says, 'if device_add() succeeds, you should
+call device_del() when you want to get rid of it. If device_add() has
+not succeeded, use only put_device() to drop the reference count'.
+
+Found by code review.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Fenghua Yu <fenghuay@nvidia.com>
-Link: https://lore.kernel.org/r/20250404120217.48772-8-xueshuai@linux.alibaba.com
+Fixes: 53d2a715c240 ("phy: Add Tegra XUSB pad controller support")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20250303072739.3874987-1-make24@iscas.ac.cn
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/idxd/init.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/phy/tegra/xusb.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -577,6 +577,17 @@ static void idxd_read_caps(struct idxd_d
- 		idxd->hw.iaa_cap.bits = ioread64(idxd->reg_base + IDXD_IAACAP_OFFSET);
+--- a/drivers/phy/tegra/xusb.c
++++ b/drivers/phy/tegra/xusb.c
+@@ -548,16 +548,16 @@ static int tegra_xusb_port_init(struct t
+ 
+ 	err = dev_set_name(&port->dev, "%s-%u", name, index);
+ 	if (err < 0)
+-		goto unregister;
++		goto put_device;
+ 
+ 	err = device_add(&port->dev);
+ 	if (err < 0)
+-		goto unregister;
++		goto put_device;
+ 
+ 	return 0;
+ 
+-unregister:
+-	device_unregister(&port->dev);
++put_device:
++	put_device(&port->dev);
+ 	return err;
  }
  
-+static void idxd_free(struct idxd_device *idxd)
-+{
-+	if (!idxd)
-+		return;
-+
-+	put_device(idxd_confdev(idxd));
-+	bitmap_free(idxd->opcap_bmap);
-+	ida_free(&idxd_ida, idxd->id);
-+	kfree(idxd);
-+}
-+
- static struct idxd_device *idxd_alloc(struct pci_dev *pdev, struct idxd_driver_data *data)
- {
- 	struct device *dev = &pdev->dev;
-@@ -843,7 +854,7 @@ static int idxd_pci_probe(struct pci_dev
-  err:
- 	pci_iounmap(pdev, idxd->reg_base);
-  err_iomap:
--	put_device(idxd_confdev(idxd));
-+	idxd_free(idxd);
-  err_idxd_alloc:
- 	pci_disable_device(pdev);
- 	return rc;
 
 
