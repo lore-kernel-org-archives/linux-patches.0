@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9893924886C;
-	Tue, 20 May 2025 14:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2464722D7A8;
+	Tue, 20 May 2025 14:06:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749993; cv=none; b=IhEWsROOnNZhZBP0G8YWkgzGTLsz9WPuyLuiRJGkOKiDd1Sravf8uUiGesy8bOKM39E3jXSM3GPKGJOoqmVtIXhU9Z58ylWf64mpC8O1h1KoNjPBzDTOdD87/rkYVikaAyyqkzfM/zzjV6MHAbwu8DpgGSwConaOnf/nu3xCNhY=
+	t=1747749996; cv=none; b=RnGNZXiQHEmgoFPBGcTr0ReLFuJ9SSr1KXnvT36RX/xbHV2ng0y5j+gu/vOLIQIJjTPYIPG5gb8SOKqZ/0pqbuNshNalb5sFfNZcwIB/7qyNvaaAsNN725W4dZD3ycoLEom7GAydaBmPd26ccGy2rHHxkFH77bJltxvH7/dQk+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749993; c=relaxed/simple;
-	bh=q9os8dGTUmC158sRDeE+69vm0ZVGWThWwzQeYWZ8ANs=;
+	s=arc-20240116; t=1747749996; c=relaxed/simple;
+	bh=sB+yhKnkHFWXrjFkGOmWx+Rca0jJG8iFNYib6CwQqhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cFDOCiNQvOmN5VKKIH8vvNTgU+4jYdv6+d6sJyUFPq0iPGCXCGAF+SQ3i8f66XTPVTtXvHJFqMvvI6lY21t05tcI/Usl/oviIviBAlg5J2n/a81VtPO5QYf91OaWJQb8lf3AetOkeo/564VuPKEHYqGfE0jcik05+VeMbaXbY5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOuVeK1v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TNVb826lErKMIVajWha9omjynQwdzmlsekbHFGT51C5TKE4AzyycWCesTzHSVyFXKf+/xlyoA3Lyw7K2kMb6fYpbdGLzM+FwbimU8i4Xj42cymWEfmjwg94m+3O7f37JGeaMLDz4mdPOgUOBhHNsrWsBVgAwEeVk9HCKYidUUvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6SeXdy5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOuVeK1v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B852BC4CEE9;
-	Tue, 20 May 2025 14:06:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6SeXdy5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA32C4CEE9;
+	Tue, 20 May 2025 14:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749993;
-	bh=q9os8dGTUmC158sRDeE+69vm0ZVGWThWwzQeYWZ8ANs=;
+	s=korg; t=1747749996;
+	bh=sB+yhKnkHFWXrjFkGOmWx+Rca0jJG8iFNYib6CwQqhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oOuVeK1vHk3d4/086U8MuuXGob202I3ivbh8e679lX7qr4yp3xSmErWnBECSuFfXs
-	 7cVb1el4o1uEdWOdnZmOOgKC+vw6PRFD0rmtSn8FUGGAh7v80QLZCD5hFrBEQfZdrc
-	 uUhsDrAumSfY0bHuKwqRP4ol0QwNa/JIM01g1huQ=
+	b=W6SeXdy5VrhhSF2YND9xL4o0zIhCQW0Em4Cjdy9851YouQo6OwyfbA6IiQSCwHct4
+	 otF2p9vjpXCXaALfnEvn8Bs4AyfFkC7EtUSNaPkFIQurJ92OUVd0cPJPCmcleStLms
+	 x0N5FH1v2+Lp8Gih0RLIqJCta+zZXAmzYbSOEM7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
-	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 6.6 115/117] btrfs: dont BUG_ON() when 0 reference count at btrfs_lookup_extent_info()
-Date: Tue, 20 May 2025 15:51:20 +0200
-Message-ID: <20250520125808.561425319@linuxfoundation.org>
+	Tom Vincent <linux@tlvince.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 001/143] arm64: dts: rockchip: Assign RT5616 MCLK rate on rk3588-friendlyelec-cm3588
+Date: Tue, 20 May 2025 15:49:16 +0200
+Message-ID: <20250520125810.096947473@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
-References: <20250520125803.981048184@linuxfoundation.org>
+In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
+References: <20250520125810.036375422@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,76 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Tom Vincent <linux@tlvince.com>
 
-commit 28cb13f29faf6290597b24b728dc3100c019356f upstream.
+[ Upstream commit 5e6a4ee9799b202fefa8c6264647971f892f0264 ]
 
-Instead of doing a BUG_ON() handle the error by returning -EUCLEAN,
-aborting the transaction and logging an error message.
+The Realtek RT5616 audio codec on the FriendlyElec CM3588 module fails
+to probe correctly due to the missing clock properties. This results
+in distorted analogue audio output.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[Minor conflict resolved due to code context change.]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Assign MCLK to 12.288 MHz, which allows the codec to advertise most of
+the standard sample rates per other RK3588 devices.
+
+Fixes: e23819cf273c ("arm64: dts: rockchip: Add FriendlyElec CM3588 NAS board")
+Signed-off-by: Tom Vincent <linux@tlvince.com>
+Link: https://lore.kernel.org/r/20250417081753.644950-1-linux@tlvince.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent-tree.c |   25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3588-friendlyelec-cm3588.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -164,6 +164,14 @@ search_again:
- 			ei = btrfs_item_ptr(leaf, path->slots[0],
- 					    struct btrfs_extent_item);
- 			num_refs = btrfs_extent_refs(leaf, ei);
-+			if (unlikely(num_refs == 0)) {
-+				ret = -EUCLEAN;
-+				btrfs_err(fs_info,
-+			"unexpected zero reference count for extent item (%llu %u %llu)",
-+					  key.objectid, key.type, key.offset);
-+				btrfs_abort_transaction(trans, ret);
-+				goto out_free;
-+			}
- 			extent_flags = btrfs_extent_flags(leaf, ei);
- 		} else {
- 			ret = -EUCLEAN;
-@@ -177,8 +185,6 @@ search_again:
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588-friendlyelec-cm3588.dtsi b/arch/arm64/boot/dts/rockchip/rk3588-friendlyelec-cm3588.dtsi
+index e3a9598b99fca..cacffc851584f 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588-friendlyelec-cm3588.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3588-friendlyelec-cm3588.dtsi
+@@ -222,6 +222,10 @@
+ 		compatible = "realtek,rt5616";
+ 		reg = <0x1b>;
+ 		#sound-dai-cells = <0>;
++		assigned-clocks = <&cru I2S0_8CH_MCLKOUT>;
++		assigned-clock-rates = <12288000>;
++		clocks = <&cru I2S0_8CH_MCLKOUT>;
++		clock-names = "mclk";
+ 	};
+ };
  
- 			goto out_free;
- 		}
--
--		BUG_ON(num_refs == 0);
- 	} else {
- 		num_refs = 0;
- 		extent_flags = 0;
-@@ -208,10 +214,19 @@ search_again:
- 			goto search_again;
- 		}
- 		spin_lock(&head->lock);
--		if (head->extent_op && head->extent_op->update_flags)
-+		if (head->extent_op && head->extent_op->update_flags) {
- 			extent_flags |= head->extent_op->flags_to_set;
--		else
--			BUG_ON(num_refs == 0);
-+		} else if (unlikely(num_refs == 0)) {
-+			spin_unlock(&head->lock);
-+			mutex_unlock(&head->mutex);
-+			spin_unlock(&delayed_refs->lock);
-+			ret = -EUCLEAN;
-+			btrfs_err(fs_info,
-+			  "unexpected zero reference count for extent %llu (%s)",
-+				  bytenr, metadata ? "metadata" : "data");
-+			btrfs_abort_transaction(trans, ret);
-+			goto out_free;
-+		}
- 
- 		num_refs += head->ref_mod;
- 		spin_unlock(&head->lock);
+-- 
+2.39.5
+
 
 
