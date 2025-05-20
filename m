@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD33DDA9;
-	Tue, 20 May 2025 13:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043ABDDA9;
+	Tue, 20 May 2025 13:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749455; cv=none; b=R/Y+NQc7Zz83AZAnPP9TDLFcwQ1dFiHdKOjssyoy+HDGp0URuHvUHmAkH3opxztobAf58t19pnC4zjdMtqy6+7PzG45sVjLA1+xWhxi8JXstfdMRLJb6K9GOqVhCxvY6Z8Z4IbCJFJLXLrdGDE53050ysTS6ESQhrLmJ8rz5ON4=
+	t=1747749459; cv=none; b=KzGnROdx7FK3p1x14/tfHEbgVQUvV++z8VSd9bVqUIWc9fNCWygiLR6Sz5toi1MNlFbgy9twR71U7FU2xbipy5tBeAFYV53q973SgaPuQlKpoOAMmoSMm/v9cLErULAF4iBCdMJ1q2Z2M38y3Q4bDMNFrrC+VIelzH5W8LJhoJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749455; c=relaxed/simple;
-	bh=SmNO870M6Ey5f30PXkVBqpxZvqeWpNlyFAcr5F5QKrs=;
+	s=arc-20240116; t=1747749459; c=relaxed/simple;
+	bh=MEyGJPLysh1DfMBgwV/mEOEvOKevIkjQB/WTgNy82N4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qhgWjZCI9eJ7nWGzQvPtf6rghlX9FO1uzOjqFveoDTy0r4ehwIkTUn9hLvYhy7rC2wCCCZ6jgyyUwvo8QEHzXKUWs0icE9JPkhbMp1pnmMXL9hb0FVJV1BVxejW+dCbkWuUr3NGZB9HYsdaQX2bL+BFytjdfKo3kBnioWaGpnEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fzF2n8zA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rLs6zDRop93ekAb7WY5VfKZ7ARBaYjcbp6X5mjLB/QDYFBkv0d6EDf0P71OswDmPTwbRqKT1gY6TK7Knktih9eoVtFIOJX7qIWNO8D+EpU9CxTfKNsCIK8X9uc7mrJRd2c4tdXk5nTXO2gvMbHxy5MVxwxnl/X6lt85qbWdIQN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrA0XCmL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fzF2n8zA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C7FC4CEEA;
-	Tue, 20 May 2025 13:57:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrA0XCmL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46A1C4CEE9;
+	Tue, 20 May 2025 13:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749455;
-	bh=SmNO870M6Ey5f30PXkVBqpxZvqeWpNlyFAcr5F5QKrs=;
+	s=korg; t=1747749458;
+	bh=MEyGJPLysh1DfMBgwV/mEOEvOKevIkjQB/WTgNy82N4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fzF2n8zAfdWaKLnganC+/MxaV6a+0Ny3N8sckVbu1ex+nt6REWzN1/NqGgQHPg/EP
-	 cXEGjE7jduoyjD8BO2F8rkWrFGH5n/in1zTK+EIy9zIalE3lPYS865LZsWOgjp5fRj
-	 qX065eDhJzBYytysRRUdw4lDWFMApjhWVAydvRwQ=
+	b=qrA0XCmLMwTP1EZOOjrxmtjDaQ5a+N2yB94AVGobYI8zcjLOxBqzZ5xgkXilXRISi
+	 XCc9GCejThylgL7dZn/LsUv12WpZFJydgCa1jYvz8FU99yVjit8AByVGjpLC8MUBWA
+	 9MgkXHq5gqQxKrd/kYqMakk0xAijqfZlz6Qum3vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Kelley <mhklinux@outlook.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 50/97] hv_netvsc: Use vmbus_sendpacket_mpb_desc() to send VMBus messages
-Date: Tue, 20 May 2025 15:50:15 +0200
-Message-ID: <20250520125802.615215921@linuxfoundation.org>
+Subject: [PATCH 6.1 51/97] hv_netvsc: Preserve contiguous PFN grouping in the page buffer array
+Date: Tue, 20 May 2025 15:50:16 +0200
+Message-ID: <20250520125802.655177617@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -52,107 +52,251 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Kelley <mhklinux@outlook.com>
 
-commit 4f98616b855cb0e3b5917918bb07b44728eb96ea upstream.
+commit 41a6328b2c55276f89ea3812069fd7521e348bbf upstream.
 
-netvsc currently uses vmbus_sendpacket_pagebuffer() to send VMBus
-messages. This function creates a series of GPA ranges, each of which
-contains a single PFN. However, if the rndis header in the VMBus
-message crosses a page boundary, the netvsc protocol with the host
-requires that both PFNs for the rndis header must be in a single "GPA
-range" data structure, which isn't possible with
-vmbus_sendpacket_pagebuffer(). As the first step in fixing this, add a
-new function netvsc_build_mpb_array() to build a VMBus message with
-multiple GPA ranges, each of which may contain multiple PFNs. Use
-vmbus_sendpacket_mpb_desc() to send this VMBus message to the host.
+Starting with commit dca5161f9bd0 ("hv_netvsc: Check status in
+SEND_RNDIS_PKT completion message") in the 6.3 kernel, the Linux
+driver for Hyper-V synthetic networking (netvsc) occasionally reports
+"nvsp_rndis_pkt_complete error status: 2".[1] This error indicates
+that Hyper-V has rejected a network packet transmit request from the
+guest, and the outgoing network packet is dropped. Higher level
+network protocols presumably recover and resend the packet so there is
+no functional error, but performance is slightly impacted. Commit
+dca5161f9bd0 is not the cause of the error -- it only added reporting
+of an error that was already happening without any notice. The error
+has presumably been present since the netvsc driver was originally
+introduced into Linux.
 
-There's no functional change since higher levels of netvsc don't
-maintain or propagate knowledge of contiguous PFNs. Based on its
-input, netvsc_build_mpb_array() still produces a separate GPA range
-for each PFN and the behavior is the same as with
-vmbus_sendpacket_pagebuffer(). But the groundwork is laid for a
-subsequent patch to provide the necessary grouping.
+The root cause of the problem is that the netvsc driver in Linux may
+send an incorrectly formatted VMBus message to Hyper-V when
+transmitting the network packet. The incorrect formatting occurs when
+the rndis header of the VMBus message crosses a page boundary due to
+how the Linux skb head memory is aligned. In such a case, two PFNs are
+required to describe the location of the rndis header, even though
+they are contiguous in guest physical address (GPA) space. Hyper-V
+requires that two rndis header PFNs be in a single "GPA range" data
+struture, but current netvsc code puts each PFN in its own GPA range,
+which Hyper-V rejects as an error.
 
+The incorrect formatting occurs only for larger packets that netvsc
+must transmit via a VMBus "GPA Direct" message. There's no problem
+when netvsc transmits a smaller packet by copying it into a pre-
+allocated send buffer slot because the pre-allocated slots don't have
+page crossing issues.
+
+After commit 14ad6ed30a10 ("net: allow small head cache usage with
+large MAX_SKB_FRAGS values") in the 6.14-rc4 kernel, the error occurs
+much more frequently in VMs with 16 or more vCPUs. It may occur every
+few seconds, or even more frequently, in an ssh session that outputs a
+lot of text. Commit 14ad6ed30a10 subtly changes how skb head memory is
+allocated, making it much more likely that the rndis header will cross
+a page boundary when the vCPU count is 16 or more. The changes in
+commit 14ad6ed30a10 are perfectly valid -- they just had the side
+effect of making the netvsc bug more prominent.
+
+Current code in init_page_array() creates a separate page buffer array
+entry for each PFN required to identify the data to be transmitted.
+Contiguous PFNs get separate entries in the page buffer array, and any
+information about contiguity is lost.
+
+Fix the core issue by having init_page_array() construct the page
+buffer array to represent contiguous ranges rather than individual
+pages. When these ranges are subsequently passed to
+netvsc_build_mpb_array(), it can build GPA ranges that contain
+multiple PFNs, as required to avoid the error "nvsp_rndis_pkt_complete
+error status: 2". If instead the network packet is sent by copying
+into a pre-allocated send buffer slot, the copy proceeds using the
+contiguous ranges rather than individual pages, but the result of the
+copying is the same. Also fix rndis_filter_send_request() to construct
+a contiguous range, since it has its own page buffer array.
+
+This change has a side benefit in CoCo VMs in that netvsc_dma_map()
+calls dma_map_single() on each contiguous range instead of on each
+page. This results in fewer calls to dma_map_single() but on larger
+chunks of memory, which should reduce contention on the swiotlb.
+
+Since the page buffer array now contains one entry for each contiguous
+range instead of for each individual page, the number of entries in
+the array can be reduced, saving 208 bytes of stack space in
+netvsc_xmit() when MAX_SKG_FRAGS has the default value of 17.
+
+[1] https://bugzilla.kernel.org/show_bug.cgi?id=217503
+
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217503
 Cc: <stable@vger.kernel.org> # 6.1.x
 Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://patch.msgid.link/20250513000604.1396-3-mhklinux@outlook.com
+Link: https://patch.msgid.link/20250513000604.1396-4-mhklinux@outlook.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/hyperv/netvsc.c |   50 +++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 45 insertions(+), 5 deletions(-)
+ drivers/net/hyperv/hyperv_net.h   |   12 +++++++
+ drivers/net/hyperv/netvsc_drv.c   |   65 +++++++++-----------------------------
+ drivers/net/hyperv/rndis_filter.c |   24 ++------------
+ 3 files changed, 33 insertions(+), 68 deletions(-)
 
---- a/drivers/net/hyperv/netvsc.c
-+++ b/drivers/net/hyperv/netvsc.c
-@@ -1082,6 +1082,42 @@ static int netvsc_dma_map(struct hv_devi
- 	return 0;
+--- a/drivers/net/hyperv/hyperv_net.h
++++ b/drivers/net/hyperv/hyperv_net.h
+@@ -891,6 +891,18 @@ struct nvsp_message {
+ 				 sizeof(struct nvsp_message))
+ #define NETVSC_MIN_IN_MSG_SIZE sizeof(struct vmpacket_descriptor)
+ 
++/* Maximum # of contiguous data ranges that can make up a trasmitted packet.
++ * Typically it's the max SKB fragments plus 2 for the rndis packet and the
++ * linear portion of the SKB. But if MAX_SKB_FRAGS is large, the value may
++ * need to be limited to MAX_PAGE_BUFFER_COUNT, which is the max # of entries
++ * in a GPA direct packet sent to netvsp over VMBus.
++ */
++#if MAX_SKB_FRAGS + 2 < MAX_PAGE_BUFFER_COUNT
++#define MAX_DATA_RANGES (MAX_SKB_FRAGS + 2)
++#else
++#define MAX_DATA_RANGES MAX_PAGE_BUFFER_COUNT
++#endif
++
+ /* Estimated requestor size:
+  * out_ring_size/min_out_msg_size + in_ring_size/min_in_msg_size
+  */
+--- a/drivers/net/hyperv/netvsc_drv.c
++++ b/drivers/net/hyperv/netvsc_drv.c
+@@ -325,43 +325,10 @@ static u16 netvsc_select_queue(struct ne
+ 	return txq;
  }
  
-+/* Build an "array" of mpb entries describing the data to be transferred
-+ * over VMBus. After the desc header fields, each "array" entry is variable
-+ * size, and each entry starts after the end of the previous entry. The
-+ * "offset" and "len" fields for each entry imply the size of the entry.
-+ *
-+ * The pfns are in HV_HYP_PAGE_SIZE, because all communication with Hyper-V
-+ * uses that granularity, even if the system page size of the guest is larger.
-+ * Each entry in the input "pb" array must describe a contiguous range of
-+ * guest physical memory so that the pfns are sequential if the range crosses
-+ * a page boundary. The offset field must be < HV_HYP_PAGE_SIZE.
-+ */
-+static inline void netvsc_build_mpb_array(struct hv_page_buffer *pb,
-+				u32 page_buffer_count,
-+				struct vmbus_packet_mpb_array *desc,
-+				u32 *desc_size)
-+{
-+	struct hv_mpb_array *mpb_entry = &desc->range;
-+	int i, j;
-+
-+	for (i = 0; i < page_buffer_count; i++) {
-+		u32 offset = pb[i].offset;
-+		u32 len = pb[i].len;
-+
-+		mpb_entry->offset = offset;
-+		mpb_entry->len = len;
-+
-+		for (j = 0; j < HVPFN_UP(offset + len); j++)
-+			mpb_entry->pfn_array[j] = pb[i].pfn + j;
-+
-+		mpb_entry = (struct hv_mpb_array *)&mpb_entry->pfn_array[j];
-+	}
-+
-+	desc->rangecount = page_buffer_count;
-+	*desc_size = (char *)mpb_entry - (char *)desc;
-+}
-+
- static inline int netvsc_send_pkt(
- 	struct hv_device *device,
- 	struct hv_netvsc_packet *packet,
-@@ -1124,6 +1160,9 @@ static inline int netvsc_send_pkt(
- 
- 	packet->dma_range = NULL;
- 	if (packet->page_buf_cnt) {
-+		struct vmbus_channel_packet_page_buffer desc;
-+		u32 desc_size;
-+
- 		if (packet->cp_partial)
- 			pb += packet->rmsg_pgcnt;
- 
-@@ -1133,11 +1172,12 @@ static inline int netvsc_send_pkt(
- 			goto exit;
- 		}
- 
--		ret = vmbus_sendpacket_pagebuffer(out_channel,
--						  pb, packet->page_buf_cnt,
--						  &nvmsg, sizeof(nvmsg),
--						  req_id);
+-static u32 fill_pg_buf(unsigned long hvpfn, u32 offset, u32 len,
+-		       struct hv_page_buffer *pb)
+-{
+-	int j = 0;
 -
-+		netvsc_build_mpb_array(pb, packet->page_buf_cnt,
-+				(struct vmbus_packet_mpb_array *)&desc,
-+				 &desc_size);
-+		ret = vmbus_sendpacket_mpb_desc(out_channel,
-+				(struct vmbus_packet_mpb_array *)&desc,
-+				desc_size, &nvmsg, sizeof(nvmsg), req_id);
- 		if (ret)
- 			netvsc_dma_unmap(ndev_ctx->device_ctx, packet);
- 	} else {
+-	hvpfn += offset >> HV_HYP_PAGE_SHIFT;
+-	offset = offset & ~HV_HYP_PAGE_MASK;
+-
+-	while (len > 0) {
+-		unsigned long bytes;
+-
+-		bytes = HV_HYP_PAGE_SIZE - offset;
+-		if (bytes > len)
+-			bytes = len;
+-		pb[j].pfn = hvpfn;
+-		pb[j].offset = offset;
+-		pb[j].len = bytes;
+-
+-		offset += bytes;
+-		len -= bytes;
+-
+-		if (offset == HV_HYP_PAGE_SIZE && len) {
+-			hvpfn++;
+-			offset = 0;
+-			j++;
+-		}
+-	}
+-
+-	return j + 1;
+-}
+-
+ static u32 init_page_array(void *hdr, u32 len, struct sk_buff *skb,
+ 			   struct hv_netvsc_packet *packet,
+ 			   struct hv_page_buffer *pb)
+ {
+-	u32 slots_used = 0;
+-	char *data = skb->data;
+ 	int frags = skb_shinfo(skb)->nr_frags;
+ 	int i;
+ 
+@@ -370,28 +337,28 @@ static u32 init_page_array(void *hdr, u3
+ 	 * 2. skb linear data
+ 	 * 3. skb fragment data
+ 	 */
+-	slots_used += fill_pg_buf(virt_to_hvpfn(hdr),
+-				  offset_in_hvpage(hdr),
+-				  len,
+-				  &pb[slots_used]);
+ 
++	pb[0].offset = offset_in_hvpage(hdr);
++	pb[0].len = len;
++	pb[0].pfn = virt_to_hvpfn(hdr);
+ 	packet->rmsg_size = len;
+-	packet->rmsg_pgcnt = slots_used;
++	packet->rmsg_pgcnt = 1;
+ 
+-	slots_used += fill_pg_buf(virt_to_hvpfn(data),
+-				  offset_in_hvpage(data),
+-				  skb_headlen(skb),
+-				  &pb[slots_used]);
++	pb[1].offset = offset_in_hvpage(skb->data);
++	pb[1].len = skb_headlen(skb);
++	pb[1].pfn = virt_to_hvpfn(skb->data);
+ 
+ 	for (i = 0; i < frags; i++) {
+ 		skb_frag_t *frag = skb_shinfo(skb)->frags + i;
+-
+-		slots_used += fill_pg_buf(page_to_hvpfn(skb_frag_page(frag)),
+-					  skb_frag_off(frag),
+-					  skb_frag_size(frag),
+-					  &pb[slots_used]);
++		struct hv_page_buffer *cur_pb = &pb[i + 2];
++		u64 pfn = page_to_hvpfn(skb_frag_page(frag));
++		u32 offset = skb_frag_off(frag);
++
++		cur_pb->offset = offset_in_hvpage(offset);
++		cur_pb->len = skb_frag_size(frag);
++		cur_pb->pfn = pfn + (offset >> HV_HYP_PAGE_SHIFT);
+ 	}
+-	return slots_used;
++	return frags + 2;
+ }
+ 
+ static int count_skb_frag_slots(struct sk_buff *skb)
+@@ -482,7 +449,7 @@ static int netvsc_xmit(struct sk_buff *s
+ 	struct net_device *vf_netdev;
+ 	u32 rndis_msg_size;
+ 	u32 hash;
+-	struct hv_page_buffer pb[MAX_PAGE_BUFFER_COUNT];
++	struct hv_page_buffer pb[MAX_DATA_RANGES];
+ 
+ 	/* If VF is present and up then redirect packets to it.
+ 	 * Skip the VF if it is marked down or has no carrier.
+--- a/drivers/net/hyperv/rndis_filter.c
++++ b/drivers/net/hyperv/rndis_filter.c
+@@ -225,8 +225,7 @@ static int rndis_filter_send_request(str
+ 				  struct rndis_request *req)
+ {
+ 	struct hv_netvsc_packet *packet;
+-	struct hv_page_buffer page_buf[2];
+-	struct hv_page_buffer *pb = page_buf;
++	struct hv_page_buffer pb;
+ 	int ret;
+ 
+ 	/* Setup the packet to send it */
+@@ -235,27 +234,14 @@ static int rndis_filter_send_request(str
+ 	packet->total_data_buflen = req->request_msg.msg_len;
+ 	packet->page_buf_cnt = 1;
+ 
+-	pb[0].pfn = virt_to_phys(&req->request_msg) >>
+-					HV_HYP_PAGE_SHIFT;
+-	pb[0].len = req->request_msg.msg_len;
+-	pb[0].offset = offset_in_hvpage(&req->request_msg);
+-
+-	/* Add one page_buf when request_msg crossing page boundary */
+-	if (pb[0].offset + pb[0].len > HV_HYP_PAGE_SIZE) {
+-		packet->page_buf_cnt++;
+-		pb[0].len = HV_HYP_PAGE_SIZE -
+-			pb[0].offset;
+-		pb[1].pfn = virt_to_phys((void *)&req->request_msg
+-			+ pb[0].len) >> HV_HYP_PAGE_SHIFT;
+-		pb[1].offset = 0;
+-		pb[1].len = req->request_msg.msg_len -
+-			pb[0].len;
+-	}
++	pb.pfn = virt_to_phys(&req->request_msg) >> HV_HYP_PAGE_SHIFT;
++	pb.len = req->request_msg.msg_len;
++	pb.offset = offset_in_hvpage(&req->request_msg);
+ 
+ 	trace_rndis_send(dev->ndev, 0, &req->request_msg);
+ 
+ 	rcu_read_lock_bh();
+-	ret = netvsc_send(dev->ndev, packet, NULL, pb, NULL, false);
++	ret = netvsc_send(dev->ndev, packet, NULL, &pb, NULL, false);
+ 	rcu_read_unlock_bh();
+ 
+ 	return ret;
 
 
