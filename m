@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1C422D7A8;
-	Tue, 20 May 2025 13:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A89D13635C;
+	Tue, 20 May 2025 13:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749488; cv=none; b=VgL5eS9Z1TeNg5uCm/fhv1i3LPGpVNLjhBPEqT6lUbMYTMrRxwEWM0GlI1KqhmiIjb35k1iVXqGrWyRyPUCNDRzQZHYlvaTwHLeOBI/XAmUyu3QLcBmim8HGYmInG2gLh6bD0R9bycGSfwMIQDkKTks/Nca4tqOVkcW22NyBoUQ=
+	t=1747749491; cv=none; b=sEJwVvijIDJ2Ugt0rs5AljkuPb1e+XARTdzE94fHkJ1RgDKyoaxjaMbuoM2GyORaXDQ80zyKTZ+uPdw8y+ISCugAdzjjLwTFVJ47ZaZv5Mv2IpEE+Ww2YCbGy1j04uU7OU1KgGBU1httgpGiCgw5amPANRDl89siMUHuP+OK9D0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749488; c=relaxed/simple;
-	bh=rg+K04/zpmt7rgDjPlWE/2A7o0oAWL43tsqcxEqRCN8=;
+	s=arc-20240116; t=1747749491; c=relaxed/simple;
+	bh=M//9Ofoe47Qfr+IrJHhweJWQ0wQYHAaJjARuhHjw1qA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JziQsK7FD+Y+v/AvTEvQokXxCmhWVDJW0cAUrlNAecXTUXXOy6Dt/OSD4Goh3vWKZc1YzJCsYZPnjkf1Kdbh4xT4V/B9/GG2XWLE/AhINamscm53vu3bmCVrAcRC68XtZB+MAwg/pVV/AP5MP5cnKvnzRH6Qk/MXVKxsIvo4OcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hOQV7Qe5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JbkEoMW7Q9MY0P20FSXQS7QiBJDlLfFZUQ0VFdZSB6V9eqk1CVq/RZ47Q+wWdMrgBdDydkqowRk4LflLn7KOuGCpjWi7EEIKVVplwF+FvUfFAYmlZ8axVr78iVrIdV3CED68ryey6/JpKqD4cdSBwyFOHToQGJ2Y4i3rB6MtjYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ui7CBw/0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOQV7Qe5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93EA7C4CEE9;
-	Tue, 20 May 2025 13:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ui7CBw/0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98153C4CEE9;
+	Tue, 20 May 2025 13:58:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749488;
-	bh=rg+K04/zpmt7rgDjPlWE/2A7o0oAWL43tsqcxEqRCN8=;
+	s=korg; t=1747749491;
+	bh=M//9Ofoe47Qfr+IrJHhweJWQ0wQYHAaJjARuhHjw1qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hOQV7Qe5tPf0ARye96+IYJ3HhC+YY/dnKsQOiLL7W4D/7CpYLgyTfTrQRACWUROMm
-	 dk3JMMUkMBX0vkHM5dcF1zX2/jaq6hRiiJjdDQTmFJpuJO3DllmfCqLvnZvsP0XE9N
-	 pvhwrtmq1FKHHhNR9wFnxD3rx/8Gcjq3wgJg9+7I=
+	b=ui7CBw/0btll0xm/ls3ARyETsYy8dfbdOFmoLRYsNfVVebc0WLtgsoj82Ao1UP7T1
+	 p30VjCa5XbeKZ0mZ3kw7mxokNiLwykJLmxwquaApVTeHLrPyV4lOCuzZz0PJml+kYb
+	 7DN6IHSTtVa9WhzfZaBY4wbF+2EiGno+few0vmP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Kees Cook <kees@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 30/97] net: dsa: sja1105: discard incoming frames in BR_STATE_LISTENING
-Date: Tue, 20 May 2025 15:49:55 +0200
-Message-ID: <20250520125801.840675708@linuxfoundation.org>
+Subject: [PATCH 6.1 31/97] nvme-pci: make nvme_pci_npages_prp() __always_inline
+Date: Tue, 20 May 2025 15:49:56 +0200
+Message-ID: <20250520125801.879194925@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -51,90 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 498625a8ab2c8e1c9ab5105744310e8d6952cc01 ]
+[ Upstream commit 40696426b8c8c4f13cf6ac52f0470eed144be4b2 ]
 
-It has been reported that when under a bridge with stp_state=1, the logs
-get spammed with this message:
+The only reason nvme_pci_npages_prp() could be used as a compile-time
+known result in BUILD_BUG_ON() is because the compiler was always choosing
+to inline the function. Under special circumstances (sanitizer coverage
+functions disabled for __init functions on ARCH=um), the compiler decided
+to stop inlining it:
 
-[  251.734607] fsl_dpaa2_eth dpni.5 eth0: Couldn't decode source port
+   drivers/nvme/host/pci.c: In function 'nvme_init':
+   include/linux/compiler_types.h:557:45: error: call to '__compiletime_assert_678' declared with attribute error: BUILD_BUG_ON failed: nvme_pci_npages_prp() > NVME_MAX_NR_ALLOCATIONS
+     557 |         _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+         |                                             ^
+   include/linux/compiler_types.h:538:25: note: in definition of macro '__compiletime_assert'
+     538 |                         prefix ## suffix();                             \
+         |                         ^~~~~~
+   include/linux/compiler_types.h:557:9: note: in expansion of macro '_compiletime_assert'
+     557 |         _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+         |         ^~~~~~~~~~~~~~~~~~~
+   include/linux/build_bug.h:39:37: note: in expansion of macro 'compiletime_assert'
+      39 | #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
+         |                                     ^~~~~~~~~~~~~~~~~~
+   include/linux/build_bug.h:50:9: note: in expansion of macro 'BUILD_BUG_ON_MSG'
+      50 |         BUILD_BUG_ON_MSG(condition, "BUILD_BUG_ON failed: " #condition)
+         |         ^~~~~~~~~~~~~~~~
+   drivers/nvme/host/pci.c:3804:9: note: in expansion of macro 'BUILD_BUG_ON'
+    3804 |         BUILD_BUG_ON(nvme_pci_npages_prp() > NVME_MAX_NR_ALLOCATIONS);
+         |         ^~~~~~~~~~~~
 
-Further debugging shows the following info associated with packets:
-source_port=-1, switch_id=-1, vid=-1, vbid=1
+Force it to be __always_inline to make sure it is always available for
+use with BUILD_BUG_ON().
 
-In other words, they are data plane packets which are supposed to be
-decoded by dsa_tag_8021q_find_port_by_vbid(), but the latter (correctly)
-refuses to do so, because no switch port is currently in
-BR_STATE_LEARNING or BR_STATE_FORWARDING - so the packet is effectively
-unexpected.
-
-The error goes away after the port progresses to BR_STATE_LEARNING in 15
-seconds (the default forward_time of the bridge), because then,
-dsa_tag_8021q_find_port_by_vbid() can correctly associate the data plane
-packets with a plausible bridge port in a plausible STP state.
-
-Re-reading IEEE 802.1D-1990, I see the following:
-
-"4.4.2 Learning: (...) The Forwarding Process shall discard received
-frames."
-
-IEEE 802.1D-2004 further clarifies:
-
-"DISABLED, BLOCKING, LISTENING, and BROKEN all correspond to the
-DISCARDING port state. While those dot1dStpPortStates serve to
-distinguish reasons for discarding frames, the operation of the
-Forwarding and Learning processes is the same for all of them. (...)
-LISTENING represents a port that the spanning tree algorithm has
-selected to be part of the active topology (computing a Root Port or
-Designated Port role) but is temporarily discarding frames to guard
-against loops or incorrect learning."
-
-Well, this is not what the driver does - instead it sets
-mac[port].ingress = true.
-
-To get rid of the log spam, prevent unexpected data plane packets to
-be received by software by discarding them on ingress in the LISTENING
-state.
-
-In terms of blame attribution: the prints only date back to commit
-d7f9787a763f ("net: dsa: tag_8021q: add support for imprecise RX based
-on the VBID"). However, the settings would permit a LISTENING port to
-forward to a FORWARDING port, and the standard suggests that's not OK.
-
-Fixes: 640f763f98c2 ("net: dsa: sja1105: Add support for Spanning Tree Protocol")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250509113816.2221992-1-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202505061846.12FMyRjj-lkp@intel.com/
+Fixes: c372cdd1efdf ("nvme-pci: iod npages fits in s8")
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/sja1105/sja1105_main.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/nvme/host/pci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
-index f1f1368e8146f..d51d982c4bc01 100644
---- a/drivers/net/dsa/sja1105/sja1105_main.c
-+++ b/drivers/net/dsa/sja1105/sja1105_main.c
-@@ -2083,6 +2083,7 @@ static void sja1105_bridge_stp_state_set(struct dsa_switch *ds, int port,
- 	switch (state) {
- 	case BR_STATE_DISABLED:
- 	case BR_STATE_BLOCKING:
-+	case BR_STATE_LISTENING:
- 		/* From UM10944 description of DRPDTAG (why put this there?):
- 		 * "Management traffic flows to the port regardless of the state
- 		 * of the INGRESS flag". So BPDUs are still be allowed to pass.
-@@ -2092,11 +2093,6 @@ static void sja1105_bridge_stp_state_set(struct dsa_switch *ds, int port,
- 		mac[port].egress    = false;
- 		mac[port].dyn_learn = false;
- 		break;
--	case BR_STATE_LISTENING:
--		mac[port].ingress   = true;
--		mac[port].egress    = false;
--		mac[port].dyn_learn = false;
--		break;
- 	case BR_STATE_LEARNING:
- 		mac[port].ingress   = true;
- 		mac[port].egress    = false;
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index da858463b2557..553e6bb461b39 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -376,7 +376,7 @@ static bool nvme_dbbuf_update_and_check_event(u16 value, __le32 *dbbuf_db,
+  * as it only leads to a small amount of wasted memory for the lifetime of
+  * the I/O.
+  */
+-static int nvme_pci_npages_prp(void)
++static __always_inline int nvme_pci_npages_prp(void)
+ {
+ 	unsigned max_bytes = (NVME_MAX_KB_SZ * 1024) + NVME_CTRL_PAGE_SIZE;
+ 	unsigned nprps = DIV_ROUND_UP(max_bytes, NVME_CTRL_PAGE_SIZE);
 -- 
 2.39.5
 
