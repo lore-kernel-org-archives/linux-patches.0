@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0621D242D79;
-	Tue, 20 May 2025 14:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5916246769;
+	Tue, 20 May 2025 14:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750538; cv=none; b=b9dNA4SjuCzrHlreqnRgng6MPhBaCcSgtUo3lQBqSQd9bqKVXuSPobIKdjZ8dHN09AJIbgaAwEVngGNPYE/0jBYmwruTujNwAulZu6Cho3sFICNna7hv8qMjShYnzeRezVGw15Qt9ECKHCDIDTcSAaD1syWRU0cuqwwCbAoEm+4=
+	t=1747750540; cv=none; b=TuIJeDEwz/6izaIy8VKK+ni5BK3+Nz4d5GZI8Ij9cWi2Yx6fflEvg+ikhGSIjDlx6jDIc0SbL+vJl7DPcYay0LsyY9i0EKazgwnCoTlRqh+8B0Avz8sl69anN6ED/+UTbeqoe0mmat0CLz+PKIe631IpkMRWyy6Ig1WbPQAch2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750538; c=relaxed/simple;
-	bh=6WOQfei03eqs6iVpkDMt+a86L4ahhc3ZlPTI3jUMsfc=;
+	s=arc-20240116; t=1747750540; c=relaxed/simple;
+	bh=rv3XWZfGZTJa7TRE0L5a3lUWIhVUs+CWPiRDIHlfrdw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o72JG6aomGiJEHX49Ts/PUWiDpns1eEAWvcoSg/eOt21Vp217RYe+9PibWaQmmfcqnqaswW2+u4D3DX96uc2H6kphApvQ/2/AfGp+0F0p4PeXZsK324oKrZe5JDHbCS+yS57TQHN1vaoaoh+7j2ZD+jprudY3EFKEuRipzxahYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZvrK3NFq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hhyZ0R+lIeAVeHqZ+pCrDDoBZL69DzbYwEbQMwOftRj7H8Jb9wEVB5N2KKcfOWX5ib0h+MqmsD+K0e2GW1uWJSdztotgRuF5R6vEU0Uq9itxf+2OqNDOGP50cP/+Ep+93JeR5dOCqJ/Ic4c3MCGFIkjRVyh6a/9oexp2yloNt/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AMiiR5Jn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvrK3NFq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DDFDC4CEE9;
-	Tue, 20 May 2025 14:15:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AMiiR5Jn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6777EC4CEE9;
+	Tue, 20 May 2025 14:15:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750537;
-	bh=6WOQfei03eqs6iVpkDMt+a86L4ahhc3ZlPTI3jUMsfc=;
+	s=korg; t=1747750540;
+	bh=rv3XWZfGZTJa7TRE0L5a3lUWIhVUs+CWPiRDIHlfrdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZvrK3NFqJ8hV8y+UbE9BxS9AygbFAYbz0uiYlDSsZm5GXg9e1W0fHhOGS51zTsN/g
-	 Zkx6DAJd6fjhTc+m6D4u610BBYji6boVvagwXeF7zEBqbexHZCwGflt/XUfdnWffjD
-	 SD0iwVcEv3nxlRXkKGH8c+GC09Bcznzdi/AacL/Q=
+	b=AMiiR5Jn3PqXvl/1e0QHmenuqx2+1AAJjxaTZ6wKegZt0XX76vWHxACzkXgAFUlSe
+	 QC6aVlLVGtdQen78IMgkc8utg/4a0CbWtI9Ezc7f2UY1N4vgJBcSMbkxoWTGuMKwCD
+	 7SjQFcfPdNjDEQJj59DTN5KvQkQxumoQ/wDxWJm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Keith Busch <kbusch@kernel.org>,
-	Daniel Wagner <wagi@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	kernel test robot <lkp@intel.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 039/145] nvme-pci: acquire cq_poll_lock in nvme_poll_irqdisable
-Date: Tue, 20 May 2025 15:50:09 +0200
-Message-ID: <20250520125812.096530765@linuxfoundation.org>
+Subject: [PATCH 6.14 040/145] ALSA: sh: SND_AICA should depend on SH_DMA_API
+Date: Tue, 20 May 2025 15:50:10 +0200
+Message-ID: <20250520125812.135773406@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -53,38 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 3d8932133dcecbd9bef1559533c1089601006f45 ]
+[ Upstream commit 66e48ef6ef506c89ec1b3851c6f9f5f80b5835ff ]
 
-We need to lock this queue for that condition because the timeout work
-executes per-namespace and can poll the poll CQ.
+If CONFIG_SH_DMA_API=n:
 
-Reported-by: Hannes Reinecke <hare@kernel.org>
-Closes: https://lore.kernel.org/all/20240902130728.1999-1-hare@kernel.org/
-Fixes: a0fa9647a54e ("NVMe: add blk polling support")
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Daniel Wagner <wagi@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+    WARNING: unmet direct dependencies detected for G2_DMA
+      Depends on [n]: SH_DREAMCAST [=y] && SH_DMA_API [=n]
+      Selected by [y]:
+      - SND_AICA [=y] && SOUND [=y] && SND [=y] && SND_SUPERH [=y] && SH_DREAMCAST [=y]
+
+SND_AICA selects G2_DMA.  As the latter depends on SH_DMA_API, the
+former should depend on SH_DMA_API, too.
+
+Fixes: f477a538c14d07f8 ("sh: dma: fix kconfig dependency for G2_DMA")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202505131320.PzgTtl9H-lkp@intel.com/
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/b90625f8a9078d0d304bafe862cbe3a3fab40082.1747121335.git.geert+renesas@glider.be
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/sh/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 7fdf7f24d46e6..00bd21b5c641e 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -1205,7 +1205,9 @@ static void nvme_poll_irqdisable(struct nvme_queue *nvmeq)
- 	WARN_ON_ONCE(test_bit(NVMEQ_POLLED, &nvmeq->flags));
+diff --git a/sound/sh/Kconfig b/sound/sh/Kconfig
+index b75fbb3236a7b..f5fa09d740b4c 100644
+--- a/sound/sh/Kconfig
++++ b/sound/sh/Kconfig
+@@ -14,7 +14,7 @@ if SND_SUPERH
  
- 	disable_irq(pci_irq_vector(pdev, nvmeq->cq_vector));
-+	spin_lock(&nvmeq->cq_poll_lock);
- 	nvme_poll_cq(nvmeq, NULL);
-+	spin_unlock(&nvmeq->cq_poll_lock);
- 	enable_irq(pci_irq_vector(pdev, nvmeq->cq_vector));
- }
- 
+ config SND_AICA
+ 	tristate "Dreamcast Yamaha AICA sound"
+-	depends on SH_DREAMCAST
++	depends on SH_DREAMCAST && SH_DMA_API
+ 	select SND_PCM
+ 	select G2_DMA
+ 	help
 -- 
 2.39.5
 
