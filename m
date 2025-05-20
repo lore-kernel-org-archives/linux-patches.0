@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201DE24DFE4;
-	Tue, 20 May 2025 14:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D7F24DFE4;
+	Tue, 20 May 2025 14:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750752; cv=none; b=oOjh5Zc6YOuMQc4EBNx9D8RYpOwEMofkfmoMk8a3886lKVudGZ+e+x7fVPGzWAaRl2jPNv8+vtfEiHgafP4OltDwJqoqK7CTp9LcAlmVUSVMIqHEX+GZsMlRZO2XneM+ZtzE7jZ1kGHypU3yzy8fs9eFHUqT6PZnxXTifXL7jTc=
+	t=1747750755; cv=none; b=FcPNqk9TJjpbeOuIQjSEb0FGt6aY4VO9cYBjCMEiPefM245Q72vhY0yDdbqG1jVwnKz75si/XJ/fHG9S7Pz/SwDP1ZwdUHcDgESofZ4jAo6mP+zc/b+T/Moa0W6zna+fvKSQKdNNy7VsRam60gcR+6eGKb4aU0vZ5gIGwVzvDUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750752; c=relaxed/simple;
-	bh=K5gES8cJIxBs1pVo9NAnFW7Fms/6D79E6HqRvBkFfNk=;
+	s=arc-20240116; t=1747750755; c=relaxed/simple;
+	bh=J8GbOJ2WiWC2NuValYvTAp1eMAwYNPcpUGhXzjngXkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BdRCpJTr3cG4vMe83nrX+VC5weoQksln1+8Tb9p1eLHFU+hBIB310qA1wsXTNqogMeddExSdHtP5QLJYJrfcr7+ChvAgZmASApNw6K1DxJHT8GQT4i61TSPhvqW9+RiewEh7doVFoMhjYIVhb6esXcUkByBhgz4znCehniYLwbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUtWeGXf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F1xAnU/Vu7WCSBl0g0R2ZYCfpAcQfWIyYTPFq/aw38rWmO2h51/M63peiTEN3/yMtDdKSlqvRd4fbXSLyMh/ZDELTzzo+t7ywmjTH3yhaQcnNAVDwrFpkWS5PRFNrhqbNs/MvAnY+xOVlFn80a4234X2JxQjeE456JntKkMcqv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HKoiFUvH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUtWeGXf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861ACC4CEEA;
-	Tue, 20 May 2025 14:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKoiFUvH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9BB0C4CEE9;
+	Tue, 20 May 2025 14:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750752;
-	bh=K5gES8cJIxBs1pVo9NAnFW7Fms/6D79E6HqRvBkFfNk=;
+	s=korg; t=1747750755;
+	bh=J8GbOJ2WiWC2NuValYvTAp1eMAwYNPcpUGhXzjngXkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oUtWeGXfeH6WoM1aU5Wv86/JEjz5ZIDaHlpSZu58OL0qZjazNtbv4l8BVNd0RFpYh
-	 K/WY86v8AYsYk4tbZxGXXSLV/eo0gG0F7Ui1lVZXjF2eB4DE5o+ou4wMceP1XR5jKW
-	 vduf0823NAxjYWbsq+Q4ygDjA6YinqhLmSz2co8s=
+	b=HKoiFUvH/I0SAE8tLd9+oppahSkDtz0t3s09reclcvmn6unCwco8OfDpdzVmNJula
+	 pOeyopt22Ppnn8zIW5Oc3oqjc2cn1JcxBgahNL7wZrH+dscL6Gs7fHsbYIKH9D4sVE
+	 3dw6rwv1geX+q13350n5QqQQiJIyrPYohREIWXHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>
-Subject: [PATCH 6.14 079/145] drm/tiny: panel-mipi-dbi: Use drm_client_setup_with_fourcc()
-Date: Tue, 20 May 2025 15:50:49 +0200
-Message-ID: <20250520125813.676615714@linuxfoundation.org>
+	"David (Ming Qiang) Wu" <David.Wu3@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Ruijing Dong <ruijing.dong@amd.com>
+Subject: [PATCH 6.14 080/145] drm/amdgpu: read back register after written for VCN v4.0.5
+Date: Tue, 20 May 2025 15:50:50 +0200
+Message-ID: <20250520125813.714702573@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -51,53 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: David (Ming Qiang) Wu <David.Wu3@amd.com>
 
-commit 9c1798259b9420f38f1fa1b83e3d864c3eb1a83e upstream.
+commit ee7360fc27d6045510f8fe459b5649b2af27811a upstream.
 
-Since commit 559358282e5b ("drm/fb-helper: Don't use the preferred depth
-for the BPP default"), RGB565 displays such as the CFAF240320X no longer
-render correctly: colors are distorted and the content is shown twice
-horizontally.
+On VCN v4.0.5 there is a race condition where the WPTR is not
+updated after starting from idle when doorbell is used. Adding
+register read-back after written at function end is to ensure
+all register writes are done before they can be used.
 
-This regression is due to the fbdev emulation layer defaulting to 32 bits
-per pixel, whereas the display expects 16 bpp (RGB565). As a result, the
-framebuffer data is incorrectly interpreted by the panel.
-
-Fix the issue by calling drm_client_setup_with_fourcc() with a format
-explicitly selected based on the display's bits-per-pixel value. For 16
-bpp, use DRM_FORMAT_RGB565; for other values, fall back to the previous
-behavior. This ensures that the allocated framebuffer format matches the
-hardware expectations, avoiding color and layout corruption.
-
-Tested on a CFAF240320X display with an RGB565 configuration, confirming
-correct colors and layout after applying this patch.
-
+Closes: https://gitlab.freedesktop.org/mesa/mesa/-/issues/12528
+Signed-off-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Tested-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 07c9db090b86e5211188e1b351303fbc673378cf)
 Cc: stable@vger.kernel.org
-Fixes: 559358282e5b ("drm/fb-helper: Don't use the preferred depth for the BPP default")
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://lore.kernel.org/r/20250417103458.2496790-1-festevam@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/tiny/panel-mipi-dbi.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/vcn_v4_0_5.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/gpu/drm/tiny/panel-mipi-dbi.c
-+++ b/drivers/gpu/drm/tiny/panel-mipi-dbi.c
-@@ -390,7 +390,10 @@ static int panel_mipi_dbi_spi_probe(stru
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_5.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_5.c
+@@ -983,6 +983,10 @@ static int vcn_v4_0_5_start_dpg_mode(str
+ 			ring->doorbell_index << VCN_RB1_DB_CTRL__OFFSET__SHIFT |
+ 			VCN_RB1_DB_CTRL__EN_MASK);
  
- 	spi_set_drvdata(spi, drm);
- 
--	drm_client_setup(drm, NULL);
-+	if (bpp == 16)
-+		drm_client_setup_with_fourcc(drm, DRM_FORMAT_RGB565);
-+	else
-+		drm_client_setup_with_fourcc(drm, DRM_FORMAT_RGB888);
- 
++	/* Keeping one read-back to ensure all register writes are done, otherwise
++	 * it may introduce race conditions */
++	RREG32_SOC15(VCN, inst_idx, regVCN_RB1_DB_CTRL);
++
  	return 0;
  }
+ 
+@@ -1169,6 +1173,10 @@ static int vcn_v4_0_5_start(struct amdgp
+ 		fw_shared->sq.queue_mode &= ~(FW_QUEUE_RING_RESET | FW_QUEUE_DPG_HOLD_OFF);
+ 	}
+ 
++	/* Keeping one read-back to ensure all register writes are done, otherwise
++	 * it may introduce race conditions */
++	RREG32_SOC15(VCN, i, regVCN_RB_ENABLE);
++
+ 	return 0;
+ }
+ 
 
 
