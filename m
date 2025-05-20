@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1710EC4;
-	Tue, 20 May 2025 13:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77D41922ED;
+	Tue, 20 May 2025 13:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749333; cv=none; b=E8dIjMMIfiM9vB8TXg/t4AbvLFBJjNo1U1UJDK7FevliMHcQ55kk75nvD5pZjlxGzIHJd32/Sk78fc4rnN5H7OnAgUCQPrUZCAQuCMkpJgQRKV8gaKaoshqetS1wkWmwS7L2qA5czRL4mqdUxPDeQJgHZzbrqwLHHSRDbPE1m0Y=
+	t=1747749336; cv=none; b=WylFYzDepvBCTDbUk3OsnDAFJUU98hxU8pIm/yG2Od0/JW6Yc8GHSlivM+c/pc67nIUt/4XVdgv+pYX1gz6xrLBx7BHhFM+e082PklJ35xMjZuq48nb3Ved5ynFpatIldODJkTA0q5iMEu2A9E1tIBL01hgJedufy90mdM4F4D4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749333; c=relaxed/simple;
-	bh=9JERdFs/LFZmXJVZFsxHReYdJYB/wkqyUO2S8TBC5Y0=;
+	s=arc-20240116; t=1747749336; c=relaxed/simple;
+	bh=g1pXKAa3OJ8kifmUsPY9LsLuQz/2tQqpXCuuFcXvmJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hGnDA6JI47agpcXejqDZL3r+a7N2J9R5OUt9wqmRH+vLXnX5ohJFkRU7PQCXO7sbsC0xfSuoLDiOFiIPkYYSii5j2eUH9h3XfgdApvrvd+Vk3S+twFJRt3f/hcQ8yGiv5MALs0mKNiMuLnDJVDHE4sRpQX0SRjqxcHnZXxp10v8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=meZz1B6t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tRTSGagA+Ng4hTgc6GK+/8ulXiyw2c42UuqiZ2B8FN92t7GEC6DmFeSVBM8wdLSWLYpiubfzrBZQtsREYw8RGQ7WoCJrfnoOetSrbOdO+BdL+mQ9W+48LL+AkoevEuuMTYo+2BkQyR0jOrg1u/N2SFPuI/pkDnbS7soUCUNu69U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K1Pk9UsJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="meZz1B6t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62188C4CEEA;
-	Tue, 20 May 2025 13:55:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1Pk9UsJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E103C4CEE9;
+	Tue, 20 May 2025 13:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749333;
-	bh=9JERdFs/LFZmXJVZFsxHReYdJYB/wkqyUO2S8TBC5Y0=;
+	s=korg; t=1747749336;
+	bh=g1pXKAa3OJ8kifmUsPY9LsLuQz/2tQqpXCuuFcXvmJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=meZz1B6t8lhuUh2XLcxo3KQxqyETZwaXLjRv1ZvbgYPYLuzvohc4edQ2MIjkV2l/B
-	 IK5uSD9WWLoHh1RziplZA8aTEAd+XzPLoQ0hT2cD1RLKicsSVUeUDL3AsQ6xx3VCu5
-	 uA2Hwo/G2gpB5FPCH+Pq8th9JfvhEAfh902jZx6Y=
+	b=K1Pk9UsJzv13DjKp7PLQZ15G4cFjWg0IQmXid1ELI9icRwA51aosmW3fuA04bMRgQ
+	 Hfy38WgHpvyqjKEGOmF8J5mSReyfyCaYoYXOpH6GMvRmAGGSbuj8RGSESYO/TVhB3G
+	 PHfbCizBpcyGI0iImjPAPmgbzO/TiqH8XIYfDn6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Cacheux <paulcacheux@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Michal Suchanek <msuchanek@suse.de>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 11/97] tracing: probes: Fix a possible race in trace_probe_log APIs
-Date: Tue, 20 May 2025 15:49:36 +0200
-Message-ID: <20250520125801.110970560@linuxfoundation.org>
+Subject: [PATCH 6.1 12/97] tpm: tis: Double the timeout B to 4s
+Date: Tue, 20 May 2025 15:49:37 +0200
+Message-ID: <20250520125801.148968450@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -51,151 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Michal Suchanek <msuchanek@suse.de>
 
-[ Upstream commit fd837de3c9cb1a162c69bc1fb1f438467fe7f2f5 ]
+[ Upstream commit 2f661f71fda1fc0c42b7746ca5b7da529eb6b5be ]
 
-Since the shared trace_probe_log variable can be accessed and
-modified via probe event create operation of kprobe_events,
-uprobe_events, and dynamic_events, it should be protected.
-In the dynamic_events, all operations are serialized by
-`dyn_event_ops_mutex`. But kprobe_events and uprobe_events
-interfaces are not serialized.
+With some Infineon chips the timeouts in tpm_tis_send_data (both B and
+C) can reach up to about 2250 ms.
 
-To solve this issue, introduces dyn_event_create(), which runs
-create() operation under the mutex, for kprobe_events and
-uprobe_events. This also uses lockdep to check the mutex is
-held when using trace_probe_log* APIs.
+Timeout C is retried since
+commit de9e33df7762 ("tpm, tpm_tis: Workaround failed command reception on Infineon devices")
 
-Link: https://lore.kernel.org/all/174684868120.551552.3068655787654268804.stgit@devnote2/
+Timeout B still needs to be extended.
 
-Reported-by: Paul Cacheux <paulcacheux@gmail.com>
-Closes: https://lore.kernel.org/all/20250510074456.805a16872b591e2971a4d221@kernel.org/
-Fixes: ab105a4fb894 ("tracing: Use tracing error_log with probe events")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+The problem is most commonly encountered with context related operation
+such as load context/save context. These are issued directly by the
+kernel, and there is no retry logic for them.
+
+When a filesystem is set up to use the TPM for unlocking the boot fails,
+and restarting the userspace service is ineffective. This is likely
+because ignoring a load context/save context result puts the real TPM
+state and the TPM state expected by the kernel out of sync.
+
+Chips known to be affected:
+tpm_tis IFX1522:00: 2.0 TPM (device-id 0x1D, rev-id 54)
+Description: SLB9672
+Firmware Revision: 15.22
+
+tpm_tis MSFT0101:00: 2.0 TPM (device-id 0x1B, rev-id 22)
+Firmware Revision: 7.83
+
+tpm_tis MSFT0101:00: 2.0 TPM (device-id 0x1A, rev-id 16)
+Firmware Revision: 5.63
+
+Link: https://lore.kernel.org/linux-integrity/Z5pI07m0Muapyu9w@kitsune.suse.cz/
+Signed-off-by: Michal Suchanek <msuchanek@suse.de>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_dynevent.c | 16 +++++++++++++++-
- kernel/trace/trace_dynevent.h |  1 +
- kernel/trace/trace_kprobe.c   |  2 +-
- kernel/trace/trace_probe.c    |  9 +++++++++
- kernel/trace/trace_uprobe.c   |  2 +-
- 5 files changed, 27 insertions(+), 3 deletions(-)
+ drivers/char/tpm/tpm_tis_core.h | 2 +-
+ include/linux/tpm.h             | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/trace_dynevent.c b/kernel/trace/trace_dynevent.c
-index 4376887e0d8aa..c9b0533407ede 100644
---- a/kernel/trace/trace_dynevent.c
-+++ b/kernel/trace/trace_dynevent.c
-@@ -16,7 +16,7 @@
- #include "trace_output.h"	/* for trace_event_sem */
- #include "trace_dynevent.h"
+diff --git a/drivers/char/tpm/tpm_tis_core.h b/drivers/char/tpm/tpm_tis_core.h
+index be72681ab8ea2..5f29eebef52b8 100644
+--- a/drivers/char/tpm/tpm_tis_core.h
++++ b/drivers/char/tpm/tpm_tis_core.h
+@@ -53,7 +53,7 @@ enum tis_int_flags {
+ enum tis_defaults {
+ 	TIS_MEM_LEN = 0x5000,
+ 	TIS_SHORT_TIMEOUT = 750,	/* ms */
+-	TIS_LONG_TIMEOUT = 2000,	/* 2 sec */
++	TIS_LONG_TIMEOUT = 4000,	/* 4 secs */
+ 	TIS_TIMEOUT_MIN_ATML = 14700,	/* usecs */
+ 	TIS_TIMEOUT_MAX_ATML = 15000,	/* usecs */
+ };
+diff --git a/include/linux/tpm.h b/include/linux/tpm.h
+index dd0784a6e07d9..4a4112bb1d1b8 100644
+--- a/include/linux/tpm.h
++++ b/include/linux/tpm.h
+@@ -181,7 +181,7 @@ enum tpm2_const {
  
--static DEFINE_MUTEX(dyn_event_ops_mutex);
-+DEFINE_MUTEX(dyn_event_ops_mutex);
- static LIST_HEAD(dyn_event_ops_list);
- 
- bool trace_event_dyn_try_get_ref(struct trace_event_call *dyn_call)
-@@ -125,6 +125,20 @@ int dyn_event_release(const char *raw_command, struct dyn_event_operations *type
- 	return ret;
- }
- 
-+/*
-+ * Locked version of event creation. The event creation must be protected by
-+ * dyn_event_ops_mutex because of protecting trace_probe_log.
-+ */
-+int dyn_event_create(const char *raw_command, struct dyn_event_operations *type)
-+{
-+	int ret;
-+
-+	mutex_lock(&dyn_event_ops_mutex);
-+	ret = type->create(raw_command);
-+	mutex_unlock(&dyn_event_ops_mutex);
-+	return ret;
-+}
-+
- static int create_dyn_event(const char *raw_command)
- {
- 	struct dyn_event_operations *ops;
-diff --git a/kernel/trace/trace_dynevent.h b/kernel/trace/trace_dynevent.h
-index 936477a111d3e..beee3f8d75444 100644
---- a/kernel/trace/trace_dynevent.h
-+++ b/kernel/trace/trace_dynevent.h
-@@ -100,6 +100,7 @@ void *dyn_event_seq_next(struct seq_file *m, void *v, loff_t *pos);
- void dyn_event_seq_stop(struct seq_file *m, void *v);
- int dyn_events_release_all(struct dyn_event_operations *type);
- int dyn_event_release(const char *raw_command, struct dyn_event_operations *type);
-+int dyn_event_create(const char *raw_command, struct dyn_event_operations *type);
- 
- /*
-  * for_each_dyn_event	-	iterate over the dyn_event list
-diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
-index 72655d81b37d3..cc155c4117684 100644
---- a/kernel/trace/trace_kprobe.c
-+++ b/kernel/trace/trace_kprobe.c
-@@ -975,7 +975,7 @@ static int create_or_delete_trace_kprobe(const char *raw_command)
- 	if (raw_command[0] == '-')
- 		return dyn_event_release(raw_command, &trace_kprobe_ops);
- 
--	ret = trace_kprobe_create(raw_command);
-+	ret = dyn_event_create(raw_command, &trace_kprobe_ops);
- 	return ret == -ECANCELED ? -EINVAL : ret;
- }
- 
-diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
-index ba48b5e270e1f..3888a59c9dfe9 100644
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -143,9 +143,12 @@ static const struct fetch_type *find_fetch_type(const char *type)
- }
- 
- static struct trace_probe_log trace_probe_log;
-+extern struct mutex dyn_event_ops_mutex;
- 
- void trace_probe_log_init(const char *subsystem, int argc, const char **argv)
- {
-+	lockdep_assert_held(&dyn_event_ops_mutex);
-+
- 	trace_probe_log.subsystem = subsystem;
- 	trace_probe_log.argc = argc;
- 	trace_probe_log.argv = argv;
-@@ -154,11 +157,15 @@ void trace_probe_log_init(const char *subsystem, int argc, const char **argv)
- 
- void trace_probe_log_clear(void)
- {
-+	lockdep_assert_held(&dyn_event_ops_mutex);
-+
- 	memset(&trace_probe_log, 0, sizeof(trace_probe_log));
- }
- 
- void trace_probe_log_set_index(int index)
- {
-+	lockdep_assert_held(&dyn_event_ops_mutex);
-+
- 	trace_probe_log.index = index;
- }
- 
-@@ -167,6 +174,8 @@ void __trace_probe_log_err(int offset, int err_type)
- 	char *command, *p;
- 	int i, len = 0, pos = 0;
- 
-+	lockdep_assert_held(&dyn_event_ops_mutex);
-+
- 	if (!trace_probe_log.argv)
- 		return;
- 
-diff --git a/kernel/trace/trace_uprobe.c b/kernel/trace/trace_uprobe.c
-index a6a3ff2a441ed..53ef3cb65098d 100644
---- a/kernel/trace/trace_uprobe.c
-+++ b/kernel/trace/trace_uprobe.c
-@@ -732,7 +732,7 @@ static int create_or_delete_trace_uprobe(const char *raw_command)
- 	if (raw_command[0] == '-')
- 		return dyn_event_release(raw_command, &trace_uprobe_ops);
- 
--	ret = trace_uprobe_create(raw_command);
-+	ret = dyn_event_create(raw_command, &trace_uprobe_ops);
- 	return ret == -ECANCELED ? -EINVAL : ret;
- }
- 
+ enum tpm2_timeouts {
+ 	TPM2_TIMEOUT_A          =    750,
+-	TPM2_TIMEOUT_B          =   2000,
++	TPM2_TIMEOUT_B          =   4000,
+ 	TPM2_TIMEOUT_C          =    200,
+ 	TPM2_TIMEOUT_D          =     30,
+ 	TPM2_DURATION_SHORT     =     20,
 -- 
 2.39.5
 
