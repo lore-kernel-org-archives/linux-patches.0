@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9E92522BD;
-	Tue, 20 May 2025 14:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F0624A076;
+	Tue, 20 May 2025 14:17:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750622; cv=none; b=qKlOURFfU1vkIa4OVSzcBYPqMlspZcwvGafyvBMn1kdJT7SI8xDZzNefnpa3fr0jjsBGir8CWHzE052af6lcWzJnT1cAnkZohFRUW9uB9Iy9qjkWOPYMKUFvVYTHEHCK0JNcI4bNeo5szORbM3utphn9bAwoVf/SFqtt2GY4Y7I=
+	t=1747750627; cv=none; b=hXQhn7FRwagpe4pVbApqYiKN57tuzKFBF7NeJ93cw9fkihYhASUnXdQlK6f2O8kk8z5U9KDjFlqAcKDjbJsqzrnPcSlEQ2p3xePJVuQ8N2ZiBsh1wSZwQ376MPg8rkMHglAWkFGzG4Pu9ZnsKv/zjn7chighr09ZLTWyWLfHVD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750622; c=relaxed/simple;
-	bh=naq4yp2DIlAvBSD73+JCm+TQS/npBrWO27I4qmN8CNA=;
+	s=arc-20240116; t=1747750627; c=relaxed/simple;
+	bh=OLD7ZOOI/ID77ewyY7tloYakpyUjzHyvxYrNW7oiZNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V21rTnCY6QiFViSRgPoq2LOSOpmf7RWn9RYUr3a2AYMYvwVounjOlbwzBSXbuOu7aRB3KH2muVO8ydu1N6GPL3dGfW3DYl9G0WsFHWnqgnZpCA0LbT/RX70aXcG51FLEgLTQQFVUpo0Ki+hJa4cb3QOnchmJRvraiY9rPA6jmho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E/Rcv3D4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R0F5UIxlRg3rEj1IbQks9PP1Q61x0PYSsyVXe35kTRR+i9Y8ym+vTG1M9Mu7ZT/ySckjOQmDVAjB4DJ4v0q5iazqCQWzkBlw0wEBgnfWtncZsRzJUr5N/UtaTqZOYgPkty/fj5AjysO/wwdAUgKshuNMoZH/twER9klNwWN6aeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bb4ki4Dw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E/Rcv3D4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE02C4CEE9;
-	Tue, 20 May 2025 14:17:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bb4ki4Dw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC1DC4CEE9;
+	Tue, 20 May 2025 14:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750622;
-	bh=naq4yp2DIlAvBSD73+JCm+TQS/npBrWO27I4qmN8CNA=;
+	s=korg; t=1747750626;
+	bh=OLD7ZOOI/ID77ewyY7tloYakpyUjzHyvxYrNW7oiZNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E/Rcv3D466+7iHaiA12bTKz/uXltzuvttvrjx62Gu566viZ4Wdq+XvDdGizqzQmQS
-	 3IxI6ZigQy7T7HD3IwtQ0/x5p4Syg7aS2ev04hKoQIC6ta3IMTEzyUezJJA98TmLTr
-	 3Lhl72xJEt6LoKZ9/ynpozdxqBOm2H2ZjuL6jsqk=
+	b=bb4ki4DwEllRsMMtNwDh7SAINvPvhJosmwZ68/NHBjSD3nrC/5Pr6yz++CbG1DX2n
+	 ZSNzblSUtP8HIHO62GsrWk35XhAQBfodnYzuA81OHWSsc/R+wy7yJz5Gp6vASkAsE+
+	 W1tFMi1oI1EveWz5Fv2ZfydiL2q8Bqj2e5cq8Ao4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yijun Shen <Yijun.Shen@dell.com>,
-	Yijun Shen <Yijun_Shen@Dell.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.14 068/145] HID: amd_sfh: Fix SRA sensor when its the only sensor
-Date: Tue, 20 May 2025 15:50:38 +0200
-Message-ID: <20250520125813.244232396@linuxfoundation.org>
+	Tianyang Zhang <zhangtianyang@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.14 069/145] LoongArch: Prevent cond_resched() occurring within kernel-fpu
+Date: Tue, 20 May 2025 15:50:39 +0200
+Message-ID: <20250520125813.282508073@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -53,53 +50,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Tianyang Zhang <zhangtianyang@loongson.cn>
 
-commit 0cc2effbc8f522af6b9d871cd27678e6aed9d56c upstream.
+commit 2468b0e3d5659dfde77f081f266e1111a981efb8 upstream.
 
-On systems that only have an SRA sensor connected to SFH the sensor
-doesn't get enabled due to a bad optimization condition of breaking
-the sensor walk loop.
+When CONFIG_PREEMPT_COUNT is not configured (i.e. CONFIG_PREEMPT_NONE/
+CONFIG_PREEMPT_VOLUNTARY), preempt_disable() / preempt_enable() merely
+acts as a barrier(). However, in these cases cond_resched() can still
+trigger a context switch and modify the CSR.EUEN, resulting in do_fpu()
+exception being activated within the kernel-fpu critical sections, as
+demonstrated in the following path:
 
-This optimization is unnecessary in the first place because if there
-is only one device then the loop only runs once. Drop the condition
-and explicitly mark sensor as enabled.
+dcn32_calculate_wm_and_dlg()
+    DC_FP_START()
+	dcn32_calculate_wm_and_dlg_fpu()
+	    dcn32_find_dummy_latency_index_for_fw_based_mclk_switch()
+		dcn32_internal_validate_bw()
+		    dcn32_enable_phantom_stream()
+			dc_create_stream_for_sink()
+			   kzalloc(GFP_KERNEL)
+				__kmem_cache_alloc_node()
+				    __cond_resched()
+    DC_FP_END()
 
-Reported-by: Yijun Shen <Yijun.Shen@dell.com>
-Tested-By: Yijun Shen <Yijun_Shen@Dell.com>
-Fixes: d1c444b47100d ("HID: amd_sfh: Add support to export device operating states")
+This patch is similar to commit d02198550423a0b (x86/fpu: Improve crypto
+performance by making kernel-mode FPU reliably usable in softirqs).  It
+uses local_bh_disable() instead of preempt_disable() for non-RT kernels
+so it can avoid the cond_resched() issue, and also extend the kernel-fpu
+application scenarios to the softirq context.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ arch/loongarch/kernel/kfpu.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
-+++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
-@@ -134,9 +134,6 @@ static int amd_sfh1_1_hid_client_init(st
- 	for (i = 0; i < cl_data->num_hid_devices; i++) {
- 		cl_data->sensor_sts[i] = SENSOR_DISABLED;
+--- a/arch/loongarch/kernel/kfpu.c
++++ b/arch/loongarch/kernel/kfpu.c
+@@ -18,11 +18,28 @@ static unsigned int euen_mask = CSR_EUEN
+ static DEFINE_PER_CPU(bool, in_kernel_fpu);
+ static DEFINE_PER_CPU(unsigned int, euen_current);
  
--		if (cl_data->num_hid_devices == 1 && cl_data->sensor_idx[0] == SRA_IDX)
--			break;
--
- 		if (cl_data->sensor_idx[i] == SRA_IDX) {
- 			info.sensor_idx = cl_data->sensor_idx[i];
- 			writel(0, privdata->mmio + amd_get_p2c_val(privdata, 0));
-@@ -145,8 +142,10 @@ static int amd_sfh1_1_hid_client_init(st
- 				(privdata, cl_data->sensor_idx[i], ENABLE_SENSOR);
++static inline void fpregs_lock(void)
++{
++	if (IS_ENABLED(CONFIG_PREEMPT_RT))
++		preempt_disable();
++	else
++		local_bh_disable();
++}
++
++static inline void fpregs_unlock(void)
++{
++	if (IS_ENABLED(CONFIG_PREEMPT_RT))
++		preempt_enable();
++	else
++		local_bh_enable();
++}
++
+ void kernel_fpu_begin(void)
+ {
+ 	unsigned int *euen_curr;
  
- 			cl_data->sensor_sts[i] = (status == 0) ? SENSOR_ENABLED : SENSOR_DISABLED;
--			if (cl_data->sensor_sts[i] == SENSOR_ENABLED)
-+			if (cl_data->sensor_sts[i] == SENSOR_ENABLED) {
-+				cl_data->is_any_sensor_enabled = true;
- 				privdata->dev_en.is_sra_present = true;
-+			}
- 			continue;
- 		}
+-	preempt_disable();
++	if (!irqs_disabled())
++		fpregs_lock();
+ 
+ 	WARN_ON(this_cpu_read(in_kernel_fpu));
+ 
+@@ -73,7 +90,8 @@ void kernel_fpu_end(void)
+ 
+ 	this_cpu_write(in_kernel_fpu, false);
+ 
+-	preempt_enable();
++	if (!irqs_disabled())
++		fpregs_unlock();
+ }
+ EXPORT_SYMBOL_GPL(kernel_fpu_end);
  
 
 
