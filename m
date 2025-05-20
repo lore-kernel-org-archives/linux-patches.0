@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442C7242D98;
-	Tue, 20 May 2025 14:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B953242D98;
+	Tue, 20 May 2025 14:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750854; cv=none; b=XmdfhiOjRfW/HlYfa7obhXo232jd03FRfBoooBjThn6bGRpROaVNfJKUONkqoZsexjD4qJV8DUj4xNoruTqXwqdFFqA5CFJusS57Md1FMfeKvMoMZ2EjL4DTw4XrNI2fXKkDZGf4VRTG7iXg3BHbU28FKO9Lb8NDcrfMjD8Nb6Y=
+	t=1747750857; cv=none; b=KiG6BesLI9cBPizddw31whPvZ+XkEkpslqe01OgRJaCzTlGI8uqC+yAGHrbFec6KfMw0pZgE9FiL7oIcmCFJn3K4TksTUm0V64Ukykon4Fc7Tl2k6+26pMfAWrgHhqNPxu6iwyJ4aJVbo+n3uGuyZbGDVt/6j1NCHJQqZKubkM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750854; c=relaxed/simple;
-	bh=28qGGkdFG+h2PolVGP1Ypt0flryut/6p1E8nDjL+9C0=;
+	s=arc-20240116; t=1747750857; c=relaxed/simple;
+	bh=h1eJ8Y3896EsGx9xKr3hiut7Q2XNGG3A2yQggg5arlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sPNiTwJBI9kqFHsi5eDk+V3KICio/G0XSOd1KAV0aIOJdkSvtK3KFvVzBcVD7AB2MKSjzmrfVji0dKCS+PMuc9PWmDY2I+LXaiq3hzUqElsleBG/P1cDzXb24RgCxKmTU5GY0KpirjkCMl1J3x43YyTQJVYzX2SbDRJ3Xj+GmPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AWX+akoZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gXuVf9SYWzK6Dmayc08JM5m0FjIeRDTowo7Y2PEnkQF90Xj28h1DFMDUVGw9YZHEJRJ3v+mXOCyRMpehfrBuWDABZubHTdrYmBfCRcb9U8+kwrtkpnMpPgzNopq5+/QW/u1MX/cLeFeTzp2/J36/BHEwu4zj/ApIcc+KMxsv0eA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6fVqhQp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AWX+akoZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F96C4CEE9;
-	Tue, 20 May 2025 14:20:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6fVqhQp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1448C4CEE9;
+	Tue, 20 May 2025 14:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750854;
-	bh=28qGGkdFG+h2PolVGP1Ypt0flryut/6p1E8nDjL+9C0=;
+	s=korg; t=1747750857;
+	bh=h1eJ8Y3896EsGx9xKr3hiut7Q2XNGG3A2yQggg5arlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AWX+akoZ9Aq+tfjV2bg7yllBsa613/KTTPxg0YCQ3gYrDo9WZODxkFC2gtRtRiWAJ
-	 Yza29DtqK+dxcmAw8muGpedQtDY4Q1KgoHFgHSaFPb5lC+uTjeTU1vJVDXAMu5klrb
-	 OYBWxG8sWx+XcpURdBFpsqpiBbnY9TzurXZVvj28=
+	b=r6fVqhQp9bgQevurG1n5RTdOsjSY8KF+VKReY58zNZtAIlNyZRmBYL+o9IAzV3634
+	 fFSUikK8k9Kgl/l1Im36E4fGephL9HgnYc8gHMufSq/tMOOwf94JFG5AAT62xBMTu/
+	 lJDPMqvbzy1HAaiSOvzPIH+GfVxQbiA4ge3d0RJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Siwinski <ssiwinski@atto.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.14 113/145] scsi: sd_zbc: block: Respect bio vector limits for REPORT ZONES buffer
-Date: Tue, 20 May 2025 15:51:23 +0200
-Message-ID: <20250520125814.976705119@linuxfoundation.org>
+	Jethro Donaldson <devel@jro.nz>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.14 114/145] smb: client: fix memory leak during error handling for POSIX mkdir
+Date: Tue, 20 May 2025 15:51:24 +0200
+Message-ID: <20250520125815.014095872@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -51,81 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve Siwinski <ssiwinski@atto.com>
+From: Jethro Donaldson <devel@jro.nz>
 
-commit e8007fad5457ea547ca63bb011fdb03213571c7e upstream.
+commit 1fe4a44b7fa3955bcb7b4067c07b778fe90d8ee7 upstream.
 
-The REPORT ZONES buffer size is currently limited by the HBA's maximum
-segment count to ensure the buffer can be mapped. However, the block
-layer further limits the number of iovec entries to 1024 when allocating
-a bio.
+The response buffer for the CREATE request handled by smb311_posix_mkdir()
+is leaked on the error path (goto err_free_rsp_buf) because the structure
+pointer *rsp passed to free_rsp_buf() is not assigned until *after* the
+error condition is checked.
 
-To avoid allocation of buffers too large to be mapped, further restrict
-the maximum buffer size to BIO_MAX_INLINE_VECS.
+As *rsp is initialised to NULL, free_rsp_buf() becomes a no-op and the leak
+is instead reported by __kmem_cache_shutdown() upon subsequent rmmod of
+cifs.ko if (and only if) the error path has been hit.
 
-Replace the UIO_MAXIOV symbolic name with the more contextually
-appropriate BIO_MAX_INLINE_VECS.
+Pass rsp_iov.iov_base to free_rsp_buf() instead, similar to the code in
+other functions in smb2pdu.c for which *rsp is assigned late.
 
-Fixes: b091ac616846 ("sd_zbc: Fix report zones buffer allocation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Steve Siwinski <ssiwinski@atto.com>
-Link: https://lore.kernel.org/r/20250508200122.243129-1-ssiwinski@atto.com
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Jethro Donaldson <devel@jro.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bio.c           |    2 +-
- drivers/scsi/sd_zbc.c |    6 +++++-
- include/linux/bio.h   |    1 +
- 3 files changed, 7 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2pdu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/block/bio.c
-+++ b/block/bio.c
-@@ -611,7 +611,7 @@ struct bio *bio_kmalloc(unsigned short n
- {
- 	struct bio *bio;
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -2967,7 +2967,7 @@ replay_again:
+ 	/* Eventually save off posix specific response info and timestamps */
  
--	if (nr_vecs > UIO_MAXIOV)
-+	if (nr_vecs > BIO_MAX_INLINE_VECS)
- 		return NULL;
- 	return kmalloc(struct_size(bio, bi_inline_vecs, nr_vecs), gfp_mask);
- }
---- a/drivers/scsi/sd_zbc.c
-+++ b/drivers/scsi/sd_zbc.c
-@@ -169,6 +169,7 @@ static void *sd_zbc_alloc_report_buffer(
- 					unsigned int nr_zones, size_t *buflen)
- {
- 	struct request_queue *q = sdkp->disk->queue;
-+	unsigned int max_segments;
- 	size_t bufsize;
- 	void *buf;
- 
-@@ -180,12 +181,15 @@ static void *sd_zbc_alloc_report_buffer(
- 	 * Furthermore, since the report zone command cannot be split, make
- 	 * sure that the allocated buffer can always be mapped by limiting the
- 	 * number of pages allocated to the HBA max segments limit.
-+	 * Since max segments can be larger than the max inline bio vectors,
-+	 * further limit the allocated buffer to BIO_MAX_INLINE_VECS.
- 	 */
- 	nr_zones = min(nr_zones, sdkp->zone_info.nr_zones);
- 	bufsize = roundup((nr_zones + 1) * 64, SECTOR_SIZE);
- 	bufsize = min_t(size_t, bufsize,
- 			queue_max_hw_sectors(q) << SECTOR_SHIFT);
--	bufsize = min_t(size_t, bufsize, queue_max_segments(q) << PAGE_SHIFT);
-+	max_segments = min(BIO_MAX_INLINE_VECS, queue_max_segments(q));
-+	bufsize = min_t(size_t, bufsize, max_segments << PAGE_SHIFT);
- 
- 	while (bufsize >= SECTOR_SIZE) {
- 		buf = kvzalloc(bufsize, GFP_KERNEL | __GFP_NORETRY);
---- a/include/linux/bio.h
-+++ b/include/linux/bio.h
-@@ -11,6 +11,7 @@
- #include <linux/uio.h>
- 
- #define BIO_MAX_VECS		256U
-+#define BIO_MAX_INLINE_VECS	UIO_MAXIOV
- 
- struct queue_limits;
- 
+ err_free_rsp_buf:
+-	free_rsp_buf(resp_buftype, rsp);
++	free_rsp_buf(resp_buftype, rsp_iov.iov_base);
+ 	kfree(pc_buf);
+ err_free_req:
+ 	cifs_small_buf_release(req);
 
 
