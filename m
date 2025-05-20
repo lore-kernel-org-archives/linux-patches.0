@@ -1,41 +1,64 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FE424BBFF
-	for <patches@lists.linux.dev>; Tue, 20 May 2025 14:57:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F355419F137
+	for <patches@lists.linux.dev>; Tue, 20 May 2025 15:22:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747753036; cv=none; b=IE/cmJiDJE1jkD1CXMyvlMuBX+5x9GmgJEg0ckddlcJLRD9pMK+j7ld7dlCQOw+HSgYX8z4Bdy8pveCzvLBQxLW374p767KTFtH81wQ3AtL6E3Mb+Ml0SSsCMH1HZTJOa/mYuGofFxOg3GvjFS6wMbbjlIy/OKiDhS7ZczK5/oI=
+	t=1747754540; cv=none; b=IoKhPeqCWDnGycGctSvQeMNoyYKW0HHx1Za6YlEmup8oyJAxSOaxPkUqAiVsPup5rbGV6dHEHau7kuqZFwJMpBw1/1vgNM+fAfmxqVOpSfVSrr97V4BUP67tuUq7xEH9II0p/uE4gzwCIpjETk9uqQHNq6A4utx3pGvFA+kvpx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747753036; c=relaxed/simple;
-	bh=HtuFhXI63urBA3dRKYyXQ6GHreCYVeNttV6YM+zDLlM=;
+	s=arc-20240116; t=1747754540; c=relaxed/simple;
+	bh=drUTSEyk+wweBp8MzrvZkkg+cv1majfZDXRkJhg6S4A=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dpxBsp2jdiE3RvuSnJCYS6zjHnZweE7rY/NotsJPlUV0JD0EPzEZ7ig7q/jgh1HNSw3RRW2cZfM8rxg/hGWDyHpzM8Z38cQRSw2PfH/ltCYLazIKEWOMsyss8ssueMb0DTcfpzJ0riAUqSFXtdA5rfai13icwxytsvSyLna2Gg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=K/K4TcRT; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	 In-Reply-To:Content-Type; b=Ynlth4EI2udCiXwgbny4hhc6EL66Vv+7mOi3AtVyvItQxly7MGOn49fK09VYWoDWl4OLnZTRfJ6O8Z8cANKQv0/gyVBqxw2C7jMfGceeiroaXcdUCFgbTJQz1VDETW1c3dMuQHuE9v2xOSyz4fQvRsoQah1okN2efNXZMlCbv1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kernel.dk; spf=pass smtp.mailfrom=kernel.dk; dkim=pass (2048-bit key) header.d=kernel-dk.20230601.gappssmtp.com header.i=@kernel-dk.20230601.gappssmtp.com header.b=G2m/04fl; arc=none smtp.client-ip=209.85.166.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kernel.dk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kernel.dk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="K/K4TcRT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1747753032; x=1748357832; i=rwarsow@gmx.de;
-	bh=HtuFhXI63urBA3dRKYyXQ6GHreCYVeNttV6YM+zDLlM=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=K/K4TcRThnPK+QGMXAEGY2FDi/YeEvqsIlb6iWop3kMoR+AZMbxakg1wHvN8Jcts
-	 JGZlTAuSBt7KgBCdKCn2dM5kQr11pkOl1X/cLqHh89YAxTwH1m21vaUacGG7zXwWS
-	 xIZnxlP7DM8aZzS8uNO7bBh16ViZLD74FoAq8/AT8xtzm+r2AhlPzvcqsYRVZxlxx
-	 BGiDXBwhF+n/ZeCFSKPfA3Q/ELvC71mLFRnoJfc6rzTq+/6U9EbdrzsCHEHW5NV6k
-	 8nD1f0IqgNmMY7kSx3mqqre+lS4ERIqjcprvHPdYNLbLIKPwgPt3t/oJBsl3s2H3s
-	 4ZgNyUDMhUGLAHF8tw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.200.20] ([46.142.35.23]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MBDnI-1u5sM53qMY-00AMI7; Tue, 20
- May 2025 16:57:11 +0200
-Message-ID: <1750dadc-5993-483d-a238-2060484ac077@gmx.de>
-Date: Tue, 20 May 2025 16:57:08 +0200
+	dkim=pass (2048-bit key) header.d=kernel-dk.20230601.gappssmtp.com header.i=@kernel-dk.20230601.gappssmtp.com header.b="G2m/04fl"
+Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-85db3475637so213543039f.1
+        for <patches@lists.linux.dev>; Tue, 20 May 2025 08:22:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kernel-dk.20230601.gappssmtp.com; s=20230601; t=1747754538; x=1748359338; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=28A77Cb9dd2oxcpPba2mZ0UcBg1frToBP1w7OoG6wpU=;
+        b=G2m/04flvQxoZbSqXTTdGlRDhQ+0E432L69OV551TScTKYF5Y8yG24j0/ieLxgOdHm
+         V1pZlGyoDwe2Or7Jgqa2IX18tkwr5cwANVWJu7RoYe6FLRdqCxBbp1BwUoMY6e9oo4aE
+         zbODJkW1ioAuxNRxlsHCreSiCrXNGYAM1b8NuTco9fbRKoxVkh9CNdGEIV4p9gees8F/
+         wBo9MUE3PZ0oFbHJKrxL59goLDyzXuzHk5ewZsFe12b9r3eLjk2jhEXQntVmXXDI17m3
+         MK9RbKfORgZ9r1WVvYpmvoImWc2somYhWhB+OGJG7NLGJRwajWzGQlVuQU3sk6FlfeL+
+         asrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747754538; x=1748359338;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=28A77Cb9dd2oxcpPba2mZ0UcBg1frToBP1w7OoG6wpU=;
+        b=TbMnfL8rfGcJeE9ToEv5dhOjiAgBfhKD/4WnUUFX/pxTtyzfrUyfcazF8WscDWmIrT
+         0C4n1TWeWkL3U3pkZkdKACHJ7udzCfAm8f4RlWWLjh6kE/Le1uNN+KUnyBomnetWmz2x
+         Cor6q4mdrturyv6zgBaJmeT/QoPb7Vfizshzdcr+zffuInXnP4+GS/+KQFY+yMWZFzFP
+         1zAeJhQr4tr73hb1d48jbS5GZpGab6W2m8kygYYUpAzfz4+ZUbgoSl914im4yDfEjd4z
+         BrXzoEiYP6ykDhrnIZVxY3Y42Auo2oHP3fM97BmgUM+4Vlr349mckYouDwC4CHmxVwIN
+         V/RQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVq4AQIkMt/Ww8sgCnr0dp4dY6nutnN9KB69i12c8N9FS+MKGphVwHxCMmM3fm5qWiPyXsLwEDa@lists.linux.dev
+X-Gm-Message-State: AOJu0YzomP2iQfOTMxFsg6vOn3MpUEvZgOm8ysQhAO7HzpOzdyhPZdNd
+	lQWTq6dotqgkhRSCHVvIMNfOPsfnGQu5bN+Sg+/aKiliP8c351qcoQe6xSNfZ9+8BhE=
+X-Gm-Gg: ASbGncsx2v7px08mSwzE1ra7DRMfMyZeaLpuxMbHznAXbHkHPnz1KUfdpCybpZAjFVK
+	plT4ODTCM2x9Yj1a8oHlPT5m1YQIaZ5kHDa/3ChAYKxpNWgqlWFVHDllGA1cH/GrF9qHtgfJt9w
+	M/rK65AB1lYrMR3EGtnLOVWDh0Qs8ChPOK878Ynv6rGKkDkP7dQgBGGW4SvKBxQwYCAR6npiOSp
+	x4yTb+vfoIDrGBLl2QcsI1FrSni7c5V0iOvoqsInL5DvEfFG0TrpC+37qa1HWXtPrGGaMjxLj9q
+	CqeA2q/Ukv39Tn6axMbOqTsgGJPWJG01cX0TQjUHfUcvPK9eQWfa+Q3gjQ==
+X-Google-Smtp-Source: AGHT+IHybOxTZR7F/QJc0USNLXLQ5L6fwe2BKiXGfcHIJgPUA62KTSuwtc5Hgl89SiSjuXmhZG6uFw==
+X-Received: by 2002:a6b:750d:0:b0:86a:441:25ca with SMTP id ca18e2360f4ac-86a175262a9mr2041757139f.6.1747754537676;
+        Tue, 20 May 2025 08:22:17 -0700 (PDT)
+Received: from [192.168.1.116] ([96.43.243.2])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4fbcc38a5b2sm2282150173.9.2025.05.20.08.22.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 May 2025 08:22:17 -0700 (PDT)
+Message-ID: <e05dbb79-9769-4825-aa33-1ed82e9bff69@kernel.dk>
+Date: Tue, 20 May 2025 09:22:16 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,75 +66,74 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.14 000/145] 6.14.8-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250520125810.535475500@linuxfoundation.org>
-From: Ronald Warsow <rwarsow@gmx.de>
-Content-Language: de-DE, en-US
-In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:BHvJ+CL56xP4bsc4UN6TpqF/WMhEoBGc64rSzwbumTsH9bp8Drd
- BL+O+V3a59MAtHQomBfctOIqDkMC01HGyaTO1l+dVNqYdbP1MuT5Kz6kySCHuXLInO/4qHC
- /oSIDtcM+e5bM2fcYEDUqmx+xF2hpIgyTBgwOAVz9Ozl1H9BmLdd17pgRALTzAIsIA/CieF
- nmcn2DZcdYhp6RmBy6VLg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:79/LDIqj9EU=;af9O9A79LfFbds+wcL0kgUtyG2e
- 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
+Subject: Re: [PATCH 6.14 162/197] loop: Add sanity check for read/write_iter
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Justin Forbes <jmforbes@linuxtx.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ syzbot+6af973a3b8dfd2faefdc@syzkaller.appspotmail.com,
+ Lizhi Xu <lizhi.xu@windriver.com>, Christoph Hellwig <hch@lst.de>,
+ Sasha Levin <sashal@kernel.org>
+References: <20250512172044.326436266@linuxfoundation.org>
+ <20250512172050.980575013@linuxfoundation.org>
+ <CAFxkdAq+5ur__TPi6ZW9uoOBv037hgn1d_9906cBeXWE=X3Sgw@mail.gmail.com>
+ <2025052059-unsteady-octagon-9321@gregkh>
+Content-Language: en-US
+From: Jens Axboe <axboe@kernel.dk>
+In-Reply-To: <2025052059-unsteady-octagon-9321@gregkh>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Greg
+On 5/19/25 10:56 PM, Greg Kroah-Hartman wrote:
+> On Mon, May 19, 2025 at 06:19:26PM -0600, Justin Forbes wrote:
+>> On Mon, May 12, 2025 at 11:51 AM Greg Kroah-Hartman
+>> <gregkh@linuxfoundation.org> wrote:
+>>>
+>>> 6.14-stable review patch.  If anyone has any objections, please let me know.
+>>>
+>>> ------------------
+>>>
+>>> From: Lizhi Xu <lizhi.xu@windriver.com>
+>>>
+>>> [ Upstream commit f5c84eff634ba003326aa034c414e2a9dcb7c6a7 ]
+>>>
+>>> Some file systems do not support read_iter/write_iter, such as selinuxfs
+>>> in this issue.
+>>> So before calling them, first confirm that the interface is supported and
+>>> then call it.
+>>>
+>>> It is releavant in that vfs_iter_read/write have the check, and removal
+>>> of their used caused szybot to be able to hit this issue.
+>>>
+>>> Fixes: f2fed441c69b ("loop: stop using vfs_iter__{read,write} for buffered I/O")
+>>> Reported-by: syzbot+6af973a3b8dfd2faefdc@syzkaller.appspotmail.com
+>>> Closes: https://syzkaller.appspot.com/bug?extid=6af973a3b8dfd2faefdc
+>>> Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+>>> Reviewed-by: Christoph Hellwig <hch@lst.de>
+>>> Link: https://lore.kernel.org/r/20250428143626.3318717-1-lizhi.xu@windriver.com
+>>> Signed-off-by: Jens Axboe <axboe@kernel.dk>
+>>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>>> ---
+>>>  drivers/block/loop.c | 23 +++++++++++++++++++++++
+>>>  1 file changed, 23 insertions(+)
+>>
+>> We have had an issue failing to set up loop devices with CI and Linus'
+>> tree since rc6, and once this patch hit stable it proved to be the
+>> culprit.  If I revert this patch, things work as they should. The
+>> problem we are seeing is "
+>>
+>> More information can be found in:
+>> https://github.com/coreos/fedora-coreos-tracker/issues/1948
+>> and
+>> https://openqa.fedoraproject.org/tests/3438220#step/_boot_to_anaconda/5
+> 
+> Sorry to hear that, please work with the developers to get this resolved
+> in Linus's tree and then we will be glad to apply the needed fix from
+> there.
 
-no regressions here on x86_64 (RKL, Intel 11th Gen. CPU)
+Should be sorted and land before 6.15:
 
-Thanks
+https://git.kernel.dk/cgit/linux/commit/?h=block-6.15&id=355341e4359b2d5edf0ed5e117f7e9e7a0a5dac0
 
-Tested-by: Ronald Warsow <rwarsow@gmx.de>
+-- 
+Jens Axboe
 
