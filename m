@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A1022D794;
-	Tue, 20 May 2025 14:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057E224C060;
+	Tue, 20 May 2025 14:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750714; cv=none; b=TuKdJtg7UaLn+1qDCcjBBO+ekxKAlQQuYOA2PRkdzuFOcPnvnox5qDyJZMcj4z/71oGTQFGpdZB/942R52U4cVgT3yO2STjb1n89TfkcrlCm4r3XNMl4jHfjTVcOnk2n1Pq16wf3mquRN//HkYLJtVMoPYHOsVCiqoiQFhIJrLc=
+	t=1747750718; cv=none; b=KGCn+KKDnu5xZW0QZ1Q2Gd6O2JhFUlO6xjWHgFqNWFfT3USu/BzoDH554fSSfatXyLJyjqYESxLgy/Kg2VPY/etea8NUPj83qHMQszr10nH34JfpTjyV/MWyhpsS66PSuavy1tBW3SF3JXqn/JPOtPR49V+EX1T0PhwgbpsDT+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750714; c=relaxed/simple;
-	bh=Fmm1CXzUjW5ENsCNP1Xqdl2cbx0WXFE3TUynv8/7SPw=;
+	s=arc-20240116; t=1747750718; c=relaxed/simple;
+	bh=7Dfo/hCbmc14sL1pwyFKzRff5KE9xQ6Q7pKvGNKlyMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B7zHQqdH8KirG/BfoBKdn8e2E8zKhV5ZOQiQ5qeBzryIiJExYRK/lrKp8fehpMnQeX7HsXiUGDQZJ9e7LQ0Hm2wvOJ1vw1hotG1t6nH1TP84O5QIfjvQ2/mL9OoT/VobHMcKBeXdpuL80W1iow5hany4PCU7fbaghBT1ikiGW8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GC7hd4iy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nC7WNV7co+eLweieDlRsyU+EMPRsGwxnQldI/jqiUWdQ4opmVG09OdtuTkO2fXvcPr4Rkr/201f3iG35AXy20BWg0K6ISibiW1mQVh8+06ZVMNuJHTw43ByKaMEUQa6gSh7vKPCku+pPE8IWKo1SaVmo/xcSUZhf3KtQxGU/U+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SxtRX9xp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GC7hd4iy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42BDDC4CEE9;
-	Tue, 20 May 2025 14:18:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SxtRX9xp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863F7C4CEE9;
+	Tue, 20 May 2025 14:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750714;
-	bh=Fmm1CXzUjW5ENsCNP1Xqdl2cbx0WXFE3TUynv8/7SPw=;
+	s=korg; t=1747750717;
+	bh=7Dfo/hCbmc14sL1pwyFKzRff5KE9xQ6Q7pKvGNKlyMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GC7hd4iyN+qz7m1kzP2AbOYrWNoz7LfV7z71wmdXvv9WpUwhFaE/eI4nVIVTuEkhx
-	 cCzYx7KDglik7RpxEn9AmMZUZkrsa4fxzxd1PlAdfhkvETe7Q+qw4gCfkWiSuSZi+h
-	 n95gS5higtHhOdj++otnjrJYKT1eWsGnP46AeHto=
+	b=SxtRX9xpT+AqsLdjtH8qZ4CiKvC+BqLpsolA0PFQE/8ueHpWVSqWZJ9cmR67/xIE6
+	 keRStb2KycPRHNLaDZuEk7yaj4X3wntCgXd/PeKQxPsPe18vIC+0f77OusSxEsJ5OY
+	 54nRJs42qXGMoWIkaEhrqVt7UMqrMURC8YZPwDFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Kelley <mhklinux@outlook.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.14 097/145] hv_netvsc: Remove rmsg_pgcnt
-Date: Tue, 20 May 2025 15:51:07 +0200
-Message-ID: <20250520125814.366836552@linuxfoundation.org>
+Subject: [PATCH 6.14 098/145] Drivers: hv: Allow vmbus_sendpacket_mpb_desc() to create multiple ranges
+Date: Tue, 20 May 2025 15:51:08 +0200
+Message-ID: <20250520125814.405832054@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -52,74 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Kelley <mhklinux@outlook.com>
 
-commit 5bbc644bbf4e97a05bc0cb052189004588ff8a09 upstream.
+commit 380b75d3078626aadd0817de61f3143f5db6e393 upstream.
 
-init_page_array() now always creates a single page buffer array entry
-for the rndis message, even if the rndis message crosses a page
-boundary. As such, the number of page buffer array entries used for
-the rndis message must no longer be tracked -- it is always just 1.
-Remove the rmsg_pgcnt field and use "1" where the value is needed.
+vmbus_sendpacket_mpb_desc() is currently used only by the storvsc driver
+and is hardcoded to create a single GPA range. To allow it to also be
+used by the netvsc driver to create multiple GPA ranges, no longer
+hardcode as having a single GPA range. Allow the calling driver to
+specify the rangecount in the supplied descriptor.
+
+Update the storvsc driver to reflect this new approach.
 
 Cc: <stable@vger.kernel.org> # 6.1.x
 Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://patch.msgid.link/20250513000604.1396-5-mhklinux@outlook.com
+Link: https://patch.msgid.link/20250513000604.1396-2-mhklinux@outlook.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/hyperv/hyperv_net.h |    1 -
- drivers/net/hyperv/netvsc.c     |    7 +++----
- drivers/net/hyperv/netvsc_drv.c |    1 -
- 3 files changed, 3 insertions(+), 6 deletions(-)
+ drivers/hv/channel.c       |    6 +++---
+ drivers/scsi/storvsc_drv.c |    1 +
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/net/hyperv/hyperv_net.h
-+++ b/drivers/net/hyperv/hyperv_net.h
-@@ -158,7 +158,6 @@ struct hv_netvsc_packet {
- 	u8 cp_partial; /* partial copy into send buffer */
+--- a/drivers/hv/channel.c
++++ b/drivers/hv/channel.c
+@@ -1136,9 +1136,10 @@ int vmbus_sendpacket_pagebuffer(struct v
+ EXPORT_SYMBOL_GPL(vmbus_sendpacket_pagebuffer);
  
- 	u8 rmsg_size; /* RNDIS header and PPI size */
--	u8 rmsg_pgcnt; /* page count of RNDIS header and PPI */
- 	u8 page_buf_cnt;
+ /*
+- * vmbus_sendpacket_multipagebuffer - Send a multi-page buffer packet
++ * vmbus_sendpacket_mpb_desc - Send one or more multi-page buffer packets
+  * using a GPADL Direct packet type.
+- * The buffer includes the vmbus descriptor.
++ * The desc argument must include space for the VMBus descriptor. The
++ * rangecount field must already be set.
+  */
+ int vmbus_sendpacket_mpb_desc(struct vmbus_channel *channel,
+ 			      struct vmbus_packet_mpb_array *desc,
+@@ -1160,7 +1161,6 @@ int vmbus_sendpacket_mpb_desc(struct vmb
+ 	desc->length8 = (u16)(packetlen_aligned >> 3);
+ 	desc->transactionid = VMBUS_RQST_ERROR; /* will be updated in hv_ringbuffer_write() */
+ 	desc->reserved = 0;
+-	desc->rangecount = 1;
  
- 	u16 q_idx;
---- a/drivers/net/hyperv/netvsc.c
-+++ b/drivers/net/hyperv/netvsc.c
-@@ -953,8 +953,7 @@ static void netvsc_copy_to_send_buf(stru
- 		     + pend_size;
- 	int i;
- 	u32 padding = 0;
--	u32 page_count = packet->cp_partial ? packet->rmsg_pgcnt :
--		packet->page_buf_cnt;
-+	u32 page_count = packet->cp_partial ? 1 : packet->page_buf_cnt;
- 	u32 remain;
+ 	bufferlist[0].iov_base = desc;
+ 	bufferlist[0].iov_len = desc_size;
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -1819,6 +1819,7 @@ static int storvsc_queuecommand(struct S
+ 				return SCSI_MLQUEUE_DEVICE_BUSY;
+ 		}
  
- 	/* Add padding */
-@@ -1137,7 +1136,7 @@ static inline int netvsc_send_pkt(
- 		u32 desc_size;
++		payload->rangecount = 1;
+ 		payload->range.len = length;
+ 		payload->range.offset = offset_in_hvpg;
  
- 		if (packet->cp_partial)
--			pb += packet->rmsg_pgcnt;
-+			pb++;
- 
- 		ret = netvsc_dma_map(ndev_ctx->device_ctx, packet, pb);
- 		if (ret) {
-@@ -1299,7 +1298,7 @@ int netvsc_send(struct net_device *ndev,
- 		packet->send_buf_index = section_index;
- 
- 		if (packet->cp_partial) {
--			packet->page_buf_cnt -= packet->rmsg_pgcnt;
-+			packet->page_buf_cnt--;
- 			packet->total_data_buflen = msd_len + packet->rmsg_size;
- 		} else {
- 			packet->page_buf_cnt = 0;
---- a/drivers/net/hyperv/netvsc_drv.c
-+++ b/drivers/net/hyperv/netvsc_drv.c
-@@ -342,7 +342,6 @@ static u32 init_page_array(void *hdr, u3
- 	pb[0].len = len;
- 	pb[0].pfn = virt_to_hvpfn(hdr);
- 	packet->rmsg_size = len;
--	packet->rmsg_pgcnt = 1;
- 
- 	pb[1].offset = offset_in_hvpage(skb->data);
- 	pb[1].len = skb_headlen(skb);
 
 
