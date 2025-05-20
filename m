@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF6724A066;
-	Tue, 20 May 2025 14:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AE924A04F;
+	Tue, 20 May 2025 14:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750356; cv=none; b=nZ12RRCMxWsXbc5edq1rsxnVTdqz5iOUweIvBVQicFirQWMxxJqjMHFrUmMOcLCc4NPjlV5aW7vBboErMfkro4emGx3vy8zecfthhLgXZ6m3zAk8aAMKs9yZbkLADj9ilJud61qA/c14TxkZNrwaK/di6eqGTc7uyMI30/hx/eI=
+	t=1747750359; cv=none; b=eoLokODOwNjAviUnXQ6y5kV5KftYhFfTrt9N6mKdYGUa8Vxr0DuLlj6hm7tkzf0TTp3T0NvwdBIBAtrc1Nj0Sp2xt2ogw9x0ZUPgmZMxv/ZnuO16JhWYih7mFD3a0mYCh0aAe/CCNHT4IjTP+rNmiDI9GNzjv6NhESmNkDXHRxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750356; c=relaxed/simple;
-	bh=dIQx1m+0ThsdkSAbYctbT8jJeUH/4AVuNYE04oL8qTw=;
+	s=arc-20240116; t=1747750359; c=relaxed/simple;
+	bh=d98JhYspnEoyzIcoFpP+1HCb9Rx/FM3TSe+oQAMGo7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fvSLyPeowiD0cRWfkFvNyLC8FptkSRzu88FJ4GU1ObKpPha58qDxrj5Kj8Lrl932l5E5WANJx0CnaRzHA49WcwXqzUdn465FajYLQ+ssbe7Nlnqhf6pke6vLbfjK7qmeY7xbIfsgh8VxzKWYPB2LWT+IX9tH9RoZ0SstjuO4WhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GwnNHK5V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OtJy2H/qwpvTjy4SJ8plHPH6+3+3oRuDEnlaESdWWAFs9lRJ6VsqXA9N2EFpAlC8oPY+5hVLV3vXmNaF4Ji319bi0drDqx5pIBrqGciExG865GDBBQZhrfk5wvbs7EER0iFAcPEebyA6C4VqZRZoOZnXHvuTOkyoXCT9Loc4Ch8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s2TakDMb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GwnNHK5V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BABAAC4CEE9;
-	Tue, 20 May 2025 14:12:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2TakDMb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E594BC4CEE9;
+	Tue, 20 May 2025 14:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750356;
-	bh=dIQx1m+0ThsdkSAbYctbT8jJeUH/4AVuNYE04oL8qTw=;
+	s=korg; t=1747750359;
+	bh=d98JhYspnEoyzIcoFpP+1HCb9Rx/FM3TSe+oQAMGo7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GwnNHK5VQvnwhVPnyvpD9p+fWZIFYPrFdMy38UVH5cOsF7FBZewTkyoaulqKt+P9u
-	 QCd+/mvMnQ4EnPknnO8Z61oWflXNQlKMsi2uF3EoBNcfp9Fo4Oh/eWG0xCsy4emyWd
-	 oWsaeKJANWaHruG1ZzdIfT8/SfUdMKxs4sMz9cYg=
+	b=s2TakDMb0SjaeAlwnyUiiQAWFYF5UbzgRp6VoBMwU/Q6SqsYW+WR5MBrmJyb2t01h
+	 4qkhZq8ywEQtriGqM9vG7T4aw47FsIl4jmZUvOccYwxF/umXs/3VsVWpd/pc9ReJRh
+	 IUFn2yyEbKBGjFiKum5Ua8dygo5SvgvIKr1or6c8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
 	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Fenghua Yu <fenghuay@nvidia.com>,
 	Dave Jiang <dave.jiang@intel.com>,
+	Fenghua Yu <fenghuay@nvidia.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 125/143] dmaengine: idxd: Add missing idxd cleanup to fix memory leak in remove call
-Date: Tue, 20 May 2025 15:51:20 +0200
-Message-ID: <20250520125814.943437168@linuxfoundation.org>
+Subject: [PATCH 6.12 126/143] dmaengine: idxd: fix memory leak in error handling path of idxd_alloc
+Date: Tue, 20 May 2025 15:51:21 +0200
+Message-ID: <20250520125814.979896438@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -55,34 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-commit d5449ff1b04dfe9ed8e455769aa01e4c2ccf6805 upstream.
+commit 46a5cca76c76c86063000a12936f8e7875295838 upstream.
 
-The remove call stack is missing idxd cleanup to free bitmap, ida and
-the idxd_device. Call idxd_free() helper routines to make sure we exit
-gracefully.
+Memory allocated for idxd is not freed if an error occurs during
+idxd_alloc(). To fix it, free the allocated memory in the reverse order
+of allocation before exiting the function in case of an error.
 
-Fixes: bfe1d56091c1 ("dmaengine: idxd: Init and probe for Intel data accelerators")
+Fixes: a8563a33a5e2 ("dmanegine: idxd: reformat opcap output to match bitmap_parse() input")
 Cc: stable@vger.kernel.org
-Suggested-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Fenghua Yu <fenghuay@nvidia.com>
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20250404120217.48772-9-xueshuai@linux.alibaba.com
+Reviewed-by: Fenghua Yu <fenghuay@nvidia.com>
+Link: https://lore.kernel.org/r/20250404120217.48772-7-xueshuai@linux.alibaba.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/idxd/init.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/idxd/init.c |   24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
 --- a/drivers/dma/idxd/init.c
 +++ b/drivers/dma/idxd/init.c
-@@ -915,6 +915,7 @@ static void idxd_remove(struct pci_dev *
- 	destroy_workqueue(idxd->wq);
- 	perfmon_pmu_remove(idxd);
- 	put_device(idxd_confdev(idxd));
-+	idxd_free(idxd);
+@@ -602,28 +602,34 @@ static struct idxd_device *idxd_alloc(st
+ 	idxd_dev_set_type(&idxd->idxd_dev, idxd->data->type);
+ 	idxd->id = ida_alloc(&idxd_ida, GFP_KERNEL);
+ 	if (idxd->id < 0)
+-		return NULL;
++		goto err_ida;
+ 
+ 	idxd->opcap_bmap = bitmap_zalloc_node(IDXD_MAX_OPCAP_BITS, GFP_KERNEL, dev_to_node(dev));
+-	if (!idxd->opcap_bmap) {
+-		ida_free(&idxd_ida, idxd->id);
+-		return NULL;
+-	}
++	if (!idxd->opcap_bmap)
++		goto err_opcap;
+ 
+ 	device_initialize(conf_dev);
+ 	conf_dev->parent = dev;
+ 	conf_dev->bus = &dsa_bus_type;
+ 	conf_dev->type = idxd->data->dev_type;
+ 	rc = dev_set_name(conf_dev, "%s%d", idxd->data->name_prefix, idxd->id);
+-	if (rc < 0) {
+-		put_device(conf_dev);
+-		return NULL;
+-	}
++	if (rc < 0)
++		goto err_name;
+ 
+ 	spin_lock_init(&idxd->dev_lock);
+ 	spin_lock_init(&idxd->cmd_lock);
+ 
+ 	return idxd;
++
++err_name:
++	put_device(conf_dev);
++	bitmap_free(idxd->opcap_bmap);
++err_opcap:
++	ida_free(&idxd_ida, idxd->id);
++err_ida:
++	kfree(idxd);
++
++	return NULL;
  }
  
- static struct pci_driver idxd_pci_driver = {
+ static int idxd_enable_system_pasid(struct idxd_device *idxd)
 
 
