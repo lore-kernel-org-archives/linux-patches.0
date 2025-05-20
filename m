@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120DD24113A;
-	Tue, 20 May 2025 13:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28039242D89;
+	Tue, 20 May 2025 13:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749137; cv=none; b=rrIeX9hgJTGxr7NOwBPK386A87oa1HrTuCNx76pxJztdUcl3cZExT5rJbeG2C92w76mTk0d62rxc7wKgAvylFPiyGtK4EuKeqzPhqhIT5QM6WTaJ6lNVPVbdLFLQejhswzL71ZWMCCY+GFW4HsVMPp8dYBrBS4JqsNbf8cWnRt0=
+	t=1747749139; cv=none; b=Lwm2HbQFMYfQFxfIk7sRxupCRbY9TDmezn3zNoYphPsJDBuENeR9VYXHxDl3UdbbVK+ppCiUmVPlXySSpaoaFtCwsKsFRijiJbPX5py1lSI2kSWIPY60QtfLFdsxltT3uZPnVLO1kTsxYgqte0CR88ULoDsW+CgyGGR7niZ8TMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749137; c=relaxed/simple;
-	bh=31XfD1SuJdp8JAWQ6AGxuR97FuEbQeuuarJ3GZ5D07I=;
+	s=arc-20240116; t=1747749139; c=relaxed/simple;
+	bh=Yge/m4wQaVb57P1AVgdR5pPcS03bqChYaBEAObyw7iA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GvqSXM9Lx+csZCuBeCtbciXblC+CezlBz5UbwMfpUHm+J9cdqvHab0s7WUKP97598MMKjRWARUYWHGAJh22I/ok7F6syLcvOTqKg7hCOh/5mYX3jVPpOFMGcku7CLNJzCLCCVd3PhDuaiyC/wVQNRu+3tULrcpIAuAUWkjJ/kvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y1whUkYd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cNbgrKfhE+4oL7MDAJc8/q8DCf9RBStiOGhD3HX1lAcZq2FoxJUOE+4ZDNKFJ2KiQnUPRA1c4obC//hq4uKmeuqzdhUJvj+ipLHtJWHDIc0S8yRED8cH6T9seMR4Wv61M5ywJx7I/exaDZ1/+1oQAv/ar4ORnmrZLV/962SLM9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axgrXHyt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y1whUkYd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DABD9C4CEE9;
-	Tue, 20 May 2025 13:52:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axgrXHyt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5C6C4CEEA;
+	Tue, 20 May 2025 13:52:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749135;
-	bh=31XfD1SuJdp8JAWQ6AGxuR97FuEbQeuuarJ3GZ5D07I=;
+	s=korg; t=1747749138;
+	bh=Yge/m4wQaVb57P1AVgdR5pPcS03bqChYaBEAObyw7iA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y1whUkYdhPSLWF9NiUbG1DL+b5uhrZgrAMMPtC3hnV+S30i/J2Jq4WsCVFo5WuVS6
-	 ypF3wTXYgWEmM2RzJTflFOVJNGFHrVIfJLKJQYUMr+xtNitpJi1XSbXCtqzK9WEAE9
-	 N3xAoYOWWheMdphkvX4JmRzT+V58kswLrsmhFwEY=
+	b=axgrXHytleziEPkIlMrTsyzblrfpuSIRMAQcLrVlxn0TmQYhtfEb+pXAnZrbVRG0T
+	 +MysLPUZhhMCLZMXIhl989oFMakMV6zDw+MMbUWwV8yp7KmOZqi68+6pACnc89Df+g
+	 iUfvFLtYYiCHdnLsOG9vrWaOaaiUtnDmMle5wRmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 01/59] platform/x86: asus-wmi: Fix wlan_ctrl_by_user detection
-Date: Tue, 20 May 2025 15:49:52 +0200
-Message-ID: <20250520125753.898302666@linuxfoundation.org>
+Subject: [PATCH 5.15 10/59] net: dsa: sja1105: discard incoming frames in BR_STATE_LISTENING
+Date: Tue, 20 May 2025 15:50:01 +0200
+Message-ID: <20250520125754.244287175@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
 References: <20250520125753.836407405@linuxfoundation.org>
@@ -46,78 +45,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit bfcfe6d335a967f8ea0c1980960e6f0205b5de6e ]
+[ Upstream commit 498625a8ab2c8e1c9ab5105744310e8d6952cc01 ]
 
-The wlan_ctrl_by_user detection was introduced by commit a50bd128f28c
-("asus-wmi: record wlan status while controlled by userapp").
+It has been reported that when under a bridge with stp_state=1, the logs
+get spammed with this message:
 
-Quoting from that commit's commit message:
+[  251.734607] fsl_dpaa2_eth dpni.5 eth0: Couldn't decode source port
 
-"""
-When you call WMIMethod(DSTS, 0x00010011) to get WLAN status, it may return
+Further debugging shows the following info associated with packets:
+source_port=-1, switch_id=-1, vid=-1, vbid=1
 
-(1) 0x00050001 (On)
-(2) 0x00050000 (Off)
-(3) 0x00030001 (On)
-(4) 0x00030000 (Off)
-(5) 0x00000002 (Unknown)
+In other words, they are data plane packets which are supposed to be
+decoded by dsa_tag_8021q_find_port_by_vbid(), but the latter (correctly)
+refuses to do so, because no switch port is currently in
+BR_STATE_LEARNING or BR_STATE_FORWARDING - so the packet is effectively
+unexpected.
 
-(1), (2) means that the model has hardware GPIO for WLAN, you can call
-WMIMethod(DEVS, 0x00010011, 1 or 0) to turn WLAN on/off.
-(3), (4) means that the model doesn’t have hardware GPIO, you need to use
-API or driver library to turn WLAN on/off, and call
-WMIMethod(DEVS, 0x00010012, 1 or 0) to set WLAN LED status.
-After you set WLAN LED status, you can see the WLAN status is changed with
-WMIMethod(DSTS, 0x00010011). Because the status is recorded lastly
-(ex: Windows), you can use it for synchronization.
-(5) means that the model doesn’t have WLAN device.
+The error goes away after the port progresses to BR_STATE_LEARNING in 15
+seconds (the default forward_time of the bridge), because then,
+dsa_tag_8021q_find_port_by_vbid() can correctly associate the data plane
+packets with a plausible bridge port in a plausible STP state.
 
-WLAN is the ONLY special case with upper rule.
-"""
+Re-reading IEEE 802.1D-1990, I see the following:
 
-The wlan_ctrl_by_user flag should be set on 0x0003000? ((3), (4) above)
-return values, but the flag mistakenly also gets set on laptops with
-0x0005000? ((1), (2)) return values. This is causing rfkill problems on
-laptops where 0x0005000? is returned.
+"4.4.2 Learning: (...) The Forwarding Process shall discard received
+frames."
 
-Fix the check to only set the wlan_ctrl_by_user flag for 0x0003000?
-return values.
+IEEE 802.1D-2004 further clarifies:
 
-Fixes: a50bd128f28c ("asus-wmi: record wlan status while controlled by userapp")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219786
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20250501131702.103360-2-hdegoede@redhat.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+"DISABLED, BLOCKING, LISTENING, and BROKEN all correspond to the
+DISCARDING port state. While those dot1dStpPortStates serve to
+distinguish reasons for discarding frames, the operation of the
+Forwarding and Learning processes is the same for all of them. (...)
+LISTENING represents a port that the spanning tree algorithm has
+selected to be part of the active topology (computing a Root Port or
+Designated Port role) but is temporarily discarding frames to guard
+against loops or incorrect learning."
+
+Well, this is not what the driver does - instead it sets
+mac[port].ingress = true.
+
+To get rid of the log spam, prevent unexpected data plane packets to
+be received by software by discarding them on ingress in the LISTENING
+state.
+
+In terms of blame attribution: the prints only date back to commit
+d7f9787a763f ("net: dsa: tag_8021q: add support for imprecise RX based
+on the VBID"). However, the settings would permit a LISTENING port to
+forward to a FORWARDING port, and the standard suggests that's not OK.
+
+Fixes: 640f763f98c2 ("net: dsa: sja1105: Add support for Spanning Tree Protocol")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250509113816.2221992-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-wmi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/dsa/sja1105/sja1105_main.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
-index a34d0f53ad16f..d9933d3718129 100644
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -3052,7 +3052,8 @@ static int asus_wmi_add(struct platform_device *pdev)
- 		goto fail_leds;
- 
- 	asus_wmi_get_devstate(asus, ASUS_WMI_DEVID_WLAN, &result);
--	if (result & (ASUS_WMI_DSTS_PRESENCE_BIT | ASUS_WMI_DSTS_USER_BIT))
-+	if ((result & (ASUS_WMI_DSTS_PRESENCE_BIT | ASUS_WMI_DSTS_USER_BIT)) ==
-+	    (ASUS_WMI_DSTS_PRESENCE_BIT | ASUS_WMI_DSTS_USER_BIT))
- 		asus->driver->wlan_ctrl_by_user = 1;
- 
- 	if (!(asus->driver->wlan_ctrl_by_user && ashs_present())) {
+diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
+index 888f10d93b9ab..ec1c0ad591184 100644
+--- a/drivers/net/dsa/sja1105/sja1105_main.c
++++ b/drivers/net/dsa/sja1105/sja1105_main.c
+@@ -1969,6 +1969,7 @@ static void sja1105_bridge_stp_state_set(struct dsa_switch *ds, int port,
+ 	switch (state) {
+ 	case BR_STATE_DISABLED:
+ 	case BR_STATE_BLOCKING:
++	case BR_STATE_LISTENING:
+ 		/* From UM10944 description of DRPDTAG (why put this there?):
+ 		 * "Management traffic flows to the port regardless of the state
+ 		 * of the INGRESS flag". So BPDUs are still be allowed to pass.
+@@ -1978,11 +1979,6 @@ static void sja1105_bridge_stp_state_set(struct dsa_switch *ds, int port,
+ 		mac[port].egress    = false;
+ 		mac[port].dyn_learn = false;
+ 		break;
+-	case BR_STATE_LISTENING:
+-		mac[port].ingress   = true;
+-		mac[port].egress    = false;
+-		mac[port].dyn_learn = false;
+-		break;
+ 	case BR_STATE_LEARNING:
+ 		mac[port].ingress   = true;
+ 		mac[port].egress    = false;
 -- 
 2.39.5
 
