@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8654324503E;
-	Tue, 20 May 2025 14:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC79F243367;
+	Tue, 20 May 2025 14:19:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750792; cv=none; b=KOiMAuYcZoZYgb2wvDLJhQATndK8q4cwuKaSqDxvoVUX8IrDDYVK8grRkCHMz1jKQVGy5mEyApp5G/7Akj3/ldj5f/JWlTOZaKcQ3QGVPepXHerHQRfuWx5+/x9fwH/R90DUWSZS8a3a1QUn5HcfTRpF19EcSff8e0R169smKLY=
+	t=1747750796; cv=none; b=kr3zZ2uSCWi79Bx5SUZKod2E1t9k7Fb5fi2BQT+kkfPygOLFrQ8BL73u0pDwoP8/0nlqMG5cLfUClH9rJlvWH41DeYwkcN42i+AexSwEUTaY5jepCDol9/Q5tsYHnIz6QOtyf00LhuXkPqk45C+Z7iU0CIx9gZqS3+O5LfP9WVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750792; c=relaxed/simple;
-	bh=hlkfmYdrxQGUd3wkaCTHo8t+dX8SDnGle89seSvbddU=;
+	s=arc-20240116; t=1747750796; c=relaxed/simple;
+	bh=7AoaKXSWAsbkTsSIwl/frO0QG/wf9plvTPKdptWlexc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kfu9u8F7GrujRvS9W8OJ05tqRI1qyzMGP9Oco4AG+jLbtbUydhH66T7CwrT79tbg7i9GVJwlDq04SX13V+SL/PtAeOYeu3Wd8wD78W4fgzifw9ftPOHIS7dOaWLTK8tg/5BiOhR6oM8Ge9D9DkJElkp4sYp1CPQ/JQ9AoTVvyVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+W7NPkY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bHU/jhv9OFo6znYzczUzQLiJ8VRYSMzbVAeuZfizANK32nsXbT9NI/tTe1h8gIGdO14z0fowDr4D4h+BAGOfo2u8JADonSn7xpGU/Il8AP56O8UuzhSm3DOpaAXzER4bJAVS9MVjXq8f09iom53PzEM5c6xPJAhocJRYsZm8ifs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CTMTN7YV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+W7NPkY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DAC9C4CEE9;
-	Tue, 20 May 2025 14:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTMTN7YV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA61C4CEE9;
+	Tue, 20 May 2025 14:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750792;
-	bh=hlkfmYdrxQGUd3wkaCTHo8t+dX8SDnGle89seSvbddU=;
+	s=korg; t=1747750795;
+	bh=7AoaKXSWAsbkTsSIwl/frO0QG/wf9plvTPKdptWlexc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H+W7NPkYxv0wYQnPJtVAZgvNFLJb++zDHNOJg7PgYaH+esZMjvgAron6PXZ9T3l3w
-	 fv0NbZylTuZxuPM41eBucgN4Msn3sZMi5Gh7W1keG/RjOyRuWyBpIWVfMn82coBC5G
-	 8UURKFsyGymMLTiG/t0bfQZSrKQWa7+6w/mjeI7g=
+	b=CTMTN7YVf7YQVu3SQO5ynfRZnRLwyCk2EVrQ2kB+IAFxNBx9YfuEUTw6WEqz1bu/t
+	 MlWyww4+eacLbmEeHIE+tfWPiiDKUlKHXF3IXstLZVgEH0UUUxPgUBNVmaZ8vs6sN2
+	 6JeW8gqkz3KE/rHeMrlrhvpfgYNwIwCESxIG0e7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wupeng Ma <mawupeng1@huawei.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
+	Barry Song <v-songbaohua@oppo.com>,
 	David Hildenbrand <david@redhat.com>,
-	Muchun Song <muchun.song@linux.dev>,
+	Peter Xu <peterx@redhat.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Lokesh Gidra <lokeshgidra@google.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.14 123/145] mm: hugetlb: fix incorrect fallback for subpool
-Date: Tue, 20 May 2025 15:51:33 +0200
-Message-ID: <20250520125815.366321869@linuxfoundation.org>
+Subject: [PATCH 6.14 124/145] mm: userfaultfd: correct dirty flags set for both present and swap pte
+Date: Tue, 20 May 2025 15:51:34 +0200
+Message-ID: <20250520125815.404506488@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -48,122 +49,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wupeng Ma <mawupeng1@huawei.com>
+From: Barry Song <v-songbaohua@oppo.com>
 
-commit a833a693a490ecff8ba377654c6d4d333718b6b1 upstream.
+commit 75cb1cca2c880179a11c7dd9380b6f14e41a06a4 upstream.
 
-During our testing with hugetlb subpool enabled, we observe that
-hstate->resv_huge_pages may underflow into negative values.  Root cause
-analysis reveals a race condition in subpool reservation fallback handling
-as follow:
+As David pointed out, what truly matters for mremap and userfaultfd move
+operations is the soft dirty bit.  The current comment and
+implementation—which always sets the dirty bit for present PTEs and
+fails to set the soft dirty bit for swap PTEs—are incorrect.  This could
+break features like Checkpoint-Restore in Userspace (CRIU).
 
-hugetlb_reserve_pages()
-    /* Attempt subpool reservation */
-    gbl_reserve = hugepage_subpool_get_pages(spool, chg);
+This patch updates the behavior to correctly set the soft dirty bit for
+both present and swap PTEs in accordance with mremap.
 
-    /* Global reservation may fail after subpool allocation */
-    if (hugetlb_acct_memory(h, gbl_reserve) < 0)
-        goto out_put_pages;
-
-out_put_pages:
-    /* This incorrectly restores reservation to subpool */
-    hugepage_subpool_put_pages(spool, chg);
-
-When hugetlb_acct_memory() fails after subpool allocation, the current
-implementation over-commits subpool reservations by returning the full
-'chg' value instead of the actual allocated 'gbl_reserve' amount.  This
-discrepancy propagates to global reservations during subsequent releases,
-eventually causing resv_huge_pages underflow.
-
-This problem can be trigger easily with the following steps:
-1. reverse hugepage for hugeltb allocation
-2. mount hugetlbfs with min_size to enable hugetlb subpool
-3. alloc hugepages with two task(make sure the second will fail due to
-   insufficient amount of hugepages)
-4. with for a few seconds and repeat step 3 which will make
-   hstate->resv_huge_pages to go below zero.
-
-To fix this problem, return corrent amount of pages to subpool during the
-fallback after hugepage_subpool_get_pages is called.
-
-Link: https://lkml.kernel.org/r/20250410062633.3102457-1-mawupeng1@huawei.com
-Fixes: 1c5ecae3a93f ("hugetlbfs: add minimum size accounting to subpools")
-Signed-off-by: Wupeng Ma <mawupeng1@huawei.com>
-Tested-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Ma Wupeng <mawupeng1@huawei.com>
-Cc: Muchun Song <muchun.song@linux.dev>
+Link: https://lkml.kernel.org/r/20250508220912.7275-1-21cnbao@gmail.com
+Fixes: adef440691ba ("userfaultfd: UFFDIO_MOVE uABI")
+Signed-off-by: Barry Song <v-songbaohua@oppo.com>
+Reported-by: David Hildenbrand <david@redhat.com>
+Closes: https://lore.kernel.org/linux-mm/02f14ee1-923f-47e3-a994-4950afb9afcc@redhat.com/
+Acked-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Cc: Lokesh Gidra <lokeshgidra@google.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |   28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ mm/userfaultfd.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -2987,7 +2987,7 @@ struct folio *alloc_hugetlb_folio(struct
- 	struct hugepage_subpool *spool = subpool_vma(vma);
- 	struct hstate *h = hstate_vma(vma);
- 	struct folio *folio;
--	long retval, gbl_chg;
-+	long retval, gbl_chg, gbl_reserve;
- 	map_chg_state map_chg;
- 	int ret, idx;
- 	struct hugetlb_cgroup *h_cg = NULL;
-@@ -3140,8 +3140,16 @@ out_uncharge_cgroup_reservation:
- 		hugetlb_cgroup_uncharge_cgroup_rsvd(idx, pages_per_huge_page(h),
- 						    h_cg);
- out_subpool_put:
--	if (map_chg)
--		hugepage_subpool_put_pages(spool, 1);
-+	/*
-+	 * put page to subpool iff the quota of subpool's rsv_hpages is used
-+	 * during hugepage_subpool_get_pages.
-+	 */
-+	if (map_chg && !gbl_chg) {
-+		gbl_reserve = hugepage_subpool_put_pages(spool, 1);
-+		hugetlb_acct_memory(h, -gbl_reserve);
-+	}
-+
-+
- out_end_reservation:
- 	if (map_chg != MAP_CHG_ENFORCED)
- 		vma_end_reservation(h, vma, addr);
-@@ -6949,7 +6957,7 @@ bool hugetlb_reserve_pages(struct inode
- 					struct vm_area_struct *vma,
- 					vm_flags_t vm_flags)
- {
--	long chg = -1, add = -1;
-+	long chg = -1, add = -1, spool_resv, gbl_resv;
- 	struct hstate *h = hstate_inode(inode);
- 	struct hugepage_subpool *spool = subpool_inode(inode);
- 	struct resv_map *resv_map;
-@@ -7084,8 +7092,16 @@ bool hugetlb_reserve_pages(struct inode
- 	return true;
+--- a/mm/userfaultfd.c
++++ b/mm/userfaultfd.c
+@@ -1068,8 +1068,13 @@ static int move_present_pte(struct mm_st
+ 	src_folio->index = linear_page_index(dst_vma, dst_addr);
  
- out_put_pages:
--	/* put back original number of pages, chg */
--	(void)hugepage_subpool_put_pages(spool, chg);
-+	spool_resv = chg - gbl_reserve;
-+	if (spool_resv) {
-+		/* put sub pool's reservation back, chg - gbl_reserve */
-+		gbl_resv = hugepage_subpool_put_pages(spool, spool_resv);
-+		/*
-+		 * subpool's reserved pages can not be put back due to race,
-+		 * return to hstate.
-+		 */
-+		hugetlb_acct_memory(h, -gbl_resv);
-+	}
- out_uncharge_cgroup:
- 	hugetlb_cgroup_uncharge_cgroup_rsvd(hstate_index(h),
- 					    chg * pages_per_huge_page(h), h_cg);
+ 	orig_dst_pte = mk_pte(&src_folio->page, dst_vma->vm_page_prot);
+-	/* Follow mremap() behavior and treat the entry dirty after the move */
+-	orig_dst_pte = pte_mkwrite(pte_mkdirty(orig_dst_pte), dst_vma);
++	/* Set soft dirty bit so userspace can notice the pte was moved */
++#ifdef CONFIG_MEM_SOFT_DIRTY
++	orig_dst_pte = pte_mksoft_dirty(orig_dst_pte);
++#endif
++	if (pte_dirty(orig_src_pte))
++		orig_dst_pte = pte_mkdirty(orig_dst_pte);
++	orig_dst_pte = pte_mkwrite(orig_dst_pte, dst_vma);
+ 
+ 	set_pte_at(mm, dst_addr, dst_pte, orig_dst_pte);
+ out:
+@@ -1104,6 +1109,9 @@ static int move_swap_pte(struct mm_struc
+ 	}
+ 
+ 	orig_src_pte = ptep_get_and_clear(mm, src_addr, src_pte);
++#ifdef CONFIG_MEM_SOFT_DIRTY
++	orig_src_pte = pte_swp_mksoft_dirty(orig_src_pte);
++#endif
+ 	set_pte_at(mm, dst_addr, dst_pte, orig_src_pte);
+ 	double_pt_unlock(dst_ptl, src_ptl);
+ 
 
 
