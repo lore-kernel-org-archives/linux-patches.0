@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FA2244686;
-	Tue, 20 May 2025 13:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A541245012;
+	Tue, 20 May 2025 13:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749282; cv=none; b=gjReMyG2reuKmk5rnS5v3/fItgmXgTyz1o88EohOYb3JfjMmM2A1BpZBb+tPEB2KxYgqXcoKqfBPHreOMuNfdYWRXJBJ81P6QJW9E4/QQyzaNWLjgjxIEEMEvAZlWJP+UfvwQD1CypidO8fbUPZnqWTfrzSI/0kLmO13DhkY77A=
+	t=1747749285; cv=none; b=ckei8cjfeFPzno9uBA8FLrOtQchq/5VNIk7JUel0jvlLHn3xCoxEt7dYAmcbYewlT69uxL3MGScRl0Ondi+hBawOMcn13XCclZgiln2Ux5WqNbr8jMR1GehWyZ0J/pfV5BDp0ALTSI8JwIs9K5AF3W8iTJMIMXcHv5YaiCE+NmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749282; c=relaxed/simple;
-	bh=sZF1VIix2TMd44gVPpzShfN8Y6BoGVNvXhVAmjswxqo=;
+	s=arc-20240116; t=1747749285; c=relaxed/simple;
+	bh=Ck0fvk3Mk7DdRfg0uENpsowPo4kEG36ZfR96EilDYcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gp/hxpHr+sQq3yFs6+sZzYQIEcDkyHkf3IPcvQHbQX/hW8kMZnXtSjptE0V+SWQ5GP5/fTemnThHhcVG9UI0/G3jAw6sfoV5QiKZDB3hhdQAdjMFp+mnovJP5B+BScgR1L1rf8ZaqTf3ec6nM7YBJNIi9FjtBUhpaUQ/LIl+LfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UsoC0E5Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HMsUWNuJHb25PNr9mzpchtEcAGfp1gaCWruYrize4vXUnE0pnpAuYHOj8TGnvTJi6I5ybuWAigKrRJiu8VLP7ioVVzIKFcgD458Dy3AHb8WMqoRG34InPAlmh19R3PramUd8RScdjB+QQhPFNlgATSSIFGOtCS1ZcawJhrU07iI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gs2Nmunl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UsoC0E5Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D902BC4CEE9;
-	Tue, 20 May 2025 13:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gs2Nmunl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8313C4CEE9;
+	Tue, 20 May 2025 13:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749282;
-	bh=sZF1VIix2TMd44gVPpzShfN8Y6BoGVNvXhVAmjswxqo=;
+	s=korg; t=1747749285;
+	bh=Ck0fvk3Mk7DdRfg0uENpsowPo4kEG36ZfR96EilDYcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UsoC0E5QWscC6HDGqY4R8bP7gm3SeSD8Gek/IYM4luGRUUfaLhZ+HCRgMAXVH5ZWb
-	 qjCURge/oNUiYqEgB1RnAW7gwGFOUQgEg9XK836fgh5yJ5rl2kPBWT2Goxyq2ViVCH
-	 B4Hie/7mzq/sgqW5nFYWPXOQyqXs+mm8XVOJyLc4=
+	b=gs2Nmunlb8SjRQ+GBNpiZlTSsP+QO0wCTWUQLW7ByKNJiYVslrb4aZTMFon87eKrt
+	 Y7d8YCAeLYdlbGnAfwWDYvBoKVURzKmYs95NKEMBpdBEfLLhiX0F8u2Sm1YNW+u7yN
+	 X6CskNM9wuGUHBOy/l/fP8HJ8bhi/klREEU5vIhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fae49d997eb56fa7c74d@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Jianqi Ren <jianqi.ren.cn@windriver.com>,
 	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 5.15 53/59] sctp: add mutual exclusion in proc_sctp_do_udp_port()
-Date: Tue, 20 May 2025 15:50:44 +0200
-Message-ID: <20250520125755.953991683@linuxfoundation.org>
+Subject: [PATCH 5.15 54/59] btrfs: dont BUG_ON() when 0 reference count at btrfs_lookup_extent_info()
+Date: Tue, 20 May 2025 15:50:45 +0200
+Message-ID: <20250520125755.992719538@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
 References: <20250520125753.836407405@linuxfoundation.org>
@@ -55,78 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 10206302af856791fbcc27a33ed3c3eb09b2793d upstream.
+commit 28cb13f29faf6290597b24b728dc3100c019356f upstream.
 
-We must serialize calls to sctp_udp_sock_stop() and sctp_udp_sock_start()
-or risk a crash as syzbot reported:
+Instead of doing a BUG_ON() handle the error by returning -EUCLEAN,
+aborting the transaction and logging an error message.
 
-Oops: general protection fault, probably for non-canonical address 0xdffffc000000000d: 0000 [#1] SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000068-0x000000000000006f]
-CPU: 1 UID: 0 PID: 6551 Comm: syz.1.44 Not tainted 6.14.0-syzkaller-g7f2ff7b62617 #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
- RIP: 0010:kernel_sock_shutdown+0x47/0x70 net/socket.c:3653
-Call Trace:
- <TASK>
-  udp_tunnel_sock_release+0x68/0x80 net/ipv4/udp_tunnel_core.c:181
-  sctp_udp_sock_stop+0x71/0x160 net/sctp/protocol.c:930
-  proc_sctp_do_udp_port+0x264/0x450 net/sctp/sysctl.c:553
-  proc_sys_call_handler+0x3d0/0x5b0 fs/proc/proc_sysctl.c:601
-  iter_file_splice_write+0x91c/0x1150 fs/splice.c:738
-  do_splice_from fs/splice.c:935 [inline]
-  direct_splice_actor+0x18f/0x6c0 fs/splice.c:1158
-  splice_direct_to_actor+0x342/0xa30 fs/splice.c:1102
-  do_splice_direct_actor fs/splice.c:1201 [inline]
-  do_splice_direct+0x174/0x240 fs/splice.c:1227
-  do_sendfile+0xafd/0xe50 fs/read_write.c:1368
-  __do_sys_sendfile64 fs/read_write.c:1429 [inline]
-  __se_sys_sendfile64 fs/read_write.c:1415 [inline]
-  __x64_sys_sendfile64+0x1d8/0x220 fs/read_write.c:1415
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-
-Fixes: 046c052b475e ("sctp: enable udp tunneling socks")
-Reported-by: syzbot+fae49d997eb56fa7c74d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/67ea5c01.050a0220.1547ec.012b.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20250331091532.224982-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 [Minor conflict resolved due to code context change.]
 Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sysctl.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/btrfs/extent-tree.c |   25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
---- a/net/sctp/sysctl.c
-+++ b/net/sctp/sysctl.c
-@@ -518,6 +518,8 @@ static int proc_sctp_do_auth(struct ctl_
- 	return ret;
- }
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -176,6 +176,14 @@ search_again:
+ 			ei = btrfs_item_ptr(leaf, path->slots[0],
+ 					    struct btrfs_extent_item);
+ 			num_refs = btrfs_extent_refs(leaf, ei);
++			if (unlikely(num_refs == 0)) {
++				ret = -EUCLEAN;
++				btrfs_err(fs_info,
++			"unexpected zero reference count for extent item (%llu %u %llu)",
++					  key.objectid, key.type, key.offset);
++				btrfs_abort_transaction(trans, ret);
++				goto out_free;
++			}
+ 			extent_flags = btrfs_extent_flags(leaf, ei);
+ 		} else {
+ 			ret = -EINVAL;
+@@ -187,8 +195,6 @@ search_again:
  
-+static DEFINE_MUTEX(sctp_sysctl_mutex);
-+
- static int proc_sctp_do_udp_port(struct ctl_table *ctl, int write,
- 				 void *buffer, size_t *lenp, loff_t *ppos)
- {
-@@ -542,6 +544,7 @@ static int proc_sctp_do_udp_port(struct
- 		if (new_value > max || new_value < min)
- 			return -EINVAL;
+ 			goto out_free;
+ 		}
+-
+-		BUG_ON(num_refs == 0);
+ 	} else {
+ 		num_refs = 0;
+ 		extent_flags = 0;
+@@ -218,10 +224,19 @@ search_again:
+ 			goto search_again;
+ 		}
+ 		spin_lock(&head->lock);
+-		if (head->extent_op && head->extent_op->update_flags)
++		if (head->extent_op && head->extent_op->update_flags) {
+ 			extent_flags |= head->extent_op->flags_to_set;
+-		else
+-			BUG_ON(num_refs == 0);
++		} else if (unlikely(num_refs == 0)) {
++			spin_unlock(&head->lock);
++			mutex_unlock(&head->mutex);
++			spin_unlock(&delayed_refs->lock);
++			ret = -EUCLEAN;
++			btrfs_err(fs_info,
++			  "unexpected zero reference count for extent %llu (%s)",
++				  bytenr, metadata ? "metadata" : "data");
++			btrfs_abort_transaction(trans, ret);
++			goto out_free;
++		}
  
-+		mutex_lock(&sctp_sysctl_mutex);
- 		net->sctp.udp_port = new_value;
- 		sctp_udp_sock_stop(net);
- 		if (new_value) {
-@@ -554,6 +557,7 @@ static int proc_sctp_do_udp_port(struct
- 		lock_sock(sk);
- 		sctp_sk(sk)->udp_port = htons(net->sctp.udp_port);
- 		release_sock(sk);
-+		mutex_unlock(&sctp_sysctl_mutex);
- 	}
- 
- 	return ret;
+ 		num_refs += head->ref_mod;
+ 		spin_unlock(&head->lock);
 
 
