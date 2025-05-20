@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922312459F7;
-	Tue, 20 May 2025 14:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA940242D73;
+	Tue, 20 May 2025 14:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750494; cv=none; b=E6WXnkdT/m4u93/umHyJZS9DqzQJa7neBMjmThyfC1CVxo2ERguyF2CGuMQC2OgnvCFuoSf2hLsHvyVTLriUrX+kuP5z91dbcTpfSyQCAKMVTc9dzRoYXrhoHrVQI83Z3SFjK11Iqm2KkYwk5J7qxY9GZNc1h+VIysS25nq1A9s=
+	t=1747750497; cv=none; b=X7RSZNaotaEz9Mx/gsgcRuoTV0oFZEYClnirArA64IvczeqTTpgLsUReJm3iw8ag9617+59M5lTVHY5WQ9Sicj70ZlBIQI10X3h+Tn8hEwNQn3KM/h9AwdCQaj4ah/SyAOaF9UjzxK780rmKr/ENr30Zh/dCplgTJlOYkfL5s0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750494; c=relaxed/simple;
-	bh=BNJjc9hsQmXjR2Xc8cMIYKMAuh0OXMI0WxtSoMxAHgg=;
+	s=arc-20240116; t=1747750497; c=relaxed/simple;
+	bh=VjlLOxbFDBu3i+tcmVDOdfZaKjx8fZaGOYiwPV9D0sA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QxjL3eIFp0l7TB7OxD4U5uNSOoxtlhrV8lt3AipBeMoeVnmxXdkQXEcyc/t3wghaKa1wQJ14V/XRfplTiIV4XFnJoZXG7e0Tz5fMU4xXu5tBFj/dWyXx15btqzTzKVpG/Yg1k45MeLgv+Uxn0Bxcr4fIrxzOgE8v1XL5QaqnuqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N0AH3Zz6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rrQlbdX3PxzIkePp/t7oT9PsnuiVyEdRl734fHtjc4lJtxo24vYva/b84sMzgp6+nFcjiYWscQ7Zrxu2JTjokMC/KWe90f3eiOZFaIpeCEC5kCjvDCuvha03CaKM1UL8RhqLN19b+r+X3pfxQYssMQN14Es/EsziEN4Hy74hYcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szpmkqHX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N0AH3Zz6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D32EC4CEE9;
-	Tue, 20 May 2025 14:14:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szpmkqHX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45630C4CEE9;
+	Tue, 20 May 2025 14:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750494;
-	bh=BNJjc9hsQmXjR2Xc8cMIYKMAuh0OXMI0WxtSoMxAHgg=;
+	s=korg; t=1747750497;
+	bh=VjlLOxbFDBu3i+tcmVDOdfZaKjx8fZaGOYiwPV9D0sA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N0AH3Zz68Qm8nxkNRcCfXqlpDUse62e7pMqVf1qpweRBqbs0RI/yh56VXd1y2YtTW
-	 R81KoFHFmb2tTQqQ4fUtLwn2DR/Crf/vVIPNFZHatTvLJTywldg2wewasxXwbGywJO
-	 sTXR6P2fdDhNbw4zpIk9INMtdILLVD70a4ItUzUE=
+	b=szpmkqHXpmDnqXgzUptLMT5cJEFCn+ZgDuXV/hNRC4gH0ET3T1G9E8VA0ssRc3aIg
+	 YwsgzhAGWYFhLegm/Le1hIpryrDkGCy6F3N7TSJPxyL3ts42fBT6p01TO0zM63ETff
+	 r4y7bO6SVjtkM9Ke+3GfjzPDRIGwnJeOsrdJhROY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Will <willsroot@protonmail.com>,
+	Savy <savy@syst3mfailure.io>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 027/145] Bluetooth: MGMT: Fix MGMT_OP_ADD_DEVICE invalid device flags
-Date: Tue, 20 May 2025 15:49:57 +0200
-Message-ID: <20250520125811.621766057@linuxfoundation.org>
+Subject: [PATCH 6.14 028/145] net_sched: Flush gso_skb list too during ->change()
+Date: Tue, 20 May 2025 15:49:58 +0200
+Message-ID: <20250520125811.662538697@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -50,53 +53,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Cong Wang <xiyou.wangcong@gmail.com>
 
-[ Upstream commit 1e2e3044c1bc64a64aa0eaf7c17f7832c26c9775 ]
+[ Upstream commit 2d3cbfd6d54a2c39ce3244f33f85c595844bd7b8 ]
 
-Device flags could be updated in the meantime while MGMT_OP_ADD_DEVICE
-is pending on hci_update_passive_scan_sync so instead of setting the
-current_flags as cmd->user_data just do a lookup using
-hci_conn_params_lookup and use the latest stored flags.
+Previously, when reducing a qdisc's limit via the ->change() operation, only
+the main skb queue was trimmed, potentially leaving packets in the gso_skb
+list. This could result in NULL pointer dereference when we only check
+sch->limit against sch->q.qlen.
 
-Fixes: a182d9c84f9c ("Bluetooth: MGMT: Fix Add Device to responding before completing")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+This patch introduces a new helper, qdisc_dequeue_internal(), which ensures
+both the gso_skb list and the main queue are properly flushed when trimming
+excess packets. All relevant qdiscs (codel, fq, fq_codel, fq_pie, hhf, pie)
+are updated to use this helper in their ->change() routines.
+
+Fixes: 76e3cc126bb2 ("codel: Controlled Delay AQM")
+Fixes: 4b549a2ef4be ("fq_codel: Fair Queue Codel AQM")
+Fixes: afe4fd062416 ("pkt_sched: fq: Fair Queue packet scheduler")
+Fixes: ec97ecf1ebe4 ("net: sched: add Flow Queue PIE packet scheduler")
+Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
+Fixes: d4b36210c2e6 ("net: pkt_sched: PIE AQM scheme")
+Reported-by: Will <willsroot@protonmail.com>
+Reported-by: Savy <savy@syst3mfailure.io>
+Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ include/net/sch_generic.h | 15 +++++++++++++++
+ net/sched/sch_codel.c     |  2 +-
+ net/sched/sch_fq.c        |  2 +-
+ net/sched/sch_fq_codel.c  |  2 +-
+ net/sched/sch_fq_pie.c    |  2 +-
+ net/sched/sch_hhf.c       |  2 +-
+ net/sched/sch_pie.c       |  2 +-
+ 7 files changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 621c555f639be..181b1e070b82e 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -7540,11 +7540,16 @@ static void add_device_complete(struct hci_dev *hdev, void *data, int err)
- 	struct mgmt_cp_add_device *cp = cmd->param;
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index d48c657191cd0..1c05fed05f2bc 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -1031,6 +1031,21 @@ static inline struct sk_buff *__qdisc_dequeue_head(struct qdisc_skb_head *qh)
+ 	return skb;
+ }
  
- 	if (!err) {
-+		struct hci_conn_params *params;
++static inline struct sk_buff *qdisc_dequeue_internal(struct Qdisc *sch, bool direct)
++{
++	struct sk_buff *skb;
 +
-+		params = hci_conn_params_lookup(hdev, &cp->addr.bdaddr,
-+						le_addr_type(cp->addr.type));
++	skb = __skb_dequeue(&sch->gso_skb);
++	if (skb) {
++		sch->q.qlen--;
++		return skb;
++	}
++	if (direct)
++		return __qdisc_dequeue_head(&sch->q);
++	else
++		return sch->dequeue(sch);
++}
 +
- 		device_added(cmd->sk, hdev, &cp->addr.bdaddr, cp->addr.type,
- 			     cp->action);
- 		device_flags_changed(NULL, hdev, &cp->addr.bdaddr,
- 				     cp->addr.type, hdev->conn_flags,
--				     PTR_UINT(cmd->user_data));
-+				     params ? params->flags : 0);
- 	}
+ static inline struct sk_buff *qdisc_dequeue_head(struct Qdisc *sch)
+ {
+ 	struct sk_buff *skb = __qdisc_dequeue_head(&sch->q);
+diff --git a/net/sched/sch_codel.c b/net/sched/sch_codel.c
+index 12dd71139da39..c93761040c6e7 100644
+--- a/net/sched/sch_codel.c
++++ b/net/sched/sch_codel.c
+@@ -144,7 +144,7 @@ static int codel_change(struct Qdisc *sch, struct nlattr *opt,
  
- 	mgmt_cmd_complete(cmd->sk, hdev->id, MGMT_OP_ADD_DEVICE,
-@@ -7647,8 +7652,6 @@ static int add_device(struct sock *sk, struct hci_dev *hdev,
- 		goto unlock;
- 	}
+ 	qlen = sch->q.qlen;
+ 	while (sch->q.qlen > sch->limit) {
+-		struct sk_buff *skb = __qdisc_dequeue_head(&sch->q);
++		struct sk_buff *skb = qdisc_dequeue_internal(sch, true);
  
--	cmd->user_data = UINT_PTR(current_flags);
--
- 	err = hci_cmd_sync_queue(hdev, add_device_sync, cmd,
- 				 add_device_complete);
- 	if (err < 0) {
+ 		dropped += qdisc_pkt_len(skb);
+ 		qdisc_qstats_backlog_dec(sch, skb);
+diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
+index 2ca5332cfcc5c..902ff54706072 100644
+--- a/net/sched/sch_fq.c
++++ b/net/sched/sch_fq.c
+@@ -1136,7 +1136,7 @@ static int fq_change(struct Qdisc *sch, struct nlattr *opt,
+ 		sch_tree_lock(sch);
+ 	}
+ 	while (sch->q.qlen > sch->limit) {
+-		struct sk_buff *skb = fq_dequeue(sch);
++		struct sk_buff *skb = qdisc_dequeue_internal(sch, false);
+ 
+ 		if (!skb)
+ 			break;
+diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
+index 6c9029f71e88d..2a0f3a513bfaa 100644
+--- a/net/sched/sch_fq_codel.c
++++ b/net/sched/sch_fq_codel.c
+@@ -441,7 +441,7 @@ static int fq_codel_change(struct Qdisc *sch, struct nlattr *opt,
+ 
+ 	while (sch->q.qlen > sch->limit ||
+ 	       q->memory_usage > q->memory_limit) {
+-		struct sk_buff *skb = fq_codel_dequeue(sch);
++		struct sk_buff *skb = qdisc_dequeue_internal(sch, false);
+ 
+ 		q->cstats.drop_len += qdisc_pkt_len(skb);
+ 		rtnl_kfree_skbs(skb, skb);
+diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
+index 93c36afbf5762..67f437c170582 100644
+--- a/net/sched/sch_fq_pie.c
++++ b/net/sched/sch_fq_pie.c
+@@ -366,7 +366,7 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
+ 
+ 	/* Drop excess packets if new limit is lower */
+ 	while (sch->q.qlen > sch->limit) {
+-		struct sk_buff *skb = fq_pie_qdisc_dequeue(sch);
++		struct sk_buff *skb = qdisc_dequeue_internal(sch, false);
+ 
+ 		len_dropped += qdisc_pkt_len(skb);
+ 		num_dropped += 1;
+diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
+index 44d9efe1a96a8..5aa434b467073 100644
+--- a/net/sched/sch_hhf.c
++++ b/net/sched/sch_hhf.c
+@@ -564,7 +564,7 @@ static int hhf_change(struct Qdisc *sch, struct nlattr *opt,
+ 	qlen = sch->q.qlen;
+ 	prev_backlog = sch->qstats.backlog;
+ 	while (sch->q.qlen > sch->limit) {
+-		struct sk_buff *skb = hhf_dequeue(sch);
++		struct sk_buff *skb = qdisc_dequeue_internal(sch, false);
+ 
+ 		rtnl_kfree_skbs(skb, skb);
+ 	}
+diff --git a/net/sched/sch_pie.c b/net/sched/sch_pie.c
+index bb1fa9aa530b2..97f71b6dbf5b5 100644
+--- a/net/sched/sch_pie.c
++++ b/net/sched/sch_pie.c
+@@ -195,7 +195,7 @@ static int pie_change(struct Qdisc *sch, struct nlattr *opt,
+ 	/* Drop excess packets if new limit is lower */
+ 	qlen = sch->q.qlen;
+ 	while (sch->q.qlen > sch->limit) {
+-		struct sk_buff *skb = __qdisc_dequeue_head(&sch->q);
++		struct sk_buff *skb = qdisc_dequeue_internal(sch, true);
+ 
+ 		dropped += qdisc_pkt_len(skb);
+ 		qdisc_qstats_backlog_dec(sch, skb);
 -- 
 2.39.5
 
