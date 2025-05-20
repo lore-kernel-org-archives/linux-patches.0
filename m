@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33F72512E9;
-	Tue, 20 May 2025 14:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17532512E9;
+	Tue, 20 May 2025 14:19:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750742; cv=none; b=XXmvLk55erd1b92yn38AvXFfUWM/MMLcubU33HriY2c0sNoVdL2dzwBuK8NC6vOpsWOOFZVrugoQJgpfp9a76b8f8ltw2h2Yc0vO8FAyNxcm2yfFTjn4duN0xZLF0Zf/5kDMg5ho+vW5kEfVtxwPTdLyj5KRIXz3fArIMMch1Tg=
+	t=1747750745; cv=none; b=cddThD6Gicngr2ylsAqFvm7JMT3RQM1mTPsFcQhx96hFT2FRPSX/3GclT23iLnyIzcra9+M/OOU+XKy2ZQbuNN7kpRbxFAwB6SNxB4AKV6sLLLO9sqWYXWkly02AyGxcUIs+OkYwaHbWCI86iuI+jLMUOSjxXuePUo8UUXcFBA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750742; c=relaxed/simple;
-	bh=8bdRJ4oLSxq76BQvy8tMflB/oevOc4yb3VOIlib820w=;
+	s=arc-20240116; t=1747750745; c=relaxed/simple;
+	bh=RFQCyXiMQofrbL7nquMLg+EPDSOqDpislfs2wNvjGGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qq3+N42FG61ZGyl2mG0+7eIHUxJwdyiLQeqLCKCfjiNtAHxNiKj5yboosY4kG0lfZXv6MI5Q1HhjA4M4wRW9hFoutnPLQGccozSddeo22t1JE3LeAuH8I2waFk/Cnxai4FU0SYGI0Ba4SvlQl1O4K9Skf7eNpZSx4v5OEJi+xwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1PMLQx23; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P3pGKn7a3+FOSefc3Y8K5QZ6Z/baf3pojHJXIsPWFgEPd6+xrrxpXTI42otkCe9nLy3L6aRDeuMfc4b8D2AqHid46PRo5SATV/BC0vZlfHsWyOV7ik0UU9E0Vl1uLe4S3MguUc/aqjxFNw56x39iO8rFsIkXSWk0TvddcYhmU0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IMJCjEhB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1PMLQx23"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 510B0C4CEEA;
-	Tue, 20 May 2025 14:19:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IMJCjEhB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4095EC4CEE9;
+	Tue, 20 May 2025 14:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750742;
-	bh=8bdRJ4oLSxq76BQvy8tMflB/oevOc4yb3VOIlib820w=;
+	s=korg; t=1747750745;
+	bh=RFQCyXiMQofrbL7nquMLg+EPDSOqDpislfs2wNvjGGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1PMLQx23MEzyLXjS2j9C+uMwN6DK83ma3C3Oy3SI3I6XCrqjQ1EF/XW4/d0ITOhYD
-	 T97SsJv+tiqDnk9XYRn9Mpj2LfPlG8cC/m1jti3VkScapwc8XzHNDgoSqA1925IuuL
-	 EEybPifl3FPwUH5ma0R6PeMGsRTiWYsM/eg5PW2M=
+	b=IMJCjEhB8E30QkunsDxbSschMqVJB2bdnX0z7zEzQCwEz2tfqDRykBPxt4aYzfn/m
+	 seh78M3QGY52TO+5KAzf6Vz74EeNeZJmrRq9MEg4AqdrR7lxQU5rQ59tX2jXpZVrwd
+	 XcRuhZDPWCvmoAfbLJeBDSCv6uQ16xiiaTxFp/90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Srikanth Aithal <sraithal@amd.com>
-Subject: [PATCH 6.14 105/145] x86/sev: Make sure pages are not skipped during kdump
-Date: Tue, 20 May 2025 15:51:15 +0200
-Message-ID: <20250520125814.673418179@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Divya Indi <divya.indi@oracle.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.14 106/145] tracing: samples: Initialize trace_array_printk() with the correct function
+Date: Tue, 20 May 2025 15:51:16 +0200
+Message-ID: <20250520125814.709555792@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -52,78 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashish Kalra <ashish.kalra@amd.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 82b7f88f2316c5442708daeb0b5ec5aa54c8ff7f upstream.
+commit 1b0c192c92ea1fe2dcb178f84adf15fe37c3e7c8 upstream.
 
-When shared pages are being converted to private during kdump, additional
-checks are performed. They include handling the case of a GHCB page being
-contained within a huge page.
+When using trace_array_printk() on a created instance, the correct
+function to use to initialize it is:
 
-Currently, this check incorrectly skips a page just below the GHCB page from
-being transitioned back to private during kdump preparation.
+  trace_array_init_printk()
 
-This skipped page causes a 0x404 #VC exception when it is accessed later while
-dumping guest memory for vmcore generation.
+Not
 
-Correct the range to be checked for GHCB contained in a huge page.  Also,
-ensure that the skipped huge page containing the GHCB page is transitioned
-back to private by applying the correct address mask later when changing GHCBs
-to private at end of kdump preparation.
+  trace_printk_init_buffer()
 
-  [ bp: Massage commit message. ]
+The former is a proper function to use, the latter is for initializing
+trace_printk() and causes the NOTICE banner to be displayed.
 
-Fixes: 3074152e56c9 ("x86/sev: Convert shared memory back to private on kexec")
-Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Tested-by: Srikanth Aithal <sraithal@amd.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/20250506183529.289549-1-Ashish.Kalra@amd.com
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Divya Indi <divya.indi@oracle.com>
+Link: https://lore.kernel.org/20250509152657.0f6744d9@gandalf.local.home
+Fixes: 89ed42495ef4a ("tracing: Sample module to demonstrate kernel access to Ftrace instances.")
+Fixes: 38ce2a9e33db6 ("tracing: Add trace_array_init_printk() to initialize instance trace_printk() buffers")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/coco/sev/core.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ samples/ftrace/sample-trace-array.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/coco/sev/core.c b/arch/x86/coco/sev/core.c
-index 41060ba41b5c..36beaac713c1 100644
---- a/arch/x86/coco/sev/core.c
-+++ b/arch/x86/coco/sev/core.c
-@@ -1101,7 +1101,8 @@ static void unshare_all_memory(void)
- 			data = per_cpu(runtime_data, cpu);
- 			ghcb = (unsigned long)&data->ghcb_page;
+--- a/samples/ftrace/sample-trace-array.c
++++ b/samples/ftrace/sample-trace-array.c
+@@ -112,7 +112,7 @@ static int __init sample_trace_array_ini
+ 	/*
+ 	 * If context specific per-cpu buffers havent already been allocated.
+ 	 */
+-	trace_printk_init_buffers();
++	trace_array_init_printk(tr);
  
--			if (addr <= ghcb && ghcb <= addr + size) {
-+			/* Handle the case of a huge page containing the GHCB page */
-+			if (addr <= ghcb && ghcb < addr + size) {
- 				skipped_addr = true;
- 				break;
- 			}
-@@ -1213,8 +1214,8 @@ static void shutdown_all_aps(void)
- void snp_kexec_finish(void)
- {
- 	struct sev_es_runtime_data *data;
-+	unsigned long size, addr;
- 	unsigned int level, cpu;
--	unsigned long size;
- 	struct ghcb *ghcb;
- 	pte_t *pte;
- 
-@@ -1242,8 +1243,10 @@ void snp_kexec_finish(void)
- 		ghcb = &data->ghcb_page;
- 		pte = lookup_address((unsigned long)ghcb, &level);
- 		size = page_level_size(level);
--		set_pte_enc(pte, level, (void *)ghcb);
--		snp_set_memory_private((unsigned long)ghcb, (size / PAGE_SIZE));
-+		/* Handle the case of a huge page containing the GHCB page */
-+		addr = (unsigned long)ghcb & page_level_mask(level);
-+		set_pte_enc(pte, level, (void *)addr);
-+		snp_set_memory_private(addr, (size / PAGE_SIZE));
- 	}
- }
- 
--- 
-2.49.0
-
+ 	simple_tsk = kthread_run(simple_thread, NULL, "sample-instance");
+ 	if (IS_ERR(simple_tsk)) {
 
 
