@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A000F1FBE9E;
-	Tue, 20 May 2025 14:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B266522D7A8;
+	Tue, 20 May 2025 14:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750104; cv=none; b=RsEM1FRsTZ8dHlDrZmS0CUarkgamV9+6hlh7OV2X7S1SGq88W9xXDklUA+mpEeGHwMo4cJssRrX4y/K0yoFdoyFkQ1w8Z3czD3tu/NEPf4rJNqx0INA3fXZUV/0ymRmHdXxfEL6ueEv2nrgYnIYg8RMv08sjmW62GYLJsyWT1Dk=
+	t=1747750107; cv=none; b=ezAYUJ/LuMTZur4ppdX0QLA+2JwkHOSvAPLGG4RJ90K7lbK/XfcoGcD849o4dNiU4eUbBSrcxN0VM+B4YxY+H74a/1fbWVnL6A+Lkvx+dkXSyT71w+vQ4pJUjLjRKLFdFOVWr2Il/ZJ8tU9oKnR5uQLOyld+dQkbivmrMZk3i+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750104; c=relaxed/simple;
-	bh=0Xi6kJ7rfBNkr1+qT56mBZHQ+xXhfWGOU0+FRmZFSEY=;
+	s=arc-20240116; t=1747750107; c=relaxed/simple;
+	bh=Zc0VCpYU1rMB6aW2JA3+ik4xkdQyUqSKENi/PLCI1qY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tcOsBulVUqdcegRd+i6mAlsmk8p1XYFmq4K4GwUeUwu5ylZ9MigiH32aQ11m80axrQ0kJhgCu9bsrMOScyuneF08KboxZsAmr5rAUiFjofsWlKz8BtR5mFnI5NS2Vz2iA3ksK73aaZ1IIq/GNdz60IZeCNkqwGGur+mRcU8xzAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndaCBr75; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZnsvTXNCZeHAUK2wD6lmYItD+zLu+okhXbaKNaRjfg27vG5DWqU/7YyULs6krDZiAsr9pV14xmJSM9sBW6obr8vViDMEsoXwijKFAJdQBmvnAipP5dVb3yVVn91w5HoAVEi+3s1hG5YzWpcYXEEOli93ozLR2WjcHwua+revWF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tsl0P+T+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndaCBr75"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27EBDC4CEE9;
-	Tue, 20 May 2025 14:08:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tsl0P+T+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D57BC4CEE9;
+	Tue, 20 May 2025 14:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750104;
-	bh=0Xi6kJ7rfBNkr1+qT56mBZHQ+xXhfWGOU0+FRmZFSEY=;
+	s=korg; t=1747750107;
+	bh=Zc0VCpYU1rMB6aW2JA3+ik4xkdQyUqSKENi/PLCI1qY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ndaCBr75VqaEa9PzIJ0SamnUXQVyR/tuIQkU8U+s7kJTllpQBL6RlyaaQkfKXF9qR
-	 9lJDzRl98tonTHDcEv3e/+NoYaswmVbtoWInuujLAkZrjaTSZI1JkRHgUQyRHlCKRs
-	 l9NblmPLN8Z4e2iQA8P9dUKW1JXFn2J+1fyY1LYY=
+	b=Tsl0P+T+3iTfS0sjff4DEH/Xf7/Qn/KJr+F/THLbnrSUj8X1hNuU1EzJDuG+sRkxN
+	 iUVPCsBzFWg/BDrnjiS3NOpNhx4IpUCiX8RI1vn9LLVQPwt3Okt+2ygIvcyTV5yqHE
+	 ra0BDij5eulauzZxrEsF2XrC0JnIdfMkRVuFXqVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	syzbot+e76d52dadc089b9d197f@syzkaller.appspotmail.com,
+	syzbot+1065a199625a388fce60@syzkaller.appspotmail.com,
+	Matt Johnston <matt@codeconstruct.com.au>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 003/143] drivers/platform/x86/amd: pmf: Check for invalid sideloaded Smart PC Policies
-Date: Tue, 20 May 2025 15:49:18 +0200
-Message-ID: <20250520125810.179550368@linuxfoundation.org>
+Subject: [PATCH 6.12 037/143] net: mctp: Dont access ifa_index when missing
+Date: Tue, 20 May 2025 15:49:52 +0200
+Message-ID: <20250520125811.518029180@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -45,51 +47,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Matt Johnston <matt@codeconstruct.com.au>
 
-[ Upstream commit 690d722e02819ef978f90cd7553973eba1007e6c ]
+[ Upstream commit f11cf946c0a92c560a890d68e4775723353599e1 ]
 
-If a policy is passed into amd_pmf_get_pb_data() that causes the engine
-to fail to start there is a memory leak. Free the memory in this failure
-path.
+In mctp_dump_addrinfo, ifa_index can be used to filter interfaces, but
+only when the struct ifaddrmsg is provided. Otherwise it will be
+comparing to uninitialised memory - reproducible in the syzkaller case from
+dhcpd, or busybox "ip addr show".
 
-Fixes: 10817f28e5337 ("platform/x86/amd/pmf: Add capability to sideload of policy binary")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20250423132002.3984997-2-superm1@kernel.org
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+The kernel MCTP implementation has always filtered by ifa_index, so
+existing userspace programs expecting to dump MCTP addresses must
+already be passing a valid ifa_index value (either 0 or a real index).
+
+BUG: KMSAN: uninit-value in mctp_dump_addrinfo+0x208/0xac0 net/mctp/device.c:128
+ mctp_dump_addrinfo+0x208/0xac0 net/mctp/device.c:128
+ rtnl_dump_all+0x3ec/0x5b0 net/core/rtnetlink.c:4380
+ rtnl_dumpit+0xd5/0x2f0 net/core/rtnetlink.c:6824
+ netlink_dump+0x97b/0x1690 net/netlink/af_netlink.c:2309
+
+Fixes: 583be982d934 ("mctp: Add device handling and netlink interface")
+Reported-by: syzbot+e76d52dadc089b9d197f@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68135815.050a0220.3a872c.000e.GAE@google.com/
+Reported-by: syzbot+1065a199625a388fce60@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/681357d6.050a0220.14dd7d.000d.GAE@google.com/
+Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
+Link: https://patch.msgid.link/20250508-mctp-addr-dump-v2-1-c8a53fd2dd66@codeconstruct.com.au
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmf/tee-if.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/mctp/device.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/platform/x86/amd/pmf/tee-if.c b/drivers/platform/x86/amd/pmf/tee-if.c
-index cb5abab2210a7..804c4085b82fb 100644
---- a/drivers/platform/x86/amd/pmf/tee-if.c
-+++ b/drivers/platform/x86/amd/pmf/tee-if.c
-@@ -364,9 +364,14 @@ static ssize_t amd_pmf_get_pb_data(struct file *filp, const char __user *buf,
- 	amd_pmf_hex_dump_pb(dev);
- 	ret = amd_pmf_start_policy_engine(dev);
- 	if (ret < 0)
--		return ret;
-+		goto cleanup;
- 
- 	return length;
+diff --git a/net/mctp/device.c b/net/mctp/device.c
+index cdb18da96c4bc..8d1386601bbe0 100644
+--- a/net/mctp/device.c
++++ b/net/mctp/device.c
+@@ -117,11 +117,18 @@ static int mctp_dump_addrinfo(struct sk_buff *skb, struct netlink_callback *cb)
+ 	struct net_device *dev;
+ 	struct ifaddrmsg *hdr;
+ 	struct mctp_dev *mdev;
+-	int ifindex, rc;
+-
+-	hdr = nlmsg_data(cb->nlh);
+-	// filter by ifindex if requested
+-	ifindex = hdr->ifa_index;
++	int ifindex = 0, rc;
 +
-+cleanup:
-+	kfree(dev->policy_buf);
-+	dev->policy_buf = NULL;
-+	return ret;
- }
++	/* Filter by ifindex if a header is provided */
++	if (cb->nlh->nlmsg_len >= nlmsg_msg_size(sizeof(*hdr))) {
++		hdr = nlmsg_data(cb->nlh);
++		ifindex = hdr->ifa_index;
++	} else {
++		if (cb->strict_check) {
++			NL_SET_ERR_MSG(cb->extack, "mctp: Invalid header for addr dump request");
++			return -EINVAL;
++		}
++	}
  
- static const struct file_operations pb_fops = {
+ 	rcu_read_lock();
+ 	for_each_netdev_dump(net, dev, mcb->ifindex) {
 -- 
 2.39.5
 
