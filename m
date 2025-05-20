@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB20245032;
-	Tue, 20 May 2025 13:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA3822D7A8;
+	Tue, 20 May 2025 13:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749444; cv=none; b=C1UxF58dtWdn2097HaLPPm5VCnPgxbyAu2pHPvS7h5KPofMce8JyjS1QkZh+SfxV9w37TK9hVhxtvV9ZlgiFc/SE/vcz1lBFV05o9dXw/SuHXkcps4XoZ7X98wvVGUER1XYWLD0mbfCfEmxwRzBKB5pSIdYbGETGI5zAc1MBh9Q=
+	t=1747749447; cv=none; b=EYJ6j+t0MHmC3+reY9EpoLCrraB3qjKG8y8ih2YaB/SGhY6+2Lsqwr1nkwmqSNZkVfMQDsyNBulOVu0+WHzxGEOXNUE1w2ONC8ulxMLdTOxj/DKqgi20p9thQL0hs89gli0wJdFZSyx38pUH14fMkjYpHCkcnyUYihX2uS96q0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749444; c=relaxed/simple;
-	bh=teqIjVjx7XYRIAVx1JH4f5B+dFYVmwRLX2utP9C5gbo=;
+	s=arc-20240116; t=1747749447; c=relaxed/simple;
+	bh=PEh7cDZ5CRR7UqzFZgT19rS0fHSQJTUbKAJ9d6KbB5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nqQ+nCAD3ZN0Wm2JuPJ2AbEXl5UA1GkGMPW3+rmXbhYsV3MEZAxElu1vXxxyH5ZsKCB8ewAg69iU2/hKAaMgwzg/Hz9Z/hFcldKTA582UQAWIZp9xXCeClKJKraxUmOV2YAGxbVW3AISSXft007QG4XrzFfD+mMyRY7XC6TPZKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWDpeHic; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XjddbZt9ylqF5q5jGbsobAEUrzz3rPa0IO0N/wl/o5DCzWZVL+B2if0mvccIOLMHLLKU3CiU97lQR75wns155PMViKOXXDU3nyppcIRUga9PkgD7nhN3u2u/1DEIobnEk/2hh+8Hq6heOkvMkZQjrYQdReFuxbYhWR+SokEA9c0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMaD0wES; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWDpeHic"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CA7C4CEEA;
-	Tue, 20 May 2025 13:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMaD0wES"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52819C4CEEB;
+	Tue, 20 May 2025 13:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749443;
-	bh=teqIjVjx7XYRIAVx1JH4f5B+dFYVmwRLX2utP9C5gbo=;
+	s=korg; t=1747749446;
+	bh=PEh7cDZ5CRR7UqzFZgT19rS0fHSQJTUbKAJ9d6KbB5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LWDpeHicbDiXCvlW8inmHbtYxKWLH06VA+YGFyO4OimsKB9eAoqjUZnkHlGB9//rv
-	 xtT+9Hihx+p95jgmcCcoJSIKd4YbUYwBqrIpRbNK6pUnVWNkDyUelHmI3wqDhUjwsg
-	 hCp/0PWVkc3QU3qRK3/MFYKkQqZy1Bsa9TX//9aI=
+	b=kMaD0wESg8WgeSZpmA3LQ31weDhEVwA3DAReW0lws7e3fIdgTvPnXmsBGI09Ab9K8
+	 OXf+t6XAKnX1Ng/4vRG0tPOVUZOwFfyB+reaY+5Gl6u1wqrNdruGnGUnHC0Dn59pvT
+	 4No0VVO+n+FEVX44Q5pXwkppAo2+yXaB58J30VFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	Christian Heusel <christian@heusel.eu>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 46/97] ALSA: es1968: Add error handling for snd_pcm_hw_constraint_pow2()
-Date: Tue, 20 May 2025 15:50:11 +0200
-Message-ID: <20250520125802.463792469@linuxfoundation.org>
+Subject: [PATCH 6.1 47/97] ALSA: usb-audio: Add sample rate quirk for Audioengine D1
+Date: Tue, 20 May 2025 15:50:12 +0200
+Message-ID: <20250520125802.503509748@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -50,48 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Christian Heusel <christian@heusel.eu>
 
-commit 9e000f1b7f31684cc5927e034360b87ac7919593 upstream.
+commit 2b24eb060c2bb9ef79e1d3bcf633ba1bc95215d6 upstream.
 
-The function snd_es1968_capture_open() calls the function
-snd_pcm_hw_constraint_pow2(), but does not check its return
-value. A proper implementation can be found in snd_cx25821_pcm_open().
+A user reported on the Arch Linux Forums that their device is emitting
+the following message in the kernel journal, which is fixed by adding
+the quirk as submitted in this patch:
 
-Add error handling for snd_pcm_hw_constraint_pow2() and propagate its
-error code.
+    > kernel: usb 1-2: current rate 8436480 is different from the runtime rate 48000
 
-Fixes: b942cf815b57 ("[ALSA] es1968 - Fix stuttering capture")
-Cc: stable@vger.kernel.org # v2.6.22
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20250514092444.331-1-vulab@iscas.ac.cn
+There also is an entry for this product line added long time ago.
+Their specific device has the following ID:
+
+    $ lsusb | grep Audio
+    Bus 001 Device 002: ID 1101:0003 EasyPass Industrial Co., Ltd Audioengine D1
+
+Link: https://bbs.archlinux.org/viewtopic.php?id=305494
+Fixes: 93f9d1a4ac593 ("ALSA: usb-audio: Apply sample rate quirk for Audioengine D1")
+Cc: stable@vger.kernel.org
+Signed-off-by: Christian Heusel <christian@heusel.eu>
+Link: https://patch.msgid.link/20250512-audioengine-quirk-addition-v1-1-4c370af6eff7@heusel.eu
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/es1968.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/usb/quirks.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/pci/es1968.c
-+++ b/sound/pci/es1968.c
-@@ -1569,7 +1569,7 @@ static int snd_es1968_capture_open(struc
- 	struct snd_pcm_runtime *runtime = substream->runtime;
- 	struct es1968 *chip = snd_pcm_substream_chip(substream);
- 	struct esschan *es;
--	int apu1, apu2;
-+	int err, apu1, apu2;
- 
- 	apu1 = snd_es1968_alloc_apu_pair(chip, ESM_APU_PCM_CAPTURE);
- 	if (apu1 < 0)
-@@ -1613,7 +1613,9 @@ static int snd_es1968_capture_open(struc
- 	runtime->hw = snd_es1968_capture;
- 	runtime->hw.buffer_bytes_max = runtime->hw.period_bytes_max =
- 		calc_available_memory_size(chip) - 1024; /* keep MIXBUF size */
--	snd_pcm_hw_constraint_pow2(runtime, 0, SNDRV_PCM_HW_PARAM_BUFFER_BYTES);
-+	err = snd_pcm_hw_constraint_pow2(runtime, 0, SNDRV_PCM_HW_PARAM_BUFFER_BYTES);
-+	if (err < 0)
-+		return err;
- 
- 	spin_lock_irq(&chip->substream_lock);
- 	list_add(&es->list, &chip->substream_list);
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2146,6 +2146,8 @@ static const struct usb_audio_quirk_flag
+ 		   QUIRK_FLAG_FIXED_RATE),
+ 	DEVICE_FLG(0x0fd9, 0x0008, /* Hauppauge HVR-950Q */
+ 		   QUIRK_FLAG_SHARE_MEDIA_DEVICE | QUIRK_FLAG_ALIGN_TRANSFER),
++	DEVICE_FLG(0x1101, 0x0003, /* Audioengine D1 */
++		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x1224, 0x2a25, /* Jieli Technology USB PHY 2.0 */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE | QUIRK_FLAG_MIC_RES_16),
+ 	DEVICE_FLG(0x1395, 0x740a, /* Sennheiser DECT */
 
 
