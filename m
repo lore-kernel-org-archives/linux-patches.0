@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5012451C8;
-	Tue, 20 May 2025 13:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA55DDA9;
+	Tue, 20 May 2025 13:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749545; cv=none; b=T15ZI6XojzBEDWZO7a/B5X0Cnc6gHBm1q5y3aEg31ypkuoymX4fG/GKlKe26FQZEWGIqVyA6adZlGTt+Tk7mbDdzkh2zv0V6Bu9e4INdQIWyROUCB1vIzdNG3AkjxRru8zkl/RoiOSQQpju8eHJzl2tXUJPgNalJUkLDMDpM6kw=
+	t=1747749548; cv=none; b=k69LJlo7xwStg1pVWDs+8tlrkWB/Ea69ewOWx0+32iPUrbKfXxZKMij/CUkRlFPvZ1DjYfbcbxzgfOeHuFkJAs8Hq3JCi/X6tvKRnkZlh20OfxUonlZUAIeR6UOrwk5fYFF1+5KwfSXhsbGH62qLVXH7NPw5Ya5L8lIM1JU7dw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749545; c=relaxed/simple;
-	bh=jn7zWoOvxxhrgVQdXVMHtGCQLru/X9JLRBMbF2NsvYA=;
+	s=arc-20240116; t=1747749548; c=relaxed/simple;
+	bh=B3N/qrFleAVWvlD0u8fYtgeXPOXLwvSaoElmElQwPpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WHTiuG0uPebcBnN9oSLNpgtGK424otgy5S35A1iG+FcWjYa8t8hTrtQIDJjvUoAAxR0lfUiiLnP4RXM8FQUDQqfOKwsBC3kzCAWBpQdTlsvTgsyvbE00Xkgc6oRrEOZH8lo+L6Qjpny+QOxKjO9Wlfw4Rway8anAOw9L8NjSk30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIKfeuWV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ch6MEzRSyETXO6HnzhzwAZyMGJWsL9Sp60IREELEh5RMeyWnOFp7r02ctbdGABgye6ofirJlMz61pIDhJKxH0gCmzFfs0Pb12rb4qpV+aneFFIS0P/k1e1fxV2Ds3MI2fNef7n81EeEuQhS2hOx/3X420Jf5t+semWm5jBngRJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7VvFKIB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIKfeuWV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39091C4CEEA;
-	Tue, 20 May 2025 13:59:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7VvFKIB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96EF9C4CEE9;
+	Tue, 20 May 2025 13:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749544;
-	bh=jn7zWoOvxxhrgVQdXVMHtGCQLru/X9JLRBMbF2NsvYA=;
+	s=korg; t=1747749548;
+	bh=B3N/qrFleAVWvlD0u8fYtgeXPOXLwvSaoElmElQwPpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZIKfeuWVHyta+l2zfIrf6id21U31lHoZhA0pVPu+QiscShQstxMZ6kHZegklUJR3X
-	 z5LerAHyNLFWUGCZHRWms3jcwJqnRnZXBiBGV/UgwqY6IAso3X4zrstwW0kq8j23wT
-	 k6QGjw8MRP1t/MWzMjzCg7Yqn9xuzvC37a9tN1ls=
+	b=n7VvFKIB02/SJvvU6lCm5ETgoApGei+omBGMXKpOLhD9jl6f9Vm1NVz2wRktskArx
+	 M8xZnhN0/Bev+Ye4eZHS2inCuZkM9S2aCba/a/3IPQKH/4Te2f9/tgoGlr3onIWFLC
+	 edAhBNuzkOtNWlyDtH1nXdsCwde3fXlmpM4dnyRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Siwinski <ssiwinski@atto.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 61/97] scsi: sd_zbc: block: Respect bio vector limits for REPORT ZONES buffer
-Date: Tue, 20 May 2025 15:50:26 +0200
-Message-ID: <20250520125803.044227392@linuxfoundation.org>
+	Feng Tang <feng.tang@linux.alibaba.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Baolin Wang <baolin.wang@inux.alibaba.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Sri Jayaramappa <sjayaram@akamai.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 79/97] selftests/mm: compaction_test: support platform with huge mount of memory
+Date: Tue, 20 May 2025 15:50:44 +0200
+Message-ID: <20250520125803.737204953@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -51,81 +55,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve Siwinski <ssiwinski@atto.com>
+From: Feng Tang <feng.tang@linux.alibaba.com>
 
-commit e8007fad5457ea547ca63bb011fdb03213571c7e upstream.
+commit ab00ddd802f80e31fc9639c652d736fe3913feae upstream.
 
-The REPORT ZONES buffer size is currently limited by the HBA's maximum
-segment count to ensure the buffer can be mapped. However, the block
-layer further limits the number of iovec entries to 1024 when allocating
-a bio.
+When running mm selftest to verify mm patches, 'compaction_test' case
+failed on an x86 server with 1TB memory.  And the root cause is that it
+has too much free memory than what the test supports.
 
-To avoid allocation of buffers too large to be mapped, further restrict
-the maximum buffer size to BIO_MAX_INLINE_VECS.
+The test case tries to allocate 100000 huge pages, which is about 200 GB
+for that x86 server, and when it succeeds, it expects it's large than 1/3
+of 80% of the free memory in system.  This logic only works for platform
+with 750 GB ( 200 / (1/3) / 80% ) or less free memory, and may raise false
+alarm for others.
 
-Replace the UIO_MAXIOV symbolic name with the more contextually
-appropriate BIO_MAX_INLINE_VECS.
+Fix it by changing the fixed page number to self-adjustable number
+according to the real number of free memory.
 
-Fixes: b091ac616846 ("sd_zbc: Fix report zones buffer allocation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve Siwinski <ssiwinski@atto.com>
-Link: https://lore.kernel.org/r/20250508200122.243129-1-ssiwinski@atto.com
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lkml.kernel.org/r/20250423103645.2758-1-feng.tang@linux.alibaba.com
+Fixes: bd67d5c15cc1 ("Test compaction of mlocked memory")
+Signed-off-by: Feng Tang <feng.tang@linux.alibaba.com>
+Acked-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Tested-by: Baolin Wang <baolin.wang@inux.alibaba.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Sri Jayaramappa <sjayaram@akamai.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bio.c           |    2 +-
- drivers/scsi/sd_zbc.c |    6 +++++-
- include/linux/bio.h   |    1 +
- 3 files changed, 7 insertions(+), 2 deletions(-)
+ tools/testing/selftests/vm/compaction_test.c |   19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
---- a/block/bio.c
-+++ b/block/bio.c
-@@ -576,7 +576,7 @@ struct bio *bio_kmalloc(unsigned short n
- {
- 	struct bio *bio;
+--- a/tools/testing/selftests/vm/compaction_test.c
++++ b/tools/testing/selftests/vm/compaction_test.c
+@@ -89,6 +89,8 @@ int check_compaction(unsigned long mem_f
+ 	int compaction_index = 0;
+ 	char initial_nr_hugepages[20] = {0};
+ 	char nr_hugepages[20] = {0};
++	char target_nr_hugepages[24] = {0};
++	int slen;
  
--	if (nr_vecs > UIO_MAXIOV)
-+	if (nr_vecs > BIO_MAX_INLINE_VECS)
- 		return NULL;
- 	return kmalloc(struct_size(bio, bi_inline_vecs, nr_vecs), gfp_mask);
- }
---- a/drivers/scsi/sd_zbc.c
-+++ b/drivers/scsi/sd_zbc.c
-@@ -197,6 +197,7 @@ static void *sd_zbc_alloc_report_buffer(
- 					unsigned int nr_zones, size_t *buflen)
- {
- 	struct request_queue *q = sdkp->disk->queue;
-+	unsigned int max_segments;
- 	size_t bufsize;
- 	void *buf;
+ 	/* We want to test with 80% of available memory. Else, OOM killer comes
+ 	   in to play */
+@@ -119,11 +121,18 @@ int check_compaction(unsigned long mem_f
  
-@@ -208,12 +209,15 @@ static void *sd_zbc_alloc_report_buffer(
- 	 * Furthermore, since the report zone command cannot be split, make
- 	 * sure that the allocated buffer can always be mapped by limiting the
- 	 * number of pages allocated to the HBA max segments limit.
-+	 * Since max segments can be larger than the max inline bio vectors,
-+	 * further limit the allocated buffer to BIO_MAX_INLINE_VECS.
- 	 */
- 	nr_zones = min(nr_zones, sdkp->zone_info.nr_zones);
- 	bufsize = roundup((nr_zones + 1) * 64, SECTOR_SIZE);
- 	bufsize = min_t(size_t, bufsize,
- 			queue_max_hw_sectors(q) << SECTOR_SHIFT);
--	bufsize = min_t(size_t, bufsize, queue_max_segments(q) << PAGE_SHIFT);
-+	max_segments = min(BIO_MAX_INLINE_VECS, queue_max_segments(q));
-+	bufsize = min_t(size_t, bufsize, max_segments << PAGE_SHIFT);
+ 	lseek(fd, 0, SEEK_SET);
  
- 	while (bufsize >= SECTOR_SIZE) {
- 		buf = kvzalloc(bufsize, GFP_KERNEL | __GFP_NORETRY);
---- a/include/linux/bio.h
-+++ b/include/linux/bio.h
-@@ -11,6 +11,7 @@
- #include <linux/uio.h>
+-	/* Request a large number of huge pages. The Kernel will allocate
+-	   as much as it can */
+-	if (write(fd, "100000", (6*sizeof(char))) != (6*sizeof(char))) {
+-		ksft_print_msg("Failed to write 100000 to /proc/sys/vm/nr_hugepages: %s\n",
+-			       strerror(errno));
++	/*
++	 * Request huge pages for about half of the free memory. The Kernel
++	 * will allocate as much as it can, and we expect it will get at least 1/3
++	 */
++	nr_hugepages_ul = mem_free / hugepage_size / 2;
++	snprintf(target_nr_hugepages, sizeof(target_nr_hugepages),
++		 "%lu", nr_hugepages_ul);
++
++	slen = strlen(target_nr_hugepages);
++	if (write(fd, target_nr_hugepages, slen) != slen) {
++		ksft_print_msg("Failed to write %lu to /proc/sys/vm/nr_hugepages: %s\n",
++			       nr_hugepages_ul, strerror(errno));
+ 		goto close_fd;
+ 	}
  
- #define BIO_MAX_VECS		256U
-+#define BIO_MAX_INLINE_VECS	UIO_MAXIOV
- 
- static inline unsigned int bio_max_segs(unsigned int nr_segs)
- {
 
 
