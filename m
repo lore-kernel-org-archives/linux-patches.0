@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5032522A1;
-	Tue, 20 May 2025 14:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448812907;
+	Tue, 20 May 2025 14:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750532; cv=none; b=qgrFjwYXkIOoQZ+y2povNePEBJQj8HjOM6dYES0S8+m/qMD7oK9piZ9KH/AozFc0nHvi3AQiDXBHNi963g8ngxyuve3DXF+jPDC1t47dlkWO4mPoPJTN7nRkT05juWWnSPN0DjmUjLhaABpZh6NjDTdILAoBxgYRQgqYgy8SbEc=
+	t=1747750536; cv=none; b=IS3zaLdb5V11QN4fUzd0DSjFun157uRfzMLizcmSX1jemiAarzSGaXOCM3v06vx4JPKYT2GyMT9l+kM0ad0nhZ3IJdZ2pyw7PzTqS86Jkl+1W/o+9J3Dip788kC2hhfZmtHB28GXsfsSMKa3blStOrgEM8UrviNk2EYmD5FfPxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750532; c=relaxed/simple;
-	bh=3rEe5wGHzYJNyrDrnFLsMmy8Hfr6dOF5OQM/Dcfkm1w=;
+	s=arc-20240116; t=1747750536; c=relaxed/simple;
+	bh=bd5XWma4wdvAKosyW75jDKI4hSN6sWkLtqj8lO3sagI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PT35ohBMFhy6Z7sLa+gLJ/KNtmVfuSoH8FYHidsKOzxlJKI4xo6YDdVxm1c+lUZiWac+Hi+C92bzadfp+6pp267WskfP4ez4rpBWNqgTmUuYP0KVQAAK8s5aM9scruKbFGrWDcWFiyyksLyABlm/FtrSudT97FVfozLyiEz78oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJ8bHRzc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nFU28RRJ7NiZCE6GrVM3HxfBFfu2DkwVp/dJSbn9zsaWnmZBFWBGOpYj+fqYEVllCdUvf+ourtAbEVTmWjz5iy0SyRkQhidDVpMuUkPvBglRq6o9aecS2+e7uBNT7BHP5n6S9cH7doFeBi5gHisL1zA1VKHHQ+3goclcLy5QydU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6EZZ9ig; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJ8bHRzc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC11EC4CEE9;
-	Tue, 20 May 2025 14:15:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6EZZ9ig"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1599C4CEE9;
+	Tue, 20 May 2025 14:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750532;
-	bh=3rEe5wGHzYJNyrDrnFLsMmy8Hfr6dOF5OQM/Dcfkm1w=;
+	s=korg; t=1747750535;
+	bh=bd5XWma4wdvAKosyW75jDKI4hSN6sWkLtqj8lO3sagI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GJ8bHRzchJXMM4+yg2r7lfZLleV2+a+3qLPbFoGSrpqwS4/0DiP0Iprc10q3oMi6+
-	 jMmhl/IBjEtJVnJzdTzKFyMCCholvLLRhN4HCrfQY54ZLVMiXruBarv/zrjqInGlKX
-	 U1AKmupOAGtnyzBg8E1NVBB6do2oAtg3zVU10Xcc=
+	b=E6EZZ9igWpwiB+dxYgCBYEJaRWNXlo01kKAoi8Ky7wDo3Epv8cBmRT3f8xUzyfLE4
+	 r2LHAC9ExOAK/XNu4CMPFD3sxVpZf9Cv5naoFQW8A8rjJvuZi24PqXZKVTNPl7MjgY
+	 lQ86O50PwnZXSRcLkcADY5me1SwHjbBkQebmHo+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Kees Cook <kees@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>,
+	Tarang Raval <tarang.raval@siliconsignals.io>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 038/145] nvme-pci: make nvme_pci_npages_prp() __always_inline
-Date: Tue, 20 May 2025 15:50:08 +0200
-Message-ID: <20250520125812.058276327@linuxfoundation.org>
+Subject: [PATCH 6.14 012/145] arm64: dts: imx8mp-var-som: Fix LDO5 shutdown causing SD card timeout
+Date: Tue, 20 May 2025 15:49:42 +0200
+Message-ID: <20250520125811.027929853@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -52,62 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
 
-[ Upstream commit 40696426b8c8c4f13cf6ac52f0470eed144be4b2 ]
+[ Upstream commit c6888983134e2ccc2db8ffd2720b0d4826d952e4 ]
 
-The only reason nvme_pci_npages_prp() could be used as a compile-time
-known result in BUILD_BUG_ON() is because the compiler was always choosing
-to inline the function. Under special circumstances (sanitizer coverage
-functions disabled for __init functions on ARCH=um), the compiler decided
-to stop inlining it:
+Fix SD card timeout issue caused by LDO5 regulator getting disabled
+after boot.
 
-   drivers/nvme/host/pci.c: In function 'nvme_init':
-   include/linux/compiler_types.h:557:45: error: call to '__compiletime_assert_678' declared with attribute error: BUILD_BUG_ON failed: nvme_pci_npages_prp() > NVME_MAX_NR_ALLOCATIONS
-     557 |         _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
-         |                                             ^
-   include/linux/compiler_types.h:538:25: note: in definition of macro '__compiletime_assert'
-     538 |                         prefix ## suffix();                             \
-         |                         ^~~~~~
-   include/linux/compiler_types.h:557:9: note: in expansion of macro '_compiletime_assert'
-     557 |         _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
-         |         ^~~~~~~~~~~~~~~~~~~
-   include/linux/build_bug.h:39:37: note: in expansion of macro 'compiletime_assert'
-      39 | #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
-         |                                     ^~~~~~~~~~~~~~~~~~
-   include/linux/build_bug.h:50:9: note: in expansion of macro 'BUILD_BUG_ON_MSG'
-      50 |         BUILD_BUG_ON_MSG(condition, "BUILD_BUG_ON failed: " #condition)
-         |         ^~~~~~~~~~~~~~~~
-   drivers/nvme/host/pci.c:3804:9: note: in expansion of macro 'BUILD_BUG_ON'
-    3804 |         BUILD_BUG_ON(nvme_pci_npages_prp() > NVME_MAX_NR_ALLOCATIONS);
-         |         ^~~~~~~~~~~~
+The kernel log shows LDO5 being disabled, which leads to a timeout
+on USDHC2:
+[   33.760561] LDO5: disabling
+[   81.119861] mmc1: Timeout waiting for hardware interrupt.
 
-Force it to be __always_inline to make sure it is always available for
-use with BUILD_BUG_ON().
+To prevent this, set regulator-boot-on and regulator-always-on for
+LDO5. Also add the vqmmc regulator to properly support 1.8V/3.3V
+signaling for USDHC2 using a GPIO-controlled regulator.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202505061846.12FMyRjj-lkp@intel.com/
-Fixes: c372cdd1efdf ("nvme-pci: iod npages fits in s8")
-Signed-off-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: 6c2a1f4f71258 ("arm64: dts: imx8mp-var-som-symphony: Add Variscite Symphony board and VAR-SOM-MX8MP SoM")
+Signed-off-by: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
+Acked-by: Tarang Raval <tarang.raval@siliconsignals.io>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mp-var-som.dtsi | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index d49b69565d04c..7fdf7f24d46e6 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -390,7 +390,7 @@ static bool nvme_dbbuf_update_and_check_event(u16 value, __le32 *dbbuf_db,
-  * as it only leads to a small amount of wasted memory for the lifetime of
-  * the I/O.
-  */
--static int nvme_pci_npages_prp(void)
-+static __always_inline int nvme_pci_npages_prp(void)
- {
- 	unsigned max_bytes = (NVME_MAX_KB_SZ * 1024) + NVME_CTRL_PAGE_SIZE;
- 	unsigned nprps = DIV_ROUND_UP(max_bytes, NVME_CTRL_PAGE_SIZE);
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-var-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-var-som.dtsi
+index b2ac2583a5929..b59da91fdd041 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-var-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-var-som.dtsi
+@@ -35,7 +35,6 @@
+ 		      <0x1 0x00000000 0 0xc0000000>;
+ 	};
+ 
+-
+ 	reg_usdhc2_vmmc: regulator-usdhc2-vmmc {
+ 	        compatible = "regulator-fixed";
+ 	        regulator-name = "VSD_3V3";
+@@ -46,6 +45,16 @@
+ 	        startup-delay-us = <100>;
+ 	        off-on-delay-us = <12000>;
+ 	};
++
++	reg_usdhc2_vqmmc: regulator-usdhc2-vqmmc {
++		compatible = "regulator-gpio";
++		regulator-name = "VSD_VSEL";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <3300000>;
++		gpios = <&gpio2 12 GPIO_ACTIVE_HIGH>;
++		states = <3300000 0x0 1800000 0x1>;
++		vin-supply = <&ldo5>;
++	};
+ };
+ 
+ &A53_0 {
+@@ -205,6 +214,7 @@
+         pinctrl-2 = <&pinctrl_usdhc2_200mhz>, <&pinctrl_usdhc2_gpio>;
+         cd-gpios = <&gpio1 14 GPIO_ACTIVE_LOW>;
+         vmmc-supply = <&reg_usdhc2_vmmc>;
++	vqmmc-supply = <&reg_usdhc2_vqmmc>;
+         bus-width = <4>;
+         status = "okay";
+ };
 -- 
 2.39.5
 
