@@ -1,126 +1,153 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210262F37;
-	Tue, 20 May 2025 14:04:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F69B24676B;
+	Tue, 20 May 2025 14:04:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749891; cv=none; b=agxjxtLW2HfJHEGDGdVrusKKyoUkg2ZD9tgs+MxAItSvRsClJcEwnRUMMaXIrZDXVNGaIkrjrvVc/p05hktm6JLQCyoQts8whlmg76u4XIcPLPzk+tfj8IlHGvjz/HPmYWhfYYUi435xuEd5wzWOtftticq8SQx/f4jzIdLknZU=
+	t=1747749892; cv=none; b=RDRKF3aMNNFqvNVtq0mTMrgclC66Hh5+WBrZuwHFuvDEi4M7K/CHEz8EKoEZlFkkHr+LE875iJx3/j0feXorl0bn8qDkUF08UM3mqj2xgYJmVIIg0flsGmb09WeUZHIIQnklarnmkelkF+lV/7ROcdEV2AWqmfQeu/iFmwG4xn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749891; c=relaxed/simple;
-	bh=VgDUsWQh9mJ8cHhZPRAtRTcBXf6NeJtKdNxp+2kehWw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ciXDQ94kUZE1a8KW3CBaiUw1sL4/w1xUpqqagXQ38GiTuh+yGqxh4TKqeMyIPQTaOGxT1XCJB062UcLfcaX6l6sAoISot+T5qH78YpImztF4srCfRR0lXDSwiHDFC3h1LEih8QKSeUU3HKhcZd26cc31NGzjmYKwXIFrjMSn3rE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JTCtQwdy; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747749892; c=relaxed/simple;
+	bh=Yr7NEAiFJmijdxDK2tj0bd577Jdr/FPnqBwHcHe3HHk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=HmqEAcV1UrkhLcv2HaXKEZq6PVrFJ1oF5c1Hb4I/cf5z6MUgDmU1LnNsES83W7nN8qYBJ3SHUIoFVO8AEQ+xaSFkLrOCPSMXhn86FF6eFhstbqBUC+QWaWE1C9U4VzcDZfieZIsLKsmrqk2cRtXjUCTlRDCsusiZR4ZwOqFQrtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8TEzbgj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JTCtQwdy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B247FC4CEEF;
-	Tue, 20 May 2025 14:04:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747749890;
-	bh=VgDUsWQh9mJ8cHhZPRAtRTcBXf6NeJtKdNxp+2kehWw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JTCtQwdyidM6pLDCi79WvGZpz7jCqUd+nRz7nld6DZUJFUHc+zlC4bR6Hn9bsB1wX
-	 KaticX7V/hO2295lHp5hLHcDFDr+AABnFHPxvOzRrZhh2bICRZCzyzJ+uikiZcrTyh
-	 Ej4P9kmreibTSTLerjdGokH03Bf+zSdq0bK/7vq9ZmfNw9TqjZgKZlzlVeyosKpLKj
-	 tsJwF+5C700BfJCzL4Jj/YL8gaGJubGp+cSs+QAY3Dhf3cXilDqxZ91oecoB4BXxez
-	 qBcCk9WST7H9kWuRFkhogHGjGjoVrdgmoDcWGcfW8PjMffjyIp/tRLyMId8ypMPlOP
-	 RN5h9QlACoPhQ==
-Date: Tue, 20 May 2025 10:04:49 -0400
-From: Sasha Levin <sashal@kernel.org>
-To: =?utf-8?Q?Micha=C5=82?= Pecio <michal.pecio@gmail.com>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Jonathan Bell <jonathan@raspberrypi.org>,
-	Oliver Neukum <oneukum@suse.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	mathias.nyman@intel.com, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 6.14 08/15] usb: xhci: Don't trust the EP Context
- cycle bit when moving HW dequeue
-Message-ID: <aCyMAdNzTPgS0urL@lappy>
-References: <20250512180352.437356-1-sashal@kernel.org>
- <20250512180352.437356-8-sashal@kernel.org>
- <20250512231628.7f91f435@foxbook>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8TEzbgj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9BBC4CEEA;
+	Tue, 20 May 2025 14:04:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1747749892;
+	bh=Yr7NEAiFJmijdxDK2tj0bd577Jdr/FPnqBwHcHe3HHk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=s8TEzbgjG4E7S1r6ge6LFM5L9BaNYCSlJyyf76YqSixkAUnSsuc8551UW1fVHKH3m
+	 qZPUJeEkQ7KPiLnBls0R1d8+47xt0wTCujpRXQOH6q2Gyv+wCto/LXowh9HU8cHjI4
+	 Bonj9dHi28gKhQtd3X2gYthB3si6LR1OGxRBCniQ=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Fenghua Yu <fenghuay@nvidia.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.6 094/117] dmaengine: idxd: fix memory leak in error handling path of idxd_setup_wqs
+Date: Tue, 20 May 2025 15:50:59 +0200
+Message-ID: <20250520125807.716653780@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
+References: <20250520125803.981048184@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250512231628.7f91f435@foxbook>
 
-On Mon, May 12, 2025 at 11:16:28PM +0200, Michał Pecio wrote:
->On Mon, 12 May 2025 14:03:43 -0400, Sasha Levin wrote:
->> From: Michal Pecio <michal.pecio@gmail.com>
->>
->> [ Upstream commit 6328bdc988d23201c700e1e7e04eb05a1149ac1e ]
->>
->> VIA VL805 doesn't bother updating the EP Context cycle bit when the
->> endpoint halts. This is seen by patching xhci_move_dequeue_past_td()
->> to print the cycle bits of the EP Context and the TRB at hw_dequeue
->> and then disconnecting a flash drive while reading it. Actual cycle
->> state is random as expected, but the EP Context bit is always 1.
->>
->> This means that the cycle state produced by this function is wrong
->> half the time, and then the endpoint stops working.
->>
->> Work around it by looking at the cycle bit of TD's end_trb instead
->> of believing the Endpoint or Stream Context. Specifically:
->>
->> - rename cycle_found to hw_dequeue_found to avoid confusion
->> - initialize new_cycle from td->end_trb instead of hw_dequeue
->> - switch new_cycle toggling to happen after end_trb is found
->>
->> Now a workload which regularly stalls the device works normally for
->> a few hours and clearly demonstrates the HW bug - the EP Context bit
->> is not updated in a new cycle until Set TR Dequeue overwrites it:
->>
->> [  +0,000298] sd 10:0:0:0: [sdc] Attached SCSI disk
->> [  +0,011758] cycle bits: TRB 1 EP Ctx 1
->> [  +5,947138] cycle bits: TRB 1 EP Ctx 1
->> [  +0,065731] cycle bits: TRB 0 EP Ctx 1
->> [  +0,064022] cycle bits: TRB 0 EP Ctx 0
->> [  +0,063297] cycle bits: TRB 0 EP Ctx 0
->> [  +0,069823] cycle bits: TRB 0 EP Ctx 0
->> [  +0,063390] cycle bits: TRB 1 EP Ctx 0
->> [  +0,063064] cycle bits: TRB 1 EP Ctx 1
->> [  +0,062293] cycle bits: TRB 1 EP Ctx 1
->> [  +0,066087] cycle bits: TRB 0 EP Ctx 1
->> [  +0,063636] cycle bits: TRB 0 EP Ctx 0
->> [  +0,066360] cycle bits: TRB 0 EP Ctx 0
->>
->> Also tested on the buggy ASM1042 which moves EP Context dequeue to
->> the next TRB after errors, one problem case addressed by the rework
->> that implemented this loop. In this case hw_dequeue can be enqueue,
->> so simply picking the cycle bit of TRB at hw_dequeue wouldn't work.
->>
->> Commit 5255660b208a ("xhci: add quirk for host controllers that
->> don't update endpoint DCS") tried to solve the stale cycle problem,
->> but it was more complex and got reverted due to a reported issue.
->>
->> Cc: Jonathan Bell <jonathan@raspberrypi.org>
->> Cc: Oliver Neukum <oneukum@suse.com>
->> Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
->> Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
->> Link: https://lore.kernel.org/r/20250505125630.561699-2-mathias.nyman@linux.intel.com
->> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->> Signed-off-by: Sasha Levin <sashal@kernel.org>
->
->Hi,
->
->This wasn't tagged for stable because the function may potentially
->still be affected by some unforeseen HW bugs, and previous attempt
->at fixing the issue ran into trouble and nobody truly knows why.
->
->The problem is very old and not critically severe, so I think this
->can wait till 6.15. People don't like minor release regressions.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-I'll drop it, thanks!
+------------------
 
--- 
-Thanks,
-Sasha
+From: Shuai Xue <xueshuai@linux.alibaba.com>
+
+commit 3fd2f4bc010cdfbc07dd21018dc65bd9370eb7a4 upstream.
+
+Memory allocated for wqs is not freed if an error occurs during
+idxd_setup_wqs(). To fix it, free the allocated memory in the reverse
+order of allocation before exiting the function in case of an error.
+
+Fixes: 7c5dd23e57c1 ("dmaengine: idxd: fix wq conf_dev 'struct device' lifetime")
+Fixes: 700af3a0a26c ("dmaengine: idxd: add 'struct idxd_dev' as wrapper for conf_dev")
+Fixes: de5819b99489 ("dmaengine: idxd: track enabled workqueues in bitmap")
+Fixes: b0325aefd398 ("dmaengine: idxd: add WQ operation cap restriction support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Fenghua Yu <fenghuay@nvidia.com>
+Link: https://lore.kernel.org/r/20250404120217.48772-2-xueshuai@linux.alibaba.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/dma/idxd/init.c |   30 +++++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
+
+--- a/drivers/dma/idxd/init.c
++++ b/drivers/dma/idxd/init.c
+@@ -159,8 +159,8 @@ static int idxd_setup_wqs(struct idxd_de
+ 
+ 	idxd->wq_enable_map = bitmap_zalloc_node(idxd->max_wqs, GFP_KERNEL, dev_to_node(dev));
+ 	if (!idxd->wq_enable_map) {
+-		kfree(idxd->wqs);
+-		return -ENOMEM;
++		rc = -ENOMEM;
++		goto err_bitmap;
+ 	}
+ 
+ 	for (i = 0; i < idxd->max_wqs; i++) {
+@@ -179,10 +179,8 @@ static int idxd_setup_wqs(struct idxd_de
+ 		conf_dev->bus = &dsa_bus_type;
+ 		conf_dev->type = &idxd_wq_device_type;
+ 		rc = dev_set_name(conf_dev, "wq%d.%d", idxd->id, wq->id);
+-		if (rc < 0) {
+-			put_device(conf_dev);
++		if (rc < 0)
+ 			goto err;
+-		}
+ 
+ 		mutex_init(&wq->wq_lock);
+ 		init_waitqueue_head(&wq->err_queue);
+@@ -193,7 +191,6 @@ static int idxd_setup_wqs(struct idxd_de
+ 		wq->enqcmds_retries = IDXD_ENQCMDS_RETRIES;
+ 		wq->wqcfg = kzalloc_node(idxd->wqcfg_size, GFP_KERNEL, dev_to_node(dev));
+ 		if (!wq->wqcfg) {
+-			put_device(conf_dev);
+ 			rc = -ENOMEM;
+ 			goto err;
+ 		}
+@@ -201,9 +198,8 @@ static int idxd_setup_wqs(struct idxd_de
+ 		if (idxd->hw.wq_cap.op_config) {
+ 			wq->opcap_bmap = bitmap_zalloc(IDXD_MAX_OPCAP_BITS, GFP_KERNEL);
+ 			if (!wq->opcap_bmap) {
+-				put_device(conf_dev);
+ 				rc = -ENOMEM;
+-				goto err;
++				goto err_opcap_bmap;
+ 			}
+ 			bitmap_copy(wq->opcap_bmap, idxd->opcap_bmap, IDXD_MAX_OPCAP_BITS);
+ 		}
+@@ -214,12 +210,28 @@ static int idxd_setup_wqs(struct idxd_de
+ 
+ 	return 0;
+ 
+- err:
++err_opcap_bmap:
++	kfree(wq->wqcfg);
++
++err:
++	put_device(conf_dev);
++	kfree(wq);
++
+ 	while (--i >= 0) {
+ 		wq = idxd->wqs[i];
++		if (idxd->hw.wq_cap.op_config)
++			bitmap_free(wq->opcap_bmap);
++		kfree(wq->wqcfg);
+ 		conf_dev = wq_confdev(wq);
+ 		put_device(conf_dev);
++		kfree(wq);
++
+ 	}
++	bitmap_free(idxd->wq_enable_map);
++
++err_bitmap:
++	kfree(idxd->wqs);
++
+ 	return rc;
+ }
+ 
+
+
