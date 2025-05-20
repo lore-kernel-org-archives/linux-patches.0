@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C4222D78C;
-	Tue, 20 May 2025 13:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C9E22D78C;
+	Tue, 20 May 2025 13:55:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749300; cv=none; b=aJJKr4LHJtFcKqcHWBG6tklHFGKcTNuDVSV1Nk4C8bvB5N1CY9ngGL90VyM7a/dClsl5S6hCm/8f9f/UvqBEeTqYUAU/Oanu68gWMDbvYsOu8lgubFReuzP9Yk2xa2pqDkAyLYUhDpTbXkJ7DDS+xTGuWt9gaWjzTW1r7BIhG3A=
+	t=1747749304; cv=none; b=GmLfZbs+saqBfv5UKPIsl0520akoOWHI+Ayxrg73rqor0Vmmu9TCFkrZDdfnSspAryd2cb1DyocxBfODeC5PdHQiR6EAD/4PQtWXNF0AEh4upE4tDyNzot8tyKOUVjcRnXxQ4+AoUKtqpmmafBlgO4KR4zaqPjx+85yYK+n927k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749300; c=relaxed/simple;
-	bh=ai74d7Tjk9pfLwyRQyZ+JRUkzYGoG88tmm20BpWCZXA=;
+	s=arc-20240116; t=1747749304; c=relaxed/simple;
+	bh=of278VsLck/QbSLb9tGNPd2RkCI6hlh5OMNimWaMRTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hoCXu8L2aerAqwjRUSYEfSjSUVlno34E1/IVd3rX/YaqR9xnUx/s1g7UJKsrFkWX3Y7lBVa9E5X3DANZpMsIjO778VLLcxnnZgkHzUbkM8mS+BvuJO09jBnpPEGBRFJjVAqmz/6za5GQqIfSc8q7TdyebeoReP3NnWAaMO6vQd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agZ6sl7I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lmYuOdRLVEDWhpiH8oBTEY0SNm/MiPTBOm+qw1+k1IVHs/geYnlCQnGB25BxIJpbbkm6U5dnRtZwCu8g2OhPjvtzSOxs9caoh9zluXLPD7AilVGJgRsHkpCJ1pHC9Ga+gA5r6XQjcihPFVY6RbFjAD+nuQgZjXy+lVhjq2W7pG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OLj/1v+w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agZ6sl7I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ABC0C4CEE9;
-	Tue, 20 May 2025 13:54:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OLj/1v+w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE77C4CEEA;
+	Tue, 20 May 2025 13:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749300;
-	bh=ai74d7Tjk9pfLwyRQyZ+JRUkzYGoG88tmm20BpWCZXA=;
+	s=korg; t=1747749303;
+	bh=of278VsLck/QbSLb9tGNPd2RkCI6hlh5OMNimWaMRTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=agZ6sl7IrQ9xttug8si3Kw0gWsxqbTwz+AetsR3GMqHBxvO3XMIvnrBFMpCuUCwyZ
-	 fgve/G4dy8Po0JCB6JIS7mQzq1PbGJwXLfgCX3y4+cK4cP9ZKHSZ7nz0TTeJlOIjNt
-	 jU4fCgYb8HXc0eSqF9hvGJUK1ooUQetVZDIkAUHw=
+	b=OLj/1v+wffwLKq33x6niJCd0XE5MVGRecAunOVRtD1rfeHDdiIZJoiD+e/ZXxLoo9
+	 IbIEAZwaJzkoNigxLtlznLDOvMIuvzm8bk7zt8P3v+UqOi3Q5xowfN9SRUcb7MSqTF
+	 +e3cNzBbH6MGskvU/HaxjjluDhLrj2xaCKTuQnXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Heyne <mheyne@amazon.de>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Jeremy Linton <jeremy.linton@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.15 32/59] ACPI: PPTT: Fix processor subtable walk
-Date: Tue, 20 May 2025 15:50:23 +0200
-Message-ID: <20250520125755.134904103@linuxfoundation.org>
+	Ivan Vecera <ivecera@redhat.com>,
+	Alexander Lobakin <alexandr.lobakin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Suraj Jitindar Singh <surajjs@amazon.com>
+Subject: [PATCH 5.15 59/59] ice: arfs: fix use-after-free when freeing @rx_cpu_rmap
+Date: Tue, 20 May 2025 15:50:50 +0200
+Message-ID: <20250520125756.181916930@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
 References: <20250520125753.836407405@linuxfoundation.org>
@@ -53,96 +52,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Linton <jeremy.linton@arm.com>
+From: Alexander Lobakin <alexandr.lobakin@intel.com>
 
-commit adfab6b39202481bb43286fff94def4953793fdb upstream.
+commit d7442f512b71fc63a99c8a801422dde4fbbf9f93 upstream.
 
-The original PPTT code had a bug where the processor subtable length
-was not correctly validated when encountering a truncated
-acpi_pptt_processor node.
+The CI testing bots triggered the following splat:
 
-Commit 7ab4f0e37a0f4 ("ACPI PPTT: Fix coding mistakes in a couple of
-sizeof() calls") attempted to fix this by validating the size is as
-large as the acpi_pptt_processor node structure. This introduced a
-regression where the last processor node in the PPTT table is ignored
-if it doesn't contain any private resources. That results errors like:
+[  718.203054] BUG: KASAN: use-after-free in free_irq_cpu_rmap+0x53/0x80
+[  718.206349] Read of size 4 at addr ffff8881bd127e00 by task sh/20834
+[  718.212852] CPU: 28 PID: 20834 Comm: sh Kdump: loaded Tainted: G S      W IOE     5.17.0-rc8_nextqueue-devqueue-02643-g23f3121aca93 #1
+[  718.219695] Hardware name: Intel Corporation S2600WFT/S2600WFT, BIOS SE5C620.86B.02.01.0012.070720200218 07/07/2020
+[  718.223418] Call Trace:
+[  718.227139]
+[  718.230783]  dump_stack_lvl+0x33/0x42
+[  718.234431]  print_address_description.constprop.9+0x21/0x170
+[  718.238177]  ? free_irq_cpu_rmap+0x53/0x80
+[  718.241885]  ? free_irq_cpu_rmap+0x53/0x80
+[  718.245539]  kasan_report.cold.18+0x7f/0x11b
+[  718.249197]  ? free_irq_cpu_rmap+0x53/0x80
+[  718.252852]  free_irq_cpu_rmap+0x53/0x80
+[  718.256471]  ice_free_cpu_rx_rmap.part.11+0x37/0x50 [ice]
+[  718.260174]  ice_remove_arfs+0x5f/0x70 [ice]
+[  718.263810]  ice_rebuild_arfs+0x3b/0x70 [ice]
+[  718.267419]  ice_rebuild+0x39c/0xb60 [ice]
+[  718.270974]  ? asm_sysvec_apic_timer_interrupt+0x12/0x20
+[  718.274472]  ? ice_init_phy_user_cfg+0x360/0x360 [ice]
+[  718.278033]  ? delay_tsc+0x4a/0xb0
+[  718.281513]  ? preempt_count_sub+0x14/0xc0
+[  718.284984]  ? delay_tsc+0x8f/0xb0
+[  718.288463]  ice_do_reset+0x92/0xf0 [ice]
+[  718.292014]  ice_pci_err_resume+0x91/0xf0 [ice]
+[  718.295561]  pci_reset_function+0x53/0x80
+<...>
+[  718.393035] Allocated by task 690:
+[  718.433497] Freed by task 20834:
+[  718.495688] Last potentially related work creation:
+[  718.568966] The buggy address belongs to the object at ffff8881bd127e00
+                which belongs to the cache kmalloc-96 of size 96
+[  718.574085] The buggy address is located 0 bytes inside of
+                96-byte region [ffff8881bd127e00, ffff8881bd127e60)
+[  718.579265] The buggy address belongs to the page:
+[  718.598905] Memory state around the buggy address:
+[  718.601809]  ffff8881bd127d00: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
+[  718.604796]  ffff8881bd127d80: 00 00 00 00 00 00 00 00 00 00 fc fc fc fc fc fc
+[  718.607794] >ffff8881bd127e00: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
+[  718.610811]                    ^
+[  718.613819]  ffff8881bd127e80: 00 00 00 00 00 00 00 00 00 00 00 00 fc fc fc fc
+[  718.617107]  ffff8881bd127f00: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
 
-  ACPI PPTT: PPTT table found, but unable to locate core XX (XX)
-  ACPI: SPE must be homogeneous
+This is due to that free_irq_cpu_rmap() is always being called
+*after* (devm_)free_irq() and thus it tries to work with IRQ descs
+already freed. For example, on device reset the driver frees the
+rmap right before allocating a new one (the splat above).
+Make rmap creation and freeing function symmetrical with
+{request,free}_irq() calls i.e. do that on ifup/ifdown instead
+of device probe/remove/resume. These operations can be performed
+independently from the actual device aRFS configuration.
+Also, make sure ice_vsi_free_irq() clears IRQ affinity notifiers
+only when aRFS is disabled -- otherwise, CPU rmap sets and clears
+its own and they must not be touched manually.
 
-Furthermore, it fails in a common case where the node length isn't
-equal to the acpi_pptt_processor structure size, leaving the original
-bug in a modified form.
-
-Correct the regression by adjusting the loop termination conditions as
-suggested by the bug reporters. An additional check performed after
-the subtable node type is detected, validates the acpi_pptt_processor
-node is fully contained in the PPTT table. Repeating the check in
-acpi_pptt_leaf_node() is largely redundant as the node is already
-known to be fully contained in the table.
-
-The case where a final truncated node's parent property is accepted,
-but the node itself is rejected should not be considered a bug.
-
-Fixes: 7ab4f0e37a0f4 ("ACPI PPTT: Fix coding mistakes in a couple of sizeof() calls")
-Reported-by: Maximilian Heyne <mheyne@amazon.de>
-Closes: https://lore.kernel.org/linux-acpi/20250506-draco-taped-15f475cd@mheyne-amazon/
-Reported-by: Yicong Yang <yangyicong@hisilicon.com>
-Closes: https://lore.kernel.org/linux-acpi/20250507035124.28071-1-yangyicong@huawei.com/
-Signed-off-by: Jeremy Linton <jeremy.linton@arm.com>
-Tested-by: Yicong Yang <yangyicong@hisilicon.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Tested-by: Maximilian Heyne <mheyne@amazon.de>
-Cc: All applicable <stable@vger.kernel.org> # 7ab4f0e37a0f4: ACPI PPTT: Fix coding mistakes ...
-Link: https://patch.msgid.link/20250508023025.1301030-1-jeremy.linton@arm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 28bf26724fdb0 ("ice: Implement aRFS")
+Co-developed-by: Ivan Vecera <ivecera@redhat.com>
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Signed-off-by: Alexander Lobakin <alexandr.lobakin@intel.com>
+Tested-by: Ivan Vecera <ivecera@redhat.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/pptt.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_arfs.c |    9 ++-------
+ drivers/net/ethernet/intel/ice/ice_lib.c  |    5 ++++-
+ drivers/net/ethernet/intel/ice/ice_main.c |   20 ++++++++------------
+ 3 files changed, 14 insertions(+), 20 deletions(-)
 
---- a/drivers/acpi/pptt.c
-+++ b/drivers/acpi/pptt.c
-@@ -219,16 +219,18 @@ static int acpi_pptt_leaf_node(struct ac
- 			     sizeof(struct acpi_table_pptt));
- 	proc_sz = sizeof(struct acpi_pptt_processor);
+--- a/drivers/net/ethernet/intel/ice/ice_arfs.c
++++ b/drivers/net/ethernet/intel/ice/ice_arfs.c
+@@ -577,7 +577,7 @@ void ice_free_cpu_rx_rmap(struct ice_vsi
+ {
+ 	struct net_device *netdev;
  
--	while ((unsigned long)entry + proc_sz < table_end) {
-+	/* ignore subtable types that are smaller than a processor node */
-+	while ((unsigned long)entry + proc_sz <= table_end) {
- 		cpu_node = (struct acpi_pptt_processor *)entry;
-+
- 		if (entry->type == ACPI_PPTT_TYPE_PROCESSOR &&
- 		    cpu_node->parent == node_entry)
- 			return 0;
- 		if (entry->length == 0)
- 			return 0;
-+
- 		entry = ACPI_ADD_PTR(struct acpi_subtable_header, entry,
- 				     entry->length);
--
- 	}
- 	return 1;
+-	if (!vsi || vsi->type != ICE_VSI_PF || !vsi->arfs_fltr_list)
++	if (!vsi || vsi->type != ICE_VSI_PF)
+ 		return;
+ 
+ 	netdev = vsi->netdev;
+@@ -599,7 +599,7 @@ int ice_set_cpu_rx_rmap(struct ice_vsi *
+ 	int base_idx, i;
+ 
+ 	if (!vsi || vsi->type != ICE_VSI_PF)
+-		return -EINVAL;
++		return 0;
+ 
+ 	pf = vsi->back;
+ 	netdev = vsi->netdev;
+@@ -636,7 +636,6 @@ void ice_remove_arfs(struct ice_pf *pf)
+ 	if (!pf_vsi)
+ 		return;
+ 
+-	ice_free_cpu_rx_rmap(pf_vsi);
+ 	ice_clear_arfs(pf_vsi);
  }
-@@ -261,15 +263,18 @@ static struct acpi_pptt_processor *acpi_
- 	proc_sz = sizeof(struct acpi_pptt_processor);
  
- 	/* find the processor structure associated with this cpuid */
--	while ((unsigned long)entry + proc_sz < table_end) {
-+	while ((unsigned long)entry + proc_sz <= table_end) {
- 		cpu_node = (struct acpi_pptt_processor *)entry;
+@@ -653,9 +652,5 @@ void ice_rebuild_arfs(struct ice_pf *pf)
+ 		return;
  
- 		if (entry->length == 0) {
- 			pr_warn("Invalid zero length subtable\n");
- 			break;
- 		}
-+		/* entry->length may not equal proc_sz, revalidate the processor structure length */
- 		if (entry->type == ACPI_PPTT_TYPE_PROCESSOR &&
- 		    acpi_cpu_id == cpu_node->acpi_processor_id &&
-+		    (unsigned long)entry + entry->length <= table_end &&
-+		    entry->length == proc_sz + cpu_node->number_of_priv_resources * sizeof(u32) &&
- 		     acpi_pptt_leaf_node(table_hdr, cpu_node)) {
- 			return (struct acpi_pptt_processor *)entry;
- 		}
+ 	ice_remove_arfs(pf);
+-	if (ice_set_cpu_rx_rmap(pf_vsi)) {
+-		dev_err(ice_pf_to_dev(pf), "Failed to rebuild aRFS\n");
+-		return;
+-	}
+ 	ice_init_arfs(pf_vsi);
+ }
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -2645,6 +2645,8 @@ void ice_vsi_free_irq(struct ice_vsi *vs
+ 		return;
+ 
+ 	vsi->irqs_ready = false;
++	ice_free_cpu_rx_rmap(vsi);
++
+ 	ice_for_each_q_vector(vsi, i) {
+ 		u16 vector = i + base;
+ 		int irq_num;
+@@ -2658,7 +2660,8 @@ void ice_vsi_free_irq(struct ice_vsi *vs
+ 			continue;
+ 
+ 		/* clear the affinity notifier in the IRQ descriptor */
+-		irq_set_affinity_notifier(irq_num, NULL);
++		if (!IS_ENABLED(CONFIG_RFS_ACCEL))
++			irq_set_affinity_notifier(irq_num, NULL);
+ 
+ 		/* clear the affinity_mask in the IRQ descriptor */
+ 		irq_set_affinity_hint(irq_num, NULL);
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -2393,6 +2393,13 @@ static int ice_vsi_req_irq_msix(struct i
+ 		irq_set_affinity_hint(irq_num, &q_vector->affinity_mask);
+ 	}
+ 
++	err = ice_set_cpu_rx_rmap(vsi);
++	if (err) {
++		netdev_err(vsi->netdev, "Failed to setup CPU RMAP on VSI %u: %pe\n",
++			   vsi->vsi_num, ERR_PTR(err));
++		goto free_q_irqs;
++	}
++
+ 	vsi->irqs_ready = true;
+ 	return 0;
+ 
+@@ -3380,22 +3387,12 @@ static int ice_setup_pf_sw(struct ice_pf
+ 	 */
+ 	ice_napi_add(vsi);
+ 
+-	status = ice_set_cpu_rx_rmap(vsi);
+-	if (status) {
+-		dev_err(ice_pf_to_dev(pf), "Failed to set CPU Rx map VSI %d error %d\n",
+-			vsi->vsi_num, status);
+-		status = -EINVAL;
+-		goto unroll_napi_add;
+-	}
+ 	status = ice_init_mac_fltr(pf);
+ 	if (status)
+-		goto free_cpu_rx_map;
++		goto unroll_napi_add;
+ 
+ 	return status;
+ 
+-free_cpu_rx_map:
+-	ice_free_cpu_rx_rmap(vsi);
+-
+ unroll_napi_add:
+ 	if (vsi) {
+ 		ice_napi_del(vsi);
+@@ -4886,7 +4883,6 @@ static int __maybe_unused ice_suspend(st
+ 			continue;
+ 		ice_vsi_free_q_vectors(pf->vsi[v]);
+ 	}
+-	ice_free_cpu_rx_rmap(ice_get_main_vsi(pf));
+ 	ice_clear_interrupt_scheme(pf);
+ 
+ 	pci_save_state(pdev);
 
 
