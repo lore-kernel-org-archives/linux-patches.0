@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760A61FBE8A;
-	Tue, 20 May 2025 14:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E0C24EF83;
+	Tue, 20 May 2025 14:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750277; cv=none; b=KWOWXALjmv6lJpJKto/9cDHtW/34vLH2JlGFEDba7ERSJPEOgGb4/jTqGjnLyIRr6Dd+ZePy7C9j7Y70baUVMiq5OcXPVir3sYMJyfK98QiYw0Q8e3grSO3LL7T6XbxccnaH8k9FkUAupg1MHNqCBt/90ngw6PrQBX7vgXGF3l8=
+	t=1747750280; cv=none; b=GWBN+uV/LSMDjxO+VkBUh0IEt8c+dI3XRhYcprkXfkHf8/BHYRcKOAAwsZbhUzO99JQl25k9w5ToRPwgppFhvQAO803Tv/lxV2wcOqdA0hYROi+1SG4XD1e1QSdEjTL0994Vk5lhbWhxeR9VO9YxoiuZHeVAvXJy3KXPwqXXtDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750277; c=relaxed/simple;
-	bh=ho3uB26TujIYVJ7iW9Gj4aIjO4lFbnMmc4cbazXZWTQ=;
+	s=arc-20240116; t=1747750280; c=relaxed/simple;
+	bh=Oph6A+SSwSOEI1y/9MEw8CE+D3zB7tRdPRlPJTZyJCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n3NLySfThd1D9dwyepzoGG9FpruqXLdgmpTxru+2r4dmq2FOOn+8Tkv4jnLNe6RXMXgBLflGZath6/DudIYbH+U0PsDFLfi9xYdlTVh8Wz8HsuD6y/iCA90igR5OyXD6FuRuaXpzG98XzghZbGWoos4cCn+V9nrMQhJJwHtsq5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qLLr69VE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kbXzK6l8lPvbISa8KLkjY5wUehfNJtM3V2DPR9msSkJLClZHL1fpGwb3AUwNKIb4yQHcTcMzt+MB3FSJu+Ad/RifmMrzsavUTqgdWDTJE876PaoLfR0kLZN3mrfbInV0aRi3TaThsnONKlcA2nf6ttYkJGRTjBYlC2fLXbyBVug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNwV4p5Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qLLr69VE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B46DC4CEE9;
-	Tue, 20 May 2025 14:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNwV4p5Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D551C4CEE9;
+	Tue, 20 May 2025 14:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750277;
-	bh=ho3uB26TujIYVJ7iW9Gj4aIjO4lFbnMmc4cbazXZWTQ=;
+	s=korg; t=1747750279;
+	bh=Oph6A+SSwSOEI1y/9MEw8CE+D3zB7tRdPRlPJTZyJCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qLLr69VEvF1FL95WzaDDSfxgTgU9RQ5OXK3WXFEBLgINyAPKvi3YjMAhlYOFX8ntG
-	 505k1X6LAtMN2g65OVudaOh2eqRRUDV7znouXPYTcU9gXqy3M4mX5AxwlW2y3yelYY
-	 1vTuOuudBCr8YMqrns5pb+t0HlGH5KWvs7q3Dwwk=
+	b=NNwV4p5QBCftJHGtjp/U7tn5/HYKI/4ybnCN9fD6qKAKN54MYBJdtuflC9GHrnv61
+	 IYxdAkfkYWiFPCNhglvYCEx7osQlNQlnXxR4klUKbuUlcfGaYQeqA6ZekNb26suqUN
+	 cf4S7ZQp3Hky8VnkHt98/BozEivnnU2UOQTGnK5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko@sntech.de>,
-	Alexey Charkov <alchark@gmail.com>,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Dragan Simic <dsimic@manjaro.org>
-Subject: [PATCH 6.12 099/143] arm64: dts: rockchip: Remove overdrive-mode OPPs from RK3588J SoC dtsi
-Date: Tue, 20 May 2025 15:50:54 +0200
-Message-ID: <20250520125813.945794348@linuxfoundation.org>
+	Tianyang Zhang <zhangtianyang@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.12 073/143] LoongArch: Prevent cond_resched() occurring within kernel-fpu
+Date: Tue, 20 May 2025 15:50:28 +0200
+Message-ID: <20250520125812.937057872@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
 References: <20250520125810.036375422@linuxfoundation.org>
@@ -52,204 +50,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragan Simic <dsimic@manjaro.org>
+From: Tianyang Zhang <zhangtianyang@loongson.cn>
 
-commit e0bd7ecf6b2dc71215af699dffbf14bf0bc3d978 upstream.
+commit 2468b0e3d5659dfde77f081f266e1111a981efb8 upstream.
 
-The differences in the vendor-approved CPU and GPU OPPs for the standard
-Rockchip RK3588 variant [1] and the industrial Rockchip RK3588J variant [2]
-come from the latter, presumably, supporting an extended temperature range
-that's usually associated with industrial applications, despite the two SoC
-variant datasheets specifying the same upper limit for the allowed ambient
-temperature for both variants.  However, the lower temperature limit is
-specified much lower for the RK3588J variant. [1][2]
+When CONFIG_PREEMPT_COUNT is not configured (i.e. CONFIG_PREEMPT_NONE/
+CONFIG_PREEMPT_VOLUNTARY), preempt_disable() / preempt_enable() merely
+acts as a barrier(). However, in these cases cond_resched() can still
+trigger a context switch and modify the CSR.EUEN, resulting in do_fpu()
+exception being activated within the kernel-fpu critical sections, as
+demonstrated in the following path:
 
-To be on the safe side and to ensure maximum longevity of the RK3588J SoCs,
-only the CPU and GPU OPPs that are declared by the vendor to be always safe
-for this SoC variant may be provided.  As explained by the vendor [3] and
-according to the RK3588J datasheet, [2] higher-frequency/higher-voltage
-CPU and GPU OPPs can be used as well, but at the risk of reducing the SoC
-lifetime expectancy.  Presumably, using the higher OPPs may be safe only
-when not enjoying the assumed extended temperature range that the RK3588J,
-as an SoC variant targeted specifically at higher-temperature, industrial
-applications, is made (or binned) for.
+dcn32_calculate_wm_and_dlg()
+    DC_FP_START()
+	dcn32_calculate_wm_and_dlg_fpu()
+	    dcn32_find_dummy_latency_index_for_fw_based_mclk_switch()
+		dcn32_internal_validate_bw()
+		    dcn32_enable_phantom_stream()
+			dc_create_stream_for_sink()
+			   kzalloc(GFP_KERNEL)
+				__kmem_cache_alloc_node()
+				    __cond_resched()
+    DC_FP_END()
 
-Anyone able to keep their RK3588J-based board outside the above-presumed
-extended temperature range at all times, and willing to take the associated
-risk of possibly reducing the SoC lifetime expectancy, is free to apply
-a DT overlay that adds the higher CPU and GPU OPPs.
+This patch is similar to commit d02198550423a0b (x86/fpu: Improve crypto
+performance by making kernel-mode FPU reliably usable in softirqs).  It
+uses local_bh_disable() instead of preempt_disable() for non-RT kernels
+so it can avoid the cond_resched() issue, and also extend the kernel-fpu
+application scenarios to the softirq context.
 
-With all this and the downstream RK3588(J) DT definitions [4][5] in mind,
-let's delete the RK3588J CPU and GPU OPPs that are not considered belonging
-to the normal operation mode for this SoC variant.  To quote the RK3588J
-datasheet [2], "normal mode means the chipset works under safety voltage
-and frequency;  for the industrial environment, highly recommend to keep in
-normal mode, the lifetime is reasonably guaranteed", while "overdrive mode
-brings higher frequency, and the voltage will increase accordingly;  under
-the overdrive mode for a long time, the chipset may shorten the lifetime,
-especially in high-temperature condition".
-
-To sum the RK3588J datasheet [2] and the vendor-provided DTs up, [4][5]
-the maximum allowed CPU core, GPU and NPU frequencies are as follows:
-
-   IP core    | Normal mode | Overdrive mode
-  ------------+-------------+----------------
-   Cortex-A55 |   1,296 MHz |      1,704 MHz
-   Cortex-A76 |   1,608 MHz |      2,016 MHz
-   GPU        |     700 MHz |        850 MHz
-   NPU        |     800 MHz |        950 MHz
-
-Unfortunately, when it comes to the actual voltages for the RK3588J CPU and
-GPU OPPs, there's a discrepancy between the RK3588J datasheet [2] and the
-downstream kernel code. [4][5]  The RK3588J datasheet states that "the max.
-working voltage of CPU/GPU/NPU is 0.75 V under the normal mode", while the
-downstream kernel code actually allows voltage ranges that go up to 0.95 V,
-which is still within the voltage range allowed by the datasheet.  However,
-the RK3588J datasheet also tells us to "strictly refer to the software
-configuration of SDK and the hardware reference design", so let's embrace
-the voltage ranges provided by the downstream kernel code, which also
-prevents the undesirable theoretical outcome of ending up with no usable
-OPPs on a particular board, as a result of the board's voltage regulator(s)
-being unable to deliver the exact voltages, for whatever reason.
-
-The above-described voltage ranges for the RK3588J CPU OPPs remain taken
-from the downstream kernel code [4][5] by picking the highest, worst-bin
-values, which ensure that all RK3588J bins will work reliably.  Yes, with
-some power inevitably wasted as unnecessarily generated heat, but the
-reliability is paramount, together with the longevity.  This deficiency
-may be revisited separately at some point in the future.
-
-The provided RK3588J CPU OPPs follow the slightly debatable "provide only
-the highest-frequency OPP from the same-voltage group" approach that's been
-established earlier, [6] as a result of the "same-voltage, lower-frequency"
-OPPs being considered inefficient from the IPA governor's standpoint, which
-may also be revisited separately at some point in the future.
-
-[1] https://wiki.friendlyelec.com/wiki/images/e/ee/Rockchip_RK3588_Datasheet_V1.6-20231016.pdf
-[2] https://wmsc.lcsc.com/wmsc/upload/file/pdf/v2/lcsc/2403201054_Rockchip-RK3588J_C22364189.pdf
-[3] https://lore.kernel.org/linux-rockchip/e55125ed-64fb-455e-b1e4-cebe2cf006e4@cherry.de/T/#u
-[4] https://raw.githubusercontent.com/rockchip-linux/kernel/604cec4004abe5a96c734f2fab7b74809d2d742f/arch/arm64/boot/dts/rockchip/rk3588s.dtsi
-[5] https://raw.githubusercontent.com/rockchip-linux/kernel/604cec4004abe5a96c734f2fab7b74809d2d742f/arch/arm64/boot/dts/rockchip/rk3588j.dtsi
-[6] https://lore.kernel.org/all/20240229-rk-dts-additions-v3-5-6afe8473a631@gmail.com/
-
-Fixes: 667885a68658 ("arm64: dts: rockchip: Add OPP data for CPU cores on RK3588j")
-Fixes: a7b2070505a2 ("arm64: dts: rockchip: Split GPU OPPs of RK3588 and RK3588j")
 Cc: stable@vger.kernel.org
-Cc: Heiko Stuebner <heiko@sntech.de>
-Cc: Alexey Charkov <alchark@gmail.com>
-Helped-by: Quentin Schulz <quentin.schulz@cherry.de>
-Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
-Link: https://lore.kernel.org/r/eeec0d30d79b019d111b3f0aa2456e69896b2caa.1742813866.git.dsimic@manjaro.org
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588j.dtsi |   53 +++++++++---------------------
- 1 file changed, 17 insertions(+), 36 deletions(-)
+ arch/loongarch/kernel/kfpu.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/rockchip/rk3588j.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3588j.dtsi
-@@ -11,20 +11,15 @@
- 		compatible = "operating-points-v2";
- 		opp-shared;
+--- a/arch/loongarch/kernel/kfpu.c
++++ b/arch/loongarch/kernel/kfpu.c
+@@ -18,11 +18,28 @@ static unsigned int euen_mask = CSR_EUEN
+ static DEFINE_PER_CPU(bool, in_kernel_fpu);
+ static DEFINE_PER_CPU(unsigned int, euen_current);
  
--		opp-1416000000 {
--			opp-hz = /bits/ 64 <1416000000>;
-+		opp-1200000000 {
-+			opp-hz = /bits/ 64 <1200000000>;
- 			opp-microvolt = <750000 750000 950000>;
- 			clock-latency-ns = <40000>;
- 			opp-suspend;
- 		};
--		opp-1608000000 {
--			opp-hz = /bits/ 64 <1608000000>;
--			opp-microvolt = <887500 887500 950000>;
--			clock-latency-ns = <40000>;
--		};
--		opp-1704000000 {
--			opp-hz = /bits/ 64 <1704000000>;
--			opp-microvolt = <937500 937500 950000>;
-+		opp-1296000000 {
-+			opp-hz = /bits/ 64 <1296000000>;
-+			opp-microvolt = <775000 775000 950000>;
- 			clock-latency-ns = <40000>;
- 		};
- 	};
-@@ -33,9 +28,14 @@
- 		compatible = "operating-points-v2";
- 		opp-shared;
++static inline void fpregs_lock(void)
++{
++	if (IS_ENABLED(CONFIG_PREEMPT_RT))
++		preempt_disable();
++	else
++		local_bh_disable();
++}
++
++static inline void fpregs_unlock(void)
++{
++	if (IS_ENABLED(CONFIG_PREEMPT_RT))
++		preempt_enable();
++	else
++		local_bh_enable();
++}
++
+ void kernel_fpu_begin(void)
+ {
+ 	unsigned int *euen_curr;
  
-+		opp-1200000000{
-+			opp-hz = /bits/ 64 <1200000000>;
-+			opp-microvolt = <750000 750000 950000>;
-+			clock-latency-ns = <40000>;
-+		};
- 		opp-1416000000 {
- 			opp-hz = /bits/ 64 <1416000000>;
--			opp-microvolt = <750000 750000 950000>;
-+			opp-microvolt = <762500 762500 950000>;
- 			clock-latency-ns = <40000>;
- 		};
- 		opp-1608000000 {
-@@ -43,25 +43,20 @@
- 			opp-microvolt = <787500 787500 950000>;
- 			clock-latency-ns = <40000>;
- 		};
--		opp-1800000000 {
--			opp-hz = /bits/ 64 <1800000000>;
--			opp-microvolt = <875000 875000 950000>;
--			clock-latency-ns = <40000>;
--		};
--		opp-2016000000 {
--			opp-hz = /bits/ 64 <2016000000>;
--			opp-microvolt = <950000 950000 950000>;
--			clock-latency-ns = <40000>;
--		};
- 	};
+-	preempt_disable();
++	if (!irqs_disabled())
++		fpregs_lock();
  
- 	cluster2_opp_table: opp-table-cluster2 {
- 		compatible = "operating-points-v2";
- 		opp-shared;
+ 	WARN_ON(this_cpu_read(in_kernel_fpu));
  
-+		opp-1200000000{
-+			opp-hz = /bits/ 64 <1200000000>;
-+			opp-microvolt = <750000 750000 950000>;
-+			clock-latency-ns = <40000>;
-+		};
- 		opp-1416000000 {
- 			opp-hz = /bits/ 64 <1416000000>;
--			opp-microvolt = <750000 750000 950000>;
-+			opp-microvolt = <762500 762500 950000>;
- 			clock-latency-ns = <40000>;
- 		};
- 		opp-1608000000 {
-@@ -69,16 +64,6 @@
- 			opp-microvolt = <787500 787500 950000>;
- 			clock-latency-ns = <40000>;
- 		};
--		opp-1800000000 {
--			opp-hz = /bits/ 64 <1800000000>;
--			opp-microvolt = <875000 875000 950000>;
--			clock-latency-ns = <40000>;
--		};
--		opp-2016000000 {
--			opp-hz = /bits/ 64 <2016000000>;
--			opp-microvolt = <950000 950000 950000>;
--			clock-latency-ns = <40000>;
--		};
- 	};
+@@ -73,7 +90,8 @@ void kernel_fpu_end(void)
  
- 	gpu_opp_table: opp-table {
-@@ -104,10 +89,6 @@
- 			opp-hz = /bits/ 64 <700000000>;
- 			opp-microvolt = <750000 750000 850000>;
- 		};
--		opp-850000000 {
--			opp-hz = /bits/ 64 <800000000>;
--			opp-microvolt = <787500 787500 850000>;
--		};
- 	};
- };
+ 	this_cpu_write(in_kernel_fpu, false);
+ 
+-	preempt_enable();
++	if (!irqs_disabled())
++		fpregs_unlock();
+ }
+ EXPORT_SYMBOL_GPL(kernel_fpu_end);
  
 
 
