@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5AB24728A;
-	Tue, 20 May 2025 14:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A132512E5;
+	Tue, 20 May 2025 14:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750736; cv=none; b=kjOvlpqUZ+nbtt4+jm055a/yx3NUgq2pqdxoX1NmwVfCOOJucQaKgq0XF1UsF5nTA8oY6boVPP5Yemv3VqWwt1E2NIPsJiasA2eSYxSB7CRTqvPOGAwHluajhl1hJW5J9Y4e+tcbp3ZN9/jmmHM35G29WhA+WxJr72kGaWnZ8s0=
+	t=1747750739; cv=none; b=pyrwqsb1gyFBS/z1o6Zkk8fIPqnFQsM2zmAD6Mts4tbNdipK7cNl/fhDEzgZ7CZe6iKaTvEpYgLt5jhoeytKtGxiKh9DoFGUnwqy7OEbNcfG9xpr5ZsPyvGuYAmP5BQCAhESP9uZsox8B4rWftxnkTKOjep80l53aPq/V/YLUSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750736; c=relaxed/simple;
-	bh=fm5dFFw6En3PE+hRrJUOrViv13fy8Zs2qTHyhl+vzo4=;
+	s=arc-20240116; t=1747750739; c=relaxed/simple;
+	bh=kEtp4KiAVcH85sfCaTtSl/ZS4fhQCkjcKW4qKyrcQ18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LFHQK3lE5j1vhTCVNtnz82tBOLLDZOSMMfWNyKo8SyyMP/OpincMgWVGa+ZJ2ETCVnOo7CVo1op9zJrgJylAHo5kY4mCmUzmEXc9LR2/ELg5qHta8a2urPbIb/ReZ8Sc1OXsWxEyndiHYqLbr6AAX128C0z96rZUAD98M0CWWcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/t9L7UZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cnzliu7dCEvN56DaoeB9EkG4d6AccHvGKfDdveDlDmCYLO0qR0sJW7hOh13IIk/lixY120e1i8RBo2PWSijZXyJej+L6CzpxptNWwU69r3zuA70Vzo4BWtvL0PEW3mvsimaa2T5VNMW8bPyMbP7IsHR37kI4XFvhcnPUyjuQpWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Et90fBTM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/t9L7UZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB07C4CEE9;
-	Tue, 20 May 2025 14:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Et90fBTM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3504AC4CEE9;
+	Tue, 20 May 2025 14:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750736;
-	bh=fm5dFFw6En3PE+hRrJUOrViv13fy8Zs2qTHyhl+vzo4=;
+	s=korg; t=1747750739;
+	bh=kEtp4KiAVcH85sfCaTtSl/ZS4fhQCkjcKW4qKyrcQ18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q/t9L7UZr+YI0ynTfUnia/9z3RucCpmRnDZmbNSUDgbFc9ZbfPdUhsEVwbLgvZMrq
-	 fUrDL8LqCXlwqZYwtHY0mAPHQjru7mRCArKo9mXKKXCBVBODGZatPHkF61v5CvpRF4
-	 1fKrQl9iJoZg3JEE+fTNUy0alJ2yXHs/ScolJkLk=
+	b=Et90fBTMqFTHcF6DqeygNuNhMyqDy9dI19aGHAt3NIX4dskUV8tq3NDWKpgBJ/Oh/
+	 7htI6DWkubguUZzkB3U7dOrZ52790D1eyzGvM3d6R8qtivf68l0aD/bcpchKAgQlaJ
+	 Ed9IhV2EqCN5J/mr/qJh+h+KD2j6jXGMzszmMh1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Pankaj Gupta <pankaj.gupta@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Srikanth Aithal <sraithal@amd.com>
-Subject: [PATCH 6.14 104/145] x86/sev: Do not touch VMSA pages during SNP guest memory kdump
-Date: Tue, 20 May 2025 15:51:14 +0200
-Message-ID: <20250520125814.636358254@linuxfoundation.org>
+	=?UTF-8?q?Michel=20D=C3=A4nzer?= <michel.daenzer@mailbox.org>,
+	Melissa Wen <mwen@igalia.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.14 078/145] Revert "drm/amd/display: Hardware cursor changes color when switched to software cursor"
+Date: Tue, 20 May 2025 15:50:48 +0200
+Message-ID: <20250520125813.640658311@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -47,337 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ashish Kalra <ashish.kalra@amd.com>
+From: Melissa Wen <mwen@igalia.com>
 
-commit d2062cc1b1c367d5d019f595ef860159e1301351 upstream.
+commit fe14c0f096f58d2569e587e9f4b05d772272bbb4 upstream.
 
-When kdump is running makedumpfile to generate vmcore and dump SNP guest
-memory it touches the VMSA page of the vCPU executing kdump.
+This reverts commit 272e6aab14bbf98d7a06b2b1cd6308a02d4a10a1.
 
-It then results in unrecoverable #NPF/RMP faults as the VMSA page is
-marked busy/in-use when the vCPU is running and subsequently a causes
-guest softlockup/hang.
+Applying degamma curve to the cursor by default breaks Linux userspace
+expectation.
 
-Additionally, other APs may be halted in guest mode and their VMSA pages
-are marked busy and touching these VMSA pages during guest memory dump
-will also cause #NPF.
+On Linux, AMD display manager enables cursor degamma ROM just for
+implict sRGB on HW versions where degamma is split into two blocks:
+degamma ROM for pre-defined TFs and `gamma correction` for user/custom
+curves, and degamma ROM settings doesn't apply to cursor plane.
 
-Issue AP_DESTROY GHCB calls on other APs to ensure they are kicked out
-of guest mode and then clear the VMSA bit on their VMSA pages.
-
-If the vCPU running kdump is an AP, mark it's VMSA page as offline to
-ensure that makedumpfile excludes that page while dumping guest memory.
-
-Fixes: 3074152e56c9 ("x86/sev: Convert shared memory back to private on kexec")
-Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Tested-by: Srikanth Aithal <sraithal@amd.com>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/1513
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2803
+Reported-by: Michel Dänzer <michel.daenzer@mailbox.org>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4144
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit f6a305d4748801a6c799ae9375b2ecff3aed094b)
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/20250428214151.155464-1-Ashish.Kalra@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/coco/sev/core.c |  244 ++++++++++++++++++++++++++++++-----------------
- 1 file changed, 158 insertions(+), 86 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp_cm.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/x86/coco/sev/core.c
-+++ b/arch/x86/coco/sev/core.c
-@@ -959,6 +959,102 @@ void snp_accept_memory(phys_addr_t start
- 	set_pages_state(vaddr, npages, SNP_PAGE_STATE_PRIVATE);
- }
+--- a/drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp_cm.c
++++ b/drivers/gpu/drm/amd/display/dc/dpp/dcn401/dcn401_dpp_cm.c
+@@ -120,10 +120,11 @@ void dpp401_set_cursor_attributes(
+ 	enum dc_cursor_color_format color_format = cursor_attributes->color_format;
+ 	int cur_rom_en = 0;
  
-+static int vmgexit_ap_control(u64 event, struct sev_es_save_area *vmsa, u32 apic_id)
-+{
-+	bool create = event != SVM_VMGEXIT_AP_DESTROY;
-+	struct ghcb_state state;
-+	unsigned long flags;
-+	struct ghcb *ghcb;
-+	int ret = 0;
-+
-+	local_irq_save(flags);
-+
-+	ghcb = __sev_get_ghcb(&state);
-+
-+	vc_ghcb_invalidate(ghcb);
-+
-+	if (create)
-+		ghcb_set_rax(ghcb, vmsa->sev_features);
-+
-+	ghcb_set_sw_exit_code(ghcb, SVM_VMGEXIT_AP_CREATION);
-+	ghcb_set_sw_exit_info_1(ghcb,
-+				((u64)apic_id << 32)	|
-+				((u64)snp_vmpl << 16)	|
-+				event);
-+	ghcb_set_sw_exit_info_2(ghcb, __pa(vmsa));
-+
-+	sev_es_wr_ghcb_msr(__pa(ghcb));
-+	VMGEXIT();
-+
-+	if (!ghcb_sw_exit_info_1_is_valid(ghcb) ||
-+	    lower_32_bits(ghcb->save.sw_exit_info_1)) {
-+		pr_err("SNP AP %s error\n", (create ? "CREATE" : "DESTROY"));
-+		ret = -EINVAL;
-+	}
-+
-+	__sev_put_ghcb(&state);
-+
-+	local_irq_restore(flags);
-+
-+	return ret;
-+}
-+
-+static int snp_set_vmsa(void *va, void *caa, int apic_id, bool make_vmsa)
-+{
-+	int ret;
-+
-+	if (snp_vmpl) {
-+		struct svsm_call call = {};
-+		unsigned long flags;
-+
-+		local_irq_save(flags);
-+
-+		call.caa = this_cpu_read(svsm_caa);
-+		call.rcx = __pa(va);
-+
-+		if (make_vmsa) {
-+			/* Protocol 0, Call ID 2 */
-+			call.rax = SVSM_CORE_CALL(SVSM_CORE_CREATE_VCPU);
-+			call.rdx = __pa(caa);
-+			call.r8  = apic_id;
-+		} else {
-+			/* Protocol 0, Call ID 3 */
-+			call.rax = SVSM_CORE_CALL(SVSM_CORE_DELETE_VCPU);
+-	// DCN4 should always do Cursor degamma for Cursor Color modes
+ 	if (color_format == CURSOR_MODE_COLOR_PRE_MULTIPLIED_ALPHA ||
+ 		color_format == CURSOR_MODE_COLOR_UN_PRE_MULTIPLIED_ALPHA) {
+-		cur_rom_en = 1;
++		if (cursor_attributes->attribute_flags.bits.ENABLE_CURSOR_DEGAMMA) {
++			cur_rom_en = 1;
 +		}
-+
-+		ret = svsm_perform_call_protocol(&call);
-+
-+		local_irq_restore(flags);
-+	} else {
-+		/*
-+		 * If the kernel runs at VMPL0, it can change the VMSA
-+		 * bit for a page using the RMPADJUST instruction.
-+		 * However, for the instruction to succeed it must
-+		 * target the permissions of a lesser privileged (higher
-+		 * numbered) VMPL level, so use VMPL1.
-+		 */
-+		u64 attrs = 1;
-+
-+		if (make_vmsa)
-+			attrs |= RMPADJUST_VMSA_PAGE_BIT;
-+
-+		ret = rmpadjust((unsigned long)va, RMP_PG_SIZE_4K, attrs);
-+	}
-+
-+	return ret;
-+}
-+
-+static void snp_cleanup_vmsa(struct sev_es_save_area *vmsa, int apic_id)
-+{
-+	int err;
-+
-+	err = snp_set_vmsa(vmsa, NULL, apic_id, false);
-+	if (err)
-+		pr_err("clear VMSA page failed (%u), leaking page\n", err);
-+	else
-+		free_page((unsigned long)vmsa);
-+}
-+
- static void set_pte_enc(pte_t *kpte, int level, void *va)
- {
- 	struct pte_enc_desc d = {
-@@ -1055,6 +1151,65 @@ void snp_kexec_begin(void)
- 		pr_warn("Failed to stop shared<->private conversions\n");
- }
- 
-+/*
-+ * Shutdown all APs except the one handling kexec/kdump and clearing
-+ * the VMSA tag on AP's VMSA pages as they are not being used as
-+ * VMSA page anymore.
-+ */
-+static void shutdown_all_aps(void)
-+{
-+	struct sev_es_save_area *vmsa;
-+	int apic_id, this_cpu, cpu;
-+
-+	this_cpu = get_cpu();
-+
-+	/*
-+	 * APs are already in HLT loop when enc_kexec_finish() callback
-+	 * is invoked.
-+	 */
-+	for_each_present_cpu(cpu) {
-+		vmsa = per_cpu(sev_vmsa, cpu);
-+
-+		/*
-+		 * The BSP or offlined APs do not have guest allocated VMSA
-+		 * and there is no need  to clear the VMSA tag for this page.
-+		 */
-+		if (!vmsa)
-+			continue;
-+
-+		/*
-+		 * Cannot clear the VMSA tag for the currently running vCPU.
-+		 */
-+		if (this_cpu == cpu) {
-+			unsigned long pa;
-+			struct page *p;
-+
-+			pa = __pa(vmsa);
-+			/*
-+			 * Mark the VMSA page of the running vCPU as offline
-+			 * so that is excluded and not touched by makedumpfile
-+			 * while generating vmcore during kdump.
-+			 */
-+			p = pfn_to_online_page(pa >> PAGE_SHIFT);
-+			if (p)
-+				__SetPageOffline(p);
-+			continue;
-+		}
-+
-+		apic_id = cpuid_to_apicid[cpu];
-+
-+		/*
-+		 * Issue AP destroy to ensure AP gets kicked out of guest mode
-+		 * to allow using RMPADJUST to remove the VMSA tag on it's
-+		 * VMSA page.
-+		 */
-+		vmgexit_ap_control(SVM_VMGEXIT_AP_DESTROY, vmsa, apic_id);
-+		snp_cleanup_vmsa(vmsa, apic_id);
-+	}
-+
-+	put_cpu();
-+}
-+
- void snp_kexec_finish(void)
- {
- 	struct sev_es_runtime_data *data;
-@@ -1069,6 +1224,8 @@ void snp_kexec_finish(void)
- 	if (!IS_ENABLED(CONFIG_KEXEC_CORE))
- 		return;
- 
-+	shutdown_all_aps();
-+
- 	unshare_all_memory();
- 
- 	/*
-@@ -1090,51 +1247,6 @@ void snp_kexec_finish(void)
- 	}
- }
- 
--static int snp_set_vmsa(void *va, void *caa, int apic_id, bool make_vmsa)
--{
--	int ret;
--
--	if (snp_vmpl) {
--		struct svsm_call call = {};
--		unsigned long flags;
--
--		local_irq_save(flags);
--
--		call.caa = this_cpu_read(svsm_caa);
--		call.rcx = __pa(va);
--
--		if (make_vmsa) {
--			/* Protocol 0, Call ID 2 */
--			call.rax = SVSM_CORE_CALL(SVSM_CORE_CREATE_VCPU);
--			call.rdx = __pa(caa);
--			call.r8  = apic_id;
--		} else {
--			/* Protocol 0, Call ID 3 */
--			call.rax = SVSM_CORE_CALL(SVSM_CORE_DELETE_VCPU);
--		}
--
--		ret = svsm_perform_call_protocol(&call);
--
--		local_irq_restore(flags);
--	} else {
--		/*
--		 * If the kernel runs at VMPL0, it can change the VMSA
--		 * bit for a page using the RMPADJUST instruction.
--		 * However, for the instruction to succeed it must
--		 * target the permissions of a lesser privileged (higher
--		 * numbered) VMPL level, so use VMPL1.
--		 */
--		u64 attrs = 1;
--
--		if (make_vmsa)
--			attrs |= RMPADJUST_VMSA_PAGE_BIT;
--
--		ret = rmpadjust((unsigned long)va, RMP_PG_SIZE_4K, attrs);
--	}
--
--	return ret;
--}
--
- #define __ATTR_BASE		(SVM_SELECTOR_P_MASK | SVM_SELECTOR_S_MASK)
- #define INIT_CS_ATTRIBS		(__ATTR_BASE | SVM_SELECTOR_READ_MASK | SVM_SELECTOR_CODE_MASK)
- #define INIT_DS_ATTRIBS		(__ATTR_BASE | SVM_SELECTOR_WRITE_MASK)
-@@ -1166,24 +1278,10 @@ static void *snp_alloc_vmsa_page(int cpu
- 	return page_address(p + 1);
- }
- 
--static void snp_cleanup_vmsa(struct sev_es_save_area *vmsa, int apic_id)
--{
--	int err;
--
--	err = snp_set_vmsa(vmsa, NULL, apic_id, false);
--	if (err)
--		pr_err("clear VMSA page failed (%u), leaking page\n", err);
--	else
--		free_page((unsigned long)vmsa);
--}
--
- static int wakeup_cpu_via_vmgexit(u32 apic_id, unsigned long start_ip)
- {
- 	struct sev_es_save_area *cur_vmsa, *vmsa;
--	struct ghcb_state state;
- 	struct svsm_ca *caa;
--	unsigned long flags;
--	struct ghcb *ghcb;
- 	u8 sipi_vector;
- 	int cpu, ret;
- 	u64 cr4;
-@@ -1297,33 +1395,7 @@ static int wakeup_cpu_via_vmgexit(u32 ap
  	}
  
- 	/* Issue VMGEXIT AP Creation NAE event */
--	local_irq_save(flags);
--
--	ghcb = __sev_get_ghcb(&state);
--
--	vc_ghcb_invalidate(ghcb);
--	ghcb_set_rax(ghcb, vmsa->sev_features);
--	ghcb_set_sw_exit_code(ghcb, SVM_VMGEXIT_AP_CREATION);
--	ghcb_set_sw_exit_info_1(ghcb,
--				((u64)apic_id << 32)	|
--				((u64)snp_vmpl << 16)	|
--				SVM_VMGEXIT_AP_CREATE);
--	ghcb_set_sw_exit_info_2(ghcb, __pa(vmsa));
--
--	sev_es_wr_ghcb_msr(__pa(ghcb));
--	VMGEXIT();
--
--	if (!ghcb_sw_exit_info_1_is_valid(ghcb) ||
--	    lower_32_bits(ghcb->save.sw_exit_info_1)) {
--		pr_err("SNP AP Creation error\n");
--		ret = -EINVAL;
--	}
--
--	__sev_put_ghcb(&state);
--
--	local_irq_restore(flags);
--
--	/* Perform cleanup if there was an error */
-+	ret = vmgexit_ap_control(SVM_VMGEXIT_AP_CREATE, vmsa, apic_id);
- 	if (ret) {
- 		snp_cleanup_vmsa(vmsa, apic_id);
- 		vmsa = NULL;
+ 	REG_UPDATE_3(CURSOR0_CONTROL,
 
 
