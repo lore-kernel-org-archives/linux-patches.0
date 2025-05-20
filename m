@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441D9253F25;
-	Tue, 20 May 2025 14:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FFE24E4A4;
+	Tue, 20 May 2025 14:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747750470; cv=none; b=qO6E43JWESISEAOYK5xyxWw0qKd0wa4xHwCOZ2pt+fqNQRbVVSix1b/2z5IaCyBlfDs/4BxJoTDpi5/PscFHa9oXerEKC63J4auHCLFGJs7jMG98dcGWBMb9VoUGpdJEInlBrAgGCiDx0BiEtFZlBxwksbXTAGVOLT1h4ufPjTY=
+	t=1747750473; cv=none; b=GBF/UBFK8Ofq+g894NqefhEou9g+NtwuywqODpOdAJ6UlfIb2gdWDMkcn74ijPduIWIR+NNOCKwh0tjyBPbvgr+TiYde/qKXPnK/v8pEn7qaEAV6W+wEVg7aQfRsk7JSeGFZvrQZuersopr5Es3Jq8rn6dVFtPXruLN3SoEwH90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747750470; c=relaxed/simple;
-	bh=3pXymaAZX/YIEUkfApLWcZaimpsgjdmT3DQEI3H3qVM=;
+	s=arc-20240116; t=1747750473; c=relaxed/simple;
+	bh=eyJ7OLbK7eODAd0X8GHMwJt9WDH5HH/xHhkj+Nxafto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S2AU+aQDj4rGpANle1gK9xzcN9OtnXIIApdkuEegX2CT5pvy706NRNh03AYtz7Jiz0EdUNagUwoxfvhJbZVmxfzTZMmWUCIihQQisqPBPAgCqbKt0OKo7QdBmfuFw5ggaXqucRIL4Gd/OVUdKs2n0VJ2AJJFGC3NvtqCRCVHiw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2tI+93w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RwryrQLdnmBBqGqISjrxungTpB9D0VZkXxb7Q0yH8Q12YE4Q62NLMqvKXJSOM06LjefOMrqSgFG1VojwaIJOZmTwXyWTQkhbhjLgx0NXuAyk/gOMSVIOPhButlJZhv+U01GgjvOVuEOJFF64a4l7y6ZovYMF8QKH/hsUHx+gKpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M68a7b0A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2tI+93w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78EA1C4CEE9;
-	Tue, 20 May 2025 14:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M68a7b0A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ABD0C4CEE9;
+	Tue, 20 May 2025 14:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747750470;
-	bh=3pXymaAZX/YIEUkfApLWcZaimpsgjdmT3DQEI3H3qVM=;
+	s=korg; t=1747750472;
+	bh=eyJ7OLbK7eODAd0X8GHMwJt9WDH5HH/xHhkj+Nxafto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e2tI+93wfUTEFSl24u/J64llOFCcjBaPrDUBfWxxDyfOHreX+qpoimIBGvwhRv2VU
-	 QocCx9mC5L3OONOCgMALLnYG0XIE2IW+lCYC7g9k4ASJ76AViCeYz4irB+ZXaKfA1T
-	 uXkQgOQaSABmg0G52U999pvCX7MlvKuVsVaoQ658=
+	b=M68a7b0Ac2kSgM/CV65vvkgVm6ite3xHsBapJKuMq45kXtopz+Vc0BBKprGdYma0o
+	 Wf9rJxxpBJvLFCYAoXBfXr9Q9yehKNfvwunxfSI31lTDHg4izB2Rbo9QSVQ/Add16J
+	 ty2YxUIExDO/8+Xitc7PuSqF0bPNhCAWoFg1GnD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	liuyi <liuy22@mails.tsinghua.edu.cn>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Daisuke Matsuda <matsuda-daisuke@fujitsu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 019/145] iio: adc: ad7606: check for NULL before calling sw_mode_config()
-Date: Tue, 20 May 2025 15:49:49 +0200
-Message-ID: <20250520125811.306905853@linuxfoundation.org>
+Subject: [PATCH 6.14 020/145] RDMA/rxe: Fix slab-use-after-free Read in rxe_queue_cleanup bug
+Date: Tue, 20 May 2025 15:49:50 +0200
+Message-ID: <20250520125811.351685207@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125810.535475500@linuxfoundation.org>
 References: <20250520125810.535475500@linuxfoundation.org>
@@ -47,60 +47,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
 
-[ Upstream commit 5257d80e22bf27009d6742e4c174f42cfe54e425 ]
+[ Upstream commit f81b33582f9339d2dc17c69b92040d3650bb4bae ]
 
-Check that the sw_mode_config function pointer is not NULL before
-calling it. Not all buses define this callback, which resulted in a NULL
-pointer dereference.
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x7d/0xa0 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0xcf/0x610 mm/kasan/report.c:489
+ kasan_report+0xb5/0xe0 mm/kasan/report.c:602
+ rxe_queue_cleanup+0xd0/0xe0 drivers/infiniband/sw/rxe/rxe_queue.c:195
+ rxe_cq_cleanup+0x3f/0x50 drivers/infiniband/sw/rxe/rxe_cq.c:132
+ __rxe_cleanup+0x168/0x300 drivers/infiniband/sw/rxe/rxe_pool.c:232
+ rxe_create_cq+0x22e/0x3a0 drivers/infiniband/sw/rxe/rxe_verbs.c:1109
+ create_cq+0x658/0xb90 drivers/infiniband/core/uverbs_cmd.c:1052
+ ib_uverbs_create_cq+0xc7/0x120 drivers/infiniband/core/uverbs_cmd.c:1095
+ ib_uverbs_write+0x969/0xc90 drivers/infiniband/core/uverbs_main.c:679
+ vfs_write fs/read_write.c:677 [inline]
+ vfs_write+0x26a/0xcc0 fs/read_write.c:659
+ ksys_write+0x1b8/0x200 fs/read_write.c:731
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xaa/0x1b0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Fixes: e571c1902116 ("iio: adc: ad7606: move scale_setup as function pointer on chip-info")
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250318-iio-adc-ad7606-improvements-v2-1-4b605427774c@baylibre.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+In the function rxe_create_cq, when rxe_cq_from_init fails, the function
+rxe_cleanup will be called to handle the allocated resources. In fact,
+some memory resources have already been freed in the function
+rxe_cq_from_init. Thus, this problem will occur.
+
+The solution is to let rxe_cleanup do all the work.
+
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Link: https://paste.ubuntu.com/p/tJgC42wDf6/
+Tested-by: liuyi <liuy22@mails.tsinghua.edu.cn>
+Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Link: https://patch.msgid.link/20250412075714.3257358-1-yanjun.zhu@linux.dev
+Reviewed-by: Daisuke Matsuda <matsuda-daisuke@fujitsu.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7606.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_cq.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/iio/adc/ad7606.c b/drivers/iio/adc/ad7606.c
-index 7985570ed1521..0339e27f92c32 100644
---- a/drivers/iio/adc/ad7606.c
-+++ b/drivers/iio/adc/ad7606.c
-@@ -1228,9 +1228,11 @@ static int ad7616_sw_mode_setup(struct iio_dev *indio_dev)
- 	st->write_scale = ad7616_write_scale_sw;
- 	st->write_os = &ad7616_write_os_sw;
+diff --git a/drivers/infiniband/sw/rxe/rxe_cq.c b/drivers/infiniband/sw/rxe/rxe_cq.c
+index fec87c9030abd..fffd144d509eb 100644
+--- a/drivers/infiniband/sw/rxe/rxe_cq.c
++++ b/drivers/infiniband/sw/rxe/rxe_cq.c
+@@ -56,11 +56,8 @@ int rxe_cq_from_init(struct rxe_dev *rxe, struct rxe_cq *cq, int cqe,
  
--	ret = st->bops->sw_mode_config(indio_dev);
--	if (ret)
--		return ret;
-+	if (st->bops->sw_mode_config) {
-+		ret = st->bops->sw_mode_config(indio_dev);
-+		if (ret)
-+			return ret;
-+	}
+ 	err = do_mmap_info(rxe, uresp ? &uresp->mi : NULL, udata,
+ 			   cq->queue->buf, cq->queue->buf_size, &cq->queue->ip);
+-	if (err) {
+-		vfree(cq->queue->buf);
+-		kfree(cq->queue);
++	if (err)
+ 		return err;
+-	}
  
- 	/* Activate Burst mode and SEQEN MODE */
- 	return ad7606_write_mask(st, AD7616_CONFIGURATION_REGISTER,
-@@ -1261,6 +1263,9 @@ static int ad7606b_sw_mode_setup(struct iio_dev *indio_dev)
- 	st->write_scale = ad7606_write_scale_sw;
- 	st->write_os = &ad7606_write_os_sw;
- 
-+	if (!st->bops->sw_mode_config)
-+		return 0;
-+
- 	return st->bops->sw_mode_config(indio_dev);
- }
+ 	cq->is_user = uresp;
  
 -- 
 2.39.5
