@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126CE246335;
-	Tue, 20 May 2025 13:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA2A24501D;
+	Tue, 20 May 2025 13:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749233; cv=none; b=evEJwwluXT6YMAvvmuUKAZ1pi7FNwPc90EDXfYWYzHVXXhHni1zvbaT/rgVI1g28TV74/q2XgYlL+x9gIwkEDmcmmWestr4hww8MHxcSBp7e+tQT3OPOIzqCql8pHHfs+RGHhPYY8DzMgpqZo2+bl0OcopaEoGZO2wODfc40D2I=
+	t=1747749235; cv=none; b=NMxPj4whyaxFirLWHUUAsw9w/bppPPbtUUSQJxv7tTkF4vP8/qehZw8Ghw2cBr6NJakEXU/K3j/qJZcfS540x4g/liTpFofN2JlHbWYPuK7gMEgVGG2q8v32l/VCyMC3ErA2k1mKkk4iQXwQCjPmdzBZrBd7i+cDlMLx0PDdltg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749233; c=relaxed/simple;
-	bh=9vxIbJsW3JoD5mox7TBu8b4V68sPF8uLkIwY1QeGkY0=;
+	s=arc-20240116; t=1747749235; c=relaxed/simple;
+	bh=fx7JcI1Bof8dBLqtRY2epE+KCQU3h1w9zW7hHbd8vV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EOAPf/+RyEMRLYdeOwbB+CV7aE0QatoDoxjzFByJdMAI/k3jAwZIFMrVLe2i7Z8eEHTpgG+XXmcmNx0aMu7ZVfVkNJjjePsGvXS+xFeE0cDqmbbzsOfiCyFNenkJPtFYZARb8vaGTufeuSL+D49oDHO5Ua3eZSwGY5+1k9U477E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mc/t0diT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ca8f0KroM3GtqBy5PHAcDWdKfZwTObsgOY2DMktpqhInpYfLpGIAyVQFbK4mP3vKBjfqj4EANc262O+5GPElvHmgDoeg10VcIwZroM+M514Q2ytHhYBNFkUQ75TrC1vmCrluW5zftnPnbL2VbvF0UB7ndvVjrzFe6UM6C74Zj+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mx6zs+e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mc/t0diT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06230C4CEE9;
-	Tue, 20 May 2025 13:53:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mx6zs+e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148BCC4CEE9;
+	Tue, 20 May 2025 13:53:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749232;
-	bh=9vxIbJsW3JoD5mox7TBu8b4V68sPF8uLkIwY1QeGkY0=;
+	s=korg; t=1747749235;
+	bh=fx7JcI1Bof8dBLqtRY2epE+KCQU3h1w9zW7hHbd8vV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mc/t0diTsUCL1RmV5muhtgPsKuyzdFovMe7mlmVayH33CoeplDuZFJst9JK5XMB3p
-	 UNazeVM9oWy0gdxPB6CWRn2hRU009hTIDvuMSUmrWtlAws+IwQ4BXN0NOBQmsazR8v
-	 Fms7W7RTYlySCVIcAtKz7Dbv+xPEHD2jH7pi+9j4=
+	b=1mx6zs+etNi1goFOko2uJgaBTeAy3DFJLYOS6vUCkKOQ+uXPHeTQ0uOX1V8aIha1+
+	 62rOHS7LLKHR3OlPo3ioInZkFPpOVVf00vxzd/UcCnem6gdO6+5azdr9P9jVw0GoNr
+	 NUyQyKfKUPXjeTkVF0bTLNc8p4VBG8xDja25ibgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathan.lynch@amd.com>,
+	Ma Ke <make24@iscas.ac.cn>,
+	Thierry Reding <treding@nvidia.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 30/59] dmaengine: Revert "dmaengine: dmatest: Fix dmatest waiting less when interrupted"
-Date: Tue, 20 May 2025 15:50:21 +0200
-Message-ID: <20250520125755.055077179@linuxfoundation.org>
+Subject: [PATCH 5.15 39/59] phy: Fix error handling in tegra_xusb_port_init
+Date: Tue, 20 May 2025 15:50:30 +0200
+Message-ID: <20250520125755.403941749@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
 References: <20250520125753.836407405@linuxfoundation.org>
@@ -50,51 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Lynch <nathan.lynch@amd.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit df180e65305f8c1e020d54bfc2132349fd693de1 upstream.
+commit b2ea5f49580c0762d17d80d8083cb89bc3acf74f upstream.
 
-Several issues with this change:
+If device_add() fails, do not use device_unregister() for error
+handling. device_unregister() consists two functions: device_del() and
+put_device(). device_unregister() should only be called after
+device_add() succeeded because device_del() undoes what device_add()
+does if successful. Change device_unregister() to put_device() call
+before returning from the function.
 
-* The analysis is flawed and it's unclear what problem is being
-  fixed. There is no difference between wait_event_freezable_timeout()
-  and wait_event_timeout() with respect to device interrupts. And of
-  course "the interrupt notifying the finish of an operation happens
-  during wait_event_freezable_timeout()" -- that's how it's supposed
-  to work.
+As comment of device_add() says, 'if device_add() succeeds, you should
+call device_del() when you want to get rid of it. If device_add() has
+not succeeded, use only put_device() to drop the reference count'.
 
-* The link at the "Closes:" tag appears to be an unrelated
-  use-after-free in idxd.
+Found by code review.
 
-* It introduces a regression: dmatest threads are meant to be
-  freezable and this change breaks that.
-
-See discussion here:
-https://lore.kernel.org/dmaengine/878qpa13fe.fsf@AUSNATLYNCH.amd.com/
-
-Fixes: e87ca16e9911 ("dmaengine: dmatest: Fix dmatest waiting less when interrupted")
-Signed-off-by: Nathan Lynch <nathan.lynch@amd.com>
-Link: https://lore.kernel.org/r/20250403-dmaengine-dmatest-revert-waiting-less-v1-1-8227c5a3d7c8@amd.com
+Cc: stable@vger.kernel.org
+Fixes: 53d2a715c240 ("phy: Add Tegra XUSB pad controller support")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20250303072739.3874987-1-make24@iscas.ac.cn
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/dmatest.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/phy/tegra/xusb.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/dma/dmatest.c
-+++ b/drivers/dma/dmatest.c
-@@ -828,9 +828,9 @@ static int dmatest_func(void *data)
- 		} else {
- 			dma_async_issue_pending(chan);
+--- a/drivers/phy/tegra/xusb.c
++++ b/drivers/phy/tegra/xusb.c
+@@ -542,16 +542,16 @@ static int tegra_xusb_port_init(struct t
  
--			wait_event_timeout(thread->done_wait,
--					   done->done,
--					   msecs_to_jiffies(params->timeout));
-+			wait_event_freezable_timeout(thread->done_wait,
-+					done->done,
-+					msecs_to_jiffies(params->timeout));
+ 	err = dev_set_name(&port->dev, "%s-%u", name, index);
+ 	if (err < 0)
+-		goto unregister;
++		goto put_device;
  
- 			status = dma_async_is_tx_complete(chan, cookie, NULL,
- 							  NULL);
+ 	err = device_add(&port->dev);
+ 	if (err < 0)
+-		goto unregister;
++		goto put_device;
+ 
+ 	return 0;
+ 
+-unregister:
+-	device_unregister(&port->dev);
++put_device:
++	put_device(&port->dev);
+ 	return err;
+ }
+ 
 
 
