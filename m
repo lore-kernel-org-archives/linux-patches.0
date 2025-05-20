@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFD0243378;
-	Tue, 20 May 2025 13:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B3D13635C;
+	Tue, 20 May 2025 13:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747749467; cv=none; b=BGY90grqwP/SQfo5+jjCYlwh2f4wvAaxfxJNoxJyHeEheI0dPFNRhQ2j9Kc9Da85sGvDTqGXV57Kd3QCFyFopunuVL9OVwkvDJ+nNxlhMV5/0tzvJHwJY6wsznH79h3fNoh8BZBthyX1aW0AAG9Ahetzi6r8E1GBfb8yRn9KeZk=
+	t=1747749470; cv=none; b=m3wb5QgahCAoOF7ZtNiJKXRR2Ih64Gnr5xiWFHNCEWUixiaFRCCYgSDfNLTVRPm6e9ZmFffO2rf8FbT4Jvj6lqqwcfbBse+B28r5y5b6MK2RrMsgvwrtkcyUQGv0sCA00Mn3zV8jWVKrLfpIeOBslzoUWFGwgsK/6e28ZxQ7N5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747749467; c=relaxed/simple;
-	bh=EXd6WAvY5Xp6I4xcvyZqZn7ZHpmxMpgf/w6rjosoKJA=;
+	s=arc-20240116; t=1747749470; c=relaxed/simple;
+	bh=VWO44E/VUx01JAK+5EnBoP6U473XsgTa8ObdYZ4kiaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wfg5fGQUQriJFqAPUW6pqJLD5+L7BQLlk+BbC6d6Eo8qLLRfIbLZM/84yPsHnN37GK0ZD4mswfd8O8OB0ndyN0bq6zpOyfbqJ4o7w6rSLX+hzNGThr9hv0hGOUzolvnBZpk0qsGKcSTb+qlNopSzQbSlhqNM/oacrSGFX5BxqxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdHz9FcS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M6SAwe8bSmK2geK7L/wuxqxspJxKP8K928f83ehDGHlvf7wno1USHYoeBBupIxkyZBk/XlESbtGUtLlwdhQeeRa5nM4c11nqb6jFF65t8IuKpwMNiEkOCgm8syJZl9Czl/Iz4d+DCiO62tHrX7+3LrjtjFsffP85mbCIbxRZhXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NpQeF8c8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdHz9FcS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEDF5C4CEE9;
-	Tue, 20 May 2025 13:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NpQeF8c8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3357C4CEE9;
+	Tue, 20 May 2025 13:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1747749467;
-	bh=EXd6WAvY5Xp6I4xcvyZqZn7ZHpmxMpgf/w6rjosoKJA=;
+	s=korg; t=1747749470;
+	bh=VWO44E/VUx01JAK+5EnBoP6U473XsgTa8ObdYZ4kiaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mdHz9FcSygn96IRVFc2tmVlnWo/3flIZu/mROpXnjvqfU2e/nzx3vKAAFOAWETR3y
-	 2nk9R2bDAS5cUEVC1y9m5U574wE5LeYvGtKVPlKr9B1vREAOTE5axBkcjHZ3BfvB1S
-	 VQJbP5FpLaV4yMbX9rp/wJPA+ocz9Pqi3a+YrhZw=
+	b=NpQeF8c8j6D/57jVhfQeJw1ltjHXDP3kZ7UmgRVMAXrp7DIyZHlWHyHIO6/tNCk8U
+	 Vy2b+fm8tARpniR4xFS5YPf1yZ8zexlh4aKGeWIiMPtRVsbwfIwgGa3VpnYhvWpOwi
+	 19/q+8EphPWlKe/sicswzYL/NAe0UAr4fq10ZUpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 54/97] Drivers: hv: vmbus: Remove vmbus_sendpacket_pagebuffer()
-Date: Tue, 20 May 2025 15:50:19 +0200
-Message-ID: <20250520125802.775392855@linuxfoundation.org>
+	pengdonglin <dolinux.peng@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 55/97] ftrace: Fix preemption accounting for stacktrace trigger command
+Date: Tue, 20 May 2025 15:50:20 +0200
+Message-ID: <20250520125802.814361817@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
 References: <20250520125800.653047540@linuxfoundation.org>
@@ -50,107 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Kelley <mhklinux@outlook.com>
+From: pengdonglin <pengdonglin@xiaomi.com>
 
-commit 45a442fe369e6c4e0b4aa9f63b31c3f2f9e2090e upstream.
+commit e333332657f615ac2b55aa35565c4a882018bbe9 upstream.
 
-With the netvsc driver changed to use vmbus_sendpacket_mpb_desc()
-instead of vmbus_sendpacket_pagebuffer(), the latter has no remaining
-callers. Remove it.
+When using the stacktrace trigger command to trace syscalls, the
+preemption count was consistently reported as 1 when the system call
+event itself had 0 (".").
 
-Cc: <stable@vger.kernel.org> # 6.1.x
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://patch.msgid.link/20250513000604.1396-6-mhklinux@outlook.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+For example:
+
+root@ubuntu22-vm:/sys/kernel/tracing/events/syscalls/sys_enter_read
+$ echo stacktrace > trigger
+$ echo 1 > enable
+
+    sshd-416     [002] .....   232.864910: sys_read(fd: a, buf: 556b1f3221d0, count: 8000)
+    sshd-416     [002] ...1.   232.864913: <stack trace>
+ => ftrace_syscall_enter
+ => syscall_trace_enter
+ => do_syscall_64
+ => entry_SYSCALL_64_after_hwframe
+
+The root cause is that the trace framework disables preemption in __DO_TRACE before
+invoking the trigger callback.
+
+Use the tracing_gen_ctx_dec() that will accommodate for the increase of
+the preemption count in __DO_TRACE when calling the callback. The result
+is the accurate reporting of:
+
+    sshd-410     [004] .....   210.117660: sys_read(fd: 4, buf: 559b725ba130, count: 40000)
+    sshd-410     [004] .....   210.117662: <stack trace>
+ => ftrace_syscall_enter
+ => syscall_trace_enter
+ => do_syscall_64
+ => entry_SYSCALL_64_after_hwframe
+
+Cc: stable@vger.kernel.org
+Fixes: ce33c845b030c ("tracing: Dump stacktrace trigger to the corresponding instance")
+Link: https://lore.kernel.org/20250512094246.1167956-1-dolinux.peng@gmail.com
+Signed-off-by: pengdonglin <dolinux.peng@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hv/channel.c   |   59 -------------------------------------------------
- include/linux/hyperv.h |    7 -----
- 2 files changed, 66 deletions(-)
+ kernel/trace/trace_events_trigger.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hv/channel.c
-+++ b/drivers/hv/channel.c
-@@ -1113,65 +1113,6 @@ int vmbus_sendpacket(struct vmbus_channe
- EXPORT_SYMBOL(vmbus_sendpacket);
+--- a/kernel/trace/trace_events_trigger.c
++++ b/kernel/trace/trace_events_trigger.c
+@@ -1539,7 +1539,7 @@ stacktrace_trigger(struct event_trigger_
+ 	struct trace_event_file *file = data->private_data;
  
- /*
-- * vmbus_sendpacket_pagebuffer - Send a range of single-page buffer
-- * packets using a GPADL Direct packet type. This interface allows you
-- * to control notifying the host. This will be useful for sending
-- * batched data. Also the sender can control the send flags
-- * explicitly.
-- */
--int vmbus_sendpacket_pagebuffer(struct vmbus_channel *channel,
--				struct hv_page_buffer pagebuffers[],
--				u32 pagecount, void *buffer, u32 bufferlen,
--				u64 requestid)
--{
--	int i;
--	struct vmbus_channel_packet_page_buffer desc;
--	u32 descsize;
--	u32 packetlen;
--	u32 packetlen_aligned;
--	struct kvec bufferlist[3];
--	u64 aligned_data = 0;
--
--	if (pagecount > MAX_PAGE_BUFFER_COUNT)
--		return -EINVAL;
--
--	/*
--	 * Adjust the size down since vmbus_channel_packet_page_buffer is the
--	 * largest size we support
--	 */
--	descsize = sizeof(struct vmbus_channel_packet_page_buffer) -
--			  ((MAX_PAGE_BUFFER_COUNT - pagecount) *
--			  sizeof(struct hv_page_buffer));
--	packetlen = descsize + bufferlen;
--	packetlen_aligned = ALIGN(packetlen, sizeof(u64));
--
--	/* Setup the descriptor */
--	desc.type = VM_PKT_DATA_USING_GPA_DIRECT;
--	desc.flags = VMBUS_DATA_PACKET_FLAG_COMPLETION_REQUESTED;
--	desc.dataoffset8 = descsize >> 3; /* in 8-bytes granularity */
--	desc.length8 = (u16)(packetlen_aligned >> 3);
--	desc.transactionid = VMBUS_RQST_ERROR; /* will be updated in hv_ringbuffer_write() */
--	desc.reserved = 0;
--	desc.rangecount = pagecount;
--
--	for (i = 0; i < pagecount; i++) {
--		desc.range[i].len = pagebuffers[i].len;
--		desc.range[i].offset = pagebuffers[i].offset;
--		desc.range[i].pfn	 = pagebuffers[i].pfn;
--	}
--
--	bufferlist[0].iov_base = &desc;
--	bufferlist[0].iov_len = descsize;
--	bufferlist[1].iov_base = buffer;
--	bufferlist[1].iov_len = bufferlen;
--	bufferlist[2].iov_base = &aligned_data;
--	bufferlist[2].iov_len = (packetlen_aligned - packetlen);
--
--	return hv_ringbuffer_write(channel, bufferlist, 3, requestid, NULL);
--}
--EXPORT_SYMBOL_GPL(vmbus_sendpacket_pagebuffer);
--
--/*
-  * vmbus_sendpacket_mpb_desc - Send one or more multi-page buffer packets
-  * using a GPADL Direct packet type.
-  * The desc argument must include space for the VMBus descriptor. The
---- a/include/linux/hyperv.h
-+++ b/include/linux/hyperv.h
-@@ -1224,13 +1224,6 @@ extern int vmbus_sendpacket(struct vmbus
- 				  enum vmbus_packet_type type,
- 				  u32 flags);
- 
--extern int vmbus_sendpacket_pagebuffer(struct vmbus_channel *channel,
--					    struct hv_page_buffer pagebuffers[],
--					    u32 pagecount,
--					    void *buffer,
--					    u32 bufferlen,
--					    u64 requestid);
--
- extern int vmbus_sendpacket_mpb_desc(struct vmbus_channel *channel,
- 				     struct vmbus_packet_mpb_array *mpb,
- 				     u32 desc_size,
+ 	if (file)
+-		__trace_stack(file->tr, tracing_gen_ctx(), STACK_SKIP);
++		__trace_stack(file->tr, tracing_gen_ctx_dec(), STACK_SKIP);
+ 	else
+ 		trace_dump_stack(STACK_SKIP);
+ }
 
 
