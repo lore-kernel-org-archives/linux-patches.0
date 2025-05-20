@@ -1,139 +1,109 @@
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F355419F137
-	for <patches@lists.linux.dev>; Tue, 20 May 2025 15:22:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D269325C83D
+	for <patches@lists.linux.dev>; Tue, 20 May 2025 15:39:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747754540; cv=none; b=IoKhPeqCWDnGycGctSvQeMNoyYKW0HHx1Za6YlEmup8oyJAxSOaxPkUqAiVsPup5rbGV6dHEHau7kuqZFwJMpBw1/1vgNM+fAfmxqVOpSfVSrr97V4BUP67tuUq7xEH9II0p/uE4gzwCIpjETk9uqQHNq6A4utx3pGvFA+kvpx4=
+	t=1747755592; cv=none; b=E3mCTYqLyleTl9fshoKSy+I7MXpfG2jimnQP2wI2evl4nOw7MgRhQVclJETArNPwoenvFERERqp6SECr0LCFEx9t4LPlhlv2VzdDJPy2OHLv7wUoiFf4vJe8an+vLz2cm6pYcDo2ZMW+ckfs3FKDWnr4BQtlA81VQclfPAgOlcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747754540; c=relaxed/simple;
-	bh=drUTSEyk+wweBp8MzrvZkkg+cv1majfZDXRkJhg6S4A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ynlth4EI2udCiXwgbny4hhc6EL66Vv+7mOi3AtVyvItQxly7MGOn49fK09VYWoDWl4OLnZTRfJ6O8Z8cANKQv0/gyVBqxw2C7jMfGceeiroaXcdUCFgbTJQz1VDETW1c3dMuQHuE9v2xOSyz4fQvRsoQah1okN2efNXZMlCbv1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kernel.dk; spf=pass smtp.mailfrom=kernel.dk; dkim=pass (2048-bit key) header.d=kernel-dk.20230601.gappssmtp.com header.i=@kernel-dk.20230601.gappssmtp.com header.b=G2m/04fl; arc=none smtp.client-ip=209.85.166.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kernel.dk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kernel.dk
+	s=arc-20240116; t=1747755592; c=relaxed/simple;
+	bh=5qaDz5va7V/bOIPJZLz/3rD4zx13j2tjLgu6z+mJZvk=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=psqEfDlMaXM/x6BlSvr44SHlpvXc4bqc239evSakUTONgkOgugkcXPg1rl09hI8DnF78QdjNtNqp+kxjuzqPcBP1b0SJqn6vup/o8LvS4tLAYnOvMZdyht9qGCh/DXF61gzIFK3wd8vfuvYZfcDWkKpvuh7lnKH6JK6PCuGGh0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=g5QqVXuB; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel-dk.20230601.gappssmtp.com header.i=@kernel-dk.20230601.gappssmtp.com header.b="G2m/04fl"
-Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-85db3475637so213543039f.1
-        for <patches@lists.linux.dev>; Tue, 20 May 2025 08:22:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kernel-dk.20230601.gappssmtp.com; s=20230601; t=1747754538; x=1748359338; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=28A77Cb9dd2oxcpPba2mZ0UcBg1frToBP1w7OoG6wpU=;
-        b=G2m/04flvQxoZbSqXTTdGlRDhQ+0E432L69OV551TScTKYF5Y8yG24j0/ieLxgOdHm
-         V1pZlGyoDwe2Or7Jgqa2IX18tkwr5cwANVWJu7RoYe6FLRdqCxBbp1BwUoMY6e9oo4aE
-         zbODJkW1ioAuxNRxlsHCreSiCrXNGYAM1b8NuTco9fbRKoxVkh9CNdGEIV4p9gees8F/
-         wBo9MUE3PZ0oFbHJKrxL59goLDyzXuzHk5ewZsFe12b9r3eLjk2jhEXQntVmXXDI17m3
-         MK9RbKfORgZ9r1WVvYpmvoImWc2somYhWhB+OGJG7NLGJRwajWzGQlVuQU3sk6FlfeL+
-         asrg==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="g5QqVXuB"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1747755589;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GJ0rFA5ozhMdO1IEpBbuVAQP+phCnmZbFuLhRhdhX4A=;
+	b=g5QqVXuBWBtlgeWAmKN8VFW70sVZdwrChT7ExQMbbiIFhebWZoD9WJOYyX3sMDnWDy8YLV
+	WmHyP+xChnK7fd1w3RSmNB97wmxNFW1Z/+qv9Y6HduL5aocKQFTuTR2diPOJ9DF/HxP8pY
+	JEWeYtvlcsVY59At4diagQ0zXH8i2YA=
+Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
+ [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-192-eswdMxMbMR2sZgVUPTlkDA-1; Tue, 20 May 2025 11:39:47 -0400
+X-MC-Unique: eswdMxMbMR2sZgVUPTlkDA-1
+X-Mimecast-MFC-AGG-ID: eswdMxMbMR2sZgVUPTlkDA_1747755587
+Received: by mail-io1-f70.google.com with SMTP id ca18e2360f4ac-85df453e4c5so93002839f.1
+        for <patches@lists.linux.dev>; Tue, 20 May 2025 08:39:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747754538; x=1748359338;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=28A77Cb9dd2oxcpPba2mZ0UcBg1frToBP1w7OoG6wpU=;
-        b=TbMnfL8rfGcJeE9ToEv5dhOjiAgBfhKD/4WnUUFX/pxTtyzfrUyfcazF8WscDWmIrT
-         0C4n1TWeWkL3U3pkZkdKACHJ7udzCfAm8f4RlWWLjh6kE/Le1uNN+KUnyBomnetWmz2x
-         Cor6q4mdrturyv6zgBaJmeT/QoPb7Vfizshzdcr+zffuInXnP4+GS/+KQFY+yMWZFzFP
-         1zAeJhQr4tr73hb1d48jbS5GZpGab6W2m8kygYYUpAzfz4+ZUbgoSl914im4yDfEjd4z
-         BrXzoEiYP6ykDhrnIZVxY3Y42Auo2oHP3fM97BmgUM+4Vlr349mckYouDwC4CHmxVwIN
-         V/RQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVq4AQIkMt/Ww8sgCnr0dp4dY6nutnN9KB69i12c8N9FS+MKGphVwHxCMmM3fm5qWiPyXsLwEDa@lists.linux.dev
-X-Gm-Message-State: AOJu0YzomP2iQfOTMxFsg6vOn3MpUEvZgOm8ysQhAO7HzpOzdyhPZdNd
-	lQWTq6dotqgkhRSCHVvIMNfOPsfnGQu5bN+Sg+/aKiliP8c351qcoQe6xSNfZ9+8BhE=
-X-Gm-Gg: ASbGncsx2v7px08mSwzE1ra7DRMfMyZeaLpuxMbHznAXbHkHPnz1KUfdpCybpZAjFVK
-	plT4ODTCM2x9Yj1a8oHlPT5m1YQIaZ5kHDa/3ChAYKxpNWgqlWFVHDllGA1cH/GrF9qHtgfJt9w
-	M/rK65AB1lYrMR3EGtnLOVWDh0Qs8ChPOK878Ynv6rGKkDkP7dQgBGGW4SvKBxQwYCAR6npiOSp
-	x4yTb+vfoIDrGBLl2QcsI1FrSni7c5V0iOvoqsInL5DvEfFG0TrpC+37qa1HWXtPrGGaMjxLj9q
-	CqeA2q/Ukv39Tn6axMbOqTsgGJPWJG01cX0TQjUHfUcvPK9eQWfa+Q3gjQ==
-X-Google-Smtp-Source: AGHT+IHybOxTZR7F/QJc0USNLXLQ5L6fwe2BKiXGfcHIJgPUA62KTSuwtc5Hgl89SiSjuXmhZG6uFw==
-X-Received: by 2002:a6b:750d:0:b0:86a:441:25ca with SMTP id ca18e2360f4ac-86a175262a9mr2041757139f.6.1747754537676;
-        Tue, 20 May 2025 08:22:17 -0700 (PDT)
-Received: from [192.168.1.116] ([96.43.243.2])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4fbcc38a5b2sm2282150173.9.2025.05.20.08.22.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 May 2025 08:22:17 -0700 (PDT)
-Message-ID: <e05dbb79-9769-4825-aa33-1ed82e9bff69@kernel.dk>
-Date: Tue, 20 May 2025 09:22:16 -0600
+        d=1e100.net; s=20230601; t=1747755586; x=1748360386;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GJ0rFA5ozhMdO1IEpBbuVAQP+phCnmZbFuLhRhdhX4A=;
+        b=TVQv1zBPfEPyJHLWkGtdrziydJHACkdD+zE1q6KuS+/yY40qViAq9GuTJrtHmZbY77
+         V9yr/oU1DE91z4z+fBvhXWTpSJM9yVoxtTxlyW0iGej+lUf5kXEyHaiM4bsZjpdTbSU4
+         knPH4S2xLQiGz+D9WspDiFzVr9RDE8UtHnPjXU0no8In19H9hJeTPpRgfS6FoNmYwAV/
+         en772E/cYy6tTDovO6NBpMTHPu/D0IiVAlKbOO92xk+s3bGeUmFiw2pbXp1ZDplEmnpC
+         U5ru8jdqfLEE5wgE+64xBsuU5HjaYh08YBvMLfwmgcEiANuc+ZgVLiMH4mojlQeLQlc9
+         caKA==
+X-Forwarded-Encrypted: i=1; AJvYcCXotYJfsmEDRAJfZ4kAiGeLjPKzmDwK9fc+VASoU8gsjXyAml78KT/wldSd/szmOjn6Rw8fJLFi@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw6lG+GYvFKo7qWjainBe3NNl5gOOdoilcZlZDNgGalNL0f5DQa
+	xqofjOEfQoRkLL/3Lo6XgHZjiVXmbGvWXCwlSMx2U2lKzqb7wfq/Qd95aV4O26tGjSWYLqGgPPY
+	K0wwrN/YVBba9dsizKSV5nOFkhWhOrjPxuxuJHoSi2HIJQYMiZM9vuInDRCk=
+X-Gm-Gg: ASbGncsTkTWCt3MrS1EnHNHy0KDcV4coVkVr8nEeuTxNHMMQWBY217GjHX8C4XVvOV3
+	iUZsXWc0LMz5u6Do5U6AaBqgINOeqZ5BHe/p2RvY/ZPus9CMouvaX02P6TZjSCUBIhC73SIOs+J
+	IovvbHpUi1+W4VlW89rJ04ojI9fyx6lnjksKqYMfjXwQ/dS+F8s3LVzTFjLjByTcxox+sjATop+
+	eYm943qesZj9HODoKuMnBbwsrifjWpoOk3LUBeQdIa1MUIvzMpyM5hkc/8TqxWedEAVHPYLBNHT
+	a7dEqMc/fdBu6+w=
+X-Received: by 2002:a05:6e02:4515:20b0:3dc:757b:3fa4 with SMTP id e9e14a558f8ab-3dc757b42a2mr12610625ab.7.1747755586650;
+        Tue, 20 May 2025 08:39:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG3VbHHu3m+p8uONX+1ieaFf8GcikTyFLsLmu7hXitJ8VoWNtERX8CvL4Yw5GgMZaX+kUid8A==
+X-Received: by 2002:a05:6e02:4515:20b0:3dc:757b:3fa4 with SMTP id e9e14a558f8ab-3dc757b42a2mr12610565ab.7.1747755586291;
+        Tue, 20 May 2025 08:39:46 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4fbcc3b1a96sm2298549173.51.2025.05.20.08.39.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 May 2025 08:39:45 -0700 (PDT)
+Date: Tue, 20 May 2025 09:39:43 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, kvm@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v2] vfio/type1: Remove Fine Grained Superpages detection
+Message-ID: <20250520093943.05bbe2eb.alex.williamson@redhat.com>
+In-Reply-To: <0-v2-97fa1da8d983+412-vfio_fgsp_jgg@nvidia.com>
+References: <0-v2-97fa1da8d983+412-vfio_fgsp_jgg@nvidia.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.14 162/197] loop: Add sanity check for read/write_iter
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Justin Forbes <jmforbes@linuxtx.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- syzbot+6af973a3b8dfd2faefdc@syzkaller.appspotmail.com,
- Lizhi Xu <lizhi.xu@windriver.com>, Christoph Hellwig <hch@lst.de>,
- Sasha Levin <sashal@kernel.org>
-References: <20250512172044.326436266@linuxfoundation.org>
- <20250512172050.980575013@linuxfoundation.org>
- <CAFxkdAq+5ur__TPi6ZW9uoOBv037hgn1d_9906cBeXWE=X3Sgw@mail.gmail.com>
- <2025052059-unsteady-octagon-9321@gregkh>
-Content-Language: en-US
-From: Jens Axboe <axboe@kernel.dk>
-In-Reply-To: <2025052059-unsteady-octagon-9321@gregkh>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: EWYRXJ0N0v2HT6EG1OSEaPPe93rdzoDx9NNR2JzW4ok_1747755587
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On 5/19/25 10:56 PM, Greg Kroah-Hartman wrote:
-> On Mon, May 19, 2025 at 06:19:26PM -0600, Justin Forbes wrote:
->> On Mon, May 12, 2025 at 11:51 AM Greg Kroah-Hartman
->> <gregkh@linuxfoundation.org> wrote:
->>>
->>> 6.14-stable review patch.  If anyone has any objections, please let me know.
->>>
->>> ------------------
->>>
->>> From: Lizhi Xu <lizhi.xu@windriver.com>
->>>
->>> [ Upstream commit f5c84eff634ba003326aa034c414e2a9dcb7c6a7 ]
->>>
->>> Some file systems do not support read_iter/write_iter, such as selinuxfs
->>> in this issue.
->>> So before calling them, first confirm that the interface is supported and
->>> then call it.
->>>
->>> It is releavant in that vfs_iter_read/write have the check, and removal
->>> of their used caused szybot to be able to hit this issue.
->>>
->>> Fixes: f2fed441c69b ("loop: stop using vfs_iter__{read,write} for buffered I/O")
->>> Reported-by: syzbot+6af973a3b8dfd2faefdc@syzkaller.appspotmail.com
->>> Closes: https://syzkaller.appspot.com/bug?extid=6af973a3b8dfd2faefdc
->>> Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
->>> Reviewed-by: Christoph Hellwig <hch@lst.de>
->>> Link: https://lore.kernel.org/r/20250428143626.3318717-1-lizhi.xu@windriver.com
->>> Signed-off-by: Jens Axboe <axboe@kernel.dk>
->>> Signed-off-by: Sasha Levin <sashal@kernel.org>
->>> ---
->>>  drivers/block/loop.c | 23 +++++++++++++++++++++++
->>>  1 file changed, 23 insertions(+)
->>
->> We have had an issue failing to set up loop devices with CI and Linus'
->> tree since rc6, and once this patch hit stable it proved to be the
->> culprit.  If I revert this patch, things work as they should. The
->> problem we are seeing is "
->>
->> More information can be found in:
->> https://github.com/coreos/fedora-coreos-tracker/issues/1948
->> and
->> https://openqa.fedoraproject.org/tests/3438220#step/_boot_to_anaconda/5
+On Mon, 14 Apr 2025 10:46:39 -0300
+Jason Gunthorpe <jgg@nvidia.com> wrote:
+
+> VFIO is looking to enable an optimization where it can rely on a fast
+> unmap operation that returned the size of a larger IOPTE.
 > 
-> Sorry to hear that, please work with the developers to get this resolved
-> in Linus's tree and then we will be glad to apply the needed fix from
-> there.
+> Due to how the test was constructed this would only ever succeed on the
+> AMDv1 page table that supported an 8k contiguous size. Nothing else
+> supports this.
+> 
+> Alex says the performance win was fairly minor, so lets remove this
+> code. Always use iommu_iova_to_phys() to extent contiguous pages.
+> 
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/vfio/vfio_iommu_type1.c | 49 +--------------------------------
+>  1 file changed, 1 insertion(+), 48 deletions(-)
 
-Should be sorted and land before 6.15:
+Applied to vfio next branch for v6.16.  Thanks,
 
-https://git.kernel.dk/cgit/linux/commit/?h=block-6.15&id=355341e4359b2d5edf0ed5e117f7e9e7a0a5dac0
-
--- 
-Jens Axboe
+Alex
 
