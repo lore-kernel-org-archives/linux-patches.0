@@ -1,107 +1,72 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3F01F8EFF
-	for <patches@lists.linux.dev>; Wed, 21 May 2025 15:07:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A28E19E7D0;
+	Wed, 21 May 2025 15:09:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747840033; cv=none; b=HJTvaTn7ZJagh5hnos/oUjp4LLIXxpgMEX/P9yWUneUKCw1gm4tSfMrVJEONO6Xue3a+Zro9fZKXp9AYnmeEI5PASdSrT0EZcsU72pd1m2Wi1K2kZ3++XQZFq0G4B7n7ux4WTfGGX5KmioUNCBaZoh/Yhrku84gxmmgB67q1Wmk=
+	t=1747840157; cv=none; b=KEjyZfHTOUjYnTvFok0LfuOY9nRfDOs41DgcisgsUpk5QQADkoMfyU2GrOei8MECxUW5lfFqbt/qMstD36JC4lACFgrupp5rO4cvwsgWWMLBRaNYm3WSs4NgtGWbGvTjp6BcuyLOWCeGnLAb56MxF18ERc+6fnpOvZK73Q2h8dU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747840033; c=relaxed/simple;
-	bh=Sjx9j827C3WnCbxCzyrv4hIEFQ7c0wVi4hBLajRNCAU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rhuQSj4Heleq16yTYFSg5XZo0llVmaCQHxvqXXzexlYkq+AjFmDhCOXgE72JWVcsAS34zwMO7ZhmjYjBYzkTkse1bjyTFg1ftwCphdqDyVGArVeddl2OfGBd3otWaxzNQ6os/RynkLPWxmX4URAdXI1G5p26UY5eWSzZQIlDjeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=X89qe938; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1747840157; c=relaxed/simple;
+	bh=yEGXJKcukp3coNXCgoAIIW+0/ePHVQR3Nl9Yg3otJmM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=K2Y8GriFHtrx+oK46gS9mpfs1eriJurZ5q5RHdkkDFkl8E2vSHt+2Nt9203piTBxcQDeN3omv1lEqqOyGGkRbdszd3QW83g98n2x5cJAAOCGIYkrwWZ1MwAb3WSm2TtOuRcBTjthlMNctZRmYe6mLl3neE5nl8gaDnKycuXKahI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XEq8pzqR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="X89qe938"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a36748920cso4110250f8f.2
-        for <patches@lists.linux.dev>; Wed, 21 May 2025 08:07:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1747840028; x=1748444828; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=J2f9J5MTYlnWEquYDQufb/Kk6K9vXfUxRcHQCizYOIA=;
-        b=X89qe938ASoQC4QVXtkBv6phT1MYthYQQuH/pa+ZNwgoAttla0/c5aeyS2pU5fw0zx
-         g84xtsTxVwZyCk+bQdbjqKol/AEtEMlyi6wQMaSw5WGV7cg0xuaXjZQ3UhZN+Bdgf8gy
-         TJjmgqFuvhjEa1fgGj/aGhZrugY3wVesnR/413mk8xoEdvtwf6sDk87P0LU7NjaxZnU4
-         XtcvS55yZ6JdgVDrFtmu3KUbdmM/xgEbFbCGqZsviuEytMY+93nu/EcGjXpRpjmQiHrZ
-         Es1a3lKYvIUVClUsg9YTzUwx2Z0t/qiKGmKh2ZDr9mU/EjhKUmb6hUd+2P/MEwKmmU6P
-         EqWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747840028; x=1748444828;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=J2f9J5MTYlnWEquYDQufb/Kk6K9vXfUxRcHQCizYOIA=;
-        b=mzn3VGuALdDr9lVdWzLeO3buDsWTmLRS7yI1Ixh+JSZaGpsi2fw0zsQY1E+oqrPjGQ
-         OIT1NRzmcOsiJgkpIscxE04C23ORkH81d5iYa1rOItqXo+VIKl0eCD4cr8UnvRAx5j0i
-         C9bwIpalPI7hpHdd9bP1HvuH7yMABXw1QBKzlX0cwvI+snfR/gCTJCrgBdTQEMzl7uAH
-         X8K01NIHyAhH3lLVfT9M2VNPfFBnrTA4xh9qOqx9uk8Cq4F8iVThjsxGrBCAKlVGbl3K
-         VNvdQqMAUNIIw7nYN9F1so1WccjBwuoH+SoGTpfXOO7JtbrBfUkt1rGEwSEOWcNBm8A5
-         H0Nw==
-X-Gm-Message-State: AOJu0YyHwa5bArHTQpPLAAMB2mJqiNwDJ0NosJzdIKYNwJ6VkeMh2UAb
-	mP/JZJeq4NEUIMKlFDUCjT0WNCrFEXZyp96cffq9NHPTqZO8bPPF9jA=
-X-Gm-Gg: ASbGncvpHLfhgvOC8pbWVMYVEVBMYZzTxyuF8uryQ7js9xeGTrURbNW4qLnVmdBnHgy
-	qAHSg4X/NSqxX5UZcHvrWuEnG2NSDnP3GkeJmzb+gsaJJolQnU0Jqd+QjnXauNuId2nLgaRJKNk
-	dVfzygn+Ruwg9h9WfCHHFLeH1R91wTOwuABxt00Oer8P7IE5nnyqeG7LpN28f8zSwHo1SzF5lih
-	qT3r+dAvdcLdd1F5nEzksVXHgFHl0aPQh9GWahKYusCqVK7gW29Eo10wHg08FPCs1KhClOMqGvh
-	sTtkubl3sMCVe34wBvGY3J9F8sABZhT5N1r+0IXzcjNrznym6VxCZIuRg3XAryjp/mt2jOmOR1W
-	E366X8PnCyBgRFdWlog/XN5vRX50=
-X-Google-Smtp-Source: AGHT+IEBWhnKMwSfgeat/ks2OGtoSRGNEoFgB5yoq0NLi0i1cR4Wwg5KRIS9wU+w34NcaoONhtKa6A==
-X-Received: by 2002:a05:6000:400f:b0:3a0:b4f1:8bd5 with SMTP id ffacd0b85a97d-3a35fe67aa7mr16678351f8f.18.1747840028138;
-        Wed, 21 May 2025 08:07:08 -0700 (PDT)
-Received: from [192.168.1.3] (p5b2ac604.dip0.t-ipconnect.de. [91.42.198.4])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca5a892sm19630199f8f.24.2025.05.21.08.07.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 May 2025 08:07:07 -0700 (PDT)
-Message-ID: <524b71e8-4f03-4f6c-94a1-c78f382db25a@googlemail.com>
-Date: Wed, 21 May 2025 17:07:06 +0200
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XEq8pzqR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96D0C4CEED;
+	Wed, 21 May 2025 15:09:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1747840155;
+	bh=yEGXJKcukp3coNXCgoAIIW+0/ePHVQR3Nl9Yg3otJmM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XEq8pzqRt72hISS9fQ+vfp5K+Wy10HZtbsf/zA4SlKo0tgb6a9mfW24MZfxm1hezH
+	 jzOLx3sr5Y4QuBWcNwboyawMnBwGnXicuZQ+N92yfFcg/9czudo5oyqJ9w7oUfPoog
+	 qo4C7liYNRj7LjR9uIL4yGE6UADYjr/iEA/KeHmE=
+Date: Wed, 21 May 2025 17:09:12 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Abdiel Janulgue <abdiel.janulgue@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>, Rob Herring <robh@kernel.org>,
+	Saravana Kannan <saravanak@google.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
+Subject: Re: [PATCH 00/10] rust: clean and enable Clippy `doc_markdown` lint
+Message-ID: <2025052156-creatable-uncorrupt-47ce@gregkh>
+References: <20250324210359.1199574-1-ojeda@kernel.org>
+ <CANiq72mBHcsCpn1ZJRJ9Qa-Ass1MsoKdKcFpiFF7hNwyOXjAOA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.6 000/117] 6.6.92-rc1 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250520125803.981048184@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20250520125803.981048184@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CANiq72mBHcsCpn1ZJRJ9Qa-Ass1MsoKdKcFpiFF7hNwyOXjAOA@mail.gmail.com>
 
-Am 20.05.2025 um 15:49 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.6.92 release.
-> There are 117 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, May 21, 2025 at 04:01:28PM +0200, Miguel Ojeda wrote:
+> On Mon, Mar 24, 2025 at 10:04 PM Miguel Ojeda <ojeda@kernel.org> wrote:
+> >
+> >   rust: alloc: add missing Markdown code spans
+> >   rust: alloc: add missing Markdown code span
+> >   rust: dma: add missing Markdown code span
+> >   rust: of: add missing Markdown code span
+> >   rust: pci: fix docs related to missing Markdown code spans
+> >   rust: platform: fix docs related to missing Markdown code spans
+> >   rust: task: add missing Markdown code spans and intra-doc links
+> 
+> Abdiel, Danilo, Rob, Saravana, Greg, Rafael: anything against me
+> picking these ones up?
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
-oddities or regressions found.
+No objection from me for you to take these through the rust tree:
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
-
-
-Beste Grüße,
-Peter Schneider
-
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
