@@ -1,109 +1,144 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE95267B1F
-	for <patches@lists.linux.dev>; Wed, 21 May 2025 13:35:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A852AF1E
+	for <patches@lists.linux.dev>; Wed, 21 May 2025 13:45:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747834542; cv=none; b=FQsWkbqbT8t4xgifO9vKkF4UyPpOA65n/hLg4hI0DvajsaX+HfIaDeax8WsPtuqD5DYTeUmtzSy2GQ/gmgIILf3QlDMbZQtgdREvBQ3G11snzmO3U+xKmXxjT5jpDianjYa7ZOpNZ/Qq7t172AVs+EGbNUQwpX1k6CRYf5MiPTg=
+	t=1747835134; cv=none; b=rgJBF6b/AVFrjjENqciWqZDOd84JYXS4AFh24KAc808jpLYEHev9EB6kKtljmAW0pUdBwepvR957eHjfQ3nE0zRAUoVvLn9sfO3fuselxNv5y3wpQtqjFVjNZccgBjn7en3O2VbyOPQvthQ2TzZ/ZZLYXLt19EJWPAZHJClSHVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747834542; c=relaxed/simple;
-	bh=Hz0zcak+SEFe3diMwY9NS2ySs/drqRPLTc1WEtV5nik=;
+	s=arc-20240116; t=1747835134; c=relaxed/simple;
+	bh=FxQfM36iuvDamyyfqC0jliSjTLRBVIUW69BqTmz6h/I=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jNtyf1raDX9mjp4tvMFOkPVdpeun5B4pzB5/0bmKu/RkH0hNAGpZLak4P+MqAaPTySEhv46j2Qr1rfLRbFOoBX/turlNmimsOUp/BdPC9bnubTu87V8gJcygcYSjMOSioAULfPGpVOtAI7DbS90UAT+SEK2SzDImilG1M7sd7KE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ciq.com; spf=pass smtp.mailfrom=ciq.com; dkim=pass (2048-bit key) header.d=ciq.com header.i=@ciq.com header.b=SasavrNw; arc=none smtp.client-ip=209.85.160.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ciq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ciq.com
+	 To:Cc:Content-Type; b=fLJJRw90vxIKtBEKXUKRKFmw/hcdxoC8i+L/CjL+n8W0Wb2vDIICY2czHuGJyC0sJe33lhADggZhyFsCR7k5IybIKiD4U6BZxYiTFBBIYfKKU0hE3HjZGMqPbbAWNExLscSvkqXLQLNM4hb1wmsG6NGTAJ+A9iTzrOSV2iv5pss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CiB5JxAu; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ciq.com header.i=@ciq.com header.b="SasavrNw"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-4769bbc21b0so66051551cf.2
-        for <patches@lists.linux.dev>; Wed, 21 May 2025 06:35:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CiB5JxAu"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-231f39b1b7aso3369305ad.2
+        for <patches@lists.linux.dev>; Wed, 21 May 2025 06:45:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ciq.com; s=s1; t=1747834539; x=1748439339; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1747835131; x=1748439931; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zHr0Cs4KaT2UvU/qZTlZsSCRg1iopIeIF/2NlDc8tRs=;
-        b=SasavrNwM1twhuuloDXXndADF4sKkMwscX8c3U1Ooxwinpw7lxw5frevvAk6d2oWgt
-         zBjKeCGoFJk8Y351ZuN+JAnfiwSl8Fv1IvE7hEwy7HqhMxLHwPUgUSXZtSCUZRHaVk16
-         89MeplxWoXCX41DQeyOKT1hNjFAu/VM7MX46AJpCDc0tMmk1+Ma1h7mvu4uN5LXCIIhV
-         4Oc0+DmJ13niZHBCVDx+3Hux5NX7mI4NK20IyPAXBGMP7dTZpsYycNb62PX+s7LYDCYp
-         a8wJOjuMfLlKqKu0uS6Gn+ySxvH/1vVDsMQdnRlJXceRIwSD9n11+mlwVBBLbPMuTYCz
-         TWtA==
+        bh=tqeO+b0MwZruALSzGBi/axWBZuamPPMaMT8p8zPZkxQ=;
+        b=CiB5JxAu5m5CmjHfKns42MNl3+C2tfnj+zDfLs9nLuK6OtNrttNiewdbfONL1dBTcs
+         x1s9Ri5e1ATtcZ/5fUCwKbmS22UA5XSb5Tv9ss90Pam3fVmM/RZNuuqB4MBJf0uVh07r
+         sJGPG5WqMibsBr6slzWfnXqZy1vFvy8SwS1FM6wmCuV4v/ebiZHSqee7qcqz6ZqFojdj
+         RkQppox/Lpi2uo+9KYFPeWOpZHzovnq6BtTGh+X0phOMr3cO7CycsOsj+rTcCwG9tl2R
+         uvTKODYaUJPAlhJTKOpd+5JdKcQq6NySUSNA3dBLD40qAgahgycHdTHfseHvglLU9Ws1
+         W1mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747834539; x=1748439339;
+        d=1e100.net; s=20230601; t=1747835131; x=1748439931;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zHr0Cs4KaT2UvU/qZTlZsSCRg1iopIeIF/2NlDc8tRs=;
-        b=HR5xzsDXSVzH8pOeiISs4JIWoEStIESv/rE55RDqDWl+wKOxrcM4iZ9PqIA0TAaiT4
-         ECMNfYyThFCxZNqb6yODeQByfbuU38U7w0ixVVG7xMQD1NYIhGf/o3J7PyBA7Zn079Wr
-         ZKgEipxUM/AEreqUt2UtpieE06dlOflK+m+KYAUFSfVC+hXw3JQ5k1ROGZzuripEYiAK
-         FxYYXk+TMNM9d+HxnNaN7o7pR79UI6PZeLUUgXmdVJUB7BGxg5+0vGctEJ18C80SHhH/
-         UF2PUDa/hGKKnpsuMtE7012oP/0ROli44tYCdPSt91F+hpTMgr+ceEmOf4Zhdk2mbtfe
-         dOVA==
-X-Forwarded-Encrypted: i=1; AJvYcCWHvAde4JK739mG1v5/+zqGzTl0zEWhrFReqoXKEuhGpo4Gh12fb3zrtWpIILBhiSmAhXPh0UcB@lists.linux.dev
-X-Gm-Message-State: AOJu0YyncoLBO/bgoGyYpB8DUdpQAubZikU2jopLMtmFg37+eYS4WVhy
-	F5t9eZxb4R0lywtKHelqLA541gpM4GiXpkDaQBU7ZAuzTmjj+3rVbfdEVy5RaBeRuScz1TBYp/A
-	ovTA9DBGF2SsUZDwpopWNP9uDaO38Jm6OGe5OZ6oe5w==
-X-Gm-Gg: ASbGncvNdUvtbdY4eS/8fsWFPJnBfSBkQ82ps2MzjpUSCuFOK61VyLp+vNCLhsLIsyp
-	J6viTLfSI4BI5Sukgwo/acgM4cuOjRM0nQRh/YxefGidh1Qhbr3w9PS+fBZQYYRE4Opzwf2BqYA
-	B0fSBxgH9xh/OIV6DUkcrhjxHJ3uiyokYhtl54au+6g+I=
-X-Google-Smtp-Source: AGHT+IHw0FtBYXqi2ZhMV8XwB3k6d+PXA2qv/4nhtVXTIGl5XoLNBzVEMfmLL//34e3b8tZ7idnmD0eIhKNjVFF8fw0=
-X-Received: by 2002:ac8:5fca:0:b0:494:b1f9:d677 with SMTP id
- d75a77b69052e-494b1f9dbe3mr261499451cf.48.1747834538524; Wed, 21 May 2025
- 06:35:38 -0700 (PDT)
+        bh=tqeO+b0MwZruALSzGBi/axWBZuamPPMaMT8p8zPZkxQ=;
+        b=ms2Y7LviU+3g+HzVzkRSLZweij5DiLeIqVcuoQEY5dHU5ZLqrx9VAF8j1jh77JS/DY
+         QeedMZq95EaDsOLFYlG5LUypd38dmXw40wC2AGZcSGvgjrFtZnGY3scJ8ve0QqUP6nBE
+         ZFz5c2nBcTnaK9CfJZQRmoCEirb+ipqV+NUINvDS8kLGX6AySJMDCI2KMR4fqXw/veql
+         7N8q2T8d+xSyE8CMqqV4LlbbB6K/brGS5jq/tYJa6ImreI54mlbimUA2uuwSX6/vcFqx
+         j0cyDXQ+ieYrM2YgStMonoP0ts0PiivveMk86M82lmqYFnjXECLgbkPraiqsAG7+dGwc
+         oxfA==
+X-Forwarded-Encrypted: i=1; AJvYcCUSl2xOzjdv0uu0f4oqLdxYdJkiITR6qKfGwh1tUQy4u+5fsH3bUmiGPxHgng+2++/mL9M73mDr@lists.linux.dev
+X-Gm-Message-State: AOJu0YyRP87Hb6pdUZF3NYWLBVhzAp2dboj/QLMgw4RoXFMWe90Ylm2n
+	233rfLwI/sWr9YAiBjHZuJimfpFbBmBIRO94aDpu1AzU8jurIkiGktw+sns7sJr/kWo7zd+Xftn
+	KcQVq0yqhQZdYV8PW2O+kaiuaDrMLXEg=
+X-Gm-Gg: ASbGncv4Pd2pSQ4FRggY0JOQw3XH+2i4FEf71jZW7SVQCmNKhhQXlMDjJ+3Pl6/tqpO
+	POl9nrsT//TCqOYqTtyq+dyJ03L8APZwLqDFQ+/XvsJQiRXFSgLLahfmQSnuCEBKa4V9aK1aaVN
+	iEc/vqSHpf20vEaQhqLYdDov13AGjMYJb8
+X-Google-Smtp-Source: AGHT+IEd6DsdwrSmmjCd7810ousDSSQK3PDaq3AuoW7wry1YdEav/d6efL+6DobgheFh5YsZPOOvlPQ1fuaqgwzW2gE=
+X-Received: by 2002:a17:903:24e:b0:22e:62da:2e58 with SMTP id
+ d9443c01a7336-231d4526b5fmr115017765ad.10.1747835131225; Wed, 21 May 2025
+ 06:45:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250520125810.036375422@linuxfoundation.org>
-In-Reply-To: <20250520125810.036375422@linuxfoundation.org>
-From: Brett Mastbergen <bmastbergen@ciq.com>
-Date: Wed, 21 May 2025 09:35:27 -0400
-X-Gm-Features: AX0GCFsnnZ61HrxlDsOy0x1qRDaTZbQ_XLe0x5ZFQ7bykkdgBHhdO40e1Ax1qDY
-Message-ID: <CAOBMUvjDCJzGO4kZzRMi0JmzeL-Boj8b92to20AFjtDQWzSN=Q@mail.gmail.com>
-Subject: Re: [PATCH 6.12 000/143] 6.12.30-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org
+References: <20250325184309.97170-1-ojeda@kernel.org>
+In-Reply-To: <20250325184309.97170-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Wed, 21 May 2025 15:45:18 +0200
+X-Gm-Features: AX0GCFurjaXVVR2SMph-zlE4anDutDZ-hG_2Vo7FkceNywf_0ew3Zm4BUxeccDQ
+Message-ID: <CANiq72nDtkpC6zKLT3dNH-u8uUXRqTGpS+GPotOrSV=pNR-39A@mail.gmail.com>
+Subject: Re: [PATCH] rust: workaround `bindgen` issue with forward references
+ to `enum` types
+To: Andreas Hindborg <a.hindborg@kernel.org>, Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
+	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 20, 2025 at 10:07=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+On Tue, Mar 25, 2025 at 7:43=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
 >
-> This is the start of the stable review cycle for the 6.12.30 release.
-> There are 143 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> `bindgen` currently generates the wrong type for an `enum` when there
+> is a forward reference to it. For instance:
 >
-> Responses should be made by Thu, 22 May 2025 12:57:37 +0000.
-> Anything received after that time might be too late.
+>     enum E;
+>     enum E { A };
 >
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.12.30-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.12.y
-> and the diffstat can be found below.
+> generates:
 >
-> thanks,
+>     pub const E_A: E =3D 0;
+>     pub type E =3D i32;
 >
-> greg k-h
+> instead of the expected:
+>
+>     pub const E_A: E =3D 0;
+>     pub type E =3D ffi::c_uint;
+>
+> The issue was reported to upstream `bindgen` [1].
+>
+> Now, both GCC and Clang support silently these forward references to
+> `enum` types, unless `-Wpedantic` is passed, and it turns out that some
+> headers in the kernel depend on them.
+>
+> Thus, depending on how the headers are included, which in turn may depend
+> on the kernel configuration or the architecture, we may get a different
+> type on the Rust side for a given C `enum`.
+>
+> That can be quite confusing, to say the least, especially since
+> developers may only notice issues when building for other architectures
+> like in [2]. In particular, they may end up forcing a cast and adding
+> an `#[allow(clippy::unnecessary_cast)]` like it was done in commit
+> 94e05a66ea3e ("rust: hrtimer: allow timer restart from timer handler"),
+> which isn't great.
+>
+> Instead, let's have a section at the top of our `bindings_helper.h` that
+> `#include`s the headers with the affected types -- hopefully there are
+> not many cases and there is a single ordering that covers all cases.
+>
+> This allows us to remove the cast and the `#[allow]`, thus keeping the
+> correct code in the source files. When the issue gets resolved in upstrea=
+m
+> `bindgen` (and we update our minimum `bindgen` version), we can easily
+> remove this section at the top.
+>
+> Link: https://github.com/rust-lang/rust-bindgen/issues/3179 [1]
+> Link: https://lore.kernel.org/rust-for-linux/87tt7md1s6.fsf@kernel.org/ [=
+2]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Builds successfully.  Boots and works on qemu and Dell XPS 15 9520 w/
-Intel Core i7-12600H
+Andreas: are you OK with something along the lines of this change?
 
-Tested-by: Brett Mastbergen <bmastbergen@ciq.com>
+If you don't have anything against it, then I think it would be nice
+to put it in, mainly so that the issue is documented, and so that we
+don't forget about this possible workaround. Plus it removes an
+`allow` and a cast, which is also nice.
 
-Thanks,
-Brett
+The only downside, as far as I know, is that the workaround cannot be
+always applied (see my sibling reply), but at least for this case, it
+can be.
+
+Thanks!
+
+Cheers,
+Miguel
