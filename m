@@ -1,318 +1,107 @@
-Received: from mail.ptr1337.dev (mail.ptr1337.dev [202.61.224.105])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF18F18C002
-	for <patches@lists.linux.dev>; Wed, 21 May 2025 14:14:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.224.105
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6741A23AF
+	for <patches@lists.linux.dev>; Wed, 21 May 2025 14:23:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747836848; cv=none; b=jXQAHLsXWNrgRFiK0gDY3LF4e2u5FXuQ1kg/GcqDMrimCZUzDAT7t9O+MqGSLaRbvVmeRarpdz3GJG2KLK/cDQOBuFIbW749L9ZBwRVia+pcavkXqBsE45UeFr+tw+FHQZ9udl34UJMIeun1C2tR/LvR/8XwynIqR/hTV/l+hc0=
+	t=1747837394; cv=none; b=bGzY4xeuFEjh5jTMi/JXMuVXhId16aJCv2BZBFAzOZXSuX+AEtQK9oeAFRiXhdGZFV+wmr2UhiQ5iXblmmJqx1U3UpZu0ryM9OhPkgbmF7pbRoZaJKthC1yisORG3xdNV3L8z2ZyZpQHjDM7Ir57fZ15v4Fw0WqlYTlQwcUHTLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747836848; c=relaxed/simple;
-	bh=ZjwFQPaextehVUJa8algcxkTYs/fCeZ5zsUrXYNNweI=;
+	s=arc-20240116; t=1747837394; c=relaxed/simple;
+	bh=iHhskWt3REXPFQt3U4rsyEt/YNK9o488HeapSlwvdTA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=R5WCT7h9L+BfetBGv1qQtOW9qvjZO1COyZa5pFYP1Z3vkTm1tU1Oh4n27zgE+RNhbNnD6KAt5PZYdmcfN9loFA2EpS1dUU4GnL0iVhTR/mbHXDUjoA+7mDZaF6NFvQ2Xr/KA0FB1uvM/0FnVtzbJty2T4yIK88cWyMXaQUVw0oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cachyos.org; spf=pass smtp.mailfrom=cachyos.org; dkim=pass (2048-bit key) header.d=cachyos.org header.i=@cachyos.org header.b=Lfd7E7Ic; arc=none smtp.client-ip=202.61.224.105
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cachyos.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cachyos.org
+	 In-Reply-To:Content-Type; b=HN0m+11Qm55bsz4am2VGeYNE9Edg/YYnFw6s5xpEyo+bMk99lIdPJc5mn/2UI1k8El51jzdefgZTZwR/vDvplXh4nXFNY+/j8Tyf6ZyjwgaNGx5tn+hjrztBmRM4g9v5oyXtdASZEZ+pDggyzKcmz+Avy8fJOT9d3bYvNmClAWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=HWPIIbv5; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cachyos.org header.i=@cachyos.org header.b="Lfd7E7Ic"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id C9D142839B1;
-	Wed, 21 May 2025 16:13:49 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cachyos.org; s=dkim;
-	t=1747836837; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=oeOsEYQdPbj/2ltGJnkFgbpMDR85asbQPAEC2VyRxhA=;
-	b=Lfd7E7IccmUZ3FQT8psOACA5xxY1yX4USVN8vjvh2hMCbNploGznezGKPSAHA/5RUwxAUD
-	mFhuOxO6c/sXbQJRf+MqkSGEsjuuoDMqKSe9wa2E5JVflGBDeYECbjkPBGZx8eZOo7eate
-	qfWC2Sxc4nkx8qA/89tjiQNRyXWq9cwm9qLajKIGFuLcf6rXUlCVEW6jOg9jrwQGv43n/S
-	0Y0srxlu3AcjhuLb+ZpXGlwU8reC20qpRCAAO5CF5chBenzdUzxrJb3YdmSBs139r61p01
-	XXbp5BmTyRISOvOM2kvWnLN2uu98HyWYvZccQ8dqnNzbDVEUMfRBibXe2bHbAA==
-Message-ID: <a5376c47-156d-4841-85ab-615f2c942960@cachyos.org>
-Date: Wed, 21 May 2025 22:13:45 +0800
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="HWPIIbv5"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43edecbfb94so74354725e9.1
+        for <patches@lists.linux.dev>; Wed, 21 May 2025 07:23:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1747837391; x=1748442191; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hJdrh3L1t2pXOV+bbYlaC+xr2LBJsGiRXUAwh3/gxE0=;
+        b=HWPIIbv5UTLuTrNWXH4TGfrkx4nzh736rjcGVvMuHxdvjuXY3SVsqs2hf1gUmkW78M
+         n6d3J006ol1IuacpWrLd6/OJGksAlvvisPQlfhi5+GJs2UAI4RU8U2SItQI418EpG/fv
+         HiPJA7aTXDbx5qCnd9QKfcz+IT8h1aW7A1fH2/bX8y6yEnpgu/nkGg4gP2sluvkzu7Q0
+         kBvUbP+TYiUWQyF0GGpJpn5FEkaPnnOJixVVeRYJsr0GVkBZMYNIFdMyqlL4ghcvsgb7
+         7vy6c4fFzsliQc65c+YspYoqQcfKpDyEGMoZMyIXvLSHDhBt9mBSXWpyou9lpbfTLwef
+         WcUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747837391; x=1748442191;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hJdrh3L1t2pXOV+bbYlaC+xr2LBJsGiRXUAwh3/gxE0=;
+        b=uEz/S/TQxf+5dhRfuA7tfmbLNLn/EfZdJrbVFe11GpAfNNc65VuMy1t2HfeMs3Chyq
+         kuXqwfNGEBoV4vuBA1i26/YbACa4javQS2SVhw9o771hR9LGQhNN/onIxKAcEVnRNhR1
+         wsc1CWwDk6nAU6lh9eYePyPxazUNTqQGnYra/MTnkx6Kb49SLPkPQQANdJpU5muvrYjz
+         RyJWkUjyxKVN5aGHTNJ2A1VpoBZyWhogSpq979Jh6bLHcGAn5sJd2rXoeJknrjQVCgTt
+         eLMUeu0OT2PT2LvO0q6Bm66YCtyl9PSRBKAq6JyAeJAezQEtiGz//UWKRNXIPmty9gNt
+         fPRw==
+X-Gm-Message-State: AOJu0Yx6aYVU5WDtIBFSRp5b7vj7W363FSXZLiObM94bPT4MyM/8EVHS
+	FAyaWxL81qHseutCVPAkYZ36yJBYF/CKO8TUdhsBoE2QT6tkJ+0gM1E=
+X-Gm-Gg: ASbGncsNgC6VTptmw265ZElLE69DcCj1C0ZBgGQUMnm4jXZAztEtcIpIUrv5A6qioyw
+	2istPiZCaU66ysPrAM/sese9M6w6BUevbabO0neN9eugFsH5ByXMM/QrNViN825pA0aDEM72giT
+	fdCSCY+3BiJtZ8HlFH7tl7prrTl7TBHPMSBxwizLuRVIremwxxkV0RL/dVunFyqteXuG4UKJf8j
+	zQxZT1ttYgUoZ12jC9fNrBEcVWORIbEhF0dj7sCXjlveIJ55AUJyEBwDcH/7GpqFnQzL4OuVDCd
+	5PJNUu+eeEPIVwi48Ok2E+avfwIBu+RbwnwKEZQvANDYWWyuvSWzaQhCHNCp2L/Vpkvi4b9XurK
+	vtvws3OE3Sd3XQWcPLVyvJ2HPaKE=
+X-Google-Smtp-Source: AGHT+IGtE5oKab5YMYXOizL8Nkh3l5Qve9bCmylWGg2p1Wz9sS6jb3o/Zpy/DJdRh4lj5xxkad2bCw==
+X-Received: by 2002:a05:600c:6806:b0:43c:fb95:c76f with SMTP id 5b1f17b1804b1-442fd618ee7mr185274145e9.9.1747837391193;
+        Wed, 21 May 2025 07:23:11 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2ac604.dip0.t-ipconnect.de. [91.42.198.4])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f6b297easm75430375e9.6.2025.05.21.07.23.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 May 2025 07:23:10 -0700 (PDT)
+Message-ID: <0b7de680-f624-493e-a7d8-072ebe68dce3@googlemail.com>
+Date: Wed, 21 May 2025 16:23:08 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.14 000/145] 6.14.8-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Mario Limonciello <mario.limonciello@amd.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, David.Wu3@amd.com,
- alexander.deucher@amd.com
-References: <20250520125810.535475500@linuxfoundation.org>
- <8db9b7cb-03ff-4aca-aafa-bcab4d1b5d82@cachyos.org>
- <c364e0d7-f3b2-484d-869b-095140e2537b@amd.com>
- <2025052153-bleach-ouch-0e59@gregkh>
-Content-Language: en-US
-From: Eric Naim <dnaim@cachyos.org>
-In-Reply-To: <2025052153-bleach-ouch-0e59@gregkh>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.1 00/97] 6.1.140-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250520125800.653047540@linuxfoundation.org>
+Content-Language: de-DE
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20250520125800.653047540@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 5/21/25 13:35, Greg Kroah-Hartman wrote:
-> On Tue, May 20, 2025 at 09:42:13PM -0500, Mario Limonciello wrote:
->> On 5/20/2025 4:34 PM, Eric Naim wrote:
->>> Hi Greg,
->>>
->>> On 5/20/25 21:49, Greg Kroah-Hartman wrote:
->>>> This is the start of the stable review cycle for the 6.14.8 release.
->>>> There are 145 patches in this series, all will be posted as a response
->>>> to this one.  If anyone has any issues with these being applied, please
->>>> let me know.
->>>>
->>>> Responses should be made by Thu, 22 May 2025 12:57:37 +0000.
->>>> Anything received after that time might be too late.
->>>>
->>>> The whole patch series can be found in one patch at:
->>>> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.14.8-rc1.gz
->>>> or in the git tree and branch at:
->>>> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.14.y
->>>> and the diffstat can be found below.
->>>>
->>>> thanks,
->>>>
->>>> greg k-h
->>>>
->>>> -------------
->>>> Pseudo-Shortlog of commits:
->>>>
->>>> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->>>>      Linux 6.14.8-rc1
->>>>
->>>> Dan Carpenter <dan.carpenter@linaro.org>
->>>>      phy: tegra: xusb: remove a stray unlock
->>>>
->>>> Tiezhu Yang <yangtiezhu@loongson.cn>
->>>>      perf tools: Fix build error for LoongArch
->>>>
->>>> Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
->>>>      mm/page_alloc: fix race condition in unaccepted memory handling
->>>>
->>>> Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
->>>>      drm/xe/gsc: do not flush the GSC worker from the reset path
->>>>
->>>> Maciej Falkowski <maciej.falkowski@linux.intel.com>
->>>>      accel/ivpu: Flush pending jobs of device's workqueues
->>>>
->>>> Karol Wachowski <karol.wachowski@intel.com>
->>>>      accel/ivpu: Fix missing MMU events if file_priv is unbound
->>>>
->>>> Karol Wachowski <karol.wachowski@intel.com>
->>>>      accel/ivpu: Fix missing MMU events from reserved SSID
->>>>
->>>> Karol Wachowski <karol.wachowski@intel.com>
->>>>      accel/ivpu: Move parts of MMU event IRQ handling to thread handler
->>>>
->>>> Karol Wachowski <karol.wachowski@intel.com>
->>>>      accel/ivpu: Dump only first MMU fault from single context
->>>>
->>>> Maciej Falkowski <maciej.falkowski@linux.intel.com>
->>>>      accel/ivpu: Use workqueue for IRQ handling
->>>>
->>>> Shuai Xue <xueshuai@linux.alibaba.com>
->>>>      dmaengine: idxd: Refactor remove call with idxd_cleanup() helper
->>>>
->>>> Shuai Xue <xueshuai@linux.alibaba.com>
->>>>      dmaengine: idxd: fix memory leak in error handling path of idxd_pci_probe
->>>>
->>>> Shuai Xue <xueshuai@linux.alibaba.com>
->>>>      dmaengine: idxd: fix memory leak in error handling path of idxd_alloc
->>>>
->>>> Shuai Xue <xueshuai@linux.alibaba.com>
->>>>      dmaengine: idxd: Add missing idxd cleanup to fix memory leak in remove call
->>>>
->>>> Shuai Xue <xueshuai@linux.alibaba.com>
->>>>      dmaengine: idxd: Add missing cleanups in cleanup internals
->>>>
->>>> Shuai Xue <xueshuai@linux.alibaba.com>
->>>>      dmaengine: idxd: Add missing cleanup for early error out in idxd_setup_internals
->>>>
->>>> Shuai Xue <xueshuai@linux.alibaba.com>
->>>>      dmaengine: idxd: fix memory leak in error handling path of idxd_setup_groups
->>>>
->>>> Shuai Xue <xueshuai@linux.alibaba.com>
->>>>      dmaengine: idxd: fix memory leak in error handling path of idxd_setup_engines
->>>>
->>>> Shuai Xue <xueshuai@linux.alibaba.com>
->>>>      dmaengine: idxd: fix memory leak in error handling path of idxd_setup_wqs
->>>>
->>>> Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
->>>>      dmaengine: ti: k3-udma: Use cap_mask directly from dma_device structure instead of a local copy
->>>>
->>>> Ronald Wahl <ronald.wahl@legrand.com>
->>>>      dmaengine: ti: k3-udma: Add missing locking
->>>>
->>>> Barry Song <baohua@kernel.org>
->>>>      mm: userfaultfd: correct dirty flags set for both present and swap pte
->>>>
->>>> Wupeng Ma <mawupeng1@huawei.com>
->>>>      mm: hugetlb: fix incorrect fallback for subpool
->>>>
->>>> hexue <xue01.he@samsung.com>
->>>>      io_uring/uring_cmd: fix hybrid polling initialization issue
->>>>
->>>> Jens Axboe <axboe@kernel.dk>
->>>>      io_uring/memmap: don't use page_address() on a highmem page
->>>>
->>>> Nathan Chancellor <nathan@kernel.org>
->>>>      net: qede: Initialize qede_ll_ops with designated initializer
->>>>
->>>> Steven Rostedt <rostedt@goodmis.org>
->>>>      ring-buffer: Fix persistent buffer when commit page is the reader page
->>>>
->>>> Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
->>>>      wifi: mt76: mt7925: fix missing hdr_trans_tlv command for broadcast wtbl
->>>>
->>>> Fedor Pchelkin <pchelkin@ispras.ru>
->>>>      wifi: mt76: disable napi on driver removal
->>>>
->>>> Jarkko Sakkinen <jarkko@kernel.org>
->>>>      tpm: Mask TPM RC in tpm2_start_auth_session()
->>>>
->>>> Aaron Kling <webgeek1234@gmail.com>
->>>>      spi: tegra114: Use value to check for invalid delays
->>>>
->>>> Jethro Donaldson <devel@jro.nz>
->>>>      smb: client: fix memory leak during error handling for POSIX mkdir
->>>>
->>>> Steve Siwinski <ssiwinski@atto.com>
->>>>      scsi: sd_zbc: block: Respect bio vector limits for REPORT ZONES buffer
->>>>
->>>> Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
->>>>      phy: renesas: rcar-gen3-usb2: Set timing registers only once
->>>>
->>>> Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
->>>>      phy: renesas: rcar-gen3-usb2: Fix role detection on unbind/bind
->>>>
->>>> Oleksij Rempel <o.rempel@pengutronix.de>
->>>>      net: phy: micrel: remove KSZ9477 EEE quirks now handled by phylink
->>>>
->>>> Oleksij Rempel <o.rempel@pengutronix.de>
->>>>      net: dsa: microchip: let phylink manage PHY EEE configuration on KSZ switches
->>>>
->>>> Ma Ke <make24@iscas.ac.cn>
->>>>      phy: Fix error handling in tegra_xusb_port_init
->>>>
->>>> Wayne Chang <waynec@nvidia.com>
->>>>      phy: tegra: xusb: Use a bitmask for UTMI pad power state tracking
->>>>
->>>> Steven Rostedt <rostedt@goodmis.org>
->>>>      tracing: samples: Initialize trace_array_printk() with the correct function
->>>>
->>>> Ashish Kalra <ashish.kalra@amd.com>
->>>>      x86/sev: Make sure pages are not skipped during kdump
->>>>
->>>> Ashish Kalra <ashish.kalra@amd.com>
->>>>      x86/sev: Do not touch VMSA pages during SNP guest memory kdump
->>>>
->>>> pengdonglin <pengdonglin@xiaomi.com>
->>>>      ftrace: Fix preemption accounting for stacktrace filter command
->>>>
->>>> pengdonglin <pengdonglin@xiaomi.com>
->>>>      ftrace: Fix preemption accounting for stacktrace trigger command
->>>>
->>>> Christophe JAILLET <christophe.jaillet@wanadoo.fr>
->>>>      i2c: designware: Fix an error handling path in i2c_dw_pci_probe()
->>>>
->>>> Nathan Chancellor <nathan@kernel.org>
->>>>      kbuild: Disable -Wdefault-const-init-unsafe
->>>>
->>>> Michael Kelley <mhklinux@outlook.com>
->>>>      Drivers: hv: vmbus: Remove vmbus_sendpacket_pagebuffer()
->>>>
->>>> Michael Kelley <mhklinux@outlook.com>
->>>>      Drivers: hv: Allow vmbus_sendpacket_mpb_desc() to create multiple ranges
->>>>
->>>> Michael Kelley <mhklinux@outlook.com>
->>>>      hv_netvsc: Remove rmsg_pgcnt
->>>>
->>>> Michael Kelley <mhklinux@outlook.com>
->>>>      hv_netvsc: Preserve contiguous PFN grouping in the page buffer array
->>>>
->>>> Michael Kelley <mhklinux@outlook.com>
->>>>      hv_netvsc: Use vmbus_sendpacket_mpb_desc() to send VMBus messages
->>>>
->>>> Dragan Simic <dsimic@manjaro.org>
->>>>      arm64: dts: rockchip: Remove overdrive-mode OPPs from RK3588J SoC dtsi
->>>>
->>>> Sam Edwards <cfsworks@gmail.com>
->>>>      arm64: dts: rockchip: Allow Turing RK1 cooling fan to spin down
->>>>
->>>> Christian Hewitt <christianshewitt@gmail.com>
->>>>      arm64: dts: amlogic: dreambox: fix missing clkc_audio node
->>>>
->>>> Hyejeong Choi <hjeong.choi@samsung.com>
->>>>      dma-buf: insert memory barrier before updating num_fences
->>>>
->>>> Nicolas Chauvet <kwizart@gmail.com>
->>>>      ALSA: usb-audio: Add sample rate quirk for Microdia JP001 USB Camera
->>>>
->>>> Christian Heusel <christian@heusel.eu>
->>>>      ALSA: usb-audio: Add sample rate quirk for Audioengine D1
->>>>
->>>> Wentao Liang <vulab@iscas.ac.cn>
->>>>      ALSA: es1968: Add error handling for snd_pcm_hw_constraint_pow2()
->>>>
->>>> Jeremy Linton <jeremy.linton@arm.com>
->>>>      ACPI: PPTT: Fix processor subtable walk
->>>>
->>>> Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
->>>>      gpio: pca953x: fix IRQ storm on system wake up
->>>>
->>>> Alexey Makhalov <alexey.makhalov@broadcom.com>
->>>>      MAINTAINERS: Update Alexey Makhalov's email address
->>>>
->>>> Wayne Lin <Wayne.Lin@amd.com>
->>>>      drm/amd/display: Avoid flooding unnecessary info messages
->>>>
->>>> Wayne Lin <Wayne.Lin@amd.com>
->>>>      drm/amd/display: Correct the reply value when AUX write incomplete
->>>>
->>>> Philip Yang <Philip.Yang@amd.com>
->>>>      drm/amdgpu: csa unmap use uninterruptible lock
->>>>
->>>> Tim Huang <tim.huang@amd.com>
->>>>      drm/amdgpu: fix incorrect MALL size for GFX1151
->>>>
->>>> David (Ming Qiang) Wu <David.Wu3@amd.com>
->>>>      drm/amdgpu: read back register after written for VCN v4.0.5
->>>>
->>>
->>> This commit seems to breaking a couple of devices with the Phoenix APU, most notably the Ryzen AI chips. Note that this commit in mainline seems to work as intended, and after doing a little bit of digging, [1] landed in 6.15 and so this cherrypick may not be so trivial after all. Attached is a kernel trace highlighting the breakage caused by this commit, along with [2] for the full log.
->>>
->>> Also adding Alex, David and Mario to Ccs.
->>>
->>
->> Just a minor correction - VCN 4.0.5 is on Strix.  So this report is not
->> likely from a Phoenix APU.
->>
->> Nonetheless I agree; I suspect backporting
->> ecc9ab4e924b7eb9e2c4a668162aaa1d9d60d08c will help the issue.
-> 
-> If it is required, someone is going to need to provide a working
-> version, as that does not apply cleanly as-is.
-> 
-> thanks,
-> 
-> greg k-h
+Am 20.05.2025 um 15:49 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.1.140 release.
+> There are 97 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-Hi Greg,
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
+oddities or regressions found.
 
-I finally got someone to test the mentioned commit, and I (or they) can confirm that ecc9ab4e924b7eb9e2c4a668162aaa1d9d60d08c is indeed the missing commit needed for "drm/amdgpu: read back register after written for VCN v4.0.5".
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-I don't know if this will help, but I got everything to apply cleanly by first applying ecc9ab4e924b7eb9e2c4a668162aaa1d9d60d08c, then cherry-picking the mainline version of "drm/amdgpu: read back register after written for VCN v4.0.5" [1] since the one in stable-rc seems to have been adjusted for the stable tree and made it conflict.
+
+Beste Grüße,
+Peter Schneider
 
 -- 
-Regards,
-  Eric
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
-[1] ee7360fc27d6045510f8fe459b5649b2af27811a
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
