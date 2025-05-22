@@ -1,110 +1,113 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB57CD517;
-	Thu, 22 May 2025 06:54:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624F2236A79
+	for <patches@lists.linux.dev>; Thu, 22 May 2025 09:47:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747896862; cv=none; b=VpKjsSVWn2IS5NTYJ15vnQzFqouRnpQkFTv06udkzD3j7LWLRsuAzBRBFpES+KPndg6ojRr2QmH5wKDJIRdumb67sa+WpkEy/KFh7zfcPWiyxphNBrUivRPuCQ7lEeNSSKn7YWauPtxVIZPMmisdxDR/rb1Ko8IdorIyIviLH0g=
+	t=1747907246; cv=none; b=tR+a9YZ+w6wOwMVxUFtlH5t8qLxKexDyiXJF19QZ6JM1uGdI3seW2JWRogJTP8TnAwN16lO5ftC1THMbE+7YIcbzCAS1DTioII0Px14fcKo3eHD5Ejh+rp3xt5S9KE6USt9j3lyDlQ61Q0hD7s2T0F4VLb9R8ek6zZeSGf/oM3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747896862; c=relaxed/simple;
-	bh=kawiY0JhilbZz8Xe2w4qeL4gCrofrUP/ZZz71VqiLyY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=B4JJvImIVdHqBcj1cfgl8R7i7r4Q7oQCk5cGWjYoNaU9HkC1zT0ykyAD/WmFqlRJr7laJYOt55mkNlZ8kFWa/bz9Raoa2M0qO80eau1uKAd00Zq3X34nTFVIqGm1T+1/ULGna3iKQjch2rIvusVFb3/7Ei0V/0X66OO/BnOoYrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gdXi97yH; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1747907246; c=relaxed/simple;
+	bh=4Mi//bmqCitlsd1rQzDuiS76DZ9pyq2kmydmOzYN5jw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cK3y6xQggniDnEY82rduAHQDgYhctgFIbZRvbZB/lUn6OTOQzyc8VijqTSeW4U7UKUwL4HAT7K3uH+6JARBFjZgeChxGzTsdULZA53lQsDEEzZlvERdSoWTztc7jYcfV9vT7zu0EJ+Qou9+rQXrcGhG5gmBetjUJZFHVAu6hzxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nF9Ko1EF; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gdXi97yH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6492C4CEE4;
-	Thu, 22 May 2025 06:54:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747896862;
-	bh=kawiY0JhilbZz8Xe2w4qeL4gCrofrUP/ZZz71VqiLyY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=gdXi97yH+FlKJerb5KxklLLkduGGoLXoGf+x2bJ7BPqL8IabaTsWCCH+VPtr0RAzm
-	 tH1tkCrxj9E4VRWI+m8CuV2SU/ef1zBoqVKfgN3GPhK+f56aMM5jDeI6yxmaXwHENC
-	 hHqd2JzzIhKt9W481FHT5I+ilmwqufGGPSGvUL3ecotZAdB8UJXMTdeXONU+/RY3dk
-	 HkM6F96w1s9DUXz3PXPwbaiOxx+tdWGeDLbMA02CII01aNVajT+zEquTkE7r7UhUZg
-	 aPm/zjbwaUmPRmuvAAALAvm4YkpBa2qbpLBvAnlucry5IxWoiLIqyQGAabnkjiGX6N
-	 NOE81qq3bZyOw==
-From: Andreas Hindborg <a.hindborg@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>,  Boqun Feng <boqun.feng@gmail.com>,
-  Gary Guo <gary@garyguo.net>,  =?utf-8?Q?Bj=C3=B6rn?= Roy Baron
- <bjorn3_gh@protonmail.com>,
-  Benno Lossin <benno.lossin@proton.me>,  Alice Ryhl
- <aliceryhl@google.com>,  Trevor Gross <tmgross@umich.edu>,  Danilo
- Krummrich <dakr@kernel.org>,  rust-for-linux@vger.kernel.org,
-  linux-kernel@vger.kernel.org,  patches@lists.linux.dev
-Subject: Re: [PATCH] rust: workaround `bindgen` issue with forward
- references to `enum` types
-In-Reply-To: <20250325184309.97170-1-ojeda@kernel.org> (Miguel Ojeda's message
-	of "Tue, 25 Mar 2025 19:43:09 +0100")
-References: <20250325184309.97170-1-ojeda@kernel.org>
-User-Agent: mu4e 1.12.7; emacs 30.1
-Date: Thu, 22 May 2025 08:50:55 +0200
-Message-ID: <874ixddtps.fsf@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nF9Ko1EF"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-231ba912ba1so7785255ad.2
+        for <patches@lists.linux.dev>; Thu, 22 May 2025 02:47:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747907244; x=1748512044; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ipAwY8ZxlvEf1nakEvQVnIk9cDkKI8+OAel+80ahbDs=;
+        b=nF9Ko1EFwCMOEUr5XjX0VipQ2o3CfokysIQZR4mhA7MFVSMDZwjN1pITRvSocqlmDw
+         II3gS7Yo5kVrhw6xS2i58o21GJr27N6grRMZERzNSVUd84l99rI5ijz3xR9IRLZkyvFQ
+         q4mp1VrIdI0nyU2chzuNL7awrZXLTZLISsdIx3cwnH7h4O6+yJSkh/gil8GSNFtxod5g
+         pk46u/eiDPRtszN43LrAnD+XZ0b1+V0e+rP1fxvzNIPeOPon1XK6DqEZogqm5wS2Lux6
+         29czzPS/Xo6Xc1L9kx/TH1nBvARChQt3xFyFV/riuzoq0YmgjxBpvb9Key+RaTB4bIVh
+         zyLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747907244; x=1748512044;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ipAwY8ZxlvEf1nakEvQVnIk9cDkKI8+OAel+80ahbDs=;
+        b=GAe/WTE9egCRPvUfHW7Jt2UY/7xbuxGKNiZDWLvq3guHWpl5vBmP4TUwQwN38117jA
+         QPpB/OE8k1I+5rriNtfzf23RWtRwKKGhvnd6xL2Z8fHHqheAAEzbtRUuF6Jz7NCclLBp
+         OnWBNfhe/sQJrmMAYW15Ma/1PQS08vk5/uIdb8HVkizd3NIC1IAWzEfpFlOyp1YeKvnm
+         V2GV7I/5NupRltPvnU6YzxT0N/fv7C7exjA4Q1pcypM6327UPpLyDD5HeCY+p7psb4qH
+         sRipK0TlRt2dg9FIZzJ8Dt6FhvXmHCbNkQ1CMG259yj0PPVv9VYqP+UlyqFDUXfwjjeH
+         BNyw==
+X-Forwarded-Encrypted: i=1; AJvYcCWGOt8os/WdzQRTgDcdtJ99d4ZXivU0489vqZzPcZwRXeMlF19E7FiPr3Zmvmge6Bc+zIvoWmb8@lists.linux.dev
+X-Gm-Message-State: AOJu0YyUAllNLvCJ6KTx9Yp8QgA24wMIVMQ/LEhkNJhVrsOusVJXNq+Z
+	7jKKEAflPI7oluw7vdVnVQ9OF87VNqCuDQT5e6J0jSQknktOzwL2EVXWbjL0ilpIt2Zbj0hGldx
+	34GZ32w0l6Bl+o55Z+Y3cWxMi/ZYrB2U=
+X-Gm-Gg: ASbGncvI7X4SkHePQ0gEEAoU9rto8HDoMClD83mzK8idy5V8a6388ioosORIwROnb+e
+	jPX/2d6MzfY/mxgLxfA8sJIEI93DhOfDXISIGybOs90MRaM3e+4Y8hRqCl3HqIpmmOCkUJLCc8b
+	59Es/WWNU6D9oGVdZRVmAxcjDq51CQzIu7
+X-Google-Smtp-Source: AGHT+IHKkMNeaj6kG+RCv22d49KV67QvtWhnBvQaNqs96AouSRNF37SPJJw4Y6hGaON6FpFmZHUqDu6VOEZ338Aktx8=
+X-Received: by 2002:a17:903:2285:b0:22f:b00d:fe59 with SMTP id
+ d9443c01a7336-231d450fd20mr120664705ad.9.1747907244533; Thu, 22 May 2025
+ 02:47:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250520182125.806758-1-ojeda@kernel.org>
+In-Reply-To: <20250520182125.806758-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Thu, 22 May 2025 11:47:10 +0200
+X-Gm-Features: AX0GCFudr69K7Ker-OBq61Wf5eeUt338xEQM0BHHVJyg1bvCHsTu9tjB29wkrAQ
+Message-ID: <CANiq72=p4P9MuFKNy28PdHSqznvW_8Tep1wjm3zPXqbZVrujfg@mail.gmail.com>
+Subject: Re: [PATCH] rust: remove unneeded Rust 1.87.0 `allow(clippy::ptr_eq)`
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Danilo Krummrich <dakr@kernel.org>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Miguel Ojeda <ojeda@kernel.org> writes:
-
-> `bindgen` currently generates the wrong type for an `enum` when there
-> is a forward reference to it. For instance:
+On Tue, May 20, 2025 at 8:22=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
 >
->     enum E;
->     enum E { A };
+> Before a change to relax the lint was backported to Rust 1.87.0 before
+> its release, Clippy was expected to warn with:
 >
-> generates:
+>     error: use `core::ptr::eq` when comparing raw pointers
+>        --> rust/kernel/list.rs:438:12
+>         |
+>     438 |         if self.first =3D=3D item {
+>         |            ^^^^^^^^^^^^^^^^^^ help: try: `core::ptr::eq(self.fi=
+rst, item)`
+>         |
+>         =3D help: for further information visit https://rust-lang.github.=
+io/rust-clippy/master/index.html#ptr_eq
+>         =3D note: `-D clippy::ptr-eq` implied by `-D warnings`
+>         =3D help: to override `-D warnings` add `#[allow(clippy::ptr_eq)]=
+`
 >
->     pub const E_A: E = 0;
->     pub type E = i32;
+> The backported finally landed indeed, thus remove the `allow`s we added
+> back then, which were added just in case the backport did not land
+> in time.
 >
-> instead of the expected:
+> See commit a39f30870927 ("rust: allow Rust 1.87.0's `clippy::ptr_eq`
+> lint") for details.
 >
->     pub const E_A: E = 0;
->     pub type E = ffi::c_uint;
->
-> The issue was reported to upstream `bindgen` [1].
->
-> Now, both GCC and Clang support silently these forward references to
-> `enum` types, unless `-Wpedantic` is passed, and it turns out that some
-> headers in the kernel depend on them.
->
-> Thus, depending on how the headers are included, which in turn may depend
-> on the kernel configuration or the architecture, we may get a different
-> type on the Rust side for a given C `enum`.
->
-> That can be quite confusing, to say the least, especially since
-> developers may only notice issues when building for other architectures
-> like in [2]. In particular, they may end up forcing a cast and adding
-> an `#[allow(clippy::unnecessary_cast)]` like it was done in commit
-> 94e05a66ea3e ("rust: hrtimer: allow timer restart from timer handler"),
-> which isn't great.
->
-> Instead, let's have a section at the top of our `bindings_helper.h` that
-> `#include`s the headers with the affected types -- hopefully there are
-> not many cases and there is a single ordering that covers all cases.
->
-> This allows us to remove the cast and the `#[allow]`, thus keeping the
-> correct code in the source files. When the issue gets resolved in upstream
-> `bindgen` (and we update our minimum `bindgen` version), we can easily
-> remove this section at the top.
->
-> Link: https://github.com/rust-lang/rust-bindgen/issues/3179 [1]
-> Link: https://lore.kernel.org/rust-for-linux/87tt7md1s6.fsf@kernel.org/ [2]
+> Link: https://github.com/rust-lang/rust/pull/140859 [1]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
+Applied to `rust-next` -- thanks everyone!
 
-Acked-by: Andreas Hindborg <a.hindborg@kernel.org>
+    [ Reworded for clarity. - Miguel ]
 
-
-Best regards,
-Andreas Hindborg
-
-
-
+Cheers,
+Miguel
