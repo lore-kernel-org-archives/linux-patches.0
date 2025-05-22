@@ -1,113 +1,118 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624F2236A79
-	for <patches@lists.linux.dev>; Thu, 22 May 2025 09:47:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB36F1AB528
+	for <patches@lists.linux.dev>; Thu, 22 May 2025 09:56:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747907246; cv=none; b=tR+a9YZ+w6wOwMVxUFtlH5t8qLxKexDyiXJF19QZ6JM1uGdI3seW2JWRogJTP8TnAwN16lO5ftC1THMbE+7YIcbzCAS1DTioII0Px14fcKo3eHD5Ejh+rp3xt5S9KE6USt9j3lyDlQ61Q0hD7s2T0F4VLb9R8ek6zZeSGf/oM3k=
+	t=1747907762; cv=none; b=K+g2688uwSlnHbazZVa57RXjTnaZBbWGXh2FaUF7lsMNsmoRo/u/qqKr/vTyO3FzV5lwVe8WkbglhgX8scWIFaM6EGo5qy2iByAZBu27jLMNLXChy8nV3HdKL0XsAC5TiEsKGYVAj1y0pqOetB7RVH5VuNY9PxNXv2tRSxY2vv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747907246; c=relaxed/simple;
-	bh=4Mi//bmqCitlsd1rQzDuiS76DZ9pyq2kmydmOzYN5jw=;
+	s=arc-20240116; t=1747907762; c=relaxed/simple;
+	bh=zZQDvy6Qo42/2W4QwFrXPUZcYGV2s/FRajduLAvDQCw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cK3y6xQggniDnEY82rduAHQDgYhctgFIbZRvbZB/lUn6OTOQzyc8VijqTSeW4U7UKUwL4HAT7K3uH+6JARBFjZgeChxGzTsdULZA53lQsDEEzZlvERdSoWTztc7jYcfV9vT7zu0EJ+Qou9+rQXrcGhG5gmBetjUJZFHVAu6hzxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nF9Ko1EF; arc=none smtp.client-ip=209.85.214.179
+	 To:Cc:Content-Type; b=J+Lfgf7f+44C4TVVhp4Xw/vWDZdcDqaZht+lUnUSxf0IEDHBup5gh3sA7xFzuCufKkrkvr2fp1v/kMDMoWTyuYRrLa9FckJuGzgdfB+SekWcTmPgcg3tLcnHlVfa0IxiL8lbiw4D54nB2u3NrBydgY/hXqSVFQY3eSRGtnSUji0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h9xQt4fV; arc=none smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nF9Ko1EF"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-231ba912ba1so7785255ad.2
-        for <patches@lists.linux.dev>; Thu, 22 May 2025 02:47:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h9xQt4fV"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-231c38c9d9eso6208405ad.3
+        for <patches@lists.linux.dev>; Thu, 22 May 2025 02:56:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747907244; x=1748512044; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1747907760; x=1748512560; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ipAwY8ZxlvEf1nakEvQVnIk9cDkKI8+OAel+80ahbDs=;
-        b=nF9Ko1EFwCMOEUr5XjX0VipQ2o3CfokysIQZR4mhA7MFVSMDZwjN1pITRvSocqlmDw
-         II3gS7Yo5kVrhw6xS2i58o21GJr27N6grRMZERzNSVUd84l99rI5ijz3xR9IRLZkyvFQ
-         q4mp1VrIdI0nyU2chzuNL7awrZXLTZLISsdIx3cwnH7h4O6+yJSkh/gil8GSNFtxod5g
-         pk46u/eiDPRtszN43LrAnD+XZ0b1+V0e+rP1fxvzNIPeOPon1XK6DqEZogqm5wS2Lux6
-         29czzPS/Xo6Xc1L9kx/TH1nBvARChQt3xFyFV/riuzoq0YmgjxBpvb9Key+RaTB4bIVh
-         zyLg==
+        bh=G09KB2onuKyHVmfE50lXFfjm4aLc9EdRitHUC4rY5fE=;
+        b=h9xQt4fV0EdGHstL6oHy3L7TQuR9Det5Evw+hKA0It9QPV7f1Yp29W2y2Cc18IXRFR
+         HyC1jMgHCIseGOqWubFjEpxb85nvNNmjMgbIfoO2OnBxLM2Xp2qLzH7dW/TiYk5Np1l4
+         1lBba/Sh3pP56qoXyVqy5/Kk5JMKqBU9JEt0PYezcKphlUD/IdXTzE45BBhsysVPMLsR
+         bvjFwwyY8aAb5rsBrI4l2nO+v2gC4PxXpc51jvL5ubsB//xNVOKv7A679sSFSQAg5w7F
+         blOuAl2pfFIGV574k3SyjkxZ0DU4DxdXgRVHh/O4/ZfOJ7y5+3rujxSfpU9oTz02KZXY
+         xrAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747907244; x=1748512044;
+        d=1e100.net; s=20230601; t=1747907760; x=1748512560;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ipAwY8ZxlvEf1nakEvQVnIk9cDkKI8+OAel+80ahbDs=;
-        b=GAe/WTE9egCRPvUfHW7Jt2UY/7xbuxGKNiZDWLvq3guHWpl5vBmP4TUwQwN38117jA
-         QPpB/OE8k1I+5rriNtfzf23RWtRwKKGhvnd6xL2Z8fHHqheAAEzbtRUuF6Jz7NCclLBp
-         OnWBNfhe/sQJrmMAYW15Ma/1PQS08vk5/uIdb8HVkizd3NIC1IAWzEfpFlOyp1YeKvnm
-         V2GV7I/5NupRltPvnU6YzxT0N/fv7C7exjA4Q1pcypM6327UPpLyDD5HeCY+p7psb4qH
-         sRipK0TlRt2dg9FIZzJ8Dt6FhvXmHCbNkQ1CMG259yj0PPVv9VYqP+UlyqFDUXfwjjeH
-         BNyw==
-X-Forwarded-Encrypted: i=1; AJvYcCWGOt8os/WdzQRTgDcdtJ99d4ZXivU0489vqZzPcZwRXeMlF19E7FiPr3Zmvmge6Bc+zIvoWmb8@lists.linux.dev
-X-Gm-Message-State: AOJu0YyUAllNLvCJ6KTx9Yp8QgA24wMIVMQ/LEhkNJhVrsOusVJXNq+Z
-	7jKKEAflPI7oluw7vdVnVQ9OF87VNqCuDQT5e6J0jSQknktOzwL2EVXWbjL0ilpIt2Zbj0hGldx
-	34GZ32w0l6Bl+o55Z+Y3cWxMi/ZYrB2U=
-X-Gm-Gg: ASbGncvI7X4SkHePQ0gEEAoU9rto8HDoMClD83mzK8idy5V8a6388ioosORIwROnb+e
-	jPX/2d6MzfY/mxgLxfA8sJIEI93DhOfDXISIGybOs90MRaM3e+4Y8hRqCl3HqIpmmOCkUJLCc8b
-	59Es/WWNU6D9oGVdZRVmAxcjDq51CQzIu7
-X-Google-Smtp-Source: AGHT+IHKkMNeaj6kG+RCv22d49KV67QvtWhnBvQaNqs96AouSRNF37SPJJw4Y6hGaON6FpFmZHUqDu6VOEZ338Aktx8=
-X-Received: by 2002:a17:903:2285:b0:22f:b00d:fe59 with SMTP id
- d9443c01a7336-231d450fd20mr120664705ad.9.1747907244533; Thu, 22 May 2025
- 02:47:24 -0700 (PDT)
+        bh=G09KB2onuKyHVmfE50lXFfjm4aLc9EdRitHUC4rY5fE=;
+        b=olu8g0bclmco1OHRk3oGW1w6TTSgGrkbjoZ0+zAZLfGsj8jwjVahGXSs5rnxUzR/Iu
+         fNA9pFsP356gLBiFsOFzaAZWsWv8UopYkMOG9ZW/QkK+1CH0qApS/4UrqJqfAD1UUv7o
+         vicZyBWaSKHeg1Toiodpfp946UymWweDp0l5MpLnyCTV05FHXGkGq3Yq+CwYTOhmD3UI
+         jc5HJaaGOO4UiAGH+gZz45F4DSsjqonxpmYMcIubtp737+4O8P8EGwZaNPoKMgQqAJbl
+         Dh0QsbGhI4ULOkYfHGRHRtkZGMnqmi/GQcHQtv5PtgKu87hX8CgC7qLPBb4jkcLfgNxg
+         Hndg==
+X-Forwarded-Encrypted: i=1; AJvYcCWTWJB8T0XShlqcynfiwlMeeaKEbfdx0D04Ao5l2Yrnd/ToEhQXJeio4ySUlIG/2jlpKnU4S5QG@lists.linux.dev
+X-Gm-Message-State: AOJu0YzircMHxsteVt7QCD1su3BKxpcDEghmn6ZiNLL2ptVg3KxJmRDX
+	XuWLrtMYaErXjZTasmabRu+hHQMuDrws8EN4u/MN8rOwNBIGnqUPQhc/GSVuqhwd8yuF6dWxhzl
+	DTkvrRYFw0f/VYgio1qQyu8b1mhpugdg=
+X-Gm-Gg: ASbGncu+uDi/J8ZrKN9rbw56EFeqPqtrsbbC6/6fkww7sgfiZcTh6Mhi9SIKBfPtxqD
+	VtSeT9ssYoYpywiYYTwKc+MV2stYDRd6NNxSG0U/pNTVx2zw5xCL9ipEBPOrH+wyJ31l7agzpi1
+	DavMe9neP5iauJj87k66DgSafLQ05Gnl2p
+X-Google-Smtp-Source: AGHT+IFYIWC+n60Jh+NK0oH7ocg0CH8rKVpjvpng/mDoRMQvt9OfeYljH/Z2woY7cuOpizBcWnXFwX5FdQwCp7RVY2c=
+X-Received: by 2002:a17:902:fc48:b0:224:88c:9255 with SMTP id
+ d9443c01a7336-231d438c7f1mr136853785ad.3.1747907759865; Thu, 22 May 2025
+ 02:55:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250520182125.806758-1-ojeda@kernel.org>
-In-Reply-To: <20250520182125.806758-1-ojeda@kernel.org>
+References: <20250520185555.825242-1-ojeda@kernel.org>
+In-Reply-To: <20250520185555.825242-1-ojeda@kernel.org>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 22 May 2025 11:47:10 +0200
-X-Gm-Features: AX0GCFudr69K7Ker-OBq61Wf5eeUt338xEQM0BHHVJyg1bvCHsTu9tjB29wkrAQ
-Message-ID: <CANiq72=p4P9MuFKNy28PdHSqznvW_8Tep1wjm3zPXqbZVrujfg@mail.gmail.com>
-Subject: Re: [PATCH] rust: remove unneeded Rust 1.87.0 `allow(clippy::ptr_eq)`
+Date: Thu, 22 May 2025 11:55:46 +0200
+X-Gm-Features: AX0GCFt5zXlczwrJWYedrmHdatCH6TtH7LDmwwL7WwbulsfmTEouK13Fcs43C90
+Message-ID: <CANiq72mPJDA55t=TGz3wFBBch9iPxjQ0V_CV30XR6XijWnh3dw@mail.gmail.com>
+Subject: Re: [PATCH] objtool/rust: relax slice condition to cover more
+ `noreturn` Rust functions
 To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Danilo Krummrich <dakr@kernel.org>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Josh Poimboeuf <jpoimboe@kernel.org>, 
+	Peter Zijlstra <peterz@infradead.org>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
 	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
 	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org, 
+	John Hubbard <jhubbard@nvidia.com>, Timur Tabi <ttabi@nvidia.com>, Kane York <kanepyork@gmail.com>, 
+	Joel Fernandes <joelagnelf@nvidia.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 20, 2025 at 8:22=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+On Tue, May 20, 2025 at 8:56=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
 te:
 >
-> Before a change to relax the lint was backported to Rust 1.87.0 before
-> its release, Clippy was expected to warn with:
+> Developers are indeed hitting other of the `noreturn` slice symbols in
+> Nova [1], thus relax the last check in the list so that we catch all of
+> them, i.e.
 >
->     error: use `core::ptr::eq` when comparing raw pointers
->        --> rust/kernel/list.rs:438:12
->         |
->     438 |         if self.first =3D=3D item {
->         |            ^^^^^^^^^^^^^^^^^^ help: try: `core::ptr::eq(self.fi=
-rst, item)`
->         |
->         =3D help: for further information visit https://rust-lang.github.=
-io/rust-clippy/master/index.html#ptr_eq
->         =3D note: `-D clippy::ptr-eq` implied by `-D warnings`
->         =3D help: to override `-D warnings` add `#[allow(clippy::ptr_eq)]=
-`
+>     *_4core5slice5index22slice_index_order_fail
+>     *_4core5slice5index24slice_end_index_len_fail
+>     *_4core5slice5index26slice_start_index_len_fail
+>     *_4core5slice5index29slice_end_index_overflow_fail
+>     *_4core5slice5index31slice_start_index_overflow_fail
 >
-> The backported finally landed indeed, thus remove the `allow`s we added
-> back then, which were added just in case the backport did not land
-> in time.
+> These all exist since at least Rust 1.78.0, thus backport it too.
 >
-> See commit a39f30870927 ("rust: allow Rust 1.87.0's `clippy::ptr_eq`
-> lint") for details.
+> See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
+> for more details.
 >
-> Link: https://github.com/rust-lang/rust/pull/140859 [1]
+> Cc: stable@vger.kernel.org # Needed in 6.12.y and later.
+> Cc: John Hubbard <jhubbard@nvidia.com>
+> Cc: Timur Tabi <ttabi@nvidia.com>
+> Cc: Kane York <kanepyork@gmail.com>
+> Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+> Cc: Peter Zijlstra <peterz@infradead.org>
+> Reported-by: Joel Fernandes <joelagnelf@nvidia.com>
+> Link: https://lore.kernel.org/rust-for-linux/20250513180757.GA1295002@joe=
+lnvbox/ [1]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Applied to `rust-next` -- thanks everyone!
+Applied to `rust-next` early so that others can benefit on -next --
+thanks everyone!
 
-    [ Reworded for clarity. - Miguel ]
+    Fixes: 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
 
 Cheers,
 Miguel
