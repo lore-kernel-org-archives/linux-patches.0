@@ -1,138 +1,136 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35EE6269CFA
-	for <patches@lists.linux.dev>; Thu, 22 May 2025 22:10:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25FF186295
+	for <patches@lists.linux.dev>; Thu, 22 May 2025 23:51:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747951839; cv=none; b=OZqVvQW58NriDaFRKNhNKAauy+HJH/uz5OIVshtTu9vihwhkgD/sCJoNZHoxlVzYGG5/pMN+nvaPvc2+J7Y3hCcrcPYfXhBuaMhjElI8yheuxgBimz3HGc8CLn2+k+gTQcU9qAb1vx1Gjal9OaQxYHgl2Q8LaIqUkjA03iSuVG8=
+	t=1747957887; cv=none; b=uOR49AuR9xxHJeVjPd7m1DcvKlRU+A91vG+eng1PKDfEmqzrucifJchirBKaWSIIJtMrG/Mi0L8S79wt9BeBHtPyWKizUnMG+Rj91l5WzyxluClRxYUrE8JQ4Y88ApbRaFXGcHaziwVtx5++/mvKoYT5opBaqdduQkqE8p1SmW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747951839; c=relaxed/simple;
-	bh=Vwp7L6L0DbadGmW+6IbLFn7FDl7XlbaZVO+AUTwmZBA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MwMwdyLsHDvLimENrulVzopNfWe0csOgNSi5jDR7HOZhxYpZHww/Kpghizlrct0vZ4H6KonaHvmispX161H7OmAkvLSYL4vefnBFFcJzLD6UyEhfXFzuz0+Et+fRyJXbWZwhSmyGou9Vm0vyNWQGBJhQ92k9IF3tGtdoqkiZD1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mUox3gmr; arc=none smtp.client-ip=209.85.214.174
+	s=arc-20240116; t=1747957887; c=relaxed/simple;
+	bh=sgyFFJAnCJUBGKmWU1InDGZENXuXQ+nwvmLUPLlqVOY=;
+	h=Message-ID:Date:From:To:Cc:Subject:MIME-Version:Content-Type:
+	 Content-Disposition; b=DUFXEbq0Q1gCZjzRYLznfVkbsc/2SGbalFPHM7S5KBFZESyu4nkdtJ01yw5q1ldp/eB8z0qeWwDP/MbzmhMakvqIvEJpagulSNsWyD3q4ph/ZFK2j+lEdyQtneQpA0Rus85mnOROJMrONOH08oszYKC3SmNQ0l5ufzT9IkFwwlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D8kT7Xin; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mUox3gmr"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-231ecbe2a5dso6455235ad.0
-        for <patches@lists.linux.dev>; Thu, 22 May 2025 15:10:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D8kT7Xin"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43cfdc2c8c9so53020325e9.2
+        for <patches@lists.linux.dev>; Thu, 22 May 2025 16:51:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747951837; x=1748556637; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QaVcQnOHZhXdhQaf8IN9xC9rWiAxsOh9GVu5nLs1VX8=;
-        b=mUox3gmrjg/bSjAA0MnSwsHyjE+6EbxzAVoebN2V2Pi4bRXpxbdTvu5n97gKt14CBK
-         c2SXkduzqn38/QTcaGbpufO5Qnw2xzU8Z9+Tlo0GcufBF1BSZNWVgSXpbHFXluoGzome
-         rBia5KwlJGZOBmXQdpIxPZSxoS2Tj8vsnu1upCVMw28AM5xnsCPCiSnUZ+c/SrLujIO7
-         Jexaknrs089pw/zSKA2CeD8NcRREcp0XoL/apVN6pITFYAc/fNmv2Hy5phAjwrFubCYG
-         EGDuW5gzsBBRrUfywB4GFhWUhPfMcUXmH0iIKJ4f8rdIYaMPZ2TWg1K+w6JKo6W18L5c
-         QBVw==
+        d=gmail.com; s=20230601; t=1747957884; x=1748562684; darn=lists.linux.dev;
+        h=content-disposition:mime-version:reply-to:subject:cc:to:from:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=JdSGGP4i8x9bilkIzdRnc9XdO8ilTm4tAPeTA/a9Egs=;
+        b=D8kT7Xin/czh4RpQ0jMbK/lktcTW6It2R47+I9gt5KE0C4NrnHdBe/Bk3ETXAVcXku
+         TVerRR7eqXM7hiNcyi9qyHGXjXHdj4LD01BgdT3M884J0dTCN5aRsSoZPhHjvMNaGZuR
+         uqksVN6A78UOAIkMzFSziX1R0UgMedNucTfA7bN5Ub1tuGPMrVjfeUHSqLw3mcCzd81i
+         SRfwwRq+NQAuib0qQ1wu9U4rbvbQHEQSAs3RUAi75h3Se0PhL31IHYp4iDYzWHil/M3u
+         1vsFEGnC7TV4Pm1z2dhZWY81b4/em2ygXLt1EOxHowWNJZ8Okb4AFPeoaCaD9HpqcYLe
+         MuKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747951837; x=1748556637;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QaVcQnOHZhXdhQaf8IN9xC9rWiAxsOh9GVu5nLs1VX8=;
-        b=GiyASEbRF7Cy3HA5ss8PPjLgEjf3cz3itoCSlBnbsrYw43c8B9Q50uC7+ex9jg1nW1
-         RyEmbg6/hIqnnEfiyq60vWQFm50WIZoIIe58xZ3ubdxAm41AJYXRa3EEFLEzxrdzGTCU
-         aMrXq5OHX28dXhpDDqf5eqmw/NcsC1p6D3F8SlfvCZuEEOEH0YOu25PbMNjNg4wEbELi
-         9nYEOuulWiQzzUmLYAYd5/LVH9rCx+KQnRwqRUMLTb0N2jTlttMjP/ujseCJa8ujBYso
-         MGl9mAi6IuHITt5sdP3LY6RR52F//8UOkb+2+9OLmcOp0HZVBkDAGb2TvUQF72QeMW6S
-         pJgA==
-X-Forwarded-Encrypted: i=1; AJvYcCU661VXnyICCjnHtZbsiP3N96GlOf3Rtr33oo/v+knG4k8kmlXbMW1a8YsmcDnvJpoTAznR605t@lists.linux.dev
-X-Gm-Message-State: AOJu0YwYWuSgPERtVT0pnHIxw9+o5HIjzPs4uDXoaVptsxKk972HHXkf
-	tKdfh5NOjC9Kk0Y+W8kZddivkxV48ZuyVwFD6LqAGwprGVCfxn6zkNXDm+tzZTH6YrD2RVcQYd5
-	jZqz7NhCHQJ7ZB5L9/8E+Qc2QvumGQt4=
-X-Gm-Gg: ASbGnct7xrjmvvRe47qfuyMUlkKndf0fHRjI+HFbIJRRaZBF+NZngUs9TcUpBHjttTq
-	DqIRZgcEUcnVe+aWfxvU9kMirSmStYq9ToMGgbJ4DdLWf8Agx3Gjv6RZlT0eE2J4YZuRjS3HsAM
-	ZVY6Y/sRE4fF1fF/roIDiqVFx5HjIrACzr
-X-Google-Smtp-Source: AGHT+IE6aWxf93Mgju2436vKfZ9FnWr6MAWyx+AfEYRoQoWD+Un59jcMnqr7D+uOUxx2gT5GGNl/U6k7mzVQmXV29jA=
-X-Received: by 2002:a17:903:4b28:b0:22e:50d1:b8d1 with SMTP id
- d9443c01a7336-233f3658cafmr976555ad.3.1747951837366; Thu, 22 May 2025
- 15:10:37 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1747957884; x=1748562684;
+        h=content-disposition:mime-version:reply-to:subject:cc:to:from:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JdSGGP4i8x9bilkIzdRnc9XdO8ilTm4tAPeTA/a9Egs=;
+        b=GW/YpMrnqLnpHe4SCqcmttn7Rb9GXmPlicmlQzSBi76F9xSdVW0l0RuxDnad71Vzom
+         tAqfI4nu8Q/yP0rViLYHYixYe6UWia5822I1lb7lBJEQKt9OhPOqio0DlwfUWqPinNzm
+         yMGauvOpHlAVPpdVaVjAtLls0Qg7nTIXRbe4smbXKgDt4aq2hjL9MBGlC6PyMX8vZk6p
+         XCPXQKddHMjdobtAa4vS5gpVyzn1RR7GI9/pOg2TnYRsd2ATA3Fe4/2wc4NUgf7n5+Qr
+         q1hNXNd612XE1FI61vI77eOKyPqT2XOeakWnG8CsjTQZRuBpGh3lcPyaiJez7xAqDNEt
+         O+gA==
+X-Forwarded-Encrypted: i=1; AJvYcCUlK9fm0p2QP7/Ptv6aS7kyBg9Zpfv/H0W7h+UimewQmyeT/KRDtY1ZkRV+bLbOEvPoWNt+2mO0@lists.linux.dev
+X-Gm-Message-State: AOJu0YznHOduElnavW9xksAKyr1zWJu9cPdSLRJE/QJ69EsOICIV6eu2
+	l1FO74uOjd9eC6gEDY6XoIBBL6J43LwxD+99emxOO+1hYtnyEDnd3AMR
+X-Gm-Gg: ASbGnct3v5kuwg8c8cCfEOmC7NZE14Fc3Ndv3twgchF+A/7ERNh9OvP/etrLyeFMzqp
+	clYN7DceJkl2BlPpmYs4D8CLCue8a9W6FKowI4pTdxD7hN20s7jmbY5m2F2LSt+r0peTpqvHpoz
+	Cu6h60FVNMBTV5qW+J+cYPvb+jtbtJXz9wY8RpN+BmMt92L2LHnS4EL43A2zQONTceBMhHS2ngq
+	q12XnxWgtQCan28UDgsdMh1mRFeJUHz+nkDtQg1eY1KX2HR87ZnvpJGawn2xFg+M0QqWfoBzyJ0
+	k/PrHix87vhPg7D3tzkm33nr5EGrbgO5LeyVB8sUMQVoYvMJ1j0il+g=
+X-Google-Smtp-Source: AGHT+IEfgibsCry+xPlNkoNT5afdLC9QRPTzl5aygSpWu90xdX49V0evjNDGo+MZuY+kRtIR6a99wg==
+X-Received: by 2002:a05:600c:4f42:b0:442:dc75:5625 with SMTP id 5b1f17b1804b1-442fd60cb7bmr245173185e9.5.1747957883857;
+        Thu, 22 May 2025 16:51:23 -0700 (PDT)
+Received: from akanner-r14. ([5.151.48.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442ebdc362fsm243071505e9.1.2025.05.22.16.51.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 May 2025 16:51:23 -0700 (PDT)
+Message-ID: <682fb87b.050a0220.33d4e6.76e3@mx.google.com>
+X-Google-Original-Message-ID: <aC+4ePTiiGBxzuJq@akanner-r14.>
+Date: Fri, 23 May 2025 00:51:20 +0100
+From: Andrew Kanner <andrew.kanner@gmail.com>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev, Li Nan <linan122@huawei.com>,
+	Song Liu <song@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.6 005/568] md: fix deadlock between mddev_suspend and
+ flush bio
+Reply-To: 20240730151640.019989388@linuxfoundation.org
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250325184309.97170-1-ojeda@kernel.org>
-In-Reply-To: <20250325184309.97170-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Fri, 23 May 2025 00:10:24 +0200
-X-Gm-Features: AX0GCFuI-Cp0LblAbfBsD5C8vBzb-kYyMkgjULkrHzzq5fNIwQ_8FcHrtWkpgus
-Message-ID: <CANiq72mwbJZ4kDe6CGBovX=_y0h+6y_xzYKoY6384oyCmcazSw@mail.gmail.com>
-Subject: Re: [PATCH] rust: workaround `bindgen` issue with forward references
- to `enum` types
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Tue, Mar 25, 2025 at 7:43=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
+> [...]
 >
-> `bindgen` currently generates the wrong type for an `enum` when there
-> is a forward reference to it. For instance:
+> Additionally, the only difference between fixing the issue and before is
+> that there is no return error handling of make_request(). But after
+> previous patch cleaned md_write_start(), make_requst() only return error
+> in raid5_make_request() by dm-raid, see commit 41425f96d7aa ("dm-raid456,
+> md/raid456: fix a deadlock for dm-raid456 while io concurrent with
+> reshape)". Since dm always splits data and flush operation into two
+> separate io, io size of flush submitted by dm always is 0, make_request()
+> will not be called in md_submit_flush_data(). To prevent future
+> modifications from introducing issues, add WARN_ON to ensure
+> make_request() no error is returned in this context.
 >
->     enum E;
->     enum E { A };
->
-> generates:
->
->     pub const E_A: E =3D 0;
->     pub type E =3D i32;
->
-> instead of the expected:
->
->     pub const E_A: E =3D 0;
->     pub type E =3D ffi::c_uint;
->
-> The issue was reported to upstream `bindgen` [1].
->
-> Now, both GCC and Clang support silently these forward references to
-> `enum` types, unless `-Wpedantic` is passed, and it turns out that some
-> headers in the kernel depend on them.
->
-> Thus, depending on how the headers are included, which in turn may depend
-> on the kernel configuration or the architecture, we may get a different
-> type on the Rust side for a given C `enum`.
->
-> That can be quite confusing, to say the least, especially since
-> developers may only notice issues when building for other architectures
-> like in [2]. In particular, they may end up forcing a cast and adding
-> an `#[allow(clippy::unnecessary_cast)]` like it was done in commit
-> 94e05a66ea3e ("rust: hrtimer: allow timer restart from timer handler"),
-> which isn't great.
->
-> Instead, let's have a section at the top of our `bindings_helper.h` that
-> `#include`s the headers with the affected types -- hopefully there are
-> not many cases and there is a single ordering that covers all cases.
->
-> This allows us to remove the cast and the `#[allow]`, thus keeping the
-> correct code in the source files. When the issue gets resolved in upstrea=
-m
-> `bindgen` (and we update our minimum `bindgen` version), we can easily
-> remove this section at the top.
->
-> Link: https://github.com/rust-lang/rust-bindgen/issues/3179 [1]
-> Link: https://lore.kernel.org/rust-for-linux/87tt7md1s6.fsf@kernel.org/ [=
-2]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> [...]
+> @@ -560,8 +552,20 @@ static void md_submit_flush_data(struct work_struct *ws)
+>  		bio_endio(bio);
+>  	} else {
+>  		bio->bi_opf &= ~REQ_PREFLUSH;
+> -		md_handle_request(mddev, bio);
+> +
+> +		/*
+> +		 * make_requst() will never return error here, it only
+> +		 * returns error in raid5_make_request() by dm-raid.
+> +		 * Since dm always splits data and flush operation into
+> +		 * two separate io, io size of flush submitted by dm
+> +		 * always is 0, make_request() will not be called here.
+> +		 */
+> +		if (WARN_ON_ONCE(!mddev->pers->make_request(mddev, bio)))
+> +			bio_io_error(bio);;
+>  	}
 
-Applied to `rust-next` -- thanks everyone!
+Hello,
 
-    [ Added extra paragraph on the comment to clarify that the workaround m=
-ay
-      not be possible in some cases. - Miguel ]
+It looks we can hit this WARN_ON_ONCE() after which rootfs is
+switching to read-only:
 
-Cheers,
-Miguel
+May 20 15:13:35 hostname kernel: WARNING: CPU: 35 PID: 1517323 at drivers/md/md.c:621 md_submit_flush_data+0x9b/0xe0
+...
+May 20 15:13:35 hostname kernel: XFS (md125): log I/O error -5
+May 20 15:13:35 hostname kernel: XFS (md125): Filesystem has been shut down due to log error (0x2).
+May 20 15:13:35 hostname kernel: XFS (md125): Please unmount the filesystem and rectify the problem(s).
+
+Can you double check if the following regression is actual?
+
+Since both stable/linux-6.1.y and stable/linux-6.6.y branches don't
+have b75197e86e6d ("md: Remove flush handling") there is a minor issue
+with this backport.
+
+Statement "previous patch cleaned md_write_start(), make_requst() only
+return error in raid5_make_request() by dm-raid" will not work for
+both branches since 03e792eaf18e ("md: change the return value type of
+md_write_start to void") was not backported.
+
+So we should either backport it, or do error handling, not the
+WARN_ON_ONCE().
+
+-- 
+Andrew Kanner
