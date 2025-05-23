@@ -1,404 +1,167 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E9F1A314F
-	for <patches@lists.linux.dev>; Fri, 23 May 2025 09:00:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E831A0731
+	for <patches@lists.linux.dev>; Fri, 23 May 2025 09:25:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747990820; cv=none; b=ivwOoYjTt6ZlU1u4Gsry5QFl+7WPgvHQNf2j+QC49Y17akRbNYSddosSssaYe9PdOG1utbXeD0FLR2Z4O3nOi3RjfrYGHRFGZLWZwZqZN3753qEI3LL0hbQsP9ABdm3eiGzYBQYCBWYoSCDzvmp6P392HR3CUwzXm8j2xOwPqfo=
+	t=1747992324; cv=none; b=lCIXmlcQ24O/dTOPmJzSCkgpfkgVzlZ/2e9RS0PIe/3QbxDEo8OS1hhxgYJk6buqSIVMK0ZZQST7DG7Rp0V6H8XkItYVivnZjaAGgNf3OZlnavNxY9x7+S2tXAAHeZN22dxl5JVwzllwNutT1ZxTEI6KPcXUTpfjFvv8TuWKPO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747990820; c=relaxed/simple;
-	bh=fFrQ/JXoJLPBH7HEbAxWk44fvHSAe7VVAjZtBLCRav0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=E8cs/p5zyeBQPcYAbEZi25eUf3ba/xLNIPX+6Ly2qhfaPFWI9vSuzll3Y9vqJ+sXGrh4TTw0YcnW2YNiE2PN9+apmUaw1mfHZLatcAVh/hrCuJUifOz4KMCpk2cmUkgPCxJTmtdcxHNpGHzjxChcc2oyNrPYcQT1Cz9NdD7yYcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OBRDmhrS; arc=none smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1747992324; c=relaxed/simple;
+	bh=PGA0Ad3C1HpTjHVROgn9fZ9oWXGJ/ly5wqU3G/dAykY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QHz0Mtlaa+Fcepkz6QMTt3gVKSon9fqgIbIzdNwlurmPGO+7DJjbH3WVeu6WLfvGmG5lqJV63GtwE6dj8s1YEqEeeWvGQSU5k1p4uQ6ga/Ct4cmVREapYc18tcSQQfKrvs6dT2XTnySZcIGcXMDI8b315lUgKI+ktWRN22zhheU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YEDp2EdM; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OBRDmhrS"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-ad1d1f57a01so1622614266b.2
-        for <patches@lists.linux.dev>; Fri, 23 May 2025 02:00:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YEDp2EdM"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-736c277331eso565815b3a.1
+        for <patches@lists.linux.dev>; Fri, 23 May 2025 02:25:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1747990817; x=1748595617; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9uOzrdUJ2LFuVEOHCGYzPK9BiHxjeHo77kFnCgkTb6Y=;
-        b=OBRDmhrS0yq1wVIhxX0R/ljRkaAQvI/eGtdXXB/RKOFX2rYffK6g9zjrBOn+uOPbsz
-         KbyH07x1ibEo36XTGqh6CArtOOy/9cIk3KP1zji3k8RleJ/SsVn62YnSqSmr3udKyAX4
-         V2CjG/kGNT7KfgKDsg5KjmyDihOD+kUVH062QL778QvKoHNqHPHglyLnYiDJlaNJW+xa
-         iYvyjo7YcnuUH9UgpGAAKyEqUwAoj+Ec6JvBVFfVK4+iUNFs0K6GKgvZbXuE7R5tkjn5
-         bkTFttPLKFWtO9drm/8k4RlwIB0BlK7rhj9bmrJQFA5225POkFqMy2apgqXsBHnfElOD
-         XN7Q==
+        d=gmail.com; s=20230601; t=1747992322; x=1748597122; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=4yPM5GHZurT6WiMDMIjRa6sRdT6oGbPUbwT9Dc0gQR0=;
+        b=YEDp2EdMfvt5nbFsIMY/AcReLzBgl7r/5TwA1tA5IIyTOf8sUflevlgWf2fzlTSdWD
+         KP7Qvh0E9zPuO5ELT1tHuYenCeE5nv1ZUReIaN4w6Qy/spdz0RTW/4J46kLWgYqldNXu
+         fzGnfgG3zq6btM9/sIHaXzU8xEMIrsssiTIqsBBSMBn4dg/j92jnpqpG8ZN4LiD4ZZgE
+         cw0pvBHRK3XTd4KK7b1L3EqwJukqYa95AcHUzfXMr+0g6YcSsggma7oZWk99MdRJSkfy
+         WiZa9Q+rnFl2GNghxDrK1iAXG4Z9vH22yXipczcVMPWMhiLaUV2d7GSLEPBrTIKhFx2z
+         6JZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747990817; x=1748595617;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9uOzrdUJ2LFuVEOHCGYzPK9BiHxjeHo77kFnCgkTb6Y=;
-        b=gNa0lgk5rwd3kWAxv31elt+6W2eFVugwZtfCl9ECFekVMHo9m8TrICTIemIwG2vls/
-         /iFPr8O27McKV6qUwzQb4JQsVQCOQcLyyfrnAtlgFezh5N3dtw5LJ17EWVG+YxdbKRn5
-         yPpyn6LbY2H8pKAaZDwY33tsPSSTYwe7sjFun1fgWJD4l4LFy49CXw0r4ojd3HF04B0C
-         7XHkUk0YW+mYlgORifKGIPseCF2XvhrDwIelEsgRn/Nd4+t6TTHkjxV+qu4kdaCerOGK
-         O1UcQ6DUzJDxGEJ5rOjJV/jhxE/40O0K/NmlOOgjhoekzWRqiLVhJea03d0f9Hswdb3o
-         greg==
-X-Forwarded-Encrypted: i=1; AJvYcCVIjChhSDtClLi/4U9if8IEt9UOBQmYDK0vjijd40odKrNN917ZN/Rmm/aqEsJwQHLgDS07J23X@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy1+hLxxAdUPIjYHDzGfRZR7qT8mzaG+g3pjwjHDV/3Jk/bDsjT
-	qM6jFKDreFCSK6WA3VA/BfdfVAK14LL9GrlnMcYS+5hCmuvslAaKgBgQ1SkaQmpunIB9x3RDPzB
-	u/+BGVjGSZU6u+rZ418hweWViQe+2ZYdApOMHrdG+
-X-Gm-Gg: ASbGnctxChil3zo81kZWLP3U38UC/v+RMN9dXy7Se9huAOtkt+IOSedXp5OPgHFqK9E
-	lHGPjOeeQ6SedJvizvn4YqpkQ5aZ3RCq26DXZQsDJ3X1hwjqbmXTthrPENztPfu1zfr940whB3g
-	QlmTrQr1Xj4Yj3PwZWKmQ1WqkpYv+E9IOBFhyIjbJOSX3lB9DLR9n3Q4clvHmjTYu8YvMlWmrl
-X-Google-Smtp-Source: AGHT+IHrHoam2SyDQ+SDFuQ3kRR6NQqlgQ1d7rX02aF+XbK5tBB+f1Jkn6eLnmPaNV6nrsvcgQvKwhCoawOGVhsiExo=
-X-Received: by 2002:a17:907:1b19:b0:aca:c38d:fef0 with SMTP id
- a640c23a62f3a-ad52d08120dmr2751786166b.0.1747990816441; Fri, 23 May 2025
- 02:00:16 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1747992322; x=1748597122;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4yPM5GHZurT6WiMDMIjRa6sRdT6oGbPUbwT9Dc0gQR0=;
+        b=hOC6w3fir4ING30ZbqGjp1gSEEuuktDo1pFxCVATJgQm0mcOLS8ZJSF3W0Yk7o/whM
+         Kip5s5DV9NKkqaNHabaQkcN+YANHfxl0YdWOTFkWmuW83izKW4yGyGScbTvXPnndN8QK
+         XAHFsZKbRP0oAzELBf+58S6n/rKA57XJEx+meQXPSwoH/OtseCVaDWnN9nFrQ/lJKn2B
+         LWNNy/FOlfZYxs/AWQQ7lmGNaDqTe2Rvhdtj9maFM5hl/Ga1+02D/NiyLDokrj0Hcb4I
+         OeJZyfS2oOKMPepTHeE1AbRwkKVr3JqksuXreoas4ogv93OIpx7prCPaWZ58s9h62rR0
+         cy2A==
+X-Gm-Message-State: AOJu0YyNneWbIkveOpsq4u7MG6xOFjsFk79QZutPmMtyn785ZM52vA4H
+	n4pFqLJuZHTJQxtysebCD1stMemX7yxPQeeTKp8FwedByAHUrCVu6S7s
+X-Gm-Gg: ASbGncvKR8+yzrpLg0RdVMpLlADgkk0csN3vspBj27Ddxi8tp9xcdTcO+ym+1FGIGlv
+	rY1RwKUw0JiOoF41BgtMkwyjPxIsH/yfHjvUTsSbRiiM2JjxSVxEKT6aiH9hPyVxQw7ixhB2nfJ
+	kC9qh53jGegb/hDUDaNI4aNfRhAHg5lvPvfrVh62+d+ONPnqy3Qudvyky1r1qwjgVzQ96cVT6V1
+	4CmKKxyyQH1Ns0kPK1QrSfiSL7nBZNWYW4svF3cOT602RitwONhp7k3z+nqa4CG1OqCd99IvS/U
+	imWfK4q3A12dKcLdagvMYEF3GRQnFlSIh4HhGluvWPOTPrzWqiyUorZbd7LmeMu3FE6W3eZbEnF
+	6TwY9sch/IO6DJw5FDISodTxo
+X-Google-Smtp-Source: AGHT+IEhjREyA9R1vAN2c4/XfdKgzwcSq1mlFAlayao0uKzK/2HNIFI6IHqVfNJCeEOSTbLaiN65VA==
+X-Received: by 2002:a05:6a20:12d2:b0:1e1:9e9f:ae4 with SMTP id adf61e73a8af0-21877ab0e3dmr4125419637.13.1747992321797;
+        Fri, 23 May 2025 02:25:21 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a98770eesm12335068b3a.154.2025.05.23.02.25.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 May 2025 02:25:21 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <0f597436-5da6-4319-b918-9f57bde5634a@roeck-us.net>
+Date: Fri, 23 May 2025 02:25:19 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250521225049.132551-1-tony.luck@intel.com> <20250521225049.132551-5-tony.luck@intel.com>
-In-Reply-To: <20250521225049.132551-5-tony.luck@intel.com>
-From: Peter Newman <peternewman@google.com>
-Date: Fri, 23 May 2025 11:00:04 +0200
-X-Gm-Features: AX0GCFvmiUC1CESAcyIjRqdnb9Dai0VpCSt1phsq4U9f_hARl-qLtMQCj1OIYxc
-Message-ID: <CALPaoCj8yfzJ=5CkxTPQXc0-WRWpu0xKRX8v4FAWFGQKtXtMUw@mail.gmail.com>
-Subject: Re: [PATCH v5 04/29] x86,fs/resctrl: Prepare for more monitor events
-To: Tony Luck <tony.luck@intel.com>
-Cc: Fenghua Yu <fenghuay@nvidia.com>, Reinette Chatre <reinette.chatre@intel.com>, 
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>, James Morse <james.morse@arm.com>, 
-	Babu Moger <babu.moger@amd.com>, Drew Fustini <dfustini@baylibre.com>, 
-	Dave Martin <Dave.Martin@arm.com>, Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>, 
-	Chen Yu <yu.c.chen@intel.com>, x86@kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.15 00/59] 5.15.184-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org
+References: <20250520125753.836407405@linuxfoundation.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20250520125753.836407405@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Tony,
+On 5/20/25 06:49, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.184 release.
+> There are 59 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 22 May 2025 12:57:37 +0000.
+> Anything received after that time might be too late.
+> 
 
-On Thu, May 22, 2025 at 12:51=E2=80=AFAM Tony Luck <tony.luck@intel.com> wr=
-ote:
->
-> There's a rule in computer programming that objects appear zero,
-> once, or many times. So code accordingly.
->
-> There are two MBM events and resctrl is coded with a lot of
->
->         if (local)
->                 do one thing
->         if (total)
->                 do a different thing
->
-> Change the rdt_mon_domain and rdt_hw_mon_domain structures to hold arrays
-> of pointers to per event data instead of explicit fields for total and
-> local bandwidth.
->
-> Simplify by coding for many events using loops on which are enabled.
->
-> Move resctrl_is_mbm_event() to <linux/resctrl.h> so it can be used more
-> widely. Also provide a for_each_mbm_event() helper macro.
->
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> ---
->  include/linux/resctrl.h                | 15 +++++---
->  include/linux/resctrl_types.h          |  3 ++
->  arch/x86/kernel/cpu/resctrl/internal.h |  6 ++--
->  arch/x86/kernel/cpu/resctrl/core.c     | 38 ++++++++++----------
->  arch/x86/kernel/cpu/resctrl/monitor.c  | 36 +++++++++----------
->  fs/resctrl/monitor.c                   | 13 ++++---
->  fs/resctrl/rdtgroup.c                  | 48 ++++++++++++--------------
->  7 files changed, 82 insertions(+), 77 deletions(-)
->
-> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-> index 843ad7c8e247..40f2d0d48d02 100644
-> --- a/include/linux/resctrl.h
-> +++ b/include/linux/resctrl.h
-> @@ -161,8 +161,7 @@ struct rdt_ctrl_domain {
->   * @hdr:               common header for different domain types
->   * @ci:                        cache info for this domain
->   * @rmid_busy_llc:     bitmap of which limbo RMIDs are above threshold
-> - * @mbm_total:         saved state for MBM total bandwidth
-> - * @mbm_local:         saved state for MBM local bandwidth
-> + * @mbm_states:                saved state for each QOS MBM event
->   * @mbm_over:          worker to periodically read MBM h/w counters
->   * @cqm_limbo:         worker to periodically read CQM h/w counters
->   * @mbm_work_cpu:      worker CPU for MBM h/w counters
-> @@ -172,8 +171,7 @@ struct rdt_mon_domain {
->         struct rdt_domain_hdr           hdr;
->         struct cacheinfo                *ci;
->         unsigned long                   *rmid_busy_llc;
-> -       struct mbm_state                *mbm_total;
-> -       struct mbm_state                *mbm_local;
-> +       struct mbm_state                *mbm_states[QOS_NUM_L3_MBM_EVENTS=
-];
->         struct delayed_work             mbm_over;
->         struct delayed_work             cqm_limbo;
->         int                             mbm_work_cpu;
-> @@ -376,6 +374,15 @@ bool resctrl_is_mon_event_enabled(enum resctrl_event=
-_id evt);
->
->  bool resctrl_arch_is_evt_configurable(enum resctrl_event_id evt);
->
-> +static inline bool resctrl_is_mbm_event(enum resctrl_event_id e)
-> +{
-> +       return (e >=3D QOS_L3_MBM_TOTAL_EVENT_ID &&
-> +               e <=3D QOS_L3_MBM_LOCAL_EVENT_ID);
-> +}
-> +
-> +#define for_each_mbm_event(evt)        \
-> +       for (evt =3D QOS_L3_MBM_TOTAL_EVENT_ID; evt <=3D QOS_L3_MBM_LOCAL=
-_EVENT_ID; evt++)
-> +
->  /**
->   * resctrl_arch_mon_event_config_write() - Write the config for an event=
-.
->   * @config_info: struct resctrl_mon_config_info describing the resource,=
- domain
-> diff --git a/include/linux/resctrl_types.h b/include/linux/resctrl_types.=
-h
-> index a25fb9c4070d..b468bfbab9ea 100644
-> --- a/include/linux/resctrl_types.h
-> +++ b/include/linux/resctrl_types.h
-> @@ -47,4 +47,7 @@ enum resctrl_event_id {
->         QOS_NUM_EVENTS,
->  };
->
-> +#define QOS_NUM_L3_MBM_EVENTS  (QOS_L3_MBM_LOCAL_EVENT_ID - QOS_L3_MBM_T=
-OTAL_EVENT_ID + 1)
-> +#define MBM_STATE_IDX(evt)     ((evt) - QOS_L3_MBM_TOTAL_EVENT_ID)
-> +
->  #endif /* __LINUX_RESCTRL_TYPES_H */
-> diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu=
-/resctrl/internal.h
-> index 5e3c41b36437..ea185b4d0d59 100644
-> --- a/arch/x86/kernel/cpu/resctrl/internal.h
-> +++ b/arch/x86/kernel/cpu/resctrl/internal.h
-> @@ -54,15 +54,13 @@ struct rdt_hw_ctrl_domain {
->   * struct rdt_hw_mon_domain - Arch private attributes of a set of CPUs t=
-hat share
->   *                           a resource for a monitor function
->   * @d_resctrl: Properties exposed to the resctrl file system
-> - * @arch_mbm_total:    arch private state for MBM total bandwidth
-> - * @arch_mbm_local:    arch private state for MBM local bandwidth
-> + * @arch_mbm_states:   arch private state for each MBM event
->   *
->   * Members of this structure are accessed via helpers that provide abstr=
-action.
->   */
->  struct rdt_hw_mon_domain {
->         struct rdt_mon_domain           d_resctrl;
-> -       struct arch_mbm_state           *arch_mbm_total;
-> -       struct arch_mbm_state           *arch_mbm_local;
-> +       struct arch_mbm_state           *arch_mbm_states[QOS_NUM_L3_MBM_E=
-VENTS];
->  };
->
->  static inline struct rdt_hw_ctrl_domain *resctrl_to_arch_ctrl_dom(struct=
- rdt_ctrl_domain *r)
-> diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/res=
-ctrl/core.c
-> index 819bc7a09327..4403a820db12 100644
-> --- a/arch/x86/kernel/cpu/resctrl/core.c
-> +++ b/arch/x86/kernel/cpu/resctrl/core.c
-> @@ -364,8 +364,8 @@ static void ctrl_domain_free(struct rdt_hw_ctrl_domai=
-n *hw_dom)
->
->  static void mon_domain_free(struct rdt_hw_mon_domain *hw_dom)
->  {
-> -       kfree(hw_dom->arch_mbm_total);
-> -       kfree(hw_dom->arch_mbm_local);
-> +       for (int i =3D 0; i < QOS_NUM_L3_MBM_EVENTS; i++)
-> +               kfree(hw_dom->arch_mbm_states[i]);
->         kfree(hw_dom);
->  }
->
-> @@ -399,25 +399,27 @@ static int domain_setup_ctrlval(struct rdt_resource=
- *r, struct rdt_ctrl_domain *
->   */
->  static int arch_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_mon_domain =
-*hw_dom)
->  {
-> -       size_t tsize;
-> -
-> -       if (resctrl_is_mon_event_enabled(QOS_L3_MBM_TOTAL_EVENT_ID)) {
-> -               tsize =3D sizeof(*hw_dom->arch_mbm_total);
-> -               hw_dom->arch_mbm_total =3D kcalloc(num_rmid, tsize, GFP_K=
-ERNEL);
-> -               if (!hw_dom->arch_mbm_total)
-> -                       return -ENOMEM;
-> -       }
-> -       if (resctrl_is_mon_event_enabled(QOS_L3_MBM_LOCAL_EVENT_ID)) {
-> -               tsize =3D sizeof(*hw_dom->arch_mbm_local);
-> -               hw_dom->arch_mbm_local =3D kcalloc(num_rmid, tsize, GFP_K=
-ERNEL);
-> -               if (!hw_dom->arch_mbm_local) {
-> -                       kfree(hw_dom->arch_mbm_total);
-> -                       hw_dom->arch_mbm_total =3D NULL;
-> -                       return -ENOMEM;
-> -               }
-> +       size_t tsize =3D sizeof(struct arch_mbm_state);
+Build reference: v5.15.184
+Compiler version: x86_64-linux-gcc (GCC) 12.4.0
+Assembler version: GNU assembler (GNU Binutils) 2.40
 
-sizeof(*hw_dom->arch_mbm_states[0])?
+Configuration file workarounds:
+     "s/CONFIG_FRAME_WARN=.*/CONFIG_FRAME_WARN=0/"
 
-The previous code didn't assume a type.
+Building i386:defconfig ... passed
+Building i386:allyesconfig ... failed
+--------------
+Error log:
+x86_64-linux-ld: arch/x86/kernel/static_call.o: in function `__static_call_transform':
+static_call.c:(.ref.text+0x46): undefined reference to `cpu_wants_rethunk_at'
+make[1]: [Makefile:1234: vmlinux] Error 1 (ignored)
+--------------
+Building i386:allmodconfig ... failed
+--------------
+Error log:
+x86_64-linux-ld: arch/x86/kernel/static_call.o: in function `__static_call_transform':
+static_call.c:(.ref.text+0x46): undefined reference to `cpu_wants_rethunk_at'
+make[1]: [Makefile:1234: vmlinux] Error 1 (ignored)
+--------------
 
-> +       enum resctrl_event_id evt;
-> +       int idx;
-> +
-> +       for_each_mbm_event(evt) {
-> +               if (!resctrl_is_mon_event_enabled(evt))
-> +                       continue;
-> +               idx =3D MBM_STATE_IDX(evt);
-> +               hw_dom->arch_mbm_states[idx] =3D kcalloc(num_rmid, tsize,=
- GFP_KERNEL);
-> +               if (!hw_dom->arch_mbm_states[idx])
-> +                       goto cleanup;
->         }
->
->         return 0;
-> +cleanup:
-> +       while (--idx >=3D 0) {
-> +               kfree(hw_dom->arch_mbm_states[idx]);
-> +               hw_dom->arch_mbm_states[idx] =3D NULL;
-> +       }
-> +
-> +       return -ENOMEM;
->  }
->
->  static int get_domain_id_from_scope(int cpu, enum resctrl_scope scope)
-> diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/=
-resctrl/monitor.c
-> index fda579251dba..85526e5540f2 100644
-> --- a/arch/x86/kernel/cpu/resctrl/monitor.c
-> +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-> @@ -160,18 +160,14 @@ static struct arch_mbm_state *get_arch_mbm_state(st=
-ruct rdt_hw_mon_domain *hw_do
->                                                  u32 rmid,
->                                                  enum resctrl_event_id ev=
-entid)
->  {
-> -       switch (eventid) {
-> -       case QOS_L3_OCCUP_EVENT_ID:
-> -               return NULL;
-> -       case QOS_L3_MBM_TOTAL_EVENT_ID:
-> -               return &hw_dom->arch_mbm_total[rmid];
-> -       case QOS_L3_MBM_LOCAL_EVENT_ID:
-> -               return &hw_dom->arch_mbm_local[rmid];
-> -       default:
-> -               /* Never expect to get here */
-> -               WARN_ON_ONCE(1);
-> +       struct arch_mbm_state *state;
-> +
-> +       if (!resctrl_is_mbm_event(eventid))
->                 return NULL;
-> -       }
-> +
-> +       state =3D hw_dom->arch_mbm_states[MBM_STATE_IDX(eventid)];
-> +
-> +       return state ? &state[rmid] : NULL;
->  }
->
->  void resctrl_arch_reset_rmid(struct rdt_resource *r, struct rdt_mon_doma=
-in *d,
-> @@ -200,14 +196,16 @@ void resctrl_arch_reset_rmid(struct rdt_resource *r=
-, struct rdt_mon_domain *d,
->  void resctrl_arch_reset_rmid_all(struct rdt_resource *r, struct rdt_mon_=
-domain *d)
->  {
->         struct rdt_hw_mon_domain *hw_dom =3D resctrl_to_arch_mon_dom(d);
-> -
-> -       if (resctrl_is_mon_event_enabled(QOS_L3_MBM_TOTAL_EVENT_ID))
-> -               memset(hw_dom->arch_mbm_total, 0,
-> -                      sizeof(*hw_dom->arch_mbm_total) * r->num_rmid);
-> -
-> -       if (resctrl_is_mon_event_enabled(QOS_L3_MBM_LOCAL_EVENT_ID))
-> -               memset(hw_dom->arch_mbm_local, 0,
-> -                      sizeof(*hw_dom->arch_mbm_local) * r->num_rmid);
-> +       enum resctrl_event_id evt;
-> +       int idx;
-> +
-> +       for_each_mbm_event(evt) {
-> +               idx =3D MBM_STATE_IDX(evt);
-> +               if (!hw_dom->arch_mbm_states[idx])
-> +                       continue;
-> +               memset(hw_dom->arch_mbm_states[idx], 0,
-> +                      sizeof(struct arch_mbm_state) * r->num_rmid);
-> +       }
->  }
->
->  static u64 mbm_overflow_count(u64 prev_msr, u64 cur_msr, unsigned int wi=
-dth)
-> diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-> index 325e23c1a403..4cd0789998bf 100644
-> --- a/fs/resctrl/monitor.c
-> +++ b/fs/resctrl/monitor.c
-> @@ -346,15 +346,14 @@ static struct mbm_state *get_mbm_state(struct rdt_m=
-on_domain *d, u32 closid,
->                                        u32 rmid, enum resctrl_event_id ev=
-tid)
->  {
->         u32 idx =3D resctrl_arch_rmid_idx_encode(closid, rmid);
-> +       struct mbm_state *states;
->
-> -       switch (evtid) {
-> -       case QOS_L3_MBM_TOTAL_EVENT_ID:
-> -               return &d->mbm_total[idx];
-> -       case QOS_L3_MBM_LOCAL_EVENT_ID:
-> -               return &d->mbm_local[idx];
-> -       default:
-> +       if (!resctrl_is_mbm_event(evtid))
->                 return NULL;
-> -       }
-> +
-> +       states =3D d->mbm_states[MBM_STATE_IDX(evtid)];
-> +
-> +       return states ? &states[idx] : NULL;
->  }
->
->  static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
-> diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-> index 80e74940281a..8649b89d7bfd 100644
-> --- a/fs/resctrl/rdtgroup.c
-> +++ b/fs/resctrl/rdtgroup.c
-> @@ -127,12 +127,6 @@ static bool resctrl_is_mbm_enabled(void)
->                 resctrl_is_mon_event_enabled(QOS_L3_MBM_LOCAL_EVENT_ID));
->  }
->
-> -static bool resctrl_is_mbm_event(int e)
-> -{
-> -       return (e >=3D QOS_L3_MBM_TOTAL_EVENT_ID &&
-> -               e <=3D QOS_L3_MBM_LOCAL_EVENT_ID);
-> -}
-> -
->  /*
->   * Trivial allocator for CLOSIDs. Use BITMAP APIs to manipulate a bitmap
->   * of free CLOSIDs.
-> @@ -4020,8 +4014,10 @@ static void rdtgroup_setup_default(void)
->  static void domain_destroy_mon_state(struct rdt_mon_domain *d)
->  {
->         bitmap_free(d->rmid_busy_llc);
-> -       kfree(d->mbm_total);
-> -       kfree(d->mbm_local);
-> +       for (int i =3D 0; i < QOS_NUM_L3_MBM_EVENTS; i++) {
-> +               kfree(d->mbm_states[i]);
-> +               d->mbm_states[i] =3D NULL;
-> +       }
->  }
->
->  void resctrl_offline_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl=
-_domain *d)
-> @@ -4081,32 +4077,34 @@ void resctrl_offline_mon_domain(struct rdt_resour=
-ce *r, struct rdt_mon_domain *d
->  static int domain_setup_mon_state(struct rdt_resource *r, struct rdt_mon=
-_domain *d)
->  {
->         u32 idx_limit =3D resctrl_arch_system_num_rmid_idx();
-> -       size_t tsize;
-> +       size_t tsize =3D sizeof(struct mbm_state);
+In v5.15.y, cpu_wants_rethunk_at is only built if CONFIG_STACK_VALIDATION=y,
+but that is not supported for i386 builds. The dummy function in
+arch/x86/include/asm/alternative.h doesn't take that dependency into account.
 
-Here too.
+Guenter
 
-Thanks!
--Peter
