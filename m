@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB39263F5E;
-	Tue, 27 May 2025 16:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C73C19E7F9;
+	Tue, 27 May 2025 16:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364695; cv=none; b=lHObpQdjxD2qDSk3/x9Im2vhJ24pfKwX2jB/cwrSsPM1von3cWc3CzURVT8S9iydCB21nLoENSt1O7awpQg+WmqKwRyInsad0sbNCFzDlZRL2YuSEoXnfQXqK+DxLk036aT9OVJt4OArAN64Mmfe5Imhs6VwOPyr/nJC2ySu9Hw=
+	t=1748364700; cv=none; b=nv6Z0uZ/6edt6qz9fp25HoaVZctNNoGBGNDeL+MRFHULHvj9XnOpbDqv7E5ayp2YrmJnY100OXbw1sX3utTit/EGnWKiQFgP0/xrnSmlW8bZ0hzx1NYULvj/8oLin8cI7rp2zchk7xRVuNuvUUHWg1oyXQ4w1Yu0x/Q6cXE4/as=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364695; c=relaxed/simple;
-	bh=l14/EBEijhWoGroJSALTMLLAjJ6VFV+8TdwrPafCUd4=;
+	s=arc-20240116; t=1748364700; c=relaxed/simple;
+	bh=Xt2w5lttwsqP4l7r0XgELTwn1MJGZFaiJIJQErXh0Mc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lj/Mg3c/3cWQJO90c/d2og1W/AxDuyFISOPt0aaKSrXHGemymZAHZ4YoBWMlZAW4B+LZaG8UPeK8hdDoHvgZPTFVqERkc1Bs6DMvNy96panqItADQrSUZiz/UajNUZ7fSnHd+iA7zZF0CnCF94+6iW9ZyJcY5D4XecL8Ftzxruk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlpSLOl1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sAZZHgt8FOrTU+uWzZ1cl2JRM3U+W6WwsAezdpHf2kK0o6+mzqGqPWxFpWgEJzOKYUWk5dFz5aWL35J/OEByVjH88PdK327tGD3L1TsIRKKFtwQydVVqLGUmQCbt5BIHzTa0DnYocktarNmVAsqgACrGVOfWNeHwGM3LZRJ8zhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WuX/GoLH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlpSLOl1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921F9C4CEE9;
-	Tue, 27 May 2025 16:51:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WuX/GoLH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E67EC4CEE9;
+	Tue, 27 May 2025 16:51:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364694;
-	bh=l14/EBEijhWoGroJSALTMLLAjJ6VFV+8TdwrPafCUd4=;
+	s=korg; t=1748364699;
+	bh=Xt2w5lttwsqP4l7r0XgELTwn1MJGZFaiJIJQErXh0Mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nlpSLOl1N9cMGyq67duBD1r5RAcmTnx+yT3cJckJk0SNCsnj1Aw9EwLK9E7jQPtoA
-	 Q7eGczI1Bgrs02UxsmXoutWkBrB4qU85WoYC1QAlIozb6aI1VQiMdvh1U2afyn3xuA
-	 ynPI+q+Gnkd0ur0RgH76jN6tWKUySk8Rz52sKwGQ=
+	b=WuX/GoLHqHJb+i9YA/8Nbj6+Y3GtRlxiGxA139zhCHiMZO7v2efkdsZp/7Lh+oK79
+	 n75iuiwyv9rYBfWLI0dh4kj8yxiqp+JQYmHoc9ypr4vOaPJNUYnC8qqkRScwa5CXdb
+	 ok7m9FFtymsXd3xAaYmQvbyR2USbrpZnsOaeMpgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Mykyta Yatsenko <yatsenko@meta.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 137/626] vfio/pci: Handle INTx IRQ_NOTCONNECTED
-Date: Tue, 27 May 2025 18:20:30 +0200
-Message-ID: <20250527162450.600737287@linuxfoundation.org>
+Subject: [PATCH 6.12 138/626] bpf: Return prog btf_id without capable check
+Date: Tue, 27 May 2025 18:20:31 +0200
+Message-ID: <20250527162450.641777909@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,82 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Williamson <alex.williamson@redhat.com>
+From: Mykyta Yatsenko <yatsenko@meta.com>
 
-[ Upstream commit 860be250fc32de9cb24154bf21b4e36f40925707 ]
+[ Upstream commit 07651ccda9ff10a8ca427670cdd06ce2c8e4269c ]
 
-Some systems report INTx as not routed by setting pdev->irq to
-IRQ_NOTCONNECTED, resulting in a -ENOTCONN error when trying to
-setup eventfd signaling.  Include this in the set of conditions
-for which the PIN register is virtualized to zero.
+Return prog's btf_id from bpf_prog_get_info_by_fd regardless of capable
+check. This patch enables scenario, when freplace program, running
+from user namespace, requires to query target prog's btf.
 
-Additionally consolidate vfio_pci_get_irq_count() to use this
-virtualized value in reporting INTx support via ioctl and sanity
-checking ioctl paths since pdev->irq is re-used when the device
-is in MSI mode.
-
-The combination of these results in both the config space of the
-device and the ioctl interface behaving as if the device does not
-support INTx.
-
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20250311230623.1264283-1-alex.williamson@redhat.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/bpf/20250317174039.161275-3-mykyta.yatsenko5@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/vfio_pci_config.c |  3 ++-
- drivers/vfio/pci/vfio_pci_core.c   | 10 +---------
- drivers/vfio/pci/vfio_pci_intrs.c  |  2 +-
- 3 files changed, 4 insertions(+), 11 deletions(-)
+ kernel/bpf/syscall.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/vfio/pci/vfio_pci_config.c b/drivers/vfio/pci/vfio_pci_config.c
-index ea2745c1ac5e6..8ea38e7421df4 100644
---- a/drivers/vfio/pci/vfio_pci_config.c
-+++ b/drivers/vfio/pci/vfio_pci_config.c
-@@ -1813,7 +1813,8 @@ int vfio_config_init(struct vfio_pci_core_device *vdev)
- 					cpu_to_le16(PCI_COMMAND_MEMORY);
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 977c084577565..fc048d3c0e69f 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -4606,6 +4606,8 @@ static int bpf_prog_get_info_by_fd(struct file *file,
+ 	info.recursion_misses = stats.misses;
+ 
+ 	info.verified_insns = prog->aux->verified_insns;
++	if (prog->aux->btf)
++		info.btf_id = btf_obj_id(prog->aux->btf);
+ 
+ 	if (!bpf_capable()) {
+ 		info.jited_prog_len = 0;
+@@ -4752,8 +4754,6 @@ static int bpf_prog_get_info_by_fd(struct file *file,
+ 		}
  	}
  
--	if (!IS_ENABLED(CONFIG_VFIO_PCI_INTX) || vdev->nointx)
-+	if (!IS_ENABLED(CONFIG_VFIO_PCI_INTX) || vdev->nointx ||
-+	    vdev->pdev->irq == IRQ_NOTCONNECTED)
- 		vconfig[PCI_INTERRUPT_PIN] = 0;
- 
- 	ret = vfio_cap_init(vdev);
-diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
-index c9eaba2276365..087c273a547fa 100644
---- a/drivers/vfio/pci/vfio_pci_core.c
-+++ b/drivers/vfio/pci/vfio_pci_core.c
-@@ -727,15 +727,7 @@ EXPORT_SYMBOL_GPL(vfio_pci_core_finish_enable);
- static int vfio_pci_get_irq_count(struct vfio_pci_core_device *vdev, int irq_type)
- {
- 	if (irq_type == VFIO_PCI_INTX_IRQ_INDEX) {
--		u8 pin;
--
--		if (!IS_ENABLED(CONFIG_VFIO_PCI_INTX) ||
--		    vdev->nointx || vdev->pdev->is_virtfn)
--			return 0;
--
--		pci_read_config_byte(vdev->pdev, PCI_INTERRUPT_PIN, &pin);
--
--		return pin ? 1 : 0;
-+		return vdev->vconfig[PCI_INTERRUPT_PIN] ? 1 : 0;
- 	} else if (irq_type == VFIO_PCI_MSI_IRQ_INDEX) {
- 		u8 pos;
- 		u16 flags;
-diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
-index 8382c58343356..565966351dfad 100644
---- a/drivers/vfio/pci/vfio_pci_intrs.c
-+++ b/drivers/vfio/pci/vfio_pci_intrs.c
-@@ -259,7 +259,7 @@ static int vfio_intx_enable(struct vfio_pci_core_device *vdev,
- 	if (!is_irq_none(vdev))
- 		return -EINVAL;
- 
--	if (!pdev->irq)
-+	if (!pdev->irq || pdev->irq == IRQ_NOTCONNECTED)
- 		return -ENODEV;
- 
- 	name = kasprintf(GFP_KERNEL_ACCOUNT, "vfio-intx(%s)", pci_name(pdev));
+-	if (prog->aux->btf)
+-		info.btf_id = btf_obj_id(prog->aux->btf);
+ 	info.attach_btf_id = prog->aux->attach_btf_id;
+ 	if (attach_btf)
+ 		info.attach_btf_obj_id = btf_obj_id(attach_btf);
 -- 
 2.39.5
 
