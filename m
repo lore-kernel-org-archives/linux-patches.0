@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33DA61A3159;
-	Tue, 27 May 2025 17:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6133678F32;
+	Tue, 27 May 2025 17:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365374; cv=none; b=riV4zVStXqHYkscuGYIaz+/HFnDov/E3A0w6lm5UuByfNv8rrKNARo55u84/2+Bni9qjlWOfdUuLL9A1XS68vK/5UpvIhFcqsovOVtlZy2UD5gH/5/9cwzZ5LqPPvERtlNJ6aEXSz14N7y1y/dwU7psy6KBgMt5V8sBt0s5a+Co=
+	t=1748365377; cv=none; b=axKmS4Bip3TMc9aI7tglUZzqmrx+iQnx/pAxSE6KsS1SwDj4aigqNtfBPw7fl6WGimTEJoe00SQBHGVUHknYJABxHFh6I/kgkUWVf94xjUrJddq+9Xtpn9pq3R2E4Db76C0cBGgCnykS89VGT3g4Y1YisySDUgwrsWtfkK2jwY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365374; c=relaxed/simple;
-	bh=7Ww4K2pkaaSpumhTISl2Ubs6b3ZoQpKi/RlBmV97ugY=;
+	s=arc-20240116; t=1748365377; c=relaxed/simple;
+	bh=OI5crT65KPE0w1hDBTry/V8FjhFTeNIH+gD0ECHMFcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KWUrxk4JX2bTGTR/hj26EW7iBmwGQHCC5JR6RFbPaJ/fv3q9H1ddrxyZdvJFsDq5ueGnA6C5nVXgprNCA8zlCm0HPU/3MEEisgBbraNR9G8pJHD3f6xCf4unrLym2uMOaFZDVP7Vp4lxBg65CfySkbWflihhHeN8z4CFhxTmxok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TuUelqj7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EX4O6xnV4yJsyAKAYfB5q3VnOYYB6izO3EKOGZURgb55FqTPBNM+ZgikQJDtlKcdsr+YAyf3+uYUjn1tG1CjAZIcnodKzsBTg8/aLSC3LOafMxU+dlJpv9pue4YizDSZag29MDOBCIKSuR/1e/vmOGavnKI9Dux5ti1dadg8zYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XJ4/rT8Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TuUelqj7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99916C4CEE9;
-	Tue, 27 May 2025 17:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XJ4/rT8Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E73C4CEED;
+	Tue, 27 May 2025 17:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365374;
-	bh=7Ww4K2pkaaSpumhTISl2Ubs6b3ZoQpKi/RlBmV97ugY=;
+	s=korg; t=1748365377;
+	bh=OI5crT65KPE0w1hDBTry/V8FjhFTeNIH+gD0ECHMFcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TuUelqj7p/7cPmmSYZ665aeahYOazTUx6kyuwyZ/G5Uzsw+IVMp+RF7FGnNB4sLru
-	 KNCedTkQdbs8GWkGx4qjHA9cDi8vfq7eG5a15u3ENQkzvjglk92PnIgkoEWVHbV/PR
-	 w7FFwNlbBgndGpj9vfd24SMuUwNBUO91WUonSLxE=
+	b=XJ4/rT8YjXqAXqM86jA2Mkyvviwwd3Ck9VJXB0S+e5zESJvtYtgd/WyTLPHDkcAsW
+	 2JhoFYjMKLnGNCWHaypKAX9D/bbKiYMONquri7LXHuuLl/NmIKuerJCFnR/3aNv73N
+	 +KaoD068KbZWyvZ4EhmFGt9oe75E4gGTGlTjHgQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Siva Durga Prasad Paladugu <siva.durga.prasad.paladugu@amd.com>,
+	Nava kishore Manne <nava.kishore.manne@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 356/626] firmware: arm_ffa: Handle the presence of host partition in the partition info
-Date: Tue, 27 May 2025 18:24:09 +0200
-Message-ID: <20250527162459.481118645@linuxfoundation.org>
+Subject: [PATCH 6.12 357/626] firmware: xilinx: Dont send linux address to get fpga config get status
+Date: Tue, 27 May 2025 18:24:10 +0200
+Message-ID: <20250527162459.520662964@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,43 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Siva Durga Prasad Paladugu <siva.durga.prasad.paladugu@amd.com>
 
-[ Upstream commit 2f622a8b0722d332a2a149794a3add47bc9bdcf3 ]
+[ Upstream commit 5abc174016052caff1bcf4cedb159bd388411e98 ]
 
-Currently it is assumed that the firmware doesn't present the host
-partition in the list of partitions presented as part of the response
-to PARTITION_INFO_GET from the firmware. However, there are few
-platforms that prefer to present the same in the list of partitions.
-It is not manadatory but not restricted as well.
+Fpga get config status just returns status through ret_payload and there
+is no need to allocate local buf and send its address through SMC args.
+Moreover, the address that is being passed till now is linux virtual
+address and is incorrect.
+Corresponding modification has been done in the firmware to avoid using the
+address sent by linux.
 
-So handle the same by making sure to check the presence of the host
-VM ID in the XArray partition information maintained/managed in the
-driver before attempting to add it.
-
-Tested-by: Viresh Kumar <viresh.kumar@linaro.org>
-Message-Id: <20250217-ffa_updates-v3-7-bd1d9de615e7@arm.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Siva Durga Prasad Paladugu <siva.durga.prasad.paladugu@amd.com>
+Signed-off-by: Nava kishore Manne <nava.kishore.manne@amd.com>
+Link: https://lore.kernel.org/r/20250207054951.1650534-1-nava.kishore.manne@amd.com
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/firmware/xilinx/zynqmp.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 8dc8654f9f4b2..47751b2c057ae 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -1449,6 +1449,10 @@ static int ffa_setup_partitions(void)
+diff --git a/drivers/firmware/xilinx/zynqmp.c b/drivers/firmware/xilinx/zynqmp.c
+index add8acf66a9c7..5578158f13750 100644
+--- a/drivers/firmware/xilinx/zynqmp.c
++++ b/drivers/firmware/xilinx/zynqmp.c
+@@ -1012,17 +1012,13 @@ EXPORT_SYMBOL_GPL(zynqmp_pm_fpga_get_status);
+ int zynqmp_pm_fpga_get_config_status(u32 *value)
+ {
+ 	u32 ret_payload[PAYLOAD_ARG_CNT];
+-	u32 buf, lower_addr, upper_addr;
+ 	int ret;
  
- 	kfree(pbuf);
+ 	if (!value)
+ 		return -EINVAL;
  
-+	/* Check if the host is already added as part of partition info */
-+	if (xa_load(&drv_info->partition_info, drv_info->vm_id))
-+		return 0;
-+
- 	/* Allocate for the host */
- 	info = kzalloc(sizeof(*info), GFP_KERNEL);
- 	if (!info) {
+-	lower_addr = lower_32_bits((u64)&buf);
+-	upper_addr = upper_32_bits((u64)&buf);
+-
+ 	ret = zynqmp_pm_invoke_fn(PM_FPGA_READ, ret_payload, 4,
+-				  XILINX_ZYNQMP_PM_FPGA_CONFIG_STAT_OFFSET, lower_addr, upper_addr,
++				  XILINX_ZYNQMP_PM_FPGA_CONFIG_STAT_OFFSET, 0, 0,
+ 				  XILINX_ZYNQMP_PM_FPGA_READ_CONFIG_REG);
+ 
+ 	*value = ret_payload[1];
 -- 
 2.39.5
 
