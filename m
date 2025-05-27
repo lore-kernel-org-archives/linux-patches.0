@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC9B2110E;
-	Tue, 27 May 2025 17:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891912110E;
+	Tue, 27 May 2025 17:04:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365483; cv=none; b=eLvajlNzdksy30tNHK0M5vVXiMwzpVgLg2C1ukvl1Ed5wA5LsouqcTYN/hYbX8QhDbFmsQ9NxjiEaJbRRFldDoGpYQb2nsJV/B/Rs7MUBk2l5xiRhwVCFcajBN508Q+6yWVUJVusQdNTi3F0QWjBnSEg/BwAdxPgoEKlixa+wKM=
+	t=1748365486; cv=none; b=sMIP5Jisl7DiKuSbiDk5WEN3LvWuVpxnwgmMrI3IbUvCmxGzRKE2ggGs25nFlk87eYCpOoXt8/D308LwHwKz+j4E1StRFxLYZL9KV88MyYVN7kJqvfS8pAr9B8+q9CxPC6ZhMsZ96dn7EHnOrrzNMNXeQiZPaEa6xpk1KJrMB0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365483; c=relaxed/simple;
-	bh=o9ypahR3DsGnGTEj9cghb8mxSEduyfpShcIx0rcA/TY=;
+	s=arc-20240116; t=1748365486; c=relaxed/simple;
+	bh=QgtzTRGVTEyfypDrTtZaqKZmbwOsVakKKm7fpXmnFac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LgDOi1K1fx0Xsmjz4iU44ihe6rnvijGV983ClE+XvoML0MuAlOlXDWV3Wmj1kUaGpRkeTd92uTfhs+GcPoBh1CRC9GqUfow7xvS1JKE0WeNCy4WYzOatJ7VD6SDH+6N3x34S8YbQvY4kfMvLdGHVdufAOcjrTOmVguxoN4nNvgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bC8YV59V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A/kMiO9jUtBW8V56m8qZARyARCIXc9D0keXHLp8tpwBJngUIiwTGAepxZdJ4Gspga5tcnLMyDPrgDJRdum3iu84f/2fNt5vycxhYay+M8uZ8wfM+HyG1k/SW+xeXyJwgYgAHzxohdrmF4P68Qs/eQbBgykcXwsS4gKWR+ZiwSGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JwXhsbop; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bC8YV59V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28D3C4CEE9;
-	Tue, 27 May 2025 17:04:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JwXhsbop"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA643C4CEE9;
+	Tue, 27 May 2025 17:04:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365483;
-	bh=o9ypahR3DsGnGTEj9cghb8mxSEduyfpShcIx0rcA/TY=;
+	s=korg; t=1748365486;
+	bh=QgtzTRGVTEyfypDrTtZaqKZmbwOsVakKKm7fpXmnFac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bC8YV59V0FUqqRpYQmnjR+hgtTFoEz6rjZeWBJmFoRVAzuWXaWvcHc5mv7pLGWW4h
-	 EB/NR5SXScnn9P96bInjUtDeB+ZuBPh+VCptOqpiSJab9M5Z68kOJ+Wi8f/tDuA98u
-	 v0vJKUxKRSJJU9pfP965z6rnpN2V15BcwoU53fd4=
+	b=JwXhsbop6gQqkcLbsMK4tbmx87myRQn7juYqbVTKm+yLnBpe+SiWXBI5LDDlWNnQn
+	 fp/JeADxiON2A3CDIf0WCP5pQXGGuYmMKoRsLGkGy2j6f87oI6Rknq9//XqUcJEw9I
+	 UgXQTcoj7a7Fp4WgBZYaLwJNNddbE7TCcgqj553U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Ilya Bakoulin <Ilya.Bakoulin@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Jiang Liu <gerry@linux.alibaba.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 391/626] drm/amd/display: Dont try AUX transactions on disconnected link
-Date: Tue, 27 May 2025 18:24:44 +0200
-Message-ID: <20250527162500.909386088@linuxfoundation.org>
+Subject: [PATCH 6.12 392/626] drm/amdgpu: reset psp->cmd to NULL after releasing the buffer
+Date: Tue, 27 May 2025 18:24:45 +0200
+Message-ID: <20250527162500.947884351@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -54,55 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Bakoulin <Ilya.Bakoulin@amd.com>
+From: Jiang Liu <gerry@linux.alibaba.com>
 
-[ Upstream commit e8bffa52e0253cfd689813a620e64521256bc712 ]
+[ Upstream commit e92f3f94cad24154fd3baae30c6dfb918492278d ]
 
-[Why]
-Setting link DPMS off in response to HPD disconnect creates AUX
-transactions on a link that is supposed to be disconnected. This can
-cause issues in some cases when the sink re-asserts HPD and expects
-source to re-enable the link.
+Reset psp->cmd to NULL after releasing the buffer in function psp_sw_fini().
 
-[How]
-Avoid AUX transactions on disconnected link.
-
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: Ilya Bakoulin <Ilya.Bakoulin@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Jiang Liu <gerry@linux.alibaba.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/link/protocols/link_dp_phy.c   | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_phy.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_phy.c
-index bafa52a0165a0..17c57cf98ec5c 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_phy.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_phy.c
-@@ -75,7 +75,8 @@ void dp_disable_link_phy(struct dc_link *link,
- 	struct dc  *dc = link->ctx->dc;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+index d70855d7c61c1..31a376f2742a2 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+@@ -531,7 +531,6 @@ static int psp_sw_fini(void *handle)
+ {
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+ 	struct psp_context *psp = &adev->psp;
+-	struct psp_gfx_cmd_resp *cmd = psp->cmd;
  
- 	if (!link->wa_flags.dp_keep_receiver_powered &&
--		!link->skip_implict_edp_power_control)
-+			!link->skip_implict_edp_power_control &&
-+			link->type != dc_connection_none)
- 		dpcd_write_rx_power_ctrl(link, false);
+ 	psp_memory_training_fini(psp);
  
- 	dc->hwss.disable_link_output(link, link_res, signal);
-@@ -163,8 +164,9 @@ enum dc_status dp_set_fec_ready(struct dc_link *link, const struct link_resource
- 	} else {
- 		if (link->fec_state == dc_link_fec_ready) {
- 			fec_config = 0;
--			core_link_write_dpcd(link, DP_FEC_CONFIGURATION,
--				&fec_config, sizeof(fec_config));
-+			if (link->type != dc_connection_none)
-+				core_link_write_dpcd(link, DP_FEC_CONFIGURATION,
-+					&fec_config, sizeof(fec_config));
+@@ -541,8 +540,8 @@ static int psp_sw_fini(void *handle)
+ 	amdgpu_ucode_release(&psp->cap_fw);
+ 	amdgpu_ucode_release(&psp->toc_fw);
  
- 			link_enc->funcs->fec_set_ready(link_enc, false);
- 			link->fec_state = dc_link_fec_not_ready;
+-	kfree(cmd);
+-	cmd = NULL;
++	kfree(psp->cmd);
++	psp->cmd = NULL;
+ 
+ 	psp_free_shared_bufs(psp);
+ 
 -- 
 2.39.5
 
