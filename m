@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C0D139579;
-	Tue, 27 May 2025 17:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFDA86347;
+	Tue, 27 May 2025 17:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365857; cv=none; b=Fx2Z21IakrvpfzFryxC9txywb4MmdSzLYMngbCf1fMQJNvCttm3DTmiGJ8ILdcrgDVJmj/FBFQVePLVMWDzKDOnG3tgXzEBIosth5BgV48wtG8kX6CqxdH0fsqApfMM1dsK4M/sfURSmt05+dZCYoGai0q5FDy/N92jV82ejFco=
+	t=1748365860; cv=none; b=HPXl/y+N5ZM6UvgEhYVjEgrjYG4cjO2mzCQSMlm60lpyVeSKikVthFK90SRbzQQLnC61BKz8J/0gQSr4muD/uEHmmsK9gDxKJev643+i0NidSJvJ6Wgl4wB71tWBZeGcOnI1g3A38QnY/K6nB9f26IV+a0AZzN5T241DulyWOVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365857; c=relaxed/simple;
-	bh=EnFoxBiW5ovyS0wCUzkIsc52VJYuMWDWrb+qpTqvdlU=;
+	s=arc-20240116; t=1748365860; c=relaxed/simple;
+	bh=Mj96WOTpkkD5CQcog0scg8SBbkaNCMZIgUbzRXShUFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c4m0IGGxgb7kgCbJKDu0zI+n5yKinJq9V+6FFLAnu5Swqra4nqVs6XxalGHvA2CJHbZrnWgxs+C112dXkaIC+9WOeEmq6O+zXFChdLRwfKsC6i/czDqvbk1pFZUyhMmsQTAkQAk2dIn6T23MMxib0L+S01fty1VnMH2Wsm3C3C0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N0n/NMJD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CuSbgWtmMgBSplueKSmih1vzeSjowL1tj6gBZJO2fae4DR3chFngbBOLgSpdvNqqdXCBdwY9BYUZqxBwx3Gta27I6fF78v+ys1euKpFB340e62OdA9hsFEUt9vEElawRTkVtTjPbBFISzvprDKzdBZbPprjUdE4DnCp39iDDaFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTYhX8oN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N0n/NMJD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF67C4CEE9;
-	Tue, 27 May 2025 17:10:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTYhX8oN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08EDDC4CEE9;
+	Tue, 27 May 2025 17:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365857;
-	bh=EnFoxBiW5ovyS0wCUzkIsc52VJYuMWDWrb+qpTqvdlU=;
+	s=korg; t=1748365860;
+	bh=Mj96WOTpkkD5CQcog0scg8SBbkaNCMZIgUbzRXShUFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N0n/NMJD6+K983I/YIzZvHV5IoSbyahgI6JaVBkubyxOghb25fwYg7ir+eUQ7lRBE
-	 VY2ZuaXb3NyNVGcET2Q/tXvSKxRPIM/U/zGMxaSyNe2qsOWkPVWAC1fCDYxTsHO7Zl
-	 7bWndPMrANk16lC7Dt3gGBe3WHIVieMAbzugL93A=
+	b=NTYhX8oNjEJ1dVW7K6T2YPheBtDcuHCKc6P5A7nel2yAd/ZlmBmycco3OvVccW6d8
+	 X/PxLPv0easxBhCY/E4Kr9Yo08ZkWkHPadNel/OJ8t+wq5+BVYyc25pzJd3hRnV9Fn
+	 nJ1FFswvsKh3J8Czzn4IBhbB1ydCXmYEasj6TZBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 480/626] perf/amd/ibs: Fix ->config to sample period calculation for OP PMU
-Date: Tue, 27 May 2025 18:26:13 +0200
-Message-ID: <20250527162504.491264667@linuxfoundation.org>
+Subject: [PATCH 6.12 481/626] clk: renesas: rzg2l-cpg: Refactor Runtime PM clock validation
+Date: Tue, 27 May 2025 18:26:14 +0200
+Message-ID: <20250527162504.532154546@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,72 +51,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravi Bangoria <ravi.bangoria@amd.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 598bdf4fefff5af4ce6d26d16f7b2a20808fc4cb ]
+[ Upstream commit f6f73b891bf6beff069fcacc7b4a796e1009bf26 ]
 
-Instead of using standard perf_event_attr->freq=0 and ->sample_period
-fields, IBS event in 'sample period mode' can also be opened by setting
-period value directly in perf_event_attr->config in a MaxCnt bit-field
-format.
+Refactor rzg2l_cpg_attach_dev to delegate clock validation for Runtime PM
+to the updated rzg2l_cpg_is_pm_clk function. Ensure validation of clocks
+associated with the power domain while excluding external and core clocks.
+Prevent incorrect Runtime PM management for clocks outside the domain's
+scope.
 
-IBS OP MaxCnt bits are defined as:
+Update rzg2l_cpg_is_pm_clk to operate on a per-power-domain basis. Verify
+clkspec.np against the domain's device node, check argument validity, and
+validate clock type (CPG_MOD). Use the no_pm_mod_clks array to exclude
+specific clocks from PM management.
 
-  (high bits) IbsOpCtl[26:20] = IbsOpMaxCnt[26:20]
-  (low bits)  IbsOpCtl[15:0]  = IbsOpMaxCnt[19:4]
-
-Perf event sample period can be derived from MaxCnt bits as:
-
-  sample_period = (high bits) | ((low_bits) << 4);
-
-However, current code just masks MaxCnt bits and shifts all of them,
-including high bits, which is incorrect. Fix it.
-
-Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lkml.kernel.org/r/20250115054438.1021-4-ravi.bangoria@amd.com
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/20241216210201.239855-1-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/ibs.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/clk/renesas/rzg2l-cpg.c | 102 +++++++++++++++++---------------
+ 1 file changed, 54 insertions(+), 48 deletions(-)
 
-diff --git a/arch/x86/events/amd/ibs.c b/arch/x86/events/amd/ibs.c
-index 8f3b5764e139d..d34ee6f04f18f 100644
---- a/arch/x86/events/amd/ibs.c
-+++ b/arch/x86/events/amd/ibs.c
-@@ -272,7 +272,7 @@ static int perf_ibs_init(struct perf_event *event)
- {
- 	struct hw_perf_event *hwc = &event->hw;
- 	struct perf_ibs *perf_ibs;
--	u64 max_cnt, config;
-+	u64 config;
- 	int ret;
+diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
+index 229f4540b219e..97d42328fa81a 100644
+--- a/drivers/clk/renesas/rzg2l-cpg.c
++++ b/drivers/clk/renesas/rzg2l-cpg.c
+@@ -1549,28 +1549,6 @@ static int rzg2l_cpg_reset_controller_register(struct rzg2l_cpg_priv *priv)
+ 	return devm_reset_controller_register(priv->dev, &priv->rcdev);
+ }
  
- 	perf_ibs = get_ibs_pmu(event->attr.type);
-@@ -309,10 +309,19 @@ static int perf_ibs_init(struct perf_event *event)
- 		if (!hwc->sample_period)
- 			hwc->sample_period = 0x10;
- 	} else {
--		max_cnt = config & perf_ibs->cnt_mask;
-+		u64 period = 0;
+-static bool rzg2l_cpg_is_pm_clk(struct rzg2l_cpg_priv *priv,
+-				const struct of_phandle_args *clkspec)
+-{
+-	const struct rzg2l_cpg_info *info = priv->info;
+-	unsigned int id;
+-	unsigned int i;
+-
+-	if (clkspec->args_count != 2)
+-		return false;
+-
+-	if (clkspec->args[0] != CPG_MOD)
+-		return false;
+-
+-	id = clkspec->args[1] + info->num_total_core_clks;
+-	for (i = 0; i < info->num_no_pm_mod_clks; i++) {
+-		if (info->no_pm_mod_clks[i] == id)
+-			return false;
+-	}
+-
+-	return true;
+-}
+-
+ /**
+  * struct rzg2l_cpg_pm_domains - RZ/G2L PM domains data structure
+  * @onecell_data: cell data
+@@ -1595,45 +1573,73 @@ struct rzg2l_cpg_pd {
+ 	u16 id;
+ };
+ 
++static bool rzg2l_cpg_is_pm_clk(struct rzg2l_cpg_pd *pd,
++				const struct of_phandle_args *clkspec)
++{
++	if (clkspec->np != pd->genpd.dev.of_node || clkspec->args_count != 2)
++		return false;
 +
-+		if (perf_ibs == &perf_ibs_op) {
-+			period = (config & IBS_OP_MAX_CNT) << 4;
-+			if (ibs_caps & IBS_CAPS_OPCNTEXT)
-+				period |= config & IBS_OP_MAX_CNT_EXT_MASK;
-+		} else {
-+			period = (config & IBS_FETCH_MAX_CNT) << 4;
++	switch (clkspec->args[0]) {
++	case CPG_MOD: {
++		struct rzg2l_cpg_priv *priv = pd->priv;
++		const struct rzg2l_cpg_info *info = priv->info;
++		unsigned int id = clkspec->args[1];
++
++		if (id >= priv->num_mod_clks)
++			return false;
++
++		id += info->num_total_core_clks;
++
++		for (unsigned int i = 0; i < info->num_no_pm_mod_clks; i++) {
++			if (info->no_pm_mod_clks[i] == id)
++				return false;
 +		}
 +
- 		config &= ~perf_ibs->cnt_mask;
--		event->attr.sample_period = max_cnt << 4;
--		hwc->sample_period = event->attr.sample_period;
-+		event->attr.sample_period = period;
-+		hwc->sample_period = period;
++		return true;
++	}
++
++	case CPG_CORE:
++	default:
++		return false;
++	}
++}
++
+ static int rzg2l_cpg_attach_dev(struct generic_pm_domain *domain, struct device *dev)
+ {
+ 	struct rzg2l_cpg_pd *pd = container_of(domain, struct rzg2l_cpg_pd, genpd);
+-	struct rzg2l_cpg_priv *priv = pd->priv;
+ 	struct device_node *np = dev->of_node;
+ 	struct of_phandle_args clkspec;
+ 	bool once = true;
+ 	struct clk *clk;
++	unsigned int i;
+ 	int error;
+-	int i = 0;
+-
+-	while (!of_parse_phandle_with_args(np, "clocks", "#clock-cells", i,
+-					   &clkspec)) {
+-		if (rzg2l_cpg_is_pm_clk(priv, &clkspec)) {
+-			if (once) {
+-				once = false;
+-				error = pm_clk_create(dev);
+-				if (error) {
+-					of_node_put(clkspec.np);
+-					goto err;
+-				}
+-			}
+-			clk = of_clk_get_from_provider(&clkspec);
++
++	for (i = 0; !of_parse_phandle_with_args(np, "clocks", "#clock-cells", i, &clkspec); i++) {
++		if (!rzg2l_cpg_is_pm_clk(pd, &clkspec)) {
+ 			of_node_put(clkspec.np);
+-			if (IS_ERR(clk)) {
+-				error = PTR_ERR(clk);
+-				goto fail_destroy;
+-			}
++			continue;
++		}
+ 
+-			error = pm_clk_add_clk(dev, clk);
++		if (once) {
++			once = false;
++			error = pm_clk_create(dev);
+ 			if (error) {
+-				dev_err(dev, "pm_clk_add_clk failed %d\n",
+-					error);
+-				goto fail_put;
++				of_node_put(clkspec.np);
++				goto err;
+ 			}
+-		} else {
+-			of_node_put(clkspec.np);
+ 		}
+-		i++;
++		clk = of_clk_get_from_provider(&clkspec);
++		of_node_put(clkspec.np);
++		if (IS_ERR(clk)) {
++			error = PTR_ERR(clk);
++			goto fail_destroy;
++		}
++
++		error = pm_clk_add_clk(dev, clk);
++		if (error) {
++			dev_err(dev, "pm_clk_add_clk failed %d\n", error);
++			goto fail_put;
++		}
  	}
  
- 	if (!hwc->sample_period)
+ 	return 0;
 -- 
 2.39.5
 
