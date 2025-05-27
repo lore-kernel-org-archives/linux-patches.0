@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439DE27CCF0;
-	Tue, 27 May 2025 17:50:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F95C27BF8D;
+	Tue, 27 May 2025 17:50:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368250; cv=none; b=hnzTpGo6nZQqe7ip3/dnje2BTJ1ikg2uCB9/g1pbpkMa7uLNJ8Y+YpljliZBI9Cs8ceurWI5djm4dgx24/Jg0nW+WnIf7sJekFyRCRJX1z7tsH82be0NWIHNMQF79sHZXerr7t8WavRghsvCJDTK8SCTtAyjEEgEt4M4j5TPE2g=
+	t=1748368253; cv=none; b=PJxLR+dvAWUCVPaoLOJob6XB2cPvHZcBXqmff9Mqawo1f6cZbdLUt15LBAo4xe9GX+VmXCqVeG8xwIY2CvjvKo0HA9JktElkM4tVLQujCSVkzV6ddlRcfMBmmW9BGcGbVYQXYx4tiLv6YPzewAkKDvS1YZnDboV2iduAoTdgIJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368250; c=relaxed/simple;
-	bh=rZlocFC/9CXgnRdHmDkkDp9F2s0elXvjb2m/90bPpzo=;
+	s=arc-20240116; t=1748368253; c=relaxed/simple;
+	bh=dlSlDWt3tmqXaI1H2ccJejpgK5Jb7ITi98+JgqApt0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q1cY7lwdR1X51O2IWqSQ+1Fpo+ubGYsHKyTqrQzlrPZXOZ7heZJm9hhPawOpDy5O0wLx6wCzR9s0RJjGXyvGveJAhXFfYnbQW2IVdrkESUTApM/aQudbkobFacsp8wYaB85vGvVXHeyi0+uAYevL0S66TO8atZguML0gcy+jkQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w3pxRcvl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fUNAIOg7gB6p0x4E8yhf16vUwoSLxsROUWjwk5TWda8b0fldtVb6PkdIUs9ANHdXdlwuE4RKXUDIYEhrRi5dKdKfWWwNznrgzx/cn6xJ1gP/R3dcAgBEMQfJUFFcISQoD1cRQd5pOaXrQlWHE691q+StS2X4KrI0lNfedfDOuHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxnzOxGH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3pxRcvl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C630BC4CEEA;
-	Tue, 27 May 2025 17:50:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxnzOxGH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E59AC4CEE9;
+	Tue, 27 May 2025 17:50:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368250;
-	bh=rZlocFC/9CXgnRdHmDkkDp9F2s0elXvjb2m/90bPpzo=;
+	s=korg; t=1748368253;
+	bh=dlSlDWt3tmqXaI1H2ccJejpgK5Jb7ITi98+JgqApt0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w3pxRcvlDy485v4CC2XdJdvpnphOecURJiFjswU7cvXoNCwQ/T+RGslyRuzI8mq/+
-	 5jBg1o4CAHG/nl7pQJV/xQA0XWW4tTpOz8dNo578ydXF6EZ1nUzPl8ZsVYDGjzR410
-	 +dlzVDzE9NAdpWQ0KIW61zQeUGBQsmouy0yDYWGs=
+	b=dxnzOxGHT2b+Qx42YQnDihPucXjvlxr8KFnbmU7jObBVe83eUdcW64mzNCjda6N4N
+	 /0/I7nQmvD+MpvIzLH2SeTN/g1cSn2Vv4l+oTWhrSC54aSRMwzqQ0xKybqEa7K/DRa
+	 V1PrZ7oGsaXq41Fr2YzTWVWcugvM2HG2iA2SHYqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Maarten Lankhorst <dev@lankhorst.se>,
+	Aaradhana Sahu <quic_aarasahu@quicinc.com>,
+	Aditya Kumar Singh <quic_adisi@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 616/783] drm/xe: Move suballocator init to after display init
-Date: Tue, 27 May 2025 18:26:53 +0200
-Message-ID: <20250527162538.234194269@linuxfoundation.org>
+Subject: [PATCH 6.14 607/783] wifi: ath12k: Fetch regdb.bin file from board-2.bin
+Date: Tue, 27 May 2025 18:26:44 +0200
+Message-ID: <20250527162537.872553755@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,80 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maarten Lankhorst <dev@lankhorst.se>
+From: Aaradhana Sahu <quic_aarasahu@quicinc.com>
 
-[ Upstream commit 380b0cdaa76bc8f5c16db16eaf48751e792ff041 ]
+[ Upstream commit 24f587572acf7509127dbdfcbf1b681ef84eeba0 ]
 
-No allocations should be done before we have had a chance to preserve
-the display fb.
+Currently, ath12k_core_fetch_regdb() finds regdb.bin file through
+board id's but in board-2.bin file regdb.bin file is present with
+default board id because of which regdb.bin is not fetched.
 
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241210083111.230484-4-dev@lankhorst.se
-Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
+Add support to fetch regdb.bin file from board-2.bin through
+default board id.
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Aaradhana Sahu <quic_aarasahu@quicinc.com>
+Reviewed-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
+Link: https://patch.msgid.link/20250116032835.118397-1-quic_aarasahu@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_device.c |  6 ++++++
- drivers/gpu/drm/xe/xe_tile.c   | 12 ++++++++----
- drivers/gpu/drm/xe/xe_tile.h   |  1 +
- 3 files changed, 15 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath12k/core.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
-index e22f29ac96631..74516e73ba4e5 100644
---- a/drivers/gpu/drm/xe/xe_device.c
-+++ b/drivers/gpu/drm/xe/xe_device.c
-@@ -736,6 +736,12 @@ int xe_device_probe(struct xe_device *xe)
- 	if (err)
- 		goto err;
+diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
+index ffd173ff7b08c..d0aed4c56050d 100644
+--- a/drivers/net/wireless/ath/ath12k/core.c
++++ b/drivers/net/wireless/ath/ath12k/core.c
+@@ -173,7 +173,7 @@ EXPORT_SYMBOL(ath12k_core_resume);
  
-+	for_each_tile(tile, xe, id) {
-+		err = xe_tile_init(tile);
-+		if (err)
-+			goto err;
-+	}
-+
- 	for_each_gt(gt, xe, id) {
- 		last_gt = id;
+ static int __ath12k_core_create_board_name(struct ath12k_base *ab, char *name,
+ 					   size_t name_len, bool with_variant,
+-					   bool bus_type_mode)
++					   bool bus_type_mode, bool with_default)
+ {
+ 	/* strlen(',variant=') + strlen(ab->qmi.target.bdf_ext) */
+ 	char variant[9 + ATH12K_QMI_BDF_EXT_STR_LENGTH] = { 0 };
+@@ -204,7 +204,9 @@ static int __ath12k_core_create_board_name(struct ath12k_base *ab, char *name,
+ 			  "bus=%s,qmi-chip-id=%d,qmi-board-id=%d%s",
+ 			  ath12k_bus_str(ab->hif.bus),
+ 			  ab->qmi.target.chip_id,
+-			  ab->qmi.target.board_id, variant);
++			  with_default ?
++			  ATH12K_BOARD_ID_DEFAULT : ab->qmi.target.board_id,
++			  variant);
+ 		break;
+ 	}
  
-diff --git a/drivers/gpu/drm/xe/xe_tile.c b/drivers/gpu/drm/xe/xe_tile.c
-index 37f170effcd67..377438ea6b838 100644
---- a/drivers/gpu/drm/xe/xe_tile.c
-+++ b/drivers/gpu/drm/xe/xe_tile.c
-@@ -170,15 +170,19 @@ int xe_tile_init_noalloc(struct xe_tile *tile)
- 	if (err)
- 		return err;
- 
--	tile->mem.kernel_bb_pool = xe_sa_bo_manager_init(tile, SZ_1M, 16);
--	if (IS_ERR(tile->mem.kernel_bb_pool))
--		return PTR_ERR(tile->mem.kernel_bb_pool);
--
- 	xe_wa_apply_tile_workarounds(tile);
- 
- 	return xe_tile_sysfs_init(tile);
+@@ -216,19 +218,19 @@ static int __ath12k_core_create_board_name(struct ath12k_base *ab, char *name,
+ static int ath12k_core_create_board_name(struct ath12k_base *ab, char *name,
+ 					 size_t name_len)
+ {
+-	return __ath12k_core_create_board_name(ab, name, name_len, true, false);
++	return __ath12k_core_create_board_name(ab, name, name_len, true, false, false);
  }
  
-+int xe_tile_init(struct xe_tile *tile)
-+{
-+	tile->mem.kernel_bb_pool = xe_sa_bo_manager_init(tile, SZ_1M, 16);
-+	if (IS_ERR(tile->mem.kernel_bb_pool))
-+		return PTR_ERR(tile->mem.kernel_bb_pool);
-+
-+	return 0;
-+}
- void xe_tile_migrate_wait(struct xe_tile *tile)
+ static int ath12k_core_create_fallback_board_name(struct ath12k_base *ab, char *name,
+ 						  size_t name_len)
  {
- 	xe_migrate_wait(tile->migrate);
-diff --git a/drivers/gpu/drm/xe/xe_tile.h b/drivers/gpu/drm/xe/xe_tile.h
-index 1c9e42ade6b05..eb939316d55b0 100644
---- a/drivers/gpu/drm/xe/xe_tile.h
-+++ b/drivers/gpu/drm/xe/xe_tile.h
-@@ -12,6 +12,7 @@ struct xe_tile;
+-	return __ath12k_core_create_board_name(ab, name, name_len, false, false);
++	return __ath12k_core_create_board_name(ab, name, name_len, false, false, true);
+ }
  
- int xe_tile_init_early(struct xe_tile *tile, struct xe_device *xe, u8 id);
- int xe_tile_init_noalloc(struct xe_tile *tile);
-+int xe_tile_init(struct xe_tile *tile);
+ static int ath12k_core_create_bus_type_board_name(struct ath12k_base *ab, char *name,
+ 						  size_t name_len)
+ {
+-	return __ath12k_core_create_board_name(ab, name, name_len, false, true);
++	return __ath12k_core_create_board_name(ab, name, name_len, false, true, true);
+ }
  
- void xe_tile_migrate_wait(struct xe_tile *tile);
- 
+ const struct firmware *ath12k_core_firmware_request(struct ath12k_base *ab,
 -- 
 2.39.5
 
