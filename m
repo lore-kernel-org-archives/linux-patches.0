@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDF178F32;
-	Tue, 27 May 2025 17:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4968154C15;
+	Tue, 27 May 2025 17:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365256; cv=none; b=n8smtQYXxV1YZ7IHQeVAJj7lSs8JDCEbsmQGQjytSo7683t/39iJFx/LT7m3tufWbjfVYTCksUDp4q5bB1QKATaAxALEYDaTq3nWOqTUu2ySRmv2T6E4skgaMbqODqJw4cNM0yzWJFR7ODOOhstPlXVO6CyHOA+snZhsNEdT8z4=
+	t=1748365259; cv=none; b=IOhhIrLOvDvuVkIrCTI3zXc6eW3R6ft6g4JUSjvdqL84G7MgSNUVsdb0BOwMBeMOd6fs8+gP3gcEcRLlXyWCHhy6ib/cKDRrZDaY2rMjiPqrfVMeGhiDwp0d82NH8x/0gbSJxlQsjlKNiTECmIsZgcJUg3BqlPwqLV1dHFrxYaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365256; c=relaxed/simple;
-	bh=To4o5DCGEDxzCLl59bGDB7VqpQ9YN6wcj6LW4oTVV8I=;
+	s=arc-20240116; t=1748365259; c=relaxed/simple;
+	bh=kSWd1rIZZZcplucKQ1nvnGPTN61UUjV/N9lgFoZeHDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I0kckJq/vo5YLVLQTnD0YUie5dgGQFmd3+YfI31rOvgYO4wF9EqsRu09fVtHgTCx/xjH23l+3fXxSgQ1EUA2pSdcCuhUsQrohqCXxXh6y5fl8mN5pL+w8KlRWBE7DmfmNawGCEZ0j0YbfghyZYHRkcDjU4SjG/AljmNbVf5KA2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCJo4DDA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fiVKWNPno4ZzPMx0HHJhNY51dyEun3k0besx3210QDpVEh9ysCFOofM+bIJ/2tDnYpk+n+JIiSxoai77iRBnU7/stLkE2sayz6Z7aRCyFj+CPun1nVwC4GLA3jcuw7ROi5LoV5Y1pEqoGVDoUbHMUwVrzbPfvZHGBkZ2RujbyB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dbgni0+Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCJo4DDA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC837C4CEE9;
-	Tue, 27 May 2025 17:00:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dbgni0+Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BBCFC4CEE9;
+	Tue, 27 May 2025 17:00:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365256;
-	bh=To4o5DCGEDxzCLl59bGDB7VqpQ9YN6wcj6LW4oTVV8I=;
+	s=korg; t=1748365259;
+	bh=kSWd1rIZZZcplucKQ1nvnGPTN61UUjV/N9lgFoZeHDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zCJo4DDAQu6/19buM3VidcbI46bT/+m1ZGyRS+mp4rahU6DIW7NwRkURjrNaFUsdk
-	 FPx8WWV3Bl8Ficgm1zfFrS+QZq+KxC2rC1ldsFju4UJCcCpdnIxvNdNljW/DScs5vq
-	 eWOzrbnkEBR06rTLBEUYscmBA/0PepsV4aBlI7eA=
+	b=Dbgni0+YjMY2a4fHk8JezDNr7STPpoWJTOxai3nuqSJgHGrJVc5H508Bh+hdMv/VI
+	 9HSnFe/qF4mlgb/IajiQPw4PWPyQ57oMlSPA8GAKvkM4xpfyyRTaYlh3MnlAM6eTM1
+	 wTRKE/dNC1whzyMsUIvZQF+a/9OVeOrcUgF++Bco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	James Zhu <James.Zhu@amd.com>,
 	Felix Kuehling <felix.kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 276/626] drm/amdkfd: KFD release_work possible circular locking
-Date: Tue, 27 May 2025 18:22:49 +0200
-Message-ID: <20250527162456.240761304@linuxfoundation.org>
+Subject: [PATCH 6.12 311/626] drm/amdgpu: remove all KFD fences from the BO on release
+Date: Tue, 27 May 2025 18:23:24 +0200
+Message-ID: <20250527162457.672329183@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -46,84 +47,181 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit 1b9366c601039d60546794c63fbb83ce8e53b978 ]
+[ Upstream commit cb0de06d1b0afb2d0c600ad748069f5ce27730ec ]
 
-If waiting for gpu reset done in KFD release_work, thers is WARNING:
-possible circular locking dependency detected
+Remove all KFD BOs from the private dma_resv object.
 
-  #2  kfd_create_process
-        kfd_process_mutex
-          flush kfd release work
+This prevents the KFD from being evict unecessarily when an exported BO
+is released.
 
-  #1  kfd release work
-        wait for amdgpu reset work
-
-  #0  amdgpu_device_gpu_reset
-        kgd2kfd_pre_reset
-          kfd_process_mutex
-
-  Possible unsafe locking scenario:
-
-        CPU0                    CPU1
-        ----                    ----
-   lock((work_completion)(&p->release_work));
-                  lock((wq_completion)kfd_process_wq);
-                  lock((work_completion)(&p->release_work));
-   lock((wq_completion)amdgpu-reset-dev);
-
-To fix this, KFD create process move flush release work outside
-kfd_process_mutex.
-
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: James Zhu <James.Zhu@amd.com>
 Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Reviewed-and-tested-by: James Zhu <James.Zhu@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_process.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h    |  5 +-
+ .../gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c  | 52 ++++++++-----------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_object.c    | 38 ++++++++------
+ 3 files changed, 47 insertions(+), 48 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index 0ec8b457494bd..45923da7709fd 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -842,6 +842,14 @@ struct kfd_process *kfd_create_process(struct task_struct *thread)
- 		return ERR_PTR(-EINVAL);
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
+index f9d1194484423..581fe1a48f376 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
+@@ -192,7 +192,7 @@ int kfd_debugfs_kfd_mem_limits(struct seq_file *m, void *data);
+ #if IS_ENABLED(CONFIG_HSA_AMD)
+ bool amdkfd_fence_check_mm(struct dma_fence *f, struct mm_struct *mm);
+ struct amdgpu_amdkfd_fence *to_amdgpu_amdkfd_fence(struct dma_fence *f);
+-int amdgpu_amdkfd_remove_fence_on_pt_pd_bos(struct amdgpu_bo *bo);
++void amdgpu_amdkfd_remove_all_eviction_fences(struct amdgpu_bo *bo);
+ int amdgpu_amdkfd_evict_userptr(struct mmu_interval_notifier *mni,
+ 				unsigned long cur_seq, struct kgd_mem *mem);
+ int amdgpu_amdkfd_bo_validate_and_fence(struct amdgpu_bo *bo,
+@@ -212,9 +212,8 @@ struct amdgpu_amdkfd_fence *to_amdgpu_amdkfd_fence(struct dma_fence *f)
+ }
  
-+	/* If the process just called exec(3), it is possible that the
-+	 * cleanup of the kfd_process (following the release of the mm
-+	 * of the old process image) is still in the cleanup work queue.
-+	 * Make sure to drain any job before trying to recreate any
-+	 * resource for this process.
-+	 */
-+	flush_workqueue(kfd_process_wq);
-+
- 	/*
- 	 * take kfd processes mutex before starting of process creation
- 	 * so there won't be a case where two threads of the same process
-@@ -860,14 +868,6 @@ struct kfd_process *kfd_create_process(struct task_struct *thread)
- 	if (process) {
- 		pr_debug("Process already found\n");
- 	} else {
--		/* If the process just called exec(3), it is possible that the
--		 * cleanup of the kfd_process (following the release of the mm
--		 * of the old process image) is still in the cleanup work queue.
--		 * Make sure to drain any job before trying to recreate any
--		 * resource for this process.
--		 */
--		flush_workqueue(kfd_process_wq);
+ static inline
+-int amdgpu_amdkfd_remove_fence_on_pt_pd_bos(struct amdgpu_bo *bo)
++void amdgpu_amdkfd_remove_all_eviction_fences(struct amdgpu_bo *bo)
+ {
+-	return 0;
+ }
+ 
+ static inline
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+index fa572ba7f9fc1..1465b3adacb0a 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -370,40 +370,32 @@ static int amdgpu_amdkfd_remove_eviction_fence(struct amdgpu_bo *bo,
+ 	return 0;
+ }
+ 
+-int amdgpu_amdkfd_remove_fence_on_pt_pd_bos(struct amdgpu_bo *bo)
++/**
++ * amdgpu_amdkfd_remove_all_eviction_fences - Remove all eviction fences
++ * @bo: the BO where to remove the evictions fences from.
++ *
++ * This functions should only be used on release when all references to the BO
++ * are already dropped. We remove the eviction fence from the private copy of
++ * the dma_resv object here since that is what is used during release to
++ * determine of the BO is idle or not.
++ */
++void amdgpu_amdkfd_remove_all_eviction_fences(struct amdgpu_bo *bo)
+ {
+-	struct amdgpu_bo *root = bo;
+-	struct amdgpu_vm_bo_base *vm_bo;
+-	struct amdgpu_vm *vm;
+-	struct amdkfd_process_info *info;
+-	struct amdgpu_amdkfd_fence *ef;
+-	int ret;
 -
- 		process = create_process(thread);
- 		if (IS_ERR(process))
- 			goto out;
+-	/* we can always get vm_bo from root PD bo.*/
+-	while (root->parent)
+-		root = root->parent;
++	struct dma_resv *resv = &bo->tbo.base._resv;
++	struct dma_fence *fence, *stub;
++	struct dma_resv_iter cursor;
+ 
+-	vm_bo = root->vm_bo;
+-	if (!vm_bo)
+-		return 0;
++	dma_resv_assert_held(resv);
+ 
+-	vm = vm_bo->vm;
+-	if (!vm)
+-		return 0;
+-
+-	info = vm->process_info;
+-	if (!info || !info->eviction_fence)
+-		return 0;
+-
+-	ef = container_of(dma_fence_get(&info->eviction_fence->base),
+-			struct amdgpu_amdkfd_fence, base);
+-
+-	BUG_ON(!dma_resv_trylock(bo->tbo.base.resv));
+-	ret = amdgpu_amdkfd_remove_eviction_fence(bo, ef);
+-	dma_resv_unlock(bo->tbo.base.resv);
++	stub = dma_fence_get_stub();
++	dma_resv_for_each_fence(&cursor, resv, DMA_RESV_USAGE_BOOKKEEP, fence) {
++		if (!to_amdgpu_amdkfd_fence(fence))
++			continue;
+ 
+-	dma_fence_put(&ef->base);
+-	return ret;
++		dma_resv_replace_fences(resv, fence->context, stub,
++					DMA_RESV_USAGE_BOOKKEEP);
++	}
++	dma_fence_put(stub);
+ }
+ 
+ static int amdgpu_amdkfd_bo_validate(struct amdgpu_bo *bo, uint32_t domain,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+index 4c4bdc4f51b29..fc588ef598c09 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+@@ -1246,28 +1246,36 @@ void amdgpu_bo_release_notify(struct ttm_buffer_object *bo)
+ 	if (abo->kfd_bo)
+ 		amdgpu_amdkfd_release_notify(abo);
+ 
+-	/* We only remove the fence if the resv has individualized. */
+-	WARN_ON_ONCE(bo->type == ttm_bo_type_kernel
+-			&& bo->base.resv != &bo->base._resv);
+-	if (bo->base.resv == &bo->base._resv)
+-		amdgpu_amdkfd_remove_fence_on_pt_pd_bos(abo);
++	/*
++	 * We lock the private dma_resv object here and since the BO is about to
++	 * be released nobody else should have a pointer to it.
++	 * So when this locking here fails something is wrong with the reference
++	 * counting.
++	 */
++	if (WARN_ON_ONCE(!dma_resv_trylock(&bo->base._resv)))
++		return;
++
++	amdgpu_amdkfd_remove_all_eviction_fences(abo);
+ 
+ 	if (!bo->resource || bo->resource->mem_type != TTM_PL_VRAM ||
+ 	    !(abo->flags & AMDGPU_GEM_CREATE_VRAM_WIPE_ON_RELEASE) ||
+ 	    adev->in_suspend || drm_dev_is_unplugged(adev_to_drm(adev)))
+-		return;
++		goto out;
+ 
+-	if (WARN_ON_ONCE(!dma_resv_trylock(bo->base.resv)))
+-		return;
++	r = dma_resv_reserve_fences(&bo->base._resv, 1);
++	if (r)
++		goto out;
+ 
+-	r = amdgpu_fill_buffer(abo, 0, bo->base.resv, &fence, true);
+-	if (!WARN_ON(r)) {
+-		amdgpu_vram_mgr_set_cleared(bo->resource);
+-		amdgpu_bo_fence(abo, fence, false);
+-		dma_fence_put(fence);
+-	}
++	r = amdgpu_fill_buffer(abo, 0, &bo->base._resv, &fence, true);
++	if (WARN_ON(r))
++		goto out;
++
++	amdgpu_vram_mgr_set_cleared(bo->resource);
++	dma_resv_add_fence(&bo->base._resv, fence, DMA_RESV_USAGE_KERNEL);
++	dma_fence_put(fence);
+ 
+-	dma_resv_unlock(bo->base.resv);
++out:
++	dma_resv_unlock(&bo->base._resv);
+ }
+ 
+ /**
 -- 
 2.39.5
 
