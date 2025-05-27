@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57AC1CAA7B;
-	Tue, 27 May 2025 17:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867931AF0BB;
+	Tue, 27 May 2025 17:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367636; cv=none; b=faLrDALao2ea25dqSKLLaZrQtEuAIBc8rIkLLs057Z0CBOSZ4mC18RF8nDLliciPHryVzw+OIWsfQQcWFhvG9NOUFtw3n+JQh6uwbGZB+eXLJMeUerpg7kIVTLWeOeHte0SaqtI2x+Ft2/wjHKSeBnus4EG/F1/HRVezILYubVI=
+	t=1748367639; cv=none; b=puRMfJN1iOsMK66ZYUtWpOpDTGVMTK4/TwDXs+KUrioX8fFoAFMhuns/1Bt/M2r+GwJemMefv5rJ4KKH5wzo4uzvjli3enKN6PaWYtbYsu9Kpko0GDU/Mv2X2PtwYJUIHRS2tcBN0lrH2CvmZnW9UCMgp3+m34fxS8AhcXD4x5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367636; c=relaxed/simple;
-	bh=XKogJU9Gn6vOsywK6fPxRuNSdUnOysxcBX8YnhEh3ww=;
+	s=arc-20240116; t=1748367639; c=relaxed/simple;
+	bh=4B5JPfP+yYTgVOY1kyGtffJK+LmFEdsf5aTfaWsldN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CAIvS5GDQzK/MBIqxjS1IsqFp/F89wyhpVa2b4xXT7iGsNArpChdF/WpHwAqApa+GIQ7ubONqe4DKPbetQB9JPDB2Q7Nfz+PqpdRotE7pC+BZfml1NTBIVRlFLcJ9PdSgBMuRfrUwLJrc7wSoYidsbYdqvd9z4th9rcrHa/RUTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbnbT4bo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SZv6f1QVxWA0tBlEsRmrY322Qm9Hr3lZUUsIwiPF398V+xiz+7Ygh6baojdlFtZh+FwkWRAo9n19Rr8/Q1QP4Ae/rizGbVA1HSpBv8/UxQDS3HZ5V9mtzA1KsOwS8Qoo0fk+fZjSgHOp43z1vG8kfRRlSy95phl46WYsteYVTjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W8um6CxS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbnbT4bo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0B7C4CEE9;
-	Tue, 27 May 2025 17:40:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8um6CxS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8BB3C4CEE9;
+	Tue, 27 May 2025 17:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367636;
-	bh=XKogJU9Gn6vOsywK6fPxRuNSdUnOysxcBX8YnhEh3ww=;
+	s=korg; t=1748367639;
+	bh=4B5JPfP+yYTgVOY1kyGtffJK+LmFEdsf5aTfaWsldN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rbnbT4bogMXMzjDdGoiAvqfICRXVjYUNLOKh9WKTxzBwpedEcOuBH4Cd8kCmRJEl/
-	 7X07d9PYQXixBSpnVTtdJBObUxIAIjZsTqcnZLNoM0XWtMvbhJLmdw9Z8NvG35KHLh
-	 EUlldkwAWGSYkX6bzBAZlNkB08z89LaXmQmKr1pI=
+	b=W8um6CxSRkkMirMXzfJ1NtsjcUhBkuiZ4fXyg1djeysB05CM8D/xOw4wQlOeZF3R8
+	 ZMjzNu2Bf0tOgu6j5Dv0jRSUWdmY9c9KuW+I6xb9hlCxxVO0h3l9FxmwOgWXsB35pa
+	 EQUobwWssdEUppccD6zvJVeIbU7/y2R/L5GxWmsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabe Teeger <gabe.teeger@amd.com>,
-	Leo Chen <leo.chen@amd.com>,
-	Syed Hassan <syed.hassan@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Valentin Caron <valentin.caron@foss.st.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 411/783] drm/amd/display: Guard against setting dispclk low when active
-Date: Tue, 27 May 2025 18:23:28 +0200
-Message-ID: <20250527162529.836443777@linuxfoundation.org>
+Subject: [PATCH 6.14 444/783] pinctrl: devicetree: do not goto err when probing hogs in pinctrl_dt_to_map
+Date: Tue, 27 May 2025 18:24:01 +0200
+Message-ID: <20250527162531.218015886@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -56,63 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+From: Valentin Caron <valentin.caron@foss.st.com>
 
-[ Upstream commit 72d7a7fa1f2404fd31c84a8f808b1b37021a3a9e ]
+[ Upstream commit c98868e816209e568c9d72023ba0bc1e4d96e611 ]
 
-[Why]
-We should never apply a minimum dispclk value while in prepare_bandwidth
-or while displays are active. This is always an optimization for when
-all displays are disabled.
+Cross case in pinctrl framework make impossible to an hogged pin and
+another, not hogged, used within the same device-tree node. For example
+with this simplified device-tree :
 
-[How]
-Defer dispclk optimization until safe_to_lower = true and display_count
-reaches 0.
+  &pinctrl {
+    pinctrl_pin_1: pinctrl-pin-1 {
+      pins = "dummy-pinctrl-pin";
+    };
+  };
 
-Since 0 has a special value in this logic (ie. no dispclk required)
-we also need adjust the logic that clamps it for the actual request
-to PMFW.
+  &rtc {
+    pinctrl-names = "default"
+    pinctrl-0 = <&pinctrl_pin_1 &rtc_pin_1>
 
-Reviewed-by: Gabe Teeger <gabe.teeger@amd.com>
-Reviewed-by: Leo Chen <leo.chen@amd.com>
-Reviewed-by: Syed Hassan <syed.hassan@amd.com>
-Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Roman Li <roman.li@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+    rtc_pin_1: rtc-pin-1 {
+      pins = "dummy-rtc-pin";
+    };
+  };
+
+"pinctrl_pin_1" configuration is never set. This produces this path in
+the code:
+
+  really_probe()
+    pinctrl_bind_pins()
+    | devm_pinctrl_get()
+    |   pinctrl_get()
+    |     create_pinctrl()
+    |       pinctrl_dt_to_map()
+    |         // Hog pin create an abort for all pins of the node
+    |         ret = dt_to_map_one_config()
+    |         | /* Do not defer probing of hogs (circular loop) */
+    |         | if (np_pctldev == p->dev->of_node)
+    |         |   return -ENODEV;
+    |         if (ret)
+    |           goto err
+    |
+    call_driver_probe()
+      stm32_rtc_probe()
+        pinctrl_enable()
+          pinctrl_claim_hogs()
+            create_pinctrl()
+              for_each_maps(maps_node, i, map)
+                // Not hog pin is skipped
+                if (pctldev && strcmp(dev_name(pctldev->dev),
+                                      map->ctrl_dev_name))
+                  continue;
+
+At the first call of create_pinctrl() the hogged pin produces an abort to
+avoid a defer of hogged pins. All other pin configurations are trashed.
+
+At the second call, create_pinctrl is now called with pctldev parameter to
+get hogs, but in this context only hogs are set. And other pins are
+skipped.
+
+To handle this, do not produce an abort in the first call of
+create_pinctrl(). Classic pin configuration will be set in
+pinctrl_bind_pins() context. And the hogged pin configuration will be set
+in pinctrl_claim_hogs() context.
+
+Signed-off-by: Valentin Caron <valentin.caron@foss.st.com>
+Link: https://lore.kernel.org/20250116170009.2075544-1-valentin.caron@foss.st.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c    | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/pinctrl/devicetree.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
-index 1648226586e22..1f47931c2dafc 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
-@@ -467,14 +467,19 @@ void dcn35_update_clocks(struct clk_mgr *clk_mgr_base,
- 		update_dppclk = true;
+diff --git a/drivers/pinctrl/devicetree.c b/drivers/pinctrl/devicetree.c
+index 6a94ecd6a8dea..0b7f74beb6a6a 100644
+--- a/drivers/pinctrl/devicetree.c
++++ b/drivers/pinctrl/devicetree.c
+@@ -143,10 +143,14 @@ static int dt_to_map_one_config(struct pinctrl *p,
+ 		pctldev = get_pinctrl_dev_from_of_node(np_pctldev);
+ 		if (pctldev)
+ 			break;
+-		/* Do not defer probing of hogs (circular loop) */
++		/*
++		 * Do not defer probing of hogs (circular loop)
++		 *
++		 * Return 1 to let the caller catch the case.
++		 */
+ 		if (np_pctldev == p->dev->of_node) {
+ 			of_node_put(np_pctldev);
+-			return -ENODEV;
++			return 1;
+ 		}
  	}
- 
--	if (should_set_clock(safe_to_lower, new_clocks->dispclk_khz, clk_mgr_base->clks.dispclk_khz)) {
-+	if (should_set_clock(safe_to_lower, new_clocks->dispclk_khz, clk_mgr_base->clks.dispclk_khz) &&
-+	    (new_clocks->dispclk_khz > 0 || (safe_to_lower && display_count == 0))) {
-+		int requested_dispclk_khz = new_clocks->dispclk_khz;
-+
- 		dcn35_disable_otg_wa(clk_mgr_base, context, safe_to_lower, true);
- 
--		if (dc->debug.min_disp_clk_khz > 0 && new_clocks->dispclk_khz < dc->debug.min_disp_clk_khz)
--			new_clocks->dispclk_khz = dc->debug.min_disp_clk_khz;
-+		/* Clamp the requested clock to PMFW based on their limit. */
-+		if (dc->debug.min_disp_clk_khz > 0 && requested_dispclk_khz < dc->debug.min_disp_clk_khz)
-+			requested_dispclk_khz = dc->debug.min_disp_clk_khz;
- 
-+		dcn35_smu_set_dispclk(clk_mgr, requested_dispclk_khz);
- 		clk_mgr_base->clks.dispclk_khz = new_clocks->dispclk_khz;
--		dcn35_smu_set_dispclk(clk_mgr, clk_mgr_base->clks.dispclk_khz);
-+
- 		dcn35_disable_otg_wa(clk_mgr_base, context, safe_to_lower, false);
- 
- 		update_dispclk = true;
+ 	of_node_put(np_pctldev);
+@@ -265,6 +269,8 @@ int pinctrl_dt_to_map(struct pinctrl *p, struct pinctrl_dev *pctldev)
+ 			ret = dt_to_map_one_config(p, pctldev, statename,
+ 						   np_config);
+ 			of_node_put(np_config);
++			if (ret == 1)
++				continue;
+ 			if (ret < 0)
+ 				goto err;
+ 		}
 -- 
 2.39.5
 
