@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0287325A627;
-	Tue, 27 May 2025 17:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1AA1E25E3;
+	Tue, 27 May 2025 17:47:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368024; cv=none; b=iKf0ClV7BRe50CnksK8zGPtJdJ6ehYBllrAmnfJxdp6eCc9ExOl98o/+7rlnmlMo77DNec2DghX5q2tbE+F/bJiHCtFS0WS8dD1qRqsNkn/dikVWhWEFtLfp2g4CsahMHepnJX1gYWBkGAhEkMa3zKQQtkZdwrriU/JF9RkAvJE=
+	t=1748368028; cv=none; b=X9/QH93Cv4rrsIjk401NKgDyq5pAMj9//JIJIZNo5lsxueIQOiQrT7sq7jtlfv3SZ6hT6kISkctSLjECViPB+2WXF7e7Ge0yK4SUCg8eGyiI1i0EB2zdslkwkyxXVlsgxR60padpdORIkCHYPHEBxvWYWafR3/PRXkVSP1wuQqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368024; c=relaxed/simple;
-	bh=MDjeEsSvK8JQMVNt6WEw4Nf6onEnDl3AdR5lJQtibqE=;
+	s=arc-20240116; t=1748368028; c=relaxed/simple;
+	bh=YulKQqlgCZlnw2g0Ag2571dCyrhDVs00PUeRcpZfyBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t4rdMS7sEyw6GopGcTgPJfM2aVaSn0v/ItEP8f6/7np3Ed8pSmNO1gt5451+IIVL3YEWPKvjk/gvusF0hOOquDu80Ip1AGjtUGtUcZO0qaLfyqo2OZ4gX2/LVJ0oQPZApIeXn4rUSqiEipM3tfpIO/D+QkHWMIzI+lYVH+KsuH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQEucnIe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ejumlWes+QLTNygdl5YDRpxlgbGy8jF8/9c2YQX3y+4yE52ujnMx+r7kcUEYo7pi3oKIygc0dgR3cZmVTcTfYPmvJt+u8188hfnkCUep1p7Blis0XqW+l85u01ZBEFR801YKkODLDTi9bHIj4KRpLh1DQR3DJNY+/NyyYyXOz40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x60l8hcV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQEucnIe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B73C4CEE9;
-	Tue, 27 May 2025 17:47:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x60l8hcV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC0F8C4CEE9;
+	Tue, 27 May 2025 17:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368023;
-	bh=MDjeEsSvK8JQMVNt6WEw4Nf6onEnDl3AdR5lJQtibqE=;
+	s=korg; t=1748368028;
+	bh=YulKQqlgCZlnw2g0Ag2571dCyrhDVs00PUeRcpZfyBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OQEucnIe+YXbNnPs9utm4F5M5ul70zIJrN26qv7N7bSEjgpYdFq3QL8XIOBJrtQ4v
-	 IocTYgLATU8tWfZsgh7rpYaTX7HPYMQDu5UWP+CAJasTLWwMG2/pi7fb5n757haiF6
-	 mKr7x8AcfPcxP9mniug+oS+X2vZ3Pcvl6i+QSW7k=
+	b=x60l8hcVKNGkgS137l/6MF/XeIFbz85xfbs41ABn1GlB3laBTg3cweem7JdXueRw+
+	 jgpWGYXFOEg9rpA9ZjKO9LjYPK4F8I6ieziUDF43erfXraUvu/F5NvE3pY3JCsWc8H
+	 awfsfjbWt9Enig7hWYJJjZgnWMk4eVU6UXhqFrMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 573/783] perf: Avoid the read if the count is already updated
-Date: Tue, 27 May 2025 18:26:10 +0200
-Message-ID: <20250527162536.484103665@linuxfoundation.org>
+Subject: [PATCH 6.14 545/783] wifi: rtw89: fw: validate multi-firmware header before accessing
+Date: Tue, 27 May 2025 18:25:42 +0200
+Message-ID: <20250527162535.353119998@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,142 +50,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra (Intel) <peterz@infradead.org>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit 8ce939a0fa194939cc1f92dbd8bc1a7806e7d40a ]
+[ Upstream commit 1f0efffd597893404aea5c3d4f1bdaa1c61d4434 ]
 
-The event may have been updated in the PMU-specific implementation,
-e.g., Intel PEBS counters snapshotting. The common code should not
-read and overwrite the value.
+A firmeware file contains multi-firmware with a header to represent
+contents. The mfw_hdr->fw_nr is to define number of firmware in file.
 
-The PERF_SAMPLE_READ in the data->sample_type can be used to detect
-whether the PMU-specific value is available. If yes, avoid the
-pmu->read() in the common code. Add a new flag, skip_read, to track the
-case.
+         +-----+-------+------+---------+--------------+
+         | sig | fw_nr | rsvd | version | reserved     |
+         +---------------------------------------------+ --
+ fw 0    | cv | type | mp | rsvd | shift | size | rsvd |   \
+         +---------------------------------------------+   |
+ fw 1    | cv | type | mp | rsvd | shift | size | rsvd |   | mfw_hdr->fw_nr
+         +---------------------------------------------+   |
+ fw N-1  |                  ...                        |   /
+         +=============================================+ --
+         |               fw 0 content                  |
+         |       (pointed by fw0 shift/size)           |
+         +=============================================+
 
-Factor out a perf_pmu_read() to clean up the code.
+To avoid Coverity warning, validate header is in range of firmware size,
+and also validate the range of actual firmware content is in range.
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20250121152303.3128733-3-kan.liang@linux.intel.com
+Addresses-Coverity-ID: 1494046 ("Untrusted loop bound")
+
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250203072911.47313-4-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/perf_event.h  |  8 +++++++-
- kernel/events/core.c        | 33 ++++++++++++++++-----------------
- kernel/events/ring_buffer.c |  1 +
- 3 files changed, 24 insertions(+), 18 deletions(-)
+ drivers/net/wireless/realtek/rtw89/fw.c | 35 +++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
-index 93ea9c6672f0e..3d5814c6d251c 100644
---- a/include/linux/perf_event.h
-+++ b/include/linux/perf_event.h
-@@ -1098,7 +1098,13 @@ struct perf_output_handle {
- 	struct perf_buffer		*rb;
- 	unsigned long			wakeup;
- 	unsigned long			size;
--	u64				aux_flags;
-+	union {
-+		u64			flags;		/* perf_output*() */
-+		u64			aux_flags;	/* perf_aux_output*() */
-+		struct {
-+			u64		skip_read : 1;
-+		};
-+	};
- 	union {
- 		void			*addr;
- 		unsigned long		head;
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index dda1670b3539a..6fa70b3826d0e 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -1191,6 +1191,12 @@ static void perf_assert_pmu_disabled(struct pmu *pmu)
- 	WARN_ON_ONCE(*this_cpu_ptr(pmu->pmu_disable_count) == 0);
+diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
+index aed0647955d8e..1fbcba718998f 100644
+--- a/drivers/net/wireless/realtek/rtw89/fw.c
++++ b/drivers/net/wireless/realtek/rtw89/fw.c
+@@ -539,6 +539,30 @@ static int rtw89_fw_hdr_parser(struct rtw89_dev *rtwdev,
+ 	}
  }
  
-+static inline void perf_pmu_read(struct perf_event *event)
++static int rtw89_mfw_validate_hdr(struct rtw89_dev *rtwdev,
++				  const struct firmware *firmware,
++				  const struct rtw89_mfw_hdr *mfw_hdr)
 +{
-+	if (event->state == PERF_EVENT_STATE_ACTIVE)
-+		event->pmu->read(event);
++	const void *mfw = firmware->data;
++	u32 mfw_len = firmware->size;
++	u8 fw_nr = mfw_hdr->fw_nr;
++	const void *ptr;
++
++	if (fw_nr == 0) {
++		rtw89_err(rtwdev, "mfw header has no fw entry\n");
++		return -ENOENT;
++	}
++
++	ptr = &mfw_hdr->info[fw_nr];
++
++	if (ptr > mfw + mfw_len) {
++		rtw89_err(rtwdev, "mfw header out of address\n");
++		return -EFAULT;
++	}
++
++	return 0;
 +}
 +
- static void get_ctx(struct perf_event_context *ctx)
- {
- 	refcount_inc(&ctx->refcount);
-@@ -3478,8 +3484,7 @@ static void __perf_event_sync_stat(struct perf_event *event,
- 	 * we know the event must be on the current CPU, therefore we
- 	 * don't need to use it.
- 	 */
--	if (event->state == PERF_EVENT_STATE_ACTIVE)
--		event->pmu->read(event);
-+	perf_pmu_read(event);
+ static
+ int rtw89_mfw_recognize(struct rtw89_dev *rtwdev, enum rtw89_fw_type type,
+ 			struct rtw89_fw_suit *fw_suit, bool nowarn)
+@@ -549,6 +573,7 @@ int rtw89_mfw_recognize(struct rtw89_dev *rtwdev, enum rtw89_fw_type type,
+ 	u32 mfw_len = firmware->size;
+ 	const struct rtw89_mfw_hdr *mfw_hdr = (const struct rtw89_mfw_hdr *)mfw;
+ 	const struct rtw89_mfw_info *mfw_info = NULL, *tmp;
++	int ret;
+ 	int i;
  
- 	perf_event_update_time(event);
+ 	if (mfw_hdr->sig != RTW89_MFW_SIG) {
+@@ -561,6 +586,10 @@ int rtw89_mfw_recognize(struct rtw89_dev *rtwdev, enum rtw89_fw_type type,
+ 		return 0;
+ 	}
  
-@@ -4625,15 +4630,8 @@ static void __perf_event_read(void *info)
- 
- 	pmu->read(event);
- 
--	for_each_sibling_event(sub, event) {
--		if (sub->state == PERF_EVENT_STATE_ACTIVE) {
--			/*
--			 * Use sibling's PMU rather than @event's since
--			 * sibling could be on different (eg: software) PMU.
--			 */
--			sub->pmu->read(sub);
--		}
--	}
-+	for_each_sibling_event(sub, event)
-+		perf_pmu_read(sub);
- 
- 	data->ret = pmu->commit_txn(pmu);
- 
-@@ -7451,9 +7449,8 @@ static void perf_output_read_group(struct perf_output_handle *handle,
- 	if (read_format & PERF_FORMAT_TOTAL_TIME_RUNNING)
- 		values[n++] = running;
- 
--	if ((leader != event) &&
--	    (leader->state == PERF_EVENT_STATE_ACTIVE))
--		leader->pmu->read(leader);
-+	if ((leader != event) && !handle->skip_read)
-+		perf_pmu_read(leader);
- 
- 	values[n++] = perf_event_count(leader, self);
- 	if (read_format & PERF_FORMAT_ID)
-@@ -7466,9 +7463,8 @@ static void perf_output_read_group(struct perf_output_handle *handle,
- 	for_each_sibling_event(sub, leader) {
- 		n = 0;
- 
--		if ((sub != event) &&
--		    (sub->state == PERF_EVENT_STATE_ACTIVE))
--			sub->pmu->read(sub);
-+		if ((sub != event) && !handle->skip_read)
-+			perf_pmu_read(sub);
- 
- 		values[n++] = perf_event_count(sub, self);
- 		if (read_format & PERF_FORMAT_ID)
-@@ -7527,6 +7523,9 @@ void perf_output_sample(struct perf_output_handle *handle,
- {
- 	u64 sample_type = data->type;
- 
-+	if (data->sample_flags & PERF_SAMPLE_READ)
-+		handle->skip_read = 1;
++	ret = rtw89_mfw_validate_hdr(rtwdev, firmware, mfw_hdr);
++	if (ret)
++		return ret;
 +
- 	perf_output_put(handle, *header);
+ 	for (i = 0; i < mfw_hdr->fw_nr; i++) {
+ 		tmp = &mfw_hdr->info[i];
+ 		if (tmp->type != type)
+@@ -590,6 +619,12 @@ int rtw89_mfw_recognize(struct rtw89_dev *rtwdev, enum rtw89_fw_type type,
+ found:
+ 	fw_suit->data = mfw + le32_to_cpu(mfw_info->shift);
+ 	fw_suit->size = le32_to_cpu(mfw_info->size);
++
++	if (fw_suit->data + fw_suit->size > mfw + mfw_len) {
++		rtw89_err(rtwdev, "fw_suit %d out of address\n", type);
++		return -EFAULT;
++	}
++
+ 	return 0;
+ }
  
- 	if (sample_type & PERF_SAMPLE_IDENTIFIER)
-diff --git a/kernel/events/ring_buffer.c b/kernel/events/ring_buffer.c
-index 09459647cb822..5130b119d0ae0 100644
---- a/kernel/events/ring_buffer.c
-+++ b/kernel/events/ring_buffer.c
-@@ -185,6 +185,7 @@ __perf_output_begin(struct perf_output_handle *handle,
- 
- 	handle->rb    = rb;
- 	handle->event = event;
-+	handle->flags = 0;
- 
- 	have_lost = local_read(&rb->lost);
- 	if (unlikely(have_lost)) {
 -- 
 2.39.5
 
