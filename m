@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3661D63EF;
-	Tue, 27 May 2025 17:44:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F05F1D63EF;
+	Tue, 27 May 2025 17:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367868; cv=none; b=QTj/acm8YbK6IZoGfh+Pg4G5bt855j+zfZuQSRpPgPVu1bQOSv42rpxHiJJIbuzRUSgzfwX0EMNLy11hV/fwA9w+ti+GBanL0SuhyOyZrigEaKsH8uWiqeh+FhkJGknfPvkp8JNAGqpMzOu9QkVVRzf984U72WrvTqp1B2fr8Ss=
+	t=1748367871; cv=none; b=VkcjWaQxJqvEVUJdUdRSGp9b8/DhlU717qGVSqsbTSxQmG5vyPOwSQNfxD6R5p9KzHAKn2zLq2dHrzsq0tCHYTjmz00Osa3LBlagm8rLe3SYprxX8sgklUQhBGvEjPQzmLRBHUD1qTfwzHvehiDoqO1Xk++l91HhDlyMzK+8eLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367868; c=relaxed/simple;
-	bh=QuI76buspXkBG418dDPQo3fBjM+XoAFPzSnpp1mpRPI=;
+	s=arc-20240116; t=1748367871; c=relaxed/simple;
+	bh=XCdfBi1bx0aDs9xr3dIaZlqYlFjNUmmhO1E4WDLKrZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GKDno/G4bwjuhYWWkGTR/1mnP+49XgiDVMrto/PRt3G6aS/BO8b/Rd247PMCuIwvFY2X0Cfm/jvICar9X5Q/shQ9VNMikS3QtFvKTUJwAf6WJlK4PSIWHsv+UJi9BN/LDcq6HSmwXbEHacKqghD9std/6zq30q6V9Z/8xvLqrh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fHWxnjgA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rJGiBDfsiGk31FKDhGTT37yJyfHQ8yCEC+kobaH9zwXmKAnD3qyeZnxvSPIZmFxyuDkI+IKL0o3drBtuoK1wZPfrp+qJbQeWPimyEizLeam4C6KboYUC11iTGbY7gUsgVW7++Cl0P/JKmd3Z/bARkeRAAremu+3mjR6x+skoMg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHYq9Lq4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fHWxnjgA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7B48C4CEE9;
-	Tue, 27 May 2025 17:44:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHYq9Lq4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E89C4CEE9;
+	Tue, 27 May 2025 17:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367868;
-	bh=QuI76buspXkBG418dDPQo3fBjM+XoAFPzSnpp1mpRPI=;
+	s=korg; t=1748367871;
+	bh=XCdfBi1bx0aDs9xr3dIaZlqYlFjNUmmhO1E4WDLKrZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fHWxnjgAYuRJwHmRZvQUcCX8Ddi20wSeYrjGbT/KkZS6NgegRaRFGQiuCfoYbhFkM
-	 ABW83EACHhRCpvi4STCpDJURX5AemldP6sO2xq621YZteFYolGDIoe5/zjNuEcVgh6
-	 Wzgdit0cxFj2Cl/MtH6dYcHjx6TFwGCax1nQQPwM=
+	b=oHYq9Lq4T9u2Ia7VuOeG0g27TFiK8TMZua9CWE1WRHiKzuZdh/Rvv2RVs93+e5rLm
+	 Zhileh1PR7JWe5f1XfyU5yZquv+HhVq3WY3vTlb/MUSoKbry/3D6s1XFCefYgJ7zR2
+	 9V6dy0KBNDJP3THOAjlJZuQAypk9Bzg3yr1JlUZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Wetzel <Alexander@wetzel-home.de>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
+	=20Bence?= <csokas.bence@prolan.hu>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 525/783] wifi: mac80211: Drop cooked monitor support
-Date: Tue, 27 May 2025 18:25:22 +0200
-Message-ID: <20250527162534.534546741@linuxfoundation.org>
+Subject: [PATCH 6.14 526/783] net: fec: Refactor MAC reset to function
+Date: Tue, 27 May 2025 18:25:23 +0200
+Message-ID: <20250527162534.574561272@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -45,880 +49,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Wetzel <Alexander@wetzel-home.de>
+From: Csókás, Bence <csokas.bence@prolan.hu>
 
-[ Upstream commit 286e696770654d79b34bd15953e7101a1c4784c7 ]
+[ Upstream commit 67800d296191d0a9bde0a7776f99ca1ddfa0fc26 ]
 
-Hostapd switched from cooked monitor interfaces to nl80211 Dec 2011.
-Drop support for the outdated cooked monitor interfaces and fix
-creating the virtual monitor interfaces in the following cases:
+The core is reset both in `fec_restart()` (called on link-up) and
+`fec_stop()` (going to sleep, driver remove etc.). These two functions
+had their separate implementations, which was at first only a register
+write and a `udelay()` (and the accompanying block comment). However,
+since then we got soft-reset (MAC disable) and Wake-on-LAN support, which
+meant that these implementations diverged, often causing bugs.
 
- 1) We have one non-monitor and one monitor interface with
-    %MONITOR_FLAG_ACTIVE enabled and then delete the non-monitor
-    interface.
+For instance, as of now, `fec_stop()` does not check for
+`FEC_QUIRK_NO_HARD_RESET`, meaning the MII/RMII mode is cleared on eg.
+a PM power-down event; and `fec_restart()` missed the refactor renaming
+the "magic" constant `1` to `FEC_ECR_RESET`.
 
- 2) We only have monitor interfaces enabled on resume while at least one
-    has %MONITOR_FLAG_ACTIVE set.
+To harmonize current implementations, and eliminate this source of
+potential future bugs, refactor implementation to a common function.
 
-Signed-off-by: Alexander Wetzel <Alexander@wetzel-home.de>
-Link: https://patch.msgid.link/20250204111352.7004-2-Alexander@wetzel-home.de
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
+Link: https://patch.msgid.link/20250207121255.161146-2-csokas.bence@prolan.hu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/dropreason.h   |   6 --
- net/mac80211/cfg.c         |   9 +-
- net/mac80211/drop.h        |  21 ++--
- net/mac80211/ieee80211_i.h |  11 +--
- net/mac80211/iface.c       |  50 ++++------
- net/mac80211/main.c        |  16 +--
- net/mac80211/rx.c          | 194 ++++++++++---------------------------
- net/mac80211/status.c      |  34 +------
- net/mac80211/tx.c          |   2 +-
- 9 files changed, 94 insertions(+), 249 deletions(-)
+ drivers/net/ethernet/freescale/fec_main.c | 52 +++++++++++------------
+ 1 file changed, 25 insertions(+), 27 deletions(-)
 
-diff --git a/include/net/dropreason.h b/include/net/dropreason.h
-index 56cb7be92244c..7d3b1a2a6feca 100644
---- a/include/net/dropreason.h
-+++ b/include/net/dropreason.h
-@@ -17,12 +17,6 @@ enum skb_drop_reason_subsys {
- 	 */
- 	SKB_DROP_REASON_SUBSYS_MAC80211_UNUSABLE,
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index c5d5fa8d7dfdd..17e9bddb9ddd5 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -1098,6 +1098,29 @@ static void fec_enet_enable_ring(struct net_device *ndev)
+ 	}
+ }
  
--	/**
--	 * @SKB_DROP_REASON_SUBSYS_MAC80211_MONITOR: mac80211 drop reasons
--	 * for frames still going to monitor, see net/mac80211/drop.h
--	 */
--	SKB_DROP_REASON_SUBSYS_MAC80211_MONITOR,
--
- 	/**
- 	 * @SKB_DROP_REASON_SUBSYS_OPENVSWITCH: openvswitch drop reasons,
- 	 * see net/openvswitch/drop.h
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index b766472703b12..1ec246133d244 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -89,15 +89,14 @@ static int ieee80211_set_mon_options(struct ieee80211_sub_if_data *sdata,
- 
- 	/* check flags first */
- 	if (params->flags && ieee80211_sdata_running(sdata)) {
--		u32 mask = MONITOR_FLAG_COOK_FRAMES | MONITOR_FLAG_ACTIVE;
-+		u32 mask = MONITOR_FLAG_ACTIVE;
- 
- 		/*
--		 * Prohibit MONITOR_FLAG_COOK_FRAMES and
--		 * MONITOR_FLAG_ACTIVE to be changed while the
--		 * interface is up.
-+		 * Prohibit MONITOR_FLAG_ACTIVE to be changed
-+		 * while the interface is up.
- 		 * Else we would need to add a lot of cruft
- 		 * to update everything:
--		 *	cooked_mntrs, monitor and all fif_* counters
-+		 *	monitor and all fif_* counters
- 		 *	reconfigure hardware
- 		 */
- 		if ((params->flags & mask) != (sdata->u.mntr.flags & mask))
-diff --git a/net/mac80211/drop.h b/net/mac80211/drop.h
-index 59e3ec4dc9607..eb9ab310f91ca 100644
---- a/net/mac80211/drop.h
-+++ b/net/mac80211/drop.h
-@@ -11,12 +11,6 @@
- 
- typedef unsigned int __bitwise ieee80211_rx_result;
- 
--#define MAC80211_DROP_REASONS_MONITOR(R)	\
--	R(RX_DROP_M_UNEXPECTED_4ADDR_FRAME)	\
--	R(RX_DROP_M_BAD_BCN_KEYIDX)		\
--	R(RX_DROP_M_BAD_MGMT_KEYIDX)		\
--/* this line for the trailing \ - add before this */
--
- #define MAC80211_DROP_REASONS_UNUSABLE(R)	\
- 	/* 0x00 == ___RX_DROP_UNUSABLE */	\
- 	R(RX_DROP_U_MIC_FAIL)			\
-@@ -66,6 +60,10 @@ typedef unsigned int __bitwise ieee80211_rx_result;
- 	R(RX_DROP_U_UNEXPECTED_STA_4ADDR)	\
- 	R(RX_DROP_U_UNEXPECTED_VLAN_MCAST)	\
- 	R(RX_DROP_U_NOT_PORT_CONTROL)		\
-+	R(RX_DROP_U_UNEXPECTED_4ADDR_FRAME)	\
-+	R(RX_DROP_U_BAD_BCN_KEYIDX)		\
-+	/* 0x30 */				\
-+	R(RX_DROP_U_BAD_MGMT_KEYIDX)		\
- 	R(RX_DROP_U_UNKNOWN_ACTION_REJECTED)	\
- /* this line for the trailing \ - add before this */
- 
-@@ -78,10 +76,6 @@ enum ___mac80211_drop_reason {
- 	___RX_QUEUED	= SKB_NOT_DROPPED_YET,
- 
- #define ENUM(x) ___ ## x,
--	___RX_DROP_MONITOR = SKB_DROP_REASON_SUBSYS_MAC80211_MONITOR <<
--		SKB_DROP_REASON_SUBSYS_SHIFT,
--	MAC80211_DROP_REASONS_MONITOR(ENUM)
--
- 	___RX_DROP_UNUSABLE = SKB_DROP_REASON_SUBSYS_MAC80211_UNUSABLE <<
- 		SKB_DROP_REASON_SUBSYS_SHIFT,
- 	MAC80211_DROP_REASONS_UNUSABLE(ENUM)
-@@ -89,11 +83,10 @@ enum ___mac80211_drop_reason {
- };
- 
- enum mac80211_drop_reason {
--	RX_CONTINUE	 = (__force ieee80211_rx_result)___RX_CONTINUE,
--	RX_QUEUED	 = (__force ieee80211_rx_result)___RX_QUEUED,
--	RX_DROP_MONITOR	 = (__force ieee80211_rx_result)___RX_DROP_MONITOR,
-+	RX_CONTINUE	= (__force ieee80211_rx_result)___RX_CONTINUE,
-+	RX_QUEUED	= (__force ieee80211_rx_result)___RX_QUEUED,
-+	RX_DROP		= (__force ieee80211_rx_result)___RX_DROP_UNUSABLE,
- #define DEF(x) x = (__force ieee80211_rx_result)___ ## x,
--	MAC80211_DROP_REASONS_MONITOR(DEF)
- 	MAC80211_DROP_REASONS_UNUSABLE(DEF)
- #undef DEF
- };
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 8f5f7797f0b6b..afc6fda6b606b 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -200,7 +200,6 @@ enum ieee80211_packet_rx_flags {
- /**
-  * enum ieee80211_rx_flags - RX data flags
-  *
-- * @IEEE80211_RX_CMNTR: received on cooked monitor already
-  * @IEEE80211_RX_BEACON_REPORTED: This frame was already reported
-  *	to cfg80211_report_obss_beacon().
-  *
-@@ -208,8 +207,7 @@ enum ieee80211_packet_rx_flags {
-  * for a single frame.
-  */
- enum ieee80211_rx_flags {
--	IEEE80211_RX_CMNTR		= BIT(0),
--	IEEE80211_RX_BEACON_REPORTED	= BIT(1),
-+	IEEE80211_RX_BEACON_REPORTED	= BIT(0),
- };
- 
- struct ieee80211_rx_data {
-@@ -1380,7 +1378,7 @@ struct ieee80211_local {
- 	spinlock_t queue_stop_reason_lock;
- 
- 	int open_count;
--	int monitors, cooked_mntrs, tx_mntrs;
-+	int monitors, tx_mntrs;
- 	/* number of interfaces with corresponding FIF_ flags */
- 	int fif_fcsfail, fif_plcpfail, fif_control, fif_other_bss, fif_pspoll,
- 	    fif_probe_req;
-@@ -1492,7 +1490,7 @@ struct ieee80211_local {
- 
- 	/* see iface.c */
- 	struct list_head interfaces;
--	struct list_head mon_list; /* only that are IFF_UP && !cooked */
-+	struct list_head mon_list; /* only that are IFF_UP */
- 	struct mutex iflist_mtx;
- 
- 	/* Scanning and BSS list */
-@@ -2090,8 +2088,7 @@ struct sk_buff *
- ieee80211_build_data_template(struct ieee80211_sub_if_data *sdata,
- 			      struct sk_buff *skb, u32 info_flags);
- void ieee80211_tx_monitor(struct ieee80211_local *local, struct sk_buff *skb,
--			  int retry_count, bool send_to_cooked,
--			  struct ieee80211_tx_status *status);
-+			  int retry_count, struct ieee80211_tx_status *status);
- 
- void ieee80211_check_fast_xmit(struct sta_info *sta);
- void ieee80211_check_fast_xmit_all(struct ieee80211_local *local);
-diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
-index d299bdbca6b3b..5616c0adbe093 100644
---- a/net/mac80211/iface.c
-+++ b/net/mac80211/iface.c
-@@ -483,8 +483,6 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
- 		ieee80211_ibss_stop(sdata);
- 		break;
- 	case NL80211_IFTYPE_MONITOR:
--		if (sdata->u.mntr.flags & MONITOR_FLAG_COOK_FRAMES)
--			break;
- 		list_del_rcu(&sdata->u.mntr.list);
- 		break;
- 	default:
-@@ -584,18 +582,17 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
- 		/* no need to tell driver */
- 		break;
- 	case NL80211_IFTYPE_MONITOR:
--		if (sdata->u.mntr.flags & MONITOR_FLAG_COOK_FRAMES) {
--			local->cooked_mntrs--;
--			break;
--		}
-+		if (!(sdata->u.mntr.flags & MONITOR_FLAG_ACTIVE) &&
-+		    !ieee80211_hw_check(&local->hw, NO_VIRTUAL_MONITOR)) {
- 
--		local->monitors--;
--		if (local->monitors == 0) {
--			local->hw.conf.flags &= ~IEEE80211_CONF_MONITOR;
--			hw_reconf_flags |= IEEE80211_CONF_CHANGE_MONITOR;
--		}
-+			local->monitors--;
-+			if (local->monitors == 0) {
-+				local->hw.conf.flags &= ~IEEE80211_CONF_MONITOR;
-+				hw_reconf_flags |= IEEE80211_CONF_CHANGE_MONITOR;
-+			}
- 
--		ieee80211_adjust_monitor_flags(sdata, -1);
-+			ieee80211_adjust_monitor_flags(sdata, -1);
-+		}
- 		break;
- 	case NL80211_IFTYPE_NAN:
- 		/* clean all the functions */
-@@ -1333,27 +1330,24 @@ int ieee80211_do_open(struct wireless_dev *wdev, bool coming_up)
- 		}
- 		break;
- 	case NL80211_IFTYPE_MONITOR:
--		if (sdata->u.mntr.flags & MONITOR_FLAG_COOK_FRAMES) {
--			local->cooked_mntrs++;
--			break;
--		}
--
- 		if ((sdata->u.mntr.flags & MONITOR_FLAG_ACTIVE) ||
- 		    ieee80211_hw_check(&local->hw, NO_VIRTUAL_MONITOR)) {
- 			res = drv_add_interface(local, sdata);
- 			if (res)
- 				goto err_stop;
--		} else if (local->monitors == 0 && local->open_count == 0) {
--			res = ieee80211_add_virtual_monitor(local);
--			if (res)
--				goto err_stop;
--		}
++/* Whack a reset.  We should wait for this.
++ * For i.MX6SX SOC, enet use AXI bus, we use disable MAC
++ * instead of reset MAC itself.
++ */
++static void fec_ctrl_reset(struct fec_enet_private *fep, bool allow_wol)
++{
++	u32 val;
++
++	if (!allow_wol || !(fep->wol_flag & FEC_WOL_FLAG_SLEEP_ON)) {
++		if (fep->quirks & FEC_QUIRK_HAS_MULTI_QUEUES ||
++		    ((fep->quirks & FEC_QUIRK_NO_HARD_RESET) && fep->link)) {
++			writel(0, fep->hwp + FEC_ECNTRL);
 +		} else {
-+			if (local->monitors == 0 && local->open_count == 0) {
-+				res = ieee80211_add_virtual_monitor(local);
-+				if (res)
-+					goto err_stop;
-+			}
-+			local->monitors++;
++			writel(FEC_ECR_RESET, fep->hwp + FEC_ECNTRL);
++			udelay(10);
++		}
++	} else {
++		val = readl(fep->hwp + FEC_ECNTRL);
++		val |= (FEC_ECR_MAGICEN | FEC_ECR_SLEEP);
++		writel(val, fep->hwp + FEC_ECNTRL);
++	}
++}
++
+ /*
+  * This function is called to start or restart the FEC during a link
+  * change, transmit timeout, or to reconfigure the FEC.  The network
+@@ -1114,17 +1137,7 @@ fec_restart(struct net_device *ndev)
+ 	if (fep->bufdesc_ex)
+ 		fec_ptp_save_state(fep);
  
--		/* must be before the call to ieee80211_configure_filter */
--		local->monitors++;
--		if (local->monitors == 1) {
--			local->hw.conf.flags |= IEEE80211_CONF_MONITOR;
--			hw_reconf_flags |= IEEE80211_CONF_CHANGE_MONITOR;
-+			/* must be before the call to ieee80211_configure_filter */
-+			if (local->monitors == 1) {
-+				local->hw.conf.flags |= IEEE80211_CONF_MONITOR;
-+				hw_reconf_flags |= IEEE80211_CONF_CHANGE_MONITOR;
-+			}
- 		}
- 
- 		ieee80211_adjust_monitor_flags(sdata, 1);
-@@ -1430,8 +1424,6 @@ int ieee80211_do_open(struct wireless_dev *wdev, bool coming_up)
- 		rcu_assign_pointer(local->p2p_sdata, sdata);
- 		break;
- 	case NL80211_IFTYPE_MONITOR:
--		if (sdata->u.mntr.flags & MONITOR_FLAG_COOK_FRAMES)
--			break;
- 		list_add_tail_rcu(&sdata->u.mntr.list, &local->mon_list);
- 		break;
- 	default:
-diff --git a/net/mac80211/main.c b/net/mac80211/main.c
-index 2b6249d75a5d4..6b6de43d9420a 100644
---- a/net/mac80211/main.c
-+++ b/net/mac80211/main.c
-@@ -1746,18 +1746,7 @@ void ieee80211_free_hw(struct ieee80211_hw *hw)
- 	wiphy_free(local->hw.wiphy);
- }
- EXPORT_SYMBOL(ieee80211_free_hw);
--
--static const char * const drop_reasons_monitor[] = {
--#define V(x)	#x,
--	[0] = "RX_DROP_MONITOR",
--	MAC80211_DROP_REASONS_MONITOR(V)
--};
--
--static struct drop_reason_list drop_reason_list_monitor = {
--	.reasons = drop_reasons_monitor,
--	.n_reasons = ARRAY_SIZE(drop_reasons_monitor),
--};
--
-+#define V(x)   #x,
- static const char * const drop_reasons_unusable[] = {
- 	[0] = "RX_DROP_UNUSABLE",
- 	MAC80211_DROP_REASONS_UNUSABLE(V)
-@@ -1786,8 +1775,6 @@ static int __init ieee80211_init(void)
- 	if (ret)
- 		goto err_netdev;
- 
--	drop_reasons_register_subsys(SKB_DROP_REASON_SUBSYS_MAC80211_MONITOR,
--				     &drop_reason_list_monitor);
- 	drop_reasons_register_subsys(SKB_DROP_REASON_SUBSYS_MAC80211_UNUSABLE,
- 				     &drop_reason_list_unusable);
- 
-@@ -1806,7 +1793,6 @@ static void __exit ieee80211_exit(void)
- 
- 	ieee80211_iface_exit();
- 
--	drop_reasons_unregister_subsys(SKB_DROP_REASON_SUBSYS_MAC80211_MONITOR);
- 	drop_reasons_unregister_subsys(SKB_DROP_REASON_SUBSYS_MAC80211_UNUSABLE);
- 
- 	rcu_barrier();
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index 0659ec892ec6c..ad019a50b6b33 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -1045,14 +1045,14 @@ static ieee80211_rx_result ieee80211_rx_mesh_check(struct ieee80211_rx_data *rx)
- 		if (is_multicast_ether_addr(hdr->addr1)) {
- 			if (ieee80211_has_tods(hdr->frame_control) ||
- 			    !ieee80211_has_fromds(hdr->frame_control))
--				return RX_DROP_MONITOR;
-+				return RX_DROP;
- 			if (ether_addr_equal(hdr->addr3, dev_addr))
--				return RX_DROP_MONITOR;
-+				return RX_DROP;
- 		} else {
- 			if (!ieee80211_has_a4(hdr->frame_control))
--				return RX_DROP_MONITOR;
-+				return RX_DROP;
- 			if (ether_addr_equal(hdr->addr4, dev_addr))
--				return RX_DROP_MONITOR;
-+				return RX_DROP;
- 		}
- 	}
- 
-@@ -1064,20 +1064,20 @@ static ieee80211_rx_result ieee80211_rx_mesh_check(struct ieee80211_rx_data *rx)
- 		struct ieee80211_mgmt *mgmt;
- 
- 		if (!ieee80211_is_mgmt(hdr->frame_control))
--			return RX_DROP_MONITOR;
-+			return RX_DROP;
- 
- 		if (ieee80211_is_action(hdr->frame_control)) {
- 			u8 category;
- 
- 			/* make sure category field is present */
- 			if (rx->skb->len < IEEE80211_MIN_ACTION_SIZE)
--				return RX_DROP_MONITOR;
-+				return RX_DROP;
- 
- 			mgmt = (struct ieee80211_mgmt *)hdr;
- 			category = mgmt->u.action.category;
- 			if (category != WLAN_CATEGORY_MESH_ACTION &&
- 			    category != WLAN_CATEGORY_SELF_PROTECTED)
--				return RX_DROP_MONITOR;
-+				return RX_DROP;
- 			return RX_CONTINUE;
- 		}
- 
-@@ -1087,7 +1087,7 @@ static ieee80211_rx_result ieee80211_rx_mesh_check(struct ieee80211_rx_data *rx)
- 		    ieee80211_is_auth(hdr->frame_control))
- 			return RX_CONTINUE;
- 
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 	}
- 
- 	return RX_CONTINUE;
-@@ -1513,7 +1513,7 @@ ieee80211_rx_h_check(struct ieee80211_rx_data *rx)
- 			hdrlen = ieee80211_hdrlen(hdr->frame_control);
- 
- 			if (rx->skb->len < hdrlen + 8)
--				return RX_DROP_MONITOR;
-+				return RX_DROP;
- 
- 			skb_copy_bits(rx->skb, hdrlen + 6, &ethertype, 2);
- 			if (ethertype == rx->sdata->control_port_protocol)
-@@ -1526,7 +1526,7 @@ ieee80211_rx_h_check(struct ieee80211_rx_data *rx)
- 					       GFP_ATOMIC))
- 			return RX_DROP_U_SPURIOUS;
- 
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 	}
- 
- 	return RX_CONTINUE;
-@@ -1862,7 +1862,7 @@ ieee80211_rx_h_sta_process(struct ieee80211_rx_data *rx)
- 				cfg80211_rx_unexpected_4addr_frame(
- 					rx->sdata->dev, sta->sta.addr,
- 					GFP_ATOMIC);
--			return RX_DROP_M_UNEXPECTED_4ADDR_FRAME;
-+			return RX_DROP_U_UNEXPECTED_4ADDR_FRAME;
- 		}
- 		/*
- 		 * Update counter and free packet here to avoid
-@@ -1997,7 +1997,7 @@ ieee80211_rx_h_decrypt(struct ieee80211_rx_data *rx)
- 				cfg80211_rx_unprot_mlme_mgmt(rx->sdata->dev,
- 							     skb->data,
- 							     skb->len);
--			return RX_DROP_M_BAD_BCN_KEYIDX;
-+			return RX_DROP_U_BAD_BCN_KEYIDX;
- 		}
- 
- 		rx->key = ieee80211_rx_get_bigtk(rx, mmie_keyidx);
-@@ -2011,11 +2011,11 @@ ieee80211_rx_h_decrypt(struct ieee80211_rx_data *rx)
- 
- 		if (mmie_keyidx < NUM_DEFAULT_KEYS ||
- 		    mmie_keyidx >= NUM_DEFAULT_KEYS + NUM_DEFAULT_MGMT_KEYS)
--			return RX_DROP_M_BAD_MGMT_KEYIDX; /* unexpected BIP keyidx */
-+			return RX_DROP_U_BAD_MGMT_KEYIDX; /* unexpected BIP keyidx */
- 		if (rx->link_sta) {
- 			if (ieee80211_is_group_privacy_action(skb) &&
- 			    test_sta_flag(rx->sta, WLAN_STA_MFP))
--				return RX_DROP_MONITOR;
-+				return RX_DROP;
- 
- 			rx->key = rcu_dereference(rx->link_sta->gtk[mmie_keyidx]);
- 		}
-@@ -2100,11 +2100,11 @@ ieee80211_rx_h_decrypt(struct ieee80211_rx_data *rx)
- 
- 	if (rx->key) {
- 		if (unlikely(rx->key->flags & KEY_FLAG_TAINTED))
--			return RX_DROP_MONITOR;
-+			return RX_DROP;
- 
- 		/* TODO: add threshold stuff again */
- 	} else {
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 	}
- 
- 	switch (rx->key->conf.cipher) {
-@@ -2278,7 +2278,7 @@ ieee80211_rx_h_defragment(struct ieee80211_rx_data *rx)
- 		goto out;
- 
- 	if (is_multicast_ether_addr(hdr->addr1))
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 
- 	I802_DEBUG_INC(rx->local->rx_handlers_fragments);
- 
-@@ -2333,7 +2333,7 @@ ieee80211_rx_h_defragment(struct ieee80211_rx_data *rx)
- 					  rx->seqno_idx, hdr);
- 	if (!entry) {
- 		I802_DEBUG_INC(rx->local->rx_handlers_drop_defrag);
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 	}
- 
- 	/* "The receiver shall discard MSDUs and MMPDUs whose constituent
-@@ -2855,25 +2855,25 @@ ieee80211_rx_mesh_data(struct ieee80211_sub_if_data *sdata, struct sta_info *sta
- 		return RX_CONTINUE;
- 
- 	if (!pskb_may_pull(skb, sizeof(*eth) + 6))
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 
- 	mesh_hdr = (struct ieee80211s_hdr *)(skb->data + sizeof(*eth));
- 	mesh_hdrlen = ieee80211_get_mesh_hdrlen(mesh_hdr);
- 
- 	if (!pskb_may_pull(skb, sizeof(*eth) + mesh_hdrlen))
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 
- 	eth = (struct ethhdr *)skb->data;
- 	multicast = is_multicast_ether_addr(eth->h_dest);
- 
- 	mesh_hdr = (struct ieee80211s_hdr *)(eth + 1);
- 	if (!mesh_hdr->ttl)
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 
- 	/* frame is in RMC, don't forward */
- 	if (is_multicast_ether_addr(eth->h_dest) &&
- 	    mesh_rmc_check(sdata, eth->h_source, mesh_hdr))
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 
- 	/* forward packet */
- 	if (sdata->crypto_tx_tailroom_needed_cnt)
-@@ -2890,7 +2890,7 @@ ieee80211_rx_mesh_data(struct ieee80211_sub_if_data *sdata, struct sta_info *sta
- 			/* has_a4 already checked in ieee80211_rx_mesh_check */
- 			proxied_addr = mesh_hdr->eaddr2;
- 		else
--			return RX_DROP_MONITOR;
-+			return RX_DROP;
- 
- 		rcu_read_lock();
- 		mppath = mpp_path_lookup(sdata, proxied_addr);
-@@ -2922,14 +2922,14 @@ ieee80211_rx_mesh_data(struct ieee80211_sub_if_data *sdata, struct sta_info *sta
- 			goto rx_accept;
- 
- 		IEEE80211_IFSTA_MESH_CTR_INC(ifmsh, dropped_frames_ttl);
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 	}
- 
- 	if (!ifmsh->mshcfg.dot11MeshForwarding) {
- 		if (is_multicast_ether_addr(eth->h_dest))
- 			goto rx_accept;
- 
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 	}
- 
- 	skb_set_queue_mapping(skb, ieee802_1d_to_ac[skb->priority]);
-@@ -3122,7 +3122,7 @@ ieee80211_rx_h_amsdu(struct ieee80211_rx_data *rx)
- 		return RX_CONTINUE;
- 
- 	if (unlikely(!ieee80211_is_data_present(fc)))
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 
- 	if (unlikely(ieee80211_has_a4(hdr->frame_control))) {
- 		switch (rx->sdata->vif.type) {
-@@ -3179,19 +3179,16 @@ ieee80211_rx_h_data(struct ieee80211_rx_data *rx)
- 		return RX_CONTINUE;
- 
- 	if (unlikely(!ieee80211_is_data_present(hdr->frame_control)))
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 
--	/*
--	 * Send unexpected-4addr-frame event to hostapd. For older versions,
--	 * also drop the frame to cooked monitor interfaces.
+-	/* Whack a reset.  We should wait for this.
+-	 * For i.MX6SX SOC, enet use AXI bus, we use disable MAC
+-	 * instead of reset MAC itself.
 -	 */
-+	/* Send unexpected-4addr-frame event to hostapd */
- 	if (ieee80211_has_a4(hdr->frame_control) &&
- 	    sdata->vif.type == NL80211_IFTYPE_AP) {
- 		if (rx->sta &&
- 		    !test_and_set_sta_flag(rx->sta, WLAN_STA_4ADDR_EVENT))
- 			cfg80211_rx_unexpected_4addr_frame(
- 				rx->sdata->dev, rx->sta->sta.addr, GFP_ATOMIC);
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 	}
+-	if (fep->quirks & FEC_QUIRK_HAS_MULTI_QUEUES ||
+-	    ((fep->quirks & FEC_QUIRK_NO_HARD_RESET) && fep->link)) {
+-		writel(0, fep->hwp + FEC_ECNTRL);
+-	} else {
+-		writel(1, fep->hwp + FEC_ECNTRL);
+-		udelay(10);
+-	}
++	fec_ctrl_reset(fep, false);
  
- 	res = __ieee80211_data_to_8023(rx, &port_control);
-@@ -3203,7 +3200,7 @@ ieee80211_rx_h_data(struct ieee80211_rx_data *rx)
- 		return res;
+ 	/*
+ 	 * enet-mac reset will reset mac address registers too,
+@@ -1378,22 +1391,7 @@ fec_stop(struct net_device *ndev)
+ 	if (fep->bufdesc_ex)
+ 		fec_ptp_save_state(fep);
  
- 	if (!ieee80211_frame_allowed(rx, fc))
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 
- 	/* directly handle TDLS channel switch requests/responses */
- 	if (unlikely(((struct ethhdr *)rx->skb->data)->h_proto ==
-@@ -3268,11 +3265,11 @@ ieee80211_rx_h_ctrl(struct ieee80211_rx_data *rx, struct sk_buff_head *frames)
- 		};
- 
- 		if (!rx->sta)
--			return RX_DROP_MONITOR;
-+			return RX_DROP;
- 
- 		if (skb_copy_bits(skb, offsetof(struct ieee80211_bar, control),
- 				  &bar_data, sizeof(bar_data)))
--			return RX_DROP_MONITOR;
-+			return RX_DROP;
- 
- 		tid = le16_to_cpu(bar_data.control) >> 12;
- 
-@@ -3284,7 +3281,7 @@ ieee80211_rx_h_ctrl(struct ieee80211_rx_data *rx, struct sk_buff_head *frames)
- 
- 		tid_agg_rx = rcu_dereference(rx->sta->ampdu_mlme.tid_rx[tid]);
- 		if (!tid_agg_rx)
--			return RX_DROP_MONITOR;
-+			return RX_DROP;
- 
- 		start_seq_num = le16_to_cpu(bar_data.start_seq_num) >> 4;
- 		event.u.ba.tid = tid;
-@@ -3308,12 +3305,7 @@ ieee80211_rx_h_ctrl(struct ieee80211_rx_data *rx, struct sk_buff_head *frames)
- 		return RX_QUEUED;
- 	}
- 
--	/*
--	 * After this point, we only want management frames,
--	 * so we can drop all remaining control frames to
--	 * cooked monitor interfaces.
+-	/* Whack a reset.  We should wait for this.
+-	 * For i.MX6SX SOC, enet use AXI bus, we use disable MAC
+-	 * instead of reset MAC itself.
 -	 */
--	return RX_DROP_MONITOR;
-+	return RX_DROP;
- }
- 
- static void ieee80211_process_sa_query_req(struct ieee80211_sub_if_data *sdata,
-@@ -3422,10 +3414,10 @@ ieee80211_rx_h_mgmt_check(struct ieee80211_rx_data *rx)
- 	 * and unknown (reserved) frames are useless.
- 	 */
- 	if (rx->skb->len < 24)
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 
- 	if (!ieee80211_is_mgmt(mgmt->frame_control))
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 
- 	/* drop too small action frames */
- 	if (ieee80211_is_action(mgmt->frame_control) &&
-@@ -3951,17 +3943,16 @@ ieee80211_rx_h_action_return(struct ieee80211_rx_data *rx)
- 	 * ones. For all other modes we will return them to the sender,
- 	 * setting the 0x80 bit in the action category, as required by
- 	 * 802.11-2012 9.24.4.
--	 * Newer versions of hostapd shall also use the management frame
--	 * registration mechanisms, but older ones still use cooked
--	 * monitor interfaces so push all frames there.
-+	 * Newer versions of hostapd use the management frame registration
-+	 * mechanisms and old cooked monitor interface is no longer supported.
- 	 */
- 	if (!(status->rx_flags & IEEE80211_RX_MALFORMED_ACTION_FRM) &&
- 	    (sdata->vif.type == NL80211_IFTYPE_AP ||
- 	     sdata->vif.type == NL80211_IFTYPE_AP_VLAN))
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 
- 	if (is_multicast_ether_addr(mgmt->da))
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 
- 	/* do not return rejected action frames */
- 	if (mgmt->u.action.category & 0x80)
-@@ -4006,7 +3997,7 @@ ieee80211_rx_h_ext(struct ieee80211_rx_data *rx)
- 		return RX_CONTINUE;
- 
- 	if (sdata->vif.type != NL80211_IFTYPE_STATION)
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 
- 	/* for now only beacons are ext, so queue them */
- 	ieee80211_queue_skb_to_iface(sdata, rx->link_id, rx->sta, rx->skb);
-@@ -4027,7 +4018,7 @@ ieee80211_rx_h_mgmt(struct ieee80211_rx_data *rx)
- 	    sdata->vif.type != NL80211_IFTYPE_ADHOC &&
- 	    sdata->vif.type != NL80211_IFTYPE_OCB &&
- 	    sdata->vif.type != NL80211_IFTYPE_STATION)
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 
- 	switch (stype) {
- 	case cpu_to_le16(IEEE80211_STYPE_AUTH):
-@@ -4038,32 +4029,32 @@ ieee80211_rx_h_mgmt(struct ieee80211_rx_data *rx)
- 	case cpu_to_le16(IEEE80211_STYPE_DEAUTH):
- 		if (is_multicast_ether_addr(mgmt->da) &&
- 		    !is_broadcast_ether_addr(mgmt->da))
--			return RX_DROP_MONITOR;
-+			return RX_DROP;
- 
- 		/* process only for station/IBSS */
- 		if (sdata->vif.type != NL80211_IFTYPE_STATION &&
- 		    sdata->vif.type != NL80211_IFTYPE_ADHOC)
--			return RX_DROP_MONITOR;
-+			return RX_DROP;
- 		break;
- 	case cpu_to_le16(IEEE80211_STYPE_ASSOC_RESP):
- 	case cpu_to_le16(IEEE80211_STYPE_REASSOC_RESP):
- 	case cpu_to_le16(IEEE80211_STYPE_DISASSOC):
- 		if (is_multicast_ether_addr(mgmt->da) &&
- 		    !is_broadcast_ether_addr(mgmt->da))
--			return RX_DROP_MONITOR;
-+			return RX_DROP;
- 
- 		/* process only for station */
- 		if (sdata->vif.type != NL80211_IFTYPE_STATION)
--			return RX_DROP_MONITOR;
-+			return RX_DROP;
- 		break;
- 	case cpu_to_le16(IEEE80211_STYPE_PROBE_REQ):
- 		/* process only for ibss and mesh */
- 		if (sdata->vif.type != NL80211_IFTYPE_ADHOC &&
- 		    sdata->vif.type != NL80211_IFTYPE_MESH_POINT)
--			return RX_DROP_MONITOR;
-+			return RX_DROP;
- 		break;
- 	default:
--		return RX_DROP_MONITOR;
-+		return RX_DROP;
- 	}
- 
- 	ieee80211_queue_skb_to_iface(sdata, rx->link_id, rx->sta, rx->skb);
-@@ -4071,82 +4062,9 @@ ieee80211_rx_h_mgmt(struct ieee80211_rx_data *rx)
- 	return RX_QUEUED;
- }
- 
--static void ieee80211_rx_cooked_monitor(struct ieee80211_rx_data *rx,
--					struct ieee80211_rate *rate,
--					ieee80211_rx_result reason)
--{
--	struct ieee80211_sub_if_data *sdata;
--	struct ieee80211_local *local = rx->local;
--	struct sk_buff *skb = rx->skb, *skb2;
--	struct net_device *prev_dev = NULL;
--	struct ieee80211_rx_status *status = IEEE80211_SKB_RXCB(skb);
--	int needed_headroom;
--
--	/*
--	 * If cooked monitor has been processed already, then
--	 * don't do it again. If not, set the flag.
--	 */
--	if (rx->flags & IEEE80211_RX_CMNTR)
--		goto out_free_skb;
--	rx->flags |= IEEE80211_RX_CMNTR;
--
--	/* If there are no cooked monitor interfaces, just free the SKB */
--	if (!local->cooked_mntrs)
--		goto out_free_skb;
--
--	/* room for the radiotap header based on driver features */
--	needed_headroom = ieee80211_rx_radiotap_hdrlen(local, status, skb);
--
--	if (skb_headroom(skb) < needed_headroom &&
--	    pskb_expand_head(skb, needed_headroom, 0, GFP_ATOMIC))
--		goto out_free_skb;
--
--	/* prepend radiotap information */
--	ieee80211_add_rx_radiotap_header(local, skb, rate, needed_headroom,
--					 false);
--
--	skb_reset_mac_header(skb);
--	skb->ip_summed = CHECKSUM_UNNECESSARY;
--	skb->pkt_type = PACKET_OTHERHOST;
--	skb->protocol = htons(ETH_P_802_2);
--
--	list_for_each_entry_rcu(sdata, &local->interfaces, list) {
--		if (!ieee80211_sdata_running(sdata))
--			continue;
--
--		if (sdata->vif.type != NL80211_IFTYPE_MONITOR ||
--		    !(sdata->u.mntr.flags & MONITOR_FLAG_COOK_FRAMES))
--			continue;
--
--		if (prev_dev) {
--			skb2 = skb_clone(skb, GFP_ATOMIC);
--			if (skb2) {
--				skb2->dev = prev_dev;
--				netif_receive_skb(skb2);
--			}
+-	if (!(fep->wol_flag & FEC_WOL_FLAG_SLEEP_ON)) {
+-		if (fep->quirks & FEC_QUIRK_HAS_MULTI_QUEUES) {
+-			writel(0, fep->hwp + FEC_ECNTRL);
+-		} else {
+-			writel(FEC_ECR_RESET, fep->hwp + FEC_ECNTRL);
+-			udelay(10);
 -		}
--
--		prev_dev = sdata->dev;
--		dev_sw_netstats_rx_add(sdata->dev, skb->len);
+-	} else {
+-		val = readl(fep->hwp + FEC_ECNTRL);
+-		val |= (FEC_ECR_MAGICEN | FEC_ECR_SLEEP);
+-		writel(val, fep->hwp + FEC_ECNTRL);
 -	}
--
--	if (prev_dev) {
--		skb->dev = prev_dev;
--		netif_receive_skb(skb);
--		return;
--	}
--
-- out_free_skb:
--	kfree_skb_reason(skb, (__force u32)reason);
--}
--
- static void ieee80211_rx_handlers_result(struct ieee80211_rx_data *rx,
- 					 ieee80211_rx_result res)
- {
--	struct ieee80211_rx_status *status = IEEE80211_SKB_RXCB(rx->skb);
--	struct ieee80211_supported_band *sband;
--	struct ieee80211_rate *rate = NULL;
--
- 	if (res == RX_QUEUED) {
- 		I802_DEBUG_INC(rx->sdata->local->rx_handlers_queued);
- 		return;
-@@ -4158,23 +4076,13 @@ static void ieee80211_rx_handlers_result(struct ieee80211_rx_data *rx,
- 			rx->link_sta->rx_stats.dropped++;
- 	}
++	fec_ctrl_reset(fep, true);
+ 	writel(fep->phy_speed, fep->hwp + FEC_MII_SPEED);
+ 	writel(FEC_DEFAULT_IMASK, fep->hwp + FEC_IMASK);
  
--	if (u32_get_bits((__force u32)res, SKB_DROP_REASON_SUBSYS_MASK) ==
--			SKB_DROP_REASON_SUBSYS_MAC80211_UNUSABLE) {
--		kfree_skb_reason(rx->skb, (__force u32)res);
--		return;
--	}
--
--	sband = rx->local->hw.wiphy->bands[status->band];
--	if (status->encoding == RX_ENC_LEGACY)
--		rate = &sband->bitrates[status->rate_idx];
--
--	ieee80211_rx_cooked_monitor(rx, rate, res);
-+	kfree_skb_reason(rx->skb, (__force u32)res);
- }
- 
- static void ieee80211_rx_handlers(struct ieee80211_rx_data *rx,
- 				  struct sk_buff_head *frames)
- {
--	ieee80211_rx_result res = RX_DROP_MONITOR;
-+	ieee80211_rx_result res = RX_DROP;
- 	struct sk_buff *skb;
- 
- #define CALL_RXH(rxh)			\
-@@ -4238,7 +4146,7 @@ static void ieee80211_rx_handlers(struct ieee80211_rx_data *rx,
- static void ieee80211_invoke_rx_handlers(struct ieee80211_rx_data *rx)
- {
- 	struct sk_buff_head reorder_release;
--	ieee80211_rx_result res = RX_DROP_MONITOR;
-+	ieee80211_rx_result res = RX_DROP;
- 
- 	__skb_queue_head_init(&reorder_release);
- 
-diff --git a/net/mac80211/status.c b/net/mac80211/status.c
-index 5f28f3633fa0a..b17b3cc7fb903 100644
---- a/net/mac80211/status.c
-+++ b/net/mac80211/status.c
-@@ -895,8 +895,7 @@ static int ieee80211_tx_get_rates(struct ieee80211_hw *hw,
- }
- 
- void ieee80211_tx_monitor(struct ieee80211_local *local, struct sk_buff *skb,
--			  int retry_count, bool send_to_cooked,
--			  struct ieee80211_tx_status *status)
-+			  int retry_count, struct ieee80211_tx_status *status)
- {
- 	struct sk_buff *skb2;
- 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
-@@ -930,10 +929,6 @@ void ieee80211_tx_monitor(struct ieee80211_local *local, struct sk_buff *skb,
- 			if (sdata->u.mntr.flags & MONITOR_FLAG_SKIP_TX)
- 				continue;
- 
--			if ((sdata->u.mntr.flags & MONITOR_FLAG_COOK_FRAMES) &&
--			    !send_to_cooked)
--				continue;
--
- 			if (prev_dev) {
- 				skb2 = skb_clone(skb, GFP_ATOMIC);
- 				if (skb2) {
-@@ -964,7 +959,6 @@ static void __ieee80211_tx_status(struct ieee80211_hw *hw,
- 	struct ieee80211_tx_info *info = status->info;
- 	struct sta_info *sta;
- 	__le16 fc;
--	bool send_to_cooked;
- 	bool acked;
- 	bool noack_success;
- 	struct ieee80211_bar *bar;
-@@ -1091,28 +1085,10 @@ static void __ieee80211_tx_status(struct ieee80211_hw *hw,
- 
- 	ieee80211_report_used_skb(local, skb, false, status->ack_hwtstamp);
- 
--	/* this was a transmitted frame, but now we want to reuse it */
--	skb_orphan(skb);
--
--	/* Need to make a copy before skb->cb gets cleared */
--	send_to_cooked = !!(info->flags & IEEE80211_TX_CTL_INJECTED) ||
--			 !(ieee80211_is_data(fc));
--
--	/*
--	 * This is a bit racy but we can avoid a lot of work
--	 * with this test...
--	 */
--	if (!local->tx_mntrs && (!send_to_cooked || !local->cooked_mntrs)) {
--		if (status->free_list)
--			list_add_tail(&skb->list, status->free_list);
--		else
--			dev_kfree_skb(skb);
--		return;
--	}
--
--	/* send to monitor interfaces */
--	ieee80211_tx_monitor(local, skb, retry_count,
--			     send_to_cooked, status);
-+	if (status->free_list)
-+		list_add_tail(&skb->list, status->free_list);
-+	else
-+		dev_kfree_skb(skb);
- }
- 
- void ieee80211_tx_status_skb(struct ieee80211_hw *hw, struct sk_buff *skb)
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index a24636bda6793..1289df373795e 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -5617,7 +5617,7 @@ struct sk_buff *ieee80211_beacon_get_tim(struct ieee80211_hw *hw,
- 	if (!copy)
- 		return bcn;
- 
--	ieee80211_tx_monitor(hw_to_local(hw), copy, 1, false, NULL);
-+	ieee80211_tx_monitor(hw_to_local(hw), copy, 1, NULL);
- 
- 	return bcn;
- }
 -- 
 2.39.5
 
