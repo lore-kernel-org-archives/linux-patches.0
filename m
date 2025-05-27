@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9F2280038;
-	Tue, 27 May 2025 17:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD31078F32;
+	Tue, 27 May 2025 17:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365926; cv=none; b=IcLo3wi+wQesuaptjtUCt1XhPMuzjdKGVdXA3kAxbHiJrOgwky+ggx1y8tKVfSsFlIh7zRK7KeCRN9D6juCusJUDVka3DhIuf0RSLIhLtyN6+GqQ1dpkZ3dhSsBal1UEl5wLDuXDG29SQWVOlzHgQaI7MIA4BWvySjjdcmpgXLE=
+	t=1748365929; cv=none; b=KI9Jx8a2zKbxrrAm/EeYeDTiboivzfr/Pm2wgGxn8IAdnH1dhGuxdkh+QyBMtd20V82yY1I/pOoiS8N2ouZCqmzkiV3XW4vb4FvInE/MSKkCxnXsJDXEsnvLQRRqZCZJ6mgrNP0A2GiYtTIJKNH6rkhIl/d4UxQGeCyITfw4kEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365926; c=relaxed/simple;
-	bh=jUwNyQCD8l6yRBy6oaPNQIuva4X+9q5QaBWO8WZ8gvo=;
+	s=arc-20240116; t=1748365929; c=relaxed/simple;
+	bh=fRYr15sbZj++cmPpWQXhGuGF3LcfwyhOfzhKvIl6zvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gr6uFFlCWAKjjzAtIwmejy/mu04sg7Q6XlggovO3Tuc7hvBRd6g9LcOakd31hwVm55lnQ6hIQ784hXGpXq2GQqqoNtG8rGlYi3BhGoWSX5Su21X6Ppg2THxPwTU678V3ImwqrSSYcryel/TQKmWvAyZyn9Hf7nzcga/pcvmF13c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mggFhgY3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QCZF6/UuuUZafa8zJM0jIJUzHkNLQbd7iwS6rM5yt6K7jUyBgFb0HYH8TOPFZfnqTLVtjEefBUcBruIQgAEjkcEWVkgu7dn0f6kOtNUk+7rsbRQQQdl132yLTQ1+8LOovipB8qSvPNswmTdKXr5rYrvxXt2SA77IzJ92oBTBLIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9mbOXed; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mggFhgY3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 468B3C4CEE9;
-	Tue, 27 May 2025 17:12:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9mbOXed"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5F2C4CEE9;
+	Tue, 27 May 2025 17:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365926;
-	bh=jUwNyQCD8l6yRBy6oaPNQIuva4X+9q5QaBWO8WZ8gvo=;
+	s=korg; t=1748365929;
+	bh=fRYr15sbZj++cmPpWQXhGuGF3LcfwyhOfzhKvIl6zvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mggFhgY3tJ46F8Dul/G05JH/BTVlf3WCAfqXbQ7umzWF7k4PuvS0XHEn0yMw++FYL
-	 uPmHu+gDqlVL9MNpo7EDGOyR1YTtE5SrdJGzjUEYlWT71jXbgwj4ZA8s34BjdiZFgt
-	 26F/VZkTQaCPfL/wQ7pfqggYQ0BkMs5zsPbvITbo=
+	b=n9mbOXedWJ6l+rV5CUwOfMTwV219YH8RpQ3b32b4udQ60MSgIUPpoDVN35JmNYigR
+	 Letpxwuscfp98JN6iruZZt08vARJMwxQu1F2ZZpTXtqzCri+N1PrDhfB8r80s4cBjD
+	 sB9YWMScK91qWDyRqLvLmpUVOxTLPWNmeXBKqit0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Simon Horman <horms@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 534/626] soundwire: bus: Fix race on the creation of the IRQ domain
-Date: Tue, 27 May 2025 18:27:07 +0200
-Message-ID: <20250527162506.693179178@linuxfoundation.org>
+Subject: [PATCH 6.12 535/626] espintcp: fix skb leaks
+Date: Tue, 27 May 2025 18:27:08 +0200
+Message-ID: <20250527162506.732283867@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,58 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit fd15594ba7d559d9da741504c322b9f57c4981e5 ]
+[ Upstream commit 63c1f19a3be3169e51a5812d22a6d0c879414076 ]
 
-The SoundWire IRQ domain needs to be created before any slaves are added
-to the bus, such that the domain is always available when needed. Move
-the call to sdw_irq_create() before the calls to sdw_acpi_find_slaves()
-and sdw_of_find_slaves().
+A few error paths are missing a kfree_skb.
 
-Fixes: 12a95123bfe1 ("soundwire: bus: Allow SoundWire peripherals to register IRQ handlers")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20250409122239.1396489-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/bus.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/ipv4/esp4.c     | 4 +++-
+ net/ipv6/esp6.c     | 4 +++-
+ net/xfrm/espintcp.c | 4 +++-
+ 3 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/soundwire/bus.c b/drivers/soundwire/bus.c
-index 263ca32f0c5c3..6ca06cce41d3c 100644
---- a/drivers/soundwire/bus.c
-+++ b/drivers/soundwire/bus.c
-@@ -121,6 +121,10 @@ int sdw_bus_master_add(struct sdw_bus *bus, struct device *parent,
- 	set_bit(SDW_GROUP13_DEV_NUM, bus->assigned);
- 	set_bit(SDW_MASTER_DEV_NUM, bus->assigned);
+diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
+index f3281312eb5eb..f0a7f06df3ade 100644
+--- a/net/ipv4/esp4.c
++++ b/net/ipv4/esp4.c
+@@ -199,8 +199,10 @@ static int esp_output_tcp_finish(struct xfrm_state *x, struct sk_buff *skb)
  
-+	ret = sdw_irq_create(bus, fwnode);
-+	if (ret)
-+		return ret;
-+
- 	/*
- 	 * SDW is an enumerable bus, but devices can be powered off. So,
- 	 * they won't be able to report as present.
-@@ -137,6 +141,7 @@ int sdw_bus_master_add(struct sdw_bus *bus, struct device *parent,
+ 	sk = esp_find_tcp_sk(x);
+ 	err = PTR_ERR_OR_ZERO(sk);
+-	if (err)
++	if (err) {
++		kfree_skb(skb);
+ 		goto out;
++	}
  
- 	if (ret < 0) {
- 		dev_err(bus->dev, "Finding slaves failed:%d\n", ret);
-+		sdw_irq_delete(bus);
- 		return ret;
- 	}
+ 	bh_lock_sock(sk);
+ 	if (sock_owned_by_user(sk))
+diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
+index b2400c226a325..3810cfbc44103 100644
+--- a/net/ipv6/esp6.c
++++ b/net/ipv6/esp6.c
+@@ -216,8 +216,10 @@ static int esp_output_tcp_finish(struct xfrm_state *x, struct sk_buff *skb)
  
-@@ -155,10 +160,6 @@ int sdw_bus_master_add(struct sdw_bus *bus, struct device *parent,
- 	bus->params.curr_bank = SDW_BANK0;
- 	bus->params.next_bank = SDW_BANK1;
+ 	sk = esp6_find_tcp_sk(x);
+ 	err = PTR_ERR_OR_ZERO(sk);
+-	if (err)
++	if (err) {
++		kfree_skb(skb);
+ 		goto out;
++	}
  
--	ret = sdw_irq_create(bus, fwnode);
--	if (ret)
--		return ret;
--
- 	return 0;
- }
- EXPORT_SYMBOL(sdw_bus_master_add);
+ 	bh_lock_sock(sk);
+ 	if (sock_owned_by_user(sk))
+diff --git a/net/xfrm/espintcp.c b/net/xfrm/espintcp.c
+index fe82e2d073006..fc7a603b04f13 100644
+--- a/net/xfrm/espintcp.c
++++ b/net/xfrm/espintcp.c
+@@ -171,8 +171,10 @@ int espintcp_queue_out(struct sock *sk, struct sk_buff *skb)
+ 	struct espintcp_ctx *ctx = espintcp_getctx(sk);
+ 
+ 	if (skb_queue_len(&ctx->out_queue) >=
+-	    READ_ONCE(net_hotdata.max_backlog))
++	    READ_ONCE(net_hotdata.max_backlog)) {
++		kfree_skb(skb);
+ 		return -ENOBUFS;
++	}
+ 
+ 	__skb_queue_tail(&ctx->out_queue, skb);
+ 
 -- 
 2.39.5
 
