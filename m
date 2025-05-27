@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC5527FD5B;
-	Tue, 27 May 2025 16:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104D027FD73;
+	Tue, 27 May 2025 16:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364719; cv=none; b=ocHFCRVPkr3QkzdyWjgdyWDqOOTIyrlwwI4E7KWffJink26vZ8DncCIRMNYxl5bKQh25wIyGk3XSZCJG2GnZt5kWlIxz/8mGGoSzRhH4aREamRdhf0ZkuliALj1RaK1ORHbiITcxA2epjRDStjWRyH1WkvjWtPNHdovABIpsbZI=
+	t=1748364722; cv=none; b=mAD0U7lENi9h5R6EGvXDCb3u2czjv2My/xJUIzFDju6IaWBbuwtS+KBh1PuC7sK54kTkPQyQBlkPG9wS6ceK23sm3qcXROKHRFoGkwlhYhWKIc7MPwhwLZaEi9qonq/moboB4o8O3y/xnDIGWBW22csf6OPfmCQr2lkLCJNCjFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364719; c=relaxed/simple;
-	bh=1RP2P5vGOsm8Ax3+KmrCCDpsUunHceII/po7NNFj2Ws=;
+	s=arc-20240116; t=1748364722; c=relaxed/simple;
+	bh=Kqx93USXi1jT3JEg8wbi+0XTKMz7H4N4A9rL5Mw4YA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n53u2c5d9717+my96tdyA07NtcArVmAcFXvY0QwTEtRknkx8x7Ag0qU18BT0L76HWNf97rjVCiuY54Qm1k5PIGVUFenFQUVuuX/ZzDuyE8IsFouzsERcUtATIGjc0SNERVq4AO8p9tBAAlyWZ+RirQq+c8WsxEWvT1O8VdHUSCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIcwJUpY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qy8zV1iDDWDplp3cyzPt9Fcyx8G7ZSsdfgBtWx54t//ZTSqTG5nnvqwBCxyBl2INtuBI9ZOJ3mugvHGYn/nEKKedPX/bHDwwxIjxLudIyfx8whnzDPQwO+B00CirMfClxYWGMs2jMGt4UM0tkGoiU2MWf9vz9PESIe5stzGv9W8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NLPBXTt4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIcwJUpY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8B7C4AF0C;
-	Tue, 27 May 2025 16:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLPBXTt4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311CAC4CEED;
+	Tue, 27 May 2025 16:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364718;
-	bh=1RP2P5vGOsm8Ax3+KmrCCDpsUunHceII/po7NNFj2Ws=;
+	s=korg; t=1748364721;
+	bh=Kqx93USXi1jT3JEg8wbi+0XTKMz7H4N4A9rL5Mw4YA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rIcwJUpYtd+0VtozUa4nNYQ+Z5+kuINEGlw/QxnlPmSmr/3X5QsoZ/98u+pprpm0S
-	 5leuYvGnvebsNdxxUp1l1Su2yrVZ05i5RvYSOd3hIKrUB8Gt/urtepaeBE3bhqCBQ6
-	 tpzzkChxghR2Woj9cHV/vw0aFF03WhfeSyUV4wuI=
+	b=NLPBXTt4K/qRQUyKkcO8S5K2P+Y7ccYBG2+y0qRatfxH2xBRbTSh/lm61m4gX2vQg
+	 z6XO0mVtzJA9MIlshT0+Ec2oiUa9XCF4RC5+UTNTqHvU0C29+8FqhjLGbuG84WTam8
+	 9X62MnjMTol0nK0N2/zj44271PJljX7ZTG0I8dsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Brendan Jackman <jackmanb@google.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 143/626] objtool: Fix error handling inconsistencies in check()
-Date: Tue, 27 May 2025 18:20:36 +0200
-Message-ID: <20250527162450.840995465@linuxfoundation.org>
+Subject: [PATCH 6.12 114/626] btrfs: make btrfs_discard_workfn() block_group ref explicit
+Date: Tue, 27 May 2025 18:20:07 +0200
+Message-ID: <20250527162449.666566351@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,65 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit b745962cb97569aad026806bb0740663cf813147 ]
+[ Upstream commit 895c6721d310c036dcfebb5ab845822229fa35eb ]
 
-Make sure all fatal errors are funneled through the 'out' label with a
-negative ret.
+Currently, the async discard machinery owns a ref to the block_group
+when the block_group is queued on a discard list. However, to handle
+races with discard cancellation and the discard workfn, we have a
+specific logic to detect that the block_group is *currently* running in
+the workfn, to protect the workfn's usage amidst cancellation.
 
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Brendan Jackman <jackmanb@google.com>
-Link: https://lore.kernel.org/r/0f49d6a27a080b4012e84e6df1e23097f44cc082.1741975349.git.jpoimboe@kernel.org
+As far as I can tell, this doesn't have any overt bugs (though
+finish_discard_pass() and remove_from_discard_list() racing can have a
+surprising outcome for the caller of remove_from_discard_list() in that
+it is again added at the end).
+
+But it is needlessly complicated to rely on locking and the nullity of
+discard_ctl->block_group. Simplify this significantly by just taking a
+refcount while we are in the workfn and unconditionally drop it in both
+the remove and workfn paths, regardless of if they race.
+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/check.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ fs/btrfs/discard.c | 34 ++++++++++++++++------------------
+ 1 file changed, 16 insertions(+), 18 deletions(-)
 
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 0757b98b0a445..4fce0074076f3 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -4758,8 +4758,10 @@ int check(struct objtool_file *file)
- 	init_cfi_state(&force_undefined_cfi);
- 	force_undefined_cfi.force_undefined = true;
+diff --git a/fs/btrfs/discard.c b/fs/btrfs/discard.c
+index e9cdc1759dada..de23c4b3515e5 100644
+--- a/fs/btrfs/discard.c
++++ b/fs/btrfs/discard.c
+@@ -168,13 +168,7 @@ static bool remove_from_discard_list(struct btrfs_discard_ctl *discard_ctl,
+ 	block_group->discard_eligible_time = 0;
+ 	queued = !list_empty(&block_group->discard_list);
+ 	list_del_init(&block_group->discard_list);
+-	/*
+-	 * If the block group is currently running in the discard workfn, we
+-	 * don't want to deref it, since it's still being used by the workfn.
+-	 * The workfn will notice this case and deref the block group when it is
+-	 * finished.
+-	 */
+-	if (queued && !running)
++	if (queued)
+ 		btrfs_put_block_group(block_group);
  
--	if (!cfi_hash_alloc(1UL << (file->elf->symbol_bits - 3)))
-+	if (!cfi_hash_alloc(1UL << (file->elf->symbol_bits - 3))) {
-+		ret = -1;
- 		goto out;
+ 	spin_unlock(&discard_ctl->lock);
+@@ -273,9 +267,10 @@ static struct btrfs_block_group *peek_discard_list(
+ 			block_group->discard_cursor = block_group->start;
+ 			block_group->discard_state = BTRFS_DISCARD_EXTENTS;
+ 		}
+-		discard_ctl->block_group = block_group;
+ 	}
+ 	if (block_group) {
++		btrfs_get_block_group(block_group);
++		discard_ctl->block_group = block_group;
+ 		*discard_state = block_group->discard_state;
+ 		*discard_index = block_group->discard_index;
+ 	}
+@@ -506,9 +501,20 @@ static void btrfs_discard_workfn(struct work_struct *work)
+ 
+ 	block_group = peek_discard_list(discard_ctl, &discard_state,
+ 					&discard_index, now);
+-	if (!block_group || !btrfs_run_discard_work(discard_ctl))
++	if (!block_group)
+ 		return;
++	if (!btrfs_run_discard_work(discard_ctl)) {
++		spin_lock(&discard_ctl->lock);
++		btrfs_put_block_group(block_group);
++		discard_ctl->block_group = NULL;
++		spin_unlock(&discard_ctl->lock);
++		return;
 +	}
- 
- 	cfi_hash_add(&init_cfi);
- 	cfi_hash_add(&func_cfi);
-@@ -4776,7 +4778,7 @@ int check(struct objtool_file *file)
- 	if (opts.retpoline) {
- 		ret = validate_retpoline(file);
- 		if (ret < 0)
--			return ret;
-+			goto out;
- 		warnings += ret;
+ 	if (now < block_group->discard_eligible_time) {
++		spin_lock(&discard_ctl->lock);
++		btrfs_put_block_group(block_group);
++		discard_ctl->block_group = NULL;
++		spin_unlock(&discard_ctl->lock);
+ 		btrfs_discard_schedule_work(discard_ctl, false);
+ 		return;
  	}
- 
-@@ -4812,7 +4814,7 @@ int check(struct objtool_file *file)
- 		 */
- 		ret = validate_unrets(file);
- 		if (ret < 0)
--			return ret;
-+			goto out;
- 		warnings += ret;
- 	}
- 
-@@ -4875,7 +4877,7 @@ int check(struct objtool_file *file)
- 	if (opts.prefix) {
- 		ret = add_prefix_symbols(file);
- 		if (ret < 0)
--			return ret;
-+			goto out;
- 		warnings += ret;
- 	}
- 
+@@ -560,15 +566,7 @@ static void btrfs_discard_workfn(struct work_struct *work)
+ 	spin_lock(&discard_ctl->lock);
+ 	discard_ctl->prev_discard = trimmed;
+ 	discard_ctl->prev_discard_time = now;
+-	/*
+-	 * If the block group was removed from the discard list while it was
+-	 * running in this workfn, then we didn't deref it, since this function
+-	 * still owned that reference. But we set the discard_ctl->block_group
+-	 * back to NULL, so we can use that condition to know that now we need
+-	 * to deref the block_group.
+-	 */
+-	if (discard_ctl->block_group == NULL)
+-		btrfs_put_block_group(block_group);
++	btrfs_put_block_group(block_group);
+ 	discard_ctl->block_group = NULL;
+ 	__btrfs_discard_schedule_work(discard_ctl, now, false);
+ 	spin_unlock(&discard_ctl->lock);
 -- 
 2.39.5
 
