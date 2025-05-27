@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193FF1E89C;
-	Tue, 27 May 2025 17:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3F11E89C;
+	Tue, 27 May 2025 17:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366456; cv=none; b=tjrTx0p7iyGv6ZGPuSTh7XO+8TI1tjWeE6s31Cp5kD4t2GKHhlkH9I9w45L4uxVyh/0ejZqvQlStd1MBh6geIxXNkRwGInN2YsBfV+T9gYq680jb9/dpK8yAYj0dSIuhRNS4W9d8Uc8bj/8lNkma6YOnANbCH0xxUeSPNxAS6JM=
+	t=1748366459; cv=none; b=D4W3LQS/WXr8B/+5sNEkeidkCYvFkYBAeoM2F4oBp+Lvcv+C+silGT2Xni7g1RHgcJ8Q0/uXBp5R0xSihffXJNob4B7Kui+jz2BXvzTUOquAbicdXnBT7JPjjwbpBAAJWeoBB3AngsNjDSJIOdu/+2mCxhX/ZA+K8depM03H1c8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366456; c=relaxed/simple;
-	bh=FbBgni5il4LWMKnSkY0RxFZHSunjwKSxzb7Qhvf/THo=;
+	s=arc-20240116; t=1748366459; c=relaxed/simple;
+	bh=QMEvCTuGi/JB7dyPBdZF1WJghJuC5fEfQAZQaO57h4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Nok4Tn0IFZfjqAlWsCbMsDar6BF28TODpe6zjv5AsTcdBGnPI+ouIfmvW7xfpC6LPV9eiNbqa2ZTfPt+3vCP56Q8JyUrRgly9RMLP2nrNXzrPUWzna0tb2JNhO5d8PpKc0P42p8A+Fi16zSDV2qmh5EZcYzfaWB0af3BZfjFVw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CquIvEJC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=n1Ih2LvFl7fdb+JCJKXdOJkLDyzIUbQK7LAGD0mG7w6MqGPaZ2zLrdmIpdIkJTytSyHq0uoLere/cnJ8J9XaIAVeCkJTyba679vAqBDOKmy3w29ZObOAFJLRhqeT+MxGO6LkaZMCizxp4HztX6vuzzE8e4ouml3/02FEIaWwNbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tD7ifQSb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CquIvEJC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FFDC4CEE9;
-	Tue, 27 May 2025 17:20:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tD7ifQSb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD0BC4CEE9;
+	Tue, 27 May 2025 17:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366456;
-	bh=FbBgni5il4LWMKnSkY0RxFZHSunjwKSxzb7Qhvf/THo=;
+	s=korg; t=1748366459;
+	bh=QMEvCTuGi/JB7dyPBdZF1WJghJuC5fEfQAZQaO57h4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CquIvEJCiWfdkbQsgNl1x+rICJOoRH/PCkamF5Tg6pab7YyghbbTJonPCDkeAAHnU
-	 A2JHaWabYnAxdzjP9wWLFNTaOmEZF5kxo4Qm0jT6Tl2yF+47D0dSh42/bYZhJ89mOS
-	 j33XF7bkJXmJIzeKZj4uaMPvzF2Z8Wt3QtBhUMog=
+	b=tD7ifQSbjUqLqOOFebJul3Ik6SgAuw4PTi/lSfkEKlii1cfowcVw7OITEmmynq/nV
+	 j4NnYbS6YdVClYCvly6125MRZr7BIZhkZ88tfPeS5g4lJb8ScvQw7Fpruq7bGUEqzl
+	 Qf3jufpVadnRLS37BAxzgrlfuhBHTECA07OpJtw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 073/783] cifs: Fix getting DACL-only xattr system.cifs_acl and system.smb3_acl
-Date: Tue, 27 May 2025 18:17:50 +0200
-Message-ID: <20250527162516.099274947@linuxfoundation.org>
+Subject: [PATCH 6.14 074/783] cifs: Check if server supports reparse points before using them
+Date: Tue, 27 May 2025 18:17:51 +0200
+Message-ID: <20250527162516.144613903@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -54,109 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit ad9364a6835c45c52f47587ffbe0577bb7cd4c5b ]
+[ Upstream commit 6c06be908ca190e2d8feae1cf452d78598cd0b94 ]
 
-Currently ->get_acl() callback always create request for OWNER, GROUP and
-DACL, even when only DACLs was requested by user. Change API callback to
-request only information for which the caller asked. Therefore when only
-DACLs requested, then SMB client will prepare and send DACL-only request.
-
-This change fixes retrieving of "system.cifs_acl" and "system.smb3_acl"
-xattrs to contain only DACL structure as documented.
-
-Note that setting/changing of "system.cifs_acl" and "system.smb3_acl"
-xattrs already takes only DACL structure and ignores all other fields.
+Do not attempt to query or create reparse point when server fs does not
+support it. This will prevent creating unusable empty object on the server.
 
 Signed-off-by: Pali Rohár <pali@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsacl.c |  4 ++--
- fs/smb/client/cifssmb.c |  3 +--
- fs/smb/client/smb2pdu.c |  4 +---
- fs/smb/client/xattr.c   | 15 +++++++++++----
- 4 files changed, 15 insertions(+), 11 deletions(-)
+ fs/smb/client/cifssmb.c   | 3 +++
+ fs/smb/client/link.c      | 3 ++-
+ fs/smb/client/smb2inode.c | 8 ++++++++
+ fs/smb/client/smb2ops.c   | 4 ++--
+ 4 files changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/client/cifsacl.c b/fs/smb/client/cifsacl.c
-index f9d577f2d59bb..63b3b1290bed2 100644
---- a/fs/smb/client/cifsacl.c
-+++ b/fs/smb/client/cifsacl.c
-@@ -1565,7 +1565,7 @@ cifs_acl_to_fattr(struct cifs_sb_info *cifs_sb, struct cifs_fattr *fattr,
- 	int rc = 0;
- 	struct tcon_link *tlink = cifs_sb_tlink(cifs_sb);
- 	struct smb_version_operations *ops;
--	const u32 info = 0;
-+	const u32 info = OWNER_SECINFO | GROUP_SECINFO | DACL_SECINFO;
- 
- 	cifs_dbg(NOISY, "converting ACL to mode for %s\n", path);
- 
-@@ -1619,7 +1619,7 @@ id_mode_to_cifs_acl(struct inode *inode, const char *path, __u64 *pnmode,
- 	struct tcon_link *tlink;
- 	struct smb_version_operations *ops;
- 	bool mode_from_sid, id_from_sid;
--	const u32 info = 0;
-+	const u32 info = OWNER_SECINFO | GROUP_SECINFO | DACL_SECINFO;
- 	bool posix;
- 
- 	tlink = cifs_sb_tlink(cifs_sb);
 diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index c2abe79f0dd3b..e90811f321944 100644
+index e90811f321944..53e3e8282cb2a 100644
 --- a/fs/smb/client/cifssmb.c
 +++ b/fs/smb/client/cifssmb.c
-@@ -3416,8 +3416,7 @@ CIFSSMBGetCIFSACL(const unsigned int xid, struct cifs_tcon *tcon, __u16 fid,
- 	/* BB TEST with big acls that might need to be e.g. larger than 16K */
- 	pSMB->MaxSetupCount = 0;
- 	pSMB->Fid = fid; /* file handle always le */
--	pSMB->AclFlags = cpu_to_le32(CIFS_ACL_OWNER | CIFS_ACL_GROUP |
--				     CIFS_ACL_DACL | info);
-+	pSMB->AclFlags = cpu_to_le32(info);
- 	pSMB->ByteCount = cpu_to_le16(11); /* 3 bytes pad + 8 bytes parm */
- 	inc_rfc1001_len(pSMB, 11);
- 	iov[0].iov_base = (char *)pSMB;
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index ed3ffcb80aef0..d080c777906b4 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -3910,12 +3910,10 @@ SMB2_query_acl(const unsigned int xid, struct cifs_tcon *tcon,
- 	       u64 persistent_fid, u64 volatile_fid,
- 	       void **data, u32 *plen, u32 extra_info)
+@@ -2725,6 +2725,9 @@ int cifs_query_reparse_point(const unsigned int xid,
+ 	if (cap_unix(tcon->ses))
+ 		return -EOPNOTSUPP;
+ 
++	if (!(le32_to_cpu(tcon->fsAttrInfo.Attributes) & FILE_SUPPORTS_REPARSE_POINTS))
++		return -EOPNOTSUPP;
++
+ 	oparms = (struct cifs_open_parms) {
+ 		.tcon = tcon,
+ 		.cifs_sb = cifs_sb,
+diff --git a/fs/smb/client/link.c b/fs/smb/client/link.c
+index 34a026243287f..769752ad2c5ce 100644
+--- a/fs/smb/client/link.c
++++ b/fs/smb/client/link.c
+@@ -643,7 +643,8 @@ cifs_symlink(struct mnt_idmap *idmap, struct inode *inode,
+ 	case CIFS_SYMLINK_TYPE_NATIVE:
+ 	case CIFS_SYMLINK_TYPE_NFS:
+ 	case CIFS_SYMLINK_TYPE_WSL:
+-		if (server->ops->create_reparse_symlink) {
++		if (server->ops->create_reparse_symlink &&
++		    (le32_to_cpu(pTcon->fsAttrInfo.Attributes) & FILE_SUPPORTS_REPARSE_POINTS)) {
+ 			rc = server->ops->create_reparse_symlink(xid, inode,
+ 								 direntry,
+ 								 pTcon,
+diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
+index 826b57a5a2a8d..e9fd3e204a6f4 100644
+--- a/fs/smb/client/smb2inode.c
++++ b/fs/smb/client/smb2inode.c
+@@ -1273,6 +1273,14 @@ struct inode *smb2_get_reparse_inode(struct cifs_open_info_data *data,
+ 	int rc;
+ 	int i;
+ 
++	/*
++	 * If server filesystem does not support reparse points then do not
++	 * attempt to create reparse point. This will prevent creating unusable
++	 * empty object on the server.
++	 */
++	if (!(le32_to_cpu(tcon->fsAttrInfo.Attributes) & FILE_SUPPORTS_REPARSE_POINTS))
++		return ERR_PTR(-EOPNOTSUPP);
++
+ 	oparms = CIFS_OPARMS(cifs_sb, tcon, full_path,
+ 			     SYNCHRONIZE | DELETE |
+ 			     FILE_READ_ATTRIBUTES |
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 6795970d4de6e..fbb3686292134 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -5237,7 +5237,7 @@ static int smb2_make_node(unsigned int xid, struct inode *inode,
+ 			  const char *full_path, umode_t mode, dev_t dev)
  {
--	__u32 additional_info = OWNER_SECINFO | GROUP_SECINFO | DACL_SECINFO |
--				extra_info;
- 	*plen = 0;
+ 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
+-	int rc;
++	int rc = -EOPNOTSUPP;
  
- 	return query_info(xid, tcon, persistent_fid, volatile_fid,
--			  0, SMB2_O_INFO_SECURITY, additional_info,
-+			  0, SMB2_O_INFO_SECURITY, extra_info,
- 			  SMB2_MAX_BUFFER_SIZE, MIN_SEC_DESC_LEN, data, plen);
- }
- 
-diff --git a/fs/smb/client/xattr.c b/fs/smb/client/xattr.c
-index 58a584f0b27e9..7d49f38f01f3e 100644
---- a/fs/smb/client/xattr.c
-+++ b/fs/smb/client/xattr.c
-@@ -320,10 +320,17 @@ static int cifs_xattr_get(const struct xattr_handler *handler,
- 		if (pTcon->ses->server->ops->get_acl == NULL)
- 			goto out; /* rc already EOPNOTSUPP */
- 
--		if (handler->flags == XATTR_CIFS_NTSD_FULL) {
--			extra_info = SACL_SECINFO;
--		} else {
--			extra_info = 0;
-+		switch (handler->flags) {
-+		case XATTR_CIFS_NTSD_FULL:
-+			extra_info = OWNER_SECINFO | GROUP_SECINFO | DACL_SECINFO | SACL_SECINFO;
-+			break;
-+		case XATTR_CIFS_NTSD:
-+			extra_info = OWNER_SECINFO | GROUP_SECINFO | DACL_SECINFO;
-+			break;
-+		case XATTR_CIFS_ACL:
-+		default:
-+			extra_info = DACL_SECINFO;
-+			break;
- 		}
- 		pacl = pTcon->ses->server->ops->get_acl(cifs_sb,
- 				inode, full_path, &acllen, extra_info);
+ 	/*
+ 	 * Check if mounted with mount parm 'sfu' mount parm.
+@@ -5248,7 +5248,7 @@ static int smb2_make_node(unsigned int xid, struct inode *inode,
+ 	if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_UNX_EMUL) {
+ 		rc = cifs_sfu_make_node(xid, inode, dentry, tcon,
+ 					full_path, mode, dev);
+-	} else {
++	} else if (le32_to_cpu(tcon->fsAttrInfo.Attributes) & FILE_SUPPORTS_REPARSE_POINTS) {
+ 		rc = smb2_mknod_reparse(xid, inode, dentry, tcon,
+ 					full_path, mode, dev);
+ 	}
 -- 
 2.39.5
 
