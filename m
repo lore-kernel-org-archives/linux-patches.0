@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6167280034;
-	Tue, 27 May 2025 17:24:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7507B27EC73;
+	Tue, 27 May 2025 17:24:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366661; cv=none; b=CWn/ySO9DfNbDuYAW/1Y48kJmGfI06PZm87qeSOTHqNP4FgufT9L1NkHxj4z4FwZ/XG/Jt7uAzXC6hy0D9K2nlJLkXvw34wneF450/MKFDvfZVBqUoU1Ujm4LothzCY+dx5FQS8YT9z2lnCYRyAomxkFOdVs5mBICB252pzNuKQ=
+	t=1748366665; cv=none; b=pWsnFnqS9a1mSFkOAqoiowocfN4kc/wnVL8ncKMlCaGUcM7gdeTJL8X32tguYotLHhC+rbSXYO/zHiLdSBC8hDBJlPKmP4BA2O2TxnOyxfwJ95VcGxq1GM94+8zbQ5I6IPacmsjYhrM5wEnlHD+C8wD88FqmYXDJ8zV87tKDRRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366661; c=relaxed/simple;
-	bh=+is5Wl+hiqkPGyndIgeDwxN4NmM+8V5zErpeASqvtvk=;
+	s=arc-20240116; t=1748366665; c=relaxed/simple;
+	bh=X7InmAU7jQWHi+ShgAgzu+SV0qZMVscLHmHaxHHm0+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZfCKXqAkyl5ItZIkzGD1KXAFJ/62p7goKF3H+wtlEhjxygNUulqGCHZvq3+szZRKsC8F5g1ZI/H9BQigwhIIq8EgiIaRFU9M8HGCgYDUmxOHARgs18iorQevLwF0bl75LsnoFBx5mTwXPL4PqsxiGAWRH9Ll4Rv52YUvRhhwOm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cRjuEbmN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X5K0w+sFU+7nUjJw4t4Ef1fs/WP5bQW0R2K4IMgjjfkocsu5qReJPzWHfaFfyAmZp7CY7ZJzwaLaOrMBIo1f+eom+zgIqeVXgvYe0XhMxjteRWqNqYZpU1ALSfrV5MsdIa3vCbp/3kp7itU5MyoCkQyJTJumBpXiVVEqqcKn2A8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F+O2JyMB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cRjuEbmN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530ACC4CEE9;
-	Tue, 27 May 2025 17:24:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+O2JyMB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7DEC4CEEA;
+	Tue, 27 May 2025 17:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366661;
-	bh=+is5Wl+hiqkPGyndIgeDwxN4NmM+8V5zErpeASqvtvk=;
+	s=korg; t=1748366665;
+	bh=X7InmAU7jQWHi+ShgAgzu+SV0qZMVscLHmHaxHHm0+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cRjuEbmNW0EPczxOSF6XA1L3dN7O85GByqEsZ4saPFLe/W6st1YQFLRTke2RjFupt
-	 PyCp9o5uRqoXKCNLI0TNmjLkXRBSJaR0vGtZmr+zHP829gJHPlt6DHerwawljfq9un
-	 3NCq0JiZC/3Q5wt9o8rcx6whJGWSb40+AJbVwbF0=
+	b=F+O2JyMBlFxQ+ruynOpMVyzwn4hOHRWjaUSsKM7e32DGMX4/2DZg4iOrfpNzXL2C6
+	 Tjths29eqBosIYe3QJoQvnDoTi//jpr4Fw8i60/DRs1yO50LiERt7JHiFMtmEZcb3n
+	 uMqnPUESOuiH+2Fg0n8LJl6lCj2z9qxxtM7WOMa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wen Tao <wentao@uniontech.com>,
-	Chen Linxuan <chenlinxuan@uniontech.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Flora Cui <flora.cui@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 140/783] blk-cgroup: improve policy registration error handling
-Date: Tue, 27 May 2025 18:18:57 +0200
-Message-ID: <20250527162518.861794675@linuxfoundation.org>
+Subject: [PATCH 6.14 141/783] drm/amdgpu: release xcp_mgr on exit
+Date: Tue, 27 May 2025 18:18:58 +0200
+Message-ID: <20250527162518.901200801@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -49,96 +46,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Linxuan <chenlinxuan@uniontech.com>
+From: Flora Cui <flora.cui@amd.com>
 
-[ Upstream commit e1a0202c6bfda24002a3ae2115154fa90104c649 ]
+[ Upstream commit b5aaa82e2b12feaaa6958f7fa0917ddcc03c24ee ]
 
-This patch improve the returned error code of blkcg_policy_register().
+Free on driver cleanup.
 
-1. Move the validation check for cpd/pd_alloc_fn and cpd/pd_free_fn
-   function pairs to the start of blkcg_policy_register(). This ensures
-   we immediately return -EINVAL if the function pairs are not correctly
-   provided, rather than returning -ENOSPC after locking and unlocking
-   mutexes unnecessarily.
-
-   Those locks should not contention any problems, as error of policy
-   registration is a super cold path.
-
-2. Return -ENOMEM when cpd_alloc_fn() failed.
-
-Co-authored-by: Wen Tao <wentao@uniontech.com>
-Signed-off-by: Wen Tao <wentao@uniontech.com>
-Signed-off-by: Chen Linxuan <chenlinxuan@uniontech.com>
-Reviewed-by: Michal Koutný <mkoutny@suse.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/3E333A73B6B6DFC0+20250317022924.150907-1-chenlinxuan@uniontech.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Flora Cui <flora.cui@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index c94efae5bcfaf..8b07015db819a 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -1727,27 +1727,27 @@ int blkcg_policy_register(struct blkcg_policy *pol)
- 	struct blkcg *blkcg;
- 	int i, ret;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index c00a01c62724a..ea50f82b547d9 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4778,6 +4778,9 @@ void amdgpu_device_fini_sw(struct amdgpu_device *adev)
+ 	kfree(adev->fru_info);
+ 	adev->fru_info = NULL;
  
-+	/*
-+	 * Make sure cpd/pd_alloc_fn and cpd/pd_free_fn in pairs, and policy
-+	 * without pd_alloc_fn/pd_free_fn can't be activated.
-+	 */
-+	if ((!pol->cpd_alloc_fn ^ !pol->cpd_free_fn) ||
-+	    (!pol->pd_alloc_fn ^ !pol->pd_free_fn))
-+		return -EINVAL;
++	kfree(adev->xcp_mgr);
++	adev->xcp_mgr = NULL;
 +
- 	mutex_lock(&blkcg_pol_register_mutex);
- 	mutex_lock(&blkcg_pol_mutex);
+ 	px = amdgpu_device_supports_px(adev_to_drm(adev));
  
- 	/* find an empty slot */
--	ret = -ENOSPC;
- 	for (i = 0; i < BLKCG_MAX_POLS; i++)
- 		if (!blkcg_policy[i])
- 			break;
- 	if (i >= BLKCG_MAX_POLS) {
- 		pr_warn("blkcg_policy_register: BLKCG_MAX_POLS too small\n");
-+		ret = -ENOSPC;
- 		goto err_unlock;
- 	}
- 
--	/*
--	 * Make sure cpd/pd_alloc_fn and cpd/pd_free_fn in pairs, and policy
--	 * without pd_alloc_fn/pd_free_fn can't be activated.
--	 */
--	if ((!pol->cpd_alloc_fn ^ !pol->cpd_free_fn) ||
--	    (!pol->pd_alloc_fn ^ !pol->pd_free_fn))
--		goto err_unlock;
--
- 	/* register @pol */
- 	pol->plid = i;
- 	blkcg_policy[pol->plid] = pol;
-@@ -1758,8 +1758,10 @@ int blkcg_policy_register(struct blkcg_policy *pol)
- 			struct blkcg_policy_data *cpd;
- 
- 			cpd = pol->cpd_alloc_fn(GFP_KERNEL);
--			if (!cpd)
-+			if (!cpd) {
-+				ret = -ENOMEM;
- 				goto err_free_cpds;
-+			}
- 
- 			blkcg->cpd[pol->plid] = cpd;
- 			cpd->blkcg = blkcg;
+ 	if (px || (!dev_is_removable(&adev->pdev->dev) &&
 -- 
 2.39.5
 
