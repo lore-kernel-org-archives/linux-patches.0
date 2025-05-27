@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDE427FD4C;
-	Tue, 27 May 2025 17:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B84E26B0B6;
+	Tue, 27 May 2025 17:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366929; cv=none; b=VA/PbQNfTQrnFsa+YdNNM2AwaJzm8qCOMHIpLgdjIJTTNbt/w2ELrn7jraBNHdOHX/RYIO0w1aqNUh1yE7LdftbIjGnR7j/n3DuLBaWErXQcIhRBA6k0hsgyvgBoPXhA5lZ1LEmoD5hEzwvfN+gcxcV21wMKynUAZ5u0E/17nzM=
+	t=1748366932; cv=none; b=TrV+uPmRkV6WQn5z1NIGElmd9GbBfR4eKzRrKRSO5F/u9tmUey3D/rsmAicLHJ9IqXQ7GfqgPxLD3d+8QTAT2ZeZja0cYTCkRK6PLaZeAHEOLexXavR/7aYw+MtquqybYcOpztqnvfLu7iQ0J8KOE8VMVVyIYL4JaH04pBZREdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366929; c=relaxed/simple;
-	bh=ct9VdcN5Tm2xgp1OJGudG3hgML3+hN5L2VC2tuLQ1os=;
+	s=arc-20240116; t=1748366932; c=relaxed/simple;
+	bh=cWz0B2UaP/ahVKuH2TRaQBfPVzjYj2BfkMwPUk/mu7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JHPnMhuQbHmGXvb6KAsutTNzMZDSU00nDx7o3a4S4aa7DNUfuxbZKtDZa9ygNK90cA4f7xaepkFwWGc64lXgTWa32K00EkqylqEEkN4KLlxzSq6xg9NNhR1k9JjD8k5OXKW+lm4uy4CrWaPbhilUrPKAq7+aYsXUY3aHUKdxdZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uv02+nqh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qqJVrmXb3UDfSNz1RqVMHahBVDsCURe5l8Dcxm/VYCj4K2mzi2pKNN5RCkkh13KxZhnBgmczMpvdDwnU4vmR6ZE8J3xbTP/wEDhktypS6+r5IkD1Worq0Emaf0gCTtu4UxXaF0LPPU5xUIj6XJuJ/OGQ5DV1lW2QyAG0hlRUDTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gM5QlUBg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uv02+nqh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B835FC4CEE9;
-	Tue, 27 May 2025 17:28:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gM5QlUBg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED80CC4CEE9;
+	Tue, 27 May 2025 17:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366929;
-	bh=ct9VdcN5Tm2xgp1OJGudG3hgML3+hN5L2VC2tuLQ1os=;
+	s=korg; t=1748366932;
+	bh=cWz0B2UaP/ahVKuH2TRaQBfPVzjYj2BfkMwPUk/mu7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uv02+nqh9FoOImGzl7Ld+NMuzxvInytjCBfSc/y7xsaB7YWN4lXy1BkQlvcSo5ZhN
-	 YUzMoem7TR+XIGAQdqHFwX+o/8FphKZyPnPZOWHlBwFo4UG74JKo/vDhNtVmmH8C5c
-	 5d9mpumKzeXdiCEx/rh6eaus+tvqCWbi0tYNuvrM=
+	b=gM5QlUBgAW/WTbY74s/nsDBmnGRL/G3b9S4vZmHBrER4zFgnmnzYLU667py/wvSNO
+	 LDBOmOFTImtDjL4RWRBqCZU4F9QkOSMH6Ih9qICs/1moVrihZvZce2rp08TKxHy/Ss
+	 +EL9r45fvmWrka2I0e8ijfrqHUG2Zj15cXa9xg4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcos Paulo de Souza <mpdesouza@suse.com>,
-	Petr Mladek <pmladek@suse.com>,
-	John Ogness <john.ogness@linutronix.de>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 215/783] printk: Check CON_SUSPEND when unblanking a console
-Date: Tue, 27 May 2025 18:20:12 +0200
-Message-ID: <20250527162521.885490130@linuxfoundation.org>
+Subject: [PATCH 6.14 224/783] wifi: mac80211_hwsim: Fix MLD address translation
+Date: Tue, 27 May 2025 18:20:21 +0200
+Message-ID: <20250527162522.242994940@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,57 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcos Paulo de Souza <mpdesouza@suse.com>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit 72c96a2dacc0fb056d13a5f02b0845c4c910fe54 ]
+[ Upstream commit 65bff0be9b154621b617fc2e4bd89f1e18e97cdb ]
 
-The commit 9e70a5e109a4 ("printk: Add per-console suspended state")
-introduced the CON_SUSPENDED flag for consoles. The suspended consoles
-will stop receiving messages, so don't unblank suspended consoles
-because it won't be showing anything either way.
+Do address translations only between shared links. It is
+possible that while an non-AP MLD station and an AP MLD
+station have shared links, the frame is intended to be sent
+on a link which is not shared (for example when sending a
+probe response).
 
-Signed-off-by: Marcos Paulo de Souza <mpdesouza@suse.com>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Reviewed-by: John Ogness <john.ogness@linutronix.de>
-Link: https://lore.kernel.org/r/20250226-printk-renaming-v1-5-0b878577f2e6@suse.com
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250308225541.1aa461270bb6.Ic21592e1b1634653f02b80628cb2152f6e9de367@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/printk/printk.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/net/wireless/virtual/mac80211_hwsim.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index 057db78876cd9..13d4210d8862f 100644
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -3340,7 +3340,12 @@ void console_unblank(void)
- 	 */
- 	cookie = console_srcu_read_lock();
- 	for_each_console_srcu(c) {
--		if ((console_srcu_read_flags(c) & CON_ENABLED) && c->unblank) {
-+		short flags = console_srcu_read_flags(c);
-+
-+		if (flags & CON_SUSPENDED)
-+			continue;
-+
-+		if ((flags & CON_ENABLED) && c->unblank) {
- 			found_unblank = true;
- 			break;
- 		}
-@@ -3377,7 +3382,12 @@ void console_unblank(void)
+diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
+index cf6a331d40427..a68530344d205 100644
+--- a/drivers/net/wireless/virtual/mac80211_hwsim.c
++++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
+@@ -4,7 +4,7 @@
+  * Copyright (c) 2008, Jouni Malinen <j@w1.fi>
+  * Copyright (c) 2011, Javier Lopez <jlopex@gmail.com>
+  * Copyright (c) 2016 - 2017 Intel Deutschland GmbH
+- * Copyright (C) 2018 - 2024 Intel Corporation
++ * Copyright (C) 2018 - 2025 Intel Corporation
+  */
  
- 	cookie = console_srcu_read_lock();
- 	for_each_console_srcu(c) {
--		if ((console_srcu_read_flags(c) & CON_ENABLED) && c->unblank)
-+		short flags = console_srcu_read_flags(c);
-+
-+		if (flags & CON_SUSPENDED)
-+			continue;
-+
-+		if ((flags & CON_ENABLED) && c->unblank)
- 			c->unblank();
- 	}
- 	console_srcu_read_unlock(cookie);
+ /*
+@@ -1983,11 +1983,13 @@ static void mac80211_hwsim_tx(struct ieee80211_hw *hw,
+ 			return;
+ 		}
+ 
+-		if (sta && sta->mlo) {
+-			if (WARN_ON(!link_sta)) {
+-				ieee80211_free_txskb(hw, skb);
+-				return;
+-			}
++		/* Do address translations only between shared links. It is
++		 * possible that while an non-AP MLD station and an AP MLD
++		 * station have shared links, the frame is intended to be sent
++		 * on a link which is not shared (for example when sending a
++		 * probe response).
++		 */
++		if (sta && sta->mlo && link_sta) {
+ 			/* address translation to link addresses on TX */
+ 			ether_addr_copy(hdr->addr1, link_sta->addr);
+ 			ether_addr_copy(hdr->addr2, bss_conf->addr);
 -- 
 2.39.5
 
