@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC002798F8;
-	Tue, 27 May 2025 17:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA86B2110E;
+	Tue, 27 May 2025 17:35:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367298; cv=none; b=VwfmUMPOhUdIm+is36DxIl/xo2bVjUFJ6GyE/sVq2Cd60pEGLxqDD6TKSSET+pg+L0omMd+Zy0CAdgOkgibI2IECOqiix+YgmGqnku7ZHjbxd5EoGYkw+LXYdaqZpfp9mDbq2QjnmFA+6Qxm4OBisAdyDAQGWE5E0IZbwVRQ/zo=
+	t=1748367301; cv=none; b=T79EP48+zgYXR0W0LfZfDfbPZpwTBGf/B6ARB7sH+yX+k5j6HG+S0cEtegty5btncRH1MTfViBEY9FN7mSnXGHof3VfGeTzIeoKkCmQoXhsIHg0jv6ZbaQFxXxKTT4iPszpMBA4NF3cTmCp/eYrr4M6xaiiQY/t4Er/C4AGpxNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367298; c=relaxed/simple;
-	bh=zHrp8qOpZ7THRrGKuQqnhqwbAjlWz2LjLtcBB5HFNKo=;
+	s=arc-20240116; t=1748367301; c=relaxed/simple;
+	bh=up1M1hdXe9OsdTryf15Avx7nycfRnc41RzPq8OHrOKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lAKBQNZTS9KqMdONSdQMD0H5XeBsRL9VpdYcj+YxFtiSPgunNDcASXZ0tJIWDUT5IFcGKOS+REGadjeWmdTiFYMil1wD8DQ1fnoHhmPhqO7IVw7MDwoKyfk88ojDdIkq81z5V9U3IRKCNnX7wWIxiNZiaZQPOS0in1RjMd+TTws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gW0CgCup; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IGjyk+mQjv8bdt3QyN6xwhEj4N0L9dvCqsOuLZPtpvJM2bQYnN31xWELKasiUT53w7bp0ZuIgkn91v8WNrUM6gQg0apu0WQFWB1Vh1qooGKV+KoE6pIyl1gXrofAQoEmfRwdOKpEkvyfX4gAOnH4F48uI1o/CKOAiUKW1mtHy74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pu87ivHx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gW0CgCup"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE18C4CEE9;
-	Tue, 27 May 2025 17:34:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pu87ivHx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F431C4CEE9;
+	Tue, 27 May 2025 17:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367298;
-	bh=zHrp8qOpZ7THRrGKuQqnhqwbAjlWz2LjLtcBB5HFNKo=;
+	s=korg; t=1748367301;
+	bh=up1M1hdXe9OsdTryf15Avx7nycfRnc41RzPq8OHrOKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gW0CgCup1oNO84gvMptG78+M0p23SzG3uRa75OGNBKMvUfHfeMriFCEclJpEFai6M
-	 UKA5I6q8tVqhLtSMz2gWSOj9piqTrKctd3lQ/Hpr2o0IKBhqwAFjiGgQYjjos03ZLL
-	 +EpwhWeIZHaHqdT+uz2vV8nq/g4dfOO7/NNgswlM=
+	b=pu87ivHxM6GS92Yz46YFSZeqy9oHToUrtIk3GqYuNH3MV2nIIZbxlSWl7p1gMyJxc
+	 MgNmmWSM6yJqJJvAm5R+Ey37S6C2/toxKjDJsOAijphieHsjaynEow+Qhk4V+WH81v
+	 ubTt7svvnRbZ+SpWzX2nkRPVq6P5eCfMyWKWSbdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	David Kaplan <David.Kaplan@amd.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 315/783] x86/bugs: Make spectre user default depend on MITIGATION_SPECTRE_V2
-Date: Tue, 27 May 2025 18:21:52 +0200
-Message-ID: <20250527162525.894904213@linuxfoundation.org>
+Subject: [PATCH 6.14 342/783] bonding: report duplicate MAC address in all situations
+Date: Tue, 27 May 2025 18:22:19 +0200
+Message-ID: <20250527162526.995162497@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -49,100 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 98fdaeb296f51ef08e727a7cc72e5b5c864c4f4d ]
+[ Upstream commit 28d68d396a1cd21591e8c6d74afbde33a7ea107e ]
 
-Change the default value of spectre v2 in user mode to respect the
-CONFIG_MITIGATION_SPECTRE_V2 config option.
+Normally, a bond uses the MAC address of the first added slave as the bond’s
+MAC address. And the bond will set active slave’s MAC address to bond’s
+address if fail_over_mac is set to none (0) or follow (2).
 
-Currently, user mode spectre v2 is set to auto
-(SPECTRE_V2_USER_CMD_AUTO) by default, even if
-CONFIG_MITIGATION_SPECTRE_V2 is disabled.
+When the first slave is removed, the bond will still use the removed slave’s
+MAC address, which can lead to a duplicate MAC address and potentially cause
+issues with the switch. To avoid confusion, let's warn the user in all
+situations, including when fail_over_mac is set to 2 or not in active-backup
+mode.
 
-Set the spectre_v2 value to auto (SPECTRE_V2_USER_CMD_AUTO) if the
-Spectre v2 config (CONFIG_MITIGATION_SPECTRE_V2) is enabled, otherwise
-set the value to none (SPECTRE_V2_USER_CMD_NONE).
-
-Important to say the command line argument "spectre_v2_user" overwrites
-the default value in both cases.
-
-When CONFIG_MITIGATION_SPECTRE_V2 is not set, users have the flexibility
-to opt-in for specific mitigations independently. In this scenario,
-setting spectre_v2= will not enable spectre_v2_user=, and command line
-options spectre_v2_user and spectre_v2 are independent when
-CONFIG_MITIGATION_SPECTRE_V2=n.
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: David Kaplan <David.Kaplan@amd.com>
-Link: https://lore.kernel.org/r/20241031-x86_bugs_last_v2-v2-2-b7ff1dab840e@debian.org
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20250225033914.18617-1-liuhangbin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt |  2 ++
- arch/x86/kernel/cpu/bugs.c                      | 10 +++++++---
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ drivers/net/bonding/bond_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index f9e11cebc598c..a8e98f75b610a 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -6602,6 +6602,8 @@
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 4da5fcb7def47..203d3467dcbcd 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2551,7 +2551,7 @@ static int __bond_release_one(struct net_device *bond_dev,
  
- 			Selecting 'on' will also enable the mitigation
- 			against user space to user space task attacks.
-+			Selecting specific mitigation does not force enable
-+			user mitigations.
+ 	RCU_INIT_POINTER(bond->current_arp_slave, NULL);
  
- 			Selecting 'off' will disable both the kernel and
- 			the user space protections.
-diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index b6994993c39f7..e0e0ecc401947 100644
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1442,9 +1442,13 @@ static __ro_after_init enum spectre_v2_mitigation_cmd spectre_v2_cmd;
- static enum spectre_v2_user_cmd __init
- spectre_v2_parse_user_cmdline(void)
- {
-+	enum spectre_v2_user_cmd mode;
- 	char arg[20];
- 	int ret, i;
- 
-+	mode = IS_ENABLED(CONFIG_MITIGATION_SPECTRE_V2) ?
-+		SPECTRE_V2_USER_CMD_AUTO : SPECTRE_V2_USER_CMD_NONE;
-+
- 	switch (spectre_v2_cmd) {
- 	case SPECTRE_V2_CMD_NONE:
- 		return SPECTRE_V2_USER_CMD_NONE;
-@@ -1457,7 +1461,7 @@ spectre_v2_parse_user_cmdline(void)
- 	ret = cmdline_find_option(boot_command_line, "spectre_v2_user",
- 				  arg, sizeof(arg));
- 	if (ret < 0)
--		return SPECTRE_V2_USER_CMD_AUTO;
-+		return mode;
- 
- 	for (i = 0; i < ARRAY_SIZE(v2_user_options); i++) {
- 		if (match_option(arg, ret, v2_user_options[i].option)) {
-@@ -1467,8 +1471,8 @@ spectre_v2_parse_user_cmdline(void)
- 		}
- 	}
- 
--	pr_err("Unknown user space protection option (%s). Switching to AUTO select\n", arg);
--	return SPECTRE_V2_USER_CMD_AUTO;
-+	pr_err("Unknown user space protection option (%s). Switching to default\n", arg);
-+	return mode;
- }
- 
- static inline bool spectre_v2_in_ibrs_mode(enum spectre_v2_mitigation mode)
+-	if (!all && (!bond->params.fail_over_mac ||
++	if (!all && (bond->params.fail_over_mac != BOND_FOM_ACTIVE ||
+ 		     BOND_MODE(bond) != BOND_MODE_ACTIVEBACKUP)) {
+ 		if (ether_addr_equal_64bits(bond_dev->dev_addr, slave->perm_hwaddr) &&
+ 		    bond_has_slaves(bond))
 -- 
 2.39.5
 
