@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C487139579;
-	Tue, 27 May 2025 17:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20243139579;
+	Tue, 27 May 2025 17:09:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365796; cv=none; b=uWXBjau4MXFQMQdJuQJAtz66zPeO3JKp8N9sxIaseScOzb1jkeTrbeAHK44T4C1x43iseSta4FXhiunIwaP4FcNf9Nf9+1YA3+2l9Mdjj3dLqt0Uy2AXfqEWh/pqNL55X+9X/mE9yY7aPje0GxsY2LQbX3ecl6rdtUOz1xtOIH0=
+	t=1748365799; cv=none; b=AVxJo5Meitg0aM18YPh+NBUux1w8KIU3ukAvxUSArUT1xpaGMs9EPKzpeizAC80xal+8tiJoW0uZeIvXhO6/lDxB1YBaC2BzVbU1g1m3eq7dEdmoy/9TpV2PcXR1TMCy1TyhBqazRq4/c3hRJLEN5VkHwGgdOS+uYLBEKX1K788=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365796; c=relaxed/simple;
-	bh=reDql2G7H9SKIM4M6/Z7MlpQvMldaM6TsVBKrTVfqRQ=;
+	s=arc-20240116; t=1748365799; c=relaxed/simple;
+	bh=Hy0IWDFeiTkvsC7id8Pk2hl3pIylz7w9wrqvY8DX70E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ov23WjMIDOFfIYlxmIw9hsXRBTqKgWYPN5DV1UNUMVCKHmvhTLKjkaaLAE6yI0ox6Xr3CqgNvmK2rj6BvEZEIiy/KlOxtmXBZZqiBH6uFBhacAuQSvDuwYQ/QyMQXQJAQTG52GeWryQXUEIQdvd2EfZp+gWxtvzL6r6UZHCJFcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=diO2hVAs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=un6AaP8b6AQql4youxle2cUyBvpmsHg0afdE+nRaq+HF1UrN5c8a7RpwHkcVrs9ESAj2k1KxZdywQdYIgveXp7aacSqn+BpGFSLpXNX1UOoE004MQyawxvKD91UAfv0x8CRz424nYagBB8G3ydLu1fZH1ljFZQEBWAsrerbno5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lIVyRLru; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="diO2hVAs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5E2C4CEE9;
-	Tue, 27 May 2025 17:09:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lIVyRLru"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91092C4CEE9;
+	Tue, 27 May 2025 17:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365795;
-	bh=reDql2G7H9SKIM4M6/Z7MlpQvMldaM6TsVBKrTVfqRQ=;
+	s=korg; t=1748365799;
+	bh=Hy0IWDFeiTkvsC7id8Pk2hl3pIylz7w9wrqvY8DX70E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=diO2hVAse1Dp3vDJWMtX+B40DSkpMWCNHVAonMh76GF4uFJx/RvVsWK55sWc93sdr
-	 TSX+rfH+zvWxw+ylEmLPZJLB2matS9ntlT1ZTIqTOkuWoRzk9DVX9pbRiWgVTcA8/b
-	 d25JZmHeHqXhh+pOTSqvHU0F2UMubFaTKjBdv8e0=
+	b=lIVyRLruw50yS0dyr5+WneA8dlVUWywNcU2S3JUk6Grz7UE+ekbmFwlUfSm21wdrT
+	 FLu1xsyVD+HKGh4PDtysWN8FfYxSGoBffV0EiM6cbxqUbYyBE79jgES/B1jW+x0pkv
+	 HniOXzyAQbfXD05bpFu365u7ivf7Za6v9uoCJn/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	P Praneesh <quic_ppranees@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Olivier Moysan <olivier.moysan@foss.st.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 492/626] wifi: ath12k: Fix end offset bit definition in monitor ring descriptor
-Date: Tue, 27 May 2025 18:26:25 +0200
-Message-ID: <20250527162504.973259795@linuxfoundation.org>
+Subject: [PATCH 6.12 493/626] drm: bridge: adv7511: fill stream capabilities
+Date: Tue, 27 May 2025 18:26:26 +0200
+Message-ID: <20250527162505.013070171@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,40 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: P Praneesh <quic_ppranees@quicinc.com>
+From: Olivier Moysan <olivier.moysan@foss.st.com>
 
-[ Upstream commit 6788a666000d600bd8f2e9f991cad9cc805e7f01 ]
+[ Upstream commit c852646f12d4cd5b4f19eeec2976c5d98c0382f8 ]
 
-End offset for the monitor destination ring descriptor is defined as
-16 bits, while the firmware definition specifies only 12 bits.
-The remaining bits (bit 12 to bit 15) are reserved and may contain
-junk values, leading to invalid information retrieval. Fix this issue
-by updating the correct genmask values.
+Set no_i2s_capture and no_spdif_capture flags in hdmi_codec_pdata structure
+to report that the ADV7511 HDMI bridge does not support i2s or spdif audio
+capture.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-
-Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
-Link: https://patch.msgid.link/20241223060132.3506372-8-quic_ppranees@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Olivier Moysan <olivier.moysan@foss.st.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250108170356.413063-2-olivier.moysan@foss.st.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/hal_desc.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/adv7511/adv7511_audio.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath12k/hal_desc.h b/drivers/net/wireless/ath/ath12k/hal_desc.h
-index 739f73370015e..4f745cfd7d8e7 100644
---- a/drivers/net/wireless/ath/ath12k/hal_desc.h
-+++ b/drivers/net/wireless/ath/ath12k/hal_desc.h
-@@ -2966,7 +2966,7 @@ struct hal_mon_buf_ring {
+diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c b/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
+index 8f786592143b6..24e1e11acf697 100644
+--- a/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
++++ b/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
+@@ -244,7 +244,9 @@ static const struct hdmi_codec_pdata codec_data = {
+ 	.ops = &adv7511_codec_ops,
+ 	.max_i2s_channels = 2,
+ 	.i2s = 1,
++	.no_i2s_capture = 1,
+ 	.spdif = 1,
++	.no_spdif_capture = 1,
+ };
  
- #define HAL_MON_DEST_COOKIE_BUF_ID      GENMASK(17, 0)
- 
--#define HAL_MON_DEST_INFO0_END_OFFSET		GENMASK(15, 0)
-+#define HAL_MON_DEST_INFO0_END_OFFSET		GENMASK(11, 0)
- #define HAL_MON_DEST_INFO0_FLUSH_DETECTED	BIT(16)
- #define HAL_MON_DEST_INFO0_END_OF_PPDU		BIT(17)
- #define HAL_MON_DEST_INFO0_INITIATOR		BIT(18)
+ int adv7511_audio_init(struct device *dev, struct adv7511 *adv7511)
 -- 
 2.39.5
 
