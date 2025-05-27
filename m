@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84DD27CCF0;
-	Tue, 27 May 2025 17:50:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1CA280021;
+	Tue, 27 May 2025 17:50:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368209; cv=none; b=H7r/1NX0eyZ1scz/5IcL4cj80QjZA1YYjy5Nb/cwOdq97lujOV0gmK8+QxfY+rzf7MMXf+ionbIwk+KVeqif8v32lpmgoQinyqGVJqxpj4Aj1E6wCoTMsQChjue2PO0d92lIOW/pdBPtgd3G60QYgFZtNR50TuafAW844ETsaPE=
+	t=1748368212; cv=none; b=Be0O5oQyYUOAkhw90F+NwxeLia+FyKB4PxYsI/aP9yy7gWniQ6KjdrvuUaMsCmCH4JRgojEtfwS7xLDGzTAQdPNGBDVM6OhfMAF/yD/6E3syjxvLxinBF4OrgVotMPQH8Jd8odvU858A6CznmZZQELtY+x3aApWbp0XCks3BOnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368209; c=relaxed/simple;
-	bh=sdkJ9xApZ8q/nAzzoyxuxQpUVh4JyTof264j2rboJFw=;
+	s=arc-20240116; t=1748368212; c=relaxed/simple;
+	bh=ZbOKn2kD0QkrBg/b76mVP/l77uEpu7B9EjjHumBVDFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QyHmN3N0W+K75TA+5AwA3KNtjqIWqVvAONrYSQyk57wQQGf+sSQjfg90X2idTgccqWA0mIWeM2KJqLCz+RWjcW/azGZbbnqBedPBJBm2cDywCHsioCImABmL1V1C1IVdxQ3A3J3wOGVKdHe/o7WawtNpnuzSegYxYad0RJHhiqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EC6E5dkn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mkRDugxTqkBm2Y6DsmkL7ER0j9bmzH8Cfwk6QLH7o2HUuk+d1o5KyOvijzhlJCFsFgnDX6svOt8DCUoyjR4yIJncVTQc76rpG66EYaoKjZ+4kpDukcu/LFEFxCOnccqjFLDYkBUUNOjusaszgkb35fPNyZRyfdozKvwG6giEHDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jUak5BF0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EC6E5dkn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375EEC4CEE9;
-	Tue, 27 May 2025 17:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUak5BF0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB75C4CEE9;
+	Tue, 27 May 2025 17:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368209;
-	bh=sdkJ9xApZ8q/nAzzoyxuxQpUVh4JyTof264j2rboJFw=;
+	s=korg; t=1748368212;
+	bh=ZbOKn2kD0QkrBg/b76mVP/l77uEpu7B9EjjHumBVDFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EC6E5dknsO4YJvV3zj0ytM4MR647s8/wTdvBGaFqUFT7bZd9zdJMHFDOZ/qNqnFb/
-	 CSxrRFkwNBa1HzPYUayoBKLDxwpSqDWQli2pDl4aDrKpk7CyP4hvgyudB2lGz3OTM6
-	 m61LZucyxkrbPTPrkCUIoRUlwIdbRmzZKcNGqesY=
+	b=jUak5BF0r3Xc7LPMhCxaEF+r6EP1RWNtferUnFWYenaHrL0oFdC5PhAd8wP86buo4
+	 JSaYz6h3IZybNyuaIA6Ysy+YR9aTcricxN+8gumQJH8muOXLEZduMWOLQp3jDhUbWU
+	 kELdXVbEmja4Jd7vnbhG5mgHUoOrcbpPrDabZQOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Amber Lin <Amber.Lin@amd.com>,
+	Harish Kasiviswanathan <Harish.Kasiviwanathan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 633/783] watchdog: aspeed: fix 64-bit division
-Date: Tue, 27 May 2025 18:27:10 +0200
-Message-ID: <20250527162538.926213389@linuxfoundation.org>
+Subject: [PATCH 6.14 634/783] drm/amdkfd: Correct F8_MODE for gfx950
+Date: Tue, 27 May 2025 18:27:11 +0200
+Message-ID: <20250527162538.965078096@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,41 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Amber Lin <Amber.Lin@amd.com>
 
-[ Upstream commit 48a136639ec233614a61653e19f559977d5da2b5 ]
+[ Upstream commit 0c7e053448945e5a4379dc4396c762d7422b11ca ]
 
-On 32-bit architectures, the new calculation causes a build failure:
+Correct F8_MODE setting for gfx950 that was removed
 
-ld.lld-21: error: undefined symbol: __aeabi_uldivmod
-
-Since neither value is ever larger than a register, cast both
-sides into a uintptr_t.
-
-Fixes: 5c03f9f4d362 ("watchdog: aspeed: Update bootstatus handling")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20250314160248.502324-1-arnd@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 61972cd93af7 ("drm/amdkfd: Set per-process flags only once for gfx9/10/11/12")
+Signed-off-by: Amber Lin <Amber.Lin@amd.com>
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviwanathan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/aspeed_wdt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_v9.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/watchdog/aspeed_wdt.c b/drivers/watchdog/aspeed_wdt.c
-index 369635b38ca0e..837e15701c0e2 100644
---- a/drivers/watchdog/aspeed_wdt.c
-+++ b/drivers/watchdog/aspeed_wdt.c
-@@ -254,7 +254,7 @@ static void aspeed_wdt_update_bootstatus(struct platform_device *pdev,
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_v9.c
+index 3264509408bc8..d85eadaa1e11b 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_v9.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_v9.c
+@@ -69,8 +69,7 @@ static bool set_cache_memory_policy_v9(struct device_queue_manager *dqm,
+ 		qpd->sh_mem_config |= 1 << SH_MEM_CONFIG__RETRY_DISABLE__SHIFT;
  
- 	if (!of_device_is_compatible(pdev->dev.of_node, "aspeed,ast2400-wdt")) {
- 		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--		idx = ((intptr_t)wdt->base & 0x00000fff) / resource_size(res);
-+		idx = ((intptr_t)wdt->base & 0x00000fff) / (uintptr_t)resource_size(res);
- 	}
+ 	if (KFD_GC_VERSION(dqm->dev->kfd) == IP_VERSION(9, 4, 3) ||
+-		KFD_GC_VERSION(dqm->dev->kfd) == IP_VERSION(9, 4, 4) ||
+-		KFD_GC_VERSION(dqm->dev->kfd) == IP_VERSION(9, 5, 0))
++		KFD_GC_VERSION(dqm->dev->kfd) == IP_VERSION(9, 4, 4))
+ 		qpd->sh_mem_config |= (1 << SH_MEM_CONFIG__F8_MODE__SHIFT);
  
- 	scu_base = syscon_regmap_lookup_by_compatible(scu.compatible);
+ 	qpd->sh_mem_ape1_limit = 0;
 -- 
 2.39.5
 
