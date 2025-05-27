@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B291CEAC2;
-	Tue, 27 May 2025 17:29:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6B51CEAC2;
+	Tue, 27 May 2025 17:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366960; cv=none; b=XLmPZ3XXlOyL7DrDXhosOU9oLN6aVUTwSjs6XoRdaeL/wgy3hmy4Vdd6PLd7v/BXcnEOau4RFDZmZrj0wrX8Bv70m7H9lcyGHu/vVVY1g9O9477qc40jXhk2SqoAVqfHFZNrZGPfjSiY900CTe07v1Ap5NSocVuZXLoxEBlezkI=
+	t=1748366963; cv=none; b=YFCivxOWkSpLiQHFq9lD0r+ZL3uf7PKWQMU/SCQ2Wzhi/IYw6UGq7FyMDU0zSYjBo6RQI8RIQsHM20Y1EgE1vN5CyfJGCJulhHwQ/w9aZCyaCH1DCNoF2y44Dw5CSboUm+80HhBGU1bAkf4JWigEk/75rf11viwBYXcHCRjnj8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366960; c=relaxed/simple;
-	bh=X39bx7qFXvIBvfgY36Y7e/z7BAL9rfuVi5HF3zn08VM=;
+	s=arc-20240116; t=1748366963; c=relaxed/simple;
+	bh=GxT5KQkggRmqs3g79N/7PSimCtIRARyq8PiicUX/+G8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o9o3HvxPNzZgJ7DfzCM5mWAd0LeDFlhK0RF2/5bIzQTtLperxyoROjKs/WRdpW38MfMfy8+6oI3hM3Y+j0kC5zFbDNfe6PVZnc/89uVNPz38zsettVlouwsqeEq+sozfIti7HQ+pS99f4Zt3+F6d63BmGnGvd7j83+5ZN14SKzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SIVp/Ggz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=egZXBsDWhOMz5EHBBG/97AZg/x47L3MmkwFHZ1x7C2VF4L85pAGXrR9DhdVwLN7TiCFHgIOUwSZFJJktWff0jFYu1KmPcQjpyfqvqE0qFB5MYgzFe4+I6XWHUkthSD/qknpNF9BQGa4c2kYIFAcmL6vxEnUlTWDDoW/L3bwXwX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H3/4Pk5+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIVp/Ggz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14A1C4CEE9;
-	Tue, 27 May 2025 17:29:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3/4Pk5+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4597C4CEE9;
+	Tue, 27 May 2025 17:29:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366960;
-	bh=X39bx7qFXvIBvfgY36Y7e/z7BAL9rfuVi5HF3zn08VM=;
+	s=korg; t=1748366963;
+	bh=GxT5KQkggRmqs3g79N/7PSimCtIRARyq8PiicUX/+G8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SIVp/Ggzf74t4YWlaZh+FBz8wZ9ia8nheHQ/LDLFJf3MT4YVW0tFUQ5xm3gPShE8D
-	 +bGbB5/q2AGC/cVVsQnHMDCEC0ME+pmyIaAY2h6xnu9WKQeorg2WZAF+SaAv3e+Gpa
-	 BYXF/feFx3Kl5AwXpG2QPgxBZhH1eYdrCtXoNLsI=
+	b=H3/4Pk5+QISTSvOxp4AP+xou8dcifJV/cqyIOAK/pBoUk1Z7/vbiNcUZaFitg4f2o
+	 TmAZn3EnlUmiOPzTnORY5D39UYaEE3TmkLDnGMVlSgr7O6porldVEWyzGj4dhiioqD
+	 XZUiwkks1I0EOAft5MFlIOoDy87Ei87r9lW+ec6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 233/783] gfs2: Check for empty queue in run_queue
-Date: Tue, 27 May 2025 18:20:30 +0200
-Message-ID: <20250527162522.614559406@linuxfoundation.org>
+Subject: [PATCH 6.14 216/783] wifi: iwlwifi: dont warn when if there is a FW error
+Date: Tue, 27 May 2025 18:20:13 +0200
+Message-ID: <20250527162521.925169265@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -50,63 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit d838605fea6eabae3746a276fd448f6719eb3926 ]
+[ Upstream commit c7f50d0433a016d43681592836a3d484817bfb34 ]
 
-In run_queue(), check if the queue of pending requests is empty instead
-of blindly assuming that it won't be.
+iwl_trans_reclaim is warning if it is called when the FW is not alive.
+But if it is called when there is a pending restart, i.e. after a FW
+error, there is no need to warn, instead - return silently.
 
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250308231427.ba3d90b22c25.I9332506af1997faefcf0bdb51d98d5e874051722@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/iwl-trans.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index 65c07aa957184..7f9cc7872214e 100644
---- a/fs/gfs2/glock.c
-+++ b/fs/gfs2/glock.c
-@@ -843,12 +843,13 @@ static void run_queue(struct gfs2_glock *gl, const int nonblock)
- __releases(&gl->gl_lockref.lock)
- __acquires(&gl->gl_lockref.lock)
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.c b/drivers/net/wireless/intel/iwlwifi/iwl-trans.c
+index ced8261c725f8..eb631080c4563 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.c
+@@ -2,7 +2,7 @@
+ /*
+  * Copyright (C) 2015 Intel Mobile Communications GmbH
+  * Copyright (C) 2016-2017 Intel Deutschland GmbH
+- * Copyright (C) 2019-2021, 2023-2024 Intel Corporation
++ * Copyright (C) 2019-2021, 2023-2025 Intel Corporation
+  */
+ #include <linux/kernel.h>
+ #include <linux/bsearch.h>
+@@ -655,6 +655,9 @@ IWL_EXPORT_SYMBOL(iwl_trans_tx);
+ void iwl_trans_reclaim(struct iwl_trans *trans, int queue, int ssn,
+ 		       struct sk_buff_head *skbs, bool is_flush)
  {
--	struct gfs2_holder *gh = NULL;
-+	struct gfs2_holder *gh;
- 
- 	if (test_bit(GLF_LOCK, &gl->gl_flags))
++	if (unlikely(test_bit(STATUS_FW_ERROR, &trans->status)))
++		return;
++
+ 	if (WARN_ONCE(trans->state != IWL_TRANS_FW_ALIVE,
+ 		      "bad state = %d\n", trans->state))
  		return;
- 	set_bit(GLF_LOCK, &gl->gl_flags);
- 
-+	/* While a demote is in progress, the GLF_LOCK flag must be set. */
- 	GLOCK_BUG_ON(gl, test_bit(GLF_DEMOTE_IN_PROGRESS, &gl->gl_flags));
- 
- 	if (test_bit(GLF_DEMOTE, &gl->gl_flags) &&
-@@ -860,18 +861,22 @@ __acquires(&gl->gl_lockref.lock)
- 		set_bit(GLF_DEMOTE_IN_PROGRESS, &gl->gl_flags);
- 		GLOCK_BUG_ON(gl, gl->gl_demote_state == LM_ST_EXCLUSIVE);
- 		gl->gl_target = gl->gl_demote_state;
-+		do_xmote(gl, NULL, gl->gl_target);
-+		return;
- 	} else {
- 		if (test_bit(GLF_DEMOTE, &gl->gl_flags))
- 			gfs2_demote_wake(gl);
- 		if (do_promote(gl))
- 			goto out_unlock;
- 		gh = find_first_waiter(gl);
-+		if (!gh)
-+			goto out_unlock;
- 		gl->gl_target = gh->gh_state;
- 		if (!(gh->gh_flags & (LM_FLAG_TRY | LM_FLAG_TRY_1CB)))
- 			do_error(gl, 0); /* Fail queued try locks */
-+		do_xmote(gl, gh, gl->gl_target);
-+		return;
- 	}
--	do_xmote(gl, gh, gl->gl_target);
--	return;
- 
- out_sched:
- 	clear_bit(GLF_LOCK, &gl->gl_flags);
 -- 
 2.39.5
 
