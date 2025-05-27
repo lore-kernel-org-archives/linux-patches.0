@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FB925DAE1;
-	Tue, 27 May 2025 17:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331E71E89C;
+	Tue, 27 May 2025 17:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366078; cv=none; b=gmEQAkdVUIfp81DSx2obUR4KLr5u+Se+dyPjaRYJaR7zeiad2qqGaG/GYU//4AAKecLFJ7CFu4eETby3h/0kWsmcj4bN+RHk6stmiiszm2t28N4tZLnwS9wN1yOzZLaF+H2ir8vDcrFv/Lza5YJbbizxz72tejiqukW6PH1xUh8=
+	t=1748366081; cv=none; b=STqFzqxC6VFqZg0uwA58geZJ/ueCu04rqmjLDoi4TsF4wHuh5Bt3l8UbBcSjbSJMlBY9gulIwxWoDo6nq+lf6NCuwxxgvDrgizi16OmR5KK0YfiMorUt0OlfA7ODVUVdba69+1OI7+Qt45w63tLH8kg07FD3DtDGuS+ssGkNQr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366078; c=relaxed/simple;
-	bh=h4v8k4XLsvylQuAMZHyCaEfsP7s0q2HOztKeWRs1iwE=;
+	s=arc-20240116; t=1748366081; c=relaxed/simple;
+	bh=F2WdEw663rO0VlnLoVV+1UJq1beun9cCcUrNvDN/hv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WFh7wCPg1PxN0jYMNMGMV2RHbFFq8NHetTzuvbo35aslxzGTuTo09qG/pX6cdayU7WntxCFDhS7NTGRxjnzCHS/qlPZqtNUmbVxs5rhRttgqoahydEDVX5DeBQ4v6dA3g92HsZUKs/qfkKLLAPVE7Njy8tPUD5f18M2C6jcqSkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzwKN49T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uFmWdjwGQ8rx7x82COd1mWF30pX2nOq6w0U3MEPhmhkhfHVFeU0JHio6BD3ykHPmctdZkSGvi5REMou14yWOYOVTtcQWUhLvxR375xPsEIL6C5ZTExjGsHpYkHTEZre0hGH3yD/0LoZN9xphSsrekPf/P8rhjnIWW9OKPrds578=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YOTGkVfy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzwKN49T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A9EC4CEE9;
-	Tue, 27 May 2025 17:14:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOTGkVfy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2CEAC4CEE9;
+	Tue, 27 May 2025 17:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366078;
-	bh=h4v8k4XLsvylQuAMZHyCaEfsP7s0q2HOztKeWRs1iwE=;
+	s=korg; t=1748366081;
+	bh=F2WdEw663rO0VlnLoVV+1UJq1beun9cCcUrNvDN/hv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tzwKN49TX7zA4P6Ozho9L4aSCRYHQIehX+aKnsdrPobMIprR5nHxKcJIDdu0cMO8T
-	 wY5AbT6qh2e5NgiPYPyusBIsXoP8gOnF9XjhmnxBM2O7POD53RSJf2pz36PEGUPZGN
-	 JbaL86t7S/dYmMSA/ac7uCkndLVJ80IaFJtpKKFM=
+	b=YOTGkVfydGwgwdj+G/EF7Lvm9/WQodg2GDGFEvm0PltpMOFvnE8PR9Y/ZVd5Mk/ba
+	 vu2RuqysslhH4zXANf03u0i/fppNuSqwAxzx+KF0F+3OttK70/MJWrZf+jnZ0hudpS
+	 2c7qWDX5Z+kN9G+rt2HZxYwcJsnL+DADgM591VJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 576/626] ASoC: SOF: Intel: hda-bus: Use PIO mode on ACE2+ platforms
-Date: Tue, 27 May 2025 18:27:49 +0200
-Message-ID: <20250527162508.377046029@linuxfoundation.org>
+	Ronak Doshi <ronak.doshi@broadcom.com>,
+	Guolin Yang <guolin.yang@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 585/626] vmxnet3: update MTU after device quiesce
+Date: Tue, 27 May 2025 18:27:58 +0200
+Message-ID: <20250527162508.748751439@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,40 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Ronak Doshi <ronak.doshi@broadcom.com>
 
-commit 4e7010826e96702d7fad13dbe85de4e94052f833 upstream.
+commit 43f0999af011fba646e015f0bb08b6c3002a0170 upstream.
 
-Keep using the PIO mode for commands on ACE2+ platforms, similarly how
-the legacy stack is configured.
+Currently, when device mtu is updated, vmxnet3 updates netdev mtu, quiesces
+the device and then reactivates it for the ESXi to know about the new mtu.
+So, technically the OS stack can start using the new mtu before ESXi knows
+about the new mtu.
 
-Fixes: 05cf17f1bf6d ("ASoC: SOF: Intel: hda-bus: Use PIO mode for Lunar Lake")
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+This can lead to issues for TSO packets which use mss as per the new mtu
+configured. This patch fixes this issue by moving the mtu write after
+device quiesce.
+
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250509081308.13784-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: d1a890fa37f2 ("net: VMware virtual Ethernet NIC driver: vmxnet3")
+Signed-off-by: Ronak Doshi <ronak.doshi@broadcom.com>
+Acked-by: Guolin Yang <guolin.yang@broadcom.com>
+Changes v1-> v2:
+  Moved MTU write after destroy of rx rings
+Link: https://patch.msgid.link/20250515190457.8597-1-ronak.doshi@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/intel/hda-bus.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/vmxnet3/vmxnet3_drv.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/sof/intel/hda-bus.c b/sound/soc/sof/intel/hda-bus.c
-index b1be03011d7e..6492e1cefbfb 100644
---- a/sound/soc/sof/intel/hda-bus.c
-+++ b/sound/soc/sof/intel/hda-bus.c
-@@ -76,7 +76,7 @@ void sof_hda_bus_init(struct snd_sof_dev *sdev, struct device *dev)
+--- a/drivers/net/vmxnet3/vmxnet3_drv.c
++++ b/drivers/net/vmxnet3/vmxnet3_drv.c
+@@ -3599,8 +3599,6 @@ vmxnet3_change_mtu(struct net_device *ne
+ 	struct vmxnet3_adapter *adapter = netdev_priv(netdev);
+ 	int err = 0;
  
- 	snd_hdac_ext_bus_init(bus, dev, &bus_core_ops, sof_hda_ext_ops);
+-	WRITE_ONCE(netdev->mtu, new_mtu);
+-
+ 	/*
+ 	 * Reset_work may be in the middle of resetting the device, wait for its
+ 	 * completion.
+@@ -3614,6 +3612,7 @@ vmxnet3_change_mtu(struct net_device *ne
  
--	if (chip && chip->hw_ip_version == SOF_INTEL_ACE_2_0)
-+	if (chip && chip->hw_ip_version >= SOF_INTEL_ACE_2_0)
- 		bus->use_pio_for_commands = true;
- #else
- 	snd_hdac_ext_bus_init(bus, dev, NULL, NULL);
--- 
-2.49.0
-
+ 		/* we need to re-create the rx queue based on the new mtu */
+ 		vmxnet3_rq_destroy_all(adapter);
++		WRITE_ONCE(netdev->mtu, new_mtu);
+ 		vmxnet3_adjust_rx_ring_size(adapter);
+ 		err = vmxnet3_rq_create_all(adapter);
+ 		if (err) {
+@@ -3630,6 +3629,8 @@ vmxnet3_change_mtu(struct net_device *ne
+ 				   "Closing it\n", err);
+ 			goto out;
+ 		}
++	} else {
++		WRITE_ONCE(netdev->mtu, new_mtu);
+ 	}
+ 
+ out:
 
 
