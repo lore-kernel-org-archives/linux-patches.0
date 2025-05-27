@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B2A13A244;
-	Tue, 27 May 2025 16:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC87A27FB16;
+	Tue, 27 May 2025 16:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364289; cv=none; b=qgQWMirQaeLoz/R7lS2oKSPA1z4NbcCcsAgp3RraoJi9eyUWmfCPRcUUMLVwr4gj2VI8bWAQSrE9EAxPZI7K7X5gEMYiiM+4gRFSwAMKTKB3QMRoaGm9TSIJO6eIMW4RgKxgexdNgBvSU2ysKsa9pCFyTymzdhW8mTdL7Tn0e0I=
+	t=1748364303; cv=none; b=DR4Vy/mEnpCe0fVihVW+2K3w78I6u+qHKDSguxBcX2R0S3vrnhrZLq0p98t/8BA/r0Fa2zyA8towGVMHVwLJwmnsIO5pbsCKQp9v7ozvro0SdaT6Sysjd7kRZUNSQa3CmfCpAh24lS8M6MAYvpRMLrd5VQrEwT+ORf1Yi4ooCxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364289; c=relaxed/simple;
-	bh=1Hsf/zV7LQhFqm+rIFx/qwRNnR0iP56BHoPaezBvw50=;
+	s=arc-20240116; t=1748364303; c=relaxed/simple;
+	bh=Vwe4Mkpo1QAAidfG0CvLY8Rwhs+PhnRg8z986Nq/FZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uo9KVzAGo91/wlneRKqfmB5hiE1W7zguDmItaxRT0p10VDo/YclbL9ZZrjls029K1mWFYEdleUlKwCbr1Bu/niyqewLNeRfvq5ksl6DDMT76a8kx7gPE+nYhUVG7T6xaTr7J/H3REsqHjODxPmWVtjLJMdW4lLGVxn//Izln6HI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0R+rM4m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R8/O1L1V3TeldcW58BFYnHD39pZAHQVLs65TLXvMAZ/vQsevFRJdLIvRXhaD7K0xWcpLhd7FU7bWzVJZxYLJEhRul9f6eG/RCBITOxTvjYCaLBWcKDdq+BjaZQ+tphO1y0i9KLLKDpORJx4QCZMw0iVA2hPGgzXYbWhcK7aci/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u6q5Z1RA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0R+rM4m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C207BC4CEE9;
-	Tue, 27 May 2025 16:44:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u6q5Z1RA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A1C6C4CEE9;
+	Tue, 27 May 2025 16:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364289;
-	bh=1Hsf/zV7LQhFqm+rIFx/qwRNnR0iP56BHoPaezBvw50=;
+	s=korg; t=1748364302;
+	bh=Vwe4Mkpo1QAAidfG0CvLY8Rwhs+PhnRg8z986Nq/FZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m0R+rM4mU6Zg3KP0Q+fkLsGcNL4q1RVzj+WK5hzgSCXCF/v/IA8UqjK17MAZCfS4i
-	 prc028RL640xtKP1YnrRCk40ea53dpDyg1+W+kfSVHqahDipS0avMDzawAP+PcucBg
-	 DLIdXdOPTEYpY/cirDWKlB05ioNBonZQSw0A/ceg=
+	b=u6q5Z1RAQKEemeMBe5qYDjpGV8ZhCUCUjlL9IADSsj4h0O+GbXvrw46MBTnuKvrnt
+	 XgJQe8hw4yvtqyPmiJNH9f51MesQck9fHomGrrw/pqj/P9LRmjbrg6wZ1W+bbh2lNB
+	 lngQHIsWl7z2yuHLcvUqCigCPWCT9Tu3RY7nkVpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 007/626] phy: renesas: rcar-gen3-usb2: Move IRQ request in probe
-Date: Tue, 27 May 2025 18:18:20 +0200
-Message-ID: <20250527162445.357959247@linuxfoundation.org>
+Subject: [PATCH 6.12 008/626] phy: renesas: rcar-gen3-usb2: Lock around hardware registers and driver data
+Date: Tue, 27 May 2025 18:18:21 +0200
+Message-ID: <20250527162445.395868574@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -55,140 +55,194 @@ Content-Transfer-Encoding: 8bit
 
 From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit de76809f60cc938d3580bbbd5b04b7d12af6ce3a ]
+[ Upstream commit 55a387ebb9219cbe4edfa8ba9996ccb0e7ad4932 ]
 
-Commit 08b0ad375ca6 ("phy: renesas: rcar-gen3-usb2: move IRQ registration
-to init") moved the IRQ request operation from probe to
-struct phy_ops::phy_init API to avoid triggering interrupts (which lead to
-register accesses) while the PHY clocks (enabled through runtime PM APIs)
-are not active. If this happens, it results in a synchronous abort.
+The phy-rcar-gen3-usb2 driver exposes four individual PHYs that are
+requested and configured by PHY users. The struct phy_ops APIs access the
+same set of registers to configure all PHYs. Additionally, PHY settings can
+be modified through sysfs or an IRQ handler. While some struct phy_ops APIs
+are protected by a driver-wide mutex, others rely on individual
+PHY-specific mutexes.
 
-One way to reproduce this issue is by enabling CONFIG_DEBUG_SHIRQ, which
-calls free_irq() on driver removal.
+This approach can lead to various issues, including:
+1/ the IRQ handler may interrupt PHY settings in progress, racing with
+   hardware configuration protected by a mutex lock
+2/ due to msleep(20) in rcar_gen3_init_otg(), while a configuration thread
+   suspends to wait for the delay, another thread may try to configure
+   another PHY (with phy_init() + phy_power_on()); re-running the
+   phy_init() goes to the exact same configuration code, re-running the
+   same hardware configuration on the same set of registers (and bits)
+   which might impact the result of the msleep for the 1st configuring
+   thread
+3/ sysfs can configure the hardware (though role_store()) and it can
+   still race with the phy_init()/phy_power_on() APIs calling into the
+   drivers struct phy_ops
 
-Move the IRQ request and free operations back to probe, and take the
-runtime PM state into account in IRQ handler. This commit is preparatory
-for the subsequent fixes in this series.
+To address these issues, add a spinlock to protect hardware register access
+and driver private data structures (e.g., calls to
+rcar_gen3_is_any_rphy_initialized()). Checking driver-specific data remains
+necessary as all PHY instances share common settings. With this change,
+the existing mutex protection is removed and the cleanup.h helpers are
+used.
 
+While at it, to keep the code simpler, do not skip
+regulator_enable()/regulator_disable() APIs in
+rcar_gen3_phy_usb2_power_on()/rcar_gen3_phy_usb2_power_off() as the
+regulators enable/disable operations are reference counted anyway.
+
+Fixes: f3b5a8d9b50d ("phy: rcar-gen3-usb2: Add R-Car Gen3 USB2 PHY driver")
+Cc: stable@vger.kernel.org
 Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20250507125032.565017-3-claudiu.beznea.uj@bp.renesas.com
+Link: https://lore.kernel.org/r/20250507125032.565017-4-claudiu.beznea.uj@bp.renesas.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Stable-dep-of: 9ce71e85b29e ("phy: renesas: rcar-gen3-usb2: Assert PLL reset on PHY power off")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/renesas/phy-rcar-gen3-usb2.c | 46 +++++++++++++-----------
- 1 file changed, 26 insertions(+), 20 deletions(-)
+ drivers/phy/renesas/phy-rcar-gen3-usb2.c | 49 +++++++++++++-----------
+ 1 file changed, 26 insertions(+), 23 deletions(-)
 
 diff --git a/drivers/phy/renesas/phy-rcar-gen3-usb2.c b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-index 513fd35dcaa95..4cd1b6e677482 100644
+index 4cd1b6e677482..188e903445aeb 100644
 --- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
 +++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-@@ -120,7 +120,6 @@ struct rcar_gen3_chan {
+@@ -9,6 +9,7 @@
+  * Copyright (C) 2014 Cogent Embedded, Inc.
+  */
+ 
++#include <linux/cleanup.h>
+ #include <linux/extcon-provider.h>
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
+@@ -118,7 +119,7 @@ struct rcar_gen3_chan {
+ 	struct regulator *vbus;
+ 	struct reset_control *rstc;
  	struct work_struct work;
- 	struct mutex lock;	/* protects rphys[...].powered */
+-	struct mutex lock;	/* protects rphys[...].powered */
++	spinlock_t lock;	/* protects access to hardware and driver data structure. */
  	enum usb_dr_mode dr_mode;
--	int irq;
  	u32 obint_enable_bits;
  	bool extcon_host;
- 	bool is_otg_channel;
-@@ -428,16 +427,25 @@ static irqreturn_t rcar_gen3_phy_usb2_irq(int irq, void *_ch)
- {
- 	struct rcar_gen3_chan *ch = _ch;
- 	void __iomem *usb2_base = ch->base;
--	u32 status = readl(usb2_base + USB2_OBINTSTA);
-+	struct device *dev = ch->dev;
- 	irqreturn_t ret = IRQ_NONE;
-+	u32 status;
+@@ -348,6 +349,8 @@ static ssize_t role_store(struct device *dev, struct device_attribute *attr,
+ 	bool is_b_device;
+ 	enum phy_mode cur_mode, new_mode;
  
-+	pm_runtime_get_noresume(dev);
++	guard(spinlock_irqsave)(&ch->lock);
 +
-+	if (pm_runtime_suspended(dev))
-+		goto rpm_put;
-+
-+	status = readl(usb2_base + USB2_OBINTSTA);
- 	if (status & ch->obint_enable_bits) {
--		dev_vdbg(ch->dev, "%s: %08x\n", __func__, status);
-+		dev_vdbg(dev, "%s: %08x\n", __func__, status);
- 		writel(ch->obint_enable_bits, usb2_base + USB2_OBINTSTA);
- 		rcar_gen3_device_recognition(ch);
- 		ret = IRQ_HANDLED;
+ 	if (!ch->is_otg_channel || !rcar_gen3_is_any_otg_rphy_initialized(ch))
+ 		return -EIO;
+ 
+@@ -415,7 +418,7 @@ static void rcar_gen3_init_otg(struct rcar_gen3_chan *ch)
+ 		val = readl(usb2_base + USB2_ADPCTRL);
+ 		writel(val | USB2_ADPCTRL_IDPULLUP, usb2_base + USB2_ADPCTRL);
+ 	}
+-	msleep(20);
++	mdelay(20);
+ 
+ 	writel(0xffffffff, usb2_base + USB2_OBINTSTA);
+ 	writel(ch->obint_enable_bits, usb2_base + USB2_OBINTEN);
+@@ -436,12 +439,14 @@ static irqreturn_t rcar_gen3_phy_usb2_irq(int irq, void *_ch)
+ 	if (pm_runtime_suspended(dev))
+ 		goto rpm_put;
+ 
+-	status = readl(usb2_base + USB2_OBINTSTA);
+-	if (status & ch->obint_enable_bits) {
+-		dev_vdbg(dev, "%s: %08x\n", __func__, status);
+-		writel(ch->obint_enable_bits, usb2_base + USB2_OBINTSTA);
+-		rcar_gen3_device_recognition(ch);
+-		ret = IRQ_HANDLED;
++	scoped_guard(spinlock, &ch->lock) {
++		status = readl(usb2_base + USB2_OBINTSTA);
++		if (status & ch->obint_enable_bits) {
++			dev_vdbg(dev, "%s: %08x\n", __func__, status);
++			writel(ch->obint_enable_bits, usb2_base + USB2_OBINTSTA);
++			rcar_gen3_device_recognition(ch);
++			ret = IRQ_HANDLED;
++		}
  	}
  
-+rpm_put:
-+	pm_runtime_put_noidle(dev);
+ rpm_put:
+@@ -456,6 +461,8 @@ static int rcar_gen3_phy_usb2_init(struct phy *p)
+ 	void __iomem *usb2_base = channel->base;
+ 	u32 val;
+ 
++	guard(spinlock_irqsave)(&channel->lock);
++
+ 	/* Initialize USB2 part */
+ 	val = readl(usb2_base + USB2_INT_ENABLE);
+ 	val |= USB2_INT_ENABLE_UCOM_INTEN | rphy->int_enable_bits;
+@@ -482,6 +489,8 @@ static int rcar_gen3_phy_usb2_exit(struct phy *p)
+ 	void __iomem *usb2_base = channel->base;
+ 	u32 val;
+ 
++	guard(spinlock_irqsave)(&channel->lock);
++
+ 	rphy->initialized = false;
+ 
+ 	val = readl(usb2_base + USB2_INT_ENABLE);
+@@ -501,16 +510,17 @@ static int rcar_gen3_phy_usb2_power_on(struct phy *p)
+ 	u32 val;
+ 	int ret = 0;
+ 
+-	mutex_lock(&channel->lock);
+-	if (!rcar_gen3_are_all_rphys_power_off(channel))
+-		goto out;
+-
+ 	if (channel->vbus) {
+ 		ret = regulator_enable(channel->vbus);
+ 		if (ret)
+-			goto out;
++			return ret;
+ 	}
+ 
++	guard(spinlock_irqsave)(&channel->lock);
++
++	if (!rcar_gen3_are_all_rphys_power_off(channel))
++		goto out;
++
+ 	val = readl(usb2_base + USB2_USBCTR);
+ 	val |= USB2_USBCTR_PLL_RST;
+ 	writel(val, usb2_base + USB2_USBCTR);
+@@ -520,7 +530,6 @@ static int rcar_gen3_phy_usb2_power_on(struct phy *p)
+ out:
+ 	/* The powered flag should be set for any other phys anyway */
+ 	rphy->powered = true;
+-	mutex_unlock(&channel->lock);
+ 
+ 	return 0;
+ }
+@@ -531,18 +540,12 @@ static int rcar_gen3_phy_usb2_power_off(struct phy *p)
+ 	struct rcar_gen3_chan *channel = rphy->ch;
+ 	int ret = 0;
+ 
+-	mutex_lock(&channel->lock);
+-	rphy->powered = false;
+-
+-	if (!rcar_gen3_are_all_rphys_power_off(channel))
+-		goto out;
++	scoped_guard(spinlock_irqsave, &channel->lock)
++		rphy->powered = false;
+ 
+ 	if (channel->vbus)
+ 		ret = regulator_disable(channel->vbus);
+ 
+-out:
+-	mutex_unlock(&channel->lock);
+-
  	return ret;
  }
  
-@@ -447,17 +455,6 @@ static int rcar_gen3_phy_usb2_init(struct phy *p)
- 	struct rcar_gen3_chan *channel = rphy->ch;
- 	void __iomem *usb2_base = channel->base;
- 	u32 val;
--	int ret;
--
--	if (!rcar_gen3_is_any_rphy_initialized(channel) && channel->irq >= 0) {
--		INIT_WORK(&channel->work, rcar_gen3_phy_usb2_work);
--		ret = request_irq(channel->irq, rcar_gen3_phy_usb2_irq,
--				  IRQF_SHARED, dev_name(channel->dev), channel);
--		if (ret < 0) {
--			dev_err(channel->dev, "No irq handler (%d)\n", channel->irq);
--			return ret;
--		}
--	}
+@@ -753,7 +756,7 @@ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
+ 	if (phy_data->no_adp_ctrl)
+ 		channel->obint_enable_bits = USB2_OBINT_IDCHG_EN;
  
- 	/* Initialize USB2 part */
- 	val = readl(usb2_base + USB2_INT_ENABLE);
-@@ -493,9 +490,6 @@ static int rcar_gen3_phy_usb2_exit(struct phy *p)
- 		val &= ~USB2_INT_ENABLE_UCOM_INTEN;
- 	writel(val, usb2_base + USB2_INT_ENABLE);
- 
--	if (channel->irq >= 0 && !rcar_gen3_is_any_rphy_initialized(channel))
--		free_irq(channel->irq, channel);
--
- 	return 0;
- }
- 
-@@ -701,7 +695,7 @@ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
- 	struct device *dev = &pdev->dev;
- 	struct rcar_gen3_chan *channel;
- 	struct phy_provider *provider;
--	int ret = 0, i;
-+	int ret = 0, i, irq;
- 
- 	if (!dev->of_node) {
- 		dev_err(dev, "This driver needs device tree\n");
-@@ -717,8 +711,6 @@ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
- 		return PTR_ERR(channel->base);
- 
- 	channel->obint_enable_bits = USB2_OBINT_BITS;
--	/* get irq number here and request_irq for OTG in phy_init */
--	channel->irq = platform_get_irq_optional(pdev, 0);
- 	channel->dr_mode = rcar_gen3_get_dr_mode(dev->of_node);
- 	if (channel->dr_mode != USB_DR_MODE_UNKNOWN) {
- 		channel->is_otg_channel = true;
-@@ -787,6 +779,20 @@ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
- 		channel->vbus = NULL;
- 	}
- 
-+	irq = platform_get_irq_optional(pdev, 0);
-+	if (irq < 0 && irq != -ENXIO) {
-+		ret = irq;
-+		goto error;
-+	} else if (irq > 0) {
-+		INIT_WORK(&channel->work, rcar_gen3_phy_usb2_work);
-+		ret = devm_request_irq(dev, irq, rcar_gen3_phy_usb2_irq,
-+				       IRQF_SHARED, dev_name(dev), channel);
-+		if (ret < 0) {
-+			dev_err(dev, "Failed to request irq (%d)\n", irq);
-+			goto error;
-+		}
-+	}
-+
- 	provider = devm_of_phy_provider_register(dev, rcar_gen3_phy_usb2_xlate);
- 	if (IS_ERR(provider)) {
- 		dev_err(dev, "Failed to register PHY provider\n");
+-	mutex_init(&channel->lock);
++	spin_lock_init(&channel->lock);
+ 	for (i = 0; i < NUM_OF_PHYS; i++) {
+ 		channel->rphys[i].phy = devm_phy_create(dev, NULL,
+ 							phy_data->phy_usb2_ops);
 -- 
 2.39.5
 
