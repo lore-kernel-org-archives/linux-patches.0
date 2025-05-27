@@ -1,70 +1,70 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753AF10E0
-	for <patches@lists.linux.dev>; Tue, 27 May 2025 00:11:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A177F10E0
+	for <patches@lists.linux.dev>; Tue, 27 May 2025 00:12:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748304668; cv=none; b=i44uTgWIV/2XmNicK4VoQv11VMKIu0sBzllQOI5RqmxIghVbrSrftxxBXqtinULOV9ja9kcLjYr2sf3c3ZTPdoRq+is4OAVkWI+1BfeTBgT3B88aH+7S2j/a1FEZx5Ioy/UriKFyNOcfKCvwGV7jq+YvGFq4wlQTIqCM/q9jAog=
+	t=1748304780; cv=none; b=QOoLZh8vs4gR7k0LNYG1mRQn1LntlGqCjk1fcvPLwo6r3Y2hOcE+/uCXtL+t/K1pEP64o62HLznZjbvtjOIAvKvjyYD/N5/1wyNVmkBmS0uEgRTgkWko1JStD+S/9xGTx8BsPTrrIB0OCtflAl7/cwEd2V/6h8kU8+Cn5jRRBn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748304668; c=relaxed/simple;
-	bh=tw+V54TzTF5aeL1GSdSVDzkRh6+ofawdotvvYMClxDI=;
+	s=arc-20240116; t=1748304780; c=relaxed/simple;
+	bh=ShvoaIDylmqmCO/4tqPQuAPuovRvMewoIpt2vjGQa/M=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uRS1QgTAH+dlWe2wClmFIxwXLaq4M0EZ0vvd+lYyqqon8RoLe3f4OmJQ4CElHnhN7Doiv+tntNEsAcLqkrK9hDvet0g6BMzrjfnCqh2gVBoZ98iHzlGrvx4H1Xdm4G0PJ/osQk1JQRUKz+555456fkZGxlIRvmorbahDTVSkajc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IOAxH8cK; arc=none smtp.client-ip=209.85.216.43
+	 To:Cc:Content-Type; b=CF6nQddDhoc9fmDE3obqtRrruLS/Pj8qWYy3BImRosR0U5BomUtpz9QZIHy/3bIGoNSMuz4iXfNvePxMt4bMKuRyhWa6PCiN2G3nfK+KocENOlN+lFdavhXo2WOd2lgeAm/Zb6+h3DmcminTc9jwt71qTZFYKJ93PnBRLVKOkRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ec4gf1vj; arc=none smtp.client-ip=209.85.216.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IOAxH8cK"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-311676255c3so98352a91.3
-        for <patches@lists.linux.dev>; Mon, 26 May 2025 17:11:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ec4gf1vj"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-311676255c3so98572a91.3
+        for <patches@lists.linux.dev>; Mon, 26 May 2025 17:12:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748304667; x=1748909467; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1748304778; x=1748909578; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KtTCmrZoRrQ0JqD2tIFY3u/ae0Uri9xjv3XvvvkKWb0=;
-        b=IOAxH8cKRCF2ixbSp6jbS6VSzVNv3j8tDvmTOEdsJVwlmvoCFnwHVNklovKUP9gGzG
-         FeEf7WPplhjNvp89gSU5EfhUA6rWrT+vA4nuw0Y+nX4z4zOk7yNbCh9U3ivZPxphP3H9
-         xnZv7er+Syh/AEInH+zvAPTRqelZVpnc0zzYUuwPheSxdIFWd9FlcmPGqz9IvKjBw1pN
-         yqf1z+ti9XKhi/yKWmxkmYOxFl3bmUfm0re0VhJdb1UCpJAgOnmHWshBkkRVc1LwlftV
-         yr9AGKYlKqgQUd8NqKL9eqkljWrMDWr3Jfghq2u+wVE2H9iw4G5qULEyCKD85xb1WZvt
-         SDsg==
+        bh=qDUVHJC72R11plYvEJN4plaYAB5GiKYQgfvLL/uyWH4=;
+        b=Ec4gf1vjT/9RsYxGzQhRSfZ+1cWHzyVCh28saB9MoC2cJQnRWjNpCNF+wZMZKk6NaJ
+         HSCxBZEKZWx75xyg/MWT8coqPBtRx8tEOatIDNRjlmxd6PF5qbO5iFEJwm8DWwE7NwMo
+         HQ0Y6nT5G8A0ODRnoiFDpywZUhkZrufFEV8RILfxpiJgXaVTVoKrbX1oSvByuYhfdXYA
+         ar/eZ95oFT/V7HIDFW0KL9fKNh2U7YK+Pv+BUy0ok8MhktxZAOmb/qbU8m7nVN1OHyFu
+         +uIgdhVxcFTuygzWwpjMQwVG4uKzO0W2Z+GtRlPAODOJRZWIJw7AMtge5cnLcZsgsVaZ
+         ESbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748304667; x=1748909467;
+        d=1e100.net; s=20230601; t=1748304778; x=1748909578;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KtTCmrZoRrQ0JqD2tIFY3u/ae0Uri9xjv3XvvvkKWb0=;
-        b=ujeXZacN2fDM6RCMOxfLqeH1VDAaitAsCiDCOlunz43XyS1SsSvHWdrNAmutYXR3jN
-         fJBY6PuUZY2vpqWwEcLPHLbzyNDeY5cwdq4Z4ng0VtVU9zc2xYKit7dHKc2jV8PkaKzy
-         nnfdLX9ccZPHaZsh+IrB88n7EpQldzotX7bg04fZWNafAUTBAQMQZzY/km4ize3wwdLj
-         6eprzk0xlc8cwU3POD9fSltAGhRUDDJ51kxyvjqY5B27hbEHLDyU/Ap9c+4Br8LzHa7z
-         fU9y5Zjcwpew1RWZLtHOeivTw37apwLRqVWS/wFUwK1hgGEyl6JWQAMpoqC2d58RR+ck
-         FBLA==
-X-Forwarded-Encrypted: i=1; AJvYcCX8lqnSZSzFhj+PFPCZeNO0/sz7i6gn7Zsfxq5psWycFnXsjcV1CRFJIivhetQpmQpu4ZmBQj4m@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz1GcobjZlHQE3R5/SZoBNuSqpUGWZgmnekSL74U5o0vVUu3Yea
-	A2y8h+mucq1rBg7K7ynbCPNDJin/nQCHb/bF9Bsi9f0z4L6OGBrEv9TIXKCBRrN+M/CL+ZaA/9q
-	A2+/40ejeGDdrTq/GWQkesdFLd9srKG0=
-X-Gm-Gg: ASbGncurGYtNGg5wTgFY5OK/D/fqN0qQ5VNuyxcGGWd9Lngl55xb5o62P4mMVyYnbX0
-	aHlZQzFHoPCFp5CRQq9n3YnafrwuVoef92y6U5AL5rxmm2YR9kvSYISh3YKLC1yAVJprs+DlAPq
-	XZdHHIPsVr+sf/0MjHYucmMic0JDNRVuD9
-X-Google-Smtp-Source: AGHT+IHuJYZe8bONowCh96S26GJWzJMXTf8gJ+iXWDqS0aq8KaIuLAGuRkVGgNILqDbnpOeuvHai1AtCg5SRH+0v1qs=
-X-Received: by 2002:a17:90b:17cb:b0:2ee:acea:9ec4 with SMTP id
- 98e67ed59e1d1-3110f72c97emr6529967a91.3.1748304666678; Mon, 26 May 2025
- 17:11:06 -0700 (PDT)
+        bh=qDUVHJC72R11plYvEJN4plaYAB5GiKYQgfvLL/uyWH4=;
+        b=mNCbXz8a3C39sIHNmuD3XgeMdLo0Bq6Xn6rRtcnFE4JvCH92psw1v31sUspeUwF6UY
+         ANQ6LcLNOXWyORyAqtoujdt+dSrWbMS6C/Sn6ezPs/CDri+MrC8f6mipGn3+YQPN0jAP
+         3I/EmP3NtUU6Vb1h8eDyCOEvgoD0fO/yaeLxhzD8xWfW6MdVHPtivq+3QRhUq9l+s6gr
+         JTu+6KroabD9Oz1nOn3HRT+I8MKI97Uw6LKG8L8VjDscIzprKmikcnn4IgWmrsKMzrsq
+         b1YMJnFT7dwb7yI9u95kB2Rl+AGvFtcNE3bEKNUlLsWuJlN/Cub0OPLkr5fgGi4vHV1+
+         15ww==
+X-Forwarded-Encrypted: i=1; AJvYcCWBktFs48NRMuqs2bKMpFKLl8xa5Suk2enGPVT6Ql3IXoz2LDTT/S9WeMJ8d/FIElwBmS8CwXNB@lists.linux.dev
+X-Gm-Message-State: AOJu0YyT++2xgExRW03bnMnmVWN5J5LSajCy0qFTZ/kwZardaQHsbFHU
+	60kjvLHX1gUpdWs9vGb8ZtrdI1u6bnYTGVDitGI+5v49ajvkG+mNk9mOlDusysh1l+0UnYB/cge
+	3K8gvDUFCxLZWAUqChiWTq7O5j1ZYolYMUJt0RBk6cw==
+X-Gm-Gg: ASbGncsO2PNIHzTuws1/30x0eAwPFizNIjzCE8SbdioxbquO9sgO8bc/wlOWMJuFSNM
+	lpqtYTYU5HxWCvs+K37vJPsNV9EBtst5EYFAHD+FLHxaU/yQnAKAYyJoTXbhxIC7HJqoCPVSRIj
+	Z0WEKb20EgcE6M6Mr0ZwE7y2///fHnYh4O
+X-Google-Smtp-Source: AGHT+IGP6WSH1KR6xEx1oB8OliPNzy9iZnUE2S1clmoqmPisa2Cs0N5JoYvUV6KeHWSF04V6hwfbzOMIFPpxAN9AOFs=
+X-Received: by 2002:a17:90b:3ec1:b0:2ff:5759:549a with SMTP id
+ 98e67ed59e1d1-3110f0ee9b7mr6504882a91.1.1748304777913; Mon, 26 May 2025
+ 17:12:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250502215133.1923676-1-ojeda@kernel.org>
-In-Reply-To: <20250502215133.1923676-1-ojeda@kernel.org>
+References: <20250502215133.1923676-1-ojeda@kernel.org> <CANiq72mj2yv4E7Dd+19fmP9xGWELdv6JwXULpu91oq0BMzob+g@mail.gmail.com>
+In-Reply-To: <CANiq72mj2yv4E7Dd+19fmP9xGWELdv6JwXULpu91oq0BMzob+g@mail.gmail.com>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 27 May 2025 02:10:53 +0200
-X-Gm-Features: AX0GCFs4jjYfVU6bcAWIwvQqEUw3eEVTRURfBNgMbKp-7WpJO6lmgJTaph6upiw
-Message-ID: <CANiq72mj2yv4E7Dd+19fmP9xGWELdv6JwXULpu91oq0BMzob+g@mail.gmail.com>
+Date: Tue, 27 May 2025 02:12:46 +0200
+X-Gm-Features: AX0GCFuWVeWoWd2QF4i5h3bZPOTXxZwG0hZtocU1fZDNtHBMsACg5wKAztA9UY8
+Message-ID: <CANiq72=q66Xvihm9t3hbtJVAcB+f-aRRY9+amSEWBZrCjTcyUQ@mail.gmail.com>
 Subject: Re: [PATCH 0/7] Rust KUnit `#[test]` support improvements
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, 
@@ -79,42 +79,16 @@ Cc: Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 2, 2025 at 11:51=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
+On Tue, May 27, 2025 at 2:10=E2=80=AFAM Miguel Ojeda
+<miguel.ojeda.sandonis@gmail.com> wrote:
 >
-> Improvements that build on top of the very basic `#[test]` support merged=
- in
-> v6.15.
+>     [ Split from the next commit as suggested by Tamir. - Miguel ]
 >
-> They are fairly minimal changes, but they allow us to map `assert*!`s bac=
-k to
-> KUnit, plus to add support for test functions that return `Result`s.
->
-> In essence, they get our `#[test]`s essentially on par with the documenta=
-tion
-> tests.
->
-> I also took the chance to convert some host `#[test]`s we had to KUnit in=
- order
-> to showcase the feature.
->
-> Finally, I added documentation that was lacking from the original submiss=
-ion.
->
-> I hope this helps.
+>     [ Split the `CString` simplification into a new commit. - Miguel ]
 
-Applied to `rust-next` -- thanks everyone!
-
-    [ Used the `cfg_attr` from the TODO comment and clarified its comment
-      now that the stabilization is in beta and thus quite likely stable
-      in Rust 1.88.0. Simplified the `new_body` code by introducing a new
-      variable. Added `#[allow(clippy::incompatible_msrv)]`. - Miguel ]
-
-    [ Used `::kernel` for paths. - Miguel ]
-
-    [ Split from the next commit as suggested by Tamir. - Miguel ]
-
-    [ Split the `CString` simplification into a new commit. - Miguel ]
+By the way, I kept the tags from David and Danilo in that new commit,
+since it was really a pure split, but of course let me know if someone
+doesn't want that.
 
 Cheers,
 Miguel
