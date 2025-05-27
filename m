@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2D02522B4;
-	Tue, 27 May 2025 17:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638742522B4;
+	Tue, 27 May 2025 17:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366948; cv=none; b=BVoO+tI8MRVJXWEVMy2pb1KPWXLbDVKsyf3HbaV9uBeOtLPk3uso0qoLOHMvAwxhxa0uHzJPJFZ6ZgwM0A7gybkgpItJIxqmAoL8lOTWX7x7Mtr584zrxEO4iyMhVE35EY7hKortlK91WQPpv3d8gPAh/RSunLfOXhAh8qYfJbI=
+	t=1748366951; cv=none; b=BrSJFz/9HWHtzhIGTBEruHjmam0akm67TiomeURTqOQQiKhPUfJiMGN3C+Fl1i4gH1ZAQbMWC7/3aQ0BZqaovxJOcvpnaW+JTpK4WyH8izfzEOHwMC1uOGpegpMpcH+OwZZZXfjYhUyU5wg1gzn19nuMWKaJ56E73f6dP3H2MnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366948; c=relaxed/simple;
-	bh=imTj+ulpNt/26w6HRquUE9boDaEaxScxthHjd0+Rg3I=;
+	s=arc-20240116; t=1748366951; c=relaxed/simple;
+	bh=0NtyRv152IvuMers3CRNqvfsWzg6cTpLQe0DbHLd3zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FyzlE3diRWwrUXzWcyQJT9FxOb3tHhSsBQxp2zOUiravcy1LsZoT08wBurinHRE64Qui+F/JpkmXY1MEDShzf35X59xbODyq6HY5+Doe6PKjIjBhbZKQHPo6HRjSl1vJvfLmffhhQLZXbNvw/SkV9Ont31qoFcnjD1B3+3weumQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1paY7Xt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DOCNdyKkn6DSQsqO7PZ3ARZz7j4dEx6J2cPhRKNEQ6kB6AAjxYPfJtrDohgG/7BtKn72+/20uoR/a5qek6H0ECMhqeqpMaxvXRrG+JOvAeDuD6BK5RNNw7f/SQWsFK4oXHkJC2fuK2GeWPtLR9SG4/HOGmR29r5a7ttxcHmZUr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBlPHMm5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1paY7Xt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEBADC4CEE9;
-	Tue, 27 May 2025 17:29:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBlPHMm5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C78F5C4CEE9;
+	Tue, 27 May 2025 17:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366948;
-	bh=imTj+ulpNt/26w6HRquUE9boDaEaxScxthHjd0+Rg3I=;
+	s=korg; t=1748366951;
+	bh=0NtyRv152IvuMers3CRNqvfsWzg6cTpLQe0DbHLd3zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l1paY7XteFU0eS9es1fp36ZiRXCe+ZLrAuPLMLgq94UoQd5raYnmXJRE1yTuWwd3X
-	 V5DVqyg1VGc8xqccrS94mc6HRuM5AEE4qW6XR/qsb92pjx1b4ot/GbfLzApcL7PvLT
-	 ApcJh/ckRAJymWBbs3Mrw05HBhElUapcUxE+J5yw=
+	b=DBlPHMm5bU1N1G2ggaGdKWzLor1lqH+D6dS6X35YjdOLGB/SjWyO0BkI8Wi0J5pHG
+	 T0Rmh6IXUqHiwuGU7Q2nvXqtqrJAyeIgY6xezZbYckRQmaDebJ0kxCw/dkvDPwJZ80
+	 E0p9+ocMD2y1bwCxEVozI3vW9owBDIaaIwDUE4/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Bunea <ovidiu.bunea@amd.com>,
-	Charlene Liu <Charlene.Liu@amd.com>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Zhikai Zhai <zhikai.zhai@amd.com>,
 	Tom Chung <chiahsuan.chung@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 229/783] drm/amd/display: remove minimum Dispclk and apply oem panel timing.
-Date: Tue, 27 May 2025 18:20:26 +0200
-Message-ID: <20250527162522.449483041@linuxfoundation.org>
+Subject: [PATCH 6.14 230/783] drm/amd/display: calculate the remain segments for all pipes
+Date: Tue, 27 May 2025 18:20:27 +0200
+Message-ID: <20250527162522.489738253@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -54,68 +54,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charlene Liu <Charlene.Liu@amd.com>
+From: Zhikai Zhai <zhikai.zhai@amd.com>
 
-[ Upstream commit 756e58e83e89d372b94269c0cde61fe55da76947 ]
+[ Upstream commit d3069feecdb5542604d29b59acfd1fd213bad95b ]
 
-[why & how]
-1. apply oem panel timing (not only on OLED)
-2. remove MIN_DPP_DISP_CLK request in driver.
+[WHY]
+In some cases the remain de-tile buffer segments will be greater
+than zero if we don't add the non-top pipe to calculate, at
+this time the override de-tile buffer size will be valid and used.
+But it makes the de-tile buffer segments used finally for all of pipes
+exceed the maximum.
 
-This fix will apply for dcn31x but not
-sync with DML's output.
+[HOW]
+Add the non-top pipe to calculate the remain de-tile buffer segments.
+Don't set override size to use the average according to pipe count
+if the value exceed the maximum.
 
-Reviewed-by: Ovidiu Bunea <ovidiu.bunea@amd.com>
-Signed-off-by: Charlene Liu <Charlene.Liu@amd.com>
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Signed-off-by: Zhikai Zhai <zhikai.zhai@amd.com>
 Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c | 2 --
- drivers/gpu/drm/amd/display/dc/clk_mgr/dcn316/dcn316_clk_mgr.c | 2 --
- drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c      | 3 ++-
- 3 files changed, 2 insertions(+), 5 deletions(-)
+ .../dc/resource/dcn315/dcn315_resource.c      | 42 +++++++++----------
+ 1 file changed, 20 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
-index 827b24b3442ad..e4d22f74f9869 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
-@@ -194,8 +194,6 @@ static void dcn315_update_clocks(struct clk_mgr *clk_mgr_base,
- 	// workaround: Limit dppclk to 100Mhz to avoid lower eDP panel switch to plus 4K monitor underflow.
- 	if (new_clocks->dppclk_khz < MIN_DPP_DISP_CLK)
- 		new_clocks->dppclk_khz = MIN_DPP_DISP_CLK;
--	if (new_clocks->dispclk_khz < MIN_DPP_DISP_CLK)
--		new_clocks->dispclk_khz = MIN_DPP_DISP_CLK;
+diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn315/dcn315_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn315/dcn315_resource.c
+index 14acef036b5a0..6c2bb3f63be15 100644
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn315/dcn315_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn315/dcn315_resource.c
+@@ -1698,7 +1698,7 @@ static int dcn315_populate_dml_pipes_from_context(
+ 		pipes[pipe_cnt].dout.dsc_input_bpc = 0;
+ 		DC_FP_START();
+ 		dcn31_zero_pipe_dcc_fraction(pipes, pipe_cnt);
+-		if (pixel_rate_crb && !pipe->top_pipe && !pipe->prev_odm_pipe) {
++		if (pixel_rate_crb) {
+ 			int bpp = source_format_to_bpp(pipes[pipe_cnt].pipe.src.source_format);
+ 			/* Ceil to crb segment size */
+ 			int approx_det_segs_required_for_pstate = dcn_get_approx_det_segs_required_for_pstate(
+@@ -1755,28 +1755,26 @@ static int dcn315_populate_dml_pipes_from_context(
+ 				continue;
+ 			}
  
- 	if (should_set_clock(safe_to_lower, new_clocks->dppclk_khz, clk_mgr->base.clks.dppclk_khz)) {
- 		if (clk_mgr->base.clks.dppclk_khz > new_clocks->dppclk_khz)
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn316/dcn316_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn316/dcn316_clk_mgr.c
-index 37c39756fece4..49efea0c8fcff 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn316/dcn316_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn316/dcn316_clk_mgr.c
-@@ -201,8 +201,6 @@ static void dcn316_update_clocks(struct clk_mgr *clk_mgr_base,
- 	// workaround: Limit dppclk to 100Mhz to avoid lower eDP panel switch to plus 4K monitor underflow.
- 	if (new_clocks->dppclk_khz < 100000)
- 		new_clocks->dppclk_khz = 100000;
--	if (new_clocks->dispclk_khz < 100000)
--		new_clocks->dispclk_khz = 100000;
- 
- 	if (should_set_clock(safe_to_lower, new_clocks->dppclk_khz, clk_mgr->base.clks.dppclk_khz)) {
- 		if (clk_mgr->base.clks.dppclk_khz > new_clocks->dppclk_khz)
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-index fc4fb4055ab00..94ceccfc04982 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-@@ -1065,7 +1065,8 @@ void dce110_edp_backlight_control(
- 			DC_LOG_DC("edp_receiver_ready_T9 skipped\n");
- 	}
- 
--	if (!enable && link->dpcd_sink_ext_caps.bits.oled) {
-+	if (!enable) {
-+		/*follow oem panel config's requirement*/
- 		pre_T11_delay += link->panel_config.pps.extra_pre_t11_ms;
- 		msleep(pre_T11_delay);
+-			if (!pipe->top_pipe && !pipe->prev_odm_pipe) {
+-				bool split_required = pipe->stream->timing.pix_clk_100hz >= dcn_get_max_non_odm_pix_rate_100hz(&dc->dml.soc)
+-						|| (pipe->plane_state && pipe->plane_state->src_rect.width > 5120);
+-
+-				if (remaining_det_segs > MIN_RESERVED_DET_SEGS && crb_pipes != 0)
+-					pipes[pipe_cnt].pipe.src.det_size_override += (remaining_det_segs - MIN_RESERVED_DET_SEGS) / crb_pipes +
+-							(crb_idx < (remaining_det_segs - MIN_RESERVED_DET_SEGS) % crb_pipes ? 1 : 0);
+-				if (pipes[pipe_cnt].pipe.src.det_size_override > 2 * DCN3_15_MAX_DET_SEGS) {
+-					/* Clamp to 2 pipe split max det segments */
+-					remaining_det_segs += pipes[pipe_cnt].pipe.src.det_size_override - 2 * (DCN3_15_MAX_DET_SEGS);
+-					pipes[pipe_cnt].pipe.src.det_size_override = 2 * DCN3_15_MAX_DET_SEGS;
+-				}
+-				if (pipes[pipe_cnt].pipe.src.det_size_override > DCN3_15_MAX_DET_SEGS || split_required) {
+-					/* If we are splitting we must have an even number of segments */
+-					remaining_det_segs += pipes[pipe_cnt].pipe.src.det_size_override % 2;
+-					pipes[pipe_cnt].pipe.src.det_size_override -= pipes[pipe_cnt].pipe.src.det_size_override % 2;
+-				}
+-				/* Convert segments into size for DML use */
+-				pipes[pipe_cnt].pipe.src.det_size_override *= DCN3_15_CRB_SEGMENT_SIZE_KB;
+-
+-				crb_idx++;
++			bool split_required = pipe->stream->timing.pix_clk_100hz >= dcn_get_max_non_odm_pix_rate_100hz(&dc->dml.soc)
++					|| (pipe->plane_state && pipe->plane_state->src_rect.width > 5120);
++
++			if (remaining_det_segs > MIN_RESERVED_DET_SEGS && crb_pipes != 0)
++				pipes[pipe_cnt].pipe.src.det_size_override += (remaining_det_segs - MIN_RESERVED_DET_SEGS) / crb_pipes +
++						(crb_idx < (remaining_det_segs - MIN_RESERVED_DET_SEGS) % crb_pipes ? 1 : 0);
++			if (pipes[pipe_cnt].pipe.src.det_size_override > 2 * DCN3_15_MAX_DET_SEGS) {
++				/* Clamp to 2 pipe split max det segments */
++				remaining_det_segs += pipes[pipe_cnt].pipe.src.det_size_override - 2 * (DCN3_15_MAX_DET_SEGS);
++				pipes[pipe_cnt].pipe.src.det_size_override = 2 * DCN3_15_MAX_DET_SEGS;
++			}
++			if (pipes[pipe_cnt].pipe.src.det_size_override > DCN3_15_MAX_DET_SEGS || split_required) {
++				/* If we are splitting we must have an even number of segments */
++				remaining_det_segs += pipes[pipe_cnt].pipe.src.det_size_override % 2;
++				pipes[pipe_cnt].pipe.src.det_size_override -= pipes[pipe_cnt].pipe.src.det_size_override % 2;
+ 			}
++			/* Convert segments into size for DML use */
++			pipes[pipe_cnt].pipe.src.det_size_override *= DCN3_15_CRB_SEGMENT_SIZE_KB;
++
++			crb_idx++;
+ 			pipe_cnt++;
+ 		}
  	}
 -- 
 2.39.5
