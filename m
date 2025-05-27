@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE5927D784;
-	Tue, 27 May 2025 17:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7DB1AF0BB;
+	Tue, 27 May 2025 17:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367083; cv=none; b=ULB+YvpjrEC5rk9bvqc78k51TDTSKubTXw99PtZj33LROsfMLx0GD1emAw51RacT5YcN7aO7izydZhzBpPKKBRwKyCboyDbJPGprpu48ld62MSE8jzAtpGji+P6+kpjM0WlPJx8szJkNFkFvWvQ4v3uo12hwM4nTF3jWpQ7toS8=
+	t=1748367086; cv=none; b=USRmTS2tAItZL7SS927B3+GqcgyDvHv+VPyXNrJ4rUxXsYKmY9PI+0/GisFiid5jJC3wNPb0j0ENkMwJYkNowh8LYxTvusmya8AoihjjhxsycnQGYhXB7S7FlTdNi1jxCw1GI9cjr5yBspiaj9dORaSfOn1hme4lZk0Et6KtDR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367083; c=relaxed/simple;
-	bh=PeqUXwFpISK1mzurOkI99QXzTmiXW+Sg2K1RTvwsqMA=;
+	s=arc-20240116; t=1748367086; c=relaxed/simple;
+	bh=ZT1Gg0E/qR9+7xC620eBe14irxPgUOMdnfMwBRWsC1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KwtL3j0ucEmMdU+m2Anlj4zHlBOQvwXH9mNEmVLywHBDizdNGZrFOR8hmIx2J1FXqPDifBfTkoqA8F1hmUtT5nr2dpQXZZQEl3pWiR7ex3UwnVpDxkPpVjqy4DoRwjjA4oRaVexlExG9JWVC0QCh7NRIyCubeHK17zCV2Kg1eL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7bHa/dD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bs35KwIXT52BA4GHLKHcZm3a8ZBwRS87olYFB9al++vMZ3z2+7SNIQPAN7mPGEEyWD0tIEw1nR2iw9WtU5tFsIylr/OCx6tjXbNzT6lp9wNAXADHzLMmFyaSqQoLbDfqczZvhiDRACmd+q7EOJMF33qFAjZxE8pv+NCjuYAyM3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SoFrzF9B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7bHa/dD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A20C4CEE9;
-	Tue, 27 May 2025 17:31:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SoFrzF9B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3799C4CEE9;
+	Tue, 27 May 2025 17:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367083;
-	bh=PeqUXwFpISK1mzurOkI99QXzTmiXW+Sg2K1RTvwsqMA=;
+	s=korg; t=1748367086;
+	bh=ZT1Gg0E/qR9+7xC620eBe14irxPgUOMdnfMwBRWsC1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C7bHa/dDX8GaPNwEe9WEmGehGVkFRCLvQVC2g+5mCqfTmlsZYNqx9owhHmWrAo8Y+
-	 ZvWwBw3uxkWe5rlOa2NNIOM4NHifRVIUoUQh2iDE6MgGDDZwOdZVC4l4K6u/p4slM3
-	 FvErb6LH6eUhRpKfHgdsZDG5saeypMaDt4eoJpmk=
+	b=SoFrzF9Bl3b58bru9lzGYUzYUkm9QJErgcdKFuQqfBN2krHQnAti+umq9Ko5lWqBb
+	 w8pWuZA0u3NQpvB3cCj2f6i0GGugQwH3VXapEO5eQr3hvRDmPYEbWKRrxesE0WUrYa
+	 AGr8DbGFTXGGu26zuwdsWH24bnJYns/+HakaS1Kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Mike Marshall <hubcap@omnibond.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 272/783] soc: mediatek: mtk-mutex: Add DPI1 SOF/EOF to MT8188 mutex tables
-Date: Tue, 27 May 2025 18:21:09 +0200
-Message-ID: <20250527162524.160658811@linuxfoundation.org>
+Subject: [PATCH 6.14 273/783] orangefs: Do not truncate file size
+Date: Tue, 27 May 2025 18:21:10 +0200
+Message-ID: <20250527162524.204464604@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -50,67 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 694e0b7c1747603243da874de9cbbf8cb806ca44 ]
+[ Upstream commit 062e8093592fb866b8e016641a8b27feb6ac509d ]
 
-MT8188 uses DPI1 to output to the HDMI controller: add the
-Start of Frame and End of Frame configuration for the DPI1
-IP to the tables to unblock generation and sending of these
-signals to the GCE.
+'len' is used to store the result of i_size_read(), so making 'len'
+a size_t results in truncation to 4GiB on 32-bit systems.
 
-Link: https://lore.kernel.org/r/20250212100012.33001-2-angelogioacchino.delregno@collabora.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: "Matthew Wilcox (Oracle)" <willy@infradead.org>
+Link: https://lore.kernel.org/r/20250305204734.1475264-2-willy@infradead.org
+Tested-by: Mike Marshall <hubcap@omnibond.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/mediatek/mtk-mutex.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/orangefs/inode.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soc/mediatek/mtk-mutex.c b/drivers/soc/mediatek/mtk-mutex.c
-index 5250c1d702eb9..aaa965d4b050a 100644
---- a/drivers/soc/mediatek/mtk-mutex.c
-+++ b/drivers/soc/mediatek/mtk-mutex.c
-@@ -155,6 +155,7 @@
- #define MT8188_MUTEX_MOD_DISP1_VPP_MERGE3	23
- #define MT8188_MUTEX_MOD_DISP1_VPP_MERGE4	24
- #define MT8188_MUTEX_MOD_DISP1_DISP_MIXER	30
-+#define MT8188_MUTEX_MOD_DISP1_DPI1		38
- #define MT8188_MUTEX_MOD_DISP1_DP_INTF1		39
+diff --git a/fs/orangefs/inode.c b/fs/orangefs/inode.c
+index aae6d2b8767df..63d7c1ca0dfd3 100644
+--- a/fs/orangefs/inode.c
++++ b/fs/orangefs/inode.c
+@@ -23,9 +23,9 @@ static int orangefs_writepage_locked(struct page *page,
+ 	struct orangefs_write_range *wr = NULL;
+ 	struct iov_iter iter;
+ 	struct bio_vec bv;
+-	size_t len, wlen;
++	size_t wlen;
+ 	ssize_t ret;
+-	loff_t off;
++	loff_t len, off;
  
- #define MT8195_MUTEX_MOD_DISP_OVL0		0
-@@ -289,6 +290,7 @@
- #define MT8188_MUTEX_SOF_DSI0			1
- #define MT8188_MUTEX_SOF_DP_INTF0		3
- #define MT8188_MUTEX_SOF_DP_INTF1		4
-+#define MT8188_MUTEX_SOF_DPI1			5
- #define MT8195_MUTEX_SOF_DSI0			1
- #define MT8195_MUTEX_SOF_DSI1			2
- #define MT8195_MUTEX_SOF_DP_INTF0		3
-@@ -301,6 +303,7 @@
- #define MT8188_MUTEX_EOF_DSI0			(MT8188_MUTEX_SOF_DSI0 << 7)
- #define MT8188_MUTEX_EOF_DP_INTF0		(MT8188_MUTEX_SOF_DP_INTF0 << 7)
- #define MT8188_MUTEX_EOF_DP_INTF1		(MT8188_MUTEX_SOF_DP_INTF1 << 7)
-+#define MT8188_MUTEX_EOF_DPI1			(MT8188_MUTEX_SOF_DPI1 << 7)
- #define MT8195_MUTEX_EOF_DSI0			(MT8195_MUTEX_SOF_DSI0 << 7)
- #define MT8195_MUTEX_EOF_DSI1			(MT8195_MUTEX_SOF_DSI1 << 7)
- #define MT8195_MUTEX_EOF_DP_INTF0		(MT8195_MUTEX_SOF_DP_INTF0 << 7)
-@@ -472,6 +475,7 @@ static const u8 mt8188_mutex_mod[DDP_COMPONENT_ID_MAX] = {
- 	[DDP_COMPONENT_PWM0] = MT8188_MUTEX_MOD2_DISP_PWM0,
- 	[DDP_COMPONENT_DP_INTF0] = MT8188_MUTEX_MOD_DISP_DP_INTF0,
- 	[DDP_COMPONENT_DP_INTF1] = MT8188_MUTEX_MOD_DISP1_DP_INTF1,
-+	[DDP_COMPONENT_DPI1] = MT8188_MUTEX_MOD_DISP1_DPI1,
- 	[DDP_COMPONENT_ETHDR_MIXER] = MT8188_MUTEX_MOD_DISP1_DISP_MIXER,
- 	[DDP_COMPONENT_MDP_RDMA0] = MT8188_MUTEX_MOD_DISP1_MDP_RDMA0,
- 	[DDP_COMPONENT_MDP_RDMA1] = MT8188_MUTEX_MOD_DISP1_MDP_RDMA1,
-@@ -686,6 +690,8 @@ static const u16 mt8188_mutex_sof[DDP_MUTEX_SOF_MAX] = {
- 	[MUTEX_SOF_SINGLE_MODE] = MUTEX_SOF_SINGLE_MODE,
- 	[MUTEX_SOF_DSI0] =
- 		MT8188_MUTEX_SOF_DSI0 | MT8188_MUTEX_EOF_DSI0,
-+	[MUTEX_SOF_DPI1] =
-+		MT8188_MUTEX_SOF_DPI1 | MT8188_MUTEX_EOF_DPI1,
- 	[MUTEX_SOF_DP_INTF0] =
- 		MT8188_MUTEX_SOF_DP_INTF0 | MT8188_MUTEX_EOF_DP_INTF0,
- 	[MUTEX_SOF_DP_INTF1] =
+ 	set_page_writeback(page);
+ 
+@@ -91,8 +91,7 @@ static int orangefs_writepages_work(struct orangefs_writepages *ow,
+ 	struct orangefs_write_range *wrp, wr;
+ 	struct iov_iter iter;
+ 	ssize_t ret;
+-	size_t len;
+-	loff_t off;
++	loff_t len, off;
+ 	int i;
+ 
+ 	len = i_size_read(inode);
 -- 
 2.39.5
 
