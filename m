@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C15127A926;
-	Tue, 27 May 2025 16:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF0627A926;
+	Tue, 27 May 2025 16:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364444; cv=none; b=Xv2mPAB0dXAmhJQOdXU+TahFD4z6oVgPne+IpFvmVQWEOl9nmD5BgzYP4YdRHerxJ5VJKrBpJs8fggGtfkSjdRsXkGm/qe4cGV+PJJ++vagvG0rHsPEXDChqrVOzEhI9YXpwqsrx+gb+vlHljf+K6hqfl1oFl+l1Fwk5vuRTavg=
+	t=1748364447; cv=none; b=n7V3PclP9XUdL0NIIFCs/hP3175JzusBh+02UR45bvJbfazGgebAJReqppO0gcxmB5geDNzLTtG1SNqiGtbWVNhQt+mp0tOqtXDLfXPXFIbYNWcD2x433ezWJc3E8pFj5yPAR6VThSzg+9OupoFRiVNyx3FZHErkVJHwG+y0unI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364444; c=relaxed/simple;
-	bh=rnq+KXWmvNaZ6yr9OOgf7gbBRCSmzzag0GU+pMvnaio=;
+	s=arc-20240116; t=1748364447; c=relaxed/simple;
+	bh=Js7fNXL2LeQhdxywurphEZCd4XufhqXwrQyNvptPKlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EA2lAITPQjbMjiu/Tgfx4YGzw094cDRRaFDwUfSzorrOLPFS4AugKOHw6PseHhmuX7esOW/vuxCY1ghhv+PUce5OJueCn7FikgaOv1aesLZpL7Vr7Mnc9XJ2jRZrO2/CjPKO4dN2ywSyX7ZyrTWNBePdwATiWMS1HMo6XBLaBhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pjbjiOrj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VKxnTB+4FsprNzD4ukfC5Kgr88STsGfHgcajWTLPh4LmVUaJVKfcCt0pg+pUyypXnfNjQNbvPZpM2smSKT/KyDTQ6uiGUjPaEoa0rfzXyWJqtPDhMkRTNf/GGFZvT6F7CW51qeda+3AnAW/kADvo+JIqrE5lxjqgvZ0HDrJE7n8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1cpz8Apn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pjbjiOrj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFBA3C4CEE9;
-	Tue, 27 May 2025 16:47:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cpz8Apn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70587C4CEE9;
+	Tue, 27 May 2025 16:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364444;
-	bh=rnq+KXWmvNaZ6yr9OOgf7gbBRCSmzzag0GU+pMvnaio=;
+	s=korg; t=1748364446;
+	bh=Js7fNXL2LeQhdxywurphEZCd4XufhqXwrQyNvptPKlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pjbjiOrjKi4KuijQWmEqCk0TAjMWWmTlplY4KRXvB/8dxfsYVw4X2/4iwpNnpfBfU
-	 tMLHpp4aMH3CtkbAPP6+7wqN6v30Mk5HlDO51uTFDqe0IMs10NnBv6643oU1fKqLCr
-	 qm31i1IpLBvcfEc/DS8jlr5NTolrUhtHo3IIGqSk=
+	b=1cpz8ApnrZaKybrqdgxTOfHRT5P+fRwygnF8kg4SCMWkjTnXZTpigjG9pxtrcAaw8
+	 Z7BlNhes8dwxPxYjTBT9ujV0yZMJbzOyaG4kKUHVP2xI8quGI94aM+OoI97vobRbNW
+	 it8q+zy4fPae3W7uZacg1JwKod7oMRmMgiF9ZuuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Yi Liu <yi.l.liu@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Zhangfei Gao <zhangfei.gao@linaro.org>
-Subject: [PATCH 6.12 058/626] iommufd: Extend IOMMU_GET_HW_INFO to report PASID capability
-Date: Tue, 27 May 2025 18:19:11 +0200
-Message-ID: <20250527162447.417934245@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Kees Cook <kees@kernel.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 059/626] tracing: Mark binary printing functions with __printf() attribute
+Date: Tue, 27 May 2025 18:19:12 +0200
+Message-ID: <20250527162447.459027476@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -49,201 +46,160 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yi Liu <yi.l.liu@intel.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 803f97298e7de9242eb677a1351dcafbbcc9117e ]
+[ Upstream commit 196a062641fe68d9bfe0ad36b6cd7628c99ad22c ]
 
-PASID usage requires PASID support in both device and IOMMU. Since the
-iommu drivers always enable the PASID capability for the device if it
-is supported, this extends the IOMMU_GET_HW_INFO to report the PASID
-capability to userspace. Also, enhances the selftest accordingly.
+Binary printing functions are using printf() type of format, and compiler
+is not happy about them as is:
 
-Link: https://patch.msgid.link/r/20250321180143.8468-5-yi.l.liu@intel.com
-Cc: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org> #aarch64 platform
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+kernel/trace/trace.c:3292:9: error: function ‘trace_vbprintk’ might be a candidate for ‘gnu_printf’ format attribute [-Werror=suggest-attribute=format]
+kernel/trace/trace_seq.c:182:9: error: function ‘trace_seq_bprintf’ might be a candidate for ‘gnu_printf’ format attribute [-Werror=suggest-attribute=format]
+
+Fix the compilation errors by adding __printf() attribute.
+
+While at it, move existing __printf() attributes from the implementations
+to the declarations. IT also fixes incorrect attribute parameters that are
+used for trace_array_printk().
+
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20250321144822.324050-4-andriy.shevchenko@linux.intel.com
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/device.c | 34 +++++++++++++++++++++++++++++++++-
- drivers/pci/ats.c              | 33 +++++++++++++++++++++++++++++++++
- include/linux/pci-ats.h        |  3 +++
- include/uapi/linux/iommufd.h   | 14 +++++++++++++-
- 4 files changed, 82 insertions(+), 2 deletions(-)
+ include/linux/trace.h     |  4 ++--
+ include/linux/trace_seq.h |  8 ++++----
+ kernel/trace/trace.c      | 11 +++--------
+ kernel/trace/trace.h      | 16 +++++++++-------
+ 4 files changed, 18 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/iommu/iommufd/device.c b/drivers/iommu/iommufd/device.c
-index 3fd8920e79ffb..74480ae6bfc0b 100644
---- a/drivers/iommu/iommufd/device.c
-+++ b/drivers/iommu/iommufd/device.c
-@@ -3,6 +3,7 @@
-  */
- #include <linux/iommu.h>
- #include <linux/iommufd.h>
-+#include <linux/pci-ats.h>
- #include <linux/slab.h>
- #include <uapi/linux/iommufd.h>
- 
-@@ -1304,7 +1305,8 @@ int iommufd_get_hw_info(struct iommufd_ucmd *ucmd)
- 	void *data;
- 	int rc;
- 
--	if (cmd->flags || cmd->__reserved)
-+	if (cmd->flags || cmd->__reserved[0] || cmd->__reserved[1] ||
-+	    cmd->__reserved[2])
- 		return -EOPNOTSUPP;
- 
- 	idev = iommufd_get_device(ucmd, cmd->dev_id);
-@@ -1361,6 +1363,36 @@ int iommufd_get_hw_info(struct iommufd_ucmd *ucmd)
- 	if (device_iommu_capable(idev->dev, IOMMU_CAP_DIRTY_TRACKING))
- 		cmd->out_capabilities |= IOMMU_HW_CAP_DIRTY_TRACKING;
- 
-+	cmd->out_max_pasid_log2 = 0;
-+	/*
-+	 * Currently, all iommu drivers enable PASID in the probe_device()
-+	 * op if iommu and device supports it. So the max_pasids stored in
-+	 * dev->iommu indicates both PASID support and enable status. A
-+	 * non-zero dev->iommu->max_pasids means PASID is supported and
-+	 * enabled. The iommufd only reports PASID capability to userspace
-+	 * if it's enabled.
-+	 */
-+	if (idev->dev->iommu->max_pasids) {
-+		cmd->out_max_pasid_log2 = ilog2(idev->dev->iommu->max_pasids);
-+
-+		if (dev_is_pci(idev->dev)) {
-+			struct pci_dev *pdev = to_pci_dev(idev->dev);
-+			int ctrl;
-+
-+			ctrl = pci_pasid_status(pdev);
-+
-+			WARN_ON_ONCE(ctrl < 0 ||
-+				     !(ctrl & PCI_PASID_CTRL_ENABLE));
-+
-+			if (ctrl & PCI_PASID_CTRL_EXEC)
-+				cmd->out_capabilities |=
-+						IOMMU_HW_CAP_PCI_PASID_EXEC;
-+			if (ctrl & PCI_PASID_CTRL_PRIV)
-+				cmd->out_capabilities |=
-+						IOMMU_HW_CAP_PCI_PASID_PRIV;
-+		}
-+	}
-+
- 	rc = iommufd_ucmd_respond(ucmd, sizeof(*cmd));
- out_free:
- 	kfree(data);
-diff --git a/drivers/pci/ats.c b/drivers/pci/ats.c
-index 6afff1f1b1430..c331b108e71de 100644
---- a/drivers/pci/ats.c
-+++ b/drivers/pci/ats.c
-@@ -538,4 +538,37 @@ int pci_max_pasids(struct pci_dev *pdev)
- 	return (1 << FIELD_GET(PCI_PASID_CAP_WIDTH, supported));
+diff --git a/include/linux/trace.h b/include/linux/trace.h
+index fdcd76b7be83d..7eaad857dee04 100644
+--- a/include/linux/trace.h
++++ b/include/linux/trace.h
+@@ -72,8 +72,8 @@ static inline int unregister_ftrace_export(struct trace_export *export)
+ static inline void trace_printk_init_buffers(void)
+ {
  }
- EXPORT_SYMBOL_GPL(pci_max_pasids);
-+
-+/**
-+ * pci_pasid_status - Check the PASID status
-+ * @pdev: PCI device structure
-+ *
-+ * Returns a negative value when no PASID capability is present.
-+ * Otherwise the value of the control register is returned.
-+ * Status reported are:
-+ *
-+ * PCI_PASID_CTRL_ENABLE - PASID enabled
-+ * PCI_PASID_CTRL_EXEC - Execute permission enabled
-+ * PCI_PASID_CTRL_PRIV - Privileged mode enabled
-+ */
-+int pci_pasid_status(struct pci_dev *pdev)
-+{
-+	int pasid;
-+	u16 ctrl;
-+
-+	if (pdev->is_virtfn)
-+		pdev = pci_physfn(pdev);
-+
-+	pasid = pdev->pasid_cap;
-+	if (!pasid)
-+		return -EINVAL;
-+
-+	pci_read_config_word(pdev, pasid + PCI_PASID_CTRL, &ctrl);
-+
-+	ctrl &= PCI_PASID_CTRL_ENABLE | PCI_PASID_CTRL_EXEC |
-+		PCI_PASID_CTRL_PRIV;
-+
-+	return ctrl;
-+}
-+EXPORT_SYMBOL_GPL(pci_pasid_status);
- #endif /* CONFIG_PCI_PASID */
-diff --git a/include/linux/pci-ats.h b/include/linux/pci-ats.h
-index 0e8b74e63767a..75c6c86cf09dc 100644
---- a/include/linux/pci-ats.h
-+++ b/include/linux/pci-ats.h
-@@ -42,6 +42,7 @@ int pci_enable_pasid(struct pci_dev *pdev, int features);
- void pci_disable_pasid(struct pci_dev *pdev);
- int pci_pasid_features(struct pci_dev *pdev);
- int pci_max_pasids(struct pci_dev *pdev);
-+int pci_pasid_status(struct pci_dev *pdev);
- #else /* CONFIG_PCI_PASID */
- static inline int pci_enable_pasid(struct pci_dev *pdev, int features)
- { return -EINVAL; }
-@@ -50,6 +51,8 @@ static inline int pci_pasid_features(struct pci_dev *pdev)
- { return -EINVAL; }
- static inline int pci_max_pasids(struct pci_dev *pdev)
- { return -EINVAL; }
-+static inline int pci_pasid_status(struct pci_dev *pdev)
-+{ return -EINVAL; }
- #endif /* CONFIG_PCI_PASID */
+-static inline int trace_array_printk(struct trace_array *tr, unsigned long ip,
+-				     const char *fmt, ...)
++static inline __printf(3, 4)
++int trace_array_printk(struct trace_array *tr, unsigned long ip, const char *fmt, ...)
+ {
+ 	return 0;
+ }
+diff --git a/include/linux/trace_seq.h b/include/linux/trace_seq.h
+index 1ef95c0287f05..a93ed5ac32265 100644
+--- a/include/linux/trace_seq.h
++++ b/include/linux/trace_seq.h
+@@ -88,8 +88,8 @@ extern __printf(2, 3)
+ void trace_seq_printf(struct trace_seq *s, const char *fmt, ...);
+ extern __printf(2, 0)
+ void trace_seq_vprintf(struct trace_seq *s, const char *fmt, va_list args);
+-extern void
+-trace_seq_bprintf(struct trace_seq *s, const char *fmt, const u32 *binary);
++extern __printf(2, 0)
++void trace_seq_bprintf(struct trace_seq *s, const char *fmt, const u32 *binary);
+ extern int trace_print_seq(struct seq_file *m, struct trace_seq *s);
+ extern int trace_seq_to_user(struct trace_seq *s, char __user *ubuf,
+ 			     int cnt);
+@@ -113,8 +113,8 @@ static inline __printf(2, 3)
+ void trace_seq_printf(struct trace_seq *s, const char *fmt, ...)
+ {
+ }
+-static inline void
+-trace_seq_bprintf(struct trace_seq *s, const char *fmt, const u32 *binary)
++static inline __printf(2, 0)
++void trace_seq_bprintf(struct trace_seq *s, const char *fmt, const u32 *binary)
+ {
+ }
  
- #endif /* LINUX_PCI_ATS_H */
-diff --git a/include/uapi/linux/iommufd.h b/include/uapi/linux/iommufd.h
-index 8c4470742dcd9..41048271a0667 100644
---- a/include/uapi/linux/iommufd.h
-+++ b/include/uapi/linux/iommufd.h
-@@ -504,9 +504,17 @@ enum iommu_hw_info_type {
-  *                                   IOMMU_HWPT_GET_DIRTY_BITMAP
-  *                                   IOMMU_HWPT_SET_DIRTY_TRACKING
-  *
-+ * @IOMMU_HW_CAP_PCI_PASID_EXEC: Execute Permission Supported, user ignores it
-+ *                               when the struct
-+ *                               iommu_hw_info::out_max_pasid_log2 is zero.
-+ * @IOMMU_HW_CAP_PCI_PASID_PRIV: Privileged Mode Supported, user ignores it
-+ *                               when the struct
-+ *                               iommu_hw_info::out_max_pasid_log2 is zero.
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 06104c2c66ab2..e773b0adcfc0a 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -3343,10 +3343,9 @@ int trace_vbprintk(unsigned long ip, const char *fmt, va_list args)
+ }
+ EXPORT_SYMBOL_GPL(trace_vbprintk);
+ 
+-__printf(3, 0)
+-static int
+-__trace_array_vprintk(struct trace_buffer *buffer,
+-		      unsigned long ip, const char *fmt, va_list args)
++static __printf(3, 0)
++int __trace_array_vprintk(struct trace_buffer *buffer,
++			  unsigned long ip, const char *fmt, va_list args)
+ {
+ 	struct trace_event_call *call = &event_print;
+ 	struct ring_buffer_event *event;
+@@ -3399,7 +3398,6 @@ __trace_array_vprintk(struct trace_buffer *buffer,
+ 	return len;
+ }
+ 
+-__printf(3, 0)
+ int trace_array_vprintk(struct trace_array *tr,
+ 			unsigned long ip, const char *fmt, va_list args)
+ {
+@@ -3429,7 +3427,6 @@ int trace_array_vprintk(struct trace_array *tr,
+  * Note, trace_array_init_printk() must be called on @tr before this
+  * can be used.
   */
- enum iommufd_hw_capabilities {
- 	IOMMU_HW_CAP_DIRTY_TRACKING = 1 << 0,
-+	IOMMU_HW_CAP_PCI_PASID_EXEC = 1 << 1,
-+	IOMMU_HW_CAP_PCI_PASID_PRIV = 1 << 2,
- };
+-__printf(3, 0)
+ int trace_array_printk(struct trace_array *tr,
+ 		       unsigned long ip, const char *fmt, ...)
+ {
+@@ -3474,7 +3471,6 @@ int trace_array_init_printk(struct trace_array *tr)
+ }
+ EXPORT_SYMBOL_GPL(trace_array_init_printk);
  
- /**
-@@ -522,6 +530,9 @@ enum iommufd_hw_capabilities {
-  *                 iommu_hw_info_type.
-  * @out_capabilities: Output the generic iommu capability info type as defined
-  *                    in the enum iommu_hw_capabilities.
-+ * @out_max_pasid_log2: Output the width of PASIDs. 0 means no PASID support.
-+ *                      PCI devices turn to out_capabilities to check if the
-+ *                      specific capabilities is supported or not.
-  * @__reserved: Must be 0
-  *
-  * Query an iommu type specific hardware information data from an iommu behind
-@@ -545,7 +556,8 @@ struct iommu_hw_info {
- 	__u32 data_len;
- 	__aligned_u64 data_uptr;
- 	__u32 out_data_type;
--	__u32 __reserved;
-+	__u8 out_max_pasid_log2;
-+	__u8 __reserved[3];
- 	__aligned_u64 out_capabilities;
- };
- #define IOMMU_GET_HW_INFO _IO(IOMMUFD_TYPE, IOMMUFD_CMD_GET_HW_INFO)
+-__printf(3, 4)
+ int trace_array_printk_buf(struct trace_buffer *buffer,
+ 			   unsigned long ip, const char *fmt, ...)
+ {
+@@ -3490,7 +3486,6 @@ int trace_array_printk_buf(struct trace_buffer *buffer,
+ 	return ret;
+ }
+ 
+-__printf(2, 0)
+ int trace_vprintk(unsigned long ip, const char *fmt, va_list args)
+ {
+ 	return trace_array_vprintk(printk_trace, ip, fmt, args);
+diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
+index 04ea327198ba8..82da3ac140242 100644
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -818,13 +818,15 @@ static inline void __init disable_tracing_selftest(const char *reason)
+ 
+ extern void *head_page(struct trace_array_cpu *data);
+ extern unsigned long long ns2usecs(u64 nsec);
+-extern int
+-trace_vbprintk(unsigned long ip, const char *fmt, va_list args);
+-extern int
+-trace_vprintk(unsigned long ip, const char *fmt, va_list args);
+-extern int
+-trace_array_vprintk(struct trace_array *tr,
+-		    unsigned long ip, const char *fmt, va_list args);
++
++__printf(2, 0)
++int trace_vbprintk(unsigned long ip, const char *fmt, va_list args);
++__printf(2, 0)
++int trace_vprintk(unsigned long ip, const char *fmt, va_list args);
++__printf(3, 0)
++int trace_array_vprintk(struct trace_array *tr,
++			unsigned long ip, const char *fmt, va_list args);
++__printf(3, 4)
+ int trace_array_printk_buf(struct trace_buffer *buffer,
+ 			   unsigned long ip, const char *fmt, ...);
+ void trace_printk_seq(struct trace_seq *s);
 -- 
 2.39.5
 
