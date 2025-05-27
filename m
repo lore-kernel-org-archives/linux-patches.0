@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC3813790B;
-	Tue, 27 May 2025 17:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35087278750;
+	Tue, 27 May 2025 17:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366120; cv=none; b=UgTeopcX8oSKUZ13/9ePo2bW+m9l/YiynD2fPnLGAA5A4yu7xVAvzDAc9QpKAUL2MZDAOiXE/jkqe9OcpoZShalvidXLHIocMxE46xHTtz89xGD6unSHMAi0qj04Us1tSwOtPhH07YQP/vZGINKkgK7ZITJwvFgncoaCvHveu7w=
+	t=1748366123; cv=none; b=sX5oH22nfQt5WQ+A6LaJc3rmnT3ZJHFhaTRJlXw52XU5JS/OUtmSk2CeJlvwcHBza7exbE5Wr4/8nmw0zFoEXm8kc0VNcFQOAj4owv8XWpa1aedRtKLDI/56wgHCIr3vGyVrXu3E/lH0NHpbimDtrPMDq5zvDO1s9msmU/kJ3Xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366120; c=relaxed/simple;
-	bh=2WCJlNYS/fWyW/RMHce7bsQR+T2L3lFv/454Yb0WIEM=;
+	s=arc-20240116; t=1748366123; c=relaxed/simple;
+	bh=shdANuQ+CYHtc7J7ZOirtNf5TccnTqrvAlPKw5dZ5Pg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=grb9mGi98GB99XnHt6aKH/K10dfWjKCGDP0hft5mWzsX5mO1GQSzlrzWWw2s2NVnNv1ewTu0zlwJjwPfO4EkjOboZPlV54LMbGjZ+wibL9BXJDwB967wPmwtadDJ1HO4OeMBvO9E/cCvFBY3daNHLCcdt64L/3LRH4OwrJWjqcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AAtK1yud; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YPOj03KqCnXzjoBk/Qr86Zk/wEstmONkjW1u1CRWxHJT6L+2KCXukGXsaFFIdOGQtoRXl5pPyxTO1frlTqiPdm8M8a6X/kw30fHU5XRc/O+vMu2AlQvMAeWxMQyngUWRBhmyiA1y/uvXIiN/xAPuMA+wEUeSoNStwb+VaX12OZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=os0iDuD7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AAtK1yud"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B201DC4CEE9;
-	Tue, 27 May 2025 17:15:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="os0iDuD7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923BAC4CEF1;
+	Tue, 27 May 2025 17:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366120;
-	bh=2WCJlNYS/fWyW/RMHce7bsQR+T2L3lFv/454Yb0WIEM=;
+	s=korg; t=1748366123;
+	bh=shdANuQ+CYHtc7J7ZOirtNf5TccnTqrvAlPKw5dZ5Pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AAtK1yudKPB6Di9VjNnRIgAFo3aJU5Egerz/NprJLgeJOQzYE2WXRXf7lSdNIMLTP
-	 6JJq4+SUhAZYWfzFnbln8UO9AGw5LCi2DPwQmpj3kev5USnpZIqpy7PtzBO0lebz4T
-	 L6dcOfj90A4iTaF4s2VJfWHFE8E+0N6HEYpBicDw=
+	b=os0iDuD7T19yFXYJWrUwOoOzjV5NHiN1eVIfnuCb7egloYEVGtCWgr6XPTSg70yTE
+	 SS2I+OB3LBw8n8dO+8RL9YtJ2LugPfAry5u+uU2ux29boBobFgh72ukAnOyfppppu1
+	 lU06m+IupNEArlpKTP/cztN+uzSeNZkPXFudaOLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Hugh Dickins <hughd@google.com>,
+	Breno Leitao <leitao@debian.org>,
+	Rik van Riel <riel@surriel.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Michael van der Westhuizen <rmikey@meta.com>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Chen Ridong <chenridong@huawei.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 597/626] highmem: add folio_test_partial_kmap()
-Date: Tue, 27 May 2025 18:28:10 +0200
-Message-ID: <20250527162509.252121962@linuxfoundation.org>
+Subject: [PATCH 6.12 598/626] memcg: always call cond_resched() after fn()
+Date: Tue, 27 May 2025 18:28:11 +0200
+Message-ID: <20250527162509.293144140@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,93 +61,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Breno Leitao <leitao@debian.org>
 
-commit 97dfbbd135cb5e4426f37ca53a8fa87eaaa4e376 upstream.
+commit 06717a7b6c86514dbd6ab322e8083ffaa4db5712 upstream.
 
-In commit c749d9b7ebbc ("iov_iter: fix copy_page_from_iter_atomic() if
-KMAP_LOCAL_FORCE_MAP"), Hugh correctly noted that if KMAP_LOCAL_FORCE_MAP
-is enabled, we must limit ourselves to PAGE_SIZE bytes per call to
-kmap_local().  The same problem exists in memcpy_from_folio(),
-memcpy_to_folio(), folio_zero_tail(), folio_fill_tail() and
-memcpy_from_file_folio(), so add folio_test_partial_kmap() to do this more
-succinctly.
+I am seeing soft lockup on certain machine types when a cgroup OOMs.  This
+is happening because killing the process in certain machine might be very
+slow, which causes the soft lockup and RCU stalls.  This happens usually
+when the cgroup has MANY processes and memory.oom.group is set.
 
-Link: https://lkml.kernel.org/r/20250514170607.3000994-2-willy@infradead.org
-Fixes: 00cdf76012ab ("mm: add memcpy_from_file_folio()")
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Hugh Dickins <hughd@google.com>
+Example I am seeing in real production:
+
+       [462012.244552] Memory cgroup out of memory: Killed process 3370438 (crosvm) ....
+       ....
+       [462037.318059] Memory cgroup out of memory: Killed process 4171372 (adb) ....
+       [462037.348314] watchdog: BUG: soft lockup - CPU#64 stuck for 26s! [stat_manager-ag:1618982]
+       ....
+
+Quick look at why this is so slow, it seems to be related to serial flush
+for certain machine types.  For all the crashes I saw, the target CPU was
+at console_flush_all().
+
+In the case above, there are thousands of processes in the cgroup, and it
+is soft locking up before it reaches the 1024 limit in the code (which
+would call the cond_resched()).  So, cond_resched() in 1024 blocks is not
+sufficient.
+
+Remove the counter-based conditional rescheduling logic and call
+cond_resched() unconditionally after each task iteration, after fn() is
+called.  This avoids the lockup independently of how slow fn() is.
+
+Link: https://lkml.kernel.org/r/20250523-memcg_fix-v1-1-ad3eafb60477@debian.org
+Fixes: ade81479c7dd ("memcg: fix soft lockup in the OOM process")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Suggested-by: Rik van Riel <riel@surriel.com>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Michael van der Westhuizen <rmikey@meta.com>
+Cc: Usama Arif <usamaarif642@gmail.com>
+Cc: Pavel Begunkov <asml.silence@gmail.com>
+Cc: Chen Ridong <chenridong@huawei.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/highmem.h    |   10 +++++-----
- include/linux/page-flags.h |    7 +++++++
- 2 files changed, 12 insertions(+), 5 deletions(-)
+ mm/memcontrol.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/include/linux/highmem.h
-+++ b/include/linux/highmem.h
-@@ -461,7 +461,7 @@ static inline void memcpy_from_folio(cha
- 		const char *from = kmap_local_folio(folio, offset);
- 		size_t chunk = len;
- 
--		if (folio_test_highmem(folio) &&
-+		if (folio_test_partial_kmap(folio) &&
- 		    chunk > PAGE_SIZE - offset_in_page(offset))
- 			chunk = PAGE_SIZE - offset_in_page(offset);
- 		memcpy(to, from, chunk);
-@@ -489,7 +489,7 @@ static inline void memcpy_to_folio(struc
- 		char *to = kmap_local_folio(folio, offset);
- 		size_t chunk = len;
- 
--		if (folio_test_highmem(folio) &&
-+		if (folio_test_partial_kmap(folio) &&
- 		    chunk > PAGE_SIZE - offset_in_page(offset))
- 			chunk = PAGE_SIZE - offset_in_page(offset);
- 		memcpy(to, from, chunk);
-@@ -522,7 +522,7 @@ static inline __must_check void *folio_z
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -1139,7 +1139,6 @@ void mem_cgroup_scan_tasks(struct mem_cg
  {
- 	size_t len = folio_size(folio) - offset;
+ 	struct mem_cgroup *iter;
+ 	int ret = 0;
+-	int i = 0;
  
--	if (folio_test_highmem(folio)) {
-+	if (folio_test_partial_kmap(folio)) {
- 		size_t max = PAGE_SIZE - offset_in_page(offset);
+ 	BUG_ON(mem_cgroup_is_root(memcg));
  
- 		while (len > max) {
-@@ -560,7 +560,7 @@ static inline void folio_fill_tail(struc
+@@ -1149,10 +1148,9 @@ void mem_cgroup_scan_tasks(struct mem_cg
  
- 	VM_BUG_ON(offset + len > folio_size(folio));
- 
--	if (folio_test_highmem(folio)) {
-+	if (folio_test_partial_kmap(folio)) {
- 		size_t max = PAGE_SIZE - offset_in_page(offset);
- 
- 		while (len > max) {
-@@ -597,7 +597,7 @@ static inline size_t memcpy_from_file_fo
- 	size_t offset = offset_in_folio(folio, pos);
- 	char *from = kmap_local_folio(folio, offset);
- 
--	if (folio_test_highmem(folio)) {
-+	if (folio_test_partial_kmap(folio)) {
- 		offset = offset_in_page(offset);
- 		len = min_t(size_t, len, PAGE_SIZE - offset);
- 	} else
---- a/include/linux/page-flags.h
-+++ b/include/linux/page-flags.h
-@@ -573,6 +573,13 @@ FOLIO_FLAG(readahead, FOLIO_HEAD_PAGE)
- PAGEFLAG_FALSE(HighMem, highmem)
- #endif
- 
-+/* Does kmap_local_folio() only allow access to one page of the folio? */
-+#ifdef CONFIG_DEBUG_KMAP_LOCAL_FORCE_MAP
-+#define folio_test_partial_kmap(f)	true
-+#else
-+#define folio_test_partial_kmap(f)	folio_test_highmem(f)
-+#endif
-+
- #ifdef CONFIG_SWAP
- static __always_inline bool folio_test_swapcache(const struct folio *folio)
- {
+ 		css_task_iter_start(&iter->css, CSS_TASK_ITER_PROCS, &it);
+ 		while (!ret && (task = css_task_iter_next(&it))) {
+-			/* Avoid potential softlockup warning */
+-			if ((++i & 1023) == 0)
+-				cond_resched();
+ 			ret = fn(task, arg);
++			/* Avoid potential softlockup warning */
++			cond_resched();
+ 		}
+ 		css_task_iter_end(&it);
+ 		if (ret) {
 
 
