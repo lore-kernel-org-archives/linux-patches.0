@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A9A283FE8;
-	Tue, 27 May 2025 17:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8CF280317;
+	Tue, 27 May 2025 17:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368667; cv=none; b=pwTYPuZiVtGYLpsftET6oEkxcPOx0rSD+EAWi+bU1qR0PsPAb3PL4/e1BUhr+PNxMDTP2qjUgIPFWH95OA5dQFVfhJIOfH8vKCJVTltXqWzJDdV9R5UfJowGh4nNMBrqlZ0rf3fzVVA0etzWu6Tt95j8oRZaiGOLa41BAJG4fp8=
+	t=1748368671; cv=none; b=rU0csU1FvGuUGxzwJu4KT6J0FVUx8R8F4Wo+q/ySG69SxPu/j8hqWQGFSGOr8m9ozmkPnhQFtimtkrjSG4sQe8xCVgZLg1btypDKAYqmdO6SeWI7nGyzlI8j3xLxNGSUBeL9/HYAIxqD+lYgQtz4B2otKLmRWGkIEvC0VCXDucQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368667; c=relaxed/simple;
-	bh=+uRXz2qKyt5QSrFD2lTfhkdflisW2w3w1AuFJ2q7mOY=;
+	s=arc-20240116; t=1748368671; c=relaxed/simple;
+	bh=3KSlfLSFx4D2BkfcIACcZZnIhco/kSqquFEtbSMjVlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QRsm6zM8VFnEhAuj0HfLjMAKv9oaIh99/lD6igjgN8Qi6eiJJ4eLoxPKYP5y7g6Bzad+4rS+tvSwD120QT15KKvoRQjHwvD/BKuFC+NW5g828wOVlvqz8MmZz3jKVm4ZmIU72FhVPJsOId+/AfkwFYaT/K35d1ZKPlpmxWF8pkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1MpJCVA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SN7BVier2+qxNZRJmpc9QNrlxG/GQipl24KZ2Stw0AO+b5xHVjrxQofYIrKQPD3rA8wbmpwlcoGbYL7QVk3RFx0THhha8ivbQNtsQsDD7ZmA3kGknOQ+7mis5UzDVJ4ihZz5O2aOktbKVQivLjMdArjJM55ZE+nE6vtSibpNDNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uea/Autk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1MpJCVA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB02AC4CEED;
-	Tue, 27 May 2025 17:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uea/Autk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7A4C4CEE9;
+	Tue, 27 May 2025 17:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368667;
-	bh=+uRXz2qKyt5QSrFD2lTfhkdflisW2w3w1AuFJ2q7mOY=;
+	s=korg; t=1748368671;
+	bh=3KSlfLSFx4D2BkfcIACcZZnIhco/kSqquFEtbSMjVlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r1MpJCVAEYxJAHylC4DE29aidmxEZJy8GOO76X8MIXfxMHCYdqkpGusQFNKGquv0f
-	 YPUSdbaaBC9aOJ//mRwUj3xd9T/j1KXH9IN5Akk+7Vaka1QuHm2sUvveReoWxQv8N6
-	 SRU6UIf44VQDqccIBLv7y7EWQLB9DhIF054e2cdM=
+	b=Uea/Autkg5I6gBorYqHXxcWj9MGj+fQUZaahJA/gj3n82UuDq2scmB20LT3e/YGAA
+	 cJFDGBb10FH71W5g3zPr7Bbou4doiQFn4EdZpFKetmjRgPWl7xOHZMcKUZZ9dr/333
+	 iJdAHhQ3XzWNoxbJE7A/KbsmnnQkYN9zlWkJuvWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bogdan-Gabriel Roman <bogdan-gabriel.roman@nxp.com>,
-	Larisa Grigore <larisa.grigore@nxp.com>,
-	James Clark <james.clark@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 773/783] spi: spi-fsl-dspi: Halt the module after a new message transfer
-Date: Tue, 27 May 2025 18:29:30 +0200
-Message-ID: <20250527162544.611321772@linuxfoundation.org>
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>
+Subject: [PATCH 6.14 782/783] Fix mis-uses of cc-option for warning disablement
+Date: Tue, 27 May 2025 18:29:39 +0200
+Message-ID: <20250527162544.973758375@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -47,114 +46,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bogdan-Gabriel Roman <bogdan-gabriel.roman@nxp.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 8a30a6d35a11ff5ccdede7d6740765685385a917 ]
+commit a79be02bba5c31f967885c7f3bf3a756d77d11d9 upstream.
 
-The XSPI mode implementation in this driver still uses the EOQ flag to
-signal the last word in a transmission and deassert the PCS signal.
-However, at speeds lower than ~200kHZ, the PCS signal seems to remain
-asserted even when SR[EOQF] = 1 indicates the end of a transmission.
-This is a problem for target devices which require the deassertation of
-the PCS signal between transfers.
+This was triggered by one of my mis-uses causing odd build warnings on
+sparc in linux-next, but while figuring out why the "obviously correct"
+use of cc-option caused such odd breakage, I found eight other cases of
+the same thing in the tree.
 
-Hence, this commit 'forces' the deassertation of the PCS by stopping the
-module through MCR[HALT] after completing a new transfer. According to
-the reference manual, the module stops or transitions from the Running
-state to the Stopped state after the current frame, when any one of the
-following conditions exist:
-- The value of SR[EOQF] = 1.
-- The chip is in Debug mode and the value of MCR[FRZ] = 1.
-- The value of MCR[HALT] = 1.
+The root cause is that 'cc-option' doesn't work for checking negative
+warning options (ie things like '-Wno-stringop-overflow') because gcc
+will silently accept options it doesn't recognize, and so 'cc-option'
+ends up thinking they are perfectly fine.
 
-This shouldn't be done if the last transfer in the message has cs_change
-set.
+And it all works, until you have a situation where _another_ warning is
+emitted.  At that point the compiler will go "Hmm, maybe the user
+intended to disable this warning but used that wrong option that I
+didn't recognize", and generate a warning for the unrecognized negative
+option.
 
-Fixes: ea93ed4c181b ("spi: spi-fsl-dspi: Use EOQ for last word in buffer even for XSPI mode")
-Signed-off-by: Bogdan-Gabriel Roman <bogdan-gabriel.roman@nxp.com>
-Signed-off-by: Larisa Grigore <larisa.grigore@nxp.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Link: https://patch.msgid.link/20250522-james-nxp-spi-v2-2-bea884630cfb@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Which explains why we have several cases of this in the tree: the
+'cc-option' test really doesn't work for this situation, but most of the
+time it simply doesn't matter that ity doesn't work.
+
+The reason my recently added case caused problems on sparc was pointed
+out by Thomas Weißschuh: the sparc build had a previous explicit warning
+that then triggered the new one.
+
+I think the best fix for this would be to make 'cc-option' a bit smarter
+about this sitation, possibly by adding an intentional warning to the
+test case that then triggers the unrecognized option warning reliably.
+
+But the short-term fix is to replace 'cc-option' with an existing helper
+designed for this exact case: 'cc-disable-warning', which picks the
+negative warning but uses the positive form for testing the compiler
+support.
+
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Link: https://lore.kernel.org/all/20250422204718.0b4e3f81@canb.auug.org.au/
+Explained-by: Thomas Weißschuh <linux@weissschuh.net>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-dspi.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ Makefile                       |    4 ++--
+ arch/loongarch/kernel/Makefile |    8 ++++----
+ arch/loongarch/kvm/Makefile    |    2 +-
+ arch/riscv/kernel/Makefile     |    4 ++--
+ scripts/Makefile.extrawarn     |    2 +-
+ 5 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
-index effb460d436da..1fa96e8189cfa 100644
---- a/drivers/spi/spi-fsl-dspi.c
-+++ b/drivers/spi/spi-fsl-dspi.c
-@@ -62,6 +62,7 @@
- #define SPI_SR_TFIWF			BIT(18)
- #define SPI_SR_RFDF			BIT(17)
- #define SPI_SR_CMDFFF			BIT(16)
-+#define SPI_SR_TXRXS			BIT(30)
- #define SPI_SR_CLEAR			(SPI_SR_TCFQF | \
- 					SPI_SR_TFUF | SPI_SR_TFFF | \
- 					SPI_SR_CMDTCF | SPI_SR_SPEF | \
-@@ -921,9 +922,20 @@ static int dspi_transfer_one_message(struct spi_controller *ctlr,
- 	struct spi_transfer *transfer;
- 	bool cs = false;
- 	int status = 0;
-+	u32 val = 0;
-+	bool cs_change = false;
+--- a/Makefile
++++ b/Makefile
+@@ -1050,11 +1050,11 @@ NOSTDINC_FLAGS += -nostdinc
+ KBUILD_CFLAGS += $(call cc-option, -fstrict-flex-arrays=3)
  
- 	message->actual_length = 0;
+ #Currently, disable -Wstringop-overflow for GCC 11, globally.
+-KBUILD_CFLAGS-$(CONFIG_CC_NO_STRINGOP_OVERFLOW) += $(call cc-option, -Wno-stringop-overflow)
++KBUILD_CFLAGS-$(CONFIG_CC_NO_STRINGOP_OVERFLOW) += $(call cc-disable-warning, stringop-overflow)
+ KBUILD_CFLAGS-$(CONFIG_CC_STRINGOP_OVERFLOW) += $(call cc-option, -Wstringop-overflow)
  
-+	/* Put DSPI in running mode if halted. */
-+	regmap_read(dspi->regmap, SPI_MCR, &val);
-+	if (val & SPI_MCR_HALT) {
-+		regmap_update_bits(dspi->regmap, SPI_MCR, SPI_MCR_HALT, 0);
-+		while (regmap_read(dspi->regmap, SPI_SR, &val) >= 0 &&
-+		       !(val & SPI_SR_TXRXS))
-+			;
-+	}
-+
- 	list_for_each_entry(transfer, &message->transfers, transfer_list) {
- 		dspi->cur_transfer = transfer;
- 		dspi->cur_msg = message;
-@@ -953,6 +965,7 @@ static int dspi_transfer_one_message(struct spi_controller *ctlr,
- 				dspi->tx_cmd |= SPI_PUSHR_CMD_CONT;
- 		}
+ #Currently, disable -Wunterminated-string-initialization as broken
+-KBUILD_CFLAGS += $(call cc-option, -Wno-unterminated-string-initialization)
++KBUILD_CFLAGS += $(call cc-disable-warning, unterminated-string-initialization)
  
-+		cs_change = transfer->cs_change;
- 		dspi->tx = transfer->tx_buf;
- 		dspi->rx = transfer->rx_buf;
- 		dspi->len = transfer->len;
-@@ -988,6 +1001,15 @@ static int dspi_transfer_one_message(struct spi_controller *ctlr,
- 			dspi_deassert_cs(spi, &cs);
- 	}
+ # disable invalid "can't wrap" optimizations for signed / pointers
+ KBUILD_CFLAGS	+= -fno-strict-overflow
+--- a/arch/loongarch/kernel/Makefile
++++ b/arch/loongarch/kernel/Makefile
+@@ -21,10 +21,10 @@ obj-$(CONFIG_CPU_HAS_LBT)	+= lbt.o
  
-+	if (status || !cs_change) {
-+		/* Put DSPI in stop mode */
-+		regmap_update_bits(dspi->regmap, SPI_MCR,
-+				   SPI_MCR_HALT, SPI_MCR_HALT);
-+		while (regmap_read(dspi->regmap, SPI_SR, &val) >= 0 &&
-+		       val & SPI_SR_TXRXS)
-+			;
-+	}
-+
- 	message->status = status;
- 	spi_finalize_current_message(ctlr);
+ obj-$(CONFIG_ARCH_STRICT_ALIGN)	+= unaligned.o
  
-@@ -1245,6 +1267,8 @@ static int dspi_init(struct fsl_dspi *dspi)
- 	if (!spi_controller_is_target(dspi->ctlr))
- 		mcr |= SPI_MCR_HOST;
+-CFLAGS_module.o		+= $(call cc-option,-Wno-override-init,)
+-CFLAGS_syscall.o	+= $(call cc-option,-Wno-override-init,)
+-CFLAGS_traps.o		+= $(call cc-option,-Wno-override-init,)
+-CFLAGS_perf_event.o	+= $(call cc-option,-Wno-override-init,)
++CFLAGS_module.o		+= $(call cc-disable-warning, override-init)
++CFLAGS_syscall.o	+= $(call cc-disable-warning, override-init)
++CFLAGS_traps.o		+= $(call cc-disable-warning, override-init)
++CFLAGS_perf_event.o	+= $(call cc-disable-warning, override-init)
  
-+	mcr |= SPI_MCR_HALT;
-+
- 	regmap_write(dspi->regmap, SPI_MCR, mcr);
- 	regmap_write(dspi->regmap, SPI_SR, SPI_SR_CLEAR);
+ ifdef CONFIG_FUNCTION_TRACER
+   ifndef CONFIG_DYNAMIC_FTRACE
+--- a/arch/loongarch/kvm/Makefile
++++ b/arch/loongarch/kvm/Makefile
+@@ -23,4 +23,4 @@ kvm-y += intc/eiointc.o
+ kvm-y += intc/pch_pic.o
+ kvm-y += irqfd.o
  
--- 
-2.39.5
-
+-CFLAGS_exit.o	+= $(call cc-option,-Wno-override-init,)
++CFLAGS_exit.o	+= $(call cc-disable-warning, override-init)
+--- a/arch/riscv/kernel/Makefile
++++ b/arch/riscv/kernel/Makefile
+@@ -9,8 +9,8 @@ CFLAGS_REMOVE_patch.o	= $(CC_FLAGS_FTRAC
+ CFLAGS_REMOVE_sbi.o	= $(CC_FLAGS_FTRACE)
+ CFLAGS_REMOVE_return_address.o	= $(CC_FLAGS_FTRACE)
+ endif
+-CFLAGS_syscall_table.o	+= $(call cc-option,-Wno-override-init,)
+-CFLAGS_compat_syscall_table.o += $(call cc-option,-Wno-override-init,)
++CFLAGS_syscall_table.o	+= $(call cc-disable-warning, override-init)
++CFLAGS_compat_syscall_table.o += $(call cc-disable-warning, override-init)
+ 
+ ifdef CONFIG_KEXEC_CORE
+ AFLAGS_kexec_relocate.o := -mcmodel=medany $(call cc-option,-mno-relax)
+--- a/scripts/Makefile.extrawarn
++++ b/scripts/Makefile.extrawarn
+@@ -15,7 +15,7 @@ KBUILD_CFLAGS += -Werror=return-type
+ KBUILD_CFLAGS += -Werror=strict-prototypes
+ KBUILD_CFLAGS += -Wno-format-security
+ KBUILD_CFLAGS += -Wno-trigraphs
+-KBUILD_CFLAGS += $(call cc-disable-warning,frame-address,)
++KBUILD_CFLAGS += $(call cc-disable-warning, frame-address)
+ KBUILD_CFLAGS += $(call cc-disable-warning, address-of-packed-member)
+ KBUILD_CFLAGS += -Wmissing-declarations
+ KBUILD_CFLAGS += -Wmissing-prototypes
 
 
