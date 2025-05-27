@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9167F26F449;
-	Tue, 27 May 2025 17:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896F62798F8;
+	Tue, 27 May 2025 17:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366386; cv=none; b=d0kAu34nyNHvEdsCVGMe0nGYGJyu5WcB2kE75Y5r8a16nC493RjMmXg9LCINMQnmkgqjpl9lxJj2IDRtSaXs1lggwkQs9zHgRqPc7Cbvrb9Xsdqt4/JcEhiJMxPTgh8KM0Nsw7/KAmK1Ivere6qnePhZjgzs6+TlVOy+H1B+hq8=
+	t=1748366388; cv=none; b=kwkmeDNsTLUWwRpf2yrVAuf5gFq28LvlpJitK07Xa+fZQXq9Ry49VrNBKh1i3hEyaLjSJkJT6HAnAYyz4trYTp2NpeihX0ncdXe+hZK4C5e9AkoUriKS22EryskIlaZJTBZThfdvmWEEqvLuwV7fHxtYquFIzleD27cllslMBvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366386; c=relaxed/simple;
-	bh=cCgzwQEPeymK8k+ISaXd//gVlxWFQvZj5nV4NvMVYbc=;
+	s=arc-20240116; t=1748366388; c=relaxed/simple;
+	bh=2VMkp+DxJ4WXGjLam/97tObGCZEEIvUDtL1ash5ijaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H/8VW9T/DqgS+uTP/kKTlrzVL2/dYUjY2sxR/epGC0ZTPTuSK7Hn2e9SY58t5yqbyg/arg7azRhTh0k0lK+ygloYaYmKNTEt6W2RaTZW5trpg0XAOCP7kmrBZ/EgJmTbJqT86BuUUH8tIZxnwm+KOZkp0x7epwpbxl96V4ldELM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLZV97aC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ShTDxA9y0bs3XKYoBm93NWqBHjUyER+cOZLS6Fvipg4mKHyeLnPoUx4QW0dfTOJX30zK8lRcs52YwDciCzZ1/Hb0oY6TWP9YYphCalK/hNMPAWQ9BCIchtNxJtqlY9MlhR3xFji1uaeM4AToVOkSAD7kY39pV4BBnDbqmZmgHhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvftm59J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLZV97aC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4652C4CEEB;
-	Tue, 27 May 2025 17:19:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvftm59J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5D52C4CEE9;
+	Tue, 27 May 2025 17:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366385;
-	bh=cCgzwQEPeymK8k+ISaXd//gVlxWFQvZj5nV4NvMVYbc=;
+	s=korg; t=1748366388;
+	bh=2VMkp+DxJ4WXGjLam/97tObGCZEEIvUDtL1ash5ijaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BLZV97aCFz5q4894ELQXLwnJ7/WNpEkOEW/09KMf1dMzC61aWVLxl2lySJz323j/R
-	 bJ7fEO+bEkMrMKNia6eGDRclwLjJeQfabmU64P9PxPkUDoL4VQUlCLXRRxNmY2apbE
-	 ZMVVpJwP2MlUUPaW3WQpiy2OMV67ipluaD+a3Kkc=
+	b=fvftm59Jk3p3+nkEHgxeDMk8Aj8LO+yoKKdtmO9lAN3EUa6uCPiGJLdSn1DLnnF62
+	 AjRiXp45kqP+8SBsUEQsZQzKfFVhfUHJHTbABGqrxqwBJ7U/0zn0z/4vIkODNQyth0
+	 p/Z/sD26NjlTOPVrCe1BpHOLJYB2XMQbvzaWXFRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Alexander Usyskin <alexander.usyskin@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 020/783] intel_th: avoid using deprecated page->mapping, index fields
-Date: Tue, 27 May 2025 18:16:57 +0200
-Message-ID: <20250527162513.906178625@linuxfoundation.org>
+Subject: [PATCH 6.14 021/783] mei: vsc: Use struct vsc_tp_packet as vsc-tp tx_buf and rx_buf type
+Date: Tue, 27 May 2025 18:16:58 +0200
+Message-ID: <20250527162513.954488956@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,143 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 8e553520596bbd5ce832e26e9d721e6a0c797b8b ]
+[ Upstream commit f88c0c72ffb014e5eba676ee337c4eb3b1d6a119 ]
 
-The struct page->mapping, index fields are deprecated and soon to be only
-available as part of a folio.
+vsc_tp.tx_buf and vsc_tp.rx_buf point to a struct vsc_tp_packet, use
+the correct type instead of "void *" and use sizeof(*ptr) when allocating
+memory for these buffers.
 
-It is likely the intel_th code which sets page->mapping, index is was
-implemented out of concern that some aspect of the page fault logic may
-encounter unexpected problems should they not.
-
-However, the appropriate interface for inserting kernel-allocated memory is
-vm_insert_page() in a VM_MIXEDMAP. By using the helper function
-vmf_insert_mixed() we can do this with minimal churn in the existing fault
-handler.
-
-By doing so, we bypass the remainder of the faulting logic. The pages are
-still pinned so there is no possibility of anything unexpected being done
-with the pages once established.
-
-It would also be reasonable to pre-map everything on fault, however to
-minimise churn we retain the fault handler.
-
-We also eliminate all code which clears page->mapping on teardown as this
-has now become unnecessary.
-
-The MSU code relies on faulting to function correctly, so is by definition
-dependent on CONFIG_MMU. We avoid spurious reports about compilation
-failure for unsupported platforms by making this requirement explicit in
-Kconfig as part of this change too.
-
-Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Acked-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Link: https://lore.kernel.org/r/20250331125608.60300-1-lorenzo.stoakes@oracle.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250318141203.94342-3-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/intel_th/Kconfig |  1 +
- drivers/hwtracing/intel_th/msu.c   | 31 +++++++-----------------------
- 2 files changed, 8 insertions(+), 24 deletions(-)
+ drivers/misc/mei/vsc-tp.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hwtracing/intel_th/Kconfig b/drivers/hwtracing/intel_th/Kconfig
-index 4b6359326ede9..4f7d2b6d79e29 100644
---- a/drivers/hwtracing/intel_th/Kconfig
-+++ b/drivers/hwtracing/intel_th/Kconfig
-@@ -60,6 +60,7 @@ config INTEL_TH_STH
+diff --git a/drivers/misc/mei/vsc-tp.c b/drivers/misc/mei/vsc-tp.c
+index fa553d4914b6e..da26a080916c5 100644
+--- a/drivers/misc/mei/vsc-tp.c
++++ b/drivers/misc/mei/vsc-tp.c
+@@ -71,8 +71,8 @@ struct vsc_tp {
+ 	u32 seq;
  
- config INTEL_TH_MSU
- 	tristate "Intel(R) Trace Hub Memory Storage Unit"
-+	depends on MMU
- 	help
- 	  Memory Storage Unit (MSU) trace output device enables
- 	  storing STP traces to system memory. It supports single
-diff --git a/drivers/hwtracing/intel_th/msu.c b/drivers/hwtracing/intel_th/msu.c
-index bf99d79a41920..7163950eb3719 100644
---- a/drivers/hwtracing/intel_th/msu.c
-+++ b/drivers/hwtracing/intel_th/msu.c
-@@ -19,6 +19,7 @@
- #include <linux/io.h>
- #include <linux/workqueue.h>
- #include <linux/dma-mapping.h>
-+#include <linux/pfn_t.h>
+ 	/* command buffer */
+-	void *tx_buf;
+-	void *rx_buf;
++	struct vsc_tp_packet *tx_buf;
++	struct vsc_tp_packet *rx_buf;
  
- #ifdef CONFIG_X86
- #include <asm/set_memory.h>
-@@ -976,7 +977,6 @@ static void msc_buffer_contig_free(struct msc *msc)
- 	for (off = 0; off < msc->nr_pages << PAGE_SHIFT; off += PAGE_SIZE) {
- 		struct page *page = virt_to_page(msc->base + off);
- 
--		page->mapping = NULL;
- 		__free_page(page);
- 	}
- 
-@@ -1158,9 +1158,6 @@ static void __msc_buffer_win_free(struct msc *msc, struct msc_window *win)
- 	int i;
- 
- 	for_each_sg(win->sgt->sgl, sg, win->nr_segs, i) {
--		struct page *page = msc_sg_page(sg);
--
--		page->mapping = NULL;
- 		dma_free_coherent(msc_dev(win->msc)->parent->parent, PAGE_SIZE,
- 				  sg_virt(sg), sg_dma_address(sg));
- 	}
-@@ -1601,22 +1598,10 @@ static void msc_mmap_close(struct vm_area_struct *vma)
+ 	atomic_t assert_cnt;
+ 	wait_queue_head_t xfer_wait;
+@@ -164,7 +164,7 @@ static int vsc_tp_xfer_helper(struct vsc_tp *tp, struct vsc_tp_packet *pkt,
  {
- 	struct msc_iter *iter = vma->vm_file->private_data;
- 	struct msc *msc = iter->msc;
--	unsigned long pg;
+ 	int ret, offset = 0, cpy_len, src_len, dst_len = sizeof(struct vsc_tp_packet_hdr);
+ 	int next_xfer_len = VSC_TP_PACKET_SIZE(pkt) + VSC_TP_XFER_TIMEOUT_BYTES;
+-	u8 *src, *crc_src, *rx_buf = tp->rx_buf;
++	u8 *src, *crc_src, *rx_buf = (u8 *)tp->rx_buf;
+ 	int count_down = VSC_TP_MAX_XFER_COUNT;
+ 	u32 recv_crc = 0, crc = ~0;
+ 	struct vsc_tp_packet_hdr ack;
+@@ -324,7 +324,7 @@ int vsc_tp_rom_xfer(struct vsc_tp *tp, const void *obuf, void *ibuf, size_t len)
+ 	guard(mutex)(&tp->mutex);
  
- 	if (!atomic_dec_and_mutex_lock(&msc->mmap_count, &msc->buf_mutex))
- 		return;
+ 	/* rom xfer is big endian */
+-	cpu_to_be32_array(tp->tx_buf, obuf, words);
++	cpu_to_be32_array((u32 *)tp->tx_buf, obuf, words);
  
--	/* drop page _refcounts */
--	for (pg = 0; pg < msc->nr_pages; pg++) {
--		struct page *page = msc_buffer_get_page(msc, pg);
--
--		if (WARN_ON_ONCE(!page))
--			continue;
--
--		if (page->mapping)
--			page->mapping = NULL;
--	}
--
- 	/* last mapping -- drop user_count */
- 	atomic_dec(&msc->user_count);
- 	mutex_unlock(&msc->buf_mutex);
-@@ -1626,16 +1611,14 @@ static vm_fault_t msc_mmap_fault(struct vm_fault *vmf)
- {
- 	struct msc_iter *iter = vmf->vma->vm_file->private_data;
- 	struct msc *msc = iter->msc;
-+	struct page *page;
+ 	ret = read_poll_timeout(gpiod_get_value_cansleep, ret,
+ 				!ret, VSC_TP_ROM_XFER_POLL_DELAY_US,
+@@ -340,7 +340,7 @@ int vsc_tp_rom_xfer(struct vsc_tp *tp, const void *obuf, void *ibuf, size_t len)
+ 		return ret;
  
--	vmf->page = msc_buffer_get_page(msc, vmf->pgoff);
--	if (!vmf->page)
-+	page = msc_buffer_get_page(msc, vmf->pgoff);
-+	if (!page)
- 		return VM_FAULT_SIGBUS;
+ 	if (ibuf)
+-		be32_to_cpu_array(ibuf, tp->rx_buf, words);
++		be32_to_cpu_array(ibuf, (u32 *)tp->rx_buf, words);
  
--	get_page(vmf->page);
--	vmf->page->mapping = vmf->vma->vm_file->f_mapping;
--	vmf->page->index = vmf->pgoff;
--
--	return 0;
-+	get_page(page);
-+	return vmf_insert_mixed(vmf->vma, vmf->address, page_to_pfn_t(page));
- }
- 
- static const struct vm_operations_struct msc_mmap_ops = {
-@@ -1676,7 +1659,7 @@ static int intel_th_msc_mmap(struct file *file, struct vm_area_struct *vma)
- 		atomic_dec(&msc->user_count);
- 
- 	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
--	vm_flags_set(vma, VM_DONTEXPAND | VM_DONTCOPY);
-+	vm_flags_set(vma, VM_DONTEXPAND | VM_DONTCOPY | VM_MIXEDMAP);
- 	vma->vm_ops = &msc_mmap_ops;
  	return ret;
  }
+@@ -494,11 +494,11 @@ static int vsc_tp_probe(struct spi_device *spi)
+ 	if (!tp)
+ 		return -ENOMEM;
+ 
+-	tp->tx_buf = devm_kzalloc(dev, VSC_TP_MAX_XFER_SIZE, GFP_KERNEL);
++	tp->tx_buf = devm_kzalloc(dev, sizeof(*tp->tx_buf), GFP_KERNEL);
+ 	if (!tp->tx_buf)
+ 		return -ENOMEM;
+ 
+-	tp->rx_buf = devm_kzalloc(dev, VSC_TP_MAX_XFER_SIZE, GFP_KERNEL);
++	tp->rx_buf = devm_kzalloc(dev, sizeof(*tp->rx_buf), GFP_KERNEL);
+ 	if (!tp->rx_buf)
+ 		return -ENOMEM;
+ 
 -- 
 2.39.5
 
