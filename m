@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A604D26FDB7;
-	Tue, 27 May 2025 17:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B111FB3;
+	Tue, 27 May 2025 17:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368043; cv=none; b=nCDzfPmzovYF1xVSYBi0iYbQJ/HZ+sYRv9x6ZHn63GqCxKk+nde5XOgyaZHhRRcz4u7pOdBpIBwxGPY+0woOR+AdEadoLQolt24Xd5oik0XgVZsUQnoy3TL7qbgSvBYyxqEcEiQeicw/G5mvJOqq6NgTmu/QwAqjKJ205UncdIc=
+	t=1748368046; cv=none; b=mjcEMqLbrHazvaNmHTCVMHQZS8YWU4ssJ1sKerwQOvxYGqVYgcTQ3Ej1xjZrutOUOccX5AhT7bW8DQo6ZkWzxVLmYMMLc7endkBQ/J1UokGIUXqTphikCP8AHx+ru+34+/4dvQuyULn/7ZfqBKJ4pqo+mB0pGijDKg+u9Dyft5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368043; c=relaxed/simple;
-	bh=FzQT9ockW0Kg0hDYq4WpmvY0cMHyWhMNBz0FS1XFUQI=;
+	s=arc-20240116; t=1748368046; c=relaxed/simple;
+	bh=D07Mb0/VuBeSBVFeS44qto7e5WdtHkutwiT5Yk5eiYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GjalED9zP38JliyUsGASed3pGjtR+YIhj+eopzwWe2AvOjz+qf7sUPc7vi8dPoDhjL6lbPBE/hB/9qG5WxYfV+SHcgsgqaJtvNYWGw9zJ2FfJAnSGQDtG241RTIXFkFyr0vif5lpO9cIGIrVJsVc+y3DyjuTPp6jLPiXM/Z9lac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImmRlfEn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R9IyyfjBeL2clJGa8Naee6CX22jPy26nLFz2qYfdLJCDuOxkZYchLLZtxJU0RltCQbUcFhOLKcKjMdagpjwmB3ZxKCJM8hLJEerN+pW+ktq6gu8hy+AFfj6bRmtyKKZ4rILg9Js9wRkWPZrA73w9qyD28ybQheowietlwQ8s5ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8+NhKX3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImmRlfEn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 284F8C4CEE9;
-	Tue, 27 May 2025 17:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8+NhKX3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ADF7C4CEE9;
+	Tue, 27 May 2025 17:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368043;
-	bh=FzQT9ockW0Kg0hDYq4WpmvY0cMHyWhMNBz0FS1XFUQI=;
+	s=korg; t=1748368046;
+	bh=D07Mb0/VuBeSBVFeS44qto7e5WdtHkutwiT5Yk5eiYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ImmRlfEnYZTQNcJmj+5FMyX5+qT5ayuP5qaDNc9qJfjvARjr2RTGWfNHbjkUsYj1k
-	 64LGy6YABW2zJdVMM8gDqVuaCuFs7AUQSDI9fSukyx7MPhIBjYSZb9Gd9HaqFwNX/B
-	 PPbOmm/Rj/VIwilkAsYhYSy/EWX02uAwvbE0dPC4=
+	b=z8+NhKX31mLv+r0HYk4b9m86p2X7kqjAky+/C046Xj3+MULed32YiB1PGlxGmwFGW
+	 ApaEbWEK1Z/DvmtdjdcCxHijPqtBgPAmHI/ZpsIyiDpLs2PXVKN2yqkkR0GRQ6NOUH
+	 qSEks4JGPuoO499N/s6TQqXicFXRKH06t9oRZy0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mina Almasry <almasrymina@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 550/783] netdevsim: allow normal queue reset while down
-Date: Tue, 27 May 2025 18:25:47 +0200
-Message-ID: <20250527162535.549400525@linuxfoundation.org>
+Subject: [PATCH 6.14 541/783] wifi: rtw88: Fix download_firmware_validate() for RTL8814AU
+Date: Tue, 27 May 2025 18:25:38 +0200
+Message-ID: <20250527162535.190244166@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,88 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 285b3f78eabd951e59e98f01f86abaaa6c76cd44 ]
+[ Upstream commit 9e8243025cc06abc975c876dffda052073207ab3 ]
 
-Resetting queues while the device is down should be legal.
-Allow it, test it. Ideally we'd test this with a real device
-supporting devmem but I don't have access to such devices.
+After the firmware is uploaded, download_firmware_validate() checks some
+bits in REG_MCUFW_CTRL to see if everything went okay. The
+RTL8814AU power on sequence sets bits 13 and 12 to 2, which this
+function does not expect, so it thinks the firmware upload failed.
 
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/20250206225638.1387810-5-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Make download_firmware_validate() ignore bits 13 and 12.
+
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/049d2887-22fc-47b7-9e59-62627cb525f8@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netdevsim/netdev.c           | 10 ++++------
- tools/testing/selftests/net/nl_netdev.py | 18 +++++++++++++++++-
- 2 files changed, 21 insertions(+), 7 deletions(-)
+ drivers/net/wireless/realtek/rtw88/reg.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/netdevsim/netdev.c b/drivers/net/netdevsim/netdev.c
-index e4c0d77849b82..a41dc79e9c2e0 100644
---- a/drivers/net/netdevsim/netdev.c
-+++ b/drivers/net/netdevsim/netdev.c
-@@ -664,8 +664,11 @@ nsim_queue_mem_alloc(struct net_device *dev, void *per_queue_mem, int idx)
- 	if (ns->rq_reset_mode > 3)
- 		return -EINVAL;
+diff --git a/drivers/net/wireless/realtek/rtw88/reg.h b/drivers/net/wireless/realtek/rtw88/reg.h
+index e438405fba566..209b6fc08a73e 100644
+--- a/drivers/net/wireless/realtek/rtw88/reg.h
++++ b/drivers/net/wireless/realtek/rtw88/reg.h
+@@ -130,6 +130,7 @@
+ #define BIT_SHIFT_ROM_PGE	16
+ #define BIT_FW_INIT_RDY		BIT(15)
+ #define BIT_FW_DW_RDY		BIT(14)
++#define BIT_CPU_CLK_SEL		(BIT(12) | BIT(13))
+ #define BIT_RPWM_TOGGLE		BIT(7)
+ #define BIT_RAM_DL_SEL		BIT(7)	/* legacy only */
+ #define BIT_DMEM_CHKSUM_OK	BIT(6)
+@@ -147,7 +148,7 @@
+ 				 BIT_CHECK_SUM_OK)
+ #define FW_READY_LEGACY		(BIT_MCUFWDL_RDY | BIT_FWDL_CHK_RPT |	       \
+ 				 BIT_WINTINI_RDY | BIT_RAM_DL_SEL)
+-#define FW_READY_MASK		0xffff
++#define FW_READY_MASK		(0xffff & ~BIT_CPU_CLK_SEL)
  
--	if (ns->rq_reset_mode == 1)
-+	if (ns->rq_reset_mode == 1) {
-+		if (!netif_running(ns->netdev))
-+			return -ENETDOWN;
- 		return nsim_create_page_pool(&qmem->pp, &ns->rq[idx]->napi);
-+	}
- 
- 	qmem->rq = nsim_queue_alloc();
- 	if (!qmem->rq)
-@@ -773,11 +776,6 @@ nsim_qreset_write(struct file *file, const char __user *data,
- 		return -EINVAL;
- 
- 	rtnl_lock();
--	if (!netif_running(ns->netdev)) {
--		ret = -ENETDOWN;
--		goto exit_unlock;
--	}
--
- 	if (queue >= ns->netdev->real_num_rx_queues) {
- 		ret = -EINVAL;
- 		goto exit_unlock;
-diff --git a/tools/testing/selftests/net/nl_netdev.py b/tools/testing/selftests/net/nl_netdev.py
-index 93e8cb671c3d9..beaee5e4e2aab 100755
---- a/tools/testing/selftests/net/nl_netdev.py
-+++ b/tools/testing/selftests/net/nl_netdev.py
-@@ -35,6 +35,21 @@ def napi_list_check(nf) -> None:
-                         comment=f"queue count after reset queue {q} mode {i}")
- 
- 
-+def nsim_rxq_reset_down(nf) -> None:
-+    """
-+    Test that the queue API supports resetting a queue
-+    while the interface is down. We should convert this
-+    test to testing real HW once more devices support
-+    queue API.
-+    """
-+    with NetdevSimDev(queue_count=4) as nsimdev:
-+        nsim = nsimdev.nsims[0]
-+
-+        ip(f"link set dev {nsim.ifname} down")
-+        for i in [0, 2, 3]:
-+            nsim.dfs_write("queue_reset", f"1 {i}")
-+
-+
- def page_pool_check(nf) -> None:
-     with NetdevSimDev() as nsimdev:
-         nsim = nsimdev.nsims[0]
-@@ -106,7 +121,8 @@ def page_pool_check(nf) -> None:
- 
- def main() -> None:
-     nf = NetdevFamily()
--    ksft_run([empty_check, lo_check, page_pool_check, napi_list_check],
-+    ksft_run([empty_check, lo_check, page_pool_check, napi_list_check,
-+              nsim_rxq_reset_down],
-              args=(nf, ))
-     ksft_exit()
- 
+ #define REG_MCU_TST_CFG		0x84
+ #define VAL_FW_TRIGGER		0x1
 -- 
 2.39.5
 
