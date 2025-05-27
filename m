@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C984E2CCC0;
-	Tue, 27 May 2025 16:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C4F194A67;
+	Tue, 27 May 2025 16:57:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365024; cv=none; b=sG2hLDeK1hkrzEmKhXPJYlmRVA64DSSksNbZ3EBAK2dmSoOGpbXpwUetDVNLZYf6mkeUbjODIfPj1smhZBkoqyjGc1NGLR5sRnlpmM7A11HlTnJfVe/wjp8lgrV1Gy2D4A68FoCW7SVDliNHf7q/JDBkpMM99tDZ0q2H0ReXKsE=
+	t=1748365028; cv=none; b=ZdMKkwzTrXNY1Lx2EcLqJuxf9wxTL4ajJxLLknH0FFlHIbAiQQTm0gaVKTNDG57ASd1pRWkrcCAOUyKXtJVjC1+2PwHUQBVlKtxvU31oQYr47EbTPOTs1l5eY6wjJ9bc6/MX0wy9A0RjqTx/h4EBNSd3iflifq+Ya1nnI3dG+n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365024; c=relaxed/simple;
-	bh=fCSZgxRJWN+lGmi2n+7yi+7N5izPfmAia9QDvQdKaX0=;
+	s=arc-20240116; t=1748365028; c=relaxed/simple;
+	bh=eJm2LXPggRIGPVxxxJkQnDpYxnrp9bgpbIY5U8td+yU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hMG5GiH7ID9e1Lb2YTXfcISG8kzzQ6+C5Wiylj8LasGUXyNbkrKwJlfp1G87Dqo53ec1tYXDuaVwhj+weag1wH734WC8Wrb6N9EJ8PvkCNihPjPB3y59i6xxoLgiTyCOGmXlX64qgoZJecwIzzyKwkyR3269OD7708mIDrK+iq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1gP/+euZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lg9/zj7mgGtes2rtLVNJHx9RTzENfNJLRzeDg/IcCQCIUEb5+oF5B2d3WieNN43tubD13Ozl3+c3xBLO9avGygO4qLuG4+qEnKz3AGy09yCvwMAn2mVU+iAV+XelEYQ1ylMjNTbSz5RK0n9Ge7657PRsAcBL40wNkCh3MurO+q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtD21yst; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1gP/+euZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38FFDC4CEE9;
-	Tue, 27 May 2025 16:57:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtD21yst"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD39C4CEE9;
+	Tue, 27 May 2025 16:57:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365024;
-	bh=fCSZgxRJWN+lGmi2n+7yi+7N5izPfmAia9QDvQdKaX0=;
+	s=korg; t=1748365028;
+	bh=eJm2LXPggRIGPVxxxJkQnDpYxnrp9bgpbIY5U8td+yU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1gP/+euZDO1Scw2upbYbngrDp3wqtPNFotFY3CUShhtPi9YD/aQSSyjyt7+7HmL0H
-	 V+/Zun0HP+MsTvjuwssHhHhNRCzOLaYnEEr5qmfxgGw1LyVryXUN+bJhoP6yxWoDHU
-	 6QyDhHN4t0jTXN5cEy4Cpy825PmV6JsSZ/r0ZDsc=
+	b=RtD21ystyzT0kHsHU/H3kZWu9aqDbAUVieJkxwcWG4VxWFllt4Ab+hJmBeAFupyZc
+	 DBZdA1zP1EoLHBTKu4I+18PFUkOKIHDAB/vJo6y9zcEgG/hBcxb288gD8SnCuvzFX/
+	 IA9kZpKq3s49QnINBdvQwKNOAoDJ9SxtYD4k1Yuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 242/626] net: ethernet: ti: cpsw_new: populate netdev of_node
-Date: Tue, 27 May 2025 18:22:15 +0200
-Message-ID: <20250527162454.846107283@linuxfoundation.org>
+Subject: [PATCH 6.12 214/626] powerpc/prom_init: Fixup missing #size-cells on PowerBook6,7
+Date: Tue, 27 May 2025 18:21:47 +0200
+Message-ID: <20250527162453.714761534@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -53,35 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
 
-[ Upstream commit 7ff1c88fc89688c27f773ba956f65f0c11367269 ]
+[ Upstream commit 7e67ef889c9ab7246547db73d524459f47403a77 ]
 
-So that of_find_net_device_by_node() can find CPSW ports and other DSA
-switches can be stacked downstream. Tested in conjunction with KSZ8873.
+Similar to the PowerMac3,1, the PowerBook6,7 is missing the #size-cells
+property on the i2s node.
 
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://patch.msgid.link/20250303074703.1758297-1-alexander.sverdlin@siemens.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Depends-on: commit 045b14ca5c36 ("of: WARN on deprecated #address-cells/#size-cells handling")
+Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+[maddy: added "commit" work in depends-on to avoid checkpatch error]
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/875xmizl6a.fsf@igel.home
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/cpsw_new.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/kernel/prom_init.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/cpsw_new.c b/drivers/net/ethernet/ti/cpsw_new.c
-index 557cc71b9dd22..0eee1a0527b5c 100644
---- a/drivers/net/ethernet/ti/cpsw_new.c
-+++ b/drivers/net/ethernet/ti/cpsw_new.c
-@@ -1417,6 +1417,7 @@ static int cpsw_create_ports(struct cpsw_common *cpsw)
- 		ndev->netdev_ops = &cpsw_netdev_ops;
- 		ndev->ethtool_ops = &cpsw_ethtool_ops;
- 		SET_NETDEV_DEV(ndev, dev);
-+		ndev->dev.of_node = slave_data->slave_node;
+diff --git a/arch/powerpc/kernel/prom_init.c b/arch/powerpc/kernel/prom_init.c
+index 935568d68196d..b1dc4cb9f78e6 100644
+--- a/arch/powerpc/kernel/prom_init.c
++++ b/arch/powerpc/kernel/prom_init.c
+@@ -2982,11 +2982,11 @@ static void __init fixup_device_tree_pmac(void)
+ 	char type[8];
+ 	phandle node;
  
- 		if (!napi_ndev) {
- 			/* CPSW Host port CPDMA interface is shared between
+-	// Some pmacs are missing #size-cells on escc nodes
++	// Some pmacs are missing #size-cells on escc or i2s nodes
+ 	for (node = 0; prom_next_node(&node); ) {
+ 		type[0] = '\0';
+ 		prom_getprop(node, "device_type", type, sizeof(type));
+-		if (prom_strcmp(type, "escc"))
++		if (prom_strcmp(type, "escc") && prom_strcmp(type, "i2s"))
+ 			continue;
+ 
+ 		if (prom_getproplen(node, "#size-cells") != PROM_ERROR)
 -- 
 2.39.5
 
