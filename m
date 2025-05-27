@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73159367;
-	Tue, 27 May 2025 17:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607DB27B51A;
+	Tue, 27 May 2025 17:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366062; cv=none; b=IZGRgYd0nMR4Qp7tHaMml66z/mEbHvd6GRD/fMsu6b9MC8/1akeoWgcCfx4bMrQV3c9EOrNmHG+yaSxAE8cZAV/hLLZc0UfyQiefo2hqVm1umXbOP5eCuaHduRBAaykfGQmt0zY4xyxprHClKqClQKWPgUd5JKw6svkf6TKblz4=
+	t=1748366065; cv=none; b=AvJbh/E7V6cTu/CeGImRN0+mcHRCgpt9qz+8JOcIaHiGnLLlrwhMHld0IOb2l61QFRnCbgh9CexXFaYyX+l0+qUa9hqrLaJ2iQyLWGZZhGNCW6FGRC1rpWWozffoBYO+3dsMnxVh5iMQ1n4t3WUbKZyoNOlR4M94XW3OETVE7yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366062; c=relaxed/simple;
-	bh=lpD5+ohnLSHVWvhu8g3C/I1utG8hpMM/Wg9GOkBCzB8=;
+	s=arc-20240116; t=1748366065; c=relaxed/simple;
+	bh=t6vGKDCrVWE4zlZ0mEikhCmztRAW+TEFKynXmt17ipM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RB1QK6XCoYhOdR4GQk5uI6/FNH68823kFh8bbQU74I/0TNjYuFNI/wUv29laQwiRpJA6r7DsKCC9Y1lC1L/hGxTvaXTr3IXoFDDnX7PRQ7ICG5UxvmJinWBFcu+JbotIwx0lvKRg3cbpLKfv39DU1hEe7iXuNfKqEAFw1Na/j34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgQcm6Er; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u648JR6lT7CJoW3tiUkF6Yq0S4z3BjohQy1Xq9Djbl6q9STe7nU+4kO00Hco+H71AKnrclNyCdLri6LJiiBZRC2kDZ/15365DX/MxjsApRtkPtllPYLevjgIsuG8XBTItZbjiv1r7YjLvFFv6vses3JlKJ0V6EhiT6LSRsj5P4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mIH7hg4p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgQcm6Er"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D358DC4CEE9;
-	Tue, 27 May 2025 17:14:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mIH7hg4p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C73C4CEEB;
+	Tue, 27 May 2025 17:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366062;
-	bh=lpD5+ohnLSHVWvhu8g3C/I1utG8hpMM/Wg9GOkBCzB8=;
+	s=korg; t=1748366065;
+	bh=t6vGKDCrVWE4zlZ0mEikhCmztRAW+TEFKynXmt17ipM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KgQcm6EruHG/iFIZzJkjEn4VHhSs8Dv9kxa3IXZpPdoQrW2i2Ztul1wMYN+4ljnAL
-	 uhDGYy99BhszMjFJkKsfnLQYbbouU61qIPHAdjMU5wuOnykPg8r0tm9Nh5wbwQe3iH
-	 dDjRCyMbc/MG+0bp/l9YAANnjosQVkdk7ojEVuwQ=
+	b=mIH7hg4pKeWmhthGIka45Q12hhikSY2SW7Sz3UQc8bOVNc0jq7fLjxRMTsMGaP1s3
+	 QDg+U4BlTe7kAyit7bz2QlO+NoZI1fuXOYQ4Oe9s7V+0EmEE5sAhzkwVD6rCZBfQor
+	 5VdLByccVq4WQoXe2ilxcRq6NYcjXVIfhsTZFDys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Tavian Barnes <tavianator@tavianator.com>,
-	Mark Brown <broonie@kernel.org>,
+	Andrew Bresticker <abrestic@rivosinc.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 548/626] ASoC: SOF: Intel: hda: Fix UAF when reloading module
-Date: Tue, 27 May 2025 18:27:21 +0200
-Message-ID: <20250527162507.248834195@linuxfoundation.org>
+Subject: [PATCH 6.12 549/626] irqchip/riscv-imsic: Start local sync timer on correct CPU
+Date: Tue, 27 May 2025 18:27:22 +0200
+Message-ID: <20250527162507.288182803@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,99 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tavian Barnes <tavianator@tavianator.com>
+From: Andrew Bresticker <abrestic@rivosinc.com>
 
-[ Upstream commit 7dd7f39fce0022b386ef1ea5ffef92ecc7dfc6af ]
+[ Upstream commit 08fb624802d8786253994d8ebdbbcdaa186f04f5 ]
 
-hda_generic_machine_select() appends -idisp to the tplg filename by
-allocating a new string with devm_kasprintf(), then stores the string
-right back into the global variable snd_soc_acpi_intel_hda_machines.
-When the module is unloaded, this memory is freed, resulting in a global
-variable pointing to freed memory.  Reloading the module then triggers
-a use-after-free:
+When starting the local sync timer to synchronize the state of a remote
+CPU it should be added on the CPU to be synchronized, not the initiating
+CPU. This results in interrupt delivery being delayed until the timer
+eventually runs (due to another mask/unmask/migrate operation) on the
+target CPU.
 
-BUG: KFENCE: use-after-free read in string+0x48/0xe0
-
-Use-after-free read at 0x00000000967e0109 (in kfence-#99):
- string+0x48/0xe0
- vsnprintf+0x329/0x6e0
- devm_kvasprintf+0x54/0xb0
- devm_kasprintf+0x58/0x80
- hda_machine_select.cold+0x198/0x17a2 [snd_sof_intel_hda_generic]
- sof_probe_work+0x7f/0x600 [snd_sof]
- process_one_work+0x17b/0x330
- worker_thread+0x2ce/0x3f0
- kthread+0xcf/0x100
- ret_from_fork+0x31/0x50
- ret_from_fork_asm+0x1a/0x30
-
-kfence-#99: 0x00000000198a940f-0x00000000ace47d9d, size=64, cache=kmalloc-64
-
-allocated by task 333 on cpu 8 at 17.798069s (130.453553s ago):
- devm_kmalloc+0x52/0x120
- devm_kvasprintf+0x66/0xb0
- devm_kasprintf+0x58/0x80
- hda_machine_select.cold+0x198/0x17a2 [snd_sof_intel_hda_generic]
- sof_probe_work+0x7f/0x600 [snd_sof]
- process_one_work+0x17b/0x330
- worker_thread+0x2ce/0x3f0
- kthread+0xcf/0x100
- ret_from_fork+0x31/0x50
- ret_from_fork_asm+0x1a/0x30
-
-freed by task 1543 on cpu 4 at 141.586686s (6.665010s ago):
- release_nodes+0x43/0xb0
- devres_release_all+0x90/0xf0
- device_unbind_cleanup+0xe/0x70
- device_release_driver_internal+0x1c1/0x200
- driver_detach+0x48/0x90
- bus_remove_driver+0x6d/0xf0
- pci_unregister_driver+0x42/0xb0
- __do_sys_delete_module+0x1d1/0x310
- do_syscall_64+0x82/0x190
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Fix it by copying the match array with devm_kmemdup_array() before we
-modify it.
-
-Fixes: 5458411d7594 ("ASoC: SOF: Intel: hda: refactoring topology name fixup for HDA mach")
-Suggested-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Signed-off-by: Tavian Barnes <tavianator@tavianator.com>
-Link: https://patch.msgid.link/570b15570b274520a0d9052f4e0f064a29c950ef.1747229716.git.tavianator@tavianator.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0f67911e821c ("irqchip/riscv-imsic: Separate next and previous pointers in IMSIC vector")
+Signed-off-by: Andrew Bresticker <abrestic@rivosinc.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/all/20250514171320.3494917-1-abrestic@rivosinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-riscv-imsic-state.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/sof/intel/hda.c b/sound/soc/sof/intel/hda.c
-index c924a998d6f90..9c8f79e55ec5d 100644
---- a/sound/soc/sof/intel/hda.c
-+++ b/sound/soc/sof/intel/hda.c
-@@ -1007,7 +1007,21 @@ static void hda_generic_machine_select(struct snd_sof_dev *sdev,
- 		if (!*mach && codec_num <= 2) {
- 			bool tplg_fixup = false;
+diff --git a/drivers/irqchip/irq-riscv-imsic-state.c b/drivers/irqchip/irq-riscv-imsic-state.c
+index 1aeba76d72795..06ff0e17c0c33 100644
+--- a/drivers/irqchip/irq-riscv-imsic-state.c
++++ b/drivers/irqchip/irq-riscv-imsic-state.c
+@@ -186,17 +186,17 @@ static bool __imsic_local_sync(struct imsic_local_priv *lpriv)
+ }
  
--			hda_mach = snd_soc_acpi_intel_hda_machines;
-+			/*
-+			 * make a local copy of the match array since we might
-+			 * be modifying it
-+			 */
-+			hda_mach = devm_kmemdup_array(sdev->dev,
-+					snd_soc_acpi_intel_hda_machines,
-+					2, /* we have one entry + sentinel in the array */
-+					sizeof(snd_soc_acpi_intel_hda_machines[0]),
-+					GFP_KERNEL);
-+			if (!hda_mach) {
-+				dev_err(bus->dev,
-+					"%s: failed to duplicate the HDA match table\n",
-+					__func__);
-+				return;
-+			}
+ #ifdef CONFIG_SMP
+-static void __imsic_local_timer_start(struct imsic_local_priv *lpriv)
++static void __imsic_local_timer_start(struct imsic_local_priv *lpriv, unsigned int cpu)
+ {
+ 	lockdep_assert_held(&lpriv->lock);
  
- 			dev_info(bus->dev, "using HDA machine driver %s now\n",
- 				 hda_mach->drv_name);
+ 	if (!timer_pending(&lpriv->timer)) {
+ 		lpriv->timer.expires = jiffies + 1;
+-		add_timer_on(&lpriv->timer, smp_processor_id());
++		add_timer_on(&lpriv->timer, cpu);
+ 	}
+ }
+ #else
+-static inline void __imsic_local_timer_start(struct imsic_local_priv *lpriv)
++static inline void __imsic_local_timer_start(struct imsic_local_priv *lpriv, unsigned int cpu)
+ {
+ }
+ #endif
+@@ -211,7 +211,7 @@ void imsic_local_sync_all(bool force_all)
+ 	if (force_all)
+ 		bitmap_fill(lpriv->dirty_bitmap, imsic->global.nr_ids + 1);
+ 	if (!__imsic_local_sync(lpriv))
+-		__imsic_local_timer_start(lpriv);
++		__imsic_local_timer_start(lpriv, smp_processor_id());
+ 
+ 	raw_spin_unlock_irqrestore(&lpriv->lock, flags);
+ }
+@@ -256,7 +256,7 @@ static void __imsic_remote_sync(struct imsic_local_priv *lpriv, unsigned int cpu
+ 				return;
+ 		}
+ 
+-		__imsic_local_timer_start(lpriv);
++		__imsic_local_timer_start(lpriv, cpu);
+ 	}
+ }
+ #else
 -- 
 2.39.5
 
