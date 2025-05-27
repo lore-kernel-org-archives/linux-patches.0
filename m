@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A9027C856;
-	Tue, 27 May 2025 16:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118D127C856;
+	Tue, 27 May 2025 16:45:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364333; cv=none; b=Pj4wCrpNV9CANoSorimqG2gz1OzHtkuwuA1yQfOmK6TAwsHluhx8N66Zvf2JetrOEF/+yOpxNQSs9VBkSgDSz2Jo4Q90h6mqg/JqIMfvrz3eLus4MdxMXCB/9IhOuk2EdNuT4j14rm/3B0FplL0NCMI3qtGv9QLzKjEjtiElwas=
+	t=1748364336; cv=none; b=MjLq7HCaXLLZJV5ZT9TeVbCbpPzr3BWpIdtbBjQ3J/dWzN3qNUwOhhbbeM0Xa0uJ3cOt5SAsBupkBX73cTf73gBb33tpgYeMkOsgyoGbSl5Y2Eh6dceLMCRLm5SLTxY/qPzQDPeiXi37ASFPh1XFsAcf4dc4SjVqHOUKkc7VEE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364333; c=relaxed/simple;
-	bh=uv/UKWMgIue10I0XGCbntP/3Z0A6uvebirzGRDItI7E=;
+	s=arc-20240116; t=1748364336; c=relaxed/simple;
+	bh=bmOb30sKa70WIX/AM/DLicQd4vguY0/jAlPsJJXiXHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cwOwde5ydEvX5AWM41b7t3Nwaq02uVWKWfuI4gIjEsRV74gYs9OWoc5u7xbLAxDDqcwhKd3B0Apt4OdBeExDNF1yAL5uRWwG2krNUzLNAaEEv7IQRAtt601dUczydJTMOPCuhWPk9x9O2lM4l0JiB4IaYiHFBuHlVRB02sfWXYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9eilcDg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=facj+WESf3SAOVhc3NcvP1X/zC6qy6ePBm9n7BqXjaUDZDJHTCEfL62+0PLWTcZnsRTV5WSet1Fh4IsIxmtquQx222/xWNA6bQd+XH5nwNFvYAKZzkhrwYNk/yPzH3mV2OfvtuyR26K5TSLVvBVjd3Ttd3PDdNoSVDXXy7MWlf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3/zdGpN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9eilcDg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89CFC4CEEB;
-	Tue, 27 May 2025 16:45:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3/zdGpN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934EEC4CEE9;
+	Tue, 27 May 2025 16:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364333;
-	bh=uv/UKWMgIue10I0XGCbntP/3Z0A6uvebirzGRDItI7E=;
+	s=korg; t=1748364335;
+	bh=bmOb30sKa70WIX/AM/DLicQd4vguY0/jAlPsJJXiXHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b9eilcDgIiTx6V4hunwMU/gtvA7n7XHpNRbH6FE/CHtO8bUVNJWX5SF84JUsqcKH9
-	 dWDgeEs8efgZKZe+tyKykdus8yCWUqDJXAilz3oFrFYAnWqjMbpwyQvhAFch6fyWkM
-	 2jlxQEC/Sud87Lss6GQzos/S856cYIYvYdKNx7s8=
+	b=l3/zdGpN0nz/pC1giYTzD7M2Q0870t2ErZb1cGLjungmDNwQ38mO1TS4dnX3qB30t
+	 dhkjr3UfF0P/iyRI6r7cffPidxfB6ON6IwhUZ/Cw+0n5efB03M+Iy4dYpNhIDMHT9f
+	 kHjBVVvTj8CuXiFgE7+OLLBpzRHy8U63XyfZuuMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	gao xu <gaoxu2@honor.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 023/626] dma-mapping: avoid potential unused data compilation warning
-Date: Tue, 27 May 2025 18:18:36 +0200
-Message-ID: <20250527162446.015304570@linuxfoundation.org>
+Subject: [PATCH 6.12 024/626] cgroup: Fix compilation issue due to cgroup_mutex not being exported
+Date: Tue, 27 May 2025 18:18:37 +0200
+Message-ID: <20250527162446.054571661@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -46,54 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: gaoxu <gaoxu2@honor.com>
 
-[ Upstream commit c9b19ea63036fc537a69265acea1b18dabd1cbd3 ]
+[ Upstream commit 87c259a7a359e73e6c52c68fcbec79988999b4e6 ]
 
-When CONFIG_NEED_DMA_MAP_STATE is not defined, dma-mapping clients might
-report unused data compilation warnings for dma_unmap_*() calls
-arguments. Redefine macros for those calls to let compiler to notice that
-it is okay when the provided arguments are not used.
+When adding folio_memcg function call in the zram module for
+Android16-6.12, the following error occurs during compilation:
+ERROR: modpost: "cgroup_mutex" [../soc-repo/zram.ko] undefined!
 
-Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Tested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20250415075659.428549-1-m.szyprowski@samsung.com
+This error is caused by the indirect call to lockdep_is_held(&cgroup_mutex)
+within folio_memcg. The export setting for cgroup_mutex is controlled by
+the CONFIG_PROVE_RCU macro. If CONFIG_LOCKDEP is enabled while
+CONFIG_PROVE_RCU is not, this compilation error will occur.
+
+To resolve this issue, add a parallel macro CONFIG_LOCKDEP control to
+ensure cgroup_mutex is properly exported when needed.
+
+Signed-off-by: gao xu <gaoxu2@honor.com>
+Acked-by: Michal Koutný <mkoutny@suse.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/dma-mapping.h | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ kernel/cgroup/cgroup.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/dma-mapping.h b/include/linux/dma-mapping.h
-index 1524da363734a..22b9099927fad 100644
---- a/include/linux/dma-mapping.h
-+++ b/include/linux/dma-mapping.h
-@@ -633,10 +633,14 @@ static inline int dma_mmap_wc(struct device *dev,
- #else
- #define DEFINE_DMA_UNMAP_ADDR(ADDR_NAME)
- #define DEFINE_DMA_UNMAP_LEN(LEN_NAME)
--#define dma_unmap_addr(PTR, ADDR_NAME)           (0)
--#define dma_unmap_addr_set(PTR, ADDR_NAME, VAL)  do { } while (0)
--#define dma_unmap_len(PTR, LEN_NAME)             (0)
--#define dma_unmap_len_set(PTR, LEN_NAME, VAL)    do { } while (0)
-+#define dma_unmap_addr(PTR, ADDR_NAME)           \
-+	({ typeof(PTR) __p __maybe_unused = PTR; 0; })
-+#define dma_unmap_addr_set(PTR, ADDR_NAME, VAL)  \
-+	do { typeof(PTR) __p __maybe_unused = PTR; } while (0)
-+#define dma_unmap_len(PTR, LEN_NAME)             \
-+	({ typeof(PTR) __p __maybe_unused = PTR; 0; })
-+#define dma_unmap_len_set(PTR, LEN_NAME, VAL)    \
-+	do { typeof(PTR) __p __maybe_unused = PTR; } while (0)
- #endif
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index e63d6f3b00470..62933468aaf46 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -90,7 +90,7 @@
+ DEFINE_MUTEX(cgroup_mutex);
+ DEFINE_SPINLOCK(css_set_lock);
  
- #endif /* _LINUX_DMA_MAPPING_H */
+-#ifdef CONFIG_PROVE_RCU
++#if (defined CONFIG_PROVE_RCU || defined CONFIG_LOCKDEP)
+ EXPORT_SYMBOL_GPL(cgroup_mutex);
+ EXPORT_SYMBOL_GPL(css_set_lock);
+ #endif
 -- 
 2.39.5
 
