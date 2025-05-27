@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523371B6D08;
-	Tue, 27 May 2025 16:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B25194A45;
+	Tue, 27 May 2025 16:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364645; cv=none; b=cN6l3qP4Tem3vOEHOs7t+51k4fESIuOzM/sXsp8Nwd6/YA+nafTFAXGoh1CpyIPS1B21uAG1tgp75T7p73zH5XJaFc2EXEgPAEnVEuDfmTxo3StCHRoAvssrMCeOJi8nAFtBjPiEKpc4gNXksOOsVhE+YxGK8OnHx8QMmA88q5M=
+	t=1748364649; cv=none; b=BTUixVfLyPvwI9Lpp8AqN1f3uF/C1O7lrVq6O6MfMBdDLvviDQHb+JQz5ByA6Ri8dMmm1+MXuKj3V+rCvI84IcjTSld9wuHkc8v9NVRkWDGtoyk1zaswKEnZ2cSr7OFcH/QYdDaTYxZLqDmZuPemKKEAnBbYD9hPVzcvrGou/VQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364645; c=relaxed/simple;
-	bh=s7DsLbRFT0FVMr6/UwR7/QvJSwUg2YG9TAlCRPyNEU0=;
+	s=arc-20240116; t=1748364649; c=relaxed/simple;
+	bh=v/GAPrP6XzEKZBb1KRYDXoxY7V1xVF7SZgCVXAV2BVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M0cr7vGektldoHfK7wW5Uh8VwP4rm0QbRIjFK/FjHv+kev/6wScKH21x5oKU2er6JBx9O9p6hXBroRQd6Bg2f41Q69w1tFwshEOh6uJU7qQiSANJXS5+qwL13Z+b+Wyln7eFWvTkUAR3b4eGdDc6trrw8CnmU06jeP81k4tcTXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOz4ug3B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XfuQvqOL8AgTRkgf3++hbEPmo/ilzNT76m2xnoyRfJKt0P62hC5X4+S+VBQVXIw7kjMFiBFvfzUBFCM7wpbNwYGM054qcDPbzwtc9cYfKAlvRm5km3kvj0gEuWkYYFLQD3LAyYzZ5+R5sD/OshCOWNHoiThwaScl49oGs1c2HUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zIwsIx2z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOz4ug3B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE5D6C4CEE9;
-	Tue, 27 May 2025 16:50:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zIwsIx2z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 389F1C4CEE9;
+	Tue, 27 May 2025 16:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364645;
-	bh=s7DsLbRFT0FVMr6/UwR7/QvJSwUg2YG9TAlCRPyNEU0=;
+	s=korg; t=1748364648;
+	bh=v/GAPrP6XzEKZBb1KRYDXoxY7V1xVF7SZgCVXAV2BVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uOz4ug3BGPRNwKKVv9YLiY3YBhhmL6m1gLpisB/dLbNIvTci3NCmlnIkwd7KPwsSe
-	 IDo2WVn0p5/r35VxEF2ah7wqAn+v5QbPcvf12fXPszwymWDThTzpKhLtwtUmzjCsbX
-	 qYFIOYzGpsZwVQi/eQ+8ahiIh/oo7MtojKajHsOs=
+	b=zIwsIx2zHIGRjD6GFb7AJV+4Dlk12+Ugrems0tydhpiPuJq5RqOkxLHx7Mj01CQuG
+	 duhWamJrxFFjXz8ZL1WdKqPuvNzu1C39nGFwCSgTlR5qZxdbYJyo25+o/wYFBvhvmB
+	 bZJ7R0bMvpElLLZQjeSR2ZeFDvZ8KJEvvZc8b2Cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlene Liu <charlene.liu@amd.com>,
-	Chris Park <chris.park@amd.com>,
-	Eric Yang <eric.yang@amd.com>,
-	Jing Zhou <Jing.Zhou@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Kent Russell <kent.russell@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 122/626] drm/amd/display: Guard against setting dispclk low for dcn31x
-Date: Tue, 27 May 2025 18:20:15 +0200
-Message-ID: <20250527162449.988070496@linuxfoundation.org>
+Subject: [PATCH 6.12 123/626] drm/amdgpu: adjust drm_firmware_drivers_only() handling
+Date: Tue, 27 May 2025 18:20:16 +0200
+Message-ID: <20250527162450.028643200@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -57,111 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jing Zhou <Jing.Zhou@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 9c2f4ae64bb6f6d83a54d88b9ee0f369cdbb9fa8 ]
+[ Upstream commit e00e5c223878a60e391e5422d173c3382d378f87 ]
 
-[WHY]
-We should never apply a minimum dispclk value while in
-prepare_bandwidth or while displays are active. This is
-always an optimizaiton for when all displays are disabled.
+Move to probe so we can check the PCI device type and
+only apply the drm_firmware_drivers_only() check for
+PCI DISPLAY classes.  Also add a module parameter to
+override the nomodeset kernel parameter as a workaround
+for platforms that have this hardcoded on their kernel
+command lines.
 
-[HOW]
-Defer dispclk optimization until safe_to_lower = true
-and display_count reaches 0.
-
-Since 0 has a special value in this logic (ie. no dispclk
-required) we also need adjust the logic that clamps it for
-the actual request to PMFW.
-
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Reviewed-by: Chris Park <chris.park@amd.com>
-Reviewed-by: Eric Yang <eric.yang@amd.com>
-Signed-off-by: Jing Zhou <Jing.Zhou@amd.com>
-Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Kent Russell <kent.russell@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dc/clk_mgr/dcn315/dcn315_clk_mgr.c        | 20 +++++++++++--------
- .../dc/clk_mgr/dcn316/dcn316_clk_mgr.c        | 13 +++++++++---
- 2 files changed, 22 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
-index a0fb4481d2f1b..827b24b3442ad 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
-@@ -130,7 +130,7 @@ static void dcn315_update_clocks(struct clk_mgr *clk_mgr_base,
- 	struct clk_mgr_internal *clk_mgr = TO_CLK_MGR_INTERNAL(clk_mgr_base);
- 	struct dc_clocks *new_clocks = &context->bw_ctx.bw.dcn.clk;
- 	struct dc *dc = clk_mgr_base->ctx->dc;
--	int display_count;
-+	int display_count = 0;
- 	bool update_dppclk = false;
- 	bool update_dispclk = false;
- 	bool dpp_clock_lowered = false;
-@@ -204,15 +204,19 @@ static void dcn315_update_clocks(struct clk_mgr *clk_mgr_base,
- 		update_dppclk = true;
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index 1b479bd851354..93c3de2d27d3a 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -172,6 +172,7 @@ uint amdgpu_sdma_phase_quantum = 32;
+ char *amdgpu_disable_cu;
+ char *amdgpu_virtual_display;
+ bool enforce_isolation;
++int amdgpu_modeset = -1;
  
--	if (should_set_clock(safe_to_lower, new_clocks->dispclk_khz, clk_mgr_base->clks.dispclk_khz)) {
--		/* No need to apply the w/a if we haven't taken over from bios yet */
--		if (clk_mgr_base->clks.dispclk_khz)
--			dcn315_disable_otg_wa(clk_mgr_base, context, true);
-+	if (should_set_clock(safe_to_lower, new_clocks->dispclk_khz, clk_mgr_base->clks.dispclk_khz) &&
-+	    (new_clocks->dispclk_khz > 0 || (safe_to_lower && display_count == 0))) {
-+		int requested_dispclk_khz = new_clocks->dispclk_khz;
+ /* Specifies the default granularity for SVM, used in buffer
+  * migration and restoration of backing memory when handling
+@@ -1037,6 +1038,13 @@ module_param_named(user_partt_mode, amdgpu_user_partt_mode, uint, 0444);
+ module_param(enforce_isolation, bool, 0444);
+ MODULE_PARM_DESC(enforce_isolation, "enforce process isolation between graphics and compute . enforce_isolation = on");
  
-+		dcn315_disable_otg_wa(clk_mgr_base, context, true);
++/**
++ * DOC: modeset (int)
++ * Override nomodeset (1 = override, -1 = auto). The default is -1 (auto).
++ */
++MODULE_PARM_DESC(modeset, "Override nomodeset (1 = enable, -1 = auto)");
++module_param_named(modeset, amdgpu_modeset, int, 0444);
 +
-+		/* Clamp the requested clock to PMFW based on their limit. */
-+		if (dc->debug.min_disp_clk_khz > 0 && requested_dispclk_khz < dc->debug.min_disp_clk_khz)
-+			requested_dispclk_khz = dc->debug.min_disp_clk_khz;
+ /**
+  * DOC: seamless (int)
+  * Seamless boot will keep the image on the screen during the boot process.
+@@ -2248,6 +2256,12 @@ static int amdgpu_pci_probe(struct pci_dev *pdev,
+ 	int ret, retry = 0, i;
+ 	bool supports_atomic = false;
+ 
++	if ((pdev->class >> 8) == PCI_CLASS_DISPLAY_VGA ||
++	    (pdev->class >> 8) == PCI_CLASS_DISPLAY_OTHER) {
++		if (drm_firmware_drivers_only() && amdgpu_modeset == -1)
++			return -EINVAL;
++	}
 +
-+		dcn315_smu_set_dispclk(clk_mgr, requested_dispclk_khz);
- 		clk_mgr_base->clks.dispclk_khz = new_clocks->dispclk_khz;
--		dcn315_smu_set_dispclk(clk_mgr, clk_mgr_base->clks.dispclk_khz);
--		if (clk_mgr_base->clks.dispclk_khz)
--			dcn315_disable_otg_wa(clk_mgr_base, context, false);
-+		dcn315_disable_otg_wa(clk_mgr_base, context, false);
- 
- 		update_dispclk = true;
- 	}
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn316/dcn316_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn316/dcn316_clk_mgr.c
-index c3e50c3aaa609..37c39756fece4 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn316/dcn316_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn316/dcn316_clk_mgr.c
-@@ -140,7 +140,7 @@ static void dcn316_update_clocks(struct clk_mgr *clk_mgr_base,
- 	struct clk_mgr_internal *clk_mgr = TO_CLK_MGR_INTERNAL(clk_mgr_base);
- 	struct dc_clocks *new_clocks = &context->bw_ctx.bw.dcn.clk;
- 	struct dc *dc = clk_mgr_base->ctx->dc;
--	int display_count;
-+	int display_count = 0;
- 	bool update_dppclk = false;
- 	bool update_dispclk = false;
- 	bool dpp_clock_lowered = false;
-@@ -211,11 +211,18 @@ static void dcn316_update_clocks(struct clk_mgr *clk_mgr_base,
- 		update_dppclk = true;
- 	}
- 
--	if (should_set_clock(safe_to_lower, new_clocks->dispclk_khz, clk_mgr_base->clks.dispclk_khz)) {
-+	if (should_set_clock(safe_to_lower, new_clocks->dispclk_khz, clk_mgr_base->clks.dispclk_khz) &&
-+	    (new_clocks->dispclk_khz > 0 || (safe_to_lower && display_count == 0))) {
-+		int requested_dispclk_khz = new_clocks->dispclk_khz;
-+
- 		dcn316_disable_otg_wa(clk_mgr_base, context, safe_to_lower, true);
- 
-+		/* Clamp the requested clock to PMFW based on their limit. */
-+		if (dc->debug.min_disp_clk_khz > 0 && requested_dispclk_khz < dc->debug.min_disp_clk_khz)
-+			requested_dispclk_khz = dc->debug.min_disp_clk_khz;
-+
-+		dcn316_smu_set_dispclk(clk_mgr, requested_dispclk_khz);
- 		clk_mgr_base->clks.dispclk_khz = new_clocks->dispclk_khz;
--		dcn316_smu_set_dispclk(clk_mgr, clk_mgr_base->clks.dispclk_khz);
- 		dcn316_disable_otg_wa(clk_mgr_base, context, safe_to_lower, false);
- 
- 		update_dispclk = true;
+ 	/* skip devices which are owned by radeon */
+ 	for (i = 0; i < ARRAY_SIZE(amdgpu_unsupported_pciidlist); i++) {
+ 		if (amdgpu_unsupported_pciidlist[i] == pdev->device)
 -- 
 2.39.5
 
