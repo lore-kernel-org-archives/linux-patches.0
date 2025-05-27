@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C51225C6EC;
-	Tue, 27 May 2025 17:48:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3061FB3;
+	Tue, 27 May 2025 17:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368092; cv=none; b=dsxWMwSMPyQFHGQigv48p9KG0VkrH4bQNq67KP0qYGwGVfFnGkfeYPhrO7LJi1aTbQ5E/X61juF8fOEG72Jt0HM7MUxBVqcfh0t/M/7lUf7i+yh0GsQLMQtnXwC5xxGxqDZwtUvAZxDH5ln6ieVz826OtciYa9m3bMoyJKP3pBI=
+	t=1748368096; cv=none; b=sLMQ6MSH3y5YK1q3HtmvEpos1ybUxlPelUngBwfAA6BU82OX/6PXiW+MTFwGq2Cx0TJdLjHhoEDvf6EwaoTObL2kj+vgnWp3J3/b/9Azp7+re+3PRnB057AM6St0azVIWW9KcUssT90aIJ/gmJG4s0uGRdejeL2Ua42nea/ts2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368092; c=relaxed/simple;
-	bh=itM712wFHWms3F4ZixJOZHHyYZmlbXnK0b57Gj+UJ8Q=;
+	s=arc-20240116; t=1748368096; c=relaxed/simple;
+	bh=VsjAuVXLEJsa0mldV/LAwdl/nnJOE3Ufaxkh2k12deU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p0n6of2j1fEERMeNnp2RNP2rGSyRpTAw600s/1ekbSbCumTfc7NftiFTm6o9VA0M1fQwj378osTjz3XNHayESLyn4xiVsIeL9E8bWugAOW0yq8gJxur+O5QP/4iGnLRyZt5/jkX3a3hrkNh0p67iZYK2YttqmfODsJ+iDX1G0fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zMQsv0hs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m/Cidi4HAYeBe5K+tqE0LrKsuduuRsoGVEWeXqTOhpqb0S+eoeDyjsIowrBN9e4Aa3+QSP9cz30ZxUL5mIwfUY673ZCQWMoPRWITdyNZ8giOeZBtntir+ndWlZeQyFUmaop6T1WeVSMXFxXt1vxFODKx5GRExEFzwBhUNiFKkGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i+om0Pe5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zMQsv0hs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFAEC4CEE9;
-	Tue, 27 May 2025 17:48:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i+om0Pe5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F7FC4CEE9;
+	Tue, 27 May 2025 17:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368091;
-	bh=itM712wFHWms3F4ZixJOZHHyYZmlbXnK0b57Gj+UJ8Q=;
+	s=korg; t=1748368094;
+	bh=VsjAuVXLEJsa0mldV/LAwdl/nnJOE3Ufaxkh2k12deU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zMQsv0hskBncVGjPol5AMpj2Z3ldAUIqmKW5GLKM2oXCVHeVoMH7UaoMRttJquMev
-	 51IGO1owPBmEVObXhBjEUVmrB1IQ4yWhxUSQiFkV6Dvq6Hn3kTWvd0/wT4Txt/sF9G
-	 GRZctNl25ovaIlPNgYX6wZ1A9QTbRCuwAsfT4TLQ=
+	b=i+om0Pe5nrHwQzR5qYPPZvNT4v1RR4SS0LjaJVdvbMWkLUaDkJPEgpzk4QeJYfryr
+	 +2oJ9AM5gk/cpvp7DldFF9UnccKReBVn9v46YmKkS+s7JZH6petuZDFbW68Pq0EluD
+	 WuorGoGW1YJw1jCkyd2xoQ66bvYnAm+RzsJjeM3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 595/783] perf/amd/ibs: Fix perf_ibs_op.cnt_mask for CurCnt
-Date: Tue, 27 May 2025 18:26:32 +0200
-Message-ID: <20250527162537.361632040@linuxfoundation.org>
+Subject: [PATCH 6.14 596/783] perf/amd/ibs: Fix ->config to sample period calculation for OP PMU
+Date: Tue, 27 May 2025 18:26:33 +0200
+Message-ID: <20250527162537.408306536@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -54,59 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Ravi Bangoria <ravi.bangoria@amd.com>
 
-[ Upstream commit 46dcf85566170d4528b842bf83ffc350d71771fa ]
+[ Upstream commit 598bdf4fefff5af4ce6d26d16f7b2a20808fc4cb ]
 
-IBS Op uses two counters: MaxCnt and CurCnt. MaxCnt is programmed with
-the desired sample period. IBS hw generates sample when CurCnt reaches
-to MaxCnt. The size of these counter used to be 20 bits but later they
-were extended to 27 bits. The 7 bit extension is indicated by CPUID
-Fn8000_001B_EAX[6 / OpCntExt].
+Instead of using standard perf_event_attr->freq=0 and ->sample_period
+fields, IBS event in 'sample period mode' can also be opened by setting
+period value directly in perf_event_attr->config in a MaxCnt bit-field
+format.
 
-perf_ibs->cnt_mask variable contains bit masks for MaxCnt and CurCnt.
-But IBS driver does not set upper 7 bits of CurCnt in cnt_mask even
-when OpCntExt CPUID bit is set. Fix this.
+IBS OP MaxCnt bits are defined as:
 
-IBS driver uses cnt_mask[CurCnt] bits only while disabling an event.
-Fortunately, CurCnt bits are not read from MSR while re-enabling the
-event, instead MaxCnt is programmed with desired period and CurCnt is
-set to 0. Hence, we did not see any issues so far.
+  (high bits) IbsOpCtl[26:20] = IbsOpMaxCnt[26:20]
+  (low bits)  IbsOpCtl[15:0]  = IbsOpMaxCnt[19:4]
+
+Perf event sample period can be derived from MaxCnt bits as:
+
+  sample_period = (high bits) | ((low_bits) << 4);
+
+However, current code just masks MaxCnt bits and shifts all of them,
+including high bits, which is incorrect. Fix it.
 
 Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Acked-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lkml.kernel.org/r/20250115054438.1021-5-ravi.bangoria@amd.com
+Link: https://lkml.kernel.org/r/20250115054438.1021-4-ravi.bangoria@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/ibs.c         | 3 ++-
- arch/x86/include/asm/perf_event.h | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/events/amd/ibs.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
 diff --git a/arch/x86/events/amd/ibs.c b/arch/x86/events/amd/ibs.c
-index e36c9c63c97cc..5d975c39701cb 100644
+index 5d975c39701cb..58ad23205d59d 100644
 --- a/arch/x86/events/amd/ibs.c
 +++ b/arch/x86/events/amd/ibs.c
-@@ -1318,7 +1318,8 @@ static __init int perf_ibs_op_init(void)
- 	if (ibs_caps & IBS_CAPS_OPCNTEXT) {
- 		perf_ibs_op.max_period  |= IBS_OP_MAX_CNT_EXT_MASK;
- 		perf_ibs_op.config_mask	|= IBS_OP_MAX_CNT_EXT_MASK;
--		perf_ibs_op.cnt_mask    |= IBS_OP_MAX_CNT_EXT_MASK;
-+		perf_ibs_op.cnt_mask    |= (IBS_OP_MAX_CNT_EXT_MASK |
-+					    IBS_OP_CUR_CNT_EXT_MASK);
+@@ -274,7 +274,7 @@ static int perf_ibs_init(struct perf_event *event)
+ {
+ 	struct hw_perf_event *hwc = &event->hw;
+ 	struct perf_ibs *perf_ibs;
+-	u64 max_cnt, config;
++	u64 config;
+ 	int ret;
+ 
+ 	perf_ibs = get_ibs_pmu(event->attr.type);
+@@ -321,10 +321,19 @@ static int perf_ibs_init(struct perf_event *event)
+ 		if (!hwc->sample_period)
+ 			hwc->sample_period = 0x10;
+ 	} else {
+-		max_cnt = config & perf_ibs->cnt_mask;
++		u64 period = 0;
++
++		if (perf_ibs == &perf_ibs_op) {
++			period = (config & IBS_OP_MAX_CNT) << 4;
++			if (ibs_caps & IBS_CAPS_OPCNTEXT)
++				period |= config & IBS_OP_MAX_CNT_EXT_MASK;
++		} else {
++			period = (config & IBS_FETCH_MAX_CNT) << 4;
++		}
++
+ 		config &= ~perf_ibs->cnt_mask;
+-		event->attr.sample_period = max_cnt << 4;
+-		hwc->sample_period = event->attr.sample_period;
++		event->attr.sample_period = period;
++		hwc->sample_period = period;
  	}
  
- 	if (ibs_caps & IBS_CAPS_ZEN4)
-diff --git a/arch/x86/include/asm/perf_event.h b/arch/x86/include/asm/perf_event.h
-index 0ba8d20f2d1d5..d37c1c32e74b9 100644
---- a/arch/x86/include/asm/perf_event.h
-+++ b/arch/x86/include/asm/perf_event.h
-@@ -536,6 +536,7 @@ struct pebs_xmm {
-  */
- #define IBS_OP_CUR_CNT		(0xFFF80ULL<<32)
- #define IBS_OP_CUR_CNT_RAND	(0x0007FULL<<32)
-+#define IBS_OP_CUR_CNT_EXT_MASK	(0x7FULL<<52)
- #define IBS_OP_CNT_CTL		(1ULL<<19)
- #define IBS_OP_VAL		(1ULL<<18)
- #define IBS_OP_ENABLE		(1ULL<<17)
+ 	if (!hwc->sample_period)
 -- 
 2.39.5
 
