@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972AA1DC998;
-	Tue, 27 May 2025 17:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D6C1DC998;
+	Tue, 27 May 2025 17:42:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367744; cv=none; b=JvForkt4CNnx2KwcGaEn7tRcg5fykvLk92T+XyOxC2TlYgFN+TAUgiGGBEoVBW7oz7wKJGBpnGms1oyY76pCvCdRfQGIOZE9mGfWcjDRVCHegTAsd/Fw5KKUaDb4DQNibprqrHhVXZG/nY8peuQ8u/Ag3gt+GGBvcAXCvzEC5dE=
+	t=1748367747; cv=none; b=epolqNP7tnMN3oMnKQnwxSMnQx4SvyJXSHnRcBv0MJPOwy/4gYR3dultcE0YRPm/DQeXhffnmkBSemzcZoPfRP8GSOHNcarK+IzGJVLjEiSZq9D4UsRtdszoQKQKhELsSnOK9ur7Etz61G8Fg25c6c1pvBgH8/r0jSqCAjBJ41A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367744; c=relaxed/simple;
-	bh=VqfTDot4cgTnhYXnc948xdbcyQmKCPdyFNyayO8S8ZA=;
+	s=arc-20240116; t=1748367747; c=relaxed/simple;
+	bh=jkncdQHC09SPNuqXnGHPDxDF3djKy4Yb502XZyMTK2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dqGbUYgv/mXOahMNIGnlMEarkMt+rq49z8KrcIfO3+s3h+3qVuDiJk/jLD0X26SlpcXHdC1sHvaMtMiivcEl6bK1Mvaa6GLhEFvAD2QMhFeSy+PqepSUBqU2Dw2lDiKqNPzP/V+LseLR0jRu7+8PV5lYKpni34DdgQZrBIimb+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qwfFCQdk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KrV9rSR85C/Njd8n4lY9zVnGYm4r/dhAsJWVqANQpnrgfmHg8QJqg8jZfpZRTYUhp3g35tdrUSMGF7hXFYoep3lq3wpUdrwibZxbVpKt2wzd6j9Lij7So4zXXufNWNNhV9AG2umtBZlQPIwIb2o1Is97E4U1pPU4cPcLdZfb4Cs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4z9Qsql; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwfFCQdk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B0AC4CEE9;
-	Tue, 27 May 2025 17:42:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4z9Qsql"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47BB1C4CEE9;
+	Tue, 27 May 2025 17:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367744;
-	bh=VqfTDot4cgTnhYXnc948xdbcyQmKCPdyFNyayO8S8ZA=;
+	s=korg; t=1748367747;
+	bh=jkncdQHC09SPNuqXnGHPDxDF3djKy4Yb502XZyMTK2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qwfFCQdkqvk8UHkDT8wC/hrvYSbPCmXf8jVzhuhO74VJvgigzM55scBiOeOFScvYB
-	 mGOKQTdFgzscz/5U2Em1uu0ehF7JfRn9LQYZ4Wxfwpj3MPVesJHAuiLf0MfVsJXli5
-	 gQA4B1DM/Asmmml6jEfm0AIgBoJzt542HamK2ids=
+	b=Y4z9QsqlJuoZmuQJoZWlQEM0MRbLVHz3ayVBqJsOH/61z2Y+TW2RRQ5JrcnEvF/Nj
+	 2BO7+SX4q76hoikh+t2cQQX8AL/Rb+g9NTVKgU/BUiPhBnFjI9c0JfNCl37jPXJ7Ro
+	 ZXG9b5mQkyFs9SPnvCgAGAiD1T/xm91qu3MDG9DE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Koo <anthony.koo@amd.com>,
-	Martin Tsai <Martin.Tsai@amd.com>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Brandon Syu <Brandon.Syu@amd.com>,
 	Alex Hung <alex.hung@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 486/783] drm/amd/display: Support multiple options during psr entry.
-Date: Tue, 27 May 2025 18:24:43 +0200
-Message-ID: <20250527162532.919929046@linuxfoundation.org>
+Subject: [PATCH 6.14 487/783] Revert "drm/amd/display: Exit idle optimizations before attempt to access PHY"
+Date: Tue, 27 May 2025 18:24:44 +0200
+Message-ID: <20250527162532.958865053@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -54,79 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Tsai <Martin.Tsai@amd.com>
+From: Brandon Syu <Brandon.Syu@amd.com>
 
-[ Upstream commit 3a5fa55455db6a11248a25f24570c365f9246144 ]
+[ Upstream commit be704e5ef4bd66dee9bb3f876964327e3a247d31 ]
 
-[WHY]
-Some panels may not handle idle pattern properly during PSR entry.
+This reverts commit de612738e9771bd66aeb20044486c457c512f684.
 
-[HOW]
-Add a condition to allow multiple options on power down
-sequence during PSR1 entry.
+Reason to revert: screen flashes or gray screen appeared half of the
+screen after resume from S4/S5.
 
-Reviewed-by: Anthony Koo <anthony.koo@amd.com>
-Signed-off-by: Martin Tsai <Martin.Tsai@amd.com>
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Signed-off-by: Brandon Syu <Brandon.Syu@amd.com>
 Signed-off-by: Alex Hung <alex.hung@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc_types.h       | 7 +++++++
- drivers/gpu/drm/amd/display/dc/dce/dmub_psr.c   | 4 ++++
- drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h | 6 ++++++
- 3 files changed, 17 insertions(+)
+ drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_types.h b/drivers/gpu/drm/amd/display/dc/dc_types.h
-index 0c2aa91f0a111..e60898c2df01a 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_types.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_types.h
-@@ -1033,6 +1033,13 @@ struct psr_settings {
- 	unsigned int psr_sdp_transmit_line_num_deadline;
- 	uint8_t force_ffu_mode;
- 	unsigned int psr_power_opt;
-+
-+	/**
-+	 * Some panels cannot handle idle pattern during PSR entry.
-+	 * To power down phy before disable stream to avoid sending
-+	 * idle pattern.
-+	 */
-+	uint8_t power_down_phy_before_disable_stream;
- };
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+index 94ceccfc04982..2f5f3e749a1ab 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+@@ -1889,7 +1889,6 @@ void dce110_enable_accelerated_mode(struct dc *dc, struct dc_state *context)
+ 	bool can_apply_edp_fast_boot = false;
+ 	bool can_apply_seamless_boot = false;
+ 	bool keep_edp_vdd_on = false;
+-	struct dc_bios *dcb = dc->ctx->dc_bios;
+ 	DC_LOGGER_INIT();
  
- enum replay_coasting_vtotal_type {
-diff --git a/drivers/gpu/drm/amd/display/dc/dce/dmub_psr.c b/drivers/gpu/drm/amd/display/dc/dce/dmub_psr.c
-index 88c75c243bf8a..ff3b8244ba3d0 100644
---- a/drivers/gpu/drm/amd/display/dc/dce/dmub_psr.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dmub_psr.c
-@@ -418,6 +418,10 @@ static bool dmub_psr_copy_settings(struct dmub_psr *dmub,
- 	copy_settings_data->relock_delay_frame_cnt = 0;
- 	if (link->dpcd_caps.sink_dev_id == DP_BRANCH_DEVICE_ID_001CF8)
- 		copy_settings_data->relock_delay_frame_cnt = 2;
-+
-+	copy_settings_data->power_down_phy_before_disable_stream =
-+		link->psr_settings.power_down_phy_before_disable_stream;
-+
- 	copy_settings_data->dsc_slice_height = psr_context->dsc_slice_height;
  
- 	dc_wake_and_execute_dmub_cmd(dc, &cmd, DM_DMUB_WAIT_TYPE_WAIT);
-diff --git a/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h b/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
-index d0fe324cb5371..8cf89aed024b7 100644
---- a/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
-+++ b/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
-@@ -3118,6 +3118,12 @@ struct dmub_cmd_psr_copy_settings_data {
- 	 * Some panels request main link off before xth vertical line
- 	 */
- 	uint16_t poweroff_before_vertical_line;
-+	/**
-+	 * Some panels cannot handle idle pattern during PSR entry.
-+	 * To power down phy before disable stream to avoid sending
-+	 * idle pattern.
-+	 */
-+	uint8_t power_down_phy_before_disable_stream;
- };
+@@ -1966,8 +1965,6 @@ void dce110_enable_accelerated_mode(struct dc *dc, struct dc_state *context)
+ 			hws->funcs.edp_backlight_control(edp_link_with_sink, false);
+ 		}
+ 		/*resume from S3, no vbios posting, no need to power down again*/
+-		if (dcb && dcb->funcs && !dcb->funcs->is_accelerated_mode(dcb))
+-			clk_mgr_exit_optimized_pwr_state(dc, dc->clk_mgr);
  
- /**
+ 		power_down_all_hw_blocks(dc);
+ 
+@@ -1980,8 +1977,6 @@ void dce110_enable_accelerated_mode(struct dc *dc, struct dc_state *context)
+ 		disable_vga_and_power_gate_all_controllers(dc);
+ 		if (edp_link_with_sink && !keep_edp_vdd_on)
+ 			dc->hwss.edp_power_control(edp_link_with_sink, false);
+-		if (dcb && dcb->funcs && !dcb->funcs->is_accelerated_mode(dcb))
+-			clk_mgr_optimize_pwr_state(dc, dc->clk_mgr);
+ 	}
+ 	bios_set_scratch_acc_mode_change(dc->ctx->dc_bios, 1);
+ }
 -- 
 2.39.5
 
