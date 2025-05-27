@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F90086347;
-	Tue, 27 May 2025 17:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D70E86347;
+	Tue, 27 May 2025 17:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365875; cv=none; b=EE/6xUW4RoWN5iWDQFdJQSyG4YR3pbaWdMwrAhKFg7ox2ny13H0E8UZJ6rZKvnRme/rsELuzM3d97+Rr6tzhDR0fovo4h4Iky92Zk6GUlhOaeRcL0Gye/9ZMM8TJuVOHB6u+JFsRuW15QU43Dxi0Xy37f0QlgFd+Lv+KY9xNLnU=
+	t=1748365878; cv=none; b=nvUyvkhSx/xsUDqXlurflBjVSAM8eQWpL7nhqqbjRL92erz29TIray4Hd6fmL83oKypfIOa+1dP0dCsg4qlvu+41qHoWqcdF2qe+LdOHY+lzQuPX7o26gJe7R9tv00xVuSvHsEMjlxyvr34oKFzg/n3NdCv/hKWUZXxnv6sagJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365875; c=relaxed/simple;
-	bh=la1RINZRgPmU1c+EqJJDHhA9RxwumN1QYqfo50/DDuc=;
+	s=arc-20240116; t=1748365878; c=relaxed/simple;
+	bh=t2fKQnErLqWtXE06ciBb4ULu6GWh+X90HF6FoV6KajU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UNtCt8K/unfci4Pw5YvS+nngUB1PLKVHW3Hcdy+LBiPNhl0xX11x5RELM0z/k6qY+25+/D7BVAvF5p0M95MZ0GDF6A/JDw6n03MQV3F6EZErAgeVQnCqT/wKgMsMntKT41hRsHSiATVpUjOlvmCK+p17BR4AQKdjZPmiVneoOt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXnqzXNd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sjkliNyq7d72T5BSD3G53+QqELWj69G4Q5Si2CrJzwLcdaej/cnIbdfSVONl9vVaHJqHog3u/J+ZiUZq6mnazcGXXftJ0kc3R5/gsoEFX2UfJJ7pJzknQ287AadShQGnNcbMEE2FudoBnIe2GNtuvZccQ2be6jQNGGzyyqXGgpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p4QUliyU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXnqzXNd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E015C4CEE9;
-	Tue, 27 May 2025 17:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p4QUliyU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C38DC4CEE9;
+	Tue, 27 May 2025 17:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365875;
-	bh=la1RINZRgPmU1c+EqJJDHhA9RxwumN1QYqfo50/DDuc=;
+	s=korg; t=1748365878;
+	bh=t2fKQnErLqWtXE06ciBb4ULu6GWh+X90HF6FoV6KajU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rXnqzXNdPtcd7zslu8ZTs5N0slKYrZTPzl9RfswszAyrltakfnX1VYHwvlggPg7lF
-	 +lCCnEQsyw2EVN2nBwcThURcud2xIdr5AWL0AiDYh5q5BuYCCRi2cxNFyVgNYNhIeb
-	 Zes+hwkU2svSvfuEkjWZIcD0yc1BY7SnW7/avpGk=
+	b=p4QUliyUR+Oy2wbQ15ROYGXweQcxJHpR/xbgeGqIUMXUnR07tT1092J5bmdvQa3Ex
+	 mA1V2mZc79GO4z1RIzseNfTIogPZQNfCp0cuN4NtRmaVxla/xX0krNY5YSpnzydRKA
+	 jiBIgxZK6X43Iaxhzva5BkIdHWgQHyzlhWIOMPZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Nikulin <pavel@noa-labs.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	syzbot+3e77fd302e99f5af9394@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 510/626] platform/x86: asus-wmi: Disable OOBE state after resume from hibernation
-Date: Tue, 27 May 2025 18:26:43 +0200
-Message-ID: <20250527162505.688034157@linuxfoundation.org>
+Subject: [PATCH 6.12 519/626] io_uring/fdinfo: annotate racy sq/cq head/tail reads
+Date: Tue, 27 May 2025 18:26:52 +0200
+Message-ID: <20250527162506.046933155@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -45,73 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Nikulin <pavel@noa-labs.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 77bdac73754e4c0c564c1ca80fe3d9c93b0e715a ]
+[ Upstream commit f024d3a8ded0d8d2129ae123d7a5305c29ca44ce ]
 
-ASUS firmware resets OOBE state during S4 suspend, so the keyboard
-blinks during resume from hibernation. This patch disables OOBE state
-after resume from hibernation.
+syzbot complains about the cached sq head read, and it's totally right.
+But we don't need to care, it's just reading fdinfo, and reading the
+CQ or SQ tail/head entries are known racy in that they are just a view
+into that very instant and may of course be outdated by the time they
+are reported.
 
-Signed-off-by: Pavel Nikulin <pavel@noa-labs.com>
-Link: https://lore.kernel.org/r/20250418140706.1691-1-pavel@noa-labs.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Annotate both the SQ head and CQ tail read with data_race() to avoid
+this syzbot complaint.
+
+Link: https://lore.kernel.org/io-uring/6811f6dc.050a0220.39e3a1.0d0e.GAE@google.com/
+Reported-by: syzbot+3e77fd302e99f5af9394@syzkaller.appspotmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-wmi.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ io_uring/fdinfo.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
-index a1cff9ff35a92..9d79c5ea8b495 100644
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -304,6 +304,7 @@ struct asus_wmi {
- 
- 	u32 kbd_rgb_dev;
- 	bool kbd_rgb_state_available;
-+	bool oobe_state_available;
- 
- 	u8 throttle_thermal_policy_mode;
- 	u32 throttle_thermal_policy_dev;
-@@ -1826,7 +1827,7 @@ static int asus_wmi_led_init(struct asus_wmi *asus)
- 			goto error;
- 	}
- 
--	if (asus_wmi_dev_is_present(asus, ASUS_WMI_DEVID_OOBE)) {
-+	if (asus->oobe_state_available) {
- 		/*
- 		 * Disable OOBE state, so that e.g. the keyboard backlight
- 		 * works.
-@@ -4741,6 +4742,7 @@ static int asus_wmi_add(struct platform_device *pdev)
- 	asus->egpu_enable_available = asus_wmi_dev_is_present(asus, ASUS_WMI_DEVID_EGPU);
- 	asus->dgpu_disable_available = asus_wmi_dev_is_present(asus, ASUS_WMI_DEVID_DGPU);
- 	asus->kbd_rgb_state_available = asus_wmi_dev_is_present(asus, ASUS_WMI_DEVID_TUF_RGB_STATE);
-+	asus->oobe_state_available = asus_wmi_dev_is_present(asus, ASUS_WMI_DEVID_OOBE);
- 	asus->ally_mcu_usb_switch = acpi_has_method(NULL, ASUS_USB0_PWR_EC0_CSEE)
- 						&& dmi_check_system(asus_ally_mcu_quirk);
- 
-@@ -4994,6 +4996,13 @@ static int asus_hotk_restore(struct device *device)
- 	}
- 	if (!IS_ERR_OR_NULL(asus->kbd_led.dev))
- 		kbd_led_update(asus);
-+	if (asus->oobe_state_available) {
-+		/*
-+		 * Disable OOBE state, so that e.g. the keyboard backlight
-+		 * works.
-+		 */
-+		asus_wmi_set_devstate(ASUS_WMI_DEVID_OOBE, 1, NULL);
-+	}
- 
- 	if (asus_wmi_has_fnlock_key(asus))
- 		asus_wmi_fnlock_update(asus);
+diff --git a/io_uring/fdinfo.c b/io_uring/fdinfo.c
+index 6b1247664b355..ecdbe473a49f7 100644
+--- a/io_uring/fdinfo.c
++++ b/io_uring/fdinfo.c
+@@ -83,11 +83,11 @@ __cold void io_uring_show_fdinfo(struct seq_file *m, struct file *file)
+ 	seq_printf(m, "SqMask:\t0x%x\n", sq_mask);
+ 	seq_printf(m, "SqHead:\t%u\n", sq_head);
+ 	seq_printf(m, "SqTail:\t%u\n", sq_tail);
+-	seq_printf(m, "CachedSqHead:\t%u\n", ctx->cached_sq_head);
++	seq_printf(m, "CachedSqHead:\t%u\n", data_race(ctx->cached_sq_head));
+ 	seq_printf(m, "CqMask:\t0x%x\n", cq_mask);
+ 	seq_printf(m, "CqHead:\t%u\n", cq_head);
+ 	seq_printf(m, "CqTail:\t%u\n", cq_tail);
+-	seq_printf(m, "CachedCqTail:\t%u\n", ctx->cached_cq_tail);
++	seq_printf(m, "CachedCqTail:\t%u\n", data_race(ctx->cached_cq_tail));
+ 	seq_printf(m, "SQEs:\t%u\n", sq_tail - sq_head);
+ 	sq_entries = min(sq_tail - sq_head, ctx->sq_entries);
+ 	for (i = 0; i < sq_entries; i++) {
 -- 
 2.39.5
 
