@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE51C276057;
-	Tue, 27 May 2025 16:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA5127B516;
+	Tue, 27 May 2025 16:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364741; cv=none; b=Q5ZOIOIp1JNWaA4vahTOW5uTkG36PGtzQZMemaBuXReFOlDSLS5dRISsgwEHgI66xPiBxwL5w7M357p2WIgXB8mt5B/4eJho18JjBHXMVEgj2pExx68YWC2lDo5Eh63ef83ggLdLKRXda1jTt1Gn4U99/wGR+FnKwZv+aPsShO4=
+	t=1748364744; cv=none; b=IuC0Zy9KPmLhPYAB7gOAkVJ75/LKut6lX0iustrW52phERYSTOKePoL9Pslf6Wl06J73MxzTyugQZwIOqllKBfLiAd7fM2r9OJyMl/oZVwKZ6qiIBJkxU5W8RvLr5v3gqaE6mHNgEZxbQm+8ZbpS1bRK0Vku+AttBzAZW9N74x0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364741; c=relaxed/simple;
-	bh=Xm222L8UyWkhu/MtAKjCiI5cUJRuPLTpU9Tz9tVcgyw=;
+	s=arc-20240116; t=1748364744; c=relaxed/simple;
+	bh=9Wy3ZOMZnCPxyLtMoiIOqfjqDZVosL4wo7mcrUGF2bY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HLjeRsj6waQIkaVMcZETevm2FRD2mrTd6G0P64gzdu1bgItpgVEIgnNB9hveW3RmZEKc3njfVlqt5ptqwJrD47e+SrXCM5MlhlHYQXz1T3ziwJnMnswrvW5jjQv3truKPqNmFq2XV65tv/TNw+eaSuPjVduv6IrgG5vvZVj+2AU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/D6TChr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IAXVk0Aqshisyxtpnk0FSHVCsst44C6IB+dJqIbSk09yXi2XLZBceh52WxqdlLc864nXd+HCBPVZrEOZnKhIeqFdffvx/CAvpOr1wynvYfP1sM/jhXzYPD7b2TOCfELyx/nxDyJ8twtif3WfMbV1XMh78ZyZf7IpSLdB6KhUlCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKDFm2Tz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/D6TChr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1A4C4CEE9;
-	Tue, 27 May 2025 16:52:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKDFm2Tz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FAAFC4CEE9;
+	Tue, 27 May 2025 16:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364740;
-	bh=Xm222L8UyWkhu/MtAKjCiI5cUJRuPLTpU9Tz9tVcgyw=;
+	s=korg; t=1748364743;
+	bh=9Wy3ZOMZnCPxyLtMoiIOqfjqDZVosL4wo7mcrUGF2bY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F/D6TChrZaYlwxaD9YIaGJxC7eYxw2F40P+eeTlQBOng8mJ8udMeCfQsLG7O0Ls7d
-	 Z5siJmQpYyp8T4NthpKBEfT4szUBXbEveVrfyOMriWdU0Ib3H3RQ4fnGCHCp8Le6RO
-	 qqRKtDjzuWsQPQd1w6wpk1VQatkADVX9eCCNA99k=
+	b=WKDFm2TzzKmElKN+7Yfe9B/ov6Qx2sWEeVrk8xYWxJITyd2VNgqvSSZy29bE4xu3I
+	 kj1I6vz5w0FuGp0rMhQ2gmb+FUlhEy/x5MNAywnjNTCTAM/kI8hHNik1tqAELmce/s
+	 ynu9ocjg/U1FhUa6Yh2OtWAoKdxl8/wvFxGAsWvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Chao Yu <chao@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 110/626] x86/microcode: Update the Intel processor flag scan check
-Date: Tue, 27 May 2025 18:20:03 +0200
-Message-ID: <20250527162449.509012793@linuxfoundation.org>
+Subject: [PATCH 6.12 145/626] erofs: initialize decompression early
+Date: Tue, 27 May 2025 18:20:38 +0200
+Message-ID: <20250527162450.921396165@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,57 +51,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sohil Mehta <sohil.mehta@intel.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 7e6b0a2e4152f4046af95eeb46f8b4f9b2a7398d ]
+[ Upstream commit fe1e57d44d7f106df9048e815e4862cf63921220 ]
 
-The Family model check to read the processor flag MSR is misleading and
-potentially incorrect. It doesn't consider Family while comparing the
-model number. The original check did have a Family number but it got
-lost/moved during refactoring.
+ - Rename erofs_init_managed_cache() to z_erofs_init_super();
+ - Move the initialization of managed_pslots into z_erofs_init_super() too;
+ - Move z_erofs_init_super() and packed inode preparation upwards, before
+   the root inode initialization.
 
-intel_collect_cpu_info() is called through multiple paths such as early
-initialization, CPU hotplug as well as IFS image load. Some of these
-flows would be error prone due to the ambiguous check.
+Therefore, the root directory can also be compressible.
 
-Correct the processor flag scan check to use a Family number and update
-it to a VFM based one to make it more readable.
-
-Signed-off-by: Sohil Mehta <sohil.mehta@intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/r/20250219184133.816753-4-sohil.mehta@intel.com
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Acked-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/r/20250317054840.3483000-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/intel-family.h   | 1 +
- arch/x86/kernel/cpu/microcode/intel.c | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ fs/erofs/internal.h |  4 ++--
+ fs/erofs/super.c    | 46 ++++++++++++++++++++++-----------------------
+ fs/erofs/zdata.c    |  4 ++--
+ 3 files changed, 26 insertions(+), 28 deletions(-)
 
-diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
-index 62d8b9448dc5c..c6198fbcc1d77 100644
---- a/arch/x86/include/asm/intel-family.h
-+++ b/arch/x86/include/asm/intel-family.h
-@@ -46,6 +46,7 @@
- #define INTEL_ANY			IFM(X86_FAMILY_ANY, X86_MODEL_ANY)
+diff --git a/fs/erofs/internal.h b/fs/erofs/internal.h
+index edbabb3256c9a..2c11e8f3048e9 100644
+--- a/fs/erofs/internal.h
++++ b/fs/erofs/internal.h
+@@ -453,6 +453,7 @@ int __init erofs_init_shrinker(void);
+ void erofs_exit_shrinker(void);
+ int __init z_erofs_init_subsystem(void);
+ void z_erofs_exit_subsystem(void);
++int z_erofs_init_super(struct super_block *sb);
+ unsigned long z_erofs_shrink_scan(struct erofs_sb_info *sbi,
+ 				  unsigned long nr_shrink);
+ int z_erofs_map_blocks_iter(struct inode *inode, struct erofs_map_blocks *map,
+@@ -462,7 +463,6 @@ void z_erofs_put_gbuf(void *ptr);
+ int z_erofs_gbuf_growsize(unsigned int nrpages);
+ int __init z_erofs_gbuf_init(void);
+ void z_erofs_gbuf_exit(void);
+-int erofs_init_managed_cache(struct super_block *sb);
+ int z_erofs_parse_cfgs(struct super_block *sb, struct erofs_super_block *dsb);
+ #else
+ static inline void erofs_shrinker_register(struct super_block *sb) {}
+@@ -471,7 +471,7 @@ static inline int erofs_init_shrinker(void) { return 0; }
+ static inline void erofs_exit_shrinker(void) {}
+ static inline int z_erofs_init_subsystem(void) { return 0; }
+ static inline void z_erofs_exit_subsystem(void) {}
+-static inline int erofs_init_managed_cache(struct super_block *sb) { return 0; }
++static inline int z_erofs_init_super(struct super_block *sb) { return 0; }
+ #endif	/* !CONFIG_EROFS_FS_ZIP */
  
- #define INTEL_PENTIUM_PRO		IFM(6, 0x01)
-+#define INTEL_PENTIUM_III_DESCHUTES	IFM(6, 0x05)
+ #ifdef CONFIG_EROFS_FS_BACKED_BY_FILE
+diff --git a/fs/erofs/super.c b/fs/erofs/super.c
+index 5b279977c9d5d..3421448fef0e3 100644
+--- a/fs/erofs/super.c
++++ b/fs/erofs/super.c
+@@ -664,9 +664,16 @@ static int erofs_fc_fill_super(struct super_block *sb, struct fs_context *fc)
+ 	else
+ 		sb->s_flags &= ~SB_POSIXACL;
  
- #define INTEL_CORE_YONAH		IFM(6, 0x0E)
+-#ifdef CONFIG_EROFS_FS_ZIP
+-	xa_init(&sbi->managed_pslots);
+-#endif
++	err = z_erofs_init_super(sb);
++	if (err)
++		return err;
++
++	if (erofs_sb_has_fragments(sbi) && sbi->packed_nid) {
++		inode = erofs_iget(sb, sbi->packed_nid);
++		if (IS_ERR(inode))
++			return PTR_ERR(inode);
++		sbi->packed_inode = inode;
++	}
  
-diff --git a/arch/x86/kernel/cpu/microcode/intel.c b/arch/x86/kernel/cpu/microcode/intel.c
-index df5650eb3f088..362cc71bbc866 100644
---- a/arch/x86/kernel/cpu/microcode/intel.c
-+++ b/arch/x86/kernel/cpu/microcode/intel.c
-@@ -74,7 +74,7 @@ void intel_collect_cpu_info(struct cpu_signature *sig)
- 	sig->pf = 0;
- 	sig->rev = intel_get_microcode_revision();
+ 	inode = erofs_iget(sb, sbi->root_nid);
+ 	if (IS_ERR(inode))
+@@ -678,24 +685,11 @@ static int erofs_fc_fill_super(struct super_block *sb, struct fs_context *fc)
+ 		iput(inode);
+ 		return -EINVAL;
+ 	}
+-
+ 	sb->s_root = d_make_root(inode);
+ 	if (!sb->s_root)
+ 		return -ENOMEM;
  
--	if (x86_model(sig->sig) >= 5 || x86_family(sig->sig) > 6) {
-+	if (IFM(x86_family(sig->sig), x86_model(sig->sig)) >= INTEL_PENTIUM_III_DESCHUTES) {
- 		unsigned int val[2];
+ 	erofs_shrinker_register(sb);
+-	if (erofs_sb_has_fragments(sbi) && sbi->packed_nid) {
+-		sbi->packed_inode = erofs_iget(sb, sbi->packed_nid);
+-		if (IS_ERR(sbi->packed_inode)) {
+-			err = PTR_ERR(sbi->packed_inode);
+-			sbi->packed_inode = NULL;
+-			return err;
+-		}
+-	}
+-	err = erofs_init_managed_cache(sb);
+-	if (err)
+-		return err;
+-
+ 	err = erofs_xattr_prefixes_init(sb);
+ 	if (err)
+ 		return err;
+@@ -831,6 +825,16 @@ static int erofs_init_fs_context(struct fs_context *fc)
+ 	return 0;
+ }
  
- 		/* get processor flags from MSR 0x17 */
++static void erofs_drop_internal_inodes(struct erofs_sb_info *sbi)
++{
++	iput(sbi->packed_inode);
++	sbi->packed_inode = NULL;
++#ifdef CONFIG_EROFS_FS_ZIP
++	iput(sbi->managed_cache);
++	sbi->managed_cache = NULL;
++#endif
++}
++
+ static void erofs_kill_sb(struct super_block *sb)
+ {
+ 	struct erofs_sb_info *sbi = EROFS_SB(sb);
+@@ -840,6 +844,7 @@ static void erofs_kill_sb(struct super_block *sb)
+ 		kill_anon_super(sb);
+ 	else
+ 		kill_block_super(sb);
++	erofs_drop_internal_inodes(sbi);
+ 	fs_put_dax(sbi->dif0.dax_dev, NULL);
+ 	erofs_fscache_unregister_fs(sb);
+ 	erofs_sb_free(sbi);
+@@ -850,17 +855,10 @@ static void erofs_put_super(struct super_block *sb)
+ {
+ 	struct erofs_sb_info *const sbi = EROFS_SB(sb);
+ 
+-	DBG_BUGON(!sbi);
+-
+ 	erofs_unregister_sysfs(sb);
+ 	erofs_shrinker_unregister(sb);
+ 	erofs_xattr_prefixes_cleanup(sb);
+-#ifdef CONFIG_EROFS_FS_ZIP
+-	iput(sbi->managed_cache);
+-	sbi->managed_cache = NULL;
+-#endif
+-	iput(sbi->packed_inode);
+-	sbi->packed_inode = NULL;
++	erofs_drop_internal_inodes(sbi);
+ 	erofs_free_dev_context(sbi->devs);
+ 	sbi->devs = NULL;
+ 	erofs_fscache_unregister_fs(sb);
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index e5e94afc5af88..74521d7dbee1d 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -663,18 +663,18 @@ static const struct address_space_operations z_erofs_cache_aops = {
+ 	.invalidate_folio = z_erofs_cache_invalidate_folio,
+ };
+ 
+-int erofs_init_managed_cache(struct super_block *sb)
++int z_erofs_init_super(struct super_block *sb)
+ {
+ 	struct inode *const inode = new_inode(sb);
+ 
+ 	if (!inode)
+ 		return -ENOMEM;
+-
+ 	set_nlink(inode, 1);
+ 	inode->i_size = OFFSET_MAX;
+ 	inode->i_mapping->a_ops = &z_erofs_cache_aops;
+ 	mapping_set_gfp_mask(inode->i_mapping, GFP_KERNEL);
+ 	EROFS_SB(sb)->managed_cache = inode;
++	xa_init(&EROFS_SB(sb)->managed_pslots);
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
