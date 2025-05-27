@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8447B3C01;
-	Tue, 27 May 2025 17:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954F63C01;
+	Tue, 27 May 2025 17:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367225; cv=none; b=iXqaNZy1gAgfo3ElcflGZlvav3YOaaqRxJxVA48xzdsK6dJHBMOE7ApZCqvTkCV3UDGtSm+hyiDrZ3BZnQdSioIcGkGw4faouDBcsgCDxHS4Ja9AxTyfqWRp6v8J6uLUBHnamlmU9FKY36iRZGvQ8uhVQbHgX63KItQ+xlefSq8=
+	t=1748367228; cv=none; b=FpJ0eBtjnOj6EZ+grIMqYFIAP03/GRGawkbWKSGkx96QsXe14sq3kbZ+FX/Z4sMLU89zq5DFNLjOr9/+x3qjLEca7imsSmhMnXK/8GWoOaTKgS/ngHPRZ0dmAYmMxVcb1KSV9Je6fusXAOM1MAoCM3UztiJEwxlrrqNGyw7Dn8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367225; c=relaxed/simple;
-	bh=3LAh/BjL2Ue9IlRQobdyoFoEhe8P9TBE1VdMIS2ipJQ=;
+	s=arc-20240116; t=1748367228; c=relaxed/simple;
+	bh=+/koIalzIxw8+6i1J1WyNRtNLLYaSP1y2+dODQSDd1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nAcs+iKPu9Li+UsnjvqsIfpjgCTbE+S0OGk+PVlQPJ1cfCbmYgM4iRe9krvgPoVdsZ74lpap9/AarEL+nmLdeUJ5+dUZxaB36vEC5c1BQpDNmxXTMvqR8d0w233LOvY6De37ipv5FgEe5yom+IKHdRx8BxVP4xF3igte7E7aTXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zpUWnMUU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ouk7IMOaSueBw0o7EPltn0LsvO33zmz6abMjNNRHRIwzAuE+fhwEMwyv1zd8/5iVecsGSDstc7rlb0vANsycMJnX/YmnoMaUopSK8zkLWRbLnKFAiDoJbdHMhkgJFZ6z3yPw9pvBax1CbD8UqEtQz0U3Ee8MnHc1VWwZchG0OfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arq6A/9N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zpUWnMUU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E63B7C4CEE9;
-	Tue, 27 May 2025 17:33:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arq6A/9N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 182C5C4CEE9;
+	Tue, 27 May 2025 17:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367225;
-	bh=3LAh/BjL2Ue9IlRQobdyoFoEhe8P9TBE1VdMIS2ipJQ=;
+	s=korg; t=1748367228;
+	bh=+/koIalzIxw8+6i1J1WyNRtNLLYaSP1y2+dODQSDd1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zpUWnMUUbmZhW7ycwvfHTF/Mgkffb1Nt4QGYOagMvH97Ow7SzDKqQdJpFrTLpc60d
-	 2gveXMUwL7JseEGoigM31RyQ8oH+xdBTyTm50BmPNksVE3y2qomwgUiDH8MCrv0XX8
-	 MVA8xpf59bAEvjuTe8dktRabwTEy58guym76IX68=
+	b=arq6A/9NmHDe2dPBZk1A1Zmo+3VOBEL6RwT4pyIcGZVeiLdnz7b70sVA9YCVGL2ZB
+	 kQnXlhpqm5IP0X7uDFWLDwN8am3CKGyfS0KnVNuuB4kpVFC4oCB72Kvk7auZabU3bC
+	 qcPG0fBWFWzLdVgF1QEXNdj0wCAd+srQTJ6FUT78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Victor Lu <victorchengchi.lu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 288/783] perf/core: Clean up perf_try_init_event()
-Date: Tue, 27 May 2025 18:21:25 +0200
-Message-ID: <20250527162524.818779021@linuxfoundation.org>
+Subject: [PATCH 6.14 279/783] drm/amdgpu: Do not program AGP BAR regs under SRIOV in gfxhub_v1_0.c
+Date: Tue, 27 May 2025 18:21:16 +0200
+Message-ID: <20250527162524.442518560@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,105 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Victor Lu <victorchengchi.lu@amd.com>
 
-[ Upstream commit da02f54e81db2f7bf6af9d1d0cfc5b41ec6d0dcb ]
+[ Upstream commit 057fef20b8401110a7bc1c2fe9d804a8a0bf0d24 ]
 
-Make sure that perf_try_init_event() doesn't leave event->pmu nor
-event->destroy set on failure.
+SRIOV VF does not have write access to AGP BAR regs.
+Skip the writes to avoid a dmesg warning.
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Link: https://lore.kernel.org/r/20250205102449.110145835@infradead.org
+Signed-off-by: Victor Lu <victorchengchi.lu@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 65 ++++++++++++++++++++++++++------------------
- 1 file changed, 38 insertions(+), 27 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfxhub_v1_0.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 93ce810384c92..de838d3819ca7 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -12020,40 +12020,51 @@ static int perf_try_init_event(struct pmu *pmu, struct perf_event *event)
- 	if (ctx)
- 		perf_event_ctx_unlock(event->group_leader, ctx);
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfxhub_v1_0.c b/drivers/gpu/drm/amd/amdgpu/gfxhub_v1_0.c
+index 0e3ddea7b8e0f..a7bfc9f41d0e3 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfxhub_v1_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfxhub_v1_0.c
+@@ -92,12 +92,12 @@ static void gfxhub_v1_0_init_system_aperture_regs(struct amdgpu_device *adev)
+ {
+ 	uint64_t value;
  
--	if (!ret) {
--		if (!(pmu->capabilities & PERF_PMU_CAP_EXTENDED_REGS) &&
--		    has_extended_regs(event))
--			ret = -EOPNOTSUPP;
-+	if (ret)
-+		goto err_pmu;
- 
--		if (pmu->capabilities & PERF_PMU_CAP_NO_EXCLUDE &&
--		    event_has_any_exclude_flag(event))
--			ret = -EINVAL;
-+	if (!(pmu->capabilities & PERF_PMU_CAP_EXTENDED_REGS) &&
-+	    has_extended_regs(event)) {
-+		ret = -EOPNOTSUPP;
-+		goto err_destroy;
-+	}
- 
--		if (pmu->scope != PERF_PMU_SCOPE_NONE && event->cpu >= 0) {
--			const struct cpumask *cpumask = perf_scope_cpu_topology_cpumask(pmu->scope, event->cpu);
--			struct cpumask *pmu_cpumask = perf_scope_cpumask(pmu->scope);
--			int cpu;
+-	/* Program the AGP BAR */
+-	WREG32_SOC15_RLC(GC, 0, mmMC_VM_AGP_BASE, 0);
+-	WREG32_SOC15_RLC(GC, 0, mmMC_VM_AGP_BOT, adev->gmc.agp_start >> 24);
+-	WREG32_SOC15_RLC(GC, 0, mmMC_VM_AGP_TOP, adev->gmc.agp_end >> 24);
 -
--			if (pmu_cpumask && cpumask) {
--				cpu = cpumask_any_and(pmu_cpumask, cpumask);
--				if (cpu >= nr_cpu_ids)
--					ret = -ENODEV;
--				else
--					event->event_caps |= PERF_EV_CAP_READ_SCOPE;
--			} else {
--				ret = -ENODEV;
--			}
--		}
-+	if (pmu->capabilities & PERF_PMU_CAP_NO_EXCLUDE &&
-+	    event_has_any_exclude_flag(event)) {
-+		ret = -EINVAL;
-+		goto err_destroy;
-+	}
- 
--		if (ret && event->destroy)
--			event->destroy(event);
-+	if (pmu->scope != PERF_PMU_SCOPE_NONE && event->cpu >= 0) {
-+		const struct cpumask *cpumask;
-+		struct cpumask *pmu_cpumask;
-+		int cpu;
+ 	if (!amdgpu_sriov_vf(adev) || adev->asic_type <= CHIP_VEGA10) {
++		/* Program the AGP BAR */
++		WREG32_SOC15_RLC(GC, 0, mmMC_VM_AGP_BASE, 0);
++		WREG32_SOC15_RLC(GC, 0, mmMC_VM_AGP_BOT, adev->gmc.agp_start >> 24);
++		WREG32_SOC15_RLC(GC, 0, mmMC_VM_AGP_TOP, adev->gmc.agp_end >> 24);
 +
-+		cpumask = perf_scope_cpu_topology_cpumask(pmu->scope, event->cpu);
-+		pmu_cpumask = perf_scope_cpumask(pmu->scope);
-+
-+		ret = -ENODEV;
-+		if (!pmu_cpumask || !cpumask)
-+			goto err_destroy;
-+
-+		cpu = cpumask_any_and(pmu_cpumask, cpumask);
-+		if (cpu >= nr_cpu_ids)
-+			goto err_destroy;
-+
-+		event->event_caps |= PERF_EV_CAP_READ_SCOPE;
- 	}
- 
--	if (ret) {
--		event->pmu = NULL;
--		module_put(pmu->module);
-+	return 0;
-+
-+err_destroy:
-+	if (event->destroy) {
-+		event->destroy(event);
-+		event->destroy = NULL;
- 	}
- 
-+err_pmu:
-+	event->pmu = NULL;
-+	module_put(pmu->module);
- 	return ret;
- }
- 
+ 		/* Program the system aperture low logical page number. */
+ 		WREG32_SOC15_RLC(GC, 0, mmMC_VM_SYSTEM_APERTURE_LOW_ADDR,
+ 			min(adev->gmc.fb_start, adev->gmc.agp_start) >> 18);
 -- 
 2.39.5
 
