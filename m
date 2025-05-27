@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4831FB3;
-	Tue, 27 May 2025 17:53:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8D41FB3;
+	Tue, 27 May 2025 17:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368381; cv=none; b=t3l187ReARY6KDdviU3Y163DRAnaYslxSIn/eC4bV7R3FZeaiJUrbs5oOBWAeEHqVT7su8vdhOYlTyNB4+BSgkf9XkmJc9VwUgpdHyQgNc2AA19adKaijOaOu+bBhj7eKiGnH3uZospq6jXQ765kXfPX0G4nsSNjnH1WnKZvkmo=
+	t=1748368384; cv=none; b=GizcfJqQmDF3ah7GGAkeShx90W3bjbYdMqUS8P38cIak2vYJujokP7/UZSCcmrLGG0mf5NK33frHLWo/ny003bipAmx0wAMh1YuyVZKzL6UfZQYKJo85r+3UTtzTps2ETc3bH6Ka+q4TFqIiaFpaEGhxr5xZ8dgvXEvTjd5A9s8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368381; c=relaxed/simple;
-	bh=AUwt6/2TrYaPgdocJX60dmLIsdIl/ox2IyY/2moKmm4=;
+	s=arc-20240116; t=1748368384; c=relaxed/simple;
+	bh=fhi4hR0lUKibaEF2o/4eOwMgo4uRTv37CEu/+jMs8as=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L7u2VxhHdX1OXJErpxahWEuejusx2L1FJVrGQkYo5t6ld79NkY2V+eBd9Ro5T0Pdy1eesEI9BpXVShy2i5Uv80UoqeexIg9u3WsLP4lD4Qg4/LYsdjQbLYpxAl9PMTzzrZveRMZuSeLt0dpfJ8M7f6NQI5pma+Lw54jy9qOZyC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOeoN/H7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zitea5nXIJMD8MYy80tXBmzzm6FBujzb4n7qs6mpwg9I8vxYi0GMESzHYR6JrW6HSGBknS1fvfPppVdQMk/He7u4uctzk6d5GvTnEWGYpyYKqnWu1PxI3QOZwFJyDFXxOjU65yjDVdYPSe3XIev48873tlReob/50SWaUeU2trQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOHzVlTa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOeoN/H7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B631BC4CEE9;
-	Tue, 27 May 2025 17:53:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOHzVlTa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0628BC4CEE9;
+	Tue, 27 May 2025 17:53:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368381;
-	bh=AUwt6/2TrYaPgdocJX60dmLIsdIl/ox2IyY/2moKmm4=;
+	s=korg; t=1748368384;
+	bh=fhi4hR0lUKibaEF2o/4eOwMgo4uRTv37CEu/+jMs8as=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rOeoN/H7yTsW+z/ttNr3rjHwKlutehvvu20jfKJEA7u3ZFlN875PFowlTTAVPJype
-	 oMw0CBjC5oiZV6xh4kIToy8vHfzsf1p/1Y9DBvuNBbxduRq4Bb7GCltU/JrJVbb0eF
-	 Bul/3OEzyuRKxPXbc7sT4THdDN9t0BFcN+35WOZs=
+	b=AOHzVlTag0v7zavBbGIvsKgr6cCFenJdzgH39UkGRgHAiycNXDlbi9rqM4/Nvwo8p
+	 3oRDe2jXomEDDow4O7faC9LJzTM1kqw+hzn57+mCKZj8JzIwVgSMwGaXCy9hMTNiEP
+	 BHx/h5/I64JFo0LMFyqyi2ccyxnCbOrDOjwz1+/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Kuba=20Szczodrzy=C5=84ski?= <kuba@szczodrzynski.pl>,
-	Andre Przywara <andre.przywara@arm.com>,
-	Chen-Yu Tsai <wens@csie.org>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Louis DeLosSantos <louis.delos.devel@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 689/783] clk: sunxi-ng: d1: Add missing divider for MMC mod clocks
-Date: Tue, 27 May 2025 18:28:06 +0200
-Message-ID: <20250527162541.192315967@linuxfoundation.org>
+Subject: [PATCH 6.14 690/783] xfrm: Sanitize marks before insert
+Date: Tue, 27 May 2025 18:28:07 +0200
+Message-ID: <20250527162541.231239314@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -46,133 +46,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-[ Upstream commit 98e6da673cc6dd46ca9a599802bd2c8f83606710 ]
+[ Upstream commit 0b91fda3a1f044141e1e615456ff62508c32b202 ]
 
-The D1/R528/T113 SoCs have a hidden divider of 2 in the MMC mod clocks,
-just as other recent SoCs. So far we did not describe that, which led
-to the resulting MMC clock rate to be only half of its intended value.
+Prior to this patch, the mark is sanitized (applying the state's mask to
+the state's value) only on inserts when checking if a conflicting XFRM
+state or policy exists.
 
-Use a macro that allows to describe a fixed post-divider, to compensate
-for that divisor.
+We discovered in Cilium that this same sanitization does not occur
+in the hot-path __xfrm_state_lookup. In the hot-path, the sk_buff's mark
+is simply compared to the state's value:
 
-This brings the MMC performance on those SoCs to its expected level,
-so about 23 MB/s for SD cards, instead of the 11 MB/s measured so far.
+    if ((mark & x->mark.m) != x->mark.v)
+        continue;
 
-Fixes: 35b97bb94111 ("clk: sunxi-ng: Add support for the D1 SoC clocks")
-Reported-by: Kuba Szczodrzyński <kuba@szczodrzynski.pl>
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Link: https://patch.msgid.link/20250501120631.837186-1-andre.przywara@arm.com
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Therefore, users can define unsanitized marks (ex. 0xf42/0xf00) which will
+never match any packet.
+
+This commit updates __xfrm_state_insert and xfrm_policy_insert to store
+the sanitized marks, thus removing this footgun.
+
+This has the side effect of changing the ip output, as the
+returned mark will have the mask applied to it when printed.
+
+Fixes: 3d6acfa7641f ("xfrm: SA lookups with mark")
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Signed-off-by: Louis DeLosSantos <louis.delos.devel@gmail.com>
+Co-developed-by: Louis DeLosSantos <louis.delos.devel@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun20i-d1.c | 44 ++++++++++++++++------------
- drivers/clk/sunxi-ng/ccu_mp.h        | 22 ++++++++++++++
- 2 files changed, 47 insertions(+), 19 deletions(-)
+ net/xfrm/xfrm_policy.c | 3 +++
+ net/xfrm/xfrm_state.c  | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/clk/sunxi-ng/ccu-sun20i-d1.c b/drivers/clk/sunxi-ng/ccu-sun20i-d1.c
-index bb66c906ebbb6..e83d4fd40240f 100644
---- a/drivers/clk/sunxi-ng/ccu-sun20i-d1.c
-+++ b/drivers/clk/sunxi-ng/ccu-sun20i-d1.c
-@@ -412,19 +412,23 @@ static const struct clk_parent_data mmc0_mmc1_parents[] = {
- 	{ .hw = &pll_periph0_2x_clk.common.hw },
- 	{ .hw = &pll_audio1_div2_clk.common.hw },
- };
--static SUNXI_CCU_MP_DATA_WITH_MUX_GATE(mmc0_clk, "mmc0", mmc0_mmc1_parents, 0x830,
--				       0, 4,	/* M */
--				       8, 2,	/* P */
--				       24, 3,	/* mux */
--				       BIT(31),	/* gate */
--				       0);
--
--static SUNXI_CCU_MP_DATA_WITH_MUX_GATE(mmc1_clk, "mmc1", mmc0_mmc1_parents, 0x834,
--				       0, 4,	/* M */
--				       8, 2,	/* P */
--				       24, 3,	/* mux */
--				       BIT(31),	/* gate */
--				       0);
-+static SUNXI_CCU_MP_DATA_WITH_MUX_GATE_POSTDIV(mmc0_clk, "mmc0",
-+					       mmc0_mmc1_parents, 0x830,
-+					       0, 4,		/* M */
-+					       8, 2,		/* P */
-+					       24, 3,		/* mux */
-+					       BIT(31),		/* gate */
-+					       2,		/* post-div */
-+					       0);
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index 6551e588fe526..50a17112c87af 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -1581,6 +1581,9 @@ int xfrm_policy_insert(int dir, struct xfrm_policy *policy, int excl)
+ 	struct xfrm_policy *delpol;
+ 	struct hlist_head *chain;
+ 
++	/* Sanitize mark before store */
++	policy->mark.v &= policy->mark.m;
 +
-+static SUNXI_CCU_MP_DATA_WITH_MUX_GATE_POSTDIV(mmc1_clk, "mmc1",
-+					       mmc0_mmc1_parents, 0x834,
-+					       0, 4,		/* M */
-+					       8, 2,		/* P */
-+					       24, 3,		/* mux */
-+					       BIT(31),		/* gate */
-+					       2,		/* post-div */
-+					       0);
+ 	spin_lock_bh(&net->xfrm.xfrm_policy_lock);
+ 	chain = policy_hash_bysel(net, &policy->selector, policy->family, dir);
+ 	if (chain)
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index fa8a8776d5397..8176081fa1f49 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -1718,6 +1718,9 @@ static void __xfrm_state_insert(struct xfrm_state *x)
  
- static const struct clk_parent_data mmc2_parents[] = {
- 	{ .fw_name = "hosc" },
-@@ -433,12 +437,14 @@ static const struct clk_parent_data mmc2_parents[] = {
- 	{ .hw = &pll_periph0_800M_clk.common.hw },
- 	{ .hw = &pll_audio1_div2_clk.common.hw },
- };
--static SUNXI_CCU_MP_DATA_WITH_MUX_GATE(mmc2_clk, "mmc2", mmc2_parents, 0x838,
--				       0, 4,	/* M */
--				       8, 2,	/* P */
--				       24, 3,	/* mux */
--				       BIT(31),	/* gate */
--				       0);
-+static SUNXI_CCU_MP_DATA_WITH_MUX_GATE_POSTDIV(mmc2_clk, "mmc2", mmc2_parents,
-+					       0x838,
-+					       0, 4,		/* M */
-+					       8, 2,		/* P */
-+					       24, 3,		/* mux */
-+					       BIT(31),		/* gate */
-+					       2,		/* post-div */
-+					       0);
+ 	list_add(&x->km.all, &net->xfrm.state_all);
  
- static SUNXI_CCU_GATE_HWS(bus_mmc0_clk, "bus-mmc0", psi_ahb_hws,
- 			  0x84c, BIT(0), 0);
-diff --git a/drivers/clk/sunxi-ng/ccu_mp.h b/drivers/clk/sunxi-ng/ccu_mp.h
-index 6e50f3728fb5f..7d836a9fb3db3 100644
---- a/drivers/clk/sunxi-ng/ccu_mp.h
-+++ b/drivers/clk/sunxi-ng/ccu_mp.h
-@@ -52,6 +52,28 @@ struct ccu_mp {
- 		}							\
- 	}
- 
-+#define SUNXI_CCU_MP_DATA_WITH_MUX_GATE_POSTDIV(_struct, _name, _parents, \
-+						_reg,			\
-+						_mshift, _mwidth,	\
-+						_pshift, _pwidth,	\
-+						_muxshift, _muxwidth,	\
-+						_gate, _postdiv, _flags)\
-+	struct ccu_mp _struct = {					\
-+		.enable	= _gate,					\
-+		.m	= _SUNXI_CCU_DIV(_mshift, _mwidth),		\
-+		.p	= _SUNXI_CCU_DIV(_pshift, _pwidth),		\
-+		.mux	= _SUNXI_CCU_MUX(_muxshift, _muxwidth),		\
-+		.fixed_post_div	= _postdiv,				\
-+		.common	= {						\
-+			.reg		= _reg,				\
-+			.features	= CCU_FEATURE_FIXED_POSTDIV,	\
-+			.hw.init	= CLK_HW_INIT_PARENTS_DATA(_name, \
-+							_parents,	\
-+							&ccu_mp_ops,	\
-+							_flags),	\
-+		}							\
-+	}
++	/* Sanitize mark before store */
++	x->mark.v &= x->mark.m;
 +
- #define SUNXI_CCU_MP_WITH_MUX_GATE(_struct, _name, _parents, _reg,	\
- 				   _mshift, _mwidth,			\
- 				   _pshift, _pwidth,			\
+ 	h = xfrm_dst_hash(net, &x->id.daddr, &x->props.saddr,
+ 			  x->props.reqid, x->props.family);
+ 	XFRM_STATE_INSERT(bydst, &x->bydst, net->xfrm.state_bydst + h,
 -- 
 2.39.5
 
