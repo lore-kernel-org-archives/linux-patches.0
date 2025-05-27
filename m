@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0820AD5A;
-	Tue, 27 May 2025 16:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB78E27F16C;
+	Tue, 27 May 2025 16:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364397; cv=none; b=mwNBiugq0NgVE3dTMhYFvcyMNaBIkI/blO1tQV3e/d1GrN6JCi8bnyS7v2YU4+9vvUo6vp0F6pc/jTkD27Ypq3gnlYGSjmG6IDSesu+NMWXJ3gMCHGa2rMy7szNPJ0d8WqMXtz+mHKu9uKmdRJk43y9UAZHwAnxOtomNe8YKeRk=
+	t=1748364400; cv=none; b=uQ3on1q3TULhPwmu9q36HQTc9lJFPVAkCJNkNTK/K6ajWDzT5QOUr7uaeHMwNn0F/JpEOEjw/RyDreDEfwVYsMS55FY3temxu7AYNcguSS9BKSP9O7UZrWEUI+TbcPnXUkaFVTt26R+1dXFKeJarBmSv6bkujKyXEtk0yIpJuqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364397; c=relaxed/simple;
-	bh=0JVhKY1fCPXxF6fgTmOppU9xddxKyI50mJah7XaLSlI=;
+	s=arc-20240116; t=1748364400; c=relaxed/simple;
+	bh=VNmGqVhOBm8LmbL+anAFbrfi6PTw0HlfZ8kq7DI5xRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dAh85cs4tGzuhEW2K8+YVdmdsVQrU4bo3+gufCJjnpB1zD2F8gq9TmYVdqVNIKU2kteb7LeRB2XmzX953Wf5J1wZ2pVE8ZRb2542z7KQ8VXLKFW9W2tWuDzSyUbTRqzZ2Miof+9lqutif+aOc2mNvMi2VPL4/Sd/KtzY6y9DPgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cw05Phgg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KtXIU9ovqQv6grBsDaU29p3Yy29aLSOux8tuYpE8TqnNo3QDT4nn0BH3/JxMXXkUQC0vwYBDiPxt2Gv6KIpkrgAsm/q2J4dg2mh9cxd8oZfL5DxgoA7B6li2SdU9e7TcyVHwBq8NAFeTnTIOd/hVjhkg2yceHrqF+O86HgfVZzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFDmegaX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cw05Phgg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9256C4CEE9;
-	Tue, 27 May 2025 16:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFDmegaX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17944C4CEEB;
+	Tue, 27 May 2025 16:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364397;
-	bh=0JVhKY1fCPXxF6fgTmOppU9xddxKyI50mJah7XaLSlI=;
+	s=korg; t=1748364400;
+	bh=VNmGqVhOBm8LmbL+anAFbrfi6PTw0HlfZ8kq7DI5xRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cw05PhggYisEABBM/AjnnPBfc3FJgf0i0R46KWiHWsDk6N0HPOWj0zzIhHxIteD2D
-	 YxRSTk/W3Knu5wmlMizuMH7bZQZr8pqiuik1BC/QGO9L2v1zfdqVJU5o1UqzmeY5+B
-	 yxzVHVrTp9uMUpoybH4nAGTPLFlDNbi+NHN8eIr8=
+	b=sFDmegaXMa2AB26GXrBbgc/L4VXMutMiwyxzuelMDTKoCce2Cswl6MbPlS1ii8Dbc
+	 TGeCtQcsYCRfT+3tzVLtA8y/W1T6mI9olohDuK88lWYNW7gcxeLepbKBdbTwQKjEpr
+	 pnQ0T2AKFqb168iQ9SeYjmA8og5mc6SA0HtwVFnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Brandon Kammerdiener <brandon.kammerdiener@intel.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Hou Tao <houtao1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 041/626] io_uring: dont duplicate flushing in io_req_post_cqe
-Date: Tue, 27 May 2025 18:18:54 +0200
-Message-ID: <20250527162446.731902941@linuxfoundation.org>
+Subject: [PATCH 6.12 042/626] bpf: fix possible endless loop in BPF map iteration
+Date: Tue, 27 May 2025 18:18:55 +0200
+Message-ID: <20250527162446.770721853@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,45 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Brandon Kammerdiener <brandon.kammerdiener@intel.com>
 
-[ Upstream commit 5e16f1a68d28965c12b6fa227a306fef8a680f84 ]
+[ Upstream commit 75673fda0c557ae26078177dd14d4857afbf128d ]
 
-io_req_post_cqe() sets submit_state.cq_flush so that
-*flush_completions() can take care of batch commiting CQEs. Don't commit
-it twice by using __io_cq_unlock_post().
+The _safe variant used here gets the next element before running the callback,
+avoiding the endless loop condition.
 
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/41c416660c509cee676b6cad96081274bcb459f3.1745493861.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Brandon Kammerdiener <brandon.kammerdiener@intel.com>
+Link: https://lore.kernel.org/r/20250424153246.141677-2-brandon.kammerdiener@intel.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Acked-by: Hou Tao <houtao1@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ kernel/bpf/hashtab.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 8ef0603c07f11..985c87ea09a90 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -874,10 +874,15 @@ bool io_req_post_cqe(struct io_kiocb *req, s32 res, u32 cflags)
- 	lockdep_assert(!io_wq_current_is_worker());
- 	lockdep_assert_held(&ctx->uring_lock);
- 
--	__io_cq_lock(ctx);
--	posted = io_fill_cqe_aux(ctx, req->cqe.user_data, res, cflags);
-+	if (!ctx->lockless_cq) {
-+		spin_lock(&ctx->completion_lock);
-+		posted = io_fill_cqe_aux(ctx, req->cqe.user_data, res, cflags);
-+		spin_unlock(&ctx->completion_lock);
-+	} else {
-+		posted = io_fill_cqe_aux(ctx, req->cqe.user_data, res, cflags);
-+	}
-+
- 	ctx->submit_state.cq_flush = true;
--	__io_cq_unlock_post(ctx);
- 	return posted;
- }
- 
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index bb3ba8ebaf3d2..570e2f7231443 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -2223,7 +2223,7 @@ static long bpf_for_each_hash_elem(struct bpf_map *map, bpf_callback_t callback_
+ 		b = &htab->buckets[i];
+ 		rcu_read_lock();
+ 		head = &b->head;
+-		hlist_nulls_for_each_entry_rcu(elem, n, head, hash_node) {
++		hlist_nulls_for_each_entry_safe(elem, n, head, hash_node) {
+ 			key = elem->key;
+ 			if (is_percpu) {
+ 				/* current cpu value for percpu map */
 -- 
 2.39.5
 
