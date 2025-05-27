@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BDB28030E;
-	Tue, 27 May 2025 17:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCA627BF8D;
+	Tue, 27 May 2025 17:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368329; cv=none; b=V3n7psczrHvtieeYjFG0y3L1V5XWBMBLKf19on/fgkRiZKQZoGt2+hAstqBH5AkW+t9dgbdhSmcW68ZNvXjel/a25Q6largVLG7we0fQtIpsWuHirOjw5yflzzhlow8VMxRFR4tZ/nWl1s48Ia7ypNvVs6bbU41rSVsI1PhRKbA=
+	t=1748368332; cv=none; b=mqXqNpyvekDsPGJu3dLsLJYK59sd7y2Tw1v3leuUq46H5i76dlA8L+zmNef1kg1x6w4y8PBvfF5rCLanXPsdquq7PWsCtnJeUydVBDPzNnSyNu3xb0EsA7tnD0Jx7bZMNfPTnCo0cQPr6xp3cG2ljVMig16lwLO4uqpozhLPEZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368329; c=relaxed/simple;
-	bh=GWuo9WLn/tWVGzWvajamTi0Dpd9cyuAUMnrjUTfTDjM=;
+	s=arc-20240116; t=1748368332; c=relaxed/simple;
+	bh=NtoKO7yn9/p8aKG7v3WhIBI7gww/KX2HxWrwo27so2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=peV4z/ISnl2xwAyfpG9gMUOMbjVTd5cCyTHFT2TIyvHecbuiQjNlzLqvKYNOYzuIm3RL/KxmMdfVaEsUiaXbGpoRqOg8mX9NWGizmg+Y4ybPEdgHNpsm7fjLrFRVDdZW6OBnRHUu4AwZwS73mmiUT7eyn17rqdjDdybZ33Ch8Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xW/xbBM+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EaQaUgIeHqa6wDv0PlJvbq4xvWuFD4lGwWckwEBPrL5ldAx9vpz2XMvQJjEzDMz3ktz6TzLU7SXcu5be/7uf1uAQ2DczsBJKZWk29UFarVLurXAeuEVPaNlYfThTjz8W8A4YZabuzjcM+MH3A+j/9fkftwXCYNNWU9OieJHH190=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WHLRH+EF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xW/xbBM+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BDB2C4CEE9;
-	Tue, 27 May 2025 17:52:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHLRH+EF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E3DC4CEE9;
+	Tue, 27 May 2025 17:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368328;
-	bh=GWuo9WLn/tWVGzWvajamTi0Dpd9cyuAUMnrjUTfTDjM=;
+	s=korg; t=1748368331;
+	bh=NtoKO7yn9/p8aKG7v3WhIBI7gww/KX2HxWrwo27so2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xW/xbBM+qcmw3du7lT/y3aJnJA7mf5jvKKBYYSkIK2FbXFwKc3pwChYFipWTpMPSa
-	 Gi1xGLFwY6n3vTjTJ8cq9lwnqv19rhpmMVlKYbOXr3LQFYXZeoaFy3lH68/ZfSKB34
-	 j+lE7keO1kU2hBkPEe5hp+DyXNu9GfgUKapJffWk=
+	b=WHLRH+EFgx7gx2BXybO50832TrOg5Hs+YfuuS5Q2wh8fxHcRhnNZaePSqjQIhuquG
+	 +PbmzLSO4VOH6IcAXLcwUruA5/ECZxVXWQJS4M9qRyg7sJSpTREYiJasFgbb9s4PRZ
+	 EZY8tVJZIIxXnf7qwkLhv2N33JO2NVo7IGTt4Cpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Goldwyn Rodrigues <rgoldwyn@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 671/783] btrfs: correct the order of prelim_ref arguments in btrfs__prelim_ref
-Date: Tue, 27 May 2025 18:27:48 +0200
-Message-ID: <20250527162540.447325198@linuxfoundation.org>
+Subject: [PATCH 6.14 672/783] btrfs: handle empty eb->folios in num_extent_folios()
+Date: Tue, 27 May 2025 18:27:49 +0200
+Message-ID: <20250527162540.488383444@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,80 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Goldwyn Rodrigues <rgoldwyn@suse.de>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit bc7e0975093567f51be8e1bdf4aa5900a3cf0b1e ]
+[ Upstream commit d6fe0c69b3aa5c985380b794bdf8e6e9b1811e60 ]
 
-btrfs_prelim_ref() calls the old and new reference variables in the
-incorrect order. This causes a NULL pointer dereference because oldref
-is passed as NULL to trace_btrfs_prelim_ref_insert().
+num_extent_folios() unconditionally calls folio_order() on
+eb->folios[0]. If that is NULL this will be a segfault. It is reasonable
+for it to return 0 as the number of folios in the eb when the first
+entry is NULL, so do that instead.
 
-Note, trace_btrfs_prelim_ref_insert() is being called with newref as
-oldref (and oldref as NULL) on purpose in order to print out
-the values of newref.
-
-To reproduce:
-echo 1 > /sys/kernel/debug/tracing/events/btrfs/btrfs_prelim_ref_insert/enable
-
-Perform some writeback operations.
-
-Backtrace:
-BUG: kernel NULL pointer dereference, address: 0000000000000018
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 115949067 P4D 115949067 PUD 11594a067 PMD 0
- Oops: Oops: 0000 [#1] SMP NOPTI
- CPU: 1 UID: 0 PID: 1188 Comm: fsstress Not tainted 6.15.0-rc2-tester+ #47 PREEMPT(voluntary)  7ca2cef72d5e9c600f0c7718adb6462de8149622
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-2-gc13ff2cd-prebuilt.qemu.org 04/01/2014
- RIP: 0010:trace_event_raw_event_btrfs__prelim_ref+0x72/0x130
- Code: e8 43 81 9f ff 48 85 c0 74 78 4d 85 e4 0f 84 8f 00 00 00 49 8b 94 24 c0 06 00 00 48 8b 0a 48 89 48 08 48 8b 52 08 48 89 50 10 <49> 8b 55 18 48 89 50 18 49 8b 55 20 48 89 50 20 41 0f b6 55 28 88
- RSP: 0018:ffffce44820077a0 EFLAGS: 00010286
- RAX: ffff8c6b403f9014 RBX: ffff8c6b55825730 RCX: 304994edf9cf506b
- RDX: d8b11eb7f0fdb699 RSI: ffff8c6b403f9010 RDI: ffff8c6b403f9010
- RBP: 0000000000000001 R08: 0000000000000001 R09: 0000000000000010
- R10: 00000000ffffffff R11: 0000000000000000 R12: ffff8c6b4e8fb000
- R13: 0000000000000000 R14: ffffce44820077a8 R15: ffff8c6b4abd1540
- FS:  00007f4dc6813740(0000) GS:ffff8c6c1d378000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000018 CR3: 000000010eb42000 CR4: 0000000000750ef0
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  prelim_ref_insert+0x1c1/0x270
-  find_parent_nodes+0x12a6/0x1ee0
-  ? __entry_text_end+0x101f06/0x101f09
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  btrfs_is_data_extent_shared+0x167/0x640
-  ? fiemap_process_hole+0xd0/0x2c0
-  extent_fiemap+0xa5c/0xbc0
-  ? __entry_text_end+0x101f05/0x101f09
-  btrfs_fiemap+0x7e/0xd0
-  do_vfs_ioctl+0x425/0x9d0
-  __x64_sys_ioctl+0x75/0xc0
-
-Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/btrfs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/extent_io.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/trace/events/btrfs.h b/include/trace/events/btrfs.h
-index 549ab3b419618..3efc00cc1bcd2 100644
---- a/include/trace/events/btrfs.h
-+++ b/include/trace/events/btrfs.h
-@@ -1928,7 +1928,7 @@ DECLARE_EVENT_CLASS(btrfs__prelim_ref,
- 	TP_PROTO(const struct btrfs_fs_info *fs_info,
- 		 const struct prelim_ref *oldref,
- 		 const struct prelim_ref *newref, u64 tree_size),
--	TP_ARGS(fs_info, newref, oldref, tree_size),
-+	TP_ARGS(fs_info, oldref, newref, tree_size),
- 
- 	TP_STRUCT__entry_btrfs(
- 		__field(	u64,  root_id		)
+diff --git a/fs/btrfs/extent_io.h b/fs/btrfs/extent_io.h
+index 6c5328bfabc22..2aefc64cdd295 100644
+--- a/fs/btrfs/extent_io.h
++++ b/fs/btrfs/extent_io.h
+@@ -297,6 +297,8 @@ static inline int num_extent_pages(const struct extent_buffer *eb)
+  */
+ static inline int num_extent_folios(const struct extent_buffer *eb)
+ {
++	if (!eb->folios[0])
++		return 0;
+ 	if (folio_order(eb->folios[0]))
+ 		return 1;
+ 	return num_extent_pages(eb);
 -- 
 2.39.5
 
