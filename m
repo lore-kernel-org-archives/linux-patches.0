@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE961185E7F;
-	Tue, 27 May 2025 17:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A4E185E7F;
+	Tue, 27 May 2025 17:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366537; cv=none; b=DUQnJLQXg6kdZx0kwBuyRmORPBFRc58AozEcUz1D39JV+pa6q+CwU/7AcFo8G5jKOyqF20rDIzl9yL7xv12YXIHBS/H81X58dRoNjGVQV+Krr5dQ5N1o8wUEsokXjVDNos++VEtm81OHwhTInWxRCetLdxq0Ta5QxG8/XUHzuPo=
+	t=1748366540; cv=none; b=aTcbPrCME07/HNAwcKBhnH6Zj9mvDkOpMXfqrrddhN51RpYgjuI2dhlaN2tTxj4eCBqR1OItfQ8J1Y8PRWaRTmVfvgy2c1ExmUCx/ijpuoxQAroIoT3F0v72RBIocv8TAG6RRq/tDGICp85WBrTwd+mKrZHQvjnVacEyFLqhvTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366537; c=relaxed/simple;
-	bh=zx7eillJqVfHTN37E0uTtResbLiZpr1GSyxahV+HVNU=;
+	s=arc-20240116; t=1748366540; c=relaxed/simple;
+	bh=2CfYq+rY94Xwc1DyKRTtQidV5Uo773feZ8sIrtlIR8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OHM+c2F6u+oLqbrWj2lrSNv2XozzubbV90ohkDfu4CNz5mvyJCEQKbPesLcZ+3iiW8VBhPku/fdoWa6L5ZABQR8Bam9FJ+UfDkwNzeKssbVp4TQFKzqsOHicVN1DfXRBRV+DwRQ0QwyEGR/q2jahIK1RcDFht/U9z3YLsGGepJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVOza0kQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pitPEpGs22rZ2nvyD6dSszFz6emY33ybRQZ/MooB0dSsIHTMDl9twRM+3C5bPkOy2YFaADdkiXzw4I8kNcO/lIdoMoNAU5qcHMbzrm+TZZ2e0UyjkKqBtO/nqi62xFuuVzPaidEaG7v3NG0JcfA/nZPegtYm2dsvKu6rEk4a4yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kafh3KTE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVOza0kQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34752C4CEE9;
-	Tue, 27 May 2025 17:22:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kafh3KTE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24616C4CEE9;
+	Tue, 27 May 2025 17:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366537;
-	bh=zx7eillJqVfHTN37E0uTtResbLiZpr1GSyxahV+HVNU=;
+	s=korg; t=1748366540;
+	bh=2CfYq+rY94Xwc1DyKRTtQidV5Uo773feZ8sIrtlIR8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bVOza0kQoTFm8hrsG8kxkDkqsrJpgnmCyego9M38vluvdRtXYino4ua4l24iIJdgd
-	 lpQk2KCLMRV5p7BvAgybxpeqSzgFLZE4wvlb/tlGL/YmMHBX5SeXKLHc7M7QkKLiQU
-	 wf8TIEHd+8GRAUF6+eGnOl3FjU/sb4O2GmmSAIVA=
+	b=kafh3KTEZlZMOwShX2MFgpBafdddlemI9LxqZhN8s1Bc1Ovw2UhrY3vXIWHdhYVSE
+	 H071/GHVCPWvTYAK0EM/dS2sWU5oC2FGXVb5ea10LIDrg+84+HA8hwPcgcs+Rxfbwx
+	 qy+NKGqyWaKkuQDcRCrusfQnaiWvgGDzFguPMUSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans-Frieder Vogt <hfdevel@gmx.net>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 083/783] net: tn40xx: create swnode for mdio and aqr105 phy and add to mdiobus
-Date: Tue, 27 May 2025 18:18:00 +0200
-Message-ID: <20250527162516.521915386@linuxfoundation.org>
+Subject: [PATCH 6.14 101/783] drm/amdgpu: rework how isolation is enforced v2
+Date: Tue, 27 May 2025 18:18:18 +0200
+Message-ID: <20250527162517.255801839@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -46,244 +46,350 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans-Frieder Vogt <hfdevel@gmx.net>
+From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit 25b6a6d29d4082f6ac231c056ac321a996eb55c9 ]
+[ Upstream commit bd22e44ad415ac22e3a4f9a983d2a085f6cb4427 ]
 
-In case of an AQR105-based device, create a software node for the mdio
-function, with a child node for the Aquantia AQR105 PHY, providing a
-firmware-name (and a bit more, which may be used for future checks) to
-allow the PHY to load a MAC specific firmware from the file system.
+Limiting the number of available VMIDs to enforce isolation causes some
+issues with gang submit and applying certain HW workarounds which
+require multiple VMIDs to work correctly.
 
-The name of the PHY software node follows the naming convention suggested
-in the patch for the mdiobus_scan function (in the same patch series).
+So instead start to track all submissions to the relevant engines in a
+per partition data structure and use the dma_fences of the submissions
+to enforce isolation similar to what a VMID limit does.
 
-Signed-off-by: Hans-Frieder Vogt <hfdevel@gmx.net>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250322-tn9510-v3a-v7-5-672a9a3d8628@gmx.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+v2: use ~0l for jobs without isolation to distinct it from kernel
+    submissions which uses NULL for the owner. Add some warning when we
+    are OOM.
+
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Acked-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/tehuti/tn40.c      |  5 +-
- drivers/net/ethernet/tehuti/tn40.h      | 33 ++++++++++
- drivers/net/ethernet/tehuti/tn40_mdio.c | 82 ++++++++++++++++++++++++-
- 3 files changed, 117 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h        | 13 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 98 +++++++++++++++++++++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c    | 43 ++++------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_job.c    | 16 +++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c   | 19 +++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_sync.h   |  1 +
+ 6 files changed, 155 insertions(+), 35 deletions(-)
 
-diff --git a/drivers/net/ethernet/tehuti/tn40.c b/drivers/net/ethernet/tehuti/tn40.c
-index a6965258441c4..558b791a97edd 100644
---- a/drivers/net/ethernet/tehuti/tn40.c
-+++ b/drivers/net/ethernet/tehuti/tn40.c
-@@ -1778,7 +1778,7 @@ static int tn40_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	ret = tn40_phy_register(priv);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to set up PHY.\n");
--		goto err_free_irq;
-+		goto err_cleanup_swnodes;
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu.h b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+index 416d2611fbf1c..90f688b3d9d36 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -1187,9 +1187,15 @@ struct amdgpu_device {
+ 	bool                            debug_enable_ras_aca;
+ 	bool                            debug_exp_resets;
  
- 	ret = tn40_priv_init(priv);
-@@ -1795,6 +1795,8 @@ static int tn40_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	return 0;
- err_unregister_phydev:
- 	tn40_phy_unregister(priv);
-+err_cleanup_swnodes:
-+	tn40_swnodes_cleanup(priv);
- err_free_irq:
- 	pci_free_irq_vectors(pdev);
- err_unset_drvdata:
-@@ -1816,6 +1818,7 @@ static void tn40_remove(struct pci_dev *pdev)
- 	unregister_netdev(ndev);
+-	bool				enforce_isolation[MAX_XCP];
+-	/* Added this mutex for cleaner shader isolation between GFX and compute processes */
++	/* Protection for the following isolation structure */
+ 	struct mutex                    enforce_isolation_mutex;
++	bool				enforce_isolation[MAX_XCP];
++	struct amdgpu_isolation {
++		void			*owner;
++		struct dma_fence	*spearhead;
++		struct amdgpu_sync	active;
++		struct amdgpu_sync	prev;
++	} isolation[MAX_XCP];
  
- 	tn40_phy_unregister(priv);
-+	tn40_swnodes_cleanup(priv);
- 	pci_free_irq_vectors(priv->pdev);
- 	pci_set_drvdata(pdev, NULL);
- 	iounmap(priv->regs);
-diff --git a/drivers/net/ethernet/tehuti/tn40.h b/drivers/net/ethernet/tehuti/tn40.h
-index 490781fe51205..25da8686d4691 100644
---- a/drivers/net/ethernet/tehuti/tn40.h
-+++ b/drivers/net/ethernet/tehuti/tn40.h
-@@ -4,10 +4,13 @@
- #ifndef _TN40_H_
- #define _TN40_H_
- 
-+#include <linux/property.h>
- #include "tn40_regs.h"
- 
- #define TN40_DRV_NAME "tn40xx"
- 
-+#define PCI_DEVICE_ID_TEHUTI_TN9510	0x4025
-+
- #define TN40_MDIO_SPEED_1MHZ (1)
- #define TN40_MDIO_SPEED_6MHZ (6)
- 
-@@ -102,10 +105,39 @@ struct tn40_txdb {
- 	int size; /* Number of elements in the db */
+ 	struct amdgpu_init_level *init_lvl;
  };
+@@ -1470,6 +1476,9 @@ void amdgpu_device_pcie_port_wreg(struct amdgpu_device *adev,
+ struct dma_fence *amdgpu_device_get_gang(struct amdgpu_device *adev);
+ struct dma_fence *amdgpu_device_switch_gang(struct amdgpu_device *adev,
+ 					    struct dma_fence *gang);
++struct dma_fence *amdgpu_device_enforce_isolation(struct amdgpu_device *adev,
++						  struct amdgpu_ring *ring,
++						  struct amdgpu_job *job);
+ bool amdgpu_device_has_display_hardware(struct amdgpu_device *adev);
+ ssize_t amdgpu_get_soft_full_reset_mask(struct amdgpu_ring *ring);
+ ssize_t amdgpu_show_reset_mask(char *buf, uint32_t supported_reset);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 34f0451b274c8..726c4854e6296 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4232,6 +4232,11 @@ int amdgpu_device_init(struct amdgpu_device *adev,
+ 	mutex_init(&adev->gfx.reset_sem_mutex);
+ 	/* Initialize the mutex for cleaner shader isolation between GFX and compute processes */
+ 	mutex_init(&adev->enforce_isolation_mutex);
++	for (i = 0; i < MAX_XCP; ++i) {
++		adev->isolation[i].spearhead = dma_fence_get_stub();
++		amdgpu_sync_create(&adev->isolation[i].active);
++		amdgpu_sync_create(&adev->isolation[i].prev);
++	}
+ 	mutex_init(&adev->gfx.kfd_sch_mutex);
  
-+#define NODE_PROP(_NAME, _PROP)	(		\
-+	(const struct software_node) {		\
-+		.name = _NAME,			\
-+		.properties = _PROP,		\
-+	})
-+
-+#define NODE_PAR_PROP(_NAME, _PAR, _PROP)	(	\
-+	(const struct software_node) {		\
-+		.name = _NAME,			\
-+		.parent = _PAR,			\
-+		.properties = _PROP,		\
-+	})
-+
-+enum tn40_swnodes {
-+	SWNODE_MDIO,
-+	SWNODE_PHY,
-+	SWNODE_MAX
-+};
-+
-+struct tn40_nodes {
-+	char phy_name[32];
-+	char mdio_name[32];
-+	struct property_entry phy_props[3];
-+	struct software_node swnodes[SWNODE_MAX];
-+	const struct software_node *group[SWNODE_MAX + 1];
-+};
-+
- struct tn40_priv {
- 	struct net_device *ndev;
- 	struct pci_dev *pdev;
+ 	amdgpu_device_init_apu_flags(adev);
+@@ -4731,7 +4736,7 @@ void amdgpu_device_fini_hw(struct amdgpu_device *adev)
  
-+	struct tn40_nodes nodes;
-+
- 	struct napi_struct napi;
- 	/* RX FIFOs: 1 for data (full) descs, and 2 for free descs */
- 	struct tn40_rxd_fifo rxd_fifo0;
-@@ -225,6 +257,7 @@ static inline void tn40_write_reg(struct tn40_priv *priv, u32 reg, u32 val)
- 
- int tn40_set_link_speed(struct tn40_priv *priv, u32 speed);
- 
-+void tn40_swnodes_cleanup(struct tn40_priv *priv);
- int tn40_mdiobus_init(struct tn40_priv *priv);
- 
- int tn40_phy_register(struct tn40_priv *priv);
-diff --git a/drivers/net/ethernet/tehuti/tn40_mdio.c b/drivers/net/ethernet/tehuti/tn40_mdio.c
-index af18615d64a8a..5bb0cbc87d064 100644
---- a/drivers/net/ethernet/tehuti/tn40_mdio.c
-+++ b/drivers/net/ethernet/tehuti/tn40_mdio.c
-@@ -14,6 +14,8 @@
- 	 (FIELD_PREP(TN40_MDIO_PRTAD_MASK, (port))))
- #define TN40_MDIO_CMD_READ BIT(15)
- 
-+#define AQR105_FIRMWARE "tehuti/aqr105-tn40xx.cld"
-+
- static void tn40_mdio_set_speed(struct tn40_priv *priv, u32 speed)
+ void amdgpu_device_fini_sw(struct amdgpu_device *adev)
  {
- 	void __iomem *regs = priv->regs;
-@@ -111,6 +113,56 @@ static int tn40_mdio_write_c45(struct mii_bus *mii_bus, int addr, int devnum,
- 	return  tn40_mdio_write(mii_bus->priv, addr, devnum, regnum, val);
+-	int idx;
++	int i, idx;
+ 	bool px;
+ 
+ 	amdgpu_device_ip_fini(adev);
+@@ -4739,6 +4744,11 @@ void amdgpu_device_fini_sw(struct amdgpu_device *adev)
+ 	amdgpu_ucode_release(&adev->firmware.gpu_info_fw);
+ 	adev->accel_working = false;
+ 	dma_fence_put(rcu_dereference_protected(adev->gang_submit, true));
++	for (i = 0; i < MAX_XCP; ++i) {
++		dma_fence_put(adev->isolation[i].spearhead);
++		amdgpu_sync_free(&adev->isolation[i].active);
++		amdgpu_sync_free(&adev->isolation[i].prev);
++	}
+ 
+ 	amdgpu_reset_fini(adev);
+ 
+@@ -6860,6 +6870,92 @@ struct dma_fence *amdgpu_device_switch_gang(struct amdgpu_device *adev,
+ 	return NULL;
  }
  
-+/* registers an mdio node and an aqr105 PHY at address 1
-+ * tn40_mdio-%id {
-+ *	ethernet-phy@1 {
-+ *		compatible = "ethernet-phy-id03a1.b4a3";
-+ *		reg = <1>;
-+ *		firmware-name = AQR105_FIRMWARE;
-+ *	};
-+ * };
++/**
++ * amdgpu_device_enforce_isolation - enforce HW isolation
++ * @adev: the amdgpu device pointer
++ * @ring: the HW ring the job is supposed to run on
++ * @job: the job which is about to be pushed to the HW ring
++ *
++ * Makes sure that only one client at a time can use the GFX block.
++ * Returns: The dependency to wait on before the job can be pushed to the HW.
++ * The function is called multiple times until NULL is returned.
 + */
-+static int tn40_swnodes_register(struct tn40_priv *priv)
++struct dma_fence *amdgpu_device_enforce_isolation(struct amdgpu_device *adev,
++						  struct amdgpu_ring *ring,
++						  struct amdgpu_job *job)
 +{
-+	struct tn40_nodes *nodes = &priv->nodes;
-+	struct pci_dev *pdev = priv->pdev;
-+	struct software_node *swnodes;
-+	u32 id;
++	struct amdgpu_isolation *isolation = &adev->isolation[ring->xcp_id];
++	struct drm_sched_fence *f = job->base.s_fence;
++	struct dma_fence *dep;
++	void *owner;
++	int r;
 +
-+	id = pci_dev_id(pdev);
++	/*
++	 * For now enforce isolation only for the GFX block since we only need
++	 * the cleaner shader on those rings.
++	 */
++	if (ring->funcs->type != AMDGPU_RING_TYPE_GFX &&
++	    ring->funcs->type != AMDGPU_RING_TYPE_COMPUTE)
++		return NULL;
 +
-+	snprintf(nodes->phy_name, sizeof(nodes->phy_name), "ethernet-phy@1");
-+	snprintf(nodes->mdio_name, sizeof(nodes->mdio_name), "tn40_mdio-%x",
-+		 id);
++	/*
++	 * All submissions where enforce isolation is false are handled as if
++	 * they come from a single client. Use ~0l as the owner to distinct it
++	 * from kernel submissions where the owner is NULL.
++	 */
++	owner = job->enforce_isolation ? f->owner : (void *)~0l;
 +
-+	swnodes = nodes->swnodes;
++	mutex_lock(&adev->enforce_isolation_mutex);
 +
-+	swnodes[SWNODE_MDIO] = NODE_PROP(nodes->mdio_name, NULL);
-+
-+	nodes->phy_props[0] = PROPERTY_ENTRY_STRING("compatible",
-+						    "ethernet-phy-id03a1.b4a3");
-+	nodes->phy_props[1] = PROPERTY_ENTRY_U32("reg", 1);
-+	nodes->phy_props[2] = PROPERTY_ENTRY_STRING("firmware-name",
-+						    AQR105_FIRMWARE);
-+	swnodes[SWNODE_PHY] = NODE_PAR_PROP(nodes->phy_name,
-+					    &swnodes[SWNODE_MDIO],
-+					    nodes->phy_props);
-+
-+	nodes->group[SWNODE_PHY] = &swnodes[SWNODE_PHY];
-+	nodes->group[SWNODE_MDIO] = &swnodes[SWNODE_MDIO];
-+	return software_node_register_node_group(nodes->group);
-+}
-+
-+void tn40_swnodes_cleanup(struct tn40_priv *priv)
-+{
-+	/* cleanup of swnodes is only needed for AQR105-based cards */
-+	if (priv->pdev->device == PCI_DEVICE_ID_TEHUTI_TN9510) {
-+		fwnode_handle_put(dev_fwnode(&priv->mdio->dev));
-+		device_remove_software_node(&priv->mdio->dev);
-+		software_node_unregister_node_group(priv->nodes.group);
++	/*
++	 * The "spearhead" submission is the first one which changes the
++	 * ownership to its client. We always need to wait for it to be
++	 * pushed to the HW before proceeding with anything.
++	 */
++	if (&f->scheduled != isolation->spearhead &&
++	    !dma_fence_is_signaled(isolation->spearhead)) {
++		dep = isolation->spearhead;
++		goto out_grab_ref;
 +	}
++
++	if (isolation->owner != owner) {
++
++		/*
++		 * Wait for any gang to be assembled before switching to a
++		 * different owner or otherwise we could deadlock the
++		 * submissions.
++		 */
++		if (!job->gang_submit) {
++			dep = amdgpu_device_get_gang(adev);
++			if (!dma_fence_is_signaled(dep))
++				goto out_return_dep;
++			dma_fence_put(dep);
++		}
++
++		dma_fence_put(isolation->spearhead);
++		isolation->spearhead = dma_fence_get(&f->scheduled);
++		amdgpu_sync_move(&isolation->active, &isolation->prev);
++		isolation->owner = owner;
++	}
++
++	/*
++	 * Specifying the ring here helps to pipeline submissions even when
++	 * isolation is enabled. If that is not desired for testing NULL can be
++	 * used instead of the ring to enforce a CPU round trip while switching
++	 * between clients.
++	 */
++	dep = amdgpu_sync_peek_fence(&isolation->prev, ring);
++	r = amdgpu_sync_fence(&isolation->active, &f->finished, GFP_NOWAIT);
++	if (r)
++		DRM_WARN("OOM tracking isolation\n");
++
++out_grab_ref:
++	dma_fence_get(dep);
++out_return_dep:
++	mutex_unlock(&adev->enforce_isolation_mutex);
++	return dep;
 +}
 +
- int tn40_mdiobus_init(struct tn40_priv *priv)
+ bool amdgpu_device_has_display_hardware(struct amdgpu_device *adev)
  {
- 	struct pci_dev *pdev = priv->pdev;
-@@ -129,14 +181,40 @@ int tn40_mdiobus_init(struct tn40_priv *priv)
- 
- 	bus->read_c45 = tn40_mdio_read_c45;
- 	bus->write_c45 = tn40_mdio_write_c45;
-+	priv->mdio = bus;
+ 	switch (adev->asic_type) {
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
+index 8e712a11aba5d..9008b7388e897 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
+@@ -287,40 +287,27 @@ static int amdgpu_vmid_grab_reserved(struct amdgpu_vm *vm,
+ 	    (*id)->flushed_updates < updates ||
+ 	    !(*id)->last_flush ||
+ 	    ((*id)->last_flush->context != fence_context &&
+-	     !dma_fence_is_signaled((*id)->last_flush))) {
++	     !dma_fence_is_signaled((*id)->last_flush)))
++		needs_flush = true;
 +
-+	/* provide swnodes for AQR105-based cards only */
-+	if (pdev->device == PCI_DEVICE_ID_TEHUTI_TN9510) {
-+		ret = tn40_swnodes_register(priv);
-+		if (ret) {
-+			pr_err("swnodes failed\n");
-+			return ret;
-+		}
-+
-+		ret = device_add_software_node(&bus->dev,
-+					       priv->nodes.group[SWNODE_MDIO]);
-+		if (ret) {
-+			dev_err(&pdev->dev,
-+				"device_add_software_node failed: %d\n", ret);
-+			goto err_swnodes_unregister;
-+		}
-+	}
++	if ((*id)->owner != vm->immediate.fence_context ||
++	    (!adev->vm_manager.concurrent_flush && needs_flush)) {
+ 		struct dma_fence *tmp;
  
- 	ret = devm_mdiobus_register(&pdev->dev, bus);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to register mdiobus %d %u %u\n",
- 			ret, bus->state, MDIOBUS_UNREGISTERED);
--		return ret;
-+		goto err_swnodes_cleanup;
+-		/* Wait for the gang to be assembled before using a
+-		 * reserved VMID or otherwise the gang could deadlock.
++		/* Don't use per engine and per process VMID at the
++		 * same time
+ 		 */
+-		tmp = amdgpu_device_get_gang(adev);
+-		if (!dma_fence_is_signaled(tmp) && tmp != job->gang_submit) {
++		if (adev->vm_manager.concurrent_flush)
++			ring = NULL;
++
++		/* to prevent one context starved by another context */
++		(*id)->pd_gpu_addr = 0;
++		tmp = amdgpu_sync_peek_fence(&(*id)->active, ring);
++		if (tmp) {
+ 			*id = NULL;
+-			*fence = tmp;
++			*fence = dma_fence_get(tmp);
+ 			return 0;
+ 		}
+-		dma_fence_put(tmp);
+-
+-		/* Make sure the id is owned by the gang before proceeding */
+-		if (!job->gang_submit ||
+-		    (*id)->owner != vm->immediate.fence_context) {
+-
+-			/* Don't use per engine and per process VMID at the
+-			 * same time
+-			 */
+-			if (adev->vm_manager.concurrent_flush)
+-				ring = NULL;
+-
+-			/* to prevent one context starved by another context */
+-			(*id)->pd_gpu_addr = 0;
+-			tmp = amdgpu_sync_peek_fence(&(*id)->active, ring);
+-			if (tmp) {
+-				*id = NULL;
+-				*fence = dma_fence_get(tmp);
+-				return 0;
+-			}
+-		}
+-		needs_flush = true;
  	}
- 	tn40_mdio_set_speed(priv, TN40_MDIO_SPEED_6MHZ);
--	priv->mdio = bus;
+ 
+ 	/* Good we can use this VMID. Remember this submission as
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+index 100f044759435..685c61a05af85 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+@@ -342,17 +342,24 @@ amdgpu_job_prepare_job(struct drm_sched_job *sched_job,
+ {
+ 	struct amdgpu_ring *ring = to_amdgpu_ring(s_entity->rq->sched);
+ 	struct amdgpu_job *job = to_amdgpu_job(sched_job);
+-	struct dma_fence *fence = NULL;
++	struct dma_fence *fence;
+ 	int r;
+ 
+ 	r = drm_sched_entity_error(s_entity);
+ 	if (r)
+ 		goto error;
+ 
+-	if (job->gang_submit)
++	if (job->gang_submit) {
+ 		fence = amdgpu_device_switch_gang(ring->adev, job->gang_submit);
++		if (fence)
++			return fence;
++	}
++
++	fence = amdgpu_device_enforce_isolation(ring->adev, ring, job);
++	if (fence)
++		return fence;
+ 
+-	if (!fence && job->vm && !job->vmid) {
++	if (job->vm && !job->vmid) {
+ 		r = amdgpu_vmid_grab(job->vm, ring, job, &fence);
+ 		if (r) {
+ 			dev_err(ring->adev->dev, "Error getting VM ID (%d)\n", r);
+@@ -365,9 +372,10 @@ amdgpu_job_prepare_job(struct drm_sched_job *sched_job,
+ 		 */
+ 		if (!fence)
+ 			job->vm = NULL;
++		return fence;
+ 	}
+ 
+-	return fence;
++	return NULL;
+ 
+ error:
+ 	dma_fence_set_error(&job->base.s_fence->finished, r);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c
+index c586ab4c911bf..d75715b3f1870 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c
+@@ -399,6 +399,25 @@ int amdgpu_sync_clone(struct amdgpu_sync *source, struct amdgpu_sync *clone)
  	return 0;
-+
-+err_swnodes_unregister:
-+	software_node_unregister_node_group(priv->nodes.group);
-+	return ret;
-+err_swnodes_cleanup:
-+	tn40_swnodes_cleanup(priv);
-+	return ret;
  }
+ 
++/**
++ * amdgpu_sync_move - move all fences from src to dst
++ *
++ * @src: source of the fences, empty after function
++ * @dst: destination for the fences
++ *
++ * Moves all fences from source to destination. All fences in destination are
++ * freed and source is empty after the function call.
++ */
++void amdgpu_sync_move(struct amdgpu_sync *src, struct amdgpu_sync *dst)
++{
++	unsigned int i;
 +
-+MODULE_FIRMWARE(AQR105_FIRMWARE);
++	amdgpu_sync_free(dst);
++
++	for (i = 0; i < HASH_SIZE(src->fences); ++i)
++		hlist_move_list(&src->fences[i], &dst->fences[i]);
++}
++
+ /**
+  * amdgpu_sync_push_to_job - push fences into job
+  * @sync: sync object to get the fences from
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.h
+index e3272dce798d7..a91a8eaf808b1 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.h
+@@ -56,6 +56,7 @@ struct dma_fence *amdgpu_sync_peek_fence(struct amdgpu_sync *sync,
+ 				     struct amdgpu_ring *ring);
+ struct dma_fence *amdgpu_sync_get_fence(struct amdgpu_sync *sync);
+ int amdgpu_sync_clone(struct amdgpu_sync *source, struct amdgpu_sync *clone);
++void amdgpu_sync_move(struct amdgpu_sync *src, struct amdgpu_sync *dst);
+ int amdgpu_sync_push_to_job(struct amdgpu_sync *sync, struct amdgpu_job *job);
+ int amdgpu_sync_wait(struct amdgpu_sync *sync, bool intr);
+ void amdgpu_sync_free(struct amdgpu_sync *sync);
 -- 
 2.39.5
 
