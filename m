@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CB43C01;
-	Tue, 27 May 2025 17:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC002798F8;
+	Tue, 27 May 2025 17:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367295; cv=none; b=ryj3mkZjamjyw+hgTi45o+0pqCC7Q5fTH2Jj/jGfsLeJPPgnSmhk1XTWc7HEB2TTDDIUn4WFF3V7W0XPilfd7GVafqwk/F+ITOFIDcvpZa9IpVskVIi4aHGSMUMzSLOcy+dUcgDQM04aHGVrOnUDI1I5LyJyk8Z28zdKM5GAnCg=
+	t=1748367298; cv=none; b=VwfmUMPOhUdIm+is36DxIl/xo2bVjUFJ6GyE/sVq2Cd60pEGLxqDD6TKSSET+pg+L0omMd+Zy0CAdgOkgibI2IECOqiix+YgmGqnku7ZHjbxd5EoGYkw+LXYdaqZpfp9mDbq2QjnmFA+6Qxm4OBisAdyDAQGWE5E0IZbwVRQ/zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367295; c=relaxed/simple;
-	bh=WxUNYzwH2M2DWlSVn1csG93S+v6sCvJ0tiGUOjKEVB4=;
+	s=arc-20240116; t=1748367298; c=relaxed/simple;
+	bh=zHrp8qOpZ7THRrGKuQqnhqwbAjlWz2LjLtcBB5HFNKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S5V3GbvAAqaKy39u8z4M5cUmjEfb7suKBmW691QoatM2ddS1qLCiJZssu0CjTbO0eXDDn7BAJ3ZnpNsyG72eEgDrmbpjVi9wmCFaIWETMKcTHEaQLu7vqyW22/wPT4QvfLSokbG9cCFw5hdh780zh6z9wiKMhyU8VTaFz3MH5OE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bk3z7xOk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lAKBQNZTS9KqMdONSdQMD0H5XeBsRL9VpdYcj+YxFtiSPgunNDcASXZ0tJIWDUT5IFcGKOS+REGadjeWmdTiFYMil1wD8DQ1fnoHhmPhqO7IVw7MDwoKyfk88ojDdIkq81z5V9U3IRKCNnX7wWIxiNZiaZQPOS0in1RjMd+TTws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gW0CgCup; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bk3z7xOk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345F0C4CEE9;
-	Tue, 27 May 2025 17:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gW0CgCup"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE18C4CEE9;
+	Tue, 27 May 2025 17:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367295;
-	bh=WxUNYzwH2M2DWlSVn1csG93S+v6sCvJ0tiGUOjKEVB4=;
+	s=korg; t=1748367298;
+	bh=zHrp8qOpZ7THRrGKuQqnhqwbAjlWz2LjLtcBB5HFNKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bk3z7xOkB98vJKd43YL76xxmIdenXSvkg27bZgwSUHaPWA4FBbDBQNepmXwK+CynB
-	 /6RjOiY3BTm9CMGC6E1nz86rippzuaQMQnSbRcmfXWoQwVLLeKQbSWiZKAMABQpV/3
-	 fskd/CAgEwsR4/M+s94t2DykWhXRpCMWE4vskPI0=
+	b=gW0CgCup1oNO84gvMptG78+M0p23SzG3uRa75OGNBKMvUfHfeMriFCEclJpEFai6M
+	 UKA5I6q8tVqhLtSMz2gWSOj9piqTrKctd3lQ/Hpr2o0IKBhqwAFjiGgQYjjos03ZLL
+	 +EpwhWeIZHaHqdT+uz2vV8nq/g4dfOO7/NNgswlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Kang Chang <gary.chang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Breno Leitao <leitao@debian.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	David Kaplan <David.Kaplan@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 341/783] wifi: rtw89: Parse channel from IE to correct invalid hardware reports during scanning
-Date: Tue, 27 May 2025 18:22:18 +0200
-Message-ID: <20250527162526.955070445@linuxfoundation.org>
+Subject: [PATCH 6.14 315/783] x86/bugs: Make spectre user default depend on MITIGATION_SPECTRE_V2
+Date: Tue, 27 May 2025 18:21:52 +0200
+Message-ID: <20250527162525.894904213@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,175 +55,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chih-Kang Chang <gary.chang@realtek.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit e16acf907a3c66b9996a5df43e177a5edec8e0a5 ]
+[ Upstream commit 98fdaeb296f51ef08e727a7cc72e5b5c864c4f4d ]
 
-For some packets, we could not get channel information from PPDU status.
-And this causes wrong frequencies being reported. Parse the channel
-information from IE if provided by AP to fix this.
+Change the default value of spectre v2 in user mode to respect the
+CONFIG_MITIGATION_SPECTRE_V2 config option.
 
-Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250220064357.17962-1-pkshih@realtek.com
+Currently, user mode spectre v2 is set to auto
+(SPECTRE_V2_USER_CMD_AUTO) by default, even if
+CONFIG_MITIGATION_SPECTRE_V2 is disabled.
+
+Set the spectre_v2 value to auto (SPECTRE_V2_USER_CMD_AUTO) if the
+Spectre v2 config (CONFIG_MITIGATION_SPECTRE_V2) is enabled, otherwise
+set the value to none (SPECTRE_V2_USER_CMD_NONE).
+
+Important to say the command line argument "spectre_v2_user" overwrites
+the default value in both cases.
+
+When CONFIG_MITIGATION_SPECTRE_V2 is not set, users have the flexibility
+to opt-in for specific mitigations independently. In this scenario,
+setting spectre_v2= will not enable spectre_v2_user=, and command line
+options spectre_v2_user and spectre_v2 are independent when
+CONFIG_MITIGATION_SPECTRE_V2=n.
+
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: David Kaplan <David.Kaplan@amd.com>
+Link: https://lore.kernel.org/r/20241031-x86_bugs_last_v2-v2-2-b7ff1dab840e@debian.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.c     | 44 +++++++++++++++++++
- drivers/net/wireless/realtek/rtw89/core.h     |  1 +
- drivers/net/wireless/realtek/rtw89/rtw8851b.c |  1 +
- drivers/net/wireless/realtek/rtw89/rtw8852a.c |  1 +
- drivers/net/wireless/realtek/rtw89/rtw8852b.c |  1 +
- .../net/wireless/realtek/rtw89/rtw8852bt.c    |  1 +
- drivers/net/wireless/realtek/rtw89/rtw8852c.c |  1 +
- drivers/net/wireless/realtek/rtw89/rtw8922a.c |  1 +
- 8 files changed, 51 insertions(+)
+ Documentation/admin-guide/kernel-parameters.txt |  2 ++
+ arch/x86/kernel/cpu/bugs.c                      | 10 +++++++---
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index 85f739f1173d8..c84446ec9e4f4 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -2381,6 +2381,49 @@ static void rtw89_core_validate_rx_signal(struct ieee80211_rx_status *rx_status)
- 		rx_status->flag |= RX_FLAG_NO_SIGNAL_VAL;
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index f9e11cebc598c..a8e98f75b610a 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -6602,6 +6602,8 @@
+ 
+ 			Selecting 'on' will also enable the mitigation
+ 			against user space to user space task attacks.
++			Selecting specific mitigation does not force enable
++			user mitigations.
+ 
+ 			Selecting 'off' will disable both the kernel and
+ 			the user space protections.
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index b6994993c39f7..e0e0ecc401947 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1442,9 +1442,13 @@ static __ro_after_init enum spectre_v2_mitigation_cmd spectre_v2_cmd;
+ static enum spectre_v2_user_cmd __init
+ spectre_v2_parse_user_cmdline(void)
+ {
++	enum spectre_v2_user_cmd mode;
+ 	char arg[20];
+ 	int ret, i;
+ 
++	mode = IS_ENABLED(CONFIG_MITIGATION_SPECTRE_V2) ?
++		SPECTRE_V2_USER_CMD_AUTO : SPECTRE_V2_USER_CMD_NONE;
++
+ 	switch (spectre_v2_cmd) {
+ 	case SPECTRE_V2_CMD_NONE:
+ 		return SPECTRE_V2_USER_CMD_NONE;
+@@ -1457,7 +1461,7 @@ spectre_v2_parse_user_cmdline(void)
+ 	ret = cmdline_find_option(boot_command_line, "spectre_v2_user",
+ 				  arg, sizeof(arg));
+ 	if (ret < 0)
+-		return SPECTRE_V2_USER_CMD_AUTO;
++		return mode;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(v2_user_options); i++) {
+ 		if (match_option(arg, ret, v2_user_options[i].option)) {
+@@ -1467,8 +1471,8 @@ spectre_v2_parse_user_cmdline(void)
+ 		}
+ 	}
+ 
+-	pr_err("Unknown user space protection option (%s). Switching to AUTO select\n", arg);
+-	return SPECTRE_V2_USER_CMD_AUTO;
++	pr_err("Unknown user space protection option (%s). Switching to default\n", arg);
++	return mode;
  }
  
-+static void rtw89_core_update_rx_freq_from_ie(struct rtw89_dev *rtwdev,
-+					      struct sk_buff *skb,
-+					      struct ieee80211_rx_status *rx_status)
-+{
-+	struct ieee80211_mgmt *mgmt = (struct ieee80211_mgmt *)skb->data;
-+	size_t hdr_len, ielen;
-+	u8 *variable;
-+	int chan;
-+
-+	if (!rtwdev->chip->rx_freq_frome_ie)
-+		return;
-+
-+	if (!rtwdev->scanning)
-+		return;
-+
-+	if (ieee80211_is_beacon(mgmt->frame_control)) {
-+		variable = mgmt->u.beacon.variable;
-+		hdr_len = offsetof(struct ieee80211_mgmt,
-+				   u.beacon.variable);
-+	} else if (ieee80211_is_probe_resp(mgmt->frame_control)) {
-+		variable = mgmt->u.probe_resp.variable;
-+		hdr_len = offsetof(struct ieee80211_mgmt,
-+				   u.probe_resp.variable);
-+	} else {
-+		return;
-+	}
-+
-+	if (skb->len > hdr_len)
-+		ielen = skb->len - hdr_len;
-+	else
-+		return;
-+
-+	/* The parsing code for both 2GHz and 5GHz bands is the same in this
-+	 * function.
-+	 */
-+	chan = cfg80211_get_ies_channel_number(variable, ielen, NL80211_BAND_2GHZ);
-+	if (chan == -1)
-+		return;
-+
-+	rx_status->band = chan > 14 ? RTW89_BAND_5G : RTW89_BAND_2G;
-+	rx_status->freq = ieee80211_channel_to_frequency(chan, rx_status->band);
-+}
-+
- static void rtw89_core_rx_to_mac80211(struct rtw89_dev *rtwdev,
- 				      struct rtw89_rx_phy_ppdu *phy_ppdu,
- 				      struct rtw89_rx_desc_info *desc_info,
-@@ -2398,6 +2441,7 @@ static void rtw89_core_rx_to_mac80211(struct rtw89_dev *rtwdev,
- 	rtw89_core_update_rx_status_by_ppdu(rtwdev, rx_status, phy_ppdu);
- 	rtw89_core_update_radiotap(rtwdev, skb_ppdu, rx_status);
- 	rtw89_core_validate_rx_signal(rx_status);
-+	rtw89_core_update_rx_freq_from_ie(rtwdev, skb_ppdu, rx_status);
- 
- 	/* In low power mode, it does RX in thread context. */
- 	local_bh_disable();
-diff --git a/drivers/net/wireless/realtek/rtw89/core.h b/drivers/net/wireless/realtek/rtw89/core.h
-index 93e41def81b40..979587e92c849 100644
---- a/drivers/net/wireless/realtek/rtw89/core.h
-+++ b/drivers/net/wireless/realtek/rtw89/core.h
-@@ -4273,6 +4273,7 @@ struct rtw89_chip_info {
- 	bool support_ant_gain;
- 	bool ul_tb_waveform_ctrl;
- 	bool ul_tb_pwr_diff;
-+	bool rx_freq_frome_ie;
- 	bool hw_sec_hdr;
- 	bool hw_mgmt_tx_encrypt;
- 	u8 rf_path_num;
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8851b.c b/drivers/net/wireless/realtek/rtw89/rtw8851b.c
-index c56f70267882a..24d48aced57ac 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8851b.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8851b.c
-@@ -2485,6 +2485,7 @@ const struct rtw89_chip_info rtw8851b_chip_info = {
- 	.support_ant_gain	= false,
- 	.ul_tb_waveform_ctrl	= true,
- 	.ul_tb_pwr_diff		= false,
-+	.rx_freq_frome_ie	= true,
- 	.hw_sec_hdr		= false,
- 	.hw_mgmt_tx_encrypt	= false,
- 	.rf_path_num		= 1,
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852a.c b/drivers/net/wireless/realtek/rtw89/rtw8852a.c
-index 9bd2842c27d50..eeb40a60c2b98 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8852a.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8852a.c
-@@ -2203,6 +2203,7 @@ const struct rtw89_chip_info rtw8852a_chip_info = {
- 	.support_ant_gain	= false,
- 	.ul_tb_waveform_ctrl	= false,
- 	.ul_tb_pwr_diff		= false,
-+	.rx_freq_frome_ie	= true,
- 	.hw_sec_hdr		= false,
- 	.hw_mgmt_tx_encrypt	= false,
- 	.rf_path_num		= 2,
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852b.c b/drivers/net/wireless/realtek/rtw89/rtw8852b.c
-index dfb2bf61b0b83..4335fa85c334b 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8852b.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8852b.c
-@@ -839,6 +839,7 @@ const struct rtw89_chip_info rtw8852b_chip_info = {
- 	.support_ant_gain	= true,
- 	.ul_tb_waveform_ctrl	= true,
- 	.ul_tb_pwr_diff		= false,
-+	.rx_freq_frome_ie	= true,
- 	.hw_sec_hdr		= false,
- 	.hw_mgmt_tx_encrypt	= false,
- 	.rf_path_num		= 2,
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852bt.c b/drivers/net/wireless/realtek/rtw89/rtw8852bt.c
-index bde3e1fb7ca62..7f64a5695486b 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8852bt.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8852bt.c
-@@ -772,6 +772,7 @@ const struct rtw89_chip_info rtw8852bt_chip_info = {
- 	.support_ant_gain	= true,
- 	.ul_tb_waveform_ctrl	= true,
- 	.ul_tb_pwr_diff		= false,
-+	.rx_freq_frome_ie	= true,
- 	.hw_sec_hdr		= false,
- 	.hw_mgmt_tx_encrypt     = false,
- 	.rf_path_num		= 2,
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852c.c b/drivers/net/wireless/realtek/rtw89/rtw8852c.c
-index bc84b15e7826d..9778621d9bc41 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8852c.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8852c.c
-@@ -2998,6 +2998,7 @@ const struct rtw89_chip_info rtw8852c_chip_info = {
- 	.support_ant_gain	= true,
- 	.ul_tb_waveform_ctrl	= false,
- 	.ul_tb_pwr_diff		= true,
-+	.rx_freq_frome_ie	= false,
- 	.hw_sec_hdr		= true,
- 	.hw_mgmt_tx_encrypt	= true,
- 	.rf_path_num		= 2,
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8922a.c b/drivers/net/wireless/realtek/rtw89/rtw8922a.c
-index 11d66bfceb15f..731bc6f18d38b 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8922a.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8922a.c
-@@ -2763,6 +2763,7 @@ const struct rtw89_chip_info rtw8922a_chip_info = {
- 	.support_ant_gain	= false,
- 	.ul_tb_waveform_ctrl	= false,
- 	.ul_tb_pwr_diff		= false,
-+	.rx_freq_frome_ie	= false,
- 	.hw_sec_hdr		= true,
- 	.hw_mgmt_tx_encrypt	= true,
- 	.rf_path_num		= 2,
+ static inline bool spectre_v2_in_ibrs_mode(enum spectre_v2_mitigation mode)
 -- 
 2.39.5
 
