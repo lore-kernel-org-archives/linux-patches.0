@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B13154C15;
-	Tue, 27 May 2025 17:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FC3154C15;
+	Tue, 27 May 2025 17:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365304; cv=none; b=nvtpRmqGPQzXQ0WaJBku3PHrqSg06ke5qvvv8RadwbtNxKqBlafxGP16M76w6Mh0zgXXnlrBqQV/K2aJjIL7E04Edx81vKnjyetJJ+NahDERmkM+f8+Fk26XAu9l+NoVg69nRZ5FMWqhEfeFavAaLs/AlkHNuQLkgcH9S/0tm/4=
+	t=1748365307; cv=none; b=EgojnAr5KGplSfNHYDqMrJduKqANCFanlfd4EUBwa87JHmXUL+dJYHVCBLLtKW/OKM7mX63zuATamO2du6dRPUXTwq75imIZfwoeReE0a4LrW0ORPPfENbSA29i/aR3gVk9ZPZZU/M3DS44nHcKKo/T3p82ghGVSwdYckn1VdFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365304; c=relaxed/simple;
-	bh=oLPGH4bWWAF9nTJ6GssR6AA5vXRd73jVk1YVVjSNnf8=;
+	s=arc-20240116; t=1748365307; c=relaxed/simple;
+	bh=5iIwQzIQ0B8nJQUfZZ6bPzZWlZPxc1hio4htcx2tysQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e2g5hjvfWKoW59QdYYYr0iNiZidRQLKEIVyAGkYwd6Z8lsymgnDrswyPF7zVIrU10FK5w5dqeEoHOfnuV13yQYmekfANMzY7a5XssXazvIAZOYaEmdxgf7vIFkPO/QurClnW5oY7ZtY6VaWtg/OlN6xb/pwVwCY5aNL6uyo7zFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bi4e+ujn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p+jCD5FaACm2HYtAf38/S2CerNcvpzZmQHPpiOtUFkGueCb1vcyldWsxXsJZTuC3swJ7einN/U/zaa4QkI82BsNKInhBdi/Se3wsTJjNfabw5fk1zgaqqGo9h46xTQGt0ckqlWQ955oS5snyMJjH+12hhMrB8Hl4eYP0tEM84gY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DC1ZO4d+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bi4e+ujn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7628CC4CEE9;
-	Tue, 27 May 2025 17:01:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DC1ZO4d+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CDEC4CEE9;
+	Tue, 27 May 2025 17:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365303;
-	bh=oLPGH4bWWAF9nTJ6GssR6AA5vXRd73jVk1YVVjSNnf8=;
+	s=korg; t=1748365306;
+	bh=5iIwQzIQ0B8nJQUfZZ6bPzZWlZPxc1hio4htcx2tysQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bi4e+ujnIZOgeP7krNJRWBti7E+HmhjAlG9HTosoI/Kc9hTjTwOArrDrc5ffRU6ke
-	 7UGQ2diaPUvG85KE+u0EPlGJ5SMHS+0mj8hdYtTObGTRaBe4+oNSPi4A60tWk2ohYC
-	 3Pov2X1tYzI/lVbofSBYvBKmoq9hYEnz1pmQEOuQ=
+	b=DC1ZO4d+KM2irqtqU9uaEhPff1pkk0BwYiPaaQbkg4HkSFWHLnsR0Wq4JCBuMXnxR
+	 K/LEunvI47GUBDc21VFWM47q3EqEPO2pRJ8RMoceEFmiLoC8W9jp3bFVMDdChQdWDg
+	 t58Yx4+7inZvLaO+tV54RcoLMLV+WZE2A1KBqKjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Harry VanZyllDeJong <hvanzyll@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 332/626] drm/amd/pm: Fetch current power limit from PMFW
-Date: Tue, 27 May 2025 18:23:45 +0200
-Message-ID: <20250527162458.513741143@linuxfoundation.org>
+Subject: [PATCH 6.12 333/626] drm/amd/display: Add support for disconnected eDP streams
+Date: Tue, 27 May 2025 18:23:46 +0200
+Message-ID: <20250527162458.553324670@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,33 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Harry VanZyllDeJong <hvanzyll@amd.com>
 
-[ Upstream commit b2a9e562dfa156bd53e62ce571f3f8f65d243f14 ]
+[ Upstream commit 6571bef25fe48c642f7a69ccf7c3198b317c136a ]
 
-On SMU v13.0.12, always query the firmware to get the current power
-limit as it could be updated through other means also.
+[Why]
+eDP may not be connected to the GPU on driver start causing
+fail enumeration.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
+[How]
+Move the virtual signal type check before the eDP connector
+signal check.
+
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: Harry VanZyllDeJong <hvanzyll@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../drm/amd/display/dc/link/protocols/link_dp_capability.c  | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-index 99d2d3092ea54..3fd8da5dc761e 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-@@ -2772,6 +2772,7 @@ int smu_get_power_limit(void *handle,
- 			switch (amdgpu_ip_version(adev, MP1_HWIP, 0)) {
- 			case IP_VERSION(13, 0, 2):
- 			case IP_VERSION(13, 0, 6):
-+			case IP_VERSION(13, 0, 12):
- 			case IP_VERSION(13, 0, 14):
- 			case IP_VERSION(11, 0, 7):
- 			case IP_VERSION(11, 0, 11):
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
+index 23e650e39910e..d9a1e1a599674 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
+@@ -945,6 +945,9 @@ bool link_decide_link_settings(struct dc_stream_state *stream,
+ 		 * TODO: add MST specific link training routine
+ 		 */
+ 		decide_mst_link_settings(link, link_setting);
++	} else if (stream->signal == SIGNAL_TYPE_VIRTUAL) {
++		link_setting->lane_count = LANE_COUNT_FOUR;
++		link_setting->link_rate = LINK_RATE_HIGH3;
+ 	} else if (link->connector_signal == SIGNAL_TYPE_EDP) {
+ 		/* enable edp link optimization for DSC eDP case */
+ 		if (stream->timing.flags.DSC) {
+@@ -967,9 +970,6 @@ bool link_decide_link_settings(struct dc_stream_state *stream,
+ 		} else {
+ 			edp_decide_link_settings(link, link_setting, req_bw);
+ 		}
+-	} else if (stream->signal == SIGNAL_TYPE_VIRTUAL) {
+-		link_setting->lane_count = LANE_COUNT_FOUR;
+-		link_setting->link_rate = LINK_RATE_HIGH3;
+ 	} else {
+ 		decide_dp_link_settings(link, link_setting, req_bw);
+ 	}
 -- 
 2.39.5
 
