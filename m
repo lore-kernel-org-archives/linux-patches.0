@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F151DC998;
-	Tue, 27 May 2025 17:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5A72110E;
+	Tue, 27 May 2025 17:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365471; cv=none; b=UdCdAgtjFOjvru8mqFD4fmVO6jYLBKj6u5lfvVnLlCObP5VkGQY/S2fzo9rXN6TY5HHq7wrrccpkeA4HmGd1WgB8jIDux5Twf7gzJBUBmwpKlvZZH2BlbK5aF62vldfR/EanEZ6K0su3ljGYjbwdDMTXoTnzLkVvqTRdFm8tT7Y=
+	t=1748365474; cv=none; b=Woo6R3rug+3u4Jj8WxDJiVl6Bhxzi4duCiuSjlMYardKvrWQ8gCFNHO7kswjbdOdwAPQam/lpXBMf09OQxQb7JF3mHacquS2BaHoBLwva8j9XvqoELMVTYCErfnDMC5T7Hezo4vtbe+l8mdNvz2xxxz7nrRNxXv8LW30XmLasJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365471; c=relaxed/simple;
-	bh=VRN7l92U9vJc/xLUSyzyjt9fV3Tp2BSPeg8dCyHG7+0=;
+	s=arc-20240116; t=1748365474; c=relaxed/simple;
+	bh=k2V0WKOtKwSVG0D2GbBBEtrtCk+GkDIOw7whRPQAlHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AyZ4eVEjJhfQNHVIpRIqrvsYFeuOunbG2ahX8L1BrlFoy3dAe5A5WJ/FO5uwipp+vB6R2hh6f9ngpkiattbehOWr9Ah7V5ObktNQFghCcSOrvEnulsA0ZzUUnnr0Q9XILMqVizov+7torOfJ8+NsYOfxHafnQSI57l0XHF9SZOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUxlkRfA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZZXzuWbEEImlb8/Gn9b8h5IUZJmzvVFGiyN7i9bGbJnBtrG3qk+5bk5A2iFJ4pygRtHIjT3HAnpSyeJXRf4s22iVvPfwomm8cFFfFgvaANAOgizxGXySL4pBjwuDQ0L43jPIwSPbrWP3gox3W2Ks65P+CX07wRLkiFCqveTzxn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXhzjwGW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUxlkRfA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB97C4CEE9;
-	Tue, 27 May 2025 17:04:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXhzjwGW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF08AC4CEE9;
+	Tue, 27 May 2025 17:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365471;
-	bh=VRN7l92U9vJc/xLUSyzyjt9fV3Tp2BSPeg8dCyHG7+0=;
+	s=korg; t=1748365474;
+	bh=k2V0WKOtKwSVG0D2GbBBEtrtCk+GkDIOw7whRPQAlHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QUxlkRfAgSWrShVOQHonzatRX4XX6yiaAnD+rlwjeaY/WdRsBZ4zjurv5KgyHbVM9
-	 oSm6BCM8tdxd0+yBB554ibCk5gEe6xD218COSfopmp5iYIfUQhUjTe/sKJfEFHrIaQ
-	 raWBh9omqp7jvD4WNaWRRQwsfAei+vOcHbKGyiyg=
+	b=qXhzjwGWNyR0VNhdhsT4lDMBrtXbil2F/l9vULT6WDtxsmgz0JgTSpmTqxYcYQKa3
+	 Feuo3KOGBTxKuXTrJ4dLX8V4NS4iI1FtJ2Psgd+y5WGI11PLvqUP3v04vpYtBKKa1l
+	 6GJCEzDAi1izOxuPoUVKe6lCJrV08Ujy3+7PzyI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Eric Huang <jinhuieric.huang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 387/626] drm/amdgpu/mes11: fix set_hw_resources_1 calculation
-Date: Tue, 27 May 2025 18:24:40 +0200
-Message-ID: <20250527162500.744494561@linuxfoundation.org>
+Subject: [PATCH 6.12 388/626] drm/amdkfd: fix missing L2 cache info in topology
+Date: Tue, 27 May 2025 18:24:41 +0200
+Message-ID: <20250527162500.785188493@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -46,43 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Eric Huang <jinhuieric.huang@amd.com>
 
-[ Upstream commit 1350dd3691b5f757a948e5b9895d62c422baeb90 ]
+[ Upstream commit 5ffd56822a7159917306d99f18fd15dfd7288f20 ]
 
-It's GPU page size not CPU page size.  In most cases they
-are the same, but not always.  This can lead to overallocation
-on systems with larger pages.
+In some ASICs L2 cache info may miss in kfd topology,
+because the first bitmap may be empty, that means
+the first cu may be inactive, so to find the first
+active cu will solve the issue.
 
-Cc: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+v2: Only find the first active cu in the first xcc
+
+Signed-off-by: Eric Huang <jinhuieric.huang@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Acked-by: Lijo Lazar <lijo.lazar@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mes_v11_0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_topology.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-index 7a773fcd7752c..49113df8baefd 100644
---- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-@@ -690,7 +690,7 @@ static int mes_v11_0_set_hw_resources(struct amdgpu_mes *mes)
- 
- static int mes_v11_0_set_hw_resources_1(struct amdgpu_mes *mes)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
+index bcb5cdc4a9d81..82da568604b6e 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
+@@ -1683,17 +1683,32 @@ static int fill_in_l2_l3_pcache(struct kfd_cache_properties **props_ext,
+ 				int cache_type, unsigned int cu_processor_id,
+ 				struct kfd_node *knode)
  {
--	int size = 128 * PAGE_SIZE;
-+	int size = 128 * AMDGPU_GPU_PAGE_SIZE;
- 	int ret = 0;
- 	struct amdgpu_device *adev = mes->adev;
- 	union MESAPI_SET_HW_RESOURCES_1 mes_set_hw_res_pkt;
+-	unsigned int cu_sibling_map_mask;
++	unsigned int cu_sibling_map_mask = 0;
+ 	int first_active_cu;
+ 	int i, j, k, xcc, start, end;
+ 	int num_xcc = NUM_XCC(knode->xcc_mask);
+ 	struct kfd_cache_properties *pcache = NULL;
+ 	enum amdgpu_memory_partition mode;
+ 	struct amdgpu_device *adev = knode->adev;
++	bool found = false;
+ 
+ 	start = ffs(knode->xcc_mask) - 1;
+ 	end = start + num_xcc;
+-	cu_sibling_map_mask = cu_info->bitmap[start][0][0];
++
++	/* To find the bitmap in the first active cu in the first
++	 * xcc, it is based on the assumption that evrey xcc must
++	 * have at least one active cu.
++	 */
++	for (i = 0; i < gfx_info->max_shader_engines && !found; i++) {
++		for (j = 0; j < gfx_info->max_sh_per_se && !found; j++) {
++			if (cu_info->bitmap[start][i % 4][j % 4]) {
++				cu_sibling_map_mask =
++					cu_info->bitmap[start][i % 4][j % 4];
++				found = true;
++			}
++		}
++	}
++
+ 	cu_sibling_map_mask &=
+ 		((1 << pcache_info[cache_type].num_cu_shared) - 1);
+ 	first_active_cu = ffs(cu_sibling_map_mask);
 -- 
 2.39.5
 
