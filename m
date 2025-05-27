@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5531127BF8D;
-	Tue, 27 May 2025 17:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439DE27CCF0;
+	Tue, 27 May 2025 17:50:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368247; cv=none; b=iHRYX+/+j3yAgfxlrccDJIyj2IwPTPBCgpUaq71BAHxuWIC0Nz8wvuHCw/kKBOYm5136HrL7n+VBnJ0RVDw2yDkw7rybvcIs2aGqT7dumOJMz5Hw7WlxKl/Wx4FqhNNAOY1PvrHfiDkLDzsmr9Tjj2vpdg8YvYLYmKvpD6pcoPM=
+	t=1748368250; cv=none; b=hnzTpGo6nZQqe7ip3/dnje2BTJ1ikg2uCB9/g1pbpkMa7uLNJ8Y+YpljliZBI9Cs8ceurWI5djm4dgx24/Jg0nW+WnIf7sJekFyRCRJX1z7tsH82be0NWIHNMQF79sHZXerr7t8WavRghsvCJDTK8SCTtAyjEEgEt4M4j5TPE2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368247; c=relaxed/simple;
-	bh=2Adm7+Tpu8XnShht4dyMqa6QC2MfQxih0LoXXIYB9+8=;
+	s=arc-20240116; t=1748368250; c=relaxed/simple;
+	bh=rZlocFC/9CXgnRdHmDkkDp9F2s0elXvjb2m/90bPpzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BHzPNzTsg7SI9h2VF9Y7hmEBJFEpRe00JUDur0QmH5TmgAI7fLtc30ASZk19JfF7snHmq0ROli6lCHVaUT1S+Jvzb9ntTaOcjUQdU5lpi+fFHKseylCc1HDZSrJPOct2jbzwqEkLAHjGUuGY2yq41e0hRr+hvR26Vhh+Ta/wkzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FpZMVgdJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q1cY7lwdR1X51O2IWqSQ+1Fpo+ubGYsHKyTqrQzlrPZXOZ7heZJm9hhPawOpDy5O0wLx6wCzR9s0RJjGXyvGveJAhXFfYnbQW2IVdrkESUTApM/aQudbkobFacsp8wYaB85vGvVXHeyi0+uAYevL0S66TO8atZguML0gcy+jkQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w3pxRcvl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FpZMVgdJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87EFC4CEE9;
-	Tue, 27 May 2025 17:50:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3pxRcvl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C630BC4CEEA;
+	Tue, 27 May 2025 17:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368247;
-	bh=2Adm7+Tpu8XnShht4dyMqa6QC2MfQxih0LoXXIYB9+8=;
+	s=korg; t=1748368250;
+	bh=rZlocFC/9CXgnRdHmDkkDp9F2s0elXvjb2m/90bPpzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FpZMVgdJDR6n6NY3K92O/CFS8rH+U0pW0w172d+OSEHFCLD33670cw7hF/uAzV4l5
-	 FkolaJRbdGjOgeTxlP8z7nbkk3cBaLdoDnIOhMRHV2uGACd7dS5dlaFPJ4pniA364R
-	 N1fcasr+29fznD2hcUmU2KkB2KvzvqN+5l1kHijM=
+	b=w3pxRcvlDy485v4CC2XdJdvpnphOecURJiFjswU7cvXoNCwQ/T+RGslyRuzI8mq/+
+	 5jBg1o4CAHG/nl7pQJV/xQA0XWW4tTpOz8dNo578ydXF6EZ1nUzPl8ZsVYDGjzR410
+	 +dlzVDzE9NAdpWQ0KIW61zQeUGBQsmouy0yDYWGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Maarten Lankhorst <dev@lankhorst.se>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 615/783] drm/ast: Hide Gens 1 to 3 TX detection in branch
-Date: Tue, 27 May 2025 18:26:52 +0200
-Message-ID: <20250527162538.195798659@linuxfoundation.org>
+Subject: [PATCH 6.14 616/783] drm/xe: Move suballocator init to after display init
+Date: Tue, 27 May 2025 18:26:53 +0200
+Message-ID: <20250527162538.234194269@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,67 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Maarten Lankhorst <dev@lankhorst.se>
 
-[ Upstream commit 87478ba50a05a1f44508316ae109622e8a85adc9 ]
+[ Upstream commit 380b0cdaa76bc8f5c16db16eaf48751e792ff041 ]
 
-Gen7 only supports ASTDP. Gens 4 to 6 support various TX chips,
-except ASTDP. These boards detect the TX chips by reading the SoC
-scratch register as VGACRD1.
+No allocations should be done before we have had a chance to preserve
+the display fb.
 
-Gens 1 to 3 only support SIL164. These boards read the DVO bit from
-VGACRA3. Hence move this test behind a branch, so that it does not
-run on later generations.
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250117103450.28692-6-tzimmermann@suse.de
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241210083111.230484-4-dev@lankhorst.se
+Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ast/ast_main.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/xe/xe_device.c |  6 ++++++
+ drivers/gpu/drm/xe/xe_tile.c   | 12 ++++++++----
+ drivers/gpu/drm/xe/xe_tile.h   |  1 +
+ 3 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/ast/ast_main.c b/drivers/gpu/drm/ast/ast_main.c
-index bc37c65305d48..96470fc8e6e53 100644
---- a/drivers/gpu/drm/ast/ast_main.c
-+++ b/drivers/gpu/drm/ast/ast_main.c
-@@ -96,21 +96,21 @@ static void ast_detect_tx_chip(struct ast_device *ast, bool need_post)
- 	/* Check 3rd Tx option (digital output afaik) */
- 	ast->tx_chip = AST_TX_NONE;
+diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
+index e22f29ac96631..74516e73ba4e5 100644
+--- a/drivers/gpu/drm/xe/xe_device.c
++++ b/drivers/gpu/drm/xe/xe_device.c
+@@ -736,6 +736,12 @@ int xe_device_probe(struct xe_device *xe)
+ 	if (err)
+ 		goto err;
  
--	/*
--	 * VGACRA3 Enhanced Color Mode Register, check if DVO is already
--	 * enabled, in that case, assume we have a SIL164 TMDS transmitter
--	 *
--	 * Don't make that assumption if we the chip wasn't enabled and
--	 * is at power-on reset, otherwise we'll incorrectly "detect" a
--	 * SIL164 when there is none.
--	 */
--	if (!need_post) {
--		jreg = ast_get_index_reg_mask(ast, AST_IO_VGACRI, 0xa3, 0xff);
--		if (jreg & 0x80)
--			ast->tx_chip = AST_TX_SIL164;
--	}
++	for_each_tile(tile, xe, id) {
++		err = xe_tile_init(tile);
++		if (err)
++			goto err;
++	}
++
+ 	for_each_gt(gt, xe, id) {
+ 		last_gt = id;
+ 
+diff --git a/drivers/gpu/drm/xe/xe_tile.c b/drivers/gpu/drm/xe/xe_tile.c
+index 37f170effcd67..377438ea6b838 100644
+--- a/drivers/gpu/drm/xe/xe_tile.c
++++ b/drivers/gpu/drm/xe/xe_tile.c
+@@ -170,15 +170,19 @@ int xe_tile_init_noalloc(struct xe_tile *tile)
+ 	if (err)
+ 		return err;
+ 
+-	tile->mem.kernel_bb_pool = xe_sa_bo_manager_init(tile, SZ_1M, 16);
+-	if (IS_ERR(tile->mem.kernel_bb_pool))
+-		return PTR_ERR(tile->mem.kernel_bb_pool);
 -
--	if (IS_AST_GEN4(ast) || IS_AST_GEN5(ast) || IS_AST_GEN6(ast)) {
-+	if (AST_GEN(ast) <= 3) {
-+		/*
-+		 * VGACRA3 Enhanced Color Mode Register, check if DVO is already
-+		 * enabled, in that case, assume we have a SIL164 TMDS transmitter
-+		 *
-+		 * Don't make that assumption if we the chip wasn't enabled and
-+		 * is at power-on reset, otherwise we'll incorrectly "detect" a
-+		 * SIL164 when there is none.
-+		 */
-+		if (!need_post) {
-+			jreg = ast_get_index_reg_mask(ast, AST_IO_VGACRI, 0xa3, 0xff);
-+			if (jreg & 0x80)
-+				ast->tx_chip = AST_TX_SIL164;
-+		}
-+	} else if (IS_AST_GEN4(ast) || IS_AST_GEN5(ast) || IS_AST_GEN6(ast)) {
- 		/*
- 		 * On AST GEN4+, look the configuration set by the SoC in
- 		 * the SOC scratch register #1 bits 11:8 (interestingly marked
+ 	xe_wa_apply_tile_workarounds(tile);
+ 
+ 	return xe_tile_sysfs_init(tile);
+ }
+ 
++int xe_tile_init(struct xe_tile *tile)
++{
++	tile->mem.kernel_bb_pool = xe_sa_bo_manager_init(tile, SZ_1M, 16);
++	if (IS_ERR(tile->mem.kernel_bb_pool))
++		return PTR_ERR(tile->mem.kernel_bb_pool);
++
++	return 0;
++}
+ void xe_tile_migrate_wait(struct xe_tile *tile)
+ {
+ 	xe_migrate_wait(tile->migrate);
+diff --git a/drivers/gpu/drm/xe/xe_tile.h b/drivers/gpu/drm/xe/xe_tile.h
+index 1c9e42ade6b05..eb939316d55b0 100644
+--- a/drivers/gpu/drm/xe/xe_tile.h
++++ b/drivers/gpu/drm/xe/xe_tile.h
+@@ -12,6 +12,7 @@ struct xe_tile;
+ 
+ int xe_tile_init_early(struct xe_tile *tile, struct xe_device *xe, u8 id);
+ int xe_tile_init_noalloc(struct xe_tile *tile);
++int xe_tile_init(struct xe_tile *tile);
+ 
+ void xe_tile_migrate_wait(struct xe_tile *tile);
+ 
 -- 
 2.39.5
 
