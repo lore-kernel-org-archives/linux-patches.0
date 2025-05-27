@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D95A27CCF0;
-	Tue, 27 May 2025 17:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7BFF27CCF0;
+	Tue, 27 May 2025 17:40:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367620; cv=none; b=Hf4+ah3wsp+1VKtyax6HrvA8shiMzILMPo7EPTmBxzBPN2kWKq68DozaqqedxMkeorxL+y3SenkYre/EpAs16RUGq0/Icgp8ShtoWTe8HGmkSvs15eYoUeSvcOtR8yRVLSMyqUX0TnnuO0/CSKz3vt478MBac/tGBDq0D0uqpmE=
+	t=1748367623; cv=none; b=d+Rge88RtXu7GJAZ8Ggbai9djJf3Xu91/nNe6XgvkrQxJICV87Bi8BZaeT2RHppbH8TLs/Ixe3mepwqjERopFwH8L4K8DLa7Hb9hNPRX0MB6yAR7jStJi1YHUiGKl7JU/1at2Z+VGyKf7linfxZdyaoYWbXQLa7TFewqe9WlN1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367620; c=relaxed/simple;
-	bh=4euGbuhsqjwCdLJnx/1dMVZ6cwfLg/+awo+l+zYg49c=;
+	s=arc-20240116; t=1748367623; c=relaxed/simple;
+	bh=21as4LyFmQu5RXwvhJdUPQ5cgs5peOfQgP9yAC6H4tI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=vA1VUo7lQDrx5CXxfXU4c+0wu60ZAGSLb2kHfVqNE6f/plEid6OY/8Og6kvAvqBUGk0UB6kXOsAPWspIOnSl1/UDfBaaQosZ4jq4YnLlbap9GSUj9lpRaR9rECVcv/ET2pjNDts/AO+2ZniQHgIOSNfMbD9lwKXQqVA1lMPxOp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Op5sTVfP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gZyOuP9ILizAGPFCrOc9/0UyVinycMtvsdK5j1eQV/cp/IhXfm9L/KMOVWj4WTFyo6JWK+QkOy38XvLJ0/rRmnwFrjLXJHGb7cHD8sF3af/fYyFwFnBfN7GEJqz/cGi3bifkhoVBoLNRSyXMkuSUxXkY+VdK8BV70v9SGDt1QJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4s1rES5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Op5sTVfP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60186C4CEE9;
-	Tue, 27 May 2025 17:40:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4s1rES5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5686C4CEE9;
+	Tue, 27 May 2025 17:40:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367620;
-	bh=4euGbuhsqjwCdLJnx/1dMVZ6cwfLg/+awo+l+zYg49c=;
+	s=korg; t=1748367623;
+	bh=21as4LyFmQu5RXwvhJdUPQ5cgs5peOfQgP9yAC6H4tI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Op5sTVfPJdOP/XadC01Bt1FtQ/Pf+0F0alhD7j0dmQqtarX34ROlEAdJNjHA8osPV
-	 WAuDJUm1HJPrnJVSgguYBuJB6BdJHu6EAuZjaoBIKAgkTHNAoR8vLjNiAmswrJ0QdR
-	 L4lQk1MkCIdGKroS5CrCqYN8aSKo5ixw4jwKT81s=
+	b=o4s1rES5wnxQWCoQjuHinlfC2AZ/bRwBUs39DPI68PYp9PnHWRX2Zxn84u/7NenoV
+	 RUMZsY04Xj8Y/LjzMqE72wEOV+VezE/oeptUZtdIyN7q5eAqJfQGgoi1hE8aKKAr38
+	 IerMOa5elNfIaAbHyafZHGxyvKn6BoIrjIISRNGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@kernel.org>,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
-	Richard Genoud <richard.genoud@bootlin.com>,
+	Firas Jahjah <firasj@amazon.com>,
+	Yonatan Nachum <ynachum@amazon.com>,
+	Michael Margolin <mrgolin@amazon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 416/783] serial: mctrl_gpio: split disable_ms into sync and no_sync APIs
-Date: Tue, 27 May 2025 18:23:33 +0200
-Message-ID: <20250527162530.044938263@linuxfoundation.org>
+Subject: [PATCH 6.14 417/783] RDMA/core: Fix best page size finding when it can cross SG entries
+Date: Tue, 27 May 2025 18:23:34 +0200
+Message-ID: <20250527162530.085004015@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -46,249 +47,143 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexis Lothoré <alexis.lothore@bootlin.com>
+From: Michael Margolin <mrgolin@amazon.com>
 
-[ Upstream commit 1bd2aad57da95f7f2d2bb52f7ad15c0f4993a685 ]
+[ Upstream commit 486055f5e09df959ad4e3aa4ee75b5c91ddeec2e ]
 
-The following splat has been observed on a SAMA5D27 platform using
-atmel_serial:
+A single scatter-gather entry is limited by a 32 bits "length" field
+that is practically 4GB - PAGE_SIZE. This means that even when the
+memory is physically contiguous, we might need more than one entry to
+represent it. Additionally when using dmabuf, the sg_table might be
+originated outside the subsystem and optimized for other needs.
 
-BUG: sleeping function called from invalid context at kernel/irq/manage.c:738
-in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 27, name: kworker/u5:0
-preempt_count: 1, expected: 0
-INFO: lockdep is turned off.
-irq event stamp: 0
-hardirqs last  enabled at (0): [<00000000>] 0x0
-hardirqs last disabled at (0): [<c01588f0>] copy_process+0x1c4c/0x7bec
-softirqs last  enabled at (0): [<c0158944>] copy_process+0x1ca0/0x7bec
-softirqs last disabled at (0): [<00000000>] 0x0
-CPU: 0 UID: 0 PID: 27 Comm: kworker/u5:0 Not tainted 6.13.0-rc7+ #74
-Hardware name: Atmel SAMA5
-Workqueue: hci0 hci_power_on [bluetooth]
-Call trace:
-  unwind_backtrace from show_stack+0x18/0x1c
-  show_stack from dump_stack_lvl+0x44/0x70
-  dump_stack_lvl from __might_resched+0x38c/0x598
-  __might_resched from disable_irq+0x1c/0x48
-  disable_irq from mctrl_gpio_disable_ms+0x74/0xc0
-  mctrl_gpio_disable_ms from atmel_disable_ms.part.0+0x80/0x1f4
-  atmel_disable_ms.part.0 from atmel_set_termios+0x764/0x11e8
-  atmel_set_termios from uart_change_line_settings+0x15c/0x994
-  uart_change_line_settings from uart_set_termios+0x2b0/0x668
-  uart_set_termios from tty_set_termios+0x600/0x8ec
-  tty_set_termios from ttyport_set_flow_control+0x188/0x1e0
-  ttyport_set_flow_control from wilc_setup+0xd0/0x524 [hci_wilc]
-  wilc_setup [hci_wilc] from hci_dev_open_sync+0x330/0x203c [bluetooth]
-  hci_dev_open_sync [bluetooth] from hci_dev_do_open+0x40/0xb0 [bluetooth]
-  hci_dev_do_open [bluetooth] from hci_power_on+0x12c/0x664 [bluetooth]
-  hci_power_on [bluetooth] from process_one_work+0x998/0x1a38
-  process_one_work from worker_thread+0x6e0/0xfb4
-  worker_thread from kthread+0x3d4/0x484
-  kthread from ret_from_fork+0x14/0x28
+For instance an SGT of 16GB GPU continuous memory might look like this:
+(a real life example)
 
-This warning is emitted when trying to toggle, at the highest level,
-some flow control (with serdev_device_set_flow_control) in a device
-driver. At the lowest level, the atmel_serial driver is using
-serial_mctrl_gpio lib to enable/disable the corresponding IRQs
-accordingly.  The warning emitted by CONFIG_DEBUG_ATOMIC_SLEEP is due to
-disable_irq (called in mctrl_gpio_disable_ms) being possibly called in
-some atomic context (some tty drivers perform modem lines configuration
-in regions protected by port lock).
+dma_address 34401400000, length fffff000
+dma_address 345013ff000, length fffff000
+dma_address 346013fe000, length fffff000
+dma_address 347013fd000, length fffff000
+dma_address 348013fc000, length 4000
 
-Split mctrl_gpio_disable_ms into two differents APIs, a non-blocking one
-and a blocking one. Replace mctrl_gpio_disable_ms calls with the
-relevant version depending on whether the call is protected by some port
-lock.
+Since ib_umem_find_best_pgsz works within SG entries, in the above case
+we will result with the worst possible 4KB page size.
 
-Suggested-by: Jiri Slaby <jirislaby@kernel.org>
-Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
-Acked-by: Richard Genoud <richard.genoud@bootlin.com>
-Link: https://lore.kernel.org/r/20250217-atomic_sleep_mctrl_serial_gpio-v3-1-59324b313eef@bootlin.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by taking into consideration only the alignment of addresses of
+real discontinuity points rather than treating SG entries as such, and
+adjust the page iterator to correctly handle cross SG entry pages.
+
+There is currently an assumption that drivers do not ask for pages
+bigger than maximal DMA size supported by their devices.
+
+Reviewed-by: Firas Jahjah <firasj@amazon.com>
+Reviewed-by: Yonatan Nachum <ynachum@amazon.com>
+Signed-off-by: Michael Margolin <mrgolin@amazon.com>
+Link: https://patch.msgid.link/20250217141623.12428-1-mrgolin@amazon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/driver-api/serial/driver.rst |  2 +-
- drivers/tty/serial/8250/8250_port.c        |  2 +-
- drivers/tty/serial/atmel_serial.c          |  2 +-
- drivers/tty/serial/imx.c                   |  2 +-
- drivers/tty/serial/serial_mctrl_gpio.c     | 34 +++++++++++++++++-----
- drivers/tty/serial/serial_mctrl_gpio.h     | 17 +++++++++--
- drivers/tty/serial/sh-sci.c                |  2 +-
- drivers/tty/serial/stm32-usart.c           |  2 +-
- 8 files changed, 47 insertions(+), 16 deletions(-)
+ drivers/infiniband/core/umem.c  | 36 ++++++++++++++++++++++++---------
+ drivers/infiniband/core/verbs.c | 11 +++++-----
+ 2 files changed, 32 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/driver-api/serial/driver.rst b/Documentation/driver-api/serial/driver.rst
-index 84b43061c11be..60434f2b02863 100644
---- a/Documentation/driver-api/serial/driver.rst
-+++ b/Documentation/driver-api/serial/driver.rst
-@@ -103,4 +103,4 @@ Some helpers are provided in order to set/get modem control lines via GPIO.
- .. kernel-doc:: drivers/tty/serial/serial_mctrl_gpio.c
-    :identifiers: mctrl_gpio_init mctrl_gpio_free mctrl_gpio_to_gpiod
-            mctrl_gpio_set mctrl_gpio_get mctrl_gpio_enable_ms
--           mctrl_gpio_disable_ms
-+           mctrl_gpio_disable_ms_sync mctrl_gpio_disable_ms_no_sync
-diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index 442967a6cd52d..886e40f680d45 100644
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -1680,7 +1680,7 @@ static void serial8250_disable_ms(struct uart_port *port)
- 	if (up->bugs & UART_BUG_NOMSR)
- 		return;
+diff --git a/drivers/infiniband/core/umem.c b/drivers/infiniband/core/umem.c
+index 07c571c7b6999..c5b6863947605 100644
+--- a/drivers/infiniband/core/umem.c
++++ b/drivers/infiniband/core/umem.c
+@@ -80,9 +80,12 @@ unsigned long ib_umem_find_best_pgsz(struct ib_umem *umem,
+ 				     unsigned long pgsz_bitmap,
+ 				     unsigned long virt)
+ {
+-	struct scatterlist *sg;
++	unsigned long curr_len = 0;
++	dma_addr_t curr_base = ~0;
+ 	unsigned long va, pgoff;
++	struct scatterlist *sg;
+ 	dma_addr_t mask;
++	dma_addr_t end;
+ 	int i;
  
--	mctrl_gpio_disable_ms(up->gpios);
-+	mctrl_gpio_disable_ms_no_sync(up->gpios);
+ 	umem->iova = va = virt;
+@@ -107,17 +110,30 @@ unsigned long ib_umem_find_best_pgsz(struct ib_umem *umem,
+ 	pgoff = umem->address & ~PAGE_MASK;
  
- 	up->ier &= ~UART_IER_MSI;
- 	serial_port_out(port, UART_IER, up->ier);
-diff --git a/drivers/tty/serial/atmel_serial.c b/drivers/tty/serial/atmel_serial.c
-index f44f9d20a9744..8918fbd4bddd5 100644
---- a/drivers/tty/serial/atmel_serial.c
-+++ b/drivers/tty/serial/atmel_serial.c
-@@ -700,7 +700,7 @@ static void atmel_disable_ms(struct uart_port *port)
- 
- 	atmel_port->ms_irq_enabled = false;
- 
--	mctrl_gpio_disable_ms(atmel_port->gpios);
-+	mctrl_gpio_disable_ms_no_sync(atmel_port->gpios);
- 
- 	if (!mctrl_gpio_to_gpiod(atmel_port->gpios, UART_GPIO_CTS))
- 		idr |= ATMEL_US_CTSIC;
-diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
-index 9c59ec128bb4f..cfeb3f8cf45ea 100644
---- a/drivers/tty/serial/imx.c
-+++ b/drivers/tty/serial/imx.c
-@@ -1608,7 +1608,7 @@ static void imx_uart_shutdown(struct uart_port *port)
- 		imx_uart_dma_exit(sport);
+ 	for_each_sgtable_dma_sg(&umem->sgt_append.sgt, sg, i) {
+-		/* Walk SGL and reduce max page size if VA/PA bits differ
+-		 * for any address.
++		/* If the current entry is physically contiguous with the previous
++		 * one, no need to take its start addresses into consideration.
+ 		 */
+-		mask |= (sg_dma_address(sg) + pgoff) ^ va;
++		if (check_add_overflow(curr_base, curr_len, &end) ||
++		    end != sg_dma_address(sg)) {
++
++			curr_base = sg_dma_address(sg);
++			curr_len = 0;
++
++			/* Reduce max page size if VA/PA bits differ */
++			mask |= (curr_base + pgoff) ^ va;
++
++			/* The alignment of any VA matching a discontinuity point
++			* in the physical memory sets the maximum possible page
++			* size as this must be a starting point of a new page that
++			* needs to be aligned.
++			*/
++			if (i != 0)
++				mask |= va;
++		}
++
++		curr_len += sg_dma_len(sg);
+ 		va += sg_dma_len(sg) - pgoff;
+-		/* Except for the last entry, the ending iova alignment sets
+-		 * the maximum possible page size as the low bits of the iova
+-		 * must be zero when starting the next chunk.
+-		 */
+-		if (i != (umem->sgt_append.sgt.nents - 1))
+-			mask |= va;
++
+ 		pgoff = 0;
  	}
  
--	mctrl_gpio_disable_ms(sport->gpios);
-+	mctrl_gpio_disable_ms_sync(sport->gpios);
- 
- 	uart_port_lock_irqsave(&sport->port, &flags);
- 	ucr2 = imx_uart_readl(sport, UCR2);
-diff --git a/drivers/tty/serial/serial_mctrl_gpio.c b/drivers/tty/serial/serial_mctrl_gpio.c
-index 8855688a5b6c0..ca55bcc0b6111 100644
---- a/drivers/tty/serial/serial_mctrl_gpio.c
-+++ b/drivers/tty/serial/serial_mctrl_gpio.c
-@@ -322,11 +322,7 @@ void mctrl_gpio_enable_ms(struct mctrl_gpios *gpios)
- }
- EXPORT_SYMBOL_GPL(mctrl_gpio_enable_ms);
- 
--/**
-- * mctrl_gpio_disable_ms - disable irqs and handling of changes to the ms lines
-- * @gpios: gpios to disable
-- */
--void mctrl_gpio_disable_ms(struct mctrl_gpios *gpios)
-+static void mctrl_gpio_disable_ms(struct mctrl_gpios *gpios, bool sync)
+diff --git a/drivers/infiniband/core/verbs.c b/drivers/infiniband/core/verbs.c
+index 473ee0831307c..dc40001072a5e 100644
+--- a/drivers/infiniband/core/verbs.c
++++ b/drivers/infiniband/core/verbs.c
+@@ -3109,22 +3109,23 @@ EXPORT_SYMBOL(__rdma_block_iter_start);
+ bool __rdma_block_iter_next(struct ib_block_iter *biter)
  {
- 	enum mctrl_gpio_idx i;
+ 	unsigned int block_offset;
+-	unsigned int sg_delta;
++	unsigned int delta;
  
-@@ -342,10 +338,34 @@ void mctrl_gpio_disable_ms(struct mctrl_gpios *gpios)
- 		if (!gpios->irq[i])
- 			continue;
+ 	if (!biter->__sg_nents || !biter->__sg)
+ 		return false;
  
--		disable_irq(gpios->irq[i]);
-+		if (sync)
-+			disable_irq(gpios->irq[i]);
-+		else
-+			disable_irq_nosync(gpios->irq[i]);
+ 	biter->__dma_addr = sg_dma_address(biter->__sg) + biter->__sg_advance;
+ 	block_offset = biter->__dma_addr & (BIT_ULL(biter->__pg_bit) - 1);
+-	sg_delta = BIT_ULL(biter->__pg_bit) - block_offset;
++	delta = BIT_ULL(biter->__pg_bit) - block_offset;
+ 
+-	if (sg_dma_len(biter->__sg) - biter->__sg_advance > sg_delta) {
+-		biter->__sg_advance += sg_delta;
+-	} else {
++	while (biter->__sg_nents && biter->__sg &&
++	       sg_dma_len(biter->__sg) - biter->__sg_advance <= delta) {
++		delta -= sg_dma_len(biter->__sg) - biter->__sg_advance;
+ 		biter->__sg_advance = 0;
+ 		biter->__sg = sg_next(biter->__sg);
+ 		biter->__sg_nents--;
  	}
++	biter->__sg_advance += delta;
+ 
+ 	return true;
  }
--EXPORT_SYMBOL_GPL(mctrl_gpio_disable_ms);
-+
-+/**
-+ * mctrl_gpio_disable_ms_sync - disable irqs and handling of changes to the ms
-+ * lines, and wait for any pending IRQ to be processed
-+ * @gpios: gpios to disable
-+ */
-+void mctrl_gpio_disable_ms_sync(struct mctrl_gpios *gpios)
-+{
-+	mctrl_gpio_disable_ms(gpios, true);
-+}
-+EXPORT_SYMBOL_GPL(mctrl_gpio_disable_ms_sync);
-+
-+/**
-+ * mctrl_gpio_disable_ms_no_sync - disable irqs and handling of changes to the
-+ * ms lines, and return immediately
-+ * @gpios: gpios to disable
-+ */
-+void mctrl_gpio_disable_ms_no_sync(struct mctrl_gpios *gpios)
-+{
-+	mctrl_gpio_disable_ms(gpios, false);
-+}
-+EXPORT_SYMBOL_GPL(mctrl_gpio_disable_ms_no_sync);
- 
- void mctrl_gpio_enable_irq_wake(struct mctrl_gpios *gpios)
- {
-diff --git a/drivers/tty/serial/serial_mctrl_gpio.h b/drivers/tty/serial/serial_mctrl_gpio.h
-index fc76910fb105a..79e97838ebe56 100644
---- a/drivers/tty/serial/serial_mctrl_gpio.h
-+++ b/drivers/tty/serial/serial_mctrl_gpio.h
-@@ -87,9 +87,16 @@ void mctrl_gpio_free(struct device *dev, struct mctrl_gpios *gpios);
- void mctrl_gpio_enable_ms(struct mctrl_gpios *gpios);
- 
- /*
-- * Disable gpio interrupts to report status line changes.
-+ * Disable gpio interrupts to report status line changes, and block until
-+ * any corresponding IRQ is processed
-  */
--void mctrl_gpio_disable_ms(struct mctrl_gpios *gpios);
-+void mctrl_gpio_disable_ms_sync(struct mctrl_gpios *gpios);
-+
-+/*
-+ * Disable gpio interrupts to report status line changes, and return
-+ * immediately
-+ */
-+void mctrl_gpio_disable_ms_no_sync(struct mctrl_gpios *gpios);
- 
- /*
-  * Enable gpio wakeup interrupts to enable wake up source.
-@@ -148,7 +155,11 @@ static inline void mctrl_gpio_enable_ms(struct mctrl_gpios *gpios)
- {
- }
- 
--static inline void mctrl_gpio_disable_ms(struct mctrl_gpios *gpios)
-+static inline void mctrl_gpio_disable_ms_sync(struct mctrl_gpios *gpios)
-+{
-+}
-+
-+static inline void mctrl_gpio_disable_ms_no_sync(struct mctrl_gpios *gpios)
- {
- }
- 
-diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
-index b1ea48f38248e..41f987632bce8 100644
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -2298,7 +2298,7 @@ static void sci_shutdown(struct uart_port *port)
- 	dev_dbg(port->dev, "%s(%d)\n", __func__, port->line);
- 
- 	s->autorts = false;
--	mctrl_gpio_disable_ms(to_sci_port(port)->gpios);
-+	mctrl_gpio_disable_ms_sync(to_sci_port(port)->gpios);
- 
- 	uart_port_lock_irqsave(port, &flags);
- 	sci_stop_rx(port);
-diff --git a/drivers/tty/serial/stm32-usart.c b/drivers/tty/serial/stm32-usart.c
-index 0854ad8c90cd2..ad06b760cfca7 100644
---- a/drivers/tty/serial/stm32-usart.c
-+++ b/drivers/tty/serial/stm32-usart.c
-@@ -944,7 +944,7 @@ static void stm32_usart_enable_ms(struct uart_port *port)
- 
- static void stm32_usart_disable_ms(struct uart_port *port)
- {
--	mctrl_gpio_disable_ms(to_stm32_port(port)->gpios);
-+	mctrl_gpio_disable_ms_sync(to_stm32_port(port)->gpios);
- }
- 
- /* Transmit stop */
 -- 
 2.39.5
 
