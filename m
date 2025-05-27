@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC0B280304;
-	Tue, 27 May 2025 17:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814E828030E;
+	Tue, 27 May 2025 17:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368587; cv=none; b=RHNPfrzJdKHNncybwqRsRDnVkppvB+r2OIDQJBgN04I2Iv9acO9IqQk/UJIGllJylEL9OuDPoitAX1g0Qp1JTa+Z9xddpgnDv+qV4i26DY7j6ZCAVoTUmups+4pkv1at8fjSPLwkNYv2oV1iXUhO99vKbWQLNXnrsTaF8N+j0G4=
+	t=1748368589; cv=none; b=sNbTCqMFyFBQqI1DNdSerZBLo0LpuWmqkehBVRl2bhKcG1/RCMTNXQU7GRcjcU1j4/3gNRsZLnhKIt4u6ydMPWBGr8t1Z0lPtmWc2ZKf4mjKa7L576MFoPrDnJXb5Hg7gQ7dhr8XMiQ0icQ5pX70Sm+eC6GA33/ADihH20sVuQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368587; c=relaxed/simple;
-	bh=le0UuCN4R71ZxQ1u9NzRZK439azmXSUIhYjmbemx5t8=;
+	s=arc-20240116; t=1748368589; c=relaxed/simple;
+	bh=VPu62Jztkr8/Pu2M9q1kpAI3NWTVrHJN29Y9eDCbpPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EJCuamzhLm1glDgoFPc9BIxKcIBRT1ENweYYeKBgtKOODcElT3sowUPjV77laEWX/1k27vmSiznM3WiSvMvnb+fNTr9p+MSk53hYiEJJRNL2tntTu041ENRm1iQb3kFIEqMipOxIFDuYR7oFMZjsYf4UyWZ2867DwHZB8XeWZgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pak8///A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VoXzInkTBTAeJlUrwep8jRXPE+eJVxoXP8DlUA2nxtV9KYVUVZulBHk5u5reQ7ev2I/bCnXqm/Ny+jWjvQFiLhiOKV8ohS0eivvzvFSins2H4GFlyFKxTc4As2g5rJqJoeT0rlTQy9Ou7CJX7IgQYDqTpg1bQE9oQ/dXf+Nz8CI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e7/7TLZ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pak8///A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41209C4AF09;
-	Tue, 27 May 2025 17:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e7/7TLZ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07DE0C4CEE9;
+	Tue, 27 May 2025 17:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368586;
-	bh=le0UuCN4R71ZxQ1u9NzRZK439azmXSUIhYjmbemx5t8=;
+	s=korg; t=1748368589;
+	bh=VPu62Jztkr8/Pu2M9q1kpAI3NWTVrHJN29Y9eDCbpPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pak8///ArajR3m57cU+xCMJm+0Gbt1c3SgYZWoGvVbSOY+vWf8qog9Met960lQAtH
-	 zsAR8uB1UmkTgVOLBlxmuqdmNYuqVgCBZmaQGnXl5Ma1p/sYTB2cKZ9DKTwrCiw4PM
-	 ZK1cNJI+BiyGYWPo0XLr9dWcWxPo1+LAiHv8GAY4=
+	b=e7/7TLZ+zpW9JOoc0nwJdTzIraUzNu9gPTkZXro42JOOjbA4DH1T5KxhHFuSIeE4N
+	 +YlR4xyVzRgmFIG37CUc6oW0mEUGNpnDDYa37ZmZYxaRgxfbfgQNVEVJPpOUPQP5VB
+	 xZUHrZpenM9bc2KsoppaWIx+Gu5oXm3ysmhJYfJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianyang Zhang <zhangtianyang@loongson.cn>,
+	David Wang <00107082@163.com>,
 	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Michal Hocko <mhocko@suse.com>,
-	Brendan Jackman <jackmanb@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Zi Yan <ziy@nvidia.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.14 756/783] mm/page_alloc.c: avoid infinite retries caused by cpuset race
-Date: Tue, 27 May 2025 18:29:13 +0200
-Message-ID: <20250527162543.910521488@linuxfoundation.org>
+Subject: [PATCH 6.14 757/783] module: release codetag section when module load fails
+Date: Tue, 27 May 2025 18:29:14 +0200
+Message-ID: <20250527162543.950858207@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -56,79 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianyang Zhang <zhangtianyang@loongson.cn>
+From: David Wang <00107082@163.com>
 
-commit e05741fb10c38d70bbd7ec12b23c197b6355d519 upstream.
+commit 221fcbf77578826fad8f4bfa0530b5b55bf9676a upstream.
 
-__alloc_pages_slowpath has no change detection for ac->nodemask in the
-part of retry path, while cpuset can modify it in parallel.  For some
-processes that set mempolicy as MPOL_BIND, this results ac->nodemask
-changes, and then the should_reclaim_retry will judge based on the latest
-nodemask and jump to retry, while the get_page_from_freelist only
-traverses the zonelist from ac->preferred_zoneref, which selected by a
-expired nodemask and may cause infinite retries in some cases
+When module load fails after memory for codetag section is ready, codetag
+section memory will not be properly released.  This causes memory leak,
+and if next module load happens to get the same module address, codetag
+may pick the uninitialized section when manipulating tags during module
+unload, and leads to "unable to handle page fault" BUG.
 
-cpu 64:
-__alloc_pages_slowpath {
-        /* ..... */
-retry:
-        /* ac->nodemask = 0x1, ac->preferred->zone->nid = 1 */
-        if (alloc_flags & ALLOC_KSWAPD)
-                wake_all_kswapds(order, gfp_mask, ac);
-        /* cpu 1:
-        cpuset_write_resmask
-            update_nodemask
-                update_nodemasks_hier
-                    update_tasks_nodemask
-                        mpol_rebind_task
-                         mpol_rebind_policy
-                          mpol_rebind_nodemask
-		// mempolicy->nodes has been modified,
-		// which ac->nodemask point to
-
-        */
-        /* ac->nodemask = 0x3, ac->preferred->zone->nid = 1 */
-        if (should_reclaim_retry(gfp_mask, order, ac, alloc_flags,
-                                 did_some_progress > 0, &no_progress_loops))
-                goto retry;
-}
-
-Simultaneously starting multiple cpuset01 from LTP can quickly reproduce
-this issue on a multi node server when the maximum memory pressure is
-reached and the swap is enabled
-
-Link: https://lkml.kernel.org/r/20250416082405.20988-1-zhangtianyang@loongson.cn
-Fixes: c33d6c06f60f ("mm, page_alloc: avoid looking up the first zone in a zonelist twice")
-Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
-Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Zi Yan <ziy@nvidia.com>
+Link: https://lkml.kernel.org/r/20250519163823.7540-1-00107082@163.com
+Fixes: 0db6f8d7820a ("alloc_tag: load module tags into separate contiguous memory")
+Closes: https://lore.kernel.org/all/20250516131246.6244-1-00107082@163.com/
+Signed-off-by: David Wang <00107082@163.com>
+Acked-by: Suren Baghdasaryan <surenb@google.com>
+Cc: Petr Pavlu <petr.pavlu@suse.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/module/main.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -4381,6 +4381,14 @@ restart:
- 	}
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -2852,6 +2852,7 @@ static void module_deallocate(struct mod
+ {
+ 	percpu_modfree(mod);
+ 	module_arch_freeing_init(mod);
++	codetag_free_module_sections(mod);
  
- retry:
-+	/*
-+	 * Deal with possible cpuset update races or zonelist updates to avoid
-+	 * infinite retries.
-+	 */
-+	if (check_retry_cpuset(cpuset_mems_cookie, ac) ||
-+	    check_retry_zonelist(zonelist_iter_cookie))
-+		goto restart;
-+
- 	/* Ensure kswapd doesn't accidentally go to sleep as long as we loop */
- 	if (alloc_flags & ALLOC_KSWAPD)
- 		wake_all_kswapds(order, gfp_mask, ac);
+ 	free_mod_mem(mod);
+ }
 
 
