@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7847A1FB3;
-	Tue, 27 May 2025 17:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123621FB3;
+	Tue, 27 May 2025 17:46:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367966; cv=none; b=jGF/pPb5iGjYVBKrGvP5U4U9xLBUan8xWdDsjoH3BPrYeoLuvIClds+0IHf+7rz2k22Xpm4XtZuzzDwSWyY8W5Kza1fn4Ty4DgT2vec4oX592NgdpeXzQ349zbxyPd6wCQDWG6hZvzSmpPP0PQi9aosaX0wk1ao1kLi+8SCGwJ4=
+	t=1748367969; cv=none; b=d6KmNeAkMiRW/I2pF7/4s15ztT+Gx1pEbeJSgVeDkAwPwO1wVDq4WoShkuzn97lIOZ0IWPpuydOq8W/RBl9D42vkTT/CwaDQjC2S1b2dlghGgdTUM1dhBctBaItiPVycH1CBKwu8mit61Ijy50piP6W5Ut6TSTa/vLS8qukWGA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367966; c=relaxed/simple;
-	bh=0R77FmWWHDTQteaXR8434lXF3r3JWtHtwYXI0tDMj1Y=;
+	s=arc-20240116; t=1748367969; c=relaxed/simple;
+	bh=3i7/8Udf2S1/feShLNz9jWT4haln+DlZYZoxG9Q6NKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D8EkOliCVeoEGkUi/o9G2KOIQ5ecjdU4Z2jRExpDaRGwg/V8gElvQB10TSd9TKQtuhDQGm+/Cl+Dq2yvTWMS8DtfKvcXVmgvT2jxxTc9dqOvXyKSEBalRxc5Em5oIKSVWfize7TcU2bL11AOIvjGcTpGAlGCp1ZOoCjHceUigVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CK8rGNaj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=liw17Oz+nEo4f/bThY4dOGJwgogNxLFO1AbO+zVT+YBOBBxgfSKjQ3P/fWZ178XuHkPP8UDh1pX1K94y6D+2EwJiSdeM7o0QCewk7j4ycdqquQ0TorF+jmGRRW89qRxDi9+Jdb4b8v2rJEoFgfcwG30oet00fbcyEThhzbtYJZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pXT2jiej; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CK8rGNaj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD89C4CEE9;
-	Tue, 27 May 2025 17:46:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pXT2jiej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D6CC4CEE9;
+	Tue, 27 May 2025 17:46:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367966;
-	bh=0R77FmWWHDTQteaXR8434lXF3r3JWtHtwYXI0tDMj1Y=;
+	s=korg; t=1748367968;
+	bh=3i7/8Udf2S1/feShLNz9jWT4haln+DlZYZoxG9Q6NKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CK8rGNaj/bPvAE4SANM82pcdFMJKNkUXs/NlzIqP36XaG1RF4VbmAEmrkKzd3vs1D
-	 OKVX+IzWLcUp1wWHDU5XByzi3O4J9Ab7bVPKtnFnIs8wIEpSMQajJfPDoTD6r3r+vk
-	 Cti4uRCo3ZLl/pkUU12DPvpR0Jx2elQMTSesG7b0=
+	b=pXT2jiejhQoAQA2P/NQeMlUlYSvnMfu+hKfbuT62vBBi5kI9C3emN7tiwrBV+ECSG
+	 f9ocdNK7j0223EbhXk0YP1G+w6VobtQhDt3MEb4u8R9F1ffhG7laYLDjKq64/AtLQx
+	 L0nnU49UY76hIYlvjYRJrSIoC4KGx9SugzrP/kkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Depeng Shao <quic_depengs@quicinc.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 556/783] media: qcom: camss: csid: Only add TPG v4l2 ctrl if TPG hardware is available
-Date: Tue, 27 May 2025 18:25:53 +0200
-Message-ID: <20250527162535.788274631@linuxfoundation.org>
+Subject: [PATCH 6.14 557/783] media: qcom: camss: Add default case in vfe_src_pad_code
+Date: Tue, 27 May 2025 18:25:54 +0200
+Message-ID: <20250527162535.830819999@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,136 +54,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Depeng Shao <quic_depengs@quicinc.com>
 
-[ Upstream commit 2f1361f862a68063f37362f1beb400e78e289581 ]
+[ Upstream commit 2f4204bb00b32eca3391a468d3b37e87feb96fa9 ]
 
-There is no CSID TPG on some SoCs, so the v4l2 ctrl in CSID driver
-shouldn't be registered. Checking the supported TPG modes to indicate
-if the TPG hardware exists or not and only registering v4l2 ctrl for
-CSID only when the TPG hardware is present.
+Add a default case in vfe_src_pad_code to get rid of a compile
+warning if a new hw enum is added.
 
 Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/qcom/camss/camss-csid.c    | 60 +++++++++++--------
- 1 file changed, 35 insertions(+), 25 deletions(-)
+ drivers/media/platform/qcom/camss/camss-vfe.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-index 858db5d4ca75c..e51f2ed3f0315 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid.c
-@@ -683,11 +683,13 @@ static int csid_set_stream(struct v4l2_subdev *sd, int enable)
- 	int ret;
- 
- 	if (enable) {
--		ret = v4l2_ctrl_handler_setup(&csid->ctrls);
--		if (ret < 0) {
--			dev_err(csid->camss->dev,
--				"could not sync v4l2 controls: %d\n", ret);
--			return ret;
-+		if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED) {
-+			ret = v4l2_ctrl_handler_setup(&csid->ctrls);
-+			if (ret < 0) {
-+				dev_err(csid->camss->dev,
-+					"could not sync v4l2 controls: %d\n", ret);
-+				return ret;
-+			}
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index 95f6a1ac7eaf5..3c5811c6c028e 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -400,6 +400,10 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
+ 			return sink_code;
  		}
- 
- 		if (!csid->testgen.enabled &&
-@@ -761,7 +763,8 @@ static void csid_try_format(struct csid_device *csid,
  		break;
- 
- 	case MSM_CSID_PAD_SRC:
--		if (csid->testgen_mode->cur.val == 0) {
-+		if (csid->testgen.nmodes == CSID_PAYLOAD_MODE_DISABLED ||
-+		    csid->testgen_mode->cur.val == 0) {
- 			/* Test generator is disabled, */
- 			/* keep pad formats in sync */
- 			u32 code = fmt->code;
-@@ -811,7 +814,8 @@ static int csid_enum_mbus_code(struct v4l2_subdev *sd,
- 
- 		code->code = csid->res->formats->formats[code->index].code;
- 	} else {
--		if (csid->testgen_mode->cur.val == 0) {
-+		if (csid->testgen.nmodes == CSID_PAYLOAD_MODE_DISABLED ||
-+		    csid->testgen_mode->cur.val == 0) {
- 			struct v4l2_mbus_framefmt *sink_fmt;
- 
- 			sink_fmt = __csid_get_format(csid, sd_state,
-@@ -1190,7 +1194,8 @@ static int csid_link_setup(struct media_entity *entity,
- 
- 		/* If test generator is enabled */
- 		/* do not allow a link from CSIPHY to CSID */
--		if (csid->testgen_mode->cur.val != 0)
-+		if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED &&
-+		    csid->testgen_mode->cur.val != 0)
- 			return -EBUSY;
- 
- 		sd = media_entity_to_v4l2_subdev(remote->entity);
-@@ -1283,24 +1288,27 @@ int msm_csid_register_entity(struct csid_device *csid,
- 		 MSM_CSID_NAME, csid->id);
- 	v4l2_set_subdevdata(sd, csid);
- 
--	ret = v4l2_ctrl_handler_init(&csid->ctrls, 1);
--	if (ret < 0) {
--		dev_err(dev, "Failed to init ctrl handler: %d\n", ret);
--		return ret;
--	}
-+	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED) {
-+		ret = v4l2_ctrl_handler_init(&csid->ctrls, 1);
-+		if (ret < 0) {
-+			dev_err(dev, "Failed to init ctrl handler: %d\n", ret);
-+			return ret;
-+		}
- 
--	csid->testgen_mode = v4l2_ctrl_new_std_menu_items(&csid->ctrls,
--				&csid_ctrl_ops, V4L2_CID_TEST_PATTERN,
--				csid->testgen.nmodes, 0, 0,
--				csid->testgen.modes);
-+		csid->testgen_mode =
-+			v4l2_ctrl_new_std_menu_items(&csid->ctrls,
-+						     &csid_ctrl_ops, V4L2_CID_TEST_PATTERN,
-+						     csid->testgen.nmodes, 0, 0,
-+						     csid->testgen.modes);
- 
--	if (csid->ctrls.error) {
--		dev_err(dev, "Failed to init ctrl: %d\n", csid->ctrls.error);
--		ret = csid->ctrls.error;
--		goto free_ctrl;
--	}
-+		if (csid->ctrls.error) {
-+			dev_err(dev, "Failed to init ctrl: %d\n", csid->ctrls.error);
-+			ret = csid->ctrls.error;
-+			goto free_ctrl;
-+		}
- 
--	csid->subdev.ctrl_handler = &csid->ctrls;
-+		csid->subdev.ctrl_handler = &csid->ctrls;
-+	}
- 
- 	ret = csid_init_formats(sd, NULL);
- 	if (ret < 0) {
-@@ -1331,7 +1339,8 @@ int msm_csid_register_entity(struct csid_device *csid,
- media_cleanup:
- 	media_entity_cleanup(&sd->entity);
- free_ctrl:
--	v4l2_ctrl_handler_free(&csid->ctrls);
-+	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED)
-+		v4l2_ctrl_handler_free(&csid->ctrls);
- 
- 	return ret;
++	default:
++		WARN(1, "Unsupported HW version: %x\n",
++		     vfe->camss->res->version);
++		break;
+ 	}
+ 	return 0;
  }
-@@ -1344,7 +1353,8 @@ void msm_csid_unregister_entity(struct csid_device *csid)
- {
- 	v4l2_device_unregister_subdev(&csid->subdev);
- 	media_entity_cleanup(&csid->subdev.entity);
--	v4l2_ctrl_handler_free(&csid->ctrls);
-+	if (csid->testgen.nmodes != CSID_PAYLOAD_MODE_DISABLED)
-+		v4l2_ctrl_handler_free(&csid->ctrls);
- }
- 
- inline bool csid_is_lite(struct csid_device *csid)
 -- 
 2.39.5
 
