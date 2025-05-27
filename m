@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6201EA91;
-	Tue, 27 May 2025 16:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC1D194A45;
+	Tue, 27 May 2025 16:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364526; cv=none; b=ubx0hciW2X3PhtEVs+PDpTbdLc1s+CoRhE9arsri/Z+L77uttB5rUlZKdZnScnEY/xZrzzNDybUJrCm/KxrvWnj8Nos06Gw4om2cr027kWsvKXKCTQZwcCxglIsdsw30kG2DpVRf1xqY/1oi1UtUSRzOXzWREmiumI7WZkhuLog=
+	t=1748364529; cv=none; b=e5UXsXL87mRAZmjK1QWLKKJmg2580ZgxrZcg+0RK1bQV9xVwx+zXwFXNLwjRCEg7V6X1H7uLOkDzd1gOKndMkbmSmFtxXVc63uc86Wqo3/FTV/A7C3TP40+vrHuE8//uzlktFaWDFmvit3luHzpAaebdV+2d3eItzbpNT7ej47A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364526; c=relaxed/simple;
-	bh=ga4BbDvBcL+ZFH7VtU9ntDvgBJocZ+Poke1WRx/8LNA=;
+	s=arc-20240116; t=1748364529; c=relaxed/simple;
+	bh=gGbrOHssW0ifZtpswZ5VVSodlz50pPXg/ao4s+ZNutE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eLs1ZJcWyT/uHdbv/C23W1nJLxjd0xNbD8GISuE/RMwgoRcnfDsmszP3qaZPzVo2VrYrWfMuZ6TyKbNKAA25O/SJKf8ob8gTURu7Zv9ef0lKPC8a1iByMtt/jcsF7HhbpdokRC0qA53N2+VHnhpzR0TW5RN+y589CSWjUGFH2k4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFrQ6vwA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WDRmHbxwPp5z/QwTatawQIa+VGqzeLfmdSp9NzAxz+cl1V4V/2vJ8IzyFZ/6LpXn+1i+4IKqJOqc//M9AYZb/IyDSOLsrk49LhFbXA+nvJR8IXRELHlAv53e+cYJixZS5YpRhjQdlshL4vYaIjuqGnVIbczKRiEQCWCj6Y7ZN7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G0SiYBfL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFrQ6vwA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943DEC4CEE9;
-	Tue, 27 May 2025 16:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0SiYBfL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0F2AC4CEED;
+	Tue, 27 May 2025 16:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364525;
-	bh=ga4BbDvBcL+ZFH7VtU9ntDvgBJocZ+Poke1WRx/8LNA=;
+	s=korg; t=1748364529;
+	bh=gGbrOHssW0ifZtpswZ5VVSodlz50pPXg/ao4s+ZNutE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jFrQ6vwAuKzH7knBqf+JJdnSZ8oSyuVincoQY+qI0/lgVEPcGDqMGpBdkZflYXe1D
-	 5ZTnh6Twb+b2pcJz8O6Rtl29kLnm1x0wBiQRhghZBLnq28Vk97lBpNN+Nj6VCdWxwI
-	 Lvx3AB2pIM6G3Pc20CddA4ibOufe97/Jztciq+Ik=
+	b=G0SiYBfLWxSQFfhQid+rB02JgOGbg3Z2VmnCeT37zDgRCBT/UuPrY9rE3jymO9u+2
+	 zjf/m8qhK1dn7OZHYfuTGOdeg0QREOq78SinYxVZwZ9XLhkx2Erh1aWG7AfPHTe5/c
+	 x5uMEJit2Ctx3D8hYHwGoOcWtQdyUzmkOlf5yI9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Hsu <Daniel-Hsu@quantatw.com>,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	"David S. Miller" <davem@davemloft.net>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 077/626] mctp: Fix incorrect tx flow invalidation condition in mctp-i2c
-Date: Tue, 27 May 2025 18:19:30 +0200
-Message-ID: <20250527162448.178621249@linuxfoundation.org>
+Subject: [PATCH 6.12 086/626] objtool: Properly disable uaccess validation
+Date: Tue, 27 May 2025 18:19:39 +0200
+Message-ID: <20250527162448.537054806@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,39 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Hsu <d486250@gmail.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 70facbf978ac90c6da17a3de2a8dd111b06f1bac ]
+[ Upstream commit e1a9dda74dbffbc3fa2069ff418a1876dc99fb14 ]
 
-Previously, the condition for invalidating the tx flow in
-mctp_i2c_invalidate_tx_flow() checked if `rc` was nonzero.
-However, this could incorrectly trigger the invalidation
-even when `rc > 0` was returned as a success status.
+If opts.uaccess isn't set, the uaccess validation is disabled, but only
+partially: it doesn't read the uaccess_safe_builtin list but still tries
+to do the validation.  Disable it completely to prevent false warnings.
 
-This patch updates the condition to explicitly check for `rc < 0`,
-ensuring that only error cases trigger the invalidation.
-
-Signed-off-by: Daniel Hsu <Daniel-Hsu@quantatw.com>
-Reviewed-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/0e95581c1d2107fb5f59418edf2b26bba38b0cbb.1742852846.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mctp/mctp-i2c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/objtool/check.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/mctp/mctp-i2c.c b/drivers/net/mctp/mctp-i2c.c
-index 6622de48fc9e7..503a9174321c6 100644
---- a/drivers/net/mctp/mctp-i2c.c
-+++ b/drivers/net/mctp/mctp-i2c.c
-@@ -538,7 +538,7 @@ static void mctp_i2c_xmit(struct mctp_i2c_dev *midev, struct sk_buff *skb)
- 		rc = __i2c_transfer(midev->adapter, &msg, 1);
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index bea6461ac340d..0757b98b0a445 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -3353,7 +3353,7 @@ static int handle_insn_ops(struct instruction *insn,
+ 		if (update_cfi_state(insn, next_insn, &state->cfi, op))
+ 			return 1;
  
- 		/* on tx errors, the flow can no longer be considered valid */
--		if (rc)
-+		if (rc < 0)
- 			mctp_i2c_invalidate_tx_flow(midev, skb);
+-		if (!insn->alt_group)
++		if (!opts.uaccess || !insn->alt_group)
+ 			continue;
  
- 		break;
+ 		if (op->dest.type == OP_DEST_PUSHF) {
+@@ -3820,6 +3820,9 @@ static int validate_branch(struct objtool_file *file, struct symbol *func,
+ 			return 0;
+ 
+ 		case INSN_STAC:
++			if (!opts.uaccess)
++				break;
++
+ 			if (state.uaccess) {
+ 				WARN_INSN(insn, "recursive UACCESS enable");
+ 				return 1;
+@@ -3829,6 +3832,9 @@ static int validate_branch(struct objtool_file *file, struct symbol *func,
+ 			break;
+ 
+ 		case INSN_CLAC:
++			if (!opts.uaccess)
++				break;
++
+ 			if (!state.uaccess && func) {
+ 				WARN_INSN(insn, "redundant UACCESS disable");
+ 				return 1;
+@@ -4304,7 +4310,8 @@ static int validate_symbol(struct objtool_file *file, struct section *sec,
+ 	if (!insn || insn->ignore || insn->visited)
+ 		return 0;
+ 
+-	state->uaccess = sym->uaccess_safe;
++	if (opts.uaccess)
++		state->uaccess = sym->uaccess_safe;
+ 
+ 	ret = validate_branch(file, insn_func(insn), insn, *state);
+ 	if (ret)
 -- 
 2.39.5
 
