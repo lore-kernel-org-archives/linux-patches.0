@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D33E2CCC0;
-	Tue, 27 May 2025 16:59:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB04194A67;
+	Tue, 27 May 2025 16:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365159; cv=none; b=D/+s59yMOX56/iDdFtBxtkWeNQxR7N4crlCtHwItTK4Q8ZRcvbbLjkFZYS44VOrn9Kzjw2y5bEZVyoAViefZrUKXG15+srdqmK1uzrMK2JTafQjqEPgdJCLQAz31f1MooomulI/OcsSyefu29s7T8IlkmZuuRVeh9Hz3NipwjfA=
+	t=1748365161; cv=none; b=UVL4jaZSTV/uLO/r88847URaDmn7cOYXKB35iNBdexX56hkl7Mm9XaGbS/ANbbh875cz8CQ4H1RgDJZWMs6vNbZ8ykqnBslvm3WY01tPR7yI7ubcwtSAAKpx13XyNYlq3g5j9SCNOPzTnwRyf9KJKtDrmbwXoAeCEp+vKLG27Mg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365159; c=relaxed/simple;
-	bh=XzlyRz9UFZFUAYVGs48l65ceAILZwvup1odr6A0aVEg=;
+	s=arc-20240116; t=1748365161; c=relaxed/simple;
+	bh=IMg3WBxeq4GKyDYH8P9l0CtxXgDQ0SNWLcNWjyOvPto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M0l6aoBa9S4Ea+/UbYkEHx8jVMXtDX3LAmmVjPW+L3C1z6LBv3Yjrtw8PFRv9a9F5cfR7vTk1kxEVObA9E7nhaLxpgOsArOT0kirvoJp5uRMjohIaDSn5rf9A1k38tcXzKJXToUo+EeWdd9KHUCNJfqRzOU8oSdVmDA9h3u6pAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uO7SENcf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RwVgZrgzrRcwBIuju0q4e2FOGerqu2txsWSKAaJlcqFJfwc6B+AAx+LujGBf1PbcXS75jCiN8URJB5NNxLBxQWBQEf+lCz2+PyqyaivIQwP4kPe20dNTvXo12g8VAIlPVMEKQN7N3xErsgJiWRZBliCSc2gH//9v8H8P+cteIWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QK7MSFXu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uO7SENcf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FB7C4CEE9;
-	Tue, 27 May 2025 16:59:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QK7MSFXu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B07CC4CEE9;
+	Tue, 27 May 2025 16:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365155;
-	bh=XzlyRz9UFZFUAYVGs48l65ceAILZwvup1odr6A0aVEg=;
+	s=korg; t=1748365161;
+	bh=IMg3WBxeq4GKyDYH8P9l0CtxXgDQ0SNWLcNWjyOvPto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uO7SENcfb/NM6WY1iAEek5iejnmMA7JYlkC60bJf2axeQr4fyi0PQDGYuja616AyD
-	 XZ0wCQ68QKmGRFHntIcHBuiUIqGr6lhh4LaQEyfCVe7nBvsb9Dv8CshKsWXqVHti2w
-	 pjm2nGXs4I/zpPN9jeeF+2Xnnb4C5IWrHx0lpni8=
+	b=QK7MSFXunIt7T5qGVV8Unlg7Krmjz33AE899+ULr5T+YeymH8pTvWqMUiZFZv3u2L
+	 4cEXl3pyz9AZ5dZMNiX43EG0dpYk3xV5+9tdC+vp8lXdVl1SSMteMphz6yUtVf35O9
+	 Vbx1moT/eBgEWrLblHob55zbvUNQs7QLlebVK/IA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Samson Tam <samson.tam@amd.com>,
+	Yihan Zhu <Yihan.Zhu@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 277/626] drm/xe: xe_gen_wa_oob: replace program_invocation_short_name
-Date: Tue, 27 May 2025 18:22:50 +0200
-Message-ID: <20250527162456.280551642@linuxfoundation.org>
+Subject: [PATCH 6.12 287/626] drm/amd/display: handle max_downscale_src_width fail check
+Date: Tue, 27 May 2025 18:23:00 +0200
+Message-ID: <20250527162456.692558298@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,56 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Gomez <da.gomez@samsung.com>
+From: Yihan Zhu <Yihan.Zhu@amd.com>
 
-[ Upstream commit 89eb42b5539f6ae6a0cabcb39e5b6fcc83c106a1 ]
+[ Upstream commit 02a940da2ccc0cc0299811379580852b405a0ea2 ]
 
-program_invocation_short_name may not be available in other systems.
-Instead, replace it with the argv[0] to pass the executable name.
+[WHY]
+If max_downscale_src_width check fails, we exit early from TAP calculation and left a NULL
+value to the scaling data structure to cause the zero divide in the DML validation.
 
-Fixes build error when program_invocation_short_name is not available:
+[HOW]
+Call set default TAP calculation before early exit in get_optimal_number_of_taps due to
+max downscale limit exceed.
 
-drivers/gpu/drm/xe/xe_gen_wa_oob.c:34:3: error: use of
-undeclared identifier 'program_invocation_short_name'    34 |
-program_invocation_short_name);       |                 ^ 1 error
-generated.
-
-Suggested-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250224-macos-build-support-xe-v3-1-d2c9ed3a27cc@samsung.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Reviewed-by: Samson Tam <samson.tam@amd.com>
+Signed-off-by: Yihan Zhu <Yihan.Zhu@amd.com>
+Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gen_wa_oob.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dpp/dcn30/dcn30_dpp.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_gen_wa_oob.c b/drivers/gpu/drm/xe/xe_gen_wa_oob.c
-index 904cf47925aa1..ed9183599e31c 100644
---- a/drivers/gpu/drm/xe/xe_gen_wa_oob.c
-+++ b/drivers/gpu/drm/xe/xe_gen_wa_oob.c
-@@ -28,10 +28,10 @@
- 	"\n" \
- 	"#endif\n"
+diff --git a/drivers/gpu/drm/amd/display/dc/dpp/dcn30/dcn30_dpp.c b/drivers/gpu/drm/amd/display/dc/dpp/dcn30/dcn30_dpp.c
+index 40acebd13e46d..abf439e743f23 100644
+--- a/drivers/gpu/drm/amd/display/dc/dpp/dcn30/dcn30_dpp.c
++++ b/drivers/gpu/drm/amd/display/dc/dpp/dcn30/dcn30_dpp.c
+@@ -425,11 +425,6 @@ bool dpp3_get_optimal_number_of_taps(
+ 	int min_taps_y, min_taps_c;
+ 	enum lb_memory_config lb_config;
  
--static void print_usage(FILE *f)
-+static void print_usage(FILE *f, const char *progname)
- {
- 	fprintf(f, "usage: %s <input-rule-file> <generated-c-source-file> <generated-c-header-file>\n",
--		program_invocation_short_name);
-+		progname);
- }
+-	if (scl_data->viewport.width > scl_data->h_active &&
+-		dpp->ctx->dc->debug.max_downscale_src_width != 0 &&
+-		scl_data->viewport.width > dpp->ctx->dc->debug.max_downscale_src_width)
+-		return false;
+-
+ 	/*
+ 	 * Set default taps if none are provided
+ 	 * From programming guide: taps = min{ ceil(2*H_RATIO,1), 8} for downscaling
+@@ -467,6 +462,12 @@ bool dpp3_get_optimal_number_of_taps(
+ 	else
+ 		scl_data->taps.h_taps_c = in_taps->h_taps_c;
  
- static void print_parse_error(const char *err_msg, const char *line,
-@@ -144,7 +144,7 @@ int main(int argc, const char *argv[])
- 
- 	if (argc < 3) {
- 		fprintf(stderr, "ERROR: wrong arguments\n");
--		print_usage(stderr);
-+		print_usage(stderr, argv[0]);
- 		return 1;
- 	}
- 
++	// Avoid null data in the scl data with this early return, proceed non-adaptive calcualtion first
++	if (scl_data->viewport.width > scl_data->h_active &&
++		dpp->ctx->dc->debug.max_downscale_src_width != 0 &&
++		scl_data->viewport.width > dpp->ctx->dc->debug.max_downscale_src_width)
++		return false;
++
+ 	/*Ensure we can support the requested number of vtaps*/
+ 	min_taps_y = dc_fixpt_ceil(scl_data->ratios.vert);
+ 	min_taps_c = dc_fixpt_ceil(scl_data->ratios.vert_c);
 -- 
 2.39.5
 
