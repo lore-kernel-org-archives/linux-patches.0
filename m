@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5149A182D7;
-	Tue, 27 May 2025 17:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A791182D7;
+	Tue, 27 May 2025 17:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366229; cv=none; b=Uik6I/gNma7d0OiA9wSa2HoIrqpIxj1yIyvBpejz4kAz0Nd+Z0Us2ikJbcFFlf8b3jG4Qb1NPgKtS6SGVGEfDm2c9C0Hpz1neXLtjscceKhBsV0e+1wGwaILKr28w2uwQYpylhzycmwxl0f+oshiYfX/wK/EfocYiQD3b2PkWPU=
+	t=1748366232; cv=none; b=naacFHjMt9lqaNCxqKPJbYaOYPdJlZiPtFRoz3jcFd92XrK46WPTkKy6OpzdtDmHKRdN22qaEIGGOoktKYrHuk1Fg3lFtsIxw5lVgH41yX3vgEfszrytte9m0vFLnRDbj+pY/WhQ4QSftFl+MNitjdrbhOgJVf1jua0D7hKZHyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366229; c=relaxed/simple;
-	bh=jHC/f4uaG9M3WxwW8EOHmDUrM3ovuVLHyhUqEWHM9ME=;
+	s=arc-20240116; t=1748366232; c=relaxed/simple;
+	bh=eO8pmykyRouOG8LT8/8HVyJ+RUpVmgTpNdDM9r9JMhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fp4ymCLI2bMTYc9CrbnXTTLWzGLk7MumlwPyWoAj4zadGYEpgUV36wO29CG/CkqPiVg/m7KJXi2ZlKEypVAsjlymeNegHlTRMZq0/VTywZolq/UunsdQVBp9PMNGWIYEncg2vOvBKFfvpmefL4tXMv/tBaV0TSX7DfTsxUdEo7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGAiECzW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pwifA9qnNb28L5Jfjww6UAGCmGdfSdrlKZqilDdVjBzq4EXZ5o3mb2MwLnCEyhLx0A6USWzfBiiJV6kqHBbycYQW343AlgaqcdffRgetn8jDqWj6yBUujh4T0rH3andIpnkpj8ddB1p8JMKI87pEQvyBWYjYyTbG2PnTQ95HkM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPNuj6iz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGAiECzW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755A5C4CEE9;
-	Tue, 27 May 2025 17:17:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPNuj6iz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA7FC4CEEB;
+	Tue, 27 May 2025 17:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366228;
-	bh=jHC/f4uaG9M3WxwW8EOHmDUrM3ovuVLHyhUqEWHM9ME=;
+	s=korg; t=1748366231;
+	bh=eO8pmykyRouOG8LT8/8HVyJ+RUpVmgTpNdDM9r9JMhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pGAiECzWWXU1y+ODYDNrWLpLkyFJJDi6YGhQw4vC7JVzXQCetL+qJpc7WLfh4MM/1
-	 cfSUOfZblPFmYooHpyNbfLZEiKeMjnmNSjoKrPO6qcz5XT44F8FI6xtWbtHjFASXC2
-	 LgMWS35AXHkmE5G1hkGh87D3q4+Bi6rvBKuINPp0=
+	b=ZPNuj6iz1gb5UvIMwk/Zf1y7uWlgclWy8CdhXOMn23yTASYG+phIrXWazJt0k8SCW
+	 Zn80RhdiwogiJkSg6KoWiw23gr/VUIHhDWe0smgVSZAj8a25uo9x0dhAQg0J6iO2aE
+	 CDZh7bstAQZMzOay++OH2kJUTNPo0DsrpY7uHrKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Larisa Grigore <larisa.grigore@nxp.com>,
-	James Clark <james.clark@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 612/626] spi: spi-fsl-dspi: Reset SR flags before sending a new message
-Date: Tue, 27 May 2025 18:28:25 +0200
-Message-ID: <20250527162509.868014044@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Raag Jadav <raag.jadav@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 6.12 613/626] err.h: move IOMEM_ERR_PTR() to err.h
+Date: Tue, 27 May 2025 18:28:26 +0200
+Message-ID: <20250527162509.907793180@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,45 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larisa Grigore <larisa.grigore@nxp.com>
+From: Raag Jadav <raag.jadav@intel.com>
 
-[ Upstream commit 7aba292eb15389073c7f3bd7847e3862dfdf604d ]
+commit 18311a766c587fc69b1806f1d5943305903b7e6e upstream.
 
-If, in a previous transfer, the controller sends more data than expected
-by the DSPI target, SR.RFDF (RX FIFO is not empty) will remain asserted.
-When flushing the FIFOs at the beginning of a new transfer (writing 1
-into MCR.CLR_TXF and MCR.CLR_RXF), SR.RFDF should also be cleared.
-Otherwise, when running in target mode with DMA, if SR.RFDF remains
-asserted, the DMA callback will be fired before the controller sends any
-data.
+Since IOMEM_ERR_PTR() macro deals with an error pointer, a better place
+for it is err.h. This helps avoid dependency on io.h for the users that
+don't need it.
 
-Take this opportunity to reset all Status Register fields.
-
-Fixes: 5ce3cc567471 ("spi: spi-fsl-dspi: Provide support for DSPI slave mode operation (Vybryd vf610)")
-Signed-off-by: Larisa Grigore <larisa.grigore@nxp.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Link: https://patch.msgid.link/20250522-james-nxp-spi-v2-3-bea884630cfb@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Raag Jadav <raag.jadav@intel.com>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-dspi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/err.h |    3 +++
+ include/linux/io.h  |    2 --
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
-index 0466a94ea6b5c..7c43df252328d 100644
---- a/drivers/spi/spi-fsl-dspi.c
-+++ b/drivers/spi/spi-fsl-dspi.c
-@@ -975,6 +975,8 @@ static int dspi_transfer_one_message(struct spi_controller *ctlr,
- 				   SPI_MCR_CLR_TXF | SPI_MCR_CLR_RXF,
- 				   SPI_MCR_CLR_TXF | SPI_MCR_CLR_RXF);
+--- a/include/linux/err.h
++++ b/include/linux/err.h
+@@ -44,6 +44,9 @@ static inline void * __must_check ERR_PT
+ /* Return the pointer in the percpu address space. */
+ #define ERR_PTR_PCPU(error) ((void __percpu *)(unsigned long)ERR_PTR(error))
  
-+		regmap_write(dspi->regmap, SPI_SR, SPI_SR_CLEAR);
++/* Cast an error pointer to __iomem. */
++#define IOMEM_ERR_PTR(error) (__force void __iomem *)ERR_PTR(error)
 +
- 		spi_take_timestamp_pre(dspi->ctlr, dspi->cur_transfer,
- 				       dspi->progress, !dspi->irq);
+ /**
+  * PTR_ERR - Extract the error code from an error pointer.
+  * @ptr: An error pointer.
+--- a/include/linux/io.h
++++ b/include/linux/io.h
+@@ -65,8 +65,6 @@ static inline void devm_ioport_unmap(str
+ }
+ #endif
  
--- 
-2.39.5
-
+-#define IOMEM_ERR_PTR(err) (__force void __iomem *)ERR_PTR(err)
+-
+ void __iomem *devm_ioremap(struct device *dev, resource_size_t offset,
+ 			   resource_size_t size);
+ void __iomem *devm_ioremap_uc(struct device *dev, resource_size_t offset,
 
 
