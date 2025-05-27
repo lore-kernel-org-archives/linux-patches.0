@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4032820A0;
-	Tue, 27 May 2025 17:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A97827FD63;
+	Tue, 27 May 2025 17:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368644; cv=none; b=WCQ2NgK1qFL/mYwyuLztBynYyHi+fSGNZ6oh/rp+E7SIknabZBTiaB0RwEvH7vN5CWVwR2H1Op5pCEPWUO7Mlm8TK1Q6G0Xd3eJbT+Y5TE+JtbtLmAOzK4iyA/cvLk4RkJ3KBGw+2OXZg3MY2iaZQ3Dtv2TLVeCzrlFbf60nIVM=
+	t=1748368646; cv=none; b=er9lqo9bRCwafayyh8h6JJQbap+5QwdoOXv40zOmK34OTpRka+yh2f4VjCI9/vhO7FF2Q/dn3wqpm0+tUk0L57fFqvcdy6AAhIL+Il1l7Qs9KgEFFImxFpnNmP4j/W3Zgc3QnI390DZxuYPsOa4rGI4U75pwFo97Lfugw/24BkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368644; c=relaxed/simple;
-	bh=lQycr01DU0JYsl0e63Se3qU37E3EMTDCP+vxsj8MUvM=;
+	s=arc-20240116; t=1748368646; c=relaxed/simple;
+	bh=p7Rl5pRXIH799Xo1LoYJNT5+Lk6ZJ4qH+3JV7vioMAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tpMtRy+RFPur9ib1B7WPaYJXAhv6PfrJ8kPEAnSdD1pJd5MAyrUcE4oFeekWFXgSZ3K/yE1ezYptw9x1MPo/puW7FidN5V7IBDqWQsbL3qXDQjPdGbEJJRfr2rF7laLgyyvZpsDd/rNdV13vObo7qbLjkZgUzc+/IR5VNpItO04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=El8rScMD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TmA9UeaVSHhniln6UlxUcbwe5t0P5RCGPQkQUYrjyfHXscxYjkLVZ/6eliT7vc3rgxoVULLUR8I71kYx2KAsT8XLBozuLqmzcZd6MTEUE+28nLrOlZ9oiqBKth3Z8x5kEkT2l1wRDEg5INL7+JJ6DkJ/Y8Zf5svSVuNZmSaITnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CcTCdath; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="El8rScMD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47206C4CEE9;
-	Tue, 27 May 2025 17:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CcTCdath"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113C6C4CEE9;
+	Tue, 27 May 2025 17:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368643;
-	bh=lQycr01DU0JYsl0e63Se3qU37E3EMTDCP+vxsj8MUvM=;
+	s=korg; t=1748368646;
+	bh=p7Rl5pRXIH799Xo1LoYJNT5+Lk6ZJ4qH+3JV7vioMAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=El8rScMDyIwsjavX038p/jXXighyR9PNQi8QxHacPYcxTo5RLa9v1IaJ+k0ya9vK4
-	 CuBXukQYCaXFK9F2bUFNYWZXOnb3xGqNTBm7CNxgImpsqSUpTH0jsnNdp+heQvZclu
-	 Xe7p8zSEMgdN9UccTKC4HE7ZwzMlkVw67Kk+ecvU=
+	b=CcTCdath7oBCHD6Ao1wp8iTMqVFQiH29zc1PWJ7/6z2uSKwiVFHhJlNNdUlO1w8/0
+	 bErJgJsOWXUID0QqkrwYEqA0AOrjqh0CXArRfndwXXkF5ssLEFUyvdsyYXLP5c4Ruv
+	 FFWLacu0tMQcD1BQ9d73RqNIW7Keyg5fTckzNSGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 771/783] spi: use container_of_cont() for to_spi_device()
-Date: Tue, 27 May 2025 18:29:28 +0200
-Message-ID: <20250527162544.532322105@linuxfoundation.org>
+	Zhang Rui <rui.zhang@intel.com>,
+	zhang ning <zhangn1985@outlook.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.14 743/783] thermal: intel: x86_pkg_temp_thermal: Fix bogus trip temperature
+Date: Tue, 27 May 2025 18:29:00 +0200
+Message-ID: <20250527162543.383249706@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -50,47 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit 1007ae0d464ceb55a3740634790521d3543aaab9 ]
+commit cf948c8e274e8b406e846cdf6cc48fe47f98cf57 upstream.
 
-Some places in the spi core pass in a const pointer to a device and the
-default container_of() casts that away, which is not a good idea.
-Preserve the proper const attribute by using container_of_const() for
-to_spi_device() instead, which is what it was designed for.
+The tj_max value obtained from the Intel TCC library are in Celsius,
+whereas the thermal subsystem operates in milli-Celsius.
 
-Note, this removes the NULL check for a device pointer in the call, but
-no one was ever checking for that return value, and a device pointer
-should never be NULL overall anyway, so this should be a safe change.
+This discrepancy leads to incorrect trip temperature calculations.
 
-Cc: Mark Brown <broonie@kernel.org>
-Fixes: d69d80484598 ("driver core: have match() callback in struct bus_type take a const *")
+Fix bogus trip temperature by converting tj_max to milli-Celsius Unit.
+
+Fixes: 8ef0ca4a177d ("Merge back other thermal control material for 6.3.")
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Reported-by: zhang ning <zhangn1985@outlook.com>
+Closes: https://lore.kernel.org/all/TY2PR01MB3786EF0FE24353026293F5ACCD97A@TY2PR01MB3786.jpnprd01.prod.outlook.com/
+Tested-by: zhang ning <zhangn1985@outlook.com>
+Cc: 6.3+ <stable@vger.kernel.org> # 6.3+
+Link: https://patch.msgid.link/20250519070901.1031233-1-rui.zhang@intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2025052230-fidgeting-stooge-66f5@gregkh
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/spi/spi.h | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/thermal/intel/x86_pkg_temp_thermal.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
-index 8497f4747e24d..660725dfd6fb6 100644
---- a/include/linux/spi/spi.h
-+++ b/include/linux/spi/spi.h
-@@ -247,10 +247,7 @@ struct spi_device {
- static_assert((SPI_MODE_KERNEL_MASK & SPI_MODE_USER_MASK) == 0,
- 	      "SPI_MODE_USER_MASK & SPI_MODE_KERNEL_MASK must not overlap");
+--- a/drivers/thermal/intel/x86_pkg_temp_thermal.c
++++ b/drivers/thermal/intel/x86_pkg_temp_thermal.c
+@@ -329,6 +329,7 @@ static int pkg_temp_thermal_device_add(u
+ 	tj_max = intel_tcc_get_tjmax(cpu);
+ 	if (tj_max < 0)
+ 		return tj_max;
++	tj_max *= 1000;
  
--static inline struct spi_device *to_spi_device(const struct device *dev)
--{
--	return dev ? container_of(dev, struct spi_device, dev) : NULL;
--}
-+#define to_spi_device(__dev)	container_of_const(__dev, struct spi_device, dev)
- 
- /* Most drivers won't need to care about device refcounting */
- static inline struct spi_device *spi_dev_get(struct spi_device *spi)
--- 
-2.39.5
-
+ 	zonedev = kzalloc(sizeof(*zonedev), GFP_KERNEL);
+ 	if (!zonedev)
 
 
