@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A779527CCF0;
-	Tue, 27 May 2025 17:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247631DC998;
+	Tue, 27 May 2025 17:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367560; cv=none; b=nMSQA9aAeUhZoPye6uMd/Z0XB3+MwUKE9T2eLRfHef2lSUcAWUKa+JS/2YSKzFOJum2s0B3xrpImqALVevwu1P+PuRh077lfafSbvcDEhF+4Whq4CnazzoFiSpLA2pWN7ug+Tx6YseDGKEs5nQY8b431UhN3MY6g9gVcWWfZNeg=
+	t=1748367561; cv=none; b=HfcQLBYR/wv0JWLGrgeXlkdgjpvrca4Xo8pa0Mo8s0oIdvKnELa5/WZF3i4d58yR3GqMlqS1+f4lxDmGYhESayU3Ffvn6/5auPK2M2XhgVo+kg5WvvN/v9xFZ8go2GcAfeUE7J4f93WjvvAX6M6gA9EAXLILxpNwizdamHeMUfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367560; c=relaxed/simple;
-	bh=I2TZYDGk8iAgR/cSktuCls1myrtpd3TXDVCCxrl4wXE=;
+	s=arc-20240116; t=1748367561; c=relaxed/simple;
+	bh=l05VTLVb16kcMlH3U1va6KkMNJ2Z0U2UO4V3CTDbGsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uf8KmIMWo4gOvCuBpDjOKy/enRNf+LP3VeKunk8uNPDnyeJ/Gwd42Uwt/X0HVl0ixcwuFgKO6OgwFRcyjoyDuW7r4WzcJluSVeJbRQ54ImeowWTBiG1u5MVpPyWhL4jgJc+TkCPtCKc+OBW5yKXFFwK0b0Fe+Mb0ENMS4DESi4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjdfkVZo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hmp6r6tLVY5I6KNQi9vZFpuU3NrjOaVIlsUxe5c99PnISL54A76VDOLwMRsH6B37ClJ55Sxoprq58lSF0S/D4TORn6nte7M/bc6EUt0r3UPY3Eh+tsqNwBrUsUDOM6X5CqTrJ/iR71p7Qe6HAEYka0zDhxPl9A7KzakShRPkIeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qeHU/Wvf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjdfkVZo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87CC2C4CEE9;
-	Tue, 27 May 2025 17:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qeHU/Wvf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DEB0C4CEEA;
+	Tue, 27 May 2025 17:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367558;
-	bh=I2TZYDGk8iAgR/cSktuCls1myrtpd3TXDVCCxrl4wXE=;
+	s=korg; t=1748367561;
+	bh=l05VTLVb16kcMlH3U1va6KkMNJ2Z0U2UO4V3CTDbGsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zjdfkVZo+7D7Nm2s2BgHf6Y/33C/v1T+sy1ps1qb87b6HYm6HNkZ3+Gt+3aXgCiIU
-	 eNx9SOxRSzIREahkgYoiV4mseZkieN+8IJaYJu0muxzaYCdAZdlQqhl1IfItE8+kOp
-	 LYejxxNMYCT0+91G+5H24Jl+U4tE51Xw1cYLtgUA=
+	b=qeHU/Wvf19Ak182bZB8VoUtUuZrcwbdR0uSjInLYlp9npHgJgZpG4wiNxf5wog/iJ
+	 z2ATIV/1/BheqJvQ06o51P31x9tUvGntwWILrhZkqtRgDmnSpLW/W//WaGlUyCA6aT
+	 PW0+UIDWBgvrMfoCHlJqWtMDLS0AEBXjt6RTp9PM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Gerst <brgerst@gmail.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Ben Segall <bsegall@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 426/783] x86/boot: Disable stack protector for early boot code
-Date: Tue, 27 May 2025 18:23:43 +0200
-Message-ID: <20250527162530.470565771@linuxfoundation.org>
+Subject: [PATCH 6.14 427/783] posix-timers: Invoke cond_resched() during exit_itimers()
+Date: Tue, 27 May 2025 18:23:44 +0200
+Message-ID: <20250527162530.510788632@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,42 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Gerst <brgerst@gmail.com>
+From: Benjamin Segall <bsegall@google.com>
 
-[ Upstream commit a9a76b38aaf577887103e3ebb41d70e6aa5a4b19 ]
+[ Upstream commit f99c5bb396b8d1424ed229d1ffa6f596e3b9c36b ]
 
-On 64-bit, this will prevent crashes when the canary access is changed
-from %gs:40 to %gs:__stack_chk_guard(%rip).  RIP-relative addresses from
-the identity-mapped early boot code will target the wrong address with
-zero-based percpu.  KASLR could then shift that address to an unmapped
-page causing a crash on boot.
+exit_itimers() loops through every timer in the process to delete it.  This
+requires taking the system-wide hash_lock for each of these timers, and
+contends with other processes trying to create or delete timers.
 
-This early boot code runs well before user-space is active and does not
-need stack protector enabled.
+When a process creates hundreds of thousands of timers, and then exits
+while other processes contend with it, this can trigger softlockups on
+CONFIG_PREEMPT=n.
 
-Signed-off-by: Brian Gerst <brgerst@gmail.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20250123190747.745588-4-brgerst@gmail.com
+Add a cond_resched() invocation into the loop to allow the system to make
+progress.
+
+Signed-off-by: Ben Segall <bsegall@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/xm2634gg2n23.fsf@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/Makefile | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/time/posix-timers.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/Makefile b/arch/x86/kernel/Makefile
-index b43eb7e384eba..84cfa179802c3 100644
---- a/arch/x86/kernel/Makefile
-+++ b/arch/x86/kernel/Makefile
-@@ -44,6 +44,8 @@ KCOV_INSTRUMENT_unwind_orc.o				:= n
- KCOV_INSTRUMENT_unwind_frame.o				:= n
- KCOV_INSTRUMENT_unwind_guess.o				:= n
+diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
+index 15ed343693101..43b08a04898a8 100644
+--- a/kernel/time/posix-timers.c
++++ b/kernel/time/posix-timers.c
+@@ -1107,8 +1107,10 @@ void exit_itimers(struct task_struct *tsk)
+ 	spin_unlock_irq(&tsk->sighand->siglock);
  
-+CFLAGS_head32.o := -fno-stack-protector
-+CFLAGS_head64.o := -fno-stack-protector
- CFLAGS_irq.o := -I $(src)/../include/asm/trace
+ 	/* The timers are not longer accessible via tsk::signal */
+-	while (!hlist_empty(&timers))
++	while (!hlist_empty(&timers)) {
+ 		itimer_delete(hlist_entry(timers.first, struct k_itimer, list));
++		cond_resched();
++	}
  
- obj-y			+= head_$(BITS).o
+ 	/*
+ 	 * There should be no timers on the ignored list. itimer_delete() has
 -- 
 2.39.5
 
