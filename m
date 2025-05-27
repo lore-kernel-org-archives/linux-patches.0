@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2533280023;
-	Tue, 27 May 2025 17:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C0027FD63;
+	Tue, 27 May 2025 17:57:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368633; cv=none; b=mPB2kju23K+yPfA0xdJp3Q2jpeP1UPii5b5aEW+PFHGmSvMZt7yrQCO3QQLyoIj0aPRayxlVvhIViRP2NuDi5AqQxJjK2uim9v2dC6p5PBzKfIz9kXuyWZfF8qXA9BbzqjloKg4afMdTHvHUBLZTTp256Lu5hIeU9F7ELfFULBY=
+	t=1748368637; cv=none; b=cHz8TDgdAkW1PuA+qNr+B3kbFDvJVzEu4VWbkQnzBM4ta8V5NkNoL4/WUQ+gQ+ilZY2uAi1xzJpwniw3DsBW2LtHB02TGTg6U2YNzQpgxMBCR4Mnuv19/BUhJag2sLTYVKQpgadFi+qjh/HqzM7iV5Swasb+AoeT2Vb/x5jZd9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368633; c=relaxed/simple;
-	bh=0zuChdbSw2dlLcUvS45iXkaS3DsjI1/9X8XKpAxZKcY=;
+	s=arc-20240116; t=1748368637; c=relaxed/simple;
+	bh=XnMuTDltEVVbukuna0e9HNNKrBZ2dZCF6b9SkHpdxyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QBE9eFLG00O1jMSd5RXU5b5Br55Ny3Ha8YCNeqOz1dyNliOG7BD+Bth8IrdT3UKuM3zOb9YZavxYKISQG4eROO89BBi6Xyuh9kaLoFfQlu96TVDtc6U2XWUu0tH/nLZiGYGkGbEV03ISXWZRqePZWyem23/rWj1YIbeC5qTqlAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J+teM8rf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qPx5m6aZJ0ZRKJM3E2f4Y1GaF5ASfIHub+7pTXGoElkK2tV01G4E1MYhmBl8JjCoNmVrIQUR7KeqzjOvbbE1TmH9KQca0KZWKOBOq87KiYeS+3Js88/JpgC/dV3iFk5x46C/gZVlF+M1qc5VILInbtR3NoE9lrtgNUsjWKklkaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UH6bvSJf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+teM8rf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 412CEC4CEE9;
-	Tue, 27 May 2025 17:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UH6bvSJf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49601C4CEE9;
+	Tue, 27 May 2025 17:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368633;
-	bh=0zuChdbSw2dlLcUvS45iXkaS3DsjI1/9X8XKpAxZKcY=;
+	s=korg; t=1748368636;
+	bh=XnMuTDltEVVbukuna0e9HNNKrBZ2dZCF6b9SkHpdxyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J+teM8rfGlUOgTYDh0nhXSNRcAbPy5eL4aztu4uTTxmnbEvJRTYzrn264re2neodR
-	 FGVsKLMydtE++4Y3ykfZ30S4q7ZWPv9qywppMb1KaKjVkfjjaVOupAE7Eg1WeFWW5t
-	 IMUoWvtVe/7nAmzU0D4exF5yyY8Z+YYPYPNQcWTg=
+	b=UH6bvSJfWNwqYUJnWmjLQROqNVQCqsdP79cRnp/Y9M1TKrwWRhOAMFhZZMwZH3SfT
+	 pOmuTkxY051daSbq+61JikR7oWrLFbEJy3BQEcXbxtooPJrBDnDrYPV1OLPfoiGmgL
+	 fYC3dkaT1y6dMwki5qFFJwQe4LO/6HxaMoDBqJlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Moskovkin <Vladimir.Moskovkin@kaspersky.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.14 742/783] platform/x86: dell-wmi-sysman: Avoid buffer overflow in current_password_store()
-Date: Tue, 27 May 2025 18:28:59 +0200
-Message-ID: <20250527162543.342644008@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.14 769/783] ksmbd: fix stream write failure
+Date: Tue, 27 May 2025 18:29:26 +0200
+Message-ID: <20250527162544.453856526@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -44,46 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Moskovkin <Vladimir.Moskovkin@kaspersky.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 4e89a4077490f52cde652d17e32519b666abf3a6 upstream.
+[ Upstream commit 1f4bbedd4e5a69b01cde2cc21d01151ab2d0884f ]
 
-If the 'buf' array received from the user contains an empty string, the
-'length' variable will be zero. Accessing the 'buf' array element with
-index 'length - 1' will result in a buffer overflow.
+If there is no stream data in file, v_len is zero.
+So, If position(*pos) is zero, stream write will fail
+due to stream write position validation check.
+This patch reorganize stream write position validation.
 
-Add a check for an empty string.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
-Cc: stable@vger.kernel.org
-Signed-off-by: Vladimir Moskovkin <Vladimir.Moskovkin@kaspersky.com>
-Link: https://lore.kernel.org/r/39973642a4f24295b4a8fad9109c5b08@kaspersky.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0ca6df4f40cf ("ksmbd: prevent out-of-bounds stream writes by validating *pos")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-wmi-sysman/passobj-attributes.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/vfs.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
---- a/drivers/platform/x86/dell/dell-wmi-sysman/passobj-attributes.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/passobj-attributes.c
-@@ -45,7 +45,7 @@ static ssize_t current_password_store(st
- 	int length;
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index 648efed5ff7de..474dc6e122c84 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -426,10 +426,15 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
+ 	ksmbd_debug(VFS, "write stream data pos : %llu, count : %zd\n",
+ 		    *pos, count);
  
- 	length = strlen(buf);
--	if (buf[length-1] == '\n')
-+	if (length && buf[length - 1] == '\n')
- 		length--;
++	if (*pos >= XATTR_SIZE_MAX) {
++		pr_err("stream write position %lld is out of bounds\n",	*pos);
++		return -EINVAL;
++	}
++
+ 	size = *pos + count;
+ 	if (size > XATTR_SIZE_MAX) {
+ 		size = XATTR_SIZE_MAX;
+-		count = (*pos + count) - XATTR_SIZE_MAX;
++		count = XATTR_SIZE_MAX - *pos;
+ 	}
  
- 	/* firmware does verifiation of min/max password length,
+ 	v_len = ksmbd_vfs_getcasexattr(idmap,
+@@ -443,13 +448,6 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
+ 		goto out;
+ 	}
+ 
+-	if (v_len <= *pos) {
+-		pr_err("stream write position %lld is out of bounds (stream length: %zd)\n",
+-				*pos, v_len);
+-		err = -EINVAL;
+-		goto out;
+-	}
+-
+ 	if (v_len < size) {
+ 		wbuf = kvzalloc(size, KSMBD_DEFAULT_GFP);
+ 		if (!wbuf) {
+-- 
+2.39.5
+
 
 
