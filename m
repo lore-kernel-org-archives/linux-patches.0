@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB9D2798F8;
-	Tue, 27 May 2025 17:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7F93C01;
+	Tue, 27 May 2025 17:37:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367430; cv=none; b=fsWJ8X54zlVgDisU9ptT9Z5DO5YG238R6060aAlAvNRXGKVdg/6B5qzh5z52wKsKYM/hxgBbEAcozA3RiZmDZZxPo5pCQFuzySonkTeGDLQql0IbjhucKRlPUAJaXo6LGycKnB+Ry5iK7ahDvKdfgWunGXjcOC2o/f4WhJeaIk4=
+	t=1748367434; cv=none; b=S6zwOmtuBMGTszHsw3JuD2MNEScjO9oNRfnUkNqzaHhZmilKJQre2B5X1gkIc37PH2CIocE116jKHvFGWQpjl83i+G3b1aLblaux6tjxMO9vI1feYaHDu4Etq4UF+PHHj1zQuqzTrHr5NiGcuONEYeBzVXMobBIr41B5p+wbDzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367430; c=relaxed/simple;
-	bh=sX5orlJ1PHI9EEf2RNXoSzx1I8pq+zzd6JZDwS0Q7Ow=;
+	s=arc-20240116; t=1748367434; c=relaxed/simple;
+	bh=zLiUXkOfSJx/6eZsCZ081T91/bzyY2Qz2cdhUV4I/IM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oDBkExvTZEExJeC1y6K9Yd1L8dZDP0vZOkZRqjIQAsYy6M4hXVll/1vfYqAhi3ATTaMRJSp9AZyENxio1btHwilHEDrxW/BMSz4XBO2lPakAX7F64APWEm6hQFKJaNTLRskulL7fxuhgTEhrlveWFkZb3/2LV5ZV5LQvvEItlWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqR5tDNd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cqZt+/5xXM0yRx+dAUVTvO2AMmq6+RhNi/8knwZcHUsxd9SZl7R89/1vJEmjXRZfoyH4snPl07FdHno+ZHEYOj7kKw4g3SqaktFpit/RCFYk0xd++oLOzdkbq9Ldw4Mlqjy1EQe2ebmkWFKMX5whK2xKBpDo95C7b0YBR6Nndmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pR+WkaLq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqR5tDNd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEAC2C4CEE9;
-	Tue, 27 May 2025 17:37:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pR+WkaLq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BB9C4CEEA;
+	Tue, 27 May 2025 17:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367430;
-	bh=sX5orlJ1PHI9EEf2RNXoSzx1I8pq+zzd6JZDwS0Q7Ow=;
+	s=korg; t=1748367433;
+	bh=zLiUXkOfSJx/6eZsCZ081T91/bzyY2Qz2cdhUV4I/IM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tqR5tDNdGx8GE7g+qVg2BVic+kdI8e+4nA+J8WzlrkNwDaNU4s+E76t7UzSxBWFU1
-	 X19Rad9HKIK0QeDV7iTAQmCbbK4JBCMvBzGl1lis05I2/Hh5K8xefOsvNwICmj/taF
-	 1vWu/wv/99hsLYepbyCjnjRIYFIHzMqqWDvP5/8Y=
+	b=pR+WkaLqgD4qPaTzCqcU+FBQ0Ih/BEXkVfpexiyFOzUrl34kNS2uNzRGgSxjP0pNo
+	 fX20Mg1WgmRlWfNyx1GnnnFkDk+/R6+U2o32a4M3aaXt51X+HkoqHSySeUut/PKyvl
+	 K6VpxNsvPHYgX3zfDitY+wtphBMJevn86eHeGkDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>,
-	Roopni Devanathan <quic_rdevanat@quicinc.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Xiao Liang <shaw.leon@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 345/783] wifi: ath12k: Improve BSS discovery with hidden SSID in 6 GHz band
-Date: Tue, 27 May 2025 18:22:22 +0200
-Message-ID: <20250527162527.114443278@linuxfoundation.org>
+Subject: [PATCH 6.14 379/783] net: ipv6: Init tunnel link-netns before registering dev
+Date: Tue, 27 May 2025 18:22:56 +0200
+Message-ID: <20250527162528.525259716@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,57 +52,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
+From: Xiao Liang <shaw.leon@gmail.com>
 
-[ Upstream commit 27d38bdfd416f4db70e09c3bef3b030c86fd235a ]
+[ Upstream commit db014522f35606031d8ac58b4aed6b1ed84f03d1 ]
 
-Currently, sometimes, the station is unable to identify the configured
-AP SSID in its scan results when the AP is not broadcasting its name
-publicly and has a hidden SSID.
+Currently some IPv6 tunnel drivers set tnl->net to dev_net(dev) in
+ndo_init(), which is called in register_netdevice(). However, it lacks
+the context of link-netns when we enable cross-net tunnels at device
+registration time.
 
-Currently, channel dwell time for an ath12k station is 30 ms. Sometimes,
-station can send broadcast probe request to AP close to the end of dwell
-time. In some of these cases, before AP sends a response to the received
-probe request, the dwell time on the station side would come to an end.
-So, the station will move to scan next channel and will not be able to
-acknowledge the unicast probe response.
+Let's move the init of tunnel link-netns before register_netdevice().
 
-Resolve this issue by increasing station's channel dwell time to 70 ms,
-so that the it remains on the same channel for a longer period. This
-would increase the station's chance of receiving probe response from the
-AP. The station will then send a response acknowledgment back to the AP,
-thus leading to successful scan and BSS discovery.
+ip6_gre has already initialized netns, so just remove the redundant
+assignment.
 
-With an increased dwell time, scan would take longer than it takes now.
-But, this fix is an improvement for hidden SSID scan issue.
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
-
-Signed-off-by: Ramasamy Kaliappan <quic_rkaliapp@quicinc.com>
-Signed-off-by: Roopni Devanathan <quic_rdevanat@quicinc.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250207060005.153835-1-quic_rdevanat@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250219125039.18024-8-shaw.leon@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/ip6_gre.c    | 2 --
+ net/ipv6/ip6_tunnel.c | 3 ++-
+ net/ipv6/ip6_vti.c    | 3 ++-
+ net/ipv6/sit.c        | 8 +++++---
+ 4 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index 7a87777e0a047..9cd7ceae5a4f8 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -2373,8 +2373,8 @@ void ath12k_wmi_start_scan_init(struct ath12k *ar,
- 	arg->dwell_time_active = 50;
- 	arg->dwell_time_active_2g = 0;
- 	arg->dwell_time_passive = 150;
--	arg->dwell_time_active_6g = 40;
--	arg->dwell_time_passive_6g = 30;
-+	arg->dwell_time_active_6g = 70;
-+	arg->dwell_time_passive_6g = 70;
- 	arg->min_rest_time = 50;
- 	arg->max_rest_time = 500;
- 	arg->repeat_probe_time = 0;
+diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+index 235808cfec705..68e9a41eed491 100644
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -1498,7 +1498,6 @@ static int ip6gre_tunnel_init_common(struct net_device *dev)
+ 	tunnel = netdev_priv(dev);
+ 
+ 	tunnel->dev = dev;
+-	tunnel->net = dev_net(dev);
+ 	strcpy(tunnel->parms.name, dev->name);
+ 
+ 	ret = dst_cache_init(&tunnel->dst_cache, GFP_KERNEL);
+@@ -1882,7 +1881,6 @@ static int ip6erspan_tap_init(struct net_device *dev)
+ 	tunnel = netdev_priv(dev);
+ 
+ 	tunnel->dev = dev;
+-	tunnel->net = dev_net(dev);
+ 	strcpy(tunnel->parms.name, dev->name);
+ 
+ 	ret = dst_cache_init(&tunnel->dst_cache, GFP_KERNEL);
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index 48fd53b989726..5350c9bb2319b 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -1878,7 +1878,6 @@ ip6_tnl_dev_init_gen(struct net_device *dev)
+ 	int t_hlen;
+ 
+ 	t->dev = dev;
+-	t->net = dev_net(dev);
+ 
+ 	ret = dst_cache_init(&t->dst_cache, GFP_KERNEL);
+ 	if (ret)
+@@ -1940,6 +1939,7 @@ static int __net_init ip6_fb_tnl_dev_init(struct net_device *dev)
+ 	struct net *net = dev_net(dev);
+ 	struct ip6_tnl_net *ip6n = net_generic(net, ip6_tnl_net_id);
+ 
++	t->net = net;
+ 	t->parms.proto = IPPROTO_IPV6;
+ 
+ 	rcu_assign_pointer(ip6n->tnls_wc[0], t);
+@@ -2013,6 +2013,7 @@ static int ip6_tnl_newlink(struct net *src_net, struct net_device *dev,
+ 	int err;
+ 
+ 	nt = netdev_priv(dev);
++	nt->net = net;
+ 
+ 	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
+ 		err = ip6_tnl_encap_setup(nt, &ipencap);
+diff --git a/net/ipv6/ip6_vti.c b/net/ipv6/ip6_vti.c
+index 590737c275379..0123504691443 100644
+--- a/net/ipv6/ip6_vti.c
++++ b/net/ipv6/ip6_vti.c
+@@ -925,7 +925,6 @@ static inline int vti6_dev_init_gen(struct net_device *dev)
+ 	struct ip6_tnl *t = netdev_priv(dev);
+ 
+ 	t->dev = dev;
+-	t->net = dev_net(dev);
+ 	netdev_hold(dev, &t->dev_tracker, GFP_KERNEL);
+ 	netdev_lockdep_set_classes(dev);
+ 	return 0;
+@@ -958,6 +957,7 @@ static int __net_init vti6_fb_tnl_dev_init(struct net_device *dev)
+ 	struct net *net = dev_net(dev);
+ 	struct vti6_net *ip6n = net_generic(net, vti6_net_id);
+ 
++	t->net = net;
+ 	t->parms.proto = IPPROTO_IPV6;
+ 
+ 	rcu_assign_pointer(ip6n->tnls_wc[0], t);
+@@ -1008,6 +1008,7 @@ static int vti6_newlink(struct net *src_net, struct net_device *dev,
+ 	vti6_netlink_parms(data, &nt->parms);
+ 
+ 	nt->parms.proto = IPPROTO_IPV6;
++	nt->net = net;
+ 
+ 	if (vti6_locate(net, &nt->parms, 0))
+ 		return -EEXIST;
+diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
+index 39bd8951bfca1..3c15a0ae228e2 100644
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -269,6 +269,7 @@ static struct ip_tunnel *ipip6_tunnel_locate(struct net *net,
+ 
+ 	nt = netdev_priv(dev);
+ 
++	nt->net = net;
+ 	nt->parms = *parms;
+ 	if (ipip6_tunnel_create(dev) < 0)
+ 		goto failed_free;
+@@ -1449,7 +1450,6 @@ static int ipip6_tunnel_init(struct net_device *dev)
+ 	int err;
+ 
+ 	tunnel->dev = dev;
+-	tunnel->net = dev_net(dev);
+ 	strcpy(tunnel->parms.name, dev->name);
+ 
+ 	ipip6_tunnel_bind_dev(dev);
+@@ -1563,6 +1563,7 @@ static int ipip6_newlink(struct net *src_net, struct net_device *dev,
+ 	int err;
+ 
+ 	nt = netdev_priv(dev);
++	nt->net = net;
+ 
+ 	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
+ 		err = ip_tunnel_encap_setup(nt, &ipencap);
+@@ -1858,6 +1859,9 @@ static int __net_init sit_init_net(struct net *net)
+ 	 */
+ 	sitn->fb_tunnel_dev->netns_local = true;
+ 
++	t = netdev_priv(sitn->fb_tunnel_dev);
++	t->net = net;
++
+ 	err = register_netdev(sitn->fb_tunnel_dev);
+ 	if (err)
+ 		goto err_reg_dev;
+@@ -1865,8 +1869,6 @@ static int __net_init sit_init_net(struct net *net)
+ 	ipip6_tunnel_clone_6rd(sitn->fb_tunnel_dev, sitn);
+ 	ipip6_fb_tunnel_init(sitn->fb_tunnel_dev);
+ 
+-	t = netdev_priv(sitn->fb_tunnel_dev);
+-
+ 	strcpy(t->parms.name, sitn->fb_tunnel_dev->name);
+ 	return 0;
+ 
 -- 
 2.39.5
 
