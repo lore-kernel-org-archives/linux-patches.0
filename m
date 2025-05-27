@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EFD81FB3;
-	Tue, 27 May 2025 17:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D631FB3;
+	Tue, 27 May 2025 17:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367981; cv=none; b=ZmLPTiIuMzd5VZaMRuR+H4NhCC/5UuDqO9Gja+s1FCIivJVRIPVDiAd4QgU9gn1mjhsatxDK6jhaHZOG4Wl3HUDVGeT0GKY/mb4O6nwY6+nh2kTYnnf63hncKR99DdWzV/gAmiQc/w/zeqI3Ag803dyryNa7aMGIUDLYWqaBBB0=
+	t=1748367984; cv=none; b=fM05A4qqOU1fEzAF73369o2T44BZmQEmlNJ+9eWUmUvCsvgRnWrc+caupF6fSzUXhGWv6Z+rcpE6S6GWdI3CMDnRPsbPpEWoIvicQIVyMD42DQMV75h3+S5iDte/sak1Jx6jCd8ZH9RL/c0egc5BymV3hzkl2d9M5cP8wO2oyL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367981; c=relaxed/simple;
-	bh=6JCLMDAFhWr8eK1weSeAUBYNY7Q3yMI3LlPx1UenH7M=;
+	s=arc-20240116; t=1748367984; c=relaxed/simple;
+	bh=MDc42TrWAovL9NxNoMPLypxZB2GBUMMjtp91hhJlRoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uQoe0v6P885rGckWCEa+f35v0QDhtpHPJeycy3FjYkNS8MA+NZPVQ7NTGb7ilN2wOXbvY4DtJmPGMVl3jECrKaDXt8hjXhG7Oi8AbeXdxLx1++y3znglJwNENeSdTVWQYfhGmAt7UZppeWVzZeJapxqbdnbcXqMaaICNeYTs6xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sEg8uJAR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sh3TNkfj2vQQCHmwamALFOiDv/OA9G+nzRgH6nBCOm9B5sFeUJPq5crhj09Vqj8c2d6yxAh8MrEElJWkr53f1BmwHODmLvSnR8SR/yOeiwxkpI9rxwFIv4xu0lNbN6rwwgaDfbouE3tc3+EESc7+OP3zJx0+A85VEE19Hb46OYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=caW2sKxQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sEg8uJAR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A652DC4CEE9;
-	Tue, 27 May 2025 17:46:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="caW2sKxQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1817C4CEE9;
+	Tue, 27 May 2025 17:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367981;
-	bh=6JCLMDAFhWr8eK1weSeAUBYNY7Q3yMI3LlPx1UenH7M=;
+	s=korg; t=1748367984;
+	bh=MDc42TrWAovL9NxNoMPLypxZB2GBUMMjtp91hhJlRoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sEg8uJARcjh5BEU6LjK1+REpbzdb2GfAubEKkhO1gXovr3loAHn7XuQ6630If3wKq
-	 Z3Y1IOQVWRJ8EwkUvNi3DYt1WiTsms37ANHV3+T+y4ONfuR4z+RHYljBAPukhsvD31
-	 3pRoslJZcyI8DGNizKo4RPMRbhkIXdy0CLYJsnV8=
+	b=caW2sKxQyTSff/Jfp+51PFbrIs+yd2aHJVN1ELUjqB4snR+KaJzmeOz3PI+8jW1tC
+	 Q+yBVVIwM6Yuhl9Y3D85ADW1XHLFjP9VQggv+vrQhNoVJUyl4EqrvIaqDu1plAsxCG
+	 LkOv4mCNO/zBPxrEy2OvzkQc4b5/u07Y6gSvtNak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ching-Te Ku <ku920601@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Yael Chemla <ychemla@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 543/783] wifi: rtw89: coex: Assign value over than 0 to avoid firmware timer hang
-Date: Tue, 27 May 2025 18:25:40 +0200
-Message-ID: <20250527162535.272707817@linuxfoundation.org>
+Subject: [PATCH 6.14 561/783] net/mlx5e: Avoid WARN_ON when configuring MQPRIO with HTB offload enabled
+Date: Tue, 27 May 2025 18:25:58 +0200
+Message-ID: <20250527162535.992828865@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,39 +55,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ching-Te Ku <ku920601@realtek.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 2e4c4717b3f6f019c71af984564b6e4d0ae8d0bd ]
+[ Upstream commit 689805dcc474c2accb5cffbbcea1c06ee4a54570 ]
 
-If the slot duration is 0, the firmware timer will trigger timer hang at
-the timer initializing state in a low rate due to hardware algorithm.
+When attempting to enable MQPRIO while HTB offload is already
+configured, the driver currently returns `-EINVAL` and triggers a
+`WARN_ON`, leading to an unnecessary call trace.
 
-Signed-off-by: Ching-Te Ku <ku920601@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250205013233.10945-2-pkshih@realtek.com
+Update the code to handle this case more gracefully by returning
+`-EOPNOTSUPP` instead, while also providing a helpful user message.
+
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Yael Chemla <ychemla@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/coex.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/coex.c b/drivers/net/wireless/realtek/rtw89/coex.c
-index 9e06cc36a75e2..d94a028555e20 100644
---- a/drivers/net/wireless/realtek/rtw89/coex.c
-+++ b/drivers/net/wireless/realtek/rtw89/coex.c
-@@ -89,10 +89,10 @@ static const struct rtw89_btc_fbtc_slot s_def[] = {
- 	[CXST_B4]	= __DEF_FBTC_SLOT(50,  0xe5555555, SLOT_MIX),
- 	[CXST_LK]	= __DEF_FBTC_SLOT(20,  0xea5a5a5a, SLOT_ISO),
- 	[CXST_BLK]	= __DEF_FBTC_SLOT(500, 0x55555555, SLOT_MIX),
--	[CXST_E2G]	= __DEF_FBTC_SLOT(0,   0xea5a5a5a, SLOT_MIX),
--	[CXST_E5G]	= __DEF_FBTC_SLOT(0,   0xffffffff, SLOT_ISO),
-+	[CXST_E2G]	= __DEF_FBTC_SLOT(5,   0xea5a5a5a, SLOT_MIX),
-+	[CXST_E5G]	= __DEF_FBTC_SLOT(5,   0xffffffff, SLOT_ISO),
- 	[CXST_EBT]	= __DEF_FBTC_SLOT(5,   0xe5555555, SLOT_MIX),
--	[CXST_ENULL]	= __DEF_FBTC_SLOT(0,   0xaaaaaaaa, SLOT_ISO),
-+	[CXST_ENULL]	= __DEF_FBTC_SLOT(5,   0xaaaaaaaa, SLOT_ISO),
- 	[CXST_WLK]	= __DEF_FBTC_SLOT(250, 0xea5a5a5a, SLOT_MIX),
- 	[CXST_W1FDD]	= __DEF_FBTC_SLOT(50,  0xffffffff, SLOT_ISO),
- 	[CXST_B1FDD]	= __DEF_FBTC_SLOT(50,  0xffffdfff, SLOT_ISO),
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index b0748e46b1ac4..ca56740f6d2f9 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -3787,8 +3787,11 @@ static int mlx5e_setup_tc_mqprio(struct mlx5e_priv *priv,
+ 	/* MQPRIO is another toplevel qdisc that can't be attached
+ 	 * simultaneously with the offloaded HTB.
+ 	 */
+-	if (WARN_ON(mlx5e_selq_is_htb_enabled(&priv->selq)))
+-		return -EINVAL;
++	if (mlx5e_selq_is_htb_enabled(&priv->selq)) {
++		NL_SET_ERR_MSG_MOD(mqprio->extack,
++				   "MQPRIO cannot be configured when HTB offload is enabled.");
++		return -EOPNOTSUPP;
++	}
+ 
+ 	switch (mqprio->mode) {
+ 	case TC_MQPRIO_MODE_DCB:
 -- 
 2.39.5
 
