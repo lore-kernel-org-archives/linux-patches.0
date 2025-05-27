@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 668A12110E;
-	Tue, 27 May 2025 17:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915252110E;
+	Tue, 27 May 2025 17:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367160; cv=none; b=J+65MJ/aanqV7OjY0htxqIfUygk9r8HWvD7HI2xSXWROly0Q72sSiIWu3et8rphLjNTAJpe8onxcE1qjnyGZkBjYy3zhXFU23oJi6tMbmZnqhd2C+0aZ6nAochw8QqNwoezjF/lwFjGs+TlcARNPsIiRl7dmnzp3lUGLzaykp1s=
+	t=1748367163; cv=none; b=FaIc85Q+E0v1zK8Li8BVHmgsMfXn3623v9Nbrie8QxyKoqH19Sa+q1VEYsFLkTJRhLrRc40ZGfTKckYiuxSiHK6mANaXLgjuklOIgtnJihh5en2EyJKkzORWniH6djCxAxGewfWXvQBqx8oYe5Fs4prC1nm/V1qXQAH9NKCgqO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367160; c=relaxed/simple;
-	bh=djhe2v6jUxwHModoGlzFGwcHxHGe+UaKGtFGzjK2Otw=;
+	s=arc-20240116; t=1748367163; c=relaxed/simple;
+	bh=zlzCc4kQbQ8zewlzJw+l7ZuK/vXlLVRzpina942vjGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OAwfkyQDOcGnupEd3bZOQAX9NWrZ/TpcNqwZKl7Xn9hXKRY81d8XLtulty9k8SLXAoa4n8SviYnIiKoXnwtpAJDD4MgN7vDKADZ9uO4VbwTQNglByI4yKj3tC3Kyoh7gSAGyhfePkfEqsOGz3g+t8ITEwDRe8Vg9yRCS8kf4Q1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ltklNOQ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=amxCY/2XTHIWvrBAHrkOJ6tGBU+jPmfV26Sh6dv5YBWQ2SA6Pl80vUi1tmvM414+d/oK27hhVtvJdV6Pt//tFGziGpL0FeQahVmkM0REeS/83C+j3nO6BYOuJkOaqMwySiLc6Mj9fgGNX64ZABdkA7yjb8MogakGp6KdXFbhVsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4ENHXTR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ltklNOQ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88F3C4CEE9;
-	Tue, 27 May 2025 17:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4ENHXTR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11FEC4CEE9;
+	Tue, 27 May 2025 17:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367160;
-	bh=djhe2v6jUxwHModoGlzFGwcHxHGe+UaKGtFGzjK2Otw=;
+	s=korg; t=1748367163;
+	bh=zlzCc4kQbQ8zewlzJw+l7ZuK/vXlLVRzpina942vjGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ltklNOQ6JCpHZx70XWBOdomSk2e4WJAhGCOm8wnS9lkpAQ98igUpcGXeB0/V531gp
-	 jlZhXlP9yp8rE5v3OV2LyuJkb2J7n6UppqwRtzOW2RiSnQn6d2lV8/2JK6VG75nnMz
-	 g6wkKAy/ZlQDm18Z1lvfcw6JCFBov6DTqK6Q45p8=
+	b=M4ENHXTRktEdCgouVrPRNbKDl2E0wVYHvqGONYOifNOzL7ukdn3fc1iaX34k07mgB
+	 CtQpsRVNeoEI5PwTG9uiVUm154njoVCYB31auJw61m0Ozn3ToHDrXrp75OQvB/ksqY
+	 61VUrNc2djzDEE9HA/PnioQodHb0D3ntO354EYDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Yi Liu <yi.l.liu@intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Dillon Varone <dillon.varone@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 298/783] iommufd: Disallow allocating nested parent domain with fault ID
-Date: Tue, 27 May 2025 18:21:35 +0200
-Message-ID: <20250527162525.212126922@linuxfoundation.org>
+Subject: [PATCH 6.14 281/783] drm/amd/display: Ensure DMCUB idle before reset on DCN31/DCN35
+Date: Tue, 27 May 2025 18:21:18 +0200
+Message-ID: <20250527162524.528491035@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,61 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Liu <yi.l.liu@intel.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 1062d81086156e42878d701b816d2f368b53a77c ]
+[ Upstream commit c707ea82c79dbd1d295ec94cc6529a5248c77757 ]
 
-Allocating a domain with a fault ID indicates that the domain is faultable.
-However, there is a gap for the nested parent domain to support PRI. Some
-hardware lacks the capability to distinguish whether PRI occurs at stage 1
-or stage 2. This limitation may require software-based page table walking
-to resolve. Since no in-tree IOMMU driver currently supports this
-functionality, it is disallowed. For more details, refer to the related
-discussion at [1].
+[Why]
+If we soft reset before halt finishes and there are outstanding
+memory transactions then the memory interface may produce unexpected
+results, such as out of order transactions when the firmware next runs.
 
-[1] https://lore.kernel.org/linux-iommu/bd1655c6-8b2f-4cfa-adb1-badc00d01811@intel.com/
+These can manifest as random or unexpected load/store violations.
 
-Link: https://patch.msgid.link/r/20250226104012.82079-1-yi.l.liu@intel.com
-Suggested-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+[How]
+Increase the timeout before soft reset to ensure the DMCUB has quiesced.
+This is effectively 1s maximum based on experimentation.
+
+Use the enable bit check on DCN31 like we're doing on DCN35 and reorder
+the reset writes to follow the HW programming guide.
+
+Ensure we're reading SCRATCH7 instead of SCRATCH8 for the HALT code.
+No current versions of DMCUB firmware use the SCRATCH8 boot bit to
+dynamically switch where the HALT code goes to maintain backwards
+compatibility with PSP.
+
+Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/hw_pagetable.c    | 3 +++
- tools/testing/selftests/iommu/iommufd.c | 4 ++++
- 2 files changed, 7 insertions(+)
+ .../gpu/drm/amd/display/dmub/src/dmub_dcn31.c   | 17 +++++++++++------
+ .../gpu/drm/amd/display/dmub/src/dmub_dcn35.c   |  4 ++--
+ 2 files changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/iommu/iommufd/hw_pagetable.c b/drivers/iommu/iommufd/hw_pagetable.c
-index 598be26a14e28..9b5b0b8522299 100644
---- a/drivers/iommu/iommufd/hw_pagetable.c
-+++ b/drivers/iommu/iommufd/hw_pagetable.c
-@@ -126,6 +126,9 @@ iommufd_hwpt_paging_alloc(struct iommufd_ctx *ictx, struct iommufd_ioas *ioas,
- 	if ((flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING) &&
- 	    !device_iommu_capable(idev->dev, IOMMU_CAP_DIRTY_TRACKING))
- 		return ERR_PTR(-EOPNOTSUPP);
-+	if ((flags & IOMMU_HWPT_FAULT_ID_VALID) &&
-+	    (flags & IOMMU_HWPT_ALLOC_NEST_PARENT))
-+		return ERR_PTR(-EOPNOTSUPP);
+diff --git a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn31.c b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn31.c
+index d9f31b191c693..1a68b5782cac6 100644
+--- a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn31.c
++++ b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn31.c
+@@ -83,8 +83,8 @@ static inline void dmub_dcn31_translate_addr(const union dmub_addr *addr_in,
+ void dmub_dcn31_reset(struct dmub_srv *dmub)
+ {
+ 	union dmub_gpint_data_register cmd;
+-	const uint32_t timeout = 100;
+-	uint32_t in_reset, scratch, i, pwait_mode;
++	const uint32_t timeout = 100000;
++	uint32_t in_reset, is_enabled, scratch, i, pwait_mode;
  
- 	hwpt_paging = __iommufd_object_alloc(
- 		ictx, hwpt_paging, IOMMUFD_OBJ_HWPT_PAGING, common.obj);
-diff --git a/tools/testing/selftests/iommu/iommufd.c b/tools/testing/selftests/iommu/iommufd.c
-index a1b2b657999dc..618c03bb6509b 100644
---- a/tools/testing/selftests/iommu/iommufd.c
-+++ b/tools/testing/selftests/iommu/iommufd.c
-@@ -439,6 +439,10 @@ TEST_F(iommufd_ioas, alloc_hwpt_nested)
- 				    &test_hwpt_id);
- 		test_err_hwpt_alloc(EINVAL, self->device_id, self->device_id, 0,
- 				    &test_hwpt_id);
-+		test_err_hwpt_alloc(EOPNOTSUPP, self->device_id, self->ioas_id,
-+				    IOMMU_HWPT_ALLOC_NEST_PARENT |
-+						IOMMU_HWPT_FAULT_ID_VALID,
-+				    &test_hwpt_id);
+ 	REG_GET(DMCUB_CNTL2, DMCUB_SOFT_RESET, &in_reset);
  
- 		test_cmd_hwpt_alloc(self->device_id, self->ioas_id,
- 				    IOMMU_HWPT_ALLOC_NEST_PARENT,
+@@ -108,7 +108,7 @@ void dmub_dcn31_reset(struct dmub_srv *dmub)
+ 		}
+ 
+ 		for (i = 0; i < timeout; ++i) {
+-			scratch = dmub->hw_funcs.get_gpint_response(dmub);
++			scratch = REG_READ(DMCUB_SCRATCH7);
+ 			if (scratch == DMUB_GPINT__STOP_FW_RESPONSE)
+ 				break;
+ 
+@@ -125,9 +125,14 @@ void dmub_dcn31_reset(struct dmub_srv *dmub)
+ 		/* Force reset in case we timed out, DMCUB is likely hung. */
+ 	}
+ 
+-	REG_UPDATE(DMCUB_CNTL2, DMCUB_SOFT_RESET, 1);
+-	REG_UPDATE(DMCUB_CNTL, DMCUB_ENABLE, 0);
+-	REG_UPDATE(MMHUBBUB_SOFT_RESET, DMUIF_SOFT_RESET, 1);
++	REG_GET(DMCUB_CNTL, DMCUB_ENABLE, &is_enabled);
++
++	if (is_enabled) {
++		REG_UPDATE(DMCUB_CNTL2, DMCUB_SOFT_RESET, 1);
++		REG_UPDATE(MMHUBBUB_SOFT_RESET, DMUIF_SOFT_RESET, 1);
++		REG_UPDATE(DMCUB_CNTL, DMCUB_ENABLE, 0);
++	}
++
+ 	REG_WRITE(DMCUB_INBOX1_RPTR, 0);
+ 	REG_WRITE(DMCUB_INBOX1_WPTR, 0);
+ 	REG_WRITE(DMCUB_OUTBOX1_RPTR, 0);
+diff --git a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn35.c b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn35.c
+index e5e77bd3c31ea..01d013a12b947 100644
+--- a/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn35.c
++++ b/drivers/gpu/drm/amd/display/dmub/src/dmub_dcn35.c
+@@ -88,7 +88,7 @@ static inline void dmub_dcn35_translate_addr(const union dmub_addr *addr_in,
+ void dmub_dcn35_reset(struct dmub_srv *dmub)
+ {
+ 	union dmub_gpint_data_register cmd;
+-	const uint32_t timeout = 100;
++	const uint32_t timeout = 100000;
+ 	uint32_t in_reset, is_enabled, scratch, i, pwait_mode;
+ 
+ 	REG_GET(DMCUB_CNTL2, DMCUB_SOFT_RESET, &in_reset);
+@@ -113,7 +113,7 @@ void dmub_dcn35_reset(struct dmub_srv *dmub)
+ 		}
+ 
+ 		for (i = 0; i < timeout; ++i) {
+-			scratch = dmub->hw_funcs.get_gpint_response(dmub);
++			scratch = REG_READ(DMCUB_SCRATCH7);
+ 			if (scratch == DMUB_GPINT__STOP_FW_RESPONSE)
+ 				break;
+ 
 -- 
 2.39.5
 
