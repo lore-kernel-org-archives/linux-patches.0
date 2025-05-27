@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3669319E967;
-	Tue, 27 May 2025 17:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193FF1E89C;
+	Tue, 27 May 2025 17:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366453; cv=none; b=MeT8kxc/Ji/fb5qIxfAhGmnUgW8fqBIa5EoTReGu6/jEYDnc6wH8YER2WGyIthAr8e8NRCe8jmh6xtWjIYZyqsHgGrEQ1IY7W/FtHfJJct+zCcB+wK6izZItxHpVUdULIvXKbGrQr9WRU9L8snRScKj3PH3SFAFIjZ27LqXMTzY=
+	t=1748366456; cv=none; b=tjrTx0p7iyGv6ZGPuSTh7XO+8TI1tjWeE6s31Cp5kD4t2GKHhlkH9I9w45L4uxVyh/0ejZqvQlStd1MBh6geIxXNkRwGInN2YsBfV+T9gYq680jb9/dpK8yAYj0dSIuhRNS4W9d8Uc8bj/8lNkma6YOnANbCH0xxUeSPNxAS6JM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366453; c=relaxed/simple;
-	bh=bshOtjdByvhTisKUS+ULvS8TFSiXoZrgozU2W/kxXpo=;
+	s=arc-20240116; t=1748366456; c=relaxed/simple;
+	bh=FbBgni5il4LWMKnSkY0RxFZHSunjwKSxzb7Qhvf/THo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TUn7uaw1Y6C9MdV8bYsaaNNEPz55vOxY+7v7yBDvg5FZb4DVZlXSC1/C1JIC0cmAcKQtzpaeXWkmCfrQofpYAkVmU7+oO1aVR9PTgHDD44OXLWZU+BhfkygILmrbj2HOceENqsDLr4fQVvWuGLbsEPhaJio2nD815pg5tGqf090=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qacZyMRG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Nok4Tn0IFZfjqAlWsCbMsDar6BF28TODpe6zjv5AsTcdBGnPI+ouIfmvW7xfpC6LPV9eiNbqa2ZTfPt+3vCP56Q8JyUrRgly9RMLP2nrNXzrPUWzna0tb2JNhO5d8PpKc0P42p8A+Fi16zSDV2qmh5EZcYzfaWB0af3BZfjFVw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CquIvEJC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qacZyMRG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2BC9C4CEE9;
-	Tue, 27 May 2025 17:20:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CquIvEJC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FFDC4CEE9;
+	Tue, 27 May 2025 17:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366453;
-	bh=bshOtjdByvhTisKUS+ULvS8TFSiXoZrgozU2W/kxXpo=;
+	s=korg; t=1748366456;
+	bh=FbBgni5il4LWMKnSkY0RxFZHSunjwKSxzb7Qhvf/THo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qacZyMRGWF7Q5+psljvjFRASDin0j5Uq1/H5OO6blKmWoiljs4PQ4kwhwG3mUxgeS
-	 BB+CEbnBr4gIC2imPdpN42odxfjkBP5pYoXPfMyrW7GTivFZYmNjSFAp+IQT6tyh0K
-	 WtE/ajiDw0TN2FSWVWPGXoepPj5sVKIHUkfEWKik=
+	b=CquIvEJCiWfdkbQsgNl1x+rICJOoRH/PCkamF5Tg6pab7YyghbbTJonPCDkeAAHnU
+	 A2JHaWabYnAxdzjP9wWLFNTaOmEZF5kxo4Qm0jT6Tl2yF+47D0dSh42/bYZhJ89mOS
+	 j33XF7bkJXmJIzeKZj4uaMPvzF2Z8Wt3QtBhUMog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 072/783] cifs: Fix establishing NetBIOS session for SMB2+ connection
-Date: Tue, 27 May 2025 18:17:49 +0200
-Message-ID: <20250527162516.060896365@linuxfoundation.org>
+Subject: [PATCH 6.14 073/783] cifs: Fix getting DACL-only xattr system.cifs_acl and system.smb3_acl
+Date: Tue, 27 May 2025 18:17:50 +0200
+Message-ID: <20250527162516.099274947@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -54,113 +54,109 @@ Content-Transfer-Encoding: 8bit
 
 From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 781802aa5a5950f99899f13ff9d760f5db81d36d ]
+[ Upstream commit ad9364a6835c45c52f47587ffbe0577bb7cd4c5b ]
 
-Function ip_rfc1001_connect() which establish NetBIOS session for SMB
-connections, currently uses smb_send() function for sending NetBIOS Session
-Request packet. This function expects that the passed buffer is SMB packet
-and for SMB2+ connections it mangles packet header, which breaks prepared
-NetBIOS Session Request packet. Result is that this function send garbage
-packet for SMB2+ connection, which SMB2+ server cannot parse. That function
-is not mangling packets for SMB1 connections, so it somehow works for SMB1.
+Currently ->get_acl() callback always create request for OWNER, GROUP and
+DACL, even when only DACLs was requested by user. Change API callback to
+request only information for which the caller asked. Therefore when only
+DACLs requested, then SMB client will prepare and send DACL-only request.
 
-Fix this problem and instead of smb_send(), use smb_send_kvec() function
-which does not mangle prepared packet, this function send them as is. Just
-API of this function takes struct msghdr (kvec) instead of packet buffer.
+This change fixes retrieving of "system.cifs_acl" and "system.smb3_acl"
+xattrs to contain only DACL structure as documented.
 
-[MS-SMB2] specification allows SMB2 protocol to use NetBIOS as a transport
-protocol. NetBIOS can be used over TCP via port 139. So this is a valid
-configuration, just not so common. And even recent Windows versions (e.g.
-Windows Server 2022) still supports this configuration: SMB over TCP port
-139, including for modern SMB2 and SMB3 dialects.
-
-This change fixes SMB2 and SMB3 connections over TCP port 139 which
-requires establishing of NetBIOS session. Tested that this change fixes
-establishing of SMB2 and SMB3 connections with Windows Server 2022.
+Note that setting/changing of "system.cifs_acl" and "system.smb3_acl"
+xattrs already takes only DACL structure and ignores all other fields.
 
 Signed-off-by: Pali Rohár <pali@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsproto.h |  3 +++
- fs/smb/client/connect.c   | 20 +++++++++++++++-----
- fs/smb/client/transport.c |  2 +-
- 3 files changed, 19 insertions(+), 6 deletions(-)
+ fs/smb/client/cifsacl.c |  4 ++--
+ fs/smb/client/cifssmb.c |  3 +--
+ fs/smb/client/smb2pdu.c |  4 +---
+ fs/smb/client/xattr.c   | 15 +++++++++++----
+ 4 files changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/fs/smb/client/cifsproto.h b/fs/smb/client/cifsproto.h
-index 278092a15f890..1609ca825d825 100644
---- a/fs/smb/client/cifsproto.h
-+++ b/fs/smb/client/cifsproto.h
-@@ -31,6 +31,9 @@ extern void cifs_small_buf_release(void *);
- extern void free_rsp_buf(int, void *);
- extern int smb_send(struct TCP_Server_Info *, struct smb_hdr *,
- 			unsigned int /* length */);
-+extern int smb_send_kvec(struct TCP_Server_Info *server,
-+			 struct msghdr *msg,
-+			 size_t *sent);
- extern unsigned int _get_xid(void);
- extern void _free_xid(unsigned int);
- #define get_xid()							\
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index 92685fc675b59..22f29d2725928 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -3028,8 +3028,10 @@ ip_rfc1001_connect(struct TCP_Server_Info *server)
- 	 * sessinit is sent but no second negprot
- 	 */
- 	struct rfc1002_session_packet req = {};
--	struct smb_hdr *smb_buf = (struct smb_hdr *)&req;
-+	struct msghdr msg = {};
-+	struct kvec iov = {};
- 	unsigned int len;
-+	size_t sent;
+diff --git a/fs/smb/client/cifsacl.c b/fs/smb/client/cifsacl.c
+index f9d577f2d59bb..63b3b1290bed2 100644
+--- a/fs/smb/client/cifsacl.c
++++ b/fs/smb/client/cifsacl.c
+@@ -1565,7 +1565,7 @@ cifs_acl_to_fattr(struct cifs_sb_info *cifs_sb, struct cifs_fattr *fattr,
+ 	int rc = 0;
+ 	struct tcon_link *tlink = cifs_sb_tlink(cifs_sb);
+ 	struct smb_version_operations *ops;
+-	const u32 info = 0;
++	const u32 info = OWNER_SECINFO | GROUP_SECINFO | DACL_SECINFO;
  
- 	req.trailer.session_req.called_len = sizeof(req.trailer.session_req.called_name);
+ 	cifs_dbg(NOISY, "converting ACL to mode for %s\n", path);
  
-@@ -3058,10 +3060,18 @@ ip_rfc1001_connect(struct TCP_Server_Info *server)
- 	 * As per rfc1002, @len must be the number of bytes that follows the
- 	 * length field of a rfc1002 session request payload.
- 	 */
--	len = sizeof(req) - offsetof(struct rfc1002_session_packet, trailer.session_req);
-+	len = sizeof(req.trailer.session_req);
-+	req.type = RFC1002_SESSION_REQUEST;
-+	req.flags = 0;
-+	req.length = cpu_to_be16(len);
-+	len += offsetof(typeof(req), trailer.session_req);
-+	iov.iov_base = &req;
-+	iov.iov_len = len;
-+	iov_iter_kvec(&msg.msg_iter, ITER_SOURCE, &iov, 1, len);
-+	rc = smb_send_kvec(server, &msg, &sent);
-+	if (rc < 0 || len != sent)
-+		return (rc == -EINTR || rc == -EAGAIN) ? rc : -ECONNABORTED;
+@@ -1619,7 +1619,7 @@ id_mode_to_cifs_acl(struct inode *inode, const char *path, __u64 *pnmode,
+ 	struct tcon_link *tlink;
+ 	struct smb_version_operations *ops;
+ 	bool mode_from_sid, id_from_sid;
+-	const u32 info = 0;
++	const u32 info = OWNER_SECINFO | GROUP_SECINFO | DACL_SECINFO;
+ 	bool posix;
  
--	smb_buf->smb_buf_length = cpu_to_be32((RFC1002_SESSION_REQUEST << 24) | len);
--	rc = smb_send(server, smb_buf, len);
- 	/*
- 	 * RFC1001 layer in at least one server requires very short break before
- 	 * negprot presumably because not expecting negprot to follow so fast.
-@@ -3070,7 +3080,7 @@ ip_rfc1001_connect(struct TCP_Server_Info *server)
- 	 */
- 	usleep_range(1000, 2000);
+ 	tlink = cifs_sb_tlink(cifs_sb);
+diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
+index c2abe79f0dd3b..e90811f321944 100644
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -3416,8 +3416,7 @@ CIFSSMBGetCIFSACL(const unsigned int xid, struct cifs_tcon *tcon, __u16 fid,
+ 	/* BB TEST with big acls that might need to be e.g. larger than 16K */
+ 	pSMB->MaxSetupCount = 0;
+ 	pSMB->Fid = fid; /* file handle always le */
+-	pSMB->AclFlags = cpu_to_le32(CIFS_ACL_OWNER | CIFS_ACL_GROUP |
+-				     CIFS_ACL_DACL | info);
++	pSMB->AclFlags = cpu_to_le32(info);
+ 	pSMB->ByteCount = cpu_to_le16(11); /* 3 bytes pad + 8 bytes parm */
+ 	inc_rfc1001_len(pSMB, 11);
+ 	iov[0].iov_base = (char *)pSMB;
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index ed3ffcb80aef0..d080c777906b4 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -3910,12 +3910,10 @@ SMB2_query_acl(const unsigned int xid, struct cifs_tcon *tcon,
+ 	       u64 persistent_fid, u64 volatile_fid,
+ 	       void **data, u32 *plen, u32 extra_info)
+ {
+-	__u32 additional_info = OWNER_SECINFO | GROUP_SECINFO | DACL_SECINFO |
+-				extra_info;
+ 	*plen = 0;
  
--	return rc;
-+	return 0;
+ 	return query_info(xid, tcon, persistent_fid, volatile_fid,
+-			  0, SMB2_O_INFO_SECURITY, additional_info,
++			  0, SMB2_O_INFO_SECURITY, extra_info,
+ 			  SMB2_MAX_BUFFER_SIZE, MIN_SEC_DESC_LEN, data, plen);
  }
  
- static int
-diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
-index 0dc80959ce488..03434dbe9374c 100644
---- a/fs/smb/client/transport.c
-+++ b/fs/smb/client/transport.c
-@@ -179,7 +179,7 @@ delete_mid(struct mid_q_entry *mid)
-  * Our basic "send data to server" function. Should be called with srv_mutex
-  * held. The caller is responsible for handling the results.
-  */
--static int
-+int
- smb_send_kvec(struct TCP_Server_Info *server, struct msghdr *smb_msg,
- 	      size_t *sent)
- {
+diff --git a/fs/smb/client/xattr.c b/fs/smb/client/xattr.c
+index 58a584f0b27e9..7d49f38f01f3e 100644
+--- a/fs/smb/client/xattr.c
++++ b/fs/smb/client/xattr.c
+@@ -320,10 +320,17 @@ static int cifs_xattr_get(const struct xattr_handler *handler,
+ 		if (pTcon->ses->server->ops->get_acl == NULL)
+ 			goto out; /* rc already EOPNOTSUPP */
+ 
+-		if (handler->flags == XATTR_CIFS_NTSD_FULL) {
+-			extra_info = SACL_SECINFO;
+-		} else {
+-			extra_info = 0;
++		switch (handler->flags) {
++		case XATTR_CIFS_NTSD_FULL:
++			extra_info = OWNER_SECINFO | GROUP_SECINFO | DACL_SECINFO | SACL_SECINFO;
++			break;
++		case XATTR_CIFS_NTSD:
++			extra_info = OWNER_SECINFO | GROUP_SECINFO | DACL_SECINFO;
++			break;
++		case XATTR_CIFS_ACL:
++		default:
++			extra_info = DACL_SECINFO;
++			break;
+ 		}
+ 		pacl = pTcon->ses->server->ops->get_acl(cifs_sb,
+ 				inode, full_path, &acllen, extra_info);
 -- 
 2.39.5
 
