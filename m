@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456BD27FD73;
-	Tue, 27 May 2025 16:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A26927E7CF;
+	Tue, 27 May 2025 16:54:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364848; cv=none; b=p0g3yd9iZCZhse30w5mHGV3eS3Nfc9QzNyefsOiPq2UG5YxGzeuIj4X0cnOlItlKOgxpWhL0ZGlxAYPEW7ofDr29OUz41ObAQJ6QHqujWd4ZzBba0CHPQNj8lM5kAMVAoFfoka/YtQzt9cnOqDjqW1FcTmzWZbwaf50kIPfbAwM=
+	t=1748364851; cv=none; b=ufsliOP66TSIZ95lPc3GrMMIo1FB1Eq3s1NQGCJ9El8voRkbWAWzzQ8rKz681hXw05Yz7t5s3+fEj/lxpqiQCrUDZ/+QIUnYjiIq220Rr+MocEuAGymLmJVL5h3CBFTwz6SvvYdUEQAXdyo8WqYzaWfg/c7/xBxyB59FNknjyP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364848; c=relaxed/simple;
-	bh=WYH1wgwXq6YcREVO8LwCvwRuBbDcrbVBS/SiRq1Dtjg=;
+	s=arc-20240116; t=1748364851; c=relaxed/simple;
+	bh=jN592LgemYMHzZgO2XgOWkDsrYSLs7NESJMqHvQLy7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tYrghmlcWPyZwNbrnglaC0TYPSWul7EZxGwaMyoYvZuoypMB6JtVnDGadsAsGMGB0m90rWpZ3oh6PamnQPYr+adqMfYtJt0xFypbPApHm0kQRL3AHARTcn/IuJSzOddVmDkNtez6jvZI4GWdUQcyb+zp57BLOftMbrd1MYeIZWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+6vGZKy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ruMJBkxG5aFYc71550g/Cn6uERJ/GHl3epHLkSbIVDtdNXqrxxTJvFukp8hv+6Mjlk43bgWBUZcwqunkdP4smZoMLLK9WrVQCz7XyJNkj7/kySSE7vVK5Y0TWhF4ggXlqFstMoOlIXXm1U9EMiFHPqaAqnwjcRqD451F9lgyjNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SpBm9/mF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+6vGZKy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CB8C4CEE9;
-	Tue, 27 May 2025 16:54:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SpBm9/mF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04BF6C4CEE9;
+	Tue, 27 May 2025 16:54:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364848;
-	bh=WYH1wgwXq6YcREVO8LwCvwRuBbDcrbVBS/SiRq1Dtjg=;
+	s=korg; t=1748364851;
+	bh=jN592LgemYMHzZgO2XgOWkDsrYSLs7NESJMqHvQLy7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B+6vGZKy0EuN+HCo6BAHOKYe1DsvL0dkg+tCzsKCLBsfpmulr38lwndwO0RuE5aXP
-	 gmx44bqJ4wT47rQR9ry84/a4nYCM6gPpi1vW7zrKC9oxgtksIG4DGLAEo7fOgss9Fm
-	 pLIcv33KCGNpkdE+Kk1sruS6EgVPuvzSAJmIyM0A=
+	b=SpBm9/mFaV9hGuwYxLrI3RgfWKZ7kuu1uUESfZdV4lkAbOHVVDqTABuhnFn8KMUVU
+	 aHzB9XQu6XMMVd236seQz+xJjWPc8NDMzFf0E2/gOKUtzCl1DPMjSn5oMwaaV2C855
+	 NEghPVm+FE9EvcxXphBqbjBE8sbTPAdrIjA6Srxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Roeschley <kyle.roeschley@ni.com>,
-	Brad Mouring <brad.mouring@ni.com>,
-	Erick Shepherd <erick.shepherd@ni.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 178/626] mmc: sdhci: Disable SD card clock before changing parameters
-Date: Tue, 27 May 2025 18:21:11 +0200
-Message-ID: <20250527162452.244829396@linuxfoundation.org>
+Subject: [PATCH 6.12 187/626] wifi: iwlwifi: mark Br device not integrated
+Date: Tue, 27 May 2025 18:21:20 +0200
+Message-ID: <20250527162452.610517181@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -48,56 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Erick Shepherd <erick.shepherd@ni.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit fb3bbc46c94f261b6156ee863c1b06c84cf157dc ]
+[ Upstream commit 5f0ab2f35a43773a0dfe1297129a8dbff906b932 ]
 
-Per the SD Host Controller Simplified Specification v4.20 §3.2.3, change
-the SD card clock parameters only after first disabling the external card
-clock. Doing this fixes a spurious clock pulse on Baytrail and Apollo Lake
-SD controllers which otherwise breaks voltage switching with a specific
-Swissbit SD card.
+This is a discrete device, don't mark it as integrated.
+This also means we cannot set the LTR delay.
 
-Signed-off-by: Kyle Roeschley <kyle.roeschley@ni.com>
-Signed-off-by: Brad Mouring <brad.mouring@ni.com>
-Signed-off-by: Erick Shepherd <erick.shepherd@ni.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250211214645.469279-1-erick.shepherd@ni.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250308231427.9bb69393fcc9.I197129383e5441c8139cbb0e810ae0b71198a37c@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/cfg/dr.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-index 4b91c9e966357..8ae76300d157d 100644
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -2035,10 +2035,15 @@ void sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
+diff --git a/drivers/net/wireless/intel/iwlwifi/cfg/dr.c b/drivers/net/wireless/intel/iwlwifi/cfg/dr.c
+index ab7c0f8d54f42..d3542af0f625e 100644
+--- a/drivers/net/wireless/intel/iwlwifi/cfg/dr.c
++++ b/drivers/net/wireless/intel/iwlwifi/cfg/dr.c
+@@ -148,11 +148,9 @@ const struct iwl_cfg_trans_params iwl_br_trans_cfg = {
+ 	.mq_rx_supported = true,
+ 	.rf_id = true,
+ 	.gen2 = true,
+-	.integrated = true,
+ 	.umac_prph_offset = 0x300000,
+ 	.xtal_latency = 12000,
+ 	.low_latency_xtal = true,
+-	.ltr_delay = IWL_CFG_TRANS_LTR_DELAY_2500US,
+ };
  
- 	host->mmc->actual_clock = 0;
- 
--	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
-+	clk = sdhci_readw(host, SDHCI_CLOCK_CONTROL);
-+	if (clk & SDHCI_CLOCK_CARD_EN)
-+		sdhci_writew(host, clk & ~SDHCI_CLOCK_CARD_EN,
-+			SDHCI_CLOCK_CONTROL);
- 
--	if (clock == 0)
-+	if (clock == 0) {
-+		sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
- 		return;
-+	}
- 
- 	clk = sdhci_calc_clk(host, clock, &host->mmc->actual_clock);
- 	sdhci_enable_clk(host, clk);
+ const char iwl_br_name[] = "Intel(R) TBD Br device";
 -- 
 2.39.5
 
