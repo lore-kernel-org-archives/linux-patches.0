@@ -1,39 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1CA280021;
-	Tue, 27 May 2025 17:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7B527A131;
+	Tue, 27 May 2025 17:50:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368212; cv=none; b=Be0O5oQyYUOAkhw90F+NwxeLia+FyKB4PxYsI/aP9yy7gWniQ6KjdrvuUaMsCmCH4JRgojEtfwS7xLDGzTAQdPNGBDVM6OhfMAF/yD/6E3syjxvLxinBF4OrgVotMPQH8Jd8odvU858A6CznmZZQELtY+x3aApWbp0XCks3BOnI=
+	t=1748368216; cv=none; b=W5Hj/vmoY7DwlzRWe+MqrJYGG3JliRRHrh3LRk6c8CN1NeSRKpnTv29BKNlHakUv9etixQO1xUGZq+q1jt7olg8aF3W82pRuxX0xt0KqFM818/qUpiqQ36d7gI+iN+sjr329XR1s5kGphFtG6SQeVpyu0xoEqNS86iFvGbTfA50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368212; c=relaxed/simple;
-	bh=ZbOKn2kD0QkrBg/b76mVP/l77uEpu7B9EjjHumBVDFM=;
+	s=arc-20240116; t=1748368216; c=relaxed/simple;
+	bh=6k1840xhtmmJ8vLPO0yw7rK4g00Rdii3B/tCX0s61uQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mkRDugxTqkBm2Y6DsmkL7ER0j9bmzH8Cfwk6QLH7o2HUuk+d1o5KyOvijzhlJCFsFgnDX6svOt8DCUoyjR4yIJncVTQc76rpG66EYaoKjZ+4kpDukcu/LFEFxCOnccqjFLDYkBUUNOjusaszgkb35fPNyZRyfdozKvwG6giEHDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jUak5BF0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MJW6IlUg1gQ13IjVQN2l1+qUBznzfmiB7+73HDah8J4NVVe/3vEtPG0KbR/OoTilEEohXT105k0UhytaOxhc/rHO4Ip7ioY5aJSt6L+cOnsP5qbNmDnfbz65Cgn1jhVAxzhdOUg3VEIBT5clOjS3gA6fb4T+bxPEpeXcCTL29pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oA1eoczi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUak5BF0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB75C4CEE9;
-	Tue, 27 May 2025 17:50:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oA1eoczi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF8EC4CEE9;
+	Tue, 27 May 2025 17:50:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368212;
-	bh=ZbOKn2kD0QkrBg/b76mVP/l77uEpu7B9EjjHumBVDFM=;
+	s=korg; t=1748368215;
+	bh=6k1840xhtmmJ8vLPO0yw7rK4g00Rdii3B/tCX0s61uQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jUak5BF0r3Xc7LPMhCxaEF+r6EP1RWNtferUnFWYenaHrL0oFdC5PhAd8wP86buo4
-	 JSaYz6h3IZybNyuaIA6Ysy+YR9aTcricxN+8gumQJH8muOXLEZduMWOLQp3jDhUbWU
-	 kELdXVbEmja4Jd7vnbhG5mgHUoOrcbpPrDabZQOs=
+	b=oA1eoczihpBc3v4Lr7pUxBADdlxQFxVVnaU6ARl7j/zWpnYxdZthfRhR5QR5ftvOB
+	 lSbo+L6wl071hagFiue1mUaHv5iKTWuH1OOGctIUMDuOr/m74JplkF3fQ6QMOt88sh
+	 /+p2s8uh4qniKO/Y1aWmPEgWYfUg4yNMoY0Y3C9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amber Lin <Amber.Lin@amd.com>,
-	Harish Kasiviswanathan <Harish.Kasiviwanathan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Andy Yan <andyshrk@163.com>,
+	Anusha Srivatsa <asrivats@redhat.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	dri-devel@lists.freedesktop.org,
+	linux-media@vger.kernel.org,
+	linaro-mm-sig@lists.linaro.org,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Simona Vetter <simona.vetter@ffwll.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 634/783] drm/amdkfd: Correct F8_MODE for gfx950
-Date: Tue, 27 May 2025 18:27:11 +0200
-Message-ID: <20250527162538.965078096@linuxfoundation.org>
+Subject: [PATCH 6.14 635/783] drm/gem: Internally test import_attach for imported objects
+Date: Tue, 27 May 2025 18:27:12 +0200
+Message-ID: <20250527162539.004348171@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -46,41 +57,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amber Lin <Amber.Lin@amd.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 0c7e053448945e5a4379dc4396c762d7422b11ca ]
+[ Upstream commit 8260731ccad0451207b45844bb66eb161a209218 ]
 
-Correct F8_MODE setting for gfx950 that was removed
+Test struct drm_gem_object.import_attach to detect imported objects.
 
-Fixes: 61972cd93af7 ("drm/amdkfd: Set per-process flags only once for gfx9/10/11/12")
-Signed-off-by: Amber Lin <Amber.Lin@amd.com>
-Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviwanathan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+During object clenanup, the dma_buf field might be NULL. Testing it in
+an object's free callback then incorrectly does a cleanup as for native
+objects. Happens for calls to drm_mode_destroy_dumb_ioctl() that
+clears the dma_buf field in drm_gem_object_exported_dma_buf_free().
+
+v3:
+- only test for import_attach (Boris)
+v2:
+- use import_attach.dmabuf instead of dma_buf (Christian)
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: b57aa47d39e9 ("drm/gem: Test for imported GEM buffers with helper")
+Reported-by: Andy Yan <andyshrk@163.com>
+Closes: https://lore.kernel.org/dri-devel/38d09d34.4354.196379aa560.Coremail.andyshrk@163.com/
+Tested-by: Andy Yan <andyshrk@163.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Anusha Srivatsa <asrivats@redhat.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: Sumit Semwal <sumit.semwal@linaro.org>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-media@vger.kernel.org
+Cc: linaro-mm-sig@lists.linaro.org
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Simona Vetter <simona.vetter@ffwll.ch>
+Link: https://lore.kernel.org/r/20250416065820.26076-1-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_v9.c | 3 +--
+ include/drm/drm_gem.h | 3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_v9.c
-index 3264509408bc8..d85eadaa1e11b 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_v9.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_v9.c
-@@ -69,8 +69,7 @@ static bool set_cache_memory_policy_v9(struct device_queue_manager *dqm,
- 		qpd->sh_mem_config |= 1 << SH_MEM_CONFIG__RETRY_DISABLE__SHIFT;
+diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
+index 2bf893eabb4b2..bcd54020d6ba5 100644
+--- a/include/drm/drm_gem.h
++++ b/include/drm/drm_gem.h
+@@ -585,8 +585,7 @@ static inline bool drm_gem_object_is_shared_for_memory_stats(struct drm_gem_obje
+  */
+ static inline bool drm_gem_is_imported(const struct drm_gem_object *obj)
+ {
+-	/* The dma-buf's priv field points to the original GEM object. */
+-	return obj->dma_buf && (obj->dma_buf->priv != obj);
++	return !!obj->import_attach;
+ }
  
- 	if (KFD_GC_VERSION(dqm->dev->kfd) == IP_VERSION(9, 4, 3) ||
--		KFD_GC_VERSION(dqm->dev->kfd) == IP_VERSION(9, 4, 4) ||
--		KFD_GC_VERSION(dqm->dev->kfd) == IP_VERSION(9, 5, 0))
-+		KFD_GC_VERSION(dqm->dev->kfd) == IP_VERSION(9, 4, 4))
- 		qpd->sh_mem_config |= (1 << SH_MEM_CONFIG__F8_MODE__SHIFT);
- 
- 	qpd->sh_mem_ape1_limit = 0;
+ #ifdef CONFIG_LOCKDEP
 -- 
 2.39.5
 
