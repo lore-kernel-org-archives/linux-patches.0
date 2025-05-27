@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A242110E;
-	Tue, 27 May 2025 17:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9102110E;
+	Tue, 27 May 2025 17:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365495; cv=none; b=u8WXsK0L/diiMp/su1M8YJyHhuFyjraSvoBqxB5KRUMLtAcJfHkFCXG8G9FaYM+pNQyYQ2Z4b4yij5CjrNE5FrbTxTCK+CkKwjXtrb90DIwY2q2SEqVtLxPgnvAMa4Q4gBEfgDceRAtqKmhBuGnsuxJPeWMcRPvOwlIG2fQYeLU=
+	t=1748365498; cv=none; b=WPkL7rxZ20M1PcOaode7UQ6F8/v9jl/mzzHlmR/2Yrc9LhA4zsUdx3Z04Sr57uIcjAjxIeRJ+NLjT5wW4qnWyfksdn9oxrgz0yb4Ap4C5hQhqvUS/bly+0SBGaNNSS5YRGOVpNOYLzt9tGvM4ysw/vrfr1A1OLt+gRaX43/O1QE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365495; c=relaxed/simple;
-	bh=7IUgqDO5eJy1e2J9fqYdsxr5lWPJsj3DaF4/7GS5v40=;
+	s=arc-20240116; t=1748365498; c=relaxed/simple;
+	bh=HSdHHfQeUEDfTye2B6p+1ImI1mggpJM3/Vzwp3QnuXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rn4lPpeqHNc+myWtS5AJDlAjqWCVsts6el7+wxSlZD7SeDdShvwjSAcPWsRjaCvanACR2iil4yQYnJFxQC3/frNp/319OAFVlktSuThcSsS/mR72cNIf9pKRzo+neSATrDWJXaI+7mWdSpNDN2iom4wcHCzMibS6KPT5oyPbpIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiFH9BrZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bjdS5ulmOykVnoFtJmWGUqcgm/YNX/FHhq6IxwcsPRtJhnz7FIp73WHxUOnXPV7cSoqzLNI8kknFNedpHlJGbaSxUq7J20bpCdOgAYpW4ga1u5oRVMw9/hp2Nr0Ix+9uvJbv4QxDocN5mln0z4HMvqC+1y4rq7J7qzoU3VngITM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idHCpGLe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiFH9BrZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2BDCC4CEE9;
-	Tue, 27 May 2025 17:04:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idHCpGLe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5DF7C4CEE9;
+	Tue, 27 May 2025 17:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365495;
-	bh=7IUgqDO5eJy1e2J9fqYdsxr5lWPJsj3DaF4/7GS5v40=;
+	s=korg; t=1748365498;
+	bh=HSdHHfQeUEDfTye2B6p+1ImI1mggpJM3/Vzwp3QnuXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tiFH9BrZhsjmug5rCifla1j8O2pdN3LbGWd7HHVDNZEXCiAjQ9Ju5OsRUvZeP+caB
-	 PMJkwNZX5ciXuYAaC77BIaTDJEBw3AyC2DAI55HeNmwI/HrE/rOZ3fhFbNz0JOKQTe
-	 FsSSyaEqm5iogIHftvbhOXD7znHZrh5+Gk3C1/tc=
+	b=idHCpGLezGZbct2Dr4ToICX6gHt6GCvAJu/5Hyo4SNF1hXaXv6s5DfQWp/b6alaAd
+	 kPB1Np6cG2ACsibgk5tOa3BxFHwpEY/tBRtsZdmmX8ACtV8GtcJQbi5zazCVGf1aGQ
+	 8Fhjp4BQ2+3YROgKb06q6l/2WR4qlLw/w3caqlyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlene Liu <charlene.liu@amd.com>,
-	Brandon Syu <Brandon.Syu@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	zihan zhou <15645113830zzh@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 395/626] Revert "drm/amd/display: Exit idle optimizations before attempt to access PHY"
-Date: Tue, 27 May 2025 18:24:48 +0200
-Message-ID: <20250527162501.073310609@linuxfoundation.org>
+Subject: [PATCH 6.12 378/626] sched: Reduce the default slice to avoid tasks getting an extra tick
+Date: Tue, 27 May 2025 18:24:31 +0200
+Message-ID: <20250527162500.375899078@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -54,55 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brandon Syu <Brandon.Syu@amd.com>
+From: zihan zhou <15645113830zzh@gmail.com>
 
-[ Upstream commit be704e5ef4bd66dee9bb3f876964327e3a247d31 ]
+[ Upstream commit 2ae891b826958b60919ea21c727f77bcd6ffcc2c ]
 
-This reverts commit de612738e9771bd66aeb20044486c457c512f684.
+The old default value for slice is 0.75 msec * (1 + ilog(ncpus)) which
+means that we have a default slice of:
 
-Reason to revert: screen flashes or gray screen appeared half of the
-screen after resume from S4/S5.
+  0.75 for 1 cpu
+  1.50 up to 3 cpus
+  2.25 up to 7 cpus
+  3.00 for 8 cpus and above.
 
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Signed-off-by: Brandon Syu <Brandon.Syu@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+For HZ=250 and HZ=100, because of the tick accuracy, the runtime of
+tasks is far higher than their slice.
+
+For HZ=1000 with 8 cpus or more, the accuracy of tick is already
+satisfactory, but there is still an issue that tasks will get an extra
+tick because the tick often arrives a little faster than expected. In
+this case, the task can only wait until the next tick to consider that it
+has reached its deadline, and will run 1ms longer.
+
+vruntime + sysctl_sched_base_slice =     deadline
+        |-----------|-----------|-----------|-----------|
+             1ms          1ms         1ms         1ms
+                   ^           ^           ^           ^
+                 tick1       tick2       tick3       tick4(nearly 4ms)
+
+There are two reasons for tick error: clockevent precision and the
+CONFIG_IRQ_TIME_ACCOUNTING/CONFIG_PARAVIRT_TIME_ACCOUNTING. with
+CONFIG_IRQ_TIME_ACCOUNTING every tick will be less than 1ms, but even
+without it, because of clockevent precision, tick still often less than
+1ms.
+
+In order to make scheduling more precise, we changed 0.75 to 0.70,
+Using 0.70 instead of 0.75 should not change much for other configs
+and would fix this issue:
+
+  0.70 for 1 cpu
+  1.40 up to 3 cpus
+  2.10 up to 7 cpus
+  2.8 for 8 cpus and above.
+
+This does not guarantee that tasks can run the slice time accurately
+every time, but occasionally running an extra tick has little impact.
+
+Signed-off-by: zihan zhou <15645113830zzh@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lkml.kernel.org/r/20250208075322.13139-1-15645113830zzh@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c | 5 -----
- 1 file changed, 5 deletions(-)
+ kernel/sched/fair.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-index 59457ca24e1dc..ccdc9d4101863 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-@@ -1888,7 +1888,6 @@ void dce110_enable_accelerated_mode(struct dc *dc, struct dc_state *context)
- 	bool can_apply_edp_fast_boot = false;
- 	bool can_apply_seamless_boot = false;
- 	bool keep_edp_vdd_on = false;
--	struct dc_bios *dcb = dc->ctx->dc_bios;
- 	DC_LOGGER_INIT();
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 990d0828bf2a9..443f6a9ef3f8f 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -71,10 +71,10 @@ unsigned int sysctl_sched_tunable_scaling = SCHED_TUNABLESCALING_LOG;
+ /*
+  * Minimal preemption granularity for CPU-bound tasks:
+  *
+- * (default: 0.75 msec * (1 + ilog(ncpus)), units: nanoseconds)
++ * (default: 0.70 msec * (1 + ilog(ncpus)), units: nanoseconds)
+  */
+-unsigned int sysctl_sched_base_slice			= 750000ULL;
+-static unsigned int normalized_sysctl_sched_base_slice	= 750000ULL;
++unsigned int sysctl_sched_base_slice			= 700000ULL;
++static unsigned int normalized_sysctl_sched_base_slice	= 700000ULL;
  
+ const_debug unsigned int sysctl_sched_migration_cost	= 500000UL;
  
-@@ -1965,8 +1964,6 @@ void dce110_enable_accelerated_mode(struct dc *dc, struct dc_state *context)
- 			hws->funcs.edp_backlight_control(edp_link_with_sink, false);
- 		}
- 		/*resume from S3, no vbios posting, no need to power down again*/
--		if (dcb && dcb->funcs && !dcb->funcs->is_accelerated_mode(dcb))
--			clk_mgr_exit_optimized_pwr_state(dc, dc->clk_mgr);
- 
- 		power_down_all_hw_blocks(dc);
- 
-@@ -1979,8 +1976,6 @@ void dce110_enable_accelerated_mode(struct dc *dc, struct dc_state *context)
- 		disable_vga_and_power_gate_all_controllers(dc);
- 		if (edp_link_with_sink && !keep_edp_vdd_on)
- 			dc->hwss.edp_power_control(edp_link_with_sink, false);
--		if (dcb && dcb->funcs && !dcb->funcs->is_accelerated_mode(dcb))
--			clk_mgr_optimize_pwr_state(dc, dc->clk_mgr);
- 	}
- 	bios_set_scratch_acc_mode_change(dc->ctx->dc_bios, 1);
- }
 -- 
 2.39.5
 
