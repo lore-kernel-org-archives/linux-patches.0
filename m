@@ -1,304 +1,482 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F871DB34C
-	for <patches@lists.linux.dev>; Tue, 27 May 2025 17:27:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27887194A45;
+	Tue, 27 May 2025 17:27:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366846; cv=none; b=MicTAwqonjjNX0EKJkEzzejbAv5Faf3kBV0iiWW7GDUNv89Ng57uD5zxGDRwtYHrvgVdS9g7sLkisFYgp8xc9+PPZHRFdF2YFXJzKnMis78Bt/yNFUKWFbzmzNCDJfyKkN6iT2x7OvGmohOeWCxOar92NT3RI5DRmwJ2OQNGhTU=
+	t=1748366846; cv=none; b=bR+Wjyy538QBDw7L8+0ON1ljjXm/elnZL+5Z9+kSRZKKRsOiNPuVzefA1/QB2vIfWr9LyR8fpFmECn+0YIw8itKGXPOtLSB68Z1m1oatIhq2mlSshu249IBLhFgSG8dBV7XDbQt1YeU202Wl5rkVFXuCbuKajCts6ZPHjVRf/hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1748366846; c=relaxed/simple;
-	bh=A3wIyJffHxPfmIV8B1isgc1zlN/9ZV21pjg8oWliHrI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Dp09iJ7GacFTh890OJTRtk/m2AJMfTsdbpBBJJW+TgNwX9jwg0+y2ARN4lL6C3gDQ3t4kLwVRlWXtcsQ8RXhs+6H4h4RtnA9h/yDV2nkFB+MOJfFgG/xdnuHoNbAo9unYkIuIlSHBc//fBmC9zP5xH7hhzS6XbPNZIOGfcovKhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=AzDaCaCF; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	bh=ZTMBxA3olXBwWkWDkp91QfqYotBZN6jsnp9/X8pIzIc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=YLboihZvKMskOnA2okfzTb6n/ubUgpxeUgOwGuXf3iLpQje/Aud3+kdQtu4NgbLfMtaYbsJqxP8cxDKpCTMz9shI6J7HJOWo+xiwnnDG8rplMawF+VGDw3SLCNvfMi8s4PcHYXoZQsNeoAE705hHaujAM8lte7sMu++dqYBzpfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zaZgw2fp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="AzDaCaCF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1748366843;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=PQzpXQ7vkWBPskbjX+BkGNGUSRzfgukO2SXDGxgoMMs=;
-	b=AzDaCaCF4Y3ylYfcUkiBqLK5qlzS+N0tccFQG/Qdvl/Te7OucCJa8itqegihMc5dnfQksK
-	9cjS7msL42dHiDgAAAkzL94IM6gXGKtR2kZfrevt4yORQdYR5ZFz2Jl8MBhD1XsLMr4/FO
-	DKpsWszYauEYJKf1grCTjnaVwh63vTQ=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-448-ZmVZ5dvBOx-jPlACpX6mZQ-1; Tue, 27 May 2025 13:27:21 -0400
-X-MC-Unique: ZmVZ5dvBOx-jPlACpX6mZQ-1
-X-Mimecast-MFC-AGG-ID: ZmVZ5dvBOx-jPlACpX6mZQ_1748366841
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c5cd0f8961so700068585a.1
-        for <patches@lists.linux.dev>; Tue, 27 May 2025 10:27:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748366841; x=1748971641;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PQzpXQ7vkWBPskbjX+BkGNGUSRzfgukO2SXDGxgoMMs=;
-        b=Zmcq/i+58u6zYclONSFcc9xx4dMc9egWzTSNCYBX3gUtXbO3sDRmnwgNwoniEA/R5t
-         mxuUwbP0pfzJXEK7UACTcrwkQyfqCkkg5dpHY+K/8Mm4ua99j9oJNNVK8RXmlYjaVz2B
-         LpFgKYZx0/zbF7uTKM7/1Yjg/Ak9xxV1uEhMA4CtjjjHUafXqrWAUqF603VQApaKIyF7
-         KwFNFaY+2GWw74hNmZk6i5yygrlb+jGtS8hiT7n1zy6m1vwPfoCkH2EqWo2v39Q/HBGh
-         Zh1Ze+VeedhpIKm19+Z8QojhcscbNsmNCr7HpWkq9EdX8WXkbkBjEdpKLMOWULaN+MWO
-         TM/Q==
-X-Gm-Message-State: AOJu0YwJUrMMbuer0YtMhnt1vv8aJtMlCEjL49IZSP6NgFPO22wUC94Z
-	SMvE577GKuTEAjc3jWR1UAy84kJiCw5yRugDyJz2HLHSlMc83bLqDKC+AtQ9M7noAMWQT61geAO
-	QFH6jaoYsqCbgnBlCepxW2H5573Uk5ixEUzbPTWPwNdUQxo4nKgu4p4f8CjU=
-X-Gm-Gg: ASbGnctt3Fi8C1iqUgMsP+7UAzCpyjQ7ytdlJEj+l+69B4H94gbAbNpRK/R0HBNCUqO
-	pzPTlpmWCC8DsZZNlg1keigv9xQpVIW9T+6g7Pu92jJRkw9eVeKxKozBw06gzf+vevCJbR9FnBp
-	y4X0YSYKKXItticPsGWgV09MIYp70rQkX0U2WVv+Qm7mdGMzvRyeSGBPTu0NH1Nz09VfVLdot+3
-	U7sC+uKuGcbNnrvLV+lplxcp+1KYIHDAZDBS/rmNiQA1kMWB+Cw/VW/IdqPkOoePa1uE35C8QP6
-	6WBBZ5fSX57Am/WB++1wD5/ERH1MosZW2UysncTcEWg4XpWVoFF626YNoOU=
-X-Received: by 2002:a05:620a:f0d:b0:7cd:40:351 with SMTP id af79cd13be357-7ceecc33e6fmr1955055085a.58.1748366841212;
-        Tue, 27 May 2025 10:27:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEV8ht+49lI5qLVclM9XNHjng2TBDERfNRW0n/yJWFo6Oh60ZUmXJ0766q4+2Vo8i8akgpwrQ==
-X-Received: by 2002:a05:620a:f0d:b0:7cd:40:351 with SMTP id af79cd13be357-7ceecc33e6fmr1955050985a.58.1748366840741;
-        Tue, 27 May 2025 10:27:20 -0700 (PDT)
-Received: from ?IPV6:2600:4040:5308:eb00:a77e:fec5:d269:f23e? ([2600:4040:5308:eb00:a77e:fec5:d269:f23e])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7cedf7930b5sm770956985a.89.2025.05.27.10.27.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 May 2025 10:27:20 -0700 (PDT)
-Message-ID: <ccdc7888-68a2-497a-bc28-f0c0297473b4@redhat.com>
-Date: Tue, 27 May 2025 13:27:19 -0400
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zaZgw2fp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58E2C4CEE9;
+	Tue, 27 May 2025 17:27:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1748366846;
+	bh=ZTMBxA3olXBwWkWDkp91QfqYotBZN6jsnp9/X8pIzIc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=zaZgw2fpS8ruUOVmlU6XOaFE/o8qRPx5qtvqLXOmwknSk7Miw9RfGj1LT8ugXJj9r
+	 0mfyJZvUNfLyMjZhwrjGdi+LibSK/H3TRjPYQmRF0G7lsuyUR17lk/2UJ54p5V4cx4
+	 DDMqCF+3dLgUlf3NpU3XWrqVRtMq+KxHPEj7bRFs=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.14 196/783] RDMA/uverbs: Propagate errors from rdma_lookup_get_uobject()
+Date: Tue, 27 May 2025 18:19:53 +0200
+Message-ID: <20250527162521.134492645@linuxfoundation.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
+References: <20250527162513.035720581@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 472/626] dm vdo vio-pool: allow variable-sized
- metadata vios
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Ken Raeburn <raeburn@redhat.com>,
- Mikulas Patocka <mpatocka@redhat.com>, Sasha Levin <sashal@kernel.org>
-References: <20250527162445.028718347@linuxfoundation.org>
- <20250527162504.171843154@linuxfoundation.org>
-From: Matthew Sakai <msakai@redhat.com>
-In-Reply-To: <20250527162504.171843154@linuxfoundation.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 7SKVsYh8s8osw4Y-uhdaALTfXAbDHbhOVdhqGQXvPOQ_1748366841
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 5/27/25 12:26 PM, Greg Kroah-Hartman wrote:
-> 6.12-stable review patch.  If anyone has any objections, please let me know.
+6.14-stable review patch.  If anyone has any objections, please let me know.
 
-There's no reason to take this patch for 6.12, it can just be dropped.
+------------------
 
-This patch adds a new interface, but the subsequent patches that use 
-that interface are not being backported. So it won't hurt anything, but 
-it's also useless in 6.12.
+From: Maher Sanalla <msanalla@nvidia.com>
 
-Matt
+[ Upstream commit 81f8f7454ad9e0bf95efdec6542afdc9a6ab1e24 ]
 
-> ------------------
-> 
-> From: Ken Raeburn <raeburn@redhat.com>
-> 
-> [ Upstream commit f979da512553a41a657f2c1198277e84d66f8ce3 ]
-> 
-> With larger-sized metadata vio pools, vdo will sometimes need to
-> issue I/O with a smaller size than the allocated size. Since
-> vio_reset_bio is where the bvec array and I/O size are initialized,
-> this reset interface must now specify what I/O size to use.
-> 
-> Signed-off-by: Ken Raeburn <raeburn@redhat.com>
-> Signed-off-by: Matthew Sakai <msakai@redhat.com>
-> Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->   drivers/md/dm-vdo/io-submitter.c |  6 ++++--
->   drivers/md/dm-vdo/io-submitter.h | 18 +++++++++++++---
->   drivers/md/dm-vdo/types.h        |  3 +++
->   drivers/md/dm-vdo/vio.c          | 36 +++++++++++++++++++-------------
->   drivers/md/dm-vdo/vio.h          |  2 ++
->   5 files changed, 46 insertions(+), 19 deletions(-)
-> 
-> diff --git a/drivers/md/dm-vdo/io-submitter.c b/drivers/md/dm-vdo/io-submitter.c
-> index ab62abe18827b..a664be89c15d7 100644
-> --- a/drivers/md/dm-vdo/io-submitter.c
-> +++ b/drivers/md/dm-vdo/io-submitter.c
-> @@ -327,6 +327,7 @@ void vdo_submit_data_vio(struct data_vio *data_vio)
->    * @error_handler: the handler for submission or I/O errors (may be NULL)
->    * @operation: the type of I/O to perform
->    * @data: the buffer to read or write (may be NULL)
-> + * @size: the I/O amount in bytes
->    *
->    * The vio is enqueued on a vdo bio queue so that bio submission (which may block) does not block
->    * other vdo threads.
-> @@ -338,7 +339,7 @@ void vdo_submit_data_vio(struct data_vio *data_vio)
->    */
->   void __submit_metadata_vio(struct vio *vio, physical_block_number_t physical,
->   			   bio_end_io_t callback, vdo_action_fn error_handler,
-> -			   blk_opf_t operation, char *data)
-> +			   blk_opf_t operation, char *data, int size)
->   {
->   	int result;
->   	struct vdo_completion *completion = &vio->completion;
-> @@ -349,7 +350,8 @@ void __submit_metadata_vio(struct vio *vio, physical_block_number_t physical,
->   
->   	vdo_reset_completion(completion);
->   	completion->error_handler = error_handler;
-> -	result = vio_reset_bio(vio, data, callback, operation | REQ_META, physical);
-> +	result = vio_reset_bio_with_size(vio, data, size, callback, operation | REQ_META,
-> +					 physical);
->   	if (result != VDO_SUCCESS) {
->   		continue_vio(vio, result);
->   		return;
-> diff --git a/drivers/md/dm-vdo/io-submitter.h b/drivers/md/dm-vdo/io-submitter.h
-> index 80748699496f2..3088f11055fdd 100644
-> --- a/drivers/md/dm-vdo/io-submitter.h
-> +++ b/drivers/md/dm-vdo/io-submitter.h
-> @@ -8,6 +8,7 @@
->   
->   #include <linux/bio.h>
->   
-> +#include "constants.h"
->   #include "types.h"
->   
->   struct io_submitter;
-> @@ -26,14 +27,25 @@ void vdo_submit_data_vio(struct data_vio *data_vio);
->   
->   void __submit_metadata_vio(struct vio *vio, physical_block_number_t physical,
->   			   bio_end_io_t callback, vdo_action_fn error_handler,
-> -			   blk_opf_t operation, char *data);
-> +			   blk_opf_t operation, char *data, int size);
->   
->   static inline void vdo_submit_metadata_vio(struct vio *vio, physical_block_number_t physical,
->   					   bio_end_io_t callback, vdo_action_fn error_handler,
->   					   blk_opf_t operation)
->   {
->   	__submit_metadata_vio(vio, physical, callback, error_handler,
-> -			      operation, vio->data);
-> +			      operation, vio->data, vio->block_count * VDO_BLOCK_SIZE);
-> +}
-> +
-> +static inline void vdo_submit_metadata_vio_with_size(struct vio *vio,
-> +						     physical_block_number_t physical,
-> +						     bio_end_io_t callback,
-> +						     vdo_action_fn error_handler,
-> +						     blk_opf_t operation,
-> +						     int size)
-> +{
-> +	__submit_metadata_vio(vio, physical, callback, error_handler,
-> +			      operation, vio->data, size);
->   }
->   
->   static inline void vdo_submit_flush_vio(struct vio *vio, bio_end_io_t callback,
-> @@ -41,7 +53,7 @@ static inline void vdo_submit_flush_vio(struct vio *vio, bio_end_io_t callback,
->   {
->   	/* FIXME: Can we just use REQ_OP_FLUSH? */
->   	__submit_metadata_vio(vio, 0, callback, error_handler,
-> -			      REQ_OP_WRITE | REQ_PREFLUSH, NULL);
-> +			      REQ_OP_WRITE | REQ_PREFLUSH, NULL, 0);
->   }
->   
->   #endif /* VDO_IO_SUBMITTER_H */
-> diff --git a/drivers/md/dm-vdo/types.h b/drivers/md/dm-vdo/types.h
-> index dbe892b10f265..cdf36e7d77021 100644
-> --- a/drivers/md/dm-vdo/types.h
-> +++ b/drivers/md/dm-vdo/types.h
-> @@ -376,6 +376,9 @@ struct vio {
->   	/* The size of this vio in blocks */
->   	unsigned int block_count;
->   
-> +	/* The amount of data to be read or written, in bytes */
-> +	unsigned int io_size;
-> +
->   	/* The data being read or written. */
->   	char *data;
->   
-> diff --git a/drivers/md/dm-vdo/vio.c b/drivers/md/dm-vdo/vio.c
-> index b291578f726f5..7c417c1af4516 100644
-> --- a/drivers/md/dm-vdo/vio.c
-> +++ b/drivers/md/dm-vdo/vio.c
-> @@ -188,14 +188,23 @@ void vdo_set_bio_properties(struct bio *bio, struct vio *vio, bio_end_io_t callb
->   
->   /*
->    * Prepares the bio to perform IO with the specified buffer. May only be used on a VDO-allocated
-> - * bio, as it assumes the bio wraps a 4k buffer that is 4k aligned, but there does not have to be a
-> - * vio associated with the bio.
-> + * bio, as it assumes the bio wraps a 4k-multiple buffer that is 4k aligned, but there does not
-> + * have to be a vio associated with the bio.
->    */
->   int vio_reset_bio(struct vio *vio, char *data, bio_end_io_t callback,
->   		  blk_opf_t bi_opf, physical_block_number_t pbn)
->   {
-> -	int bvec_count, offset, len, i;
-> +	return vio_reset_bio_with_size(vio, data, vio->block_count * VDO_BLOCK_SIZE,
-> +				       callback, bi_opf, pbn);
-> +}
-> +
-> +int vio_reset_bio_with_size(struct vio *vio, char *data, int size, bio_end_io_t callback,
-> +			    blk_opf_t bi_opf, physical_block_number_t pbn)
-> +{
-> +	int bvec_count, offset, i;
->   	struct bio *bio = vio->bio;
-> +	int vio_size = vio->block_count * VDO_BLOCK_SIZE;
-> +	int remaining;
->   
->   	bio_reset(bio, bio->bi_bdev, bi_opf);
->   	vdo_set_bio_properties(bio, vio, callback, bi_opf, pbn);
-> @@ -204,22 +213,21 @@ int vio_reset_bio(struct vio *vio, char *data, bio_end_io_t callback,
->   
->   	bio->bi_io_vec = bio->bi_inline_vecs;
->   	bio->bi_max_vecs = vio->block_count + 1;
-> -	len = VDO_BLOCK_SIZE * vio->block_count;
-> +	if (VDO_ASSERT(size <= vio_size, "specified size %d is not greater than allocated %d",
-> +		       size, vio_size) != VDO_SUCCESS)
-> +		size = vio_size;
-> +	vio->io_size = size;
->   	offset = offset_in_page(data);
-> -	bvec_count = DIV_ROUND_UP(offset + len, PAGE_SIZE);
-> +	bvec_count = DIV_ROUND_UP(offset + size, PAGE_SIZE);
-> +	remaining = size;
->   
-> -	/*
-> -	 * If we knew that data was always on one page, or contiguous pages, we wouldn't need the
-> -	 * loop. But if we're using vmalloc, it's not impossible that the data is in different
-> -	 * pages that can't be merged in bio_add_page...
-> -	 */
-> -	for (i = 0; (i < bvec_count) && (len > 0); i++) {
-> +	for (i = 0; (i < bvec_count) && (remaining > 0); i++) {
->   		struct page *page;
->   		int bytes_added;
->   		int bytes = PAGE_SIZE - offset;
->   
-> -		if (bytes > len)
-> -			bytes = len;
-> +		if (bytes > remaining)
-> +			bytes = remaining;
->   
->   		page = is_vmalloc_addr(data) ? vmalloc_to_page(data) : virt_to_page(data);
->   		bytes_added = bio_add_page(bio, page, bytes, offset);
-> @@ -231,7 +239,7 @@ int vio_reset_bio(struct vio *vio, char *data, bio_end_io_t callback,
->   		}
->   
->   		data += bytes;
-> -		len -= bytes;
-> +		remaining -= bytes;
->   		offset = 0;
->   	}
->   
-> diff --git a/drivers/md/dm-vdo/vio.h b/drivers/md/dm-vdo/vio.h
-> index 3490e9f59b04a..74e8fd7c8c029 100644
-> --- a/drivers/md/dm-vdo/vio.h
-> +++ b/drivers/md/dm-vdo/vio.h
-> @@ -123,6 +123,8 @@ void vdo_set_bio_properties(struct bio *bio, struct vio *vio, bio_end_io_t callb
->   
->   int vio_reset_bio(struct vio *vio, char *data, bio_end_io_t callback,
->   		  blk_opf_t bi_opf, physical_block_number_t pbn);
-> +int vio_reset_bio_with_size(struct vio *vio, char *data, int size, bio_end_io_t callback,
-> +			    blk_opf_t bi_opf, physical_block_number_t pbn);
->   
->   void update_vio_error_stats(struct vio *vio, const char *format, ...)
->   	__printf(2, 3);
+Currently, the IB uverbs API calls uobj_get_uobj_read(), which in turn
+uses the rdma_lookup_get_uobject() helper to retrieve user objects.
+In case of failure, uobj_get_uobj_read() returns NULL, overriding the
+error code from rdma_lookup_get_uobject(). The IB uverbs API then
+translates this NULL to -EINVAL, masking the actual error and
+complicating debugging. For example, applications calling ibv_modify_qp
+that fails with EBUSY when retrieving the QP uobject will see the
+overridden error code EINVAL instead, masking the actual error.
+
+Furthermore, based on rdma-core commit:
+"2a22f1ced5f3 ("Merge pull request #1568 from jakemoroni/master")"
+Kernel's IB uverbs return values are either ignored and passed on as is
+to application or overridden with other errnos in a few cases.
+
+Thus, to improve error reporting and debuggability, propagate the
+original error from rdma_lookup_get_uobject() instead of replacing it
+with EINVAL.
+
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Link: https://patch.msgid.link/64f9d3711b183984e939962c2f83383904f97dfb.1740577869.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/infiniband/core/uverbs_cmd.c | 144 ++++++++++++++-------------
+ include/rdma/uverbs_std_types.h      |   2 +-
+ 2 files changed, 77 insertions(+), 69 deletions(-)
+
+diff --git a/drivers/infiniband/core/uverbs_cmd.c b/drivers/infiniband/core/uverbs_cmd.c
+index 5ad14c39d48c9..de75dcc0947c7 100644
+--- a/drivers/infiniband/core/uverbs_cmd.c
++++ b/drivers/infiniband/core/uverbs_cmd.c
+@@ -716,8 +716,8 @@ static int ib_uverbs_reg_mr(struct uverbs_attr_bundle *attrs)
+ 		goto err_free;
+ 
+ 	pd = uobj_get_obj_read(pd, UVERBS_OBJECT_PD, cmd.pd_handle, attrs);
+-	if (!pd) {
+-		ret = -EINVAL;
++	if (IS_ERR(pd)) {
++		ret = PTR_ERR(pd);
+ 		goto err_free;
+ 	}
+ 
+@@ -807,8 +807,8 @@ static int ib_uverbs_rereg_mr(struct uverbs_attr_bundle *attrs)
+ 	if (cmd.flags & IB_MR_REREG_PD) {
+ 		new_pd = uobj_get_obj_read(pd, UVERBS_OBJECT_PD, cmd.pd_handle,
+ 					   attrs);
+-		if (!new_pd) {
+-			ret = -EINVAL;
++		if (IS_ERR(new_pd)) {
++			ret = PTR_ERR(new_pd);
+ 			goto put_uobjs;
+ 		}
+ 	} else {
+@@ -917,8 +917,8 @@ static int ib_uverbs_alloc_mw(struct uverbs_attr_bundle *attrs)
+ 		return PTR_ERR(uobj);
+ 
+ 	pd = uobj_get_obj_read(pd, UVERBS_OBJECT_PD, cmd.pd_handle, attrs);
+-	if (!pd) {
+-		ret = -EINVAL;
++	if (IS_ERR(pd)) {
++		ret = PTR_ERR(pd);
+ 		goto err_free;
+ 	}
+ 
+@@ -1125,8 +1125,8 @@ static int ib_uverbs_resize_cq(struct uverbs_attr_bundle *attrs)
+ 		return ret;
+ 
+ 	cq = uobj_get_obj_read(cq, UVERBS_OBJECT_CQ, cmd.cq_handle, attrs);
+-	if (!cq)
+-		return -EINVAL;
++	if (IS_ERR(cq))
++		return PTR_ERR(cq);
+ 
+ 	ret = cq->device->ops.resize_cq(cq, cmd.cqe, &attrs->driver_udata);
+ 	if (ret)
+@@ -1187,8 +1187,8 @@ static int ib_uverbs_poll_cq(struct uverbs_attr_bundle *attrs)
+ 		return ret;
+ 
+ 	cq = uobj_get_obj_read(cq, UVERBS_OBJECT_CQ, cmd.cq_handle, attrs);
+-	if (!cq)
+-		return -EINVAL;
++	if (IS_ERR(cq))
++		return PTR_ERR(cq);
+ 
+ 	/* we copy a struct ib_uverbs_poll_cq_resp to user space */
+ 	header_ptr = attrs->ucore.outbuf;
+@@ -1236,8 +1236,8 @@ static int ib_uverbs_req_notify_cq(struct uverbs_attr_bundle *attrs)
+ 		return ret;
+ 
+ 	cq = uobj_get_obj_read(cq, UVERBS_OBJECT_CQ, cmd.cq_handle, attrs);
+-	if (!cq)
+-		return -EINVAL;
++	if (IS_ERR(cq))
++		return PTR_ERR(cq);
+ 
+ 	ib_req_notify_cq(cq, cmd.solicited_only ?
+ 			 IB_CQ_SOLICITED : IB_CQ_NEXT_COMP);
+@@ -1319,8 +1319,8 @@ static int create_qp(struct uverbs_attr_bundle *attrs,
+ 		ind_tbl = uobj_get_obj_read(rwq_ind_table,
+ 					    UVERBS_OBJECT_RWQ_IND_TBL,
+ 					    cmd->rwq_ind_tbl_handle, attrs);
+-		if (!ind_tbl) {
+-			ret = -EINVAL;
++		if (IS_ERR(ind_tbl)) {
++			ret = PTR_ERR(ind_tbl);
+ 			goto err_put;
+ 		}
+ 
+@@ -1358,8 +1358,10 @@ static int create_qp(struct uverbs_attr_bundle *attrs,
+ 			if (cmd->is_srq) {
+ 				srq = uobj_get_obj_read(srq, UVERBS_OBJECT_SRQ,
+ 							cmd->srq_handle, attrs);
+-				if (!srq || srq->srq_type == IB_SRQT_XRC) {
+-					ret = -EINVAL;
++				if (IS_ERR(srq) ||
++				    srq->srq_type == IB_SRQT_XRC) {
++					ret = IS_ERR(srq) ? PTR_ERR(srq) :
++								  -EINVAL;
+ 					goto err_put;
+ 				}
+ 			}
+@@ -1369,23 +1371,29 @@ static int create_qp(struct uverbs_attr_bundle *attrs,
+ 					rcq = uobj_get_obj_read(
+ 						cq, UVERBS_OBJECT_CQ,
+ 						cmd->recv_cq_handle, attrs);
+-					if (!rcq) {
+-						ret = -EINVAL;
++					if (IS_ERR(rcq)) {
++						ret = PTR_ERR(rcq);
+ 						goto err_put;
+ 					}
+ 				}
+ 			}
+ 		}
+ 
+-		if (has_sq)
++		if (has_sq) {
+ 			scq = uobj_get_obj_read(cq, UVERBS_OBJECT_CQ,
+ 						cmd->send_cq_handle, attrs);
++			if (IS_ERR(scq)) {
++				ret = PTR_ERR(scq);
++				goto err_put;
++			}
++		}
++
+ 		if (!ind_tbl && cmd->qp_type != IB_QPT_XRC_INI)
+ 			rcq = rcq ?: scq;
+ 		pd = uobj_get_obj_read(pd, UVERBS_OBJECT_PD, cmd->pd_handle,
+ 				       attrs);
+-		if (!pd || (!scq && has_sq)) {
+-			ret = -EINVAL;
++		if (IS_ERR(pd)) {
++			ret = PTR_ERR(pd);
+ 			goto err_put;
+ 		}
+ 
+@@ -1480,18 +1488,18 @@ static int create_qp(struct uverbs_attr_bundle *attrs,
+ err_put:
+ 	if (!IS_ERR(xrcd_uobj))
+ 		uobj_put_read(xrcd_uobj);
+-	if (pd)
++	if (!IS_ERR_OR_NULL(pd))
+ 		uobj_put_obj_read(pd);
+-	if (scq)
++	if (!IS_ERR_OR_NULL(scq))
+ 		rdma_lookup_put_uobject(&scq->uobject->uevent.uobject,
+ 					UVERBS_LOOKUP_READ);
+-	if (rcq && rcq != scq)
++	if (!IS_ERR_OR_NULL(rcq) && rcq != scq)
+ 		rdma_lookup_put_uobject(&rcq->uobject->uevent.uobject,
+ 					UVERBS_LOOKUP_READ);
+-	if (srq)
++	if (!IS_ERR_OR_NULL(srq))
+ 		rdma_lookup_put_uobject(&srq->uobject->uevent.uobject,
+ 					UVERBS_LOOKUP_READ);
+-	if (ind_tbl)
++	if (!IS_ERR_OR_NULL(ind_tbl))
+ 		uobj_put_obj_read(ind_tbl);
+ 
+ 	uobj_alloc_abort(&obj->uevent.uobject, attrs);
+@@ -1653,8 +1661,8 @@ static int ib_uverbs_query_qp(struct uverbs_attr_bundle *attrs)
+ 	}
+ 
+ 	qp = uobj_get_obj_read(qp, UVERBS_OBJECT_QP, cmd.qp_handle, attrs);
+-	if (!qp) {
+-		ret = -EINVAL;
++	if (IS_ERR(qp)) {
++		ret = PTR_ERR(qp);
+ 		goto out;
+ 	}
+ 
+@@ -1759,8 +1767,8 @@ static int modify_qp(struct uverbs_attr_bundle *attrs,
+ 
+ 	qp = uobj_get_obj_read(qp, UVERBS_OBJECT_QP, cmd->base.qp_handle,
+ 			       attrs);
+-	if (!qp) {
+-		ret = -EINVAL;
++	if (IS_ERR(qp)) {
++		ret = PTR_ERR(qp);
+ 		goto out;
+ 	}
+ 
+@@ -2026,8 +2034,8 @@ static int ib_uverbs_post_send(struct uverbs_attr_bundle *attrs)
+ 		return -ENOMEM;
+ 
+ 	qp = uobj_get_obj_read(qp, UVERBS_OBJECT_QP, cmd.qp_handle, attrs);
+-	if (!qp) {
+-		ret = -EINVAL;
++	if (IS_ERR(qp)) {
++		ret = PTR_ERR(qp);
+ 		goto out;
+ 	}
+ 
+@@ -2064,9 +2072,9 @@ static int ib_uverbs_post_send(struct uverbs_attr_bundle *attrs)
+ 
+ 			ud->ah = uobj_get_obj_read(ah, UVERBS_OBJECT_AH,
+ 						   user_wr->wr.ud.ah, attrs);
+-			if (!ud->ah) {
++			if (IS_ERR(ud->ah)) {
++				ret = PTR_ERR(ud->ah);
+ 				kfree(ud);
+-				ret = -EINVAL;
+ 				goto out_put;
+ 			}
+ 			ud->remote_qpn = user_wr->wr.ud.remote_qpn;
+@@ -2303,8 +2311,8 @@ static int ib_uverbs_post_recv(struct uverbs_attr_bundle *attrs)
+ 		return PTR_ERR(wr);
+ 
+ 	qp = uobj_get_obj_read(qp, UVERBS_OBJECT_QP, cmd.qp_handle, attrs);
+-	if (!qp) {
+-		ret = -EINVAL;
++	if (IS_ERR(qp)) {
++		ret = PTR_ERR(qp);
+ 		goto out;
+ 	}
+ 
+@@ -2354,8 +2362,8 @@ static int ib_uverbs_post_srq_recv(struct uverbs_attr_bundle *attrs)
+ 		return PTR_ERR(wr);
+ 
+ 	srq = uobj_get_obj_read(srq, UVERBS_OBJECT_SRQ, cmd.srq_handle, attrs);
+-	if (!srq) {
+-		ret = -EINVAL;
++	if (IS_ERR(srq)) {
++		ret = PTR_ERR(srq);
+ 		goto out;
+ 	}
+ 
+@@ -2411,8 +2419,8 @@ static int ib_uverbs_create_ah(struct uverbs_attr_bundle *attrs)
+ 	}
+ 
+ 	pd = uobj_get_obj_read(pd, UVERBS_OBJECT_PD, cmd.pd_handle, attrs);
+-	if (!pd) {
+-		ret = -EINVAL;
++	if (IS_ERR(pd)) {
++		ret = PTR_ERR(pd);
+ 		goto err;
+ 	}
+ 
+@@ -2481,8 +2489,8 @@ static int ib_uverbs_attach_mcast(struct uverbs_attr_bundle *attrs)
+ 		return ret;
+ 
+ 	qp = uobj_get_obj_read(qp, UVERBS_OBJECT_QP, cmd.qp_handle, attrs);
+-	if (!qp)
+-		return -EINVAL;
++	if (IS_ERR(qp))
++		return PTR_ERR(qp);
+ 
+ 	obj = qp->uobject;
+ 
+@@ -2531,8 +2539,8 @@ static int ib_uverbs_detach_mcast(struct uverbs_attr_bundle *attrs)
+ 		return ret;
+ 
+ 	qp = uobj_get_obj_read(qp, UVERBS_OBJECT_QP, cmd.qp_handle, attrs);
+-	if (!qp)
+-		return -EINVAL;
++	if (IS_ERR(qp))
++		return PTR_ERR(qp);
+ 
+ 	obj = qp->uobject;
+ 	mutex_lock(&obj->mcast_lock);
+@@ -2666,8 +2674,8 @@ static int kern_spec_to_ib_spec_action(struct uverbs_attr_bundle *attrs,
+ 							UVERBS_OBJECT_FLOW_ACTION,
+ 							kern_spec->action.handle,
+ 							attrs);
+-		if (!ib_spec->action.act)
+-			return -EINVAL;
++		if (IS_ERR(ib_spec->action.act))
++			return PTR_ERR(ib_spec->action.act);
+ 		ib_spec->action.size =
+ 			sizeof(struct ib_flow_spec_action_handle);
+ 		flow_resources_add(uflow_res,
+@@ -2684,8 +2692,8 @@ static int kern_spec_to_ib_spec_action(struct uverbs_attr_bundle *attrs,
+ 					  UVERBS_OBJECT_COUNTERS,
+ 					  kern_spec->flow_count.handle,
+ 					  attrs);
+-		if (!ib_spec->flow_count.counters)
+-			return -EINVAL;
++		if (IS_ERR(ib_spec->flow_count.counters))
++			return PTR_ERR(ib_spec->flow_count.counters);
+ 		ib_spec->flow_count.size =
+ 				sizeof(struct ib_flow_spec_action_count);
+ 		flow_resources_add(uflow_res,
+@@ -2903,14 +2911,14 @@ static int ib_uverbs_ex_create_wq(struct uverbs_attr_bundle *attrs)
+ 		return PTR_ERR(obj);
+ 
+ 	pd = uobj_get_obj_read(pd, UVERBS_OBJECT_PD, cmd.pd_handle, attrs);
+-	if (!pd) {
+-		err = -EINVAL;
++	if (IS_ERR(pd)) {
++		err = PTR_ERR(pd);
+ 		goto err_uobj;
+ 	}
+ 
+ 	cq = uobj_get_obj_read(cq, UVERBS_OBJECT_CQ, cmd.cq_handle, attrs);
+-	if (!cq) {
+-		err = -EINVAL;
++	if (IS_ERR(cq)) {
++		err = PTR_ERR(cq);
+ 		goto err_put_pd;
+ 	}
+ 
+@@ -3011,8 +3019,8 @@ static int ib_uverbs_ex_modify_wq(struct uverbs_attr_bundle *attrs)
+ 		return -EINVAL;
+ 
+ 	wq = uobj_get_obj_read(wq, UVERBS_OBJECT_WQ, cmd.wq_handle, attrs);
+-	if (!wq)
+-		return -EINVAL;
++	if (IS_ERR(wq))
++		return PTR_ERR(wq);
+ 
+ 	if (cmd.attr_mask & IB_WQ_FLAGS) {
+ 		wq_attr.flags = cmd.flags;
+@@ -3095,8 +3103,8 @@ static int ib_uverbs_ex_create_rwq_ind_table(struct uverbs_attr_bundle *attrs)
+ 			num_read_wqs++) {
+ 		wq = uobj_get_obj_read(wq, UVERBS_OBJECT_WQ,
+ 				       wqs_handles[num_read_wqs], attrs);
+-		if (!wq) {
+-			err = -EINVAL;
++		if (IS_ERR(wq)) {
++			err = PTR_ERR(wq);
+ 			goto put_wqs;
+ 		}
+ 
+@@ -3251,8 +3259,8 @@ static int ib_uverbs_ex_create_flow(struct uverbs_attr_bundle *attrs)
+ 	}
+ 
+ 	qp = uobj_get_obj_read(qp, UVERBS_OBJECT_QP, cmd.qp_handle, attrs);
+-	if (!qp) {
+-		err = -EINVAL;
++	if (IS_ERR(qp)) {
++		err = PTR_ERR(qp);
+ 		goto err_uobj;
+ 	}
+ 
+@@ -3398,15 +3406,15 @@ static int __uverbs_create_xsrq(struct uverbs_attr_bundle *attrs,
+ 	if (ib_srq_has_cq(cmd->srq_type)) {
+ 		attr.ext.cq = uobj_get_obj_read(cq, UVERBS_OBJECT_CQ,
+ 						cmd->cq_handle, attrs);
+-		if (!attr.ext.cq) {
+-			ret = -EINVAL;
++		if (IS_ERR(attr.ext.cq)) {
++			ret = PTR_ERR(attr.ext.cq);
+ 			goto err_put_xrcd;
+ 		}
+ 	}
+ 
+ 	pd = uobj_get_obj_read(pd, UVERBS_OBJECT_PD, cmd->pd_handle, attrs);
+-	if (!pd) {
+-		ret = -EINVAL;
++	if (IS_ERR(pd)) {
++		ret = PTR_ERR(pd);
+ 		goto err_put_cq;
+ 	}
+ 
+@@ -3513,8 +3521,8 @@ static int ib_uverbs_modify_srq(struct uverbs_attr_bundle *attrs)
+ 		return ret;
+ 
+ 	srq = uobj_get_obj_read(srq, UVERBS_OBJECT_SRQ, cmd.srq_handle, attrs);
+-	if (!srq)
+-		return -EINVAL;
++	if (IS_ERR(srq))
++		return PTR_ERR(srq);
+ 
+ 	attr.max_wr    = cmd.max_wr;
+ 	attr.srq_limit = cmd.srq_limit;
+@@ -3541,8 +3549,8 @@ static int ib_uverbs_query_srq(struct uverbs_attr_bundle *attrs)
+ 		return ret;
+ 
+ 	srq = uobj_get_obj_read(srq, UVERBS_OBJECT_SRQ, cmd.srq_handle, attrs);
+-	if (!srq)
+-		return -EINVAL;
++	if (IS_ERR(srq))
++		return PTR_ERR(srq);
+ 
+ 	ret = ib_query_srq(srq, &attr);
+ 
+@@ -3667,8 +3675,8 @@ static int ib_uverbs_ex_modify_cq(struct uverbs_attr_bundle *attrs)
+ 		return -EOPNOTSUPP;
+ 
+ 	cq = uobj_get_obj_read(cq, UVERBS_OBJECT_CQ, cmd.cq_handle, attrs);
+-	if (!cq)
+-		return -EINVAL;
++	if (IS_ERR(cq))
++		return PTR_ERR(cq);
+ 
+ 	ret = rdma_set_cq_moderation(cq, cmd.attr.cq_count, cmd.attr.cq_period);
+ 
+diff --git a/include/rdma/uverbs_std_types.h b/include/rdma/uverbs_std_types.h
+index fe05121169589..555ea3d142a46 100644
+--- a/include/rdma/uverbs_std_types.h
++++ b/include/rdma/uverbs_std_types.h
+@@ -34,7 +34,7 @@
+ static inline void *_uobj_get_obj_read(struct ib_uobject *uobj)
+ {
+ 	if (IS_ERR(uobj))
+-		return NULL;
++		return ERR_CAST(uobj);
+ 	return uobj->object;
+ }
+ #define uobj_get_obj_read(_object, _type, _id, _attrs)                         \
+-- 
+2.39.5
+
+
 
