@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C4042A9B;
-	Tue, 27 May 2025 17:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3787725C6EC;
+	Tue, 27 May 2025 17:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368113; cv=none; b=ncMC5TEB4sxg2gwhQYC7IzvkzGivivhTcfYiWY6Ks3ql1tH3YAj+48HQtF19UEoxObWxJu5LBTcvXHw/nZCurReXIp50eo8p7Ay4OxNQi5lwikmIlnLOGqb6iU3Drsr2dX0w0n+bQAxXIgEVVH92FhCyeM01lJWAOhwW9FmyrR0=
+	t=1748368116; cv=none; b=X8tzMunenaKMrmL3+AvCwTryFzwIj0+R6HcoRs7b9UtA6Gi8uVHkcLDWCy1ycpfWb3aGBQWjuwsi5aYk10LlSRqpOpVufhuVXlCn81OJQ0ZrT2Vk8NXtTULpjeRXpbkkZ0OFK1diSK6yDK8uc5zdAJpb+8nk7avPT8eeDS4xVjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368113; c=relaxed/simple;
-	bh=PzzBSX5iAQKbv4SkIE5VOwYy//chGAyjjFfLlqEwaOU=;
+	s=arc-20240116; t=1748368116; c=relaxed/simple;
+	bh=1X5j6N9ZL4QIOPmG9xZ9OdZnU06Tu2cMlk92z7vwiNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YzbHN0sG0//pUXwXwsFbgnSoQMWaBLVBF3DX9oPuEryRsvqptPF1iMGX49fN1k1T7QBquxgDk71rwFfkqvLn7PObuYyO940UTyMRWuuAoKqsVG3SNGNJVlNlaTyPnPEiruFjVmO+Fz2nE87DIS+84r5wTCdQeY5eC9Pn6OgeciU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNlpoZ0h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=To+g9LpnzaDk1qGwmQUMc9N4Gg2k29qPZwPfS7xeKPALAkhf01kPFPPNr8CZsg1PTl3LN4CWR0WzCY8HP4y4qBtKxlqvq0jS1qqEGmHCqHMd6MwZb2gUAv0FPBYHB65DIF4pwaf9ji44mHsbC6hsVw36UVsRteEvmcjMZ+i/f10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5jTlqdG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNlpoZ0h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CE6C4CEE9;
-	Tue, 27 May 2025 17:48:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5jTlqdG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B55C4CEEA;
+	Tue, 27 May 2025 17:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368112;
-	bh=PzzBSX5iAQKbv4SkIE5VOwYy//chGAyjjFfLlqEwaOU=;
+	s=korg; t=1748368116;
+	bh=1X5j6N9ZL4QIOPmG9xZ9OdZnU06Tu2cMlk92z7vwiNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YNlpoZ0htS8zYb/oubIlAq/S9RRQ324OnAo8GWscTzdX/dNGo/kcXiQ8aCdibu5Yc
-	 +9druIlfh61HgZzzBliWF9Lganxcm6yrnlI4IybHj3D9DJxVv5ea0ta1fGQM5uPbCE
-	 ukddkQIxgHtAmj/aWoEhaSpwxZ0MQo1Nz4eMINrU=
+	b=S5jTlqdG+wKS4I1x9tm7QhiG/6ZWpbTQCJv+wiQHU+YOusSnIxx0My/WHfwqoMAif
+	 UHu2UWC0ttT71YSmxZWD2wTo3QKMWHcaWD6U4xEBDRi4cus7r2qhBV/2Bh61DjW/yb
+	 V4+Wr1fYNQybUk+/u0NnE9w3S4QO+0qWizidFLwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Isaac Scott <isaac.scott@ideasonboard.com>,
-	Michael Hennerich <michael.hennerich@analog.com>,
-	Mark Brown <broonie@kernel.org>,
+	Nicolas Escande <nico.escande@gmail.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 602/783] regulator: ad5398: Add device tree support
-Date: Tue, 27 May 2025 18:26:39 +0200
-Message-ID: <20250527162537.671970012@linuxfoundation.org>
+Subject: [PATCH 6.14 603/783] wifi: ath12k: fix ath12k_hal_tx_cmd_ext_desc_setup() info1 override
+Date: Tue, 27 May 2025 18:26:40 +0200
+Message-ID: <20250527162537.712492910@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,61 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Isaac Scott <isaac.scott@ideasonboard.com>
+From: Nicolas Escande <nico.escande@gmail.com>
 
-[ Upstream commit 5a6a461079decea452fdcae955bccecf92e07e97 ]
+[ Upstream commit df11edfba49e5fb69f4c9e7cb76082b89c417f78 ]
 
-Previously, the ad5398 driver used only platform_data, which is
-deprecated in favour of device tree. This caused the AD5398 to fail to
-probe as it could not load its init_data. If the AD5398 has a device
-tree node, pull the init_data from there using
-of_get_regulator_init_data.
+Since inception there is an obvious typo laying around in
+ath12k_hal_tx_cmd_ext_desc_setup(). Instead of initializing + adding
+flags to tcl_ext_cmd->info1, we initialize + override. This will be needed
+in the future to make broadcast frames work with ethernet encapsulation.
 
-Signed-off-by: Isaac Scott <isaac.scott@ideasonboard.com>
-Acked-by: Michael Hennerich <michael.hennerich@analog.com>
-Link: https://patch.msgid.link/20250128173143.959600-4-isaac.scott@ideasonboard.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250127071306.1454699-1-nico.escande@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/ad5398.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/ad5398.c b/drivers/regulator/ad5398.c
-index 40f7dba42b5ad..404cbe32711e7 100644
---- a/drivers/regulator/ad5398.c
-+++ b/drivers/regulator/ad5398.c
-@@ -14,6 +14,7 @@
- #include <linux/platform_device.h>
- #include <linux/regulator/driver.h>
- #include <linux/regulator/machine.h>
-+#include <linux/regulator/of_regulator.h>
+diff --git a/drivers/net/wireless/ath/ath12k/dp_tx.c b/drivers/net/wireless/ath/ath12k/dp_tx.c
+index 75608ae027afe..a39bfb959797a 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_tx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_tx.c
+@@ -117,7 +117,7 @@ static void ath12k_hal_tx_cmd_ext_desc_setup(struct ath12k_base *ab,
+ 			       le32_encode_bits(ti->data_len,
+ 						HAL_TX_MSDU_EXT_INFO1_BUF_LEN);
  
- #define AD5398_CURRENT_EN_MASK	0x8000
- 
-@@ -221,15 +222,20 @@ static int ad5398_probe(struct i2c_client *client)
- 	const struct ad5398_current_data_format *df =
- 			(struct ad5398_current_data_format *)id->driver_data;
- 
--	if (!init_data)
--		return -EINVAL;
--
- 	chip = devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL);
- 	if (!chip)
- 		return -ENOMEM;
- 
- 	config.dev = &client->dev;
-+	if (client->dev.of_node)
-+		init_data = of_get_regulator_init_data(&client->dev,
-+						       client->dev.of_node,
-+						       &ad5398_reg);
-+	if (!init_data)
-+		return -EINVAL;
-+
- 	config.init_data = init_data;
-+	config.of_node = client->dev.of_node;
- 	config.driver_data = chip;
- 
- 	chip->client = client;
+-	tcl_ext_cmd->info1 = le32_encode_bits(1, HAL_TX_MSDU_EXT_INFO1_EXTN_OVERRIDE) |
++	tcl_ext_cmd->info1 |= le32_encode_bits(1, HAL_TX_MSDU_EXT_INFO1_EXTN_OVERRIDE) |
+ 				le32_encode_bits(ti->encap_type,
+ 						 HAL_TX_MSDU_EXT_INFO1_ENCAP_TYPE) |
+ 				le32_encode_bits(ti->encrypt_type,
 -- 
 2.39.5
 
