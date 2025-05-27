@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586AF28001F;
-	Tue, 27 May 2025 17:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65FD1263F5E;
+	Tue, 27 May 2025 17:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368453; cv=none; b=nvQ9H3zFI4PSHRfRZo69EY8qL3rC5NmrgYeRx7XuaWTnQJke2rrihAIstZn6RUhv8NJk9ncfa1SiJmP0kiVHRJv0Hd6AEELNoke8otjP6yp6wzisqcoLUa0WhANVNBLvPzXwp/iWBARqZT9ahDsvsb6pQc0qVe5wjdOBE3JrJRs=
+	t=1748368456; cv=none; b=JKd4cnXhbPjes0BaNak3NJiNJqkc40mWNcyorhfST18rPxLLBtXB4nL4E9ix/e3gkz6NUM5OYU14+EfOBBpnLSIQCJnAmtciY3S6QZaTnyVclqM+PLEq+22ZByC/rN/D8d93OPT9+uF4p//zCgUwPM3ocu4KgjYxWSgrhf/1RT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368453; c=relaxed/simple;
-	bh=Gr9GNepdHE1NTmcygRiluljI2mNgv3GXKV0A1I7CL9o=;
+	s=arc-20240116; t=1748368456; c=relaxed/simple;
+	bh=DqmyGEGqHxU3lDgzA5vMcDu28iMONP4e9bP3jhxGP2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQ7i3mPyzR43ZXFumtBRhK+nUV1QXXulvJEKSUU7YZek4avJlqgZojWFiSr6eLYeEu+HwqqyEGKseMXXFOzaIpDsx+jk2H7GJ113D6Ki2jAhQ8UTIJKNXoZ5bJva/BbD6TB6CKZ4/22gAjkzFvXPcp1aHbNwxSm4wp5Ii9VV0Oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3mWOl/j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rwkG/fiTuY4hTQmOWdr/ZKyKW1Dg1Pi9jNsTJHn8J2QzjBjqeryjgbqqKVDxnuOHMp9NnT5pnPxViU1eB5mYl8ApIT+A79gJKQddygxhp3VBCBR7AqqgXNRR5hIAwEGie2C/xe3BOjkWjwe0IEfx8QVVU+arC6Dp/cLXJewV3y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBvKzlLK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3mWOl/j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC62FC4CEE9;
-	Tue, 27 May 2025 17:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBvKzlLK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1BDDC4CEE9;
+	Tue, 27 May 2025 17:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368453;
-	bh=Gr9GNepdHE1NTmcygRiluljI2mNgv3GXKV0A1I7CL9o=;
+	s=korg; t=1748368456;
+	bh=DqmyGEGqHxU3lDgzA5vMcDu28iMONP4e9bP3jhxGP2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a3mWOl/jh7V5ncArb7DBgcw7V/o2HY9/nPcRAfwEOrVE8DEAjGelHkm2GHyjSnUy4
-	 lGV+QZYsZbjZivAcx7cgYsm2Fl1LKF3Ngv52rOvnH52FLzuQFxSJkfo+oSlz745ghd
-	 SiVS89KZmQ58wTpxEUM6WsWtP/LD6zdg5DqLQC9E=
+	b=qBvKzlLKkda3U1u+w4bh7hazX38uP8KKixD8hPKaCOU6IP62J3WtDOYNs2gR8QUWC
+	 xNgVLSpOG5az0/Xohnrl1ahtPKknN+oRNQlLRdw+nLCVJouDv9iXfrdV/tDFcL5LIU
+	 gEjd6NW8brBOuw8hsCwqIUUqX31Z6u0RAAsVME+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 681/783] soundwire: bus: Fix race on the creation of the IRQ domain
-Date: Tue, 27 May 2025 18:27:58 +0200
-Message-ID: <20250527162540.861621855@linuxfoundation.org>
+Subject: [PATCH 6.14 673/783] btrfs: avoid NULL pointer dereference if no valid csum tree
+Date: Tue, 27 May 2025 18:27:50 +0200
+Message-ID: <20250527162540.535981015@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,58 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit fd15594ba7d559d9da741504c322b9f57c4981e5 ]
+[ Upstream commit f95d186255b319c48a365d47b69bd997fecb674e ]
 
-The SoundWire IRQ domain needs to be created before any slaves are added
-to the bus, such that the domain is always available when needed. Move
-the call to sdw_irq_create() before the calls to sdw_acpi_find_slaves()
-and sdw_of_find_slaves().
+[BUG]
+When trying read-only scrub on a btrfs with rescue=idatacsums mount
+option, it will crash with the following call trace:
 
-Fixes: 12a95123bfe1 ("soundwire: bus: Allow SoundWire peripherals to register IRQ handlers")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20250409122239.1396489-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+  BUG: kernel NULL pointer dereference, address: 0000000000000208
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  CPU: 1 UID: 0 PID: 835 Comm: btrfs Tainted: G           O        6.15.0-rc3-custom+ #236 PREEMPT(full)
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
+  RIP: 0010:btrfs_lookup_csums_bitmap+0x49/0x480 [btrfs]
+  Call Trace:
+   <TASK>
+   scrub_find_fill_first_stripe+0x35b/0x3d0 [btrfs]
+   scrub_simple_mirror+0x175/0x290 [btrfs]
+   scrub_stripe+0x5f7/0x6f0 [btrfs]
+   scrub_chunk+0x9a/0x150 [btrfs]
+   scrub_enumerate_chunks+0x333/0x660 [btrfs]
+   btrfs_scrub_dev+0x23e/0x600 [btrfs]
+   btrfs_ioctl+0x1dcf/0x2f80 [btrfs]
+   __x64_sys_ioctl+0x97/0xc0
+   do_syscall_64+0x4f/0x120
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+[CAUSE]
+Mount option "rescue=idatacsums" will completely skip loading the csum
+tree, so that any data read will not find any data csum thus we will
+ignore data checksum verification.
+
+Normally call sites utilizing csum tree will check the fs state flag
+NO_DATA_CSUMS bit, but unfortunately scrub does not check that bit at all.
+
+This results in scrub to call btrfs_search_slot() on a NULL pointer
+and triggered above crash.
+
+[FIX]
+Check both extent and csum tree root before doing any tree search.
+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/bus.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/btrfs/scrub.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soundwire/bus.c b/drivers/soundwire/bus.c
-index 9b295fc9acd53..df73e2c040904 100644
---- a/drivers/soundwire/bus.c
-+++ b/drivers/soundwire/bus.c
-@@ -121,6 +121,10 @@ int sdw_bus_master_add(struct sdw_bus *bus, struct device *parent,
- 	set_bit(SDW_GROUP13_DEV_NUM, bus->assigned);
- 	set_bit(SDW_MASTER_DEV_NUM, bus->assigned);
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index 531312efee8df..5d0060eb8ff4c 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -1541,8 +1541,8 @@ static int scrub_find_fill_first_stripe(struct btrfs_block_group *bg,
+ 	u64 extent_gen;
+ 	int ret;
  
-+	ret = sdw_irq_create(bus, fwnode);
-+	if (ret)
-+		return ret;
-+
- 	/*
- 	 * SDW is an enumerable bus, but devices can be powered off. So,
- 	 * they won't be able to report as present.
-@@ -137,6 +141,7 @@ int sdw_bus_master_add(struct sdw_bus *bus, struct device *parent,
- 
- 	if (ret < 0) {
- 		dev_err(bus->dev, "Finding slaves failed:%d\n", ret);
-+		sdw_irq_delete(bus);
- 		return ret;
+-	if (unlikely(!extent_root)) {
+-		btrfs_err(fs_info, "no valid extent root for scrub");
++	if (unlikely(!extent_root || !csum_root)) {
++		btrfs_err(fs_info, "no valid extent or csum root for scrub");
+ 		return -EUCLEAN;
  	}
- 
-@@ -155,10 +160,6 @@ int sdw_bus_master_add(struct sdw_bus *bus, struct device *parent,
- 	bus->params.curr_bank = SDW_BANK0;
- 	bus->params.next_bank = SDW_BANK1;
- 
--	ret = sdw_irq_create(bus, fwnode);
--	if (ret)
--		return ret;
--
- 	return 0;
- }
- EXPORT_SYMBOL(sdw_bus_master_add);
+ 	memset(stripe->sectors, 0, sizeof(struct scrub_sector_verification) *
 -- 
 2.39.5
 
