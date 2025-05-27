@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65FD1263F5E;
-	Tue, 27 May 2025 17:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD45280304;
+	Tue, 27 May 2025 17:54:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368456; cv=none; b=JKd4cnXhbPjes0BaNak3NJiNJqkc40mWNcyorhfST18rPxLLBtXB4nL4E9ix/e3gkz6NUM5OYU14+EfOBBpnLSIQCJnAmtciY3S6QZaTnyVclqM+PLEq+22ZByC/rN/D8d93OPT9+uF4p//zCgUwPM3ocu4KgjYxWSgrhf/1RT0=
+	t=1748368459; cv=none; b=C4tQ2dGA89/w0vNtgZAd6bkGev4PBBr1ehpt6CwJIW0U0yo463ucFMFeJfLZZzTuXHfu5C9nEhO9+Vr2lmJDVs4JqODzheoiky5vk4aQo5u+cF3zkFT9MO1vjflrsMGhlJg0jSmbyWVpjMBEgVSxLYaxktFeDfKvWBMxozq2t28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368456; c=relaxed/simple;
-	bh=DqmyGEGqHxU3lDgzA5vMcDu28iMONP4e9bP3jhxGP2c=;
+	s=arc-20240116; t=1748368459; c=relaxed/simple;
+	bh=kpIgzkrjgoeDFu+7mXYMuTH26MyTF/KSmfXghWPS8GM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rwkG/fiTuY4hTQmOWdr/ZKyKW1Dg1Pi9jNsTJHn8J2QzjBjqeryjgbqqKVDxnuOHMp9NnT5pnPxViU1eB5mYl8ApIT+A79gJKQddygxhp3VBCBR7AqqgXNRR5hIAwEGie2C/xe3BOjkWjwe0IEfx8QVVU+arC6Dp/cLXJewV3y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBvKzlLK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U+yvOM/Qk/PpqkTeTo1gLpjGDBomwugW79MfaFIde9/Gj7etNdh5IaP5FJHhAZUFYXnHPD0g7sCpuMSTKwshjcRwCi2w3jqbVrSScLbGG1Iqm15tbYKse8oV9gMeImDMLUONNvDYbJJzo8rXXAOtDWKPIBSPio6xQyESWV3Fq88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NFdghsKN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBvKzlLK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1BDDC4CEE9;
-	Tue, 27 May 2025 17:54:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NFdghsKN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF880C4CEE9;
+	Tue, 27 May 2025 17:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368456;
-	bh=DqmyGEGqHxU3lDgzA5vMcDu28iMONP4e9bP3jhxGP2c=;
+	s=korg; t=1748368459;
+	bh=kpIgzkrjgoeDFu+7mXYMuTH26MyTF/KSmfXghWPS8GM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qBvKzlLKkda3U1u+w4bh7hazX38uP8KKixD8hPKaCOU6IP62J3WtDOYNs2gR8QUWC
-	 xNgVLSpOG5az0/Xohnrl1ahtPKknN+oRNQlLRdw+nLCVJouDv9iXfrdV/tDFcL5LIU
-	 gEjd6NW8brBOuw8hsCwqIUUqX31Z6u0RAAsVME+M=
+	b=NFdghsKNlChAEl8pnSY3PS/ntnOUSBvMby7a37T85PNV7kJaKdLVsPdlxjzitpWBn
+	 Oh5wqlySahXqHa73gfXJpFMRPKIDA/9ezFrnMjRp/wfMq0z0Fea8v+VNI8AnILwEmX
+	 kdqs2wGblthFyIyUo7fB1B6D3uZXEY/R0wecyxHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Christian Hesse <mail@eworm.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 673/783] btrfs: avoid NULL pointer dereference if no valid csum tree
-Date: Tue, 27 May 2025 18:27:50 +0200
-Message-ID: <20250527162540.535981015@linuxfoundation.org>
+Subject: [PATCH 6.14 706/783] loop: dont require ->write_iter for writable files in loop_configure
+Date: Tue, 27 May 2025 18:28:23 +0200
+Message-ID: <20250527162541.870153995@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,71 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit f95d186255b319c48a365d47b69bd997fecb674e ]
+[ Upstream commit 355341e4359b2d5edf0ed5e117f7e9e7a0a5dac0 ]
 
-[BUG]
-When trying read-only scrub on a btrfs with rescue=idatacsums mount
-option, it will crash with the following call trace:
+Block devices can be opened read-write even if they can't be written to
+for historic reasons.  Remove the check requiring file->f_op->write_iter
+when the block devices was opened in loop_configure. The call to
+loop_check_backing_file just below ensures the ->write_iter is present
+for backing files opened for writing, which is the only check that is
+actually needed.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000208
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  CPU: 1 UID: 0 PID: 835 Comm: btrfs Tainted: G           O        6.15.0-rc3-custom+ #236 PREEMPT(full)
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
-  RIP: 0010:btrfs_lookup_csums_bitmap+0x49/0x480 [btrfs]
-  Call Trace:
-   <TASK>
-   scrub_find_fill_first_stripe+0x35b/0x3d0 [btrfs]
-   scrub_simple_mirror+0x175/0x290 [btrfs]
-   scrub_stripe+0x5f7/0x6f0 [btrfs]
-   scrub_chunk+0x9a/0x150 [btrfs]
-   scrub_enumerate_chunks+0x333/0x660 [btrfs]
-   btrfs_scrub_dev+0x23e/0x600 [btrfs]
-   btrfs_ioctl+0x1dcf/0x2f80 [btrfs]
-   __x64_sys_ioctl+0x97/0xc0
-   do_syscall_64+0x4f/0x120
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-[CAUSE]
-Mount option "rescue=idatacsums" will completely skip loading the csum
-tree, so that any data read will not find any data csum thus we will
-ignore data checksum verification.
-
-Normally call sites utilizing csum tree will check the fs state flag
-NO_DATA_CSUMS bit, but unfortunately scrub does not check that bit at all.
-
-This results in scrub to call btrfs_search_slot() on a NULL pointer
-and triggered above crash.
-
-[FIX]
-Check both extent and csum tree root before doing any tree search.
-
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: f5c84eff634b ("loop: Add sanity check for read/write_iter")
+Reported-by: Christian Hesse <mail@eworm.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250520135420.1177312-1-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/scrub.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/block/loop.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
-index 531312efee8df..5d0060eb8ff4c 100644
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -1541,8 +1541,8 @@ static int scrub_find_fill_first_stripe(struct btrfs_block_group *bg,
- 	u64 extent_gen;
- 	int ret;
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index f68f86e9cb716..0b135d1ca25ea 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -973,9 +973,6 @@ static int loop_configure(struct loop_device *lo, blk_mode_t mode,
+ 	if (!file)
+ 		return -EBADF;
  
--	if (unlikely(!extent_root)) {
--		btrfs_err(fs_info, "no valid extent root for scrub");
-+	if (unlikely(!extent_root || !csum_root)) {
-+		btrfs_err(fs_info, "no valid extent or csum root for scrub");
- 		return -EUCLEAN;
- 	}
- 	memset(stripe->sectors, 0, sizeof(struct scrub_sector_verification) *
+-	if ((mode & BLK_OPEN_WRITE) && !file->f_op->write_iter)
+-		return -EINVAL;
+-
+ 	error = loop_check_backing_file(file);
+ 	if (error)
+ 		return error;
 -- 
 2.39.5
 
