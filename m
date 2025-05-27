@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F95C27BF8D;
-	Tue, 27 May 2025 17:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3EA27BF8D;
+	Tue, 27 May 2025 17:50:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368253; cv=none; b=PJxLR+dvAWUCVPaoLOJob6XB2cPvHZcBXqmff9Mqawo1f6cZbdLUt15LBAo4xe9GX+VmXCqVeG8xwIY2CvjvKo0HA9JktElkM4tVLQujCSVkzV6ddlRcfMBmmW9BGcGbVYQXYx4tiLv6YPzewAkKDvS1YZnDboV2iduAoTdgIJI=
+	t=1748368256; cv=none; b=U6IBDR6wklrAXyyEeURPzoDFtsp/v2PSM5RLqpN5IgP5F3m+6DenCzlegkqE6GBRgaBxVSQ4fMQDfq7aaNd8lQjFPR26DJGMqshlWTEU830TVI68plOTq3EO9JxxsaB0sKRnRLJdtDKsv2WIL+E6wb87Q3hGHY+aXJJND5CXcAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368253; c=relaxed/simple;
-	bh=dlSlDWt3tmqXaI1H2ccJejpgK5Jb7ITi98+JgqApt0U=;
+	s=arc-20240116; t=1748368256; c=relaxed/simple;
+	bh=NAKKSl0D0fU4bnVqbEwKYV5DmFM0xAO9SX9qRM+DmP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fUNAIOg7gB6p0x4E8yhf16vUwoSLxsROUWjwk5TWda8b0fldtVb6PkdIUs9ANHdXdlwuE4RKXUDIYEhrRi5dKdKfWWwNznrgzx/cn6xJ1gP/R3dcAgBEMQfJUFFcISQoD1cRQd5pOaXrQlWHE691q+StS2X4KrI0lNfedfDOuHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxnzOxGH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=REXSkP00+muxucY6/uJhm0Qthsjs9mcoEzKg4qSUUqP/ewfNJeE7yQXT2RdN1SDJVzMcNPSzha/zDs+dy9CvuaqlaABYFXKtXCnxScLqW9xFrYeu+Hd3pGMuy17UPuxE3McAy1aulEbe2kJ34LHQQAbf6glASM0vUz1hZPByvrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBOJ+hRE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxnzOxGH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E59AC4CEE9;
-	Tue, 27 May 2025 17:50:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBOJ+hRE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F6CC4CEE9;
+	Tue, 27 May 2025 17:50:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368253;
-	bh=dlSlDWt3tmqXaI1H2ccJejpgK5Jb7ITi98+JgqApt0U=;
+	s=korg; t=1748368256;
+	bh=NAKKSl0D0fU4bnVqbEwKYV5DmFM0xAO9SX9qRM+DmP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dxnzOxGHT2b+Qx42YQnDihPucXjvlxr8KFnbmU7jObBVe83eUdcW64mzNCjda6N4N
-	 /0/I7nQmvD+MpvIzLH2SeTN/g1cSn2Vv4l+oTWhrSC54aSRMwzqQ0xKybqEa7K/DRa
-	 V1PrZ7oGsaXq41Fr2YzTWVWcugvM2HG2iA2SHYqg=
+	b=sBOJ+hRE32iEbZjV1tZCHSp2FJaBtFaF4O/MenZ+inh3IA9d3rneznvMmp/9IrTfC
+	 tHeh1g+RLlb11Z8C8jMc4IIWEZgb3NfoCZSvxP5/kJzDEbruF+l8U22Hp1fM356Oyr
+	 44UBQ7GJAVAmF6u37avdRLWNNwBB4a8Fj/JZCjN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaradhana Sahu <quic_aarasahu@quicinc.com>,
-	Aditya Kumar Singh <quic_adisi@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Ovidiu Bunea <Ovidiu.Bunea@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 607/783] wifi: ath12k: Fetch regdb.bin file from board-2.bin
-Date: Tue, 27 May 2025 18:26:44 +0200
-Message-ID: <20250527162537.872553755@linuxfoundation.org>
+Subject: [PATCH 6.14 641/783] drm/amd/display: Exit idle optimizations before accessing PHY
+Date: Tue, 27 May 2025 18:27:18 +0200
+Message-ID: <20250527162539.247227264@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,75 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaradhana Sahu <quic_aarasahu@quicinc.com>
+From: Ovidiu Bunea <Ovidiu.Bunea@amd.com>
 
-[ Upstream commit 24f587572acf7509127dbdfcbf1b681ef84eeba0 ]
+[ Upstream commit c488967488d7eff7b9c527d5469c424c15377502 ]
 
-Currently, ath12k_core_fetch_regdb() finds regdb.bin file through
-board id's but in board-2.bin file regdb.bin file is present with
-default board id because of which regdb.bin is not fetched.
+[why & how]
+By default, DCN HW is in idle optimized state which does not allow access
+to PHY registers. If BIOS powers up the DCN, it is fine because they will
+power up everything. Only exit idle optimized state when not taking control
+from VBIOS.
 
-Add support to fetch regdb.bin file from board-2.bin through
-default board id.
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
-
-Signed-off-by: Aaradhana Sahu <quic_aarasahu@quicinc.com>
-Reviewed-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
-Link: https://patch.msgid.link/20250116032835.118397-1-quic_aarasahu@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: be704e5ef4bd ("Revert "drm/amd/display: Exit idle optimizations before attempt to access PHY"")
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Signed-off-by: Ovidiu Bunea <Ovidiu.Bunea@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/core.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
-index ffd173ff7b08c..d0aed4c56050d 100644
---- a/drivers/net/wireless/ath/ath12k/core.c
-+++ b/drivers/net/wireless/ath/ath12k/core.c
-@@ -173,7 +173,7 @@ EXPORT_SYMBOL(ath12k_core_resume);
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+index 2f5f3e749a1ab..94ceccfc04982 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+@@ -1889,6 +1889,7 @@ void dce110_enable_accelerated_mode(struct dc *dc, struct dc_state *context)
+ 	bool can_apply_edp_fast_boot = false;
+ 	bool can_apply_seamless_boot = false;
+ 	bool keep_edp_vdd_on = false;
++	struct dc_bios *dcb = dc->ctx->dc_bios;
+ 	DC_LOGGER_INIT();
  
- static int __ath12k_core_create_board_name(struct ath12k_base *ab, char *name,
- 					   size_t name_len, bool with_variant,
--					   bool bus_type_mode)
-+					   bool bus_type_mode, bool with_default)
- {
- 	/* strlen(',variant=') + strlen(ab->qmi.target.bdf_ext) */
- 	char variant[9 + ATH12K_QMI_BDF_EXT_STR_LENGTH] = { 0 };
-@@ -204,7 +204,9 @@ static int __ath12k_core_create_board_name(struct ath12k_base *ab, char *name,
- 			  "bus=%s,qmi-chip-id=%d,qmi-board-id=%d%s",
- 			  ath12k_bus_str(ab->hif.bus),
- 			  ab->qmi.target.chip_id,
--			  ab->qmi.target.board_id, variant);
-+			  with_default ?
-+			  ATH12K_BOARD_ID_DEFAULT : ab->qmi.target.board_id,
-+			  variant);
- 		break;
+ 
+@@ -1965,6 +1966,8 @@ void dce110_enable_accelerated_mode(struct dc *dc, struct dc_state *context)
+ 			hws->funcs.edp_backlight_control(edp_link_with_sink, false);
+ 		}
+ 		/*resume from S3, no vbios posting, no need to power down again*/
++		if (dcb && dcb->funcs && !dcb->funcs->is_accelerated_mode(dcb))
++			clk_mgr_exit_optimized_pwr_state(dc, dc->clk_mgr);
+ 
+ 		power_down_all_hw_blocks(dc);
+ 
+@@ -1977,6 +1980,8 @@ void dce110_enable_accelerated_mode(struct dc *dc, struct dc_state *context)
+ 		disable_vga_and_power_gate_all_controllers(dc);
+ 		if (edp_link_with_sink && !keep_edp_vdd_on)
+ 			dc->hwss.edp_power_control(edp_link_with_sink, false);
++		if (dcb && dcb->funcs && !dcb->funcs->is_accelerated_mode(dcb))
++			clk_mgr_optimize_pwr_state(dc, dc->clk_mgr);
  	}
- 
-@@ -216,19 +218,19 @@ static int __ath12k_core_create_board_name(struct ath12k_base *ab, char *name,
- static int ath12k_core_create_board_name(struct ath12k_base *ab, char *name,
- 					 size_t name_len)
- {
--	return __ath12k_core_create_board_name(ab, name, name_len, true, false);
-+	return __ath12k_core_create_board_name(ab, name, name_len, true, false, false);
+ 	bios_set_scratch_acc_mode_change(dc->ctx->dc_bios, 1);
  }
- 
- static int ath12k_core_create_fallback_board_name(struct ath12k_base *ab, char *name,
- 						  size_t name_len)
- {
--	return __ath12k_core_create_board_name(ab, name, name_len, false, false);
-+	return __ath12k_core_create_board_name(ab, name, name_len, false, false, true);
- }
- 
- static int ath12k_core_create_bus_type_board_name(struct ath12k_base *ab, char *name,
- 						  size_t name_len)
- {
--	return __ath12k_core_create_board_name(ab, name, name_len, false, true);
-+	return __ath12k_core_create_board_name(ab, name, name_len, false, true, true);
- }
- 
- const struct firmware *ath12k_core_firmware_request(struct ath12k_base *ab,
 -- 
 2.39.5
 
