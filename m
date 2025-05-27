@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7302B19E967;
-	Tue, 27 May 2025 17:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9393719E967;
+	Tue, 27 May 2025 17:20:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366415; cv=none; b=MGV7vqGnpZJNO6UKrzeYyHRzjvfqTRtDkgRfNXHhA2xnaH7o76N6iUF9RngkXJninLnGb+QAfyJcCs9p9Mzza7k5umkUvW5JbjJNKyHe0/DmxM4eNrUK7+VxLWqhyA9JtLJdClhe9j9SnWNUqkogWWBrK7cDeXH0pDcVEeLfoog=
+	t=1748366417; cv=none; b=D7eQnYR18jdjOtTKF6A0HnN8O3pMqzpHVoh0s3jXvBjA6co3D7jFyZWpehfQs4rXn1BYforENvAAwKsMSyNu2fwGiqy5X1PnikBqnTS2YzO81pvpxlxZyWpLudkGRi+0SBgfrsXQ5Q2jv9iOm3n+2bnzh4mX4HUM2/CC2zX2Fi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366415; c=relaxed/simple;
-	bh=h+ibSuJ47FT8fQy4UVSRp2+vFqpKAhyjWsYtmYiJiio=;
+	s=arc-20240116; t=1748366417; c=relaxed/simple;
+	bh=VE9CxlQrrBWSd/uhR6wmIEecYh8P07TwK2DfQRuFCfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdSOnPKgrUTVQNbW9p59MTpSviJsNPz2sNmghtF9+ozM9tchhnNHwlAdNgRX2RWccokPh371Kz50z4pvhsuWoBdgcuhQBDr3y2fw5QA0gu3p7YuefjHxJnt2MxjevIOfEVDRp0OHdOTn5PNE/ppEetvJGr2q12/qtmkCmy8Ttm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=asLAXIp8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ogqDvPQd2yA9J7ERbjkOOIObNPeMPeE63zMmu00uTxqTCd7ddYZoLvvTyPTD6VZSqsxcMaZjUpXdwvvHc0a62oJ7KuzXGkl+Mbd3x85oU/FA4GvRBRwy6RkjyMuKwkyKArogBfiU6hBJ2zX6eqyNbbNy4RdarQ1lO37lY9dxuFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U21X0QmZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="asLAXIp8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64309C4CEE9;
-	Tue, 27 May 2025 17:20:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U21X0QmZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1BCC4CEE9;
+	Tue, 27 May 2025 17:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366413;
-	bh=h+ibSuJ47FT8fQy4UVSRp2+vFqpKAhyjWsYtmYiJiio=;
+	s=korg; t=1748366417;
+	bh=VE9CxlQrrBWSd/uhR6wmIEecYh8P07TwK2DfQRuFCfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=asLAXIp87OL+d1Fm7vZNliBLYraTbHS1250lXK0R39zGwctSnrPfslUpKRBAw+f/c
-	 /3gz2F31bScsLIGQOMKyLF/An5J/6t9O4OzKUaTdoc76yXqSO50emnGnJOTudE7IAU
-	 /CUk4ss+8tnkW2o95a2/UBaGoqu5sgPaH6KxTntA=
+	b=U21X0QmZ+/RQMssyZXmOgxZ/A6BOVJVYLEt5twtHg++08zVU7Vu0Qt/k8psPowEh0
+	 pcabbz6Fjg4bh4USVIhQwRtuUMWXPGnArKkaQUFPtoYBVoQvlB7GvTl7TjugY9jj0/
+	 yNvc6Dn4HAxRzktuDR4QPMh+428tqA5lvuTkjYTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Kees Cook <kees@kernel.org>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 060/783] ring-buffer: Use kaslr address instead of text delta
-Date: Tue, 27 May 2025 18:17:37 +0200
-Message-ID: <20250527162515.572573604@linuxfoundation.org>
+Subject: [PATCH 6.14 061/783] tracing: Mark binary printing functions with __printf() attribute
+Date: Tue, 27 May 2025 18:17:38 +0200
+Message-ID: <20250527162515.612354258@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -48,258 +46,160 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit bcba8d4dbe6880ce9883409df486de35d3946704 ]
+[ Upstream commit 196a062641fe68d9bfe0ad36b6cd7628c99ad22c ]
 
-Instead of saving off the text and data pointers and using them to compare
-with the current boot's text and data pointers, just save off the KASLR
-offset. Then that can be used to figure out how to read the previous boots
-buffer.
+Binary printing functions are using printf() type of format, and compiler
+is not happy about them as is:
 
-The last_boot_info will now show this offset, but only if it is for a
-previous boot:
+kernel/trace/trace.c:3292:9: error: function ‘trace_vbprintk’ might be a candidate for ‘gnu_printf’ format attribute [-Werror=suggest-attribute=format]
+kernel/trace/trace_seq.c:182:9: error: function ‘trace_seq_bprintf’ might be a candidate for ‘gnu_printf’ format attribute [-Werror=suggest-attribute=format]
 
-  ~# cat instances/boot_mapped/last_boot_info
-  39000000	[kernel]
+Fix the compilation errors by adding __printf() attribute.
 
-  ~# echo function > instances/boot_mapped/current_tracer
-  ~# cat instances/boot_mapped/last_boot_info
-  # Current
+While at it, move existing __printf() attributes from the implementations
+to the declarations. IT also fixes incorrect attribute parameters that are
+used for trace_array_printk().
 
-If the KASLR offset saved is for the current boot, the last_boot_info will
-show the value of "current".
-
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Link: https://lore.kernel.org/20250305164608.274956504@goodmis.org
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20250321144822.324050-4-andriy.shevchenko@linux.intel.com
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ring_buffer.h |  3 +--
- kernel/trace/ring_buffer.c  | 31 ++++++++++++-------------------
- kernel/trace/trace.c        | 30 +++++++++++++++++++++---------
- kernel/trace/trace.h        |  9 +++++----
- 4 files changed, 39 insertions(+), 34 deletions(-)
+ include/linux/trace.h     |  4 ++--
+ include/linux/trace_seq.h |  8 ++++----
+ kernel/trace/trace.c      | 11 +++--------
+ kernel/trace/trace.h      | 16 +++++++++-------
+ 4 files changed, 18 insertions(+), 21 deletions(-)
 
-diff --git a/include/linux/ring_buffer.h b/include/linux/ring_buffer.h
-index 17fbb78552952..8de035f4f0d9a 100644
---- a/include/linux/ring_buffer.h
-+++ b/include/linux/ring_buffer.h
-@@ -94,8 +94,7 @@ struct trace_buffer *__ring_buffer_alloc_range(unsigned long size, unsigned flag
- 					       unsigned long range_size,
- 					       struct lock_class_key *key);
- 
--bool ring_buffer_last_boot_delta(struct trace_buffer *buffer, long *text,
--				 long *data);
-+bool ring_buffer_last_boot_delta(struct trace_buffer *buffer, unsigned long *kaslr_addr);
- 
- /*
-  * Because the ring buffer is generic, if other users of the ring buffer get
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index f76bee67a792c..9b1db04c74e25 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -31,6 +31,7 @@
- 
- #include <asm/local64.h>
- #include <asm/local.h>
-+#include <asm/setup.h>
- 
- #include "trace.h"
- 
-@@ -49,8 +50,7 @@ static void update_pages_handler(struct work_struct *work);
- struct ring_buffer_meta {
- 	int		magic;
- 	int		struct_size;
--	unsigned long	text_addr;
--	unsigned long	data_addr;
-+	unsigned long	kaslr_addr;
- 	unsigned long	first_buffer;
- 	unsigned long	head_buffer;
- 	unsigned long	commit_buffer;
-@@ -550,8 +550,7 @@ struct trace_buffer {
- 	unsigned long			range_addr_start;
- 	unsigned long			range_addr_end;
- 
--	long				last_text_delta;
--	long				last_data_delta;
-+	unsigned long			kaslr_addr;
- 
- 	unsigned int			subbuf_size;
- 	unsigned int			subbuf_order;
-@@ -1893,16 +1892,13 @@ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
- 	}
- }
- 
--/* Used to calculate data delta */
--static char rb_data_ptr[] = "";
--
--#define THIS_TEXT_PTR		((unsigned long)rb_meta_init_text_addr)
--#define THIS_DATA_PTR		((unsigned long)rb_data_ptr)
--
- static void rb_meta_init_text_addr(struct ring_buffer_meta *meta)
+diff --git a/include/linux/trace.h b/include/linux/trace.h
+index fdcd76b7be83d..7eaad857dee04 100644
+--- a/include/linux/trace.h
++++ b/include/linux/trace.h
+@@ -72,8 +72,8 @@ static inline int unregister_ftrace_export(struct trace_export *export)
+ static inline void trace_printk_init_buffers(void)
  {
--	meta->text_addr = THIS_TEXT_PTR;
--	meta->data_addr = THIS_DATA_PTR;
-+#ifdef CONFIG_RANDOMIZE_BASE
-+	meta->kaslr_addr = kaslr_offset();
-+#else
-+	meta->kaslr_addr = 0;
-+#endif
  }
- 
- static void rb_range_meta_init(struct trace_buffer *buffer, int nr_pages)
-@@ -1930,8 +1926,7 @@ static void rb_range_meta_init(struct trace_buffer *buffer, int nr_pages)
- 			meta->first_buffer += delta;
- 			meta->head_buffer += delta;
- 			meta->commit_buffer += delta;
--			buffer->last_text_delta = THIS_TEXT_PTR - meta->text_addr;
--			buffer->last_data_delta = THIS_DATA_PTR - meta->data_addr;
-+			buffer->kaslr_addr = meta->kaslr_addr;
- 			continue;
- 		}
- 
-@@ -2484,17 +2479,15 @@ struct trace_buffer *__ring_buffer_alloc_range(unsigned long size, unsigned flag
-  *
-  * Returns: The true if the delta is non zero
-  */
--bool ring_buffer_last_boot_delta(struct trace_buffer *buffer, long *text,
--				 long *data)
-+bool ring_buffer_last_boot_delta(struct trace_buffer *buffer, unsigned long *kaslr_addr)
+-static inline int trace_array_printk(struct trace_array *tr, unsigned long ip,
+-				     const char *fmt, ...)
++static inline __printf(3, 4)
++int trace_array_printk(struct trace_array *tr, unsigned long ip, const char *fmt, ...)
  {
- 	if (!buffer)
- 		return false;
- 
--	if (!buffer->last_text_delta)
-+	if (!buffer->kaslr_addr)
- 		return false;
- 
--	*text = buffer->last_text_delta;
--	*data = buffer->last_data_delta;
-+	*kaslr_addr = buffer->kaslr_addr;
- 
- 	return true;
+ 	return 0;
  }
+diff --git a/include/linux/trace_seq.h b/include/linux/trace_seq.h
+index 1ef95c0287f05..a93ed5ac32265 100644
+--- a/include/linux/trace_seq.h
++++ b/include/linux/trace_seq.h
+@@ -88,8 +88,8 @@ extern __printf(2, 3)
+ void trace_seq_printf(struct trace_seq *s, const char *fmt, ...);
+ extern __printf(2, 0)
+ void trace_seq_vprintf(struct trace_seq *s, const char *fmt, va_list args);
+-extern void
+-trace_seq_bprintf(struct trace_seq *s, const char *fmt, const u32 *binary);
++extern __printf(2, 0)
++void trace_seq_bprintf(struct trace_seq *s, const char *fmt, const u32 *binary);
+ extern int trace_print_seq(struct seq_file *m, struct trace_seq *s);
+ extern int trace_seq_to_user(struct trace_seq *s, char __user *ubuf,
+ 			     int cnt);
+@@ -113,8 +113,8 @@ static inline __printf(2, 3)
+ void trace_seq_printf(struct trace_seq *s, const char *fmt, ...)
+ {
+ }
+-static inline void
+-trace_seq_bprintf(struct trace_seq *s, const char *fmt, const u32 *binary)
++static inline __printf(2, 0)
++void trace_seq_bprintf(struct trace_seq *s, const char *fmt, const u32 *binary)
+ {
+ }
+ 
 diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 814626bb410b2..c3f1365ec9609 100644
+index c3f1365ec9609..b1738563bdc3b 100644
 --- a/kernel/trace/trace.c
 +++ b/kernel/trace/trace.c
-@@ -50,7 +50,7 @@
- #include <linux/irq_work.h>
- #include <linux/workqueue.h>
+@@ -3322,10 +3322,9 @@ int trace_vbprintk(unsigned long ip, const char *fmt, va_list args)
+ }
+ EXPORT_SYMBOL_GPL(trace_vbprintk);
  
--#include <asm/setup.h> /* COMMAND_LINE_SIZE */
-+#include <asm/setup.h> /* COMMAND_LINE_SIZE and kaslr_offset() */
- 
- #include "trace.h"
- #include "trace_output.h"
-@@ -4193,7 +4193,7 @@ static enum print_line_t print_trace_fmt(struct trace_iterator *iter)
- 		 * safe to use if the array has delta offsets
- 		 * Force printing via the fields.
- 		 */
--		if ((tr->text_delta || tr->data_delta) &&
-+		if ((tr->text_delta) &&
- 		    event->type > __TRACE_LAST_TYPE)
- 			return print_event_fields(iter, event);
- 
-@@ -5990,7 +5990,7 @@ ssize_t tracing_resize_ring_buffer(struct trace_array *tr,
- 
- static void update_last_data(struct trace_array *tr)
+-__printf(3, 0)
+-static int
+-__trace_array_vprintk(struct trace_buffer *buffer,
+-		      unsigned long ip, const char *fmt, va_list args)
++static __printf(3, 0)
++int __trace_array_vprintk(struct trace_buffer *buffer,
++			  unsigned long ip, const char *fmt, va_list args)
  {
--	if (!tr->text_delta && !tr->data_delta)
-+	if (!(tr->flags & TRACE_ARRAY_FL_LAST_BOOT))
- 		return;
- 
- 	/*
-@@ -6003,7 +6003,8 @@ static void update_last_data(struct trace_array *tr)
- 
- 	/* Using current data now */
- 	tr->text_delta = 0;
--	tr->data_delta = 0;
-+
-+	tr->flags &= ~TRACE_ARRAY_FL_LAST_BOOT;
+ 	struct ring_buffer_event *event;
+ 	int len = 0, size;
+@@ -3375,7 +3374,6 @@ __trace_array_vprintk(struct trace_buffer *buffer,
+ 	return len;
  }
  
- /**
-@@ -6822,8 +6823,17 @@ tracing_last_boot_read(struct file *filp, char __user *ubuf, size_t cnt, loff_t
- 
- 	seq_buf_init(&seq, buf, 64);
- 
--	seq_buf_printf(&seq, "text delta:\t%ld\n", tr->text_delta);
--	seq_buf_printf(&seq, "data delta:\t%ld\n", tr->data_delta);
-+	/*
-+	 * Do not leak KASLR address. This only shows the KASLR address of
-+	 * the last boot. When the ring buffer is started, the LAST_BOOT
-+	 * flag gets cleared, and this should only report "current".
-+	 * Otherwise it shows the KASLR address from the previous boot which
-+	 * should not be the same as the current boot.
-+	 */
-+	if (tr->flags & TRACE_ARRAY_FL_LAST_BOOT)
-+		seq_buf_printf(&seq, "%lx\t[kernel]\n", tr->kaslr_addr);
-+	else
-+		seq_buf_puts(&seq, "# Current\n");
- 
- 	return simple_read_from_buffer(ubuf, cnt, ppos, buf, seq_buf_used(&seq));
+-__printf(3, 0)
+ int trace_array_vprintk(struct trace_array *tr,
+ 			unsigned long ip, const char *fmt, va_list args)
+ {
+@@ -3405,7 +3403,6 @@ int trace_array_vprintk(struct trace_array *tr,
+  * Note, trace_array_init_printk() must be called on @tr before this
+  * can be used.
+  */
+-__printf(3, 0)
+ int trace_array_printk(struct trace_array *tr,
+ 		       unsigned long ip, const char *fmt, ...)
+ {
+@@ -3450,7 +3447,6 @@ int trace_array_init_printk(struct trace_array *tr)
  }
-@@ -9211,8 +9221,10 @@ allocate_trace_buffer(struct trace_array *tr, struct array_buffer *buf, int size
- 						      tr->range_addr_start,
- 						      tr->range_addr_size);
+ EXPORT_SYMBOL_GPL(trace_array_init_printk);
  
--		ring_buffer_last_boot_delta(buf->buffer,
--					    &tr->text_delta, &tr->data_delta);
-+#ifdef CONFIG_RANDOMIZE_BASE
-+		if (ring_buffer_last_boot_delta(buf->buffer, &tr->kaslr_addr))
-+			tr->text_delta = kaslr_offset() - tr->kaslr_addr;
-+#endif
- 		/*
- 		 * This is basically the same as a mapped buffer,
- 		 * with the same restrictions.
-@@ -10470,7 +10482,7 @@ __init static void enable_instances(void)
- 		 * to it.
- 		 */
- 		if (start) {
--			tr->flags |= TRACE_ARRAY_FL_BOOT;
-+			tr->flags |= TRACE_ARRAY_FL_BOOT | TRACE_ARRAY_FL_LAST_BOOT;
- 			tr->ref++;
- 		}
+-__printf(3, 4)
+ int trace_array_printk_buf(struct trace_buffer *buffer,
+ 			   unsigned long ip, const char *fmt, ...)
+ {
+@@ -3466,7 +3462,6 @@ int trace_array_printk_buf(struct trace_buffer *buffer,
+ 	return ret;
+ }
  
+-__printf(2, 0)
+ int trace_vprintk(unsigned long ip, const char *fmt, va_list args)
+ {
+ 	return trace_array_vprintk(printk_trace, ip, fmt, args);
 diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
-index 9c21ba45b7af6..abe8169c3e879 100644
+index abe8169c3e879..ccf3874823f5f 100644
 --- a/kernel/trace/trace.h
 +++ b/kernel/trace/trace.h
-@@ -348,8 +348,8 @@ struct trace_array {
- 	unsigned int		mapped;
- 	unsigned long		range_addr_start;
- 	unsigned long		range_addr_size;
-+	unsigned long		kaslr_addr;
- 	long			text_delta;
--	long			data_delta;
+@@ -837,13 +837,15 @@ static inline void __init disable_tracing_selftest(const char *reason)
  
- 	struct trace_pid_list	__rcu *filtered_pids;
- 	struct trace_pid_list	__rcu *filtered_no_pids;
-@@ -433,9 +433,10 @@ struct trace_array {
- };
- 
- enum {
--	TRACE_ARRAY_FL_GLOBAL	= BIT(0),
--	TRACE_ARRAY_FL_BOOT	= BIT(1),
--	TRACE_ARRAY_FL_MOD_INIT	= BIT(2),
-+	TRACE_ARRAY_FL_GLOBAL		= BIT(0),
-+	TRACE_ARRAY_FL_BOOT		= BIT(1),
-+	TRACE_ARRAY_FL_LAST_BOOT	= BIT(2),
-+	TRACE_ARRAY_FL_MOD_INIT		= BIT(3),
- };
- 
- #ifdef CONFIG_MODULES
+ extern void *head_page(struct trace_array_cpu *data);
+ extern unsigned long long ns2usecs(u64 nsec);
+-extern int
+-trace_vbprintk(unsigned long ip, const char *fmt, va_list args);
+-extern int
+-trace_vprintk(unsigned long ip, const char *fmt, va_list args);
+-extern int
+-trace_array_vprintk(struct trace_array *tr,
+-		    unsigned long ip, const char *fmt, va_list args);
++
++__printf(2, 0)
++int trace_vbprintk(unsigned long ip, const char *fmt, va_list args);
++__printf(2, 0)
++int trace_vprintk(unsigned long ip, const char *fmt, va_list args);
++__printf(3, 0)
++int trace_array_vprintk(struct trace_array *tr,
++			unsigned long ip, const char *fmt, va_list args);
++__printf(3, 4)
+ int trace_array_printk_buf(struct trace_buffer *buffer,
+ 			   unsigned long ip, const char *fmt, ...);
+ void trace_printk_seq(struct trace_seq *s);
 -- 
 2.39.5
 
