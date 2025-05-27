@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945F32110E;
-	Tue, 27 May 2025 17:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A158C27A463;
+	Tue, 27 May 2025 17:12:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365920; cv=none; b=fioRE8z/AtXfwa0UjAWj1lGTLot71yEPnwj5TtH0H37HO3J72IgvdF2gk7tnxFDLdMLipRjNUi6KEnaAGjggopU88Vst4wnqmNdQ0ciDxH4UNGYyPKvhPVr7EefkbTEc3RyRZtP5wCTk4WFFMljKwiaGUmgzLwZzEO/JRO0piFE=
+	t=1748365923; cv=none; b=vEL1FZ7RA+tklUlMw7pZm09MVca5r28Kl3XUviuOz6MSgkMVMuJE1P+KxqKIa4wV5CWEDcOBXQgjSYSm1mNU41Uio8W9HPOnASu7SdaogBOiHxYMC+a63f3bIvE8Ri2ExhkmX2BmL/POmqdtirbMy/GvaNcFMSfc6VSkeoFx+4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365920; c=relaxed/simple;
-	bh=f5N3Ntd4Rw41ygKgZm3vKQk17svRiIFOmyCjAboS2nE=;
+	s=arc-20240116; t=1748365923; c=relaxed/simple;
+	bh=JnazW+JgV4I97HqQH6GrPqDMrosqs688EnPr4mvaVic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B1DHHqTAcny23lhCnB+XBda5OiFsRc2Fz1EUToewfd7zw5gioD/N4G/RNxPdjPYhsOexS0r1RtKlP5JJwdfTu82QYdq8doqfCJMrbpRKh2Cj1iMjQCN3IXKbMHTXZqbinhcAe11cGSrvNnt7YO/emE4hiIsPKFLcgnonCNBlYWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pvo2pMcB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jsojBdzMmaYhv4KWH49VHUg+W7xft7N5PN73WqnwGIrqjAKbRjqVwx2wf98+y8M3LGQN+TpYe9mupUkUiNC1Rueh6LdYQ+S+rW3EhWsOdmmUJLPAXl05iO75FN4bwJ2VbmAdBgPRIdYgaemL+C4xlU7ngggJgX83sBCKy+m+3/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SltJQeXH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvo2pMcB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24BF2C4CEE9;
-	Tue, 27 May 2025 17:11:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SltJQeXH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B05DC4CEE9;
+	Tue, 27 May 2025 17:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365920;
-	bh=f5N3Ntd4Rw41ygKgZm3vKQk17svRiIFOmyCjAboS2nE=;
+	s=korg; t=1748365923;
+	bh=JnazW+JgV4I97HqQH6GrPqDMrosqs688EnPr4mvaVic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pvo2pMcBgnWgGZ791YLoI+FwPgjg39e+HGT3JVdxNR96w6HAJkr+jUrqgt+498myy
-	 LIcjVcO531vfH022KQlp+3XW9Uq871TWSrEkOkHSVxptnGQgaxXZFDkeN2mqnPrxpU
-	 hBqytRfTL4vbJnyDze8WmaP+ugG0bClNd3h6isT0=
+	b=SltJQeXHeajc3ljPt7l8J34pS3gEyEw8jIwkCY5WNTDjBdOkXmxZyQayyIoZhNvXF
+	 IghGt2ykiI8VXaeCAujHaeieG0Grd2w5Cx7uEODxSpQFm7YOPOUKiI/ySR9xcNP8tw
+	 Que4AwMjKhOisCoXy7/L+7iEronv/5xROxFs2IfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Austin Zheng <Austin.Zheng@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 532/626] drm/amd/display: Call FP Protect Before Mode Programming/Mode Support
-Date: Tue, 27 May 2025 18:27:05 +0200
-Message-ID: <20250527162506.608854881@linuxfoundation.org>
+Subject: [PATCH 6.12 533/626] __legitimize_mnt(): check for MNT_SYNC_UMOUNT should be under mount_lock
+Date: Tue, 27 May 2025 18:27:06 +0200
+Message-ID: <20250527162506.654150529@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -54,71 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Austin Zheng <Austin.Zheng@amd.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit eba692ca3abca258b3214a6e4126afefad1822f0 ]
+[ Upstream commit 250cf3693060a5f803c5f1ddc082bb06b16112a9 ]
 
-[Why]
-Memory allocation occurs within dml21_validate() for adding phantom planes.
-May cause kernel to be tainted due to usage of FP Start.
+... or we risk stealing final mntput from sync umount - raising mnt_count
+after umount(2) has verified that victim is not busy, but before it
+has set MNT_SYNC_UMOUNT; in that case __legitimize_mnt() doesn't see
+that it's safe to quietly undo mnt_count increment and leaves dropping
+the reference to caller, where it'll be a full-blown mntput().
 
-[How]
-Move FP start from dml21_validate to before mode programming/mode support.
-Calculations requiring floating point are all done within mode programming
-or mode support.
+Check under mount_lock is needed; leaving the current one done before
+taking that makes no sense - it's nowhere near common enough to bother
+with.
 
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Signed-off-by: Austin Zheng <Austin.Zheng@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit fe3250f10819b411808ab9ae1d824c5fc9b59170)
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/namespace.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
-index e3e4f40bd4123..dcbe327209d5d 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
-@@ -221,7 +221,9 @@ static bool dml21_mode_check_and_programming(const struct dc *in_dc, struct dc_s
- 	if (!result)
- 		return false;
- 
-+	DC_FP_START();
- 	result = dml2_build_mode_programming(mode_programming);
-+	DC_FP_END();
- 	if (!result)
- 		return false;
- 
-@@ -271,7 +273,9 @@ static bool dml21_check_mode_support(const struct dc *in_dc, struct dc_state *co
- 	mode_support->dml2_instance = dml_init->dml2_instance;
- 	dml21_map_dc_state_into_dml_display_cfg(in_dc, context, dml_ctx);
- 	dml_ctx->v21.mode_programming.dml2_instance->scratch.build_mode_programming_locals.mode_programming_params.programming = dml_ctx->v21.mode_programming.programming;
-+	DC_FP_START();
- 	is_supported = dml2_check_mode_supported(mode_support);
-+	DC_FP_END();
- 	if (!is_supported)
- 		return false;
- 
-@@ -282,16 +286,12 @@ bool dml21_validate(const struct dc *in_dc, struct dc_state *context, struct dml
- {
- 	bool out = false;
- 
--	DC_FP_START();
--
- 	/* Use dml_validate_only for fast_validate path */
- 	if (fast_validate)
- 		out = dml21_check_mode_support(in_dc, context, dml_ctx);
- 	else
- 		out = dml21_mode_check_and_programming(in_dc, context, dml_ctx);
- 
--	DC_FP_END();
--
- 	return out;
- }
- 
+diff --git a/fs/namespace.c b/fs/namespace.c
+index c3c1e8c644f2e..c1ac585e41e36 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -750,12 +750,8 @@ int __legitimize_mnt(struct vfsmount *bastard, unsigned seq)
+ 	smp_mb();		// see mntput_no_expire() and do_umount()
+ 	if (likely(!read_seqretry(&mount_lock, seq)))
+ 		return 0;
+-	if (bastard->mnt_flags & MNT_SYNC_UMOUNT) {
+-		mnt_add_count(mnt, -1);
+-		return 1;
+-	}
+ 	lock_mount_hash();
+-	if (unlikely(bastard->mnt_flags & MNT_DOOMED)) {
++	if (unlikely(bastard->mnt_flags & (MNT_SYNC_UMOUNT | MNT_DOOMED))) {
+ 		mnt_add_count(mnt, -1);
+ 		unlock_mount_hash();
+ 		return 1;
 -- 
 2.39.5
 
