@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EFB528003A;
-	Tue, 27 May 2025 17:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA7727CCF0;
+	Tue, 27 May 2025 17:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367902; cv=none; b=A+ZLavjb6lotaItXn4JUU6UqbY9WK7PSy4Ov1XRRdSIUgw3aHhbe62t33zP93icDZtrKlmqVGpOiuC8k6oN1n4EM/3SZX4v1DNs+WMjBpwAWoIZcUGiJBMKiHCowNr2SlEfDHRXs/EWo9plpOulAYJ4FGfBBZjq7Ral9TagbYtg=
+	t=1748367907; cv=none; b=j3F+OEwOSIgSGgX1hIJ8QFu57DRdpKK9JtzFTJNZHH1ECYuJv7eHb/mWuUSiahKZbu9FL+o6fbpg2r4GB5wAkjIVwSwQhEjQBnL3FhDuFFQ1QIG4gvhUVOrmFIu+5qiOoVHVLONTveNPcB5TTPzRmwGc02TFQjNlumAk1/82oNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367902; c=relaxed/simple;
-	bh=8mi5zBKV4AY+mxWoVDyw6b2fxG8e2rwP2wGK5ltEh6Y=;
+	s=arc-20240116; t=1748367907; c=relaxed/simple;
+	bh=hPcAnwJyaTSH7x3fDCp0IJapafQCmGSlGprBpG9jRxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KSi/bdyOSHPcyaP9IFPnrY+UObva5GBY8K+hjNSemSHgKyxZt92MtVc0e9PG5QCJbBYy0yI+rZ+JKR/5BenMNLu1BdAvy+tfATdxlP+CbnpfNnMjwRxoJrXnsPwRkdc0kv06WaGG102CWChFB0ZEqHL6Y9sQQ7rEaJOQgqATroM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FIgkaq0c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rqS/7vsA1xlejMuje33sLsbCzzYDX8tImzsUmXO0YXtj4SdRYMSTMmq+Ai0b4PVeA4ZbhM47OvKUuBpq8xqAp1FYfnp1G8X90uDgrlGZyAwsHgzTdPPr2gKaNAcU/BrWCl6rHekPDFZozNa6CMJybnJNuUW6NFwfGTiJYqnsZTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=igACQBgc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FIgkaq0c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E106C4CEE9;
-	Tue, 27 May 2025 17:45:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igACQBgc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1729CC4CEE9;
+	Tue, 27 May 2025 17:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367902;
-	bh=8mi5zBKV4AY+mxWoVDyw6b2fxG8e2rwP2wGK5ltEh6Y=;
+	s=korg; t=1748367905;
+	bh=hPcAnwJyaTSH7x3fDCp0IJapafQCmGSlGprBpG9jRxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FIgkaq0cTwBVgasFrD+vsNuFHReQHGrixSUZdihZCiYVZhsR9cHk6SYfUI3Wckr4B
-	 NPCDjCM9TStdUWx5TlWi4fFB9RP4JWQ5HlGPdsfQ4RCXNwwucNQtEXUe49mr/bzwTG
-	 O5DJ/lMgnHk7NQwDfjgAIuv1iMJKuaA1rcq9v18o=
+	b=igACQBgc9luSB5DkGcPOOL5TIMLXRJpPJnfdaTB7U5u5ohPZKCn/e3bt/OUtdqyS3
+	 m9GlxPmbJ1c6gvA4yBPajmwNPIpxOT6mSXShuqtd5VQsXF07AbVKPEP60IGybsfTWf
+	 NvseCqVUmRQu72+hEh2R/zAWpCUBTQeweKRwULu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
+	Marek Vasut <marex@denx.de>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 535/783] pstore: Change kmsg_bytes storage size to u32
-Date: Tue, 27 May 2025 18:25:32 +0200
-Message-ID: <20250527162534.936843516@linuxfoundation.org>
+Subject: [PATCH 6.14 536/783] leds: trigger: netdev: Configure LED blink interval for HW offload
+Date: Tue, 27 May 2025 18:25:33 +0200
+Message-ID: <20250527162534.979236225@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -50,106 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 5674609535bafa834ab014d90d9bbe8e89223a0b ]
+[ Upstream commit c629c972b310af41e9e072febb6dae9a299edde6 ]
 
-The types around kmsg_bytes were inconsistent. The global was unsigned
-long, the argument to pstore_set_kmsg_bytes() was int, and the filesystem
-option was u32. Given other internal limits, there's not much sense
-in making a single pstore record larger than INT_MAX and it can't be
-negative, so use u32 everywhere. Additionally, use READ/WRITE_ONCE and a
-local variable in pstore_dump() to avoid kmsg_bytes changing during a
-dump.
+In case a PHY LED implements .blink_set callback to set LED blink
+interval, call it even if .hw_control is already set, as that LED
+blink interval likely controls the blink rate of that HW offloaded
+LED. For PHY LEDs, that can be their activity blinking interval.
 
-Link: https://lore.kernel.org/r/20250206191655.work.798-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+The software blinking is not affected by this change.
+
+With this change, the LED interval setting looks something like this:
+$ echo netdev > /sys/class/leds/led:green:lan/trigger
+$ echo 1 > /sys/class/leds/led:green:lan/brightness
+$ echo 250 > /sys/class/leds/led:green:lan/interval
+
+Signed-off-by: Marek Vasut <marex@denx.de>
+Link: https://lore.kernel.org/r/20250120113740.91807-1-marex@denx.de
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/inode.c    |  2 +-
- fs/pstore/internal.h |  4 ++--
- fs/pstore/platform.c | 11 ++++++-----
- 3 files changed, 9 insertions(+), 8 deletions(-)
+ drivers/leds/trigger/ledtrig-netdev.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/fs/pstore/inode.c b/fs/pstore/inode.c
-index 56815799ce798..9de6b280c4f41 100644
---- a/fs/pstore/inode.c
-+++ b/fs/pstore/inode.c
-@@ -265,7 +265,7 @@ static void parse_options(char *options)
- static int pstore_show_options(struct seq_file *m, struct dentry *root)
+diff --git a/drivers/leds/trigger/ledtrig-netdev.c b/drivers/leds/trigger/ledtrig-netdev.c
+index c15efe3e50780..4e048e08c4fde 100644
+--- a/drivers/leds/trigger/ledtrig-netdev.c
++++ b/drivers/leds/trigger/ledtrig-netdev.c
+@@ -68,6 +68,7 @@ struct led_netdev_data {
+ 	unsigned int last_activity;
+ 
+ 	unsigned long mode;
++	unsigned long blink_delay;
+ 	int link_speed;
+ 	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported_link_modes);
+ 	u8 duplex;
+@@ -86,6 +87,10 @@ static void set_baseline_state(struct led_netdev_data *trigger_data)
+ 	/* Already validated, hw control is possible with the requested mode */
+ 	if (trigger_data->hw_control) {
+ 		led_cdev->hw_control_set(led_cdev, trigger_data->mode);
++		if (led_cdev->blink_set) {
++			led_cdev->blink_set(led_cdev, &trigger_data->blink_delay,
++					    &trigger_data->blink_delay);
++		}
+ 
+ 		return;
+ 	}
+@@ -454,10 +459,11 @@ static ssize_t interval_store(struct device *dev,
+ 			      size_t size)
  {
- 	if (kmsg_bytes != CONFIG_PSTORE_DEFAULT_KMSG_BYTES)
--		seq_printf(m, ",kmsg_bytes=%lu", kmsg_bytes);
-+		seq_printf(m, ",kmsg_bytes=%u", kmsg_bytes);
- 	return 0;
- }
+ 	struct led_netdev_data *trigger_data = led_trigger_get_drvdata(dev);
++	struct led_classdev *led_cdev = trigger_data->led_cdev;
+ 	unsigned long value;
+ 	int ret;
  
-diff --git a/fs/pstore/internal.h b/fs/pstore/internal.h
-index 801d6c0b170c3..a0fc511969100 100644
---- a/fs/pstore/internal.h
-+++ b/fs/pstore/internal.h
-@@ -6,7 +6,7 @@
- #include <linux/time.h>
- #include <linux/pstore.h>
+-	if (trigger_data->hw_control)
++	if (trigger_data->hw_control && !led_cdev->blink_set)
+ 		return -EINVAL;
  
--extern unsigned long kmsg_bytes;
-+extern unsigned int kmsg_bytes;
+ 	ret = kstrtoul(buf, 0, &value);
+@@ -466,9 +472,13 @@ static ssize_t interval_store(struct device *dev,
  
- #ifdef CONFIG_PSTORE_FTRACE
- extern void pstore_register_ftrace(void);
-@@ -35,7 +35,7 @@ static inline void pstore_unregister_pmsg(void) {}
+ 	/* impose some basic bounds on the timer interval */
+ 	if (value >= 5 && value <= 10000) {
+-		cancel_delayed_work_sync(&trigger_data->work);
++		if (trigger_data->hw_control) {
++			trigger_data->blink_delay = value;
++		} else {
++			cancel_delayed_work_sync(&trigger_data->work);
  
- extern struct pstore_info *psinfo;
+-		atomic_set(&trigger_data->interval, msecs_to_jiffies(value));
++			atomic_set(&trigger_data->interval, msecs_to_jiffies(value));
++		}
+ 		set_baseline_state(trigger_data);	/* resets timer */
+ 	}
  
--extern void	pstore_set_kmsg_bytes(int);
-+extern void	pstore_set_kmsg_bytes(unsigned int bytes);
- extern void	pstore_get_records(int);
- extern void	pstore_get_backend_records(struct pstore_info *psi,
- 					   struct dentry *root, int quiet);
-diff --git a/fs/pstore/platform.c b/fs/pstore/platform.c
-index f56b066ab80ce..557cf9d40177f 100644
---- a/fs/pstore/platform.c
-+++ b/fs/pstore/platform.c
-@@ -92,8 +92,8 @@ module_param(compress, charp, 0444);
- MODULE_PARM_DESC(compress, "compression to use");
- 
- /* How much of the kernel log to snapshot */
--unsigned long kmsg_bytes = CONFIG_PSTORE_DEFAULT_KMSG_BYTES;
--module_param(kmsg_bytes, ulong, 0444);
-+unsigned int kmsg_bytes = CONFIG_PSTORE_DEFAULT_KMSG_BYTES;
-+module_param(kmsg_bytes, uint, 0444);
- MODULE_PARM_DESC(kmsg_bytes, "amount of kernel log to snapshot (in bytes)");
- 
- static void *compress_workspace;
-@@ -107,9 +107,9 @@ static void *compress_workspace;
- static char *big_oops_buf;
- static size_t max_compressed_size;
- 
--void pstore_set_kmsg_bytes(int bytes)
-+void pstore_set_kmsg_bytes(unsigned int bytes)
- {
--	kmsg_bytes = bytes;
-+	WRITE_ONCE(kmsg_bytes, bytes);
- }
- 
- /* Tag each group of saved records with a sequence number */
-@@ -278,6 +278,7 @@ static void pstore_dump(struct kmsg_dumper *dumper,
- 			struct kmsg_dump_detail *detail)
- {
- 	struct kmsg_dump_iter iter;
-+	unsigned int	remaining = READ_ONCE(kmsg_bytes);
- 	unsigned long	total = 0;
- 	const char	*why;
- 	unsigned int	part = 1;
-@@ -300,7 +301,7 @@ static void pstore_dump(struct kmsg_dumper *dumper,
- 	kmsg_dump_rewind(&iter);
- 
- 	oopscount++;
--	while (total < kmsg_bytes) {
-+	while (total < remaining) {
- 		char *dst;
- 		size_t dst_size;
- 		int header_size;
 -- 
 2.39.5
 
