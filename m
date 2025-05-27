@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2CAA3C01;
-	Tue, 27 May 2025 17:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60ACF278754;
+	Tue, 27 May 2025 17:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367276; cv=none; b=C1OczsX7+Ct4iRhTtDOmxuycN6C4pCpFQybCwML3OoiVzGL9FJ8uhS2w0EHGZ1iQHFycKWL11HARiYZoJgn7t7AXg5VeJS/LDEDGLeSdx8A5Ur/7lqAmSB71AgeQPInoWejcqlTwqNhLUNMX6f+4gjm3LvhBti6A3EGDJsvFtNQ=
+	t=1748367277; cv=none; b=blmnKK4LqbvtxWgaVofpwu7hmBcY/ZKg4c2zwfYdSEGZBR7fvbCC17uKebCC6saAVcQS3INCIGh63tvu0lFUDcLyi5JxEa0If5Vkwq6GHe1FNIbIK7mDk+1ucMsihVDs6Y/WT54CSvKhLGRqSLxdQUeHuOA73RXbwtFdj1Kt/UQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367276; c=relaxed/simple;
-	bh=aQSJUEX8vP1ghxnCYKfvystoWuKhAQBGMS6P0JdCzJI=;
+	s=arc-20240116; t=1748367277; c=relaxed/simple;
+	bh=JCcYiFXz9flKRsLEt/7dfOyBV9/1lkxlz0/RyJAT2aI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UoUPIWO6IKdPz4LXEVZG9VcpYwdaIdntgBF+En1Fw+GoaIyv7Ygm4p6dMce5jTXGCSbR3YpmhP+0lNGTSK07Q0Yi1snuGDEEGcOfDhAJ7gjma3u7gbizGXgXZwC0o8x+BywnDIdb5g87ajVp2t55oDFWotG9H/8EiscD7uv1pAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwo/RJdW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FTgCDLxZ0JgypvUhg3tXX4z+ghUs16mbv7uIqtfWPAAVPNfbZGkrqh+kJfA6Sveoi60e95r6z3vZloI1B3vVbbB2zIVUPgHz6hdpku7ySJYXNGCLl8t+B1sGYncpv7LHuEhsy02wUgmzCT2pjg5bofquqSJpIiFtJKrK3xTAE4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PS5lcDtT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwo/RJdW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6CA1C4CEEA;
-	Tue, 27 May 2025 17:34:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PS5lcDtT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6227C4CEEA;
+	Tue, 27 May 2025 17:34:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367274;
-	bh=aQSJUEX8vP1ghxnCYKfvystoWuKhAQBGMS6P0JdCzJI=;
+	s=korg; t=1748367277;
+	bh=JCcYiFXz9flKRsLEt/7dfOyBV9/1lkxlz0/RyJAT2aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pwo/RJdW0Uw6z5vM5mnS9guWhcTRUne4WEzK5V/H7zcnolD7t7tkaUs3NED8+sxe7
-	 6M1NFzfRCTvQ/7QdlI4H2hmvxgdmnx+mGD28c1+tXmMYjYrqy5NxFzOQWJpvRJfydT
-	 iRazAPIwh/Mo7qtBUnN6qQ+rI/HpaFHdm2n66SJQ=
+	b=PS5lcDtTmIZXGN+IzH8cOG8GiBQT8VhqQlFpcL+T8m6kRSgdVahOQJuFfuKrhGCVa
+	 N1g7YL0OY4VZMOGXzScFsGHvd+MOBMGzLPpHagiu34Iz0CpK92WvbntBdPjpzJTipR
+	 nGH/qOk1FjpHB5ADmTllIlPaW+h/smwohZ8o0/sQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 334/783] drm/amdkfd: KFD release_work possible circular locking
-Date: Tue, 27 May 2025 18:22:11 +0200
-Message-ID: <20250527162526.661949385@linuxfoundation.org>
+Subject: [PATCH 6.14 335/783] drm/xe: xe_gen_wa_oob: replace program_invocation_short_name
+Date: Tue, 27 May 2025 18:22:12 +0200
+Message-ID: <20250527162526.702179186@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,78 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Daniel Gomez <da.gomez@samsung.com>
 
-[ Upstream commit 1b9366c601039d60546794c63fbb83ce8e53b978 ]
+[ Upstream commit 89eb42b5539f6ae6a0cabcb39e5b6fcc83c106a1 ]
 
-If waiting for gpu reset done in KFD release_work, thers is WARNING:
-possible circular locking dependency detected
+program_invocation_short_name may not be available in other systems.
+Instead, replace it with the argv[0] to pass the executable name.
 
-  #2  kfd_create_process
-        kfd_process_mutex
-          flush kfd release work
+Fixes build error when program_invocation_short_name is not available:
 
-  #1  kfd release work
-        wait for amdgpu reset work
+drivers/gpu/drm/xe/xe_gen_wa_oob.c:34:3: error: use of
+undeclared identifier 'program_invocation_short_name'    34 |
+program_invocation_short_name);       |                 ^ 1 error
+generated.
 
-  #0  amdgpu_device_gpu_reset
-        kgd2kfd_pre_reset
-          kfd_process_mutex
-
-  Possible unsafe locking scenario:
-
-        CPU0                    CPU1
-        ----                    ----
-   lock((work_completion)(&p->release_work));
-                  lock((wq_completion)kfd_process_wq);
-                  lock((work_completion)(&p->release_work));
-   lock((wq_completion)amdgpu-reset-dev);
-
-To fix this, KFD create process move flush release work outside
-kfd_process_mutex.
-
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Suggested-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250224-macos-build-support-xe-v3-1-d2c9ed3a27cc@samsung.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_process.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/xe/xe_gen_wa_oob.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index c3f2c0428e013..c9cbc0ecd9cb2 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -842,6 +842,14 @@ struct kfd_process *kfd_create_process(struct task_struct *thread)
- 		return ERR_PTR(-EINVAL);
+diff --git a/drivers/gpu/drm/xe/xe_gen_wa_oob.c b/drivers/gpu/drm/xe/xe_gen_wa_oob.c
+index 904cf47925aa1..ed9183599e31c 100644
+--- a/drivers/gpu/drm/xe/xe_gen_wa_oob.c
++++ b/drivers/gpu/drm/xe/xe_gen_wa_oob.c
+@@ -28,10 +28,10 @@
+ 	"\n" \
+ 	"#endif\n"
+ 
+-static void print_usage(FILE *f)
++static void print_usage(FILE *f, const char *progname)
+ {
+ 	fprintf(f, "usage: %s <input-rule-file> <generated-c-source-file> <generated-c-header-file>\n",
+-		program_invocation_short_name);
++		progname);
+ }
+ 
+ static void print_parse_error(const char *err_msg, const char *line,
+@@ -144,7 +144,7 @@ int main(int argc, const char *argv[])
+ 
+ 	if (argc < 3) {
+ 		fprintf(stderr, "ERROR: wrong arguments\n");
+-		print_usage(stderr);
++		print_usage(stderr, argv[0]);
+ 		return 1;
  	}
  
-+	/* If the process just called exec(3), it is possible that the
-+	 * cleanup of the kfd_process (following the release of the mm
-+	 * of the old process image) is still in the cleanup work queue.
-+	 * Make sure to drain any job before trying to recreate any
-+	 * resource for this process.
-+	 */
-+	flush_workqueue(kfd_process_wq);
-+
- 	/*
- 	 * take kfd processes mutex before starting of process creation
- 	 * so there won't be a case where two threads of the same process
-@@ -862,14 +870,6 @@ struct kfd_process *kfd_create_process(struct task_struct *thread)
- 	if (process) {
- 		pr_debug("Process already found\n");
- 	} else {
--		/* If the process just called exec(3), it is possible that the
--		 * cleanup of the kfd_process (following the release of the mm
--		 * of the old process image) is still in the cleanup work queue.
--		 * Make sure to drain any job before trying to recreate any
--		 * resource for this process.
--		 */
--		flush_workqueue(kfd_process_wq);
--
- 		process = create_process(thread);
- 		if (IS_ERR(process))
- 			goto out;
 -- 
 2.39.5
 
