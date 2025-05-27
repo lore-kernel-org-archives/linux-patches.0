@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157C61EA91;
-	Tue, 27 May 2025 16:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56E227F737;
+	Tue, 27 May 2025 16:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364520; cv=none; b=RT0Ys03uUseBWBwY6ic+DFibE/BkwbiiBWsWIp83PYuhMrUdyJoJ0BFKzs75ABZtYvSoEKE6Q2J4wCZ8IQwq3tq9uSVIYqUHvqxnsL5wMiWY0uyef7RhLqQ2x9z6znBwfMPwk31Xh7lRYLRaCP6V2mw0yvexJuH03odiL2wzrRs=
+	t=1748364522; cv=none; b=dihZdSgevjMTB9rXVEMHvqvnsTJin3j3w+NOyezLKQ/IrK1vaZA57Qz8sB2KZbf6kbb8LIxuCAx2YgI7O5Z63FrCz6mVS8a9TeUBuGD8KKNw89ckGKrSzt/g7TpRkT3LhTGs86tuKg7vLdQRpEn9/pnuMvBdPr0RH+kXY56rkSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364520; c=relaxed/simple;
-	bh=GQyd4jFwO0snGAnndCg4JDwvfz/+p8xMb6W7bZXia5w=;
+	s=arc-20240116; t=1748364522; c=relaxed/simple;
+	bh=QeDUDHqOPpRRJ3kfxEajw1UgKo5PDf6QkdCTAmqNN3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UxAgLwV9vz1aYwuriVWDLxSqDJ9VqHag7dVBSskdb5yr6L5Z8gakRrFy870VpiIQUeSq5NU+CagdeE7tofemEeWPw3FgQAep/KuGHR5cjwa1GGdY3UioQksvJq+0is/eJcTLFiacq5MZC/95vvwMDpWSaA1nAeYSIJAMq5Cwn9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hljbS23J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MPf7l8dHNsEdcQheZencdnGZpuAC6W0s+C3DTyrIboCN5Y0MOlSAIFK6E4eDK47ferhmcV48jNmQF/KC/S4SMNj1QOZSv4TK26DbcCxA/ArGK7K0Z9+PiQ9XF+OycFDeGx/WJ3dn17QRZsYQK+EPMYlDYAnWqieApgeoCl5GW5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FfHe6CPr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hljbS23J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A444C4CEE9;
-	Tue, 27 May 2025 16:48:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FfHe6CPr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 415FFC4CEE9;
+	Tue, 27 May 2025 16:48:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364519;
-	bh=GQyd4jFwO0snGAnndCg4JDwvfz/+p8xMb6W7bZXia5w=;
+	s=korg; t=1748364522;
+	bh=QeDUDHqOPpRRJ3kfxEajw1UgKo5PDf6QkdCTAmqNN3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hljbS23Jfz8ItAkdvtJ0dXnt85FZ0AeCLTqLaOSI5PEih2mp2eyJbgPRHRGAy+nyu
-	 FZcjggLg6rcCL149YQms5B13vcrNTKisjnyWFHdDimCsvmeinOLA3Pu6PWCUlWfYWV
-	 aXy3pCKP2xmNqf8hPQmrq1DtgxxecwFZmz4r2KvQ=
+	b=FfHe6CPruiV8dLGywOsESmrvt5eljpRhEf2p3ESxQpNa1PreCN7nyXxSqtpZjYxvL
+	 VgbwqmlajIhTKDl9xdo73tLuCpyhVhRIZOqSh4gaGurUMh7DbDj6bVbcV4fFSmpsOu
+	 z+Hk/mZpHoStSg3tHitFUqFNRoPLwVMkLnr/BGsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Haoran Jiang <jianghaoran@kylinos.cn>,
+	zhangxi <zhangxi@kylinos.cn>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 052/626] exfat: call bh_read in get_block only when necessary
-Date: Tue, 27 May 2025 18:19:05 +0200
-Message-ID: <20250527162447.175687856@linuxfoundation.org>
+Subject: [PATCH 6.12 043/626] samples/bpf: Fix compilation failure for samples/bpf on LoongArch Fedora
+Date: Tue, 27 May 2025 18:18:56 +0200
+Message-ID: <20250527162446.808700900@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,220 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sungjong Seo <sj1557.seo@samsung.com>
+From: Haoran Jiang <jianghaoran@kylinos.cn>
 
-[ Upstream commit c73e680d1f84059e1b1ea82a537f6ccc1c563eb4 ]
+[ Upstream commit 548762f05d19c5542db7590bcdfb9be1fb928376 ]
 
-With commit 11a347fb6cef ("exfat: change to get file size from DataLength"),
-exfat_get_block() can now handle valid_size. However, most partial
-unwritten blocks that could be mapped with other blocks are being
-inefficiently processed separately as individual blocks.
+When building the latest samples/bpf on LoongArch Fedora
 
-Except for partial unwritten blocks that require independent processing,
-let's handle them simply as before.
+     make M=samples/bpf
 
-Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
-Reviewed-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+There are compilation errors as follows:
+
+In file included from ./linux/samples/bpf/sockex2_kern.c:2:
+In file included from ./include/uapi/linux/in.h:25:
+In file included from ./include/linux/socket.h:8:
+In file included from ./include/linux/uio.h:9:
+In file included from ./include/linux/thread_info.h:60:
+In file included from ./arch/loongarch/include/asm/thread_info.h:15:
+In file included from ./arch/loongarch/include/asm/processor.h:13:
+In file included from ./arch/loongarch/include/asm/cpu-info.h:11:
+./arch/loongarch/include/asm/loongarch.h:13:10: fatal error: 'larchintrin.h' file not found
+         ^~~~~~~~~~~~~~~
+1 error generated.
+
+larchintrin.h is included in /usr/lib64/clang/14.0.6/include,
+and the header file location is specified at compile time.
+
+Test on LoongArch Fedora:
+https://github.com/fedora-remix-loongarch/releases-info
+
+Signed-off-by: Haoran Jiang <jianghaoran@kylinos.cn>
+Signed-off-by: zhangxi <zhangxi@kylinos.cn>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250425095042.838824-1-jianghaoran@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/inode.c | 159 +++++++++++++++++++++++------------------------
- 1 file changed, 77 insertions(+), 82 deletions(-)
+ samples/bpf/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/exfat/inode.c b/fs/exfat/inode.c
-index 3801516ac5071..cc4dcb7a32b57 100644
---- a/fs/exfat/inode.c
-+++ b/fs/exfat/inode.c
-@@ -274,9 +274,11 @@ static int exfat_get_block(struct inode *inode, sector_t iblock,
- 	sector_t last_block;
- 	sector_t phys = 0;
- 	sector_t valid_blks;
-+	loff_t i_size;
- 
- 	mutex_lock(&sbi->s_lock);
--	last_block = EXFAT_B_TO_BLK_ROUND_UP(i_size_read(inode), sb);
-+	i_size = i_size_read(inode);
-+	last_block = EXFAT_B_TO_BLK_ROUND_UP(i_size, sb);
- 	if (iblock >= last_block && !create)
- 		goto done;
- 
-@@ -305,102 +307,95 @@ static int exfat_get_block(struct inode *inode, sector_t iblock,
- 	if (buffer_delay(bh_result))
- 		clear_buffer_delay(bh_result);
- 
--	if (create) {
-+	/*
-+	 * In most cases, we just need to set bh_result to mapped, unmapped
-+	 * or new status as follows:
-+	 *  1. i_size == valid_size
-+	 *  2. write case (create == 1)
-+	 *  3. direct_read (!bh_result->b_folio)
-+	 *     -> the unwritten part will be zeroed in exfat_direct_IO()
-+	 *
-+	 * Otherwise, in the case of buffered read, it is necessary to take
-+	 * care the last nested block if valid_size is not equal to i_size.
-+	 */
-+	if (i_size == ei->valid_size || create || !bh_result->b_folio)
- 		valid_blks = EXFAT_B_TO_BLK_ROUND_UP(ei->valid_size, sb);
-+	else
-+		valid_blks = EXFAT_B_TO_BLK(ei->valid_size, sb);
- 
--		if (iblock + max_blocks < valid_blks) {
--			/* The range has been written, map it */
--			goto done;
--		} else if (iblock < valid_blks) {
--			/*
--			 * The range has been partially written,
--			 * map the written part.
--			 */
--			max_blocks = valid_blks - iblock;
--			goto done;
--		}
-+	/* The range has been fully written, map it */
-+	if (iblock + max_blocks < valid_blks)
-+		goto done;
- 
--		/* The area has not been written, map and mark as new. */
--		set_buffer_new(bh_result);
-+	/* The range has been partially written, map the written part */
-+	if (iblock < valid_blks) {
-+		max_blocks = valid_blks - iblock;
-+		goto done;
-+	}
- 
-+	/* The area has not been written, map and mark as new for create case */
-+	if (create) {
-+		set_buffer_new(bh_result);
- 		ei->valid_size = EXFAT_BLK_TO_B(iblock + max_blocks, sb);
- 		mark_inode_dirty(inode);
--	} else {
--		valid_blks = EXFAT_B_TO_BLK(ei->valid_size, sb);
-+		goto done;
-+	}
- 
--		if (iblock + max_blocks < valid_blks) {
--			/* The range has been written, map it */
--			goto done;
--		} else if (iblock < valid_blks) {
--			/*
--			 * The area has been partially written,
--			 * map the written part.
--			 */
--			max_blocks = valid_blks - iblock;
-+	/*
-+	 * The area has just one block partially written.
-+	 * In that case, we should read and fill the unwritten part of
-+	 * a block with zero.
-+	 */
-+	if (bh_result->b_folio && iblock == valid_blks &&
-+	    (ei->valid_size & (sb->s_blocksize - 1))) {
-+		loff_t size, pos;
-+		void *addr;
-+
-+		max_blocks = 1;
-+
-+		/*
-+		 * No buffer_head is allocated.
-+		 * (1) bmap: It's enough to set blocknr without I/O.
-+		 * (2) read: The unwritten part should be filled with zero.
-+		 *           If a folio does not have any buffers,
-+		 *           let's returns -EAGAIN to fallback to
-+		 *           block_read_full_folio() for per-bh IO.
-+		 */
-+		if (!folio_buffers(bh_result->b_folio)) {
-+			err = -EAGAIN;
- 			goto done;
--		} else if (iblock == valid_blks &&
--			   (ei->valid_size & (sb->s_blocksize - 1))) {
--			/*
--			 * The block has been partially written,
--			 * zero the unwritten part and map the block.
--			 */
--			loff_t size, pos;
--			void *addr;
--
--			max_blocks = 1;
--
--			/*
--			 * For direct read, the unwritten part will be zeroed in
--			 * exfat_direct_IO()
--			 */
--			if (!bh_result->b_folio)
--				goto done;
--
--			/*
--			 * No buffer_head is allocated.
--			 * (1) bmap: It's enough to fill bh_result without I/O.
--			 * (2) read: The unwritten part should be filled with 0
--			 *           If a folio does not have any buffers,
--			 *           let's returns -EAGAIN to fallback to
--			 *           per-bh IO like block_read_full_folio().
--			 */
--			if (!folio_buffers(bh_result->b_folio)) {
--				err = -EAGAIN;
--				goto done;
--			}
-+		}
- 
--			pos = EXFAT_BLK_TO_B(iblock, sb);
--			size = ei->valid_size - pos;
--			addr = folio_address(bh_result->b_folio) +
--			       offset_in_folio(bh_result->b_folio, pos);
-+		pos = EXFAT_BLK_TO_B(iblock, sb);
-+		size = ei->valid_size - pos;
-+		addr = folio_address(bh_result->b_folio) +
-+			offset_in_folio(bh_result->b_folio, pos);
- 
--			/* Check if bh->b_data points to proper addr in folio */
--			if (bh_result->b_data != addr) {
--				exfat_fs_error_ratelimit(sb,
-+		/* Check if bh->b_data points to proper addr in folio */
-+		if (bh_result->b_data != addr) {
-+			exfat_fs_error_ratelimit(sb,
- 					"b_data(%p) != folio_addr(%p)",
- 					bh_result->b_data, addr);
--				err = -EINVAL;
--				goto done;
--			}
--
--			/* Read a block */
--			err = bh_read(bh_result, 0);
--			if (err < 0)
--				goto done;
-+			err = -EINVAL;
-+			goto done;
-+		}
- 
--			/* Zero unwritten part of a block */
--			memset(bh_result->b_data + size, 0,
--			       bh_result->b_size - size);
-+		/* Read a block */
-+		err = bh_read(bh_result, 0);
-+		if (err < 0)
-+			goto done;
- 
--			err = 0;
--		} else {
--			/*
--			 * The range has not been written, clear the mapped flag
--			 * to only zero the cache and do not read from disk.
--			 */
--			clear_buffer_mapped(bh_result);
--		}
-+		/* Zero unwritten part of a block */
-+		memset(bh_result->b_data + size, 0, bh_result->b_size - size);
-+		err = 0;
-+		goto done;
- 	}
-+
-+	/*
-+	 * The area has not been written, clear mapped for read/bmap cases.
-+	 * If so, it will be filled with zero without reading from disk.
-+	 */
-+	clear_buffer_mapped(bh_result);
- done:
- 	bh_result->b_size = EXFAT_BLK_TO_B(max_blocks, sb);
- 	if (err < 0)
+diff --git a/samples/bpf/Makefile b/samples/bpf/Makefile
+index 7afe040cf43b3..f06f88b26183c 100644
+--- a/samples/bpf/Makefile
++++ b/samples/bpf/Makefile
+@@ -400,7 +400,7 @@ $(obj)/%.o: $(src)/%.c
+ 	@echo "  CLANG-bpf " $@
+ 	$(Q)$(CLANG) $(NOSTDINC_FLAGS) $(LINUXINCLUDE) $(BPF_EXTRA_CFLAGS) \
+ 		-I$(obj) -I$(srctree)/tools/testing/selftests/bpf/ \
+-		-I$(LIBBPF_INCLUDE) \
++		-I$(LIBBPF_INCLUDE) $(CLANG_SYS_INCLUDES) \
+ 		-D__KERNEL__ -D__BPF_TRACING__ -Wno-unused-value -Wno-pointer-sign \
+ 		-D__TARGET_ARCH_$(SRCARCH) -Wno-compare-distinct-pointer-types \
+ 		-Wno-gnu-variable-sized-type-not-at-end \
 -- 
 2.39.5
 
