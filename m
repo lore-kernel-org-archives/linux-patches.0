@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED4F1FB3;
-	Tue, 27 May 2025 17:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9331FB3;
+	Tue, 27 May 2025 17:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367945; cv=none; b=eBDYJV5o+zaJ+FuwUjmbZAY/IWItGZVJ/aAGmlMPGaC9IWbxnIW9cACuAu3JGkvvLr+x5UCtz5H/77og40UMtBw39oiZceIrVyC8jJNy9jyg7xG29iD7ABFk8brGkBsvpAlUMv4uqpW3h9CvrrpNXqXJQ6n0dM++OPU660aZcEI=
+	t=1748367949; cv=none; b=jrZ+jagQUHJe9Mvdm1vgGjMMBLQmPUdnRa1c1Sw8O5B2exRGWmXSfl3A37AH3nxNNcCJkcRWgSlnQFaBluMNdiie0VGrB/nslUCX5QkC7FabFYIZdmbVroo9p2dta5dAXvF2obIcWwO7uA0QYIw5u9Oea5seR+NBIQGXXxQjbys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367945; c=relaxed/simple;
-	bh=dYDldtsV7xwXvTj6nOKfCpzA1455KV1lr8LUmhzkkLk=;
+	s=arc-20240116; t=1748367949; c=relaxed/simple;
+	bh=gdZKinPIfxyxn7b8t0VBt6WKEZE0fRa6xFuz9xKNXq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XwkQRH4mv+xcOYmNPbEjYYgO1zBjlaO426Mf0KjfOZbbDU2BlHwzgLo+IjQV3Q6kpQdyDXG1a/1LGgWQMD+PG7dwP1310udaduLF0m/mCM05A6KS9Z9hmgOsIDmki7RuVSWdzgIhwCWNjOR8O8CWU8M1c0UiKZW5UalAe6XNf1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGn8emYr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JJEx3rPlHau+2THtT9gov4O4D1255rN0hEf+VmGt1zkc5wKem20N3CC9hyTHL50xMs0QASTlxogP9nHYJ/gPaucFFqK91JbIvklg2NpeCiZEmjfFB95XdOyhZ8aABF+dgAaYFySasZYH2Mw6KaMm2DfsWVCiUI1dJZc2qOtZQMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vnGAevC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGn8emYr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE6BC4CEE9;
-	Tue, 27 May 2025 17:45:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vnGAevC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64109C4CEE9;
+	Tue, 27 May 2025 17:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367945;
-	bh=dYDldtsV7xwXvTj6nOKfCpzA1455KV1lr8LUmhzkkLk=;
+	s=korg; t=1748367948;
+	bh=gdZKinPIfxyxn7b8t0VBt6WKEZE0fRa6xFuz9xKNXq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TGn8emYrM4LIL5uhSWBttiGXo3um5pHadzhovwULmdNBcCo/H+L6eSXq3Z6CueVml
-	 B/564KCyI+ZleYuHvZOUOoO79+qr9j9ASVJIAw3rKv1QcVxRDTzTEKizr4lXM0jlFL
-	 IZy0ZcJmV8sdxDNY24M2c8y89SevjvVGzdVKP4Cw=
+	b=1vnGAevCk+RX54Bnd8EdrGDk07T5QuvzGbbdVCcM9KvYhG6PXi1vtT04ipU+5ReQr
+	 cORHUVd2fbmMTg/KMdnm1SKnKeAVGGwaJih+1Jyo08mgMAuuGzPaCae11KZo+mtKSn
+	 7Qj0w8qwAOpUnwhx4SqyTMGRzQKregKpp+FUCQxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 542/783] wifi: rtw88: Fix __rtw_download_firmware() for RTL8814AU
-Date: Tue, 27 May 2025 18:25:39 +0200
-Message-ID: <20250527162535.229709381@linuxfoundation.org>
+Subject: [PATCH 6.14 551/783] net: page_pool: avoid false positive warning if NAPI was never added
+Date: Tue, 27 May 2025 18:25:48 +0200
+Message-ID: <20250527162535.589476526@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,47 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 8425f5c8f04dbcf11ade78f984a494fc0b90e7a0 ]
+[ Upstream commit c1e00bc4be06cacee6307cedb9b55bbaddb5044d ]
 
-Don't call ltecoex_read_reg() and ltecoex_reg_write() when the
-ltecoex_addr member of struct rtw_chip_info is NULL. The RTL8814AU
-doesn't have this feature.
+We expect NAPI to be in disabled state when page pool is torn down.
+But it is also legal if the NAPI is completely uninitialized.
 
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/55b5641f-094e-4f94-9f79-ac053733f2cf@gmail.com
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/20250206225638.1387810-4-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/mac.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/core/dev.h       | 12 ++++++++++++
+ net/core/page_pool.c |  7 ++-----
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/mac.c b/drivers/net/wireless/realtek/rtw88/mac.c
-index ea6406df42b3d..0491f501c1383 100644
---- a/drivers/net/wireless/realtek/rtw88/mac.c
-+++ b/drivers/net/wireless/realtek/rtw88/mac.c
-@@ -785,7 +785,8 @@ static int __rtw_download_firmware(struct rtw_dev *rtwdev,
- 	if (!check_firmware_size(data, size))
- 		return -EINVAL;
+diff --git a/net/core/dev.h b/net/core/dev.h
+index a5b166bbd169a..caa13e431a6bc 100644
+--- a/net/core/dev.h
++++ b/net/core/dev.h
+@@ -299,6 +299,18 @@ void xdp_do_check_flushed(struct napi_struct *napi);
+ static inline void xdp_do_check_flushed(struct napi_struct *napi) { }
+ #endif
  
--	if (!ltecoex_read_reg(rtwdev, 0x38, &ltecoex_bckp))
-+	if (rtwdev->chip->ltecoex_addr &&
-+	    !ltecoex_read_reg(rtwdev, 0x38, &ltecoex_bckp))
- 		return -EBUSY;
++/* Best effort check that NAPI is not idle (can't be scheduled to run) */
++static inline void napi_assert_will_not_race(const struct napi_struct *napi)
++{
++	/* uninitialized instance, can't race */
++	if (!napi->poll_list.next)
++		return;
++
++	/* SCHED bit is set on disabled instances */
++	WARN_ON(!test_bit(NAPI_STATE_SCHED, &napi->state));
++	WARN_ON(READ_ONCE(napi->list_owner) != -1);
++}
++
+ void kick_defer_list_purge(struct softnet_data *sd, unsigned int cpu);
  
- 	wlan_cpu_enable(rtwdev, false);
-@@ -803,7 +804,8 @@ static int __rtw_download_firmware(struct rtw_dev *rtwdev,
+ #define XMIT_RECURSION_LIMIT	8
+diff --git a/net/core/page_pool.c b/net/core/page_pool.c
+index ede82c610936e..cca51aa2e876f 100644
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -25,6 +25,7 @@
  
- 	wlan_cpu_enable(rtwdev, true);
+ #include <trace/events/page_pool.h>
  
--	if (!ltecoex_reg_write(rtwdev, 0x38, ltecoex_bckp)) {
-+	if (rtwdev->chip->ltecoex_addr &&
-+	    !ltecoex_reg_write(rtwdev, 0x38, ltecoex_bckp)) {
- 		ret = -EBUSY;
- 		goto dlfw_fail;
- 	}
++#include "dev.h"
+ #include "mp_dmabuf_devmem.h"
+ #include "netmem_priv.h"
+ #include "page_pool_priv.h"
+@@ -1146,11 +1147,7 @@ void page_pool_disable_direct_recycling(struct page_pool *pool)
+ 	if (!pool->p.napi)
+ 		return;
+ 
+-	/* To avoid races with recycling and additional barriers make sure
+-	 * pool and NAPI are unlinked when NAPI is disabled.
+-	 */
+-	WARN_ON(!test_bit(NAPI_STATE_SCHED, &pool->p.napi->state));
+-	WARN_ON(READ_ONCE(pool->p.napi->list_owner) != -1);
++	napi_assert_will_not_race(pool->p.napi);
+ 
+ 	mutex_lock(&page_pools_lock);
+ 	WRITE_ONCE(pool->p.napi, NULL);
 -- 
 2.39.5
 
