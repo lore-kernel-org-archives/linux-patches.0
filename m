@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D25278750;
-	Tue, 27 May 2025 17:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D70027CCF0;
+	Tue, 27 May 2025 17:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366001; cv=none; b=a5AvZvK3/AZ/R5BD/gdOeddyz0nO9Ld2XJpl8QHymWsihNJvltXrHICvyb8bDCcz6XHVlOAN/hrhvarHZXUQb1tlkHfZJ9tgkbhf0amxDfrJ6WPwaEibju//cPX96qg2aUwIDyTUM8iIN/4mVrPrO9TYv1FcuSNNf0Xj+kH6pOM=
+	t=1748366003; cv=none; b=cKYqVbIWuY1HH8T7wYFZ+InqQUbiaeTx+MdzgNDJc5itIWLTqugxk/lBRFsdrm6qTLw3XZ16FOPzTVWUG4t+k65W4LDF0ibMry6ZzzjrPVSKC6PzhZqQefmKt/AvcM66AinK4rneOJeMd0Z0vfjiTqe6zBvNEPQ7U5CIrd5G7TE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366001; c=relaxed/simple;
-	bh=wCS/mD26Lx9WvipeIqiqJoHgna6tQ2Z7Ihvnklyw/4E=;
+	s=arc-20240116; t=1748366003; c=relaxed/simple;
+	bh=OpAJbaK8CE1ULwAs9j5mW4HX+dRn+YQHzqwzRzARw/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HxbCh652oHmhmybeclL90urxCl/JgxBb78uMqzmCtjehIm/nI/AlD5gRL8oyOKevePkhWtCdJoKqWRI+bhZpPCVWffKwzGGJsLfH8bNZVQFtaqW0D9Gona02/ts9eT4Qj/5nZUWzqK6RZ/u8sWFzUskT2r85G9UdwauOo+srRj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wcPibci+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FrVfw9gOCNx6ui2FsOXwhtwH6a/AAxvsfADBSiazDz59yNumkFnZeqhQWy5NIYKhNaolfoVZe+Z6P1ndAIyB8BENO4sURlsQYyRJuqyO8BNn+9ySE1IMjh8B7zZn5qsEiQuQG5xBxQyENd2HSNDvRicIOJuvfnx9rm0IZNhHaow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2QQ8aSi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wcPibci+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047A0C4CEE9;
-	Tue, 27 May 2025 17:13:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2QQ8aSi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D3AC4CEE9;
+	Tue, 27 May 2025 17:13:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366000;
-	bh=wCS/mD26Lx9WvipeIqiqJoHgna6tQ2Z7Ihvnklyw/4E=;
+	s=korg; t=1748366003;
+	bh=OpAJbaK8CE1ULwAs9j5mW4HX+dRn+YQHzqwzRzARw/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wcPibci+uDiiQVNF3y7mjL/h9txkdTMalyEzRi7dqaS1uTc2ljov76QzS71ThxD/H
-	 2QApR5nQeuEuGeSiA01eQlxNnpmwrNwUV0DOA4UJEq2+54SXHm6t5rUaA8eundldWi
-	 KD9pZ3RIa7XpIUiuDqcoR+DalGwpUXV/NTNxF8bE=
+	b=A2QQ8aSi/Zl40j7MHImpGDIRIEMHiI8ni7DsLzs7AdIzcsvI8419nU5H4MdVvdz1t
+	 xEbT6/ADvLqmy5zuIcMoFMHnOzjFbZVVjDuO8OdeD+OFyhI8RRcFJnFQ67ACaooAts
+	 aIXJvQqImbouthoA5sADH+uXfEUxBYv98DeroTF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Paul Kocialkowski <paulk@sys-base.io>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Corentin LABBE <clabbe.montjoie@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 559/626] pinctrl: qcom: switch to devm_register_sys_off_handler()
-Date: Tue, 27 May 2025 18:27:32 +0200
-Message-ID: <20250527162507.680984785@linuxfoundation.org>
+Subject: [PATCH 6.12 560/626] net: dwmac-sun8i: Use parsed internal PHY address instead of 1
+Date: Tue, 27 May 2025 18:27:33 +0200
+Message-ID: <20250527162507.721371527@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,94 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Paul Kocialkowski <paulk@sys-base.io>
 
-[ Upstream commit 41e452e6933d14146381ea25cff5e4d1ac2abea1 ]
+[ Upstream commit 47653e4243f2b0a26372e481ca098936b51ec3a8 ]
 
-Error-handling paths in msm_pinctrl_probe() don't call
-a function required to unroll restart handler registration,
-unregister_restart_handler(). Instead of adding calls to this function,
-switch the msm pinctrl code into using devm_register_sys_off_handler().
+While the MDIO address of the internal PHY on Allwinner sun8i chips is
+generally 1, of_mdio_parse_addr is used to cleanly parse the address
+from the device-tree instead of hardcoding it.
 
-Fixes: cf1fc1876289 ("pinctrl: qcom: use restart_notifier mechanism for ps_hold")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/20250513-pinctrl-msm-fix-v2-2-249999af0fc1@oss.qualcomm.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+A commit reworking the code ditched the parsed value and hardcoded the
+value 1 instead, which didn't really break anything but is more fragile
+and not future-proof.
+
+Restore the initial behavior using the parsed address returned from the
+helper.
+
+Fixes: 634db83b8265 ("net: stmmac: dwmac-sun8i: Handle integrated/external MDIOs")
+Signed-off-by: Paul Kocialkowski <paulk@sys-base.io>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Acked-by: Corentin LABBE <clabbe.montjoie@gmail.com>
+Tested-by: Corentin LABBE <clabbe.montjoie@gmail.com>
+Link: https://patch.msgid.link/20250519164936.4172658-1-paulk@sys-base.io
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-msm.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index a6bdff7a0bb25..018e96d921c05 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -43,7 +43,6 @@
-  * @pctrl:          pinctrl handle.
-  * @chip:           gpiochip handle.
-  * @desc:           pin controller descriptor
-- * @restart_nb:     restart notifier block.
-  * @irq:            parent irq for the TLMM irq_chip.
-  * @intr_target_use_scm: route irq to application cpu using scm calls
-  * @lock:           Spinlock to protect register resources as well
-@@ -63,7 +62,6 @@ struct msm_pinctrl {
- 	struct pinctrl_dev *pctrl;
- 	struct gpio_chip chip;
- 	struct pinctrl_desc desc;
--	struct notifier_block restart_nb;
- 
- 	int irq;
- 
-@@ -1470,10 +1468,9 @@ static int msm_gpio_init(struct msm_pinctrl *pctrl)
- 	return 0;
- }
- 
--static int msm_ps_hold_restart(struct notifier_block *nb, unsigned long action,
--			       void *data)
-+static int msm_ps_hold_restart(struct sys_off_data *data)
- {
--	struct msm_pinctrl *pctrl = container_of(nb, struct msm_pinctrl, restart_nb);
-+	struct msm_pinctrl *pctrl = data->cb_data;
- 
- 	writel(0, pctrl->regs[0] + PS_HOLD_OFFSET);
- 	mdelay(1000);
-@@ -1484,7 +1481,11 @@ static struct msm_pinctrl *poweroff_pctrl;
- 
- static void msm_ps_hold_poweroff(void)
- {
--	msm_ps_hold_restart(&poweroff_pctrl->restart_nb, 0, NULL);
-+	struct sys_off_data data = {
-+		.cb_data = poweroff_pctrl,
-+	};
-+
-+	msm_ps_hold_restart(&data);
- }
- 
- static void msm_pinctrl_setup_pm_reset(struct msm_pinctrl *pctrl)
-@@ -1494,9 +1495,11 @@ static void msm_pinctrl_setup_pm_reset(struct msm_pinctrl *pctrl)
- 
- 	for (i = 0; i < pctrl->soc->nfunctions; i++)
- 		if (!strcmp(func[i].name, "ps_hold")) {
--			pctrl->restart_nb.notifier_call = msm_ps_hold_restart;
--			pctrl->restart_nb.priority = 128;
--			if (register_restart_handler(&pctrl->restart_nb))
-+			if (devm_register_sys_off_handler(pctrl->dev,
-+							  SYS_OFF_MODE_RESTART,
-+							  128,
-+							  msm_ps_hold_restart,
-+							  pctrl))
- 				dev_err(pctrl->dev,
- 					"failed to setup restart handler.\n");
- 			poweroff_pctrl = pctrl;
-@@ -1598,8 +1601,6 @@ void msm_pinctrl_remove(struct platform_device *pdev)
- 	struct msm_pinctrl *pctrl = platform_get_drvdata(pdev);
- 
- 	gpiochip_remove(&pctrl->chip);
--
--	unregister_restart_handler(&pctrl->restart_nb);
- }
- EXPORT_SYMBOL(msm_pinctrl_remove);
- 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
+index 4a0ae92b3055c..ce8367b63823a 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-sun8i.c
+@@ -964,7 +964,7 @@ static int sun8i_dwmac_set_syscon(struct device *dev,
+ 		/* of_mdio_parse_addr returns a valid (0 ~ 31) PHY
+ 		 * address. No need to mask it again.
+ 		 */
+-		reg |= 1 << H3_EPHY_ADDR_SHIFT;
++		reg |= ret << H3_EPHY_ADDR_SHIFT;
+ 	} else {
+ 		/* For SoCs without internal PHY the PHY selection bit should be
+ 		 * set to 0 (external PHY).
 -- 
 2.39.5
 
