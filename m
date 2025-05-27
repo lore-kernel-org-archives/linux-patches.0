@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C77F27D766;
-	Tue, 27 May 2025 17:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC6827FB0C;
+	Tue, 27 May 2025 17:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366299; cv=none; b=Vkg6lCKnMtSTRv2Z78WUtuW18vlGOfkjjZ5lrl5XSYe55G1ya0WhAoiSx13Jz2bhgdGRJSHk25j3BpiqehJprRgKXBju1+TlEpS4LtKgbW10aa1/ek05+UqH80JmbIVBKULrs8Oh9sZPKBDVLDRrGLshlmrI4OWBFQgi5HxC1dk=
+	t=1748366302; cv=none; b=gc4Jin2mcE7Ux1wbL7Fi4mcmuKmW3bWXm+KCyDTPZQQulIVjuUdAMMUxw+3wXAzRVI8Enb2SV6fFaJQZsCqf9dCxLjkCQ9J1bhVxSioAN+AZFhJw6+dPOkqYde6OcmLI03GDWgesOmQq0Oei1UycoHRneY2kK6uFQeXYkKYkgtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366299; c=relaxed/simple;
-	bh=OkvQw1nBc3rJ48l5uHJ2yuOYe1jEI0CnrbkbLw6tzO4=;
+	s=arc-20240116; t=1748366302; c=relaxed/simple;
+	bh=q+n8sVKmFvaG8rD14UBjrkSDj9Zxn0gwYrqycENMSLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nDxVqqjHy+KBUXQrl4F04JE3HiiY+Cl6TdzWGMnjfsoBhxMXOxfuA2pZWkbvjOZ02fqQiuNZCWIwJVHwJaDYza+imMQtwhpoPgy4cpN8zoqVm1rpr0eeC5ZESyVOSkO/Wj2JpKN1pB6LRBP/fkpmxeeb5eEJbWDrfn2NJimXHDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mabIF8FQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ES94vPnvYVKkCAqgo3reW5Yku9kTz9aBTik5RYAd5TBnmgx7DLQCsJnmbyyXlKVm5lzDhhnSfmjls6st323qWXnhukYh53u7S1tiRVQSRdQuwuB4sJwMo9ZyKcjifXIlfN2GrdQY1l8ulHJpiAWuiN4bLqpL2SFIiFM9A0uZ0Ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dyk4qGVI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mabIF8FQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF318C4CEE9;
-	Tue, 27 May 2025 17:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dyk4qGVI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B078BC4CEE9;
+	Tue, 27 May 2025 17:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366299;
-	bh=OkvQw1nBc3rJ48l5uHJ2yuOYe1jEI0CnrbkbLw6tzO4=;
+	s=korg; t=1748366302;
+	bh=q+n8sVKmFvaG8rD14UBjrkSDj9Zxn0gwYrqycENMSLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mabIF8FQjjyKxkJHU6qxk9/GemcZX3+aB+HBhmYJwesWiFUo0LLNkJLTPolCZbar7
-	 4uWTl9FNSr8knlWQzhrAs2O1fVygc5ar5tMmcbsjjliwtmryo0lwFxTdNbMRDZjg50
-	 f7mjZJllFyJZfpUSKeZWrMaPA+p5X5Lj0HodAMXI=
+	b=Dyk4qGVIXAsDcKHQURO2ckJRVa+DRhla9IXpcvE8H3kQ6hdfNoIN1RxXqbXlQ0oGr
+	 bRLvgzkW8rH0bZUcXp65uLOp02mAjDa9qx4x2V2FrLQseW5LEZ3oHRuv039pnjOjwS
+	 BP3ryYzpKcIFHQ5OsCZDPVY+ftOT3WiFBUvqyUMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Bogdanov <d.bogdanov@yadro.com>,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 016/783] scsi: target: iscsi: Fix timeout on deleted connection
-Date: Tue, 27 May 2025 18:16:53 +0200
-Message-ID: <20250527162513.708589964@linuxfoundation.org>
+Subject: [PATCH 6.14 025/783] vhost_task: fix vhost_task_create() documentation
+Date: Tue, 27 May 2025 18:17:02 +0200
+Message-ID: <20250527162514.125760244@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,55 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Bogdanov <d.bogdanov@yadro.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-[ Upstream commit 7f533cc5ee4c4436cee51dc58e81dfd9c3384418 ]
+[ Upstream commit fec0abf52609c20279243699d08b660c142ce0aa ]
 
-NOPIN response timer may expire on a deleted connection and crash with
-such logs:
+Commit cb380909ae3b ("vhost: return task creation error instead of NULL")
+changed the return value of vhost_task_create(), but did not update the
+documentation.
 
-Did not receive response to NOPIN on CID: 0, failing connection for I_T Nexus (null),i,0x00023d000125,iqn.2017-01.com.iscsi.target,t,0x3d
+Reflect the change in the documentation: on an error, vhost_task_create()
+returns an ERR_PTR() and no longer NULL.
 
-BUG: Kernel NULL pointer dereference on read at 0x00000000
-NIP  strlcpy+0x8/0xb0
-LR iscsit_fill_cxn_timeout_err_stats+0x5c/0xc0 [iscsi_target_mod]
-Call Trace:
- iscsit_handle_nopin_response_timeout+0xfc/0x120 [iscsi_target_mod]
- call_timer_fn+0x58/0x1f0
- run_timer_softirq+0x740/0x860
- __do_softirq+0x16c/0x420
- irq_exit+0x188/0x1c0
- timer_interrupt+0x184/0x410
-
-That is because nopin response timer may be re-started on nopin timer
-expiration.
-
-Stop nopin timer before stopping the nopin response timer to be sure
-that no one of them will be re-started.
-
-Signed-off-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
-Link: https://lore.kernel.org/r/20241224101757.32300-1-d.bogdanov@yadro.com
-Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20250327124435.142831-1-sgarzare@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target.c | 2 +-
+ kernel/vhost_task.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
-index 1244ef3aa86c1..620ba6e0ab075 100644
---- a/drivers/target/iscsi/iscsi_target.c
-+++ b/drivers/target/iscsi/iscsi_target.c
-@@ -4263,8 +4263,8 @@ int iscsit_close_connection(
- 	spin_unlock(&iscsit_global->ts_bitmap_lock);
- 
- 	iscsit_stop_timers_for_cmds(conn);
--	iscsit_stop_nopin_response_timer(conn);
- 	iscsit_stop_nopin_timer(conn);
-+	iscsit_stop_nopin_response_timer(conn);
- 
- 	if (conn->conn_transport->iscsit_wait_conn)
- 		conn->conn_transport->iscsit_wait_conn(conn);
+diff --git a/kernel/vhost_task.c b/kernel/vhost_task.c
+index 2ef2e1b800916..2f844c279a3e0 100644
+--- a/kernel/vhost_task.c
++++ b/kernel/vhost_task.c
+@@ -111,7 +111,7 @@ EXPORT_SYMBOL_GPL(vhost_task_stop);
+  * @arg: data to be passed to fn and handled_kill
+  * @name: the thread's name
+  *
+- * This returns a specialized task for use by the vhost layer or NULL on
++ * This returns a specialized task for use by the vhost layer or ERR_PTR() on
+  * failure. The returned task is inactive, and the caller must fire it up
+  * through vhost_task_start().
+  */
 -- 
 2.39.5
 
