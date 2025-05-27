@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27BF427C856;
-	Tue, 27 May 2025 16:47:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2B527FD56;
+	Tue, 27 May 2025 16:47:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364450; cv=none; b=VgajmZiyp9gEdDKfDB07IPnBDAD9nBqSvhDN0fbGEsZKgLwLr8h+u+clCSHmZFUUtIqgl8IaoW4lsMgGFB5MYcwepIyFmggYVzvcXtbNiBvDc09Ij9GvlWnAcAr6j1oZUqBaOLrVR0n9iS7xCW4VMB2xZq34vCygGBYPANtlA+A=
+	t=1748364453; cv=none; b=FGqNWdiKwwvvk3l+xnLyFSWv6MbgWN/0IVfQW0qEPE8pWuduODZbdrv1Ln0QIxNPFXQRq5SQI7kvIXYey/iaST26P0EigBBEfaXGH27ax4NSceFSHwi4lZzCttmqyFsSsJQkWkhFWgnuZblgvA0TSQFWHF7DVGQRdOgLfij4Pb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364450; c=relaxed/simple;
-	bh=WuqFaZs4eE9fa+JjdbXXKqPcovhQHifgGbWf3l57BmE=;
+	s=arc-20240116; t=1748364453; c=relaxed/simple;
+	bh=JkSoNRrrrIvpYZ+meXywXinFnEWi45epu4M9r6YQdDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SsukfyTQ/W3yVta9BxVQTuG0MwfciUatQlCMGDoYStHzhSzy7eKpKFfNy9G+5H7JNZ0nsLOMpWsOLUefijbBBjKDVnoHJ+VZy6Wa2dXKFzb7y8ZMSQKB/KONlNF41V3H5So6kAhEH9rWYEvSCrcvdrlvOO3jPNf3UYbYYxAfJFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bVzgbA+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k6aezQC4M+Xx7Ndx8X4v7FZxorY8yC0KLk3o7RRzhT5V+O2Y1jkPnf4bgN5yUV3hpwT/LL0H6vm/vdTvuQZnphGIv22u5zWsQD1Q3aThGErkT2QLJV7vEyU6JzE7sCeWKcv2L+CodMehZATnBE99rDb30xjZHe6SXhkba+89TuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEOu3OQc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bVzgbA+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77537C4CEEB;
-	Tue, 27 May 2025 16:47:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEOu3OQc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE76C4CEE9;
+	Tue, 27 May 2025 16:47:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364450;
-	bh=WuqFaZs4eE9fa+JjdbXXKqPcovhQHifgGbWf3l57BmE=;
+	s=korg; t=1748364452;
+	bh=JkSoNRrrrIvpYZ+meXywXinFnEWi45epu4M9r6YQdDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0bVzgbA++pjqfeMfZyxX6kGqm8Laocx8R/gMaTaLYZ3eSxDeQe70oGP0XU3vL7Qmv
-	 dzL++cHCiEE8E5sa6tdWrN8ucnIHg6KA7vB1TTDq2uvHpWzpD8TCmwyuDfu4rHO8Ku
-	 P0vWtMSNpX0fxwi9rChaV38R36YuNEqUJuO28+uw=
+	b=vEOu3OQc8wTXtPc5q+7Pgi+0wnKJzpc7JxwCnjp06NKJ3KSl/zkSTpQGaVA5pJWhE
+	 qaaokTNnbD5yCoyPZH7dLnbxbXv1FTFLfpgnWeKZKrOGL3yvl+H9ChK4ZGuF3WhHmg
+	 hS7cVhDpp74crkobjH25GrSQC7M8bvRYhdPuIT1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diogo Ivo <diogo.ivo@siemens.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jonathan McDowell <noodles@meta.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 060/626] ACPI: PNP: Add Intel OC Watchdog IDs to non-PNP device list
-Date: Tue, 27 May 2025 18:19:13 +0200
-Message-ID: <20250527162447.498524685@linuxfoundation.org>
+Subject: [PATCH 6.12 061/626] tpm: Convert warn to dbg in tpm2_start_auth_session()
+Date: Tue, 27 May 2025 18:19:14 +0200
+Message-ID: <20250527162447.540085134@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,43 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diogo Ivo <diogo.ivo@siemens.com>
+From: Jonathan McDowell <noodles@meta.com>
 
-[ Upstream commit f06777cf2bbc21dd8c71d6e3906934e56b4e18e4 ]
+[ Upstream commit 6359691b4fbcaf3ed86f53043a1f7c6cc54c09be ]
 
-Intel Over-Clocking Watchdogs are described in ACPI tables by both the
-generic PNP0C02 _CID and their ACPI _HID. The presence of the _CID then
-causes the PNP scan handler to attach to the watchdog, preventing the
-actual watchdog driver from binding. Address this by adding the ACPI
-_HIDs to the list of non-PNP devices, so that the PNP scan handler is
-bypassed.
+TPM2 sessions have been flushed lazily since commit df745e25098dc ("tpm:
+Lazily flush the auth session").  If /dev/tpm{rm}0 is not accessed
+in-between two in-kernel calls, it is possible that a TPM2 session is
+re-started before the previous one has been completed.
 
-Note that these watchdogs can be described by multiple _HIDs for what
-seems to be identical hardware. This commit is not a complete list of
-all the possible watchdog ACPI _HIDs.
+This causes a spurios warning in a legit run-time condition, which is also
+correctly addressed with a fast return path:
 
-Signed-off-by: Diogo Ivo <diogo.ivo@siemens.com>
-Link: https://patch.msgid.link/20250317-ivo-intel_oc_wdt-v3-2-32c396f4eefd@siemens.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[    2.944047] tpm tpm0: auth session is active
+
+Address the issue by changing dev_warn_once() call to a dev_dbg_once()
+call.
+
+[jarkko: Rewrote the commit message, and instead of dropping converted
+ to a debug message.]
+Signed-off-by: Jonathan McDowell <noodles@meta.com>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_pnp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/char/tpm/tpm2-sessions.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpi_pnp.c b/drivers/acpi/acpi_pnp.c
-index 01abf26764b00..3f5a1840f5733 100644
---- a/drivers/acpi/acpi_pnp.c
-+++ b/drivers/acpi/acpi_pnp.c
-@@ -355,8 +355,10 @@ static bool acpi_pnp_match(const char *idstr, const struct acpi_device_id **matc
-  * device represented by it.
-  */
- static const struct acpi_device_id acpi_nonpnp_device_ids[] = {
-+	{"INT3F0D"},
- 	{"INTC1080"},
- 	{"INTC1081"},
-+	{"INTC1099"},
- 	{""},
- };
+diff --git a/drivers/char/tpm/tpm2-sessions.c b/drivers/char/tpm/tpm2-sessions.c
+index ecea089157301..cf0b831540447 100644
+--- a/drivers/char/tpm/tpm2-sessions.c
++++ b/drivers/char/tpm/tpm2-sessions.c
+@@ -974,7 +974,7 @@ int tpm2_start_auth_session(struct tpm_chip *chip)
+ 	int rc;
+ 
+ 	if (chip->auth) {
+-		dev_warn_once(&chip->dev, "auth session is active\n");
++		dev_dbg_once(&chip->dev, "auth session is active\n");
+ 		return 0;
+ 	}
  
 -- 
 2.39.5
