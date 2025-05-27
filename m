@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3267C1CEAC2;
-	Tue, 27 May 2025 17:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0C81DB34C;
+	Tue, 27 May 2025 17:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366942; cv=none; b=hD3j/cFKo94NwAdIMSXPCWMZRJ3l0mHSTxXSHZ7aclg752k4KgYxQdS5UM2SVi+ZX5YdTVUCpSUQBeG0V/ZvzF+DjRUkilhaMsL40M+JF9il1BPUMOJj8bliRiEEd1XNN/NVJ1Aa4IE3rWuarRM33KD+cxAAY6JY5/NACUIzaxc=
+	t=1748366945; cv=none; b=C9YRMf/FadoaotGZ/LNeuHayBsRmbPBqXNE+rfigKy9JRyOiQif03CB0Pqjepwb2PuQr/CeRPFhBwZMJi/9gxvArb+muyWuHBYE5X8lhdO/Glv8rHM1u5GmL40x79qjBezTWLRE7mXBD/u6urlonaUnnvZVf7pOltAXFk9If1Fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366942; c=relaxed/simple;
-	bh=QW/fLO4h4R/lqKmGS/XDEM5qSFrQTYigY6i1CpgK9yY=;
+	s=arc-20240116; t=1748366945; c=relaxed/simple;
+	bh=A8ATE+F9ZajkWhJy/NYzpz78s2Qpubq++E5FHU6XsOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WHpxHk1z9/e4bWKbUSCz7JHUbR+FoXVsjf/SmabLT6M235Q9w/w5ilPOhXbTgsRfrzdn9s+Eayf7JWnNczR91u2asLuxewS5r8CHBvOYRsx0W+iE1dp3XvOLBzIWDx5MhfJsffSO68I0YIVd0V5b/n9IuF4JBzKSLleMiPqJdVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AHTzTp1i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=st1x5Tv7+4Sw/QnbKM/fE6y3Dxd2octezx1U9jyxk3ncW8ELptCo1T3m6eHPqW/xUjS9sek300yI26w96LTG2Sb2Y5EZj8rwSR4NXOeCZg9mK/xuY8TyG3XJuvys3OGkxqiwPkorJoDgeK+Xlza/OHTmjlQRBAfqVNSWMYum65M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DmQq28wr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AHTzTp1i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92955C4CEE9;
-	Tue, 27 May 2025 17:29:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DmQq28wr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5923C4CEE9;
+	Tue, 27 May 2025 17:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366942;
-	bh=QW/fLO4h4R/lqKmGS/XDEM5qSFrQTYigY6i1CpgK9yY=;
+	s=korg; t=1748366945;
+	bh=A8ATE+F9ZajkWhJy/NYzpz78s2Qpubq++E5FHU6XsOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AHTzTp1iTrTEeb7q39kOLg0WuFA+SR4EKFexoZa6C0GOL8Pzq9yQ/wJdttZIvkyFM
-	 KoK/00Gbh4D2L6wVguELx7WcmA3/+ODh933jUbA3Vonpl7eEZqYta00XTdtX9uQL41
-	 VCLu4E2ox4NWnWtMWaxmGiwZyQ/OMREGdex1ThMw=
+	b=DmQq28wrYXJ63qJLVUjrywPGzdH9WR9eOsxZ2bzRh4VYnfknGQQiEZbJJFl+u2WEx
+	 tHngeuzfKfr9dokK+H4q/XBU8CNcBV4vlJp9P7Ji4jJ4rcCuzjsSHdNZ8iyRrfbq8J
+	 mK9TBLtXJ3K4tKHkOxal5iWZs4r9oX/UzKa2Xm6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rui Salvaterra <rsalvaterra@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 227/783] r8169: increase max jumbo packet size on RTL8125/RTL8126
-Date: Tue, 27 May 2025 18:20:24 +0200
-Message-ID: <20250527162522.369061918@linuxfoundation.org>
+Subject: [PATCH 6.14 228/783] ipv6: save dontfrag in cork
+Date: Tue, 27 May 2025 18:20:25 +0200
+Message-ID: <20250527162522.407689657@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,48 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 473367a5ffe1607a61be481e2feda684eb5faea9 ]
+[ Upstream commit a18dfa9925b9ef6107ea3aa5814ca3c704d34a8a ]
 
-Realtek confirmed that all RTL8125/RTL8126 chip versions support up to
-16K jumbo packets. Reflect this in the driver.
+When spanning datagram construction over multiple send calls using
+MSG_MORE, per datagram settings are configured on the first send.
 
-Tested by Rui on RTL8125B with 12K jumbo packets.
+That is when ip(6)_setup_cork stores these settings for subsequent use
+in __ip(6)_append_data and others.
 
-Suggested-by: Rui Salvaterra <rsalvaterra@gmail.com>
-Tested-by: Rui Salvaterra <rsalvaterra@gmail.com>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/396762ad-cc65-4e60-b01e-8847db89e98b@gmail.com
+The only flag that escaped this was dontfrag. As a result, a datagram
+could be constructed with df=0 on the first sendmsg, but df=1 on a
+next. Which is what cmsg_ip.sh does in an upcoming MSG_MORE test in
+the "diff" scenario.
+
+Changing datagram conditions in the middle of constructing an skb
+makes this already complex code path even more convoluted. It is here
+unintentional. Bring this flag in line with expected sockopt/cmsg
+behavior.
+
+And stop passing ipc6 to __ip6_append_data, to avoid such issues
+in the future. This is already the case for __ip_append_data.
+
+inet6_cork had a 6 byte hole, so the 1B flag has no impact.
+
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250307033620.411611-3-willemdebruijn.kernel@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/linux/ipv6.h  | 1 +
+ net/ipv6/ip6_output.c | 9 +++++----
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index 4ead966727734..485ecd62e585d 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -89,6 +89,7 @@
- #define JUMBO_6K	(6 * SZ_1K - VLAN_ETH_HLEN - ETH_FCS_LEN)
- #define JUMBO_7K	(7 * SZ_1K - VLAN_ETH_HLEN - ETH_FCS_LEN)
- #define JUMBO_9K	(9 * SZ_1K - VLAN_ETH_HLEN - ETH_FCS_LEN)
-+#define JUMBO_16K	(SZ_16K - VLAN_ETH_HLEN - ETH_FCS_LEN)
+diff --git a/include/linux/ipv6.h b/include/linux/ipv6.h
+index a6e2aadbb91bd..5aeeed22f35bf 100644
+--- a/include/linux/ipv6.h
++++ b/include/linux/ipv6.h
+@@ -207,6 +207,7 @@ struct inet6_cork {
+ 	struct ipv6_txoptions *opt;
+ 	u8 hop_limit;
+ 	u8 tclass;
++	u8 dontfrag:1;
+ };
  
- static const struct {
- 	const char *name;
-@@ -5353,6 +5354,9 @@ static int rtl_jumbo_max(struct rtl8169_private *tp)
- 	/* RTL8168c */
- 	case RTL_GIGA_MAC_VER_18 ... RTL_GIGA_MAC_VER_24:
- 		return JUMBO_6K;
-+	/* RTL8125/8126 */
-+	case RTL_GIGA_MAC_VER_61 ... RTL_GIGA_MAC_VER_71:
-+		return JUMBO_16K;
- 	default:
- 		return JUMBO_9K;
+ /* struct ipv6_pinfo - ipv6 private area */
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index d577bf2f30538..eb636bec89796 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -1386,6 +1386,7 @@ static int ip6_setup_cork(struct sock *sk, struct inet_cork_full *cork,
  	}
+ 	v6_cork->hop_limit = ipc6->hlimit;
+ 	v6_cork->tclass = ipc6->tclass;
++	v6_cork->dontfrag = ipc6->dontfrag;
+ 	if (rt->dst.flags & DST_XFRM_TUNNEL)
+ 		mtu = READ_ONCE(np->pmtudisc) >= IPV6_PMTUDISC_PROBE ?
+ 		      READ_ONCE(rt->dst.dev->mtu) : dst_mtu(&rt->dst);
+@@ -1421,7 +1422,7 @@ static int __ip6_append_data(struct sock *sk,
+ 			     int getfrag(void *from, char *to, int offset,
+ 					 int len, int odd, struct sk_buff *skb),
+ 			     void *from, size_t length, int transhdrlen,
+-			     unsigned int flags, struct ipcm6_cookie *ipc6)
++			     unsigned int flags)
+ {
+ 	struct sk_buff *skb, *skb_prev = NULL;
+ 	struct inet_cork *cork = &cork_full->base;
+@@ -1475,7 +1476,7 @@ static int __ip6_append_data(struct sock *sk,
+ 	if (headersize + transhdrlen > mtu)
+ 		goto emsgsize;
+ 
+-	if (cork->length + length > mtu - headersize && ipc6->dontfrag &&
++	if (cork->length + length > mtu - headersize && v6_cork->dontfrag &&
+ 	    (sk->sk_protocol == IPPROTO_UDP ||
+ 	     sk->sk_protocol == IPPROTO_ICMPV6 ||
+ 	     sk->sk_protocol == IPPROTO_RAW)) {
+@@ -1855,7 +1856,7 @@ int ip6_append_data(struct sock *sk,
+ 
+ 	return __ip6_append_data(sk, &sk->sk_write_queue, &inet->cork,
+ 				 &np->cork, sk_page_frag(sk), getfrag,
+-				 from, length, transhdrlen, flags, ipc6);
++				 from, length, transhdrlen, flags);
+ }
+ EXPORT_SYMBOL_GPL(ip6_append_data);
+ 
+@@ -2060,7 +2061,7 @@ struct sk_buff *ip6_make_skb(struct sock *sk,
+ 	err = __ip6_append_data(sk, &queue, cork, &v6_cork,
+ 				&current->task_frag, getfrag, from,
+ 				length + exthdrlen, transhdrlen + exthdrlen,
+-				flags, ipc6);
++				flags);
+ 	if (err) {
+ 		__ip6_flush_pending_frames(sk, &queue, cork, &v6_cork);
+ 		return ERR_PTR(err);
 -- 
 2.39.5
 
