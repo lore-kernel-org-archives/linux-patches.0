@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8448E1E89C;
-	Tue, 27 May 2025 17:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976BD2110E;
+	Tue, 27 May 2025 17:21:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366513; cv=none; b=X5/fVIv7quKhFJgtdpe5CEqlxPpAUDb9CwwfbPfssXjclx87Om+VSXplK+zTSa4S3dvF4lWv1n1ZD8yGK1BbDsMGwFGydH/K+0mOJ5N+z9/25tixUABHyE0L6nx49mX9azIFoA35fcCd4Min/auB5gZ2dCcz2O6tQtyRSxRxP7k=
+	t=1748366516; cv=none; b=WFfd8fOU8VBO0ZeZ595y87THXXw076z+FMjFLjXXuDbtTTEIeV0FmDYmp/7Rt/k5D4xqh97tIyhX8e0kEOGWldlQ7X5foN8Ny2OWl3Td/pvEv5z6hDm50WqyLreCPsw1ZU6Ylun1J/nXbS+T9Mx8EvqMvtupbtmCfeobTuckF0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366513; c=relaxed/simple;
-	bh=++VtEZadR+0SyJFUAlsmPuFBtPsm5+ztgHjJZUISE9Y=;
+	s=arc-20240116; t=1748366516; c=relaxed/simple;
+	bh=+LyXhCPgMpDHI524xrLYxABYeF7CkIEwP54EJDsKS54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oHR6YTxpmYCsXG10KfXhIRctYjHKa/NhtuZGbn3NnwdAGXQbqqtdZwGd3hRzd6+JJ6osOaHKYsw+9pSoCKYI3FaVw3wE6d3rWc9Ezx9SrBpYSpNg92ntlCu6GLT6AMkvxc1C2xYh3KK8XygupGgH8nqIsgecO3KideaS8WtIh8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C449aioS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B89gNkWF7mAB/K7LSi98mA5gqL8jJvI1st66MGa4aFfGYHn/IS+D0fl4Pj5RxPZxTpenULZQ6TrHEv6u5/TPrlntsd697A3U3TbhdB8I0/2A8c/2YqXN7eTx/2/F620FVxvg6t5/Ru7IJ7+2z8H3NgzkI/DpecP3k5VFf6nSfNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSM22X/v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C449aioS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0A5C4CEE9;
-	Tue, 27 May 2025 17:21:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSM22X/v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F9FC4CEE9;
+	Tue, 27 May 2025 17:21:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366513;
-	bh=++VtEZadR+0SyJFUAlsmPuFBtPsm5+ztgHjJZUISE9Y=;
+	s=korg; t=1748366516;
+	bh=+LyXhCPgMpDHI524xrLYxABYeF7CkIEwP54EJDsKS54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C449aioShd+n7l/KIPNO5wBXxaxlIMOiagvGoByJ6ObAgdcJ1IAtO715EB6kIXd6X
-	 Gg86n3EyhEAy4dycTqGw3TvOPX4V8yoCTXQPd5/TzQIkWKi/Xd8JUzGA/B29YRFn6J
-	 1Wsr3uyFXiwfE+3mgz2aHYGVCcWuXXRKXJZODRV0=
+	b=zSM22X/vKm9vwOlOtySRa/xFhe0vE3MhJcUwce0UAo67DA/EL0Q8oGgrPT8P1wakF
+	 E/wg8ht+kBSuvUpbBr9s6lrf0O3wE7bB9MVyUVzWCjrF5jdb8czVi3ozU+ETbA5hnP
+	 eQipnWzHj7+yNGHzdW52peeEd//YXW0OYYk18uQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	ChunHao Lin <hau@realtek.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 093/783] PCI: dwc: ep: Ensure proper iteration over outbound map windows
-Date: Tue, 27 May 2025 18:18:10 +0200
-Message-ID: <20250527162516.927941961@linuxfoundation.org>
+Subject: [PATCH 6.14 094/783] r8169: disable RTL8126 ZRX-DC timeout
+Date: Tue, 27 May 2025 18:18:11 +0200
+Message-ID: <20250527162516.967396797@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,43 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: ChunHao Lin <hau@realtek.com>
 
-[ Upstream commit f3e1dccba0a0833fc9a05fb838ebeb6ea4ca0e1a ]
+[ Upstream commit b48688ea3c9ac8d5d910c6e91fb7f80d846581f0 ]
 
-Most systems' PCIe outbound map windows have non-zero physical addresses,
-but the possibility of encountering zero increased after following commit
-("PCI: dwc: Use parent_bus_offset").
+Disable it due to it dose not meet ZRX-DC specification. If it is enabled,
+device will exit L1 substate every 100ms. Disable it for saving more power
+in L1 substate.
 
-'ep->outbound_addr[n]', representing 'parent_bus_address', might be 0 on
-some hardware, which trims high address bits through bus fabric before
-sending to the PCIe controller.
-
-Replace the iteration logic with 'for_each_set_bit()' to ensure only
-allocated map windows are iterated when determining the ATU index from a
-given address.
-
-Link: https://lore.kernel.org/r/20250315201548.858189-12-helgaas@kernel.org
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: ChunHao Lin <hau@realtek.com>
+Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://patch.msgid.link/20250318083721.4127-3-hau@realtek.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-ep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/realtek/r8169_main.c | 27 +++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index e41479a9ca027..c91d095024689 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -282,7 +282,7 @@ static int dw_pcie_find_index(struct dw_pcie_ep *ep, phys_addr_t addr,
- 	u32 index;
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index 5a5eba49c6515..4ead966727734 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -2850,6 +2850,32 @@ static u32 rtl_csi_read(struct rtl8169_private *tp, int addr)
+ 		RTL_R32(tp, CSIDR) : ~0;
+ }
  
--	for (index = 0; index < pci->num_ob_windows; index++) {
-+	for_each_set_bit(index, ep->ob_window_map, pci->num_ob_windows) {
- 		if (ep->outbound_addr[index] != addr)
- 			continue;
- 		*atu_index = index;
++static void rtl_disable_zrxdc_timeout(struct rtl8169_private *tp)
++{
++	struct pci_dev *pdev = tp->pci_dev;
++	u32 csi;
++	int rc;
++	u8 val;
++
++#define RTL_GEN3_RELATED_OFF	0x0890
++#define RTL_GEN3_ZRXDC_NONCOMPL	0x1
++	if (pdev->cfg_size > RTL_GEN3_RELATED_OFF) {
++		rc = pci_read_config_byte(pdev, RTL_GEN3_RELATED_OFF, &val);
++		if (rc == PCIBIOS_SUCCESSFUL) {
++			val &= ~RTL_GEN3_ZRXDC_NONCOMPL;
++			rc = pci_write_config_byte(pdev, RTL_GEN3_RELATED_OFF,
++						   val);
++			if (rc == PCIBIOS_SUCCESSFUL)
++				return;
++		}
++	}
++
++	netdev_notice_once(tp->dev,
++		"No native access to PCI extended config space, falling back to CSI\n");
++	csi = rtl_csi_read(tp, RTL_GEN3_RELATED_OFF);
++	rtl_csi_write(tp, RTL_GEN3_RELATED_OFF, csi & ~RTL_GEN3_ZRXDC_NONCOMPL);
++}
++
+ static void rtl_set_aspm_entry_latency(struct rtl8169_private *tp, u8 val)
+ {
+ 	struct pci_dev *pdev = tp->pci_dev;
+@@ -3822,6 +3848,7 @@ static void rtl_hw_start_8125d(struct rtl8169_private *tp)
+ 
+ static void rtl_hw_start_8126a(struct rtl8169_private *tp)
+ {
++	rtl_disable_zrxdc_timeout(tp);
+ 	rtl_set_def_aspm_entry_latency(tp);
+ 	rtl_hw_start_8125_common(tp);
+ }
 -- 
 2.39.5
 
