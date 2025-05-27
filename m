@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CDED27FB3D;
-	Tue, 27 May 2025 17:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045CF27FB3D;
+	Tue, 27 May 2025 17:55:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368543; cv=none; b=pxhk6BUWteKquXN9n+tVzMFG7xR02eSrxaQqw4n/fwvAOmjNDg72YHliFuKzwoXlKxymCHZ4lbPWq9h4yoKKmjvv9EWVLETlyM8QhT8rJjmkVwcaQg+wJfeXB5jtDfpD77VbByMaZT36eXbWNCRnBUWgw/5gFKIW3n/nwb8bnoM=
+	t=1748368546; cv=none; b=VsvySgY+C7iUXv5UX2aOHbMxZGAHDW5P/kQ3HcfJMr2GdFpGI0KFovv7CzzBjgy5VvfrMGEN3Jhoa3hR7rCbUlrCvvPOwLFV7TwutWZdtoXI0i6SD2c9GhFUG7SL1jToMR5MyKdo6MZV8pVfaOI379xwOg1iVs1kcisZCTR1YO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368543; c=relaxed/simple;
-	bh=jW5XU4lWFjz7VKmNAuydR7IZu1AGIOdBaJCtPg/TcBQ=;
+	s=arc-20240116; t=1748368546; c=relaxed/simple;
+	bh=cLAD6gHjkwSqydvMjDeqGhNU+o3gmfJz2ePnhPThhKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IROZSyoZVe3dbZvGxypH5Y70rY5OC8ANB4HhsPcdkEJiYpcZFeGhO5oFStQCsLFt3Liyw6Ol6diNZoQR+sLnfLmSbJHUTEyc85Y4DxvcmEC3UE7iJpLyC57D+5rTFfg+m/L1AW0Fjz+hUZmKEBWof4KHU9Nx3N45rLgtWP7brJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5rBegTw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IzXdSvSl3kO0ofhR3JBJLrvkSnankSAC6zLOwJNk2y6CL2TgFOX/7z9WMUOU6YTp7MlrT4QH+F58DzRZLe9bMAPzxrkqCeBdBtlTa98CeMEX1C8DJiB4OQqbHhrvtWjV/n3M2idcOdKAggjvVruaqcwRYvcR7u9JrGsTpZC+LrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eYBfYBZH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5rBegTw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776DAC4CEE9;
-	Tue, 27 May 2025 17:55:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eYBfYBZH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B8CC4CEE9;
+	Tue, 27 May 2025 17:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368543;
-	bh=jW5XU4lWFjz7VKmNAuydR7IZu1AGIOdBaJCtPg/TcBQ=;
+	s=korg; t=1748368545;
+	bh=cLAD6gHjkwSqydvMjDeqGhNU+o3gmfJz2ePnhPThhKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w5rBegTw3TN77c1m/QMX6bz74L8y7ZDgV5Hdi08evqWEd0dzVWT6hsIy2mPb/lfZU
-	 Y/SOfDwWgWWmc2BIHooew59RgfhKXTAEI0/WOBiaquonUMHCoVbYpIGGYpefveMVYQ
-	 vbg00Lcc21dMZEjkmT3cWy7WAjao6bIskuADfYh8=
+	b=eYBfYBZHYWoAfQ26/PrDgTkOAng+kcdDaL1JtYcASDo64NVoz0Enpd2asvF7gN4Or
+	 Qk4PjlmRdnw9+tNqKfJuIps6BOdrCCsoHXJc+D98jeyl0eIONjtJ6of2p6UVZdaG53
+	 Ng1Lskv4/p5UBc7gIW8kKvtlBiDovSHR8sPy/zUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thangaraj Samynathan <thangaraj.s@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 709/783] net: lan743x: Restore SGMII CTRL register on resume
-Date: Tue, 27 May 2025 18:28:26 +0200
-Message-ID: <20250527162541.987802961@linuxfoundation.org>
+Subject: [PATCH 6.14 710/783] xsk: Bring back busy polling support in XDP_COPY
+Date: Tue, 27 May 2025 18:28:27 +0200
+Message-ID: <20250527162542.028792137@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,90 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thangaraj Samynathan <thangaraj.s@microchip.com>
+From: Samiullah Khawaja <skhawaja@google.com>
 
-[ Upstream commit 293e38ff4e4c2ba53f3fd47d8a4a9f0f0414a7a6 ]
+[ Upstream commit b95ed5517354a5f451fb9b3771776ca4c0b65ac3 ]
 
-SGMII_CTRL register, which specifies the active interface, was not
-properly restored when resuming from suspend. This led to incorrect
-interface selection after resume particularly in scenarios involving
-the FPGA.
+Commit 5ef44b3cb43b ("xsk: Bring back busy polling support") fixed the
+busy polling support in xsk for XDP_ZEROCOPY after it was broken in
+commit 86e25f40aa1e ("net: napi: Add napi_config"). The busy polling
+support with XDP_COPY remained broken since the napi_id setup in
+xsk_rcv_check was removed.
 
-To fix this:
-- Move the SGMII_CTRL setup out of the probe function.
-- Initialize the register in the hardware initialization helper function,
-which is called during both device initialization and resume.
+Bring back the setup of napi_id for XDP_COPY so socket level SO_BUSYPOLL
+can be used to poll the underlying napi.
 
-This ensures the interface configuration is consistently restored after
-suspend/resume cycles.
+Do the setup of napi_id for XDP_COPY in xsk_bind, as it is done
+currently for XDP_ZEROCOPY. The setup of napi_id for XDP_COPY in
+xsk_bind is safe because xsk_rcv_check checks that the rx queue at which
+the packet arrives is equal to the queue_id that was supplied in bind.
+This is done for both XDP_COPY and XDP_ZEROCOPY mode.
 
-Fixes: a46d9d37c4f4f ("net: lan743x: Add support for SGMII interface")
-Signed-off-by: Thangaraj Samynathan <thangaraj.s@microchip.com>
-Link: https://patch.msgid.link/20250516035719.117960-1-thangaraj.s@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested using AF_XDP support in virtio-net by running the xsk_rr AF_XDP
+benchmarking tool shared here:
+https://lore.kernel.org/all/20250320163523.3501305-1-skhawaja@google.com/T/
+
+Enabled socket busy polling using following commands in qemu,
+
+```
+sudo ethtool -L eth0 combined 1
+echo 400 | sudo tee /proc/sys/net/core/busy_read
+echo 100 | sudo tee /sys/class/net/eth0/napi_defer_hard_irqs
+echo 15000   | sudo tee /sys/class/net/eth0/gro_flush_timeout
+```
+
+Fixes: 5ef44b3cb43b ("xsk: Bring back busy polling support")
+Signed-off-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan743x_main.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ net/xdp/xsk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
-index e2d6bfb5d6933..a70b88037a208 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -3495,6 +3495,7 @@ static int lan743x_hardware_init(struct lan743x_adapter *adapter,
- 				 struct pci_dev *pdev)
- {
- 	struct lan743x_tx *tx;
-+	u32 sgmii_ctl;
- 	int index;
- 	int ret;
+diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+index c13e13fa79fc0..dc67870b76122 100644
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -1301,7 +1301,7 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
+ 	xs->queue_id = qid;
+ 	xp_add_xsk(xs->pool, xs);
  
-@@ -3507,6 +3508,15 @@ static int lan743x_hardware_init(struct lan743x_adapter *adapter,
- 		spin_lock_init(&adapter->eth_syslock_spinlock);
- 		mutex_init(&adapter->sgmii_rw_lock);
- 		pci11x1x_set_rfe_rd_fifo_threshold(adapter);
-+		sgmii_ctl = lan743x_csr_read(adapter, SGMII_CTL);
-+		if (adapter->is_sgmii_en) {
-+			sgmii_ctl |= SGMII_CTL_SGMII_ENABLE_;
-+			sgmii_ctl &= ~SGMII_CTL_SGMII_POWER_DN_;
-+		} else {
-+			sgmii_ctl &= ~SGMII_CTL_SGMII_ENABLE_;
-+			sgmii_ctl |= SGMII_CTL_SGMII_POWER_DN_;
-+		}
-+		lan743x_csr_write(adapter, SGMII_CTL, sgmii_ctl);
- 	} else {
- 		adapter->max_tx_channels = LAN743X_MAX_TX_CHANNELS;
- 		adapter->used_tx_channels = LAN743X_USED_TX_CHANNELS;
-@@ -3558,7 +3568,6 @@ static int lan743x_hardware_init(struct lan743x_adapter *adapter,
+-	if (xs->zc && qid < dev->real_num_rx_queues) {
++	if (qid < dev->real_num_rx_queues) {
+ 		struct netdev_rx_queue *rxq;
  
- static int lan743x_mdiobus_init(struct lan743x_adapter *adapter)
- {
--	u32 sgmii_ctl;
- 	int ret;
- 
- 	adapter->mdiobus = devm_mdiobus_alloc(&adapter->pdev->dev);
-@@ -3570,10 +3579,6 @@ static int lan743x_mdiobus_init(struct lan743x_adapter *adapter)
- 	adapter->mdiobus->priv = (void *)adapter;
- 	if (adapter->is_pci11x1x) {
- 		if (adapter->is_sgmii_en) {
--			sgmii_ctl = lan743x_csr_read(adapter, SGMII_CTL);
--			sgmii_ctl |= SGMII_CTL_SGMII_ENABLE_;
--			sgmii_ctl &= ~SGMII_CTL_SGMII_POWER_DN_;
--			lan743x_csr_write(adapter, SGMII_CTL, sgmii_ctl);
- 			netif_dbg(adapter, drv, adapter->netdev,
- 				  "SGMII operation\n");
- 			adapter->mdiobus->read = lan743x_mdiobus_read_c22;
-@@ -3584,10 +3589,6 @@ static int lan743x_mdiobus_init(struct lan743x_adapter *adapter)
- 			netif_dbg(adapter, drv, adapter->netdev,
- 				  "lan743x-mdiobus-c45\n");
- 		} else {
--			sgmii_ctl = lan743x_csr_read(adapter, SGMII_CTL);
--			sgmii_ctl &= ~SGMII_CTL_SGMII_ENABLE_;
--			sgmii_ctl |= SGMII_CTL_SGMII_POWER_DN_;
--			lan743x_csr_write(adapter, SGMII_CTL, sgmii_ctl);
- 			netif_dbg(adapter, drv, adapter->netdev,
- 				  "RGMII operation\n");
- 			// Only C22 support when RGMII I/F
+ 		rxq = __netif_get_rx_queue(dev, qid);
 -- 
 2.39.5
 
