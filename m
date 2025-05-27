@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1081FB3;
-	Tue, 27 May 2025 17:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2FB25C6EC;
+	Tue, 27 May 2025 17:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368003; cv=none; b=Rc2QI+C/Ok9FZLSpVPQrFBP1zVJTVrGGcW/PuWLK/kLOoJ+qK6eTV4MPTKXkwPjkTn/47OnDx8ffX22SqMiiRd+wxj+rtWFhvzKBrT+Ph5km7Yyr19dAaqbRCjehjRB+frL9XXPfqO1nEdwiBsV0fVnCJQkCAITuBD9+BAYb9l4=
+	t=1748368006; cv=none; b=lvrw5zUPjLothccRIqS+Rif2C5ENmavalcxrqzTWrYNwb7UeqnUg+imleorPuONeN4h6MQMtSRJdo6IrejrJfFYxctNdAil8pUuCbOvDaPKCuZEhtvWs8qwN3q4mCOAHwlDXnqLy5Hwuab4BShNRF10AET1JJ+93aB1drMut7u0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368003; c=relaxed/simple;
-	bh=9Mx+IcKdXqbLFHdPXAvLICXGA1Ug/tDhHU7AjjCkgTM=;
+	s=arc-20240116; t=1748368006; c=relaxed/simple;
+	bh=M6OHXbRIqlxEUwbL2fWEDpj6rSG7p5+vYD8KdnHfCNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R83ZlkRvdCtgK2lWRBCql+zTvtVKfz+FvqVYYC43bzFYi3Ujx6TNIG8inXh9KftpDwXvpjidRvKMcnZ+SJ0UshmlKWZg6LSJpG6HT++1/HdrvfgHH3uupX6nCQFlk1bsb84ZoyAFULtFSIAjKXEGGrALAFKXTZ8jzYg19ICUhLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXeU0H6z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ryO+BqTv8p8y1wBEuFmYjITilOC+jnvLoAOlJ4s+niXTH0FoEi7An/Fn24CtxrDctVdzCuD7WcoRe6wTD4HZjZRP8yBGFZihSwtrMl92qly36Z+m0cN5szMUFt5rGOh2Aes4ZvZsABb6iYO/NVbgHV6tVeFVpMx13b85ktG98D0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AcI6wsx2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXeU0H6z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8939C4CEE9;
-	Tue, 27 May 2025 17:46:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AcI6wsx2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71BC5C4CEE9;
+	Tue, 27 May 2025 17:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368003;
-	bh=9Mx+IcKdXqbLFHdPXAvLICXGA1Ug/tDhHU7AjjCkgTM=;
+	s=korg; t=1748368005;
+	bh=M6OHXbRIqlxEUwbL2fWEDpj6rSG7p5+vYD8KdnHfCNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MXeU0H6zMH5AeEFG4n1EQLXMwnN8YyvgVOcXN/ML6ICTaD2EXmbk18trYVwBlUE1Z
-	 H7IQfCjy46WtipPpVta3af63TmB9Z6oyT0iGz5xDDl8Ox+Pm7bpNzLuBWU9GyIxjHu
-	 tkBuXguHU72NyHrjMn25z4wzhLX/KgdjlQTBtuH4=
+	b=AcI6wsx2EUMpAzuQ/0zXPsKHzW83rbuj4P/HAFt9qEDUQpbLWWA39sZz9vUN4KRPk
+	 u6TuTO41ETJ2FccwgYCv6svEWaiBLgEzUTiZWYxur1DbOAuiFul4Zs8lKyTDjm6f4l
+	 LwAYZSMisGNNo5U4lQAq/9ZTP7F4VYyDmypsYIlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 567/783] bridge: mdb: Allow replace of a host-joined group
-Date: Tue, 27 May 2025 18:26:04 +0200
-Message-ID: <20250527162536.232364347@linuxfoundation.org>
+Subject: [PATCH 6.14 568/783] ice: init flow director before RDMA
+Date: Tue, 27 May 2025 18:26:05 +0200
+Message-ID: <20250527162536.274194588@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,65 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Machata <petrm@nvidia.com>
+From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 
-[ Upstream commit d9e9f6d7b7d0c520bb87f19d2cbc57aeeb2091d5 ]
+[ Upstream commit d67627e7b53203ca150e54723abbed81a0716286 ]
 
-Attempts to replace an MDB group membership of the host itself are
-currently bounced:
+Flow director needs only one MSI-X. Load it before RDMA to save MSI-X
+for it.
 
- # ip link add name br up type bridge vlan_filtering 1
- # bridge mdb replace dev br port br grp 239.0.0.1 vid 2
- # bridge mdb replace dev br port br grp 239.0.0.1 vid 2
- Error: bridge: Group is already joined by host.
-
-A similar operation done on a member port would succeed. Ignore the check
-for replacement of host group memberships as well.
-
-The bit of code that this enables is br_multicast_host_join(), which, for
-already-joined groups only refreshes the MC group expiration timer, which
-is desirable; and a userspace notification, also desirable.
-
-Change a selftest that exercises this code path from expecting a rejection
-to expecting a pass. The rest of MDB selftests pass without modification.
-
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/e5c5188b9787ae806609e7ca3aa2a0a501b9b5c4.1738685648.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Signed-off-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_mdb.c                                  | 2 +-
- tools/testing/selftests/net/forwarding/bridge_mdb.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/bridge/br_mdb.c b/net/bridge/br_mdb.c
-index 1a52a0bca086d..7e1ad229e1330 100644
---- a/net/bridge/br_mdb.c
-+++ b/net/bridge/br_mdb.c
-@@ -1040,7 +1040,7 @@ static int br_mdb_add_group(const struct br_mdb_config *cfg,
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index e13bd5a6cb6c4..d24d46b24e371 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -5186,11 +5186,12 @@ int ice_load(struct ice_pf *pf)
  
- 	/* host join */
- 	if (!port) {
--		if (mp->host_joined) {
-+		if (mp->host_joined && !(cfg->nlflags & NLM_F_REPLACE)) {
- 			NL_SET_ERR_MSG_MOD(extack, "Group is already joined by host");
- 			return -EEXIST;
- 		}
-diff --git a/tools/testing/selftests/net/forwarding/bridge_mdb.sh b/tools/testing/selftests/net/forwarding/bridge_mdb.sh
-index d9d587454d207..8c1597ebc2d38 100755
---- a/tools/testing/selftests/net/forwarding/bridge_mdb.sh
-+++ b/tools/testing/selftests/net/forwarding/bridge_mdb.sh
-@@ -149,7 +149,7 @@ cfg_test_host_common()
- 	check_err $? "Failed to add $name host entry"
+ 	ice_napi_add(vsi);
  
- 	bridge mdb replace dev br0 port br0 grp $grp $state vid 10 &> /dev/null
--	check_fail $? "Managed to replace $name host entry"
-+	check_err $? "Failed to replace $name host entry"
++	ice_init_features(pf);
++
+ 	err = ice_init_rdma(pf);
+ 	if (err)
+ 		goto err_init_rdma;
  
- 	bridge mdb del dev br0 port br0 grp $grp $state vid 10
- 	bridge mdb get dev br0 grp $grp vid 10 &> /dev/null
+-	ice_init_features(pf);
+ 	ice_service_task_restart(pf);
+ 
+ 	clear_bit(ICE_DOWN, pf->state);
+@@ -5198,6 +5199,7 @@ int ice_load(struct ice_pf *pf)
+ 	return 0;
+ 
+ err_init_rdma:
++	ice_deinit_features(pf);
+ 	ice_tc_indir_block_unregister(vsi);
+ err_tc_indir_block_register:
+ 	ice_unregister_netdev(vsi);
+@@ -5221,8 +5223,8 @@ void ice_unload(struct ice_pf *pf)
+ 
+ 	devl_assert_locked(priv_to_devlink(pf));
+ 
+-	ice_deinit_features(pf);
+ 	ice_deinit_rdma(pf);
++	ice_deinit_features(pf);
+ 	ice_tc_indir_block_unregister(vsi);
+ 	ice_unregister_netdev(vsi);
+ 	ice_devlink_destroy_pf_port(pf);
 -- 
 2.39.5
 
