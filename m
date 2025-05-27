@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DC0194A45;
-	Tue, 27 May 2025 16:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0AA1194A45;
+	Tue, 27 May 2025 16:50:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364635; cv=none; b=cYx8KYhCko1qHSP1+wEt9Izy5tx9UYE5klzNVdn16NmtbbrqWCAQSswY7+IoMQl1phmTD/ZqqWBtbGiemCDI19ADdqP3CYEhvxrogH7s+jO/xEsEU7R/YGDiQTh6oQFgdJg5NUVURTGi6+9rMt9Qln8qP5n6Y9JTamHWPPCjc6A=
+	t=1748364639; cv=none; b=GA82X9yuiVGAHxook/dIucKcScs//V0cXd2HTLwE5BdfZ36bjKzuZqaNVIYk5BCu14IgoTAHhorJF53TiTCcj8C2qXWzdEaRx9paWRz4vabHIO6X3e1+EFRcKIJB0dFErA1BJWzPk5sBenhQCIOd4qUzrFNV1gdJtwPNPp6jVOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364635; c=relaxed/simple;
-	bh=TNTlFeKM2vq5PxrEU8qDKwcyqzU7wknDK2BeysJmQmA=;
+	s=arc-20240116; t=1748364639; c=relaxed/simple;
+	bh=nGO36/wmuX3NuHUX9J6kH0Vj47N4sGr+poPp5nF4udA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e7+SfTFQU3yat9NZsabwQHCZtbVoKs5ltdJxl2c2LfoaCueM1Gvts4lVRxA6mq7FPgmU34JIcK+v9VmbDyFFdV15V8orC2JfQnAs2RzjLKOZqImO1EZVSWIC5tnaSWaBNL1RYpZ8+OKq4xy5E3GpeavWvrArVCtUEoC7dGlBdws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tf8ExFxB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QJvTNyFq0IqGor+lQ7Had3L2lx/oePJ9r6tBUk/xVVj6jGVTvRWggu6u6JkQgnLCFQt5zU8W+dxUsb9iyqcu+EQFOKS86pcw7s7/L++uZAURbN5wHT6la+R3MkICwsEqdmq1zYClCDvumbUoxdR0nxjiKlpWtq/l/kXDOM2Ho+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VPJ765o6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tf8ExFxB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D586C4CEE9;
-	Tue, 27 May 2025 16:50:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VPJ765o6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52533C4CEE9;
+	Tue, 27 May 2025 16:50:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364635;
-	bh=TNTlFeKM2vq5PxrEU8qDKwcyqzU7wknDK2BeysJmQmA=;
+	s=korg; t=1748364638;
+	bh=nGO36/wmuX3NuHUX9J6kH0Vj47N4sGr+poPp5nF4udA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tf8ExFxBb5hGv8m+IeuTqf7nI7F76gsdYDpc1J0VYXlap6xfk3/cDnEEt1Stw1M0/
-	 wibP4NoD/OXifS/6HJzjZZJIYNFKCL9/iY3r+RXcz8QFkgEsiG8khHoA05Ta6iEESp
-	 OMmAhlnR9QQ6ZcH3dkOFnc00Z4As6YwtApNj9bQ8=
+	b=VPJ765o65G1HUg9726xO37Og+3fl0/PxIXya7aqNWX+eP9xztkds4V3uXOvelhZU5
+	 UBlNUO9g4M9atiJuTX2/LgD0IT12XemcP1bhTxaAi1c46bP2RDgLM7SWQ+xfRrxdnM
+	 zm5I5Cz+4eMFJwMSz2wAV5BQeuw4PsEGH5K01bYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Redkin <me@rarity.fan>,
-	Ingo Molnar <mingo@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Rik van Riel <riel@surriel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
+	Wen Tao <wentao@uniontech.com>,
+	Chen Linxuan <chenlinxuan@uniontech.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Tejun Heo <tj@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 111/626] x86/mm: Check return value from memblock_phys_alloc_range()
-Date: Tue, 27 May 2025 18:20:04 +0200
-Message-ID: <20250527162449.546737011@linuxfoundation.org>
+Subject: [PATCH 6.12 120/626] blk-cgroup: improve policy registration error handling
+Date: Tue, 27 May 2025 18:20:13 +0200
+Message-ID: <20250527162449.906831419@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -48,57 +49,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philip Redkin <me@rarity.fan>
+From: Chen Linxuan <chenlinxuan@uniontech.com>
 
-[ Upstream commit 631ca8909fd5c62b9fda9edda93924311a78a9c4 ]
+[ Upstream commit e1a0202c6bfda24002a3ae2115154fa90104c649 ]
 
-At least with CONFIG_PHYSICAL_START=0x100000, if there is < 4 MiB of
-contiguous free memory available at this point, the kernel will crash
-and burn because memblock_phys_alloc_range() returns 0 on failure,
-which leads memblock_phys_free() to throw the first 4 MiB of physical
-memory to the wolves.
+This patch improve the returned error code of blkcg_policy_register().
 
-At a minimum it should fail gracefully with a meaningful diagnostic,
-but in fact everything seems to work fine without the weird reserve
-allocation.
+1. Move the validation check for cpd/pd_alloc_fn and cpd/pd_free_fn
+   function pairs to the start of blkcg_policy_register(). This ensures
+   we immediately return -EINVAL if the function pairs are not correctly
+   provided, rather than returning -ENOSPC after locking and unlocking
+   mutexes unnecessarily.
 
-Signed-off-by: Philip Redkin <me@rarity.fan>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Link: https://lore.kernel.org/r/94b3e98f-96a7-3560-1f76-349eb95ccf7f@rarity.fan
+   Those locks should not contention any problems, as error of policy
+   registration is a super cold path.
+
+2. Return -ENOMEM when cpd_alloc_fn() failed.
+
+Co-authored-by: Wen Tao <wentao@uniontech.com>
+Signed-off-by: Wen Tao <wentao@uniontech.com>
+Signed-off-by: Chen Linxuan <chenlinxuan@uniontech.com>
+Reviewed-by: Michal Koutný <mkoutny@suse.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/3E333A73B6B6DFC0+20250317022924.150907-1-chenlinxuan@uniontech.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/init.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ block/blk-cgroup.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/arch/x86/mm/init.c b/arch/x86/mm/init.c
-index 101725c149c42..9cbc1e6057d3c 100644
---- a/arch/x86/mm/init.c
-+++ b/arch/x86/mm/init.c
-@@ -645,8 +645,13 @@ static void __init memory_map_top_down(unsigned long map_start,
- 	 */
- 	addr = memblock_phys_alloc_range(PMD_SIZE, PMD_SIZE, map_start,
- 					 map_end);
--	memblock_phys_free(addr, PMD_SIZE);
--	real_end = addr + PMD_SIZE;
-+	if (!addr) {
-+		pr_warn("Failed to release memory for alloc_low_pages()");
-+		real_end = max(map_start, ALIGN_DOWN(map_end, PMD_SIZE));
-+	} else {
-+		memblock_phys_free(addr, PMD_SIZE);
-+		real_end = addr + PMD_SIZE;
-+	}
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index f1cf7f2909f3a..643d6bf66522e 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -1725,27 +1725,27 @@ int blkcg_policy_register(struct blkcg_policy *pol)
+ 	struct blkcg *blkcg;
+ 	int i, ret;
  
- 	/* step_size need to be small so pgt_buf from BRK could cover it */
- 	step_size = PMD_SIZE;
++	/*
++	 * Make sure cpd/pd_alloc_fn and cpd/pd_free_fn in pairs, and policy
++	 * without pd_alloc_fn/pd_free_fn can't be activated.
++	 */
++	if ((!pol->cpd_alloc_fn ^ !pol->cpd_free_fn) ||
++	    (!pol->pd_alloc_fn ^ !pol->pd_free_fn))
++		return -EINVAL;
++
+ 	mutex_lock(&blkcg_pol_register_mutex);
+ 	mutex_lock(&blkcg_pol_mutex);
+ 
+ 	/* find an empty slot */
+-	ret = -ENOSPC;
+ 	for (i = 0; i < BLKCG_MAX_POLS; i++)
+ 		if (!blkcg_policy[i])
+ 			break;
+ 	if (i >= BLKCG_MAX_POLS) {
+ 		pr_warn("blkcg_policy_register: BLKCG_MAX_POLS too small\n");
++		ret = -ENOSPC;
+ 		goto err_unlock;
+ 	}
+ 
+-	/*
+-	 * Make sure cpd/pd_alloc_fn and cpd/pd_free_fn in pairs, and policy
+-	 * without pd_alloc_fn/pd_free_fn can't be activated.
+-	 */
+-	if ((!pol->cpd_alloc_fn ^ !pol->cpd_free_fn) ||
+-	    (!pol->pd_alloc_fn ^ !pol->pd_free_fn))
+-		goto err_unlock;
+-
+ 	/* register @pol */
+ 	pol->plid = i;
+ 	blkcg_policy[pol->plid] = pol;
+@@ -1756,8 +1756,10 @@ int blkcg_policy_register(struct blkcg_policy *pol)
+ 			struct blkcg_policy_data *cpd;
+ 
+ 			cpd = pol->cpd_alloc_fn(GFP_KERNEL);
+-			if (!cpd)
++			if (!cpd) {
++				ret = -ENOMEM;
+ 				goto err_free_cpds;
++			}
+ 
+ 			blkcg->cpd[pol->plid] = cpd;
+ 			cpd->blkcg = blkcg;
 -- 
 2.39.5
 
