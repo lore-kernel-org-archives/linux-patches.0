@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D43E194A45;
-	Tue, 27 May 2025 17:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D90194A45;
+	Tue, 27 May 2025 17:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368347; cv=none; b=Kqd2LFsfmfBtvBviyoUpMdvS9bSC4T+Kuu3ZK9tTjxihGPXl19wYciiIGlSw/qyP5ACKLCadEaYSOVlLKeBxkDXl/Hqn7bAsc4ZgiNrUFgT8p4+uqfVeZx2b8CpsTf3RTT6KDtVz/RVHexv64i9Uu7BCRIoIOLUvBJ17zh2vY8k=
+	t=1748368350; cv=none; b=IZIymgRVH9Q/WWwEhEJvAEHqmOFV5hBbeUKbhyIvQf5qvShibM07AQwMzfxPK/2azxg6BVCGqzTTd/Q2k/RhVDpXJc6Dbky3LMUi283HPwwLLd2u1Y7+ixeIDM4Qj/utBWsMeYPyBa3wXNqDgciHZysoGcxF7DsDevTP9lHV89A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368347; c=relaxed/simple;
-	bh=dBLfRG7yP0MAAMPtohzBDlXcc9Xa0qWiI8DqUfRFsk4=;
+	s=arc-20240116; t=1748368350; c=relaxed/simple;
+	bh=KaY44K9Ue5ZzWj5eURYuz9qO9tOHo5VT0hRHFpY5Hbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pyFk7is1RIx9cMreRspEH75CSGnApmwt9NtRALYF1PtzFlqGcaDs1qLF8aS9vcSedvbGMIHQLgEFEEkFjAcyY7WjDfKKbuiq0AbczrRJJwBdrL4dXGEO88+olgWwfBERbnCeSi/eajJQHOwEURkfwklid3CD5ChzlMK1RSkrcvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RkQayaPx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tZvl4beq0jqrdLWKpfGeAAtzfSgB/yFMrXeqap1EBxeJ//jvl2ywP25tntcAJybZdPOKoFieoFr00aadbwZDXwLC1wqCn8T3lBh4n80x4qaGAG/+or6ZQ4HShTllnB+irNGl0GW06QDa83ganVS23ehca8wYpqHLShnHDHCMp2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZ93lWlu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RkQayaPx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DB9CC4CEE9;
-	Tue, 27 May 2025 17:52:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZ93lWlu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FFDC4CEE9;
+	Tue, 27 May 2025 17:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368347;
-	bh=dBLfRG7yP0MAAMPtohzBDlXcc9Xa0qWiI8DqUfRFsk4=;
+	s=korg; t=1748368350;
+	bh=KaY44K9Ue5ZzWj5eURYuz9qO9tOHo5VT0hRHFpY5Hbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RkQayaPxqTRO+Aem0je0y6hNmFEKxSc9dzUES+N9VPFZ0bi26mdtc4f/b5U8Jok1h
-	 uMAJn3unZJe4Nvex5/gaSDLrahe9bisZ6yjJhvYJUQ88YVg14ZRV/WjAVmTBc7Em53
-	 /oQG1wmD+4+D4WxIybuQwDI5jtZjf11iWdFFuzSc=
+	b=FZ93lWlu3ev5Uo0287mzQqiR76Q8477RTEs9b8yJSps4KUE4mmt1hTZRUerNT9nZk
+	 hUQKPuVxBIhN7H+nq6inpmVxwTrUlf0b6/DWLf/acwWS3zOs9VKqlIgHr4mM6jU30d
+	 RECYcimrst2vHpAUc0aysUWE/gHDtcMyswaT2bKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Donet Tom <donettom@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 648/783] book3s64/radix: Fix compile errors when CONFIG_ARCH_WANT_OPTIMIZE_DAX_VMEMMAP=n
-Date: Tue, 27 May 2025 18:27:25 +0200
-Message-ID: <20250527162539.524002759@linuxfoundation.org>
+Subject: [PATCH 6.14 649/783] pinctrl: meson: define the pull up/down resistor value as 60 kOhm
+Date: Tue, 27 May 2025 18:27:26 +0200
+Message-ID: <20250527162539.562007480@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,42 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit 29bdc1f1c1df80868fb35bc69d1f073183adc6de ]
+[ Upstream commit e56088a13708757da68ad035269d69b93ac8c389 ]
 
-Fix compile errors when CONFIG_ARCH_WANT_OPTIMIZE_DAX_VMEMMAP=n
+The public datasheets of the following Amlogic SoCs describe a typical
+resistor value for the built-in pull up/down resistor:
+- Meson8/8b/8m2: not documented
+- GXBB (S905): 60 kOhm
+- GXL (S905X): 60 kOhm
+- GXM (S912): 60 kOhm
+- G12B (S922X): 60 kOhm
+- SM1 (S905D3): 60 kOhm
 
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Donet Tom <donettom@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/8231763344223c193e3452eab0ae8ea966aff466.1741609795.git.donettom@linux.ibm.com
+The public G12B and SM1 datasheets additionally state min and max
+values:
+- min value: 50 kOhm for both, pull-up and pull-down
+- max value for the pull-up: 70 kOhm
+- max value for the pull-down: 130 kOhm
+
+Use 60 kOhm in the pinctrl-meson driver as well so it's shown in the
+debugfs output. It may not be accurate for Meson8/8b/8m2 but in reality
+60 kOhm is closer to the actual value than 1 Ohm.
+
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/20250329190132.855196-1-martin.blumenstingl@googlemail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/book3s64/radix_pgtable.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pinctrl/meson/pinctrl-meson.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/mm/book3s64/radix_pgtable.c b/arch/powerpc/mm/book3s64/radix_pgtable.c
-index 128c011afc481..9f764bc42b8cc 100644
---- a/arch/powerpc/mm/book3s64/radix_pgtable.c
-+++ b/arch/powerpc/mm/book3s64/radix_pgtable.c
-@@ -976,7 +976,7 @@ int __meminit radix__vmemmap_create_mapping(unsigned long start,
- 	return 0;
- }
- 
--
-+#ifdef CONFIG_ARCH_WANT_OPTIMIZE_DAX_VMEMMAP
- bool vmemmap_can_optimize(struct vmem_altmap *altmap, struct dev_pagemap *pgmap)
- {
- 	if (radix_enabled())
-@@ -984,6 +984,7 @@ bool vmemmap_can_optimize(struct vmem_altmap *altmap, struct dev_pagemap *pgmap)
- 
- 	return false;
- }
-+#endif
- 
- int __meminit vmemmap_check_pmd(pmd_t *pmdp, int node,
- 				unsigned long addr, unsigned long next)
+diff --git a/drivers/pinctrl/meson/pinctrl-meson.c b/drivers/pinctrl/meson/pinctrl-meson.c
+index 253a0cc57e396..e5a32a0532eee 100644
+--- a/drivers/pinctrl/meson/pinctrl-meson.c
++++ b/drivers/pinctrl/meson/pinctrl-meson.c
+@@ -487,7 +487,7 @@ static int meson_pinconf_get(struct pinctrl_dev *pcdev, unsigned int pin,
+ 	case PIN_CONFIG_BIAS_PULL_DOWN:
+ 	case PIN_CONFIG_BIAS_PULL_UP:
+ 		if (meson_pinconf_get_pull(pc, pin) == param)
+-			arg = 1;
++			arg = 60000;
+ 		else
+ 			return -EINVAL;
+ 		break;
 -- 
 2.39.5
 
