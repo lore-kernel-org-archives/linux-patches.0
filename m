@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976BD2110E;
-	Tue, 27 May 2025 17:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746372110E;
+	Tue, 27 May 2025 17:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366516; cv=none; b=WFfd8fOU8VBO0ZeZ595y87THXXw076z+FMjFLjXXuDbtTTEIeV0FmDYmp/7Rt/k5D4xqh97tIyhX8e0kEOGWldlQ7X5foN8Ny2OWl3Td/pvEv5z6hDm50WqyLreCPsw1ZU6Ylun1J/nXbS+T9Mx8EvqMvtupbtmCfeobTuckF0Q=
+	t=1748366519; cv=none; b=G36ZE9VM6HXuW2W/2YEwrVl5fYfhr1Z/rSl/p0UU/+EM0E7EZq7qKTosE6cBzq1siVj47soSCM8CX0MIBMu5cUAh9gYYJp9eGc1NLAlmuYXoPyuuFFna8sn9Ff/0z4jPgCTes0Czv9jN6kPBUI+++mR3erO0oa0FhTAKoRNsVJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366516; c=relaxed/simple;
-	bh=+LyXhCPgMpDHI524xrLYxABYeF7CkIEwP54EJDsKS54=;
+	s=arc-20240116; t=1748366519; c=relaxed/simple;
+	bh=J68ctQ7wpGNsIh71mZqK/QrF79ypVHlbKPAmZr0cTFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B89gNkWF7mAB/K7LSi98mA5gqL8jJvI1st66MGa4aFfGYHn/IS+D0fl4Pj5RxPZxTpenULZQ6TrHEv6u5/TPrlntsd697A3U3TbhdB8I0/2A8c/2YqXN7eTx/2/F620FVxvg6t5/Ru7IJ7+2z8H3NgzkI/DpecP3k5VFf6nSfNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSM22X/v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IF15iy8g1cyFpieSXRO/aX7aQb/JMN1sqawmsoHNNHrVU4IrBYajqzefFGHHiF3odpo9GIQInRCtEF6aLcknafttdqWt3/v/mbR9OJBj/aUjug57d3YUVPSJfjBIZa8DhCpnvWs82WpjVTcIAq+XH9Oj1bZHC8wuIZSyjsKzHL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HwPxnPCG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSM22X/v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F9FC4CEE9;
-	Tue, 27 May 2025 17:21:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HwPxnPCG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8AFAC4CEE9;
+	Tue, 27 May 2025 17:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366516;
-	bh=+LyXhCPgMpDHI524xrLYxABYeF7CkIEwP54EJDsKS54=;
+	s=korg; t=1748366519;
+	bh=J68ctQ7wpGNsIh71mZqK/QrF79ypVHlbKPAmZr0cTFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zSM22X/vKm9vwOlOtySRa/xFhe0vE3MhJcUwce0UAo67DA/EL0Q8oGgrPT8P1wakF
-	 E/wg8ht+kBSuvUpbBr9s6lrf0O3wE7bB9MVyUVzWCjrF5jdb8czVi3ozU+ETbA5hnP
-	 eQipnWzHj7+yNGHzdW52peeEd//YXW0OYYk18uQM=
+	b=HwPxnPCGvwZ2Dg9oAuapkv7pNih/mbAPzOpwKNIeCnhZfJ0yN1829iBx9TWZ1mRHr
+	 QRqYFiUd05wVk7FQv/7rSw+V9+Tm1Hx9YCL0/S1kGOWV+IWC5Q/F+ARLez6/Md9Z8e
+	 2VVsmZu0TiNOxRi8rGaB4EStpsNiVZcC9MyLRC9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChunHao Lin <hau@realtek.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	James Clark <james.clark@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 094/783] r8169: disable RTL8126 ZRX-DC timeout
-Date: Tue, 27 May 2025 18:18:11 +0200
-Message-ID: <20250527162516.967396797@linuxfoundation.org>
+Subject: [PATCH 6.14 095/783] tools/build: Dont pass test log files to linker
+Date: Tue, 27 May 2025 18:18:12 +0200
+Message-ID: <20250527162517.008993563@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,68 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChunHao Lin <hau@realtek.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit b48688ea3c9ac8d5d910c6e91fb7f80d846581f0 ]
+[ Upstream commit 935e7cb5bb80106ff4f2fe39640f430134ef8cd8 ]
 
-Disable it due to it dose not meet ZRX-DC specification. If it is enabled,
-device will exit L1 substate every 100ms. Disable it for saving more power
-in L1 substate.
+Separate test log files from object files. Depend on test log output
+but don't pass to the linker.
 
-Signed-off-by: ChunHao Lin <hau@realtek.com>
-Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://patch.msgid.link/20250318083721.4127-3-hau@realtek.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250311213628.569562-2-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 27 +++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ tools/build/Makefile.build | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index 5a5eba49c6515..4ead966727734 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -2850,6 +2850,32 @@ static u32 rtl_csi_read(struct rtl8169_private *tp, int addr)
- 		RTL_R32(tp, CSIDR) : ~0;
- }
+diff --git a/tools/build/Makefile.build b/tools/build/Makefile.build
+index e710ed67a1b49..3584ff3086078 100644
+--- a/tools/build/Makefile.build
++++ b/tools/build/Makefile.build
+@@ -129,6 +129,10 @@ objprefix    := $(subst ./,,$(OUTPUT)$(dir)/)
+ obj-y        := $(addprefix $(objprefix),$(obj-y))
+ subdir-obj-y := $(addprefix $(objprefix),$(subdir-obj-y))
  
-+static void rtl_disable_zrxdc_timeout(struct rtl8169_private *tp)
-+{
-+	struct pci_dev *pdev = tp->pci_dev;
-+	u32 csi;
-+	int rc;
-+	u8 val;
++# Separate out test log files from real build objects.
++test-y       := $(filter %_log, $(obj-y))
++obj-y        := $(filter-out %_log, $(obj-y))
 +
-+#define RTL_GEN3_RELATED_OFF	0x0890
-+#define RTL_GEN3_ZRXDC_NONCOMPL	0x1
-+	if (pdev->cfg_size > RTL_GEN3_RELATED_OFF) {
-+		rc = pci_read_config_byte(pdev, RTL_GEN3_RELATED_OFF, &val);
-+		if (rc == PCIBIOS_SUCCESSFUL) {
-+			val &= ~RTL_GEN3_ZRXDC_NONCOMPL;
-+			rc = pci_write_config_byte(pdev, RTL_GEN3_RELATED_OFF,
-+						   val);
-+			if (rc == PCIBIOS_SUCCESSFUL)
-+				return;
-+		}
-+	}
-+
-+	netdev_notice_once(tp->dev,
-+		"No native access to PCI extended config space, falling back to CSI\n");
-+	csi = rtl_csi_read(tp, RTL_GEN3_RELATED_OFF);
-+	rtl_csi_write(tp, RTL_GEN3_RELATED_OFF, csi & ~RTL_GEN3_ZRXDC_NONCOMPL);
-+}
-+
- static void rtl_set_aspm_entry_latency(struct rtl8169_private *tp, u8 val)
- {
- 	struct pci_dev *pdev = tp->pci_dev;
-@@ -3822,6 +3848,7 @@ static void rtl_hw_start_8125d(struct rtl8169_private *tp)
+ # Final '$(obj)-in.o' object
+ in-target := $(objprefix)$(obj)-in.o
  
- static void rtl_hw_start_8126a(struct rtl8169_private *tp)
- {
-+	rtl_disable_zrxdc_timeout(tp);
- 	rtl_set_def_aspm_entry_latency(tp);
- 	rtl_hw_start_8125_common(tp);
- }
+@@ -139,7 +143,7 @@ $(subdir-y):
+ 
+ $(sort $(subdir-obj-y)): $(subdir-y) ;
+ 
+-$(in-target): $(obj-y) FORCE
++$(in-target): $(obj-y) $(test-y) FORCE
+ 	$(call rule_mkdir)
+ 	$(call if_changed,$(host)ld_multi)
+ 
 -- 
 2.39.5
 
