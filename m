@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BC52110E;
-	Tue, 27 May 2025 17:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40ECA271476;
+	Tue, 27 May 2025 17:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365462; cv=none; b=SCK1M7k2oeE6bACr59jvK1n1ufvYweDKmmai4Z9Y/ujk1PWss4JN/C0/EPc86TysgXyik0J94k9YmOxXRyDER1yhzhUsAlcj7GC6dZUpvZamyR5PZ7WDy8C+I74zadXLf6k5b35+1DEtZoIT8lfheMAKdBD/dKqSGrbMZhLA/I4=
+	t=1748365465; cv=none; b=EVWN5bg4acGVeHVH9JawIOYPepa8IFZpwM1qMagzs//OsP8qXlHmvqbyG/JCNC6h1+Zz8GOcxqiv8w8M1XziwvAhL4ybTlIWbYdM0vRM48innRVmRmdHGDAZ0u+IxDJsZ329Qm65qZUmu2Ta+EBwxTOjA8m+yFVXibvsOpcxIY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365462; c=relaxed/simple;
-	bh=BjsMHwCyGYi9WDpnTYqxbpKDzk4tKp+9UY+seOkTQoc=;
+	s=arc-20240116; t=1748365465; c=relaxed/simple;
+	bh=npThKAFz0zS8F3mkw5o0gNRaBg90+nuDkMFklAKHbQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qz3DDpwgBo/koLcMlsgL7rSJOllAfwZWo9L6MO5uwngi1gmtHf9J/vPScWjFPESvN3rPYkltPyd3+9lY3ss6FlOu3ZCXuhYn5iw6cYljQv9bFj/9bGT5PEUMLvgJsOLFQQdTXR7zYYucpU3yELyhjy8OdHYT1tARVuiMx+k2SBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uY1rXpoW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hj1kGRbF6aOQH/XMvnVW4JygQhQrTw/2NVaq1ufynVTWZvztHaG5vs+MFt2mrO9pLik9+gy7kgbMuHXROHt/jUmTLwcmyK5D2DtNJV8C6dYXQhfT9/rqYkQbsVoNVDbzChbksdpacdMWclYzwa35SwivZv97YjMoH0ZoL/aFPI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2jfzBUO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uY1rXpoW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA9CC4CEE9;
-	Tue, 27 May 2025 17:04:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2jfzBUO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A120CC4CEE9;
+	Tue, 27 May 2025 17:04:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365461;
-	bh=BjsMHwCyGYi9WDpnTYqxbpKDzk4tKp+9UY+seOkTQoc=;
+	s=korg; t=1748365465;
+	bh=npThKAFz0zS8F3mkw5o0gNRaBg90+nuDkMFklAKHbQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uY1rXpoW/UTNbZsni07hxTEqPmmOHL6athLplm5AmM+6A4XWs4yDJRaT5IiAKxFq0
-	 lMXXz7cDAFq991d5TdrAcSxu/OeMzGX46wD/3bwXbkIpgd0Y633w9lPBCBi437zOQI
-	 Gj1pbJF9ss7/hYMmVTrQX1Bv0xKSeUVMiHCBwESA=
+	b=E2jfzBUOYEbQMFu242Vy9LXqy4gUp2BVyvdBg9n2npxwBI9Mc/WvPrb5p1hWe2V08
+	 tk89w2YSQwe66HoaTW78+Qt7EZr/QzeuW/XNEBHMrebRuf1qYslckZwZUqnXb5xQfk
+	 2y8KP2waAZ81dhp8FxnjF1YBGyiz5eoNYHWEvHVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 343/626] bpf: dont do clean_live_states when state->loop_entry->branches > 0
-Date: Tue, 27 May 2025 18:23:56 +0200
-Message-ID: <20250527162458.951473764@linuxfoundation.org>
+Subject: [PATCH 6.12 377/626] x86/traps: Cleanup and robustify decode_bug()
+Date: Tue, 27 May 2025 18:24:30 +0200
+Message-ID: <20250527162500.335261796@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,102 +51,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 9e63fdb0cbdf3268c86638a8274f4d5549a82820 ]
+[ Upstream commit c20ad96c9a8f0aeaf4e4057730a22de2657ad0c2 ]
 
-verifier.c:is_state_visited() uses RANGE_WITHIN states comparison rules
-for cached states that have loop_entry with non-zero branches count
-(meaning that loop_entry's verification is not yet done).
+Notably, don't attempt to decode an immediate when MOD == 3.
 
-The RANGE_WITHIN rules in regsafe()/stacksafe() require register and
-stack objects types to be identical in current and old states.
+Additionally have it return the instruction length, such that WARN
+like bugs can more reliably skip to the correct instruction.
 
-verifier.c:clean_live_states() replaces registers and stack spills
-with NOT_INIT/STACK_INVALID marks, if these registers/stack spills are
-not read in any child state. This means that clean_live_states() works
-against loop convergence logic under some conditions. See selftest in
-the next patch for a specific example.
-
-Mitigate this by prohibiting clean_verifier_state() when
-state->loop_entry->branches > 0.
-
-This undoes negative verification performance impact of the
-copy_verifier_state() fix from the previous patch.
-Below is comparison between master and current patch.
-
-selftests:
-
-File                                Program                       Insns (A)  Insns (B)  Insns    (DIFF)  States (A)  States (B)  States  (DIFF)
-----------------------------------  ----------------------------  ---------  ---------  ---------------  ----------  ----------  --------------
-arena_htab.bpf.o                    arena_htab_llvm                     717        423   -294 (-41.00%)          57          37   -20 (-35.09%)
-arena_htab_asm.bpf.o                arena_htab_asm                      597        445   -152 (-25.46%)          47          37   -10 (-21.28%)
-arena_list.bpf.o                    arena_list_add                     1493       1822   +329 (+22.04%)          30          37    +7 (+23.33%)
-arena_list.bpf.o                    arena_list_del                      309        261    -48 (-15.53%)          23          15    -8 (-34.78%)
-iters.bpf.o                         checkpoint_states_deletion        18125      22154  +4029 (+22.23%)         818         918  +100 (+12.22%)
-iters.bpf.o                         iter_nested_deeply_iters            593        367   -226 (-38.11%)          67          43   -24 (-35.82%)
-iters.bpf.o                         iter_nested_iters                   813        772     -41 (-5.04%)          79          72     -7 (-8.86%)
-iters.bpf.o                         iter_subprog_check_stacksafe        155        135    -20 (-12.90%)          15          14     -1 (-6.67%)
-iters.bpf.o                         iter_subprog_iters                 1094        808   -286 (-26.14%)          88          68   -20 (-22.73%)
-iters.bpf.o                         loop_state_deps2                    479        356   -123 (-25.68%)          46          35   -11 (-23.91%)
-iters.bpf.o                         triple_continue                      35         31     -4 (-11.43%)           3           3     +0 (+0.00%)
-kmem_cache_iter.bpf.o               open_coded_iter                      63         59      -4 (-6.35%)           7           6    -1 (-14.29%)
-mptcp_subflow.bpf.o                 _getsockopt_subflow                 501        446    -55 (-10.98%)          25          23     -2 (-8.00%)
-pyperf600_iter.bpf.o                on_event                          12339       6379  -5960 (-48.30%)         441         286  -155 (-35.15%)
-verifier_bits_iter.bpf.o            max_words                            92         84      -8 (-8.70%)           8           7    -1 (-12.50%)
-verifier_iterating_callbacks.bpf.o  cond_break2                         113        192    +79 (+69.91%)          12          21    +9 (+75.00%)
-
-sched_ext:
-
-File               Program                 Insns (A)  Insns (B)  Insns      (DIFF)  States (A)  States (B)  States    (DIFF)
------------------  ----------------------  ---------  ---------  -----------------  ----------  ----------  ----------------
-bpf.bpf.o          layered_dispatch            11485       9039    -2446 (-21.30%)         848         662    -186 (-21.93%)
-bpf.bpf.o          layered_dump                 7422       5022    -2400 (-32.34%)         681         298    -383 (-56.24%)
-bpf.bpf.o          layered_enqueue             16854      13753    -3101 (-18.40%)        1611        1308    -303 (-18.81%)
-bpf.bpf.o          layered_init              1000001       5549  -994452 (-99.45%)       84672         523  -84149 (-99.38%)
-bpf.bpf.o          layered_runnable             3149       1899    -1250 (-39.70%)         288         151    -137 (-47.57%)
-bpf.bpf.o          p2dq_init                    2343       1936     -407 (-17.37%)         201         170     -31 (-15.42%)
-bpf.bpf.o          refresh_layer_cpumasks      16487       1285   -15202 (-92.21%)        1770         120   -1650 (-93.22%)
-bpf.bpf.o          rusty_select_cpu             1937       1386     -551 (-28.45%)         177         125     -52 (-29.38%)
-scx_central.bpf.o  central_dispatch              636        600       -36 (-5.66%)          63          59       -4 (-6.35%)
-scx_central.bpf.o  central_init                  913        632     -281 (-30.78%)          48          39      -9 (-18.75%)
-scx_nest.bpf.o     nest_init                     636        601       -35 (-5.50%)          60          58       -2 (-3.33%)
-scx_pair.bpf.o     pair_dispatch             1000001       1914  -998087 (-99.81%)       58169         142  -58027 (-99.76%)
-scx_qmap.bpf.o     qmap_dispatch                2393       2187      -206 (-8.61%)         196         174     -22 (-11.22%)
-scx_qmap.bpf.o     qmap_init                   16367      22777    +6410 (+39.16%)         603         768    +165 (+27.36%)
-
-'layered_init' and 'pair_dispatch' hit 1M on master, but are verified
-ok with this patch.
-
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20250215110411.3236773-4-eddyz87@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Link: https://lore.kernel.org/r/20250207122546.721120726@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/x86/include/asm/bug.h |  5 ++-
+ arch/x86/include/asm/ibt.h |  4 +-
+ arch/x86/kernel/traps.c    | 82 ++++++++++++++++++++++++++++----------
+ 3 files changed, 65 insertions(+), 26 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 294fbafbeba75..592ee3b47635b 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -17282,12 +17282,16 @@ static void clean_verifier_state(struct bpf_verifier_env *env,
- static void clean_live_states(struct bpf_verifier_env *env, int insn,
- 			      struct bpf_verifier_state *cur)
- {
-+	struct bpf_verifier_state *loop_entry;
- 	struct bpf_verifier_state_list *sl;
+diff --git a/arch/x86/include/asm/bug.h b/arch/x86/include/asm/bug.h
+index 806649c7f23dc..9a0f29be1a9ea 100644
+--- a/arch/x86/include/asm/bug.h
++++ b/arch/x86/include/asm/bug.h
+@@ -22,8 +22,9 @@
+ #define SECOND_BYTE_OPCODE_UD2	0x0b
  
- 	sl = *explored_state(env, insn);
- 	while (sl) {
- 		if (sl->state.branches)
- 			goto next;
-+		loop_entry = get_loop_entry(&sl->state);
-+		if (loop_entry && loop_entry->branches)
-+			goto next;
- 		if (sl->state.insn_idx != insn ||
- 		    !same_callsites(&sl->state, cur))
- 			goto next;
+ #define BUG_NONE		0xffff
+-#define BUG_UD1			0xfffe
+-#define BUG_UD2			0xfffd
++#define BUG_UD2			0xfffe
++#define BUG_UD1			0xfffd
++#define BUG_UD1_UBSAN		0xfffc
+ 
+ #ifdef CONFIG_GENERIC_BUG
+ 
+diff --git a/arch/x86/include/asm/ibt.h b/arch/x86/include/asm/ibt.h
+index 1e59581d500ca..b778ae6e67ee8 100644
+--- a/arch/x86/include/asm/ibt.h
++++ b/arch/x86/include/asm/ibt.h
+@@ -41,7 +41,7 @@
+ 	_ASM_PTR fname "\n\t"				\
+ 	".popsection\n\t"
+ 
+-static inline __attribute_const__ u32 gen_endbr(void)
++static __always_inline __attribute_const__ u32 gen_endbr(void)
+ {
+ 	u32 endbr;
+ 
+@@ -56,7 +56,7 @@ static inline __attribute_const__ u32 gen_endbr(void)
+ 	return endbr;
+ }
+ 
+-static inline __attribute_const__ u32 gen_endbr_poison(void)
++static __always_inline __attribute_const__ u32 gen_endbr_poison(void)
+ {
+ 	/*
+ 	 * 4 byte NOP that isn't NOP4 (in fact it is OSP NOP3), such that it
+diff --git a/arch/x86/kernel/traps.c b/arch/x86/kernel/traps.c
+index 5e3e036e6e537..b18fc7539b8d7 100644
+--- a/arch/x86/kernel/traps.c
++++ b/arch/x86/kernel/traps.c
+@@ -94,10 +94,17 @@ __always_inline int is_valid_bugaddr(unsigned long addr)
+ 
+ /*
+  * Check for UD1 or UD2, accounting for Address Size Override Prefixes.
+- * If it's a UD1, get the ModRM byte to pass along to UBSan.
++ * If it's a UD1, further decode to determine its use:
++ *
++ * UBSan{0}:     67 0f b9 00             ud1    (%eax),%eax
++ * UBSan{10}:    67 0f b9 40 10          ud1    0x10(%eax),%eax
++ * static_call:  0f b9 cc                ud1    %esp,%ecx
++ *
++ * Notably UBSAN uses EAX, static_call uses ECX.
+  */
+-__always_inline int decode_bug(unsigned long addr, u32 *imm)
++__always_inline int decode_bug(unsigned long addr, s32 *imm, int *len)
+ {
++	unsigned long start = addr;
+ 	u8 v;
+ 
+ 	if (addr < TASK_SIZE_MAX)
+@@ -110,24 +117,42 @@ __always_inline int decode_bug(unsigned long addr, u32 *imm)
+ 		return BUG_NONE;
+ 
+ 	v = *(u8 *)(addr++);
+-	if (v == SECOND_BYTE_OPCODE_UD2)
++	if (v == SECOND_BYTE_OPCODE_UD2) {
++		*len = addr - start;
+ 		return BUG_UD2;
++	}
+ 
+-	if (!IS_ENABLED(CONFIG_UBSAN_TRAP) || v != SECOND_BYTE_OPCODE_UD1)
++	if (v != SECOND_BYTE_OPCODE_UD1)
+ 		return BUG_NONE;
+ 
+-	/* Retrieve the immediate (type value) for the UBSAN UD1 */
+-	v = *(u8 *)(addr++);
+-	if (X86_MODRM_RM(v) == 4)
+-		addr++;
+-
+ 	*imm = 0;
+-	if (X86_MODRM_MOD(v) == 1)
+-		*imm = *(u8 *)addr;
+-	else if (X86_MODRM_MOD(v) == 2)
+-		*imm = *(u32 *)addr;
+-	else
+-		WARN_ONCE(1, "Unexpected MODRM_MOD: %u\n", X86_MODRM_MOD(v));
++	v = *(u8 *)(addr++);		/* ModRM */
++
++	if (X86_MODRM_MOD(v) != 3 && X86_MODRM_RM(v) == 4)
++		addr++;			/* SIB */
++
++	/* Decode immediate, if present */
++	switch (X86_MODRM_MOD(v)) {
++	case 0: if (X86_MODRM_RM(v) == 5)
++			addr += 4; /* RIP + disp32 */
++		break;
++
++	case 1: *imm = *(s8 *)addr;
++		addr += 1;
++		break;
++
++	case 2: *imm = *(s32 *)addr;
++		addr += 4;
++		break;
++
++	case 3: break;
++	}
++
++	/* record instruction length */
++	*len = addr - start;
++
++	if (X86_MODRM_REG(v) == 0)	/* EAX */
++		return BUG_UD1_UBSAN;
+ 
+ 	return BUG_UD1;
+ }
+@@ -258,10 +283,10 @@ static inline void handle_invalid_op(struct pt_regs *regs)
+ static noinstr bool handle_bug(struct pt_regs *regs)
+ {
+ 	bool handled = false;
+-	int ud_type;
+-	u32 imm;
++	int ud_type, ud_len;
++	s32 ud_imm;
+ 
+-	ud_type = decode_bug(regs->ip, &imm);
++	ud_type = decode_bug(regs->ip, &ud_imm, &ud_len);
+ 	if (ud_type == BUG_NONE)
+ 		return handled;
+ 
+@@ -281,15 +306,28 @@ static noinstr bool handle_bug(struct pt_regs *regs)
+ 	 */
+ 	if (regs->flags & X86_EFLAGS_IF)
+ 		raw_local_irq_enable();
+-	if (ud_type == BUG_UD2) {
++
++	switch (ud_type) {
++	case BUG_UD2:
+ 		if (report_bug(regs->ip, regs) == BUG_TRAP_TYPE_WARN ||
+ 		    handle_cfi_failure(regs) == BUG_TRAP_TYPE_WARN) {
+-			regs->ip += LEN_UD2;
++			regs->ip += ud_len;
+ 			handled = true;
+ 		}
+-	} else if (IS_ENABLED(CONFIG_UBSAN_TRAP)) {
+-		pr_crit("%s at %pS\n", report_ubsan_failure(regs, imm), (void *)regs->ip);
++		break;
++
++	case BUG_UD1_UBSAN:
++		if (IS_ENABLED(CONFIG_UBSAN_TRAP)) {
++			pr_crit("%s at %pS\n",
++				report_ubsan_failure(regs, ud_imm),
++				(void *)regs->ip);
++		}
++		break;
++
++	default:
++		break;
+ 	}
++
+ 	if (regs->flags & X86_EFLAGS_IF)
+ 		raw_local_irq_disable();
+ 	instrumentation_end();
 -- 
 2.39.5
 
