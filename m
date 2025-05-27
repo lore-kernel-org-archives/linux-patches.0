@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61CB280303;
-	Tue, 27 May 2025 16:56:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90E9280303;
+	Tue, 27 May 2025 16:56:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364962; cv=none; b=E6K8XD1uEvG6fp7ynWr0M0H5MU74Q7OkJ8UsudpB3xYeqi/R/w6EIDcHVATzVeT3T4rvIPEqQp+Rdlo4QeGutkTQQy7XLpmQmEkxoI1dHvMqVUVn01NSWYD9cpptiMlbxaPhKqonMvW4JOz8r7TukQITKL0qkgonB7vgw8qdFBs=
+	t=1748364965; cv=none; b=GsEqnukcRFlZxtO+Zj2smBDgd4dr4bbkp217vdi97XRkUlgj3w3NVGSBEitEDYXTXB5CLMCVof6N5GyQiFejJb0Ldx5DJgEWzMln03yaFQyKOqoHJb9SyQNYy9lO1BHYzH3L3c0vJTuW14Ntj0m8a23aQwYIcPnq4/s7cawiVyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364962; c=relaxed/simple;
-	bh=RdXAmDNvuZKH8h235Hia7xxWXo56n29LEi+xFhmgbM4=;
+	s=arc-20240116; t=1748364965; c=relaxed/simple;
+	bh=yYWUhLzd/eU88oQH/yu/s+dRfu73GbQ8htaODvOOE1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MMKjxDStvKcJuLIU3yjql+wBUPvP8O6Geq8Z4CaqoQ59ICglMGvpuoTGuR5uAJAlEI2PCeBmx6w931NfrTHX2DPHkZ20BWvvfJJrM4NkiSZxcklj3TpnyIStIfAL1LtxkTuuNuj9cPKfKPF1MLWv0UnhdB+Jzii4975sJaHdJjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bXz+pKL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q8/7K4SpF6gd9FT1zVsdGmynnMf+XIcEE3CNtEbJjJpBihZE4StA8v3ecDHK6BmN/zvKogT8R/dOT/WWdIQhrqV2y4Hqn+XjEhXUZ/njptrgP3Il9Lyb/YuP8zp6YUUEGvyrImzHT3ErwcJteS+KY2BV7igBKRMWcHYl9gbRnBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wdk6L2K9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bXz+pKL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF04AC4CEE9;
-	Tue, 27 May 2025 16:56:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wdk6L2K9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85EFC4CEE9;
+	Tue, 27 May 2025 16:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364962;
-	bh=RdXAmDNvuZKH8h235Hia7xxWXo56n29LEi+xFhmgbM4=;
+	s=korg; t=1748364965;
+	bh=yYWUhLzd/eU88oQH/yu/s+dRfu73GbQ8htaODvOOE1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1bXz+pKLD07kaAhRqhoWO62gDcpJyOq75616KPCZfdMmFW+cAEEc6p0qyF8AIVVVB
-	 EC3oh5ThddoqazeyahbU/oC3QeSo67Dqgo8qfuclZf68+XpjCWB/mzuYKuy4tGF5Qj
-	 QdvkdjrYr86ZWpcA9CAe7z7IE78OOjS6ZWVuoGvA=
+	b=Wdk6L2K9sIa6wg+dCGFJ0y01wEFY+VHRtEJ/8y1FV12LojxdZ1gq81UTZxC7eqjAJ
+	 wwwDivDV8glEhzLgHnbPtVv4yxTIFi+Jlz0Se6+yY2AY6AHOnySaZnBvRvVg8tWcJ8
+	 8Y0y6xZkvZ4QbqYIE60Aurgtd1qqMC+70w1TWeeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Elfring <elfring@users.sourceforge.net>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Niklas Neronin <niklas.neronin@linux.intel.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 223/626] media: c8sectpfe: Call of_node_put(i2c_bus) only once in c8sectpfe_probe()
-Date: Tue, 27 May 2025 18:21:56 +0200
-Message-ID: <20250527162454.075919102@linuxfoundation.org>
+Subject: [PATCH 6.12 224/626] usb: xhci: set page size to the xHCI-supported size
+Date: Tue, 27 May 2025 18:21:57 +0200
+Message-ID: <20250527162454.120062577@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,42 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Elfring <elfring@users.sourceforge.net>
+From: Niklas Neronin <niklas.neronin@linux.intel.com>
 
-[ Upstream commit b773530a34df0687020520015057075f8b7b4ac4 ]
+[ Upstream commit 68c1f1671650b49bbd26e6a65ddcf33f2565efa3 ]
 
-An of_node_put(i2c_bus) call was immediately used after a pointer check
-for an of_find_i2c_adapter_by_node() call in this function implementation.
-Thus call such a function only once instead directly before the check.
+The current xHCI driver does not validate whether a page size of 4096
+bytes is supported. Address the issue by setting the page size to the
+value supported by the xHCI controller, as read from the Page Size
+register. In the event of an unexpected value; default to a 4K page size.
 
-This issue was transformed by using the Coccinelle software.
+Additionally, this commit removes unnecessary debug messages and instead
+prints the supported and used page size once.
 
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+The xHCI controller supports page sizes of (2^{(n+12)}) bytes, where 'n'
+is the Page Size Bit. Only one page size is supported, with a maximum
+page size of 128 KB.
+
+Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250306144954.3507700-10-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/st/sti/c8sectpfe/c8sectpfe-core.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/host/xhci-mem.c | 34 ++++++++++++++++++----------------
+ drivers/usb/host/xhci.h     |  8 ++++----
+ 2 files changed, 22 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/media/platform/st/sti/c8sectpfe/c8sectpfe-core.c b/drivers/media/platform/st/sti/c8sectpfe/c8sectpfe-core.c
-index 67d3d6e50d2e2..ed3a107965cc9 100644
---- a/drivers/media/platform/st/sti/c8sectpfe/c8sectpfe-core.c
-+++ b/drivers/media/platform/st/sti/c8sectpfe/c8sectpfe-core.c
-@@ -797,13 +797,12 @@ static int c8sectpfe_probe(struct platform_device *pdev)
- 		}
- 		tsin->i2c_adapter =
- 			of_find_i2c_adapter_by_node(i2c_bus);
-+		of_node_put(i2c_bus);
- 		if (!tsin->i2c_adapter) {
- 			dev_err(&pdev->dev, "No i2c adapter found\n");
--			of_node_put(i2c_bus);
- 			ret = -ENODEV;
- 			goto err_node_put;
- 		}
--		of_node_put(i2c_bus);
+diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
+index 8c26275696df9..f9c51e0f2e37c 100644
+--- a/drivers/usb/host/xhci-mem.c
++++ b/drivers/usb/host/xhci-mem.c
+@@ -1959,7 +1959,6 @@ void xhci_mem_cleanup(struct xhci_hcd *xhci)
+ 	xhci->interrupters = NULL;
  
- 		/* Acquire reset GPIO and activate it */
- 		tsin->rst_gpio = devm_fwnode_gpiod_get(dev,
+ 	xhci->page_size = 0;
+-	xhci->page_shift = 0;
+ 	xhci->usb2_rhub.bus_state.bus_suspended = 0;
+ 	xhci->usb3_rhub.bus_state.bus_suspended = 0;
+ }
+@@ -2378,6 +2377,22 @@ xhci_create_secondary_interrupter(struct usb_hcd *hcd, unsigned int segs,
+ }
+ EXPORT_SYMBOL_GPL(xhci_create_secondary_interrupter);
+ 
++static void xhci_hcd_page_size(struct xhci_hcd *xhci)
++{
++	u32 page_size;
++
++	page_size = readl(&xhci->op_regs->page_size) & XHCI_PAGE_SIZE_MASK;
++	if (!is_power_of_2(page_size)) {
++		xhci_warn(xhci, "Invalid page size register = 0x%x\n", page_size);
++		/* Fallback to 4K page size, since that's common */
++		page_size = 1;
++	}
++
++	xhci->page_size = page_size << 12;
++	xhci_dbg_trace(xhci, trace_xhci_dbg_init, "HCD page size set to %iK",
++		       xhci->page_size >> 10);
++}
++
+ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
+ {
+ 	struct xhci_interrupter *ir;
+@@ -2385,7 +2400,7 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
+ 	dma_addr_t	dma;
+ 	unsigned int	val, val2;
+ 	u64		val_64;
+-	u32		page_size, temp;
++	u32		temp;
+ 	int		i;
+ 
+ 	INIT_LIST_HEAD(&xhci->cmd_list);
+@@ -2394,20 +2409,7 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
+ 	INIT_DELAYED_WORK(&xhci->cmd_timer, xhci_handle_command_timeout);
+ 	init_completion(&xhci->cmd_ring_stop_completion);
+ 
+-	page_size = readl(&xhci->op_regs->page_size);
+-	xhci_dbg_trace(xhci, trace_xhci_dbg_init,
+-			"Supported page size register = 0x%x", page_size);
+-	val = ffs(page_size) - 1;
+-	if (val < 16)
+-		xhci_dbg_trace(xhci, trace_xhci_dbg_init,
+-			"Supported page size of %iK", (1 << (val + 12)) / 1024);
+-	else
+-		xhci_warn(xhci, "WARN: no supported page size\n");
+-	/* Use 4K pages, since that's common and the minimum the HC supports */
+-	xhci->page_shift = 12;
+-	xhci->page_size = 1 << xhci->page_shift;
+-	xhci_dbg_trace(xhci, trace_xhci_dbg_init,
+-			"HCD page size set to %iK", xhci->page_size / 1024);
++	xhci_hcd_page_size(xhci);
+ 
+ 	/*
+ 	 * Program the Number of Device Slots Enabled field in the CONFIG
+diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+index 2a954efa53e80..c4d5b90ef90a8 100644
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -211,6 +211,9 @@ struct xhci_op_regs {
+ #define CONFIG_CIE		(1 << 9)
+ /* bits 10:31 - reserved and should be preserved */
+ 
++/* bits 15:0 - HCD page shift bit */
++#define XHCI_PAGE_SIZE_MASK     0xffff
++
+ /**
+  * struct xhci_intr_reg - Interrupt Register Set
+  * @irq_pending:	IMAN - Interrupt Management Register.  Used to enable
+@@ -1503,10 +1506,7 @@ struct xhci_hcd {
+ 	u16		max_interrupters;
+ 	/* imod_interval in ns (I * 250ns) */
+ 	u32		imod_interval;
+-	/* 4KB min, 128MB max */
+-	int		page_size;
+-	/* Valid values are 12 to 20, inclusive */
+-	int		page_shift;
++	u32		page_size;
+ 	/* MSI-X/MSI vectors */
+ 	int		nvecs;
+ 	/* optional clocks */
 -- 
 2.39.5
 
