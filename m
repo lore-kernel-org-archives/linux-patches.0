@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729E5271476;
-	Tue, 27 May 2025 17:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3C426868E;
+	Tue, 27 May 2025 17:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365529; cv=none; b=gSF6uIbQwwk3AjWuIml6C+KQbnTE9XpV6zkSq5bsVZVZbsy9txTW68dxvWzHFGyYOG9R3/QeGTpedCLu+CWftk0A7QSkat3B/X6CIc0T7k+Yy70y/HVlhtnMMipTdtMKh4mdhMD3d1JU8FuOM97sZRHdByfkjP1OI/ebxISD7yc=
+	t=1748365532; cv=none; b=J/4GPRFFY88fkSwRqsyCUtzJk9h4EbOIPRnYjqcFygmSQ5RiIkLwQZHJyzVxdc2TX8HhXOPFQKwiuyzd2F/xSGwuWhgRx8DP370VRbZ5xw5/UIZrDyXIF5iaaDJk5iZOhw9xdyZzD6ZWAXvAfCK0EEY3Tn5ONIq+9a0GSqarNYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365529; c=relaxed/simple;
-	bh=mFX86gMU7YZHRV7A8LTvPCd7tv3TNNrBnpInNTcwns4=;
+	s=arc-20240116; t=1748365532; c=relaxed/simple;
+	bh=6x0jXoFpnd8iMwZIDKzHVAnZUBNfxtcYkrDBZ/baO1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s0X0d+yLwfnkKNrBwctBbEaHqxkk3iFJDlYkvYEbNJRAZ597chWn9o1L3FNprvq/VhCLyAi4utionh60+n5qOB+8E2lU8+Q7dr5mo3OwFz8xH6oB5yVAiNWamO+Nxel/1tynbLw4tN3APHqt1dPbgul9AOesOldAhtDwymT068o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MzbBUwtL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LgM+7/F1/0vqBlc40Xshda4+VnNKdEivKWtFJJN2QauQU5l1nC4eo0BhTJkPwLfBpJv4euYSd77p4K/VzgNZfE1/oJ3uuqvrB+lBvvwlAkr8Imtnavm1K7EyhIlNfqFzCQ15ZtiQfjgHXzIc9d16Hf6xfIBi2DLkWKQFHdxa6AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zsMFDe3g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MzbBUwtL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E65C4CEE9;
-	Tue, 27 May 2025 17:05:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zsMFDe3g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB16C4CEE9;
+	Tue, 27 May 2025 17:05:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365529;
-	bh=mFX86gMU7YZHRV7A8LTvPCd7tv3TNNrBnpInNTcwns4=;
+	s=korg; t=1748365532;
+	bh=6x0jXoFpnd8iMwZIDKzHVAnZUBNfxtcYkrDBZ/baO1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MzbBUwtLF4xt3LjpZ5bPr9IDmEIJjWmwFovOQMTgECtxJo5JS2SA5oHxQ/fI1k2jq
-	 A0/amuZyBR9tRLw+7JFbKfmzAmgZh7atbjc7f8zKEKLiBqWdhgj4eTo+wG+zDJCGRl
-	 ABDG1UlMhoATsbEenuEPmjJJ1CcrfYMb/rgE09XY=
+	b=zsMFDe3gZI/M2C5vglwc2PvAHG5hO9Ce5mcEU9XLmfTbmkvw1pfrEinxSbWogD7f2
+	 zFwMdeuhZt6CvA8dZ9N9Wqkz6SxEzwYebQ4rHHTkjhY/vG1DXrjtRq4ne97GY87CP8
+	 b0iOW/UFpPfPONskQ0jSkVRhhHpDv5WAG1BSfrU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Lazar <alazar@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 405/626] net/mlx5: XDP, Enable TX side XDP multi-buffer support
-Date: Tue, 27 May 2025 18:24:58 +0200
-Message-ID: <20250527162501.471698590@linuxfoundation.org>
+Subject: [PATCH 6.12 379/626] serial: sh-sci: Update the suspend/resume support
+Date: Tue, 27 May 2025 18:24:32 +0200
+Message-ID: <20250527162500.414638820@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,204 +51,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Lazar <alazar@nvidia.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 1a9304859b3a4119579524c293b902a8927180f3 ]
+[ Upstream commit 22a6984c5b5df8eab864d7f3e8b94d5a554d31ab ]
 
-In XDP scenarios, fragmented packets can occur if the MTU is larger
-than the page size, even when the packet size fits within the linear
-part.
-If XDP multi-buffer support is disabled, the fragmented part won't be
-handled in the TX flow, leading to packet drops.
+The Renesas RZ/G3S supports a power saving mode where power to most of the
+SoC components is turned off. When returning from this power saving mode,
+SoC components need to be re-configured.
 
-Since XDP multi-buffer support is always available, this commit removes
-the conditional check for enabling it.
-This ensures that XDP multi-buffer support is always enabled,
-regardless of the `is_xdp_mb` parameter, and guarantees the handling of
-fragmented packets in such scenarios.
+The SCIFs on the Renesas RZ/G3S need to be re-configured as well when
+returning from this power saving mode. The sh-sci code already configures
+the SCIF clocks, power domain and registers by calling uart_resume_port()
+in sci_resume(). On suspend path the SCIF UART ports are suspended
+accordingly (by calling uart_suspend_port() in sci_suspend()). The only
+missing setting is the reset signal. For this assert/de-assert the reset
+signal on driver suspend/resume.
 
-Signed-off-by: Alexei Lazar <alazar@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250209101716.112774-16-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+In case the no_console_suspend is specified by the user, the registers need
+to be saved on suspend path and restore on resume path. To do this the
+sci_console_save()/sci_console_restore() functions were added. There is no
+need to cache/restore the status or FIFO registers. Only the control
+registers. The registers that will be saved/restored on suspend/resume are
+specified by the struct sci_suspend_regs data structure.
+
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20250207113313.545432-1-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en.h  |  1 -
- .../ethernet/mellanox/mlx5/core/en/params.c   |  1 -
- .../ethernet/mellanox/mlx5/core/en/params.h   |  1 -
- .../mellanox/mlx5/core/en/reporter_tx.c       |  1 -
- .../net/ethernet/mellanox/mlx5/core/en/xdp.c  | 49 ++++++++-----------
- .../net/ethernet/mellanox/mlx5/core/en_main.c | 29 -----------
- 6 files changed, 21 insertions(+), 61 deletions(-)
+ drivers/tty/serial/sh-sci.c | 71 +++++++++++++++++++++++++++++++++++--
+ 1 file changed, 69 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en.h b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-index 57b7298a0e793..d6266f6a96d6e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-@@ -385,7 +385,6 @@ enum {
- 	MLX5E_SQ_STATE_VLAN_NEED_L2_INLINE,
- 	MLX5E_SQ_STATE_PENDING_XSK_TX,
- 	MLX5E_SQ_STATE_PENDING_TLS_RX_RESYNC,
--	MLX5E_SQ_STATE_XDP_MULTIBUF,
- 	MLX5E_NUM_SQ_STATES, /* Must be kept last */
+diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
+index 80efe3b0ed0c3..779074b1c2be4 100644
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -104,6 +104,15 @@ struct plat_sci_reg {
+ 	u8 offset, size;
  };
  
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-index 31eb99f09c63c..8c4d710e85675 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-@@ -1242,7 +1242,6 @@ void mlx5e_build_xdpsq_param(struct mlx5_core_dev *mdev,
- 	mlx5e_build_sq_param_common(mdev, param);
- 	MLX5_SET(wq, wq, log_wq_sz, params->log_sq_size);
- 	param->is_mpw = MLX5E_GET_PFLAG(params, MLX5E_PFLAG_XDP_TX_MPWQE);
--	param->is_xdp_mb = !mlx5e_rx_is_linear_skb(mdev, params, xsk);
- 	mlx5e_build_tx_cq_param(mdev, params, &param->cqp);
++struct sci_suspend_regs {
++	u16 scsmr;
++	u16 scscr;
++	u16 scfcr;
++	u16 scsptr;
++	u8 scbrr;
++	u8 semr;
++};
++
+ struct sci_port_params {
+ 	const struct plat_sci_reg regs[SCIx_NR_REGS];
+ 	unsigned int fifosize;
+@@ -134,6 +143,8 @@ struct sci_port {
+ 	struct dma_chan			*chan_tx;
+ 	struct dma_chan			*chan_rx;
+ 
++	struct reset_control		*rstc;
++
+ #ifdef CONFIG_SERIAL_SH_SCI_DMA
+ 	struct dma_chan			*chan_tx_saved;
+ 	struct dma_chan			*chan_rx_saved;
+@@ -153,6 +164,7 @@ struct sci_port {
+ 	int				rx_trigger;
+ 	struct timer_list		rx_fifo_timer;
+ 	int				rx_fifo_timeout;
++	struct sci_suspend_regs		suspend_regs;
+ 	u16				hscif_tot;
+ 
+ 	bool has_rtscts;
+@@ -3384,6 +3396,7 @@ static struct plat_sci_port *sci_parse_dt(struct platform_device *pdev,
+ 	}
+ 
+ 	sp = &sci_ports[id];
++	sp->rstc = rstc;
+ 	*dev_id = id;
+ 
+ 	p->type = SCI_OF_TYPE(data);
+@@ -3532,13 +3545,57 @@ static int sci_probe(struct platform_device *dev)
+ 	return 0;
  }
  
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/params.h b/drivers/net/ethernet/mellanox/mlx5/core/en/params.h
-index 3f8986f9d8629..bd5877acc5b1e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/params.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/params.h
-@@ -33,7 +33,6 @@ struct mlx5e_sq_param {
- 	struct mlx5_wq_param       wq;
- 	bool                       is_mpw;
- 	bool                       is_tls;
--	bool                       is_xdp_mb;
- 	u16                        stop_room;
- };
++static void sci_console_save(struct sci_port *s)
++{
++	struct sci_suspend_regs *regs = &s->suspend_regs;
++	struct uart_port *port = &s->port;
++
++	if (sci_getreg(port, SCSMR)->size)
++		regs->scsmr = sci_serial_in(port, SCSMR);
++	if (sci_getreg(port, SCSCR)->size)
++		regs->scscr = sci_serial_in(port, SCSCR);
++	if (sci_getreg(port, SCFCR)->size)
++		regs->scfcr = sci_serial_in(port, SCFCR);
++	if (sci_getreg(port, SCSPTR)->size)
++		regs->scsptr = sci_serial_in(port, SCSPTR);
++	if (sci_getreg(port, SCBRR)->size)
++		regs->scbrr = sci_serial_in(port, SCBRR);
++	if (sci_getreg(port, SEMR)->size)
++		regs->semr = sci_serial_in(port, SEMR);
++}
++
++static void sci_console_restore(struct sci_port *s)
++{
++	struct sci_suspend_regs *regs = &s->suspend_regs;
++	struct uart_port *port = &s->port;
++
++	if (sci_getreg(port, SCSMR)->size)
++		sci_serial_out(port, SCSMR, regs->scsmr);
++	if (sci_getreg(port, SCSCR)->size)
++		sci_serial_out(port, SCSCR, regs->scscr);
++	if (sci_getreg(port, SCFCR)->size)
++		sci_serial_out(port, SCFCR, regs->scfcr);
++	if (sci_getreg(port, SCSPTR)->size)
++		sci_serial_out(port, SCSPTR, regs->scsptr);
++	if (sci_getreg(port, SCBRR)->size)
++		sci_serial_out(port, SCBRR, regs->scbrr);
++	if (sci_getreg(port, SEMR)->size)
++		sci_serial_out(port, SEMR, regs->semr);
++}
++
+ static __maybe_unused int sci_suspend(struct device *dev)
+ {
+ 	struct sci_port *sport = dev_get_drvdata(dev);
  
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
-index c8adf309ecad0..dbd9482359e1e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
-@@ -16,7 +16,6 @@ static const char * const sq_sw_state_type_name[] = {
- 	[MLX5E_SQ_STATE_VLAN_NEED_L2_INLINE] = "vlan_need_l2_inline",
- 	[MLX5E_SQ_STATE_PENDING_XSK_TX] = "pending_xsk_tx",
- 	[MLX5E_SQ_STATE_PENDING_TLS_RX_RESYNC] = "pending_tls_rx_resync",
--	[MLX5E_SQ_STATE_XDP_MULTIBUF] = "xdp_multibuf",
- };
+-	if (sport)
++	if (sport) {
+ 		uart_suspend_port(&sci_uart_driver, &sport->port);
  
- static int mlx5e_wait_for_sq_flush(struct mlx5e_txqsq *sq)
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-index 4610621a340e5..08ab0999f7b31 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-@@ -546,6 +546,7 @@ mlx5e_xmit_xdp_frame(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptxd,
- 	bool inline_ok;
- 	bool linear;
- 	u16 pi;
-+	int i;
++		if (!console_suspend_enabled && uart_console(&sport->port))
++			sci_console_save(sport);
++		else
++			return reset_control_assert(sport->rstc);
++	}
++
+ 	return 0;
+ }
  
- 	struct mlx5e_xdpsq_stats *stats = sq->stats;
+@@ -3546,8 +3603,18 @@ static __maybe_unused int sci_resume(struct device *dev)
+ {
+ 	struct sci_port *sport = dev_get_drvdata(dev);
  
-@@ -612,41 +613,33 @@ mlx5e_xmit_xdp_frame(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptxd,
- 
- 	cseg->opmod_idx_opcode = cpu_to_be32((sq->pc << 8) | MLX5_OPCODE_SEND);
- 
--	if (test_bit(MLX5E_SQ_STATE_XDP_MULTIBUF, &sq->state)) {
--		int i;
--
--		memset(&cseg->trailer, 0, sizeof(cseg->trailer));
--		memset(eseg, 0, sizeof(*eseg) - sizeof(eseg->trailer));
--
--		eseg->inline_hdr.sz = cpu_to_be16(inline_hdr_sz);
-+	memset(&cseg->trailer, 0, sizeof(cseg->trailer));
-+	memset(eseg, 0, sizeof(*eseg) - sizeof(eseg->trailer));
- 
--		for (i = 0; i < num_frags; i++) {
--			skb_frag_t *frag = &xdptxdf->sinfo->frags[i];
--			dma_addr_t addr;
-+	eseg->inline_hdr.sz = cpu_to_be16(inline_hdr_sz);
- 
--			addr = xdptxdf->dma_arr ? xdptxdf->dma_arr[i] :
--				page_pool_get_dma_addr(skb_frag_page(frag)) +
--				skb_frag_off(frag);
-+	for (i = 0; i < num_frags; i++) {
-+		skb_frag_t *frag = &xdptxdf->sinfo->frags[i];
-+		dma_addr_t addr;
- 
--			dseg->addr = cpu_to_be64(addr);
--			dseg->byte_count = cpu_to_be32(skb_frag_size(frag));
--			dseg->lkey = sq->mkey_be;
--			dseg++;
--		}
-+		addr = xdptxdf->dma_arr ? xdptxdf->dma_arr[i] :
-+			page_pool_get_dma_addr(skb_frag_page(frag)) +
-+			skb_frag_off(frag);
- 
--		cseg->qpn_ds = cpu_to_be32((sq->sqn << 8) | ds_cnt);
-+		dseg->addr = cpu_to_be64(addr);
-+		dseg->byte_count = cpu_to_be32(skb_frag_size(frag));
-+		dseg->lkey = sq->mkey_be;
-+		dseg++;
+-	if (sport)
++	if (sport) {
++		if (!console_suspend_enabled && uart_console(&sport->port)) {
++			sci_console_restore(sport);
++		} else {
++			int ret = reset_control_deassert(sport->rstc);
++
++			if (ret)
++				return ret;
++		}
++
+ 		uart_resume_port(&sci_uart_driver, &sport->port);
 +	}
  
--		sq->db.wqe_info[pi] = (struct mlx5e_xdp_wqe_info) {
--			.num_wqebbs = num_wqebbs,
--			.num_pkts = 1,
--		};
-+	cseg->qpn_ds = cpu_to_be32((sq->sqn << 8) | ds_cnt);
- 
--		sq->pc += num_wqebbs;
--	} else {
--		cseg->fm_ce_se = 0;
-+	sq->db.wqe_info[pi] = (struct mlx5e_xdp_wqe_info) {
-+		.num_wqebbs = num_wqebbs,
-+		.num_pkts = 1,
-+	};
- 
--		sq->pc++;
--	}
-+	sq->pc += num_wqebbs;
- 
- 	xsk_tx_metadata_request(meta, &mlx5e_xsk_tx_metadata_ops, eseg);
- 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 3e9ad3cb8121d..38055537b12ac 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -2030,41 +2030,12 @@ int mlx5e_open_xdpsq(struct mlx5e_channel *c, struct mlx5e_params *params,
- 	csp.min_inline_mode = sq->min_inline_mode;
- 	set_bit(MLX5E_SQ_STATE_ENABLED, &sq->state);
- 
--	if (param->is_xdp_mb)
--		set_bit(MLX5E_SQ_STATE_XDP_MULTIBUF, &sq->state);
--
- 	err = mlx5e_create_sq_rdy(c->mdev, param, &csp, 0, &sq->sqn);
- 	if (err)
- 		goto err_free_xdpsq;
- 
- 	mlx5e_set_xmit_fp(sq, param->is_mpw);
- 
--	if (!param->is_mpw && !test_bit(MLX5E_SQ_STATE_XDP_MULTIBUF, &sq->state)) {
--		unsigned int ds_cnt = MLX5E_TX_WQE_EMPTY_DS_COUNT + 1;
--		unsigned int inline_hdr_sz = 0;
--		int i;
--
--		if (sq->min_inline_mode != MLX5_INLINE_MODE_NONE) {
--			inline_hdr_sz = MLX5E_XDP_MIN_INLINE;
--			ds_cnt++;
--		}
--
--		/* Pre initialize fixed WQE fields */
--		for (i = 0; i < mlx5_wq_cyc_get_size(&sq->wq); i++) {
--			struct mlx5e_tx_wqe      *wqe  = mlx5_wq_cyc_get_wqe(&sq->wq, i);
--			struct mlx5_wqe_ctrl_seg *cseg = &wqe->ctrl;
--			struct mlx5_wqe_eth_seg  *eseg = &wqe->eth;
--
--			sq->db.wqe_info[i] = (struct mlx5e_xdp_wqe_info) {
--				.num_wqebbs = 1,
--				.num_pkts   = 1,
--			};
--
--			cseg->qpn_ds = cpu_to_be32((sq->sqn << 8) | ds_cnt);
--			eseg->inline_hdr.sz = cpu_to_be16(inline_hdr_sz);
--		}
--	}
--
  	return 0;
- 
- err_free_xdpsq:
+ }
 -- 
 2.39.5
 
