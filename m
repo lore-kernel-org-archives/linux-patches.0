@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348791AF0BB;
-	Tue, 27 May 2025 17:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0F72110E;
+	Tue, 27 May 2025 17:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367101; cv=none; b=ATSJR3k5Q/gn2gLiX3R1j/f6X2yXoteGpxyVJcX2bXQkJ6bT0z4xRMduVeeiKPfhIHwo6hcg98Xv9gqcZDjQLtN+MXa9NdiriipcRpgYYbKsFjohXT7VQCV3Ae9mcDiiXBexNkbXTU6jkaiBIHjVncao5WG82KnMhbutTfD1N1U=
+	t=1748367105; cv=none; b=Wxw47JDVjHdKJinFbjlG87BF5P0k29RDZKP7NfVnbVdNiGSVHSk1T8ox9eM2uKG/kaDm2P760PkseiajOqZ4BSov0PihkKnZh9hz/ochYmDUbRqVQ+wEMAWU4DuRs/2ktat/bYfOorvGoJC+5u8V71ehfjz4FE9BMH0JA3oDfOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367101; c=relaxed/simple;
-	bh=QzERjcPNHwUPV27a8OKhE0uERvfXCmzOFyKtO+VTB7k=;
+	s=arc-20240116; t=1748367105; c=relaxed/simple;
+	bh=qFcFZORoL76IAb1eorXlfOAp+XriqhAdNYF4YCZqPNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aqRa2oZhp1UonYumxcI4PDfLC/flEn//qqOISfh9EDAigW+MLVpBZ8wZz8pGmYzbQPotSTWvQ9MyBB+pshqkpSsyQyJ9jNqHwKyi2HWoQ5V+/8Dtn69+KHH4wFOnnkJZ0JTpXY5wMAcx36Cx1dXJnXobVuKe3hXVjF7AvqavCT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q2rzHozg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Azaq+ljmEP1N+XVAIV+tV0I/PbscEmgck90KehD+Xb974FLxaAaOYz3J5q77CVYiFhPCLII4y39KGRR8c+/a/SpJI+DmxP10EoplE1Soy3QqQukFhbTGyor816Lbnxf+ioutpzNcbZ/LTxqBhlPNpOBKL/q9o/1/BbwjSeW2d4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHJTWcZa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q2rzHozg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1798C4CEE9;
-	Tue, 27 May 2025 17:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHJTWcZa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79AC9C4CEE9;
+	Tue, 27 May 2025 17:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367101;
-	bh=QzERjcPNHwUPV27a8OKhE0uERvfXCmzOFyKtO+VTB7k=;
+	s=korg; t=1748367103;
+	bh=qFcFZORoL76IAb1eorXlfOAp+XriqhAdNYF4YCZqPNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q2rzHozgbqiPc9k0cdA6t4hsxFc2oZ/S9iVze6R77xrPB7pPHnXP7YHd6wBd8XD+G
-	 yogWtdP9sOSuNQ0Kz0cWDcX/uWZQ6svpTymu5fy5betbI0flQluAJMvYvfCO5GY+9S
-	 lk7Dx1scqkWqvqDZt9BmRqMfamiTvDxmmzIanVdk=
+	b=zHJTWcZanSCu+CoqqZc4U8DHMASJ6TKWFPNBQZVtGZ+ZOoe+156/BZzjI2e0IAeti
+	 KgIPJPShkuHzKr/BUHeXltQkNbmZpxt95okRL7KIu1GTKHcRLvBk15BVpbrZkK5qIb
+	 LlsuncS6XEPLFd6Gir1KjnykM1YlcvsQK509RFqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
-	Luca Weiss <luca@lucaweiss.eu>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Gustavo Sousa <gustavo.sousa@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 277/783] remoteproc: qcom_wcnss: Handle platforms with only single power domain
-Date: Tue, 27 May 2025 18:21:14 +0200
-Message-ID: <20250527162524.365019082@linuxfoundation.org>
+Subject: [PATCH 6.14 278/783] drm/xe: Disambiguate GMDID-based IP names
+Date: Tue, 27 May 2025 18:21:15 +0200
+Message-ID: <20250527162524.404030750@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -46,114 +45,154 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+From: Gustavo Sousa <gustavo.sousa@intel.com>
 
-[ Upstream commit 65991ea8a6d1e68effdc01d95ebe39f1653f7b71 ]
+[ Upstream commit 0695c746f55c875f4cf20bab92533a800a0fe4d6 ]
 
-Both MSM8974 and MSM8226 have only CX as power domain with MX & PX being
-handled as regulators. Handle this case by reodering pd_names to have CX
-first, and handling that the driver core will already attach a single
-power domain internally.
+The name of an IP is a function of its version. As such, given an IP
+version, it should be clear to identify the name of that IP release.
 
-Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-[luca: minor changes]
-Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
-Link: https://lore.kernel.org/r/20250206-wcnss-singlepd-v2-2-9a53ee953dee@lucaweiss.eu
-[bjorn: Added missing braces to else after multi-statement if]
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+With the current code, we keep that mapping clear for pre-GMDID IPs, but
+ambiguous for GMDID-based ones. That causes two types of inconveniences:
+
+ 1. The end user, who might not have all the necessary mapping at hand,
+    might be confused when seeing different possible IP names in the
+    dmesg log.
+
+ 2. It makes a developer who is not familiar with the "IP version" to
+    "Release name" need to resort to looking at the specs to understand
+    see what version maps to what. While the specs should be the
+    authority on the mapping, we should make our lives easier by
+    reflecting that mapping in the source code.
+
+Thus, since the IP name is tied to the version, let's  remove the
+ambiguity by using a "name" field in struct gmdid_map instead of
+accumulating names in the descriptor instances.
+
+This does result in the code having IP name being defined in
+different structs (gmdid_map, xe_graphics_desc, xe_media_desc), but that
+will be resolved in upcoming changes.
+
+A side-effect of this change is that media_xe2 exactly matches
+media_xelpmp now, so we just re-use the latter.
+
+v2:
+  - Drop media_xe2 and re-use media_xelpmp. (Matt)
+
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Signed-off-by: Gustavo Sousa <gustavo.sousa@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250221-xe-unify-ip-descriptors-v2-2-5bc0c6d0c13f@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_wcnss.c | 33 ++++++++++++++++++++++++++-------
- 1 file changed, 26 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/xe/xe_pci.c       | 36 +++++++++++--------------------
+ drivers/gpu/drm/xe/xe_pci_types.h |  1 +
+ 2 files changed, 14 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
-index 5b5664603eed2..775b056d795a8 100644
---- a/drivers/remoteproc/qcom_wcnss.c
-+++ b/drivers/remoteproc/qcom_wcnss.c
-@@ -117,10 +117,10 @@ static const struct wcnss_data pronto_v1_data = {
- 	.pmu_offset = 0x1004,
- 	.spare_offset = 0x1088,
+diff --git a/drivers/gpu/drm/xe/xe_pci.c b/drivers/gpu/drm/xe/xe_pci.c
+index 39be74848e447..9b8813a518d72 100644
+--- a/drivers/gpu/drm/xe/xe_pci.c
++++ b/drivers/gpu/drm/xe/xe_pci.c
+@@ -150,7 +150,6 @@ static const struct xe_graphics_desc graphics_xehpc = {
+ };
  
--	.pd_names = { "mx", "cx" },
-+	.pd_names = { "cx", "mx" },
- 	.vregs = (struct wcnss_vreg_info[]) {
--		{ "vddmx", 950000, 1150000, 0 },
- 		{ "vddcx", .super_turbo = true},
-+		{ "vddmx", 950000, 1150000, 0 },
- 		{ "vddpx", 1800000, 1800000, 0 },
- 	},
- 	.num_pd_vregs = 2,
-@@ -131,10 +131,10 @@ static const struct wcnss_data pronto_v2_data = {
- 	.pmu_offset = 0x1004,
- 	.spare_offset = 0x1088,
+ static const struct xe_graphics_desc graphics_xelpg = {
+-	.name = "Xe_LPG",
+ 	.hw_engine_mask =
+ 		BIT(XE_HW_ENGINE_RCS0) | BIT(XE_HW_ENGINE_BCS0) |
+ 		BIT(XE_HW_ENGINE_CCS0),
+@@ -174,8 +173,6 @@ static const struct xe_graphics_desc graphics_xelpg = {
+ 		GENMASK(XE_HW_ENGINE_CCS3, XE_HW_ENGINE_CCS0)
  
--	.pd_names = { "mx", "cx" },
-+	.pd_names = { "cx", "mx" },
- 	.vregs = (struct wcnss_vreg_info[]) {
--		{ "vddmx", 1287500, 1287500, 0 },
- 		{ "vddcx", .super_turbo = true },
-+		{ "vddmx", 1287500, 1287500, 0 },
- 		{ "vddpx", 1800000, 1800000, 0 },
- 	},
- 	.num_pd_vregs = 2,
-@@ -397,8 +397,17 @@ static irqreturn_t wcnss_stop_ack_interrupt(int irq, void *dev)
- static int wcnss_init_pds(struct qcom_wcnss *wcnss,
- 			  const char * const pd_names[WCNSS_MAX_PDS])
- {
-+	struct device *dev = wcnss->dev;
- 	int i, ret;
+ static const struct xe_graphics_desc graphics_xe2 = {
+-	.name = "Xe2_LPG / Xe2_HPG / Xe3_LPG",
+-
+ 	XE2_GFX_FEATURES,
+ };
  
-+	/* Handle single power domain */
-+	if (dev->pm_domain) {
-+		wcnss->pds[0] = dev;
-+		wcnss->num_pds = 1;
-+		pm_runtime_enable(dev);
-+		return 0;
-+	}
-+
- 	for (i = 0; i < WCNSS_MAX_PDS; i++) {
- 		if (!pd_names[i])
+@@ -200,15 +197,6 @@ static const struct xe_media_desc media_xehpm = {
+ };
+ 
+ static const struct xe_media_desc media_xelpmp = {
+-	.name = "Xe_LPM+",
+-	.hw_engine_mask =
+-		GENMASK(XE_HW_ENGINE_VCS7, XE_HW_ENGINE_VCS0) |
+-		GENMASK(XE_HW_ENGINE_VECS3, XE_HW_ENGINE_VECS0) |
+-		BIT(XE_HW_ENGINE_GSCCS0)
+-};
+-
+-static const struct xe_media_desc media_xe2 = {
+-	.name = "Xe2_LPM / Xe2_HPM / Xe3_LPM",
+ 	.hw_engine_mask =
+ 		GENMASK(XE_HW_ENGINE_VCS7, XE_HW_ENGINE_VCS0) |
+ 		GENMASK(XE_HW_ENGINE_VECS3, XE_HW_ENGINE_VECS0) |
+@@ -357,21 +345,21 @@ __diag_pop();
+ 
+ /* Map of GMD_ID values to graphics IP */
+ static const struct gmdid_map graphics_ip_map[] = {
+-	{ 1270, &graphics_xelpg },
+-	{ 1271, &graphics_xelpg },
+-	{ 1274, &graphics_xelpg },	/* Xe_LPG+ */
+-	{ 2001, &graphics_xe2 },
+-	{ 2004, &graphics_xe2 },
+-	{ 3000, &graphics_xe2 },
+-	{ 3001, &graphics_xe2 },
++	{ 1270, "Xe_LPG", &graphics_xelpg },
++	{ 1271, "Xe_LPG", &graphics_xelpg },
++	{ 1274, "Xe_LPG+", &graphics_xelpg },
++	{ 2001, "Xe2_HPG", &graphics_xe2 },
++	{ 2004, "Xe2_LPG", &graphics_xe2 },
++	{ 3000, "Xe3_LPG", &graphics_xe2 },
++	{ 3001, "Xe3_LPG", &graphics_xe2 },
+ };
+ 
+ /* Map of GMD_ID values to media IP */
+ static const struct gmdid_map media_ip_map[] = {
+-	{ 1300, &media_xelpmp },
+-	{ 1301, &media_xe2 },
+-	{ 2000, &media_xe2 },
+-	{ 3000, &media_xe2 },
++	{ 1300, "Xe_LPM+", &media_xelpmp },
++	{ 1301, "Xe2_HPM", &media_xelpmp },
++	{ 2000, "Xe2_LPM", &media_xelpmp },
++	{ 3000, "Xe3_LPM", &media_xelpmp },
+ };
+ 
+ /*
+@@ -566,6 +554,7 @@ static void handle_gmdid(struct xe_device *xe,
+ 	for (int i = 0; i < ARRAY_SIZE(graphics_ip_map); i++) {
+ 		if (ver == graphics_ip_map[i].ver) {
+ 			xe->info.graphics_verx100 = ver;
++			xe->info.graphics_name = graphics_ip_map[i].name;
+ 			*graphics = graphics_ip_map[i].ip;
+ 
  			break;
-@@ -418,8 +427,15 @@ static int wcnss_init_pds(struct qcom_wcnss *wcnss,
+@@ -586,6 +575,7 @@ static void handle_gmdid(struct xe_device *xe,
+ 	for (int i = 0; i < ARRAY_SIZE(media_ip_map); i++) {
+ 		if (ver == media_ip_map[i].ver) {
+ 			xe->info.media_verx100 = ver;
++			xe->info.media_name = media_ip_map[i].name;
+ 			*media = media_ip_map[i].ip;
  
- static void wcnss_release_pds(struct qcom_wcnss *wcnss)
- {
-+	struct device *dev = wcnss->dev;
- 	int i;
+ 			break;
+diff --git a/drivers/gpu/drm/xe/xe_pci_types.h b/drivers/gpu/drm/xe/xe_pci_types.h
+index 79b0f80376a4d..665b4447b2ebc 100644
+--- a/drivers/gpu/drm/xe/xe_pci_types.h
++++ b/drivers/gpu/drm/xe/xe_pci_types.h
+@@ -44,6 +44,7 @@ struct xe_media_desc {
  
-+	/* Handle single power domain */
-+	if (wcnss->num_pds == 1 && dev->pm_domain) {
-+		pm_runtime_disable(dev);
-+		return;
-+	}
-+
- 	for (i = 0; i < wcnss->num_pds; i++)
- 		dev_pm_domain_detach(wcnss->pds[i], false);
- }
-@@ -437,10 +453,13 @@ static int wcnss_init_regulators(struct qcom_wcnss *wcnss,
- 	 * the regulators for the power domains. For old device trees we need to
- 	 * reserve extra space to manage them through the regulator interface.
- 	 */
--	if (wcnss->num_pds)
--		info += num_pd_vregs;
--	else
-+	if (wcnss->num_pds) {
-+		info += wcnss->num_pds;
-+		/* Handle single power domain case */
-+		num_vregs += num_pd_vregs - wcnss->num_pds;
-+	} else {
- 		num_vregs += num_pd_vregs;
-+	}
+ struct gmdid_map {
+ 	unsigned int ver;
++	const char *name;
+ 	const void *ip;
+ };
  
- 	bulk = devm_kcalloc(wcnss->dev,
- 			    num_vregs, sizeof(struct regulator_bulk_data),
 -- 
 2.39.5
 
