@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC7BAD5A;
-	Tue, 27 May 2025 16:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5571AD5A;
+	Tue, 27 May 2025 16:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364346; cv=none; b=M4Hatqys02bhkdXXKjD4Iz+w/8akzTqpImXT8sD6+3iqzsnQD2WTFxEV9r8dHZF5WWt1R8wO5y2i/XOJ12RKXNRUEIs8eWttyAablszfZReeICnypAeRrxMVkiMmCX0y5h07zY8hOH5vNLCgBSDxPvHj7atH/rTBI/dtqxzNMuI=
+	t=1748364348; cv=none; b=qOKN3hXogd+/6TKoOVmr71yQC2xgp9BBA9LxLz/HjpzJOm2rFeGMyj7hxjueUh6/sY7eqX0j+8sOwUrMdReQgo51sADLOKWgOYWwljx+lWETEPDu293Xge6DxnUmsmsdAFFMZ6YcYvEnuaVSfPy8nzKfFv4lSKSFPGLWSr7MQeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364346; c=relaxed/simple;
-	bh=kWZkCs/eLO/dcgHAmLtYWyuYxx8hUHNCkytbfIC2bhg=;
+	s=arc-20240116; t=1748364348; c=relaxed/simple;
+	bh=bfEfJyRxMrjzGvqfo96CogNvRaV+c0wAPRb/fx1CPIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E2nd5WWaJ1A0yVqON7EX6/Nduw3H3MQfnekWcGcKkPmlggX7HbNylJCrmafAWMz/p6yETyGwvRnR2D4P/U0IPZGhk3a+chud9Opg8fLg2Z8QdlccyhpEud/k/zMYFgjzYWd+JHF+TeU4V+2CbaRoTGbK0qVAbAQMRU9AR/8fOFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vMC48+Oc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LYHHZbjOyZyd4H5v8Dn2ToFiUrzR8O/JHmIZGF4NFzxE1DyrdpIf8lJ2rC/ehaFpOH4VhELocu8tkP3o11bRMWgCVfJpCAxy3+XVZ5VszN0uNjchHJHGelcSN3ASU3LrikZLJCqcRJti4kirve0YhqGy2FAMSj5jAnAJiXMmzrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WptWGblE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vMC48+Oc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA4EC4CEE9;
-	Tue, 27 May 2025 16:45:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WptWGblE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55EBFC4CEE9;
+	Tue, 27 May 2025 16:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364345;
-	bh=kWZkCs/eLO/dcgHAmLtYWyuYxx8hUHNCkytbfIC2bhg=;
+	s=korg; t=1748364348;
+	bh=bfEfJyRxMrjzGvqfo96CogNvRaV+c0wAPRb/fx1CPIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vMC48+OcinIV8vcL0bNK12m93x03NofRuMXdnrwaoiDN+ke97uqqp2gmfeanMREf3
-	 sBOGt+mQTLqxo2Xnm8TywRDkPryiEAUhN5212KCgLLkpiFzYcKni7ZxdcB9pwQTqpA
-	 4kPIZPr+R7L2KDupdxQsoxTe5Sk+xwFKToR9Mf/Q=
+	b=WptWGblEcY8aFYQLYBFIU18+UO/rZ2IP8jxZtMfvdu4MHPHcvaTgn6nszoFnKZK1R
+	 dJuKE+flhAjg5pDMgOF2n5nQmP3dw8laedDgIE3WdXUEPiaf/pCdwrNUHwfZhAoFnV
+	 09Lp9OihhSFimbQEayuFbMMRjL54nGchM+yb7cS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 027/626] scsi: mpi3mr: Add level check to control event logging
-Date: Tue, 27 May 2025 18:18:40 +0200
-Message-ID: <20250527162446.171572726@linuxfoundation.org>
+Subject: [PATCH 6.12 028/626] net: enetc: refactor bulk flipping of RX buffers to separate function
+Date: Tue, 27 May 2025 18:18:41 +0200
+Message-ID: <20250527162446.209738842@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,35 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit b0b7ee3b574a72283399b9232f6190be07f220c0 ]
+[ Upstream commit 1d587faa5be7e9785b682cc5f58ba8f4100c13ea ]
 
-Ensure event logs are only generated when the debug logging level
-MPI3_DEBUG_EVENT is enabled. This prevents unnecessary logging.
+This small snippet of code ensures that we do something with the array
+of RX software buffer descriptor elements after passing the skb to the
+stack. In this case, we see if the other half of the page is reusable,
+and if so, we "turn around" the buffers, making them directly usable by
+enetc_refill_rx_ring() without going to enetc_new_page().
 
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Link: https://lore.kernel.org/r/20250415101546.204018-1-ranjan.kumar@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+We will need to perform this kind of buffer flipping from a new code
+path, i.e. from XDP_PASS. Currently, enetc_build_skb() does it there
+buffer by buffer, but in a subsequent change we will stop using
+enetc_build_skb() for XDP_PASS.
+
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20250417120005.3288549-3-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/freescale/enetc/enetc.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index c0a372868e1d7..f6d3db3fd0d8e 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -174,6 +174,9 @@ static void mpi3mr_print_event_data(struct mpi3mr_ioc *mrioc,
- 	char *desc = NULL;
- 	u16 event;
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+index f662a5d54986c..d8272b7a55fcb 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -1572,6 +1572,16 @@ static void enetc_xdp_drop(struct enetc_bdr *rx_ring, int rx_ring_first,
+ 	}
+ }
  
-+	if (!(mrioc->logging_level & MPI3_DEBUG_EVENT))
-+		return;
++static void enetc_bulk_flip_buff(struct enetc_bdr *rx_ring, int rx_ring_first,
++				 int rx_ring_last)
++{
++	while (rx_ring_first != rx_ring_last) {
++		enetc_flip_rx_buff(rx_ring,
++				   &rx_ring->rx_swbd[rx_ring_first]);
++		enetc_bdr_idx_inc(rx_ring, &rx_ring_first);
++	}
++}
 +
- 	event = event_reply->event;
- 
- 	switch (event) {
+ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 				   struct napi_struct *napi, int work_limit,
+ 				   struct bpf_prog *prog)
+@@ -1687,11 +1697,7 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 				enetc_xdp_drop(rx_ring, orig_i, i);
+ 				rx_ring->stats.xdp_redirect_failures++;
+ 			} else {
+-				while (orig_i != i) {
+-					enetc_flip_rx_buff(rx_ring,
+-							   &rx_ring->rx_swbd[orig_i]);
+-					enetc_bdr_idx_inc(rx_ring, &orig_i);
+-				}
++				enetc_bulk_flip_buff(rx_ring, orig_i, i);
+ 				xdp_redirect_frm_cnt++;
+ 				rx_ring->stats.xdp_redirect++;
+ 			}
 -- 
 2.39.5
 
