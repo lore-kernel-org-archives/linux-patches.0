@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8B7154C15;
-	Tue, 27 May 2025 17:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78386154C15;
+	Tue, 27 May 2025 17:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365263; cv=none; b=CiCbG9eDAMrdhmsngP6vqc8bXq9EXIpSyyWkiccaAkM6W3UZdudaILrcbnWPDnI/WjV47n0yjqppMFbSTCSmQYptfTAJZ2bgaD2/MMgsGlf8i0SBexEExs2BikemLO0GZC5C1hYlFzOV6CNHow71Tbg31JdjkW8Jp828bklphto=
+	t=1748365266; cv=none; b=Rz/lyQx+BndfPWOuXauozZ4E1Ywfs/7wIPjKN1acm/W/DgWAPe10TSxS94xOS1t7+6Wm4OyRDCOs2gOuDYOOsbqiTXGyV5Pz6w7adg/o49fo/5PVt/j8t2wXdKZ86QDVzeKnh2csynQnattz7z/x3gKRggfLwp/VGKUEtXlS8kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365263; c=relaxed/simple;
-	bh=v1/cRK5rIxk0anZGqx9yXhVeSAeXmBcrgKqG31GYfjA=;
+	s=arc-20240116; t=1748365266; c=relaxed/simple;
+	bh=JcSQScUB9W4/43h8bDvP7q1q5gqK2KS+sjhqgJdylTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BbsNHjcQy+CoCr8GgWHmGlw9XSFow4ER85dqdXbksDXIrz+0w3fUR44jHRv4nKwI+FzNDF6U4d8+XsQicNUeoSuXV9GEIZt1sdPGXpv9/yRAO3fCBBJqk6nmIkH7potx6G7yS9XtTncqRS6dVbtQ6Gxub4yNJ4nnne7OEC7wKRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DO5oPTbx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FEAOWWI+efzi0DWooVoq+ORuuchMAGqtIv8VdxcX3j2BzuSqu05uEVA8YBQiUYg8LdmXZJcJBjdM5ilTQNlaEB6sv7RvIoBSfIT97mrNTIPu5QU8LeF4io6oX/lYMoDGwhs6mBBK1lDB0M9+LAIdh1TmyXZdezGIOgIaWLFwMlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WjgVrXc7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DO5oPTbx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98CB4C4CEE9;
-	Tue, 27 May 2025 17:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjgVrXc7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AD2C4CEE9;
+	Tue, 27 May 2025 17:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365263;
-	bh=v1/cRK5rIxk0anZGqx9yXhVeSAeXmBcrgKqG31GYfjA=;
+	s=korg; t=1748365266;
+	bh=JcSQScUB9W4/43h8bDvP7q1q5gqK2KS+sjhqgJdylTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DO5oPTbxHWqQtyKG+tf9/5j7RKmzqdTNELvi491hlQFZzFArptlSTMY3dAqnhFQwl
-	 TInhCKUaIsTeeZ07SmH6uI3P6+f/9qLoHTxP2qx0r/9ciqoV2YANcSiZHUnPqon4LE
-	 MF1tOIm5ZEWOQ2lCU0LG3LdnPL4e+q7gCnyFtbuM=
+	b=WjgVrXc70GKMu4bIX91VNMyxBUohN8ODbxapnv04zaY4y5pv5PRShC2zB7pfwy9ng
+	 hNxLV7QVusTOdbXz2loKYBMDnj73bPXikuz9RQco32d7DTn6YDFkpalMeV54POZ54z
+	 UbGfDw9N2bTf3CFsWjlxSRRxav7Ob/PAAQvbGgNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 320/626] wifi: rtw88: Fix rtw_desc_to_mcsrate() to handle MCS16-31
-Date: Tue, 27 May 2025 18:23:33 +0200
-Message-ID: <20250527162458.032099264@linuxfoundation.org>
+Subject: [PATCH 6.12 321/626] wifi: rtw89: fw: propagate error code from rtw89_h2c_tx()
+Date: Tue, 27 May 2025 18:23:34 +0200
+Message-ID: <20250527162458.073289274@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,40 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit 86d04f8f991a0509e318fe886d5a1cf795736c7d ]
+[ Upstream commit 56e1acaa0f80620b8e2c3410db35b4b975782b0a ]
 
-This function translates the rate number reported by the hardware into
-something mac80211 can understand. It was ignoring the 3SS and 4SS HT
-rates. Translate them too.
+The error code should be propagated to callers during downloading firmware
+header and body. Remove unnecessary assignment of -1.
 
-Also set *nss to 0 for the HT rates, just to make sure it's
-initialised.
-
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/d0a5a86b-4869-47f6-a5a7-01c0f987cc7f@gmail.com
+Link: https://patch.msgid.link/20250217064308.43559-4-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/util.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw89/fw.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/util.c b/drivers/net/wireless/realtek/rtw88/util.c
-index e222d3c01a77e..66819f6944055 100644
---- a/drivers/net/wireless/realtek/rtw88/util.c
-+++ b/drivers/net/wireless/realtek/rtw88/util.c
-@@ -101,7 +101,8 @@ void rtw_desc_to_mcsrate(u16 rate, u8 *mcs, u8 *nss)
- 		*nss = 4;
- 		*mcs = rate - DESC_RATEVHT4SS_MCS0;
- 	} else if (rate >= DESC_RATEMCS0 &&
--		   rate <= DESC_RATEMCS15) {
-+		   rate <= DESC_RATEMCS31) {
-+		*nss = 0;
- 		*mcs = rate - DESC_RATEMCS0;
+diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
+index 620e076d1b597..9d26502a2885a 100644
+--- a/drivers/net/wireless/realtek/rtw89/fw.c
++++ b/drivers/net/wireless/realtek/rtw89/fw.c
+@@ -1234,7 +1234,6 @@ static int __rtw89_fw_download_hdr(struct rtw89_dev *rtwdev,
+ 	ret = rtw89_h2c_tx(rtwdev, skb, false);
+ 	if (ret) {
+ 		rtw89_err(rtwdev, "failed to send h2c\n");
+-		ret = -1;
+ 		goto fail;
  	}
- }
+ 
+@@ -1311,7 +1310,6 @@ static int __rtw89_fw_download_main(struct rtw89_dev *rtwdev,
+ 		ret = rtw89_h2c_tx(rtwdev, skb, true);
+ 		if (ret) {
+ 			rtw89_err(rtwdev, "failed to send h2c\n");
+-			ret = -1;
+ 			goto fail;
+ 		}
+ 
 -- 
 2.39.5
 
