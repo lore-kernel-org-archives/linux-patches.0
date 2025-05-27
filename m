@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966261FB3;
-	Tue, 27 May 2025 17:45:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7771C1E25E3;
+	Tue, 27 May 2025 17:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367936; cv=none; b=h3eZA7Tx/sQONUGwmQZNrf/SfJcS9NPiYvz0VjendFsufHHy0Ei7/JnSxfJc1HXblEd0kWig2R04WV3p7+DuWwMIU1XSOyKqTkFEF0/rJP+0HzkA7qTrGO4k43BEWAHKeZsCZZQFwm3+J0sJSodreJsk6pCHHDCpJSLM03otZu0=
+	t=1748367939; cv=none; b=EGKYBBQSL8XFBPFjzN3EN0p7yCdc31w96GlXS8ERgmpu2uEuadKyZ8zbZ/z1Z8EzCz59P+VDKHCYcuRdSsYpKAFsDFMJc1i0jwEp+qhQo0zLwmv3lRK9Zs+mV8iRKCNnUhgqoz54jA+uCpyAwQdXMxSS8LAOOU8tTNdBq0Ojtkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367936; c=relaxed/simple;
-	bh=pgWIQgYy+n1gFsy7unnLb8kC3tKO3JO9hbD/vzJg2Rs=;
+	s=arc-20240116; t=1748367939; c=relaxed/simple;
+	bh=hebOLvR1NTMNQGZDWpH6OtupAbJbqZ5AbwUXp5QH20I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eo2+eaqngRIxvxHmYkyyxy2lqFCTIMxw7F2QqzgxfTWHKV24cGpUc+ZrEu7biWvZ2/eKt34UOldI4fwTGlKwyT+E18NrgjoP3uDicDUQQaYYCW0klpfzFaVanNPR1JViarxu1sNUnlCvzmtZQagxev5QDUsOrGvd1nuTiAxkcpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BDfMjoUe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NXTVGFJjp2GpsySl751W5lG8dwAMoeOCtb7qjJmp7dRuhFMANA6Ll8RsO0X8fjoYz+M5c1Uld8UTj7UBiP50Ya2pTlEN2PO/iF8XNBviUVzzCMu+rVOeu1lRSszG3qOuiw1YGHACPn3NA+feaM/LINnxFplXE2jXn8KLJReGHME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JWxeG2nj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BDfMjoUe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F04CC4CEE9;
-	Tue, 27 May 2025 17:45:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JWxeG2nj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1606C4CEEB;
+	Tue, 27 May 2025 17:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367936;
-	bh=pgWIQgYy+n1gFsy7unnLb8kC3tKO3JO9hbD/vzJg2Rs=;
+	s=korg; t=1748367939;
+	bh=hebOLvR1NTMNQGZDWpH6OtupAbJbqZ5AbwUXp5QH20I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BDfMjoUeoONK1aZlNNJ9M90G9QY01t0MYQ9mB5OoYHGKMKjKHjeyrK6mr7TdHSrAk
-	 IlNX9QHqpgNRsPJ5wG0xaawNWJP306wKlbUtPzm5K/RPLrKdzcjV8hDwuyOC80pXQv
-	 uFBuGdYUmJd0KkL9WT0c/TR2ikqbrx4wIdIifKwI=
+	b=JWxeG2njd3BRfgq8YM/K+PxFzNXc8WFhU0T0pcoJPudZ29ZiXiZq4KdV59n59wylj
+	 BNFp2Q79C55t/NScpTK0I37C31m53tVJIJvfycZ/WAC1uYR4+UHxlZ7QfPsYTduVTL
+	 9+JsVUStgJd7PWgi0+dQItTL5K6OHmp3S/88361w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 517/783] mptcp: pm: userspace: flags: clearer msg if no remote addr
-Date: Tue, 27 May 2025 18:25:14 +0200
-Message-ID: <20250527162534.198950268@linuxfoundation.org>
+Subject: [PATCH 6.14 518/783] wifi: iwlwifi: use correct IMR dump variable
+Date: Tue, 27 May 2025 18:25:15 +0200
+Message-ID: <20250527162534.239482337@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,53 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 58b21309f97b08b6b9814d1ee1419249eba9ef08 ]
+[ Upstream commit 21e4d29ac0def546d57bacebe4a51cbed1209b03 ]
 
-Since its introduction in commit 892f396c8e68 ("mptcp: netlink: issue
-MP_PRIO signals from userspace PMs"), it was mandatory to specify the
-remote address, because of the 'if (rem->addr.family == AF_UNSPEC)'
-check done later one.
+We shouldn't dump the reg_data here which dumps the last
+entry again, it should use the imr_reg_data.
 
-In theory, this attribute can be optional, but it sounds better to be
-precise to avoid sending the MP_PRIO on the wrong subflow, e.g. if there
-are multiple subflows attached to the same local ID. This can be relaxed
-later on if there is a need to act on multiple subflows with one
-command.
-
-For the moment, the check to see if attr_rem is NULL can be removed,
-because mptcp_pm_parse_entry() will do this check as well, no need to do
-that differently here.
-
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250205145347.3313b18667d1.Iaa9ab66b1d397912a573525e060d39ea01b29d19@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_userspace.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/fw/dbg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/mptcp/pm_userspace.c b/net/mptcp/pm_userspace.c
-index 940ca94c88634..cd220742d2493 100644
---- a/net/mptcp/pm_userspace.c
-+++ b/net/mptcp/pm_userspace.c
-@@ -583,11 +583,9 @@ int mptcp_userspace_pm_set_flags(struct sk_buff *skb, struct genl_info *info)
- 	if (ret < 0)
- 		goto set_flags_err;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+index 6594216f873c4..cd284767ff4ba 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2005-2014, 2018-2024 Intel Corporation
++ * Copyright (C) 2005-2014, 2018-2025 Intel Corporation
+  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
+  * Copyright (C) 2015-2017 Intel Deutschland GmbH
+  */
+@@ -2691,7 +2691,7 @@ static u32 iwl_dump_ini_trigger(struct iwl_fw_runtime *fwrt,
+ 	}
+ 	/* collect DRAM_IMR region in the last */
+ 	if (imr_reg_data.reg_tlv)
+-		size += iwl_dump_ini_mem(fwrt, list, &reg_data,
++		size += iwl_dump_ini_mem(fwrt, list, &imr_reg_data,
+ 					 &iwl_dump_ini_region_ops[IWL_FW_INI_REGION_DRAM_IMR]);
  
--	if (attr_rem) {
--		ret = mptcp_pm_parse_entry(attr_rem, info, false, &rem);
--		if (ret < 0)
--			goto set_flags_err;
--	}
-+	ret = mptcp_pm_parse_entry(attr_rem, info, false, &rem);
-+	if (ret < 0)
-+		goto set_flags_err;
- 
- 	if (loc.addr.family == AF_UNSPEC ||
- 	    rem.addr.family == AF_UNSPEC) {
+ 	if (size) {
 -- 
 2.39.5
 
