@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E39127D776;
-	Tue, 27 May 2025 17:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F7727D776;
+	Tue, 27 May 2025 17:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366646; cv=none; b=fqghGkFF6MSmqQvkxtGveg3AkKOWwUVNIXU4DEoujy1G2HQ276wz9BHY4pUd3/xBz1lbCAan0JITq6LPaUI7vndyNQ/HVSht0OwoqxAq7l4zHEFpTwOUdL5mKEtvLgptN7eu12dADyf9yT0jYge3vZc3Mc+FXYtuApgk8V8U/UE=
+	t=1748366649; cv=none; b=nHPNZHGu1Pq58Bff55yb65fPun3n3GSk82TeOKAJda1geKwJpgqFYgNCvCUP/X439cE/YZgJ7OAZmOiNhAZqQI1sRLeJEjVEe8r9TgPRTfTKuwmjm/yrDlk/7IVFDgLYnC6VLw13xxZv/b03tak1FUehBFhGEOawa4AhnRj/r48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366646; c=relaxed/simple;
-	bh=oAi01EPGXXAg+vawP41tNTX7V/aabGNs7F+r0GP3bWE=;
+	s=arc-20240116; t=1748366649; c=relaxed/simple;
+	bh=y4zcJmNDPx+cuvzqoiivT3r4JmWnUb/WLU1fmfTutDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cGjvNPS10b1paAHdignmncSyGnVb6w2wlRROE9TA7/QrBAxujYmRIadSDaTAx5g6aWFKp0MCVUBZnyu2TYP3ASfHe1VAz4Dml51t71hZjKYJaNRoNs+drRXrYdr2NKVKh6dipnj3DqVmFfn8H24vEFt6fQStX9qyhmhebeyoRJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQ98cyEn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KH0NXyv3pHjEB5PKy7Dzdw9yZKMtj1ekigu//zsYxyd6pgz4ryYeJIuuP0VMxbMLppxUxFaa1CE0+VjiuhWcZdchxmIwL13+4MlQ8V46GdklBpKVWcjhaSLNRDiIh0+uCkG5EjlAoGeUopJj7uXV5tpY/IyUGyU4caKkbAxvgAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlEw6P9Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQ98cyEn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002E1C4CEE9;
-	Tue, 27 May 2025 17:24:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlEw6P9Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08FB6C4CEE9;
+	Tue, 27 May 2025 17:24:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366646;
-	bh=oAi01EPGXXAg+vawP41tNTX7V/aabGNs7F+r0GP3bWE=;
+	s=korg; t=1748366649;
+	bh=y4zcJmNDPx+cuvzqoiivT3r4JmWnUb/WLU1fmfTutDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HQ98cyEnch4BKdYdc0vME9Oi75gQWSkWwwanjIR2oOT5JFPzGtFbYFCZeWNIA4Oww
-	 kdy+xm6AV4ScPsgZiQVSfkigEmwpQeL5m0Taq3bXIAZcS1EGxpCLupaIwgpEPz9fb6
-	 82HMbJ9ThzPV+99A3MFsAQzEJpy2kDpzX9I3Vpy4=
+	b=vlEw6P9Yq3FxDZswIn5zmkTTZuEh2shDoG8MAid8+NqANEofbtJVqllZGFWLO9Hy+
+	 8G1+W4nCs1BOgrqYh6nLuoUBoNAjexx2BGeKpTpHSiAe/j+GJPNI/fdt5cyGUWRuVQ
+	 PYeRes36rM6ipTmpXYUTjBALe2cjfHcppKiDFzkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Filipe Manana <fdmanana@suse.com>,
 	Qu Wenruo <wqu@suse.com>,
-	Mark Harmstone <maharmstone@fb.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 135/783] btrfs: avoid linker error in btrfs_find_create_tree_block()
-Date: Tue, 27 May 2025 18:18:52 +0200
-Message-ID: <20250527162518.652236987@linuxfoundation.org>
+Subject: [PATCH 6.14 136/783] btrfs: run btrfs_error_commit_super() early
+Date: Tue, 27 May 2025 18:18:53 +0200
+Message-ID: <20250527162518.697175465@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,59 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Harmstone <maharmstone@fb.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 7ef3cbf17d2734ca66c4ed8573be45f4e461e7ee ]
+[ Upstream commit df94a342efb451deb0e32b495d1d6cd4bb3a1648 ]
 
-The inline function btrfs_is_testing() is hardcoded to return 0 if
-CONFIG_BTRFS_FS_RUN_SANITY_TESTS is not set. Currently we're relying on
-the compiler optimizing out the call to alloc_test_extent_buffer() in
-btrfs_find_create_tree_block(), as it's not been defined (it's behind an
- #ifdef).
+[BUG]
+Even after all the error fixes related the
+"ASSERT(list_empty(&fs_info->delayed_iputs));" in close_ctree(), I can
+still hit it reliably with my experimental 2K block size.
 
-Add a stub version of alloc_test_extent_buffer() to avoid linker errors
-on non-standard optimization levels. This problem was seen on GCC 14
-with -O0 and is helps to see symbols that would be otherwise optimized
-out.
+[CAUSE]
+In my case, all the error is triggered after the fs is already in error
+status.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Mark Harmstone <maharmstone@fb.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
+I find the following call trace to be the cause of race:
+
+           Main thread                       |     endio_write_workers
+---------------------------------------------+---------------------------
+close_ctree()                                |
+|- btrfs_error_commit_super()                |
+|  |- btrfs_cleanup_transaction()            |
+|  |  |- btrfs_destroy_all_ordered_extents() |
+|  |     |- btrfs_wait_ordered_roots()       |
+|  |- btrfs_run_delayed_iputs()              |
+|                                            | btrfs_finish_ordered_io()
+|                                            | |- btrfs_put_ordered_extent()
+|                                            |    |- btrfs_add_delayed_iput()
+|- ASSERT(list_empty(delayed_iputs))         |
+   !!! Triggered !!!
+
+The root cause is that, btrfs_wait_ordered_roots() only wait for
+ordered extents to finish their IOs, not to wait for them to finish and
+removed.
+
+[FIX]
+Since btrfs_error_commit_super() will flush and wait for all ordered
+extents, it should be executed early, before we start flushing the
+workqueues.
+
+And since btrfs_error_commit_super() now runs early, there is no need to
+run btrfs_run_delayed_iputs() inside it, so just remove the
+btrfs_run_delayed_iputs() call from btrfs_error_commit_super().
+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/btrfs/disk-io.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index c021aae8875eb..06922529f19dc 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -2842,10 +2842,10 @@ struct extent_buffer *find_extent_buffer(struct btrfs_fs_info *fs_info,
- 	return eb;
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index ca821e5966bd3..e4eda8b0f9381 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -4328,6 +4328,14 @@ void __cold close_ctree(struct btrfs_fs_info *fs_info)
+ 	/* clear out the rbtree of defraggable inodes */
+ 	btrfs_cleanup_defrag_inodes(fs_info);
+ 
++	/*
++	 * Handle the error fs first, as it will flush and wait for all ordered
++	 * extents.  This will generate delayed iputs, thus we want to handle
++	 * it first.
++	 */
++	if (unlikely(BTRFS_FS_ERROR(fs_info)))
++		btrfs_error_commit_super(fs_info);
++
+ 	/*
+ 	 * Wait for any fixup workers to complete.
+ 	 * If we don't wait for them here and they are still running by the time
+@@ -4418,9 +4426,6 @@ void __cold close_ctree(struct btrfs_fs_info *fs_info)
+ 			btrfs_err(fs_info, "commit super ret %d", ret);
+ 	}
+ 
+-	if (BTRFS_FS_ERROR(fs_info))
+-		btrfs_error_commit_super(fs_info);
+-
+ 	kthread_stop(fs_info->transaction_kthread);
+ 	kthread_stop(fs_info->cleaner_kthread);
+ 
+@@ -4543,10 +4548,6 @@ static void btrfs_error_commit_super(struct btrfs_fs_info *fs_info)
+ 	/* cleanup FS via transaction */
+ 	btrfs_cleanup_transaction(fs_info);
+ 
+-	mutex_lock(&fs_info->cleaner_mutex);
+-	btrfs_run_delayed_iputs(fs_info);
+-	mutex_unlock(&fs_info->cleaner_mutex);
+-
+ 	down_write(&fs_info->cleanup_work_sem);
+ 	up_write(&fs_info->cleanup_work_sem);
  }
- 
--#ifdef CONFIG_BTRFS_FS_RUN_SANITY_TESTS
- struct extent_buffer *alloc_test_extent_buffer(struct btrfs_fs_info *fs_info,
- 					u64 start)
- {
-+#ifdef CONFIG_BTRFS_FS_RUN_SANITY_TESTS
- 	struct extent_buffer *eb, *exists = NULL;
- 	int ret;
- 
-@@ -2881,8 +2881,11 @@ struct extent_buffer *alloc_test_extent_buffer(struct btrfs_fs_info *fs_info,
- free_eb:
- 	btrfs_release_extent_buffer(eb);
- 	return exists;
--}
-+#else
-+	/* Stub to avoid linker error when compiled with optimizations turned off. */
-+	return NULL;
- #endif
-+}
- 
- static struct extent_buffer *grab_extent_buffer(struct btrfs_fs_info *fs_info,
- 						struct folio *folio)
 -- 
 2.39.5
 
