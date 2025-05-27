@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C54351D63EF;
-	Tue, 27 May 2025 17:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9908C1D63EF;
+	Tue, 27 May 2025 17:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367874; cv=none; b=IrTz77Ca70vaM3ptURRuE4v1jlPeOEJEWeGvsk2Mexmd2tE0INHsLKQKH5OlzXA+PifULw5/PmJBD+ydCX1oHtowoLbcspas2Z1B7b/auFQjFV2KA4vkOAb5i+DRzdvFd4Qxfe9j3Oa0Gg2Xg+P3E9wuX7NBYIIsJzgKsqBaatw=
+	t=1748367877; cv=none; b=SeDQK8T4NHL8MNjBZgrJMfxYiP5NOVWA8/rHU7hXVtICTSVspT9WUCTOrb073C28sINC6c0suQOk4xKlEzD9Ms/Xdtbli+xgkbVNsFRia2V+Xb/22JIpiDVMVNwmZA85Q1SSFz7o5KcVGsxphdZUOkVWEsY4W1XuhlQz4zsJ7j0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367874; c=relaxed/simple;
-	bh=VwZnoAyCCRlaVrzJxxVl4vmwMB6o51FS/JfrSCvQPP4=;
+	s=arc-20240116; t=1748367877; c=relaxed/simple;
+	bh=qMhCKyshf1R7rB4iYnM7YMUc2Wbcsg50Qn7INiDIufc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aks0mSE8YvlaEiMrMHwyqenTAdzRiRcyaOZTVi/ZoaGcH560d63cfQ9Gkm6Gx18F3ZirS8VMwIgQS6PYQIgGtIdyROIFEgx9sxS7n7D/p8j3e4+7lauKN0uyMznu4P4XAj+lXMBBjj05Yly749LfxcsrzR7zoxRfWpCbkP2si0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PBD6WfCD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FHv+k8Ve0+nluDoJ5pneDxV/fg2z1pnrbne3/orjmRGjZUBg6xTHNVLFImCr3ZtJAiZzIiwSF+0thV+1aU1uummtbCyRLYqVx2PAoLPHos2UlyPDu8OMK/AHiPKHg71Yew73PYY4aawhbYkEpimBkIOgzpKcrdPGF3MqwnF0sHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s1N1lt3U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PBD6WfCD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293C6C4CEE9;
-	Tue, 27 May 2025 17:44:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s1N1lt3U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246C3C4CEE9;
+	Tue, 27 May 2025 17:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367874;
-	bh=VwZnoAyCCRlaVrzJxxVl4vmwMB6o51FS/JfrSCvQPP4=;
+	s=korg; t=1748367877;
+	bh=qMhCKyshf1R7rB4iYnM7YMUc2Wbcsg50Qn7INiDIufc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PBD6WfCDcDlXBrh1wFk8fEzmEkXOkOAj1PESWv3JJA9aXS2zP6KhETQ54Ye+W5KRz
-	 Ig93JbSPl74eUOA+9dRd5kkSho8JfjBxAzPNw7ORsEanaT09Sw4o9tnCAwRjNFJ7+h
-	 66d9FfvDhDuEbJsUxcvcH/5RN6RvHK5pleDVQfDc=
+	b=s1N1lt3UMrf1EX0LLjcfXO3m+NSV1+IFz0LyPwtJXXPZnMnbbfvsO5LtHZjtkToPN
+	 6RcTQ8tmx/Emd1Ea90xP3nkchITSVhhBTGFZcvVEqdxKGUmDJcsxnssqbOCWIDjJ8y
+	 XyNBCd2uMpKfM/bDmtmRhXQGsWUOfKimwPkVZoOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Gaurav Batra <gbatra@linux.ibm.com>,
-	Donet Tom <donettom@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 527/783] powerpc/pseries/iommu: memory notifier incorrectly adds TCEs for pmemory
-Date: Tue, 27 May 2025 18:25:24 +0200
-Message-ID: <20250527162534.613676459@linuxfoundation.org>
+Subject: [PATCH 6.14 528/783] powerpc/pseries/iommu: create DDW for devices with DMA mask less than 64-bits
+Date: Tue, 27 May 2025 18:25:25 +0200
+Message-ID: <20250527162534.653515942@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -54,133 +53,249 @@ Content-Transfer-Encoding: 8bit
 
 From: Gaurav Batra <gbatra@linux.ibm.com>
 
-[ Upstream commit 6aa989ab2bd0d37540c812b4270006ff794662e7 ]
+[ Upstream commit 67dfc11982f7e3c37f0977e74671da2391b29181 ]
 
-iommu_mem_notifier() is invoked when RAM is dynamically added/removed. This
-notifier call is responsible to add/remove TCEs from the Dynamic DMA Window
-(DDW) when TCEs are pre-mapped. TCEs are pre-mapped only for RAM and not
-for persistent memory (pmemory). For DMA buffers in pmemory, TCEs are
-dynamically mapped when the device driver instructs to do so.
+Starting with PAPR level 2.13, platform supports placing PHB in limited
+address mode. Devices that support DMA masks less that 64-bit but greater
+than 32-bits are placed in limited address mode. In this mode, the
+starting DMA address returned by the DDW is 4GB.
 
-The issue is 'daxctl' command is capable of adding pmemory as "System RAM"
-after LPAR boot. The command to do so is -
-
-daxctl reconfigure-device --mode=system-ram dax0.0 --force
-
-This will dynamically add pmemory range to LPAR RAM eventually invoking
-iommu_mem_notifier(). The address range of pmemory is way beyond the Max
-RAM that the LPAR can have. Which means, this range is beyond the DDW
-created for the device, at device initialization time.
-
-As a result when TCEs are pre-mapped for the pmemory range, by
-iommu_mem_notifier(), PHYP HCALL returns H_PARAMETER. This failed the
-command, daxctl, to add pmemory as RAM.
-
-The solution is to not pre-map TCEs for pmemory.
+When the device driver calls dma_supported, with mask less then 64-bit, the
+PowerPC IOMMU driver places PHB in the Limited Addressing Mode before
+creating DDW.
 
 Signed-off-by: Gaurav Batra <gbatra@linux.ibm.com>
-Tested-by: Donet Tom <donettom@linux.ibm.com>
-Reviewed-by: Donet Tom <donettom@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250130183854.92258-1-gbatra@linux.ibm.com
+Link: https://patch.msgid.link/20250108164814.73250-1-gbatra@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/mmzone.h      |  1 +
- arch/powerpc/mm/numa.c                 |  2 +-
- arch/powerpc/platforms/pseries/iommu.c | 29 ++++++++++++++------------
- 3 files changed, 18 insertions(+), 14 deletions(-)
+ arch/powerpc/platforms/pseries/iommu.c | 110 +++++++++++++++++++++----
+ 1 file changed, 94 insertions(+), 16 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/mmzone.h b/arch/powerpc/include/asm/mmzone.h
-index d99863cd6cde4..049152f8d597a 100644
---- a/arch/powerpc/include/asm/mmzone.h
-+++ b/arch/powerpc/include/asm/mmzone.h
-@@ -29,6 +29,7 @@ extern cpumask_var_t node_to_cpumask_map[];
- #ifdef CONFIG_MEMORY_HOTPLUG
- extern unsigned long max_pfn;
- u64 memory_hotplug_max(void);
-+u64 hot_add_drconf_memory_max(void);
- #else
- #define memory_hotplug_max() memblock_end_of_DRAM()
- #endif
-diff --git a/arch/powerpc/mm/numa.c b/arch/powerpc/mm/numa.c
-index 3c1da08304d03..603a0f652ba61 100644
---- a/arch/powerpc/mm/numa.c
-+++ b/arch/powerpc/mm/numa.c
-@@ -1336,7 +1336,7 @@ int hot_add_scn_to_nid(unsigned long scn_addr)
- 	return nid;
- }
- 
--static u64 hot_add_drconf_memory_max(void)
-+u64 hot_add_drconf_memory_max(void)
- {
- 	struct device_node *memory = NULL;
- 	struct device_node *dn = NULL;
 diff --git a/arch/powerpc/platforms/pseries/iommu.c b/arch/powerpc/platforms/pseries/iommu.c
-index ae6f7a235d8b2..8f32340960e21 100644
+index 8f32340960e21..d6ebc19fb99c5 100644
 --- a/arch/powerpc/platforms/pseries/iommu.c
 +++ b/arch/powerpc/platforms/pseries/iommu.c
-@@ -1284,17 +1284,13 @@ static LIST_HEAD(failed_ddw_pdn_list);
+@@ -52,7 +52,8 @@ enum {
+ enum {
+ 	DDW_EXT_SIZE = 0,
+ 	DDW_EXT_RESET_DMA_WIN = 1,
+-	DDW_EXT_QUERY_OUT_SIZE = 2
++	DDW_EXT_QUERY_OUT_SIZE = 2,
++	DDW_EXT_LIMITED_ADDR_MODE = 3
+ };
  
- static phys_addr_t ddw_memory_hotplug_max(void)
- {
--	resource_size_t max_addr = memory_hotplug_max();
--	struct device_node *memory;
-+	resource_size_t max_addr;
- 
--	for_each_node_by_type(memory, "memory") {
--		struct resource res;
--
--		if (of_address_to_resource(memory, 0, &res))
--			continue;
--
--		max_addr = max_t(resource_size_t, max_addr, res.end + 1);
--	}
-+#if defined(CONFIG_NUMA) && defined(CONFIG_MEMORY_HOTPLUG)
-+	max_addr = hot_add_drconf_memory_max();
-+#else
-+	max_addr = memblock_end_of_DRAM();
-+#endif
- 
- 	return max_addr;
+ static struct iommu_table *iommu_pseries_alloc_table(int node)
+@@ -1327,6 +1328,54 @@ static void reset_dma_window(struct pci_dev *dev, struct device_node *par_dn)
+ 			 ret);
  }
-@@ -1600,7 +1596,7 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
  
- 	if (direct_mapping) {
- 		/* DDW maps the whole partition, so enable direct DMA mapping */
--		ret = walk_system_ram_range(0, memblock_end_of_DRAM() >> PAGE_SHIFT,
-+		ret = walk_system_ram_range(0, ddw_memory_hotplug_max() >> PAGE_SHIFT,
- 					    win64->value, tce_setrange_multi_pSeriesLP_walk);
- 		if (ret) {
- 			dev_info(&dev->dev, "failed to map DMA window for %pOF: %d\n",
-@@ -2349,11 +2345,17 @@ static int iommu_mem_notifier(struct notifier_block *nb, unsigned long action,
- 	struct memory_notify *arg = data;
- 	int ret = 0;
- 
-+	/* This notifier can get called when onlining persistent memory as well.
-+	 * TCEs are not pre-mapped for persistent memory. Persistent memory will
-+	 * always be above ddw_memory_hotplug_max()
-+	 */
++/*
++ * Platforms support placing PHB in limited address mode starting with LoPAR
++ * level 2.13 implement. In this mode, the DMA address returned by DDW is over
++ * 4GB but, less than 64-bits. This benefits IO adapters that don't support
++ * 64-bits for DMA addresses.
++ */
++static int limited_dma_window(struct pci_dev *dev, struct device_node *par_dn)
++{
++	int ret;
++	u32 cfg_addr, reset_dma_win, las_supported;
++	u64 buid;
++	struct device_node *dn;
++	struct pci_dn *pdn;
 +
- 	switch (action) {
- 	case MEM_GOING_ONLINE:
- 		spin_lock(&dma_win_list_lock);
- 		list_for_each_entry(window, &dma_win_list, list) {
--			if (window->direct) {
-+			if (window->direct && (arg->start_pfn << PAGE_SHIFT) <
-+				ddw_memory_hotplug_max()) {
- 				ret |= tce_setrange_multi_pSeriesLP(arg->start_pfn,
- 						arg->nr_pages, window->prop);
- 			}
-@@ -2365,7 +2367,8 @@ static int iommu_mem_notifier(struct notifier_block *nb, unsigned long action,
- 	case MEM_OFFLINE:
- 		spin_lock(&dma_win_list_lock);
- 		list_for_each_entry(window, &dma_win_list, list) {
--			if (window->direct) {
-+			if (window->direct && (arg->start_pfn << PAGE_SHIFT) <
-+				ddw_memory_hotplug_max()) {
- 				ret |= tce_clearrange_multi_pSeriesLP(arg->start_pfn,
- 						arg->nr_pages, window->prop);
- 			}
++	ret = ddw_read_ext(par_dn, DDW_EXT_RESET_DMA_WIN, &reset_dma_win);
++	if (ret)
++		goto out;
++
++	ret = ddw_read_ext(par_dn, DDW_EXT_LIMITED_ADDR_MODE, &las_supported);
++
++	/* Limited Address Space extension available on the platform but DDW in
++	 * limited addressing mode not supported
++	 */
++	if (!ret && !las_supported)
++		ret = -EPROTO;
++
++	if (ret) {
++		dev_info(&dev->dev, "Limited Address Space for DDW not Supported, err: %d", ret);
++		goto out;
++	}
++
++	dn = pci_device_to_OF_node(dev);
++	pdn = PCI_DN(dn);
++	buid = pdn->phb->buid;
++	cfg_addr = (pdn->busno << 16) | (pdn->devfn << 8);
++
++	ret = rtas_call(reset_dma_win, 4, 1, NULL, cfg_addr, BUID_HI(buid),
++			BUID_LO(buid), 1);
++	if (ret)
++		dev_info(&dev->dev,
++			 "ibm,reset-pe-dma-windows(%x) for Limited Addr Support: %x %x %x returned %d ",
++			 reset_dma_win, cfg_addr, BUID_HI(buid), BUID_LO(buid),
++			 ret);
++
++out:
++	return ret;
++}
++
+ /* Return largest page shift based on "IO Page Sizes" output of ibm,query-pe-dma-window. */
+ static int iommu_get_page_shift(u32 query_page_size)
+ {
+@@ -1394,7 +1443,7 @@ static struct property *ddw_property_create(const char *propname, u32 liobn, u64
+  *
+  * returns true if can map all pages (direct mapping), false otherwise..
+  */
+-static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
++static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn, u64 dma_mask)
+ {
+ 	int len = 0, ret;
+ 	int max_ram_len = order_base_2(ddw_memory_hotplug_max());
+@@ -1413,6 +1462,9 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
+ 	bool pmem_present;
+ 	struct pci_dn *pci = PCI_DN(pdn);
+ 	struct property *default_win = NULL;
++	bool limited_addr_req = false, limited_addr_enabled = false;
++	int dev_max_ddw;
++	int ddw_sz;
+ 
+ 	dn = of_find_node_by_type(NULL, "ibm,pmemory");
+ 	pmem_present = dn != NULL;
+@@ -1439,7 +1491,6 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
+ 	 * the ibm,ddw-applicable property holds the tokens for:
+ 	 * ibm,query-pe-dma-window
+ 	 * ibm,create-pe-dma-window
+-	 * ibm,remove-pe-dma-window
+ 	 * for the given node in that order.
+ 	 * the property is actually in the parent, not the PE
+ 	 */
+@@ -1459,6 +1510,20 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
+ 	if (ret != 0)
+ 		goto out_failed;
+ 
++	/* DMA Limited Addressing required? This is when the driver has
++	 * requested to create DDW but supports mask which is less than 64-bits
++	 */
++	limited_addr_req = (dma_mask != DMA_BIT_MASK(64));
++
++	/* place the PHB in Limited Addressing mode */
++	if (limited_addr_req) {
++		if (limited_dma_window(dev, pdn))
++			goto out_failed;
++
++		/* PHB is in Limited address mode */
++		limited_addr_enabled = true;
++	}
++
+ 	/*
+ 	 * If there is no window available, remove the default DMA window,
+ 	 * if it's present. This will make all the resources available to the
+@@ -1505,6 +1570,15 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
+ 		goto out_failed;
+ 	}
+ 
++	/* Maximum DMA window size that the device can address (in log2) */
++	dev_max_ddw = fls64(dma_mask);
++
++	/* If the device DMA mask is less than 64-bits, make sure the DMA window
++	 * size is not bigger than what the device can access
++	 */
++	ddw_sz = min(order_base_2(query.largest_available_block << page_shift),
++			dev_max_ddw);
++
+ 	/*
+ 	 * The "ibm,pmemory" can appear anywhere in the address space.
+ 	 * Assuming it is still backed by page structs, try MAX_PHYSMEM_BITS
+@@ -1513,23 +1587,21 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
+ 	 */
+ 	len = max_ram_len;
+ 	if (pmem_present) {
+-		if (query.largest_available_block >=
+-		    (1ULL << (MAX_PHYSMEM_BITS - page_shift)))
++		if (ddw_sz >= MAX_PHYSMEM_BITS)
+ 			len = MAX_PHYSMEM_BITS;
+ 		else
+ 			dev_info(&dev->dev, "Skipping ibm,pmemory");
+ 	}
+ 
+ 	/* check if the available block * number of ptes will map everything */
+-	if (query.largest_available_block < (1ULL << (len - page_shift))) {
++	if (ddw_sz < len) {
+ 		dev_dbg(&dev->dev,
+ 			"can't map partition max 0x%llx with %llu %llu-sized pages\n",
+ 			1ULL << len,
+ 			query.largest_available_block,
+ 			1ULL << page_shift);
+ 
+-		len = order_base_2(query.largest_available_block << page_shift);
+-
++		len = ddw_sz;
+ 		dynamic_mapping = true;
+ 	} else {
+ 		direct_mapping = !default_win_removed ||
+@@ -1543,8 +1615,9 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
+ 		 */
+ 		if (default_win_removed && pmem_present && !direct_mapping) {
+ 			/* DDW is big enough to be split */
+-			if ((query.largest_available_block << page_shift) >=
+-			     MIN_DDW_VPMEM_DMA_WINDOW + (1ULL << max_ram_len)) {
++			if ((1ULL << ddw_sz) >=
++			    MIN_DDW_VPMEM_DMA_WINDOW + (1ULL << max_ram_len)) {
++
+ 				direct_mapping = true;
+ 
+ 				/* offset of the Dynamic part of DDW */
+@@ -1555,8 +1628,7 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
+ 			dynamic_mapping = true;
+ 
+ 			/* create max size DDW possible */
+-			len = order_base_2(query.largest_available_block
+-							<< page_shift);
++			len = ddw_sz;
+ 		}
+ 	}
+ 
+@@ -1685,7 +1757,7 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
+ 	__remove_dma_window(pdn, ddw_avail, create.liobn);
+ 
+ out_failed:
+-	if (default_win_removed)
++	if (default_win_removed || limited_addr_enabled)
+ 		reset_dma_window(dev, pdn);
+ 
+ 	fpdn = kzalloc(sizeof(*fpdn), GFP_KERNEL);
+@@ -1704,6 +1776,9 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
+ 		dev->dev.bus_dma_limit = dev->dev.archdata.dma_offset +
+ 						(1ULL << max_ram_len);
+ 
++	dev_info(&dev->dev, "lsa_required: %x, lsa_enabled: %x, direct mapping: %x\n",
++			limited_addr_req, limited_addr_enabled, direct_mapping);
++
+ 	return direct_mapping;
+ }
+ 
+@@ -1829,8 +1904,11 @@ static bool iommu_bypass_supported_pSeriesLP(struct pci_dev *pdev, u64 dma_mask)
+ {
+ 	struct device_node *dn = pci_device_to_OF_node(pdev), *pdn;
+ 
+-	/* only attempt to use a new window if 64-bit DMA is requested */
+-	if (dma_mask < DMA_BIT_MASK(64))
++	/* For DDW, DMA mask should be more than 32-bits. For mask more then
++	 * 32-bits but less then 64-bits, DMA addressing is supported in
++	 * Limited Addressing mode.
++	 */
++	if (dma_mask <= DMA_BIT_MASK(32))
+ 		return false;
+ 
+ 	dev_dbg(&pdev->dev, "node is %pOF\n", dn);
+@@ -1843,7 +1921,7 @@ static bool iommu_bypass_supported_pSeriesLP(struct pci_dev *pdev, u64 dma_mask)
+ 	 */
+ 	pdn = pci_dma_find(dn, NULL);
+ 	if (pdn && PCI_DN(pdn))
+-		return enable_ddw(pdev, pdn);
++		return enable_ddw(pdev, pdn, dma_mask);
+ 
+ 	return false;
+ }
 -- 
 2.39.5
 
