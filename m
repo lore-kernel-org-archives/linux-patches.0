@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC804271476;
-	Tue, 27 May 2025 17:05:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD6126868E;
+	Tue, 27 May 2025 17:05:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365552; cv=none; b=iscwZ1kIzcXd/0ZJ9cLv0wWblYwikc148lKI3M9lFFfmm8QNlKzf1goceZCdlhK+VRtEtKJB0o6dRTNErhFM0amfUAa8Xavqiom1zZIl2RPtKPSSebEM+d0sBMqhApGc0snwA+6Wue5B8veYpFjiWGe5cR4WW0KB3Wl+SrvyBB0=
+	t=1748365556; cv=none; b=EB10wmeY84rsEyOHiTQwvSF8y5QpqsT2fUZmsLD04XzX8LE4bONwH9AmhoRgFNV+bswVASd44L8VvoNXaLFFnmcL0I4zE9akZU2EuWC9ywFsfUoo/AHIZbgoG+FhZ5/X9VFT65WtXTxUrcHANqNiV7zQnL5YJT609QFN6WVM8Kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365552; c=relaxed/simple;
-	bh=9ba6s/4G0bJtbCchNiotdv05hPNqhXnWiv4FPUko6CQ=;
+	s=arc-20240116; t=1748365556; c=relaxed/simple;
+	bh=3xxwe3sfl/ESdE7X89cjYQR5q6+pO8Eh9kf/At6eQjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uDTXnfn8NFwiXzTEZxMylgFpK4ROmaexVGK9VmqlAeH0sz25RSapmF8YuDTSX7aHbi49kxugUjPV+E16Ruq+tNjWqI+379Kym5kp1qMmZBIKHkWCiFYrT8bciivkfSMzfPztkq54CL3fuecb/0/YboG4R5f8ZWIaPRWG/UfhLv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HnJwWZ0n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B78rwFoLQKjtERz8QpzSznGuFF2Oj/lvbMP5r3fTlxV+SR0XbZ4tPnRH6GzpdVZVNbnnIdPBRyEOEA0Sbv0tMvPXd6hrNHO31x3V6bohpEkakgPWRQXIkvaWX5uPA7nhUbBSJ/CCEdlGIbFjouTr2qc3poytXdxB37kCwuxRJYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtC+RuAx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HnJwWZ0n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B5D3C4CEE9;
-	Tue, 27 May 2025 17:05:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtC+RuAx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ECA8C4CEE9;
+	Tue, 27 May 2025 17:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365552;
-	bh=9ba6s/4G0bJtbCchNiotdv05hPNqhXnWiv4FPUko6CQ=;
+	s=korg; t=1748365555;
+	bh=3xxwe3sfl/ESdE7X89cjYQR5q6+pO8Eh9kf/At6eQjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HnJwWZ0nGyR7WG5yL1PUXettAmOhTEu88UiXXHCJuRvgC2LNgkbmaUBFTRDtlNion
-	 vXPE7fi1VWrxBVrfYynkRC5Qxj5xQw4ye7Vx1LHewL1Do7XdGGiQfrg8y9ICsyJjYB
-	 xTgrsEKBWFxr+SXbHFDVPamqnW+C3wJ/PS0zNpD4=
+	b=rtC+RuAx+0+iHfZPVvFfE4g/Y1KTliipR59i0wfrJqLxSXBl+xN2upgvFPTKquc2g
+	 B0oQwzOTHouP/hJ1s6GzUqnQkkIe9Iw9jFrYEHNLKrBvY5Pz9JUvqTKaXmyfrHauvH
+	 UCPEGOTpQq1f4eu4DpD+b2imaX77MPqdtlo3JYB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Griffin <peter.griffin@linaro.org>,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Will McVicker <willmcvicker@google.com>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 383/626] phy: exynos5-usbdrd: fix EDS distribution tuning (gs101)
-Date: Tue, 27 May 2025 18:24:36 +0200
-Message-ID: <20250527162500.576688061@linuxfoundation.org>
+Subject: [PATCH 6.12 384/626] soundwire: amd: change the soundwire wake enable/disable sequence
+Date: Tue, 27 May 2025 18:24:37 +0200
+Message-ID: <20250527162500.615180564@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -47,59 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit 21860f340ba76ee042e5431ff92537f89bc11476 ]
+[ Upstream commit dcc48a73eae7f791b1a6856ea1bcc4079282c88d ]
 
-This code's intention is to configure lane0 and lane2 tunings, but for
-lane2 there is a typo and it ends up tuning something else.
+During runtime suspend scenario, SoundWire wake should be enabled and
+during system level suspend scenario SoundWire wake should be disabled.
 
-Fix the typo, as it doesn't appear to make sense to apply different
-tunings for lane0 vs lane2.
+Implement the SoundWire wake enable/disable sequence as per design flow
+for SoundWire poweroff mode.
 
-The same typo appears to exist in the bootloader, hence we restore the
-original value in the typo'd registers as well. This can be removed
-once / if the bootloader is updated.
-
-Note that this is incorrect in the downstream driver as well - the
-values had been copied from there.
-
-Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
-Tested-by: Peter Griffin <peter.griffin@linaro.org>
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Tested-by: Will McVicker <willmcvicker@google.com>
-Link: https://lore.kernel.org/r/20241206-gs101-phy-lanes-orientation-phy-v4-4-f5961268b149@linaro.org
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://lore.kernel.org/r/20250207065841.4718-2-Vijendar.Mukunda@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/samsung/phy-exynos5-usbdrd.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/soundwire/amd_manager.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/phy/samsung/phy-exynos5-usbdrd.c b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-index 46b8f6987c62c..28d02ae60cc14 100644
---- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
-+++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-@@ -1513,8 +1513,11 @@ static const struct exynos5_usbdrd_phy_tuning gs101_tunes_pipe3_preinit[] = {
- 	PHY_TUNING_ENTRY_PMA(0x09e0, -1, 0x00),
- 	PHY_TUNING_ENTRY_PMA(0x09e4, -1, 0x36),
- 	PHY_TUNING_ENTRY_PMA(0x1e7c, -1, 0x06),
--	PHY_TUNING_ENTRY_PMA(0x1e90, -1, 0x00),
--	PHY_TUNING_ENTRY_PMA(0x1e94, -1, 0x36),
-+	PHY_TUNING_ENTRY_PMA(0x19e0, -1, 0x00),
-+	PHY_TUNING_ENTRY_PMA(0x19e4, -1, 0x36),
-+	/* fix bootloader bug */
-+	PHY_TUNING_ENTRY_PMA(0x1e90, -1, 0x02),
-+	PHY_TUNING_ENTRY_PMA(0x1e94, -1, 0x0b),
- 	/* improve LVCC */
- 	PHY_TUNING_ENTRY_PMA(0x08f0, -1, 0x30),
- 	PHY_TUNING_ENTRY_PMA(0x18f0, -1, 0x30),
+diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
+index 0d01849c35861..e3d5e6c1d582c 100644
+--- a/drivers/soundwire/amd_manager.c
++++ b/drivers/soundwire/amd_manager.c
+@@ -1110,6 +1110,7 @@ static int __maybe_unused amd_suspend(struct device *dev)
+ 		amd_sdw_wake_enable(amd_manager, false);
+ 		return amd_sdw_clock_stop(amd_manager);
+ 	} else if (amd_manager->power_mode_mask & AMD_SDW_POWER_OFF_MODE) {
++		amd_sdw_wake_enable(amd_manager, false);
+ 		/*
+ 		 * As per hardware programming sequence on AMD platforms,
+ 		 * clock stop should be invoked first before powering-off
+@@ -1137,6 +1138,7 @@ static int __maybe_unused amd_suspend_runtime(struct device *dev)
+ 		amd_sdw_wake_enable(amd_manager, true);
+ 		return amd_sdw_clock_stop(amd_manager);
+ 	} else if (amd_manager->power_mode_mask & AMD_SDW_POWER_OFF_MODE) {
++		amd_sdw_wake_enable(amd_manager, true);
+ 		ret = amd_sdw_clock_stop(amd_manager);
+ 		if (ret)
+ 			return ret;
 -- 
 2.39.5
 
