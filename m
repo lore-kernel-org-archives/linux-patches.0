@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165E61E89C;
-	Tue, 27 May 2025 17:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F48A182D7;
+	Tue, 27 May 2025 17:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366158; cv=none; b=FqCTUZjlR0FI3Wbu8oznFhcmpT0DZXjdJp5L0Lr+y5MU9HyCWcuFvJSR13NX/VzSHZsLSIU+Gj0km8jMQaRxr9gEu2x4qBDfKdeRLGFfOdQcN+aJ17D81t1hLriJMMihcuMeocD4hrf8rjYZM2BmH7k4Z/DKhxQuHjIqMUt8jJo=
+	t=1748366170; cv=none; b=EEuPcbpGunB8l7YoakDp6qHs5C9NzeUS7Vfs6UZYlzuEPw0ftPL28xAfMWgajD8a5PtXGR9Q2+ijdLWhqPGozGl09bgWGrwE7FOt1pbqRO9BMyft5IqFRLJSaCOQyw+i1cwuyH0rbjhzNm9I/zPhjCQ0Z/bMo/x2a0cBjJdJqFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366158; c=relaxed/simple;
-	bh=y6lJMMaPr0AvPFPRsUC0yPYwMKLQUk7KF2K+AFF45SA=;
+	s=arc-20240116; t=1748366170; c=relaxed/simple;
+	bh=STOaDNMcUs5G+Sz6u0OCuBRrtQRq3FhNbDm+GUcSFUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D/X1szmRvXcKd761pdIWvFB4r/28Dt8FHMuz0lpHf2Wa/jFlrZPopkQ6wkHJYZz8V532YyQehs5SoHlfAPjMZMS72CA9gQ8IA7wtqvTQKVs72zxLLQb1kbCcDOaR2rje/dTXMZLDP/ugHlOX++BhYRrtzslhoDgeJAfuGWW4YCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlQpijJV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=osOy3eZlcSgaJG+cmzykhGEUjPcdtTQumdZLEYNvLu+3f4hWYAi6KzNJE5uqoEm4OuNsYxwTYwM8qJadnStss/jzcgV8iaiUi1luUnC23ltpVwgRmRUJS83kR8H1HPzJ8V3c5qFaMcaj/rIMBUGNDTMORqthc0G0MxMp/gPWLnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGQ48TVU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlQpijJV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8A7C4CEE9;
-	Tue, 27 May 2025 17:15:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGQ48TVU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2527CC4CEE9;
+	Tue, 27 May 2025 17:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366157;
-	bh=y6lJMMaPr0AvPFPRsUC0yPYwMKLQUk7KF2K+AFF45SA=;
+	s=korg; t=1748366170;
+	bh=STOaDNMcUs5G+Sz6u0OCuBRrtQRq3FhNbDm+GUcSFUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vlQpijJV8lIRvkrjDEutru+kc3sTgZ4CH0WFBav0AMqPbOBHCWl09Ayf+AsJFgk3t
-	 aANXnE/aR1lNyUN1Degs55Yl63DyG7RHsc85dZ6e3GhwLDHWsLoFWVFjMRhd5JZocj
-	 VqjeOoEFPAGTZihYjUz9eZRHEF7JF+zUEBsd4hgg=
+	b=rGQ48TVU77nANxGgKXgQ22m0XElwnmxb8f2Mii7wItVIXI0EDg4gt/Vr+nue+BJGi
+	 QjoCxZNz3nUkJzuF3ggVTloYhTkT8zB5Gk/8J4z3lir2pKdYE0BWaKKPVJRPVMXJAU
+	 stUPLj5ReV4pECTrSl3NQechw/zZHeAizfrGfKdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+32d4647f551007595173@syzkaller.appspotmail.com,
+	Ed Burcher <git@edburcher.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 579/626] ALSA: pcm: Fix race of buffer access at PCM OSS layer
-Date: Tue, 27 May 2025 18:27:52 +0200
-Message-ID: <20250527162508.504577123@linuxfoundation.org>
+Subject: [PATCH 6.12 580/626] ALSA: hda/realtek: Add quirk for Lenovo Yoga Pro 7 14ASP10
+Date: Tue, 27 May 2025 18:27:53 +0200
+Message-ID: <20250527162508.544276780@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -50,74 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Ed Burcher <git@edburcher.com>
 
-commit 93a81ca0657758b607c3f4ba889ae806be9beb73 upstream.
+commit 8d70503068510e6080c2c649cccb154f16de26c9 upstream.
 
-The PCM OSS layer tries to clear the buffer with the silence data at
-initialization (or reconfiguration) of a stream with the explicit call
-of snd_pcm_format_set_silence() with runtime->dma_area.  But this may
-lead to a UAF because the accessed runtime->dma_area might be freed
-concurrently, as it's performed outside the PCM ops.
+Lenovo Yoga Pro 7 (gen 10) with Realtek ALC3306 and combined CS35L56
+amplifiers need quirk ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN to
+enable bass
 
-For avoiding it, move the code into the PCM core and perform it inside
-the buffer access lock, so that it won't be changed during the
-operation.
-
-Reported-by: syzbot+32d4647f551007595173@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/68164d8e.050a0220.11da1b.0019.GAE@google.com
+Signed-off-by: Ed Burcher <git@edburcher.com>
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250516080817.20068-1-tiwai@suse.de
+Link: https://patch.msgid.link/20250519224907.31265-2-git@edburcher.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/sound/pcm.h      |    2 ++
- sound/core/oss/pcm_oss.c |    3 +--
- sound/core/pcm_native.c  |   11 +++++++++++
- 3 files changed, 14 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/sound/pcm.h
-+++ b/include/sound/pcm.h
-@@ -1428,6 +1428,8 @@ int snd_pcm_lib_mmap_iomem(struct snd_pc
- #define snd_pcm_lib_mmap_iomem	NULL
- #endif
- 
-+void snd_pcm_runtime_buffer_set_silence(struct snd_pcm_runtime *runtime);
-+
- /**
-  * snd_pcm_limit_isa_dma_size - Get the max size fitting with ISA DMA transfer
-  * @dma: DMA number
---- a/sound/core/oss/pcm_oss.c
-+++ b/sound/core/oss/pcm_oss.c
-@@ -1074,8 +1074,7 @@ static int snd_pcm_oss_change_params_loc
- 	runtime->oss.params = 0;
- 	runtime->oss.prepare = 1;
- 	runtime->oss.buffer_used = 0;
--	if (runtime->dma_area)
--		snd_pcm_format_set_silence(runtime->format, runtime->dma_area, bytes_to_samples(runtime, runtime->dma_bytes));
-+	snd_pcm_runtime_buffer_set_silence(runtime);
- 
- 	runtime->oss.period_frames = snd_pcm_alsa_frames(substream, oss_period_size);
- 
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -723,6 +723,17 @@ static void snd_pcm_buffer_access_unlock
- 	atomic_inc(&runtime->buffer_accessing);
- }
- 
-+/* fill the PCM buffer with the current silence format; called from pcm_oss.c */
-+void snd_pcm_runtime_buffer_set_silence(struct snd_pcm_runtime *runtime)
-+{
-+	snd_pcm_buffer_access_lock(runtime);
-+	if (runtime->dma_area)
-+		snd_pcm_format_set_silence(runtime->format, runtime->dma_area,
-+					   bytes_to_samples(runtime, runtime->dma_bytes));
-+	snd_pcm_buffer_access_unlock(runtime);
-+}
-+EXPORT_SYMBOL_GPL(snd_pcm_runtime_buffer_set_silence);
-+
- #if IS_ENABLED(CONFIG_SND_PCM_OSS)
- #define is_oss_stream(substream)	((substream)->oss.oss)
- #else
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11182,6 +11182,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x17aa, 0x38fa, "Thinkbook 16P Gen5", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
+ 	SND_PCI_QUIRK(0x17aa, 0x38fd, "ThinkBook plus Gen5 Hybrid", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
++	SND_PCI_QUIRK(0x17aa, 0x390d, "Lenovo Yoga Pro 7 14ASP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x391f, "Yoga S990-16 pro Quad YC Quad", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3920, "Yoga S990-16 pro Quad VECO Quad", ALC287_FIXUP_TAS2781_I2C),
 
 
