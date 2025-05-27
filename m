@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071571CAA7B;
-	Tue, 27 May 2025 17:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308EA280328;
+	Tue, 27 May 2025 17:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367570; cv=none; b=lqebFpoXJi3tOsps8slpbfrP2x/D0K/OmtzXHMdpwY8TJYM8a8x+jSIKwOc79I4KNSd4yTM0imh5M/cClcJxHUN7pep6Mj1F4NEjJYPR+1V7r4d/eTCYFavwzwOKHms3UQV26W2yG2TXvUC61CeC4xZGOc0+oNV52bxWSIiGWPo=
+	t=1748367573; cv=none; b=uR5W60bPisEp9UJVG8c0nz7jOziE976zc+CxQiOYumeU6NTCRvmzAEEspWY9BfEJJ2b8vjva7T73bHMLKxpOcopHsMoOSlcOL8dBLj8knTWvLSsXfjU1O5M+rSwhGPPn9REpu8iblxUXm259scHILs9zB1eVPhlB0ALBhG5/ly0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367570; c=relaxed/simple;
-	bh=AWqcunUadk/OaYqg6wEtKsKqamiY7O7sXq/ada5xHro=;
+	s=arc-20240116; t=1748367573; c=relaxed/simple;
+	bh=AeBYvtK24mvnLOtWolV9stNFBZLNFnOugQbY9zERPpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=auz/6YSkQQXHT8q1Gn8MPnGWOmlkgsUK7R6Budpj3wmciX+OPfa6me8QflGBACJmU8YoVs99BMsciFxQzaXzs82K9t2e3IZa1d+6+4Nj1VAI4gB6SzJCTkvXDppmfKdNT/g+gHQjsFhVw4U8SxbCNDtA5CUhsRPgKfUtoiavFZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DVhmsFKy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RVy20YsvMd1xx4348sj3Wv2fwrMXL8GqxjoqfGHRPbxOhkPAp1Tt3rdIIS2bjNonbmtD7BdN1QJhZRfrJidUxeGMZiXpmVUsD3wK5vg1ghG5/J8yyJRS+h8Z/hVb6/4aQsmIe1/QJcIhELIzTi52KorzyaYtgC5XiGPsxRKM80k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SWSP4DAc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVhmsFKy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670FEC4CEEA;
-	Tue, 27 May 2025 17:39:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SWSP4DAc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921A1C4CEE9;
+	Tue, 27 May 2025 17:39:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367569;
-	bh=AWqcunUadk/OaYqg6wEtKsKqamiY7O7sXq/ada5xHro=;
+	s=korg; t=1748367573;
+	bh=AeBYvtK24mvnLOtWolV9stNFBZLNFnOugQbY9zERPpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DVhmsFKy5AbDoeazyHbUnHPFaVM3jDtWEAnP7tuvg3AcAJQTSgLgU8T+mjnFiPCT5
-	 3yk8zAVTm2fypsOvVV7c5Q/FFdYpaveTmcmmuNjvtTHyc/4zB4nVs/YUR+mmhiDf5x
-	 tcBWziGyD1oscce0QrdjU3DLLP8yyUA9H6MWHDs4=
+	b=SWSP4DAcPZsjlP9JRsqcsDCFYFXcyeOhiRnIQ3gAlkn/ltaiqERzQS2GfToR8R+/6
+	 AkXFR5+J8qciiCnN4iNenW1Tybl/+zot+dOffG778oDTcvNZTsyr2wTdUMMj9Fg9vr
+	 RTt++7VE0liU17jc7H+zaGWxlIrdnV497rWvSXJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	"Artem S. Tashkinov" <aros@gmx.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	George Shen <george.shen@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 430/783] media: test-drivers: vivid: dont call schedule in loop
-Date: Tue, 27 May 2025 18:23:47 +0200
-Message-ID: <20250527162530.635203876@linuxfoundation.org>
+Subject: [PATCH 6.14 413/783] drm/amd/display: Read LTTPR ALPM caps during link cap retrieval
+Date: Tue, 27 May 2025 18:23:30 +0200
+Message-ID: <20250527162529.919032327@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,126 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil@xs4all.nl>
+From: George Shen <george.shen@amd.com>
 
-[ Upstream commit e4740118b752005cbed339aec9a1d1c43620e0b9 ]
+[ Upstream commit de84d580126eb2214937df755cfec5ef0901479e ]
 
-Artem reported that the CPU load was 100% when capturing from
-vivid at low resolution with ffmpeg.
+[Why]
+The latest DP spec requires the DP TX to read DPCD F0000h through F0009h
+when detecting LTTPR capabilities for the first time.
 
-This was caused by:
+[How]
+Update LTTPR cap retrieval to read up to F0009h (two more bytes than the
+previous F0007h), and store the LTTPR ALPM capabilities.
 
-while (time_is_after_jiffies(cur_jiffies + wait_jiffies) &&
-       !kthread_should_stop())
-        schedule();
-
-If there are no other processes running that can be scheduled,
-then this is basically a busy-loop.
-
-Change it to wait_event_interruptible_timeout() which doesn't
-have that problem.
-
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Reported-by: Artem S. Tashkinov <aros@gmx.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219570
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: George Shen <george.shen@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vivid/vivid-kthread-cap.c  | 11 ++++++++---
- drivers/media/test-drivers/vivid/vivid-kthread-out.c  | 11 ++++++++---
- .../media/test-drivers/vivid/vivid-kthread-touch.c    | 11 ++++++++---
- drivers/media/test-drivers/vivid/vivid-sdr-cap.c      | 11 ++++++++---
- 4 files changed, 32 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dc_dp_types.h         | 12 ++++++++++++
+ .../display/dc/link/protocols/link_dp_capability.c   |  6 +++++-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/test-drivers/vivid/vivid-kthread-cap.c b/drivers/media/test-drivers/vivid/vivid-kthread-cap.c
-index 669bd96da4c79..273e8ed8c2a90 100644
---- a/drivers/media/test-drivers/vivid/vivid-kthread-cap.c
-+++ b/drivers/media/test-drivers/vivid/vivid-kthread-cap.c
-@@ -789,9 +789,14 @@ static int vivid_thread_vid_cap(void *data)
- 			next_jiffies_since_start = jiffies_since_start;
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
+index cc005da75ce4c..8bb628ab78554 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
+@@ -959,6 +959,14 @@ union dp_128b_132b_supported_lttpr_link_rates {
+ 	uint8_t raw;
+ };
  
- 		wait_jiffies = next_jiffies_since_start - jiffies_since_start;
--		while (time_is_after_jiffies(cur_jiffies + wait_jiffies) &&
--		       !kthread_should_stop())
--			schedule();
-+		if (!time_is_after_jiffies(cur_jiffies + wait_jiffies))
-+			continue;
++union dp_alpm_lttpr_cap {
++	struct {
++		uint8_t AUX_LESS_ALPM_SUPPORTED	:1;
++		uint8_t RESERVED				:7;
++	} bits;
++	uint8_t raw;
++};
 +
-+		wait_queue_head_t wait;
-+
-+		init_waitqueue_head(&wait);
-+		wait_event_interruptible_timeout(wait, kthread_should_stop(),
-+					cur_jiffies + wait_jiffies - jiffies);
- 	}
- 	dprintk(dev, 1, "Video Capture Thread End\n");
- 	return 0;
-diff --git a/drivers/media/test-drivers/vivid/vivid-kthread-out.c b/drivers/media/test-drivers/vivid/vivid-kthread-out.c
-index fac6208b51da8..015a7b166a1e6 100644
---- a/drivers/media/test-drivers/vivid/vivid-kthread-out.c
-+++ b/drivers/media/test-drivers/vivid/vivid-kthread-out.c
-@@ -235,9 +235,14 @@ static int vivid_thread_vid_out(void *data)
- 			next_jiffies_since_start = jiffies_since_start;
+ union dp_sink_video_fallback_formats {
+ 	struct {
+ 		uint8_t dp_1024x768_60Hz_24bpp_support	:1;
+@@ -1118,6 +1126,7 @@ struct dc_lttpr_caps {
+ 	uint8_t max_ext_timeout;
+ 	union dp_main_link_channel_coding_lttpr_cap main_link_channel_coding;
+ 	union dp_128b_132b_supported_lttpr_link_rates supported_128b_132b_rates;
++	union dp_alpm_lttpr_cap alpm;
+ 	uint8_t aux_rd_interval[MAX_REPEATER_CNT - 1];
+ 	uint8_t lttpr_ieee_oui[3];
+ 	uint8_t lttpr_device_id[6];
+@@ -1372,6 +1381,9 @@ struct dp_trace {
+ #ifndef DPCD_MAX_UNCOMPRESSED_PIXEL_RATE_CAP
+ #define DPCD_MAX_UNCOMPRESSED_PIXEL_RATE_CAP    0x221c
+ #endif
++#ifndef DP_LTTPR_ALPM_CAPABILITIES
++#define DP_LTTPR_ALPM_CAPABILITIES              0xF0009
++#endif
+ #ifndef DP_REPEATER_CONFIGURATION_AND_STATUS_SIZE
+ #define DP_REPEATER_CONFIGURATION_AND_STATUS_SIZE	0x50
+ #endif
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
+index 28843e9882d39..64e4ae379e346 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
+@@ -1502,7 +1502,7 @@ static bool dpcd_read_sink_ext_caps(struct dc_link *link)
  
- 		wait_jiffies = next_jiffies_since_start - jiffies_since_start;
--		while (time_is_after_jiffies(cur_jiffies + wait_jiffies) &&
--		       !kthread_should_stop())
--			schedule();
-+		if (!time_is_after_jiffies(cur_jiffies + wait_jiffies))
-+			continue;
-+
-+		wait_queue_head_t wait;
-+
-+		init_waitqueue_head(&wait);
-+		wait_event_interruptible_timeout(wait, kthread_should_stop(),
-+					cur_jiffies + wait_jiffies - jiffies);
- 	}
- 	dprintk(dev, 1, "Video Output Thread End\n");
- 	return 0;
-diff --git a/drivers/media/test-drivers/vivid/vivid-kthread-touch.c b/drivers/media/test-drivers/vivid/vivid-kthread-touch.c
-index fa711ee36a3fb..c862689786b69 100644
---- a/drivers/media/test-drivers/vivid/vivid-kthread-touch.c
-+++ b/drivers/media/test-drivers/vivid/vivid-kthread-touch.c
-@@ -135,9 +135,14 @@ static int vivid_thread_touch_cap(void *data)
- 			next_jiffies_since_start = jiffies_since_start;
+ enum dc_status dp_retrieve_lttpr_cap(struct dc_link *link)
+ {
+-	uint8_t lttpr_dpcd_data[8] = {0};
++	uint8_t lttpr_dpcd_data[10] = {0};
+ 	enum dc_status status;
+ 	bool is_lttpr_present;
  
- 		wait_jiffies = next_jiffies_since_start - jiffies_since_start;
--		while (time_is_after_jiffies(cur_jiffies + wait_jiffies) &&
--		       !kthread_should_stop())
--			schedule();
-+		if (!time_is_after_jiffies(cur_jiffies + wait_jiffies))
-+			continue;
-+
-+		wait_queue_head_t wait;
-+
-+		init_waitqueue_head(&wait);
-+		wait_event_interruptible_timeout(wait, kthread_should_stop(),
-+					cur_jiffies + wait_jiffies - jiffies);
- 	}
- 	dprintk(dev, 1, "Touch Capture Thread End\n");
- 	return 0;
-diff --git a/drivers/media/test-drivers/vivid/vivid-sdr-cap.c b/drivers/media/test-drivers/vivid/vivid-sdr-cap.c
-index 74a91d28c8be9..c633fc2ed664f 100644
---- a/drivers/media/test-drivers/vivid/vivid-sdr-cap.c
-+++ b/drivers/media/test-drivers/vivid/vivid-sdr-cap.c
-@@ -206,9 +206,14 @@ static int vivid_thread_sdr_cap(void *data)
- 			next_jiffies_since_start = jiffies_since_start;
+@@ -1552,6 +1552,10 @@ enum dc_status dp_retrieve_lttpr_cap(struct dc_link *link)
+ 			lttpr_dpcd_data[DP_PHY_REPEATER_128B132B_RATES -
+ 							DP_LT_TUNABLE_PHY_REPEATER_FIELD_DATA_STRUCTURE_REV];
  
- 		wait_jiffies = next_jiffies_since_start - jiffies_since_start;
--		while (time_is_after_jiffies(cur_jiffies + wait_jiffies) &&
--		       !kthread_should_stop())
--			schedule();
-+		if (!time_is_after_jiffies(cur_jiffies + wait_jiffies))
-+			continue;
++	link->dpcd_caps.lttpr_caps.alpm.raw =
++			lttpr_dpcd_data[DP_LTTPR_ALPM_CAPABILITIES -
++							DP_LT_TUNABLE_PHY_REPEATER_FIELD_DATA_STRUCTURE_REV];
 +
-+		wait_queue_head_t wait;
-+
-+		init_waitqueue_head(&wait);
-+		wait_event_interruptible_timeout(wait, kthread_should_stop(),
-+					cur_jiffies + wait_jiffies - jiffies);
- 	}
- 	dprintk(dev, 1, "SDR Capture Thread End\n");
- 	return 0;
+ 	/* If this chip cap is set, at least one retimer must exist in the chain
+ 	 * Override count to 1 if we receive a known bad count (0 or an invalid value) */
+ 	if (((link->chip_caps & AMD_EXT_DISPLAY_PATH_CAPS__EXT_CHIP_MASK) == AMD_EXT_DISPLAY_PATH_CAPS__DP_FIXED_VS_EN) &&
 -- 
 2.39.5
 
