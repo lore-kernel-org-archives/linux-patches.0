@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6D927FD69;
-	Tue, 27 May 2025 16:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CB02CCC0;
+	Tue, 27 May 2025 16:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365012; cv=none; b=Sl5N05q6iDDYaLpsubEKV8b7t34LOJFSbtb2vrpJxCljYDDGuNEU77wMsLMLXtkFzOKGAbC/5DwitkxAwTlUmfhFyFmPkkxNYfB2NcG8cMXN0ahPHl2KcrmbHtC52pd6gBSiGCNY2iiq97KnfqaO31vTWrvlAw7RyKI8iMjnKqs=
+	t=1748365015; cv=none; b=W+JBvwREtWi9LGK34K2WiMf9oYlktOAcXSYoyfds4CLZvJSW0S41aFeIzGMC2iiIgNJUTTDN/9aEmA5TBqRWyNTEixNSostHK/Kq2HsMkf65gTYjcl/ftylk1dxGCjw8eRN1KyDkk5poZ6LS5CGVameyvwxL12Z9FNCk4p/qvYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365012; c=relaxed/simple;
-	bh=6P3o9BuQ9zaGFaBSSqt1jxEXAFKOZSgeOUlAYlvEWw8=;
+	s=arc-20240116; t=1748365015; c=relaxed/simple;
+	bh=eVG3osM5cJc5CJCHEI1FF4qId3mSqIbtpngO4c6vKuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jvbZDxW2qtZ+MP6mBBQwMmnrjdJFXmB57r77feI0xDBA5MVWMRps0NXUYYTMSU6qIw6Tp44NeepGyJNULeCx5GvVtXsBeM40QcIehVdb37li70obhot3izyotwvkHNBJATCm/RVZ8DHT7vNaAxMZtvYisNdvEZVTvej+vmiW2OA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qp6XpSbv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rSudNMNeI9y/8+KUYFlZtLn2XrhsYOQYNZq6jjaudtnt3LhpT5FMIvMwoKewNgYhT95fWZ8Fs84GwaIwBuTqrvUbqdUJgt/Q6VOlF4NZYpHb8Mb3a/OTa3qZi+UayuyDHUC+hNCkVZ0npV+tvcVArprX2dWxTPFNCTYuy+g1ePE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETxtXe6N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qp6XpSbv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CDA9C4CEE9;
-	Tue, 27 May 2025 16:56:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETxtXe6N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1DDC4CEE9;
+	Tue, 27 May 2025 16:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365012;
-	bh=6P3o9BuQ9zaGFaBSSqt1jxEXAFKOZSgeOUlAYlvEWw8=;
+	s=korg; t=1748365015;
+	bh=eVG3osM5cJc5CJCHEI1FF4qId3mSqIbtpngO4c6vKuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qp6XpSbvfADVyJcTR25r211Y+3FQAg2z02UCQ2aVAtYlIPAS4sH6M8a1rkOUl5hBp
-	 h9vLN4FvjmhN7fNnYByXWjEEwXLAY+WAUPj8nR5hR1dqdCOo9Idg+nCZ2mYYbk3QAH
-	 msUFL3sLMC9LthbKocCFGdcNpXdy4XuclNtOwclU=
+	b=ETxtXe6NNBX22oqfiNZwxt4f6c+TzoRafnrBNRc4LzmrYkv7jufAbzlwYDwiaZ4Tt
+	 6Ur1jF+Y0+fXVodf64xvz5caONQbwoQ20LZ7UDwBZwdcMBburEfy6hdL/ecU4bSJLk
+	 qLVai7lioTcNTJJ2dJ4n2AbUdSyB/EtGmH8sqkD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 239/626] media: cx231xx: set device_caps for 417
-Date: Tue, 27 May 2025 18:22:12 +0200
-Message-ID: <20250527162454.722778392@linuxfoundation.org>
+Subject: [PATCH 6.12 213/626] arm64: tegra: Resize aperture for the IGX PCIe C5 slot
+Date: Tue, 27 May 2025 18:21:46 +0200
+Message-ID: <20250527162453.673043586@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,38 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil@xs4all.nl>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit a79efc44b51432490538a55b9753a721f7d3ea42 ]
+[ Upstream commit 6d4bfe6d86af1ef52bdb4592c9afb2037f24f2c4 ]
 
-The video_device for the MPEG encoder did not set device_caps.
+Some discrete graphics cards such as the NVIDIA RTX A6000 support
+resizable BARs. When connecting an A6000 card to the NVIDIA IGX Orin
+platform, resizing the BAR1 aperture to 8GB fails because the current
+device-tree configuration for the PCIe C5 slot cannot support this.
+Fix this by updating the device-tree 'reg' and 'ranges' properties for
+the PCIe C5 slot to support this.
 
-Add this, otherwise the video device can't be registered (you get a
-WARN_ON instead).
-
-Not seen before since currently 417 support is disabled, but I found
-this while experimenting with it.
-
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://lore.kernel.org/r/20250116151903.476047-1-jonathanh@nvidia.com
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/cx231xx/cx231xx-417.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/media/usb/cx231xx/cx231xx-417.c b/drivers/media/usb/cx231xx/cx231xx-417.c
-index abb967c8bd352..6cb130eb32d58 100644
---- a/drivers/media/usb/cx231xx/cx231xx-417.c
-+++ b/drivers/media/usb/cx231xx/cx231xx-417.c
-@@ -1722,6 +1722,8 @@ static void cx231xx_video_dev_init(
- 	vfd->lock = &dev->lock;
- 	vfd->release = video_device_release_empty;
- 	vfd->ctrl_handler = &dev->mpeg_ctrl_handler.hdl;
-+	vfd->device_caps = V4L2_CAP_READWRITE | V4L2_CAP_STREAMING |
-+			   V4L2_CAP_VIDEO_CAPTURE;
- 	video_set_drvdata(vfd, dev);
- 	if (dev->tuner_type == TUNER_ABSENT) {
- 		v4l2_disable_ioctl(vfd, VIDIOC_G_FREQUENCY);
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts b/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts
+index 36e8880537460..9ce55b4d2de89 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts
++++ b/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts
+@@ -302,6 +302,16 @@ pcie@14160000 {
+ 		};
+ 
+ 		pcie@141a0000 {
++			reg = <0x00 0x141a0000 0x0 0x00020000   /* appl registers (128K)      */
++			       0x00 0x3a000000 0x0 0x00040000   /* configuration space (256K) */
++			       0x00 0x3a040000 0x0 0x00040000   /* iATU_DMA reg space (256K)  */
++			       0x00 0x3a080000 0x0 0x00040000   /* DBI reg space (256K)       */
++			       0x2e 0x20000000 0x0 0x10000000>; /* ECAM (256MB)               */
++
++			ranges = <0x81000000 0x00 0x3a100000 0x00 0x3a100000 0x0 0x00100000      /* downstream I/O (1MB) */
++				  0x82000000 0x00 0x40000000 0x2e 0x30000000 0x0 0x08000000      /* non-prefetchable memory (128MB) */
++				  0xc3000000 0x28 0x00000000 0x28 0x00000000 0x6 0x20000000>;    /* prefetchable memory (25088MB) */
++
+ 			status = "okay";
+ 			vddio-pex-ctl-supply = <&vdd_1v8_ls>;
+ 			phys = <&p2u_nvhs_0>, <&p2u_nvhs_1>, <&p2u_nvhs_2>,
 -- 
 2.39.5
 
