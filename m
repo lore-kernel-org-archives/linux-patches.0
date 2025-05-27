@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02CB3C01;
-	Tue, 27 May 2025 17:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA6C3C01;
+	Tue, 27 May 2025 17:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367334; cv=none; b=INpRXzm2YN2+374KNHrUepAFEy2kPnASCpnBtVSSdpT5pKxeL3gLh8dGt8xd6N9TDqKtEkk0CMJKv51HW4AN7QqbUujmgNYx9i+22X0r23ShtcZo7fhkvrwhF4R6Dq52FRrTdJJtgO6jYh7F01DAN7Y2ycJ0MT7GQ/NWJ68GDgE=
+	t=1748367336; cv=none; b=nRUHYmws4Tgwt+RpO51K/yKQHvcHq55VxXWpqV65OVDMXTXSiuJ1Kg52M/fiB9dJU4PUu5yt+p4cE7BdekY3Eg5uPzX8Z8I8VXal0mWA1gs4P79il+qc8f79HJhEVqnzgG76Bb851xuGcFtn9HfDnhX027qybwi475W0XadwsRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367334; c=relaxed/simple;
-	bh=q9dGDe3BThzSIPme6f+HXLsLii9eMK9zDu15pOzRq0M=;
+	s=arc-20240116; t=1748367336; c=relaxed/simple;
+	bh=xvbZMLwc1jDX1Cu5rPVdg7yxxqY6lJp6W0BGaudPAcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d2zfgvEm25iFyGvInKK2lqinDuvFUdiqvt87lCHhNn4B4iMreWOoH8rxtcoDkchB7VeaUIoNKk1htwZbIxsbnQc2+8kBY6P93crvheTh81jwSn1x/JgYrE1N+4g8KNKM6VJGK/fDZbNYvRi8jlZrC8oJpC/w0m9bTwifRMI8NtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AWHaZDut; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tnEaU90xyjPO16Kmd5nEPoHY5+ssemfk2ZuZyNws3tZNbj3qmhOuDeCJp5+4NdksjoaVVLG/MIOQboGsQdmLg/4IqQkGwJQUmC+ptRDei5efhef+c0QIIA15BE4+ydPU0Vi7FpHgGIZ9fRbeh1fW8CFWT+6g5o0qHod9eEcAH5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxYGd2b1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AWHaZDut"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F01BC4CEE9;
-	Tue, 27 May 2025 17:35:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxYGd2b1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D54CC4CEE9;
+	Tue, 27 May 2025 17:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367332;
-	bh=q9dGDe3BThzSIPme6f+HXLsLii9eMK9zDu15pOzRq0M=;
+	s=korg; t=1748367335;
+	bh=xvbZMLwc1jDX1Cu5rPVdg7yxxqY6lJp6W0BGaudPAcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AWHaZDutessUHaoeg0zMS/TRWAjyvCCpoEWbqrtkKTGRFBjH7VoeuF6gmU8cFQSeq
-	 Pn0EWgvIDmYp6yp8GjEvzd4WXaYOXZvKgEhPKVDeeGaS+LQc1dJtnZ1/v+ckwquMKQ
-	 0ejacyQ+qQmWexrrHqMIRN0q7ORuTkFGo0HgJ5zs=
+	b=KxYGd2b1GBGq4r1oqQKTlBfqVDnI4YzfrKiNWj39FwFITih0sZwEl+c6pDdgRZxRn
+	 Ah3MBLt0IIdP1IIjTnJAxQN6cGeak7e8BKwIFUdZpqIJFdrW3umUrSP2x7ZkFr9Q/f
+	 puCERGWGBpLrO0U+RMopUIYffYFqTVmjYHSlDgs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Davis <afd@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	Samson Tam <Samson.Tam@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 346/783] soc: ti: k3-socinfo: Do not use syscon helper to build regmap
-Date: Tue, 27 May 2025 18:22:23 +0200
-Message-ID: <20250527162527.153795184@linuxfoundation.org>
+Subject: [PATCH 6.14 355/783] drm/amd/display: Fix mismatch type comparison in custom_float
+Date: Tue, 27 May 2025 18:22:32 +0200
+Message-ID: <20250527162527.526947188@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,65 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Davis <afd@ti.com>
+From: Samson Tam <Samson.Tam@amd.com>
 
-[ Upstream commit a5caf03188e44388e8c618dcbe5fffad1a249385 ]
+[ Upstream commit 86f06bcbb54e93f3c7b5e22ae37e72882b74c4b0 ]
 
-The syscon helper device_node_to_regmap() is used to fetch a regmap
-registered to a device node. It also currently creates this regmap
-if the node did not already have a regmap associated with it. This
-should only be used on "syscon" nodes. This driver is not such a
-device and instead uses device_node_to_regmap() on its own node as
-a hacky way to create a regmap for itself.
+[Why & How]
+Passing uint into uchar function param.  Pass uint instead
 
-This will not work going forward and so we should create our regmap
-the normal way by defining our regmap_config, fetching our memory
-resource, then using the normal regmap_init_mmio() function.
-
-Signed-off-by: Andrew Davis <afd@ti.com>
-Link: https://lore.kernel.org/r/20250123181726.597144-1-afd@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Samson Tam <Samson.Tam@amd.com>
+Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/ti/k3-socinfo.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.c | 2 +-
+ drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.h | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/soc/ti/k3-socinfo.c b/drivers/soc/ti/k3-socinfo.c
-index 4fb0f0a248288..704039eb3c078 100644
---- a/drivers/soc/ti/k3-socinfo.c
-+++ b/drivers/soc/ti/k3-socinfo.c
-@@ -105,6 +105,12 @@ k3_chipinfo_variant_to_sr(unsigned int partno, unsigned int variant,
- 	return -ENODEV;
- }
- 
-+static const struct regmap_config k3_chipinfo_regmap_cfg = {
-+	.reg_bits = 32,
-+	.val_bits = 32,
-+	.reg_stride = 4,
-+};
-+
- static int k3_chipinfo_probe(struct platform_device *pdev)
+diff --git a/drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.c b/drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.c
+index 131f1e3949d33..52d97918a3bd2 100644
+--- a/drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.c
++++ b/drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.c
+@@ -346,7 +346,7 @@ struct spl_fixed31_32 spl_fixpt_exp(struct spl_fixed31_32 arg)
+ 		if (m > 0)
+ 			return spl_fixpt_shl(
+ 				spl_fixed31_32_exp_from_taylor_series(r),
+-				(unsigned char)m);
++				(unsigned int)m);
+ 		else
+ 			return spl_fixpt_div_int(
+ 				spl_fixed31_32_exp_from_taylor_series(r),
+diff --git a/drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.h b/drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.h
+index ed2647f9a0999..9f349ffe91485 100644
+--- a/drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.h
++++ b/drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.h
+@@ -189,7 +189,7 @@ static inline struct spl_fixed31_32 spl_fixpt_clamp(
+  * @brief
+  * result = arg << shift
+  */
+-static inline struct spl_fixed31_32 spl_fixpt_shl(struct spl_fixed31_32 arg, unsigned char shift)
++static inline struct spl_fixed31_32 spl_fixpt_shl(struct spl_fixed31_32 arg, unsigned int shift)
  {
- 	struct device_node *node = pdev->dev.of_node;
-@@ -112,13 +118,18 @@ static int k3_chipinfo_probe(struct platform_device *pdev)
- 	struct device *dev = &pdev->dev;
- 	struct soc_device *soc_dev;
- 	struct regmap *regmap;
-+	void __iomem *base;
- 	u32 partno_id;
- 	u32 variant;
- 	u32 jtag_id;
- 	u32 mfg;
- 	int ret;
- 
--	regmap = device_node_to_regmap(node);
-+	base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(base))
-+		return PTR_ERR(base);
-+
-+	regmap = regmap_init_mmio(dev, base, &k3_chipinfo_regmap_cfg);
- 	if (IS_ERR(regmap))
- 		return PTR_ERR(regmap);
+ 	SPL_ASSERT(((arg.value >= 0) && (arg.value <= LLONG_MAX >> shift)) ||
+ 		((arg.value < 0) && (arg.value >= ~(LLONG_MAX >> shift))));
+@@ -203,7 +203,7 @@ static inline struct spl_fixed31_32 spl_fixpt_shl(struct spl_fixed31_32 arg, uns
+  * @brief
+  * result = arg >> shift
+  */
+-static inline struct spl_fixed31_32 spl_fixpt_shr(struct spl_fixed31_32 arg, unsigned char shift)
++static inline struct spl_fixed31_32 spl_fixpt_shr(struct spl_fixed31_32 arg, unsigned int shift)
+ {
+ 	bool negative = arg.value < 0;
  
 -- 
 2.39.5
