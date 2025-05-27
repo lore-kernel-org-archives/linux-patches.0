@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1155627D786;
-	Tue, 27 May 2025 17:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0973A27D786;
+	Tue, 27 May 2025 17:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367446; cv=none; b=NggJAj8JvAdvT13sz43Q6FugjEfsvWAi6tcJAliIRvYS/VSk5LU5pulph0VhBC3xRKfGEJ3Ahf3V0yCNbUQQyAQ2kUgZ1z8+n6msrryUo23kFhrr0aN/bNY1u2s74JB+1apNmr+haqXGxNQh6T8pQy+5SUDGaGXyo0g8SpxQJ74=
+	t=1748367449; cv=none; b=u4xu9i1tO5Do0ve/hm6/g7yuLPCh7vTFnr/I3hf2VrTCwGCz9c2McGe23u10aWY/yE7qKO1QHa2X9gYGcBQ//Og00CVoM4Dg1SZX8k/1BOoKWfgh9re+9M3pKp1hRZ6tpIy3NoxXPBZHS/bJDsKzoBeSNlcCOHHB+5Mgxj0WsBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367446; c=relaxed/simple;
-	bh=eK768Ao5/MM/aJoRUOrXh5P3mh0Rxk8W5trTVHLHwqQ=;
+	s=arc-20240116; t=1748367449; c=relaxed/simple;
+	bh=AmrQ0oaYaFWfi5zEYWbVmb/S0SOXHVOO6wH9zTVTH0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VleN4kXnVvIUAr1bvfsdHUQ2qxvM5R5nDBMKi2ykkkqnYhMa0+a5+Nv6gSCDFE+9YFDofFOjDhZhCjIJmBFMbUi8oGPGX1fB13gJcIWoX8OuHJY2udXndWhSsHIAXOYm9YDny1FnIyskj0L2s9kb9UVxkjd5syW1A9hp0ZErYGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tRPddsL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ckkTt9pGzyPh+doHF8a1UHg5ItdR8RLc+CVxs4h0WeXAv8jbtnZbf3SQDxJ1XPK+sX6p2VuHGkgq3GME23qEEJMCeULy+dpHdYCYugevcd5csfMjYli4uSJ0gy1ty5Pm6r+Ex3609X+BhcStK4pBAee3Az3sEnhiFp4FQezj5X4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ypKja+aS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tRPddsL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DAC3C4CEEB;
-	Tue, 27 May 2025 17:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ypKja+aS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837BEC4CEE9;
+	Tue, 27 May 2025 17:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367445;
-	bh=eK768Ao5/MM/aJoRUOrXh5P3mh0Rxk8W5trTVHLHwqQ=;
+	s=korg; t=1748367448;
+	bh=AmrQ0oaYaFWfi5zEYWbVmb/S0SOXHVOO6wH9zTVTH0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2tRPddsLTVPGdnjQVjNh+xs83yY0UTfn5i/d5cmh2Q1wzHiVvLLukg5U9qBFjrTxA
-	 z2xt0Nlqzl9eM5IFKbB/zoX6zJzt3D5m5fcMKKIuk/QSz2QGNyBYeS7CnOMX8I8lS3
-	 qz/gfuloA0KXLY7ogitqh64LAB0Ec7bkor5PJKak=
+	b=ypKja+aSaY3BPksp9ZD3DPlgN+CYI0rCBmHVk+PA/82SJ22oTrwjnI9tX2cse7rai
+	 lxgyqVeFZ9Qw6htvYJjmSifS2L8cAiqGznlWpgslVasqJGbcUm4A88eMFi1puIVq7Q
+	 OZ2A0/N1t5QWLX6xUXpPSrdUQ7BjfHXXXiyEKka8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shivasharan S <shivasharan.srikanteshwara@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 391/783] scsi: mpt3sas: Send a diag reset if target reset fails
-Date: Tue, 27 May 2025 18:23:08 +0200
-Message-ID: <20250527162529.016917493@linuxfoundation.org>
+Subject: [PATCH 6.14 392/783] wifi: rtw88: Fix rtw_init_vht_cap() for RTL8814AU
+Date: Tue, 27 May 2025 18:23:09 +0200
+Message-ID: <20250527162529.055312143@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,62 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivasharan S <shivasharan.srikanteshwara@broadcom.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 5612d6d51ed2634a033c95de2edec7449409cbb9 ]
+[ Upstream commit 6be7544d19fcfcb729495e793bc6181f85bb8949 ]
 
-When an IOCTL times out and driver issues a target reset, if firmware
-fails the task management elevate the recovery by issuing a diag reset to
-controller.
+Set the MCS maps and the highest rates according to the number of
+spatial streams the chip has. For RTL8814AU that is 3.
 
-Signed-off-by: Shivasharan S <shivasharan.srikanteshwara@broadcom.com>
-Link: https://lore.kernel.org/r/1739410016-27503-5-git-send-email-shivasharan.srikanteshwara@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/e86aa009-b5bf-4b3a-8112-ea5e3cd49465@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_ctl.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw88/main.c | 23 +++++++++--------------
+ 1 file changed, 9 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_ctl.c b/drivers/scsi/mpt3sas/mpt3sas_ctl.c
-index 87784c96249a7..47faa27bc3559 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_ctl.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_ctl.c
-@@ -679,6 +679,7 @@ _ctl_do_mpt_command(struct MPT3SAS_ADAPTER *ioc, struct mpt3_ioctl_command karg,
- 	size_t data_in_sz = 0;
- 	long ret;
- 	u16 device_handle = MPT3SAS_INVALID_DEVICE_HANDLE;
-+	int tm_ret;
+diff --git a/drivers/net/wireless/realtek/rtw88/main.c b/drivers/net/wireless/realtek/rtw88/main.c
+index 0cee0fd8c0ef0..d66abb31f091b 100644
+--- a/drivers/net/wireless/realtek/rtw88/main.c
++++ b/drivers/net/wireless/realtek/rtw88/main.c
+@@ -1597,8 +1597,9 @@ static void rtw_init_vht_cap(struct rtw_dev *rtwdev,
+ 			     struct ieee80211_sta_vht_cap *vht_cap)
+ {
+ 	struct rtw_efuse *efuse = &rtwdev->efuse;
+-	u16 mcs_map;
++	u16 mcs_map = 0;
+ 	__le16 highest;
++	int i;
  
- 	issue_reset = 0;
+ 	if (efuse->hw_cap.ptcl != EFUSE_HW_CAP_IGNORE &&
+ 	    efuse->hw_cap.ptcl != EFUSE_HW_CAP_PTCL_VHT)
+@@ -1621,21 +1622,15 @@ static void rtw_init_vht_cap(struct rtw_dev *rtwdev,
+ 	if (rtw_chip_has_rx_ldpc(rtwdev))
+ 		vht_cap->cap |= IEEE80211_VHT_CAP_RXLDPC;
  
-@@ -1120,18 +1121,25 @@ _ctl_do_mpt_command(struct MPT3SAS_ADAPTER *ioc, struct mpt3_ioctl_command karg,
- 			if (pcie_device && (!ioc->tm_custom_handling) &&
- 			    (!(mpt3sas_scsih_is_pcie_scsi_device(
- 			    pcie_device->device_info))))
--				mpt3sas_scsih_issue_locked_tm(ioc,
-+				tm_ret = mpt3sas_scsih_issue_locked_tm(ioc,
- 				  le16_to_cpu(mpi_request->FunctionDependent1),
- 				  0, 0, 0,
- 				  MPI2_SCSITASKMGMT_TASKTYPE_TARGET_RESET, 0,
- 				  0, pcie_device->reset_timeout,
- 			MPI26_SCSITASKMGMT_MSGFLAGS_PROTOCOL_LVL_RST_PCIE);
- 			else
--				mpt3sas_scsih_issue_locked_tm(ioc,
-+				tm_ret = mpt3sas_scsih_issue_locked_tm(ioc,
- 				  le16_to_cpu(mpi_request->FunctionDependent1),
- 				  0, 0, 0,
- 				  MPI2_SCSITASKMGMT_TASKTYPE_TARGET_RESET, 0,
- 				  0, 30, MPI2_SCSITASKMGMT_MSGFLAGS_LINK_RESET);
-+
-+			if (tm_ret != SUCCESS) {
-+				ioc_info(ioc,
-+					 "target reset failed, issue hard reset: handle (0x%04x)\n",
-+					 le16_to_cpu(mpi_request->FunctionDependent1));
-+				mpt3sas_base_hard_reset_handler(ioc, FORCE_BIG_HAMMER);
-+			}
- 		} else
- 			mpt3sas_base_hard_reset_handler(ioc, FORCE_BIG_HAMMER);
+-	mcs_map = IEEE80211_VHT_MCS_SUPPORT_0_9 << 0 |
+-		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 4 |
+-		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 6 |
+-		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 8 |
+-		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 10 |
+-		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 12 |
+-		  IEEE80211_VHT_MCS_NOT_SUPPORTED << 14;
+-	if (efuse->hw_cap.nss > 1) {
+-		highest = cpu_to_le16(780);
+-		mcs_map |= IEEE80211_VHT_MCS_SUPPORT_0_9 << 2;
+-	} else {
+-		highest = cpu_to_le16(390);
+-		mcs_map |= IEEE80211_VHT_MCS_NOT_SUPPORTED << 2;
++	for (i = 0; i < 8; i++) {
++		if (i < efuse->hw_cap.nss)
++			mcs_map |= IEEE80211_VHT_MCS_SUPPORT_0_9 << (i * 2);
++		else
++			mcs_map |= IEEE80211_VHT_MCS_NOT_SUPPORTED << (i * 2);
  	}
+ 
++	highest = cpu_to_le16(390 * efuse->hw_cap.nss);
++
+ 	vht_cap->vht_mcs.rx_mcs_map = cpu_to_le16(mcs_map);
+ 	vht_cap->vht_mcs.tx_mcs_map = cpu_to_le16(mcs_map);
+ 	vht_cap->vht_mcs.rx_highest = highest;
 -- 
 2.39.5
 
