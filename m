@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C130E2750E8;
-	Tue, 27 May 2025 17:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C2D25A627;
+	Tue, 27 May 2025 17:43:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367801; cv=none; b=p9MjmmJhky1K82WwvtaNGnhCGlLa11f9SNmLZ3lmm1/9jhuFmcY/VrbGVaywLwX57gowA1+FZlhKcaQBP847MC4miltjbryBHgaCDqmyzlFqImliW6Ptcl0ArtuWmldpqwjQHFT5oaDcqTRjpPqrv+VTvE1WUwficIlNz5lJwl8=
+	t=1748367804; cv=none; b=lobfc46atXFaL8nUb4ddVgptAxfxMjHjyXlZ3lWkGUDNU8w3/PcsUDMpmmNezK+qKbhdteeeeBPOP9Fm/sqorHeyH/9rlCvBGjDwSattsg7qnjho32j2UV6tRLdg8szZyBH4z2V7IZXx6SGQGWoi4I6Fo0N6JcVYHIYHyoGrYEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367801; c=relaxed/simple;
-	bh=upFiYiG345xuLFkV5k9M8cxEQknNj91Tk01ppjYjVQQ=;
+	s=arc-20240116; t=1748367804; c=relaxed/simple;
+	bh=KGi0YT5W1b0Wz+Fsgi45hxodSv2SH2thtIn2+LEkwu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q6FKycNUDDNpzMbeVn5I0kxRa+K7vMmAMwyBEnVO1pmMX5MgNAnJ2gmhEDmquSXU7gNu/UE04ReVd6EWpl6pwMhyvnlFN9IaNz0b7eO4SjnjA2/fXhvxy+ikKGCF9Uj1jrGUwdozuG7eruxB6MTNUcj/IHZ00S/7G20X9BYDJ2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSX+IxzK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SF07U1EL4cRZO7F9un8McvfEMmgWSVVl0i986t+qgSjTpVoHG/38Ik4skSWlPR24KOA0E7YBKNYGJ9qHjyFEm53O5LnVoqd37SilUnE+KENtzP5ok1rNCFuzHLrXiVh/pPGxpz35sWSi3ADfEO8Gy4MaOyFPeyHVlfgE6edJerU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HDN380Tz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSX+IxzK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B644BC4CEE9;
-	Tue, 27 May 2025 17:43:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDN380Tz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC20EC4CEE9;
+	Tue, 27 May 2025 17:43:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367801;
-	bh=upFiYiG345xuLFkV5k9M8cxEQknNj91Tk01ppjYjVQQ=;
+	s=korg; t=1748367804;
+	bh=KGi0YT5W1b0Wz+Fsgi45hxodSv2SH2thtIn2+LEkwu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BSX+IxzKe/QrPheshzoXmxkqG3qDo9veANRLah2WXqW6sfyJkKlVWfhgkYNh6grod
-	 pxZnNy4p0skNHCvR3SWKYYexcJ/Wcss5+eaApZF5RUUw7G5izTz7AkJu5OgI7nKbH8
-	 5gzSqKwCmFPxtwx2QqN1RnRZLK5HXfuap8K7s9/w=
+	b=HDN380TzmTuqM/AZWHUaaaZAzBLXpn+G/cIm5B77cUKJUzAr90DjE+Qu8tFwAawji
+	 /nLHmtz8lG5J7wbOc/xkyx+F6nH/wfUVGeRbCtidn/K1yosLiyUirjO5D7/k8nYJlS
+	 HH5GRRgbr5/+Tpu3p6bFV3Qu+6/qtWIs+ssgV4As=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chaohai Chen <wdhh66@163.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 503/783] drm/amd/display/dm: drop hw_support check in amdgpu_dm_i2c_xfer()
-Date: Tue, 27 May 2025 18:25:00 +0200
-Message-ID: <20250527162533.619235576@linuxfoundation.org>
+Subject: [PATCH 6.14 504/783] scsi: target: spc: Fix loop traversal in spc_rsoc_get_descr()
+Date: Tue, 27 May 2025 18:25:01 +0200
+Message-ID: <20250527162533.662550571@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,32 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Chaohai Chen <wdhh66@163.com>
 
-[ Upstream commit 33da70bd1e115d7d73f45fb1c09f5ecc448f3f13 ]
+[ Upstream commit 04ad06e41d1c74cc323b20a7bd023c47bd0e0c38 ]
 
-DC supports SW i2c as well.  Drop the check.
+Stop traversing after finding the appropriate descriptor.
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Chaohai Chen <wdhh66@163.com>
+Link: https://lore.kernel.org/r/20250124085542.109088-1-wdhh66@163.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/target/target_core_spc.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 2cfc18401f3f2..7b1fd3b28e9b5 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -8382,7 +8382,7 @@ static int amdgpu_dm_i2c_xfer(struct i2c_adapter *i2c_adap,
- 	int i;
- 	int result = -EIO;
+diff --git a/drivers/target/target_core_spc.c b/drivers/target/target_core_spc.c
+index 785a97536212b..0a02492bef701 100644
+--- a/drivers/target/target_core_spc.c
++++ b/drivers/target/target_core_spc.c
+@@ -2151,8 +2151,10 @@ spc_rsoc_get_descr(struct se_cmd *cmd, struct target_opcode_descriptor **opcode)
+ 			if (descr->serv_action_valid)
+ 				return TCM_INVALID_CDB_FIELD;
  
--	if (!ddc_service->ddc_pin || !ddc_service->ddc_pin->hw_info.hw_supported)
-+	if (!ddc_service->ddc_pin)
- 		return result;
+-			if (!descr->enabled || descr->enabled(descr, cmd))
++			if (!descr->enabled || descr->enabled(descr, cmd)) {
+ 				*opcode = descr;
++				return TCM_NO_SENSE;
++			}
+ 			break;
+ 		case 0x2:
+ 			/*
+@@ -2166,8 +2168,10 @@ spc_rsoc_get_descr(struct se_cmd *cmd, struct target_opcode_descriptor **opcode)
+ 			if (descr->serv_action_valid &&
+ 			    descr->service_action == requested_sa) {
+ 				if (!descr->enabled || descr->enabled(descr,
+-								      cmd))
++								      cmd)) {
+ 					*opcode = descr;
++					return TCM_NO_SENSE;
++				}
+ 			} else if (!descr->serv_action_valid)
+ 				return TCM_INVALID_CDB_FIELD;
+ 			break;
+@@ -2180,13 +2184,15 @@ spc_rsoc_get_descr(struct se_cmd *cmd, struct target_opcode_descriptor **opcode)
+ 			 */
+ 			if (descr->service_action == requested_sa)
+ 				if (!descr->enabled || descr->enabled(descr,
+-								      cmd))
++								      cmd)) {
+ 					*opcode = descr;
++					return TCM_NO_SENSE;
++				}
+ 			break;
+ 		}
+ 	}
  
- 	cmd.payloads = kcalloc(num, sizeof(struct i2c_payload), GFP_KERNEL);
+-	return 0;
++	return TCM_NO_SENSE;
+ }
+ 
+ static sense_reason_t
 -- 
 2.39.5
 
