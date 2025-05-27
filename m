@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C868278750;
-	Tue, 27 May 2025 17:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F6E1E89C;
+	Tue, 27 May 2025 17:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366053; cv=none; b=bt1l36rDJF+NS75ClyF9Jsbr4bkngufFpvCcwwMrVol6O7xTg748cjm2omw+qt/mZWWBdeV40vknWyT9pDEHOUQOQgrVNQBh3X89ZIWCxJt6Dwllu3wCxFP7bGNv4kpng6DJA2nr26qu2tHEg5hFK/sYEqUM0OgTOty44LJslXY=
+	t=1748366056; cv=none; b=aottABT6ZgUMIIO+MB4s7PyvlMjlL0rUyG3HmjUBb0217G46XNTQtG1yHRQx3+wSqhqkJy2P5Og/OByjk6wi4zC3uFctavnYBBo/F1VUknUZj73lJr2hxdqVqXIMuzavp8Ez7JNRItQwFgjFMNvgWY1SZLq5oQ/HODfTodpNL8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366053; c=relaxed/simple;
-	bh=Rei3Ll0eH4Sl4bJbZaBJxH5Vxl+m95N0cumP5V+SWHk=;
+	s=arc-20240116; t=1748366056; c=relaxed/simple;
+	bh=8kxnQRGN9w6vWqKscCX+6gSeRq+3HCYJ9cjHxp88xcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zdtemnd0sAXJK4VHmvA40kwKWGviwzbhCCMGoMeo7L3qHViTjWkk123o3+Ii3ylzaBrazVagu4iHc0Ncc01uYn9EV72eCLW99W20KcpZbHhXdhMAJ8nN5aKc8ArAdKznMGUojTAEmVhN7X+1lawwuMjusmVqgesXuMKHOIMo3tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKvhJAgK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T5IzC2FcdlC1HnAZk4uL3Fdf5FiXy+QVeh/r1zdOFL9nVgVTMc2lLzT2Ir4awAQHpsiJlHnCwJEJRbfeOGI7SxbNUY05AqhnsIxkLAn7EbC42PgGFZWaSiQeTA4I15acDy3HEoMz+MYao3bTNxXXaCpXA7ZIeahlUqAjBjZYykg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bYD5TZd9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKvhJAgK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09E8C4CEE9;
-	Tue, 27 May 2025 17:14:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bYD5TZd9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E6EC4CEE9;
+	Tue, 27 May 2025 17:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366053;
-	bh=Rei3Ll0eH4Sl4bJbZaBJxH5Vxl+m95N0cumP5V+SWHk=;
+	s=korg; t=1748366056;
+	bh=8kxnQRGN9w6vWqKscCX+6gSeRq+3HCYJ9cjHxp88xcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RKvhJAgKg1Wj2ax0zDRKQxXSHsAXFLMlKJ+Zl8AI+v6Cxr3upRaUGWYYwgZ14/Z6O
-	 v+gFWFKrNvJ4kgPT0akwUXoThdKnNJNkHBZvY1QRS5QxnBYcl0At9MF40zbUkuyUyG
-	 Q1NVn0QqyRVeqQtyrJMezbH/cTl+DNnwxehni934=
+	b=bYD5TZd9jNUOkySMxvphPqTIQhrKS5HrRa6gaIpDMRNxWnEzWJAgZYfVza0/9dGWQ
+	 GsVVHuqIKOfOq1S/J6pKp+R11S6/4PtvYgLnVYzANDDZJp1VIJIiB5+BSG8agqHSdM
+	 KLNN12K8kzwCjZarsURkgLw2RAAOIZqjIE6qnKVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.12 574/626] can: bcm: add missing rcu read protection for procfs content
-Date: Tue, 27 May 2025 18:27:47 +0200
-Message-ID: <20250527162508.295510218@linuxfoundation.org>
+	Raag Jadav <raag.jadav@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 546/626] driver core: Split devres APIs to device/devres.h
+Date: Tue, 27 May 2025 18:27:19 +0200
+Message-ID: <20250527162507.168983075@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,79 +52,302 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit dac5e6249159ac255dad9781793dbe5908ac9ddb upstream.
+[ Upstream commit a21cad9312767d26b5257ce0662699bb202cdda1 ]
 
-When the procfs content is generated for a bcm_op which is in the process
-to be removed the procfs output might show unreliable data (UAF).
+device.h is a huge header which is hard to follow and easy to miss
+something. Improve that by splitting devres APIs to device/devres.h.
 
-As the removal of bcm_op's is already implemented with rcu handling this
-patch adds the missing rcu_read_lock() and makes sure the list entries
-are properly removed under rcu protection.
+In particular this helps to speedup the build of the code that includes
+device.h solely for a devres APIs.
 
-Fixes: f1b4e32aca08 ("can: bcm: use call_rcu() instead of costly synchronize_rcu()")
-Reported-by: Anderson Nascimento <anderson@allelesecurity.com>
-Suggested-by: Anderson Nascimento <anderson@allelesecurity.com>
-Tested-by: Anderson Nascimento <anderson@allelesecurity.com>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20250519125027.11900-2-socketcan@hartkopp.net
-Cc: stable@vger.kernel.org # >= 5.4
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+While at it, cast the error pointers to __iomem using IOMEM_ERR_PTR()
+and fix sparse warnings.
+
+Signed-off-by: Raag Jadav <raag.jadav@intel.com>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Stable-dep-of: 7dd7f39fce00 ("ASoC: SOF: Intel: hda: Fix UAF when reloading module")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/bcm.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ include/linux/device.h        | 119 +-------------------------------
+ include/linux/device/devres.h | 124 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 125 insertions(+), 118 deletions(-)
+ create mode 100644 include/linux/device/devres.h
 
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -219,7 +219,9 @@ static int bcm_proc_show(struct seq_file
- 	seq_printf(m, " / bound %s", bcm_proc_getifname(net, ifname, bo->ifindex));
- 	seq_printf(m, " <<<\n");
+diff --git a/include/linux/device.h b/include/linux/device.h
+index 667cb6db90193..39120b172992e 100644
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -26,9 +26,9 @@
+ #include <linux/atomic.h>
+ #include <linux/uidgid.h>
+ #include <linux/gfp.h>
+-#include <linux/overflow.h>
+ #include <linux/device/bus.h>
+ #include <linux/device/class.h>
++#include <linux/device/devres.h>
+ #include <linux/device/driver.h>
+ #include <linux/cleanup.h>
+ #include <asm/device.h>
+@@ -281,123 +281,6 @@ int __must_check device_create_bin_file(struct device *dev,
+ void device_remove_bin_file(struct device *dev,
+ 			    const struct bin_attribute *attr);
  
--	list_for_each_entry(op, &bo->rx_ops, list) {
-+	rcu_read_lock();
+-/* device resource management */
+-typedef void (*dr_release_t)(struct device *dev, void *res);
+-typedef int (*dr_match_t)(struct device *dev, void *res, void *match_data);
+-
+-void *__devres_alloc_node(dr_release_t release, size_t size, gfp_t gfp,
+-			  int nid, const char *name) __malloc;
+-#define devres_alloc(release, size, gfp) \
+-	__devres_alloc_node(release, size, gfp, NUMA_NO_NODE, #release)
+-#define devres_alloc_node(release, size, gfp, nid) \
+-	__devres_alloc_node(release, size, gfp, nid, #release)
+-
+-void devres_for_each_res(struct device *dev, dr_release_t release,
+-			 dr_match_t match, void *match_data,
+-			 void (*fn)(struct device *, void *, void *),
+-			 void *data);
+-void devres_free(void *res);
+-void devres_add(struct device *dev, void *res);
+-void *devres_find(struct device *dev, dr_release_t release,
+-		  dr_match_t match, void *match_data);
+-void *devres_get(struct device *dev, void *new_res,
+-		 dr_match_t match, void *match_data);
+-void *devres_remove(struct device *dev, dr_release_t release,
+-		    dr_match_t match, void *match_data);
+-int devres_destroy(struct device *dev, dr_release_t release,
+-		   dr_match_t match, void *match_data);
+-int devres_release(struct device *dev, dr_release_t release,
+-		   dr_match_t match, void *match_data);
+-
+-/* devres group */
+-void * __must_check devres_open_group(struct device *dev, void *id, gfp_t gfp);
+-void devres_close_group(struct device *dev, void *id);
+-void devres_remove_group(struct device *dev, void *id);
+-int devres_release_group(struct device *dev, void *id);
+-
+-/* managed devm_k.alloc/kfree for device drivers */
+-void *devm_kmalloc(struct device *dev, size_t size, gfp_t gfp) __alloc_size(2);
+-void *devm_krealloc(struct device *dev, void *ptr, size_t size,
+-		    gfp_t gfp) __must_check __realloc_size(3);
+-__printf(3, 0) char *devm_kvasprintf(struct device *dev, gfp_t gfp,
+-				     const char *fmt, va_list ap) __malloc;
+-__printf(3, 4) char *devm_kasprintf(struct device *dev, gfp_t gfp,
+-				    const char *fmt, ...) __malloc;
+-static inline void *devm_kzalloc(struct device *dev, size_t size, gfp_t gfp)
+-{
+-	return devm_kmalloc(dev, size, gfp | __GFP_ZERO);
+-}
+-static inline void *devm_kmalloc_array(struct device *dev,
+-				       size_t n, size_t size, gfp_t flags)
+-{
+-	size_t bytes;
+-
+-	if (unlikely(check_mul_overflow(n, size, &bytes)))
+-		return NULL;
+-
+-	return devm_kmalloc(dev, bytes, flags);
+-}
+-static inline void *devm_kcalloc(struct device *dev,
+-				 size_t n, size_t size, gfp_t flags)
+-{
+-	return devm_kmalloc_array(dev, n, size, flags | __GFP_ZERO);
+-}
+-static inline __realloc_size(3, 4) void * __must_check
+-devm_krealloc_array(struct device *dev, void *p, size_t new_n, size_t new_size, gfp_t flags)
+-{
+-	size_t bytes;
+-
+-	if (unlikely(check_mul_overflow(new_n, new_size, &bytes)))
+-		return NULL;
+-
+-	return devm_krealloc(dev, p, bytes, flags);
+-}
+-
+-void devm_kfree(struct device *dev, const void *p);
+-char *devm_kstrdup(struct device *dev, const char *s, gfp_t gfp) __malloc;
+-const char *devm_kstrdup_const(struct device *dev, const char *s, gfp_t gfp);
+-void *devm_kmemdup(struct device *dev, const void *src, size_t len, gfp_t gfp)
+-	__realloc_size(3);
+-
+-unsigned long devm_get_free_pages(struct device *dev,
+-				  gfp_t gfp_mask, unsigned int order);
+-void devm_free_pages(struct device *dev, unsigned long addr);
+-
+-#ifdef CONFIG_HAS_IOMEM
+-void __iomem *devm_ioremap_resource(struct device *dev,
+-				    const struct resource *res);
+-void __iomem *devm_ioremap_resource_wc(struct device *dev,
+-				       const struct resource *res);
+-
+-void __iomem *devm_of_iomap(struct device *dev,
+-			    struct device_node *node, int index,
+-			    resource_size_t *size);
+-#else
+-
+-static inline
+-void __iomem *devm_ioremap_resource(struct device *dev,
+-				    const struct resource *res)
+-{
+-	return ERR_PTR(-EINVAL);
+-}
+-
+-static inline
+-void __iomem *devm_ioremap_resource_wc(struct device *dev,
+-				       const struct resource *res)
+-{
+-	return ERR_PTR(-EINVAL);
+-}
+-
+-static inline
+-void __iomem *devm_of_iomap(struct device *dev,
+-			    struct device_node *node, int index,
+-			    resource_size_t *size)
+-{
+-	return ERR_PTR(-EINVAL);
+-}
+-
+-#endif
+-
+ /* allows to add/remove a custom action to devres stack */
+ void devm_remove_action(struct device *dev, void (*action)(void *), void *data);
+ void devm_release_action(struct device *dev, void (*action)(void *), void *data);
+diff --git a/include/linux/device/devres.h b/include/linux/device/devres.h
+new file mode 100644
+index 0000000000000..6b0b265058bcc
+--- /dev/null
++++ b/include/linux/device/devres.h
+@@ -0,0 +1,124 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _DEVICE_DEVRES_H_
++#define _DEVICE_DEVRES_H_
 +
-+	list_for_each_entry_rcu(op, &bo->rx_ops, list) {
- 
- 		unsigned long reduction;
- 
-@@ -275,6 +277,9 @@ static int bcm_proc_show(struct seq_file
- 		seq_printf(m, "# sent %ld\n", op->frames_abs);
- 	}
- 	seq_putc(m, '\n');
++#include <linux/err.h>
++#include <linux/gfp_types.h>
++#include <linux/numa.h>
++#include <linux/overflow.h>
++#include <linux/stdarg.h>
++#include <linux/types.h>
 +
-+	rcu_read_unlock();
++struct device;
++struct device_node;
++struct resource;
 +
- 	return 0;
- }
- #endif /* CONFIG_PROC_FS */
-@@ -858,7 +863,7 @@ static int bcm_delete_rx_op(struct list_
- 						  REGMASK(op->can_id),
- 						  bcm_rx_handler, op);
- 
--			list_del(&op->list);
-+			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return 1; /* done */
- 		}
-@@ -878,7 +883,7 @@ static int bcm_delete_tx_op(struct list_
- 	list_for_each_entry_safe(op, n, ops, list) {
- 		if ((op->can_id == mh->can_id) && (op->ifindex == ifindex) &&
- 		    (op->flags & CAN_FD_FRAME) == (mh->flags & CAN_FD_FRAME)) {
--			list_del(&op->list);
-+			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return 1; /* done */
- 		}
-@@ -1300,7 +1305,7 @@ static int bcm_rx_setup(struct bcm_msg_h
- 					      bcm_rx_handler, op, "bcm", sk);
- 		if (err) {
- 			/* this bcm rx op is broken -> remove it */
--			list_del(&op->list);
-+			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return err;
- 		}
++/* device resource management */
++typedef void (*dr_release_t)(struct device *dev, void *res);
++typedef int (*dr_match_t)(struct device *dev, void *res, void *match_data);
++
++void * __malloc
++__devres_alloc_node(dr_release_t release, size_t size, gfp_t gfp, int nid, const char *name);
++#define devres_alloc(release, size, gfp) \
++	__devres_alloc_node(release, size, gfp, NUMA_NO_NODE, #release)
++#define devres_alloc_node(release, size, gfp, nid) \
++	__devres_alloc_node(release, size, gfp, nid, #release)
++
++void devres_for_each_res(struct device *dev, dr_release_t release,
++			 dr_match_t match, void *match_data,
++			 void (*fn)(struct device *, void *, void *),
++			 void *data);
++void devres_free(void *res);
++void devres_add(struct device *dev, void *res);
++void *devres_find(struct device *dev, dr_release_t release, dr_match_t match, void *match_data);
++void *devres_get(struct device *dev, void *new_res, dr_match_t match, void *match_data);
++void *devres_remove(struct device *dev, dr_release_t release, dr_match_t match, void *match_data);
++int devres_destroy(struct device *dev, dr_release_t release, dr_match_t match, void *match_data);
++int devres_release(struct device *dev, dr_release_t release, dr_match_t match, void *match_data);
++
++/* devres group */
++void * __must_check devres_open_group(struct device *dev, void *id, gfp_t gfp);
++void devres_close_group(struct device *dev, void *id);
++void devres_remove_group(struct device *dev, void *id);
++int devres_release_group(struct device *dev, void *id);
++
++/* managed devm_k.alloc/kfree for device drivers */
++void * __alloc_size(2)
++devm_kmalloc(struct device *dev, size_t size, gfp_t gfp);
++void * __must_check __realloc_size(3)
++devm_krealloc(struct device *dev, void *ptr, size_t size, gfp_t gfp);
++static inline void *devm_kzalloc(struct device *dev, size_t size, gfp_t gfp)
++{
++	return devm_kmalloc(dev, size, gfp | __GFP_ZERO);
++}
++static inline void *devm_kmalloc_array(struct device *dev, size_t n, size_t size, gfp_t flags)
++{
++	size_t bytes;
++
++	if (unlikely(check_mul_overflow(n, size, &bytes)))
++		return NULL;
++
++	return devm_kmalloc(dev, bytes, flags);
++}
++static inline void *devm_kcalloc(struct device *dev, size_t n, size_t size, gfp_t flags)
++{
++	return devm_kmalloc_array(dev, n, size, flags | __GFP_ZERO);
++}
++static inline __realloc_size(3, 4) void * __must_check
++devm_krealloc_array(struct device *dev, void *p, size_t new_n, size_t new_size, gfp_t flags)
++{
++	size_t bytes;
++
++	if (unlikely(check_mul_overflow(new_n, new_size, &bytes)))
++		return NULL;
++
++	return devm_krealloc(dev, p, bytes, flags);
++}
++
++void devm_kfree(struct device *dev, const void *p);
++
++void * __realloc_size(3)
++devm_kmemdup(struct device *dev, const void *src, size_t len, gfp_t gfp);
++
++char * __malloc
++devm_kstrdup(struct device *dev, const char *s, gfp_t gfp);
++const char *devm_kstrdup_const(struct device *dev, const char *s, gfp_t gfp);
++char * __printf(3, 0) __malloc
++devm_kvasprintf(struct device *dev, gfp_t gfp, const char *fmt, va_list ap);
++char * __printf(3, 4) __malloc
++devm_kasprintf(struct device *dev, gfp_t gfp, const char *fmt, ...);
++
++unsigned long devm_get_free_pages(struct device *dev, gfp_t gfp_mask, unsigned int order);
++void devm_free_pages(struct device *dev, unsigned long addr);
++
++#ifdef CONFIG_HAS_IOMEM
++
++void __iomem *devm_ioremap_resource(struct device *dev, const struct resource *res);
++void __iomem *devm_ioremap_resource_wc(struct device *dev, const struct resource *res);
++
++void __iomem *devm_of_iomap(struct device *dev, struct device_node *node, int index,
++			    resource_size_t *size);
++#else
++
++static inline
++void __iomem *devm_ioremap_resource(struct device *dev, const struct resource *res)
++{
++	return IOMEM_ERR_PTR(-EINVAL);
++}
++
++static inline
++void __iomem *devm_ioremap_resource_wc(struct device *dev, const struct resource *res)
++{
++	return IOMEM_ERR_PTR(-EINVAL);
++}
++
++static inline
++void __iomem *devm_of_iomap(struct device *dev, struct device_node *node, int index,
++			    resource_size_t *size)
++{
++	return IOMEM_ERR_PTR(-EINVAL);
++}
++
++#endif
++
++#endif /* _DEVICE_DEVRES_H_ */
+-- 
+2.39.5
+
 
 
