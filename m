@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6B51CEAC2;
-	Tue, 27 May 2025 17:29:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9231CEAC2;
+	Tue, 27 May 2025 17:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366963; cv=none; b=YFCivxOWkSpLiQHFq9lD0r+ZL3uf7PKWQMU/SCQ2Wzhi/IYw6UGq7FyMDU0zSYjBo6RQI8RIQsHM20Y1EgE1vN5CyfJGCJulhHwQ/w9aZCyaCH1DCNoF2y44Dw5CSboUm+80HhBGU1bAkf4JWigEk/75rf11viwBYXcHCRjnj8A=
+	t=1748366966; cv=none; b=CY5q0c0y8ckDSBPuhCcsxu5fap6I6Hw9/lqBlX9BexTtWFQdmyxrgV4xMpNPtTFjUXhLosxBGbxxA7DTcd73g5oKi9DQMXRiFuBvMKH8w6BPAlhdvC5exwF2+5F7jpIbdgeLfYGu2jYCpzwizwo2560d1IyVqJC9S2DXgRbPHIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366963; c=relaxed/simple;
-	bh=GxT5KQkggRmqs3g79N/7PSimCtIRARyq8PiicUX/+G8=;
+	s=arc-20240116; t=1748366966; c=relaxed/simple;
+	bh=ob8XM+v2QrukV/gVDvsBbUi1pBOAZcP/tTzhT6DZFfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=egZXBsDWhOMz5EHBBG/97AZg/x47L3MmkwFHZ1x7C2VF4L85pAGXrR9DhdVwLN7TiCFHgIOUwSZFJJktWff0jFYu1KmPcQjpyfqvqE0qFB5MYgzFe4+I6XWHUkthSD/qknpNF9BQGa4c2kYIFAcmL6vxEnUlTWDDoW/L3bwXwX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H3/4Pk5+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z08aqGaXawQHwtZ7wobA83O0KhrhVCKeNxj6KmsaRUuRgUdWxbtARjgr5zjCONAh2SChHd6cjQyAX7AbHPrlrcbjAvLM5/LCXWKSOfgWnkAeUVNzrBDJtpS401FYo3FYC0nUKT1RdKlK5PtjzqsEZiXtaCGoYyGNp2yY9Ac4xns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZ0wu3Ls; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3/4Pk5+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4597C4CEE9;
-	Tue, 27 May 2025 17:29:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZ0wu3Ls"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3761C4CEE9;
+	Tue, 27 May 2025 17:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366963;
-	bh=GxT5KQkggRmqs3g79N/7PSimCtIRARyq8PiicUX/+G8=;
+	s=korg; t=1748366966;
+	bh=ob8XM+v2QrukV/gVDvsBbUi1pBOAZcP/tTzhT6DZFfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H3/4Pk5+QISTSvOxp4AP+xou8dcifJV/cqyIOAK/pBoUk1Z7/vbiNcUZaFitg4f2o
-	 TmAZn3EnlUmiOPzTnORY5D39UYaEE3TmkLDnGMVlSgr7O6porldVEWyzGj4dhiioqD
-	 XZUiwkks1I0EOAft5MFlIOoDy87Ei87r9lW+ec6I=
+	b=sZ0wu3Ls4fMPWcDuqazAQQI63vrCnzg/+GdkYPrUZ9xxj4zknmt+Kc+vHicWQ9Tcc
+	 kiFmCtDIJV7SWVGTxZEfXfozeGXUlTWqGJMNkFpnag4TYisZSb9sVbiT0tbQb9ZQWm
+	 qoN7TuoKu2FkHge3aFHv2vttDvyqR9GqAbnZPghg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 216/783] wifi: iwlwifi: dont warn when if there is a FW error
-Date: Tue, 27 May 2025 18:20:13 +0200
-Message-ID: <20250527162521.925169265@linuxfoundation.org>
+Subject: [PATCH 6.14 234/783] auxdisplay: charlcd: Partially revert "Move hwidth and bwidth to struct hd44780_common"
+Date: Tue, 27 May 2025 18:20:31 +0200
+Message-ID: <20250527162522.654086033@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,44 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit c7f50d0433a016d43681592836a3d484817bfb34 ]
+[ Upstream commit 09965a142078080fe7807bab0f6f1890cb5987a4 ]
 
-iwl_trans_reclaim is warning if it is called when the FW is not alive.
-But if it is called when there is a pending restart, i.e. after a FW
-error, there is no need to warn, instead - return silently.
+Commit 2545c1c948a6 ("auxdisplay: Move hwidth and bwidth to struct
+hd44780_common") makes charlcd_alloc() argument-less effectively dropping
+the single allocation for the struct charlcd_priv object along with
+the driver specific one. Restore that behaviour here.
 
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250308231427.ba3d90b22c25.I9332506af1997faefcf0bdb51d98d5e874051722@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-trans.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/auxdisplay/charlcd.c | 5 +++--
+ drivers/auxdisplay/charlcd.h | 5 +++--
+ drivers/auxdisplay/hd44780.c | 2 +-
+ drivers/auxdisplay/lcd2s.c   | 2 +-
+ drivers/auxdisplay/panel.c   | 2 +-
+ 5 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.c b/drivers/net/wireless/intel/iwlwifi/iwl-trans.c
-index ced8261c725f8..eb631080c4563 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.c
-@@ -2,7 +2,7 @@
- /*
-  * Copyright (C) 2015 Intel Mobile Communications GmbH
-  * Copyright (C) 2016-2017 Intel Deutschland GmbH
-- * Copyright (C) 2019-2021, 2023-2024 Intel Corporation
-+ * Copyright (C) 2019-2021, 2023-2025 Intel Corporation
-  */
- #include <linux/kernel.h>
- #include <linux/bsearch.h>
-@@ -655,6 +655,9 @@ IWL_EXPORT_SYMBOL(iwl_trans_tx);
- void iwl_trans_reclaim(struct iwl_trans *trans, int queue, int ssn,
- 		       struct sk_buff_head *skbs, bool is_flush)
+diff --git a/drivers/auxdisplay/charlcd.c b/drivers/auxdisplay/charlcd.c
+index 19b619376d48b..09020bb8ad15f 100644
+--- a/drivers/auxdisplay/charlcd.c
++++ b/drivers/auxdisplay/charlcd.c
+@@ -595,18 +595,19 @@ static int charlcd_init(struct charlcd *lcd)
+ 	return 0;
+ }
+ 
+-struct charlcd *charlcd_alloc(void)
++struct charlcd *charlcd_alloc(unsigned int drvdata_size)
  {
-+	if (unlikely(test_bit(STATUS_FW_ERROR, &trans->status)))
-+		return;
+ 	struct charlcd_priv *priv;
+ 	struct charlcd *lcd;
+ 
+-	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
++	priv = kzalloc(sizeof(*priv) + drvdata_size, GFP_KERNEL);
+ 	if (!priv)
+ 		return NULL;
+ 
+ 	priv->esc_seq.len = -1;
+ 
+ 	lcd = &priv->lcd;
++	lcd->drvdata = priv->drvdata;
+ 
+ 	return lcd;
+ }
+diff --git a/drivers/auxdisplay/charlcd.h b/drivers/auxdisplay/charlcd.h
+index 4d4287209d04c..d10b89740bcae 100644
+--- a/drivers/auxdisplay/charlcd.h
++++ b/drivers/auxdisplay/charlcd.h
+@@ -51,7 +51,7 @@ struct charlcd {
+ 		unsigned long y;
+ 	} addr;
+ 
+-	void *drvdata;
++	void *drvdata;			/* Set by charlcd_alloc() */
+ };
+ 
+ /**
+@@ -95,7 +95,8 @@ struct charlcd_ops {
+ };
+ 
+ void charlcd_backlight(struct charlcd *lcd, enum charlcd_onoff on);
+-struct charlcd *charlcd_alloc(void);
 +
- 	if (WARN_ONCE(trans->state != IWL_TRANS_FW_ALIVE,
- 		      "bad state = %d\n", trans->state))
++struct charlcd *charlcd_alloc(unsigned int drvdata_size);
+ void charlcd_free(struct charlcd *lcd);
+ 
+ int charlcd_register(struct charlcd *lcd);
+diff --git a/drivers/auxdisplay/hd44780.c b/drivers/auxdisplay/hd44780.c
+index 9d0ae9c02e9ba..1d67fe3243412 100644
+--- a/drivers/auxdisplay/hd44780.c
++++ b/drivers/auxdisplay/hd44780.c
+@@ -226,7 +226,7 @@ static int hd44780_probe(struct platform_device *pdev)
+ 	if (!hdc)
+ 		return -ENOMEM;
+ 
+-	lcd = charlcd_alloc();
++	lcd = charlcd_alloc(0);
+ 	if (!lcd)
+ 		goto fail1;
+ 
+diff --git a/drivers/auxdisplay/lcd2s.c b/drivers/auxdisplay/lcd2s.c
+index a28daa4ffbf75..c71ebb925971b 100644
+--- a/drivers/auxdisplay/lcd2s.c
++++ b/drivers/auxdisplay/lcd2s.c
+@@ -307,7 +307,7 @@ static int lcd2s_i2c_probe(struct i2c_client *i2c)
+ 	if (err < 0)
+ 		return err;
+ 
+-	lcd = charlcd_alloc();
++	lcd = charlcd_alloc(0);
+ 	if (!lcd)
+ 		return -ENOMEM;
+ 
+diff --git a/drivers/auxdisplay/panel.c b/drivers/auxdisplay/panel.c
+index 6dc8798d01f98..4da142692d55f 100644
+--- a/drivers/auxdisplay/panel.c
++++ b/drivers/auxdisplay/panel.c
+@@ -835,7 +835,7 @@ static void lcd_init(void)
+ 	if (!hdc)
+ 		return;
+ 
+-	charlcd = charlcd_alloc();
++	charlcd = charlcd_alloc(0);
+ 	if (!charlcd) {
+ 		kfree(hdc);
  		return;
 -- 
 2.39.5
