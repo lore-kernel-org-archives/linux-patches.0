@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F7D17B425;
-	Tue, 27 May 2025 17:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8961617B425;
+	Tue, 27 May 2025 17:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366289; cv=none; b=Yvh84xhzXp8XTJ5XVOP2B+UHubYfP9gvKsxnn1LdApPXpzA9erV0kF6LhaZMKopiKfs/JNtGlS9Tnc+ds5E7lkJVvgJtpRogSv6MVpNr8hz4Eh59FFifMH9p83XK1qnYf5bvSA/V0fcRDI7lGE9v36A5q4MMcRCBMsh/3rQWO8w=
+	t=1748366292; cv=none; b=aDRNZJoFl9U1rLPymijt66694qBol9HdBqK8VJJUAwIxELPBCuI98aXl8UC7kUclNfTgBunFt32nWdTC4yp6JKg/JdoEaIv5Lxl73mGAtB+EeNYqEU6TviHynR/zpQnFDUD39S0M3HzAMQLwipR8f6nO1wsm2jMiyPQkPeuXpr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366289; c=relaxed/simple;
-	bh=1s4Zoka+gVD5E/fsWLvyn63z+vFVo5bZEU7DMZTQt30=;
+	s=arc-20240116; t=1748366292; c=relaxed/simple;
+	bh=YQLAfsAJMjRIRng3vvtqidBRuVfRdBxZQcR4eQmx/l0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R7V/EmPrsaelBYy5ZY5W0rpdRUrJl1Rfx7i99hIk5fUjI6S+D1po/iR7zFATLCqa/i+wdJfurE0maLb9fPZwx+Mkq5kwG+Nns3r2M9eusMnAQTfnRSs++EksMv2qYvyMKh5BhD+QXPnEm78tE1m+9WlEHZ3R4Yd49qrkVMHDieg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=saDttqGb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XycJuG2mT6HWeMf99gHx7Qivwb1DyJvMN/JVkrt/j0eRUXzbmVY3xHOQrZ5IAP1C/g/bT235eHqIbWD1P8QKOTzRq8JTtdNg6GqAiRRCZ8PbWuQOwqzBT1K+o1Sjgf9wkc8qZ/CPyrPuGRHjcBLDkLiVyKa6mjhpYncRe10iUpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQivTNEK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saDttqGb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2097C4CEE9;
-	Tue, 27 May 2025 17:18:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQivTNEK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F31C4CEE9;
+	Tue, 27 May 2025 17:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366289;
-	bh=1s4Zoka+gVD5E/fsWLvyn63z+vFVo5bZEU7DMZTQt30=;
+	s=korg; t=1748366292;
+	bh=YQLAfsAJMjRIRng3vvtqidBRuVfRdBxZQcR4eQmx/l0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=saDttqGbRsAHuOetyqOD0fuyB9Iyjc+emksoVwnvBsRobHuh081a4jBsreOjtliwM
-	 tSBO0Ei9iE98/SzQldBDKW9H0wBNP7zWfWN+VfLmqN14FhKrnuuZf+Gf+wQgFjrPqK
-	 8fBUUZp9wYx5RAgrSyG8rD/q5qyCgIpvrRLYJwCs=
+	b=fQivTNEKkQi/0OrjyMs9FN8TXVIj9ddrGAUxuAbhldY4IL7BvvFS0N2sM6As90b3B
+	 hyEyuVk4TxmIReYUfXDfaKGpadj3/xOYdXpfZrFWTkyqghCEv7+EMx/JBJNgpKTg/m
+	 TP6FV4t9KzxbOiEJ6v51x8lZUIZ/VxAYXwO13DZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Pengyu Luo <mitltlatltl@gmail.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 008/783] nvmet: pci-epf: clear completion queue IRQ flag on delete
-Date: Tue, 27 May 2025 18:16:45 +0200
-Message-ID: <20250527162513.385712508@linuxfoundation.org>
+Subject: [PATCH 6.14 009/783] cpufreq: Add SM8650 to cpufreq-dt-platdev blocklist
+Date: Tue, 27 May 2025 18:16:46 +0200
+Message-ID: <20250527162513.424719846@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,44 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Pengyu Luo <mitltlatltl@gmail.com>
 
-[ Upstream commit 85adf2094abb9084770dc4ab302aaa9c5d26dd2d ]
+[ Upstream commit fc5414a4774e14e51a93499a6adfdc45f2de82e0 ]
 
-The function nvmet_pci_epf_delete_cq() unconditionally calls
-nvmet_pci_epf_remove_irq_vector() even for completion queues that do not
-have interrupts enabled. Furthermore, for completion queues that do
-have IRQ enabled, deleting and re-creating the completion queue leaves
-the flag NVMET_PCI_EPF_Q_IRQ_ENABLED set, even if the completion queue
-is being re-created with IRQ disabled.
+SM8650 have already been supported by qcom-cpufreq-hw driver, but
+never been added to cpufreq-dt-platdev. This makes noise
 
-Fix these issues by calling nvmet_pci_epf_remove_irq_vector() only if
-NVMET_PCI_EPF_Q_IRQ_ENABLED is set and make sure to always clear that
-flag.
+[    0.388525] cpufreq-dt cpufreq-dt: failed register driver: -17
+[    0.388537] cpufreq-dt cpufreq-dt: probe with driver cpufreq-dt failed with error -17
 
-Fixes: 0faa0fe6f90e ("nvmet: New NVMe PCI endpoint function target driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+So adding it to the cpufreq-dt-platdev driver's blocklist to fix it.
+
+Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/pci-epf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq-dt-platdev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvme/target/pci-epf.c b/drivers/nvme/target/pci-epf.c
-index 81957b6e84986..fbc167f47d8a6 100644
---- a/drivers/nvme/target/pci-epf.c
-+++ b/drivers/nvme/target/pci-epf.c
-@@ -1344,7 +1344,8 @@ static u16 nvmet_pci_epf_delete_cq(struct nvmet_ctrl *tctrl, u16 cqid)
+diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
+index 2aa00769cf09d..a010da0f6337f 100644
+--- a/drivers/cpufreq/cpufreq-dt-platdev.c
++++ b/drivers/cpufreq/cpufreq-dt-platdev.c
+@@ -175,6 +175,7 @@ static const struct of_device_id blocklist[] __initconst = {
+ 	{ .compatible = "qcom,sm8350", },
+ 	{ .compatible = "qcom,sm8450", },
+ 	{ .compatible = "qcom,sm8550", },
++	{ .compatible = "qcom,sm8650", },
  
- 	cancel_delayed_work_sync(&cq->work);
- 	nvmet_pci_epf_drain_queue(cq);
--	nvmet_pci_epf_remove_irq_vector(ctrl, cq->vector);
-+	if (test_and_clear_bit(NVMET_PCI_EPF_Q_IRQ_ENABLED, &cq->flags))
-+		nvmet_pci_epf_remove_irq_vector(ctrl, cq->vector);
- 	nvmet_pci_epf_mem_unmap(ctrl->nvme_epf, &cq->pci_map);
- 
- 	return NVME_SC_SUCCESS;
+ 	{ .compatible = "st,stih407", },
+ 	{ .compatible = "st,stih410", },
 -- 
 2.39.5
 
