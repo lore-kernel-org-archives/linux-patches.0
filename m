@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26EE627FB3D;
-	Tue, 27 May 2025 17:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51AF01FB3;
+	Tue, 27 May 2025 17:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368416; cv=none; b=YIFHL8kllPVTgtpcdjOnn87Lkqck2XnSS/ni3uAmPJlD/Eki0MjSgOavIdr1XaJy9RZ/6I1fxs9tpiTEH5EaNSRm1jXrWphNfTplfOZptMT0P6K3oVjIdMc6vp625K5A/GTUUCYiKOdLTJgwSNtrhVjraWzHAt52dwmLg9et/wU=
+	t=1748368419; cv=none; b=noxUhWk/5IE+c7X1kr5usi6DmydlBZNCR0kSgTdLyjF68NXYJaxlcQcVYMPcmfDRumqBuwzZrotyaFAEcUfH2JvGlU8qq8nwFQ0o05VrVov8tuM3K1/RG/5Jr5tCWecQZ1+hojVHFqMyO+VGLrFBvqAL2mplxBs9iCliG0+L7uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368416; c=relaxed/simple;
-	bh=Oxdv2AC71tWJpXvRoorWRpoR82325zxLzoy2xM/wYko=;
+	s=arc-20240116; t=1748368419; c=relaxed/simple;
+	bh=0cLtJKFQyBWgMik9XSgGBQiDMx2kBO7miZgT4iNNvzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t+l6Gl6sJXG0q4XWVblp2PuR92heNiiG4LphNle+UlubMihNNs5D2zvkrXFmX0JMY7DKheGCLoUyF2Yo8ke9p4H7tB7ImN3TZJ1/atggRJiEV0BkWl0upMboBVEQc7rXAia4QPyoHgvxdCWNUaAOirh8JDy07LbGlTZeQG9myv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJ8ggs5i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mBvDfi+M5b1SN5UCpbpXdYwTRSGJiIb8MB0HKk1ZgwDoXLIJ4hwJwSGb4K92lNcubj1jZSqKzeVGF3DXYlvyX+pHeyK1iDq59TY3tR4SQh8heujIIANYq0gHGHYfpJSdICIwa5lyDfKh6r3p/+Z6VUb09rEK1RcvrLyq+AoJOLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mqlhtog/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJ8ggs5i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A28EC4CEE9;
-	Tue, 27 May 2025 17:53:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mqlhtog/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD157C4CEE9;
+	Tue, 27 May 2025 17:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368416;
-	bh=Oxdv2AC71tWJpXvRoorWRpoR82325zxLzoy2xM/wYko=;
+	s=korg; t=1748368419;
+	bh=0cLtJKFQyBWgMik9XSgGBQiDMx2kBO7miZgT4iNNvzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pJ8ggs5iNQoos8ZxwG+cl+4I4VIcUAX+sonjGi4KuIGUxcvPkrAiWaBu3izAd4HQ8
-	 BLRRlHCWIyxAM7WNXYJMPw8UcCaCbq6di4ahq4JaUDyDgpoJ1SGwNagnWEXeyDw9xm
-	 y5aRCT0wMtL9Z0cbECDNvD0cV7mYL+nXsrgUFk+U=
+	b=mqlhtog/728I2Llj6BTEYvR80InKjj68e72I1RAZaDYjUbFMiFF/MIByGItDN1vMJ
+	 O6RLxswv9EP5Ex9Y03j9G1fZdfJa8DvUIGA8Ivb1X/I1g5p8/XyXvCAy2l/aFmknkm
+	 sMTc34rB7sVeg9r9r9MOV5VFWqNBD3Vm6fxNYkp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	En-Wei Wu <en-wei.wu@canonical.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sagi Maimon <maimon.sagi@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 699/783] Bluetooth: btusb: use skb_pull to avoid unsafe access in QCA dump handling
-Date: Tue, 27 May 2025 18:28:16 +0200
-Message-ID: <20250527162541.588476287@linuxfoundation.org>
+Subject: [PATCH 6.14 700/783] ptp: ocp: Limit signal/freq counts in summary output functions
+Date: Tue, 27 May 2025 18:28:17 +0200
+Message-ID: <20250527162541.628774497@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,190 +53,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: En-Wei Wu <en-wei.wu@canonical.com>
+From: Sagi Maimon <maimon.sagi@gmail.com>
 
-[ Upstream commit 4bcb0c7dc25446b99fc7a8fa2a143d69f3314162 ]
+[ Upstream commit c9e455581e2ba87ee38c126e8dc49a424b9df0cf ]
 
-Use skb_pull() and skb_pull_data() to safely parse QCA dump packets.
+The debugfs summary output could access uninitialized elements in
+the freq_in[] and signal_out[] arrays, causing NULL pointer
+dereferences and triggering a kernel Oops (page_fault_oops).
+This patch adds u8 fields (nr_freq_in, nr_signal_out) to track the
+number of initialized elements, with a maximum of 4 per array.
+The summary output functions are updated to respect these limits,
+preventing out-of-bounds access and ensuring safe array handling.
 
-This avoids direct pointer math on skb->data, which could lead to
-invalid access if the packet is shorter than expected.
+Widen the label variables because the change confuses GCC about
+max length of the strings.
 
-Fixes: 20981ce2d5a5 ("Bluetooth: btusb: Add WCN6855 devcoredump support")
-Signed-off-by: En-Wei Wu <en-wei.wu@canonical.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: ef61f5528fca ("ptp: ocp: add Adva timecard support")
+Signed-off-by: Sagi Maimon <maimon.sagi@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20250514073541.35817-1-maimon.sagi@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 98 ++++++++++++++++-----------------------
- 1 file changed, 40 insertions(+), 58 deletions(-)
+ drivers/ptp/ptp_ocp.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index ccd0a21da3955..b15f3ed767c53 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3014,9 +3014,8 @@ static void btusb_coredump_qca(struct hci_dev *hdev)
- static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
+diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
+index 605cce32a3d37..e4be8b9291966 100644
+--- a/drivers/ptp/ptp_ocp.c
++++ b/drivers/ptp/ptp_ocp.c
+@@ -315,6 +315,8 @@ struct ptp_ocp_serial_port {
+ #define OCP_BOARD_ID_LEN		13
+ #define OCP_SERIAL_LEN			6
+ #define OCP_SMA_NUM			4
++#define OCP_SIGNAL_NUM			4
++#define OCP_FREQ_NUM			4
+ 
+ enum {
+ 	PORT_GNSS,
+@@ -342,8 +344,8 @@ struct ptp_ocp {
+ 	struct dcf_master_reg	__iomem *dcf_out;
+ 	struct dcf_slave_reg	__iomem *dcf_in;
+ 	struct tod_reg		__iomem *nmea_out;
+-	struct frequency_reg	__iomem *freq_in[4];
+-	struct ptp_ocp_ext_src	*signal_out[4];
++	struct frequency_reg	__iomem *freq_in[OCP_FREQ_NUM];
++	struct ptp_ocp_ext_src	*signal_out[OCP_SIGNAL_NUM];
+ 	struct ptp_ocp_ext_src	*pps;
+ 	struct ptp_ocp_ext_src	*ts0;
+ 	struct ptp_ocp_ext_src	*ts1;
+@@ -378,10 +380,12 @@ struct ptp_ocp {
+ 	u32			utc_tai_offset;
+ 	u32			ts_window_adjust;
+ 	u64			fw_cap;
+-	struct ptp_ocp_signal	signal[4];
++	struct ptp_ocp_signal	signal[OCP_SIGNAL_NUM];
+ 	struct ptp_ocp_sma_connector sma[OCP_SMA_NUM];
+ 	const struct ocp_sma_op *sma_op;
+ 	struct dpll_device *dpll;
++	int signals_nr;
++	int freq_in_nr;
+ };
+ 
+ #define OCP_REQ_TIMESTAMP	BIT(0)
+@@ -2697,6 +2701,8 @@ ptp_ocp_fb_board_init(struct ptp_ocp *bp, struct ocp_resource *r)
+ 	bp->eeprom_map = fb_eeprom_map;
+ 	bp->fw_version = ioread32(&bp->image->version);
+ 	bp->sma_op = &ocp_fb_sma_op;
++	bp->signals_nr = 4;
++	bp->freq_in_nr = 4;
+ 
+ 	ptp_ocp_fb_set_version(bp);
+ 
+@@ -2862,6 +2868,8 @@ ptp_ocp_art_board_init(struct ptp_ocp *bp, struct ocp_resource *r)
+ 	bp->fw_version = ioread32(&bp->reg->version);
+ 	bp->fw_tag = 2;
+ 	bp->sma_op = &ocp_art_sma_op;
++	bp->signals_nr = 4;
++	bp->freq_in_nr = 4;
+ 
+ 	/* Enable MAC serial port during initialisation */
+ 	iowrite32(1, &bp->board_config->mro50_serial_activate);
+@@ -2888,6 +2896,8 @@ ptp_ocp_adva_board_init(struct ptp_ocp *bp, struct ocp_resource *r)
+ 	bp->flash_start = 0xA00000;
+ 	bp->eeprom_map = fb_eeprom_map;
+ 	bp->sma_op = &ocp_adva_sma_op;
++	bp->signals_nr = 2;
++	bp->freq_in_nr = 2;
+ 
+ 	version = ioread32(&bp->image->version);
+ 	/* if lower 16 bits are empty, this is the fw loader. */
+@@ -4008,7 +4018,7 @@ _signal_summary_show(struct seq_file *s, struct ptp_ocp *bp, int nr)
  {
- 	int ret = 0;
-+	unsigned int skip = 0;
- 	u8 pkt_type;
--	u8 *sk_ptr;
--	unsigned int sk_len;
- 	u16 seqno;
- 	u32 dump_size;
+ 	struct signal_reg __iomem *reg = bp->signal_out[nr]->mem;
+ 	struct ptp_ocp_signal *signal = &bp->signal[nr];
+-	char label[8];
++	char label[16];
+ 	bool on;
+ 	u32 val;
  
-@@ -3025,18 +3024,13 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
- 	struct usb_device *udev = btdata->udev;
+@@ -4034,7 +4044,7 @@ static void
+ _frequency_summary_show(struct seq_file *s, int nr,
+ 			struct frequency_reg __iomem *reg)
+ {
+-	char label[8];
++	char label[16];
+ 	bool on;
+ 	u32 val;
  
- 	pkt_type = hci_skb_pkt_type(skb);
--	sk_ptr = skb->data;
--	sk_len = skb->len;
-+	skip = sizeof(struct hci_event_hdr);
-+	if (pkt_type == HCI_ACLDATA_PKT)
-+		skip += sizeof(struct hci_acl_hdr);
- 
--	if (pkt_type == HCI_ACLDATA_PKT) {
--		sk_ptr += HCI_ACL_HDR_SIZE;
--		sk_len -= HCI_ACL_HDR_SIZE;
--	}
--
--	sk_ptr += HCI_EVENT_HDR_SIZE;
--	sk_len -= HCI_EVENT_HDR_SIZE;
-+	skb_pull(skb, skip);
-+	dump_hdr = (struct qca_dump_hdr *)skb->data;
- 
--	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
- 	seqno = le16_to_cpu(dump_hdr->seqno);
- 	if (seqno == 0) {
- 		set_bit(BTUSB_HW_SSR_ACTIVE, &btdata->flags);
-@@ -3056,16 +3050,15 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
- 
- 		btdata->qca_dump.ram_dump_size = dump_size;
- 		btdata->qca_dump.ram_dump_seqno = 0;
--		sk_ptr += offsetof(struct qca_dump_hdr, data0);
--		sk_len -= offsetof(struct qca_dump_hdr, data0);
-+
-+		skb_pull(skb, offsetof(struct qca_dump_hdr, data0));
- 
- 		usb_disable_autosuspend(udev);
- 		bt_dev_info(hdev, "%s memdump size(%u)\n",
- 			    (pkt_type == HCI_ACLDATA_PKT) ? "ACL" : "event",
- 			    dump_size);
- 	} else {
--		sk_ptr += offsetof(struct qca_dump_hdr, data);
--		sk_len -= offsetof(struct qca_dump_hdr, data);
-+		skb_pull(skb, offsetof(struct qca_dump_hdr, data));
+@@ -4178,11 +4188,11 @@ ptp_ocp_summary_show(struct seq_file *s, void *data)
  	}
  
- 	if (!btdata->qca_dump.ram_dump_size) {
-@@ -3085,7 +3078,6 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
- 		return ret;
- 	}
+ 	if (bp->fw_cap & OCP_CAP_SIGNAL)
+-		for (i = 0; i < 4; i++)
++		for (i = 0; i < bp->signals_nr; i++)
+ 			_signal_summary_show(s, bp, i);
  
--	skb_pull(skb, skb->len - sk_len);
- 	hci_devcd_append(hdev, skb);
- 	btdata->qca_dump.ram_dump_seqno++;
- 	if (seqno == QCA_LAST_SEQUENCE_NUM) {
-@@ -3113,68 +3105,58 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
- /* Return: true if the ACL packet is a dump packet, false otherwise. */
- static bool acl_pkt_is_dump_qca(struct hci_dev *hdev, struct sk_buff *skb)
- {
--	u8 *sk_ptr;
--	unsigned int sk_len;
--
- 	struct hci_event_hdr *event_hdr;
- 	struct hci_acl_hdr *acl_hdr;
- 	struct qca_dump_hdr *dump_hdr;
-+	struct sk_buff *clone = skb_clone(skb, GFP_ATOMIC);
-+	bool is_dump = false;
+ 	if (bp->fw_cap & OCP_CAP_FREQ)
+-		for (i = 0; i < 4; i++)
++		for (i = 0; i < bp->freq_in_nr; i++)
+ 			_frequency_summary_show(s, i, bp->freq_in[i]);
  
--	sk_ptr = skb->data;
--	sk_len = skb->len;
--
--	acl_hdr = hci_acl_hdr(skb);
--	if (le16_to_cpu(acl_hdr->handle) != QCA_MEMDUMP_ACL_HANDLE)
-+	if (!clone)
- 		return false;
- 
--	sk_ptr += HCI_ACL_HDR_SIZE;
--	sk_len -= HCI_ACL_HDR_SIZE;
--	event_hdr = (struct hci_event_hdr *)sk_ptr;
--
--	if ((event_hdr->evt != HCI_VENDOR_PKT) ||
--	    (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE)))
--		return false;
-+	acl_hdr = skb_pull_data(clone, sizeof(*acl_hdr));
-+	if (!acl_hdr || (le16_to_cpu(acl_hdr->handle) != QCA_MEMDUMP_ACL_HANDLE))
-+		goto out;
- 
--	sk_ptr += HCI_EVENT_HDR_SIZE;
--	sk_len -= HCI_EVENT_HDR_SIZE;
-+	event_hdr = skb_pull_data(clone, sizeof(*event_hdr));
-+	if (!event_hdr || (event_hdr->evt != HCI_VENDOR_PKT))
-+		goto out;
- 
--	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
--	if ((sk_len < offsetof(struct qca_dump_hdr, data)) ||
--	    (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS) ||
--	    (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
--		return false;
-+	dump_hdr = skb_pull_data(clone, sizeof(*dump_hdr));
-+	if (!dump_hdr || (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS) ||
-+	   (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
-+		goto out;
- 
--	return true;
-+	is_dump = true;
-+out:
-+	consume_skb(clone);
-+	return is_dump;
- }
- 
- /* Return: true if the event packet is a dump packet, false otherwise. */
- static bool evt_pkt_is_dump_qca(struct hci_dev *hdev, struct sk_buff *skb)
- {
--	u8 *sk_ptr;
--	unsigned int sk_len;
--
- 	struct hci_event_hdr *event_hdr;
- 	struct qca_dump_hdr *dump_hdr;
-+	struct sk_buff *clone = skb_clone(skb, GFP_ATOMIC);
-+	bool is_dump = false;
- 
--	sk_ptr = skb->data;
--	sk_len = skb->len;
--
--	event_hdr = hci_event_hdr(skb);
--
--	if ((event_hdr->evt != HCI_VENDOR_PKT)
--	    || (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE)))
-+	if (!clone)
- 		return false;
- 
--	sk_ptr += HCI_EVENT_HDR_SIZE;
--	sk_len -= HCI_EVENT_HDR_SIZE;
-+	event_hdr = skb_pull_data(clone, sizeof(*event_hdr));
-+	if (!event_hdr || (event_hdr->evt != HCI_VENDOR_PKT))
-+		goto out;
- 
--	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
--	if ((sk_len < offsetof(struct qca_dump_hdr, data)) ||
--	    (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS) ||
--	    (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
--		return false;
-+	dump_hdr = skb_pull_data(clone, sizeof(*dump_hdr));
-+	if (!dump_hdr || (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS) ||
-+	   (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
-+		goto out;
- 
--	return true;
-+	is_dump = true;
-+out:
-+	consume_skb(clone);
-+	return is_dump;
- }
- 
- static int btusb_recv_acl_qca(struct hci_dev *hdev, struct sk_buff *skb)
+ 	if (bp->irig_out) {
 -- 
 2.39.5
 
