@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B87248F45;
-	Tue, 27 May 2025 17:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCF01E89C;
+	Tue, 27 May 2025 17:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366353; cv=none; b=jFNdzYpAMLJ+eZWXo79pDUDMb4amHBBjDh9GOjDlkB5HRAsylTrPcqYReOiDDum58HrMcTczzeTbgZhkaQDuL0kzTTbLmK9ouI7atyW6Pfi4jd+o5AWw509MHXoLewd+fEkTG0j3OD8wtyKZ9A/VojrNmVtu+wqCIhxXy1HFj8A=
+	t=1748366356; cv=none; b=Dzpi/5teRCo3CgAgYoaC/wXmvPEON7kLCIjOLhMBbLMyfiXZR4j9H9sInUK7bRIbK8na7oofb2EXXRoAcptvFnh42f7634HTU0hzFn1WjCozK45mSGRNODyvCjmhgI1K1O/KfF4vtGD/wziwFrC6/paKtD+6UO/rmINNJfOA0sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366353; c=relaxed/simple;
-	bh=kHmGcnLCLE7U3X0M5ryIiESpsaIYT8d2QrK/8PcclOI=;
+	s=arc-20240116; t=1748366356; c=relaxed/simple;
+	bh=a7HtwN8HcgsC0J6ZcRv9W+IxeE376VTibpLP2XhU7hw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jnDDgioLwhX8Vse9D7gLz2EDzE+VWLoM5/+PW892hBYnsyTAuS2JlxOn9Yt7+n8dc+3EpnkBJVPhrImcnvCBoa2mtvTdgb1hQZeByHsAete1EdfFcdFysGiyPcux7HT+Gb8J7NPzIMrBeblIDeGSrvQ4pjWuAl1+HRi+apCelWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WlGmY2yP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uOQ5c3pebPalHzDZR88NSUukwUQj8ZNEfBFKzdiS5hIKO8nf60OI9owjWEpb2/NtZsnPxsF85lpFB1hjvTrFKGXy6HCy2CXO8by9CIa2PKKRgGw4Dl1d/4RrwVVDRWXQ/GU7KzokwrBC/l3QDx7uFbKMPSCVhBub+Fp4TkSRf7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skwE2tmp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WlGmY2yP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE82C4CEE9;
-	Tue, 27 May 2025 17:19:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skwE2tmp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9A0C4CEE9;
+	Tue, 27 May 2025 17:19:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366353;
-	bh=kHmGcnLCLE7U3X0M5ryIiESpsaIYT8d2QrK/8PcclOI=;
+	s=korg; t=1748366356;
+	bh=a7HtwN8HcgsC0J6ZcRv9W+IxeE376VTibpLP2XhU7hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WlGmY2yPMFYv8U70h5qweiVxV22RcozCFgTGHsQYtjPIqc1+E3OPLNX5+lDGzOg+J
-	 pjkKKUj/t8qpSle5M21Xd1GBbX++98AT8qMYqqTff1Ib/W8Bg1IN0yxG32iPPORo4P
-	 lCbDn7YRxQ7HsfwSSoAz6PgFILUI/EIosedztRPc=
+	b=skwE2tmpkWxX5RfHsS5/U9hSC7ia3CyXEAY+/ATvHPsFOEiA5qvDJnrme8+35D1xg
+	 A/OgHrXcGgpYNpEpzQV9WZFd+tWgZtqwT+xRdtEg1yPD43G8VJgfRxnLm7OIqhMs72
+	 pmwjkD39mAIUOgOBmNNLAol2LGHXWHoy7Dh1+0GI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 040/783] block: hoist block size validation code to a separate function
-Date: Tue, 27 May 2025 18:17:17 +0200
-Message-ID: <20250527162514.760518631@linuxfoundation.org>
+Subject: [PATCH 6.14 041/783] io_uring: dont duplicate flushing in io_req_post_cqe
+Date: Tue, 27 May 2025 18:17:18 +0200
+Message-ID: <20250527162514.802843164@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,87 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit e03463d247ddac66e71143468373df3d74a3a6bd ]
+[ Upstream commit 5e16f1a68d28965c12b6fa227a306fef8a680f84 ]
 
-Hoist the block size validation code to bdev_validate_blocksize so that
-we can call it from filesystems that don't care about the bdev pagecache
-manipulations of set_blocksize.
+io_req_post_cqe() sets submit_state.cq_flush so that
+*flush_completions() can take care of batch commiting CQEs. Don't commit
+it twice by using __io_cq_unlock_post().
 
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/174543795720.4139148.840349813093799165.stgit@frogsfrogsfrogs
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/41c416660c509cee676b6cad96081274bcb459f3.1745493861.git.asml.silence@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bdev.c           | 33 +++++++++++++++++++++++++++------
- include/linux/blkdev.h |  1 +
- 2 files changed, 28 insertions(+), 6 deletions(-)
+ io_uring/io_uring.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/block/bdev.c b/block/bdev.c
-index 74f2fe8aa1604..9bb7e041bd9ce 100644
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -150,18 +150,39 @@ static void set_init_blocksize(struct block_device *bdev)
- 	BD_INODE(bdev)->i_blkbits = blksize_bits(bsize);
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index a60cb9d30cc0d..f1c09e2b53022 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -864,10 +864,15 @@ bool io_req_post_cqe(struct io_kiocb *req, s32 res, u32 cflags)
+ 	lockdep_assert(!io_wq_current_is_worker());
+ 	lockdep_assert_held(&ctx->uring_lock);
+ 
+-	__io_cq_lock(ctx);
+-	posted = io_fill_cqe_aux(ctx, req->cqe.user_data, res, cflags);
++	if (!ctx->lockless_cq) {
++		spin_lock(&ctx->completion_lock);
++		posted = io_fill_cqe_aux(ctx, req->cqe.user_data, res, cflags);
++		spin_unlock(&ctx->completion_lock);
++	} else {
++		posted = io_fill_cqe_aux(ctx, req->cqe.user_data, res, cflags);
++	}
++
+ 	ctx->submit_state.cq_flush = true;
+-	__io_cq_unlock_post(ctx);
+ 	return posted;
  }
  
--int set_blocksize(struct file *file, int size)
-+/**
-+ * bdev_validate_blocksize - check that this block size is acceptable
-+ * @bdev:	blockdevice to check
-+ * @block_size:	block size to check
-+ *
-+ * For block device users that do not use buffer heads or the block device
-+ * page cache, make sure that this block size can be used with the device.
-+ *
-+ * Return: On success zero is returned, negative error code on failure.
-+ */
-+int bdev_validate_blocksize(struct block_device *bdev, int block_size)
- {
--	struct inode *inode = file->f_mapping->host;
--	struct block_device *bdev = I_BDEV(inode);
--
--	if (blk_validate_block_size(size))
-+	if (blk_validate_block_size(block_size))
- 		return -EINVAL;
- 
- 	/* Size cannot be smaller than the size supported by the device */
--	if (size < bdev_logical_block_size(bdev))
-+	if (block_size < bdev_logical_block_size(bdev))
- 		return -EINVAL;
- 
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(bdev_validate_blocksize);
-+
-+int set_blocksize(struct file *file, int size)
-+{
-+	struct inode *inode = file->f_mapping->host;
-+	struct block_device *bdev = I_BDEV(inode);
-+	int ret;
-+
-+	ret = bdev_validate_blocksize(bdev, size);
-+	if (ret)
-+		return ret;
-+
- 	if (!file->private_data)
- 		return -EINVAL;
- 
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 0fec27d6b986c..844af92bea1e4 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -1616,6 +1616,7 @@ static inline void bio_end_io_acct(struct bio *bio, unsigned long start_time)
- 	return bio_end_io_acct_remapped(bio, start_time, bio->bi_bdev);
- }
- 
-+int bdev_validate_blocksize(struct block_device *bdev, int block_size);
- int set_blocksize(struct file *file, int size);
- 
- int lookup_bdev(const char *pathname, dev_t *dev);
 -- 
 2.39.5
 
