@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896F62798F8;
-	Tue, 27 May 2025 17:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAEC227E7C1;
+	Tue, 27 May 2025 17:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366388; cv=none; b=kwkmeDNsTLUWwRpf2yrVAuf5gFq28LvlpJitK07Xa+fZQXq9Ry49VrNBKh1i3hEyaLjSJkJT6HAnAYyz4trYTp2NpeihX0ncdXe+hZK4C5e9AkoUriKS22EryskIlaZJTBZThfdvmWEEqvLuwV7fHxtYquFIzleD27cllslMBvU=
+	t=1748366391; cv=none; b=Fhi/O669WqBKQY5MbXR3egv3baJZUoeknJWbEHvCAfMjqdPpqdfZ9og7ZKF1gKcWXW8/vmW6raURYD1aQqALNx2F2g3gyqM5EgK5aYoncvgl0dQC/rJpKdVm/b7/pMQNjSk9sq753zXOmqSZ+xdMLSMjn1hk642c7sOx2Gb/zoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366388; c=relaxed/simple;
-	bh=2VMkp+DxJ4WXGjLam/97tObGCZEEIvUDtL1ash5ijaE=;
+	s=arc-20240116; t=1748366391; c=relaxed/simple;
+	bh=+u6bxOYFEaPFWJreG4YB1Xm02JkwlEncx4ahuEE1t58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ShTDxA9y0bs3XKYoBm93NWqBHjUyER+cOZLS6Fvipg4mKHyeLnPoUx4QW0dfTOJX30zK8lRcs52YwDciCzZ1/Hb0oY6TWP9YYphCalK/hNMPAWQ9BCIchtNxJtqlY9MlhR3xFji1uaeM4AToVOkSAD7kY39pV4BBnDbqmZmgHhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvftm59J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oIFjmyr/oODnwC47ZGX3EunknRbyammB8oR9b3cbc67peXgi/8rON8LQfSxaut7JZhgfYE4qv6scMeZuVVBeC1dRpMpdSyzDAOHdjXWLG9vwGf6cXfJM25eGsmsTvw/XhbQNCWJ7ZeQTVganZQJ7iLhocVJZNgqfCZDwakEbUX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PEWSKLHX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvftm59J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5D52C4CEE9;
-	Tue, 27 May 2025 17:19:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PEWSKLHX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7381C4CEE9;
+	Tue, 27 May 2025 17:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366388;
-	bh=2VMkp+DxJ4WXGjLam/97tObGCZEEIvUDtL1ash5ijaE=;
+	s=korg; t=1748366391;
+	bh=+u6bxOYFEaPFWJreG4YB1Xm02JkwlEncx4ahuEE1t58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fvftm59Jk3p3+nkEHgxeDMk8Aj8LO+yoKKdtmO9lAN3EUa6uCPiGJLdSn1DLnnF62
-	 AjRiXp45kqP+8SBsUEQsZQzKfFVhfUHJHTbABGqrxqwBJ7U/0zn0z/4vIkODNQyth0
-	 p/Z/sD26NjlTOPVrCe1BpHOLJYB2XMQbvzaWXFRY=
+	b=PEWSKLHX1BtmtjHU28k80dUXKhm18yQUQ+WZPg6E7+WqcbjlNchoerOb24i++25SD
+	 7DIOvJl2UMXfuZEHDBW+lj3T3H2H3LCv/z1nLyUY3tR+AD6FRBsS3k6liAWMfstZKe
+	 ya5m5w3yQ/OopaVPVnHY/5jXCJBXreBnh60MQA98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 021/783] mei: vsc: Use struct vsc_tp_packet as vsc-tp tx_buf and rx_buf type
-Date: Tue, 27 May 2025 18:16:58 +0200
-Message-ID: <20250527162513.954488956@linuxfoundation.org>
+Subject: [PATCH 6.14 022/783] dma-mapping: avoid potential unused data compilation warning
+Date: Tue, 27 May 2025 18:16:59 +0200
+Message-ID: <20250527162513.999545105@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,80 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit f88c0c72ffb014e5eba676ee337c4eb3b1d6a119 ]
+[ Upstream commit c9b19ea63036fc537a69265acea1b18dabd1cbd3 ]
 
-vsc_tp.tx_buf and vsc_tp.rx_buf point to a struct vsc_tp_packet, use
-the correct type instead of "void *" and use sizeof(*ptr) when allocating
-memory for these buffers.
+When CONFIG_NEED_DMA_MAP_STATE is not defined, dma-mapping clients might
+report unused data compilation warnings for dma_unmap_*() calls
+arguments. Redefine macros for those calls to let compiler to notice that
+it is okay when the provided arguments are not used.
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250318141203.94342-3-hdegoede@redhat.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Tested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20250415075659.428549-1-m.szyprowski@samsung.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mei/vsc-tp.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ include/linux/dma-mapping.h | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/misc/mei/vsc-tp.c b/drivers/misc/mei/vsc-tp.c
-index fa553d4914b6e..da26a080916c5 100644
---- a/drivers/misc/mei/vsc-tp.c
-+++ b/drivers/misc/mei/vsc-tp.c
-@@ -71,8 +71,8 @@ struct vsc_tp {
- 	u32 seq;
+diff --git a/include/linux/dma-mapping.h b/include/linux/dma-mapping.h
+index b79925b1c4333..85ab710ec0e72 100644
+--- a/include/linux/dma-mapping.h
++++ b/include/linux/dma-mapping.h
+@@ -629,10 +629,14 @@ static inline int dma_mmap_wc(struct device *dev,
+ #else
+ #define DEFINE_DMA_UNMAP_ADDR(ADDR_NAME)
+ #define DEFINE_DMA_UNMAP_LEN(LEN_NAME)
+-#define dma_unmap_addr(PTR, ADDR_NAME)           (0)
+-#define dma_unmap_addr_set(PTR, ADDR_NAME, VAL)  do { } while (0)
+-#define dma_unmap_len(PTR, LEN_NAME)             (0)
+-#define dma_unmap_len_set(PTR, LEN_NAME, VAL)    do { } while (0)
++#define dma_unmap_addr(PTR, ADDR_NAME)           \
++	({ typeof(PTR) __p __maybe_unused = PTR; 0; })
++#define dma_unmap_addr_set(PTR, ADDR_NAME, VAL)  \
++	do { typeof(PTR) __p __maybe_unused = PTR; } while (0)
++#define dma_unmap_len(PTR, LEN_NAME)             \
++	({ typeof(PTR) __p __maybe_unused = PTR; 0; })
++#define dma_unmap_len_set(PTR, LEN_NAME, VAL)    \
++	do { typeof(PTR) __p __maybe_unused = PTR; } while (0)
+ #endif
  
- 	/* command buffer */
--	void *tx_buf;
--	void *rx_buf;
-+	struct vsc_tp_packet *tx_buf;
-+	struct vsc_tp_packet *rx_buf;
- 
- 	atomic_t assert_cnt;
- 	wait_queue_head_t xfer_wait;
-@@ -164,7 +164,7 @@ static int vsc_tp_xfer_helper(struct vsc_tp *tp, struct vsc_tp_packet *pkt,
- {
- 	int ret, offset = 0, cpy_len, src_len, dst_len = sizeof(struct vsc_tp_packet_hdr);
- 	int next_xfer_len = VSC_TP_PACKET_SIZE(pkt) + VSC_TP_XFER_TIMEOUT_BYTES;
--	u8 *src, *crc_src, *rx_buf = tp->rx_buf;
-+	u8 *src, *crc_src, *rx_buf = (u8 *)tp->rx_buf;
- 	int count_down = VSC_TP_MAX_XFER_COUNT;
- 	u32 recv_crc = 0, crc = ~0;
- 	struct vsc_tp_packet_hdr ack;
-@@ -324,7 +324,7 @@ int vsc_tp_rom_xfer(struct vsc_tp *tp, const void *obuf, void *ibuf, size_t len)
- 	guard(mutex)(&tp->mutex);
- 
- 	/* rom xfer is big endian */
--	cpu_to_be32_array(tp->tx_buf, obuf, words);
-+	cpu_to_be32_array((u32 *)tp->tx_buf, obuf, words);
- 
- 	ret = read_poll_timeout(gpiod_get_value_cansleep, ret,
- 				!ret, VSC_TP_ROM_XFER_POLL_DELAY_US,
-@@ -340,7 +340,7 @@ int vsc_tp_rom_xfer(struct vsc_tp *tp, const void *obuf, void *ibuf, size_t len)
- 		return ret;
- 
- 	if (ibuf)
--		be32_to_cpu_array(ibuf, tp->rx_buf, words);
-+		be32_to_cpu_array(ibuf, (u32 *)tp->rx_buf, words);
- 
- 	return ret;
- }
-@@ -494,11 +494,11 @@ static int vsc_tp_probe(struct spi_device *spi)
- 	if (!tp)
- 		return -ENOMEM;
- 
--	tp->tx_buf = devm_kzalloc(dev, VSC_TP_MAX_XFER_SIZE, GFP_KERNEL);
-+	tp->tx_buf = devm_kzalloc(dev, sizeof(*tp->tx_buf), GFP_KERNEL);
- 	if (!tp->tx_buf)
- 		return -ENOMEM;
- 
--	tp->rx_buf = devm_kzalloc(dev, VSC_TP_MAX_XFER_SIZE, GFP_KERNEL);
-+	tp->rx_buf = devm_kzalloc(dev, sizeof(*tp->rx_buf), GFP_KERNEL);
- 	if (!tp->rx_buf)
- 		return -ENOMEM;
- 
+ #endif /* _LINUX_DMA_MAPPING_H */
 -- 
 2.39.5
 
