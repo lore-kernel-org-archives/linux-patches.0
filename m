@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38DF3266592;
-	Tue, 27 May 2025 17:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A63627E7EA;
+	Tue, 27 May 2025 17:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365202; cv=none; b=V34G5mNwddB5jpfMrfoW+QBrjYCsfFZJBaJCpTCIO8ERgaErXrPkI672q+z4nvF2MFWIK/o225YGauRb6ajqY+ZCM052YV9qdGXUqUGc2H0TTtPj2JVBCz5AW9eU5bmx5DUPI9xiDnyl6L9GLzaAurQuhubjQdX31BIWePy6O08=
+	t=1748365205; cv=none; b=SyDnzO8sxnYjBlGDfLjMxwPXPX4loiQr+8DCn7M6zbLldIgyhKdpwAsofYyd5KYPeikolX5iTulJ/TXzaUU1X2dIaF3GFYNTFr3GfkaGWjvfbzfb9Ov4u6jPu1ZMk/+PNEZ9piadJ5zMTqmDlCZfJDdgQ4lAIAbjI7LaYWMktUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365202; c=relaxed/simple;
-	bh=SzQfNzvcZ4dQDf/L0eP5JAYPtlO3a/Yb3wqkug7E9I8=;
+	s=arc-20240116; t=1748365205; c=relaxed/simple;
+	bh=/kAR8eaAgoG7fcK9IcClDHthiCUrqzv42GlIzQTt0dk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=auUsL6OjvsiHJpLpHZ82L/TiddLX/0Fv1PnG7X7T8gtKT+uewDqQhlBTr0XZc9WcGrdwMRun35FMRtjS6j9D6h7kl/ix/krQ0UYXh0YVrgMxoM0X8pdyGagWad6j8dmkVei39SXIIJmzMTcDuFW1sFf4v6VnFrD5G+2JrIf6sts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKYZ8w+K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bGh5e4wG3vdY2bIcV0ceMzD8vn9kJalxXMdNuiokziN021kjY0987G9ugOSeRaIxIox7gGNGJqGitdrIRE6z0rawXXUxT/qs2C3V0piyPiK4yinIEj+s8XA6KvDCdwsTSZrYoRgtmpLxOpP2vrmP5RQM//NLJy+Ovl0YuWOxfXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=te2kLm9L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKYZ8w+K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7E5C4CEE9;
-	Tue, 27 May 2025 17:00:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="te2kLm9L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACCBEC4CEE9;
+	Tue, 27 May 2025 17:00:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365202;
-	bh=SzQfNzvcZ4dQDf/L0eP5JAYPtlO3a/Yb3wqkug7E9I8=;
+	s=korg; t=1748365205;
+	bh=/kAR8eaAgoG7fcK9IcClDHthiCUrqzv42GlIzQTt0dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FKYZ8w+KPRkcGtKHM+Jg/zcFhPoao6jvw75QcMAusJasgchKmYWPbPhaUgjt3x8lk
-	 SWN4W5jokHsf2SIrZ3hpVgp0+cwn7+CmO5ltZdQ5EXfZ7GxPll+w6RY+7nvNzjfD8Y
-	 X2ytXZ65H8ES83cElxONUqzujyjnm6Ga+zaB8FuE=
+	b=te2kLm9LMIUBWSHGaFKk1L1oB+7ldMQCJv77L50CMX+iTeSnYgZcaDsFanj7GrRFw
+	 KtTJx0MXoLoFCPDSG3Q+PFkrMK+awkTKTFModFHK8RG6ell5jrYEmgy2Ry+FJX+9Ts
+	 9CV+pHDD/raBLZFW+/q7vVGD/dw/pC0lGlgjc9vQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Saxena <sumit.saxena@broadcom.com>,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 299/626] scsi: mpi3mr: Update timestamp only for supervisor IOCs
-Date: Tue, 27 May 2025 18:23:12 +0200
-Message-ID: <20250527162457.178149218@linuxfoundation.org>
+Subject: [PATCH 6.12 300/626] loop: check in LO_FLAGS_DIRECT_IO in loop_default_blocksize
+Date: Tue, 27 May 2025 18:23:13 +0200
+Message-ID: <20250527162457.217532747@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,42 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 83a9d30d29f275571f6e8f879f04b2379be7eb6c ]
+[ Upstream commit f6f9e32fe1e454ae8ac0190b2c2bd6074914beec ]
 
-The driver issues the time stamp update command periodically. Even if the
-command fails with supervisor only IOC Status.
+We can't go below the minimum direct I/O size no matter if direct I/O is
+enabled by passing in an O_DIRECT file descriptor or due to the explicit
+flag.  Now that LO_FLAGS_DIRECT_IO is set earlier after assigning a
+backing file, loop_default_blocksize can check it instead of the
+O_DIRECT flag to handle both conditions.
 
-Instead check the Non-Supervisor capability bit reported by IOC as part of
-IOC Facts.
-
-Co-developed-by: Sumit Saxena <sumit.saxena@broadcom.com>
-Signed-off-by: Sumit Saxena <sumit.saxena@broadcom.com>
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Link: https://lore.kernel.org/r/20250220142528.20837-3-ranjan.kumar@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20250131120120.1315125-4-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/block/loop.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index f6d3db3fd0d8e..604f37e5c0c35 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -2747,7 +2747,10 @@ static void mpi3mr_watchdog_work(struct work_struct *work)
- 		return;
- 	}
- 
--	if (mrioc->ts_update_counter++ >= mrioc->ts_update_interval) {
-+	if (!(mrioc->facts.ioc_capabilities &
-+		MPI3_IOCFACTS_CAPABILITY_NON_SUPERVISOR_IOC) &&
-+		(mrioc->ts_update_counter++ >= mrioc->ts_update_interval)) {
-+
- 		mrioc->ts_update_counter = 0;
- 		mpi3mr_sync_timestamp(mrioc);
- 	}
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index 6bd44ec2c9b1a..fa9c77b8f4d23 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -916,7 +916,7 @@ static unsigned int loop_default_blocksize(struct loop_device *lo,
+ 		struct block_device *backing_bdev)
+ {
+ 	/* In case of direct I/O, match underlying block size */
+-	if ((lo->lo_backing_file->f_flags & O_DIRECT) && backing_bdev)
++	if ((lo->lo_flags & LO_FLAGS_DIRECT_IO) && backing_bdev)
+ 		return bdev_logical_block_size(backing_bdev);
+ 	return SECTOR_SIZE;
+ }
 -- 
 2.39.5
 
