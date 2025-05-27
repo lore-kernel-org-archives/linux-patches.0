@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AD1139579;
-	Tue, 27 May 2025 17:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C487139579;
+	Tue, 27 May 2025 17:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365794; cv=none; b=FD+2aGI83o+ZGsZ++pYxV67IX7AJInPzaUWx1B7fGipSg8eeuAMNmVcLJge+m6uSsMnImV4eWta7AXEGP71TnWldW+tSpi42SHriRp5zC9BrB8tm1RS+gF8qb3pENozK88H2Tl1c86PCkhd8/M6fo0+RKOy4ySssqFI0nZBCIJw=
+	t=1748365796; cv=none; b=uWXBjau4MXFQMQdJuQJAtz66zPeO3JKp8N9sxIaseScOzb1jkeTrbeAHK44T4C1x43iseSta4FXhiunIwaP4FcNf9Nf9+1YA3+2l9Mdjj3dLqt0Uy2AXfqEWh/pqNL55X+9X/mE9yY7aPje0GxsY2LQbX3ecl6rdtUOz1xtOIH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365794; c=relaxed/simple;
-	bh=r9A4G87KyqTmBDivq7QCSYGsRv4WDJpqeTdByFqGGEs=;
+	s=arc-20240116; t=1748365796; c=relaxed/simple;
+	bh=reDql2G7H9SKIM4M6/Z7MlpQvMldaM6TsVBKrTVfqRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UAMBgfVph9skG5El5CN+y6Q/fwiNfXbKqXMdHET/8ol/B03F6wmcuxfLGevBd54HX7/ixsr04Z6A/P8uhIHqHVUVGimsFZnmXeHRZSkJhk6VKVHhx9fZr0IErPE3BYfG3Qtkc86A1Tc2IsEJ88YoNAZ82t8ZhWaI/yr7iGu6i/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQ717j4x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ov23WjMIDOFfIYlxmIw9hsXRBTqKgWYPN5DV1UNUMVCKHmvhTLKjkaaLAE6yI0ox6Xr3CqgNvmK2rj6BvEZEIiy/KlOxtmXBZZqiBH6uFBhacAuQSvDuwYQ/QyMQXQJAQTG52GeWryQXUEIQdvd2EfZp+gWxtvzL6r6UZHCJFcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=diO2hVAs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQ717j4x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86529C4CEE9;
-	Tue, 27 May 2025 17:09:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="diO2hVAs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5E2C4CEE9;
+	Tue, 27 May 2025 17:09:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365793;
-	bh=r9A4G87KyqTmBDivq7QCSYGsRv4WDJpqeTdByFqGGEs=;
+	s=korg; t=1748365795;
+	bh=reDql2G7H9SKIM4M6/Z7MlpQvMldaM6TsVBKrTVfqRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tQ717j4xWrO4yeGpKkz9BBtqNhw4G3Ejx/BGrIfCV0tW3bhfye3l6oHsa21o3cywc
-	 qda9MccPRG/ZJ7TQEoYf4iMQ2OFdypxasXU+sHOE+oqy1Y7JdKXjqCKOp1i6GRPDpE
-	 rdzh5c4QInhtQCdL7Tc2/fYz3nucop8w4HXgSlWw=
+	b=diO2hVAse1Dp3vDJWMtX+B40DSkpMWCNHVAonMh76GF4uFJx/RvVsWK55sWc93sdr
+	 TSX+rfH+zvWxw+ylEmLPZJLB2matS9ntlT1ZTIqTOkuWoRzk9DVX9pbRiWgVTcA8/b
+	 d25JZmHeHqXhh+pOTSqvHU0F2UMubFaTKjBdv8e0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaradhana Sahu <quic_aarasahu@quicinc.com>,
-	Aditya Kumar Singh <quic_adisi@quicinc.com>,
+	P Praneesh <quic_ppranees@quicinc.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 491/626] wifi: ath12k: Fetch regdb.bin file from board-2.bin
-Date: Tue, 27 May 2025 18:26:24 +0200
-Message-ID: <20250527162504.934732322@linuxfoundation.org>
+Subject: [PATCH 6.12 492/626] wifi: ath12k: Fix end offset bit definition in monitor ring descriptor
+Date: Tue, 27 May 2025 18:26:25 +0200
+Message-ID: <20250527162504.973259795@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,75 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaradhana Sahu <quic_aarasahu@quicinc.com>
+From: P Praneesh <quic_ppranees@quicinc.com>
 
-[ Upstream commit 24f587572acf7509127dbdfcbf1b681ef84eeba0 ]
+[ Upstream commit 6788a666000d600bd8f2e9f991cad9cc805e7f01 ]
 
-Currently, ath12k_core_fetch_regdb() finds regdb.bin file through
-board id's but in board-2.bin file regdb.bin file is present with
-default board id because of which regdb.bin is not fetched.
-
-Add support to fetch regdb.bin file from board-2.bin through
-default board id.
+End offset for the monitor destination ring descriptor is defined as
+16 bits, while the firmware definition specifies only 12 bits.
+The remaining bits (bit 12 to bit 15) are reserved and may contain
+junk values, leading to invalid information retrieval. Fix this issue
+by updating the correct genmask values.
 
 Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
-Signed-off-by: Aaradhana Sahu <quic_aarasahu@quicinc.com>
-Reviewed-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
-Link: https://patch.msgid.link/20250116032835.118397-1-quic_aarasahu@quicinc.com
+Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
+Link: https://patch.msgid.link/20241223060132.3506372-8-quic_ppranees@quicinc.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/core.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath12k/hal_desc.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
-index 51252e8bc1ae9..8bb8ee98188bf 100644
---- a/drivers/net/wireless/ath/ath12k/core.c
-+++ b/drivers/net/wireless/ath/ath12k/core.c
-@@ -161,7 +161,7 @@ EXPORT_SYMBOL(ath12k_core_resume);
+diff --git a/drivers/net/wireless/ath/ath12k/hal_desc.h b/drivers/net/wireless/ath/ath12k/hal_desc.h
+index 739f73370015e..4f745cfd7d8e7 100644
+--- a/drivers/net/wireless/ath/ath12k/hal_desc.h
++++ b/drivers/net/wireless/ath/ath12k/hal_desc.h
+@@ -2966,7 +2966,7 @@ struct hal_mon_buf_ring {
  
- static int __ath12k_core_create_board_name(struct ath12k_base *ab, char *name,
- 					   size_t name_len, bool with_variant,
--					   bool bus_type_mode)
-+					   bool bus_type_mode, bool with_default)
- {
- 	/* strlen(',variant=') + strlen(ab->qmi.target.bdf_ext) */
- 	char variant[9 + ATH12K_QMI_BDF_EXT_STR_LENGTH] = { 0 };
-@@ -192,7 +192,9 @@ static int __ath12k_core_create_board_name(struct ath12k_base *ab, char *name,
- 			  "bus=%s,qmi-chip-id=%d,qmi-board-id=%d%s",
- 			  ath12k_bus_str(ab->hif.bus),
- 			  ab->qmi.target.chip_id,
--			  ab->qmi.target.board_id, variant);
-+			  with_default ?
-+			  ATH12K_BOARD_ID_DEFAULT : ab->qmi.target.board_id,
-+			  variant);
- 		break;
- 	}
+ #define HAL_MON_DEST_COOKIE_BUF_ID      GENMASK(17, 0)
  
-@@ -204,19 +206,19 @@ static int __ath12k_core_create_board_name(struct ath12k_base *ab, char *name,
- static int ath12k_core_create_board_name(struct ath12k_base *ab, char *name,
- 					 size_t name_len)
- {
--	return __ath12k_core_create_board_name(ab, name, name_len, true, false);
-+	return __ath12k_core_create_board_name(ab, name, name_len, true, false, false);
- }
- 
- static int ath12k_core_create_fallback_board_name(struct ath12k_base *ab, char *name,
- 						  size_t name_len)
- {
--	return __ath12k_core_create_board_name(ab, name, name_len, false, false);
-+	return __ath12k_core_create_board_name(ab, name, name_len, false, false, true);
- }
- 
- static int ath12k_core_create_bus_type_board_name(struct ath12k_base *ab, char *name,
- 						  size_t name_len)
- {
--	return __ath12k_core_create_board_name(ab, name, name_len, false, true);
-+	return __ath12k_core_create_board_name(ab, name, name_len, false, true, true);
- }
- 
- const struct firmware *ath12k_core_firmware_request(struct ath12k_base *ab,
+-#define HAL_MON_DEST_INFO0_END_OFFSET		GENMASK(15, 0)
++#define HAL_MON_DEST_INFO0_END_OFFSET		GENMASK(11, 0)
+ #define HAL_MON_DEST_INFO0_FLUSH_DETECTED	BIT(16)
+ #define HAL_MON_DEST_INFO0_END_OF_PPDU		BIT(17)
+ #define HAL_MON_DEST_INFO0_INITIATOR		BIT(18)
 -- 
 2.39.5
 
