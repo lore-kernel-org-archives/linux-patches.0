@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B5C2798E6;
-	Tue, 27 May 2025 17:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2262798E6;
+	Tue, 27 May 2025 17:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366040; cv=none; b=hIDR6TrvmpHAbGTZRT9i0FD6ZX/2TDwD+Sh3lUu0BjydjZMOOl5UzjqqZ2XzYu/w3b++O6qhaqK23g7ZpbWQKl5oPe6PUozq7qNC83+lgb7y6hT5qAcK2DYPu/bObelaYgL9m/sdhAwUJmE9NM9bu7AfseVjEqlKmuXxLU/mE7s=
+	t=1748366044; cv=none; b=GO3yyrS3CiK0eC9HTFdFMWgJhVJAqS/LYjWnefPJ2Ec0lafzRl867wo157e6xTdYHrV3xvtfRyQLSW6KY13qVpGGI2Kp+xnnWSsYiB0ayR2oyvgZMp9ecn+456uxpbCgx05/CdNuBgK+YQpcgZ0Wl+2lZTCYcvkYV9h3xEL0+po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366040; c=relaxed/simple;
-	bh=j8aH9xR+4wNE7lYOUY0jJuJoVQuezu1AISRcQXW2xb4=;
+	s=arc-20240116; t=1748366044; c=relaxed/simple;
+	bh=9M1J1iRwqfz/jWEN6O4bC5Tz/jzERxTqgaVLoG00ACM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z/3P0Coll52SkKxhPPlw0mawSVNOHKSkXwAYJIhzAcSeq6m7J55kgirx3D1r41XNu8z+/mWFJ4K0Uue1pvme1UUGXtpN2xyMirfG6pajHhW3WOb55iSNXxDlQz2gbcnaVKHK4EgbFu0aqdYfgvzXz+/jB+U4NPFUFJ+koOMsTgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMo2Naaw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MDEqvI0Z51yXkC8O3sEZYjbGPCGjrkIyJOJPWFoM/V3pKJ2jlTcMUEbcGfU/CfC9ZFCoK7tdGBPSWVCU9hCofip6CrRp2EBCngQWUJtnUEJfNiUVLtLt7BPD7EFVdPEoVe5Lt5yI7nSTYHaxwDr9s98cO50gI8oggjd9ZBWAOaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHKNYuu5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMo2Naaw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F98C4CEE9;
-	Tue, 27 May 2025 17:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHKNYuu5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A235C4CEE9;
+	Tue, 27 May 2025 17:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366040;
-	bh=j8aH9xR+4wNE7lYOUY0jJuJoVQuezu1AISRcQXW2xb4=;
+	s=korg; t=1748366043;
+	bh=9M1J1iRwqfz/jWEN6O4bC5Tz/jzERxTqgaVLoG00ACM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QMo2NaawhA6MPxUM+eKpEYZM2rilQrdsVw6aUw4AKUITVpMu3wz5CxoLh0TQDq3S+
-	 5Kzj5wYLW7Lbp0Z5PuHnR1H1SspydwLIvzZ8gOfxtmVQGqC/uSmyOO7Y1rrA9sb1pg
-	 btEULUle1S4fBkAAX9tEK3BdhoCUkulF2hw9AOy8=
+	b=ZHKNYuu5ikCl1Z8A9WwwuoYMsH0VHKTYYr+X3J+oR8k+nlwxCE1wOY9VLouSV97bb
+	 BRZKVBzu5a3KZorihuXwFMyHXDsLr7RmOyYAwmcNyAYCJolIse+eWcGMOQv13qN1ZO
+	 QZFsqz2gqRuhCoAmKkb9ZG6ipe8Yo3JDOnDROzvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominik Grzegorzek <dominik.grzegorzek@oracle.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 571/626] padata: do not leak refcount in reorder_work
-Date: Tue, 27 May 2025 18:27:44 +0200
-Message-ID: <20250527162508.164773910@linuxfoundation.org>
+	Stefan Wahren <wahrenst@gmx.net>,
+	Joy Zou <joy.zou@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 545/626] dmaengine: fsl-edma: Fix return code for unhandled interrupts
+Date: Tue, 27 May 2025 18:27:18 +0200
+Message-ID: <20250527162507.130334213@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -50,55 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominik Grzegorzek <dominik.grzegorzek@oracle.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-commit d6ebcde6d4ecf34f8495fb30516645db3aea8993 upstream.
+[ Upstream commit 5e27af0514e2249a9ccc9a762abd3b74e03a1f90 ]
 
-A recent patch that addressed a UAF introduced a reference count leak:
-the parallel_data refcount is incremented unconditionally, regardless
-of the return value of queue_work(). If the work item is already queued,
-the incremented refcount is never decremented.
+For fsl,imx93-edma4 two DMA channels share the same interrupt.
+So in case fsl_edma3_tx_handler is called for the "wrong"
+channel, the return code must be IRQ_NONE. This signalize that
+the interrupt wasn't handled.
 
-Fix this by checking the return value of queue_work() and decrementing
-the refcount when necessary.
-
-Resolves:
-
-Unreferenced object 0xffff9d9f421e3d80 (size 192):
-  comm "cryptomgr_probe", pid 157, jiffies 4294694003
-  hex dump (first 32 bytes):
-    80 8b cf 41 9f 9d ff ff b8 97 e0 89 ff ff ff ff  ...A............
-    d0 97 e0 89 ff ff ff ff 19 00 00 00 1f 88 23 00  ..............#.
-  backtrace (crc 838fb36):
-    __kmalloc_cache_noprof+0x284/0x320
-    padata_alloc_pd+0x20/0x1e0
-    padata_alloc_shell+0x3b/0xa0
-    0xffffffffc040a54d
-    cryptomgr_probe+0x43/0xc0
-    kthread+0xf6/0x1f0
-    ret_from_fork+0x2f/0x50
-    ret_from_fork_asm+0x1a/0x30
-
-Fixes: dd7d37ccf6b1 ("padata: avoid UAF for reorder_work")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Dominik Grzegorzek <dominik.grzegorzek@oracle.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 72f5801a4e2b ("dmaengine: fsl-edma: integrate v3 support")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Reviewed-by: Joy Zou <joy.zou@nxp.com>
+Link: https://lore.kernel.org/r/20250424114829.9055-1-wahrenst@gmx.net
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/padata.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/dma/fsl-edma-main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -358,7 +358,8 @@ static void padata_reorder(struct parall
- 		 * To avoid UAF issue, add pd ref here, and put pd ref after reorder_work finish.
- 		 */
- 		padata_get_pd(pd);
--		queue_work(pinst->serial_wq, &pd->reorder_work);
-+		if (!queue_work(pinst->serial_wq, &pd->reorder_work))
-+			padata_put_pd(pd);
- 	}
- }
+diff --git a/drivers/dma/fsl-edma-main.c b/drivers/dma/fsl-edma-main.c
+index 27645606f900b..4794d58dab556 100644
+--- a/drivers/dma/fsl-edma-main.c
++++ b/drivers/dma/fsl-edma-main.c
+@@ -56,7 +56,7 @@ static irqreturn_t fsl_edma3_tx_handler(int irq, void *dev_id)
  
+ 	intr = edma_readl_chreg(fsl_chan, ch_int);
+ 	if (!intr)
+-		return IRQ_HANDLED;
++		return IRQ_NONE;
+ 
+ 	edma_writel_chreg(fsl_chan, 1, ch_int);
+ 
+-- 
+2.39.5
+
 
 
