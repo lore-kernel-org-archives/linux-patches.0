@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D8825A627;
-	Tue, 27 May 2025 17:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53171DC998;
+	Tue, 27 May 2025 17:40:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367614; cv=none; b=H3d4G0ZRjb9tTX4gWOliyziPT6llF44iTza0J18P+Rijo9S7ynl81CHT2yb/Xxv8z02cZ19gGtjYquIrqcLi2i61FTKLIExjbTfZyWvYbVRG/wWe5VSrC7MnVD/qH9Uvwad02oSDzFN2n9FwrO+6ESR14DBlZu0/x2Rpx8GS0s4=
+	t=1748367616; cv=none; b=sLG5UWhdkhnFO7Vrt4fkvS+iY/Os5TPCoypVU5kRqoVDQeABvKSQZ/K1JlpcLczhqf3bO/xWAwOZKXtnQCiqehQfsuLYcXIgvdHsEXpIck7UKV9sNRx5ALUJPm0tpa4mwAsav4PYGnmPcFqwROgm80HUb1CcXQ1DTCNBWmsdPAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367614; c=relaxed/simple;
-	bh=BIOcGsGWD9y0JQulbAAM4IaxzlBzA9LHYdVuKfSsOA0=;
+	s=arc-20240116; t=1748367616; c=relaxed/simple;
+	bh=jtU29gg1U8dg741FjUjA5VH4kE2IjUdLN3OwgTbCoKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gAb5JmXsSz75jq4vMKwYlEPjQRB1pODPV62idRaFJRtpFJXoZcRd/XwZyz9ctcMyZYe3yaohFiVhjN8a9OKxSgaL5UWaXLeFXN0Ihhi1C3taTmshoZ+iNAJKgL0BKOw/sVT+2U/ayfYGQO6Is5g3KJkBMaLYNRM0HGsDJYLfRxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=igCZY6Q3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RR0KT1hV3+ic0i8cFlmu6YBb+7HokeI7pcr3L/JTrPIQCqzmGPOgHkQQfVor76zQgg4iGK+Q9jvoxkkgg60OsNFwH1cDKGaZ41soJMcUHvnB/P7x7I9a9xEVeR9WkSa73Z68p0jKdqCtsynM7QUPjIFY2s1GVJimyn6oqVKdmDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oraH6VwH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igCZY6Q3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A8F6C4CEE9;
-	Tue, 27 May 2025 17:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oraH6VwH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A9FC4CEE9;
+	Tue, 27 May 2025 17:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367613;
-	bh=BIOcGsGWD9y0JQulbAAM4IaxzlBzA9LHYdVuKfSsOA0=;
+	s=korg; t=1748367616;
+	bh=jtU29gg1U8dg741FjUjA5VH4kE2IjUdLN3OwgTbCoKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=igCZY6Q3WYB45cuGtPTcQ3mHLrs8ysD3PcbTRD75pUhAlZII0n8xaW7OS4/EDZj5z
-	 BvblbqHBNfQWo3Yld5j3lduRDyp50wlgyoEde2ZlymIEm1Ksv3xodvCuyQKezuoVxj
-	 vgZMzgDlYU3qJzBrVNt8PaQrZYJvawQn87h2QZXo=
+	b=oraH6VwHAcXwwxlAuQqWZt1zTCHx+oRQ0o18t//pBrPGqVcA0K/wFTsncznI5XYcw
+	 Dy6nI61+du5Z5mPnvXeO45gjDe/zSjtoP/3yaseNO/6bfmGR2MSvKh+NJwwDiAeoJ3
+	 bqtJC8Arxg22Wn/nz8vD893ascQjPsf2M5uQWWPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hector Martin <marcan@marcan.st>,
-	Mark Brown <broonie@kernel.org>,
+	Alex Hung <alex.hung@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 442/783] ASoC: tas2764: Power up/down amp on mute ops
-Date: Tue, 27 May 2025 18:23:59 +0200
-Message-ID: <20250527162531.138599540@linuxfoundation.org>
+Subject: [PATCH 6.14 415/783] drm/amd/display: Dont treat wb connector as physical in create_validate_stream_for_sink
+Date: Tue, 27 May 2025 18:23:32 +0200
+Message-ID: <20250527162530.005365829@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,106 +54,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hector Martin <marcan@marcan.st>
+From: Harry Wentland <harry.wentland@amd.com>
 
-[ Upstream commit 1c3b5f37409682184669457a5bdf761268eafbe5 ]
+[ Upstream commit cbf4890c6f28fb1ad733e14613fbd33c2004bced ]
 
-The ASoC convention is that clocks are removed after codec mute, and
-power up/down is more about top level power management. For these chips,
-the "mute" state still expects a TDM clock, and yanking the clock in
-this state will trigger clock errors. So, do the full
-shutdown<->mute<->active transition on the mute operation, so the amp is
-in software shutdown by the time the clocks are removed.
+Don't try to operate on a drm_wb_connector as an amdgpu_dm_connector.
+While dereferencing aconnector->base will "work" it's wrong and
+might lead to unknown bad things. Just... don't.
 
-This fixes TDM clock errors when streams are stopped.
-
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20250208-asoc-tas2764-v1-1-dbab892a69b5@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2764.c | 51 ++++++++++++++++----------------------
- 1 file changed, 21 insertions(+), 30 deletions(-)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 26 ++++++++++++-------
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h |  2 +-
+ .../display/amdgpu_dm/amdgpu_dm_mst_types.c   |  6 ++---
+ 3 files changed, 20 insertions(+), 14 deletions(-)
 
-diff --git a/sound/soc/codecs/tas2764.c b/sound/soc/codecs/tas2764.c
-index 31f94c8cf2844..39a7d39536fe6 100644
---- a/sound/soc/codecs/tas2764.c
-+++ b/sound/soc/codecs/tas2764.c
-@@ -180,33 +180,6 @@ static SOC_ENUM_SINGLE_DECL(
- static const struct snd_kcontrol_new tas2764_asi1_mux =
- 	SOC_DAPM_ENUM("ASI1 Source", tas2764_ASI1_src_enum);
- 
--static int tas2764_dac_event(struct snd_soc_dapm_widget *w,
--			     struct snd_kcontrol *kcontrol, int event)
--{
--	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
--	struct tas2764_priv *tas2764 = snd_soc_component_get_drvdata(component);
--	int ret;
--
--	switch (event) {
--	case SND_SOC_DAPM_POST_PMU:
--		tas2764->dac_powered = true;
--		ret = tas2764_update_pwr_ctrl(tas2764);
--		break;
--	case SND_SOC_DAPM_PRE_PMD:
--		tas2764->dac_powered = false;
--		ret = tas2764_update_pwr_ctrl(tas2764);
--		break;
--	default:
--		dev_err(tas2764->dev, "Unsupported event\n");
--		return -EINVAL;
--	}
--
--	if (ret < 0)
--		return ret;
--
--	return 0;
--}
--
- static const struct snd_kcontrol_new isense_switch =
- 	SOC_DAPM_SINGLE("Switch", TAS2764_PWR_CTRL, TAS2764_ISENSE_POWER_EN, 1, 1);
- static const struct snd_kcontrol_new vsense_switch =
-@@ -219,8 +192,7 @@ static const struct snd_soc_dapm_widget tas2764_dapm_widgets[] = {
- 			    1, &isense_switch),
- 	SND_SOC_DAPM_SWITCH("VSENSE", TAS2764_PWR_CTRL, TAS2764_VSENSE_POWER_EN,
- 			    1, &vsense_switch),
--	SND_SOC_DAPM_DAC_E("DAC", NULL, SND_SOC_NOPM, 0, 0, tas2764_dac_event,
--			   SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD),
-+	SND_SOC_DAPM_DAC("DAC", NULL, SND_SOC_NOPM, 0, 0),
- 	SND_SOC_DAPM_OUTPUT("OUT"),
- 	SND_SOC_DAPM_SIGGEN("VMON"),
- 	SND_SOC_DAPM_SIGGEN("IMON")
-@@ -241,9 +213,28 @@ static int tas2764_mute(struct snd_soc_dai *dai, int mute, int direction)
- {
- 	struct tas2764_priv *tas2764 =
- 			snd_soc_component_get_drvdata(dai->component);
-+	int ret;
-+
-+	if (!mute) {
-+		tas2764->dac_powered = true;
-+		ret = tas2764_update_pwr_ctrl(tas2764);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	tas2764->unmuted = !mute;
--	return tas2764_update_pwr_ctrl(tas2764);
-+	ret = tas2764_update_pwr_ctrl(tas2764);
-+	if (ret)
-+		return ret;
-+
-+	if (mute) {
-+		tas2764->dac_powered = false;
-+		ret = tas2764_update_pwr_ctrl(tas2764);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	return 0;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 6c2d79d84feec..2cfc18401f3f2 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -7493,12 +7493,12 @@ static enum dc_status dm_validate_stream_and_context(struct dc *dc,
  }
  
- static int tas2764_set_bitwidth(struct tas2764_priv *tas2764, int bitwidth)
+ struct dc_stream_state *
+-create_validate_stream_for_sink(struct amdgpu_dm_connector *aconnector,
++create_validate_stream_for_sink(struct drm_connector *connector,
+ 				const struct drm_display_mode *drm_mode,
+ 				const struct dm_connector_state *dm_state,
+ 				const struct dc_stream_state *old_stream)
+ {
+-	struct drm_connector *connector = &aconnector->base;
++	struct amdgpu_dm_connector *aconnector = NULL;
+ 	struct amdgpu_device *adev = drm_to_adev(connector->dev);
+ 	struct dc_stream_state *stream;
+ 	const struct drm_connector_state *drm_state = dm_state ? &dm_state->base : NULL;
+@@ -7509,8 +7509,12 @@ create_validate_stream_for_sink(struct amdgpu_dm_connector *aconnector,
+ 	if (!dm_state)
+ 		return NULL;
+ 
+-	if (aconnector->dc_link->connector_signal == SIGNAL_TYPE_HDMI_TYPE_A ||
+-	    aconnector->dc_link->dpcd_caps.dongle_type == DISPLAY_DONGLE_DP_HDMI_CONVERTER)
++	if (connector->connector_type != DRM_MODE_CONNECTOR_WRITEBACK)
++		aconnector = to_amdgpu_dm_connector(connector);
++
++	if (aconnector &&
++	    (aconnector->dc_link->connector_signal == SIGNAL_TYPE_HDMI_TYPE_A ||
++	     aconnector->dc_link->dpcd_caps.dongle_type == DISPLAY_DONGLE_DP_HDMI_CONVERTER))
+ 		bpc_limit = 8;
+ 
+ 	do {
+@@ -7522,10 +7526,11 @@ create_validate_stream_for_sink(struct amdgpu_dm_connector *aconnector,
+ 			break;
+ 		}
+ 
+-		if (aconnector->base.connector_type == DRM_MODE_CONNECTOR_WRITEBACK)
++		dc_result = dc_validate_stream(adev->dm.dc, stream);
++
++		if (!aconnector) /* writeback connector */
+ 			return stream;
+ 
+-		dc_result = dc_validate_stream(adev->dm.dc, stream);
+ 		if (dc_result == DC_OK && stream->signal == SIGNAL_TYPE_DISPLAY_PORT_MST)
+ 			dc_result = dm_dp_mst_is_port_support_mode(aconnector, stream);
+ 
+@@ -7555,7 +7560,7 @@ create_validate_stream_for_sink(struct amdgpu_dm_connector *aconnector,
+ 				     __func__, __LINE__);
+ 
+ 		aconnector->force_yuv420_output = true;
+-		stream = create_validate_stream_for_sink(aconnector, drm_mode,
++		stream = create_validate_stream_for_sink(connector, drm_mode,
+ 						dm_state, old_stream);
+ 		aconnector->force_yuv420_output = false;
+ 	}
+@@ -7570,6 +7575,9 @@ enum drm_mode_status amdgpu_dm_connector_mode_valid(struct drm_connector *connec
+ 	struct dc_sink *dc_sink;
+ 	/* TODO: Unhardcode stream count */
+ 	struct dc_stream_state *stream;
++	/* we always have an amdgpu_dm_connector here since we got
++	 * here via the amdgpu_dm_connector_helper_funcs
++	 */
+ 	struct amdgpu_dm_connector *aconnector = to_amdgpu_dm_connector(connector);
+ 
+ 	if ((mode->flags & DRM_MODE_FLAG_INTERLACE) ||
+@@ -7594,7 +7602,7 @@ enum drm_mode_status amdgpu_dm_connector_mode_valid(struct drm_connector *connec
+ 
+ 	drm_mode_set_crtcinfo(mode, 0);
+ 
+-	stream = create_validate_stream_for_sink(aconnector, mode,
++	stream = create_validate_stream_for_sink(connector, mode,
+ 						 to_dm_connector_state(connector->state),
+ 						 NULL);
+ 	if (stream) {
+@@ -10646,7 +10654,7 @@ static int dm_update_crtc_state(struct amdgpu_display_manager *dm,
+ 		if (!drm_atomic_crtc_needs_modeset(new_crtc_state))
+ 			goto skip_modeset;
+ 
+-		new_stream = create_validate_stream_for_sink(aconnector,
++		new_stream = create_validate_stream_for_sink(connector,
+ 							     &new_crtc_state->mode,
+ 							     dm_new_conn_state,
+ 							     dm_old_crtc_state->stream);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+index d2703ca7dff31..195fec9048df7 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+@@ -989,7 +989,7 @@ int amdgpu_dm_process_dmub_set_config_sync(struct dc_context *ctx, unsigned int
+ 					struct set_config_cmd_payload *payload, enum set_config_status *operation_result);
+ 
+ struct dc_stream_state *
+-	create_validate_stream_for_sink(struct amdgpu_dm_connector *aconnector,
++	create_validate_stream_for_sink(struct drm_connector *connector,
+ 					const struct drm_display_mode *drm_mode,
+ 					const struct dm_connector_state *dm_state,
+ 					const struct dc_stream_state *old_stream);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+index 8497de360640a..c3759a1c32cec 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -1651,7 +1651,6 @@ int pre_validate_dsc(struct drm_atomic_state *state,
+ 
+ 		if (ind >= 0) {
+ 			struct drm_connector *connector;
+-			struct amdgpu_dm_connector *aconnector;
+ 			struct drm_connector_state *drm_new_conn_state;
+ 			struct dm_connector_state *dm_new_conn_state;
+ 			struct dm_crtc_state *dm_old_crtc_state;
+@@ -1659,15 +1658,14 @@ int pre_validate_dsc(struct drm_atomic_state *state,
+ 			connector =
+ 				amdgpu_dm_find_first_crtc_matching_connector(state,
+ 									     state->crtcs[ind].ptr);
+-			aconnector = to_amdgpu_dm_connector(connector);
+ 			drm_new_conn_state =
+ 				drm_atomic_get_new_connector_state(state,
+-								   &aconnector->base);
++								   connector);
+ 			dm_new_conn_state = to_dm_connector_state(drm_new_conn_state);
+ 			dm_old_crtc_state = to_dm_crtc_state(state->crtcs[ind].old_state);
+ 
+ 			local_dc_state->streams[i] =
+-				create_validate_stream_for_sink(aconnector,
++				create_validate_stream_for_sink(connector,
+ 								&state->crtcs[ind].new_state->mode,
+ 								dm_new_conn_state,
+ 								dm_old_crtc_state->stream);
 -- 
 2.39.5
 
