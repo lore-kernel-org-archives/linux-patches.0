@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC6886347;
-	Tue, 27 May 2025 17:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7401B1D88D7;
+	Tue, 27 May 2025 17:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365418; cv=none; b=kLR1tNuv4h8wxdS6K6yLgr0DKqP4l0QVzh7tOh/k+Tay+/RkifDXANxSLnPf/hTC/g/NaUYIxyV8b4FgiVRZIEOsY24gNT/Jl9mc+54UvkEilKNmtQkg3sVzAQb0dnFq3E1A9KQp4KNgTa1lCukSWI/DBvbSd8K3bd7m4U/kMBU=
+	t=1748365423; cv=none; b=rxePO7A8x2uLMvGaO+/GLlfRNQ0Jsc6pXTVEva9Wc67+nxxhJqYzQtazW5Op35ux89PKw2paozL9N4QRA+uoU4dOAtr8Ruvw3PmxrLsWumwvbe1ZwNDocatjTRCKHFjb7DqTl0RboOw8cb7nIe6SViQG+r3Ay1NQMwWSHIswzv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365418; c=relaxed/simple;
-	bh=jDi8yAoL9UNiDB7aw0USsWzxVygwsc6tpdNTPF2dUtA=;
+	s=arc-20240116; t=1748365423; c=relaxed/simple;
+	bh=THP89GMFmovmXKZVKwPQU3yaIaJMOeAUFJ7sO2+2bCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IlV8aOdqe08wLgDssP2yRyxO/nkamvMwey19qjL7jNUYIMBjkJFnDZcFtO0ocm/MOzOwkW3ZoXnmal71S1Sb8OJSd5i9d3AoPRLQTeDv5jiokM48os59rhasC8I14B/NxdZj7HjvGJwOnN2Ic5Sl1WzRzV+0em/fWrPHcrzCR/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+w2a5sx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qi9aGmgafP7jfmDpk3bhhpF0HNG4VXrWslk2hefOiafIamR70RfZWhAd5DH+pxFmy689cPjdL6gOL1XXSZIOiFHYMUbQLkBQckGDPf1JNLIWnAX8tR9Xz1Itk4CoamaHwLsXmH3h7rykpQ9BEC+4Mbzu0pU3wcdRcAIi5CCy3QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pt7nRVVk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+w2a5sx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F46C4CEEF;
-	Tue, 27 May 2025 17:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pt7nRVVk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A27C4CEEB;
+	Tue, 27 May 2025 17:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365418;
-	bh=jDi8yAoL9UNiDB7aw0USsWzxVygwsc6tpdNTPF2dUtA=;
+	s=korg; t=1748365421;
+	bh=THP89GMFmovmXKZVKwPQU3yaIaJMOeAUFJ7sO2+2bCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+w2a5sxI4GxUCldEJQuKsGyBfCF1gahVoq5Z0V61a4vVsLp0rouH5El2c9d8zFGi
-	 FibOeIpcoCvR0z4a/wOvxHu8Ww++rC3sOeg2WadZkOFX79Z9wKrQ5UR7lfffkXhfXp
-	 8GPLHK7xcPL20RmSm0gObu3zGPvf3FTzg/4xsTJ0=
+	b=pt7nRVVkkvjOgpKa1cqxLx6v4Rt+Men95w9FQ2KG3mxoVliv5bKYrbRxr5QtxRepk
+	 2SKRuvMck73HZndHkQEE8y3oVrAcnC1dOHJEFzJbdcsQwq6AvWZpcbjRt2cULA4VKu
+	 WmnLzJ9kSYzUjVnp2J4ChjOytXdxIWVhADETx25U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Francois Dugast <francois.dugast@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 369/626] net/mlx4_core: Avoid impossible mlx4_db_alloc() order value
-Date: Tue, 27 May 2025 18:24:22 +0200
-Message-ID: <20250527162500.022256468@linuxfoundation.org>
+Subject: [PATCH 6.12 370/626] drm/xe: Stop ignoring errors from xe_ttm_stolen_mgr_init()
+Date: Tue, 27 May 2025 18:24:23 +0200
+Message-ID: <20250527162500.061093200@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,76 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Lucas De Marchi <lucas.demarchi@intel.com>
 
-[ Upstream commit 4a6f18f28627e121bd1f74b5fcc9f945d6dbeb1e ]
+[ Upstream commit ff57025c358603555f1e0ae0d50282a460433594 ]
 
-GCC can see that the value range for "order" is capped, but this leads
-it to consider that it might be negative, leading to a false positive
-warning (with GCC 15 with -Warray-bounds -fdiagnostics-details):
+Make sure to differentiate normal behavior, e.g. there's no stolen, from
+allocation errors or failure to initialize lower layers.
 
-../drivers/net/ethernet/mellanox/mlx4/alloc.c:691:47: error: array subscript -1 is below array bounds of 'long unsigned int *[2]' [-Werror=array-bounds=]
-  691 |                 i = find_first_bit(pgdir->bits[o], MLX4_DB_PER_PAGE >> o);
-      |                                    ~~~~~~~~~~~^~~
-  'mlx4_alloc_db_from_pgdir': events 1-2
-  691 |                 i = find_first_bit(pgdir->bits[o], MLX4_DB_PER_PAGE >> o);                        |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      |                     |                         |                                                   |                     |                         (2) out of array bounds here
-      |                     (1) when the condition is evaluated to true                             In file included from ../drivers/net/ethernet/mellanox/mlx4/mlx4.h:53,
-                 from ../drivers/net/ethernet/mellanox/mlx4/alloc.c:42:
-../include/linux/mlx4/device.h:664:33: note: while referencing 'bits'
-  664 |         unsigned long          *bits[2];
-      |                                 ^~~~
-
-Switch the argument to unsigned int, which removes the compiler needing
-to consider negative values.
-
-Signed-off-by: Kees Cook <kees@kernel.org>
-Link: https://patch.msgid.link/20250210174504.work.075-kees@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Francois Dugast <francois.dugast@intel.com>
+Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250213192909.996148-5-lucas.demarchi@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx4/alloc.c | 6 +++---
- include/linux/mlx4/device.h                | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_device.c         |  4 +++-
+ drivers/gpu/drm/xe/xe_ttm_stolen_mgr.c | 17 +++++++++--------
+ drivers/gpu/drm/xe/xe_ttm_stolen_mgr.h |  2 +-
+ 3 files changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx4/alloc.c b/drivers/net/ethernet/mellanox/mlx4/alloc.c
-index b330020dc0d67..f2bded847e61d 100644
---- a/drivers/net/ethernet/mellanox/mlx4/alloc.c
-+++ b/drivers/net/ethernet/mellanox/mlx4/alloc.c
-@@ -682,9 +682,9 @@ static struct mlx4_db_pgdir *mlx4_alloc_db_pgdir(struct device *dma_device)
+diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
+index bb85208cf1a94..5c37bed3c948f 100644
+--- a/drivers/gpu/drm/xe/xe_device.c
++++ b/drivers/gpu/drm/xe/xe_device.c
+@@ -694,7 +694,9 @@ int xe_device_probe(struct xe_device *xe)
+ 	}
+ 
+ 	/* Allocate and map stolen after potential VRAM resize */
+-	xe_ttm_stolen_mgr_init(xe);
++	err = xe_ttm_stolen_mgr_init(xe);
++	if (err)
++		return err;
+ 
+ 	/*
+ 	 * Now that GT is initialized (TTM in particular),
+diff --git a/drivers/gpu/drm/xe/xe_ttm_stolen_mgr.c b/drivers/gpu/drm/xe/xe_ttm_stolen_mgr.c
+index f7113cf6109d5..ef84fa757b26f 100644
+--- a/drivers/gpu/drm/xe/xe_ttm_stolen_mgr.c
++++ b/drivers/gpu/drm/xe/xe_ttm_stolen_mgr.c
+@@ -201,17 +201,16 @@ static u64 detect_stolen(struct xe_device *xe, struct xe_ttm_stolen_mgr *mgr)
+ #endif
  }
  
- static int mlx4_alloc_db_from_pgdir(struct mlx4_db_pgdir *pgdir,
--				    struct mlx4_db *db, int order)
-+				    struct mlx4_db *db, unsigned int order)
+-void xe_ttm_stolen_mgr_init(struct xe_device *xe)
++int xe_ttm_stolen_mgr_init(struct xe_device *xe)
  {
--	int o;
-+	unsigned int o;
- 	int i;
+-	struct xe_ttm_stolen_mgr *mgr = drmm_kzalloc(&xe->drm, sizeof(*mgr), GFP_KERNEL);
+ 	struct pci_dev *pdev = to_pci_dev(xe->drm.dev);
++	struct xe_ttm_stolen_mgr *mgr;
+ 	u64 stolen_size, io_size;
+ 	int err;
  
- 	for (o = order; o <= 1; ++o) {
-@@ -712,7 +712,7 @@ static int mlx4_alloc_db_from_pgdir(struct mlx4_db_pgdir *pgdir,
- 	return 0;
+-	if (!mgr) {
+-		drm_dbg_kms(&xe->drm, "Stolen mgr init failed\n");
+-		return;
+-	}
++	mgr = drmm_kzalloc(&xe->drm, sizeof(*mgr), GFP_KERNEL);
++	if (!mgr)
++		return -ENOMEM;
+ 
+ 	if (IS_SRIOV_VF(xe))
+ 		stolen_size = 0;
+@@ -224,7 +223,7 @@ void xe_ttm_stolen_mgr_init(struct xe_device *xe)
+ 
+ 	if (!stolen_size) {
+ 		drm_dbg_kms(&xe->drm, "No stolen memory support\n");
+-		return;
++		return 0;
+ 	}
+ 
+ 	/*
+@@ -240,7 +239,7 @@ void xe_ttm_stolen_mgr_init(struct xe_device *xe)
+ 				     io_size, PAGE_SIZE);
+ 	if (err) {
+ 		drm_dbg_kms(&xe->drm, "Stolen mgr init failed: %i\n", err);
+-		return;
++		return err;
+ 	}
+ 
+ 	drm_dbg_kms(&xe->drm, "Initialized stolen memory support with %llu bytes\n",
+@@ -248,6 +247,8 @@ void xe_ttm_stolen_mgr_init(struct xe_device *xe)
+ 
+ 	if (io_size)
+ 		mgr->mapping = devm_ioremap_wc(&pdev->dev, mgr->io_base, io_size);
++
++	return 0;
  }
  
--int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, int order)
-+int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, unsigned int order)
- {
- 	struct mlx4_priv *priv = mlx4_priv(dev);
- 	struct mlx4_db_pgdir *pgdir;
-diff --git a/include/linux/mlx4/device.h b/include/linux/mlx4/device.h
-index 27f42f713c891..86f0f2a25a3d6 100644
---- a/include/linux/mlx4/device.h
-+++ b/include/linux/mlx4/device.h
-@@ -1135,7 +1135,7 @@ int mlx4_write_mtt(struct mlx4_dev *dev, struct mlx4_mtt *mtt,
- int mlx4_buf_write_mtt(struct mlx4_dev *dev, struct mlx4_mtt *mtt,
- 		       struct mlx4_buf *buf);
+ u64 xe_ttm_stolen_io_offset(struct xe_bo *bo, u32 offset)
+diff --git a/drivers/gpu/drm/xe/xe_ttm_stolen_mgr.h b/drivers/gpu/drm/xe/xe_ttm_stolen_mgr.h
+index 1777245ff8101..8e877d1e839bd 100644
+--- a/drivers/gpu/drm/xe/xe_ttm_stolen_mgr.h
++++ b/drivers/gpu/drm/xe/xe_ttm_stolen_mgr.h
+@@ -12,7 +12,7 @@ struct ttm_resource;
+ struct xe_bo;
+ struct xe_device;
  
--int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, int order);
-+int mlx4_db_alloc(struct mlx4_dev *dev, struct mlx4_db *db, unsigned int order);
- void mlx4_db_free(struct mlx4_dev *dev, struct mlx4_db *db);
- 
- int mlx4_alloc_hwq_res(struct mlx4_dev *dev, struct mlx4_hwq_resources *wqres,
+-void xe_ttm_stolen_mgr_init(struct xe_device *xe);
++int xe_ttm_stolen_mgr_init(struct xe_device *xe);
+ int xe_ttm_stolen_io_mem_reserve(struct xe_device *xe, struct ttm_resource *mem);
+ bool xe_ttm_stolen_cpu_access_needs_ggtt(struct xe_device *xe);
+ u64 xe_ttm_stolen_io_offset(struct xe_bo *bo, u32 offset);
 -- 
 2.39.5
 
