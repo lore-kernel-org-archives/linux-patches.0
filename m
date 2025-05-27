@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B9B1CD0C;
-	Tue, 27 May 2025 17:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3FCA277808;
+	Tue, 27 May 2025 17:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366776; cv=none; b=pYCqgwL/tH2r47Ymqvj53SHSFyjZRS626S/upWR9tlyzm2koeGsrLNBfg/sF1zxanWgMx/G54eFG/CZ3NedSI7PU8wXNmae7OJf6F69JkvTWet8tQACp/UiXVelipzxZwyMlBX9ygPmcZTLwmkRwDcHeg5cLrlRrpGrl3Z1H91s=
+	t=1748366780; cv=none; b=a7RS7RU57N0jIxHw9UO1CbzUNxgsGtBqUAuJKvVsL8/fWV0iyutMi64P1nOq1/KhcTFuhdOJ/Glc02mMY3fAg+oPDCbJ/QR0KxIyxVfgiQgphnCteuQsCCBjijYK273EtGB21WvtKlvPhmK+VSWJhK3/ye+BbzreKnwKWSRvnfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366776; c=relaxed/simple;
-	bh=5b+VXWwcRP3dnyQF77/ld0OdU+i8H3jCndUajN1kGds=;
+	s=arc-20240116; t=1748366780; c=relaxed/simple;
+	bh=uAfYUxnLFu2yjP6WZ7HjAUUJg6Jm8HuOnFvtUNPV0i4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o6qxSEe95ktBMAqOWlhooy1t8OAJHzxplVhsPBDX5z/tBfAxVFgIsq8zNdjLmggnmwz8VEfXt6RINPM5l0QLqZ7jpR+VlEGEg9gDlQXO/T62zIvxyqVeKa8eqdy23adm8de0HNFGtfYypnKrTtW9D83B9esj1BppDzlmL4iFeYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hciX7Yzp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lED+ZqRRDlIX/yIHmNYj4fy0hwjFHM0dL3yYUzPX03cc0M2xaA2k08dANv0Zxd3mrKM/RV49VQtKeI8zeJQdnRVhdYWQH9puGwWj529cjMkEFMR9aeXy/J/ANp4oKX4PkFzaoYaOgXYT2kl32EcCW6mIDFNAcWK4/ASZHeiHNQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FPTJr9BA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hciX7Yzp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5278C4CEE9;
-	Tue, 27 May 2025 17:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FPTJr9BA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40690C4CEE9;
+	Tue, 27 May 2025 17:26:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366775;
-	bh=5b+VXWwcRP3dnyQF77/ld0OdU+i8H3jCndUajN1kGds=;
+	s=korg; t=1748366780;
+	bh=uAfYUxnLFu2yjP6WZ7HjAUUJg6Jm8HuOnFvtUNPV0i4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hciX7YzpzXD5H6QWw+iRntRrNXx756G2ldzjw4rFB0cUwtFR5lPGYIAEUD6zpe875
-	 jN95fJipimkzyMPc3zHUXFutpkz6h3m9MvUxSwHYRPy6LVVzJG84jKH2tFhmEgZ7KN
-	 Q4cgMfI8gBc5pU4+vCV6BLQKjSIU9ao7LtWFt9Uc=
+	b=FPTJr9BA5Qn8n0g9M9tYxxsjKShCJjnb4mXqYyhVzhk/iOobnJr0Ykg/P2l/9uVom
+	 Ig4ORFEFWN/fGAqOj1keQoDjOsBsyZYNhgA0oHoYf2T+FbwVemq9WTBuRwrpWX26sX
+	 pz5TOp7OeqzQdht80/UPyl7a+pAbJN0eR27LlNwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Rae Moar <rmoar@google.com>,
+	David Gow <davidgow@google.com>,
+	Shuah Khan <shuah@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 174/783] ASoC: mediatek: mt6359: Add stub for mt6359_accdet_enable_jack_detect
-Date: Tue, 27 May 2025 18:19:31 +0200
-Message-ID: <20250527162520.248401748@linuxfoundation.org>
+Subject: [PATCH 6.14 175/783] kunit: tool: Fix bug in parsing test plan
+Date: Tue, 27 May 2025 18:19:32 +0200
+Message-ID: <20250527162520.288742830@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -46,50 +46,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Rae Moar <rmoar@google.com>
 
-[ Upstream commit 0116a7d84b32537a10d9bea1fd1bfc06577ef527 ]
+[ Upstream commit 1d4c06d51963f89f67c7b75d5c0c34e9d1bb2ae6 ]
 
-Add a stub for mt6359_accdet_enable_jack_detect() to prevent linker
-failures in the machine sound drivers calling it when
-CONFIG_SND_SOC_MT6359_ACCDET is not enabled.
+A bug was identified where the KTAP below caused an infinite loop:
 
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Link: https://patch.msgid.link/20250306-mt8188-accdet-v3-3-7828e835ff4b@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+ TAP version 13
+ ok 4 test_case
+ 1..4
+
+The infinite loop was caused by the parser not parsing a test plan
+if following a test result line.
+
+Fix this bug by parsing test plan line to avoid the infinite loop.
+
+Link: https://lore.kernel.org/r/20250313192714.1380005-1-rmoar@google.com
+Signed-off-by: Rae Moar <rmoar@google.com>
+Reviewed-by: David Gow <davidgow@google.com>
+Signed-off-by: Shuah Khan <shuah@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/mt6359-accdet.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ tools/testing/kunit/kunit_parser.py | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/codecs/mt6359-accdet.h b/sound/soc/codecs/mt6359-accdet.h
-index c234f2f4276a1..78ada3a5bfae5 100644
---- a/sound/soc/codecs/mt6359-accdet.h
-+++ b/sound/soc/codecs/mt6359-accdet.h
-@@ -123,6 +123,15 @@ struct mt6359_accdet {
- 	struct workqueue_struct *jd_workqueue;
- };
- 
-+#if IS_ENABLED(CONFIG_SND_SOC_MT6359_ACCDET)
- int mt6359_accdet_enable_jack_detect(struct snd_soc_component *component,
- 				     struct snd_soc_jack *jack);
-+#else
-+static inline int
-+mt6359_accdet_enable_jack_detect(struct snd_soc_component *component,
-+				 struct snd_soc_jack *jack)
-+{
-+	return -EOPNOTSUPP;
-+}
-+#endif
- #endif
+diff --git a/tools/testing/kunit/kunit_parser.py b/tools/testing/kunit/kunit_parser.py
+index 29fc27e8949bd..da53a709773a2 100644
+--- a/tools/testing/kunit/kunit_parser.py
++++ b/tools/testing/kunit/kunit_parser.py
+@@ -759,7 +759,7 @@ def parse_test(lines: LineStream, expected_num: int, log: List[str], is_subtest:
+ 		# If parsing the main/top-level test, parse KTAP version line and
+ 		# test plan
+ 		test.name = "main"
+-		ktap_line = parse_ktap_header(lines, test, printer)
++		parse_ktap_header(lines, test, printer)
+ 		test.log.extend(parse_diagnostic(lines))
+ 		parse_test_plan(lines, test)
+ 		parent_test = True
+@@ -768,13 +768,12 @@ def parse_test(lines: LineStream, expected_num: int, log: List[str], is_subtest:
+ 		# the KTAP version line and/or subtest header line
+ 		ktap_line = parse_ktap_header(lines, test, printer)
+ 		subtest_line = parse_test_header(lines, test)
++		test.log.extend(parse_diagnostic(lines))
++		parse_test_plan(lines, test)
+ 		parent_test = (ktap_line or subtest_line)
+ 		if parent_test:
+-			# If KTAP version line and/or subtest header is found, attempt
+-			# to parse test plan and print test header
+-			test.log.extend(parse_diagnostic(lines))
+-			parse_test_plan(lines, test)
+ 			print_test_header(test, printer)
++
+ 	expected_count = test.expected_count
+ 	subtests = []
+ 	test_num = 1
 -- 
 2.39.5
 
