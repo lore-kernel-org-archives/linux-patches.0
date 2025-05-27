@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C2426F449;
-	Tue, 27 May 2025 17:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEABD1DB34C;
+	Tue, 27 May 2025 17:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366879; cv=none; b=Ph40l0L3OCniB0nLu3j3a4DKKxOV5IJuIgH8EbXQ8GohA5YDckEkKspYJk2KFcCK4OlFr4MDPEYXHBlppmJkUVCQJCXIQCFTvtTSlPYcVvF0z0VYe9GTIE9y46xl8nSEZrMg2CbWraeUCMMk4PQ36gjjBkN20bsqszQ435qcLZA=
+	t=1748366882; cv=none; b=uMn4aJzjEZ/Tilzj5UzD15XZhwjQUQkbzlLEYJn5BFbuLD8WOUA+68RBvYQ7+h+PDM6T9DkD7Gqx2P3n0eIFW34FD6FnHSSE8ZX1jODYtu7LEmG6gFQRIgp/tnIbrd+Rx+nq3lzJQHhk3b5xiLJolDI07Hp6S4O2Y8TmczoKtqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366879; c=relaxed/simple;
-	bh=sr3oRbqceOsT3KO4TPRKhGzOKQGzOR5BtbAhde+02Vc=;
+	s=arc-20240116; t=1748366882; c=relaxed/simple;
+	bh=3zHAxKJroQ6YXx+3rD3meznskmaWkRGoN69AX2ERnYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HmgigrfnCNRhDTAX0OlV5l49RCF3ybqQapvUbXw8yU7vpShpxHyKTMw+zRQmIDuLdyAeynuJIElnIZ0s9h48NgYoX0EYoPCqpOW0cdXvStrpXPe5cNPuCJDiGjQGJgAQ7TSqBrbBSEXRS+SY10ey20R1VgvgsO5EUHSTwcqnuF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zm9IOqyx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K/GtLBFbfJSr7H+x/YRA6PXC42luQiySksXibbXZTTErnDYiFIyVNI6bD7FenLaYdZMBZU5ybdALhu3QupUg275NROAY5qxJUIO4zwEwZHoztrtKzIVhpHkHb1K5WtT4vnSZnlGPUd7A7Pm42XxNp3TF6tc9PvDEn5g0qIcxfxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJwW5+P5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zm9IOqyx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3245C4CEE9;
-	Tue, 27 May 2025 17:27:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJwW5+P5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32239C4CEEA;
+	Tue, 27 May 2025 17:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366879;
-	bh=sr3oRbqceOsT3KO4TPRKhGzOKQGzOR5BtbAhde+02Vc=;
+	s=korg; t=1748366882;
+	bh=3zHAxKJroQ6YXx+3rD3meznskmaWkRGoN69AX2ERnYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zm9IOqyxmrVEpNMZJaeEbPjXwSmHFMaYhk3IQ+bgMvkQoMsbxRtXJl+jgfg6cSiz6
-	 ubj4DavS+lOB+Vm4kj7X5T/ZpmwFhE72WVzebN5QmnHcvlDdxpUVi1wX/bWzRqGn/S
-	 txbJXQTT43wWKctu8fikW9e9Pf3pAEKAxtjPR6r8=
+	b=SJwW5+P5rl2q6GmJYl+KxeNMN2bvEvEKkv1EnfASJeSr9AJqeEPpdRvrHxeeZ9Vm2
+	 63qxmOCBQycBbn7nVWiJm8eayYjNnpxL7srythobH5g0aF9b5ePPXPcRhej7gV/ONa
+	 AAMcuc8YSayAZgeymzH2d05ebffEv7bAnGT+oqa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 206/783] phy: rockchip: usbdp: Only verify link rates/lanes/voltage when the corresponding set flags are set
-Date: Tue, 27 May 2025 18:20:03 +0200
-Message-ID: <20250527162521.527810501@linuxfoundation.org>
+Subject: [PATCH 6.14 207/783] arm64/mm: Check pmd_table() in pmd_trans_huge()
+Date: Tue, 27 May 2025 18:20:04 +0200
+Message-ID: <20250527162521.567351596@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,172 +57,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Yan <andy.yan@rock-chips.com>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-[ Upstream commit 969a38be437b68dc9e12e3c3f08911c9f9c8be73 ]
+[ Upstream commit d1770e909898c108e8c7d30ca039053e8818a9c9 ]
 
-According documentation of phy_configure_opts_dp, at the configure
-stage, link rates should only be verify/configure when set_rate
-flag is set, the same applies to lanes and voltage.
+Check for pmd_table() in pmd_trans_huge() rather then just checking for the
+PMD_TABLE_BIT. But ensure all present-invalid entries are handled correctly
+by always setting PTE_VALID before checking with pmd_table().
 
-So do it as the documentation says.
-Because voltage setting depends on the lanes, link rates set
-previously, so record the link rates and lanes at it's verify stage.
-
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Link: https://lore.kernel.org/r/20250312080041.524546-1-andyshrk@163.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/20250221044227.1145393-8-anshuman.khandual@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-usbdp.c | 87 ++++++++++++++---------
- 1 file changed, 53 insertions(+), 34 deletions(-)
+ arch/arm64/include/asm/pgtable.h | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-index c04cf64f8a35d..fff04e0fbd800 100644
---- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
-+++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-@@ -187,6 +187,8 @@ struct rk_udphy {
- 	u32 dp_aux_din_sel;
- 	bool dp_sink_hpd_sel;
- 	bool dp_sink_hpd_cfg;
-+	unsigned int link_rate;
-+	unsigned int lanes;
- 	u8 bw;
- 	int id;
+diff --git a/arch/arm64/include/asm/pgtable.h b/arch/arm64/include/asm/pgtable.h
+index 0b2a2ad1b9e83..abf990ce175b1 100644
+--- a/arch/arm64/include/asm/pgtable.h
++++ b/arch/arm64/include/asm/pgtable.h
+@@ -548,18 +548,6 @@ static inline int pmd_protnone(pmd_t pmd)
+ #endif
  
-@@ -1102,15 +1104,19 @@ static int rk_udphy_dp_phy_power_off(struct phy *phy)
- 	return 0;
- }
- 
--static int rk_udphy_dp_phy_verify_link_rate(unsigned int link_rate)
-+/*
-+ * Verify link rate
-+ */
-+static int rk_udphy_dp_phy_verify_link_rate(struct rk_udphy *udphy,
-+					    struct phy_configure_opts_dp *dp)
- {
--	switch (link_rate) {
-+	switch (dp->link_rate) {
- 	case 1620:
- 	case 2700:
- 	case 5400:
- 	case 8100:
-+		udphy->link_rate = dp->link_rate;
- 		break;
+ #define pmd_present(pmd)	pte_present(pmd_pte(pmd))
 -
- 	default:
- 		return -EINVAL;
- 	}
-@@ -1118,45 +1124,44 @@ static int rk_udphy_dp_phy_verify_link_rate(unsigned int link_rate)
- 	return 0;
- }
- 
--static int rk_udphy_dp_phy_verify_config(struct rk_udphy *udphy,
--					 struct phy_configure_opts_dp *dp)
-+static int rk_udphy_dp_phy_verify_lanes(struct rk_udphy *udphy,
-+					struct phy_configure_opts_dp *dp)
- {
--	int i, ret;
+-/*
+- * THP definitions.
+- */
 -
--	/* If changing link rate was required, verify it's supported. */
--	ret = rk_udphy_dp_phy_verify_link_rate(dp->link_rate);
--	if (ret)
--		return ret;
+-#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+-static inline int pmd_trans_huge(pmd_t pmd)
+-{
+-	return pmd_val(pmd) && pmd_present(pmd) && !(pmd_val(pmd) & PMD_TABLE_BIT);
+-}
+-#endif /* CONFIG_TRANSPARENT_HUGEPAGE */
 -
--	/* Verify lane count. */
- 	switch (dp->lanes) {
- 	case 1:
- 	case 2:
- 	case 4:
- 		/* valid lane count. */
-+		udphy->lanes = dp->lanes;
- 		break;
+ #define pmd_dirty(pmd)		pte_dirty(pmd_pte(pmd))
+ #define pmd_young(pmd)		pte_young(pmd_pte(pmd))
+ #define pmd_valid(pmd)		pte_valid(pmd_pte(pmd))
+@@ -724,6 +712,18 @@ extern pgprot_t phys_mem_access_prot(struct file *file, unsigned long pfn,
+ #define pmd_leaf_size(pmd)	(pmd_cont(pmd) ? CONT_PMD_SIZE : PMD_SIZE)
+ #define pte_leaf_size(pte)	(pte_cont(pte) ? CONT_PTE_SIZE : PAGE_SIZE)
  
- 	default:
- 		return -EINVAL;
- 	}
- 
--	/*
--	 * If changing voltages is required, check swing and pre-emphasis
--	 * levels, per-lane.
--	 */
--	if (dp->set_voltages) {
--		/* Lane count verified previously. */
--		for (i = 0; i < dp->lanes; i++) {
--			if (dp->voltage[i] > 3 || dp->pre[i] > 3)
--				return -EINVAL;
-+	return 0;
-+}
- 
--			/*
--			 * Sum of voltage swing and pre-emphasis levels cannot
--			 * exceed 3.
--			 */
--			if (dp->voltage[i] + dp->pre[i] > 3)
--				return -EINVAL;
--		}
-+/*
-+ * If changing voltages is required, check swing and pre-emphasis
-+ * levels, per-lane.
-+ */
-+static int rk_udphy_dp_phy_verify_voltages(struct rk_udphy *udphy,
-+					   struct phy_configure_opts_dp *dp)
++#ifdef CONFIG_TRANSPARENT_HUGEPAGE
++static inline int pmd_trans_huge(pmd_t pmd)
 +{
-+	int i;
++	/*
++	 * If pmd is present-invalid, pmd_table() won't detect it
++	 * as a table, so force the valid bit for the comparison.
++	 */
++	return pmd_val(pmd) && pmd_present(pmd) &&
++	       !pmd_table(__pmd(pmd_val(pmd) | PTE_VALID));
++}
++#endif /* CONFIG_TRANSPARENT_HUGEPAGE */
 +
-+	/* Lane count verified previously. */
-+	for (i = 0; i < udphy->lanes; i++) {
-+		if (dp->voltage[i] > 3 || dp->pre[i] > 3)
-+			return -EINVAL;
-+
-+		/*
-+		 * Sum of voltage swing and pre-emphasis levels cannot
-+		 * exceed 3.
-+		 */
-+		if (dp->voltage[i] + dp->pre[i] > 3)
-+			return -EINVAL;
- 	}
- 
- 	return 0;
-@@ -1196,9 +1201,23 @@ static int rk_udphy_dp_phy_configure(struct phy *phy,
- 	u32 i, val, lane;
- 	int ret;
- 
--	ret = rk_udphy_dp_phy_verify_config(udphy, dp);
--	if (ret)
--		return ret;
-+	if (dp->set_rate) {
-+		ret = rk_udphy_dp_phy_verify_link_rate(udphy, dp);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	if (dp->set_lanes) {
-+		ret = rk_udphy_dp_phy_verify_lanes(udphy, dp);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	if (dp->set_voltages) {
-+		ret = rk_udphy_dp_phy_verify_voltages(udphy, dp);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	if (dp->set_rate) {
- 		regmap_update_bits(udphy->pma_regmap, CMN_DP_RSTN_OFFSET,
-@@ -1243,9 +1262,9 @@ static int rk_udphy_dp_phy_configure(struct phy *phy,
- 	}
- 
- 	if (dp->set_voltages) {
--		for (i = 0; i < dp->lanes; i++) {
-+		for (i = 0; i < udphy->lanes; i++) {
- 			lane = udphy->dp_lane_sel[i];
--			switch (dp->link_rate) {
-+			switch (udphy->link_rate) {
- 			case 1620:
- 			case 2700:
- 				regmap_update_bits(udphy->pma_regmap,
+ #if defined(CONFIG_ARM64_64K_PAGES) || CONFIG_PGTABLE_LEVELS < 3
+ static inline bool pud_sect(pud_t pud) { return false; }
+ static inline bool pud_table(pud_t pud) { return true; }
 -- 
 2.39.5
 
