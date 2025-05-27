@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE0227FD73;
-	Tue, 27 May 2025 16:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456BD27FD73;
+	Tue, 27 May 2025 16:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364845; cv=none; b=DYObhDOD8C7kEMMU/QF2L3W4BuaGMIFxsrDyXluWOeygavooCbyBK8OwrPjtN6Q7IqSKRjQQy2HJgaiPzjNJ0sQpYfLXGKvYRlDLfVMNCxicG/g3XABYuXq6LHdYywDk6spvYTVrAmOFLw5V+z/tIFVVSmZvMv1njf1zYlAq3jk=
+	t=1748364848; cv=none; b=p0g3yd9iZCZhse30w5mHGV3eS3Nfc9QzNyefsOiPq2UG5YxGzeuIj4X0cnOlItlKOgxpWhL0ZGlxAYPEW7ofDr29OUz41ObAQJ6QHqujWd4ZzBba0CHPQNj8lM5kAMVAoFfoka/YtQzt9cnOqDjqW1FcTmzWZbwaf50kIPfbAwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364845; c=relaxed/simple;
-	bh=X10aKGSuOQfL8Goqge+OUG0Muxp4MqWhJdsVzbGycsY=;
+	s=arc-20240116; t=1748364848; c=relaxed/simple;
+	bh=WYH1wgwXq6YcREVO8LwCvwRuBbDcrbVBS/SiRq1Dtjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gc3jHLuX3QI2Q60c+OtosPopHYN2SkMDO9r9GWlKz5wJtzg8L6cfZzrjPNMhRH4FazzoN5ZtXSGHQKgMmDGo18F/cAj5SSB2JCQ+HmJqjO7BF8aHl1bFcXDkl43Ua26Kw88syl/Y4F8RY/wyrWAPv3h+vI92CnHJRNd0+j9Qtfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EXKYdMAB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tYrghmlcWPyZwNbrnglaC0TYPSWul7EZxGwaMyoYvZuoypMB6JtVnDGadsAsGMGB0m90rWpZ3oh6PamnQPYr+adqMfYtJt0xFypbPApHm0kQRL3AHARTcn/IuJSzOddVmDkNtez6jvZI4GWdUQcyb+zp57BLOftMbrd1MYeIZWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+6vGZKy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EXKYdMAB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974EAC4CEE9;
-	Tue, 27 May 2025 16:54:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+6vGZKy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CB8C4CEE9;
+	Tue, 27 May 2025 16:54:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364845;
-	bh=X10aKGSuOQfL8Goqge+OUG0Muxp4MqWhJdsVzbGycsY=;
+	s=korg; t=1748364848;
+	bh=WYH1wgwXq6YcREVO8LwCvwRuBbDcrbVBS/SiRq1Dtjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EXKYdMABxuAjOLpg087ifBaU7fzXa9PEaDtx7tddNoBtmybCtqJmSbHOpC7E321a2
-	 2EUzfepm0fSPc5x6Jm57ULj6M15d7TKX5+VgJ1Xh3LqzUUrQd8fNaDJ2+6NrVo5qRE
-	 l6KwfjWMY995wSjuMm0SnjqZLj0uk2aSSgCeOGHQ=
+	b=B+6vGZKy0EuN+HCo6BAHOKYe1DsvL0dkg+tCzsKCLBsfpmulr38lwndwO0RuE5aXP
+	 gmx44bqJ4wT47rQR9ry84/a4nYCM6gPpi1vW7zrKC9oxgtksIG4DGLAEo7fOgss9Fm
+	 pLIcv33KCGNpkdE+Kk1sruS6EgVPuvzSAJmIyM0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Kyle Roeschley <kyle.roeschley@ni.com>,
+	Brad Mouring <brad.mouring@ni.com>,
+	Erick Shepherd <erick.shepherd@ni.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 144/626] thunderbolt: Do not add non-active NVM if NVM upgrade is disabled for retimer
-Date: Tue, 27 May 2025 18:20:37 +0200
-Message-ID: <20250527162450.880218735@linuxfoundation.org>
+Subject: [PATCH 6.12 178/626] mmc: sdhci: Disable SD card clock before changing parameters
+Date: Tue, 27 May 2025 18:21:11 +0200
+Message-ID: <20250527162452.244829396@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -44,45 +48,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Erick Shepherd <erick.shepherd@ni.com>
 
-[ Upstream commit ad79c278e478ca8c1a3bf8e7a0afba8f862a48a1 ]
+[ Upstream commit fb3bbc46c94f261b6156ee863c1b06c84cf157dc ]
 
-This is only used to write a new NVM in order to upgrade the retimer
-firmware. It does not make sense to expose it if upgrade is disabled.
-This also makes it consistent with the router NVM upgrade.
+Per the SD Host Controller Simplified Specification v4.20 §3.2.3, change
+the SD card clock parameters only after first disabling the external card
+clock. Doing this fixes a spurious clock pulse on Baytrail and Apollo Lake
+SD controllers which otherwise breaks voltage switching with a specific
+Swissbit SD card.
 
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Kyle Roeschley <kyle.roeschley@ni.com>
+Signed-off-by: Brad Mouring <brad.mouring@ni.com>
+Signed-off-by: Erick Shepherd <erick.shepherd@ni.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20250211214645.469279-1-erick.shepherd@ni.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/retimer.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/mmc/host/sdhci.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thunderbolt/retimer.c b/drivers/thunderbolt/retimer.c
-index eeb64433ebbca..3488be7620674 100644
---- a/drivers/thunderbolt/retimer.c
-+++ b/drivers/thunderbolt/retimer.c
-@@ -93,9 +93,11 @@ static int tb_retimer_nvm_add(struct tb_retimer *rt)
- 	if (ret)
- 		goto err_nvm;
+diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
+index 4b91c9e966357..8ae76300d157d 100644
+--- a/drivers/mmc/host/sdhci.c
++++ b/drivers/mmc/host/sdhci.c
+@@ -2035,10 +2035,15 @@ void sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
  
--	ret = tb_nvm_add_non_active(nvm, nvm_write);
--	if (ret)
--		goto err_nvm;
-+	if (!rt->no_nvm_upgrade) {
-+		ret = tb_nvm_add_non_active(nvm, nvm_write);
-+		if (ret)
-+			goto err_nvm;
+ 	host->mmc->actual_clock = 0;
+ 
+-	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
++	clk = sdhci_readw(host, SDHCI_CLOCK_CONTROL);
++	if (clk & SDHCI_CLOCK_CARD_EN)
++		sdhci_writew(host, clk & ~SDHCI_CLOCK_CARD_EN,
++			SDHCI_CLOCK_CONTROL);
+ 
+-	if (clock == 0)
++	if (clock == 0) {
++		sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
+ 		return;
 +	}
  
- 	rt->nvm = nvm;
- 	dev_dbg(&rt->dev, "NVM version %x.%x\n", nvm->major, nvm->minor);
+ 	clk = sdhci_calc_clk(host, clock, &host->mmc->actual_clock);
+ 	sdhci_enable_clk(host, clk);
 -- 
 2.39.5
 
