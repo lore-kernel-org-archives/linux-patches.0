@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE021CEAC2;
-	Tue, 27 May 2025 17:17:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497251DB34C;
+	Tue, 27 May 2025 17:17:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366261; cv=none; b=L9CpCPbwACNdZQlqFVx+8zHh2arE+stUx3Koj5NCTHLvWRKII8f9YFQLkOtuZB1uA1SbEcgNtVZqTGTgnXPQNfb6OutL+4rEPLy08X0ZOQ+PcPIjZtTIlH6e2orwpKfRdWdXek85o1xEdDpWN/N9rHz7dQZmQG3LJh4mgNK4cn4=
+	t=1748366264; cv=none; b=tFCNLNdWS2LQhTDWkIoLjQPbsbONmRsRKrRGzTWB2qg8Geb1Zf8FMJtJIoOAX4w29k7Y/6pusfiJD7g3ZNdGfAdtEJR6bIlBFhTRI+izuLz3bce8BDQTshpbE4pQcYVx8oq79b57QA+PW146GCngFJq6ETZl/wlEtOt64kKnMHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366261; c=relaxed/simple;
-	bh=plXl5L3qUQwfTbwJ/hSaN4SW+YK0NA9Nnj7WSKpcFYU=;
+	s=arc-20240116; t=1748366264; c=relaxed/simple;
+	bh=E4y1DOCch5XjT4XOQvaGgz1eS+nSL4qHGIA1d5Ifen8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ri1Cz1O8DUqJBW18+w6+nEXKxrrMPdjpvRMzpK0oKbI3cUXS6USPZspXep0AQp8oJBzzSOh0NNqq5uV3NWBrsiu8BOEGZQKnD74RVHDaKvsWNnF/r69M7mgZSFn03KZ3Zu/PDj8Yx7ot7OPex1WFaQZ84LV6FG2MNVZAPFkkCio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1SSG0fVQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bB82/5GxffqzATeKVVYnpx4iez1yO7CP/MR13VKmM7UPsLHhYo5vjz2P7fKLpQlSBDc4Z3dK5wrptvIjNs/2mEvxPaUX5UHlIqxGZ8BwLuhKQyS8z3YJh6459yT065FZU/y94K0NjFIqHpGW7Lu63jGjI2x2m3uSJ5Zrc2Nu+2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fCx2bkwe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1SSG0fVQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C222FC4CEE9;
-	Tue, 27 May 2025 17:17:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fCx2bkwe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9DDC4CEE9;
+	Tue, 27 May 2025 17:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366261;
-	bh=plXl5L3qUQwfTbwJ/hSaN4SW+YK0NA9Nnj7WSKpcFYU=;
+	s=korg; t=1748366264;
+	bh=E4y1DOCch5XjT4XOQvaGgz1eS+nSL4qHGIA1d5Ifen8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1SSG0fVQRiKw3EjbWHzjXZWdzzcUTQhHwS41cr2Cj/E+Yj39cABYZTbzgACgSQ9p6
-	 DqWmLUEtWDFSl7EtTCN56fsUiqmrBOncUzhAg1VbBHx+b0+Iez57QOZ6DbhKm4VJvJ
-	 40nuxpIJcme515+xZYTmgsyrrIH0mPdVqBhHKBas=
+	b=fCx2bkweAzI2d/kiz6pDWH3l5tZ3vfwzI45UJztE7YoCvWPrj+XlK874Gk0nl6w92
+	 1BvFVi97zCNth+4TR0Joj05ZpFCfvRHxfOMYfPZF/zzU4FEBO+X2VYD8a/NpD2pwnf
+	 FTjNH3GtHf8VOTd4OCuDCt2dlc/Zdy3eMwnTNEGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 012/783] nvmem: core: fix bit offsets of more than one byte
-Date: Tue, 27 May 2025 18:16:49 +0200
-Message-ID: <20250527162513.544032181@linuxfoundation.org>
+Subject: [PATCH 6.14 013/783] nvmem: core: verify cells raw_len
+Date: Tue, 27 May 2025 18:16:50 +0200
+Message-ID: <20250527162513.585800726@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,72 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 7a06ef75107799675ea6e4d73b9df37e18e352a8 ]
+[ Upstream commit 13bcd440f2ff38cd7e42a179c223d4b833158b33 ]
 
-If the NVMEM specifies a stride to access data, reading particular cell
-might require bit offset that is bigger than one byte. Rework NVMEM core
-code to support bit offsets of more than 8 bits.
+Check that the NVMEM cell's raw_len is a aligned to word_size. Otherwise
+Otherwise drivers might face incomplete read while accessing the last
+part of the NVMEM cell.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20250411112251.68002-9-srinivas.kandagatla@linaro.org
+Link: https://lore.kernel.org/r/20250411112251.68002-10-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/core.c | 24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ drivers/nvmem/core.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
-index fff85bbf0ecd0..7872903c08a11 100644
+index 7872903c08a11..7b8c85f9e035c 100644
 --- a/drivers/nvmem/core.c
 +++ b/drivers/nvmem/core.c
-@@ -837,7 +837,9 @@ static int nvmem_add_cells_from_dt(struct nvmem_device *nvmem, struct device_nod
- 		if (addr && len == (2 * sizeof(u32))) {
- 			info.bit_offset = be32_to_cpup(addr++);
- 			info.nbits = be32_to_cpup(addr);
--			if (info.bit_offset >= BITS_PER_BYTE || info.nbits < 1) {
-+			if (info.bit_offset >= BITS_PER_BYTE * info.bytes ||
-+			    info.nbits < 1 ||
-+			    info.bit_offset + info.nbits > BITS_PER_BYTE * info.bytes) {
- 				dev_err(dev, "nvmem: invalid bits on %pOF\n", child);
- 				of_node_put(child);
- 				return -EINVAL;
-@@ -1630,21 +1632,29 @@ EXPORT_SYMBOL_GPL(nvmem_cell_put);
- static void nvmem_shift_read_buffer_in_place(struct nvmem_cell_entry *cell, void *buf)
- {
- 	u8 *p, *b;
--	int i, extra, bit_offset = cell->bit_offset;
-+	int i, extra, bytes_offset;
-+	int bit_offset = cell->bit_offset;
+@@ -605,6 +605,18 @@ static int nvmem_cell_info_to_nvmem_cell_entry_nodup(struct nvmem_device *nvmem,
+ 		return -EINVAL;
+ 	}
  
- 	p = b = buf;
--	if (bit_offset) {
++	if (!IS_ALIGNED(cell->raw_len, nvmem->word_size)) {
++		dev_err(&nvmem->dev,
++			"cell %s raw len %zd unaligned to nvmem word size %d\n",
++			cell->name ?: "<unknown>", cell->raw_len,
++			nvmem->word_size);
 +
-+	bytes_offset = bit_offset / BITS_PER_BYTE;
-+	b += bytes_offset;
-+	bit_offset %= BITS_PER_BYTE;
++		if (info->raw_len)
++			return -EINVAL;
 +
-+	if (bit_offset % BITS_PER_BYTE) {
- 		/* First shift */
--		*b++ >>= bit_offset;
-+		*p = *b++ >> bit_offset;
++		cell->raw_len = ALIGN(cell->raw_len, nvmem->word_size);
++	}
++
+ 	return 0;
+ }
  
- 		/* setup rest of the bytes if any */
- 		for (i = 1; i < cell->bytes; i++) {
- 			/* Get bits from next byte and shift them towards msb */
--			*p |= *b << (BITS_PER_BYTE - bit_offset);
-+			*p++ |= *b << (BITS_PER_BYTE - bit_offset);
- 
--			p = b;
--			*b++ >>= bit_offset;
-+			*p = *b++ >> bit_offset;
- 		}
-+	} else if (p != b) {
-+		memmove(p, b, cell->bytes - bytes_offset);
-+		p += cell->bytes - 1;
- 	} else {
- 		/* point to the msb */
- 		p += cell->bytes - 1;
 -- 
 2.39.5
 
