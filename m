@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073741AF0BB;
-	Tue, 27 May 2025 17:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6B41AF0BB;
+	Tue, 27 May 2025 17:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367677; cv=none; b=BrPUKxvo82sLsNCgtR072RkQSoG2R5iJAwQfN06pf2a4AuhiIorUxjgAOmQmtYLjwdn9bOOq7qumUnoZYJN9hfvgFpaKagTqLUE6s9/N3ZaSw0s0amCO2HXLFhxmFLoMmVo5C1g4oU/qZA2G0wtHJZ+AlTBT7DdmToCYBv+S9XY=
+	t=1748367680; cv=none; b=AJqVeIlJwr3IoARy9ixH6m8+HkkVBV8kl3Xm+UnD8b1LZclPjs68weYMKZ/JY+JWLucoh29nEwXTwbaGmmQvanlCgAPqEVZggdx/UT3zAQkuhPrEg+dXO8fM2Z1LFCoEe4w0oD2tbtTe9NfHxwI1Yo3Lx8Q4qE4un1qcFgh0F0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367677; c=relaxed/simple;
-	bh=35Q5Hrlsc/EOioErS8bTvufnwb03Hh7OlZRGDn9Et3U=;
+	s=arc-20240116; t=1748367680; c=relaxed/simple;
+	bh=/VUCazaWoAiTvc9p8bICZMvDsSp8xnB40PlNR0v+Zj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NymTdYSFEnwN/YaTpWJRVMOLO+ie4FB7h0BRc+3C2N6wOREYWtFR4dmzZ0B7FX3ujpZzvisoBJw6+AvqpYL28ZijBo5YUeBbN2FMM2oExo5KdjJooCg+DtFIYLkFHyz7Kcp4DzrvQR+75Cr3Kt0OgLPQjOrL3qzo0fJ7G1y3Kec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WDlbnswV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=usCUoz1LzFHr8wyrLrvuTGdPOP/EZEgcBlUj4cWdo1SLbl+i/zXcr5ufDbnW6buj5eKfls9JB2RIiGEUFGmhchDbUlqSPzHYQEzuwtjptHbi/cjAJP05GsEbgPPGvT4I7Ufaso93m5QZQuJmAZx80rOvfR+tE4gmkhUqO8fhXGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrr4JMhC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDlbnswV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B5CC4CEE9;
-	Tue, 27 May 2025 17:41:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrr4JMhC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB7AC4CEEB;
+	Tue, 27 May 2025 17:41:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367676;
-	bh=35Q5Hrlsc/EOioErS8bTvufnwb03Hh7OlZRGDn9Et3U=;
+	s=korg; t=1748367679;
+	bh=/VUCazaWoAiTvc9p8bICZMvDsSp8xnB40PlNR0v+Zj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WDlbnswVBQKI1SXrhvGXRFJAiXLucbPjLW1g5IoZei5GC1Pvx1WyujPccsOLPpsL2
-	 oX1Q1JA91OHYuE6T2Ngc5otbw7MN9NeLd/mx2R6Vv99P51MwQOuSyvqcMB3FI4HdHX
-	 458z5sVHqH9GCEl6TinY/gpav6OsJxDqsM1xKRJM=
+	b=yrr4JMhCQPEFpur7ot2w57X0FLplT00vTUtYQBXCb3wRuiaeZQxEoiUEZ815zbNld
+	 sc9kVPu89ylpLa6Oj+byQbBHRbqtX2f6QZS1/92X5lWODmyjrXERAyDD6MC+PTX3Be
+	 nuImbKTmP9s6pMn2UztbqncBQmSZyKoKyZ6Es6hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 463/783] x86/ibt: Handle FineIBT in handle_cfi_failure()
-Date: Tue, 27 May 2025 18:24:20 +0200
-Message-ID: <20250527162531.988538210@linuxfoundation.org>
+Subject: [PATCH 6.14 464/783] x86/traps: Cleanup and robustify decode_bug()
+Date: Tue, 27 May 2025 18:24:21 +0200
+Message-ID: <20250527162532.035756315@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,136 +53,188 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 882b86fd4e0d49bf91148dbadcdbece19ded40e6 ]
+[ Upstream commit c20ad96c9a8f0aeaf4e4057730a22de2657ad0c2 ]
 
-Sami reminded me that FineIBT failure does not hook into the regular
-CFI failure case, and as such CFI_PERMISSIVE does not work.
+Notably, don't attempt to decode an immediate when MOD == 3.
 
-Reported-by: Sami Tolvanen <samitolvanen@google.com>
+Additionally have it return the instruction length, such that WARN
+like bugs can more reliably skip to the correct instruction.
+
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Link: https://lkml.kernel.org/r/20250214092619.GB21726@noisy.programming.kicks-ass.net
+Link: https://lore.kernel.org/r/20250207122546.721120726@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/cfi.h    | 11 +++++++++++
- arch/x86/kernel/alternative.c | 30 ++++++++++++++++++++++++++++++
- arch/x86/kernel/cfi.c         | 22 ++++++++++++++++++----
- 3 files changed, 59 insertions(+), 4 deletions(-)
+ arch/x86/include/asm/bug.h |  5 ++-
+ arch/x86/include/asm/ibt.h |  4 +-
+ arch/x86/kernel/traps.c    | 82 ++++++++++++++++++++++++++++----------
+ 3 files changed, 65 insertions(+), 26 deletions(-)
 
-diff --git a/arch/x86/include/asm/cfi.h b/arch/x86/include/asm/cfi.h
-index 31d19c815f992..7dd5ab239c87b 100644
---- a/arch/x86/include/asm/cfi.h
-+++ b/arch/x86/include/asm/cfi.h
-@@ -126,6 +126,17 @@ static inline int cfi_get_offset(void)
+diff --git a/arch/x86/include/asm/bug.h b/arch/x86/include/asm/bug.h
+index e85ac0c7c039e..1a5e4b3726940 100644
+--- a/arch/x86/include/asm/bug.h
++++ b/arch/x86/include/asm/bug.h
+@@ -22,8 +22,9 @@
+ #define SECOND_BYTE_OPCODE_UD2	0x0b
  
- extern u32 cfi_get_func_hash(void *func);
+ #define BUG_NONE		0xffff
+-#define BUG_UD1			0xfffe
+-#define BUG_UD2			0xfffd
++#define BUG_UD2			0xfffe
++#define BUG_UD1			0xfffd
++#define BUG_UD1_UBSAN		0xfffc
  
-+#ifdef CONFIG_FINEIBT
-+extern bool decode_fineibt_insn(struct pt_regs *regs, unsigned long *target, u32 *type);
-+#else
-+static inline bool
-+decode_fineibt_insn(struct pt_regs *regs, unsigned long *target, u32 *type)
-+{
-+	return false;
-+}
-+
-+#endif
-+
- #else
- static inline enum bug_trap_type handle_cfi_failure(struct pt_regs *regs)
+ #ifdef CONFIG_GENERIC_BUG
+ 
+diff --git a/arch/x86/include/asm/ibt.h b/arch/x86/include/asm/ibt.h
+index e7f4caa42839a..b04bcbb1a14ef 100644
+--- a/arch/x86/include/asm/ibt.h
++++ b/arch/x86/include/asm/ibt.h
+@@ -41,7 +41,7 @@
+ 	_ASM_PTR fname "\n\t"				\
+ 	".popsection\n\t"
+ 
+-static inline __attribute_const__ u32 gen_endbr(void)
++static __always_inline __attribute_const__ u32 gen_endbr(void)
  {
-diff --git a/arch/x86/kernel/alternative.c b/arch/x86/kernel/alternative.c
-index f843fd37cf987..e1913bcb806e2 100644
---- a/arch/x86/kernel/alternative.c
-+++ b/arch/x86/kernel/alternative.c
-@@ -1271,6 +1271,7 @@ asm(	".pushsection .rodata			\n"
- 	"	endbr64				\n"
- 	"	subl	$0x12345678, %r10d	\n"
- 	"	je	fineibt_preamble_end	\n"
-+	"fineibt_preamble_ud2:			\n"
- 	"	ud2				\n"
- 	"	nop				\n"
- 	"fineibt_preamble_end:			\n"
-@@ -1278,9 +1279,11 @@ asm(	".pushsection .rodata			\n"
- );
+ 	u32 endbr;
  
- extern u8 fineibt_preamble_start[];
-+extern u8 fineibt_preamble_ud2[];
- extern u8 fineibt_preamble_end[];
- 
- #define fineibt_preamble_size (fineibt_preamble_end - fineibt_preamble_start)
-+#define fineibt_preamble_ud2  (fineibt_preamble_ud2 - fineibt_preamble_start)
- #define fineibt_preamble_hash 7
- 
- asm(	".pushsection .rodata			\n"
-@@ -1598,6 +1601,33 @@ static void poison_cfi(void *addr, void *wr_addr)
- 	}
+@@ -56,7 +56,7 @@ static inline __attribute_const__ u32 gen_endbr(void)
+ 	return endbr;
  }
  
-+/*
-+ * regs->ip points to a UD2 instruction, return true and fill out target and
-+ * type when this UD2 is from a FineIBT preamble.
+-static inline __attribute_const__ u32 gen_endbr_poison(void)
++static __always_inline __attribute_const__ u32 gen_endbr_poison(void)
+ {
+ 	/*
+ 	 * 4 byte NOP that isn't NOP4 (in fact it is OSP NOP3), such that it
+diff --git a/arch/x86/kernel/traps.c b/arch/x86/kernel/traps.c
+index 5e3e036e6e537..b18fc7539b8d7 100644
+--- a/arch/x86/kernel/traps.c
++++ b/arch/x86/kernel/traps.c
+@@ -94,10 +94,17 @@ __always_inline int is_valid_bugaddr(unsigned long addr)
+ 
+ /*
+  * Check for UD1 or UD2, accounting for Address Size Override Prefixes.
+- * If it's a UD1, get the ModRM byte to pass along to UBSan.
++ * If it's a UD1, further decode to determine its use:
 + *
-+ * We check the preamble by checking for the ENDBR instruction relative to the
-+ * UD2 instruction.
-+ */
-+bool decode_fineibt_insn(struct pt_regs *regs, unsigned long *target, u32 *type)
-+{
-+	unsigned long addr = regs->ip - fineibt_preamble_ud2;
-+	u32 endbr, hash;
-+
-+	__get_kernel_nofault(&endbr, addr, u32, Efault);
-+	if (endbr != gen_endbr())
-+		return false;
-+
-+	*target = addr + fineibt_preamble_size;
-+
-+	__get_kernel_nofault(&hash, addr + fineibt_preamble_hash, u32, Efault);
-+	*type = (u32)regs->r10 + hash;
-+
-+	return true;
-+
-+Efault:
-+	return false;
-+}
-+
- #else
++ * UBSan{0}:     67 0f b9 00             ud1    (%eax),%eax
++ * UBSan{10}:    67 0f b9 40 10          ud1    0x10(%eax),%eax
++ * static_call:  0f b9 cc                ud1    %esp,%ecx
++ *
++ * Notably UBSAN uses EAX, static_call uses ECX.
+  */
+-__always_inline int decode_bug(unsigned long addr, u32 *imm)
++__always_inline int decode_bug(unsigned long addr, s32 *imm, int *len)
+ {
++	unsigned long start = addr;
+ 	u8 v;
  
- static void __apply_fineibt(s32 *start_retpoline, s32 *end_retpoline,
-diff --git a/arch/x86/kernel/cfi.c b/arch/x86/kernel/cfi.c
-index e6bf78fac1462..f6905bef0af84 100644
---- a/arch/x86/kernel/cfi.c
-+++ b/arch/x86/kernel/cfi.c
-@@ -70,11 +70,25 @@ enum bug_trap_type handle_cfi_failure(struct pt_regs *regs)
- 	unsigned long target;
- 	u32 type;
+ 	if (addr < TASK_SIZE_MAX)
+@@ -110,24 +117,42 @@ __always_inline int decode_bug(unsigned long addr, u32 *imm)
+ 		return BUG_NONE;
  
--	if (!is_cfi_trap(regs->ip))
--		return BUG_TRAP_TYPE_NONE;
-+	switch (cfi_mode) {
-+	case CFI_KCFI:
-+		if (!is_cfi_trap(regs->ip))
-+			return BUG_TRAP_TYPE_NONE;
+ 	v = *(u8 *)(addr++);
+-	if (v == SECOND_BYTE_OPCODE_UD2)
++	if (v == SECOND_BYTE_OPCODE_UD2) {
++		*len = addr - start;
+ 		return BUG_UD2;
++	}
+ 
+-	if (!IS_ENABLED(CONFIG_UBSAN_TRAP) || v != SECOND_BYTE_OPCODE_UD1)
++	if (v != SECOND_BYTE_OPCODE_UD1)
+ 		return BUG_NONE;
+ 
+-	/* Retrieve the immediate (type value) for the UBSAN UD1 */
+-	v = *(u8 *)(addr++);
+-	if (X86_MODRM_RM(v) == 4)
+-		addr++;
+-
+ 	*imm = 0;
+-	if (X86_MODRM_MOD(v) == 1)
+-		*imm = *(u8 *)addr;
+-	else if (X86_MODRM_MOD(v) == 2)
+-		*imm = *(u32 *)addr;
+-	else
+-		WARN_ONCE(1, "Unexpected MODRM_MOD: %u\n", X86_MODRM_MOD(v));
++	v = *(u8 *)(addr++);		/* ModRM */
 +
-+		if (!decode_cfi_insn(regs, &target, &type))
-+			return report_cfi_failure_noaddr(regs, regs->ip);
++	if (X86_MODRM_MOD(v) != 3 && X86_MODRM_RM(v) == 4)
++		addr++;			/* SIB */
 +
++	/* Decode immediate, if present */
++	switch (X86_MODRM_MOD(v)) {
++	case 0: if (X86_MODRM_RM(v) == 5)
++			addr += 4; /* RIP + disp32 */
 +		break;
- 
--	if (!decode_cfi_insn(regs, &target, &type))
--		return report_cfi_failure_noaddr(regs, regs->ip);
-+	case CFI_FINEIBT:
-+		if (!decode_fineibt_insn(regs, &target, &type))
-+			return BUG_TRAP_TYPE_NONE;
 +
++	case 1: *imm = *(s8 *)addr;
++		addr += 1;
++		break;
++
++	case 2: *imm = *(s32 *)addr;
++		addr += 4;
++		break;
++
++	case 3: break;
++	}
++
++	/* record instruction length */
++	*len = addr - start;
++
++	if (X86_MODRM_REG(v) == 0)	/* EAX */
++		return BUG_UD1_UBSAN;
+ 
+ 	return BUG_UD1;
+ }
+@@ -258,10 +283,10 @@ static inline void handle_invalid_op(struct pt_regs *regs)
+ static noinstr bool handle_bug(struct pt_regs *regs)
+ {
+ 	bool handled = false;
+-	int ud_type;
+-	u32 imm;
++	int ud_type, ud_len;
++	s32 ud_imm;
+ 
+-	ud_type = decode_bug(regs->ip, &imm);
++	ud_type = decode_bug(regs->ip, &ud_imm, &ud_len);
+ 	if (ud_type == BUG_NONE)
+ 		return handled;
+ 
+@@ -281,15 +306,28 @@ static noinstr bool handle_bug(struct pt_regs *regs)
+ 	 */
+ 	if (regs->flags & X86_EFLAGS_IF)
+ 		raw_local_irq_enable();
+-	if (ud_type == BUG_UD2) {
++
++	switch (ud_type) {
++	case BUG_UD2:
+ 		if (report_bug(regs->ip, regs) == BUG_TRAP_TYPE_WARN ||
+ 		    handle_cfi_failure(regs) == BUG_TRAP_TYPE_WARN) {
+-			regs->ip += LEN_UD2;
++			regs->ip += ud_len;
+ 			handled = true;
+ 		}
+-	} else if (IS_ENABLED(CONFIG_UBSAN_TRAP)) {
+-		pr_crit("%s at %pS\n", report_ubsan_failure(regs, imm), (void *)regs->ip);
++		break;
++
++	case BUG_UD1_UBSAN:
++		if (IS_ENABLED(CONFIG_UBSAN_TRAP)) {
++			pr_crit("%s at %pS\n",
++				report_ubsan_failure(regs, ud_imm),
++				(void *)regs->ip);
++		}
 +		break;
 +
 +	default:
-+		return BUG_TRAP_TYPE_NONE;
-+	}
- 
- 	return report_cfi_failure(regs, regs->ip, &target, type);
- }
++		break;
+ 	}
++
+ 	if (regs->flags & X86_EFLAGS_IF)
+ 		raw_local_irq_disable();
+ 	instrumentation_end();
 -- 
 2.39.5
 
