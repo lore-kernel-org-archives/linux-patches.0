@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE7B26F469;
-	Tue, 27 May 2025 17:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4554226F469;
+	Tue, 27 May 2025 17:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366235; cv=none; b=N5J2dWXlQwDrByyQSxzYXvs7CLcpnM9stN9IRvP/PHMm+yxg9UhTPaa/CsdgH5McabO8DNqh+23NB4XeZNPfNxiqDWG529wPtC6vsdjocuMJi7wvH9gnNAV/wKkq9cXaYMC28YYSOfagm3p+niVCnJf4xaCHsXB2Jk07XUQO5SI=
+	t=1748366238; cv=none; b=WLa+vmLfMQZ8zlXLaMz7sdEVhi4vmQ3uVQ4rBqtYV7RBNi3/eP17pgJ+dhtt7z+AmguRa+74Bi3zpLui7O4UIhBhKlJUsGro9PhjH4B6F4XzQOtbubllwg3tC31NnADgxd+6YoadlSryeZqK/Q0dM0qsMLjbALFHAHam6pFbZ6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366235; c=relaxed/simple;
-	bh=P0gNpGR6UwjWYVlKlhWn5yMcHI/qOG2TRimj+/h6eGo=;
+	s=arc-20240116; t=1748366238; c=relaxed/simple;
+	bh=VKfQnCZBB4WUjDZJlvudb+mIvDr8W7ep4lRO+HsuwjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=roRh5nU9tZtQpPHViDmuaOvH2MsmB492kkPsvL9dJKgc7FJRwbzZEQ1FJaLFsy9zc3WtnxwbtC0pgWxeqsi0cfbMwYdTx7p8RZdxeVhsod+6yokTr6QpNswTs8pkk6uf5r5mXZF5++ggJfWCM5JjV6Py2U9VkFn6zs68KCHRGNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KlA3/0ea; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WdPyYCv/9Q02/XD6R+z69RNzUsYMKtdbWHTg7CNhUVz0Rqfv1p4v864Oi3YyyI2c9oK46yRplCUibFPJ2QJbtn3JWTIAparZrzGVk5y+x96QfE8oJzr7DxCjwlKrXfXSvROq8zojWwu9bHCN2ERMfT6TVDF4xFQTSZe4A0lzZpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hcnu4QOt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlA3/0ea"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FE6C4CEE9;
-	Tue, 27 May 2025 17:17:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hcnu4QOt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23C6C4CEE9;
+	Tue, 27 May 2025 17:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366235;
-	bh=P0gNpGR6UwjWYVlKlhWn5yMcHI/qOG2TRimj+/h6eGo=;
+	s=korg; t=1748366238;
+	bh=VKfQnCZBB4WUjDZJlvudb+mIvDr8W7ep4lRO+HsuwjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KlA3/0eamaJVbiqL4QkkzgusCbdlW0BLkki+UNWCYCLVaIdoXW2HWBsOO0o8lCg5b
-	 RGxlEicRXqBrejUOT1rXydoKgjefdk4MfQWjJbjoXzUqfLzbXs6O1uTRQDiELduStz
-	 cWlrrUJoONy0x5p99+TT1gWGbwEoHvY9afrY/P00=
+	b=Hcnu4QOtsl4XFGZjDLVm6zX22aDcbVz0sweB4wqbK45QurQEl43IXRgmAjKLKO7gR
+	 WbP+FqIlCTJu4OEuX2mY91JBbd+ijYo3nAkNLXty79WO5oS+0rAdX2mGAhDlvylzUF
+	 a4tLzBJZZRerpePvsm9NZFRtV3xdiGIBRIQ77aV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Clayton <chris2553@googlemail.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.12 614/626] gcc-15: make unterminated string initialization just a warning
-Date: Tue, 27 May 2025 18:28:27 +0200
-Message-ID: <20250527162509.945880114@linuxfoundation.org>
+Subject: [PATCH 6.12 615/626] gcc-15: disable -Wunterminated-string-initialization entirely for now
+Date: Tue, 27 May 2025 18:28:28 +0200
+Message-ID: <20250527162509.985363871@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -44,90 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
+commit 9d7a0577c9db35c4cc52db90bc415ea248446472 upstream.
+
 From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit d5d45a7f26194460964eb5677a9226697f7b7fdd upstream.
+I had left the warning around but as a non-fatal error to get my gcc-15
+builds going, but fixed up some of the most annoying warning cases so
+that it wouldn't be *too* verbose.
 
-gcc-15 enabling -Wunterminated-string-initialization in -Wextra by
-default was done with the best intentions, but the warning is still
-quite broken.
+Because I like the _concept_ of the warning, even if I detested the
+implementation to shut it up.
 
-What annoys me about the warning is that this is a very traditional AND
-CORRECT way to initialize fixed byte arrays in C:
+It turns out the implementation to shut it up is even more broken than I
+thought, and my "shut up most of the warnings" patch just caused fatal
+errors on gcc-14 instead.
 
-	unsigned char hex[16] = "0123456789abcdef";
+I had tested with clang, but when I upgrade my development environment,
+I try to do it on all machines because I hate having different systems
+to maintain, and hadn't realized that gcc-14 now had issues.
 
-and we use this all over the kernel.  And the warning is fine, but gcc
-developers apparently never made a reasonable way to disable it.  As is
-(sadly) tradition with these things.
+The ACPI case is literally why I wanted to have a *type* that doesn't
+trigger the warning (see commit d5d45a7f2619: "gcc-15: make
+'unterminated string initialization' just a warning"), instead of
+marking individual places as "__nonstring".
 
-Yes, there's "__attribute__((nonstring))", and we have a macro to make
-that absolutely disgusting syntax more palatable (ie the kernel syntax
-for that monstrosity is just "__nonstring").
+But gcc-14 doesn't like that __nonstring location that shut gcc-15 up,
+because it's on an array of char arrays, not on one single array:
 
-But that attribute is misdesigned.  What you'd typically want to do is
-tell the compiler that you are using a type that isn't a string but a
-byte array, but that doesn't work at all:
+  drivers/acpi/tables.c:399:1: error: 'nonstring' attribute ignored on objects of type 'const char[][4]' [-Werror=attributes]
+    399 | static const char table_sigs[][ACPI_NAMESEG_SIZE] __initconst __nonstring = {
+        | ^~~~~~
 
-	warning: ‘nonstring’ attribute does not apply to types [-Wattributes]
+and my attempts to nest it properly with a type had failed, because of
+how gcc doesn't like marking the types as having attributes, only
+symbols.
 
-and because of this fundamental mis-design, you then have to mark each
-instance of that pattern.
+There may be some trick to it, but I was already annoyed by the bad
+attribute design, now I'm just entirely fed up with it.
 
-This is particularly noticeable in our ACPI code, because ACPI has this
-notion of a 4-byte "type name" that gets used all over, and is exactly
-this kind of byte array.
+I wish gcc had a proper way to say "this type is a *byte* array, not a
+string".
 
-This is a sad oversight, because the warning is useful, but really would
-be so much better if gcc had also given a sane way to indicate that we
-really just want a byte array type at a type level, not the broken "each
-and every array definition" level.
+The obvious thing would be to distinguish between "char []" and an
+explicitly signed "unsigned char []" (as opposed to an implicitly
+unsigned char, which is typically an architecture-specific default, but
+for the kernel is universal thanks to '-funsigned-char').
 
-So now instead of creating a nice "ACPI name" type using something like
+But any "we can typedef a 8-bit type to not become a string just because
+it's an array" model would be fine.
 
-	typedef char acpi_name_t[4] __nonstring;
+But "__attribute__((nonstring))" is sadly not that sane model.
 
-we have to do things like
-
-	char name[ACPI_NAMESEG_SIZE] __nonstring;
-
-in every place that uses this concept and then happens to have the
-typical initializers.
-
-This is annoying me mainly because I think the warning _is_ a good
-warning, which is why I'm not just turning it off in disgust.  But it is
-hampered by this bad implementation detail.
-
-[ And obviously I'm doing this now because system upgrades for me are
-  something that happen in the middle of the release cycle: don't do it
-  before or during travel, or just before or during the busy merge
-  window period. ]
-
+Reported-by: Chris Clayton <chris2553@googlemail.com>
+Fixes: 4b4bd8c50f48 ("gcc-15: acpi: sprinkle random '__nonstring' crumbles around")
+Fixes: d5d45a7f2619 ("gcc-15: make 'unterminated string initialization' just a warning")
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+[nathan: drivers/acpi diff dropped due to lack of 4b4bd8c50f48 in stable]
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    3 +++
- 1 file changed, 3 insertions(+)
+ Makefile |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/Makefile
 +++ b/Makefile
-@@ -1001,6 +1001,9 @@ KBUILD_CFLAGS += $(call cc-option, -fstr
+@@ -1001,8 +1001,8 @@ KBUILD_CFLAGS += $(call cc-option, -fstr
  KBUILD_CFLAGS-$(CONFIG_CC_NO_STRINGOP_OVERFLOW) += $(call cc-option, -Wno-stringop-overflow)
  KBUILD_CFLAGS-$(CONFIG_CC_STRINGOP_OVERFLOW) += $(call cc-option, -Wstringop-overflow)
  
-+#Currently, disable -Wunterminated-string-initialization as an error
-+KBUILD_CFLAGS += $(call cc-option, -Wno-error=unterminated-string-initialization)
-+
+-#Currently, disable -Wunterminated-string-initialization as an error
+-KBUILD_CFLAGS += $(call cc-option, -Wno-error=unterminated-string-initialization)
++#Currently, disable -Wunterminated-string-initialization as broken
++KBUILD_CFLAGS += $(call cc-option, -Wno-unterminated-string-initialization)
+ 
  # disable invalid "can't wrap" optimizations for signed / pointers
  KBUILD_CFLAGS	+= -fno-strict-overflow
- 
 
 
