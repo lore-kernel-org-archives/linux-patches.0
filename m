@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650CB1DB34C;
-	Tue, 27 May 2025 17:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2A91CEAC2;
+	Tue, 27 May 2025 17:29:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366954; cv=none; b=AncWRAnFvfJGXem2JxoCPlxFWMMzOyRgmAuoqgNnU1tk6mnuNxfbVe+4T/L/T1f/lM4SrBB6GtLmFFF7lNRfK2g9Bxe+bfI1BgNtSQmE8CXmvahSlgxqeSgM3PFSMpGRyT17jLCdTRCnKuGX64zp0RYC4FVkaTOaczhwXr2c13I=
+	t=1748366957; cv=none; b=Ov8BJ6mgaUn0arsb+sK6rx01O6P1SS6hi7jPRzG8NAIH0wKlc77UGVaN22xbdoISiXmdlQCuP3yiFE1bhOVxrvkSIS1OCHEmjEvJNZBvlDiSX5Tf+co4a0nbDrFeELOnX/WBMBgH1ya9fK1eWjTjiz/NqFeTwAEo+URT+n5at/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366954; c=relaxed/simple;
-	bh=egsS7fJcPlGmjGN77UalJwtG3YNBLnGMXidlH2LxSUE=;
+	s=arc-20240116; t=1748366957; c=relaxed/simple;
+	bh=mwoM9/9F9Bw91w52+SqGX7+Wm2qvkrFVnm5LiyzhLrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OMFj4Q32cQhl0y2NXKprtyeC6t46cMajuTSz0lcrrvk+3mbcx3o5SHS1lttcdsxS7JaGj+HOx/ntsXgu1Co9Lgkxh5rB+sTeLAXHAlNVnYFylMNlxfp+u8+cWesUiOaqvvf3lmdg6FREelniGzDhINqhpzZF8Fg/h5U1u6M9LLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=teusnbdJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YBFZ4CbkTdDgZDsBWmOnKGH6EuMlNdqiw61KwaEOntFcAd26tlRmQ3xVA/Z9YX8etTWPa7WjU0ZQiZDMlxWl9itEdDkPY6U1znAgcO3mpiFjVJ5+N5ig+LTdRfyBydbkYB7E4lXsOE/wZhp3U/EdZ6iBTwPegdAwOx7KT7Ucc44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YIYqI2OY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="teusnbdJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFB4FC4CEE9;
-	Tue, 27 May 2025 17:29:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YIYqI2OY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1AEC4CEE9;
+	Tue, 27 May 2025 17:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366954;
-	bh=egsS7fJcPlGmjGN77UalJwtG3YNBLnGMXidlH2LxSUE=;
+	s=korg; t=1748366957;
+	bh=mwoM9/9F9Bw91w52+SqGX7+Wm2qvkrFVnm5LiyzhLrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=teusnbdJAy9LnqJ3uA1enx7aiRPX4TDUfcOOeCEMsL1SzKcoH5cYOcFz8EjoTbJXJ
-	 ozINVET89n08SGGLipei0s2sAVapT6UY6Sa/oJ5VeEQfCgvBPrjmBcXZ+KM5e1BLEz
-	 QbK61JLAk58j7ja7fljBhM/d1jbKxDmUu60LRSc4=
+	b=YIYqI2OYBoCkThIsXR+sI1yRzMLKeKbQBuuJ9ewZ9x6RjPUPbNXiV6/bzNpMq57Zr
+	 bZ5y/hakiYQ04f+ET6RwMHrWct68ceP2fQnVtR4r5IwC57ktC4UhUe512nh7TOXtOs
+	 SEbr3T+ePDWkgjTXXqvAhnS0Jr6b3Lr5zPG50pJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cruise Hung <cruise.hung@amd.com>,
-	Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>,
-	Peichen Huang <PeiChen.Huang@amd.com>,
+	Robin Chen <robin.chen@amd.com>,
+	Leon Huang <Leon.Huang1@amd.com>,
 	Tom Chung <chiahsuan.chung@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 231/783] drm/amd/display: not abort link train when bw is low
-Date: Tue, 27 May 2025 18:20:28 +0200
-Message-ID: <20250527162522.527745596@linuxfoundation.org>
+Subject: [PATCH 6.14 232/783] drm/amd/display: Fix incorrect DPCD configs while Replay/PSR switch
+Date: Tue, 27 May 2025 18:20:29 +0200
+Message-ID: <20250527162522.573284530@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -55,47 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peichen Huang <PeiChen.Huang@amd.com>
+From: Leon Huang <Leon.Huang1@amd.com>
 
-[ Upstream commit 8a21da2842bb22b2b80e5902d0438030d729bfd3 ]
+[ Upstream commit 0d9cabc8f591ea1cd97c071b853b75b155c13259 ]
 
-[WHY]
-DP tunneling should not abort link train even bandwidth become
-too low after downgrade. Otherwise, it would fail compliance test.
+[Why]
+When switching between PSR/Replay,
+the DPCD config of previous mode is not cleared,
+resulting in unexpected behavior in TCON.
 
-[HOW}
-Do link train with downgrade settings even bandwidth is not enough
+[How]
+Initialize the DPCD in setup function
 
-Reviewed-by: Cruise Hung <cruise.hung@amd.com>
-Reviewed-by: Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>
-Signed-off-by: Peichen Huang <PeiChen.Huang@amd.com>
+Reviewed-by: Robin Chen <robin.chen@amd.com>
+Signed-off-by: Leon Huang <Leon.Huang1@amd.com>
 Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/link/protocols/link_dp_training.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ .../link/protocols/link_edp_panel_control.c   | 25 ++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
-index 751c18e592ea5..7848ddb94456c 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
-@@ -1782,13 +1782,10 @@ bool perform_link_training_with_retries(
- 			is_link_bw_min = ((cur_link_settings.link_rate <= LINK_RATE_LOW) &&
- 				(cur_link_settings.lane_count <= LANE_COUNT_ONE));
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
+index e0e3bb8653595..1e4adbc764ea6 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
+@@ -675,6 +675,18 @@ bool edp_setup_psr(struct dc_link *link,
+ 	if (!link)
+ 		return false;
  
--			if (is_link_bw_low) {
-+			if (is_link_bw_low)
- 				DC_LOG_WARNING(
- 					"%s: Link(%d) bandwidth too low after fallback req_bw(%d) > link_bw(%d)\n",
- 					__func__, link->link_index, req_bw, link_bw);
++	//Clear PSR cfg
++	memset(&psr_configuration, 0, sizeof(psr_configuration));
++	dm_helpers_dp_write_dpcd(
++		link->ctx,
++		link,
++		DP_PSR_EN_CFG,
++		&psr_configuration.raw,
++		sizeof(psr_configuration.raw));
++
++	if (link->psr_settings.psr_version == DC_PSR_VERSION_UNSUPPORTED)
++		return false;
++
+ 	dc = link->ctx->dc;
+ 	dmcu = dc->res_pool->dmcu;
+ 	psr = dc->res_pool->psr;
+@@ -685,9 +697,6 @@ bool edp_setup_psr(struct dc_link *link,
+ 	if (!dc_get_edp_link_panel_inst(dc, link, &panel_inst))
+ 		return false;
+ 
 -
--				return false;
--			}
- 		}
+-	memset(&psr_configuration, 0, sizeof(psr_configuration));
+-
+ 	psr_configuration.bits.ENABLE                    = 1;
+ 	psr_configuration.bits.CRC_VERIFICATION          = 1;
+ 	psr_configuration.bits.FRAME_CAPTURE_INDICATION  =
+@@ -950,6 +959,16 @@ bool edp_setup_replay(struct dc_link *link, const struct dc_stream_state *stream
+ 	if (!link)
+ 		return false;
  
- 		msleep(delay_between_attempts);
++	//Clear Replay config
++	dm_helpers_dp_write_dpcd(link->ctx, link,
++		DP_SINK_PR_ENABLE_AND_CONFIGURATION,
++		(uint8_t *)&(replay_config.raw), sizeof(uint8_t));
++
++	if (!(link->replay_settings.config.replay_supported))
++		return false;
++
++	link->replay_settings.config.replay_error_status.raw = 0;
++
+ 	dc = link->ctx->dc;
+ 
+ 	replay = dc->res_pool->replay;
 -- 
 2.39.5
 
