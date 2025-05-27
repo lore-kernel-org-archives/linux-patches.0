@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2BC1AF0BB;
-	Tue, 27 May 2025 17:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E8C42A9B;
+	Tue, 27 May 2025 17:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367658; cv=none; b=VAfAxYYHw36aHt9g6/8o7J/YMs83dhLoHW+vqoSAGgPN0jfH7HFoImPgp7BMNCEkjKbpirKKenzS2RycHg9WNAnlBfne5+jdkEFsIt4LVO+ne2izfRoOmZcq3aQsESRYg5rWnxdFAQtpagxZWp/DLjogtf1HdgmVC/vIQ+ElIVU=
+	t=1748367661; cv=none; b=SEd3FiBVYmSgfL/kpk0IYQjosnwR3+WgsbI6kCLJ8fU9cxb+hq4QOauS11Bb/wzRWDhe70biHF+PRw09dEejGncdVCn/BGx1Z7+t+H14Vicc5KqLKPRhCJo5UBUehdQsVbljgQDVlDIfuUwH4SajhFOJVPNpdjRw4fjmdXJ++6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367658; c=relaxed/simple;
-	bh=Cj2YllWeZpmfPBousj+Ie4ZifmdblZpRNVFmq9JpjE8=;
+	s=arc-20240116; t=1748367661; c=relaxed/simple;
+	bh=s6nUcxdD5ove/9iFwCXN+WpXgENS6ZEupdVk8gRHeEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K9LXm7yRd9Se2mkMEZSYnFt73/E5/RRaESVXE3zw88wxhgu07qkzo8Ul/30Z64ABzQr4zEi1yi4zlkhJTyStx0iK2qP+wNsI8FvGHyRGzoESWc2JBtBep3cwxrq//pQGmjE78+89Fe/jqwJzeW67pxQdk9rulKtKlmqg++1aPLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEfNB1G2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=adPTxTqmcbJ+vygPSB0JfFZjrOdpZvTG24+6V+2uKw+jIfYSn66LzY87lvM737po+QuJzLD4FmArNSnw4VV++P1CqbzSNgYWVc9BitU0y6YetG0wJpbb5dov+2Qu0BasCMeaBIuxSeUPoTYNpC5bUwqDyHD7geiXjJ3KrDRu8MY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjfdRFTT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEfNB1G2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADCC6C4CEE9;
-	Tue, 27 May 2025 17:40:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjfdRFTT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A774FC4CEE9;
+	Tue, 27 May 2025 17:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367658;
-	bh=Cj2YllWeZpmfPBousj+Ie4ZifmdblZpRNVFmq9JpjE8=;
+	s=korg; t=1748367661;
+	bh=s6nUcxdD5ove/9iFwCXN+WpXgENS6ZEupdVk8gRHeEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kEfNB1G2Xt2z+uu9FnVV9r79+FdfY/RLHvPAuwWfGshydpsc0noTXQ6ZfnwRMoSeW
-	 mED4Majop1r8xMeqocNl1DHXMaOI9YIHcbvcg+yAIfCa8/nbh269J4seLmqv98/anQ
-	 JHHtUnMvfxs3HB+HCrQSDO3Xiu6LExLCuV5pL3nY=
+	b=yjfdRFTTjy6OOb5+QGezaWacbftgKOM1CMwpJwG+iv9xOYtgSjHB8tOjki2rZieRE
+	 5C8Ot1OVFmFgfbrnvQU5FXo6CZoWh2eeXCdz6ukUtsnpeX9NApyWyJfy6ufCEE9481
+	 jmHyw5CzqaHGpgg6auezXWDIaGjmdFv63BW3i1Hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Chan <exxxxkc@getgoogleoff.me>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Lizhi Hou <lizhi.hou@amd.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 458/783] clk: qcom: ipq5018: allow it to be bulid on arm32
-Date: Tue, 27 May 2025 18:24:15 +0200
-Message-ID: <20250527162531.774794611@linuxfoundation.org>
+Subject: [PATCH 6.14 459/783] accel/amdxdna: Refactor hardware context destroy routine
+Date: Tue, 27 May 2025 18:24:16 +0200
+Message-ID: <20250527162531.821290120@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,38 +51,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Chan <exxxxkc@getgoogleoff.me>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 5d02941c83997b58e8fc15390290c7c6975acaff ]
+[ Upstream commit 4fd6ca90fc7f509977585d39885f21b2911123f3 ]
 
-There are some ipq5018 based device's firmware only can able to boot
-arm32 but the clock driver dont allow it to be compiled on arm32.
-Therefore allow GCC for IPQ5018 to be selected when building ARM32
-kernel
+It is required by firmware to wait up to 2 seconds for pending commands
+before sending the destroy hardware context command. After 2 seconds
+wait, if there are still pending commands, driver needs to cancel them.
 
-Signed-off-by: Karl Chan <exxxxkc@getgoogleoff.me>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241007163414.32458-4-exxxxkc@getgoogleoff.me
-[bjorn: Updated commit message, per Dmitry's suggestion]
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+So the context destroy steps need to be:
+  1. Stop drm scheduler. (drm_sched_entity_destroy)
+  2. Wait up to 2 seconds for pending commands.
+  3. Destroy hardware context and cancel the rest pending requests.
+  4. Wait all jobs associated with the hwctx are freed.
+  5. Free job resources.
+
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250124173536.148676-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/accel/amdxdna/aie2_ctx.c    | 29 ++++++++++++++++-------------
+ drivers/accel/amdxdna/amdxdna_ctx.c |  2 ++
+ drivers/accel/amdxdna/amdxdna_ctx.h |  3 +++
+ 3 files changed, 21 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 69bbf62ba3cd7..d470ed007854c 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -217,7 +217,7 @@ config IPQ_GCC_4019
+diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
+index 5f43db02b2404..92c768b0c9a03 100644
+--- a/drivers/accel/amdxdna/aie2_ctx.c
++++ b/drivers/accel/amdxdna/aie2_ctx.c
+@@ -34,6 +34,8 @@ static void aie2_job_release(struct kref *ref)
  
- config IPQ_GCC_5018
- 	tristate "IPQ5018 Global Clock Controller"
--	depends on ARM64 || COMPILE_TEST
-+	depends on ARM || ARM64 || COMPILE_TEST
- 	help
- 	  Support for global clock controller on ipq5018 devices.
- 	  Say Y if you want to use peripheral devices such as UART, SPI,
+ 	job = container_of(ref, struct amdxdna_sched_job, refcnt);
+ 	amdxdna_sched_job_cleanup(job);
++	atomic64_inc(&job->hwctx->job_free_cnt);
++	wake_up(&job->hwctx->priv->job_free_wq);
+ 	if (job->out_fence)
+ 		dma_fence_put(job->out_fence);
+ 	kfree(job);
+@@ -134,7 +136,8 @@ static void aie2_hwctx_wait_for_idle(struct amdxdna_hwctx *hwctx)
+ 	if (!fence)
+ 		return;
+ 
+-	dma_fence_wait(fence, false);
++	/* Wait up to 2 seconds for fw to finish all pending requests */
++	dma_fence_wait_timeout(fence, false, msecs_to_jiffies(2000));
+ 	dma_fence_put(fence);
+ }
+ 
+@@ -616,6 +619,7 @@ int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
+ 	hwctx->status = HWCTX_STAT_INIT;
+ 	ndev = xdna->dev_handle;
+ 	ndev->hwctx_num++;
++	init_waitqueue_head(&priv->job_free_wq);
+ 
+ 	XDNA_DBG(xdna, "hwctx %s init completed", hwctx->name);
+ 
+@@ -652,25 +656,23 @@ void aie2_hwctx_fini(struct amdxdna_hwctx *hwctx)
+ 	xdna = hwctx->client->xdna;
+ 	ndev = xdna->dev_handle;
+ 	ndev->hwctx_num--;
+-	drm_sched_wqueue_stop(&hwctx->priv->sched);
+ 
+-	/* Now, scheduler will not send command to device. */
++	XDNA_DBG(xdna, "%s sequence number %lld", hwctx->name, hwctx->priv->seq);
++	drm_sched_entity_destroy(&hwctx->priv->entity);
++
++	aie2_hwctx_wait_for_idle(hwctx);
++
++	/* Request fw to destroy hwctx and cancel the rest pending requests */
+ 	aie2_release_resource(hwctx);
+ 
+-	/*
+-	 * All submitted commands are aborted.
+-	 * Restart scheduler queues to cleanup jobs. The amdxdna_sched_job_run()
+-	 * will return NODEV if it is called.
+-	 */
+-	drm_sched_wqueue_start(&hwctx->priv->sched);
++	/* Wait for all submitted jobs to be completed or canceled */
++	wait_event(hwctx->priv->job_free_wq,
++		   atomic64_read(&hwctx->job_submit_cnt) ==
++		   atomic64_read(&hwctx->job_free_cnt));
+ 
+-	aie2_hwctx_wait_for_idle(hwctx);
+-	drm_sched_entity_destroy(&hwctx->priv->entity);
+ 	drm_sched_fini(&hwctx->priv->sched);
+ 	aie2_ctx_syncobj_destroy(hwctx);
+ 
+-	XDNA_DBG(xdna, "%s sequence number %lld", hwctx->name, hwctx->priv->seq);
+-
+ 	for (idx = 0; idx < ARRAY_SIZE(hwctx->priv->cmd_buf); idx++)
+ 		drm_gem_object_put(to_gobj(hwctx->priv->cmd_buf[idx]));
+ 	amdxdna_gem_unpin(hwctx->priv->heap);
+@@ -879,6 +881,7 @@ int aie2_cmd_submit(struct amdxdna_hwctx *hwctx, struct amdxdna_sched_job *job,
+ 	drm_gem_unlock_reservations(job->bos, job->bo_cnt, &acquire_ctx);
+ 
+ 	aie2_job_put(job);
++	atomic64_inc(&hwctx->job_submit_cnt);
+ 
+ 	return 0;
+ 
+diff --git a/drivers/accel/amdxdna/amdxdna_ctx.c b/drivers/accel/amdxdna/amdxdna_ctx.c
+index d11b1c83d9c3b..43442b9e273b3 100644
+--- a/drivers/accel/amdxdna/amdxdna_ctx.c
++++ b/drivers/accel/amdxdna/amdxdna_ctx.c
+@@ -220,6 +220,8 @@ int amdxdna_drm_create_hwctx_ioctl(struct drm_device *dev, void *data, struct dr
+ 	args->syncobj_handle = hwctx->syncobj_hdl;
+ 	mutex_unlock(&xdna->dev_lock);
+ 
++	atomic64_set(&hwctx->job_submit_cnt, 0);
++	atomic64_set(&hwctx->job_free_cnt, 0);
+ 	XDNA_DBG(xdna, "PID %d create HW context %d, ret %d", client->pid, args->handle, ret);
+ 	drm_dev_exit(idx);
+ 	return 0;
+diff --git a/drivers/accel/amdxdna/amdxdna_ctx.h b/drivers/accel/amdxdna/amdxdna_ctx.h
+index 80b0304193ec3..f0a4a8586d858 100644
+--- a/drivers/accel/amdxdna/amdxdna_ctx.h
++++ b/drivers/accel/amdxdna/amdxdna_ctx.h
+@@ -87,6 +87,9 @@ struct amdxdna_hwctx {
+ 	struct amdxdna_qos_info		     qos;
+ 	struct amdxdna_hwctx_param_config_cu *cus;
+ 	u32				syncobj_hdl;
++
++	atomic64_t			job_submit_cnt;
++	atomic64_t			job_free_cnt ____cacheline_aligned_in_smp;
+ };
+ 
+ #define drm_job_to_xdna_job(j) \
 -- 
 2.39.5
 
