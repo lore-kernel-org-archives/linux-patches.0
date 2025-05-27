@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A43B27F4CB;
-	Tue, 27 May 2025 17:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B6427EC73;
+	Tue, 27 May 2025 17:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366680; cv=none; b=FWYlbkv2a2YCjzWsZUIEzHJdVIjqdJC/8HuA2jYLZZ6eV2EZRqZLHEv8bAoDf/OB2K58eTlLKD2oeduRHdTC3kiWJbtUi/XNhwaGeQx0ywb6kqbDrJ4x0rh0jqDg6ngVa6tcUZBVHnpYNCxa/LWDryafE1CUTF2zhu0/gGbSJuc=
+	t=1748366683; cv=none; b=L4QYIp7f2p49TGka2/MdwoAmZA+6LYLAQYoJR2p9sGXjLTFW1Mia2pSpK9VSLVaiqleniR/d7Y+dS6sn3W/O9K67UPNC3tLke4YmDFhWV5vs+LKIQciHwaK3yHj/OQwfeLYqq8bWft2TKHuoZKzqT26LEmhrA5JreouRgqI91hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366680; c=relaxed/simple;
-	bh=Llltz0psRHuP/tE7tm0+MTbexIPBH0st5hrzm/wLD90=;
+	s=arc-20240116; t=1748366683; c=relaxed/simple;
+	bh=GsxsikANRWx795aFiNl1FCnCZYBU4ngwgB8r9j/2/V8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DBwZlk179hiHEfzS0oq/l3tQtwwTBLsyMRAbs2S0sG+oRBNbPQuPPkdGZD7IufbFkW93liGimqtHhQEUOEgDiZD+HYBWo0PwP2HeXzvNxLVa7dgnBv2gNWdSy/1PaSnxJDcGIhHHZym7AQ6pFVvElWlEa6Xe0sJrml3wCmg1+Zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxSldwbt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hNr9MBqre6Rh7OjRdn6GNzfULu7J0QyP6v2FRa+Jp7H1VNTT4XlSRySW4YnT54xUX04HdAp2fLTmnnszi7+V6afX6WPysDyW67U0AkwqLkCqtjG/qqSKtkjMtoLaY6EURsvwJDRbCt5zW6jH0G2ILAPbpbAXOHSR6OqXrzoqSo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJ/bHmGM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxSldwbt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD9AC4CEEA;
-	Tue, 27 May 2025 17:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJ/bHmGM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDCB7C4CEE9;
+	Tue, 27 May 2025 17:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366680;
-	bh=Llltz0psRHuP/tE7tm0+MTbexIPBH0st5hrzm/wLD90=;
+	s=korg; t=1748366683;
+	bh=GsxsikANRWx795aFiNl1FCnCZYBU4ngwgB8r9j/2/V8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HxSldwbt219JNNhlNdMj/wtbpyfsEN1EMhyRfGnK7DAQ/B0YLG9Fef5ciMBPKqEnl
-	 xd1EBx6VXW1HaBMpcU7ux8massjn+Jk47C2Wx2SLzN47QhVxewvoSOJrmJVgU0bwZp
-	 gQSTtgXqyIkaHBwnSWTq8S1UeYIax/SIGJsyMxhY=
+	b=fJ/bHmGMYMzYMCWMNc0XJ0zJP6GAXhMB+D+GzFWW+thYk20K0js528hgPUU+UQfvx
+	 rEhTEbhcSsB0ztgbrUhfKYUYabLV+c++I7urbuGygYGL/GRkZ35m9Db0Cf7R60Ui5s
+	 UWsKzaXGxxxX1MOvKJRfvAAz8O9y6tWynaxVFNF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanley Chu <yschu@nuvoton.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 145/783] i3c: master: svc: Fix missing STOP for master request
-Date: Tue, 27 May 2025 18:19:02 +0200
-Message-ID: <20250527162519.062946235@linuxfoundation.org>
+Subject: [PATCH 6.14 146/783] s390/tlb: Use mm_has_pgste() instead of mm_alloc_pgste()
+Date: Tue, 27 May 2025 18:19:03 +0200
+Message-ID: <20250527162519.103099987@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,35 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Chu <yschu@nuvoton.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 0430bf9bc1ac068c8b8c540eb93e5751872efc51 ]
+[ Upstream commit 9291ea091b29bb3e37c4b3416c7c1e49e472c7d5 ]
 
-The controller driver nacked the master request but didn't emit a
-STOP to end the transaction. The driver shall refuse the unsupported
-requests and return the controller state to IDLE by emitting a STOP.
+An mm has pgstes only after s390_enable_sie() has been called, while
+mm_alloc_pgste() may be always true (e.g. via sysctl setting).
 
-Signed-off-by: Stanley Chu <yschu@nuvoton.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250318053606.3087121-4-yschu@nuvoton.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Limit the calls to gmap_unlink() in pte_free_tlb() to those cases
+where there might be something to unlink.
+
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/svc-i3c-master.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/s390/include/asm/tlb.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
-index 0fc03bb5d0a6e..a18fe62962b0c 100644
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -551,6 +551,7 @@ static void svc_i3c_master_ibi_work(struct work_struct *work)
- 			queue_work(master->base.wq, &master->hj_work);
- 		break;
- 	case SVC_I3C_MSTATUS_IBITYPE_MASTER_REQUEST:
-+		svc_i3c_master_emit_stop(master);
- 	default:
- 		break;
- 	}
+diff --git a/arch/s390/include/asm/tlb.h b/arch/s390/include/asm/tlb.h
+index 72655fd2d867c..f20601995bb0e 100644
+--- a/arch/s390/include/asm/tlb.h
++++ b/arch/s390/include/asm/tlb.h
+@@ -84,7 +84,7 @@ static inline void pte_free_tlb(struct mmu_gather *tlb, pgtable_t pte,
+ 	tlb->mm->context.flush_mm = 1;
+ 	tlb->freed_tables = 1;
+ 	tlb->cleared_pmds = 1;
+-	if (mm_alloc_pgste(tlb->mm))
++	if (mm_has_pgste(tlb->mm))
+ 		gmap_unlink(tlb->mm, (unsigned long *)pte, address);
+ 	tlb_remove_ptdesc(tlb, virt_to_ptdesc(pte));
+ }
 -- 
 2.39.5
 
