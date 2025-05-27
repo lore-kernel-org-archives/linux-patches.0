@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F673276057;
-	Tue, 27 May 2025 16:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93DD0280012;
+	Tue, 27 May 2025 16:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364935; cv=none; b=Y85N8tfymLkmW6TEipWgwFY1Qef3sRGpu0aLwShEtVepLFqSdjpCjkrltcYJzCotOfL4tkhLqwKvSwQFFI74+kjqzXwVSOmUcPIcfNz4e74F/8ClUsuUxGx7CCBuTc0yimeoZXcUBU1t4pKiP4KPCwMRKxp6XBKuNTr0ZerKMV8=
+	t=1748364938; cv=none; b=Jx2EJRKWCVqnRJgGOjEXoHvfVqZnLUyHAhKPNWEaDSt0uySyxU8Lvo2ILPNqemqZU7TIo9QT2ZK7pgjM5O7im0R2zIZisJmCR/gWXGbRSbrW8EgHAXEr8RS17B3KIPp+RB+gdHryZDlY/wI8X0+jgqhbuTSw8wFO58VVTr8Jdlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364935; c=relaxed/simple;
-	bh=6BzOdGwj8GZ9VZfZKdfEtMZxwSnuBfj6bCI2PBMXE7w=;
+	s=arc-20240116; t=1748364938; c=relaxed/simple;
+	bh=K6gdxiHv/Lrr2yX5U2ldfARHTPcADSdz1iaSML93dnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QxtHB9ohIvQ1DviZXlrNVTcXId4WPskAkeWxCVrZypaq9Wq0xoopJmVlPRatu9gSuRnGqGcp62+9qEsVvpMslpZA0aDTKDcq1APfchFHO4JJkVHDu1QsVVmgXihqbKMoMFHZoQxKJVO2/hO52Ah4HYC5D51/wGcqTB5cdw0PzFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sr8g9FGM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VMGhZgqlGprJDfgjbV+raFbSMHbirWFxSOHXd4Ct9Mmr0kUDk20Xu3E5JOEmLtA9lvp2gA4Z7SDERxgaAYdvdkGukXNdpGyr0nfgtC6J5ebd+VHoZU8Too6rZqN7UkbRKVtduLmodAJ2cGgvg816OdIJJ1W8LFQKDpAZRyVv3Rw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHJFnzhw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sr8g9FGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF5E7C4CEE9;
-	Tue, 27 May 2025 16:55:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHJFnzhw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CB1C4CEE9;
+	Tue, 27 May 2025 16:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364935;
-	bh=6BzOdGwj8GZ9VZfZKdfEtMZxwSnuBfj6bCI2PBMXE7w=;
+	s=korg; t=1748364938;
+	bh=K6gdxiHv/Lrr2yX5U2ldfARHTPcADSdz1iaSML93dnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sr8g9FGMaAko65E4tiWnFpWEOkq6tYhsO0Fdq43/fGQR7llJkpseUHegg+v+nVPk1
-	 HG9AlG6A5XebxbcBHoeMIDrl68ZAW2P2zfpGKOuwp5eBP0pekPgt3O0Eps6GAlpFFV
-	 7BWSt7lY1QdV4H2M8Dp/HvUDh0YTLKuIC5Scww7g=
+	b=bHJFnzhwcPCV8VUgpRzXakYHaJFMJhghCgV5nZBUCiv0Qtpp5Y4S1q1Jnckpd4MqX
+	 5PnNiox0ipKpvhLcWw2Be4DwhmUL88to/uKRna1yCiVLXkjWKHFE6oBaVBAq+jG9xu
+	 wZCRyFfULaeBUHxvA9OBinFHd7HWlYckC9o2RI00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcos Paulo de Souza <mpdesouza@suse.com>,
-	Petr Mladek <pmladek@suse.com>,
-	John Ogness <john.ogness@linutronix.de>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 183/626] printk: Check CON_SUSPEND when unblanking a console
-Date: Tue, 27 May 2025 18:21:16 +0200
-Message-ID: <20250527162452.444908675@linuxfoundation.org>
+Subject: [PATCH 6.12 184/626] wifi: iwlwifi: dont warn when if there is a FW error
+Date: Tue, 27 May 2025 18:21:17 +0200
+Message-ID: <20250527162452.485196461@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,57 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcos Paulo de Souza <mpdesouza@suse.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 72c96a2dacc0fb056d13a5f02b0845c4c910fe54 ]
+[ Upstream commit c7f50d0433a016d43681592836a3d484817bfb34 ]
 
-The commit 9e70a5e109a4 ("printk: Add per-console suspended state")
-introduced the CON_SUSPENDED flag for consoles. The suspended consoles
-will stop receiving messages, so don't unblank suspended consoles
-because it won't be showing anything either way.
+iwl_trans_reclaim is warning if it is called when the FW is not alive.
+But if it is called when there is a pending restart, i.e. after a FW
+error, there is no need to warn, instead - return silently.
 
-Signed-off-by: Marcos Paulo de Souza <mpdesouza@suse.com>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Reviewed-by: John Ogness <john.ogness@linutronix.de>
-Link: https://lore.kernel.org/r/20250226-printk-renaming-v1-5-0b878577f2e6@suse.com
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250308231427.ba3d90b22c25.I9332506af1997faefcf0bdb51d98d5e874051722@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/printk/printk.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/iwl-trans.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index 881a26e18c658..3a91b739e8f30 100644
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -3310,7 +3310,12 @@ void console_unblank(void)
- 	 */
- 	cookie = console_srcu_read_lock();
- 	for_each_console_srcu(c) {
--		if ((console_srcu_read_flags(c) & CON_ENABLED) && c->unblank) {
-+		short flags = console_srcu_read_flags(c);
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.c b/drivers/net/wireless/intel/iwlwifi/iwl-trans.c
+index 3b3dcaf33c9d9..311b167ea09ed 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.c
+@@ -2,7 +2,7 @@
+ /*
+  * Copyright (C) 2015 Intel Mobile Communications GmbH
+  * Copyright (C) 2016-2017 Intel Deutschland GmbH
+- * Copyright (C) 2019-2021, 2023-2024 Intel Corporation
++ * Copyright (C) 2019-2021, 2023-2025 Intel Corporation
+  */
+ #include <linux/kernel.h>
+ #include <linux/bsearch.h>
+@@ -419,6 +419,9 @@ IWL_EXPORT_SYMBOL(iwl_trans_tx);
+ void iwl_trans_reclaim(struct iwl_trans *trans, int queue, int ssn,
+ 		       struct sk_buff_head *skbs, bool is_flush)
+ {
++	if (unlikely(test_bit(STATUS_FW_ERROR, &trans->status)))
++		return;
 +
-+		if (flags & CON_SUSPENDED)
-+			continue;
-+
-+		if ((flags & CON_ENABLED) && c->unblank) {
- 			found_unblank = true;
- 			break;
- 		}
-@@ -3347,7 +3352,12 @@ void console_unblank(void)
- 
- 	cookie = console_srcu_read_lock();
- 	for_each_console_srcu(c) {
--		if ((console_srcu_read_flags(c) & CON_ENABLED) && c->unblank)
-+		short flags = console_srcu_read_flags(c);
-+
-+		if (flags & CON_SUSPENDED)
-+			continue;
-+
-+		if ((flags & CON_ENABLED) && c->unblank)
- 			c->unblank();
- 	}
- 	console_srcu_read_unlock(cookie);
+ 	if (WARN_ONCE(trans->state != IWL_TRANS_FW_ALIVE,
+ 		      "bad state = %d\n", trans->state))
+ 		return;
 -- 
 2.39.5
 
