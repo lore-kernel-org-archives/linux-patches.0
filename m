@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2BD1E89C;
-	Tue, 27 May 2025 17:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165E61E89C;
+	Tue, 27 May 2025 17:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366155; cv=none; b=daHzpIM4QaqGXarfMfdQUBco9mgFGhn8P6w3HId9mIDNr7ENgZxnultMNjI17F3LrDEil2nZRDCKjUTeeXgCX0Sm9EAF7FKZYJu113PtuclHBGB4E16mSWPzwi3ESoi7/kHggGrRRErFNBF0xDc8I1Tw9iLy9sxK+spUHbab+p0=
+	t=1748366158; cv=none; b=FqCTUZjlR0FI3Wbu8oznFhcmpT0DZXjdJp5L0Lr+y5MU9HyCWcuFvJSR13NX/VzSHZsLSIU+Gj0km8jMQaRxr9gEu2x4qBDfKdeRLGFfOdQcN+aJ17D81t1hLriJMMihcuMeocD4hrf8rjYZM2BmH7k4Z/DKhxQuHjIqMUt8jJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366155; c=relaxed/simple;
-	bh=/OBIMv/AK3EbwZs6H/WRYUiVNz1WcymJnYVGh0r4Zdo=;
+	s=arc-20240116; t=1748366158; c=relaxed/simple;
+	bh=y6lJMMaPr0AvPFPRsUC0yPYwMKLQUk7KF2K+AFF45SA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fzQ/ip7ETHfpECqGtoAfrTq06Q6nokhAZOLswasPZrY9cNLDjfPH+63gX16vQG7Y7IGTyJseiQWfIhdyG3SwF4RvhkoAzRLQfu6fqsBDo/zcHSCChYBJ+zQ64BC6aiiRPh9F6SHlvkU740ap/Zc+UbzZ/ouW1UdP/mtzxGEYQ8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zaj4AVqS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D/X1szmRvXcKd761pdIWvFB4r/28Dt8FHMuz0lpHf2Wa/jFlrZPopkQ6wkHJYZz8V532YyQehs5SoHlfAPjMZMS72CA9gQ8IA7wtqvTQKVs72zxLLQb1kbCcDOaR2rje/dTXMZLDP/ugHlOX++BhYRrtzslhoDgeJAfuGWW4YCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlQpijJV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zaj4AVqS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05F5C4CEE9;
-	Tue, 27 May 2025 17:15:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlQpijJV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8A7C4CEE9;
+	Tue, 27 May 2025 17:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366154;
-	bh=/OBIMv/AK3EbwZs6H/WRYUiVNz1WcymJnYVGh0r4Zdo=;
+	s=korg; t=1748366157;
+	bh=y6lJMMaPr0AvPFPRsUC0yPYwMKLQUk7KF2K+AFF45SA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zaj4AVqSwOowsiBnOBOV2/IkgGyrn5zJ5JVXi740rTiPueL489rIk71CnZ8FNpfnw
-	 qtEJY3g+bCf2hFWMSxUpI7CRiIonjZQBjtjJemicOaRyS6vuv/2H1WGDnx4cKBzMEO
-	 PxSsdWxSp8UEAY/0ahZtoO8KhsWKFN94Ry9hakaA=
+	b=vlQpijJV8lIRvkrjDEutru+kc3sTgZ4CH0WFBav0AMqPbOBHCWl09Ayf+AsJFgk3t
+	 aANXnE/aR1lNyUN1Degs55Yl63DyG7RHsc85dZ6e3GhwLDHWsLoFWVFjMRhd5JZocj
+	 VqjeOoEFPAGTZihYjUz9eZRHEF7JF+zUEBsd4hgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 607/626] ksmbd: fix stream write failure
-Date: Tue, 27 May 2025 18:28:20 +0200
-Message-ID: <20250527162509.657152839@linuxfoundation.org>
+	syzbot+32d4647f551007595173@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 579/626] ALSA: pcm: Fix race of buffer access at PCM OSS layer
+Date: Tue, 27 May 2025 18:27:52 +0200
+Message-ID: <20250527162508.504577123@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,60 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 1f4bbedd4e5a69b01cde2cc21d01151ab2d0884f ]
+commit 93a81ca0657758b607c3f4ba889ae806be9beb73 upstream.
 
-If there is no stream data in file, v_len is zero.
-So, If position(*pos) is zero, stream write will fail
-due to stream write position validation check.
-This patch reorganize stream write position validation.
+The PCM OSS layer tries to clear the buffer with the silence data at
+initialization (or reconfiguration) of a stream with the explicit call
+of snd_pcm_format_set_silence() with runtime->dma_area.  But this may
+lead to a UAF because the accessed runtime->dma_area might be freed
+concurrently, as it's performed outside the PCM ops.
 
-Fixes: 0ca6df4f40cf ("ksmbd: prevent out-of-bounds stream writes by validating *pos")
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+For avoiding it, move the code into the PCM core and perform it inside
+the buffer access lock, so that it won't be changed during the
+operation.
+
+Reported-by: syzbot+32d4647f551007595173@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/68164d8e.050a0220.11da1b.0019.GAE@google.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250516080817.20068-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/vfs.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ include/sound/pcm.h      |    2 ++
+ sound/core/oss/pcm_oss.c |    3 +--
+ sound/core/pcm_native.c  |   11 +++++++++++
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index e059316be36fd..59ae63ab86857 100644
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -426,10 +426,15 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
- 	ksmbd_debug(VFS, "write stream data pos : %llu, count : %zd\n",
- 		    *pos, count);
+--- a/include/sound/pcm.h
++++ b/include/sound/pcm.h
+@@ -1428,6 +1428,8 @@ int snd_pcm_lib_mmap_iomem(struct snd_pc
+ #define snd_pcm_lib_mmap_iomem	NULL
+ #endif
  
-+	if (*pos >= XATTR_SIZE_MAX) {
-+		pr_err("stream write position %lld is out of bounds\n",	*pos);
-+		return -EINVAL;
-+	}
++void snd_pcm_runtime_buffer_set_silence(struct snd_pcm_runtime *runtime);
 +
- 	size = *pos + count;
- 	if (size > XATTR_SIZE_MAX) {
- 		size = XATTR_SIZE_MAX;
--		count = (*pos + count) - XATTR_SIZE_MAX;
-+		count = XATTR_SIZE_MAX - *pos;
- 	}
+ /**
+  * snd_pcm_limit_isa_dma_size - Get the max size fitting with ISA DMA transfer
+  * @dma: DMA number
+--- a/sound/core/oss/pcm_oss.c
++++ b/sound/core/oss/pcm_oss.c
+@@ -1074,8 +1074,7 @@ static int snd_pcm_oss_change_params_loc
+ 	runtime->oss.params = 0;
+ 	runtime->oss.prepare = 1;
+ 	runtime->oss.buffer_used = 0;
+-	if (runtime->dma_area)
+-		snd_pcm_format_set_silence(runtime->format, runtime->dma_area, bytes_to_samples(runtime, runtime->dma_bytes));
++	snd_pcm_runtime_buffer_set_silence(runtime);
  
- 	v_len = ksmbd_vfs_getcasexattr(idmap,
-@@ -443,13 +448,6 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
- 		goto out;
- 	}
+ 	runtime->oss.period_frames = snd_pcm_alsa_frames(substream, oss_period_size);
  
--	if (v_len <= *pos) {
--		pr_err("stream write position %lld is out of bounds (stream length: %zd)\n",
--				*pos, v_len);
--		err = -EINVAL;
--		goto out;
--	}
--
- 	if (v_len < size) {
- 		wbuf = kvzalloc(size, KSMBD_DEFAULT_GFP);
- 		if (!wbuf) {
--- 
-2.39.5
-
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -723,6 +723,17 @@ static void snd_pcm_buffer_access_unlock
+ 	atomic_inc(&runtime->buffer_accessing);
+ }
+ 
++/* fill the PCM buffer with the current silence format; called from pcm_oss.c */
++void snd_pcm_runtime_buffer_set_silence(struct snd_pcm_runtime *runtime)
++{
++	snd_pcm_buffer_access_lock(runtime);
++	if (runtime->dma_area)
++		snd_pcm_format_set_silence(runtime->format, runtime->dma_area,
++					   bytes_to_samples(runtime, runtime->dma_bytes));
++	snd_pcm_buffer_access_unlock(runtime);
++}
++EXPORT_SYMBOL_GPL(snd_pcm_runtime_buffer_set_silence);
++
+ #if IS_ENABLED(CONFIG_SND_PCM_OSS)
+ #define is_oss_stream(substream)	((substream)->oss.oss)
+ #else
 
 
