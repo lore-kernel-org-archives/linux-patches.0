@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A4D280328;
-	Tue, 27 May 2025 17:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586AF28001F;
+	Tue, 27 May 2025 17:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368447; cv=none; b=XjcLASYBAhERgNsimPd4u94T8/en39sL6ZDE9Ov3uYF1fcrKsiUsLEoRvaOBpCVTY0OVUwqpFtp9RSlnGxbGzG9lgzKFyHJ7rm9gqXGYnR13MH2MRthKOx2rBOEMndg26HAwwTynZSGTp7XlaftWuZ/At52vbuAPc/HmkB1ypmw=
+	t=1748368453; cv=none; b=nvQ9H3zFI4PSHRfRZo69EY8qL3rC5NmrgYeRx7XuaWTnQJke2rrihAIstZn6RUhv8NJk9ncfa1SiJmP0kiVHRJv0Hd6AEELNoke8otjP6yp6wzisqcoLUa0WhANVNBLvPzXwp/iWBARqZT9ahDsvsb6pQc0qVe5wjdOBE3JrJRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368447; c=relaxed/simple;
-	bh=fy0U5mcbevCti0INX+BHN/Ml3ajVf9/06x/Kwful1eg=;
+	s=arc-20240116; t=1748368453; c=relaxed/simple;
+	bh=Gr9GNepdHE1NTmcygRiluljI2mNgv3GXKV0A1I7CL9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h/iwnLm7W7UIfywPP2hwaaJyWQK5oFbG+9uCN+c4BgwydK2za5vqu7vQQkljThxMpwg6oKUP9F6v4dshPDWkNFPn+v4p7cwjYQBZ5/h2hEgvd7+aVh1r2i16C5eOQigqIG2yE3E5rSvnynbxOP44A/v0fe+9gV8O9qBQBRcYosY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNvpq3GP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lQ7i3mPyzR43ZXFumtBRhK+nUV1QXXulvJEKSUU7YZek4avJlqgZojWFiSr6eLYeEu+HwqqyEGKseMXXFOzaIpDsx+jk2H7GJ113D6Ki2jAhQ8UTIJKNXoZ5bJva/BbD6TB6CKZ4/22gAjkzFvXPcp1aHbNwxSm4wp5Ii9VV0Oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3mWOl/j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNvpq3GP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC77BC4CEE9;
-	Tue, 27 May 2025 17:54:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3mWOl/j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC62FC4CEE9;
+	Tue, 27 May 2025 17:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368447;
-	bh=fy0U5mcbevCti0INX+BHN/Ml3ajVf9/06x/Kwful1eg=;
+	s=korg; t=1748368453;
+	bh=Gr9GNepdHE1NTmcygRiluljI2mNgv3GXKV0A1I7CL9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SNvpq3GPUKz3zFpgY/AtMas6mObEgUi0zpK8DtDeu77Y5ZQ17/2dbcEzQaq6OAgtI
-	 94flI6ofipKo1q3Vw1FxolKpNGxpE5+wHU3L8vnFzK1MWP4GGL9fUWKKJm+LO3yOaf
-	 9S0fALtoR8uPdCSFwER/yx6CIDMIRASdmjOoNYZA=
+	b=a3mWOl/jh7V5ncArb7DBgcw7V/o2HY9/nPcRAfwEOrVE8DEAjGelHkm2GHyjSnUy4
+	 lGV+QZYsZbjZivAcx7cgYsm2Fl1LKF3Ngv52rOvnH52FLzuQFxSJkfo+oSlz745ghd
+	 SiVS89KZmQ58wTpxEUM6WsWtP/LD6zdg5DqLQC9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 680/783] __legitimize_mnt(): check for MNT_SYNC_UMOUNT should be under mount_lock
-Date: Tue, 27 May 2025 18:27:57 +0200
-Message-ID: <20250527162540.822978816@linuxfoundation.org>
+Subject: [PATCH 6.14 681/783] soundwire: bus: Fix race on the creation of the IRQ domain
+Date: Tue, 27 May 2025 18:27:58 +0200
+Message-ID: <20250527162540.861621855@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,45 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 250cf3693060a5f803c5f1ddc082bb06b16112a9 ]
+[ Upstream commit fd15594ba7d559d9da741504c322b9f57c4981e5 ]
 
-... or we risk stealing final mntput from sync umount - raising mnt_count
-after umount(2) has verified that victim is not busy, but before it
-has set MNT_SYNC_UMOUNT; in that case __legitimize_mnt() doesn't see
-that it's safe to quietly undo mnt_count increment and leaves dropping
-the reference to caller, where it'll be a full-blown mntput().
+The SoundWire IRQ domain needs to be created before any slaves are added
+to the bus, such that the domain is always available when needed. Move
+the call to sdw_irq_create() before the calls to sdw_acpi_find_slaves()
+and sdw_of_find_slaves().
 
-Check under mount_lock is needed; leaving the current one done before
-taking that makes no sense - it's nowhere near common enough to bother
-with.
-
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Fixes: 12a95123bfe1 ("soundwire: bus: Allow SoundWire peripherals to register IRQ handlers")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20250409122239.1396489-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/soundwire/bus.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 5b84e29613fe4..1d950974d67ee 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -781,12 +781,8 @@ int __legitimize_mnt(struct vfsmount *bastard, unsigned seq)
- 	smp_mb();		// see mntput_no_expire() and do_umount()
- 	if (likely(!read_seqretry(&mount_lock, seq)))
- 		return 0;
--	if (bastard->mnt_flags & MNT_SYNC_UMOUNT) {
--		mnt_add_count(mnt, -1);
--		return 1;
--	}
- 	lock_mount_hash();
--	if (unlikely(bastard->mnt_flags & MNT_DOOMED)) {
-+	if (unlikely(bastard->mnt_flags & (MNT_SYNC_UMOUNT | MNT_DOOMED))) {
- 		mnt_add_count(mnt, -1);
- 		unlock_mount_hash();
- 		return 1;
+diff --git a/drivers/soundwire/bus.c b/drivers/soundwire/bus.c
+index 9b295fc9acd53..df73e2c040904 100644
+--- a/drivers/soundwire/bus.c
++++ b/drivers/soundwire/bus.c
+@@ -121,6 +121,10 @@ int sdw_bus_master_add(struct sdw_bus *bus, struct device *parent,
+ 	set_bit(SDW_GROUP13_DEV_NUM, bus->assigned);
+ 	set_bit(SDW_MASTER_DEV_NUM, bus->assigned);
+ 
++	ret = sdw_irq_create(bus, fwnode);
++	if (ret)
++		return ret;
++
+ 	/*
+ 	 * SDW is an enumerable bus, but devices can be powered off. So,
+ 	 * they won't be able to report as present.
+@@ -137,6 +141,7 @@ int sdw_bus_master_add(struct sdw_bus *bus, struct device *parent,
+ 
+ 	if (ret < 0) {
+ 		dev_err(bus->dev, "Finding slaves failed:%d\n", ret);
++		sdw_irq_delete(bus);
+ 		return ret;
+ 	}
+ 
+@@ -155,10 +160,6 @@ int sdw_bus_master_add(struct sdw_bus *bus, struct device *parent,
+ 	bus->params.curr_bank = SDW_BANK0;
+ 	bus->params.next_bank = SDW_BANK1;
+ 
+-	ret = sdw_irq_create(bus, fwnode);
+-	if (ret)
+-		return ret;
+-
+ 	return 0;
+ }
+ EXPORT_SYMBOL(sdw_bus_master_add);
 -- 
 2.39.5
 
