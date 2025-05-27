@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E00271464;
-	Tue, 27 May 2025 17:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4AA3185E7F;
+	Tue, 27 May 2025 17:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366318; cv=none; b=tFHw3hvSDNwWOEhIewuIyyHDp8fKHYEE2RyvtdlU1UE0nKXhAzdey091gkv8S6cnLCgovePjfQLV81eS6AtIioLtp5RXa+W6nUZpbyl7uPj1o1erL/NC3q1ntVowRoKdmGfMVWxTZ1B+bles4V7NDI2H6+TwyJTkskXObin3b08=
+	t=1748366321; cv=none; b=XephF7cITn7SU9H5rRq7rocSZ6BG/pZDFIAXFhSIt794VBbu7TKIBkkfOEa5/jy2DAoHb645QaGkE44ZXsp8tizsbPjDTa7kcM/eITOm/dmTFMK9iexjqb4Lz4Jb3dgtc02hSsvsJqZY8zdR8hS9RbvoiF2iU3i3uM3G+0wPh6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366318; c=relaxed/simple;
-	bh=qGB8rheHpHxYizpH5JQaU5ulXJ3FdAnlZS/stPWXdsA=;
+	s=arc-20240116; t=1748366321; c=relaxed/simple;
+	bh=zl4akWeOOXGssNl7sYYrhvUX7TOv5JeRri2bFtWWfi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s/Um4CI8qjxy33Q8bx/cnKtAQxCcJR8ou5oM22eXZMcwVP2adbHL9iamNstB2ryL5vE/1WkBFv+/wE2Vcq0bTWkt9eFNfV2nPNFdK5bIuEqU8eowEY0fga/FLZLuJqHHD9zIrDaT2hodAde8TUPAwTItTPyWOz2I7Ekz2cXCU/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usLJ/xAw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dZyqFvPjVaGZ+9zy0dKhY1+ItNTjIhKEtMfDreYnmhcI/WoX+TqRc17MlheHAs7YKmwx8Yn5DQeHj+xPKO33LtwlPUErQvult1kz1EaHdg8euozcCe9Z2mHwzyHCkdYGX0DrkbKlJREnZX+xhh0U+nAP+xVtW7/WFy9zYhDLjYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vrzLj6B6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usLJ/xAw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2BD7C4CEE9;
-	Tue, 27 May 2025 17:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vrzLj6B6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23CCBC4CEE9;
+	Tue, 27 May 2025 17:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366318;
-	bh=qGB8rheHpHxYizpH5JQaU5ulXJ3FdAnlZS/stPWXdsA=;
+	s=korg; t=1748366321;
+	bh=zl4akWeOOXGssNl7sYYrhvUX7TOv5JeRri2bFtWWfi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=usLJ/xAwVHvOx9vjrer+kMib5xs5mX7HPC725D++FEsAN73Px0T39s9sugKY/EXm6
-	 LBEIelsFcv6PB0hrO+ncQMe0RyDl/1TjomNEQ/MrAP+SE4vF7Mt2YUEtLFF6po1abV
-	 1If/NnPWIknDVVxlUX7Avy44x3MIFO3a9I3JOBB4=
+	b=vrzLj6B6dR4FnZQLZlV0N55akYTwIxdMsT5c9tk/qC3CBu1DaX177kJJEpqTIFUCG
+	 rYljwYNnLjfwtU6ASq8PMBKcUeoq5cqXDW8vdGgMDca7FYKI5zfiZE4Ax418Dh7Owh
+	 qopo3po377QbkLl9nN2d4yKVwIM+Wbne1vm8kkR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Luis Chamberlain <mcgrof@kernel.org>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 030/783] fs/buffer: split locking for pagecache lookups
-Date: Tue, 27 May 2025 18:17:07 +0200
-Message-ID: <20250527162514.350990133@linuxfoundation.org>
+Subject: [PATCH 6.14 031/783] fs/buffer: introduce sleeping flavors for pagecache lookups
+Date: Tue, 27 May 2025 18:17:08 +0200
+Message-ID: <20250527162514.392451899@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -56,121 +56,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Davidlohr Bueso <dave@stgolabs.net>
 
-[ Upstream commit 7ffe3de53a885dbb5836541c2178bd07d1bad7df ]
+[ Upstream commit 2814a7d3d2ff5d2cdd22936f641f758fdb971fa0 ]
 
-Callers of __find_get_block() may or may not allow for blocking
-semantics, and is currently assumed that it will not. Layout
-two paths based on this. The the private_lock scheme will
-continued to be used for atomic contexts. Otherwise take the
-folio lock instead, which protects the buffers, such as
-vs migration and try_to_free_buffers().
-
-Per the "hack idea", the latter can alleviate contention on
-the private_lock for bdev mappings. For reasons of determinism
-and avoid making bugs hard to reproduce, the trylocking is not
-attempted.
-
-No change in semantics. All lookup users still take the spinlock.
+Add __find_get_block_nonatomic() and sb_find_get_block_nonatomic()
+calls for which users will be converted where safe. These versions
+will take the folio lock instead of the mapping's private_lock.
 
 Reviewed-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
 Link: https://kdevops.org/ext4/v6.15-rc2.html # [0]
 Link: https://lore.kernel.org/all/aAAEvcrmREWa1SKF@bombadil.infradead.org/ # [1]
-Link: https://lore.kernel.org/20250418015921.132400-2-dave@stgolabs.net
+Link: https://lore.kernel.org/20250418015921.132400-3-dave@stgolabs.net
 Tested-by: kdevops@lists.linux.dev
 Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/buffer.c | 41 +++++++++++++++++++++++++----------------
- 1 file changed, 25 insertions(+), 16 deletions(-)
+ fs/buffer.c                 | 9 +++++++++
+ include/linux/buffer_head.h | 8 ++++++++
+ 2 files changed, 17 insertions(+)
 
 diff --git a/fs/buffer.c b/fs/buffer.c
-index cc8452f602516..a03c245022dcf 100644
+index a03c245022dcf..7981097c846d4 100644
 --- a/fs/buffer.c
 +++ b/fs/buffer.c
-@@ -176,18 +176,8 @@ void end_buffer_write_sync(struct buffer_head *bh, int uptodate)
+@@ -1414,6 +1414,15 @@ __find_get_block(struct block_device *bdev, sector_t block, unsigned size)
  }
- EXPORT_SYMBOL(end_buffer_write_sync);
- 
--/*
-- * Various filesystems appear to want __find_get_block to be non-blocking.
-- * But it's the page lock which protects the buffers.  To get around this,
-- * we get exclusion from try_to_free_buffers with the blockdev mapping's
-- * i_private_lock.
-- *
-- * Hack idea: for the blockdev mapping, i_private_lock contention
-- * may be quite high.  This code could TryLock the page, and if that
-- * succeeds, there is no need to take i_private_lock.
-- */
- static struct buffer_head *
--__find_get_block_slow(struct block_device *bdev, sector_t block)
-+__find_get_block_slow(struct block_device *bdev, sector_t block, bool atomic)
- {
- 	struct address_space *bd_mapping = bdev->bd_mapping;
- 	const int blkbits = bd_mapping->host->i_blkbits;
-@@ -204,7 +194,16 @@ __find_get_block_slow(struct block_device *bdev, sector_t block)
- 	if (IS_ERR(folio))
- 		goto out;
- 
--	spin_lock(&bd_mapping->i_private_lock);
-+	/*
-+	 * Folio lock protects the buffers. Callers that cannot block
-+	 * will fallback to serializing vs try_to_free_buffers() via
-+	 * the i_private_lock.
-+	 */
-+	if (atomic)
-+		spin_lock(&bd_mapping->i_private_lock);
-+	else
-+		folio_lock(folio);
-+
- 	head = folio_buffers(folio);
- 	if (!head)
- 		goto out_unlock;
-@@ -236,7 +235,10 @@ __find_get_block_slow(struct block_device *bdev, sector_t block)
- 		       1 << blkbits);
- 	}
- out_unlock:
--	spin_unlock(&bd_mapping->i_private_lock);
-+	if (atomic)
-+		spin_unlock(&bd_mapping->i_private_lock);
-+	else
-+		folio_unlock(folio);
- 	folio_put(folio);
- out:
- 	return ret;
-@@ -1388,14 +1390,15 @@ lookup_bh_lru(struct block_device *bdev, sector_t block, unsigned size)
-  * it in the LRU and mark it as accessed.  If it is not present then return
-  * NULL
-  */
--struct buffer_head *
--__find_get_block(struct block_device *bdev, sector_t block, unsigned size)
-+static struct buffer_head *
-+find_get_block_common(struct block_device *bdev, sector_t block,
-+			unsigned size, bool atomic)
- {
- 	struct buffer_head *bh = lookup_bh_lru(bdev, block, size);
- 
- 	if (bh == NULL) {
- 		/* __find_get_block_slow will mark the page accessed */
--		bh = __find_get_block_slow(bdev, block);
-+		bh = __find_get_block_slow(bdev, block, atomic);
- 		if (bh)
- 			bh_lru_install(bh);
- 	} else
-@@ -1403,6 +1406,12 @@ __find_get_block(struct block_device *bdev, sector_t block, unsigned size)
- 
- 	return bh;
- }
-+
-+struct buffer_head *
-+__find_get_block(struct block_device *bdev, sector_t block, unsigned size)
-+{
-+	return find_get_block_common(bdev, block, size, true);
-+}
  EXPORT_SYMBOL(__find_get_block);
  
++/* same as __find_get_block() but allows sleeping contexts */
++struct buffer_head *
++__find_get_block_nonatomic(struct block_device *bdev, sector_t block,
++			   unsigned size)
++{
++	return find_get_block_common(bdev, block, size, false);
++}
++EXPORT_SYMBOL(__find_get_block_nonatomic);
++
  /**
+  * bdev_getblk - Get a buffer_head in a block device's buffer cache.
+  * @bdev: The block device.
+diff --git a/include/linux/buffer_head.h b/include/linux/buffer_head.h
+index 932139c5d46f5..ffcd76d977703 100644
+--- a/include/linux/buffer_head.h
++++ b/include/linux/buffer_head.h
+@@ -223,6 +223,8 @@ void __wait_on_buffer(struct buffer_head *);
+ wait_queue_head_t *bh_waitq_head(struct buffer_head *bh);
+ struct buffer_head *__find_get_block(struct block_device *bdev, sector_t block,
+ 			unsigned size);
++struct buffer_head *__find_get_block_nonatomic(struct block_device *bdev,
++			sector_t block, unsigned size);
+ struct buffer_head *bdev_getblk(struct block_device *bdev, sector_t block,
+ 		unsigned size, gfp_t gfp);
+ void __brelse(struct buffer_head *);
+@@ -398,6 +400,12 @@ sb_find_get_block(struct super_block *sb, sector_t block)
+ 	return __find_get_block(sb->s_bdev, block, sb->s_blocksize);
+ }
+ 
++static inline struct buffer_head *
++sb_find_get_block_nonatomic(struct super_block *sb, sector_t block)
++{
++	return __find_get_block_nonatomic(sb->s_bdev, block, sb->s_blocksize);
++}
++
+ static inline void
+ map_bh(struct buffer_head *bh, struct super_block *sb, sector_t block)
+ {
 -- 
 2.39.5
 
