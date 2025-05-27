@@ -1,94 +1,156 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A177F10E0
-	for <patches@lists.linux.dev>; Tue, 27 May 2025 00:12:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B1A1E884;
+	Tue, 27 May 2025 02:37:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748304780; cv=none; b=QOoLZh8vs4gR7k0LNYG1mRQn1LntlGqCjk1fcvPLwo6r3Y2hOcE+/uCXtL+t/K1pEP64o62HLznZjbvtjOIAvKvjyYD/N5/1wyNVmkBmS0uEgRTgkWko1JStD+S/9xGTx8BsPTrrIB0OCtflAl7/cwEd2V/6h8kU8+Cn5jRRBn0=
+	t=1748313457; cv=none; b=bhaU+DLI8hvJ3fwrmmfiddI/L7ynykU5/r3xRu9fXiJs/1MpIpgd7vQMkz3AstPhD3EW7SlLMo/HnosT8i4cbd/KPv8SPHTL9DOC9SVrjk9Z+RZwakykDDKTx8XraA+d2YioZhASgFNPcFIbeDT6hoUpSjeN1xVyTbPgN1Nqdms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748304780; c=relaxed/simple;
-	bh=ShvoaIDylmqmCO/4tqPQuAPuovRvMewoIpt2vjGQa/M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CF6nQddDhoc9fmDE3obqtRrruLS/Pj8qWYy3BImRosR0U5BomUtpz9QZIHy/3bIGoNSMuz4iXfNvePxMt4bMKuRyhWa6PCiN2G3nfK+KocENOlN+lFdavhXo2WOd2lgeAm/Zb6+h3DmcminTc9jwt71qTZFYKJ93PnBRLVKOkRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ec4gf1vj; arc=none smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1748313457; c=relaxed/simple;
+	bh=jkOVKI8c3o0zgkPgrUn/cIYQRlugbXV4hpaCfpYwxPI=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=JIlJajfv8o+/xH2si1UchhR0eUwPVKWbY4TFTHmVXuopy/UDV6s4rl6oPfXnVwtxIYZe1OmaQ56cH6OF5vOrqt9dKljkLortB2mgB5HKq2fu6j2G6231ZWqnVVYanTpPNYFfn/Ae2NIGgcmgmM2XDTTO84f35S2i2xkT9yj6NlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cmaJn1iL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ec4gf1vj"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-311676255c3so98572a91.3
-        for <patches@lists.linux.dev>; Mon, 26 May 2025 17:12:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748304778; x=1748909578; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qDUVHJC72R11plYvEJN4plaYAB5GiKYQgfvLL/uyWH4=;
-        b=Ec4gf1vjT/9RsYxGzQhRSfZ+1cWHzyVCh28saB9MoC2cJQnRWjNpCNF+wZMZKk6NaJ
-         HSCxBZEKZWx75xyg/MWT8coqPBtRx8tEOatIDNRjlmxd6PF5qbO5iFEJwm8DWwE7NwMo
-         HQ0Y6nT5G8A0ODRnoiFDpywZUhkZrufFEV8RILfxpiJgXaVTVoKrbX1oSvByuYhfdXYA
-         ar/eZ95oFT/V7HIDFW0KL9fKNh2U7YK+Pv+BUy0ok8MhktxZAOmb/qbU8m7nVN1OHyFu
-         +uIgdhVxcFTuygzWwpjMQwVG4uKzO0W2Z+GtRlPAODOJRZWIJw7AMtge5cnLcZsgsVaZ
-         ESbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748304778; x=1748909578;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qDUVHJC72R11plYvEJN4plaYAB5GiKYQgfvLL/uyWH4=;
-        b=mNCbXz8a3C39sIHNmuD3XgeMdLo0Bq6Xn6rRtcnFE4JvCH92psw1v31sUspeUwF6UY
-         ANQ6LcLNOXWyORyAqtoujdt+dSrWbMS6C/Sn6ezPs/CDri+MrC8f6mipGn3+YQPN0jAP
-         3I/EmP3NtUU6Vb1h8eDyCOEvgoD0fO/yaeLxhzD8xWfW6MdVHPtivq+3QRhUq9l+s6gr
-         JTu+6KroabD9Oz1nOn3HRT+I8MKI97Uw6LKG8L8VjDscIzprKmikcnn4IgWmrsKMzrsq
-         b1YMJnFT7dwb7yI9u95kB2Rl+AGvFtcNE3bEKNUlLsWuJlN/Cub0OPLkr5fgGi4vHV1+
-         15ww==
-X-Forwarded-Encrypted: i=1; AJvYcCWBktFs48NRMuqs2bKMpFKLl8xa5Suk2enGPVT6Ql3IXoz2LDTT/S9WeMJ8d/FIElwBmS8CwXNB@lists.linux.dev
-X-Gm-Message-State: AOJu0YyT++2xgExRW03bnMnmVWN5J5LSajCy0qFTZ/kwZardaQHsbFHU
-	60kjvLHX1gUpdWs9vGb8ZtrdI1u6bnYTGVDitGI+5v49ajvkG+mNk9mOlDusysh1l+0UnYB/cge
-	3K8gvDUFCxLZWAUqChiWTq7O5j1ZYolYMUJt0RBk6cw==
-X-Gm-Gg: ASbGncsO2PNIHzTuws1/30x0eAwPFizNIjzCE8SbdioxbquO9sgO8bc/wlOWMJuFSNM
-	lpqtYTYU5HxWCvs+K37vJPsNV9EBtst5EYFAHD+FLHxaU/yQnAKAYyJoTXbhxIC7HJqoCPVSRIj
-	Z0WEKb20EgcE6M6Mr0ZwE7y2///fHnYh4O
-X-Google-Smtp-Source: AGHT+IGP6WSH1KR6xEx1oB8OliPNzy9iZnUE2S1clmoqmPisa2Cs0N5JoYvUV6KeHWSF04V6hwfbzOMIFPpxAN9AOFs=
-X-Received: by 2002:a17:90b:3ec1:b0:2ff:5759:549a with SMTP id
- 98e67ed59e1d1-3110f0ee9b7mr6504882a91.1.1748304777913; Mon, 26 May 2025
- 17:12:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cmaJn1iL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5838C4CEE7;
+	Tue, 27 May 2025 02:37:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748313456;
+	bh=jkOVKI8c3o0zgkPgrUn/cIYQRlugbXV4hpaCfpYwxPI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=cmaJn1iLykG+DY1skG/tDmSG5UxiB7Tq6wVQ38p/klBCsC60kXE2y1NvCvR51EE/i
+	 BnKOSYpngyODW7f/vw3+8nSaudSzRa2oetlmPCAKM4NZmFuoij+ZbyqJLwvw66Z3vB
+	 ACphMHq9Ewp13RnjpUZyGpOvtiPdirots60KJdO2a1H+iQ00eSJtLMCxPiF5hsbsGe
+	 fOwxYKG8aLzX1id3+alYtVllSexcYSb6C/1hRiDPS1teaeUSpmhw22aDroSMuUSU9V
+	 Ap5/nULVHws0Edl5GHYUGU59kVPYujeiZ41QjAtJ9UXmK5PZvFoa+9lE7LaegyaVRt
+	 NEs0Td13jsYkA==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Valtteri Koskivuori <vkoskiv@gmail.com>,
+	Jonathan Woithe <jwoithe@just42.net>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	hdegoede@redhat.com,
+	platform-driver-x86@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 1/5] platform/x86: fujitsu-laptop: Support Lifebook S2110 hotkeys
+Date: Mon, 26 May 2025 22:37:30 -0400
+Message-Id: <20250527023734.1017073-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250502215133.1923676-1-ojeda@kernel.org> <CANiq72mj2yv4E7Dd+19fmP9xGWELdv6JwXULpu91oq0BMzob+g@mail.gmail.com>
-In-Reply-To: <CANiq72mj2yv4E7Dd+19fmP9xGWELdv6JwXULpu91oq0BMzob+g@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 27 May 2025 02:12:46 +0200
-X-Gm-Features: AX0GCFuWVeWoWd2QF4i5h3bZPOTXxZwG0hZtocU1fZDNtHBMsACg5wKAztA9UY8
-Message-ID: <CANiq72=q66Xvihm9t3hbtJVAcB+f-aRRY9+amSEWBZrCjTcyUQ@mail.gmail.com>
-Subject: Re: [PATCH 0/7] Rust KUnit `#[test]` support improvements
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Rae Moar <rmoar@google.com>, 
-	linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.14.8
+Content-Transfer-Encoding: 8bit
 
-On Tue, May 27, 2025 at 2:10=E2=80=AFAM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
->
->     [ Split from the next commit as suggested by Tamir. - Miguel ]
->
->     [ Split the `CString` simplification into a new commit. - Miguel ]
+From: Valtteri Koskivuori <vkoskiv@gmail.com>
 
-By the way, I kept the tags from David and Danilo in that new commit,
-since it was really a pure split, but of course let me know if someone
-doesn't want that.
+[ Upstream commit a7e255ff9fe4d9b8b902023aaf5b7a673786bb50 ]
 
-Cheers,
-Miguel
+The S2110 has an additional set of media playback control keys enabled
+by a hardware toggle button that switches the keys between "Application"
+and "Player" modes. Toggling "Player" mode just shifts the scancode of
+each hotkey up by 4.
+
+Add defines for new scancodes, and a keymap and dmi id for the S2110.
+
+Tested on a Fujitsu Lifebook S2110.
+
+Signed-off-by: Valtteri Koskivuori <vkoskiv@gmail.com>
+Acked-by: Jonathan Woithe <jwoithe@just42.net>
+Link: https://lore.kernel.org/r/20250509184251.713003-1-vkoskiv@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/platform/x86/fujitsu-laptop.c | 33 +++++++++++++++++++++++----
+ 1 file changed, 29 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/platform/x86/fujitsu-laptop.c b/drivers/platform/x86/fujitsu-laptop.c
+index a0eae24ca9e60..162809140f68a 100644
+--- a/drivers/platform/x86/fujitsu-laptop.c
++++ b/drivers/platform/x86/fujitsu-laptop.c
+@@ -17,13 +17,13 @@
+ /*
+  * fujitsu-laptop.c - Fujitsu laptop support, providing access to additional
+  * features made available on a range of Fujitsu laptops including the
+- * P2xxx/P5xxx/S6xxx/S7xxx series.
++ * P2xxx/P5xxx/S2xxx/S6xxx/S7xxx series.
+  *
+  * This driver implements a vendor-specific backlight control interface for
+  * Fujitsu laptops and provides support for hotkeys present on certain Fujitsu
+  * laptops.
+  *
+- * This driver has been tested on a Fujitsu Lifebook S6410, S7020 and
++ * This driver has been tested on a Fujitsu Lifebook S2110, S6410, S7020 and
+  * P8010.  It should work on most P-series and S-series Lifebooks, but
+  * YMMV.
+  *
+@@ -107,7 +107,11 @@
+ #define KEY2_CODE			0x411
+ #define KEY3_CODE			0x412
+ #define KEY4_CODE			0x413
+-#define KEY5_CODE			0x420
++#define KEY5_CODE			0x414
++#define KEY6_CODE			0x415
++#define KEY7_CODE			0x416
++#define KEY8_CODE			0x417
++#define KEY9_CODE			0x420
+ 
+ /* Hotkey ringbuffer limits */
+ #define MAX_HOTKEY_RINGBUFFER_SIZE	100
+@@ -560,7 +564,7 @@ static const struct key_entry keymap_default[] = {
+ 	{ KE_KEY, KEY2_CODE,            { KEY_PROG2 } },
+ 	{ KE_KEY, KEY3_CODE,            { KEY_PROG3 } },
+ 	{ KE_KEY, KEY4_CODE,            { KEY_PROG4 } },
+-	{ KE_KEY, KEY5_CODE,            { KEY_RFKILL } },
++	{ KE_KEY, KEY9_CODE,            { KEY_RFKILL } },
+ 	/* Soft keys read from status flags */
+ 	{ KE_KEY, FLAG_RFKILL,          { KEY_RFKILL } },
+ 	{ KE_KEY, FLAG_TOUCHPAD_TOGGLE, { KEY_TOUCHPAD_TOGGLE } },
+@@ -584,6 +588,18 @@ static const struct key_entry keymap_p8010[] = {
+ 	{ KE_END, 0 }
+ };
+ 
++static const struct key_entry keymap_s2110[] = {
++	{ KE_KEY, KEY1_CODE, { KEY_PROG1 } }, /* "A" */
++	{ KE_KEY, KEY2_CODE, { KEY_PROG2 } }, /* "B" */
++	{ KE_KEY, KEY3_CODE, { KEY_WWW } },   /* "Internet" */
++	{ KE_KEY, KEY4_CODE, { KEY_EMAIL } }, /* "E-mail" */
++	{ KE_KEY, KEY5_CODE, { KEY_STOPCD } },
++	{ KE_KEY, KEY6_CODE, { KEY_PLAYPAUSE } },
++	{ KE_KEY, KEY7_CODE, { KEY_PREVIOUSSONG } },
++	{ KE_KEY, KEY8_CODE, { KEY_NEXTSONG } },
++	{ KE_END, 0 }
++};
++
+ static const struct key_entry *keymap = keymap_default;
+ 
+ static int fujitsu_laptop_dmi_keymap_override(const struct dmi_system_id *id)
+@@ -621,6 +637,15 @@ static const struct dmi_system_id fujitsu_laptop_dmi_table[] = {
+ 		},
+ 		.driver_data = (void *)keymap_p8010
+ 	},
++	{
++		.callback = fujitsu_laptop_dmi_keymap_override,
++		.ident = "Fujitsu LifeBook S2110",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU SIEMENS"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "LIFEBOOK S2110"),
++		},
++		.driver_data = (void *)keymap_s2110
++	},
+ 	{}
+ };
+ 
+-- 
+2.39.5
+
