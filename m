@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECA127CCF0;
-	Tue, 27 May 2025 17:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4B027CCF0;
+	Tue, 27 May 2025 17:33:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367200; cv=none; b=BEpCDOsnlxJSO1q07TPLGRTEaUl+/3OWiGQX3aurLhZoqF7qcDBbYbr/hqOWEzfnOB/flKxHcbzPaP/Kb36QhnBwtC4qXqfXyUKdV9lTmEXE5Jv+vv6yyd8Q7twxipqG+LQIvtL1AMI30duDUar59A7fx1ThQxsnFYFoEP8s9Is=
+	t=1748367203; cv=none; b=fgmukVHc7BXIlq4xteyYz5TrH3zFeqrLjP3yrzwHP6TFo6Vz1puPIpWV8siMBgeeCdpOsZCjPlOrIYmYZv8+4pN2E8TcAwzwjqxXOpVZoJkZFs13hhbwyOoYquWKFqI6JnxHPpOyv3Pxygr53yOOEZSOQB8MOIw6CA9cJpmHsjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367200; c=relaxed/simple;
-	bh=cCt8VtbgO7DqKC5wA0pZ/q+U50CluHlaz+NU6BsjurU=;
+	s=arc-20240116; t=1748367203; c=relaxed/simple;
+	bh=FYx+x6jPt5gMhdxpAJs7vVjYVQ4bljPepMzGbrCDAiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iNU5UNc9hHxWe9MzltH0n2SM+Vujapw7P5+rCVnifuSbyv5W6fZYn1KzXtns7t+0jqM5b04HsBbp5dG034acymY46ShwtF8eWOeDxCUluQQqH0PgwHZOuRB9WRZlOrx4o7EfpxuThQXu3KQ3U8AQvZRrzzSKemjpJIY+xBcRgFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5MvIrXX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mByOn1c0pi57keLObARmqJo59EvISPQEdNLUnXPF6xfKosvGSt8e/69mv+3IIRy1o3pEHSzkX89B+7FWGnCTuZ5owAEB6zHsFvIMMKb2zSNdw4otu2FXAyquKwReCg/jFa8zpk79mNxCIkJheYhy6T+UtpQweMp9YNggxl1OzqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wJtgez0R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5MvIrXX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA814C4CEE9;
-	Tue, 27 May 2025 17:33:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wJtgez0R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0378C4CEE9;
+	Tue, 27 May 2025 17:33:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367200;
-	bh=cCt8VtbgO7DqKC5wA0pZ/q+U50CluHlaz+NU6BsjurU=;
+	s=korg; t=1748367203;
+	bh=FYx+x6jPt5gMhdxpAJs7vVjYVQ4bljPepMzGbrCDAiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L5MvIrXXE3BOdCNUliKvZdT6ZKQlkyHikHf8IKFlHyX79Kh5t/W1JgiDZG0VWmYkL
-	 2UuK2Z97FaevKUCesBlIY6AOYmP/lppZ3jzKgWw+s2ZTy3wKGm3KDpXyXw8tDulAW4
-	 YLuog30NBOUwY91C29iaPtOWMqrLhoqLJDnwXa3Y=
+	b=wJtgez0RkmI5/hMtFzc7E/W/XM6hSgN78cqHuTxjlcjie93sZUSrW9153FXRqh94u
+	 O44T99SdHmxe/7ua71dOLCrJQ2YIB8cFs5WnBx2GhGElxTOjxO/DVry6wokjfhLM2/
+	 WSt7oS8/vegkwDd8EEfPk84vrLU9QSB1m0Uc3M5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 309/783] null_blk: generate null_blk configfs features string
-Date: Tue, 27 May 2025 18:21:46 +0200
-Message-ID: <20250527162525.650676089@linuxfoundation.org>
+Subject: [PATCH 6.14 310/783] ublk: complete command synchronously on error
+Date: Tue, 27 May 2025 18:21:47 +0200
+Message-ID: <20250527162525.689681646@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -55,149 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Caleb Sander Mateos <csander@purestorage.com>
 
-[ Upstream commit 2cadb8ef25a6157b5bd3e8fe0d3e23f32defec25 ]
+[ Upstream commit 603f9be21c1894e462416e3324962d6c9c2b95f8 ]
 
-The null_blk configfs file 'features' provides a string that lists
-available null_blk features for userspace programs to reference.
-The string is defined as a long constant in the code, which tends to be
-forgotten for updates. It also causes checkpatch.pl to report
-"WARNING: quoted string split across lines".
+In case of an error, ublk's ->uring_cmd() functions currently return
+-EIOCBQUEUED and immediately call io_uring_cmd_done(). -EIOCBQUEUED and
+io_uring_cmd_done() are intended for asynchronous completions. For
+synchronous completions, the ->uring_cmd() function can just return the
+negative return code directly. This skips io_uring_cmd_del_cancelable(),
+and deferring the completion to task work. So return the error code
+directly from __ublk_ch_uring_cmd() and ublk_ctrl_uring_cmd().
 
-To avoid these drawbacks, generate the feature string on the fly. Refer
-to the ca_name field of each element in the nullb_device_attrs table and
-concatenate them in the given buffer. Also, sorted nullb_device_attrs
-table elements in alphabetical order.
+Update ublk_ch_uring_cmd_cb(), which currently ignores the return value
+from __ublk_ch_uring_cmd(), to call io_uring_cmd_done() for synchronous
+completions.
 
-Of note is that the feature "index" was missing before this commit.
-This commit adds it to the generated string.
-
-Suggested-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Link: https://lore.kernel.org/r/20250226100613.1622564-2-shinichiro.kawasaki@wdc.com
+Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Link: https://lore.kernel.org/r/20250225212456.2902549-1-csander@purestorage.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 86 ++++++++++++++++++++---------------
- 1 file changed, 49 insertions(+), 37 deletions(-)
+ drivers/block/ublk_drv.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index 175566a71bb3f..41c2cd5818b4a 100644
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -592,41 +592,41 @@ static ssize_t nullb_device_zone_offline_store(struct config_item *item,
- CONFIGFS_ATTR_WO(nullb_device_, zone_offline);
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index b462f7d16ee55..08694d7d18db4 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -2053,10 +2053,9 @@ static int __ublk_ch_uring_cmd(struct io_uring_cmd *cmd,
+ 	return -EIOCBQUEUED;
  
- static struct configfs_attribute *nullb_device_attrs[] = {
--	&nullb_device_attr_size,
-+	&nullb_device_attr_badblocks,
-+	&nullb_device_attr_blocking,
-+	&nullb_device_attr_blocksize,
-+	&nullb_device_attr_cache_size,
- 	&nullb_device_attr_completion_nsec,
--	&nullb_device_attr_submit_queues,
--	&nullb_device_attr_poll_queues,
-+	&nullb_device_attr_discard,
-+	&nullb_device_attr_fua,
- 	&nullb_device_attr_home_node,
--	&nullb_device_attr_queue_mode,
--	&nullb_device_attr_blocksize,
--	&nullb_device_attr_max_sectors,
--	&nullb_device_attr_irqmode,
- 	&nullb_device_attr_hw_queue_depth,
- 	&nullb_device_attr_index,
--	&nullb_device_attr_blocking,
--	&nullb_device_attr_use_per_node_hctx,
--	&nullb_device_attr_power,
--	&nullb_device_attr_memory_backed,
--	&nullb_device_attr_discard,
-+	&nullb_device_attr_irqmode,
-+	&nullb_device_attr_max_sectors,
- 	&nullb_device_attr_mbps,
--	&nullb_device_attr_cache_size,
--	&nullb_device_attr_badblocks,
--	&nullb_device_attr_zoned,
--	&nullb_device_attr_zone_size,
-+	&nullb_device_attr_memory_backed,
-+	&nullb_device_attr_no_sched,
-+	&nullb_device_attr_poll_queues,
-+	&nullb_device_attr_power,
-+	&nullb_device_attr_queue_mode,
-+	&nullb_device_attr_rotational,
-+	&nullb_device_attr_shared_tag_bitmap,
-+	&nullb_device_attr_shared_tags,
-+	&nullb_device_attr_size,
-+	&nullb_device_attr_submit_queues,
-+	&nullb_device_attr_use_per_node_hctx,
-+	&nullb_device_attr_virt_boundary,
-+	&nullb_device_attr_zone_append_max_sectors,
- 	&nullb_device_attr_zone_capacity,
--	&nullb_device_attr_zone_nr_conv,
--	&nullb_device_attr_zone_max_open,
-+	&nullb_device_attr_zone_full,
- 	&nullb_device_attr_zone_max_active,
--	&nullb_device_attr_zone_append_max_sectors,
--	&nullb_device_attr_zone_readonly,
-+	&nullb_device_attr_zone_max_open,
-+	&nullb_device_attr_zone_nr_conv,
- 	&nullb_device_attr_zone_offline,
--	&nullb_device_attr_zone_full,
--	&nullb_device_attr_virt_boundary,
--	&nullb_device_attr_no_sched,
--	&nullb_device_attr_shared_tags,
--	&nullb_device_attr_shared_tag_bitmap,
--	&nullb_device_attr_fua,
--	&nullb_device_attr_rotational,
-+	&nullb_device_attr_zone_readonly,
-+	&nullb_device_attr_zone_size,
-+	&nullb_device_attr_zoned,
- 	NULL,
- };
- 
-@@ -704,16 +704,28 @@ nullb_group_drop_item(struct config_group *group, struct config_item *item)
- 
- static ssize_t memb_group_features_show(struct config_item *item, char *page)
- {
--	return snprintf(page, PAGE_SIZE,
--			"badblocks,blocking,blocksize,cache_size,fua,"
--			"completion_nsec,discard,home_node,hw_queue_depth,"
--			"irqmode,max_sectors,mbps,memory_backed,no_sched,"
--			"poll_queues,power,queue_mode,shared_tag_bitmap,"
--			"shared_tags,size,submit_queues,use_per_node_hctx,"
--			"virt_boundary,zoned,zone_capacity,zone_max_active,"
--			"zone_max_open,zone_nr_conv,zone_offline,zone_readonly,"
--			"zone_size,zone_append_max_sectors,zone_full,"
--			"rotational\n");
-+
-+	struct configfs_attribute **entry;
-+	char delimiter = ',';
-+	size_t left = PAGE_SIZE;
-+	size_t written = 0;
-+	int ret;
-+
-+	for (entry = &nullb_device_attrs[0]; *entry && left > 0; entry++) {
-+		if (!*(entry + 1))
-+			delimiter = '\n';
-+		ret = snprintf(page + written, left, "%s%c", (*entry)->ca_name,
-+			       delimiter);
-+		if (ret >= left) {
-+			WARN_ONCE(1, "Too many null_blk features to print\n");
-+			memzero_explicit(page, PAGE_SIZE);
-+			return -ENOBUFS;
-+		}
-+		left -= ret;
-+		written += ret;
-+	}
-+
-+	return written;
+  out:
+-	io_uring_cmd_done(cmd, ret, 0, issue_flags);
+ 	pr_devel("%s: complete: cmd op %d, tag %d ret %x io_flags %x\n",
+ 			__func__, cmd_op, tag, ret, io->flags);
+-	return -EIOCBQUEUED;
++	return ret;
  }
  
- CONFIGFS_ATTR_RO(memb_group_, features);
+ static inline struct request *__ublk_check_and_get_req(struct ublk_device *ub,
+@@ -2112,7 +2111,10 @@ static inline int ublk_ch_uring_cmd_local(struct io_uring_cmd *cmd,
+ static void ublk_ch_uring_cmd_cb(struct io_uring_cmd *cmd,
+ 		unsigned int issue_flags)
+ {
+-	ublk_ch_uring_cmd_local(cmd, issue_flags);
++	int ret = ublk_ch_uring_cmd_local(cmd, issue_flags);
++
++	if (ret != -EIOCBQUEUED)
++		io_uring_cmd_done(cmd, ret, 0, issue_flags);
+ }
+ 
+ static int ublk_ch_uring_cmd(struct io_uring_cmd *cmd, unsigned int issue_flags)
+@@ -3201,10 +3203,9 @@ static int ublk_ctrl_uring_cmd(struct io_uring_cmd *cmd,
+ 	if (ub)
+ 		ublk_put_device(ub);
+  out:
+-	io_uring_cmd_done(cmd, ret, 0, issue_flags);
+ 	pr_devel("%s: cmd done ret %d cmd_op %x, dev id %d qid %d\n",
+ 			__func__, ret, cmd->cmd_op, header->dev_id, header->queue_id);
+-	return -EIOCBQUEUED;
++	return ret;
+ }
+ 
+ static const struct file_operations ublk_ctl_fops = {
 -- 
 2.39.5
 
