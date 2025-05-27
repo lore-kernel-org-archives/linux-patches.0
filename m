@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570953C01;
-	Tue, 27 May 2025 17:35:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 984303C01;
+	Tue, 27 May 2025 17:35:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367311; cv=none; b=Zf0njgSZ41etPBcAPcYbWV81FN9ego7wgLbychTczheHUdwJzWNHbGQsA8JbTyJUKHZyA+ah5XldfmbwFRUcLXUmN+K/YC0pCDSULqkCUPw5yqNLwy0HTKtFsOXKakkcWfRX+LuK0+0QeJobUT16PGSV6LJd4thljvGv9FgvHyw=
+	t=1748367314; cv=none; b=lUPu3d+wJ/YcTN+UNiZu7GuozHXwoVlu4WW8WPT35676m2Lqx6xmHHdh3HRk3WG5L63kVAMCR3Vd0T7SSqXT+8fES5b2uW+vYeiiUXfhXFqafdeXEvyaF9VkszkAOe216cMEdPhNvXcQrAKp7++xQ7FqMShweeP1K7LBnAXn7gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367311; c=relaxed/simple;
-	bh=AgisHirvke8uzbpLma0EDVsedveNuIaAHqAGu/EMrIA=;
+	s=arc-20240116; t=1748367314; c=relaxed/simple;
+	bh=Fv7ApyDZW9+qACUCUIMROkshDmcJj+TxmjZr8dkehDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KeEdPWFHmOcQixcI7PWoITQ/etZ5+fUrTp2FsdlDP23+919SUNtwrS+0pPk3p7dpCE2VqzFIyG5IpKmyhgenY+p5JRpAbbWfJ/9cc8I3qjPmBJ2d7upowWwPioaLQCbTxbjxroi/3eRezkxPNLawrMrnxAmOwoUa0CU3gKuWzVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0TQryxja; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BFco0C3a46IkXXr9xNR3laiwhezqcaC5rK2EX4cRwy5IqbvNTzks0hnmsQSAmmheYWM69tQxx0RBdgpbe6wGQhda/1oiwRyLFwLO1GkAiriTBE39ZeJBh8BlavI2hGm+ZNAUFreIfpmKPSSZCqwxOQePI0cMhXWwS4jhkmXsXRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfABeZux; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0TQryxja"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8AB6C4CEE9;
-	Tue, 27 May 2025 17:35:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfABeZux"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E0AC4CEE9;
+	Tue, 27 May 2025 17:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367311;
-	bh=AgisHirvke8uzbpLma0EDVsedveNuIaAHqAGu/EMrIA=;
+	s=korg; t=1748367314;
+	bh=Fv7ApyDZW9+qACUCUIMROkshDmcJj+TxmjZr8dkehDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0TQryxjaRccy2XnWTOCXmuglcqdha9zAa8Id4/cHF2SKk6/bRueW41LzDTjnAG3Na
-	 CtJCa9K9fF84IralStZ1OSVT6UvoOeeT4JsTCtLbocBu4WsdMKS1uE+CtqwlNHkh4E
-	 p+ahpAuyoFDnGARMxHp+ZqT8TCRqQkTep5Lj1irg=
+	b=WfABeZux4jbahLFXv1BaIXMT9Y7+BIxvxNLFfoASABixLvSy/iPnvGMc/U9d7XNyE
+	 tCSgvKg9i6rKpuJb13fTVi8HtrTrfoquVyuvaJEQH+K4nJBzC5oE04W5cppNsPcbCX
+	 aVmVFTlRSjkTSoLio/ZLeEAt9Tau59x41AYsDNPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huisong Li <lihuisong@huawei.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 316/783] hwmon: (acpi_power_meter) Fix the fake power alarm reporting
-Date: Tue, 27 May 2025 18:21:53 +0200
-Message-ID: <20250527162525.933525103@linuxfoundation.org>
+Subject: [PATCH 6.14 317/783] hwmon: (gpio-fan) Add missing mutex locks
+Date: Tue, 27 May 2025 18:21:54 +0200
+Message-ID: <20250527162525.973682634@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,49 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huisong Li <lihuisong@huawei.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 0ea627381eb527a0ebd262c690c3992085b87ff4 ]
+[ Upstream commit 9fee7d19bab635f89223cc40dfd2c8797fdc4988 ]
 
-We encountered a problem that a fake power alarm is reported to
-user on the platform unsupported notifications at the second step
-below:
-1> Query 'power1_alarm' attribute when the power capping occurs.
-2> Query 'power1_alarm' attribute when the power capping is over
-   and the current average power is less then power cap value.
+set_fan_speed() is expected to be called with fan_data->lock being locked.
+Add locking for proper synchronization.
 
-The root cause is that the resource->power_alarm is set to true
-at the first step. And power meter use this old value to show
-the power alarm state instead of the current the comparison value.
-
-Signed-off-by: Huisong Li <lihuisong@huawei.com>
-Link: https://lore.kernel.org/r/20250220030832.2976-1-lihuisong@huawei.com
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20250210145934.761280-3-alexander.stein@ew.tq-group.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/acpi_power_meter.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/hwmon/gpio-fan.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/acpi_power_meter.c b/drivers/hwmon/acpi_power_meter.c
-index 44afb07409a46..f05986e4f3792 100644
---- a/drivers/hwmon/acpi_power_meter.c
-+++ b/drivers/hwmon/acpi_power_meter.c
-@@ -437,9 +437,13 @@ static ssize_t show_val(struct device *dev,
- 			ret = update_cap(resource);
- 			if (ret)
- 				return ret;
-+			resource->power_alarm = resource->power > resource->cap;
-+			val = resource->power_alarm;
-+		} else {
-+			val = resource->power_alarm ||
-+				 resource->power > resource->cap;
-+			resource->power_alarm = resource->power > resource->cap;
- 		}
--		val = resource->power_alarm || resource->power > resource->cap;
--		resource->power_alarm = resource->power > resource->cap;
- 		break;
- 	case 7:
- 	case 8:
+diff --git a/drivers/hwmon/gpio-fan.c b/drivers/hwmon/gpio-fan.c
+index d92c536be9af7..b779240328d59 100644
+--- a/drivers/hwmon/gpio-fan.c
++++ b/drivers/hwmon/gpio-fan.c
+@@ -393,7 +393,12 @@ static int gpio_fan_set_cur_state(struct thermal_cooling_device *cdev,
+ 	if (state >= fan_data->num_speed)
+ 		return -EINVAL;
+ 
++	mutex_lock(&fan_data->lock);
++
+ 	set_fan_speed(fan_data, state);
++
++	mutex_unlock(&fan_data->lock);
++
+ 	return 0;
+ }
+ 
+@@ -489,7 +494,11 @@ MODULE_DEVICE_TABLE(of, of_gpio_fan_match);
+ 
+ static void gpio_fan_stop(void *data)
+ {
++	struct gpio_fan_data *fan_data = data;
++
++	mutex_lock(&fan_data->lock);
+ 	set_fan_speed(data, 0);
++	mutex_unlock(&fan_data->lock);
+ }
+ 
+ static int gpio_fan_probe(struct platform_device *pdev)
+@@ -562,7 +571,9 @@ static int gpio_fan_suspend(struct device *dev)
+ 
+ 	if (fan_data->gpios) {
+ 		fan_data->resume_speed = fan_data->speed_index;
++		mutex_lock(&fan_data->lock);
+ 		set_fan_speed(fan_data, 0);
++		mutex_unlock(&fan_data->lock);
+ 	}
+ 
+ 	return 0;
+@@ -572,8 +583,11 @@ static int gpio_fan_resume(struct device *dev)
+ {
+ 	struct gpio_fan_data *fan_data = dev_get_drvdata(dev);
+ 
+-	if (fan_data->gpios)
++	if (fan_data->gpios) {
++		mutex_lock(&fan_data->lock);
+ 		set_fan_speed(fan_data, fan_data->resume_speed);
++		mutex_unlock(&fan_data->lock);
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.39.5
 
