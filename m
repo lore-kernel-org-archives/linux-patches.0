@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3DD1E89C;
-	Tue, 27 May 2025 17:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8AE26F469;
+	Tue, 27 May 2025 17:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366344; cv=none; b=j+395OCa6CjRv0tgGEYqtBDKaTvMBEjdHIgR9XSLChOYIXhMqSdVKvCo6xP8LwDFcW2q9DtOFB1/8uRIQK8PiJ/R9/Qd99wAPotoahx8Zds6SXja7BaWXSObaWsXdZPoe9SPUkCzugE/1lEvdeJj8A5sgpEaH9WpPye+lvZroIg=
+	t=1748366347; cv=none; b=Mmh1nv7ltc58uApbYNKizCp8ZInZBWkidAEmZaEbIBNNnsLCmYZwlvlkwkRx56xwzmWOY+zbuTqfCWZepnziLwhMRsaHZDFGWobIKJkgL8RrKiUQmjiTuaQgkciLbJvK+vhwA0XUFfrEFaRjlc1Vc9IDOPtgI1jPdcBFlFVRB98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366344; c=relaxed/simple;
-	bh=nOgzw0DzCBFOPeXNcykB6khvrNJQe+R4B89/lycfYwY=;
+	s=arc-20240116; t=1748366347; c=relaxed/simple;
+	bh=6SQyuNyc/stxQGUejz6jU+tPGdtmFUyYbaRnp14M/Ms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iLyCf5XdanjbLib4HYcyXwW224Oa6Q5DZnSzEdaNqxCXOC5YImHUkUgROsCW2FPVkfnEhYOQ7rVV4Z8SljscsNWpA0Zn1wjinX8Twq93vbCU3NjDZ4z88n+dMz2GfnQ6MSjxue0FEj0o8pxwNpZdndNtqcUT51iqEg9qakzq7kU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLXYf0yP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oWMOMyenuoyxHcd6avBHeTn1EY+0TUNgzyWV9JG0rxqSWhmRPvuP604xoel7wcao+4/9i+aA37bK1rBRKChXjrs2fPTtkyAtIKZ7NyiLLY2XT1faXCNI30By0f2BNr7EV09lGc7U8INRfB7/TzsgbHL17Rz5QwYxVc/2tUeFhKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NmdhXSiL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLXYf0yP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7D4C4CEEB;
-	Tue, 27 May 2025 17:19:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NmdhXSiL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA88C4CEE9;
+	Tue, 27 May 2025 17:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366344;
-	bh=nOgzw0DzCBFOPeXNcykB6khvrNJQe+R4B89/lycfYwY=;
+	s=korg; t=1748366347;
+	bh=6SQyuNyc/stxQGUejz6jU+tPGdtmFUyYbaRnp14M/Ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GLXYf0yPmshKNX0W0P7ToK9W+1bqzNjW55K7UN/aOrblUyCjB9URqa/hQEglkuWVT
-	 Tad3BqAoYyWFPKZiSqLpd+1WADACs3L1PpqOsadqOdnRVNQL20z1NOPmE4TA3zPkB7
-	 I3LsLr0VYLeDsRHXJl1qW3RnES/9hblvAdKlrXk8=
+	b=NmdhXSiLQAfu0T3LEG3+i3L7vqfNaPQ0fxDhk2fIO5pV00z44LVEnPnrXFCkNNKdh
+	 qopBKPpqaPeO8yfp6bK5uj4It3JP52isY8iDIDesyFIq3CykXeMv4MqOabhwc7Wi57
+	 bvGY3/k72XOA5zWqrzq4WtTTTNr2fnl3hXlcEs20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	"Hao (Claire) Zhou" <hao.zhou@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 037/783] drm/amdgpu: Allow P2P access through XGMI
-Date: Tue, 27 May 2025 18:17:14 +0200
-Message-ID: <20250527162514.638491931@linuxfoundation.org>
+Subject: [PATCH 6.14 038/783] selftests/bpf: Mitigate sockmap_ktls disconnect_after_delete failure
+Date: Tue, 27 May 2025 18:17:15 +0200
+Message-ID: <20250527162514.680349195@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -47,89 +47,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Kuehling <felix.kuehling@amd.com>
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
 
-[ Upstream commit a92741e72f91b904c1d8c3d409ed8dbe9c1f2b26 ]
+[ Upstream commit f2858f308131a09e33afb766cd70119b5b900569 ]
 
-If peer memory is accessible through XGMI, allow leaving it in VRAM
-rather than forcing its migration to GTT on DMABuf attachment.
+"sockmap_ktls disconnect_after_delete" test has been failing on BPF CI
+after recent merges from netdev:
+* https://github.com/kernel-patches/bpf/actions/runs/14458537639
+* https://github.com/kernel-patches/bpf/actions/runs/14457178732
 
-Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
-Tested-by: Hao (Claire) Zhou <hao.zhou@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 372c8d72c3680fdea3fbb2d6b089f76b4a6d596a)
+It happens because disconnect has been disabled for TLS [1], and it
+renders the test case invalid.
+
+Removing all the test code creates a conflict between bpf and
+bpf-next, so for now only remove the offending assert [2].
+
+The test will be removed later on bpf-next.
+
+[1] https://lore.kernel.org/netdev/20250404180334.3224206-1-kuba@kernel.org/
+[2] https://lore.kernel.org/bpf/cfc371285323e1a3f3b006bfcf74e6cf7ad65258@linux.dev/
+
+Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://lore.kernel.org/bpf/20250416170246.2438524-1-ihor.solodrai@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c | 30 ++++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
+ tools/testing/selftests/bpf/prog_tests/sockmap_ktls.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
-index c9842a0e2a1cd..cb043296f9aec 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
-@@ -43,6 +43,29 @@
- #include <linux/dma-fence-array.h>
- #include <linux/pci-p2pdma.h>
+diff --git a/tools/testing/selftests/bpf/prog_tests/sockmap_ktls.c b/tools/testing/selftests/bpf/prog_tests/sockmap_ktls.c
+index 2d0796314862a..0a99fd404f6dc 100644
+--- a/tools/testing/selftests/bpf/prog_tests/sockmap_ktls.c
++++ b/tools/testing/selftests/bpf/prog_tests/sockmap_ktls.c
+@@ -68,7 +68,6 @@ static void test_sockmap_ktls_disconnect_after_delete(int family, int map)
+ 		goto close_cli;
  
-+static const struct dma_buf_attach_ops amdgpu_dma_buf_attach_ops;
-+
-+/**
-+ * dma_buf_attach_adev - Helper to get adev of an attachment
-+ *
-+ * @attach: attachment
-+ *
-+ * Returns:
-+ * A struct amdgpu_device * if the attaching device is an amdgpu device or
-+ * partition, NULL otherwise.
-+ */
-+static struct amdgpu_device *dma_buf_attach_adev(struct dma_buf_attachment *attach)
-+{
-+	if (attach->importer_ops == &amdgpu_dma_buf_attach_ops) {
-+		struct drm_gem_object *obj = attach->importer_priv;
-+		struct amdgpu_bo *bo = gem_to_amdgpu_bo(obj);
-+
-+		return amdgpu_ttm_adev(bo->tbo.bdev);
-+	}
-+
-+	return NULL;
-+}
-+
- /**
-  * amdgpu_dma_buf_attach - &dma_buf_ops.attach implementation
-  *
-@@ -54,11 +77,13 @@
- static int amdgpu_dma_buf_attach(struct dma_buf *dmabuf,
- 				 struct dma_buf_attachment *attach)
- {
-+	struct amdgpu_device *attach_adev = dma_buf_attach_adev(attach);
- 	struct drm_gem_object *obj = dmabuf->priv;
- 	struct amdgpu_bo *bo = gem_to_amdgpu_bo(obj);
- 	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
+ 	err = disconnect(cli);
+-	ASSERT_OK(err, "disconnect");
  
--	if (pci_p2pdma_distance(adev->pdev, attach->dev, false) < 0)
-+	if (!amdgpu_dmabuf_is_xgmi_accessible(attach_adev, bo) &&
-+	    pci_p2pdma_distance(adev->pdev, attach->dev, false) < 0)
- 		attach->peer2peer = false;
- 
- 	amdgpu_vm_bo_update_shared(bo);
-@@ -459,6 +484,9 @@ bool amdgpu_dmabuf_is_xgmi_accessible(struct amdgpu_device *adev,
- 	struct drm_gem_object *obj = &bo->tbo.base;
- 	struct drm_gem_object *gobj;
- 
-+	if (!adev)
-+		return false;
-+
- 	if (obj->import_attach) {
- 		struct dma_buf *dma_buf = obj->import_attach->dmabuf;
- 
+ close_cli:
+ 	close(cli);
 -- 
 2.39.5
 
