@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60ACF278754;
-	Tue, 27 May 2025 17:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736EF3C01;
+	Tue, 27 May 2025 17:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367277; cv=none; b=blmnKK4LqbvtxWgaVofpwu7hmBcY/ZKg4c2zwfYdSEGZBR7fvbCC17uKebCC6saAVcQS3INCIGh63tvu0lFUDcLyi5JxEa0If5Vkwq6GHe1FNIbIK7mDk+1ucMsihVDs6Y/WT54CSvKhLGRqSLxdQUeHuOA73RXbwtFdj1Kt/UQ=
+	t=1748367280; cv=none; b=maK1Ju59xlj19cVzYt9ulgyW+0jkshkFtUzKeIFbYtD3+ERD6dOG48Ua2arAiQYWKSilC7R9A1J9GZ5tOS0SVICciy0fbff0hzdGV4fTiZa299IWSzlDSwo80zxavqPfIlTd645Oix/bS52NruBSVF3Yuk9iWLRYfOWiUhdBJJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367277; c=relaxed/simple;
-	bh=JCcYiFXz9flKRsLEt/7dfOyBV9/1lkxlz0/RyJAT2aI=;
+	s=arc-20240116; t=1748367280; c=relaxed/simple;
+	bh=lA/+wO4qfs5S6T75s34/sO35fJ2rK9atjJPdxHeuvfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FTgCDLxZ0JgypvUhg3tXX4z+ghUs16mbv7uIqtfWPAAVPNfbZGkrqh+kJfA6Sveoi60e95r6z3vZloI1B3vVbbB2zIVUPgHz6hdpku7ySJYXNGCLl8t+B1sGYncpv7LHuEhsy02wUgmzCT2pjg5bofquqSJpIiFtJKrK3xTAE4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PS5lcDtT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VcscGYBPJ5ldq4YGd67KCawRPxnoO27/5xkNf3NzT+odxJmDd31m1Eg6V5vskxN6jAkGT+cflhooxP8Fs0BiDzUHrvHEejEP7bAPWfKYKphSyTVJkYIbo1MEVxNxgpZp69CAXYSLtBt0NlVsBSGTblS1JIfONVTGUyKCRSaC6eo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xI1Z0rhd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PS5lcDtT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6227C4CEEA;
-	Tue, 27 May 2025 17:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xI1Z0rhd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D245CC4CEE9;
+	Tue, 27 May 2025 17:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367277;
-	bh=JCcYiFXz9flKRsLEt/7dfOyBV9/1lkxlz0/RyJAT2aI=;
+	s=korg; t=1748367280;
+	bh=lA/+wO4qfs5S6T75s34/sO35fJ2rK9atjJPdxHeuvfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PS5lcDtTmIZXGN+IzH8cOG8GiBQT8VhqQlFpcL+T8m6kRSgdVahOQJuFfuKrhGCVa
-	 N1g7YL0OY4VZMOGXzScFsGHvd+MOBMGzLPpHagiu34Iz0CpK92WvbntBdPjpzJTipR
-	 nGH/qOk1FjpHB5ADmTllIlPaW+h/smwohZ8o0/sQ=
+	b=xI1Z0rhdqv9Lo2BbSlz0RtynORJJH0Ps7x4196ZZgtJcUKALvV/SS3EuFkWiVPjtZ
+	 2opu+VkAQW45m/PIyQ+I8LlxFuxZWIsc7NAmlb7BBAL6k+sxdERLTjgbnmS2oEc9qz
+	 DdM7DB+yt3HZatUGMzCEdBghlnq2wbuf+V9y5yaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Yuanjun Gong <ruc_gongyuanjun@163.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 335/783] drm/xe: xe_gen_wa_oob: replace program_invocation_short_name
-Date: Tue, 27 May 2025 18:22:12 +0200
-Message-ID: <20250527162526.702179186@linuxfoundation.org>
+Subject: [PATCH 6.14 336/783] leds: pwm-multicolor: Add check for fwnode_property_read_u32
+Date: Tue, 27 May 2025 18:22:13 +0200
+Message-ID: <20250527162526.743768250@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,55 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Gomez <da.gomez@samsung.com>
+From: Yuanjun Gong <ruc_gongyuanjun@163.com>
 
-[ Upstream commit 89eb42b5539f6ae6a0cabcb39e5b6fcc83c106a1 ]
+[ Upstream commit 6d91124e7edc109f114b1afe6d00d85d0d0ac174 ]
 
-program_invocation_short_name may not be available in other systems.
-Instead, replace it with the argv[0] to pass the executable name.
+Add a check to the return value of fwnode_property_read_u32()
+in case it fails.
 
-Fixes build error when program_invocation_short_name is not available:
-
-drivers/gpu/drm/xe/xe_gen_wa_oob.c:34:3: error: use of
-undeclared identifier 'program_invocation_short_name'    34 |
-program_invocation_short_name);       |                 ^ 1 error
-generated.
-
-Suggested-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250224-macos-build-support-xe-v3-1-d2c9ed3a27cc@samsung.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
+Link: https://lore.kernel.org/r/20250223121459.2889484-1-ruc_gongyuanjun@163.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gen_wa_oob.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/leds/rgb/leds-pwm-multicolor.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_gen_wa_oob.c b/drivers/gpu/drm/xe/xe_gen_wa_oob.c
-index 904cf47925aa1..ed9183599e31c 100644
---- a/drivers/gpu/drm/xe/xe_gen_wa_oob.c
-+++ b/drivers/gpu/drm/xe/xe_gen_wa_oob.c
-@@ -28,10 +28,10 @@
- 	"\n" \
- 	"#endif\n"
+diff --git a/drivers/leds/rgb/leds-pwm-multicolor.c b/drivers/leds/rgb/leds-pwm-multicolor.c
+index f80a06cc31f8a..1c7705bafdfc7 100644
+--- a/drivers/leds/rgb/leds-pwm-multicolor.c
++++ b/drivers/leds/rgb/leds-pwm-multicolor.c
+@@ -141,8 +141,11 @@ static int led_pwm_mc_probe(struct platform_device *pdev)
  
--static void print_usage(FILE *f)
-+static void print_usage(FILE *f, const char *progname)
- {
- 	fprintf(f, "usage: %s <input-rule-file> <generated-c-source-file> <generated-c-header-file>\n",
--		program_invocation_short_name);
-+		progname);
- }
- 
- static void print_parse_error(const char *err_msg, const char *line,
-@@ -144,7 +144,7 @@ int main(int argc, const char *argv[])
- 
- 	if (argc < 3) {
- 		fprintf(stderr, "ERROR: wrong arguments\n");
--		print_usage(stderr);
-+		print_usage(stderr, argv[0]);
- 		return 1;
- 	}
+ 	/* init the multicolor's LED class device */
+ 	cdev = &priv->mc_cdev.led_cdev;
+-	fwnode_property_read_u32(mcnode, "max-brightness",
++	ret = fwnode_property_read_u32(mcnode, "max-brightness",
+ 				 &cdev->max_brightness);
++	if (ret)
++		goto release_mcnode;
++
+ 	cdev->flags = LED_CORE_SUSPENDRESUME;
+ 	cdev->brightness_set_blocking = led_pwm_mc_set;
  
 -- 
 2.39.5
