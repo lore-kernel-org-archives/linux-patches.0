@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70568139579;
-	Tue, 27 May 2025 17:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C335D139579;
+	Tue, 27 May 2025 17:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365829; cv=none; b=CTRn/zZqWoqoKLgTAF7k/H7T74DDrXuQqF4K/C/dhMVmIRnoxKDM5jy9wPf1eoo04olS6d3pMosGgD322pXx3sD5mTS1gGtbOkxFRISlhe706yaz6C4qTnyrOaqwl+hpP3+qMbWqZpLDrYNLro9kMUzUNSWBlosaYgIFDrAn8Ew=
+	t=1748365832; cv=none; b=TYsU6p+UYNxt88x00ZSsW6WlsS2r3I0FqjqYjYfHI3XgKv27M3r46mJleTPJlwOnvgoohMZT7SJsgToGM+3kcIC1ZccTXZIn9kzvR5MAqLoE+HWfcBoNGqHb62xcLIE+1SonglVxuyDIBCWEpBz5s1xaheRztVUtg09bdcjNvtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365829; c=relaxed/simple;
-	bh=YyUzvvCGa5WPs5rO10JXCven8mAl2Z4OFdNGi1pqH1I=;
+	s=arc-20240116; t=1748365832; c=relaxed/simple;
+	bh=FfEqjFSURMZtBteaKGgq2vnouXRPTSQ/0Rfi947Q8Uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u6ruPFjK+ic2JZobGZdrDP27G2QwuMy1/0EmBWLO1Q8AxPM5uqzZREYvlL3RYOpiT0K9GfR4kPW0HyYBgT693vJBArLOjJP+JUpwunDx4G3GAba1gnh8tbs8o9pmcCo6+knF/sl05QidikzNLw0pO4iUm04hd11c6f3qkaCMP8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HYd676os; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=glsncDA7z+Bb/8w899YreF6LBzkrZSVkK1NF6TeuBWTk2u6wFZya0V9W+Lt4Nm4Ww3b8ywBLSX/7mRK1S+O5IQyazK6GRpo1OvhikTA0w6aMUe1DF7AmWFQysc5YxUzk+xSJP9H80NAyhx1RqAuTheJ/QQP5csnq8q6Idq0MzPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vIY8Yr9O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HYd676os"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB86C4CEE9;
-	Tue, 27 May 2025 17:10:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vIY8Yr9O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C544C4CEE9;
+	Tue, 27 May 2025 17:10:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365829;
-	bh=YyUzvvCGa5WPs5rO10JXCven8mAl2Z4OFdNGi1pqH1I=;
+	s=korg; t=1748365832;
+	bh=FfEqjFSURMZtBteaKGgq2vnouXRPTSQ/0Rfi947Q8Uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HYd676osm4pCUFp8y6XIdY2ErvpEXz7HQV48nhwRnTahIdEM0uSqN/Eli7i7OS1pj
-	 kURAr69j8BUyKaaDpOXUl1cyGPLFV0usBxitwL36dgN+E/CPGbtwowB63kNfG5vdPV
-	 X+76ETMW1NLwW4Fafh9cSGRlidqiv+FujEyztJEc=
+	b=vIY8Yr9Otb4wKmE7QjStjfUlyKOpWVYgbhnpTzKUsYkuuyiibCvnINoWKhiFKrkGu
+	 Hd+xG40lbwGQjWbe5Qeq5mZ192D3TUjOvtcnivQAvl8i+UJxj+Qmw6LNudHOuGZWUb
+	 kUzMek/mzVeKVRSNzGpckgIqlcaw8PRCQwyPIyvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lin.Cao" <lincao12@amd.com>,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
-	Matthew Auld <matthew.auld@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 502/626] drm/buddy: fix issue that force_merge cannot free all roots
-Date: Tue, 27 May 2025 18:26:35 +0200
-Message-ID: <20250527162505.371307002@linuxfoundation.org>
+Subject: [PATCH 6.12 503/626] drm/panel-edp: Add Starry 116KHD024006
+Date: Tue, 27 May 2025 18:26:36 +0200
+Message-ID: <20250527162505.410488881@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,52 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin.Cao <lincao12@amd.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 467dce3817bd2b62ccd6fcfd7aae76f242ac907e ]
+[ Upstream commit 749b5b279e5636cdcef51e15d67b77162cca6caa ]
 
-If buddy manager have more than one roots and each root have sub-block
-need to be free. When drm_buddy_fini called, the first loop of
-force_merge will merge and free all of the sub block of first root,
-which offset is 0x0 and size is biggest(more than have of the mm size).
-In subsequent force_merge rounds, if we use 0 as start and use remaining
-mm size as end, the block of other roots will be skipped in
-__force_merge function. It will cause the other roots can not be freed.
+We have a few reports of sc7180-trogdor-pompom devices that have a
+panel in them that IDs as STA 0x0004 and has the following raw EDID:
 
-Solution: use roots' offset as the start could fix this issue.
+  00 ff ff ff ff ff ff 00  4e 81 04 00 00 00 00 00
+  10 20 01 04 a5 1a 0e 78  0a dc dd 96 5b 5b 91 28
+  1f 52 54 00 00 00 01 01  01 01 01 01 01 01 01 01
+  01 01 01 01 01 01 8e 1c  56 a0 50 00 1e 30 28 20
+  55 00 00 90 10 00 00 18  00 00 00 00 00 00 00 00
+  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 fe
+  00 31 31 36 4b 48 44 30  32 34 30 30 36 0a 00 e6
 
-Signed-off-by: Lin.Cao <lincao12@amd.com>
-Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241226070116.309290-1-Arunpravin.PaneerSelvam@amd.com
+We've been unable to locate a datasheet for this panel and our partner
+has not been responsive, but all Starry eDP datasheets that we can
+find agree on the same timing (delay_100_500_e200) so it should be
+safe to use that here instead of the super conservative timings. We'll
+still go a little extra conservative and allow `hpd_absent` of 200
+instead of 100 because that won't add any real-world delay in most
+cases.
+
+We'll associate the string from the EDID ("116KHD024006") with this
+panel. Given that the ID is the suspicious value of 0x0004 it seems
+likely that Starry doesn't always update their IDs but the string will
+still work to differentiate if we ever need to in the future.
+
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250109142853.1.Ibcc3009933fd19507cc9c713ad0c99c7a9e4fe17@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_buddy.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-edp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/drm_buddy.c b/drivers/gpu/drm/drm_buddy.c
-index 103c185bb1c8a..ca42e6081d27c 100644
---- a/drivers/gpu/drm/drm_buddy.c
-+++ b/drivers/gpu/drm/drm_buddy.c
-@@ -324,7 +324,7 @@ EXPORT_SYMBOL(drm_buddy_init);
-  */
- void drm_buddy_fini(struct drm_buddy *mm)
- {
--	u64 root_size, size;
-+	u64 root_size, size, start;
- 	unsigned int order;
- 	int i;
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index 767e47a2b0c14..663af985d1b38 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -1983,6 +1983,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('S', 'H', 'P', 0x153a, &delay_200_500_e50, "LQ140T1JH01"),
+ 	EDP_PANEL_ENTRY('S', 'H', 'P', 0x154c, &delay_200_500_p2e100, "LQ116M1JW10"),
  
-@@ -332,7 +332,8 @@ void drm_buddy_fini(struct drm_buddy *mm)
++	EDP_PANEL_ENTRY('S', 'T', 'A', 0x0004, &delay_200_500_e200, "116KHD024006"),
+ 	EDP_PANEL_ENTRY('S', 'T', 'A', 0x0100, &delay_100_500_e200, "2081116HHD028001-51D"),
  
- 	for (i = 0; i < mm->n_roots; ++i) {
- 		order = ilog2(size) - ilog2(mm->chunk_size);
--		__force_merge(mm, 0, size, order);
-+		start = drm_buddy_block_offset(mm->roots[i]);
-+		__force_merge(mm, start, start + size, order);
- 
- 		WARN_ON(!drm_buddy_block_is_free(mm->roots[i]));
- 		drm_block_free(mm, mm->roots[i]);
+ 	{ /* sentinal */ }
 -- 
 2.39.5
 
