@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E675182D7;
-	Tue, 27 May 2025 17:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676E0182D7;
+	Tue, 27 May 2025 17:16:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366188; cv=none; b=SFSGVLqgwdPVXXfkZM+tL8rl9zo6WwigCbZBVlTeBi0myawxiykDPqocn8egOw7gEZeX0NSqxrWDFzjBARqkM4AgzqmCf4wh9gaAeJYBHWBzIVELimXO0uTR/kxuxFQgbcFgnnyjTZJFniPseh/LFSmLS3GPR7KsP+kS0Yb6qho=
+	t=1748366191; cv=none; b=Hfl4eOuXk6usrrPxtMPgSXQgXFWvb+e0zNKp+AigZr3JvDngQbUUanlH6+hfABBinJNQV/fVcmvazcTTYKIvyYhwGPPxHRil9x3wv8/Gyxe3+wWpr1zevHdzIdb0MlPoH3T40XmxFRolppR+TQg+bPZ58diZpK4APw4crjUccLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366188; c=relaxed/simple;
-	bh=4UbnXvZ8IQCHGynFW6bE70DRttAtOdtIfomIAcLrxXU=;
+	s=arc-20240116; t=1748366191; c=relaxed/simple;
+	bh=01Hd7+D9LM27uwNHf+FUqx+9M2UAuaWvXmY8eqmQXV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KYaJPSYYgy7xYk9nzSSxbIzTUkuFEhRmsVnm4LRJXUOB1B7faG0b+P/fbuX2Ld3D/XlSJ19iz1unM2Sf2x4YGyTrdaP52b19tn9AkySaAAivzf99G3N0+IShHUfjC5IWhZ0pNqJn4mKsRXvNVgQj8mU7ScbeOVGE6uXDDzY36gQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=weh0sbsR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IYhQV5lkm6JIWHe7fh1PpNTmAjyednQW9zOSQ1T4Zm6reHrHkK55uKxZHjS4IJQEIlclk3nOYOPW686T+tYk8O2AMxK3XFMm0r+Zgiqv939QNn6evq+/rzamAW/Z6DjyEJ+Djv3zBU/oS7S8DkNEsk5iqxRMwgCndv46H9dgE+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snOx47NB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="weh0sbsR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97B3C4CEE9;
-	Tue, 27 May 2025 17:16:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snOx47NB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE96C4CEE9;
+	Tue, 27 May 2025 17:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366188;
-	bh=4UbnXvZ8IQCHGynFW6bE70DRttAtOdtIfomIAcLrxXU=;
+	s=korg; t=1748366191;
+	bh=01Hd7+D9LM27uwNHf+FUqx+9M2UAuaWvXmY8eqmQXV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=weh0sbsRo+KfuUE+m7Eac0fdealq+2kigLDQb3rS7hF/vyZ5GF+LD3pkq72XJPiUo
-	 jaZoW0d0YeQnQOpbiU9L1VOUNKh52ZWPOwdON0MtdMHgrVJiSpvHgXDWbYNwerG3cM
-	 C+gLBMF5gTp/XQ4rMeZQNjq0b1yn6PL1eJdIl7sY=
+	b=snOx47NB1BvhEnkSskuKp9nS/aFPo3xKAgw5FerK1sPXfJcyVPsgj9hdYNBIK5Gxn
+	 v27D+tglRfRRZ/bwc3keWNQAD2OE1W1ltAG4LfLEtwCENf9VvHx0o8ZmOsFKHDas3U
+	 gmkca7vrIjZZJog2k+JO4EZvkqsWLpLdEvYA84fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 575/626] ASoC: SOF: ipc4-control: Use SOF_CTRL_CMD_BINARY as numid for bytes_ext
-Date: Tue, 27 May 2025 18:27:48 +0200
-Message-ID: <20250527162508.337916429@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 609/626] spi: use container_of_cont() for to_spi_device()
+Date: Tue, 27 May 2025 18:28:22 +0200
+Message-ID: <20250527162509.747746092@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -53,64 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 4d14b1069e9e672dbe1adab52594076da6f4a62d upstream.
+[ Upstream commit 1007ae0d464ceb55a3740634790521d3543aaab9 ]
 
-The header.numid is set to scontrol->comp_id in bytes_ext_get and it is
-ignored during bytes_ext_put.
-The use of comp_id is not quite great as it is kernel internal
-identification number.
+Some places in the spi core pass in a const pointer to a device and the
+default container_of() casts that away, which is not a good idea.
+Preserve the proper const attribute by using container_of_const() for
+to_spi_device() instead, which is what it was designed for.
 
-Set the header.numid to SOF_CTRL_CMD_BINARY during get and validate the
-numid during put to provide consistent and compatible identification
-number as IPC3.
+Note, this removes the NULL check for a device pointer in the call, but
+no one was ever checking for that return value, and a device pointer
+should never be NULL overall anyway, so this should be a safe change.
 
-For IPC4 existing tooling also ignored the numid but with the use of
-SOF_CTRL_CMD_BINARY the different handling of the blobs can be dropped,
-providing better user experience.
-
-Reported-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
-Closes: https://github.com/thesofproject/linux/issues/5282
-Fixes: a062c8899fed ("ASoC: SOF: ipc4-control: Add support for bytes control get and put")
-Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Link: https://patch.msgid.link/20250509085633.14930-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Fixes: d69d80484598 ("driver core: have match() callback in struct bus_type take a const *")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2025052230-fidgeting-stooge-66f5@gregkh
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc4-control.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ include/linux/spi/spi.h | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/sound/soc/sof/ipc4-control.c
-+++ b/sound/soc/sof/ipc4-control.c
-@@ -531,6 +531,14 @@ static int sof_ipc4_bytes_ext_put(struct
- 		return -EINVAL;
- 	}
+diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
+index 4b95663163e0b..71ad766932d31 100644
+--- a/include/linux/spi/spi.h
++++ b/include/linux/spi/spi.h
+@@ -247,10 +247,7 @@ struct spi_device {
+ static_assert((SPI_MODE_KERNEL_MASK & SPI_MODE_USER_MASK) == 0,
+ 	      "SPI_MODE_USER_MASK & SPI_MODE_KERNEL_MASK must not overlap");
  
-+	/* Check header id */
-+	if (header.numid != SOF_CTRL_CMD_BINARY) {
-+		dev_err_ratelimited(scomp->dev,
-+				    "Incorrect numid for bytes put %d\n",
-+				    header.numid);
-+		return -EINVAL;
-+	}
-+
- 	/* Verify the ABI header first */
- 	if (copy_from_user(&abi_hdr, tlvd->tlv, sizeof(abi_hdr)))
- 		return -EFAULT;
-@@ -613,7 +621,8 @@ static int _sof_ipc4_bytes_ext_get(struc
- 	if (data_size > size)
- 		return -ENOSPC;
+-static inline struct spi_device *to_spi_device(const struct device *dev)
+-{
+-	return dev ? container_of(dev, struct spi_device, dev) : NULL;
+-}
++#define to_spi_device(__dev)	container_of_const(__dev, struct spi_device, dev)
  
--	header.numid = scontrol->comp_id;
-+	/* Set header id and length */
-+	header.numid = SOF_CTRL_CMD_BINARY;
- 	header.length = data_size;
- 
- 	if (copy_to_user(tlvd, &header, sizeof(struct snd_ctl_tlv)))
+ /* Most drivers won't need to care about device refcounting */
+ static inline struct spi_device *spi_dev_get(struct spi_device *spi)
+-- 
+2.39.5
+
 
 
