@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4051413A244;
-	Tue, 27 May 2025 16:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4801313A244;
+	Tue, 27 May 2025 16:44:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364268; cv=none; b=gkM9/WQXTWiUrZkWocEzgvicuh8q6YPJzto+S0daredHPQGlpvkZO2hMTx/KDdBcusaIuSU7a3OdE/jKGdlCHNFJCtN9bpdAGALdsyyED4IY4aOXWv5pHSrl6wUBJhnmCF62AWzWWMw2ENeP9yG4qwawmJVH7KCgNHfIh0K3YpA=
+	t=1748364273; cv=none; b=XpMaDA5b8r0bBiSMhP+kJShsIXfUieIpWFCW2pojTsbTwkR4mPCWseVlqIqjsVKtbz+caCuwI7K228UNZhj5ZCWuJSX4NzS3PHe4O3spD6TT6HmHrL6A4UREB7NrUVvDPgZQVweSEffqlGQp0uHQLN6JCQR5TvaCsg6xe35cYaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364268; c=relaxed/simple;
-	bh=PXIiai3zXouy7fIC7kpdEWoEDN/ZX+EJvrv3egI5OVE=;
+	s=arc-20240116; t=1748364273; c=relaxed/simple;
+	bh=gzyWRFIzIAtCRrq1xmKesblpRit84UrlKGjGe/d2vig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nQIOPa8mLa6A/Kf0i1m8t6lQS7GBbGmK8gJTtthRIoautym1D011hptYOTR1Z1N4TKivJHAxeJyJx5+xFehcbkJIgAlUwZte/3Ol32HDIDuGxhNmRrRyDOyWrOhDkJDaWwH5LUFfYNYs0Oum/fw0xv16scmrWsYq7Ic75XfbEJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qmbgt7HK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iieAaKYejMona4nqDLnLr6T7l0E/f30KScIwk/Er3PfCBbYJHuhYOAPYLTKFwdhlfE9HQC3acZ/dCfB2EFkb612H0jEYoXZ8HkJyAiPtVEO29azDpc33Qn/s6C6M4mp82/kayM0p6ecp7sA50MJMNHXjc/hD17SvLb5PkP7CqGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S6YfCkp/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qmbgt7HK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C32BC4CEE9;
-	Tue, 27 May 2025 16:44:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6YfCkp/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8FEC4CEEB;
+	Tue, 27 May 2025 16:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364267;
-	bh=PXIiai3zXouy7fIC7kpdEWoEDN/ZX+EJvrv3egI5OVE=;
+	s=korg; t=1748364270;
+	bh=gzyWRFIzIAtCRrq1xmKesblpRit84UrlKGjGe/d2vig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qmbgt7HKDF9IZ8XimlEsUYdwmDXVNhVmOPsTVG+ERHqqcFoTgwlnYp+rcNxuORcPv
-	 jwlsB0qTo3k5gRECxNvhEX68ecUiXSAe9ww1qnatTjz8pcOZfDXpYA/IISD3+Pq4Ta
-	 dIgx1Qk48t6dLDQbzq+yDzYxQo5wgxRR5y45jMog=
+	b=S6YfCkp/ya9sDUCgWwOLHQBY4zhkwvdx7u37v8kGerT9vOgQP3TG4Z9WK8fxtUqD1
+	 XkmLxU/hWMTEZBTQm0nakzBj1IYTAnJPzE5Mo0WVwCje4pk+oOYHb2t9DzkzqkheF9
+	 0NBAJ3P5u3WZO9Z/ZgeAXHW6MNAh3YibJPxowBKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Dillon Varone <dillon.varone@amd.com>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Anthony Koo <anthony.koo@amd.com>,
+	Robin Chen <robin.chen@amd.com>,
+	Danny Wang <danny.wang@amd.com>,
+	Zhongwei Zhang <Zhongwei.Zhang@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 001/626] drm/amd/display: Configure DTBCLK_P with OPTC only for dcn401
-Date: Tue, 27 May 2025 18:18:14 +0200
-Message-ID: <20250527162445.105890436@linuxfoundation.org>
+Subject: [PATCH 6.12 002/626] drm/amd/display: Do not enable replay when vtotal update is pending.
+Date: Tue, 27 May 2025 18:18:15 +0200
+Message-ID: <20250527162445.145617135@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -54,244 +56,266 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dillon Varone <dillon.varone@amd.com>
+From: Danny Wang <danny.wang@amd.com>
 
-[ Upstream commit 3c6c8d1a1e3f033f1abf84d6d54c268c35b0fcdd ]
+[ Upstream commit bd00b29b5f236dce677089319176dee5872b5a7a ]
 
-[WHY]
-DTBCLK_P is used to generate virtual pixel clock, and to drive the HPO
-stream encoder clock. Programming the required clock when
-enabling/disabling both components can cause issues.
-For example, if HPO is being disabled and clock source is changed to
-REFCLK, virtual pixel rate will then be wrong, causing issues in CRTC.
+[Why&How]
+Vtotal is not applied to HW when handling vsync interrupt.
+Make sure vtotal is aligned before enable replay.
 
-[HOW]
-Only program the DTBCLK_P when programming CRTC, as its expected it will
-be enabled prior to HPO, and disabled after HPO in all valid cases.
-
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Signed-off-by: Dillon Varone <dillon.varone@amd.com>
-Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Reviewed-by: Anthony Koo <anthony.koo@amd.com>
+Reviewed-by: Robin Chen <robin.chen@amd.com>
+Signed-off-by: Danny Wang <danny.wang@amd.com>
+Signed-off-by: Zhongwei Zhang <Zhongwei.Zhang@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: 874697e12793 ("drm/amd/display: Defer BW-optimization-blocked DRR adjustments")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../amd/display/dc/dccg/dcn401/dcn401_dccg.c  |   3 -
- .../amd/display/dc/hwss/dcn401/dcn401_hwseq.c | 135 +++++++++++++++++-
- .../amd/display/dc/hwss/dcn401/dcn401_hwseq.h |   7 +
- .../amd/display/dc/hwss/dcn401/dcn401_init.c  |   4 +-
- 4 files changed, 142 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c          |  9 +++++++--
+ .../gpu/drm/amd/display/dc/core/dc_hw_sequencer.c | 15 +++++++++++++++
+ drivers/gpu/drm/amd/display/dc/dc_hw_types.h      |  1 +
+ .../drm/amd/display/dc/hwss/dce110/dce110_hwseq.c |  7 ++-----
+ .../drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c   |  7 ++-----
+ .../drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c   |  8 ++------
+ .../drm/amd/display/dc/hwss/dcn31/dcn31_hwseq.c   |  4 +---
+ .../drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c   |  3 +--
+ .../drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c | 10 +++-------
+ .../gpu/drm/amd/display/dc/hwss/hw_sequencer.h    |  6 ++++++
+ 10 files changed, 40 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c b/drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c
-index 0b889004509ad..62402c7be0a5e 100644
---- a/drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c
-+++ b/drivers/gpu/drm/amd/display/dc/dccg/dcn401/dcn401_dccg.c
-@@ -580,9 +580,6 @@ static void dccg401_set_dpstreamclk(
- 		int otg_inst,
- 		int dp_hpo_inst)
- {
--	/* set the dtbclk_p source */
--	dccg401_set_dtbclk_p_src(dccg, src, otg_inst);
--
- 	/* enabled to select one of the DTBCLKs for pipe */
- 	if (src == REFCLK)
- 		dccg401_disable_dpstreamclk(dccg, dp_hpo_inst);
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-index 62f1e597787e6..b6b333a2461f8 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -844,6 +844,13 @@ enum dc_status dcn401_enable_stream_timing(
- 				odm_slice_width, last_odm_slice_width);
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 216b525bd75e7..3392746f1d420 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -452,6 +452,7 @@ bool dc_stream_adjust_vmin_vmax(struct dc *dc,
  
-+	/* set DTBCLK_P */
-+	if (dc->res_pool->dccg->funcs->set_dtbclk_p_src) {
-+		if (dc_is_dp_signal(stream->signal) || dc_is_virtual_signal(stream->signal)) {
-+			dc->res_pool->dccg->funcs->set_dtbclk_p_src(dc->res_pool->dccg, DPREFCLK, pipe_ctx->stream_res.tg->inst);
-+		}
-+	}
-+
- 	/* HW program guide assume display already disable
- 	 * by unplug sequence. OTG assume stop.
- 	 */
-@@ -1007,8 +1014,6 @@ void dcn401_enable_stream(struct pipe_ctx *pipe_ctx)
- 				dccg->funcs->enable_symclk32_se(dccg, dp_hpo_inst, phyd32clk);
- 			}
- 		} else {
--			/* need to set DTBCLK_P source to DPREFCLK for DP8B10B */
--			dccg->funcs->set_dtbclk_p_src(dccg, DPREFCLK, tg->inst);
- 			dccg->funcs->enable_symclk_se(dccg, stream_enc->stream_enc_inst,
- 					link_enc->transmitter - TRANSMITTER_UNIPHY_A);
+ 	if (dc->caps.max_v_total != 0 &&
+ 		(adjust->v_total_max > dc->caps.max_v_total || adjust->v_total_min > dc->caps.max_v_total)) {
++		stream->adjust.timing_adjust_pending = false;
+ 		if (adjust->allow_otg_v_count_halt)
+ 			return set_long_vtotal(dc, stream, adjust);
+ 		else
+@@ -465,7 +466,7 @@ bool dc_stream_adjust_vmin_vmax(struct dc *dc,
+ 			dc->hwss.set_drr(&pipe,
+ 					1,
+ 					*adjust);
+-
++			stream->adjust.timing_adjust_pending = false;
+ 			return true;
  		}
-@@ -1773,3 +1778,129 @@ void dcn401_program_outstanding_updates(struct dc *dc,
- 	if (hubbub->funcs->program_compbuf_segments)
- 		hubbub->funcs->program_compbuf_segments(hubbub, context->bw_ctx.bw.dcn.arb_regs.compbuf_size, true);
+ 	}
+@@ -2975,8 +2976,12 @@ static void copy_stream_update_to_stream(struct dc *dc,
+ 	if (update->vrr_active_fixed)
+ 		stream->vrr_active_fixed = *update->vrr_active_fixed;
+ 
+-	if (update->crtc_timing_adjust)
++	if (update->crtc_timing_adjust) {
++		if (stream->adjust.v_total_min != update->crtc_timing_adjust->v_total_min ||
++			stream->adjust.v_total_max != update->crtc_timing_adjust->v_total_max)
++			stream->adjust.timing_adjust_pending = true;
+ 		stream->adjust = *update->crtc_timing_adjust;
++	}
+ 
+ 	if (update->dpms_off)
+ 		stream->dpms_off = *update->dpms_off;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
+index bb766c2a74176..fdcba960e1e6f 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
+@@ -554,6 +554,21 @@ void set_p_state_switch_method(
+ 	}
  }
-+
-+void dcn401_reset_back_end_for_pipe(
-+		struct dc *dc,
+ 
++void set_drr_and_clear_adjust_pending(
 +		struct pipe_ctx *pipe_ctx,
-+		struct dc_state *context)
++		struct dc_stream_state *stream,
++		struct drr_params *params)
 +{
-+	int i;
-+	struct dc_link *link = pipe_ctx->stream->link;
-+	const struct link_hwss *link_hwss = get_link_hwss(link, &pipe_ctx->link_res);
++	/* params can be null.*/
++	if (pipe_ctx && pipe_ctx->stream_res.tg &&
++			pipe_ctx->stream_res.tg->funcs->set_drr)
++		pipe_ctx->stream_res.tg->funcs->set_drr(
++				pipe_ctx->stream_res.tg, params);
 +
-+	DC_LOGGER_INIT(dc->ctx->logger);
-+	if (pipe_ctx->stream_res.stream_enc == NULL) {
-+		pipe_ctx->stream = NULL;
-+		return;
-+	}
-+
-+	/* DPMS may already disable or */
-+	/* dpms_off status is incorrect due to fastboot
-+	 * feature. When system resume from S4 with second
-+	 * screen only, the dpms_off would be true but
-+	 * VBIOS lit up eDP, so check link status too.
-+	 */
-+	if (!pipe_ctx->stream->dpms_off || link->link_status.link_active)
-+		dc->link_srv->set_dpms_off(pipe_ctx);
-+	else if (pipe_ctx->stream_res.audio)
-+		dc->hwss.disable_audio_stream(pipe_ctx);
-+
-+	/* free acquired resources */
-+	if (pipe_ctx->stream_res.audio) {
-+		/*disable az_endpoint*/
-+		pipe_ctx->stream_res.audio->funcs->az_disable(pipe_ctx->stream_res.audio);
-+
-+		/*free audio*/
-+		if (dc->caps.dynamic_audio == true) {
-+			/*we have to dynamic arbitrate the audio endpoints*/
-+			/*we free the resource, need reset is_audio_acquired*/
-+			update_audio_usage(&dc->current_state->res_ctx, dc->res_pool,
-+					pipe_ctx->stream_res.audio, false);
-+			pipe_ctx->stream_res.audio = NULL;
-+		}
-+	}
-+
-+	/* by upper caller loop, parent pipe: pipe0, will be reset last.
-+	 * back end share by all pipes and will be disable only when disable
-+	 * parent pipe.
-+	 */
-+	if (pipe_ctx->top_pipe == NULL) {
-+
-+		dc->hwss.set_abm_immediate_disable(pipe_ctx);
-+
-+		pipe_ctx->stream_res.tg->funcs->disable_crtc(pipe_ctx->stream_res.tg);
-+
-+		pipe_ctx->stream_res.tg->funcs->enable_optc_clock(pipe_ctx->stream_res.tg, false);
-+		if (pipe_ctx->stream_res.tg->funcs->set_odm_bypass)
-+			pipe_ctx->stream_res.tg->funcs->set_odm_bypass(
-+					pipe_ctx->stream_res.tg, &pipe_ctx->stream->timing);
-+
-+		if (pipe_ctx->stream_res.tg->funcs->set_drr)
-+			pipe_ctx->stream_res.tg->funcs->set_drr(
-+					pipe_ctx->stream_res.tg, NULL);
-+		/* TODO - convert symclk_ref_cnts for otg to a bit map to solve
-+		 * the case where the same symclk is shared across multiple otg
-+		 * instances
-+		 */
-+		if (dc_is_hdmi_tmds_signal(pipe_ctx->stream->signal))
-+			link->phy_state.symclk_ref_cnts.otg = 0;
-+		if (link->phy_state.symclk_state == SYMCLK_ON_TX_OFF) {
-+			link_hwss->disable_link_output(link,
-+					&pipe_ctx->link_res, pipe_ctx->stream->signal);
-+			link->phy_state.symclk_state = SYMCLK_OFF_TX_OFF;
-+		}
-+
-+		/* reset DTBCLK_P */
-+		if (dc->res_pool->dccg->funcs->set_dtbclk_p_src)
-+			dc->res_pool->dccg->funcs->set_dtbclk_p_src(dc->res_pool->dccg, REFCLK, pipe_ctx->stream_res.tg->inst);
-+	}
-+
-+	for (i = 0; i < dc->res_pool->pipe_count; i++)
-+		if (&dc->current_state->res_ctx.pipe_ctx[i] == pipe_ctx)
-+			break;
-+
-+	if (i == dc->res_pool->pipe_count)
-+		return;
-+
-+/*
-+ * In case of a dangling plane, setting this to NULL unconditionally
-+ * causes failures during reset hw ctx where, if stream is NULL,
-+ * it is expected that the pipe_ctx pointers to pipes and plane are NULL.
-+ */
-+	pipe_ctx->stream = NULL;
-+	DC_LOG_DEBUG("Reset back end for pipe %d, tg:%d\n",
-+					pipe_ctx->pipe_idx, pipe_ctx->stream_res.tg->inst);
++	if (stream)
++		stream->adjust.timing_adjust_pending = false;
 +}
 +
-+void dcn401_reset_hw_ctx_wrap(
-+		struct dc *dc,
-+		struct dc_state *context)
-+{
-+	int i;
-+	struct dce_hwseq *hws = dc->hwseq;
-+
-+	/* Reset Back End*/
-+	for (i = dc->res_pool->pipe_count - 1; i >= 0 ; i--) {
-+		struct pipe_ctx *pipe_ctx_old =
-+			&dc->current_state->res_ctx.pipe_ctx[i];
-+		struct pipe_ctx *pipe_ctx = &context->res_ctx.pipe_ctx[i];
-+
-+		if (!pipe_ctx_old->stream)
-+			continue;
-+
-+		if (pipe_ctx_old->top_pipe || pipe_ctx_old->prev_odm_pipe)
-+			continue;
-+
-+		if (!pipe_ctx->stream ||
-+				pipe_need_reprogram(pipe_ctx_old, pipe_ctx)) {
-+			struct clock_source *old_clk = pipe_ctx_old->clock_source;
-+
-+			if (hws->funcs.reset_back_end_for_pipe)
-+				hws->funcs.reset_back_end_for_pipe(dc, pipe_ctx_old, dc->current_state);
-+			if (hws->funcs.enable_stream_gating)
-+				hws->funcs.enable_stream_gating(dc, pipe_ctx_old);
-+			if (old_clk)
-+				old_clk->funcs->cs_power_down(old_clk);
-+		}
-+	}
-+}
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.h b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.h
-index a27e62081685d..6256429c8a4f6 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.h
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.h
-@@ -84,4 +84,11 @@ void adjust_hotspot_between_slices_for_2x_magnify(uint32_t cursor_width, struct
- void dcn401_wait_for_det_buffer_update(struct dc *dc, struct dc_state *context, struct pipe_ctx *otg_master);
- void dcn401_interdependent_update_lock(struct dc *dc, struct dc_state *context, bool lock);
- void dcn401_program_outstanding_updates(struct dc *dc, struct dc_state *context);
-+void dcn401_reset_back_end_for_pipe(
-+		struct dc *dc,
-+		struct pipe_ctx *pipe_ctx,
-+		struct dc_state *context);
-+void dcn401_reset_hw_ctx_wrap(
-+		struct dc *dc,
-+		struct dc_state *context);
- #endif /* __DC_HWSS_DCN401_H__ */
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_init.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_init.c
-index a2ca07235c83d..d6f36b8e1a261 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_init.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_init.c
-@@ -111,7 +111,7 @@ static const struct hwseq_private_funcs dcn401_private_funcs = {
- 	.power_down = dce110_power_down,
- 	.enable_display_power_gating = dcn10_dummy_display_power_gating,
- 	.blank_pixel_data = dcn20_blank_pixel_data,
--	.reset_hw_ctx_wrap = dcn20_reset_hw_ctx_wrap,
-+	.reset_hw_ctx_wrap = dcn401_reset_hw_ctx_wrap,
- 	.enable_stream_timing = dcn401_enable_stream_timing,
- 	.edp_backlight_control = dce110_edp_backlight_control,
- 	.setup_vupdate_interrupt = dcn20_setup_vupdate_interrupt,
-@@ -136,7 +136,7 @@ static const struct hwseq_private_funcs dcn401_private_funcs = {
- 	.update_mall_sel = dcn32_update_mall_sel,
- 	.calculate_dccg_k1_k2_values = NULL,
- 	.apply_single_controller_ctx_to_hw = dce110_apply_single_controller_ctx_to_hw,
--	.reset_back_end_for_pipe = dcn20_reset_back_end_for_pipe,
-+	.reset_back_end_for_pipe = dcn401_reset_back_end_for_pipe,
- 	.populate_mcm_luts = NULL,
+ void get_fams2_visual_confirm_color(
+ 		struct dc *dc,
+ 		struct dc_state *context,
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_hw_types.h b/drivers/gpu/drm/amd/display/dc/dc_hw_types.h
+index c10567ec1c819..0ded4bc7825b0 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_hw_types.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_hw_types.h
+@@ -1000,6 +1000,7 @@ struct dc_crtc_timing_adjust {
+ 	uint32_t v_total_mid;
+ 	uint32_t v_total_mid_frame_num;
+ 	uint32_t allow_otg_v_count_halt;
++	uint8_t timing_adjust_pending;
  };
  
+ 
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+index 4fbed0298adfa..1e76524d116dc 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+@@ -1653,9 +1653,7 @@ enum dc_status dce110_apply_single_controller_ctx_to_hw(
+ 
+ 	params.vertical_total_min = stream->adjust.v_total_min;
+ 	params.vertical_total_max = stream->adjust.v_total_max;
+-	if (pipe_ctx->stream_res.tg->funcs->set_drr)
+-		pipe_ctx->stream_res.tg->funcs->set_drr(
+-			pipe_ctx->stream_res.tg, &params);
++	set_drr_and_clear_adjust_pending(pipe_ctx, stream, &params);
+ 
+ 	// DRR should set trigger event to monitor surface update event
+ 	if (stream->adjust.v_total_min != 0 && stream->adjust.v_total_max != 0)
+@@ -2103,8 +2101,7 @@ static void set_drr(struct pipe_ctx **pipe_ctx,
+ 		struct timing_generator *tg = pipe_ctx[i]->stream_res.tg;
+ 
+ 		if ((tg != NULL) && tg->funcs) {
+-			if (tg->funcs->set_drr)
+-				tg->funcs->set_drr(tg, &params);
++			set_drr_and_clear_adjust_pending(pipe_ctx[i], pipe_ctx[i]->stream, &params);
+ 			if (adjust.v_total_max != 0 && adjust.v_total_min != 0)
+ 				if (tg->funcs->set_static_screen_control)
+ 					tg->funcs->set_static_screen_control(
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
+index d725af14af371..00be0b26689d3 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
+@@ -1112,9 +1112,7 @@ static void dcn10_reset_back_end_for_pipe(
+ 		pipe_ctx->stream_res.tg->funcs->disable_crtc(pipe_ctx->stream_res.tg);
+ 
+ 		pipe_ctx->stream_res.tg->funcs->enable_optc_clock(pipe_ctx->stream_res.tg, false);
+-		if (pipe_ctx->stream_res.tg->funcs->set_drr)
+-			pipe_ctx->stream_res.tg->funcs->set_drr(
+-					pipe_ctx->stream_res.tg, NULL);
++		set_drr_and_clear_adjust_pending(pipe_ctx, pipe_ctx->stream, NULL);
+ 		if (dc_is_hdmi_tmds_signal(pipe_ctx->stream->signal))
+ 			pipe_ctx->stream->link->phy_state.symclk_ref_cnts.otg = 0;
+ 	}
+@@ -3217,8 +3215,7 @@ void dcn10_set_drr(struct pipe_ctx **pipe_ctx,
+ 		struct timing_generator *tg = pipe_ctx[i]->stream_res.tg;
+ 
+ 		if ((tg != NULL) && tg->funcs) {
+-			if (tg->funcs->set_drr)
+-				tg->funcs->set_drr(tg, &params);
++			set_drr_and_clear_adjust_pending(pipe_ctx[i], pipe_ctx[i]->stream, &params);
+ 			if (adjust.v_total_max != 0 && adjust.v_total_min != 0)
+ 				if (tg->funcs->set_static_screen_control)
+ 					tg->funcs->set_static_screen_control(
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+index f5f1ccd8303cf..9c5cdb3b80b5d 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+@@ -952,9 +952,7 @@ enum dc_status dcn20_enable_stream_timing(
+ 	params.vertical_total_max = stream->adjust.v_total_max;
+ 	params.vertical_total_mid = stream->adjust.v_total_mid;
+ 	params.vertical_total_mid_frame_num = stream->adjust.v_total_mid_frame_num;
+-	if (pipe_ctx->stream_res.tg->funcs->set_drr)
+-		pipe_ctx->stream_res.tg->funcs->set_drr(
+-			pipe_ctx->stream_res.tg, &params);
++	set_drr_and_clear_adjust_pending(pipe_ctx, stream, &params);
+ 
+ 	// DRR should set trigger event to monitor surface update event
+ 	if (stream->adjust.v_total_min != 0 && stream->adjust.v_total_max != 0)
+@@ -2822,9 +2820,7 @@ void dcn20_reset_back_end_for_pipe(
+ 			pipe_ctx->stream_res.tg->funcs->set_odm_bypass(
+ 					pipe_ctx->stream_res.tg, &pipe_ctx->stream->timing);
+ 
+-		if (pipe_ctx->stream_res.tg->funcs->set_drr)
+-			pipe_ctx->stream_res.tg->funcs->set_drr(
+-					pipe_ctx->stream_res.tg, NULL);
++		set_drr_and_clear_adjust_pending(pipe_ctx, pipe_ctx->stream, NULL);
+ 		/* TODO - convert symclk_ref_cnts for otg to a bit map to solve
+ 		 * the case where the same symclk is shared across multiple otg
+ 		 * instances
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn31/dcn31_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn31/dcn31_hwseq.c
+index 3d4b31bd99469..9aa925a0b3b43 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn31/dcn31_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn31/dcn31_hwseq.c
+@@ -528,9 +528,7 @@ static void dcn31_reset_back_end_for_pipe(
+ 	if (dc_is_hdmi_tmds_signal(pipe_ctx->stream->signal))
+ 		pipe_ctx->stream->link->phy_state.symclk_ref_cnts.otg = 0;
+ 
+-	if (pipe_ctx->stream_res.tg->funcs->set_drr)
+-		pipe_ctx->stream_res.tg->funcs->set_drr(
+-				pipe_ctx->stream_res.tg, NULL);
++	set_drr_and_clear_adjust_pending(pipe_ctx, pipe_ctx->stream, NULL);
+ 
+ 	link = pipe_ctx->stream->link;
+ 	/* DPMS may already disable or */
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
+index 38755ca771401..ca446e08f6a27 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
+@@ -1452,8 +1452,7 @@ void dcn35_set_drr(struct pipe_ctx **pipe_ctx,
+ 					num_frames = 2 * (frame_rate % 60);
+ 				}
+ 			}
+-			if (tg->funcs->set_drr)
+-				tg->funcs->set_drr(tg, &params);
++			set_drr_and_clear_adjust_pending(pipe_ctx[i], pipe_ctx[i]->stream, &params);
+ 			if (adjust.v_total_max != 0 && adjust.v_total_min != 0)
+ 				if (tg->funcs->set_static_screen_control)
+ 					tg->funcs->set_static_screen_control(
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+index b6b333a2461f8..3279f347660cb 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+@@ -902,10 +902,7 @@ enum dc_status dcn401_enable_stream_timing(
+ 	}
+ 
+ 	hws->funcs.wait_for_blank_complete(pipe_ctx->stream_res.opp);
+-
+-	if (pipe_ctx->stream_res.tg->funcs->set_drr)
+-		pipe_ctx->stream_res.tg->funcs->set_drr(
+-			pipe_ctx->stream_res.tg, &params);
++	set_drr_and_clear_adjust_pending(pipe_ctx, stream, &params);
+ 
+ 	/* Event triggers and num frames initialized for DRR, but can be
+ 	 * later updated for PSR use. Note DRR trigger events are generated
+@@ -1835,9 +1832,8 @@ void dcn401_reset_back_end_for_pipe(
+ 			pipe_ctx->stream_res.tg->funcs->set_odm_bypass(
+ 					pipe_ctx->stream_res.tg, &pipe_ctx->stream->timing);
+ 
+-		if (pipe_ctx->stream_res.tg->funcs->set_drr)
+-			pipe_ctx->stream_res.tg->funcs->set_drr(
+-					pipe_ctx->stream_res.tg, NULL);
++		set_drr_and_clear_adjust_pending(pipe_ctx, pipe_ctx->stream, NULL);
++
+ 		/* TODO - convert symclk_ref_cnts for otg to a bit map to solve
+ 		 * the case where the same symclk is shared across multiple otg
+ 		 * instances
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h b/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h
+index ac92056256233..9ae6259f2db17 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h
++++ b/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h
+@@ -46,6 +46,7 @@ struct dce_hwseq;
+ struct link_resource;
+ struct dc_dmub_cmd;
+ struct pg_block_update;
++struct drr_params;
+ 
+ struct subvp_pipe_control_lock_fast_params {
+ 	struct dc *dc;
+@@ -509,6 +510,11 @@ void set_p_state_switch_method(
+ 		struct dc_state *context,
+ 		struct pipe_ctx *pipe_ctx);
+ 
++void set_drr_and_clear_adjust_pending(
++		struct pipe_ctx *pipe_ctx,
++		struct dc_stream_state *stream,
++		struct drr_params *params);
++
+ void hwss_execute_sequence(struct dc *dc,
+ 		struct block_sequence block_sequence[],
+ 		int num_steps);
 -- 
 2.39.5
 
