@@ -1,50 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7776E1E89C;
-	Tue, 27 May 2025 17:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9167F26F449;
+	Tue, 27 May 2025 17:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366383; cv=none; b=QTznXiEY7OoI5ORXwT6GVB+korisJR9wXsg25yKRGj/pjJKDcVYYz7ZjsdPH+J8Ayw9HOoYHVQU08C8fij8RJqt6pva5RFKARJa/+Eqcre1aLamhhqa/2ygOM48Z8VBl/wsHujnoj1vw7yJjUsDBZoh/CJ38vy/Vm6jQhA1s4GU=
+	t=1748366386; cv=none; b=d0kAu34nyNHvEdsCVGMe0nGYGJyu5WcB2kE75Y5r8a16nC493RjMmXg9LCINMQnmkgqjpl9lxJj2IDRtSaXs1lggwkQs9zHgRqPc7Cbvrb9Xsdqt4/JcEhiJMxPTgh8KM0Nsw7/KAmK1Ivere6qnePhZjgzs6+TlVOy+H1B+hq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366383; c=relaxed/simple;
-	bh=63xhmFP5ZsAH+ToPLiR1Pm83yzbrEyishYWo9HEOVxM=;
+	s=arc-20240116; t=1748366386; c=relaxed/simple;
+	bh=cCgzwQEPeymK8k+ISaXd//gVlxWFQvZj5nV4NvMVYbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZuTzh0X+sKCrZZO3A3tDT1gWB5GYDC34ovEDn7lrhUjXzy/DiT6jcSOa864931LWo3OdfFcu9dajD5p5Jme0tAZSalbCJF9Ww6b/5RxslFVwq19QJoPZTtojlxrQgh/k1pg1eikIl1rvFBfHqDlRfOU4vww/IxhLcNxXZfN1Rgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KFjCbvwc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H/8VW9T/DqgS+uTP/kKTlrzVL2/dYUjY2sxR/epGC0ZTPTuSK7Hn2e9SY58t5yqbyg/arg7azRhTh0k0lK+ygloYaYmKNTEt6W2RaTZW5trpg0XAOCP7kmrBZ/EgJmTbJqT86BuUUH8tIZxnwm+KOZkp0x7epwpbxl96V4ldELM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLZV97aC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KFjCbvwc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578B4C4CEE9;
-	Tue, 27 May 2025 17:19:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLZV97aC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4652C4CEEB;
+	Tue, 27 May 2025 17:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366382;
-	bh=63xhmFP5ZsAH+ToPLiR1Pm83yzbrEyishYWo9HEOVxM=;
+	s=korg; t=1748366385;
+	bh=cCgzwQEPeymK8k+ISaXd//gVlxWFQvZj5nV4NvMVYbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KFjCbvwcRcepV87PIuxolwGEdy1Y874rmMUIF7VVqBejSef6MkdUafzfHUY6WKby9
-	 F35ygXdUnagC3ksiSuFIYPBZ2Luo8tLuybe6cshM3F5B4S1StmMkoZtXHNl3VX5ypl
-	 1mXkcBxVXR5iU3TiewqkQwqXh9ihPSNgKSiN+dTk=
+	b=BLZV97aCFz5q4894ELQXLwnJ7/WNpEkOEW/09KMf1dMzC61aWVLxl2lySJz323j/R
+	 bJ7fEO+bEkMrMKNia6eGDRclwLjJeQfabmU64P9PxPkUDoL4VQUlCLXRRxNmY2apbE
+	 ZMVVpJwP2MlUUPaW3WQpiy2OMV67ipluaD+a3Kkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Kees Cook <kees@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Bert Karwatzki <spasswolf@web.de>,
-	Christoph Hellwig <hch@infradead.org>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 019/783] dma/mapping.c: dev_dbg support for dma_addressing_limited
-Date: Tue, 27 May 2025 18:16:56 +0200
-Message-ID: <20250527162513.854258833@linuxfoundation.org>
+Subject: [PATCH 6.14 020/783] intel_th: avoid using deprecated page->mapping, index fields
+Date: Tue, 27 May 2025 18:16:57 +0200
+Message-ID: <20250527162513.906178625@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -57,85 +45,149 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Balbir Singh <balbirs@nvidia.com>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-[ Upstream commit 2042c352e21d19eaf5f9e22fb6afce72293ef28c ]
+[ Upstream commit 8e553520596bbd5ce832e26e9d721e6a0c797b8b ]
 
-In the debug and resolution of an issue involving forced use of bounce
-buffers, 7170130e4c72 ("x86/mm/init: Handle the special case of device
-private pages in add_pages(), to not increase max_pfn and trigger
-dma_addressing_limited() bounce buffers"). It would have been easier
-to debug the issue if dma_addressing_limited() had debug information
-about the device not being able to address all of memory and thus forcing
-all accesses through a bounce buffer. Please see[2]
+The struct page->mapping, index fields are deprecated and soon to be only
+available as part of a folio.
 
-Implement dev_dbg to debug the potential use of bounce buffers
-when we hit the condition. When swiotlb is used,
-dma_addressing_limited() is used to determine the size of maximum dma
-buffer size in dma_direct_max_mapping_size(). The debug prints could be
-triggered in that check as well (when enabled).
+It is likely the intel_th code which sets page->mapping, index is was
+implemented out of concern that some aspect of the page fault logic may
+encounter unexpected problems should they not.
 
-Link: https://lore.kernel.org/lkml/20250401000752.249348-1-balbirs@nvidia.com/ [1]
-Link: https://lore.kernel.org/lkml/20250310112206.4168-1-spasswolf@web.de/ [2]
+However, the appropriate interface for inserting kernel-allocated memory is
+vm_insert_page() in a VM_MIXEDMAP. By using the helper function
+vmf_insert_mixed() we can do this with minimal churn in the existing fault
+handler.
 
-Cc: Marek Szyprowski <m.szyprowski@samsung.com>
-Cc: Robin Murphy <robin.murphy@arm.com>
-Cc: "Christian König" <christian.koenig@amd.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Bert Karwatzki <spasswolf@web.de>
-Cc: Christoph Hellwig <hch@infradead.org>
+By doing so, we bypass the remainder of the faulting logic. The pages are
+still pinned so there is no possibility of anything unexpected being done
+with the pages once established.
 
-Signed-off-by: Balbir Singh <balbirs@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20250414113752.3298276-1-balbirs@nvidia.com
+It would also be reasonable to pre-map everything on fault, however to
+minimise churn we retain the fault handler.
+
+We also eliminate all code which clears page->mapping on teardown as this
+has now become unnecessary.
+
+The MSU code relies on faulting to function correctly, so is by definition
+dependent on CONFIG_MMU. We avoid spurious reports about compilation
+failure for unsupported platforms by making this requirement explicit in
+Kconfig as part of this change too.
+
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Acked-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Link: https://lore.kernel.org/r/20250331125608.60300-1-lorenzo.stoakes@oracle.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/mapping.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/hwtracing/intel_th/Kconfig |  1 +
+ drivers/hwtracing/intel_th/msu.c   | 31 +++++++-----------------------
+ 2 files changed, 8 insertions(+), 24 deletions(-)
 
-diff --git a/kernel/dma/mapping.c b/kernel/dma/mapping.c
-index cda127027e48a..67da08fa67237 100644
---- a/kernel/dma/mapping.c
-+++ b/kernel/dma/mapping.c
-@@ -918,7 +918,7 @@ EXPORT_SYMBOL(dma_set_coherent_mask);
-  * the system, else %false.  Lack of addressing bits is the prime reason for
-  * bounce buffering, but might not be the only one.
-  */
--bool dma_addressing_limited(struct device *dev)
-+static bool __dma_addressing_limited(struct device *dev)
+diff --git a/drivers/hwtracing/intel_th/Kconfig b/drivers/hwtracing/intel_th/Kconfig
+index 4b6359326ede9..4f7d2b6d79e29 100644
+--- a/drivers/hwtracing/intel_th/Kconfig
++++ b/drivers/hwtracing/intel_th/Kconfig
+@@ -60,6 +60,7 @@ config INTEL_TH_STH
+ 
+ config INTEL_TH_MSU
+ 	tristate "Intel(R) Trace Hub Memory Storage Unit"
++	depends on MMU
+ 	help
+ 	  Memory Storage Unit (MSU) trace output device enables
+ 	  storing STP traces to system memory. It supports single
+diff --git a/drivers/hwtracing/intel_th/msu.c b/drivers/hwtracing/intel_th/msu.c
+index bf99d79a41920..7163950eb3719 100644
+--- a/drivers/hwtracing/intel_th/msu.c
++++ b/drivers/hwtracing/intel_th/msu.c
+@@ -19,6 +19,7 @@
+ #include <linux/io.h>
+ #include <linux/workqueue.h>
+ #include <linux/dma-mapping.h>
++#include <linux/pfn_t.h>
+ 
+ #ifdef CONFIG_X86
+ #include <asm/set_memory.h>
+@@ -976,7 +977,6 @@ static void msc_buffer_contig_free(struct msc *msc)
+ 	for (off = 0; off < msc->nr_pages << PAGE_SHIFT; off += PAGE_SIZE) {
+ 		struct page *page = virt_to_page(msc->base + off);
+ 
+-		page->mapping = NULL;
+ 		__free_page(page);
+ 	}
+ 
+@@ -1158,9 +1158,6 @@ static void __msc_buffer_win_free(struct msc *msc, struct msc_window *win)
+ 	int i;
+ 
+ 	for_each_sg(win->sgt->sgl, sg, win->nr_segs, i) {
+-		struct page *page = msc_sg_page(sg);
+-
+-		page->mapping = NULL;
+ 		dma_free_coherent(msc_dev(win->msc)->parent->parent, PAGE_SIZE,
+ 				  sg_virt(sg), sg_dma_address(sg));
+ 	}
+@@ -1601,22 +1598,10 @@ static void msc_mmap_close(struct vm_area_struct *vma)
  {
- 	const struct dma_map_ops *ops = get_dma_ops(dev);
+ 	struct msc_iter *iter = vma->vm_file->private_data;
+ 	struct msc *msc = iter->msc;
+-	unsigned long pg;
  
-@@ -930,6 +930,15 @@ bool dma_addressing_limited(struct device *dev)
- 		return false;
- 	return !dma_direct_all_ram_mapped(dev);
+ 	if (!atomic_dec_and_mutex_lock(&msc->mmap_count, &msc->buf_mutex))
+ 		return;
+ 
+-	/* drop page _refcounts */
+-	for (pg = 0; pg < msc->nr_pages; pg++) {
+-		struct page *page = msc_buffer_get_page(msc, pg);
+-
+-		if (WARN_ON_ONCE(!page))
+-			continue;
+-
+-		if (page->mapping)
+-			page->mapping = NULL;
+-	}
+-
+ 	/* last mapping -- drop user_count */
+ 	atomic_dec(&msc->user_count);
+ 	mutex_unlock(&msc->buf_mutex);
+@@ -1626,16 +1611,14 @@ static vm_fault_t msc_mmap_fault(struct vm_fault *vmf)
+ {
+ 	struct msc_iter *iter = vmf->vma->vm_file->private_data;
+ 	struct msc *msc = iter->msc;
++	struct page *page;
+ 
+-	vmf->page = msc_buffer_get_page(msc, vmf->pgoff);
+-	if (!vmf->page)
++	page = msc_buffer_get_page(msc, vmf->pgoff);
++	if (!page)
+ 		return VM_FAULT_SIGBUS;
+ 
+-	get_page(vmf->page);
+-	vmf->page->mapping = vmf->vma->vm_file->f_mapping;
+-	vmf->page->index = vmf->pgoff;
+-
+-	return 0;
++	get_page(page);
++	return vmf_insert_mixed(vmf->vma, vmf->address, page_to_pfn_t(page));
  }
-+
-+bool dma_addressing_limited(struct device *dev)
-+{
-+	if (!__dma_addressing_limited(dev))
-+		return false;
-+
-+	dev_dbg(dev, "device is DMA addressing limited\n");
-+	return true;
-+}
- EXPORT_SYMBOL_GPL(dma_addressing_limited);
  
- size_t dma_max_mapping_size(struct device *dev)
+ static const struct vm_operations_struct msc_mmap_ops = {
+@@ -1676,7 +1659,7 @@ static int intel_th_msc_mmap(struct file *file, struct vm_area_struct *vma)
+ 		atomic_dec(&msc->user_count);
+ 
+ 	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
+-	vm_flags_set(vma, VM_DONTEXPAND | VM_DONTCOPY);
++	vm_flags_set(vma, VM_DONTEXPAND | VM_DONTCOPY | VM_MIXEDMAP);
+ 	vma->vm_ops = &msc_mmap_ops;
+ 	return ret;
+ }
 -- 
 2.39.5
 
