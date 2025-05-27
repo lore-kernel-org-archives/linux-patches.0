@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7F93C01;
-	Tue, 27 May 2025 17:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1AA27F178;
+	Tue, 27 May 2025 17:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367434; cv=none; b=S6zwOmtuBMGTszHsw3JuD2MNEScjO9oNRfnUkNqzaHhZmilKJQre2B5X1gkIc37PH2CIocE116jKHvFGWQpjl83i+G3b1aLblaux6tjxMO9vI1feYaHDu4Etq4UF+PHHj1zQuqzTrHr5NiGcuONEYeBzVXMobBIr41B5p+wbDzE=
+	t=1748367437; cv=none; b=bcKSTKR88bjm6U3jHMxPHSBPma7T6RT8g5HkX4d7WuwYkLPlFGpBYSLb0eu82yyQYm+6ptfc7p1VVjVOVgdv2JA4G19Gh3oUShlXjrlrrhPQ7vn/1lIema/R0fgdGslONfAJWiGYZ1wd9/Q70+cJnxpUTXA3CqVbf7DX9WpS0LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367434; c=relaxed/simple;
-	bh=zLiUXkOfSJx/6eZsCZ081T91/bzyY2Qz2cdhUV4I/IM=;
+	s=arc-20240116; t=1748367437; c=relaxed/simple;
+	bh=JjlWp/4SOm9p1VbvngssHVMzSCiD5jgQulbPV4xrtkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cqZt+/5xXM0yRx+dAUVTvO2AMmq6+RhNi/8knwZcHUsxd9SZl7R89/1vJEmjXRZfoyH4snPl07FdHno+ZHEYOj7kKw4g3SqaktFpit/RCFYk0xd++oLOzdkbq9Ldw4Mlqjy1EQe2ebmkWFKMX5whK2xKBpDo95C7b0YBR6Nndmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pR+WkaLq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S/JWvxOGjTzUVo6rNC8edE/WhuMMOJyAt7eZata6Hu7383JK33X/9TQjrNAZHDm87hkd1KvhEPujA4cmEw//K9fIOXFmP7tl0gbGp53yc26yPurHxzsCymUIpY1GFsHpdjcmTuet2Lam2c+mSGGP5vGtneqAxWOSLUj/iV3oe0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqY6dEAj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pR+WkaLq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BB9C4CEEA;
-	Tue, 27 May 2025 17:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqY6dEAj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4E7C4CEE9;
+	Tue, 27 May 2025 17:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367433;
-	bh=zLiUXkOfSJx/6eZsCZ081T91/bzyY2Qz2cdhUV4I/IM=;
+	s=korg; t=1748367437;
+	bh=JjlWp/4SOm9p1VbvngssHVMzSCiD5jgQulbPV4xrtkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pR+WkaLqgD4qPaTzCqcU+FBQ0Ih/BEXkVfpexiyFOzUrl34kNS2uNzRGgSxjP0pNo
-	 fX20Mg1WgmRlWfNyx1GnnnFkDk+/R6+U2o32a4M3aaXt51X+HkoqHSySeUut/PKyvl
-	 K6VpxNsvPHYgX3zfDitY+wtphBMJevn86eHeGkDA=
+	b=eqY6dEAje1NMRYcHgzx6IPbuXZeYTkQDPKuceiuNh95X0Gf5lN3hZVWSUIdCt7LjJ
+	 Dw5oM4Ra0y9LW7JGUJGVgVzDt6FvsfWJcuQNsK82sBjhsbVNAfpHTYH5j9S7+mfyQl
+	 FUEX48uqWY0rCiT0XXZEv5veP3bCq8gidgLjsHl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Liang <shaw.leon@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paul Burton <paulburton@kernel.org>,
+	Dragan Mladjenovic <dragan.mladjenovic@syrmia.com>,
+	Aleksandar Rikalo <arikalo@gmail.com>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 379/783] net: ipv6: Init tunnel link-netns before registering dev
-Date: Tue, 27 May 2025 18:22:56 +0200
-Message-ID: <20250527162528.525259716@linuxfoundation.org>
+Subject: [PATCH 6.14 388/783] MIPS: pm-cps: Use per-CPU variables as per-CPU, not per-core
+Date: Tue, 27 May 2025 18:23:05 +0200
+Message-ID: <20250527162528.897413813@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,155 +55,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiao Liang <shaw.leon@gmail.com>
+From: Paul Burton <paulburton@kernel.org>
 
-[ Upstream commit db014522f35606031d8ac58b4aed6b1ed84f03d1 ]
+[ Upstream commit 00a134fc2bb4a5f8fada58cf7ff4259149691d64 ]
 
-Currently some IPv6 tunnel drivers set tnl->net to dev_net(dev) in
-ndo_init(), which is called in register_netdevice(). However, it lacks
-the context of link-netns when we enable cross-net tunnels at device
-registration time.
+The pm-cps code has up until now used per-CPU variables indexed by core,
+rather than CPU number, in order to share data amongst sibling CPUs (ie.
+VPs/threads in a core). This works fine for single cluster systems, but
+with multi-cluster systems a core number is no longer unique in the
+system, leading to sharing between CPUs that are not actually siblings.
 
-Let's move the init of tunnel link-netns before register_netdevice().
+Avoid this issue by using per-CPU variables as they are more generally
+used - ie. access them using CPU numbers rather than core numbers.
+Sharing between siblings is then accomplished by:
+ - Assigning the same pointer to entries for each sibling CPU for the
+   nc_asm_enter & ready_count variables, which allow this by virtue of
+   being per-CPU pointers.
 
-ip6_gre has already initialized netns, so just remove the redundant
-assignment.
+ - Indexing by the first CPU set in a CPUs cpu_sibling_map in the case
+   of pm_barrier, for which we can't use the previous approach because
+   the per-CPU variable is not a pointer.
 
-Signed-off-by: Xiao Liang <shaw.leon@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250219125039.18024-8-shaw.leon@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Paul Burton <paulburton@kernel.org>
+Signed-off-by: Dragan Mladjenovic <dragan.mladjenovic@syrmia.com>
+Signed-off-by: Aleksandar Rikalo <arikalo@gmail.com>
+Tested-by: Serge Semin <fancer.lancer@gmail.com>
+Tested-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_gre.c    | 2 --
- net/ipv6/ip6_tunnel.c | 3 ++-
- net/ipv6/ip6_vti.c    | 3 ++-
- net/ipv6/sit.c        | 8 +++++---
- 4 files changed, 9 insertions(+), 7 deletions(-)
+ arch/mips/kernel/pm-cps.c | 30 +++++++++++++++++-------------
+ 1 file changed, 17 insertions(+), 13 deletions(-)
 
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index 235808cfec705..68e9a41eed491 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -1498,7 +1498,6 @@ static int ip6gre_tunnel_init_common(struct net_device *dev)
- 	tunnel = netdev_priv(dev);
+diff --git a/arch/mips/kernel/pm-cps.c b/arch/mips/kernel/pm-cps.c
+index d09ca77e624d7..9369a8dc385e2 100644
+--- a/arch/mips/kernel/pm-cps.c
++++ b/arch/mips/kernel/pm-cps.c
+@@ -57,10 +57,7 @@ static DEFINE_PER_CPU_ALIGNED(u32*, ready_count);
+ /* Indicates online CPUs coupled with the current CPU */
+ static DEFINE_PER_CPU_ALIGNED(cpumask_t, online_coupled);
  
- 	tunnel->dev = dev;
--	tunnel->net = dev_net(dev);
- 	strcpy(tunnel->parms.name, dev->name);
+-/*
+- * Used to synchronize entry to deep idle states. Actually per-core rather
+- * than per-CPU.
+- */
++/* Used to synchronize entry to deep idle states */
+ static DEFINE_PER_CPU_ALIGNED(atomic_t, pm_barrier);
  
- 	ret = dst_cache_init(&tunnel->dst_cache, GFP_KERNEL);
-@@ -1882,7 +1881,6 @@ static int ip6erspan_tap_init(struct net_device *dev)
- 	tunnel = netdev_priv(dev);
+ /* Saved CPU state across the CPS_PM_POWER_GATED state */
+@@ -112,9 +109,10 @@ int cps_pm_enter_state(enum cps_pm_state state)
+ 	cps_nc_entry_fn entry;
+ 	struct core_boot_config *core_cfg;
+ 	struct vpe_boot_config *vpe_cfg;
++	atomic_t *barrier;
  
- 	tunnel->dev = dev;
--	tunnel->net = dev_net(dev);
- 	strcpy(tunnel->parms.name, dev->name);
+ 	/* Check that there is an entry function for this state */
+-	entry = per_cpu(nc_asm_enter, core)[state];
++	entry = per_cpu(nc_asm_enter, cpu)[state];
+ 	if (!entry)
+ 		return -EINVAL;
  
- 	ret = dst_cache_init(&tunnel->dst_cache, GFP_KERNEL);
-diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
-index 48fd53b989726..5350c9bb2319b 100644
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -1878,7 +1878,6 @@ ip6_tnl_dev_init_gen(struct net_device *dev)
- 	int t_hlen;
+@@ -150,7 +148,7 @@ int cps_pm_enter_state(enum cps_pm_state state)
+ 	smp_mb__after_atomic();
  
- 	t->dev = dev;
--	t->net = dev_net(dev);
+ 	/* Create a non-coherent mapping of the core ready_count */
+-	core_ready_count = per_cpu(ready_count, core);
++	core_ready_count = per_cpu(ready_count, cpu);
+ 	nc_addr = kmap_noncoherent(virt_to_page(core_ready_count),
+ 				   (unsigned long)core_ready_count);
+ 	nc_addr += ((unsigned long)core_ready_count & ~PAGE_MASK);
+@@ -158,7 +156,8 @@ int cps_pm_enter_state(enum cps_pm_state state)
  
- 	ret = dst_cache_init(&t->dst_cache, GFP_KERNEL);
- 	if (ret)
-@@ -1940,6 +1939,7 @@ static int __net_init ip6_fb_tnl_dev_init(struct net_device *dev)
- 	struct net *net = dev_net(dev);
- 	struct ip6_tnl_net *ip6n = net_generic(net, ip6_tnl_net_id);
+ 	/* Ensure ready_count is zero-initialised before the assembly runs */
+ 	WRITE_ONCE(*nc_core_ready_count, 0);
+-	coupled_barrier(&per_cpu(pm_barrier, core), online);
++	barrier = &per_cpu(pm_barrier, cpumask_first(&cpu_sibling_map[cpu]));
++	coupled_barrier(barrier, online);
  
-+	t->net = net;
- 	t->parms.proto = IPPROTO_IPV6;
+ 	/* Run the generated entry code */
+ 	left = entry(online, nc_core_ready_count);
+@@ -629,12 +628,14 @@ static void *cps_gen_entry_code(unsigned cpu, enum cps_pm_state state)
  
- 	rcu_assign_pointer(ip6n->tnls_wc[0], t);
-@@ -2013,6 +2013,7 @@ static int ip6_tnl_newlink(struct net *src_net, struct net_device *dev,
- 	int err;
- 
- 	nt = netdev_priv(dev);
-+	nt->net = net;
- 
- 	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
- 		err = ip6_tnl_encap_setup(nt, &ipencap);
-diff --git a/net/ipv6/ip6_vti.c b/net/ipv6/ip6_vti.c
-index 590737c275379..0123504691443 100644
---- a/net/ipv6/ip6_vti.c
-+++ b/net/ipv6/ip6_vti.c
-@@ -925,7 +925,6 @@ static inline int vti6_dev_init_gen(struct net_device *dev)
- 	struct ip6_tnl *t = netdev_priv(dev);
- 
- 	t->dev = dev;
--	t->net = dev_net(dev);
- 	netdev_hold(dev, &t->dev_tracker, GFP_KERNEL);
- 	netdev_lockdep_set_classes(dev);
- 	return 0;
-@@ -958,6 +957,7 @@ static int __net_init vti6_fb_tnl_dev_init(struct net_device *dev)
- 	struct net *net = dev_net(dev);
- 	struct vti6_net *ip6n = net_generic(net, vti6_net_id);
- 
-+	t->net = net;
- 	t->parms.proto = IPPROTO_IPV6;
- 
- 	rcu_assign_pointer(ip6n->tnls_wc[0], t);
-@@ -1008,6 +1008,7 @@ static int vti6_newlink(struct net *src_net, struct net_device *dev,
- 	vti6_netlink_parms(data, &nt->parms);
- 
- 	nt->parms.proto = IPPROTO_IPV6;
-+	nt->net = net;
- 
- 	if (vti6_locate(net, &nt->parms, 0))
- 		return -EEXIST;
-diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
-index 39bd8951bfca1..3c15a0ae228e2 100644
---- a/net/ipv6/sit.c
-+++ b/net/ipv6/sit.c
-@@ -269,6 +269,7 @@ static struct ip_tunnel *ipip6_tunnel_locate(struct net *net,
- 
- 	nt = netdev_priv(dev);
- 
-+	nt->net = net;
- 	nt->parms = *parms;
- 	if (ipip6_tunnel_create(dev) < 0)
- 		goto failed_free;
-@@ -1449,7 +1450,6 @@ static int ipip6_tunnel_init(struct net_device *dev)
- 	int err;
- 
- 	tunnel->dev = dev;
--	tunnel->net = dev_net(dev);
- 	strcpy(tunnel->parms.name, dev->name);
- 
- 	ipip6_tunnel_bind_dev(dev);
-@@ -1563,6 +1563,7 @@ static int ipip6_newlink(struct net *src_net, struct net_device *dev,
- 	int err;
- 
- 	nt = netdev_priv(dev);
-+	nt->net = net;
- 
- 	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
- 		err = ip_tunnel_encap_setup(nt, &ipencap);
-@@ -1858,6 +1859,9 @@ static int __net_init sit_init_net(struct net *net)
- 	 */
- 	sitn->fb_tunnel_dev->netns_local = true;
- 
-+	t = netdev_priv(sitn->fb_tunnel_dev);
-+	t->net = net;
+ static int cps_pm_online_cpu(unsigned int cpu)
+ {
+-	enum cps_pm_state state;
+-	unsigned core = cpu_core(&cpu_data[cpu]);
++	unsigned int sibling, core;
+ 	void *entry_fn, *core_rc;
++	enum cps_pm_state state;
 +
- 	err = register_netdev(sitn->fb_tunnel_dev);
- 	if (err)
- 		goto err_reg_dev;
-@@ -1865,8 +1869,6 @@ static int __net_init sit_init_net(struct net *net)
- 	ipip6_tunnel_clone_6rd(sitn->fb_tunnel_dev, sitn);
- 	ipip6_fb_tunnel_init(sitn->fb_tunnel_dev);
++	core = cpu_core(&cpu_data[cpu]);
  
--	t = netdev_priv(sitn->fb_tunnel_dev);
--
- 	strcpy(t->parms.name, sitn->fb_tunnel_dev->name);
+ 	for (state = CPS_PM_NC_WAIT; state < CPS_PM_STATE_COUNT; state++) {
+-		if (per_cpu(nc_asm_enter, core)[state])
++		if (per_cpu(nc_asm_enter, cpu)[state])
+ 			continue;
+ 		if (!test_bit(state, state_support))
+ 			continue;
+@@ -646,16 +647,19 @@ static int cps_pm_online_cpu(unsigned int cpu)
+ 			clear_bit(state, state_support);
+ 		}
+ 
+-		per_cpu(nc_asm_enter, core)[state] = entry_fn;
++		for_each_cpu(sibling, &cpu_sibling_map[cpu])
++			per_cpu(nc_asm_enter, sibling)[state] = entry_fn;
+ 	}
+ 
+-	if (!per_cpu(ready_count, core)) {
++	if (!per_cpu(ready_count, cpu)) {
+ 		core_rc = kmalloc(sizeof(u32), GFP_KERNEL);
+ 		if (!core_rc) {
+ 			pr_err("Failed allocate core %u ready_count\n", core);
+ 			return -ENOMEM;
+ 		}
+-		per_cpu(ready_count, core) = core_rc;
++
++		for_each_cpu(sibling, &cpu_sibling_map[cpu])
++			per_cpu(ready_count, sibling) = core_rc;
+ 	}
+ 
  	return 0;
- 
 -- 
 2.39.5
 
