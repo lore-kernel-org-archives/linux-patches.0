@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52372566;
-	Tue, 27 May 2025 17:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A736B1BD4F7;
+	Tue, 27 May 2025 17:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367027; cv=none; b=Gag3fm/z0qZ/nhxnfqPyKG9JleBHz899GuwpwzcayxuX088IMFwzDW/I9Fi7DqgTGkEUD1m/PgDAb/XmQp5Ursvk4rECs0VTodoBL2XntYo9XqM/XgCQu7yQ6km8K+8WpUJo7kBrPxUthL7DEpGLUwpZEuwdQAEEfRFTWii5cAA=
+	t=1748367030; cv=none; b=Y75C0dBnJHCTMC7EAP+h0iFuBxzq5Zt5Yxk8+Hb/FL9rYE0WdqLTP3BY3zO/t4qQxge+1T/v3mOlQwux1qOomSt0Jcv9zctpY5UzNpbfa8eiGIhnzAQoPLVIwqkO6TC+K8R7VoEg/JZeObTaLzLMnFBZs94mOJzQp+uezfUMhvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367027; c=relaxed/simple;
-	bh=ZByjT47l3bI9TCepItSSzkAj3HSM61uUSmJYB5Onqaw=;
+	s=arc-20240116; t=1748367030; c=relaxed/simple;
+	bh=BGgwKmZWWr8j+25lsSJGlRTnUxW85siob2Q2oItzI2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BveYxYJS/W/roFezZIyMB4FIkJZR107ItfQL+GGxtM1HM8cs+V9qanxpXn5hbHV/CzYZEdmgQxFibiYDp5GYWG4R521eBOEljUpkiFor+vQ2idh313BZeUrI2rxrqbGZ+GBpykTxykBTsOgga4dX2mHJb2k5ImcXBLD59wS9vnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GMT0Ke7G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=e+XLVymwl09NgEO3pp6N6wKgRZFyT1U8wS8sOrAPU/a1NJaHt3wsySgEsCLqY3+hFQrvIpyWMC+hsjEGXKBPUy8yTjNH9id+/rjUIEA/Wy025ThOrzFzWIo3s38t0/N4f8JbwMyEGZixfIjLG63UTjHtfkZ/mVBSoQbn10NA2ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0KGsI/Cg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GMT0Ke7G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19409C4CEE9;
-	Tue, 27 May 2025 17:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0KGsI/Cg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8F4C4CEE9;
+	Tue, 27 May 2025 17:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367027;
-	bh=ZByjT47l3bI9TCepItSSzkAj3HSM61uUSmJYB5Onqaw=;
+	s=korg; t=1748367030;
+	bh=BGgwKmZWWr8j+25lsSJGlRTnUxW85siob2Q2oItzI2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GMT0Ke7GPb0c/Wikb22RxDy8YaOjrJOv1jRJJoJQ5ZjquqofNR4qeAjabfFLO1cc2
-	 LsXY2+MiMXrDxBjgbmoSmUPU0mkRf+o1qGmuEA3FNlW+5nU7mEuIlOVdxTILtes6mw
-	 TiRDW8+2SLlpig1A5A6CC5NqvhRrr2U5pyfa9M9c=
+	b=0KGsI/Cgeq8JGrlmPNxD8PnF2r5oVwH+4Kw+/tnS0uFGy5Cvoha15UZhhMbGjqXNm
+	 2zrGacJ4k3Dg2uWQ5D3S4hDlrOslYc2SJg0I4x4CkSkJ8ehTr1HAbPdrOSSKMhdgdQ
+	 PLQhWw0FZxrd0CDHLyc6pTzqZkozSMY9Y2yP+S5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 214/783] iommu: Keep dev->iommu state consistent
-Date: Tue, 27 May 2025 18:20:11 +0200
-Message-ID: <20250527162521.845616866@linuxfoundation.org>
+Subject: [PATCH 6.14 248/783] selftests: pci_endpoint: Skip disabled BARs
+Date: Tue, 27 May 2025 18:20:45 +0200
+Message-ID: <20250527162523.207278629@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -46,92 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 3832862eb9c4dfa0e80b2522bfaedbc8a43de97d ]
+[ Upstream commit af1451b6738ec7cf91f2914f53845424959ec4ee ]
 
-At the moment, if of_iommu_configure() allocates dev->iommu itself via
-iommu_fwspec_init(), then suffers a DT parsing failure, it cleans up the
-fwspec but leaves the empty dev_iommu hanging around. So far this is
-benign (if a tiny bit wasteful), but we'd like to be able to reason
-about dev->iommu having a consistent and unambiguous lifecycle. Thus
-make sure that the of_iommu cleanup undoes precisely whatever it did.
+Currently BARs that have been disabled by the endpoint controller driver
+will result in a test FAIL.
 
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/d219663a3f23001f23d520a883ac622d70b4e642.1740753261.git.robin.murphy@arm.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Returning FAIL for a BAR that is disabled seems overly pessimistic.
+
+There are EPC that disables one or more BARs intentionally.
+
+One reason for this is that there are certain EPCs that are hardwired to
+expose internal PCIe controller registers over a certain BAR, so the EPC
+driver disables such a BAR, such that the host will not overwrite random
+registers during testing.
+
+Such a BAR will be disabled by the EPC driver's init function, and the
+BAR will be marked as BAR_RESERVED, such that it will be unavailable to
+endpoint function drivers.
+
+Let's return FAIL only for BARs that are actually enabled and failed the
+test, and let's return skip for BARs that are not even enabled.
+
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20250123120147.3603409-4-cassel@kernel.org
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommu-priv.h | 2 ++
- drivers/iommu/iommu.c      | 2 +-
- drivers/iommu/of_iommu.c   | 6 +++++-
- 3 files changed, 8 insertions(+), 2 deletions(-)
+ tools/testing/selftests/pci_endpoint/pci_endpoint_test.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iommu/iommu-priv.h b/drivers/iommu/iommu-priv.h
-index de5b54eaa8bf1..a5913c0b02a0a 100644
---- a/drivers/iommu/iommu-priv.h
-+++ b/drivers/iommu/iommu-priv.h
-@@ -17,6 +17,8 @@ static inline const struct iommu_ops *dev_iommu_ops(struct device *dev)
- 	return dev->iommu->iommu_dev->ops;
+diff --git a/tools/testing/selftests/pci_endpoint/pci_endpoint_test.c b/tools/testing/selftests/pci_endpoint/pci_endpoint_test.c
+index c267b822c1081..576c590b277b1 100644
+--- a/tools/testing/selftests/pci_endpoint/pci_endpoint_test.c
++++ b/tools/testing/selftests/pci_endpoint/pci_endpoint_test.c
+@@ -65,6 +65,8 @@ TEST_F(pci_ep_bar, BAR_TEST)
+ 	int ret;
+ 
+ 	pci_ep_ioctl(PCITEST_BAR, variant->barno);
++	if (ret == -ENODATA)
++		SKIP(return, "BAR is disabled");
+ 	EXPECT_FALSE(ret) TH_LOG("Test failed for BAR%d", variant->barno);
  }
  
-+void dev_iommu_free(struct device *dev);
-+
- const struct iommu_ops *iommu_ops_from_fwnode(const struct fwnode_handle *fwnode);
- 
- static inline const struct iommu_ops *iommu_fwspec_ops(struct iommu_fwspec *fwspec)
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index 1efe7cddb4fe3..3a2804a98203b 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -352,7 +352,7 @@ static struct dev_iommu *dev_iommu_get(struct device *dev)
- 	return param;
- }
- 
--static void dev_iommu_free(struct device *dev)
-+void dev_iommu_free(struct device *dev)
- {
- 	struct dev_iommu *param = dev->iommu;
- 
-diff --git a/drivers/iommu/of_iommu.c b/drivers/iommu/of_iommu.c
-index 97987cd78da93..e10a68b5ffde1 100644
---- a/drivers/iommu/of_iommu.c
-+++ b/drivers/iommu/of_iommu.c
-@@ -116,6 +116,7 @@ static void of_pci_check_device_ats(struct device *dev, struct device_node *np)
- int of_iommu_configure(struct device *dev, struct device_node *master_np,
- 		       const u32 *id)
- {
-+	bool dev_iommu_present;
- 	int err;
- 
- 	if (!master_np)
-@@ -127,6 +128,7 @@ int of_iommu_configure(struct device *dev, struct device_node *master_np,
- 		mutex_unlock(&iommu_probe_device_lock);
- 		return 0;
- 	}
-+	dev_iommu_present = dev->iommu;
- 
- 	/*
- 	 * We don't currently walk up the tree looking for a parent IOMMU.
-@@ -147,8 +149,10 @@ int of_iommu_configure(struct device *dev, struct device_node *master_np,
- 		err = of_iommu_configure_device(master_np, dev, id);
- 	}
- 
--	if (err)
-+	if (err && dev_iommu_present)
- 		iommu_fwspec_free(dev);
-+	else if (err && dev->iommu)
-+		dev_iommu_free(dev);
- 	mutex_unlock(&iommu_probe_device_lock);
- 
- 	if (!err && dev->bus)
 -- 
 2.39.5
 
