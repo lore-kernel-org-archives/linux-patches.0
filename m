@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8D41FB3;
-	Tue, 27 May 2025 17:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEC1263F5E;
+	Tue, 27 May 2025 17:53:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368384; cv=none; b=GizcfJqQmDF3ah7GGAkeShx90W3bjbYdMqUS8P38cIak2vYJujokP7/UZSCcmrLGG0mf5NK33frHLWo/ny003bipAmx0wAMh1YuyVZKzL6UfZQYKJo85r+3UTtzTps2ETc3bH6Ka+q4TFqIiaFpaEGhxr5xZ8dgvXEvTjd5A9s8=
+	t=1748368388; cv=none; b=LV7q8IfBEGRBOS7D2TKXKrlWRovZu/7rekTw96C13GftiPMt4cOvywx4jiIb3Doy81fHiNFL6GKU1+N+JKiLaVRJW51HMvrXxqSts2O0AfIPOmFjoS2ocurUPO6HIpRCJdnX6iGL1dM3H+vghpB7a8HdsFzwEDCOBi3YFoPqYTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368384; c=relaxed/simple;
-	bh=fhi4hR0lUKibaEF2o/4eOwMgo4uRTv37CEu/+jMs8as=;
+	s=arc-20240116; t=1748368388; c=relaxed/simple;
+	bh=i3yrREdgNENkIYk+9qUtvEJKNzr6r8L2azmd7yLMs8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zitea5nXIJMD8MYy80tXBmzzm6FBujzb4n7qs6mpwg9I8vxYi0GMESzHYR6JrW6HSGBknS1fvfPppVdQMk/He7u4uctzk6d5GvTnEWGYpyYKqnWu1PxI3QOZwFJyDFXxOjU65yjDVdYPSe3XIev48873tlReob/50SWaUeU2trQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOHzVlTa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F77VYGWEEwngxk43GkNKrZF4o0DLXE2U9HKJ0mSiNtOp5UHPDd6UG7hQyQWxCAj0onypJ2J+LiO9D3RADBTvVrvgvezMMArE1DNOyF0cw6lUVNF/DeQAU9tdZOyJE2jPB+0jiD0dSgv2cd2V6P1Z9wTXNp+81L0cMypp4HznbDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mwi0Ij6x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOHzVlTa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0628BC4CEE9;
-	Tue, 27 May 2025 17:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mwi0Ij6x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A4AFC4CEE9;
+	Tue, 27 May 2025 17:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368384;
-	bh=fhi4hR0lUKibaEF2o/4eOwMgo4uRTv37CEu/+jMs8as=;
+	s=korg; t=1748368387;
+	bh=i3yrREdgNENkIYk+9qUtvEJKNzr6r8L2azmd7yLMs8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AOHzVlTag0v7zavBbGIvsKgr6cCFenJdzgH39UkGRgHAiycNXDlbi9rqM4/Nvwo8p
-	 3oRDe2jXomEDDow4O7faC9LJzTM1kqw+hzn57+mCKZj8JzIwVgSMwGaXCy9hMTNiEP
-	 BHx/h5/I64JFo0LMFyqyi2ccyxnCbOrDOjwz1+/w=
+	b=Mwi0Ij6x5/4vWsXzXw+cx6uQC+cNDlvygYiCjkC4r3sJgMET3AnsPm494qo8ec3vh
+	 rYNkdJUCukTnI/DYWTffqef4Spl2sFTIf0BHeV1Ow8s8nS5J0hUiehYEbBWX8xAA9w
+	 42umH1v7y2T0Um+k3wSklLOJOKDEbtkX7FWQ7BRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Louis DeLosSantos <louis.delos.devel@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	kernel test robot <lkp@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 690/783] xfrm: Sanitize marks before insert
-Date: Tue, 27 May 2025 18:28:07 +0200
-Message-ID: <20250527162541.231239314@linuxfoundation.org>
+Subject: [PATCH 6.14 691/783] dmaengine: idxd: Fix ->poll() return value
+Date: Tue, 27 May 2025 18:28:08 +0200
+Message-ID: <20250527162541.272874877@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,69 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 0b91fda3a1f044141e1e615456ff62508c32b202 ]
+[ Upstream commit ae74cd15ade833adc289279b5c6f12e78f64d4d7 ]
 
-Prior to this patch, the mark is sanitized (applying the state's mask to
-the state's value) only on inserts when checking if a conflicting XFRM
-state or policy exists.
+The fix to block access from different address space did not return a
+correct value for ->poll() change.  kernel test bot reported that a
+return value of type __poll_t is expected rather than int. Fix to return
+POLLNVAL to indicate invalid request.
 
-We discovered in Cilium that this same sanitization does not occur
-in the hot-path __xfrm_state_lookup. In the hot-path, the sk_buff's mark
-is simply compared to the state's value:
-
-    if ((mark & x->mark.m) != x->mark.v)
-        continue;
-
-Therefore, users can define unsanitized marks (ex. 0xf42/0xf00) which will
-never match any packet.
-
-This commit updates __xfrm_state_insert and xfrm_policy_insert to store
-the sanitized marks, thus removing this footgun.
-
-This has the side effect of changing the ip output, as the
-returned mark will have the mask applied to it when printed.
-
-Fixes: 3d6acfa7641f ("xfrm: SA lookups with mark")
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Signed-off-by: Louis DeLosSantos <louis.delos.devel@gmail.com>
-Co-developed-by: Louis DeLosSantos <louis.delos.devel@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 8dfa57aabff6 ("dmaengine: idxd: Fix allowing write() from different address spaces")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202505081851.rwD7jVxg-lkp@intel.com/
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/20250508170548.2747425-1-dave.jiang@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_policy.c | 3 +++
- net/xfrm/xfrm_state.c  | 3 +++
- 2 files changed, 6 insertions(+)
+ drivers/dma/idxd/cdev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index 6551e588fe526..50a17112c87af 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -1581,6 +1581,9 @@ int xfrm_policy_insert(int dir, struct xfrm_policy *policy, int excl)
- 	struct xfrm_policy *delpol;
- 	struct hlist_head *chain;
+diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
+index b847b74949f19..cd57067e82180 100644
+--- a/drivers/dma/idxd/cdev.c
++++ b/drivers/dma/idxd/cdev.c
+@@ -500,7 +500,7 @@ static __poll_t idxd_cdev_poll(struct file *filp,
+ 	__poll_t out = 0;
  
-+	/* Sanitize mark before store */
-+	policy->mark.v &= policy->mark.m;
-+
- 	spin_lock_bh(&net->xfrm.xfrm_policy_lock);
- 	chain = policy_hash_bysel(net, &policy->selector, policy->family, dir);
- 	if (chain)
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index fa8a8776d5397..8176081fa1f49 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -1718,6 +1718,9 @@ static void __xfrm_state_insert(struct xfrm_state *x)
+ 	if (current->mm != ctx->mm)
+-		return -EPERM;
++		return POLLNVAL;
  
- 	list_add(&x->km.all, &net->xfrm.state_all);
- 
-+	/* Sanitize mark before store */
-+	x->mark.v &= x->mark.m;
-+
- 	h = xfrm_dst_hash(net, &x->id.daddr, &x->props.saddr,
- 			  x->props.reqid, x->props.family);
- 	XFRM_STATE_INSERT(bydst, &x->bydst, net->xfrm.state_bydst + h,
+ 	poll_wait(filp, &wq->err_queue, wait);
+ 	spin_lock(&idxd->dev_lock);
 -- 
 2.39.5
 
