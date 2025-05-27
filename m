@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4006626FDB7;
-	Tue, 27 May 2025 17:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C90D27A131;
+	Tue, 27 May 2025 17:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368034; cv=none; b=EtzqgBHPk0bEx/gWRNq/HvHxXMxXjnPtChTNcIJkVyr7LIkhMOp3xjMftgPT4oLasIFzyeNDT5w3/UcJw4kbbZmRdKjQZ418p1/d2BtLpP3E1A3m6E3VSK1sA/6qcuQp/Ps7mJgOItM+28LqydKYV4zZ8uQCOXJ7ssVnQBXd4rQ=
+	t=1748368037; cv=none; b=VNKhHqy6zVMoKjaWSyuF0l+o1jpMj99hnCktgdU/3tO6jEGYDjn+4aWiid9Trk0/lydzZemcJhqPZIdUnrh7JTGytdckfzguHOLyMYvmor6b1AMwPyFZUD+PGFdxmeXaETTV7Fupvg4FaD2YgG3LCsXCcqv0Q1wa+M6CY9I3pkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368034; c=relaxed/simple;
-	bh=3QXGoRPh5b6VzkEimMaOJaiWqN3d296UMl1n4a+J6IM=;
+	s=arc-20240116; t=1748368037; c=relaxed/simple;
+	bh=VtEhrLY2bZUyi+CyphBmIm8LR++G9puzyz1JQJAdUMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JcPYWw5Fu7mTG4oZEfAcAx2SA/+i60/gMr/5CVW7PzT58L0FYUmbNvF9qlV2d6QwPVFogaueJMxfbS15NxrjCUuyVOQPkePnHDlYhcGmv369/lCh+dCATbcEUFp3HcnU/CrT2QHbxix6x9nMj1J6MeQALyH1E7exhfVjFGaoj4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SzC2D8Tv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tPUz8QgEWY4bkUPaLTmWXepV5HwUC/pypMg2OKcus7ezCy70jTuWl5t2Sga0x4RvZAu2KXkmz6eqKD0lkuUZbeCg6ZRhPjnm5f25CuHY8OWf5JEoFtB3erWG/DRNexYuAgoto++83L7SoJ9CHEm7RwOhMpe7RsQgIrox9LvRgAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YS5kKC+J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzC2D8Tv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6646C4CEE9;
-	Tue, 27 May 2025 17:47:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YS5kKC+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D732BC4CEE9;
+	Tue, 27 May 2025 17:47:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368034;
-	bh=3QXGoRPh5b6VzkEimMaOJaiWqN3d296UMl1n4a+J6IM=;
+	s=korg; t=1748368037;
+	bh=VtEhrLY2bZUyi+CyphBmIm8LR++G9puzyz1JQJAdUMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SzC2D8TvLBSOnX7O+gwv2Exo5ec8KFQ0HlP+Z6OuFgFU7H78y/c2QGhOv2O6714k5
-	 DunzYdb+Zbt+ymTxmLdkTOqhibuWJTcc9xEjjrk2Jh/H+c3MZhNl+kjT43SBSHFp5m
-	 vnUoP22VWAebp7sQBOpMt8UPhQ6bMJctAQ/XHR+o=
+	b=YS5kKC+JKAS8EsHvvE25zr92TvD/zvCM8LajQD2EBWPIDJrHcf+37lDqy9ZjNMeqA
+	 e1RV2VSGB19dwbsF2ZXTM6SrRF97Qhf2W8V2OVFOr96cngrrtosDsIPBET3nSsplz4
+	 /nvciQTYq08E6LLIpxdiCMgBIRX1Y77fbUWV0nmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Nuno Sa <nuno.sa@analog.com>,
 	Angelo Dureghello <adureghello@baylibre.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 547/783] iio: dac: ad3552r-hs: use instruction mode for configuration
-Date: Tue, 27 May 2025 18:25:44 +0200
-Message-ID: <20250527162535.433280621@linuxfoundation.org>
+Subject: [PATCH 6.14 548/783] iio: dac: adi-axi-dac: add bus mode setup
+Date: Tue, 27 May 2025 18:25:45 +0200
+Message-ID: <20250527162535.472569526@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,96 +54,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Angelo Dureghello <adureghello@baylibre.com>
 
-[ Upstream commit 21889245fb538123ac9968eea0018f878b44c8c8 ]
+[ Upstream commit 8ab67b37b81dfaa00a25e95a5f5a020f374848bb ]
 
-Use "instruction" mode over initial configuration and all other
-non-streaming operations.
+The ad354xr requires DSPI mode (2 data lanes) to work in buffering
+mode, so, depending on the DAC type, target TRANSFER_REGISTER
+"MULTI_IO_MODE" bitfield can be set between:
+    SPI  (configuration, entire ad35xxr family),
+    DSPI (ad354xr),
+    QSPI (ad355xr).
+Also bus IO_MODE must be set accordingly.
 
-DAC boots in streaming mode as default, and the driver is not
-changing this mode.
+About removal of AXI_DAC_CUSTOM_CTRL_SYNCED_TRANSFER, according to
+the HDL history the flag has never been used. So looks like the driver
+was including it by mistake or in anticipation for something that was
+never implemented on HDL side.
 
-Instruction r/w is still working because instruction is processed
-from the DAC after chip select is deasserted, this works until
-loop mode is 0 or greater than the instruction size.
+Current HDL updated documentation confirm it is actually not in use
+anymore and replaced by the IO_MODE bits.
 
-All initial operations should be more safely done in instruction
-mode, a mode provided for this.
-
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
 Signed-off-by: Angelo Dureghello <adureghello@baylibre.com>
-Link: https://patch.msgid.link/20250114-wip-bl-ad3552r-axi-v0-iio-testing-carlos-v4-6-979402e33545@baylibre.com
+Link: https://patch.msgid.link/20250114-wip-bl-ad3552r-axi-v0-iio-testing-carlos-v4-4-979402e33545@baylibre.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/dac/ad3552r-hs.c | 29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+ drivers/iio/dac/ad3552r-hs.h  |  8 ++++++++
+ drivers/iio/dac/adi-axi-dac.c | 22 +++++++++++++++++++++-
+ 2 files changed, 29 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/dac/ad3552r-hs.c b/drivers/iio/dac/ad3552r-hs.c
-index 8974df6256708..67957fc21696a 100644
---- a/drivers/iio/dac/ad3552r-hs.c
-+++ b/drivers/iio/dac/ad3552r-hs.c
-@@ -137,13 +137,20 @@ static int ad3552r_hs_buffer_postenable(struct iio_dev *indio_dev)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/iio/dac/ad3552r-hs.h b/drivers/iio/dac/ad3552r-hs.h
+index 724261d38dea3..4a9e352341244 100644
+--- a/drivers/iio/dac/ad3552r-hs.h
++++ b/drivers/iio/dac/ad3552r-hs.h
+@@ -8,11 +8,19 @@
  
-+	/* Primary region access, set streaming mode (now in SPI + SDR). */
-+	ret = ad3552r_qspi_update_reg_bits(st,
-+					   AD3552R_REG_ADDR_INTERFACE_CONFIG_B,
-+					   AD3552R_MASK_SINGLE_INST, 0, 1);
-+	if (ret)
-+		return ret;
+ struct iio_backend;
+ 
++enum ad3552r_io_mode {
++	AD3552R_IO_MODE_SPI,
++	AD3552R_IO_MODE_DSPI,
++	AD3552R_IO_MODE_QSPI,
++};
 +
- 	/* Inform DAC chip to switch into DDR mode */
- 	ret = ad3552r_qspi_update_reg_bits(st,
- 					   AD3552R_REG_ADDR_INTERFACE_CONFIG_D,
- 					   AD3552R_MASK_SPI_CONFIG_DDR,
- 					   AD3552R_MASK_SPI_CONFIG_DDR, 1);
- 	if (ret)
--		return ret;
-+		goto exit_err_ddr;
+ struct ad3552r_hs_platform_data {
+ 	int (*bus_reg_read)(struct iio_backend *back, u32 reg, u32 *val,
+ 			    size_t data_size);
+ 	int (*bus_reg_write)(struct iio_backend *back, u32 reg, u32 val,
+ 			     size_t data_size);
++	int (*bus_set_io_mode)(struct iio_backend *back,
++			       enum ad3552r_io_mode mode);
+ 	u32 bus_sample_data_clock_hz;
+ };
  
- 	/* Inform DAC IP to go for DDR mode from now on */
- 	ret = iio_backend_ddr_enable(st->back);
-@@ -174,6 +181,11 @@ static int ad3552r_hs_buffer_postenable(struct iio_dev *indio_dev)
+diff --git a/drivers/iio/dac/adi-axi-dac.c b/drivers/iio/dac/adi-axi-dac.c
+index ac871deb8063c..bcaf365feef42 100644
+--- a/drivers/iio/dac/adi-axi-dac.c
++++ b/drivers/iio/dac/adi-axi-dac.c
+@@ -64,7 +64,7 @@
+ #define   AXI_DAC_UI_STATUS_IF_BUSY		BIT(4)
+ #define AXI_DAC_CUSTOM_CTRL_REG			0x008C
+ #define   AXI_DAC_CUSTOM_CTRL_ADDRESS		GENMASK(31, 24)
+-#define   AXI_DAC_CUSTOM_CTRL_SYNCED_TRANSFER	BIT(2)
++#define   AXI_DAC_CUSTOM_CTRL_MULTI_IO_MODE	GENMASK(3, 2)
+ #define   AXI_DAC_CUSTOM_CTRL_STREAM		BIT(1)
+ #define   AXI_DAC_CUSTOM_CTRL_TRANSFER_DATA	BIT(0)
  
- 	iio_backend_ddr_disable(st->back);
- 
-+exit_err_ddr:
-+	ad3552r_qspi_update_reg_bits(st, AD3552R_REG_ADDR_INTERFACE_CONFIG_B,
-+				     AD3552R_MASK_SINGLE_INST,
-+				     AD3552R_MASK_SINGLE_INST, 1);
-+
- 	return ret;
+@@ -722,6 +722,25 @@ static int axi_dac_bus_reg_read(struct iio_backend *back, u32 reg, u32 *val,
+ 	return regmap_read(st->regmap, AXI_DAC_CUSTOM_RD_REG, val);
  }
  
-@@ -198,6 +210,14 @@ static int ad3552r_hs_buffer_predisable(struct iio_dev *indio_dev)
- 	if (ret)
- 		return ret;
- 
-+	/* Back to single instruction mode, disabling loop. */
-+	ret = ad3552r_qspi_update_reg_bits(st,
-+					   AD3552R_REG_ADDR_INTERFACE_CONFIG_B,
-+					   AD3552R_MASK_SINGLE_INST,
-+					   AD3552R_MASK_SINGLE_INST, 1);
++static int axi_dac_bus_set_io_mode(struct iio_backend *back,
++				   enum ad3552r_io_mode mode)
++{
++	struct axi_dac_state *st = iio_backend_get_priv(back);
++	int ival, ret;
++
++	guard(mutex)(&st->lock);
++
++	ret = regmap_update_bits(st->regmap, AXI_DAC_CUSTOM_CTRL_REG,
++			AXI_DAC_CUSTOM_CTRL_MULTI_IO_MODE,
++			FIELD_PREP(AXI_DAC_CUSTOM_CTRL_MULTI_IO_MODE, mode));
 +	if (ret)
 +		return ret;
 +
- 	return 0;
- }
- 
-@@ -308,6 +328,13 @@ static int ad3552r_hs_setup(struct ad3552r_hs_state *st)
- 	if (ret)
- 		return ret;
- 
-+	ret = st->data->bus_reg_write(st->back,
-+				      AD3552R_REG_ADDR_INTERFACE_CONFIG_B,
-+				      AD3552R_MASK_SINGLE_INST |
-+				      AD3552R_MASK_SHORT_INSTRUCTION, 1);
-+	if (ret)
-+		return ret;
++	return regmap_read_poll_timeout(st->regmap, AXI_DAC_UI_STATUS_REG, ival,
++			FIELD_GET(AXI_DAC_UI_STATUS_IF_BUSY, ival) == 0, 10,
++			100 * KILO);
++}
 +
- 	ret = ad3552r_hs_scratch_pad_test(st);
- 	if (ret)
- 		return ret;
+ static void axi_dac_child_remove(void *data)
+ {
+ 	platform_device_unregister(data);
+@@ -733,6 +752,7 @@ static int axi_dac_create_platform_device(struct axi_dac_state *st,
+ 	struct ad3552r_hs_platform_data pdata = {
+ 		.bus_reg_read = axi_dac_bus_reg_read,
+ 		.bus_reg_write = axi_dac_bus_reg_write,
++		.bus_set_io_mode = axi_dac_bus_set_io_mode,
+ 		.bus_sample_data_clock_hz = st->dac_clk_rate,
+ 	};
+ 	struct platform_device_info pi = {
 -- 
 2.39.5
 
