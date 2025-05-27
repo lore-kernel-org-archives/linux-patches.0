@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F48527CCF0;
-	Tue, 27 May 2025 17:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082D527BF79;
+	Tue, 27 May 2025 17:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367380; cv=none; b=fwwES/54QRYIjvS++OOHrxA0E4UsE/WxGt0ltM0JoIdwwqNYGZtxO+wuA4C9JO6NgWHAMavvAKAx+a1Lr2burKF5WhXPZwejd+NIFqbueEE/vKi6eWgMqTJj0qsxl/wLof/wM9NM8FvP6pQ6YNsgqWBrsjGPaomATO4S9+U6hDA=
+	t=1748367383; cv=none; b=EvvpBbotyCkhE9EbjhWC81Fp/6dSZxGbBfofbm/eQeAVPRxRisx8fT37gZFBmqIXSYZMiiRKU0GVlXeJ53CQwLec2ZaVD5lzqgEarMFlXpyp5vQ6j5fPOxkDmOgnGJpObHLGpAdhJr1YTbU3dYiEmKrKgX4BWtRm7lXbGkDNbiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367380; c=relaxed/simple;
-	bh=AMwIDlj9i/5e43FbK/Md/ITSEBXfgmO5VylEuxuvNU0=;
+	s=arc-20240116; t=1748367383; c=relaxed/simple;
+	bh=QxWtYy3qkkEfo/CiSKs1HvVCNKrmDsVsOe44wwA1tzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mEVQ/bATO2rfQ7nuTf6AuGaFyiRCV4AoehLDnxyEW/VOnF8Gt0qXw4Y+JrsokLHUtRsXdlWjuINFKL+/GYMeS5KT290uJVu3qwifhDNSKZyDApz3Wwk8cJMv09mC3qn9UIO2E6wjbj8pW9bm2Xm5GnYlGYEuBDXtRV9aH8X/1O0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uw45nxMP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O91qHiXqKCBatu+9MUNW1E4oMsoMp+5tyizfdnvvnYg73+2dYVCTZPG7HSsT/b1ejyDjlGXUnx7j+4H+Gbf6s/WqGetK3keJ9Ewh60w9ZHukCd9b5nSxbEnDoZ3n0oJl4t4hN8FDtzkE9TSr0oxOvycy3pOJMiidWhTkE6ioswQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t2lKWHKP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uw45nxMP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602EEC4CEE9;
-	Tue, 27 May 2025 17:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2lKWHKP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179CBC4CEE9;
+	Tue, 27 May 2025 17:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367376;
-	bh=AMwIDlj9i/5e43FbK/Md/ITSEBXfgmO5VylEuxuvNU0=;
+	s=korg; t=1748367382;
+	bh=QxWtYy3qkkEfo/CiSKs1HvVCNKrmDsVsOe44wwA1tzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uw45nxMPBJSOs0bGteeg9frfC/ltCRr4hq9RiRbVE67BI7o2eht/2kUDtoh2C/xAM
-	 8+ackw1nRjM+/zFYpG5op6XrPa5BZPK9SD0rx6XzzSv2QiBXQPFJE+T1SpCgR684cf
-	 w0Uiz3zuLv4NXQLLNYHYT1cV/AeChSNNe7NXTg6M=
+	b=t2lKWHKPIuzBv08UzUYfkEvDlfAO3jdA0Ic60RFrfUa7qAAU54Sj2jR+QShTAqnLB
+	 +N9U/oXR4ofzehT/zr3NT4cMJYuLhocloGfdbsj+NjBbvhC8yiSS/+u0pA1qg5ZIJO
+	 8g7O3Ez5k1g8fvzUL/jBFkRfkKIuHl7PmObq6Oto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Auger <eauger@redhat.com>,
+	Hongyu Ning <hongyu.ning@linux.intel.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 367/783] net: stmmac: Correct usage of maximum queue number macros
-Date: Tue, 27 May 2025 18:22:44 +0200
-Message-ID: <20250527162528.028736914@linuxfoundation.org>
+Subject: [PATCH 6.14 369/783] virtio: break and reset virtio devices on device_shutdown()
+Date: Tue, 27 May 2025 18:22:46 +0200
+Message-ID: <20250527162528.107668043@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,76 +54,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit 352bc4513ec3907db71cb5674fb93a76fc341ca9 ]
+[ Upstream commit 8bd2fa086a04886798b505f28db4002525895203 ]
 
-The maximum numbers of each Rx and Tx queues are defined by
-MTL_MAX_RX_QUEUES and MTL_MAX_TX_QUEUES respectively.
+Hongyu reported a hang on kexec in a VM. QEMU reported invalid memory
+accesses during the hang.
 
-There are some places where Rx and Tx are used in reverse. There is no
-issue when the Tx and Rx macros have the same value, but should correct
-usage of macros for maximum queue number to keep consistency and prevent
-unexpected mistakes.
+	Invalid read at addr 0x102877002, size 2, region '(null)', reason: rejected
+	Invalid write at addr 0x102877A44, size 2, region '(null)', reason: rejected
+	...
 
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Huacai Chen <chenhuacai@kernel.org>
-Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Link: https://patch.msgid.link/20250221051818.4163678-1-hayashi.kunihiko@socionext.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+It was traced down to virtio-console. Kexec works fine if virtio-console
+is not in use.
+
+The issue is that virtio-console continues to write to the MMIO even after
+underlying virtio-pci device is reset.
+
+Additionally, Eric noticed that IOMMUs are reset before devices, if
+devices are not reset on shutdown they continue to poke at guest memory
+and get errors from the IOMMU. Some devices get wedged then.
+
+The problem can be solved by breaking all virtio devices on virtio
+bus shutdown, then resetting them.
+
+Reported-by: Eric Auger <eauger@redhat.com>
+Reported-by: Hongyu Ning <hongyu.ning@linux.intel.com>
+Message-ID: <c1dbc7dbad9b445245d3348f19e6742b0be07347.1740094946.git.mst@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/common.h | 4 ++--
- drivers/net/ethernet/stmicro/stmmac/stmmac.h | 7 +++----
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ drivers/virtio/virtio.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/common.h b/drivers/net/ethernet/stmicro/stmmac/common.h
-index e25db747a81a5..c660eb933f24b 100644
---- a/drivers/net/ethernet/stmicro/stmmac/common.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/common.h
-@@ -101,8 +101,8 @@ struct stmmac_rxq_stats {
- /* Updates on each CPU protected by not allowing nested irqs. */
- struct stmmac_pcpu_stats {
- 	struct u64_stats_sync syncp;
--	u64_stats_t rx_normal_irq_n[MTL_MAX_TX_QUEUES];
--	u64_stats_t tx_normal_irq_n[MTL_MAX_RX_QUEUES];
-+	u64_stats_t rx_normal_irq_n[MTL_MAX_RX_QUEUES];
-+	u64_stats_t tx_normal_irq_n[MTL_MAX_TX_QUEUES];
+diff --git a/drivers/virtio/virtio.c b/drivers/virtio/virtio.c
+index ba37665188b51..150753c3b5782 100644
+--- a/drivers/virtio/virtio.c
++++ b/drivers/virtio/virtio.c
+@@ -395,6 +395,34 @@ static const struct cpumask *virtio_irq_get_affinity(struct device *_d,
+ 	return dev->config->get_vq_affinity(dev, irq_vec);
+ }
+ 
++static void virtio_dev_shutdown(struct device *_d)
++{
++	struct virtio_device *dev = dev_to_virtio(_d);
++	struct virtio_driver *drv = drv_to_virtio(dev->dev.driver);
++
++	/*
++	 * Stop accesses to or from the device.
++	 * We only need to do it if there's a driver - no accesses otherwise.
++	 */
++	if (!drv)
++		return;
++
++	/*
++	 * Some devices get wedged if you kick them after they are
++	 * reset. Mark all vqs as broken to make sure we don't.
++	 */
++	virtio_break_device(dev);
++	/*
++	 * Guarantee that any callback will see vq->broken as true.
++	 */
++	virtio_synchronize_cbs(dev);
++	/*
++	 * As IOMMUs are reset on shutdown, this will block device access to memory.
++	 * Some devices get wedged if this happens, so reset to make sure it does not.
++	 */
++	dev->config->reset(dev);
++}
++
+ static const struct bus_type virtio_bus = {
+ 	.name  = "virtio",
+ 	.match = virtio_dev_match,
+@@ -403,6 +431,7 @@ static const struct bus_type virtio_bus = {
+ 	.probe = virtio_dev_probe,
+ 	.remove = virtio_dev_remove,
+ 	.irq_get_affinity = virtio_irq_get_affinity,
++	.shutdown = virtio_dev_shutdown,
  };
  
- /* Extra statistic and debug information exposed by ethtool */
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-index f05cae103d836..dae279ee2c280 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-@@ -257,7 +257,7 @@ struct stmmac_priv {
- 	/* Frequently used values are kept adjacent for cache effect */
- 	u32 tx_coal_frames[MTL_MAX_TX_QUEUES];
- 	u32 tx_coal_timer[MTL_MAX_TX_QUEUES];
--	u32 rx_coal_frames[MTL_MAX_TX_QUEUES];
-+	u32 rx_coal_frames[MTL_MAX_RX_QUEUES];
- 
- 	int hwts_tx_en;
- 	bool tx_path_in_lpi_mode;
-@@ -265,8 +265,7 @@ struct stmmac_priv {
- 	int sph;
- 	int sph_cap;
- 	u32 sarc_type;
--
--	u32 rx_riwt[MTL_MAX_TX_QUEUES];
-+	u32 rx_riwt[MTL_MAX_RX_QUEUES];
- 	int hwts_rx_en;
- 
- 	void __iomem *ioaddr;
-@@ -343,7 +342,7 @@ struct stmmac_priv {
- 	char int_name_sfty[IFNAMSIZ + 10];
- 	char int_name_sfty_ce[IFNAMSIZ + 10];
- 	char int_name_sfty_ue[IFNAMSIZ + 10];
--	char int_name_rx_irq[MTL_MAX_TX_QUEUES][IFNAMSIZ + 14];
-+	char int_name_rx_irq[MTL_MAX_RX_QUEUES][IFNAMSIZ + 14];
- 	char int_name_tx_irq[MTL_MAX_TX_QUEUES][IFNAMSIZ + 18];
- 
- #ifdef CONFIG_DEBUG_FS
+ int __register_virtio_driver(struct virtio_driver *driver, struct module *owner)
 -- 
 2.39.5
 
