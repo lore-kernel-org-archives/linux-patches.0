@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020D01E89C;
-	Tue, 27 May 2025 17:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C2C1E89C;
+	Tue, 27 May 2025 17:19:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366363; cv=none; b=VCr0FIuyDqaA6mhy/8C4mZhQEoC4Q3upg/+GfGVpfMDq81wjoDWmcPPdC5/uJkzn6iOUT5hLfp7EVJJ/WUl+q2UWOrAuYN7YusoC6FafBANWL9h5WM/YIt2UKCe96vNsbYe0ITVBS9c94jtQeReI3H7VuPzs/ICbW7HjV55UdWI=
+	t=1748366366; cv=none; b=Mq4yIhn11MC9FRNhMGOB8zu7GmEEF5j8XMIzp9aifr2thqmYhCFRnIDInz4vBPHLSSarSO1n/ru9m08mIkREYFdJwc7QHvaWhsHJjYHsSFqEBH4GSuypHJpc8N04z4s1pD74uCvBijobuI84BwnbvUYkMezlJ/0FSxZPAvARA64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366363; c=relaxed/simple;
-	bh=ncuOy6PCWKHdc0kF6dXJkPN7kM3UfX0/iV+k3XM8HbA=;
+	s=arc-20240116; t=1748366366; c=relaxed/simple;
+	bh=j1v1aNGU7WqOpb8ghg6KPB2ahRMtfNavj4IyRqCD0iU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n1YZ/iE3FO7V7hNLa2ThlpXxP5vXn8kgRfv+VVbTfQFSDI6ekx64gVlo4Tv2p6t9pqkvHotBIGwey0OfGgFhjQYkp59pHGEjYOFi7pioang3pRcHz6n1P2Wpwdmn11k1vJfq4ysqJ9g0soaDX62l5g06ue0lkSmFDLRnLd3FGrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ytbL/zLv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lJ9v5HxV3xb9398fMjXrqK7kN+BGuRQ04wx7GUp3o+8INEQP1pQ4/GQI+RvX6tvfzc0b9yxdDdrex7F6X5cyTJz/RP09PZjxKccwJGSqfY7kHsvXma6kNBPABgQW9Hs95UBdQSPN1dAcZqEpFrdo2wCwmI9+T39Z6F8I1pTCCn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxjgP/qW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ytbL/zLv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF8DC4CEE9;
-	Tue, 27 May 2025 17:19:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxjgP/qW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90803C4CEE9;
+	Tue, 27 May 2025 17:19:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366362;
-	bh=ncuOy6PCWKHdc0kF6dXJkPN7kM3UfX0/iV+k3XM8HbA=;
+	s=korg; t=1748366366;
+	bh=j1v1aNGU7WqOpb8ghg6KPB2ahRMtfNavj4IyRqCD0iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ytbL/zLvNm6CkcAvYRgdELxcFX8uBIjdmLG3ys7GFmThroelZ87vgQIB2uY5SN37b
-	 OEd5++TjzP1cr8YhKMi2zHS0cR1MXfvgQeRo+tRwEj9LQihtFXu38dHMsUibKpEe9U
-	 PJjCH2jbjPY1m15e/PO9ag5mCmTVZ1sCys0aD+rU=
+	b=FxjgP/qWHMXub4zXhYN7HmCFXMI2uHodM5VWFUGof95Ti61xC43ThQ00H3hzgBOKZ
+	 qYGYrII3IWTyn5EelsZIhEOnhZCSCkSXmihksYWKLE0xSUlipUcb5jdh0kt7JBUup4
+	 EAV8y9kjf5vKjLtZSjgcsdfl7bIRAqSaFKMaZEec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoran Jiang <jianghaoran@kylinos.cn>,
-	zhangxi <zhangxi@kylinos.cn>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 043/783] samples/bpf: Fix compilation failure for samples/bpf on LoongArch Fedora
-Date: Tue, 27 May 2025 18:17:20 +0200
-Message-ID: <20250527162514.885113989@linuxfoundation.org>
+Subject: [PATCH 6.14 044/783] kconfig: merge_config: use an empty file as initfile
+Date: Tue, 27 May 2025 18:17:21 +0200
+Message-ID: <20250527162514.928568815@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,56 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoran Jiang <jianghaoran@kylinos.cn>
+From: Daniel Gomez <da.gomez@samsung.com>
 
-[ Upstream commit 548762f05d19c5542db7590bcdfb9be1fb928376 ]
+[ Upstream commit a26fe287eed112b4e21e854f173c8918a6a8596d ]
 
-When building the latest samples/bpf on LoongArch Fedora
+The scripts/kconfig/merge_config.sh script requires an existing
+$INITFILE (or the $1 argument) as a base file for merging Kconfig
+fragments. However, an empty $INITFILE can serve as an initial starting
+point, later referenced by the KCONFIG_ALLCONFIG Makefile variable
+if -m is not used. This variable can point to any configuration file
+containing preset config symbols (the merged output) as stated in
+Documentation/kbuild/kconfig.rst. When -m is used $INITFILE will
+contain just the merge output requiring the user to run make (i.e.
+KCONFIG_ALLCONFIG=<$INITFILE> make <allnoconfig/alldefconfig> or make
+olddefconfig).
 
-     make M=samples/bpf
+Instead of failing when `$INITFILE` is missing, create an empty file and
+use it as the starting point for merges.
 
-There are compilation errors as follows:
-
-In file included from ./linux/samples/bpf/sockex2_kern.c:2:
-In file included from ./include/uapi/linux/in.h:25:
-In file included from ./include/linux/socket.h:8:
-In file included from ./include/linux/uio.h:9:
-In file included from ./include/linux/thread_info.h:60:
-In file included from ./arch/loongarch/include/asm/thread_info.h:15:
-In file included from ./arch/loongarch/include/asm/processor.h:13:
-In file included from ./arch/loongarch/include/asm/cpu-info.h:11:
-./arch/loongarch/include/asm/loongarch.h:13:10: fatal error: 'larchintrin.h' file not found
-         ^~~~~~~~~~~~~~~
-1 error generated.
-
-larchintrin.h is included in /usr/lib64/clang/14.0.6/include,
-and the header file location is specified at compile time.
-
-Test on LoongArch Fedora:
-https://github.com/fedora-remix-loongarch/releases-info
-
-Signed-off-by: Haoran Jiang <jianghaoran@kylinos.cn>
-Signed-off-by: zhangxi <zhangxi@kylinos.cn>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250425095042.838824-1-jianghaoran@kylinos.cn
+Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/bpf/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/kconfig/merge_config.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/samples/bpf/Makefile b/samples/bpf/Makefile
-index 5b632635e00dd..95a4fa1f1e447 100644
---- a/samples/bpf/Makefile
-+++ b/samples/bpf/Makefile
-@@ -376,7 +376,7 @@ $(obj)/%.o: $(src)/%.c
- 	@echo "  CLANG-bpf " $@
- 	$(Q)$(CLANG) $(NOSTDINC_FLAGS) $(LINUXINCLUDE) $(BPF_EXTRA_CFLAGS) \
- 		-I$(obj) -I$(srctree)/tools/testing/selftests/bpf/ \
--		-I$(LIBBPF_INCLUDE) \
-+		-I$(LIBBPF_INCLUDE) $(CLANG_SYS_INCLUDES) \
- 		-D__KERNEL__ -D__BPF_TRACING__ -Wno-unused-value -Wno-pointer-sign \
- 		-D__TARGET_ARCH_$(SRCARCH) -Wno-compare-distinct-pointer-types \
- 		-Wno-gnu-variable-sized-type-not-at-end \
+diff --git a/scripts/kconfig/merge_config.sh b/scripts/kconfig/merge_config.sh
+index 0b7952471c18f..79c09b378be81 100755
+--- a/scripts/kconfig/merge_config.sh
++++ b/scripts/kconfig/merge_config.sh
+@@ -112,8 +112,8 @@ INITFILE=$1
+ shift;
+ 
+ if [ ! -r "$INITFILE" ]; then
+-	echo "The base file '$INITFILE' does not exist.  Exit." >&2
+-	exit 1
++	echo "The base file '$INITFILE' does not exist. Creating one..." >&2
++	touch "$INITFILE"
+ fi
+ 
+ MERGE_LIST=$*
 -- 
 2.39.5
 
