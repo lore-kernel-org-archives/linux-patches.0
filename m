@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071C61FB3;
-	Tue, 27 May 2025 17:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4E427A131;
+	Tue, 27 May 2025 17:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367928; cv=none; b=AgvshryKA3x0FA4q/bAdJLI8XMzyt/LfIFvidyatLJljJ6r7eKo4GfBlSqHplo68yG80hNig4oQQQjQilQAL2G99ETQOIC75JUMJQA1eQLmVfN9QSWJ3cXr7hiuMENeqIS2EyGN2YfW6W6thayGzPW/HbePcgtk27BHyTrVW5tU=
+	t=1748367930; cv=none; b=MC5/iwmz5ofxxpXCqC8AEQaReQe9Aj1XIV5dYdQtn71QyrekHf9PNbVWIUoLP93nNCPDoNYY3kqARzI94HKBj7NUwFf9dbZeZhkdM3VTtQjMP/tkXfv6SOdwVTsV4eoirzunt9SxMvMCZUi2f/GWk2gSduX7fTRmB9HDGKkqFTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367928; c=relaxed/simple;
-	bh=9hD8ao917AwSfQbfxskg4JjCTyClP67iyZbXfryu3Ts=;
+	s=arc-20240116; t=1748367930; c=relaxed/simple;
+	bh=BTIrimQ/Fq5W/oGvIRth0nOSz2tGoZsvoGRyI2ijyYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mIOebTQfcC1UIN8R2s1wuYvFTXBmZd+p9it6KBoGz2x+ZiGny9AkJrWMG94DwHR4J2IOx4+hHtstjHBmI7tnU1gqJyZJKcAI3eeC/42kFvJSnxUAnxTMI1HBoQVs20XVICEHHvr56qmYlkdhH4MRPVMpE4Fk/VXlpMIZTd57VM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8xxiIEZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qR8zRv5Oajq3dSrng0wLtpiMB16jjcauAZ6iYPexzJ+nU8CS7nfUbdLIo2aE90GpY3Eqo+1nyxaKVQnpfKw2fLZefMYuFVhYuSOQ5cve0od+Hvz9wZhv/yht1cXDJcEh0YI4/hnMjg2C0KrMoSsLwFziV4tlg382G+5gFNKVkgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kiQ30Y9W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8xxiIEZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E15C4CEEA;
-	Tue, 27 May 2025 17:45:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kiQ30Y9W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E81C4CEE9;
+	Tue, 27 May 2025 17:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367927;
-	bh=9hD8ao917AwSfQbfxskg4JjCTyClP67iyZbXfryu3Ts=;
+	s=korg; t=1748367930;
+	bh=BTIrimQ/Fq5W/oGvIRth0nOSz2tGoZsvoGRyI2ijyYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u8xxiIEZ1fD/nPSsr4wUMFN9At5oZApLa/KsZ5KmWPWEfVuugIXJr+xgOL8CxTBB9
-	 8lIG69XFAIm9xX5lm6fekTkkGfpM7+1OyW/9L/Mmoce3HLCgMyhWWlq5z3fAYQsAlK
-	 xR4giu7/2kTlFH3uvTQaxu66DlKFcWrHVKIYnREk=
+	b=kiQ30Y9WgjT4yVIhvRQdbj0QZJk4oFHkvmxzWEZbU8vMhwXAkanBl7cSh3RFR4jQg
+	 MvsJeb93sT3ReHQ/mRJQfyhBoFudya4aobOlSCAxkcG3dV4jUhQ5BeJ5PvZVS5o/4H
+	 P7uXA2bhv4wJ1Y/2VcEg3tZLEMEr8WRo4L3dVTzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	P Praneesh <quic_ppranees@quicinc.com>,
 	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
-	Nicolas Escande <nico.escande@gmail.com>,
+	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 514/783] wifi: ath12k: use arvif instead of link_conf in ath12k_mac_set_key()
-Date: Tue, 27 May 2025 18:25:11 +0200
-Message-ID: <20250527162534.073682460@linuxfoundation.org>
+Subject: [PATCH 6.14 515/783] wifi: ath12k: fix the ampdu id fetch in the HAL_RX_MPDU_START TLV
+Date: Tue, 27 May 2025 18:25:12 +0200
+Message-ID: <20250527162534.114007031@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,76 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
+From: P Praneesh <quic_ppranees@quicinc.com>
 
-[ Upstream commit 00e4dc11695d48322780812b503314682659e98b ]
+[ Upstream commit dff4f278ee1ef12d822b7ed2a1048d27037209bb ]
 
-Currently, in ath12k_mac_set_key(), if sta is not present, the address is
-retrieved from link_conf's bssid or addr member, depending on the interface
-type.
-
-When operating as an ML station and during shutdown, link_conf will not be
-available. This can result in the following error:
-
-ath12k_pci 0004:01:00.0: unable to access bss link conf in set key for vif AA:BB:CC:DD:EE:FF link 1
-
-The primary purpose of accessing link_conf is to obtain the address for
-finding the peer. However, since arvif is always valid in this call, it can
-be used instead.
-
-Add change to use arvif instead of link_conf.
-
-A subsequent change will expose this issue but since tear down will give
-error, this is included first.
+Currently, ampdu id is update with peer id mask which is incorrect.
+Therefore, update the ampdu id with PPDU id mask value. Also move
+the ampdu_id field inside the user stats since it is a user id based
+statistics.
 
 Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00130-QCAHKSWPL_SILICONZ-1.97421.5 # Nicolas Escande
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
 
+Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
 Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Signed-off-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
-Tested-by: Nicolas Escande <nico.escande@gmail.com>
-Link: https://patch.msgid.link/20250204-unlink_link_arvif_from_chanctx-v2-5-764fb5973c1a@oss.qualcomm.com
+Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+Link: https://patch.msgid.link/20250206013854.174765-7-quic_periyasa@quicinc.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 14 +-------------
- 1 file changed, 1 insertion(+), 13 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_mon.c | 16 ++++++++++------
+ drivers/net/wireless/ath/ath12k/hal_rx.h |  3 ++-
+ 2 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 9123ffab55b52..95ad9fefbdfcd 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -4534,9 +4534,6 @@ static int ath12k_mac_set_key(struct ath12k *ar, enum set_key_cmd cmd,
- 			      struct ath12k_link_sta *arsta,
- 			      struct ieee80211_key_conf *key)
+diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
+index b952e79179d01..f23fee7055abc 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_mon.c
++++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2019-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+ #include "dp_mon.h"
+@@ -655,6 +655,11 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
+ 		if (userid < HAL_MAX_UL_MU_USERS) {
+ 			struct hal_rx_user_status *rxuser_stats =
+ 				&ppdu_info->userstats[userid];
++
++			if (ppdu_info->num_mpdu_fcs_ok > 1 ||
++			    ppdu_info->num_mpdu_fcs_err > 1)
++				ppdu_info->userstats[userid].ampdu_present = true;
++
+ 			ppdu_info->num_users += 1;
+ 
+ 			ath12k_dp_mon_rx_handle_ofdma_info(eu_stats, rxuser_stats);
+@@ -755,8 +760,8 @@ ath12k_dp_mon_rx_parse_status_tlv(struct ath12k_base *ab,
+ 		if (userid < HAL_MAX_UL_MU_USERS) {
+ 			info[0] = __le32_to_cpu(mpdu_start->info0);
+ 			ppdu_info->userid = userid;
+-			ppdu_info->ampdu_id[userid] =
+-				u32_get_bits(info[0], HAL_RX_MPDU_START_INFO1_PEERID);
++			ppdu_info->userstats[userid].ampdu_id =
++				u32_get_bits(info[0], HAL_RX_MPDU_START_INFO0_PPDU_ID);
+ 		}
+ 
+ 		break;
+@@ -956,15 +961,14 @@ static void ath12k_dp_mon_update_radiotap(struct ath12k *ar,
  {
--	struct ath12k_vif *ahvif = arvif->ahvif;
--	struct ieee80211_vif *vif = ath12k_ahvif_to_vif(ahvif);
--	struct ieee80211_bss_conf *link_conf;
- 	struct ieee80211_sta *sta = NULL;
- 	struct ath12k_base *ab = ar->ab;
- 	struct ath12k_peer *peer;
-@@ -4553,19 +4550,10 @@ static int ath12k_mac_set_key(struct ath12k *ar, enum set_key_cmd cmd,
- 	if (test_bit(ATH12K_FLAG_HW_CRYPTO_DISABLED, &ab->dev_flags))
- 		return 1;
+ 	struct ieee80211_supported_band *sband;
+ 	u8 *ptr = NULL;
+-	u16 ampdu_id = ppduinfo->ampdu_id[ppduinfo->userid];
  
--	link_conf = ath12k_mac_get_link_bss_conf(arvif);
--	if (!link_conf) {
--		ath12k_warn(ab, "unable to access bss link conf in set key for vif %pM link %u\n",
--			    vif->addr, arvif->link_id);
--		return -ENOLINK;
--	}
--
- 	if (sta)
- 		peer_addr = arsta->addr;
--	else if (ahvif->vdev_type == WMI_VDEV_TYPE_STA)
--		peer_addr = link_conf->bssid;
- 	else
--		peer_addr = link_conf->addr;
-+		peer_addr = arvif->bssid;
+ 	rxs->flag |= RX_FLAG_MACTIME_START;
+ 	rxs->signal = ppduinfo->rssi_comb + ATH12K_DEFAULT_NOISE_FLOOR;
+ 	rxs->nss = ppduinfo->nss + 1;
  
- 	key->hw_key_idx = key->keyidx;
+-	if (ampdu_id) {
++	if (ppduinfo->userstats[ppduinfo->userid].ampdu_present) {
+ 		rxs->flag |= RX_FLAG_AMPDU_DETAILS;
+-		rxs->ampdu_reference = ampdu_id;
++		rxs->ampdu_reference = ppduinfo->userstats[ppduinfo->userid].ampdu_id;
+ 	}
  
+ 	if (ppduinfo->he_mu_flags) {
+diff --git a/drivers/net/wireless/ath/ath12k/hal_rx.h b/drivers/net/wireless/ath/ath12k/hal_rx.h
+index 54f3eaeca8bb9..55b2dd5b76f6b 100644
+--- a/drivers/net/wireless/ath/ath12k/hal_rx.h
++++ b/drivers/net/wireless/ath/ath12k/hal_rx.h
+@@ -146,6 +146,8 @@ struct hal_rx_user_status {
+ 	u32 mpdu_fcs_ok_bitmap[HAL_RX_NUM_WORDS_PER_PPDU_BITMAP];
+ 	u32 mpdu_ok_byte_count;
+ 	u32 mpdu_err_byte_count;
++	bool ampdu_present;
++	u16 ampdu_id;
+ };
+ 
+ #define HAL_MAX_UL_MU_USERS	37
+@@ -230,7 +232,6 @@ struct hal_rx_mon_ppdu_info {
+ 	u8 addr4[ETH_ALEN];
+ 	struct hal_rx_user_status userstats[HAL_MAX_UL_MU_USERS];
+ 	u8 userid;
+-	u16 ampdu_id[HAL_MAX_UL_MU_USERS];
+ 	bool first_msdu_in_mpdu;
+ 	bool is_ampdu;
+ 	u8 medium_prot_type;
 -- 
 2.39.5
 
