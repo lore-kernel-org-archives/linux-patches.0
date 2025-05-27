@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120A019E7F9;
-	Tue, 27 May 2025 16:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2140A271476;
+	Tue, 27 May 2025 16:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364689; cv=none; b=sJEeJqM3eK9xwzBBg8upI5LhfLij7DA3QQ6LINBqfSCf0SB88E6zjpEpPA76yaOkU+E1L4mORj8Q8sBwyDutmg+laaY7Wf9k/OviyXov4y4L6CBKJ1jqT2JWl47X+84pVJBeNDjgojxNp+6qd9IndxHD2Rx5mHU8sxco+AxxKys=
+	t=1748364692; cv=none; b=VOokb8CvZXI8zG8S0ymyLz4n35Qhdv5hChq7bk1sS4GUZ/zRBbXqNtweLGXnSl2HJ5+5/TcvsLyHEC5FAJIwgjeaLF2sPWUgVx0HLp4W0VEpcZejji4fBcCKUgnXSb9C38yq5dXJE2Ggnui71AFwUst3PhQhLdLREzj62a816I0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364689; c=relaxed/simple;
-	bh=pzwzRQGlFw4wOpFHJVG208V8c7yGCoJrwvAHUd2M0Gk=;
+	s=arc-20240116; t=1748364692; c=relaxed/simple;
+	bh=CPYAKZA9h/iooSYBM4NBIp+Uwo3bKNngYdpFIm6sdsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aaqCyTVYz3aZXDdP2DXLl/Cin+Moxa2zzXGjZt66PbCA8oVaamFUz3vgOc/Y40T8ZLI9WchV96DimvnNaG33eGP8zR6uhFx0fx4b+SeQ2wvp4hk3PZQhzayoIRSeZKiSNv5qHC7fjp3Kg26ZrBKCauMWrU/KDWN+sUDx5cDJ0AU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTM5877q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dO+wlWOjr7JroHXgv14xe+X5Iw4YtYp1bovsCZ+o2sncYR8NJWQTxCXd+dgDUXsjNJDEOzforGTzNlyzjpqAJPSo11Yogmn/B/Jzv+jadVfeJgdg5qxYFs4Mc2AEecq8Td9+kv0+1NeZIs0F1Y//FCK7VZ/5nt7uyR+v/j8egcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7fv2DsQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTM5877q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77269C4CEE9;
-	Tue, 27 May 2025 16:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7fv2DsQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E4CAC4CEE9;
+	Tue, 27 May 2025 16:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364688;
-	bh=pzwzRQGlFw4wOpFHJVG208V8c7yGCoJrwvAHUd2M0Gk=;
+	s=korg; t=1748364692;
+	bh=CPYAKZA9h/iooSYBM4NBIp+Uwo3bKNngYdpFIm6sdsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NTM5877qCxsOKbk9D0njoVRmvbGLBZTeMSXfh7exfV19SOoWB55LwqSHge2YDiT50
-	 17Y4whF8sR87dPmS6oArLE17lIvH1Ce3G137UGlb+Uf6fO0Xe09oGaFsmK+nQcFnc7
-	 DKeTIC4le/0mtzm+tXPZcbk890LE1WYbWzHWW08M=
+	b=S7fv2DsQKm8F5KXtvYtkDGadvAcGTvLDt4214AA1OhmV0LJDtumz8qaYuEVVlz08n
+	 ciCkCo6sG5uGxiHsFoGtW4rrLxRFyr7q9RSeAfgKCiWAYT9bkHNJD2pWZElJ5V7+Xy
+	 UHMfOrTPU32X8ytgskWHmzdakde+79NnpYEkVEFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Kai=20M=C3=A4kisara?= <Kai.Makisara@kolumbus.fi>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 135/626] scsi: st: Tighten the page format heuristics with MODE SELECT
-Date: Tue, 27 May 2025 18:20:28 +0200
-Message-ID: <20250527162450.513410412@linuxfoundation.org>
+Subject: [PATCH 6.12 136/626] scsi: st: ERASE does not change tape location
+Date: Tue, 27 May 2025 18:20:29 +0200
+Message-ID: <20250527162450.551892356@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -54,40 +54,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
 
-[ Upstream commit 8db816c6f176321e42254badd5c1a8df8bfcfdb4 ]
+[ Upstream commit ad77cebf97bd42c93ab4e3bffd09f2b905c1959a ]
 
-In the days when SCSI-2 was emerging, some drives did claim SCSI-2 but did
-not correctly implement it. The st driver first tries MODE SELECT with the
-page format bit set to set the block descriptor.  If not successful, the
-non-page format is tried.
-
-The test only tests the sense code and this triggers also from illegal
-parameter in the parameter list. The test is limited to "old" devices and
-made more strict to remove false alarms.
+The SCSI ERASE command erases from the current position onwards.  Don't
+clear the position variables.
 
 Signed-off-by: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
-Link: https://lore.kernel.org/r/20250311112516.5548-4-Kai.Makisara@kolumbus.fi
+Link: https://lore.kernel.org/r/20250311112516.5548-3-Kai.Makisara@kolumbus.fi
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/st.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/scsi/st.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
-index a17441635ff3a..1c0951168f646 100644
+index 1c0951168f646..1cfd7e71dcdde 100644
 --- a/drivers/scsi/st.c
 +++ b/drivers/scsi/st.c
-@@ -3081,7 +3081,9 @@ static int st_int_ioctl(struct scsi_tape *STp, unsigned int cmd_in, unsigned lon
- 			   cmd_in == MTSETDRVBUFFER ||
- 			   cmd_in == SET_DENS_AND_BLK) {
- 			if (cmdstatp->sense_hdr.sense_key == ILLEGAL_REQUEST &&
--			    !(STp->use_pf & PF_TESTED)) {
-+				cmdstatp->sense_hdr.asc == 0x24 &&
-+				(STp->device)->scsi_level <= SCSI_2 &&
-+				!(STp->use_pf & PF_TESTED)) {
- 				/* Try the other possible state of Page Format if not
- 				   already tried */
- 				STp->use_pf = (STp->use_pf ^ USE_PF) | PF_TESTED;
+@@ -2894,7 +2894,6 @@ static int st_int_ioctl(struct scsi_tape *STp, unsigned int cmd_in, unsigned lon
+ 			timeout = STp->long_timeout * 8;
+ 
+ 		DEBC_printk(STp, "Erasing tape.\n");
+-		fileno = blkno = at_sm = 0;
+ 		break;
+ 	case MTSETBLK:		/* Set block length */
+ 	case MTSETDENSITY:	/* Set tape density */
 -- 
 2.39.5
 
