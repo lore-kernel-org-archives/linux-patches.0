@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA3528001F;
-	Tue, 27 May 2025 17:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C766227A131;
+	Tue, 27 May 2025 17:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368220; cv=none; b=iXNJ1vRPcLodhaG7DmerskKAxs0VrCaZF+fVvkU5m06sMh6r8QfkBZhgZcFSD6OD0Ycl8jQ1ksg1tHVdrLFxQqzbVzbqOP3t3NIycUMU2rmoAknVp+SeP/LCDHJFFIrrOaZr8C7yNmE9GYpOlQWxlanGtm1GtTopv/pF/ZJQ42I=
+	t=1748368222; cv=none; b=G1XrO7qBqsz3pejRPG6U+jxkmeFrEr/dp4RJPkxIlmFqPg06YP27JiyYSha4SSYOi3hgGb6BdbylDJu1qThiXmIyAayHqqE3ZUihVFHP3vG27V1ld7ubz1YXLH1hbXrtAUlgMgyZ2R3JDohWBDua6/l61SBxTeBIZAhScuLlCuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368220; c=relaxed/simple;
-	bh=yEZBbgjTiC93EnaJZwy2bJR4zPBJASpQFNkTuUQAErk=;
+	s=arc-20240116; t=1748368222; c=relaxed/simple;
+	bh=evBSgS0BNfNS+k2gvm7fvnIXqhCGCGNw9+bFAhWtSfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PMx/8fWZxHcz/gq2M/2MZgfStzxjMfms0f9CMfRDBEPjTHIzG8o993WOHRJuCRCer2uzuCpggYBCUIWcWCORCiycM4obf2ON4HxPJvjcHMdOsJoe1enxBMdzmLmTp3RxX1XV11PoAoHavkhvKHqVR1Ix26T9RQtBpg620GDAtkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gR6CnaEX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GIZuJZ1K8Cl6BDcbLRXuGtgHTuHoYFKklrCKDVb4fVesJL7Gum1250Ne/kYX7eXtGNC+17PahyizikR5USxcnIscAhS0yxqXNAY2DPCc+QPP0pHpJCwb2Slch25fVkzxg+Wb/MAuid1dMsv/GpwiyPWKHdyEnwAtRSytzLHSkwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEryUVYa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gR6CnaEX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE7DC4CEE9;
-	Tue, 27 May 2025 17:50:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEryUVYa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89E9C4CEEA;
+	Tue, 27 May 2025 17:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368219;
-	bh=yEZBbgjTiC93EnaJZwy2bJR4zPBJASpQFNkTuUQAErk=;
+	s=korg; t=1748368222;
+	bh=evBSgS0BNfNS+k2gvm7fvnIXqhCGCGNw9+bFAhWtSfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gR6CnaEXsuO6mcLWftv1IoNPaK4pBpDsX9ECXHPdzSZ6Mr4ydj8kbQR6Si13jw/av
-	 zNc09e0qNa3pHEnKk/RcMONasYuvjNU/n4nM7V3123R/IuFxjFFQkQHKZmrbMQiH2t
-	 Qsrvk1UfGMH4bTcG5czOaW9/t/vwhDcx5Jm1fpLk=
+	b=OEryUVYaN9JUeCWyqoScFhfsIdA6TBpLy0PJSYlyluaLb2aSVamkjtRHTkUn0zAaS
+	 8ZGQCXVmKij8vrgBZedCc9PZsVq5+Lmo4bQ4EBx2/xZDxbg8Hu/LWdpfGcVenUCN33
+	 Kh9z442HBZQM0EOvda19UuB0wOKRo1emxPTcJU9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Auger <eric.auger@redhat.com>,
-	Eric Auger <eauger@redhat.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Lingbo Kong <quic_lingbok@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 636/783] virtgpu: dont reset on shutdown
-Date: Tue, 27 May 2025 18:27:13 +0200
-Message-ID: <20250527162539.044087424@linuxfoundation.org>
+Subject: [PATCH 6.14 610/783] wifi: ath12k: report station mode receive rate for IEEE 802.11be
+Date: Tue, 27 May 2025 18:26:47 +0200
+Message-ID: <20250527162537.993046227@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,155 +51,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: Lingbo Kong <quic_lingbok@quicinc.com>
 
-[ Upstream commit 183a08715af1491d381b4e22efd61578fbe05fa5 ]
+[ Upstream commit 5e73276c814fc1a5a1bce6be743e1a07baa6d4bc ]
 
-It looks like GPUs are used after shutdown is invoked.
-Thus, breaking virtio gpu in the shutdown callback is not a good idea -
-guest hangs attempting to finish console drawing, with these warnings:
+Currently, the receive rate of EHT of "iw dev xxx station dump" command
+always show an invalid value.
 
-[   20.504464] WARNING: CPU: 0 PID: 568 at drivers/gpu/drm/virtio/virtgpu_vq.c:358 virtio_gpu_queue_ctrl_sgs+0x236/0x290 [virtio_gpu]
-[   20.505685] Modules linked in: nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject nft_ct nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 rfkill ip_set nf_tables nfnetlink vfat fat intel_rapl_msr intel_rapl_common intel_uncore_frequency_common nfit libnvdimm kvm_intel kvm rapl iTCO_wdt iTCO_vendor_support virtio_gpu virtio_dma_buf pcspkr drm_shmem_helper i2c_i801 drm_kms_helper lpc_ich i2c_smbus virtio_balloon joydev drm fuse xfs libcrc32c ahci libahci crct10dif_pclmul crc32_pclmul crc32c_intel libata virtio_net ghash_clmulni_intel net_failover virtio_blk failover serio_raw dm_mirror dm_region_hash dm_log dm_mod
-[   20.511847] CPU: 0 PID: 568 Comm: kworker/0:3 Kdump: loaded Tainted: G        W         -------  ---  5.14.0-578.6675_1757216455.el9.x86_64 #1
-[   20.513157] Hardware name: Red Hat KVM/RHEL, BIOS edk2-20241117-3.el9 11/17/2024
-[   20.513918] Workqueue: events drm_fb_helper_damage_work [drm_kms_helper]
-[   20.514626] RIP: 0010:virtio_gpu_queue_ctrl_sgs+0x236/0x290 [virtio_gpu]
-[   20.515332] Code: 00 00 48 85 c0 74 0c 48 8b 78 08 48 89 ee e8 51 50 00 00 65 ff 0d 42 e3 74 3f 0f 85 69 ff ff ff 0f 1f 44 00 00 e9 5f ff ff ff <0f> 0b e9 3f ff ff ff 48 83 3c 24 00 74 0e 49 8b 7f 40 48 85 ff 74
-[   20.517272] RSP: 0018:ff34f0a8c0787ad8 EFLAGS: 00010282
-[   20.517820] RAX: 00000000fffffffb RBX: 0000000000000000 RCX: 0000000000000820
-[   20.518565] RDX: 0000000000000000 RSI: ff34f0a8c0787be0 RDI: ff218bef03a26300
-[   20.519308] RBP: ff218bef03a26300 R08: 0000000000000001 R09: ff218bef07224360
-[   20.520059] R10: 0000000000008dc0 R11: 0000000000000002 R12: ff218bef02630028
-[   20.520806] R13: ff218bef0263fb48 R14: ff218bef00cb8000 R15: ff218bef07224360
-[   20.521555] FS:  0000000000000000(0000) GS:ff218bef7ba00000(0000) knlGS:0000000000000000
-[   20.522397] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   20.522996] CR2: 000055ac4f7871c0 CR3: 000000010b9f2002 CR4: 0000000000771ef0
-[   20.523740] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[   20.524477] DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
-[   20.525223] PKRU: 55555554
-[   20.525515] Call Trace:
-[   20.525777]  <TASK>
-[   20.526003]  ? show_trace_log_lvl+0x1c4/0x2df
-[   20.526464]  ? show_trace_log_lvl+0x1c4/0x2df
-[   20.526925]  ? virtio_gpu_queue_fenced_ctrl_buffer+0x82/0x2c0 [virtio_gpu]
-[   20.527643]  ? virtio_gpu_queue_ctrl_sgs+0x236/0x290 [virtio_gpu]
-[   20.528282]  ? __warn+0x7e/0xd0
-[   20.528621]  ? virtio_gpu_queue_ctrl_sgs+0x236/0x290 [virtio_gpu]
-[   20.529256]  ? report_bug+0x100/0x140
-[   20.529643]  ? handle_bug+0x3c/0x70
-[   20.530010]  ? exc_invalid_op+0x14/0x70
-[   20.530421]  ? asm_exc_invalid_op+0x16/0x20
-[   20.530862]  ? virtio_gpu_queue_ctrl_sgs+0x236/0x290 [virtio_gpu]
-[   20.531506]  ? virtio_gpu_queue_ctrl_sgs+0x174/0x290 [virtio_gpu]
-[   20.532148]  virtio_gpu_queue_fenced_ctrl_buffer+0x82/0x2c0 [virtio_gpu]
-[   20.532843]  virtio_gpu_primary_plane_update+0x3e2/0x460 [virtio_gpu]
-[   20.533520]  drm_atomic_helper_commit_planes+0x108/0x320 [drm_kms_helper]
-[   20.534233]  drm_atomic_helper_commit_tail+0x45/0x80 [drm_kms_helper]
-[   20.534914]  commit_tail+0xd2/0x130 [drm_kms_helper]
-[   20.535446]  drm_atomic_helper_commit+0x11b/0x140 [drm_kms_helper]
-[   20.536097]  drm_atomic_commit+0xa4/0xe0 [drm]
-[   20.536588]  ? __pfx___drm_printfn_info+0x10/0x10 [drm]
-[   20.537162]  drm_atomic_helper_dirtyfb+0x192/0x270 [drm_kms_helper]
-[   20.537823]  drm_fbdev_shmem_helper_fb_dirty+0x43/0xa0 [drm_shmem_helper]
-[   20.538536]  drm_fb_helper_damage_work+0x87/0x160 [drm_kms_helper]
-[   20.539188]  process_one_work+0x194/0x380
-[   20.539612]  worker_thread+0x2fe/0x410
-[   20.540007]  ? __pfx_worker_thread+0x10/0x10
-[   20.540456]  kthread+0xdd/0x100
-[   20.540791]  ? __pfx_kthread+0x10/0x10
-[   20.541190]  ret_from_fork+0x29/0x50
-[   20.541566]  </TASK>
-[   20.541802] ---[ end trace 0000000000000000 ]---
+This is because ath12k does not pass information about the rx_status of EHT
+to mac80211. So, mac80211 not calculate the receive rate.
 
-It looks like the shutdown is called in the middle of console drawing, so
-we should either wait for it to finish, or let drm handle the shutdown.
+To address this issue, add logic for handling rx_status of EHT to the
+ath12k_dp_rx_h_rate() function.
 
-This patch implements this second option:
+After that, "iw dev xxx station dump" show the correct receive rate.
+Such as:
 
-Add an option for drivers to bypass the common break+reset handling.
-As DRM is careful to flush/synchronize outstanding buffers, it looks like
-GPU can just have a NOP there.
+Station 00:03:7f:12:03:03 (on wlo1)
+        inactive time:  48 ms
+        rx bytes:       59226
+        rx packets:     320
+        tx bytes:       26556
+        tx packets:     191
+        tx retries:     99
+        tx failed:      0
+        beacon loss:    0
+        beacon rx:      79
+        rx drop misc:   68
+        signal:         -95 dBm
+        beacon signal avg:      -20 dBm
+        tx bitrate:     688.2 MBit/s 40MHz EHT-MCS 13 EHT-NSS 2 EHT-GI 0
+        tx duration:    0 us
+        rx bitrate:     619.5 MBit/s 40MHz EHT-MCS 8 EHT-NSS 3 EHT-GI 0
 
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Fixes: 8bd2fa086a04 ("virtio: break and reset virtio devices on device_shutdown()")
-Cc: Eric Auger <eauger@redhat.com>
-Cc: Jocelyn Falempe <jfalempe@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <8490dbeb6f79ed039e6c11d121002618972538a3.1744293540.git.mst@redhat.com>
+This patch affects the station mode of WCN7850 and QCN9274.
+
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.1.1-00214-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Lingbo Kong <quic_lingbok@quicinc.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219715
+Link: https://patch.msgid.link/20250115063537.35797-3-quic_lingbok@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_drv.c | 9 +++++++++
- drivers/virtio/virtio.c              | 6 ++++++
- include/linux/virtio.h               | 3 +++
- 3 files changed, 18 insertions(+)
+ drivers/net/wireless/ath/ath12k/dp_rx.c   | 22 ++++++++++++++++++++--
+ drivers/net/wireless/ath/ath12k/rx_desc.h |  2 ++
+ 2 files changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.c b/drivers/gpu/drm/virtio/virtgpu_drv.c
-index 6a67c6297d583..8719b778a1ff0 100644
---- a/drivers/gpu/drm/virtio/virtgpu_drv.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_drv.c
-@@ -125,6 +125,14 @@ static void virtio_gpu_remove(struct virtio_device *vdev)
- 	drm_dev_put(dev);
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index ae6608b10bb57..ff6a709b5042c 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+ #include <linux/ieee80211.h>
+@@ -2392,6 +2392,23 @@ static void ath12k_dp_rx_h_rate(struct ath12k *ar, struct hal_rx_desc *rx_desc,
+ 		rx_status->he_gi = ath12k_he_gi_to_nl80211_he_gi(sgi);
+ 		rx_status->bw = ath12k_mac_bw_to_mac80211_bw(bw);
+ 		break;
++	case RX_MSDU_START_PKT_TYPE_11BE:
++		rx_status->rate_idx = rate_mcs;
++
++		if (rate_mcs > ATH12K_EHT_MCS_MAX) {
++			ath12k_warn(ar->ab,
++				    "Received with invalid mcs in EHT mode %d\n",
++				    rate_mcs);
++			break;
++		}
++
++		rx_status->encoding = RX_ENC_EHT;
++		rx_status->nss = nss;
++		rx_status->eht.gi = ath12k_mac_eht_gi_to_nl80211_eht_gi(sgi);
++		rx_status->bw = ath12k_mac_bw_to_mac80211_bw(bw);
++		break;
++	default:
++		break;
+ 	}
  }
  
-+static void virtio_gpu_shutdown(struct virtio_device *vdev)
-+{
-+	/*
-+	 * drm does its own synchronization on shutdown.
-+	 * Do nothing here, opt out of device reset.
-+	 */
-+}
-+
- static void virtio_gpu_config_changed(struct virtio_device *vdev)
- {
- 	struct drm_device *dev = vdev->priv;
-@@ -159,6 +167,7 @@ static struct virtio_driver virtio_gpu_driver = {
- 	.id_table = id_table,
- 	.probe = virtio_gpu_probe,
- 	.remove = virtio_gpu_remove,
-+	.shutdown = virtio_gpu_shutdown,
- 	.config_changed = virtio_gpu_config_changed
+@@ -2486,7 +2503,7 @@ static void ath12k_dp_rx_deliver_msdu(struct ath12k *ar, struct napi_struct *nap
+ 	spin_unlock_bh(&ab->base_lock);
+ 
+ 	ath12k_dbg(ab, ATH12K_DBG_DATA,
+-		   "rx skb %p len %u peer %pM %d %s sn %u %s%s%s%s%s%s%s%s%s rate_idx %u vht_nss %u freq %u band %u flag 0x%x fcs-err %i mic-err %i amsdu-more %i\n",
++		   "rx skb %p len %u peer %pM %d %s sn %u %s%s%s%s%s%s%s%s%s%s rate_idx %u vht_nss %u freq %u band %u flag 0x%x fcs-err %i mic-err %i amsdu-more %i\n",
+ 		   msdu,
+ 		   msdu->len,
+ 		   peer ? peer->addr : NULL,
+@@ -2497,6 +2514,7 @@ static void ath12k_dp_rx_deliver_msdu(struct ath12k *ar, struct napi_struct *nap
+ 		   (status->encoding == RX_ENC_HT) ? "ht" : "",
+ 		   (status->encoding == RX_ENC_VHT) ? "vht" : "",
+ 		   (status->encoding == RX_ENC_HE) ? "he" : "",
++		   (status->encoding == RX_ENC_EHT) ? "eht" : "",
+ 		   (status->bw == RATE_INFO_BW_40) ? "40" : "",
+ 		   (status->bw == RATE_INFO_BW_80) ? "80" : "",
+ 		   (status->bw == RATE_INFO_BW_160) ? "160" : "",
+diff --git a/drivers/net/wireless/ath/ath12k/rx_desc.h b/drivers/net/wireless/ath/ath12k/rx_desc.h
+index 10366bbe99999..fc1eceb2d99bb 100644
+--- a/drivers/net/wireless/ath/ath12k/rx_desc.h
++++ b/drivers/net/wireless/ath/ath12k/rx_desc.h
+@@ -637,6 +637,8 @@ enum rx_msdu_start_pkt_type {
+ 	RX_MSDU_START_PKT_TYPE_11N,
+ 	RX_MSDU_START_PKT_TYPE_11AC,
+ 	RX_MSDU_START_PKT_TYPE_11AX,
++	RX_MSDU_START_PKT_TYPE_11BA,
++	RX_MSDU_START_PKT_TYPE_11BE,
  };
  
-diff --git a/drivers/virtio/virtio.c b/drivers/virtio/virtio.c
-index 150753c3b5782..95d5d7993e5b1 100644
---- a/drivers/virtio/virtio.c
-+++ b/drivers/virtio/virtio.c
-@@ -407,6 +407,12 @@ static void virtio_dev_shutdown(struct device *_d)
- 	if (!drv)
- 		return;
- 
-+	/* If the driver has its own shutdown method, use that. */
-+	if (drv->shutdown) {
-+		drv->shutdown(dev);
-+		return;
-+	}
-+
- 	/*
- 	 * Some devices get wedged if you kick them after they are
- 	 * reset. Mark all vqs as broken to make sure we don't.
-diff --git a/include/linux/virtio.h b/include/linux/virtio.h
-index 4d16c13d0df58..64cb4b04be7ad 100644
---- a/include/linux/virtio.h
-+++ b/include/linux/virtio.h
-@@ -220,6 +220,8 @@ size_t virtio_max_dma_size(const struct virtio_device *vdev);
-  *    occurs.
-  * @reset_done: optional function to call after transport specific reset
-  *    operation has finished.
-+ * @shutdown: synchronize with the device on shutdown. If provided, replaces
-+ *    the virtio core implementation.
-  */
- struct virtio_driver {
- 	struct device_driver driver;
-@@ -237,6 +239,7 @@ struct virtio_driver {
- 	int (*restore)(struct virtio_device *dev);
- 	int (*reset_prepare)(struct virtio_device *dev);
- 	int (*reset_done)(struct virtio_device *dev);
-+	void (*shutdown)(struct virtio_device *dev);
- };
- 
- #define drv_to_virtio(__drv)	container_of_const(__drv, struct virtio_driver, driver)
+ enum rx_msdu_start_sgi {
 -- 
 2.39.5
 
