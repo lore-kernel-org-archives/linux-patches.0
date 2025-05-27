@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206E0139579;
-	Tue, 27 May 2025 17:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFFA027E7C6;
+	Tue, 27 May 2025 17:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365852; cv=none; b=CKwCtKf3IDdDuZqrDCw/53TQwJvDsFEEzqZ1BM73UEAScgHF4/E8dYbBXFko9kgaozQda3ywEodYSWeQzxfh9tr6pIkB/Y2ylochgyCw1C184ybSWYfaJJpji01rsyaxhzlBEiieG3BMSHDw/CYINzZ80HsgvAMLmfHXjTVQXkk=
+	t=1748365854; cv=none; b=IDBEmlN1YkXtd6+lHIQBgo4GN5BgNIcu5pNg3zQQ8hawLbsD3MAJt/w6kOXzrNBn7tcqA4g5E4VDAYkoozixSZk1iQeXuzpote4kiac4ugUQtTh31xw/Fe4N8l2naErqFL102iWRl+DSItScPPFgkRY+HRQQSauFb1qqga04dX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365852; c=relaxed/simple;
-	bh=Ev49vztQgMB25fA9TziNCVF88IW9BPpRgvpfhIOHYms=;
+	s=arc-20240116; t=1748365854; c=relaxed/simple;
+	bh=6jEPxKsh0LSPpOl6U5UBdIjtVKbscAl90CD4yjz4zzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cU5ifVcg+I4gjk8CDMhQzS5iVsL4vCXWFU6uXYNpdCG/WkVKLOy3t+dB/8H/wpcd1WvDx6ZOZgUcTRfn+an2R9mOOFkj9gp3ypEfemKSyONfR6RC6RwoImmbkHKqOIZZz0XC5ZY6mIa/g3tMgT3K3FXhfh8eVJIjZ/T+ypARJsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYrw6ngJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BrjojNIspBcY4/jpCGHzgs9rQFpMepOg9/GlQkV2R0SmRvw8coxXrMFv+AtYLkAIi+J1rlUO2F4rsE0QPtaFh27/FXwOr5YEl1fbUWy1wuddvqQG/qvT68XDrFHdP2DDobg/ngW/XIRLoYya5Tl5rkCA+5Jx5DWE5BQp4GBu+tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0NnbDuV2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYrw6ngJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3FCFC4CEE9;
-	Tue, 27 May 2025 17:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NnbDuV2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6020FC4CEE9;
+	Tue, 27 May 2025 17:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365852;
-	bh=Ev49vztQgMB25fA9TziNCVF88IW9BPpRgvpfhIOHYms=;
+	s=korg; t=1748365854;
+	bh=6jEPxKsh0LSPpOl6U5UBdIjtVKbscAl90CD4yjz4zzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UYrw6ngJ0tocRqxH2DKOM/yHMQhCgRP3WSHonlOLDZYpgHhkGk6J898F0oIT4d3xM
-	 61r9/aDBxa/m3G3m2uQ7RJEMi2Iabub9nEkrJYL0rmjNrbUUvEkDjMuyg7sryNkm/g
-	 bdo4/hQgv7JuaH8zdoL9851RgpzudH+oqHqGUYEY=
+	b=0NnbDuV2h6d2xPf1SJXkWBunpDpEbEL0jKmpwRtHuPrRhz8qc7SKLrFRbcPGLzjP5
+	 cFlKg2W8SeVe1DMDt73H9uT+/CR3w1M2DvIgKhowIRfoX4alsR8crg0XcPI0/jGBRb
+	 JJTOboGrLf+GQuBzaD6HJsKqHMc/izdLSuXZ4/jE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 508/626] smb: server: smb2pdu: check return value of xa_store()
-Date: Tue, 27 May 2025 18:26:41 +0200
-Message-ID: <20250527162505.603803370@linuxfoundation.org>
+Subject: [PATCH 6.12 479/626] perf/amd/ibs: Fix perf_ibs_op.cnt_mask for CurCnt
+Date: Tue, 27 May 2025 18:26:12 +0200
+Message-ID: <20250527162504.449888519@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,48 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Ravi Bangoria <ravi.bangoria@amd.com>
 
-[ Upstream commit af5226abb40cae959f424f7ca614787a1c87ce48 ]
+[ Upstream commit 46dcf85566170d4528b842bf83ffc350d71771fa ]
 
-xa_store() may fail so check its return value and return error code if
-error occurred.
+IBS Op uses two counters: MaxCnt and CurCnt. MaxCnt is programmed with
+the desired sample period. IBS hw generates sample when CurCnt reaches
+to MaxCnt. The size of these counter used to be 20 bits but later they
+were extended to 27 bits. The 7 bit extension is indicated by CPUID
+Fn8000_001B_EAX[6 / OpCntExt].
 
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+perf_ibs->cnt_mask variable contains bit masks for MaxCnt and CurCnt.
+But IBS driver does not set upper 7 bits of CurCnt in cnt_mask even
+when OpCntExt CPUID bit is set. Fix this.
+
+IBS driver uses cnt_mask[CurCnt] bits only while disabling an event.
+Fortunately, CurCnt bits are not read from MSR while re-enabling the
+event, instead MaxCnt is programmed with desired period and CurCnt is
+set to 0. Hence, we did not see any issues so far.
+
+Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lkml.kernel.org/r/20250115054438.1021-5-ravi.bangoria@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/x86/events/amd/ibs.c         | 3 ++-
+ arch/x86/include/asm/perf_event.h | 1 +
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index f0760d786502f..08d9a7cfba8cd 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1448,7 +1448,7 @@ static int ntlm_authenticate(struct ksmbd_work *work,
- {
- 	struct ksmbd_conn *conn = work->conn;
- 	struct ksmbd_session *sess = work->sess;
--	struct channel *chann = NULL;
-+	struct channel *chann = NULL, *old;
- 	struct ksmbd_user *user;
- 	u64 prev_id;
- 	int sz, rc;
-@@ -1560,7 +1560,12 @@ static int ntlm_authenticate(struct ksmbd_work *work,
- 				return -ENOMEM;
- 
- 			chann->conn = conn;
--			xa_store(&sess->ksmbd_chann_list, (long)conn, chann, KSMBD_DEFAULT_GFP);
-+			old = xa_store(&sess->ksmbd_chann_list, (long)conn, chann,
-+					KSMBD_DEFAULT_GFP);
-+			if (xa_is_err(old)) {
-+				kfree(chann);
-+				return xa_err(old);
-+			}
- 		}
+diff --git a/arch/x86/events/amd/ibs.c b/arch/x86/events/amd/ibs.c
+index c3a2f6f57770a..8f3b5764e139d 100644
+--- a/arch/x86/events/amd/ibs.c
++++ b/arch/x86/events/amd/ibs.c
+@@ -1222,7 +1222,8 @@ static __init int perf_ibs_op_init(void)
+ 	if (ibs_caps & IBS_CAPS_OPCNTEXT) {
+ 		perf_ibs_op.max_period  |= IBS_OP_MAX_CNT_EXT_MASK;
+ 		perf_ibs_op.config_mask	|= IBS_OP_MAX_CNT_EXT_MASK;
+-		perf_ibs_op.cnt_mask    |= IBS_OP_MAX_CNT_EXT_MASK;
++		perf_ibs_op.cnt_mask    |= (IBS_OP_MAX_CNT_EXT_MASK |
++					    IBS_OP_CUR_CNT_EXT_MASK);
  	}
  
+ 	if (ibs_caps & IBS_CAPS_ZEN4)
+diff --git a/arch/x86/include/asm/perf_event.h b/arch/x86/include/asm/perf_event.h
+index 7505bb5d260ab..aa351c4a20eee 100644
+--- a/arch/x86/include/asm/perf_event.h
++++ b/arch/x86/include/asm/perf_event.h
+@@ -520,6 +520,7 @@ struct pebs_xmm {
+  */
+ #define IBS_OP_CUR_CNT		(0xFFF80ULL<<32)
+ #define IBS_OP_CUR_CNT_RAND	(0x0007FULL<<32)
++#define IBS_OP_CUR_CNT_EXT_MASK	(0x7FULL<<52)
+ #define IBS_OP_CNT_CTL		(1ULL<<19)
+ #define IBS_OP_VAL		(1ULL<<18)
+ #define IBS_OP_ENABLE		(1ULL<<17)
 -- 
 2.39.5
 
