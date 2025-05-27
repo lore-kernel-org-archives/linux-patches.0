@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1297A28031C;
-	Tue, 27 May 2025 17:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E59280A4C;
+	Tue, 27 May 2025 17:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365951; cv=none; b=Clum5NRbFxPKuIlzR1Hu6QiPzScmcdiPElm63uWDNZikRK6ebUNNaj6palIeOGJdpKc/walU0TfiI2O6TN+s19AG8tXpx+O2dMbjYRqpZE+frEP4lqM3RZ8cCzVOku8Grh+SzWpYkqSeAA132pjb53bqTNsRAY6k8Sn6qCnnBYI=
+	t=1748365955; cv=none; b=uIoVEYBeA3bIiL4Sxq5C8OQLpe0wspMjP4Hvp5Q3jcupE5HfkFH6Frz7QbZBu4v1B578QwKhbTljvZzQRkVPIzujCpqOVO/8A/+yLMH1RMhhy7MGrKjeRDBE11QCmUHYek9l8aAREwyAz4eZZ1CD/rURrZqjrV1ZRy/GOUcHgOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365951; c=relaxed/simple;
-	bh=PDji31/pXWBwyf2E4yCth3Xi1lfOtHT3ZCZ6crq/T9w=;
+	s=arc-20240116; t=1748365955; c=relaxed/simple;
+	bh=aEnE+b3oxurXlnJP2+/7aubN3izZF4Xar836BslL6Gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k8J7ZSmkvcEq0U2INhAfAMqDkE7K7XflxUWrYRVTSwFf3M9Moxu95DvhGf3ykwh63NoLTGpwWXeG4j+5YMhnk9WsHprnxbkh+5Uqq2EM/uOXZ416AeOjwaIIwc0TddK9EFwhomhHDjBMcuLYljmL5AH5I9nIbcuGNF6bEVqKN+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrGJcbSA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AJ8TOaDlr0UqRd8EXtb9CZ4+d4V6HHWy4wKNYK2iBZc7GljCaNUoBVMQkIpaRQ/lAsNN5SXC+7GIH8f52eG9q/2EltlbJzoShrnNQcY4ARsjCVsD03fgxRlXBMzCmQifmxuqk8y9RdQuI6SVyqdDe0DR+5YyHEUIfrFp+fnP0c0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PoX/l+p6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrGJcbSA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88CF2C4CEE9;
-	Tue, 27 May 2025 17:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PoX/l+p6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3019C4CEE9;
+	Tue, 27 May 2025 17:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365950;
-	bh=PDji31/pXWBwyf2E4yCth3Xi1lfOtHT3ZCZ6crq/T9w=;
+	s=korg; t=1748365954;
+	bh=aEnE+b3oxurXlnJP2+/7aubN3izZF4Xar836BslL6Gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xrGJcbSAOr49Qk/AeER8BWjylp9a4UmdAxFb8rP1U8tz7nCWShhiqWU9NvpgcxzOK
-	 UaHjWDxJvSyYKDv0nhg59VJOixpiquphgScimchpBUbBHKuWYXcYlTHrHkwtLgD0mP
-	 mjvyN9r+PwmFK6ZrSQMeDCxh3hdjens/hpSQG6f8=
+	b=PoX/l+p6pjvOw3DcKEPxyPCpSoqPryv+DFsfTZloyfMSIKE06ttEqCV0Zr6siQUHZ
+	 gZwDbt+b8No7eXZJoLarr5Yti2dGT5TQIC3U1IwkEz4tZsSs4HcD4cpHLv3Pv+udKK
+	 KoK/Lp17RYVwmaBIp9lmDzpvvIG1WRDgvI6wCVRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 6.12 541/626] remoteproc: qcom_wcnss: Fix on platforms without fallback regulators
-Date: Tue, 27 May 2025 18:27:14 +0200
-Message-ID: <20250527162506.973963596@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 513/626] ASoC: Intel: bytcr_rt5640: Add DMI quirk for Acer Aspire SW3-013
+Date: Tue, 27 May 2025 18:26:46 +0200
+Message-ID: <20250527162505.806289220@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -46,47 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 4ca45af0a56d00b86285d6fdd720dca3215059a7 ]
+[ Upstream commit a549b927ea3f5e50b1394209b64e6e17e31d4db8 ]
 
-Recent change to handle platforms with only single power domain broke
-pronto-v3 which requires power domains and doesn't have fallback voltage
-regulators in case power domains are missing. Add a check to verify
-the number of fallback voltage regulators before using the code which
-handles single power domain situation.
+Acer Aspire SW3-013 requires the very same quirk as other Acer Aspire
+model for making it working.
 
-Fixes: 65991ea8a6d1 ("remoteproc: qcom_wcnss: Handle platforms with only single power domain")
-Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sdm632-fairphone-fp3
-Link: https://lore.kernel.org/r/20250511234026.94735-1-matti.lehtimaki@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220011
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250420085716.12095-1-tiwai@suse.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_wcnss.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/intel/boards/bytcr_rt5640.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
-index 735d373a9f636..a2ae6adf0053a 100644
---- a/drivers/remoteproc/qcom_wcnss.c
-+++ b/drivers/remoteproc/qcom_wcnss.c
-@@ -456,7 +456,8 @@ static int wcnss_init_regulators(struct qcom_wcnss *wcnss,
- 	if (wcnss->num_pds) {
- 		info += wcnss->num_pds;
- 		/* Handle single power domain case */
--		num_vregs += num_pd_vregs - wcnss->num_pds;
-+		if (wcnss->num_pds < num_pd_vregs)
-+			num_vregs += num_pd_vregs - wcnss->num_pds;
- 	} else {
- 		num_vregs += num_pd_vregs;
- 	}
+diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
+index 1148e9498d8e8..b6434b4731261 100644
+--- a/sound/soc/intel/boards/bytcr_rt5640.c
++++ b/sound/soc/intel/boards/bytcr_rt5640.c
+@@ -576,6 +576,19 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
+ 					BYT_RT5640_SSP0_AIF2 |
+ 					BYT_RT5640_MCLK_EN),
+ 	},
++	{       /* Acer Aspire SW3-013 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire SW3-013"),
++		},
++		.driver_data = (void *)(BYT_RT5640_DMIC1_MAP |
++					BYT_RT5640_JD_SRC_JD2_IN4N |
++					BYT_RT5640_OVCD_TH_2000UA |
++					BYT_RT5640_OVCD_SF_0P75 |
++					BYT_RT5640_DIFF_MIC |
++					BYT_RT5640_SSP0_AIF1 |
++					BYT_RT5640_MCLK_EN),
++	},
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
 -- 
 2.39.5
 
