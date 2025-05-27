@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9ADE27CB35;
-	Tue, 27 May 2025 17:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6422827CCF0;
+	Tue, 27 May 2025 17:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367512; cv=none; b=ZFLhR+8YMQYIxkPIB1ae9RvsFhNbjKK//I2l4Iv5aVtiNPnXHtP8yPgIG+PXtVAnqpxGuhSCSNBiwBhTv8zqBhjrY9m+IqQs1JJSv0vFvHECKwSsiFf368weUuCvMZG0ncWHGsm3iNqlbmCJ/pte6x/9tKgajjMAMDBIr0kr3KU=
+	t=1748367514; cv=none; b=PGs7boTLWvqOrPpi+2Cfa/6X1bYY0cpxMv93s+lKo6m960h/GeJehzW+ntFUYwr2kSITxOSFaLfDZS24BfzSGJHW7Uyeqcv4SkF26gvHdutxe9wylG410FZP12P2hGJ0w5OrysT3kiwkgOV/Co+GVGO4KPQmhPkWsTbcemo3lSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367512; c=relaxed/simple;
-	bh=3XvYC5uUzpM4zNU1dUTfeSUGOt6vWen9X+mYqPcRY5k=;
+	s=arc-20240116; t=1748367514; c=relaxed/simple;
+	bh=HNNyMe2oTO/quMmGgdvtlfejLuloyJLetDSH45jDIao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jFAHNj2o20CvVl5MhVxGzKVml9pFz7RiS8u7vfwis8wiMzqvo4f/b7DTjY9EYzaI5I1UAmhmqhDA0NYbiIYMkMyAjY9zFB+6ihJhkecJo/68Y//XO34kcWMMl/jEfb3ruONOHA/5U7AwYot0r3HHGH5GJhpxFWaOpoQuXVu8eUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pgOXueBD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R4QSJre6EKW1I7RfP5aOIsoA6AVS5G8vsLMtBD0Yem4Y2anxRKScvQ8McFHIHwPZ5/SUnT0IrjuxkeTPnZ0Ro3lrw31yFJwmOHmBdTHF7Pc+HWoRVobDatbLDD09HSMRhQyoOZMEl/kUlMI09CaSZ3eERjyE2jUFoFDBK6t3cYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FmFThx4j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pgOXueBD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1F9C4CEE9;
-	Tue, 27 May 2025 17:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FmFThx4j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C77A8C4CEE9;
+	Tue, 27 May 2025 17:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367511;
-	bh=3XvYC5uUzpM4zNU1dUTfeSUGOt6vWen9X+mYqPcRY5k=;
+	s=korg; t=1748367514;
+	bh=HNNyMe2oTO/quMmGgdvtlfejLuloyJLetDSH45jDIao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pgOXueBDw9JS/YgshLcYVi5ZUgA69p7QJ9EqSKwqVLGNT4v83FFIIqD3tvFP7lVn3
-	 dGZHf7vJH2IuUaYI5i4WyiGyTKjCvS07zAnbDJYzZnf+Bf77I3SqbbQGdj25970Mlk
-	 iipWyZSv6GkWNXw9C49tJbY99iYKoW8m8syxpkqU=
+	b=FmFThx4jFZKmDzUJ5buFbRBUiE9VI1i+j7Mgia6tExVj8ZWsmo8P2CohjyDDHSzSb
+	 +Brd4KXrKIhW2GHyUReS/RK6Si2XT2Z6CUD7xIDxc7xKX1yJODVMAA7Pk9jtv5NfLg
+	 mfGRKgb2ikzy9DJGxZXPeuOZLorxVpzO5yOotVKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Harry VanZyllDeJong <hvanzyll@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Bibo Mao <maobibo@loongson.cn>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 410/783] drm/amd/display: Add support for disconnected eDP streams
-Date: Tue, 27 May 2025 18:23:27 +0200
-Message-ID: <20250527162529.796741853@linuxfoundation.org>
+Subject: [PATCH 6.14 382/783] MIPS: Use arch specific syscall name match function
+Date: Tue, 27 May 2025 18:22:59 +0200
+Message-ID: <20250527162528.648759805@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -54,52 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry VanZyllDeJong <hvanzyll@amd.com>
+From: Bibo Mao <maobibo@loongson.cn>
 
-[ Upstream commit 6571bef25fe48c642f7a69ccf7c3198b317c136a ]
+[ Upstream commit 756276ce78d5624dc814f9d99f7d16c8fd51076e ]
 
-[Why]
-eDP may not be connected to the GPU on driver start causing
-fail enumeration.
+On MIPS system, most of the syscall function name begin with prefix
+sys_. Some syscalls are special such as clone/fork, function name of
+these begin with __sys_. Since scratch registers need be saved in
+stack when these system calls happens.
 
-[How]
-Move the virtual signal type check before the eDP connector
-signal check.
+With ftrace system call method, system call functions are declared with
+SYSCALL_DEFINEx, metadata of the system call symbol name begins with
+sys_. Here mips specific function arch_syscall_match_sym_name is used to
+compare function name between sys_call_table[] and metadata of syscall
+symbol.
 
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: Harry VanZyllDeJong <hvanzyll@amd.com>
-Signed-off-by: Roman Li <roman.li@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/link/protocols/link_dp_capability.c  | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/mips/include/asm/ftrace.h | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-index 6d7131369f00b..28843e9882d39 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-@@ -945,6 +945,9 @@ bool link_decide_link_settings(struct dc_stream_state *stream,
- 		 * TODO: add MST specific link training routine
- 		 */
- 		decide_mst_link_settings(link, link_setting);
-+	} else if (stream->signal == SIGNAL_TYPE_VIRTUAL) {
-+		link_setting->lane_count = LANE_COUNT_FOUR;
-+		link_setting->link_rate = LINK_RATE_HIGH3;
- 	} else if (link->connector_signal == SIGNAL_TYPE_EDP) {
- 		/* enable edp link optimization for DSC eDP case */
- 		if (stream->timing.flags.DSC) {
-@@ -967,9 +970,6 @@ bool link_decide_link_settings(struct dc_stream_state *stream,
- 		} else {
- 			edp_decide_link_settings(link, link_setting, req_bw);
- 		}
--	} else if (stream->signal == SIGNAL_TYPE_VIRTUAL) {
--		link_setting->lane_count = LANE_COUNT_FOUR;
--		link_setting->link_rate = LINK_RATE_HIGH3;
- 	} else {
- 		decide_dp_link_settings(link, link_setting, req_bw);
- 	}
+diff --git a/arch/mips/include/asm/ftrace.h b/arch/mips/include/asm/ftrace.h
+index dc025888f6d28..b41fc10446688 100644
+--- a/arch/mips/include/asm/ftrace.h
++++ b/arch/mips/include/asm/ftrace.h
+@@ -91,4 +91,20 @@ void prepare_ftrace_return(unsigned long *parent_ra_addr, unsigned long self_ra,
+ 
+ #endif /* __ASSEMBLY__ */
+ #endif /* CONFIG_FUNCTION_TRACER */
++
++#ifdef CONFIG_FTRACE_SYSCALLS
++#ifndef __ASSEMBLY__
++/*
++ * Some syscall entry functions on mips start with "__sys_" (fork and clone,
++ * for instance). We should also match the sys_ variant with those.
++ */
++#define ARCH_HAS_SYSCALL_MATCH_SYM_NAME
++static inline bool arch_syscall_match_sym_name(const char *sym,
++					       const char *name)
++{
++	return !strcmp(sym, name) ||
++		(!strncmp(sym, "__sys_", 6) && !strcmp(sym + 6, name + 4));
++}
++#endif /* __ASSEMBLY__ */
++#endif /* CONFIG_FTRACE_SYSCALLS */
+ #endif /* _ASM_MIPS_FTRACE_H */
 -- 
 2.39.5
 
