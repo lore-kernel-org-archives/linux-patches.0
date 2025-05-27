@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BAE1AF0BB;
-	Tue, 27 May 2025 17:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB1A280021;
+	Tue, 27 May 2025 17:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367598; cv=none; b=jxfIaPLSlapRyGgaX76qNXy7jI4jxf6zsPMp+wgiZb4PWMxca+zTPpsTTxqigUOmBbWtTm4htlnXCUoewPSYz/in7nE1wuGzC8HpvfRkynYyb55cM/6Ms1EsowyqLZJ999LyL0IJhw4hPk3BbSnvm9e5st3q0fDojw5sW/Vijms=
+	t=1748367601; cv=none; b=NTui0hNIfvxUpzntd6OfoHZSEWEDK3V2ZuBRVVoZlO3aBNVmjsKcQeqJ0lpnmQvK2/LUT4a06z9oJSm6OkI2VboXOAshYDa/j/OPSPm3vc7C+TKXoHi7wq0ceOZHZtomGYwEGqOLos15bufz7uSErsjK71MfgrfQiAi7AwqTXUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367598; c=relaxed/simple;
-	bh=9omEmZeqii+PVecTCDDaz60do+CYliHE3aBF9xZpz0U=;
+	s=arc-20240116; t=1748367601; c=relaxed/simple;
+	bh=DUHQZa29W/+h7+dNdOIDlhdv7xPP0Kx0PcSAFTKWlRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VT/WCahoeaOrq9u6M5appijRHwG0FhzPLAHVEZSo9mzT50w6ii/z1/oAkkngNzCHMjuMd6aWKsvXrGgX2W5F1ih8m2bHNaXF1U0FlVvRf4vTpxfwuXCb/kJuDD84oE5XHoLaAxBW31ytUN8kUMaosM331yezmGYoUYd7hCfI0gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DoyMoLDq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OO/IaM7cCp7Oo2Wl2ANxKT5E1potrg9mSopXOkaFLNr48opOkpSvDsKF8xURq3/+ZIQsYBPPyavGpgDjC3B3RjwU6P4l9j+xvnwsu1MJL3lO4SaDUfEEX+RXX2Ae/+Y5jyWEFu8TtYbscibL3uQex4fChXuHkcBopEb08nt8aFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxGWmRVk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DoyMoLDq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8865C4CEE9;
-	Tue, 27 May 2025 17:39:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxGWmRVk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0880C4CEE9;
+	Tue, 27 May 2025 17:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367598;
-	bh=9omEmZeqii+PVecTCDDaz60do+CYliHE3aBF9xZpz0U=;
+	s=korg; t=1748367601;
+	bh=DUHQZa29W/+h7+dNdOIDlhdv7xPP0Kx0PcSAFTKWlRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DoyMoLDqALBS3mLGOOa8rh2Z5aQGNKwo46Th2W3gaAG1QzhX3Ei8T0/jSZVv4+sDL
-	 S6yKOK6sxyT5twuNachTbaB2jBvUD9ymJRUJJSL6zVLTTy5py8i609nDi/n7eUwdoB
-	 E0yQmXvAt6w2LAZ4dMqkYMZiIu2/NV5N0R9VN8CY=
+	b=gxGWmRVksXruIo7X2dJdYXNucwx17eiwfGfbIsTVCOMbLeWzZCu0NH37DP3pZP8Wl
+	 Mmhe/TW44tTsKuYBhpGM8mNdetnR6UPyLyhR5p11xtF5RdXG9epvAwTGJeaNm6XG7j
+	 b0enhZ0wx02GxdL/KSKvDPAiwvNZ6lbTfcz0MrGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 438/783] io_uring: sanitise ring params earlier
-Date: Tue, 27 May 2025 18:23:55 +0200
-Message-ID: <20250527162530.966053536@linuxfoundation.org>
+Subject: [PATCH 6.14 439/783] ASoC: ops: Enforce platform maximum on initial value
+Date: Tue, 27 May 2025 18:23:56 +0200
+Message-ID: <20250527162531.008121438@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -45,139 +45,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Martin Povišer <povik+lin@cutebit.org>
 
-[ Upstream commit 92a3bac9a57c39728226ab191859c85f5e2829c0 ]
+[ Upstream commit 783db6851c1821d8b983ffb12b99c279ff64f2ee ]
 
-Do all struct io_uring_params validation early on before allocating the
-context. That makes initialisation easier, especially by having fewer
-places where we need to care about partial de-initialisation.
+Lower the volume if it is violating the platform maximum at its initial
+value (i.e. at the time of the 'snd_soc_limit_volume' call).
 
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/363ba90b83ff78eefdc88b60e1b2c4a39d182247.1738344646.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
+[Cherry picked from the Asahi kernel with fixups -- broonie]
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20250208-asoc-volume-limit-v1-1-b98fcf4cdbad@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 77 ++++++++++++++++++++++++++-------------------
- 1 file changed, 44 insertions(+), 33 deletions(-)
+ sound/soc/soc-ops.c | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 56f10cce8f009..52c9fa6c06450 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3532,6 +3532,44 @@ static struct file *io_uring_get_file(struct io_ring_ctx *ctx)
- 					 O_RDWR | O_CLOEXEC, NULL);
+diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
+index b0e4e4168f38d..fb11003d56cf6 100644
+--- a/sound/soc/soc-ops.c
++++ b/sound/soc/soc-ops.c
+@@ -639,6 +639,33 @@ int snd_soc_get_volsw_range(struct snd_kcontrol *kcontrol,
  }
+ EXPORT_SYMBOL_GPL(snd_soc_get_volsw_range);
  
-+static int io_uring_sanitise_params(struct io_uring_params *p)
++static int snd_soc_clip_to_platform_max(struct snd_kcontrol *kctl)
 +{
-+	unsigned flags = p->flags;
++	struct soc_mixer_control *mc = (struct soc_mixer_control *)kctl->private_value;
++	struct snd_ctl_elem_value uctl;
++	int ret;
 +
-+	/* There is no way to mmap rings without a real fd */
-+	if ((flags & IORING_SETUP_REGISTERED_FD_ONLY) &&
-+	    !(flags & IORING_SETUP_NO_MMAP))
-+		return -EINVAL;
++	if (!mc->platform_max)
++		return 0;
 +
-+	if (flags & IORING_SETUP_SQPOLL) {
-+		/* IPI related flags don't make sense with SQPOLL */
-+		if (flags & (IORING_SETUP_COOP_TASKRUN |
-+			     IORING_SETUP_TASKRUN_FLAG |
-+			     IORING_SETUP_DEFER_TASKRUN))
-+			return -EINVAL;
-+	}
++	ret = kctl->get(kctl, &uctl);
++	if (ret < 0)
++		return ret;
 +
-+	if (flags & IORING_SETUP_TASKRUN_FLAG) {
-+		if (!(flags & (IORING_SETUP_COOP_TASKRUN |
-+			       IORING_SETUP_DEFER_TASKRUN)))
-+			return -EINVAL;
-+	}
++	if (uctl.value.integer.value[0] > mc->platform_max)
++		uctl.value.integer.value[0] = mc->platform_max;
 +
-+	/* HYBRID_IOPOLL only valid with IOPOLL */
-+	if ((flags & IORING_SETUP_HYBRID_IOPOLL) && !(flags & IORING_SETUP_IOPOLL))
-+		return -EINVAL;
++	if (snd_soc_volsw_is_stereo(mc) &&
++	    uctl.value.integer.value[1] > mc->platform_max)
++		uctl.value.integer.value[1] = mc->platform_max;
 +
-+	/*
-+	 * For DEFER_TASKRUN we require the completion task to be the same as
-+	 * the submission task. This implies that there is only one submitter.
-+	 */
-+	if ((flags & IORING_SETUP_DEFER_TASKRUN) &&
-+	    !(flags & IORING_SETUP_SINGLE_ISSUER))
-+		return -EINVAL;
++	ret = kctl->put(kctl, &uctl);
++	if (ret < 0)
++		return ret;
 +
 +	return 0;
 +}
 +
- int io_uring_fill_params(unsigned entries, struct io_uring_params *p)
- {
- 	if (!entries)
-@@ -3542,10 +3580,6 @@ int io_uring_fill_params(unsigned entries, struct io_uring_params *p)
- 		entries = IORING_MAX_ENTRIES;
+ /**
+  * snd_soc_limit_volume - Set new limit to an existing volume control.
+  *
+@@ -663,7 +690,7 @@ int snd_soc_limit_volume(struct snd_soc_card *card,
+ 		struct soc_mixer_control *mc = (struct soc_mixer_control *)kctl->private_value;
+ 		if (max <= mc->max - mc->min) {
+ 			mc->platform_max = max;
+-			ret = 0;
++			ret = snd_soc_clip_to_platform_max(kctl);
+ 		}
  	}
- 
--	if ((p->flags & IORING_SETUP_REGISTERED_FD_ONLY)
--	    && !(p->flags & IORING_SETUP_NO_MMAP))
--		return -EINVAL;
--
- 	/*
- 	 * Use twice as many entries for the CQ ring. It's possible for the
- 	 * application to drive a higher depth than the size of the SQ ring,
-@@ -3607,6 +3641,10 @@ static __cold int io_uring_create(unsigned entries, struct io_uring_params *p,
- 	struct file *file;
- 	int ret;
- 
-+	ret = io_uring_sanitise_params(p);
-+	if (ret)
-+		return ret;
-+
- 	ret = io_uring_fill_params(entries, p);
- 	if (unlikely(ret))
- 		return ret;
-@@ -3654,37 +3692,10 @@ static __cold int io_uring_create(unsigned entries, struct io_uring_params *p,
- 	 * For SQPOLL, we just need a wakeup, always. For !SQPOLL, if
- 	 * COOP_TASKRUN is set, then IPIs are never needed by the app.
- 	 */
--	ret = -EINVAL;
--	if (ctx->flags & IORING_SETUP_SQPOLL) {
--		/* IPI related flags don't make sense with SQPOLL */
--		if (ctx->flags & (IORING_SETUP_COOP_TASKRUN |
--				  IORING_SETUP_TASKRUN_FLAG |
--				  IORING_SETUP_DEFER_TASKRUN))
--			goto err;
-+	if (ctx->flags & (IORING_SETUP_SQPOLL|IORING_SETUP_COOP_TASKRUN))
- 		ctx->notify_method = TWA_SIGNAL_NO_IPI;
--	} else if (ctx->flags & IORING_SETUP_COOP_TASKRUN) {
--		ctx->notify_method = TWA_SIGNAL_NO_IPI;
--	} else {
--		if (ctx->flags & IORING_SETUP_TASKRUN_FLAG &&
--		    !(ctx->flags & IORING_SETUP_DEFER_TASKRUN))
--			goto err;
-+	else
- 		ctx->notify_method = TWA_SIGNAL;
--	}
--
--	/* HYBRID_IOPOLL only valid with IOPOLL */
--	if ((ctx->flags & (IORING_SETUP_IOPOLL|IORING_SETUP_HYBRID_IOPOLL)) ==
--			IORING_SETUP_HYBRID_IOPOLL)
--		goto err;
--
--	/*
--	 * For DEFER_TASKRUN we require the completion task to be the same as the
--	 * submission task. This implies that there is only one submitter, so enforce
--	 * that.
--	 */
--	if (ctx->flags & IORING_SETUP_DEFER_TASKRUN &&
--	    !(ctx->flags & IORING_SETUP_SINGLE_ISSUER)) {
--		goto err;
--	}
- 
- 	/*
- 	 * This is just grabbed for accounting purposes. When a process exits,
+ 	return ret;
 -- 
 2.39.5
 
