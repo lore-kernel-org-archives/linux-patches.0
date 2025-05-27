@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E762CCC0;
-	Tue, 27 May 2025 16:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5872CCC0;
+	Tue, 27 May 2025 16:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365119; cv=none; b=o9G7PwYeaSIW9B56Otg4uS+G6cl0OAbgegbY3Ga2RnkW91zfwxMLfufjyUEB3dsF/wtS/JlUTw1lpRdbUHsoZvv5iAiwgJmstlRb976uMSOUsHiSQhXiy4/WZDDifZAS5EluPau/LBPh9xAK9N1314imsfpONKsazkAglLtN69Q=
+	t=1748365122; cv=none; b=bCFfaYe3NyNqBI+zM0pwqzLenW+ljxZlxP4lu5i/6BYzfW7jGY/Swan3qFk8lShiVv+TnEh2QmgUrhRhmLUAd4tLSvkYBYc/RAf4QcDmQ6QtIRAOxRTHOxRjuhfBlsnuPfYvJ3gclt8eMwLFAZbK8b+p7zwSmVuBKVpYvIuX6QM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365119; c=relaxed/simple;
-	bh=Wo8BvY2Hk4WRXY1LYwslp4TqqCLf0yyqAhX5wlefIs8=;
+	s=arc-20240116; t=1748365122; c=relaxed/simple;
+	bh=GcSKhByWo4w25bY9IdxpioHnvXv1gLFETR6Wrc5QMd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gs1Tbkl8Vd/VszcRwLEA4NcHkL+BVjgTm8y3fY/mATPXFzgzYugXIJsm+VMJVpa1teujw35+MeQLTYJji2ADFdqKZtX00iWnmi3TB5smR4tPcvDB/ntld8saGZ6tTyTweUZBvwulyHQ8/12c2jqffGS658/lsG+w591NXe/iDdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NnxEBq+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IO//8Fl3X7U69zjeoHRNVrhbZLqrbJmEbgqAyNnA9jk2jbL2054v9Yejgy31io0VBuL1Qi62Acof5oW2EEOw3e9QA60Y0iQlOOYQr+O7w3xWWODrfHNwUJEZPC6pscZ0ot5F3nLipK1dbWs1yVYvPinPZa5s+QO9mLt4S1cOfJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SMjgrcii; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NnxEBq+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BAD7C4CEE9;
-	Tue, 27 May 2025 16:58:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SMjgrcii"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DFF1C4CEED;
+	Tue, 27 May 2025 16:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365118;
-	bh=Wo8BvY2Hk4WRXY1LYwslp4TqqCLf0yyqAhX5wlefIs8=;
+	s=korg; t=1748365121;
+	bh=GcSKhByWo4w25bY9IdxpioHnvXv1gLFETR6Wrc5QMd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2NnxEBq+nHzbPKMYQos0GGHcvHHy4aoSO2ROWh9fsCQVx4YXOu6Xado5Lxv+dJzzz
-	 aFO14rgThlfzJqV4RL276M7Phk91FrI1/DvLWuMn0A8ejDWVlEQAXu3sGN3xbwFeOo
-	 jTfKq8gUHxLrFhP6DMJljxzONK9wL4nVF10bhcIw=
+	b=SMjgrciipZdEHN6oD4j8vDpjcQbmFGudKNa9qz93cUXKxJSX6wvr14QFvvMFJuetn
+	 FkeJY2NnH1gi5I0vnNqhCv8FKmizphuziF3hB/n4nnzLw2fcrh05OwqinEjwG1q+cq
+	 ywqtbJKu9oKSbCGnox/oEoLtBYb4yE3NNLvbUOM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Satyanarayana K V P <satyanarayana.k.v.p@intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Wajdeczko?= <michal.wajdeczko@intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
-	=?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 272/626] drm/xe/pf: Create a link between PF and VF devices
-Date: Tue, 27 May 2025 18:22:45 +0200
-Message-ID: <20250527162456.079720937@linuxfoundation.org>
+Subject: [PATCH 6.12 246/626] iommufd: Disallow allocating nested parent domain with fault ID
+Date: Tue, 27 May 2025 18:22:19 +0200
+Message-ID: <20250527162455.013718488@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -47,122 +47,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
+From: Yi Liu <yi.l.liu@intel.com>
 
-[ Upstream commit 8c0aff7d92e2be25717669eb65a81a89740a24f2 ]
+[ Upstream commit 1062d81086156e42878d701b816d2f368b53a77c ]
 
-When both PF and VF devices are enabled on the host, they
-resume simultaneously during system resume.
+Allocating a domain with a fault ID indicates that the domain is faultable.
+However, there is a gap for the nested parent domain to support PRI. Some
+hardware lacks the capability to distinguish whether PRI occurs at stage 1
+or stage 2. This limitation may require software-based page table walking
+to resolve. Since no in-tree IOMMU driver currently supports this
+functionality, it is disallowed. For more details, refer to the related
+discussion at [1].
 
-However, the PF must finish provisioning the VF before any
-VFs can successfully resume.
+[1] https://lore.kernel.org/linux-iommu/bd1655c6-8b2f-4cfa-adb1-badc00d01811@intel.com/
 
-Establish a parent-child device link between the PF and VF
-devices to ensure the correct order of resumption.
-
-V4 -> V5:
-- Added missing break in the error condition.
-V3 -> V4:
-- Made xe_pci_pf_get_vf_dev() as a static function and updated
-  input parameter types.
-- Updated xe_sriov_warn() to xe_sriov_abort() when VF device
-  cannot be found.
-V2 -> V3:
-- Added function documentation for xe_pci_pf_get_vf_dev().
-- Added assertion if not called from PF.
-V1 -> V2:
-- Added a helper function to get VF pci_dev.
-- Updated xe_sriov_notice() to xe_sriov_warn() if vf pci_dev
-  is not found.
-
-Signed-off-by: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
-Cc: Michał Wajdeczko <michal.wajdeczko@intel.com>
-Cc: Michał Winiarski <michal.winiarski@intel.com>
-Cc: Piotr Piórkowski <piotr.piorkowski@intel.com>
-Reviewed-by: Piotr Piorkowski <piotr.piorkowski@intel.com>
-Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250224102807.11065-2-satyanarayana.k.v.p@intel.com
+Link: https://patch.msgid.link/r/20250226104012.82079-1-yi.l.liu@intel.com
+Suggested-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pci_sriov.c | 51 +++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ drivers/iommu/iommufd/hw_pagetable.c    | 3 +++
+ tools/testing/selftests/iommu/iommufd.c | 4 ++++
+ 2 files changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_pci_sriov.c b/drivers/gpu/drm/xe/xe_pci_sriov.c
-index aaceee748287e..09ee8a06fe2ed 100644
---- a/drivers/gpu/drm/xe/xe_pci_sriov.c
-+++ b/drivers/gpu/drm/xe/xe_pci_sriov.c
-@@ -62,6 +62,55 @@ static void pf_reset_vfs(struct xe_device *xe, unsigned int num_vfs)
- 			xe_gt_sriov_pf_control_trigger_flr(gt, n);
- }
+diff --git a/drivers/iommu/iommufd/hw_pagetable.c b/drivers/iommu/iommufd/hw_pagetable.c
+index d06bf6e6c19fd..2454627a8b61b 100644
+--- a/drivers/iommu/iommufd/hw_pagetable.c
++++ b/drivers/iommu/iommufd/hw_pagetable.c
+@@ -122,6 +122,9 @@ iommufd_hwpt_paging_alloc(struct iommufd_ctx *ictx, struct iommufd_ioas *ioas,
+ 	if ((flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING) &&
+ 	    !device_iommu_capable(idev->dev, IOMMU_CAP_DIRTY_TRACKING))
+ 		return ERR_PTR(-EOPNOTSUPP);
++	if ((flags & IOMMU_HWPT_FAULT_ID_VALID) &&
++	    (flags & IOMMU_HWPT_ALLOC_NEST_PARENT))
++		return ERR_PTR(-EOPNOTSUPP);
  
-+static struct pci_dev *xe_pci_pf_get_vf_dev(struct xe_device *xe, unsigned int vf_id)
-+{
-+	struct pci_dev *pdev = to_pci_dev(xe->drm.dev);
-+
-+	xe_assert(xe, IS_SRIOV_PF(xe));
-+
-+	/* caller must use pci_dev_put() */
-+	return pci_get_domain_bus_and_slot(pci_domain_nr(pdev->bus),
-+			pdev->bus->number,
-+			pci_iov_virtfn_devfn(pdev, vf_id));
-+}
-+
-+static void pf_link_vfs(struct xe_device *xe, int num_vfs)
-+{
-+	struct pci_dev *pdev_pf = to_pci_dev(xe->drm.dev);
-+	struct device_link *link;
-+	struct pci_dev *pdev_vf;
-+	unsigned int n;
-+
-+	/*
-+	 * When both PF and VF devices are enabled on the host, during system
-+	 * resume they are resuming in parallel.
-+	 *
-+	 * But PF has to complete the provision of VF first to allow any VFs to
-+	 * successfully resume.
-+	 *
-+	 * Create a parent-child device link between PF and VF devices that will
-+	 * enforce correct resume order.
-+	 */
-+	for (n = 1; n <= num_vfs; n++) {
-+		pdev_vf = xe_pci_pf_get_vf_dev(xe, n - 1);
-+
-+		/* unlikely, something weird is happening, abort */
-+		if (!pdev_vf) {
-+			xe_sriov_err(xe, "Cannot find VF%u device, aborting link%s creation!\n",
-+				     n, str_plural(num_vfs));
-+			break;
-+		}
-+
-+		link = device_link_add(&pdev_vf->dev, &pdev_pf->dev,
-+				       DL_FLAG_AUTOREMOVE_CONSUMER);
-+		/* unlikely and harmless, continue with other VFs */
-+		if (!link)
-+			xe_sriov_notice(xe, "Failed linking VF%u\n", n);
-+
-+		pci_dev_put(pdev_vf);
-+	}
-+}
-+
- static int pf_enable_vfs(struct xe_device *xe, int num_vfs)
- {
- 	struct pci_dev *pdev = to_pci_dev(xe->drm.dev);
-@@ -92,6 +141,8 @@ static int pf_enable_vfs(struct xe_device *xe, int num_vfs)
- 	if (err < 0)
- 		goto failed;
+ 	hwpt_paging = __iommufd_object_alloc(
+ 		ictx, hwpt_paging, IOMMUFD_OBJ_HWPT_PAGING, common.obj);
+diff --git a/tools/testing/selftests/iommu/iommufd.c b/tools/testing/selftests/iommu/iommufd.c
+index 4927b9add5add..06f252733660a 100644
+--- a/tools/testing/selftests/iommu/iommufd.c
++++ b/tools/testing/selftests/iommu/iommufd.c
+@@ -289,6 +289,10 @@ TEST_F(iommufd_ioas, alloc_hwpt_nested)
+ 				    &test_hwpt_id);
+ 		test_err_hwpt_alloc(EINVAL, self->device_id, self->device_id, 0,
+ 				    &test_hwpt_id);
++		test_err_hwpt_alloc(EOPNOTSUPP, self->device_id, self->ioas_id,
++				    IOMMU_HWPT_ALLOC_NEST_PARENT |
++						IOMMU_HWPT_FAULT_ID_VALID,
++				    &test_hwpt_id);
  
-+	pf_link_vfs(xe, num_vfs);
-+
- 	xe_sriov_info(xe, "Enabled %u of %u VF%s\n",
- 		      num_vfs, total_vfs, str_plural(total_vfs));
- 	return num_vfs;
+ 		test_cmd_hwpt_alloc(self->device_id, self->ioas_id,
+ 				    IOMMU_HWPT_ALLOC_NEST_PARENT,
 -- 
 2.39.5
 
