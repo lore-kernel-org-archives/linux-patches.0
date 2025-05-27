@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA6C3C01;
-	Tue, 27 May 2025 17:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF632110E;
+	Tue, 27 May 2025 17:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367336; cv=none; b=nRUHYmws4Tgwt+RpO51K/yKQHvcHq55VxXWpqV65OVDMXTXSiuJ1Kg52M/fiB9dJU4PUu5yt+p4cE7BdekY3Eg5uPzX8Z8I8VXal0mWA1gs4P79il+qc8f79HJhEVqnzgG76Bb851xuGcFtn9HfDnhX027qybwi475W0XadwsRE=
+	t=1748367338; cv=none; b=CezpqzKGQn4fCLh3c2X6cDyQuFqsj8WhNEuISJo+ipEvO7D8HKAsPZGkalEbZxBL7kBJQ3EugM3ZTLVy949x3u0x6WnIrv7q5xxvL811hkub71caZuD4WhTce8WG5EyjjGJ1OM+ZVxOp5euFJWJjo9aHHhWc4zfUk8Jwgxtu33E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367336; c=relaxed/simple;
-	bh=xvbZMLwc1jDX1Cu5rPVdg7yxxqY6lJp6W0BGaudPAcI=;
+	s=arc-20240116; t=1748367338; c=relaxed/simple;
+	bh=i1CIcV2KzdkshKGT9IfF+9hJxrwuGtbba1ZTbY91nVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tnEaU90xyjPO16Kmd5nEPoHY5+ssemfk2ZuZyNws3tZNbj3qmhOuDeCJp5+4NdksjoaVVLG/MIOQboGsQdmLg/4IqQkGwJQUmC+ptRDei5efhef+c0QIIA15BE4+ydPU0Vi7FpHgGIZ9fRbeh1fW8CFWT+6g5o0qHod9eEcAH5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxYGd2b1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=byghuBDtK0dmyGBJwFYTN+Wqen8YluNQxxIppS+cUXBGVfigzfbWL5JwIqY5T5UJHOIWw1yeE0J9FkJvNGHFmq6/196ESCwbw2VEV0OCMTQ1OsNjS1soVY05g/Qw2OCAlh6g38FTD9Ch245dAa44vcIRdfuQ1iN4rdvWSU8BMNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t8qGVB5i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxYGd2b1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D54CC4CEE9;
-	Tue, 27 May 2025 17:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t8qGVB5i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A16C4CEE9;
+	Tue, 27 May 2025 17:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367335;
-	bh=xvbZMLwc1jDX1Cu5rPVdg7yxxqY6lJp6W0BGaudPAcI=;
+	s=korg; t=1748367338;
+	bh=i1CIcV2KzdkshKGT9IfF+9hJxrwuGtbba1ZTbY91nVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KxYGd2b1GBGq4r1oqQKTlBfqVDnI4YzfrKiNWj39FwFITih0sZwEl+c6pDdgRZxRn
-	 Ah3MBLt0IIdP1IIjTnJAxQN6cGeak7e8BKwIFUdZpqIJFdrW3umUrSP2x7ZkFr9Q/f
-	 puCERGWGBpLrO0U+RMopUIYffYFqTVmjYHSlDgs8=
+	b=t8qGVB5iu2o7H+Yn2FqZdo4FzH5oRTbnREl0/X2SUSjysPnPmhP3JK8dfyJn6fXun
+	 Z1iVt4H/rMfhd6uqzvcp9GJ0OScyZxnRNGmasw/3GPcg4dgdPpUHd+AXfUC0RenKHV
+	 l7rCzb4yoQCtrABsl7Yvuh9ivjyHZaLzbNuH53Qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samson Tam <Samson.Tam@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 355/783] drm/amd/display: Fix mismatch type comparison in custom_float
-Date: Tue, 27 May 2025 18:22:32 +0200
-Message-ID: <20250527162527.526947188@linuxfoundation.org>
+Subject: [PATCH 6.14 356/783] ASoC: mediatek: mt8188: Treat DMIC_GAINx_CUR as non-volatile
+Date: Tue, 27 May 2025 18:22:33 +0200
+Message-ID: <20250527162527.565763266@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -47,64 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Samson Tam <Samson.Tam@amd.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 86f06bcbb54e93f3c7b5e22ae37e72882b74c4b0 ]
+[ Upstream commit 7d87bde21c73731ddaf15e572020f80999c38ee3 ]
 
-[Why & How]
-Passing uint into uchar function param.  Pass uint instead
+The DMIC_GAINx_CUR registers contain the current (as in present) gain of
+each DMIC. During capture, this gain will ramp up until a target value
+is reached, and therefore the register is volatile since it is updated
+automatically by hardware.
 
-Signed-off-by: Samson Tam <Samson.Tam@amd.com>
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+However, after capture the register's value returns to the value that
+was written to it. So reading these registers returns the current gain,
+and writing configures the initial gain for every capture.
+
+>From an audio configuration perspective, reading the instantaneous gain
+is not really useful. Instead, reading back the initial gain that was
+configured is the desired behavior. For that reason, consider the
+DMIC_GAINx_CUR registers as non-volatile, so the regmap's cache can be
+used to retrieve the values, rather than requiring pm runtime resuming
+the device.
+
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20250225-genio700-dmic-v2-3-3076f5b50ef7@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.c | 2 +-
- drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.h | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/mediatek/mt8188/mt8188-afe-pcm.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.c b/drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.c
-index 131f1e3949d33..52d97918a3bd2 100644
---- a/drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.c
-+++ b/drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.c
-@@ -346,7 +346,7 @@ struct spl_fixed31_32 spl_fixpt_exp(struct spl_fixed31_32 arg)
- 		if (m > 0)
- 			return spl_fixpt_shl(
- 				spl_fixed31_32_exp_from_taylor_series(r),
--				(unsigned char)m);
-+				(unsigned int)m);
- 		else
- 			return spl_fixpt_div_int(
- 				spl_fixed31_32_exp_from_taylor_series(r),
-diff --git a/drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.h b/drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.h
-index ed2647f9a0999..9f349ffe91485 100644
---- a/drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.h
-+++ b/drivers/gpu/drm/amd/display/dc/spl/spl_fixpt31_32.h
-@@ -189,7 +189,7 @@ static inline struct spl_fixed31_32 spl_fixpt_clamp(
-  * @brief
-  * result = arg << shift
-  */
--static inline struct spl_fixed31_32 spl_fixpt_shl(struct spl_fixed31_32 arg, unsigned char shift)
-+static inline struct spl_fixed31_32 spl_fixpt_shl(struct spl_fixed31_32 arg, unsigned int shift)
- {
- 	SPL_ASSERT(((arg.value >= 0) && (arg.value <= LLONG_MAX >> shift)) ||
- 		((arg.value < 0) && (arg.value >= ~(LLONG_MAX >> shift))));
-@@ -203,7 +203,7 @@ static inline struct spl_fixed31_32 spl_fixpt_shl(struct spl_fixed31_32 arg, uns
-  * @brief
-  * result = arg >> shift
-  */
--static inline struct spl_fixed31_32 spl_fixpt_shr(struct spl_fixed31_32 arg, unsigned char shift)
-+static inline struct spl_fixed31_32 spl_fixpt_shr(struct spl_fixed31_32 arg, unsigned int shift)
- {
- 	bool negative = arg.value < 0;
- 
+diff --git a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
+index 73e5c63aeec87..d36520c6272dd 100644
+--- a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
++++ b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
+@@ -2855,10 +2855,6 @@ static bool mt8188_is_volatile_reg(struct device *dev, unsigned int reg)
+ 	case AFE_DMIC3_SRC_DEBUG_MON0:
+ 	case AFE_DMIC3_UL_SRC_MON0:
+ 	case AFE_DMIC3_UL_SRC_MON1:
+-	case DMIC_GAIN1_CUR:
+-	case DMIC_GAIN2_CUR:
+-	case DMIC_GAIN3_CUR:
+-	case DMIC_GAIN4_CUR:
+ 	case ETDM_IN1_MONITOR:
+ 	case ETDM_IN2_MONITOR:
+ 	case ETDM_OUT1_MONITOR:
 -- 
 2.39.5
 
