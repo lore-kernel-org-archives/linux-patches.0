@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F79527D766;
-	Tue, 27 May 2025 17:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430602566;
+	Tue, 27 May 2025 17:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368570; cv=none; b=Gk/g3g++yGEW/TyFv822oK0UY2bnMhqWbXa881G+1o/OksZsx8rbbxBaanAfVf3n6HuPl7cDWXhuDEUviy+ICegq85MYTuzvR6GR9kAaPRcPyAllL7yJNjBVUux2fFtOj5kwWC2XUzEvZ/4ktW1Bm8cMo7ROCI9Lb/zGFOzjLIU=
+	t=1748368573; cv=none; b=ho6dGzimrC5uj0vkieMv369rU6S7fxd/icn0rJW6w+5NFTDw7xAoF4MHISF+BuIHnf3S/X9GW4NyCS66ZNxZy5FrFyjdA9AnLEqjDdodrJRbDrelBzxr3CSCYVOnG83XJjMp8bQ5ZPTtr1rSSa38lyqcnOCpewvcz+kDS9CmOsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368570; c=relaxed/simple;
-	bh=ym1D65ScpWW0/l2xbeCY9dMrJW7JV2WPKvErrGegoc8=;
+	s=arc-20240116; t=1748368573; c=relaxed/simple;
+	bh=NH6Ki+RvFxoAkVOiqKs/Pg0/2F3TzlUXfzenfvfYA2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rsgiQAd0tiL43qbzP8YgzHym5mWwl995iYjN7fMZpTr48rRlzIce8eGdPAVcGxu3MdY9C3P0AzirQEGOrsBPwrd8zNBaJpud3tDLIns6ZdlAi1PUwC7MjR6ti+xkIhcdJ5tvcM9LlQCw8y+Nl6IflH/cRBgHoZAVhhW2sFbjZ6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THDe2BGE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TmP30FFcYAue8CWXAa0YQQy5RAmwMUujtp6XV51LZXaDxbScptkFSKvDnfO9VjgrezecclkiSMVvH42cCzaVpiKez/jPqGC059YLDAS3sRCv70opUUHvhfb+/SH5FzseSYeUoQS1dhfioLUfezE4+GH7IDZ970EqZy2B4WH+eww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2NbLFHj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THDe2BGE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC3BC4CEE9;
-	Tue, 27 May 2025 17:56:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2NbLFHj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E24C4CEE9;
+	Tue, 27 May 2025 17:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368570;
-	bh=ym1D65ScpWW0/l2xbeCY9dMrJW7JV2WPKvErrGegoc8=;
+	s=korg; t=1748368573;
+	bh=NH6Ki+RvFxoAkVOiqKs/Pg0/2F3TzlUXfzenfvfYA2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=THDe2BGE7Vy4y/q2UQSA7MxW3T3//hdb98dPLL1XoUY6zP+DNsV4P6sHJMuJP8h7s
-	 kPtC0eqU4CHl6zcJABzbtxJJJSeTbtHErTw/pawxhWH68aKTeRJ0eKG8/uJCUPAPJ6
-	 cs+OUfy9pfSIhe+Jq5AmPYZdY3lAXQs9J+smNI44=
+	b=x2NbLFHjFypnrRDPFrixxA3m2uW+hJI2D6ZFgd7w8utSh2yGUpjb33QxEnMo1EACH
+	 URA2ucnhR21ZZnyI8mFvP20MVV1NBpjcV01HfdY4DW9thenJw23BFuliRY+RFWmtA9
+	 8K1JrPYUOP8ss6H5lKZlbFc/ggtX+xTNc3ooMfGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Hanno=20B=C3=B6ck?= <hanno@hboeck.de>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.14 750/783] Input: synaptics-rmi - fix crash with unsupported versions of F34
-Date: Tue, 27 May 2025 18:29:07 +0200
-Message-ID: <20250527162543.672934881@linuxfoundation.org>
+	Suren Baghdasaryan <surenb@google.com>,
+	David Wang <00107082@163.com>,
+	"Christoph Lameter (Ampere)" <cl@gentwo.org>,
+	Dennis Zhou <dennis@kernel.org>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Tejun Heo <tj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.14 751/783] alloc_tag: allocate percpu counters for module tags dynamically
+Date: Tue, 27 May 2025 18:29:08 +0200
+Message-ID: <20250527162543.711308470@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -44,259 +50,271 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Suren Baghdasaryan <surenb@google.com>
 
-commit ca39500f6af9cfe6823dc5aa8fbaed788d6e35b2 upstream.
+commit 12ca42c237756182aad8ab04654c952765cb9061 upstream.
 
-Sysfs interface for updating firmware for RMI devices is available even
-when F34 probe fails. The code checks for presence of F34 "container"
-pointer and then tries to use the function data attached to the
-sub-device. F34 assigns the function data early, before it knows if
-probe will succeed, leaving behind a stale pointer.
+When a module gets unloaded it checks whether any of its tags are still in
+use and if so, we keep the memory containing module's allocation tags
+alive until all tags are unused.  However percpu counters referenced by
+the tags are freed by free_module().  This will lead to UAF if the memory
+allocated by a module is accessed after module was unloaded.
 
-Fix this by expanding checks to not only test for presence of F34
-"container" but also check if there is driver data assigned to the
-sub-device, and call dev_set_drvdata() only after we are certain that
-probe is successful.
+To fix this we allocate percpu counters for module allocation tags
+dynamically and we keep it alive for tags which are still in use after
+module unloading.  This also removes the requirement of a larger
+PERCPU_MODULE_RESERVE when memory allocation profiling is enabled because
+percpu memory for counters does not need to be reserved anymore.
 
-This is not a complete fix, since F34 will be freed during firmware
-update, so there is still a race when fetching and accessing this
-pointer. This race will be addressed in follow-up changes.
-
-Reported-by: Hanno Böck <hanno@hboeck.de>
-Fixes: 29fd0ec2bdbe ("Input: synaptics-rmi4 - add support for F34 device reflash")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/aBlAl6sGulam-Qcx@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://lkml.kernel.org/r/20250517000739.5930-1-surenb@google.com
+Fixes: 0db6f8d7820a ("alloc_tag: load module tags into separate contiguous memory")
+Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+Reported-by: David Wang <00107082@163.com>
+Closes: https://lore.kernel.org/all/20250516131246.6244-1-00107082@163.com/
+Tested-by: David Wang <00107082@163.com>
+Cc: Christoph Lameter (Ampere) <cl@gentwo.org>
+Cc: Dennis Zhou <dennis@kernel.org>
+Cc: Kent Overstreet <kent.overstreet@linux.dev>
+Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/rmi4/rmi_f34.c |  133 ++++++++++++++++++++++++-------------------
- 1 file changed, 75 insertions(+), 58 deletions(-)
+ include/linux/alloc_tag.h |   12 ++++++
+ include/linux/codetag.h   |    8 ++--
+ include/linux/percpu.h    |    4 --
+ lib/alloc_tag.c           |   89 ++++++++++++++++++++++++++++++++++++----------
+ lib/codetag.c             |    5 +-
+ 5 files changed, 89 insertions(+), 29 deletions(-)
 
---- a/drivers/input/rmi4/rmi_f34.c
-+++ b/drivers/input/rmi4/rmi_f34.c
-@@ -4,6 +4,7 @@
-  * Copyright (C) 2016 Zodiac Inflight Innovations
-  */
+--- a/include/linux/alloc_tag.h
++++ b/include/linux/alloc_tag.h
+@@ -104,6 +104,16 @@ DECLARE_PER_CPU(struct alloc_tag_counter
  
-+#include "linux/device.h"
- #include <linux/kernel.h>
- #include <linux/rmi.h>
- #include <linux/firmware.h>
-@@ -289,39 +290,30 @@ static int rmi_f34_update_firmware(struc
- 	return rmi_f34_flash_firmware(f34, syn_fw);
- }
+ #else /* ARCH_NEEDS_WEAK_PER_CPU */
  
--static int rmi_f34_status(struct rmi_function *fn)
--{
--	struct f34_data *f34 = dev_get_drvdata(&fn->dev);
--
--	/*
--	 * The status is the percentage complete, or once complete,
--	 * zero for success or a negative return code.
--	 */
--	return f34->update_status;
--}
--
- static ssize_t rmi_driver_bootloader_id_show(struct device *dev,
- 					     struct device_attribute *dattr,
- 					     char *buf)
- {
- 	struct rmi_driver_data *data = dev_get_drvdata(dev);
--	struct rmi_function *fn = data->f34_container;
-+	struct rmi_function *fn;
- 	struct f34_data *f34;
- 
--	if (fn) {
--		f34 = dev_get_drvdata(&fn->dev);
-+	fn = data->f34_container;
-+	if (!fn)
-+		return -ENODEV;
- 
--		if (f34->bl_version == 5)
--			return sysfs_emit(buf, "%c%c\n",
--					  f34->bootloader_id[0],
--					  f34->bootloader_id[1]);
--		else
--			return sysfs_emit(buf, "V%d.%d\n",
--					  f34->bootloader_id[1],
--					  f34->bootloader_id[0]);
--	}
-+	f34 = dev_get_drvdata(&fn->dev);
-+	if (!f34)
-+		return -ENODEV;
- 
--	return 0;
-+	if (f34->bl_version == 5)
-+		return sysfs_emit(buf, "%c%c\n",
-+				  f34->bootloader_id[0],
-+				  f34->bootloader_id[1]);
-+	else
-+		return sysfs_emit(buf, "V%d.%d\n",
-+				  f34->bootloader_id[1],
-+				  f34->bootloader_id[0]);
- }
- 
- static DEVICE_ATTR(bootloader_id, 0444, rmi_driver_bootloader_id_show, NULL);
-@@ -334,13 +326,16 @@ static ssize_t rmi_driver_configuration_
- 	struct rmi_function *fn = data->f34_container;
- 	struct f34_data *f34;
- 
--	if (fn) {
--		f34 = dev_get_drvdata(&fn->dev);
-+	fn = data->f34_container;
-+	if (!fn)
-+		return -ENODEV;
- 
--		return sysfs_emit(buf, "%s\n", f34->configuration_id);
--	}
-+	f34 = dev_get_drvdata(&fn->dev);
-+	if (!f34)
-+		return -ENODEV;
- 
--	return 0;
++#ifdef MODULE
 +
-+	return sysfs_emit(buf, "%s\n", f34->configuration_id);
- }
- 
- static DEVICE_ATTR(configuration_id, 0444,
-@@ -356,10 +351,14 @@ static int rmi_firmware_update(struct rm
- 
- 	if (!data->f34_container) {
- 		dev_warn(dev, "%s: No F34 present!\n", __func__);
--		return -EINVAL;
-+		return -ENODEV;
- 	}
- 
- 	f34 = dev_get_drvdata(&data->f34_container->dev);
-+	if (!f34) {
-+		dev_warn(dev, "%s: No valid F34 present!\n", __func__);
-+		return -ENODEV;
-+	}
- 
- 	if (f34->bl_version >= 7) {
- 		if (data->pdt_props & HAS_BSR) {
-@@ -485,10 +484,18 @@ static ssize_t rmi_driver_update_fw_stat
- 						char *buf)
- {
- 	struct rmi_driver_data *data = dev_get_drvdata(dev);
--	int update_status = 0;
-+	struct f34_data *f34;
-+	int update_status = -ENODEV;
- 
--	if (data->f34_container)
--		update_status = rmi_f34_status(data->f34_container);
-+	/*
-+	 * The status is the percentage complete, or once complete,
-+	 * zero for success or a negative return code.
-+	 */
-+	if (data->f34_container) {
-+		f34 = dev_get_drvdata(&data->f34_container->dev);
-+		if (f34)
-+			update_status = f34->update_status;
-+	}
- 
- 	return sysfs_emit(buf, "%d\n", update_status);
- }
-@@ -508,33 +515,21 @@ static const struct attribute_group rmi_
- 	.attrs = rmi_firmware_attrs,
- };
- 
--static int rmi_f34_probe(struct rmi_function *fn)
-+static int rmi_f34v5_probe(struct f34_data *f34)
- {
--	struct f34_data *f34;
--	unsigned char f34_queries[9];
-+	struct rmi_function *fn = f34->fn;
-+	u8 f34_queries[9];
- 	bool has_config_id;
--	u8 version = fn->fd.function_version;
--	int ret;
--
--	f34 = devm_kzalloc(&fn->dev, sizeof(struct f34_data), GFP_KERNEL);
--	if (!f34)
--		return -ENOMEM;
--
--	f34->fn = fn;
--	dev_set_drvdata(&fn->dev, f34);
--
--	/* v5 code only supported version 0, try V7 probe */
--	if (version > 0)
--		return rmi_f34v7_probe(f34);
-+	int error;
- 
- 	f34->bl_version = 5;
- 
--	ret = rmi_read_block(fn->rmi_dev, fn->fd.query_base_addr,
--			     f34_queries, sizeof(f34_queries));
--	if (ret) {
-+	error = rmi_read_block(fn->rmi_dev, fn->fd.query_base_addr,
-+			       f34_queries, sizeof(f34_queries));
-+	if (error) {
- 		dev_err(&fn->dev, "%s: Failed to query properties\n",
- 			__func__);
--		return ret;
-+		return error;
- 	}
- 
- 	snprintf(f34->bootloader_id, sizeof(f34->bootloader_id),
-@@ -560,11 +555,11 @@ static int rmi_f34_probe(struct rmi_func
- 		f34->v5.config_blocks);
- 
- 	if (has_config_id) {
--		ret = rmi_read_block(fn->rmi_dev, fn->fd.control_base_addr,
--				     f34_queries, sizeof(f34_queries));
--		if (ret) {
-+		error = rmi_read_block(fn->rmi_dev, fn->fd.control_base_addr,
-+				       f34_queries, sizeof(f34_queries));
-+		if (error) {
- 			dev_err(&fn->dev, "Failed to read F34 config ID\n");
--			return ret;
-+			return error;
- 		}
- 
- 		snprintf(f34->configuration_id, sizeof(f34->configuration_id),
-@@ -573,11 +568,33 @@ static int rmi_f34_probe(struct rmi_func
- 			 f34_queries[2], f34_queries[3]);
- 
- 		rmi_dbg(RMI_DEBUG_FN, &fn->dev, "Configuration ID: %s\n",
--			 f34->configuration_id);
-+			f34->configuration_id);
- 	}
- 
- 	return 0;
- }
++#define DEFINE_ALLOC_TAG(_alloc_tag)						\
++	static struct alloc_tag _alloc_tag __used __aligned(8)			\
++	__section(ALLOC_TAG_SECTION_NAME) = {					\
++		.ct = CODE_TAG_INIT,						\
++		.counters = NULL };
 +
-+static int rmi_f34_probe(struct rmi_function *fn)
++#else  /* MODULE */
++
+ #define DEFINE_ALLOC_TAG(_alloc_tag)						\
+ 	static DEFINE_PER_CPU(struct alloc_tag_counters, _alloc_tag_cntr);	\
+ 	static struct alloc_tag _alloc_tag __used __aligned(8)			\
+@@ -111,6 +121,8 @@ DECLARE_PER_CPU(struct alloc_tag_counter
+ 		.ct = CODE_TAG_INIT,						\
+ 		.counters = &_alloc_tag_cntr };
+ 
++#endif /* MODULE */
++
+ #endif /* ARCH_NEEDS_WEAK_PER_CPU */
+ 
+ DECLARE_STATIC_KEY_MAYBE(CONFIG_MEM_ALLOC_PROFILING_ENABLED_BY_DEFAULT,
+--- a/include/linux/codetag.h
++++ b/include/linux/codetag.h
+@@ -36,10 +36,10 @@ union codetag_ref {
+ struct codetag_type_desc {
+ 	const char *section;
+ 	size_t tag_size;
+-	void (*module_load)(struct codetag_type *cttype,
+-			    struct codetag_module *cmod);
+-	void (*module_unload)(struct codetag_type *cttype,
+-			      struct codetag_module *cmod);
++	void (*module_load)(struct module *mod,
++			    struct codetag *start, struct codetag *end);
++	void (*module_unload)(struct module *mod,
++			      struct codetag *start, struct codetag *end);
+ #ifdef CONFIG_MODULES
+ 	void (*module_replaced)(struct module *mod, struct module *new_mod);
+ 	bool (*needs_section_mem)(struct module *mod, unsigned long size);
+--- a/include/linux/percpu.h
++++ b/include/linux/percpu.h
+@@ -15,11 +15,7 @@
+ 
+ /* enough to cover all DEFINE_PER_CPUs in modules */
+ #ifdef CONFIG_MODULES
+-#ifdef CONFIG_MEM_ALLOC_PROFILING
+-#define PERCPU_MODULE_RESERVE		(8 << 13)
+-#else
+ #define PERCPU_MODULE_RESERVE		(8 << 10)
+-#endif
+ #else
+ #define PERCPU_MODULE_RESERVE		0
+ #endif
+--- a/lib/alloc_tag.c
++++ b/lib/alloc_tag.c
+@@ -350,18 +350,28 @@ static bool needs_section_mem(struct mod
+ 	return size >= sizeof(struct alloc_tag);
+ }
+ 
+-static struct alloc_tag *find_used_tag(struct alloc_tag *from, struct alloc_tag *to)
++static bool clean_unused_counters(struct alloc_tag *start_tag,
++				  struct alloc_tag *end_tag)
+ {
+-	while (from <= to) {
++	struct alloc_tag *tag;
++	bool ret = true;
++
++	for (tag = start_tag; tag <= end_tag; tag++) {
+ 		struct alloc_tag_counters counter;
+ 
+-		counter = alloc_tag_read(from);
+-		if (counter.bytes)
+-			return from;
+-		from++;
++		if (!tag->counters)
++			continue;
++
++		counter = alloc_tag_read(tag);
++		if (!counter.bytes) {
++			free_percpu(tag->counters);
++			tag->counters = NULL;
++		} else {
++			ret = false;
++		}
+ 	}
+ 
+-	return NULL;
++	return ret;
+ }
+ 
+ /* Called with mod_area_mt locked */
+@@ -371,12 +381,16 @@ static void clean_unused_module_areas_lo
+ 	struct module *val;
+ 
+ 	mas_for_each(&mas, val, module_tags.size) {
++		struct alloc_tag *start_tag;
++		struct alloc_tag *end_tag;
++
+ 		if (val != &unloaded_mod)
+ 			continue;
+ 
+ 		/* Release area if all tags are unused */
+-		if (!find_used_tag((struct alloc_tag *)(module_tags.start_addr + mas.index),
+-				   (struct alloc_tag *)(module_tags.start_addr + mas.last)))
++		start_tag = (struct alloc_tag *)(module_tags.start_addr + mas.index);
++		end_tag = (struct alloc_tag *)(module_tags.start_addr + mas.last);
++		if (clean_unused_counters(start_tag, end_tag))
+ 			mas_erase(&mas);
+ 	}
+ }
+@@ -561,7 +575,8 @@ unlock:
+ static void release_module_tags(struct module *mod, bool used)
+ {
+ 	MA_STATE(mas, &mod_area_mt, module_tags.size, module_tags.size);
+-	struct alloc_tag *tag;
++	struct alloc_tag *start_tag;
++	struct alloc_tag *end_tag;
+ 	struct module *val;
+ 
+ 	mas_lock(&mas);
+@@ -575,15 +590,22 @@ static void release_module_tags(struct m
+ 	if (!used)
+ 		goto release_area;
+ 
+-	/* Find out if the area is used */
+-	tag = find_used_tag((struct alloc_tag *)(module_tags.start_addr + mas.index),
+-			    (struct alloc_tag *)(module_tags.start_addr + mas.last));
+-	if (tag) {
+-		struct alloc_tag_counters counter = alloc_tag_read(tag);
+-
+-		pr_info("%s:%u module %s func:%s has %llu allocated at module unload\n",
+-			tag->ct.filename, tag->ct.lineno, tag->ct.modname,
+-			tag->ct.function, counter.bytes);
++	start_tag = (struct alloc_tag *)(module_tags.start_addr + mas.index);
++	end_tag = (struct alloc_tag *)(module_tags.start_addr + mas.last);
++	if (!clean_unused_counters(start_tag, end_tag)) {
++		struct alloc_tag *tag;
++
++		for (tag = start_tag; tag <= end_tag; tag++) {
++			struct alloc_tag_counters counter;
++
++			if (!tag->counters)
++				continue;
++
++			counter = alloc_tag_read(tag);
++			pr_info("%s:%u module %s func:%s has %llu allocated at module unload\n",
++				tag->ct.filename, tag->ct.lineno, tag->ct.modname,
++				tag->ct.function, counter.bytes);
++		}
+ 	} else {
+ 		used = false;
+ 	}
+@@ -596,6 +618,34 @@ out:
+ 	mas_unlock(&mas);
+ }
+ 
++static void load_module(struct module *mod, struct codetag *start, struct codetag *stop)
 +{
-+	struct f34_data *f34;
-+	u8 version = fn->fd.function_version;
-+	int error;
++	/* Allocate module alloc_tag percpu counters */
++	struct alloc_tag *start_tag;
++	struct alloc_tag *stop_tag;
++	struct alloc_tag *tag;
 +
-+	f34 = devm_kzalloc(&fn->dev, sizeof(struct f34_data), GFP_KERNEL);
-+	if (!f34)
-+		return -ENOMEM;
++	if (!mod)
++		return;
 +
-+	f34->fn = fn;
-+
-+	/* v5 code only supported version 0 */
-+	error = version == 0 ? rmi_f34v5_probe(f34) : rmi_f34v7_probe(f34);
-+	if (error)
-+		return error;
-+
-+	dev_set_drvdata(&fn->dev, f34);
-+
-+	return 0;
++	start_tag = ct_to_alloc_tag(start);
++	stop_tag = ct_to_alloc_tag(stop);
++	for (tag = start_tag; tag < stop_tag; tag++) {
++		WARN_ON(tag->counters);
++		tag->counters = alloc_percpu(struct alloc_tag_counters);
++		if (!tag->counters) {
++			while (--tag >= start_tag) {
++				free_percpu(tag->counters);
++				tag->counters = NULL;
++			}
++			shutdown_mem_profiling(true);
++			pr_err("Failed to allocate memory for allocation tag percpu counters in the module %s. Memory allocation profiling is disabled!\n",
++			       mod->name);
++			break;
++		}
++	}
 +}
- 
- int rmi_f34_create_sysfs(struct rmi_device *rmi_dev)
++
+ static void replace_module(struct module *mod, struct module *new_mod)
  {
+ 	MA_STATE(mas, &mod_area_mt, 0, module_tags.size);
+@@ -757,6 +807,7 @@ static int __init alloc_tag_init(void)
+ 		.needs_section_mem	= needs_section_mem,
+ 		.alloc_section_mem	= reserve_module_tags,
+ 		.free_section_mem	= release_module_tags,
++		.module_load		= load_module,
+ 		.module_replaced	= replace_module,
+ #endif
+ 	};
+--- a/lib/codetag.c
++++ b/lib/codetag.c
+@@ -194,7 +194,7 @@ static int codetag_module_init(struct co
+ 	if (err >= 0) {
+ 		cttype->count += range_size(cttype, &range);
+ 		if (cttype->desc.module_load)
+-			cttype->desc.module_load(cttype, cmod);
++			cttype->desc.module_load(mod, range.start, range.stop);
+ 	}
+ 	up_write(&cttype->mod_lock);
+ 
+@@ -333,7 +333,8 @@ void codetag_unload_module(struct module
+ 		}
+ 		if (found) {
+ 			if (cttype->desc.module_unload)
+-				cttype->desc.module_unload(cttype, cmod);
++				cttype->desc.module_unload(cmod->mod,
++					cmod->range.start, cmod->range.stop);
+ 
+ 			cttype->count -= range_size(cttype, &cmod->range);
+ 			idr_remove(&cttype->mod_idr, mod_id);
 
 
