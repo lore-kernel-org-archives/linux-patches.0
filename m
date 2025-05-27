@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6BE3C01;
-	Tue, 27 May 2025 17:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02CB3C01;
+	Tue, 27 May 2025 17:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367329; cv=none; b=ga1W1fXFmzfEfdLcWo8MmByCIbt4LZp+eSeYJGLxcAxEYncmLlVbuy7nFTPz04d54aMFrCjkMCUTtD6vAo7RBBnVtG/1UdxztvMLmG4ZSkKmUoUMVA5yi/i/ZEUJ9hIKKSuYJpJGjWV7vwqeMgBAq6hhE1yo2i/lnh0F0z8ex+A=
+	t=1748367334; cv=none; b=INpRXzm2YN2+374KNHrUepAFEy2kPnASCpnBtVSSdpT5pKxeL3gLh8dGt8xd6N9TDqKtEkk0CMJKv51HW4AN7QqbUujmgNYx9i+22X0r23ShtcZo7fhkvrwhF4R6Dq52FRrTdJJtgO6jYh7F01DAN7Y2ycJ0MT7GQ/NWJ68GDgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367329; c=relaxed/simple;
-	bh=SILpHhN2RinkzNwFusizdZsIfk2K4yxrNGMf8t4okJI=;
+	s=arc-20240116; t=1748367334; c=relaxed/simple;
+	bh=q9dGDe3BThzSIPme6f+HXLsLii9eMK9zDu15pOzRq0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gAuBXX465DuFntCsfrh9vXp5pspCxp2oajTzMVaZjr2hhDMlH6gTas6Rnfd7e6HMvzVEi4/P1xCfQA6KyFaKGxLMug53TbVHJvpLQWutdMINMOh8ZMJB0l/shF/hwOrBRkiEL00MdUtqh9fc1fpds8LZMnwRlifBe05JBcV77Ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ut00SN/p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d2zfgvEm25iFyGvInKK2lqinDuvFUdiqvt87lCHhNn4B4iMreWOoH8rxtcoDkchB7VeaUIoNKk1htwZbIxsbnQc2+8kBY6P93crvheTh81jwSn1x/JgYrE1N+4g8KNKM6VJGK/fDZbNYvRi8jlZrC8oJpC/w0m9bTwifRMI8NtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AWHaZDut; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ut00SN/p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7EBC4CEEB;
-	Tue, 27 May 2025 17:35:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AWHaZDut"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F01BC4CEE9;
+	Tue, 27 May 2025 17:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367329;
-	bh=SILpHhN2RinkzNwFusizdZsIfk2K4yxrNGMf8t4okJI=;
+	s=korg; t=1748367332;
+	bh=q9dGDe3BThzSIPme6f+HXLsLii9eMK9zDu15pOzRq0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ut00SN/pMZVCgCIn09w8rvk0LS4Q++CEbbhNKYSLauQnNDtr9jws7iNZirR81DvJx
-	 qu/7elY90BhdtpTOvLQ5l8a7Y3nPNB8SmHTMcd+5P+VXo9lpoxyMrqW5AGdBUejo8W
-	 Kpnsy/OMUgEIAZe70o73UXHCLkQwKg4oygqZ9Lfk=
+	b=AWHaZDutessUHaoeg0zMS/TRWAjyvCCpoEWbqrtkKTGRFBjH7VoeuF6gmU8cFQSeq
+	 Pn0EWgvIDmYp6yp8GjEvzd4WXaYOXZvKgEhPKVDeeGaS+LQc1dJtnZ1/v+ckwquMKQ
+	 0ejacyQ+qQmWexrrHqMIRN0q7ORuTkFGo0HgJ5zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Yunke Cao <yunkec@google.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Andrew Davis <afd@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 312/783] media: uvcvideo: Handle uvc menu translation inside uvc_get_le_value
-Date: Tue, 27 May 2025 18:21:49 +0200
-Message-ID: <20250527162525.776574476@linuxfoundation.org>
+Subject: [PATCH 6.14 346/783] soc: ti: k3-socinfo: Do not use syscon helper to build regmap
+Date: Tue, 27 May 2025 18:22:23 +0200
+Message-ID: <20250527162527.153795184@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,159 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Andrew Davis <afd@ti.com>
 
-[ Upstream commit 9109a0b4cb10fd681e9c6e9a4497a6fec5b91c39 ]
+[ Upstream commit a5caf03188e44388e8c618dcbe5fffad1a249385 ]
 
-map->get() gets a value from an uvc_control in "UVC format" and converts
-it to a value that can be consumed by v4l2.
+The syscon helper device_node_to_regmap() is used to fetch a regmap
+registered to a device node. It also currently creates this regmap
+if the node did not already have a regmap associated with it. This
+should only be used on "syscon" nodes. This driver is not such a
+device and instead uses device_node_to_regmap() on its own node as
+a hacky way to create a regmap for itself.
 
-Instead of using a special get function for V4L2_CTRL_TYPE_MENU, we
-were converting from uvc_get_le_value in two different places.
+This will not work going forward and so we should create our regmap
+the normal way by defining our regmap_config, fetching our memory
+resource, then using the normal regmap_init_mmio() function.
 
-Move the conversion to uvc_get_le_value().
-
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Tested-by: Yunke Cao <yunkec@google.com>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://lore.kernel.org/r/20250203-uvc-roi-v17-4-5900a9fed613@chromium.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Andrew Davis <afd@ti.com>
+Link: https://lore.kernel.org/r/20250123181726.597144-1-afd@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c | 77 +++++++++++++-------------------
- 1 file changed, 32 insertions(+), 45 deletions(-)
+ drivers/soc/ti/k3-socinfo.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-index 4e58476d305ef..4a55cf78ec526 100644
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -862,6 +862,25 @@ static inline void uvc_clear_bit(u8 *data, int bit)
- 	data[bit >> 3] &= ~(1 << (bit & 7));
+diff --git a/drivers/soc/ti/k3-socinfo.c b/drivers/soc/ti/k3-socinfo.c
+index 4fb0f0a248288..704039eb3c078 100644
+--- a/drivers/soc/ti/k3-socinfo.c
++++ b/drivers/soc/ti/k3-socinfo.c
+@@ -105,6 +105,12 @@ k3_chipinfo_variant_to_sr(unsigned int partno, unsigned int variant,
+ 	return -ENODEV;
  }
  
-+static s32 uvc_menu_to_v4l2_menu(struct uvc_control_mapping *mapping, s32 val)
-+{
-+	unsigned int i;
++static const struct regmap_config k3_chipinfo_regmap_cfg = {
++	.reg_bits = 32,
++	.val_bits = 32,
++	.reg_stride = 4,
++};
 +
-+	for (i = 0; BIT(i) <= mapping->menu_mask; ++i) {
-+		u32 menu_value;
-+
-+		if (!test_bit(i, &mapping->menu_mask))
-+			continue;
-+
-+		menu_value = uvc_mapping_get_menu_value(mapping, i);
-+
-+		if (menu_value == val)
-+			return i;
-+	}
-+
-+	return val;
-+}
-+
- /*
-  * Extract the bit string specified by mapping->offset and mapping->size
-  * from the little-endian data stored at 'data' and return the result as
-@@ -896,6 +915,16 @@ static s32 uvc_get_le_value(struct uvc_control_mapping *mapping,
- 	if (mapping->data_type == UVC_CTRL_DATA_TYPE_SIGNED)
- 		value |= -(value & (1 << (mapping->size - 1)));
- 
-+	/* If it is a menu, convert from uvc to v4l2. */
-+	if (mapping->v4l2_type != V4L2_CTRL_TYPE_MENU)
-+		return value;
-+
-+	switch (query) {
-+	case UVC_GET_CUR:
-+	case UVC_GET_DEF:
-+		return uvc_menu_to_v4l2_menu(mapping, value);
-+	}
-+
- 	return value;
- }
- 
-@@ -1060,32 +1089,6 @@ static int uvc_ctrl_populate_cache(struct uvc_video_chain *chain,
- 	return 0;
- }
- 
--static s32 __uvc_ctrl_get_value(struct uvc_control_mapping *mapping,
--				const u8 *data)
--{
--	s32 value = mapping->get(mapping, UVC_GET_CUR, data);
--
--	if (mapping->v4l2_type == V4L2_CTRL_TYPE_MENU) {
--		unsigned int i;
--
--		for (i = 0; BIT(i) <= mapping->menu_mask; ++i) {
--			u32 menu_value;
--
--			if (!test_bit(i, &mapping->menu_mask))
--				continue;
--
--			menu_value = uvc_mapping_get_menu_value(mapping, i);
--
--			if (menu_value == value) {
--				value = i;
--				break;
--			}
--		}
--	}
--
--	return value;
--}
--
- static int __uvc_ctrl_load_cur(struct uvc_video_chain *chain,
- 			       struct uvc_control *ctrl)
+ static int k3_chipinfo_probe(struct platform_device *pdev)
  {
-@@ -1136,8 +1139,8 @@ static int __uvc_ctrl_get(struct uvc_video_chain *chain,
- 	if (ret < 0)
- 		return ret;
+ 	struct device_node *node = pdev->dev.of_node;
+@@ -112,13 +118,18 @@ static int k3_chipinfo_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	struct soc_device *soc_dev;
+ 	struct regmap *regmap;
++	void __iomem *base;
+ 	u32 partno_id;
+ 	u32 variant;
+ 	u32 jtag_id;
+ 	u32 mfg;
+ 	int ret;
  
--	*value = __uvc_ctrl_get_value(mapping,
--				uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT));
-+	*value = mapping->get(mapping, UVC_GET_CUR,
-+			      uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT));
+-	regmap = device_node_to_regmap(node);
++	base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(base))
++		return PTR_ERR(base);
++
++	regmap = regmap_init_mmio(dev, base, &k3_chipinfo_regmap_cfg);
+ 	if (IS_ERR(regmap))
+ 		return PTR_ERR(regmap);
  
- 	return 0;
- }
-@@ -1287,7 +1290,6 @@ static int __uvc_query_v4l2_ctrl(struct uvc_video_chain *chain,
- {
- 	struct uvc_control_mapping *master_map = NULL;
- 	struct uvc_control *master_ctrl = NULL;
--	unsigned int i;
- 
- 	memset(v4l2_ctrl, 0, sizeof(*v4l2_ctrl));
- 	v4l2_ctrl->id = mapping->id;
-@@ -1330,21 +1332,6 @@ static int __uvc_query_v4l2_ctrl(struct uvc_video_chain *chain,
- 		v4l2_ctrl->minimum = ffs(mapping->menu_mask) - 1;
- 		v4l2_ctrl->maximum = fls(mapping->menu_mask) - 1;
- 		v4l2_ctrl->step = 1;
--
--		for (i = 0; BIT(i) <= mapping->menu_mask; ++i) {
--			u32 menu_value;
--
--			if (!test_bit(i, &mapping->menu_mask))
--				continue;
--
--			menu_value = uvc_mapping_get_menu_value(mapping, i);
--
--			if (menu_value == v4l2_ctrl->default_value) {
--				v4l2_ctrl->default_value = i;
--				break;
--			}
--		}
--
- 		return 0;
- 
- 	case V4L2_CTRL_TYPE_BOOLEAN:
-@@ -1630,7 +1617,7 @@ void uvc_ctrl_status_event(struct uvc_video_chain *chain,
- 		uvc_ctrl_set_handle(handle, ctrl, NULL);
- 
- 	list_for_each_entry(mapping, &ctrl->info.mappings, list) {
--		s32 value = __uvc_ctrl_get_value(mapping, data);
-+		s32 value = mapping->get(mapping, UVC_GET_CUR, data);
- 
- 		/*
- 		 * handle may be NULL here if the device sends auto-update
 -- 
 2.39.5
 
