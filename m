@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73ED61D88D7;
-	Tue, 27 May 2025 17:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879F21D88D7;
+	Tue, 27 May 2025 17:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366565; cv=none; b=KLLcL5y3I1IYcbrhUnEIhw9mu1Zef/GZJ1jH42ywYxPbSzhj6SOK0afaErmJm2qlG7Fh78tu47TCQTYx/04m/mWzIqdtplPvZKOl7zEStQwlVjqtD+v6EUcVJp4SJ66KsqVw9eInKgJgFCqoOoPWMfWaax2XTlAw26b9MdC4zYQ=
+	t=1748366568; cv=none; b=eHJeqCefHra7ofKkH9BxtGclKcPX09tL0eSYeetHHay0rRzpDR1HQjxEUWwdq2KEiluk6soN1ClcJ16HZZ+0mEmkqMwFgWKs5MGm5ePImqbqmFS/edcJRDH0yw4mNBM7NxEJLxSKRSUsFm3gOyu/Br2/ufn0IxVyoVhOQtA8OIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366565; c=relaxed/simple;
-	bh=mG2BGYiezbuEEQPQhe8WN3qyYj6hhn450rUG6wsznVs=;
+	s=arc-20240116; t=1748366568; c=relaxed/simple;
+	bh=IkZqhT/iDipMcj+hsl25sGXnXz3en4q6NP7bBsYPnPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QeLsX38EWQ6feI13A06xQlytRAxXNbaATHKmyPVXFirC2w+cmv6DASwDk8cpjfPyLMYWFSfa8GAtkN+hcLOd2wPSJ+o72rr4LMr50PKTklqoDqA7sceh3srzhPfUHX8m/+wZhB7fCBMA919OD2mS0tmq3smdXi0KKbtM4QTnihk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07YyozUX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kn+ShoiYXq6tvpGqC/P4Kp5YruXe0nymuoqdFe1Rox0bRa58ibiIHhxOWshPwrwrm4lPKROUnfrhSNKPwyDOXsgpign0hoRklDpaaOibQZEB0lIVdcXXx3DzDDFqofJ+RhI2SklT/0zeW5CGSqFK/KwU+8o8KWiJLIHkUsreuZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pgT9dVsU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07YyozUX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1ABC4CEE9;
-	Tue, 27 May 2025 17:22:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pgT9dVsU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1269BC4CEE9;
+	Tue, 27 May 2025 17:22:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366565;
-	bh=mG2BGYiezbuEEQPQhe8WN3qyYj6hhn450rUG6wsznVs=;
+	s=korg; t=1748366568;
+	bh=IkZqhT/iDipMcj+hsl25sGXnXz3en4q6NP7bBsYPnPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=07YyozUXUx9wvZIEgrnf8N0S9iQ2LBbP5k3H8+FKM/UlTqH7I2XcPuzh7XZ9ztgv5
-	 elQDGzHSwJmolByXSV1GlDZzpv3K0zz7sL2jz3VVZEVVSOIZ2pg6tCaaHCtgJAhvRr
-	 Q4SJ8KV0hXHBPmbt+kF8xCBfKgoeckuTNJE8ilEM=
+	b=pgT9dVsUE9v+cJ2mEY75NMV50pe3tXllIORGEfnlMZ0Kk3vOypunTc3XhdeVqQ0zA
+	 XUIyBuINgrIG9HYxw8xNO1RfBsucqY5tB6mS+W/Zm7WcFRTT0BIE6l26Jd8gu4ZQRH
+	 7vrkihmIZbaznkljDDtWCpLu13BaiXKvucoJlCyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
+	Erick Shepherd <erick.shepherd@ni.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 109/783] staging: vchiq_arm: Create keep-alive thread during probe
-Date: Tue, 27 May 2025 18:18:26 +0200
-Message-ID: <20250527162517.590669889@linuxfoundation.org>
+Subject: [PATCH 6.14 110/783] mmc: host: Wait for Vdd to settle on card power off
+Date: Tue, 27 May 2025 18:18:27 +0200
+Message-ID: <20250527162517.631187550@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -50,127 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Erick Shepherd <erick.shepherd@ni.com>
 
-[ Upstream commit 86bc8821700665ad3962f3ef0d93667f59cf7031 ]
+[ Upstream commit 31e75ed964582257f59156ce6a42860e1ae4cc39 ]
 
-Creating the keep-alive thread in vchiq_platform_init_state have
-the following advantages:
-- abort driver probe if kthread_create fails (more consistent behavior)
-- make resource release process easier
+The SD spec version 6.0 section 6.4.1.5 requires that Vdd must be
+lowered to less than 0.5V for a minimum of 1 ms when powering off a
+card. Increase wait to 15 ms so that voltage has time to drain down
+to 0.5V and cards can power off correctly. Issues with voltage drain
+time were only observed on Apollo Lake and Bay Trail host controllers
+so this fix is limited to those devices.
 
-Since vchiq_keepalive_thread_func is defined below
-vchiq_platform_init_state, the latter must be moved.
-
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://lore.kernel.org/r/20250309125014.37166-5-wahrenst@gmx.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Erick Shepherd <erick.shepherd@ni.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20250314195021.1588090-1-erick.shepherd@ni.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../interface/vchiq_arm/vchiq_arm.c           | 69 +++++++++----------
- 1 file changed, 34 insertions(+), 35 deletions(-)
+ drivers/mmc/host/sdhci-pci-core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-index 0c7ea2d0ee85e..64f9536f12329 100644
---- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-+++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-@@ -280,29 +280,6 @@ static int vchiq_platform_init(struct platform_device *pdev, struct vchiq_state
- 	return 0;
- }
+diff --git a/drivers/mmc/host/sdhci-pci-core.c b/drivers/mmc/host/sdhci-pci-core.c
+index 1f0bd723f0112..13a84b9309e06 100644
+--- a/drivers/mmc/host/sdhci-pci-core.c
++++ b/drivers/mmc/host/sdhci-pci-core.c
+@@ -610,8 +610,12 @@ static void sdhci_intel_set_power(struct sdhci_host *host, unsigned char mode,
  
--int
--vchiq_platform_init_state(struct vchiq_state *state)
--{
--	struct vchiq_arm_state *platform_state;
--
--	platform_state = devm_kzalloc(state->dev, sizeof(*platform_state), GFP_KERNEL);
--	if (!platform_state)
--		return -ENOMEM;
--
--	rwlock_init(&platform_state->susp_res_lock);
--
--	init_completion(&platform_state->ka_evt);
--	atomic_set(&platform_state->ka_use_count, 0);
--	atomic_set(&platform_state->ka_use_ack_count, 0);
--	atomic_set(&platform_state->ka_release_count, 0);
--
--	platform_state->state = state;
--
--	state->platform_state = (struct opaque_platform_state *)platform_state;
--
--	return 0;
--}
--
- static struct vchiq_arm_state *vchiq_platform_get_arm_state(struct vchiq_state *state)
- {
- 	return (struct vchiq_arm_state *)state->platform_state;
-@@ -1011,6 +988,39 @@ vchiq_keepalive_thread_func(void *v)
- 	return 0;
- }
+ 	sdhci_set_power(host, mode, vdd);
  
-+int
-+vchiq_platform_init_state(struct vchiq_state *state)
-+{
-+	struct vchiq_arm_state *platform_state;
-+	char threadname[16];
-+
-+	platform_state = devm_kzalloc(state->dev, sizeof(*platform_state), GFP_KERNEL);
-+	if (!platform_state)
-+		return -ENOMEM;
-+
-+	snprintf(threadname, sizeof(threadname), "vchiq-keep/%d",
-+		 state->id);
-+	platform_state->ka_thread = kthread_create(&vchiq_keepalive_thread_func,
-+						   (void *)state, threadname);
-+	if (IS_ERR(platform_state->ka_thread)) {
-+		dev_err(state->dev, "couldn't create thread %s\n", threadname);
-+		return PTR_ERR(platform_state->ka_thread);
+-	if (mode == MMC_POWER_OFF)
++	if (mode == MMC_POWER_OFF) {
++		if (slot->chip->pdev->device == PCI_DEVICE_ID_INTEL_APL_SD ||
++		    slot->chip->pdev->device == PCI_DEVICE_ID_INTEL_BYT_SD)
++			usleep_range(15000, 17500);
+ 		return;
 +	}
-+
-+	rwlock_init(&platform_state->susp_res_lock);
-+
-+	init_completion(&platform_state->ka_evt);
-+	atomic_set(&platform_state->ka_use_count, 0);
-+	atomic_set(&platform_state->ka_use_ack_count, 0);
-+	atomic_set(&platform_state->ka_release_count, 0);
-+
-+	platform_state->state = state;
-+
-+	state->platform_state = (struct opaque_platform_state *)platform_state;
-+
-+	return 0;
-+}
-+
- int
- vchiq_use_internal(struct vchiq_state *state, struct vchiq_service *service,
- 		   enum USE_TYPE_E use_type)
-@@ -1331,7 +1341,6 @@ void vchiq_platform_conn_state_changed(struct vchiq_state *state,
- 				       enum vchiq_connstate newstate)
- {
- 	struct vchiq_arm_state *arm_state = vchiq_platform_get_arm_state(state);
--	char threadname[16];
  
- 	dev_dbg(state->dev, "suspend: %d: %s->%s\n",
- 		state->id, get_conn_state_name(oldstate), get_conn_state_name(newstate));
-@@ -1346,17 +1355,7 @@ void vchiq_platform_conn_state_changed(struct vchiq_state *state,
- 
- 	arm_state->first_connect = 1;
- 	write_unlock_bh(&arm_state->susp_res_lock);
--	snprintf(threadname, sizeof(threadname), "vchiq-keep/%d",
--		 state->id);
--	arm_state->ka_thread = kthread_create(&vchiq_keepalive_thread_func,
--					      (void *)state,
--					      threadname);
--	if (IS_ERR(arm_state->ka_thread)) {
--		dev_err(state->dev, "suspend: Couldn't create thread %s\n",
--			threadname);
--	} else {
--		wake_up_process(arm_state->ka_thread);
--	}
-+	wake_up_process(arm_state->ka_thread);
- }
- 
- static const struct of_device_id vchiq_of_match[] = {
+ 	/*
+ 	 * Bus power might not enable after D3 -> D0 transition due to the
 -- 
 2.39.5
 
