@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF70527F16C;
-	Tue, 27 May 2025 16:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35B613A244;
+	Tue, 27 May 2025 16:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364354; cv=none; b=FuM2IOpamRQUbILi1BwnqjooQ7jsF4A+s2Ie/LmgmGfbvdcC7HhJeAmsw7vb7xBxtbKs8G+jnkRI31ez38uBrTYBUUnf0zpMOgWW7/WwMHMj/NjNIGxY77QKfX+XYPIJeNYpO5NjVW+96CYeG0dFJFgD7oinUndEBMBv4nHur6g=
+	t=1748364359; cv=none; b=OzStkyzdP8DG0Md2j64z6SsyOeSVYdpltUf4zB025nmMLzdOjOWH54YJAEhuFZ7pOlFmxz8z/RBvSzzgr/ipOGlQdiiEyYaTQthNvRsMHJbtOM/bDZAGYe46OjpxQxRcnz2qcy6FPLtvIcCadZO4u4/CT+POlKvkT3x1hXsMSi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364354; c=relaxed/simple;
-	bh=ZiZbvNpxZfYYTSQGKJMd9RwkAz8e14FrQte3an3I2jk=;
+	s=arc-20240116; t=1748364359; c=relaxed/simple;
+	bh=NDq6XuWOEPIsxQ+fDTKB42V5hKSIZO+fCDFZrntFVaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GH4l3u5sfJYY/mohhOnpFaKKdzMBcoBopFRu6ytc3i+3qTjvFNMvC2/ZLEMoIyK4bWMhrE+Xp6MpQARZNaECHSXAkRbr77mqXEorITAOUQssotqxFcDjE89nw+WYIo8jgvL0BccxnkY7bGS3Ho/XL8BrbPdluIe6T7DHUomyyCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QLNHnyJI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QjSTjasl2ArvL/0WFqB4KOq0JSVJ+oZ8gHeT4djZS0Ym2XLz8KH6cYKXufyIUi2tAMvBriiZZjJ6d5/Gz6POpVN9wNb4NxFn4lFyHrruS/3SZtHQkwwX0la68u5QqPbgqz30/6VgGE+nNk7HyISIuZzQ34HIWJ1ACIA9oTZXtqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=erd6SIhX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLNHnyJI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E49C4CEEB;
-	Tue, 27 May 2025 16:45:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="erd6SIhX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1047FC4CEE9;
+	Tue, 27 May 2025 16:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364354;
-	bh=ZiZbvNpxZfYYTSQGKJMd9RwkAz8e14FrQte3an3I2jk=;
+	s=korg; t=1748364358;
+	bh=NDq6XuWOEPIsxQ+fDTKB42V5hKSIZO+fCDFZrntFVaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QLNHnyJI/WpHvfJkL+YYsYPYsDRimceEIUh0bcHh/UtaZyZDKsCtpLijG2yg3rPsc
-	 0ouiaSqTe9UMogJn3krFvaLRwGn8EQ13f6UGJZD7dk/ckpo6S7Jpr6Ki9lH5EOxVQn
-	 xz3dSTcxznYPguRrUgxQL6W1D9m5qjF32BDBiCoU=
+	b=erd6SIhXx6tOfd0Ps+vfrre3ZwmMnYKF9PsZ48fC3oZxeR/ykF6cZY6OfcF5zDmIp
+	 JVRbgHfXihPaniBiYcWqoIPsggTIy18HpPjIfAQRXaPneT9qmkIfvaP5+EGLIsdXGM
+	 wOxsGw8aPwfmiPp4ZfAd1yupBncUM8EP8FqH2azQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko@sntech.de>,
-	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Frederick Lawler <fred@cloudflare.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 012/626] nvmem: rockchip-otp: add rk3576 variant data
-Date: Tue, 27 May 2025 18:18:25 +0200
-Message-ID: <20250527162445.556932076@linuxfoundation.org>
+Subject: [PATCH 6.12 030/626] ima: process_measurement() needlessly takes inode_lock() on MAY_READ
+Date: Tue, 27 May 2025 18:18:43 +0200
+Message-ID: <20250527162446.289243888@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,53 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Stuebner <heiko@sntech.de>
+From: Frederick Lawler <fred@cloudflare.com>
 
-[ Upstream commit 50d75a13a9ce880a5ef07a4ccc63ba561cc2e69a ]
+[ Upstream commit 30d68cb0c37ebe2dc63aa1d46a28b9163e61caa2 ]
 
-The variant works very similar to the rk3588, just with a different
-read-offset and size.
+On IMA policy update, if a measure rule exists in the policy,
+IMA_MEASURE is set for ima_policy_flags which makes the violation_check
+variable always true. Coupled with a no-action on MAY_READ for a
+FILE_CHECK call, we're always taking the inode_lock().
 
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Tested-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20250411112251.68002-5-srinivas.kandagatla@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This becomes a performance problem for extremely heavy read-only workloads.
+Therefore, prevent this only in the case there's no action to be taken.
+
+Signed-off-by: Frederick Lawler <fred@cloudflare.com>
+Acked-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/rockchip-otp.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ security/integrity/ima/ima_main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvmem/rockchip-otp.c b/drivers/nvmem/rockchip-otp.c
-index 3edfbfc2d7220..d88f12c532426 100644
---- a/drivers/nvmem/rockchip-otp.c
-+++ b/drivers/nvmem/rockchip-otp.c
-@@ -274,6 +274,14 @@ static const struct rockchip_data px30_data = {
- 	.reg_read = px30_otp_read,
- };
+diff --git a/security/integrity/ima/ima_main.c b/security/integrity/ima/ima_main.c
+index a9aab10bebcaa..2f3f267e72167 100644
+--- a/security/integrity/ima/ima_main.c
++++ b/security/integrity/ima/ima_main.c
+@@ -245,7 +245,9 @@ static int process_measurement(struct file *file, const struct cred *cred,
+ 				&allowed_algos);
+ 	violation_check = ((func == FILE_CHECK || func == MMAP_CHECK ||
+ 			    func == MMAP_CHECK_REQPROT) &&
+-			   (ima_policy_flag & IMA_MEASURE));
++			   (ima_policy_flag & IMA_MEASURE) &&
++			   ((action & IMA_MEASURE) ||
++			    (file->f_mode & FMODE_WRITE)));
+ 	if (!action && !violation_check)
+ 		return 0;
  
-+static const struct rockchip_data rk3576_data = {
-+	.size = 0x100,
-+	.read_offset = 0x700,
-+	.clks = px30_otp_clocks,
-+	.num_clks = ARRAY_SIZE(px30_otp_clocks),
-+	.reg_read = rk3588_otp_read,
-+};
-+
- static const char * const rk3588_otp_clocks[] = {
- 	"otp", "apb_pclk", "phy", "arb",
- };
-@@ -295,6 +303,10 @@ static const struct of_device_id rockchip_otp_match[] = {
- 		.compatible = "rockchip,rk3308-otp",
- 		.data = &px30_data,
- 	},
-+	{
-+		.compatible = "rockchip,rk3576-otp",
-+		.data = &rk3576_data,
-+	},
- 	{
- 		.compatible = "rockchip,rk3588-otp",
- 		.data = &rk3588_data,
 -- 
 2.39.5
 
