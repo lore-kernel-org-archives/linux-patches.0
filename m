@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF731E89C;
-	Tue, 27 May 2025 17:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0771E89C;
+	Tue, 27 May 2025 17:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366429; cv=none; b=h1g2ULtoDjOAXSGvfbbbvgLSCzzOqoBFJYtSR3Cp594aEDrlWp1P/sZl/QadxFgEQcgG5wxjZEaeIAifr+lLqADQUE8FelzPtqlRjy1UYd1p9h1foVxCBXFIiHYVudmzmhl7waQiuE3cha53Rs86/1pyXNMSrxF2535HSvRAouo=
+	t=1748366432; cv=none; b=jh9Y8q4MVwiILaxVK53DuS9RIUoAI+k9HUTJ2RWjyOu28xqcEB5c2KQ/jndm+H/UORPf/7jW0NWEpvSRejyipHEsFW6pPh0SJkUai+iWW/tR0ZiW2j1nkn4CX1mDxox1igVshc8PxrLoEMRYD33gZlLfvlywwqx7S37vLsTX5SE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366429; c=relaxed/simple;
-	bh=3GmJJouPVlaZnrFPfN5CmdjgOIi/YfXEZyAWxFl+sdI=;
+	s=arc-20240116; t=1748366432; c=relaxed/simple;
+	bh=5BPBssEKGBEwMEvjIeZnEH/DnkOzEKuHzO1Mg0lQJo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l7JGPzdFl3HwnAPrSWP28wFLOHpeGzRVajZV17uRKz4faUUmSARzYVq8EHb4ZwIA168PgG0EiWOD+17nffJ+qoivg+ZllxcO6afRU4t/OH8+9QWxtVJ8NpliWyoSDdpucRInPNXy7dtbnJyHzCH0h8nqWoiANnj7GXncg0J5QyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OYyf1z8D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M0cOmzGGIiLwC6jqZNQ9ZrOmCHGyFycJrlhiYHbtOYNFoxLAISh2UDXyvDbKI38Pu0HhqVxyZv/+Nl5yhRvWrTSJUGp5TSilq5YmhVSMNMQZdewkkrYJaA/lkFYy2owZBRnF+uS/kk3xU9nhF4hoXmkb2TxMwLF5LevFDQkfKAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eW6TJOGU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYyf1z8D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45E4C4CEE9;
-	Tue, 27 May 2025 17:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eW6TJOGU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D743CC4CEEB;
+	Tue, 27 May 2025 17:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366429;
-	bh=3GmJJouPVlaZnrFPfN5CmdjgOIi/YfXEZyAWxFl+sdI=;
+	s=korg; t=1748366432;
+	bh=5BPBssEKGBEwMEvjIeZnEH/DnkOzEKuHzO1Mg0lQJo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OYyf1z8DQzj46Gtb3rRi0lsol5by4PpDg1sma5t73C5n0uvUmH1LINiXFxILd//PN
-	 qW6LfB/nQrwIZV3sR2aV6CN5jFk5+MDxWXQRRF3bMC23LAr0rpwXiXNQxV9VWet/ap
-	 /NxOH37cCZDgPoIa9tVqIUL0TSoVU5lXA2IfktEM=
+	b=eW6TJOGUEKJBz1QiisMcqYYTjfip5VYQ/WN1Elnhf0xefZKdeLYaIdmbJ3pq4fOW4
+	 szjNjZM21GsMKhyD54E1ANuvlvXrufImIDUanGJTwJ6gKbDM7IsCYvuFjKJu7stNME
+	 uPRsQMsETljJFgvXwGqIMd4qNCQNlBL26PE3pre8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Jesse Taube <mr.bossman075@gmail.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 065/783] mailbox: use error ret code of of_parse_phandle_with_args()
-Date: Tue, 27 May 2025 18:17:42 +0200
-Message-ID: <20250527162515.770131805@linuxfoundation.org>
+Subject: [PATCH 6.14 066/783] riscv: Allow NOMMU kernels to access all of RAM
+Date: Tue, 27 May 2025 18:17:43 +0200
+Message-ID: <20250527162515.811278303@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,43 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-[ Upstream commit 24fdd5074b205cfb0ef4cd0751a2d03031455929 ]
+[ Upstream commit 2c0391b29b27f315c1b4c29ffde66f50b29fab99 ]
 
-In case of error, of_parse_phandle_with_args() returns -EINVAL when the
-passed index is negative, or -ENOENT when the index is for an empty
-phandle. The mailbox core overwrote the error return code with a less
-precise -ENODEV. Use the error returned code from
-of_parse_phandle_with_args().
+NOMMU kernels currently cannot access memory below the kernel link
+address. Remove this restriction by setting PAGE_OFFSET to the actual
+start of RAM, as determined from the devicetree. The kernel link address
+must be a constant, so keep using CONFIG_PAGE_OFFSET for that purpose.
 
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Reviewed-by: Jesse Taube <mr.bossman075@gmail.com>
+Link: https://lore.kernel.org/r/20241026171441.3047904-3-samuel.holland@sifive.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/riscv/include/asm/page.h    | 12 ++++--------
+ arch/riscv/include/asm/pgtable.h |  2 +-
+ 2 files changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
-index d3d26a2c98956..cb174e788a96c 100644
---- a/drivers/mailbox/mailbox.c
-+++ b/drivers/mailbox/mailbox.c
-@@ -415,11 +415,12 @@ struct mbox_chan *mbox_request_channel(struct mbox_client *cl, int index)
+diff --git a/arch/riscv/include/asm/page.h b/arch/riscv/include/asm/page.h
+index 125f5ecd95652..6409fd78ae6fa 100644
+--- a/arch/riscv/include/asm/page.h
++++ b/arch/riscv/include/asm/page.h
+@@ -24,12 +24,9 @@
+  * When not using MMU this corresponds to the first free page in
+  * physical memory (aligned on a page boundary).
+  */
+-#ifdef CONFIG_64BIT
+ #ifdef CONFIG_MMU
++#ifdef CONFIG_64BIT
+ #define PAGE_OFFSET		kernel_map.page_offset
+-#else
+-#define PAGE_OFFSET		_AC(CONFIG_PAGE_OFFSET, UL)
+-#endif
+ /*
+  * By default, CONFIG_PAGE_OFFSET value corresponds to SV57 address space so
+  * define the PAGE_OFFSET value for SV48 and SV39.
+@@ -39,6 +36,9 @@
+ #else
+ #define PAGE_OFFSET		_AC(CONFIG_PAGE_OFFSET, UL)
+ #endif /* CONFIG_64BIT */
++#else
++#define PAGE_OFFSET		((unsigned long)phys_ram_base)
++#endif /* CONFIG_MMU */
  
- 	mutex_lock(&con_mutex);
+ #ifndef __ASSEMBLY__
  
--	if (of_parse_phandle_with_args(dev->of_node, "mboxes",
--				       "#mbox-cells", index, &spec)) {
-+	ret = of_parse_phandle_with_args(dev->of_node, "mboxes", "#mbox-cells",
-+					 index, &spec);
-+	if (ret) {
- 		dev_dbg(dev, "%s: can't parse \"mboxes\" property\n", __func__);
- 		mutex_unlock(&con_mutex);
--		return ERR_PTR(-ENODEV);
-+		return ERR_PTR(ret);
- 	}
+@@ -95,11 +95,7 @@ typedef struct page *pgtable_t;
+ #define MIN_MEMBLOCK_ADDR      0
+ #endif
  
- 	chan = ERR_PTR(-EPROBE_DEFER);
+-#ifdef CONFIG_MMU
+ #define ARCH_PFN_OFFSET		(PFN_DOWN((unsigned long)phys_ram_base))
+-#else
+-#define ARCH_PFN_OFFSET		(PAGE_OFFSET >> PAGE_SHIFT)
+-#endif /* CONFIG_MMU */
+ 
+ struct kernel_mapping {
+ 	unsigned long page_offset;
+diff --git a/arch/riscv/include/asm/pgtable.h b/arch/riscv/include/asm/pgtable.h
+index 050fdc49b5ad7..eb7b25ef556ec 100644
+--- a/arch/riscv/include/asm/pgtable.h
++++ b/arch/riscv/include/asm/pgtable.h
+@@ -12,7 +12,7 @@
+ #include <asm/pgtable-bits.h>
+ 
+ #ifndef CONFIG_MMU
+-#define KERNEL_LINK_ADDR	PAGE_OFFSET
++#define KERNEL_LINK_ADDR	_AC(CONFIG_PAGE_OFFSET, UL)
+ #define KERN_VIRT_SIZE		(UL(-1))
+ #else
+ 
 -- 
 2.39.5
 
