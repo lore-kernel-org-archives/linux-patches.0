@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF663C01;
-	Tue, 27 May 2025 17:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB4527F728;
+	Tue, 27 May 2025 17:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367216; cv=none; b=S7lkrbYkOleRo7RkLWgAvN57YuJaQu0Kc5t3Up+Ts/4a6vlr08r3IzXtYyMCD/7iu5lWPs3xXD3NH7m1bYrc2rUSPPRNed7hL/rnwVHX44pPn7LWOGShLL19WvYF1sJSlg+ebwDeURVwruBy8xa7Upeti11bhtQER4X9EkUGuJw=
+	t=1748367219; cv=none; b=X7j32WZsQYBZlMYeokEHUKJsLgd4Opp/TNmWFThW0JxvtBnJ3Ngoj30ZssknRVs+ybl1/ZXgyiZN5wFGs4BKh20kj1ERcCzrR8SZkv/3BFA5Z0NaQiB1aS5zFBPbcT6MrYFDzRcDPVQZtAcq/EyiB6fRQ3FLnVgYTRqp9joNGqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367216; c=relaxed/simple;
-	bh=KjqyNNyi7aO+QJzYCBI9P4x1mmVe4JL6p8+yKH0pIz4=;
+	s=arc-20240116; t=1748367219; c=relaxed/simple;
+	bh=mxahw2dzGY/NMWFzAJOrYfwZNb+15CNZl8QiJukMstk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hfi1oqYL2aBbGg675tZN0urbCtTKAboELB/0wWD+l9+UFBf2/7gu5gJQfJBu9oUqneyKi56ezTqs+16xBMNMVz1k8UvXYpfIjjp8PW9XCiPp+c5SRejvilB32HTvAANr7yQRlfvHo/knM+iQjzOq6T+VFHHpWCXKewwn8NZhgv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6QrISLM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=os6ENcbCmfoBLWdgFB0d9T8nJXlUnPbDhFAGZRp3QhcSH9b3aLj7XvZ6Jee4G5pQyJT9qHkQErBjcRh9SoSMq8KGu5e5ATeT7auKvCItCWjCspoQokLdPTsd5diqO46cEylkPm443To7i+bQ6HhdPSOMrBMJ/4vSsjRtWMLXAoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7UfhxaA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6QrISLM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986BCC4CEE9;
-	Tue, 27 May 2025 17:33:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7UfhxaA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93EBFC4CEE9;
+	Tue, 27 May 2025 17:33:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367216;
-	bh=KjqyNNyi7aO+QJzYCBI9P4x1mmVe4JL6p8+yKH0pIz4=;
+	s=korg; t=1748367219;
+	bh=mxahw2dzGY/NMWFzAJOrYfwZNb+15CNZl8QiJukMstk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t6QrISLMFS9b25tBqNDqpiOElc/jQ5t+4tLuos9AbKOYiFrTjiZ/xmuD1BhWGgBGQ
-	 golBpNF5vdFczVJGrZYeQQX6PqOSDCaAnifvWOUG5T6C0Yut2LWCKJwD18UAHyyab6
-	 sC3i3TLo6OI0LlLK+/saE64gLWCN2jDzZjzraRhU=
+	b=j7UfhxaAA2a/630OirSppgDF8EfYTgMhYMJPFRCsh4RxMNOafxFmN+jQCXL63V31q
+	 Fvb09Zvw0FzdmxfJ5rUGMcsWOiEomGvhOclH2Y5YD0S+VsslPjm0EJkJJjaFKyjEvz
+	 N0cRrZrOaBaWjz5D8SuGvApmM2g6YzSZpANhzGx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aric Cyr <aric.cyr@amd.com>,
-	Aric Cyr <Aric.Cyr@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 285/783] drm/amd/display: Request HW cursor on DCN3.2 with SubVP
-Date: Tue, 27 May 2025 18:21:22 +0200
-Message-ID: <20250527162524.694752024@linuxfoundation.org>
+Subject: [PATCH 6.14 286/783] drm/amdgpu: Avoid HDP flush on JPEG v5.0.1
+Date: Tue, 27 May 2025 18:21:23 +0200
+Message-ID: <20250527162524.733878551@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -54,57 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aric Cyr <Aric.Cyr@amd.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit b74f46f3ce1e5f6336645f1e9ff47c56d5dfdef1 ]
+[ Upstream commit a734a717dcfe1ce618301775034e598cb456665b ]
 
-[why]
-When SubVP is active the HW cursor size is limited to 64x64, and
-anything larger will force composition which is bad for gaming on
-DCN3.2 if the game uses a larger cursor.
+Similar to JPEG v4.0.3, HDP flush shouldn't be performed by JPEG engine.
+Keep it empty.
 
-[how]
-If HW cursor is requested, typically by a fullscreen game, do not
-enable SubVP so that up to 256x256 cursor sizes are available for
-DCN3.2.
-
-Reviewed-by: Aric Cyr <aric.cyr@amd.com>
-Signed-off-by: Aric Cyr <Aric.Cyr@amd.com>
-Signed-off-by: Wayne Lin <wayne.lin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c             | 3 ++-
- drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c | 2 +-
+ drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.h | 1 +
+ drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c | 1 +
+ 3 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 722175e347fdc..167f9d99a5408 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -4912,7 +4912,8 @@ static bool full_update_required(struct dc *dc,
- 			stream_update->lut3d_func ||
- 			stream_update->pending_test_pattern ||
- 			stream_update->crtc_timing_adjust ||
--			stream_update->scaler_sharpener_update))
-+			stream_update->scaler_sharpener_update ||
-+			stream_update->hw_cursor_req))
- 		return true;
+diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
+index 88f9771c16869..b2904ee494e04 100644
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
+@@ -637,7 +637,7 @@ static uint64_t jpeg_v4_0_3_dec_ring_get_wptr(struct amdgpu_ring *ring)
+ 			ring->pipe ? (0x40 * ring->pipe - 0xc80) : 0);
+ }
  
- 	if (stream) {
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-index 6f490d8d7038c..56dda686e2992 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-@@ -626,6 +626,7 @@ static bool dcn32_assign_subvp_pipe(struct dc *dc,
- 		 * - Not TMZ surface
- 		 */
- 		if (pipe->plane_state && !pipe->top_pipe && !pipe->prev_odm_pipe && !dcn32_is_center_timing(pipe) &&
-+				!pipe->stream->hw_cursor_req &&
- 				!(pipe->stream->timing.pix_clk_100hz / 10000 > DCN3_2_MAX_SUBVP_PIXEL_RATE_MHZ) &&
- 				(!dcn32_is_psr_capable(pipe) || (context->stream_count == 1 && dc->caps.dmub_caps.subvp_psr)) &&
- 				dc_state_get_pipe_subvp_type(context, pipe) == SUBVP_NONE &&
+-static void jpeg_v4_0_3_ring_emit_hdp_flush(struct amdgpu_ring *ring)
++void jpeg_v4_0_3_ring_emit_hdp_flush(struct amdgpu_ring *ring)
+ {
+ 	/* JPEG engine access for HDP flush doesn't work when RRMT is enabled.
+ 	 * This is a workaround to avoid any HDP flush through JPEG ring.
+diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.h b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.h
+index 747a3e5f68564..a90bf370a0025 100644
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.h
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.h
+@@ -56,6 +56,7 @@ void jpeg_v4_0_3_dec_ring_emit_fence(struct amdgpu_ring *ring, u64 addr, u64 seq
+ 				unsigned int flags);
+ void jpeg_v4_0_3_dec_ring_emit_vm_flush(struct amdgpu_ring *ring,
+ 					unsigned int vmid, uint64_t pd_addr);
++void jpeg_v4_0_3_ring_emit_hdp_flush(struct amdgpu_ring *ring);
+ void jpeg_v4_0_3_dec_ring_nop(struct amdgpu_ring *ring, uint32_t count);
+ void jpeg_v4_0_3_dec_ring_insert_start(struct amdgpu_ring *ring);
+ void jpeg_v4_0_3_dec_ring_insert_end(struct amdgpu_ring *ring);
+diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
+index 40d4c32a8c2a6..f2cc11b3fd68b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
+@@ -655,6 +655,7 @@ static const struct amdgpu_ring_funcs jpeg_v5_0_1_dec_ring_vm_funcs = {
+ 	.emit_ib = jpeg_v4_0_3_dec_ring_emit_ib,
+ 	.emit_fence = jpeg_v4_0_3_dec_ring_emit_fence,
+ 	.emit_vm_flush = jpeg_v4_0_3_dec_ring_emit_vm_flush,
++	.emit_hdp_flush = jpeg_v4_0_3_ring_emit_hdp_flush,
+ 	.test_ring = amdgpu_jpeg_dec_ring_test_ring,
+ 	.test_ib = amdgpu_jpeg_dec_ring_test_ib,
+ 	.insert_nop = jpeg_v4_0_3_dec_ring_nop,
 -- 
 2.39.5
 
