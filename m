@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045CF27FB3D;
-	Tue, 27 May 2025 17:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B1827FB3D;
+	Tue, 27 May 2025 17:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368546; cv=none; b=VsvySgY+C7iUXv5UX2aOHbMxZGAHDW5P/kQ3HcfJMr2GdFpGI0KFovv7CzzBjgy5VvfrMGEN3Jhoa3hR7rCbUlrCvvPOwLFV7TwutWZdtoXI0i6SD2c9GhFUG7SL1jToMR5MyKdo6MZV8pVfaOI379xwOg1iVs1kcisZCTR1YO8=
+	t=1748368549; cv=none; b=j8hD9zPunmBLNVt3NyL77vp5aoEtlglfZut6tB143f1GTAK/qx6XR934M/1dNXsm662fpHYP+CaTKLgwRvapWLl/MfgWtuwtj42jCXbnw/6P1C3RnAC4XBvhNbZi8ZTmSVHZdVRcN12EuOpHfQxvMmUk/33Ds/TttfBa1usR6Js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368546; c=relaxed/simple;
-	bh=cLAD6gHjkwSqydvMjDeqGhNU+o3gmfJz2ePnhPThhKA=;
+	s=arc-20240116; t=1748368549; c=relaxed/simple;
+	bh=uHw1Jfj4PHIPHaL4AxuAiWEfjkFmlhYRpf5K8YgF/z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IzXdSvSl3kO0ofhR3JBJLrvkSnankSAC6zLOwJNk2y6CL2TgFOX/7z9WMUOU6YTp7MlrT4QH+F58DzRZLe9bMAPzxrkqCeBdBtlTa98CeMEX1C8DJiB4OQqbHhrvtWjV/n3M2idcOdKAggjvVruaqcwRYvcR7u9JrGsTpZC+LrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eYBfYBZH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JalnLHmKzsfvITdKMPVYSTR7y3yDFwEgOdH1EXUDIyzGlLe6RhJU4/OBQZXYGZoDsg2Vg+CyW916cLb2gfxUHEWEr40E3lQ/IopQCBfodDg97hTeFqkIW8SCKvUW6jjd6G6utzfvslWWrH5GTNk1wBvQfWeeuxuM1d+BV5gJn+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ItH7J4m8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eYBfYBZH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B8CC4CEE9;
-	Tue, 27 May 2025 17:55:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ItH7J4m8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E38C4CEE9;
+	Tue, 27 May 2025 17:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368545;
-	bh=cLAD6gHjkwSqydvMjDeqGhNU+o3gmfJz2ePnhPThhKA=;
+	s=korg; t=1748368548;
+	bh=uHw1Jfj4PHIPHaL4AxuAiWEfjkFmlhYRpf5K8YgF/z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eYBfYBZHYWoAfQ26/PrDgTkOAng+kcdDaL1JtYcASDo64NVoz0Enpd2asvF7gN4Or
-	 Qk4PjlmRdnw9+tNqKfJuIps6BOdrCCsoHXJc+D98jeyl0eIONjtJ6of2p6UVZdaG53
-	 Ng1Lskv4/p5UBc7gIW8kKvtlBiDovSHR8sPy/zUw=
+	b=ItH7J4m8dC0btRao9yanmwxSh4bKC+oW5tZBswN8H3RbOf0ANyNEX51emvsY6+bYe
+	 kIzysS+nC14yheAn66gDCDu7ykJGbBfZ26468tLTGd4RbX3oopbO2JA9HnJs1l3q7m
+	 +OQdITKdf92hdu3HCfWDX6sAHAOUtIB1lr5g5BOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	"David S. Miller" <davem@davemloft.net>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 710/783] xsk: Bring back busy polling support in XDP_COPY
-Date: Tue, 27 May 2025 18:28:27 +0200
-Message-ID: <20250527162542.028792137@linuxfoundation.org>
+Subject: [PATCH 6.14 711/783] io_uring: fix overflow resched cqe reordering
+Date: Tue, 27 May 2025 18:28:28 +0200
+Message-ID: <20250527162542.071196375@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,61 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samiullah Khawaja <skhawaja@google.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit b95ed5517354a5f451fb9b3771776ca4c0b65ac3 ]
+[ Upstream commit a7d755ed9ce9738af3db602eb29d32774a180bc7 ]
 
-Commit 5ef44b3cb43b ("xsk: Bring back busy polling support") fixed the
-busy polling support in xsk for XDP_ZEROCOPY after it was broken in
-commit 86e25f40aa1e ("net: napi: Add napi_config"). The busy polling
-support with XDP_COPY remained broken since the napi_id setup in
-xsk_rcv_check was removed.
+Leaving the CQ critical section in the middle of a overflow flushing
+can cause cqe reordering since the cache cq pointers are reset and any
+new cqe emitters that might get called in between are not going to be
+forced into io_cqe_cache_refill().
 
-Bring back the setup of napi_id for XDP_COPY so socket level SO_BUSYPOLL
-can be used to poll the underlying napi.
-
-Do the setup of napi_id for XDP_COPY in xsk_bind, as it is done
-currently for XDP_ZEROCOPY. The setup of napi_id for XDP_COPY in
-xsk_bind is safe because xsk_rcv_check checks that the rx queue at which
-the packet arrives is equal to the queue_id that was supplied in bind.
-This is done for both XDP_COPY and XDP_ZEROCOPY mode.
-
-Tested using AF_XDP support in virtio-net by running the xsk_rr AF_XDP
-benchmarking tool shared here:
-https://lore.kernel.org/all/20250320163523.3501305-1-skhawaja@google.com/T/
-
-Enabled socket busy polling using following commands in qemu,
-
-```
-sudo ethtool -L eth0 combined 1
-echo 400 | sudo tee /proc/sys/net/core/busy_read
-echo 100 | sudo tee /sys/class/net/eth0/napi_defer_hard_irqs
-echo 15000   | sudo tee /sys/class/net/eth0/gro_flush_timeout
-```
-
-Fixes: 5ef44b3cb43b ("xsk: Bring back busy polling support")
-Signed-off-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: eac2ca2d682f9 ("io_uring: check if we need to reschedule during overflow flush")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/90ba817f1a458f091f355f407de1c911d2b93bbf.1747483784.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xsk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/io_uring.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index c13e13fa79fc0..dc67870b76122 100644
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -1301,7 +1301,7 @@ static int xsk_bind(struct socket *sock, struct sockaddr *addr, int addr_len)
- 	xs->queue_id = qid;
- 	xp_add_xsk(xs->pool, xs);
- 
--	if (xs->zc && qid < dev->real_num_rx_queues) {
-+	if (qid < dev->real_num_rx_queues) {
- 		struct netdev_rx_queue *rxq;
- 
- 		rxq = __netif_get_rx_queue(dev, qid);
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 52c9fa6c06450..1f60883d78c64 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -632,6 +632,7 @@ static void __io_cqring_overflow_flush(struct io_ring_ctx *ctx, bool dying)
+ 		 * to care for a non-real case.
+ 		 */
+ 		if (need_resched()) {
++			ctx->cqe_sentinel = ctx->cqe_cached;
+ 			io_cq_unlock_post(ctx);
+ 			mutex_unlock(&ctx->uring_lock);
+ 			cond_resched();
 -- 
 2.39.5
 
