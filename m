@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835971D432D;
-	Tue, 27 May 2025 17:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F90E1F4CB1;
+	Tue, 27 May 2025 17:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365430; cv=none; b=BA/mP7kEhIkjBI9rn231cwjoh6oXxpePTgiR0UK8Yh+fn4xVgIZiStke6vUuMJTH9Nu+he74rCswSQnWdXZ2ovnK4Ma2c6JiLJ4L0AJz1KqW0Az9FXFM8NSy2y4BGtUiHGzfukYrq+Ma79Qnv/yQlzfqkMkq6PFFqDEB+XJ+mtI=
+	t=1748365434; cv=none; b=HeNDdSYbC0hv5zzuTZCDpETsrpGhB7cVLfkTlez9xiwJJ/b/cG9bj5fsfBU+WhwhI+W5BZokCfQhRbZ4Iifsu7IYdbe320sRTkOvN687g//ZwChlpJprikqhdZSh2RjRfi7hDdoVLusjMj0vBZW/OPjq6j2uMDA9UzzE5qHYa24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365430; c=relaxed/simple;
-	bh=XH29Mh0cQzi9+ehVfPVTMEf+zWtr0PRBXg7kBoeT6Uo=;
+	s=arc-20240116; t=1748365434; c=relaxed/simple;
+	bh=i4jm1kPpLrgXwx4fbqVQ8KW8uDtMTcPXlxcp23i8log=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FhtzgxqsHl7EBRdxKoIMyJRjVURjfmeEyOwJNrONOT33HqXTUQDjW+p5QVl4ZKZk7Vr8dfAOc5TM3GeTOjJa/8UoYeeyCsHzJHJH5131pG4w4s4OOjcZaNwmTdq+OkhGEWKbHT4uFBj2gLAzlSSb/6H30p77Txf1LmPsgehHKGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AU3IGbwH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hZIxe5gvaPC9HwC4Iy0L0PWJfaBk8ecQJrydYI2jEuf1OjNzeDtCs4Jb+IB2V0pqMzaENNNxvg/x4XhhqMtWnqxZ2TXaflXAUjBlFwh/t+mDkdz0p/S2sDbTtgB2j5st01Gexb1jMk56Se9LiJTDoYmRz8rs+FZcrLMprwUzGYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1m2/ooi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AU3IGbwH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E9BC4CEE9;
-	Tue, 27 May 2025 17:03:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1m2/ooi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3833AC4CEE9;
+	Tue, 27 May 2025 17:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365430;
-	bh=XH29Mh0cQzi9+ehVfPVTMEf+zWtr0PRBXg7kBoeT6Uo=;
+	s=korg; t=1748365433;
+	bh=i4jm1kPpLrgXwx4fbqVQ8KW8uDtMTcPXlxcp23i8log=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AU3IGbwH/r03xd8HA+GlC9B9XPcD6yTa91f+cG7msdPmdksL4+v9pZUASd8Kytbhn
-	 X1+1uq/MyzX65Kb6/DJAdZ1I8WVtmY3EL+MlzCumWhGk4Gq3UJ5E8yRUzbvmqVsvQM
-	 /V2iTw+xjJibcx0lbZA6DW/ddKueKxOl6hWpqrBw=
+	b=z1m2/ooij3WtbLrudCYEl2Xcxsz1MY1LAkocvoT4vPsZHHF0ul/qPrhSsWE++Gn9U
+	 EUf4jgR5gs28hd/ACOtLSbOCXcXfyKtuNQsSeKlX2J3bIwmVFQdQP//maFmh5ci3M9
+	 51anZgPg/UHmdPuW0lMBMZXD6M1d4Pwxqvx/magI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Xiaochun Lee <lixc17@lenovo.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 346/626] PCI: Fix old_size lower bound in calculate_iosize() too
-Date: Tue, 27 May 2025 18:23:59 +0200
-Message-ID: <20250527162459.082452365@linuxfoundation.org>
+Subject: [PATCH 6.12 373/626] clk: qcom: clk-alpha-pll: Do not use random stack value for recalc rate
+Date: Tue, 27 May 2025 18:24:26 +0200
+Message-ID: <20250527162500.178169400@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -46,50 +45,146 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit ff61f380de5652e723168341480cc7adf1dd6213 ]
+[ Upstream commit 7a243e1b814a02ab40793026ef64223155d86395 ]
 
-Commit 903534fa7d30 ("PCI: Fix resource double counting on remove &
-rescan") fixed double counting of mem resources because of old_size being
-applied too early.
+If regmap_read() fails, random stack value was used in calculating new
+frequency in recalc_rate() callbacks.  Such failure is really not
+expected as these are all MMIO reads, however code should be here
+correct and bail out.  This also avoids possible warning on
+uninitialized value.
 
-Fix a similar counting bug on the io resource side.
-
-Link: https://lore.kernel.org/r/20241216175632.4175-6-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Xiaochun Lee <lixc17@lenovo.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250212-b4-clk-qcom-clean-v3-1-499f37444f5d@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/setup-bus.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/clk/qcom/clk-alpha-pll.c | 52 ++++++++++++++++++++++----------
+ 1 file changed, 36 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
-index f16c7ce3bf3fc..1eceabef9e84d 100644
---- a/drivers/pci/setup-bus.c
-+++ b/drivers/pci/setup-bus.c
-@@ -814,11 +814,9 @@ static resource_size_t calculate_iosize(resource_size_t size,
- 	size = (size & 0xff) + ((size & ~0xffUL) << 2);
- #endif
- 	size = size + size1;
--	if (size < old_size)
--		size = old_size;
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index 10e276dabff93..e76ecc4663511 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -670,14 +670,19 @@ clk_alpha_pll_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+ 	u32 alpha_width = pll_alpha_width(pll);
  
--	size = ALIGN(max(size, add_size) + children_add_size, align);
--	return size;
-+	size = max(size, add_size) + children_add_size;
-+	return ALIGN(max(size, old_size), align);
+-	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
++	if (regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l))
++		return 0;
++
++	if (regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl))
++		return 0;
+ 
+-	regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl);
+ 	if (ctl & PLL_ALPHA_EN) {
+-		regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &low);
++		if (regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &low))
++			return 0;
+ 		if (alpha_width > 32) {
+-			regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL_U(pll),
+-				    &high);
++			if (regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL_U(pll),
++					&high))
++				return 0;
+ 			a = (u64)high << 32 | low;
+ 		} else {
+ 			a = low & GENMASK(alpha_width - 1, 0);
+@@ -903,8 +908,11 @@ alpha_pll_huayra_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+ 	u32 l, alpha = 0, ctl, alpha_m, alpha_n;
+ 
+-	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
+-	regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl);
++	if (regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l))
++		return 0;
++
++	if (regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl))
++		return 0;
+ 
+ 	if (ctl & PLL_ALPHA_EN) {
+ 		regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &alpha);
+@@ -1098,8 +1106,11 @@ clk_trion_pll_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+ 	u32 l, frac, alpha_width = pll_alpha_width(pll);
+ 
+-	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
+-	regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &frac);
++	if (regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l))
++		return 0;
++
++	if (regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &frac))
++		return 0;
+ 
+ 	return alpha_pll_calc_rate(parent_rate, l, frac, alpha_width);
  }
+@@ -1157,7 +1168,8 @@ clk_alpha_pll_postdiv_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ 	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
+ 	u32 ctl;
  
- static resource_size_t calculate_memsize(resource_size_t size,
+-	regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl);
++	if (regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &ctl))
++		return 0;
+ 
+ 	ctl >>= PLL_POST_DIV_SHIFT;
+ 	ctl &= PLL_POST_DIV_MASK(pll);
+@@ -1373,8 +1385,11 @@ static unsigned long alpha_pll_fabia_recalc_rate(struct clk_hw *hw,
+ 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+ 	u32 l, frac, alpha_width = pll_alpha_width(pll);
+ 
+-	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
+-	regmap_read(pll->clkr.regmap, PLL_FRAC(pll), &frac);
++	if (regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l))
++		return 0;
++
++	if (regmap_read(pll->clkr.regmap, PLL_FRAC(pll), &frac))
++		return 0;
+ 
+ 	return alpha_pll_calc_rate(parent_rate, l, frac, alpha_width);
+ }
+@@ -1524,7 +1539,8 @@ clk_trion_pll_postdiv_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ 	struct regmap *regmap = pll->clkr.regmap;
+ 	u32 i, div = 1, val;
+ 
+-	regmap_read(regmap, PLL_USER_CTL(pll), &val);
++	if (regmap_read(regmap, PLL_USER_CTL(pll), &val))
++		return 0;
+ 
+ 	val >>= pll->post_div_shift;
+ 	val &= PLL_POST_DIV_MASK(pll);
+@@ -2451,9 +2467,12 @@ static unsigned long alpha_pll_lucid_evo_recalc_rate(struct clk_hw *hw,
+ 	struct regmap *regmap = pll->clkr.regmap;
+ 	u32 l, frac;
+ 
+-	regmap_read(regmap, PLL_L_VAL(pll), &l);
++	if (regmap_read(regmap, PLL_L_VAL(pll), &l))
++		return 0;
+ 	l &= LUCID_EVO_PLL_L_VAL_MASK;
+-	regmap_read(regmap, PLL_ALPHA_VAL(pll), &frac);
++
++	if (regmap_read(regmap, PLL_ALPHA_VAL(pll), &frac))
++		return 0;
+ 
+ 	return alpha_pll_calc_rate(parent_rate, l, frac, pll_alpha_width(pll));
+ }
+@@ -2528,7 +2547,8 @@ static unsigned long clk_rivian_evo_pll_recalc_rate(struct clk_hw *hw,
+ 	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+ 	u32 l;
+ 
+-	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
++	if (regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l))
++		return 0;
+ 
+ 	return parent_rate * l;
+ }
 -- 
 2.39.5
 
