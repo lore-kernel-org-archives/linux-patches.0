@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF812110E;
-	Tue, 27 May 2025 17:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C643227A133;
+	Tue, 27 May 2025 17:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367122; cv=none; b=F8jc0QPul+HJ30z9HXc5eW9XQOuwgvfQQ0cEtK6wqcBFGyxs2Nh+cmB3IVtOuVU23cOefo6+sbVxcxvXx3E64+asjyZzt8VgMlRC8yci/mxnqstTbfGhugkuN4iBcMw2zGJTgeYbm2EguJfxOgl6wbyeVKt52RqIPrlBusXpKRo=
+	t=1748367125; cv=none; b=hF70iLoS1t+gVVqmuzDMNzaMZW2aMV3xT/xZYrg8bxoBAEFX55G734cfmT30uGe6hS9OUiX+QE7euYl58DopUfUx9VSXBBJ3D3jIhlfpPCb0UA7w534weNBFvp7NBN1XBQZ5vzchj+/oa/Ei1bTSwIQRaZTAAYbyiYI594+QSHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367122; c=relaxed/simple;
-	bh=liYBRF3gh+SfThZgMZDxut9odWCiDffMuMbuuq68nBU=;
+	s=arc-20240116; t=1748367125; c=relaxed/simple;
+	bh=tdSHUaEm5JHt/tkdKsjaoZwJzYvz59f1N6kOyJu6zS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qEKmTBX5w+E26dkdKnRfc+ddfXyIwZKLSoy4R59o7iGa/qM8Q399dKORbH+cInMC4X3ywRsVNWwPurEslo6/90SEZDiLI7LbA7ywbhrrz3hNXA1rjKHIxrTqVvUr99O6Rny8Sc347ZGkjAUquodJnoGFuAFaWHJYXRGRvCY5FXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HAGckLrV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=S/DjxSlEnWxO9WnE70lMhGfK0KNendk/IhtvGZ4XKSbTMnwmxjV9ybrHVwSEgYn7fqY89eK/AyS5w1lEOaOxRDHZMxSn1qRcB8ZqlMpVjbRc8JrWN0xnoKni9z+IZ4EEyEFhpyyT0jOGyTXJwZb9B0MdlO7p1kUD3dW8tdKAKm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VRi8G9+b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HAGckLrV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AB2C4CEE9;
-	Tue, 27 May 2025 17:32:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VRi8G9+b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3198AC4CEEA;
+	Tue, 27 May 2025 17:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367122;
-	bh=liYBRF3gh+SfThZgMZDxut9odWCiDffMuMbuuq68nBU=;
+	s=korg; t=1748367125;
+	bh=tdSHUaEm5JHt/tkdKsjaoZwJzYvz59f1N6kOyJu6zS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HAGckLrVN1QjfXG0ijz4im4hFZove4yPMKrpPc6CtpFFJ4b+ugIZFekLIKdfnoSt+
-	 7/7gBy+X6seAR/pCB1faUjghjXgdMbPDAvPd92QrAL+VxX9PRUVWRHEUPn1bghlBIb
-	 Dg0R14EbvuABrLcZxPe+wnulpuXNp9b/kKmBnoIg=
+	b=VRi8G9+bmL/0Jmot97TJKjITxoUjaUoYwpjmfXMBch7yoxEFLjCk0lUjQbFKck51i
+	 3sd092o2j/tNLAt8YGuZhm1YM6xk9ACVE30gzo3N7laWSheL3hJbgBvdISbTCBJXzm
+	 A43sEPO3fIJ7QOo5OiVVnMKecgCgjr37lJ+6lc1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
-	Thierry Reding <treding@nvidia.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 256/783] arm64: tegra: p2597: Fix gpio for vdd-1v8-dis regulator
-Date: Tue, 27 May 2025 18:20:53 +0200
-Message-ID: <20250527162523.525060493@linuxfoundation.org>
+Subject: [PATCH 6.14 247/783] misc: pci_endpoint_test: Give disabled BARs a distinct error code
+Date: Tue, 27 May 2025 18:20:44 +0200
+Message-ID: <20250527162523.167242757@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -45,41 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit f34621f31e3be81456c903287f7e4c0609829e29 ]
+[ Upstream commit 7e80bbef1d697dbce7a39cfad0df770880fe3f29 ]
 
-According to the board schematics the enable pin of this regulator is
-connected to gpio line #9 of the first instance of the TCA9539
-GPIO expander, so adjust it.
+The current code returns -ENOMEM if test->bar[barno] is NULL.
 
-Signed-off-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
-Link: https://lore.kernel.org/r/20250224-diogo-gpio_exp-v1-1-80fb84ac48c6@tecnico.ulisboa.pt
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+There can be two reasons why test->bar[barno] is NULL:
+
+  1) The pci_ioremap_bar() call in pci_endpoint_test_probe() failed.
+  2) The BAR was skipped, because it is disabled by the endpoint.
+
+Many PCI endpoint controller drivers will disable all BARs in their
+init function. A disabled BAR will have a size of 0.
+
+A PCI endpoint function driver will be able to enable any BAR that
+is not marked as BAR_RESERVED (which means that the BAR should not
+be touched by the EPF driver).
+
+Thus, perform check if the size is 0, before checking if
+test->bar[barno] is NULL, such that we can return different errors.
+
+This will allow the selftests to return SKIP instead of FAIL for
+disabled BARs.
+
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20250123120147.3603409-3-cassel@kernel.org
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/pci_endpoint_test.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi b/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
-index 63b94a04308e8..38d49d612c0c1 100644
---- a/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
-@@ -1686,7 +1686,7 @@ vdd_1v8_dis: regulator-vdd-1v8-dis {
- 		regulator-min-microvolt = <1800000>;
- 		regulator-max-microvolt = <1800000>;
- 		regulator-always-on;
--		gpio = <&exp1 14 GPIO_ACTIVE_HIGH>;
-+		gpio = <&exp1 9 GPIO_ACTIVE_HIGH>;
- 		enable-active-high;
- 		vin-supply = <&vdd_1v8>;
- 	};
+diff --git a/drivers/misc/pci_endpoint_test.c b/drivers/misc/pci_endpoint_test.c
+index 4c0f37ad0281b..8a7e860c06812 100644
+--- a/drivers/misc/pci_endpoint_test.c
++++ b/drivers/misc/pci_endpoint_test.c
+@@ -295,11 +295,13 @@ static int pci_endpoint_test_bar(struct pci_endpoint_test *test,
+ 	struct pci_dev *pdev = test->pdev;
+ 	int buf_size;
+ 
++	bar_size = pci_resource_len(pdev, barno);
++	if (!bar_size)
++		return -ENODATA;
++
+ 	if (!test->bar[barno])
+ 		return -ENOMEM;
+ 
+-	bar_size = pci_resource_len(pdev, barno);
+-
+ 	if (barno == test->test_reg_bar)
+ 		bar_size = 0x4;
+ 
 -- 
 2.39.5
 
