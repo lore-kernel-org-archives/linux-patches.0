@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6537428032E;
-	Tue, 27 May 2025 17:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97032280CD6;
+	Tue, 27 May 2025 17:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368678; cv=none; b=F7QJmahB34FNjb26lDAwGouulQdIEG2/G11AjuGckabQVYqn8i8MTVU5plz0Fua/72vKZ83RXVVgUa8Erh8S+l1Z1JopF4vPudE+iaL/5pmDNyIOVoaIBJhdI6PVZ1qaa+HRzmN3YZ2+WsdFN3Ui1uSOLv1TagFIj/VN1Mefxkw=
+	t=1748368681; cv=none; b=lIQAG6C3NKv8nclgHc4jx3x25GZXllTkEmvjcHGvHxYh8QRmOYHPPw1uYmGHUaAP4Jkf0VucVqcbkVirXvs0xzh771OZzgqybuKBOOv55cTBp5Yub3B/gHgSr5OFkdco9rVS6bj28YE1nEYa20BmRvTk18f13eYZsBRfASI9L2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368678; c=relaxed/simple;
-	bh=jEZn4ts+dRcpt/Xa21vVgv1mSKNHKPsSEDDUPNkCwDI=;
+	s=arc-20240116; t=1748368681; c=relaxed/simple;
+	bh=wXqauVk2B5YAV5Ye1gxg5MmRod8C08AQwi0IRuzEWeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p2xBYbZn8OdhTnOhS8eAeETZqsCYU8YKnTvqMp07icJdZD9cwBDTo8y5KJd144dXTIbLxNegLPzg9AoQsXhfm5rCmCUkc/mD5hBroyay8hZ+FXWhkMwCCDYVLWb8mbrP8k+jbuV3x9j8z2ETy5OlMjonzfGEIXBDbL8+r9/Nrnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdMkne8H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NDB2SlFfqv+QEpCtqYIwCrLZhsZpVEnvNYWxuPXIABwqGtpUGamC6eUZ3MYhZQQ5jLWQ68fuipwlVBnDc7fBesOzXqHAEMWsht5Y6ktR/UeyPqKz6tjvuKPmSh6z9EGakqwdTLoBEST1A2Nz12WBnw6JPgyCsGAcCU0zfFqdilA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yHJQLGWS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdMkne8H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE00EC4CEE9;
-	Tue, 27 May 2025 17:57:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yHJQLGWS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A0EC4CEE9;
+	Tue, 27 May 2025 17:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368678;
-	bh=jEZn4ts+dRcpt/Xa21vVgv1mSKNHKPsSEDDUPNkCwDI=;
+	s=korg; t=1748368681;
+	bh=wXqauVk2B5YAV5Ye1gxg5MmRod8C08AQwi0IRuzEWeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pdMkne8HT5Rcz3Fdvezo7MX4eK7R4NP9n10irsY7LjyGomhSYOlDZoFZ93gmUodD2
-	 UTiH3Uyd/RbLCxxb3qm1/bR49b6vl2xOXxuKGwIjGU6Zstfy7y8iLwA1ki5BgQKpWR
-	 tzqsLwfR5VI3FhGUawvcy8ELoxykUBrQTiE5OOAc=
+	b=yHJQLGWS/sFwuGKrGa8/6G5yZ6wviUDEUHr+qNifS06xuG6uJXZUAUYdMB8nHghyA
+	 jqZ+HfrpGISNibj1riZpLVcg0JLR7Sf8SuLf/fF0h0qd8zx/1ekwxusNvyzaXl0mZX
+	 YIU20NuHpSWcSSZKVeX1bGjfWN78aoQLcbhJfWiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Larisa Grigore <larisa.grigore@nxp.com>,
-	James Clark <james.clark@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 774/783] spi: spi-fsl-dspi: Reset SR flags before sending a new message
-Date: Tue, 27 May 2025 18:29:31 +0200
-Message-ID: <20250527162544.650964225@linuxfoundation.org>
+Subject: [PATCH 6.14 775/783] drm/xe: Use xe_mmio_read32() to read mtcfg register
+Date: Tue, 27 May 2025 18:29:32 +0200
+Message-ID: <20250527162544.689976291@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,43 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larisa Grigore <larisa.grigore@nxp.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit 7aba292eb15389073c7f3bd7847e3862dfdf604d ]
+[ Upstream commit 84b6f8503b29a6cc5a82848253a97c09a95fdf49 ]
 
-If, in a previous transfer, the controller sends more data than expected
-by the DSPI target, SR.RFDF (RX FIFO is not empty) will remain asserted.
-When flushing the FIFOs at the beginning of a new transfer (writing 1
-into MCR.CLR_TXF and MCR.CLR_RXF), SR.RFDF should also be cleared.
-Otherwise, when running in target mode with DMA, if SR.RFDF remains
-asserted, the DMA callback will be fired before the controller sends any
-data.
+The mtcfg register is a 32-bit register and should therefore be
+accessed using xe_mmio_read32().
 
-Take this opportunity to reset all Status Register fields.
+Other 3 changes per codestyle suggestion:
+"
+xe_mmio.c:83: CHECK: Alignment should match open parenthesis
+xe_mmio.c:131: CHECK: Comparison to NULL could be written "!xe->mmio.regs"
+xe_mmio.c:315: CHECK: line length of 103 exceeds 100 columns
+"
 
-Fixes: 5ce3cc567471 ("spi: spi-fsl-dspi: Provide support for DSPI slave mode operation (Vybryd vf610)")
-Signed-off-by: Larisa Grigore <larisa.grigore@nxp.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Link: https://patch.msgid.link/20250522-james-nxp-spi-v2-3-bea884630cfb@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Reviewed-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Link: https://lore.kernel.org/r/20250513153010.3464767-1-shuicheng.lin@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit d2662cf8f44a68deb6c76ad9f1d9f29dbf7ba601)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-dspi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/xe/xe_mmio.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
-index 1fa96e8189cfa..863781ba6c160 100644
---- a/drivers/spi/spi-fsl-dspi.c
-+++ b/drivers/spi/spi-fsl-dspi.c
-@@ -975,6 +975,8 @@ static int dspi_transfer_one_message(struct spi_controller *ctlr,
- 				   SPI_MCR_CLR_TXF | SPI_MCR_CLR_RXF,
- 				   SPI_MCR_CLR_TXF | SPI_MCR_CLR_RXF);
+diff --git a/drivers/gpu/drm/xe/xe_mmio.c b/drivers/gpu/drm/xe/xe_mmio.c
+index a48f239cad1c5..9c2f60ce0c948 100644
+--- a/drivers/gpu/drm/xe/xe_mmio.c
++++ b/drivers/gpu/drm/xe/xe_mmio.c
+@@ -76,12 +76,12 @@ static void mmio_multi_tile_setup(struct xe_device *xe, size_t tile_mmio_size)
+ 		 * is fine as it's going to the root tile's mmio, that's
+ 		 * guaranteed to be initialized earlier in xe_mmio_init()
+ 		 */
+-		mtcfg = xe_mmio_read64_2x32(mmio, XEHP_MTCFG_ADDR);
++		mtcfg = xe_mmio_read32(mmio, XEHP_MTCFG_ADDR);
+ 		tile_count = REG_FIELD_GET(TILE_COUNT, mtcfg) + 1;
  
-+		regmap_write(dspi->regmap, SPI_SR, SPI_SR_CLEAR);
-+
- 		spi_take_timestamp_pre(dspi->ctlr, dspi->cur_transfer,
- 				       dspi->progress, !dspi->irq);
+ 		if (tile_count < xe->info.tile_count) {
+ 			drm_info(&xe->drm, "tile_count: %d, reduced_tile_count %d\n",
+-					xe->info.tile_count, tile_count);
++				 xe->info.tile_count, tile_count);
+ 			xe->info.tile_count = tile_count;
  
+ 			/*
+@@ -173,7 +173,7 @@ int xe_mmio_init(struct xe_device *xe)
+ 	 */
+ 	xe->mmio.size = pci_resource_len(pdev, GTTMMADR_BAR);
+ 	xe->mmio.regs = pci_iomap(pdev, GTTMMADR_BAR, 0);
+-	if (xe->mmio.regs == NULL) {
++	if (!xe->mmio.regs) {
+ 		drm_err(&xe->drm, "failed to map registers\n");
+ 		return -EIO;
+ 	}
+@@ -338,8 +338,8 @@ u64 xe_mmio_read64_2x32(struct xe_mmio *mmio, struct xe_reg reg)
+ 	return (u64)udw << 32 | ldw;
+ }
+ 
+-static int __xe_mmio_wait32(struct xe_mmio *mmio, struct xe_reg reg, u32 mask, u32 val, u32 timeout_us,
+-			    u32 *out_val, bool atomic, bool expect_match)
++static int __xe_mmio_wait32(struct xe_mmio *mmio, struct xe_reg reg, u32 mask, u32 val,
++			    u32 timeout_us, u32 *out_val, bool atomic, bool expect_match)
+ {
+ 	ktime_t cur = ktime_get_raw();
+ 	const ktime_t end = ktime_add_us(cur, timeout_us);
 -- 
 2.39.5
 
