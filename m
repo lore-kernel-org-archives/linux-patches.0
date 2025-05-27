@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0244926868E;
-	Tue, 27 May 2025 17:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17282110E;
+	Tue, 27 May 2025 17:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365593; cv=none; b=YTNUNApzt79vWLvlV1ylnqSrzR3CnwugjUm82QzNoa3ftHGmMe14Pkqhmfv8aYcyvu3I5zYR70tYpTsPJjM8oWyk9DYVgUPI9L3i1LBXR2dwq9JTSYSn8EpCOyD+SL0naydQOuoFBANW31ZjWa7fW3b6E6KsCFBG15ZejUJXWrQ=
+	t=1748365596; cv=none; b=Q04wRPD28GJB4V4qvpnSS6UMocuUhq7OcOhzwSobrZVmbiANIu8o8L6KhL7KJbPI+D4QVK1zSqBk4OuaPcCWkLLTVM6HF9RIOvdygcKh2ryI7J0genKv0ouRR9JobMxYc31ha1vsZ8TDAFUGOnN3l/KhmZLC63LpZ8npQBS2QUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365593; c=relaxed/simple;
-	bh=Bhj1B2vZSNPOf4Tjj9ZiiG9LTJG+Ze3/AhRI8eHGqFQ=;
+	s=arc-20240116; t=1748365596; c=relaxed/simple;
+	bh=CYSidLXWYWbH3EYrPdS5O3Li+fDK5327Nc0/G3vsTjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jSz4nH0hMjjpt+e3m21lXlbRlGBhEu8SIcQVg7eEdbjPPy+eUfIYYvy9JX+GCOVKoS59efODNoop691oSQTxRDo0iqrEeWkDs6V0ykRDsnKcDsXaJruuJluEtyiZxsHZej/+W5ILllcMk2tC9Ng1wLbOJrsMVzy+QCYwO+nO34M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GQxcTgKY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LhEJlyVoV4CbS6AymtOT22C1V9ruBYR+euC7MQKVrfYXOefgJedNniqtou6JyPCAqeT6QdGZV6zVr4B7K4O8th303+N1bvKaNeAZLQXCZKKzYiqPQKLmzVgVP8jeDKCRn06zSOSWJ+DV+QL+CbSw0YlfiEXvrxKMimGA8z/t0DI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYpp7was; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GQxcTgKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A62C4CEE9;
-	Tue, 27 May 2025 17:06:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYpp7was"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81949C4CEE9;
+	Tue, 27 May 2025 17:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365592;
-	bh=Bhj1B2vZSNPOf4Tjj9ZiiG9LTJG+Ze3/AhRI8eHGqFQ=;
+	s=korg; t=1748365595;
+	bh=CYSidLXWYWbH3EYrPdS5O3Li+fDK5327Nc0/G3vsTjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GQxcTgKYgzvGBXkqTgwTfjdD1/mUwI9zoSjWMcZToqPEZE/4gRTIABOrRoyZ71s78
-	 yT3W/9h15pneHa+2V/aul6zKSq+VBquEpx601aAqnEMTp1YzaoC3jICt2K9NRfnkFX
-	 jAa6XZ+4cDuFFV9fG1/wqsQvg1kxkC1F8QD3hFGs=
+	b=uYpp7wasW6UcEOFWh3VA64G5eGcpO+CcUlykL8MKSv6nS5fUX0w004pEVZc9cdnj+
+	 stDlP6w74AhlVMAeii8nkBugvD+wBZDO4s4d4M+cFmp6ddHHXgsNK6c5qqR91110Dn
+	 tAs32PkKvRtxwJN6pgI7yxy0HmlVWkRGQleiViUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Lee Jones <lee@kernel.org>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 427/626] leds: trigger: netdev: Configure LED blink interval for HW offload
-Date: Tue, 27 May 2025 18:25:20 +0200
-Message-ID: <20250527162502.362964645@linuxfoundation.org>
+Subject: [PATCH 6.12 428/626] ext4: dont write back data before punch hole in nojournal mode
+Date: Tue, 27 May 2025 18:25:21 +0200
+Message-ID: <20250527162502.402018534@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,82 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit c629c972b310af41e9e072febb6dae9a299edde6 ]
+[ Upstream commit 43d0105e2c7523cc6b14cad65e2044e829c0a07a ]
 
-In case a PHY LED implements .blink_set callback to set LED blink
-interval, call it even if .hw_control is already set, as that LED
-blink interval likely controls the blink rate of that HW offloaded
-LED. For PHY LEDs, that can be their activity blinking interval.
+There is no need to write back all data before punching a hole in
+non-journaled mode since it will be dropped soon after removing space.
+Therefore, the call to filemap_write_and_wait_range() can be eliminated.
+Besides, similar to ext4_zero_range(), we must address the case of
+partially punched folios when block size < page size. It is essential to
+remove writable userspace mappings to ensure that the folio can be
+faulted again during subsequent mmap write access.
 
-The software blinking is not affected by this change.
+In journaled mode, we need to write dirty pages out before discarding
+page cache in case of crash before committing the freeing data
+transaction, which could expose old, stale data, even if synchronization
+has been performed.
 
-With this change, the LED interval setting looks something like this:
-$ echo netdev > /sys/class/leds/led:green:lan/trigger
-$ echo 1 > /sys/class/leds/led:green:lan/brightness
-$ echo 250 > /sys/class/leds/led:green:lan/interval
-
-Signed-off-by: Marek Vasut <marex@denx.de>
-Link: https://lore.kernel.org/r/20250120113740.91807-1-marex@denx.de
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://patch.msgid.link/20241220011637.1157197-4-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/trigger/ledtrig-netdev.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ fs/ext4/inode.c | 18 +++++-------------
+ 1 file changed, 5 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/leds/trigger/ledtrig-netdev.c b/drivers/leds/trigger/ledtrig-netdev.c
-index 4b0863db901a9..356a55ced2c28 100644
---- a/drivers/leds/trigger/ledtrig-netdev.c
-+++ b/drivers/leds/trigger/ledtrig-netdev.c
-@@ -68,6 +68,7 @@ struct led_netdev_data {
- 	unsigned int last_activity;
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 487d9aec56c9d..819be57bb4ecf 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -3933,17 +3933,6 @@ int ext4_punch_hole(struct file *file, loff_t offset, loff_t length)
  
- 	unsigned long mode;
-+	unsigned long blink_delay;
- 	int link_speed;
- 	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported_link_modes);
- 	u8 duplex;
-@@ -86,6 +87,10 @@ static void set_baseline_state(struct led_netdev_data *trigger_data)
- 	/* Already validated, hw control is possible with the requested mode */
- 	if (trigger_data->hw_control) {
- 		led_cdev->hw_control_set(led_cdev, trigger_data->mode);
-+		if (led_cdev->blink_set) {
-+			led_cdev->blink_set(led_cdev, &trigger_data->blink_delay,
-+					    &trigger_data->blink_delay);
-+		}
+ 	trace_ext4_punch_hole(inode, offset, length, 0);
  
- 		return;
- 	}
-@@ -454,10 +459,11 @@ static ssize_t interval_store(struct device *dev,
- 			      size_t size)
- {
- 	struct led_netdev_data *trigger_data = led_trigger_get_drvdata(dev);
-+	struct led_classdev *led_cdev = trigger_data->led_cdev;
- 	unsigned long value;
- 	int ret;
+-	/*
+-	 * Write out all dirty pages to avoid race conditions
+-	 * Then release them.
+-	 */
+-	if (mapping_tagged(mapping, PAGECACHE_TAG_DIRTY)) {
+-		ret = filemap_write_and_wait_range(mapping, offset,
+-						   offset + length - 1);
+-		if (ret)
+-			return ret;
+-	}
+-
+ 	inode_lock(inode);
  
--	if (trigger_data->hw_control)
-+	if (trigger_data->hw_control && !led_cdev->blink_set)
- 		return -EINVAL;
- 
- 	ret = kstrtoul(buf, 0, &value);
-@@ -466,9 +472,13 @@ static ssize_t interval_store(struct device *dev,
- 
- 	/* impose some basic bounds on the timer interval */
- 	if (value >= 5 && value <= 10000) {
--		cancel_delayed_work_sync(&trigger_data->work);
-+		if (trigger_data->hw_control) {
-+			trigger_data->blink_delay = value;
-+		} else {
-+			cancel_delayed_work_sync(&trigger_data->work);
- 
--		atomic_set(&trigger_data->interval, msecs_to_jiffies(value));
-+			atomic_set(&trigger_data->interval, msecs_to_jiffies(value));
-+		}
- 		set_baseline_state(trigger_data);	/* resets timer */
+ 	/* No need to punch hole beyond i_size */
+@@ -4005,8 +3994,11 @@ int ext4_punch_hole(struct file *file, loff_t offset, loff_t length)
+ 		ret = ext4_update_disksize_before_punch(inode, offset, length);
+ 		if (ret)
+ 			goto out_dio;
+-		truncate_pagecache_range(inode, first_block_offset,
+-					 last_block_offset);
++
++		ret = ext4_truncate_page_cache_block_range(inode,
++				first_block_offset, last_block_offset + 1);
++		if (ret)
++			goto out_dio;
  	}
  
+ 	if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
 -- 
 2.39.5
 
