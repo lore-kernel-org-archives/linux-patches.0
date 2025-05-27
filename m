@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B671E2750E8;
-	Tue, 27 May 2025 17:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EFB528003A;
+	Tue, 27 May 2025 17:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367899; cv=none; b=NIwUWEdPEYLJvBW/BrJFycpTpviiEPV64k/xZFZhYfJ5gmFw5EzA7uTGH8vY5SlY1n5TBhGhODnceK7C37axVybPvhnkhpzmmuMTMmrpG1b3OpLihjR0ZUCi7AMDu5+sC66rfbo0AXrS7ulG/T9baeU4OaH0u1Qcj6gmtqOPW+8=
+	t=1748367902; cv=none; b=A+ZLavjb6lotaItXn4JUU6UqbY9WK7PSy4Ov1XRRdSIUgw3aHhbe62t33zP93icDZtrKlmqVGpOiuC8k6oN1n4EM/3SZX4v1DNs+WMjBpwAWoIZcUGiJBMKiHCowNr2SlEfDHRXs/EWo9plpOulAYJ4FGfBBZjq7Ral9TagbYtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367899; c=relaxed/simple;
-	bh=wy8aCc6A/l6W1Lwpb1xXLTr6Nr0fejzmwplKn75qtMc=;
+	s=arc-20240116; t=1748367902; c=relaxed/simple;
+	bh=8mi5zBKV4AY+mxWoVDyw6b2fxG8e2rwP2wGK5ltEh6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kpZYdsBkcL2uPNFjIo4q35h6DBYpHt+JSHyPH42ORVuZbp1CzqHvuMr5M/gZ4s5PlbTsr6t+NOWjHhjQ0I63KIsE+aUceMh9xvHUVRedf/UydPanIz89MOUzHCrFTuZvHp00tnhgIjDgMrIJx5AI8EqXRZCBK2SD/oYzuYcG+Bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scoDF+bl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KSi/bdyOSHPcyaP9IFPnrY+UObva5GBY8K+hjNSemSHgKyxZt92MtVc0e9PG5QCJbBYy0yI+rZ+JKR/5BenMNLu1BdAvy+tfATdxlP+CbnpfNnMjwRxoJrXnsPwRkdc0kv06WaGG102CWChFB0ZEqHL6Y9sQQ7rEaJOQgqATroM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FIgkaq0c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scoDF+bl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E44AC4CEE9;
-	Tue, 27 May 2025 17:44:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FIgkaq0c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E106C4CEE9;
+	Tue, 27 May 2025 17:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367899;
-	bh=wy8aCc6A/l6W1Lwpb1xXLTr6Nr0fejzmwplKn75qtMc=;
+	s=korg; t=1748367902;
+	bh=8mi5zBKV4AY+mxWoVDyw6b2fxG8e2rwP2wGK5ltEh6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=scoDF+blKXGPzrLlWDB0yqTFHZAeUG6+EBUir2mprJaXU94Ba/x0nwKrW3NiGp65g
-	 lA2QyKntOOEiDwvY8XSukmunJZchv9u+LNu3zL84YBwocfcwROiGxcKCUyx/6fvHII
-	 4tE+WQymDWfvStisku7bTs3bEiGR4jBrO7PPVjSo=
+	b=FIgkaq0cTwBVgasFrD+vsNuFHReQHGrixSUZdihZCiYVZhsR9cHk6SYfUI3Wckr4B
+	 NPCDjCM9TStdUWx5TlWi4fFB9RP4JWQ5HlGPdsfQ4RCXNwwucNQtEXUe49mr/bzwTG
+	 O5DJ/lMgnHk7NQwDfjgAIuv1iMJKuaA1rcq9v18o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Yoong Siang <yoong.siang.song@intel.com>,
-	Avigail Dahan <avigailx.dahan@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 534/783] igc: Avoid unnecessary link down event in XDP_SETUP_PROG process
-Date: Tue, 27 May 2025 18:25:31 +0200
-Message-ID: <20250527162534.898223987@linuxfoundation.org>
+Subject: [PATCH 6.14 535/783] pstore: Change kmsg_bytes storage size to u32
+Date: Tue, 27 May 2025 18:25:32 +0200
+Message-ID: <20250527162534.936843516@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,134 +50,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Song Yoong Siang <yoong.siang.song@intel.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit be324b790368c1522f07c6bb5654122e07b5e588 ]
+[ Upstream commit 5674609535bafa834ab014d90d9bbe8e89223a0b ]
 
-The igc_close()/igc_open() functions are too drastic for installing a new
-XDP prog because they cause undesirable link down event and device reset.
+The types around kmsg_bytes were inconsistent. The global was unsigned
+long, the argument to pstore_set_kmsg_bytes() was int, and the filesystem
+option was u32. Given other internal limits, there's not much sense
+in making a single pstore record larger than INT_MAX and it can't be
+negative, so use u32 everywhere. Additionally, use READ/WRITE_ONCE and a
+local variable in pstore_dump() to avoid kmsg_bytes changing during a
+dump.
 
-To avoid delays in Ethernet traffic, improve the XDP_SETUP_PROG process by
-using the same sequence as igc_xdp_setup_pool(), which performs only the
-necessary steps, as follows:
- 1. stop the traffic and clean buffer
- 2. stop NAPI
- 3. install the XDP program
- 4. resume NAPI
- 5. allocate buffer and resume the traffic
-
-This patch has been tested using the 'ip link set xdpdrv' command to attach
-a simple XDP prog that always returns XDP_PASS.
-
-Before this patch, attaching xdp program will cause ptp4l to lose sync for
-few seconds, as shown in ptp4l log below:
-  ptp4l[198.082]: rms    4 max    8 freq   +906 +/-   2 delay    12 +/-   0
-  ptp4l[199.082]: rms    3 max    4 freq   +906 +/-   3 delay    12 +/-   0
-  ptp4l[199.536]: port 1 (enp2s0): link down
-  ptp4l[199.536]: port 1 (enp2s0): SLAVE to FAULTY on FAULT_DETECTED (FT_UNSPECIFIED)
-  ptp4l[199.600]: selected local clock 22abbc.fffe.bb1234 as best master
-  ptp4l[199.600]: port 1 (enp2s0): assuming the grand master role
-  ptp4l[199.600]: port 1 (enp2s0): master state recommended in slave only mode
-  ptp4l[199.600]: port 1 (enp2s0): defaultDS.priority1 probably misconfigured
-  ptp4l[202.266]: port 1 (enp2s0): link up
-  ptp4l[202.300]: port 1 (enp2s0): FAULTY to LISTENING on INIT_COMPLETE
-  ptp4l[205.558]: port 1 (enp2s0): new foreign master 44abbc.fffe.bb2144-1
-  ptp4l[207.558]: selected best master clock 44abbc.fffe.bb2144
-  ptp4l[207.559]: port 1 (enp2s0): LISTENING to UNCALIBRATED on RS_SLAVE
-  ptp4l[208.308]: port 1 (enp2s0): UNCALIBRATED to SLAVE on MASTER_CLOCK_SELECTED
-  ptp4l[208.933]: rms  742 max 1303 freq   -195 +/- 682 delay    12 +/-   0
-  ptp4l[209.933]: rms  178 max  274 freq   +387 +/- 243 delay    12 +/-   0
-
-After this patch, attaching xdp program no longer cause ptp4l to lose sync,
-as shown in ptp4l log below:
-  ptp4l[201.183]: rms    1 max    3 freq   +959 +/-   1 delay     8 +/-   0
-  ptp4l[202.183]: rms    1 max    3 freq   +961 +/-   2 delay     8 +/-   0
-  ptp4l[203.183]: rms    2 max    3 freq   +958 +/-   2 delay     8 +/-   0
-  ptp4l[204.183]: rms    3 max    5 freq   +961 +/-   3 delay     8 +/-   0
-  ptp4l[205.183]: rms    2 max    4 freq   +964 +/-   3 delay     8 +/-   0
-
-Besides, before this patch, attaching xdp program will causes flood ping to
-lose 10 packets, as shown in ping statistics below:
-  --- 169.254.1.2 ping statistics ---
-  100000 packets transmitted, 99990 received, +6 errors, 0.01% packet loss, time 34001ms
-  rtt min/avg/max/mdev = 0.028/0.301/3104.360/13.838 ms, pipe 10, ipg/ewma 0.340/0.243 ms
-
-After this patch, attaching xdp program no longer cause flood ping to loss
-any packets, as shown in ping statistics below:
-  --- 169.254.1.2 ping statistics ---
-  100000 packets transmitted, 100000 received, 0% packet loss, time 32326ms
-  rtt min/avg/max/mdev = 0.027/0.231/19.589/0.155 ms, pipe 2, ipg/ewma 0.323/0.322 ms
-
-On the other hand, this patch has been tested with tools/testing/selftests/
-bpf/xdp_hw_metadata app to make sure AF_XDP zero-copy is working fine with
-XDP Tx and Rx metadata. Below is the result of last packet after received
-10000 UDP packets with interval 1 ms:
-  poll: 1 (0) skip=0 fail=0 redir=10000
-  xsk_ring_cons__peek: 1
-  0x55881c7ef7a8: rx_desc[9999]->addr=8f110 addr=8f110 comp_addr=8f110 EoP
-  rx_hash: 0xFB9BB6A3 with RSS type:0x1
-  HW RX-time:   1733923136269470866 (sec:1733923136.2695) delta to User RX-time sec:0.0000 (43.280 usec)
-  XDP RX-time:   1733923136269482482 (sec:1733923136.2695) delta to User RX-time sec:0.0000 (31.664 usec)
-  No rx_vlan_tci or rx_vlan_proto, err=-95
-  0x55881c7ef7a8: ping-pong with csum=ab19 (want 315b) csum_start=34 csum_offset=6
-  0x55881c7ef7a8: complete tx idx=9999 addr=f010
-  HW TX-complete-time:   1733923136269591637 (sec:1733923136.2696) delta to User TX-complete-time sec:0.0001 (108.571 usec)
-  XDP RX-time:   1733923136269482482 (sec:1733923136.2695) delta to User TX-complete-time sec:0.0002 (217.726 usec)
-  HW RX-time:   1733923136269470866 (sec:1733923136.2695) delta to HW TX-complete-time sec:0.0001 (120.771 usec)
-  0x55881c7ef7a8: complete rx idx=10127 addr=8f110
-
-Signed-off-by: Song Yoong Siang <yoong.siang.song@intel.com>
-Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20250206191655.work.798-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_xdp.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ fs/pstore/inode.c    |  2 +-
+ fs/pstore/internal.h |  4 ++--
+ fs/pstore/platform.c | 11 ++++++-----
+ 3 files changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_xdp.c b/drivers/net/ethernet/intel/igc/igc_xdp.c
-index 869815f48ac1d..9eb47b4beb062 100644
---- a/drivers/net/ethernet/intel/igc/igc_xdp.c
-+++ b/drivers/net/ethernet/intel/igc/igc_xdp.c
-@@ -14,6 +14,7 @@ int igc_xdp_set_prog(struct igc_adapter *adapter, struct bpf_prog *prog,
- 	bool if_running = netif_running(dev);
- 	struct bpf_prog *old_prog;
- 	bool need_update;
-+	unsigned int i;
- 
- 	if (dev->mtu > ETH_DATA_LEN) {
- 		/* For now, the driver doesn't support XDP functionality with
-@@ -24,8 +25,13 @@ int igc_xdp_set_prog(struct igc_adapter *adapter, struct bpf_prog *prog,
- 	}
- 
- 	need_update = !!adapter->xdp_prog != !!prog;
--	if (if_running && need_update)
--		igc_close(dev);
-+	if (if_running && need_update) {
-+		for (i = 0; i < adapter->num_rx_queues; i++) {
-+			igc_disable_rx_ring(adapter->rx_ring[i]);
-+			igc_disable_tx_ring(adapter->tx_ring[i]);
-+			napi_disable(&adapter->rx_ring[i]->q_vector->napi);
-+		}
-+	}
- 
- 	old_prog = xchg(&adapter->xdp_prog, prog);
- 	if (old_prog)
-@@ -36,8 +42,13 @@ int igc_xdp_set_prog(struct igc_adapter *adapter, struct bpf_prog *prog,
- 	else
- 		xdp_features_clear_redirect_target(dev);
- 
--	if (if_running && need_update)
--		igc_open(dev);
-+	if (if_running && need_update) {
-+		for (i = 0; i < adapter->num_rx_queues; i++) {
-+			napi_enable(&adapter->rx_ring[i]->q_vector->napi);
-+			igc_enable_tx_ring(adapter->tx_ring[i]);
-+			igc_enable_rx_ring(adapter->rx_ring[i]);
-+		}
-+	}
- 
+diff --git a/fs/pstore/inode.c b/fs/pstore/inode.c
+index 56815799ce798..9de6b280c4f41 100644
+--- a/fs/pstore/inode.c
++++ b/fs/pstore/inode.c
+@@ -265,7 +265,7 @@ static void parse_options(char *options)
+ static int pstore_show_options(struct seq_file *m, struct dentry *root)
+ {
+ 	if (kmsg_bytes != CONFIG_PSTORE_DEFAULT_KMSG_BYTES)
+-		seq_printf(m, ",kmsg_bytes=%lu", kmsg_bytes);
++		seq_printf(m, ",kmsg_bytes=%u", kmsg_bytes);
  	return 0;
  }
+ 
+diff --git a/fs/pstore/internal.h b/fs/pstore/internal.h
+index 801d6c0b170c3..a0fc511969100 100644
+--- a/fs/pstore/internal.h
++++ b/fs/pstore/internal.h
+@@ -6,7 +6,7 @@
+ #include <linux/time.h>
+ #include <linux/pstore.h>
+ 
+-extern unsigned long kmsg_bytes;
++extern unsigned int kmsg_bytes;
+ 
+ #ifdef CONFIG_PSTORE_FTRACE
+ extern void pstore_register_ftrace(void);
+@@ -35,7 +35,7 @@ static inline void pstore_unregister_pmsg(void) {}
+ 
+ extern struct pstore_info *psinfo;
+ 
+-extern void	pstore_set_kmsg_bytes(int);
++extern void	pstore_set_kmsg_bytes(unsigned int bytes);
+ extern void	pstore_get_records(int);
+ extern void	pstore_get_backend_records(struct pstore_info *psi,
+ 					   struct dentry *root, int quiet);
+diff --git a/fs/pstore/platform.c b/fs/pstore/platform.c
+index f56b066ab80ce..557cf9d40177f 100644
+--- a/fs/pstore/platform.c
++++ b/fs/pstore/platform.c
+@@ -92,8 +92,8 @@ module_param(compress, charp, 0444);
+ MODULE_PARM_DESC(compress, "compression to use");
+ 
+ /* How much of the kernel log to snapshot */
+-unsigned long kmsg_bytes = CONFIG_PSTORE_DEFAULT_KMSG_BYTES;
+-module_param(kmsg_bytes, ulong, 0444);
++unsigned int kmsg_bytes = CONFIG_PSTORE_DEFAULT_KMSG_BYTES;
++module_param(kmsg_bytes, uint, 0444);
+ MODULE_PARM_DESC(kmsg_bytes, "amount of kernel log to snapshot (in bytes)");
+ 
+ static void *compress_workspace;
+@@ -107,9 +107,9 @@ static void *compress_workspace;
+ static char *big_oops_buf;
+ static size_t max_compressed_size;
+ 
+-void pstore_set_kmsg_bytes(int bytes)
++void pstore_set_kmsg_bytes(unsigned int bytes)
+ {
+-	kmsg_bytes = bytes;
++	WRITE_ONCE(kmsg_bytes, bytes);
+ }
+ 
+ /* Tag each group of saved records with a sequence number */
+@@ -278,6 +278,7 @@ static void pstore_dump(struct kmsg_dumper *dumper,
+ 			struct kmsg_dump_detail *detail)
+ {
+ 	struct kmsg_dump_iter iter;
++	unsigned int	remaining = READ_ONCE(kmsg_bytes);
+ 	unsigned long	total = 0;
+ 	const char	*why;
+ 	unsigned int	part = 1;
+@@ -300,7 +301,7 @@ static void pstore_dump(struct kmsg_dumper *dumper,
+ 	kmsg_dump_rewind(&iter);
+ 
+ 	oopscount++;
+-	while (total < kmsg_bytes) {
++	while (total < remaining) {
+ 		char *dst;
+ 		size_t dst_size;
+ 		int header_size;
 -- 
 2.39.5
 
