@@ -1,49 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594811E89C;
-	Tue, 27 May 2025 17:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE87182D7;
+	Tue, 27 May 2025 17:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366220; cv=none; b=dWkzfBI8q/mj/ukPUO0KVDg6DHwwW5rdUaHwAEBKMJRDLDJMfOWJuswmNEOingIanmq9qCqg8RivJK6NIIBzlZdssxpC+vEw61L+Vo6k+CFmAsQmIK+tu77PotbDDnHjxP8K7AjJJtiiZJj++X+G0qss1bw3Ea0jYEJwFoxGRPQ=
+	t=1748366223; cv=none; b=i3PWal+czER1lCSsf5Letkh9egMeQbKwliIFV43v3Zgg99Rqnv44u35UR0GffQFCAaUHVEE3c92PE8gW35JaWHKsR5J98Ajed4e5QwSBI47yNH51wDxlQwEb6dZUDLqHZcHUDdtjgQ6zaSD2sNtCxgU2JtUsYy9joeAqu99knJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366220; c=relaxed/simple;
-	bh=rXR+j7SzkBphvPCQmVf0AQbUzKSDcaE0HgfxPMuKOsI=;
+	s=arc-20240116; t=1748366223; c=relaxed/simple;
+	bh=GCGR2c5BMOqr8MmWDAIF5G2vgMFvxjAuOxla8syNvag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nOfM+hjqDIoR5aSkgI1xwq4tQ1LEjfGXbqP89wgyWbOsGs6NNgqySmR5zrYKxxJDPM7zxPasySHYKTwe+hhgh+9uBZvRKumLNbnGpXdxnwd9m7Su7iHB/fUnfwvTSTLjb5ImhIB858UW3OhT8MAPhMqnhPCrrfkB7wRbzWv7K10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNg+bJxU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cF7mkifmqv+c238f1TOZfT/NlJhKdwgrmrMrGVIAmUlJrWwDHzxZbPMUppvhCNEz3oavFFbNsp5XRO+mm0XQWBtK2Q9CxenGn7wYvkttXQ2UTxJkGyMG+I1zq7CVdXw2VBlVra7HMjve9agDygxbNExmhxytx3tiuAbzQSkTHXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grX14GJ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNg+bJxU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D13EC4CEEB;
-	Tue, 27 May 2025 17:16:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grX14GJ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4F6C4CEE9;
+	Tue, 27 May 2025 17:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366220;
-	bh=rXR+j7SzkBphvPCQmVf0AQbUzKSDcaE0HgfxPMuKOsI=;
+	s=korg; t=1748366223;
+	bh=GCGR2c5BMOqr8MmWDAIF5G2vgMFvxjAuOxla8syNvag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NNg+bJxUOAt/PcwQYa/noEn0OWxych4EvIChVQ67RktpCrXiU09rgXyZgKCMj61/B
-	 yB7URlKSEYR/BqFJNXFZ0BkmIDjn55P+414KAhI5N8sX02Ml1CKg1L5TajXRO9is+A
-	 z5PoTN4te78iJMdKFp+qNmsBU8Hy9AhV69ZeEIvI=
+	b=grX14GJ9Sh5/BNLOcnxPwvx0Gg9llislUI2ENmHM6FEj2PbWUUW0y4bH2xbbtAyzo
+	 CDeDS5rXI8VvFq9Hlrizas9EG1ZTWWf7QBuTbYd10ee84Rm//eQbRSO2XXUX1fh3/m
+	 r16ZJa9/2GmgqzeYQiqe1YFiLyOJ3AsLyOpCoE3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Andy Yan <andyshrk@163.com>,
-	Anusha Srivatsa <asrivats@redhat.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	dri-devel@lists.freedesktop.org,
-	linux-media@vger.kernel.org,
-	linaro-mm-sig@lists.linaro.org,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Simona Vetter <simona.vetter@ffwll.ch>
-Subject: [PATCH 6.12 626/626] drm/gem: Internally test import_attach for imported objects
-Date: Tue, 27 May 2025 18:28:39 +0200
-Message-ID: <20250527162510.435633025@linuxfoundation.org>
+	Xulin Sun <xulin.sun@windriver.com>,
+	Larisa Grigore <larisa.grigore@nxp.com>,
+	James Clark <james.clark@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 610/626] spi: spi-fsl-dspi: restrict register range for regmap access
+Date: Tue, 27 May 2025 18:28:23 +0200
+Message-ID: <20250527162509.786922962@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -56,65 +47,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Larisa Grigore <larisa.grigore@nxp.com>
 
-commit 8260731ccad0451207b45844bb66eb161a209218 upstream.
+[ Upstream commit 283ae0c65e9c592f4a1ba4f31917f5e766da7f31 ]
 
-Test struct drm_gem_object.import_attach to detect imported objects.
+DSPI registers are NOT continuous, some registers are reserved and
+accessing them from userspace will trigger external abort, add regmap
+register access table to avoid below abort.
 
-During object clenanup, the dma_buf field might be NULL. Testing it in
-an object's free callback then incorrectly does a cleanup as for native
-objects. Happens for calls to drm_mode_destroy_dumb_ioctl() that
-clears the dma_buf field in drm_gem_object_exported_dma_buf_free().
+  For example on S32G:
 
-v3:
-- only test for import_attach (Boris)
-v2:
-- use import_attach.dmabuf instead of dma_buf (Christian)
+  # cat /sys/kernel/debug/regmap/401d8000.spi/registers
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: b57aa47d39e9 ("drm/gem: Test for imported GEM buffers with helper")
-Reported-by: Andy Yan <andyshrk@163.com>
-Closes: https://lore.kernel.org/dri-devel/38d09d34.4354.196379aa560.Coremail.andyshrk@163.com/
-Tested-by: Andy Yan <andyshrk@163.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Anusha Srivatsa <asrivats@redhat.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: Sumit Semwal <sumit.semwal@linaro.org>
-Cc: "Christian König" <christian.koenig@amd.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-media@vger.kernel.org
-Cc: linaro-mm-sig@lists.linaro.org
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Simona Vetter <simona.vetter@ffwll.ch>
-Link: https://lore.kernel.org/r/20250416065820.26076-1-tzimmermann@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  Internal error: synchronous external abort: 96000210 1 PREEMPT SMP
+  ...
+  Call trace:
+  regmap_mmio_read32le+0x24/0x48
+  regmap_mmio_read+0x48/0x70
+  _regmap_bus_reg_read+0x38/0x48
+  _regmap_read+0x68/0x1b0
+  regmap_read+0x50/0x78
+  regmap_read_debugfs+0x120/0x338
+
+Fixes: 1acbdeb92c87 ("spi/fsl-dspi: Convert to use regmap and add big-endian support")
+Co-developed-by: Xulin Sun <xulin.sun@windriver.com>
+Signed-off-by: Xulin Sun <xulin.sun@windriver.com>
+Signed-off-by: Larisa Grigore <larisa.grigore@nxp.com>
+Signed-off-by: James Clark <james.clark@linaro.org>
+Link: https://patch.msgid.link/20250522-james-nxp-spi-v2-1-bea884630cfb@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/drm_gem.h |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/spi/spi-fsl-dspi.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
---- a/include/drm/drm_gem.h
-+++ b/include/drm/drm_gem.h
-@@ -580,8 +580,7 @@ static inline bool drm_gem_object_is_sha
-  */
- static inline bool drm_gem_is_imported(const struct drm_gem_object *obj)
- {
--	/* The dma-buf's priv field points to the original GEM object. */
--	return obj->dma_buf && (obj->dma_buf->priv != obj);
-+	return !!obj->import_attach;
- }
+diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
+index 3fa990fb59c78..b8e7e6dbe0030 100644
+--- a/drivers/spi/spi-fsl-dspi.c
++++ b/drivers/spi/spi-fsl-dspi.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0+
+ //
+ // Copyright 2013 Freescale Semiconductor, Inc.
+-// Copyright 2020 NXP
++// Copyright 2020-2025 NXP
+ //
+ // Freescale DSPI driver
+ // This file contains a driver for the Freescale DSPI
+@@ -1167,6 +1167,20 @@ static int dspi_resume(struct device *dev)
  
- #ifdef CONFIG_LOCKDEP
+ static SIMPLE_DEV_PM_OPS(dspi_pm, dspi_suspend, dspi_resume);
+ 
++static const struct regmap_range dspi_yes_ranges[] = {
++	regmap_reg_range(SPI_MCR, SPI_MCR),
++	regmap_reg_range(SPI_TCR, SPI_CTAR(3)),
++	regmap_reg_range(SPI_SR, SPI_TXFR3),
++	regmap_reg_range(SPI_RXFR0, SPI_RXFR3),
++	regmap_reg_range(SPI_CTARE(0), SPI_CTARE(3)),
++	regmap_reg_range(SPI_SREX, SPI_SREX),
++};
++
++static const struct regmap_access_table dspi_access_table = {
++	.yes_ranges	= dspi_yes_ranges,
++	.n_yes_ranges	= ARRAY_SIZE(dspi_yes_ranges),
++};
++
+ static const struct regmap_range dspi_volatile_ranges[] = {
+ 	regmap_reg_range(SPI_MCR, SPI_TCR),
+ 	regmap_reg_range(SPI_SR, SPI_SR),
+@@ -1184,6 +1198,8 @@ static const struct regmap_config dspi_regmap_config = {
+ 	.reg_stride	= 4,
+ 	.max_register	= 0x88,
+ 	.volatile_table	= &dspi_volatile_table,
++	.rd_table	= &dspi_access_table,
++	.wr_table	= &dspi_access_table,
+ };
+ 
+ static const struct regmap_range dspi_xspi_volatile_ranges[] = {
+@@ -1205,6 +1221,8 @@ static const struct regmap_config dspi_xspi_regmap_config[] = {
+ 		.reg_stride	= 4,
+ 		.max_register	= 0x13c,
+ 		.volatile_table	= &dspi_xspi_volatile_table,
++		.rd_table	= &dspi_access_table,
++		.wr_table	= &dspi_access_table,
+ 	},
+ 	{
+ 		.name		= "pushr",
+-- 
+2.39.5
+
 
 
