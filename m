@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9102110E;
-	Tue, 27 May 2025 17:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6B02110E;
+	Tue, 27 May 2025 17:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365498; cv=none; b=WPkL7rxZ20M1PcOaode7UQ6F8/v9jl/mzzHlmR/2Yrc9LhA4zsUdx3Z04Sr57uIcjAjxIeRJ+NLjT5wW4qnWyfksdn9oxrgz0yb4Ap4C5hQhqvUS/bly+0SBGaNNSS5YRGOVpNOYLzt9tGvM4ysw/vrfr1A1OLt+gRaX43/O1QE=
+	t=1748365501; cv=none; b=Km9U6/SLqguRbB9Wr26BE7VOrmDCCuJwvJRiFWTwQKyS64PWr1pul84f7HszKnkd7zpZOs/dwgfaFWHFa36dZuu+TS3Pxe3VZurunlQZ3fUWJFCGz0PVDsc06ntdwYyIWpE+TD+N2f1+R0wq36YxezVSJKjoZ47qd5JIPGtmolg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365498; c=relaxed/simple;
-	bh=HSdHHfQeUEDfTye2B6p+1ImI1mggpJM3/Vzwp3QnuXI=;
+	s=arc-20240116; t=1748365501; c=relaxed/simple;
+	bh=nfrhBdWam/mtyVt/GI7QtPwaAFGcmWdty1Z6oGsOqRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bjdS5ulmOykVnoFtJmWGUqcgm/YNX/FHhq6IxwcsPRtJhnz7FIp73WHxUOnXPV7cSoqzLNI8kknFNedpHlJGbaSxUq7J20bpCdOgAYpW4ga1u5oRVMw9/hp2Nr0Ix+9uvJbv4QxDocN5mln0z4HMvqC+1y4rq7J7qzoU3VngITM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idHCpGLe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mW8arQTJp6VKKXA0yjJMAWSRBMKT5A0fIC7nBlqWtKqipry0wuqngWRgo9zDVN3fAcM1jYbxqETVuQ7O/bayYFxW4f/yob+8v7dEvg5jYGSVyfpNiaYk1JnMANTPEBGinUlP2/oskiZZEA+onJyAfTmUAVRaNy++vCA7WJ7fvuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2agMos74; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idHCpGLe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5DF7C4CEE9;
-	Tue, 27 May 2025 17:04:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2agMos74"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35377C4CEE9;
+	Tue, 27 May 2025 17:05:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365498;
-	bh=HSdHHfQeUEDfTye2B6p+1ImI1mggpJM3/Vzwp3QnuXI=;
+	s=korg; t=1748365501;
+	bh=nfrhBdWam/mtyVt/GI7QtPwaAFGcmWdty1Z6oGsOqRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=idHCpGLezGZbct2Dr4ToICX6gHt6GCvAJu/5Hyo4SNF1hXaXv6s5DfQWp/b6alaAd
-	 kPB1Np6cG2ACsibgk5tOa3BxFHwpEY/tBRtsZdmmX8ACtV8GtcJQbi5zazCVGf1aGQ
-	 8Fhjp4BQ2+3YROgKb06q6l/2WR4qlLw/w3caqlyk=
+	b=2agMos74gLzCYICItoLEwWHYZwvIpwa0/vnEVFMGwXf+GCdUG6ZWXrCu19p/adfXN
+	 DSuIOqdryKojWJ0WZKfKnwz3V6fnA22tBPA7flSaRFoT0EjOJ78TEF/MAGU1pFp3aA
+	 z40GaRCCklm2lASsaD+AmNGi0MBZz1Ep1X/IlqKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zihan zhou <15645113830zzh@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	Michael Strauss <michael.strauss@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	George Shen <george.shen@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 378/626] sched: Reduce the default slice to avoid tasks getting an extra tick
-Date: Tue, 27 May 2025 18:24:31 +0200
-Message-ID: <20250527162500.375899078@linuxfoundation.org>
+Subject: [PATCH 6.12 396/626] drm/amd/display: Update CR AUX RD interval interpretation
+Date: Tue, 27 May 2025 18:24:49 +0200
+Message-ID: <20250527162501.115656302@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,77 +55,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zihan zhou <15645113830zzh@gmail.com>
+From: George Shen <george.shen@amd.com>
 
-[ Upstream commit 2ae891b826958b60919ea21c727f77bcd6ffcc2c ]
+[ Upstream commit 6a7fde433231c18164c117592d3e18ced648ad58 ]
 
-The old default value for slice is 0.75 msec * (1 + ilog(ncpus)) which
-means that we have a default slice of:
+[Why]
+DP spec updated to have the CR AUX RD interval match the EQ AUX RD
+interval interpretation of DPCD 0000Eh/0220Eh for 8b/10b non-LTTPR mode
+and LTTPR transparent mode cases.
 
-  0.75 for 1 cpu
-  1.50 up to 3 cpus
-  2.25 up to 7 cpus
-  3.00 for 8 cpus and above.
+[How]
+Update interpretation of DPCD 0000Eh/0220Eh for CR AUX RD interval
+during 8b/10b link training.
 
-For HZ=250 and HZ=100, because of the tick accuracy, the runtime of
-tasks is far higher than their slice.
-
-For HZ=1000 with 8 cpus or more, the accuracy of tick is already
-satisfactory, but there is still an issue that tasks will get an extra
-tick because the tick often arrives a little faster than expected. In
-this case, the task can only wait until the next tick to consider that it
-has reached its deadline, and will run 1ms longer.
-
-vruntime + sysctl_sched_base_slice =     deadline
-        |-----------|-----------|-----------|-----------|
-             1ms          1ms         1ms         1ms
-                   ^           ^           ^           ^
-                 tick1       tick2       tick3       tick4(nearly 4ms)
-
-There are two reasons for tick error: clockevent precision and the
-CONFIG_IRQ_TIME_ACCOUNTING/CONFIG_PARAVIRT_TIME_ACCOUNTING. with
-CONFIG_IRQ_TIME_ACCOUNTING every tick will be less than 1ms, but even
-without it, because of clockevent precision, tick still often less than
-1ms.
-
-In order to make scheduling more precise, we changed 0.75 to 0.70,
-Using 0.70 instead of 0.75 should not change much for other configs
-and would fix this issue:
-
-  0.70 for 1 cpu
-  1.40 up to 3 cpus
-  2.10 up to 7 cpus
-  2.8 for 8 cpus and above.
-
-This does not guarantee that tasks can run the slice time accurately
-every time, but occasionally running an extra tick has little impact.
-
-Signed-off-by: zihan zhou <15645113830zzh@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lkml.kernel.org/r/20250208075322.13139-1-15645113830zzh@gmail.com
+Reviewed-by: Michael Strauss <michael.strauss@amd.com>
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: George Shen <george.shen@amd.com>
+Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ .../display/dc/link/protocols/link_dp_training_8b_10b.c    | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 990d0828bf2a9..443f6a9ef3f8f 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -71,10 +71,10 @@ unsigned int sysctl_sched_tunable_scaling = SCHED_TUNABLESCALING_LOG;
- /*
-  * Minimal preemption granularity for CPU-bound tasks:
-  *
-- * (default: 0.75 msec * (1 + ilog(ncpus)), units: nanoseconds)
-+ * (default: 0.70 msec * (1 + ilog(ncpus)), units: nanoseconds)
-  */
--unsigned int sysctl_sched_base_slice			= 750000ULL;
--static unsigned int normalized_sysctl_sched_base_slice	= 750000ULL;
-+unsigned int sysctl_sched_base_slice			= 700000ULL;
-+static unsigned int normalized_sysctl_sched_base_slice	= 700000ULL;
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_8b_10b.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_8b_10b.c
+index 3bdce32a85e3c..ae95ec48e5721 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_8b_10b.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_8b_10b.c
+@@ -36,7 +36,8 @@
+ 	link->ctx->logger
  
- const_debug unsigned int sysctl_sched_migration_cost	= 500000UL;
+ static int32_t get_cr_training_aux_rd_interval(struct dc_link *link,
+-		const struct dc_link_settings *link_settings)
++		const struct dc_link_settings *link_settings,
++		enum lttpr_mode lttpr_mode)
+ {
+ 	union training_aux_rd_interval training_rd_interval;
+ 	uint32_t wait_in_micro_secs = 100;
+@@ -49,6 +50,8 @@ static int32_t get_cr_training_aux_rd_interval(struct dc_link *link,
+ 				DP_TRAINING_AUX_RD_INTERVAL,
+ 				(uint8_t *)&training_rd_interval,
+ 				sizeof(training_rd_interval));
++		if (lttpr_mode != LTTPR_MODE_NON_TRANSPARENT)
++			wait_in_micro_secs = 400;
+ 		if (training_rd_interval.bits.TRAINIG_AUX_RD_INTERVAL)
+ 			wait_in_micro_secs = training_rd_interval.bits.TRAINIG_AUX_RD_INTERVAL * 4000;
+ 	}
+@@ -110,7 +113,6 @@ void decide_8b_10b_training_settings(
+ 	 */
+ 	lt_settings->link_settings.link_spread = link->dp_ss_off ?
+ 			LINK_SPREAD_DISABLED : LINK_SPREAD_05_DOWNSPREAD_30KHZ;
+-	lt_settings->cr_pattern_time = get_cr_training_aux_rd_interval(link, link_setting);
+ 	lt_settings->eq_pattern_time = get_eq_training_aux_rd_interval(link, link_setting);
+ 	lt_settings->pattern_for_cr = decide_cr_training_pattern(link_setting);
+ 	lt_settings->pattern_for_eq = decide_eq_training_pattern(link, link_setting);
+@@ -119,6 +121,7 @@ void decide_8b_10b_training_settings(
+ 	lt_settings->disallow_per_lane_settings = true;
+ 	lt_settings->always_match_dpcd_with_hw_lane_settings = true;
+ 	lt_settings->lttpr_mode = dp_decide_8b_10b_lttpr_mode(link);
++	lt_settings->cr_pattern_time = get_cr_training_aux_rd_interval(link, link_setting, lt_settings->lttpr_mode);
+ 	dp_hw_to_dpcd_lane_settings(lt_settings, lt_settings->hw_lane_settings, lt_settings->dpcd_lane_settings);
+ }
  
 -- 
 2.39.5
