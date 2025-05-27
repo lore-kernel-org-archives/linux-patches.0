@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D3A19E967;
-	Tue, 27 May 2025 17:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8448E1E89C;
+	Tue, 27 May 2025 17:21:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366510; cv=none; b=O80a7DdpUQbUyL+0tdV5g2EG96Gctwetkjze82dm9FL3f9ILv47wplRdip8h4BEfp8wzIbO1538SoDmxnVD1y6xaKoCmyfzqkDuLdLl4VZKiPZIYsjh+w0nizE0IAv8VOpnX0vFr9geDk+wQQ3+P/ySR/B/ryOWmPaXu8+lPGH4=
+	t=1748366513; cv=none; b=X5/fVIv7quKhFJgtdpe5CEqlxPpAUDb9CwwfbPfssXjclx87Om+VSXplK+zTSa4S3dvF4lWv1n1ZD8yGK1BbDsMGwFGydH/K+0mOJ5N+z9/25tixUABHyE0L6nx49mX9azIFoA35fcCd4Min/auB5gZ2dCcz2O6tQtyRSxRxP7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366510; c=relaxed/simple;
-	bh=Wzoiv3RP90uJvH6AGK+31yvV4PtCid4ZJ69/UOWtuFw=;
+	s=arc-20240116; t=1748366513; c=relaxed/simple;
+	bh=++VtEZadR+0SyJFUAlsmPuFBtPsm5+ztgHjJZUISE9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MUVSlQYMA1Kk6ubfFBxTh40jTaWI7U/PzeH/VHq8vuq4OeOoe2Yuz4hh6+k2QEPKFCn/jtQeIwhX8fgOnHbtULEg8ZAapJCxZPdaPqM2seOZ4GHXnlaUPvTuymVO70W8hM/TObI0VxKqOELpbr+kBkXUN6ZR0VMyLLedEA1hO0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhNihbkA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oHR6YTxpmYCsXG10KfXhIRctYjHKa/NhtuZGbn3NnwdAGXQbqqtdZwGd3hRzd6+JJ6osOaHKYsw+9pSoCKYI3FaVw3wE6d3rWc9Ezx9SrBpYSpNg92ntlCu6GLT6AMkvxc1C2xYh3KK8XygupGgH8nqIsgecO3KideaS8WtIh8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C449aioS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhNihbkA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D503EC4CEEA;
-	Tue, 27 May 2025 17:21:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C449aioS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0A5C4CEE9;
+	Tue, 27 May 2025 17:21:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366510;
-	bh=Wzoiv3RP90uJvH6AGK+31yvV4PtCid4ZJ69/UOWtuFw=;
+	s=korg; t=1748366513;
+	bh=++VtEZadR+0SyJFUAlsmPuFBtPsm5+ztgHjJZUISE9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZhNihbkAyynZhYj8T3e71Uezf6kU97rZ1NFnkXszpKZbhKfAqiyH14OHbAXd6mKap
-	 RjkoCJEE9NBj/u2nBz0uwIYGDDsb/faUYJNivbOb9jy5rRAxnhMj7YRVDi0e05TT7d
-	 M4dHG2Ws0hE73ZPOkAw8c+KJCNI596HgWEKYh7Uw=
+	b=C449aioShd+n7l/KIPNO5wBXxaxlIMOiagvGoByJ6ObAgdcJ1IAtO715EB6kIXd6X
+	 Gg86n3EyhEAy4dycTqGw3TvOPX4V8yoCTXQPd5/TzQIkWKi/Xd8JUzGA/B29YRFn6J
+	 1Wsr3uyFXiwfE+3mgz2aHYGVCcWuXXRKXJZODRV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Zhang <markzhang@nvidia.com>,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 092/783] net/mlx5e: Use right API to free bitmap memory
-Date: Tue, 27 May 2025 18:18:09 +0200
-Message-ID: <20250527162516.888277446@linuxfoundation.org>
+Subject: [PATCH 6.14 093/783] PCI: dwc: ep: Ensure proper iteration over outbound map windows
+Date: Tue, 27 May 2025 18:18:10 +0200
+Message-ID: <20250527162516.927941961@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -54,47 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Zhang <markzhang@nvidia.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit cac48eb6d383ee4f037e320608efa5dec029e26a ]
+[ Upstream commit f3e1dccba0a0833fc9a05fb838ebeb6ea4ca0e1a ]
 
-Use bitmap_free() to free memory allocated with bitmap_zalloc_node().
-This fixes memtrack error:
-  mtl rsc inconsistency: memtrack_free: .../drivers/net/ethernet/mellanox/mlx5/core/en_main.c::466: kfree for unknown address=0xFFFF0000CA3619E8, device=0x0
+Most systems' PCIe outbound map windows have non-zero physical addresses,
+but the possibility of encountering zero increased after following commit
+("PCI: dwc: Use parent_bus_offset").
 
-Signed-off-by: Mark Zhang <markzhang@nvidia.com>
-Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Link: https://patch.msgid.link/1742412199-159596-3-git-send-email-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+'ep->outbound_addr[n]', representing 'parent_bus_address', might be 0 on
+some hardware, which trims high address bits through bus fabric before
+sending to the PCIe controller.
+
+Replace the iteration logic with 'for_each_set_bit()' to ensure only
+allocated map windows are iterated when determining the ATU index from a
+given address.
+
+Link: https://lore.kernel.org/r/20250315201548.858189-12-helgaas@kernel.org
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware-ep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 01f6a60308cb7..5c5168bdacb90 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -359,7 +359,7 @@ static int mlx5e_rq_shampo_hd_info_alloc(struct mlx5e_rq *rq, int node)
- 	return 0;
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index e41479a9ca027..c91d095024689 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -282,7 +282,7 @@ static int dw_pcie_find_index(struct dw_pcie_ep *ep, phys_addr_t addr,
+ 	u32 index;
+ 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
  
- err_nomem:
--	kvfree(shampo->bitmap);
-+	bitmap_free(shampo->bitmap);
- 	kvfree(shampo->pages);
- 
- 	return -ENOMEM;
-@@ -367,7 +367,7 @@ static int mlx5e_rq_shampo_hd_info_alloc(struct mlx5e_rq *rq, int node)
- 
- static void mlx5e_rq_shampo_hd_info_free(struct mlx5e_rq *rq)
- {
--	kvfree(rq->mpwqe.shampo->bitmap);
-+	bitmap_free(rq->mpwqe.shampo->bitmap);
- 	kvfree(rq->mpwqe.shampo->pages);
- }
- 
+-	for (index = 0; index < pci->num_ob_windows; index++) {
++	for_each_set_bit(index, ep->ob_window_map, pci->num_ob_windows) {
+ 		if (ep->outbound_addr[index] != addr)
+ 			continue;
+ 		*atu_index = index;
 -- 
 2.39.5
 
