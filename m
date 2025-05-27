@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF951DFF0;
-	Tue, 27 May 2025 17:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE61327FD4C;
+	Tue, 27 May 2025 17:55:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368500; cv=none; b=AqgJIp5rUhWQwwLz1ClBVgS0UmThiGnspnFqLH1a4IgaZQhgHYxF5Ka1j9Qk4qXkQm7iOUhfMRSWaEEy/JUW19j//0zO3wKcgXwxNRTLktv0JcqeXZCBdJDM4N73QhhuraRar61DbZpcli7vEPaZWxNxn4GdPXx7e809RDqQSfM=
+	t=1748368503; cv=none; b=C/fBKnG1mkwCcyN0kLDPhkDrSmDAY/tuzelr3rGW6A8GNhSOy9FUpLyKI9ggvZ+8PjocyWEi9L1kUinPR8KECF4UuxwO4hLyL2feOcSDx+n0jr9SnIev0yLnJiE1+SRJhDLAuD8c4D3NMPHtWIoWD27pfRRTUQbxHNkQxlFRaS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368500; c=relaxed/simple;
-	bh=e1dIqiMXuJ595e02c4U7CtdZq5qnHebhCBwschMuw38=;
+	s=arc-20240116; t=1748368503; c=relaxed/simple;
+	bh=kOLv3ra3S7YHE/mcU17dBUxH28AgHgdcYroEvd7PmX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tLzZoGULc85o5atqfam76eMmoz/00wmalh6H5KZxWouD8jRt0Gp3jhXKSL6URRPJ222g/x/WXVR+HLNhn5+O+zRFIuZboHgXCionWK6jCBFnrRddYTVGkbErRiMOvueas9JoC7fhs6qh8846VsMeVDcBBuKEw0IvqiLPwGYELPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Wn80LCo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oRsz+QR6aJBsTL0v+XYfEIv91a+3a3FI9EIIc+StKx7Qc37OAhh4YlbEjmf1oKLrxRgwR+VxQXxz0sIUBg81W77Yqth46F2UJUq9w3pEACsHBjdhe0tikK2On4eET9Ha8/DDdPFpGHdCz5GaYx5IFyi1xz3KNDFWxGX0/Z2iPuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b4yybzhw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Wn80LCo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3219BC4CEE9;
-	Tue, 27 May 2025 17:55:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b4yybzhw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED230C4CEE9;
+	Tue, 27 May 2025 17:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368500;
-	bh=e1dIqiMXuJ595e02c4U7CtdZq5qnHebhCBwschMuw38=;
+	s=korg; t=1748368503;
+	bh=kOLv3ra3S7YHE/mcU17dBUxH28AgHgdcYroEvd7PmX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Wn80LCo/ZDkU4pHuhAjxz5qp6ktNCQATBZW+Rl4UVVjxrTy/vn7zR5dLBln1cl6T
-	 Cp3bvP1FtoqAisySR1eAwCOTDxfCwqm+Sx+I+KwqXF67jQrZe6hqNWQMnVGjb4yQqU
-	 mTKxFBB32sKivk5fC7mhe9MQl78/vnT5EquxHu5w=
+	b=b4yybzhwNNObuVQBcut7QYXTQHKh3cHeaIK+bgbTfw/LVOKN7X9bZXvs+sHir8XH/
+	 PHOwP36HDVdxF7H4HXmHEbM6m+eKdSDSwjTbXgbm2DFzZKXS5kYMDUkEB+514MeFtA
+	 O7ZWHroWcCypblfKgQnFOlGgMTMP8/eeycJ3TABg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.14 726/783] can: bcm: add missing rcu read protection for procfs content
-Date: Tue, 27 May 2025 18:28:43 +0200
-Message-ID: <20250527162542.683084176@linuxfoundation.org>
+	Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.14 727/783] ASoC: SOF: ipc4-control: Use SOF_CTRL_CMD_BINARY as numid for bytes_ext
+Date: Tue, 27 May 2025 18:28:44 +0200
+Message-ID: <20250527162542.725628494@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,79 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit dac5e6249159ac255dad9781793dbe5908ac9ddb upstream.
+commit 4d14b1069e9e672dbe1adab52594076da6f4a62d upstream.
 
-When the procfs content is generated for a bcm_op which is in the process
-to be removed the procfs output might show unreliable data (UAF).
+The header.numid is set to scontrol->comp_id in bytes_ext_get and it is
+ignored during bytes_ext_put.
+The use of comp_id is not quite great as it is kernel internal
+identification number.
 
-As the removal of bcm_op's is already implemented with rcu handling this
-patch adds the missing rcu_read_lock() and makes sure the list entries
-are properly removed under rcu protection.
+Set the header.numid to SOF_CTRL_CMD_BINARY during get and validate the
+numid during put to provide consistent and compatible identification
+number as IPC3.
 
-Fixes: f1b4e32aca08 ("can: bcm: use call_rcu() instead of costly synchronize_rcu()")
-Reported-by: Anderson Nascimento <anderson@allelesecurity.com>
-Suggested-by: Anderson Nascimento <anderson@allelesecurity.com>
-Tested-by: Anderson Nascimento <anderson@allelesecurity.com>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20250519125027.11900-2-socketcan@hartkopp.net
-Cc: stable@vger.kernel.org # >= 5.4
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+For IPC4 existing tooling also ignored the numid but with the use of
+SOF_CTRL_CMD_BINARY the different handling of the blobs can be dropped,
+providing better user experience.
+
+Reported-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
+Closes: https://github.com/thesofproject/linux/issues/5282
+Fixes: a062c8899fed ("ASoC: SOF: ipc4-control: Add support for bytes control get and put")
+Cc: stable@vger.kernel.org
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Link: https://patch.msgid.link/20250509085633.14930-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/bcm.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ sound/soc/sof/ipc4-control.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -219,7 +219,9 @@ static int bcm_proc_show(struct seq_file
- 	seq_printf(m, " / bound %s", bcm_proc_getifname(net, ifname, bo->ifindex));
- 	seq_printf(m, " <<<\n");
- 
--	list_for_each_entry(op, &bo->rx_ops, list) {
-+	rcu_read_lock();
-+
-+	list_for_each_entry_rcu(op, &bo->rx_ops, list) {
- 
- 		unsigned long reduction;
- 
-@@ -275,6 +277,9 @@ static int bcm_proc_show(struct seq_file
- 		seq_printf(m, "# sent %ld\n", op->frames_abs);
+--- a/sound/soc/sof/ipc4-control.c
++++ b/sound/soc/sof/ipc4-control.c
+@@ -531,6 +531,14 @@ static int sof_ipc4_bytes_ext_put(struct
+ 		return -EINVAL;
  	}
- 	seq_putc(m, '\n');
-+
-+	rcu_read_unlock();
-+
- 	return 0;
- }
- #endif /* CONFIG_PROC_FS */
-@@ -858,7 +863,7 @@ static int bcm_delete_rx_op(struct list_
- 						  REGMASK(op->can_id),
- 						  bcm_rx_handler, op);
  
--			list_del(&op->list);
-+			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return 1; /* done */
- 		}
-@@ -878,7 +883,7 @@ static int bcm_delete_tx_op(struct list_
- 	list_for_each_entry_safe(op, n, ops, list) {
- 		if ((op->can_id == mh->can_id) && (op->ifindex == ifindex) &&
- 		    (op->flags & CAN_FD_FRAME) == (mh->flags & CAN_FD_FRAME)) {
--			list_del(&op->list);
-+			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return 1; /* done */
- 		}
-@@ -1300,7 +1305,7 @@ static int bcm_rx_setup(struct bcm_msg_h
- 					      bcm_rx_handler, op, "bcm", sk);
- 		if (err) {
- 			/* this bcm rx op is broken -> remove it */
--			list_del(&op->list);
-+			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return err;
- 		}
++	/* Check header id */
++	if (header.numid != SOF_CTRL_CMD_BINARY) {
++		dev_err_ratelimited(scomp->dev,
++				    "Incorrect numid for bytes put %d\n",
++				    header.numid);
++		return -EINVAL;
++	}
++
+ 	/* Verify the ABI header first */
+ 	if (copy_from_user(&abi_hdr, tlvd->tlv, sizeof(abi_hdr)))
+ 		return -EFAULT;
+@@ -613,7 +621,8 @@ static int _sof_ipc4_bytes_ext_get(struc
+ 	if (data_size > size)
+ 		return -ENOSPC;
+ 
+-	header.numid = scontrol->comp_id;
++	/* Set header id and length */
++	header.numid = SOF_CTRL_CMD_BINARY;
+ 	header.length = data_size;
+ 
+ 	if (copy_to_user(tlvd, &header, sizeof(struct snd_ctl_tlv)))
 
 
