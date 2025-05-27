@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB78E27F16C;
-	Tue, 27 May 2025 16:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0661D63EF;
+	Tue, 27 May 2025 16:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364400; cv=none; b=uQ3on1q3TULhPwmu9q36HQTc9lJFPVAkCJNkNTK/K6ajWDzT5QOUr7uaeHMwNn0F/JpEOEjw/RyDreDEfwVYsMS55FY3temxu7AYNcguSS9BKSP9O7UZrWEUI+TbcPnXUkaFVTt26R+1dXFKeJarBmSv6bkujKyXEtk0yIpJuqI=
+	t=1748364404; cv=none; b=ZWJDe3urXOObFE8GGPq8cNNgMfxRdEC7jrZCVwe/pLghT+dKP/Qw5jrk+TH9psLLQPui/4wfENm+up8YKSC9XS4UP5Z1V5PA7Fh8hN6+LWeFMbebqq87jyg7XTRl6jfo8LawiIvcUxmGNx1fSQGQhTfdcTD53disJ92j/S/Tdc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364400; c=relaxed/simple;
-	bh=VNmGqVhOBm8LmbL+anAFbrfi6PTw0HlfZ8kq7DI5xRM=;
+	s=arc-20240116; t=1748364404; c=relaxed/simple;
+	bh=TWWdo0GmASUFO7I09e8IjLqiMo/OA6ihWg2Qgbblv8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KtXIU9ovqQv6grBsDaU29p3Yy29aLSOux8tuYpE8TqnNo3QDT4nn0BH3/JxMXXkUQC0vwYBDiPxt2Gv6KIpkrgAsm/q2J4dg2mh9cxd8oZfL5DxgoA7B6li2SdU9e7TcyVHwBq8NAFeTnTIOd/hVjhkg2yceHrqF+O86HgfVZzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFDmegaX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JyriurWIqY5sd7vkDrylXJdz2PMUcMJOqnviSv15OjOCtLhtLHMLYHyIPIX42SDwcRgf+zA64CswUG1ltbqV1xIU7G5DcQmbHG285OaeXGUV2n+kBQdS2JEIeCPSLbIVzYGxTUYYN0Fa/l1/ssUaE1o+FkrPK1U4TAPWah3HuIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=csLrCG14; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFDmegaX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17944C4CEEB;
-	Tue, 27 May 2025 16:46:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="csLrCG14"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABBAC4CEE9;
+	Tue, 27 May 2025 16:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364400;
-	bh=VNmGqVhOBm8LmbL+anAFbrfi6PTw0HlfZ8kq7DI5xRM=;
+	s=korg; t=1748364403;
+	bh=TWWdo0GmASUFO7I09e8IjLqiMo/OA6ihWg2Qgbblv8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sFDmegaXMa2AB26GXrBbgc/L4VXMutMiwyxzuelMDTKoCce2Cswl6MbPlS1ii8Dbc
-	 TGeCtQcsYCRfT+3tzVLtA8y/W1T6mI9olohDuK88lWYNW7gcxeLepbKBdbTwQKjEpr
-	 pnQ0T2AKFqb168iQ9SeYjmA8og5mc6SA0HtwVFnw=
+	b=csLrCG14JDA/7aN7U1sN8NBQXxCX3UZmwMlt99GKgNTK3SCCzujs/tMWXek4KAYuE
+	 rIqoM3WPDQAtD1L3QQWIgkgorYpmf9RpIyPw9ZezuRE1OyEwky4R+JDp8GJFV/UA+J
+	 4U2+YSUKliSFE4uP6kuig/Lpt7uZXVPA3+c8zKJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brandon Kammerdiener <brandon.kammerdiener@intel.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Hou Tao <houtao1@huawei.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 042/626] bpf: fix possible endless loop in BPF map iteration
-Date: Tue, 27 May 2025 18:18:55 +0200
-Message-ID: <20250527162446.770721853@linuxfoundation.org>
+Subject: [PATCH 6.12 014/626] nvmem: core: verify cells raw_len
+Date: Tue, 27 May 2025 18:18:27 +0200
+Message-ID: <20250527162445.638865621@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,35 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brandon Kammerdiener <brandon.kammerdiener@intel.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 75673fda0c557ae26078177dd14d4857afbf128d ]
+[ Upstream commit 13bcd440f2ff38cd7e42a179c223d4b833158b33 ]
 
-The _safe variant used here gets the next element before running the callback,
-avoiding the endless loop condition.
+Check that the NVMEM cell's raw_len is a aligned to word_size. Otherwise
+Otherwise drivers might face incomplete read while accessing the last
+part of the NVMEM cell.
 
-Signed-off-by: Brandon Kammerdiener <brandon.kammerdiener@intel.com>
-Link: https://lore.kernel.org/r/20250424153246.141677-2-brandon.kammerdiener@intel.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20250411112251.68002-10-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/hashtab.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvmem/core.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index bb3ba8ebaf3d2..570e2f7231443 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -2223,7 +2223,7 @@ static long bpf_for_each_hash_elem(struct bpf_map *map, bpf_callback_t callback_
- 		b = &htab->buckets[i];
- 		rcu_read_lock();
- 		head = &b->head;
--		hlist_nulls_for_each_entry_rcu(elem, n, head, hash_node) {
-+		hlist_nulls_for_each_entry_safe(elem, n, head, hash_node) {
- 			key = elem->key;
- 			if (is_percpu) {
- 				/* current cpu value for percpu map */
+diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
+index 8af2a569c23aa..3671d156c7c33 100644
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -592,6 +592,18 @@ static int nvmem_cell_info_to_nvmem_cell_entry_nodup(struct nvmem_device *nvmem,
+ 		return -EINVAL;
+ 	}
+ 
++	if (!IS_ALIGNED(cell->raw_len, nvmem->word_size)) {
++		dev_err(&nvmem->dev,
++			"cell %s raw len %zd unaligned to nvmem word size %d\n",
++			cell->name ?: "<unknown>", cell->raw_len,
++			nvmem->word_size);
++
++		if (info->raw_len)
++			return -EINVAL;
++
++		cell->raw_len = ALIGN(cell->raw_len, nvmem->word_size);
++	}
++
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
