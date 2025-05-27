@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828F186347;
-	Tue, 27 May 2025 17:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F4986347;
+	Tue, 27 May 2025 17:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365884; cv=none; b=py8yw4OXANpk4bpCLU1h6jGhHk+E/DBIEsjCjS44W31zwIt3SmZijsTFV2MhM31S/ktc6YTwdNx0iM248bxN3iUjmf9dCJ/q1rAsJoOUbjMLCnWC38jbUjoVOtQz81MKpV5q3Pn/jBzOTX/Zmo6G5QwERwOiUE88RPfCx8wTjfM=
+	t=1748365888; cv=none; b=uh4XMV2q3+BRtV1t0PyVDm0iLx3rPCPJfCicavYADYZdPBJCSgV7PBVmKKq5UvHgGI9Fzx3OLSiETfZTudQzu4XHb3SfgE2+cYqLQCZpSDpm3TvrFuPS2+NmEX/Xdfw0psIbipIZ/7HQfZLrNpXSmsNPRpITXBpn1F2xL9trMsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365884; c=relaxed/simple;
-	bh=/4rT+dxaCogAavEGZuyDnxRH9e1/miAciJ/q1dqUn54=;
+	s=arc-20240116; t=1748365888; c=relaxed/simple;
+	bh=JgSy6Iv9QceHbyEElQtcO0ZIZjtyTLrEHswQqHySQIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mEmKDdJkKv3+DL+lXrRtMX8ibOEdsec2YWsCtPClCZV5w3nwxOsDW2zKnb5QEFuH4YJ4j6uexcTsoY78fI0Yz4D2GNzaaU3hBpFtek4j+7zjtqxa2qQvxpPBx15HlJE2bkNDJ4nKOQhxFuoRSWmi5lWjseL/tkBNs2mCIIQFxT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zD+mmnro; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V+G0ddiqvMXpHxVx48UncMzsEKuHKJd0UFacu0GkIjmtgIW0oAXLOY7CaV4OYPxXEavaVV4khvH/VmF3GFHrKiue7MtdUlhedopqocA7XDUgR+y7nRucid8y6jWfCRLsgu56ED4u+nnxWcdyKCcG0y20v0C+4TqjHd/epBPWG3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSHFHC0F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zD+mmnro"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 117F0C4CEE9;
-	Tue, 27 May 2025 17:11:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSHFHC0F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC9F4C4CEE9;
+	Tue, 27 May 2025 17:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365884;
-	bh=/4rT+dxaCogAavEGZuyDnxRH9e1/miAciJ/q1dqUn54=;
+	s=korg; t=1748365887;
+	bh=JgSy6Iv9QceHbyEElQtcO0ZIZjtyTLrEHswQqHySQIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zD+mmnrom7CWrAxJ4Lx/+fWCRbRCYJ0so7Pu9ygHpPTw5iVUsCclFibEDzqpfOAMi
-	 v0GFLCTiXGyvUb4fnoEKHsVI/SCVsUQSZ7tuFy3FRoR4XCpRBBkADVTuRCxIikPXzh
-	 FvAb+JRYgpgnrr3kcePx7CVtDc6FG8cTScAQprFU=
+	b=SSHFHC0FaF1sH03El8uVsb5JSn5PIcKE4z5C07TnLQuXJYjYbyl/7Qfa48GEbKtj8
+	 2kG4qvcfD4NJbHU0cQCBWwGI6mm1+aqh3wTslx+5SCKARAZuBS60JN38mYgnhYBGZo
+	 xXOzxoake0zjUFuhyfCW+Qonls9qxUPT06DCjyAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Stefan Binding <sbinding@opensource.cirrus.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 521/626] cifs: Fix changing times and read-only attr over SMB1 smb_set_file_info() function
-Date: Tue, 27 May 2025 18:26:54 +0200
-Message-ID: <20250527162506.150738132@linuxfoundation.org>
+Subject: [PATCH 6.12 522/626] ASoC: intel/sdw_utils: Add volume limit to cs42l43 speakers
+Date: Tue, 27 May 2025 18:26:55 +0200
+Message-ID: <20250527162506.193187924@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -45,335 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Stefan Binding <sbinding@opensource.cirrus.com>
 
-[ Upstream commit f122121796f91168d0894c2710b8dd71330a34f8 ]
+[ Upstream commit 02b44a2b2bdcee03cbb92484d31e9ca1b91b2a38 ]
 
-Function CIFSSMBSetPathInfo() is not supported by non-NT servers and
-returns error. Fallback code via open filehandle and CIFSSMBSetFileInfo()
-does not work neither because CIFS_open() works also only on NT server.
+The volume control for cs42l43 speakers has a maximum gain of +31.5 dB.
+However, for many use cases, this can cause distorted audio, depending
+various factors, such as other signal-processing elements in the chain,
+for example if the audio passes through a gain control before reaching
+the codec or the signal path has been tuned for a particular maximum
+gain in the codec.
 
-Therefore currently the whole smb_set_file_info() function as a SMB1
-callback for the ->set_file_info() does not work with older non-NT SMB
-servers, like Win9x and others.
+In the case of systems which use the soc_sdw_cs42l43 driver, audio will
+likely be distorted in all cases above 0 dB, therefore add a volume
+limit of 128, which is 0 dB maximum volume inside this driver.
 
-This change implements fallback code in smb_set_file_info() which will
-works with any server and allows to change time values and also to set or
-clear read-only attributes.
-
-To make existing fallback code via CIFSSMBSetFileInfo() working with also
-non-NT servers, it is needed to change open function from CIFS_open()
-(which is NT specific) to cifs_open_file() which works with any server
-(this is just a open wrapper function which choose the correct open
-function supported by the server).
-
-CIFSSMBSetFileInfo() is working also on non-NT servers, but zero time
-values are not treated specially. So first it is needed to fill all time
-values if some of them are missing, via cifs_query_path_info() call.
-
-There is another issue, opening file in write-mode (needed for changing
-attributes) is not possible when the file has read-only attribute set.
-The only option how to clear read-only attribute is via SMB_COM_SETATTR
-command. And opening directory is not possible neither and here the
-SMB_COM_SETATTR command is the only option how to change attributes.
-And CIFSSMBSetFileInfo() does not honor setting read-only attribute, so
-for setting is also needed to use SMB_COM_SETATTR command.
-
-Existing code in cifs_query_path_info() is already using SMB_COM_GETATTR as
-a fallback code path (function SMBQueryInformation()), so introduce a new
-function SMBSetInformation which will implement SMB_COM_SETATTR command.
-
-My testing showed that Windows XP SMB1 client is also using SMB_COM_SETATTR
-command for setting or clearing read-only attribute against non-NT server.
-So this can prove that this is the correct way how to do it.
-
-With this change it is possible set all 4 time values and all attributes,
-including clearing and setting read-only bit on non-NT SMB servers.
-Tested against Win98 SMB1 server.
-
-This change fixes "touch" command which was failing when called on existing
-file. And fixes also "chmod +w" and "chmod -w" commands which were also
-failing (as they are changing read-only attribute).
-
-Note that this change depends on following change
-"cifs: Improve cifs_query_path_info() and cifs_query_file_info()"
-as it require to query all 4 time attribute values.
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250430103134.24579-2-sbinding@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifspdu.h   |   5 +-
- fs/smb/client/cifsproto.h |   4 ++
- fs/smb/client/cifssmb.c   |  57 +++++++++++++++++++
- fs/smb/client/smb1ops.c   | 112 +++++++++++++++++++++++++++++++++++---
- 4 files changed, 166 insertions(+), 12 deletions(-)
+ sound/soc/sdw_utils/soc_sdw_cs42l43.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/smb/client/cifspdu.h b/fs/smb/client/cifspdu.h
-index ee78bb6741d62..28f8ca470770d 100644
---- a/fs/smb/client/cifspdu.h
-+++ b/fs/smb/client/cifspdu.h
-@@ -1226,10 +1226,9 @@ typedef struct smb_com_query_information_rsp {
- typedef struct smb_com_setattr_req {
- 	struct smb_hdr hdr; /* wct = 8 */
- 	__le16 attr;
--	__le16 time_low;
--	__le16 time_high;
-+	__le32 last_write_time;
- 	__le16 reserved[5]; /* must be zero */
--	__u16  ByteCount;
-+	__le16 ByteCount;
- 	__u8   BufferFormat; /* 4 = ASCII */
- 	unsigned char fileName[];
- } __attribute__((packed)) SETATTR_REQ;
-diff --git a/fs/smb/client/cifsproto.h b/fs/smb/client/cifsproto.h
-index 306386e5c171f..6e938b17875f5 100644
---- a/fs/smb/client/cifsproto.h
-+++ b/fs/smb/client/cifsproto.h
-@@ -396,6 +396,10 @@ extern int CIFSSMBQFSUnixInfo(const unsigned int xid, struct cifs_tcon *tcon);
- extern int CIFSSMBQFSPosixInfo(const unsigned int xid, struct cifs_tcon *tcon,
- 			struct kstatfs *FSData);
+diff --git a/sound/soc/sdw_utils/soc_sdw_cs42l43.c b/sound/soc/sdw_utils/soc_sdw_cs42l43.c
+index adb1c008e871d..2dc7787234c36 100644
+--- a/sound/soc/sdw_utils/soc_sdw_cs42l43.c
++++ b/sound/soc/sdw_utils/soc_sdw_cs42l43.c
+@@ -20,6 +20,8 @@
+ #include <sound/soc-dapm.h>
+ #include <sound/soc_sdw_utils.h>
  
-+extern int SMBSetInformation(const unsigned int xid, struct cifs_tcon *tcon,
-+			     const char *fileName, __le32 attributes, __le64 write_time,
-+			     const struct nls_table *nls_codepage,
-+			     struct cifs_sb_info *cifs_sb);
- extern int CIFSSMBSetPathInfo(const unsigned int xid, struct cifs_tcon *tcon,
- 			const char *fileName, const FILE_BASIC_INFO *data,
- 			const struct nls_table *nls_codepage,
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index e2a14e25da87c..8667f403a0ab6 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -5199,6 +5199,63 @@ CIFSSMBSetFileSize(const unsigned int xid, struct cifs_tcon *tcon,
- 	return rc;
- }
- 
-+int
-+SMBSetInformation(const unsigned int xid, struct cifs_tcon *tcon,
-+		  const char *fileName, __le32 attributes, __le64 write_time,
-+		  const struct nls_table *nls_codepage,
-+		  struct cifs_sb_info *cifs_sb)
-+{
-+	SETATTR_REQ *pSMB;
-+	SETATTR_RSP *pSMBr;
-+	struct timespec64 ts;
-+	int bytes_returned;
-+	int name_len;
-+	int rc;
++#define CS42L43_SPK_VOLUME_0DB	128 /* 0dB Max */
 +
-+	cifs_dbg(FYI, "In %s path %s\n", __func__, fileName);
-+
-+retry:
-+	rc = smb_init(SMB_COM_SETATTR, 8, tcon, (void **) &pSMB,
-+		      (void **) &pSMBr);
-+	if (rc)
-+		return rc;
-+
-+	if (pSMB->hdr.Flags2 & SMBFLG2_UNICODE) {
-+		name_len =
-+			cifsConvertToUTF16((__le16 *) pSMB->fileName,
-+					   fileName, PATH_MAX, nls_codepage,
-+					   cifs_remap(cifs_sb));
-+		name_len++;     /* trailing null */
-+		name_len *= 2;
-+	} else {
-+		name_len = copy_path_name(pSMB->fileName, fileName);
-+	}
-+	/* Only few attributes can be set by this command, others are not accepted by Win9x. */
-+	pSMB->attr = cpu_to_le16(le32_to_cpu(attributes) &
-+			(ATTR_READONLY | ATTR_HIDDEN | ATTR_SYSTEM | ATTR_ARCHIVE));
-+	/* Zero write time value (in both NT and SETATTR formats) means to not change it. */
-+	if (le64_to_cpu(write_time) != 0) {
-+		ts = cifs_NTtimeToUnix(write_time);
-+		pSMB->last_write_time = cpu_to_le32(ts.tv_sec);
-+	}
-+	pSMB->BufferFormat = 0x04;
-+	name_len++; /* account for buffer type byte */
-+	inc_rfc1001_len(pSMB, (__u16)name_len);
-+	pSMB->ByteCount = cpu_to_le16(name_len);
-+
-+	rc = SendReceive(xid, tcon->ses, (struct smb_hdr *) pSMB,
-+			 (struct smb_hdr *) pSMBr, &bytes_returned, 0);
-+	if (rc)
-+		cifs_dbg(FYI, "Send error in %s = %d\n", __func__, rc);
-+
-+	cifs_buf_release(pSMB);
-+
-+	if (rc == -EAGAIN)
-+		goto retry;
-+
-+	return rc;
-+}
-+
- /* Some legacy servers such as NT4 require that the file times be set on
-    an open handle, rather than by pathname - this is awkward due to
-    potential access conflicts on the open, but it is unavoidable for these
-diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
-index 088fd84188b95..0385a514f59e9 100644
---- a/fs/smb/client/smb1ops.c
-+++ b/fs/smb/client/smb1ops.c
-@@ -912,6 +912,9 @@ smb_set_file_info(struct inode *inode, const char *full_path,
- 	struct cifs_fid fid;
- 	struct cifs_open_parms oparms;
- 	struct cifsFileInfo *open_file;
-+	FILE_BASIC_INFO new_buf;
-+	struct cifs_open_info_data query_data;
-+	__le64 write_time = buf->LastWriteTime;
- 	struct cifsInodeInfo *cinode = CIFS_I(inode);
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
- 	struct tcon_link *tlink = NULL;
-@@ -919,20 +922,58 @@ smb_set_file_info(struct inode *inode, const char *full_path,
- 
- 	/* if the file is already open for write, just use that fileid */
- 	open_file = find_writable_file(cinode, FIND_WR_FSUID_ONLY);
-+
- 	if (open_file) {
- 		fid.netfid = open_file->fid.netfid;
- 		netpid = open_file->pid;
- 		tcon = tlink_tcon(open_file->tlink);
--		goto set_via_filehandle;
-+	} else {
-+		tlink = cifs_sb_tlink(cifs_sb);
-+		if (IS_ERR(tlink)) {
-+			rc = PTR_ERR(tlink);
-+			tlink = NULL;
-+			goto out;
-+		}
-+		tcon = tlink_tcon(tlink);
+ static const struct snd_soc_dapm_route cs42l43_hs_map[] = {
+ 	{ "Headphone", NULL, "cs42l43 AMP3_OUT" },
+ 	{ "Headphone", NULL, "cs42l43 AMP4_OUT" },
+@@ -117,6 +119,14 @@ int asoc_sdw_cs42l43_spk_rtd_init(struct snd_soc_pcm_runtime *rtd, struct snd_so
+ 			return -ENOMEM;
  	}
  
--	tlink = cifs_sb_tlink(cifs_sb);
--	if (IS_ERR(tlink)) {
--		rc = PTR_ERR(tlink);
--		tlink = NULL;
--		goto out;
-+	/*
-+	 * Non-NT servers interprets zero time value in SMB_SET_FILE_BASIC_INFO
-+	 * over TRANS2_SET_FILE_INFORMATION as a valid time value. NT servers
-+	 * interprets zero time value as do not change existing value on server.
-+	 * API of ->set_file_info() callback expects that zero time value has
-+	 * the NT meaning - do not change. Therefore if server is non-NT and
-+	 * some time values in "buf" are zero, then fetch missing time values.
-+	 */
-+	if (!(tcon->ses->capabilities & CAP_NT_SMBS) &&
-+	    (!buf->CreationTime || !buf->LastAccessTime ||
-+	     !buf->LastWriteTime || !buf->ChangeTime)) {
-+		rc = cifs_query_path_info(xid, tcon, cifs_sb, full_path, &query_data);
-+		if (rc) {
-+			if (open_file) {
-+				cifsFileInfo_put(open_file);
-+				open_file = NULL;
-+			}
-+			goto out;
-+		}
-+		/*
-+		 * Original write_time from buf->LastWriteTime is preserved
-+		 * as SMBSetInformation() interprets zero as do not change.
-+		 */
-+		new_buf = *buf;
-+		buf = &new_buf;
-+		if (!buf->CreationTime)
-+			buf->CreationTime = query_data.fi.CreationTime;
-+		if (!buf->LastAccessTime)
-+			buf->LastAccessTime = query_data.fi.LastAccessTime;
-+		if (!buf->LastWriteTime)
-+			buf->LastWriteTime = query_data.fi.LastWriteTime;
-+		if (!buf->ChangeTime)
-+			buf->ChangeTime = query_data.fi.ChangeTime;
- 	}
--	tcon = tlink_tcon(tlink);
++	ret = snd_soc_limit_volume(card, "cs42l43 Speaker Digital Volume",
++				   CS42L43_SPK_VOLUME_0DB);
++	if (ret)
++		dev_err(card->dev, "cs42l43 speaker volume limit failed: %d\n", ret);
++	else
++		dev_info(card->dev, "Setting CS42L43 Speaker volume limit to %d\n",
++			 CS42L43_SPK_VOLUME_0DB);
 +
-+	if (open_file)
-+		goto set_via_filehandle;
- 
- 	rc = CIFSSMBSetPathInfo(xid, tcon, full_path, buf, cifs_sb->local_nls,
- 				cifs_sb);
-@@ -953,8 +994,45 @@ smb_set_file_info(struct inode *inode, const char *full_path,
- 		.fid = &fid,
- 	};
- 
--	cifs_dbg(FYI, "calling SetFileInfo since SetPathInfo for times not supported by this server\n");
--	rc = CIFS_open(xid, &oparms, &oplock, NULL);
-+	if (S_ISDIR(inode->i_mode) && !(tcon->ses->capabilities & CAP_NT_SMBS)) {
-+		/* Opening directory path is not possible on non-NT servers. */
-+		rc = -EOPNOTSUPP;
-+	} else {
-+		/*
-+		 * Use cifs_open_file() instead of CIFS_open() as the
-+		 * cifs_open_file() selects the correct function which
-+		 * works also on non-NT servers.
-+		 */
-+		rc = cifs_open_file(xid, &oparms, &oplock, NULL);
-+		/*
-+		 * Opening path for writing on non-NT servers is not
-+		 * possible when the read-only attribute is already set.
-+		 * Non-NT server in this case returns -EACCES. For those
-+		 * servers the only possible way how to clear the read-only
-+		 * bit is via SMB_COM_SETATTR command.
-+		 */
-+		if (rc == -EACCES &&
-+		    (cinode->cifsAttrs & ATTR_READONLY) &&
-+		     le32_to_cpu(buf->Attributes) != 0 && /* 0 = do not change attrs */
-+		     !(le32_to_cpu(buf->Attributes) & ATTR_READONLY) &&
-+		     !(tcon->ses->capabilities & CAP_NT_SMBS))
-+			rc = -EOPNOTSUPP;
-+	}
-+
-+	/* Fallback to SMB_COM_SETATTR command when absolutelty needed. */
-+	if (rc == -EOPNOTSUPP) {
-+		cifs_dbg(FYI, "calling SetInformation since SetPathInfo for attrs/times not supported by this server\n");
-+		rc = SMBSetInformation(xid, tcon, full_path,
-+				       buf->Attributes != 0 ? buf->Attributes : cpu_to_le32(cinode->cifsAttrs),
-+				       write_time,
-+				       cifs_sb->local_nls, cifs_sb);
-+		if (rc == 0)
-+			cinode->cifsAttrs = le32_to_cpu(buf->Attributes);
-+		else
-+			rc = -EACCES;
-+		goto out;
-+	}
-+
- 	if (rc != 0) {
- 		if (rc == -EIO)
- 			rc = -EINVAL;
-@@ -962,6 +1040,7 @@ smb_set_file_info(struct inode *inode, const char *full_path,
- 	}
- 
- 	netpid = current->tgid;
-+	cifs_dbg(FYI, "calling SetFileInfo since SetPathInfo for attrs/times not supported by this server\n");
- 
- set_via_filehandle:
- 	rc = CIFSSMBSetFileInfo(xid, tcon, buf, fid.netfid, netpid);
-@@ -972,6 +1051,21 @@ smb_set_file_info(struct inode *inode, const char *full_path,
- 		CIFSSMBClose(xid, tcon, fid.netfid);
- 	else
- 		cifsFileInfo_put(open_file);
-+
-+	/*
-+	 * Setting the read-only bit is not honered on non-NT servers when done
-+	 * via open-semantics. So for setting it, use SMB_COM_SETATTR command.
-+	 * This command works only after the file is closed, so use it only when
-+	 * operation was called without the filehandle.
-+	 */
-+	if (open_file == NULL &&
-+	    !(tcon->ses->capabilities & CAP_NT_SMBS) &&
-+	    le32_to_cpu(buf->Attributes) & ATTR_READONLY) {
-+		SMBSetInformation(xid, tcon, full_path,
-+				  buf->Attributes,
-+				  0 /* do not change write time */,
-+				  cifs_sb->local_nls, cifs_sb);
-+	}
- out:
- 	if (tlink != NULL)
- 		cifs_put_tlink(tlink);
+ 	ret = snd_soc_dapm_add_routes(&card->dapm, cs42l43_spk_map,
+ 				      ARRAY_SIZE(cs42l43_spk_map));
+ 	if (ret)
 -- 
 2.39.5
 
