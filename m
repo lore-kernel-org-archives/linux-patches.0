@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200BA42A9B;
-	Tue, 27 May 2025 17:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465EF42A9B;
+	Tue, 27 May 2025 17:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367779; cv=none; b=QfivgTnO3AqnclUNJCMJh0Dxx4ojmSchGv8dxJ2HOtpjPP/UNUrTJU0/SMyFeKEgNG1TY7IdeIep90BMFlpkMLil58ttGEwAyF1F2mS3hI78fDGZxKts7ZCxgOG9HCPEsYuJ5VitnA95JO+ASyakA0BDJGx92pTVuJrDBS3qBoo=
+	t=1748367782; cv=none; b=QMYSr5dD81MQkQxhYkW80jwrvpQq7MLvDI2KiDthtYHmKRApAfcoMQyxuezPqzq75nqLgPGygWEnNoWo45HB3LMitrak98Kh+b4/06x8pnlFYen25aFJGfWCkKFG5tLVrtsXh8XH843Yonuay3m8cMFhVL53NHmQ5RSgVzyJ7lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367779; c=relaxed/simple;
-	bh=YW/WOFwGKIeWxHn7FZpznmoATtm4/Pq97dQKJsE6gxQ=;
+	s=arc-20240116; t=1748367782; c=relaxed/simple;
+	bh=FOardvH8DJTVPIlrtKujE+cQ2lKXh97rxUTH9FT3skg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hSctgyt2JxQQlhaU3/iFq+X7IOBTRgaRz3fVQ147+F8BYHDQuAdvW2mOulo8LVsnZuQSUqBaejLRbzrrrxYZbI8fPJzKquaw8aC+evdmClc1w3p3me1cNt0Gh9CVzHqDHauY3ubY79dfS24/KoTXOtMGjgn/ZuWWrbvAq33DTao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uFcUzS8K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zt+5FU6fs/Cw17anDHvlFfom5I6OeyQ6SOL+/PIxU7FgAJE2pNR021hWjlif6lX75hohYqQV3PpNiAOALp98IR/X7pxn6doxuTVVvAUW0SOPfzy68opPsjicnaJrHaltOZnu29L257QwMJjBUvZ514bSJ1KXnoLOfr6lNfL26uM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jqq4BnQr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uFcUzS8K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FEBDC4CEE9;
-	Tue, 27 May 2025 17:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jqq4BnQr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0437C4CEE9;
+	Tue, 27 May 2025 17:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367779;
-	bh=YW/WOFwGKIeWxHn7FZpznmoATtm4/Pq97dQKJsE6gxQ=;
+	s=korg; t=1748367782;
+	bh=FOardvH8DJTVPIlrtKujE+cQ2lKXh97rxUTH9FT3skg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uFcUzS8K6zUgazrkDRoRhd7KTYQv9gPfpQhb+WUO6vZab93YsiG4ZvoWmBn+7LV+E
-	 lFYxTCx7o1jxij4rSUJLVq1oxa2UdOe26n9GOMXSjeBLHQQrC0PnBleBCBsRDWhKD6
-	 LzC4NZFQnMV1XccNXHiNdsMjpRUBGK+ZGxZnHc1E=
+	b=Jqq4BnQrx25kidX5tE2koWqEyYqmDOu1pQmXdJY+Mgg5Kb4EeOW3mHXAgVrkN1AIq
+	 JiTxfmImFAtekvWEnjRdVJkJrrVXkEGwzhfj1wPBuL31RZ9/SmQCDOjOQCEQH9jgqy
+	 sCD/x8vLzapmZPmNNWAbtvWYlYxUSixQONTbyEFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alvin Lee <alvin.lee2@amd.com>,
-	Peterson Guo <peterson.guo@amd.com>,
+	Joshua Aberback <joshua.aberback@amd.com>,
 	Wayne Lin <wayne.lin@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 496/783] drm/amd/display: Reverse the visual confirm recouts
-Date: Tue, 27 May 2025 18:24:53 +0200
-Message-ID: <20250527162533.332103821@linuxfoundation.org>
+Subject: [PATCH 6.14 497/783] drm/amd/display: Increase block_sequence array size
+Date: Tue, 27 May 2025 18:24:54 +0200
+Message-ID: <20250527162533.372419851@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -54,327 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peterson Guo <peterson.guo@amd.com>
+From: Joshua Aberback <joshua.aberback@amd.com>
 
-[ Upstream commit 3c50bf2196aaddcaffe2c7a1a7080470380cbfdd ]
+[ Upstream commit 3a7810c212bcf2f722671dadf4b23ff70a7d23ee ]
 
-[WHY]
-When checking if a pipe can disable cursor to prevent duplicate cursors,
-having visual confirm on will prevent disabling cursors on planes which
-cover the bottom of the screen.
+[Why]
+It's possible to generate more than 50 steps in hwss_build_fast_sequence,
+for example with a 6-pipe asic where all pipes are in one MPC chain. This
+overflows the block_sequence buffer and corrupts block_sequence_steps,
+causing a crash.
 
-[HOW]
-When checking if a plane can disable visual confirm, the pipe first
-reverses these calculations before doing the checks.
+[How]
+Expand block_sequence to 100 items. A naive upper bound on the possible
+number of steps for a 6-pipe asic, ignoring the potential for steps to be
+mutually exclusive, is 91 with current code, therefore 100 is sufficient.
 
 Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Signed-off-by: Peterson Guo <peterson.guo@amd.com>
+Signed-off-by: Joshua Aberback <joshua.aberback@amd.com>
 Signed-off-by: Wayne Lin <wayne.lin@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/core/dc_resource.c | 67 +++++++++++++++++++
- drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c  | 50 +-------------
- .../amd/display/dc/hwss/dcn10/dcn10_hwseq.c   | 48 +------------
- .../amd/display/dc/hwss/dcn401/dcn401_hwseq.c | 48 +------------
- drivers/gpu/drm/amd/display/dc/inc/resource.h |  2 +
- 5 files changed, 73 insertions(+), 142 deletions(-)
+ drivers/gpu/drm/amd/display/dc/inc/core_types.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-index 3367030da3414..375b3b1d1d182 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -941,6 +941,17 @@ static void calculate_adjust_recout_for_visual_confirm(struct pipe_ctx *pipe_ctx
- 		*base_offset = VISUAL_CONFIRM_BASE_DEFAULT;
- }
+diff --git a/drivers/gpu/drm/amd/display/dc/inc/core_types.h b/drivers/gpu/drm/amd/display/dc/inc/core_types.h
+index d558efc6e12f9..652d52040f4e6 100644
+--- a/drivers/gpu/drm/amd/display/dc/inc/core_types.h
++++ b/drivers/gpu/drm/amd/display/dc/inc/core_types.h
+@@ -627,7 +627,7 @@ struct dc_state {
+ 	 */
+ 	struct bw_context bw_ctx;
  
-+static void reverse_adjust_recout_for_visual_confirm(struct rect *recout,
-+		struct pipe_ctx *pipe_ctx)
-+{
-+	int dpp_offset, base_offset;
-+
-+	calculate_adjust_recout_for_visual_confirm(pipe_ctx, &base_offset,
-+		&dpp_offset);
-+	recout->height += base_offset;
-+	recout->height += dpp_offset;
-+}
-+
- static void adjust_recout_for_visual_confirm(struct rect *recout,
- 		struct pipe_ctx *pipe_ctx)
- {
-@@ -1642,6 +1653,62 @@ bool resource_build_scaling_params(struct pipe_ctx *pipe_ctx)
- 	return res;
- }
- 
-+bool resource_can_pipe_disable_cursor(struct pipe_ctx *pipe_ctx)
-+{
-+	struct pipe_ctx *test_pipe, *split_pipe;
-+	struct rect r1 = pipe_ctx->plane_res.scl_data.recout;
-+	int r1_right, r1_bottom;
-+	int cur_layer = pipe_ctx->plane_state->layer_index;
-+
-+	reverse_adjust_recout_for_visual_confirm(&r1, pipe_ctx);
-+	r1_right = r1.x + r1.width;
-+	r1_bottom = r1.y + r1.height;
-+
-+	/**
-+	 * Disable the cursor if there's another pipe above this with a
-+	 * plane that contains this pipe's viewport to prevent double cursor
-+	 * and incorrect scaling artifacts.
-+	 */
-+	for (test_pipe = pipe_ctx->top_pipe; test_pipe;
-+	     test_pipe = test_pipe->top_pipe) {
-+		struct rect r2;
-+		int r2_right, r2_bottom;
-+		// Skip invisible layer and pipe-split plane on same layer
-+		if (!test_pipe->plane_state ||
-+		    !test_pipe->plane_state->visible ||
-+		    test_pipe->plane_state->layer_index == cur_layer)
-+			continue;
-+
-+		r2 = test_pipe->plane_res.scl_data.recout;
-+		reverse_adjust_recout_for_visual_confirm(&r2, test_pipe);
-+		r2_right = r2.x + r2.width;
-+		r2_bottom = r2.y + r2.height;
-+
-+		/**
-+		 * There is another half plane on same layer because of
-+		 * pipe-split, merge together per same height.
-+		 */
-+		for (split_pipe = pipe_ctx->top_pipe; split_pipe;
-+		     split_pipe = split_pipe->top_pipe)
-+			if (split_pipe->plane_state->layer_index == test_pipe->plane_state->layer_index) {
-+				struct rect r2_half;
-+
-+				r2_half = split_pipe->plane_res.scl_data.recout;
-+				reverse_adjust_recout_for_visual_confirm(&r2_half, split_pipe);
-+				r2.x = min(r2_half.x, r2.x);
-+				r2.width = r2.width + r2_half.width;
-+				r2_right = r2.x + r2.width;
-+				r2_bottom = min(r2_bottom, r2_half.y + r2_half.height);
-+				break;
-+			}
-+
-+		if (r1.x >= r2.x && r1.y >= r2.y && r1_right <= r2_right && r1_bottom <= r2_bottom)
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
- 
- enum dc_status resource_build_scaling_params_for_context(
- 	const struct dc  *dc,
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-index 44ff9abe2880f..87b4c2793df3c 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-+++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-@@ -991,57 +991,11 @@ void dc_dmub_srv_log_diagnostic_data(struct dc_dmub_srv *dc_dmub_srv)
- 	DC_LOG_DEBUG("    is_cw6_en          : %d", diag_data.is_cw6_enabled);
- }
- 
--static bool dc_can_pipe_disable_cursor(struct pipe_ctx *pipe_ctx)
--{
--	struct pipe_ctx *test_pipe, *split_pipe;
--	const struct scaler_data *scl_data = &pipe_ctx->plane_res.scl_data;
--	struct rect r1 = scl_data->recout, r2, r2_half;
--	int r1_r = r1.x + r1.width, r1_b = r1.y + r1.height, r2_r, r2_b;
--	int cur_layer = pipe_ctx->plane_state->layer_index;
--
--	/**
--	 * Disable the cursor if there's another pipe above this with a
--	 * plane that contains this pipe's viewport to prevent double cursor
--	 * and incorrect scaling artifacts.
--	 */
--	for (test_pipe = pipe_ctx->top_pipe; test_pipe;
--	     test_pipe = test_pipe->top_pipe) {
--		// Skip invisible layer and pipe-split plane on same layer
--		if (!test_pipe->plane_state->visible || test_pipe->plane_state->layer_index == cur_layer)
--			continue;
--
--		r2 = test_pipe->plane_res.scl_data.recout;
--		r2_r = r2.x + r2.width;
--		r2_b = r2.y + r2.height;
--
--		/**
--		 * There is another half plane on same layer because of
--		 * pipe-split, merge together per same height.
--		 */
--		for (split_pipe = pipe_ctx->top_pipe; split_pipe;
--		     split_pipe = split_pipe->top_pipe)
--			if (split_pipe->plane_state->layer_index == test_pipe->plane_state->layer_index) {
--				r2_half = split_pipe->plane_res.scl_data.recout;
--				r2.x = (r2_half.x < r2.x) ? r2_half.x : r2.x;
--				r2.width = r2.width + r2_half.width;
--				r2_r = r2.x + r2.width;
--				break;
--			}
--
--		if (r1.x >= r2.x && r1.y >= r2.y && r1_r <= r2_r && r1_b <= r2_b)
--			return true;
--	}
--
--	return false;
--}
--
- static bool dc_dmub_should_update_cursor_data(struct pipe_ctx *pipe_ctx)
- {
- 	if (pipe_ctx->plane_state != NULL) {
--		if (pipe_ctx->plane_state->address.type == PLN_ADDR_TYPE_VIDEO_PROGRESSIVE)
--			return false;
--
--		if (dc_can_pipe_disable_cursor(pipe_ctx))
-+		if (pipe_ctx->plane_state->address.type == PLN_ADDR_TYPE_VIDEO_PROGRESSIVE ||
-+			resource_can_pipe_disable_cursor(pipe_ctx))
- 			return false;
- 	}
- 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-index 4c89bf6725b3b..bbeaefe1ef0db 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn10/dcn10_hwseq.c
-@@ -3424,52 +3424,6 @@ void dcn10_update_dchub(struct dce_hwseq *hws, struct dchub_init_data *dh_data)
- 	hubbub->funcs->update_dchub(hubbub, dh_data);
- }
- 
--static bool dcn10_can_pipe_disable_cursor(struct pipe_ctx *pipe_ctx)
--{
--	struct pipe_ctx *test_pipe, *split_pipe;
--	const struct scaler_data *scl_data = &pipe_ctx->plane_res.scl_data;
--	struct rect r1 = scl_data->recout, r2, r2_half;
--	int r1_r = r1.x + r1.width, r1_b = r1.y + r1.height, r2_r, r2_b;
--	int cur_layer = pipe_ctx->plane_state->layer_index;
--
--	/**
--	 * Disable the cursor if there's another pipe above this with a
--	 * plane that contains this pipe's viewport to prevent double cursor
--	 * and incorrect scaling artifacts.
--	 */
--	for (test_pipe = pipe_ctx->top_pipe; test_pipe;
--	     test_pipe = test_pipe->top_pipe) {
--		// Skip invisible layer and pipe-split plane on same layer
--		if (!test_pipe->plane_state ||
--		    !test_pipe->plane_state->visible ||
--		    test_pipe->plane_state->layer_index == cur_layer)
--			continue;
--
--		r2 = test_pipe->plane_res.scl_data.recout;
--		r2_r = r2.x + r2.width;
--		r2_b = r2.y + r2.height;
--
--		/**
--		 * There is another half plane on same layer because of
--		 * pipe-split, merge together per same height.
--		 */
--		for (split_pipe = pipe_ctx->top_pipe; split_pipe;
--		     split_pipe = split_pipe->top_pipe)
--			if (split_pipe->plane_state->layer_index == test_pipe->plane_state->layer_index) {
--				r2_half = split_pipe->plane_res.scl_data.recout;
--				r2.x = (r2_half.x < r2.x) ? r2_half.x : r2.x;
--				r2.width = r2.width + r2_half.width;
--				r2_r = r2.x + r2.width;
--				break;
--			}
--
--		if (r1.x >= r2.x && r1.y >= r2.y && r1_r <= r2_r && r1_b <= r2_b)
--			return true;
--	}
--
--	return false;
--}
--
- void dcn10_set_cursor_position(struct pipe_ctx *pipe_ctx)
- {
- 	struct dc_cursor_position pos_cpy = pipe_ctx->stream->cursor_position;
-@@ -3569,7 +3523,7 @@ void dcn10_set_cursor_position(struct pipe_ctx *pipe_ctx)
- 			== PLN_ADDR_TYPE_VIDEO_PROGRESSIVE)
- 		pos_cpy.enable = false;
- 
--	if (pos_cpy.enable && dcn10_can_pipe_disable_cursor(pipe_ctx))
-+	if (pos_cpy.enable && resource_can_pipe_disable_cursor(pipe_ctx))
- 		pos_cpy.enable = false;
- 
- 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-index a6f2aff84267d..da8afb08b9201 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -972,52 +972,6 @@ void dcn401_setup_hpo_hw_control(const struct dce_hwseq *hws, bool enable)
- 	REG_UPDATE(HPO_TOP_HW_CONTROL, HPO_IO_EN, enable);
- }
- 
--static bool dcn401_can_pipe_disable_cursor(struct pipe_ctx *pipe_ctx)
--{
--	struct pipe_ctx *test_pipe, *split_pipe;
--	const struct scaler_data *scl_data = &pipe_ctx->plane_res.scl_data;
--	struct rect r1 = scl_data->recout, r2, r2_half;
--	int r1_r = r1.x + r1.width, r1_b = r1.y + r1.height, r2_r, r2_b;
--	int cur_layer = pipe_ctx->plane_state->layer_index;
--
--	/**
--	 * Disable the cursor if there's another pipe above this with a
--	 * plane that contains this pipe's viewport to prevent double cursor
--	 * and incorrect scaling artifacts.
--	 */
--	for (test_pipe = pipe_ctx->top_pipe; test_pipe;
--		test_pipe = test_pipe->top_pipe) {
--		// Skip invisible layer and pipe-split plane on same layer
--		if (!test_pipe->plane_state ||
--			!test_pipe->plane_state->visible ||
--			test_pipe->plane_state->layer_index == cur_layer)
--			continue;
--
--		r2 = test_pipe->plane_res.scl_data.recout;
--		r2_r = r2.x + r2.width;
--		r2_b = r2.y + r2.height;
--
--		/**
--		 * There is another half plane on same layer because of
--		 * pipe-split, merge together per same height.
--		 */
--		for (split_pipe = pipe_ctx->top_pipe; split_pipe;
--			split_pipe = split_pipe->top_pipe)
--			if (split_pipe->plane_state->layer_index == test_pipe->plane_state->layer_index) {
--				r2_half = split_pipe->plane_res.scl_data.recout;
--				r2.x = (r2_half.x < r2.x) ? r2_half.x : r2.x;
--				r2.width = r2.width + r2_half.width;
--				r2_r = r2.x + r2.width;
--				break;
--			}
--
--		if (r1.x >= r2.x && r1.y >= r2.y && r1_r <= r2_r && r1_b <= r2_b)
--			return true;
--	}
--
--	return false;
--}
--
- void adjust_hotspot_between_slices_for_2x_magnify(uint32_t cursor_width, struct dc_cursor_position *pos_cpy)
- {
- 	if (cursor_width <= 128) {
-@@ -1208,7 +1162,7 @@ void dcn401_set_cursor_position(struct pipe_ctx *pipe_ctx)
- 	pos_cpy.x = (uint32_t)x_pos;
- 	pos_cpy.y = (uint32_t)y_pos;
- 
--	if (pos_cpy.enable && dcn401_can_pipe_disable_cursor(pipe_ctx))
-+	if (pos_cpy.enable && resource_can_pipe_disable_cursor(pipe_ctx))
- 		pos_cpy.enable = false;
- 
- 	x_pos = pos_cpy.x - param.recout.x;
-diff --git a/drivers/gpu/drm/amd/display/dc/inc/resource.h b/drivers/gpu/drm/amd/display/dc/inc/resource.h
-index cd1157d225abe..b32d07ce0f087 100644
---- a/drivers/gpu/drm/amd/display/dc/inc/resource.h
-+++ b/drivers/gpu/drm/amd/display/dc/inc/resource.h
-@@ -152,6 +152,8 @@ bool resource_attach_surfaces_to_context(
- 		struct dc_state *context,
- 		const struct resource_pool *pool);
- 
-+bool resource_can_pipe_disable_cursor(struct pipe_ctx *pipe_ctx);
-+
- #define FREE_PIPE_INDEX_NOT_FOUND -1
- 
- /*
+-	struct block_sequence block_sequence[50];
++	struct block_sequence block_sequence[100];
+ 	unsigned int block_sequence_steps;
+ 	struct dc_dmub_cmd dc_dmub_cmd[10];
+ 	unsigned int dmub_cmd_count;
 -- 
 2.39.5
 
