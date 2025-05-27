@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B9D25A323;
-	Tue, 27 May 2025 17:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F151DC998;
+	Tue, 27 May 2025 17:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365468; cv=none; b=qLdb10+3za/DQX4qi2GJ1O2n6tLsfvvCov8o16BGuzsfIhIKNge07VUnVpmoXC5i1Pke09+nCjjzKsCxtAS3Ec/f0Ab0HgoXvlUBnXxmTLQpKsuUZDkjNETt8z9/NwRakWlCz+c5zrgByEdPd56Yub/lVeFUgyNRTBY7sJcrVJs=
+	t=1748365471; cv=none; b=UdCdAgtjFOjvru8mqFD4fmVO6jYLBKj6u5lfvVnLlCObP5VkGQY/S2fzo9rXN6TY5HHq7wrrccpkeA4HmGd1WgB8jIDux5Twf7gzJBUBmwpKlvZZH2BlbK5aF62vldfR/EanEZ6K0su3ljGYjbwdDMTXoTnzLkVvqTRdFm8tT7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365468; c=relaxed/simple;
-	bh=dKosc52lM0bxJ4UODjH9Xqi7uSqd/avXFzlYsipKJKQ=;
+	s=arc-20240116; t=1748365471; c=relaxed/simple;
+	bh=VRN7l92U9vJc/xLUSyzyjt9fV3Tp2BSPeg8dCyHG7+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YBls5ghr+59rvygdiwgRA78Oh7jVoX9NG6TgtBPan3AV6yZMl+ktDFvlKbbYlp7P+DcPJLxeA86MYfUgdQz0SZhUMgG+50QzABDoeuBPsscodXF1RYTc88rSMtwghIghI9xVl0n3QvQ7LekTWnmqM2wt5LQpVpEp0B2bbJebgaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HYpPvBUJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AyZ4eVEjJhfQNHVIpRIqrvsYFeuOunbG2ahX8L1BrlFoy3dAe5A5WJ/FO5uwipp+vB6R2hh6f9ngpkiattbehOWr9Ah7V5ObktNQFghCcSOrvEnulsA0ZzUUnnr0Q9XILMqVizov+7torOfJ8+NsYOfxHafnQSI57l0XHF9SZOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUxlkRfA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HYpPvBUJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DD4C4CEE9;
-	Tue, 27 May 2025 17:04:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUxlkRfA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB97C4CEE9;
+	Tue, 27 May 2025 17:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365468;
-	bh=dKosc52lM0bxJ4UODjH9Xqi7uSqd/avXFzlYsipKJKQ=;
+	s=korg; t=1748365471;
+	bh=VRN7l92U9vJc/xLUSyzyjt9fV3Tp2BSPeg8dCyHG7+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HYpPvBUJNe7Kb4nJUJZmjLJL6evzSgDboBtD8JkGbyD1MgQ2b2ytQn87pFN5FVIFV
-	 lvpNBYxkvEUJH0xTvYbCsXNyQC2giOtZNsMJ1sWAFOiS+QujbTtzZ6ZZb9uJJeiyIr
-	 nRg0KsVwuDHi/+tmJtu0DJkWh35NIJ/UtaTS37/s=
+	b=QUxlkRfAgSWrShVOQHonzatRX4XX6yiaAnD+rlwjeaY/WdRsBZ4zjurv5KgyHbVM9
+	 oSm6BCM8tdxd0+yBB554ibCk5gEe6xD218COSfopmp5iYIfUQhUjTe/sKJfEFHrIaQ
+	 raWBh9omqp7jvD4WNaWRRQwsfAei+vOcHbKGyiyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanteng Si <si.yanteng@linux.dev>,
-	Simon Horman <horms@kernel.org>,
-	Chong Qiao <qiaochong@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 386/626] net: stmmac: dwmac-loongson: Set correct {tx,rx}_fifo_size
-Date: Tue, 27 May 2025 18:24:39 +0200
-Message-ID: <20250527162500.701489082@linuxfoundation.org>
+Subject: [PATCH 6.12 387/626] drm/amdgpu/mes11: fix set_hw_resources_1 calculation
+Date: Tue, 27 May 2025 18:24:40 +0200
+Message-ID: <20250527162500.744494561@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -48,56 +46,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 8dbf0c7556454b52af91bae305ca71500c31495c ]
+[ Upstream commit 1350dd3691b5f757a948e5b9895d62c422baeb90 ]
 
-Now for dwmac-loongson {tx,rx}_fifo_size are uninitialised, which means
-zero. This means dwmac-loongson doesn't support changing MTU because in
-stmmac_change_mtu() it requires the fifo size be no less than MTU. Thus,
-set the correct tx_fifo_size and rx_fifo_size for it (16KB multiplied by
-queue counts).
+It's GPU page size not CPU page size.  In most cases they
+are the same, but not always.  This can lead to overallocation
+on systems with larger pages.
 
-Here {tx,rx}_fifo_size is initialised with the initial value (also the
-maximum value) of {tx,rx}_queues_to_use. So it will keep as 16KB if we
-don't change the queue count, and will be larger than 16KB if we change
-(decrease) the queue count. However stmmac_change_mtu() still work well
-with current logic (MTU cannot be larger than 16KB for stmmac).
-
-Note: the Fixes tag picked here is the oldest commit and key commit of
-the dwmac-loongson series "stmmac: Add Loongson platform support".
-
-Acked-by: Yanteng Si <si.yanteng@linux.dev>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Chong Qiao <qiaochong@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Link: https://patch.msgid.link/20250210134328.2755328-1-chenhuacai@loongson.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/mes_v11_0.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-index ab7c2750c1042..702ea5a00b56d 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-@@ -590,6 +590,9 @@ static int loongson_dwmac_probe(struct pci_dev *pdev, const struct pci_device_id
- 	if (ret)
- 		goto err_disable_device;
+diff --git a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
+index 7a773fcd7752c..49113df8baefd 100644
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
+@@ -690,7 +690,7 @@ static int mes_v11_0_set_hw_resources(struct amdgpu_mes *mes)
  
-+	plat->tx_fifo_size = SZ_16K * plat->tx_queues_to_use;
-+	plat->rx_fifo_size = SZ_16K * plat->rx_queues_to_use;
-+
- 	if (dev_of_node(&pdev->dev))
- 		ret = loongson_dwmac_dt_config(pdev, plat, &res);
- 	else
+ static int mes_v11_0_set_hw_resources_1(struct amdgpu_mes *mes)
+ {
+-	int size = 128 * PAGE_SIZE;
++	int size = 128 * AMDGPU_GPU_PAGE_SIZE;
+ 	int ret = 0;
+ 	struct amdgpu_device *adev = mes->adev;
+ 	union MESAPI_SET_HW_RESOURCES_1 mes_set_hw_res_pkt;
 -- 
 2.39.5
 
