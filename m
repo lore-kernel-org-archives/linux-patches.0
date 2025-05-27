@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3FE42A9B;
-	Tue, 27 May 2025 17:42:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FA5280023;
+	Tue, 27 May 2025 17:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367735; cv=none; b=uQSAKis6t7FjCvDB9KeP9hBiOex77Q2kXzKOxj0HBz5YyPozgGveUcwDzeol5qNGCxV7357g4y6H8jvK2uG/x5rSoM0+/P/WStApMBTNxcVGOmLJWowz5/HOWCbdf68zbRR2KbOf8jUmB6TdhNAR67trDtWH3O1kanwXvDMN8F4=
+	t=1748367738; cv=none; b=iz8Rr2oluObYeyj50X/WQejb9DYa3m5wQJNFZZiYSuWEhnCqnAGIq2MuVBaa2i3LV5UJd6cvHO4lBZMIozAEI973FcejZ73ii0hnCFU688RSv0E95ntgt4GZzfIs5RTKIkpcuNd1zKuj04+pNjKe9tgvtHR0qXTwYFOEIX9QyKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367735; c=relaxed/simple;
-	bh=MMawq7c+fsINb3YRTTGMqqQ4wRNqMvr6VMyJlSuGFv4=;
+	s=arc-20240116; t=1748367738; c=relaxed/simple;
+	bh=MbQR/bnPOCjkL81rKCdbZoE1ODNopmRXKduzouAFSFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TPDT67OYnPYHGFp0Qi+lKHYVyeTOfYPIoak1WSVEmMkviI3Hsc8KsirQeVoObZ9pOcDTGoZeorkuXQ8u5h3pdDZjhGfD/Px8u1daTAp+Nxem0kW2tEIogYHRbJJJlicz8uG42gL15AS+AQlkZrqZFatWSucPhbKGbY8JvtgmfLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oIXN4L+6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AszZAeYgVl0zLO3sl1yCtZU8I6F22+hAQp++dQuncHS15eG9A/VUJRgrVaRZpk3k71/JUWEILfI56YnSDX9FoF6WHsX2sIapO1omvFiQ5+/DDIY9M8Twxs8h1wm+2dd23o2DTVI39gcniH8RzFSKaSybirJE0j05DeA7EZdZUUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qt4z9DfI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oIXN4L+6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D99A1C4CEE9;
-	Tue, 27 May 2025 17:42:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qt4z9DfI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15C0CC4CEE9;
+	Tue, 27 May 2025 17:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367735;
-	bh=MMawq7c+fsINb3YRTTGMqqQ4wRNqMvr6VMyJlSuGFv4=;
+	s=korg; t=1748367738;
+	bh=MbQR/bnPOCjkL81rKCdbZoE1ODNopmRXKduzouAFSFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oIXN4L+6cH0QfdHtlTLvP3LkM3EmtX0lBXBkXGsqe7GJxYKJTPZDlkfcNyzAloW2g
-	 yJadXexFdzaJyB6aYveLowcE32pFyUbGqg78JlpAUMX27EJtBSv7n65S+nAINDwdWF
-	 3PQF3sSNqhlkJjC2PwrNeBVJCzmE1ULuK3Vc8BVQ=
+	b=qt4z9DfI5Guy/8bvuycLNBYfhKtC67T3/KlJRun10TtDxKGRxGHG511jhShACrHt3
+	 ffaYmp3nhNJzVFNw7I9qvx9X5ViYSCxwNyi8GB1BdMu7S3BF/sw7bDpirqoFuWUeRr
+	 yaaGaTUD3lN4yJm1L/b1ZFrcl6StIvOXixOOXJis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 452/783] media: stm32: csi: add missing pm_runtime_put on error
-Date: Tue, 27 May 2025 18:24:09 +0200
-Message-ID: <20250527162531.533775265@linuxfoundation.org>
+Subject: [PATCH 6.14 443/783] ASoC: soc-dai: check return value at snd_soc_dai_set_tdm_slot()
+Date: Tue, 27 May 2025 18:24:00 +0200
+Message-ID: <20250527162531.177926704@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,66 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alain Volmat <alain.volmat@foss.st.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit f7cd9c94959e7a5b8c4eca33e20bd6ba1b048a64 ]
+[ Upstream commit 7f1186a8d738661b941b298fd6d1d5725ed71428 ]
 
-Within the stm32_csi_start function, pm_runtime_put should
-be called upon error following pm_runtime_get_sync.
-Rework the function error handling by putting a label in
-order to have common error handling for all calls requiring
-pm_runtime_put.
+snd_soc_dai_set_tdm_slot() calls .xlate_tdm_slot_mask() or
+snd_soc_xlate_tdm_slot_mask(), but didn't check its return value.
+Let's check it.
 
-Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+This patch might break existing driver. In such case, let's makes
+each func to void instead of int.
+
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/87o6z7yk61.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/st/stm32/stm32-csi.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ sound/soc/soc-dai.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/st/stm32/stm32-csi.c b/drivers/media/platform/st/stm32/stm32-csi.c
-index a4f8db608cedd..0c776e4a7ce83 100644
---- a/drivers/media/platform/st/stm32/stm32-csi.c
-+++ b/drivers/media/platform/st/stm32/stm32-csi.c
-@@ -499,21 +499,19 @@ static int stm32_csi_start(struct stm32_csi_dev *csidev,
+diff --git a/sound/soc/soc-dai.c b/sound/soc/soc-dai.c
+index ca0308f6d41c1..dc7283ee4dfb0 100644
+--- a/sound/soc/soc-dai.c
++++ b/sound/soc/soc-dai.c
+@@ -275,10 +275,11 @@ int snd_soc_dai_set_tdm_slot(struct snd_soc_dai *dai,
  
- 	ret = pm_runtime_get_sync(csidev->dev);
- 	if (ret < 0)
--		return ret;
-+		goto error_put;
- 
- 	/* Retrieve CSI2PHY clock rate to compute CCFR value */
- 	phy_clk_frate = clk_get_rate(csidev->clks[STM32_CSI_CLK_CSI2PHY].clk);
- 	if (!phy_clk_frate) {
--		pm_runtime_put(csidev->dev);
- 		dev_err(csidev->dev, "CSI2PHY clock rate invalid (0)\n");
--		return ret;
-+		ret = -EINVAL;
-+		goto error_put;
- 	}
- 
- 	ret = stm32_csi_setup_lane_merger(csidev);
--	if (ret) {
--		pm_runtime_put(csidev->dev);
--		return ret;
--	}
+ 	if (dai->driver->ops &&
+ 	    dai->driver->ops->xlate_tdm_slot_mask)
+-		dai->driver->ops->xlate_tdm_slot_mask(slots,
+-						      &tx_mask, &rx_mask);
++		ret = dai->driver->ops->xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
+ 	else
+-		snd_soc_xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
++		ret = snd_soc_xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
 +	if (ret)
-+		goto error_put;
++		goto err;
  
- 	/* Enable the CSI */
- 	writel_relaxed(STM32_CSI_CR_CSIEN, csidev->base + STM32_CSI_CR);
-@@ -569,6 +567,10 @@ static int stm32_csi_start(struct stm32_csi_dev *csidev,
- 	writel_relaxed(0, csidev->base + STM32_CSI_PMCR);
- 
- 	return ret;
-+
-+error_put:
-+	pm_runtime_put(csidev->dev);
-+	return ret;
+ 	for_each_pcm_streams(stream)
+ 		snd_soc_dai_tdm_mask_set(dai, stream, *tdm_mask[stream]);
+@@ -287,6 +288,7 @@ int snd_soc_dai_set_tdm_slot(struct snd_soc_dai *dai,
+ 	    dai->driver->ops->set_tdm_slot)
+ 		ret = dai->driver->ops->set_tdm_slot(dai, tx_mask, rx_mask,
+ 						      slots, slot_width);
++err:
+ 	return soc_dai_ret(dai, ret);
  }
- 
- static void stm32_csi_stop(struct stm32_csi_dev *csidev)
+ EXPORT_SYMBOL_GPL(snd_soc_dai_set_tdm_slot);
 -- 
 2.39.5
 
