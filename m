@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279AB194A45;
-	Tue, 27 May 2025 17:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FD7194A45;
+	Tue, 27 May 2025 17:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368369; cv=none; b=SVGRgYOd0D/jHpx6lckHag6FaxNLeHyGXgL4gDiq7WQNc52wfYZCpiwCEsr5tvE3ZCI1KViOUJptkD8/yM9meOGNe3sUcyrwmoiFTXoaYdJFu8/1lFfzNNmQ83PPwFM32v7E3BqnnKbsviCWdkCZ+PENsldPvFrfF+T3AfdoAZc=
+	t=1748368372; cv=none; b=l3S3FsmJDr6m0bvSdR5hEL7fPvWG3pQijqwc4OSgFi7jR92yQ1oHG+zAebeei6x0vPNRHuK5S3JOTGZwRHees1Gn/8fR26UUzwKYy3RfRWzkDvzP9QPCP6zRY9IwkVNye+XgxFrbQPCkcoDscVDPYySv9R/E1T3Neg0cXccYbM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368369; c=relaxed/simple;
-	bh=yxVyo+iBytK6Dy0nvFTYioU1kkSJwkooYQU7JsxmZ5Q=;
+	s=arc-20240116; t=1748368372; c=relaxed/simple;
+	bh=2SqDwaMyM76LZDG+oCe2mCMLi0Ccrjyy3tgY5lhjqWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C2dpXXVpzqcdEXMSubgErnzSYe+ou0nk20NMNlG3djgpMmEd9wWsRZpzq/pu8b+LzeRvrzgD4NiKyP6OnNC9KFIYqZJ0X+SgyezwjURUEtpGj9VQSh80qADSvo5oymBCSwj6VLZgBpp5NB+T44o4/iuxMAPT/be1gnQk/roPnQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GiB1+1Qx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ghWj0Pmcf7lr+q9SMMHmkTJscYwf1/LeZgxwIm7D7SbxR07JY0n73RvmNz2yBWMmHh4CESzaka3Vuh62MAUgwAdG8WRh3ZqYxjanMiiuNZDAoJjXSJgXLiq1xD1+KsIbd38DcJFGInawKlmyMqSGKfJCzek7QLnzVgcRRdUY/nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuwHZK2C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GiB1+1Qx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2855C4CEE9;
-	Tue, 27 May 2025 17:52:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuwHZK2C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F47C4CEE9;
+	Tue, 27 May 2025 17:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368369;
-	bh=yxVyo+iBytK6Dy0nvFTYioU1kkSJwkooYQU7JsxmZ5Q=;
+	s=korg; t=1748368372;
+	bh=2SqDwaMyM76LZDG+oCe2mCMLi0Ccrjyy3tgY5lhjqWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GiB1+1QxqCJu+U3cpvRG4VynfS3jgeNyK7EocUyGTtjk3vdKJI5fPrW66OkN4xOhY
-	 h8K4W7Zfw1v4zhTSdbDD9h4x4o/P+kCXvr5TUUhlYeeW7zjAbkHHV9uejXfth1xjR8
-	 UvhuN0NfbwF23V0X+msbhzC0/QZJdB0yWNYQbZIg=
+	b=xuwHZK2C65zB7aRp7XL+Nid6Wor3qNeHRWnpyd4FmQ9UaCFE3ndja5N+yr6jxdIjv
+	 joxh2XKtPaq8a2Ux4T5uaQsGTojJ1JGuFOc3NaJENwBKlZCtZPddnh4HRQk8jdnE2L
+	 hwdCh/P/kuFcg4JMOpbgAGFqUqzjsIo8q/n17gSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Seongman Lee <augustus92@kaist.ac.kr>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 685/783] dmaengine: idxd: Fix allowing write() from different address spaces
-Date: Tue, 27 May 2025 18:28:02 +0200
-Message-ID: <20250527162541.025823287@linuxfoundation.org>
+Subject: [PATCH 6.14 686/783] x86/sev: Fix operator precedence in GHCB_MSR_VMPL_REQ_LEVEL macro
+Date: Tue, 27 May 2025 18:28:03 +0200
+Message-ID: <20250527162541.065501750@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,57 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Seongman Lee <augustus92@kaist.ac.kr>
 
-[ Upstream commit 8dfa57aabff625bf445548257f7711ef294cd30e ]
+[ Upstream commit f7387eff4bad33d12719c66c43541c095556ae4e ]
 
-Check if the process submitting the descriptor belongs to the same
-address space as the one that opened the file, reject otherwise.
+The GHCB_MSR_VMPL_REQ_LEVEL macro lacked parentheses around the bitmask
+expression, causing the shift operation to bind too early. As a result,
+when requesting VMPL1 (e.g., GHCB_MSR_VMPL_REQ_LEVEL(1)), incorrect
+values such as 0x000000016 were generated instead of the intended
+0x100000016 (the requested VMPL level is specified in GHCBData[39:32]).
 
-Fixes: 6827738dc684 ("dmaengine: idxd: add a write() method for applications to submit work")
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20250421170337.3008875-1-dave.jiang@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fix the precedence issue by grouping the masked value before applying
+the shift.
+
+  [ bp: Massage commit message. ]
+
+Fixes: 34ff65901735 ("x86/sev: Use kernel provided SVSM Calling Areas")
+Signed-off-by: Seongman Lee <augustus92@kaist.ac.kr>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/20250511092329.12680-1-cloudlee1719@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/cdev.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/x86/include/asm/sev-common.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-index ff94ee892339d..b847b74949f19 100644
---- a/drivers/dma/idxd/cdev.c
-+++ b/drivers/dma/idxd/cdev.c
-@@ -407,6 +407,9 @@ static int idxd_cdev_mmap(struct file *filp, struct vm_area_struct *vma)
- 	if (!idxd->user_submission_safe && !capable(CAP_SYS_RAWIO))
- 		return -EPERM;
+diff --git a/arch/x86/include/asm/sev-common.h b/arch/x86/include/asm/sev-common.h
+index dcbccdb280f9e..1385227125ab4 100644
+--- a/arch/x86/include/asm/sev-common.h
++++ b/arch/x86/include/asm/sev-common.h
+@@ -116,7 +116,7 @@ enum psc_op {
+ #define GHCB_MSR_VMPL_REQ		0x016
+ #define GHCB_MSR_VMPL_REQ_LEVEL(v)			\
+ 	/* GHCBData[39:32] */				\
+-	(((u64)(v) & GENMASK_ULL(7, 0) << 32) |		\
++	((((u64)(v) & GENMASK_ULL(7, 0)) << 32) |	\
+ 	/* GHCBDdata[11:0] */				\
+ 	GHCB_MSR_VMPL_REQ)
  
-+	if (current->mm != ctx->mm)
-+		return -EPERM;
-+
- 	rc = check_vma(wq, vma, __func__);
- 	if (rc < 0)
- 		return rc;
-@@ -473,6 +476,9 @@ static ssize_t idxd_cdev_write(struct file *filp, const char __user *buf, size_t
- 	ssize_t written = 0;
- 	int i;
- 
-+	if (current->mm != ctx->mm)
-+		return -EPERM;
-+
- 	for (i = 0; i < len/sizeof(struct dsa_hw_desc); i++) {
- 		int rc = idxd_submit_user_descriptor(ctx, udesc + i);
- 
-@@ -493,6 +499,9 @@ static __poll_t idxd_cdev_poll(struct file *filp,
- 	struct idxd_device *idxd = wq->idxd;
- 	__poll_t out = 0;
- 
-+	if (current->mm != ctx->mm)
-+		return -EPERM;
-+
- 	poll_wait(filp, &wq->err_queue, wait);
- 	spin_lock(&idxd->dev_lock);
- 	if (idxd->sw_err.valid)
 -- 
 2.39.5
 
