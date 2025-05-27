@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95191AF0BB;
-	Tue, 27 May 2025 17:31:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1771DC998;
+	Tue, 27 May 2025 17:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367075; cv=none; b=Uj6m1csNeyAS3Dw9/ktf1CatGZEI+NDjdAmUpbxfZaaH6RKfwGCf819X649nirdPUl86Yv98x1b11s8OWwu5Ijvk7LcehThmyEx1gpuRro6sUQvxBHv3ghjEFBZRCGD+Yq+k5/9ColkATCByL0mXZt5gTX0AzEe3zaP0/zJjiP4=
+	t=1748367080; cv=none; b=uWFGwFqLuWEPf+nS616YK2gt3tPFFWppP1loi2Ll+r2q6mDM2b5viI1R0eFAnRC2nVnmjW8CBvYRghszNoQ/ZXSwwHKxWQ1QEFnafy5KZVZ3XzhUhap09kFqIxaLJLwVgdRqrL1KiiO33k85pq85K4U04b5j6o+eRJq6VZq04bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367075; c=relaxed/simple;
-	bh=zowsrtAyCRj09WCy3Y2FK7FC94O9rvXmIA6LwA5OS7c=;
+	s=arc-20240116; t=1748367080; c=relaxed/simple;
+	bh=HuSgZsht0OTOVEWLbACCFYUSO9cuSqSytI6ChE8cTwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pywIAR0TePfdFpkSa5HZrAHiNluPvfOsk/HzksGhVixw3WeftDFuP8ck1/IjQ2dQEbmp9cv9da/+YUHJgDoWoYEwcT9JTQJP/vQMgaqn8h2sXYdgfngqR2xWjAOAjQhbHRku9Ugz7RXwaje3Jq8nu8LJZNuq7MLQ4wtiYAA8Ve4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZsdZlwH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eAfsdCZltBH03K6597eoc5/3t2IHl7ORtA7t8I1srlRTeXX16roL2R2424IRCERnIIJQpPihtuYKZCrYiG/2kBI0gNK/UUckTP5WBDZZsgKDOcMh3wczJTpTmEE/Hk20bkUL2PUy3nkdzGIdgfSOgYZMGo2yQW1LcSJhZw3Jup0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1UGiXssw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZsdZlwH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B902AC4CEE9;
-	Tue, 27 May 2025 17:31:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1UGiXssw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0048FC4CEE9;
+	Tue, 27 May 2025 17:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367075;
-	bh=zowsrtAyCRj09WCy3Y2FK7FC94O9rvXmIA6LwA5OS7c=;
+	s=korg; t=1748367080;
+	bh=HuSgZsht0OTOVEWLbACCFYUSO9cuSqSytI6ChE8cTwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ZsdZlwH7zuE9ffjmlK7lCQZ8aHcVkYRF3BmQ0ATmTjlfaXyOdl2dbORmfsMBbfcC
-	 PyBdWkn7YU6CEBnaH98OgqOjiVJf9n9EYBY65xUNOm8Ife996h0argC6WwFokEHSjX
-	 tQa8Fuk76FNF64crJki/qdBKDuyMROKbPcUoMVlM=
+	b=1UGiXsswNRY0SHfMcwIlpYG3aZTSFxe4Av43tebI/mm9HxBPat8K6QpRvUEX8gZm7
+	 ByL/+cspjL8RLxj4k0+dshJeBxBoB8SPtqJMPd+orxnkr5k5HPUoxTd34EZRcG/sCW
+	 6xDpQ/S9/Tu8rIOPMZY0nyBCCKF90lmXYwBfohFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Neronin <niklas.neronin@linux.intel.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 270/783] usb: xhci: set page size to the xHCI-supported size
-Date: Tue, 27 May 2025 18:21:07 +0200
-Message-ID: <20250527162524.080211498@linuxfoundation.org>
+Subject: [PATCH 6.14 271/783] dm cache: prevent BUG_ON by blocking retries on failed device resumes
+Date: Tue, 27 May 2025 18:21:08 +0200
+Message-ID: <20250527162524.120496869@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,124 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Neronin <niklas.neronin@linux.intel.com>
+From: Ming-Hung Tsai <mtsai@redhat.com>
 
-[ Upstream commit 68c1f1671650b49bbd26e6a65ddcf33f2565efa3 ]
+[ Upstream commit 5da692e2262b8f81993baa9592f57d12c2703dea ]
 
-The current xHCI driver does not validate whether a page size of 4096
-bytes is supported. Address the issue by setting the page size to the
-value supported by the xHCI controller, as read from the Page Size
-register. In the event of an unexpected value; default to a 4K page size.
+A cache device failing to resume due to mapping errors should not be
+retried, as the failure leaves a partially initialized policy object.
+Repeating the resume operation risks triggering BUG_ON when reloading
+cache mappings into the incomplete policy object.
 
-Additionally, this commit removes unnecessary debug messages and instead
-prints the supported and used page size once.
+Reproduce steps:
 
-The xHCI controller supports page sizes of (2^{(n+12)}) bytes, where 'n'
-is the Page Size Bit. Only one page size is supported, with a maximum
-page size of 128 KB.
+1. create a cache metadata consisting of 512 or more cache blocks,
+   with some mappings stored in the first array block of the mapping
+   array. Here we use cache_restore v1.0 to build the metadata.
 
-Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250306144954.3507700-10-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+cat <<EOF >> cmeta.xml
+<superblock uuid="" block_size="128" nr_cache_blocks="512" \
+policy="smq" hint_width="4">
+  <mappings>
+    <mapping cache_block="0" origin_block="0" dirty="false"/>
+  </mappings>
+</superblock>
+EOF
+dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
+cache_restore -i cmeta.xml -o /dev/mapper/cmeta --metadata-version=2
+dmsetup remove cmeta
+
+2. wipe the second array block of the mapping array to simulate
+   data degradations.
+
+mapping_root=$(dd if=/dev/sdc bs=1c count=8 skip=192 \
+2>/dev/null | hexdump -e '1/8 "%u\n"')
+ablock=$(dd if=/dev/sdc bs=1c count=8 skip=$((4096*mapping_root+2056)) \
+2>/dev/null | hexdump -e '1/8 "%u\n"')
+dd if=/dev/zero of=/dev/sdc bs=4k count=1 seek=$ablock
+
+3. try bringing up the cache device. The resume is expected to fail
+   due to the broken array block.
+
+dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
+dmsetup create cdata --table "0 65536 linear /dev/sdc 8192"
+dmsetup create corig --table "0 524288 linear /dev/sdc 262144"
+dmsetup create cache --notable
+dmsetup load cache --table "0 524288 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
+dmsetup resume cache
+
+4. try resuming the cache again. An unexpected BUG_ON is triggered
+   while loading cache mappings.
+
+dmsetup resume cache
+
+Kernel logs:
+
+(snip)
+------------[ cut here ]------------
+kernel BUG at drivers/md/dm-cache-policy-smq.c:752!
+Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN NOPTI
+CPU: 0 UID: 0 PID: 332 Comm: dmsetup Not tainted 6.13.4 #3
+RIP: 0010:smq_load_mapping+0x3e5/0x570
+
+Fix by disallowing resume operations for devices that failed the
+initial attempt.
+
+Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-mem.c | 34 ++++++++++++++++++----------------
- drivers/usb/host/xhci.h     |  8 ++++----
- 2 files changed, 22 insertions(+), 20 deletions(-)
+ drivers/md/dm-cache-target.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index 9aa7e2a876ec1..d698095fc88d3 100644
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -1953,7 +1953,6 @@ void xhci_mem_cleanup(struct xhci_hcd *xhci)
- 	xhci->interrupters = NULL;
- 
- 	xhci->page_size = 0;
--	xhci->page_shift = 0;
- 	xhci->usb2_rhub.bus_state.bus_suspended = 0;
- 	xhci->usb3_rhub.bus_state.bus_suspended = 0;
+diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
+index 9cb797a561d6e..6cee5eac8b9e2 100644
+--- a/drivers/md/dm-cache-target.c
++++ b/drivers/md/dm-cache-target.c
+@@ -2899,6 +2899,27 @@ static dm_cblock_t get_cache_dev_size(struct cache *cache)
+ 	return to_cblock(size);
  }
-@@ -2372,6 +2371,22 @@ xhci_create_secondary_interrupter(struct usb_hcd *hcd, unsigned int segs,
- }
- EXPORT_SYMBOL_GPL(xhci_create_secondary_interrupter);
  
-+static void xhci_hcd_page_size(struct xhci_hcd *xhci)
++static bool can_resume(struct cache *cache)
 +{
-+	u32 page_size;
-+
-+	page_size = readl(&xhci->op_regs->page_size) & XHCI_PAGE_SIZE_MASK;
-+	if (!is_power_of_2(page_size)) {
-+		xhci_warn(xhci, "Invalid page size register = 0x%x\n", page_size);
-+		/* Fallback to 4K page size, since that's common */
-+		page_size = 1;
++	/*
++	 * Disallow retrying the resume operation for devices that failed the
++	 * first resume attempt, as the failure leaves the policy object partially
++	 * initialized. Retrying could trigger BUG_ON when loading cache mappings
++	 * into the incomplete policy object.
++	 */
++	if (cache->sized && !cache->loaded_mappings) {
++		if (get_cache_mode(cache) != CM_WRITE)
++			DMERR("%s: unable to resume a failed-loaded cache, please check metadata.",
++			      cache_device_name(cache));
++		else
++			DMERR("%s: unable to resume cache due to missing proper cache table reload",
++			      cache_device_name(cache));
++		return false;
 +	}
 +
-+	xhci->page_size = page_size << 12;
-+	xhci_dbg_trace(xhci, trace_xhci_dbg_init, "HCD page size set to %iK",
-+		       xhci->page_size >> 10);
++	return true;
 +}
 +
- int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
+ static bool can_resize(struct cache *cache, dm_cblock_t new_size)
  {
- 	struct xhci_interrupter *ir;
-@@ -2379,7 +2394,7 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
- 	dma_addr_t	dma;
- 	unsigned int	val, val2;
- 	u64		val_64;
--	u32		page_size, temp;
-+	u32		temp;
- 	int		i;
+ 	if (from_cblock(new_size) > from_cblock(cache->cache_size)) {
+@@ -2947,6 +2968,9 @@ static int cache_preresume(struct dm_target *ti)
+ 	struct cache *cache = ti->private;
+ 	dm_cblock_t csize = get_cache_dev_size(cache);
  
- 	INIT_LIST_HEAD(&xhci->cmd_list);
-@@ -2388,20 +2403,7 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
- 	INIT_DELAYED_WORK(&xhci->cmd_timer, xhci_handle_command_timeout);
- 	init_completion(&xhci->cmd_ring_stop_completion);
- 
--	page_size = readl(&xhci->op_regs->page_size);
--	xhci_dbg_trace(xhci, trace_xhci_dbg_init,
--			"Supported page size register = 0x%x", page_size);
--	val = ffs(page_size) - 1;
--	if (val < 16)
--		xhci_dbg_trace(xhci, trace_xhci_dbg_init,
--			"Supported page size of %iK", (1 << (val + 12)) / 1024);
--	else
--		xhci_warn(xhci, "WARN: no supported page size\n");
--	/* Use 4K pages, since that's common and the minimum the HC supports */
--	xhci->page_shift = 12;
--	xhci->page_size = 1 << xhci->page_shift;
--	xhci_dbg_trace(xhci, trace_xhci_dbg_init,
--			"HCD page size set to %iK", xhci->page_size / 1024);
-+	xhci_hcd_page_size(xhci);
- 
- 	/*
- 	 * Program the Number of Device Slots Enabled field in the CONFIG
-diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-index 2c394cba120f1..7d22617417fe0 100644
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -211,6 +211,9 @@ struct xhci_op_regs {
- #define CONFIG_CIE		(1 << 9)
- /* bits 10:31 - reserved and should be preserved */
- 
-+/* bits 15:0 - HCD page shift bit */
-+#define XHCI_PAGE_SIZE_MASK     0xffff
++	if (!can_resume(cache))
++		return -EINVAL;
 +
- /**
-  * struct xhci_intr_reg - Interrupt Register Set
-  * @irq_pending:	IMAN - Interrupt Management Register.  Used to enable
-@@ -1514,10 +1517,7 @@ struct xhci_hcd {
- 	u16		max_interrupters;
- 	/* imod_interval in ns (I * 250ns) */
- 	u32		imod_interval;
--	/* 4KB min, 128MB max */
--	int		page_size;
--	/* Valid values are 12 to 20, inclusive */
--	int		page_shift;
-+	u32		page_size;
- 	/* MSI-X/MSI vectors */
- 	int		nvecs;
- 	/* optional clocks */
+ 	/*
+ 	 * Check to see if the cache has resized.
+ 	 */
 -- 
 2.39.5
 
