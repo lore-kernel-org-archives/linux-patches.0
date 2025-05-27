@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA89276051;
-	Tue, 27 May 2025 17:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5ED8271476;
+	Tue, 27 May 2025 17:04:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365452; cv=none; b=elQehLVBZEebjr841dMYdeutrKXzOPG0uOKusk21Vc2ZOGdAGeOTJiPWxcaxWcCof77TVqcJzk9O8SV252pKz8cpetDVhKqCg2LkpCkzCQCdXeeHwTyAh4bo1UYLw6nbWVl90K2XwQ84alHJrqWsYJv6JgDxe/qoGuSAODOD/II=
+	t=1748365458; cv=none; b=A08I3pJmQDSqJwcdik3pl3yFHKBKyXxT5AK4WIpVENjdGm7vICXhhz2rBuqboopPZDMSlTer4cA70UFtvKale/P1A98APWyggXhXSZMJB4EZPS7oEaPDQPW4mx4lb5GFCWaCuIC6Ha+Ak9fZAQGCWMM+ot/pZrr3lhDiEg/pNjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365452; c=relaxed/simple;
-	bh=fM3qcjB17DBFeIHDM77BXtqWi0LMPW3D0rqDwaZak14=;
+	s=arc-20240116; t=1748365458; c=relaxed/simple;
+	bh=NFZ09lppT9Kg9J7a/91S8z+2Z8sfZqistGO6VrbM9OM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HGW9ACV0GxqN3A4eM60B1jZH02wEVUpyb2+2M0+QpR+0eFUk2NtvLle+hfhty58o2sfwJ8LrWFVVK7aWfB54l5Ddur5Q3tqdagdZ/65U/e7VkSkz78Tx8pOSRO1XLs7SCh+occJRsPkFccJPJHK8jDf59JeB4bfl1rKwPcs8L0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MO0vgQOw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ivVTIZJXspXKx4T+5JkFEE1sCVL5tD0WlhyU4o3lsJ9or42AgSVfAtg25AdMeUWVrdm88WRgrdeDTF5cQ1vXfILtJ/pT2ltQIKaOjYApE3Bv5ToE1Xby9ZG9ScMry+8SRlgLxkALxFDW8NbPoy//CZgkX6vumpxtoSmRyeDYZ3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZs3gvrZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MO0vgQOw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FE94C4CEE9;
-	Tue, 27 May 2025 17:04:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZs3gvrZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C140C4CEEB;
+	Tue, 27 May 2025 17:04:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365452;
-	bh=fM3qcjB17DBFeIHDM77BXtqWi0LMPW3D0rqDwaZak14=;
+	s=korg; t=1748365458;
+	bh=NFZ09lppT9Kg9J7a/91S8z+2Z8sfZqistGO6VrbM9OM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MO0vgQOwBwpHVhquq2fHjWZB2+TBTpTJ7guodASPa+aA3iVW7wEcIw4V2HRbu5KIs
-	 Q3rVeaNmqbWQAdg4trtLmLAwUkb0AsePde6gBZ49c4s0CI+OAiIbaD7niyHKopqiNw
-	 40iOuLoVjRCSeoykW/OLU/wSNaDlRbLx1LYHIJWg=
+	b=cZs3gvrZTErgm6n+gUXA2TyWWWUIt1TK8Mk5VCEvpuC7ho5qSfG28mMA1PAFrYCrT
+	 Ld01amgq94clZ6oDMjyjx1vfY7DwZYqYIdO7L17AWFG9ipJirgq5VYOmO7F1Z6s4UX
+	 YwFQM5MHQ2oWX1Fu3RXk2M33nm+w7MyuONZPKp2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	"Artem S. Tashkinov" <aros@gmx.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 350/626] hrtimers: Replace hrtimer_clock_to_base_table with switch-case
-Date: Tue, 27 May 2025 18:24:03 +0200
-Message-ID: <20250527162459.238484656@linuxfoundation.org>
+Subject: [PATCH 6.12 352/626] media: test-drivers: vivid: dont call schedule in loop
+Date: Tue, 27 May 2025 18:24:05 +0200
+Message-ID: <20250527162459.320856595@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,85 +53,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Hans Verkuil <hverkuil@xs4all.nl>
 
-[ Upstream commit 4441b976dfeff0d3579e8da3c0283300c618a553 ]
+[ Upstream commit e4740118b752005cbed339aec9a1d1c43620e0b9 ]
 
-Clang and GCC complain about overlapped initialisers in the
-hrtimer_clock_to_base_table definition. With `make W=1` and CONFIG_WERROR=y
-(which is default nowadays) this breaks the build:
+Artem reported that the CPU load was 100% when capturing from
+vivid at low resolution with ffmpeg.
 
-  CC      kernel/time/hrtimer.o
-kernel/time/hrtimer.c:124:21: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
-  124 |         [CLOCK_REALTIME]        = HRTIMER_BASE_REALTIME,
+This was caused by:
 
-kernel/time/hrtimer.c:122:27: note: previous initialization is here
-  122 |         [0 ... MAX_CLOCKS - 1]  = HRTIMER_MAX_CLOCK_BASES,
+while (time_is_after_jiffies(cur_jiffies + wait_jiffies) &&
+       !kthread_should_stop())
+        schedule();
 
-(and similar for CLOCK_MONOTONIC, CLOCK_BOOTTIME, and CLOCK_TAI).
+If there are no other processes running that can be scheduled,
+then this is basically a busy-loop.
 
-hrtimer_clockid_to_base(), which uses the table, is only used in
-__hrtimer_init(), which is not a hotpath.
+Change it to wait_event_interruptible_timeout() which doesn't
+have that problem.
 
-Therefore replace the table lookup with a switch case in
-hrtimer_clockid_to_base() to avoid this warning.
-
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250214134424.3367619-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Reported-by: Artem S. Tashkinov <aros@gmx.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219570
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/hrtimer.c | 29 ++++++++++++-----------------
- 1 file changed, 12 insertions(+), 17 deletions(-)
+ drivers/media/test-drivers/vivid/vivid-kthread-cap.c  | 11 ++++++++---
+ drivers/media/test-drivers/vivid/vivid-kthread-out.c  | 11 ++++++++---
+ .../media/test-drivers/vivid/vivid-kthread-touch.c    | 11 ++++++++---
+ drivers/media/test-drivers/vivid/vivid-sdr-cap.c      | 11 ++++++++---
+ 4 files changed, 32 insertions(+), 12 deletions(-)
 
-diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index db9c06bb23116..06fbc226341fd 100644
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -117,16 +117,6 @@ DEFINE_PER_CPU(struct hrtimer_cpu_base, hrtimer_bases) =
- 	.csd = CSD_INIT(retrigger_next_event, NULL)
- };
+diff --git a/drivers/media/test-drivers/vivid/vivid-kthread-cap.c b/drivers/media/test-drivers/vivid/vivid-kthread-cap.c
+index 669bd96da4c79..273e8ed8c2a90 100644
+--- a/drivers/media/test-drivers/vivid/vivid-kthread-cap.c
++++ b/drivers/media/test-drivers/vivid/vivid-kthread-cap.c
+@@ -789,9 +789,14 @@ static int vivid_thread_vid_cap(void *data)
+ 			next_jiffies_since_start = jiffies_since_start;
  
--static const int hrtimer_clock_to_base_table[MAX_CLOCKS] = {
--	/* Make sure we catch unsupported clockids */
--	[0 ... MAX_CLOCKS - 1]	= HRTIMER_MAX_CLOCK_BASES,
--
--	[CLOCK_REALTIME]	= HRTIMER_BASE_REALTIME,
--	[CLOCK_MONOTONIC]	= HRTIMER_BASE_MONOTONIC,
--	[CLOCK_BOOTTIME]	= HRTIMER_BASE_BOOTTIME,
--	[CLOCK_TAI]		= HRTIMER_BASE_TAI,
--};
--
- static inline bool hrtimer_base_is_online(struct hrtimer_cpu_base *base)
- {
- 	if (!IS_ENABLED(CONFIG_HOTPLUG_CPU))
-@@ -1597,14 +1587,19 @@ u64 hrtimer_next_event_without(const struct hrtimer *exclude)
- 
- static inline int hrtimer_clockid_to_base(clockid_t clock_id)
- {
--	if (likely(clock_id < MAX_CLOCKS)) {
--		int base = hrtimer_clock_to_base_table[clock_id];
--
--		if (likely(base != HRTIMER_MAX_CLOCK_BASES))
--			return base;
-+	switch (clock_id) {
-+	case CLOCK_REALTIME:
-+		return HRTIMER_BASE_REALTIME;
-+	case CLOCK_MONOTONIC:
-+		return HRTIMER_BASE_MONOTONIC;
-+	case CLOCK_BOOTTIME:
-+		return HRTIMER_BASE_BOOTTIME;
-+	case CLOCK_TAI:
-+		return HRTIMER_BASE_TAI;
-+	default:
-+		WARN(1, "Invalid clockid %d. Using MONOTONIC\n", clock_id);
-+		return HRTIMER_BASE_MONOTONIC;
+ 		wait_jiffies = next_jiffies_since_start - jiffies_since_start;
+-		while (time_is_after_jiffies(cur_jiffies + wait_jiffies) &&
+-		       !kthread_should_stop())
+-			schedule();
++		if (!time_is_after_jiffies(cur_jiffies + wait_jiffies))
++			continue;
++
++		wait_queue_head_t wait;
++
++		init_waitqueue_head(&wait);
++		wait_event_interruptible_timeout(wait, kthread_should_stop(),
++					cur_jiffies + wait_jiffies - jiffies);
  	}
--	WARN(1, "Invalid clockid %d. Using MONOTONIC\n", clock_id);
--	return HRTIMER_BASE_MONOTONIC;
- }
+ 	dprintk(dev, 1, "Video Capture Thread End\n");
+ 	return 0;
+diff --git a/drivers/media/test-drivers/vivid/vivid-kthread-out.c b/drivers/media/test-drivers/vivid/vivid-kthread-out.c
+index fac6208b51da8..015a7b166a1e6 100644
+--- a/drivers/media/test-drivers/vivid/vivid-kthread-out.c
++++ b/drivers/media/test-drivers/vivid/vivid-kthread-out.c
+@@ -235,9 +235,14 @@ static int vivid_thread_vid_out(void *data)
+ 			next_jiffies_since_start = jiffies_since_start;
  
- static void __hrtimer_init(struct hrtimer *timer, clockid_t clock_id,
+ 		wait_jiffies = next_jiffies_since_start - jiffies_since_start;
+-		while (time_is_after_jiffies(cur_jiffies + wait_jiffies) &&
+-		       !kthread_should_stop())
+-			schedule();
++		if (!time_is_after_jiffies(cur_jiffies + wait_jiffies))
++			continue;
++
++		wait_queue_head_t wait;
++
++		init_waitqueue_head(&wait);
++		wait_event_interruptible_timeout(wait, kthread_should_stop(),
++					cur_jiffies + wait_jiffies - jiffies);
+ 	}
+ 	dprintk(dev, 1, "Video Output Thread End\n");
+ 	return 0;
+diff --git a/drivers/media/test-drivers/vivid/vivid-kthread-touch.c b/drivers/media/test-drivers/vivid/vivid-kthread-touch.c
+index fa711ee36a3fb..c862689786b69 100644
+--- a/drivers/media/test-drivers/vivid/vivid-kthread-touch.c
++++ b/drivers/media/test-drivers/vivid/vivid-kthread-touch.c
+@@ -135,9 +135,14 @@ static int vivid_thread_touch_cap(void *data)
+ 			next_jiffies_since_start = jiffies_since_start;
+ 
+ 		wait_jiffies = next_jiffies_since_start - jiffies_since_start;
+-		while (time_is_after_jiffies(cur_jiffies + wait_jiffies) &&
+-		       !kthread_should_stop())
+-			schedule();
++		if (!time_is_after_jiffies(cur_jiffies + wait_jiffies))
++			continue;
++
++		wait_queue_head_t wait;
++
++		init_waitqueue_head(&wait);
++		wait_event_interruptible_timeout(wait, kthread_should_stop(),
++					cur_jiffies + wait_jiffies - jiffies);
+ 	}
+ 	dprintk(dev, 1, "Touch Capture Thread End\n");
+ 	return 0;
+diff --git a/drivers/media/test-drivers/vivid/vivid-sdr-cap.c b/drivers/media/test-drivers/vivid/vivid-sdr-cap.c
+index 38cda33dffb2a..97cfc58b70571 100644
+--- a/drivers/media/test-drivers/vivid/vivid-sdr-cap.c
++++ b/drivers/media/test-drivers/vivid/vivid-sdr-cap.c
+@@ -206,9 +206,14 @@ static int vivid_thread_sdr_cap(void *data)
+ 			next_jiffies_since_start = jiffies_since_start;
+ 
+ 		wait_jiffies = next_jiffies_since_start - jiffies_since_start;
+-		while (time_is_after_jiffies(cur_jiffies + wait_jiffies) &&
+-		       !kthread_should_stop())
+-			schedule();
++		if (!time_is_after_jiffies(cur_jiffies + wait_jiffies))
++			continue;
++
++		wait_queue_head_t wait;
++
++		init_waitqueue_head(&wait);
++		wait_event_interruptible_timeout(wait, kthread_should_stop(),
++					cur_jiffies + wait_jiffies - jiffies);
+ 	}
+ 	dprintk(dev, 1, "SDR Capture Thread End\n");
+ 	return 0;
 -- 
 2.39.5
 
