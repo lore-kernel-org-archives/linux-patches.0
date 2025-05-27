@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649C91E89C;
-	Tue, 27 May 2025 17:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0DA1E89C;
+	Tue, 27 May 2025 17:19:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366369; cv=none; b=ukwtxIsbDek6eEh9QFs5xt329s1dSW3pQeqJjNryE5iaNMVbpumRwPJVJvSfeDlP81wfngtiQngsXcKVr36UKiCQFI3NMf54+Oi+VoAb2FgS8JvrYm/dGj7Q1BkOL1sIvWqVykTSMI8sfAtz+HZXWNWO9+w8aF/xjPcpuzsbV34=
+	t=1748366372; cv=none; b=EV/oMc6edUw0ALkq52LJJot9KADGWAdSgQpSvw2qj82uUyoC+SHXHwu8vA2d71ebHQ+VZy2FgBVY2OEnu3jkvCCXErHsfwF+bsOKB25FQuL91y6jIQDcuND298yANLRxL0woNNz3yvRLpfyEaCl/Pz4EV/tpCBgp053u9md5qI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366369; c=relaxed/simple;
-	bh=sOpoP25dLohZ8TVZLdr2WdkVjyd7HUjhN1QyMZaY5DI=;
+	s=arc-20240116; t=1748366372; c=relaxed/simple;
+	bh=87/iFQuXzZ7dV3eqyc3FsG97m+u5ru0Fcc/Xr03lw4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cwfTVU2m0I+u7MVfEnMJd9g4nwXIhlx7HXR2ckhduXBtQ6/Vlcth+Mdb50W1wO2R3YUwfxjdoZSmJwzw88R54FEqcpnpG6NqlUefGUM/7UJJOJiimrmgX6W7CbBZzqXh/i43GlEyw7Sh++vy+v/f20M5pHyBlDzmtipRBUSYwcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EM3ltQAd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=idzOoJ6Rd+Xj4K3lyCI7uKxWrfJwApcR6GCjvd94enXzdDcaE64Xfa8s6GYPKvDDtEjHGu4wh9KYthizYNNkbhUCBo/iyUuR2Gdp+KEKiwIEMJsSIIO31SI1oj5Yf8HKl4X+mVdmY+tugUEMcA7GdG02UFzzeSUS3I8xARxXhf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQal6Nwy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EM3ltQAd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD38C4CEE9;
-	Tue, 27 May 2025 17:19:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQal6Nwy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83E8C4CEE9;
+	Tue, 27 May 2025 17:19:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366369;
-	bh=sOpoP25dLohZ8TVZLdr2WdkVjyd7HUjhN1QyMZaY5DI=;
+	s=korg; t=1748366372;
+	bh=87/iFQuXzZ7dV3eqyc3FsG97m+u5ru0Fcc/Xr03lw4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EM3ltQAdZK8yxHoWKYqjuOz1MB4SrFF44zR3EbUl4cizjlg/BxZoqHciywjfAkKLX
-	 N4AcKEf9hGvJyBUZvNkET8DDBRGBgm00DlZt3dPoULgP4rGydJ0iXk3Ryp0dE6FPaV
-	 3/yciksO8gqMv9m5pmqcYpqr/NTCASTDiTQ5C3WQ=
+	b=KQal6NwyXOVyOVvd2ADa14251DmjO6iqroXJ7OMRuGxqieX7ihBP93tJXnnDXOaNa
+	 I++lSXdHdvJJMAGp9Mdc+gHR05PcogHCb+lwAS3fFXAKvJ/L+D4ppXYpdh4a1Y6qP4
+	 GkAxX2z/X1ULaWCbmSP/BWAWeEBNCSPQjjNwWFYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+efe683d57990864b8c8e@syzkaller.appspotmail.com,
-	Zhongqiu Han <quic_zhonhan@quicinc.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
+	Xi Pardee <xi.pardee@intel.com>,
+	Todd Brandt <todd.e.brandt@intel.com>,
+	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
+	"Xin Li (Intel)" <xin@zytor.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	Brian Gerst <brgerst@gmail.com>,
+	Juergen Gross <jgross@suse.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 018/783] virtio_ring: Fix data race by tagging event_triggered as racy for KCSAN
-Date: Tue, 27 May 2025 18:16:55 +0200
-Message-ID: <20250527162513.801148917@linuxfoundation.org>
+Subject: [PATCH 6.14 045/783] x86/fred: Fix system hang during S4 resume with FRED enabled
+Date: Tue, 27 May 2025 18:17:22 +0200
+Message-ID: <20250527162514.966932947@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,68 +59,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhongqiu Han <quic_zhonhan@quicinc.com>
+From: Xin Li (Intel) <xin@zytor.com>
 
-[ Upstream commit 2e2f925fe737576df2373931c95e1a2b66efdfef ]
+[ Upstream commit e5f1e8af9c9e151ecd665f6d2e36fb25fec3b110 ]
 
-syzbot reports a data-race when accessing the event_triggered, here is the
-simplified stack when the issue occurred:
+Upon a wakeup from S4, the restore kernel starts and initializes the
+FRED MSRs as needed from its perspective.  It then loads a hibernation
+image, including the image kernel, and attempts to load image pages
+directly into their original page frames used before hibernation unless
+those frames are currently in use.  Once all pages are moved to their
+original locations, it jumps to a "trampoline" page in the image kernel.
 
-==================================================================
-BUG: KCSAN: data-race in virtqueue_disable_cb / virtqueue_enable_cb_delayed
+At this point, the image kernel takes control, but the FRED MSRs still
+contain values set by the restore kernel, which may differ from those
+set by the image kernel before hibernation.  Therefore, the image kernel
+must ensure the FRED MSRs have the same values as before hibernation.
+Since these values depend only on the location of the kernel text and
+data, they can be recomputed from scratch.
 
-write to 0xffff8881025bc452 of 1 bytes by task 3288 on cpu 0:
- virtqueue_enable_cb_delayed+0x42/0x3c0 drivers/virtio/virtio_ring.c:2653
- start_xmit+0x230/0x1310 drivers/net/virtio_net.c:3264
- __netdev_start_xmit include/linux/netdevice.h:5151 [inline]
- netdev_start_xmit include/linux/netdevice.h:5160 [inline]
- xmit_one net/core/dev.c:3800 [inline]
-
-read to 0xffff8881025bc452 of 1 bytes by interrupt on cpu 1:
- virtqueue_disable_cb_split drivers/virtio/virtio_ring.c:880 [inline]
- virtqueue_disable_cb+0x92/0x180 drivers/virtio/virtio_ring.c:2566
- skb_xmit_done+0x5f/0x140 drivers/net/virtio_net.c:777
- vring_interrupt+0x161/0x190 drivers/virtio/virtio_ring.c:2715
- __handle_irq_event_percpu+0x95/0x490 kernel/irq/handle.c:158
- handle_irq_event_percpu kernel/irq/handle.c:193 [inline]
-
-value changed: 0x01 -> 0x00
-==================================================================
-
-When the data race occurs, the function virtqueue_enable_cb_delayed() sets
-event_triggered to false, and virtqueue_disable_cb_split/packed() reads it
-as false due to the race condition. Since event_triggered is an unreliable
-hint used for optimization, this should only cause the driver temporarily
-suggest that the device not send an interrupt notification when the event
-index is used.
-
-Fix this KCSAN reported data-race issue by explicitly tagging the access as
-data_racy.
-
-Reported-by: syzbot+efe683d57990864b8c8e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/67c7761a.050a0220.15b4b9.0018.GAE@google.com/
-Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
-Message-Id: <20250312130412.3516307-1-quic_zhonhan@quicinc.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Reported-by: Xi Pardee <xi.pardee@intel.com>
+Reported-by: Todd Brandt <todd.e.brandt@intel.com>
+Tested-by: Todd Brandt <todd.e.brandt@intel.com>
+Suggested-by: H. Peter Anvin (Intel) <hpa@zytor.com>
+Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: H. Peter Anvin (Intel) <hpa@zytor.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Brian Gerst <brgerst@gmail.com>
+Cc: Juergen Gross <jgross@suse.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20250401075728.3626147-1-xin@zytor.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_ring.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/power/cpu.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
-index fdd2d2b07b5a2..b784aab668670 100644
---- a/drivers/virtio/virtio_ring.c
-+++ b/drivers/virtio/virtio_ring.c
-@@ -2650,7 +2650,7 @@ bool virtqueue_enable_cb_delayed(struct virtqueue *_vq)
- 	struct vring_virtqueue *vq = to_vvq(_vq);
+diff --git a/arch/x86/power/cpu.c b/arch/x86/power/cpu.c
+index 63230ff8cf4f0..08e76a5ca1553 100644
+--- a/arch/x86/power/cpu.c
++++ b/arch/x86/power/cpu.c
+@@ -27,6 +27,7 @@
+ #include <asm/mmu_context.h>
+ #include <asm/cpu_device_id.h>
+ #include <asm/microcode.h>
++#include <asm/fred.h>
  
- 	if (vq->event_triggered)
--		vq->event_triggered = false;
-+		data_race(vq->event_triggered = false);
- 
- 	return vq->packed_ring ? virtqueue_enable_cb_delayed_packed(_vq) :
- 				 virtqueue_enable_cb_delayed_split(_vq);
+ #ifdef CONFIG_X86_32
+ __visible unsigned long saved_context_ebx;
+@@ -231,6 +232,19 @@ static void notrace __restore_processor_state(struct saved_context *ctxt)
+ 	 */
+ #ifdef CONFIG_X86_64
+ 	wrmsrl(MSR_GS_BASE, ctxt->kernelmode_gs_base);
++
++	/*
++	 * Reinitialize FRED to ensure the FRED MSRs contain the same values
++	 * as before hibernation.
++	 *
++	 * Note, the setup of FRED RSPs requires access to percpu data
++	 * structures.  Therefore, FRED reinitialization can only occur after
++	 * the percpu access pointer (i.e., MSR_GS_BASE) is restored.
++	 */
++	if (ctxt->cr4 & X86_CR4_FRED) {
++		cpu_init_fred_exceptions();
++		cpu_init_fred_rsps();
++	}
+ #else
+ 	loadsegment(fs, __KERNEL_PERCPU);
+ #endif
 -- 
 2.39.5
 
