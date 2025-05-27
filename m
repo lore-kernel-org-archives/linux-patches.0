@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A97827FD63;
-	Tue, 27 May 2025 17:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFCC52820AF;
+	Tue, 27 May 2025 17:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368646; cv=none; b=er9lqo9bRCwafayyh8h6JJQbap+5QwdoOXv40zOmK34OTpRka+yh2f4VjCI9/vhO7FF2Q/dn3wqpm0+tUk0L57fFqvcdy6AAhIL+Il1l7Qs9KgEFFImxFpnNmP4j/W3Zgc3QnI390DZxuYPsOa4rGI4U75pwFo97Lfugw/24BkQ=
+	t=1748368649; cv=none; b=Vr4TY560GQxMOcYWOxGB+vuFwbyw04kbmngfItlSgJhftWuUY9n7fWuj20Z/TXChV8DC4mBGUKTN/ABLmwZecPMXGzFuc23v6AgBhpGy5gxJWOVh7HvBYg9DAvGBfRcWIS4eozyw7JQgR+aTTxgZi3gn1g1YVr2dzX8osKnNspU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368646; c=relaxed/simple;
-	bh=p7Rl5pRXIH799Xo1LoYJNT5+Lk6ZJ4qH+3JV7vioMAI=;
+	s=arc-20240116; t=1748368649; c=relaxed/simple;
+	bh=Ez3jCceKjqmtQ5gYg3dxlzBs//p1GKRjiQGLadz4yH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TmA9UeaVSHhniln6UlxUcbwe5t0P5RCGPQkQUYrjyfHXscxYjkLVZ/6eliT7vc3rgxoVULLUR8I71kYx2KAsT8XLBozuLqmzcZd6MTEUE+28nLrOlZ9oiqBKth3Z8x5kEkT2l1wRDEg5INL7+JJ6DkJ/Y8Zf5svSVuNZmSaITnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CcTCdath; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fdDtR+PTkAtVaJDzR8yezypdA/U7fP1HD7cFbFzxy659jF5F0UYrrqlHbazvBoBrjqP493yfVQR+k/ZRX+3+bibMbKFI5QH2RdXDtAZZ7yRt6v9OUUWGZ5TLDL78L2wa4wMnXmKXPiXWDaCSZCRaC+YOGOmJ4+xSOon7/aXtKuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/ZmH7m1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CcTCdath"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113C6C4CEE9;
-	Tue, 27 May 2025 17:57:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/ZmH7m1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0372C4CEE9;
+	Tue, 27 May 2025 17:57:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368646;
-	bh=p7Rl5pRXIH799Xo1LoYJNT5+Lk6ZJ4qH+3JV7vioMAI=;
+	s=korg; t=1748368649;
+	bh=Ez3jCceKjqmtQ5gYg3dxlzBs//p1GKRjiQGLadz4yH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CcTCdath7oBCHD6Ao1wp8iTMqVFQiH29zc1PWJ7/6z2uSKwiVFHhJlNNdUlO1w8/0
-	 bErJgJsOWXUID0QqkrwYEqA0AOrjqh0CXArRfndwXXkF5ssLEFUyvdsyYXLP5c4Ruv
-	 FFWLacu0tMQcD1BQ9d73RqNIW7Keyg5fTckzNSGQ=
+	b=t/ZmH7m1pMs69BE+uxmkpR2gna7O6R3MFew181zhLw80xKEHfRMJCPMF7mkn/LEQP
+	 slZPkxHvH/PgJL0y3Qzo3jShU82Yi1ZV1QsUfv9sSGoTmteJEFgMTt7FSYa5xa/Ujv
+	 YhIa7SO0yTSggUUgsW59Mb6/WUKUV2uSCGeZPP0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	zhang ning <zhangn1985@outlook.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.14 743/783] thermal: intel: x86_pkg_temp_thermal: Fix bogus trip temperature
-Date: Tue, 27 May 2025 18:29:00 +0200
-Message-ID: <20250527162543.383249706@linuxfoundation.org>
+	"feijuan.li" <feijuan.li@samsung.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.14 744/783] drm/edid: fixed the bug that hdr metadata was not reset
+Date: Tue, 27 May 2025 18:29:01 +0200
+Message-ID: <20250527162543.426107971@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,39 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: feijuan.li <feijuan.li@samsung.com>
 
-commit cf948c8e274e8b406e846cdf6cc48fe47f98cf57 upstream.
+commit 6692dbc15e5ed40a3aa037aced65d7b8826c58cd upstream.
 
-The tj_max value obtained from the Intel TCC library are in Celsius,
-whereas the thermal subsystem operates in milli-Celsius.
+When DP connected to a device with HDR capability,
+the hdr structure was filled.Then connected to another
+sink device without hdr capability, but the hdr info
+still exist.
 
-This discrepancy leads to incorrect trip temperature calculations.
-
-Fix bogus trip temperature by converting tj_max to milli-Celsius Unit.
-
-Fixes: 8ef0ca4a177d ("Merge back other thermal control material for 6.3.")
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Reported-by: zhang ning <zhangn1985@outlook.com>
-Closes: https://lore.kernel.org/all/TY2PR01MB3786EF0FE24353026293F5ACCD97A@TY2PR01MB3786.jpnprd01.prod.outlook.com/
-Tested-by: zhang ning <zhangn1985@outlook.com>
-Cc: 6.3+ <stable@vger.kernel.org> # 6.3+
-Link: https://patch.msgid.link/20250519070901.1031233-1-rui.zhang@intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: e85959d6cbe0 ("drm: Parse HDR metadata info from EDID")
+Cc: <stable@vger.kernel.org> # v5.3+
+Signed-off-by: "feijuan.li" <feijuan.li@samsung.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://lore.kernel.org/r/20250514063511.4151780-1-feijuan.li@samsung.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/intel/x86_pkg_temp_thermal.c |    1 +
+ drivers/gpu/drm/drm_edid.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/thermal/intel/x86_pkg_temp_thermal.c
-+++ b/drivers/thermal/intel/x86_pkg_temp_thermal.c
-@@ -329,6 +329,7 @@ static int pkg_temp_thermal_device_add(u
- 	tj_max = intel_tcc_get_tjmax(cpu);
- 	if (tj_max < 0)
- 		return tj_max;
-+	tj_max *= 1000;
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -6596,6 +6596,7 @@ static void drm_reset_display_info(struc
+ 	info->has_hdmi_infoframe = false;
+ 	info->rgb_quant_range_selectable = false;
+ 	memset(&info->hdmi, 0, sizeof(info->hdmi));
++	memset(&connector->hdr_sink_metadata, 0, sizeof(connector->hdr_sink_metadata));
  
- 	zonedev = kzalloc(sizeof(*zonedev), GFP_KERNEL);
- 	if (!zonedev)
+ 	info->edid_hdmi_rgb444_dc_modes = 0;
+ 	info->edid_hdmi_ycbcr444_dc_modes = 0;
 
 
