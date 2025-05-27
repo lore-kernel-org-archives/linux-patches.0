@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F59F1EA91;
-	Tue, 27 May 2025 16:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03821EA91;
+	Tue, 27 May 2025 16:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364542; cv=none; b=KBMQat+VkqbaQESNGDBFYGloG+P7h1jYO5ud9LQKSyqNK7+3jku82KR8Xgr1xl31+wU7/zHnN1uqcDSewgMPsvQzVoWE310ggAM0bvVCHZo+zWse/BYTOmf/ak9IVKvUerihCJtsg61cnegUidGNOGNHQOQ6/N7rVEdyofqsTaY=
+	t=1748364545; cv=none; b=NfdJeMa4im4OHARf6dEnB4W7fk/+DR4suNffIRz/j0t5vore38epnWYjZUS6CiDNZ42VkxkRpEgHF7waqiuHENLoidxEBOU6+fuaq4KXVzht3uUKlolNtQYVsmUqVSzea9xzr6hHsvgxrfxC8K0z+m8XXbu8mzyuxvTQKE0TUvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364542; c=relaxed/simple;
-	bh=ntsGJaC1VDYq7GMiEpY0i/DgI9vIOSKtZNKmmpvqfno=;
+	s=arc-20240116; t=1748364545; c=relaxed/simple;
+	bh=FyzLew4tnQg+r7/OioV5MvSrs854eiIAN1ikyQezshw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bbqHhFxAyqsku4PhivN6DSBJs7iirglq1s3HFG+1/s8wwc80etniQ9VzloAyI4tw4LTvNojWbEbkzVGsy2IC86Xq1BmWsAd6+KFaIly3ACcahUOEH9P+VnSAOcsoT5ZhITOQZtluin92FIpnFca/fz0tmJXdxyU28+GEV9mlfjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvupUxpV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X3NHcatvK2XCJnomCNRF9E/qVUfco3UFO7QZbaX+pJ3hMuhfjU61WVPZYTxZa76+FYS+5s7CKWkeI1KVW9pYq2KjlDrxjfKw1EuOC4Psid3oa3cyIwUvAcF6ZpAesXTGnibTuCJ4h8fbguO2/jCPTfUhpab7Ov4gEuu7qM4wgiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7Bw31tr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvupUxpV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C986EC4CEE9;
-	Tue, 27 May 2025 16:49:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7Bw31tr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ACB1C4CEEB;
+	Tue, 27 May 2025 16:49:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364542;
-	bh=ntsGJaC1VDYq7GMiEpY0i/DgI9vIOSKtZNKmmpvqfno=;
+	s=korg; t=1748364545;
+	bh=FyzLew4tnQg+r7/OioV5MvSrs854eiIAN1ikyQezshw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LvupUxpVJiy7kkcUZWcqzLHgnbMBB5dc4Cz245BVQ+JZDLE29lbKURCY06wnnrRt+
-	 oXuwGyo86cQbGPSsQHNWz2c5vnw+cViEUf1ckPJ33QSusR3K4sNIINQlC2S3ZcC1+E
-	 WOVL4IvZ5SfSCdLnZScxVMNRTYr8fwkYvyWh+/3g=
+	b=S7Bw31trOaT+3I+y/pWgHgSz4mMabHz/xUfrpe8iG+jB/65SitM8gf0PEZcsgfUnv
+	 /zJvACG+Am3SvWfWP2+9S28eYWY1sDQrls89vcyNnr/zjpLx4MlgiTQn3i1sXEHIDU
+	 hufF5umDd2YSlDZm9WmVcAM9JP1y8NaUwSv4WOxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Flora Cui <flora.cui@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 090/626] pNFS/flexfiles: Report ENETDOWN as a connection error
-Date: Tue, 27 May 2025 18:19:43 +0200
-Message-ID: <20250527162448.700516866@linuxfoundation.org>
+Subject: [PATCH 6.12 091/626] drm/amdgpu/discovery: check ip_discovery fw file available
+Date: Tue, 27 May 2025 18:19:44 +0200
+Message-ID: <20250527162448.741907475@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,35 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Flora Cui <flora.cui@amd.com>
 
-[ Upstream commit aa42add73ce9b9e3714723d385c254b75814e335 ]
+[ Upstream commit 017fbb6690c2245b1b4ef39b66c79d2990fe63dd ]
 
-If the client should see an ENETDOWN when trying to connect to the data
-server, it might still be able to talk to the metadata server through
-another NIC. If so, report the error.
-
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Tested-by: Jeff Layton <jlayton@kernel.org>
-Acked-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Flora Cui <flora.cui@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c | 31 ++++++++++---------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
-index a1cfe4cc60c4b..8f7ea4076653d 100644
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -1263,6 +1263,7 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
- 		case -ECONNRESET:
- 		case -EHOSTDOWN:
- 		case -EHOSTUNREACH:
-+		case -ENETDOWN:
- 		case -ENETUNREACH:
- 		case -EADDRINUSE:
- 		case -ENOBUFS:
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+index ca8091fd3a24f..018240a2ab96a 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+@@ -111,8 +111,7 @@
+ #include "amdgpu_isp.h"
+ #endif
+ 
+-#define FIRMWARE_IP_DISCOVERY "amdgpu/ip_discovery.bin"
+-MODULE_FIRMWARE(FIRMWARE_IP_DISCOVERY);
++MODULE_FIRMWARE("amdgpu/ip_discovery.bin");
+ 
+ #define mmIP_DISCOVERY_VERSION  0x16A00
+ #define mmRCC_CONFIG_MEMSIZE	0xde3
+@@ -295,21 +294,13 @@ static int amdgpu_discovery_read_binary_from_mem(struct amdgpu_device *adev,
+ 	return ret;
+ }
+ 
+-static int amdgpu_discovery_read_binary_from_file(struct amdgpu_device *adev, uint8_t *binary)
++static int amdgpu_discovery_read_binary_from_file(struct amdgpu_device *adev,
++							uint8_t *binary,
++							const char *fw_name)
+ {
+ 	const struct firmware *fw;
+-	const char *fw_name;
+ 	int r;
+ 
+-	switch (amdgpu_discovery) {
+-	case 2:
+-		fw_name = FIRMWARE_IP_DISCOVERY;
+-		break;
+-	default:
+-		dev_warn(adev->dev, "amdgpu_discovery is not set properly\n");
+-		return -EINVAL;
+-	}
+-
+ 	r = request_firmware(&fw, fw_name, adev->dev);
+ 	if (r) {
+ 		dev_err(adev->dev, "can't load firmware \"%s\"\n",
+@@ -402,10 +393,19 @@ static int amdgpu_discovery_verify_npsinfo(struct amdgpu_device *adev,
+ 	return 0;
+ }
+ 
++static const char *amdgpu_discovery_get_fw_name(struct amdgpu_device *adev)
++{
++	if (amdgpu_discovery == 2)
++		return "amdgpu/ip_discovery.bin";
++
++	return NULL;
++}
++
+ static int amdgpu_discovery_init(struct amdgpu_device *adev)
+ {
+ 	struct table_info *info;
+ 	struct binary_header *bhdr;
++	const char *fw_name;
+ 	uint16_t offset;
+ 	uint16_t size;
+ 	uint16_t checksum;
+@@ -417,9 +417,10 @@ static int amdgpu_discovery_init(struct amdgpu_device *adev)
+ 		return -ENOMEM;
+ 
+ 	/* Read from file if it is the preferred option */
+-	if (amdgpu_discovery == 2) {
++	fw_name = amdgpu_discovery_get_fw_name(adev);
++	if (fw_name != NULL) {
+ 		dev_info(adev->dev, "use ip discovery information from file");
+-		r = amdgpu_discovery_read_binary_from_file(adev, adev->mman.discovery_bin);
++		r = amdgpu_discovery_read_binary_from_file(adev, adev->mman.discovery_bin, fw_name);
+ 
+ 		if (r) {
+ 			dev_err(adev->dev, "failed to read ip discovery binary from file\n");
 -- 
 2.39.5
 
