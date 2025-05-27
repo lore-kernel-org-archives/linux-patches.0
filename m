@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442ED78F32;
-	Tue, 27 May 2025 17:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244EB78F32;
+	Tue, 27 May 2025 17:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365295; cv=none; b=l+1a2kUCi1m3pheT9hcP9CV7S1dG75Oj9Ss3uktdzrf2Eu1M5Z6gIesKo1pO7VqNjldfwg6Jja+t5oHzv3dWU8V18Gx+Evs0eEp6vqBLlc1IOGqFn++XI3OlR3+vsWaC7tRi1zOZXheH8D0LCCtaKOEwxrOrMy5CPjSWrv08hyg=
+	t=1748365298; cv=none; b=alKTo1mV4NzSvPccZSdU/vd8NMAzGNa9Ul9iP7imrA3du8VoLtKUQDesMcDkPaNzhWo9IfEYe7PMsnXvrj16F4xvqVIG1R7DgSwtdQBhzreKjyMDTMIvmmh31JN1YwD2F/zkQ/J3WnBAXMq9YZdk6+V5eiH9ZhMsb5tPLdAVSOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365295; c=relaxed/simple;
-	bh=QjR7j7SimQF0QaA8rz6+3Ca7YalVjUQIOlhdvyX78xU=;
+	s=arc-20240116; t=1748365298; c=relaxed/simple;
+	bh=hLbM61zMa0q/KLuejOsBvCPF5X8DuvA4gZaLeSMZLJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ldsw8YnyB/vRCBbYsSpAWNID8idoquO25YpoY/WsbQpTVxsFlztNQCPVwBDSGiKe4AYh6dCQ0yLJjtMS0TLR4p+oCefUJ62y8yaTGF1kUgNhP7/TQPg8tOrApzRlKrhYTME3ua1RFrIGWzcdAeXkhwASEs7IiVbEaHxRXEBHoy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqjY1651; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iu6ioeCm6U19PBhaYkmGl73ZRNsJtOFx+Hfmg1mq7gGpfXpIL19gmeA0a/pWW6IKBPgMAE3WgqTv26wO3STyrWfL4rovbbdgAY1XBXpRiJtuw3+oe0GLcFRBjL2sobc1a52O+ezhP3b+byb7kA50xjJL6c+kBm1jmJQo8rX12os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxyk70X9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqjY1651"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C87C4CEE9;
-	Tue, 27 May 2025 17:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxyk70X9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F8BC4CEE9;
+	Tue, 27 May 2025 17:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365295;
-	bh=QjR7j7SimQF0QaA8rz6+3Ca7YalVjUQIOlhdvyX78xU=;
+	s=korg; t=1748365298;
+	bh=hLbM61zMa0q/KLuejOsBvCPF5X8DuvA4gZaLeSMZLJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gqjY1651xmwEvox3oITORtNq9cKS0qCBv0gkO9Qovbuy60JEQfEdTz10wHitS7v0L
-	 Ox7kNjyIkfsW2Kx1YlABN1RSIJiRcBHbC5JsgvKgAVSzJgGdrQscfZVBPP+ZiLfDhH
-	 WHLNI/ACw/BWmr7Ncb8GVjWNtld58/t56JdZjJXU=
+	b=pxyk70X918LyzB7xkESIDujyWdGtf2sF1D7R1VTJH+MlQ0ZU1LP8kYLyjaq3VGVlM
+	 8IYz8glcnjPtvKvAGCXkBHepCRi9FNS1CgCWI9SJ47wI1Tvs69QFtME7hYuqAF4qJu
+	 G8+hxVgjL766idZ4p+poRlH7kWB+a6bA9vbE7JrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uros Bizjak <ubizjak@gmail.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Eddie James <eajames@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 312/626] x86/locking: Use ALT_OUTPUT_SP() for percpu_{,try_}cmpxchg{64,128}_op()
-Date: Tue, 27 May 2025 18:23:25 +0200
-Message-ID: <20250527162457.710462987@linuxfoundation.org>
+Subject: [PATCH 6.12 330/626] eeprom: ee1004: Check chip before probing
+Date: Tue, 27 May 2025 18:23:43 +0200
+Message-ID: <20250527162458.436993675@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,90 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uros Bizjak <ubizjak@gmail.com>
+From: Eddie James <eajames@linux.ibm.com>
 
-[ Upstream commit 4087e16b033140cf2ce509ec23503bddec818a16 ]
+[ Upstream commit d9406677428e9234ea62bb2d2f5e996d1b777760 ]
 
-percpu_{,try_}cmpxchg{64,128}() macros use CALL instruction inside
-asm statement in one of their alternatives. Use ALT_OUTPUT_SP()
-macro to add required dependence on %esp register.
+Like other eeprom drivers, check if the device is really there and
+functional before probing.
 
-ALT_OUTPUT_SP() implements the above dependence by adding
-ASM_CALL_CONSTRAINT to its arguments. This constraint should be used
-for any inline asm which has a CALL instruction, otherwise the
-compiler may schedule the asm before the frame pointer gets set up
-by the containing function, causing objtool to print a "call without
-frame pointer save/setup" warning.
-
-Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20250214150929.5780-1-ubizjak@gmail.com
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250218220959.721698-1-eajames@linux.ibm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/percpu.h | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ drivers/misc/eeprom/ee1004.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/x86/include/asm/percpu.h b/arch/x86/include/asm/percpu.h
-index c55a79d5feaeb..2d9c250b3c8d8 100644
---- a/arch/x86/include/asm/percpu.h
-+++ b/arch/x86/include/asm/percpu.h
-@@ -349,9 +349,9 @@ do {									\
- 									\
- 	asm qual (ALTERNATIVE("call this_cpu_cmpxchg8b_emu",		\
- 			      "cmpxchg8b " __percpu_arg([var]), X86_FEATURE_CX8) \
--		  : [var] "+m" (__my_cpu_var(_var)),			\
--		    "+a" (old__.low),					\
--		    "+d" (old__.high)					\
-+		  : ALT_OUTPUT_SP([var] "+m" (__my_cpu_var(_var)),	\
-+				  "+a" (old__.low),			\
-+				  "+d" (old__.high))			\
- 		  : "b" (new__.low),					\
- 		    "c" (new__.high),					\
- 		    "S" (&(_var))					\
-@@ -380,10 +380,10 @@ do {									\
- 	asm qual (ALTERNATIVE("call this_cpu_cmpxchg8b_emu",		\
- 			      "cmpxchg8b " __percpu_arg([var]), X86_FEATURE_CX8) \
- 		  CC_SET(z)						\
--		  : CC_OUT(z) (success),				\
--		    [var] "+m" (__my_cpu_var(_var)),			\
--		    "+a" (old__.low),					\
--		    "+d" (old__.high)					\
-+		  : ALT_OUTPUT_SP(CC_OUT(z) (success),			\
-+				  [var] "+m" (__my_cpu_var(_var)),	\
-+				  "+a" (old__.low),			\
-+				  "+d" (old__.high))			\
- 		  : "b" (new__.low),					\
- 		    "c" (new__.high),					\
- 		    "S" (&(_var))					\
-@@ -420,9 +420,9 @@ do {									\
- 									\
- 	asm qual (ALTERNATIVE("call this_cpu_cmpxchg16b_emu",		\
- 			      "cmpxchg16b " __percpu_arg([var]), X86_FEATURE_CX16) \
--		  : [var] "+m" (__my_cpu_var(_var)),			\
--		    "+a" (old__.low),					\
--		    "+d" (old__.high)					\
-+		  : ALT_OUTPUT_SP([var] "+m" (__my_cpu_var(_var)),	\
-+				  "+a" (old__.low),			\
-+				  "+d" (old__.high))			\
- 		  : "b" (new__.low),					\
- 		    "c" (new__.high),					\
- 		    "S" (&(_var))					\
-@@ -451,10 +451,10 @@ do {									\
- 	asm qual (ALTERNATIVE("call this_cpu_cmpxchg16b_emu",		\
- 			      "cmpxchg16b " __percpu_arg([var]), X86_FEATURE_CX16) \
- 		  CC_SET(z)						\
--		  : CC_OUT(z) (success),				\
--		    [var] "+m" (__my_cpu_var(_var)),			\
--		    "+a" (old__.low),					\
--		    "+d" (old__.high)					\
-+		  : ALT_OUTPUT_SP(CC_OUT(z) (success),			\
-+				  [var] "+m" (__my_cpu_var(_var)),	\
-+				  "+a" (old__.low),			\
-+				  "+d" (old__.high))			\
- 		  : "b" (new__.low),					\
- 		    "c" (new__.high),					\
- 		    "S" (&(_var))					\
+diff --git a/drivers/misc/eeprom/ee1004.c b/drivers/misc/eeprom/ee1004.c
+index 89224d4af4a20..e13f9fdd9d7b1 100644
+--- a/drivers/misc/eeprom/ee1004.c
++++ b/drivers/misc/eeprom/ee1004.c
+@@ -304,6 +304,10 @@ static int ee1004_probe(struct i2c_client *client)
+ 				     I2C_FUNC_SMBUS_BYTE | I2C_FUNC_SMBUS_READ_BYTE_DATA))
+ 		return -EPFNOSUPPORT;
+ 
++	err = i2c_smbus_read_byte(client);
++	if (err < 0)
++		return -ENODEV;
++
+ 	mutex_lock(&ee1004_bus_lock);
+ 
+ 	err = ee1004_init_bus_data(client);
 -- 
 2.39.5
 
