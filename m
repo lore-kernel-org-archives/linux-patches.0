@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CEB1CD0C;
-	Tue, 27 May 2025 17:27:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D9D1CD0C;
+	Tue, 27 May 2025 17:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366851; cv=none; b=oLwEylnlGG3KRVW+hyvWxxOP1gYWTSPgd3rQ30VknU1AhrPVCXpes8NLgaXh9n2/YGxkanAsIHvTx1WaP7FsYOizN8c1P3Uvc8As5baVrjhTTLErU9isu+sIH0ggOfhF3v0s5fqNyWgk7EUJ7LeQ99gL1URA1/j09o0Kl/xIyGc=
+	t=1748366854; cv=none; b=oTeV60yYzVMHMNjtKHfdSt4fVNSf7GooCfCDuO/ZKhbneCZmrsdB4ZtJJCLfnygdQefe6oyfRruJx83IEJopvkrSXPN20f6jd2zeJ2ZCSpmy2HAtosSZ+62anXDKgEpFBW/gaPxK/3BYj8A59E0+EiBTWRjeFv2kyRoQXFkAxys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366851; c=relaxed/simple;
-	bh=OkVeUWgh7f5qXpPMHUAz6rubvWDRlNOb6PdRy6pKBoc=;
+	s=arc-20240116; t=1748366854; c=relaxed/simple;
+	bh=NaJY+VpaNDgW+KqF/u4jqPjZlq2qnsT+N0+DsOzDx8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qTQFTWgfYjljYLdwwthYUgjIyUWIhUWcQj0J2ArY++yw3epYP6iIcfkt+cSaRr1p0Jc9uLL8NzWjMOsMq+DySViB9zh9ZyTe0+6paAs4sI8af2OHjrPKimbFdvcxuQje2Bxy6hsL0vBFabTbrVE5+RHJ1zY3fnogUmusLeiyKWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UgLFkrlx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mayQJ+vYtX4W6iqfS/ld5Z7CEKxCfSK5Y8fMbpVVbgo8wR9zffz6b2W8JJkypQfJBmEdTgevRFNK634fYaZfk/dCjAF187Axxcxgj112ZUaxzlKox54bhviAnklYSGk0H/fT1ePi/FhiS6wR47GSLLfdID9yX58DFdjSWUcEGe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nPke+w0U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UgLFkrlx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48683C4CEE9;
-	Tue, 27 May 2025 17:27:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nPke+w0U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2463BC4CEE9;
+	Tue, 27 May 2025 17:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366851;
-	bh=OkVeUWgh7f5qXpPMHUAz6rubvWDRlNOb6PdRy6pKBoc=;
+	s=korg; t=1748366854;
+	bh=NaJY+VpaNDgW+KqF/u4jqPjZlq2qnsT+N0+DsOzDx8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UgLFkrlxkiwqEoWi5ndvm5WZps5uOT+i3MmKiffKMwt58IAgPSmhuKLRT/TeyiTrm
-	 0FZoguKsPZeZO2PX8zWyDN9Y3sl+O2LA7WxOcs5baj8MS5MihTqiwUs58pkavDVBRb
-	 8jTttgcBKRgVF9tjZPhhPmzjYvPe8uCP6xZ7lqGk=
+	b=nPke+w0UD+vzj0MS005pwgdCrFkz5/O2r7KnmhBSQI1HYK8qwlB0NVrLdX5OhnWok
+	 XlivNgYeiBdO2YJ+zwDTdD8gPiCBLgEpriz+AWTWCbECLFuOaJoSACcamod97N/ERN
+	 TpbVBX8pKCKVEDACo6dmnjQMBOTLNPVbclhLhdGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Simon Horman <horms@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 198/783] posix-timers: Ensure that timer initialization is fully visible
-Date: Tue, 27 May 2025 18:19:55 +0200
-Message-ID: <20250527162521.213887685@linuxfoundation.org>
+Subject: [PATCH 6.14 199/783] net: stmmac: dwmac-rk: Validate GRF and peripheral GRF during probe
+Date: Tue, 27 May 2025 18:19:56 +0200
+Message-ID: <20250527162521.252001718@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,82 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit 2389c6efd3ad8edb3bcce0019b4edcc7d9c7de19 ]
+[ Upstream commit 247e84f66a3d1946193d739fec5dc3d69833fd00 ]
 
-Frederic pointed out that the memory operations to initialize the timer are
-not guaranteed to be visible, when __lock_timer() observes timer::it_signal
-valid under timer::it_lock:
+All Rockchip GMAC variants typically write to GRF regs to control e.g.
+interface mode, speed and MAC rx/tx delay. Newer SoCs such as RK3576 and
+RK3588 use a mix of GRF and peripheral GRF regs. These syscon regmaps is
+located with help of a rockchip,grf and rockchip,php-grf phandle.
 
-  T0                                      T1
-  ---------                               -----------
-  do_timer_create()
-      // A
-      new_timer->.... = ....
-      spin_lock(current->sighand)
-      // B
-      WRITE_ONCE(new_timer->it_signal, current->signal)
-      spin_unlock(current->sighand)
-					sys_timer_*()
-					   t =  __lock_timer()
-						  spin_lock(&timr->it_lock)
-						  // observes B
-						  if (timr->it_signal == current->signal)
-						    return timr;
-			                   if (!t)
-					       return;
-					// Is not guaranteed to observe A
+However, validating the rockchip,grf and rockchip,php-grf syscon regmap
+is deferred until e.g. interface mode or speed is configured, inside the
+individual SoC specific operations.
 
-Protect the write of timer::it_signal, which makes the timer valid, with
-timer::it_lock as well. This guarantees that T1 must observe the
-initialization A completely, when it observes the valid signal pointer
-under timer::it_lock. sighand::siglock must still be taken to protect the
-signal::posix_timers list.
+Change to validate the rockchip,grf and rockchip,php-grf syscon regmap
+at probe time to simplify all SoC specific operations.
 
-Reported-by: Frederic Weisbecker <frederic@kernel.org>
-Suggested-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Link: https://lore.kernel.org/all/20250308155623.507944489@linutronix.de
+This should not introduce any backward compatibility issues as all
+GMAC nodes have been added together with a rockchip,grf phandle (and
+rockchip,php-grf where required) in their initial commit.
+
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250308213720.2517944-3-jonas@kwiboo.se
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/posix-timers.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ .../net/ethernet/stmicro/stmmac/dwmac-rk.c    | 21 +++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
-index 7f8644e047558..15ed343693101 100644
---- a/kernel/time/posix-timers.c
-+++ b/kernel/time/posix-timers.c
-@@ -463,14 +463,21 @@ static int do_timer_create(clockid_t which_clock, struct sigevent *event,
- 	if (error)
- 		goto out;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
+index a4dc89e23a68e..a33be23121b35 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
+@@ -33,6 +33,7 @@ struct rk_gmac_ops {
+ 	void (*set_clock_selection)(struct rk_priv_data *bsp_priv, bool input,
+ 				    bool enable);
+ 	void (*integrated_phy_powerup)(struct rk_priv_data *bsp_priv);
++	bool php_grf_required;
+ 	bool regs_valid;
+ 	u32 regs[];
+ };
+@@ -1254,6 +1255,7 @@ static const struct rk_gmac_ops rk3576_ops = {
+ 	.set_rgmii_speed = rk3576_set_gmac_speed,
+ 	.set_rmii_speed = rk3576_set_gmac_speed,
+ 	.set_clock_selection = rk3576_set_clock_selection,
++	.php_grf_required = true,
+ 	.regs_valid = true,
+ 	.regs = {
+ 		0x2a220000, /* gmac0 */
+@@ -1401,6 +1403,7 @@ static const struct rk_gmac_ops rk3588_ops = {
+ 	.set_rgmii_speed = rk3588_set_gmac_speed,
+ 	.set_rmii_speed = rk3588_set_gmac_speed,
+ 	.set_clock_selection = rk3588_set_clock_selection,
++	.php_grf_required = true,
+ 	.regs_valid = true,
+ 	.regs = {
+ 		0xfe1b0000, /* gmac0 */
+@@ -1812,8 +1815,22 @@ static struct rk_priv_data *rk_gmac_setup(struct platform_device *pdev,
  
--	spin_lock_irq(&current->sighand->siglock);
--	/* This makes the timer valid in the hash table */
--	WRITE_ONCE(new_timer->it_signal, current->signal);
--	hlist_add_head(&new_timer->list, &current->signal->posix_timers);
--	spin_unlock_irq(&current->sighand->siglock);
- 	/*
--	 * After unlocking sighand::siglock @new_timer is subject to
--	 * concurrent removal and cannot be touched anymore
-+	 * timer::it_lock ensures that __lock_timer() observes a fully
-+	 * initialized timer when it observes a valid timer::it_signal.
-+	 *
-+	 * sighand::siglock is required to protect signal::posix_timers.
-+	 */
-+	scoped_guard (spinlock_irq, &new_timer->it_lock) {
-+		guard(spinlock)(&current->sighand->siglock);
-+		/* This makes the timer valid in the hash table */
-+		WRITE_ONCE(new_timer->it_signal, current->signal);
-+		hlist_add_head(&new_timer->list, &current->signal->posix_timers);
+ 	bsp_priv->grf = syscon_regmap_lookup_by_phandle(dev->of_node,
+ 							"rockchip,grf");
+-	bsp_priv->php_grf = syscon_regmap_lookup_by_phandle(dev->of_node,
+-							    "rockchip,php-grf");
++	if (IS_ERR(bsp_priv->grf)) {
++		dev_err_probe(dev, PTR_ERR(bsp_priv->grf),
++			      "failed to lookup rockchip,grf\n");
++		return ERR_CAST(bsp_priv->grf);
 +	}
-+	/*
-+	 * After unlocking @new_timer is subject to concurrent removal and
-+	 * cannot be touched anymore
- 	 */
- 	return 0;
- out:
++
++	if (ops->php_grf_required) {
++		bsp_priv->php_grf =
++			syscon_regmap_lookup_by_phandle(dev->of_node,
++							"rockchip,php-grf");
++		if (IS_ERR(bsp_priv->php_grf)) {
++			dev_err_probe(dev, PTR_ERR(bsp_priv->php_grf),
++				      "failed to lookup rockchip,php-grf\n");
++			return ERR_CAST(bsp_priv->php_grf);
++		}
++	}
+ 
+ 	if (plat->phy_node) {
+ 		bsp_priv->integrated_phy = of_property_read_bool(plat->phy_node,
 -- 
 2.39.5
 
