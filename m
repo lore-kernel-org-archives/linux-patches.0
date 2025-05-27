@@ -1,47 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D211FFC55;
-	Tue, 27 May 2025 02:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EADC20409A;
+	Tue, 27 May 2025 02:38:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748313480; cv=none; b=p1oD8b49uxZJopumBwMuzOIURZUs2qXZpI4tcrE7pD+QStt/JstK9MxTj1NA+0h8w016HSoHLmCdzCoXjPCIDhHrQ246LMN7Fd7OvXHSRjr67dojgAeJfMsJOq0wPftBiQEPKScrfca2Pd01TKS1++KgH22SuXWdFkTlfspjrRg=
+	t=1748313483; cv=none; b=XcHvMh1FUJy3Oe44NsrFJMom/jgtup7RIG/KWPYAGnXNgNPzLZbsqSHoGwGvuT4UhwlpoeHy4DYeXFCP1zXMYns7qEalnUKalx3ZvCEA/u6Y1VpEHcjnwb2YzxEW6HgH56xSi9LQhJHWdF1hkeTaPNgnLoyx24g8cwmvGCU6i7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748313480; c=relaxed/simple;
-	bh=gLLR9V9lnaQXolHhfifW/QMM4y2cjA8KtwjSzqo3WrA=;
+	s=arc-20240116; t=1748313483; c=relaxed/simple;
+	bh=MpHIJl4Skd66AmQMjmb122pJJVSuewLE5MMH7G1YrpY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mAZlsSzDoFU/XjY/C3cXp9DkuW6QF9dzci7huENCMpgvaTJzhHi1fdPO3ayAWvCH83LumD8YITuQFj559Yv61z+qFWOJvEWDuICMlksafPSpmCYAQRuhvtTe2zwiexLlSPbJQUkwODI5xUAvFht+aajgIJh3R+eTjVdfKVn22K0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RrgAByP9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eBf9kyo0PntiBh9MaaoqzUroj5r7uPE2CG0wVpYWwbkLwIdmbUCvMZcFlixYfoHBiRvulpJEHdSX2qWE4jilclux9iIUfRx0O+t80hRjyZxcH86clvcCa802KtleB6VnZQvfxJGNoCC8Y7BXxBLTR07ODiFGXzNdRVRF6zZzA8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HhQdToHM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RrgAByP9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98AEC4CEED;
-	Tue, 27 May 2025 02:37:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HhQdToHM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650BBC4CEED;
+	Tue, 27 May 2025 02:38:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748313480;
-	bh=gLLR9V9lnaQXolHhfifW/QMM4y2cjA8KtwjSzqo3WrA=;
+	s=k20201202; t=1748313482;
+	bh=MpHIJl4Skd66AmQMjmb122pJJVSuewLE5MMH7G1YrpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RrgAByP9Z1VT82EszU8l3TyqXShYCGXXkfnss2tWpB+7LPTPny2WDzLi8+ua9mFzu
-	 01cf8vsIfuYmAZqoxR9a4WP+m/bCjeQe6gsQzYevNsGjnYgQ14t27ry/d3R2FjANeV
-	 V5fjqC3Qfcvtz7LkWqO6SFyZ8yGlpgLyw4VXwc1gUztzKCAXiGqZMz9+4dCJCa62SX
-	 NC8z/+wl+AdFtZdvb6aRA7Ju0IVOWPQyf12H7vtQERwACJPXHgVER/pV+Acav9KZNx
-	 qo1rzg/aE6K7LvbedichAgZ4f1QGduosukzWAd1nG1N0NnZnevTI5pn2mD9Vtm3bpg
-	 /37e3TKFVDQ5w==
+	b=HhQdToHMKkK0sQqzI6RULythZ8rshv9e2QBMsD7LcMXA2x6f5F6y0d5Ew+QuQhV8h
+	 A8siWC50IwEzs2kHyvOcPAA01S0GH0IQC+FA5u7ZZ8sJyT//0EGJz49AT8NkmVnnFv
+	 wT/4dkELJBy9NYLvTM+fQGEofnbDsTYkYvDHTO6uCzYzhIBnnKoJlHf8gA7uyRSjyx
+	 m7IaZY/fktk+uZxQCU4WTyDMnFeOUuxZf1MM7Wim+FM606M9pNfxHbR6G5vWfgcJyT
+	 C6fhUE+HPKyuxKm+AzgnTeXfR9RE6VwPFeznNMpZKwbFnf/qXKARPTEEQijlEJuQt2
+	 M/YQtP+gQkz5g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mark Pearson <mpearson-lenovo@squebb.ca>,
-	Derek Barbosa <debarbos@redhat.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Nishanth Menon <nm@ti.com>,
+	Simon Horman <horms@kernel.org>,
+	Roger Quadros <rogerq@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	hmh@hmh.eng.br,
-	ibm-acpi-devel@lists.sourceforge.net,
-	platform-driver-x86@vger.kernel.org,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	alexander.sverdlin@gmail.com,
+	dan.carpenter@linaro.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 2/4] platform/x86: thinkpad_acpi: Ignore battery threshold change event notification
-Date: Mon, 26 May 2025 22:37:54 -0400
-Message-Id: <20250527023756.1017237-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 3/4] net: ethernet: ti: am65-cpsw: Lower random mac address error print to info
+Date: Mon, 26 May 2025 22:37:55 -0400
+Message-Id: <20250527023756.1017237-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250527023756.1017237-1-sashal@kernel.org>
 References: <20250527023756.1017237-1-sashal@kernel.org>
@@ -51,56 +54,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.92
 Content-Transfer-Encoding: 8bit
 
-From: Mark Pearson <mpearson-lenovo@squebb.ca>
+From: Nishanth Menon <nm@ti.com>
 
-[ Upstream commit 29e4e6b4235fefa5930affb531fe449cac330a72 ]
+[ Upstream commit 50980d8da71a0c2e045e85bba93c0099ab73a209 ]
 
-If user modifies the battery charge threshold an ACPI event is generated.
-Confirmed with Lenovo FW team this is only generated on user event. As no
-action is needed, ignore the event and prevent spurious kernel logs.
+Using random mac address is not an error since the driver continues to
+function, it should be informative that the system has not assigned
+a MAC address. This is inline with other drivers such as ax88796c,
+dm9051 etc. Drop the error level to info level.
 
-Reported-by: Derek Barbosa <debarbos@redhat.com>
-Closes: https://lore.kernel.org/platform-driver-x86/7e9a1c47-5d9c-4978-af20-3949d53fb5dc@app.fastmail.com/T/#m5f5b9ae31d3fbf30d7d9a9d76c15fb3502dfd903
-Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20250517023348.2962591-1-mpearson-lenovo@squebb.ca
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Link: https://patch.msgid.link/20250516122655.442808-1-nm@ti.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/thinkpad_acpi.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
-index cde5f845cf255..9f6a5830c94ff 100644
---- a/drivers/platform/x86/thinkpad_acpi.c
-+++ b/drivers/platform/x86/thinkpad_acpi.c
-@@ -212,6 +212,7 @@ enum tpacpi_hkey_event_t {
- 	/* Thermal events */
- 	TP_HKEY_EV_ALARM_BAT_HOT	= 0x6011, /* battery too hot */
- 	TP_HKEY_EV_ALARM_BAT_XHOT	= 0x6012, /* battery critically hot */
-+	TP_HKEY_EV_ALARM_BAT_LIM_CHANGE	= 0x6013, /* battery charge limit changed*/
- 	TP_HKEY_EV_ALARM_SENSOR_HOT	= 0x6021, /* sensor too hot */
- 	TP_HKEY_EV_ALARM_SENSOR_XHOT	= 0x6022, /* sensor critically hot */
- 	TP_HKEY_EV_THM_TABLE_CHANGED	= 0x6030, /* windows; thermal table changed */
-@@ -3942,6 +3943,10 @@ static bool hotkey_notify_6xxx(const u32 hkey,
- 		pr_alert("THERMAL EMERGENCY: battery is extremely hot!\n");
- 		/* recommended action: immediate sleep/hibernate */
- 		break;
-+	case TP_HKEY_EV_ALARM_BAT_LIM_CHANGE:
-+		pr_debug("Battery Info: battery charge threshold changed\n");
-+		/* User changed charging threshold. No action needed */
-+		return true;
- 	case TP_HKEY_EV_ALARM_SENSOR_HOT:
- 		pr_crit("THERMAL ALARM: a sensor reports something is too hot!\n");
- 		/* recommended action: warn user through gui, that */
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 9c8376b271891..c379a958380ce 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -2095,7 +2095,7 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
+ 							port->slave.mac_addr);
+ 			if (!is_valid_ether_addr(port->slave.mac_addr)) {
+ 				eth_random_addr(port->slave.mac_addr);
+-				dev_err(dev, "Use random MAC address\n");
++				dev_info(dev, "Use random MAC address\n");
+ 			}
+ 		}
+ 	}
 -- 
 2.39.5
 
