@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84CF4276057;
-	Tue, 27 May 2025 17:07:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CAE19E7F9;
+	Tue, 27 May 2025 17:07:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365626; cv=none; b=U/RyxEpioH56BQg3DSJPBAvXAjVg82tur7z1oIX/dpwp8dHth9oeeW6x9CqmVdaWlnC0ySkzyzBksWjO17AuByK+mcohikd97hW5tF/wP0N/bapmAecE24yzBzaOKVESnd68SypsdG++ux/v5PVKZV3nj6jQcqthmEVzVxNpPEY=
+	t=1748365630; cv=none; b=qTDZiPmrmUJyMAV7SuMw4giq9kc6ONSBbYO3fd8CNfcALwFZxmjgjDYvZcUJwoNiak3FXNQoiwngTn9nuR71HkHfTEkNiVFheo/WCmlrokTggdEMdvY7G/krPkQOT7m3u88Ojl2DiRXPy/eW/Rq7gpBs6OzFOZQ+et8580GeAUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365626; c=relaxed/simple;
-	bh=WwfkvbwBUmAxpgiaU9Z9McdPkVOENtUBoqWcPxvsfFI=;
+	s=arc-20240116; t=1748365630; c=relaxed/simple;
+	bh=pL409jbWgEVHonVhItSjOvKPP4+Xb3w1lUgCAPivJ/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OtxO4EXKYvFKcaxjIJ85ybkDSGsIJ4e+EKLz8CFxGkB9+xdm5GbwVJCQV2JJyaHvX98DpHZN9m1QTwZicrveRnNTqvTZmqEOOx47gPWaCeDvIg8m4JnK26BQ9a13aYNugT1XUqw10kRLEn5o/ARkmeuYBDEC+peS99z28Vw7XGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K/AfTg87; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=W1wBYNp9Nag/f0j++eD4ICm7bpuYrZN+iBKI2Dx/H6/H8yQ4VLrYjUKv7b31qj+loDjS5hMXGcvHvkjuo4ZauObuyjPrf6Dw/3Eman99oGejsiZgVXRrCGIlB78GF3mM9yQNdARSUzuYeHDsr2iBgJNk14iSw48MOZlc/cKqFRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IHQOxA/2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K/AfTg87"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDD21C4CEE9;
-	Tue, 27 May 2025 17:07:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IHQOxA/2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF87AC4CEE9;
+	Tue, 27 May 2025 17:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365626;
-	bh=WwfkvbwBUmAxpgiaU9Z9McdPkVOENtUBoqWcPxvsfFI=;
+	s=korg; t=1748365630;
+	bh=pL409jbWgEVHonVhItSjOvKPP4+Xb3w1lUgCAPivJ/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K/AfTg87VJgqYb72RDsMO1dQmz+NWSa7mWR+ineHnEn08NgXpQLo8oN4xzkGoqQUo
-	 JgJgnomf62oBmA/+M7O8AdV1tI3zveHX7MMbECBtzDsH2X82BumzYFGBSNTSVhjSea
-	 vU6fv+icg42FEy/elzoN/mdqgdrDN3U8PTnKnXoc=
+	b=IHQOxA/2p5sFREiATHyMXigSSoZTtlRi5r5ZKaFmu2YqIK3cBeqoXDOlbQmP0kIOM
+	 2W4JNLhyoWaBBU4+7nztI4B18mM9eZLFpG64Vr7uIH/wg0ATUy2FGfQC4GqC3VUXo5
+	 PzwhSW/tPauKz7PFlwNY2k5/ZpKHEsEFDXSk8OFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mina Almasry <almasrymina@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Artem Bityutskiy <artem.bityutskiy@intel.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 437/626] net: page_pool: avoid false positive warning if NAPI was never added
-Date: Tue, 27 May 2025 18:25:30 +0200
-Message-ID: <20250527162502.761212565@linuxfoundation.org>
+Subject: [PATCH 6.12 438/626] tools/power turbostat: Clustered Uncore MHz counters should honor show/hide options
+Date: Tue, 27 May 2025 18:25:31 +0200
+Message-ID: <20250527162502.802224035@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -45,76 +45,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Len Brown <len.brown@intel.com>
 
-[ Upstream commit c1e00bc4be06cacee6307cedb9b55bbaddb5044d ]
+[ Upstream commit 1c7c7388e6c31f46b26a884d80b45efbad8237b2 ]
 
-We expect NAPI to be in disabled state when page pool is torn down.
-But it is also legal if the NAPI is completely uninitialized.
+The clustered uncore frequency counters, UMHz*.*
+should honor the --show and --hide options.
 
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/20250206225638.1387810-4-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+All non-specified counters should be implicityly hidden.
+But when --show was used, UMHz*.* showed up anyway:
+
+$ sudo turbostat -q -S --show Busy%
+Busy%  UMHz0.0  UMHz1.0  UMHz2.0  UMHz3.0  UMHz4.0
+
+Indeed, there was no string that can be used to explicitly
+show or hide clustered uncore counters.
+
+Even through they are dynamically probed and added,
+group the clustered UMHz*.* counters with the legacy
+built-in-counter "UncMHz" for show/hide.
+
+turbostat --show Busy%
+	does not show UMHz*.*.
+turbostat --show UncMHz
+	shows either UncMHz or UMHz*.*, if present
+turbostat --hide UncMHz
+	hides either UncMHz or UMHz*.*, if present
+
+Reported-by: Artem Bityutskiy <artem.bityutskiy@intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
+Tested-by: Artem Bityutskiy <artem.bityutskiy@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.h       | 12 ++++++++++++
- net/core/page_pool.c |  7 ++-----
- 2 files changed, 14 insertions(+), 5 deletions(-)
+ tools/power/x86/turbostat/turbostat.8 |  1 +
+ tools/power/x86/turbostat/turbostat.c | 13 ++++++++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/dev.h b/net/core/dev.h
-index 2e3bb7669984a..764e0097ccf22 100644
---- a/net/core/dev.h
-+++ b/net/core/dev.h
-@@ -148,6 +148,18 @@ void xdp_do_check_flushed(struct napi_struct *napi);
- static inline void xdp_do_check_flushed(struct napi_struct *napi) { }
- #endif
+diff --git a/tools/power/x86/turbostat/turbostat.8 b/tools/power/x86/turbostat/turbostat.8
+index a3cf1d17163ae..e4b00e13302b3 100644
+--- a/tools/power/x86/turbostat/turbostat.8
++++ b/tools/power/x86/turbostat/turbostat.8
+@@ -199,6 +199,7 @@ The system configuration dump (if --quiet is not used) is followed by statistics
+ \fBUncMHz\fP per-package uncore MHz, instantaneous sample.
+ .PP
+ \fBUMHz1.0\fP per-package uncore MHz for domain=1 and fabric_cluster=0, instantaneous sample.  System summary is the average of all packages.
++For the "--show" and "--hide" options, use "UncMHz" to operate on all UMHz*.* as a group.
+ .SH TOO MUCH INFORMATION EXAMPLE
+ By default, turbostat dumps all possible information -- a system configuration header, followed by columns for all counters.
+ This is ideal for remote debugging, use the "--out" option to save everything to a text file, and get that file to the expert helping you debug.
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 77ef60980ee58..12424bf08551d 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -6445,7 +6445,18 @@ static void probe_intel_uncore_frequency_cluster(void)
+ 		sprintf(path, "%s/current_freq_khz", path_base);
+ 		sprintf(name_buf, "UMHz%d.%d", domain_id, cluster_id);
  
-+/* Best effort check that NAPI is not idle (can't be scheduled to run) */
-+static inline void napi_assert_will_not_race(const struct napi_struct *napi)
-+{
-+	/* uninitialized instance, can't race */
-+	if (!napi->poll_list.next)
-+		return;
-+
-+	/* SCHED bit is set on disabled instances */
-+	WARN_ON(!test_bit(NAPI_STATE_SCHED, &napi->state));
-+	WARN_ON(READ_ONCE(napi->list_owner) != -1);
-+}
-+
- void kick_defer_list_purge(struct softnet_data *sd, unsigned int cpu);
+-		add_counter(0, path, name_buf, 0, SCOPE_PACKAGE, COUNTER_K2M, FORMAT_AVERAGE, 0, package_id);
++		/*
++		 * Once add_couter() is called, that counter is always read
++		 * and reported -- So it is effectively (enabled & present).
++		 * Only call add_counter() here if legacy BIC_UNCORE_MHZ (UncMHz)
++		 * is (enabled).  Since we are in this routine, we
++		 * know we will not probe and set (present) the legacy counter.
++		 *
++		 * This allows "--show/--hide UncMHz" to be effective for
++		 * the clustered MHz counters, as a group.
++		 */
++		if BIC_IS_ENABLED(BIC_UNCORE_MHZ)
++			add_counter(0, path, name_buf, 0, SCOPE_PACKAGE, COUNTER_K2M, FORMAT_AVERAGE, 0, package_id);
  
- #define XMIT_RECURSION_LIMIT	8
-diff --git a/net/core/page_pool.c b/net/core/page_pool.c
-index 7b20f6fcb82c0..c8ce069605c42 100644
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -25,6 +25,7 @@
- 
- #include <trace/events/page_pool.h>
- 
-+#include "dev.h"
- #include "mp_dmabuf_devmem.h"
- #include "netmem_priv.h"
- #include "page_pool_priv.h"
-@@ -1108,11 +1109,7 @@ void page_pool_disable_direct_recycling(struct page_pool *pool)
- 	if (!pool->p.napi)
- 		return;
- 
--	/* To avoid races with recycling and additional barriers make sure
--	 * pool and NAPI are unlinked when NAPI is disabled.
--	 */
--	WARN_ON(!test_bit(NAPI_STATE_SCHED, &pool->p.napi->state));
--	WARN_ON(READ_ONCE(pool->p.napi->list_owner) != -1);
-+	napi_assert_will_not_race(pool->p.napi);
- 
- 	WRITE_ONCE(pool->p.napi, NULL);
- }
+ 		if (quiet)
+ 			continue;
 -- 
 2.39.5
 
