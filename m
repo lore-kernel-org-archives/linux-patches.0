@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D6B1D432D;
-	Tue, 27 May 2025 17:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B5223ED75;
+	Tue, 27 May 2025 17:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365393; cv=none; b=eHXai48hwGBw0b88GmP29jYiIgXwaLXWFM1X512C1DW7Lk/7ZW+yGjT8Z65YhYwIdXq8UrQWAneYujHPcVlSV2J19KPmHbjkgyLMemjder9yJiJHxb1LI/ZNYAwH9fxp3Md3lfvua5nLf1IA8M6sCZ7LGRhgnZgjWxrIlpJWUBw=
+	t=1748365396; cv=none; b=o+ZhXvufmbT7G0HftJ5QJgyqDyYS6abiCu932MpQL0qNvLXA1164klkqbPTpwVA4T9P6tQzWwoQZ2h0F6qTXxAA4PiD+7oQ6Rn0gX1uHIz12SoHgSU5wYWu4iOxF0aB1G71IwcMwHCeM5sdvsgtdZJw/5jKI/t+veJ7FdLs+SB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365393; c=relaxed/simple;
-	bh=bLtPhl5A/IFeCud3gNmu+BnuNiUOn2C4FGRucUe6TVI=;
+	s=arc-20240116; t=1748365396; c=relaxed/simple;
+	bh=6A4dFzSAlyJj13dh+dJzbl+lSBHUCMcZvuR5jPIxYQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3P8FaKRTLRtGvlEUcpdtnERPgMpiNMl0nBsTrFKPL5m2B+/5cDKzg1xHeVepJN7fZ0Wfq78fp6f+dV9o04COjGCgd+F7n4AnO/ZWF2d+QZ8ytS385IuxEHZx2TJVIe42XQ7dTA/27e0uszcm6m9vqwlWLxoZi8s0S8DV9gHMRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=At5c3ZQI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aAMpUZ3QE3eQ34c99DqpKCylD6X5YIkJbDR/PdjJJag+ZnwJjJMvWaQ6jELVjg3Sipj/Vorr3a7R5oM8kI/pcBX7kfpJN7lnp7w3TQvf+rQvlh9USN2Sp8vIN3Ch3b0Xe3W8MBDkMrYvzngNGqD5TPFO07ishndGmjFdrFaMSoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y1QOHi3p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="At5c3ZQI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B2E0C4CEE9;
-	Tue, 27 May 2025 17:03:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y1QOHi3p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD39BC4CEE9;
+	Tue, 27 May 2025 17:03:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365392;
-	bh=bLtPhl5A/IFeCud3gNmu+BnuNiUOn2C4FGRucUe6TVI=;
+	s=korg; t=1748365396;
+	bh=6A4dFzSAlyJj13dh+dJzbl+lSBHUCMcZvuR5jPIxYQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=At5c3ZQIgvNB5h/VHWDMNcEBMEtLp4HahQ28munEMb9LFvhObQqehPKlrBztLjYo0
-	 EGdVoZDoRaPst5/e1mp1e86NnznHTEpVPA6Fgm8d46rEY5QVvV8gJOELJX81kaVUwd
-	 Qtkqar6+UMoLO4YbNaM12t2bJ4h/Q+4Em6S5SZps=
+	b=y1QOHi3pKvYOdd2vjqEa5axIa04oHcLWLY3EqYZoMXSWuzD+MFBd6tPtsuLruktxo
+	 S+m/GB0CKnt/0ooWYI5RwhzdHC3qXYC4ZtfKruc6xfdqczaNc5MRE+TLFiZ2Ex9Ozn
+	 5pOxdyF32t8AgYXd49u/YNT4yhR1FZiCnf767NNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 362/626] ASoC: soc-dai: check return value at snd_soc_dai_set_tdm_slot()
-Date: Tue, 27 May 2025 18:24:15 +0200
-Message-ID: <20250527162459.720205933@linuxfoundation.org>
+Subject: [PATCH 6.12 345/626] eth: mlx4: dont try to complete XDP frames in netpoll
+Date: Tue, 27 May 2025 18:23:58 +0200
+Message-ID: <20250527162459.043103107@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,52 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 7f1186a8d738661b941b298fd6d1d5725ed71428 ]
+[ Upstream commit 8fdeafd66edaf420ea0063a1f13442fe3470fe70 ]
 
-snd_soc_dai_set_tdm_slot() calls .xlate_tdm_slot_mask() or
-snd_soc_xlate_tdm_slot_mask(), but didn't check its return value.
-Let's check it.
+mlx4 doesn't support ndo_xdp_xmit / XDP_REDIRECT and wasn't
+using page pool until now, so it could run XDP completions
+in netpoll (NAPI budget == 0) just fine. Page pool has calling
+context requirements, make sure we don't try to call it from
+what is potentially HW IRQ context.
 
-This patch might break existing driver. In such case, let's makes
-each func to void instead of int.
-
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://patch.msgid.link/87o6z7yk61.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250213010635.1354034-3-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-dai.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlx4/en_tx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/soc-dai.c b/sound/soc/soc-dai.c
-index 4e08892d24c62..de09d21add453 100644
---- a/sound/soc/soc-dai.c
-+++ b/sound/soc/soc-dai.c
-@@ -275,10 +275,11 @@ int snd_soc_dai_set_tdm_slot(struct snd_soc_dai *dai,
+diff --git a/drivers/net/ethernet/mellanox/mlx4/en_tx.c b/drivers/net/ethernet/mellanox/mlx4/en_tx.c
+index 1ddb11cb25f91..6e077d202827a 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/en_tx.c
++++ b/drivers/net/ethernet/mellanox/mlx4/en_tx.c
+@@ -450,6 +450,8 @@ int mlx4_en_process_tx_cq(struct net_device *dev,
  
- 	if (dai->driver->ops &&
- 	    dai->driver->ops->xlate_tdm_slot_mask)
--		dai->driver->ops->xlate_tdm_slot_mask(slots,
--						      &tx_mask, &rx_mask);
-+		ret = dai->driver->ops->xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
- 	else
--		snd_soc_xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
-+		ret = snd_soc_xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
-+	if (ret)
-+		goto err;
+ 	if (unlikely(!priv->port_up))
+ 		return 0;
++	if (unlikely(!napi_budget) && cq->type == TX_XDP)
++		return 0;
  
- 	for_each_pcm_streams(stream)
- 		snd_soc_dai_tdm_mask_set(dai, stream, *tdm_mask[stream]);
-@@ -287,6 +288,7 @@ int snd_soc_dai_set_tdm_slot(struct snd_soc_dai *dai,
- 	    dai->driver->ops->set_tdm_slot)
- 		ret = dai->driver->ops->set_tdm_slot(dai, tx_mask, rx_mask,
- 						      slots, slot_width);
-+err:
- 	return soc_dai_ret(dai, ret);
- }
- EXPORT_SYMBOL_GPL(snd_soc_dai_set_tdm_slot);
+ 	netdev_txq_bql_complete_prefetchw(ring->tx_queue);
+ 
 -- 
 2.39.5
 
