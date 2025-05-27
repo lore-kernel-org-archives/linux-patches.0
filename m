@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A742E280333;
-	Tue, 27 May 2025 17:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE24E280333;
+	Tue, 27 May 2025 17:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368700; cv=none; b=R/WlLFLizG0NlKtcuWpjUqisSgoMDlbTEenOKWAOFCGM6wFr9tTdQ7FD9wt4PBkkDu/x+uuhsVVOxP58U9JNH2/ukr5k+28ED7jzi59VkH+Hm9n40quFByghM9Zsark51MaqUTWouwKHokhBeBtpGoloAo55Mh12CBozD4RikyY=
+	t=1748368704; cv=none; b=bTZTzZCJzOTj9rPNCssHl6bA6gZIMSwx4yZYwkxhOTA3gwr3ok+A8apPSthbI3HhsD6IyeUJoHJfzvEMufNId1kjUD4jlZ3k/rmofxcHtwo6mIbX7ODgufE6mIc3Qd1CtJoLIgJNYYFuj3gwmbhIwRvEdKidYVIEDfsk3Qv+ETI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368700; c=relaxed/simple;
-	bh=RxO8ea4g154fAZ7/EQ3RTU0XmkluUs+eKFu+qJThRJE=;
+	s=arc-20240116; t=1748368704; c=relaxed/simple;
+	bh=yJvES4Ky6tsUx/bcUoIJHWiCHZypTuKP1TMPYa1kTio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TrRo+GQFHKiltzg0KMoQptUNJsFwv3ovGgzRjBAphOzNka5WUHyMCGmRjA6r0Ux8CH37amB8V6oZ5ALqMuKsEZrAtea6oedhMW1zXhk+CVcMDh87WhaFAXOCKoGLJwzndsyt6efjz7x5V6AGamopgihZ2BSzuKMV/9DIbYhGA20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gx8qMQRv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=khaMECn73mtjNyVJkFlo5SUwXbqdvjd1jI52bT2395jRyxzUIXMYMFUnMSXfEniKCv80D0L9h7+C8PTPNzniQZjtQblloWPDSHwGb1wZW0tlgxRSF9LxnKMHQtToQU57TdEB4jtzvRh9ebEEoa05byajWddqa7aOOCl/4oeubhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yDPFFYpO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gx8qMQRv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2177AC4CEE9;
-	Tue, 27 May 2025 17:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yDPFFYpO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F53C4CEE9;
+	Tue, 27 May 2025 17:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368700;
-	bh=RxO8ea4g154fAZ7/EQ3RTU0XmkluUs+eKFu+qJThRJE=;
+	s=korg; t=1748368703;
+	bh=yJvES4Ky6tsUx/bcUoIJHWiCHZypTuKP1TMPYa1kTio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gx8qMQRvvtFqj879iObz4pjNUrg9E4Jgm+0jl6d67VlzhexKtARO9Vb71oibLbDep
-	 M+Oset1KZqR/IxqVPOwXfPVzpk45jE5M+nwoHj5DDUdsum0+x2ZAjeTInCU1KosWrK
-	 Am/oxvi7RNeYzvPSyBF5RmmEGCVJbaORk/f5N1m4=
+	b=yDPFFYpOB2/qFqhPqO5JuzN2klZb8aD1n0Y8vF9TlvqA84XPU9wQpi12YKjdqh90b
+	 HucE1PxG3H45zdnNp9KEe/ZUlJWey/FbtuX6ajj6EBx6/OjBspsh0r49Z6QcGweDOY
+	 orGOVYx3rRXo1LOKq/Ppeg/PxS8QTR/V4N6VQ5Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Clayton <chris2553@googlemail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.14 781/783] gcc-15: disable -Wunterminated-string-initialization entirely for now
-Date: Tue, 27 May 2025 18:29:38 +0200
-Message-ID: <20250527162544.935592045@linuxfoundation.org>
+	Xulin Sun <xulin.sun@windriver.com>,
+	Larisa Grigore <larisa.grigore@nxp.com>,
+	James Clark <james.clark@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.14 772/783] spi: spi-fsl-dspi: restrict register range for regmap access
+Date: Tue, 27 May 2025 18:29:29 +0200
+Message-ID: <20250527162544.570581555@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,80 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Larisa Grigore <larisa.grigore@nxp.com>
 
-commit 9d7a0577c9db35c4cc52db90bc415ea248446472 upstream.
+[ Upstream commit 283ae0c65e9c592f4a1ba4f31917f5e766da7f31 ]
 
-I had left the warning around but as a non-fatal error to get my gcc-15
-builds going, but fixed up some of the most annoying warning cases so
-that it wouldn't be *too* verbose.
+DSPI registers are NOT continuous, some registers are reserved and
+accessing them from userspace will trigger external abort, add regmap
+register access table to avoid below abort.
 
-Because I like the _concept_ of the warning, even if I detested the
-implementation to shut it up.
+  For example on S32G:
 
-It turns out the implementation to shut it up is even more broken than I
-thought, and my "shut up most of the warnings" patch just caused fatal
-errors on gcc-14 instead.
+  # cat /sys/kernel/debug/regmap/401d8000.spi/registers
 
-I had tested with clang, but when I upgrade my development environment,
-I try to do it on all machines because I hate having different systems
-to maintain, and hadn't realized that gcc-14 now had issues.
+  Internal error: synchronous external abort: 96000210 1 PREEMPT SMP
+  ...
+  Call trace:
+  regmap_mmio_read32le+0x24/0x48
+  regmap_mmio_read+0x48/0x70
+  _regmap_bus_reg_read+0x38/0x48
+  _regmap_read+0x68/0x1b0
+  regmap_read+0x50/0x78
+  regmap_read_debugfs+0x120/0x338
 
-The ACPI case is literally why I wanted to have a *type* that doesn't
-trigger the warning (see commit d5d45a7f2619: "gcc-15: make
-'unterminated string initialization' just a warning"), instead of
-marking individual places as "__nonstring".
-
-But gcc-14 doesn't like that __nonstring location that shut gcc-15 up,
-because it's on an array of char arrays, not on one single array:
-
-  drivers/acpi/tables.c:399:1: error: 'nonstring' attribute ignored on objects of type 'const char[][4]' [-Werror=attributes]
-    399 | static const char table_sigs[][ACPI_NAMESEG_SIZE] __initconst __nonstring = {
-        | ^~~~~~
-
-and my attempts to nest it properly with a type had failed, because of
-how gcc doesn't like marking the types as having attributes, only
-symbols.
-
-There may be some trick to it, but I was already annoyed by the bad
-attribute design, now I'm just entirely fed up with it.
-
-I wish gcc had a proper way to say "this type is a *byte* array, not a
-string".
-
-The obvious thing would be to distinguish between "char []" and an
-explicitly signed "unsigned char []" (as opposed to an implicitly
-unsigned char, which is typically an architecture-specific default, but
-for the kernel is universal thanks to '-funsigned-char').
-
-But any "we can typedef a 8-bit type to not become a string just because
-it's an array" model would be fine.
-
-But "__attribute__((nonstring))" is sadly not that sane model.
-
-Reported-by: Chris Clayton <chris2553@googlemail.com>
-Fixes: 4b4bd8c50f48 ("gcc-15: acpi: sprinkle random '__nonstring' crumbles around")
-Fixes: d5d45a7f2619 ("gcc-15: make 'unterminated string initialization' just a warning")
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-[nathan: drivers/acpi diff dropped due to lack of 4b4bd8c50f48 in stable]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1acbdeb92c87 ("spi/fsl-dspi: Convert to use regmap and add big-endian support")
+Co-developed-by: Xulin Sun <xulin.sun@windriver.com>
+Signed-off-by: Xulin Sun <xulin.sun@windriver.com>
+Signed-off-by: Larisa Grigore <larisa.grigore@nxp.com>
+Signed-off-by: James Clark <james.clark@linaro.org>
+Link: https://patch.msgid.link/20250522-james-nxp-spi-v2-1-bea884630cfb@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Makefile |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-fsl-dspi.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -1053,8 +1053,8 @@ KBUILD_CFLAGS += $(call cc-option, -fstr
- KBUILD_CFLAGS-$(CONFIG_CC_NO_STRINGOP_OVERFLOW) += $(call cc-option, -Wno-stringop-overflow)
- KBUILD_CFLAGS-$(CONFIG_CC_STRINGOP_OVERFLOW) += $(call cc-option, -Wstringop-overflow)
+diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
+index 067c954cb6ea0..effb460d436da 100644
+--- a/drivers/spi/spi-fsl-dspi.c
++++ b/drivers/spi/spi-fsl-dspi.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0+
+ //
+ // Copyright 2013 Freescale Semiconductor, Inc.
+-// Copyright 2020 NXP
++// Copyright 2020-2025 NXP
+ //
+ // Freescale DSPI driver
+ // This file contains a driver for the Freescale DSPI
+@@ -1167,6 +1167,20 @@ static int dspi_resume(struct device *dev)
  
--#Currently, disable -Wunterminated-string-initialization as an error
--KBUILD_CFLAGS += $(call cc-option, -Wno-error=unterminated-string-initialization)
-+#Currently, disable -Wunterminated-string-initialization as broken
-+KBUILD_CFLAGS += $(call cc-option, -Wno-unterminated-string-initialization)
+ static SIMPLE_DEV_PM_OPS(dspi_pm, dspi_suspend, dspi_resume);
  
- # disable invalid "can't wrap" optimizations for signed / pointers
- KBUILD_CFLAGS	+= -fno-strict-overflow
++static const struct regmap_range dspi_yes_ranges[] = {
++	regmap_reg_range(SPI_MCR, SPI_MCR),
++	regmap_reg_range(SPI_TCR, SPI_CTAR(3)),
++	regmap_reg_range(SPI_SR, SPI_TXFR3),
++	regmap_reg_range(SPI_RXFR0, SPI_RXFR3),
++	regmap_reg_range(SPI_CTARE(0), SPI_CTARE(3)),
++	regmap_reg_range(SPI_SREX, SPI_SREX),
++};
++
++static const struct regmap_access_table dspi_access_table = {
++	.yes_ranges	= dspi_yes_ranges,
++	.n_yes_ranges	= ARRAY_SIZE(dspi_yes_ranges),
++};
++
+ static const struct regmap_range dspi_volatile_ranges[] = {
+ 	regmap_reg_range(SPI_MCR, SPI_TCR),
+ 	regmap_reg_range(SPI_SR, SPI_SR),
+@@ -1184,6 +1198,8 @@ static const struct regmap_config dspi_regmap_config = {
+ 	.reg_stride	= 4,
+ 	.max_register	= 0x88,
+ 	.volatile_table	= &dspi_volatile_table,
++	.rd_table	= &dspi_access_table,
++	.wr_table	= &dspi_access_table,
+ };
+ 
+ static const struct regmap_range dspi_xspi_volatile_ranges[] = {
+@@ -1205,6 +1221,8 @@ static const struct regmap_config dspi_xspi_regmap_config[] = {
+ 		.reg_stride	= 4,
+ 		.max_register	= 0x13c,
+ 		.volatile_table	= &dspi_xspi_volatile_table,
++		.rd_table	= &dspi_access_table,
++		.wr_table	= &dspi_access_table,
+ 	},
+ 	{
+ 		.name		= "pushr",
+-- 
+2.39.5
+
 
 
