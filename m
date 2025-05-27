@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB2542A9B;
-	Tue, 27 May 2025 17:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A520342A9B;
+	Tue, 27 May 2025 17:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367667; cv=none; b=bTwaM/VkLtivPVCXx77HBgIKoJE1mXJOnHQmDq4mTrkJwX8sGQ8kS5KIGGxCMkRDRdiAS+AlEOoWCgs9uSPSTMk7bes2AmS2N8LJkjZPrleaI51KBqEy++WsdSaBfGW9sxKfpucLjtcZBeo7MOKxiNPgOBVqNt4Vbcfj0YzCrzQ=
+	t=1748367670; cv=none; b=C4v7S+zT9RmClr5xcQhrkE9qBxceXjUsdiq1HshmpttTCDqUIjiDR43Dt0d7rFdOrJ8SrwE/eFsyf36Gyu8JezmeUycOv/ULAqeZ8fwsfXh7AHVYr7l+ebYILZyVmIOS4KY6u0IGCk0aFl6Cl2Iu7RfBMZVJhAPpSfAD2dpF78E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367667; c=relaxed/simple;
-	bh=NovsZaP5byCAaJMy9RMvr+FUJ4jg6CedExZheFL5//s=;
+	s=arc-20240116; t=1748367670; c=relaxed/simple;
+	bh=Th0cK1P5Ri6vdDd1iTDshy7AwnwhwFAcn0sFzrfwCO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=go/Cjm0IjY+W8uTsiuj4s/I2lSLjCVap/jKHRfZ6vC+UfGxG3tCI0vxVTMARQPruQjveWFkIQazZw3/r4IXaXicuf/ZfPy8WeoB4zgZ+KkDEyR3LY91ww50T7yxlcjSjCKDxhxLx8XQcbGX4L7+hOK2uofvAAnKbplQPiawfE1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFu93gTf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O9acsmaIOkzkw7On2aSCcYVAJdTozcMalBU+6nlOluHzfpcaSnKw22WcS6n8EogM1pbmSt+BiOnQMHC4GOv5J2ZvHSfsn82H2mQiwH48qlDvmg/3KrzQ2alTcw0bMIRS63CjAAjTGWT+YYnqNaWwBeil1iIJlPthgHQp5d0Wqo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NvG7eGQt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFu93gTf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5CFC4CEE9;
-	Tue, 27 May 2025 17:41:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NvG7eGQt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14333C4CEE9;
+	Tue, 27 May 2025 17:41:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367667;
-	bh=NovsZaP5byCAaJMy9RMvr+FUJ4jg6CedExZheFL5//s=;
+	s=korg; t=1748367670;
+	bh=Th0cK1P5Ri6vdDd1iTDshy7AwnwhwFAcn0sFzrfwCO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EFu93gTfwwzBCTCP2RtH031fayI/NQz7sfqN7evgt2YFEb9tH8QvIhbUA/AVIyz67
-	 RCb2J9ydhoFRQkvQXsSiw7jqGbL+zmkOXkGLg1p9d3EL/nwQ3M0LVvN5rvHiDX6IEm
-	 esAMxr0R8wE5bkfCBGUaSqgovbcXYtuCxTFTdtBc=
+	b=NvG7eGQtVL5Vnr8+E399T2j6siCq4QtQbVAYYT+sVd5l2H6KxytNsKU5rhJth7Ojb
+	 2gW4Rdodco+2D1Y3As78vGx9RmyxI33S3KpGNm3Irs4HtVfUOWofHSSlemlP1QHJQA
+	 eY9z90M+B/G4ra8ckoDxu9WMM7HY6ZsXnVRdcDhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Wang <x.wang@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Fei Yang <fei.yang@intel.com>,
 	Shuicheng Lin <shuicheng.lin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 461/783] drm/xe/debugfs: fixed the return value of wedged_mode_set
-Date: Tue, 27 May 2025 18:24:18 +0200
-Message-ID: <20250527162531.901982710@linuxfoundation.org>
+Subject: [PATCH 6.14 462/783] drm/xe/debugfs: Add missing xe_pm_runtime_put in wedge_mode_set
+Date: Tue, 27 May 2025 18:24:19 +0200
+Message-ID: <20250527162531.942869938@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,49 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Wang <x.wang@intel.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit 6884d2051011f4db9e2f0b85709c79a8ced13bd6 ]
+[ Upstream commit b31e668d3111b100d16fd7db8db335328ce8c6d5 ]
 
-It is generally expected that the write() function should return a
-positive value indicating the number of bytes written or a negative
-error code if an error occurs. Returning 0 is unusual and can lead
-to unexpected behavior.
+xe_pm_runtime_put is missed in the failure path.
 
-When the user program writes the same value to wedged_mode twice in
-a row, a lockup will occur, because the value expected to be
-returned by the write() function inside the program should be equal
-to the actual written value instead of 0.
-
-To reproduce the issue:
-echo 1 > /sys/kernel/debug/dri/0/wedged_mode
-echo 1 > /sys/kernel/debug/dri/0/wedged_mode   <- lockup here
-
-Signed-off-by: Xin Wang <x.wang@intel.com>
 Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Fei Yang <fei.yang@intel.com>
-Cc: Shuicheng Lin <shuicheng.lin@intel.com>
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
 Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250213223615.2327367-1-x.wang@intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20250213230322.1180621-1-shuicheng.lin@intel.com
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_debugfs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/xe/xe_debugfs.c b/drivers/gpu/drm/xe/xe_debugfs.c
-index 492b4877433f1..6bfdd3a9913fd 100644
+index 6bfdd3a9913fd..92e6fa8fe3a17 100644
 --- a/drivers/gpu/drm/xe/xe_debugfs.c
 +++ b/drivers/gpu/drm/xe/xe_debugfs.c
-@@ -166,7 +166,7 @@ static ssize_t wedged_mode_set(struct file *f, const char __user *ubuf,
- 		return -EINVAL;
- 
- 	if (xe->wedged.mode == wedged_mode)
--		return 0;
-+		return size;
- 
- 	xe->wedged.mode = wedged_mode;
- 
+@@ -175,6 +175,7 @@ static ssize_t wedged_mode_set(struct file *f, const char __user *ubuf,
+ 		ret = xe_guc_ads_scheduler_policy_toggle_reset(&gt->uc.guc.ads);
+ 		if (ret) {
+ 			xe_gt_err(gt, "Failed to update GuC ADS scheduler policy. GuC may still cause engine reset even with wedged_mode=2\n");
++			xe_pm_runtime_put(xe);
+ 			return -EIO;
+ 		}
+ 	}
 -- 
 2.39.5
 
