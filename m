@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C721E89C;
-	Tue, 27 May 2025 17:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559251E89C;
+	Tue, 27 May 2025 17:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366714; cv=none; b=Eoohwxr9cnnUrCDp6ILIUjhiBa/OXMiK1I2OnTBB/JTjzjD9DcX0qWzvANoGXwLrVcWd70U1KPpundmPa1Fgjwmv/DElg5uHzB4x5t6zTa4tEHxbo9svJwyj52DOCC01IDjRU/B6VDIubGEsoC4bkiIqP9a6JDsGDUKfrZFTr5I=
+	t=1748366717; cv=none; b=KI78qws/9F/1UXjZj+jwomd61luztYH/vgIBKeqxxTQwlRGlz6BVfrwqLKGj24m22UjFyyQ4irlkxY6mw26zORLcRSh7hrzjPLNVHlI9/xvDCgbzD3nFsDJFV9o/0HIzDs6T3L9nqyy3s0XiDeWhFtbraPdhaHDwF2QlI5qpIt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366714; c=relaxed/simple;
-	bh=YA8/uZcUDvXbi29JE14W9dqn9IRhRZeEDS/Lxvvq030=;
+	s=arc-20240116; t=1748366717; c=relaxed/simple;
+	bh=udkipFbp4wMi3iTsF/+TvNTvt6FKCPuZX+ATCVD9WFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sz3ysUjtG0KtFTAP7r55MfIA/cLkmN4KPSyvkqOlaUZjHFwY/QuQLi6ObTnoPbDvDcmzOOMqe7DxBYRA3D4J3nNJsmCq2s3N3TZU94bALlcib4QBWpM9g9QDTyVC86fnFeu92xAar5cQSWW/nbrzyL9p9DCcdE5ajytjnc9Ft4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v2L6+nu+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=W2+IRCY8OewJ3iAvCYWoG4ZiedVOudheSZPe+d/TDsLkysztLfHcKwajno1uxMfM5CQGuIHje+2TmESljnUN4G2TT8b3YCN11zbfroLONlESIf6IRk7jBj5X/RSa3uiTALyK7vSad7MmllLQyj4tDeURhpBakUPX+eOaZVsK5UI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBEc3Ji8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v2L6+nu+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867A0C4CEE9;
-	Tue, 27 May 2025 17:25:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBEc3Ji8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F81C4CEE9;
+	Tue, 27 May 2025 17:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366714;
-	bh=YA8/uZcUDvXbi29JE14W9dqn9IRhRZeEDS/Lxvvq030=;
+	s=korg; t=1748366717;
+	bh=udkipFbp4wMi3iTsF/+TvNTvt6FKCPuZX+ATCVD9WFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v2L6+nu+wVTYQMLcJ+0DUAJTA8OhkbnbuzEh0+V7WFFgjcaaZdINDisO6R1vJVNEd
-	 /h3a88KiG5krBJY2zt+peuBtMbCe4S9KkgSSBuZNxhRBTPwGTy8p79nl0HNzVqL5L8
-	 +HPcs1t3PSmSOycgikcHcgSXquXTNfGKxwpwm4Nw=
+	b=kBEc3Ji8scc4fpb9ctGRBIIRjQuOHa/JYfSKk7qKhRl4F0JScEuShqodZMF/1koO5
+	 h7l1hgpbDRFx2ff9ECyglGfrnEKSShJn8mCfyBG1jnI9ygn0NvCVhyrzPrehLVvV8J
+	 GUXJx0y9w7k997Jb59jDxJbGVg3cnj+z7lafvD5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	=?UTF-8?q?Kai=20M=C3=A4kisara?= <Kai.Makisara@kolumbus.fi>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 158/783] hypfs_create_cpu_files(): add missing check for hypfs_mkdir() failure
-Date: Tue, 27 May 2025 18:19:15 +0200
-Message-ID: <20250527162519.605953769@linuxfoundation.org>
+Subject: [PATCH 6.14 159/783] scsi: st: Tighten the page format heuristics with MODE SELECT
+Date: Tue, 27 May 2025 18:19:16 +0200
+Message-ID: <20250527162519.645671364@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -44,35 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
 
-[ Upstream commit 00cdfdcfa0806202aea56b02cedbf87ef1e75df8 ]
+[ Upstream commit 8db816c6f176321e42254badd5c1a8df8bfcfdb4 ]
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+In the days when SCSI-2 was emerging, some drives did claim SCSI-2 but did
+not correctly implement it. The st driver first tries MODE SELECT with the
+page format bit set to set the block descriptor.  If not successful, the
+non-page format is tried.
+
+The test only tests the sense code and this triggers also from illegal
+parameter in the parameter list. The test is limited to "old" devices and
+made more strict to remove false alarms.
+
+Signed-off-by: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
+Link: https://lore.kernel.org/r/20250311112516.5548-4-Kai.Makisara@kolumbus.fi
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/hypfs/hypfs_diag_fs.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/st.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/s390/hypfs/hypfs_diag_fs.c b/arch/s390/hypfs/hypfs_diag_fs.c
-index 00a6d370a2803..280266a74f378 100644
---- a/arch/s390/hypfs/hypfs_diag_fs.c
-+++ b/arch/s390/hypfs/hypfs_diag_fs.c
-@@ -208,6 +208,8 @@ static int hypfs_create_cpu_files(struct dentry *cpus_dir, void *cpu_info)
- 	snprintf(buffer, TMP_SIZE, "%d", cpu_info__cpu_addr(diag204_get_info_type(),
- 							    cpu_info));
- 	cpu_dir = hypfs_mkdir(cpus_dir, buffer);
-+	if (IS_ERR(cpu_dir))
-+		return PTR_ERR(cpu_dir);
- 	rc = hypfs_create_u64(cpu_dir, "mgmtime",
- 			      cpu_info__acc_time(diag204_get_info_type(), cpu_info) -
- 			      cpu_info__lp_time(diag204_get_info_type(), cpu_info));
+diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
+index 344e4da336bb5..2a18ba51427ac 100644
+--- a/drivers/scsi/st.c
++++ b/drivers/scsi/st.c
+@@ -3084,7 +3084,9 @@ static int st_int_ioctl(struct scsi_tape *STp, unsigned int cmd_in, unsigned lon
+ 			   cmd_in == MTSETDRVBUFFER ||
+ 			   cmd_in == SET_DENS_AND_BLK) {
+ 			if (cmdstatp->sense_hdr.sense_key == ILLEGAL_REQUEST &&
+-			    !(STp->use_pf & PF_TESTED)) {
++				cmdstatp->sense_hdr.asc == 0x24 &&
++				(STp->device)->scsi_level <= SCSI_2 &&
++				!(STp->use_pf & PF_TESTED)) {
+ 				/* Try the other possible state of Page Format if not
+ 				   already tried */
+ 				STp->use_pf = (STp->use_pf ^ USE_PF) | PF_TESTED;
 -- 
 2.39.5
 
