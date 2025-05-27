@@ -1,38 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD0C139579;
-	Tue, 27 May 2025 17:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56032139579;
+	Tue, 27 May 2025 17:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365823; cv=none; b=VOGTqI5/n3xpJmAQGHZ1s88E3GtxOk8JLIpq1ICCVIAxGgUdXov/iiN8PO14ZhydOztSqiXx5YFzbdfE3dJ25IlpwjBBmDd8fKctklVwPv6bujAOyO1p/sPGCS673/pB8BfaWeFmT1itmYFFbGRc8f2SP/mApgmjby1iDLS/IrY=
+	t=1748365826; cv=none; b=JQToNPEjQv/xebNA/kucSEbWPj4AXD65TNVHwNumEyY8XQ7Ob0KZB55G39Ju1ZNGgSY1FSiSQbldG69f6Um3kLbcHTPSvJMhalTGjJ5QA8bzZywrbj8lELI4D09HbXWCuX9XyREGefS9kDnnSgZbv4pFTQZK8sX/GkemOKxxR6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365823; c=relaxed/simple;
-	bh=HSriP0PvkuIvl6pmUNEdwJfuvOb9mUkJgkYBlDW/wD0=;
+	s=arc-20240116; t=1748365826; c=relaxed/simple;
+	bh=NjlJsRqsMkGNJrvMAT5vgvZXEgBybbuwypXFsLFb+uQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ST7qX4jOEtNj1FwT07W+uDryZXOGexCYBgt910JvQfa2MNBPwi9+TP2WrjehNHs9iciCHl1Pgm1zFS7VWsFzcp1YkZxBOpkTY4XPEdpPbMfypOHHOflbcHZ0G30G7s+e8g0L37yhfrUdhMjfiHc0GOy3vVTCRYMkZ/RHauUySO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YRWD39Q+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ezu8uyGzyMFXbuhawZNd+E8U9voiBpXYiBzeiNZasExaKhRRbnDgBDlEPBVWYU29hPhPxv8N+6NXCEGaS0zXbncqlUU2/U0BmGsaGvYK+Bc0bX7q6NU2aDOVtoOay9/7J+vZwYtiXg58y5Ja3He+6eauE1E4jKuJKw9cUgGJ4r0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9YyzGLD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRWD39Q+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07F2C4CEE9;
-	Tue, 27 May 2025 17:10:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9YyzGLD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F1AC4CEE9;
+	Tue, 27 May 2025 17:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365823;
-	bh=HSriP0PvkuIvl6pmUNEdwJfuvOb9mUkJgkYBlDW/wD0=;
+	s=korg; t=1748365826;
+	bh=NjlJsRqsMkGNJrvMAT5vgvZXEgBybbuwypXFsLFb+uQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YRWD39Q+A0zrnJ8EZXKAdzXiv9eIcjgbMnymedQjc9K52oSqV0OofRyM7DPPyoldw
-	 Uqqtsb8fuuWz4+vvKXDR8Ma0xnYQXkreiyR8CmUnImS14gWvgsFebDmNdhgTJ2IsxC
-	 OPbenrYS6p2lTgh+AUi69a7FfwWpx7+CVpF3dHZI=
+	b=y9YyzGLDXfBg0GyiNGaQPuen65z4nPyeijRu16XV3QT91fMKh1BxHlEJ0C2jzMeEv
+	 NggkNqEf3dG4T47Iej5B8lEDGc66vi343OILsKftPgpWgutynW+jHUQ1bhr9+RgvLx
+	 s4D1y+MW8gf9BdUy8TQd6adS6pAEp307jaANeW/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Oak Zeng <oak.zeng@intel.com>,
+	Pekka Paalanen <pekka.paalanen@collabora.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Rob Clark <robdclark@gmail.com>,
+	Simon Ser <contact@emersion.fr>,
+	Manasi Navare <navaremanasi@google.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Simona Vetter <simona.vetter@intel.com>,
+	Simona Vetter <simona.vetter@ffwll.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 500/626] drm/xe: Reject BO eviction if BO is bound to current VM
-Date: Tue, 27 May 2025 18:26:33 +0200
-Message-ID: <20250527162505.290060479@linuxfoundation.org>
+Subject: [PATCH 6.12 501/626] drm/atomic: clarify the rules around drm_atomic_state->allow_modeset
+Date: Tue, 27 May 2025 18:26:34 +0200
+Message-ID: <20250527162505.329708456@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,63 +64,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oak Zeng <oak.zeng@intel.com>
+From: Simona Vetter <simona.vetter@ffwll.ch>
 
-[ Upstream commit 0af944f0e3082ff517958b1cea76fb9b8cb379dd ]
+[ Upstream commit c5e3306a424b52e38ad2c28c7f3399fcd03e383d ]
 
-This is a follow up fix for
-https://patchwork.freedesktop.org/patch/msgid/20241203021929.1919730-1-oak.zeng@intel.com
-The overall goal is to fail vm_bind when there is memory pressure. See more
-details in the commit message of above patch. Abbove patch fixes the issue
-when user pass in a vm_id parameter during gem_create. If user doesn't pass
-in a vm_id during gem_create, above patch doesn't help.
+msm is automagically upgrading normal commits to full modesets, and
+that's a big no-no:
 
-This patch further reject BO eviction (which could be triggered by bo validation)
-if BO is bound to the current VM. vm_bind could fail due to the eviction failure.
-The BO to VM reverse mapping structure is used to determine whether BO is bound
-to VM.
+- for one this results in full on->off->on transitions on all these
+  crtc, at least if you're using the usual helpers. Which seems to be
+  the case, and is breaking uapi
 
-v2:
-Move vm_bo definition from function scope to if(evict) clause (Thomas)
-Further constraint the condition by adding ctx->resv (Thomas)
-Add a short comment describe the change.
+- further even if the ctm change itself would not result in flicker,
+  this can hide modesets for other reasons. Which again breaks the
+  uapi
 
-Suggested-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Signed-off-by: Oak Zeng <oak.zeng@intel.com>
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250110210137.3181576-1-oak.zeng@intel.com
+v2: I forgot the case of adding unrelated crtc state. Add that case
+and link to the existing kerneldoc explainers. This has come up in an
+irc discussion with Manasi and Ville about intel's bigjoiner mode.
+Also cc everyone involved in the msm irc discussion, more people
+joined after I sent out v1.
+
+v3: Wording polish from Pekka and Thomas
+
+Acked-by: Pekka Paalanen <pekka.paalanen@collabora.com>
+Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Pekka Paalanen <pekka.paalanen@collabora.com>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Simon Ser <contact@emersion.fr>
+Cc: Manasi Navare <navaremanasi@google.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Simona Vetter <simona.vetter@intel.com>
+Signed-off-by: Simona Vetter <simona.vetter@ffwll.ch>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250108172417.160831-1-simona.vetter@ffwll.ch
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_bo.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ include/drm/drm_atomic.h | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_bo.c b/drivers/gpu/drm/xe/xe_bo.c
-index 35a8242a9f541..8acc4640f0a28 100644
---- a/drivers/gpu/drm/xe/xe_bo.c
-+++ b/drivers/gpu/drm/xe/xe_bo.c
-@@ -702,6 +702,21 @@ static int xe_bo_move(struct ttm_buffer_object *ttm_bo, bool evict,
- 		goto out;
- 	}
- 
-+	/* Reject BO eviction if BO is bound to current VM. */
-+	if (evict && ctx->resv) {
-+		struct drm_gpuvm_bo *vm_bo;
-+
-+		drm_gem_for_each_gpuvm_bo(vm_bo, &bo->ttm.base) {
-+			struct xe_vm *vm = gpuvm_to_vm(vm_bo->vm);
-+
-+			if (xe_vm_resv(vm) == ctx->resv &&
-+			    xe_vm_in_preempt_fence_mode(vm)) {
-+				ret = -EBUSY;
-+				goto out;
-+			}
-+		}
-+	}
-+
- 	/*
- 	 * Failed multi-hop where the old_mem is still marked as
- 	 * TTM_PL_FLAG_TEMPORARY, should just be a dummy move.
+diff --git a/include/drm/drm_atomic.h b/include/drm/drm_atomic.h
+index 31ca88deb10d2..1ded9a8d4e84d 100644
+--- a/include/drm/drm_atomic.h
++++ b/include/drm/drm_atomic.h
+@@ -376,8 +376,27 @@ struct drm_atomic_state {
+ 	 *
+ 	 * Allow full modeset. This is used by the ATOMIC IOCTL handler to
+ 	 * implement the DRM_MODE_ATOMIC_ALLOW_MODESET flag. Drivers should
+-	 * never consult this flag, instead looking at the output of
+-	 * drm_atomic_crtc_needs_modeset().
++	 * generally not consult this flag, but instead look at the output of
++	 * drm_atomic_crtc_needs_modeset(). The detailed rules are:
++	 *
++	 * - Drivers must not consult @allow_modeset in the atomic commit path.
++	 *   Use drm_atomic_crtc_needs_modeset() instead.
++	 *
++	 * - Drivers must consult @allow_modeset before adding unrelated struct
++	 *   drm_crtc_state to this commit by calling
++	 *   drm_atomic_get_crtc_state(). See also the warning in the
++	 *   documentation for that function.
++	 *
++	 * - Drivers must never change this flag, it is under the exclusive
++	 *   control of userspace.
++	 *
++	 * - Drivers may consult @allow_modeset in the atomic check path, if
++	 *   they have the choice between an optimal hardware configuration
++	 *   which requires a modeset, and a less optimal configuration which
++	 *   can be committed without a modeset. An example would be suboptimal
++	 *   scanout FIFO allocation resulting in increased idle power
++	 *   consumption. This allows userspace to avoid flickering and delays
++	 *   for the normal composition loop at reasonable cost.
+ 	 */
+ 	bool allow_modeset : 1;
+ 	/**
 -- 
 2.39.5
 
