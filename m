@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51AF01FB3;
-	Tue, 27 May 2025 17:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F4C2566;
+	Tue, 27 May 2025 17:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368419; cv=none; b=noxUhWk/5IE+c7X1kr5usi6DmydlBZNCR0kSgTdLyjF68NXYJaxlcQcVYMPcmfDRumqBuwzZrotyaFAEcUfH2JvGlU8qq8nwFQ0o05VrVov8tuM3K1/RG/5Jr5tCWecQZ1+hojVHFqMyO+VGLrFBvqAL2mplxBs9iCliG0+L7uc=
+	t=1748368422; cv=none; b=tR1KPSzlcrbHbbYORoPTzpVfQcKwqYfCl58onw7mPbO7u0cVQKcBbgV5brJu6F9ux/8UWUeagdAkam/iYfgbragQi66sbAAaAtiwOkVvyzEqWKnIYJqCJV0C5ijdJAJHg/EjlBZeeD6VkZEjlwYdojxHCRsOQcuxA5Xd/BRGwCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368419; c=relaxed/simple;
-	bh=0cLtJKFQyBWgMik9XSgGBQiDMx2kBO7miZgT4iNNvzA=;
+	s=arc-20240116; t=1748368422; c=relaxed/simple;
+	bh=0XVHz7p9bZM7C99/Ga2T85VDrY6arYUSooqeGkogYns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mBvDfi+M5b1SN5UCpbpXdYwTRSGJiIb8MB0HKk1ZgwDoXLIJ4hwJwSGb4K92lNcubj1jZSqKzeVGF3DXYlvyX+pHeyK1iDq59TY3tR4SQh8heujIIANYq0gHGHYfpJSdICIwa5lyDfKh6r3p/+Z6VUb09rEK1RcvrLyq+AoJOLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mqlhtog/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UEd+gugOBa98jNw+rGKyH0vVkrLZ0SeJEyDd6+YiSDRjkAfnK2+pQ1uWtu5rFtovPYyXmC5aDErCGwqGqSR933NXgTmuqH/sd/NiWEVeOz3y+GJZbyZWCKsQpkFpdRPgTgRbcCov40FSXTU6N8eCpdmSP0LhvAArW/UYC2HPCeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yCXO5B+Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mqlhtog/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD157C4CEE9;
-	Tue, 27 May 2025 17:53:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yCXO5B+Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94966C4CEE9;
+	Tue, 27 May 2025 17:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368419;
-	bh=0cLtJKFQyBWgMik9XSgGBQiDMx2kBO7miZgT4iNNvzA=;
+	s=korg; t=1748368422;
+	bh=0XVHz7p9bZM7C99/Ga2T85VDrY6arYUSooqeGkogYns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mqlhtog/728I2Llj6BTEYvR80InKjj68e72I1RAZaDYjUbFMiFF/MIByGItDN1vMJ
-	 O6RLxswv9EP5Ex9Y03j9G1fZdfJa8DvUIGA8Ivb1X/I1g5p8/XyXvCAy2l/aFmknkm
-	 sMTc34rB7sVeg9r9r9MOV5VFWqNBD3Vm6fxNYkp8=
+	b=yCXO5B+QYWnAmlVffQVhZBgoFNiewxRpn7zb1oFj1qYGlVd6Bmpk+Dm0ymMModO6H
+	 86drkwaemAvzY2ouffwALmY0QdGtNzbbHAT1NipyCIf5g61ZMUTWl1IZKPUN8dLK+b
+	 4+TZ9Zy3cE2No690ECTl6tsWTLCEe8iIMGN7WKLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Maimon <maimon.sagi@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Venkat Venkatsubra <venkat.x.venkatsubra@oracle.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 700/783] ptp: ocp: Limit signal/freq counts in summary output functions
-Date: Tue, 27 May 2025 18:28:17 +0200
-Message-ID: <20250527162541.628774497@linuxfoundation.org>
+Subject: [PATCH 6.14 701/783] bridge: netfilter: Fix forwarding of fragmented packets
+Date: Tue, 27 May 2025 18:28:18 +0200
+Message-ID: <20250527162541.667890662@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,129 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sagi Maimon <maimon.sagi@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit c9e455581e2ba87ee38c126e8dc49a424b9df0cf ]
+[ Upstream commit 91b6dbced0ef1d680afdd69b14fc83d50ebafaf3 ]
 
-The debugfs summary output could access uninitialized elements in
-the freq_in[] and signal_out[] arrays, causing NULL pointer
-dereferences and triggering a kernel Oops (page_fault_oops).
-This patch adds u8 fields (nr_freq_in, nr_signal_out) to track the
-number of initialized elements, with a maximum of 4 per array.
-The summary output functions are updated to respect these limits,
-preventing out-of-bounds access and ensuring safe array handling.
+When netfilter defrag hooks are loaded (due to the presence of conntrack
+rules, for example), fragmented packets entering the bridge will be
+defragged by the bridge's pre-routing hook (br_nf_pre_routing() ->
+ipv4_conntrack_defrag()).
 
-Widen the label variables because the change confuses GCC about
-max length of the strings.
+Later on, in the bridge's post-routing hook, the defragged packet will
+be fragmented again. If the size of the largest fragment is larger than
+what the kernel has determined as the destination MTU (using
+ip_skb_dst_mtu()), the defragged packet will be dropped.
 
-Fixes: ef61f5528fca ("ptp: ocp: add Adva timecard support")
-Signed-off-by: Sagi Maimon <maimon.sagi@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20250514073541.35817-1-maimon.sagi@gmail.com
+Before commit ac6627a28dbf ("net: ipv4: Consolidate ipv4_mtu and
+ip_dst_mtu_maybe_forward"), ip_skb_dst_mtu() would return dst_mtu() as
+the destination MTU. Assuming the dst entry attached to the packet is
+the bridge's fake rtable one, this would simply be the bridge's MTU (see
+fake_mtu()).
+
+However, after above mentioned commit, ip_skb_dst_mtu() ends up
+returning the route's MTU stored in the dst entry's metrics. Ideally, in
+case the dst entry is the bridge's fake rtable one, this should be the
+bridge's MTU as the bridge takes care of updating this metric when its
+MTU changes (see br_change_mtu()).
+
+Unfortunately, the last operation is a no-op given the metrics attached
+to the fake rtable entry are marked as read-only. Therefore,
+ip_skb_dst_mtu() ends up returning 1500 (the initial MTU value) and
+defragged packets are dropped during fragmentation when dealing with
+large fragments and high MTU (e.g., 9k).
+
+Fix by moving the fake rtable entry's metrics to be per-bridge (in a
+similar fashion to the fake rtable entry itself) and marking them as
+writable, thereby allowing MTU changes to be reflected.
+
+Fixes: 62fa8a846d7d ("net: Implement read-only protection and COW'ing of metrics.")
+Fixes: 33eb9873a283 ("bridge: initialize fake_rtable metrics")
+Reported-by: Venkat Venkatsubra <venkat.x.venkatsubra@oracle.com>
+Closes: https://lore.kernel.org/netdev/PH0PR10MB4504888284FF4CBA648197D0ACB82@PH0PR10MB4504.namprd10.prod.outlook.com/
+Tested-by: Venkat Venkatsubra <venkat.x.venkatsubra@oracle.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20250515084848.727706-1-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_ocp.c | 24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ net/bridge/br_nf_core.c | 7 ++-----
+ net/bridge/br_private.h | 1 +
+ 2 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
-index 605cce32a3d37..e4be8b9291966 100644
---- a/drivers/ptp/ptp_ocp.c
-+++ b/drivers/ptp/ptp_ocp.c
-@@ -315,6 +315,8 @@ struct ptp_ocp_serial_port {
- #define OCP_BOARD_ID_LEN		13
- #define OCP_SERIAL_LEN			6
- #define OCP_SMA_NUM			4
-+#define OCP_SIGNAL_NUM			4
-+#define OCP_FREQ_NUM			4
- 
- enum {
- 	PORT_GNSS,
-@@ -342,8 +344,8 @@ struct ptp_ocp {
- 	struct dcf_master_reg	__iomem *dcf_out;
- 	struct dcf_slave_reg	__iomem *dcf_in;
- 	struct tod_reg		__iomem *nmea_out;
--	struct frequency_reg	__iomem *freq_in[4];
--	struct ptp_ocp_ext_src	*signal_out[4];
-+	struct frequency_reg	__iomem *freq_in[OCP_FREQ_NUM];
-+	struct ptp_ocp_ext_src	*signal_out[OCP_SIGNAL_NUM];
- 	struct ptp_ocp_ext_src	*pps;
- 	struct ptp_ocp_ext_src	*ts0;
- 	struct ptp_ocp_ext_src	*ts1;
-@@ -378,10 +380,12 @@ struct ptp_ocp {
- 	u32			utc_tai_offset;
- 	u32			ts_window_adjust;
- 	u64			fw_cap;
--	struct ptp_ocp_signal	signal[4];
-+	struct ptp_ocp_signal	signal[OCP_SIGNAL_NUM];
- 	struct ptp_ocp_sma_connector sma[OCP_SMA_NUM];
- 	const struct ocp_sma_op *sma_op;
- 	struct dpll_device *dpll;
-+	int signals_nr;
-+	int freq_in_nr;
- };
- 
- #define OCP_REQ_TIMESTAMP	BIT(0)
-@@ -2697,6 +2701,8 @@ ptp_ocp_fb_board_init(struct ptp_ocp *bp, struct ocp_resource *r)
- 	bp->eeprom_map = fb_eeprom_map;
- 	bp->fw_version = ioread32(&bp->image->version);
- 	bp->sma_op = &ocp_fb_sma_op;
-+	bp->signals_nr = 4;
-+	bp->freq_in_nr = 4;
- 
- 	ptp_ocp_fb_set_version(bp);
- 
-@@ -2862,6 +2868,8 @@ ptp_ocp_art_board_init(struct ptp_ocp *bp, struct ocp_resource *r)
- 	bp->fw_version = ioread32(&bp->reg->version);
- 	bp->fw_tag = 2;
- 	bp->sma_op = &ocp_art_sma_op;
-+	bp->signals_nr = 4;
-+	bp->freq_in_nr = 4;
- 
- 	/* Enable MAC serial port during initialisation */
- 	iowrite32(1, &bp->board_config->mro50_serial_activate);
-@@ -2888,6 +2896,8 @@ ptp_ocp_adva_board_init(struct ptp_ocp *bp, struct ocp_resource *r)
- 	bp->flash_start = 0xA00000;
- 	bp->eeprom_map = fb_eeprom_map;
- 	bp->sma_op = &ocp_adva_sma_op;
-+	bp->signals_nr = 2;
-+	bp->freq_in_nr = 2;
- 
- 	version = ioread32(&bp->image->version);
- 	/* if lower 16 bits are empty, this is the fw loader. */
-@@ -4008,7 +4018,7 @@ _signal_summary_show(struct seq_file *s, struct ptp_ocp *bp, int nr)
+diff --git a/net/bridge/br_nf_core.c b/net/bridge/br_nf_core.c
+index 98aea5485aaef..a8c67035e23c0 100644
+--- a/net/bridge/br_nf_core.c
++++ b/net/bridge/br_nf_core.c
+@@ -65,17 +65,14 @@ static struct dst_ops fake_dst_ops = {
+  * ipt_REJECT needs it.  Future netfilter modules might
+  * require us to fill additional fields.
+  */
+-static const u32 br_dst_default_metrics[RTAX_MAX] = {
+-	[RTAX_MTU - 1] = 1500,
+-};
+-
+ void br_netfilter_rtable_init(struct net_bridge *br)
  {
- 	struct signal_reg __iomem *reg = bp->signal_out[nr]->mem;
- 	struct ptp_ocp_signal *signal = &bp->signal[nr];
--	char label[8];
-+	char label[16];
- 	bool on;
- 	u32 val;
+ 	struct rtable *rt = &br->fake_rtable;
  
-@@ -4034,7 +4044,7 @@ static void
- _frequency_summary_show(struct seq_file *s, int nr,
- 			struct frequency_reg __iomem *reg)
- {
--	char label[8];
-+	char label[16];
- 	bool on;
- 	u32 val;
- 
-@@ -4178,11 +4188,11 @@ ptp_ocp_summary_show(struct seq_file *s, void *data)
- 	}
- 
- 	if (bp->fw_cap & OCP_CAP_SIGNAL)
--		for (i = 0; i < 4; i++)
-+		for (i = 0; i < bp->signals_nr; i++)
- 			_signal_summary_show(s, bp, i);
- 
- 	if (bp->fw_cap & OCP_CAP_FREQ)
--		for (i = 0; i < 4; i++)
-+		for (i = 0; i < bp->freq_in_nr; i++)
- 			_frequency_summary_show(s, i, bp->freq_in[i]);
- 
- 	if (bp->irig_out) {
+ 	rcuref_init(&rt->dst.__rcuref, 1);
+ 	rt->dst.dev = br->dev;
+-	dst_init_metrics(&rt->dst, br_dst_default_metrics, true);
++	dst_init_metrics(&rt->dst, br->metrics, false);
++	dst_metric_set(&rt->dst, RTAX_MTU, br->dev->mtu);
+ 	rt->dst.flags	= DST_NOXFRM | DST_FAKE_RTABLE;
+ 	rt->dst.ops = &fake_dst_ops;
+ }
+diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
+index d5b3c5936a79e..4715a8d6dc326 100644
+--- a/net/bridge/br_private.h
++++ b/net/bridge/br_private.h
+@@ -505,6 +505,7 @@ struct net_bridge {
+ 		struct rtable		fake_rtable;
+ 		struct rt6_info		fake_rt6_info;
+ 	};
++	u32				metrics[RTAX_MAX];
+ #endif
+ 	u16				group_fwd_mask;
+ 	u16				group_fwd_mask_required;
 -- 
 2.39.5
 
