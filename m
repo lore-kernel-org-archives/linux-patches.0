@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D86842A9B;
-	Tue, 27 May 2025 17:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F46242A9B;
+	Tue, 27 May 2025 17:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368191; cv=none; b=WeNMozryn6cv2Qo8UDU9ZfoyPSXX9plPvAn1iXm5HZIroDKrttqwaN0/XXr2Mu4ulY2ZNUHWLJWcQwCWlGdSOF5vWfzZ/evSrhE4V1aR5djxFZJySHILqliAgDV/2OSW093iYSp42yZJWlK7bRkk1P5qyEjmg6M2muZPPWzxGQU=
+	t=1748368193; cv=none; b=GmERvM6s4Gshmp6QT2j8Ywh7FDoCpO4uMD6lkLOlB6SBrJ5RqmZ5h44u1dKoMqoWdL3ScD7TtndEHEmRLYCdNsrGe5RiZcqFsStkm40ruxhgpy55x85qevy84LVIUH23ZYR/9JIPd9Lh8D5iUqHJaIVGq6KMzpLpewPZoa3gOCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368191; c=relaxed/simple;
-	bh=TsMvn1a3uyFs70ifyaPK22nINvXPAuPi4AYpW703t+M=;
+	s=arc-20240116; t=1748368193; c=relaxed/simple;
+	bh=3aqME75OYdLee/RXvBm4y71JOCgWSibRcotNbfx1NcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WsLBhws2UTj+dQcHFPzOvGjTCoXZWnCVtl+5o4+h2cSOaca5XmRFwLd7VPodXMpHQjplyvev/iY+whjxFQcW5OgDx2UFSIXv34eaMRPe2i6x+SWoNjFj8f6zjiIulTFd7pDRs5PCH3HINbD4+DX07u9FHNW3iPV9cB9kW2x9KFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Un6n9Etq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PsCcTg+NPCAK/QWdf+2VeFIxY3pOSrdadClyeuJdpvbcz3ndG9D4T9INCu8CQprd1/XN+YkRIJ8bsoCO4/4SAaam8FJz0cKh7e4jTYQK2Noesh/NKq52ZMvFyPSWGBywkiyLazdN3h6mC45pI9H/ggLYi860WOzveDTGcZsIZ0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WSTTwAXB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Un6n9Etq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BAD1C4CEE9;
-	Tue, 27 May 2025 17:49:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WSTTwAXB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 286D9C4CEE9;
+	Tue, 27 May 2025 17:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368190;
-	bh=TsMvn1a3uyFs70ifyaPK22nINvXPAuPi4AYpW703t+M=;
+	s=korg; t=1748368193;
+	bh=3aqME75OYdLee/RXvBm4y71JOCgWSibRcotNbfx1NcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Un6n9EtqmMa4mPmUGsifZsbf4/7mMEOzZe4yFsXBWlrTDjKbraCwRy3DTDalUpbbd
-	 ASVcvuUuxPrDv8XhMckSM8PL7MyMjj+6RrelgxDRHVVeluTBqBrQlv/xMtCFQd6eeF
-	 LOchZsnpUvYs+arBmcHDhWuKLQwANz+kqPKVnA6I=
+	b=WSTTwAXB5GIx7jeExz1y/Ht/5SigDY5zsNkzmHGHTku4afFewcp007eOJwSm4ElDf
+	 AKME2BcGozLT3LhjqP9G0v6VTm/5pJqX7kQRPncu87LLKoOldEFKLd70ezGqvuduIr
+	 KCdl2rpSJKI30tFZZzzAL06ktbz20X4ijOu/bRPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 627/783] drm/xe: Add locks in gtidle code
-Date: Tue, 27 May 2025 18:27:04 +0200
-Message-ID: <20250527162538.683470736@linuxfoundation.org>
+Subject: [PATCH 6.14 628/783] drm/panel-edp: Add Starry 116KHD024006
+Date: Tue, 27 May 2025 18:27:05 +0200
+Message-ID: <20250527162538.722856220@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,121 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit d160dc6f53914d729be7fcb7afbd0e9e6a3725b2 ]
+[ Upstream commit 749b5b279e5636cdcef51e15d67b77162cca6caa ]
 
-The update of the residency values needs to be protected by a lock to
-avoid multiple entrypoints, for example when multiple userspace clients
-read the sysfs file. Other in-kernel clients are going to be added to
-sample these values, making the problem worse. Protect those updates
-with a raw_spinlock so it can be called by future integration with perf
-pmu.
+We have a few reports of sc7180-trogdor-pompom devices that have a
+panel in them that IDs as STA 0x0004 and has the following raw EDID:
 
-Suggested-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250110173308.2412232-2-lucas.demarchi@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+  00 ff ff ff ff ff ff 00  4e 81 04 00 00 00 00 00
+  10 20 01 04 a5 1a 0e 78  0a dc dd 96 5b 5b 91 28
+  1f 52 54 00 00 00 01 01  01 01 01 01 01 01 01 01
+  01 01 01 01 01 01 8e 1c  56 a0 50 00 1e 30 28 20
+  55 00 00 90 10 00 00 18  00 00 00 00 00 00 00 00
+  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 fe
+  00 31 31 36 4b 48 44 30  32 34 30 30 36 0a 00 e6
+
+We've been unable to locate a datasheet for this panel and our partner
+has not been responsive, but all Starry eDP datasheets that we can
+find agree on the same timing (delay_100_500_e200) so it should be
+safe to use that here instead of the super conservative timings. We'll
+still go a little extra conservative and allow `hpd_absent` of 200
+instead of 100 because that won't add any real-world delay in most
+cases.
+
+We'll associate the string from the EDID ("116KHD024006") with this
+panel. Given that the ID is the suspicious value of 0x0004 it seems
+likely that Starry doesn't always update their IDs but the string will
+still work to differentiate if we ever need to in the future.
+
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250109142853.1.Ibcc3009933fd19507cc9c713ad0c99c7a9e4fe17@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt_idle.c       | 23 ++++++++++++++++++++---
- drivers/gpu/drm/xe/xe_gt_idle.h       |  1 +
- drivers/gpu/drm/xe/xe_gt_idle_types.h |  3 +++
- 3 files changed, 24 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/panel/panel-edp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt_idle.c b/drivers/gpu/drm/xe/xe_gt_idle.c
-index ffd3ba7f66561..fbbace7b0b12a 100644
---- a/drivers/gpu/drm/xe/xe_gt_idle.c
-+++ b/drivers/gpu/drm/xe/xe_gt_idle.c
-@@ -69,6 +69,8 @@ static u64 get_residency_ms(struct xe_gt_idle *gtidle, u64 cur_residency)
- {
- 	u64 delta, overflow_residency, prev_residency;
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index f8511fe5fb0d6..b0315d3ba00a5 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -1993,6 +1993,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('S', 'H', 'P', 0x154c, &delay_200_500_p2e100, "LQ116M1JW10"),
+ 	EDP_PANEL_ENTRY('S', 'H', 'P', 0x1593, &delay_200_500_p2e100, "LQ134N1"),
  
-+	lockdep_assert_held(&gtidle->lock);
-+
- 	overflow_residency = BIT_ULL(32);
++	EDP_PANEL_ENTRY('S', 'T', 'A', 0x0004, &delay_200_500_e200, "116KHD024006"),
+ 	EDP_PANEL_ENTRY('S', 'T', 'A', 0x0100, &delay_100_500_e200, "2081116HHD028001-51D"),
  
- 	/*
-@@ -275,8 +277,21 @@ static ssize_t idle_status_show(struct device *dev,
- 
- 	return sysfs_emit(buff, "%s\n", gt_idle_state_to_string(state));
- }
--static DEVICE_ATTR_RO(idle_status);
- 
-+u64 xe_gt_idle_residency_msec(struct xe_gt_idle *gtidle)
-+{
-+	struct xe_guc_pc *pc = gtidle_to_pc(gtidle);
-+	u64 residency;
-+	unsigned long flags;
-+
-+	raw_spin_lock_irqsave(&gtidle->lock, flags);
-+	residency = get_residency_ms(gtidle, gtidle->idle_residency(pc));
-+	raw_spin_unlock_irqrestore(&gtidle->lock, flags);
-+
-+	return residency;
-+}
-+
-+static DEVICE_ATTR_RO(idle_status);
- static ssize_t idle_residency_ms_show(struct device *dev,
- 				      struct device_attribute *attr, char *buff)
- {
-@@ -285,10 +300,10 @@ static ssize_t idle_residency_ms_show(struct device *dev,
- 	u64 residency;
- 
- 	xe_pm_runtime_get(pc_to_xe(pc));
--	residency = gtidle->idle_residency(pc);
-+	residency = xe_gt_idle_residency_msec(gtidle);
- 	xe_pm_runtime_put(pc_to_xe(pc));
- 
--	return sysfs_emit(buff, "%llu\n", get_residency_ms(gtidle, residency));
-+	return sysfs_emit(buff, "%llu\n", residency);
- }
- static DEVICE_ATTR_RO(idle_residency_ms);
- 
-@@ -331,6 +346,8 @@ int xe_gt_idle_init(struct xe_gt_idle *gtidle)
- 	if (!kobj)
- 		return -ENOMEM;
- 
-+	raw_spin_lock_init(&gtidle->lock);
-+
- 	if (xe_gt_is_media_type(gt)) {
- 		snprintf(gtidle->name, sizeof(gtidle->name), "gt%d-mc", gt->info.id);
- 		gtidle->idle_residency = xe_guc_pc_mc6_residency;
-diff --git a/drivers/gpu/drm/xe/xe_gt_idle.h b/drivers/gpu/drm/xe/xe_gt_idle.h
-index 4455a6501cb07..591a01e181bcc 100644
---- a/drivers/gpu/drm/xe/xe_gt_idle.h
-+++ b/drivers/gpu/drm/xe/xe_gt_idle.h
-@@ -17,5 +17,6 @@ void xe_gt_idle_disable_c6(struct xe_gt *gt);
- void xe_gt_idle_enable_pg(struct xe_gt *gt);
- void xe_gt_idle_disable_pg(struct xe_gt *gt);
- int xe_gt_idle_pg_print(struct xe_gt *gt, struct drm_printer *p);
-+u64 xe_gt_idle_residency_msec(struct xe_gt_idle *gtidle);
- 
- #endif /* _XE_GT_IDLE_H_ */
-diff --git a/drivers/gpu/drm/xe/xe_gt_idle_types.h b/drivers/gpu/drm/xe/xe_gt_idle_types.h
-index b8b297a3f8848..a3667c567f8a7 100644
---- a/drivers/gpu/drm/xe/xe_gt_idle_types.h
-+++ b/drivers/gpu/drm/xe/xe_gt_idle_types.h
-@@ -6,6 +6,7 @@
- #ifndef _XE_GT_IDLE_SYSFS_TYPES_H_
- #define _XE_GT_IDLE_SYSFS_TYPES_H_
- 
-+#include <linux/spinlock.h>
- #include <linux/types.h>
- 
- struct xe_guc_pc;
-@@ -31,6 +32,8 @@ struct xe_gt_idle {
- 	u64 cur_residency;
- 	/** @prev_residency: previous residency counter */
- 	u64 prev_residency;
-+	/** @lock: Lock protecting idle residency counters */
-+	raw_spinlock_t lock;
- 	/** @idle_status: get the current idle state */
- 	enum xe_gt_idle_state (*idle_status)(struct xe_guc_pc *pc);
- 	/** @idle_residency: get idle residency counter */
+ 	{ /* sentinal */ }
 -- 
 2.39.5
 
