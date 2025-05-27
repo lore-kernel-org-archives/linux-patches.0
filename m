@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1042110E;
-	Tue, 27 May 2025 17:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFA419E967;
+	Tue, 27 May 2025 17:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366504; cv=none; b=W/XvvI/Eao8krQ9n4REyT5pP8EYsL4OZm192YSF9s6U1VinTVL5PkACQpgUCyWmfGGe2jAhQjI67gX8ZddGvakm3NUnQ8huOBnEDaHpeO6owBq1Kjkug8tp10vqQ6Q8U+sTE+xfnVB0ku7n9Iw9l4c/o6zJm+vFDazgdzYflBBA=
+	t=1748366507; cv=none; b=bWJlmdSUVS60rDbOgl4XeIkB7g8H2HEsmIMTDAHvNUVjCDTpr4s5x2WPXX/CN/KxwKi/zu7cuwLglIyloX+JOLq5GwcwiSXoAXZPh1/CFl4rSTJYEQhz1n7GUzivISrlegd7x6cmZME9ZFAHeOJQ+0P2caS1c/V/waO2d4LGBPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366504; c=relaxed/simple;
-	bh=zOTBekvK04Zq/0hz3r8uGR/rc2WinlrHKr2xlKls9vI=;
+	s=arc-20240116; t=1748366507; c=relaxed/simple;
+	bh=K/0H98mYmyQD6aG4HjWI6w5piYKY641Cmn+EcsTJA1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uj9ARHpw0I4ua/XvzlJZ09Z1IBV15gaoh2djk1aB+ZdYzwjBSU4EupKYyzljWEzM1hGErHt74wXpDJFVa3edvoXQVcgFEOwpNNmRHH7/2S6U6moAyZ86Le50iMXB1aSBX+GGjAO/xlAv2pnJEypLVicMPgQD+/WptDkMrzgm7DI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BtwLMeRJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o+OJdjH4n360nKo/+4ob7JgSo400RB6b1AdXhlC6UYmKQ2d7nVo+TWByWVwwHMpfdIRwBlYC46StWRHzJci8ZQcjAijsit+VibrUxk66rcHZsJUSxcOUMy7XX32etSqNrOyoqpJN+cEfW0+AOQSfuZflD0o7CJd1qyLvdigUtiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8om5Z/D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BtwLMeRJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8B3C4CEE9;
-	Tue, 27 May 2025 17:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8om5Z/D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA92FC4CEE9;
+	Tue, 27 May 2025 17:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366504;
-	bh=zOTBekvK04Zq/0hz3r8uGR/rc2WinlrHKr2xlKls9vI=;
+	s=korg; t=1748366507;
+	bh=K/0H98mYmyQD6aG4HjWI6w5piYKY641Cmn+EcsTJA1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BtwLMeRJBjXcHFxcvNj8Kr+1faPIGa+JNtPZdV79pIKzYysgkF2xCr73mbfOxf9D9
-	 W6o8+65BsA5GffqhR0WYzlydDcz1gTt3ynymX0dqiQt2LWgswjosUqFV5+6fF17ck4
-	 1eLRqjd3HUwcdg+Z6Td8PFpFXI2LA0COjxgRCjow=
+	b=H8om5Z/Dp3Id0h6QAzCj27L7HH9ei1NqeFNFuDfixG1IA5KvsSAOExBIl00u6WHHl
+	 m9j47ylDJ7z+aojKEoyFs0oZ9uoN/A84JuyJDiyQfADPFzFE2OcbAKCjPTVI8kZw3F
+	 3K8xLjk+sxg0kOCTmcbGZsYG4/CPzKBqUVu0w4Lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans-Frieder Vogt <hfdevel@gmx.net>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 082/783] net: tn40xx: add pci-id of the aqr105-based Tehuti TN4010 cards
-Date: Tue, 27 May 2025 18:17:59 +0200
-Message-ID: <20250527162516.482396630@linuxfoundation.org>
+Subject: [PATCH 6.14 091/783] objtool: Properly disable uaccess validation
+Date: Tue, 27 May 2025 18:18:08 +0200
+Message-ID: <20250527162516.845840214@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,41 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans-Frieder Vogt <hfdevel@gmx.net>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 53377b5c2952097527b01ce2f1d9a9332f042f70 ]
+[ Upstream commit e1a9dda74dbffbc3fa2069ff418a1876dc99fb14 ]
 
-Add the PCI-ID of the AQR105-based Tehuti TN4010 cards to allow loading
-of the tn40xx driver on these cards. Here, I chose the detailed definition
-with the subvendor ID similar to the QT2025 cards with the PCI-ID
-TEHUTI:0x4022, because there is a card with an AQ2104 hiding amongst the
-AQR105 cards, and they all come with the same PCI-ID (TEHUTI:0x4025). But
-the AQ2104 is currently not supported.
+If opts.uaccess isn't set, the uaccess validation is disabled, but only
+partially: it doesn't read the uaccess_safe_builtin list but still tries
+to do the validation.  Disable it completely to prevent false warnings.
 
-Signed-off-by: Hans-Frieder Vogt <hfdevel@gmx.net>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250322-tn9510-v3a-v7-7-672a9a3d8628@gmx.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/0e95581c1d2107fb5f59418edf2b26bba38b0cbb.1742852846.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/tehuti/tn40.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/objtool/check.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/tehuti/tn40.c b/drivers/net/ethernet/tehuti/tn40.c
-index 259bdac24cf21..a6965258441c4 100644
---- a/drivers/net/ethernet/tehuti/tn40.c
-+++ b/drivers/net/ethernet/tehuti/tn40.c
-@@ -1832,6 +1832,10 @@ static const struct pci_device_id tn40_id_table[] = {
- 			 PCI_VENDOR_ID_ASUSTEK, 0x8709) },
- 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_TEHUTI, 0x4022,
- 			 PCI_VENDOR_ID_EDIMAX, 0x8103) },
-+	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_TEHUTI, PCI_DEVICE_ID_TEHUTI_TN9510,
-+			 PCI_VENDOR_ID_TEHUTI, 0x3015) },
-+	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_TEHUTI, PCI_DEVICE_ID_TEHUTI_TN9510,
-+			 PCI_VENDOR_ID_EDIMAX, 0x8102) },
- 	{ }
- };
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index a7dcf2d00ab65..522ae26f581be 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -3209,7 +3209,7 @@ static int handle_insn_ops(struct instruction *insn,
+ 		if (update_cfi_state(insn, next_insn, &state->cfi, op))
+ 			return 1;
  
+-		if (!insn->alt_group)
++		if (!opts.uaccess || !insn->alt_group)
+ 			continue;
+ 
+ 		if (op->dest.type == OP_DEST_PUSHF) {
+@@ -3676,6 +3676,9 @@ static int validate_branch(struct objtool_file *file, struct symbol *func,
+ 			return 0;
+ 
+ 		case INSN_STAC:
++			if (!opts.uaccess)
++				break;
++
+ 			if (state.uaccess) {
+ 				WARN_INSN(insn, "recursive UACCESS enable");
+ 				return 1;
+@@ -3685,6 +3688,9 @@ static int validate_branch(struct objtool_file *file, struct symbol *func,
+ 			break;
+ 
+ 		case INSN_CLAC:
++			if (!opts.uaccess)
++				break;
++
+ 			if (!state.uaccess && func) {
+ 				WARN_INSN(insn, "redundant UACCESS disable");
+ 				return 1;
+@@ -4160,7 +4166,8 @@ static int validate_symbol(struct objtool_file *file, struct section *sec,
+ 	if (!insn || insn->ignore || insn->visited)
+ 		return 0;
+ 
+-	state->uaccess = sym->uaccess_safe;
++	if (opts.uaccess)
++		state->uaccess = sym->uaccess_safe;
+ 
+ 	ret = validate_branch(file, insn_func(insn), insn, *state);
+ 	if (ret)
 -- 
 2.39.5
 
