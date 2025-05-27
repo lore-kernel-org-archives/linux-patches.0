@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B8D19E967;
-	Tue, 27 May 2025 17:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7054A1E89C;
+	Tue, 27 May 2025 17:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366498; cv=none; b=lm3fyekctnsGXhfNYVkMHjIvd2Vgg0xYroUFLdzUbhqvR3BBPCurC/ElyOoKmrVEilMcDVuhfrKkM/urA2Ww3QVkEBUckBhs94e+E+8RFoKxy4BwM30G3Qil5pvIxFuu1C0+k99WF97UQLWqp26WG/nJ8QFX/ZqtLb95DcHtDlU=
+	t=1748366501; cv=none; b=cUTrAll0VJGNonfgKtf9U7hQLjebiHOGhlRXm6Cmnoeiz4ohW3AG1QHsVUHZQIPP9sAFDfsfoUjZM711bfR5UkrbxDQ9T5XBuqqSGb2x2Ii1YsReJZgZ3sfJvlydeLY1cD8ShHdtiXqgaktOl7vQlI7GdKjdQ2O1lZd4tSrpmB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366498; c=relaxed/simple;
-	bh=Wq/aoe8mH2XacxTCe/RHAZur5cAEx2kl8OgKwkBV36A=;
+	s=arc-20240116; t=1748366501; c=relaxed/simple;
+	bh=Tg00eZ8Vg3amrRye/9kebQw5cCnkzxkP33j7R1s2+JY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f6qphINxwzPId3B9mgBChymauPSAqv0sXUFwKzy3xfSp/6oQa2dG85btViR+to17/SDUk0hDocnUYmb0S59HysEZnAq92jwCaBexXwfBppIlJ4WO0Ujn2JiuNe9EAgFLHwEvDrsDN4uXzWev0MTDMpCYBbYokrIlXlQ0DvawaS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zEFBhvOP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=vASfAfDxyf4/k5g8wFi26CskQTqAfRJdwR0Uu/ZeTE/J7iViY8bPNClGibEdpUAPMEql1mc8H6oVmSni2ST7aTUrRCDTCrEBh4WbRYQ4IiS6eM+rt+fIvct0waZZCI8JkY9kETtf1p3HMrAA0mGWEobY0vDQFrfqetIBOPUSnpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JwSVfO2A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zEFBhvOP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2824DC4CEE9;
-	Tue, 27 May 2025 17:21:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JwSVfO2A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC90C4CEE9;
+	Tue, 27 May 2025 17:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366498;
-	bh=Wq/aoe8mH2XacxTCe/RHAZur5cAEx2kl8OgKwkBV36A=;
+	s=korg; t=1748366501;
+	bh=Tg00eZ8Vg3amrRye/9kebQw5cCnkzxkP33j7R1s2+JY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zEFBhvOPtFL1ETyLr0uPZbFS1mKGidbrd72hOk4MixmadKiT3G1WbzBfpEzha3cLA
-	 5j9WLd+AkBS1c4ywimbUIYqK0o8VAfKeKPNsQj/Ad/ZStnMZ6aKFJELMdRSGpwme+F
-	 fbKsBB+oqenVkHuAuaFXN8KgAkmQRLxa+A2h23p4=
+	b=JwSVfO2A+GUSwpiQy6d73v2BTTGwXAXRq57L1/1JYpWxqweufqh2AyQVPik+54XJ7
+	 jHq+2nu4cyE6BsaXwKZAVumUgR08ax6blQtmWuXK0qKsgIzkEu/OLV5FJTJZM03HbR
+	 xmdqugIFljtFP/y4xC1S/ZrJSRSaHgAhSNYbxHpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 057/783] SUNRPC: Dont allow waiting for exiting tasks
-Date: Tue, 27 May 2025 18:17:34 +0200
-Message-ID: <20250527162515.449678528@linuxfoundation.org>
+Subject: [PATCH 6.14 048/783] cifs: Fix querying and creating MF symlinks over SMB1
+Date: Tue, 27 May 2025 18:17:25 +0200
+Message-ID: <20250527162515.088443531@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -45,39 +45,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 14e41b16e8cb677bb440dca2edba8b041646c742 ]
+[ Upstream commit 4236ac9fe5b8b42756070d4abfb76fed718e87c2 ]
 
-Once a task calls exit_signals() it can no longer be signalled. So do
-not allow it to do killable waits.
+Old SMB1 servers without CAP_NT_SMBS do not support CIFS_open() function
+and instead SMBLegacyOpen() needs to be used. This logic is already handled
+in cifs_open_file() function, which is server->ops->open callback function.
 
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+So for querying and creating MF symlinks use open callback function instead
+of CIFS_open() function directly.
+
+This change fixes querying and creating new MF symlinks on Windows 98.
+Currently cifs_query_mf_symlink() is not able to detect MF symlink and
+cifs_create_mf_symlink() is failing with EIO error.
+
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/sched.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/link.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/sunrpc/sched.c b/net/sunrpc/sched.c
-index 9b45fbdc90cab..73bc39281ef5f 100644
---- a/net/sunrpc/sched.c
-+++ b/net/sunrpc/sched.c
-@@ -276,6 +276,8 @@ EXPORT_SYMBOL_GPL(rpc_destroy_wait_queue);
+diff --git a/fs/smb/client/link.c b/fs/smb/client/link.c
+index 6e6c09cc5ce7a..34a026243287f 100644
+--- a/fs/smb/client/link.c
++++ b/fs/smb/client/link.c
+@@ -258,7 +258,7 @@ cifs_query_mf_symlink(unsigned int xid, struct cifs_tcon *tcon,
+ 	struct cifs_open_parms oparms;
+ 	struct cifs_io_parms io_parms = {0};
+ 	int buf_type = CIFS_NO_BUFFER;
+-	FILE_ALL_INFO file_info;
++	struct cifs_open_info_data query_data;
  
- static int rpc_wait_bit_killable(struct wait_bit_key *key, int mode)
- {
-+	if (unlikely(current->flags & PF_EXITING))
-+		return -EINTR;
- 	schedule();
- 	if (signal_pending_state(mode, current))
- 		return -ERESTARTSYS;
+ 	oparms = (struct cifs_open_parms) {
+ 		.tcon = tcon,
+@@ -270,11 +270,11 @@ cifs_query_mf_symlink(unsigned int xid, struct cifs_tcon *tcon,
+ 		.fid = &fid,
+ 	};
+ 
+-	rc = CIFS_open(xid, &oparms, &oplock, &file_info);
++	rc = tcon->ses->server->ops->open(xid, &oparms, &oplock, &query_data);
+ 	if (rc)
+ 		return rc;
+ 
+-	if (file_info.EndOfFile != cpu_to_le64(CIFS_MF_SYMLINK_FILE_SIZE)) {
++	if (query_data.fi.EndOfFile != cpu_to_le64(CIFS_MF_SYMLINK_FILE_SIZE)) {
+ 		rc = -ENOENT;
+ 		/* it's not a symlink */
+ 		goto out;
+@@ -313,7 +313,7 @@ cifs_create_mf_symlink(unsigned int xid, struct cifs_tcon *tcon,
+ 		.fid = &fid,
+ 	};
+ 
+-	rc = CIFS_open(xid, &oparms, &oplock, NULL);
++	rc = tcon->ses->server->ops->open(xid, &oparms, &oplock, NULL);
+ 	if (rc)
+ 		return rc;
+ 
 -- 
 2.39.5
 
