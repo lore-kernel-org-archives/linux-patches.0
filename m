@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CB02CCC0;
-	Tue, 27 May 2025 16:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79831EA91;
+	Tue, 27 May 2025 16:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365015; cv=none; b=W+JBvwREtWi9LGK34K2WiMf9oYlktOAcXSYoyfds4CLZvJSW0S41aFeIzGMC2iiIgNJUTTDN/9aEmA5TBqRWyNTEixNSostHK/Kq2HsMkf65gTYjcl/ftylk1dxGCjw8eRN1KyDkk5poZ6LS5CGVameyvwxL12Z9FNCk4p/qvYY=
+	t=1748365018; cv=none; b=rNhL0IqJq5IYaNz4nS/d8dSyYjTfhQ8borgEGwAL1iThqKaVN/XWt3AiE5DJgerMClZoYpj1LS+fbsQZSD8sUch460yL45d0CC1LYUUuOPBGO9tdt1nwRyEsFiEzPXVuNNutM6AuJApPRm6YMFQkLaHUh14KEpLNcA87BDAXt4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365015; c=relaxed/simple;
-	bh=eVG3osM5cJc5CJCHEI1FF4qId3mSqIbtpngO4c6vKuE=;
+	s=arc-20240116; t=1748365018; c=relaxed/simple;
+	bh=MiBNtChPiUB0MXT9cDyvuHAcJrALjrmfuSiT6suQ1Wk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rSudNMNeI9y/8+KUYFlZtLn2XrhsYOQYNZq6jjaudtnt3LhpT5FMIvMwoKewNgYhT95fWZ8Fs84GwaIwBuTqrvUbqdUJgt/Q6VOlF4NZYpHb8Mb3a/OTa3qZi+UayuyDHUC+hNCkVZ0npV+tvcVArprX2dWxTPFNCTYuy+g1ePE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETxtXe6N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s1ZxO4ghr4BpdvccaDMm9eT+q7ab8JhZLjPVsbr9CklzYQ8n4hoUgiU8odxhuaEbZQ/0+gLWcNrVzrLTRoDRRvwRIKoHTlR9pvAcy0U6VPXv3wZ9kUb/BoN/45AAExwQ5jIl5YhwxZqslPhSfZm6gOxPZERZcLY+009A6WP7Qqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IIxC+2aB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETxtXe6N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1DDC4CEE9;
-	Tue, 27 May 2025 16:56:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IIxC+2aB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FED1C4CEE9;
+	Tue, 27 May 2025 16:56:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365015;
-	bh=eVG3osM5cJc5CJCHEI1FF4qId3mSqIbtpngO4c6vKuE=;
+	s=korg; t=1748365018;
+	bh=MiBNtChPiUB0MXT9cDyvuHAcJrALjrmfuSiT6suQ1Wk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ETxtXe6NNBX22oqfiNZwxt4f6c+TzoRafnrBNRc4LzmrYkv7jufAbzlwYDwiaZ4Tt
-	 6Ur1jF+Y0+fXVodf64xvz5caONQbwoQ20LZ7UDwBZwdcMBburEfy6hdL/ecU4bSJLk
-	 qLVai7lioTcNTJJ2dJ4n2AbUdSyB/EtGmH8sqkD4=
+	b=IIxC+2aBlLImfHYxK5Dbd6vGG8tyNSDhvx+/acK0KhdCkzZWygh9XwNQaHevrgfc/
+	 Pr+dy2MydbXZic4gOH06Ff9eHSn9nuT9rFNQPmso9BIWEUGl9To+CitqhDGeQfrmZB
+	 tSIloD0SGlYCDzTeaHH14uybcSdfQzTh3vzlYxoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Artur Weber <aweber.kernel@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 213/626] arm64: tegra: Resize aperture for the IGX PCIe C5 slot
-Date: Tue, 27 May 2025 18:21:46 +0200
-Message-ID: <20250527162453.673043586@linuxfoundation.org>
+Subject: [PATCH 6.12 240/626] pinctrl: bcm281xx: Use "unsigned int" instead of bare "unsigned"
+Date: Tue, 27 May 2025 18:22:13 +0200
+Message-ID: <20250527162454.760986137@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,46 +51,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jon Hunter <jonathanh@nvidia.com>
+From: Artur Weber <aweber.kernel@gmail.com>
 
-[ Upstream commit 6d4bfe6d86af1ef52bdb4592c9afb2037f24f2c4 ]
+[ Upstream commit 07b5a2a13f4704c5eae3be7277ec54ffdba45f72 ]
 
-Some discrete graphics cards such as the NVIDIA RTX A6000 support
-resizable BARs. When connecting an A6000 card to the NVIDIA IGX Orin
-platform, resizing the BAR1 aperture to 8GB fails because the current
-device-tree configuration for the PCIe C5 slot cannot support this.
-Fix this by updating the device-tree 'reg' and 'ranges' properties for
-the PCIe C5 slot to support this.
+Replace uses of bare "unsigned" with "unsigned int" to fix checkpatch
+warnings. No functional change.
 
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://lore.kernel.org/r/20250116151903.476047-1-jonathanh@nvidia.com
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
+Link: https://lore.kernel.org/20250303-bcm21664-pinctrl-v3-2-5f8b80e4ab51@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/pinctrl/bcm/pinctrl-bcm281xx.c | 44 +++++++++++++-------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts b/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts
-index 36e8880537460..9ce55b4d2de89 100644
---- a/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts
-+++ b/arch/arm64/boot/dts/nvidia/tegra234-p3740-0002+p3701-0008.dts
-@@ -302,6 +302,16 @@ pcie@14160000 {
- 		};
+diff --git a/drivers/pinctrl/bcm/pinctrl-bcm281xx.c b/drivers/pinctrl/bcm/pinctrl-bcm281xx.c
+index cf6efa9c0364a..a039b490cdb8e 100644
+--- a/drivers/pinctrl/bcm/pinctrl-bcm281xx.c
++++ b/drivers/pinctrl/bcm/pinctrl-bcm281xx.c
+@@ -72,7 +72,7 @@ static enum bcm281xx_pin_type hdmi_pin = BCM281XX_PIN_TYPE_HDMI;
+ struct bcm281xx_pin_function {
+ 	const char *name;
+ 	const char * const *groups;
+-	const unsigned ngroups;
++	const unsigned int ngroups;
+ };
  
- 		pcie@141a0000 {
-+			reg = <0x00 0x141a0000 0x0 0x00020000   /* appl registers (128K)      */
-+			       0x00 0x3a000000 0x0 0x00040000   /* configuration space (256K) */
-+			       0x00 0x3a040000 0x0 0x00040000   /* iATU_DMA reg space (256K)  */
-+			       0x00 0x3a080000 0x0 0x00040000   /* DBI reg space (256K)       */
-+			       0x2e 0x20000000 0x0 0x10000000>; /* ECAM (256MB)               */
-+
-+			ranges = <0x81000000 0x00 0x3a100000 0x00 0x3a100000 0x0 0x00100000      /* downstream I/O (1MB) */
-+				  0x82000000 0x00 0x40000000 0x2e 0x30000000 0x0 0x08000000      /* non-prefetchable memory (128MB) */
-+				  0xc3000000 0x28 0x00000000 0x28 0x00000000 0x6 0x20000000>;    /* prefetchable memory (25088MB) */
-+
- 			status = "okay";
- 			vddio-pex-ctl-supply = <&vdd_1v8_ls>;
- 			phys = <&p2u_nvhs_0>, <&p2u_nvhs_1>, <&p2u_nvhs_2>,
+ /*
+@@ -84,10 +84,10 @@ struct bcm281xx_pinctrl_data {
+ 
+ 	/* List of all pins */
+ 	const struct pinctrl_pin_desc *pins;
+-	const unsigned npins;
++	const unsigned int npins;
+ 
+ 	const struct bcm281xx_pin_function *functions;
+-	const unsigned nfunctions;
++	const unsigned int nfunctions;
+ 
+ 	struct regmap *regmap;
+ };
+@@ -941,7 +941,7 @@ static struct bcm281xx_pinctrl_data bcm281xx_pinctrl = {
+ };
+ 
+ static inline enum bcm281xx_pin_type pin_type_get(struct pinctrl_dev *pctldev,
+-						  unsigned pin)
++						  unsigned int pin)
+ {
+ 	struct bcm281xx_pinctrl_data *pdata = pinctrl_dev_get_drvdata(pctldev);
+ 
+@@ -985,7 +985,7 @@ static int bcm281xx_pinctrl_get_groups_count(struct pinctrl_dev *pctldev)
+ }
+ 
+ static const char *bcm281xx_pinctrl_get_group_name(struct pinctrl_dev *pctldev,
+-						   unsigned group)
++						   unsigned int group)
+ {
+ 	struct bcm281xx_pinctrl_data *pdata = pinctrl_dev_get_drvdata(pctldev);
+ 
+@@ -993,9 +993,9 @@ static const char *bcm281xx_pinctrl_get_group_name(struct pinctrl_dev *pctldev,
+ }
+ 
+ static int bcm281xx_pinctrl_get_group_pins(struct pinctrl_dev *pctldev,
+-					   unsigned group,
++					   unsigned int group,
+ 					   const unsigned **pins,
+-					   unsigned *num_pins)
++					   unsigned int *num_pins)
+ {
+ 	struct bcm281xx_pinctrl_data *pdata = pinctrl_dev_get_drvdata(pctldev);
+ 
+@@ -1007,7 +1007,7 @@ static int bcm281xx_pinctrl_get_group_pins(struct pinctrl_dev *pctldev,
+ 
+ static void bcm281xx_pinctrl_pin_dbg_show(struct pinctrl_dev *pctldev,
+ 					  struct seq_file *s,
+-					  unsigned offset)
++					  unsigned int offset)
+ {
+ 	seq_printf(s, " %s", dev_name(pctldev->dev));
+ }
+@@ -1029,7 +1029,7 @@ static int bcm281xx_pinctrl_get_fcns_count(struct pinctrl_dev *pctldev)
+ }
+ 
+ static const char *bcm281xx_pinctrl_get_fcn_name(struct pinctrl_dev *pctldev,
+-						 unsigned function)
++						 unsigned int function)
+ {
+ 	struct bcm281xx_pinctrl_data *pdata = pinctrl_dev_get_drvdata(pctldev);
+ 
+@@ -1037,9 +1037,9 @@ static const char *bcm281xx_pinctrl_get_fcn_name(struct pinctrl_dev *pctldev,
+ }
+ 
+ static int bcm281xx_pinctrl_get_fcn_groups(struct pinctrl_dev *pctldev,
+-					   unsigned function,
++					   unsigned int function,
+ 					   const char * const **groups,
+-					   unsigned * const num_groups)
++					   unsigned int * const num_groups)
+ {
+ 	struct bcm281xx_pinctrl_data *pdata = pinctrl_dev_get_drvdata(pctldev);
+ 
+@@ -1050,8 +1050,8 @@ static int bcm281xx_pinctrl_get_fcn_groups(struct pinctrl_dev *pctldev,
+ }
+ 
+ static int bcm281xx_pinmux_set(struct pinctrl_dev *pctldev,
+-			       unsigned function,
+-			       unsigned group)
++			       unsigned int function,
++			       unsigned int group)
+ {
+ 	struct bcm281xx_pinctrl_data *pdata = pinctrl_dev_get_drvdata(pctldev);
+ 	const struct bcm281xx_pin_function *f = &pdata->functions[function];
+@@ -1082,7 +1082,7 @@ static const struct pinmux_ops bcm281xx_pinctrl_pinmux_ops = {
+ };
+ 
+ static int bcm281xx_pinctrl_pin_config_get(struct pinctrl_dev *pctldev,
+-					   unsigned pin,
++					   unsigned int pin,
+ 					   unsigned long *config)
+ {
+ 	return -ENOTSUPP;
+@@ -1091,9 +1091,9 @@ static int bcm281xx_pinctrl_pin_config_get(struct pinctrl_dev *pctldev,
+ 
+ /* Goes through the configs and update register val/mask */
+ static int bcm281xx_std_pin_update(struct pinctrl_dev *pctldev,
+-				   unsigned pin,
++				   unsigned int pin,
+ 				   unsigned long *configs,
+-				   unsigned num_configs,
++				   unsigned int num_configs,
+ 				   u32 *val,
+ 				   u32 *mask)
+ {
+@@ -1207,9 +1207,9 @@ static const u16 bcm281xx_pullup_map[] = {
+ 
+ /* Goes through the configs and update register val/mask */
+ static int bcm281xx_i2c_pin_update(struct pinctrl_dev *pctldev,
+-				   unsigned pin,
++				   unsigned int pin,
+ 				   unsigned long *configs,
+-				   unsigned num_configs,
++				   unsigned int num_configs,
+ 				   u32 *val,
+ 				   u32 *mask)
+ {
+@@ -1277,9 +1277,9 @@ static int bcm281xx_i2c_pin_update(struct pinctrl_dev *pctldev,
+ 
+ /* Goes through the configs and update register val/mask */
+ static int bcm281xx_hdmi_pin_update(struct pinctrl_dev *pctldev,
+-				    unsigned pin,
++				    unsigned int pin,
+ 				    unsigned long *configs,
+-				    unsigned num_configs,
++				    unsigned int num_configs,
+ 				    u32 *val,
+ 				    u32 *mask)
+ {
+@@ -1321,9 +1321,9 @@ static int bcm281xx_hdmi_pin_update(struct pinctrl_dev *pctldev,
+ }
+ 
+ static int bcm281xx_pinctrl_pin_config_set(struct pinctrl_dev *pctldev,
+-					   unsigned pin,
++					   unsigned int pin,
+ 					   unsigned long *configs,
+-					   unsigned num_configs)
++					   unsigned int num_configs)
+ {
+ 	struct bcm281xx_pinctrl_data *pdata = pinctrl_dev_get_drvdata(pctldev);
+ 	enum bcm281xx_pin_type pin_type;
 -- 
 2.39.5
 
