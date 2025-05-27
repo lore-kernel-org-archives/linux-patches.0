@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E92927FD4C;
-	Tue, 27 May 2025 17:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B681E89C;
+	Tue, 27 May 2025 17:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366673; cv=none; b=IN5++T9waNkYNmsX/giIU2qGULtxQmy06MC4+k8qkdJWoxGveXFuZNztf/fUmS+7qvPcIFCAidL6BUGMGxzXTV5x/7GLUHElcOcRn8Hiyg4TvIBzLidIry6uT5lhSlr0JhkJ9curLcLggxXy9fpaeeZjBDregkRiW449rYFQwiY=
+	t=1748366674; cv=none; b=lWADGcbvEIj1Q9oND602h0iSk4vnv90FOZ8DQ2AXHWMoM+6A1EhKyDNAX63+maKWjB/8+K9hb1N2ZkP9REWBJrIUFRz94xt6jELnPtyImMB84TQwzS8aSgr7gvSH8w9H++VvAlaeZktPsxlI5czqnfmDmWqVLz7heJE4aO2r2Yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366673; c=relaxed/simple;
-	bh=hYcCvCG/nkc69KRWWr6k6rgwividhSGisBWR8KzkZF4=;
+	s=arc-20240116; t=1748366674; c=relaxed/simple;
+	bh=/JeT/8e0Imz6O7qt/Rvyrb+3tYXpCH9rYO8QS3Z0+QI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fbpMbCFU7IBMJNwqES61/WMMf3bcmdyPx+yNTuL9s5vZL+xI0d62itpSnAdfSbcyaaiY3f/uTRUVJ62LfDxrHoDm3A1gPbjiwyb/SuXVS4lCg7YvZMxyh2Y21QmDVKHMV0IougOBsbocrGuNb5wJm8h568JDXMOKMd1vQfJtyAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fR44xyk2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ovOg325Pobe+Y6TkqzsjYsCNikUsKggealx7Z/new7CTwrVOPdmQKxYUSxa1wVD2jUTyl7/p3bQedaTcvyG4f5i5a3Wyjhuvj8cweXeVzNziIuFtADqf2d8MotXvXiBd1teVxKdBzS5TWe5JYUo2KWQYwVw+vBS2bgf5rNYu1Qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yDiymfLC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fR44xyk2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E28BC4CEE9;
-	Tue, 27 May 2025 17:24:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yDiymfLC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF79BC4CEE9;
+	Tue, 27 May 2025 17:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366671;
-	bh=hYcCvCG/nkc69KRWWr6k6rgwividhSGisBWR8KzkZF4=;
+	s=korg; t=1748366674;
+	bh=/JeT/8e0Imz6O7qt/Rvyrb+3tYXpCH9rYO8QS3Z0+QI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fR44xyk2EEJAt1RjcAXVOL5vutGwiqqFR1uizQVEw2aMDJUeTDn5zaUQwsOI1D/DV
-	 Kwp0Y22Ug4Vf0uWl+ceBoLe4MecYfXaINs6CWCoqMpDGt4jjRMQuzkAp/4P5voUd00
-	 sfDGf7PyeZ76hAjGpOvRPsGEUPUZcOt2CenpVJNk=
+	b=yDiymfLC25BNzGRQoyMJXh8YDpiLaP4DvlES7H5A1O5ImxrHiZFx9YRVTiZYblSZE
+	 rbaPb2MUcke9bX3hLDpd4m/BlX9Qch3KHWGmdkCGEZrsNCyw7k36Horj/6ZwDxx8Ei
+	 1IEkZ/Jz9GJ5NxgpB8EzInldDfGTcC5edQdqjnm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Russell <kent.russell@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 143/783] drm/amdgpu: dont free conflicting apertures for non-display devices
-Date: Tue, 27 May 2025 18:19:00 +0200
-Message-ID: <20250527162518.979417977@linuxfoundation.org>
+Subject: [PATCH 6.14 117/783] wifi: mt76: mt7996: use the correct vif link for scanning/roc
+Date: Tue, 27 May 2025 18:18:34 +0200
+Message-ID: <20250527162517.913482213@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,47 +50,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 9deacd6c55f1b31e5ab20db79df2e14ac480203c ]
+[ Upstream commit 13b4c81083cc4b59fb639a511c0a9a7c38efde7e ]
 
-PCI_CLASS_ACCELERATOR_PROCESSING devices won't ever be
-the sysfb, so there is no need to free conflicting
-apertures.
+Use the newly added offchannel_link pointer in vif data
 
-Reviewed-by: Kent Russell <kent.russell@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://patch.msgid.link/20250311103646.43346-5-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7996/mac.c   | 40 +++++++++++++------
+ .../net/wireless/mediatek/mt76/mt7996/main.c  |  1 +
+ 2 files changed, 28 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index ea50f82b547d9..28190b0ac5fca 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4370,10 +4370,17 @@ int amdgpu_device_init(struct amdgpu_device *adev,
- 	if (r)
- 		return r;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index 019c925ae600e..88f9d9059d5f2 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -832,7 +832,8 @@ void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
+ 	u8 band_idx = (info->hw_queue & MT_TX_HW_QUEUE_PHY) >> 2;
+ 	u8 p_fmt, q_idx, omac_idx = 0, wmm_idx = 0;
+ 	bool is_8023 = info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP;
+-	struct mt76_vif_link *mvif;
++	struct mt76_vif_link *mlink = NULL;
++	struct mt7996_vif *mvif;
+ 	u16 tx_count = 15;
+ 	u32 val;
+ 	bool inband_disc = !!(changed & (BSS_CHANGED_UNSOL_BCAST_PROBE_RESP |
+@@ -840,11 +841,18 @@ void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
+ 	bool beacon = !!(changed & (BSS_CHANGED_BEACON |
+ 				    BSS_CHANGED_BEACON_ENABLED)) && (!inband_disc);
  
--	/* Get rid of things like offb */
--	r = aperture_remove_conflicting_pci_devices(adev->pdev, amdgpu_kms_driver.name);
--	if (r)
--		return r;
-+	/*
-+	 * No need to remove conflicting FBs for non-display class devices.
-+	 * This prevents the sysfb from being freed accidently.
-+	 */
-+	if ((pdev->class >> 8) == PCI_CLASS_DISPLAY_VGA ||
-+	    (pdev->class >> 8) == PCI_CLASS_DISPLAY_OTHER) {
-+		/* Get rid of things like offb */
-+		r = aperture_remove_conflicting_pci_devices(adev->pdev, amdgpu_kms_driver.name);
-+		if (r)
-+			return r;
+-	mvif = vif ? (struct mt76_vif_link *)vif->drv_priv : NULL;
+-	if (mvif) {
+-		omac_idx = mvif->omac_idx;
+-		wmm_idx = mvif->wmm_idx;
+-		band_idx = mvif->band_idx;
++	if (vif) {
++		mvif = (struct mt7996_vif *)vif->drv_priv;
++		if (wcid->offchannel)
++			mlink = rcu_dereference(mvif->mt76.offchannel_link);
++		if (!mlink)
++			mlink = &mvif->deflink.mt76;
 +	}
++
++	if (mlink) {
++		omac_idx = mlink->omac_idx;
++		wmm_idx = mlink->wmm_idx;
++		band_idx = mlink->band_idx;
+ 	}
  
- 	/* Enable TMZ based on IP_VERSION */
- 	amdgpu_gmc_tmz_set(adev);
+ 	if (inband_disc) {
+@@ -910,13 +918,13 @@ void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
+ 			     is_multicast_ether_addr(hdr->addr1);
+ 		u8 idx = MT7996_BASIC_RATES_TBL;
+ 
+-		if (mvif) {
+-			if (mcast && mvif->mcast_rates_idx)
+-				idx = mvif->mcast_rates_idx;
+-			else if (beacon && mvif->beacon_rates_idx)
+-				idx = mvif->beacon_rates_idx;
++		if (mlink) {
++			if (mcast && mlink->mcast_rates_idx)
++				idx = mlink->mcast_rates_idx;
++			else if (beacon && mlink->beacon_rates_idx)
++				idx = mlink->beacon_rates_idx;
+ 			else
+-				idx = mvif->basic_rates_idx;
++				idx = mlink->basic_rates_idx;
+ 		}
+ 
+ 		val = FIELD_PREP(MT_TXD6_TX_RATE, idx) | MT_TXD6_FIXED_BW;
+@@ -984,8 +992,14 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
+ 
+ 	if (vif) {
+ 		struct mt7996_vif *mvif = (struct mt7996_vif *)vif->drv_priv;
++		struct mt76_vif_link *mlink = NULL;
++
++		if (wcid->offchannel)
++			mlink = rcu_dereference(mvif->mt76.offchannel_link);
++		if (!mlink)
++			mlink = &mvif->deflink.mt76;
+ 
+-		txp->fw.bss_idx = mvif->deflink.mt76.idx;
++		txp->fw.bss_idx = mlink->idx;
+ 	}
+ 
+ 	txp->fw.token = cpu_to_le16(id);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+index 980a059b3b38f..b01cc7ef47999 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+@@ -249,6 +249,7 @@ int mt7996_vif_link_add(struct mt76_phy *mphy, struct ieee80211_vif *vif,
+ 	mlink->band_idx = band_idx;
+ 	mlink->wmm_idx = vif->type == NL80211_IFTYPE_AP ? 0 : 3;
+ 	mlink->wcid = &link->sta.wcid;
++	mlink->wcid->offchannel = mlink->offchannel;
+ 
+ 	ret = mt7996_mcu_add_dev_info(phy, vif, link_conf, mlink, true);
+ 	if (ret)
 -- 
 2.39.5
 
