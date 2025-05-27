@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676E0182D7;
-	Tue, 27 May 2025 17:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F74182D7;
+	Tue, 27 May 2025 17:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366191; cv=none; b=Hfl4eOuXk6usrrPxtMPgSXQgXFWvb+e0zNKp+AigZr3JvDngQbUUanlH6+hfABBinJNQV/fVcmvazcTTYKIvyYhwGPPxHRil9x3wv8/Gyxe3+wWpr1zevHdzIdb0MlPoH3T40XmxFRolppR+TQg+bPZ58diZpK4APw4crjUccLo=
+	t=1748366195; cv=none; b=c6qAUu/jxH78YXR9Yha48fOFKUHUlykpmyOgg4dc1z4bdscoPifuPSLVaZkHHZN3iOn20qqnx2KyIEmLwj4uFPegIxMWWLp/3PxAYBVvJeuKto+C32mLh9M7itlAH5Z8Ir7OwdDHkorqDvsbHh2OiMu3a7OWkVlalKAEW9KE/9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366191; c=relaxed/simple;
-	bh=01Hd7+D9LM27uwNHf+FUqx+9M2UAuaWvXmY8eqmQXV0=;
+	s=arc-20240116; t=1748366195; c=relaxed/simple;
+	bh=lCbPu07x32TolFMWOdYwdRd3HTrBmqX4CVOgFjT8/Xg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IYhQV5lkm6JIWHe7fh1PpNTmAjyednQW9zOSQ1T4Zm6reHrHkK55uKxZHjS4IJQEIlclk3nOYOPW686T+tYk8O2AMxK3XFMm0r+Zgiqv939QNn6evq+/rzamAW/Z6DjyEJ+Djv3zBU/oS7S8DkNEsk5iqxRMwgCndv46H9dgE+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snOx47NB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M/ObBPmVqJipqwN6DGSS+tcqEUJdrTA3AYnpTHvfA0qrL30y7CltpQPI9qoBrtULqyXZGt37x7hfVQKHjtk/XJYWInNT+mMzJVOfYvZCic3JVGncrf7ctzbQw0Kh3Q+DUe/AyKxJf54uaSzD+IArVGvK5fCkl77d2ELJl+1E4/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZPTMOfl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snOx47NB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE96C4CEE9;
-	Tue, 27 May 2025 17:16:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZPTMOfl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ACDCC4CEEB;
+	Tue, 27 May 2025 17:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366191;
-	bh=01Hd7+D9LM27uwNHf+FUqx+9M2UAuaWvXmY8eqmQXV0=;
+	s=korg; t=1748366195;
+	bh=lCbPu07x32TolFMWOdYwdRd3HTrBmqX4CVOgFjT8/Xg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=snOx47NB1BvhEnkSskuKp9nS/aFPo3xKAgw5FerK1sPXfJcyVPsgj9hdYNBIK5Gxn
-	 v27D+tglRfRRZ/bwc3keWNQAD2OE1W1ltAG4LfLEtwCENf9VvHx0o8ZmOsFKHDas3U
-	 gmkca7vrIjZZJog2k+JO4EZvkqsWLpLdEvYA84fc=
+	b=nZPTMOflGs1ptyghhHtKXt23NCsf/fHu8jVySMPTALB1Y8zUl49sioHAvl4Uz1kJL
+	 KNN0CYJ2TDUFAVttQ/ZtUMldcja6ZfyDp/zSJkSdRCJ999cLFEHbbaRvFRNQ6UyYOL
+	 PoKt/8yTwnx26Bb2H8jWgyUKuOT1llGW31YiD0Ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 609/626] spi: use container_of_cont() for to_spi_device()
-Date: Tue, 27 May 2025 18:28:22 +0200
-Message-ID: <20250527162509.747746092@linuxfoundation.org>
+	Charlene Liu <charlene.liu@amd.com>,
+	Ovidiu Bunea <Ovidiu.Bunea@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 618/626] drm/amd/display: Exit idle optimizations before accessing PHY
+Date: Tue, 27 May 2025 18:28:31 +0200
+Message-ID: <20250527162510.109544502@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -50,47 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Ovidiu Bunea <Ovidiu.Bunea@amd.com>
 
-[ Upstream commit 1007ae0d464ceb55a3740634790521d3543aaab9 ]
+commit c488967488d7eff7b9c527d5469c424c15377502 upstream.
 
-Some places in the spi core pass in a const pointer to a device and the
-default container_of() casts that away, which is not a good idea.
-Preserve the proper const attribute by using container_of_const() for
-to_spi_device() instead, which is what it was designed for.
+[why & how]
+By default, DCN HW is in idle optimized state which does not allow access
+to PHY registers. If BIOS powers up the DCN, it is fine because they will
+power up everything. Only exit idle optimized state when not taking control
+from VBIOS.
 
-Note, this removes the NULL check for a device pointer in the call, but
-no one was ever checking for that return value, and a device pointer
-should never be NULL overall anyway, so this should be a safe change.
-
-Cc: Mark Brown <broonie@kernel.org>
-Fixes: d69d80484598 ("driver core: have match() callback in struct bus_type take a const *")
+Fixes: be704e5ef4bd ("Revert "drm/amd/display: Exit idle optimizations before attempt to access PHY"")
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Signed-off-by: Ovidiu Bunea <Ovidiu.Bunea@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2025052230-fidgeting-stooge-66f5@gregkh
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/spi/spi.h | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
-index 4b95663163e0b..71ad766932d31 100644
---- a/include/linux/spi/spi.h
-+++ b/include/linux/spi/spi.h
-@@ -247,10 +247,7 @@ struct spi_device {
- static_assert((SPI_MODE_KERNEL_MASK & SPI_MODE_USER_MASK) == 0,
- 	      "SPI_MODE_USER_MASK & SPI_MODE_KERNEL_MASK must not overlap");
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+@@ -1888,6 +1888,7 @@ void dce110_enable_accelerated_mode(stru
+ 	bool can_apply_edp_fast_boot = false;
+ 	bool can_apply_seamless_boot = false;
+ 	bool keep_edp_vdd_on = false;
++	struct dc_bios *dcb = dc->ctx->dc_bios;
+ 	DC_LOGGER_INIT();
  
--static inline struct spi_device *to_spi_device(const struct device *dev)
--{
--	return dev ? container_of(dev, struct spi_device, dev) : NULL;
--}
-+#define to_spi_device(__dev)	container_of_const(__dev, struct spi_device, dev)
  
- /* Most drivers won't need to care about device refcounting */
- static inline struct spi_device *spi_dev_get(struct spi_device *spi)
--- 
-2.39.5
-
+@@ -1964,6 +1965,8 @@ void dce110_enable_accelerated_mode(stru
+ 			hws->funcs.edp_backlight_control(edp_link_with_sink, false);
+ 		}
+ 		/*resume from S3, no vbios posting, no need to power down again*/
++		if (dcb && dcb->funcs && !dcb->funcs->is_accelerated_mode(dcb))
++			clk_mgr_exit_optimized_pwr_state(dc, dc->clk_mgr);
+ 
+ 		power_down_all_hw_blocks(dc);
+ 
+@@ -1976,6 +1979,8 @@ void dce110_enable_accelerated_mode(stru
+ 		disable_vga_and_power_gate_all_controllers(dc);
+ 		if (edp_link_with_sink && !keep_edp_vdd_on)
+ 			dc->hwss.edp_power_control(edp_link_with_sink, false);
++		if (dcb && dcb->funcs && !dcb->funcs->is_accelerated_mode(dcb))
++			clk_mgr_optimize_pwr_state(dc, dc->clk_mgr);
+ 	}
+ 	bios_set_scratch_acc_mode_change(dc->ctx->dc_bios, 1);
+ }
 
 
