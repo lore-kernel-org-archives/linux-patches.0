@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4533B194A67;
-	Tue, 27 May 2025 16:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775A027FB37;
+	Tue, 27 May 2025 16:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365189; cv=none; b=hON+9zTSEfPzjFbQWmLysygzgYFk8j4KyyrGfocd4rej/1xCj+iEXZOiFJ+BWCB77yGheh0gMIdN42IuKVRbXPVFksgLwHU+2RSVI164yKAM3GkF2cpdWw9wpPvDLwxETUByeJ/GlQQmwcpJi2ge3VxG636QI95KtVPIwheUywo=
+	t=1748365192; cv=none; b=VqzPlKEW673g04qOCIFfyjsCi8Gwqq6JpjpDXjAI0/RwGjySlsl1TyS3xVgTTpI0D91UlpqI/eMI7GFOpoSKLviAmZGZ38/xW2590cD1EWpQJF3PQRyA5mLxlrLVdq2C9bHFS2BoXvUKi/YU2tcBM9Y/gagmCPIxDIyp5u/Loow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365189; c=relaxed/simple;
-	bh=gDbuONY8QV058CmvIFYjDNojQlZQDXeTaiRfyH+tAOk=;
+	s=arc-20240116; t=1748365192; c=relaxed/simple;
+	bh=llu9wSHnu0rg3dLpz9FAtQbcAy0hX8meNva75R4LHKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cR98CCxib0FCJWMzVzMLQ0GbIi/DmFeeYuMMr0GlUcM6voGl4kMGcKK8gVgvKrM48UKyHiENJn3z9ddypEh3ntL9mpcP4/WPgkncPT4K91RJiFLaBEDu+7keH9HkPx4l2gGuFOfdA2G/50qmi9KI8G8YBoljUpZfx3scUBH+FkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6dF5y8d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OJQy0fuI3flMbRHu2RLBbYNcjFST1AWEa7mEm6nT8apdJ+VgtmyYOnavfytkdEPI/Tkewoy0qud12VQWUdn/LOFrT35hA3yuTa31YiptCPnI3/V26ktshdD/X3I9vaAGdK2cpym3GENad0QZMls7CQe47OjNbTdqVa2F44kLCZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxsebHhU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6dF5y8d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B86C4CEE9;
-	Tue, 27 May 2025 16:59:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxsebHhU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D333FC4CEE9;
+	Tue, 27 May 2025 16:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365189;
-	bh=gDbuONY8QV058CmvIFYjDNojQlZQDXeTaiRfyH+tAOk=;
+	s=korg; t=1748365192;
+	bh=llu9wSHnu0rg3dLpz9FAtQbcAy0hX8meNva75R4LHKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O6dF5y8db9Cfzq7xAfk/XuA0tU4WEdOPJZWTdUeBLjQMnJN5cC3+3RWk/Nx+kPZY+
-	 qfTWvab2ZqaYCvqcLjro0Q3W1QYXjFhNrLYDkOhz+jM+/f0VsCWy+TR1u1M/9KoyHH
-	 JjoxH/XylSjD24NMUabWhaJ2m5Su8uAPFbds7A3Y=
+	b=uxsebHhUZJmZCsmQtTn8RFhJXAOoz+syPInuwmKlfAghAWuURz/wA8JrC4w4c0bmN
+	 VSbbiqJpRbakNN0XbAiQ2WLk9mVPjOjm6U7Aytr+ykHWIpplrpBb6ZclFQZnljaCnX
+	 1Mnql4g/XzYCakRm8PXttD1HMInLD6mQWbfokM1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjun Gong <ruc_gongyuanjun@163.com>,
-	Lee Jones <lee@kernel.org>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 278/626] leds: pwm-multicolor: Add check for fwnode_property_read_u32
-Date: Tue, 27 May 2025 18:22:51 +0200
-Message-ID: <20250527162456.319661212@linuxfoundation.org>
+Subject: [PATCH 6.12 296/626] media: adv7180: Disable test-pattern control on adv7180
+Date: Tue, 27 May 2025 18:23:09 +0200
+Message-ID: <20250527162457.059728983@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -45,44 +45,133 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-[ Upstream commit 6d91124e7edc109f114b1afe6d00d85d0d0ac174 ]
+[ Upstream commit a980bc5f56b0292336e408f657f79e574e8067c0 ]
 
-Add a check to the return value of fwnode_property_read_u32()
-in case it fails.
+The register that enables selecting a test-pattern to be outputted in
+free-run mode (FREE_RUN_PAT_SEL[2:0]) is only available on adv7280 based
+devices, not the adv7180 based ones.
 
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
-Link: https://lore.kernel.org/r/20250223121459.2889484-1-ruc_gongyuanjun@163.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Add a flag to mark devices that are capable of generating test-patterns,
+and those that are not. And only register the control on supported
+devices.
+
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/rgb/leds-pwm-multicolor.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/media/i2c/adv7180.c | 34 ++++++++++++++++++++++------------
+ 1 file changed, 22 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/leds/rgb/leds-pwm-multicolor.c b/drivers/leds/rgb/leds-pwm-multicolor.c
-index e1a81e0109e8a..c0aa34b1d0e2d 100644
---- a/drivers/leds/rgb/leds-pwm-multicolor.c
-+++ b/drivers/leds/rgb/leds-pwm-multicolor.c
-@@ -135,8 +135,11 @@ static int led_pwm_mc_probe(struct platform_device *pdev)
+diff --git a/drivers/media/i2c/adv7180.c b/drivers/media/i2c/adv7180.c
+index 819ff9f7c90fe..2a20a4fad796c 100644
+--- a/drivers/media/i2c/adv7180.c
++++ b/drivers/media/i2c/adv7180.c
+@@ -195,6 +195,7 @@ struct adv7180_state;
+ #define ADV7180_FLAG_V2			BIT(1)
+ #define ADV7180_FLAG_MIPI_CSI2		BIT(2)
+ #define ADV7180_FLAG_I2P		BIT(3)
++#define ADV7180_FLAG_TEST_PATTERN	BIT(4)
  
- 	/* init the multicolor's LED class device */
- 	cdev = &priv->mc_cdev.led_cdev;
--	fwnode_property_read_u32(mcnode, "max-brightness",
-+	ret = fwnode_property_read_u32(mcnode, "max-brightness",
- 				 &cdev->max_brightness);
-+	if (ret)
-+		goto release_mcnode;
-+
- 	cdev->flags = LED_CORE_SUSPENDRESUME;
- 	cdev->brightness_set_blocking = led_pwm_mc_set;
+ struct adv7180_chip_info {
+ 	unsigned int flags;
+@@ -682,11 +683,15 @@ static int adv7180_init_controls(struct adv7180_state *state)
+ 			  ADV7180_HUE_MAX, 1, ADV7180_HUE_DEF);
+ 	v4l2_ctrl_new_custom(&state->ctrl_hdl, &adv7180_ctrl_fast_switch, NULL);
  
+-	v4l2_ctrl_new_std_menu_items(&state->ctrl_hdl, &adv7180_ctrl_ops,
+-				      V4L2_CID_TEST_PATTERN,
+-				      ARRAY_SIZE(test_pattern_menu) - 1,
+-				      0, ARRAY_SIZE(test_pattern_menu) - 1,
+-				      test_pattern_menu);
++	if (state->chip_info->flags & ADV7180_FLAG_TEST_PATTERN) {
++		v4l2_ctrl_new_std_menu_items(&state->ctrl_hdl,
++					     &adv7180_ctrl_ops,
++					     V4L2_CID_TEST_PATTERN,
++					     ARRAY_SIZE(test_pattern_menu) - 1,
++					     0,
++					     ARRAY_SIZE(test_pattern_menu) - 1,
++					     test_pattern_menu);
++	}
+ 
+ 	state->sd.ctrl_handler = &state->ctrl_hdl;
+ 	if (state->ctrl_hdl.error) {
+@@ -1221,7 +1226,7 @@ static const struct adv7180_chip_info adv7182_info = {
+ };
+ 
+ static const struct adv7180_chip_info adv7280_info = {
+-	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_I2P,
++	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_I2P | ADV7180_FLAG_TEST_PATTERN,
+ 	.valid_input_mask = BIT(ADV7182_INPUT_CVBS_AIN1) |
+ 		BIT(ADV7182_INPUT_CVBS_AIN2) |
+ 		BIT(ADV7182_INPUT_CVBS_AIN3) |
+@@ -1235,7 +1240,8 @@ static const struct adv7180_chip_info adv7280_info = {
+ };
+ 
+ static const struct adv7180_chip_info adv7280_m_info = {
+-	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2 | ADV7180_FLAG_I2P,
++	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2 | ADV7180_FLAG_I2P |
++		ADV7180_FLAG_TEST_PATTERN,
+ 	.valid_input_mask = BIT(ADV7182_INPUT_CVBS_AIN1) |
+ 		BIT(ADV7182_INPUT_CVBS_AIN2) |
+ 		BIT(ADV7182_INPUT_CVBS_AIN3) |
+@@ -1256,7 +1262,8 @@ static const struct adv7180_chip_info adv7280_m_info = {
+ };
+ 
+ static const struct adv7180_chip_info adv7281_info = {
+-	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2,
++	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2 |
++		ADV7180_FLAG_TEST_PATTERN,
+ 	.valid_input_mask = BIT(ADV7182_INPUT_CVBS_AIN1) |
+ 		BIT(ADV7182_INPUT_CVBS_AIN2) |
+ 		BIT(ADV7182_INPUT_CVBS_AIN7) |
+@@ -1271,7 +1278,8 @@ static const struct adv7180_chip_info adv7281_info = {
+ };
+ 
+ static const struct adv7180_chip_info adv7281_m_info = {
+-	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2,
++	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2 |
++		ADV7180_FLAG_TEST_PATTERN,
+ 	.valid_input_mask = BIT(ADV7182_INPUT_CVBS_AIN1) |
+ 		BIT(ADV7182_INPUT_CVBS_AIN2) |
+ 		BIT(ADV7182_INPUT_CVBS_AIN3) |
+@@ -1291,7 +1299,8 @@ static const struct adv7180_chip_info adv7281_m_info = {
+ };
+ 
+ static const struct adv7180_chip_info adv7281_ma_info = {
+-	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2,
++	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2 |
++		ADV7180_FLAG_TEST_PATTERN,
+ 	.valid_input_mask = BIT(ADV7182_INPUT_CVBS_AIN1) |
+ 		BIT(ADV7182_INPUT_CVBS_AIN2) |
+ 		BIT(ADV7182_INPUT_CVBS_AIN3) |
+@@ -1316,7 +1325,7 @@ static const struct adv7180_chip_info adv7281_ma_info = {
+ };
+ 
+ static const struct adv7180_chip_info adv7282_info = {
+-	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_I2P,
++	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_I2P | ADV7180_FLAG_TEST_PATTERN,
+ 	.valid_input_mask = BIT(ADV7182_INPUT_CVBS_AIN1) |
+ 		BIT(ADV7182_INPUT_CVBS_AIN2) |
+ 		BIT(ADV7182_INPUT_CVBS_AIN7) |
+@@ -1331,7 +1340,8 @@ static const struct adv7180_chip_info adv7282_info = {
+ };
+ 
+ static const struct adv7180_chip_info adv7282_m_info = {
+-	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2 | ADV7180_FLAG_I2P,
++	.flags = ADV7180_FLAG_V2 | ADV7180_FLAG_MIPI_CSI2 | ADV7180_FLAG_I2P |
++		ADV7180_FLAG_TEST_PATTERN,
+ 	.valid_input_mask = BIT(ADV7182_INPUT_CVBS_AIN1) |
+ 		BIT(ADV7182_INPUT_CVBS_AIN2) |
+ 		BIT(ADV7182_INPUT_CVBS_AIN3) |
 -- 
 2.39.5
 
