@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3C426868E;
-	Tue, 27 May 2025 17:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B7F2798E6;
+	Tue, 27 May 2025 17:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365532; cv=none; b=J/4GPRFFY88fkSwRqsyCUtzJk9h4EbOIPRnYjqcFygmSQ5RiIkLwQZHJyzVxdc2TX8HhXOPFQKwiuyzd2F/xSGwuWhgRx8DP370VRbZ5xw5/UIZrDyXIF5iaaDJk5iZOhw9xdyZzD6ZWAXvAfCK0EEY3Tn5ONIq+9a0GSqarNYM=
+	t=1748365535; cv=none; b=jjRwj0uhGp4tuAov9wvkNnTADZXQgIgiATGPxPYwmR4NwgbYh1LgEgLJFixUS+xsT47FR3swnW5Nwakp+00Hc4OiNZJAto5YiT71aUPGb0rAr90PqRYRjwC7EF/tte6K5ZJDVxxP0i5DXvLkCMThP/Cza1ZIjjzkWcG7/1OXk4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365532; c=relaxed/simple;
-	bh=6x0jXoFpnd8iMwZIDKzHVAnZUBNfxtcYkrDBZ/baO1I=;
+	s=arc-20240116; t=1748365535; c=relaxed/simple;
+	bh=GbNWntq2Wta7G1Xak5rIz+HMP5a6QPb3V5SLz27t1GQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LgM+7/F1/0vqBlc40Xshda4+VnNKdEivKWtFJJN2QauQU5l1nC4eo0BhTJkPwLfBpJv4euYSd77p4K/VzgNZfE1/oJ3uuqvrB+lBvvwlAkr8Imtnavm1K7EyhIlNfqFzCQ15ZtiQfjgHXzIc9d16Hf6xfIBi2DLkWKQFHdxa6AU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zsMFDe3g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O3MO9ybvSK/OnPGEqqnV1+rkn9UwsEkVw1ainI5T/61br4vr1zvtgDG6dG6RIXNkuXy3eizg4QUaaTobel4eB69GcUvlKnNcihOc7Sew/yBER9qmqw72MMSywH9T9gl1dbclegwuYxLJdYJqtlFw3pJHkVax73pLD0K4PVXWXMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STbCo0dF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zsMFDe3g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB16C4CEE9;
-	Tue, 27 May 2025 17:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STbCo0dF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95CB6C4CEE9;
+	Tue, 27 May 2025 17:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365532;
-	bh=6x0jXoFpnd8iMwZIDKzHVAnZUBNfxtcYkrDBZ/baO1I=;
+	s=korg; t=1748365534;
+	bh=GbNWntq2Wta7G1Xak5rIz+HMP5a6QPb3V5SLz27t1GQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zsMFDe3gZI/M2C5vglwc2PvAHG5hO9Ce5mcEU9XLmfTbmkvw1pfrEinxSbWogD7f2
-	 zFwMdeuhZt6CvA8dZ9N9Wqkz6SxEzwYebQ4rHHTkjhY/vG1DXrjtRq4ne97GY87CP8
-	 b0iOW/UFpPfPONskQ0jSkVRhhHpDv5WAG1BSfrU0=
+	b=STbCo0dFkFINsHTKiXfcbRJPdoqaPvpvx/WhsAiRxG0yhVYZQUPBkv94Du551ojCU
+	 vG0+tPp2ApTqiU/B5u1hGigP4+BvzuLep0rHMcM+r2pOQHYY54KoZm4C/4K4B3H5Ov
+	 mPbuckOLxPGkyfFdbxyuMovcG+4rYq+fVNk22y44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Alexei Lazar <alazar@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 379/626] serial: sh-sci: Update the suspend/resume support
-Date: Tue, 27 May 2025 18:24:32 +0200
-Message-ID: <20250527162500.414638820@linuxfoundation.org>
+Subject: [PATCH 6.12 406/626] net/mlx5: Extend Ethtool loopback selftest to support non-linear SKB
+Date: Tue, 27 May 2025 18:24:59 +0200
+Message-ID: <20250527162501.511587915@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,162 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Alexei Lazar <alazar@nvidia.com>
 
-[ Upstream commit 22a6984c5b5df8eab864d7f3e8b94d5a554d31ab ]
+[ Upstream commit 95b9606b15bb3ce1198d28d2393dd0e1f0a5f3e9 ]
 
-The Renesas RZ/G3S supports a power saving mode where power to most of the
-SoC components is turned off. When returning from this power saving mode,
-SoC components need to be re-configured.
+Current loopback test validation ignores non-linear SKB case in
+the SKB access, which can lead to failures in scenarios such as
+when HW GRO is enabled.
+Linearize the SKB so both cases will be handled.
 
-The SCIFs on the Renesas RZ/G3S need to be re-configured as well when
-returning from this power saving mode. The sh-sci code already configures
-the SCIF clocks, power domain and registers by calling uart_resume_port()
-in sci_resume(). On suspend path the SCIF UART ports are suspended
-accordingly (by calling uart_suspend_port() in sci_suspend()). The only
-missing setting is the reset signal. For this assert/de-assert the reset
-signal on driver suspend/resume.
-
-In case the no_console_suspend is specified by the user, the registers need
-to be saved on suspend path and restore on resume path. To do this the
-sci_console_save()/sci_console_restore() functions were added. There is no
-need to cache/restore the status or FIFO registers. Only the control
-registers. The registers that will be saved/restored on suspend/resume are
-specified by the struct sci_suspend_regs data structure.
-
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20250207113313.545432-1-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alexei Lazar <alazar@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250209101716.112774-15-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sh-sci.c | 71 +++++++++++++++++++++++++++++++++++--
- 1 file changed, 69 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
-index 80efe3b0ed0c3..779074b1c2be4 100644
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -104,6 +104,15 @@ struct plat_sci_reg {
- 	u8 offset, size;
- };
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c b/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
+index 1d60465cc2ca4..2f7a543feca62 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
+@@ -166,6 +166,9 @@ mlx5e_test_loopback_validate(struct sk_buff *skb,
+ 	struct udphdr *udph;
+ 	struct iphdr *iph;
  
-+struct sci_suspend_regs {
-+	u16 scsmr;
-+	u16 scscr;
-+	u16 scfcr;
-+	u16 scsptr;
-+	u8 scbrr;
-+	u8 semr;
-+};
++	if (skb_linearize(skb))
++		goto out;
 +
- struct sci_port_params {
- 	const struct plat_sci_reg regs[SCIx_NR_REGS];
- 	unsigned int fifosize;
-@@ -134,6 +143,8 @@ struct sci_port {
- 	struct dma_chan			*chan_tx;
- 	struct dma_chan			*chan_rx;
- 
-+	struct reset_control		*rstc;
-+
- #ifdef CONFIG_SERIAL_SH_SCI_DMA
- 	struct dma_chan			*chan_tx_saved;
- 	struct dma_chan			*chan_rx_saved;
-@@ -153,6 +164,7 @@ struct sci_port {
- 	int				rx_trigger;
- 	struct timer_list		rx_fifo_timer;
- 	int				rx_fifo_timeout;
-+	struct sci_suspend_regs		suspend_regs;
- 	u16				hscif_tot;
- 
- 	bool has_rtscts;
-@@ -3384,6 +3396,7 @@ static struct plat_sci_port *sci_parse_dt(struct platform_device *pdev,
- 	}
- 
- 	sp = &sci_ports[id];
-+	sp->rstc = rstc;
- 	*dev_id = id;
- 
- 	p->type = SCI_OF_TYPE(data);
-@@ -3532,13 +3545,57 @@ static int sci_probe(struct platform_device *dev)
- 	return 0;
- }
- 
-+static void sci_console_save(struct sci_port *s)
-+{
-+	struct sci_suspend_regs *regs = &s->suspend_regs;
-+	struct uart_port *port = &s->port;
-+
-+	if (sci_getreg(port, SCSMR)->size)
-+		regs->scsmr = sci_serial_in(port, SCSMR);
-+	if (sci_getreg(port, SCSCR)->size)
-+		regs->scscr = sci_serial_in(port, SCSCR);
-+	if (sci_getreg(port, SCFCR)->size)
-+		regs->scfcr = sci_serial_in(port, SCFCR);
-+	if (sci_getreg(port, SCSPTR)->size)
-+		regs->scsptr = sci_serial_in(port, SCSPTR);
-+	if (sci_getreg(port, SCBRR)->size)
-+		regs->scbrr = sci_serial_in(port, SCBRR);
-+	if (sci_getreg(port, SEMR)->size)
-+		regs->semr = sci_serial_in(port, SEMR);
-+}
-+
-+static void sci_console_restore(struct sci_port *s)
-+{
-+	struct sci_suspend_regs *regs = &s->suspend_regs;
-+	struct uart_port *port = &s->port;
-+
-+	if (sci_getreg(port, SCSMR)->size)
-+		sci_serial_out(port, SCSMR, regs->scsmr);
-+	if (sci_getreg(port, SCSCR)->size)
-+		sci_serial_out(port, SCSCR, regs->scscr);
-+	if (sci_getreg(port, SCFCR)->size)
-+		sci_serial_out(port, SCFCR, regs->scfcr);
-+	if (sci_getreg(port, SCSPTR)->size)
-+		sci_serial_out(port, SCSPTR, regs->scsptr);
-+	if (sci_getreg(port, SCBRR)->size)
-+		sci_serial_out(port, SCBRR, regs->scbrr);
-+	if (sci_getreg(port, SEMR)->size)
-+		sci_serial_out(port, SEMR, regs->semr);
-+}
-+
- static __maybe_unused int sci_suspend(struct device *dev)
- {
- 	struct sci_port *sport = dev_get_drvdata(dev);
- 
--	if (sport)
-+	if (sport) {
- 		uart_suspend_port(&sci_uart_driver, &sport->port);
- 
-+		if (!console_suspend_enabled && uart_console(&sport->port))
-+			sci_console_save(sport);
-+		else
-+			return reset_control_assert(sport->rstc);
-+	}
-+
- 	return 0;
- }
- 
-@@ -3546,8 +3603,18 @@ static __maybe_unused int sci_resume(struct device *dev)
- {
- 	struct sci_port *sport = dev_get_drvdata(dev);
- 
--	if (sport)
-+	if (sport) {
-+		if (!console_suspend_enabled && uart_console(&sport->port)) {
-+			sci_console_restore(sport);
-+		} else {
-+			int ret = reset_control_deassert(sport->rstc);
-+
-+			if (ret)
-+				return ret;
-+		}
-+
- 		uart_resume_port(&sci_uart_driver, &sport->port);
-+	}
- 
- 	return 0;
- }
+ 	/* We are only going to peek, no need to clone the SKB */
+ 	if (MLX5E_TEST_PKT_SIZE - ETH_HLEN > skb_headlen(skb))
+ 		goto out;
 -- 
 2.39.5
 
