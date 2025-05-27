@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DCB13A244;
-	Tue, 27 May 2025 17:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A4526B0B6;
+	Tue, 27 May 2025 17:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365668; cv=none; b=U1iG4/bGiubRZ0vgZBrdna6DZZYQDP4ghCzgXv1JqfHXp9oFBSVJ+qQWTnnvnhNDzmfyI8oGSvAhNOZ6dOcFMBWA4/446l+Nn02U+9L7JJggY3y/RPbbaZfKy+H9HPBoqF7jl1S2c/NZ9tRPdXHow+vaiulETXIBjnkbSyP6xao=
+	t=1748365671; cv=none; b=dDqvzGyPvekQi3f7890GLjy1pyrKk1LrsVCmNcGe0BIrfZsh8XRq+s/HawiY29J87RuI2v1yxcYgz/eX7hujCA4jZhJa54s3591hW7qlPrpGSDkcML6xBwU3zCVyJas2/WS29lFHxeTw9H/a+Fw6cQv2k10SEVxkFxJEwVs1vmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365668; c=relaxed/simple;
-	bh=FOdL/iIAiksU2mpbUKyGLhxW0LLW008WEj+imrZmzf4=;
+	s=arc-20240116; t=1748365671; c=relaxed/simple;
+	bh=0Mo5shdL5vMh5QOho2mWxk6pv2dNQtGVJZO6TkKjOHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TysqYWtTZB9o8RsUleiKI/Uc142vegPlkZmqJ3BUcFQ6L7Q9xSwUrtr81AGyocqcyML2O1EohcK4BATbzNWs4AkYbQWou/PkJMvc7L94GfhSyJ8moTZf8KvFHR+u/v7/ScZINX/J0V/vCBZJwT5aEcA7U3kJ4VoX3aTgRWy2k3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JikoKLr+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HaABJ9kiJIOZnGoVxBUg1zmSEIy7KubIu1y6T8Vgo/s9bYjCdEA0HDxe8hbYCa1npA2sOIpwBAb5hE0MZdhHZ2Il4iTCtIG9maWaROvjR6hTwGhUJKS28hQPmBXllGfiSDlj966TkSPZjHimDt6M/a/nA+AQHDhoApRJvl8GPkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEx6VIt0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JikoKLr+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B939C4CEE9;
-	Tue, 27 May 2025 17:07:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEx6VIt0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF6AC4CEE9;
+	Tue, 27 May 2025 17:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365668;
-	bh=FOdL/iIAiksU2mpbUKyGLhxW0LLW008WEj+imrZmzf4=;
+	s=korg; t=1748365671;
+	bh=0Mo5shdL5vMh5QOho2mWxk6pv2dNQtGVJZO6TkKjOHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JikoKLr+S8pi4L4/bP9LgBq5RbDpiOgualn72lYienWq4GoIr3YiP/CeMnAhNLk7D
-	 qTcumEEj20oaKTePG46MKntknEiLpz3SJKN/lcPjHLYOU6oMLf/VcWD/SFjfyFDKyE
-	 Ztp3OvizKlJ9nyffNeEA7rFMQxP9BKl230IOg3pU=
+	b=OEx6VIt0Aqvglm0ts+Po5QcG3e8V2Q+G4GzS8FXIqeHlVbxb75K86i5r8WCNhF3bn
+	 JbB3YGdHf0B9IdacmEGoNcnyJPIAyX/Y1Dlyro6eByTAmeKzs3rEjI0PYb4ME0gJnm
+	 LMYMYougPKr93b/B+x3KWxUD8vJ7bXOvzmvBBtaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	FUKAUMI Naoki <naoki@radxa.com>,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 443/626] drm/rockchip: vop2: Improve display modes handling on RK3588 HDMI0
-Date: Tue, 27 May 2025 18:25:36 +0200
-Message-ID: <20250527162503.000454389@linuxfoundation.org>
+Subject: [PATCH 6.12 452/626] bridge: mdb: Allow replace of a host-joined group
+Date: Tue, 27 May 2025 18:25:45 +0200
+Message-ID: <20250527162503.365276109@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,110 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Petr Machata <petrm@nvidia.com>
 
-[ Upstream commit 2c1268e7aad0819f38e56134bbc2095fd95fde1b ]
+[ Upstream commit d9e9f6d7b7d0c520bb87f19d2cbc57aeeb2091d5 ]
 
-The RK3588 specific implementation is currently quite limited in terms
-of handling the full range of display modes supported by the connected
-screens, e.g. 2560x1440@75Hz, 2048x1152@60Hz, 1024x768@60Hz are just a
-few of them.
+Attempts to replace an MDB group membership of the host itself are
+currently bounced:
 
-Additionally, it doesn't cope well with non-integer refresh rates like
-59.94, 29.97, 23.98, etc.
+ # ip link add name br up type bridge vlan_filtering 1
+ # bridge mdb replace dev br port br grp 239.0.0.1 vid 2
+ # bridge mdb replace dev br port br grp 239.0.0.1 vid 2
+ Error: bridge: Group is already joined by host.
 
-Make use of HDMI0 PHY PLL as a more accurate DCLK source to handle
-all display modes up to 4K@60Hz.
+A similar operation done on a member port would succeed. Ignore the check
+for replacement of host group memberships as well.
 
-Tested-by: FUKAUMI Naoki <naoki@radxa.com>
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250204-vop2-hdmi0-disp-modes-v3-3-d71c6a196e58@collabora.com
+The bit of code that this enables is br_multicast_host_join(), which, for
+already-joined groups only refreshes the MC group expiration timer, which
+is desirable; and a userspace notification, also desirable.
+
+Change a selftest that exercises this code path from expecting a rejection
+to expecting a pass. The rest of MDB selftests pass without modification.
+
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/e5c5188b9787ae806609e7ca3aa2a0a501b9b5c4.1738685648.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 34 ++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ net/bridge/br_mdb.c                                  | 2 +-
+ tools/testing/selftests/net/forwarding/bridge_mdb.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index 2aab2a0956788..5d7df4c3b08c4 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -157,6 +157,7 @@ struct vop2_video_port {
- 	struct drm_crtc crtc;
- 	struct vop2 *vop2;
- 	struct clk *dclk;
-+	struct clk *dclk_src;
- 	unsigned int id;
- 	const struct vop2_video_port_data *data;
+diff --git a/net/bridge/br_mdb.c b/net/bridge/br_mdb.c
+index 1a52a0bca086d..7e1ad229e1330 100644
+--- a/net/bridge/br_mdb.c
++++ b/net/bridge/br_mdb.c
+@@ -1040,7 +1040,7 @@ static int br_mdb_add_group(const struct br_mdb_config *cfg,
  
-@@ -211,6 +212,7 @@ struct vop2 {
- 	struct clk *hclk;
- 	struct clk *aclk;
- 	struct clk *pclk;
-+	struct clk *pll_hdmiphy0;
+ 	/* host join */
+ 	if (!port) {
+-		if (mp->host_joined) {
++		if (mp->host_joined && !(cfg->nlflags & NLM_F_REPLACE)) {
+ 			NL_SET_ERR_MSG_MOD(extack, "Group is already joined by host");
+ 			return -EEXIST;
+ 		}
+diff --git a/tools/testing/selftests/net/forwarding/bridge_mdb.sh b/tools/testing/selftests/net/forwarding/bridge_mdb.sh
+index d9d587454d207..8c1597ebc2d38 100755
+--- a/tools/testing/selftests/net/forwarding/bridge_mdb.sh
++++ b/tools/testing/selftests/net/forwarding/bridge_mdb.sh
+@@ -149,7 +149,7 @@ cfg_test_host_common()
+ 	check_err $? "Failed to add $name host entry"
  
- 	/* optional internal rgb encoder */
- 	struct rockchip_rgb *rgb;
-@@ -219,6 +221,8 @@ struct vop2 {
- 	struct vop2_win win[];
- };
+ 	bridge mdb replace dev br0 port br0 grp $grp $state vid 10 &> /dev/null
+-	check_fail $? "Managed to replace $name host entry"
++	check_err $? "Failed to replace $name host entry"
  
-+#define VOP2_MAX_DCLK_RATE		600000000
-+
- #define vop2_output_if_is_hdmi(x)	((x) == ROCKCHIP_VOP2_EP_HDMI0 || \
- 					 (x) == ROCKCHIP_VOP2_EP_HDMI1)
- 
-@@ -1051,6 +1055,9 @@ static void vop2_crtc_atomic_disable(struct drm_crtc *crtc,
- 
- 	vop2_crtc_disable_irq(vp, VP_INT_DSP_HOLD_VALID);
- 
-+	if (vp->dclk_src)
-+		clk_set_parent(vp->dclk, vp->dclk_src);
-+
- 	clk_disable_unprepare(vp->dclk);
- 
- 	vop2->enable_count--;
-@@ -2071,6 +2078,27 @@ static void vop2_crtc_atomic_enable(struct drm_crtc *crtc,
- 
- 	vop2_vp_write(vp, RK3568_VP_MIPI_CTRL, 0);
- 
-+	/*
-+	 * Switch to HDMI PHY PLL as DCLK source for display modes up
-+	 * to 4K@60Hz, if available, otherwise keep using the system CRU.
-+	 */
-+	if (vop2->pll_hdmiphy0 && clock <= VOP2_MAX_DCLK_RATE) {
-+		drm_for_each_encoder_mask(encoder, crtc->dev, crtc_state->encoder_mask) {
-+			struct rockchip_encoder *rkencoder = to_rockchip_encoder(encoder);
-+
-+			if (rkencoder->crtc_endpoint_id == ROCKCHIP_VOP2_EP_HDMI0) {
-+				if (!vp->dclk_src)
-+					vp->dclk_src = clk_get_parent(vp->dclk);
-+
-+				ret = clk_set_parent(vp->dclk, vop2->pll_hdmiphy0);
-+				if (ret < 0)
-+					drm_warn(vop2->drm,
-+						 "Could not switch to HDMI0 PHY PLL: %d\n", ret);
-+				break;
-+			}
-+		}
-+	}
-+
- 	clk_set_rate(vp->dclk, clock);
- 
- 	vop2_post_config(crtc);
-@@ -3242,6 +3270,12 @@ static int vop2_bind(struct device *dev, struct device *master, void *data)
- 		return PTR_ERR(vop2->pclk);
- 	}
- 
-+	vop2->pll_hdmiphy0 = devm_clk_get_optional(vop2->dev, "pll_hdmiphy0");
-+	if (IS_ERR(vop2->pll_hdmiphy0)) {
-+		drm_err(vop2->drm, "failed to get pll_hdmiphy0\n");
-+		return PTR_ERR(vop2->pll_hdmiphy0);
-+	}
-+
- 	vop2->irq = platform_get_irq(pdev, 0);
- 	if (vop2->irq < 0) {
- 		drm_err(vop2->drm, "cannot find irq for vop2\n");
+ 	bridge mdb del dev br0 port br0 grp $grp $state vid 10
+ 	bridge mdb get dev br0 grp $grp vid 10 &> /dev/null
 -- 
 2.39.5
 
