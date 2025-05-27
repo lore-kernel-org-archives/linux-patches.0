@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85972CCC0;
-	Tue, 27 May 2025 16:59:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB1027FD49;
+	Tue, 27 May 2025 16:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365149; cv=none; b=eSLmgDxWv2gz/ydUoXcsAaMmCXD2qRKUuvnIw2Q/dUCwM7tT9zuF0UuNQkdISLntCETkVdqrXGco8K3Y9l/HRlwjH7USB2MTWeesOm4YlcEkOc7eg7dPVrqmV37nyMqFfkb4USTKSkAKCy9IsbHuvwoZpAnZXxCBtLlgKT/BU1M=
+	t=1748365152; cv=none; b=UQjUTrAlS0Y5rOUQlTA1FoyBcTRebfn9gGq49Fw8GQCqI+a5QvNTOVpQy5ADxCTulI/TEkWsvnCS6R2BG2lHl/54eD2fSgOLkkKYwHilgB7wvtgyvThYjnmHcdU1HXlu/gm+oPEzrxIJg1AFlyIKgxyK/14b6zCRWi7xpTrEedY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365149; c=relaxed/simple;
-	bh=uoym1Al+RxBHmEFOq/9iDtNf9CiGg5KJ7qCaRDmT3vE=;
+	s=arc-20240116; t=1748365152; c=relaxed/simple;
+	bh=MOJRz7Nd1MIZsv/x/0XyB9Jj9Q2jwlh7bPtwtpzyp+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sh3F5B0TWD1fgDgXOXYQaG0EfnLgXHm1wBi+sqwdsFj0ZO9uIU0e76l5K77qZBWltO7oOLZwpKQusorJB1xC7WAjpSqnUrm0bkhU8pAMbMvbbJTy20CydjG41IOcrgA4Jxr0PpstPDqafRT21mAjnBbtGHmi6YQFg/W0JRyv/2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GnNpKWIg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pxaeI8FZcg93BEj+f6eSxBt0UGS3waRarrK64/1Tsde8WfIRPPCi/mjtWX/pg5pwYqYeW5X3411IIHqEPjpDyMwfPb1kfH8KF8GHj/DD+RR9GjzliS7TuT1AvgF2uK0gEaDtXBiCCztnwg5loOFM3x+jDA94fjGxL5WiXy0R8EQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/5/ag3G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GnNpKWIg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2796DC4CEE9;
-	Tue, 27 May 2025 16:59:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/5/ag3G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03CCEC4CEE9;
+	Tue, 27 May 2025 16:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365149;
-	bh=uoym1Al+RxBHmEFOq/9iDtNf9CiGg5KJ7qCaRDmT3vE=;
+	s=korg; t=1748365152;
+	bh=MOJRz7Nd1MIZsv/x/0XyB9Jj9Q2jwlh7bPtwtpzyp+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GnNpKWIgY5JD5Q4AYmF35dbMOB75eTcdptQIq2fSmojOHTC1rRtxnl8M6z71xur8M
-	 /8/chqOjEfV60g+b/Oex9RTlx+GgXbJpQexhmIyBSBYlQPO5dyZS3BfSJB9Jrft4je
-	 S6hUno6TR4Qo/6eUb/6H0/++rC7cqQArTtAO79bg=
+	b=i/5/ag3GKquueV+vZ5PZKHX4v1yyEOtR0LTvRkbq8Yptps8MbRH6hlDUya8K9dzGL
+	 aq9fEmQu3jncZqv5WPKP0P9wS5rWLoeD9OMZkjeG63L7nXvjD6LDApYk2ggVpd3v66
+	 Vi+vQPGZG3ds/xOYutTzJLx6bpBMVhyK1JOJET9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
+	Andrei Botila <andrei.botila@oss.nxp.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 252/626] ipv4: fib: Move fib_valid_key_len() to rtm_to_fib_config().
-Date: Tue, 27 May 2025 18:22:25 +0200
-Message-ID: <20250527162455.252135541@linuxfoundation.org>
+Subject: [PATCH 6.12 243/626] net: phy: nxp-c45-tja11xx: add match_phy_device to TJA1103/TJA1104
+Date: Tue, 27 May 2025 18:22:16 +0200
+Message-ID: <20250527162454.885786711@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -53,126 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Andrei Botila <andrei.botila@oss.nxp.com>
 
-[ Upstream commit 254ba7e6032d3fc738050d500b0c1d8197af90ca ]
+[ Upstream commit a06a868a0cd96bc51401cdea897313a3f6ad01a0 ]
 
-fib_valid_key_len() is called in the beginning of fib_table_insert()
-or fib_table_delete() to check if the prefix length is valid.
+Add .match_phy_device for the existing TJAs to differentiate between
+TJA1103 and TJA1104.
+TJA1103 and TJA1104 share the same PHY_ID but TJA1104 has MACsec
+capabilities while TJA1103 doesn't.
 
-fib_table_insert() and fib_table_delete() are called from 3 paths
-
-  - ip_rt_ioctl()
-  - inet_rtm_newroute() / inet_rtm_delroute()
-  - fib_magic()
-
-In the first ioctl() path, rtentry_to_fib_config() checks the prefix
-length with bad_mask().  Also, fib_magic() always passes the correct
-prefix: 32 or ifa->ifa_prefixlen, which is already validated.
-
-Let's move fib_valid_key_len() to the rtnetlink path, rtm_to_fib_config().
-
-While at it, 2 direct returns in rtm_to_fib_config() are changed to
-goto to match other places in the same function
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250228042328.96624-12-kuniyu@amazon.com
+Signed-off-by: Andrei Botila <andrei.botila@oss.nxp.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250228154320.2979000-2-andrei.botila@oss.nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_frontend.c | 18 ++++++++++++++++--
- net/ipv4/fib_trie.c     | 22 ----------------------
- 2 files changed, 16 insertions(+), 24 deletions(-)
+ drivers/net/phy/nxp-c45-tja11xx.c | 54 +++++++++++++++++++++++++++++--
+ 1 file changed, 52 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/fib_frontend.c b/net/ipv4/fib_frontend.c
-index 793e6781399a4..5b7c41333d6fc 100644
---- a/net/ipv4/fib_frontend.c
-+++ b/net/ipv4/fib_frontend.c
-@@ -829,19 +829,33 @@ static int rtm_to_fib_config(struct net *net, struct sk_buff *skb,
- 		}
- 	}
+diff --git a/drivers/net/phy/nxp-c45-tja11xx.c b/drivers/net/phy/nxp-c45-tja11xx.c
+index 9788b820c6be7..99a5eee77bec1 100644
+--- a/drivers/net/phy/nxp-c45-tja11xx.c
++++ b/drivers/net/phy/nxp-c45-tja11xx.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /* NXP C45 PHY driver
+- * Copyright 2021-2023 NXP
++ * Copyright 2021-2025 NXP
+  * Author: Radu Pirea <radu-nicolae.pirea@oss.nxp.com>
+  */
  
-+	if (cfg->fc_dst_len > 32) {
-+		NL_SET_ERR_MSG(extack, "Invalid prefix length");
-+		err = -EINVAL;
-+		goto errout;
-+	}
-+
-+	if (cfg->fc_dst_len < 32 && (ntohl(cfg->fc_dst) << cfg->fc_dst_len)) {
-+		NL_SET_ERR_MSG(extack, "Invalid prefix for given prefix length");
-+		err = -EINVAL;
-+		goto errout;
-+	}
-+
- 	if (cfg->fc_nh_id) {
- 		if (cfg->fc_oif || cfg->fc_gw_family ||
- 		    cfg->fc_encap || cfg->fc_mp) {
- 			NL_SET_ERR_MSG(extack,
- 				       "Nexthop specification and nexthop id are mutually exclusive");
--			return -EINVAL;
-+			err = -EINVAL;
-+			goto errout;
- 		}
- 	}
+@@ -18,6 +18,8 @@
  
- 	if (has_gw && has_via) {
- 		NL_SET_ERR_MSG(extack,
- 			       "Nexthop configuration can not contain both GATEWAY and VIA");
--		return -EINVAL;
-+		err = -EINVAL;
-+		goto errout;
- 	}
+ #include "nxp-c45-tja11xx.h"
  
- 	if (!cfg->fc_table)
-diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
-index 09e31757e96c7..cc86031d2050f 100644
---- a/net/ipv4/fib_trie.c
-+++ b/net/ipv4/fib_trie.c
-@@ -1193,22 +1193,6 @@ static int fib_insert_alias(struct trie *t, struct key_vector *tp,
- 	return 0;
++#define PHY_ID_MASK			GENMASK(31, 4)
++/* Same id: TJA1103, TJA1104 */
+ #define PHY_ID_TJA_1103			0x001BB010
+ #define PHY_ID_TJA_1120			0x001BB031
+ 
+@@ -1930,6 +1932,30 @@ static void tja1120_nmi_handler(struct phy_device *phydev,
+ 	}
  }
  
--static bool fib_valid_key_len(u32 key, u8 plen, struct netlink_ext_ack *extack)
--{
--	if (plen > KEYLENGTH) {
--		NL_SET_ERR_MSG(extack, "Invalid prefix length");
--		return false;
--	}
--
--	if ((plen < KEYLENGTH) && (key << plen)) {
--		NL_SET_ERR_MSG(extack,
--			       "Invalid prefix for given prefix length");
--		return false;
--	}
--
--	return true;
--}
--
- static void fib_remove_alias(struct trie *t, struct key_vector *tp,
- 			     struct key_vector *l, struct fib_alias *old);
++static int nxp_c45_macsec_ability(struct phy_device *phydev)
++{
++	bool macsec_ability;
++	int phy_abilities;
++
++	phy_abilities = phy_read_mmd(phydev, MDIO_MMD_VEND1,
++				     VEND1_PORT_ABILITIES);
++	macsec_ability = !!(phy_abilities & MACSEC_ABILITY);
++
++	return macsec_ability;
++}
++
++static int tja1103_match_phy_device(struct phy_device *phydev)
++{
++	return phy_id_compare(phydev->phy_id, PHY_ID_TJA_1103, PHY_ID_MASK) &&
++	       !nxp_c45_macsec_ability(phydev);
++}
++
++static int tja1104_match_phy_device(struct phy_device *phydev)
++{
++	return phy_id_compare(phydev->phy_id, PHY_ID_TJA_1103, PHY_ID_MASK) &&
++	       nxp_c45_macsec_ability(phydev);
++}
++
+ static const struct nxp_c45_regmap tja1120_regmap = {
+ 	.vend1_ptp_clk_period	= 0x1020,
+ 	.vend1_event_msg_filt	= 0x9010,
+@@ -2000,7 +2026,6 @@ static const struct nxp_c45_phy_data tja1120_phy_data = {
  
-@@ -1229,9 +1213,6 @@ int fib_table_insert(struct net *net, struct fib_table *tb,
- 
- 	key = ntohl(cfg->fc_dst);
- 
--	if (!fib_valid_key_len(key, plen, extack))
--		return -EINVAL;
--
- 	pr_debug("Insert table=%u %08x/%d\n", tb->tb_id, key, plen);
- 
- 	fi = fib_create_info(cfg, extack);
-@@ -1723,9 +1704,6 @@ int fib_table_delete(struct net *net, struct fib_table *tb,
- 
- 	key = ntohl(cfg->fc_dst);
- 
--	if (!fib_valid_key_len(key, plen, extack))
--		return -EINVAL;
--
- 	l = fib_find_node(t, &tp, key);
- 	if (!l)
- 		return -ESRCH;
+ static struct phy_driver nxp_c45_driver[] = {
+ 	{
+-		PHY_ID_MATCH_MODEL(PHY_ID_TJA_1103),
+ 		.name			= "NXP C45 TJA1103",
+ 		.get_features		= nxp_c45_get_features,
+ 		.driver_data		= &tja1103_phy_data,
+@@ -2022,6 +2047,31 @@ static struct phy_driver nxp_c45_driver[] = {
+ 		.get_sqi		= nxp_c45_get_sqi,
+ 		.get_sqi_max		= nxp_c45_get_sqi_max,
+ 		.remove			= nxp_c45_remove,
++		.match_phy_device	= tja1103_match_phy_device,
++	},
++	{
++		.name			= "NXP C45 TJA1104",
++		.get_features		= nxp_c45_get_features,
++		.driver_data		= &tja1103_phy_data,
++		.probe			= nxp_c45_probe,
++		.soft_reset		= nxp_c45_soft_reset,
++		.config_aneg		= genphy_c45_config_aneg,
++		.config_init		= nxp_c45_config_init,
++		.config_intr		= tja1103_config_intr,
++		.handle_interrupt	= nxp_c45_handle_interrupt,
++		.read_status		= genphy_c45_read_status,
++		.suspend		= genphy_c45_pma_suspend,
++		.resume			= genphy_c45_pma_resume,
++		.get_sset_count		= nxp_c45_get_sset_count,
++		.get_strings		= nxp_c45_get_strings,
++		.get_stats		= nxp_c45_get_stats,
++		.cable_test_start	= nxp_c45_cable_test_start,
++		.cable_test_get_status	= nxp_c45_cable_test_get_status,
++		.set_loopback		= genphy_c45_loopback,
++		.get_sqi		= nxp_c45_get_sqi,
++		.get_sqi_max		= nxp_c45_get_sqi_max,
++		.remove			= nxp_c45_remove,
++		.match_phy_device	= tja1104_match_phy_device,
+ 	},
+ 	{
+ 		PHY_ID_MATCH_MODEL(PHY_ID_TJA_1120),
 -- 
 2.39.5
 
