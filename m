@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2140A271476;
-	Tue, 27 May 2025 16:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB39263F5E;
+	Tue, 27 May 2025 16:51:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364692; cv=none; b=VOokb8CvZXI8zG8S0ymyLz4n35Qhdv5hChq7bk1sS4GUZ/zRBbXqNtweLGXnSl2HJ5+5/TcvsLyHEC5FAJIwgjeaLF2sPWUgVx0HLp4W0VEpcZejji4fBcCKUgnXSb9C38yq5dXJE2Ggnui71AFwUst3PhQhLdLREzj62a816I0=
+	t=1748364695; cv=none; b=lHObpQdjxD2qDSk3/x9Im2vhJ24pfKwX2jB/cwrSsPM1von3cWc3CzURVT8S9iydCB21nLoENSt1O7awpQg+WmqKwRyInsad0sbNCFzDlZRL2YuSEoXnfQXqK+DxLk036aT9OVJt4OArAN64Mmfe5Imhs6VwOPyr/nJC2ySu9Hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364692; c=relaxed/simple;
-	bh=CPYAKZA9h/iooSYBM4NBIp+Uwo3bKNngYdpFIm6sdsM=;
+	s=arc-20240116; t=1748364695; c=relaxed/simple;
+	bh=l14/EBEijhWoGroJSALTMLLAjJ6VFV+8TdwrPafCUd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dO+wlWOjr7JroHXgv14xe+X5Iw4YtYp1bovsCZ+o2sncYR8NJWQTxCXd+dgDUXsjNJDEOzforGTzNlyzjpqAJPSo11Yogmn/B/Jzv+jadVfeJgdg5qxYFs4Mc2AEecq8Td9+kv0+1NeZIs0F1Y//FCK7VZ/5nt7uyR+v/j8egcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7fv2DsQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lj/Mg3c/3cWQJO90c/d2og1W/AxDuyFISOPt0aaKSrXHGemymZAHZ4YoBWMlZAW4B+LZaG8UPeK8hdDoHvgZPTFVqERkc1Bs6DMvNy96panqItADQrSUZiz/UajNUZ7fSnHd+iA7zZF0CnCF94+6iW9ZyJcY5D4XecL8Ftzxruk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlpSLOl1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7fv2DsQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E4CAC4CEE9;
-	Tue, 27 May 2025 16:51:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlpSLOl1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921F9C4CEE9;
+	Tue, 27 May 2025 16:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364692;
-	bh=CPYAKZA9h/iooSYBM4NBIp+Uwo3bKNngYdpFIm6sdsM=;
+	s=korg; t=1748364694;
+	bh=l14/EBEijhWoGroJSALTMLLAjJ6VFV+8TdwrPafCUd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S7fv2DsQKm8F5KXtvYtkDGadvAcGTvLDt4214AA1OhmV0LJDtumz8qaYuEVVlz08n
-	 ciCkCo6sG5uGxiHsFoGtW4rrLxRFyr7q9RSeAfgKCiWAYT9bkHNJD2pWZElJ5V7+Xy
-	 UHMfOrTPU32X8ytgskWHmzdakde+79NnpYEkVEFM=
+	b=nlpSLOl1N9cMGyq67duBD1r5RAcmTnx+yT3cJckJk0SNCsnj1Aw9EwLK9E7jQPtoA
+	 Q7eGczI1Bgrs02UxsmXoutWkBrB4qU85WoYC1QAlIozb6aI1VQiMdvh1U2afyn3xuA
+	 ynPI+q+Gnkd0ur0RgH76jN6tWKUySk8Rz52sKwGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Kai=20M=C3=A4kisara?= <Kai.Makisara@kolumbus.fi>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 136/626] scsi: st: ERASE does not change tape location
-Date: Tue, 27 May 2025 18:20:29 +0200
-Message-ID: <20250527162450.551892356@linuxfoundation.org>
+Subject: [PATCH 6.12 137/626] vfio/pci: Handle INTx IRQ_NOTCONNECTED
+Date: Tue, 27 May 2025 18:20:30 +0200
+Message-ID: <20250527162450.600737287@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -45,40 +45,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
+From: Alex Williamson <alex.williamson@redhat.com>
 
-[ Upstream commit ad77cebf97bd42c93ab4e3bffd09f2b905c1959a ]
+[ Upstream commit 860be250fc32de9cb24154bf21b4e36f40925707 ]
 
-The SCSI ERASE command erases from the current position onwards.  Don't
-clear the position variables.
+Some systems report INTx as not routed by setting pdev->irq to
+IRQ_NOTCONNECTED, resulting in a -ENOTCONN error when trying to
+setup eventfd signaling.  Include this in the set of conditions
+for which the PIN register is virtualized to zero.
 
-Signed-off-by: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
-Link: https://lore.kernel.org/r/20250311112516.5548-3-Kai.Makisara@kolumbus.fi
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Additionally consolidate vfio_pci_get_irq_count() to use this
+virtualized value in reporting INTx support via ioctl and sanity
+checking ioctl paths since pdev->irq is re-used when the device
+is in MSI mode.
+
+The combination of these results in both the config space of the
+device and the ioctl interface behaving as if the device does not
+support INTx.
+
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20250311230623.1264283-1-alex.williamson@redhat.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/st.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/vfio/pci/vfio_pci_config.c |  3 ++-
+ drivers/vfio/pci/vfio_pci_core.c   | 10 +---------
+ drivers/vfio/pci/vfio_pci_intrs.c  |  2 +-
+ 3 files changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
-index 1c0951168f646..1cfd7e71dcdde 100644
---- a/drivers/scsi/st.c
-+++ b/drivers/scsi/st.c
-@@ -2894,7 +2894,6 @@ static int st_int_ioctl(struct scsi_tape *STp, unsigned int cmd_in, unsigned lon
- 			timeout = STp->long_timeout * 8;
+diff --git a/drivers/vfio/pci/vfio_pci_config.c b/drivers/vfio/pci/vfio_pci_config.c
+index ea2745c1ac5e6..8ea38e7421df4 100644
+--- a/drivers/vfio/pci/vfio_pci_config.c
++++ b/drivers/vfio/pci/vfio_pci_config.c
+@@ -1813,7 +1813,8 @@ int vfio_config_init(struct vfio_pci_core_device *vdev)
+ 					cpu_to_le16(PCI_COMMAND_MEMORY);
+ 	}
  
- 		DEBC_printk(STp, "Erasing tape.\n");
--		fileno = blkno = at_sm = 0;
- 		break;
- 	case MTSETBLK:		/* Set block length */
- 	case MTSETDENSITY:	/* Set tape density */
+-	if (!IS_ENABLED(CONFIG_VFIO_PCI_INTX) || vdev->nointx)
++	if (!IS_ENABLED(CONFIG_VFIO_PCI_INTX) || vdev->nointx ||
++	    vdev->pdev->irq == IRQ_NOTCONNECTED)
+ 		vconfig[PCI_INTERRUPT_PIN] = 0;
+ 
+ 	ret = vfio_cap_init(vdev);
+diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
+index c9eaba2276365..087c273a547fa 100644
+--- a/drivers/vfio/pci/vfio_pci_core.c
++++ b/drivers/vfio/pci/vfio_pci_core.c
+@@ -727,15 +727,7 @@ EXPORT_SYMBOL_GPL(vfio_pci_core_finish_enable);
+ static int vfio_pci_get_irq_count(struct vfio_pci_core_device *vdev, int irq_type)
+ {
+ 	if (irq_type == VFIO_PCI_INTX_IRQ_INDEX) {
+-		u8 pin;
+-
+-		if (!IS_ENABLED(CONFIG_VFIO_PCI_INTX) ||
+-		    vdev->nointx || vdev->pdev->is_virtfn)
+-			return 0;
+-
+-		pci_read_config_byte(vdev->pdev, PCI_INTERRUPT_PIN, &pin);
+-
+-		return pin ? 1 : 0;
++		return vdev->vconfig[PCI_INTERRUPT_PIN] ? 1 : 0;
+ 	} else if (irq_type == VFIO_PCI_MSI_IRQ_INDEX) {
+ 		u8 pos;
+ 		u16 flags;
+diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
+index 8382c58343356..565966351dfad 100644
+--- a/drivers/vfio/pci/vfio_pci_intrs.c
++++ b/drivers/vfio/pci/vfio_pci_intrs.c
+@@ -259,7 +259,7 @@ static int vfio_intx_enable(struct vfio_pci_core_device *vdev,
+ 	if (!is_irq_none(vdev))
+ 		return -EINVAL;
+ 
+-	if (!pdev->irq)
++	if (!pdev->irq || pdev->irq == IRQ_NOTCONNECTED)
+ 		return -ENODEV;
+ 
+ 	name = kasprintf(GFP_KERNEL_ACCOUNT, "vfio-intx(%s)", pci_name(pdev));
 -- 
 2.39.5
 
