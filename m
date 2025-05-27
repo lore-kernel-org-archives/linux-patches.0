@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150681CD0C;
-	Tue, 27 May 2025 17:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5CE1CD0C;
+	Tue, 27 May 2025 17:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366861; cv=none; b=JkE+I15+UYGOQrIgm9WW3zFtBynaVXETbVi4Im/9fY52NIyAaIa4niyOpwxuGK97pnIN7UPqlEm4HG4Xemd2sCY5jVFXGIPvcUwjmaWVO4zr5wvohALhVyooGhZOYIl9oG76PuTvlzYIGlAqeEBGdZZEdyH0tlkuRcwFOuws12c=
+	t=1748366864; cv=none; b=uXhYKjS1lhCquTsnSwypp7yX/s7YGFD27iIqZKQZoFQiJXn6gw1k1MOXSaN7Rj8u6YkrZovFQ0GvLIQzJ/OkXIQRUHml6pxdIBpvxEnhvkDRsgs2Fe/DyKdE1D2UZlFdo/C90Pz6nVR37BWdYi/S6Bq/AU/fma83ekeSFfXb4vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366861; c=relaxed/simple;
-	bh=jSbfjVlvgc6rG11xSNtEekPKzZOE5iHnXYR+TofiCnY=;
+	s=arc-20240116; t=1748366864; c=relaxed/simple;
+	bh=cwOzNcKVeC+cl8pbcvdgyH6Xl3LapdNCn5/2oi578+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nve0iSW+QYCMUxaTdYk4iQx1phn2M2rcjyDIi6SErBs71kI7y0TG//Zo06eSPrwBDKMvpq/bc2Y86xKUxsVBqzwBZYIS/9LCoop7GeUDkBx68le/GhUEZSnBLTvNAw2b5dv0cGohxHY3ZOUGI2ePjo+ywrJUXljQglqfs3T5DHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KRH58uYS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=j4H6w2/gbLFVhkgBuGNa0wRMYjrjU5MAZvXo9//gyk7ssQ49RsJ7DCG8kK6gelrFp7K/vZ0v225QOOX1JUhbeRcPWcqIGHJbQz7XMnxE6ZWBtKvWfbL4mwhzXfOqoUABnovymSn0rgPoXfhY8D1NAp1YeiblrF7ZHxzuvv7KqlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwOeT56U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KRH58uYS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F73C4CEEA;
-	Tue, 27 May 2025 17:27:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwOeT56U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7176CC4CEEB;
+	Tue, 27 May 2025 17:27:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366861;
-	bh=jSbfjVlvgc6rG11xSNtEekPKzZOE5iHnXYR+TofiCnY=;
+	s=korg; t=1748366863;
+	bh=cwOzNcKVeC+cl8pbcvdgyH6Xl3LapdNCn5/2oi578+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KRH58uYSw1kS2TecwkR+nh4AL9fY9GavR9FdwywBGLDgH0ukkKioWnUyKaSNqARfk
-	 JGducDjdn3LcwKyTfpYEvOAAKhbq6+M0hXGAt3sJX2MkwsAGdpxNQrNSYo67qiI1uD
-	 P8Z5OrDwGZsLAcXckBgtLHMUfD63t27hGfS+2hSE=
+	b=EwOeT56U5CjJHNSwfZr8rTDAeuXbI0N2kBjKS7JQn0y+7sEA811htqwtRoTPKtzCc
+	 bEv7PcHGY2mezQ7qEddU53j7RhPrAoQn5+kcpH4izsSFo+WuyN36lQ8JO1UjSCxiyY
+	 /lw0QzQGcOYJa+am10IIG+dgCnPxFk2B/RCVqAHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Shete <pshete@nvidia.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 183/783] pinctrl-tegra: Restore SFSEL bit when freeing pins
-Date: Tue, 27 May 2025 18:19:40 +0200
-Message-ID: <20250527162520.605546481@linuxfoundation.org>
+Subject: [PATCH 6.14 201/783] timer_list: Dont use %pK through printk()
+Date: Tue, 27 May 2025 18:19:58 +0200
+Message-ID: <20250527162521.331653826@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -45,187 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Prathamesh Shete <pshete@nvidia.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit c12bfa0fee65940b10ff5187349f76c6f6b1df9c ]
+[ Upstream commit a52067c24ccf6ee4c85acffa0f155e9714f9adce ]
 
-Each pin can be configured as a Special Function IO (SFIO) or GPIO,
-where the SFIO enables the pin to operate in alternative modes such as
-I2C, SPI, etc.
+This reverts commit f590308536db ("timer debug: Hide kernel addresses via
+%pK in /proc/timer_list")
 
-The current implementation sets all the pins back to SFIO mode
-even if they were initially in GPIO mode. This can cause glitches
-on the pins when pinctrl_gpio_free() is called.
+The timer list helper SEQ_printf() uses either the real seq_printf() for
+procfs output or vprintk() to print to the kernel log, when invoked from
+SysRq-q. It uses %pK for printing pointers.
 
-Avoid these undesired glitches by storing the pin's SFIO/GPIO
-state on GPIO request and restoring it on GPIO free.
+In the past %pK was prefered over %p as it would not leak raw pointer
+values into the kernel log. Since commit ad67b74d2469 ("printk: hash
+addresses printed with %p") the regular %p has been improved to avoid this
+issue.
 
-Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
-Link: https://lore.kernel.org/20250305104939.15168-2-pshete@nvidia.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Furthermore, restricted pointers ("%pK") were never meant to be used
+through printk(). They can still unintentionally leak raw pointers or
+acquire sleeping looks in atomic contexts.
+
+Switch to the regular pointer formatting which is safer, easier to reason
+about and sufficient here.
+
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/lkml/20250113171731-dc10e3c1-da64-4af0-b767-7c7070468023@linutronix.de/
+Link: https://lore.kernel.org/all/20250311-restricted-pointers-timer-v1-1-6626b91e54ab@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/tegra/pinctrl-tegra.c | 59 +++++++++++++++++++++++----
- drivers/pinctrl/tegra/pinctrl-tegra.h |  6 +++
- 2 files changed, 57 insertions(+), 8 deletions(-)
+ kernel/time/timer_list.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/tegra/pinctrl-tegra.c b/drivers/pinctrl/tegra/pinctrl-tegra.c
-index 3b046450bd3ff..27823e4207347 100644
---- a/drivers/pinctrl/tegra/pinctrl-tegra.c
-+++ b/drivers/pinctrl/tegra/pinctrl-tegra.c
-@@ -278,8 +278,8 @@ static int tegra_pinctrl_set_mux(struct pinctrl_dev *pctldev,
- 	return 0;
- }
- 
--static const struct tegra_pingroup *tegra_pinctrl_get_group(struct pinctrl_dev *pctldev,
--					unsigned int offset)
-+static int tegra_pinctrl_get_group_index(struct pinctrl_dev *pctldev,
-+					 unsigned int offset)
+diff --git a/kernel/time/timer_list.c b/kernel/time/timer_list.c
+index 1c311c46da507..cfbb46cc4e761 100644
+--- a/kernel/time/timer_list.c
++++ b/kernel/time/timer_list.c
+@@ -46,7 +46,7 @@ static void
+ print_timer(struct seq_file *m, struct hrtimer *taddr, struct hrtimer *timer,
+ 	    int idx, u64 now)
  {
- 	struct tegra_pmx *pmx = pinctrl_dev_get_drvdata(pctldev);
- 	unsigned int group, num_pins, j;
-@@ -292,12 +292,35 @@ static const struct tegra_pingroup *tegra_pinctrl_get_group(struct pinctrl_dev *
- 			continue;
- 		for (j = 0; j < num_pins; j++) {
- 			if (offset == pins[j])
--				return &pmx->soc->groups[group];
-+				return group;
- 		}
- 	}
- 
--	dev_err(pctldev->dev, "Pingroup not found for pin %u\n", offset);
--	return NULL;
-+	return -EINVAL;
-+}
-+
-+static const struct tegra_pingroup *tegra_pinctrl_get_group(struct pinctrl_dev *pctldev,
-+							    unsigned int offset,
-+							    int group_index)
-+{
-+	struct tegra_pmx *pmx = pinctrl_dev_get_drvdata(pctldev);
-+
-+	if (group_index < 0 || group_index > pmx->soc->ngroups)
-+		return NULL;
-+
-+	return &pmx->soc->groups[group_index];
-+}
-+
-+static struct tegra_pingroup_config *tegra_pinctrl_get_group_config(struct pinctrl_dev *pctldev,
-+								    unsigned int offset,
-+								    int group_index)
-+{
-+	struct tegra_pmx *pmx = pinctrl_dev_get_drvdata(pctldev);
-+
-+	if (group_index < 0)
-+		return NULL;
-+
-+	return &pmx->pingroup_configs[group_index];
- }
- 
- static int tegra_pinctrl_gpio_request_enable(struct pinctrl_dev *pctldev,
-@@ -306,12 +329,15 @@ static int tegra_pinctrl_gpio_request_enable(struct pinctrl_dev *pctldev,
+-	SEQ_printf(m, " #%d: <%pK>, %ps", idx, taddr, timer->function);
++	SEQ_printf(m, " #%d: <%p>, %ps", idx, taddr, timer->function);
+ 	SEQ_printf(m, ", S:%02x", timer->state);
+ 	SEQ_printf(m, "\n");
+ 	SEQ_printf(m, " # expires at %Lu-%Lu nsecs [in %Ld to %Ld nsecs]\n",
+@@ -98,7 +98,7 @@ print_active_timers(struct seq_file *m, struct hrtimer_clock_base *base,
+ static void
+ print_base(struct seq_file *m, struct hrtimer_clock_base *base, u64 now)
  {
- 	struct tegra_pmx *pmx = pinctrl_dev_get_drvdata(pctldev);
- 	const struct tegra_pingroup *group;
-+	struct tegra_pingroup_config *config;
-+	int group_index;
- 	u32 value;
+-	SEQ_printf(m, "  .base:       %pK\n", base);
++	SEQ_printf(m, "  .base:       %p\n", base);
+ 	SEQ_printf(m, "  .index:      %d\n", base->index);
  
- 	if (!pmx->soc->sfsel_in_mux)
- 		return 0;
- 
--	group = tegra_pinctrl_get_group(pctldev, offset);
-+	group_index = tegra_pinctrl_get_group_index(pctldev, offset);
-+	group = tegra_pinctrl_get_group(pctldev, offset, group_index);
- 
- 	if (!group)
- 		return -EINVAL;
-@@ -319,7 +345,11 @@ static int tegra_pinctrl_gpio_request_enable(struct pinctrl_dev *pctldev,
- 	if (group->mux_reg < 0 || group->sfsel_bit < 0)
- 		return -EINVAL;
- 
-+	config = tegra_pinctrl_get_group_config(pctldev, offset, group_index);
-+	if (!config)
-+		return -EINVAL;
- 	value = pmx_readl(pmx, group->mux_bank, group->mux_reg);
-+	config->is_sfsel = (value & BIT(group->sfsel_bit)) != 0;
- 	value &= ~BIT(group->sfsel_bit);
- 	pmx_writel(pmx, value, group->mux_bank, group->mux_reg);
- 
-@@ -332,12 +362,15 @@ static void tegra_pinctrl_gpio_disable_free(struct pinctrl_dev *pctldev,
- {
- 	struct tegra_pmx *pmx = pinctrl_dev_get_drvdata(pctldev);
- 	const struct tegra_pingroup *group;
-+	struct tegra_pingroup_config *config;
-+	int group_index;
- 	u32 value;
- 
- 	if (!pmx->soc->sfsel_in_mux)
- 		return;
- 
--	group = tegra_pinctrl_get_group(pctldev, offset);
-+	group_index = tegra_pinctrl_get_group_index(pctldev, offset);
-+	group = tegra_pinctrl_get_group(pctldev, offset, group_index);
- 
- 	if (!group)
- 		return;
-@@ -345,8 +378,12 @@ static void tegra_pinctrl_gpio_disable_free(struct pinctrl_dev *pctldev,
- 	if (group->mux_reg < 0 || group->sfsel_bit < 0)
- 		return;
- 
-+	config = tegra_pinctrl_get_group_config(pctldev, offset, group_index);
-+	if (!config)
-+		return;
- 	value = pmx_readl(pmx, group->mux_bank, group->mux_reg);
--	value |= BIT(group->sfsel_bit);
-+	if (config->is_sfsel)
-+		value |= BIT(group->sfsel_bit);
- 	pmx_writel(pmx, value, group->mux_bank, group->mux_reg);
- }
- 
-@@ -791,6 +828,12 @@ int tegra_pinctrl_probe(struct platform_device *pdev,
- 	pmx->dev = &pdev->dev;
- 	pmx->soc = soc_data;
- 
-+	pmx->pingroup_configs = devm_kcalloc(&pdev->dev,
-+					     pmx->soc->ngroups, sizeof(*pmx->pingroup_configs),
-+					     GFP_KERNEL);
-+	if (!pmx->pingroup_configs)
-+		return -ENOMEM;
-+
- 	/*
- 	 * Each mux group will appear in 4 functions' list of groups.
- 	 * This over-allocates slightly, since not all groups are mux groups.
-diff --git a/drivers/pinctrl/tegra/pinctrl-tegra.h b/drivers/pinctrl/tegra/pinctrl-tegra.h
-index b3289bdf727d8..b97136685f7a8 100644
---- a/drivers/pinctrl/tegra/pinctrl-tegra.h
-+++ b/drivers/pinctrl/tegra/pinctrl-tegra.h
-@@ -8,6 +8,10 @@
- #ifndef __PINMUX_TEGRA_H__
- #define __PINMUX_TEGRA_H__
- 
-+struct tegra_pingroup_config {
-+	bool is_sfsel;
-+};
-+
- struct tegra_pmx {
- 	struct device *dev;
- 	struct pinctrl_dev *pctl;
-@@ -21,6 +25,8 @@ struct tegra_pmx {
- 	int nbanks;
- 	void __iomem **regs;
- 	u32 *backup_regs;
-+	/* Array of size soc->ngroups */
-+	struct tegra_pingroup_config *pingroup_configs;
- };
- 
- enum tegra_pinconf_param {
+ 	SEQ_printf(m, "  .resolution: %u nsecs\n", hrtimer_resolution);
 -- 
 2.39.5
 
