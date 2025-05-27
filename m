@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBC128033D;
-	Tue, 27 May 2025 17:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BEF280CD4;
+	Tue, 27 May 2025 17:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368610; cv=none; b=fhlD3rglR7qeEtMUZrYk3Fu97cr5ir+cGVVN/ldOjSsjBwe7ZWyD2EKKv4tzl/q/CBhe6Jb6e5p6Ekqq1tO1wMrexy6AV/inW3oCcBEiIY9NlqPruoUh9ptWKb5aPF8gUSp7x6+lgG7onsjPt3TcVou0EK2jIeRN/F3nGpj5l4c=
+	t=1748368614; cv=none; b=L48ffWfmgZOi1Sq05l5pBXhroh+8oiiI9N/tsX/sgtfdEXxTRaePwaqIIUR/CUqRwKEyxeo3RxvDPPZFdFZ/KCqdOFAU8bWVD4efB6/YWPU5LkkOkFvK/uNm3TkyLmB3zGDRlZkuIEerzK0u/WjYbYwD/jPB4FjejPljLQ7LZZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368610; c=relaxed/simple;
-	bh=rO2Dn1eR8SVsU4ZHoXlQ8bMfrbL7JguQgc+iU+x+eJo=;
+	s=arc-20240116; t=1748368614; c=relaxed/simple;
+	bh=KkY+KPQtTO7qxH/AZVinuUXILpLdrd8epC4bCSrzDSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZI7EzZ8tVybRzFhTXv8ayy9G40YIdGtQAtZcm+LkRzj6zZCD/eSvBa+tW5yt5rsl136Vxw7BJ39rviZyyvRTS2KVM1LVwSdQKgzqFVYiXFUZQZi2t7vpTeDtDGPwwPHkRYYHTXwaOgXbhzIGw5vnd8sZP1gQ+pQXknBQcwFu0f0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZHZgZIK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ly1FLvNumGTcXjnH2+w+1TZvUSLbnMv3sIJzCN6xyVMehvb+boEp/bRQjsuADpAgModdh0+to/70bcGHJh5y7R5PCZ5ho5k2dtxZ2/5mE/DN5dYeZ2DdxLT4jx0NrxZWy4Tr5SkC2xDMU5qPX13QQtLKtKSici9sAeX5pkxS0lU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n63rgswy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZHZgZIK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC74C4CEE9;
-	Tue, 27 May 2025 17:56:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n63rgswy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85BB2C4CEE9;
+	Tue, 27 May 2025 17:56:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368610;
-	bh=rO2Dn1eR8SVsU4ZHoXlQ8bMfrbL7JguQgc+iU+x+eJo=;
+	s=korg; t=1748368614;
+	bh=KkY+KPQtTO7qxH/AZVinuUXILpLdrd8epC4bCSrzDSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZHZgZIKf6KVF2J/x8O2Zjce+AS1bGISI9qu08gddv9mhaLS7VQ7wx0RaaHxcjBnA
-	 EIWMbnZS2gBYi/SwQrR7prp8KJ7mr9xsykll5vMDJHN8oxZbKYUmRKs2DVJQy6jNeC
-	 HK8s8XyKy1bizeWF02xmgVbwZhM+eh2uTYm9KZFI=
+	b=n63rgswyWNo66c0ldPSYSQFCD5yg/fhIfYnZSRPrMzd8N6VE8kaq2qjSw+nspLsw4
+	 cLUu8yqHlq6gTETHZaZrbZHhdXQRhoI4uEBFKRB8+/L/JtKw186Nad+LrolDe4pdau
+	 wJ6J7nZF4N2c5hdwrFY3Mq+eY5J6AafCBtT4TQ3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	"Erhard F." <erhard_f@mailbox.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.14 762/783] mm: vmalloc: only zero-init on vrealloc shrink
-Date: Tue, 27 May 2025 18:29:19 +0200
-Message-ID: <20250527162544.154284633@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Suman Ghosh <sumang@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.14 763/783] octeontx2: hide unused label
+Date: Tue, 27 May 2025 18:29:20 +0200
+Message-ID: <20250527162544.201104248@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -56,57 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 70d1eb031a68cbde4eed8099674be21778441c94 upstream.
+commit ca57d1c56f4015d83fe7840b41d74783ee900b28 upstream.
 
-The common case is to grow reallocations, and since init_on_alloc will
-have already zeroed the whole allocation, we only need to zero when
-shrinking the allocation.
+A previous patch introduces a build-time warning when CONFIG_DCB
+is disabled:
 
-Link: https://lkml.kernel.org/r/20250515214217.619685-2-kees@kernel.org
-Fixes: a0309faf1cb0 ("mm: vmalloc: support more granular vrealloc() sizing")
-Signed-off-by: Kees Cook <kees@kernel.org>
-Tested-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Eduard Zingerman <eddyz87@gmail.com>
-Cc: "Erhard F." <erhard_f@mailbox.org>
-Cc: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c: In function 'otx2_probe':
+drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c:3217:1: error: label 'err_free_zc_bmap' defined but not used [-Werror=unused-label]
+drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c: In function 'otx2vf_probe':
+drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c:740:1: error: label 'err_free_zc_bmap' defined but not used [-Werror=unused-label]
+
+Add the same #ifdef check around it.
+
+Fixes: efabce290151 ("octeontx2-pf: AF_XDP zero copy receive support")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Suman Ghosh <sumang@marvell.com>
+Link: https://patch.msgid.link/20250219162239.1376865-1-arnd@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmalloc.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c |    2 ++
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c |    2 ++
+ 2 files changed, 4 insertions(+)
 
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -4097,8 +4097,8 @@ void *vrealloc_noprof(const void *p, siz
- 	 * would be a good heuristic for when to shrink the vm_area?
- 	 */
- 	if (size <= old_size) {
--		/* Zero out "freed" memory. */
--		if (want_init_on_free())
-+		/* Zero out "freed" memory, potentially for future realloc. */
-+		if (want_init_on_free() || want_init_on_alloc(flags))
- 			memset((void *)p + size, 0, old_size - size);
- 		vm->requested_size = size;
- 		kasan_poison_vmalloc(p + size, old_size - size);
-@@ -4111,9 +4111,11 @@ void *vrealloc_noprof(const void *p, siz
- 	if (size <= alloced_size) {
- 		kasan_unpoison_vmalloc(p + old_size, size - old_size,
- 				       KASAN_VMALLOC_PROT_NORMAL);
--		/* Zero out "alloced" memory. */
--		if (want_init_on_alloc(flags))
--			memset((void *)p + old_size, 0, size - old_size);
-+		/*
-+		 * No need to zero memory here, as unused memory will have
-+		 * already been zeroed at initial allocation time or during
-+		 * realloc shrink time.
-+		 */
- 		vm->requested_size = size;
- 		return (void *)p;
- 	}
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -3214,8 +3214,10 @@ static int otx2_probe(struct pci_dev *pd
+ 
+ 	return 0;
+ 
++#ifdef CONFIG_DCB
+ err_free_zc_bmap:
+ 	bitmap_free(pf->af_xdp_zc_qidx);
++#endif
+ err_sriov_cleannup:
+ 	otx2_sriov_vfcfg_cleanup(pf);
+ err_pf_sriov_init:
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
+@@ -740,8 +740,10 @@ static int otx2vf_probe(struct pci_dev *
+ 
+ 	return 0;
+ 
++#ifdef CONFIG_DCB
+ err_free_zc_bmap:
+ 	bitmap_free(vf->af_xdp_zc_qidx);
++#endif
+ err_unreg_devlink:
+ 	otx2_unregister_dl(vf);
+ err_shutdown_tc:
 
 
