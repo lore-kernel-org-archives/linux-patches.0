@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E88327933A;
-	Tue, 27 May 2025 17:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D329E27933A;
+	Tue, 27 May 2025 17:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366395; cv=none; b=eBXmwqxKuzHHeKP3IlyKJO8A0WKKPDj2iHS8AHtLOU+l6+mUSoKMVteCO2M64dPDFjJK/SaI9hjYAJJE49YYWsbf/usvKYMwnrOn0dS8huFgG1mhs/KabNMHqcbQGDa7C3xpUr/jBkgZui832ynvkeK/6CQ3IN2dcPLPfGhRTto=
+	t=1748366397; cv=none; b=MeRFkVLeV7KLSllqtPJUsYNFmvlgk6mv4etUWy7UDlf7KIa5piRxwsDBC01CCvZX3rVgt9KjotoD0k1s5GBxuK/gbQRlxWNvyESOe9L7cvhXe0GlyQpIckcUg0LAJHjJ2rtu2fUy2y7b9yPjSLsCkFXJ/19SwIwXHAFcIu7qhx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366395; c=relaxed/simple;
-	bh=GMwvu03qraqXTsDW4xRB4r7g8Bjd9scaTP9ysM2+tV4=;
+	s=arc-20240116; t=1748366397; c=relaxed/simple;
+	bh=m2jaykpo31im0AZyYSdYU9lIRsG9ZX5Nlh/Z+RAKqmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ebkhNo6CnNsUrgIZ7Ny5sntX16RIZHKU/NXn4Vd+FQXa+61j1EUaXQIOLKMaG7KnIISO9c13y8sSvKqKxNfhqS9sI/HMHzwT4p3p0xsymJ4+x3KVIJLBDfdgSZhe8w14Rt8pDd/UcWfH8VaTwWX4WbFnkRXe+UikYOQHyo7COto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSop1Pct; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SitR0UK3RHVl4rp/f/sRj472zGc3tiZGZfQDPArVWHLvp0BjwR1YNYTxMQs8uXm4WZErxzNXhZuSMDWhxAW10wrZnhTJHDaIYLp6ILVXmEBE//rbACc3vHgiht4RTHYIuEWborSDJhLOTD+Df0rJW5vHu6i+CSDvRF1KuMFX7uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=htWCSZs/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSop1Pct"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218A7C4CEEB;
-	Tue, 27 May 2025 17:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="htWCSZs/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E26C4CEE9;
+	Tue, 27 May 2025 17:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366394;
-	bh=GMwvu03qraqXTsDW4xRB4r7g8Bjd9scaTP9ysM2+tV4=;
+	s=korg; t=1748366397;
+	bh=m2jaykpo31im0AZyYSdYU9lIRsG9ZX5Nlh/Z+RAKqmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jSop1PctqYKEs07CZ5u3vjiLuaEiQHJkSAU9sCPPULtYgXNapCVyrKEQLB7h0TLJ2
-	 qwO1ScMm65KF1+cJm8BXhp+Qo2JIBM3ijqWjoXE+g1Dbu7KPVxG/GETRc9v04bQ/Tj
-	 t6aH3SguHOQ0Pv3Hb/e3ud7I/X+F21ccqSKHIsBE=
+	b=htWCSZs/WRHUB5PSy6+Vw3ZY8cKHSlR/ch47LexSnKI1kiuWQcEZbkJQOgHpvc02s
+	 Jkgnm6GcvvboxWHhKuBTABDpMkmFW/t1npR8w7l76vwjyIxHCWGnwKi3/dPVj1sIBs
+	 qvUU/wiVbjzyYBWi+DUpOlCdh46uB35VrSOyhLvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	gao xu <gaoxu2@honor.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 023/783] btrfs: tree-checker: adjust error code for header level check
-Date: Tue, 27 May 2025 18:17:00 +0200
-Message-ID: <20250527162514.043102939@linuxfoundation.org>
+Subject: [PATCH 6.14 024/783] cgroup: Fix compilation issue due to cgroup_mutex not being exported
+Date: Tue, 27 May 2025 18:17:01 +0200
+Message-ID: <20250527162514.083195973@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -45,42 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: gaoxu <gaoxu2@honor.com>
 
-[ Upstream commit f1ab0171e9be96fd530329fa54761cff5e09ea95 ]
+[ Upstream commit 87c259a7a359e73e6c52c68fcbec79988999b4e6 ]
 
-The whole tree checker returns EUCLEAN, except the one check in
-btrfs_verify_level_key(). This was inherited from the function that was
-moved from disk-io.c in 2cac5af16537 ("btrfs: move
-btrfs_verify_level_key into tree-checker.c") but this should be unified
-with the rest.
+When adding folio_memcg function call in the zram module for
+Android16-6.12, the following error occurs during compilation:
+ERROR: modpost: "cgroup_mutex" [../soc-repo/zram.ko] undefined!
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+This error is caused by the indirect call to lockdep_is_held(&cgroup_mutex)
+within folio_memcg. The export setting for cgroup_mutex is controlled by
+the CONFIG_PROVE_RCU macro. If CONFIG_LOCKDEP is enabled while
+CONFIG_PROVE_RCU is not, this compilation error will occur.
+
+To resolve this issue, add a parallel macro CONFIG_LOCKDEP control to
+ensure cgroup_mutex is properly exported when needed.
+
+Signed-off-by: gao xu <gaoxu2@honor.com>
+Acked-by: Michal Koutný <mkoutny@suse.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-checker.c | 2 +-
+ kernel/cgroup/cgroup.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
-index 43979891f7c89..2b66a6130269a 100644
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -2235,7 +2235,7 @@ int btrfs_verify_level_key(struct extent_buffer *eb,
- 		btrfs_err(fs_info,
- "tree level mismatch detected, bytenr=%llu level expected=%u has=%u",
- 			  eb->start, check->level, found_level);
--		return -EIO;
-+		return -EUCLEAN;
- 	}
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index 68d58753c75c3..660d27a0cb3d4 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -90,7 +90,7 @@
+ DEFINE_MUTEX(cgroup_mutex);
+ DEFINE_SPINLOCK(css_set_lock);
  
- 	if (!check->has_first_key)
+-#ifdef CONFIG_PROVE_RCU
++#if (defined CONFIG_PROVE_RCU || defined CONFIG_LOCKDEP)
+ EXPORT_SYMBOL_GPL(cgroup_mutex);
+ EXPORT_SYMBOL_GPL(css_set_lock);
+ #endif
 -- 
 2.39.5
 
