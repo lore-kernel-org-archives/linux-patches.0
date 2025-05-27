@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D6F18A6A5;
-	Tue, 27 May 2025 17:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DCD4154C15;
+	Tue, 27 May 2025 17:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365325; cv=none; b=KRGzJLNKmTZyuMF0OUN77vlfEb9OgAMYJEu2gYCbzmljFE9K5jqEszYOPVaI2EVIu/7vOQa1nCRCTstuAZrYJk10A15I0HE4g4FDU8Pm3F0RyMLHYx/+KjPRSXiU+CbxQgRrxGcIi5NFopREdClKE+nkmQkPuh1lZP+x58hP4ko=
+	t=1748365328; cv=none; b=fYkW6NYDYDqRSHRdGqTIxzUcyiwuz7H2WA5H8Ic/WGGTPc5NlwisXqrk/BfT8u6hDLXVJFkJkrk+LeIlCGcMiX65+Lrl/GRKvIFYgcSeopUILq4+dMzm4x+Oc7/WieZ0USo1XR0fm14McQXNyjGo/D3T3kmNKxo0fu9Uk6IJG+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365325; c=relaxed/simple;
-	bh=tHeL3jeX5gYyBGVsjjCp7adlwtRSuDMks9KOzXbgUew=;
+	s=arc-20240116; t=1748365328; c=relaxed/simple;
+	bh=A6ag0CbVb0lWQHN6X0l8JewoOy7UJOHtiY6lvyAlcow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QPmGwibQ9l3CfOW0qvOsOYpYBPzTnBc3Uomtb4gJ+RrdMjI4jEjX5dtXUMN9CzBCxHndiFFB55K4Z7S/UhnnWbEvHCHRoh/9sdMvSbXvczLvE9K+Wcg5IpXkHvnWPT6bYXskqIEkAnIFDLThB/J3RCmdWOystNb+AZYLYquwQXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fu6x6NFh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cx0yNqd8aA+az1DDFTRZcaQs2tsNz45/De05ccYOtyXmdpcmyXQK4gPQS2FkB+27PIg/JyKuNdztUPIHFSA4Eu1oqezOivZGyBly2AC6FloR3Q6shRG5BuHxgO/bLaqTJJG3KmlZvtUSvXe171L6pK+CuKX3fxFk5sOyuSE4/Zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+VvOEKk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fu6x6NFh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD734C4CEE9;
-	Tue, 27 May 2025 17:02:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+VvOEKk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B748EC4CEE9;
+	Tue, 27 May 2025 17:02:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365325;
-	bh=tHeL3jeX5gYyBGVsjjCp7adlwtRSuDMks9KOzXbgUew=;
+	s=korg; t=1748365328;
+	bh=A6ag0CbVb0lWQHN6X0l8JewoOy7UJOHtiY6lvyAlcow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fu6x6NFh8g3fgMPZpAPH/IDaXPfnu8hZTGtJXkOqI9EBvl9CFe1yydSAk2uA4Do88
-	 Y669tkqivY9msObwzSuJ/y9MgXHTu+Zd5NTJjchU0gVAyGpW5XipfeXqQZJgPkjidN
-	 J/4w6bzp+GJyr8gPmsN6lTE9I0kWTWfP8BMNdj5k=
+	b=V+VvOEKkgyxKOpSSzUZ6WMvDu8HOA2v9qWAKqY0KpfVYeyZYYk+mq6ydoU4yYlrAh
+	 d+Vuu9PEp8vufOFgHQG0sFYQj5u8Z93qURWfz9ZEdJWz9+rDNZgIvrZ7p4dgq0MoVm
+	 4omm38vXpkBDFrktZIkPik5rYaithmNgtRWDJFYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@kernel.org>,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
-	Richard Genoud <richard.genoud@bootlin.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 339/626] serial: mctrl_gpio: split disable_ms into sync and no_sync APIs
-Date: Tue, 27 May 2025 18:23:52 +0200
-Message-ID: <20250527162458.791236674@linuxfoundation.org>
+Subject: [PATCH 6.12 313/626] genirq/msi: Store the IOMMU IOVA directly in msi_desc instead of iommu_cookie
+Date: Tue, 27 May 2025 18:23:26 +0200
+Message-ID: <20250527162457.749682268@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -46,249 +46,178 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexis Lothoré <alexis.lothore@bootlin.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 1bd2aad57da95f7f2d2bb52f7ad15c0f4993a685 ]
+[ Upstream commit 1f7df3a691740a7736bbc99dc4ed536120eb4746 ]
 
-The following splat has been observed on a SAMA5D27 platform using
-atmel_serial:
+The IOMMU translation for MSI message addresses has been a 2-step process,
+separated in time:
 
-BUG: sleeping function called from invalid context at kernel/irq/manage.c:738
-in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 27, name: kworker/u5:0
-preempt_count: 1, expected: 0
-INFO: lockdep is turned off.
-irq event stamp: 0
-hardirqs last  enabled at (0): [<00000000>] 0x0
-hardirqs last disabled at (0): [<c01588f0>] copy_process+0x1c4c/0x7bec
-softirqs last  enabled at (0): [<c0158944>] copy_process+0x1ca0/0x7bec
-softirqs last disabled at (0): [<00000000>] 0x0
-CPU: 0 UID: 0 PID: 27 Comm: kworker/u5:0 Not tainted 6.13.0-rc7+ #74
-Hardware name: Atmel SAMA5
-Workqueue: hci0 hci_power_on [bluetooth]
-Call trace:
-  unwind_backtrace from show_stack+0x18/0x1c
-  show_stack from dump_stack_lvl+0x44/0x70
-  dump_stack_lvl from __might_resched+0x38c/0x598
-  __might_resched from disable_irq+0x1c/0x48
-  disable_irq from mctrl_gpio_disable_ms+0x74/0xc0
-  mctrl_gpio_disable_ms from atmel_disable_ms.part.0+0x80/0x1f4
-  atmel_disable_ms.part.0 from atmel_set_termios+0x764/0x11e8
-  atmel_set_termios from uart_change_line_settings+0x15c/0x994
-  uart_change_line_settings from uart_set_termios+0x2b0/0x668
-  uart_set_termios from tty_set_termios+0x600/0x8ec
-  tty_set_termios from ttyport_set_flow_control+0x188/0x1e0
-  ttyport_set_flow_control from wilc_setup+0xd0/0x524 [hci_wilc]
-  wilc_setup [hci_wilc] from hci_dev_open_sync+0x330/0x203c [bluetooth]
-  hci_dev_open_sync [bluetooth] from hci_dev_do_open+0x40/0xb0 [bluetooth]
-  hci_dev_do_open [bluetooth] from hci_power_on+0x12c/0x664 [bluetooth]
-  hci_power_on [bluetooth] from process_one_work+0x998/0x1a38
-  process_one_work from worker_thread+0x6e0/0xfb4
-  worker_thread from kthread+0x3d4/0x484
-  kthread from ret_from_fork+0x14/0x28
+ 1) iommu_dma_prepare_msi(): A cookie pointer containing the IOVA address
+    is stored in the MSI descriptor when an MSI interrupt is allocated.
 
-This warning is emitted when trying to toggle, at the highest level,
-some flow control (with serdev_device_set_flow_control) in a device
-driver. At the lowest level, the atmel_serial driver is using
-serial_mctrl_gpio lib to enable/disable the corresponding IRQs
-accordingly.  The warning emitted by CONFIG_DEBUG_ATOMIC_SLEEP is due to
-disable_irq (called in mctrl_gpio_disable_ms) being possibly called in
-some atomic context (some tty drivers perform modem lines configuration
-in regions protected by port lock).
+ 2) iommu_dma_compose_msi_msg(): this cookie pointer is used to compute a
+    translated message address.
 
-Split mctrl_gpio_disable_ms into two differents APIs, a non-blocking one
-and a blocking one. Replace mctrl_gpio_disable_ms calls with the
-relevant version depending on whether the call is protected by some port
-lock.
+This has an inherent lifetime problem for the pointer stored in the cookie
+that must remain valid between the two steps. However, there is no locking
+at the irq layer that helps protect the lifetime. Today, this works under
+the assumption that the iommu domain is not changed while MSI interrupts
+being programmed. This is true for normal DMA API users within the kernel,
+as the iommu domain is attached before the driver is probed and cannot be
+changed while a driver is attached.
 
-Suggested-by: Jiri Slaby <jirislaby@kernel.org>
-Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
-Acked-by: Richard Genoud <richard.genoud@bootlin.com>
-Link: https://lore.kernel.org/r/20250217-atomic_sleep_mctrl_serial_gpio-v3-1-59324b313eef@bootlin.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Classic VFIO type1 also prevented changing the iommu domain while VFIO was
+running as it does not support changing the "container" after starting up.
+
+However, iommufd has improved this so that the iommu domain can be changed
+during VFIO operation. This potentially allows userspace to directly race
+VFIO_DEVICE_ATTACH_IOMMUFD_PT (which calls iommu_attach_group()) and
+VFIO_DEVICE_SET_IRQS (which calls into iommu_dma_compose_msi_msg()).
+
+This potentially causes both the cookie pointer and the unlocked call to
+iommu_get_domain_for_dev() on the MSI translation path to become UAFs.
+
+Fix the MSI cookie UAF by removing the cookie pointer. The translated IOVA
+address is already known during iommu_dma_prepare_msi() and cannot change.
+Thus, it can simply be stored as an integer in the MSI descriptor.
+
+The other UAF related to iommu_get_domain_for_dev() will be addressed in
+patch "iommu: Make iommu_dma_prepare_msi() into a generic operation" by
+using the IOMMU group mutex.
+
+Link: https://patch.msgid.link/r/a4f2cd76b9dc1833ee6c1cf325cba57def22231c.1740014950.git.nicolinc@nvidia.com
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/driver-api/serial/driver.rst |  2 +-
- drivers/tty/serial/8250/8250_port.c        |  2 +-
- drivers/tty/serial/atmel_serial.c          |  2 +-
- drivers/tty/serial/imx.c                   |  2 +-
- drivers/tty/serial/serial_mctrl_gpio.c     | 34 +++++++++++++++++-----
- drivers/tty/serial/serial_mctrl_gpio.h     | 17 +++++++++--
- drivers/tty/serial/sh-sci.c                |  2 +-
- drivers/tty/serial/stm32-usart.c           |  2 +-
- 8 files changed, 47 insertions(+), 16 deletions(-)
+ drivers/iommu/dma-iommu.c | 28 +++++++++++++---------------
+ include/linux/msi.h       | 33 ++++++++++++---------------------
+ 2 files changed, 25 insertions(+), 36 deletions(-)
 
-diff --git a/Documentation/driver-api/serial/driver.rst b/Documentation/driver-api/serial/driver.rst
-index 84b43061c11be..60434f2b02863 100644
---- a/Documentation/driver-api/serial/driver.rst
-+++ b/Documentation/driver-api/serial/driver.rst
-@@ -103,4 +103,4 @@ Some helpers are provided in order to set/get modem control lines via GPIO.
- .. kernel-doc:: drivers/tty/serial/serial_mctrl_gpio.c
-    :identifiers: mctrl_gpio_init mctrl_gpio_free mctrl_gpio_to_gpiod
-            mctrl_gpio_set mctrl_gpio_get mctrl_gpio_enable_ms
--           mctrl_gpio_disable_ms
-+           mctrl_gpio_disable_ms_sync mctrl_gpio_disable_ms_no_sync
-diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index c1376727642a7..0519679929652 100644
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -1657,7 +1657,7 @@ static void serial8250_disable_ms(struct uart_port *port)
- 	if (up->bugs & UART_BUG_NOMSR)
- 		return;
+diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+index 2a9fa0c8cc00f..0f0caf59023c7 100644
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -1815,7 +1815,7 @@ int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr)
+ 	static DEFINE_MUTEX(msi_prepare_lock); /* see below */
  
--	mctrl_gpio_disable_ms(up->gpios);
-+	mctrl_gpio_disable_ms_no_sync(up->gpios);
- 
- 	up->ier &= ~UART_IER_MSI;
- 	serial_port_out(port, UART_IER, up->ier);
-diff --git a/drivers/tty/serial/atmel_serial.c b/drivers/tty/serial/atmel_serial.c
-index 09b246c9e389e..8bd39586a49f7 100644
---- a/drivers/tty/serial/atmel_serial.c
-+++ b/drivers/tty/serial/atmel_serial.c
-@@ -700,7 +700,7 @@ static void atmel_disable_ms(struct uart_port *port)
- 
- 	atmel_port->ms_irq_enabled = false;
- 
--	mctrl_gpio_disable_ms(atmel_port->gpios);
-+	mctrl_gpio_disable_ms_no_sync(atmel_port->gpios);
- 
- 	if (!mctrl_gpio_to_gpiod(atmel_port->gpios, UART_GPIO_CTS))
- 		idr |= ATMEL_US_CTSIC;
-diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
-index 90974d338f3c0..8e3b15534bc72 100644
---- a/drivers/tty/serial/imx.c
-+++ b/drivers/tty/serial/imx.c
-@@ -1596,7 +1596,7 @@ static void imx_uart_shutdown(struct uart_port *port)
- 		imx_uart_dma_exit(sport);
+ 	if (!domain || !domain->iova_cookie) {
+-		desc->iommu_cookie = NULL;
++		msi_desc_set_iommu_msi_iova(desc, 0, 0);
+ 		return 0;
  	}
  
--	mctrl_gpio_disable_ms(sport->gpios);
-+	mctrl_gpio_disable_ms_sync(sport->gpios);
- 
- 	uart_port_lock_irqsave(&sport->port, &flags);
- 	ucr2 = imx_uart_readl(sport, UCR2);
-diff --git a/drivers/tty/serial/serial_mctrl_gpio.c b/drivers/tty/serial/serial_mctrl_gpio.c
-index 8855688a5b6c0..ca55bcc0b6111 100644
---- a/drivers/tty/serial/serial_mctrl_gpio.c
-+++ b/drivers/tty/serial/serial_mctrl_gpio.c
-@@ -322,11 +322,7 @@ void mctrl_gpio_enable_ms(struct mctrl_gpios *gpios)
- }
- EXPORT_SYMBOL_GPL(mctrl_gpio_enable_ms);
- 
--/**
-- * mctrl_gpio_disable_ms - disable irqs and handling of changes to the ms lines
-- * @gpios: gpios to disable
-- */
--void mctrl_gpio_disable_ms(struct mctrl_gpios *gpios)
-+static void mctrl_gpio_disable_ms(struct mctrl_gpios *gpios, bool sync)
- {
- 	enum mctrl_gpio_idx i;
- 
-@@ -342,10 +338,34 @@ void mctrl_gpio_disable_ms(struct mctrl_gpios *gpios)
- 		if (!gpios->irq[i])
- 			continue;
- 
--		disable_irq(gpios->irq[i]);
-+		if (sync)
-+			disable_irq(gpios->irq[i]);
-+		else
-+			disable_irq_nosync(gpios->irq[i]);
- 	}
- }
--EXPORT_SYMBOL_GPL(mctrl_gpio_disable_ms);
+@@ -1827,11 +1827,12 @@ int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr)
+ 	mutex_lock(&msi_prepare_lock);
+ 	msi_page = iommu_dma_get_msi_page(dev, msi_addr, domain);
+ 	mutex_unlock(&msi_prepare_lock);
+-
+-	msi_desc_set_iommu_cookie(desc, msi_page);
+-
+ 	if (!msi_page)
+ 		return -ENOMEM;
 +
-+/**
-+ * mctrl_gpio_disable_ms_sync - disable irqs and handling of changes to the ms
-+ * lines, and wait for any pending IRQ to be processed
-+ * @gpios: gpios to disable
-+ */
-+void mctrl_gpio_disable_ms_sync(struct mctrl_gpios *gpios)
-+{
-+	mctrl_gpio_disable_ms(gpios, true);
-+}
-+EXPORT_SYMBOL_GPL(mctrl_gpio_disable_ms_sync);
-+
-+/**
-+ * mctrl_gpio_disable_ms_no_sync - disable irqs and handling of changes to the
-+ * ms lines, and return immediately
-+ * @gpios: gpios to disable
-+ */
-+void mctrl_gpio_disable_ms_no_sync(struct mctrl_gpios *gpios)
-+{
-+	mctrl_gpio_disable_ms(gpios, false);
-+}
-+EXPORT_SYMBOL_GPL(mctrl_gpio_disable_ms_no_sync);
++	msi_desc_set_iommu_msi_iova(
++		desc, msi_page->iova,
++		ilog2(cookie_msi_granule(domain->iova_cookie)));
+ 	return 0;
+ }
  
- void mctrl_gpio_enable_irq_wake(struct mctrl_gpios *gpios)
- {
-diff --git a/drivers/tty/serial/serial_mctrl_gpio.h b/drivers/tty/serial/serial_mctrl_gpio.h
-index fc76910fb105a..79e97838ebe56 100644
---- a/drivers/tty/serial/serial_mctrl_gpio.h
-+++ b/drivers/tty/serial/serial_mctrl_gpio.h
-@@ -87,9 +87,16 @@ void mctrl_gpio_free(struct device *dev, struct mctrl_gpios *gpios);
- void mctrl_gpio_enable_ms(struct mctrl_gpios *gpios);
- 
- /*
-- * Disable gpio interrupts to report status line changes.
-+ * Disable gpio interrupts to report status line changes, and block until
-+ * any corresponding IRQ is processed
+@@ -1842,18 +1843,15 @@ int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr)
   */
--void mctrl_gpio_disable_ms(struct mctrl_gpios *gpios);
-+void mctrl_gpio_disable_ms_sync(struct mctrl_gpios *gpios);
-+
-+/*
-+ * Disable gpio interrupts to report status line changes, and return
-+ * immediately
-+ */
-+void mctrl_gpio_disable_ms_no_sync(struct mctrl_gpios *gpios);
- 
- /*
-  * Enable gpio wakeup interrupts to enable wake up source.
-@@ -148,7 +155,11 @@ static inline void mctrl_gpio_enable_ms(struct mctrl_gpios *gpios)
+ void iommu_dma_compose_msi_msg(struct msi_desc *desc, struct msi_msg *msg)
  {
+-	struct device *dev = msi_desc_to_dev(desc);
+-	const struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
+-	const struct iommu_dma_msi_page *msi_page;
++#ifdef CONFIG_IRQ_MSI_IOMMU
++	if (desc->iommu_msi_shift) {
++		u64 msi_iova = desc->iommu_msi_iova << desc->iommu_msi_shift;
+ 
+-	msi_page = msi_desc_get_iommu_cookie(desc);
+-
+-	if (!domain || !domain->iova_cookie || WARN_ON(!msi_page))
+-		return;
+-
+-	msg->address_hi = upper_32_bits(msi_page->iova);
+-	msg->address_lo &= cookie_msi_granule(domain->iova_cookie) - 1;
+-	msg->address_lo += lower_32_bits(msi_page->iova);
++		msg->address_hi = upper_32_bits(msi_iova);
++		msg->address_lo = lower_32_bits(msi_iova) |
++				  (msg->address_lo & ((1 << desc->iommu_msi_shift) - 1));
++	}
++#endif
  }
  
--static inline void mctrl_gpio_disable_ms(struct mctrl_gpios *gpios)
-+static inline void mctrl_gpio_disable_ms_sync(struct mctrl_gpios *gpios)
-+{
+ static int iommu_dma_init(void)
+diff --git a/include/linux/msi.h b/include/linux/msi.h
+index 59a421fc42bf0..63d0e51f7a801 100644
+--- a/include/linux/msi.h
++++ b/include/linux/msi.h
+@@ -165,6 +165,10 @@ struct msi_desc_data {
+  * @dev:	Pointer to the device which uses this descriptor
+  * @msg:	The last set MSI message cached for reuse
+  * @affinity:	Optional pointer to a cpu affinity mask for this descriptor
++ * @iommu_msi_iova: Optional shifted IOVA from the IOMMU to override the msi_addr.
++ *                  Only used if iommu_msi_shift != 0
++ * @iommu_msi_shift: Indicates how many bits of the original address should be
++ *                   preserved when using iommu_msi_iova.
+  * @sysfs_attr:	Pointer to sysfs device attribute
+  *
+  * @write_msi_msg:	Callback that may be called when the MSI message
+@@ -183,7 +187,8 @@ struct msi_desc {
+ 	struct msi_msg			msg;
+ 	struct irq_affinity_desc	*affinity;
+ #ifdef CONFIG_IRQ_MSI_IOMMU
+-	const void			*iommu_cookie;
++	u64				iommu_msi_iova : 58;
++	u64				iommu_msi_shift : 6;
+ #endif
+ #ifdef CONFIG_SYSFS
+ 	struct device_attribute		*sysfs_attrs;
+@@ -284,28 +289,14 @@ struct msi_desc *msi_next_desc(struct device *dev, unsigned int domid,
+ 
+ #define msi_desc_to_dev(desc)		((desc)->dev)
+ 
+-#ifdef CONFIG_IRQ_MSI_IOMMU
+-static inline const void *msi_desc_get_iommu_cookie(struct msi_desc *desc)
+-{
+-	return desc->iommu_cookie;
+-}
+-
+-static inline void msi_desc_set_iommu_cookie(struct msi_desc *desc,
+-					     const void *iommu_cookie)
+-{
+-	desc->iommu_cookie = iommu_cookie;
+-}
+-#else
+-static inline const void *msi_desc_get_iommu_cookie(struct msi_desc *desc)
++static inline void msi_desc_set_iommu_msi_iova(struct msi_desc *desc, u64 msi_iova,
++					       unsigned int msi_shift)
+ {
+-	return NULL;
+-}
+-
+-static inline void msi_desc_set_iommu_cookie(struct msi_desc *desc,
+-					     const void *iommu_cookie)
+-{
+-}
++#ifdef CONFIG_IRQ_MSI_IOMMU
++	desc->iommu_msi_iova = msi_iova >> msi_shift;
++	desc->iommu_msi_shift = msi_shift;
+ #endif
 +}
-+
-+static inline void mctrl_gpio_disable_ms_no_sync(struct mctrl_gpios *gpios)
- {
- }
  
-diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
-index f43059e1b5c28..80efe3b0ed0c3 100644
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -2297,7 +2297,7 @@ static void sci_shutdown(struct uart_port *port)
- 	dev_dbg(port->dev, "%s(%d)\n", __func__, port->line);
- 
- 	s->autorts = false;
--	mctrl_gpio_disable_ms(to_sci_port(port)->gpios);
-+	mctrl_gpio_disable_ms_sync(to_sci_port(port)->gpios);
- 
- 	uart_port_lock_irqsave(port, &flags);
- 	sci_stop_rx(port);
-diff --git a/drivers/tty/serial/stm32-usart.c b/drivers/tty/serial/stm32-usart.c
-index 9b9981352b1e1..e685cace5c854 100644
---- a/drivers/tty/serial/stm32-usart.c
-+++ b/drivers/tty/serial/stm32-usart.c
-@@ -944,7 +944,7 @@ static void stm32_usart_enable_ms(struct uart_port *port)
- 
- static void stm32_usart_disable_ms(struct uart_port *port)
- {
--	mctrl_gpio_disable_ms(to_stm32_port(port)->gpios);
-+	mctrl_gpio_disable_ms_sync(to_stm32_port(port)->gpios);
- }
- 
- /* Transmit stop */
+ int msi_domain_insert_msi_desc(struct device *dev, unsigned int domid,
+ 			       struct msi_desc *init_desc);
 -- 
 2.39.5
 
