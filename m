@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76047194A67;
-	Tue, 27 May 2025 16:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B196E255E26;
+	Tue, 27 May 2025 16:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364428; cv=none; b=Xt41u8bJi03dwq4CraZrs1wnYCI8n4Np7XhRaFZDbLSkpY5Ku9Gk8G+RkeAsv4ly8H1jsMeunvTfUaZy1PWKSTWXBM9kXFQCw9uPN+LpiHjgyvOC1TtnjoqE9gNpBcqwoqZ/MB03y+09sJcKVbkjwGWzQekuBcyw8Qp7RF4RzLE=
+	t=1748364431; cv=none; b=ZJhM2SVC8drLmhCCbsAP1x4dfMSopp31OBqodLfwKWPikeF2ts7STt6LobRQn30c+cVjRVYMC7bCF+xqLoQJ4/OQI5YtEiuNE20puPMgMDSRtceSE+jrspWc9QCp2k+00VqX8UfFfELDijLJH0CYBjqtgt3OyB3PjqY3ZsxCBgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364428; c=relaxed/simple;
-	bh=Z2libKXmS3L/5Hl4vaIjET8+vi+G+Ai+0FO+Vcpwurw=;
+	s=arc-20240116; t=1748364431; c=relaxed/simple;
+	bh=JFRW+y0x8gaDmOE/NlZ4kKA0xRoO6E0+8OrvicC5vQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J9OJ+OwsJdV5iNoxEZwmyI18OimiJrhRlAoma1pcW9yy7Jfaec6jsee0XT2LmrQglF2P0aRHh4IaHstkDe7buU4Dv/QgOgo0W5Rgxm/7poVvR2uQEZ3VNV7+zMHgZ4kKcCW/F35AU49EsTWgP/KIy3LWnLtBobFff6l94poVy6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISiT18DM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HTCDJbV5KSXB5qDyRABqiBYSvzNJZZWkA4tHe9H5joXkrY9ePvGh/2ILa553WvyPAuhK6dKL4biRscaIIX5S9p493/bOCGbuZeMt+ObxO4SOGuRwyJO/moCaYpE15xi05Ol4wAgCL/+LlB/LRvz89cgi3N311Xz2CFIVlTB8ldU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbnzZHk4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISiT18DM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7876C4CEED;
-	Tue, 27 May 2025 16:47:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbnzZHk4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374CEC4CEE9;
+	Tue, 27 May 2025 16:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364428;
-	bh=Z2libKXmS3L/5Hl4vaIjET8+vi+G+Ai+0FO+Vcpwurw=;
+	s=korg; t=1748364431;
+	bh=JFRW+y0x8gaDmOE/NlZ4kKA0xRoO6E0+8OrvicC5vQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ISiT18DMvLk5ygmSqlEz4JDjO87Wz6XRxt+tgZ4IHeY4y0j/fWc3Cs/haN1fX12r9
-	 R67Ogw63hOE44xn1h7YXJTzakGifDM47VUdIr4b7ERS7ixwoKqX2is80IRwFDzSvEy
-	 GgeLV+dhQV+VLWrVB28h2Yuqum2+U4DXVxvEwOYA=
+	b=NbnzZHk4uVLVPBmSgseTAeAbBhjjzNnUh6sP2GPQdI5/lzAA2dRY07ly4qviFmM7n
+	 5wBxsOCXav4w54dncb0I5R+CDZwxQwY3jfNFOITXVsC0qriazj5Qtj3rEZo8TM1bu8
+	 lEs4g/ar/usHkAdGtiTn9CNW1JqNBZAJaUj8sxqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 053/626] io_uring/msg: initialise msg request opcode
-Date: Tue, 27 May 2025 18:19:06 +0200
-Message-ID: <20250527162447.214682048@linuxfoundation.org>
+Subject: [PATCH 6.12 054/626] NFSv4: Check for delegation validity in nfs_start_delegation_return_locked()
+Date: Tue, 27 May 2025 18:19:07 +0200
+Message-ID: <20250527162447.254688475@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,34 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 9cc0bbdaba2a66ad90bc6ce45163b7745baffe98 ]
+[ Upstream commit 9e8f324bd44c1fe026b582b75213de4eccfa1163 ]
 
-It's risky to have msg request opcode set to garbage, so at least
-initialise it to nop. Later we might want to add a user inaccessible
-opcode for such cases.
+Check that the delegation is still attached after taking the spin lock
+in nfs_start_delegation_return_locked().
 
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/9afe650fcb348414a4529d89f52eb8969ba06efd.1743190078.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/msg_ring.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/nfs/delegation.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/io_uring/msg_ring.c b/io_uring/msg_ring.c
-index 7fd9badcfaf81..35b1b585e9cbe 100644
---- a/io_uring/msg_ring.c
-+++ b/io_uring/msg_ring.c
-@@ -94,6 +94,7 @@ static int io_msg_remote_post(struct io_ring_ctx *ctx, struct io_kiocb *req,
- 		kmem_cache_free(req_cachep, req);
- 		return -EOWNERDEAD;
- 	}
-+	req->opcode = IORING_OP_NOP;
- 	req->cqe.user_data = user_data;
- 	io_req_set_res(req, res, cflags);
- 	percpu_ref_get(&ctx->refs);
+diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
+index 325ba0663a6de..8bdbc4dca89ca 100644
+--- a/fs/nfs/delegation.c
++++ b/fs/nfs/delegation.c
+@@ -307,7 +307,8 @@ nfs_start_delegation_return_locked(struct nfs_inode *nfsi)
+ 	if (delegation == NULL)
+ 		goto out;
+ 	spin_lock(&delegation->lock);
+-	if (!test_and_set_bit(NFS_DELEGATION_RETURNING, &delegation->flags)) {
++	if (delegation->inode &&
++	    !test_and_set_bit(NFS_DELEGATION_RETURNING, &delegation->flags)) {
+ 		clear_bit(NFS_DELEGATION_RETURN_DELAYED, &delegation->flags);
+ 		/* Refcount matched in nfs_end_delegation_return() */
+ 		ret = nfs_get_delegation(delegation);
 -- 
 2.39.5
 
