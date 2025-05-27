@@ -1,50 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8361917F4;
-	Tue, 27 May 2025 02:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02EA1FBCBE;
+	Tue, 27 May 2025 02:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748313475; cv=none; b=L+lPFvAePRdX0Rr2AietREB47StgoFQrfYPLGMo61rZbhsq/L/8wuaN7+pfnTS/boRPSQuD7vbN2gJt/RE5T4mJPbMrqS8At9A2Li5c8cpi3XoBP4T+U6Oj42wzdYpzVt3jukKW2ScqiURslle+MkTpU3wcxaH8QJXnOB45AB0s=
+	t=1748313476; cv=none; b=kjoYZQ8KMHR58nzHYkIwAD0PKw74pQ0BsO9aZ6vrE2agMzHTb4joJlUDyZZHkNGZ4dajfvUJVJo7+0LACUOhw9qYxukG60fAThwIjdi1LN/XqVGcjrYPAZBHGikz5UaPSp9g52aBiffEu9/kjIs9xXcBt4I0sGbNAJf6EY/Hbdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748313475; c=relaxed/simple;
-	bh=kIRuaEhuQ3RL20AjvrHTCG8H0uPTnQyPtIC4tWHNvx0=;
+	s=arc-20240116; t=1748313476; c=relaxed/simple;
+	bh=+lT2LEuNni8ViqKn05Nza/0ZecgImC+iyyjaB0KCjJE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Rsmc6xoN1E+OR7S5rpMypeUAjyrnULonu4hEFS5PPyaFVdQERr1kFTkO0gXx0ObBhkcjof8CjFMY8tOk7iAnktASK9yNQ+GkyI8ldeLp9ojmBveOAuA199MFI19Hz8A3NZ9he8K57Owzp/Q2YgSTnxPm0r2m35cxO/+9aaCuofg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P+2wR/81; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ayqJuhzk31xQE+CXBEi5b+lI6CrSkNi/KQJqPGXu8wGR74+ggye/MXLkSWdy31NszUfrfqsoSYsanDyMZMWgLI4XtrGXXiiZgiIrIB5xVHzh1HcAYU1d6IYoFilSHRkBID458X+WEvUgDCzPAjINlwjAFwpwjBmDt2jrEvYuoy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rOrDJ1Bd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P+2wR/81"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58351C4CEF5;
-	Tue, 27 May 2025 02:37:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rOrDJ1Bd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 228FCC4CEE7;
+	Tue, 27 May 2025 02:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748313474;
-	bh=kIRuaEhuQ3RL20AjvrHTCG8H0uPTnQyPtIC4tWHNvx0=;
+	s=k20201202; t=1748313476;
+	bh=+lT2LEuNni8ViqKn05Nza/0ZecgImC+iyyjaB0KCjJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P+2wR/81tMwpHjlcG8ellSYlikttXgG3qsCkTEn0n64iCCvmbMAL56XvsqI++qEZr
-	 OzzeB6q1au1PVJ/BBNmQVw+FkX0BYojrwQPVRtYAZSvVr6FZBla2t8EybuPkbqnrWs
-	 wUmnLnSOV0BvZWyjLwdoNTtRmpGVHcJ6sXruDn3AmOeiVQ8jp5KD0Wsb7Ffved9hRi
-	 q7FhIG5GrUBq0Yjg64QXy/VwYChK+yYNpZm9qvtvtxqImdQeolQCNj7Pzx0U/fIVvu
-	 ZiDmATxuPpNDzAgGPBlPsksjbT7//0Skq3TYw7FfQ9cVeRK9jUnXhKMyBzDx8aSlGy
-	 /b0+kiN6BetGg==
+	b=rOrDJ1BdqyNhIlEHhunYCusu0+4nE4OPJd52PpR/vQIb2EwPfkp7YxI+ZviGVeyGW
+	 FRy0a8L1BJtCf12GI+O2JMfy8EXl12wti9aMiSogfgGq2Si7GsFa7EkOAzaEXBdCuu
+	 mYWGkfpX45dEfQWU2aWaZcamuvvAdJfxxBkxpo8qB6/ARIPVpbHsVENhCPsPKclxW/
+	 +3gA6gfwKc/cmBm4RJ2oyEzfzauMWd0rQXYr+ZOcUbZWZCLJJzRNAJiL8l318NEk8k
+	 DHns7feYi1nv5cQy4kc4uuLeu1bbfYf2s/ujGmUP+7On/tSnuXBkI3hgUN/RzkdmzV
+	 9V8fHFvBC5JAA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nishanth Menon <nm@ti.com>,
-	Simon Horman <horms@kernel.org>,
-	Roger Quadros <rogerq@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Namjae Jeon <linkinjeon@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	alexander.sverdlin@gmail.com,
-	dan.carpenter@linaro.org,
-	netdev@vger.kernel.org,
+	smfrench@gmail.com,
+	linux-cifs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 4/5] net: ethernet: ti: am65-cpsw: Lower random mac address error print to info
-Date: Mon, 26 May 2025 22:37:44 -0400
-Message-Id: <20250527023745.1017153-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 5/5] ksmbd: use list_first_entry_or_null for opinfo_get_list()
+Date: Mon, 26 May 2025 22:37:45 -0400
+Message-Id: <20250527023745.1017153-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250527023745.1017153-1-sashal@kernel.org>
 References: <20250527023745.1017153-1-sashal@kernel.org>
@@ -59,38 +54,43 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.30
 Content-Transfer-Encoding: 8bit
 
-From: Nishanth Menon <nm@ti.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 50980d8da71a0c2e045e85bba93c0099ab73a209 ]
+[ Upstream commit 10379171f346e6f61d30d9949500a8de4336444a ]
 
-Using random mac address is not an error since the driver continues to
-function, it should be informative that the system has not assigned
-a MAC address. This is inline with other drivers such as ax88796c,
-dm9051 etc. Drop the error level to info level.
+The list_first_entry() macro never returns NULL.  If the list is
+empty then it returns an invalid pointer.  Use list_first_entry_or_null()
+to check if the list is empty.
 
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Link: https://patch.msgid.link/20250516122655.442808-1-nm@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202505080231.7OXwq4Te-lkp@intel.com/
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/oplock.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index a21e7c0afbfdc..61788a43cb861 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -2699,7 +2699,7 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
- 							port->slave.mac_addr);
- 			if (!is_valid_ether_addr(port->slave.mac_addr)) {
- 				eth_random_addr(port->slave.mac_addr);
--				dev_err(dev, "Use random MAC address\n");
-+				dev_info(dev, "Use random MAC address\n");
- 			}
- 		}
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index 03f606afad93a..d7a8a580d0136 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -146,12 +146,9 @@ static struct oplock_info *opinfo_get_list(struct ksmbd_inode *ci)
+ {
+ 	struct oplock_info *opinfo;
  
+-	if (list_empty(&ci->m_op_list))
+-		return NULL;
+-
+ 	down_read(&ci->m_lock);
+-	opinfo = list_first_entry(&ci->m_op_list, struct oplock_info,
+-					op_entry);
++	opinfo = list_first_entry_or_null(&ci->m_op_list, struct oplock_info,
++					  op_entry);
+ 	if (opinfo) {
+ 		if (opinfo->conn == NULL ||
+ 		    !atomic_inc_not_zero(&opinfo->refcount))
 -- 
 2.39.5
 
