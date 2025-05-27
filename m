@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285E778F32;
-	Tue, 27 May 2025 17:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FF278F32;
+	Tue, 27 May 2025 17:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365316; cv=none; b=RrDXVtD2YMj3AOGbf8Ljn8n+hUljPDxyd5K2pePyzlE6FCwqITB6FQiN0sVTIDvg3MbCrr+ta8cBCl1FAKaStBLDeAzOICqRRfbSarHPecgIyWIkCoZhS1I4EdqYrlDyCl05bsRftXyNxY95qNb9nMEoql5th9C3h+8D1cwypqw=
+	t=1748365319; cv=none; b=EyiMy0Cue3hKl3g2sr6euyeVSrDk71KMFyWszYEi9RPYGfvSmELSIBC6zK6KrxB1/pYIT7wwAJ69PF82yQUUARwxorCghKeFQdoBmmZ4SYb5c62qhEXzNjW6GEdEalNdPEtWW1w7jcqLt2H2Qvyk613DbkHzUrWa/ak9ffFPHDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365316; c=relaxed/simple;
-	bh=+wQ6Opj6oJvZJ1txc+AD8H0PlhCCr7RiZn0ynRKafxU=;
+	s=arc-20240116; t=1748365319; c=relaxed/simple;
+	bh=6UhD6hZMoxuBN7m7cBaJdbkGapOf8YDMmhQ6pOPABvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PDBTAwXwpOy+ckrHVEUShCZBV32VXNTl+VXYll6Pw5kJOb8xMcmD3tne1VXuJ7kcfz+Oknnoqj/o3/sBr9YkVcFJHVZkXgk2a2Ivp8B2mSZ7lWe+6cZ4LWisEVAdGuIya7qEXoZFK1Twwso8nqXIUFw32e3fmFvLEvDFTwVY9/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EBgzpyzh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iYaktTGAh8P3lLgWFtHUxIUd+GnZqvbd6FKf2b2SgkHLVQdxZ7o6jU32I4mp6n1ociE4jKUsSxjHAlh1ULUu/oWj+VEzXdyWtJp0SGUhlNFrwnwipSD4OtaUmTAeARwI96hxpqoAiRbPdGIlQQInlOUuB3eFhmxJ1/P5co9DIP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V21Xc2Nz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EBgzpyzh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31C2C4CEE9;
-	Tue, 27 May 2025 17:01:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V21Xc2Nz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D0BC4CEE9;
+	Tue, 27 May 2025 17:01:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365316;
-	bh=+wQ6Opj6oJvZJ1txc+AD8H0PlhCCr7RiZn0ynRKafxU=;
+	s=korg; t=1748365319;
+	bh=6UhD6hZMoxuBN7m7cBaJdbkGapOf8YDMmhQ6pOPABvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EBgzpyzhZqGs24WKjx1nqll7cImueeYiWCxLLi1Jjc0aYL1Y/6CrhtICOVf28Pf5J
-	 EW/TJnKiZaUklRwWJNDfcsRW3fThBQWv8sv5FTRf5+bAIutLmRAnJK8vWT3z9E0j6H
-	 tZgZriaZX2dkTO/C89Ydc5Z98BqBDeHUCNH7TJG4=
+	b=V21Xc2Nze9sigw+IsTGMJRxVEM4/3K7LFDFXAq6WWZlHLy0oQTG5w6q96kFhmzCr7
+	 XdXOszxtHhLQbhsOXtl4A22UMxPzxuk9fCGDhXQX4fUUOX2w+0OC9e38knNfFd+BlU
+	 CuT1PIDuj7V8z2TrLT2brYFSDDECiP/M2Y15L0qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	George Shen <george.shen@amd.com>,
+	Dillon Varone <dillon.varone@amd.com>,
+	Leo Zeng <Leo.Zeng@amd.com>,
 	Roman Li <roman.li@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 336/626] drm/amd/display: Read LTTPR ALPM caps during link cap retrieval
-Date: Tue, 27 May 2025 18:23:49 +0200
-Message-ID: <20250527162458.675766324@linuxfoundation.org>
+Subject: [PATCH 6.12 337/626] Revert "drm/amd/display: Request HW cursor on DCN3.2 with SubVP"
+Date: Tue, 27 May 2025 18:23:50 +0200
+Message-ID: <20250527162458.714111468@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -54,90 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Shen <george.shen@amd.com>
+From: Leo Zeng <Leo.Zeng@amd.com>
 
-[ Upstream commit de84d580126eb2214937df755cfec5ef0901479e ]
+[ Upstream commit 8ae6dfc0b61b170cf13832d4cfe2a0c744e621a7 ]
 
-[Why]
-The latest DP spec requires the DP TX to read DPCD F0000h through F0009h
-when detecting LTTPR capabilities for the first time.
+This reverts commit 13437c91606c9232c747475e202fe3827cd53264.
 
-[How]
-Update LTTPR cap retrieval to read up to F0009h (two more bytes than the
-previous F0007h), and store the LTTPR ALPM capabilities.
+Reason to revert: idle power regression found in testing.
 
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: George Shen <george.shen@amd.com>
+Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Signed-off-by: Leo Zeng <Leo.Zeng@amd.com>
 Signed-off-by: Roman Li <roman.li@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc_dp_types.h         | 12 ++++++++++++
- .../display/dc/link/protocols/link_dp_capability.c   |  6 +++++-
- 2 files changed, 17 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
-index 41bd95e9177a4..223c3d55544b2 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
-@@ -959,6 +959,14 @@ union dp_128b_132b_supported_lttpr_link_rates {
- 	uint8_t raw;
- };
- 
-+union dp_alpm_lttpr_cap {
-+	struct {
-+		uint8_t AUX_LESS_ALPM_SUPPORTED	:1;
-+		uint8_t RESERVED				:7;
-+	} bits;
-+	uint8_t raw;
-+};
-+
- union dp_sink_video_fallback_formats {
- 	struct {
- 		uint8_t dp_1024x768_60Hz_24bpp_support	:1;
-@@ -1103,6 +1111,7 @@ struct dc_lttpr_caps {
- 	uint8_t max_ext_timeout;
- 	union dp_main_link_channel_coding_lttpr_cap main_link_channel_coding;
- 	union dp_128b_132b_supported_lttpr_link_rates supported_128b_132b_rates;
-+	union dp_alpm_lttpr_cap alpm;
- 	uint8_t aux_rd_interval[MAX_REPEATER_CNT - 1];
- };
- 
-@@ -1352,6 +1361,9 @@ struct dp_trace {
- #ifndef DPCD_MAX_UNCOMPRESSED_PIXEL_RATE_CAP
- #define DPCD_MAX_UNCOMPRESSED_PIXEL_RATE_CAP    0x221c
- #endif
-+#ifndef DP_LTTPR_ALPM_CAPABILITIES
-+#define DP_LTTPR_ALPM_CAPABILITIES              0xF0009
-+#endif
- #ifndef DP_REPEATER_CONFIGURATION_AND_STATUS_SIZE
- #define DP_REPEATER_CONFIGURATION_AND_STATUS_SIZE	0x50
- #endif
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-index d9a1e1a599674..842636c7922b4 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-@@ -1495,7 +1495,7 @@ static bool dpcd_read_sink_ext_caps(struct dc_link *link)
- 
- enum dc_status dp_retrieve_lttpr_cap(struct dc_link *link)
- {
--	uint8_t lttpr_dpcd_data[8] = {0};
-+	uint8_t lttpr_dpcd_data[10] = {0};
- 	enum dc_status status;
- 	bool is_lttpr_present;
- 
-@@ -1545,6 +1545,10 @@ enum dc_status dp_retrieve_lttpr_cap(struct dc_link *link)
- 			lttpr_dpcd_data[DP_PHY_REPEATER_128B132B_RATES -
- 							DP_LT_TUNABLE_PHY_REPEATER_FIELD_DATA_STRUCTURE_REV];
- 
-+	link->dpcd_caps.lttpr_caps.alpm.raw =
-+			lttpr_dpcd_data[DP_LTTPR_ALPM_CAPABILITIES -
-+							DP_LT_TUNABLE_PHY_REPEATER_FIELD_DATA_STRUCTURE_REV];
-+
- 	/* If this chip cap is set, at least one retimer must exist in the chain
- 	 * Override count to 1 if we receive a known bad count (0 or an invalid value) */
- 	if ((link->chip_caps & EXT_DISPLAY_PATH_CAPS__DP_FIXED_VS_EN) &&
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+index 56dda686e2992..6f490d8d7038c 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -626,7 +626,6 @@ static bool dcn32_assign_subvp_pipe(struct dc *dc,
+ 		 * - Not TMZ surface
+ 		 */
+ 		if (pipe->plane_state && !pipe->top_pipe && !pipe->prev_odm_pipe && !dcn32_is_center_timing(pipe) &&
+-				!pipe->stream->hw_cursor_req &&
+ 				!(pipe->stream->timing.pix_clk_100hz / 10000 > DCN3_2_MAX_SUBVP_PIXEL_RATE_MHZ) &&
+ 				(!dcn32_is_psr_capable(pipe) || (context->stream_count == 1 && dc->caps.dmub_caps.subvp_psr)) &&
+ 				dc_state_get_pipe_subvp_type(context, pipe) == SUBVP_NONE &&
 -- 
 2.39.5
 
