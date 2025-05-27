@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEEC42A9B;
-	Tue, 27 May 2025 17:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF3442A9B;
+	Tue, 27 May 2025 17:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367630; cv=none; b=FT8u3itqLQiaewRDZA+j++jGCoeMwZo2o4Ud7Y/wI6fO0Cm9F37KAc794vxb5ZUe8UUzWN7u9AxPr8DwSB8Bsmf1HcJ7kOfybujnZNRxo2wNmuEuRRSAnuhdNnCh9a8Gx1GEr7F6LXkjVZ/TK9TTBjNSwUa5j7T/hYEo6oDaS5U=
+	t=1748367633; cv=none; b=buUnnrselPjpnlRTFL5NfirpeqzjecGd+aRjnPrUIQa3Y2uW2AcrhiPeXrpySKpg5/ngW7FjQ42DUcWKqsaOtFxrhXDVMHBiLDQ8qdeA9uviFjPaj8lLkoFeqOJxvE855WO413AXRctH4TLDlRsKDcLEFlRElXse918IgkPA/P8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367630; c=relaxed/simple;
-	bh=tmJgFD81VBaWskebJjjlOvHOiGJ/PYKeqcxSggmNPlo=;
+	s=arc-20240116; t=1748367633; c=relaxed/simple;
+	bh=a+a801v5rNYTdsYgWE25yY688TRTP7r+X+ctsZKo2Vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HlOQJ8ARzROuoXnqnDrbIqCPxwanPcgsJSAv3vmz6EE83oBSeuDXaEhE+TArHTwWy8xYnBm8duH5L50tZUCN6oy64b9QjyBnuJDK7kmPT9Le3aMl+gUFNbXknCELB00jP5E/iCMZrV4b/ZBX6vasfnwGPPAIvoe4L7XyCJcyOJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IaChRVpW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=htZvgwzrvSXOsGHLOWp6lyqbz4T6piTCbgPkRfkQhnL+tLpoF5btLyYB0sbxwQLId/7zdJ6/7aQKM3i+eg0Nmeu7unlgvg7fh0t/CImQfEeGx4G7FLsjXeaJhoHOL25JMuT/pTx/f7e7fSenb58Zv/ilgIPUfC4hqU8XgcBjrWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PptVn19j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IaChRVpW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F79FC4CEE9;
-	Tue, 27 May 2025 17:40:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PptVn19j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9303DC4CEE9;
+	Tue, 27 May 2025 17:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367629;
-	bh=tmJgFD81VBaWskebJjjlOvHOiGJ/PYKeqcxSggmNPlo=;
+	s=korg; t=1748367633;
+	bh=a+a801v5rNYTdsYgWE25yY688TRTP7r+X+ctsZKo2Vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IaChRVpWvqgMOPChSfAh8RS6CLltC2htr1gmYN91WAwvfu48HNallWHpaR4eb9VSZ
-	 /6247v1LtppPNXQxV51AHtfJmXz2CdVFA2LB8RSXE4WxvbFS+vP6/VCmXoTPpWfG5L
-	 6SsBCZSy1B+4CLyzI9wZZeEMVhWdt/bPrHB+7qBg=
+	b=PptVn19jlmKmH79zX1AkwigpUVWrYUagC4oMjcwvoa+k3Rn2cEsR9tIRrX0qbHIKB
+	 K3x38p/bcpjm/sboGXPhT6g0VZpKw8WWkYLwICrvjTsMq9kcPsBtm9+hUu9+iH+f0F
+	 f0WjQAKGjc7TxYXXkOX4D3AiR0NcAwZvT2tPf0z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 419/783] can: c_can: Use of_property_present() to test existence of DT property
-Date: Tue, 27 May 2025 18:23:36 +0200
-Message-ID: <20250527162530.161403148@linuxfoundation.org>
+Subject: [PATCH 6.14 420/783] bpf: dont do clean_live_states when state->loop_entry->branches > 0
+Date: Tue, 27 May 2025 18:23:37 +0200
+Message-ID: <20250527162530.201806418@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,35 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit ab1bc2290fd8311d49b87c29f1eb123fcb581bee ]
+[ Upstream commit 9e63fdb0cbdf3268c86638a8274f4d5549a82820 ]
 
-of_property_read_bool() should be used only on boolean properties.
+verifier.c:is_state_visited() uses RANGE_WITHIN states comparison rules
+for cached states that have loop_entry with non-zero branches count
+(meaning that loop_entry's verification is not yet done).
 
-Cc: Rob Herring <robh@kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Link: https://patch.msgid.link/20250212-syscon-phandle-args-can-v2-3-ac9a1253396b@linaro.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+The RANGE_WITHIN rules in regsafe()/stacksafe() require register and
+stack objects types to be identical in current and old states.
+
+verifier.c:clean_live_states() replaces registers and stack spills
+with NOT_INIT/STACK_INVALID marks, if these registers/stack spills are
+not read in any child state. This means that clean_live_states() works
+against loop convergence logic under some conditions. See selftest in
+the next patch for a specific example.
+
+Mitigate this by prohibiting clean_verifier_state() when
+state->loop_entry->branches > 0.
+
+This undoes negative verification performance impact of the
+copy_verifier_state() fix from the previous patch.
+Below is comparison between master and current patch.
+
+selftests:
+
+File                                Program                       Insns (A)  Insns (B)  Insns    (DIFF)  States (A)  States (B)  States  (DIFF)
+----------------------------------  ----------------------------  ---------  ---------  ---------------  ----------  ----------  --------------
+arena_htab.bpf.o                    arena_htab_llvm                     717        423   -294 (-41.00%)          57          37   -20 (-35.09%)
+arena_htab_asm.bpf.o                arena_htab_asm                      597        445   -152 (-25.46%)          47          37   -10 (-21.28%)
+arena_list.bpf.o                    arena_list_add                     1493       1822   +329 (+22.04%)          30          37    +7 (+23.33%)
+arena_list.bpf.o                    arena_list_del                      309        261    -48 (-15.53%)          23          15    -8 (-34.78%)
+iters.bpf.o                         checkpoint_states_deletion        18125      22154  +4029 (+22.23%)         818         918  +100 (+12.22%)
+iters.bpf.o                         iter_nested_deeply_iters            593        367   -226 (-38.11%)          67          43   -24 (-35.82%)
+iters.bpf.o                         iter_nested_iters                   813        772     -41 (-5.04%)          79          72     -7 (-8.86%)
+iters.bpf.o                         iter_subprog_check_stacksafe        155        135    -20 (-12.90%)          15          14     -1 (-6.67%)
+iters.bpf.o                         iter_subprog_iters                 1094        808   -286 (-26.14%)          88          68   -20 (-22.73%)
+iters.bpf.o                         loop_state_deps2                    479        356   -123 (-25.68%)          46          35   -11 (-23.91%)
+iters.bpf.o                         triple_continue                      35         31     -4 (-11.43%)           3           3     +0 (+0.00%)
+kmem_cache_iter.bpf.o               open_coded_iter                      63         59      -4 (-6.35%)           7           6    -1 (-14.29%)
+mptcp_subflow.bpf.o                 _getsockopt_subflow                 501        446    -55 (-10.98%)          25          23     -2 (-8.00%)
+pyperf600_iter.bpf.o                on_event                          12339       6379  -5960 (-48.30%)         441         286  -155 (-35.15%)
+verifier_bits_iter.bpf.o            max_words                            92         84      -8 (-8.70%)           8           7    -1 (-12.50%)
+verifier_iterating_callbacks.bpf.o  cond_break2                         113        192    +79 (+69.91%)          12          21    +9 (+75.00%)
+
+sched_ext:
+
+File               Program                 Insns (A)  Insns (B)  Insns      (DIFF)  States (A)  States (B)  States    (DIFF)
+-----------------  ----------------------  ---------  ---------  -----------------  ----------  ----------  ----------------
+bpf.bpf.o          layered_dispatch            11485       9039    -2446 (-21.30%)         848         662    -186 (-21.93%)
+bpf.bpf.o          layered_dump                 7422       5022    -2400 (-32.34%)         681         298    -383 (-56.24%)
+bpf.bpf.o          layered_enqueue             16854      13753    -3101 (-18.40%)        1611        1308    -303 (-18.81%)
+bpf.bpf.o          layered_init              1000001       5549  -994452 (-99.45%)       84672         523  -84149 (-99.38%)
+bpf.bpf.o          layered_runnable             3149       1899    -1250 (-39.70%)         288         151    -137 (-47.57%)
+bpf.bpf.o          p2dq_init                    2343       1936     -407 (-17.37%)         201         170     -31 (-15.42%)
+bpf.bpf.o          refresh_layer_cpumasks      16487       1285   -15202 (-92.21%)        1770         120   -1650 (-93.22%)
+bpf.bpf.o          rusty_select_cpu             1937       1386     -551 (-28.45%)         177         125     -52 (-29.38%)
+scx_central.bpf.o  central_dispatch              636        600       -36 (-5.66%)          63          59       -4 (-6.35%)
+scx_central.bpf.o  central_init                  913        632     -281 (-30.78%)          48          39      -9 (-18.75%)
+scx_nest.bpf.o     nest_init                     636        601       -35 (-5.50%)          60          58       -2 (-3.33%)
+scx_pair.bpf.o     pair_dispatch             1000001       1914  -998087 (-99.81%)       58169         142  -58027 (-99.76%)
+scx_qmap.bpf.o     qmap_dispatch                2393       2187      -206 (-8.61%)         196         174     -22 (-11.22%)
+scx_qmap.bpf.o     qmap_init                   16367      22777    +6410 (+39.16%)         603         768    +165 (+27.36%)
+
+'layered_init' and 'pair_dispatch' hit 1M on master, but are verified
+ok with this patch.
+
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20250215110411.3236773-4-eddyz87@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/c_can/c_can_platform.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/can/c_can/c_can_platform.c b/drivers/net/can/c_can/c_can_platform.c
-index 399844809bbea..bb6071a758f36 100644
---- a/drivers/net/can/c_can/c_can_platform.c
-+++ b/drivers/net/can/c_can/c_can_platform.c
-@@ -324,7 +324,7 @@ static int c_can_plat_probe(struct platform_device *pdev)
- 		/* Check if we need custom RAMINIT via syscon. Mostly for TI
- 		 * platforms. Only supported with DT boot.
- 		 */
--		if (np && of_property_read_bool(np, "syscon-raminit")) {
-+		if (np && of_property_present(np, "syscon-raminit")) {
- 			u32 id;
- 			struct c_can_raminit *raminit = &priv->raminit_sys;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index e2801472c0ae4..68715b18df5e2 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -17830,12 +17830,16 @@ static void clean_verifier_state(struct bpf_verifier_env *env,
+ static void clean_live_states(struct bpf_verifier_env *env, int insn,
+ 			      struct bpf_verifier_state *cur)
+ {
++	struct bpf_verifier_state *loop_entry;
+ 	struct bpf_verifier_state_list *sl;
  
+ 	sl = *explored_state(env, insn);
+ 	while (sl) {
+ 		if (sl->state.branches)
+ 			goto next;
++		loop_entry = get_loop_entry(&sl->state);
++		if (loop_entry && loop_entry->branches)
++			goto next;
+ 		if (sl->state.insn_idx != insn ||
+ 		    !same_callsites(&sl->state, cur))
+ 			goto next;
 -- 
 2.39.5
 
