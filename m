@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3FD27F4CB;
-	Tue, 27 May 2025 17:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142971CEAC2;
+	Tue, 27 May 2025 17:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366253; cv=none; b=VDI2kycf7BM8HWSRAuIw9wtaQ3fY0Nbtb5UXZ9Opk/u0hX2lUexlJf9RuhWDMFP4JTzpp7loFot0L60Lei2/iiCWKlNySl2xZFieBr2Dnet2cAVa8exlkhLvURMLbbSU3PxMlEcclaAUHE67DG5IBObOUTvliv+YyWcOQB7w0Ng=
+	t=1748366257; cv=none; b=nUuUk87Cce/ZbQe13PUg6v9pBhnLCtpbGxr50kt7KuhVgkN3O29P6tRJU/FZCig20aH3Il71EEm8kpRq5X39IiiS1WpZHafvcnDjHGGvpztCcmGHe/WxuZ7J4Mk6+FzXCay6nRUcJfPE6mXIJ0rOX/416m3d4t9Ds+jerCz922Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366253; c=relaxed/simple;
-	bh=g18cQofro7jHt2vevA9vfjbESmQdvREjswnwCw+/eHQ=;
+	s=arc-20240116; t=1748366257; c=relaxed/simple;
+	bh=4/5NnEtlhCC56YxrR5j/2kJp3wRGK3E81+J5MQ3U30g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cIdnFGnpBfgL8gJGnU2aejTMOgpAxahCtzlk5WU9gMH76WeQTDK3/NWdGqLWXNXWxyiFxL8TI+HqzfQWZTSrdptK3v3xF5wOIC4Qg5KP91GbU3mNU+JygEn6A+2t0AOej8OxY2Tl2kmeRSTZYka5fGOAmjsfbuXWlcjSvQugu5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kkgo4E8i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zy41FdMa92dLaKDUSHOErtNDF+083NU6dhwYjdMjUm8Xj1aOsJ3Zb7h9fKxXSwx4ULRDVBugOKUGvw5idJf0m4xz12HPuASLejUie5kbheF9nbglnlUaW6TjRT3YBoa4vw+nYa6ZV3u2uTSiYQdSXo/oTX2Gz9FvJWa8vt54ca0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WAtcGiZf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kkgo4E8i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDE6C4CEE9;
-	Tue, 27 May 2025 17:17:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WAtcGiZf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E2F7C4CEE9;
+	Tue, 27 May 2025 17:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366253;
-	bh=g18cQofro7jHt2vevA9vfjbESmQdvREjswnwCw+/eHQ=;
+	s=korg; t=1748366256;
+	bh=4/5NnEtlhCC56YxrR5j/2kJp3wRGK3E81+J5MQ3U30g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kkgo4E8iaUSSEHeyDkA26wAd7nlnDYbuLgsDElYCuF6mXPqKcNvQGW1mtKGmoF12s
-	 GV8WWk4f0dwcxYhJZ+KYyFS8cCP0ET8qNhyUsVLsUBSjeNi57qrz2ZuUxUetD/+3i3
-	 g/8LMVeDh9d6wYeR7tIujqbK3E57WR/S7M0WJS3A=
+	b=WAtcGiZfNuuXcvDNHWxqTvF2ZMmZEfS1ci50tuvBPegXtXYoy/Cr7IBNiZgpIzHUt
+	 mzJRpRfOs9zn8PwN8Aukua07lT+nMAoudA1lsCQwF9z/nkAJ6vvE3kpgbjbGW4m1iL
+	 jt43s0kOvEGJh6y0b6Vrddx9ECFnW+fALnWveAc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 010/783] nvmem: rockchip-otp: Move read-offset into variant-data
-Date: Tue, 27 May 2025 18:16:47 +0200
-Message-ID: <20250527162513.464829670@linuxfoundation.org>
+Subject: [PATCH 6.14 011/783] nvmem: rockchip-otp: add rk3576 variant data
+Date: Tue, 27 May 2025 18:16:48 +0200
+Message-ID: <20250527162513.503579380@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -54,63 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 6907e8093b3070d877ee607e5ceede60cfd08bde ]
+[ Upstream commit 50d75a13a9ce880a5ef07a4ccc63ba561cc2e69a ]
 
-The RK3588 has an offset into the OTP area where the readable area begins
-and automatically adds this to the start address.
-Other variants are very much similar to rk3588, just with a different
-offset, so move that value into variant-data.
-
-To match the size in bytes, store this value also in bytes and not in
-number of blocks.
+The variant works very similar to the rk3588, just with a different
+read-offset and size.
 
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Tested-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20250411112251.68002-2-srinivas.kandagatla@linaro.org
+Link: https://lore.kernel.org/r/20250411112251.68002-5-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/rockchip-otp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/nvmem/rockchip-otp.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/drivers/nvmem/rockchip-otp.c b/drivers/nvmem/rockchip-otp.c
-index ebc3f0b24166b..3edfbfc2d7220 100644
+index 3edfbfc2d7220..d88f12c532426 100644
 --- a/drivers/nvmem/rockchip-otp.c
 +++ b/drivers/nvmem/rockchip-otp.c
-@@ -59,7 +59,6 @@
- #define RK3588_OTPC_AUTO_EN		0x08
- #define RK3588_OTPC_INT_ST		0x84
- #define RK3588_OTPC_DOUT0		0x20
--#define RK3588_NO_SECURE_OFFSET		0x300
- #define RK3588_NBYTES			4
- #define RK3588_BURST_NUM		1
- #define RK3588_BURST_SHIFT		8
-@@ -69,6 +68,7 @@
+@@ -274,6 +274,14 @@ static const struct rockchip_data px30_data = {
+ 	.reg_read = px30_otp_read,
+ };
  
- struct rockchip_data {
- 	int size;
-+	int read_offset;
- 	const char * const *clks;
- 	int num_clks;
- 	nvmem_reg_read_t reg_read;
-@@ -196,7 +196,7 @@ static int rk3588_otp_read(void *context, unsigned int offset,
- 	addr_start = round_down(offset, RK3588_NBYTES) / RK3588_NBYTES;
- 	addr_end = round_up(offset + bytes, RK3588_NBYTES) / RK3588_NBYTES;
- 	addr_len = addr_end - addr_start;
--	addr_start += RK3588_NO_SECURE_OFFSET;
-+	addr_start += otp->data->read_offset / RK3588_NBYTES;
- 
- 	buf = kzalloc(array_size(addr_len, RK3588_NBYTES), GFP_KERNEL);
- 	if (!buf)
-@@ -280,6 +280,7 @@ static const char * const rk3588_otp_clocks[] = {
- 
- static const struct rockchip_data rk3588_data = {
- 	.size = 0x400,
-+	.read_offset = 0xc00,
- 	.clks = rk3588_otp_clocks,
- 	.num_clks = ARRAY_SIZE(rk3588_otp_clocks),
- 	.reg_read = rk3588_otp_read,
++static const struct rockchip_data rk3576_data = {
++	.size = 0x100,
++	.read_offset = 0x700,
++	.clks = px30_otp_clocks,
++	.num_clks = ARRAY_SIZE(px30_otp_clocks),
++	.reg_read = rk3588_otp_read,
++};
++
+ static const char * const rk3588_otp_clocks[] = {
+ 	"otp", "apb_pclk", "phy", "arb",
+ };
+@@ -295,6 +303,10 @@ static const struct of_device_id rockchip_otp_match[] = {
+ 		.compatible = "rockchip,rk3308-otp",
+ 		.data = &px30_data,
+ 	},
++	{
++		.compatible = "rockchip,rk3576-otp",
++		.data = &rk3576_data,
++	},
+ 	{
+ 		.compatible = "rockchip,rk3588-otp",
+ 		.data = &rk3588_data,
 -- 
 2.39.5
 
