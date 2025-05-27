@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F802110E;
-	Tue, 27 May 2025 17:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81DF2110E;
+	Tue, 27 May 2025 17:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365586; cv=none; b=JXzLHdV4NcsL9heMiZuQkEIkiAjwJdP5rH1kG7F9TQ8EvpOMtfRT4OjQ2E7xwnCZdLCTEdZ4QUgrHXbMtdpzBxqMThxuo4Iasgf0xJIb2tlIMBTa8jK4oHyvha/SINsMui/8tWJ2d4pnI2J/4RaYInEOFjfHqakoQkiYFvS1yu0=
+	t=1748365590; cv=none; b=e+mGgWf8p0hh1AU2roHd29s5rbYzTihGVZCSHh+QAYGtoKK7GMoKOwpxA1BiVw0uKvrsEE7Oi7+ZY84OW8NiMqxigj4WNDU13Bc2AZUPoXINAcgefzWtaGN4XlXGRYuji7dsjUg/przuHU7IxG1VqB0w5UG1YCqq84KtH6IK4kA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365586; c=relaxed/simple;
-	bh=IcaaOzq8ossENrURKUhSDNGWLjKW9C0e1+teGwkzxjA=;
+	s=arc-20240116; t=1748365590; c=relaxed/simple;
+	bh=mhVGh8eD0ulXflQ0BtLbzv2PFRF7UKg0SHVgMeP54lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lTMtesV4wK+EPiDiyyE+gOOXGjdSj2ZxXSMjkh7ETp/a1ezP1h/2VxqCfHGxFStRAp/CR2XJ7lXLsuumBsoceGXj5fSByr+S54tky5JFlBN9RUcfFw7LRkpzLJmGS0rAfTigB0isbB60q7Qssjsc+wEKjZWAarF+Dd+4HfhYZBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rexUgLb1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jFJe7SvaLElC84JCdLK2VaRD+2Dm0F6K9NTyvxy4ARPYdZP8sBD71rrX5q3R5pUHBFW60yBbqbH+/p6rEgl/WElNhC6SYmzucGr54ibhRezuvazzrsFXWhj9Mp5Zz8b4mne/XeromF8aIujgpw/3fpNBwpvpaoVmWLa9tSHNYC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8OZLuRO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rexUgLb1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40108C4CEE9;
-	Tue, 27 May 2025 17:06:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8OZLuRO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B775C4CEF5;
+	Tue, 27 May 2025 17:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365586;
-	bh=IcaaOzq8ossENrURKUhSDNGWLjKW9C0e1+teGwkzxjA=;
+	s=korg; t=1748365589;
+	bh=mhVGh8eD0ulXflQ0BtLbzv2PFRF7UKg0SHVgMeP54lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rexUgLb1lw+QcaoJi7bMeHUPYnMJvgWzZyyb4EnsdbJJP8SCzd8Py8NocLyVzxXT8
-	 2qMVfLRDY4KKwE+bq8igHEjGQhqOe23bJuPvyUKqxyKjjG5ch5elHVwSG/SPEaHtBQ
-	 XRrsHmcpPkjlFlmJihZgI1JMdJS+Z1UdU9MJww7Y=
+	b=I8OZLuRODkr5QJSu2UAn3ERddRMN1/Ximfqd4n3NwUZ0ReicxgETzxjcivjs3laSZ
+	 1kOshrwJiShIHjKzOcNRlvDA2yUZpRY5u5BBwsdmiMoUgcO0uuUvluYFNySYFLQrnX
+	 0fYo2rIas1D9PmresGOx17sigOftX+N/3/EeTsk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	David Lechner <dlechner@baylibre.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 425/626] iio: adc: ad7944: dont use storagebits for sizing
-Date: Tue, 27 May 2025 18:25:18 +0200
-Message-ID: <20250527162502.276696606@linuxfoundation.org>
+Subject: [PATCH 6.12 426/626] pstore: Change kmsg_bytes storage size to u32
+Date: Tue, 27 May 2025 18:25:19 +0200
+Message-ID: <20250527162502.322165774@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,96 +50,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 503d20ed8cf7c7b40ec0bd94f53c490c1d91c31b ]
+[ Upstream commit 5674609535bafa834ab014d90d9bbe8e89223a0b ]
 
-Replace use of storagebits with realbits for determining the number of
-bytes needed for SPI transfers.
+The types around kmsg_bytes were inconsistent. The global was unsigned
+long, the argument to pstore_set_kmsg_bytes() was int, and the filesystem
+option was u32. Given other internal limits, there's not much sense
+in making a single pstore record larger than INT_MAX and it can't be
+negative, so use u32 everywhere. Additionally, use READ/WRITE_ONCE and a
+local variable in pstore_dump() to avoid kmsg_bytes changing during a
+dump.
 
-When adding SPI offload support, storagebits will always be 32 rather
-than 16 for 16-bit 16-bit chips so we can no longer rely on storagebits
-being the correct size expected by the SPI framework (it always uses
-4 bytes for > 16-bit xfers and 2 bytes for > 8-bit xfers). Instead,
-derive the correct size from realbits since it will always be correct
-even when SPI offloading is used.
-
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-vy: Nuno Sa <nuno.sa@analog.com>
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250207-dlech-mainline-spi-engine-offload-2-v8-10-e48a489be48c@baylibre.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/r/20250206191655.work.798-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7944.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ fs/pstore/inode.c    |  2 +-
+ fs/pstore/internal.h |  4 ++--
+ fs/pstore/platform.c | 11 ++++++-----
+ 3 files changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/iio/adc/ad7944.c b/drivers/iio/adc/ad7944.c
-index 0f36138a71445..58a25792cec37 100644
---- a/drivers/iio/adc/ad7944.c
-+++ b/drivers/iio/adc/ad7944.c
-@@ -98,6 +98,9 @@ struct ad7944_chip_info {
- 	const struct iio_chan_spec channels[2];
- };
+diff --git a/fs/pstore/inode.c b/fs/pstore/inode.c
+index 56815799ce798..9de6b280c4f41 100644
+--- a/fs/pstore/inode.c
++++ b/fs/pstore/inode.c
+@@ -265,7 +265,7 @@ static void parse_options(char *options)
+ static int pstore_show_options(struct seq_file *m, struct dentry *root)
+ {
+ 	if (kmsg_bytes != CONFIG_PSTORE_DEFAULT_KMSG_BYTES)
+-		seq_printf(m, ",kmsg_bytes=%lu", kmsg_bytes);
++		seq_printf(m, ",kmsg_bytes=%u", kmsg_bytes);
+ 	return 0;
+ }
  
-+/* get number of bytes for SPI xfer */
-+#define AD7944_SPI_BYTES(scan_type) ((scan_type).realbits > 16 ? 4 : 2)
-+
- /*
-  * AD7944_DEFINE_CHIP_INFO - Define a chip info structure for a specific chip
-  * @_name: The name of the chip
-@@ -164,7 +167,7 @@ static int ad7944_3wire_cs_mode_init_msg(struct device *dev, struct ad7944_adc *
+diff --git a/fs/pstore/internal.h b/fs/pstore/internal.h
+index 801d6c0b170c3..a0fc511969100 100644
+--- a/fs/pstore/internal.h
++++ b/fs/pstore/internal.h
+@@ -6,7 +6,7 @@
+ #include <linux/time.h>
+ #include <linux/pstore.h>
  
- 	/* Then we can read the data during the acquisition phase */
- 	xfers[2].rx_buf = &adc->sample.raw;
--	xfers[2].len = BITS_TO_BYTES(chan->scan_type.storagebits);
-+	xfers[2].len = AD7944_SPI_BYTES(chan->scan_type);
- 	xfers[2].bits_per_word = chan->scan_type.realbits;
+-extern unsigned long kmsg_bytes;
++extern unsigned int kmsg_bytes;
  
- 	spi_message_init_with_transfers(&adc->msg, xfers, 3);
-@@ -193,7 +196,7 @@ static int ad7944_4wire_mode_init_msg(struct device *dev, struct ad7944_adc *adc
- 	xfers[0].delay.unit = SPI_DELAY_UNIT_NSECS;
+ #ifdef CONFIG_PSTORE_FTRACE
+ extern void pstore_register_ftrace(void);
+@@ -35,7 +35,7 @@ static inline void pstore_unregister_pmsg(void) {}
  
- 	xfers[1].rx_buf = &adc->sample.raw;
--	xfers[1].len = BITS_TO_BYTES(chan->scan_type.storagebits);
-+	xfers[1].len = AD7944_SPI_BYTES(chan->scan_type);
- 	xfers[1].bits_per_word = chan->scan_type.realbits;
+ extern struct pstore_info *psinfo;
  
- 	spi_message_init_with_transfers(&adc->msg, xfers, 2);
-@@ -228,7 +231,7 @@ static int ad7944_chain_mode_init_msg(struct device *dev, struct ad7944_adc *adc
- 	xfers[0].delay.unit = SPI_DELAY_UNIT_NSECS;
+-extern void	pstore_set_kmsg_bytes(int);
++extern void	pstore_set_kmsg_bytes(unsigned int bytes);
+ extern void	pstore_get_records(int);
+ extern void	pstore_get_backend_records(struct pstore_info *psi,
+ 					   struct dentry *root, int quiet);
+diff --git a/fs/pstore/platform.c b/fs/pstore/platform.c
+index f56b066ab80ce..557cf9d40177f 100644
+--- a/fs/pstore/platform.c
++++ b/fs/pstore/platform.c
+@@ -92,8 +92,8 @@ module_param(compress, charp, 0444);
+ MODULE_PARM_DESC(compress, "compression to use");
  
- 	xfers[1].rx_buf = adc->chain_mode_buf;
--	xfers[1].len = BITS_TO_BYTES(chan->scan_type.storagebits) * n_chain_dev;
-+	xfers[1].len = AD7944_SPI_BYTES(chan->scan_type) * n_chain_dev;
- 	xfers[1].bits_per_word = chan->scan_type.realbits;
+ /* How much of the kernel log to snapshot */
+-unsigned long kmsg_bytes = CONFIG_PSTORE_DEFAULT_KMSG_BYTES;
+-module_param(kmsg_bytes, ulong, 0444);
++unsigned int kmsg_bytes = CONFIG_PSTORE_DEFAULT_KMSG_BYTES;
++module_param(kmsg_bytes, uint, 0444);
+ MODULE_PARM_DESC(kmsg_bytes, "amount of kernel log to snapshot (in bytes)");
  
- 	spi_message_init_with_transfers(&adc->msg, xfers, 2);
-@@ -274,12 +277,12 @@ static int ad7944_single_conversion(struct ad7944_adc *adc,
- 		return ret;
+ static void *compress_workspace;
+@@ -107,9 +107,9 @@ static void *compress_workspace;
+ static char *big_oops_buf;
+ static size_t max_compressed_size;
  
- 	if (adc->spi_mode == AD7944_SPI_MODE_CHAIN) {
--		if (chan->scan_type.storagebits > 16)
-+		if (chan->scan_type.realbits > 16)
- 			*val = ((u32 *)adc->chain_mode_buf)[chan->scan_index];
- 		else
- 			*val = ((u16 *)adc->chain_mode_buf)[chan->scan_index];
- 	} else {
--		if (chan->scan_type.storagebits > 16)
-+		if (chan->scan_type.realbits > 16)
- 			*val = adc->sample.raw.u32;
- 		else
- 			*val = adc->sample.raw.u16;
-@@ -409,8 +412,7 @@ static int ad7944_chain_mode_alloc(struct device *dev,
- 	/* 1 word for each voltage channel + aligned u64 for timestamp */
+-void pstore_set_kmsg_bytes(int bytes)
++void pstore_set_kmsg_bytes(unsigned int bytes)
+ {
+-	kmsg_bytes = bytes;
++	WRITE_ONCE(kmsg_bytes, bytes);
+ }
  
- 	chain_mode_buf_size = ALIGN(n_chain_dev *
--		BITS_TO_BYTES(chan[0].scan_type.storagebits), sizeof(u64))
--		+ sizeof(u64);
-+		AD7944_SPI_BYTES(chan[0].scan_type), sizeof(u64)) + sizeof(u64);
- 	buf = devm_kzalloc(dev, chain_mode_buf_size, GFP_KERNEL);
- 	if (!buf)
- 		return -ENOMEM;
+ /* Tag each group of saved records with a sequence number */
+@@ -278,6 +278,7 @@ static void pstore_dump(struct kmsg_dumper *dumper,
+ 			struct kmsg_dump_detail *detail)
+ {
+ 	struct kmsg_dump_iter iter;
++	unsigned int	remaining = READ_ONCE(kmsg_bytes);
+ 	unsigned long	total = 0;
+ 	const char	*why;
+ 	unsigned int	part = 1;
+@@ -300,7 +301,7 @@ static void pstore_dump(struct kmsg_dumper *dumper,
+ 	kmsg_dump_rewind(&iter);
+ 
+ 	oopscount++;
+-	while (total < kmsg_bytes) {
++	while (total < remaining) {
+ 		char *dst;
+ 		size_t dst_size;
+ 		int header_size;
 -- 
 2.39.5
 
