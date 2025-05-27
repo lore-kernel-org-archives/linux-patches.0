@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B70280A51;
-	Tue, 27 May 2025 17:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33FF28033D;
+	Tue, 27 May 2025 17:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368605; cv=none; b=RxuolygATI0xYljoCPk6vCdofIaS8r4et5VrtdcCCAnU2N+y1B0fYL0EJG6Spyw+6CSHbKRbYs+VgeJ91mr+4qa2J8heE/RhR9145rqcvsmJ9KHGRlTuvU1OmUldXmPJe9Enz00zdnQ0ODYjUa6PnruWm0Bo1K6GXMHXiRCxvYM=
+	t=1748368608; cv=none; b=QzSEescG1Z/MdBWslNdIEhH0gGu2OzuRCxvyVvIZ+pkAxcOjY7/NVGWlXjXLnXhQOPt9Wxe6VImklsSQ+hRxVPdZgwHv/bZ8nx9sHXPbLuLmkZG4GWxPxU0g1NEzMywzAY5MH0Pz/UPgIasTXsXOQACV0M+5QG8oW8PMSGphE5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368605; c=relaxed/simple;
-	bh=zaNG+i1mDvMUuc5LtIlLIhyrQW/Pm2Y1tfJWCtZXcJ4=;
+	s=arc-20240116; t=1748368608; c=relaxed/simple;
+	bh=WuasC5RPEZ2Ve4q8TtNXp/YeS9LcXS9gUh8b/VwAmm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cwQg98iwbN9/SMiLrflxkDeoO9GRiKcdYKBSzMMqK117U/ImVDGKfm1zF3c+pnvDobLwAJ7r1GJNhwgrP0wc5/IpQiCgdHiS4M/Voa3T+4gE+iVQBPFdpFWvlpfbH/d0u2hInCcEX4lRTxYENDmDimEYvb08VdwT4D3qo6HD2cI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shOa8YoP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bV5CFLuSOYb4CMGmSYytbbeCIWL4J/AgCAfb9SIHAmdwbdncLX/K8QBX9eShlmQJcLHA1IV1EpNvWBLWHmNpJDLADtb+dYSb4ef43ay17LCh7Ryuh7AkcSBScCMcNthxuxdCVuY4h6avfYkiuAYzfmYlT0j/5bVeVV0Hh/DgpJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W7z3S/XX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shOa8YoP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31F5C4CEEA;
-	Tue, 27 May 2025 17:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W7z3S/XX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73B96C4CEE9;
+	Tue, 27 May 2025 17:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368605;
-	bh=zaNG+i1mDvMUuc5LtIlLIhyrQW/Pm2Y1tfJWCtZXcJ4=;
+	s=korg; t=1748368607;
+	bh=WuasC5RPEZ2Ve4q8TtNXp/YeS9LcXS9gUh8b/VwAmm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=shOa8YoP3VUFHePB3Vbz48QwIKaBg6HT3U+HMxccRAcktZyWDlPY/JgRaGgm/GwSQ
-	 Di4eRnbWVS1FNShBKUzKHeqFqE7nqiGNeKvhkDi27L0JSXz6ovGnkhztqR+Yyvw24t
-	 G2jMsW9ysMRisIeK5f92T7aSb3oLtThEHdIKF3/Y=
+	b=W7z3S/XXCs7DIkqdMrg8F4sAnl3VidkESZ4iUNr3ScoeK6F82soWJpjAl+47VjRGj
+	 3zHRQ9uFnXzQQYbY2GgbG43m9mFYWg/esTRTB1T6kHxz9bNZ312xUX6lik37obA9SH
+	 v8p6dYbrJTbgIc7i73YpqsZW/jTYN7pbWm+m4gxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florent Revest <revest@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
-	Borislav Betkov <bp@alien8.de>,
-	Brendan Jackman <jackmanb@google.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Thiago Jung Bauermann <thiago.bauermann@linaro.org>,
-	Thomas Gleinxer <tglx@linutronix.de>,
-	Will Deacon <will@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	"Erhard F." <erhard_f@mailbox.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.14 760/783] mm: fix VM_UFFD_MINOR == VM_SHADOW_STACK on USERFAULTFD=y && ARM64_GCS=y
-Date: Tue, 27 May 2025 18:29:17 +0200
-Message-ID: <20250527162544.069333928@linuxfoundation.org>
+Subject: [PATCH 6.14 761/783] mm: vmalloc: actually use the in-place vrealloc region
+Date: Tue, 27 May 2025 18:29:18 +0200
+Message-ID: <20250527162544.112266103@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -59,52 +56,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florent Revest <revest@chromium.org>
+From: Kees Cook <kees@kernel.org>
 
-commit 0f518255bde881d2a2605bbc080b438b532b6ab2 upstream.
+commit f7a35a3c36d1e36059c5654737d9bee3454f01a3 upstream.
 
-On configs with CONFIG_ARM64_GCS=y, VM_SHADOW_STACK is bit 38.  On configs
-with CONFIG_HAVE_ARCH_USERFAULTFD_MINOR=y (selected by CONFIG_ARM64 when
-CONFIG_USERFAULTFD=y), VM_UFFD_MINOR is _also_ bit 38.
+Patch series "mm: vmalloc: Actually use the in-place vrealloc region".
 
-This bit being shared by two different VMA flags could lead to all sorts
-of unintended behaviors.  Presumably, a process could maybe call into
-userfaultfd in a way that disables the shadow stack vma flag.  I can't
-think of any attack where this would help (presumably, if an attacker
-tries to disable shadow stacks, they are trying to hijack control flow so
-can't arbitrarily call into userfaultfd yet anyway) but this still feels
-somewhat scary.
+This fixes a performance regression[1] with vrealloc()[1].
 
-Link: https://lkml.kernel.org/r/20250507131000.1204175-2-revest@chromium.org
-Fixes: ae80e1629aea ("mm: Define VM_SHADOW_STACK for arm64 when we support GCS")
-Signed-off-by: Florent Revest <revest@chromium.org>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Cc: Borislav Betkov <bp@alien8.de>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Florent Revest <revest@chromium.org>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Thiago Jung Bauermann <thiago.bauermann@linaro.org>
-Cc: Thomas Gleinxer <tglx@linutronix.de>
-Cc: Will Deacon <will@kernel.org>
+
+The refactoring to not build a new vmalloc region only actually worked
+when shrinking.  Actually return the resized area when it grows.  Ugh.
+
+Link: https://lkml.kernel.org/r/20250515214217.619685-1-kees@kernel.org
+Fixes: a0309faf1cb0 ("mm: vmalloc: support more granular vrealloc() sizing")
+Signed-off-by: Kees Cook <kees@kernel.org>
+Reported-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Closes: https://lore.kernel.org/all/20250515-bpf-verifier-slowdown-vwo2meju4cgp2su5ckj@6gi6ssxbnfqg [1]
+Tested-by: Eduard Zingerman <eddyz87@gmail.com>
+Tested-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Tested-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Reviewed-by: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Cc: "Erhard F." <erhard_f@mailbox.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/mm.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/vmalloc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -411,7 +411,7 @@ extern unsigned int kobjsize(const void
- #endif
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -4115,6 +4115,7 @@ void *vrealloc_noprof(const void *p, siz
+ 		if (want_init_on_alloc(flags))
+ 			memset((void *)p + old_size, 0, size - old_size);
+ 		vm->requested_size = size;
++		return (void *)p;
+ 	}
  
- #ifdef CONFIG_HAVE_ARCH_USERFAULTFD_MINOR
--# define VM_UFFD_MINOR_BIT	38
-+# define VM_UFFD_MINOR_BIT	41
- # define VM_UFFD_MINOR		BIT(VM_UFFD_MINOR_BIT)	/* UFFD minor faults */
- #else /* !CONFIG_HAVE_ARCH_USERFAULTFD_MINOR */
- # define VM_UFFD_MINOR		VM_NONE
+ 	/* TODO: Grow the vm_area, i.e. allocate and map additional pages. */
 
 
