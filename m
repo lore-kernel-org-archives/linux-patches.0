@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E139C276037;
-	Tue, 27 May 2025 17:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BDC276037;
+	Tue, 27 May 2025 17:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366312; cv=none; b=UXyeANrwRVQ2PVOhyU36MVHNRRUUaYhRuRYg1DhXA2dD1ovUTd4WG71ECy3I74JusTVdk6Sp+ND9ezhgEA3GCtlbnZVFJU3qmSkJLqnCSiRhb7GZQgIR8N92ytod0qEO61CQ8vfv72Y3sts8to8ZTSWGwHY6fPZG+dmQelBfpS8=
+	t=1748366315; cv=none; b=VAjGpjzKSilUMhwu9SGGmKqHB6MHVfPZrKF3WZdlb3e78h5+r8KpKhi5qaCb6Pnzyhi6d5pDSaxXvHnaBl+66wBSo1nHr+UKXFXYeWH+1GdOgrW9o15lIRVeF7zcVClChX+qUs1KtSOvt10lENioFjTOTqBPDskYiwwZZvpHcCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366312; c=relaxed/simple;
-	bh=Dw1J+AKLFH/fI3dkSs1MYvNUCiojqlOIkcVQeMXRSTw=;
+	s=arc-20240116; t=1748366315; c=relaxed/simple;
+	bh=YuNOzgBXUPa83sPz37oOGsJ8XIZGrSTV1xoD4AmI/yw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W9j/vm9XR0l8k3A7XXgrrl4hegUhLAM6R6PYmDhLzOZCD3WLv+DasivIbCv82XwZ1nzL98z2BcT1O3ZArZIgdkfnFEEecGpZ+v6kKyu9iGAtyQpixPa7fyUJDy+eqI0I8Zgew8vlOxB6tlSaRYoLKwKqHOE4xrA8+Pvce9ehNoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7uyj9Wp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sgr4MT8sXFI94rGDz5688VDKSh2WKeXhoQqnPz4gwsNTZhRWFM89sZHodmlqOUMSi0UqNE3nCIvT52eEzgXneEh7mKXYikYjIXZHYjt8hHxv/1XaxxpSp3LKK8ihjNWFAamVeepeJRnLfuHWnsGmls1krLSXF2w8nYubH7x4iK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHJk1qZm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7uyj9Wp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DAF8C4CEE9;
-	Tue, 27 May 2025 17:18:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHJk1qZm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8B7C4CEE9;
+	Tue, 27 May 2025 17:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366311;
-	bh=Dw1J+AKLFH/fI3dkSs1MYvNUCiojqlOIkcVQeMXRSTw=;
+	s=korg; t=1748366314;
+	bh=YuNOzgBXUPa83sPz37oOGsJ8XIZGrSTV1xoD4AmI/yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C7uyj9WpbNUUzfbzAMvX9a3V6dU01MD2d0yW5iJ4Fhy8ENcepa+Ea28fySbGYJ46F
-	 Zw7q4seP4jutvMNRH+IoMj0g8UXNnES3g98jc6j/VD/kRpTh73ERXPnwmsUJUDvBe4
-	 tvmOb0UfnlQEHp/7fI455yU1ma/vnklGq3Z59mLg=
+	b=DHJk1qZmCX7oFNotcSfXXEGY1xylcAo019VmzLcJpzWhCPjGZNAkadFH8CJAjJplp
+	 RVbhTl0FwNZRSHpAVQcQ6PmlJnb1bRabdZg4cyeT/J23cbQe4UfapQEJKhQU0qE6Wo
+	 ulPelKMJwEmO4Hylvy9V56gt4hEFAj4iowmyEt4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Christoph Hellwig <hch@lst.de>,
-	kernel test robot <lkp@intel.com>,
-	Balbir Singh <balbirs@nvidia.com>,
+	Frederick Lawler <fred@cloudflare.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 028/783] dma-mapping: Fix warning reported for missing prototype
-Date: Tue, 27 May 2025 18:17:05 +0200
-Message-ID: <20250527162514.261631314@linuxfoundation.org>
+Subject: [PATCH 6.14 029/783] ima: process_measurement() needlessly takes inode_lock() on MAY_READ
+Date: Tue, 27 May 2025 18:17:06 +0200
+Message-ID: <20250527162514.302001685@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -53,64 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balbir Singh <balbirs@nvidia.com>
+From: Frederick Lawler <fred@cloudflare.com>
 
-[ Upstream commit cae5572ec9261f752af834cdaaf5a0ba0afcf256 ]
+[ Upstream commit 30d68cb0c37ebe2dc63aa1d46a28b9163e61caa2 ]
 
-lkp reported a warning about missing prototype for a recent patch.
+On IMA policy update, if a measure rule exists in the policy,
+IMA_MEASURE is set for ima_policy_flags which makes the violation_check
+variable always true. Coupled with a no-action on MAY_READ for a
+FILE_CHECK call, we're always taking the inode_lock().
 
-The kernel-doc style comments are out of sync, move them to the right
-function.
+This becomes a performance problem for extremely heavy read-only workloads.
+Therefore, prevent this only in the case there's no action to be taken.
 
-Cc: Marek Szyprowski <m.szyprowski@samsung.com>
-Cc: Christoph Hellwig <hch@lst.de>
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202504190615.g9fANxHw-lkp@intel.com/
-
-Signed-off-by: Balbir Singh <balbirs@nvidia.com>
-[mszyprow: reformatted subject]
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20250422114034.3535515-1-balbirs@nvidia.com
+Signed-off-by: Frederick Lawler <fred@cloudflare.com>
+Acked-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/mapping.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ security/integrity/ima/ima_main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/dma/mapping.c b/kernel/dma/mapping.c
-index 67da08fa67237..051a32988040f 100644
---- a/kernel/dma/mapping.c
-+++ b/kernel/dma/mapping.c
-@@ -910,14 +910,6 @@ int dma_set_coherent_mask(struct device *dev, u64 mask)
- }
- EXPORT_SYMBOL(dma_set_coherent_mask);
+diff --git a/security/integrity/ima/ima_main.c b/security/integrity/ima/ima_main.c
+index f3e7ac513db3f..f99ab1a3b0f09 100644
+--- a/security/integrity/ima/ima_main.c
++++ b/security/integrity/ima/ima_main.c
+@@ -245,7 +245,9 @@ static int process_measurement(struct file *file, const struct cred *cred,
+ 				&allowed_algos);
+ 	violation_check = ((func == FILE_CHECK || func == MMAP_CHECK ||
+ 			    func == MMAP_CHECK_REQPROT) &&
+-			   (ima_policy_flag & IMA_MEASURE));
++			   (ima_policy_flag & IMA_MEASURE) &&
++			   ((action & IMA_MEASURE) ||
++			    (file->f_mode & FMODE_WRITE)));
+ 	if (!action && !violation_check)
+ 		return 0;
  
--/**
-- * dma_addressing_limited - return if the device is addressing limited
-- * @dev:	device to check
-- *
-- * Return %true if the devices DMA mask is too small to address all memory in
-- * the system, else %false.  Lack of addressing bits is the prime reason for
-- * bounce buffering, but might not be the only one.
-- */
- static bool __dma_addressing_limited(struct device *dev)
- {
- 	const struct dma_map_ops *ops = get_dma_ops(dev);
-@@ -931,6 +923,14 @@ static bool __dma_addressing_limited(struct device *dev)
- 	return !dma_direct_all_ram_mapped(dev);
- }
- 
-+/**
-+ * dma_addressing_limited - return if the device is addressing limited
-+ * @dev:	device to check
-+ *
-+ * Return %true if the devices DMA mask is too small to address all memory in
-+ * the system, else %false.  Lack of addressing bits is the prime reason for
-+ * bounce buffering, but might not be the only one.
-+ */
- bool dma_addressing_limited(struct device *dev)
- {
- 	if (!__dma_addressing_limited(dev))
 -- 
 2.39.5
 
