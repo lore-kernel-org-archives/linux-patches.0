@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E016F1A3159;
-	Tue, 27 May 2025 17:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C082925FA1D;
+	Tue, 27 May 2025 17:00:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365217; cv=none; b=DBpjXegL/SGM1Y97aFM04X9U4t46cZfbPmzqamTo5xyPUghdnCDW/RXw19YC80tBATbrDlEH2Q9Zs8WPlDB+S+zVTo52X7cm0HZnr8u8nDXtMBViEVhjN88ZjRUdQdZhdL6AWYj7DHYVJHSgpydp2Wg4mjwVLHQa0nG5S7c2Ecg=
+	t=1748365217; cv=none; b=uhZL6llSU7jINbewlxjCdf9EpY4dFuzuzzSwGxwr4KLUsxBRzdD6cXiaNYD9AIWzhacqwaluAhn37RZFk9JZMqcqYj8J4qR9yEgwfEz8pjIWuW77Pt5VxWLHUAi5TWFMljo7BqBdkbrnGpiQpK5MwjHU9vMr9+U6+JxCqqVq0JQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1748365217; c=relaxed/simple;
-	bh=YiZ4cLU45FFbF+GJ0q29hAvmVxdSZ4WRTV7mlBsArjI=;
+	bh=LHJD2AWLchEXXTbL9LNU4yog1CZ+IZDxNF+92dxC9to=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OmDRolS0n5KyLGX0EDX8fXDvZUpZ74lBr1fw4upEjrMMbl04T0XM20L3Ui4MMRhNtBgpYD27D8o08qUL0vOOwnoUX+19OMos24uXFwI/OxZYMTAQGD8uDfAr/KhS2gJ+EKdbtGLjH2dJf/mLVsJWvahR+ahohMRJNE8tz0P76uI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GI/aCRbb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OnxnNQeEcHEk2CxAcjS8s/dLMAzYdc0B78PuWwXD5qPbv6nIY0xNrFj7muId6RYcvILeSiNYB3s5CGa6e0UpjFTq0dGqLL9DuFslTClsIoCvrcuqgady2lA+QH4WH2f+SbVjtynXgKYQC1UXLhWRudDrvqKu1kQocyi19H4bniQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGmav5eH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GI/aCRbb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79C1C4CEE9;
-	Tue, 27 May 2025 17:00:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGmav5eH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 261D0C4CEE9;
+	Tue, 27 May 2025 17:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365214;
-	bh=YiZ4cLU45FFbF+GJ0q29hAvmVxdSZ4WRTV7mlBsArjI=;
+	s=korg; t=1748365217;
+	bh=LHJD2AWLchEXXTbL9LNU4yog1CZ+IZDxNF+92dxC9to=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GI/aCRbbn046NiAYUfHfiwvHdSjlYAK/XXzJIDzi5LJy4BNp9f/uCsSwno+sApr2l
-	 Zqfa29fxmllf2ft+EB3iCvdbk6RTST/kQ+WYeoUT/Nip0MDWEtUfx8tR/sjm7nc2uZ
-	 p7Ev3iA/Ira9AH2uYCGbu7BNLtN0I4l//6V7FlV0=
+	b=IGmav5eHZ/i3NkibzIQhmkt+rG4CT7ZpHjD+/uZPE/RNXyWjWJIl/v6CUlC0A/XUH
+	 7oX708WH3QPIWzLx5u6h51W0wcocMt8z0XtGPapAypkOHJ50AIj+NLeSC9SOPQr/zf
+	 QokdlKXG9J14Hbk0q13m0j5WiIz9T5Ww6z6xo/ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Kai=20M=C3=A4kisara?= <Kai.Makisara@kolumbus.fi>,
-	John Meneghini <jmeneghi@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Maor Gottlieb <maorg@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 303/626] scsi: scsi_debug: First fixes for tapes
-Date: Tue, 27 May 2025 18:23:16 +0200
-Message-ID: <20250527162457.337465703@linuxfoundation.org>
+Subject: [PATCH 6.12 304/626] net/mlx5: Change POOL_NEXT_SIZE define value and make it global
+Date: Tue, 27 May 2025 18:23:17 +0200
+Message-ID: <20250527162457.378801822@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -46,167 +48,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit f69da85d5d5cc5b7dfb963a6c6c1ac0dd9002341 ]
+[ Upstream commit 80df31f384b4146a62a01b3d4beb376cc7b9a89e ]
 
-Patch includes the following:
+Change POOL_NEXT_SIZE define value from 0 to BIT(30), since this define
+is used to request the available maximum sized flow table, and zero doesn't
+make sense for it, whereas some places in the driver use zero explicitly
+expecting the smallest table size possible but instead due to this
+define they end up allocating the biggest table size unawarely.
 
- - Enable MODE SENSE/SELECT without actual page (to read/write only the
-   Block Descriptor)
+In addition move the definition to "include/linux/mlx5/fs.h" to expose the
+define to IB driver as well, while appropriately renaming it.
 
- - Store the density code and block size in the Block Descriptor (only
-   short version for tapes)
-
- - Fix REWIND not to use the wrong page filling function
-
-Signed-off-by: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
-Link: https://lore.kernel.org/r/20250213092636.2510-2-Kai.Makisara@kolumbus.fi
-Reviewed-by: John Meneghini <jmeneghi@redhat.com>
-Tested-by: John Meneghini <jmeneghi@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250219085808.349923-3-tariqt@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 55 ++++++++++++++++++++++++++++++++++-----
- 1 file changed, 49 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/esw/legacy.c    | 2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.c    | 6 ++++--
+ drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.h    | 2 --
+ drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c | 3 ++-
+ include/linux/mlx5/fs.h                                 | 2 ++
+ 5 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 680ba180a6725..89a2aaccdcfce 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -173,6 +173,10 @@ static const char *sdebug_version_date = "20210520";
- #define DEF_ZBC_MAX_OPEN_ZONES	8
- #define DEF_ZBC_NR_CONV_ZONES	1
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/legacy.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/legacy.c
+index 8587cd572da53..bdb825aa87268 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/legacy.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/legacy.c
+@@ -96,7 +96,7 @@ static int esw_create_legacy_fdb_table(struct mlx5_eswitch *esw)
+ 	if (!flow_group_in)
+ 		return -ENOMEM;
  
-+/* Default parameters for tape drives */
-+#define TAPE_DEF_DENSITY  0x0
-+#define TAPE_DEF_BLKSIZE  0
-+
- #define SDEBUG_LUN_0_VAL 0
+-	ft_attr.max_fte = POOL_NEXT_SIZE;
++	ft_attr.max_fte = MLX5_FS_MAX_POOL_SIZE;
+ 	ft_attr.prio = LEGACY_FDB_PRIO;
+ 	fdb = mlx5_create_flow_table(root_ns, &ft_attr);
+ 	if (IS_ERR(fdb)) {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.c b/drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.c
+index c14590acc7726..f6abfd00d7e68 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.c
+@@ -50,10 +50,12 @@ mlx5_ft_pool_get_avail_sz(struct mlx5_core_dev *dev, enum fs_flow_table_type tab
+ 	int i, found_i = -1;
  
- /* bit mask values for sdebug_opts */
-@@ -363,6 +367,10 @@ struct sdebug_dev_info {
- 	ktime_t create_ts;	/* time since bootup that this device was created */
- 	struct sdeb_zone_state *zstate;
- 
-+	/* For tapes */
-+	unsigned int tape_blksize;
-+	unsigned int tape_density;
-+
- 	struct dentry *debugfs_entry;
- 	struct spinlock list_lock;
- 	struct list_head inject_err_list;
-@@ -773,7 +781,7 @@ static const struct opcode_info_t opcode_info_arr[SDEB_I_LAST_ELEM_P1 + 1] = {
- /* 20 */
- 	{0, 0x1e, 0, 0, NULL, NULL, /* ALLOW REMOVAL */
- 	    {6,  0, 0, 0, 0x3, 0xc7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
--	{0, 0x1, 0, 0, resp_start_stop, NULL, /* REWIND ?? */
-+	{0, 0x1, 0, 0, NULL, NULL, /* REWIND ?? */
- 	    {6,  0x1, 0, 0, 0, 0xc7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
- 	{0, 0, 0, F_INV_OP | FF_RESPOND, NULL, NULL, /* ATA_PT */
- 	    {0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
-@@ -2742,7 +2750,7 @@ static int resp_mode_sense(struct scsi_cmnd *scp,
- 	unsigned char *ap;
- 	unsigned char *arr __free(kfree);
- 	unsigned char *cmd = scp->cmnd;
--	bool dbd, llbaa, msense_6, is_disk, is_zbc;
-+	bool dbd, llbaa, msense_6, is_disk, is_zbc, is_tape;
- 
- 	arr = kzalloc(SDEBUG_MAX_MSENSE_SZ, GFP_ATOMIC);
- 	if (!arr)
-@@ -2755,7 +2763,8 @@ static int resp_mode_sense(struct scsi_cmnd *scp,
- 	llbaa = msense_6 ? false : !!(cmd[1] & 0x10);
- 	is_disk = (sdebug_ptype == TYPE_DISK);
- 	is_zbc = devip->zoned;
--	if ((is_disk || is_zbc) && !dbd)
-+	is_tape = (sdebug_ptype == TYPE_TAPE);
-+	if ((is_disk || is_zbc || is_tape) && !dbd)
- 		bd_len = llbaa ? 16 : 8;
- 	else
- 		bd_len = 0;
-@@ -2793,15 +2802,25 @@ static int resp_mode_sense(struct scsi_cmnd *scp,
- 			put_unaligned_be32(0xffffffff, ap + 0);
- 		else
- 			put_unaligned_be32(sdebug_capacity, ap + 0);
--		put_unaligned_be16(sdebug_sector_size, ap + 6);
-+		if (is_tape) {
-+			ap[0] = devip->tape_density;
-+			put_unaligned_be16(devip->tape_blksize, ap + 6);
-+		} else
-+			put_unaligned_be16(sdebug_sector_size, ap + 6);
- 		offset += bd_len;
- 		ap = arr + offset;
- 	} else if (16 == bd_len) {
-+		if (is_tape) {
-+			mk_sense_invalid_fld(scp, SDEB_IN_DATA, 1, 4);
-+			return check_condition_result;
-+		}
- 		put_unaligned_be64((u64)sdebug_capacity, ap + 0);
- 		put_unaligned_be32(sdebug_sector_size, ap + 12);
- 		offset += bd_len;
- 		ap = arr + offset;
- 	}
-+	if (cmd[2] == 0)
-+		goto only_bd; /* Only block descriptor requested */
- 
- 	/*
- 	 * N.B. If len>0 before resp_*_pg() call, then form of that call should be:
-@@ -2902,6 +2921,7 @@ static int resp_mode_sense(struct scsi_cmnd *scp,
- 	default:
- 		goto bad_pcode;
- 	}
-+only_bd:
- 	if (msense_6)
- 		arr[0] = offset - 1;
- 	else
-@@ -2945,8 +2965,27 @@ static int resp_mode_select(struct scsi_cmnd *scp,
- 			    __func__, param_len, res);
- 	md_len = mselect6 ? (arr[0] + 1) : (get_unaligned_be16(arr + 0) + 2);
- 	bd_len = mselect6 ? arr[3] : get_unaligned_be16(arr + 6);
--	off = bd_len + (mselect6 ? 4 : 8);
--	if (md_len > 2 || off >= res) {
-+	off = (mselect6 ? 4 : 8);
-+	if (sdebug_ptype == TYPE_TAPE) {
-+		int blksize;
-+
-+		if (bd_len != 8) {
-+			mk_sense_invalid_fld(scp, SDEB_IN_DATA,
-+					mselect6 ? 3 : 6, -1);
-+			return check_condition_result;
-+		}
-+		blksize = get_unaligned_be16(arr + off + 6);
-+		if ((blksize % 4) != 0) {
-+			mk_sense_invalid_fld(scp, SDEB_IN_DATA, off + 6, -1);
-+			return check_condition_result;
-+		}
-+		devip->tape_density = arr[off];
-+		devip->tape_blksize = blksize;
-+	}
-+	off += bd_len;
-+	if (off >= res)
-+		return 0; /* No page written, just descriptors */
-+	if (md_len > 2) {
- 		mk_sense_invalid_fld(scp, SDEB_IN_DATA, 0, -1);
- 		return check_condition_result;
- 	}
-@@ -5835,6 +5874,10 @@ static struct sdebug_dev_info *sdebug_device_create(
- 		} else {
- 			devip->zoned = false;
+ 	for (i = ARRAY_SIZE(FT_POOLS) - 1; i >= 0; i--) {
+-		if (dev->priv.ft_pool->ft_left[i] && FT_POOLS[i] >= desired_size &&
++		if (dev->priv.ft_pool->ft_left[i] &&
++		    (FT_POOLS[i] >= desired_size ||
++		     desired_size == MLX5_FS_MAX_POOL_SIZE) &&
+ 		    FT_POOLS[i] <= max_ft_size) {
+ 			found_i = i;
+-			if (desired_size != POOL_NEXT_SIZE)
++			if (desired_size != MLX5_FS_MAX_POOL_SIZE)
+ 				break;
  		}
-+		if (sdebug_ptype == TYPE_TAPE) {
-+			devip->tape_density = TAPE_DEF_DENSITY;
-+			devip->tape_blksize = TAPE_DEF_BLKSIZE;
-+		}
- 		devip->create_ts = ktime_get_boottime();
- 		atomic_set(&devip->stopped, (sdeb_tur_ms_to_ready > 0 ? 2 : 0));
- 		spin_lock_init(&devip->list_lock);
+ 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.h b/drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.h
+index 25f4274b372b5..173e312db7204 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_ft_pool.h
+@@ -7,8 +7,6 @@
+ #include <linux/mlx5/driver.h>
+ #include "fs_core.h"
+ 
+-#define POOL_NEXT_SIZE 0
+-
+ int mlx5_ft_pool_init(struct mlx5_core_dev *dev);
+ void mlx5_ft_pool_destroy(struct mlx5_core_dev *dev);
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c
+index 711d14dea2485..d313cb7f0ed88 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/fs_chains.c
+@@ -161,7 +161,8 @@ mlx5_chains_create_table(struct mlx5_fs_chains *chains,
+ 		ft_attr.flags |= (MLX5_FLOW_TABLE_TUNNEL_EN_REFORMAT |
+ 				  MLX5_FLOW_TABLE_TUNNEL_EN_DECAP);
+ 
+-	sz = (chain == mlx5_chains_get_nf_ft_chain(chains)) ? FT_TBL_SZ : POOL_NEXT_SIZE;
++	sz = (chain == mlx5_chains_get_nf_ft_chain(chains)) ?
++		FT_TBL_SZ : MLX5_FS_MAX_POOL_SIZE;
+ 	ft_attr.max_fte = sz;
+ 
+ 	/* We use chains_default_ft(chains) as the table's next_ft till
+diff --git a/include/linux/mlx5/fs.h b/include/linux/mlx5/fs.h
+index b744e554f014d..db5c9ddef1702 100644
+--- a/include/linux/mlx5/fs.h
++++ b/include/linux/mlx5/fs.h
+@@ -40,6 +40,8 @@
+ 
+ #define MLX5_SET_CFG(p, f, v) MLX5_SET(create_flow_group_in, p, f, v)
+ 
++#define MLX5_FS_MAX_POOL_SIZE BIT(30)
++
+ enum mlx5_flow_destination_type {
+ 	MLX5_FLOW_DESTINATION_TYPE_NONE,
+ 	MLX5_FLOW_DESTINATION_TYPE_VPORT,
 -- 
 2.39.5
 
