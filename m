@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F064367;
-	Tue, 27 May 2025 17:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C7627E7C8;
+	Tue, 27 May 2025 17:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365940; cv=none; b=L0YnzEAWmkbpeYyO08XJIBrcly36On2Dt3M8yIdw+jIRbcD+6SlBdmFwQTnmZBvyyTR/TuizFHSuCjNhjxmtKJYA/2pW3MY4Y5oQ9onRRWHf7EKkJWYqfRwpSXcZRjLVBOlzd2nGWu+uf+DEUyZ/hJezZXUKkUwsuRO6j2fD+t8=
+	t=1748365942; cv=none; b=NY6vQwtXHNMOi7OEuoNYUKeQ7m74ttIROcMLY1GrPWwCkBx1upE0tpqr1prWqaxJb3lLlusm09EVEPONxjL5BdJUs9J4WK8F3vTC2USmrn8tEcqdV1wuplZfNWk+C41a4fvo+p5Wpr9F6ANAk7MPeorMCELVRHq4alXtyrkntw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365940; c=relaxed/simple;
-	bh=kg7gBzgH8unAz6nkA9x3WowcJdZg9eliBVE/HdQMrRc=;
+	s=arc-20240116; t=1748365942; c=relaxed/simple;
+	bh=UietwjkyltU6XH8jSHSxMlQZljLhq1ifxLW2jNdf+gE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJE0bcg4FBnGiXvvuWQ/8StgSPspgHuQVCCLfPRSH0Fb0bEmVdqxvlt5e1+xWSKm8YRIXDCa0qy65ElgCzMyW5TuzFgi946Vbyw+TA25Pw0f3qvM9xjoWAaVxb+tYvjYbM3nq5v17fr5383fil4F4W0RA/nDb8jS/xOdnR/BfAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+xVnPhv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LFnbVWfVEzYIaQrFotbX0RxE1Y/96aIqcK+MHzn5h5+a8wudljJEIcpQwv+QShm+gE+7l1OCmav7t0jpL61CkpthpRi8TJMQcO1B22nnBZXqxQaheRxdu/eZci19yMWSxj2rtiTiwjclz07ldm4FHw0X1LazfJAuBFrTOcqilXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQ1Vx12Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+xVnPhv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 124E5C4CEEB;
-	Tue, 27 May 2025 17:12:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQ1Vx12Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08FA4C4CEEB;
+	Tue, 27 May 2025 17:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365938;
-	bh=kg7gBzgH8unAz6nkA9x3WowcJdZg9eliBVE/HdQMrRc=;
+	s=korg; t=1748365941;
+	bh=UietwjkyltU6XH8jSHSxMlQZljLhq1ifxLW2jNdf+gE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M+xVnPhvCi8WiZNqUx3hFuTLUEmESHdi/x7T4aTzcL6wSEVU9I62qjDLWUzQfqwH8
-	 f53KyfwIuK44n4+BEP/w61zQmHKvYG0nfxRoT96xpUihK/+x5CmUNucmhvYhhT74Ky
-	 029xPbcK0WbdqegL8xSPloyjs25Z8VlpcECUHBi4=
+	b=LQ1Vx12Ztn7+YMJ+l1adDFl2ZOTsr8q0St64URceFIloEKoS3ijsw37lvyHgv4YUl
+	 VzGrcTKBwNcoEhKzUui6sS+eVHA81ackVr0hch3CauQ70SxGGOxag99Pq+if5WutCj
+	 mObm/dwBIeniOs6I/31gvsG+Eea0ePPttOXMtKYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 538/626] dmaengine: idxd: Fix allowing write() from different address spaces
-Date: Tue, 27 May 2025 18:27:11 +0200
-Message-ID: <20250527162506.848140192@linuxfoundation.org>
+Subject: [PATCH 6.12 512/626] ASoC: cs42l43: Disable headphone clamps during type detection
+Date: Tue, 27 May 2025 18:26:45 +0200
+Message-ID: <20250527162505.767124662@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,57 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 8dfa57aabff625bf445548257f7711ef294cd30e ]
+[ Upstream commit 70ad2e6bd180f94be030aef56e59693e36d945f3 ]
 
-Check if the process submitting the descriptor belongs to the same
-address space as the one that opened the file, reject otherwise.
+The headphone clamps cause fairly loud pops during type detect
+because they sink current from the detection process itself. Disable
+the clamps whilst the type detect runs, to improve the detection
+pop performance.
 
-Fixes: 6827738dc684 ("dmaengine: idxd: add a write() method for applications to submit work")
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20250421170337.3008875-1-dave.jiang@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250423090944.1504538-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/cdev.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/soc/codecs/cs42l43-jack.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-index 57f1bf2ab20be..928b8ab8499a7 100644
---- a/drivers/dma/idxd/cdev.c
-+++ b/drivers/dma/idxd/cdev.c
-@@ -412,6 +412,9 @@ static int idxd_cdev_mmap(struct file *filp, struct vm_area_struct *vma)
- 	if (!idxd->user_submission_safe && !capable(CAP_SYS_RAWIO))
- 		return -EPERM;
+diff --git a/sound/soc/codecs/cs42l43-jack.c b/sound/soc/codecs/cs42l43-jack.c
+index 73d764fc85392..984a7f470a31f 100644
+--- a/sound/soc/codecs/cs42l43-jack.c
++++ b/sound/soc/codecs/cs42l43-jack.c
+@@ -654,6 +654,10 @@ static int cs42l43_run_type_detect(struct cs42l43_codec *priv)
  
-+	if (current->mm != ctx->mm)
-+		return -EPERM;
+ 	reinit_completion(&priv->type_detect);
+ 
++	regmap_update_bits(cs42l43->regmap, CS42L43_STEREO_MIC_CLAMP_CTRL,
++			   CS42L43_SMIC_HPAMP_CLAMP_DIS_FRC_VAL_MASK,
++			   CS42L43_SMIC_HPAMP_CLAMP_DIS_FRC_VAL_MASK);
 +
- 	rc = check_vma(wq, vma, __func__);
- 	if (rc < 0)
- 		return rc;
-@@ -478,6 +481,9 @@ static ssize_t idxd_cdev_write(struct file *filp, const char __user *buf, size_t
- 	ssize_t written = 0;
- 	int i;
+ 	cs42l43_start_hs_bias(priv, true);
+ 	regmap_update_bits(cs42l43->regmap, CS42L43_HS2,
+ 			   CS42L43_HSDET_MODE_MASK, 0x3 << CS42L43_HSDET_MODE_SHIFT);
+@@ -665,6 +669,9 @@ static int cs42l43_run_type_detect(struct cs42l43_codec *priv)
+ 			   CS42L43_HSDET_MODE_MASK, 0x2 << CS42L43_HSDET_MODE_SHIFT);
+ 	cs42l43_stop_hs_bias(priv);
  
-+	if (current->mm != ctx->mm)
-+		return -EPERM;
++	regmap_update_bits(cs42l43->regmap, CS42L43_STEREO_MIC_CLAMP_CTRL,
++			   CS42L43_SMIC_HPAMP_CLAMP_DIS_FRC_VAL_MASK, 0);
 +
- 	for (i = 0; i < len/sizeof(struct dsa_hw_desc); i++) {
- 		int rc = idxd_submit_user_descriptor(ctx, udesc + i);
+ 	if (!time_left)
+ 		return -ETIMEDOUT;
  
-@@ -498,6 +504,9 @@ static __poll_t idxd_cdev_poll(struct file *filp,
- 	struct idxd_device *idxd = wq->idxd;
- 	__poll_t out = 0;
- 
-+	if (current->mm != ctx->mm)
-+		return -EPERM;
-+
- 	poll_wait(filp, &wq->err_queue, wait);
- 	spin_lock(&idxd->dev_lock);
- 	if (idxd->sw_err.valid)
 -- 
 2.39.5
 
