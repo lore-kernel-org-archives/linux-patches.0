@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C22727BF7C;
-	Tue, 27 May 2025 16:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5134427FD61;
+	Tue, 27 May 2025 16:49:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364595; cv=none; b=f8tyIUPXVKJBsmXtAlgpqjkYJMJQX/MACfi6tGw0zq341exJd8J8YWML4q7rXFzec5/a0LtQrJC9k01rlDwueMD00oHdJnPCHg1f8Y5KtEGPkUfyp5im36gSUgiu0CFGLV7wHqZSmCOJ2RKmbBnPxpCDBqFXfo6R7s9ciJ5OL3g=
+	t=1748364601; cv=none; b=LqobUDC7uJ5e0q0URoQW3cSvfIRdLQhWrw3N99tbn1hvJGY2rpQ/BDgrYGc7qrwc3aq23x6ODjcTt7msT1J/WBSha7T1fdJSl2vDmLES0RAxD1KR6nHCqYoVqB+vWaLAezUZ6+n0KXo+IIQd4H6pwPO8e09qf1hNqBY5SL0E5g8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364595; c=relaxed/simple;
-	bh=pEeLogLcXj6e1LHi9n+VQgo5iBgiwDvabOxr2mibdMk=;
+	s=arc-20240116; t=1748364601; c=relaxed/simple;
+	bh=eFA+52L/vzNKsLosllhZKcCOfubx7m61c8WC9p0n7G4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdBOw9lfD6/RiVYVJP9eqo5YdeNrjRJGmxsttm6AM+CWOKFge2w6NA8enKSeraT/zWM1ZEGNNcCrz+FBZ59PZ4mmGdEAbZyMuF0uyYRguwX/eBY9IuulvJYTy6D/KT0YLEXUTa9yy/zPbzwMtBsiYPdQhuy7LGHlCu02WFXGOAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gtQceNmF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OmPpEPZLqIlS5Pw72oBlf2Ycg2mdNjAm24SIaSz52jtD0w0job8qCx8VHI+uhMKudJ5DAJhvYAWlrhlL9IS2dcwivhegZuycTRZCWBq/Yu4N7DdqYZOzYC4Gbt9XzOG0xyKEb28AhqE4QNBMEiQddPYbc4UAfaBcX/3k6edxEvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2nb4ImX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtQceNmF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133FCC4CEE9;
-	Tue, 27 May 2025 16:49:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2nb4ImX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559BDC4CEE9;
+	Tue, 27 May 2025 16:49:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364595;
-	bh=pEeLogLcXj6e1LHi9n+VQgo5iBgiwDvabOxr2mibdMk=;
+	s=korg; t=1748364598;
+	bh=eFA+52L/vzNKsLosllhZKcCOfubx7m61c8WC9p0n7G4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gtQceNmFhX2T6KVYPTomDuYXFtQs5UwmNtbl49peHknvubUHZ2uBIUkKXAUURiaf4
-	 Ed6FBjGo7Rfsd8druih5YTTUAYsAzv9K4np/hZTx7Sz5WUn1LpRdDRPO3eo3bkppUy
-	 PqgL6iMChqUFFeY+a0ZyvgVVblk5zCbFcmbQEMQg=
+	b=T2nb4ImXNO58b2tsHTzXaVnW27t25vqhuJCqXVkpA0WYHRHvc5MKcEvvxp9z8PHls
+	 D28i7tCBJyjHZAPXfIf15IYE8Qr7Eo5S4hHBvqAqPVjYQpyTqNSW3rGE6ToLRXD87x
+	 M+TX/Gq8PtNDpPqjqoXV42P9Q4QGsevbG/JZcajo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans-Frieder Vogt <hfdevel@gmx.net>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Quan Zhou <quan.zhou@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 079/626] net: tn40xx: create swnode for mdio and aqr105 phy and add to mdiobus
-Date: Tue, 27 May 2025 18:19:32 +0200
-Message-ID: <20250527162448.256458833@linuxfoundation.org>
+Subject: [PATCH 6.12 106/626] wifi: mt76: mt7925: fix fails to enter low power mode in suspend state
+Date: Tue, 27 May 2025 18:19:59 +0200
+Message-ID: <20250527162449.350348931@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,238 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans-Frieder Vogt <hfdevel@gmx.net>
+From: Quan Zhou <quan.zhou@mediatek.com>
 
-[ Upstream commit 25b6a6d29d4082f6ac231c056ac321a996eb55c9 ]
+[ Upstream commit 2d5630b0c9466ac6549495828aa7dce7424a272a ]
 
-In case of an AQR105-based device, create a software node for the mdio
-function, with a child node for the Aquantia AQR105 PHY, providing a
-firmware-name (and a bit more, which may be used for future checks) to
-allow the PHY to load a MAC specific firmware from the file system.
+The mt7925 sometimes fails to enter low power mode during suspend.
+This is caused by the chip firmware sending an additional ACK event
+to the host after processing the suspend command. Due to timing issues,
+this event may not reach the host, causing the chip to get stuck.
+To resolve this, the ACK flag in the suspend command is removed,
+as it is not needed in the MT7925 architecture. This prevents the
+firmware from sending the additional ACK event, ensuring the device
+can reliably enter low power mode during suspend.
 
-The name of the PHY software node follows the naming convention suggested
-in the patch for the mdiobus_scan function (in the same patch series).
-
-Signed-off-by: Hans-Frieder Vogt <hfdevel@gmx.net>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250322-tn9510-v3a-v7-5-672a9a3d8628@gmx.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
+Link: https://patch.msgid.link/d056938144a3a0336c3a4e3cec6f271899f32bf7.1736775666.git.quan.zhou@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/tehuti/tn40.c      |  5 +-
- drivers/net/ethernet/tehuti/tn40.h      | 33 ++++++++++
- drivers/net/ethernet/tehuti/tn40_mdio.c | 82 ++++++++++++++++++++++++-
- 3 files changed, 117 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/mcu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/tehuti/tn40.c b/drivers/net/ethernet/tehuti/tn40.c
-index a6965258441c4..558b791a97edd 100644
---- a/drivers/net/ethernet/tehuti/tn40.c
-+++ b/drivers/net/ethernet/tehuti/tn40.c
-@@ -1778,7 +1778,7 @@ static int tn40_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	ret = tn40_phy_register(priv);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to set up PHY.\n");
--		goto err_free_irq;
-+		goto err_cleanup_swnodes;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+index 5b14bf434df36..2396e1795fe17 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+@@ -3287,6 +3287,9 @@ int mt7925_mcu_fill_message(struct mt76_dev *mdev, struct sk_buff *skb,
+ 		else
+ 			uni_txd->option = MCU_CMD_UNI_EXT_ACK;
+ 
++		if (cmd == MCU_UNI_CMD(HIF_CTRL))
++			uni_txd->option &= ~MCU_CMD_ACK;
++
+ 		goto exit;
  	}
  
- 	ret = tn40_priv_init(priv);
-@@ -1795,6 +1795,8 @@ static int tn40_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	return 0;
- err_unregister_phydev:
- 	tn40_phy_unregister(priv);
-+err_cleanup_swnodes:
-+	tn40_swnodes_cleanup(priv);
- err_free_irq:
- 	pci_free_irq_vectors(pdev);
- err_unset_drvdata:
-@@ -1816,6 +1818,7 @@ static void tn40_remove(struct pci_dev *pdev)
- 	unregister_netdev(ndev);
- 
- 	tn40_phy_unregister(priv);
-+	tn40_swnodes_cleanup(priv);
- 	pci_free_irq_vectors(priv->pdev);
- 	pci_set_drvdata(pdev, NULL);
- 	iounmap(priv->regs);
-diff --git a/drivers/net/ethernet/tehuti/tn40.h b/drivers/net/ethernet/tehuti/tn40.h
-index 490781fe51205..25da8686d4691 100644
---- a/drivers/net/ethernet/tehuti/tn40.h
-+++ b/drivers/net/ethernet/tehuti/tn40.h
-@@ -4,10 +4,13 @@
- #ifndef _TN40_H_
- #define _TN40_H_
- 
-+#include <linux/property.h>
- #include "tn40_regs.h"
- 
- #define TN40_DRV_NAME "tn40xx"
- 
-+#define PCI_DEVICE_ID_TEHUTI_TN9510	0x4025
-+
- #define TN40_MDIO_SPEED_1MHZ (1)
- #define TN40_MDIO_SPEED_6MHZ (6)
- 
-@@ -102,10 +105,39 @@ struct tn40_txdb {
- 	int size; /* Number of elements in the db */
- };
- 
-+#define NODE_PROP(_NAME, _PROP)	(		\
-+	(const struct software_node) {		\
-+		.name = _NAME,			\
-+		.properties = _PROP,		\
-+	})
-+
-+#define NODE_PAR_PROP(_NAME, _PAR, _PROP)	(	\
-+	(const struct software_node) {		\
-+		.name = _NAME,			\
-+		.parent = _PAR,			\
-+		.properties = _PROP,		\
-+	})
-+
-+enum tn40_swnodes {
-+	SWNODE_MDIO,
-+	SWNODE_PHY,
-+	SWNODE_MAX
-+};
-+
-+struct tn40_nodes {
-+	char phy_name[32];
-+	char mdio_name[32];
-+	struct property_entry phy_props[3];
-+	struct software_node swnodes[SWNODE_MAX];
-+	const struct software_node *group[SWNODE_MAX + 1];
-+};
-+
- struct tn40_priv {
- 	struct net_device *ndev;
- 	struct pci_dev *pdev;
- 
-+	struct tn40_nodes nodes;
-+
- 	struct napi_struct napi;
- 	/* RX FIFOs: 1 for data (full) descs, and 2 for free descs */
- 	struct tn40_rxd_fifo rxd_fifo0;
-@@ -225,6 +257,7 @@ static inline void tn40_write_reg(struct tn40_priv *priv, u32 reg, u32 val)
- 
- int tn40_set_link_speed(struct tn40_priv *priv, u32 speed);
- 
-+void tn40_swnodes_cleanup(struct tn40_priv *priv);
- int tn40_mdiobus_init(struct tn40_priv *priv);
- 
- int tn40_phy_register(struct tn40_priv *priv);
-diff --git a/drivers/net/ethernet/tehuti/tn40_mdio.c b/drivers/net/ethernet/tehuti/tn40_mdio.c
-index af18615d64a8a..5bb0cbc87d064 100644
---- a/drivers/net/ethernet/tehuti/tn40_mdio.c
-+++ b/drivers/net/ethernet/tehuti/tn40_mdio.c
-@@ -14,6 +14,8 @@
- 	 (FIELD_PREP(TN40_MDIO_PRTAD_MASK, (port))))
- #define TN40_MDIO_CMD_READ BIT(15)
- 
-+#define AQR105_FIRMWARE "tehuti/aqr105-tn40xx.cld"
-+
- static void tn40_mdio_set_speed(struct tn40_priv *priv, u32 speed)
- {
- 	void __iomem *regs = priv->regs;
-@@ -111,6 +113,56 @@ static int tn40_mdio_write_c45(struct mii_bus *mii_bus, int addr, int devnum,
- 	return  tn40_mdio_write(mii_bus->priv, addr, devnum, regnum, val);
- }
- 
-+/* registers an mdio node and an aqr105 PHY at address 1
-+ * tn40_mdio-%id {
-+ *	ethernet-phy@1 {
-+ *		compatible = "ethernet-phy-id03a1.b4a3";
-+ *		reg = <1>;
-+ *		firmware-name = AQR105_FIRMWARE;
-+ *	};
-+ * };
-+ */
-+static int tn40_swnodes_register(struct tn40_priv *priv)
-+{
-+	struct tn40_nodes *nodes = &priv->nodes;
-+	struct pci_dev *pdev = priv->pdev;
-+	struct software_node *swnodes;
-+	u32 id;
-+
-+	id = pci_dev_id(pdev);
-+
-+	snprintf(nodes->phy_name, sizeof(nodes->phy_name), "ethernet-phy@1");
-+	snprintf(nodes->mdio_name, sizeof(nodes->mdio_name), "tn40_mdio-%x",
-+		 id);
-+
-+	swnodes = nodes->swnodes;
-+
-+	swnodes[SWNODE_MDIO] = NODE_PROP(nodes->mdio_name, NULL);
-+
-+	nodes->phy_props[0] = PROPERTY_ENTRY_STRING("compatible",
-+						    "ethernet-phy-id03a1.b4a3");
-+	nodes->phy_props[1] = PROPERTY_ENTRY_U32("reg", 1);
-+	nodes->phy_props[2] = PROPERTY_ENTRY_STRING("firmware-name",
-+						    AQR105_FIRMWARE);
-+	swnodes[SWNODE_PHY] = NODE_PAR_PROP(nodes->phy_name,
-+					    &swnodes[SWNODE_MDIO],
-+					    nodes->phy_props);
-+
-+	nodes->group[SWNODE_PHY] = &swnodes[SWNODE_PHY];
-+	nodes->group[SWNODE_MDIO] = &swnodes[SWNODE_MDIO];
-+	return software_node_register_node_group(nodes->group);
-+}
-+
-+void tn40_swnodes_cleanup(struct tn40_priv *priv)
-+{
-+	/* cleanup of swnodes is only needed for AQR105-based cards */
-+	if (priv->pdev->device == PCI_DEVICE_ID_TEHUTI_TN9510) {
-+		fwnode_handle_put(dev_fwnode(&priv->mdio->dev));
-+		device_remove_software_node(&priv->mdio->dev);
-+		software_node_unregister_node_group(priv->nodes.group);
-+	}
-+}
-+
- int tn40_mdiobus_init(struct tn40_priv *priv)
- {
- 	struct pci_dev *pdev = priv->pdev;
-@@ -129,14 +181,40 @@ int tn40_mdiobus_init(struct tn40_priv *priv)
- 
- 	bus->read_c45 = tn40_mdio_read_c45;
- 	bus->write_c45 = tn40_mdio_write_c45;
-+	priv->mdio = bus;
-+
-+	/* provide swnodes for AQR105-based cards only */
-+	if (pdev->device == PCI_DEVICE_ID_TEHUTI_TN9510) {
-+		ret = tn40_swnodes_register(priv);
-+		if (ret) {
-+			pr_err("swnodes failed\n");
-+			return ret;
-+		}
-+
-+		ret = device_add_software_node(&bus->dev,
-+					       priv->nodes.group[SWNODE_MDIO]);
-+		if (ret) {
-+			dev_err(&pdev->dev,
-+				"device_add_software_node failed: %d\n", ret);
-+			goto err_swnodes_unregister;
-+		}
-+	}
- 
- 	ret = devm_mdiobus_register(&pdev->dev, bus);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to register mdiobus %d %u %u\n",
- 			ret, bus->state, MDIOBUS_UNREGISTERED);
--		return ret;
-+		goto err_swnodes_cleanup;
- 	}
- 	tn40_mdio_set_speed(priv, TN40_MDIO_SPEED_6MHZ);
--	priv->mdio = bus;
- 	return 0;
-+
-+err_swnodes_unregister:
-+	software_node_unregister_node_group(priv->nodes.group);
-+	return ret;
-+err_swnodes_cleanup:
-+	tn40_swnodes_cleanup(priv);
-+	return ret;
- }
-+
-+MODULE_FIRMWARE(AQR105_FIRMWARE);
 -- 
 2.39.5
 
