@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14A7194A67;
-	Tue, 27 May 2025 16:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E85E27E7C6;
+	Tue, 27 May 2025 16:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364778; cv=none; b=mplPsdw1kkwn2XWTIo8G3B6HGWC5848gWMMAUZ2At5VMUqnjaVU7T3Axmg55BJX9MoHJd3xfUNaYQWvPSe21v6efvPd1lS0LqTE/3N51Y/SsEChgo9708RFM67TO/shtIc7/2d9yyISyXj9EfUJO7d1ho3OURCd/fxFa81/4tJY=
+	t=1748364782; cv=none; b=PGJb7kuQgqwsKX0K41+jIzGIc9Wpb92+FFGRF5QnBHqv8zhq2s//IkVeRbHJBBMe9cLrjFdzTjQ/tJAf0wFE9sA7M8/CpJyni/eYggIzXtFDZq8lHIUF8A8XMQXAd0MFpnofV5mCv5sAOq6DN1QmsAjbaN0Ud+YiH968AavfUBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364778; c=relaxed/simple;
-	bh=lZWlg0Yjee68k37ThbAaSxXNs0KGxWdhqTc2PUgI3Z4=;
+	s=arc-20240116; t=1748364782; c=relaxed/simple;
+	bh=Fer/O6b7YpZqL3iTUHJ7/qRO9Nto//eVTPXrCSDUWaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sjsXUwt+HlEGvMJZLwjuKHC77VhMYpcyERFbi/BSfg6xygS+5xxzr0jYxpgixSy8XtKUYNuN3sseb18zGQcCjDeRQezQkFchQo891YVxsFkR9JblW7sr2M52KXTV7olOJQ4ospURtsCYXZMxBadGSsvHKQdgzlubU7TriSWbVGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cc+wUP0U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=npEZJ5XBpqs7NvirC7lnTs1k+PdRnzSV/Za99dnyvEDjmmui9iePbyRvmYgdejLq0QGcupJK9hs/barH77DFGbzVRi3rI5LjmGIpIH4bvECtKlqanXC1diLWlGC/WYB9ZsT1QDhBXWeOfSnhg5M9j16dnXI1cuQnou/KkCJ4zbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDU9Mr3K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cc+wUP0U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D249C4CEE9;
-	Tue, 27 May 2025 16:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDU9Mr3K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C26EC4CEE9;
+	Tue, 27 May 2025 16:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364778;
-	bh=lZWlg0Yjee68k37ThbAaSxXNs0KGxWdhqTc2PUgI3Z4=;
+	s=korg; t=1748364781;
+	bh=Fer/O6b7YpZqL3iTUHJ7/qRO9Nto//eVTPXrCSDUWaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cc+wUP0UPwStCGz5RtMM2TwAZ2xn+WAgye+f8o79YTRRb9BjcRjA54bKB+VmTvxGF
-	 18XZbJKBSe5sc2CJapFWYD27l3Vydi1Dfrvwm31LWhcRytRKwfm/hZWz1+b+Kvm3u4
-	 ODYHiDzEkhEkPEqg2K0Hu/4snQbqTFPUeIQtElJk=
+	b=hDU9Mr3KfYfVTmXQjyeYFs4kybBMPRwOzbAq46wpZKcx2wYduBK/fKx7xvXB5TPTy
+	 l+ZsDF9nKecgM3+cz0oeFZ9tB3W7PZdxFeCpRG1rqO0tajvwQe/8NX5C8zjgTF/2Eh
+	 skpL1a7okZsLVMv7W0xuimFHSeNtidXJ4K+R+49M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergio Perez Gonzalez <sperezglz@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 146/626] spi: spi-mux: Fix coverity issue, unchecked return value
-Date: Tue, 27 May 2025 18:20:39 +0200
-Message-ID: <20250527162450.962830925@linuxfoundation.org>
+Subject: [PATCH 6.12 164/626] ext4: do not convert the unwritten extents if data writeback fails
+Date: Tue, 27 May 2025 18:20:57 +0200
+Message-ID: <20250527162451.689878982@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,38 +53,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergio Perez Gonzalez <sperezglz@gmail.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 5a5fc308418aca275a898d638bc38c093d101855 ]
+[ Upstream commit e856f93e0fb249955f7d5efb18fe20500a9ccc6d ]
 
-The return value of spi_setup() is not captured within
-spi_mux_select() and it is assumed to be always success.
+When dioread_nolock is turned on (the default), it will convert unwritten
+extents to written at ext4_end_io_end(), even if the data writeback fails.
 
-CID: 1638374
+It leads to the possibility that stale data may be exposed when the
+physical block corresponding to the file data is read-only (i.e., writes
+return -EIO, but reads are normal).
 
-Signed-off-by: Sergio Perez Gonzalez <sperezglz@gmail.com>
-Link: https://patch.msgid.link/20250316054651.13242-1-sperezglz@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Therefore a new ext4_io_end->flags EXT4_IO_END_FAILED is added, which
+indicates that some bio write-back failed in the current ext4_io_end.
+When this flag is set, the unwritten to written conversion is no longer
+performed. Users can read the data normally until the caches are dropped,
+after that, the failed extents can only be read to all 0.
+
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20250122110533.4116662-3-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-mux.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/ext4/ext4.h    |  3 ++-
+ fs/ext4/page-io.c | 16 ++++++++++++++--
+ 2 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-mux.c b/drivers/spi/spi-mux.c
-index c02c4204442f5..0eb35c4e3987e 100644
---- a/drivers/spi/spi-mux.c
-+++ b/drivers/spi/spi-mux.c
-@@ -68,9 +68,7 @@ static int spi_mux_select(struct spi_device *spi)
+diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+index bbffb76d9a904..75df7eeee50d8 100644
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -278,7 +278,8 @@ struct ext4_system_blocks {
+ /*
+  * Flags for ext4_io_end->flags
+  */
+-#define	EXT4_IO_END_UNWRITTEN	0x0001
++#define EXT4_IO_END_UNWRITTEN	0x0001
++#define EXT4_IO_END_FAILED	0x0002
  
- 	priv->current_cs = spi_get_chipselect(spi, 0);
+ struct ext4_io_end_vec {
+ 	struct list_head list;		/* list of io_end_vec */
+diff --git a/fs/ext4/page-io.c b/fs/ext4/page-io.c
+index b7b9261fec3b5..cb023922c93c8 100644
+--- a/fs/ext4/page-io.c
++++ b/fs/ext4/page-io.c
+@@ -181,14 +181,25 @@ static int ext4_end_io_end(ext4_io_end_t *io_end)
+ 		   "list->prev 0x%p\n",
+ 		   io_end, inode->i_ino, io_end->list.next, io_end->list.prev);
  
--	spi_setup(priv->spi);
--
--	return 0;
-+	return spi_setup(priv->spi);
- }
- 
- static int spi_mux_setup(struct spi_device *spi)
+-	io_end->handle = NULL;	/* Following call will use up the handle */
+-	ret = ext4_convert_unwritten_io_end_vec(handle, io_end);
++	/*
++	 * Do not convert the unwritten extents if data writeback fails,
++	 * or stale data may be exposed.
++	 */
++	io_end->handle = NULL;  /* Following call will use up the handle */
++	if (unlikely(io_end->flag & EXT4_IO_END_FAILED)) {
++		ret = -EIO;
++		if (handle)
++			jbd2_journal_free_reserved(handle);
++	} else {
++		ret = ext4_convert_unwritten_io_end_vec(handle, io_end);
++	}
+ 	if (ret < 0 && !ext4_forced_shutdown(inode->i_sb)) {
+ 		ext4_msg(inode->i_sb, KERN_EMERG,
+ 			 "failed to convert unwritten extents to written "
+ 			 "extents -- potential data loss!  "
+ 			 "(inode %lu, error %d)", inode->i_ino, ret);
+ 	}
++
+ 	ext4_clear_io_unwritten_flag(io_end);
+ 	ext4_release_io_end(io_end);
+ 	return ret;
+@@ -344,6 +355,7 @@ static void ext4_end_bio(struct bio *bio)
+ 			     bio->bi_status, inode->i_ino,
+ 			     (unsigned long long)
+ 			     bi_sector >> (inode->i_blkbits - 9));
++		io_end->flag |= EXT4_IO_END_FAILED;
+ 		mapping_set_error(inode->i_mapping,
+ 				blk_status_to_errno(bio->bi_status));
+ 	}
 -- 
 2.39.5
 
