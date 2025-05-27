@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504AD1EA91;
-	Tue, 27 May 2025 16:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E810C194A67;
+	Tue, 27 May 2025 16:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365043; cv=none; b=WVNPjpsWG/QVdL0ldYZyvcuD6bHyj+I+l4UILcijng6EFXGKpvDv1BYZItwlBgu4NhgZ7H/U937R532VX4NC3hr0NJ7a3QlU/Ev+NSJjp2CNoOkgWiFskcMaWvM2/hIYfQ7r+qezFdcqj0cb57BC9B97uMk4sGPGRu+STQQ+DH8=
+	t=1748365047; cv=none; b=MDpQVXXsy0RzoQOXBQWHVoyFqfAlKY9nfMgRL+X4B1v6SpypwjmT6TpIo79sKu98bj3l7ht9qx9njXPQ5LTuNw/8wBVvbaBpm6VFEIqYVs5ettdLdLWqsbxps0LcXTSpvILLs6cEJv4wk1CuBf8KBSx6UF2lrt+3zBnYnSqeo9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365043; c=relaxed/simple;
-	bh=cQQ8AfeF4hWSL/U0ouuqBiTBBZGrB9CE+qqxUvnzel8=;
+	s=arc-20240116; t=1748365047; c=relaxed/simple;
+	bh=SrExGv0pEwKYJmbL/vHKcCce+jbbSSi2GLCCN9/Tx/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I8H0cmC7aAuFq4KT7B99pErhBjAxjbtTRqQ84qxfBmc56yXhCzF9Jtj8E+tG10MhIxxrOpgh8C5P3MiX1w/DAXM6CWEDv+4iIgt4HLUWeKbYmN+Pc/mWcRkEipT5Soa4usispRRRpuRLG2RTs/4Ial8curnH1dt1EzhMhDy1JxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RED2Gj0I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K08GURjcHLFKkwEJS/1wts2neTEmqPVI470ePNhSWYBxM2L2kYz9Wrv+h/PWNXB4ZdsoYjFHEu/KkvRbowUMqE5rLVr2PokzSw+c/IgEh89ZWSttMV9XBqUnGdk8Twr6ishTZMMRHMf6Llq64Dy4QZ+2ypFh1cTJPKqoVMey9RQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rDyOp6jG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RED2Gj0I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5588C4CEE9;
-	Tue, 27 May 2025 16:57:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rDyOp6jG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6691C4CEE9;
+	Tue, 27 May 2025 16:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365043;
-	bh=cQQ8AfeF4hWSL/U0ouuqBiTBBZGrB9CE+qqxUvnzel8=;
+	s=korg; t=1748365046;
+	bh=SrExGv0pEwKYJmbL/vHKcCce+jbbSSi2GLCCN9/Tx/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RED2Gj0Id69pjp80euXxuWHTsXRcDH27DEbVimNJcnzQTnsknsd8Du98CbWECWSiw
-	 XBNfBhmx/m4ntG9JJzNoGMubpt1uLpqw015EjqmX/cIgN/afNtAZDG6dhYf9L7FFEX
-	 AYHPl07r7XHVs4P3Bw9O9PTmA+l2VVIudCqqICQ4=
+	b=rDyOp6jGk8GGlkxc9SJs6KZsowiK8gvc87QwX6W0DF5X6xSlh2sRM7DXpVKV8HXkN
+	 WNvE4zfXanAhJfrpN9RBc9ez1Vo5IVNqVKhSjN2KhV+cj01ZUSJVutgD5BWG6MQMym
+	 IzL6oIIb+80YN+7DBa8cKxSnn4VBzScAO6hvC3Tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Amber Lin <Amber.Lin@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 219/626] drm/xe: Nuke VMs mapping upon close
-Date: Tue, 27 May 2025 18:21:52 +0200
-Message-ID: <20250527162453.917023512@linuxfoundation.org>
+Subject: [PATCH 6.12 210/626] drm/amdkfd: Set per-process flags only once cik/vi
+Date: Tue, 27 May 2025 18:21:43 +0200
+Message-ID: <20250527162453.550886049@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -45,197 +46,305 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
 
-[ Upstream commit 074e40d9c2a84939fe28d7121d3469db50f34a3d ]
+[ Upstream commit 289e68503a4533b014f8447e2af28ad44c92c221 ]
 
-Clear root PT entry and invalidate entire VM's address space when
-closing the VM. Will prevent the GPU from accessing any of the VM's
-memory after closing.
+Set per-process static sh_mem config only once during process
+initialization. Move all static changes from update_qpd() which is
+called each time a queue is created to set_cache_memory_policy() which
+is called once during process initialization.
 
-v2:
- - s/vma/vm in kernel doc (CI)
- - Don't nuke migration VM as this occur at driver unload (CI)
-v3:
- - Rebase and pull into SVM series (Thomas)
- - Wait for pending binds (Thomas)
-v5:
- - Remove xe_gt_tlb_invalidation_fence_fini in error case (Matt Auld)
- - Drop local migration bool (Thomas)
-v7:
- - Add drm_dev_enter/exit protecting invalidation (CI, Matt Auld)
+set_cache_memory_policy() is currently defined only for cik and vi
+family. So this commit only focuses on these two. A separate commit will
+address other asics.
 
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250306012657.3505757-12-matthew.brost@intel.com
+Signed-off-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Reviewed-by: Amber Lin <Amber.Lin@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt_tlb_invalidation.c | 22 ++++++++++++++
- drivers/gpu/drm/xe/xe_gt_tlb_invalidation.h |  2 ++
- drivers/gpu/drm/xe/xe_pt.c                  | 14 +++++++++
- drivers/gpu/drm/xe/xe_pt.h                  |  3 ++
- drivers/gpu/drm/xe/xe_vm.c                  | 32 +++++++++++++++++++++
- 5 files changed, 73 insertions(+)
+ .../drm/amd/amdkfd/kfd_device_queue_manager.c | 39 +---------
+ .../amd/amdkfd/kfd_device_queue_manager_cik.c | 69 ++++++++++++------
+ .../amd/amdkfd/kfd_device_queue_manager_vi.c  | 71 ++++++++++++-------
+ 3 files changed, 94 insertions(+), 85 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.c b/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.c
-index 98a450271f5ce..3155825fa46ad 100644
---- a/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.c
-+++ b/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.c
-@@ -406,6 +406,28 @@ int xe_gt_tlb_invalidation_range(struct xe_gt *gt,
- 	return send_tlb_invalidation(&gt->uc.guc, fence, action, len);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+index 951b87e7e3f68..6a58dd8d2130c 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -2453,14 +2453,6 @@ static int destroy_queue_cpsch(struct device_queue_manager *dqm,
+ 	return retval;
  }
  
-+/**
-+ * xe_gt_tlb_invalidation_vm - Issue a TLB invalidation on this GT for a VM
-+ * @gt: graphics tile
-+ * @vm: VM to invalidate
-+ *
-+ * Invalidate entire VM's address space
+-/*
+- * Low bits must be 0000/FFFF as required by HW, high bits must be 0 to
+- * stay in user mode.
+- */
+-#define APE1_FIXED_BITS_MASK 0xFFFF80000000FFFFULL
+-/* APE1 limit is inclusive and 64K aligned. */
+-#define APE1_LIMIT_ALIGNMENT 0xFFFF
+-
+ static bool set_cache_memory_policy(struct device_queue_manager *dqm,
+ 				   struct qcm_process_device *qpd,
+ 				   enum cache_policy default_policy,
+@@ -2475,34 +2467,6 @@ static bool set_cache_memory_policy(struct device_queue_manager *dqm,
+ 
+ 	dqm_lock(dqm);
+ 
+-	if (alternate_aperture_size == 0) {
+-		/* base > limit disables APE1 */
+-		qpd->sh_mem_ape1_base = 1;
+-		qpd->sh_mem_ape1_limit = 0;
+-	} else {
+-		/*
+-		 * In FSA64, APE1_Base[63:0] = { 16{SH_MEM_APE1_BASE[31]},
+-		 *			SH_MEM_APE1_BASE[31:0], 0x0000 }
+-		 * APE1_Limit[63:0] = { 16{SH_MEM_APE1_LIMIT[31]},
+-		 *			SH_MEM_APE1_LIMIT[31:0], 0xFFFF }
+-		 * Verify that the base and size parameters can be
+-		 * represented in this format and convert them.
+-		 * Additionally restrict APE1 to user-mode addresses.
+-		 */
+-
+-		uint64_t base = (uintptr_t)alternate_aperture_base;
+-		uint64_t limit = base + alternate_aperture_size - 1;
+-
+-		if (limit <= base || (base & APE1_FIXED_BITS_MASK) != 0 ||
+-		   (limit & APE1_FIXED_BITS_MASK) != APE1_LIMIT_ALIGNMENT) {
+-			retval = false;
+-			goto out;
+-		}
+-
+-		qpd->sh_mem_ape1_base = base >> 16;
+-		qpd->sh_mem_ape1_limit = limit >> 16;
+-	}
+-
+ 	retval = dqm->asic_ops.set_cache_memory_policy(
+ 			dqm,
+ 			qpd,
+@@ -2511,6 +2475,9 @@ static bool set_cache_memory_policy(struct device_queue_manager *dqm,
+ 			alternate_aperture_base,
+ 			alternate_aperture_size);
+ 
++	if (retval)
++		goto out;
++
+ 	if ((dqm->sched_policy == KFD_SCHED_POLICY_NO_HWS) && (qpd->vmid != 0))
+ 		program_sh_mem_settings(dqm, qpd);
+ 
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_cik.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_cik.c
+index d4d95c7f2e5d4..32bedef912b3b 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_cik.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_cik.c
+@@ -27,6 +27,14 @@
+ #include "oss/oss_2_4_sh_mask.h"
+ #include "gca/gfx_7_2_sh_mask.h"
+ 
++/*
++ * Low bits must be 0000/FFFF as required by HW, high bits must be 0 to
++ * stay in user mode.
 + */
-+void xe_gt_tlb_invalidation_vm(struct xe_gt *gt, struct xe_vm *vm)
-+{
-+	struct xe_gt_tlb_invalidation_fence fence;
-+	u64 range = 1ull << vm->xe->info.va_bits;
-+	int ret;
++#define APE1_FIXED_BITS_MASK 0xFFFF80000000FFFFULL
++/* APE1 limit is inclusive and 64K aligned. */
++#define APE1_LIMIT_ALIGNMENT 0xFFFF
 +
-+	xe_gt_tlb_invalidation_fence_init(gt, &fence, true);
-+
-+	ret = xe_gt_tlb_invalidation_range(gt, &fence, 0, range, vm->usm.asid);
-+	if (ret < 0)
-+		return;
-+
-+	xe_gt_tlb_invalidation_fence_wait(&fence);
-+}
-+
- /**
-  * xe_gt_tlb_invalidation_vma - Issue a TLB invalidation on this GT for a VMA
-  * @gt: graphics tile
-diff --git a/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.h b/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.h
-index 672acfcdf0d70..abe9b03d543e6 100644
---- a/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.h
-+++ b/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.h
-@@ -12,6 +12,7 @@
- 
- struct xe_gt;
- struct xe_guc;
-+struct xe_vm;
- struct xe_vma;
- 
- int xe_gt_tlb_invalidation_init_early(struct xe_gt *gt);
-@@ -21,6 +22,7 @@ int xe_gt_tlb_invalidation_ggtt(struct xe_gt *gt);
- int xe_gt_tlb_invalidation_vma(struct xe_gt *gt,
- 			       struct xe_gt_tlb_invalidation_fence *fence,
- 			       struct xe_vma *vma);
-+void xe_gt_tlb_invalidation_vm(struct xe_gt *gt, struct xe_vm *vm);
- int xe_gt_tlb_invalidation_range(struct xe_gt *gt,
- 				 struct xe_gt_tlb_invalidation_fence *fence,
- 				 u64 start, u64 end, u32 asid);
-diff --git a/drivers/gpu/drm/xe/xe_pt.c b/drivers/gpu/drm/xe/xe_pt.c
-index 230cf47fb9c5e..fb94ff55c7361 100644
---- a/drivers/gpu/drm/xe/xe_pt.c
-+++ b/drivers/gpu/drm/xe/xe_pt.c
-@@ -217,6 +217,20 @@ void xe_pt_destroy(struct xe_pt *pt, u32 flags, struct llist_head *deferred)
- 	xe_pt_free(pt);
- }
- 
-+/**
-+ * xe_pt_clear() - Clear a page-table.
-+ * @xe: xe device.
-+ * @pt: The page-table.
-+ *
-+ * Clears page-table by setting to zero.
-+ */
-+void xe_pt_clear(struct xe_device *xe, struct xe_pt *pt)
-+{
-+	struct iosys_map *map = &pt->bo->vmap;
-+
-+	xe_map_memset(xe, map, 0, 0, SZ_4K);
-+}
-+
- /**
-  * DOC: Pagetable building
-  *
-diff --git a/drivers/gpu/drm/xe/xe_pt.h b/drivers/gpu/drm/xe/xe_pt.h
-index 9ab386431cadd..8e43912ae8e94 100644
---- a/drivers/gpu/drm/xe/xe_pt.h
-+++ b/drivers/gpu/drm/xe/xe_pt.h
-@@ -13,6 +13,7 @@ struct dma_fence;
- struct xe_bo;
- struct xe_device;
- struct xe_exec_queue;
-+struct xe_svm_range;
- struct xe_sync_entry;
- struct xe_tile;
- struct xe_vm;
-@@ -35,6 +36,8 @@ void xe_pt_populate_empty(struct xe_tile *tile, struct xe_vm *vm,
- 
- void xe_pt_destroy(struct xe_pt *pt, u32 flags, struct llist_head *deferred);
- 
-+void xe_pt_clear(struct xe_device *xe, struct xe_pt *pt);
-+
- int xe_pt_update_ops_prepare(struct xe_tile *tile, struct xe_vma_ops *vops);
- struct dma_fence *xe_pt_update_ops_run(struct xe_tile *tile,
- 				       struct xe_vma_ops *vops);
-diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
-index 872de052d670f..de257a032225f 100644
---- a/drivers/gpu/drm/xe/xe_vm.c
-+++ b/drivers/gpu/drm/xe/xe_vm.c
-@@ -8,6 +8,7 @@
- #include <linux/dma-fence-array.h>
- #include <linux/nospec.h>
- 
-+#include <drm/drm_drv.h>
- #include <drm/drm_exec.h>
- #include <drm/drm_print.h>
- #include <drm/ttm/ttm_execbuf_util.h>
-@@ -1581,9 +1582,40 @@ struct xe_vm *xe_vm_create(struct xe_device *xe, u32 flags)
- 
- static void xe_vm_close(struct xe_vm *vm)
+ static bool set_cache_memory_policy_cik(struct device_queue_manager *dqm,
+ 				   struct qcm_process_device *qpd,
+ 				   enum cache_policy default_policy,
+@@ -84,6 +92,36 @@ static bool set_cache_memory_policy_cik(struct device_queue_manager *dqm,
  {
-+	struct xe_device *xe = vm->xe;
-+	bool bound;
-+	int idx;
+ 	uint32_t default_mtype;
+ 	uint32_t ape1_mtype;
++	unsigned int temp;
++	bool retval = true;
 +
-+	bound = drm_dev_enter(&xe->drm, &idx);
++	if (alternate_aperture_size == 0) {
++		/* base > limit disables APE1 */
++		qpd->sh_mem_ape1_base = 1;
++		qpd->sh_mem_ape1_limit = 0;
++	} else {
++		/*
++		 * In FSA64, APE1_Base[63:0] = { 16{SH_MEM_APE1_BASE[31]},
++		 *			SH_MEM_APE1_BASE[31:0], 0x0000 }
++		 * APE1_Limit[63:0] = { 16{SH_MEM_APE1_LIMIT[31]},
++		 *			SH_MEM_APE1_LIMIT[31:0], 0xFFFF }
++		 * Verify that the base and size parameters can be
++		 * represented in this format and convert them.
++		 * Additionally restrict APE1 to user-mode addresses.
++		 */
 +
- 	down_write(&vm->lock);
++		uint64_t base = (uintptr_t)alternate_aperture_base;
++		uint64_t limit = base + alternate_aperture_size - 1;
 +
- 	vm->size = 0;
-+
-+	if (!((vm->flags & XE_VM_FLAG_MIGRATION))) {
-+		struct xe_tile *tile;
-+		struct xe_gt *gt;
-+		u8 id;
-+
-+		/* Wait for pending binds */
-+		dma_resv_wait_timeout(xe_vm_resv(vm),
-+				      DMA_RESV_USAGE_BOOKKEEP,
-+				      false, MAX_SCHEDULE_TIMEOUT);
-+
-+		if (bound) {
-+			for_each_tile(tile, xe, id)
-+				if (vm->pt_root[id])
-+					xe_pt_clear(xe, vm->pt_root[id]);
-+
-+			for_each_gt(gt, xe, id)
-+				xe_gt_tlb_invalidation_vm(gt, vm);
++		if (limit <= base || (base & APE1_FIXED_BITS_MASK) != 0 ||
++		   (limit & APE1_FIXED_BITS_MASK) != APE1_LIMIT_ALIGNMENT) {
++			retval = false;
++			goto out;
 +		}
++
++		qpd->sh_mem_ape1_base = base >> 16;
++		qpd->sh_mem_ape1_limit = limit >> 16;
 +	}
+ 
+ 	default_mtype = (default_policy == cache_policy_coherent) ?
+ 			MTYPE_NONCACHED :
+@@ -97,37 +135,22 @@ static bool set_cache_memory_policy_cik(struct device_queue_manager *dqm,
+ 			| ALIGNMENT_MODE(SH_MEM_ALIGNMENT_MODE_UNALIGNED)
+ 			| DEFAULT_MTYPE(default_mtype)
+ 			| APE1_MTYPE(ape1_mtype);
+-
+-	return true;
+-}
+-
+-static int update_qpd_cik(struct device_queue_manager *dqm,
+-			  struct qcm_process_device *qpd)
+-{
+-	struct kfd_process_device *pdd;
+-	unsigned int temp;
+-
+-	pdd = qpd_to_pdd(qpd);
+-
+-	/* check if sh_mem_config register already configured */
+-	if (qpd->sh_mem_config == 0) {
+-		qpd->sh_mem_config =
+-			ALIGNMENT_MODE(SH_MEM_ALIGNMENT_MODE_UNALIGNED) |
+-			DEFAULT_MTYPE(MTYPE_NONCACHED) |
+-			APE1_MTYPE(MTYPE_NONCACHED);
+-		qpd->sh_mem_ape1_limit = 0;
+-		qpd->sh_mem_ape1_base = 0;
+-	}
+-
+ 	/* On dGPU we're always in GPUVM64 addressing mode with 64-bit
+ 	 * aperture addresses.
+ 	 */
+-	temp = get_sh_mem_bases_nybble_64(pdd);
++	temp = get_sh_mem_bases_nybble_64(qpd_to_pdd(qpd));
+ 	qpd->sh_mem_bases = compute_sh_mem_bases_64bit(temp);
+ 
+ 	pr_debug("is32bit process: %d sh_mem_bases nybble: 0x%X and register 0x%X\n",
+ 		qpd->pqm->process->is_32bit_user_mode, temp, qpd->sh_mem_bases);
+ 
++out:
++	return retval;
++}
 +
- 	up_write(&vm->lock);
-+
-+	if (bound)
-+		drm_dev_exit(idx);
++static int update_qpd_cik(struct device_queue_manager *dqm,
++			  struct qcm_process_device *qpd)
++{
+ 	return 0;
  }
  
- void xe_vm_close_and_put(struct xe_vm *vm)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_vi.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_vi.c
+index b291ee0fab943..320518f418903 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_vi.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager_vi.c
+@@ -27,6 +27,14 @@
+ #include "gca/gfx_8_0_sh_mask.h"
+ #include "oss/oss_3_0_sh_mask.h"
+ 
++/*
++ * Low bits must be 0000/FFFF as required by HW, high bits must be 0 to
++ * stay in user mode.
++ */
++#define APE1_FIXED_BITS_MASK 0xFFFF80000000FFFFULL
++/* APE1 limit is inclusive and 64K aligned. */
++#define APE1_LIMIT_ALIGNMENT 0xFFFF
++
+ static bool set_cache_memory_policy_vi(struct device_queue_manager *dqm,
+ 				       struct qcm_process_device *qpd,
+ 				       enum cache_policy default_policy,
+@@ -85,6 +93,36 @@ static bool set_cache_memory_policy_vi(struct device_queue_manager *dqm,
+ {
+ 	uint32_t default_mtype;
+ 	uint32_t ape1_mtype;
++	unsigned int temp;
++	bool retval = true;
++
++	if (alternate_aperture_size == 0) {
++		/* base > limit disables APE1 */
++		qpd->sh_mem_ape1_base = 1;
++		qpd->sh_mem_ape1_limit = 0;
++	} else {
++		/*
++		 * In FSA64, APE1_Base[63:0] = { 16{SH_MEM_APE1_BASE[31]},
++		 *			SH_MEM_APE1_BASE[31:0], 0x0000 }
++		 * APE1_Limit[63:0] = { 16{SH_MEM_APE1_LIMIT[31]},
++		 *			SH_MEM_APE1_LIMIT[31:0], 0xFFFF }
++		 * Verify that the base and size parameters can be
++		 * represented in this format and convert them.
++		 * Additionally restrict APE1 to user-mode addresses.
++		 */
++
++		uint64_t base = (uintptr_t)alternate_aperture_base;
++		uint64_t limit = base + alternate_aperture_size - 1;
++
++		if (limit <= base || (base & APE1_FIXED_BITS_MASK) != 0 ||
++		   (limit & APE1_FIXED_BITS_MASK) != APE1_LIMIT_ALIGNMENT) {
++			retval = false;
++			goto out;
++		}
++
++		qpd->sh_mem_ape1_base = base >> 16;
++		qpd->sh_mem_ape1_limit = limit >> 16;
++	}
+ 
+ 	default_mtype = (default_policy == cache_policy_coherent) ?
+ 			MTYPE_UC :
+@@ -100,40 +138,21 @@ static bool set_cache_memory_policy_vi(struct device_queue_manager *dqm,
+ 			default_mtype << SH_MEM_CONFIG__DEFAULT_MTYPE__SHIFT |
+ 			ape1_mtype << SH_MEM_CONFIG__APE1_MTYPE__SHIFT;
+ 
+-	return true;
+-}
+-
+-static int update_qpd_vi(struct device_queue_manager *dqm,
+-			 struct qcm_process_device *qpd)
+-{
+-	struct kfd_process_device *pdd;
+-	unsigned int temp;
+-
+-	pdd = qpd_to_pdd(qpd);
+-
+-	/* check if sh_mem_config register already configured */
+-	if (qpd->sh_mem_config == 0) {
+-		qpd->sh_mem_config =
+-				SH_MEM_ALIGNMENT_MODE_UNALIGNED <<
+-					SH_MEM_CONFIG__ALIGNMENT_MODE__SHIFT |
+-				MTYPE_UC <<
+-					SH_MEM_CONFIG__DEFAULT_MTYPE__SHIFT |
+-				MTYPE_UC <<
+-					SH_MEM_CONFIG__APE1_MTYPE__SHIFT;
+-
+-		qpd->sh_mem_ape1_limit = 0;
+-		qpd->sh_mem_ape1_base = 0;
+-	}
+-
+ 	/* On dGPU we're always in GPUVM64 addressing mode with 64-bit
+ 	 * aperture addresses.
+ 	 */
+-	temp = get_sh_mem_bases_nybble_64(pdd);
++	temp = get_sh_mem_bases_nybble_64(qpd_to_pdd(qpd));
+ 	qpd->sh_mem_bases = compute_sh_mem_bases_64bit(temp);
+ 
+ 	pr_debug("sh_mem_bases nybble: 0x%X and register 0x%X\n",
+ 		temp, qpd->sh_mem_bases);
++out:
++	return retval;
++}
+ 
++static int update_qpd_vi(struct device_queue_manager *dqm,
++			 struct qcm_process_device *qpd)
++{
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
