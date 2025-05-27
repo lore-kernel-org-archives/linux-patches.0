@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C14A27FD49;
-	Tue, 27 May 2025 17:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F4A27FD49;
+	Tue, 27 May 2025 17:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365911; cv=none; b=oIJ66qO6rngtutPed16Czikzw1RhctB+Edc5ZVP2HeYwG+kPJp1D+hn+NFISOOTzirwmzXzji3AyzAlcSGniD/xE/dGuv8UTJqT63D/Lzpn0MgxAo55KyqKTvEzKrEMp3QAlhribHld2DsTW7xXJXJF/78q91/RwTUXsHeu1OFE=
+	t=1748365914; cv=none; b=WQKkoP43ogTxrRIURGJIOolL1YOfMIPTdJ9RNDgEbY5Dw34PHhqY6bVJk71AHpCCs797T+Tz6jTUGY5/nnri1a1KiPHfFJh0GRtIEwMlDtxHYJ8QKpJVUUdaoLKfQqcAmsu0Hf57N2r2s4E91cST0ZV8Dz8a4zklqsoLJ+RqouQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365911; c=relaxed/simple;
-	bh=Oe7FzaDLlT/rzBxGGPmFMUC2JxzycPwgsBJSKGoKRTM=;
+	s=arc-20240116; t=1748365914; c=relaxed/simple;
+	bh=uYCbZrqMvZTDUg1k1kYUVvhB5a99pUMYrxnUgyfFSSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pWliH7gTATlL/28iDkOTaGbwo/WyfBf0E+ne5hjh3LuD/oqz5VqTSfg3/N4lcr2h1EBtBr2xVAcPPTtz9wrkyvPy2QNbwh38LIAQAHFKFtlSki+ZnAr/yb2tdRgJJsmPgVgxHC/vYeibE4ykB/F3SyRyld799PYqNHHyQHSsWsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMFnZVfL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nDq4ZKSEPKIY9EEq0HZ1dSZfIDFYlXSOytsVPJboMX91Ircr135G7+rfLVtlA5cxR0rla0k/H1/0QrSsIZJ/s3cnHSZ+XXqtw5bR0oH7lH1D8N7IT2R/5c7NjGneDjEMziLtAIIyfTY5xOo3OhvUeRVXKcDBao1pHpW4+4gJwaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uuv4yjgQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMFnZVfL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980CDC4CEE9;
-	Tue, 27 May 2025 17:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uuv4yjgQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C21BCC4CEF3;
+	Tue, 27 May 2025 17:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365911;
-	bh=Oe7FzaDLlT/rzBxGGPmFMUC2JxzycPwgsBJSKGoKRTM=;
+	s=korg; t=1748365914;
+	bh=uYCbZrqMvZTDUg1k1kYUVvhB5a99pUMYrxnUgyfFSSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CMFnZVfL6UzszEXpwyTTltFBNBzOzFtX7ivSchvu/kjWYhjQbntvY0x8i1H5IBceA
-	 dKNtL+PJ5N/J2hIV0mAjyh8UwIIX0IPEh+vsBArr1MqSHsPURn8B7WnDHCU4RjQILG
-	 ynswlz+ztPywMpwVzngOVO81RfPZmDBr86itKMdA=
+	b=Uuv4yjgQBemAUsR7x4jPJX8cW3oIK7iQFEndlFgbxm5LBeft0OwIo9qyIjyYwj7zi
+	 3OgdCoxsYPvDs001l/z/U6MBq7JQdHpmnbbRzDfNwtNttt8b9Bkat6nM2jpeBjUXCJ
+	 Z5AeQNPSdqg7p7nh4HGFWkGaahc+QZRF3aoY6w4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	=?UTF-8?q?Pawe=C5=82=20Anikiel?= <panikiel@google.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 529/626] wifi: iwlwifi: add support for Killer on MTL
-Date: Tue, 27 May 2025 18:27:02 +0200
-Message-ID: <20250527162506.486887607@linuxfoundation.org>
+Subject: [PATCH 6.12 530/626] x86/Kconfig: make CFI_AUTO_DEFAULT depend on !RUST or Rust >= 1.88
+Date: Tue, 27 May 2025 18:27:03 +0200
+Message-ID: <20250527162506.526765323@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -44,40 +47,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Paweł Anikiel <panikiel@google.com>
 
-[ Upstream commit ebedf8b7f05b9c886d68d63025db8d1b12343157 ]
+[ Upstream commit 5595c31c370957aabe739ac3996aedba8267603f ]
 
-For now, we need another entry for these devices, this
-will be changed completely for 6.16.
+Calling core::fmt::write() from rust code while FineIBT is enabled
+results in a kernel panic:
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219926
-Link: https://patch.msgid.link/20250506214258.2efbdc9e9a82.I31915ec252bd1c74bd53b89a0e214e42a74b6f2e@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ 4614.199779] kernel BUG at arch/x86/kernel/cet.c:132!
+[ 4614.205343] Oops: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
+[ 4614.211781] CPU: 2 UID: 0 PID: 6057 Comm: dmabuf_dump Tainted: G     U     O       6.12.17-android16-0-g6ab38c534a43 #1 9da040f27673ec3945e23b998a0f8bd64c846599
+[ 4614.227832] Tainted: [U]=USER, [O]=OOT_MODULE
+[ 4614.241247] RIP: 0010:do_kernel_cp_fault+0xea/0xf0
+...
+[ 4614.398144] RIP: 0010:_RNvXs5_NtNtNtCs3o2tGsuHyou_4core3fmt3num3impyNtB9_7Display3fmt+0x0/0x20
+[ 4614.407792] Code: 48 f7 df 48 0f 48 f9 48 89 f2 89 c6 5d e9 18 fd ff ff 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 41 81 ea 14 61 af 2c 74 03 0f 0b 90 <66> 0f 1f 00 55 48 89 e5 48 89 f2 48 8b 3f be 01 00 00 00 5d e9 e7
+[ 4614.428775] RSP: 0018:ffffb95acfa4ba68 EFLAGS: 00010246
+[ 4614.434609] RAX: 0000000000000000 RBX: 0000000000000010 RCX: 0000000000000000
+[ 4614.442587] RDX: 0000000000000007 RSI: ffffb95acfa4ba70 RDI: ffffb95acfa4bc88
+[ 4614.450557] RBP: ffffb95acfa4bae0 R08: ffff0a00ffffff05 R09: 0000000000000070
+[ 4614.458527] R10: 0000000000000000 R11: ffffffffab67eaf0 R12: ffffb95acfa4bcc8
+[ 4614.466493] R13: ffffffffac5d50f0 R14: 0000000000000000 R15: 0000000000000000
+[ 4614.474473]  ? __cfi__RNvXs5_NtNtNtCs3o2tGsuHyou_4core3fmt3num3impyNtB9_7Display3fmt+0x10/0x10
+[ 4614.484118]  ? _RNvNtCs3o2tGsuHyou_4core3fmt5write+0x1d2/0x250
+
+This happens because core::fmt::write() calls
+core::fmt::rt::Argument::fmt(), which currently has CFI disabled:
+
+library/core/src/fmt/rt.rs:
+171     // FIXME: Transmuting formatter in new and indirectly branching to/calling
+172     // it here is an explicit CFI violation.
+173     #[allow(inline_no_sanitize)]
+174     #[no_sanitize(cfi, kcfi)]
+175     #[inline]
+176     pub(super) unsafe fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+
+This causes a Control Protection exception, because FineIBT has sealed
+off the original function's endbr64.
+
+This makes rust currently incompatible with FineIBT. Add a Kconfig
+dependency that prevents FineIBT from getting turned on by default
+if rust is enabled.
+
+[ Rust 1.88.0 (scheduled for 2025-06-26) should have this fixed [1],
+  and thus we relaxed the condition with Rust >= 1.88.
+
+  When `objtool` lands checking for this with e.g. [2], the plan is
+  to ideally run that in upstream Rust's CI to prevent regressions
+  early [3], since we do not control `core`'s source code.
+
+  Alice tested the Rust PR backported to an older compiler.
+
+  Peter would like that Rust provides a stable `core` which can be
+  pulled into the kernel: "Relying on that much out of tree code is
+  'unfortunate'".
+
+    - Miguel ]
+
+Signed-off-by: Paweł Anikiel <panikiel@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Acked-by: Peter Zijlstra <peterz@infradead.org>
+Link: https://github.com/rust-lang/rust/pull/139632 [1]
+Link: https://lore.kernel.org/rust-for-linux/20250410154556.GB9003@noisy.programming.kicks-ass.net/ [2]
+Link: https://github.com/rust-lang/rust/pull/139632#issuecomment-2801950873 [3]
+Link: https://lore.kernel.org/r/20250410115420.366349-1-panikiel@google.com
+Link: https://lore.kernel.org/r/att0-CANiq72kjDM0cKALVy4POEzhfdT4nO7tqz0Pm7xM+3=_0+L1t=A@mail.gmail.com
+[ Reduced splat. - Miguel ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-index 9141ea57abfce..68989d183e82a 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-@@ -587,6 +587,8 @@ VISIBLE_IF_IWLWIFI_KUNIT const struct iwl_dev_info iwl_dev_info_table[] = {
- 	IWL_DEV_INFO(0x7A70, 0x1692, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690i_name),
- 	IWL_DEV_INFO(0x7AF0, 0x1691, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690s_name),
- 	IWL_DEV_INFO(0x7AF0, 0x1692, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690i_name),
-+	IWL_DEV_INFO(0x7F70, 0x1691, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690s_name),
-+	IWL_DEV_INFO(0x7F70, 0x1692, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690i_name),
- 
- 	IWL_DEV_INFO(0x271C, 0x0214, iwl9260_2ac_cfg, iwl9260_1_name),
- 	IWL_DEV_INFO(0x7E40, 0x1691, iwl_cfg_ma, iwl_ax411_killer_1690s_name),
+diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
+index 7b3622ba4c3c8..15425c9bdc2bc 100644
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -2420,6 +2420,7 @@ config STRICT_SIGALTSTACK_SIZE
+ config CFI_AUTO_DEFAULT
+ 	bool "Attempt to use FineIBT by default at boot time"
+ 	depends on FINEIBT
++	depends on !RUST || RUSTC_VERSION >= 108800
+ 	default y
+ 	help
+ 	  Attempt to use FineIBT by default at boot time. If enabled,
 -- 
 2.39.5
 
