@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554BF280314;
-	Tue, 27 May 2025 17:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778D21CAA7B;
+	Tue, 27 May 2025 17:40:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367604; cv=none; b=D1c5Bqj1g38sXXnlK0faFaICarr5H2QkC1kL4PAiU77hCgSLlvsDcxzu7dDmPGCtV/RYkdz6VO6sMro4BWPHmsQzVSrvw+iUyZvZKfIaHtsBRCy7TcGL8q0N1Ix8mYjmCf8u5iSR3sbOVh42scTGkXTr1p+bbx7sRo+u9PX0S2o=
+	t=1748367607; cv=none; b=rgRNnjAErptrmzB7qFu0DVWbI24mdBqrXw5htyiDSVdJfuCOReV4aFgyVO/PS+63MWfvUM3MNpyds/oBRYQUgRqs866sm1PhDGxVVqNjiYYNsfrwB/y2j67G+/L+LRXsPrysEfi12IAWUtFhofMHFl31IuoFt700U584CWJgUTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367604; c=relaxed/simple;
-	bh=Z02/qLBzkLgOJYa0uYXUdUjPxOTZ+PLDMB35jNkCAwg=;
+	s=arc-20240116; t=1748367607; c=relaxed/simple;
+	bh=u0zPlmkkkzmrpwNYIBrSoQVKaOtZdEXYfMmTbilevG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rDBg1euX3dDW6G3czEyFvtIVAXrqCh/jA99mXaAx/7aYcrJHKH0N5PtAZ3OpvYThSohI70cKWLXdaVFYUdFiM2pYEC9GZQJRO88+0HgpQPim9ls+ADuxIPfuhDhqc2Mb2nBq/2K6uC7a+4vexEPxxfMRH78eqHY9F4VLsFai5Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eEsK9Uka; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kRtkAICem/1fdk6IYBLyXxi+lgpOiU0kROt2kPEefTJ9l9ucALoJyQy0khmjROQC/784vD+y7ahR/b60MKyKzjR+b9a3WzcJeYENKk9uPMrDAjJSdR06X6H8FEASf5Eub50zQ+LwGIrXA7q1H0QNQN0HNn3ehmsf/Dkc1rmZTOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pB6bP57f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eEsK9Uka"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5D0C4CEEA;
-	Tue, 27 May 2025 17:40:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pB6bP57f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D6CC4CEE9;
+	Tue, 27 May 2025 17:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367604;
-	bh=Z02/qLBzkLgOJYa0uYXUdUjPxOTZ+PLDMB35jNkCAwg=;
+	s=korg; t=1748367607;
+	bh=u0zPlmkkkzmrpwNYIBrSoQVKaOtZdEXYfMmTbilevG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eEsK9Uka/LLCuk/jlSmtivYo2wfBCne5GHet3q/utffzLUcMkcVxeoNKpyMuEbKGI
-	 t4/QG4ATNp2HELeKbbTCTGt+VjEKxIkXG0EwSBqCGXx4dzdFNHS54sVwT/D7V5egPc
-	 ZVWKI7S4JJJcyhNVEg6ilSg+R5ZnCalHaarSfqJY=
+	b=pB6bP57f135PZo1w7pP8elEB4SKDS6SLUoG/4tRVUN1dZO4HsM7Q1mn/g50qD3HzR
+	 ncArYkoHar2meLr9jMfB3d++dFtre1AKloXDpCqa+B6PTupXUbRY5BzrL4XhhXRxXX
+	 mZtsdD9A2lJMDuklxGPG8doD07mHkp3rzM38ghGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hector Martin <marcan@marcan.st>,
-	Mark Brown <broonie@kernel.org>,
+	Dillon Varone <dillon.varone@amd.com>,
+	Leo Zeng <Leo.Zeng@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 440/783] ASoC: tas2764: Add reg defaults for TAS2764_INT_CLK_CFG
-Date: Tue, 27 May 2025 18:23:57 +0200
-Message-ID: <20250527162531.053865111@linuxfoundation.org>
+Subject: [PATCH 6.14 414/783] Revert "drm/amd/display: Request HW cursor on DCN3.2 with SubVP"
+Date: Tue, 27 May 2025 18:23:31 +0200
+Message-ID: <20250527162529.958980170@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,31 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hector Martin <marcan@marcan.st>
+From: Leo Zeng <Leo.Zeng@amd.com>
 
-[ Upstream commit d64c4c3d1c578f98d70db1c5e2535b47adce9d07 ]
+[ Upstream commit 8ae6dfc0b61b170cf13832d4cfe2a0c744e621a7 ]
 
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20250208-asoc-tas2764-v1-4-dbab892a69b5@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This reverts commit 13437c91606c9232c747475e202fe3827cd53264.
+
+Reason to revert: idle power regression found in testing.
+
+Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Signed-off-by: Leo Zeng <Leo.Zeng@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2764.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/sound/soc/codecs/tas2764.c b/sound/soc/codecs/tas2764.c
-index 58315eab492a1..bc0a73fc7ab41 100644
---- a/sound/soc/codecs/tas2764.c
-+++ b/sound/soc/codecs/tas2764.c
-@@ -634,6 +634,7 @@ static const struct reg_default tas2764_reg_defaults[] = {
- 	{ TAS2764_TDM_CFG2, 0x0a },
- 	{ TAS2764_TDM_CFG3, 0x10 },
- 	{ TAS2764_TDM_CFG5, 0x42 },
-+	{ TAS2764_INT_CLK_CFG, 0x19 },
- };
- 
- static const struct regmap_range_cfg tas2764_regmap_ranges[] = {
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+index 56dda686e2992..6f490d8d7038c 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -626,7 +626,6 @@ static bool dcn32_assign_subvp_pipe(struct dc *dc,
+ 		 * - Not TMZ surface
+ 		 */
+ 		if (pipe->plane_state && !pipe->top_pipe && !pipe->prev_odm_pipe && !dcn32_is_center_timing(pipe) &&
+-				!pipe->stream->hw_cursor_req &&
+ 				!(pipe->stream->timing.pix_clk_100hz / 10000 > DCN3_2_MAX_SUBVP_PIXEL_RATE_MHZ) &&
+ 				(!dcn32_is_psr_capable(pipe) || (context->stream_count == 1 && dc->caps.dmub_caps.subvp_psr)) &&
+ 				dc_state_get_pipe_subvp_type(context, pipe) == SUBVP_NONE &&
 -- 
 2.39.5
 
