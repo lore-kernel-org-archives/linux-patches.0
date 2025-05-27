@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E741AF0BB;
-	Tue, 27 May 2025 17:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7B31AF0BB;
+	Tue, 27 May 2025 17:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367095; cv=none; b=O8gLp23Nu8zJdwokZBtTN6IUJ2tyJwbt6jDAik6VxHNuAeMUZSKFHnjQ8BMIHgF2ryp44vIWhYDJs50adECf2dGSLUmjx+KYNKCc290URVSHivL3s2RXM6Gpqkb581U4OhCZGdyFled4vLp04qYNhTLR08TJEHh34BK9y9vNov0=
+	t=1748367099; cv=none; b=kDeZUm2NvCBZBXZo7oLklJnXMF4v1CYOawnCV8Wpkthf+79hwcNamSwEowNo0iiITQlbtxmJ9NTyZHJWE1Kg102wX43oZj2u6aM+B+iRLeOu1QFNHg7djnKT4F0TcreZGrh8qD/JVIyHjfoHoN/qU5HYZSgBc4Q78/L42BLXvOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367095; c=relaxed/simple;
-	bh=ntHaB7jbqQRAbiVok4W8AS4OcFaUWPo4LExaKDjYcjg=;
+	s=arc-20240116; t=1748367099; c=relaxed/simple;
+	bh=XsZ5GRy8hIiV8FkoQQOVm/xg2zvO0iSfEt+dTeien+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z84fqn6F6/tf0EOORf3hfreGgFGLWAZtH1ER1jAaaVtybHR2IOivPzvhsfrzuGVhegbrHWSX8vo53OlcCh7Ej3PRzmB2WzwQQghpDVf1NuO/c3bWVw5g9UdS9/y6WtWMVgDFCDiIIOSKN0CaYYo/U68WjQDx0c6PWwzz5uepNq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0xDlGz2t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ffIzmC7dA/dvxbu0GZ0U2AVcxqtqFBTC+jiYjhpwvkj8NKEnp+4ha8NZBQzpH0DepfEYAKNz2ARhs/NvzfX8Ug8X0PnfoX7WkY7UTNZgp3RsyR0w7labqDTih+lIAeeCkwg4bhPRYTT2aQRyehs3N9x7Eic6XNzExU00DswId9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqpzNHJ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0xDlGz2t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6449C4CEE9;
-	Tue, 27 May 2025 17:31:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqpzNHJ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F21C4CEE9;
+	Tue, 27 May 2025 17:31:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367095;
-	bh=ntHaB7jbqQRAbiVok4W8AS4OcFaUWPo4LExaKDjYcjg=;
+	s=korg; t=1748367098;
+	bh=XsZ5GRy8hIiV8FkoQQOVm/xg2zvO0iSfEt+dTeien+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0xDlGz2tKPrEmKBPtRoSGHw8Cz1ZicbQfhybk5fPY5quPVOLlkwp0b+HFTkxEOahZ
-	 Io1MGtGlZxvvKVDscvoYkohb7aau88QJyrKPk0O+V8/rBgRgQfyoIxLFPsPemggraa
-	 0HE9cjcDck+qmFEFTGYfdOSUHy4I1gOhl75UlPCA=
+	b=XqpzNHJ/j0+Lvj/t0YHE9dR+OULE233B8bMNaMKpWeVd7qQJffyoesqwJhQSQtBkW
+	 riMHbqxTp2/VwV/D0xBZNjwL3LUUaUaJEJ3ypeRKCmcmfdt1BDoW9+jCONYkIx74rY
+	 HsN5jeUVhAXljnhlqYZBmFFJ06qEl8tNJLrlckds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Sven Schwermer <sven@svenschwermer.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 276/783] blk-throttle: dont take carryover for prioritized processing of metadata
-Date: Tue, 27 May 2025 18:21:13 +0200
-Message-ID: <20250527162524.324130124@linuxfoundation.org>
+Subject: [PATCH 6.14 250/783] crypto: mxs-dcp - Only set OTP_KEY bit for OTP key
+Date: Tue, 27 May 2025 18:20:47 +0200
+Message-ID: <20250527162523.286092790@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -54,61 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Sven Schwermer <sven@svenschwermer.de>
 
-[ Upstream commit a9fc8868b350cbf4ff730a4ea9651319cc669516 ]
+[ Upstream commit caa9dbb76ff52ec848a57245062aaeaa07740adc ]
 
-Commit 29390bb5661d ("blk-throttle: support prioritized processing of metadata")
-takes bytes/ios carryover for prioritized processing of metadata. Turns out
-we can support it by charging it directly without trimming slice, and the
-result is same with carryover.
+While MXS_DCP_CONTROL0_OTP_KEY is set, the CRYPTO_KEY (DCP_PAES_KEY_OTP)
+is used even if the UNIQUE_KEY (DCP_PAES_KEY_UNIQUE) is selected. This
+is not clearly documented, but this implementation is consistent with
+NXP's downstream kernel fork and optee_os.
 
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Josef Bacik <josef@toxicpanda.com>
-Cc: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20250305043123.3938491-3-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sven Schwermer <sven@svenschwermer.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-throttle.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ drivers/crypto/mxs-dcp.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/block/blk-throttle.c b/block/blk-throttle.c
-index a52f0d6b40ad4..762fbbd388c87 100644
---- a/block/blk-throttle.c
-+++ b/block/blk-throttle.c
-@@ -1623,13 +1623,6 @@ static bool tg_within_limit(struct throtl_grp *tg, struct bio *bio, bool rw)
- 	return tg_may_dispatch(tg, bio, NULL);
- }
+diff --git a/drivers/crypto/mxs-dcp.c b/drivers/crypto/mxs-dcp.c
+index d94a26c3541a0..133ebc9982362 100644
+--- a/drivers/crypto/mxs-dcp.c
++++ b/drivers/crypto/mxs-dcp.c
+@@ -265,12 +265,12 @@ static int mxs_dcp_run_aes(struct dcp_async_ctx *actx,
+ 		    MXS_DCP_CONTROL0_INTERRUPT |
+ 		    MXS_DCP_CONTROL0_ENABLE_CIPHER;
  
--static void tg_dispatch_in_debt(struct throtl_grp *tg, struct bio *bio, bool rw)
--{
--	if (!bio_flagged(bio, BIO_BPS_THROTTLED))
--		tg->carryover_bytes[rw] -= throtl_bio_data_size(bio);
--	tg->carryover_ios[rw]--;
--}
--
- bool __blk_throtl_bio(struct bio *bio)
- {
- 	struct request_queue *q = bdev_get_queue(bio->bi_bdev);
-@@ -1666,10 +1659,12 @@ bool __blk_throtl_bio(struct bio *bio)
- 			/*
- 			 * IOs which may cause priority inversions are
- 			 * dispatched directly, even if they're over limit.
--			 * Debts are handled by carryover_bytes/ios while
--			 * calculating wait time.
-+			 *
-+			 * Charge and dispatch directly, and our throttle
-+			 * control algorithm is adaptive, and extra IO bytes
-+			 * will be throttled for paying the debt
- 			 */
--			tg_dispatch_in_debt(tg, bio, rw);
-+			throtl_charge_bio(tg, bio);
- 		} else {
- 			/* if above limits, break to queue */
- 			break;
+-	if (key_referenced)
+-		/* Set OTP key bit to select the key via KEY_SELECT. */
+-		desc->control0 |= MXS_DCP_CONTROL0_OTP_KEY;
+-	else
++	if (!key_referenced)
+ 		/* Payload contains the key. */
+ 		desc->control0 |= MXS_DCP_CONTROL0_PAYLOAD_KEY;
++	else if (actx->key[0] == DCP_PAES_KEY_OTP)
++		/* Set OTP key bit to select the key via KEY_SELECT. */
++		desc->control0 |= MXS_DCP_CONTROL0_OTP_KEY;
+ 
+ 	if (rctx->enc)
+ 		desc->control0 |= MXS_DCP_CONTROL0_CIPHER_ENCRYPT;
 -- 
 2.39.5
 
