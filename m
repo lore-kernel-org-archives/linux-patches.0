@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB729139579;
-	Tue, 27 May 2025 17:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1DD025A323;
+	Tue, 27 May 2025 17:08:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365724; cv=none; b=awGS7hQJGbMhHXpXUgg6A23IAPm126pPPILP1gLBh5a01Fbzf99X+VnTZQmxGEqw9Ow4xcOjYDJb6HdYZOhtdo2voNDTntSG2Jxqr7otKdHgpiHznKSV2PzVUZK3AEEcr3x0gWPRRL9aWFb4OFdQhAFjQICkUX4a5WrGx4cIAno=
+	t=1748365728; cv=none; b=b1YamDZdRsfRW2uJMlIXnXUp8SZu3TzeXpKo/0O0oU8MSLU0+ze22LdvbltAtq4TPs+ZffANT+c6liBy+I3beXYvHwNC0o6X01cDtHz4G8BOAWEw5tE5BSqxBrBq2VgZvtqcOT70g5nGaR/C0PpIdv3qTmL531WSqj5q53fUko8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365724; c=relaxed/simple;
-	bh=AnM7I4PA/2ZhN5g2Ljz88zG9A3gnti5lk9tfCFJh/iQ=;
+	s=arc-20240116; t=1748365728; c=relaxed/simple;
+	bh=8esODaBkO/PEACmUwnYrkrwlREAhn8fC/073YI26938=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FBTUgVxg/g/osfS8/0H1HQ5hE8r5CwviuLtY5Ba+6AsmEfDsogrYyffR9Idm4qe8OjF4j31bozqDWGtyqcMmD0CLioCqA3Fu2EHg24M7MdG4Imu/hrsl3xMOzY/lJmAPM1Gx6Xiy0eNH/EeBiHWYtf6AgLvn5clVWfBsDBh3rDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jwN8pe1j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nPcnrGD92JBIb/qIwadbRem/SnWZMRH1dMJYa0bHK3Ydl/ydMFxQbIqMTYxjG2oHGztJij6nVmFNpEEsZhSc7IVqR42ABtjQfMjQ/ODYV292WRJip/lnYvcbLN/sGO28Wlwblyw4xswfXNL9T5UH3dxpXN5Oxu1Id18fT17lXOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqx0lXOs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jwN8pe1j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F79C4CEE9;
-	Tue, 27 May 2025 17:08:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqx0lXOs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67A07C4CEE9;
+	Tue, 27 May 2025 17:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365724;
-	bh=AnM7I4PA/2ZhN5g2Ljz88zG9A3gnti5lk9tfCFJh/iQ=;
+	s=korg; t=1748365727;
+	bh=8esODaBkO/PEACmUwnYrkrwlREAhn8fC/073YI26938=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jwN8pe1jL2IVpvA7V2ThkSZxQIibyLZWCh36nkR+/CLS8ITtghINExY+pZTkeqyV6
-	 rCrDfEswQ9IuNXExhqoIYrxAsPQ1LUjwE/S4bMINJIh/WNqGEZhTjnOiGVZQeWXJov
-	 ZQMlZcis5O9WhwufEklEVjfdSurtfBJU4SulW00s=
+	b=kqx0lXOsc2Fce+fkeerpl+ubvioXmrjvrScEhpBtfqtWBZmc4RSdK311XKvFeNOR1
+	 OZjkrckvjdH7fECbiUldVhj0bEQ7RoOG/lfYfdOlFH+J5vtZAhgcEf7HvKvgR10s6c
+	 wVsbCnM0twyj8xf6VHAfyKjTDI1yMirp+dAlJmTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naman Trivedi <naman.trivedimanojbhai@amd.com>,
-	Senthil Nathan Thangaraj <senthilnathan.thangaraj@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 468/626] arm64: zynqmp: add clock-output-names property in clock nodes
-Date: Tue, 27 May 2025 18:26:01 +0200
-Message-ID: <20250527162504.012909699@linuxfoundation.org>
+Subject: [PATCH 6.12 469/626] ASoC: codecs: pcm3168a: Allow for 24-bit in provider mode
+Date: Tue, 27 May 2025 18:26:02 +0200
+Message-ID: <20250527162504.051705051@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,78 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naman Trivedi <naman.trivedimanojbhai@amd.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 385a59e7f7fb3438466a0712cc14672c708bbd57 ]
+[ Upstream commit 7d92a38d67e5d937b64b20aa4fd14451ee1772f3 ]
 
-Add clock-output-names property to clock nodes, so that the resulting
-clock name do not change when clock node name is changed.
-Also, replace underscores with hyphens in the clock node names as per
-dt-schema rule.
+As per codec device specification, 24-bit is allowed in provider mode.
+Update the code to reflect that.
 
-Signed-off-by: Naman Trivedi <naman.trivedimanojbhai@amd.com>
-Acked-by: Senthil Nathan Thangaraj <senthilnathan.thangaraj@amd.com>
-Link: https://lore.kernel.org/r/20241122095712.1166883-1-naman.trivedimanojbhai@amd.com
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250203141051.2361323-4-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/xilinx/zynqmp-clk-ccf.dtsi | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ sound/soc/codecs/pcm3168a.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/xilinx/zynqmp-clk-ccf.dtsi b/arch/arm64/boot/dts/xilinx/zynqmp-clk-ccf.dtsi
-index 60d1b1acf9a03..385fed8a852af 100644
---- a/arch/arm64/boot/dts/xilinx/zynqmp-clk-ccf.dtsi
-+++ b/arch/arm64/boot/dts/xilinx/zynqmp-clk-ccf.dtsi
-@@ -10,39 +10,44 @@
- 
- #include <dt-bindings/clock/xlnx-zynqmp-clk.h>
- / {
--	pss_ref_clk: pss_ref_clk {
-+	pss_ref_clk: pss-ref-clk {
- 		bootph-all;
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <33333333>;
-+		clock-output-names = "pss_ref_clk";
- 	};
- 
--	video_clk: video_clk {
-+	video_clk: video-clk {
- 		bootph-all;
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <27000000>;
-+		clock-output-names = "video_clk";
- 	};
- 
--	pss_alt_ref_clk: pss_alt_ref_clk {
-+	pss_alt_ref_clk: pss-alt-ref-clk {
- 		bootph-all;
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <0>;
-+		clock-output-names = "pss_alt_ref_clk";
- 	};
- 
--	gt_crx_ref_clk: gt_crx_ref_clk {
-+	gt_crx_ref_clk: gt-crx-ref-clk {
- 		bootph-all;
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <108000000>;
-+		clock-output-names = "gt_crx_ref_clk";
- 	};
- 
--	aux_ref_clk: aux_ref_clk {
-+	aux_ref_clk: aux-ref-clk {
- 		bootph-all;
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <27000000>;
-+		clock-output-names = "aux_ref_clk";
- 	};
- };
- 
+diff --git a/sound/soc/codecs/pcm3168a.c b/sound/soc/codecs/pcm3168a.c
+index fac0617ab95b6..6cbb8d0535b02 100644
+--- a/sound/soc/codecs/pcm3168a.c
++++ b/sound/soc/codecs/pcm3168a.c
+@@ -493,9 +493,9 @@ static int pcm3168a_hw_params(struct snd_pcm_substream *substream,
+ 		}
+ 		break;
+ 	case 24:
+-		if (provider_mode || (format == SND_SOC_DAIFMT_DSP_A) ||
+-		    		     (format == SND_SOC_DAIFMT_DSP_B)) {
+-			dev_err(component->dev, "24-bit slots not supported in provider mode, or consumer mode using DSP\n");
++		if (!provider_mode && ((format == SND_SOC_DAIFMT_DSP_A) ||
++				       (format == SND_SOC_DAIFMT_DSP_B))) {
++			dev_err(component->dev, "24-bit slots not supported in consumer mode using DSP\n");
+ 			return -EINVAL;
+ 		}
+ 		break;
 -- 
 2.39.5
 
