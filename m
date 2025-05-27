@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833591E89C;
-	Tue, 27 May 2025 17:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF1B1E89C;
+	Tue, 27 May 2025 17:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366435; cv=none; b=mwKuOFfD5QqSGRs0WCD0Va+tf4u5ztqZpbbbTM3xhEqcYXbie5/9+RxJbob/+wqFpWi6jNC1Fo17xK8YdpmT7uLI+TKZST3WOyCcZ0ZAKVs5xJWYSlhojPOyRI0e8/n4BAuod0M+ENp+GA10MC0clSL43Zk9+Z/3+O+9KasplhY=
+	t=1748366438; cv=none; b=t9b9yYVzUTZnYTMZ9KhkdBe7ZBWIvQqrkTRSIVgd1RfAbwDq7eAlH4EjN2jER66J9dMr8hy3s8kXkzbIoKoNSp/vnMdBIJ62OETes8Dloqh8+uQG0fwiWv68y6rYSvyVRO8XnYafEdknf5/ZUAw/+lIRqr8nbqNW7d5/vP3Em9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366435; c=relaxed/simple;
-	bh=sUVA90KfWUOuKByz2/+MHsc55n0TCJr67LVgC5uI7Nw=;
+	s=arc-20240116; t=1748366438; c=relaxed/simple;
+	bh=l/U/o8MqheRNafydARdvpT6o37r/pWgyv7yBw1EZbZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MdlRbHpgH8hzV9BxdBUP3Cclwz6dK4q/vsIO7qlH0sdrlNGynAX7JoKRLgoSUYep8vfonkg2LgsYFXw6w2TDTCAQLn40+9WjWqc9miJaySPVtmJ3CMC4e7c51cLzpQBvfSdHXTLSUcOnayC84bZzMQGwFXBzu1+aoL1t1QvFaxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVC+Iass; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JtGMI3EDxHO3mHkB7Yv6CDouWPEBo3KtdAhbPiy97ovRZhjJSanIfwseNR9TFd6flq7GS7Qf38GRTj6b9kRRuBIuWLjOE76jNycwL6nyK4AXO1Dn+G44yEQuzPfO//uO4qsx79m68okxyTlAaTWkw2TWgg+QiyweYDal9Plpm+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trqxWSlU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVC+Iass"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14464C4CEE9;
-	Tue, 27 May 2025 17:20:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trqxWSlU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8439C4CEE9;
+	Tue, 27 May 2025 17:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366435;
-	bh=sUVA90KfWUOuKByz2/+MHsc55n0TCJr67LVgC5uI7Nw=;
+	s=korg; t=1748366438;
+	bh=l/U/o8MqheRNafydARdvpT6o37r/pWgyv7yBw1EZbZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gVC+Iassowj9sSn9G4BwfzlkRZQPwPIAhcibb1TJUdhPcQcSahaCMiLWIZkKY7c1V
-	 x84Ud4KyaeI7t767TJUmTND2dYlkwrW9j1CdY1ay688JcOJFSOE8YwlA5nUs+K28IE
-	 4yIwpGSYapfJtFKu/OpliTwBBdmZ3RLpNOkFRulM=
+	b=trqxWSlUUrod2Ksqtn1jmBjmK0d7lteNhHMiF2EVxwglT4aKh1Y1JdLMs5CsoqQWq
+	 85kgUhbJQ3l58/Z+Uva2LVjcyTs22LD0gbdeC68WsaUwI/wUCEBKEk0nlpA7j9x0Id
+	 lfRySr6+S1u8QVq35DZYmAWOuNeOyAoqg2fiKgv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shixiong Ou <oushixiong@kylinos.cn>,
-	Helge Deller <deller@gmx.de>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 067/783] fbdev: fsl-diu-fb: add missing device_remove_file()
-Date: Tue, 27 May 2025 18:17:44 +0200
-Message-ID: <20250527162515.851281497@linuxfoundation.org>
+Subject: [PATCH 6.14 050/783] cifs: Fix negotiate retry functionality
+Date: Tue, 27 May 2025 18:17:27 +0200
+Message-ID: <20250527162515.167439664@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -45,37 +45,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shixiong Ou <oushixiong@kylinos.cn>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 86d16cd12efa547ed43d16ba7a782c1251c80ea8 ]
+[ Upstream commit e94e882a6d69525c07589222cf3a6ff57ad12b5b ]
 
-Call device_remove_file() when driver remove.
+SMB negotiate retry functionality in cifs_negotiate() is currently broken
+and does not work when doing socket reconnect. Caller of this function,
+which is cifs_negotiate_protocol() requires that tcpStatus after successful
+execution of negotiate callback stay in CifsInNegotiate. But if the
+CIFSSMBNegotiate() called from cifs_negotiate() fails due to connection
+issues then tcpStatus is changed as so repeated CIFSSMBNegotiate() call
+does not help.
 
-Signed-off-by: Shixiong Ou <oushixiong@kylinos.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fix this problem by moving retrying code from negotiate callback (which is
+either cifs_negotiate() or smb2_negotiate()) to cifs_negotiate_protocol()
+which is caller of those callbacks. This allows to properly handle and
+implement correct transistions between tcpStatus states as function
+cifs_negotiate_protocol() already handles it.
+
+With this change, cifs_negotiate_protocol() now handles also -EAGAIN error
+set by the RFC1002_NEGATIVE_SESSION_RESPONSE processing after reconnecting
+with NetBIOS session.
+
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/fsl-diu-fb.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/connect.c | 10 ++++++++++
+ fs/smb/client/smb1ops.c |  7 -------
+ fs/smb/client/smb2ops.c |  3 ---
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/video/fbdev/fsl-diu-fb.c b/drivers/video/fbdev/fsl-diu-fb.c
-index 5ac8201c35337..b71d15794ce8b 100644
---- a/drivers/video/fbdev/fsl-diu-fb.c
-+++ b/drivers/video/fbdev/fsl-diu-fb.c
-@@ -1827,6 +1827,7 @@ static void fsl_diu_remove(struct platform_device *pdev)
- 	int i;
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index cc9c912db8def..92685fc675b59 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -3922,11 +3922,13 @@ int
+ cifs_negotiate_protocol(const unsigned int xid, struct cifs_ses *ses,
+ 			struct TCP_Server_Info *server)
+ {
++	bool in_retry = false;
+ 	int rc = 0;
  
- 	data = dev_get_drvdata(&pdev->dev);
-+	device_remove_file(&pdev->dev, &data->dev_attr);
- 	disable_lcdc(&data->fsl_diu_info[0]);
+ 	if (!server->ops->need_neg || !server->ops->negotiate)
+ 		return -ENOSYS;
  
- 	free_irq(data->irq, data->diu_reg);
++retry:
+ 	/* only send once per connect */
+ 	spin_lock(&server->srv_lock);
+ 	if (server->tcpStatus != CifsGood &&
+@@ -3946,6 +3948,14 @@ cifs_negotiate_protocol(const unsigned int xid, struct cifs_ses *ses,
+ 	spin_unlock(&server->srv_lock);
+ 
+ 	rc = server->ops->negotiate(xid, ses, server);
++	if (rc == -EAGAIN) {
++		/* Allow one retry attempt */
++		if (!in_retry) {
++			in_retry = true;
++			goto retry;
++		}
++		rc = -EHOSTDOWN;
++	}
+ 	if (rc == 0) {
+ 		spin_lock(&server->srv_lock);
+ 		if (server->tcpStatus == CifsInNegotiate)
+diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
+index 808970e4a7142..e28cdaca47e12 100644
+--- a/fs/smb/client/smb1ops.c
++++ b/fs/smb/client/smb1ops.c
+@@ -426,13 +426,6 @@ cifs_negotiate(const unsigned int xid,
+ {
+ 	int rc;
+ 	rc = CIFSSMBNegotiate(xid, ses, server);
+-	if (rc == -EAGAIN) {
+-		/* retry only once on 1st time connection */
+-		set_credits(server, 1);
+-		rc = CIFSSMBNegotiate(xid, ses, server);
+-		if (rc == -EAGAIN)
+-			rc = -EHOSTDOWN;
+-	}
+ 	return rc;
+ }
+ 
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 7aeac8dd9a1d1..6f89e087629fe 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -464,9 +464,6 @@ smb2_negotiate(const unsigned int xid,
+ 	server->CurrentMid = 0;
+ 	spin_unlock(&server->mid_lock);
+ 	rc = SMB2_negotiate(xid, ses, server);
+-	/* BB we probably don't need to retry with modern servers */
+-	if (rc == -EAGAIN)
+-		rc = -EHOSTDOWN;
+ 	return rc;
+ }
+ 
 -- 
 2.39.5
 
