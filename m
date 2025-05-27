@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D668C2820B7;
-	Tue, 27 May 2025 17:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90ED2820A4;
+	Tue, 27 May 2025 17:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368655; cv=none; b=Uk1JeBGc6lNk98kpxCHnsPe9XbTUa/5wGIAAiiz6/UuFo7tRkovZouHXoI6FfC9ta0RmfkGL7fq3jSNHF4J1JOja7QaOVJhXnz+Zlsi23tEJXgJNqqbZs63r5FYs2vE6urfU1GbPAx+gDrn6Z1B7h/GMd2jZFKLIRkJ0Zid9CPE=
+	t=1748368658; cv=none; b=DFi4Afy8LC0ripIAl0OOx0Qb6mACCWwWmp6atGkUrk4YNpSVU4kIsxPvMSmsgZ47vASVG08JMDNArtf/qcfKJUAfCuTIWmkiMsEOOR9/7YAnVLBwKFRKGL7qyvTKjiKrKl10pdAnl+oim9CX4rtnzcvn5SWojfBLF9ohGvXJgY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368655; c=relaxed/simple;
-	bh=D0orHEJ/sTOwpIuinMsWm4G6sQchzz15fgr7pOYKZcs=;
+	s=arc-20240116; t=1748368658; c=relaxed/simple;
+	bh=Dpr+P/KneNLJIfnQVzNbrBUIvzkyR81PwptSiAGImEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=idcuGLLLOhBYEGOifARE36/NBtDrfZV7ZGCO8iBnUWVjCr8Nsxedm/AQeWl5ZYaBSZt9OcF7/LcJVww0j56pKCyVJ3LEkiycopZOEXhLcSWPOckfHDxxKeGOYj5wKO/NQBrOolborVrKYWm9gyR6VTEiaqZlnKREIFN8TVXuWaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkFuZvcY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n1b8S7daya2HPtANsbJ2HA88JYHD3jbhEb8VtnXXh4xWwrqxFBwDEtC1hNgmvh2xIZVZy2xX6YDbrFQ+JWvfA/93JIf5ep9fdVofGw6xkr1JPnXw2nurYAhfwgUo/5ZTkmfjcU+A324TQsZLW9Y7x9krbeF+iUk99oQaM91J/uU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WwovvZcW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkFuZvcY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61D2C4CEE9;
-	Tue, 27 May 2025 17:57:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwovvZcW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C742C4CEED;
+	Tue, 27 May 2025 17:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748368655;
-	bh=D0orHEJ/sTOwpIuinMsWm4G6sQchzz15fgr7pOYKZcs=;
+	s=korg; t=1748368658;
+	bh=Dpr+P/KneNLJIfnQVzNbrBUIvzkyR81PwptSiAGImEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SkFuZvcY54NA/un8WAv74MdAGAPm5G7unjxPMqVi/v9rASnP2tpCM1z2W/D64F+H5
-	 EwKm5Zk0GhswEjqk8jXnS4U8srUMgJh8dJq/7//Spf8c+FcstyyWqP4DxrNHvCVDV7
-	 C/1T+bRAZAggsEqU7WVYHNT3BkNgTqOZ/ukQPPQQ=
+	b=WwovvZcWY8lkscEZ/i3T71GHPDlU2JZ2ierXOFjw0h3foy1GGhT5tX6pBisg9Semt
+	 8N6m6U9QQXhTFP40ydb0vyC+ZR5N+s230TEbP1hVQHg2zydlMUo1VY88Ex4CeHrske
+	 /D73BnZY3QU7iDRf9BJoXhlpOUjVZvl8NoA+M3o8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Imre Kaloz <kaloz@openwrt.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>
-Subject: [PATCH 6.14 746/783] arm64: dts: marvell: uDPU: define pinctrl state for alarm LEDs
-Date: Tue, 27 May 2025 18:29:03 +0200
-Message-ID: <20250527162543.513759243@linuxfoundation.org>
+	Wang Zhaolong <wangzhaolong1@huawei.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.14 747/783] smb: client: Reset all search buffer pointers when releasing buffer
+Date: Tue, 27 May 2025 18:29:04 +0200
+Message-ID: <20250527162543.553334246@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,76 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Wang Zhaolong <wangzhaolong1@huawei.com>
 
-commit b04f0d89e880bc2cca6a5c73cf287082c91878da upstream.
+commit e48f9d849bfdec276eebf782a84fd4dfbe1c14c0 upstream.
 
-The two alarm LEDs of on the uDPU board are stopped working since
-commit 78efa53e715e ("leds: Init leds class earlier").
+Multiple pointers in struct cifs_search_info (ntwrk_buf_start,
+srch_entries_start, and last_entry) point to the same allocated buffer.
+However, when freeing this buffer, only ntwrk_buf_start was set to NULL,
+while the other pointers remained pointing to freed memory.
 
-The LEDs are driven by the GPIO{15,16} pins of the North Bridge
-GPIO controller. These pins are part of the 'spi_quad' pin group
-for which the 'spi' function is selected via the default pinctrl
-state of the 'spi' node. This is wrong however, since in order to
-allow controlling the LEDs, the pins should use the 'gpio' function.
+This is defensive programming to prevent potential issues with stale
+pointers. While the active UAF vulnerability is fixed by the previous
+patch, this change ensures consistent pointer state and more robust error
+handling.
 
-Before the commit mentined above, the 'spi' function is selected
-first by the pinctrl core before probing the spi driver, but then
-it gets overridden to 'gpio' implicitly via the
-devm_gpiod_get_index_optional() call from the 'leds-gpio' driver.
-
-After the commit, the LED subsystem gets initialized before the
-SPI subsystem, so the function of the pin group remains 'spi'
-which in turn prevents controlling of the LEDs.
-
-Despite the change of the initialization order, the root cause is
-that the pinctrl state definition is wrong since its initial commit
-0d45062cfc89 ("arm64: dts: marvell: Add device tree for uDPU board"),
-
-To fix the problem, override the function in the 'spi_quad_pins'
-node to 'gpio' and move the pinctrl state definition from the
-'spi' node into the 'leds' node.
-
-Cc: stable@vger.kernel.org # needs adjustment for < 6.1
-Fixes: 0d45062cfc89 ("arm64: dts: marvell: Add device tree for uDPU board")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Signed-off-by: Wang Zhaolong <wangzhaolong1@huawei.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/smb/client/readdir.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
-+++ b/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
-@@ -26,6 +26,8 @@
- 
- 	leds {
- 		compatible = "gpio-leds";
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&spi_quad_pins>;
- 
- 		led-power1 {
- 			label = "udpu:green:power";
-@@ -82,8 +84,6 @@
- 
- &spi0 {
- 	status = "okay";
--	pinctrl-names = "default";
--	pinctrl-0 = <&spi_quad_pins>;
- 
- 	flash@0 {
- 		compatible = "jedec,spi-nor";
-@@ -108,6 +108,10 @@
- 	};
- };
- 
-+&spi_quad_pins {
-+	function = "gpio";
-+};
-+
- &pinctrl_nb {
- 	i2c2_recovery_pins: i2c2-recovery-pins {
- 		groups = "i2c2";
+--- a/fs/smb/client/readdir.c
++++ b/fs/smb/client/readdir.c
+@@ -733,7 +733,10 @@ find_cifs_entry(const unsigned int xid,
+ 			else
+ 				cifs_buf_release(cfile->srch_inf.
+ 						ntwrk_buf_start);
++			/* Reset all pointers to the network buffer to prevent stale references */
+ 			cfile->srch_inf.ntwrk_buf_start = NULL;
++			cfile->srch_inf.srch_entries_start = NULL;
++			cfile->srch_inf.last_entry = NULL;
+ 		}
+ 		rc = initiate_cifs_search(xid, file, full_path);
+ 		if (rc) {
 
 
