@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3124A26F469;
-	Tue, 27 May 2025 17:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3DD1E89C;
+	Tue, 27 May 2025 17:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366341; cv=none; b=aVZwiQmPdKxDLFkyzRbnSPW5wgK7/kMMJTCb9UwViK/2GT+MZqmvHtMJjWLwUD2y8DTlqeDiGtEPKLpMUbcpMrWxCQlbH9yexge8JnLGYZCJoIM7kPZ3ZZFQna/6FjbuJqHqx2bnHWqcbowG/KGESBwAGJ/2A5NJMLoM/SGyqHY=
+	t=1748366344; cv=none; b=j+395OCa6CjRv0tgGEYqtBDKaTvMBEjdHIgR9XSLChOYIXhMqSdVKvCo6xP8LwDFcW2q9DtOFB1/8uRIQK8PiJ/R9/Qd99wAPotoahx8Zds6SXja7BaWXSObaWsXdZPoe9SPUkCzugE/1lEvdeJj8A5sgpEaH9WpPye+lvZroIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366341; c=relaxed/simple;
-	bh=yldAQB1/NrU8HpMLiqUEuc2MmO5u7wgHvJEUkrG2MLw=;
+	s=arc-20240116; t=1748366344; c=relaxed/simple;
+	bh=nOgzw0DzCBFOPeXNcykB6khvrNJQe+R4B89/lycfYwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQgIdW/PEcz3mYKg7EIj6fyXqABWFrEP2E2n+zWPWsWPj/vZ8ieETraJ1D2pxbJ7mY5tOQD7RwofEAH8qwIDclVEPgg7s0fw+9OI1R49lYNdTKk2JmJRDGtdIaxf/eSWQIhi3fzPCBVDVBZHJhR+UWNd9Gtq9czPq9SMZj8GhKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nYfIhaUm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iLyCf5XdanjbLib4HYcyXwW224Oa6Q5DZnSzEdaNqxCXOC5YImHUkUgROsCW2FPVkfnEhYOQ7rVV4Z8SljscsNWpA0Zn1wjinX8Twq93vbCU3NjDZ4z88n+dMz2GfnQ6MSjxue0FEj0o8pxwNpZdndNtqcUT51iqEg9qakzq7kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLXYf0yP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nYfIhaUm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9397EC4CEE9;
-	Tue, 27 May 2025 17:19:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLXYf0yP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7D4C4CEEB;
+	Tue, 27 May 2025 17:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366341;
-	bh=yldAQB1/NrU8HpMLiqUEuc2MmO5u7wgHvJEUkrG2MLw=;
+	s=korg; t=1748366344;
+	bh=nOgzw0DzCBFOPeXNcykB6khvrNJQe+R4B89/lycfYwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nYfIhaUmRrC9+x4OtS2gMmk2DlDFC0Qtiwdyk3B7p5OO6KNxAS9BNwaI9oX3j2+93
-	 WNBhB/Am7kHoq29NrSUczXMHDiB81Xz7KLCBgyifJmYIK2t7oswkwARZKO6pX9QoX1
-	 oGm81cIml074d6JdUjfzAakdYmHB4I1kWA3qelJk=
+	b=GLXYf0yPmshKNX0W0P7ToK9W+1bqzNjW55K7UN/aOrblUyCjB9URqa/hQEglkuWVT
+	 Tad3BqAoYyWFPKZiSqLpd+1WADACs3L1PpqOsadqOdnRVNQL20z1NOPmE4TA3zPkB7
+	 I3LsLr0VYLeDsRHXJl1qW3RnES/9hblvAdKlrXk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlene Liu <charlene.liu@amd.com>,
-	Nicholas Susanto <nsusanto@amd.com>,
-	Zaeem Mohamed <zaeem.mohamed@amd.com>,
-	Mark Broadworth <mark.broadworth@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	"Hao (Claire) Zhou" <hao.zhou@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 036/783] drm/amd/display: Enable urgent latency adjustment on DCN35
-Date: Tue, 27 May 2025 18:17:13 +0200
-Message-ID: <20250527162514.597048075@linuxfoundation.org>
+Subject: [PATCH 6.14 037/783] drm/amdgpu: Allow P2P access through XGMI
+Date: Tue, 27 May 2025 18:17:14 +0200
+Message-ID: <20250527162514.638491931@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -48,57 +47,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicholas Susanto <nsusanto@amd.com>
+From: Felix Kuehling <felix.kuehling@amd.com>
 
-[ Upstream commit 756c85e4d0ddc497b4ad5b1f41ad54e838e06188 ]
+[ Upstream commit a92741e72f91b904c1d8c3d409ed8dbe9c1f2b26 ]
 
-[Why]
+If peer memory is accessible through XGMI, allow leaving it in VRAM
+rather than forcing its migration to GTT on DMABuf attachment.
 
-Urgent latency adjustment was disabled on DCN35 due to issues with P0
-enablement on some platforms. Without urgent latency, underflows occur
-when doing certain high timing configurations. After testing, we found
-that reenabling urgent latency didn't reintroduce p0 support on multiple
-platforms.
-
-[How]
-
-renable urgent latency on DCN35 and setting it to 3000 Mhz.
-
-This reverts commit 3412860cc4c0c484f53f91b371483e6e4440c3e5.
-
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Signed-off-by: Nicholas Susanto <nsusanto@amd.com>
-Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
-Tested-by: Mark Broadworth <mark.broadworth@amd.com>
+Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
+Tested-by: Hao (Claire) Zhou <hao.zhou@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit cd74ce1f0cddffb3f36d0995d0f61e89f0010738)
+(cherry picked from commit 372c8d72c3680fdea3fbb2d6b089f76b4a6d596a)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn35/dcn35_fpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c | 30 ++++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn35/dcn35_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn35/dcn35_fpu.c
-index 47d785204f29c..beed7adbbd43e 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn35/dcn35_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn35/dcn35_fpu.c
-@@ -195,9 +195,9 @@ struct _vcs_dpi_soc_bounding_box_st dcn3_5_soc = {
- 	.dcn_downspread_percent = 0.5,
- 	.gpuvm_min_page_size_bytes = 4096,
- 	.hostvm_min_page_size_bytes = 4096,
--	.do_urgent_latency_adjustment = 0,
-+	.do_urgent_latency_adjustment = 1,
- 	.urgent_latency_adjustment_fabric_clock_component_us = 0,
--	.urgent_latency_adjustment_fabric_clock_reference_mhz = 0,
-+	.urgent_latency_adjustment_fabric_clock_reference_mhz = 3000,
- };
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
+index c9842a0e2a1cd..cb043296f9aec 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
+@@ -43,6 +43,29 @@
+ #include <linux/dma-fence-array.h>
+ #include <linux/pci-p2pdma.h>
  
- void dcn35_build_wm_range_table_fpu(struct clk_mgr *clk_mgr)
++static const struct dma_buf_attach_ops amdgpu_dma_buf_attach_ops;
++
++/**
++ * dma_buf_attach_adev - Helper to get adev of an attachment
++ *
++ * @attach: attachment
++ *
++ * Returns:
++ * A struct amdgpu_device * if the attaching device is an amdgpu device or
++ * partition, NULL otherwise.
++ */
++static struct amdgpu_device *dma_buf_attach_adev(struct dma_buf_attachment *attach)
++{
++	if (attach->importer_ops == &amdgpu_dma_buf_attach_ops) {
++		struct drm_gem_object *obj = attach->importer_priv;
++		struct amdgpu_bo *bo = gem_to_amdgpu_bo(obj);
++
++		return amdgpu_ttm_adev(bo->tbo.bdev);
++	}
++
++	return NULL;
++}
++
+ /**
+  * amdgpu_dma_buf_attach - &dma_buf_ops.attach implementation
+  *
+@@ -54,11 +77,13 @@
+ static int amdgpu_dma_buf_attach(struct dma_buf *dmabuf,
+ 				 struct dma_buf_attachment *attach)
+ {
++	struct amdgpu_device *attach_adev = dma_buf_attach_adev(attach);
+ 	struct drm_gem_object *obj = dmabuf->priv;
+ 	struct amdgpu_bo *bo = gem_to_amdgpu_bo(obj);
+ 	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
+ 
+-	if (pci_p2pdma_distance(adev->pdev, attach->dev, false) < 0)
++	if (!amdgpu_dmabuf_is_xgmi_accessible(attach_adev, bo) &&
++	    pci_p2pdma_distance(adev->pdev, attach->dev, false) < 0)
+ 		attach->peer2peer = false;
+ 
+ 	amdgpu_vm_bo_update_shared(bo);
+@@ -459,6 +484,9 @@ bool amdgpu_dmabuf_is_xgmi_accessible(struct amdgpu_device *adev,
+ 	struct drm_gem_object *obj = &bo->tbo.base;
+ 	struct drm_gem_object *gobj;
+ 
++	if (!adev)
++		return false;
++
+ 	if (obj->import_attach) {
+ 		struct dma_buf *dma_buf = obj->import_attach->dmabuf;
+ 
 -- 
 2.39.5
 
