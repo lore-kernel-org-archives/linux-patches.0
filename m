@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3F11E89C;
-	Tue, 27 May 2025 17:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700A31E89C;
+	Tue, 27 May 2025 17:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366459; cv=none; b=D4W3LQS/WXr8B/+5sNEkeidkCYvFkYBAeoM2F4oBp+Lvcv+C+silGT2Xni7g1RHgcJ8Q0/uXBp5R0xSihffXJNob4B7Kui+jz2BXvzTUOquAbicdXnBT7JPjjwbpBAAJWeoBB3AngsNjDSJIOdu/+2mCxhX/ZA+K8depM03H1c8=
+	t=1748366462; cv=none; b=fr9G0qAnIDog4GcAHYBiszLvUkGiqzW7miNNU2zCUxWl/l1o5rnIP/HCZ6z4ELlJDTc9ErBMcpOkEHKcxct2qB3OBiAwsEVPwhIRbcnv1YmxKHf37/ZIYX2uy3GQgDDZGVKYsO8/5faQ7QsYY/6O6xjbRq4MTuRcem25U+UtZfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366459; c=relaxed/simple;
-	bh=QMEvCTuGi/JB7dyPBdZF1WJghJuC5fEfQAZQaO57h4Y=;
+	s=arc-20240116; t=1748366462; c=relaxed/simple;
+	bh=z33e4QPYXkPq99MvNTxlxqNuFOEDq7/RI6JCBjP6EPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n1Ih2LvFl7fdb+JCJKXdOJkLDyzIUbQK7LAGD0mG7w6MqGPaZ2zLrdmIpdIkJTytSyHq0uoLere/cnJ8J9XaIAVeCkJTyba679vAqBDOKmy3w29ZObOAFJLRhqeT+MxGO6LkaZMCizxp4HztX6vuzzE8e4ouml3/02FEIaWwNbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tD7ifQSb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YgAa2WoZ9iA1YQjTacMZrlheo28kmmVB0Q/an2nJyG11LJN7oRfERvqgmHVS6UPJKM57LidOHia7L8pVBD8p5Qlnfd/vYo0YdAqCPd6Q7IxRD2q3eDIBPro+Y6f6VbWkM1wBSR5F9apjE3Dq3OtWSii2F34XTMw40NUX51KMh8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ys1O/zLb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tD7ifQSb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD0BC4CEE9;
-	Tue, 27 May 2025 17:20:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ys1O/zLb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC408C4CEE9;
+	Tue, 27 May 2025 17:21:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366459;
-	bh=QMEvCTuGi/JB7dyPBdZF1WJghJuC5fEfQAZQaO57h4Y=;
+	s=korg; t=1748366462;
+	bh=z33e4QPYXkPq99MvNTxlxqNuFOEDq7/RI6JCBjP6EPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tD7ifQSbjUqLqOOFebJul3Ik6SgAuw4PTi/lSfkEKlii1cfowcVw7OITEmmynq/nV
-	 j4NnYbS6YdVClYCvly6125MRZr7BIZhkZ88tfPeS5g4lJb8ScvQw7Fpruq7bGUEqzl
-	 Qf3jufpVadnRLS37BAxzgrlfuhBHTECA07OpJtw8=
+	b=Ys1O/zLbcX2lM+lqacJaE6iBMl5ThZHKbqdRfm+U3dbilKppCbL2VoxZL7lxKX4uj
+	 bYoGQ4BwxCkJ9I+sKtG6HT+c7Uk9qPVxxZaDWpoB5DQPJMfI+wCDJnJEMO1hUxIJPJ
+	 5Q/VSi3EwnTzRzJf1fFI0rvmvvZZnDMrGDGGMJm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 074/783] cifs: Check if server supports reparse points before using them
-Date: Tue, 27 May 2025 18:17:51 +0200
-Message-ID: <20250527162516.144613903@linuxfoundation.org>
+Subject: [PATCH 6.14 075/783] NFSv4: Treat ENETUNREACH errors as fatal for state recovery
+Date: Tue, 27 May 2025 18:17:52 +0200
+Message-ID: <20250527162516.188943925@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -45,99 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 6c06be908ca190e2d8feae1cf452d78598cd0b94 ]
+[ Upstream commit 0af5fb5ed3d2fd9e110c6112271f022b744a849a ]
 
-Do not attempt to query or create reparse point when server fs does not
-support it. This will prevent creating unusable empty object on the server.
+If a containerised process is killed and causes an ENETUNREACH or
+ENETDOWN error to be propagated to the state manager, then mark the
+nfs_client as being dead so that we don't loop in functions that are
+expecting recovery to succeed.
 
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c   | 3 +++
- fs/smb/client/link.c      | 3 ++-
- fs/smb/client/smb2inode.c | 8 ++++++++
- fs/smb/client/smb2ops.c   | 4 ++--
- 4 files changed, 15 insertions(+), 3 deletions(-)
+ fs/nfs/nfs4state.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index e90811f321944..53e3e8282cb2a 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -2725,6 +2725,9 @@ int cifs_query_reparse_point(const unsigned int xid,
- 	if (cap_unix(tcon->ses))
- 		return -EOPNOTSUPP;
- 
-+	if (!(le32_to_cpu(tcon->fsAttrInfo.Attributes) & FILE_SUPPORTS_REPARSE_POINTS))
-+		return -EOPNOTSUPP;
-+
- 	oparms = (struct cifs_open_parms) {
- 		.tcon = tcon,
- 		.cifs_sb = cifs_sb,
-diff --git a/fs/smb/client/link.c b/fs/smb/client/link.c
-index 34a026243287f..769752ad2c5ce 100644
---- a/fs/smb/client/link.c
-+++ b/fs/smb/client/link.c
-@@ -643,7 +643,8 @@ cifs_symlink(struct mnt_idmap *idmap, struct inode *inode,
- 	case CIFS_SYMLINK_TYPE_NATIVE:
- 	case CIFS_SYMLINK_TYPE_NFS:
- 	case CIFS_SYMLINK_TYPE_WSL:
--		if (server->ops->create_reparse_symlink) {
-+		if (server->ops->create_reparse_symlink &&
-+		    (le32_to_cpu(pTcon->fsAttrInfo.Attributes) & FILE_SUPPORTS_REPARSE_POINTS)) {
- 			rc = server->ops->create_reparse_symlink(xid, inode,
- 								 direntry,
- 								 pTcon,
-diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
-index 826b57a5a2a8d..e9fd3e204a6f4 100644
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -1273,6 +1273,14 @@ struct inode *smb2_get_reparse_inode(struct cifs_open_info_data *data,
- 	int rc;
- 	int i;
- 
-+	/*
-+	 * If server filesystem does not support reparse points then do not
-+	 * attempt to create reparse point. This will prevent creating unusable
-+	 * empty object on the server.
-+	 */
-+	if (!(le32_to_cpu(tcon->fsAttrInfo.Attributes) & FILE_SUPPORTS_REPARSE_POINTS))
-+		return ERR_PTR(-EOPNOTSUPP);
-+
- 	oparms = CIFS_OPARMS(cifs_sb, tcon, full_path,
- 			     SYNCHRONIZE | DELETE |
- 			     FILE_READ_ATTRIBUTES |
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 6795970d4de6e..fbb3686292134 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -5237,7 +5237,7 @@ static int smb2_make_node(unsigned int xid, struct inode *inode,
- 			  const char *full_path, umode_t mode, dev_t dev)
- {
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
--	int rc;
-+	int rc = -EOPNOTSUPP;
- 
- 	/*
- 	 * Check if mounted with mount parm 'sfu' mount parm.
-@@ -5248,7 +5248,7 @@ static int smb2_make_node(unsigned int xid, struct inode *inode,
- 	if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_UNX_EMUL) {
- 		rc = cifs_sfu_make_node(xid, inode, dentry, tcon,
- 					full_path, mode, dev);
--	} else {
-+	} else if (le32_to_cpu(tcon->fsAttrInfo.Attributes) & FILE_SUPPORTS_REPARSE_POINTS) {
- 		rc = smb2_mknod_reparse(xid, inode, dentry, tcon,
- 					full_path, mode, dev);
- 	}
+diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
+index 542cdf71229fe..04c726cc2900b 100644
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -2739,7 +2739,15 @@ static void nfs4_state_manager(struct nfs_client *clp)
+ 	pr_warn_ratelimited("NFS: state manager%s%s failed on NFSv4 server %s"
+ 			" with error %d\n", section_sep, section,
+ 			clp->cl_hostname, -status);
+-	ssleep(1);
++	switch (status) {
++	case -ENETDOWN:
++	case -ENETUNREACH:
++		nfs_mark_client_ready(clp, -EIO);
++		break;
++	default:
++		ssleep(1);
++		break;
++	}
+ out_drain:
+ 	memalloc_nofs_restore(memflags);
+ 	nfs4_end_drain_session(clp);
 -- 
 2.39.5
 
