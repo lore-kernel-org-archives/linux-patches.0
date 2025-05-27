@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032AA27FD6F;
-	Tue, 27 May 2025 17:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAAD27F4CB;
+	Tue, 27 May 2025 17:23:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366634; cv=none; b=J6RANqc13YCkRHKqUCzN6s2wCQrZ2b0cdfYVMz6kGe/aJdTM9FVeNQ09Vj+U4tAxJotN9k/gwPky9hLSsPspdzQZ0+Rvy+Ha8Hey5k1lk6Pw/EmNr7dNg1Rmm0eVTIPWpHuO50zi0Q/bqX7rwjYBDk9jewKVev3FA2hgxYeMkKk=
+	t=1748366637; cv=none; b=OHsZO728Qz7m3BE5Uq/zSSPZwYGdErO68pZaMjhtCFvrSoSfNcj8tksKKu/G+0/SIcKz4QSrIVJbuI6yJ8v/mn0jFuAdU68gakM/fh5yKZDNa0hXJPKCcSJppztGP2EUW+cdT6X4uSwcS9wKi5OIj8oMNxbYPcz1ANeDimtAmT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366634; c=relaxed/simple;
-	bh=2Wt7VZ0lywYOPIEQXI23VuPiMaU0o5XJ7vC+1EJehdA=;
+	s=arc-20240116; t=1748366637; c=relaxed/simple;
+	bh=7doVSZOSS47QVYFIMItb6Z9WJTLNdrnuAOsqGkbkQS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQbVvo/Z4qNB5kRtkUEV9avCO+pnpbQVdcO408Hm9wtba/WPYMzLdl68hN1B7ZQF+JW3+lEq//DLsn/6e20s+oTpRDxXSmBontTA7KV6jitZVzy616zwEWzHQNCZfUiqdZpOA1v1d20jIxiYFIMooYCkcEnixbEZ2nbXwzq/mVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bscglo07; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=beEebGXVnl2yZ8rfBXYIycZpa1NW4SBbD3IQM8bBIcH0zfJjfn3a4YVuxaUKJqTeD4KkyDo96QVu7RZvWuoM1Ix6pXmqUMFMFf5/sjv9bDZ9Lp1B9gKib4w+Ft5qzzKWNShx+A1QlcYbH+CbwJ1FabUsMjLQwXls+6TGnu/QYUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09aBQ8lR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bscglo07"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5B6C4CEEA;
-	Tue, 27 May 2025 17:23:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09aBQ8lR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B890C4CEE9;
+	Tue, 27 May 2025 17:23:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366633;
-	bh=2Wt7VZ0lywYOPIEQXI23VuPiMaU0o5XJ7vC+1EJehdA=;
+	s=korg; t=1748366636;
+	bh=7doVSZOSS47QVYFIMItb6Z9WJTLNdrnuAOsqGkbkQS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bscglo071HPzsiAZ3dCJUKhimdU/oBz1dvFO5tBEt+g7qE3SzJhvCg7sTLPqhhiqK
-	 guiiQXO9ieTTHmS9Y4ggP/bMR6JEtzgwwJww0YGwqKu9nE3jZZggU6YryLPdCKeIgD
-	 vBHvCp16J35TgiBhnMDyxhNrPtGsvQJdEo4LDjoc=
+	b=09aBQ8lRDqlf2g7ouwoePWiDuW2jcIwuzPga94p6yzug5hq9D6uQ0nUQbbbqWfXRS
+	 PoGoPNIqDlir7VHVFuMt0z5+vfuQLygFK86D+LjoQ9WrI4MuJCE6N6GrOo++2OxWfR
+	 jZDWE+dNJ2EUt2x1h/K8d1Kcir7eF4/97pKt+nvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanket Goswami <Sanket.Goswami@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Vitalii Mordan <mordan@ispras.ru>,
 	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 132/783] i2c: amd-asf: Set cmd variable when encountering an error
-Date: Tue, 27 May 2025 18:18:49 +0200
-Message-ID: <20250527162518.524646196@linuxfoundation.org>
+Subject: [PATCH 6.14 133/783] i2c: pxa: fix call balance of i2c->clk handling routines
+Date: Tue, 27 May 2025 18:18:50 +0200
+Message-ID: <20250527162518.572808447@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,36 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+From: Vitalii Mordan <mordan@ispras.ru>
 
-[ Upstream commit b719afaa1e5d88a1b51d76adf344ff4a48efdb45 ]
+[ Upstream commit be7113d2e2a6f20cbee99c98d261a1fd6fd7b549 ]
 
-In the event of ASF error during the transfer, update the cmd and exit
-the process, as data processing is not performed when a command fails.
+If the clock i2c->clk was not enabled in i2c_pxa_probe(), it should not be
+disabled in any path.
 
-Co-developed-by: Sanket Goswami <Sanket.Goswami@amd.com>
-Signed-off-by: Sanket Goswami <Sanket.Goswami@amd.com>
-Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Found by Linux Verification Center (linuxtesting.org) with Klever.
+
+Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250217090258.398540-2-Shyam-sundar.S-k@amd.com
+Link: https://lore.kernel.org/r/20250212172803.1422136-1-mordan@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-amd-asf-plat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-pxa.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-amd-asf-plat.c b/drivers/i2c/busses/i2c-amd-asf-plat.c
-index 93ebec162c6dd..61bc714c28d70 100644
---- a/drivers/i2c/busses/i2c-amd-asf-plat.c
-+++ b/drivers/i2c/busses/i2c-amd-asf-plat.c
-@@ -69,7 +69,7 @@ static void amd_asf_process_target(struct work_struct *work)
- 	/* Check if no error bits are set in target status register */
- 	if (reg & ASF_ERROR_STATUS) {
- 		/* Set bank as full */
--		cmd = 0;
-+		cmd = 1;
- 		reg |= GENMASK(3, 2);
- 		outb_p(reg, ASFDATABNKSEL);
- 	} else {
+diff --git a/drivers/i2c/busses/i2c-pxa.c b/drivers/i2c/busses/i2c-pxa.c
+index cb69884826739..4415a29f749b9 100644
+--- a/drivers/i2c/busses/i2c-pxa.c
++++ b/drivers/i2c/busses/i2c-pxa.c
+@@ -1503,7 +1503,10 @@ static int i2c_pxa_probe(struct platform_device *dev)
+ 				i2c->adap.name);
+ 	}
+ 
+-	clk_prepare_enable(i2c->clk);
++	ret = clk_prepare_enable(i2c->clk);
++	if (ret)
++		return dev_err_probe(&dev->dev, ret,
++				     "failed to enable clock\n");
+ 
+ 	if (i2c->use_pio) {
+ 		i2c->adap.algo = &i2c_pxa_pio_algorithm;
 -- 
 2.39.5
 
