@@ -1,74 +1,73 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3CFB36D
-	for <patches@lists.linux.dev>; Tue, 27 May 2025 00:09:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753AF10E0
+	for <patches@lists.linux.dev>; Tue, 27 May 2025 00:11:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748304545; cv=none; b=m54o/T7M71vBHYfbU5tAz9UuUIzXSkbmVH/3atXtJ9GKGK8YtcbusX/gBp660brVWL9D5p+Cat6Hw/H9udAJbnFbb0H69wwvZgzVY5Koc9PZdk96XOfeo1tFWyS8LhE1g9bzY+Il4M8hpNPihBhk/GSTFtXP3Du1n86RdlcO2TI=
+	t=1748304668; cv=none; b=i44uTgWIV/2XmNicK4VoQv11VMKIu0sBzllQOI5RqmxIghVbrSrftxxBXqtinULOV9ja9kcLjYr2sf3c3ZTPdoRq+is4OAVkWI+1BfeTBgT3B88aH+7S2j/a1FEZx5Ioy/UriKFyNOcfKCvwGV7jq+YvGFq4wlQTIqCM/q9jAog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748304545; c=relaxed/simple;
-	bh=2rzQq5yLfjvOmTTYtmk60CDfVK8FMvHBMNx7m1BjYnI=;
+	s=arc-20240116; t=1748304668; c=relaxed/simple;
+	bh=tw+V54TzTF5aeL1GSdSVDzkRh6+ofawdotvvYMClxDI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=s3tgUPHJQ6S5pmpV20PNEyaHeLWtITT82dCNDFxd0bwLmPvhWV94eP3aOBZEdZ7mR8AWWn3tRIaXj/Y+ONx60d3XF10iFC6z8GfzIZdjTj+K013O1ydboy7Mnm5H9G7VNs2bBmOkuuJFfJxrPKn+X0GehVkjOrhZoFnlY5s7xXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZnU4JHC4; arc=none smtp.client-ip=209.85.216.41
+	 To:Cc:Content-Type; b=uRS1QgTAH+dlWe2wClmFIxwXLaq4M0EZ0vvd+lYyqqon8RoLe3f4OmJQ4CElHnhN7Doiv+tntNEsAcLqkrK9hDvet0g6BMzrjfnCqh2gVBoZ98iHzlGrvx4H1Xdm4G0PJ/osQk1JQRUKz+555456fkZGxlIRvmorbahDTVSkajc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IOAxH8cK; arc=none smtp.client-ip=209.85.216.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZnU4JHC4"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-3108652400cso385645a91.1
-        for <patches@lists.linux.dev>; Mon, 26 May 2025 17:09:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IOAxH8cK"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-311676255c3so98352a91.3
+        for <patches@lists.linux.dev>; Mon, 26 May 2025 17:11:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748304543; x=1748909343; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1748304667; x=1748909467; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2rzQq5yLfjvOmTTYtmk60CDfVK8FMvHBMNx7m1BjYnI=;
-        b=ZnU4JHC4ipb5qritSf2hXZ3qArvzaVkSvw58wK3IqZtTMaOwyBsgrd9aVdXNPEb5Vh
-         7U2N9pUwI5s5ImE6fHiUlbFLXFuU2coY5RHPIKNQ7LUe+16zCgRZHUH8wWxlTk555+WJ
-         whvwQEF/1znNUcYZY7gcmfT8BzemFOol2CUkcqT87mQft/LLs5gJv2h1oExUjt2zBV5S
-         DHhPiRVariL1YjRZFrSY2ASyCIu65gOyl8tDMq1iBE/wBwCHWrOffO6NNaomuObB3iDw
-         Da5R3aEdf6h3YLnYwvnUTFa8KdniSBsJwNJOMRYi3J+g1qXaAhIE2S0tALuos/7R1Um9
-         /bEA==
+        bh=KtTCmrZoRrQ0JqD2tIFY3u/ae0Uri9xjv3XvvvkKWb0=;
+        b=IOAxH8cKRCF2ixbSp6jbS6VSzVNv3j8tDvmTOEdsJVwlmvoCFnwHVNklovKUP9gGzG
+         FeEf7WPplhjNvp89gSU5EfhUA6rWrT+vA4nuw0Y+nX4z4zOk7yNbCh9U3ivZPxphP3H9
+         xnZv7er+Syh/AEInH+zvAPTRqelZVpnc0zzYUuwPheSxdIFWd9FlcmPGqz9IvKjBw1pN
+         yqf1z+ti9XKhi/yKWmxkmYOxFl3bmUfm0re0VhJdb1UCpJAgOnmHWshBkkRVc1LwlftV
+         yr9AGKYlKqgQUd8NqKL9eqkljWrMDWr3Jfghq2u+wVE2H9iw4G5qULEyCKD85xb1WZvt
+         SDsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748304543; x=1748909343;
+        d=1e100.net; s=20230601; t=1748304667; x=1748909467;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2rzQq5yLfjvOmTTYtmk60CDfVK8FMvHBMNx7m1BjYnI=;
-        b=nWDGCsE17H1KfXzTrEPH3n1blNMX9zSJGou/BOhmvp2wwtYfU1bkgcABmJc5lmS56F
-         5pBgQry+VqQjubbJujr9cdhKuHE/CGLG+tjrS2jIZkOzLHK+9ibnl0IEuPD4kA9zsSvW
-         qDSSQOaFYNH151SURYwyVhwixmIjVNfg8nlaIXZx90zeFo1h90DmjAogaDWJ/h+MeBav
-         uCMSLNmmwwc8RYbSMesV1mnPie4JE9vF2+K1F+3jLNp5phDwG732/snxADLyxcdnQ2ne
-         JGaZ21/XQspZK/r3rgVpudyvi+kcjmaOM1wMpIF48sPOn+dqP1X5KgxYJH04H/G1ydwq
-         Um3w==
-X-Forwarded-Encrypted: i=1; AJvYcCUIf729e/sBhvVqkyMTrBCiyPmXG9feFZuvXNSsOPEvFLSBnhD1lB2WQu9Qvi6NKXOFRNErKY9K@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw060YfXjdLYRu6tffypsUJm423iWzN/5YPVqdd1vPci9Aa9MH/
-	53GRjqDIQSz8IrDfYMsKzsEBmZQeMq9jCYgYjvYi1TiChdO6OAftpRL2wgpaBEj/GqaxawaM9P7
-	KX0pdSUrOiHJQ19FHaPaCHZT104RRDbU=
-X-Gm-Gg: ASbGncuT/RwcZgg64eqZ61Q47RRD6QJNDDhw6AVZLlHi3N7FOpmG86Vsk0Jfgj7ZeS8
-	60vXLXY3Rnh+LbatS7xjHPDZUhLaap/q2dia2kJj/xJaIldVylNHe8/OVGPxEyGIeItRxFcP374
-	vEGC5if3L8tzGIluyopzNz3ZpTInlVp7iD
-X-Google-Smtp-Source: AGHT+IHY6vduokEbcDZbsaJP+Df5U3wkP1/4ZR/q0IrJRApNtoX6odgNCZguNrzIkQpVmMEUhIC4NLmz4dpXZUFw1Hw=
-X-Received: by 2002:a17:902:cf03:b0:21f:356:758f with SMTP id
- d9443c01a7336-23414f2f960mr66050825ad.3.1748304542991; Mon, 26 May 2025
- 17:09:02 -0700 (PDT)
+        bh=KtTCmrZoRrQ0JqD2tIFY3u/ae0Uri9xjv3XvvvkKWb0=;
+        b=ujeXZacN2fDM6RCMOxfLqeH1VDAaitAsCiDCOlunz43XyS1SsSvHWdrNAmutYXR3jN
+         fJBY6PuUZY2vpqWwEcLPHLbzyNDeY5cwdq4Z4ng0VtVU9zc2xYKit7dHKc2jV8PkaKzy
+         nnfdLX9ccZPHaZsh+IrB88n7EpQldzotX7bg04fZWNafAUTBAQMQZzY/km4ize3wwdLj
+         6eprzk0xlc8cwU3POD9fSltAGhRUDDJ51kxyvjqY5B27hbEHLDyU/Ap9c+4Br8LzHa7z
+         fU9y5Zjcwpew1RWZLtHOeivTw37apwLRqVWS/wFUwK1hgGEyl6JWQAMpoqC2d58RR+ck
+         FBLA==
+X-Forwarded-Encrypted: i=1; AJvYcCX8lqnSZSzFhj+PFPCZeNO0/sz7i6gn7Zsfxq5psWycFnXsjcV1CRFJIivhetQpmQpu4ZmBQj4m@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz1GcobjZlHQE3R5/SZoBNuSqpUGWZgmnekSL74U5o0vVUu3Yea
+	A2y8h+mucq1rBg7K7ynbCPNDJin/nQCHb/bF9Bsi9f0z4L6OGBrEv9TIXKCBRrN+M/CL+ZaA/9q
+	A2+/40ejeGDdrTq/GWQkesdFLd9srKG0=
+X-Gm-Gg: ASbGncurGYtNGg5wTgFY5OK/D/fqN0qQ5VNuyxcGGWd9Lngl55xb5o62P4mMVyYnbX0
+	aHlZQzFHoPCFp5CRQq9n3YnafrwuVoef92y6U5AL5rxmm2YR9kvSYISh3YKLC1yAVJprs+DlAPq
+	XZdHHIPsVr+sf/0MjHYucmMic0JDNRVuD9
+X-Google-Smtp-Source: AGHT+IHuJYZe8bONowCh96S26GJWzJMXTf8gJ+iXWDqS0aq8KaIuLAGuRkVGgNILqDbnpOeuvHai1AtCg5SRH+0v1qs=
+X-Received: by 2002:a17:90b:17cb:b0:2ee:acea:9ec4 with SMTP id
+ 98e67ed59e1d1-3110f72c97emr6529967a91.3.1748304666678; Mon, 26 May 2025
+ 17:11:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250502215133.1923676-1-ojeda@kernel.org> <20250502215133.1923676-2-ojeda@kernel.org>
- <CABVgOSnTYwYtoMXCC-mUxV=A2quCrA+CD1Qe32n=qddxLKpcUw@mail.gmail.com>
-In-Reply-To: <CABVgOSnTYwYtoMXCC-mUxV=A2quCrA+CD1Qe32n=qddxLKpcUw@mail.gmail.com>
+References: <20250502215133.1923676-1-ojeda@kernel.org>
+In-Reply-To: <20250502215133.1923676-1-ojeda@kernel.org>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 27 May 2025 02:08:51 +0200
-X-Gm-Features: AX0GCFuLlqQmhMR9CPFwVVMh5b02Mj0zAcZXwOB02-yOXPW14jBMHCFaWkavBk0
-Message-ID: <CANiq72nhr24L-yKU8rFjCRTeY1yJ2FGNYP2RfmO=_+XgLgHFTw@mail.gmail.com>
-Subject: Re: [PATCH 1/7] rust: kunit: support KUnit-mapped `assert!` macros in `#[test]`s
-To: David Gow <davidgow@google.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Brendan Higgins <brendan.higgins@linux.dev>, 
+Date: Tue, 27 May 2025 02:10:53 +0200
+X-Gm-Features: AX0GCFs4jjYfVU6bcAWIwvQqEUw3eEVTRURfBNgMbKp-7WpJO6lmgJTaph6upiw
+Message-ID: <CANiq72mj2yv4E7Dd+19fmP9xGWELdv6JwXULpu91oq0BMzob+g@mail.gmail.com>
+Subject: Re: [PATCH 0/7] Rust KUnit `#[test]` support improvements
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, 
 	Alex Gaynor <alex.gaynor@gmail.com>, Rae Moar <rmoar@google.com>, 
 	linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
@@ -80,25 +79,42 @@ Cc: Miguel Ojeda <ojeda@kernel.org>, Brendan Higgins <brendan.higgins@linux.dev>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 5, 2025 at 8:02=E2=80=AFAM David Gow <davidgow@google.com> wrot=
-e:
+On Fri, May 2, 2025 at 11:51=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
 >
-> Nice! While I do think there may still be some cases where we might
-> want to use KUnit-specific macros in the future (particularly if we
-> have more complex, multithreaded test contexts), this is definitely
-> better for most cases.
+> Improvements that build on top of the very basic `#[test]` support merged=
+ in
+> v6.15.
 >
-> I also managed to test it against the 1.88 nightly, and the message is
-> looking good.
+> They are fairly minimal changes, but they allow us to map `assert*!`s bac=
+k to
+> KUnit, plus to add support for test functions that return `Result`s.
 >
-> Reviewed-by: David Gow <davidgow@google.com>
+> In essence, they get our `#[test]`s essentially on par with the documenta=
+tion
+> tests.
+>
+> I also took the chance to convert some host `#[test]`s we had to KUnit in=
+ order
+> to showcase the feature.
+>
+> Finally, I added documentation that was lacking from the original submiss=
+ion.
+>
+> I hope this helps.
 
-Thanks for all the feedback and for testing it, David! Very much appreciate=
-d.
+Applied to `rust-next` -- thanks everyone!
 
-Given you were happy with this first version already and that others
-want to use it soon, I did a few final minor tweaks and I am applying
-it.
+    [ Used the `cfg_attr` from the TODO comment and clarified its comment
+      now that the stabilization is in beta and thus quite likely stable
+      in Rust 1.88.0. Simplified the `new_body` code by introducing a new
+      variable. Added `#[allow(clippy::incompatible_msrv)]`. - Miguel ]
+
+    [ Used `::kernel` for paths. - Miguel ]
+
+    [ Split from the next commit as suggested by Tamir. - Miguel ]
+
+    [ Split the `CString` simplification into a new commit. - Miguel ]
 
 Cheers,
 Miguel
