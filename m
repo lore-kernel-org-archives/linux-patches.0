@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44CF19E7F9;
-	Tue, 27 May 2025 16:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD3F263F5E;
+	Tue, 27 May 2025 16:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364703; cv=none; b=DO1nVhinXUnCKalwymxvJH92dbaX6OvXUFV/4e9UXl48H3orYnd5NiWMbZSJN7DUE0XpnMUOjIvgn1b0gzEGGyDBKVHcXEe2xdeEElftvyi0+nSfyThTL79QPTpuzHSHV699ydPGtTd6isLQq5kW4UrLyjKbAylCLi/3D0dEn94=
+	t=1748364705; cv=none; b=HGJH3+nkRS+alEwZfVPRYT+jFqzkOAtIpsQ0fa8gBfnmDTg2fkt9zd+m4Ic5yVoE8LhiCrZUbuBfNTmSWb5S5Nt1TMl1hNDXGLorUpgV80BmJFZce6ce3VghPLMGBRK8lPpmeBQvHtKbymEzQVsc82NI/HCWrC6CE0jH6dE4IlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364703; c=relaxed/simple;
-	bh=N4IYj2ToIyL37awS/jarbWkf7Cw7rwi+36uJNrL8I9Y=;
+	s=arc-20240116; t=1748364705; c=relaxed/simple;
+	bh=8FYICPDfTnMvMeYHjWW8bE0ZiorfsFo+2Z26xsvhsLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kfPK8j4L94qLDTbHqITsCsr23+YhzhPKeW96WTF2nGCbG/HPAczTe6eUe1+9z2IuBAF8vV1WEzpkEmkrplA5DHTk4B0fVQpdVjdj41+6SR6vNXkNmBdYhG9FJy1WvHmNOrxDXUfLQ+wTbEm3hmQl0aIJN11SpYkcpX+XPnU4qgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lz5uoP3c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T9y0QCcC5P3FEb21sf9l7nA5z8LrWxi/kAbskYQwRrJUU+q1PrLI65FHhy9IFJdXniA+XvaIVcSOrKeHAt6abVSj0O4hdF82xsg9/JtjXswoRiujJprWyG3Ivq8v9OZL1wh7SRZ1jK88OGS7zhLif2BnOnaEy5ywYmWKJ46LRfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VozRy2Iv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lz5uoP3c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 525BDC4CEE9;
-	Tue, 27 May 2025 16:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VozRy2Iv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572C7C4CEE9;
+	Tue, 27 May 2025 16:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364702;
-	bh=N4IYj2ToIyL37awS/jarbWkf7Cw7rwi+36uJNrL8I9Y=;
+	s=korg; t=1748364705;
+	bh=8FYICPDfTnMvMeYHjWW8bE0ZiorfsFo+2Z26xsvhsLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lz5uoP3c1+lmQM8syauDQHfoN3lEpP6rlx4e0LQQ5t0LUkGsgIuko+QBP8TvR/jBC
-	 Fj5JDTFfy2X+0uz+bZQd3WcYLYXsDolTIni/lHUfJ/IDLPGzxyy+vXBPqdltte0g7T
-	 wmBYLOzO7pwsnW+qnRtcHz++vwDg9ejSNRNwHHZY=
+	b=VozRy2Iv79jzDHbIvU5snL0IpH8FfuV3DDm2XoRtyjyOZZKAbbHWBObD/KZPdPDYO
+	 PFzAFA5Qgo/yCf9NSMpeYuRkYV0+PaXzBHLMib1M5ZPb/sC1mK5sPRT6oRUUR7eZ3o
+	 6rgVmNUh6HmDyY/CF+gS7mcwjVlBV9QzFo48N5UM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Vitalii Mordan <mordan@ispras.ru>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 139/626] PCI: dwc: Use resource start as ioremap() input in dw_pcie_pme_turn_off()
-Date: Tue, 27 May 2025 18:20:32 +0200
-Message-ID: <20250527162450.680502112@linuxfoundation.org>
+Subject: [PATCH 6.12 113/626] i2c: pxa: fix call balance of i2c->clk handling routines
+Date: Tue, 27 May 2025 18:20:06 +0200
+Message-ID: <20250527162449.625395382@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,43 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Vitalii Mordan <mordan@ispras.ru>
 
-[ Upstream commit 8f4a489b370e6612700aa16b9e4373b2d85d7503 ]
+[ Upstream commit be7113d2e2a6f20cbee99c98d261a1fd6fd7b549 ]
 
-The msg_res region translates writes into PCIe Message TLPs. Previously we
-mapped this region using atu.cpu_addr, the input address programmed into
-the ATU.
+If the clock i2c->clk was not enabled in i2c_pxa_probe(), it should not be
+disabled in any path.
 
-"cpu_addr" is a misnomer because when a bus fabric translates addresses
-between the CPU and the ATU, the ATU input address is different from the
-CPU address.  A future patch will rename "cpu_addr" and correct the value
-to be the ATU input address instead of the CPU physical address.
+Found by Linux Verification Center (linuxtesting.org) with Klever.
 
-Map the msg_res region before writing to it using the msg_res resource
-start, a CPU physical address.
-
-Link: https://lore.kernel.org/r/20250315201548.858189-2-helgaas@kernel.org
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20250212172803.1422136-1-mordan@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-host.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-pxa.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-index 120e2aca5164a..d428457d9c432 100644
---- a/drivers/pci/controller/dwc/pcie-designware-host.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-@@ -902,7 +902,7 @@ static int dw_pcie_pme_turn_off(struct dw_pcie *pci)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/i2c/busses/i2c-pxa.c b/drivers/i2c/busses/i2c-pxa.c
+index 4d76e71cdd4be..afc1a8171f59e 100644
+--- a/drivers/i2c/busses/i2c-pxa.c
++++ b/drivers/i2c/busses/i2c-pxa.c
+@@ -1503,7 +1503,10 @@ static int i2c_pxa_probe(struct platform_device *dev)
+ 				i2c->adap.name);
+ 	}
  
--	mem = ioremap(atu.cpu_addr, pci->region_align);
-+	mem = ioremap(pci->pp.msg_res->start, pci->region_align);
- 	if (!mem)
- 		return -ENOMEM;
+-	clk_prepare_enable(i2c->clk);
++	ret = clk_prepare_enable(i2c->clk);
++	if (ret)
++		return dev_err_probe(&dev->dev, ret,
++				     "failed to enable clock\n");
  
+ 	if (i2c->use_pio) {
+ 		i2c->adap.algo = &i2c_pxa_pio_algorithm;
 -- 
 2.39.5
 
