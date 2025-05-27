@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C54025A323;
-	Tue, 27 May 2025 17:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B90C25A323;
+	Tue, 27 May 2025 17:09:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365771; cv=none; b=ShanX9bG+FqCnZobTQpKMTq9r2Z3b1/cZaO4P5wDhAdlBm/lEu9tqBViFb6yPRHv/Gy0t7F4OnOOYk1Iv0YD5A+GDdOM5oVEszjnCtEZtHRgVqt2axPrJshu2vEbi4dh78eRt65UhSZUshhKaZWoaoeyjfpVOejb7/jUjgB6zK0=
+	t=1748365774; cv=none; b=P09uP7HPiKBzRh1t2+y7IfGVpFLpTkDUVPumO3j+ywIBD7EDy9xXodd7JqReG84k5/DS8PclhB4ml18y3+f4rLa23msM+VVV8KWYookxuEmLTLYY2/fvfe+FhTrtqXBkk3IHqSmhWWlp2Qefc5ejbLeoSkchId1OdsUhjfYRaxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365771; c=relaxed/simple;
-	bh=CWyfdb/JDt3U57NXC5sagYkUh+sU18z0HrXU7erb3Bk=;
+	s=arc-20240116; t=1748365774; c=relaxed/simple;
+	bh=tFA8fTx/qvqgvuIBSN+2mZLnTupCV+ziJQM2LSXRwr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BIpS4gN1cT8+tcw6HsnyiCzEiXYwg+t5XkxRYfNCs3ykQwwpM7V0b7brOXlMMozKAgwlPZBwbLHpAtO74maxp5JrH+JnIFGmHfoDedcGOs78T+SY3LREZzTKqN+clW19qyZCO2wddcijc8bzpuDGpdxBinxRytbQ5RcVrqKK4vM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1OuDBysv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EEo1JFX1+3YePneSxnmCbW6WyWraiIROmLUplEh/VDqvYSrH1CWwDIkTgsXoxGpFSmGNshFuXvjdOyPmSqo6hKc8rBcNREaUsnOlgXfatfBUkldHSYZfsUB+QonsBD4ONOgXQ2JwvpgO4tg4soTUaM22FTIcvVyGdOeGkNIm//U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BIyZFJku; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1OuDBysv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8CBC4CEE9;
-	Tue, 27 May 2025 17:09:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BIyZFJku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF321C4CEE9;
+	Tue, 27 May 2025 17:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365771;
-	bh=CWyfdb/JDt3U57NXC5sagYkUh+sU18z0HrXU7erb3Bk=;
+	s=korg; t=1748365774;
+	bh=tFA8fTx/qvqgvuIBSN+2mZLnTupCV+ziJQM2LSXRwr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1OuDBysv2GECImnvwx5n2/gSCozGpz/jIaRHx/ARDIsYdAqJf08eQqBHBzXG3IvCs
-	 vxg+4VijZH9dEzDTYxtpA4aojRP8EgpXoTVYHxYP/lvnHglZ4GFkqDSw+eceM3RAxu
-	 XtuTz/mh2jLveA3wbGPz38ln6KM9kg3hSk7UAqxY=
+	b=BIyZFJkuo7HnlMCImSAmCMdOuo9g3Q2UXfOb03gkM0Kd6olzXpkl4cjPu+FakQu57
+	 rsKwyZaCMi0GIF4rA+tUXXGKn/KfcgyYHn7LVGR8pZ3n/KBsrxdy4pvjQlB5itZpwP
+	 Y5VWEIptZGRUf0kvTaltcx1XVzCPXbqZsZ9N889w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Amery Hung <ameryhung@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 476/626] bpf: Use kallsyms to find the function name of a struct_opss stub function
-Date: Tue, 27 May 2025 18:26:09 +0200
-Message-ID: <20250527162504.332114063@linuxfoundation.org>
+Subject: [PATCH 6.12 485/626] spi: zynqmp-gqspi: Always acknowledge interrupts
+Date: Tue, 27 May 2025 18:26:18 +0200
+Message-ID: <20250527162504.690204406@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -55,250 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit 12fdd29d5d71d2987a1aec434b704d850a4d7fcb ]
+[ Upstream commit 89785306453ce6d949e783f6936821a0b7649ee2 ]
 
-In commit 1611603537a4 ("bpf: Create argument information for nullable arguments."),
-it introduced a "__nullable" tagging at the argument name of a
-stub function. Some background on the commit:
-it requires to tag the stub function instead of directly tagging
-the "ops" of a struct. This is because the btf func_proto of the "ops"
-does not have the argument name and the "__nullable" is tagged at
-the argument name.
+RXEMPTY can cause an IRQ, even though we may not do anything about it
+(such as if we are waiting for more received data). We must still handle
+these IRQs because we can tell they were caused by the device.
 
-To find the stub function of a "ops", it currently relies on a naming
-convention on the stub function "st_ops__ops_name".
-e.g. tcp_congestion_ops__ssthresh. However, the new kernel
-sub system implementing bpf_struct_ops have missed this and
-have been surprised that the "__nullable" and the to-be-landed
-"__ref" tagging was not effective.
-
-One option would be to give a warning whenever the stub function does
-not follow the naming convention, regardless if it requires arg tagging
-or not.
-
-Instead, this patch uses the kallsyms_lookup approach and removes
-the requirement on the naming convention. The st_ops->cfi_stubs has
-all the stub function kernel addresses. kallsyms_lookup() is used to
-lookup the function name. With the function name, BTF can be used to
-find the BTF func_proto. The existing "__nullable" arg name searching
-logic will then fall through.
-
-One notable change is,
-if it failed in kallsyms_lookup or it failed in looking up the stub
-function name from the BTF, the bpf_struct_ops registration will fail.
-This is different from the previous behavior that it silently ignored
-the "st_ops__ops_name" function not found error.
-
-The "tcp_congestion_ops", "sched_ext_ops", and "hid_bpf_ops" can still be
-registered successfully after this patch. There is struct_ops_maybe_null
-selftest to cover the "__nullable" tagging.
-
-Other minor changes:
-1. Removed the "%s__%s" format from the pr_warn because the naming
-   convention is removed.
-2. The existing bpf_struct_ops_supported() is also moved earlier
-   because prepare_arg_info needs to use it to decide if the
-   stub function is NULL before calling the prepare_arg_info.
-
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Benjamin Tissoires <bentiss@kernel.org>
-Cc: Yonghong Song <yonghong.song@linux.dev>
-Cc: Amery Hung <ameryhung@gmail.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Reviewed-by: Amery Hung <ameryhung@gmail.com>
-Link: https://lore.kernel.org/r/20250127222719.2544255-1-martin.lau@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Link: https://patch.msgid.link/20250116224130.2684544-6-sean.anderson@linux.dev
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_struct_ops.c | 98 +++++++++++++++++--------------------
- 1 file changed, 44 insertions(+), 54 deletions(-)
+ drivers/spi/spi-zynqmp-gqspi.c | 20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/kernel/bpf/bpf_struct_ops.c b/kernel/bpf/bpf_struct_ops.c
-index b70d0eef8a284..477947456371a 100644
---- a/kernel/bpf/bpf_struct_ops.c
-+++ b/kernel/bpf/bpf_struct_ops.c
-@@ -147,39 +147,6 @@ void bpf_struct_ops_image_free(void *image)
- }
- 
- #define MAYBE_NULL_SUFFIX "__nullable"
--#define MAX_STUB_NAME 128
--
--/* Return the type info of a stub function, if it exists.
-- *
-- * The name of a stub function is made up of the name of the struct_ops and
-- * the name of the function pointer member, separated by "__". For example,
-- * if the struct_ops type is named "foo_ops" and the function pointer
-- * member is named "bar", the stub function name would be "foo_ops__bar".
-- */
--static const struct btf_type *
--find_stub_func_proto(const struct btf *btf, const char *st_op_name,
--		     const char *member_name)
--{
--	char stub_func_name[MAX_STUB_NAME];
--	const struct btf_type *func_type;
--	s32 btf_id;
--	int cp;
--
--	cp = snprintf(stub_func_name, MAX_STUB_NAME, "%s__%s",
--		      st_op_name, member_name);
--	if (cp >= MAX_STUB_NAME) {
--		pr_warn("Stub function name too long\n");
--		return NULL;
--	}
--	btf_id = btf_find_by_name_kind(btf, stub_func_name, BTF_KIND_FUNC);
--	if (btf_id < 0)
--		return NULL;
--	func_type = btf_type_by_id(btf, btf_id);
--	if (!func_type)
--		return NULL;
--
--	return btf_type_by_id(btf, func_type->type); /* FUNC_PROTO */
--}
- 
- /* Prepare argument info for every nullable argument of a member of a
-  * struct_ops type.
-@@ -204,27 +171,42 @@ find_stub_func_proto(const struct btf *btf, const char *st_op_name,
- static int prepare_arg_info(struct btf *btf,
- 			    const char *st_ops_name,
- 			    const char *member_name,
--			    const struct btf_type *func_proto,
-+			    const struct btf_type *func_proto, void *stub_func_addr,
- 			    struct bpf_struct_ops_arg_info *arg_info)
+diff --git a/drivers/spi/spi-zynqmp-gqspi.c b/drivers/spi/spi-zynqmp-gqspi.c
+index b9df39e06e7cd..4b091b4d4ff37 100644
+--- a/drivers/spi/spi-zynqmp-gqspi.c
++++ b/drivers/spi/spi-zynqmp-gqspi.c
+@@ -799,7 +799,6 @@ static void zynqmp_process_dma_irq(struct zynqmp_qspi *xqspi)
+ static irqreturn_t zynqmp_qspi_irq(int irq, void *dev_id)
  {
- 	const struct btf_type *stub_func_proto, *pointed_type;
- 	const struct btf_param *stub_args, *args;
- 	struct bpf_ctx_arg_aux *info, *info_buf;
- 	u32 nargs, arg_no, info_cnt = 0;
-+	char ksym[KSYM_SYMBOL_LEN];
-+	const char *stub_fname;
-+	s32 stub_func_id;
- 	u32 arg_btf_id;
- 	int offset;
+ 	struct zynqmp_qspi *xqspi = (struct zynqmp_qspi *)dev_id;
+-	irqreturn_t ret = IRQ_NONE;
+ 	u32 status, mask, dma_status = 0;
  
--	stub_func_proto = find_stub_func_proto(btf, st_ops_name, member_name);
--	if (!stub_func_proto)
--		return 0;
-+	stub_fname = kallsyms_lookup((unsigned long)stub_func_addr, NULL, NULL, NULL, ksym);
-+	if (!stub_fname) {
-+		pr_warn("Cannot find the stub function name for the %s in struct %s\n",
-+			member_name, st_ops_name);
-+		return -ENOENT;
-+	}
-+
-+	stub_func_id = btf_find_by_name_kind(btf, stub_fname, BTF_KIND_FUNC);
-+	if (stub_func_id < 0) {
-+		pr_warn("Cannot find the stub function %s in btf\n", stub_fname);
-+		return -ENOENT;
-+	}
-+
-+	stub_func_proto = btf_type_by_id(btf, stub_func_id);
-+	stub_func_proto = btf_type_by_id(btf, stub_func_proto->type);
- 
- 	/* Check if the number of arguments of the stub function is the same
- 	 * as the number of arguments of the function pointer.
- 	 */
- 	nargs = btf_type_vlen(func_proto);
- 	if (nargs != btf_type_vlen(stub_func_proto)) {
--		pr_warn("the number of arguments of the stub function %s__%s does not match the number of arguments of the member %s of struct %s\n",
--			st_ops_name, member_name, member_name, st_ops_name);
-+		pr_warn("the number of arguments of the stub function %s does not match the number of arguments of the member %s of struct %s\n",
-+			stub_fname, member_name, st_ops_name);
- 		return -EINVAL;
+ 	status = zynqmp_gqspi_read(xqspi, GQSPI_ISR_OFST);
+@@ -814,27 +813,24 @@ static irqreturn_t zynqmp_qspi_irq(int irq, void *dev_id)
+ 				   dma_status);
  	}
  
-@@ -254,21 +236,21 @@ static int prepare_arg_info(struct btf *btf,
- 						    &arg_btf_id);
- 		if (!pointed_type ||
- 		    !btf_type_is_struct(pointed_type)) {
--			pr_warn("stub function %s__%s has %s tagging to an unsupported type\n",
--				st_ops_name, member_name, MAYBE_NULL_SUFFIX);
-+			pr_warn("stub function %s has %s tagging to an unsupported type\n",
-+				stub_fname, MAYBE_NULL_SUFFIX);
- 			goto err_out;
- 		}
+-	if (mask & GQSPI_ISR_TXNOT_FULL_MASK) {
++	if (!mask && !dma_status)
++		return IRQ_NONE;
++
++	if (mask & GQSPI_ISR_TXNOT_FULL_MASK)
+ 		zynqmp_qspi_filltxfifo(xqspi, GQSPI_TX_FIFO_FILL);
+-		ret = IRQ_HANDLED;
+-	}
  
- 		offset = btf_ctx_arg_offset(btf, func_proto, arg_no);
- 		if (offset < 0) {
--			pr_warn("stub function %s__%s has an invalid trampoline ctx offset for arg#%u\n",
--				st_ops_name, member_name, arg_no);
-+			pr_warn("stub function %s has an invalid trampoline ctx offset for arg#%u\n",
-+				stub_fname, arg_no);
- 			goto err_out;
- 		}
+-	if (dma_status & GQSPI_QSPIDMA_DST_I_STS_DONE_MASK) {
++	if (dma_status & GQSPI_QSPIDMA_DST_I_STS_DONE_MASK)
+ 		zynqmp_process_dma_irq(xqspi);
+-		ret = IRQ_HANDLED;
+-	} else if (!(mask & GQSPI_IER_RXEMPTY_MASK) &&
+-			(mask & GQSPI_IER_GENFIFOEMPTY_MASK)) {
++	else if (!(mask & GQSPI_IER_RXEMPTY_MASK) &&
++			(mask & GQSPI_IER_GENFIFOEMPTY_MASK))
+ 		zynqmp_qspi_readrxfifo(xqspi, GQSPI_RX_FIFO_FILL);
+-		ret = IRQ_HANDLED;
+-	}
  
- 		if (args[arg_no].type != stub_args[arg_no].type) {
--			pr_warn("arg#%u type in stub function %s__%s does not match with its original func_proto\n",
--				arg_no, st_ops_name, member_name);
-+			pr_warn("arg#%u type in stub function %s does not match with its original func_proto\n",
-+				arg_no, stub_fname);
- 			goto err_out;
- 		}
- 
-@@ -325,6 +307,13 @@ static bool is_module_member(const struct btf *btf, u32 id)
- 	return !strcmp(btf_name_by_offset(btf, t->name_off), "module");
+ 	if (xqspi->bytes_to_receive == 0 && xqspi->bytes_to_transfer == 0 &&
+ 	    ((status & GQSPI_IRQ_MASK) == GQSPI_IRQ_MASK)) {
+ 		zynqmp_gqspi_write(xqspi, GQSPI_IDR_OFST, GQSPI_ISR_IDR_MASK);
+ 		complete(&xqspi->data_completion);
+-		ret = IRQ_HANDLED;
+ 	}
+-	return ret;
++	return IRQ_HANDLED;
  }
  
-+int bpf_struct_ops_supported(const struct bpf_struct_ops *st_ops, u32 moff)
-+{
-+	void *func_ptr = *(void **)(st_ops->cfi_stubs + moff);
-+
-+	return func_ptr ? 0 : -ENOTSUPP;
-+}
-+
- int bpf_struct_ops_desc_init(struct bpf_struct_ops_desc *st_ops_desc,
- 			     struct btf *btf,
- 			     struct bpf_verifier_log *log)
-@@ -388,7 +377,10 @@ int bpf_struct_ops_desc_init(struct bpf_struct_ops_desc *st_ops_desc,
- 
- 	for_each_member(i, t, member) {
- 		const struct btf_type *func_proto;
-+		void **stub_func_addr;
-+		u32 moff;
- 
-+		moff = __btf_member_bit_offset(t, member) / 8;
- 		mname = btf_name_by_offset(btf, member->name_off);
- 		if (!*mname) {
- 			pr_warn("anon member in struct %s is not supported\n",
-@@ -414,7 +406,11 @@ int bpf_struct_ops_desc_init(struct bpf_struct_ops_desc *st_ops_desc,
- 		func_proto = btf_type_resolve_func_ptr(btf,
- 						       member->type,
- 						       NULL);
--		if (!func_proto)
-+
-+		/* The member is not a function pointer or
-+		 * the function pointer is not supported.
-+		 */
-+		if (!func_proto || bpf_struct_ops_supported(st_ops, moff))
- 			continue;
- 
- 		if (btf_distill_func_proto(log, btf,
-@@ -426,8 +422,9 @@ int bpf_struct_ops_desc_init(struct bpf_struct_ops_desc *st_ops_desc,
- 			goto errout;
- 		}
- 
-+		stub_func_addr = *(void **)(st_ops->cfi_stubs + moff);
- 		err = prepare_arg_info(btf, st_ops->name, mname,
--				       func_proto,
-+				       func_proto, stub_func_addr,
- 				       arg_info + i);
- 		if (err)
- 			goto errout;
-@@ -1153,13 +1150,6 @@ void bpf_struct_ops_put(const void *kdata)
- 	bpf_map_put(&st_map->map);
- }
- 
--int bpf_struct_ops_supported(const struct bpf_struct_ops *st_ops, u32 moff)
--{
--	void *func_ptr = *(void **)(st_ops->cfi_stubs + moff);
--
--	return func_ptr ? 0 : -ENOTSUPP;
--}
--
- static bool bpf_struct_ops_valid_to_reg(struct bpf_map *map)
- {
- 	struct bpf_struct_ops_map *st_map = (struct bpf_struct_ops_map *)map;
+ /**
 -- 
 2.39.5
 
