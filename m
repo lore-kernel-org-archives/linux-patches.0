@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D879C13790B;
-	Tue, 27 May 2025 17:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6310213790B;
+	Tue, 27 May 2025 17:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366144; cv=none; b=iqz6nQJxl8Kbf1TTJiVXoRdfEnBPHcBa8BoiOSz4t9pIn/Lt8HS/1z4K8jpseButruOcb78PWEqCnp1DdVobi2rbiubMVlxg/MfmlAR61NJ0frQksUFCTuXIZeM1vyWGT7X8PTngW0yK3fP9WtrenVKwvNCLm0grCzQSY8VwZVk=
+	t=1748366145; cv=none; b=E9rprKkNkTXKUdo1tViBXchos4tVzBYsA8seMXDenG85FW89JlpRGXPKvLquqLlEvKCuSy5Vhz3ww1m+GxAeG4qcs0yt7NRWUTEUgH+fWSLCtjubRBGhJYX9ZbUJeiSzVVDJ0EFGoRnl45fFFavlvaQcTMWchNCob7IKjuqdwwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366144; c=relaxed/simple;
-	bh=albKVfX3+p+1rfLbFZJADBN/SEzkaA30d88xiH5eys0=;
+	s=arc-20240116; t=1748366145; c=relaxed/simple;
+	bh=qNUOBYF2qfK2iu/+eSXTKZiecD95bwKfiUD1F7qfyUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lpbyp/TlfFWev/A2/lu05iNBxxuEJF9s2NqijUuJjjDyA90+IIC+tHDIhxVhiZJzKq5JFWP9HqSKvbLRnqDPOZN1bVxdWmqiXqKibaV8wW7ZpIlifoQQWwqapOQn3P9IFPXszdVKbwWNpWUKrvHj7U/y9rnm/DTeG3lL3yQ767Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qk3ktYct; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qTIxyuzeGdW4d9MKnXfCGSOjHVu3jsM03QG9JtgVjYwfFEZMhBxoTUZ6EJ4s7gW2pAJwUxZYBKNmMCGITM2lVVKlQGWa6K64M/m0JC9ZrtkhZYbYlVsssPDhjr5CpHlip+Ok/q1K1H4cj0v2gw07homhfU0YFvmecYIruPOt5aM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+4Ls4Kb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qk3ktYct"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB0F0C4CEE9;
-	Tue, 27 May 2025 17:15:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+4Ls4Kb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF89DC4CEEB;
+	Tue, 27 May 2025 17:15:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366142;
-	bh=albKVfX3+p+1rfLbFZJADBN/SEzkaA30d88xiH5eys0=;
+	s=korg; t=1748366145;
+	bh=qNUOBYF2qfK2iu/+eSXTKZiecD95bwKfiUD1F7qfyUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qk3ktYctVcRRSpVxBqprqB00F34i9D60rSVmVKM0FMlgnj/U8BLLMKS37MwZE5gui
-	 XchAKkU8f1WcykAE4DqC2TznVch0tuT9xXCQPrmOT4ZwNWVJRkHhpETItC9QlcshcQ
-	 q4XDslkGQ4+lT2Q5a2gbyenz4dl/r3DU+kCsm40Q=
+	b=d+4Ls4KbYM6E/YFLIEmljSW7lBlI2KUxd1qKViZw06SQkCnMcOVIN8UViKg2e/TJa
+	 Kvt17nlgGlM/fAgsbGsA3vVAQUlQYng1zIKTkQRvGWtKmDSr4GS8bqBUuEunptkI0E
+	 Of22F1xfPnkUFFf0OT2tFdbKCW7syFPL6oyEzd0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lu <chris.lu@mediatek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 604/626] Bluetooth: btmtksdio: Check function enabled before doing close
-Date: Tue, 27 May 2025 18:28:17 +0200
-Message-ID: <20250527162509.539138205@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 578/626] ASoC: SOF: ipc4-pcm: Delay reporting is only supported for playback direction
+Date: Tue, 27 May 2025 18:27:51 +0200
+Message-ID: <20250527162508.456000983@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -50,33 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Lu <chris.lu@mediatek.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit 07e90048e356a29079fbc011cfc2e1fa1d1c5ac9 upstream.
+commit 98db16f314b3a0d6e5acd94708ea69751436467f upstream.
 
-Check BTMTKSDIO_FUNC_ENABLED flag before doing close to prevent
-btmtksdio_close been called twice.
+The firmware does not provide any information for capture streams via the
+shared pipeline registers.
 
-Fixes: 6ac4233afb9a ("Bluetooth: btmtksdio: Prevent enabling interrupts after IRQ handler removal")
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+To avoid reporting invalid delay value for capture streams to user space
+we need to disable it.
+
+Fixes: af74dbd0dbcf ("ASoC: SOF: ipc4-pcm: allocate time info for pcm delay feature")
+Cc: stable@vger.kernel.org
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Link: https://patch.msgid.link/20250509085951.15696-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btmtksdio.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/sof/ipc4-pcm.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/bluetooth/btmtksdio.c
-+++ b/drivers/bluetooth/btmtksdio.c
-@@ -723,6 +723,10 @@ static int btmtksdio_close(struct hci_de
- {
- 	struct btmtksdio_dev *bdev = hci_get_drvdata(hdev);
+--- a/sound/soc/sof/ipc4-pcm.c
++++ b/sound/soc/sof/ipc4-pcm.c
+@@ -794,7 +794,8 @@ static int sof_ipc4_pcm_setup(struct snd
  
-+	/* Skip btmtksdio_close if BTMTKSDIO_FUNC_ENABLED isn't set */
-+	if (!test_bit(BTMTKSDIO_FUNC_ENABLED, &bdev->tx_state))
-+		return 0;
-+
- 	sdio_claim_host(bdev->func);
+ 		spcm->stream[stream].private = stream_priv;
  
- 	/* Disable interrupt */
+-		if (!support_info)
++		/* Delay reporting is only supported on playback */
++		if (!support_info || stream == SNDRV_PCM_STREAM_CAPTURE)
+ 			continue;
+ 
+ 		time_info = kzalloc(sizeof(*time_info), GFP_KERNEL);
 
 
