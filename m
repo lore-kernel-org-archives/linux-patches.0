@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D329E27933A;
-	Tue, 27 May 2025 17:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B2A27FB02;
+	Tue, 27 May 2025 17:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366397; cv=none; b=MeRFkVLeV7KLSllqtPJUsYNFmvlgk6mv4etUWy7UDlf7KIa5piRxwsDBC01CCvZX3rVgt9KjotoD0k1s5GBxuK/gbQRlxWNvyESOe9L7cvhXe0GlyQpIckcUg0LAJHjJ2rtu2fUy2y7b9yPjSLsCkFXJ/19SwIwXHAFcIu7qhx4=
+	t=1748366401; cv=none; b=gP0bLcLwRr9Yc8tzZNKhdA7l8a8qS0aU3Or9zYRbRvvEME8eX0N2TYUdg2G8Aup+hDwT0L4KKmnmaE0AxP5uXl+a5r/8DghlSxajL6BvfMbyOA4jlZLGZfXwAJa+TTMlOG18TAnyumFRGX7tQM37GNi7AYjNXTU3hqNP8uxAa3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366397; c=relaxed/simple;
-	bh=m2jaykpo31im0AZyYSdYU9lIRsG9ZX5Nlh/Z+RAKqmE=;
+	s=arc-20240116; t=1748366401; c=relaxed/simple;
+	bh=Ut+D0Xw85w4MELh3O3BiSQgjjx51VM+CAF8+FOvgoo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SitR0UK3RHVl4rp/f/sRj472zGc3tiZGZfQDPArVWHLvp0BjwR1YNYTxMQs8uXm4WZErxzNXhZuSMDWhxAW10wrZnhTJHDaIYLp6ILVXmEBE//rbACc3vHgiht4RTHYIuEWborSDJhLOTD+Df0rJW5vHu6i+CSDvRF1KuMFX7uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=htWCSZs/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=El/ZUUzAMmi7NF1bSIYrOefjcxJNHNgAElcU21zvVNmmLGFhVXBsTY7OW47okkIZ7dtqqq3jJEgA9bN/7EMLVPNbPwcOVOdcpVAaqrv4nxzA52PtX3bFNuFG5bS+7wmzR1jLls394RuCQsoWFgU/9lq56/q4UdRV3H8gBwlDN7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NR70rKLD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="htWCSZs/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E26C4CEE9;
-	Tue, 27 May 2025 17:19:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NR70rKLD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7FDC4CEE9;
+	Tue, 27 May 2025 17:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366397;
-	bh=m2jaykpo31im0AZyYSdYU9lIRsG9ZX5Nlh/Z+RAKqmE=;
+	s=korg; t=1748366400;
+	bh=Ut+D0Xw85w4MELh3O3BiSQgjjx51VM+CAF8+FOvgoo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=htWCSZs/WRHUB5PSy6+Vw3ZY8cKHSlR/ch47LexSnKI1kiuWQcEZbkJQOgHpvc02s
-	 Jkgnm6GcvvboxWHhKuBTABDpMkmFW/t1npR8w7l76vwjyIxHCWGnwKi3/dPVj1sIBs
-	 qvUU/wiVbjzyYBWi+DUpOlCdh46uB35VrSOyhLvo=
+	b=NR70rKLDItMq4PlmR1C/rpS55QSXoH0CY4HpJ4YsZNPWYmkloAe0C/kUyLLkKLkcx
+	 nl3oZjzjLZXweANPPLwX8Y807TVB5tUaWhdrfVcRJlOiip8rr4aX8v7AR0bxeq/koH
+	 LxGVoYezTaUKBypL9VdBD7VVVZFzXTSx594fy5Ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	gao xu <gaoxu2@honor.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 024/783] cgroup: Fix compilation issue due to cgroup_mutex not being exported
-Date: Tue, 27 May 2025 18:17:01 +0200
-Message-ID: <20250527162514.083195973@linuxfoundation.org>
+Subject: [PATCH 6.14 015/783] nvmem: qfprom: switch to 4-byte aligned reads
+Date: Tue, 27 May 2025 18:16:52 +0200
+Message-ID: <20250527162513.668703680@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -46,50 +45,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: gaoxu <gaoxu2@honor.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 87c259a7a359e73e6c52c68fcbec79988999b4e6 ]
+[ Upstream commit 3566a737db87a9bf360c2fd36433c5149f805f2e ]
 
-When adding folio_memcg function call in the zram module for
-Android16-6.12, the following error occurs during compilation:
-ERROR: modpost: "cgroup_mutex" [../soc-repo/zram.ko] undefined!
+All platforms since Snapdragon 8 Gen1 (SM8450) require using 4-byte
+reads to access QFPROM data. While older platforms were more than happy
+with 1-byte reads, change the qfprom driver to use 4-byte reads for all
+the platforms. Specify stride and word size of 4 bytes. To retain
+compatibility with the existing DT and to simplify porting data from
+vendor kernels, use fixup_dt_cell_info in order to bump alignment
+requirements.
 
-This error is caused by the indirect call to lockdep_is_held(&cgroup_mutex)
-within folio_memcg. The export setting for cgroup_mutex is controlled by
-the CONFIG_PROVE_RCU macro. If CONFIG_LOCKDEP is enabled while
-CONFIG_PROVE_RCU is not, this compilation error will occur.
-
-To resolve this issue, add a parallel macro CONFIG_LOCKDEP control to
-ensure cgroup_mutex is properly exported when needed.
-
-Signed-off-by: gao xu <gaoxu2@honor.com>
-Acked-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20250411112251.68002-12-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cgroup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvmem/qfprom.c | 26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index 68d58753c75c3..660d27a0cb3d4 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -90,7 +90,7 @@
- DEFINE_MUTEX(cgroup_mutex);
- DEFINE_SPINLOCK(css_set_lock);
+diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
+index 116a39e804c70..a872c640b8c5a 100644
+--- a/drivers/nvmem/qfprom.c
++++ b/drivers/nvmem/qfprom.c
+@@ -321,19 +321,32 @@ static int qfprom_reg_read(void *context,
+ 			unsigned int reg, void *_val, size_t bytes)
+ {
+ 	struct qfprom_priv *priv = context;
+-	u8 *val = _val;
+-	int i = 0, words = bytes;
++	u32 *val = _val;
+ 	void __iomem *base = priv->qfpcorrected;
++	int words = DIV_ROUND_UP(bytes, sizeof(u32));
++	int i;
  
--#ifdef CONFIG_PROVE_RCU
-+#if (defined CONFIG_PROVE_RCU || defined CONFIG_LOCKDEP)
- EXPORT_SYMBOL_GPL(cgroup_mutex);
- EXPORT_SYMBOL_GPL(css_set_lock);
- #endif
+ 	if (read_raw_data && priv->qfpraw)
+ 		base = priv->qfpraw;
+ 
+-	while (words--)
+-		*val++ = readb(base + reg + i++);
++	for (i = 0; i < words; i++)
++		*val++ = readl(base + reg + i * sizeof(u32));
+ 
+ 	return 0;
+ }
+ 
++/* Align reads to word boundary */
++static void qfprom_fixup_dt_cell_info(struct nvmem_device *nvmem,
++				      struct nvmem_cell_info *cell)
++{
++	unsigned int byte_offset = cell->offset % sizeof(u32);
++
++	cell->bit_offset += byte_offset * BITS_PER_BYTE;
++	cell->offset -= byte_offset;
++	if (byte_offset && !cell->nbits)
++		cell->nbits = cell->bytes * BITS_PER_BYTE;
++}
++
+ static void qfprom_runtime_disable(void *data)
+ {
+ 	pm_runtime_disable(data);
+@@ -358,10 +371,11 @@ static int qfprom_probe(struct platform_device *pdev)
+ 	struct nvmem_config econfig = {
+ 		.name = "qfprom",
+ 		.add_legacy_fixed_of_cells = true,
+-		.stride = 1,
+-		.word_size = 1,
++		.stride = 4,
++		.word_size = 4,
+ 		.id = NVMEM_DEVID_AUTO,
+ 		.reg_read = qfprom_reg_read,
++		.fixup_dt_cell_info = qfprom_fixup_dt_cell_info,
+ 	};
+ 	struct device *dev = &pdev->dev;
+ 	struct resource *res;
 -- 
 2.39.5
 
