@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00CC27FB0C;
-	Tue, 27 May 2025 16:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B917C280A56;
+	Tue, 27 May 2025 16:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364882; cv=none; b=S+zT7QGiEvZje99QbEcGIcOROVskwu6AdeWBVxs0o99y3GvMFFrRL/FK/ON/wpBgt1ZzpTunNhfvb4iBBrQt7iUF3LiN2Qg4j6qSg5DFDnvSMwCiMI+Fb50iRr0LuM66RK/Vx0XqzTFCj3zVhyENKOpFd59S9Vq+fnOra4fEeNE=
+	t=1748364885; cv=none; b=Xi9V1zOxYR3dwxd+xw6mb9SqVt50ilGlxvUpyEgGrRcP79Itupjys7MyDIZ4SIDd5p8sG7rQbt+0zFTlBPZaHurV7oW0GYzhXeAhtgKgNRAvCbYbWEW7fYLHPiixrUyJev/YBYeW2kFtrGIV4CRM1JN9zzJBsvwdOcieulJqMkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364882; c=relaxed/simple;
-	bh=D0wRFi5tUoORMS3SuXMl+HYAhx7WlDazoXiObQle/qk=;
+	s=arc-20240116; t=1748364885; c=relaxed/simple;
+	bh=PmjZcMbiKq//k0FJHikJZRAcHfA9lyX0LlQHTU9BV88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CGiiQR+twcUh/9eQ7cwDPk+qRW6XY3+5Qn2jOezSTWSRPXmvfUcb4qGB+X96bZbQRcZIHoI4A+ngrIDgIrBr6b6l0zlFIxZPiflopiK6RiQLSJhTqHuIQOQDF+8SofJTUkpEmY3nFDvUCoKplmrtYiUPGpxkf0DdhTpD238HYrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dhkZgAiG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bft4DPiQqoPYcN5JThZF/6UOtu5sPnUwGImE9eCERtZOLvroGx/eqjRhSnYzOv7s+cftBS5vzlUFsgcPGX1NUcoQUYAkvEYzvkzWjT6oJGCtF6cIHHIIyS5fq3sFnBNaDEXL5WnxURsmFFjkTeX/xkh9GGX+6MfKbtjMS4074Xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MrZgg1Wz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dhkZgAiG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE76C4CEE9;
-	Tue, 27 May 2025 16:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MrZgg1Wz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C055C4CEEF;
+	Tue, 27 May 2025 16:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364882;
-	bh=D0wRFi5tUoORMS3SuXMl+HYAhx7WlDazoXiObQle/qk=;
+	s=korg; t=1748364885;
+	bh=PmjZcMbiKq//k0FJHikJZRAcHfA9lyX0LlQHTU9BV88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dhkZgAiGjFghS/0474fBxb9p0l+zx1XRojTFAjAhoTN1fzUZF+O11ElnAPwkfqDNq
-	 DN0MPcpfdf303QEPxKf7bhVyycsK4xOTkyNTWa9hJu1cELmNif1th7Wi6SKDVLPnYM
-	 C4xeW0ELuBwdv2dRR32/ADGmebxWUdIZhFGHx3uI=
+	b=MrZgg1WznFgU+hHFn3nTUA1DM94UmC9MNyFOjXdgGfz4s9dWJBDeBSssg8dBdt8W+
+	 MAj0z+UUWSbbjKmH53KYkyKnZni/ERr/13D4NTgg5IrWUXnZ1Li/A/ktiBcjclJ79j
+	 5i85ltHaVqb/oemAQB2YcopIcJWa4Xna5za/8k/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 179/626] usb: xhci: Dont change the status of stalled TDs on failed Stop EP
-Date: Tue, 27 May 2025 18:21:12 +0200
-Message-ID: <20250527162452.287377879@linuxfoundation.org>
+Subject: [PATCH 6.12 197/626] gfs2: Check for empty queue in run_queue
+Date: Tue, 27 May 2025 18:21:30 +0200
+Message-ID: <20250527162453.027971714@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,66 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit dfc88357b6b6356dadea06b2c0bc8041f5e11720 ]
+[ Upstream commit d838605fea6eabae3746a276fd448f6719eb3926 ]
 
-When the device stalls an endpoint, current TD is assigned -EPIPE
-status and Reset Endpoint is queued. If a Stop Endpoint is pending
-at the time, it will run before Reset Endpoint and fail due to the
-stall. Its handler will change TD's status to -EPROTO before Reset
-Endpoint handler runs and initiates giveback.
+In run_queue(), check if the queue of pending requests is empty instead
+of blindly assuming that it won't be.
 
-Check if the stall has already been handled and don't try to do it
-again. Since xhci_handle_halted_endpoint() performs this check too,
-not overwriting td->status is the only difference.
-
-I haven't seen this case yet, but I have seen a related one where
-the xHC has already executed Reset Endpoint, EP Context state is
-now Stopped and EP_HALTED is set. If the xHC took a bit longer to
-execute Reset Endpoint, said case would become this one.
-
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250311154551.4035726-3-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ fs/gfs2/glock.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 3e70e4f6bf083..fbc8419a54730 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1156,7 +1156,14 @@ static void xhci_handle_cmd_stop_ep(struct xhci_hcd *xhci, int slot_id,
- 	 */
- 		switch (GET_EP_CTX_STATE(ep_ctx)) {
- 		case EP_STATE_HALTED:
--			xhci_dbg(xhci, "Stop ep completion raced with stall, reset ep\n");
-+			xhci_dbg(xhci, "Stop ep completion raced with stall\n");
-+			/*
-+			 * If the halt happened before Stop Endpoint failed, its transfer event
-+			 * should have already been handled and Reset Endpoint should be pending.
-+			 */
-+			if (ep->ep_state & EP_HALTED)
-+				goto reset_done;
-+
- 			if (ep->ep_state & EP_HAS_STREAMS) {
- 				reset_type = EP_SOFT_RESET;
- 			} else {
-@@ -1167,8 +1174,11 @@ static void xhci_handle_cmd_stop_ep(struct xhci_hcd *xhci, int slot_id,
- 			}
- 			/* reset ep, reset handler cleans up cancelled tds */
- 			err = xhci_handle_halted_endpoint(xhci, ep, td, reset_type);
-+			xhci_dbg(xhci, "Stop ep completion resetting ep, status %d\n", err);
- 			if (err)
- 				break;
-+reset_done:
-+			/* Reset EP handler will clean up cancelled TDs */
- 			ep->ep_state &= ~EP_STOP_CMD_PENDING;
- 			return;
- 		case EP_STATE_STOPPED:
+diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
+index a51fe42732c4c..4f1eca99786b6 100644
+--- a/fs/gfs2/glock.c
++++ b/fs/gfs2/glock.c
+@@ -843,12 +843,13 @@ static void run_queue(struct gfs2_glock *gl, const int nonblock)
+ __releases(&gl->gl_lockref.lock)
+ __acquires(&gl->gl_lockref.lock)
+ {
+-	struct gfs2_holder *gh = NULL;
++	struct gfs2_holder *gh;
+ 
+ 	if (test_bit(GLF_LOCK, &gl->gl_flags))
+ 		return;
+ 	set_bit(GLF_LOCK, &gl->gl_flags);
+ 
++	/* While a demote is in progress, the GLF_LOCK flag must be set. */
+ 	GLOCK_BUG_ON(gl, test_bit(GLF_DEMOTE_IN_PROGRESS, &gl->gl_flags));
+ 
+ 	if (test_bit(GLF_DEMOTE, &gl->gl_flags) &&
+@@ -860,18 +861,22 @@ __acquires(&gl->gl_lockref.lock)
+ 		set_bit(GLF_DEMOTE_IN_PROGRESS, &gl->gl_flags);
+ 		GLOCK_BUG_ON(gl, gl->gl_demote_state == LM_ST_EXCLUSIVE);
+ 		gl->gl_target = gl->gl_demote_state;
++		do_xmote(gl, NULL, gl->gl_target);
++		return;
+ 	} else {
+ 		if (test_bit(GLF_DEMOTE, &gl->gl_flags))
+ 			gfs2_demote_wake(gl);
+ 		if (do_promote(gl))
+ 			goto out_unlock;
+ 		gh = find_first_waiter(gl);
++		if (!gh)
++			goto out_unlock;
+ 		gl->gl_target = gh->gh_state;
+ 		if (!(gh->gh_flags & (LM_FLAG_TRY | LM_FLAG_TRY_1CB)))
+ 			do_error(gl, 0); /* Fail queued try locks */
++		do_xmote(gl, gh, gl->gl_target);
++		return;
+ 	}
+-	do_xmote(gl, gh, gl->gl_target);
+-	return;
+ 
+ out_sched:
+ 	clear_bit(GLF_LOCK, &gl->gl_flags);
 -- 
 2.39.5
 
