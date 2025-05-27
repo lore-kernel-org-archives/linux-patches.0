@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93DD0280012;
-	Tue, 27 May 2025 16:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D01280037;
+	Tue, 27 May 2025 16:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364938; cv=none; b=Jx2EJRKWCVqnRJgGOjEXoHvfVqZnLUyHAhKPNWEaDSt0uySyxU8Lvo2ILPNqemqZU7TIo9QT2ZK7pgjM5O7im0R2zIZisJmCR/gWXGbRSbrW8EgHAXEr8RS17B3KIPp+RB+gdHryZDlY/wI8X0+jgqhbuTSw8wFO58VVTr8Jdlk=
+	t=1748364942; cv=none; b=pG6IMyyiTTTkRcYaT9yekB1BCBOFrGnb1WHh5pziIzl4JpbNuddUplBQ1evy3+FSFw5h60xQBhBdyz1n5GCde8BJieoBJvn87ZDMFHVq2c7Z/4d9xjYOkZPvihrL7wyVaDifyDtEmgCaIO+/6v/5q8AK0YHViV/Sey0kNrg/tjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364938; c=relaxed/simple;
-	bh=K6gdxiHv/Lrr2yX5U2ldfARHTPcADSdz1iaSML93dnA=;
+	s=arc-20240116; t=1748364942; c=relaxed/simple;
+	bh=IWb225kG/pzEpmQnaH3w4NF/JV4SYAjE9HLC2fhrL0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VMGhZgqlGprJDfgjbV+raFbSMHbirWFxSOHXd4Ct9Mmr0kUDk20Xu3E5JOEmLtA9lvp2gA4Z7SDERxgaAYdvdkGukXNdpGyr0nfgtC6J5ebd+VHoZU8Too6rZqN7UkbRKVtduLmodAJ2cGgvg816OdIJJ1W8LFQKDpAZRyVv3Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHJFnzhw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RzKuKKKvCB5K4mlkT/gzsuxEb8TS2oBqDSJTFJGSDRJxISg3HNQn8RoIuo/4L45tKXMj1oVkhFTSPdIk2mISDPrvw7t8u6MYCUESIe3Ji76CTNTTNZ7h2H1oWHKLl2b+ock/1oOFqr5LRUGCZX1ajdO6jCcsujO7NFYgCe2+4EE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDQ6pETo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHJFnzhw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CB1C4CEE9;
-	Tue, 27 May 2025 16:55:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDQ6pETo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC64FC4CEE9;
+	Tue, 27 May 2025 16:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364938;
-	bh=K6gdxiHv/Lrr2yX5U2ldfARHTPcADSdz1iaSML93dnA=;
+	s=korg; t=1748364941;
+	bh=IWb225kG/pzEpmQnaH3w4NF/JV4SYAjE9HLC2fhrL0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bHJFnzhwcPCV8VUgpRzXakYHaJFMJhghCgV5nZBUCiv0Qtpp5Y4S1q1Jnckpd4MqX
-	 5PnNiox0ipKpvhLcWw2Be4DwhmUL88to/uKRna1yCiVLXkjWKHFE6oBaVBAq+jG9xu
-	 wZCRyFfULaeBUHxvA9OBinFHd7HWlYckC9o2RI00=
+	b=QDQ6pEToz5/VZ7IUxOnQ1ns9pGIXSjrELX6xyokP9MJ8xlkCd+mIcQc1qFgK/Hklg
+	 nlsxRj35F5OcjPqg5ny+p5rDq4wo1UaIwcVSz7vVQx0qutpeJflT/7iuHQSq9+VwLH
+	 TIFKor34Fc4TySYEfE9dJPPbD8nbtc+s2gx7jjX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Daniel Gabay <daniel.gabay@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 184/626] wifi: iwlwifi: dont warn when if there is a FW error
-Date: Tue, 27 May 2025 18:21:17 +0200
-Message-ID: <20250527162452.485196461@linuxfoundation.org>
+Subject: [PATCH 6.12 185/626] wifi: iwlwifi: w/a FW SMPS mode selection
+Date: Tue, 27 May 2025 18:21:18 +0200
+Message-ID: <20250527162452.525832033@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -51,45 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Daniel Gabay <daniel.gabay@intel.com>
 
-[ Upstream commit c7f50d0433a016d43681592836a3d484817bfb34 ]
+[ Upstream commit b2e709805ce955f80803b7cab3421813c79e1df4 ]
 
-iwl_trans_reclaim is warning if it is called when the FW is not alive.
-But if it is called when there is a pending restart, i.e. after a FW
-error, there is no need to warn, instead - return silently.
+The FW is now responsible of determining the SMPS mode.
+If the user disabled power save in a certain vif, we send the vif-level
+power command to clear out the POWER_FLAGS_POWER_MANAGEMENT_ENA_MSK bit
+for that vif.
+But erroneously, the FW checks DEVICE_POWER_FLAGS_POWER_SAVE_ENA_MSK in
+the device-level command to determine the SMPS mode.
 
+To W/A this, send also the device-level command when the power save of a
+vif changes, and disable power save if there is any vif that has power
+save disabled.
+
+Signed-off-by: Daniel Gabay <daniel.gabay@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250308231427.ba3d90b22c25.I9332506af1997faefcf0bdb51d98d5e874051722@changeid
+Link: https://patch.msgid.link/20250308231427.7bf205efa027.I2c793ff1fc2a6779a95faaee1ded348100fd97f1@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-trans.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 15 +++++++++++++++
+ .../net/wireless/intel/iwlwifi/mvm/mld-mac80211.c |  3 ++-
+ drivers/net/wireless/intel/iwlwifi/mvm/mvm.h      |  3 +++
+ 3 files changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.c b/drivers/net/wireless/intel/iwlwifi/iwl-trans.c
-index 3b3dcaf33c9d9..311b167ea09ed 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.c
-@@ -2,7 +2,7 @@
- /*
-  * Copyright (C) 2015 Intel Mobile Communications GmbH
-  * Copyright (C) 2016-2017 Intel Deutschland GmbH
-- * Copyright (C) 2019-2021, 2023-2024 Intel Corporation
-+ * Copyright (C) 2019-2021, 2023-2025 Intel Corporation
-  */
- #include <linux/kernel.h>
- #include <linux/bsearch.h>
-@@ -419,6 +419,9 @@ IWL_EXPORT_SYMBOL(iwl_trans_tx);
- void iwl_trans_reclaim(struct iwl_trans *trans, int queue, int ssn,
- 		       struct sk_buff_head *skbs, bool is_flush)
- {
-+	if (unlikely(test_bit(STATUS_FW_ERROR, &trans->status)))
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index d37d83d246354..3fd257f770baa 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -4096,6 +4096,20 @@ iwl_mvm_sta_state_authorized_to_assoc(struct iwl_mvm *mvm,
+ 	return 0;
+ }
+ 
++void iwl_mvm_smps_workaround(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
++			     bool update)
++{
++	struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(vif);
++
++	if (!iwl_mvm_has_rlc_offload(mvm))
 +		return;
 +
- 	if (WARN_ONCE(trans->state != IWL_TRANS_FW_ALIVE,
- 		      "bad state = %d\n", trans->state))
- 		return;
++	mvmvif->ps_disabled = !vif->cfg.ps;
++
++	if (update)
++		iwl_mvm_power_update_mac(mvm);
++}
++
+ /* Common part for MLD and non-MLD modes */
+ int iwl_mvm_mac_sta_state_common(struct ieee80211_hw *hw,
+ 				 struct ieee80211_vif *vif,
+@@ -4188,6 +4202,7 @@ int iwl_mvm_mac_sta_state_common(struct ieee80211_hw *hw,
+ 		   new_state == IEEE80211_STA_AUTHORIZED) {
+ 		ret = iwl_mvm_sta_state_assoc_to_authorized(mvm, vif, sta,
+ 							    callbacks);
++		iwl_mvm_smps_workaround(mvm, vif, true);
+ 	} else if (old_state == IEEE80211_STA_AUTHORIZED &&
+ 		   new_state == IEEE80211_STA_ASSOC) {
+ 		ret = iwl_mvm_sta_state_authorized_to_assoc(mvm, vif, sta,
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+index e252f0dcea205..04da02bdd9536 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2022-2024 Intel Corporation
++ * Copyright (C) 2022-2025 Intel Corporation
+  */
+ #include "mvm.h"
+ 
+@@ -961,6 +961,7 @@ static void iwl_mvm_mld_vif_cfg_changed_station(struct iwl_mvm *mvm,
+ 	}
+ 
+ 	if (changes & BSS_CHANGED_PS) {
++		iwl_mvm_smps_workaround(mvm, vif, false);
+ 		ret = iwl_mvm_power_update_mac(mvm);
+ 		if (ret)
+ 			IWL_ERR(mvm, "failed to update power mode\n");
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+index ef07cff203b0d..7d86d273092ac 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+@@ -3042,4 +3042,7 @@ iwl_mvm_send_ap_tx_power_constraint_cmd(struct iwl_mvm *mvm,
+ 					struct ieee80211_vif *vif,
+ 					struct ieee80211_bss_conf *bss_conf,
+ 					bool is_ap);
++
++void iwl_mvm_smps_workaround(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
++			     bool update);
+ #endif /* __IWL_MVM_H__ */
 -- 
 2.39.5
 
