@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F451D88D7;
-	Tue, 27 May 2025 17:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB26185E7F;
+	Tue, 27 May 2025 17:23:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748366602; cv=none; b=Jjcoc/+psACranPJjiZcE5GQR5b696cBtYIfy5nUZiKQG60BqmC5+y5LpNJoLgOMedUc6fbfQJN9WcQZeLaOV5y1OtpeE6A2n4evnDNmZq/mS1EMIh3eHfoa1QifkI5PnWALF2m0ZNivW1vM1dAPRHzJutmgl50sHRKFi3fVYMo=
+	t=1748366605; cv=none; b=NWKh1j/ybiwZC8N5LW1XJUwUDywcMfxMKVrN4rjML77wSL2HCqW3HjgFuFRHPaHePtTb8p77r6AWpnmWbxOXZS9sRx9tCAsUgeH89pTb741bLq4II1K9NH+6XEfx/9PU8c7BgrCm4QYfW7q+ulEva9cH9y72RtWlhgTWCZtJjuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748366602; c=relaxed/simple;
-	bh=bc07nCwUzFd3xHMnZSVIk2qUJT4PF+8+U1xpkiSPWXg=;
+	s=arc-20240116; t=1748366605; c=relaxed/simple;
+	bh=xNK1yTCEYbYJs3RwVEHMBkOmRQ52eqSeJpns7umcGLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=odkdGasl4tDg4eeDKEPEr1x4zr72xmTvgkBEpJecZ+wgLMXRmS+1LF0SC9dMCXTMP68hHs6z/EV728NqS93Z/fvagIjLUGNcg5r5vzZ/RmyjIgcypSoTG/EGLJPJ151GYAap4SoFjVwmo3IwV2SNO/i0XHPqZGl06SMe0Ivta+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKtHcAhp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZIfKQULlruNl4fAh0GrJAouz3tbFbAemtwzq0h0alZZsvrJzVk0zUlHksK18YVgog6eTaAX76JO803xj4WZmKrhPZeHp6Hpgk+FIuqo9mLGimZXZb4fqtYSPzsPwzMktfLtDrgK6naAs7tNJl6KVf5rkOilrSjZF4sxs/LKq7Xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZdE6tet; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKtHcAhp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08879C4CEE9;
-	Tue, 27 May 2025 17:23:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZdE6tet"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19AF4C4CEE9;
+	Tue, 27 May 2025 17:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748366602;
-	bh=bc07nCwUzFd3xHMnZSVIk2qUJT4PF+8+U1xpkiSPWXg=;
+	s=korg; t=1748366605;
+	bh=xNK1yTCEYbYJs3RwVEHMBkOmRQ52eqSeJpns7umcGLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jKtHcAhpEuV28l2miLonwHpx+PIEeCCd6vKa9HYECFfKTWBgzFMlK11lyKjAxtUMd
-	 QpV4u5BKUm0lIZjwVtVUTffk1TiSQOGGDKwlzcYpn/u4r4pQlN+hyQEZ77+f8uDliX
-	 uyOfdLyL7ekaS8MLxTePTRGzV8SAybMCIis44qIo=
+	b=fZdE6tet7tfs+Jvz6NPLopZunTp2l7hyoamCW66GLpzmi1LFvwq26SIq9elbzE8Rh
+	 cylifh2LpgUpjdCd/S80NWKiJXF5HdNUeq/C+OhEu+6K9dEMJ4tLAvy7l+KpdiIUMQ
+	 UX5OE4Ku8fG9fHJKTg2xmSmUivpi0QjIJoR8ofVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Hsu <Daniel-Hsu@quantatw.com>,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	"David S. Miller" <davem@davemloft.net>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 081/783] mctp: Fix incorrect tx flow invalidation condition in mctp-i2c
-Date: Tue, 27 May 2025 18:17:58 +0200
-Message-ID: <20250527162516.436706826@linuxfoundation.org>
+Subject: [PATCH 6.14 115/783] wifi: mt76: mt7996: implement driver specific get_txpower function
+Date: Tue, 27 May 2025 18:18:32 +0200
+Message-ID: <20250527162517.834165862@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,39 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Hsu <d486250@gmail.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 70facbf978ac90c6da17a3de2a8dd111b06f1bac ]
+[ Upstream commit 86db2c5d4ed390b97a5b455a97e2cd9c4f3eff2b ]
 
-Previously, the condition for invalidating the tx flow in
-mctp_i2c_invalidate_tx_flow() checked if `rc` was nonzero.
-However, this could incorrectly trigger the invalidation
-even when `rc > 0` was returned as a success status.
+Fixes reporting tx power for vifs that don't have a channel context
+assigned. Report the tx power of a phy that is covered by the vif's
+radio mask.
 
-This patch updates the condition to explicitly check for `rc < 0`,
-ensuring that only error cases trigger the invalidation.
-
-Signed-off-by: Daniel Hsu <Daniel-Hsu@quantatw.com>
-Reviewed-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://patch.msgid.link/20250311103646.43346-7-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mctp/mctp-i2c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/wireless/mediatek/mt76/mt7996/main.c  | 29 ++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/mctp/mctp-i2c.c b/drivers/net/mctp/mctp-i2c.c
-index d74d47dd6e04d..f782d93f826ef 100644
---- a/drivers/net/mctp/mctp-i2c.c
-+++ b/drivers/net/mctp/mctp-i2c.c
-@@ -537,7 +537,7 @@ static void mctp_i2c_xmit(struct mctp_i2c_dev *midev, struct sk_buff *skb)
- 		rc = __i2c_transfer(midev->adapter, &msg, 1);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+index 69dd565d83190..980a059b3b38f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+@@ -601,6 +601,33 @@ static void mt7996_configure_filter(struct ieee80211_hw *hw,
+ 	mutex_unlock(&dev->mt76.mutex);
+ }
  
- 		/* on tx errors, the flow can no longer be considered valid */
--		if (rc)
-+		if (rc < 0)
- 			mctp_i2c_invalidate_tx_flow(midev, skb);
- 
- 		break;
++static int
++mt7996_get_txpower(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
++		   unsigned int link_id, int *dbm)
++{
++	struct mt7996_vif *mvif = (struct mt7996_vif *)vif->drv_priv;
++	struct mt7996_phy *phy = mt7996_vif_link_phy(&mvif->deflink);
++	struct mt7996_dev *dev = mt7996_hw_dev(hw);
++	struct wireless_dev *wdev;
++	int n_chains, delta, i;
++
++	if (!phy) {
++		wdev = ieee80211_vif_to_wdev(vif);
++		for (i = 0; i < hw->wiphy->n_radio; i++)
++			if (wdev->radio_mask & BIT(i))
++				phy = dev->radio_phy[i];
++
++		if (!phy)
++			return -EINVAL;
++	}
++
++	n_chains = hweight16(phy->mt76->chainmask);
++	delta = mt76_tx_power_nss_delta(n_chains);
++	*dbm = DIV_ROUND_UP(phy->mt76->txpower_cur + delta, 2);
++
++	return 0;
++}
++
+ static u8
+ mt7996_get_rates_table(struct mt7996_phy *phy, struct ieee80211_bss_conf *conf,
+ 		       bool beacon, bool mcast)
+@@ -1650,7 +1677,7 @@ const struct ieee80211_ops mt7996_ops = {
+ 	.remain_on_channel = mt76_remain_on_channel,
+ 	.cancel_remain_on_channel = mt76_cancel_remain_on_channel,
+ 	.release_buffered_frames = mt76_release_buffered_frames,
+-	.get_txpower = mt76_get_txpower,
++	.get_txpower = mt7996_get_txpower,
+ 	.channel_switch_beacon = mt7996_channel_switch_beacon,
+ 	.get_stats = mt7996_get_stats,
+ 	.get_et_sset_count = mt7996_get_et_sset_count,
 -- 
 2.39.5
 
