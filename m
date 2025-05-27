@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC0B42A9B;
-	Tue, 27 May 2025 17:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C4342A9B;
+	Tue, 27 May 2025 17:41:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367682; cv=none; b=kRViaPH7Tmj7aWZvxF/Ra95ArWBMtV+VBo45F1rTaSP6Mxm7Ir+FgoSksRa4cs6Fl3vm2l9VFdouuWlXoH/KJ8w0fJIMNvyVPHrFC5QO+I/kvmiMWYFknU1cO9w5HtO8HCNTg8mszcZjDrcfHx6QZLd+El/VJxfbLEQfb1Kk2C4=
+	t=1748367685; cv=none; b=jEft9/Rpm9V48B1bMtuuLzUBc8NmXX+Hwoxxb5XCif0kR9paWhzDARj2rTy3UioWN4qhAOuLyah/ec0k74ZaWXaQqwsSEIutrjhbcpWcipGWMFQ6jNa2rkag/XpnBMe5cG0Z+E2pvv+32p1qu9i8BPlyLQ8lYYKPxeiwcIcHmZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367682; c=relaxed/simple;
-	bh=+HRNbPEfrX87RRQ+U90pn1OEL8ab833WoxS9Gu5uAtk=;
+	s=arc-20240116; t=1748367685; c=relaxed/simple;
+	bh=FZ8g/H+deOotERNIFNoIw/BYc3yspUK16OF5DO7sMfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qo6rjRg8uist1L/ib+NnkETior+wniHFiGEKhxGxCu+sB25wjKIjjZyKfaxpHOqxHs6C8phhxqFIkLxBjDWxflusD9gkdrfoP6BfUvNXh51KSBGbiJCHrjL6bxjJ2ckYlGzH+1tai6eFAIa2Jg0laCvsfWwRKI6x/V5ZKuCr9yM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efEtE3k/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V6d2v8vyVc1R9tlYi6SIpVHhnWk2dSRUZS9Wq8Ys1mD3xJO7v7ELF9st6S7RoOJFQlUa5cYkWZcmGawBeMBRNc/OCdv5/JByIez/fS7aTqlifCmwXYdw+6zw8DqFJxCmOuWOR2gQ//UtJHHpoAHjPpbQ9DDWeFJqfIaVd+NrN0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7qivKEJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efEtE3k/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA0AC4CEE9;
-	Tue, 27 May 2025 17:41:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7qivKEJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1E3C4CEE9;
+	Tue, 27 May 2025 17:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367682;
-	bh=+HRNbPEfrX87RRQ+U90pn1OEL8ab833WoxS9Gu5uAtk=;
+	s=korg; t=1748367685;
+	bh=FZ8g/H+deOotERNIFNoIw/BYc3yspUK16OF5DO7sMfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=efEtE3k/4UrYeWivhSvblG5qXvAtaBD/W44IBE2dMqcj7dQtnDaspuCvcCQ9/32FI
-	 aeQZTtzLlVUXt1A7cZvamOMZOfiReMke64/AfFD2KlLk3KdFs0xJODPT47Qx9gQmmG
-	 WJJq4SddLFaR+7p6jcIkYqchHx1+N6bfV7fSUHVI=
+	b=l7qivKEJvZerxBe+lNEFUraXnrfSeaK8MluSXMRzoOA1HYSHN4T95lKIabwsbRv3W
+	 oXMHCGXm77JIFRtnYayV+2KV64csSd286bN6uu0nYL1F4vcmpobKtYNnv+9PrY0yJ3
+	 q8P90eY4JOl1hLlbBKksvPWlDj3wkMztW4OqG06k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	zihan zhou <15645113830zzh@gmail.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 465/783] x86/boot: Mark start_secondary() with __noendbr
-Date: Tue, 27 May 2025 18:24:22 +0200
-Message-ID: <20250527162532.075706307@linuxfoundation.org>
+Subject: [PATCH 6.14 466/783] sched: Reduce the default slice to avoid tasks getting an extra tick
+Date: Tue, 27 May 2025 18:24:23 +0200
+Message-ID: <20250527162532.114422536@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -51,69 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: zihan zhou <15645113830zzh@gmail.com>
 
-[ Upstream commit 93f16a1ab78ca56e3cd997d1ea54c214774781ac ]
+[ Upstream commit 2ae891b826958b60919ea21c727f77bcd6ffcc2c ]
 
-The handoff between the boot stubs and start_secondary() are before IBT is
-enabled and is definitely not subject to kCFI. As such, suppress all that for
-this function.
+The old default value for slice is 0.75 msec * (1 + ilog(ncpus)) which
+means that we have a default slice of:
 
-Notably when the ENDBR poison would become fatal (ud1 instead of nop) this will
-trigger a tripple fault because we haven't set up the IDT to handle #UD yet.
+  0.75 for 1 cpu
+  1.50 up to 3 cpus
+  2.25 up to 7 cpus
+  3.00 for 8 cpus and above.
 
+For HZ=250 and HZ=100, because of the tick accuracy, the runtime of
+tasks is far higher than their slice.
+
+For HZ=1000 with 8 cpus or more, the accuracy of tick is already
+satisfactory, but there is still an issue that tasks will get an extra
+tick because the tick often arrives a little faster than expected. In
+this case, the task can only wait until the next tick to consider that it
+has reached its deadline, and will run 1ms longer.
+
+vruntime + sysctl_sched_base_slice =     deadline
+        |-----------|-----------|-----------|-----------|
+             1ms          1ms         1ms         1ms
+                   ^           ^           ^           ^
+                 tick1       tick2       tick3       tick4(nearly 4ms)
+
+There are two reasons for tick error: clockevent precision and the
+CONFIG_IRQ_TIME_ACCOUNTING/CONFIG_PARAVIRT_TIME_ACCOUNTING. with
+CONFIG_IRQ_TIME_ACCOUNTING every tick will be less than 1ms, but even
+without it, because of clockevent precision, tick still often less than
+1ms.
+
+In order to make scheduling more precise, we changed 0.75 to 0.70,
+Using 0.70 instead of 0.75 should not change much for other configs
+and would fix this issue:
+
+  0.70 for 1 cpu
+  1.40 up to 3 cpus
+  2.10 up to 7 cpus
+  2.8 for 8 cpus and above.
+
+This does not guarantee that tasks can run the slice time accurately
+every time, but occasionally running an extra tick has little impact.
+
+Signed-off-by: zihan zhou <15645113830zzh@gmail.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Link: https://lore.kernel.org/r/20250207122546.509520369@infradead.org
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lkml.kernel.org/r/20250208075322.13139-1-15645113830zzh@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/smpboot.c | 3 ++-
- include/linux/objtool.h   | 4 +++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ kernel/sched/fair.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/kernel/smpboot.c b/arch/x86/kernel/smpboot.c
-index 3d5069ee297bf..463634b138bbb 100644
---- a/arch/x86/kernel/smpboot.c
-+++ b/arch/x86/kernel/smpboot.c
-@@ -229,7 +229,7 @@ static void ap_calibrate_delay(void)
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 3d9b68a347b76..eb11650160f7e 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -74,10 +74,10 @@ unsigned int sysctl_sched_tunable_scaling = SCHED_TUNABLESCALING_LOG;
  /*
-  * Activate a secondary processor.
+  * Minimal preemption granularity for CPU-bound tasks:
+  *
+- * (default: 0.75 msec * (1 + ilog(ncpus)), units: nanoseconds)
++ * (default: 0.70 msec * (1 + ilog(ncpus)), units: nanoseconds)
   */
--static void notrace start_secondary(void *unused)
-+static void notrace __noendbr start_secondary(void *unused)
- {
- 	/*
- 	 * Don't put *anything* except direct CPU state initialization
-@@ -314,6 +314,7 @@ static void notrace start_secondary(void *unused)
- 	wmb();
- 	cpu_startup_entry(CPUHP_AP_ONLINE_IDLE);
- }
-+ANNOTATE_NOENDBR_SYM(start_secondary);
+-unsigned int sysctl_sched_base_slice			= 750000ULL;
+-static unsigned int normalized_sysctl_sched_base_slice	= 750000ULL;
++unsigned int sysctl_sched_base_slice			= 700000ULL;
++static unsigned int normalized_sysctl_sched_base_slice	= 700000ULL;
  
- /*
-  * The bootstrap kernel entry code has set these up. Save them for
-diff --git a/include/linux/objtool.h b/include/linux/objtool.h
-index c722a921165ba..3ca965a2ddc80 100644
---- a/include/linux/objtool.h
-+++ b/include/linux/objtool.h
-@@ -128,7 +128,7 @@
- #define UNWIND_HINT(type, sp_reg, sp_offset, signal) "\n\t"
- #define STACK_FRAME_NON_STANDARD(func)
- #define STACK_FRAME_NON_STANDARD_FP(func)
--#define __ASM_ANNOTATE(label, type)
-+#define __ASM_ANNOTATE(label, type) ""
- #define ASM_ANNOTATE(type)
- #else
- .macro UNWIND_HINT type:req sp_reg=0 sp_offset=0 signal=0
-@@ -147,6 +147,8 @@
-  * these relocations will never be used for indirect calls.
-  */
- #define ANNOTATE_NOENDBR		ASM_ANNOTATE(ANNOTYPE_NOENDBR)
-+#define ANNOTATE_NOENDBR_SYM(sym)	asm(__ASM_ANNOTATE(sym, ANNOTYPE_NOENDBR))
-+
- /*
-  * This should be used immediately before an indirect jump/call. It tells
-  * objtool the subsequent indirect jump/call is vouched safe for retpoline
+ const_debug unsigned int sysctl_sched_migration_cost	= 500000UL;
+ 
 -- 
 2.39.5
 
