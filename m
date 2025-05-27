@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622A313A244;
-	Tue, 27 May 2025 17:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B5313A244;
+	Tue, 27 May 2025 17:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365620; cv=none; b=knat9RIv+NCuL/95xm3Qahg3JnsvcsvZQ+R7QPFVF3CfD+mtp0rrA+t7dY2cHNR4ntQqiLTp2EMABz9hBjNJzvVk+dhv9PkVpWsqyxS6fdl8arpy4rFoA10ipivZHvFwe3U9AUKO/jFX71MlskjQLTbBgecFiyxXnGH3z2UJU3I=
+	t=1748365623; cv=none; b=A2tXIY+5bXHNq4YmSmRj8UPUoLW3XmQVCsmXhaUAC/PW9VVQ66LIOLsVAmIqMVxfHjpqq6l15JZGzAYU1PAQ7iRy9a/DJoza/4kdZd9p33fQ8/fHt8svSNNKhTIt+RdrmGFuXIrNkTFguGXNRSHfl6L1SBN6VsH6A89bNljuRic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365620; c=relaxed/simple;
-	bh=6IOxyOn77HS9wRANmBvpDe+f2IzusSzlkNWDtZK8lik=;
+	s=arc-20240116; t=1748365623; c=relaxed/simple;
+	bh=dIwX+iaMkrOCxjXVIHunUSAPi2HjVSKhMw6UuH8pBMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P90oDjoBoHcB3WrXI2HLWisPflDYIHMYU23foufjjOEowI5QiAnFCfnNJznOUqCE1BfDSZSo+gP8Bdi9OyJJ2PF4JmirVYj30IJNGbLAD9UZAZ1a9FImOsu5lm8JcQ61fsqa+PxlOZp/7Ij6XBQo80TDKCkPy2SID5d6510Tz24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJ+QXh+N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rNhDZqHn9NNEySMYq4PtyuvHiEImBQcdX7LU05ZPs8J2wYv3HLKtozZ07KwqwyFRbzj3nGJODrg+huSF7haY2lD7itA3FDSUsKx5iIoh07g8ahr4/Rhfho52grUpHMp28XZ/u0nM0EBgTahGt/iaBMnHO7ANRqZPdb+8hr1CQMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdNAWZdp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJ+QXh+N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F132C4CEE9;
-	Tue, 27 May 2025 17:06:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdNAWZdp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA05C4CEE9;
+	Tue, 27 May 2025 17:07:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365619;
-	bh=6IOxyOn77HS9wRANmBvpDe+f2IzusSzlkNWDtZK8lik=;
+	s=korg; t=1748365623;
+	bh=dIwX+iaMkrOCxjXVIHunUSAPi2HjVSKhMw6UuH8pBMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lJ+QXh+NYTVBh2ZBNEHO1tnk7LMFXhwe6Zbu4kMeN8AC4TaAtukkRJ+l45jrSWd8v
-	 pcoJ6BJ1WIPCsioqmSR9xii+aQ4acx7XjHqPPa7NLNKNGIVohYJqu0e8qubGv/a11y
-	 t9YQ4J4Ipl9BCq7gKnZmGJz1zYmcDVcW1OQzmBn8=
+	b=hdNAWZdpE0RQDTRehJZn35dQx8JYRxriTuEgSmm6i4e9PpVUKlRV1V3UQsK/d1qgT
+	 fmNr+p0qkrKbYovtzZ0lxfUSoTyF8fDSsEGChOYUFnLHY87vk+xAxczjwubMuo2fgu
+	 u921MxhPJ/iiX2Xmt2PybEZgTav5OSsCyKYMJnjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Jordan Crouse <jorcrous@amazon.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 435/626] wifi: rtw89: call power_on ahead before selecting firmware
-Date: Tue, 27 May 2025 18:25:28 +0200
-Message-ID: <20250527162502.681070065@linuxfoundation.org>
+Subject: [PATCH 6.12 436/626] clk: qcom: camcc-sm8250: Use clk_rcg2_shared_ops for some RCGs
+Date: Tue, 27 May 2025 18:25:29 +0200
+Message-ID: <20250527162502.720092025@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -50,166 +53,283 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Jordan Crouse <jorcrous@amazon.com>
 
-[ Upstream commit d078f5857a00c06fa0ddee26d3cb722e938e1688 ]
+[ Upstream commit 52b10b591f83dc6d9a1d6c2dc89433470a787ecd ]
 
-Driver selects firmware by hardware version, which normally can be read
-from registers before selecting firmware. However, certain chips such as
-RTL8851B, it needs to read hardware version from efuse while doing
-power_on, but do power_on after selecting firmware in current flow.
+Update some RCGs on the sm8250 camera clock controller to use
+clk_rcg2_shared_ops. The shared_ops ensure the RCGs get parked
+to the XO during clock disable to prevent the clocks from locking up
+when the GDSC is enabled. These mirror similar fixes for other controllers
+such as commit e5c359f70e4b ("clk: qcom: camcc: Update the clock ops for
+the SC7180").
 
-To resolve this flow problem, move power_on out from
-rtw89_mac_partial_init(), and call rtw89_mac_pwr_on() separately at
-proper places to have expected flow.
-
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250203072911.47313-2-pkshih@realtek.com
+Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Link: https://lore.kernel.org/r/20250122222612.32351-1-jorcrous@amazon.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.c | 23 +++++++++++-------
- drivers/net/wireless/realtek/rtw89/mac.c  | 29 ++++++++++++++++-------
- drivers/net/wireless/realtek/rtw89/mac.h  |  1 +
- 3 files changed, 36 insertions(+), 17 deletions(-)
+ drivers/clk/qcom/camcc-sm8250.c | 56 ++++++++++++++++-----------------
+ 1 file changed, 28 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index f82a26be6fa82..83b22bd0ce81a 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -4862,8 +4862,6 @@ static int rtw89_chip_efuse_info_setup(struct rtw89_dev *rtwdev)
+diff --git a/drivers/clk/qcom/camcc-sm8250.c b/drivers/clk/qcom/camcc-sm8250.c
+index 34d2f17520dcc..450ddbebd35f2 100644
+--- a/drivers/clk/qcom/camcc-sm8250.c
++++ b/drivers/clk/qcom/camcc-sm8250.c
+@@ -411,7 +411,7 @@ static struct clk_rcg2 cam_cc_bps_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
- 	rtw89_hci_mac_pre_deinit(rtwdev);
+@@ -433,7 +433,7 @@ static struct clk_rcg2 cam_cc_camnoc_axi_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
--	rtw89_mac_pwr_off(rtwdev);
--
- 	return 0;
- }
+@@ -454,7 +454,7 @@ static struct clk_rcg2 cam_cc_cci_0_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
-@@ -4944,36 +4942,45 @@ int rtw89_chip_info_setup(struct rtw89_dev *rtwdev)
+@@ -469,7 +469,7 @@ static struct clk_rcg2 cam_cc_cci_1_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
- 	rtw89_read_chip_ver(rtwdev);
+@@ -490,7 +490,7 @@ static struct clk_rcg2 cam_cc_cphy_rx_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
-+	ret = rtw89_mac_pwr_on(rtwdev);
-+	if (ret) {
-+		rtw89_err(rtwdev, "failed to power on\n");
-+		return ret;
-+	}
-+
- 	ret = rtw89_wait_firmware_completion(rtwdev);
- 	if (ret) {
- 		rtw89_err(rtwdev, "failed to wait firmware completion\n");
--		return ret;
-+		goto out;
- 	}
+@@ -511,7 +511,7 @@ static struct clk_rcg2 cam_cc_csi0phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
- 	ret = rtw89_fw_recognize(rtwdev);
- 	if (ret) {
- 		rtw89_err(rtwdev, "failed to recognize firmware\n");
--		return ret;
-+		goto out;
- 	}
+@@ -526,7 +526,7 @@ static struct clk_rcg2 cam_cc_csi1phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
- 	ret = rtw89_chip_efuse_info_setup(rtwdev);
- 	if (ret)
--		return ret;
-+		goto out;
+@@ -556,7 +556,7 @@ static struct clk_rcg2 cam_cc_csi3phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
- 	ret = rtw89_fw_recognize_elements(rtwdev);
- 	if (ret) {
- 		rtw89_err(rtwdev, "failed to recognize firmware elements\n");
--		return ret;
-+		goto out;
- 	}
+@@ -571,7 +571,7 @@ static struct clk_rcg2 cam_cc_csi4phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
- 	ret = rtw89_chip_board_info_setup(rtwdev);
- 	if (ret)
--		return ret;
-+		goto out;
+@@ -586,7 +586,7 @@ static struct clk_rcg2 cam_cc_csi5phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
- 	rtw89_core_setup_rfe_parms(rtwdev);
- 	rtwdev->ps_mode = rtw89_update_ps_mode(rtwdev);
+@@ -611,7 +611,7 @@ static struct clk_rcg2 cam_cc_fast_ahb_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
--	return 0;
-+out:
-+	rtw89_mac_pwr_off(rtwdev);
-+
-+	return ret;
- }
- EXPORT_SYMBOL(rtw89_chip_info_setup);
+@@ -634,7 +634,7 @@ static struct clk_rcg2 cam_cc_fd_core_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
-index 04e254bd6b17f..9b09d4b7dea59 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac.c
-@@ -1491,6 +1491,21 @@ static int rtw89_mac_power_switch(struct rtw89_dev *rtwdev, bool on)
- #undef PWR_ACT
- }
+@@ -649,7 +649,7 @@ static struct clk_rcg2 cam_cc_icp_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
-+int rtw89_mac_pwr_on(struct rtw89_dev *rtwdev)
-+{
-+	int ret;
-+
-+	ret = rtw89_mac_power_switch(rtwdev, true);
-+	if (ret) {
-+		rtw89_mac_power_switch(rtwdev, false);
-+		ret = rtw89_mac_power_switch(rtwdev, true);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	return 0;
-+}
-+
- void rtw89_mac_pwr_off(struct rtw89_dev *rtwdev)
- {
- 	rtw89_mac_power_switch(rtwdev, false);
-@@ -3918,14 +3933,6 @@ int rtw89_mac_partial_init(struct rtw89_dev *rtwdev, bool include_bb)
- {
- 	int ret;
+@@ -673,7 +673,7 @@ static struct clk_rcg2 cam_cc_ife_0_clk_src = {
+ 		.parent_data = cam_cc_parent_data_2,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_2),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
--	ret = rtw89_mac_power_switch(rtwdev, true);
--	if (ret) {
--		rtw89_mac_power_switch(rtwdev, false);
--		ret = rtw89_mac_power_switch(rtwdev, true);
--		if (ret)
--			return ret;
--	}
--
- 	rtw89_mac_ctrl_hci_dma_trx(rtwdev, true);
+@@ -710,7 +710,7 @@ static struct clk_rcg2 cam_cc_ife_0_csid_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
- 	if (include_bb) {
-@@ -3958,6 +3965,10 @@ int rtw89_mac_init(struct rtw89_dev *rtwdev)
- 	bool include_bb = !!chip->bbmcu_nr;
- 	int ret;
+@@ -734,7 +734,7 @@ static struct clk_rcg2 cam_cc_ife_1_clk_src = {
+ 		.parent_data = cam_cc_parent_data_3,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_3),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
-+	ret = rtw89_mac_pwr_on(rtwdev);
-+	if (ret)
-+		return ret;
-+
- 	ret = rtw89_mac_partial_init(rtwdev, include_bb);
- 	if (ret)
- 		goto fail;
-@@ -3989,7 +4000,7 @@ int rtw89_mac_init(struct rtw89_dev *rtwdev)
+@@ -749,7 +749,7 @@ static struct clk_rcg2 cam_cc_ife_1_csid_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
- 	return ret;
- fail:
--	rtw89_mac_power_switch(rtwdev, false);
-+	rtw89_mac_pwr_off(rtwdev);
+@@ -771,7 +771,7 @@ static struct clk_rcg2 cam_cc_ife_lite_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
- 	return ret;
- }
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.h b/drivers/net/wireless/realtek/rtw89/mac.h
-index 5ba1133b79d64..7974849f41e25 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.h
-+++ b/drivers/net/wireless/realtek/rtw89/mac.h
-@@ -1120,6 +1120,7 @@ rtw89_write32_port_set(struct rtw89_dev *rtwdev, struct rtw89_vif_link *rtwvif_l
- 	rtw89_write32_set(rtwdev, reg, bit);
- }
+@@ -786,7 +786,7 @@ static struct clk_rcg2 cam_cc_ife_lite_csid_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
-+int rtw89_mac_pwr_on(struct rtw89_dev *rtwdev);
- void rtw89_mac_pwr_off(struct rtw89_dev *rtwdev);
- int rtw89_mac_partial_init(struct rtw89_dev *rtwdev, bool include_bb);
- int rtw89_mac_init(struct rtw89_dev *rtwdev);
+@@ -810,7 +810,7 @@ static struct clk_rcg2 cam_cc_ipe_0_clk_src = {
+ 		.parent_data = cam_cc_parent_data_4,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_4),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -825,7 +825,7 @@ static struct clk_rcg2 cam_cc_jpeg_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -847,7 +847,7 @@ static struct clk_rcg2 cam_cc_mclk0_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -862,7 +862,7 @@ static struct clk_rcg2 cam_cc_mclk1_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -877,7 +877,7 @@ static struct clk_rcg2 cam_cc_mclk2_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -892,7 +892,7 @@ static struct clk_rcg2 cam_cc_mclk3_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -907,7 +907,7 @@ static struct clk_rcg2 cam_cc_mclk4_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -922,7 +922,7 @@ static struct clk_rcg2 cam_cc_mclk5_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -993,7 +993,7 @@ static struct clk_rcg2 cam_cc_slow_ahb_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
 -- 
 2.39.5
 
