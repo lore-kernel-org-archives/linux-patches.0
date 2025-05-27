@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9563B42A9B;
-	Tue, 27 May 2025 17:41:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFE742A9B;
+	Tue, 27 May 2025 17:41:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367697; cv=none; b=sqmYs+diM9rp4+eHS0+NdGjFUBoccem5pgAxhxYgjQXAVMoH3Hu0xufU8X/YcmIV3Mu6VcBqSub4p+ub3T38ZOyM4YfvdJ9dpB9tKOO1+acWlXX6F1SasoC1Uzkw5fseoeVXbW1nE3CPtwtYLO38tHzMmYAQ0yNpab2Oyqqe/Rw=
+	t=1748367701; cv=none; b=gn5JFhMaNebrJU7Qg2qHh/SJ+iY+FzRWfgoDIXedvXfjp3oua7jjrVq5X8XoaBs0CEi40tbSq9BxMuNhKbmKxCA/DQpt0Nzqv4LmNr7NF7L60EQ621vlPJmYXSzG5Zk44DP7tDLbGHclpWojT5GMe4UZo5ctDV1ef40dp/HfF6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367697; c=relaxed/simple;
-	bh=V9Pic/ZYi7k9yG5/xMRj+Jxidi6iiKyL7uTZoB/0qcQ=;
+	s=arc-20240116; t=1748367701; c=relaxed/simple;
+	bh=VWcl+qiH9LTdkLyDcRKm8uOV5eLnhPtpxqD5we/uTyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kmrki9yZeL/Snp7zVJLaf5MuScunnbQKTrKsbIm5hGcs5/gevBt/+rwBJ34COuZAArYADkdKY+I/s+0JucpsfAOPE6UnaH9rnPc/IJSFTEeoOaBBE28JIAejCE1GNY9YXMibmt9wLl6SVSQDF8rRBQK4dQtsh+I/ApwBCFYdtkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Adrqe+C7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hTckZh9MY/iv0h66+gnpurDtRtQSMgXdCeQcS1OUmLKwUw4jgMyJ9Ik2J+EPy5Pgs1YfX3QDhONAkKNKa4Ae0L9PKapX0J+AVw8MKej9eCL81o/i4bSvbLJ5uxIRtyXkElTaUlRHy2fMWfAK1PO723ci52X0723IPcu4W5LVmiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjGEVJkv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Adrqe+C7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09FD8C4CEE9;
-	Tue, 27 May 2025 17:41:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjGEVJkv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4201C4CEE9;
+	Tue, 27 May 2025 17:41:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367697;
-	bh=V9Pic/ZYi7k9yG5/xMRj+Jxidi6iiKyL7uTZoB/0qcQ=;
+	s=korg; t=1748367700;
+	bh=VWcl+qiH9LTdkLyDcRKm8uOV5eLnhPtpxqD5we/uTyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Adrqe+C7ef3PIVBWsT/N3hKwdZErWZN7FwrtM7FeFLj8UDAfEnNMs4OMnTiFK/j0C
-	 iot6SjQuGMTC4FI97UTIxvkaL+WpEaajcenObklDG/Rp2FPN3aQATHISq9OtFsuCJC
-	 JuJ+UwmJHUM4mFlARrSIhcVES0cPHzKhLGoFvlrc=
+	b=YjGEVJkvJ4wExUEG5AIFATNW7HB37r9wq+02WeGniIjvtCtgTXC4BfDProS80AjED
+	 1avhpQ2JCq39MkFSuXU4f/0KOP4PjABK9ipJWSuGNL+abbszu5Dj/XxfGxo7PvTaSQ
+	 UEU4ZkU6EIC3qVQrnkOs/bAJqCwDLkdMdTwBmR3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 470/783] phy: phy-rockchip-samsung-hdptx: Swap the definitions of LCPLL_REF and ROPLL_REF
-Date: Tue, 27 May 2025 18:24:27 +0200
-Message-ID: <20250527162532.270801142@linuxfoundation.org>
+Subject: [PATCH 6.14 471/783] phy: core: dont require set_mode() callback for phy_get_mode() to work
+Date: Tue, 27 May 2025 18:24:28 +0200
+Message-ID: <20250527162532.312223276@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,38 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damon Ding <damon.ding@rock-chips.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 2947c8065e9efdd3b6434d2817dc8896234a3fc0 ]
+[ Upstream commit d58c04e305afbaa9dda7969151f06c4efe2c98b0 ]
 
-According to the datasheet, setting the dig_clk_sel bit of CMN_REG(0097)
-to 1'b1 selects LCPLL as the reference clock, while setting it to 1'b0
-selects the ROPLL.
+As reported by Damon Ding, the phy_get_mode() call doesn't work as
+expected unless the PHY driver has a .set_mode() call. This prompts PHY
+drivers to have empty stubs for .set_mode() for the sake of being able
+to get the mode.
 
-Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20250205105157.580060-2-damon.ding@rock-chips.com
+Make .set_mode() callback truly optional and update PHY's mode even if
+it there is none.
+
+Cc: Damon Ding <damon.ding@rock-chips.com>
+Link: https://lore.kernel.org/r/96f8310f-93f1-4bcb-8637-137e1159ff83@rock-chips.com
+Tested-by: Damon Ding <damon.ding@rock-chips.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20250209-phy-fix-set-moe-v2-1-76e248503856@linaro.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/phy/phy-core.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-index 2fb4f297fda3d..920abf6fa9bdd 100644
---- a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-+++ b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-@@ -94,8 +94,8 @@
- #define LCPLL_ALONE_MODE		BIT(1)
- /* CMN_REG(0097) */
- #define DIG_CLK_SEL			BIT(1)
--#define ROPLL_REF			BIT(1)
--#define LCPLL_REF			0
-+#define LCPLL_REF			BIT(1)
-+#define ROPLL_REF			0
- /* CMN_REG(0099) */
- #define CMN_ROPLL_ALONE_MODE		BIT(2)
- #define ROPLL_ALONE_MODE		BIT(2)
+diff --git a/drivers/phy/phy-core.c b/drivers/phy/phy-core.c
+index 8dfdce605a905..067316dfcd83a 100644
+--- a/drivers/phy/phy-core.c
++++ b/drivers/phy/phy-core.c
+@@ -405,13 +405,14 @@ EXPORT_SYMBOL_GPL(phy_power_off);
+ 
+ int phy_set_mode_ext(struct phy *phy, enum phy_mode mode, int submode)
+ {
+-	int ret;
++	int ret = 0;
+ 
+-	if (!phy || !phy->ops->set_mode)
++	if (!phy)
+ 		return 0;
+ 
+ 	mutex_lock(&phy->mutex);
+-	ret = phy->ops->set_mode(phy, mode, submode);
++	if (phy->ops->set_mode)
++		ret = phy->ops->set_mode(phy, mode, submode);
+ 	if (!ret)
+ 		phy->attrs.mode = mode;
+ 	mutex_unlock(&phy->mutex);
 -- 
 2.39.5
 
