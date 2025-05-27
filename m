@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0983A1EA91;
-	Tue, 27 May 2025 16:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F59F1EA91;
+	Tue, 27 May 2025 16:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364539; cv=none; b=dGA38zP0B5M36TORtCkhkdk81+inThEzBs03WBSWRoqYRU+dDjfpRlO6TZRYH4MPn4hh4vm3JV6J2i7td6vCSWGeznWtbL7QB++jK5hII7jhnZU5NKwWEi0leo8GO8D0TMaghLtKFupMIJ6GR3i/s/pgGmiXZoKYWgQYSlu7Gho=
+	t=1748364542; cv=none; b=KBMQat+VkqbaQESNGDBFYGloG+P7h1jYO5ud9LQKSyqNK7+3jku82KR8Xgr1xl31+wU7/zHnN1uqcDSewgMPsvQzVoWE310ggAM0bvVCHZo+zWse/BYTOmf/ak9IVKvUerihCJtsg61cnegUidGNOGNHQOQ6/N7rVEdyofqsTaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364539; c=relaxed/simple;
-	bh=IBZdjmyso2KyAHFHPBo5+IdpAG7HSpi2mk85LpiDVEQ=;
+	s=arc-20240116; t=1748364542; c=relaxed/simple;
+	bh=ntsGJaC1VDYq7GMiEpY0i/DgI9vIOSKtZNKmmpvqfno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S+NWil9BXYK5PutBgev0TpTJJaCNh3wu9SMOTxoSTm1e6Es6kHOsUC71Pg5VkSO/r9Jle7hRDA9Bj0Lr3t9mB2v94lagsYLRohIds5cm6V2md30HAFOCnYnlpYQee8OtZFNQUCP7JO72y/5/hr3hqVjWtNJwvstzaJgIslI1zQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQM39y4I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bbqHhFxAyqsku4PhivN6DSBJs7iirglq1s3HFG+1/s8wwc80etniQ9VzloAyI4tw4LTvNojWbEbkzVGsy2IC86Xq1BmWsAd6+KFaIly3ACcahUOEH9P+VnSAOcsoT5ZhITOQZtluin92FIpnFca/fz0tmJXdxyU28+GEV9mlfjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvupUxpV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQM39y4I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D23BC4CEE9;
-	Tue, 27 May 2025 16:48:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvupUxpV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C986EC4CEE9;
+	Tue, 27 May 2025 16:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364538;
-	bh=IBZdjmyso2KyAHFHPBo5+IdpAG7HSpi2mk85LpiDVEQ=;
+	s=korg; t=1748364542;
+	bh=ntsGJaC1VDYq7GMiEpY0i/DgI9vIOSKtZNKmmpvqfno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TQM39y4IgsrzNxXS81TMitzs2oRmAXqgDgXPk8rD43JFuvsIw9SgldkMYaSi5oJPc
-	 r/x+tjT3/ZlDN+ZTHXQ9syCUghpZszfitXdh+gJmnZUadZIM4Q+DthRAB2586iqdfu
-	 CUR7/DkUL9QGEieKM8YuWxOX0twFzHcF/+pjVOxA=
+	b=LvupUxpVJiy7kkcUZWcqzLHgnbMBB5dc4Cz245BVQ+JZDLE29lbKURCY06wnnrRt+
+	 oXuwGyo86cQbGPSsQHNWz2c5vnw+cViEUf1ckPJ33QSusR3K4sNIINQlC2S3ZcC1+E
+	 WOVL4IvZ5SfSCdLnZScxVMNRTYr8fwkYvyWh+/3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 089/626] tools/build: Dont pass test log files to linker
-Date: Tue, 27 May 2025 18:19:42 +0200
-Message-ID: <20250527162448.661531814@linuxfoundation.org>
+Subject: [PATCH 6.12 090/626] pNFS/flexfiles: Report ENETDOWN as a connection error
+Date: Tue, 27 May 2025 18:19:43 +0200
+Message-ID: <20250527162448.700516866@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,46 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 935e7cb5bb80106ff4f2fe39640f430134ef8cd8 ]
+[ Upstream commit aa42add73ce9b9e3714723d385c254b75814e335 ]
 
-Separate test log files from object files. Depend on test log output
-but don't pass to the linker.
+If the client should see an ENETDOWN when trying to connect to the data
+server, it might still be able to talk to the metadata server through
+another NIC. If so, report the error.
 
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250311213628.569562-2-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Tested-by: Jeff Layton <jlayton@kernel.org>
+Acked-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/build/Makefile.build | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/build/Makefile.build b/tools/build/Makefile.build
-index 5fb3fb3d97e0f..ffe988867703b 100644
---- a/tools/build/Makefile.build
-+++ b/tools/build/Makefile.build
-@@ -149,6 +149,10 @@ objprefix    := $(subst ./,,$(OUTPUT)$(dir)/)
- obj-y        := $(addprefix $(objprefix),$(obj-y))
- subdir-obj-y := $(addprefix $(objprefix),$(subdir-obj-y))
- 
-+# Separate out test log files from real build objects.
-+test-y       := $(filter %_log, $(obj-y))
-+obj-y        := $(filter-out %_log, $(obj-y))
-+
- # Final '$(obj)-in.o' object
- in-target := $(objprefix)$(obj)-in.o
- 
-@@ -159,7 +163,7 @@ $(subdir-y):
- 
- $(sort $(subdir-obj-y)): $(subdir-y) ;
- 
--$(in-target): $(obj-y) FORCE
-+$(in-target): $(obj-y) $(test-y) FORCE
- 	$(call rule_mkdir)
- 	$(call if_changed,$(host)ld_multi)
- 
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index a1cfe4cc60c4b..8f7ea4076653d 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -1263,6 +1263,7 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
+ 		case -ECONNRESET:
+ 		case -EHOSTDOWN:
+ 		case -EHOSTUNREACH:
++		case -ENETDOWN:
+ 		case -ENETUNREACH:
+ 		case -EADDRINUSE:
+ 		case -ENOBUFS:
 -- 
 2.39.5
 
