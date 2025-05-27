@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5232F28032D;
-	Tue, 27 May 2025 16:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DD6284B4F;
+	Tue, 27 May 2025 16:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364892; cv=none; b=jo9TSvaLrQ14cpP6FDrxvLwJrVU6wXXHTU2oYMqPevK0EtREAGlZxTIMbQxrtn7l4mvx7+KTkwShvINK5iQOSZv1YjJtukSxE54hKR1qoGEIIHgjxAjWbAxyodfiMKU/o20j0LmyEfpZlRRl3tAlKlR4vGL5vVL1i07KSqaAP8c=
+	t=1748364895; cv=none; b=Qdnd2Syji89IsI5dLELU84918o2nPxB7OicyV5FNKu0vEFlYMNkQmUqRTCSgZ4ElJbfFGmqReKmk/cj0FzzdrQFTNz+4RRDoi8shypSX2j/EVPBX+np7J45Q+Jy4YKWQv9fWxEbkujkM+NK1uan4ZvuGAfsGGSEM7PDYnJ0YKbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364892; c=relaxed/simple;
-	bh=05fwvd+4kxO+KskQF62sYzuR6VZYYU9QGPRl/2ZGOYY=;
+	s=arc-20240116; t=1748364895; c=relaxed/simple;
+	bh=TmBjkiVzRYvBT1R4KUXU/LDGDz/420Hl6OSy/gmjWrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cEGjSdPb4zcKjC3W4dgb2v4zvKtzCYTZJSSSNAEJ5Ds0mTQJRywKqHtDum06pFQI4WCi7b88DyZ/yhcdmJs1ntMZgEThJAJyB79ySTQ5LQhlz3psF4woj/PAF6ybAzYBukrk5Q3st0cPxtq6tpYTIqtrxJhFKytKOdlijVsEu3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8gZeev2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KXGKPzLt2aQguCRBjUCPV8zUjWnhAioP3IrGvKxjdI9UY1XEvEe6ta5yZTIcjAdG4KHFCXiHsDVrMAugUAoBeNegocvBwnVDO6OG3SFetTKqnOJQtKLBOUmDvRoLUD7YMVxaXi/ys5TCR6mKDQAXHMMtvzRhvY79mX24vJHIvX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STbmnChL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8gZeev2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD6CC4CEEF;
-	Tue, 27 May 2025 16:54:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STbmnChL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A8AC4CEEF;
+	Tue, 27 May 2025 16:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748364892;
-	bh=05fwvd+4kxO+KskQF62sYzuR6VZYYU9QGPRl/2ZGOYY=;
+	s=korg; t=1748364895;
+	bh=TmBjkiVzRYvBT1R4KUXU/LDGDz/420Hl6OSy/gmjWrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R8gZeev23E+pRULZLgauq/L+5hzz7b5H0jN2xV7RAcT5d7KXphgQeqHXMy2n0TLer
-	 IMSzBXg/14EIj7zyfYZ5Zx20/EK4eRbSUz6pLOMP99mQSEeAujzgop1DB2jXQJ5tVM
-	 YgW6Dw5Bg758zwdozrbsgbiN1pXm8yZcWoSmjbGo=
+	b=STbmnChL+KEF972KFy2et6QcFbqY8ZU/HAIG16ejr7O/iYKQInCzSkX5eAxS1hCKd
+	 r+ifbu3D7qw0DO4rho9cAggxnep3Yt9MV6yunIkkT/O8jZ5IrDGwOMX7xmdNoZGMac
+	 +wG6BCuL4aCMA9ulV5948hkaBA7AQDDIK37hyHjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Coly Li <colyli@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 199/626] ASoC: qcom: sm8250: explicitly set format in sm8250_be_hw_params_fixup()
-Date: Tue, 27 May 2025 18:21:32 +0200
-Message-ID: <20250527162453.106732263@linuxfoundation.org>
+Subject: [PATCH 6.12 200/626] badblocks: Fix a nonsense WARN_ON() which checks whether a u64 variable < 0
+Date: Tue, 27 May 2025 18:21:33 +0200
+Message-ID: <20250527162453.147625775@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -52,46 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+From: Coly Li <colyli@kernel.org>
 
-[ Upstream commit 89be3c15a58b2ccf31e969223c8ac93ca8932d81 ]
+[ Upstream commit 7e76336e14de9a2b67af96012ddd46c5676cf340 ]
 
-Setting format to s16le is required for compressed playback on compatible
-soundcards.
+In _badblocks_check(), there are lines of code like this,
+1246         sectors -= len;
+[snipped]
+1251         WARN_ON(sectors < 0);
 
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Link: https://patch.msgid.link/20250228161430.373961-1-alexey.klimov@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The WARN_ON() at line 1257 doesn't make sense because sectors is
+unsigned long long type and never to be <0.
+
+Fix it by checking directly checking whether sectors is less than len.
+
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Coly Li <colyli@kernel.org>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20250309160556.42854-1-colyli@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/sm8250.c | 3 +++
- 1 file changed, 3 insertions(+)
+ block/badblocks.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/qcom/sm8250.c b/sound/soc/qcom/sm8250.c
-index 19adadedc88a2..1001fd3213803 100644
---- a/sound/soc/qcom/sm8250.c
-+++ b/sound/soc/qcom/sm8250.c
-@@ -7,6 +7,7 @@
- #include <sound/soc.h>
- #include <sound/soc-dapm.h>
- #include <sound/pcm.h>
-+#include <sound/pcm_params.h>
- #include <linux/soundwire/sdw.h>
- #include <sound/jack.h>
- #include <linux/input-event-codes.h>
-@@ -39,9 +40,11 @@ static int sm8250_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
- 					SNDRV_PCM_HW_PARAM_RATE);
- 	struct snd_interval *channels = hw_param_interval(params,
- 					SNDRV_PCM_HW_PARAM_CHANNELS);
-+	struct snd_mask *fmt = hw_param_mask(params, SNDRV_PCM_HW_PARAM_FORMAT);
+diff --git a/block/badblocks.c b/block/badblocks.c
+index db4ec8b9b2a8c..a9709771a1015 100644
+--- a/block/badblocks.c
++++ b/block/badblocks.c
+@@ -1349,14 +1349,15 @@ static int _badblocks_check(struct badblocks *bb, sector_t s, int sectors,
+ 	len = sectors;
  
- 	rate->min = rate->max = 48000;
- 	channels->min = channels->max = 2;
-+	snd_mask_set_format(fmt, SNDRV_PCM_FORMAT_S16_LE);
+ update_sectors:
++	/* This situation should never happen */
++	WARN_ON(sectors < len);
++
+ 	s += len;
+ 	sectors -= len;
  
- 	return 0;
- }
+ 	if (sectors > 0)
+ 		goto re_check;
+ 
+-	WARN_ON(sectors < 0);
+-
+ 	if (unacked_badblocks > 0)
+ 		rv = -1;
+ 	else if (acked_badblocks > 0)
 -- 
 2.39.5
 
