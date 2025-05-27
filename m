@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09CF70831;
-	Tue, 27 May 2025 17:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5960570831;
+	Tue, 27 May 2025 17:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748365683; cv=none; b=FW9nDCHrAD8elCV/4w5uJlRy0/e6+7zZFhJgnyDiun7wgJXdrmFxXm9l8rtIjWQalxXTt1cv5bSr879ELuujSbEp6dtW/koVxRTZncX7j5DcQbNnVdrYpdlCgANCeS4+GOtjWr7BUs9dK/wjtfGI5FDarhPKsU09Qk2nXeHVKeI=
+	t=1748365687; cv=none; b=RYzMzv5jwqSHuE8ZsY2itXn5qq8h0pPw/edBaWHgDFYRIgK+GDtwmYNqm5tOXW4AOOQ4/vJ+VTJGKGawXgw657UzowwNfb/cSheLcHSKBEJkx4z4M8Baomj7mUS/MWUhfrQ+ZRCbxkQjyRLc3HgZR+znwXWEJiViXpglIBEL8x0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748365683; c=relaxed/simple;
-	bh=hBQe8Kvglo6vywBP/7OgwooN3ftPItXruRz327BSjHA=;
+	s=arc-20240116; t=1748365687; c=relaxed/simple;
+	bh=wtMH3o4ZlT2Pdn8MV6QH7D3ybMgsYU3t6BD4u1yy4Tk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nSjlwb6LTavVqdaCUpjgUdQ0jRib/47GtwIpAUzIuv8P66eAn6ym6ZC1pSYioxFIFjdfa1nhydIO7QcoyiXerghq9rDVeAOWGQS9FoKA3PDEvOWGErH05HkPspLsHUK3IISZkSagGM0IzgtBqWUDptE6mFGEzeCrV/iCQoG04Rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yU2dBdO9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iB7f5qtVwa969K1kzGnM4TcTdLxmv+hSL/g24MBoO77k102jjRAlF7+HCbQ4cPmTz6V4xKzVd2r88eIensqLckpise1UeOgvXN2SqVGr/GJHQ9Qz6c5xv5Rtmfk+2uL6eCJ4FB/nxHuS0yM0MsiACHhKYc7eoKmOGW+RXxG4n9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L7E7L1kk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yU2dBdO9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E021C4CEE9;
-	Tue, 27 May 2025 17:08:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L7E7L1kk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A364C4CEE9;
+	Tue, 27 May 2025 17:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748365683;
-	bh=hBQe8Kvglo6vywBP/7OgwooN3ftPItXruRz327BSjHA=;
+	s=korg; t=1748365687;
+	bh=wtMH3o4ZlT2Pdn8MV6QH7D3ybMgsYU3t6BD4u1yy4Tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yU2dBdO98bSx6O20cegZJfBETqQmDufR0qS1Bp3yVyAr9Ph3kZNOi8TfonYgLNrcG
-	 l4U8lWv9fjqTsjVolHbNFi3Pq3JsVsGpdpUOWcAE64UmxOONFu9PY5jQDTx+O5YMQs
-	 weFVYXNX0yK/6faxqjkWV0p6HtndUlOzzFKWIyj8=
+	b=L7E7L1kkYx+KTXmgNFdPRnxQP5XaGM0V+YNO3kCcd3xihkxOgu28GN/baowK2u9xd
+	 YJyzvOX8/jPMZ5AhMEeRu3AQesVM3/38xrcRAtIlHzA9JpqBeJsgljqAyF49bumEJl
+	 FUZYIBkOdslFW8tV3Jg3ZepkoGsaCIzt28OLxQRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Ankur Arora <ankur.a.arora@oracle.com>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Ankur Arora <ankur.a.arora@oracle.com>,
 	Boqun Feng <boqun.feng@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 456/626] rcu: handle unstable rdp in rcu_read_unlock_strict()
-Date: Tue, 27 May 2025 18:25:49 +0200
-Message-ID: <20250527162503.522685283@linuxfoundation.org>
+Subject: [PATCH 6.12 457/626] rcu: fix header guard for rcu_all_qs()
+Date: Tue, 27 May 2025 18:25:50 +0200
+Message-ID: <20250527162503.562852177@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162445.028718347@linuxfoundation.org>
 References: <20250527162445.028718347@linuxfoundation.org>
@@ -55,64 +56,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Ankur Arora <ankur.a.arora@oracle.com>
 
-[ Upstream commit fcf0e25ad4c8d14d2faab4d9a17040f31efce205 ]
+[ Upstream commit ad6b5b73ff565e88aca7a7d1286788d80c97ba71 ]
 
-rcu_read_unlock_strict() can be called with preemption enabled
-which can make for an unstable rdp and a racy norm value.
+rcu_all_qs() is defined for !CONFIG_PREEMPT_RCU but the declaration
+is conditioned on CONFIG_PREEMPTION.
 
-Fix this by dropping the preempt-count in __rcu_read_unlock()
-after the call to rcu_read_unlock_strict(), adjusting the
-preempt-count check appropriately.
+With CONFIG_PREEMPT_LAZY, CONFIG_PREEMPTION=y does not imply
+CONFIG_PREEMPT_RCU=y.
 
-Suggested-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Ankur Arora <ankur.a.arora@oracle.com>
+Decouple the two.
+
+Cc: Paul E. McKenney <paulmck@kernel.org>
 Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Ankur Arora <ankur.a.arora@oracle.com>
 Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rcupdate.h |  2 +-
- kernel/rcu/tree_plugin.h | 11 ++++++++++-
- 2 files changed, 11 insertions(+), 2 deletions(-)
+ include/linux/rcutree.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/rcupdate.h b/include/linux/rcupdate.h
-index bd69ddc102fbc..0844ab3288519 100644
---- a/include/linux/rcupdate.h
-+++ b/include/linux/rcupdate.h
-@@ -95,9 +95,9 @@ static inline void __rcu_read_lock(void)
+diff --git a/include/linux/rcutree.h b/include/linux/rcutree.h
+index 90a684f94776e..ae8b5cb475a36 100644
+--- a/include/linux/rcutree.h
++++ b/include/linux/rcutree.h
+@@ -104,7 +104,7 @@ extern int rcu_scheduler_active;
+ void rcu_end_inkernel_boot(void);
+ bool rcu_inkernel_boot_has_ended(void);
+ bool rcu_is_watching(void);
+-#ifndef CONFIG_PREEMPTION
++#ifndef CONFIG_PREEMPT_RCU
+ void rcu_all_qs(void);
+ #endif
  
- static inline void __rcu_read_unlock(void)
- {
--	preempt_enable();
- 	if (IS_ENABLED(CONFIG_RCU_STRICT_GRACE_PERIOD))
- 		rcu_read_unlock_strict();
-+	preempt_enable();
- }
- 
- static inline int rcu_preempt_depth(void)
-diff --git a/kernel/rcu/tree_plugin.h b/kernel/rcu/tree_plugin.h
-index 75ba4d5788c0f..304e3405e6ec7 100644
---- a/kernel/rcu/tree_plugin.h
-+++ b/kernel/rcu/tree_plugin.h
-@@ -832,8 +832,17 @@ void rcu_read_unlock_strict(void)
- {
- 	struct rcu_data *rdp;
- 
--	if (irqs_disabled() || preempt_count() || !rcu_state.gp_kthread)
-+	if (irqs_disabled() || in_atomic_preempt_off() || !rcu_state.gp_kthread)
- 		return;
-+
-+	/*
-+	 * rcu_report_qs_rdp() can only be invoked with a stable rdp and
-+	 * from the local CPU.
-+	 *
-+	 * The in_atomic_preempt_off() check ensures that we come here holding
-+	 * the last preempt_count (which will get dropped once we return to
-+	 * __rcu_read_unlock().
-+	 */
- 	rdp = this_cpu_ptr(&rcu_data);
- 	rdp->cpu_no_qs.b.norm = false;
- 	rcu_report_qs_rdp(rdp);
 -- 
 2.39.5
 
