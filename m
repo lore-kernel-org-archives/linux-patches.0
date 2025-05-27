@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06D12110E;
-	Tue, 27 May 2025 17:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF812110E;
+	Tue, 27 May 2025 17:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748367119; cv=none; b=Sgwot/mEtP6qZtGcoKilIT/gxVLp8hkD45HHuEfXEoC2EGLlgc9qjISYbXj8lizgQTwGT1GyT3NT8pa6N0Or8NmnGrzmrwBKN7wNs4dp2sF9fpLNNzu+SYTndo+Ui3i9m5ZB3ngVv9ESBXFgj+HeQtvKHM9CfsllcXF8gn4eBJ0=
+	t=1748367122; cv=none; b=F8jc0QPul+HJ30z9HXc5eW9XQOuwgvfQQ0cEtK6wqcBFGyxs2Nh+cmB3IVtOuVU23cOefo6+sbVxcxvXx3E64+asjyZzt8VgMlRC8yci/mxnqstTbfGhugkuN4iBcMw2zGJTgeYbm2EguJfxOgl6wbyeVKt52RqIPrlBusXpKRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748367119; c=relaxed/simple;
-	bh=LIkA4I/vk/S1Iuz45zyZOyrI3aEEzVXvKnGwFbA2SUk=;
+	s=arc-20240116; t=1748367122; c=relaxed/simple;
+	bh=liYBRF3gh+SfThZgMZDxut9odWCiDffMuMbuuq68nBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l8wfgAuHoWjHqqRfLvJpc2wG0oJiM4U8OQTYlYOsAqIGpn1kqLj6B4eM5Uj1rV++uGgKDzNoPCR8HzoYEz0LwiFroYHFXUcDrdSta5rmvOPfDp/TX/7Wgu41vEIulo/vht16u3AXOw2vFJXeazKUAQnLILxIdJC34Zq/FPotq08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m3uTQteg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qEKmTBX5w+E26dkdKnRfc+ddfXyIwZKLSoy4R59o7iGa/qM8Q399dKORbH+cInMC4X3ywRsVNWwPurEslo6/90SEZDiLI7LbA7ywbhrrz3hNXA1rjKHIxrTqVvUr99O6Rny8Sc347ZGkjAUquodJnoGFuAFaWHJYXRGRvCY5FXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HAGckLrV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3uTQteg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96BFC4CEEA;
-	Tue, 27 May 2025 17:31:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HAGckLrV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AB2C4CEE9;
+	Tue, 27 May 2025 17:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748367119;
-	bh=LIkA4I/vk/S1Iuz45zyZOyrI3aEEzVXvKnGwFbA2SUk=;
+	s=korg; t=1748367122;
+	bh=liYBRF3gh+SfThZgMZDxut9odWCiDffMuMbuuq68nBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m3uTQtegHdAyesM43cmMKRwBZ2ErSsiwYFpRzXo94sBZXETsZECdnh6MZSX06w6dy
-	 lPnisg20wF2AG9YXqIDuwls9EvJfwYRCelHx0JLkheO12RN+CPuvgP/1n3OfACTDB7
-	 kL+N0lUn0m/29asmGYy6ScXg4FKtS9P/9DbIis1o=
+	b=HAGckLrVN1QjfXG0ijz4im4hFZove4yPMKrpPc6CtpFFJ4b+ugIZFekLIKdfnoSt+
+	 7/7gBy+X6seAR/pCB1faUjghjXgdMbPDAvPd92QrAL+VxX9PRUVWRHEUPn1bghlBIb
+	 Dg0R14EbvuABrLcZxPe+wnulpuXNp9b/kKmBnoIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emily Deng <Emily.Deng@amd.com>,
-	Xiaogang Chen <xiaogang.chen@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.14 255/783] drm/amdgpu: Fix missing drain retry fault the last entry
-Date: Tue, 27 May 2025 18:20:52 +0200
-Message-ID: <20250527162523.484456683@linuxfoundation.org>
+Subject: [PATCH 6.14 256/783] arm64: tegra: p2597: Fix gpio for vdd-1v8-dis regulator
+Date: Tue, 27 May 2025 18:20:53 +0200
+Message-ID: <20250527162523.525060493@linuxfoundation.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
 References: <20250527162513.035720581@linuxfoundation.org>
@@ -52,53 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emily Deng <Emily.Deng@amd.com>
+From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
 
-[ Upstream commit fe2fa3be3d59ba67d6de54a0064441ec233cb50c ]
+[ Upstream commit f34621f31e3be81456c903287f7e4c0609829e29 ]
 
-While the entry get in svm_range_unmap_from_cpu is the last entry, and
-the entry is page fault, it also need to be dropped. So for equal case,
-it also need to be dropped.
+According to the board schematics the enable pin of this regulator is
+connected to gpio line #9 of the first instance of the TCA9539
+GPIO expander, so adjust it.
 
-v2:
-Only modify the svm_range_restore_pages.
-
-Signed-off-by: Emily Deng <Emily.Deng@amd.com>
-Reviewed-by: Xiaogang Chen<xiaogang.chen@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+Link: https://lore.kernel.org/r/20250224-diogo-gpio_exp-v1-1-80fb84ac48c6@tecnico.ulisboa.pt
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h | 3 +++
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c   | 2 +-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h
-index 7d4395a5d8ac9..b0a88f92cd821 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h
-@@ -78,6 +78,9 @@ struct amdgpu_ih_ring {
- #define amdgpu_ih_ts_after(t1, t2) \
- 		(((int64_t)((t2) << 16) - (int64_t)((t1) << 16)) > 0LL)
- 
-+#define amdgpu_ih_ts_after_or_equal(t1, t2) \
-+		(((int64_t)((t2) << 16) - (int64_t)((t1) << 16)) >= 0LL)
-+
- /* provided by the ih block */
- struct amdgpu_ih_funcs {
- 	/* ring read/write ptr handling, called from interrupt context */
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-index d1cf9dd352904..47189453b20c3 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -3024,7 +3024,7 @@ svm_range_restore_pages(struct amdgpu_device *adev, unsigned int pasid,
- 
- 	/* check if this page fault time stamp is before svms->checkpoint_ts */
- 	if (svms->checkpoint_ts[gpuidx] != 0) {
--		if (amdgpu_ih_ts_after(ts,  svms->checkpoint_ts[gpuidx])) {
-+		if (amdgpu_ih_ts_after_or_equal(ts,  svms->checkpoint_ts[gpuidx])) {
- 			pr_debug("draining retry fault, drop fault 0x%llx\n", addr);
- 			r = -EAGAIN;
- 			goto out_unlock_svms;
+diff --git a/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi b/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
+index 63b94a04308e8..38d49d612c0c1 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
+@@ -1686,7 +1686,7 @@ vdd_1v8_dis: regulator-vdd-1v8-dis {
+ 		regulator-min-microvolt = <1800000>;
+ 		regulator-max-microvolt = <1800000>;
+ 		regulator-always-on;
+-		gpio = <&exp1 14 GPIO_ACTIVE_HIGH>;
++		gpio = <&exp1 9 GPIO_ACTIVE_HIGH>;
+ 		enable-active-high;
+ 		vin-supply = <&vdd_1v8>;
+ 	};
 -- 
 2.39.5
 
