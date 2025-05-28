@@ -1,74 +1,64 @@
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B107A21770B
-	for <patches@lists.linux.dev>; Wed, 28 May 2025 19:01:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5736720D4F0
+	for <patches@lists.linux.dev>; Wed, 28 May 2025 21:38:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748458863; cv=none; b=Uy7hkF6dQoMpELgwRGTcOtsXuJIqNrzq3upivrk17GpvsOiomQRBg4xQYyyDFw83GEcS//Yz3cny8Oz6TO7dc3KvA+K/UGpAGziZGGEqAnMIvdRbMVpTczPhwfWbkZNYOkQgFHGCjwgpCTQ8I48jso+hHfTPo9cgRZtgZEnvq5c=
+	t=1748468294; cv=none; b=VUo7C+vJfWtHXSflWtUx+5//2LRjd7Hb8z2dZwXgA/GY9fztwWVCPuFX7aNsEvuUb2+h0ccMGnjbNvNaXwVtWZbHkLwZhoUymVySkWGd/s8Ft07r/HB/9r/Ww9QcW4+wY6ynFlEPtSsSPPGIoRsX2YOb3d1ncB3rd70ku7hYg/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748458863; c=relaxed/simple;
-	bh=99lZxN5vhS9pT7XjyafkDptBxd868nvYUBqPecl/XbA=;
+	s=arc-20240116; t=1748468294; c=relaxed/simple;
+	bh=fquSITk+E1xqk35FlWKKdQEdyzF7bcsbzu1Yz6hkfPQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gJKS5XPCt45pq0T5+eQ4P+etK1ofLrTHoV6lDAea3NtH5pwtrVuGUhfVYtLmMBeHZMU4tlfa09ISLsiEpvzGWy8jXbNxMysoY+sRKSwVjXtK/Dl3PM3Tq1evW4+vqdjiruw6pE8RhIZyjilMxJ6/ZOtGhWToMbV0pZRLgaFKMT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=ik633yzD; arc=none smtp.client-ip=209.85.166.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=mUkgQ6dE+W5aB9K5+nP09FLRfqu7fu6oVzBsvXqCrYs4JKreGiHnLjMa39LqjTM6h6t+ltaCdEyCnPva3qiArxsP8rYMlfQuN+xXfhAWJnlmDJHr5qWYkbbQOaqgpu/kAzs7llLXf0zYBbTKeK0lowO6LVG1V4GQ9IzO2qwyry0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LrKzjOUQ; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="ik633yzD"
-Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-3dc8265b9b5so943795ab.1
-        for <patches@lists.linux.dev>; Wed, 28 May 2025 12:01:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1748458860; x=1749063660; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=E6uMWV3+sb1xZHl//TOe7Sv20/rDXHWApZwSoImEOEg=;
-        b=ik633yzDKZswE5RUcUg5IQmciGg5oCIAHvknU7oxYNm4rGWzCghA3ZaX0Fk5LsKthr
-         /kG8OIoN8iXOfaUkvhZg6YvLflGQkkQ/Yg7JlV2Y3MbkKIoJuWUkF1UBgWi/MnWyHh8j
-         sWgCY2D7FoeXHjzgogc03BS+Zz1aiqIDdP+rE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748458860; x=1749063660;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=E6uMWV3+sb1xZHl//TOe7Sv20/rDXHWApZwSoImEOEg=;
-        b=AXuByKQXcz4K2LqVtxhotLjDaCdeq7ARaBthzbu+0HE52wmaLU9/0l8lxfivBClL/x
-         9ROLFzDNIabhMKcBLNYyqgrAOCCr1+r0Kzu+0E8TyUIoa1ikcmE3iceJo+2EPBT3zrqx
-         13DBc4m0hR0elMcIuuTXJQ2G0nFk/6JnIovFvIN5Hz226aynsHoDmYo78NUro7xzm+fq
-         7pE4DhGF8pnt/KLYTLUbBhqtWvlkrovj3R+EKQs8/DoR4iZD0H2QtFNJNipmsz816XPg
-         9oySDnfz9y1e5rJnxA334nR7D2fGXCQkNhy7FcLPp27tEArudxeUON3aNoj7W4QD1O8K
-         tSeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW9bQBdDrKVHsc+uT7rM6dLis+bRCMaRYsQxS8ynt+fs5AgrzF+WTrr0OT5GI7zQWDcQt3gP76x@lists.linux.dev
-X-Gm-Message-State: AOJu0YxOHB0LG6zGUVmx0cXkNIOl01mkpTQ5zT6d5Qfx8T4prfISYqNh
-	jx3GdzqFlmXrK+Awk7DgA0cam2NRsZemyAkY46x5kbRGxg3wEOsXnjNwO5qgFPEuzg==
-X-Gm-Gg: ASbGncvgmg35/yxk3WUHK7OCpQAtV8rom8CFzbOmkRe2zRlyzimAJVoVqzod59oybFg
-	oxOBXHmqiv3h2OXqluKKULBTWMROKJzkONuBROqOvdSOEFfgAaG2nN3KxSfn6Kg/tNR1Gml4LAt
-	320bMbp5/64Bie+f1HIBbEpaPnqpu+yWyUfizaJGOXZlTTFpzishwVIvqz43aR9BdHm4MV5BXFj
-	bv7mRL4MWmXRsVWLaRgoakBVAEd7t8sqk9OnCDlLpRT3qZMkhIZShcgOVA5ejPlX6R42GXM/xWv
-	daLVxwHjyAwn9q0s0Wg3hzFfwLAw2xvzcRiYbf0KT4zsj3VTiZF5b/dI9PR+lUTBsLehT9u+1nO
-	oZvs=
-X-Google-Smtp-Source: AGHT+IGO2PTzIAqkK41ccV62UVml+KrtjC/CCurWR884MEq1rueZvDmtfrOp5qmDL+URey90IDvSbQ==
-X-Received: by 2002:a05:6e02:1786:b0:3dc:8423:543e with SMTP id e9e14a558f8ab-3dd8b044b9bmr36739375ab.17.1748458859626;
-        Wed, 28 May 2025 12:00:59 -0700 (PDT)
-Received: from fedora64.linuxtx.org ([72.42.103.70])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4fdbd58790asm341459173.95.2025.05.28.12.00.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 May 2025 12:00:59 -0700 (PDT)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Wed, 28 May 2025 13:00:57 -0600
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.14 000/783] 6.14.9-rc1 review
-Message-ID: <aDddaQGen1YUVCYz@fedora64.linuxtx.org>
-References: <20250527162513.035720581@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LrKzjOUQ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1748468293; x=1780004293;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=fquSITk+E1xqk35FlWKKdQEdyzF7bcsbzu1Yz6hkfPQ=;
+  b=LrKzjOUQw25YcqyV2ZrAXgePe4IP+mqsOsGLChNkXcsYZGFTRX/kdJo4
+   dLOFelMULt2WTA6V1onDLdJLEU5YOgAYogYbFv32FKvU0c2oU1aK05h6d
+   6KR0cVfhEMtSOR1B0xGZxQHkKKPHCKW6IXxcup7HU/T0j9VFlQHgh4pTy
+   o4ZtxDNNvfojXX4IrHViTAyAEE9hScxJ2TSwlRTg648QTb35JMbyIKGSe
+   Uqb/ftPv4S8vYknrVaHD99fVTJQI2156rsMNdWfNh5yw7iJOjN+QLMUqN
+   6OBaKf7GXnclCX5rz2R7tV6cH+gqxpqdFR1cbBI8fM42/4ADTMvsIXTH2
+   A==;
+X-CSE-ConnectionGUID: 4cejwIIjRayXd/478R6i3g==
+X-CSE-MsgGUID: TxFyHaqJT2eBwdurIJh3kw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11447"; a="61147465"
+X-IronPort-AV: E=Sophos;i="6.15,322,1739865600"; 
+   d="scan'208";a="61147465"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2025 14:38:12 -0700
+X-CSE-ConnectionGUID: sCJVDOP8QJeHyZRL+EEBgQ==
+X-CSE-MsgGUID: 9veFNIHpQZaB8LuVbpvGrA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,322,1739865600"; 
+   d="scan'208";a="147245874"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.103.51])
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2025 14:38:12 -0700
+Date: Wed, 28 May 2025 14:38:11 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: Fenghua Yu <fenghuay@nvidia.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
+	Chen Yu <yu.c.chen@intel.com>, x86@kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v5 00/29] x86/resctrl telemetry monitoring
+Message-ID: <aDeCQ-v9OHzHauPi@agluck-desk3>
+References: <20250521225049.132551-1-tony.luck@intel.com>
+ <b8ddce03-65c0-4420-b30d-e43c54943667@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -77,29 +67,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
+In-Reply-To: <b8ddce03-65c0-4420-b30d-e43c54943667@intel.com>
 
-On Tue, May 27, 2025 at 06:16:37PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.14.9 release.
-> There are 783 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 29 May 2025 16:22:51 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.14.9-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.14.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Hi Reinette,
 
-Tested rc1 minus the broken "s390/crash: Use note name macros" patch against
-the Fedora build system (aarch64, ppc64le, s390x, x86_64), and boot tested
-x86_64. No regressions noted.
+I've begun drafting a new cover letter to explain telemetry.
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+Here's the introduction. Let me know if it helps cover the
+gaps and ambiguities that you pointed out.
+
+-Tony
+
+
+RMID based telemetry events
+---------------------------
+
+Each CPU on a system keeps a local count of various events.
+
+Every two milliseconds, or when the value of the RMID field in the
+IA32_PQR_ASSOC MSR is changed, the CPU transmits all the event counts
+together with the value of the RMID to a nearby OOBMSM (Out of band
+management services module) device. The CPU then resets all counters and
+begins counting events for the new RMID or time interval.
+
+The OOBMSM device sums each event count with those received from other
+CPUs keeping a running total for each event for each RMID.
+
+The operating system can read these counts to gather a picture of
+system-wide activity for each of the logged events per-RMID.
+
+E.g. the operating system may assign RMID 5 to all the tasks running to
+perform a certain job. When it reads the core energy event counter for
+RMID 5 it will see the total energy consumed by CPU cores for all tasks
+in that job while running on any CPU. This is a much lower overhead
+mechanism to track events per job than the typical "perf" approach
+of reading counters on every context switch.
+
+Events
+------
+
+"core energy" The number of Joules consumed by CPU cores during execution
+of instructions for the current RMID.
+Note that this does not include energy used by the "uncore" (LLC cache
+and interfaces to off package devices) or energy used by memory or I/O
+devices. Energy may be calculated based on measures of activity rather
+than the output from a power meter.
+
+"activity" The dynamic capacitance (Cdyn) in Farads for a core due to
+execution of instructions for the current RMID. This event will be
+more useful to a user interested in optimizing energy consumption
+of a workload because it is invariant of frequency changes (e.g.
+turbo mode) that may be outside of the control of the developer.
