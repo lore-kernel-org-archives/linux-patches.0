@@ -1,90 +1,97 @@
-Received: from mx.denx.de (mx.denx.de [89.58.32.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C003242D98
-	for <patches@lists.linux.dev>; Wed, 28 May 2025 06:50:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FD61FE461
+	for <patches@lists.linux.dev>; Wed, 28 May 2025 08:03:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748415020; cv=none; b=rWxN9tWiQyHToXU964Rt082Mf0AldFgF76L9oWCNy3LsL4zjot1AGr0OFU25a9f0B9AFp930HfKcpLgUDvAp+l7lkCIL58NUxv15dHUG47SxZ2qih4N8SkNP+LE3lP6bpf7wixehzHo7CFG7Ppau3/+rCAIFNEmJZuYJ557Inkg=
+	t=1748419402; cv=none; b=IhKiXRvFBurBshzwrXwxZJ3XBHNsZdzNSX9FXlZu8QsGlEN0P8xCoGj1ujnmE5OUf/0EW+M24gC+IE6nRnYlwS3rtcFCYlQRu61wUV0fBUhRlDMV1q5F2zAMKYqqbo85Nu6Qde8FCfPsDBS7EuytNiMnsQzFJjUAlTV+8Y1qwvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748415020; c=relaxed/simple;
-	bh=1gdDLxbDe2Ht/h7iA3Hx1dveQII8jJ9qcqr0cmha0Yg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bfjVXquEvhbvQ0aTD5FmNwPyqEoJC8Mjnd+Og5xivvZW7jMoXdMuF1L5avRWsMFTgjxpqO3WiOmTLuZV06NUZR4nxAzRBNQgDjVWkr7M3HtMPWDlTy/7SF0ehQKgVJnLmvwiaf31umoXMSQpK68SIyiFqiHJh+kJDgTeeNaKRU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=YVrC4w25; arc=none smtp.client-ip=89.58.32.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
+	s=arc-20240116; t=1748419402; c=relaxed/simple;
+	bh=m1AgbkSD9ZhqsKYGnxQT5QuWasbz/mdwKFB3lNLS1o0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=i6P4hJOyZZlYzlMBLJorBSHOk8hSDS2BQv1L+7lkKV5/L1gJIrGOsEpR0wcAqNfLB4pUpH2dKAL0ZZQk87d7kjFpY8al4SYWOyd6nLzpyHNNfvcrXgczEaaXg8UaGVPZRjmkawB+HiNWIN/Pjdc0/JOGoiWgT089UFemSWWBWWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lq7qdmmH; arc=none smtp.client-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="YVrC4w25"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id C64C21039728C;
-	Wed, 28 May 2025 08:50:10 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
-	t=1748415015; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=9+/FxJGf/fg6nDfJfXIkd4wxGzuaejuHfG9+LqI/sYk=;
-	b=YVrC4w25G9rslNhMzj7Vt7KMYXQk0Nu4WeLwl9cUbFPR8Z4ZAhpa0TwhBfjMwG3jPclt3T
-	mlXre/KSPspvV2qDbACjlrPXBTSaGHVlFWPiCom6c4jDVVgKix03l+QFQrsuRm99/yOdHH
-	K+yxNMZ1Gj8H7l594V3KNvjRt5sRAx3yglYWBBvQtC13AlY7/ozdFwwfP6lsDXzWRV5lx5
-	EetuxWhp1kfUabmJ+46nl/3F/aB1pfPyavOUdv0d740rRdTGsEdIemXlsAZboUS83godtu
-	Ug+2e7uSSksYUZCz78UXgxWxmrDOHiL7zrC29mr0Os1MM35+G6NHL7rT2+mK8A==
-Date: Wed, 28 May 2025 08:50:07 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.14 000/783] 6.14.9-rc1 review
-Message-ID: <aDayH15C6g9rjght@duo.ucw.cz>
-References: <20250527162513.035720581@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lq7qdmmH"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-30e5438316bso302387a91.1
+        for <patches@lists.linux.dev>; Wed, 28 May 2025 01:03:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748419400; x=1749024200; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7EOwFLOIjUGE9rMIYijxRVcus8CYn2cGLNdJL9ka6c0=;
+        b=Lq7qdmmHmy0ohGNJckKoNoTU+VUAsVof88owu5AQXx1+3lv4DPpAiE4bv/Muo0qrAE
+         PopSPY8SD6878xLdo9YhCM3sG5L/UTzlyRwxpJ0XL9lZpDogho6WEnJKLYaXQg90buO6
+         V0Y8UtnGSL3+S+RJBw53nQGn1PDQG5VZR6CdcVfdHf8NDzHdGlIetE+YcXwDAQu0dvOS
+         fLRYS36sPLhJC4ph5b57A8rI/P/Oj5nMdslj53973gQ8N+zhWsFsoN+73WyBErRwRmxa
+         H1Wk1HC9Z0s9k1TYYQmSiWVAg8EnFx2WWlwQLPMG9cPBoOmfk+m9zxp3bNwFMlAebXLy
+         nM2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748419400; x=1749024200;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7EOwFLOIjUGE9rMIYijxRVcus8CYn2cGLNdJL9ka6c0=;
+        b=WcoPdUFIrf8gF+j2o3r7afTsSltruPgfPSNnKh6LsvKVPY+PzDv11hguNFsF6BMsYM
+         0y6DnRg7Ife2/j6kVqhLIFYNd9UFVRfVUE7dN+j9+wxxxuNuPhaVYvSLbcysoiGNuEnw
+         1PFeMprc5yynu7bKfw2xjSvjHLaSZmFcX6x5zSG7quiWjq7tfR2LtX1+q8mX/0Q8B14Y
+         nqNT7aGuvuOVsAM04wpzA3Nx1Ov4UL3vDhn93wIQh0D7Y/+MXez/6yJQ8rVsjg20QoJi
+         sJ51bM+EE7LC0qH5FN6jccNqvaJj4cwe1eU50as6Xh+j6+L7pyzWTp3OE8fq1WNGp8lF
+         r/mg==
+X-Forwarded-Encrypted: i=1; AJvYcCWPtuU0BLT42Yp6XpbRApiVoKzF6w4hY5OnADm/J1WN5fjqLj3GSLPNGsn2r6PFCJPeWzJGXMp9@lists.linux.dev
+X-Gm-Message-State: AOJu0Yydwn/SafMZxmSEB4dA5GGDTZaHZ/rX6yOvhYWJW8eD/qoyAive
+	yNTaqKIsLR+JGpPrJa/S9aSPsC6fK3YPEwdqvx0Ur2NN3biMig3RqFCCakc7bjeYEvN08uTD+Uw
+	DKsdozArZLgjoOkOXvrLRwAUarCrYl7s=
+X-Gm-Gg: ASbGncvhHdzdzmAGlxKAe4vmbobQgntCVUAxoI0/nQt7Wr2Al+vN3TGKAMk+eKZBQnw
+	P5VlaTRmb+Tc2qj2QMJA7LWPCLMF+Hdzo6EuIzQQEeyg2NrjaP3Glac45PhuNzkEvq+nZap22Oh
+	wDmKC83wA2TdpjTywQY2ESmIwHk82FDG5p
+X-Google-Smtp-Source: AGHT+IEiwicS/q9RUO/V8KuNVVyWFDIAjAK2Mnb5ZiQ/pv0ORt4DIc9nszJacBNbGZrUZagNVQ3qcC1eIdODchfFkbQ=
+X-Received: by 2002:a17:90b:1b4b:b0:311:e8cc:424b with SMTP id
+ 98e67ed59e1d1-311e8cc4639mr847651a91.5.1748419400178; Wed, 28 May 2025
+ 01:03:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="XjXPnOCKr9jfoKGD"
-Content-Disposition: inline
-In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
-
-
---XjXPnOCKr9jfoKGD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20250502215133.1923676-1-ojeda@kernel.org> <CANiq72mj2yv4E7Dd+19fmP9xGWELdv6JwXULpu91oq0BMzob+g@mail.gmail.com>
+In-Reply-To: <CANiq72mj2yv4E7Dd+19fmP9xGWELdv6JwXULpu91oq0BMzob+g@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Wed, 28 May 2025 10:03:07 +0200
+X-Gm-Features: AX0GCFvKE0fCOzzRb6dIal5zXh6Jr2moZJDyfrK-nCJ7S0wGurEFElmTeo_tH7w
+Message-ID: <CANiq72m2vnoagiFBU81L=Z=AXa--+Sz-Q8OKcv-++mXvRu__mA@mail.gmail.com>
+Subject: Re: [PATCH 0/7] Rust KUnit `#[test]` support improvements
+To: Miguel Ojeda <ojeda@kernel.org>, Stephen Rothwell <sfr@canb.auug.org.au>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Rae Moar <rmoar@google.com>, 
+	linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi!
+On Tue, May 27, 2025 at 2:10=E2=80=AFAM Miguel Ojeda
+<miguel.ojeda.sandonis@gmail.com> wrote:
+>
+>     [ Used the `cfg_attr` from the TODO comment and clarified its comment
+>       now that the stabilization is in beta and thus quite likely stable
+>       in Rust 1.88.0. Simplified the `new_body` code by introducing a new
+>       variable. Added `#[allow(clippy::incompatible_msrv)]`. - Miguel ]
 
-> This is the start of the stable review cycle for the 6.14.9 release.
-> There are 783 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+One addition:
 
-CIP testing did not find any problems here:
+    Required `KUNIT=3Dy` like for doctests.
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.14.y
+The build error was reported by Stephen when merging -- thanks!
 
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---XjXPnOCKr9jfoKGD
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaDayHwAKCRAw5/Bqldv6
-8k70AJ4vrjPHhwAnSWi4ynStElOuD7WK5wCgteCjXcxbnPOI2ENeIxp0k90VE2o=
-=94kv
------END PGP SIGNATURE-----
-
---XjXPnOCKr9jfoKGD--
+Cheers,
+Miguel
