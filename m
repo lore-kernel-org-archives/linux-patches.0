@@ -1,47 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4747D2248AF;
-	Wed, 28 May 2025 21:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852612253F7;
+	Wed, 28 May 2025 21:56:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748469370; cv=none; b=XzmgQJ9nTaf+o9lEPP1UVty5BJ97fn0N9OMUxbq9by4js0zWSaxs1ZDGyjXq+xgeYwy0TBnqwLvoX+iAwJKMIbjcUOKxmP4aok7XQnAdO+BB7xr9c8N1e/JhfScGcmR4RD803CMIMva/P4XiNKCA3OzfghaUPc+r8GtXQxuVLFY=
+	t=1748469371; cv=none; b=VKP8mEr1MwO2njpPeM+p8ZDGgIXzaBt6qGvcT8sUSAVcy8nx1umF2V7Gm74k42e3uvN9Qxzat5ehhWuPER1QU8PRPVSWdOP/UAHE1aPcXOJHLsTvcxxuZgLqwC6dtU41PMBA0DfWwjoPW9H/3t+tcrdzI8lpnWjd6SG/Tp5inT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748469370; c=relaxed/simple;
-	bh=OLr+lHLF1b6leX+yACQ6obVgGCNqcRl/H9Y7AcITMvA=;
+	s=arc-20240116; t=1748469371; c=relaxed/simple;
+	bh=OgMXT81AKEiRtnjDzZdMPIpE3J3W9eQyIF4xJKa5knA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YHknn+vq5J+EZa698sdeCuiM3kF8OuBrnxJYDIXyg5PY7SgDAJHSEvu2mM/30nkF3seLMEcYxh7o+1haL5P93o727nD7w9mbMmbqCI4lM6zebJWtOClRel+Vo3GdEYGb2sNuncwQSdI9YVlXpvxykWpTrqAB6yD7qz2B/qThCfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nC0sWeVD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tp3KMXc9ezUo4njfBHgG/Hf+aqT4AuHWGdeC1DmSwU6H5MVxV1TuDLj7oe6duphZUzM7Y6ZzdR5zLhGM4uTLa8mZ5kQ2Sq0bwS5TG6aq+vapGdnycpQy8yRBreyqfATraidlMBk/W/0+G1b/oGMDeAAPWB5Rj7q+iEk9OGc4jj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=II5YQDgG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nC0sWeVD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C80C4CEE3;
-	Wed, 28 May 2025 21:56:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="II5YQDgG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17722C4CEED;
+	Wed, 28 May 2025 21:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748469369;
-	bh=OLr+lHLF1b6leX+yACQ6obVgGCNqcRl/H9Y7AcITMvA=;
+	s=k20201202; t=1748469371;
+	bh=OgMXT81AKEiRtnjDzZdMPIpE3J3W9eQyIF4xJKa5knA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nC0sWeVD0fHisq/7MJjoFr41TR61GiXvqn/w4o/GZFlSSjiOdbQxlvMADKoGUz57k
-	 J0Sd2546EjRjmnRdi7/EABCcrQwFs5pdAdxxrCbb7sWCdYlnLysCNVfPwWKDe8ckO7
-	 bW7SerFhUEXsbP6gm7A5aUKWjjpEGzO//S2jBa7xE/cAHbfjbhELznJ5F0rM91GrMl
-	 2q9bL5DHCKCpxeqpNtrYjVxsBt8Nfv9dw3eYaZE+1b6a04fJ3X9Ne964z3uoFs1wOM
-	 FGuZFOMixj31o7WxZTux45SM1k5V1TCq3lkkYGUAyw5d9FLFubRNnuIhLAmVJVb2Vu
-	 wN/PxudwbqFsQ==
+	b=II5YQDgGals0fGUT/wPe+qNCKvJdwhLXTxPFqvK4G721+v81SE+SIGhdpYRKle0wk
+	 VYn5UOJebBk0XwL0i7hwabMXeb4w07vj15lMgPQQm5pgDfWJPjmgQ7TIuN6iRVRCIw
+	 x1ovkNxNNyNjPnygiOZPtImy0JX+WNiLDpaFedUzSI8INbUfqtl1HZsakfHz8FtAGV
+	 twZxagcVcXYa1YMkXf4iWdLNqlzn8THNB1fEKrEGDPB/qodK2eTUh77NE9lmO93E5X
+	 ZPMhlUM33Kcnj9zwmAdfMaVntuhyXyuz03TQO/bIejJQAkcfQJC7zLB+LfE/bTKLaW
+	 KYEKgjnF45UDQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Zijlstra <peterz@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
+Cc: Ming Lei <ming.lei@redhat.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>,
-	mingo@redhat.com,
-	acme@kernel.org,
-	ast@kernel.org,
-	daniel@iogearbox.net,
-	linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org,
-	bpf@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 8/9] perf: Ensure bpf_perf_link path is properly serialized
-Date: Wed, 28 May 2025 17:55:58 -0400
-Message-Id: <20250528215559.1983214-8-sashal@kernel.org>
+	linux-block@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 9/9] block: use q->elevator with ->elevator_lock held in elv_iosched_show()
+Date: Wed, 28 May 2025 17:55:59 -0400
+Message-Id: <20250528215559.1983214-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250528215559.1983214-1-sashal@kernel.org>
 References: <20250528215559.1983214-1-sashal@kernel.org>
@@ -54,136 +52,89 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 7ed9138a72829d2035ecbd8dbd35b1bc3c137c40 ]
+[ Upstream commit 94209d27d14104ed828ca88cd5403a99162fe51a ]
 
-Ravi reported that the bpf_perf_link_attach() usage of
-perf_event_set_bpf_prog() is not serialized by ctx->mutex, unlike the
-PERF_EVENT_IOC_SET_BPF case.
+Use q->elevator with ->elevator_lock held in elv_iosched_show(), since
+the local cached elevator reference may become stale after getting
+->elevator_lock.
 
-Reported-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Link: https://lkml.kernel.org/r/20250307193305.486326750@infradead.org
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20250505141805.2751237-5-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and the kernel tree context, here is
-my evaluation: **YES** This commit should be backported to stable kernel
-trees. Here's my detailed analysis: ## Bug Analysis The commit fixes a
-**race condition and security vulnerability** in the BPF perf event
-attachment path. Specifically: 1. **Race Condition**: The
-`bpf_perf_link_attach()` function calls `perf_event_set_bpf_prog()`
-without holding the `ctx->mutex`, while the equivalent ioctl path
-(`PERF_EVENT_IOC_SET_BPF`) properly acquires this mutex before calling
-the same function. 2. **Inconsistent Locking**: The fix shows two
-different code paths accessing the same critical section with different
-locking semantics: - **ioctl path** (line 2309): Acquires `ctx->mutex`
-via `_perf_ioctl()` → `__perf_event_set_bpf_prog()` -
-**bpf_perf_link_attach path**: Called `perf_event_set_bpf_prog()`
-directly without mutex protection ## Code Changes Analysis The fix
-introduces proper serialization by: 1. **Creating
-`__perf_event_set_bpf_prog()`**: An internal version that doesn't
-acquire locks 2. **Modifying `perf_event_set_bpf_prog()`**: Now acquires
-`ctx->mutex` before calling the internal version 3. **Updating ioctl
-path**: Uses the internal version since it already holds the mutex ##
-Why This Should Be Backported 1. **Security Impact**: Race conditions in
-BPF attachment can lead to use-after-free or other memory corruption
-issues that could be exploited 2. **Bug Fix Nature**: This is clearly a
-bug fix that addresses inconsistent locking semantics rather than adding
-new features 3. **Minimal Risk**: The change is small, contained, and
-follows existing patterns - it simply ensures consistent locking across
-both code paths 4. **Critical Subsystem**: This affects the BPF
-subsystem and perf events, both critical kernel components where race
-conditions can have serious security implications 5. **Similar
-Historical Precedent**: Looking at the reference commits, commit #5 with
-"Backport Status: YES" was backported for fixing a similar type
-validation issue in BPF perf events, showing that BPF perf-related fixes
-are appropriate for stable trees The commit addresses the exact type of
-concurrency bug that stable trees are designed to fix - it's a clear
-bugfix with minimal regression risk that addresses a potential security
-vulnerability in a critical kernel subsystem.
+The environment variable is set. Now let me analyze the commit mentioned
+in the prompt: **Subject**: block: use q->elevator with ->elevator_lock
+held in elv_iosched_show() **Analysis of the code changes**: The commit
+fixes a race condition in the block elevator subsystem in
+`elv_iosched_show()`. Here's what it does: 1. **Removes local cached
+variable**: The commit removes the local variable `struct elevator_queue
+*eq = q->elevator;` that was caching the elevator queue reference. 2.
+**Accesses q->elevator under lock**: Instead of using the cached
+`eq->type`, it now directly accesses `q->elevator->type` while holding
+the `->elevator_lock` mutex. 3. **Fixes race condition**: The old code
+had a time-of-check-time-of-use (TOCTOU) race where the cached `eq`
+could become stale after acquiring the `->elevator_lock`, but before
+actually using `eq->type`. **Analysis of backport suitability**: Looking
+at similar commits in the reference history: - Similar Commit #4 was
+marked YES for backporting because it fixed a real bug with clear user
+impact - The other similar commits were marked NO because they were code
+cleanups/optimizations without fixing actual bugs This commit: 1.
+**Fixes a real race condition bug** - The cached elevator reference
+could become invalid between when it's stored and when it's used 2.
+**Has clear user impact** - Race conditions in the elevator code could
+lead to crashes or memory corruption when users access
+`/sys/block/*/queue/scheduler` 3. **Is a small, contained fix** - Only
+changes a few lines in one function 4. **Has minimal regression risk** -
+Simply ensures proper locking is used when accessing shared data 5.
+**Follows stable tree rules** - It's an important bugfix with minimal
+risk The commit message explicitly states the problem: "the local cached
+elevator reference may become stale after getting ->elevator_lock" -
+this is a classic race condition that could cause system instability.
+**YES** This commit should be backported to stable kernel trees. It
+fixes a race condition in the block elevator subsystem where a cached
+elevator reference could become stale between the time it's stored and
+when it's actually used, even after acquiring the elevator lock. The fix
+is minimal and safe - it simply ensures that `q->elevator->type` is
+accessed directly while holding the lock rather than using a potentially
+stale cached reference. This prevents potential crashes or memory
+corruption when users access the scheduler interface in
+`/sys/block/*/queue/scheduler`. The change is small, contained to a
+single function, has clear bug-fixing intent, and follows stable tree
+criteria of being an important bugfix with minimal regression risk.
 
- kernel/events/core.c | 34 ++++++++++++++++++++++++++++++----
- 1 file changed, 30 insertions(+), 4 deletions(-)
+ block/elevator.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 95e703891b24f..eaa9588eb968d 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -6239,6 +6239,9 @@ static int perf_event_set_output(struct perf_event *event,
- static int perf_event_set_filter(struct perf_event *event, void __user *arg);
- static int perf_copy_attr(struct perf_event_attr __user *uattr,
- 			  struct perf_event_attr *attr);
-+static int __perf_event_set_bpf_prog(struct perf_event *event,
-+				     struct bpf_prog *prog,
-+				     u64 bpf_cookie);
- 
- static long _perf_ioctl(struct perf_event *event, unsigned int cmd, unsigned long arg)
+diff --git a/block/elevator.c b/block/elevator.c
+index b4d08026b02ce..dc4cadef728e5 100644
+--- a/block/elevator.c
++++ b/block/elevator.c
+@@ -744,7 +744,6 @@ ssize_t elv_iosched_store(struct gendisk *disk, const char *buf,
+ ssize_t elv_iosched_show(struct gendisk *disk, char *name)
  {
-@@ -6301,7 +6304,7 @@ static long _perf_ioctl(struct perf_event *event, unsigned int cmd, unsigned lon
- 		if (IS_ERR(prog))
- 			return PTR_ERR(prog);
+ 	struct request_queue *q = disk->queue;
+-	struct elevator_queue *eq = q->elevator;
+ 	struct elevator_type *cur = NULL, *e;
+ 	int len = 0;
  
--		err = perf_event_set_bpf_prog(event, prog, 0);
-+		err = __perf_event_set_bpf_prog(event, prog, 0);
- 		if (err) {
- 			bpf_prog_put(prog);
- 			return err;
-@@ -11069,8 +11072,9 @@ static inline bool perf_event_is_tracing(struct perf_event *event)
- 	return false;
- }
+@@ -753,7 +752,7 @@ ssize_t elv_iosched_show(struct gendisk *disk, char *name)
+ 		len += sprintf(name+len, "[none] ");
+ 	} else {
+ 		len += sprintf(name+len, "none ");
+-		cur = eq->type;
++		cur = q->elevator->type;
+ 	}
  
--int perf_event_set_bpf_prog(struct perf_event *event, struct bpf_prog *prog,
--			    u64 bpf_cookie)
-+static int __perf_event_set_bpf_prog(struct perf_event *event,
-+				     struct bpf_prog *prog,
-+				     u64 bpf_cookie)
- {
- 	bool is_kprobe, is_uprobe, is_tracepoint, is_syscall_tp;
- 
-@@ -11108,6 +11112,20 @@ int perf_event_set_bpf_prog(struct perf_event *event, struct bpf_prog *prog,
- 	return perf_event_attach_bpf_prog(event, prog, bpf_cookie);
- }
- 
-+int perf_event_set_bpf_prog(struct perf_event *event,
-+			    struct bpf_prog *prog,
-+			    u64 bpf_cookie)
-+{
-+	struct perf_event_context *ctx;
-+	int ret;
-+
-+	ctx = perf_event_ctx_lock(event);
-+	ret = __perf_event_set_bpf_prog(event, prog, bpf_cookie);
-+	perf_event_ctx_unlock(event, ctx);
-+
-+	return ret;
-+}
-+
- void perf_event_free_bpf_prog(struct perf_event *event)
- {
- 	if (!event->prog)
-@@ -11130,7 +11148,15 @@ static void perf_event_free_filter(struct perf_event *event)
- {
- }
- 
--int perf_event_set_bpf_prog(struct perf_event *event, struct bpf_prog *prog,
-+static int __perf_event_set_bpf_prog(struct perf_event *event,
-+				     struct bpf_prog *prog,
-+				     u64 bpf_cookie)
-+{
-+	return -ENOENT;
-+}
-+
-+int perf_event_set_bpf_prog(struct perf_event *event,
-+			    struct bpf_prog *prog,
- 			    u64 bpf_cookie)
- {
- 	return -ENOENT;
+ 	spin_lock(&elv_list_lock);
 -- 
 2.39.5
 
