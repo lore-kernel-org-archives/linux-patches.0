@@ -1,177 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from omta36.uswest2.a.cloudfilter.net (omta36.uswest2.a.cloudfilter.net [35.89.44.35])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167FF26A0BF;
-	Wed, 28 May 2025 08:52:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97EA32741D5
+	for <patches@lists.linux.dev>; Wed, 28 May 2025 08:57:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.35
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748422357; cv=none; b=dCxE6zCVX7RUwYy/tAiWORiamv94eIpn8WLTTdTEPA+g6+6NEZdS7vw9GkkN9wuMdwhoBcmsIC4zYxhd65+zWaqJCNhaiOPE0rdALkvc7X8eNUbATGCWWzJuWqda8yOgKfSmCcFISO/616ScCVrMKIOKgoXuLk+Dv/tGpsdVg0Y=
+	t=1748422644; cv=none; b=Lx65bAuowdtlPDXXUAQkUqpHWMyiDkMmgAnxf5p2BLRS5S5z/Cqzf8YqYtB1LGxc0969vElRdKHrIS7FAO2mYQNk/g76WDh4P/kYFw+wZcZ4wNTRLXUo77aZqBMSmpdWrUnk0UwcP+aE2XzGRgr3B3qWx6HuBITS+Yk2V1FIUpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748422357; c=relaxed/simple;
-	bh=BmYME872G2HKJBR/wdLI4h4RnelU/w385HSGJ/Nngpg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rmM7beHYHsy1Tegwa2TM0ePuiERwfEBHqxaETkjEz1NiihG/48MIsOaDPYwVueW+Gu2Y/9nHzxevbKynd/jEQFg+LUiFEQprwCM6UUJ4oXX0TRZImXIZwggaQbUVOFrNAg13bwSoCAUsGRDuvjZwB2pvrRVYjoscvmO9D/E9ZUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+IJMmF7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1748422644; c=relaxed/simple;
+	bh=WqT5k29mabgxiTMmvCIyVa8aqzh5NKbZh6jGUFeRZhE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sSNJIpTIBVfDscj+bpPvfOU5HGAzK8osb8GxZnPTjkkGzEWlCsGbm9812Pe+YQFII0MT/s029i0OqB8v8BxwiS06fIyg0cEy472AQwNt8QAT9+xSwJdk9bUnSjG2YPBf3XW5JAaae57w492WdvRZ89S1ooFXv0XMTzBe4X5VUwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=3IpnPYIH; arc=none smtp.client-ip=35.89.44.35
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+IJMmF7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B18C4CEED;
-	Wed, 28 May 2025 08:52:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748422356;
-	bh=BmYME872G2HKJBR/wdLI4h4RnelU/w385HSGJ/Nngpg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=V+IJMmF7A9LPOcBmCxMUAACufm6xiV1ZyHyycFYXdgE0lWfb5gG6zjebdjGlk8wSG
-	 YzcJTlmtH7nWSId+lwsWhxNY3pMgO7X6/Qlfn+R2zocZOLyc05Rooj67UP9n8oyq3e
-	 195jqT4JP5wo63S+2nq0DOj6NiIO48+Bu7kRr3y0=
-Date: Wed, 28 May 2025 10:50:42 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
-	Arnd Bergmann <arnd@arndb.de>, linux-s390@vger.kernel.org,
-	Linux trace kernel <linux-trace-kernel@vger.kernel.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: Re: [PATCH 6.14 000/783] 6.14.9-rc1 review
-Message-ID: <2025052824-turret-crank-48ee@gregkh>
-References: <20250527162513.035720581@linuxfoundation.org>
- <CA+G9fYsvuqySTdV0Yqi3i-cyBh6j4Rw2_ze46RSUPrz0sbA2Xg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="3IpnPYIH"
+Received: from eig-obgw-5009a.ext.cloudfilter.net ([10.0.29.176])
+	by cmsmtp with ESMTPS
+	id JuqauRm8jMETlKCb5u32LV; Wed, 28 May 2025 08:57:15 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id KCb4uEMgULedNKCb4ue8wS; Wed, 28 May 2025 08:57:14 +0000
+X-Authority-Analysis: v=2.4 cv=Bpabw5X5 c=1 sm=1 tr=0 ts=6836cfea
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=5E2gbQE8QDOJjfjLMUMA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=Wh1V8bzkS9CpCxOpQUxp:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=83C9954UDhMJIVB4ENt/jwjCY1O8WR2AKglvGvJAkzc=; b=3IpnPYIH318Ajs1M+RLelFaDBZ
+	lSXwYShPxZTOXXQb/ScfHQZQAVXbtPw2UdrlMyLIPEgQpEyWNqjgt0wzbEcl9vn9LBk5VFM0cmwTn
+	fIn2tCDkdDfwPYZMBA4fijFoRtpTCJcxMeUE8MspWGs7O8e3oUNXS2h9sMDuV2GszOC766Qinb34w
+	jlaZdI68gBINWVqVLQWf2rbbpFo5Em9TcNCF1uag5N1ugXCl09PiFTDwL68jxl1rTdljlAaez25ev
+	hkS7OIm3KMpCNnpKpR+tHUqlEpm3poOdCQNLruarnlCJVTAfXNubM9dAjdl5bX/dU4oONePUQK/25
+	qAS9YEXw==;
+Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:53932 helo=[10.0.1.116])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.98.1)
+	(envelope-from <re@w6rz.net>)
+	id 1uKCb2-00000000FOr-1eGv;
+	Wed, 28 May 2025 02:57:12 -0600
+Message-ID: <736e7623-d216-4d16-ae7f-afc55502be02@w6rz.net>
+Date: Wed, 28 May 2025 01:57:08 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+G9fYsvuqySTdV0Yqi3i-cyBh6j4Rw2_ze46RSUPrz0sbA2Xg@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.14 000/783] 6.14.9-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250527162513.035720581@linuxfoundation.org>
+Content-Language: en-US
+From: Ron Economos <re@w6rz.net>
+In-Reply-To: <20250527162513.035720581@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.223.253.157
+X-Source-L: No
+X-Exim-ID: 1uKCb2-00000000FOr-1eGv
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.116]) [73.223.253.157]:53932
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 17
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfMi0G0Vt7Eo7rxKdeVRngD42Ggg3Kl1KI3kSQhla7OGBUThqWylKeHrQCuGXgczWo0UkOw71WIJqD6AdueCsdOrIyAjGVop8luBFx0Ap+wMYj+/2tmLZ
+ zcyUeGFGi+lmqMaU1peUzy9bdEQyMyURaV0bQQnAXsTcQK0CSHphjlRIW+bzYVMB8FyEdIzhwkfScw==
 
-On Wed, May 28, 2025 at 12:40:10AM +0530, Naresh Kamboju wrote:
-> On Tue, 27 May 2025 at 22:48, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 6.14.9 release.
-> > There are 783 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Thu, 29 May 2025 16:22:51 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.14.9-rc1.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.14.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
-> 
-> Regressions on S390 defconfig builds failing with gcc-13, gcc-8 and
-> clang-20 and clang-nightly tool chains on 6.14.9-rc1.
-> 
-> Regression Analysis:
->  - New regression? Yes
->  - Reproducible? Yes
-> 
-> Build regression: S390 defconfig crash_dump.c use of undeclared
-> identifier 'NN_PRSTATUS'
-> 
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> 
-> 
-> Build log:
-> ---------
-> arch/s390/kernel/crash_dump.c:312:8: error: use of undeclared
-> identifier 'NN_PRFPREG'
->   312 |         ptr = nt_init(ptr, PRFPREG, nt_fpregset);
->       |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> arch/s390/kernel/crash_dump.c:274:56: note: expanded from macro 'nt_init'
->   274 |         nt_init_name(buf, NT_ ## type, &(desc), sizeof(desc),
-> NN_ ## type)
->       |
-> ^~~~~~~~~~~
-> <scratch space>:85:1: note: expanded from here
->    85 | NN_PRFPREG
->       | ^~~~~~~~~~
-> arch/s390/kernel/crash_dump.c:313:8: error: use of undeclared
-> identifier 'NN_S390_TIMER'
->   313 |         ptr = nt_init(ptr, S390_TIMER, sa->timer);
->       |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> arch/s390/kernel/crash_dump.c:274:56: note: expanded from macro 'nt_init'
->   274 |         nt_init_name(buf, NT_ ## type, &(desc), sizeof(desc),
-> NN_ ## type)
->       |
-> ^~~~~~~~~~~
-> <scratch space>:87:1: note: expanded from here
->    87 | NN_S390_TIMER
->       | ^~~~~~~~~~~~~
-> arch/s390/kernel/crash_dump.c:314:8: error: use of undeclared
-> identifier 'NN_S390_TODCMP'
->   314 |         ptr = nt_init(ptr, S390_TODCMP, sa->todcmp);
->       |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> arch/s390/kernel/crash_dump.c:274:56: note: expanded from macro 'nt_init'
->   274 |         nt_init_name(buf, NT_ ## type, &(desc), sizeof(desc),
-> NN_ ## type)
->       |
-> ^~~~~~~~~~~
-> <scratch space>:89:1: note: expanded from here
->    89 | NN_S390_TODCMP
->       | ^~~~~~~~~~~~~~
-> arch/s390/kernel/crash_dump.c:315:8: error: use of undeclared
-> identifier 'NN_S390_TODPREG'
->   315 |         ptr = nt_init(ptr, S390_TODPREG, sa->todpreg);
->       |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> arch/s390/kernel/crash_dump.c:274:56: note: expanded from macro 'nt_init'
->   274 |         nt_init_name(buf, NT_ ## type, &(desc), sizeof(desc),
-> NN_ ## type)
->       |
-> ^~~~~~~~~~~
-> <scratch space>:91:1: note: expanded from here
->    91 | NN_S390_TODPREG
->       | ^~~~~~~~~~~~~~~
-> arch/s390/kernel/crash_dump.c:316:8: error: use of undeclared
-> identifier 'NN_S390_CTRS'
->   316 |         ptr = nt_init(ptr, S390_CTRS, sa->ctrs);
->       |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> arch/s390/kernel/crash_dump.c:274:56: note: expanded from macro 'nt_init'
->   274 |         nt_init_name(buf, NT_ ## type, &(desc), sizeof(desc),
-> NN_ ## type)
->       |
-> ^~~~~~~~~~~
-> 
-> ## Source
-> * kernel version: 6.14.9-rc1
-> * git tree: https://kernel.googlesource.com/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-> * git sha: 10804dbee7fa8cfb895bbffcc7be97d8221748b6
-> * git describe: v6.14.8-784-g10804dbee7fa
-> * project details:
-> https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.14.y/build/v6.14.8-784-g10804dbee7fa/
-> * architecture: S390
-> * toolchain: gcc-8, gcc-13, clang-20, clang-nightly
-> * config : defconfig
-> * Build config:
-> https://storage.tuxsuite.com/public/linaro/lkft/builds/2xgl51jcJfVGQZw8dKSuEJNFtd4/config
-> * Build: https://storage.tuxsuite.com/public/linaro/lkft/builds/2xgl51jcJfVGQZw8dKSuEJNFtd4/
-> 
-> ## Boot log
-> * Build log: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.14.y/build/v6.14.8-784-g10804dbee7fa/testrun/28574235/suite/build/test/gcc-13-defconfig/log
-> * Build details:
-> https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.14.y/build/v6.14.8-784-g10804dbee7fa/testrun/28574235/suite/build/test/gcc-13-defconfig/details/
-> * Build history:
-> https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.14.y/build/v6.14.8-784-g10804dbee7fa/testrun/28574235/suite/build/test/gcc-13-defconfig/history/
-> 
-> ## Steps to reproduce
->  - tuxmake --runtime podman --target-arch s390 --toolchain gcc-13
-> --kconfig defconfig
+On 5/27/25 09:16, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.14.9 release.
+> There are 783 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 29 May 2025 16:22:51 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.14.9-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.14.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Thanks, offending patch is now removed.
+Built (with both gcc-14 and gcc-15) and booted successfully on RISC-V 
+RV64 (HiFive Unmatched).
 
-greg k-h
+Tested-by: Ron Economos <re@w6rz.net>
+
