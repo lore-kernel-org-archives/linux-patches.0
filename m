@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7087F233134;
-	Wed, 28 May 2025 21:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1825D234977;
+	Wed, 28 May 2025 21:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748469394; cv=none; b=epsBDZKUD9DgolIbBGZFGoRx8CPyNQwFmtFq1Ij30jqu/2UGUl1mQdBOcITjIs3gqAQglNoook3cTCsz/5ABxSx9WKX9pWJ2Ka9lAHh4hGy4vMrS3nAl/LTlbYt4QHIjpIxCe41w5UzDhyk6rbhvdOTpMOvLQMEFpJ1mtQZo/Mo=
+	t=1748469396; cv=none; b=lKWqVtoy6Wx4KDJ3KhAOsKs5K+7LCkNwSR4sjQXTxfsLXdNM4hAZqXNeQ2pZQcmp1qW0+2AteOt7SMQAiiMDFZ3tpKlhEPNZasrviUexccMX3LZ3idxv5KeoKfhakf4fvETps9tvuFH6vKIn6StQSfT6Jz0sBXh6SMzhNXU8QIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748469394; c=relaxed/simple;
-	bh=s9GugJ8zjs7muL+GsfA4pWwyw31H/j8/hlP8OMTEOuY=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=hgtWDyhj1/+Mqvn5Iodb+pJjpYa5YzBojyhvouS6xOZJJ2wVkoQX9Iozy4yPXeP0WYDO/nuDCLKQ7YoQnKPDjKZMzRA5F6edI03pTVmJYu4XkLWxYBsIrF9CFDcfxs+zWGBQDIl7Q1RtMtGPGKBPYE5ked/+pz7LWU4407BJ/E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qnyG1dZ3; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1748469396; c=relaxed/simple;
+	bh=RZM8nLDveGHkxmvvrbG/O3Uu95IblNherwTNAnsHZo0=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=E/3rq4wTrljk3nJwQeUueieuImHTxYVm60vqxbgnkhcHgstuUenEIcp4y/iEtb1QD6F6rATU60/VfMNB3JQ3cdiH2olricEcCjMUcWNrKQluDqGgh4zPTUlZAmqcij/R1TarLtknNmJJ4/cimhufW5CIwWxKpvynecgeWVrno6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JB5ruJse; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qnyG1dZ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F77C4CEE3;
-	Wed, 28 May 2025 21:56:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JB5ruJse"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1542C4CEF0;
+	Wed, 28 May 2025 21:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748469394;
-	bh=s9GugJ8zjs7muL+GsfA4pWwyw31H/j8/hlP8OMTEOuY=;
-	h=From:To:Cc:Subject:Date:From;
-	b=qnyG1dZ3fD2G+8AuRWhT1hVYH9j6TdJnh/gK+7zIH55CHs28WmMY01QS3qpdgM/re
-	 az7h1gf1zjEO34qfHP3ES+4+K6YfISORr5Pb98+cgUF0LoFmva7MHfwbz6j4yIMwCe
-	 XZk0PS8SNl8dI3aX1gGMs73OLyvzCXdrnImxfI09c5CXehzXDAbw2rlWCxsHzqP/gZ
-	 0kFGVfKaCCg23WLed7uuATIw8YI8OSXu7hw7vU5zdq4GvN14LrumZ0k6+N0ITssC++
-	 ackfQsX2u1yeTIl2ZMhyrNI9xm52ij2WMRv6iJ8Jv78J9iYIGNFmepu911i8NUQWs5
-	 CQbL0IemDNZfw==
+	s=k20201202; t=1748469395;
+	bh=RZM8nLDveGHkxmvvrbG/O3Uu95IblNherwTNAnsHZo0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=JB5ruJseThNWqhFgqdRBp3ZUYnAAAcUdq5KZ4vWOH+ExmVVf2evsjYXV0MAAMFX9w
+	 31UKVb9MgMiUHBu2m1/rrOKgkd4cbxJGNxlHr7d6m620LkrV1OzdNLaabz1iOuOXxW
+	 6FtvCUBKkAKRDeJwyoa5V3wDZoBB4n/wzvHbiT/kUXmLZBaeaZe5SdGqcXeVaRDQLM
+	 4yQeuUdX4tCwKjYi6Wu4nDPoAZoZOSv62//l9E5dMoMgStl6kJUr/KQiWn4NIOcttk
+	 4k5kSuJP+/rPuhPQGRh59qAiQ+ZCGpYujOdILgRpu4tPL1DgesSPhPse5h2aJNRdOt
+	 tPPtGfeBqSCZg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zijun Hu <quic_zijuhu@quicinc.com>,
-	Christian Brauner <brauner@kernel.org>,
+Cc: Daniel Wagner <wagi@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>,
-	viro@zeniv.linux.org.uk,
-	linux-fsdevel@vger.kernel.org,
+	james.smart@broadcom.com,
+	sagi@grimberg.me,
+	linux-nvme@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 1/3] fs/filesystems: Fix potential unsigned integer underflow in fs_name()
-Date: Wed, 28 May 2025 17:56:30 -0400
-Message-Id: <20250528215632.1983756-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 2/3] nvmet-fcloop: access fcpreq only when holding reqlock
+Date: Wed, 28 May 2025 17:56:31 -0400
+Message-Id: <20250528215632.1983756-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250528215632.1983756-1-sashal@kernel.org>
+References: <20250528215632.1983756-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,93 +54,145 @@ X-stable-base: Linux 6.6.92
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 1363c134ade81e425873b410566e957fecebb261 ]
+[ Upstream commit 47a827cd7929d0550c3496d70b417fcb5649b27b ]
 
-fs_name() has @index as unsigned int, so there is underflow risk for
-operation '@index--'.
+The abort handling logic expects that the state and the fcpreq are only
+accessed when holding the reqlock lock.
 
-Fix by breaking the for loop when '@index == 0' which is also more proper
-than '@index <= 0' for unsigned integer comparison.
+While at it, only handle the aborts in the abort handler.
 
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/20250410-fix_fs-v1-1-7c14ccc8ebaa@quicinc.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees.
-**Detailed Analysis:** **The Bug:** The `fs_name()` function at
-`fs/filesystems.c:156-174` has a critical unsigned integer underflow
-vulnerability. When the function receives `index=0` as a parameter, the
-loop `for (tmp = file_systems; tmp; tmp = tmp->next, index--)`
-decrements `index` from 0 to `UINT_MAX` (4294967295 on 32-bit systems),
-causing the condition `if (index <= 0 && try_module_get(tmp->owner))` to
-evaluate incorrectly. **The Fix:** The commit changes the logic from: -
-Old: `if (index <= 0 && try_module_get(tmp->owner))` - New: `if (index
-== 0) { if (try_module_get(tmp->owner)) res = 0; break; }` This prevents
-the unsigned integer from wrapping around and provides proper bounds
-checking. **Impact and Severity:** 1. **User-accessible vulnerability**:
-The `fs_name()` function is called through the `sysfs` system call
-(syscall #139) with option 2, making it directly accessible to userspace
-applications. 2. **Potential for exploitation**: An attacker could call
-`sysfs(2, 0, buffer)` to trigger the underflow, potentially causing: -
-Infinite loops in the filesystem list traversal - Unintended module
-reference acquisition - System instability or denial of service 3.
-**Core filesystem subsystem**: This affects the fundamental filesystem
-registration mechanism in the kernel. **Comparison with Similar
-Commits:** This follows the same pattern as the **accepted backport
-examples**: - **Similar to Commit #1 (ntfs3)**: Both fix integer
-overflow/underflow issues that could cause system instability -
-**Similar to Commit #3 (f2fs)**: Both prevent integer arithmetic issues
-in filesystem code - **Similar to Commit #5 (f2fs)**: Both add bounds
-checking to prevent corruption **Stable Tree Criteria:** ✅ **Fixes
-important bug**: Prevents potential system instability and undefined
-behavior ✅ **Small and contained**: Minimal code change, only affects
-one function ✅ **Clear side effects**: No architectural changes, just
-safer bounds checking ✅ **Low regression risk**: The fix makes the
-function more robust without changing expected behavior ✅ **Critical
-subsystem**: Filesystem management is fundamental to kernel operation
-**Conclusion:** This is a textbook example of a commit suitable for
-stable backporting: it fixes a clear bug with security implications in
-core kernel infrastructure, uses a minimal and safe approach, and has no
-risk of introducing regressions. The unsigned integer underflow could
-lead to system instability when triggered through the accessible `sysfs`
-syscall.
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Commit Analysis This commit fixes a critical
+**race condition and data corruption issue** in the nvmet-fcloop
+driver's abort handling logic. The changes address serious
+synchronization problems that could lead to use-after-free conditions
+and inconsistent state management. ## Key Issues Fixed ### 1. **Unsafe
+fcpreq Access Outside Lock Protection** The main issue is that `fcpreq`
+was being accessed without proper lock protection in
+`fcloop_fcp_recv_work()`: ```c // BEFORE (unsafe): struct nvmefc_fcp_req
+*fcpreq = tfcp_req->fcpreq; // Access outside lock
+spin_lock_irqsave(&tfcp_req->reqlock, flags); // ... lock operations ...
+spin_unlock_irqrestore(&tfcp_req->reqlock, flags); // Later use of
+fcpreq - could be stale/freed // AFTER (safe):
+spin_lock_irqsave(&tfcp_req->reqlock, flags); fcpreq = tfcp_req->fcpreq;
+// Access inside lock protection // ... rest of operations ... ``` This
+change ensures `fcpreq` is only accessed while holding the `reqlock`,
+preventing race conditions where the pointer could be modified by
+concurrent abort operations. ### 2. **Improved Abort Handling Logic**
+The abort path in `fcloop_fcp_abort_recv_work()` was restructured to
+properly handle the `fcpreq` pointer: ```c // BEFORE: fcpreq =
+tfcp_req->fcpreq; // Read fcpreq switch (tfcp_req->inistate) { case
+INI_IO_ABORTED: break; // ... later operations outside lock set fcpreq
+to NULL // AFTER: switch (tfcp_req->inistate) { case INI_IO_ABORTED:
+fcpreq = tfcp_req->fcpreq; // Only read when in ABORTED state
+tfcp_req->fcpreq = NULL; // Clear immediately under lock break; ``` ###
+3. **Cleaner Control Flow** The commit also improves the logic in
+`fcloop_fcp_recv_work()` by having the abort handler take full
+responsibility for calling `fcloop_call_host_done()` when aborted,
+rather than duplicating this logic. ## Stable Tree Backport Criteria
+Assessment ✅ **Fixes Important Bug**: Yes - race conditions and
+potential use-after-free in critical I/O path ✅ **Small and Contained**:
+Yes - only 30 lines changed, focused on specific synchronization issue ✅
+**Minimal Regression Risk**: Yes - improves existing locking patterns
+without architectural changes ✅ **Clear Side Effects**: No major side
+effects - only improves synchronization ✅ **Confined to Subsystem**: Yes
+- only affects nvmet-fcloop test driver ✅ **Follows Stable Rules**: Yes
+- critical bugfix with minimal complexity ## Comparison with Historical
+Commits This commit aligns perfectly with **Similar Commit #4** which
+was marked **"Backport Status: YES"**: - Both fix
+locking/synchronization issues in fcloop - Both address race conditions
+in abort handling - Both are small, focused changes - Both improve
+existing patterns rather than introducing new architecture The pattern
+of fcloop locking fixes being suitable for backport is well-established,
+as seen in the historical reference where similar synchronization
+improvements were deemed appropriate for stable trees. ## Conclusion
+This is a textbook example of a stable tree backport candidate: it fixes
+a genuine race condition bug that could cause data corruption or
+crashes, uses a minimal and safe approach, and improves the robustness
+of the existing code without introducing new features or architectural
+changes.
 
- fs/filesystems.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/nvme/target/fcloop.c | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/fs/filesystems.c b/fs/filesystems.c
-index 58b9067b2391c..95e5256821a53 100644
---- a/fs/filesystems.c
-+++ b/fs/filesystems.c
-@@ -156,15 +156,19 @@ static int fs_index(const char __user * __name)
- static int fs_name(unsigned int index, char __user * buf)
+diff --git a/drivers/nvme/target/fcloop.c b/drivers/nvme/target/fcloop.c
+index 4b35bdcac185f..aeeb7455fc2e7 100644
+--- a/drivers/nvme/target/fcloop.c
++++ b/drivers/nvme/target/fcloop.c
+@@ -613,12 +613,13 @@ fcloop_fcp_recv_work(struct work_struct *work)
  {
- 	struct file_system_type * tmp;
--	int len, res;
-+	int len, res = -EINVAL;
+ 	struct fcloop_fcpreq *tfcp_req =
+ 		container_of(work, struct fcloop_fcpreq, fcp_rcv_work);
+-	struct nvmefc_fcp_req *fcpreq = tfcp_req->fcpreq;
++	struct nvmefc_fcp_req *fcpreq;
+ 	unsigned long flags;
+ 	int ret = 0;
+ 	bool aborted = false;
  
- 	read_lock(&file_systems_lock);
--	for (tmp = file_systems; tmp; tmp = tmp->next, index--)
--		if (index <= 0 && try_module_get(tmp->owner))
-+	for (tmp = file_systems; tmp; tmp = tmp->next, index--) {
-+		if (index == 0) {
-+			if (try_module_get(tmp->owner))
-+				res = 0;
- 			break;
-+		}
+ 	spin_lock_irqsave(&tfcp_req->reqlock, flags);
++	fcpreq = tfcp_req->fcpreq;
+ 	switch (tfcp_req->inistate) {
+ 	case INI_IO_START:
+ 		tfcp_req->inistate = INI_IO_ACTIVE;
+@@ -633,16 +634,19 @@ fcloop_fcp_recv_work(struct work_struct *work)
+ 	}
+ 	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
+ 
+-	if (unlikely(aborted))
+-		ret = -ECANCELED;
+-	else {
+-		if (likely(!check_for_drop(tfcp_req)))
+-			ret = nvmet_fc_rcv_fcp_req(tfcp_req->tport->targetport,
+-				&tfcp_req->tgt_fcp_req,
+-				fcpreq->cmdaddr, fcpreq->cmdlen);
+-		else
+-			pr_info("%s: dropped command ********\n", __func__);
++	if (unlikely(aborted)) {
++		/* the abort handler will call fcloop_call_host_done */
++		return;
 +	}
- 	read_unlock(&file_systems_lock);
--	if (!tmp)
--		return -EINVAL;
-+	if (res)
-+		return res;
++
++	if (unlikely(check_for_drop(tfcp_req))) {
++		pr_info("%s: dropped command ********\n", __func__);
++		return;
+ 	}
++
++	ret = nvmet_fc_rcv_fcp_req(tfcp_req->tport->targetport,
++				   &tfcp_req->tgt_fcp_req,
++				   fcpreq->cmdaddr, fcpreq->cmdlen);
+ 	if (ret)
+ 		fcloop_call_host_done(fcpreq, tfcp_req, ret);
+ }
+@@ -657,9 +661,10 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
+ 	unsigned long flags;
  
- 	/* OK, we got the reference, so we can safely block */
- 	len = strlen(tmp->name) + 1;
+ 	spin_lock_irqsave(&tfcp_req->reqlock, flags);
+-	fcpreq = tfcp_req->fcpreq;
+ 	switch (tfcp_req->inistate) {
+ 	case INI_IO_ABORTED:
++		fcpreq = tfcp_req->fcpreq;
++		tfcp_req->fcpreq = NULL;
+ 		break;
+ 	case INI_IO_COMPLETED:
+ 		completed = true;
+@@ -681,10 +686,6 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
+ 		nvmet_fc_rcv_fcp_abort(tfcp_req->tport->targetport,
+ 					&tfcp_req->tgt_fcp_req);
+ 
+-	spin_lock_irqsave(&tfcp_req->reqlock, flags);
+-	tfcp_req->fcpreq = NULL;
+-	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
+-
+ 	fcloop_call_host_done(fcpreq, tfcp_req, -ECANCELED);
+ 	/* call_host_done releases reference for abort downcall */
+ }
 -- 
 2.39.5
 
