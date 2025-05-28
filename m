@@ -1,120 +1,132 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5736720D4F0
-	for <patches@lists.linux.dev>; Wed, 28 May 2025 21:38:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F0619B3CB;
+	Wed, 28 May 2025 21:56:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748468294; cv=none; b=VUo7C+vJfWtHXSflWtUx+5//2LRjd7Hb8z2dZwXgA/GY9fztwWVCPuFX7aNsEvuUb2+h0ccMGnjbNvNaXwVtWZbHkLwZhoUymVySkWGd/s8Ft07r/HB/9r/Ww9QcW4+wY6ynFlEPtSsSPPGIoRsX2YOb3d1ncB3rd70ku7hYg/4=
+	t=1748469362; cv=none; b=YlDgux3PIxHdCB6V/vdgm6FvyHtwJofgxyKAOq2sBUrl94VwtCPVT1oZuC4mScHuiZ6muocsa0c3330VKL7+dc2rrilzQb4meVUS91Yzq4FnO6txk5Wqxl9ClR+3mv394I4BHfQZFwzrNZB6eZx7Km6ATfJzIMoDsSvOd3ukRzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748468294; c=relaxed/simple;
-	bh=fquSITk+E1xqk35FlWKKdQEdyzF7bcsbzu1Yz6hkfPQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mUkgQ6dE+W5aB9K5+nP09FLRfqu7fu6oVzBsvXqCrYs4JKreGiHnLjMa39LqjTM6h6t+ltaCdEyCnPva3qiArxsP8rYMlfQuN+xXfhAWJnlmDJHr5qWYkbbQOaqgpu/kAzs7llLXf0zYBbTKeK0lowO6LVG1V4GQ9IzO2qwyry0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LrKzjOUQ; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1748469362; c=relaxed/simple;
+	bh=uw3tEeeMk5Bc24CVW+ncU6a0qB2pCTBmCm7AtTlyOQk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=Mvj1Z8tJKmaV5cVpGZinNRLq/F9tsb9YVZjJkRaNOLEGafrEcVAsI2bfT6H0KfjoCgLUI+uP5eY3pFy6gZO1XCvDzHJ6hUMe3wsWTchL3eiPxLLh+H30UC6etoZAffaoFgu6GCFrDI8zjNUJ0fv6bG1CbZ+wyksinN76SnROdfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZvKhmLl4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LrKzjOUQ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1748468293; x=1780004293;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=fquSITk+E1xqk35FlWKKdQEdyzF7bcsbzu1Yz6hkfPQ=;
-  b=LrKzjOUQw25YcqyV2ZrAXgePe4IP+mqsOsGLChNkXcsYZGFTRX/kdJo4
-   dLOFelMULt2WTA6V1onDLdJLEU5YOgAYogYbFv32FKvU0c2oU1aK05h6d
-   6KR0cVfhEMtSOR1B0xGZxQHkKKPHCKW6IXxcup7HU/T0j9VFlQHgh4pTy
-   o4ZtxDNNvfojXX4IrHViTAyAEE9hScxJ2TSwlRTg648QTb35JMbyIKGSe
-   Uqb/ftPv4S8vYknrVaHD99fVTJQI2156rsMNdWfNh5yw7iJOjN+QLMUqN
-   6OBaKf7GXnclCX5rz2R7tV6cH+gqxpqdFR1cbBI8fM42/4ADTMvsIXTH2
-   A==;
-X-CSE-ConnectionGUID: 4cejwIIjRayXd/478R6i3g==
-X-CSE-MsgGUID: TxFyHaqJT2eBwdurIJh3kw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11447"; a="61147465"
-X-IronPort-AV: E=Sophos;i="6.15,322,1739865600"; 
-   d="scan'208";a="61147465"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2025 14:38:12 -0700
-X-CSE-ConnectionGUID: sCJVDOP8QJeHyZRL+EEBgQ==
-X-CSE-MsgGUID: 9veFNIHpQZaB8LuVbpvGrA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,322,1739865600"; 
-   d="scan'208";a="147245874"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.103.51])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2025 14:38:12 -0700
-Date: Wed, 28 May 2025 14:38:11 -0700
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Reinette Chatre <reinette.chatre@intel.com>
-Cc: Fenghua Yu <fenghuay@nvidia.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
-	Chen Yu <yu.c.chen@intel.com>, x86@kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v5 00/29] x86/resctrl telemetry monitoring
-Message-ID: <aDeCQ-v9OHzHauPi@agluck-desk3>
-References: <20250521225049.132551-1-tony.luck@intel.com>
- <b8ddce03-65c0-4420-b30d-e43c54943667@intel.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZvKhmLl4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78239C4CEE3;
+	Wed, 28 May 2025 21:56:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748469361;
+	bh=uw3tEeeMk5Bc24CVW+ncU6a0qB2pCTBmCm7AtTlyOQk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ZvKhmLl4F9KukOIYGziMfksPaiQfS1yqltdMwGv9hJwiv3uXHIWEESsoEsF18ig3P
+	 XV+W8dPDVVqVTisVfGaQI3ko45r/TnNjkuvWBlKvIQl9vVlWmCxtUUvlGq1VKTVRaE
+	 bZWBV++O/66DP/uvi0I53pBis7I7LSO5EEhGQfErGKkxI1Z7OTnXHLLceveDCaZd23
+	 Mp+wWxrfsYso45j8CX9uJUHW2Tb3O6bSU7Cxaa/AVdjlMzR8bV14xah2JWGTu8/U50
+	 tCX7FFPaJWr0fdYh9Rg15B4fuuU/DebHBejGDAOyE/6MoO55egA0kjl6U2vqrFvnbT
+	 rOvvaylPk/aMA==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>,
+	clm@fb.com,
+	josef@toxicpanda.com,
+	linux-btrfs@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 1/9] btrfs: exit after state insertion failure at btrfs_convert_extent_bit()
+Date: Wed, 28 May 2025 17:55:51 -0400
+Message-Id: <20250528215559.1983214-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b8ddce03-65c0-4420-b30d-e43c54943667@intel.com>
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.15
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Reinette,
+From: Filipe Manana <fdmanana@suse.com>
 
-I've begun drafting a new cover letter to explain telemetry.
+[ Upstream commit 3bf179e36da917c5d9bec71c714573ed1649b7c1 ]
 
-Here's the introduction. Let me know if it helps cover the
-gaps and ambiguities that you pointed out.
+If insert_state() state failed it returns an error pointer and we call
+extent_io_tree_panic() which will trigger a BUG() call. However if
+CONFIG_BUG is disabled, which is an uncommon and exotic scenario, then
+we fallthrough and call cache_state() which will dereference the error
+pointer, resulting in an invalid memory access.
 
--Tony
+So jump to the 'out' label after calling extent_io_tree_panic(), it also
+makes the code more clear besides dealing with the exotic scenario where
+CONFIG_BUG is disabled.
 
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
 
-RMID based telemetry events
----------------------------
+**YES** This commit should be backported to stable kernel trees.
+**Detailed Analysis:** **1. Bug Description and Impact:** The commit
+fixes a serious potential memory corruption bug in the btrfs filesystem.
+When `insert_state()` fails in `btrfs_convert_extent_bit()`, it returns
+an error pointer (ERR_PTR). The current code calls
+`extent_io_tree_panic()` which triggers `BUG()`, but if `CONFIG_BUG` is
+disabled, the code continues executing and calls
+`cache_state(inserted_state, cached_state)` with the error pointer,
+causing invalid memory access. **2. Code Changes Analysis:** The fix is
+minimal and surgical - just adding a single `goto out;` statement after
+the `extent_io_tree_panic()` call: ```c if (IS_ERR(inserted_state)) {
+ret = PTR_ERR(inserted_state); extent_io_tree_panic(tree, prealloc,
+"insert", ret); + goto out; // <-- The fix } ``` This ensures that when
+`CONFIG_BUG` is disabled, execution jumps to the cleanup code instead of
+continuing with an invalid pointer. **3. Comparison with Similar
+Commits:** This commit aligns with the pattern seen in "Similar Commit
+#2" (Status: YES), which also: - Removes reliance on `BUG_ON()` behavior
+- Provides graceful error handling - Has minimal risk - Fixes a
+potential crash/corruption scenario Similar to commit #3 and #5 (both
+Status: NO), this touches BUG() handling, but unlike those commits which
+make broader architectural changes to error handling patterns, this fix
+is much more contained. **4. Stable Tree Criteria Assessment:** ✅
+**Fixes important bug**: Prevents potential memory corruption/crashes ✅
+**Small and contained**: Single line addition ✅ **Minimal risk**: Only
+affects error path when insert_state() fails AND CONFIG_BUG is disabled
+✅ **No new features**: Pure bug fix ✅ **No architectural changes**:
+Preserves existing error handling, just prevents fallthrough ✅
+**Critical subsystem**: btrfs filesystem corruption prevention ✅ **Clear
+side effects**: No unintended consequences beyond fixing the bug **5.
+Risk Assessment:** - **Very Low Risk**: The change only affects an error
+condition that's already problematic - **Exotic scenario**: Only impacts
+systems with `CONFIG_BUG` disabled (uncommon but not impossible) - **No
+regression potential**: The change only prevents executing invalid code,
+doesn't change normal operation - **Well-contained**: Affects only one
+function in one file **6. Security Implications:** While `CONFIG_BUG`
+disabled is uncommon, this could potentially be exploited if an attacker
+can trigger the `insert_state()` failure condition, leading to memory
+corruption. The fix prevents this attack vector. This is a clear
+candidate for stable backporting - it fixes a real bug with minimal risk
+and follows the stable tree rules perfectly.
 
-Each CPU on a system keeps a local count of various events.
+ fs/btrfs/extent-io-tree.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Every two milliseconds, or when the value of the RMID field in the
-IA32_PQR_ASSOC MSR is changed, the CPU transmits all the event counts
-together with the value of the RMID to a nearby OOBMSM (Out of band
-management services module) device. The CPU then resets all counters and
-begins counting events for the new RMID or time interval.
+diff --git a/fs/btrfs/extent-io-tree.c b/fs/btrfs/extent-io-tree.c
+index 13de6af279e52..92cfde37b1d33 100644
+--- a/fs/btrfs/extent-io-tree.c
++++ b/fs/btrfs/extent-io-tree.c
+@@ -1456,6 +1456,7 @@ int convert_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
+ 		if (IS_ERR(inserted_state)) {
+ 			ret = PTR_ERR(inserted_state);
+ 			extent_io_tree_panic(tree, prealloc, "insert", ret);
++			goto out;
+ 		}
+ 		cache_state(inserted_state, cached_state);
+ 		if (inserted_state == prealloc)
+-- 
+2.39.5
 
-The OOBMSM device sums each event count with those received from other
-CPUs keeping a running total for each event for each RMID.
-
-The operating system can read these counts to gather a picture of
-system-wide activity for each of the logged events per-RMID.
-
-E.g. the operating system may assign RMID 5 to all the tasks running to
-perform a certain job. When it reads the core energy event counter for
-RMID 5 it will see the total energy consumed by CPU cores for all tasks
-in that job while running on any CPU. This is a much lower overhead
-mechanism to track events per job than the typical "perf" approach
-of reading counters on every context switch.
-
-Events
-------
-
-"core energy" The number of Joules consumed by CPU cores during execution
-of instructions for the current RMID.
-Note that this does not include energy used by the "uncore" (LLC cache
-and interfaces to off package devices) or energy used by memory or I/O
-devices. Energy may be calculated based on measures of activity rather
-than the output from a power meter.
-
-"activity" The dynamic capacitance (Cdyn) in Farads for a core due to
-execution of instructions for the current RMID. This event will be
-more useful to a user interested in optimizing energy consumption
-of a workload because it is invariant of frequency changes (e.g.
-turbo mode) that may be outside of the control of the developer.
