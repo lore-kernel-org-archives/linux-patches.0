@@ -1,50 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91925221FD9;
-	Wed, 28 May 2025 21:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1328F23959D;
+	Wed, 28 May 2025 21:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748469402; cv=none; b=dWtJ0bFaeXDc1tPZWPBn8ajcJdyEitIi4kNadZ2zr++RStAPkJSk3NwJry+Ev6oa1f4rllWqnkNhtP+jtCWr46YxjNRVg/ygbjyov30l3L6joO3fsUKkW55RL3/lMY/sRs7jgrtz8uFUTtlDYsMsX6CoUgOjzfnJjqcC5mW5j6k=
+	t=1748469405; cv=none; b=creRh4Ja2a7J5B6R9jPsd1E9DN2FCDdZtlQ+ZbLssv2P6A6PVDifgFsNrrzfEzIpCuI5j0pLyGQwU223i5h/aoK8UILCezpigp1s5F9U56K+DQF2bj1IWGrX1djaPVf3I53uoi+qC/y5fCHfw910kCPlpwt71xrNODPATL4XNls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748469402; c=relaxed/simple;
-	bh=BJLqWLq2H7lCTwYJPE7Twex64GxiwfCLjH6e85Bfj40=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tUaVOoxMJCUsjl7HrzbvE5cjOp+ZdFOODU1Vp4vjOdEq0n3XciGC55UN1ZXbJFXsU2i5saVoA5iEGCUZ8Rwb20YcXO05ZdUSet05W9bOm+qX9wy3riK5m1FMwofUXYcIm4UmlHfwKKA/9BX44VnGG6IVRShibqO4XZNCNi9J2S8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ua/xBYDn; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1748469405; c=relaxed/simple;
+	bh=s9GugJ8zjs7muL+GsfA4pWwyw31H/j8/hlP8OMTEOuY=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=GAmpmLymED5KsX3HRXRT98u+wN5Dlck/KeAFXmb88BVFyqFTtS8frL08PWRUDUMZih8UCESSwmNP9NHhlV+Tbf0+rNsclDpTIpVOeJT1akr/Uxcavp+6/wuk2juM5Sj3akhkYDeeGz5TPGBwoVT2VeUMjJdV4fOT6VbTOlWs24s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OW+GHL1Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ua/xBYDn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F36C7C4CEF3;
-	Wed, 28 May 2025 21:56:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OW+GHL1Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6DECC4CEE7;
+	Wed, 28 May 2025 21:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748469402;
-	bh=BJLqWLq2H7lCTwYJPE7Twex64GxiwfCLjH6e85Bfj40=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ua/xBYDnvcI+bpGtCo5QgeH+jF6pDOEcu9VFg2QQK9xE8nu5OvzHS21NkTT1B93MC
-	 7nCPwjY6dVnjEYuZS8esIpvIFufbU5nu0j6fH6nMXA1WninmRJ6CjB4cPPQ9BgDrOn
-	 Z38CPxI4gYFUD58eVE7PGMxkes4eOVQzB6Z+k0F7Xpb07e9mn+J6wyxvnxuDfBFEll
-	 La9D2Ij0ur5KUXvTqLCqdiC96JifgEm3KoDjHu3nCDR6rC6v8OpXL1Jl9YZfAzyrAm
-	 VW4p4N42nwwOZO2RsIPS6YwgGYIFz2jEVI0ni3urUaZe/Ur0OmwzBYf5g0IeNhrvcO
-	 QHmc2nXrsq79A==
+	s=k20201202; t=1748469404;
+	bh=s9GugJ8zjs7muL+GsfA4pWwyw31H/j8/hlP8OMTEOuY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=OW+GHL1QwB+NrxISc7JBxUHC0OvJqPou7iDAL8zaCBX8nmw7FhBXK3sAmD1N+9sVk
+	 gbxezIw/NbJn+vofQpbgF2xMzS7wN0aGniKyE9QfQQpLxe5tcE7fMVImGQ9Y3i6KE+
+	 sPPV5lFJFQLDt4v8L3rbvfcnSKvCGkiOwJB4mgCe3dviKvGuKKvsl0FqyrC81A+hAa
+	 a1HPAlZuhXqKCO7OOcwYaKjDpLLu7xgugofIGu9v89g2qgls/s+FwX0XX3wDIFfsll
+	 zz1ZnvusSEzznow0y1Yp/RwuFaUTUZmThE76rGKVQwag5fjDEToFwZg/itRAa0EWT+
+	 r09wo0mSJPpmg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Zijlstra <peterz@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
+Cc: Zijun Hu <quic_zijuhu@quicinc.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mingo@redhat.com,
-	acme@kernel.org,
-	ast@kernel.org,
-	daniel@iogearbox.net,
-	linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org,
-	bpf@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.1 3/3] perf: Ensure bpf_perf_link path is properly serialized
-Date: Wed, 28 May 2025 17:56:37 -0400
-Message-Id: <20250528215637.1983842-3-sashal@kernel.org>
+	viro@zeniv.linux.org.uk,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.15 1/3] fs/filesystems: Fix potential unsigned integer underflow in fs_name()
+Date: Wed, 28 May 2025 17:56:40 -0400
+Message-Id: <20250528215642.1983928-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250528215637.1983842-1-sashal@kernel.org>
-References: <20250528215637.1983842-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -53,137 +46,97 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.1.140
+X-stable-base: Linux 5.15.184
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 7ed9138a72829d2035ecbd8dbd35b1bc3c137c40 ]
+[ Upstream commit 1363c134ade81e425873b410566e957fecebb261 ]
 
-Ravi reported that the bpf_perf_link_attach() usage of
-perf_event_set_bpf_prog() is not serialized by ctx->mutex, unlike the
-PERF_EVENT_IOC_SET_BPF case.
+fs_name() has @index as unsigned int, so there is underflow risk for
+operation '@index--'.
 
-Reported-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Link: https://lkml.kernel.org/r/20250307193305.486326750@infradead.org
+Fix by breaking the for loop when '@index == 0' which is also more proper
+than '@index <= 0' for unsigned integer comparison.
+
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/20250410-fix_fs-v1-1-7c14ccc8ebaa@quicinc.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and the kernel tree context, here is
-my evaluation: **YES** This commit should be backported to stable kernel
-trees. Here's my detailed analysis: ## Bug Analysis The commit fixes a
-**race condition and security vulnerability** in the BPF perf event
-attachment path. Specifically: 1. **Race Condition**: The
-`bpf_perf_link_attach()` function calls `perf_event_set_bpf_prog()`
-without holding the `ctx->mutex`, while the equivalent ioctl path
-(`PERF_EVENT_IOC_SET_BPF`) properly acquires this mutex before calling
-the same function. 2. **Inconsistent Locking**: The fix shows two
-different code paths accessing the same critical section with different
-locking semantics: - **ioctl path** (line 2309): Acquires `ctx->mutex`
-via `_perf_ioctl()` → `__perf_event_set_bpf_prog()` -
-**bpf_perf_link_attach path**: Called `perf_event_set_bpf_prog()`
-directly without mutex protection ## Code Changes Analysis The fix
-introduces proper serialization by: 1. **Creating
-`__perf_event_set_bpf_prog()`**: An internal version that doesn't
-acquire locks 2. **Modifying `perf_event_set_bpf_prog()`**: Now acquires
-`ctx->mutex` before calling the internal version 3. **Updating ioctl
-path**: Uses the internal version since it already holds the mutex ##
-Why This Should Be Backported 1. **Security Impact**: Race conditions in
-BPF attachment can lead to use-after-free or other memory corruption
-issues that could be exploited 2. **Bug Fix Nature**: This is clearly a
-bug fix that addresses inconsistent locking semantics rather than adding
-new features 3. **Minimal Risk**: The change is small, contained, and
-follows existing patterns - it simply ensures consistent locking across
-both code paths 4. **Critical Subsystem**: This affects the BPF
-subsystem and perf events, both critical kernel components where race
-conditions can have serious security implications 5. **Similar
-Historical Precedent**: Looking at the reference commits, commit #5 with
-"Backport Status: YES" was backported for fixing a similar type
-validation issue in BPF perf events, showing that BPF perf-related fixes
-are appropriate for stable trees The commit addresses the exact type of
-concurrency bug that stable trees are designed to fix - it's a clear
-bugfix with minimal regression risk that addresses a potential security
-vulnerability in a critical kernel subsystem.
+**YES** This commit should be backported to stable kernel trees.
+**Detailed Analysis:** **The Bug:** The `fs_name()` function at
+`fs/filesystems.c:156-174` has a critical unsigned integer underflow
+vulnerability. When the function receives `index=0` as a parameter, the
+loop `for (tmp = file_systems; tmp; tmp = tmp->next, index--)`
+decrements `index` from 0 to `UINT_MAX` (4294967295 on 32-bit systems),
+causing the condition `if (index <= 0 && try_module_get(tmp->owner))` to
+evaluate incorrectly. **The Fix:** The commit changes the logic from: -
+Old: `if (index <= 0 && try_module_get(tmp->owner))` - New: `if (index
+== 0) { if (try_module_get(tmp->owner)) res = 0; break; }` This prevents
+the unsigned integer from wrapping around and provides proper bounds
+checking. **Impact and Severity:** 1. **User-accessible vulnerability**:
+The `fs_name()` function is called through the `sysfs` system call
+(syscall #139) with option 2, making it directly accessible to userspace
+applications. 2. **Potential for exploitation**: An attacker could call
+`sysfs(2, 0, buffer)` to trigger the underflow, potentially causing: -
+Infinite loops in the filesystem list traversal - Unintended module
+reference acquisition - System instability or denial of service 3.
+**Core filesystem subsystem**: This affects the fundamental filesystem
+registration mechanism in the kernel. **Comparison with Similar
+Commits:** This follows the same pattern as the **accepted backport
+examples**: - **Similar to Commit #1 (ntfs3)**: Both fix integer
+overflow/underflow issues that could cause system instability -
+**Similar to Commit #3 (f2fs)**: Both prevent integer arithmetic issues
+in filesystem code - **Similar to Commit #5 (f2fs)**: Both add bounds
+checking to prevent corruption **Stable Tree Criteria:** ✅ **Fixes
+important bug**: Prevents potential system instability and undefined
+behavior ✅ **Small and contained**: Minimal code change, only affects
+one function ✅ **Clear side effects**: No architectural changes, just
+safer bounds checking ✅ **Low regression risk**: The fix makes the
+function more robust without changing expected behavior ✅ **Critical
+subsystem**: Filesystem management is fundamental to kernel operation
+**Conclusion:** This is a textbook example of a commit suitable for
+stable backporting: it fixes a clear bug with security implications in
+core kernel infrastructure, uses a minimal and safe approach, and has no
+risk of introducing regressions. The unsigned integer underflow could
+lead to system instability when triggered through the accessible `sysfs`
+syscall.
 
- kernel/events/core.c | 34 ++++++++++++++++++++++++++++++----
- 1 file changed, 30 insertions(+), 4 deletions(-)
+ fs/filesystems.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 8fc2bc5646ee2..447536a74fc75 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -5728,6 +5728,9 @@ static int perf_event_set_output(struct perf_event *event,
- static int perf_event_set_filter(struct perf_event *event, void __user *arg);
- static int perf_copy_attr(struct perf_event_attr __user *uattr,
- 			  struct perf_event_attr *attr);
-+static int __perf_event_set_bpf_prog(struct perf_event *event,
-+				     struct bpf_prog *prog,
-+				     u64 bpf_cookie);
- 
- static long _perf_ioctl(struct perf_event *event, unsigned int cmd, unsigned long arg)
+diff --git a/fs/filesystems.c b/fs/filesystems.c
+index 58b9067b2391c..95e5256821a53 100644
+--- a/fs/filesystems.c
++++ b/fs/filesystems.c
+@@ -156,15 +156,19 @@ static int fs_index(const char __user * __name)
+ static int fs_name(unsigned int index, char __user * buf)
  {
-@@ -5796,7 +5799,7 @@ static long _perf_ioctl(struct perf_event *event, unsigned int cmd, unsigned lon
- 		if (IS_ERR(prog))
- 			return PTR_ERR(prog);
+ 	struct file_system_type * tmp;
+-	int len, res;
++	int len, res = -EINVAL;
  
--		err = perf_event_set_bpf_prog(event, prog, 0);
-+		err = __perf_event_set_bpf_prog(event, prog, 0);
- 		if (err) {
- 			bpf_prog_put(prog);
- 			return err;
-@@ -10351,8 +10354,9 @@ static inline bool perf_event_is_tracing(struct perf_event *event)
- 	return false;
- }
+ 	read_lock(&file_systems_lock);
+-	for (tmp = file_systems; tmp; tmp = tmp->next, index--)
+-		if (index <= 0 && try_module_get(tmp->owner))
++	for (tmp = file_systems; tmp; tmp = tmp->next, index--) {
++		if (index == 0) {
++			if (try_module_get(tmp->owner))
++				res = 0;
+ 			break;
++		}
++	}
+ 	read_unlock(&file_systems_lock);
+-	if (!tmp)
+-		return -EINVAL;
++	if (res)
++		return res;
  
--int perf_event_set_bpf_prog(struct perf_event *event, struct bpf_prog *prog,
--			    u64 bpf_cookie)
-+static int __perf_event_set_bpf_prog(struct perf_event *event,
-+				     struct bpf_prog *prog,
-+				     u64 bpf_cookie)
- {
- 	bool is_kprobe, is_uprobe, is_tracepoint, is_syscall_tp;
- 
-@@ -10390,6 +10394,20 @@ int perf_event_set_bpf_prog(struct perf_event *event, struct bpf_prog *prog,
- 	return perf_event_attach_bpf_prog(event, prog, bpf_cookie);
- }
- 
-+int perf_event_set_bpf_prog(struct perf_event *event,
-+			    struct bpf_prog *prog,
-+			    u64 bpf_cookie)
-+{
-+	struct perf_event_context *ctx;
-+	int ret;
-+
-+	ctx = perf_event_ctx_lock(event);
-+	ret = __perf_event_set_bpf_prog(event, prog, bpf_cookie);
-+	perf_event_ctx_unlock(event, ctx);
-+
-+	return ret;
-+}
-+
- void perf_event_free_bpf_prog(struct perf_event *event)
- {
- 	if (!perf_event_is_tracing(event)) {
-@@ -10409,7 +10427,15 @@ static void perf_event_free_filter(struct perf_event *event)
- {
- }
- 
--int perf_event_set_bpf_prog(struct perf_event *event, struct bpf_prog *prog,
-+static int __perf_event_set_bpf_prog(struct perf_event *event,
-+				     struct bpf_prog *prog,
-+				     u64 bpf_cookie)
-+{
-+	return -ENOENT;
-+}
-+
-+int perf_event_set_bpf_prog(struct perf_event *event,
-+			    struct bpf_prog *prog,
- 			    u64 bpf_cookie)
- {
- 	return -ENOENT;
+ 	/* OK, we got the reference, so we can safely block */
+ 	len = strlen(tmp->name) + 1;
 -- 
 2.39.5
 
