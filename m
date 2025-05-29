@@ -1,148 +1,152 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20521EF0BB;
-	Thu, 29 May 2025 07:55:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3E422B8CF
+	for <patches@lists.linux.dev>; Thu, 29 May 2025 16:17:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748505359; cv=none; b=mss3ZY2qjbUMhdcPYCSeT+6rfa7WEzkZQuke6xJtlO0LgHKbl+N4IyopcLxb+sfpuyFCuEdb/SRv3biOt7sfxSiBFdLSwvrqA4AU8125bJ4+R6HYQ0rJ3wmr7wjZ/W+QlMONFh1h7m/oxmufi65js584jcDpr8OuI51u9PTCicM=
+	t=1748535450; cv=none; b=YEdoSi+rCa8MtAOYwXBa3yId61pqX+6ADfRFE2s1757ewCigwxF8BBBiYTC6C2vSnt3FqwXiROhWa5w5pgom5QnpfpI0MXHVCDsDnE3HN3I0VF/0oJh/jrXtYbe6Nr3Pf4ORTW/VqKsUtg8iM6RJMbvjrOlq5AEiY7/czgt+6zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748505359; c=relaxed/simple;
-	bh=M1lYqml+OyELSjDi4T5mXAOPoDVNUs5tFw7Ug7Aq1R0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eAAZ+N/TfyLOrqY7Iyvv2scTnZrWuTdRNPc798fc3SiOLc2k0Uq4A/nSYkIFyAtNOLGZnnjQsADIemijMC3qd4/hfYk7pbbpikffw0F7z5U/Vlv7Ftjs36Bd2JLmHxK8XdmVtl7mXHuJpqql9dZBHmvZ2IIq7/I/QIIHwRAPlhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N7QPY3vY; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1748535450; c=relaxed/simple;
+	bh=FY8UJr/g+f5NMmL3wgjX3wt97XPE5ermVVXqzKDxh8g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=o1cnIzQCQg+0o3/eyPRqNTrCoRGFaSDdvjD6cYXIeBR+ecl6tBuQ+wcGK7t9UERcWmEdDB5xe9atGQPnYKCug3hkf5CmUPDURshz72FuBkBKFZmo1Yk1LHhL1YDaqO2gAN69lgX7F7qetr+iTArnB6h7WTx9gfZ84iDES6o4nYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FA/B3SzK; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N7QPY3vY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EEEFC4CEE7;
-	Thu, 29 May 2025 07:55:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1748505359;
-	bh=M1lYqml+OyELSjDi4T5mXAOPoDVNUs5tFw7Ug7Aq1R0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=N7QPY3vYl6/0JrvqhiiBu+03N6ar178+WdTcsr8l62fvRAFo1T3ej4TfwnwHxX6Ad
-	 4wxIzNzz8kayfr99MU+xlRlz8NVwykfn3DXnF1KlvdywGLrnsv5qEfADGFTEqU4eOz
-	 RBQlR5owkPAn5Mnyn5DJT9SbL4jsLvgVcnQ+wZtc=
-Date: Thu, 29 May 2025 09:55:55 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ard Biesheuvel <ardb@kernel.org>
-Cc: Brian Gerst <brgerst@gmail.com>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.14 426/783] x86/boot: Disable stack protector for early
- boot code
-Message-ID: <2025052912-snorkel-importer-1299@gregkh>
-References: <20250527162513.035720581@linuxfoundation.org>
- <20250527162530.470565771@linuxfoundation.org>
- <CAMzpN2hwSXUybfvcas2X5213V=Ow+nqGqqurC_tjfCdb44aFfg@mail.gmail.com>
- <2025052945-squabble-romp-6304@gregkh>
- <CAMj1kXFCQ=q3O043q_Ub8aABHf5E31QrqmqJ3iYCCeLkx37pwA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FA/B3SzK"
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-32a696ff4deso9322261fa.1
+        for <patches@lists.linux.dev>; Thu, 29 May 2025 09:17:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748535446; x=1749140246; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2jgJKTXVnj6f8YCLQX9p0jhEG5ZRzucQkXQ/lqtbPwI=;
+        b=FA/B3SzKgLi9PQPTndysdAXi7PW5Bp3uBf/HMh+wqhacte1x+repe+ZqMn7jaILjXS
+         Uh+t0ceFWhgGofvPlCEMRYiDMlvj2KltZJNpQ2XCPn6tAPlCXZXIxtilgd2nknAI7HcU
+         jgg8JSFBBL/uPr5etz3XP3il9/1ntdwN2cqPv1/BIapXazqsCehAiyhI2wqLyQolskQV
+         DYd9yMFme7GU8I1x5e+aFU7XyXPTT5SVGT2LDcUIvGSny7WU5n++S2CJY94FgA2TwzX/
+         b57AHbv00hW8MZFt4nZjd3/83gxCpfleQsnrxsUgWxFLPYEdJ91I7skoVCEyHNkWbe4b
+         7GpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748535446; x=1749140246;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2jgJKTXVnj6f8YCLQX9p0jhEG5ZRzucQkXQ/lqtbPwI=;
+        b=RJerN5yVF+WWFyQ6jE9yjEXYjK62ptWbNTW2g7cuZc3mx1CqITw+CMFNO55kkL3oNl
+         wNvC9tRNVvYc2dFarXV7cpBkwjIptMB88I+76UFJGQoZEwwmLWzC3aqdram+y2RZYv8L
+         NMf6KTTuefYtu7R2O5lZE1Vn97Fe84ySZ3PKNwB4fgUe5dPGqDzDb0QWAz4qSv7d519Z
+         m5Ep1ledfdvssfh8BLRpx2uaRUNjCXpBWTJv+XrWtgqgoGX10PfhLrj+UhQu9mnyyskl
+         Ol9wXLzpO6tDZ3XWIsrZ5dzcVXNm1iZiE0R9iNcAAq81OtLgCvSxvMXdbSS393Ohhf3t
+         mIAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUE+HyV/AH9a6nY5/2EPWIp6+TWbkASEAAFsB8lslyPt2x3/98/tP809VhNeke1Uwb7PAe9BKkz@lists.linux.dev
+X-Gm-Message-State: AOJu0YxCNGFXBy1iw7Q9wl2dzWur0YMMEY0TM4mwytnW938BaJp5gi/p
+	KICkFXInBPK/08WNgy6aC0mDT59AQ960N+gU4MWdp16plLKnveY3Bk53ByZYuMR+Hukv3GZgmsE
+	6tZ4zM2kF16ihWJwO0Og2U5Tm11fhiQ==
+X-Gm-Gg: ASbGncvqDH3+V+U3lvU05C2t8zL7jJsrYuNdPT0Vc2y4EeVmz/Ixv5QtqlBOIheuDGa
+	9HaagdGJyQ0kOEhAHsXD8gQ+DQEZ3KPE8TckGFl8dZoXFT/PuoyFauaW8HMDqzQ2n5rnaUHNeUV
+	IFEJZNjgEMIJIKZ0Z+pen8EZbhjmUvgsbqe9VOa8QmhFFSktY=
+X-Google-Smtp-Source: AGHT+IEymqDwVw9xb6SnmJx+Z0cvqa6rUfL1KnraMAqKFT9Y938Sfu2Ihk2ACz/8Bhs5ueNFlxh7/9XoAvhSlH+rqSw=
+X-Received: by 2002:a05:651c:1549:b0:32a:6c63:935 with SMTP id
+ 38308e7fff4ca-32a8cd295d5mr1661941fa.4.1748535446050; Thu, 29 May 2025
+ 09:17:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMj1kXFCQ=q3O043q_Ub8aABHf5E31QrqmqJ3iYCCeLkx37pwA@mail.gmail.com>
+References: <20250527162513.035720581@linuxfoundation.org> <20250527162530.470565771@linuxfoundation.org>
+ <CAMzpN2hwSXUybfvcas2X5213V=Ow+nqGqqurC_tjfCdb44aFfg@mail.gmail.com> <2025052945-squabble-romp-6304@gregkh>
+In-Reply-To: <2025052945-squabble-romp-6304@gregkh>
+From: Brian Gerst <brgerst@gmail.com>
+Date: Thu, 29 May 2025 12:17:14 -0400
+X-Gm-Features: AX0GCFt3X3ZfQfNuUHPxH832YhIHcNZGBocfQfbrKm3jTaQuo5E4XRm35NDAYrw
+Message-ID: <CAMzpN2inYN7uXgdfDXwDPWRp0WnEYkOew1Ys=bPPperrwCz5uw@mail.gmail.com>
+Subject: Re: [PATCH 6.14 426/783] x86/boot: Disable stack protector for early
+ boot code
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Ingo Molnar <mingo@kernel.org>, Ard Biesheuvel <ardb@kernel.org>, 
+	Linus Torvalds <torvalds@linux-foundation.org>, Sasha Levin <sashal@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 29, 2025 at 08:59:37AM +0200, Ard Biesheuvel wrote:
-> On Thu, 29 May 2025 at 08:34, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > On Wed, May 28, 2025 at 01:52:16PM -0400, Brian Gerst wrote:
-> > > On Tue, May 27, 2025 at 1:39 PM Greg Kroah-Hartman
-> > > <gregkh@linuxfoundation.org> wrote:
-> > > >
-> > > > 6.14-stable review patch.  If anyone has any objections, please let me know.
-> > > >
-> > > > ------------------
-> > > >
-> > > > From: Brian Gerst <brgerst@gmail.com>
-> > > >
-> > > > [ Upstream commit a9a76b38aaf577887103e3ebb41d70e6aa5a4b19 ]
-> > > >
-> > > > On 64-bit, this will prevent crashes when the canary access is changed
-> > > > from %gs:40 to %gs:__stack_chk_guard(%rip).  RIP-relative addresses from
-> > > > the identity-mapped early boot code will target the wrong address with
-> > > > zero-based percpu.  KASLR could then shift that address to an unmapped
-> > > > page causing a crash on boot.
-> > > >
-> > > > This early boot code runs well before user-space is active and does not
-> > > > need stack protector enabled.
-> > > >
-> > > > Signed-off-by: Brian Gerst <brgerst@gmail.com>
-> > > > Signed-off-by: Ingo Molnar <mingo@kernel.org>
-> > > > Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-> > > > Cc: Linus Torvalds <torvalds@linux-foundation.org>
-> > > > Link: https://lore.kernel.org/r/20250123190747.745588-4-brgerst@gmail.com
-> > > > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > > > ---
-> > > >  arch/x86/kernel/Makefile | 2 ++
-> > > >  1 file changed, 2 insertions(+)
-> > > >
-> > > > diff --git a/arch/x86/kernel/Makefile b/arch/x86/kernel/Makefile
-> > > > index b43eb7e384eba..84cfa179802c3 100644
-> > > > --- a/arch/x86/kernel/Makefile
-> > > > +++ b/arch/x86/kernel/Makefile
-> > > > @@ -44,6 +44,8 @@ KCOV_INSTRUMENT_unwind_orc.o                          := n
-> > > >  KCOV_INSTRUMENT_unwind_frame.o                         := n
-> > > >  KCOV_INSTRUMENT_unwind_guess.o                         := n
-> > > >
-> > > > +CFLAGS_head32.o := -fno-stack-protector
-> > > > +CFLAGS_head64.o := -fno-stack-protector
-> > > >  CFLAGS_irq.o := -I $(src)/../include/asm/trace
-> > > >
-> > > >  obj-y                  += head_$(BITS).o
-> > > > --
-> > > > 2.39.5
-> > > >
-> > > >
-> > > >
+On Thu, May 29, 2025 at 2:34=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> On Wed, May 28, 2025 at 01:52:16PM -0400, Brian Gerst wrote:
+> > On Tue, May 27, 2025 at 1:39=E2=80=AFPM Greg Kroah-Hartman
+> > <gregkh@linuxfoundation.org> wrote:
 > > >
-> > > This doesn't need to be backported.  It's harmless, but not necessary
-> > > without the rest of the stack protector changes.
+> > > 6.14-stable review patch.  If anyone has any objections, please let m=
+e know.
+> > >
+> > > ------------------
+> > >
+> > > From: Brian Gerst <brgerst@gmail.com>
+> > >
+> > > [ Upstream commit a9a76b38aaf577887103e3ebb41d70e6aa5a4b19 ]
+> > >
+> > > On 64-bit, this will prevent crashes when the canary access is change=
+d
+> > > from %gs:40 to %gs:__stack_chk_guard(%rip).  RIP-relative addresses f=
+rom
+> > > the identity-mapped early boot code will target the wrong address wit=
+h
+> > > zero-based percpu.  KASLR could then shift that address to an unmappe=
+d
+> > > page causing a crash on boot.
+> > >
+> > > This early boot code runs well before user-space is active and does n=
+ot
+> > > need stack protector enabled.
+> > >
+> > > Signed-off-by: Brian Gerst <brgerst@gmail.com>
+> > > Signed-off-by: Ingo Molnar <mingo@kernel.org>
+> > > Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+> > > Cc: Linus Torvalds <torvalds@linux-foundation.org>
+> > > Link: https://lore.kernel.org/r/20250123190747.745588-4-brgerst@gmail=
+.com
+> > > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > > ---
+> > >  arch/x86/kernel/Makefile | 2 ++
+> > >  1 file changed, 2 insertions(+)
+> > >
+> > > diff --git a/arch/x86/kernel/Makefile b/arch/x86/kernel/Makefile
+> > > index b43eb7e384eba..84cfa179802c3 100644
+> > > --- a/arch/x86/kernel/Makefile
+> > > +++ b/arch/x86/kernel/Makefile
+> > > @@ -44,6 +44,8 @@ KCOV_INSTRUMENT_unwind_orc.o                       =
+   :=3D n
+> > >  KCOV_INSTRUMENT_unwind_frame.o                         :=3D n
+> > >  KCOV_INSTRUMENT_unwind_guess.o                         :=3D n
+> > >
+> > > +CFLAGS_head32.o :=3D -fno-stack-protector
+> > > +CFLAGS_head64.o :=3D -fno-stack-protector
+> > >  CFLAGS_irq.o :=3D -I $(src)/../include/asm/trace
+> > >
+> > >  obj-y                  +=3D head_$(BITS).o
+> > > --
+> > > 2.39.5
+> > >
+> > >
+> > >
 > >
-> > What specific changes?  I see stackprotector code in this, and the 6.12
-> > tree, so what commit id does this "fix"?
-> >
-> 
-> It does not fix anything. I already raised this with Sasha in response
-> to one of his AUTOSEL spam bombs. [0]
+> > This doesn't need to be backported.  It's harmless, but not necessary
+> > without the rest of the stack protector changes.
+>
+> What specific changes?  I see stackprotector code in this, and the 6.12
+> tree, so what commit id does this "fix"?
 
-That one was dropped, eventually, thanks.
+Here is the whole patch series:
+https://lore.kernel.org/lkml/20250123190747.745588-1-brgerst@gmail.com/
 
-> The first patch of the series in question bumped the minimum GCC
-> version from 5.x to 8.1, so I am pretty sure it is out of scope for
-> -stable.
+This patch is a prerequisite for patch #8 (Use relative percpu
+offsets).  It does not fix an existing problem.
 
-Yes.
 
-> Please stop backporting random shit via AUTOSEL. You keep saying that
-> developers who don't care about -stable won't have to, but we are the
-> ones having to make sense of the mess you have created when AUTOSEL
-> picks one or two random changes out of a larger series. I don't think
-> AUTOSEL should be used at all until we find a solution to that
-> problem.
-
-The "problem" is that AUTOSEL finds a LOT of real fixes that are needed
-that no one has tagged for backporting.  So unless we have all
-maintainers remember to properly tag patches, it's solving a real
-issue (i.e. fixes in newer kernel releases for user-visable security and
-"normal" bugs).
-
-AUTOSEL has now been tweaked to describe _why_ it thinks the patch
-should be backported, and that's in the email that is sent out.  See the
-recent series that was sent yesterday for examples:
-	https://lore.kernel.org/all/20250528215637.1983842-2-sashal@kernel.org/
-
-And again, as always, if you do NOT want your subsystem or any specific
-files to be considered by AUTOSEL, just let Sasha know and we will add
-them to the "ignore" list.
-
-thanks,
-
-greg k-h
+Brian Gerst
