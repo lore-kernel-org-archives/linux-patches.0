@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB971258CD3;
-	Fri, 30 May 2025 12:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318B125A2AE;
+	Fri, 30 May 2025 12:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608820; cv=none; b=NndhjgGvr0tZGyoSzAVxrsYL4amq4qMUayvru8oCg+13vFnJtLHgq5CkwCnTQ0SghrbJZMuNA/DEjMVxK5OcK8KicLOQoEuJeKMjeDpND+/cc7ULMnFswg889h3tmjiDGx5bgK4YHTGaqH0ePoFcs3cml2YJHsQzgnNMQFIQ+oI=
+	t=1748608822; cv=none; b=fkk/VrjZCYAGMkrsfzsTMuntjXavQq25MVfztDOYh7ieIcpEfJjvW16I4KbzcvmhaNV8fGPrqQVuyhwGomUh+9V4udNDigxNyZuCIN39TgeVIZBhO+APzOgEaZyZpztrgZ3Bc1HpnufLEbY0qDJSgRz0pSojpV6bqqlr06A0hPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608820; c=relaxed/simple;
-	bh=JqCSuh2WkMf9UAgArpAqtSe4jGhwNOvf+oHYM15zWss=;
+	s=arc-20240116; t=1748608822; c=relaxed/simple;
+	bh=bGxfaZw2BYIy87yRXG2i04vyIinc7z7zQ/CwDZpX1Og=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S+i2dfto2n6/8zxpI7MvYX8HAkA295te5PXmZDhMwrHD0+KbCoxMA3lpkXHhTIwKBq///wNuYBFwFLj7TTP5GLPR7nV5DnPDptx+D8FhwC+liTXwpcQXcX8OsukfE/+bJWdyrbm/+hFfTK9JjOrmzgRXsGJTw9perssU+SKAY50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jKlTNfjb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZEwdQlkWUJHQi9jifyf9IEl/SGBk+EEGGh8D1y2FKbymk+ODj4092XhGyll6uEKoQhacRhWjjZ/EG4VB/pS51dtOaqC8m+x7b3MlhSMNPSpBRNPPIyTjzdZszyzafIJYJazO6g+AEQx1myfFJEfNlPxBX/Hig72ByRWMEhT+iiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dbzxji5F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jKlTNfjb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C130AC4CEEA;
-	Fri, 30 May 2025 12:40:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dbzxji5F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0AFEC4CEEF;
+	Fri, 30 May 2025 12:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608820;
-	bh=JqCSuh2WkMf9UAgArpAqtSe4jGhwNOvf+oHYM15zWss=;
+	s=k20201202; t=1748608822;
+	bh=bGxfaZw2BYIy87yRXG2i04vyIinc7z7zQ/CwDZpX1Og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jKlTNfjb+4ji+TC5xF8GCBUzaOYdqGRJ93z5OiivtYQ33Ki5S6xSjoc8TbFDimkUw
-	 xzoaiC6LcAbEnNY6VOTJ4PdgO40RkUgNDLu2pa2hy1vuI//NzH8AsmwlVi++hRX5XV
-	 OUYn5dSpOqLzxv2SdUN/1jjd9p8f11/Ag3RScmyePHr0QmiPViXBEloGon6aiR2nfK
-	 pcA1Cl63WJwP7QOPy3+E59b76od0+ZIDngQoXT2gReIfkkDQstvi8AorJ99ipAlzDQ
-	 FIyT0Vuh4ez5H8LsJ2u/tP9V4lKk5+wC1tHo2iQjxpqsqiDkoe8EwiZlJgJf3eWnnp
-	 ZfSCw9CG9mOZg==
+	b=Dbzxji5FMEHhj7Vpm9pXE4ExWbFkXIOt/KWP70ZL8jGYdp0BTRTRSFLyOeGIGOzUX
+	 G/QhTaZ3hKSX/rslImJykuXbDtD6BbQpzhIClxJFCt30C+e9lopyU9Z6EjvnrReLLe
+	 xCfFqvrYEHrw+d6RWY0PVOaFSgSlwAiPPKyRFBUwmWZHlwe70uUkhHTY7MIJzMED9U
+	 NX2d+TtTlX5mtokaSaClRW1cTozNctdX7h8KEJs/0tmq+3bd0KbjiWdNdy8xpvfgu3
+	 VQvc01radBsHB4dWQNPaYV8KEipkszm1F51kh4t0MgowGPpCeSPcVwUWaSHTGe3FPD
+	 PjKqHa/2yrB0A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Erick Shepherd <erick.shepherd@ni.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+Cc: Ahmed Salem <x0rw3ll@gmail.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-mmc@vger.kernel.org,
+	rjw@rjwysocki.net,
+	lenb@kernel.org,
+	robert.moore@intel.com,
+	erik.schmauss@intel.com,
+	linux-acpi@vger.kernel.org,
+	devel@acpica.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 06/26] mmc: Add quirk to disable DDR50 tuning
-Date: Fri, 30 May 2025 08:39:52 -0400
-Message-Id: <20250530124012.2575409-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 07/26] ACPICA: Avoid sequence overread in call to strncmp()
+Date: Fri, 30 May 2025 08:39:53 -0400
+Message-Id: <20250530124012.2575409-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530124012.2575409-1-sashal@kernel.org>
 References: <20250530124012.2575409-1-sashal@kernel.org>
@@ -50,178 +54,99 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.31
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Erick Shepherd <erick.shepherd@ni.com>
+From: Ahmed Salem <x0rw3ll@gmail.com>
 
-[ Upstream commit 9510b38dc0ba358c93cbf5ee7c28820afb85937b ]
+[ Upstream commit 64b9dfd0776e9c38d733094859a09f13282ce6f8 ]
 
-Adds the MMC_QUIRK_NO_UHS_DDR50_TUNING quirk and updates
-mmc_execute_tuning() to return 0 if that quirk is set. This fixes an
-issue on certain Swissbit SD cards that do not support DDR50 tuning
-where tuning requests caused I/O errors to be thrown.
+ACPICA commit 8b83a8d88dfec59ea147fad35fc6deea8859c58c
 
-Signed-off-by: Erick Shepherd <erick.shepherd@ni.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250331221337.1414534-1-erick.shepherd@ni.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+ap_get_table_length() checks if tables are valid by
+calling ap_is_valid_header(). The latter then calls
+ACPI_VALIDATE_RSDP_SIG(Table->Signature).
+
+ap_is_valid_header() accepts struct acpi_table_header as an argument, so
+the signature size is always fixed to 4 bytes.
+
+The problem is when the string comparison is between ACPI-defined table
+signature and ACPI_SIG_RSDP. Common ACPI table header specifies the
+Signature field to be 4 bytes long[1], with the exception of the RSDP
+structure whose signature is 8 bytes long "RSD PTR " (including the
+trailing blank character)[2]. Calling strncmp(sig, rsdp_sig, 8) would
+then result in a sequence overread[3] as sig would be smaller (4 bytes)
+than the specified bound (8 bytes).
+
+As a workaround, pass the bound conditionally based on the size of the
+signature being passed.
+
+Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#system-description-table-header [1]
+Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#root-system-description-pointer-rsdp-structure [2]
+Link: https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-overread [3]
+Link: https://github.com/acpica/acpica/commit/8b83a8d8
+Signed-off-by: Ahmed Salem <x0rw3ll@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/2248233.Mh6RI2rZIc@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my detailed analysis: ## Bug Fix Classification This is clearly a
-**bugfix**, not a new feature. The commit fixes I/O errors that occur on
-specific Swissbit SD cards when DDR50 tuning is attempted. The commit
-message explicitly states: "This fixes an issue on certain Swissbit SD
-cards that do not support DDR50 tuning where tuning requests caused I/O
-errors to be thrown." ## Code Change Analysis ### 1. **Minimal and
-Targeted Changes** The changes are very focused and follow established
-kernel patterns: - **New quirk flag**: `MMC_QUIRK_NO_UHS_DDR50_TUNING
-(1<<18)` in `include/linux/mmc/card.h` - **Helper function**:
-`mmc_card_no_uhs_ddr50_tuning()` in `drivers/mmc/core/card.h` -
-**Specific card targeting**: Only affects Swissbit cards (manufacturer
-ID 0x5D) with specific model/date criteria - **Logic refactoring**:
-Extracts tuning decision into `mmc_sd_use_tuning()` function ### 2.
-**Low Risk Implementation** The implementation uses the existing MMC
-quirk infrastructure, which is well-tested: - Follows the same pattern
-as Similar Commit #2 (marked YES for backport) - Uses standard
-`_FIXUP_EXT()` macro with precise card identification - Only affects the
-specific problematic cards, leaving all others unchanged ### 3.
-**Controlled Scope** The quirk is highly specific: ```c
-_FIXUP_EXT("0016G", CID_MANFID_SWISSBIT, 0x5342, 2019, 1, 0, -1ull,
-SDIO_ANY_ID, SDIO_ANY_ID, add_quirk_sd, MMC_QUIRK_NO_UHS_DDR50_TUNING,
-EXT_CSD_REV_ANY), ``` This targets only Swissbit cards with model
-"0016G", OEM ID 0x5342, manufactured in January 2019. ## Comparison with
-Similar Commits This commit closely matches **Similar Commit #2** (YES
-for backport), which also: - Adds quirk handling for specific hardware
-issues - Makes minimal, contained changes - Fixes real user-facing
-problems - Uses existing infrastructure Unlike **Similar Commit #1** (NO
-for backport), this commit: - Fixes an existing bug rather than adding
-new functionality - Doesn't introduce new interfaces or capabilities -
-Has minimal risk of regression ## User Impact Without this fix, affected
-Swissbit SD cards would be **unusable** due to I/O errors during tuning.
-This represents a significant hardware compatibility issue that makes
-the cards completely non-functional on affected systems. ## Stable Tree
-Criteria Compliance ✅ **Important bugfix**: Fixes I/O errors on specific
-hardware ✅ **Minimal risk**: Uses established quirk infrastructure ✅
-**No architectural changes**: Follows existing patterns ✅ **Contained
-scope**: Only affects specific problematic cards ✅ **No new features**:
-Pure hardware compatibility fix The commit follows the stable tree rule
-that quirks for hardware compatibility issues are generally acceptable
-for backporting when they fix real problems with minimal risk.
+**YES** This commit should be backported to stable kernel trees. ##
+Detailed Analysis: ### The Problem The commit fixes a **buffer overread
+vulnerability** in the `ACPI_VALIDATE_RSDP_SIG` macro. The issue occurs
+when: 1. **Context**: The macro `ACPI_VALIDATE_RSDP_SIG(a)` calls
+`strncmp(ACPI_CAST_PTR(char, (a)), ACPI_SIG_RSDP, 8)` 2. **Problem**:
+When `a` points to a standard ACPI table header (4 bytes signature), but
+the comparison tries to read 8 bytes for RSDP validation ("RSD PTR "),
+it reads 4 bytes beyond the allocated signature field 3. **Impact**:
+This causes a sequence overread that can be detected by tools like GCC's
+`-Wstringop-overread` and security-focused architectures like
+CHERI/Morello ### The Fix The fix changes line 530 in
+`include/acpi/actypes.h`: ```c // Before: #define
+ACPI_VALIDATE_RSDP_SIG(a) (!strncmp (ACPI_CAST_PTR (char, (a)),
+ACPI_SIG_RSDP, 8)) // After: #define ACPI_VALIDATE_RSDP_SIG(a) (!strncmp
+(ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, (sizeof(a) < 8) ?
+ACPI_NAMESEG_SIZE : 8)) ``` This conditionally limits the comparison to
+`ACPI_NAMESEG_SIZE` (4 bytes) when the source is smaller than 8 bytes,
+preventing the overread. ### Why This Should Be Backported: 1.
+**Security Fix**: This addresses a buffer overread that could be
+exploited or cause crashes on security-hardened systems 2. **Small &
+Contained**: The fix is a single line change to a macro definition with
+minimal risk 3. **Widespread Usage**: The macro is used in multiple
+critical ACPI code paths: - `drivers/acpi/acpica/tbprint.c` (kernel ACPI
+table printing) - `tools/power/acpi/tools/acpidump/apdump.c` (ACPI
+debugging tools) - Various other ACPI validation functions 4. **No
+Architectural Changes**: This doesn't change functionality, just
+prevents unsafe memory access 5. **Compiler Warning Fix**: Resolves
+build warnings with newer GCC versions using `-Wstringop-overread` ###
+Comparison with Historical Commits: - **Similar to Commit #3 (YES)**:
+Like the "disable -Wstringop-truncation" commit, this fixes compiler
+warnings related to string operations, but this one actually fixes the
+underlying safety issue rather than just suppressing warnings - **Unlike
+Commits #1,#2,#4,#5 (NO)**: Those were either pure code cleanup,
+debugging improvements, or infrastructure changes without security
+implications ### Risk Assessment: - **Minimal Risk**: The fix only
+affects boundary condition handling in string comparison - **No
+Functional Impact**: Normal RSDP validation still works correctly for
+valid 8-byte signatures - **Improves Safety**: Prevents potential memory
+safety violations on hardened systems This is exactly the type of small,
+safe, security-focused bugfix that stable trees are designed for.
 
- drivers/mmc/core/card.h   |  6 ++++++
- drivers/mmc/core/quirks.h | 10 ++++++++++
- drivers/mmc/core/sd.c     | 32 ++++++++++++++++++++++++--------
- include/linux/mmc/card.h  |  1 +
- 4 files changed, 41 insertions(+), 8 deletions(-)
+ include/acpi/actypes.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/core/card.h b/drivers/mmc/core/card.h
-index 3205feb1e8ff6..9cbdd240c3a7d 100644
---- a/drivers/mmc/core/card.h
-+++ b/drivers/mmc/core/card.h
-@@ -89,6 +89,7 @@ struct mmc_fixup {
- #define CID_MANFID_MICRON       0x13
- #define CID_MANFID_SAMSUNG      0x15
- #define CID_MANFID_APACER       0x27
-+#define CID_MANFID_SWISSBIT     0x5D
- #define CID_MANFID_KINGSTON     0x70
- #define CID_MANFID_HYNIX	0x90
- #define CID_MANFID_KINGSTON_SD	0x9F
-@@ -294,4 +295,9 @@ static inline int mmc_card_broken_sd_poweroff_notify(const struct mmc_card *c)
- 	return c->quirks & MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY;
- }
+diff --git a/include/acpi/actypes.h b/include/acpi/actypes.h
+index 80767e8bf3ad4..d323dfffa4bfc 100644
+--- a/include/acpi/actypes.h
++++ b/include/acpi/actypes.h
+@@ -527,7 +527,7 @@ typedef u64 acpi_integer;
  
-+static inline int mmc_card_no_uhs_ddr50_tuning(const struct mmc_card *c)
-+{
-+	return c->quirks & MMC_QUIRK_NO_UHS_DDR50_TUNING;
-+}
-+
- #endif
-diff --git a/drivers/mmc/core/quirks.h b/drivers/mmc/core/quirks.h
-index 89b512905be14..7f893bafaa607 100644
---- a/drivers/mmc/core/quirks.h
-+++ b/drivers/mmc/core/quirks.h
-@@ -34,6 +34,16 @@ static const struct mmc_fixup __maybe_unused mmc_sd_fixups[] = {
- 		   MMC_QUIRK_BROKEN_SD_CACHE | MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY,
- 		   EXT_CSD_REV_ANY),
+ /* Support for the special RSDP signature (8 characters) */
  
-+	/*
-+	 * Swissbit series S46-u cards throw I/O errors during tuning requests
-+	 * after the initial tuning request expectedly times out. This has
-+	 * only been observed on cards manufactured on 01/2019 that are using
-+	 * Bay Trail host controllers.
-+	 */
-+	_FIXUP_EXT("0016G", CID_MANFID_SWISSBIT, 0x5342, 2019, 1,
-+		   0, -1ull, SDIO_ANY_ID, SDIO_ANY_ID, add_quirk_sd,
-+		   MMC_QUIRK_NO_UHS_DDR50_TUNING, EXT_CSD_REV_ANY),
-+
- 	END_FIXUP
- };
+-#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, 8))
++#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, (sizeof(a) < 8) ? ACPI_NAMESEG_SIZE : 8))
+ #define ACPI_MAKE_RSDP_SIG(dest)        (memcpy (ACPI_CAST_PTR (char, (dest)), ACPI_SIG_RSDP, 8))
  
-diff --git a/drivers/mmc/core/sd.c b/drivers/mmc/core/sd.c
-index 63915541c0e49..916ae9996e9d7 100644
---- a/drivers/mmc/core/sd.c
-+++ b/drivers/mmc/core/sd.c
-@@ -613,6 +613,29 @@ static int sd_set_current_limit(struct mmc_card *card, u8 *status)
- 	return 0;
- }
- 
-+/*
-+ * Determine if the card should tune or not.
-+ */
-+static bool mmc_sd_use_tuning(struct mmc_card *card)
-+{
-+	/*
-+	 * SPI mode doesn't define CMD19 and tuning is only valid for SDR50 and
-+	 * SDR104 mode SD-cards. Note that tuning is mandatory for SDR104.
-+	 */
-+	if (mmc_host_is_spi(card->host))
-+		return false;
-+
-+	switch (card->host->ios.timing) {
-+	case MMC_TIMING_UHS_SDR50:
-+	case MMC_TIMING_UHS_SDR104:
-+		return true;
-+	case MMC_TIMING_UHS_DDR50:
-+		return !mmc_card_no_uhs_ddr50_tuning(card);
-+	}
-+
-+	return false;
-+}
-+
- /*
-  * UHS-I specific initialization procedure
-  */
-@@ -656,14 +679,7 @@ static int mmc_sd_init_uhs_card(struct mmc_card *card)
- 	if (err)
- 		goto out;
- 
--	/*
--	 * SPI mode doesn't define CMD19 and tuning is only valid for SDR50 and
--	 * SDR104 mode SD-cards. Note that tuning is mandatory for SDR104.
--	 */
--	if (!mmc_host_is_spi(card->host) &&
--		(card->host->ios.timing == MMC_TIMING_UHS_SDR50 ||
--		 card->host->ios.timing == MMC_TIMING_UHS_DDR50 ||
--		 card->host->ios.timing == MMC_TIMING_UHS_SDR104)) {
-+	if (mmc_sd_use_tuning(card)) {
- 		err = mmc_execute_tuning(card);
- 
- 		/*
-diff --git a/include/linux/mmc/card.h b/include/linux/mmc/card.h
-index eb67d3d5ff5b2..2e455b20c37c2 100644
---- a/include/linux/mmc/card.h
-+++ b/include/linux/mmc/card.h
-@@ -295,6 +295,7 @@ struct mmc_card {
- #define MMC_QUIRK_BROKEN_SD_CACHE	(1<<15)	/* Disable broken SD cache support */
- #define MMC_QUIRK_BROKEN_CACHE_FLUSH	(1<<16)	/* Don't flush cache until the write has occurred */
- #define MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY	(1<<17) /* Disable broken SD poweroff notify support */
-+#define MMC_QUIRK_NO_UHS_DDR50_TUNING	(1<<18) /* Disable DDR50 tuning */
- 
- 	bool			written_flag;	/* Indicates eMMC has been written since power on */
- 	bool			reenable_cmdq;	/* Re-enable Command Queue */
+ /* Support for OEMx signature (x can be any character) */
 -- 
 2.39.5
 
