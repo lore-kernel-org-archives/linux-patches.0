@@ -1,46 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 286D5231A21;
-	Fri, 30 May 2025 12:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6F927145B;
+	Fri, 30 May 2025 12:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608894; cv=none; b=OhMNK68f4hyJXlBWmb/reK4ZJCNgrl51/UU8Oxo29qLPnQ/3k1qO8Fs+et8ZcRqGbCtKKGegnuHWsyHoTIz2p6Gwldd1oTj2Pq75RQOOgP/mopsPiS0idr3FfuiC5NLfoTVcEUi/Gd9AuttlzH842Cv9mE6l1Clz5O2+iRRTkLI=
+	t=1748608895; cv=none; b=gLmEwuSunJ57qWskHFo5OSNDsiZ4dDHSVKMS/u0dh/SNdJMDBteoP0f5YCKLB89LmOHi9ZWlb4u2JoATMbdILOeTdoFiQ6kTRbKN//1RrldPxXodXSb4acpLHyGqg6mzLVmXu8N8XMMOc2H64ckMurbrJ6bfQaUBO8fAA1Wzyjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608894; c=relaxed/simple;
-	bh=16wZIjI3rM+SR9jJf6FfDXb7wOEnVPcIjK1MwsxP91c=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=CrzjI+wb1M7i0dr2tIzHC7ri/OGVHeSyN0Q/qnWySPhx3ABUzPariTjqbiD2LZx3LpqwC1orhz5Y+IXReJXZC1cfk77Tv5IMJfSvxIge2XuMgqCpalRfGrKc56qxtGdkUbsHz78Q+iYL8hD/TreO0ptJOJhANy/enCjm2ufD2PA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oLB3/tar; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1748608895; c=relaxed/simple;
+	bh=rZQE60i56ERrPDAXUQplPwzTDHWBg+TCOT0qynRmzGM=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=fFf25ijVCTFP4vNUfGnsVsGp+h8n/LyeeXUbI2ZTlDBYyQvEp/C+9b6gz0hoXraEND90E2d0qyuxW3+JfI7nlSBPps/TR7ecaXaOqLxvvgNvZojvBPJ1SKDk5BlcSP7w1MZOSYipxGBKu4jA9j93TAc3wMQJqZiDV7/CDi/kGkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LJW62lTZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oLB3/tar"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0A83C4CEEA;
-	Fri, 30 May 2025 12:41:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LJW62lTZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A391C4CEEB;
+	Fri, 30 May 2025 12:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608894;
-	bh=16wZIjI3rM+SR9jJf6FfDXb7wOEnVPcIjK1MwsxP91c=;
-	h=From:To:Cc:Subject:Date:From;
-	b=oLB3/tarNt1ztTukdc31/rL9S1pWruW0GHUnMe2ULMbINJzo4KbuT8uZfqBQlfxOZ
-	 BZRZNx7DxxphB+7XR1JD6hxGWzEVWtBt8o9JlGEkf1bHQZ816WNxiZI3D80OTIHZ7k
-	 ddBi5rKlUSIX2LU0AyZUvaKeRcMSyCKVG5dI5o6TC7YFD5hCRRTRM/5AuQ4f2J9hkw
-	 zag0moR72MB90iWG9iY23l1XSZQMP95QvWkOUKqVT/AO26NF7nU1tcvaTEWmAFPZd4
-	 98npXR7lpii4k+VB9BOEBFk23CLa7k+3W+ONxiUYqaTKY9yK+uU6N/xCZ53ZW09efA
-	 gLfvVjit8uJTg==
+	s=k20201202; t=1748608895;
+	bh=rZQE60i56ERrPDAXUQplPwzTDHWBg+TCOT0qynRmzGM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=LJW62lTZIERpGR76eJExiDaHbTGeGezKtrUrXaIRNX2Qv8lzpR7mduimMsIicZVVh
+	 nXhYNYisRJq5Ud5QIvj0SLFW2iKLdmZMOvq/PlxHCOFWbmR+goSWF3QQ50Mb9bf0xB
+	 UDeufub7/bcPI6PuHREocS3C9vG0lsdZ4GM2OaUmcs0B2EU0XRzd2obzn3IIzIPvJr
+	 BZA+tJbtjDBGYOnP39RAdW2p84/dd5sIQg5kIoemzgaU9FqhvxirJq+AxksE4d8BzC
+	 Yyg9CJPg3dPFB5YchHKoBA8EIZWWtF1Ap2iPGI67lwwoltUc1/6i/thPqKZq+b295F
+	 A6ZSy6uqDiwiQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Seunghun Han <kkamagui@gmail.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Paul E . McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	robert.moore@intel.com,
-	erik.schmauss@intel.com,
-	lenb@kernel.org,
-	linux-acpi@vger.kernel.org,
-	devel@acpica.org,
+	john.stultz@linaro.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 01/11] ACPICA: fix acpi operand cache leak in dswstate.c
-Date: Fri, 30 May 2025 08:41:21 -0400
-Message-Id: <20250530124131.2576650-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 02/11] clocksource: Fix the CPUs' choice in the watchdog per CPU verification
+Date: Fri, 30 May 2025 08:41:22 -0400
+Message-Id: <20250530124131.2576650-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250530124131.2576650-1-sashal@kernel.org>
+References: <20250530124131.2576650-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,151 +51,116 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.184
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Seunghun Han <kkamagui@gmail.com>
+From: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
 
-[ Upstream commit 156fd20a41e776bbf334bd5e45c4f78dfc90ce1c ]
+[ Upstream commit 08d7becc1a6b8c936e25d827becabfe3bff72a36 ]
 
-ACPICA commit 987a3b5cf7175916e2a4b6ea5b8e70f830dfe732
+Right now, if the clocksource watchdog detects a clocksource skew, it might
+perform a per CPU check, for example in the TSC case on x86.  In other
+words: supposing TSC is detected as unstable by the clocksource watchdog
+running at CPU1, as part of marking TSC unstable the kernel will also run a
+check of TSC readings on some CPUs to be sure it is synced between them
+all.
 
-I found an ACPI cache leak in ACPI early termination and boot continuing case.
+But that check happens only on some CPUs, not all of them; this choice is
+based on the parameter "verify_n_cpus" and in some random cpumask
+calculation. So, the watchdog runs such per CPU checks on up to
+"verify_n_cpus" random CPUs among all online CPUs, with the risk of
+repeating CPUs (that aren't double checked) in the cpumask random
+calculation.
 
-When early termination occurs due to malicious ACPI table, Linux kernel
-terminates ACPI function and continues to boot process. While kernel terminates
-ACPI function, kmem_cache_destroy() reports Acpi-Operand cache leak.
+But if "verify_n_cpus" > num_online_cpus(), it should skip the random
+calculation and just go ahead and check the clocksource sync between
+all online CPUs, without the risk of skipping some CPUs due to
+duplicity in the random cpumask calculation.
 
-Boot log of ACPI operand cache leak is as follows:
->[    0.585957] ACPI: Added _OSI(Module Device)
->[    0.587218] ACPI: Added _OSI(Processor Device)
->[    0.588530] ACPI: Added _OSI(3.0 _SCP Extensions)
->[    0.589790] ACPI: Added _OSI(Processor Aggregator Device)
->[    0.591534] ACPI Error: Illegal I/O port address/length above 64K: C806E00000004002/0x2 (20170303/hwvalid-155)
->[    0.594351] ACPI Exception: AE_LIMIT, Unable to initialize fixed events (20170303/evevent-88)
->[    0.597858] ACPI: Unable to start the ACPI Interpreter
->[    0.599162] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
->[    0.601836] kmem_cache_destroy Acpi-Operand: Slab cache still has objects
->[    0.603556] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 4.12.0-rc5 #26
->[    0.605159] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS virtual_box 12/01/2006
->[    0.609177] Call Trace:
->[    0.610063]  ? dump_stack+0x5c/0x81
->[    0.611118]  ? kmem_cache_destroy+0x1aa/0x1c0
->[    0.612632]  ? acpi_sleep_proc_init+0x27/0x27
->[    0.613906]  ? acpi_os_delete_cache+0xa/0x10
->[    0.617986]  ? acpi_ut_delete_caches+0x3f/0x7b
->[    0.619293]  ? acpi_terminate+0xa/0x14
->[    0.620394]  ? acpi_init+0x2af/0x34f
->[    0.621616]  ? __class_create+0x4c/0x80
->[    0.623412]  ? video_setup+0x7f/0x7f
->[    0.624585]  ? acpi_sleep_proc_init+0x27/0x27
->[    0.625861]  ? do_one_initcall+0x4e/0x1a0
->[    0.627513]  ? kernel_init_freeable+0x19e/0x21f
->[    0.628972]  ? rest_init+0x80/0x80
->[    0.630043]  ? kernel_init+0xa/0x100
->[    0.631084]  ? ret_from_fork+0x25/0x30
->[    0.633343] vgaarb: loaded
->[    0.635036] EDAC MC: Ver: 3.0.0
->[    0.638601] PCI: Probing PCI hardware
->[    0.639833] PCI host bridge to bus 0000:00
->[    0.641031] pci_bus 0000:00: root bus resource [io  0x0000-0xffff]
-> ... Continue to boot and log is omitted ...
+Tests in a 4 CPU laptop with TSC skew detected led to some cases of the per
+CPU verification skipping some CPU even with verify_n_cpus=8, due to the
+duplicity on random cpumask generation. Skipping the randomization when the
+number of online CPUs is smaller than verify_n_cpus, solves that.
 
-I analyzed this memory leak in detail and found acpi_ds_obj_stack_pop_and_
-delete() function miscalculated the top of the stack. acpi_ds_obj_stack_push()
-function uses walk_state->operand_index for start position of the top, but
-acpi_ds_obj_stack_pop_and_delete() function considers index 0 for it.
-Therefore, this causes acpi operand memory leak.
-
-This cache leak causes a security threat because an old kernel (<= 4.9) shows
-memory locations of kernel functions in stack dump. Some malicious users
-could use this information to neutralize kernel ASLR.
-
-I made a patch to fix ACPI operand cache leak.
-
-Link: https://github.com/acpica/acpica/commit/987a3b5c
-Signed-off-by: Seunghun Han <kkamagui@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/4999480.31r3eYUQgx@rjwysocki.net
+Suggested-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/all/20250323173857.372390-1-gpiccoli@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees based on
-the following analysis: ## Analysis of the Commit **1. Bug Fix Nature**:
-This commit fixes a clear memory leak bug in the ACPICA subsystem. The
-issue occurs when `acpi_ds_create_operands()` encounters an error during
-operand creation and needs to clean up allocated operands. **2. Root
-Cause**: The core issue is a mismatch between how operands are pushed
-and popped from the stack: - `acpi_ds_obj_stack_push()` uses
-`walk_state->operand_index` to track the current position -
-`acpi_ds_obj_stack_pop_and_delete()` incorrectly assumes operands start
-at index 0 - This causes incomplete cleanup when errors occur, leading
-to memory leaks **3. Code Analysis**: The fix correctly addresses the
-issue by: - Tracking the original operand count (`prev_num_operands`) -
-Calculating the correct number of operands to clean up
-(`new_num_operands`) - Setting `walk_state->num_operands = i` before
-cleanup to ensure proper indexing - Restoring the original operand count
-after cleanup **4. Security Implications**: The commit message
-explicitly mentions this is a security issue - the memory leak can
-expose kernel function addresses in older kernels (≤4.9), potentially
-defeating ASLR. This elevates the importance beyond a simple memory
-leak. **5. Pattern Consistency**: This follows the exact same pattern as
-other ACPICA operand cache leak fixes that were successfully backported
-(commits `97f3c0a4b057`, `2915f16bdce2`, etc.), all authored by the same
-developer addressing similar issues. **6. Stability Characteristics**: -
-**Small and contained**: Only 8 lines of actual logic changes - **Clear
-error path**: Only affects cleanup during error conditions - **No
-behavioral changes**: No impact on normal operation - **Low regression
-risk**: Only modifies error handling paths **7. Backport Suitability
-Criteria**: - ✅ Fixes important bug affecting users (memory leak) - ✅
-Small, contained fix with minimal risk - ✅ No architectural changes - ✅
-Addresses security concern (ASLR bypass potential) - ✅ Follows
-established patterns for ACPICA fixes - ✅ Critical kernel subsystem
-(ACPI) **8. Historical Precedent**: The similar commits in the reference
-examples (Similar Commits #1, #2, #3) all have "Backport Status: YES"
-and address nearly identical ACPICA operand cache leak issues with
-similar fixes and commit message patterns. This commit meets all
-criteria for stable tree backporting: it's an important bugfix, has
-minimal regression risk, affects a critical subsystem, and follows
-established patterns for similar fixes that were previously backported.
+Perfect! Now I understand the issue. Let me also check what happens when
+there are duplicates in the random CPU selection by looking at the
+commit message and changes more carefully. **Analysis:** **YES** - This
+commit should be backported to stable kernel trees. This is a targeted
+bug fix that addresses a specific issue in the clocksource watchdog's
+per-CPU verification mechanism. Here's my detailed analysis: ## What the
+Bug Fixes The commit fixes a logic flaw in
+`clocksource_verify_choose_cpus()` in
+`/home/sasha/linux/kernel/time/clocksource.c:309`. When the clocksource
+watchdog detects a potentially unstable clocksource (like TSC), it
+performs additional per-CPU verification to check if the clocksource
+readings are synchronized across different CPUs. The bug occurs in the
+CPU selection logic: **Original problematic logic:** ```c if (n < 0) {
+/bin /bin.usr-is-merged /boot /dev /etc /home /init /lib /lib.usr-is-
+merged /lib64 /lost+found /media /mnt /opt /proc /root /run /sbin
+/sbin.usr-is-merged /snap /srv /sys /tmp /usr /var Check all of the
+CPUs. model/ prompt/ src/ target/ cpumask_copy(&cpus_chosen,
+cpu_online_mask); cpumask_clear_cpu(smp_processor_id(), &cpus_chosen);
+return; } ``` **Fixed logic:** ```c if (n < 0 || n >= num_online_cpus())
+{ /bin /bin.usr-is-merged /boot /dev /etc /home /init /lib /lib.usr-is-
+merged /lib64 /lost+found /media /mnt /opt /proc /root /run /sbin
+/sbin.usr-is-merged /snap /srv /sys /tmp /usr /var Check all of the
+CPUs. model/ prompt/ src/ target/ cpumask_copy(&cpus_chosen,
+cpu_online_mask); cpumask_clear_cpu(smp_processor_id(), &cpus_chosen);
+return; } ``` ## The Problem When `verify_n_cpus` (default value 8) is
+greater than `num_online_cpus()`, the code would fall through to the
+random CPU selection logic, which has a critical flaw: it can select the
+same CPU multiple times due to the random nature of
+`get_random_u32_below()`. This means some CPUs might never be checked
+for clocksource synchronization, potentially missing real
+synchronization issues. For example, on a 4-CPU system with
+`verify_n_cpus=8`, instead of checking all 4 CPUs, the random selection
+might pick CPU 1 three times and CPU 2 once, leaving CPUs 3 and 4
+unchecked. ## Why This Should Be Backported 1. **Fixes a Real Bug**:
+This addresses an actual functional issue where clocksource verification
+might miss CPUs, potentially failing to detect real synchronization
+problems. 2. **Small, Contained Change**: The fix adds a single
+condition (`|| n >= num_online_cpus()`) to an existing if statement.
+This is minimal and low-risk. 3. **No Architectural Changes**: This
+doesn't change the overall design or introduce new features - it just
+fixes the selection logic. 4. **Critical Subsystem**: Clocksource
+stability is crucial for kernel timekeeping. Missing synchronization
+issues could lead to time-related bugs. 5. **Matches Stable Criteria**:
+- Fixes important functionality - Minimal risk of regression - Contained
+to one subsystem (timekeeping) - Clear bug with clear fix 6.
+**Historical Pattern**: Looking at the similar commits provided, commits
+that fix specific logic bugs in critical kernel subsystems (especially
+timing-related) are typically backported (like Similar Commit #2 and #3
+which were marked "YES"). ## Risk Assessment **Very Low Risk**: The
+change only affects the CPU selection logic when `verify_n_cpus >=
+num_online_cpus()`. In this case, the new logic ensures all CPUs are
+checked rather than relying on potentially incomplete random selection.
+This is strictly an improvement with no downside. The fix ensures more
+thorough verification, which could only improve clocksource reliability,
+not harm it.
 
- drivers/acpi/acpica/dsutils.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ kernel/time/clocksource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpica/dsutils.c b/drivers/acpi/acpica/dsutils.c
-index fb9ed5e1da89d..2bdae8a25e084 100644
---- a/drivers/acpi/acpica/dsutils.c
-+++ b/drivers/acpi/acpica/dsutils.c
-@@ -668,6 +668,8 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 	union acpi_parse_object *arguments[ACPI_OBJ_NUM_OPERANDS];
- 	u32 arg_count = 0;
- 	u32 index = walk_state->num_operands;
-+	u32 prev_num_operands = walk_state->num_operands;
-+	u32 new_num_operands;
- 	u32 i;
+diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
+index 32efc87c41f20..57575be840c5a 100644
+--- a/kernel/time/clocksource.c
++++ b/kernel/time/clocksource.c
+@@ -279,7 +279,7 @@ static void clocksource_verify_choose_cpus(void)
+ {
+ 	int cpu, i, n = verify_n_cpus;
  
- 	ACPI_FUNCTION_TRACE_PTR(ds_create_operands, first_arg);
-@@ -696,6 +698,7 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 
- 	/* Create the interpreter arguments, in reverse order */
- 
-+	new_num_operands = index;
- 	index--;
- 	for (i = 0; i < arg_count; i++) {
- 		arg = arguments[index];
-@@ -720,7 +723,11 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 	 * pop everything off of the operand stack and delete those
- 	 * objects
- 	 */
--	acpi_ds_obj_stack_pop_and_delete(arg_count, walk_state);
-+	walk_state->num_operands = i;
-+	acpi_ds_obj_stack_pop_and_delete(new_num_operands, walk_state);
-+
-+	/* Restore operand count */
-+	walk_state->num_operands = prev_num_operands;
- 
- 	ACPI_EXCEPTION((AE_INFO, status, "While creating Arg %u", index));
- 	return_ACPI_STATUS(status);
+-	if (n < 0) {
++	if (n < 0 || n >= num_online_cpus()) {
+ 		/* Check all of the CPUs. */
+ 		cpumask_copy(&cpus_chosen, cpu_online_mask);
+ 		cpumask_clear_cpu(smp_processor_id(), &cpus_chosen);
 -- 
 2.39.5
 
