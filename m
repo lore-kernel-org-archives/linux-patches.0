@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BE625D1FB;
-	Fri, 30 May 2025 12:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C41A25D529;
+	Fri, 30 May 2025 12:40:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608833; cv=none; b=TLfbhRxqwlJwDXUE8lFTHcIU67Ho10n5h3YqoKzIJ5YdsoIUHhpus76lo3ch0iEVimI1CKuBUZ4KpOoSmC3uRzbO69j4Gm/CAvc5RAQRsiShBpYQ36pKgz5/UiNCElsNoQUGm7BcSYRFMSHwzjQdL6SDJZlsAJTR0qEe/G9T7EE=
+	t=1748608834; cv=none; b=ac9hd+thJJ5pFHKXbPpVHMKaWElurqJdWtfHGJ+IPYZNPY2L0ULhzGuOHWhxuB0e3hc85Wug3LoKvUmwgNKkoqrnGLH5Mt1wsQO6vYMlWeMVFlQZ62hBoOmvE3YXtwzNjNb42vqDgWNYR1hiX92NqDG7Avo1uL6AnIoEWHH7Un0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608833; c=relaxed/simple;
-	bh=tPoOtt4IWEcPkFgZy1UQAh/qZlaV/O4k+3dkBlDaDO4=;
+	s=arc-20240116; t=1748608834; c=relaxed/simple;
+	bh=VgZEeLw7T3s1uP6nCWXg5iGGMgiOW5UUpkRsubmHo3s=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qu0upzERfalvy95RWFz/tn3rbEbH2igoA/IdLR2fDmOpv7+XVG9crH9tJsg2XN/iTYCgE0mV12tY/Hz+8vDRJZDGVkjF3ONN85AQS1Wj7mpiM4Pg3TsIjDFLxae3fugbq4dTkOgmCk2axE9l4lKjAe+74KzUrYuY2HH7fSq2e8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sHaJKSCu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NEJg/PXsRVWGq4S3AhBJGbHUnqPTWiz58ElqXdaMBpEuiFxGA6e/FN3i4lxZySk0h1OEDQ7Oj+eO5IIgrhdB59QJX/S40mNB4TW5/vyqjjU2ndDBWy+B33zbY/XVkOlYLuk3yUQjBPxRyXRvWTePkFMyVbUucJniHIUMeJz03p0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tq9l8qgb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sHaJKSCu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F06C4CEF0;
-	Fri, 30 May 2025 12:40:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tq9l8qgb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFC4C4CEEA;
+	Fri, 30 May 2025 12:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608831;
-	bh=tPoOtt4IWEcPkFgZy1UQAh/qZlaV/O4k+3dkBlDaDO4=;
+	s=k20201202; t=1748608834;
+	bh=VgZEeLw7T3s1uP6nCWXg5iGGMgiOW5UUpkRsubmHo3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sHaJKSCue57iajldrMQOi6GYb3eAzyPXTnxA+zrwjqs7CF7pVZOo2V234PhZnKOw2
-	 zR89l+toMxWIWOBHhFjakyw8+C6PxJo+dEZVttSUQKsHzpsf0oa7rUfv/deFNNlmui
-	 S5W2bXwjlJXwYkR317KcudwSAraUrocg6YZG3pyvWWcor4ikgFM8oHmYNbkGkesfu0
-	 54sIfOjcerS6kC7iD+q3nLBJ/Wt9mECTaV9rAXXaSGzalbuBRzWWnvIR+yXOv5m5L3
-	 YEK93O5h9WAn9psVVLy7drsoB5WLijlGJWyiLMJiokv9e1Hfxe+cL630TYYiSUxNFM
-	 Ajm8P4P/Fojfw==
+	b=Tq9l8qgbrMHosGY4caRhKF3W/Bgd7Zo4y0sGJ+Hm8ZvlCIhIK/xCf3dLLHmygoNcS
+	 8Z1p1dJkw+QBcjhaWV3O7xhCSDHJS92tEre6EY8yIiQwcZcyD/lpdyQYbWZTtKubvf
+	 mMuNY8IRwbGGahP+HcLXw9+IP7NzNBuq8qppyyKd2DVuAhu8jlT0Fu3PvAMFqkxofs
+	 AG4yUuisBpw1gj/TNYnH7+iopwHF76huAIhBsmKsRvpKuI/AwJ4UYujFwN1Lkj0AlK
+	 StW8y7o7ykCANmP5Clo7slr1Zib3R+bgEjD6JQqJEEVLYTTYQ6Yz6mBfCDFy/5/JNT
+	 RcmLlsErXiopA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tamir Duberstein <tamird@gmail.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Jerry Lv <Jerry.Lv@axis.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>,
-	robert.moore@intel.com,
-	erik.schmauss@intel.com,
-	lenb@kernel.org,
-	linux-acpi@vger.kernel.org,
-	devel@acpica.org,
-	linux-kernel@vger.kernel.org,
-	clang-built-linux@googlegroups.com
-Subject: [PATCH AUTOSEL 6.12 14/26] ACPICA: Apply pack(1) to union aml_resource
-Date: Fri, 30 May 2025 08:40:00 -0400
-Message-Id: <20250530124012.2575409-14-sashal@kernel.org>
+	sre@kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 16/26] power: supply: bq27xxx: Retrieve again when busy
+Date: Fri, 30 May 2025 08:40:02 -0400
+Message-Id: <20250530124012.2575409-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530124012.2575409-1-sashal@kernel.org>
 References: <20250530124012.2575409-1-sashal@kernel.org>
@@ -57,302 +54,126 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.31
 Content-Transfer-Encoding: 8bit
 
-From: Tamir Duberstein <tamird@gmail.com>
+From: Jerry Lv <Jerry.Lv@axis.com>
 
-[ Upstream commit eedf3e3c2f2af55dca42b0ea81dffb808211d269 ]
+[ Upstream commit f16d9fb6cf03fdbdefa41a8b32ba1e57afb7ae3d ]
 
-ACPICA commit 1c28da2242783579d59767617121035dafba18c3
+Multiple applications may access the battery gauge at the same time, so
+the gauge may be busy and EBUSY will be returned. The driver will set a
+flag to record the EBUSY state, and this flag will be kept until the next
+periodic update. When this flag is set, bq27xxx_battery_get_property()
+will just return ENODEV until the flag is updated.
 
-This was originally done in NetBSD:
-https://github.com/NetBSD/src/commit/b69d1ac3f7702f67edfe412e4392f77d09804910
-and is the correct alternative to the smattering of `memcpy`s I
-previously contributed to this repository.
+Even if the gauge was busy during the last accessing attempt, returning
+ENODEV is not ideal, and can cause confusion in the applications layer.
 
-This also sidesteps the newly strict checks added in UBSAN:
-https://github.com/llvm/llvm-project/commit/792674400f6f04a074a3827349ed0e2ac10067f6
+Instead, retry accessing the I2C to update the flag is as expected, for
+the gauge typically recovers from busy state within a few milliseconds.
+If still failed to access the gauge, the real error code would be returned
+instead of ENODEV (as suggested by Pali Rohár).
 
-Before this change we see the following UBSAN stack trace in Fuchsia:
-
-  #0    0x000021afcfdeca5e in acpi_rs_get_address_common(struct acpi_resource*, union aml_resource*) ../../third_party/acpica/source/components/resources/rsaddr.c:329 <platform-bus-x86.so>+0x6aca5e
-  #1.2  0x000021982bc4af3c in ubsan_get_stack_trace() compiler-rt/lib/ubsan/ubsan_diag.cpp:41 <libclang_rt.asan.so>+0x41f3c
-  #1.1  0x000021982bc4af3c in maybe_print_stack_trace() compiler-rt/lib/ubsan/ubsan_diag.cpp:51 <libclang_rt.asan.so>+0x41f3c
-  #1    0x000021982bc4af3c in ~scoped_report() compiler-rt/lib/ubsan/ubsan_diag.cpp:395 <libclang_rt.asan.so>+0x41f3c
-  #2    0x000021982bc4bb6f in handletype_mismatch_impl() compiler-rt/lib/ubsan/ubsan_handlers.cpp:137 <libclang_rt.asan.so>+0x42b6f
-  #3    0x000021982bc4b723 in __ubsan_handle_type_mismatch_v1 compiler-rt/lib/ubsan/ubsan_handlers.cpp:142 <libclang_rt.asan.so>+0x42723
-  #4    0x000021afcfdeca5e in acpi_rs_get_address_common(struct acpi_resource*, union aml_resource*) ../../third_party/acpica/source/components/resources/rsaddr.c:329 <platform-bus-x86.so>+0x6aca5e
-  #5    0x000021afcfdf2089 in acpi_rs_convert_aml_to_resource(struct acpi_resource*, union aml_resource*, struct acpi_rsconvert_info*) ../../third_party/acpica/source/components/resources/rsmisc.c:355 <platform-bus-x86.so>+0x6b2089
-  #6    0x000021afcfded169 in acpi_rs_convert_aml_to_resources(u8*, u32, u32, u8, void**) ../../third_party/acpica/source/components/resources/rslist.c:137 <platform-bus-x86.so>+0x6ad169
-  #7    0x000021afcfe2d24a in acpi_ut_walk_aml_resources(struct acpi_walk_state*, u8*, acpi_size, acpi_walk_aml_callback, void**) ../../third_party/acpica/source/components/utilities/utresrc.c:237 <platform-bus-x86.so>+0x6ed24a
-  #8    0x000021afcfde66b7 in acpi_rs_create_resource_list(union acpi_operand_object*, struct acpi_buffer*) ../../third_party/acpica/source/components/resources/rscreate.c:199 <platform-bus-x86.so>+0x6a66b7
-  #9    0x000021afcfdf6979 in acpi_rs_get_method_data(acpi_handle, const char*, struct acpi_buffer*) ../../third_party/acpica/source/components/resources/rsutils.c:770 <platform-bus-x86.so>+0x6b6979
-  #10   0x000021afcfdf708f in acpi_walk_resources(acpi_handle, char*, acpi_walk_resource_callback, void*) ../../third_party/acpica/source/components/resources/rsxface.c:731 <platform-bus-x86.so>+0x6b708f
-  #11   0x000021afcfa95dcf in acpi::acpi_impl::walk_resources(acpi::acpi_impl*, acpi_handle, const char*, acpi::Acpi::resources_callable) ../../src/devices/board/lib/acpi/acpi-impl.cc:41 <platform-bus-x86.so>+0x355dcf
-  #12   0x000021afcfaa8278 in acpi::device_builder::gather_resources(acpi::device_builder*, acpi::Acpi*, fidl::any_arena&, acpi::Manager*, acpi::device_builder::gather_resources_callback) ../../src/devices/board/lib/acpi/device-builder.cc:84 <platform-bus-x86.so>+0x368278
-  #13   0x000021afcfbddb87 in acpi::Manager::configure_discovered_devices(acpi::Manager*) ../../src/devices/board/lib/acpi/manager.cc:75 <platform-bus-x86.so>+0x49db87
-  #14   0x000021afcf99091d in publish_acpi_devices(acpi::Manager*, zx_device_t*, zx_device_t*) ../../src/devices/board/drivers/x86/acpi-nswalk.cc:95 <platform-bus-x86.so>+0x25091d
-  #15   0x000021afcf9c1d4e in x86::X86::do_init(x86::X86*) ../../src/devices/board/drivers/x86/x86.cc:60 <platform-bus-x86.so>+0x281d4e
-  #16   0x000021afcf9e33ad in λ(x86::X86::ddk_init::(anon class)*) ../../src/devices/board/drivers/x86/x86.cc:77 <platform-bus-x86.so>+0x2a33ad
-  #17   0x000021afcf9e313e in fit::internal::target<(lambda at../../src/devices/board/drivers/x86/x86.cc:76:19), false, false, std::__2::allocator<std::byte>, void>::invoke(void*) ../../sdk/lib/fit/include/lib/fit/internal/function.h:183 <platform-bus-x86.so>+0x2a313e
-  #18   0x000021afcfbab4c7 in fit::internal::function_base<16UL, false, void(), std::__2::allocator<std::byte>>::invoke(const fit::internal::function_base<16UL, false, void (), std::__2::allocator<std::byte> >*) ../../sdk/lib/fit/include/lib/fit/internal/function.h:522 <platform-bus-x86.so>+0x46b4c7
-  #19   0x000021afcfbab342 in fit::function_impl<16UL, false, void(), std::__2::allocator<std::byte>>::operator()(const fit::function_impl<16UL, false, void (), std::__2::allocator<std::byte> >*) ../../sdk/lib/fit/include/lib/fit/function.h:315 <platform-bus-x86.so>+0x46b342
-  #20   0x000021afcfcd98c3 in async::internal::retained_task::Handler(async_dispatcher_t*, async_task_t*, zx_status_t) ../../sdk/lib/async/task.cc:24 <platform-bus-x86.so>+0x5998c3
-  #21   0x00002290f9924616 in λ(const driver_runtime::Dispatcher::post_task::(anon class)*, std::__2::unique_ptr<driver_runtime::callback_request, std::__2::default_delete<driver_runtime::callback_request> >, zx_status_t) ../../src/devices/bin/driver_runtime/dispatcher.cc:789 <libdriver_runtime.so>+0x10a616
-  #22   0x00002290f9924323 in fit::internal::target<(lambda at../../src/devices/bin/driver_runtime/dispatcher.cc:788:7), true, false, std::__2::allocator<std::byte>, void, std::__2::unique_ptr<driver_runtime::callback_request, std::__2::default_delete<driver_runtime::callback_request>>, int>::invoke(void*, std::__2::unique_ptr<driver_runtime::callback_request, std::__2::default_delete<driver_runtime::callback_request> >, int) ../../sdk/lib/fit/include/lib/fit/internal/function.h:128 <libdriver_runtime.so>+0x10a323
-  #23   0x00002290f9904b76 in fit::internal::function_base<24UL, true, void(std::__2::unique_ptr<driver_runtime::callback_request, std::__2::default_delete<driver_runtime::callback_request>>, int), std::__2::allocator<std::byte>>::invoke(const fit::internal::function_base<24UL, true, void (std::__2::unique_ptr<driver_runtime::callback_request, std::__2::default_delete<driver_runtime::callback_request> >, int), std::__2::allocator<std::byte> >*, std::__2::unique_ptr<driver_runtime::callback_request, std::__2::default_delete<driver_runtime::callback_request> >, int) ../../sdk/lib/fit/include/lib/fit/internal/function.h:522 <libdriver_runtime.so>+0xeab76
-  #24   0x00002290f9904831 in fit::callback_impl<24UL, true, void(std::__2::unique_ptr<driver_runtime::callback_request, std::__2::default_delete<driver_runtime::callback_request>>, int), std::__2::allocator<std::byte>>::operator()(fit::callback_impl<24UL, true, void (std::__2::unique_ptr<driver_runtime::callback_request, std::__2::default_delete<driver_runtime::callback_request> >, int), std::__2::allocator<std::byte> >*, std::__2::unique_ptr<driver_runtime::callback_request, std::__2::default_delete<driver_runtime::callback_request> >, int) ../../sdk/lib/fit/include/lib/fit/function.h:471 <libdriver_runtime.so>+0xea831
-  #25   0x00002290f98d5adc in driver_runtime::callback_request::Call(driver_runtime::callback_request*, std::__2::unique_ptr<driver_runtime::callback_request, std::__2::default_delete<driver_runtime::callback_request> >, zx_status_t) ../../src/devices/bin/driver_runtime/callback_request.h:74 <libdriver_runtime.so>+0xbbadc
-  #26   0x00002290f98e1e58 in driver_runtime::Dispatcher::dispatch_callback(driver_runtime::Dispatcher*, std::__2::unique_ptr<driver_runtime::callback_request, std::__2::default_delete<driver_runtime::callback_request> >) ../../src/devices/bin/driver_runtime/dispatcher.cc:1248 <libdriver_runtime.so>+0xc7e58
-  #27   0x00002290f98e4159 in driver_runtime::Dispatcher::dispatch_callbacks(driver_runtime::Dispatcher*, std::__2::unique_ptr<driver_runtime::Dispatcher::event_waiter, std::__2::default_delete<driver_runtime::Dispatcher::event_waiter> >, fbl::ref_ptr<driver_runtime::Dispatcher>) ../../src/devices/bin/driver_runtime/dispatcher.cc:1308 <libdriver_runtime.so>+0xca159
-  #28   0x00002290f9918414 in λ(const driver_runtime::Dispatcher::create_with_adder::(anon class)*, std::__2::unique_ptr<driver_runtime::Dispatcher::event_waiter, std::__2::default_delete<driver_runtime::Dispatcher::event_waiter> >, fbl::ref_ptr<driver_runtime::Dispatcher>) ../../src/devices/bin/driver_runtime/dispatcher.cc:353 <libdriver_runtime.so>+0xfe414
-  #29   0x00002290f991812d in fit::internal::target<(lambda at../../src/devices/bin/driver_runtime/dispatcher.cc:351:7), true, false, std::__2::allocator<std::byte>, void, std::__2::unique_ptr<driver_runtime::Dispatcher::event_waiter, std::__2::default_delete<driver_runtime::Dispatcher::event_waiter>>, fbl::ref_ptr<driver_runtime::Dispatcher>>::invoke(void*, std::__2::unique_ptr<driver_runtime::Dispatcher::event_waiter, std::__2::default_delete<driver_runtime::Dispatcher::event_waiter> >, fbl::ref_ptr<driver_runtime::Dispatcher>) ../../sdk/lib/fit/include/lib/fit/internal/function.h:128 <libdriver_runtime.so>+0xfe12d
-  #30   0x00002290f9906fc7 in fit::internal::function_base<8UL, true, void(std::__2::unique_ptr<driver_runtime::Dispatcher::event_waiter, std::__2::default_delete<driver_runtime::Dispatcher::event_waiter>>, fbl::ref_ptr<driver_runtime::Dispatcher>), std::__2::allocator<std::byte>>::invoke(const fit::internal::function_base<8UL, true, void (std::__2::unique_ptr<driver_runtime::Dispatcher::event_waiter, std::__2::default_delete<driver_runtime::Dispatcher::event_waiter> >, fbl::ref_ptr<driver_runtime::Dispatcher>), std::__2::allocator<std::byte> >*, std::__2::unique_ptr<driver_runtime::Dispatcher::event_waiter, std::__2::default_delete<driver_runtime::Dispatcher::event_waiter> >, fbl::ref_ptr<driver_runtime::Dispatcher>) ../../sdk/lib/fit/include/lib/fit/internal/function.h:522 <libdriver_runtime.so>+0xecfc7
-  #31   0x00002290f9906c66 in fit::function_impl<8UL, true, void(std::__2::unique_ptr<driver_runtime::Dispatcher::event_waiter, std::__2::default_delete<driver_runtime::Dispatcher::event_waiter>>, fbl::ref_ptr<driver_runtime::Dispatcher>), std::__2::allocator<std::byte>>::operator()(const fit::function_impl<8UL, true, void (std::__2::unique_ptr<driver_runtime::Dispatcher::event_waiter, std::__2::default_delete<driver_runtime::Dispatcher::event_waiter> >, fbl::ref_ptr<driver_runtime::Dispatcher>), std::__2::allocator<std::byte> >*, std::__2::unique_ptr<driver_runtime::Dispatcher::event_waiter, std::__2::default_delete<driver_runtime::Dispatcher::event_waiter> >, fbl::ref_ptr<driver_runtime::Dispatcher>) ../../sdk/lib/fit/include/lib/fit/function.h:315 <libdriver_runtime.so>+0xecc66
-  #32   0x00002290f98e73d9 in driver_runtime::Dispatcher::event_waiter::invoke_callback(driver_runtime::Dispatcher::event_waiter*, std::__2::unique_ptr<driver_runtime::Dispatcher::event_waiter, std::__2::default_delete<driver_runtime::Dispatcher::event_waiter> >, fbl::ref_ptr<driver_runtime::Dispatcher>) ../../src/devices/bin/driver_runtime/dispatcher.h:543 <libdriver_runtime.so>+0xcd3d9
-  #33   0x00002290f98e700d in driver_runtime::Dispatcher::event_waiter::handle_event(std::__2::unique_ptr<driver_runtime::Dispatcher::event_waiter, std::__2::default_delete<driver_runtime::Dispatcher::event_waiter> >, async_dispatcher_t*, async::wait_base*, zx_status_t, zx_packet_signal_t const*) ../../src/devices/bin/driver_runtime/dispatcher.cc:1442 <libdriver_runtime.so>+0xcd00d
-  #34   0x00002290f9918983 in async_loop_owned_event_handler<driver_runtime::Dispatcher::event_waiter>::handle_event(async_loop_owned_event_handler<driver_runtime::Dispatcher::event_waiter>*, async_dispatcher_t*, async::wait_base*, zx_status_t, zx_packet_signal_t const*) ../../src/devices/bin/driver_runtime/async_loop_owned_event_handler.h:59 <libdriver_runtime.so>+0xfe983
-  #35   0x00002290f9918b9e in async::wait_method<async_loop_owned_event_handler<driver_runtime::Dispatcher::event_waiter>, &async_loop_owned_event_handler<driver_runtime::Dispatcher::event_waiter>::handle_event>::call_handler(async_dispatcher_t*, async_wait_t*, zx_status_t, zx_packet_signal_t const*) ../../sdk/lib/async/include/lib/async/cpp/wait.h:201 <libdriver_runtime.so>+0xfeb9e
-  #36   0x00002290f99bf509 in async_loop_dispatch_wait(async_loop_t*, async_wait_t*, zx_status_t, zx_packet_signal_t const*) ../../sdk/lib/async-loop/loop.c:394 <libdriver_runtime.so>+0x1a5509
-  #37   0x00002290f99b9958 in async_loop_run_once(async_loop_t*, zx_time_t) ../../sdk/lib/async-loop/loop.c:343 <libdriver_runtime.so>+0x19f958
-  #38   0x00002290f99b9247 in async_loop_run(async_loop_t*, zx_time_t, _Bool) ../../sdk/lib/async-loop/loop.c:301 <libdriver_runtime.so>+0x19f247
-  #39   0x00002290f99ba962 in async_loop_run_thread(void*) ../../sdk/lib/async-loop/loop.c:860 <libdriver_runtime.so>+0x1a0962
-  #40   0x000041afd176ef30 in start_c11(void*) ../../zircon/third_party/ulib/musl/pthread/pthread_create.c:63 <libc.so>+0x84f30
-  #41   0x000041afd18a448d in thread_trampoline(uintptr_t, uintptr_t) ../../zircon/system/ulib/runtime/thread.cc:100 <libc.so>+0x1ba48d
-
-Link: https://github.com/acpica/acpica/commit/1c28da22
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/4664267.LvFx2qVVIh@rjwysocki.net
-Signed-off-by: Tamir Duberstein <tamird@gmail.com>
-[ rjw: Pick up the tag from Tamir ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Jerry Lv <Jerry.Lv@axis.com>
+Link: https://lore.kernel.org/r/20250415-foo-fix-v2-1-5b45a395e4cc@axis.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Critical Bug Fix Analysis **1. Fixes Real
-UBSAN Errors**: The commit addresses actual UBSAN (Undefined Behavior
-Sanitizer) violations that are triggered in real systems, specifically
-in Fuchsia OS but likely affecting Linux as well when using strict UBSAN
-builds. The stack trace shows concrete crashes in
-`acpi_rs_get_address_common()` and related ACPICA functions. **2. Root
-Cause - Misaligned Structure Access**: The fundamental issue is that
-`union aml_resource` was being defined with default alignment (after
-`#pragma pack()` at line 509 in amlresrc.h), while the individual
-structures within it were packed. This created a mismatch where: -
-Individual structs like `aml_resource_address` are packed with `#pragma
-pack(1)` - But `union aml_resource` containing them uses default
-alignment - When the union is cast from potentially misaligned AML byte
-streams, direct member access violates alignment requirements **3.
-Current Workarounds are Suboptimal**: The kernel currently has multiple
-`memcpy` workarounds scattered across 5 files (`rsaddr.c`, `rscalc.c`,
-`rslist.c`, `utresrc.c`) to avoid direct member access. These include
-comments like "Avoid undefined behavior: member access within misaligned
-address". **4. Elegant Solution**: The commit applies `#pragma pack(1)`
-to the `union aml_resource` itself by moving the `#pragma pack()`
-directive from before the union (line 509) to after it (line 563). This
-ensures the union has the same packing as its constituent structures. ##
-Code Impact Analysis **5. Minimal and Contained Change**: - Only moves
-existing pragma directives (4 lines changed in amlresrc.h) - Removes 48
-lines of workaround `memcpy` code across 4 files - No functional logic
-changes, only structural alignment fixes **6. Removes Maintenance
-Burden**: Eliminates the need for ongoing `memcpy` workarounds and the
-associated risk of missing alignment issues in future ACPICA updates.
-**7. Performance Benefit**: Direct member access is more efficient than
-`memcpy` operations, especially in ACPI hot paths during device
-enumeration. ## Stability Assessment **8. Low Regression Risk**: -
-ACPICA is well-tested code that undergoes extensive validation - The
-change makes the code more correct, not less - Similar pattern already
-used successfully in NetBSD - Does not change ABI or userspace
-interfaces **9. Critical Subsystem**: ACPI is fundamental to modern x86
-systems for device enumeration, power management, and hardware
-configuration. UBSAN violations in this code path can cause system
-instability. **10. Alignment with Stable Tree Criteria**: - ✅ Fixes
-important bugs (UBSAN violations can cause crashes) - ✅ Doesn't
-introduce new features - ✅ No architectural changes (just alignment fix)
-- ✅ Minimal regression risk - ✅ Confined to ACPICA subsystem ##
-Historical Context **11. Pattern of ACPICA UBSAN Fixes**: The git log
-shows multiple recent UBSAN-related fixes in ACPICA (commits
-d0a874cb4519, bf44c56a9977, 5bd2315bd2e4, etc.), indicating this is part
-of an ongoing effort to clean up undefined behavior in this critical
-subsystem. **12. Missing from Stable**: The commit appears in v6.16+ but
-has not been backported to stable branches like 6.14.y or 6.13.y,
-despite being a clear bugfix. This commit represents exactly the type of
-fix that stable trees need: it resolves real crashes/undefined behavior
-in a critical subsystem with minimal risk and no functional changes. The
-presence of extensive workarounds in the current code demonstrates that
-this is a known problem affecting real systems.
+**YES** This commit should be backported to stable kernel trees. ##
+Detailed Analysis: ### 1. **User-Visible Bug Fix** ✅ The commit fixes a
+clear user-visible issue where multiple applications accessing the
+battery gauge simultaneously receive confusing `-ENODEV` errors instead
+of actual battery data or proper error codes. This directly impacts
+battery monitoring applications and system power management tools. ###
+2. **Code Changes Analysis** **bq27xxx_battery.c change:** ```c -return
+-ENODEV; +return di->cache.flags; ``` This single-line change stops
+masking real error codes with generic `-ENODEV`, allowing applications
+to see the actual error (like `-EBUSY`) and handle it appropriately.
+**bq27xxx_battery_i2c.c changes:** - Adds retry logic with up to 3
+attempts when encountering `-EBUSY` - Uses standard `usleep_range(10000,
+11000)` for 10ms delays - Implements proper loop structure with explicit
+break conditions ### 3. **Small and Contained** ✅ The changes are
+minimal and focused: - No architectural modifications - No changes to
+driver interfaces or APIs - Limited to error handling improvement within
+the same subsystem ### 4. **Low Regression Risk** ✅ - Uses established
+kernel patterns (`usleep_range`, retry counters) - No timing changes to
+critical paths - Battery gauges typically recover from busy state within
+milliseconds - Maintains backward compatibility ### 5. **Historical
+Precedent** ✅ Analysis of similar bq27xxx commits shows consistent
+backporting: - "Fix race condition" (Similar Commit #4): **YES** -
+Similar I2C access improvement - "After charger plug in/out wait 0.5s"
+(Similar Commit #5): **YES** - Similar stability fix - "make status more
+robust" (Similar Commit #2): **YES** - Similar robustness improvement
+### 6. **Follows Kernel Conventions** ✅ - Standard I2C retry mechanisms
+are common in the kernel - Proper error code propagation instead of
+masking - Code reviewed by subsystem maintainer (Pali Rohár) - Uses
+kernel-standard delay functions ### 7. **System Impact** **Improves
+stability** by: - Preventing userspace confusion from misleading error
+codes - Gracefully handling concurrent access scenarios - Better error
+reporting for debugging - No negative side effects identified ### 8.
+**Risk Assessment** **Very Low Risk:** - No memory management changes -
+No locking mechanism modifications - Standard retry pattern with bounded
+attempts - Preserves all existing functionality This commit represents
+an ideal stable backport candidate: it fixes a real user-visible bug
+with minimal, well-understood code changes that follow established
+kernel patterns and have strong historical precedent for backporting in
+this driver subsystem.
 
- drivers/acpi/acpica/amlresrc.h |  8 ++++----
- drivers/acpi/acpica/rsaddr.c   | 13 ++++---------
- drivers/acpi/acpica/rscalc.c   | 22 +++++-----------------
- drivers/acpi/acpica/rslist.c   | 12 +++---------
- drivers/acpi/acpica/utresrc.c  | 14 +++++---------
- 5 files changed, 21 insertions(+), 48 deletions(-)
+ drivers/power/supply/bq27xxx_battery.c     |  2 +-
+ drivers/power/supply/bq27xxx_battery_i2c.c | 13 ++++++++++++-
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/acpica/amlresrc.h b/drivers/acpi/acpica/amlresrc.h
-index 4e88f9fc2a289..b6588b7fa8986 100644
---- a/drivers/acpi/acpica/amlresrc.h
-+++ b/drivers/acpi/acpica/amlresrc.h
-@@ -504,10 +504,6 @@ struct aml_resource_pin_group_config {
+diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
+index 1a20c775489c7..871f03d160c53 100644
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -2062,7 +2062,7 @@ static int bq27xxx_battery_get_property(struct power_supply *psy,
+ 	mutex_unlock(&di->lock);
  
- #define AML_RESOURCE_PIN_GROUP_CONFIG_REVISION    1	/* ACPI 6.2 */
+ 	if (psp != POWER_SUPPLY_PROP_PRESENT && di->cache.flags < 0)
+-		return -ENODEV;
++		return di->cache.flags;
  
--/* restore default alignment */
--
--#pragma pack()
--
- /* Union of all resource descriptors, so we can allocate the worst case */
+ 	switch (psp) {
+ 	case POWER_SUPPLY_PROP_STATUS:
+diff --git a/drivers/power/supply/bq27xxx_battery_i2c.c b/drivers/power/supply/bq27xxx_battery_i2c.c
+index ba0d22d904295..868e95f0887e1 100644
+--- a/drivers/power/supply/bq27xxx_battery_i2c.c
++++ b/drivers/power/supply/bq27xxx_battery_i2c.c
+@@ -6,6 +6,7 @@
+  *	Andrew F. Davis <afd@ti.com>
+  */
  
- union aml_resource {
-@@ -562,6 +558,10 @@ union aml_resource {
- 	u8 byte_item;
- };
++#include <linux/delay.h>
+ #include <linux/i2c.h>
+ #include <linux/interrupt.h>
+ #include <linux/module.h>
+@@ -31,6 +32,7 @@ static int bq27xxx_battery_i2c_read(struct bq27xxx_device_info *di, u8 reg,
+ 	struct i2c_msg msg[2];
+ 	u8 data[2];
+ 	int ret;
++	int retry = 0;
  
-+/* restore default alignment */
+ 	if (!client->adapter)
+ 		return -ENODEV;
+@@ -47,7 +49,16 @@ static int bq27xxx_battery_i2c_read(struct bq27xxx_device_info *di, u8 reg,
+ 	else
+ 		msg[1].len = 2;
+ 
+-	ret = i2c_transfer(client->adapter, msg, ARRAY_SIZE(msg));
++	do {
++		ret = i2c_transfer(client->adapter, msg, ARRAY_SIZE(msg));
++		if (ret == -EBUSY && ++retry < 3) {
++			/* sleep 10 milliseconds when busy */
++			usleep_range(10000, 11000);
++			continue;
++		}
++		break;
++	} while (1);
 +
-+#pragma pack()
-+
- /* Interfaces used by both the disassembler and compiler */
+ 	if (ret < 0)
+ 		return ret;
  
- void
-diff --git a/drivers/acpi/acpica/rsaddr.c b/drivers/acpi/acpica/rsaddr.c
-index 27384ee245f09..f92010e667cda 100644
---- a/drivers/acpi/acpica/rsaddr.c
-+++ b/drivers/acpi/acpica/rsaddr.c
-@@ -272,18 +272,13 @@ u8
- acpi_rs_get_address_common(struct acpi_resource *resource,
- 			   union aml_resource *aml)
- {
--	struct aml_resource_address address;
--
- 	ACPI_FUNCTION_ENTRY();
- 
--	/* Avoid undefined behavior: member access within misaligned address */
--
--	memcpy(&address, aml, sizeof(address));
--
- 	/* Validate the Resource Type */
- 
--	if ((address.resource_type > 2) &&
--	    (address.resource_type < 0xC0) && (address.resource_type != 0x0A)) {
-+	if ((aml->address.resource_type > 2) &&
-+	    (aml->address.resource_type < 0xC0) &&
-+	    (aml->address.resource_type != 0x0A)) {
- 		return (FALSE);
- 	}
- 
-@@ -304,7 +299,7 @@ acpi_rs_get_address_common(struct acpi_resource *resource,
- 		/* Generic resource type, just grab the type_specific byte */
- 
- 		resource->data.address.info.type_specific =
--		    address.specific_flags;
-+		    aml->address.specific_flags;
- 	}
- 
- 	return (TRUE);
-diff --git a/drivers/acpi/acpica/rscalc.c b/drivers/acpi/acpica/rscalc.c
-index 6e7a152d64595..242daf45e20ef 100644
---- a/drivers/acpi/acpica/rscalc.c
-+++ b/drivers/acpi/acpica/rscalc.c
-@@ -608,18 +608,12 @@ acpi_rs_get_list_length(u8 *aml_buffer,
- 
- 		case ACPI_RESOURCE_NAME_SERIAL_BUS:{
- 
--				/* Avoid undefined behavior: member access within misaligned address */
--
--				struct aml_resource_common_serialbus
--				    common_serial_bus;
--				memcpy(&common_serial_bus, aml_resource,
--				       sizeof(common_serial_bus));
--
- 				minimum_aml_resource_length =
- 				    acpi_gbl_resource_aml_serial_bus_sizes
--				    [common_serial_bus.type];
-+				    [aml_resource->common_serial_bus.type];
- 				extra_struct_bytes +=
--				    common_serial_bus.resource_length -
-+				    aml_resource->common_serial_bus.
-+				    resource_length -
- 				    minimum_aml_resource_length;
- 				break;
- 			}
-@@ -688,16 +682,10 @@ acpi_rs_get_list_length(u8 *aml_buffer,
- 		 */
- 		if (acpi_ut_get_resource_type(aml_buffer) ==
- 		    ACPI_RESOURCE_NAME_SERIAL_BUS) {
--
--			/* Avoid undefined behavior: member access within misaligned address */
--
--			struct aml_resource_common_serialbus common_serial_bus;
--			memcpy(&common_serial_bus, aml_resource,
--			       sizeof(common_serial_bus));
--
- 			buffer_size =
- 			    acpi_gbl_resource_struct_serial_bus_sizes
--			    [common_serial_bus.type] + extra_struct_bytes;
-+			    [aml_resource->common_serial_bus.type] +
-+			    extra_struct_bytes;
- 		} else {
- 			buffer_size =
- 			    acpi_gbl_resource_struct_sizes[resource_index] +
-diff --git a/drivers/acpi/acpica/rslist.c b/drivers/acpi/acpica/rslist.c
-index 164c96e063c6e..e46efaa889cdd 100644
---- a/drivers/acpi/acpica/rslist.c
-+++ b/drivers/acpi/acpica/rslist.c
-@@ -55,21 +55,15 @@ acpi_rs_convert_aml_to_resources(u8 * aml,
- 	aml_resource = ACPI_CAST_PTR(union aml_resource, aml);
- 
- 	if (acpi_ut_get_resource_type(aml) == ACPI_RESOURCE_NAME_SERIAL_BUS) {
--
--		/* Avoid undefined behavior: member access within misaligned address */
--
--		struct aml_resource_common_serialbus common_serial_bus;
--		memcpy(&common_serial_bus, aml_resource,
--		       sizeof(common_serial_bus));
--
--		if (common_serial_bus.type > AML_RESOURCE_MAX_SERIALBUSTYPE) {
-+		if (aml_resource->common_serial_bus.type >
-+		    AML_RESOURCE_MAX_SERIALBUSTYPE) {
- 			conversion_table = NULL;
- 		} else {
- 			/* This is an I2C, SPI, UART, or CSI2 serial_bus descriptor */
- 
- 			conversion_table =
- 			    acpi_gbl_convert_resource_serial_bus_dispatch
--			    [common_serial_bus.type];
-+			    [aml_resource->common_serial_bus.type];
- 		}
- 	} else {
- 		conversion_table =
-diff --git a/drivers/acpi/acpica/utresrc.c b/drivers/acpi/acpica/utresrc.c
-index cff7901f7866e..e1cc3d3487508 100644
---- a/drivers/acpi/acpica/utresrc.c
-+++ b/drivers/acpi/acpica/utresrc.c
-@@ -361,20 +361,16 @@ acpi_ut_validate_resource(struct acpi_walk_state *walk_state,
- 	aml_resource = ACPI_CAST_PTR(union aml_resource, aml);
- 	if (resource_type == ACPI_RESOURCE_NAME_SERIAL_BUS) {
- 
--		/* Avoid undefined behavior: member access within misaligned address */
--
--		struct aml_resource_common_serialbus common_serial_bus;
--		memcpy(&common_serial_bus, aml_resource,
--		       sizeof(common_serial_bus));
--
- 		/* Validate the bus_type field */
- 
--		if ((common_serial_bus.type == 0) ||
--		    (common_serial_bus.type > AML_RESOURCE_MAX_SERIALBUSTYPE)) {
-+		if ((aml_resource->common_serial_bus.type == 0) ||
-+		    (aml_resource->common_serial_bus.type >
-+		     AML_RESOURCE_MAX_SERIALBUSTYPE)) {
- 			if (walk_state) {
- 				ACPI_ERROR((AE_INFO,
- 					    "Invalid/unsupported SerialBus resource descriptor: BusType 0x%2.2X",
--					    common_serial_bus.type));
-+					    aml_resource->common_serial_bus.
-+					    type));
- 			}
- 			return (AE_AML_INVALID_RESOURCE_TYPE);
- 		}
 -- 
 2.39.5
 
