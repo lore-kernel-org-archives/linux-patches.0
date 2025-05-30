@@ -1,97 +1,141 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx.denx.de (mx.denx.de [89.58.32.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A38922D4FA
-	for <patches@lists.linux.dev>; Thu, 29 May 2025 21:57:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB00F20AF98
+	for <patches@lists.linux.dev>; Fri, 30 May 2025 09:43:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748555863; cv=none; b=ZCN0f3ZkIiu8/cOPKF0VSuabpFSz44DW11yYeisMWWh/nTPcKmwG795Lvwz0LmlKumnWkUBDfxKNBo3Vw2BZTjWPF5HbCaII7tGTDvaTPMkcOxX2hu418sOXjNicorJu1gulglPHLMcB8C3KaOCZc1Mvpz2dR4st7uiq7cXp9zA=
+	t=1748598201; cv=none; b=WkzBV7hrpD7w/bh9WChgDLpLZMRhMAgO/5tQbBAjBPc/vixn+GovnwB4kc/coSScFwfQjPGxnKAdXPff97+iGVJXV6mH4jtbtfLo0jPDoVpHedymAKQuwq7LfZBiJN0UXbHfwoeft/qhGaYWN71eQpz7I32iM4CvwvA6IkNJJtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748555863; c=relaxed/simple;
-	bh=hRhuj7xE1dBPPnx/EVxIJiotQ89zyqzhXVw7IFjGmE8=;
+	s=arc-20240116; t=1748598201; c=relaxed/simple;
+	bh=mioDvC2ui2Lxen2IMB4GYdqH2dt1hyHQQ6NT3WLGnEQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KMGw1cFQf0Nqo+LnTEqk8SsEIZVj6fBwcHPAZFLYTjIqc+DaBR48RLYAbCA15IWk1IgT1zlDA24V76JbAVajPKXGGBlQCnPqksdcPEKaWuIhi6kJZto8h64EmSXPqJgmG6MEQ0bmtQREg+GY+QyVBVN3WQRC8zvMRvxLtMQCCfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mj3wVum7; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=JLSs7b6uEAEhKcuPuxe98BEyxtQyIuM2d/4WUtYLGtW2E86cCKNPEZUo0cf5e84HlMmH7G/3p7YcpcC31ZAq8SOWqm+gTIxG8ooqJmMn7FBbF8kwOvBG+ACUE3IkX2VTAK0s2p2lDhnRAkOPa6iMwTwVYu3ut2TmJirN8EYMRWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=PFerO9NQ; arc=none smtp.client-ip=89.58.32.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mj3wVum7"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-22e16234307so12226445ad.0
-        for <patches@lists.linux.dev>; Thu, 29 May 2025 14:57:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748555860; x=1749160660; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=x0GMs9CYxQo1qYKiYb5d9sx6J+FnaGgIltFASAatpr4=;
-        b=Mj3wVum7cfnBc8Lnpwz2umeHHbC4UlojZuinB/yuR30FjI57eLC6rVo7DuGRGiiTeO
-         c26L++heRo7lKhqVQrg7Cs/Q6xfbCqcG6DAuDVKcv3yjkIJS+WelyQQiDS9xx2Fm2+wO
-         SzM0RlFtTbD6Um8pEyFoa8TPwtOtSISt7o4Cutzr6GaBpzI6llmkzwIz3nd7zLpJNohL
-         iYbEV7Jya0vBf4d+fo5M1jJZunmVoSsbipSeawjefbfW5DFBPz42V/9Py4IDleuoE5M/
-         U27IWgC8QZRnyRnx9b8BgYuoyAW4pKt5Ks+P3Fso9ZBnfEknDRAzT9BgK59rXnTXGIW9
-         nfow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748555860; x=1749160660;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=x0GMs9CYxQo1qYKiYb5d9sx6J+FnaGgIltFASAatpr4=;
-        b=mkItq+eqaJFQMF6mY2BWdUDlWQqDGbpSij9mws52eLRzaLYEi28CStXq7lgT0k5xuA
-         iUKuU5v/kFMHgvhhyT/9XopLlhru6IUFcFJKzl74cf5RM7eCeGYA8o3GfSKBatWh9zzO
-         Qms0P3G4tIRL1rr9Leqkvdni497ij9KuCdTZWVHt9CiCjt7EazjsjEB/xWwQwh5KbXzg
-         ht5ApEJ6H0r8MP6NvGGyCkTbkUY2v4YG9Ii+A2Uo9N+4vtgYr6uMn0/wxSqv1zIP+wCf
-         1lx8VkQb2aVNltAsxqK0bbPREW1QfNn0pF+5sBC2zmh6T1BTPXMHMN+8a62/IAAmFFls
-         TEBw==
-X-Forwarded-Encrypted: i=1; AJvYcCWdbImdmzTTA0q2M3U9MOSax/t5SKQW4fDQmik0ahhbcYBWE+Q2KKa8JwQrXrHKw/Po8eC3U07t@lists.linux.dev
-X-Gm-Message-State: AOJu0YzVABc9Ng3mwtPccnxT/68rXM/rIq9QlTf/kPMIjDDq6DHIOBVb
-	1kPcKXTMwE2OuNExgvysNkKfkU1VVn7Km9JMgrMKWwpuYZtqEEhwoUL+
-X-Gm-Gg: ASbGncvU/IOg0T077hRETUJb+un2tCNl489FNectlpSepqRKSZlQXly7lq+WdiMRFdS
-	a0nFhhiX9D9bDNqJl9AUWdu37bB6TjnXHDbbbnxOcdDxUT1PWpAunziXlloF/tkjRNrHiKJWPUr
-	75sy0g0TOHsy0EATkfUWo28qT+m/WMsBtMHDkAQrAoXxC+wvi/0davKiPpz8i4cUNEqi9jH/80f
-	+4Xp+YDqlUt7k0/eYzNTdFD2ai67gmm50bo4OqB+BbHQX3gBs5bZOK3CIYwovELDz8vkutXX6N8
-	guRyx8IaOYnMopbVZcLQ1aIO0fufmNshDRH+zMQxPBtWKEX2ot/hF1PlN+ZaBnw=
-X-Google-Smtp-Source: AGHT+IFCgSmz/OIAP9QcUueti/TFiI+FoURwz75jbYsNGy7OOgBeFcGvWYnDLiQ58WZGcXzehIbEvw==
-X-Received: by 2002:a17:902:e803:b0:215:ba2b:cd55 with SMTP id d9443c01a7336-2352af0b270mr13215645ad.2.1748555860392;
-        Thu, 29 May 2025 14:57:40 -0700 (PDT)
-Received: from google.com ([2620:15c:9d:2:4497:aae1:cfdf:dc31])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23506d14c9asm16655905ad.231.2025.05.29.14.57.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 May 2025 14:57:40 -0700 (PDT)
-Date: Thu, 29 May 2025 14:57:37 -0700
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="PFerO9NQ"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 2471E1039728C;
+	Fri, 30 May 2025 11:43:07 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
+	t=1748598191; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=FQRxEscHyQvbeEYaXoppZrwOnFMUfcM8GeS7AnKpU9k=;
+	b=PFerO9NQjRLNXT2V82j389X3VTgCUUSGBokFd6zZtH+rMNSQs/rD5HCnuNLRGd8CiF7yJO
+	lTPfcrzVbxcAEZY0QOln3bBqk5Z92fi4pxbUZlhY3nNGGvQ1aHBrLxIFbNnL9rCaMB+piB
+	K/mFSlNRFUDPa5Jdlxxns7zctAO1U6WDgNKeBZpAhYjajQFSzgJ3250bWs7PulFEe7kS0c
+	3XAMN5OkWmHAbgq2isaOGAALNCBHQa1s0EmwB9OqOdkmaYnoVKzHs/OqeixU59uNMSsQv8
+	CeNuGNnRcKWzznsmrIRodhlG6/7b3/URGUyFKOwHtGghKgmMadJtcuVD6jkNQw==
+Date: Fri, 30 May 2025 11:43:05 +0200
+From: Pavel Machek <pavel@denx.de>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Hanno =?utf-8?B?QsO2Y2s=?= <hanno@hboeck.de>
-Subject: Re: [PATCH 6.14 750/783] Input: synaptics-rmi - fix crash with
- unsupported versions of F34
-Message-ID: <mznd6ptvrkapnt2tra63bsavlzr6iuicd5o4re32vrtye5au6w@5q4b22g3oszc>
-References: <20250527162513.035720581@linuxfoundation.org>
- <20250527162543.672934881@linuxfoundation.org>
- <i7tnbh7l2blxussxcdgjuvcpkzet5w552dqu6vl5upus4xf74n@dva72me3bdia>
- <2025052959-corrode-outback-6ecd@gregkh>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Vinod Koul <vkoul@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.12 008/626] phy: renesas: rcar-gen3-usb2: Lock around
+ hardware registers and driver data
+Message-ID: <aDl9qRLgMsPk6wfm@duo.ucw.cz>
+References: <20250527162445.028718347@linuxfoundation.org>
+ <20250527162445.395868574@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="8UIl4i+mEuGkEsGB"
+Content-Disposition: inline
+In-Reply-To: <20250527162445.395868574@linuxfoundation.org>
+X-Last-TLS-Session-Version: TLSv1.3
+
+
+--8UIl4i+mEuGkEsGB
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2025052959-corrode-outback-6ecd@gregkh>
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 29, 2025 at 08:35:17AM +0200, Greg Kroah-Hartman wrote:
-> On Tue, May 27, 2025 at 01:42:39PM -0700, Dmitry Torokhov wrote:
-> > Hi Greg,
-> > 
-> > On Tue, May 27, 2025 at 06:29:07PM +0200, Greg Kroah-Hartman wrote:
-> > > 6.14-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > Can you hold this for a bit? I might need to revert this.
-> 
-> Now dropped from all stable queues.  Let us know when you want this
-> added back.
+Hi!
 
-Thank you. It looks like it was a false alarm, but I'll wait a few more
-days just to make sure.
+> 6.12-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+>=20
+> ------------------
+>=20
+> From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+>=20
+> [ Upstream commit 55a387ebb9219cbe4edfa8ba9996ccb0e7ad4932 ]
+>=20
+> The phy-rcar-gen3-usb2 driver exposes four individual PHYs that are
+> requested and configured by PHY users. The struct phy_ops APIs access the
+> same set of registers to configure all PHYs. Additionally, PHY settings c=
+an
+> be modified through sysfs or an IRQ handler. While some struct phy_ops AP=
+Is
+> are protected by a driver-wide mutex, others rely on individual
+> PHY-specific mutexes.
 
--- 
-Dmitry
+
+> This approach can lead to various issues, including:
+> 1/ the IRQ handler may interrupt PHY settings in progress, racing with
+>    hardware configuration protected by a mutex lock
+> 2/ due to msleep(20) in rcar_gen3_init_otg(), while a configuration thread
+>    suspends to wait for the delay, another thread may try to configure
+>    another PHY (with phy_init() + phy_power_on()); re-running the
+
+You should not be holding spinlock for 20 msec. You really, really,
+_really_ should not be holding irqsave spinlock for 20 msec.
+
+> +++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+> @@ -118,7 +119,7 @@ struct rcar_gen3_chan {
+>  	struct regulator *vbus;
+>  	struct reset_control *rstc;
+>  	struct work_struct work;
+> -	struct mutex lock;	/* protects rphys[...].powered */
+> +	spinlock_t lock;	/* protects access to hardware and driver data structu=
+re. */
+>  	enum usb_dr_mode dr_mode;
+>  	u32 obint_enable_bits;
+>  	bool extcon_host;
+> @@ -348,6 +349,8 @@ static ssize_t role_store(struct device *dev, struct =
+device_attribute *attr,
+>  	bool is_b_device;
+>  	enum phy_mode cur_mode, new_mode;
+> =20
+> +	guard(spinlock_irqsave)(&ch->lock);
+> +
+>  	if (!ch->is_otg_channel || !rcar_gen3_is_any_otg_rphy_initialized(ch))
+>  		return -EIO;
+> =20
+> @@ -415,7 +418,7 @@ static void rcar_gen3_init_otg(struct rcar_gen3_chan =
+*ch)
+>  		val =3D readl(usb2_base + USB2_ADPCTRL);
+>  		writel(val | USB2_ADPCTRL_IDPULLUP, usb2_base + USB2_ADPCTRL);
+>  	}
+> -	msleep(20);
+> +	mdelay(20);
+> =20
+>  	writel(0xffffffff, usb2_base + USB2_OBINTSTA);
+>  	writel(ch->obint_enable_bits, usb2_base + USB2_OBINTEN);
+
+Here.
+
+Best regards,
+								Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--8UIl4i+mEuGkEsGB
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaDl9qQAKCRAw5/Bqldv6
+8iedAJ44sblWyUv4c4lD/YYyPEGna2RtlwCfRuk3jPq6XVlu/+j0yQ0hDYWHPwM=
+=TsQE
+-----END PGP SIGNATURE-----
+
+--8UIl4i+mEuGkEsGB--
