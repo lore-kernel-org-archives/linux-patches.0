@@ -1,46 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0931253B66;
-	Fri, 30 May 2025 12:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9142561C2;
+	Fri, 30 May 2025 12:40:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608814; cv=none; b=gLgfrYtgX7MK7IrkNAG2j+WkFGbyUD/2lNYlow1q0McRZcBvfiTMv9kyIqiP2azYW4qFYMA7sLXryXNsq6DSJD+e1WAoGo/E8BxDnTw7lfeP1MhcKy/rOyzzgFu3v6+NcaUFA9SnR8ZUPkF+mQT/TtngaPxwkwfTrBuulHM+hZw=
+	t=1748608816; cv=none; b=hnEd1vYtwo7g7FONxfiNdOCK1JNgyO1VT9zKohtFUIOQjGvwrztymwNGGZaBR6s2hUq/qlN89EYbsWqi5TsMAWbSZ74fkF03w62jOqnGNGJrvvwTbmgiw5CzsZc/mu8m9IEDzbEcHrmHBvy4iBvCt2+VEZ6zFTIR6nG2lP8Bn2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608814; c=relaxed/simple;
-	bh=16wZIjI3rM+SR9jJf6FfDXb7wOEnVPcIjK1MwsxP91c=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=s1LN42OfuOmgiV7al6JcFbkIVwYaTC1m9z8BlBCFdfETWvBP1Rd3yVlNyUMaT/UcmyLskpB33FWpwSucHzVmG/mqdsjNoB9pUXqKxH0Hawp34xkO5gh0xLjQgLLW7YrVn6f2pVwFetHFMNx0b6rc+CHXjS75Xx3cg20RPYiK1Hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=paNlgA75; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1748608816; c=relaxed/simple;
+	bh=4QKsNMi+GXQlpetVe9R0wo8FXMgIicrAGhk2pEQx7Gg=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=AH+Kyw9tdDe8UsMpQ4mymgm/YzLERwJ88nMcWRX9/N2r1s5/hq0uNu7p7bu5V6r9/M5zkJHpJ3DnvOlYSY+9TGqEWy+LiUGzIEwd9wjW+W1D38JIz5OrLSiBTTEtTLZ+J6cFTHsxtbDi46N7vxDEJpSqZ34TaxsQlfMIatjjGyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PuWz+dtB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="paNlgA75"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD71C4CEE9;
-	Fri, 30 May 2025 12:40:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PuWz+dtB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE3AC4CEEA;
+	Fri, 30 May 2025 12:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608814;
-	bh=16wZIjI3rM+SR9jJf6FfDXb7wOEnVPcIjK1MwsxP91c=;
-	h=From:To:Cc:Subject:Date:From;
-	b=paNlgA75zufSEBj+ppDoJHsqwqD29HEE8JUVGU5WwZoo052jtBVjqfMY/ZOjdQtBn
-	 CrPZlmFWqmQxZ/wTsT/BjW889tVaw6jYpXnJOtUxntYVOuBtzBnNN4XrJiLmIuZrSY
-	 m5lRi5/ymj8Xq/xIt3A6llFI7xpi+i5rXRVyBCe9Vps1Scs7Zo30SJ2LpGPXM/HvPS
-	 uxZ7zw6UN4rn0S/SAWdxXXbUuZvlXONlSL3REPhjFNUrS4mjitNJiu8kVfzcvIOElp
-	 382ikI3d3DarnO2nGlLclvharUknVZPowCfCQuGp4t0+SVaIHvzHWa4ewDLXnyCM5u
-	 bjqJ7JkN07eRw==
+	s=k20201202; t=1748608815;
+	bh=4QKsNMi+GXQlpetVe9R0wo8FXMgIicrAGhk2pEQx7Gg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=PuWz+dtBdNVFZ9QbmKL0OXZi5pBZdanSN61VYDt297d+oB9SjjUO3HkAvBLD8qQq0
+	 dqZHI7fAjn+pXKWVP0SjLfuSdEW/8sngL9OJ0bxnmfZbHP9/XHrdYP48xjT69xGEg6
+	 FpOu1Rae/ZcfBQEmlSBbp7ZRmFL2orkBqZfnXps8cBUqJ7qVe2E7ra7bRPi/cUeAfQ
+	 H4l46o3j+oJwCkX4xW+pOZxFUZBDgzKWKxlQa6HCO5Yu0xYlP/a7+A4Ni3OCkDJIlg
+	 sEhtAdmofY7pCu5oaJC6x8eJ6hh347lXNi87/jVM0fDP1h4PaF8pzg6glPwk/x+khE
+	 aUY1n5twC/VZw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Seunghun Han <kkamagui@gmail.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Talhah Peerbhai <talhah.peerbhai@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	robert.moore@intel.com,
-	erik.schmauss@intel.com,
-	lenb@kernel.org,
-	linux-acpi@vger.kernel.org,
-	devel@acpica.org,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	alsa-devel@alsa-project.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 01/26] ACPICA: fix acpi operand cache leak in dswstate.c
-Date: Fri, 30 May 2025 08:39:47 -0400
-Message-Id: <20250530124012.2575409-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 02/26] ASoC: amd: yc: Add quirk for Lenovo Yoga Pro 7 14ASP9
+Date: Fri, 30 May 2025 08:39:48 -0400
+Message-Id: <20250530124012.2575409-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250530124012.2575409-1-sashal@kernel.org>
+References: <20250530124012.2575409-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -53,148 +55,85 @@ X-stable-base: Linux 6.12.31
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Seunghun Han <kkamagui@gmail.com>
+From: Talhah Peerbhai <talhah.peerbhai@gmail.com>
 
-[ Upstream commit 156fd20a41e776bbf334bd5e45c4f78dfc90ce1c ]
+[ Upstream commit a28206060dc5848a1a2a15b7f6ac6223d869084d ]
 
-ACPICA commit 987a3b5cf7175916e2a4b6ea5b8e70f830dfe732
+Similar to many other Lenovo models with AMD chips, the Lenovo
+Yoga Pro 7 14ASP9 (product name 83HN) requires a specific quirk
+to ensure internal mic detection. This patch adds a quirk fixing this.
 
-I found an ACPI cache leak in ACPI early termination and boot continuing case.
-
-When early termination occurs due to malicious ACPI table, Linux kernel
-terminates ACPI function and continues to boot process. While kernel terminates
-ACPI function, kmem_cache_destroy() reports Acpi-Operand cache leak.
-
-Boot log of ACPI operand cache leak is as follows:
->[    0.585957] ACPI: Added _OSI(Module Device)
->[    0.587218] ACPI: Added _OSI(Processor Device)
->[    0.588530] ACPI: Added _OSI(3.0 _SCP Extensions)
->[    0.589790] ACPI: Added _OSI(Processor Aggregator Device)
->[    0.591534] ACPI Error: Illegal I/O port address/length above 64K: C806E00000004002/0x2 (20170303/hwvalid-155)
->[    0.594351] ACPI Exception: AE_LIMIT, Unable to initialize fixed events (20170303/evevent-88)
->[    0.597858] ACPI: Unable to start the ACPI Interpreter
->[    0.599162] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
->[    0.601836] kmem_cache_destroy Acpi-Operand: Slab cache still has objects
->[    0.603556] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 4.12.0-rc5 #26
->[    0.605159] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS virtual_box 12/01/2006
->[    0.609177] Call Trace:
->[    0.610063]  ? dump_stack+0x5c/0x81
->[    0.611118]  ? kmem_cache_destroy+0x1aa/0x1c0
->[    0.612632]  ? acpi_sleep_proc_init+0x27/0x27
->[    0.613906]  ? acpi_os_delete_cache+0xa/0x10
->[    0.617986]  ? acpi_ut_delete_caches+0x3f/0x7b
->[    0.619293]  ? acpi_terminate+0xa/0x14
->[    0.620394]  ? acpi_init+0x2af/0x34f
->[    0.621616]  ? __class_create+0x4c/0x80
->[    0.623412]  ? video_setup+0x7f/0x7f
->[    0.624585]  ? acpi_sleep_proc_init+0x27/0x27
->[    0.625861]  ? do_one_initcall+0x4e/0x1a0
->[    0.627513]  ? kernel_init_freeable+0x19e/0x21f
->[    0.628972]  ? rest_init+0x80/0x80
->[    0.630043]  ? kernel_init+0xa/0x100
->[    0.631084]  ? ret_from_fork+0x25/0x30
->[    0.633343] vgaarb: loaded
->[    0.635036] EDAC MC: Ver: 3.0.0
->[    0.638601] PCI: Probing PCI hardware
->[    0.639833] PCI host bridge to bus 0000:00
->[    0.641031] pci_bus 0000:00: root bus resource [io  0x0000-0xffff]
-> ... Continue to boot and log is omitted ...
-
-I analyzed this memory leak in detail and found acpi_ds_obj_stack_pop_and_
-delete() function miscalculated the top of the stack. acpi_ds_obj_stack_push()
-function uses walk_state->operand_index for start position of the top, but
-acpi_ds_obj_stack_pop_and_delete() function considers index 0 for it.
-Therefore, this causes acpi operand memory leak.
-
-This cache leak causes a security threat because an old kernel (<= 4.9) shows
-memory locations of kernel functions in stack dump. Some malicious users
-could use this information to neutralize kernel ASLR.
-
-I made a patch to fix ACPI operand cache leak.
-
-Link: https://github.com/acpica/acpica/commit/987a3b5c
-Signed-off-by: Seunghun Han <kkamagui@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/4999480.31r3eYUQgx@rjwysocki.net
+Signed-off-by: Talhah Peerbhai <talhah.peerbhai@gmail.com>
+Link: https://patch.msgid.link/20250515222741.144616-1-talhah.peerbhai@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees based on
-the following analysis: ## Analysis of the Commit **1. Bug Fix Nature**:
-This commit fixes a clear memory leak bug in the ACPICA subsystem. The
-issue occurs when `acpi_ds_create_operands()` encounters an error during
-operand creation and needs to clean up allocated operands. **2. Root
-Cause**: The core issue is a mismatch between how operands are pushed
-and popped from the stack: - `acpi_ds_obj_stack_push()` uses
-`walk_state->operand_index` to track the current position -
-`acpi_ds_obj_stack_pop_and_delete()` incorrectly assumes operands start
-at index 0 - This causes incomplete cleanup when errors occur, leading
-to memory leaks **3. Code Analysis**: The fix correctly addresses the
-issue by: - Tracking the original operand count (`prev_num_operands`) -
-Calculating the correct number of operands to clean up
-(`new_num_operands`) - Setting `walk_state->num_operands = i` before
-cleanup to ensure proper indexing - Restoring the original operand count
-after cleanup **4. Security Implications**: The commit message
-explicitly mentions this is a security issue - the memory leak can
-expose kernel function addresses in older kernels (≤4.9), potentially
-defeating ASLR. This elevates the importance beyond a simple memory
-leak. **5. Pattern Consistency**: This follows the exact same pattern as
-other ACPICA operand cache leak fixes that were successfully backported
-(commits `97f3c0a4b057`, `2915f16bdce2`, etc.), all authored by the same
-developer addressing similar issues. **6. Stability Characteristics**: -
-**Small and contained**: Only 8 lines of actual logic changes - **Clear
-error path**: Only affects cleanup during error conditions - **No
-behavioral changes**: No impact on normal operation - **Low regression
-risk**: Only modifies error handling paths **7. Backport Suitability
-Criteria**: - ✅ Fixes important bug affecting users (memory leak) - ✅
-Small, contained fix with minimal risk - ✅ No architectural changes - ✅
-Addresses security concern (ASLR bypass potential) - ✅ Follows
-established patterns for ACPICA fixes - ✅ Critical kernel subsystem
-(ACPI) **8. Historical Precedent**: The similar commits in the reference
-examples (Similar Commits #1, #2, #3) all have "Backport Status: YES"
-and address nearly identical ACPICA operand cache leak issues with
-similar fixes and commit message patterns. This commit meets all
-criteria for stable tree backporting: it's an important bugfix, has
-minimal regression risk, affects a critical subsystem, and follows
-established patterns for similar fixes that were previously backported.
+Based on my analysis of this commit, I can provide a comprehensive
+assessment for backporting. **YES** This commit should be backported to
+stable kernel trees for the following reasons: **1. Identical Pattern to
+Previously Backported Commits:** All five similar commits provided in
+the historical context (commits for Lenovo models 82UU, 82, 82YM, 83AS,
+and 21M1) have "Backport Status: YES" and follow the exact same pattern
+as this commit. This establishes a clear precedent for backporting such
+changes. **2. Hardware Enablement Bug Fix:** The commit fixes a clear
+user-affecting bug where the internal microphone on the Lenovo Yoga Pro
+7 14ASP9 (product name 83HN) is non-functional. This is a hardware
+compatibility issue that directly impacts users' ability to use their
+device's built-in microphone. **3. Minimal and Contained Change:** The
+code change is extremely small and safe: - Adds only a single 7-line
+quirk table entry to `sound/soc/amd/yc/acp6x-mach.c` - The change is
+purely additive - no existing code is modified - The quirk entry follows
+the exact same pattern as dozens of other entries in the same table -
+Zero risk of regression to existing functionality **4. Critical
+Subsystem with Safe Pattern:** While this touches audio (a critical
+subsystem), the change follows a well-established, safe pattern used
+extensively in this driver. The quirk table approach is designed
+specifically for adding device-specific compatibility without affecting
+other hardware. **5. Clear User Benefit:** Users with this specific
+Lenovo model will have their internal microphone functionality restored,
+which is essential for video calls, voice recording, and other audio
+input tasks. **6. Code Quality Improvement:** The commit also includes a
+minor whitespace fix (changing spaces to tab at line 350), improving
+code formatting consistency. **7. Follows Stable Tree Rules:** -
+Important bugfix: ✓ (enables hardware functionality) - Minimal risk: ✓
+(purely additive quirk entry) - Small and contained: ✓ (7 lines added) -
+No architectural changes: ✓ - Confined to subsystem: ✓ (AMD YC audio
+driver) The commit message clearly explains the issue and solution, and
+the change is identical in nature to numerous other successfully
+backported commits for similar Lenovo audio quirks. This represents a
+textbook example of a stable-appropriate hardware enablement fix.
 
- drivers/acpi/acpica/dsutils.c | 9 ++++++++-
+ sound/soc/amd/yc/acp6x-mach.c | 9 ++++++++-
  1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpica/dsutils.c b/drivers/acpi/acpica/dsutils.c
-index fb9ed5e1da89d..2bdae8a25e084 100644
---- a/drivers/acpi/acpica/dsutils.c
-+++ b/drivers/acpi/acpica/dsutils.c
-@@ -668,6 +668,8 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 	union acpi_parse_object *arguments[ACPI_OBJ_NUM_OPERANDS];
- 	u32 arg_count = 0;
- 	u32 index = walk_state->num_operands;
-+	u32 prev_num_operands = walk_state->num_operands;
-+	u32 new_num_operands;
- 	u32 i;
- 
- 	ACPI_FUNCTION_TRACE_PTR(ds_create_operands, first_arg);
-@@ -696,6 +698,7 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 
- 	/* Create the interpreter arguments, in reverse order */
- 
-+	new_num_operands = index;
- 	index--;
- 	for (i = 0; i < arg_count; i++) {
- 		arg = arguments[index];
-@@ -720,7 +723,11 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
- 	 * pop everything off of the operand stack and delete those
- 	 * objects
- 	 */
--	acpi_ds_obj_stack_pop_and_delete(arg_count, walk_state);
-+	walk_state->num_operands = i;
-+	acpi_ds_obj_stack_pop_and_delete(new_num_operands, walk_state);
-+
-+	/* Restore operand count */
-+	walk_state->num_operands = prev_num_operands;
- 
- 	ACPI_EXCEPTION((AE_INFO, status, "While creating Arg %u", index));
- 	return_ACPI_STATUS(status);
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index e632f16c91025..3d9da93d22ee8 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -311,6 +311,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "83AS"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83HN"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+@@ -360,7 +367,7 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "M5402RA"),
+ 		}
+ 	},
+-        {
++	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
 -- 
 2.39.5
 
