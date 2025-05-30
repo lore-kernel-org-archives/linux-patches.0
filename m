@@ -1,49 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC59233128;
-	Fri, 30 May 2025 12:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFCC233155;
+	Fri, 30 May 2025 12:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608752; cv=none; b=kovz5GYjFZTHIBPOBNWNWq7z23eDYnFLd9kT51FdrtEn40KjRtSEhfJjC9T64WTaobJ1Y7FJY/3PriuwcIzxCm7Q+8C3wZKOKMHK1rIfPv8WKCSNKwxkBKTfc2FBCLr5z8S9hmZ1K6rKZAHTyiPdslEe1IAZmILog8snScFlc+k=
+	t=1748608753; cv=none; b=mkmxVyC8u2enk8OItOKMxrHyXwZEyrIvptVAMPWffU4kKT3ZO/VHTRf5OvShs5UzsM9SHs6OOf1nkhSIpfrlLMDcjmfn53G0i8+lb2+mIA40g19W3BjormHgbluxQVRtukak1zRR9SXUYNY9Bd+nzCuUdeJkjwEINq2LrD0H5Ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608752; c=relaxed/simple;
-	bh=lTIFbvUzVtrdoyRg87m1jXHUYMw1CfmB2wmzwJv1abU=;
+	s=arc-20240116; t=1748608753; c=relaxed/simple;
+	bh=w4Rwff7iiK+vRyCc4SdbMl5Ob5KEJMg+Sm/6d3oiCLg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RtFN9vZZQKgdRvGzfG8uoGOhfbQDkdefe+gcRxRJGZ2hC8aYKnILchHLbSm7YBjSQyP+DWt/5P/GlAjLSOgpM2wEGTSSP7z7/3hs1FfroiQKWeVHRln1j5stg9+RxsUByW90VrByUBBP2jupi1LliyXzCSYhMBM5aBGjU7tQoc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ttCOqqwb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gA5/jBtH/myFlb1Hsz2OGnTWOTSeDiSW+0lAVZT2WBzz++BBzCeoIAhvVSQxbEYgTZJOwKn+/emHO+ygH5PO5qg9ALxXC564UpDD9Yc74BbjOVlag5NoIxN+M9j8J/iz/7c6e6Mg1lOZpDEfPwMx02uhOw6Gw5Pkmy6tCCkobC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YWjBczjK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ttCOqqwb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF19C4CEEB;
-	Fri, 30 May 2025 12:39:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YWjBczjK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C79DC4CEEF;
+	Fri, 30 May 2025 12:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608751;
-	bh=lTIFbvUzVtrdoyRg87m1jXHUYMw1CfmB2wmzwJv1abU=;
+	s=k20201202; t=1748608753;
+	bh=w4Rwff7iiK+vRyCc4SdbMl5Ob5KEJMg+Sm/6d3oiCLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ttCOqqwb4zy0D/vfC2sHm+oZJ9yINNruHUIKdfafEGtFhunjQUD5rK0OWgCIhp0LK
-	 f75CS417JFYx/xpN6E9U0J1H8EjmcIQxDD4p2kKvMa6ksdn9gD/DKykUZ86SmHWxDH
-	 JKicwSqyocifwuX/8QzsqMMc5Kcs8281rGyi6jYqvNOfq2fSYNv+N4nNeQqCvMKa5x
-	 DtJG+h1Vnx3kzcn+XNI8zpcHdWkOxILIPnYgpmO21j/23xDL1qY0do0IzWng8Sz8ep
-	 YM8PcbWvzSEGCU1bFdSSC97+AbHSqNRvXI0jCsR4VjUmWvRttU5cCX+6OQApZFcBQY
-	 EAYWo+qWxNWpQ==
+	b=YWjBczjKx9IcpiIJdVlEkdzqmS2mOgfTDszJuS0GxqJRz7wNmuXI5066q0k1it5I7
+	 HLRxcg84s1WDkwq2jmFVf/4I4wxTTbD39vjDyTW9jB628JFVSxV3gLMWWefjMfAhYs
+	 NueJl+9jGMwsKMDdfA8k55qAWL0Q8R80F7hkdylvtCHGGHJx3EB6gs6iB7oKxJJrxp
+	 f+1VJl1VZj7u4M6ngb6p69CZ05ljxAbIEWIvHHeWsZlASI5RP+0EMFQ66bSJ3NEODL
+	 4yScbOBvxNt/bPCW854zWJPenEoIZgSKl5iqJEhjobYUbQeCXdx0mhDp7egl7HwOg6
+	 CH/9uR/phmTTQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Stefan Binding <sbinding@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Mario Limonciello <mario.limonciello@amd.com>,
+	kernel test robot <lkp@intel.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	kailang@realtek.com,
-	gregkh@linuxfoundation.org,
-	edson.drosdeck@gmail.com,
-	oder_chiou@realtek.com,
-	desikumar81@gmail.com,
-	alsa-devel@alsa-project.org,
+	rjw@rjwysocki.net,
+	lenb@kernel.org,
+	linux-acpi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 14/30] ALSA: hda/realtek: Add support for Acer Helios Laptops using CS35L41 HDA
-Date: Fri, 30 May 2025 08:38:36 -0400
-Message-Id: <20250530123852.2574030-14-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 15/30] ACPI: Add missing prototype for non CONFIG_SUSPEND/CONFIG_X86 case
+Date: Fri, 30 May 2025 08:38:37 -0400
+Message-Id: <20250530123852.2574030-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530123852.2574030-1-sashal@kernel.org>
 References: <20250530123852.2574030-1-sashal@kernel.org>
@@ -59,95 +55,103 @@ X-stable-base: Linux 6.15
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit d64cbb5ed9227566c068ac9300a85912234d10aa ]
+[ Upstream commit e1bdbbc98279164d910d2de82a745f090a8b249f ]
 
-Laptops use 2 CS35L41 Amps with HDA, using External boost with I2C.
-Similar to previous Acer laptops, these laptops also need the
-ALC255_FIXUP_PREDATOR_SUBWOOFER quirk to function properly.
+acpi_register_lps0_dev() and acpi_unregister_lps0_dev() may be used
+in drivers that don't require CONFIG_SUSPEND or compile on !X86.
 
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250515162848.405055-2-sbinding@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Add prototypes for those cases.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202502191627.fRgoBwcZ-lkp@intel.com/
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20250407183656.1503446-1-superm1@kernel.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. ##
-Analysis ### What the commit does: This commit adds audio support for
-Acer Helios laptops using CS35L41 HDA amplifiers. The specific changes
-are: 1. **Adds new enum**: `ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2` 2.
-**Adds new fixup entry**: Chains `cs35l41_fixup_i2c_two` with the
-existing `ALC255_FIXUP_PREDATOR_SUBWOOFER` quirk 3. **Adds 3 PCI quirk
-entries** for specific Acer models: - `0x1025, 0x1826, "Acer Helios
-ZPC"` - `0x1025, 0x182c, "Acer Helios ZPD"` - `0x1025, 0x1844, "Acer
-Helios ZPS"` ### Comparison with approved similar commits: This commit
-follows **exactly the same pattern** as the four similar commits marked
-"YES": - **Similar Commits #1-4**: All added PCI quirk entries for ASUS
-laptops using CS35L41 HDA, with identical structure - **Same approach**:
-Extending the quirk table to map new hardware IDs to existing, proven
-fixup mechanisms - **Same scope**: Hardware-specific audio support using
-well-established CS35L41 amplifier functionality ### Hardware support vs
-bug fixing: This is **new hardware support** that enables audio
-functionality on specific Acer Helios laptop models. The CS35L41
-amplifier support and ALC255_FIXUP_PREDATOR_SUBWOOFER quirk already
-exist - this simply extends support to new hardware variants. ### Risk
-assessment: **Very low risk** because: 1. **Isolated impact**: Only
-affects the three specific Acer Helios models listed (PCI IDs 0x1826,
-0x182c, 0x1844) 2. **No architectural changes**: Pure quirk table
-additions with no modifications to core audio logic 3. **Proven fixup
-chain**: Both `cs35l41_fixup_i2c_two` and
-`ALC255_FIXUP_PREDATOR_SUBWOOFER` are existing, stable fixups 4. **No
-regression risk**: Doesn't modify behavior for any existing hardware ###
-Stable kernel criteria alignment: ✅ **Fixes important bugs**: Enables
-audio functionality that would otherwise be broken on these laptops ✅
-**No new features**: Uses existing CS35L41 and Predator subwoofer
-infrastructure ✅ **No architectural changes**: Only extends PCI quirk
-tables ✅ **Minimal regression risk**: Changes are completely isolated to
-specific hardware IDs ✅ **Subsystem-confined**: Limited to ALSA HDA
-realtek driver quirks This commit perfectly matches the established
-pattern of stable-worthy ALSA HDA hardware support commits and should be
-backported to ensure audio functionality works properly for users with
-these Acer Helios laptops.
+**YES** This commit should be backported to stable kernel trees.
+**Analysis:** This commit fixes a clear build error that affects users
+in specific, but valid, kernel configurations. Here's the detailed
+analysis: **1. Clear Bug Fix:** The commit addresses missing function
+prototypes for `acpi_register_lps0_dev()` and
+`acpi_unregister_lps0_dev()` when `CONFIG_SUSPEND` or `CONFIG_X86` are
+not enabled. This causes compilation failures when drivers that use
+these functions are built without these config options. **2. Code
+Changes Analysis:** - **File Modified:** `include/linux/acpi.h` at lines
+1108-1162 - **Before:** The `struct acpi_s2idle_dev_ops` was only
+defined within the `#if defined(CONFIG_SUSPEND) && defined(CONFIG_X86)`
+block, and the stub functions for `acpi_register_lps0_dev()` and
+`acpi_unregister_lps0_dev()` were missing from the `#else` clause. -
+**After:** The struct definition is moved outside the conditional block,
+and stub functions are added in the `#else` clause that return `-ENODEV`
+for registration and do nothing for unregistration. **3. Real-world
+Impact:** From examining the kernel tree, several drivers use these
+functions: - `/home/sasha/linux/drivers/platform/x86/amd/pmc/pmc.c` -
+AMD PMC driver calls `acpi_register_lps0_dev()` and
+`acpi_unregister_lps0_dev()` -
+`/home/sasha/linux/arch/x86/platform/atom/punit_atom_debug.c` - Intel
+Atom debug driver - `/home/sasha/linux/drivers/platform/x86/pmc_atom.c`
+- Intel PMC Atom driver These drivers can be enabled on platforms or
+configurations where `CONFIG_SUSPEND` or `CONFIG_X86` might not be set,
+causing build failures. **4. Minimal Risk:** - **Size:** Very small
+change - only adds stub function prototypes - **Scope:** Limited to
+header file, no runtime behavior changes for existing working
+configurations - **Side Effects:** None - the stubs return appropriate
+error codes and maintain API compatibility **5. Comparison with Similar
+Commits:** Looking at the provided similar commits, this follows the
+same pattern as commits #2, #3, and #4 (all marked as NO), which were
+prototype/warning fixes. However, this commit differs crucially because:
+- It fixes actual **build failures** (not just warnings) - The kernel
+test robot specifically reported compilation errors - It affects **real
+drivers** that are in use **6. Stable Tree Criteria Compliance:** - ✅
+Fixes important bugs (build failures) - ✅ Doesn't introduce new features
+- ✅ Doesn't make architectural changes - ✅ Has minimal risk of
+regression - ✅ Is confined to a specific subsystem (ACPI headers) The
+commit message explicitly mentions "kernel test robot" reporting build
+failures, indicating this is a real issue affecting automated testing
+and potentially user builds. The fix is exactly what's needed for proper
+API completeness - providing stub implementations when the real
+functionality isn't available.
 
- sound/pci/hda/patch_realtek.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ include/linux/acpi.h | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 20ab1fb2195ff..cd0d7ba7320ef 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -8029,6 +8029,7 @@ enum {
- 	ALC283_FIXUP_DELL_HP_RESUME,
- 	ALC294_FIXUP_ASUS_CS35L41_SPI_2,
- 	ALC274_FIXUP_HP_AIO_BIND_DACS,
-+	ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2,
- };
+diff --git a/include/linux/acpi.h b/include/linux/acpi.h
+index 3f2e93ed97301..fc372bbaa5476 100644
+--- a/include/linux/acpi.h
++++ b/include/linux/acpi.h
+@@ -1125,13 +1125,13 @@ void acpi_os_set_prepare_extended_sleep(int (*func)(u8 sleep_state,
  
- /* A special fixup for Lenovo C940 and Yoga Duet 7;
-@@ -9301,6 +9302,12 @@ static const struct hda_fixup alc269_fixups[] = {
- 			{ }
- 		}
- 	},
-+	[ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = cs35l41_fixup_i2c_two,
-+		.chained = true,
-+		.chain_id = ALC255_FIXUP_PREDATOR_SUBWOOFER
-+	},
- 	[ALC256_FIXUP_MEDION_HEADSET_NO_PRESENCE] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = (const struct hda_pintbl[]) {
-@@ -10456,6 +10463,9 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1025, 0x1534, "Acer Predator PH315-54", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1025, 0x159c, "Acer Nitro 5 AN515-58", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1025, 0x169a, "Acer Swift SFG16", ALC256_FIXUP_ACER_SFG16_MICMUTE_LED),
-+	SND_PCI_QUIRK(0x1025, 0x1826, "Acer Helios ZPC", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x1025, 0x182c, "Acer Helios ZPD", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x1025, 0x1844, "Acer Helios ZPS", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1028, 0x0470, "Dell M101z", ALC269_FIXUP_DELL_M101Z),
- 	SND_PCI_QUIRK(0x1028, 0x053c, "Dell Latitude E5430", ALC292_FIXUP_DELL_E7X),
- 	SND_PCI_QUIRK(0x1028, 0x054b, "Dell XPS one 2710", ALC275_FIXUP_DELL_XPS),
+ acpi_status acpi_os_prepare_extended_sleep(u8 sleep_state,
+ 					   u32 val_a, u32 val_b);
+-#if defined(CONFIG_SUSPEND) && defined(CONFIG_X86)
+ struct acpi_s2idle_dev_ops {
+ 	struct list_head list_node;
+ 	void (*prepare)(void);
+ 	void (*check)(void);
+ 	void (*restore)(void);
+ };
++#if defined(CONFIG_SUSPEND) && defined(CONFIG_X86)
+ int acpi_register_lps0_dev(struct acpi_s2idle_dev_ops *arg);
+ void acpi_unregister_lps0_dev(struct acpi_s2idle_dev_ops *arg);
+ int acpi_get_lps0_constraint(struct acpi_device *adev);
+@@ -1140,6 +1140,13 @@ static inline int acpi_get_lps0_constraint(struct device *dev)
+ {
+ 	return ACPI_STATE_UNKNOWN;
+ }
++static inline int acpi_register_lps0_dev(struct acpi_s2idle_dev_ops *arg)
++{
++	return -ENODEV;
++}
++static inline void acpi_unregister_lps0_dev(struct acpi_s2idle_dev_ops *arg)
++{
++}
+ #endif /* CONFIG_SUSPEND && CONFIG_X86 */
+ void arch_reserve_mem_area(acpi_physical_address addr, size_t size);
+ #else
 -- 
 2.39.5
 
