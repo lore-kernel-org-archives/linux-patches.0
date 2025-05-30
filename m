@@ -1,47 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E4D2797A3;
-	Fri, 30 May 2025 12:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B2927A105;
+	Fri, 30 May 2025 12:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608914; cv=none; b=gr9pAJjge2k2VjApn8386lZngZAYxJIpVAPVUgmtVJDRCcb+8ZYpz+yhjalQ+bK99/8vEgvcQQOZpwk26cEOjtye6AFBrsfCrtqVv2QZ2Nc0ja4OxhAB7xmvxse+HeLLjY+049kfBsiGSnpeqPUhlVhD3rvwic+YROdCxs2XuMs=
+	t=1748608914; cv=none; b=gEmVTu6Xd/fCGzZ1HzU3iyWlTUN2XngZnWU4FCFVsQIfHx/J8ZX1eRjt5Gw9b+zXBVQWR68bmBmfZGrtGzH7HMlWz8GSuQ7YdrOZ9VJbKYhrep4Iw4WkGD0kG6J9f23XyEpQ0iIHNlyC1MDJHmxDaNzTnt6jj0teL/LoSpmHfuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1748608914; c=relaxed/simple;
-	bh=XLmOqm8dCUHz5RtYb91vhlNLfnFfc9kZIesq6gPMU9k=;
+	bh=bIsmsBorD41oHc3cckSULlGCl4kPMmuXZw2svrqf0jU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=sTXeZOf6tsuTpmmPpPEOaqDmXvC2mPYST1MewJkxgn9Jdxyy6013VaJyMhRgX8QLYEZSERZdKdKlHanL1uJN0+M/b6cKZ+RbMgzK0QJnRE6mkALxmpDwb764v3JX+MbWWawmcTfOt0ujKN92pTjpIbZ1sIUNlIsYJ6nDGFPdxng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S+tOleCv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gAkkT6qjo8jvNL1ofduyXCka27n1c76BTZCGXHGZZj4VAf04gnVh/5Haihx3F/loe+f89Fjg8GP66baNENB6/viQh7R0vZFACLL6AryAQWyPyXL6hCo6oeR02d4fqyBP2QO9EwK6F6+SREZiwDVtRFiaahNS2ocPOwB4jaRguo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nWy2Yx1s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S+tOleCv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FD1C4CEEA;
-	Fri, 30 May 2025 12:41:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nWy2Yx1s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40732C4CEEB;
+	Fri, 30 May 2025 12:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608912;
-	bh=XLmOqm8dCUHz5RtYb91vhlNLfnFfc9kZIesq6gPMU9k=;
+	s=k20201202; t=1748608914;
+	bh=bIsmsBorD41oHc3cckSULlGCl4kPMmuXZw2svrqf0jU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S+tOleCvgByN+/CiJ5sEeJI2qqpZpW0o7/uFQspmGabFHJX8yOTL/KOt6Clli2Q0+
-	 yiEsdLNjNTXWbij6nQlte6Xw7AVvrarklQcvpF+9akSwchsxPxjc/rJGELWWsjhYMp
-	 qdbmb7QFdIJaqOjf6Ps11NTZ96NkZabAJmIpEQ3xFIJIsJXdChPRiE8isjBCpqX/c0
-	 92VehN1Q+GpunnGztnhsCo26JU+5NllZ4ESuazVkhfQmTs68tM7p4GSBMB4kZDIU8N
-	 Ld7pSZSOHlPmJveAYxh7cOJrsF8Cw8w498FpCzvFazTirMG+gJGkS+RkTQzry3miZi
-	 FAenwOZ7kkZJA==
+	b=nWy2Yx1s2yH69Ih1vUs3eJ1nhOYJczRfrNBALTunauyPlnv0oIDkF8sYJ7lF4vxap
+	 SFZiPOvHkJhukuEfjE2P29ZNwk18hS237MxjARL53wp9vSgNBV6sWwcQZ4a9GkKT2d
+	 Hd+KKzti5y4rCiV03GR7iKZxusXxzoil7nRCe4JXUFglCIppp//DcJlIlor5I+w+gH
+	 /zDjEvvf3KnDfTX4MwJElfeB1hlgglrOcOZkqM9kaLB33jPI8uDsqbpHwEaI5uMsZ0
+	 TNpy/OomLB4lw2wV6pof6LiPxNqT1lkmkrcYZm75lisdt9MLs1j1jWe/+4R9EK2BuV
+	 Y/aHyR5LKumkg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ahmed Salem <x0rw3ll@gmail.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Hector Martin <marcan@marcan.st>,
+	Neal Gompa <neal@gompa.dev>,
+	James Calligeros <jcalligeros99@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	rjw@rjwysocki.net,
-	lenb@kernel.org,
-	robert.moore@intel.com,
-	erik.schmauss@intel.com,
-	linux-acpi@vger.kernel.org,
-	devel@acpica.org,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	alsa-devel@alsa-project.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 03/10] ACPICA: Avoid sequence overread in call to strncmp()
-Date: Fri, 30 May 2025 08:41:41 -0400
-Message-Id: <20250530124148.2576913-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 04/10] ASoC: tas2770: Power cycle amp on ISENSE/VSENSE change
+Date: Fri, 30 May 2025 08:41:42 -0400
+Message-Id: <20250530124148.2576913-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530124148.2576913-1-sashal@kernel.org>
 References: <20250530124148.2576913-1-sashal@kernel.org>
@@ -56,97 +56,113 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.10.237
 Content-Transfer-Encoding: 8bit
 
-From: Ahmed Salem <x0rw3ll@gmail.com>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit 64b9dfd0776e9c38d733094859a09f13282ce6f8 ]
+[ Upstream commit f529c91be8a34ac12e7599bf87c65b6f4a2c9f5c ]
 
-ACPICA commit 8b83a8d88dfec59ea147fad35fc6deea8859c58c
+The ISENSE/VSENSE blocks are only powered up when the amplifier
+transitions from shutdown to active. This means that if those controls
+are flipped on while the amplifier is already playing back audio, they
+will have no effect.
 
-ap_get_table_length() checks if tables are valid by
-calling ap_is_valid_header(). The latter then calls
-ACPI_VALIDATE_RSDP_SIG(Table->Signature).
+Fix this by forcing a power cycle around transitions in those controls.
 
-ap_is_valid_header() accepts struct acpi_table_header as an argument, so
-the signature size is always fixed to 4 bytes.
-
-The problem is when the string comparison is between ACPI-defined table
-signature and ACPI_SIG_RSDP. Common ACPI table header specifies the
-Signature field to be 4 bytes long[1], with the exception of the RSDP
-structure whose signature is 8 bytes long "RSD PTR " (including the
-trailing blank character)[2]. Calling strncmp(sig, rsdp_sig, 8) would
-then result in a sequence overread[3] as sig would be smaller (4 bytes)
-than the specified bound (8 bytes).
-
-As a workaround, pass the bound conditionally based on the size of the
-signature being passed.
-
-Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#system-description-table-header [1]
-Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#root-system-description-pointer-rsdp-structure [2]
-Link: https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-overread [3]
-Link: https://github.com/acpica/acpica/commit/8b83a8d8
-Signed-off-by: Ahmed Salem <x0rw3ll@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2248233.Mh6RI2rZIc@rjwysocki.net
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
+Link: https://patch.msgid.link/20250406-apple-codec-changes-v5-1-50a00ec850a3@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. ##
-Detailed Analysis: ### The Problem The commit fixes a **buffer overread
-vulnerability** in the `ACPI_VALIDATE_RSDP_SIG` macro. The issue occurs
-when: 1. **Context**: The macro `ACPI_VALIDATE_RSDP_SIG(a)` calls
-`strncmp(ACPI_CAST_PTR(char, (a)), ACPI_SIG_RSDP, 8)` 2. **Problem**:
-When `a` points to a standard ACPI table header (4 bytes signature), but
-the comparison tries to read 8 bytes for RSDP validation ("RSD PTR "),
-it reads 4 bytes beyond the allocated signature field 3. **Impact**:
-This causes a sequence overread that can be detected by tools like GCC's
-`-Wstringop-overread` and security-focused architectures like
-CHERI/Morello ### The Fix The fix changes line 530 in
-`include/acpi/actypes.h`: ```c // Before: #define
-ACPI_VALIDATE_RSDP_SIG(a) (!strncmp (ACPI_CAST_PTR (char, (a)),
-ACPI_SIG_RSDP, 8)) // After: #define ACPI_VALIDATE_RSDP_SIG(a) (!strncmp
-(ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, (sizeof(a) < 8) ?
-ACPI_NAMESEG_SIZE : 8)) ``` This conditionally limits the comparison to
-`ACPI_NAMESEG_SIZE` (4 bytes) when the source is smaller than 8 bytes,
-preventing the overread. ### Why This Should Be Backported: 1.
-**Security Fix**: This addresses a buffer overread that could be
-exploited or cause crashes on security-hardened systems 2. **Small &
-Contained**: The fix is a single line change to a macro definition with
-minimal risk 3. **Widespread Usage**: The macro is used in multiple
-critical ACPI code paths: - `drivers/acpi/acpica/tbprint.c` (kernel ACPI
-table printing) - `tools/power/acpi/tools/acpidump/apdump.c` (ACPI
-debugging tools) - Various other ACPI validation functions 4. **No
-Architectural Changes**: This doesn't change functionality, just
-prevents unsafe memory access 5. **Compiler Warning Fix**: Resolves
-build warnings with newer GCC versions using `-Wstringop-overread` ###
-Comparison with Historical Commits: - **Similar to Commit #3 (YES)**:
-Like the "disable -Wstringop-truncation" commit, this fixes compiler
-warnings related to string operations, but this one actually fixes the
-underlying safety issue rather than just suppressing warnings - **Unlike
-Commits #1,#2,#4,#5 (NO)**: Those were either pure code cleanup,
-debugging improvements, or infrastructure changes without security
-implications ### Risk Assessment: - **Minimal Risk**: The fix only
-affects boundary condition handling in string comparison - **No
-Functional Impact**: Normal RSDP validation still works correctly for
-valid 8-byte signatures - **Improves Safety**: Prevents potential memory
-safety violations on hardened systems This is exactly the type of small,
-safe, security-focused bugfix that stable trees are designed for.
+**YES** This commit should be backported to stable kernel trees based on
+my analysis of both the commit message and code changes. Here's my
+extensive explanation: ## Bug Fix Analysis This commit addresses a
+specific functional bug in the tas2770 audio codec driver where
+ISENSE/VSENSE controls don't work properly when changed during active
+playback. The commit message clearly states: "if those controls are
+flipped on while the amplifier is already playing back audio, they will
+have no effect." ## Code Changes Analysis The fix is contained and
+minimal, involving three key changes to `sound/soc/codecs/tas2770.c`: 1.
+**Addition of `sense_event` function (lines +21 to +43)**: This function
+implements a power cycling mechanism that forces the amplifier through a
+shutdown state when ISENSE/VSENSE controls are changed. This ensures the
+changes take effect regardless of playback state. 2. **Modified DAPM
+widget definitions (lines +45 to +48)**: The ISENSE and VSENSE switches
+are changed from simple `SND_SOC_DAPM_SWITCH` to `SND_SOC_DAPM_SWITCH_E`
+with event handling, connecting them to the new `sense_event` function.
+3. **Event triggers**: The widgets respond to `SND_SOC_DAPM_PRE_REG` and
+`SND_SOC_DAPM_POST_REG` events to perform the power cycling around
+register changes. ## Why This Should Be Backported 1. **User-Affecting
+Bug**: This fixes a real functional issue where audio controls don't
+work as expected during playback, which directly impacts user
+experience. 2. **Small and Contained**: The fix is confined to a single
+driver file (`tas2770.c`) and doesn't affect other subsystems. The
+changes are surgical and targeted. 3. **Low Risk**: The fix follows
+established ASoC patterns using standard DAPM event handling. Similar
+power cycling approaches are used throughout the ASoC subsystem. 4. **No
+New Features**: This purely fixes existing functionality rather than
+adding new features. 5. **Comparison with Similar Commits**: Looking at
+the provided examples, this commit is very similar to "Similar Commit
+#2" and "Similar Commit #5" which were both marked as backportable
+(YES). Like commit #2, it fixes incorrect hardware behavior with a small
+register/control change. Like commit #5, it addresses power state
+management issues in audio hardware. 6. **Hardware-Specific Fix**: The
+commit addresses a hardware limitation specific to the tas2770 chip
+where ISENSE/VSENSE blocks are only powered up during shutdown-to-active
+transitions. This is documented in the commit message and is a
+legitimate hardware workaround. The fix ensures that software speaker
+protection functionality works correctly by guaranteeing that IVSENSE
+controls are functional, which is critical for protecting audio hardware
+from damage.
 
- include/acpi/actypes.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/tas2770.c | 30 ++++++++++++++++++++++++++++--
+ 1 file changed, 28 insertions(+), 2 deletions(-)
 
-diff --git a/include/acpi/actypes.h b/include/acpi/actypes.h
-index 7334037624c5c..a2bf54fb946a0 100644
---- a/include/acpi/actypes.h
-+++ b/include/acpi/actypes.h
-@@ -524,7 +524,7 @@ typedef u64 acpi_integer;
+diff --git a/sound/soc/codecs/tas2770.c b/sound/soc/codecs/tas2770.c
+index 1928c1616a52d..629cc24d51c3d 100644
+--- a/sound/soc/codecs/tas2770.c
++++ b/sound/soc/codecs/tas2770.c
+@@ -158,11 +158,37 @@ static const struct snd_kcontrol_new isense_switch =
+ static const struct snd_kcontrol_new vsense_switch =
+ 	SOC_DAPM_SINGLE("Switch", TAS2770_PWR_CTRL, 2, 1, 1);
  
- /* Support for the special RSDP signature (8 characters) */
- 
--#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, 8))
-+#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, (sizeof(a) < 8) ? ACPI_NAMESEG_SIZE : 8))
- #define ACPI_MAKE_RSDP_SIG(dest)        (memcpy (ACPI_CAST_PTR (char, (dest)), ACPI_SIG_RSDP, 8))
- 
- /* Support for OEMx signature (x can be any character) */
++static int sense_event(struct snd_soc_dapm_widget *w,
++			struct snd_kcontrol *kcontrol, int event)
++{
++	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
++	struct tas2770_priv *tas2770 = snd_soc_component_get_drvdata(component);
++
++	/*
++	 * Powering up ISENSE/VSENSE requires a trip through the shutdown state.
++	 * Do that here to ensure that our changes are applied properly, otherwise
++	 * we might end up with non-functional IVSENSE if playback started earlier,
++	 * which would break software speaker protection.
++	 */
++	switch (event) {
++	case SND_SOC_DAPM_PRE_REG:
++		return snd_soc_component_update_bits(component, TAS2770_PWR_CTRL,
++						    TAS2770_PWR_CTRL_MASK,
++						    TAS2770_PWR_CTRL_SHUTDOWN);
++	case SND_SOC_DAPM_POST_REG:
++		return tas2770_update_pwr_ctrl(tas2770);
++	default:
++		return 0;
++	}
++}
++
+ static const struct snd_soc_dapm_widget tas2770_dapm_widgets[] = {
+ 	SND_SOC_DAPM_AIF_IN("ASI1", "ASI1 Playback", 0, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_MUX("ASI1 Sel", SND_SOC_NOPM, 0, 0, &tas2770_asi1_mux),
+-	SND_SOC_DAPM_SWITCH("ISENSE", TAS2770_PWR_CTRL, 3, 1, &isense_switch),
+-	SND_SOC_DAPM_SWITCH("VSENSE", TAS2770_PWR_CTRL, 2, 1, &vsense_switch),
++	SND_SOC_DAPM_SWITCH_E("ISENSE", TAS2770_PWR_CTRL, 3, 1, &isense_switch,
++		sense_event, SND_SOC_DAPM_PRE_REG | SND_SOC_DAPM_POST_REG),
++	SND_SOC_DAPM_SWITCH_E("VSENSE", TAS2770_PWR_CTRL, 2, 1, &vsense_switch,
++		sense_event, SND_SOC_DAPM_PRE_REG | SND_SOC_DAPM_POST_REG),
+ 	SND_SOC_DAPM_DAC_E("DAC", NULL, SND_SOC_NOPM, 0, 0, tas2770_dac_event,
+ 			   SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD),
+ 	SND_SOC_DAPM_OUTPUT("OUT"),
 -- 
 2.39.5
 
