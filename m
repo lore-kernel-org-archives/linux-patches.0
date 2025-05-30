@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE298238145;
-	Fri, 30 May 2025 12:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734C823817E;
+	Fri, 30 May 2025 12:39:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608768; cv=none; b=pZ9i4k/oEsqTPRdU4mbBEO1yCbMhGY/BlpuFP6fk+gVyeMTz9hzq1JGMRE9nrWu0OO6YS2iY+x+EVtBc0EkMSgR6ZqMRLXT33+fsrT6JlGzD4IRgY7mqS0POpkPy5b4cBGZGiS7EH1DRz29pgge9Qlbp016PAlC8dEZGO3MRusE=
+	t=1748608769; cv=none; b=FHQlrkXnWzmuJxMC08C3XJbFDfrL8pks/aEAlAuZ6Ouly6FXg6DpIEYb/KVhUTS/KLllc/Vqq0WuDmcqiVsLuufJ6mnrn77hR+y9VeLYOihjI3s4oxI+XA5+wr2lbl9Y1IjV+ytjk8sPnIhSmb9aKSgbCncsg4LOC4Xq6Ose4r0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608768; c=relaxed/simple;
-	bh=PFuS/P/Z3jWRUglB1GrBuK1+zlS+EyAfSjrB9hZYF+w=;
+	s=arc-20240116; t=1748608769; c=relaxed/simple;
+	bh=ujpYUTndHL/N3UhKwb6o8yLSgSaykwUBYog/pzoygb4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=LYIRhQn+7eYQQucwBPu6b/qAZihnJ5+VrvVcWhqrzZz+xX8PN6Cpin3UBoN8QbA6HMaQdnkrUXehz/UKrV5cG7Z3PWnS3oMYhm0+pbZP8pD8ft2Gfn9KuEmTJVeGgyXe/6kHFNC6Vt9/cpCWQ+aWZ//+By1RztF/6onFp5+B2Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k3m5J/6R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JMpRofZ7cvGrLqZ6FRxCBUv2Ye6Zao4Qcn+IgzLE7QUWtZA6ZOXhwM0Cq/qTfZiHDFNKR2AJ7qBvlwsnBNtZLUR8OBqEqmuLWBb29w4DCj2WgPrTZ9vHUUMq4ANnJn82UlgT3WEmDEPpGfi2E1xuOG796d5NH3IrS9Ils+QgdZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bN/+4M/h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k3m5J/6R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA90FC4CEF1;
-	Fri, 30 May 2025 12:39:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bN/+4M/h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E7A0C4CEE9;
+	Fri, 30 May 2025 12:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608767;
-	bh=PFuS/P/Z3jWRUglB1GrBuK1+zlS+EyAfSjrB9hZYF+w=;
+	s=k20201202; t=1748608769;
+	bh=ujpYUTndHL/N3UhKwb6o8yLSgSaykwUBYog/pzoygb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k3m5J/6RcnhprR8zGpJYJ8cqNvIIzavpWwzWZyTnvdYg+I4uAaiOId7Y9tMXwGd5F
-	 RWr/s+OG/+mow9R1+nUqYb0KKxlc+PWA6dXtf2QXViQf1lOQ+mI2EW9qsc1MYaXfZ8
-	 OnAgcolbDidBDUtm8EwpmgLys0rIAxAa8GsablB9rAqUA1gGJ9CLR06PysaObLixm7
-	 AvkOdBOfJTwBnZsvanDvJod+F6afiN6SHfPuR43Wp/9qHGZKyPh4HdBsc1FUrHyiDj
-	 uLJjDLlfTAr96Tf/S7PQd0HYHZ7aXpMqOogx30a09m12zWYfYOBzzjopB7HMcQRfZO
-	 I+AN2APjuHkCg==
+	b=bN/+4M/h0RQem1UApqh/bRj04W2RhTwNE5WoP7r+t7HUNr695COgWhHtXdJU/SiRa
+	 APPb7v5BGgLyMPbIXtBrYh3xzUenKzw2VcVdXVlMApyJqivBZNlUWwmSW2OymyQKsN
+	 Bvq053MwIvOgNMFwmFr248Mh2PdqYq7S3TqvuTgcuyGmlDgS/GLIct5Jn9sxwoGJIH
+	 odvyOltBRxoLEq7jy3EyZ6cArct1VKjfNxfrd/55bkjT0zDUOWYHtxH6ad3YXtewpy
+	 r+6Lyu1ytnB+pGN47OBfn8CSm4WFVnrgo4CpANUPB4reBxZUWEPiOpFD+hZj4hJ/uX
+	 Q96ZuGtmiGx/w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peng Fan <peng.fan@nxp.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+Cc: Charan Teja Kalla <quic_charante@quicinc.com>,
+	Patrick Daly <quic_pdaly@quicinc.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	bgolaszewski@baylibre.com,
-	linux-gpio@vger.kernel.org,
+	rjw@rjwysocki.net,
+	len.brown@intel.com,
+	pavel@ucw.cz,
+	gregkh@linuxfoundation.org,
+	linux-pm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 26/30] gpiolib: of: Add polarity quirk for s5m8767
-Date: Fri, 30 May 2025 08:38:48 -0400
-Message-Id: <20250530123852.2574030-26-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 27/30] PM: runtime: fix denying of auto suspend in pm_suspend_timer_fn()
+Date: Fri, 30 May 2025 08:38:49 -0400
+Message-Id: <20250530123852.2574030-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530123852.2574030-1-sashal@kernel.org>
 References: <20250530123852.2574030-1-sashal@kernel.org>
@@ -51,110 +54,109 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Charan Teja Kalla <quic_charante@quicinc.com>
 
-[ Upstream commit 4e310626eb4df52a31a142c1360fead0fcbd3793 ]
+[ Upstream commit 40d3b40dce375d6f1c1dbf08d79eed3aed6c691d ]
 
-This is prepare patch for switching s5m8767 regulator driver to
-use GPIO descriptor. DTS for exynos5250 spring incorrectly specifies
-"active low" polarity for the DVS and DS line. But per datasheet,
-they are actually active high. So add polarity quirk for it.
+pm_runtime_put_autosuspend() schedules a hrtimer to expire
+at "dev->power.timer_expires". If the hrtimer's callback,
+pm_suspend_timer_fn(), observes that the current time equals
+"dev->power.timer_expires", it unexpectedly bails out instead of
+proceeding with runtime suspend.
 
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20250327004945.563765-1-peng.fan@oss.nxp.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+pm_suspend_timer_fn():
+
+ if (expires > 0 && expires < ktime_get_mono_fast_ns()) {
+ 	dev->power.timer_expires = 0;
+ 	rpm_suspend(..)
+ }
+
+Additionally, as ->timer_expires is not cleared, all the future auto
+suspend requests will not schedule hrtimer to perform auto suspend.
+
+rpm_suspend():
+
+ if ((rpmflags & RPM_AUTO) &&...) {
+ 	if (!(dev->power.timer_expires && ...) { <-- this will fail.
+ 		hrtimer_start_range_ns(&dev->power.suspend_timer,...);
+ 	}
+ }
+
+Fix this by as well checking if current time reaches the set expiration.
+
+Co-developed-by: Patrick Daly <quic_pdaly@quicinc.com>
+Signed-off-by: Patrick Daly <quic_pdaly@quicinc.com>
+Signed-off-by: Charan Teja Kalla <quic_charante@quicinc.com>
+Link: https://patch.msgid.link/20250515064125.1211561-1-quic_charante@quicinc.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit, the code changes, and the kernel
-context: **YES** This commit should be backported to stable kernel
-trees. Here's my extensive analysis: **Code Analysis:** The commit adds
-a polarity quirk for the s5m8767 regulator driver by modifying
-`drivers/gpio/gpiolib-of.c`. It adds these entries to the
-`of_gpio_try_fixup_polarity` function: ```c #if
-IS_ENABLED(CONFIG_REGULATOR_S5M8767) /bin /bin.usr-is-merged /boot /dev
-/etc /home /init /lib /lib.usr-is-merged /lib64 /lost+found /media /mnt
-/opt /proc /root /run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp
-/usr /var 0001-Fix-Clippy-warnings.patch 0002-Enhance-inference-prompt-
-to-utilize-CVEKERNELDIR-whe.patch 0003-Update-to-latest-version-of-
-clap.patch Cargo.lock Cargo.toml LICENSE README.md
-analyze_merge_commit.sh io_uring_analysis.txt ksmbd_analysis.txt
-merge_commit_analysis.txt model prompt src target test_gpio_cleanup.txt
-test_patch.txt According to S5M8767, the DVS and DS pin are 0001-Fix-
-Clippy-warnings.patch 0002-Enhance-inference-prompt-to-utilize-
-CVEKERNELDIR-whe.patch 0003-Update-to-latest-version-of-clap.patch
-Cargo.lock Cargo.toml LICENSE README.md analyze_merge_commit.sh
-io_uring_analysis.txt ksmbd_analysis.txt merge_commit_analysis.txt model
-prompt src target test_gpio_cleanup.txt test_patch.txt active-high
-signals. However, exynos5250-spring.dts use 0001-Fix-Clippy-
-warnings.patch 0002-Enhance-inference-prompt-to-utilize-CVEKERNELDIR-
-whe.patch 0003-Update-to-latest-version-of-clap.patch Cargo.lock
-Cargo.toml LICENSE README.md analyze_merge_commit.sh
-io_uring_analysis.txt ksmbd_analysis.txt merge_commit_analysis.txt model
-prompt src target test_gpio_cleanup.txt test_patch.txt active-low
-setting. model/ prompt/ src/ target/ { "samsung,s5m8767-pmic",
-"s5m8767,pmic-buck-dvs-gpios", true }, { "samsung,s5m8767-pmic",
-"s5m8767,pmic-buck-ds-gpios", true }, #endif ``` **Why this should be
-backported:** 1. **Clear Bug Fix**: This fixes incorrect GPIO polarity
-in existing Device Tree Source (DTS) files. The commit message clearly
-states that `exynos5250-spring.dts` incorrectly specifies "active low"
-polarity while the S5M8767 datasheet specifies these signals as "active
-high". 2. **Follows Established Pattern**: This change follows the exact
-same pattern as the similar commits I examined, all of which were marked
-as "Backport Status: YES". The structure and purpose are identical to
-successful backports like the TSC2005, Himax LCD, and Lantiq PCI quirks.
-3. **Preparation for Driver Conversion**: The commit message indicates
-this is a "prepare patch for switching s5m8767 regulator driver to use
-GPIO descriptor". Without this quirk, the driver conversion would break
-existing hardware using incorrect DTS polarity. 4. **Small and
-Contained**: The change is minimal - only 8 lines of code adding two
-entries to an existing quirk table. It's confined to the GPIO polarity
-handling subsystem. 5. **No Architectural Changes**: This doesn't change
-any kernel architecture or introduce new features. It's purely a
-compatibility fix for existing hardware. 6. **Critical for Hardware
-Functionality**: DVS (Dynamic Voltage Scaling) and DS (Deep Sleep) GPIO
-lines are critical for power management. Incorrect polarity could lead
-to system instability, power management failures, or hardware damage. 7.
-**Well-Tested Pattern**: The `of_gpio_try_fixup_polarity` mechanism is
-well-established and has been successfully used for similar fixes across
-multiple subsystems. 8. **Prevents Regression**: When the s5m8767 driver
-is converted to use GPIO descriptors (which respect polarity flags),
-existing systems with incorrect DTS would break without this quirk.
-**Risk Assessment:** - **Very Low Risk**: The change only affects
-devices with "samsung,s5m8767-pmic" compatible string and specific GPIO
-property names - **Contained Impact**: Only affects the specific GPIO
-properties mentioned, no broader system impact - **Follows Stable
-Rules**: Fixes important bugs with minimal risk, exactly what stable
-trees are for The commit perfectly fits the stable tree criteria: it's a
-targeted bug fix for existing hardware, has minimal risk of regression,
-and prevents functional issues when the related driver is modernized.
+Now, based on my analysis, let me provide the decision: **YES** This
+commit should be backported to stable kernel trees. Here's my extensive
+analysis: ## Bug Analysis This is a clear **logical bug fix** in the PM
+runtime autosuspend mechanism that affects device power management. The
+issue is in the `pm_suspend_timer_fn()` function at
+`drivers/base/power/runtime.c:1006`. ## The Problem The current code
+uses a strict less-than comparison: ```c if (expires > 0 && expires <
+ktime_get_mono_fast_ns()) { ``` However, this creates a race condition
+where: 1. When `pm_runtime_put_autosuspend()` schedules an hrtimer to
+expire at exactly `dev->power.timer_expires` 2. If the timer callback
+`pm_suspend_timer_fn()` observes that the current time **equals**
+`dev->power.timer_expires` (not less than), it incorrectly bails out 3.
+The timer expires but the device is not suspended 4. Since
+`timer_expires` is not cleared, all future auto-suspend requests fail
+because the condition `if (!(dev->power.timer_expires && ...))` in
+`rpm_suspend()` (line 596-597) will always be false ## The Fix The fix
+correctly changes the comparison to `<=` (less than or equal): ```c if
+(expires > 0 && expires <= ktime_get_mono_fast_ns()) { ``` This ensures
+that the suspend is triggered when the current time equals or exceeds
+the expiration time. ## Why This Should Be Backported 1. **Fixes a Real
+User-Affecting Bug**: Devices may fail to auto-suspend, leading to
+increased power consumption and potential battery drain on mobile
+devices. 2. **Minimal Risk**: This is a one-character change (`<` to
+`<=`) that fixes a clear logical error. The change is extremely
+contained and low-risk. 3. **Critical Subsystem**: PM runtime is a
+critical kernel subsystem affecting all device power management. A
+failure here can impact system-wide power efficiency. 4. **No
+Architectural Changes**: This doesn't introduce new features or change
+architecture - it simply fixes incorrect logic. 5. **Small and
+Contained**: The fix is confined to a single comparison operator in one
+function. 6. **Clear Co-authors**: The commit shows collaboration
+between Patrick Daly and Charan Teja Kalla from Qualcomm, indicating
+this was found in real-world usage. ## Comparison with Similar Commits
+Looking at the historical examples: - **Similar Commit #5 (Status:
+YES)**: Also a PM runtime timer fix with data type correction - this had
+similar characteristics and was backported - The current commit follows
+the same pattern: critical PM runtime bug fix with minimal, contained
+changes ## Stable Tree Criteria Met - ✅ Fixes important bug affecting
+users - ✅ Relatively small and contained fix - ✅ No clear side effects
+beyond fixing the issue - ✅ No major architectural changes - ✅ Touches
+critical kernel subsystem (appropriately) - ✅ Follows stable tree rules
+(important bugfix, minimal risk) - ✅ Has clear explanation of the
+problem and solution This commit perfectly fits the stable backport
+criteria and should be included in stable kernel trees to ensure proper
+device power management functionality across all kernel versions.
 
- drivers/gpio/gpiolib-of.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/base/power/runtime.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
-index 65f6a7177b78e..17802d97492fa 100644
---- a/drivers/gpio/gpiolib-of.c
-+++ b/drivers/gpio/gpiolib-of.c
-@@ -224,6 +224,15 @@ static void of_gpio_try_fixup_polarity(const struct device_node *np,
- 		 */
- 		{ "lantiq,pci-xway",	"gpio-reset",	false },
- #endif
-+#if IS_ENABLED(CONFIG_REGULATOR_S5M8767)
-+		/*
-+		 * According to S5M8767, the DVS and DS pin are
-+		 * active-high signals. However, exynos5250-spring.dts use
-+		 * active-low setting.
-+		 */
-+		{ "samsung,s5m8767-pmic", "s5m8767,pmic-buck-dvs-gpios", true },
-+		{ "samsung,s5m8767-pmic", "s5m8767,pmic-buck-ds-gpios", true },
-+#endif
- #if IS_ENABLED(CONFIG_TOUCHSCREEN_TSC2005)
- 		/*
- 		 * DTS for Nokia N900 incorrectly specified "active high"
+diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+index 0e127b0329c00..520f7e0aa0411 100644
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -1011,7 +1011,7 @@ static enum hrtimer_restart  pm_suspend_timer_fn(struct hrtimer *timer)
+ 	 * If 'expires' is after the current time, we've been called
+ 	 * too early.
+ 	 */
+-	if (expires > 0 && expires < ktime_get_mono_fast_ns()) {
++	if (expires > 0 && expires <= ktime_get_mono_fast_ns()) {
+ 		dev->power.timer_expires = 0;
+ 		rpm_suspend(dev, dev->power.timer_autosuspends ?
+ 		    (RPM_ASYNC | RPM_AUTO) : RPM_ASYNC);
 -- 
 2.39.5
 
