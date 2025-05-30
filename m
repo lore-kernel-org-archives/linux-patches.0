@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10779233D64;
-	Fri, 30 May 2025 12:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8C72343B6;
+	Fri, 30 May 2025 12:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608755; cv=none; b=nkLVxmkOkJx6PPentOWte9y/jBULo4P+Xp+RyZ/4vVnSUS58pgrO6id1anNKs329ywSJHYQSYCS25i0Ddc6Nfywj+JJWh7IADtYjWOHwEvTboWXFOA4Qpf70M1I/JPcEvR7It0G4S7/qE2av/V2NGx6QEvbwFzqp0elELz8/NAk=
+	t=1748608757; cv=none; b=c6oO8aEqUaLgy019Ml1GcgW5HtKXNsNth3P29CZ5a1Y8ZWujjztmWfAYnnPzth2/ZhEn6ehgBzyuJluJ99Up169E7JpaZWpS3ELUaT6ij7v8ivGFMY2PzgtSvkzSUQ+9Svuz3bqwOA4uxNr1BMwBg0lqH/hppV6+dHVLPG0gglU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608755; c=relaxed/simple;
-	bh=QYIBKsKdiOpGctKP27azQZrDT1fogH4qLxaIXrRG1p4=;
+	s=arc-20240116; t=1748608757; c=relaxed/simple;
+	bh=0mNPQpbwT1Pfw1ec0QHifRguoEQrfpMBmf9+3fPz8uc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e+Ybb4OwDRBH9d2375YvuMxmxpjJFl2SIgqa6pLL7S8MFC4eiCy7F0Jd9IPLjJ3XRmoco8LKrJn/XeUf1m+plbma14bWeeD0KkReud3OwTnuQQrA0vzKBGQwPojMCksK7SdN1iIiDr8HUgBc4rlbHY5hCSN4pJUFj23aSWg4cbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CDiwFEBl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mZMHNTEM/ZYh85cfDvil9hGubqRRjL8456qLNfjQfx4iSTARe75xq55VULP0llwDS5ZBgXr0gH4Bu+R5ID3//nG/SFf+i5Dg6Vo69/w0BG+x/i+rf+5L38cWymlUtqLcgPsDmZGE+SqSi2kE1+6jvNfo6x6N7siVx8+x4tQk1O0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HRFdJhO+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CDiwFEBl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F55BC4CEEA;
-	Fri, 30 May 2025 12:39:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HRFdJhO+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667D2C4CEEB;
+	Fri, 30 May 2025 12:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608754;
-	bh=QYIBKsKdiOpGctKP27azQZrDT1fogH4qLxaIXrRG1p4=;
+	s=k20201202; t=1748608757;
+	bh=0mNPQpbwT1Pfw1ec0QHifRguoEQrfpMBmf9+3fPz8uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CDiwFEBl32rZ43/EnUUQLxuK9HyIrJfqd76kCA+2v0X2Sn/lSjoGMWaHezGb1dOR+
-	 e182pROI09VaptVCB+Fih4AVbh3CMP7pDfQsoIWxtXLtMHmoq6EicQZM4VUzLm092X
-	 BuubACs/aa/VRVXW8kgzr4yr33ZeSUu9sLMFlEPiNqsuEl/R+EV3wAaBNcVS2EdZnM
-	 afnskdKo6adO8DWqimt+5HI+V/CcHXTrvG+Rx6mnLZ8SK0VQ2s9ZeMrdZXqI+Qfm7w
-	 moqeovHaJA4vHXPKEy5wWbRi6MbDwIU09FsBvroxNdaUov+GPvLPONwKwtWs/WwgT0
-	 aTo4CkjtU83nQ==
+	b=HRFdJhO+ApuA3Ntz+gPQKQxwg5682IRiBJEf9J11v9jUQoyJLnrcuxJhHlPmBCNNN
+	 3BGxmGhjfuQEl1blzGEZiWgihfq/wxtlAYNzf95JPX9WJHIyyBomM8pE2p8SoNyrlC
+	 PFYBjmU+I0c+tL/6szYIgeh6b+SNhtiVcPg/CyoP4SEaQgeRQkes0QG31ygGCxqYkY
+	 /CI9Md5deDYMEWctHgDbaKM3seVPUxdH2QYSs/zdoaBQmhK6Z/qoV2PfwhVjW1Tph1
+	 P/IEvL27MwAmDTDDWeGM2UkOiGHebNjZvZZ6uChRnVtMmps9O+auJtB9RjR0Cx+HpM
+	 tmPtB4iFodjXw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Seunghun Han <kkamagui@gmail.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Stefan Binding <sbinding@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	robert.moore@intel.com,
-	erik.schmauss@intel.com,
-	lenb@kernel.org,
-	linux-acpi@vger.kernel.org,
-	devel@acpica.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	alsa-devel@alsa-project.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 16/30] ACPICA: fix acpi parse and parseext cache leaks
-Date: Fri, 30 May 2025 08:38:38 -0400
-Message-Id: <20250530123852.2574030-16-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 18/30] ALSA: hda: cs35l41: Fix swapped l/r audio channels for Acer Helios laptops
+Date: Fri, 30 May 2025 08:38:40 -0400
+Message-Id: <20250530123852.2574030-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530123852.2574030-1-sashal@kernel.org>
 References: <20250530123852.2574030-1-sashal@kernel.org>
@@ -50,287 +48,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Seunghun Han <kkamagui@gmail.com>
+From: Stefan Binding <sbinding@opensource.cirrus.com>
 
-[ Upstream commit bed18f0bdcd6737a938264a59d67923688696fc4 ]
+[ Upstream commit e43a93c41982e82c1b703dd7fa9c1d965260fbb3 ]
 
-ACPICA commit 8829e70e1360c81e7a5a901b5d4f48330e021ea5
+Fixes audio channel assignment from ACPI using configuration table.
 
-I'm Seunghun Han, and I work for National Security Research Institute of
-South Korea.
-
-I have been doing a research on ACPI and found an ACPI cache leak in ACPI
-early abort cases.
-
-Boot log of ACPI cache leak is as follows:
-[    0.352414] ACPI: Added _OSI(Module Device)
-[    0.353182] ACPI: Added _OSI(Processor Device)
-[    0.353182] ACPI: Added _OSI(3.0 _SCP Extensions)
-[    0.353182] ACPI: Added _OSI(Processor Aggregator Device)
-[    0.356028] ACPI: Unable to start the ACPI Interpreter
-[    0.356799] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
-[    0.360215] kmem_cache_destroy Acpi-State: Slab cache still has objects
-[    0.360648] CPU: 0 PID: 1 Comm: swapper/0 Tainted: G        W
-4.12.0-rc4-next-20170608+ #10
-[    0.361273] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS
-virtual_box 12/01/2006
-[    0.361873] Call Trace:
-[    0.362243]  ? dump_stack+0x5c/0x81
-[    0.362591]  ? kmem_cache_destroy+0x1aa/0x1c0
-[    0.362944]  ? acpi_sleep_proc_init+0x27/0x27
-[    0.363296]  ? acpi_os_delete_cache+0xa/0x10
-[    0.363646]  ? acpi_ut_delete_caches+0x6d/0x7b
-[    0.364000]  ? acpi_terminate+0xa/0x14
-[    0.364000]  ? acpi_init+0x2af/0x34f
-[    0.364000]  ? __class_create+0x4c/0x80
-[    0.364000]  ? video_setup+0x7f/0x7f
-[    0.364000]  ? acpi_sleep_proc_init+0x27/0x27
-[    0.364000]  ? do_one_initcall+0x4e/0x1a0
-[    0.364000]  ? kernel_init_freeable+0x189/0x20a
-[    0.364000]  ? rest_init+0xc0/0xc0
-[    0.364000]  ? kernel_init+0xa/0x100
-[    0.364000]  ? ret_from_fork+0x25/0x30
-
-I analyzed this memory leak in detail. I found that “Acpi-State” cache and
-“Acpi-Parse” cache were merged because the size of cache objects was same
-slab cache size.
-
-I finally found “Acpi-Parse” cache and “Acpi-parse_ext” cache were leaked
-using SLAB_NEVER_MERGE flag in kmem_cache_create() function.
-
-Real ACPI cache leak point is as follows:
-[    0.360101] ACPI: Added _OSI(Module Device)
-[    0.360101] ACPI: Added _OSI(Processor Device)
-[    0.360101] ACPI: Added _OSI(3.0 _SCP Extensions)
-[    0.361043] ACPI: Added _OSI(Processor Aggregator Device)
-[    0.364016] ACPI: Unable to start the ACPI Interpreter
-[    0.365061] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
-[    0.368174] kmem_cache_destroy Acpi-Parse: Slab cache still has objects
-[    0.369332] CPU: 1 PID: 1 Comm: swapper/0 Tainted: G        W
-4.12.0-rc4-next-20170608+ #8
-[    0.371256] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS
-virtual_box 12/01/2006
-[    0.372000] Call Trace:
-[    0.372000]  ? dump_stack+0x5c/0x81
-[    0.372000]  ? kmem_cache_destroy+0x1aa/0x1c0
-[    0.372000]  ? acpi_sleep_proc_init+0x27/0x27
-[    0.372000]  ? acpi_os_delete_cache+0xa/0x10
-[    0.372000]  ? acpi_ut_delete_caches+0x56/0x7b
-[    0.372000]  ? acpi_terminate+0xa/0x14
-[    0.372000]  ? acpi_init+0x2af/0x34f
-[    0.372000]  ? __class_create+0x4c/0x80
-[    0.372000]  ? video_setup+0x7f/0x7f
-[    0.372000]  ? acpi_sleep_proc_init+0x27/0x27
-[    0.372000]  ? do_one_initcall+0x4e/0x1a0
-[    0.372000]  ? kernel_init_freeable+0x189/0x20a
-[    0.372000]  ? rest_init+0xc0/0xc0
-[    0.372000]  ? kernel_init+0xa/0x100
-[    0.372000]  ? ret_from_fork+0x25/0x30
-[    0.388039] kmem_cache_destroy Acpi-parse_ext: Slab cache still has objects
-[    0.389063] CPU: 1 PID: 1 Comm: swapper/0 Tainted: G        W
-4.12.0-rc4-next-20170608+ #8
-[    0.390557] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS
-virtual_box 12/01/2006
-[    0.392000] Call Trace:
-[    0.392000]  ? dump_stack+0x5c/0x81
-[    0.392000]  ? kmem_cache_destroy+0x1aa/0x1c0
-[    0.392000]  ? acpi_sleep_proc_init+0x27/0x27
-[    0.392000]  ? acpi_os_delete_cache+0xa/0x10
-[    0.392000]  ? acpi_ut_delete_caches+0x6d/0x7b
-[    0.392000]  ? acpi_terminate+0xa/0x14
-[    0.392000]  ? acpi_init+0x2af/0x34f
-[    0.392000]  ? __class_create+0x4c/0x80
-[    0.392000]  ? video_setup+0x7f/0x7f
-[    0.392000]  ? acpi_sleep_proc_init+0x27/0x27
-[    0.392000]  ? do_one_initcall+0x4e/0x1a0
-[    0.392000]  ? kernel_init_freeable+0x189/0x20a
-[    0.392000]  ? rest_init+0xc0/0xc0
-[    0.392000]  ? kernel_init+0xa/0x100
-[    0.392000]  ? ret_from_fork+0x25/0x30
-
-When early abort is occurred due to invalid ACPI information, Linux kernel
-terminates ACPI by calling acpi_terminate() function. The function calls
-acpi_ut_delete_caches() function to delete local caches (acpi_gbl_namespace_
-cache, state_cache, operand_cache, ps_node_cache, ps_node_ext_cache).
-
-But the deletion codes in acpi_ut_delete_caches() function only delete
-slab caches using kmem_cache_destroy() function, therefore the cache
-objects should be flushed before acpi_ut_delete_caches() function.
-
-"Acpi-Parse" cache and "Acpi-ParseExt" cache are used in an AML parse
-function, acpi_ps_parse_loop(). The function should complete all ops
-using acpi_ps_complete_final_op() when an error occurs due to invalid
-AML codes.
-However, the current implementation of acpi_ps_complete_final_op() does not
-complete all ops when it meets some errors and this cause cache leak.
-
-This cache leak has a security threat because an old kernel (<= 4.9) shows
-memory locations of kernel functions in stack dump. Some malicious users
-could use this information to neutralize kernel ASLR.
-
-To fix ACPI cache leak for enhancing security, I made a patch to complete all
-ops unconditionally for acpi_ps_complete_final_op() function.
-
-I hope that this patch improves the security of Linux kernel.
-
-Thank you.
-
-Link: https://github.com/acpica/acpica/commit/8829e70e
-Signed-off-by: Seunghun Han <kkamagui@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2363774.ElGaqSPkdT@rjwysocki.net
+Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250515162848.405055-3-sbinding@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees based on
-comprehensive analysis of both the commit message and code changes: ##
-Security Impact Analysis The commit fixes a critical **memory cache leak
-that poses a security threat**: - The leak exposes kernel function
-memory locations in stack dumps on older kernels (≤ 4.9) - This
-information can be exploited to neutralize **kernel ASLR** (Address
-Space Layout Randomization) - The researcher specifically mentions this
-creates a security vulnerability that malicious users could exploit ##
-Bug Analysis The commit addresses **"Acpi-Parse" and "Acpi-ParseExt"
-cache leaks** that occur during ACPI early abort scenarios: 1. **Root
-Cause**: In `acpi_ps_complete_final_op()`, when errors occur during AML
-parsing, the function would exit early without properly cleaning up all
-parse operations 2. **Leak Mechanism**: The original code had multiple
-early return paths that bypassed the cleanup loop, leaving parse cache
-objects unfreed 3. **Trigger Conditions**: Invalid/malicious ACPI tables
-causing parse errors ## Code Changes Analysis The fix in
-`drivers/acpi/acpica/psobject.c` is **well-contained and minimal**:
-**Key changes:** 1. **Eliminates early returns**: Replaces immediate
-`return_ACPI_STATUS()` calls with flag setting (`ascending = FALSE`) 2.
-**Ensures complete cleanup**: All ops are now processed through
-`acpi_ps_complete_this_op()` unconditionally 3. **Preserves error
-reporting**: Uses `return_status` to track the first/most important
-error while continuing cleanup 4. **Maintains logic flow**: The cleanup
-loop now always runs to completion, preventing cache leaks **Specific
-improvements:** - Lines 674-701: Instead of immediate return on
-`AE_CTRL_TERMINATE`, sets `ascending = FALSE` and continues - Lines
-704-712: On parse failures, sets `ascending = FALSE` and continues
-instead of returning early - Lines 715-719: Always calls
-`acpi_ps_complete_this_op()` and tracks errors without early exit ##
-Backport Suitability Assessment **✅ Meets stable tree criteria:** 1.
-**Important bug fix**: Fixes memory leaks with security implications 2.
-**Minimal risk**: Changes are confined to error handling paths in ACPI
-parser 3. **Small and contained**: Only 50 lines changed in a single
-function 4. **No architectural changes**: Preserves existing API and
-behavior 5. **Clear regression prevention**: Ensures proper resource
-cleanup in error cases **✅ Historical precedent**: The kernel tree shows
-**multiple similar ACPI cache leak fixes by the same security
-researcher** (Seunghun Han) that were backported: - `3b2d69114fef` -
-"ACPICA: Namespace: fix operand cache leak" - `97f3c0a4b057` - "ACPICA:
-acpi: acpica: fix acpi operand cache leak in nseval.c" **✅ Risk
-assessment:** - **Low regression risk**: Only affects error paths during
-ACPI parse failures - **No functional changes**: Normal ACPI parsing
-behavior unchanged - **Defensive programming**: Makes cleanup more
-robust without changing success paths The commit represents a textbook
-example of a stable-tree appropriate fix: it addresses an important
-security-related memory leak with minimal, well-contained changes that
-improve robustness without introducing new functionality or
-architectural modifications.
+**YES** This commit should be backported to stable kernel trees.
+**Extensive Analysis:** **1. Nature of the Fix:** The commit fixes
+swapped left/right audio channels for Acer Helios laptops by adding
+three new entries to the `cs35l41_config_table[]`: - `{ "10251826", 2,
+EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 }` -
+`{ "1025182C", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0,
+-1, -1, 0, 0, 0 }` - `{ "10251844", 2, EXTERNAL, { CS35L41_LEFT,
+CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 }` The corresponding model
+table entries are also added to enable these configurations. **2.
+Comparison with Historical Similar Commits:** This commit is **very
+similar to Similar Commit #1 (Status: YES)** which also fixed swapped
+l/r audio channels for Lenovo ThinkBook laptops. Both commits: - Fix the
+same fundamental issue: swapped audio channels - Make identical types of
+changes: correcting channel assignment in configuration tables - Are
+small, contained fixes affecting only audio configuration data - Target
+specific laptop models with broken audio channel mapping The primary
+difference is that Similar Commit #1 modified existing entries by
+swapping `CS35L41_LEFT` and `CS35L41_RIGHT`, while this commit adds new
+entries with correct channel assignments. **3. Why This Qualifies for
+Backporting:** **✅ Fixes Important User-Affecting Bug:** Swapped audio
+channels are a significant usability issue that directly impacts users'
+audio experience on affected Acer Helios laptops. **✅ Small and
+Contained Change:** The fix only adds static configuration data - three
+new entries in a lookup table. No algorithmic changes or complex logic
+modifications. **✅ Minimal Risk of Regression:** Adding new entries to a
+device-specific configuration table cannot break existing functionality
+for other devices. The changes only affect the three specific Acer
+laptop models. **✅ No Architectural Changes:** This is purely data-
+driven configuration, not structural code changes. **✅ Specific Hardware
+Support:** The SSID values (10251826, 1025182C, 10251844) are vendor-
+specific identifiers for Acer devices (1025 = Acer vendor ID), ensuring
+the fix only applies to the intended hardware. **4. Code Analysis
+Verification:** From examining the current kernel tree at
+`/home/sasha/linux/sound/pci/hda/cs35l41_hda_property.c`, I confirmed
+that: - The file exists and contains the same structure as the commit -
+No "1025" entries currently exist in the configuration table - The
+pattern matches exactly with other vendor entries (HP: 103C, ASUS: 1043,
+Lenovo: 17AA) **5. Risk Assessment:** - **Regression Risk: MINIMAL** -
+Adding device-specific entries cannot affect other hardware - **Side
+Effects: NONE** - Changes are isolated to specific Acer laptop models -
+**Complexity: LOW** - Simple data table additions with no logic changes
+**Conclusion:** This commit perfectly fits the stable tree criteria:
+it's an important hardware-specific bug fix that affects users, with
+minimal risk and no architectural changes. The historical precedent
+(Similar Commit #1 with identical nature receiving YES status) strongly
+supports backporting this fix.
 
- drivers/acpi/acpica/psobject.c | 52 ++++++++++------------------------
- 1 file changed, 15 insertions(+), 37 deletions(-)
+ sound/pci/hda/cs35l41_hda_property.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/acpi/acpica/psobject.c b/drivers/acpi/acpica/psobject.c
-index 54471083ba545..0bce1baaa62b3 100644
---- a/drivers/acpi/acpica/psobject.c
-+++ b/drivers/acpi/acpica/psobject.c
-@@ -636,7 +636,8 @@ acpi_status
- acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
- 			  union acpi_parse_object *op, acpi_status status)
- {
--	acpi_status status2;
-+	acpi_status return_status = status;
-+	u8 ascending = TRUE;
+diff --git a/sound/pci/hda/cs35l41_hda_property.c b/sound/pci/hda/cs35l41_hda_property.c
+index 61d2314834e7b..d8249d997c2a0 100644
+--- a/sound/pci/hda/cs35l41_hda_property.c
++++ b/sound/pci/hda/cs35l41_hda_property.c
+@@ -31,6 +31,9 @@ struct cs35l41_config {
+ };
  
- 	ACPI_FUNCTION_TRACE_PTR(ps_complete_final_op, walk_state);
- 
-@@ -650,7 +651,7 @@ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
- 			  op));
- 	do {
- 		if (op) {
--			if (walk_state->ascending_callback != NULL) {
-+			if (ascending && walk_state->ascending_callback != NULL) {
- 				walk_state->op = op;
- 				walk_state->op_info =
- 				    acpi_ps_get_opcode_info(op->common.
-@@ -672,49 +673,26 @@ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
- 				}
- 
- 				if (status == AE_CTRL_TERMINATE) {
--					status = AE_OK;
--
--					/* Clean up */
--					do {
--						if (op) {
--							status2 =
--							    acpi_ps_complete_this_op
--							    (walk_state, op);
--							if (ACPI_FAILURE
--							    (status2)) {
--								return_ACPI_STATUS
--								    (status2);
--							}
--						}
--
--						acpi_ps_pop_scope(&
--								  (walk_state->
--								   parser_state),
--								  &op,
--								  &walk_state->
--								  arg_types,
--								  &walk_state->
--								  arg_count);
--
--					} while (op);
--
--					return_ACPI_STATUS(status);
-+					ascending = FALSE;
-+					return_status = AE_CTRL_TERMINATE;
- 				}
- 
- 				else if (ACPI_FAILURE(status)) {
- 
- 					/* First error is most important */
- 
--					(void)
--					    acpi_ps_complete_this_op(walk_state,
--								     op);
--					return_ACPI_STATUS(status);
-+					ascending = FALSE;
-+					return_status = status;
- 				}
- 			}
- 
--			status2 = acpi_ps_complete_this_op(walk_state, op);
--			if (ACPI_FAILURE(status2)) {
--				return_ACPI_STATUS(status2);
-+			status = acpi_ps_complete_this_op(walk_state, op);
-+			if (ACPI_FAILURE(status)) {
-+				ascending = FALSE;
-+				if (ACPI_SUCCESS(return_status) ||
-+				    return_status == AE_CTRL_TERMINATE) {
-+					return_status = status;
-+				}
- 			}
- 		}
- 
-@@ -724,5 +702,5 @@ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
- 
- 	} while (op);
- 
--	return_ACPI_STATUS(status);
-+	return_ACPI_STATUS(return_status);
- }
+ static const struct cs35l41_config cs35l41_config_table[] = {
++	{ "10251826", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
++	{ "1025182C", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
++	{ "10251844", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
+ 	{ "10280B27", 2, INTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, 2, 0, 1000, 4500, 24 },
+ 	{ "10280B28", 2, INTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, 2, 0, 1000, 4500, 24 },
+ 	{ "10280BEB", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, -1, 0, 0, 0, 0 },
+@@ -452,6 +455,9 @@ struct cs35l41_prop_model {
+ static const struct cs35l41_prop_model cs35l41_prop_model_table[] = {
+ 	{ "CLSA0100", NULL, lenovo_legion_no_acpi },
+ 	{ "CLSA0101", NULL, lenovo_legion_no_acpi },
++	{ "CSC3551", "10251826", generic_dsd_config },
++	{ "CSC3551", "1025182C", generic_dsd_config },
++	{ "CSC3551", "10251844", generic_dsd_config },
+ 	{ "CSC3551", "10280B27", generic_dsd_config },
+ 	{ "CSC3551", "10280B28", generic_dsd_config },
+ 	{ "CSC3551", "10280BEB", generic_dsd_config },
 -- 
 2.39.5
 
