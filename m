@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF5F268696;
-	Fri, 30 May 2025 12:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B343268C7F;
+	Fri, 30 May 2025 12:41:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608868; cv=none; b=iXYxSSVlJ48cYgW+yo1QvFDDbKEZAJuVoItTzbp3jRXmh0pxyL6Zy1+Q2yrcq2PgpQXQT4e009HHs20rdIxT8LvV7C7qNajbeF3NkJ+eeZpOK6vJ5Nih+tfukT9PqOL8tf5rKe6aeDrGEPqpT35hArTPbevx+t+z0T6UKnoITNc=
+	t=1748608869; cv=none; b=SN7khcI542ax26P9+iNdrooVUFjDhg+diJc5Cv7nVlPzXOb3NbwtfAf0Qx0MKauIhhZAunuTQtVahDdd9h8xG+kVfEXgiiipcpA9H3TxbcJGOPfE9Wu8fDBei71l10nkK0mdt9uH7MTHxV4vv3UNmVm/dC4hc2XEEku12pKeaFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608868; c=relaxed/simple;
-	bh=Yizfy1XHJ4W+SiEGnJstdQkQ/isGgjlfcQVKxgOkasE=;
+	s=arc-20240116; t=1748608869; c=relaxed/simple;
+	bh=5LpukfSploEVR67mxHqzkj4VIPHH+CNrASNyoPWR7qg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hzhdUVGQt5rUc18q9PqS3o24baaxTDGaWKusXiV2HwlBgZ6UXYqLtnz2GUe55VPdRGEJ1zIxoNG7BCONFSHvqG0hlFKxBpDKTa4A+YZ1T70top+Ax2errKnFaV0JH/JkV3aFiABA7fopaAVjNlhZoQEBd6BzvcI3+J5wvyXjcHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H0XRL3c9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zw0cTrtg9My8Kk9/m9MatuQHQ0aYRA5U1BI7DT6ChscpFVBJifr++paQtCJngKee5MulQCi1qgmGl+wI/Hw2iedM1v1aILurR03p2CKppDFcu3k/pR4lEY+abjedBrsmTmVAz2VxKGfejodorfGzvdktezXGz1o0vX1F7wizMUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gyTppEYp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H0XRL3c9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41C3C4CEEB;
-	Fri, 30 May 2025 12:41:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gyTppEYp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833D8C4CEF0;
+	Fri, 30 May 2025 12:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608868;
-	bh=Yizfy1XHJ4W+SiEGnJstdQkQ/isGgjlfcQVKxgOkasE=;
+	s=k20201202; t=1748608869;
+	bh=5LpukfSploEVR67mxHqzkj4VIPHH+CNrASNyoPWR7qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H0XRL3c9B4orkjyAWaUtCTYn1vEBJFgEmoBcizlUfCMZIeg6e9NCETIHJS46kfgXb
-	 Fadz10yIHy88F5TPcRfCrGV2DCSkEVbm+zzntIi5GmpYsFOY+NX+cdN20+VYjgxRbU
-	 mcLwxclHb3/0mgflkULHxz7zNvA8Vuhwqx6H3b7FqHkGW3krRQTva6LkvT1UbS4rl3
-	 mfDTpqrjB8iJvoj17h1ObAdQCXCfY9dxF6PJiQntyVRKRj3T6ryf/J727cH0oL4eo4
-	 +FM0JuScCQYUxR8JvCaubAu95ynQnrLePVUzWxJJ6PgxNYUE2oabfv3JkM1xAHu2rJ
-	 OAQgc1zBv73Mg==
+	b=gyTppEYpTvqgNTSssQj7FBifXHZs0fAY/B+xMgaWCnzR70u3F1pGFaiAoEncU4Bpi
+	 PsqfuuIFkXYhBzLXjfs9OPrDGk8+bFAufcDo05kHHSWSkpL6K4pKn1Xm4/eO3jPjwJ
+	 9FdrSUoza0wWNfbL7h8jqm4GRWwcZy0TG8SxsFbRCQfmYWOkuw7yG0XAwtQrRM4kOU
+	 W1P06nNRs4Z9J43GFViypsyHmrjWYdNv4iXgkNBQfpZXdDArullKnicz5Z6fWxCcZS
+	 9WieaoXI3Y9BGQsb9NCLAe7AVPWxYar9F0BikWbQRXvp2UZcs4YQpMVDdneOMZLSXn
+	 Vb5//mbMPqmkQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yuanjun Gong <ruc_gongyuanjun@163.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Peng Fan <peng.fan@nxp.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	thierry.reding@gmail.com,
-	jonathanh@nvidia.com,
-	alsa-devel@alsa-project.org,
-	linux-tegra@vger.kernel.org,
+	bgolaszewski@baylibre.com,
+	linux-gpio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 15/18] ASoC: tegra210_ahub: Add check to of_device_get_match_data()
-Date: Fri, 30 May 2025 08:40:44 -0400
-Message-Id: <20250530124047.2575954-15-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 16/18] gpiolib: of: Add polarity quirk for s5m8767
+Date: Fri, 30 May 2025 08:40:45 -0400
+Message-Id: <20250530124047.2575954-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530124047.2575954-1-sashal@kernel.org>
 References: <20250530124047.2575954-1-sashal@kernel.org>
@@ -55,81 +51,110 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.92
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 04cb269c204398763a620d426cbee43064854000 ]
+[ Upstream commit 4e310626eb4df52a31a142c1360fead0fcbd3793 ]
 
-In tegra_ahub_probe(), check the result of function
-of_device_get_match_data(), return an error code in case it fails.
+This is prepare patch for switching s5m8767 regulator driver to
+use GPIO descriptor. DTS for exynos5250 spring incorrectly specifies
+"active low" polarity for the DVS and DS line. But per datasheet,
+they are actually active high. So add polarity quirk for it.
 
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
-Link: https://patch.msgid.link/20250513123744.3041724-1-ruc_gongyuanjun@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20250327004945.563765-1-peng.fan@oss.nxp.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees.
-**Extensive Analysis:** **1. Nature of the Bug Fix:** This commit fixes
-a critical null pointer dereference vulnerability in the tegra210_ahub
-driver. The code calls `of_device_get_match_data(&pdev->dev)` but never
-validates the return value before using `ahub->soc_data`. Looking at the
-kernel tree, we can see that immediately after the assignment, the code
-accesses `ahub->soc_data->regmap_config` and later
-`ahub->soc_data->cmpnt_drv`, `ahub->soc_data->dai_drv`, and
-`ahub->soc_data->num_dais` without any null checking. **2. Severity and
-Impact:** - **High severity**: A null pointer dereference in the kernel
-probe function can cause kernel panic - **User impact**: Systems using
-Tegra210 audio hardware could crash during device initialization -
-**Subsystem criticality**: Audio subsystem failure affects multimedia
-functionality **3. Code Analysis:** The fix is minimal and surgical:
-```c ahub->soc_data = of_device_get_match_data(&pdev->dev); +if
-(!ahub->soc_data) + return -ENODEV; ``` This follows established kernel
-patterns and returns an appropriate error code (-ENODEV) when device
-match data cannot be found. **4. Consistency with Similar Fixes:**
-Examining the kernel tree reveals that other Tegra drivers have already
-been fixed with identical patterns: - `tegra30_ahub.c` already has this
-null check (returns -EINVAL) - `tegra30_i2s.c` already has this null
-check (returns -ENODEV) This indicates that tegra210_ahub was an
-oversight that should be corrected for consistency and safety. **5.
-Historical Reference Analysis:** While the provided historical commits
-all have "Backport Status: NO", they were primarily code cleanup and API
-migration commits (switching to `of_device_get_match_data`), not
-security/stability fixes. This commit is fundamentally different - it's
-a critical bug fix that prevents kernel crashes. **6. Stable Tree
-Criteria Compliance:** - ✅ **Important bugfix**: Prevents kernel panic -
-✅ **Minimal risk**: Two-line addition with well-established pattern - ✅
-**Small and contained**: No architectural changes - ✅ **Clear purpose**:
-Prevents null pointer dereference - ✅ **Subsystem confined**: Only
-affects tegra210_ahub driver **7. Risk Assessment:** - **Regression
-risk**: Extremely low - only adds a safety check - **Side effects**:
-None - failure case now returns clean error instead of crashing -
-**Testing impact**: Improves robustness without changing successful code
-paths **Conclusion:** This is a textbook example of a commit that should
-be backported to stable trees. It fixes a critical null pointer
-dereference that can cause kernel panics, uses minimal code changes
-following established patterns, and has virtually no risk of introducing
-regressions. The fix brings tegra210_ahub in line with other Tegra
-drivers that already have this protection.
+Based on my analysis of the commit, the code changes, and the kernel
+context: **YES** This commit should be backported to stable kernel
+trees. Here's my extensive analysis: **Code Analysis:** The commit adds
+a polarity quirk for the s5m8767 regulator driver by modifying
+`drivers/gpio/gpiolib-of.c`. It adds these entries to the
+`of_gpio_try_fixup_polarity` function: ```c #if
+IS_ENABLED(CONFIG_REGULATOR_S5M8767) /bin /bin.usr-is-merged /boot /dev
+/etc /home /init /lib /lib.usr-is-merged /lib64 /lost+found /media /mnt
+/opt /proc /root /run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp
+/usr /var 0001-Fix-Clippy-warnings.patch 0002-Enhance-inference-prompt-
+to-utilize-CVEKERNELDIR-whe.patch 0003-Update-to-latest-version-of-
+clap.patch Cargo.lock Cargo.toml LICENSE README.md
+analyze_merge_commit.sh io_uring_analysis.txt ksmbd_analysis.txt
+merge_commit_analysis.txt model prompt src target test_gpio_cleanup.txt
+test_patch.txt According to S5M8767, the DVS and DS pin are 0001-Fix-
+Clippy-warnings.patch 0002-Enhance-inference-prompt-to-utilize-
+CVEKERNELDIR-whe.patch 0003-Update-to-latest-version-of-clap.patch
+Cargo.lock Cargo.toml LICENSE README.md analyze_merge_commit.sh
+io_uring_analysis.txt ksmbd_analysis.txt merge_commit_analysis.txt model
+prompt src target test_gpio_cleanup.txt test_patch.txt active-high
+signals. However, exynos5250-spring.dts use 0001-Fix-Clippy-
+warnings.patch 0002-Enhance-inference-prompt-to-utilize-CVEKERNELDIR-
+whe.patch 0003-Update-to-latest-version-of-clap.patch Cargo.lock
+Cargo.toml LICENSE README.md analyze_merge_commit.sh
+io_uring_analysis.txt ksmbd_analysis.txt merge_commit_analysis.txt model
+prompt src target test_gpio_cleanup.txt test_patch.txt active-low
+setting. model/ prompt/ src/ target/ { "samsung,s5m8767-pmic",
+"s5m8767,pmic-buck-dvs-gpios", true }, { "samsung,s5m8767-pmic",
+"s5m8767,pmic-buck-ds-gpios", true }, #endif ``` **Why this should be
+backported:** 1. **Clear Bug Fix**: This fixes incorrect GPIO polarity
+in existing Device Tree Source (DTS) files. The commit message clearly
+states that `exynos5250-spring.dts` incorrectly specifies "active low"
+polarity while the S5M8767 datasheet specifies these signals as "active
+high". 2. **Follows Established Pattern**: This change follows the exact
+same pattern as the similar commits I examined, all of which were marked
+as "Backport Status: YES". The structure and purpose are identical to
+successful backports like the TSC2005, Himax LCD, and Lantiq PCI quirks.
+3. **Preparation for Driver Conversion**: The commit message indicates
+this is a "prepare patch for switching s5m8767 regulator driver to use
+GPIO descriptor". Without this quirk, the driver conversion would break
+existing hardware using incorrect DTS polarity. 4. **Small and
+Contained**: The change is minimal - only 8 lines of code adding two
+entries to an existing quirk table. It's confined to the GPIO polarity
+handling subsystem. 5. **No Architectural Changes**: This doesn't change
+any kernel architecture or introduce new features. It's purely a
+compatibility fix for existing hardware. 6. **Critical for Hardware
+Functionality**: DVS (Dynamic Voltage Scaling) and DS (Deep Sleep) GPIO
+lines are critical for power management. Incorrect polarity could lead
+to system instability, power management failures, or hardware damage. 7.
+**Well-Tested Pattern**: The `of_gpio_try_fixup_polarity` mechanism is
+well-established and has been successfully used for similar fixes across
+multiple subsystems. 8. **Prevents Regression**: When the s5m8767 driver
+is converted to use GPIO descriptors (which respect polarity flags),
+existing systems with incorrect DTS would break without this quirk.
+**Risk Assessment:** - **Very Low Risk**: The change only affects
+devices with "samsung,s5m8767-pmic" compatible string and specific GPIO
+property names - **Contained Impact**: Only affects the specific GPIO
+properties mentioned, no broader system impact - **Follows Stable
+Rules**: Fixes important bugs with minimal risk, exactly what stable
+trees are for The commit perfectly fits the stable tree criteria: it's a
+targeted bug fix for existing hardware, has minimal risk of regression,
+and prevents functional issues when the related driver is modernized.
 
- sound/soc/tegra/tegra210_ahub.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpio/gpiolib-of.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/sound/soc/tegra/tegra210_ahub.c b/sound/soc/tegra/tegra210_ahub.c
-index ab3c6b2544d20..140cb27f73287 100644
---- a/sound/soc/tegra/tegra210_ahub.c
-+++ b/sound/soc/tegra/tegra210_ahub.c
-@@ -1359,6 +1359,8 @@ static int tegra_ahub_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	ahub->soc_data = of_device_get_match_data(&pdev->dev);
-+	if (!ahub->soc_data)
-+		return -ENODEV;
- 
- 	platform_set_drvdata(pdev, ahub);
- 
+diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
+index a0a2a0f75bba4..c1e83b2926ae4 100644
+--- a/drivers/gpio/gpiolib-of.c
++++ b/drivers/gpio/gpiolib-of.c
+@@ -203,6 +203,15 @@ static void of_gpio_try_fixup_polarity(const struct device_node *np,
+ 		 */
+ 		{ "lantiq,pci-xway",	"gpio-reset",	false },
+ #endif
++#if IS_ENABLED(CONFIG_REGULATOR_S5M8767)
++		/*
++		 * According to S5M8767, the DVS and DS pin are
++		 * active-high signals. However, exynos5250-spring.dts use
++		 * active-low setting.
++		 */
++		{ "samsung,s5m8767-pmic", "s5m8767,pmic-buck-dvs-gpios", true },
++		{ "samsung,s5m8767-pmic", "s5m8767,pmic-buck-ds-gpios", true },
++#endif
+ #if IS_ENABLED(CONFIG_TOUCHSCREEN_TSC2005)
+ 		/*
+ 		 * DTS for Nokia N900 incorrectly specified "active high"
 -- 
 2.39.5
 
