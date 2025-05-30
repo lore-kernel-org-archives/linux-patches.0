@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A64253935;
-	Fri, 30 May 2025 12:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97456253F28;
+	Fri, 30 May 2025 12:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608810; cv=none; b=ZoJC7jnayARAslndd3NhHhDYUxpdy/aV/QYJhBH1LIr9h0nT10zxd53yYXnL55wVABoYU6JiK/dTPlcAPjz5k9qqfuljza6KgX2Bejkv8YzmHKLY78r7guohQLHuoi/g9/QcUXD2GG93TZD2irQELhlXJOQmJiwUKIsVe/8oUlo=
+	t=1748608811; cv=none; b=dHqxyEhMjyRFtBMUbsu6Vi88HG26LCVliWuPpazuOk8yK+4eVVMw70mUUJVSIUnNmuGHT9AIl21bAvuQlR8CHAtKmBEjxIXCH+++5Yj9uuGUPu3Qf3lOfPWkcvmWqwJoX7aWvFDsMgAAxRsqwIJyekES/unLzkQGYlvxFeuz1L0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608810; c=relaxed/simple;
-	bh=FlpeWCnJFPCv86vto1B49MxkeN4OkRESOjSv+/+0ZAw=;
+	s=arc-20240116; t=1748608811; c=relaxed/simple;
+	bh=WB1NuruDwRCD+slcGfKp354V01KHBSYTdfV6y5c/ESM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I/osh09VZjlIno3LKphEQj1ThoitRR7U9/w4AA9kepVADOjn4FOzuHkhAIKYvJaQkqs+QKxxMyivrZbkH/tGA32bY1yqcJciCD2I4+ZtalHA70avJ8G0E++EnS0EYCMg9exe9neLaSMEza0ZlS+n101hgPsCz8SJkHyWrOOuBeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cHdUyXaZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MZSAev2u1J3takfbtb9/Hf0iw/VDVyRj9KdIw8PVx3S6Z6jNT/rld57UiMCmP56hOFGagAktXo2skVgu6PcZQya/ETppFT9xYLu4AK9QaLgLOXe8E4ohtzxo5y44SqUvzkJXX9pgOOIfVVz229ZYPSHc9lNHC6pnXXO0vfHCrSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ixrLjsHO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cHdUyXaZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8D5C4CEE9;
-	Fri, 30 May 2025 12:40:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ixrLjsHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33205C4CEEA;
+	Fri, 30 May 2025 12:40:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608809;
-	bh=FlpeWCnJFPCv86vto1B49MxkeN4OkRESOjSv+/+0ZAw=;
+	s=k20201202; t=1748608811;
+	bh=WB1NuruDwRCD+slcGfKp354V01KHBSYTdfV6y5c/ESM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cHdUyXaZfocQ3DrQ7lvcLwx8sIu/X9AeDIFuUCMhE074IUYct3UVfgo9ZeIeprQit
-	 CQtFt+JJe2maN5dG4dG7NNjjTgNAtFjYhXv32M41pOtJ/5kJwx9MRTSAR1VKdu/loS
-	 7kWW2XuWuS40d5Qh6/fduvBxCwXQj++ueqw4YJdjHfGvSgYOoS6AKzrqclC93fHopS
-	 5GtRFMder+CpxKmNgV+ERCVEmogrJfiYkll7Kaf+FPzd1aK3Z/75fwWreyg0plEubQ
-	 fgspJIZ5qxzJ/oGSRIIED+6SvRvNRaHJYy2EFHKFidHi5zza8pkXfIYQ4o1a0G+S5J
-	 pRcz4x8VWLM5Q==
+	b=ixrLjsHOytnIlK+aHeKG1sMm8A7Rbg58rmZqTFbebl8+q6zOQ59w30b72QVbE4TRw
+	 glI018+39hnuSQ2QxP2tVrWzSS4na3Ho8RB8xGdmlCNhyaGgoTxqaJm604gNKz4da+
+	 yazB9R6w204+/s4t5q0g1NoAkXBZ8lWtVb86A5kVycKsOsHHSJoEmSKrGKXMj+PsWT
+	 ZrRc3yWV+AX91RdfjrWVR32hVk1oo+hUZzP2laFGXQjh3vXl7GgWdJ6qf0Z5AfMPTx
+	 0/lo7IyqXyIDIWy4ZMWLdGZzTt3aEdI9DXOk2pICMLpL8yYWfmaAaW1uuESTmoRq4A
+	 TcMbaN8hYT7AA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Svyatoslav Ryhel <clamor95@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+Cc: Peter Marheine <pmarheine@chromium.org>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sre@kernel.org,
-	linux-pm@vger.kernel.org,
+	rjw@rjwysocki.net,
+	lenb@kernel.org,
+	linux-acpi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 27/28] power: supply: max17040: adjust thermal channel scaling
-Date: Fri, 30 May 2025 08:39:33 -0400
-Message-Id: <20250530123934.2574748-27-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.14 28/28] ACPI: battery: negate current when discharging
+Date: Fri, 30 May 2025 08:39:34 -0400
+Message-Id: <20250530123934.2574748-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530123934.2574748-1-sashal@kernel.org>
 References: <20250530123934.2574748-1-sashal@kernel.org>
@@ -50,97 +51,99 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.9
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Svyatoslav Ryhel <clamor95@gmail.com>
+From: Peter Marheine <pmarheine@chromium.org>
 
-[ Upstream commit d055f51731744243b244aafb1720f793a5b61f7b ]
+[ Upstream commit 234f71555019d308c6bc6f98c78c5551cb8cd56a ]
 
-IIO thermal channel is in millidegree while power supply framework expects
-decidegree values. Adjust scaling to get correct readings.
+The ACPI specification requires that battery rate is always positive,
+but the kernel ABI for POWER_SUPPLY_PROP_CURRENT_NOW
+(Documentation/ABI/testing/sysfs-class-power) specifies that it should
+be negative when a battery is discharging. When reporting CURRENT_NOW,
+massage the value to match the documented ABI.
 
-Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
-Link: https://lore.kernel.org/r/20250430060239.12085-2-clamor95@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+This only changes the sign of `current_now` and not `power_now` because
+documentation doesn't describe any particular meaning for `power_now` so
+leaving `power_now` unchanged is less likely to confuse userspace
+unnecessarily, whereas becoming consistent with the documented ABI is
+worth potentially confusing clients that read `current_now`.
+
+Signed-off-by: Peter Marheine <pmarheine@chromium.org>
+Link: https://patch.msgid.link/20250508024146.1436129-1-pmarheine@chromium.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Code Analysis The commit fixes a **units
-conversion bug** in the max17040 power supply driver's temperature
-reporting. Specifically: ### The Problem The original code in
-`max17040_get_property()` for `POWER_SUPPLY_PROP_TEMP` was: ```c
-iio_read_channel_processed_scale(chip->channel_temp, &val->intval, 10);
-``` ### The Fix The corrected code is: ```c
-iio_read_channel_processed(chip->channel_temp, &val->intval);
-val->intval /= 100; /bin /bin.usr-is-merged /boot /dev /etc /home /init
-/lib /lib.usr-is-merged /lib64 /lost+found /media /mnt /opt /proc /root
-/run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp /usr /var Convert
-from milli- to deci-degree model/ prompt/ src/ target/ ``` ### Units
-Mismatch Issue According to the power supply class documentation found
-in `/home/sasha/linux/Documentation/power/power_supply_class.rst`: >
-"All voltages, currents, charges, energies, time and **temperatures** in
-µV, µA, µAh, µWh, seconds and **tenths of degree Celsius** unless
-otherwise stated." The power supply framework expects temperatures in
-**tenths of degree Celsius** (decidegrees), but IIO thermal channels
-typically return values in **millidegrees Celsius**. ### Mathematical
-Analysis - IIO thermal channel: returns millidegrees (1/1000 °C) - Power
-supply framework expects: decidegrees (1/10 °C) - Required conversion:
-millidegrees ÷ 100 = decidegrees - Old code: Applied a scale of 10,
-which would convert from decidegrees to degrees (wrong direction) - New
-code: Divides by 100, correctly converting from millidegrees to
-decidegrees ### Confirmation from Kernel Sources Looking at
-`max17042_battery.c` (similar chip), line 109 shows the correct pattern:
-```c /bin /bin.usr-is-merged /boot /dev /etc /home /init /lib /lib.usr-
-is-merged /lib64 /lost+found /media /mnt /opt /proc /root /run /sbin
-/sbin.usr-is-merged /snap /srv /sys /tmp /usr /var The value is
-converted into deci-centigrade scale model/ prompt/ src/ target/ *temp =
-*temp 0001-Fix-Clippy-warnings.patch 0002-Enhance-inference-prompt-to-
-utilize-CVEKERNELDIR-whe.patch 0003-Update-to-latest-version-of-
-clap.patch Cargo.lock Cargo.toml LICENSE README.md
-analyze_merge_commit.sh io_uring_analysis.txt ksmbd_analysis.txt
-merge_commit_analysis.txt model prompt src target test_gpio_cleanup.txt
-test_patch.txt 10 / 256; ``` This confirms that power supply drivers
-should output temperatures in deci-centigrade (decidegrees). ## Backport
-Suitability Assessment **1. Bug Fix**: ✅ Yes - This fixes incorrect
-temperature readings **2. Small and Contained**: ✅ Yes - Only 3 lines
-changed in one function **3. Clear Side Effects**: ✅ No major side
-effects - only corrects temperature values **4. Architectural Changes**:
-✅ No - Simple unit conversion fix **5. Critical Subsystem**: ✅ Limited
-impact - only affects optional temperature reporting **6. Stable Tree
-Mention**: ❌ No explicit mention, but meets criteria **7. Stable Tree
-Rules**: ✅ Important bugfix with minimal regression risk ## Risk
-Assessment - **Regression Risk**: Very low - only affects temperature
-readings when IIO thermal channel is present - **User Impact**: High for
-affected users - wrong temperature readings could affect thermal
-management - **Code Complexity**: Minimal - straightforward arithmetic
-fix ## Historical Context The thermal channel support was added in
-commit `814755c48f8b` (July 2023), and this scaling bug has been present
-since then. The fix addresses a fundamental units mismatch that would
-cause incorrect temperature reporting for any system using the IIO
-thermal channel feature. This is exactly the type of contained,
-important bugfix that stable trees are designed for.
+Based on my analysis of the commit and examination of the kernel
+codebase, I can now provide my assessment: **YES** This commit should be
+backported to stable kernel trees because: 1. **Fixes a real user-facing
+bug**: The commit addresses an ABI inconsistency where ACPI battery
+drivers were reporting current_now with the wrong sign. According to the
+kernel's power supply ABI documentation
+(Documentation/ABI/testing/sysfs-class-power), `current_now` should be
+negative when discharging and positive when charging, but ACPI battery
+drivers were reporting positive values always. 2. **Small and contained
+fix**: The change is minimal and well-contained. It only affects the
+`POWER_SUPPLY_PROP_CURRENT_NOW` case in `acpi_battery_get_property()`
+function in `drivers/acpi/battery.c`. The code adds a simple check to
+negate the current value only when: - Property requested is
+`POWER_SUPPLY_PROP_CURRENT_NOW` (not power_now) - Battery is in
+discharging state - The `acpi_battery_handle_discharging()` function
+confirms it's actually discharging 3. **Follows stable rules**: This is
+an important bugfix that corrects userspace-visible behavior to match
+documented ABI. Applications and battery monitoring tools rely on the
+documented behavior that negative current indicates discharging. 4.
+**Minimal regression risk**: The change is very conservative: - Only
+affects `current_now`, not `power_now` (as noted in commit message) -
+Uses existing `acpi_battery_handle_discharging()` logic to double-check
+the discharging state - Leaves all other battery properties unchanged 5.
+**Similar pattern in similar drivers**: From the historical examples
+provided, commits like "power: supply: bq27xxx: fix polarity of
+current_now" and "power: supply: axp20x_battery: properly report current
+when discharging" were backported with YES status for exactly the same
+type of issue - fixing current sign during discharge. 6. **Affects
+critical subsystem**: Battery reporting is crucial for power management,
+and incorrect current direction can confuse userspace tools and
+potentially impact power management decisions. The commit carefully
+addresses the ABI compliance issue while minimizing risk by only
+changing the sign for `current_now` during confirmed discharging states,
+making it an ideal candidate for stable backporting.
 
- drivers/power/supply/max17040_battery.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/acpi/battery.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/power/supply/max17040_battery.c b/drivers/power/supply/max17040_battery.c
-index 51310f6e4803b..c1640bc6accd2 100644
---- a/drivers/power/supply/max17040_battery.c
-+++ b/drivers/power/supply/max17040_battery.c
-@@ -410,8 +410,9 @@ static int max17040_get_property(struct power_supply *psy,
- 		if (!chip->channel_temp)
- 			return -ENODATA;
- 
--		iio_read_channel_processed_scale(chip->channel_temp,
--						 &val->intval, 10);
-+		iio_read_channel_processed(chip->channel_temp, &val->intval);
-+		val->intval /= 100; /* Convert from milli- to deci-degree */
+diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
+index 6760330a8af55..93bb1f7d90986 100644
+--- a/drivers/acpi/battery.c
++++ b/drivers/acpi/battery.c
+@@ -243,10 +243,23 @@ static int acpi_battery_get_property(struct power_supply *psy,
+ 		break;
+ 	case POWER_SUPPLY_PROP_CURRENT_NOW:
+ 	case POWER_SUPPLY_PROP_POWER_NOW:
+-		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
++		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
+ 			ret = -ENODEV;
+-		else
+-			val->intval = battery->rate_now * 1000;
++			break;
++		}
++
++		val->intval = battery->rate_now * 1000;
++		/*
++		 * When discharging, the current should be reported as a
++		 * negative number as per the power supply class interface
++		 * definition.
++		 */
++		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
++		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
++		    acpi_battery_handle_discharging(battery)
++				== POWER_SUPPLY_STATUS_DISCHARGING)
++			val->intval = -val->intval;
 +
  		break;
- 	default:
- 		return -EINVAL;
+ 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
+ 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
 -- 
 2.39.5
 
