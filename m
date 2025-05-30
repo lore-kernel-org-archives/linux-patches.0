@@ -1,47 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B2927A105;
-	Fri, 30 May 2025 12:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C0D271452;
+	Fri, 30 May 2025 12:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608914; cv=none; b=gEmVTu6Xd/fCGzZ1HzU3iyWlTUN2XngZnWU4FCFVsQIfHx/J8ZX1eRjt5Gw9b+zXBVQWR68bmBmfZGrtGzH7HMlWz8GSuQ7YdrOZ9VJbKYhrep4Iw4WkGD0kG6J9f23XyEpQ0iIHNlyC1MDJHmxDaNzTnt6jj0teL/LoSpmHfuc=
+	t=1748608915; cv=none; b=eMpv9RqLedOfLdXoTlERtm5DhP3fsd64XnEJAXWvDUOlD394nFX488BLVaKSCbkrqw5wvfZHqflCLpofglOXRmVHbvur06hrHZRCgsaqZTi4ImApmhLC0LvDC/Fx+M1tSbAyikmNN1DUep4/MWEah6zmytVkDDnd3pott+oIrwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608914; c=relaxed/simple;
-	bh=bIsmsBorD41oHc3cckSULlGCl4kPMmuXZw2svrqf0jU=;
+	s=arc-20240116; t=1748608915; c=relaxed/simple;
+	bh=app3iSGCOwILWfxcCXItTXXqsdYp60vHF3vCfDCiwgo=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=gAkkT6qjo8jvNL1ofduyXCka27n1c76BTZCGXHGZZj4VAf04gnVh/5Haihx3F/loe+f89Fjg8GP66baNENB6/viQh7R0vZFACLL6AryAQWyPyXL6hCo6oeR02d4fqyBP2QO9EwK6F6+SREZiwDVtRFiaahNS2ocPOwB4jaRguo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nWy2Yx1s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UDbA42BpEPQHTMxrLNfjuVbZ2aIJW6Vbk1fFVDPlBwDCp5b8PXSspjVdzuNLanfiBXbQr3HqVZYXUmCTD3DgoFo8kssnoe62G01A6qrLCBm3JwBluyEY0Ex7EG8VxhrljzSqotfebZtDwsAIo5MnJmUzy8xlDfo0cne+xbqhSGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ONjdqpMk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nWy2Yx1s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40732C4CEEB;
-	Fri, 30 May 2025 12:41:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ONjdqpMk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3E5C4CEE9;
+	Fri, 30 May 2025 12:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608914;
-	bh=bIsmsBorD41oHc3cckSULlGCl4kPMmuXZw2svrqf0jU=;
+	s=k20201202; t=1748608915;
+	bh=app3iSGCOwILWfxcCXItTXXqsdYp60vHF3vCfDCiwgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWy2Yx1s2yH69Ih1vUs3eJ1nhOYJczRfrNBALTunauyPlnv0oIDkF8sYJ7lF4vxap
-	 SFZiPOvHkJhukuEfjE2P29ZNwk18hS237MxjARL53wp9vSgNBV6sWwcQZ4a9GkKT2d
-	 Hd+KKzti5y4rCiV03GR7iKZxusXxzoil7nRCe4JXUFglCIppp//DcJlIlor5I+w+gH
-	 /zDjEvvf3KnDfTX4MwJElfeB1hlgglrOcOZkqM9kaLB33jPI8uDsqbpHwEaI5uMsZ0
-	 TNpy/OomLB4lw2wV6pof6LiPxNqT1lkmkrcYZm75lisdt9MLs1j1jWe/+4R9EK2BuV
-	 Y/aHyR5LKumkg==
+	b=ONjdqpMk/hiecIaakAlmf1G8XFrzpWZyVVXNV0vfHdlnmIPmzHtpDg6ZnjVK60Sfc
+	 sFuq21L/Kr8CTRN0meTFCaES2Gre4J71bpcalOAcVkzvmZjr+0lJZK/I7qUOQF8Ksx
+	 /RreDM7trrhFCzTkbZaDnQ3BaWBSiGYEvprXMN/dai3ksLUj68M5OrNhUYevO91UhU
+	 GI5d207iOOh9Wf1Wwr6J77ffMbeZdY/gwVtZo1dFOloU+ST4A/z3TAAhgGthbK1UAP
+	 G5ICUP5uW1rBN+syAdH5eU5xXWoxniPB5o+HDKjOFcbO01M9VUbx6hE/IDZ+fRCx5/
+	 JrEaNEES1m1cA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hector Martin <marcan@marcan.st>,
-	Neal Gompa <neal@gompa.dev>,
-	James Calligeros <jcalligeros99@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Seunghun Han <kkamagui@gmail.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	alsa-devel@alsa-project.org,
+	robert.moore@intel.com,
+	erik.schmauss@intel.com,
+	lenb@kernel.org,
+	linux-acpi@vger.kernel.org,
+	devel@acpica.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 04/10] ASoC: tas2770: Power cycle amp on ISENSE/VSENSE change
-Date: Fri, 30 May 2025 08:41:42 -0400
-Message-Id: <20250530124148.2576913-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 05/10] ACPICA: fix acpi parse and parseext cache leaks
+Date: Fri, 30 May 2025 08:41:43 -0400
+Message-Id: <20250530124148.2576913-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530124148.2576913-1-sashal@kernel.org>
 References: <20250530124148.2576913-1-sashal@kernel.org>
@@ -51,118 +50,287 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.10.237
 Content-Transfer-Encoding: 8bit
 
-From: Hector Martin <marcan@marcan.st>
+From: Seunghun Han <kkamagui@gmail.com>
 
-[ Upstream commit f529c91be8a34ac12e7599bf87c65b6f4a2c9f5c ]
+[ Upstream commit bed18f0bdcd6737a938264a59d67923688696fc4 ]
 
-The ISENSE/VSENSE blocks are only powered up when the amplifier
-transitions from shutdown to active. This means that if those controls
-are flipped on while the amplifier is already playing back audio, they
-will have no effect.
+ACPICA commit 8829e70e1360c81e7a5a901b5d4f48330e021ea5
 
-Fix this by forcing a power cycle around transitions in those controls.
+I'm Seunghun Han, and I work for National Security Research Institute of
+South Korea.
 
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
-Link: https://patch.msgid.link/20250406-apple-codec-changes-v5-1-50a00ec850a3@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+I have been doing a research on ACPI and found an ACPI cache leak in ACPI
+early abort cases.
+
+Boot log of ACPI cache leak is as follows:
+[    0.352414] ACPI: Added _OSI(Module Device)
+[    0.353182] ACPI: Added _OSI(Processor Device)
+[    0.353182] ACPI: Added _OSI(3.0 _SCP Extensions)
+[    0.353182] ACPI: Added _OSI(Processor Aggregator Device)
+[    0.356028] ACPI: Unable to start the ACPI Interpreter
+[    0.356799] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
+[    0.360215] kmem_cache_destroy Acpi-State: Slab cache still has objects
+[    0.360648] CPU: 0 PID: 1 Comm: swapper/0 Tainted: G        W
+4.12.0-rc4-next-20170608+ #10
+[    0.361273] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS
+virtual_box 12/01/2006
+[    0.361873] Call Trace:
+[    0.362243]  ? dump_stack+0x5c/0x81
+[    0.362591]  ? kmem_cache_destroy+0x1aa/0x1c0
+[    0.362944]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.363296]  ? acpi_os_delete_cache+0xa/0x10
+[    0.363646]  ? acpi_ut_delete_caches+0x6d/0x7b
+[    0.364000]  ? acpi_terminate+0xa/0x14
+[    0.364000]  ? acpi_init+0x2af/0x34f
+[    0.364000]  ? __class_create+0x4c/0x80
+[    0.364000]  ? video_setup+0x7f/0x7f
+[    0.364000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.364000]  ? do_one_initcall+0x4e/0x1a0
+[    0.364000]  ? kernel_init_freeable+0x189/0x20a
+[    0.364000]  ? rest_init+0xc0/0xc0
+[    0.364000]  ? kernel_init+0xa/0x100
+[    0.364000]  ? ret_from_fork+0x25/0x30
+
+I analyzed this memory leak in detail. I found that “Acpi-State” cache and
+“Acpi-Parse” cache were merged because the size of cache objects was same
+slab cache size.
+
+I finally found “Acpi-Parse” cache and “Acpi-parse_ext” cache were leaked
+using SLAB_NEVER_MERGE flag in kmem_cache_create() function.
+
+Real ACPI cache leak point is as follows:
+[    0.360101] ACPI: Added _OSI(Module Device)
+[    0.360101] ACPI: Added _OSI(Processor Device)
+[    0.360101] ACPI: Added _OSI(3.0 _SCP Extensions)
+[    0.361043] ACPI: Added _OSI(Processor Aggregator Device)
+[    0.364016] ACPI: Unable to start the ACPI Interpreter
+[    0.365061] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
+[    0.368174] kmem_cache_destroy Acpi-Parse: Slab cache still has objects
+[    0.369332] CPU: 1 PID: 1 Comm: swapper/0 Tainted: G        W
+4.12.0-rc4-next-20170608+ #8
+[    0.371256] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS
+virtual_box 12/01/2006
+[    0.372000] Call Trace:
+[    0.372000]  ? dump_stack+0x5c/0x81
+[    0.372000]  ? kmem_cache_destroy+0x1aa/0x1c0
+[    0.372000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.372000]  ? acpi_os_delete_cache+0xa/0x10
+[    0.372000]  ? acpi_ut_delete_caches+0x56/0x7b
+[    0.372000]  ? acpi_terminate+0xa/0x14
+[    0.372000]  ? acpi_init+0x2af/0x34f
+[    0.372000]  ? __class_create+0x4c/0x80
+[    0.372000]  ? video_setup+0x7f/0x7f
+[    0.372000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.372000]  ? do_one_initcall+0x4e/0x1a0
+[    0.372000]  ? kernel_init_freeable+0x189/0x20a
+[    0.372000]  ? rest_init+0xc0/0xc0
+[    0.372000]  ? kernel_init+0xa/0x100
+[    0.372000]  ? ret_from_fork+0x25/0x30
+[    0.388039] kmem_cache_destroy Acpi-parse_ext: Slab cache still has objects
+[    0.389063] CPU: 1 PID: 1 Comm: swapper/0 Tainted: G        W
+4.12.0-rc4-next-20170608+ #8
+[    0.390557] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS
+virtual_box 12/01/2006
+[    0.392000] Call Trace:
+[    0.392000]  ? dump_stack+0x5c/0x81
+[    0.392000]  ? kmem_cache_destroy+0x1aa/0x1c0
+[    0.392000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.392000]  ? acpi_os_delete_cache+0xa/0x10
+[    0.392000]  ? acpi_ut_delete_caches+0x6d/0x7b
+[    0.392000]  ? acpi_terminate+0xa/0x14
+[    0.392000]  ? acpi_init+0x2af/0x34f
+[    0.392000]  ? __class_create+0x4c/0x80
+[    0.392000]  ? video_setup+0x7f/0x7f
+[    0.392000]  ? acpi_sleep_proc_init+0x27/0x27
+[    0.392000]  ? do_one_initcall+0x4e/0x1a0
+[    0.392000]  ? kernel_init_freeable+0x189/0x20a
+[    0.392000]  ? rest_init+0xc0/0xc0
+[    0.392000]  ? kernel_init+0xa/0x100
+[    0.392000]  ? ret_from_fork+0x25/0x30
+
+When early abort is occurred due to invalid ACPI information, Linux kernel
+terminates ACPI by calling acpi_terminate() function. The function calls
+acpi_ut_delete_caches() function to delete local caches (acpi_gbl_namespace_
+cache, state_cache, operand_cache, ps_node_cache, ps_node_ext_cache).
+
+But the deletion codes in acpi_ut_delete_caches() function only delete
+slab caches using kmem_cache_destroy() function, therefore the cache
+objects should be flushed before acpi_ut_delete_caches() function.
+
+"Acpi-Parse" cache and "Acpi-ParseExt" cache are used in an AML parse
+function, acpi_ps_parse_loop(). The function should complete all ops
+using acpi_ps_complete_final_op() when an error occurs due to invalid
+AML codes.
+However, the current implementation of acpi_ps_complete_final_op() does not
+complete all ops when it meets some errors and this cause cache leak.
+
+This cache leak has a security threat because an old kernel (<= 4.9) shows
+memory locations of kernel functions in stack dump. Some malicious users
+could use this information to neutralize kernel ASLR.
+
+To fix ACPI cache leak for enhancing security, I made a patch to complete all
+ops unconditionally for acpi_ps_complete_final_op() function.
+
+I hope that this patch improves the security of Linux kernel.
+
+Thank you.
+
+Link: https://github.com/acpica/acpica/commit/8829e70e
+Signed-off-by: Seunghun Han <kkamagui@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/2363774.ElGaqSPkdT@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES** This commit should be backported to stable kernel trees based on
-my analysis of both the commit message and code changes. Here's my
-extensive explanation: ## Bug Fix Analysis This commit addresses a
-specific functional bug in the tas2770 audio codec driver where
-ISENSE/VSENSE controls don't work properly when changed during active
-playback. The commit message clearly states: "if those controls are
-flipped on while the amplifier is already playing back audio, they will
-have no effect." ## Code Changes Analysis The fix is contained and
-minimal, involving three key changes to `sound/soc/codecs/tas2770.c`: 1.
-**Addition of `sense_event` function (lines +21 to +43)**: This function
-implements a power cycling mechanism that forces the amplifier through a
-shutdown state when ISENSE/VSENSE controls are changed. This ensures the
-changes take effect regardless of playback state. 2. **Modified DAPM
-widget definitions (lines +45 to +48)**: The ISENSE and VSENSE switches
-are changed from simple `SND_SOC_DAPM_SWITCH` to `SND_SOC_DAPM_SWITCH_E`
-with event handling, connecting them to the new `sense_event` function.
-3. **Event triggers**: The widgets respond to `SND_SOC_DAPM_PRE_REG` and
-`SND_SOC_DAPM_POST_REG` events to perform the power cycling around
-register changes. ## Why This Should Be Backported 1. **User-Affecting
-Bug**: This fixes a real functional issue where audio controls don't
-work as expected during playback, which directly impacts user
-experience. 2. **Small and Contained**: The fix is confined to a single
-driver file (`tas2770.c`) and doesn't affect other subsystems. The
-changes are surgical and targeted. 3. **Low Risk**: The fix follows
-established ASoC patterns using standard DAPM event handling. Similar
-power cycling approaches are used throughout the ASoC subsystem. 4. **No
-New Features**: This purely fixes existing functionality rather than
-adding new features. 5. **Comparison with Similar Commits**: Looking at
-the provided examples, this commit is very similar to "Similar Commit
-#2" and "Similar Commit #5" which were both marked as backportable
-(YES). Like commit #2, it fixes incorrect hardware behavior with a small
-register/control change. Like commit #5, it addresses power state
-management issues in audio hardware. 6. **Hardware-Specific Fix**: The
-commit addresses a hardware limitation specific to the tas2770 chip
-where ISENSE/VSENSE blocks are only powered up during shutdown-to-active
-transitions. This is documented in the commit message and is a
-legitimate hardware workaround. The fix ensures that software speaker
-protection functionality works correctly by guaranteeing that IVSENSE
-controls are functional, which is critical for protecting audio hardware
-from damage.
+comprehensive analysis of both the commit message and code changes: ##
+Security Impact Analysis The commit fixes a critical **memory cache leak
+that poses a security threat**: - The leak exposes kernel function
+memory locations in stack dumps on older kernels (≤ 4.9) - This
+information can be exploited to neutralize **kernel ASLR** (Address
+Space Layout Randomization) - The researcher specifically mentions this
+creates a security vulnerability that malicious users could exploit ##
+Bug Analysis The commit addresses **"Acpi-Parse" and "Acpi-ParseExt"
+cache leaks** that occur during ACPI early abort scenarios: 1. **Root
+Cause**: In `acpi_ps_complete_final_op()`, when errors occur during AML
+parsing, the function would exit early without properly cleaning up all
+parse operations 2. **Leak Mechanism**: The original code had multiple
+early return paths that bypassed the cleanup loop, leaving parse cache
+objects unfreed 3. **Trigger Conditions**: Invalid/malicious ACPI tables
+causing parse errors ## Code Changes Analysis The fix in
+`drivers/acpi/acpica/psobject.c` is **well-contained and minimal**:
+**Key changes:** 1. **Eliminates early returns**: Replaces immediate
+`return_ACPI_STATUS()` calls with flag setting (`ascending = FALSE`) 2.
+**Ensures complete cleanup**: All ops are now processed through
+`acpi_ps_complete_this_op()` unconditionally 3. **Preserves error
+reporting**: Uses `return_status` to track the first/most important
+error while continuing cleanup 4. **Maintains logic flow**: The cleanup
+loop now always runs to completion, preventing cache leaks **Specific
+improvements:** - Lines 674-701: Instead of immediate return on
+`AE_CTRL_TERMINATE`, sets `ascending = FALSE` and continues - Lines
+704-712: On parse failures, sets `ascending = FALSE` and continues
+instead of returning early - Lines 715-719: Always calls
+`acpi_ps_complete_this_op()` and tracks errors without early exit ##
+Backport Suitability Assessment **✅ Meets stable tree criteria:** 1.
+**Important bug fix**: Fixes memory leaks with security implications 2.
+**Minimal risk**: Changes are confined to error handling paths in ACPI
+parser 3. **Small and contained**: Only 50 lines changed in a single
+function 4. **No architectural changes**: Preserves existing API and
+behavior 5. **Clear regression prevention**: Ensures proper resource
+cleanup in error cases **✅ Historical precedent**: The kernel tree shows
+**multiple similar ACPI cache leak fixes by the same security
+researcher** (Seunghun Han) that were backported: - `3b2d69114fef` -
+"ACPICA: Namespace: fix operand cache leak" - `97f3c0a4b057` - "ACPICA:
+acpi: acpica: fix acpi operand cache leak in nseval.c" **✅ Risk
+assessment:** - **Low regression risk**: Only affects error paths during
+ACPI parse failures - **No functional changes**: Normal ACPI parsing
+behavior unchanged - **Defensive programming**: Makes cleanup more
+robust without changing success paths The commit represents a textbook
+example of a stable-tree appropriate fix: it addresses an important
+security-related memory leak with minimal, well-contained changes that
+improve robustness without introducing new functionality or
+architectural modifications.
 
- sound/soc/codecs/tas2770.c | 30 ++++++++++++++++++++++++++++--
- 1 file changed, 28 insertions(+), 2 deletions(-)
+ drivers/acpi/acpica/psobject.c | 52 ++++++++++------------------------
+ 1 file changed, 15 insertions(+), 37 deletions(-)
 
-diff --git a/sound/soc/codecs/tas2770.c b/sound/soc/codecs/tas2770.c
-index 1928c1616a52d..629cc24d51c3d 100644
---- a/sound/soc/codecs/tas2770.c
-+++ b/sound/soc/codecs/tas2770.c
-@@ -158,11 +158,37 @@ static const struct snd_kcontrol_new isense_switch =
- static const struct snd_kcontrol_new vsense_switch =
- 	SOC_DAPM_SINGLE("Switch", TAS2770_PWR_CTRL, 2, 1, 1);
+diff --git a/drivers/acpi/acpica/psobject.c b/drivers/acpi/acpica/psobject.c
+index 2480c26c51710..bf708126a7523 100644
+--- a/drivers/acpi/acpica/psobject.c
++++ b/drivers/acpi/acpica/psobject.c
+@@ -636,7 +636,8 @@ acpi_status
+ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
+ 			  union acpi_parse_object *op, acpi_status status)
+ {
+-	acpi_status status2;
++	acpi_status return_status = status;
++	u8 ascending = TRUE;
  
-+static int sense_event(struct snd_soc_dapm_widget *w,
-+			struct snd_kcontrol *kcontrol, int event)
-+{
-+	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
-+	struct tas2770_priv *tas2770 = snd_soc_component_get_drvdata(component);
-+
-+	/*
-+	 * Powering up ISENSE/VSENSE requires a trip through the shutdown state.
-+	 * Do that here to ensure that our changes are applied properly, otherwise
-+	 * we might end up with non-functional IVSENSE if playback started earlier,
-+	 * which would break software speaker protection.
-+	 */
-+	switch (event) {
-+	case SND_SOC_DAPM_PRE_REG:
-+		return snd_soc_component_update_bits(component, TAS2770_PWR_CTRL,
-+						    TAS2770_PWR_CTRL_MASK,
-+						    TAS2770_PWR_CTRL_SHUTDOWN);
-+	case SND_SOC_DAPM_POST_REG:
-+		return tas2770_update_pwr_ctrl(tas2770);
-+	default:
-+		return 0;
-+	}
-+}
-+
- static const struct snd_soc_dapm_widget tas2770_dapm_widgets[] = {
- 	SND_SOC_DAPM_AIF_IN("ASI1", "ASI1 Playback", 0, SND_SOC_NOPM, 0, 0),
- 	SND_SOC_DAPM_MUX("ASI1 Sel", SND_SOC_NOPM, 0, 0, &tas2770_asi1_mux),
--	SND_SOC_DAPM_SWITCH("ISENSE", TAS2770_PWR_CTRL, 3, 1, &isense_switch),
--	SND_SOC_DAPM_SWITCH("VSENSE", TAS2770_PWR_CTRL, 2, 1, &vsense_switch),
-+	SND_SOC_DAPM_SWITCH_E("ISENSE", TAS2770_PWR_CTRL, 3, 1, &isense_switch,
-+		sense_event, SND_SOC_DAPM_PRE_REG | SND_SOC_DAPM_POST_REG),
-+	SND_SOC_DAPM_SWITCH_E("VSENSE", TAS2770_PWR_CTRL, 2, 1, &vsense_switch,
-+		sense_event, SND_SOC_DAPM_PRE_REG | SND_SOC_DAPM_POST_REG),
- 	SND_SOC_DAPM_DAC_E("DAC", NULL, SND_SOC_NOPM, 0, 0, tas2770_dac_event,
- 			   SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD),
- 	SND_SOC_DAPM_OUTPUT("OUT"),
+ 	ACPI_FUNCTION_TRACE_PTR(ps_complete_final_op, walk_state);
+ 
+@@ -650,7 +651,7 @@ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
+ 			  op));
+ 	do {
+ 		if (op) {
+-			if (walk_state->ascending_callback != NULL) {
++			if (ascending && walk_state->ascending_callback != NULL) {
+ 				walk_state->op = op;
+ 				walk_state->op_info =
+ 				    acpi_ps_get_opcode_info(op->common.
+@@ -672,49 +673,26 @@ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
+ 				}
+ 
+ 				if (status == AE_CTRL_TERMINATE) {
+-					status = AE_OK;
+-
+-					/* Clean up */
+-					do {
+-						if (op) {
+-							status2 =
+-							    acpi_ps_complete_this_op
+-							    (walk_state, op);
+-							if (ACPI_FAILURE
+-							    (status2)) {
+-								return_ACPI_STATUS
+-								    (status2);
+-							}
+-						}
+-
+-						acpi_ps_pop_scope(&
+-								  (walk_state->
+-								   parser_state),
+-								  &op,
+-								  &walk_state->
+-								  arg_types,
+-								  &walk_state->
+-								  arg_count);
+-
+-					} while (op);
+-
+-					return_ACPI_STATUS(status);
++					ascending = FALSE;
++					return_status = AE_CTRL_TERMINATE;
+ 				}
+ 
+ 				else if (ACPI_FAILURE(status)) {
+ 
+ 					/* First error is most important */
+ 
+-					(void)
+-					    acpi_ps_complete_this_op(walk_state,
+-								     op);
+-					return_ACPI_STATUS(status);
++					ascending = FALSE;
++					return_status = status;
+ 				}
+ 			}
+ 
+-			status2 = acpi_ps_complete_this_op(walk_state, op);
+-			if (ACPI_FAILURE(status2)) {
+-				return_ACPI_STATUS(status2);
++			status = acpi_ps_complete_this_op(walk_state, op);
++			if (ACPI_FAILURE(status)) {
++				ascending = FALSE;
++				if (ACPI_SUCCESS(return_status) ||
++				    return_status == AE_CTRL_TERMINATE) {
++					return_status = status;
++				}
+ 			}
+ 		}
+ 
+@@ -724,5 +702,5 @@ acpi_ps_complete_final_op(struct acpi_walk_state *walk_state,
+ 
+ 	} while (op);
+ 
+-	return_ACPI_STATUS(status);
++	return_ACPI_STATUS(return_status);
+ }
 -- 
 2.39.5
 
