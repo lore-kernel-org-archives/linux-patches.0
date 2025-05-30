@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C50B22DF96;
-	Fri, 30 May 2025 12:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E6E22F17A;
+	Fri, 30 May 2025 12:39:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608741; cv=none; b=gtJePHAi5sP+4PCQfFHDAIKEhztC4M8uiIvKkoTWJMEEiy5CkeB3lXjY4pWEeI9S3cKZ7uS5h+WlnQbaa41/GWLv3e+238q/86rveXBABSoOfkC/3+lTo4GAsP9Ss7y/AGBY6/JlSirfgIJSuNe6ylda6bOEEnM7AENtoMshqA4=
+	t=1748608742; cv=none; b=Krlo0o9mNIjuPc3fSqUJPz9l0K2tz5cdr/sceMc87QX3Yop+iUB5TFQtyO286L7YKvgrQ+g0ETLsKZjpkB+h01cx2dHMejldC8mEtxNVKpqXUjZoNgHBgMqbf/OQtEkSDbDThxbCaJ76482a8FYn8UxNq8szdk8fpyU2CF2v62g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608741; c=relaxed/simple;
-	bh=xg8veMOPGvIOw6WvGZ0ho8TejVo3zpsy6lpGwjyRjUQ=;
+	s=arc-20240116; t=1748608742; c=relaxed/simple;
+	bh=rjkg0c6kAcXGqJW1BIx004U8wasmYRYOLSHV4y5ffdc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HFciuK1t7sJLchSeuKuFurJv7iqlL7jGZKZ4+dJh+TEqKsUApe07RSF8fzHxlYQ83PQmrLxBMRbmVPa04RsBQlHDCLDzqtpywCwtoSFkdnNEUcH9aSlvnO3HLz0R2M8j6Bb5M9yISHw0lO1i74tuXFwLMuIYz9ztW9XVFT6zhTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Px5MgdZr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Q51NuYVIi5k+Zcrcv7BVUvfkVmIOqZhMHWc/Ro2x/BX5uCQPcRw5cKJoNiXZmn+mjKxr1dx9pAgsHjCVQiIEcNIbnvMpSa5YiXJRvJoHWr21t1FdDVba59bro13ychqj8XbIwvi9EjtzAE8M+UsWk/7ucoRUpoc8xzbx5eF5TDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DbHWt7Dx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Px5MgdZr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 316CDC4CEE9;
-	Fri, 30 May 2025 12:39:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DbHWt7Dx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77424C4CEEA;
+	Fri, 30 May 2025 12:39:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608741;
-	bh=xg8veMOPGvIOw6WvGZ0ho8TejVo3zpsy6lpGwjyRjUQ=;
+	s=k20201202; t=1748608742;
+	bh=rjkg0c6kAcXGqJW1BIx004U8wasmYRYOLSHV4y5ffdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Px5MgdZrYgiWBFcbv6B7c2aHS8KvqQMz+vhsiz+fiBO0KsEIlFticn/D1KTGMlMPa
-	 1vVn2XtBNEnx5YmngK3D49T7HkWm+zE4HNNFcWTvryMCG5tMBAmqEBSwgNq61wEx9w
-	 2q0R52/qb7rECSp5ibuNMhWTlqCIF8+TDqmtFDoiL2AMK8uMCDxFXQp2E9JE2T1QdY
-	 vPRhJ/O9MCHc6co8fMj4GMb3spr7ytunybcPvdhFCK3+3Q86D5Le6e0/yqC9mTAYnY
-	 +6ZsKQHZ3ifc6r9B6k/m9w3eb+V7ahBKVi9Pg1ACZdkxN9DF6lCyZfevqAF9nC5TbS
-	 NCxTk9NrXxiPQ==
+	b=DbHWt7DxreAOndEeHkBpy5hZc/PaDGYFYCGQdr8gm9lPfvsn9BqqGwJXjUrr1HT4Y
+	 R5B6cbxRKJ29aldYJkdKEhumGG/u/GAAdMQEpH7Xc7ueAQmLxG/ZYYtbsY70PLW3DN
+	 MHwxixFGO/QSvJ6x+SyfYOHpMzcwFGXSfzflW1DKs/Qqv4dHm6dC0s4UNP39NZZZr+
+	 KA10Ucuyowb4Rp4J9vUD1uIxvMPoXx8EBJSLgdjymVbEtBuYTkQOjQspKVdbMKQvit
+	 S8+TzSf9KnJwkIT4irzNqhZOd05OJHjq25cVg2bJ+YxPJv8i6TS/HPAVkoOoxw5t75
+	 eoUJZAYaljVig==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+Cc: Erick Shepherd <erick.shepherd@ni.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	sre@kernel.org,
-	linux-pm@vger.kernel.org,
+	linux-mmc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 06/30] power: supply: collie: Fix wakeup source leaks on device unbind
-Date: Fri, 30 May 2025 08:38:28 -0400
-Message-Id: <20250530123852.2574030-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 07/30] mmc: Add quirk to disable DDR50 tuning
+Date: Fri, 30 May 2025 08:38:29 -0400
+Message-Id: <20250530123852.2574030-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530123852.2574030-1-sashal@kernel.org>
 References: <20250530123852.2574030-1-sashal@kernel.org>
@@ -53,78 +53,175 @@ X-stable-base: Linux 6.15
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Erick Shepherd <erick.shepherd@ni.com>
 
-[ Upstream commit c73d19f89cb03c43abbbfa3b9caa1b8fc719764c ]
+[ Upstream commit 9510b38dc0ba358c93cbf5ee7c28820afb85937b ]
 
-Device can be unbound, so driver must also release memory for the wakeup
-source.
+Adds the MMC_QUIRK_NO_UHS_DDR50_TUNING quirk and updates
+mmc_execute_tuning() to return 0 if that quirk is set. This fixes an
+issue on certain Swissbit SD cards that do not support DDR50 tuning
+where tuning requests caused I/O errors to be thrown.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20250406202730.55096-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Erick Shepherd <erick.shepherd@ni.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20250331221337.1414534-1-erick.shepherd@ni.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Perfect! This confirms the pattern. Now let me analyze the commit:
 **YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Justification for Backporting ### 1. **Bug Fix
-Nature** The commit fixes a resource leak bug where wakeup sources are
-not properly cleaned up when the device is unbound. This is a clear bug
-fix that affects system resource management. ### 2. **Matching Pattern
-with Similar Commits** This commit follows the exact same pattern as the
-similar commits marked "YES" for backporting: - **Similar Commit #1
-(gpio: mpc8xxx)** and **Similar Commit #3 (gpio: zynq)** both have
-identical commit messages and fix the same type of wakeup source leak by
-adding `device_init_wakeup(&pdev->dev, 0)` in the remove function. - All
-these commits are from the same author (Krzysztof Kozlowski) and have
-`Cc: stable@vger.kernel.org` in their commit messages, indicating
-explicit intention for stable tree inclusion. ### 3. **Code Analysis**
-The code change is minimal and surgical: - **Single line addition**:
-`device_init_wakeup(&ucb->dev, 0);` in the `collie_bat_remove()`
-function - **Proper cleanup ordering**: The line is added at the
-beginning of the remove function, which is the correct place for
-resource cleanup - **Symmetric operation**: The probe function calls
-`device_init_wakeup(&ucb->dev, 1)` at line 414, and now the remove
-function properly disables it with `device_init_wakeup(&ucb->dev, 0)`
-### 4. **Resource Leak Prevention** From examining the kernel tree, I
-can see that: - The probe function enables wakeup with
-`device_init_wakeup(&ucb->dev, 1)` - Without this fix, when the driver
-is unbound, the wakeup source memory is leaked - This follows the
-established pattern seen in other drivers like gpio-zynq.c where
-`device_init_wakeup(&pdev->dev, 0)` is called in remove functions ### 5.
-**Low Risk Assessment** - **Minimal scope**: Only affects the collie
-battery driver cleanup path - **No functional changes**: Doesn't change
-driver behavior, only fixes resource cleanup - **No architectural
-changes**: Single line addition for proper resource management - **No
-new features**: Pure bug fix ### 6. **Stable Tree Criteria Compliance**
-- ✅ **Important bug fix**: Prevents resource leaks - ✅ **Minimal risk**:
-Single line, well-understood API call - ✅ **No new features**: Only
-fixes cleanup - ✅ **Small and contained**: Confined to one driver's
-remove function - ✅ **Clear side effects**: Only positive effect of
-proper resource cleanup ### 7. **Explicit Stable Tree Intent** The
-commit message doesn't include `Cc: stable@vger.kernel.org`, but the
-similar commits #1 and #3 from the same author fixing identical issues
-do have this tag, suggesting this is part of a series addressing wakeup
-source leaks across multiple drivers. The fix is essential for proper
-resource management and follows established kernel patterns for wakeup
-source cleanup during device unbinding.
+my detailed analysis: ## Bug Fix Classification This is clearly a
+**bugfix**, not a new feature. The commit fixes I/O errors that occur on
+specific Swissbit SD cards when DDR50 tuning is attempted. The commit
+message explicitly states: "This fixes an issue on certain Swissbit SD
+cards that do not support DDR50 tuning where tuning requests caused I/O
+errors to be thrown." ## Code Change Analysis ### 1. **Minimal and
+Targeted Changes** The changes are very focused and follow established
+kernel patterns: - **New quirk flag**: `MMC_QUIRK_NO_UHS_DDR50_TUNING
+(1<<18)` in `include/linux/mmc/card.h` - **Helper function**:
+`mmc_card_no_uhs_ddr50_tuning()` in `drivers/mmc/core/card.h` -
+**Specific card targeting**: Only affects Swissbit cards (manufacturer
+ID 0x5D) with specific model/date criteria - **Logic refactoring**:
+Extracts tuning decision into `mmc_sd_use_tuning()` function ### 2.
+**Low Risk Implementation** The implementation uses the existing MMC
+quirk infrastructure, which is well-tested: - Follows the same pattern
+as Similar Commit #2 (marked YES for backport) - Uses standard
+`_FIXUP_EXT()` macro with precise card identification - Only affects the
+specific problematic cards, leaving all others unchanged ### 3.
+**Controlled Scope** The quirk is highly specific: ```c
+_FIXUP_EXT("0016G", CID_MANFID_SWISSBIT, 0x5342, 2019, 1, 0, -1ull,
+SDIO_ANY_ID, SDIO_ANY_ID, add_quirk_sd, MMC_QUIRK_NO_UHS_DDR50_TUNING,
+EXT_CSD_REV_ANY), ``` This targets only Swissbit cards with model
+"0016G", OEM ID 0x5342, manufactured in January 2019. ## Comparison with
+Similar Commits This commit closely matches **Similar Commit #2** (YES
+for backport), which also: - Adds quirk handling for specific hardware
+issues - Makes minimal, contained changes - Fixes real user-facing
+problems - Uses existing infrastructure Unlike **Similar Commit #1** (NO
+for backport), this commit: - Fixes an existing bug rather than adding
+new functionality - Doesn't introduce new interfaces or capabilities -
+Has minimal risk of regression ## User Impact Without this fix, affected
+Swissbit SD cards would be **unusable** due to I/O errors during tuning.
+This represents a significant hardware compatibility issue that makes
+the cards completely non-functional on affected systems. ## Stable Tree
+Criteria Compliance ✅ **Important bugfix**: Fixes I/O errors on specific
+hardware ✅ **Minimal risk**: Uses established quirk infrastructure ✅
+**No architectural changes**: Follows existing patterns ✅ **Contained
+scope**: Only affects specific problematic cards ✅ **No new features**:
+Pure hardware compatibility fix The commit follows the stable tree rule
+that quirks for hardware compatibility issues are generally acceptable
+for backporting when they fix real problems with minimal risk.
 
- drivers/power/supply/collie_battery.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/core/card.h   |  6 ++++++
+ drivers/mmc/core/quirks.h | 10 ++++++++++
+ drivers/mmc/core/sd.c     | 32 ++++++++++++++++++++++++--------
+ include/linux/mmc/card.h  |  1 +
+ 4 files changed, 41 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/power/supply/collie_battery.c b/drivers/power/supply/collie_battery.c
-index 68390bd1004f0..3daf7befc0bf6 100644
---- a/drivers/power/supply/collie_battery.c
-+++ b/drivers/power/supply/collie_battery.c
-@@ -440,6 +440,7 @@ static int collie_bat_probe(struct ucb1x00_dev *dev)
+diff --git a/drivers/mmc/core/card.h b/drivers/mmc/core/card.h
+index 3205feb1e8ff6..9cbdd240c3a7d 100644
+--- a/drivers/mmc/core/card.h
++++ b/drivers/mmc/core/card.h
+@@ -89,6 +89,7 @@ struct mmc_fixup {
+ #define CID_MANFID_MICRON       0x13
+ #define CID_MANFID_SAMSUNG      0x15
+ #define CID_MANFID_APACER       0x27
++#define CID_MANFID_SWISSBIT     0x5D
+ #define CID_MANFID_KINGSTON     0x70
+ #define CID_MANFID_HYNIX	0x90
+ #define CID_MANFID_KINGSTON_SD	0x9F
+@@ -294,4 +295,9 @@ static inline int mmc_card_broken_sd_poweroff_notify(const struct mmc_card *c)
+ 	return c->quirks & MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY;
+ }
  
- static void collie_bat_remove(struct ucb1x00_dev *dev)
- {
-+	device_init_wakeup(&ucb->dev, 0);
- 	free_irq(gpiod_to_irq(collie_bat_main.gpio_full), &collie_bat_main);
- 	power_supply_unregister(collie_bat_bu.psy);
- 	power_supply_unregister(collie_bat_main.psy);
++static inline int mmc_card_no_uhs_ddr50_tuning(const struct mmc_card *c)
++{
++	return c->quirks & MMC_QUIRK_NO_UHS_DDR50_TUNING;
++}
++
+ #endif
+diff --git a/drivers/mmc/core/quirks.h b/drivers/mmc/core/quirks.h
+index 89b512905be14..7f893bafaa607 100644
+--- a/drivers/mmc/core/quirks.h
++++ b/drivers/mmc/core/quirks.h
+@@ -34,6 +34,16 @@ static const struct mmc_fixup __maybe_unused mmc_sd_fixups[] = {
+ 		   MMC_QUIRK_BROKEN_SD_CACHE | MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY,
+ 		   EXT_CSD_REV_ANY),
+ 
++	/*
++	 * Swissbit series S46-u cards throw I/O errors during tuning requests
++	 * after the initial tuning request expectedly times out. This has
++	 * only been observed on cards manufactured on 01/2019 that are using
++	 * Bay Trail host controllers.
++	 */
++	_FIXUP_EXT("0016G", CID_MANFID_SWISSBIT, 0x5342, 2019, 1,
++		   0, -1ull, SDIO_ANY_ID, SDIO_ANY_ID, add_quirk_sd,
++		   MMC_QUIRK_NO_UHS_DDR50_TUNING, EXT_CSD_REV_ANY),
++
+ 	END_FIXUP
+ };
+ 
+diff --git a/drivers/mmc/core/sd.c b/drivers/mmc/core/sd.c
+index 8eba697d3d867..6847b3fe8887a 100644
+--- a/drivers/mmc/core/sd.c
++++ b/drivers/mmc/core/sd.c
+@@ -617,6 +617,29 @@ static int sd_set_current_limit(struct mmc_card *card, u8 *status)
+ 	return 0;
+ }
+ 
++/*
++ * Determine if the card should tune or not.
++ */
++static bool mmc_sd_use_tuning(struct mmc_card *card)
++{
++	/*
++	 * SPI mode doesn't define CMD19 and tuning is only valid for SDR50 and
++	 * SDR104 mode SD-cards. Note that tuning is mandatory for SDR104.
++	 */
++	if (mmc_host_is_spi(card->host))
++		return false;
++
++	switch (card->host->ios.timing) {
++	case MMC_TIMING_UHS_SDR50:
++	case MMC_TIMING_UHS_SDR104:
++		return true;
++	case MMC_TIMING_UHS_DDR50:
++		return !mmc_card_no_uhs_ddr50_tuning(card);
++	}
++
++	return false;
++}
++
+ /*
+  * UHS-I specific initialization procedure
+  */
+@@ -660,14 +683,7 @@ static int mmc_sd_init_uhs_card(struct mmc_card *card)
+ 	if (err)
+ 		goto out;
+ 
+-	/*
+-	 * SPI mode doesn't define CMD19 and tuning is only valid for SDR50 and
+-	 * SDR104 mode SD-cards. Note that tuning is mandatory for SDR104.
+-	 */
+-	if (!mmc_host_is_spi(card->host) &&
+-		(card->host->ios.timing == MMC_TIMING_UHS_SDR50 ||
+-		 card->host->ios.timing == MMC_TIMING_UHS_DDR50 ||
+-		 card->host->ios.timing == MMC_TIMING_UHS_SDR104)) {
++	if (mmc_sd_use_tuning(card)) {
+ 		err = mmc_execute_tuning(card);
+ 
+ 		/*
+diff --git a/include/linux/mmc/card.h b/include/linux/mmc/card.h
+index 526fce5816575..ddcdf23d731c4 100644
+--- a/include/linux/mmc/card.h
++++ b/include/linux/mmc/card.h
+@@ -329,6 +329,7 @@ struct mmc_card {
+ #define MMC_QUIRK_BROKEN_SD_CACHE	(1<<15)	/* Disable broken SD cache support */
+ #define MMC_QUIRK_BROKEN_CACHE_FLUSH	(1<<16)	/* Don't flush cache until the write has occurred */
+ #define MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY	(1<<17) /* Disable broken SD poweroff notify support */
++#define MMC_QUIRK_NO_UHS_DDR50_TUNING	(1<<18) /* Disable DDR50 tuning */
+ 
+ 	bool			written_flag;	/* Indicates eMMC has been written since power on */
+ 	bool			reenable_cmdq;	/* Re-enable Command Queue */
 -- 
 2.39.5
 
