@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90841279357;
-	Fri, 30 May 2025 12:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E4D2797A3;
+	Fri, 30 May 2025 12:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608911; cv=none; b=mQy2nKvxy5DfOoUwILIxgMTPRPRYmMp/bzzTwy3N8R8evthDWX55IGOrAp4wmQ4/ZPK0ZrkioaP8ChISqun/YSfJHT5j/NmFyNmf2a59Rkkk7GqV4MC8pd7s0ZYd4GfDbTKal/5nFJb1H+IovuGsH7Qh25oZrW8NWrkT8lHoB/M=
+	t=1748608914; cv=none; b=gr9pAJjge2k2VjApn8386lZngZAYxJIpVAPVUgmtVJDRCcb+8ZYpz+yhjalQ+bK99/8vEgvcQQOZpwk26cEOjtye6AFBrsfCrtqVv2QZ2Nc0ja4OxhAB7xmvxse+HeLLjY+049kfBsiGSnpeqPUhlVhD3rvwic+YROdCxs2XuMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608911; c=relaxed/simple;
-	bh=Te7sjvZm+2IPqEGhQlAHs+aX+gHeK/bfHb4GaDGpexg=;
+	s=arc-20240116; t=1748608914; c=relaxed/simple;
+	bh=XLmOqm8dCUHz5RtYb91vhlNLfnFfc9kZIesq6gPMU9k=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=DjDfv71Ur5crJUgXvzDPNkVXTRV6yFdR1VM5FZl69j0LpdWX5MJKJvcDe1Qlb7ialxXGtv6Dp/f7IzFmcLRNiYm3LuHTco2Ng6HtOR/wXjiuwza3422/A8yYoIXVs80h6RRF8pJuz7ZfuUHR2oDuGSRs1xHSIBL6XxhSBtHFZ1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ghm5ONNd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sTXeZOf6tsuTpmmPpPEOaqDmXvC2mPYST1MewJkxgn9Jdxyy6013VaJyMhRgX8QLYEZSERZdKdKlHanL1uJN0+M/b6cKZ+RbMgzK0QJnRE6mkALxmpDwb764v3JX+MbWWawmcTfOt0ujKN92pTjpIbZ1sIUNlIsYJ6nDGFPdxng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S+tOleCv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ghm5ONNd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C3AC4CEE9;
-	Fri, 30 May 2025 12:41:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S+tOleCv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FD1C4CEEA;
+	Fri, 30 May 2025 12:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608911;
-	bh=Te7sjvZm+2IPqEGhQlAHs+aX+gHeK/bfHb4GaDGpexg=;
+	s=k20201202; t=1748608912;
+	bh=XLmOqm8dCUHz5RtYb91vhlNLfnFfc9kZIesq6gPMU9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ghm5ONNd7kEV1WlxMFSZZJ89/Doo6xpb+YC0eFPGCr6olFdV4P9cGVjtfxakdSu5Y
-	 3sjHgX9iRcq50avYXHakK6SODGAhngqwc9YBUSR+Cs8NplvIZi7oDflWCNe42xAWGj
-	 QGBvap//dYLxf9oTfFtQQlvZqyftgOEIF2ATtdJbFCvFivuPXeD9GPn6n/AW9oxjZc
-	 HzTDpLQljT+aBmtXJAEuj0uJEN03sudBy/r1sKDU72ko8c6SWHuQfWlMYwPtS1Ttvk
-	 iORcd+Ip+NPcuS/+nxZBfvu02OCPH6yUzL8LoUrPjPDIMXLIlI/gUbn5GBD24MxT0M
-	 CdLZsvk8gI+uA==
+	b=S+tOleCvgByN+/CiJ5sEeJI2qqpZpW0o7/uFQspmGabFHJX8yOTL/KOt6Clli2Q0+
+	 yiEsdLNjNTXWbij6nQlte6Xw7AVvrarklQcvpF+9akSwchsxPxjc/rJGELWWsjhYMp
+	 qdbmb7QFdIJaqOjf6Ps11NTZ96NkZabAJmIpEQ3xFIJIsJXdChPRiE8isjBCpqX/c0
+	 92VehN1Q+GpunnGztnhsCo26JU+5NllZ4ESuazVkhfQmTs68tM7p4GSBMB4kZDIU8N
+	 Ld7pSZSOHlPmJveAYxh7cOJrsF8Cw8w498FpCzvFazTirMG+gJGkS+RkTQzry3miZi
+	 FAenwOZ7kkZJA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Paul E . McKenney" <paulmck@kernel.org>,
+Cc: Ahmed Salem <x0rw3ll@gmail.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	john.stultz@linaro.org,
+	rjw@rjwysocki.net,
+	lenb@kernel.org,
+	robert.moore@intel.com,
+	erik.schmauss@intel.com,
+	linux-acpi@vger.kernel.org,
+	devel@acpica.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 02/10] clocksource: Fix the CPUs' choice in the watchdog per CPU verification
-Date: Fri, 30 May 2025 08:41:40 -0400
-Message-Id: <20250530124148.2576913-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 03/10] ACPICA: Avoid sequence overread in call to strncmp()
+Date: Fri, 30 May 2025 08:41:41 -0400
+Message-Id: <20250530124148.2576913-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530124148.2576913-1-sashal@kernel.org>
 References: <20250530124148.2576913-1-sashal@kernel.org>
@@ -53,114 +56,97 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.10.237
 Content-Transfer-Encoding: 8bit
 
-From: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
+From: Ahmed Salem <x0rw3ll@gmail.com>
 
-[ Upstream commit 08d7becc1a6b8c936e25d827becabfe3bff72a36 ]
+[ Upstream commit 64b9dfd0776e9c38d733094859a09f13282ce6f8 ]
 
-Right now, if the clocksource watchdog detects a clocksource skew, it might
-perform a per CPU check, for example in the TSC case on x86.  In other
-words: supposing TSC is detected as unstable by the clocksource watchdog
-running at CPU1, as part of marking TSC unstable the kernel will also run a
-check of TSC readings on some CPUs to be sure it is synced between them
-all.
+ACPICA commit 8b83a8d88dfec59ea147fad35fc6deea8859c58c
 
-But that check happens only on some CPUs, not all of them; this choice is
-based on the parameter "verify_n_cpus" and in some random cpumask
-calculation. So, the watchdog runs such per CPU checks on up to
-"verify_n_cpus" random CPUs among all online CPUs, with the risk of
-repeating CPUs (that aren't double checked) in the cpumask random
-calculation.
+ap_get_table_length() checks if tables are valid by
+calling ap_is_valid_header(). The latter then calls
+ACPI_VALIDATE_RSDP_SIG(Table->Signature).
 
-But if "verify_n_cpus" > num_online_cpus(), it should skip the random
-calculation and just go ahead and check the clocksource sync between
-all online CPUs, without the risk of skipping some CPUs due to
-duplicity in the random cpumask calculation.
+ap_is_valid_header() accepts struct acpi_table_header as an argument, so
+the signature size is always fixed to 4 bytes.
 
-Tests in a 4 CPU laptop with TSC skew detected led to some cases of the per
-CPU verification skipping some CPU even with verify_n_cpus=8, due to the
-duplicity on random cpumask generation. Skipping the randomization when the
-number of online CPUs is smaller than verify_n_cpus, solves that.
+The problem is when the string comparison is between ACPI-defined table
+signature and ACPI_SIG_RSDP. Common ACPI table header specifies the
+Signature field to be 4 bytes long[1], with the exception of the RSDP
+structure whose signature is 8 bytes long "RSD PTR " (including the
+trailing blank character)[2]. Calling strncmp(sig, rsdp_sig, 8) would
+then result in a sequence overread[3] as sig would be smaller (4 bytes)
+than the specified bound (8 bytes).
 
-Suggested-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Link: https://lore.kernel.org/all/20250323173857.372390-1-gpiccoli@igalia.com
+As a workaround, pass the bound conditionally based on the size of the
+signature being passed.
+
+Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#system-description-table-header [1]
+Link: https://uefi.org/specs/ACPI/6.5_A/05_ACPI_Software_Programming_Model.html#root-system-description-pointer-rsdp-structure [2]
+Link: https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstringop-overread [3]
+Link: https://github.com/acpica/acpica/commit/8b83a8d8
+Signed-off-by: Ahmed Salem <x0rw3ll@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/2248233.Mh6RI2rZIc@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Perfect! Now I understand the issue. Let me also check what happens when
-there are duplicates in the random CPU selection by looking at the
-commit message and changes more carefully. **Analysis:** **YES** - This
-commit should be backported to stable kernel trees. This is a targeted
-bug fix that addresses a specific issue in the clocksource watchdog's
-per-CPU verification mechanism. Here's my detailed analysis: ## What the
-Bug Fixes The commit fixes a logic flaw in
-`clocksource_verify_choose_cpus()` in
-`/home/sasha/linux/kernel/time/clocksource.c:309`. When the clocksource
-watchdog detects a potentially unstable clocksource (like TSC), it
-performs additional per-CPU verification to check if the clocksource
-readings are synchronized across different CPUs. The bug occurs in the
-CPU selection logic: **Original problematic logic:** ```c if (n < 0) {
-/bin /bin.usr-is-merged /boot /dev /etc /home /init /lib /lib.usr-is-
-merged /lib64 /lost+found /media /mnt /opt /proc /root /run /sbin
-/sbin.usr-is-merged /snap /srv /sys /tmp /usr /var Check all of the
-CPUs. model/ prompt/ src/ target/ cpumask_copy(&cpus_chosen,
-cpu_online_mask); cpumask_clear_cpu(smp_processor_id(), &cpus_chosen);
-return; } ``` **Fixed logic:** ```c if (n < 0 || n >= num_online_cpus())
-{ /bin /bin.usr-is-merged /boot /dev /etc /home /init /lib /lib.usr-is-
-merged /lib64 /lost+found /media /mnt /opt /proc /root /run /sbin
-/sbin.usr-is-merged /snap /srv /sys /tmp /usr /var Check all of the
-CPUs. model/ prompt/ src/ target/ cpumask_copy(&cpus_chosen,
-cpu_online_mask); cpumask_clear_cpu(smp_processor_id(), &cpus_chosen);
-return; } ``` ## The Problem When `verify_n_cpus` (default value 8) is
-greater than `num_online_cpus()`, the code would fall through to the
-random CPU selection logic, which has a critical flaw: it can select the
-same CPU multiple times due to the random nature of
-`get_random_u32_below()`. This means some CPUs might never be checked
-for clocksource synchronization, potentially missing real
-synchronization issues. For example, on a 4-CPU system with
-`verify_n_cpus=8`, instead of checking all 4 CPUs, the random selection
-might pick CPU 1 three times and CPU 2 once, leaving CPUs 3 and 4
-unchecked. ## Why This Should Be Backported 1. **Fixes a Real Bug**:
-This addresses an actual functional issue where clocksource verification
-might miss CPUs, potentially failing to detect real synchronization
-problems. 2. **Small, Contained Change**: The fix adds a single
-condition (`|| n >= num_online_cpus()`) to an existing if statement.
-This is minimal and low-risk. 3. **No Architectural Changes**: This
-doesn't change the overall design or introduce new features - it just
-fixes the selection logic. 4. **Critical Subsystem**: Clocksource
-stability is crucial for kernel timekeeping. Missing synchronization
-issues could lead to time-related bugs. 5. **Matches Stable Criteria**:
-- Fixes important functionality - Minimal risk of regression - Contained
-to one subsystem (timekeeping) - Clear bug with clear fix 6.
-**Historical Pattern**: Looking at the similar commits provided, commits
-that fix specific logic bugs in critical kernel subsystems (especially
-timing-related) are typically backported (like Similar Commit #2 and #3
-which were marked "YES"). ## Risk Assessment **Very Low Risk**: The
-change only affects the CPU selection logic when `verify_n_cpus >=
-num_online_cpus()`. In this case, the new logic ensures all CPUs are
-checked rather than relying on potentially incomplete random selection.
-This is strictly an improvement with no downside. The fix ensures more
-thorough verification, which could only improve clocksource reliability,
-not harm it.
+**YES** This commit should be backported to stable kernel trees. ##
+Detailed Analysis: ### The Problem The commit fixes a **buffer overread
+vulnerability** in the `ACPI_VALIDATE_RSDP_SIG` macro. The issue occurs
+when: 1. **Context**: The macro `ACPI_VALIDATE_RSDP_SIG(a)` calls
+`strncmp(ACPI_CAST_PTR(char, (a)), ACPI_SIG_RSDP, 8)` 2. **Problem**:
+When `a` points to a standard ACPI table header (4 bytes signature), but
+the comparison tries to read 8 bytes for RSDP validation ("RSD PTR "),
+it reads 4 bytes beyond the allocated signature field 3. **Impact**:
+This causes a sequence overread that can be detected by tools like GCC's
+`-Wstringop-overread` and security-focused architectures like
+CHERI/Morello ### The Fix The fix changes line 530 in
+`include/acpi/actypes.h`: ```c // Before: #define
+ACPI_VALIDATE_RSDP_SIG(a) (!strncmp (ACPI_CAST_PTR (char, (a)),
+ACPI_SIG_RSDP, 8)) // After: #define ACPI_VALIDATE_RSDP_SIG(a) (!strncmp
+(ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, (sizeof(a) < 8) ?
+ACPI_NAMESEG_SIZE : 8)) ``` This conditionally limits the comparison to
+`ACPI_NAMESEG_SIZE` (4 bytes) when the source is smaller than 8 bytes,
+preventing the overread. ### Why This Should Be Backported: 1.
+**Security Fix**: This addresses a buffer overread that could be
+exploited or cause crashes on security-hardened systems 2. **Small &
+Contained**: The fix is a single line change to a macro definition with
+minimal risk 3. **Widespread Usage**: The macro is used in multiple
+critical ACPI code paths: - `drivers/acpi/acpica/tbprint.c` (kernel ACPI
+table printing) - `tools/power/acpi/tools/acpidump/apdump.c` (ACPI
+debugging tools) - Various other ACPI validation functions 4. **No
+Architectural Changes**: This doesn't change functionality, just
+prevents unsafe memory access 5. **Compiler Warning Fix**: Resolves
+build warnings with newer GCC versions using `-Wstringop-overread` ###
+Comparison with Historical Commits: - **Similar to Commit #3 (YES)**:
+Like the "disable -Wstringop-truncation" commit, this fixes compiler
+warnings related to string operations, but this one actually fixes the
+underlying safety issue rather than just suppressing warnings - **Unlike
+Commits #1,#2,#4,#5 (NO)**: Those were either pure code cleanup,
+debugging improvements, or infrastructure changes without security
+implications ### Risk Assessment: - **Minimal Risk**: The fix only
+affects boundary condition handling in string comparison - **No
+Functional Impact**: Normal RSDP validation still works correctly for
+valid 8-byte signatures - **Improves Safety**: Prevents potential memory
+safety violations on hardened systems This is exactly the type of small,
+safe, security-focused bugfix that stable trees are designed for.
 
- kernel/time/clocksource.c | 2 +-
+ include/acpi/actypes.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
-index b22508c5d2d96..bd49fec0f624b 100644
---- a/kernel/time/clocksource.c
-+++ b/kernel/time/clocksource.c
-@@ -273,7 +273,7 @@ static void clocksource_verify_choose_cpus(void)
- {
- 	int cpu, i, n = verify_n_cpus;
+diff --git a/include/acpi/actypes.h b/include/acpi/actypes.h
+index 7334037624c5c..a2bf54fb946a0 100644
+--- a/include/acpi/actypes.h
++++ b/include/acpi/actypes.h
+@@ -524,7 +524,7 @@ typedef u64 acpi_integer;
  
--	if (n < 0) {
-+	if (n < 0 || n >= num_online_cpus()) {
- 		/* Check all of the CPUs. */
- 		cpumask_copy(&cpus_chosen, cpu_online_mask);
- 		cpumask_clear_cpu(smp_processor_id(), &cpus_chosen);
+ /* Support for the special RSDP signature (8 characters) */
+ 
+-#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, 8))
++#define ACPI_VALIDATE_RSDP_SIG(a)       (!strncmp (ACPI_CAST_PTR (char, (a)), ACPI_SIG_RSDP, (sizeof(a) < 8) ? ACPI_NAMESEG_SIZE : 8))
+ #define ACPI_MAKE_RSDP_SIG(dest)        (memcpy (ACPI_CAST_PTR (char, (dest)), ACPI_SIG_RSDP, 8))
+ 
+ /* Support for OEMx signature (x can be any character) */
 -- 
 2.39.5
 
