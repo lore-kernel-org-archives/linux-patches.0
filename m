@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F94A2522B5;
-	Fri, 30 May 2025 12:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A64253935;
+	Fri, 30 May 2025 12:40:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608809; cv=none; b=dzuMRdvauk4HROC7Dgal1wTpA9EBO2WEDo4/zcolBrG+/xeyomNeGkwNdUlEYI20F9+AF1IrOlStfAhHh1FtK8QA1mGM34Kw1B53YSnEEOo4SdjpQ0enrhopXPdTvmPHP4OGbVWIxQaOtDVaxP01gJ64jOLHJFp4qEYyNBHTXpQ=
+	t=1748608810; cv=none; b=ZoJC7jnayARAslndd3NhHhDYUxpdy/aV/QYJhBH1LIr9h0nT10zxd53yYXnL55wVABoYU6JiK/dTPlcAPjz5k9qqfuljza6KgX2Bejkv8YzmHKLY78r7guohQLHuoi/g9/QcUXD2GG93TZD2irQELhlXJOQmJiwUKIsVe/8oUlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608809; c=relaxed/simple;
-	bh=poXFRBoHY/JOXMW1SDPPvXManolaYnkYIJsuOj/kcYg=;
+	s=arc-20240116; t=1748608810; c=relaxed/simple;
+	bh=FlpeWCnJFPCv86vto1B49MxkeN4OkRESOjSv+/+0ZAw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qLHgQ9Wtr9woK//9z/2dS3B0jqCwJeDC0+kH3fKWtcNAIEWpcViMSsLBDZAQT0vx8tO0FahDHe6xgjO72QKOpBBdFwunPErm09y3r/GYyn5oMYvhREA8nE6rGRyjvkYzTZx+tLgqt4tg5m9t0iz3rHOc7mhC9Y/PGAERam0q+EA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F8/R9oiU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=I/osh09VZjlIno3LKphEQj1ThoitRR7U9/w4AA9kepVADOjn4FOzuHkhAIKYvJaQkqs+QKxxMyivrZbkH/tGA32bY1yqcJciCD2I4+ZtalHA70avJ8G0E++EnS0EYCMg9exe9neLaSMEza0ZlS+n101hgPsCz8SJkHyWrOOuBeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cHdUyXaZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F8/R9oiU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF49C4CEEF;
-	Fri, 30 May 2025 12:40:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cHdUyXaZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8D5C4CEE9;
+	Fri, 30 May 2025 12:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608808;
-	bh=poXFRBoHY/JOXMW1SDPPvXManolaYnkYIJsuOj/kcYg=;
+	s=k20201202; t=1748608809;
+	bh=FlpeWCnJFPCv86vto1B49MxkeN4OkRESOjSv+/+0ZAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F8/R9oiUgva+JP6n1nzdt+xtCR26k7mbrjCISYAmb/I5HfbJLgwvH2zwOoOezXarc
-	 4T7wWgfKWkax06II1j7hdtgd3FbFhqydKYA3tt7GMp/tGIdATZrEcu5VuI3EmKCNZl
-	 wW2jQCXhH7nbCTJNMsnGK5i4THM8yblywOYb1FNY9mWjXWoLloknnlbmN7xCq9az01
-	 xP7/xecXtCmFwIG8J9U41+dI+Mg0MYRtQqOPnIXdv9JNvvq1BEQiBZJfJL1lX6n984
-	 +/jx16pjdKH9FzUB1uruoWqeba1x75yDSCNEjXe99/feiohgqNKc7KxSWcqjrAvaM4
-	 RHnsXp+7LKqQQ==
+	b=cHdUyXaZfocQ3DrQ7lvcLwx8sIu/X9AeDIFuUCMhE074IUYct3UVfgo9ZeIeprQit
+	 CQtFt+JJe2maN5dG4dG7NNjjTgNAtFjYhXv32M41pOtJ/5kJwx9MRTSAR1VKdu/loS
+	 7kWW2XuWuS40d5Qh6/fduvBxCwXQj++ueqw4YJdjHfGvSgYOoS6AKzrqclC93fHopS
+	 5GtRFMder+CpxKmNgV+ERCVEmogrJfiYkll7Kaf+FPzd1aK3Z/75fwWreyg0plEubQ
+	 fgspJIZ5qxzJ/oGSRIIED+6SvRvNRaHJYy2EFHKFidHi5zza8pkXfIYQ4o1a0G+S5J
+	 pRcz4x8VWLM5Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Willy Tarreau <w@1wt.eu>,
+Cc: Svyatoslav Ryhel <clamor95@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>,
-	paul.walmsley@sifive.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.14 26/28] tools/nolibc: use pselect6_time64 if available
-Date: Fri, 30 May 2025 08:39:32 -0400
-Message-Id: <20250530123934.2574748-26-sashal@kernel.org>
+	sre@kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 27/28] power: supply: max17040: adjust thermal channel scaling
+Date: Fri, 30 May 2025 08:39:33 -0400
+Message-Id: <20250530123934.2574748-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530123934.2574748-1-sashal@kernel.org>
 References: <20250530123934.2574748-1-sashal@kernel.org>
@@ -49,87 +47,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.14.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Svyatoslav Ryhel <clamor95@gmail.com>
 
-[ Upstream commit 248ddc80b145515286bfb75d08034ad4c0fdb08e ]
+[ Upstream commit d055f51731744243b244aafb1720f793a5b61f7b ]
 
-riscv32 does not have any of the older select systemcalls.
-Use pselect6_time64 instead.
-poll() is also used to implement sleep().
+IIO thermal channel is in millidegree while power supply framework expects
+decidegree values. Adjust scaling to get correct readings.
 
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Acked-by: Willy Tarreau <w@1wt.eu>
+Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
+Link: https://lore.kernel.org/r/20250430060239.12085-2-clamor95@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES** This commit should be backported to stable kernel trees. Here's
-my detailed analysis: ## Code Analysis The commit adds support for
-`pselect6_time64` syscall as a fallback option in the `sys_select()`
-function in `tools/include/nolibc/sys.h`. The change adds 8 lines of
-code that implement an additional fallback case: ```c #elif
-defined(__NR_pselect6_time64) struct __kernel_timespec t; if (timeout) {
-t.tv_sec = timeout->tv_sec; t.tv_nsec = timeout->tv_usec 0001-Fix-
-Clippy-warnings.patch 0002-Enhance-inference-prompt-to-utilize-
-CVEKERNELDIR-whe.patch 0003-Update-to-latest-version-of-clap.patch
-Cargo.lock Cargo.toml LICENSE README.md analyze_merge_commit.sh
-io_uring_analysis.txt ksmbd_analysis.txt merge_commit_analysis.txt model
-prompt src target test_gpio_cleanup.txt test_patch.txt 1000; } return
-my_syscall6(__NR_pselect6_time64, nfds, rfds, wfds, efds, timeout ? &t :
-NULL, NULL); ``` This follows the exact same pattern as the existing
-`__NR_pselect6` fallback, but uses `__kernel_timespec` instead of
-`timespec`. ## Why This Should Be Backported **1. Fixes a Real Bug**:
-RISC-V 32-bit systems that don't provide legacy select syscalls
-(`__NR_select`, `__NR__newselect`) would fall back to `__NR_pselect6`,
-but newer systems may only provide `__NR_pselect6_time64`. Without this
-patch, `select()` calls would fail with `ENOSYS` on such systems. **2.
-Low Risk**: This is a minimal, targeted fix that: - Only affects systems
-that lack both legacy select syscalls AND regular pselect6 - Uses an
-identical code pattern to existing fallbacks - Doesn't modify any
-existing working code paths - Is self-contained with no dependencies
-**3. Consistent with Similar Commits**: Looking at the historical
-reference commits, this follows the same pattern as commit #1 (Status:
-YES) which added pselect6 support for RISCV, and is much simpler than
-commits #2-5 (Status: NO) which involved more complex architectural
-changes. **4. Addresses Platform Compatibility**: The commit message
-specifically mentions that "riscv32 does not have any of the older
-select systemcalls" and this provides necessary compatibility for newer
-RISC-V 32-bit platforms. **5. Minimal Scope**: The change only adds one
-additional fallback case before the final `ENOSYS` return, making it
-extremely safe. **6. Essential for Functionality**: Without this fix,
-basic I/O operations using select() would be broken on affected RISC-V
-32-bit systems, making tools/nolibc unusable for such platforms. The
-commit meets all criteria for stable backporting: it's a clear bugfix,
-has minimal risk, doesn't introduce new features, and fixes
-functionality that users depend on.
+my extensive analysis: ## Code Analysis The commit fixes a **units
+conversion bug** in the max17040 power supply driver's temperature
+reporting. Specifically: ### The Problem The original code in
+`max17040_get_property()` for `POWER_SUPPLY_PROP_TEMP` was: ```c
+iio_read_channel_processed_scale(chip->channel_temp, &val->intval, 10);
+``` ### The Fix The corrected code is: ```c
+iio_read_channel_processed(chip->channel_temp, &val->intval);
+val->intval /= 100; /bin /bin.usr-is-merged /boot /dev /etc /home /init
+/lib /lib.usr-is-merged /lib64 /lost+found /media /mnt /opt /proc /root
+/run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp /usr /var Convert
+from milli- to deci-degree model/ prompt/ src/ target/ ``` ### Units
+Mismatch Issue According to the power supply class documentation found
+in `/home/sasha/linux/Documentation/power/power_supply_class.rst`: >
+"All voltages, currents, charges, energies, time and **temperatures** in
+µV, µA, µAh, µWh, seconds and **tenths of degree Celsius** unless
+otherwise stated." The power supply framework expects temperatures in
+**tenths of degree Celsius** (decidegrees), but IIO thermal channels
+typically return values in **millidegrees Celsius**. ### Mathematical
+Analysis - IIO thermal channel: returns millidegrees (1/1000 °C) - Power
+supply framework expects: decidegrees (1/10 °C) - Required conversion:
+millidegrees ÷ 100 = decidegrees - Old code: Applied a scale of 10,
+which would convert from decidegrees to degrees (wrong direction) - New
+code: Divides by 100, correctly converting from millidegrees to
+decidegrees ### Confirmation from Kernel Sources Looking at
+`max17042_battery.c` (similar chip), line 109 shows the correct pattern:
+```c /bin /bin.usr-is-merged /boot /dev /etc /home /init /lib /lib.usr-
+is-merged /lib64 /lost+found /media /mnt /opt /proc /root /run /sbin
+/sbin.usr-is-merged /snap /srv /sys /tmp /usr /var The value is
+converted into deci-centigrade scale model/ prompt/ src/ target/ *temp =
+*temp 0001-Fix-Clippy-warnings.patch 0002-Enhance-inference-prompt-to-
+utilize-CVEKERNELDIR-whe.patch 0003-Update-to-latest-version-of-
+clap.patch Cargo.lock Cargo.toml LICENSE README.md
+analyze_merge_commit.sh io_uring_analysis.txt ksmbd_analysis.txt
+merge_commit_analysis.txt model prompt src target test_gpio_cleanup.txt
+test_patch.txt 10 / 256; ``` This confirms that power supply drivers
+should output temperatures in deci-centigrade (decidegrees). ## Backport
+Suitability Assessment **1. Bug Fix**: ✅ Yes - This fixes incorrect
+temperature readings **2. Small and Contained**: ✅ Yes - Only 3 lines
+changed in one function **3. Clear Side Effects**: ✅ No major side
+effects - only corrects temperature values **4. Architectural Changes**:
+✅ No - Simple unit conversion fix **5. Critical Subsystem**: ✅ Limited
+impact - only affects optional temperature reporting **6. Stable Tree
+Mention**: ❌ No explicit mention, but meets criteria **7. Stable Tree
+Rules**: ✅ Important bugfix with minimal regression risk ## Risk
+Assessment - **Regression Risk**: Very low - only affects temperature
+readings when IIO thermal channel is present - **User Impact**: High for
+affected users - wrong temperature readings could affect thermal
+management - **Code Complexity**: Minimal - straightforward arithmetic
+fix ## Historical Context The thermal channel support was added in
+commit `814755c48f8b` (July 2023), and this scaling bug has been present
+since then. The fix addresses a fundamental units mismatch that would
+cause incorrect temperature reporting for any system using the IIO
+thermal channel feature. This is exactly the type of contained,
+important bugfix that stable trees are designed for.
 
- tools/include/nolibc/sys.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/power/supply/max17040_battery.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/tools/include/nolibc/sys.h b/tools/include/nolibc/sys.h
-index d4a5c2399a66b..977838f2fcf97 100644
---- a/tools/include/nolibc/sys.h
-+++ b/tools/include/nolibc/sys.h
-@@ -982,6 +982,14 @@ int sys_select(int nfds, fd_set *rfds, fd_set *wfds, fd_set *efds, struct timeva
- 		t.tv_nsec = timeout->tv_usec * 1000;
- 	}
- 	return my_syscall6(__NR_pselect6, nfds, rfds, wfds, efds, timeout ? &t : NULL, NULL);
-+#elif defined(__NR_pselect6_time64)
-+	struct __kernel_timespec t;
+diff --git a/drivers/power/supply/max17040_battery.c b/drivers/power/supply/max17040_battery.c
+index 51310f6e4803b..c1640bc6accd2 100644
+--- a/drivers/power/supply/max17040_battery.c
++++ b/drivers/power/supply/max17040_battery.c
+@@ -410,8 +410,9 @@ static int max17040_get_property(struct power_supply *psy,
+ 		if (!chip->channel_temp)
+ 			return -ENODATA;
+ 
+-		iio_read_channel_processed_scale(chip->channel_temp,
+-						 &val->intval, 10);
++		iio_read_channel_processed(chip->channel_temp, &val->intval);
++		val->intval /= 100; /* Convert from milli- to deci-degree */
 +
-+	if (timeout) {
-+		t.tv_sec  = timeout->tv_sec;
-+		t.tv_nsec = timeout->tv_usec * 1000;
-+	}
-+	return my_syscall6(__NR_pselect6_time64, nfds, rfds, wfds, efds, timeout ? &t : NULL, NULL);
- #else
- 	return __nolibc_enosys(__func__, nfds, rfds, wfds, efds, timeout);
- #endif
+ 		break;
+ 	default:
+ 		return -EINVAL;
 -- 
 2.39.5
 
