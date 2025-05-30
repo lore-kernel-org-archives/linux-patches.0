@@ -1,93 +1,200 @@
-Received: from mx.denx.de (mx.denx.de [89.58.32.78])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22EFB1411EB
-	for <patches@lists.linux.dev>; Fri, 30 May 2025 09:56:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC7D21C19B;
+	Fri, 30 May 2025 12:38:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748598998; cv=none; b=pMX7CwabT15SO+B38y5iJOcXjQVNgx0S87pcdTtdg0+vXSt3+VPVFJWVz4NxnJqFUbBQh2tJBqfYnM6eSX4yZU7aRnqECtKCPj+oSOvbf16MvQ4DgigVdWQ1WjvT0qpKRhr773xeKMgvmpl75gNxOulDie7PGZKmo6xlzZD1AtA=
+	t=1748608735; cv=none; b=HusD40L+Ee5uF0A3BpckfeBKBP91+Ub4XPiYXB+UsVRWhvDHXPQSBfI5GuAhjTa8hx8qlKHgB8PnoAhLk9hmz7jVuCwgUSC31lWFi63j4EhXO2qCyat5ZqRMrWwKPZolm8bjdbRJQy706mbhaphJZFuxiqBLvUitWKTutE+Eafg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748598998; c=relaxed/simple;
-	bh=97uZXwCbMzjtNiv+xCxbvzriM0FY2toOMbIEnIjQrFk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N0lcH2E9YYE0Sxw1G4Q5/jcVpslx3VUUyyG3qUIUWppU1eYaed6Amij3X4NLyxW35GNt2RYBd+9nRhbrE0/Jrmi5TQvCoXvvWLoLytvFmY2yOkAk6D5TOHb4ShrvN6soFFIEp5qwjjeZgWMCtE10Pwgl8/FNy9PWLCkVPdXVcp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=KA15+su1; arc=none smtp.client-ip=89.58.32.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
+	s=arc-20240116; t=1748608735; c=relaxed/simple;
+	bh=16wZIjI3rM+SR9jJf6FfDXb7wOEnVPcIjK1MwsxP91c=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=MmW+4MUKd2MOatKb+NrUbaq+v5P9OwFck0NLnLYt2v1iVgIp9lhQssMr+agpgqsUkyj1+BLuNyWWjChqKCRpklrGvCa1aU37u31NWHSFLWIbu2AW8RmV1hUlyHAq3HJHFfDJTyj+zhaGtbSsSQeO9C4Tut4Z5ZRvkqu/lXx1buA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m4leAmUe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="KA15+su1"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id EC4E9103972A6;
-	Fri, 30 May 2025 11:56:31 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
-	t=1748598993; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=kRELN26s0aAmuJoO+DiSWkxsO0ilowOEJFYK5+KpCCQ=;
-	b=KA15+su1XL3IdS4aXSxId93/ZGSak5ut1JNyz48ofvbjLWg7Jj6yqErONENPdQEAaYEho1
-	COJEwHEVka+hoqMSacntczBaVSco4mODwObMxpiyMd/LB+yC/ZF6K1JO8Rff1y6LUE26Px
-	ok1PtqdSjFk4L/0sTMOn3wXlEZ+//LzJck0aLUfi9YxBmGEdWksf1Pn+KKwtbR9fFPrde9
-	x8PNA5gaSa3rMgyv0e4hEMBsXavOY5xHfob22gkxtZQFawFdsXCaJawRkMXwwWHpPXqRVT
-	T4puLlh8DQmitMyXcHpHF3il2ZngPFG7WpIWkyAHtRkPexiB1BYjDimDhR3Xhw==
-Date: Fri, 30 May 2025 11:56:29 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Subject: Re: [PATCH 6.12 620/626] serial: sh-sci: Save and restore more
- registers
-Message-ID: <aDmAzfFcDdRPQXf5@duo.ucw.cz>
-References: <20250527162445.028718347@linuxfoundation.org>
- <20250527162510.188701315@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m4leAmUe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F0CC4CEE9;
+	Fri, 30 May 2025 12:38:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748608735;
+	bh=16wZIjI3rM+SR9jJf6FfDXb7wOEnVPcIjK1MwsxP91c=;
+	h=From:To:Cc:Subject:Date:From;
+	b=m4leAmUeZ3VJ7H45htY+KMG0Cg0L+7+8Uu7gPItHSt6WSNbUFYuAZZKOJzf6TViiN
+	 ChuDnSn3NHJMEUHqosuHeFBF6jND+PrmVKW5wpRcD/4UzMEpJHw8j0wbX3j1VPzSEJ
+	 bIw2gKr2XPJxPtrc8w1uQR8c1+v2gD5pxMiRtJ+SexeUbDcc1baZDeoav/r4HdW8qx
+	 ibbSAfq256sQEPQXqrWRDDDK8q5sjJpMm31YQ5dFSwwl3HNqscmCjzwz9KBON9RLLE
+	 GpPrFIDa+7CPXNLtNEeXzHLOM65UqPQwDY7GBeV99eM2dVJpSufaDyfqM0Qy5mfGTq
+	 ssiWrZgDAeepg==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Seunghun Han <kkamagui@gmail.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	robert.moore@intel.com,
+	erik.schmauss@intel.com,
+	lenb@kernel.org,
+	linux-acpi@vger.kernel.org,
+	devel@acpica.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 01/30] ACPICA: fix acpi operand cache leak in dswstate.c
+Date: Fri, 30 May 2025 08:38:23 -0400
+Message-Id: <20250530123852.2574030-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="1b5UNz4O3p+LzBKK"
-Content-Disposition: inline
-In-Reply-To: <20250527162510.188701315@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.15
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+From: Seunghun Han <kkamagui@gmail.com>
 
---1b5UNz4O3p+LzBKK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+[ Upstream commit 156fd20a41e776bbf334bd5e45c4f78dfc90ce1c ]
 
-Hi!
+ACPICA commit 987a3b5cf7175916e2a4b6ea5b8e70f830dfe732
 
-> 6.12-stable review patch.  If anyone has any objections, please let me kn=
-ow.
+I found an ACPI cache leak in ACPI early termination and boot continuing case.
 
-Something went wrong with the scripts here:
+When early termination occurs due to malicious ACPI table, Linux kernel
+terminates ACPI function and continues to boot process. While kernel terminates
+ACPI function, kmem_cache_destroy() reports Acpi-Operand cache leak.
 
-> Fixes: 22a6984c5b5df8ea ("serial: sh-sci: Update the suspend/resume suppo=
-rt")
-> Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-> Reviewed-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-> Link: https://lore.kernel.org/r/11c2eab45d48211e75d8b8202cce60400880fe55.=
-1741114989.git.geert+renesas@glider.be
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Boot log of ACPI operand cache leak is as follows:
+>[    0.585957] ACPI: Added _OSI(Module Device)
+>[    0.587218] ACPI: Added _OSI(Processor Device)
+>[    0.588530] ACPI: Added _OSI(3.0 _SCP Extensions)
+>[    0.589790] ACPI: Added _OSI(Processor Aggregator Device)
+>[    0.591534] ACPI Error: Illegal I/O port address/length above 64K: C806E00000004002/0x2 (20170303/hwvalid-155)
+>[    0.594351] ACPI Exception: AE_LIMIT, Unable to initialize fixed events (20170303/evevent-88)
+>[    0.597858] ACPI: Unable to start the ACPI Interpreter
+>[    0.599162] ACPI Error: Could not remove SCI handler (20170303/evmisc-281)
+>[    0.601836] kmem_cache_destroy Acpi-Operand: Slab cache still has objects
+>[    0.603556] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 4.12.0-rc5 #26
+>[    0.605159] Hardware name: innotek gmb_h virtual_box/virtual_box, BIOS virtual_box 12/01/2006
+>[    0.609177] Call Trace:
+>[    0.610063]  ? dump_stack+0x5c/0x81
+>[    0.611118]  ? kmem_cache_destroy+0x1aa/0x1c0
+>[    0.612632]  ? acpi_sleep_proc_init+0x27/0x27
+>[    0.613906]  ? acpi_os_delete_cache+0xa/0x10
+>[    0.617986]  ? acpi_ut_delete_caches+0x3f/0x7b
+>[    0.619293]  ? acpi_terminate+0xa/0x14
+>[    0.620394]  ? acpi_init+0x2af/0x34f
+>[    0.621616]  ? __class_create+0x4c/0x80
+>[    0.623412]  ? video_setup+0x7f/0x7f
+>[    0.624585]  ? acpi_sleep_proc_init+0x27/0x27
+>[    0.625861]  ? do_one_initcall+0x4e/0x1a0
+>[    0.627513]  ? kernel_init_freeable+0x19e/0x21f
+>[    0.628972]  ? rest_init+0x80/0x80
+>[    0.630043]  ? kernel_init+0xa/0x100
+>[    0.631084]  ? ret_from_fork+0x25/0x30
+>[    0.633343] vgaarb: loaded
+>[    0.635036] EDAC MC: Ver: 3.0.0
+>[    0.638601] PCI: Probing PCI hardware
+>[    0.639833] PCI host bridge to bus 0000:00
+>[    0.641031] pci_bus 0000:00: root bus resource [io  0x0000-0xffff]
+> ... Continue to boot and log is omitted ...
 
-We should not really have two sign-offs in a row.
+I analyzed this memory leak in detail and found acpi_ds_obj_stack_pop_and_
+delete() function miscalculated the top of the stack. acpi_ds_obj_stack_push()
+function uses walk_state->operand_index for start position of the top, but
+acpi_ds_obj_stack_pop_and_delete() function considers index 0 for it.
+Therefore, this causes acpi operand memory leak.
 
-BR,
-								Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+This cache leak causes a security threat because an old kernel (<= 4.9) shows
+memory locations of kernel functions in stack dump. Some malicious users
+could use this information to neutralize kernel ASLR.
 
---1b5UNz4O3p+LzBKK
-Content-Type: application/pgp-signature; name="signature.asc"
+I made a patch to fix ACPI operand cache leak.
 
------BEGIN PGP SIGNATURE-----
+Link: https://github.com/acpica/acpica/commit/987a3b5c
+Signed-off-by: Seunghun Han <kkamagui@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/4999480.31r3eYUQgx@rjwysocki.net
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
 
-iFwEABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaDmAzQAKCRAw5/Bqldv6
-8vYTAJirnapQkrsnfcSFphf7Zd/My2xLAJ44CPF4+T2OsXPDmMuJ7mXCQdPDQQ==
-=fCn0
------END PGP SIGNATURE-----
+**YES** This commit should be backported to stable kernel trees based on
+the following analysis: ## Analysis of the Commit **1. Bug Fix Nature**:
+This commit fixes a clear memory leak bug in the ACPICA subsystem. The
+issue occurs when `acpi_ds_create_operands()` encounters an error during
+operand creation and needs to clean up allocated operands. **2. Root
+Cause**: The core issue is a mismatch between how operands are pushed
+and popped from the stack: - `acpi_ds_obj_stack_push()` uses
+`walk_state->operand_index` to track the current position -
+`acpi_ds_obj_stack_pop_and_delete()` incorrectly assumes operands start
+at index 0 - This causes incomplete cleanup when errors occur, leading
+to memory leaks **3. Code Analysis**: The fix correctly addresses the
+issue by: - Tracking the original operand count (`prev_num_operands`) -
+Calculating the correct number of operands to clean up
+(`new_num_operands`) - Setting `walk_state->num_operands = i` before
+cleanup to ensure proper indexing - Restoring the original operand count
+after cleanup **4. Security Implications**: The commit message
+explicitly mentions this is a security issue - the memory leak can
+expose kernel function addresses in older kernels (≤4.9), potentially
+defeating ASLR. This elevates the importance beyond a simple memory
+leak. **5. Pattern Consistency**: This follows the exact same pattern as
+other ACPICA operand cache leak fixes that were successfully backported
+(commits `97f3c0a4b057`, `2915f16bdce2`, etc.), all authored by the same
+developer addressing similar issues. **6. Stability Characteristics**: -
+**Small and contained**: Only 8 lines of actual logic changes - **Clear
+error path**: Only affects cleanup during error conditions - **No
+behavioral changes**: No impact on normal operation - **Low regression
+risk**: Only modifies error handling paths **7. Backport Suitability
+Criteria**: - ✅ Fixes important bug affecting users (memory leak) - ✅
+Small, contained fix with minimal risk - ✅ No architectural changes - ✅
+Addresses security concern (ASLR bypass potential) - ✅ Follows
+established patterns for ACPICA fixes - ✅ Critical kernel subsystem
+(ACPI) **8. Historical Precedent**: The similar commits in the reference
+examples (Similar Commits #1, #2, #3) all have "Backport Status: YES"
+and address nearly identical ACPICA operand cache leak issues with
+similar fixes and commit message patterns. This commit meets all
+criteria for stable tree backporting: it's an important bugfix, has
+minimal regression risk, affects a critical subsystem, and follows
+established patterns for similar fixes that were previously backported.
 
---1b5UNz4O3p+LzBKK--
+ drivers/acpi/acpica/dsutils.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/acpi/acpica/dsutils.c b/drivers/acpi/acpica/dsutils.c
+index fb9ed5e1da89d..2bdae8a25e084 100644
+--- a/drivers/acpi/acpica/dsutils.c
++++ b/drivers/acpi/acpica/dsutils.c
+@@ -668,6 +668,8 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
+ 	union acpi_parse_object *arguments[ACPI_OBJ_NUM_OPERANDS];
+ 	u32 arg_count = 0;
+ 	u32 index = walk_state->num_operands;
++	u32 prev_num_operands = walk_state->num_operands;
++	u32 new_num_operands;
+ 	u32 i;
+ 
+ 	ACPI_FUNCTION_TRACE_PTR(ds_create_operands, first_arg);
+@@ -696,6 +698,7 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
+ 
+ 	/* Create the interpreter arguments, in reverse order */
+ 
++	new_num_operands = index;
+ 	index--;
+ 	for (i = 0; i < arg_count; i++) {
+ 		arg = arguments[index];
+@@ -720,7 +723,11 @@ acpi_ds_create_operands(struct acpi_walk_state *walk_state,
+ 	 * pop everything off of the operand stack and delete those
+ 	 * objects
+ 	 */
+-	acpi_ds_obj_stack_pop_and_delete(arg_count, walk_state);
++	walk_state->num_operands = i;
++	acpi_ds_obj_stack_pop_and_delete(new_num_operands, walk_state);
++
++	/* Restore operand count */
++	walk_state->num_operands = prev_num_operands;
+ 
+ 	ACPI_EXCEPTION((AE_INFO, status, "While creating Arg %u", index));
+ 	return_ACPI_STATUS(status);
+-- 
+2.39.5
+
