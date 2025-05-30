@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B1426FA53;
-	Fri, 30 May 2025 12:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6577826FA4E;
+	Fri, 30 May 2025 12:41:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608888; cv=none; b=bKxhhQ847uD8PfKkQhQaeHkO45jDTKkBam8Zif98MWOL3TcIPtcMrnZPjeVvTi87IxLAA2F35Et0OL0yYymDSolon+gQnbgcFs8cBW/N3nq5d2RKvWsFPfDo3Au5w9akrhY6I1J+XVCRT5Fs3AEm+8sFE5u6UDGWNzW4qXAH4kU=
+	t=1748608890; cv=none; b=bIEMv7TwhPsBCN0pKj+M+vA/tYw+yJDCHMF6kyuqNgxM0OdR/047mopiFb1B6JD6fC9+uV18wBAoQdlJrNQyQoV1XjXTfWnqI2cjBRzd1g6hNlzQlRp+++HU0MnLl5Wt28+Yj3Zq5kF+g5LP4FU+kIZ0xJ8G89s+OWL0ZpTR6Kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608888; c=relaxed/simple;
-	bh=hw1GoorufsFMRWHhcLKrwojPpH2cjlyG8VbQwqVCMnc=;
+	s=arc-20240116; t=1748608890; c=relaxed/simple;
+	bh=Kf9GzocTZRinNBCdFamN4sRAAa2nA93+FKnXF1dWk0k=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LodkDu10PnCPbI4KXCdTPVE42gW4hJFrBy+J2HgSlUg2az9LoBkzKxrYI5+1Hnpp1cCpufbRwgndJ1+4DAP6ZkhWnVxFNV0oeMdRXNDzJUN+dhbfijsPvvYS5ljsuyOkIZ7LHBV70V3KtV32PVDk3Pgc8sULcW+ScXLWRGCl5cE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dXWrhlgH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=e1LmynXrrWS3Effzex+oI5oW8q3TKMU7YzDCiN1HJ4G/vbXEZ4gHMLlU9l5V1zbJom7GTcObD12Y2KgL72+Z5AO2udL5lhOARN8s2dQgQYuV/m63t56cdjojIt+7NLJLh9OBTce2408uh/xfNwjxTcnFyQbk2HUf8+BCage1Hic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GyAn8EiP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dXWrhlgH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC9CC4CEEA;
-	Fri, 30 May 2025 12:41:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GyAn8EiP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFCF8C4CEEA;
+	Fri, 30 May 2025 12:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608888;
-	bh=hw1GoorufsFMRWHhcLKrwojPpH2cjlyG8VbQwqVCMnc=;
+	s=k20201202; t=1748608889;
+	bh=Kf9GzocTZRinNBCdFamN4sRAAa2nA93+FKnXF1dWk0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dXWrhlgHruOwh9qwC4sq9nATb6pZy+jxfy87UaPTI67bS+4vptVTkKorj3BhdBh4B
-	 d2Px7c94ZY0IMKvWox6N8BAuRnyMWXMyDGJoKT/PiqvtfdifEqpjdhw3JPy97xDDsL
-	 eG0RajvlrkbI7hv+QpstbfQt3R8Ca/qrDvyTN6eRf7E8UAXxjyXrDA68cDbRSu5X4X
-	 0/hz4W66owz5NGkHQM8haiYbbC4SCFcQf2pubBpUc+VaL4FTksiAwBGeb65v5HomqG
-	 rL5R+wLK2HF+jjQ1cCSUs7XMNCIXP55kCXtr0+lgISIPumiPO5EQzY5tSiPep4qr2C
-	 5acMhwnVXRIWw==
+	b=GyAn8EiPqJxirlFgF5MMvt0V3B7aQd6qeBtuiAzoRNOTYIz03e2zqPUdkLjZySzzS
+	 tZMmpk5B73LavUiYXLkNGo43wU+yEnr9LYYAOLmJ8Gu2FSvRq2R40FALaxX0F9AyOS
+	 3QlFcXLKmHqqoFNO1FE+krKpAhOg0LOjmpuff6+e//a4J35XjhJkQRNYH5PtiEGMdK
+	 fuLjSg/gJZSPtzce2j9nwnkljZQpyQG8512SBt4W8Ug6gX0D8fkd/TnhTiD1+FHO5G
+	 SVOCFOKIVaTcHHwYxTdfVOsyNszcOuc+HLhl6RUyFdp3De6mt/a73oCGEu59vvsCf7
+	 DS2Dt3fYK6rLw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yuanjun Gong <ruc_gongyuanjun@163.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Charan Teja Kalla <quic_charante@quicinc.com>,
+	Patrick Daly <quic_pdaly@quicinc.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	thierry.reding@gmail.com,
-	jonathanh@nvidia.com,
-	alsa-devel@alsa-project.org,
-	linux-tegra@vger.kernel.org,
+	rjw@rjwysocki.net,
+	pavel@ucw.cz,
+	len.brown@intel.com,
+	gregkh@linuxfoundation.org,
+	linux-pm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.1 11/13] ASoC: tegra210_ahub: Add check to of_device_get_match_data()
-Date: Fri, 30 May 2025 08:41:10 -0400
-Message-Id: <20250530124112.2576343-11-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.1 12/13] PM: runtime: fix denying of auto suspend in pm_suspend_timer_fn()
+Date: Fri, 30 May 2025 08:41:11 -0400
+Message-Id: <20250530124112.2576343-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530124112.2576343-1-sashal@kernel.org>
 References: <20250530124112.2576343-1-sashal@kernel.org>
@@ -58,78 +57,106 @@ X-stable-base: Linux 6.1.140
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuanjun Gong <ruc_gongyuanjun@163.com>
+From: Charan Teja Kalla <quic_charante@quicinc.com>
 
-[ Upstream commit 04cb269c204398763a620d426cbee43064854000 ]
+[ Upstream commit 40d3b40dce375d6f1c1dbf08d79eed3aed6c691d ]
 
-In tegra_ahub_probe(), check the result of function
-of_device_get_match_data(), return an error code in case it fails.
+pm_runtime_put_autosuspend() schedules a hrtimer to expire
+at "dev->power.timer_expires". If the hrtimer's callback,
+pm_suspend_timer_fn(), observes that the current time equals
+"dev->power.timer_expires", it unexpectedly bails out instead of
+proceeding with runtime suspend.
 
-Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
-Link: https://patch.msgid.link/20250513123744.3041724-1-ruc_gongyuanjun@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+pm_suspend_timer_fn():
+
+ if (expires > 0 && expires < ktime_get_mono_fast_ns()) {
+ 	dev->power.timer_expires = 0;
+ 	rpm_suspend(..)
+ }
+
+Additionally, as ->timer_expires is not cleared, all the future auto
+suspend requests will not schedule hrtimer to perform auto suspend.
+
+rpm_suspend():
+
+ if ((rpmflags & RPM_AUTO) &&...) {
+ 	if (!(dev->power.timer_expires && ...) { <-- this will fail.
+ 		hrtimer_start_range_ns(&dev->power.suspend_timer,...);
+ 	}
+ }
+
+Fix this by as well checking if current time reaches the set expiration.
+
+Co-developed-by: Patrick Daly <quic_pdaly@quicinc.com>
+Signed-off-by: Patrick Daly <quic_pdaly@quicinc.com>
+Signed-off-by: Charan Teja Kalla <quic_charante@quicinc.com>
+Link: https://patch.msgid.link/20250515064125.1211561-1-quic_charante@quicinc.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees.
-**Extensive Analysis:** **1. Nature of the Bug Fix:** This commit fixes
-a critical null pointer dereference vulnerability in the tegra210_ahub
-driver. The code calls `of_device_get_match_data(&pdev->dev)` but never
-validates the return value before using `ahub->soc_data`. Looking at the
-kernel tree, we can see that immediately after the assignment, the code
-accesses `ahub->soc_data->regmap_config` and later
-`ahub->soc_data->cmpnt_drv`, `ahub->soc_data->dai_drv`, and
-`ahub->soc_data->num_dais` without any null checking. **2. Severity and
-Impact:** - **High severity**: A null pointer dereference in the kernel
-probe function can cause kernel panic - **User impact**: Systems using
-Tegra210 audio hardware could crash during device initialization -
-**Subsystem criticality**: Audio subsystem failure affects multimedia
-functionality **3. Code Analysis:** The fix is minimal and surgical:
-```c ahub->soc_data = of_device_get_match_data(&pdev->dev); +if
-(!ahub->soc_data) + return -ENODEV; ``` This follows established kernel
-patterns and returns an appropriate error code (-ENODEV) when device
-match data cannot be found. **4. Consistency with Similar Fixes:**
-Examining the kernel tree reveals that other Tegra drivers have already
-been fixed with identical patterns: - `tegra30_ahub.c` already has this
-null check (returns -EINVAL) - `tegra30_i2s.c` already has this null
-check (returns -ENODEV) This indicates that tegra210_ahub was an
-oversight that should be corrected for consistency and safety. **5.
-Historical Reference Analysis:** While the provided historical commits
-all have "Backport Status: NO", they were primarily code cleanup and API
-migration commits (switching to `of_device_get_match_data`), not
-security/stability fixes. This commit is fundamentally different - it's
-a critical bug fix that prevents kernel crashes. **6. Stable Tree
-Criteria Compliance:** - ✅ **Important bugfix**: Prevents kernel panic -
-✅ **Minimal risk**: Two-line addition with well-established pattern - ✅
-**Small and contained**: No architectural changes - ✅ **Clear purpose**:
-Prevents null pointer dereference - ✅ **Subsystem confined**: Only
-affects tegra210_ahub driver **7. Risk Assessment:** - **Regression
-risk**: Extremely low - only adds a safety check - **Side effects**:
-None - failure case now returns clean error instead of crashing -
-**Testing impact**: Improves robustness without changing successful code
-paths **Conclusion:** This is a textbook example of a commit that should
-be backported to stable trees. It fixes a critical null pointer
-dereference that can cause kernel panics, uses minimal code changes
-following established patterns, and has virtually no risk of introducing
-regressions. The fix brings tegra210_ahub in line with other Tegra
-drivers that already have this protection.
+Now, based on my analysis, let me provide the decision: **YES** This
+commit should be backported to stable kernel trees. Here's my extensive
+analysis: ## Bug Analysis This is a clear **logical bug fix** in the PM
+runtime autosuspend mechanism that affects device power management. The
+issue is in the `pm_suspend_timer_fn()` function at
+`drivers/base/power/runtime.c:1006`. ## The Problem The current code
+uses a strict less-than comparison: ```c if (expires > 0 && expires <
+ktime_get_mono_fast_ns()) { ``` However, this creates a race condition
+where: 1. When `pm_runtime_put_autosuspend()` schedules an hrtimer to
+expire at exactly `dev->power.timer_expires` 2. If the timer callback
+`pm_suspend_timer_fn()` observes that the current time **equals**
+`dev->power.timer_expires` (not less than), it incorrectly bails out 3.
+The timer expires but the device is not suspended 4. Since
+`timer_expires` is not cleared, all future auto-suspend requests fail
+because the condition `if (!(dev->power.timer_expires && ...))` in
+`rpm_suspend()` (line 596-597) will always be false ## The Fix The fix
+correctly changes the comparison to `<=` (less than or equal): ```c if
+(expires > 0 && expires <= ktime_get_mono_fast_ns()) { ``` This ensures
+that the suspend is triggered when the current time equals or exceeds
+the expiration time. ## Why This Should Be Backported 1. **Fixes a Real
+User-Affecting Bug**: Devices may fail to auto-suspend, leading to
+increased power consumption and potential battery drain on mobile
+devices. 2. **Minimal Risk**: This is a one-character change (`<` to
+`<=`) that fixes a clear logical error. The change is extremely
+contained and low-risk. 3. **Critical Subsystem**: PM runtime is a
+critical kernel subsystem affecting all device power management. A
+failure here can impact system-wide power efficiency. 4. **No
+Architectural Changes**: This doesn't introduce new features or change
+architecture - it simply fixes incorrect logic. 5. **Small and
+Contained**: The fix is confined to a single comparison operator in one
+function. 6. **Clear Co-authors**: The commit shows collaboration
+between Patrick Daly and Charan Teja Kalla from Qualcomm, indicating
+this was found in real-world usage. ## Comparison with Similar Commits
+Looking at the historical examples: - **Similar Commit #5 (Status:
+YES)**: Also a PM runtime timer fix with data type correction - this had
+similar characteristics and was backported - The current commit follows
+the same pattern: critical PM runtime bug fix with minimal, contained
+changes ## Stable Tree Criteria Met - ✅ Fixes important bug affecting
+users - ✅ Relatively small and contained fix - ✅ No clear side effects
+beyond fixing the issue - ✅ No major architectural changes - ✅ Touches
+critical kernel subsystem (appropriately) - ✅ Follows stable tree rules
+(important bugfix, minimal risk) - ✅ Has clear explanation of the
+problem and solution This commit perfectly fits the stable backport
+criteria and should be included in stable kernel trees to ensure proper
+device power management functionality across all kernel versions.
 
- sound/soc/tegra/tegra210_ahub.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/base/power/runtime.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/tegra/tegra210_ahub.c b/sound/soc/tegra/tegra210_ahub.c
-index dfdcb4580cd75..4be5683504154 100644
---- a/sound/soc/tegra/tegra210_ahub.c
-+++ b/sound/soc/tegra/tegra210_ahub.c
-@@ -1369,6 +1369,8 @@ static int tegra_ahub_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	ahub->soc_data = of_device_get_match_data(&pdev->dev);
-+	if (!ahub->soc_data)
-+		return -ENODEV;
- 
- 	platform_set_drvdata(pdev, ahub);
- 
+diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+index bb68cba4d85a9..313ccb7e77646 100644
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -1001,7 +1001,7 @@ static enum hrtimer_restart  pm_suspend_timer_fn(struct hrtimer *timer)
+ 	 * If 'expires' is after the current time, we've been called
+ 	 * too early.
+ 	 */
+-	if (expires > 0 && expires < ktime_get_mono_fast_ns()) {
++	if (expires > 0 && expires <= ktime_get_mono_fast_ns()) {
+ 		dev->power.timer_expires = 0;
+ 		rpm_suspend(dev, dev->power.timer_autosuspends ?
+ 		    (RPM_ASYNC | RPM_AUTO) : RPM_ASYNC);
 -- 
 2.39.5
 
