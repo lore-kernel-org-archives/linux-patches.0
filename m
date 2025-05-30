@@ -1,37 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDF722F777;
-	Fri, 30 May 2025 12:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1E425B1F7;
+	Fri, 30 May 2025 12:40:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608825; cv=none; b=ed53fDu7uA8x3hLcuGvHgc7vp/XqRvkLl8URKESuROZdTtL56numUakU9e3qrWcgWggERMjhUTEQOkVGVL5LaOOsK6HTZdPzk1UczOuabZKOE3GzpDYnmIqUrhhK33Q1uQT0hyqXsTdkSAfrPxvJfYl/vXRhv0mGpOexrzvSt7w=
+	t=1748608826; cv=none; b=lBog1/ne8rjW4pt8d0d3SgriEMAKIdWvln1LWy7QdTsG2t8RlZ2It4squJJ66K1LxLNcKlcwWfOp23cluyfoKYNMeiYO7+cGVIY8jgrfjABAqs15RTbeSgrJo3vES2WPoSFUvTunRiBmdMG0GYQqll64CcBwRWGJOxpNd68GU90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608825; c=relaxed/simple;
-	bh=NCUICTrC8+gqXYnUCqs7UKPOFce2Teg+APrv6Pq+XjQ=;
+	s=arc-20240116; t=1748608826; c=relaxed/simple;
+	bh=OPaaY5EGcY8Mnex4SLmbd7K0LViDxsO/aqe9Un5Rzhk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=S6+v3lOxmMYp3GgISpYRHdUxmEFit+Qs/fBYpMSxsihrIx54thXWps6EjocmXiKb/dWmWzc19879epKXCdQIFRC9opgow+2XGwu1LaC7uPTiDh5xTyaI8WHdd2Isx3QrPss4BVdU0hRp0yvqT/Kc21rYSLLbjI58p13EqyWtZ7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=if5NgYf4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VeFHipoLCwNv+1co7SmRgr63iey37zutWj5+NEe7QP8Ud5zbBBVOqRtAj06MyydVs0gCmqZQ1/ZIgNCjYfgaSM9kcPWC9+kRTGNm11IFEOUnNcyb7oTATJVQoOeqVf0JFcPW38udf19J3bT8JFZ9xz0DNz27TzKNujDMoj08MQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LvaoYGrv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="if5NgYf4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A862BC4CEEF;
-	Fri, 30 May 2025 12:40:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LvaoYGrv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B001C4CEF1;
+	Fri, 30 May 2025 12:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608824;
-	bh=NCUICTrC8+gqXYnUCqs7UKPOFce2Teg+APrv6Pq+XjQ=;
+	s=k20201202; t=1748608826;
+	bh=OPaaY5EGcY8Mnex4SLmbd7K0LViDxsO/aqe9Un5Rzhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=if5NgYf4xAnVsaBNgxMy7/pKa8bOyubdHpb3JUJV8xO8MkIImRM4+2OenOLt6AI1i
-	 xkGauzE/MDy1mjdN9lttPBdSDbubQA88B1MVUp/nNdz6i3horEBxse/yMFnXtHiiMX
-	 bfRX9Beo3FK13dBL+9GQynaJn78RCAY8cvEHohPJLXDcySl6zT37nyhCLN4GAsDT9v
-	 uol551lRpAoe0HJvZU4LGolkRXgjIiPbjuMuL61pCIIAX0lXPeojVmMYE/s60SeXO7
-	 +OtnozuQCiaQnuWK1kh8z0rJLQmKWhbHFYYKK5THkufeMgRf07l9UIjIvTEC0fUPRH
-	 swvaVjmsYAkFg==
+	b=LvaoYGrvVE3t7N0Bh/btVAlZVnIFOJYPELGq8aePw9eFHl5u/i4N0612WtIv5JCcN
+	 OVaAWD2lePxOcHgFlNzHMaF9iO281bL3FdLnxPVdA2Ifbec7gmdIyIHbTbd5TvHVW0
+	 hbg2QqADQp3SlieWFI7LEdEwuwLCc4PdkbYjGMxQgoBtPIRSdmtZezG+Lw7rdLOG9o
+	 jgh+0aYzSTOWCyChhPuiKG3voVZ8Xz05frftiZv92l4GoAABi4wqoKRq7Zc//ffmuX
+	 NbHWAyD/LkQnqTf9vmQeri30EhkqwcwsrhTdT4JyRor3nt4kMB/I86/mgtK2ewTDkV
+	 CJUKFZgcgp+GQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hector Martin <marcan@marcan.st>,
-	Neal Gompa <neal@gompa.dev>,
-	James Calligeros <jcalligeros99@gmail.com>,
+Cc: I Hsin Cheng <richard120310@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	lgirdwood@gmail.com,
@@ -39,9 +37,9 @@ Cc: Hector Martin <marcan@marcan.st>,
 	tiwai@suse.com,
 	alsa-devel@alsa-project.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 09/26] ASoC: tas2770: Power cycle amp on ISENSE/VSENSE change
-Date: Fri, 30 May 2025 08:39:55 -0400
-Message-Id: <20250530124012.2575409-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 10/26] ASoC: intel/sdw_utils: Assign initial value in asoc_sdw_rt_amp_spk_rtd_init()
+Date: Fri, 30 May 2025 08:39:56 -0400
+Message-Id: <20250530124012.2575409-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530124012.2575409-1-sashal@kernel.org>
 References: <20250530124012.2575409-1-sashal@kernel.org>
@@ -54,115 +52,95 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.31
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hector Martin <marcan@marcan.st>
+From: I Hsin Cheng <richard120310@gmail.com>
 
-[ Upstream commit f529c91be8a34ac12e7599bf87c65b6f4a2c9f5c ]
+[ Upstream commit 5fb3878216aece471af030b33a9fbef3babd8617 ]
 
-The ISENSE/VSENSE blocks are only powered up when the amplifier
-transitions from shutdown to active. This means that if those controls
-are flipped on while the amplifier is already playing back audio, they
-will have no effect.
+Initialize "ret" with "-EINVAL" to handle cases where "strstr()" for
+"codec_dai->component->name_prefix" doesn't find "-1" nor "-2". In that
+case "name_prefix" is invalid because for current implementation it's
+expected to have either "-1" or "-2" in it. (Maybe "-3", "-4" and so on
+in the future.)
 
-Fix this by forcing a power cycle around transitions in those controls.
-
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
-Link: https://patch.msgid.link/20250406-apple-codec-changes-v5-1-50a00ec850a3@gmail.com
+Link: https://scan5.scan.coverity.com/#/project-view/36179/10063?selectedIssue=1627120
+Signed-off-by: I Hsin Cheng <richard120310@gmail.com>
+Link: https://patch.msgid.link/20250505185423.680608-1-richard120310@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees based on
-my analysis of both the commit message and code changes. Here's my
-extensive explanation: ## Bug Fix Analysis This commit addresses a
-specific functional bug in the tas2770 audio codec driver where
-ISENSE/VSENSE controls don't work properly when changed during active
-playback. The commit message clearly states: "if those controls are
-flipped on while the amplifier is already playing back audio, they will
-have no effect." ## Code Changes Analysis The fix is contained and
-minimal, involving three key changes to `sound/soc/codecs/tas2770.c`: 1.
-**Addition of `sense_event` function (lines +21 to +43)**: This function
-implements a power cycling mechanism that forces the amplifier through a
-shutdown state when ISENSE/VSENSE controls are changed. This ensures the
-changes take effect regardless of playback state. 2. **Modified DAPM
-widget definitions (lines +45 to +48)**: The ISENSE and VSENSE switches
-are changed from simple `SND_SOC_DAPM_SWITCH` to `SND_SOC_DAPM_SWITCH_E`
-with event handling, connecting them to the new `sense_event` function.
-3. **Event triggers**: The widgets respond to `SND_SOC_DAPM_PRE_REG` and
-`SND_SOC_DAPM_POST_REG` events to perform the power cycling around
-register changes. ## Why This Should Be Backported 1. **User-Affecting
-Bug**: This fixes a real functional issue where audio controls don't
-work as expected during playback, which directly impacts user
-experience. 2. **Small and Contained**: The fix is confined to a single
-driver file (`tas2770.c`) and doesn't affect other subsystems. The
-changes are surgical and targeted. 3. **Low Risk**: The fix follows
-established ASoC patterns using standard DAPM event handling. Similar
-power cycling approaches are used throughout the ASoC subsystem. 4. **No
-New Features**: This purely fixes existing functionality rather than
-adding new features. 5. **Comparison with Similar Commits**: Looking at
-the provided examples, this commit is very similar to "Similar Commit
-#2" and "Similar Commit #5" which were both marked as backportable
-(YES). Like commit #2, it fixes incorrect hardware behavior with a small
-register/control change. Like commit #5, it addresses power state
-management issues in audio hardware. 6. **Hardware-Specific Fix**: The
-commit addresses a hardware limitation specific to the tas2770 chip
-where ISENSE/VSENSE blocks are only powered up during shutdown-to-active
-transitions. This is documented in the commit message and is a
-legitimate hardware workaround. The fix ensures that software speaker
-protection functionality works correctly by guaranteeing that IVSENSE
-controls are functional, which is critical for protecting audio hardware
-from damage.
+Based on my analysis of the commit and the codebase context, I can now
+provide a comprehensive assessment: **YES** This commit should be
+backported to stable kernel trees. ## Extensive Analysis ### Nature of
+the Bug The commit addresses a classic uninitialized variable bug in
+`asoc_sdw_rt_amp_spk_rtd_init()` in
+`sound/soc/sdw_utils/soc_sdw_rt_amp.c`. The function declares `int ret;`
+but only conditionally assigns values to it within a loop: ```c
+for_each_rtd_codec_dais(rtd, i, codec_dai) { if
+(strstr(codec_dai->component->name_prefix, "-1")) ret =
+snd_soc_dapm_add_routes(&card->dapm, rt_amp_map, 2); else if
+(strstr(codec_dai->component->name_prefix, "-2")) ret =
+snd_soc_dapm_add_routes(&card->dapm, rt_amp_map + 2, 2); } return ret;
+``` ### When the Bug Manifests The bug occurs when: 1.
+`codec_dai->component->name_prefix` doesn't contain "-1" OR "-2" 2. Both
+`strstr()` calls return NULL, causing neither branch to execute 3. The
+function returns an uninitialized `ret` value, leading to unpredictable
+behavior ### Historical Context From the git blame analysis, this bug
+was introduced in commit `84e0a19adb73d` (May 9, 2024) by Bard Liao when
+adding a dai parameter to rtd_init callbacks. The commit changed the
+variable name from `dai` to `codec_dai` to avoid conflicts, but failed
+to initialize `ret` properly for the edge case. ### Code Analysis The
+fix is simple and correct: - **Before**: `int ret;` (uninitialized) -
+**After**: `int ret = -EINVAL;` (initialized with appropriate error
+code) The `-EINVAL` choice is appropriate because: 1. If name_prefix
+lacks "-1" or "-2", it indicates an invalid configuration for current
+implementation 2. The commit message explicitly states this expectation
+3. `-EINVAL` is the standard Linux kernel error for invalid arguments
+### Static Analysis Context The commit message references Coverity scan
+ID 1627120, indicating this was caught by static analysis tools. This is
+a legitimate bug that could cause: - Random return values leading to
+unpredictable behavior - Potential system instability in audio subsystem
+- Difficult-to-debug intermittent failures ### Backport Suitability
+Analysis **✅ Meets Stable Tree Criteria:** 1. **Important Bug Fix**:
+Fixes a real bug that can cause unpredictable behavior in the audio
+subsystem 2. **Small and Contained**: Single line change, minimal risk
+of introducing regressions 3. **No Side Effects**: Only affects the
+error path when name_prefix is invalid 4. **No Architectural Changes**:
+Pure bug fix with no design changes 5. **Subsystem Confined**: Limited
+to ASoC Intel SDW utils subsystem 6. **Clear Benefit**: Prevents
+undefined behavior and ensures deterministic error handling **Risk
+Assessment**: **VERY LOW** - Single line initialization change - Only
+affects error/edge case paths - No functional logic changes - Well-
+understood fix pattern **Impact**: **MODERATE** - Affects Intel
+SoundWire audio configurations - Could prevent audio system failures on
+affected hardware - Improves system reliability and debuggability ###
+Comparison with Similar Commits The provided examples show that simple
+NULL check additions (Similar Commit #1) and small contained bug fixes
+are consistently marked as "YES" for backporting. This commit follows
+the same pattern - it's a small, contained fix for a legitimate bug with
+minimal risk. This commit exemplifies the ideal stable tree candidate:
+it fixes a real bug, is minimal in scope, has no risk of regression, and
+improves system reliability.
 
- sound/soc/codecs/tas2770.c | 30 ++++++++++++++++++++++++++++--
- 1 file changed, 28 insertions(+), 2 deletions(-)
+ sound/soc/sdw_utils/soc_sdw_rt_amp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/tas2770.c b/sound/soc/codecs/tas2770.c
-index 863c3f672ba98..0931b6109755f 100644
---- a/sound/soc/codecs/tas2770.c
-+++ b/sound/soc/codecs/tas2770.c
-@@ -156,11 +156,37 @@ static const struct snd_kcontrol_new isense_switch =
- static const struct snd_kcontrol_new vsense_switch =
- 	SOC_DAPM_SINGLE("Switch", TAS2770_PWR_CTRL, 2, 1, 1);
+diff --git a/sound/soc/sdw_utils/soc_sdw_rt_amp.c b/sound/soc/sdw_utils/soc_sdw_rt_amp.c
+index 6951dfb565263..b3d6ca2499734 100644
+--- a/sound/soc/sdw_utils/soc_sdw_rt_amp.c
++++ b/sound/soc/sdw_utils/soc_sdw_rt_amp.c
+@@ -190,7 +190,7 @@ int asoc_sdw_rt_amp_spk_rtd_init(struct snd_soc_pcm_runtime *rtd, struct snd_soc
+ 	const struct snd_soc_dapm_route *rt_amp_map;
+ 	char codec_name[CODEC_NAME_SIZE];
+ 	struct snd_soc_dai *codec_dai;
+-	int ret;
++	int ret = -EINVAL;
+ 	int i;
  
-+static int sense_event(struct snd_soc_dapm_widget *w,
-+			struct snd_kcontrol *kcontrol, int event)
-+{
-+	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
-+	struct tas2770_priv *tas2770 = snd_soc_component_get_drvdata(component);
-+
-+	/*
-+	 * Powering up ISENSE/VSENSE requires a trip through the shutdown state.
-+	 * Do that here to ensure that our changes are applied properly, otherwise
-+	 * we might end up with non-functional IVSENSE if playback started earlier,
-+	 * which would break software speaker protection.
-+	 */
-+	switch (event) {
-+	case SND_SOC_DAPM_PRE_REG:
-+		return snd_soc_component_update_bits(component, TAS2770_PWR_CTRL,
-+						    TAS2770_PWR_CTRL_MASK,
-+						    TAS2770_PWR_CTRL_SHUTDOWN);
-+	case SND_SOC_DAPM_POST_REG:
-+		return tas2770_update_pwr_ctrl(tas2770);
-+	default:
-+		return 0;
-+	}
-+}
-+
- static const struct snd_soc_dapm_widget tas2770_dapm_widgets[] = {
- 	SND_SOC_DAPM_AIF_IN("ASI1", "ASI1 Playback", 0, SND_SOC_NOPM, 0, 0),
- 	SND_SOC_DAPM_MUX("ASI1 Sel", SND_SOC_NOPM, 0, 0, &tas2770_asi1_mux),
--	SND_SOC_DAPM_SWITCH("ISENSE", TAS2770_PWR_CTRL, 3, 1, &isense_switch),
--	SND_SOC_DAPM_SWITCH("VSENSE", TAS2770_PWR_CTRL, 2, 1, &vsense_switch),
-+	SND_SOC_DAPM_SWITCH_E("ISENSE", TAS2770_PWR_CTRL, 3, 1, &isense_switch,
-+		sense_event, SND_SOC_DAPM_PRE_REG | SND_SOC_DAPM_POST_REG),
-+	SND_SOC_DAPM_SWITCH_E("VSENSE", TAS2770_PWR_CTRL, 2, 1, &vsense_switch,
-+		sense_event, SND_SOC_DAPM_PRE_REG | SND_SOC_DAPM_POST_REG),
- 	SND_SOC_DAPM_DAC_E("DAC", NULL, SND_SOC_NOPM, 0, 0, tas2770_dac_event,
- 			   SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_PRE_PMD),
- 	SND_SOC_DAPM_OUTPUT("OUT"),
+ 	rt_amp_map = get_codec_name_and_route(dai, codec_name);
 -- 
 2.39.5
 
