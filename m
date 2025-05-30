@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C03275877;
-	Fri, 30 May 2025 12:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5171277026;
+	Fri, 30 May 2025 12:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608906; cv=none; b=nUhT8mELoxV4wfM9WIHqOFmFmiAiWnTQo5tl5KInjSkPqa791vpd/DYq/nBnnnyA9NHeCkBUDEAnkyC2n30uBhj6QB36SVAQysnnvQosY2pe9VodMu8rzWF/Hxdq2oQc7bFRgd92h1eY3u2nXYEeEQzowJYwLHBo40uhI6geZJs=
+	t=1748608907; cv=none; b=FBS1/Ex4Hz2EUJptknqbYftIuDTo0DiqEKY2i91eYPhYIgDwc+dsXvuF344yJj2nKW3t3g++YZ2Om92++1YDA3+uT2VyPp1nuDZmNhzo71NoOmwnHnzUEBAbErx4Xk1IIQn9GLcqR5Zmen1BQWNPyZdbqysLb7muM+FbGQKBBeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608906; c=relaxed/simple;
-	bh=3hOjsq/il6wq0d7+ylT/hlTsOZE8ChIXd8UtO0IiRns=;
+	s=arc-20240116; t=1748608907; c=relaxed/simple;
+	bh=wCKT2ANgON7RqHSfdHdof0iuxGEAx0kSohWDgb0dM1c=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QP9Gjm47LZ8VWqhsfG0Nq6YIy5QpeY5YdcnDN3lNWaJ8TPg+5fRrY4KP8u1nhVnZA/1RVQTNK1zJtq29w8WEWUiJ+xVlzNgQczyRD3+Ed53jRBUMLTzYJystTb0Tq4oWOGSS4EP3yMqqS29hKAcirZmhX1vVQR+GOko/u4UAxaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iC8RFtfK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QL1PJAGoSBfu9YhRAtKw40ykWVWZldJR5kLDrKIUPmvB51TLpDKmJepzDYWitMEKOziaglq4yN+oX5yfdXmgGJJ9ofMLcrd6IR07N0Tu1Ba2EKQabVc43yAmU3PytEssG7PY4TO67B3JgbjdihfeVbwN7Cwu0dwBf3/LufAxTAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ePuxjCTG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iC8RFtfK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E5FC4CEE9;
-	Fri, 30 May 2025 12:41:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ePuxjCTG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B62C4CEEB;
+	Fri, 30 May 2025 12:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608906;
-	bh=3hOjsq/il6wq0d7+ylT/hlTsOZE8ChIXd8UtO0IiRns=;
+	s=k20201202; t=1748608907;
+	bh=wCKT2ANgON7RqHSfdHdof0iuxGEAx0kSohWDgb0dM1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iC8RFtfKbSLIngB5oGFkhVyPPphVkIyR24llJ+3skP6KWb+6vlNLH3uTs6HmOiMbq
-	 z3g/ctnwlld+i4YeUI781VD/DtBaewsqihbv+ta7JNd1GXluJmIZNYEpUDVjQG4x8y
-	 chRhNkMHVgCS8lNEeQEl+hTo2uNM7VYcO9B26PjIaMzXVlzQi9qLN7D+3Hhl/R4+w/
-	 mBDx6nz06bIk889TUN0bFnoNs2da8Oa72RNsXcd4kcZf/PXffi4tEypSdE4hXwEPKk
-	 vNLLSZRgyGxLKASW37J/Y0djsQUYIZkCilA1k0ceGJBxV+P8+tiMB3HStcygjbRTGc
-	 9cuRw6rPpiZvQ==
+	b=ePuxjCTG+1RmWi5N1rq4Fe1W/+J/XMO6fwmLXRfLrIce40UZbdF1Vk1CSkHdX8kuu
+	 Z4h3kDBe2AWD7dc5j+eyWkgd0h/8nTu0VoKvgwBYPcH+66sBt4iQp1faSHrbdKaEaG
+	 cl+X1N1Nu9D2ANwn01JwhLZQG8yJYpJjreJAX/t7ianIeP4R+SLpCgJddhtgaHGQE0
+	 c26IGClboY2nTk8jeAKVI1Td3AiYXBK/FMHohkWMZFfAQPwOeyK6Imq9SN9bwei5CZ
+	 c0zUM8qAHqYybB7/R2+tqHmykwB6i6ycX5P24oqU8S38yTWAEHElkttnRMOJ7LtRGi
+	 NqnXfg61J4CfA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Charan Teja Kalla <quic_charante@quicinc.com>,
-	Patrick Daly <quic_pdaly@quicinc.com>,
+Cc: Peter Marheine <pmarheine@chromium.org>,
 	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	rjw@rjwysocki.net,
-	pavel@ucw.cz,
-	len.brown@intel.com,
-	gregkh@linuxfoundation.org,
-	linux-pm@vger.kernel.org,
+	lenb@kernel.org,
+	linux-acpi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 10/11] PM: runtime: fix denying of auto suspend in pm_suspend_timer_fn()
-Date: Fri, 30 May 2025 08:41:30 -0400
-Message-Id: <20250530124131.2576650-10-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 11/11] ACPI: battery: negate current when discharging
+Date: Fri, 30 May 2025 08:41:31 -0400
+Message-Id: <20250530124131.2576650-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530124131.2576650-1-sashal@kernel.org>
 References: <20250530124131.2576650-1-sashal@kernel.org>
@@ -54,109 +51,99 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.184
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Charan Teja Kalla <quic_charante@quicinc.com>
+From: Peter Marheine <pmarheine@chromium.org>
 
-[ Upstream commit 40d3b40dce375d6f1c1dbf08d79eed3aed6c691d ]
+[ Upstream commit 234f71555019d308c6bc6f98c78c5551cb8cd56a ]
 
-pm_runtime_put_autosuspend() schedules a hrtimer to expire
-at "dev->power.timer_expires". If the hrtimer's callback,
-pm_suspend_timer_fn(), observes that the current time equals
-"dev->power.timer_expires", it unexpectedly bails out instead of
-proceeding with runtime suspend.
+The ACPI specification requires that battery rate is always positive,
+but the kernel ABI for POWER_SUPPLY_PROP_CURRENT_NOW
+(Documentation/ABI/testing/sysfs-class-power) specifies that it should
+be negative when a battery is discharging. When reporting CURRENT_NOW,
+massage the value to match the documented ABI.
 
-pm_suspend_timer_fn():
+This only changes the sign of `current_now` and not `power_now` because
+documentation doesn't describe any particular meaning for `power_now` so
+leaving `power_now` unchanged is less likely to confuse userspace
+unnecessarily, whereas becoming consistent with the documented ABI is
+worth potentially confusing clients that read `current_now`.
 
- if (expires > 0 && expires < ktime_get_mono_fast_ns()) {
- 	dev->power.timer_expires = 0;
- 	rpm_suspend(..)
- }
-
-Additionally, as ->timer_expires is not cleared, all the future auto
-suspend requests will not schedule hrtimer to perform auto suspend.
-
-rpm_suspend():
-
- if ((rpmflags & RPM_AUTO) &&...) {
- 	if (!(dev->power.timer_expires && ...) { <-- this will fail.
- 		hrtimer_start_range_ns(&dev->power.suspend_timer,...);
- 	}
- }
-
-Fix this by as well checking if current time reaches the set expiration.
-
-Co-developed-by: Patrick Daly <quic_pdaly@quicinc.com>
-Signed-off-by: Patrick Daly <quic_pdaly@quicinc.com>
-Signed-off-by: Charan Teja Kalla <quic_charante@quicinc.com>
-Link: https://patch.msgid.link/20250515064125.1211561-1-quic_charante@quicinc.com
+Signed-off-by: Peter Marheine <pmarheine@chromium.org>
+Link: https://patch.msgid.link/20250508024146.1436129-1-pmarheine@chromium.org
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now, based on my analysis, let me provide the decision: **YES** This
-commit should be backported to stable kernel trees. Here's my extensive
-analysis: ## Bug Analysis This is a clear **logical bug fix** in the PM
-runtime autosuspend mechanism that affects device power management. The
-issue is in the `pm_suspend_timer_fn()` function at
-`drivers/base/power/runtime.c:1006`. ## The Problem The current code
-uses a strict less-than comparison: ```c if (expires > 0 && expires <
-ktime_get_mono_fast_ns()) { ``` However, this creates a race condition
-where: 1. When `pm_runtime_put_autosuspend()` schedules an hrtimer to
-expire at exactly `dev->power.timer_expires` 2. If the timer callback
-`pm_suspend_timer_fn()` observes that the current time **equals**
-`dev->power.timer_expires` (not less than), it incorrectly bails out 3.
-The timer expires but the device is not suspended 4. Since
-`timer_expires` is not cleared, all future auto-suspend requests fail
-because the condition `if (!(dev->power.timer_expires && ...))` in
-`rpm_suspend()` (line 596-597) will always be false ## The Fix The fix
-correctly changes the comparison to `<=` (less than or equal): ```c if
-(expires > 0 && expires <= ktime_get_mono_fast_ns()) { ``` This ensures
-that the suspend is triggered when the current time equals or exceeds
-the expiration time. ## Why This Should Be Backported 1. **Fixes a Real
-User-Affecting Bug**: Devices may fail to auto-suspend, leading to
-increased power consumption and potential battery drain on mobile
-devices. 2. **Minimal Risk**: This is a one-character change (`<` to
-`<=`) that fixes a clear logical error. The change is extremely
-contained and low-risk. 3. **Critical Subsystem**: PM runtime is a
-critical kernel subsystem affecting all device power management. A
-failure here can impact system-wide power efficiency. 4. **No
-Architectural Changes**: This doesn't introduce new features or change
-architecture - it simply fixes incorrect logic. 5. **Small and
-Contained**: The fix is confined to a single comparison operator in one
-function. 6. **Clear Co-authors**: The commit shows collaboration
-between Patrick Daly and Charan Teja Kalla from Qualcomm, indicating
-this was found in real-world usage. ## Comparison with Similar Commits
-Looking at the historical examples: - **Similar Commit #5 (Status:
-YES)**: Also a PM runtime timer fix with data type correction - this had
-similar characteristics and was backported - The current commit follows
-the same pattern: critical PM runtime bug fix with minimal, contained
-changes ## Stable Tree Criteria Met - ✅ Fixes important bug affecting
-users - ✅ Relatively small and contained fix - ✅ No clear side effects
-beyond fixing the issue - ✅ No major architectural changes - ✅ Touches
-critical kernel subsystem (appropriately) - ✅ Follows stable tree rules
-(important bugfix, minimal risk) - ✅ Has clear explanation of the
-problem and solution This commit perfectly fits the stable backport
-criteria and should be included in stable kernel trees to ensure proper
-device power management functionality across all kernel versions.
+Based on my analysis of the commit and examination of the kernel
+codebase, I can now provide my assessment: **YES** This commit should be
+backported to stable kernel trees because: 1. **Fixes a real user-facing
+bug**: The commit addresses an ABI inconsistency where ACPI battery
+drivers were reporting current_now with the wrong sign. According to the
+kernel's power supply ABI documentation
+(Documentation/ABI/testing/sysfs-class-power), `current_now` should be
+negative when discharging and positive when charging, but ACPI battery
+drivers were reporting positive values always. 2. **Small and contained
+fix**: The change is minimal and well-contained. It only affects the
+`POWER_SUPPLY_PROP_CURRENT_NOW` case in `acpi_battery_get_property()`
+function in `drivers/acpi/battery.c`. The code adds a simple check to
+negate the current value only when: - Property requested is
+`POWER_SUPPLY_PROP_CURRENT_NOW` (not power_now) - Battery is in
+discharging state - The `acpi_battery_handle_discharging()` function
+confirms it's actually discharging 3. **Follows stable rules**: This is
+an important bugfix that corrects userspace-visible behavior to match
+documented ABI. Applications and battery monitoring tools rely on the
+documented behavior that negative current indicates discharging. 4.
+**Minimal regression risk**: The change is very conservative: - Only
+affects `current_now`, not `power_now` (as noted in commit message) -
+Uses existing `acpi_battery_handle_discharging()` logic to double-check
+the discharging state - Leaves all other battery properties unchanged 5.
+**Similar pattern in similar drivers**: From the historical examples
+provided, commits like "power: supply: bq27xxx: fix polarity of
+current_now" and "power: supply: axp20x_battery: properly report current
+when discharging" were backported with YES status for exactly the same
+type of issue - fixing current sign during discharge. 6. **Affects
+critical subsystem**: Battery reporting is crucial for power management,
+and incorrect current direction can confuse userspace tools and
+potentially impact power management decisions. The commit carefully
+addresses the ABI compliance issue while minimizing risk by only
+changing the sign for `current_now` during confirmed discharging states,
+making it an ideal candidate for stable backporting.
 
- drivers/base/power/runtime.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/battery.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index edee7f1af1cec..35e1a090ef901 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -996,7 +996,7 @@ static enum hrtimer_restart  pm_suspend_timer_fn(struct hrtimer *timer)
- 	 * If 'expires' is after the current time, we've been called
- 	 * too early.
- 	 */
--	if (expires > 0 && expires < ktime_get_mono_fast_ns()) {
-+	if (expires > 0 && expires <= ktime_get_mono_fast_ns()) {
- 		dev->power.timer_expires = 0;
- 		rpm_suspend(dev, dev->power.timer_autosuspends ?
- 		    (RPM_ASYNC | RPM_AUTO) : RPM_ASYNC);
+diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
+index 8bb0f4d06adc0..b0a5d077db905 100644
+--- a/drivers/acpi/battery.c
++++ b/drivers/acpi/battery.c
+@@ -250,10 +250,23 @@ static int acpi_battery_get_property(struct power_supply *psy,
+ 		break;
+ 	case POWER_SUPPLY_PROP_CURRENT_NOW:
+ 	case POWER_SUPPLY_PROP_POWER_NOW:
+-		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
++		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
+ 			ret = -ENODEV;
+-		else
+-			val->intval = battery->rate_now * 1000;
++			break;
++		}
++
++		val->intval = battery->rate_now * 1000;
++		/*
++		 * When discharging, the current should be reported as a
++		 * negative number as per the power supply class interface
++		 * definition.
++		 */
++		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
++		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
++		    acpi_battery_handle_discharging(battery)
++				== POWER_SUPPLY_STATUS_DISCHARGING)
++			val->intval = -val->intval;
++
+ 		break;
+ 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
+ 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
 -- 
 2.39.5
 
