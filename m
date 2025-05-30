@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20831231820;
-	Fri, 30 May 2025 12:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B7423184E;
+	Fri, 30 May 2025 12:39:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608749; cv=none; b=H/UyOi0gu6Fchb7d6gsaJ4vEiw7k/oHqMWaVJBZSb+iEdWNBqDUP9fykF7GPHTzI67hmY4pSD9KRydy2YdDtNUSA6HrAyXPq/Xwd87Mujibx2/vJLOxUUxhJ1PGuqmWVUzClvMIZ15NumSgoRhtFXVPgJ7fRuQrs9PncOekMeoU=
+	t=1748608750; cv=none; b=QSers3jvTraQuqOC7gMnfN6S1C9JPM7jey3F6jy15w5PSHu1OGUnTaXlnRcSj6C5WX5WhsNnCgBr5jrKijsFILsW6a/9fXZFL+Kx14eI9v0OM5kT6Huy6RyLM9tGTaF6lgsaI9x9Yq8clgIfBfpcHbswut+LxyU9VYWcfjpyezI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608749; c=relaxed/simple;
-	bh=6iH0CzUKeg3sM7kVPqS4VamrSXZlCtGCM06ywwwLXk8=;
+	s=arc-20240116; t=1748608750; c=relaxed/simple;
+	bh=rgYLD5MAQ+lOJZ+TUeLa6w7pA6mFTpUI8kgviXibUhA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gYKceS+xdg3a8QzpWi+fK0DDLvfwGyfv2MNa1ZG17LZujJcNAj/ThJQkdeWIq0Uoq5RABIdUiSlV0rS5u7jzCKHpWNr+StqjSnLnCdTc7enriKjOHi+7ELox3r4YsTvqNDnWeE+an2E6Pj37rFyqSab7lsscGgszGuIbICxPSBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=npAm9KHE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HiU4QQzdilpvYpzXaD9NVGrAPWf6HRsQn89e7ssg/lv3LafGGGIXj+oThJLdjVYc6XZr0Fr5QCDKi9lnkznHJiwA+bvvs85oed0xH9nUyrmcK8uVqrj+M9HlLY+XNLWsJ5j1yEEpxS01gU37XfbKR+LpRhGbmQibvkZLNvSbpRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D6DLgziP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="npAm9KHE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA80C4CEEA;
-	Fri, 30 May 2025 12:39:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D6DLgziP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50127C4CEE9;
+	Fri, 30 May 2025 12:39:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608749;
-	bh=6iH0CzUKeg3sM7kVPqS4VamrSXZlCtGCM06ywwwLXk8=;
+	s=k20201202; t=1748608750;
+	bh=rgYLD5MAQ+lOJZ+TUeLa6w7pA6mFTpUI8kgviXibUhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=npAm9KHE2Ut9TkmLOYyScRRskJSVc4qQqSWcxoYjlP5EI70HuFCP/RsUhOz2q2Ulu
-	 dirtFsVUTKS5+RLdNEfiVP0A2Cgco9SbI+CkWeccU13AC4WUzavOnTcRV4u1NtAZmP
-	 w64G896znFoxSf5rxk47sxVEPv+ysy6PDtoHU4pi3glAeDbSyuBqDrxRz8TM0I1o2+
-	 3Zv7JFcLLaF57tzkCx0qfmQwfxPOxZVCHVZvMrsJX0DQCckZmSohkVvhIMt1T7LuQa
-	 pAVnAOuYM1x4h4Ez++I2eiAocrxvCWpGu12iEqhaJkZKWOSuHM5yYjhnVGiXMo128M
-	 1l0kEZsuSTBVQ==
+	b=D6DLgziPfTiQNJMmfIazSzyQ5BD6vlqq2rLOX547y7cxVQuYFayi/IRCnkc74Xv91
+	 E3M0ov3IIhZxHsfGOe9MFLMZGFpahaYJd3Am0h7LjVpulBKZsQLENn/rmeXqFOJDxE
+	 lew4WEC3VdjKqfaRLyfKqgbcWgH28vmEZdZHdT6vsuqXBaKvjygrxKK/ZTrj1C6kPQ
+	 /fO5FS2MfTXkgO/z+cY4+/Tb9ddMLfUx5tMHV6xBAPYft2x7OPZNjXE1Bx3hj9NzO8
+	 e65aW2o4uw3hJfZ5sGc9LAWuSgo7TNXaK+Sw0Z4m5ZVRW5Bf21vA07fi2T7gEli0ep
+	 BifNfpBqXWnew==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: I Hsin Cheng <richard120310@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	alsa-devel@alsa-project.org,
+	rjw@rjwysocki.net,
+	lenb@kernel.org,
+	linux-acpi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 12/30] ASoC: intel/sdw_utils: Assign initial value in asoc_sdw_rt_amp_spk_rtd_init()
-Date: Fri, 30 May 2025 08:38:34 -0400
-Message-Id: <20250530123852.2574030-12-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 13/30] ACPI: bus: Bail out if acpi_kobj registration fails
+Date: Fri, 30 May 2025 08:38:35 -0400
+Message-Id: <20250530123852.2574030-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530123852.2574030-1-sashal@kernel.org>
 References: <20250530123852.2574030-1-sashal@kernel.org>
@@ -55,92 +54,86 @@ X-stable-base: Linux 6.15
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: I Hsin Cheng <richard120310@gmail.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 5fb3878216aece471af030b33a9fbef3babd8617 ]
+[ Upstream commit 94a370fc8def6038dbc02199db9584b0b3690f1a ]
 
-Initialize "ret" with "-EINVAL" to handle cases where "strstr()" for
-"codec_dai->component->name_prefix" doesn't find "-1" nor "-2". In that
-case "name_prefix" is invalid because for current implementation it's
-expected to have either "-1" or "-2" in it. (Maybe "-3", "-4" and so on
-in the future.)
+The ACPI sysfs code will fail to initialize if acpi_kobj is NULL,
+together with some ACPI drivers.
 
-Link: https://scan5.scan.coverity.com/#/project-view/36179/10063?selectedIssue=1627120
-Signed-off-by: I Hsin Cheng <richard120310@gmail.com>
-Link: https://patch.msgid.link/20250505185423.680608-1-richard120310@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Follow the other firmware subsystems and bail out if the kobject
+cannot be registered.
+
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20250518185111.3560-2-W_Armin@gmx.de
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and the codebase context, I can now
-provide a comprehensive assessment: **YES** This commit should be
-backported to stable kernel trees. ## Extensive Analysis ### Nature of
-the Bug The commit addresses a classic uninitialized variable bug in
-`asoc_sdw_rt_amp_spk_rtd_init()` in
-`sound/soc/sdw_utils/soc_sdw_rt_amp.c`. The function declares `int ret;`
-but only conditionally assigns values to it within a loop: ```c
-for_each_rtd_codec_dais(rtd, i, codec_dai) { if
-(strstr(codec_dai->component->name_prefix, "-1")) ret =
-snd_soc_dapm_add_routes(&card->dapm, rt_amp_map, 2); else if
-(strstr(codec_dai->component->name_prefix, "-2")) ret =
-snd_soc_dapm_add_routes(&card->dapm, rt_amp_map + 2, 2); } return ret;
-``` ### When the Bug Manifests The bug occurs when: 1.
-`codec_dai->component->name_prefix` doesn't contain "-1" OR "-2" 2. Both
-`strstr()` calls return NULL, causing neither branch to execute 3. The
-function returns an uninitialized `ret` value, leading to unpredictable
-behavior ### Historical Context From the git blame analysis, this bug
-was introduced in commit `84e0a19adb73d` (May 9, 2024) by Bard Liao when
-adding a dai parameter to rtd_init callbacks. The commit changed the
-variable name from `dai` to `codec_dai` to avoid conflicts, but failed
-to initialize `ret` properly for the edge case. ### Code Analysis The
-fix is simple and correct: - **Before**: `int ret;` (uninitialized) -
-**After**: `int ret = -EINVAL;` (initialized with appropriate error
-code) The `-EINVAL` choice is appropriate because: 1. If name_prefix
-lacks "-1" or "-2", it indicates an invalid configuration for current
-implementation 2. The commit message explicitly states this expectation
-3. `-EINVAL` is the standard Linux kernel error for invalid arguments
-### Static Analysis Context The commit message references Coverity scan
-ID 1627120, indicating this was caught by static analysis tools. This is
-a legitimate bug that could cause: - Random return values leading to
-unpredictable behavior - Potential system instability in audio subsystem
-- Difficult-to-debug intermittent failures ### Backport Suitability
-Analysis **✅ Meets Stable Tree Criteria:** 1. **Important Bug Fix**:
-Fixes a real bug that can cause unpredictable behavior in the audio
-subsystem 2. **Small and Contained**: Single line change, minimal risk
-of introducing regressions 3. **No Side Effects**: Only affects the
-error path when name_prefix is invalid 4. **No Architectural Changes**:
-Pure bug fix with no design changes 5. **Subsystem Confined**: Limited
-to ASoC Intel SDW utils subsystem 6. **Clear Benefit**: Prevents
-undefined behavior and ensures deterministic error handling **Risk
-Assessment**: **VERY LOW** - Single line initialization change - Only
-affects error/edge case paths - No functional logic changes - Well-
-understood fix pattern **Impact**: **MODERATE** - Affects Intel
-SoundWire audio configurations - Could prevent audio system failures on
-affected hardware - Improves system reliability and debuggability ###
-Comparison with Similar Commits The provided examples show that simple
-NULL check additions (Similar Commit #1) and small contained bug fixes
-are consistently marked as "YES" for backporting. This commit follows
-the same pattern - it's a small, contained fix for a legitimate bug with
-minimal risk. This commit exemplifies the ideal stable tree candidate:
-it fixes a real bug, is minimal in scope, has no risk of regression, and
-improves system reliability.
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Code Change Analysis The commit changes the
+behavior in `acpi_init()` when `kobject_create_and_add("acpi",
+firmware_kobj)` fails: **Before:** - If `acpi_kobj` creation fails, only
+prints a debug message and continues execution - The function proceeds
+to initialize ACPI subsystems with a NULL `acpi_kobj` - This leads to
+potential crashes/failures in other ACPI components **After:** - If
+`acpi_kobj` creation fails, prints an error message and returns
+`-ENOMEM` - Prevents initialization of ACPI subsystems with a NULL
+`acpi_kobj` - Follows proper error handling patterns ## Evidence from
+Kernel Code Investigation From examining the kernel repository, I found
+multiple critical usages of `acpi_kobj` that would fail catastrophically
+if it's NULL: 1. **drivers/acpi/sysfs.c:514**:
+`kobject_create_and_add("tables", acpi_kobj)` - NULL parent causes
+undefined behavior 2. **drivers/acpi/sysfs.c:924**:
+`sysfs_create_group(acpi_kobj, &interrupt_stats_attr_group)` - NULL
+kobject crashes 3. **drivers/acpi/platform_profile.c**: Multiple
+`sysfs_notify(acpi_kobj, ...)` calls that would crash with NULL 4.
+**drivers/acpi/platform_profile.c**: `sysfs_create_group(acpi_kobj,
+&platform_profile_group)` would fail ## Backport Criteria Assessment ✅
+**Fixes a real bug**: Yes - prevents crashes when kobject creation fails
+✅ **Small and contained**: Yes - only 4 lines changed in one function ✅
+**Clear side effects**: Yes - prevents ACPI initialization on memory
+allocation failure ✅ **No architectural changes**: Yes - just proper
+error handling ✅ **Critical subsystem**: Yes - ACPI is core kernel
+infrastructure ✅ **Minimal regression risk**: Yes - only affects rare
+failure path ✅ **Follows stable rules**: Yes - important bugfix with
+minimal risk ## Comparison with Historical Examples This commit closely
+matches **Similar Commit #1** (Status: YES) which also: - Fixed error
+handling in ACPI initialization code - Added proper cleanup/error
+handling when kobject operations fail - Was considered suitable for
+backporting The commit differs significantly from the "NO" examples
+which were: - Code cleanup/style changes (Similar Commits #2, #3, #4) -
+Refactoring without fixing actual bugs (Similar Commit #4) ## Risk
+Assessment **Low Risk**: The change only affects the extremely rare case
+where `kobject_create_and_add()` fails due to memory allocation failure.
+In such cases: - **Current behavior**: System continues with broken
+ACPI, leading to crashes - **New behavior**: ACPI initialization fails
+cleanly, system may still boot without ACPI ## Conclusion This is a
+critical bug fix that prevents crashes in ACPI subsystems when memory
+allocation fails during boot. It transforms undefined behavior/crashes
+into clean failure handling, making it an ideal candidate for stable
+backporting.
 
- sound/soc/sdw_utils/soc_sdw_rt_amp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/bus.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/sdw_utils/soc_sdw_rt_amp.c b/sound/soc/sdw_utils/soc_sdw_rt_amp.c
-index 0538c252ba69b..83c2368170cb5 100644
---- a/sound/soc/sdw_utils/soc_sdw_rt_amp.c
-+++ b/sound/soc/sdw_utils/soc_sdw_rt_amp.c
-@@ -190,7 +190,7 @@ int asoc_sdw_rt_amp_spk_rtd_init(struct snd_soc_pcm_runtime *rtd, struct snd_soc
- 	const struct snd_soc_dapm_route *rt_amp_map;
- 	char codec_name[CODEC_NAME_SIZE];
- 	struct snd_soc_dai *codec_dai;
--	int ret;
-+	int ret = -EINVAL;
- 	int i;
+diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
+index 058910af82bca..c2ab2783303f2 100644
+--- a/drivers/acpi/bus.c
++++ b/drivers/acpi/bus.c
+@@ -1446,8 +1446,10 @@ static int __init acpi_init(void)
+ 	}
  
- 	rt_amp_map = get_codec_name_and_route(dai, codec_name);
+ 	acpi_kobj = kobject_create_and_add("acpi", firmware_kobj);
+-	if (!acpi_kobj)
+-		pr_debug("%s: kset create error\n", __func__);
++	if (!acpi_kobj) {
++		pr_err("Failed to register kobject\n");
++		return -ENOMEM;
++	}
+ 
+ 	init_prmt();
+ 	acpi_init_pcc();
 -- 
 2.39.5
 
