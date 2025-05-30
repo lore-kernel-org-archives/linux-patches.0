@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F4622FE0C;
-	Fri, 30 May 2025 12:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5242C21D3D3;
+	Fri, 30 May 2025 12:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748608745; cv=none; b=Cy9Wela6vqNRMW7G+6GiiZnbJhLLzXilpNltVH9Pp5ldTMSLh4C7DlV/RBNwpuPLuVnDlUpZhD/jJQUpIY4rpCJzgD6+fM/QkrGudlSAkZily8pcBDp9PFEN0LLK8+5M8HLTfO85SjWeKp3Uhd8/Dt70neFITqofPpNDNUMJtA8=
+	t=1748608746; cv=none; b=qdy6CeyjZWrcDGAXn1jCjgaNa10JFEeWn+/L48xAdnKMPcc5QtAnRkwQhZOyaJSVXOldm+kfaElS3rkxlIzH0VZ5PM3UyENIqyN4UfnYpbYBCqFRtxU80BOH+P8/9nbBlb7tOxyYEOAf/icwsWS8KBuIrXC8pFy0v6DybQRmfmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748608745; c=relaxed/simple;
-	bh=WCfPEgF7U60SODsr12OJ4UDT8DSIMuvTRTm+GCIA8F0=;
+	s=arc-20240116; t=1748608746; c=relaxed/simple;
+	bh=QlBMF20uuqb1mzlxrqwepoG0gi+rYFsSjGhjyhsggkA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=OwfloJqt2RCqOOCS+OFpFBb8vv80yrozY7HZjTV1RsmH5fGl+gmMxEQsW7X9gxow5yD9bZQ8AKnntondwoz38zrb5J74g/dvtGyYvIJ06Qcu9LNl6DirTppiUbgwGkvy7HeoxkwZrcvLHCe1hStv89gn/h6XZBz4lqecwOvuKjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kJlS6b7l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WGJ7I8wE8LoojU5WBQeuSAHftzddKe1RtbtsB24OyvxKRxOzbcx+TfvYq27Sbuu8YgdPYmjuW3Z/Eh1cQ+BHx5vTa52imh9wESK0raMuKMy+9jXUjULJwPm7ARnlJbKpp5U1f4gV4E2q5h1pqCNA998L+wOtl//J7ghsZHqL/RM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TjveBzsr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kJlS6b7l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CEF3C4CEE9;
-	Fri, 30 May 2025 12:39:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TjveBzsr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54F5EC4CEEF;
+	Fri, 30 May 2025 12:39:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748608745;
-	bh=WCfPEgF7U60SODsr12OJ4UDT8DSIMuvTRTm+GCIA8F0=;
+	s=k20201202; t=1748608746;
+	bh=QlBMF20uuqb1mzlxrqwepoG0gi+rYFsSjGhjyhsggkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kJlS6b7lqWHQAdADFPzh0zijsSPOXW+ascVjiTpmVSd4mRJkDg3lEg16jWJjI6CRA
-	 i+Ybduv9vIHycZUkIbyUBZ0u0ic+NOwBGouo16iOaWe4ALdEU/x0QLyqbbYXwy6nkh
-	 WCP0nmdkgccmJQPIJVrTmacyQRnoHkq3RylOzyUQbDrYBE2RoEnf5bCaWze5DY4cLE
-	 B50Ib15YUqCM9C//NnyPlv3/FxcAp/Fc7++P7OyMlamBxi8LAgQGD9ysJdDkpgsEl+
-	 Np07ukdHOzma1r3Cw/bYdyoR49qezjGazSle9qCWd4Qhhlw6ad3iSw0SbHGFGWmRtZ
-	 9LcmaHrbG7R+Q==
+	b=TjveBzsrUc07JIj/1N8A66ucbd1uVvJlHOR5QtLBqcwG63yF+H9XrYBghskzfL+Y3
+	 vb3aNtLycuQoGNciCVqxRShf8QPNsdiE9Ekag6o1zVWwStLwCq55puusGjwKnbRQLm
+	 1r/he0xGAAGbF+nzEqAAXOLErMy1CdraxbCgRPl9m/+l/eYMaFyzv6XZwmPadIPxKW
+	 dUm6Q1hrY+tnAGtvO4zmkw5XxETNmoju7qJ0YeSBU0bOolQZJMq94oIonAgVBHR4Gi
+	 gmT8Hw/He0UtYXLq/oNkpBGYYDFQUXA0ibGG7A7/UylaKd06MybZaIqVdkDz9OToMl
+	 /pH3XWxuvl7ew==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Luke Wang <ziniu.wang_1@nxp.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+Cc: Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	shawnguo@kernel.org,
-	linux-mmc@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
+	bp@alien8.de,
+	mchehab@kernel.org,
+	linux-edac@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 09/30] mmc: sdhci-esdhc-imx: Save tuning value when card stays powered in suspend
-Date: Fri, 30 May 2025 08:38:31 -0400
-Message-Id: <20250530123852.2574030-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 10/30] EDAC/igen6: Skip absent memory controllers
+Date: Fri, 30 May 2025 08:38:32 -0400
+Message-Id: <20250530123852.2574030-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530123852.2574030-1-sashal@kernel.org>
 References: <20250530123852.2574030-1-sashal@kernel.org>
@@ -52,251 +51,214 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luke Wang <ziniu.wang_1@nxp.com>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit c63d25cdc59ae2891b39ba2da950910291d9bcbf ]
+[ Upstream commit 20e190b1c1fd88b21cc5106c12cfe6def5ab849d ]
 
-For SoCs like i.MX6UL(L/Z) and i.MX7D, USDHC powers off completely during
-system power management (PM), causing the internal tuning status to be
-lost. To address this, save the tuning value when system suspend and
-restore it for any command issued after system resume when re-tuning is
-held.
+Some BIOS versions may fuse off certain memory controllers and set the
+registers of these absent memory controllers to ~0. The current igen6_edac
+mistakenly enumerates these absent memory controllers and registers them
+with the EDAC core.
 
-A typical case involves SDIO WiFi devices with the MMC_PM_KEEP_POWER and
-MMC_PM_WAKE_SDIO_IRQ flag, which retain power during system PM. To
-conserve power, WiFi switches to 1-bit mode and restores 4-bit mode upon
-resume. As per the specification, tuning commands are not supported in
-1-bit mode. When sending CMD52 to restore 4-bit mode, re-tuning must be
-held. However, CMD52 still requires a correct sample point to avoid CRC
-errors, necessitating preservation of the previous tuning value.
+Skip the absent memory controllers to avoid mistakenly enumerating them.
 
-Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250328112517.2624806-1-ziniu.wang_1@nxp.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://lore.kernel.org/r/20250408132455.489046-2-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit message, code changes, and
-examination of the kernel repository, here is my assessment: **YES**
-This commit should be backported to stable kernel trees. **Extensive
-Analysis:** **1. Bug Fix Nature:** This commit fixes a specific bug
-affecting SDIO WiFi devices on i.MX6UL(L/Z) and i.MX7D SoCs during
-system suspend/resume cycles. The problem occurs when: - SDIO devices
-maintain power during suspend (MMC_PM_KEEP_POWER) - USDHC hardware
-completely loses power despite software flags - Tuning values are lost,
-causing CRC errors on resume - This affects real-world WiFi
-functionality **2. Code Analysis - Key Changes:** The commit adds three
-main components: a) **Data Structure Addition** (line ~241): ```c
-unsigned int saved_tuning_delay_cell; /bin /bin.usr-is-merged /boot /dev
-/etc /home /init /lib /lib.usr-is-merged /lib64 /lost+found /media /mnt
-/opt /proc /root /run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp
-/usr /var save the value of tuning delay cell model/ prompt/ src/
-target/ ``` This adds storage for the tuning value in the platform data
-structure. b) **Tuning Save Function** (`sdhc_esdhc_tuning_save`): ```c
-if (host->timing == MMC_TIMING_UHS_SDR50 || host->timing ==
-MMC_TIMING_UHS_SDR104) { reg = readl(host->ioaddr +
-ESDHC_TUNE_CTRL_STATUS); reg =
-FIELD_GET(ESDHC_TUNE_CTRL_STATUS_TAP_SEL_PRE_MASK, reg);
-imx_data->boarddata.saved_tuning_delay_cell = reg; } ``` This safely
-reads and stores the current tuning delay value for modes that require
-tuning. c) **Tuning Restore Function** (`sdhc_esdhc_tuning_restore`):
-```c reg = readl(host->ioaddr + ESDHC_TUNING_CTRL); reg &=
-~ESDHC_STD_TUNING_EN; writel(reg, host->ioaddr + ESDHC_TUNING_CTRL); reg
-= readl(host->ioaddr + ESDHC_MIX_CTRL); reg |= ESDHC_MIX_CTRL_SMPCLK_SEL
-| ESDHC_MIX_CTRL_FBCLK_SEL; writel(reg, host->ioaddr + ESDHC_MIX_CTRL);
-writel(FIELD_PREP(ESDHC_TUNE_CTRL_STATUS_DLY_CELL_SET_PRE_MASK,
-imx_data->boarddata.saved_tuning_delay_cell), host->ioaddr +
-ESDHC_TUNE_CTRL_STATUS); ``` This carefully restores the tuning value by
-manually configuring the hardware registers. **3. Risk Assessment - Very
-Low Risk:** - **Conditional Execution**: Both save/restore functions
-only execute when specific conditions are met: -
-`mmc_card_keep_power(host->mmc)` AND `mmc_card_wake_sdio_irq(host->mmc)`
-AND `esdhc_is_usdhc(imx_data)` - Only affects SDR50/SDR104 timing modes
-- Only targets specific SoC families (i.MX6UL(L/Z), i.MX7D) - **Register
-Manipulation Safety**: The code uses proper field masking (`FIELD_GET`,
-`FIELD_PREP`) and follows existing patterns in the driver - **No
-Architectural Changes**: This is purely a state preservation mechanism,
-doesn't change driver architecture **4. Comparison with Similar
-Commits:** Looking at the reference commits: - **Similar Commit #4
-(YES)**: Also fixes SDIO suspend/resume tuning issues with
-`mmc_retune_hold_now()` - **Similar Commit #5 (YES)**: Also addresses
-tuning-related problems by disabling CMD CRC checks This new commit
-follows the same pattern of fixing specific SDIO tuning issues with
-targeted, low-risk changes. **5. Hardware-Specific Nature:** The fix
-targets specific hardware (i.MX SoCs) where USDHC loses power despite
-software flags. This hardware-specific bug affects real users with SDIO
-WiFi cards and has a clear, contained solution. **6. Clear Problem
-Statement:** The commit message clearly describes the problem: "CMD52
-still requires a correct sample point to avoid CRC errors, necessitating
-preservation of the previous tuning value." This is a well-defined
-technical issue with a specific solution. **Conclusion:** This is a
-contained, hardware-specific bug fix that addresses real-world WiFi
-functionality issues on specific i.MX SoCs. The changes are
-conservative, well-guarded by conditions, and follow established
-patterns in the subsystem. The risk of regression is very low while the
-benefit to affected users is significant.
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Bug Impact and User Experience This commit
+fixes a real problem where **some BIOS versions fuse off certain memory
+controllers** and set their registers to `~0` (all 1s). The current
+igen6_edac driver mistakenly enumerates these absent memory controllers
+and registers them with the EDAC core, which can lead to: 1. **Incorrect
+memory controller enumeration** - showing non-existent memory
+controllers to userspace 2. **Potential false error reporting** - trying
+to read error logs from non-existent hardware 3. **Resource waste** -
+allocating structures and registering devices for hardware that doesn't
+exist ## Code Analysis - Minimal and Safe Changes Looking at the
+specific code changes: ### 1. New Detection Function ```c +/* Check
+whether the memory controller is absent. model/ prompt/ src/ target/
++static bool igen6_imc_absent(void __iomem *window) +{ + return
+readl(window + MAD_INTER_CHANNEL_OFFSET) == ~0; +} ``` This is a
+**simple, conservative check** that reads a known register
+(`MAD_INTER_CHANNEL_OFFSET`) and checks if it returns all 1s (`~0`),
+which is the standard pattern for absent/fused-off hardware. ### 2.
+Modified Registration Logic The key change in `igen6_register_mcis()`:
+```c + if (igen6_imc_absent(window)) { + iounmap(window); + edac_dbg(2,
+"Skip absent mc%d\n", pmc); + continue; + } ``` This **safely skips**
+absent controllers rather than trying to register them. The logic is: -
+Map the memory controller's MMIO space - Check if it's absent (registers
+return ~0) - If absent: unmap and continue to next controller - If
+present: proceed with normal registration ### 3. Robust Error Handling
+The code maintains proper resource cleanup and adds logging for when
+fewer controllers are found than expected: ```c + if (lmc <
+res_cfg->num_imc) + igen6_printk(KERN_WARNING, "Expected %d mcs, but
+only %d detected.", + res_cfg->num_imc, lmc); ``` ## Comparison with
+Similar Commits Looking at the historical examples: **Similar Commit #1
+(YES)** - "EDAC/i10nm: Skip the absent memory controllers" has nearly
+identical logic and was backported because it fixed absent memory
+controller detection causing call traces. **Similar Commit #2 (YES)** -
+A dependency fix that prevented build errors was backported. This commit
+follows the same pattern as **Similar Commit #1** - it's a focused bug
+fix for absent hardware detection with minimal risk. ## Why This Should
+Be Backported ### 1. **Clear Bug Fix** This addresses a specific,
+reproducible issue where BIOS configurations cause incorrect driver
+behavior. ### 2. **Minimal Risk** - Small, contained change - Only
+affects the memory controller enumeration path - Adds defensive checks
+rather than changing core logic - Maintains backward compatibility ###
+3. **Follows Established Patterns** The "check register for ~0" pattern
+is well-established in kernel hardware detection and matches the
+successful backport in Similar Commit #1. ### 4. **Hardware Support
+Issue** This fixes support for legitimate hardware configurations where
+BIOS has fused off memory controllers - these systems should work
+correctly. ### 5. **Stable Tree Criteria Met** - ✅ Fixes important bug
+affecting users - ✅ Small and contained change - ✅ No architectural
+changes - ✅ Minimal regression risk - ✅ Confined to single driver
+subsystem The commit represents exactly the type of targeted hardware
+fix that stable trees are designed to include - it resolves a real-world
+compatibility issue with a safe, minimal change.
 
- drivers/mmc/host/sdhci-esdhc-imx.c | 88 +++++++++++++++++++++++++++++-
- 1 file changed, 86 insertions(+), 2 deletions(-)
+ drivers/edac/igen6_edac.c | 78 +++++++++++++++++++++++++++++++--------
+ 1 file changed, 62 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
-index ff78a7c6a04c9..7e8addaed697e 100644
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -81,6 +81,8 @@
- #define  ESDHC_TUNE_CTRL_STEP		1
- #define  ESDHC_TUNE_CTRL_MIN		0
- #define  ESDHC_TUNE_CTRL_MAX		((1 << 7) - 1)
-+#define  ESDHC_TUNE_CTRL_STATUS_TAP_SEL_PRE_MASK	GENMASK(30, 24)
-+#define  ESDHC_TUNE_CTRL_STATUS_DLY_CELL_SET_PRE_MASK	GENMASK(14, 8)
+diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
+index 5807517ee32de..ec64bff8236f6 100644
+--- a/drivers/edac/igen6_edac.c
++++ b/drivers/edac/igen6_edac.c
+@@ -127,6 +127,7 @@
  
- /* strobe dll register */
- #define ESDHC_STROBE_DLL_CTRL		0x70
-@@ -235,6 +237,7 @@ struct esdhc_platform_data {
- 	unsigned int tuning_step;       /* The delay cell steps in tuning procedure */
- 	unsigned int tuning_start_tap;	/* The start delay cell point in tuning procedure */
- 	unsigned int strobe_dll_delay_target;	/* The delay cell for strobe pad (read clock) */
-+	unsigned int saved_tuning_delay_cell;	/* save the value of tuning delay cell */
- };
+ static const struct res_config {
+ 	bool machine_check;
++	/* The number of present memory controllers. */
+ 	int num_imc;
+ 	u32 imc_base;
+ 	u32 cmf_base;
+@@ -1201,23 +1202,21 @@ static void igen6_check(struct mem_ctl_info *mci)
+ 		irq_work_queue(&ecclog_irq_work);
+ }
  
- struct esdhc_soc_data {
-@@ -1057,7 +1060,7 @@ static void esdhc_reset_tuning(struct sdhci_host *host)
- {
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
--	u32 ctrl;
-+	u32 ctrl, tuning_ctrl;
- 	int ret;
- 
- 	/* Reset the tuning circuit */
-@@ -1071,6 +1074,16 @@ static void esdhc_reset_tuning(struct sdhci_host *host)
- 			writel(0, host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
- 		} else if (imx_data->socdata->flags & ESDHC_FLAG_STD_TUNING) {
- 			writel(ctrl, host->ioaddr + ESDHC_MIX_CTRL);
-+			/*
-+			 * enable the std tuning just in case it cleared in
-+			 * sdhc_esdhc_tuning_restore.
-+			 */
-+			tuning_ctrl = readl(host->ioaddr + ESDHC_TUNING_CTRL);
-+			if (!(tuning_ctrl & ESDHC_STD_TUNING_EN)) {
-+				tuning_ctrl |= ESDHC_STD_TUNING_EN;
-+				writel(tuning_ctrl, host->ioaddr + ESDHC_TUNING_CTRL);
-+			}
+-static int igen6_register_mci(int mc, u64 mchbar, struct pci_dev *pdev)
++/* Check whether the memory controller is absent. */
++static bool igen6_imc_absent(void __iomem *window)
++{
++	return readl(window + MAD_INTER_CHANNEL_OFFSET) == ~0;
++}
 +
- 			ctrl = readl(host->ioaddr + SDHCI_AUTO_CMD_STATUS);
- 			ctrl &= ~ESDHC_MIX_CTRL_SMPCLK_SEL;
- 			ctrl &= ~ESDHC_MIX_CTRL_EXE_TUNE;
-@@ -1149,7 +1162,8 @@ static void esdhc_prepare_tuning(struct sdhci_host *host, u32 val)
- 	reg |= ESDHC_MIX_CTRL_EXE_TUNE | ESDHC_MIX_CTRL_SMPCLK_SEL |
- 			ESDHC_MIX_CTRL_FBCLK_SEL;
- 	writel(reg, host->ioaddr + ESDHC_MIX_CTRL);
--	writel(val << 8, host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
-+	writel(FIELD_PREP(ESDHC_TUNE_CTRL_STATUS_DLY_CELL_SET_PRE_MASK, val),
-+	       host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
- 	dev_dbg(mmc_dev(host->mmc),
- 		"tuning with delay 0x%x ESDHC_TUNE_CTRL_STATUS 0x%x\n",
- 			val, readl(host->ioaddr + ESDHC_TUNE_CTRL_STATUS));
-@@ -1569,6 +1583,57 @@ static void sdhci_esdhc_imx_hwinit(struct sdhci_host *host)
++static int igen6_register_mci(int mc, void __iomem *window, struct pci_dev *pdev)
+ {
+ 	struct edac_mc_layer layers[2];
+ 	struct mem_ctl_info *mci;
+ 	struct igen6_imc *imc;
+-	void __iomem *window;
+ 	int rc;
+ 
+ 	edac_dbg(2, "\n");
+ 
+-	mchbar += mc * MCHBAR_SIZE;
+-	window = ioremap(mchbar, MCHBAR_SIZE);
+-	if (!window) {
+-		igen6_printk(KERN_ERR, "Failed to ioremap 0x%llx\n", mchbar);
+-		return -ENODEV;
+-	}
+-
+ 	layers[0].type = EDAC_MC_LAYER_CHANNEL;
+ 	layers[0].size = NUM_CHANNELS;
+ 	layers[0].is_virt_csrow = false;
+@@ -1283,7 +1282,6 @@ static int igen6_register_mci(int mc, u64 mchbar, struct pci_dev *pdev)
+ fail2:
+ 	edac_mc_free(mci);
+ fail:
+-	iounmap(window);
+ 	return rc;
+ }
+ 
+@@ -1309,6 +1307,56 @@ static void igen6_unregister_mcis(void)
  	}
  }
  
-+static void sdhc_esdhc_tuning_save(struct sdhci_host *host)
++static int igen6_register_mcis(struct pci_dev *pdev, u64 mchbar)
 +{
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
-+	u32 reg;
++	void __iomem *window;
++	int lmc, pmc, rc;
++	u64 base;
 +
-+	/*
-+	 * SD/eMMC do not need this tuning save because it will re-init
-+	 * after system resume back.
-+	 * Here save the tuning delay value for SDIO device since it may
-+	 * keep power during system PM. And for usdhc, only SDR50 and
-+	 * SDR104 mode for SDIO device need to do tuning, and need to
-+	 * save/restore.
-+	 */
-+	if (host->timing == MMC_TIMING_UHS_SDR50 ||
-+	    host->timing == MMC_TIMING_UHS_SDR104) {
-+		reg = readl(host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
-+		reg = FIELD_GET(ESDHC_TUNE_CTRL_STATUS_TAP_SEL_PRE_MASK, reg);
-+		imx_data->boarddata.saved_tuning_delay_cell = reg;
++	for (lmc = 0, pmc = 0; pmc < NUM_IMC; pmc++) {
++		base   = mchbar + pmc * MCHBAR_SIZE;
++		window = ioremap(base, MCHBAR_SIZE);
++		if (!window) {
++			igen6_printk(KERN_ERR, "Failed to ioremap 0x%llx for mc%d\n", base, pmc);
++			rc = -ENOMEM;
++			goto out_unregister_mcis;
++		}
++
++		if (igen6_imc_absent(window)) {
++			iounmap(window);
++			edac_dbg(2, "Skip absent mc%d\n", pmc);
++			continue;
++		}
++
++		rc = igen6_register_mci(lmc, window, pdev);
++		if (rc)
++			goto out_iounmap;
++
++		/* Done, if all present MCs are detected and registered. */
++		if (++lmc >= res_cfg->num_imc)
++			break;
 +	}
++
++	if (!lmc) {
++		igen6_printk(KERN_ERR, "No mc found.\n");
++		return -ENODEV;
++	}
++
++	if (lmc < res_cfg->num_imc)
++		igen6_printk(KERN_WARNING, "Expected %d mcs, but only %d detected.",
++			     res_cfg->num_imc, lmc);
++
++	return 0;
++
++out_iounmap:
++	iounmap(window);
++
++out_unregister_mcis:
++	igen6_unregister_mcis();
++
++	return rc;
 +}
 +
-+static void sdhc_esdhc_tuning_restore(struct sdhci_host *host)
-+{
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
-+	u32 reg;
-+
-+	if (host->timing == MMC_TIMING_UHS_SDR50 ||
-+	    host->timing == MMC_TIMING_UHS_SDR104) {
-+		/*
-+		 * restore the tuning delay value actually is a
-+		 * manual tuning method, so clear the standard
-+		 * tuning enable bit here. Will set back this
-+		 * ESDHC_STD_TUNING_EN in esdhc_reset_tuning()
-+		 * when trigger re-tuning.
-+		 */
-+		reg = readl(host->ioaddr + ESDHC_TUNING_CTRL);
-+		reg &= ~ESDHC_STD_TUNING_EN;
-+		writel(reg, host->ioaddr + ESDHC_TUNING_CTRL);
-+
-+		reg = readl(host->ioaddr + ESDHC_MIX_CTRL);
-+		reg |= ESDHC_MIX_CTRL_SMPCLK_SEL | ESDHC_MIX_CTRL_FBCLK_SEL;
-+		writel(reg, host->ioaddr + ESDHC_MIX_CTRL);
-+
-+		writel(FIELD_PREP(ESDHC_TUNE_CTRL_STATUS_DLY_CELL_SET_PRE_MASK,
-+				  imx_data->boarddata.saved_tuning_delay_cell),
-+		       host->ioaddr + ESDHC_TUNE_CTRL_STATUS);
-+	}
-+}
-+
- static void esdhc_cqe_enable(struct mmc_host *mmc)
+ static int igen6_mem_slice_setup(u64 mchbar)
  {
- 	struct sdhci_host *host = mmc_priv(mmc);
-@@ -1900,6 +1965,15 @@ static int sdhci_esdhc_suspend(struct device *dev)
- 	if (host->tuning_mode != SDHCI_TUNING_MODE_3)
- 		mmc_retune_needed(host->mmc);
- 
-+	/*
-+	 * For the device need to keep power during system PM, need
-+	 * to save the tuning delay value just in case the usdhc
-+	 * lost power during system PM.
-+	 */
-+	if (mmc_card_keep_power(host->mmc) && mmc_card_wake_sdio_irq(host->mmc) &&
-+	    esdhc_is_usdhc(imx_data))
-+		sdhc_esdhc_tuning_save(host);
-+
- 	ret = sdhci_suspend_host(host);
- 	if (ret)
- 		return ret;
-@@ -1916,6 +1990,8 @@ static int sdhci_esdhc_suspend(struct device *dev)
- static int sdhci_esdhc_resume(struct device *dev)
+ 	struct igen6_imc *imc = &igen6_pvt->imc[0];
+@@ -1405,7 +1453,7 @@ static void opstate_set(const struct res_config *cfg, const struct pci_device_id
+ static int igen6_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
  {
- 	struct sdhci_host *host = dev_get_drvdata(dev);
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
- 	int ret;
+ 	u64 mchbar;
+-	int i, rc;
++	int rc;
  
- 	ret = pinctrl_pm_select_default_state(dev);
-@@ -1929,6 +2005,14 @@ static int sdhci_esdhc_resume(struct device *dev)
- 	if (ret)
- 		return ret;
+ 	edac_dbg(2, "\n");
  
-+	/*
-+	 * restore the saved tuning delay value for the device which keep
-+	 * power during system PM.
-+	 */
-+	if (mmc_card_keep_power(host->mmc) && mmc_card_wake_sdio_irq(host->mmc) &&
-+	    esdhc_is_usdhc(imx_data))
-+		sdhc_esdhc_tuning_restore(host);
-+
- 	if (host->mmc->caps2 & MMC_CAP2_CQE)
- 		ret = cqhci_resume(host->mmc);
+@@ -1421,11 +1469,9 @@ static int igen6_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
  
+ 	opstate_set(res_cfg, ent);
+ 
+-	for (i = 0; i < res_cfg->num_imc; i++) {
+-		rc = igen6_register_mci(i, mchbar, pdev);
+-		if (rc)
+-			goto fail2;
+-	}
++	rc = igen6_register_mcis(pdev, mchbar);
++	if (rc)
++		goto fail;
+ 
+ 	if (res_cfg->num_imc > 1) {
+ 		rc = igen6_mem_slice_setup(mchbar);
 -- 
 2.39.5
 
