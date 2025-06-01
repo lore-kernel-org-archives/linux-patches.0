@@ -1,50 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABACF25EF8F;
-	Sun,  1 Jun 2025 23:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA6A259CA3;
+	Sun,  1 Jun 2025 23:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820549; cv=none; b=CSZ9+4pFi5hE7VInxMyRnsDGXQDWxeHV6JnyJ1gqkrnY988IaKCxplAzoBrbT+mSpk75SHr3Tg//ZkeXAio4VK3XXWBaM3rcsiV0mUstbvS4qC0DARtvdIWar+W7XepS+ZnNRXK68d3UXRt5HYcvUoZVqDXuuFquoces0+3iqF0=
+	t=1748820551; cv=none; b=CEaua4A+FDNxgcwbLYq+yLyv6kNlFNLalxJSa5J44E5v03LTC503ousaKx0YK0CRC3lE08VDGrMpw/fC0/zeJoxpS/eiTpV60tuFS2zzlS/Vqi7IScbYfystgCY8LbsWTViLJ8xhEvgSfs/cRcTA3QOCgwpryqIT+CNWkU63dVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820549; c=relaxed/simple;
-	bh=UoMqPF0JODIkz2Nbh672KEMJcLMwggCN1tSMDfpD35E=;
+	s=arc-20240116; t=1748820551; c=relaxed/simple;
+	bh=6dNR0iwUkDUe+Z20gH8lTMPYmMWgLOdwIuunJo8fX5A=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=c/e8d4Z6zlmN7673J1YZ4LA1yQI8JqHERJpVaL0i2Rgq6D97gjArPYDLjSKmyTmz+JuWgaDLLionv3Lxu/l30Ay4LDk9HxrkBtL+HIW73zlTaAaixkYaEkoFgkJxt1h//IpImWHWcpv+0qh4rNazSVJpFk9VHIaqobIYOGSALyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nFL67hmZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jUZTsvfar+BamB5X1yZ8vbQX8DUIDnST6nYWi2GsCmj7vYYPNQr2kkw/gMp+TkUVXCGfu4OiYQeuF519BTRWlnOD+oXQCbFq5e9Csw0Vty2gTi4RhvmcNhqAIlNrZxLJ30NFqFrL4eJKLZN6nwqPRkw8dTwR+dnKmwiwojIiohg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SfyuLjqJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nFL67hmZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3152C4CEE7;
-	Sun,  1 Jun 2025 23:29:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SfyuLjqJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F01ADC4CEEE;
+	Sun,  1 Jun 2025 23:29:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820549;
-	bh=UoMqPF0JODIkz2Nbh672KEMJcLMwggCN1tSMDfpD35E=;
+	s=k20201202; t=1748820551;
+	bh=6dNR0iwUkDUe+Z20gH8lTMPYmMWgLOdwIuunJo8fX5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nFL67hmZ7S5dAJv9kTO/Yz669TLfH0zghMwLElZaLZDeFttcl0Q5plDU5pbnB6r7u
-	 vkxV92GwGMII2GCokI4AGgpm9CuG2qxX54jFJGIVs/Gq9/dA8DupmWFyDiZgSmacbR
-	 5amqXv1sDvMa9J0/PGIDDBcl8XVB//QIZtGAWf0Hg9NxHBpiBn9WrOPE5Gj16+0X9B
-	 x+SLHsgBaAGUDRaCzXxnw1elDcQCQHvqdLmbpEAbPb/7LNDbw+Qt5e0naGAEqmj7+L
-	 xzP6HYUUaDKxX1ZaXto/I76UBS0YnPqhkVR8gG6sapRTbCJeRIQEG9QR2vxmuWFm0o
-	 eJqSKCMKHvHFA==
+	b=SfyuLjqJ26l1LC7yC+XRhtYwBDKBvK+KYvla2IXkKIz9odywgbnb5El1z+ojK0uDj
+	 DtN2Z5SIy1F8i0OXpE7Vp09eyfTCKViSQ29nV/jACsLFTQQwqIBanMG44NpcUMcEpj
+	 yzC4EIbhcQtCQf7iL4r2OJY93ZqSanVTaQQ6ELiC8fA1qf7L4jFdvkfn5KuHQBofGY
+	 /0WOmHxR9NNccuSsvaxwXNR8odVLWH8bPmTR/Q8MjslbyNjPrx6frBajBYRxwfJnxd
+	 lFHDa/mwfU+y0Brlh7zYKNEXuIWRcajhJKnbD02XpfAOwd6XLUIUNtdGIICB9ivOG6
+	 PjIR18igawIkQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: I Hsin Cheng <richard120310@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Paul E . McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	yung-chuan.liao@linux.intel.com,
-	pierre-louis.bossart@linux.dev,
-	Vijendar.Mukunda@amd.com,
-	gregkh@linuxfoundation.org,
-	peterz@infradead.org,
-	linux-sound@vger.kernel.org,
+	jstultz@google.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 096/110] ASoC: intel/sdw_utils: Assign initial value in asoc_sdw_rt_amp_spk_rtd_init()
-Date: Sun,  1 Jun 2025 19:24:18 -0400
-Message-Id: <20250601232435.3507697-96-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 097/110] clocksource: Fix the CPUs' choice in the watchdog per CPU verification
+Date: Sun,  1 Jun 2025 19:24:19 -0400
+Message-Id: <20250601232435.3507697-97-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601232435.3507697-1-sashal@kernel.org>
 References: <20250601232435.3507697-1-sashal@kernel.org>
@@ -57,90 +51,95 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: I Hsin Cheng <richard120310@gmail.com>
+From: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
 
-[ Upstream commit 5fb3878216aece471af030b33a9fbef3babd8617 ]
+[ Upstream commit 08d7becc1a6b8c936e25d827becabfe3bff72a36 ]
 
-Initialize "ret" with "-EINVAL" to handle cases where "strstr()" for
-"codec_dai->component->name_prefix" doesn't find "-1" nor "-2". In that
-case "name_prefix" is invalid because for current implementation it's
-expected to have either "-1" or "-2" in it. (Maybe "-3", "-4" and so on
-in the future.)
+Right now, if the clocksource watchdog detects a clocksource skew, it might
+perform a per CPU check, for example in the TSC case on x86.  In other
+words: supposing TSC is detected as unstable by the clocksource watchdog
+running at CPU1, as part of marking TSC unstable the kernel will also run a
+check of TSC readings on some CPUs to be sure it is synced between them
+all.
 
-Link: https://scan5.scan.coverity.com/#/project-view/36179/10063?selectedIssue=1627120
-Signed-off-by: I Hsin Cheng <richard120310@gmail.com>
-Link: https://patch.msgid.link/20250505185423.680608-1-richard120310@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+But that check happens only on some CPUs, not all of them; this choice is
+based on the parameter "verify_n_cpus" and in some random cpumask
+calculation. So, the watchdog runs such per CPU checks on up to
+"verify_n_cpus" random CPUs among all online CPUs, with the risk of
+repeating CPUs (that aren't double checked) in the cpumask random
+calculation.
+
+But if "verify_n_cpus" > num_online_cpus(), it should skip the random
+calculation and just go ahead and check the clocksource sync between
+all online CPUs, without the risk of skipping some CPUs due to
+duplicity in the random cpumask calculation.
+
+Tests in a 4 CPU laptop with TSC skew detected led to some cases of the per
+CPU verification skipping some CPU even with verify_n_cpus=8, due to the
+duplicity on random cpumask generation. Skipping the randomization when the
+number of online CPUs is smaller than verify_n_cpus, solves that.
+
+Suggested-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/all/20250323173857.372390-1-gpiccoli@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my comprehensive analysis of this commit, I can now provide my
-backport recommendation: **YES** This commit should be backported to
-stable kernel trees. Here's my extensive analysis: ## Bug Description
-and Analysis The commit fixes a critical bug in the
-`asoc_sdw_rt_amp_spk_rtd_init()` function in
-`sound/soc/sdw_utils/soc_sdw_rt_amp.c`. The issue is that the `ret`
-variable is declared but never initialized, and in certain execution
-paths, it may be returned uninitialized. ### Specific Problem Details 1.
-**Uninitialized Variable Issue**: The `ret` variable is declared on line
-193 but never given an initial value. 2. **Problematic Code Path**: In
-the `for_each_rtd_codec_dais()` loop (lines 204-209), `ret` is only
-assigned a value if `strstr()` finds either "-1" or "-2" in the
-`codec_dai->component->name_prefix`. However, if neither condition is
-met, `ret` remains uninitialized. 3. **Return of Garbage Value**: When
-the function reaches `return ret;` on line 211, if neither condition in
-the loop was satisfied, the function returns an uninitialized value,
-which could be any random memory content. ### Why This Is a Serious Bug
-1. **Unpredictable Behavior**: The function may return success (0) or
-failure (non-zero) randomly depending on stack contents, leading to
-inconsistent system behavior. 2. **Audio Subsystem Impact**: The
-function is used as an `rtd_init` callback for multiple Realtek audio
-amplifier codecs (rt1308, rt1316, rt1318, rt1320) as evidenced by the
-codec info list in `soc_sdw_utils.c`. 3. **Error Propagation**: The
-return value is checked in `asoc_sdw_rtd_init()` and propagated upward -
-a garbage positive value would cause audio initialization to fail
-unexpectedly. ### Evidence from Code Analysis The function is called via
-the `rtd_init` callback mechanism: ```c if
-(codec_info->dais[dai_index].rtd_init) { ret =
-codec_info->dais[dai_index].rtd_init(rtd, dai); if (ret) return ret; //
-Failure propagated upward } ``` The fix correctly initializes `ret =
--EINVAL` to handle the case where the `name_prefix` doesn't contain the
-expected "-1" or "-2" suffixes, which indicates an invalid configuration
-that should properly return an error. ### Characteristics Supporting
-Backport 1. **Clear Bug Fix**: This is a straightforward bug fix with no
-new features or architectural changes. 2. **Minimal Risk**: The change
-is one line adding initialization - extremely low risk of introducing
-regressions. 3. **Wide Hardware Impact**: Affects multiple Realtek audio
-amplifier codecs used in Intel SoundWire configurations. 4. **Stable
-Tree Compatible**: Bug was introduced in v6.10 (commit 84e0a19adb73d),
-making it applicable to stable kernels from v6.10 onward. 5. **Static
-Analysis Found**: The bug was found by Coverity static analysis,
-indicating it's a real issue that could manifest in practice. 6. **User
-Impact**: Audio hardware initialization failures can significantly
-impact user experience, especially on laptops and embedded systems using
-these codecs. This commit perfectly fits the stable kernel criteria: it
-fixes an important bug, has minimal risk, is contained to a specific
-subsystem, and addresses undefined behavior that could cause random
-failures in audio hardware initialization.
+**YES** This commit should be backported to stable kernel trees. Here's
+my detailed analysis: **Bug Fix Analysis:** The commit fixes a logical
+flaw in the clocksource watchdog's per-CPU verification mechanism. The
+issue occurs in the `clocksource_verify_choose_cpus()` function at
+`/kernel/time/clocksource.c:313`. **The Problem:** The original
+condition `if (n < 0)` only checked for negative values of
+`verify_n_cpus`, but when `verify_n_cpus` (default 8) is greater than
+the number of online CPUs, the code would still proceed with random CPU
+selection. This could lead to: 1. **CPU duplication**: Random selection
+could pick the same CPU multiple times 2. **Incomplete coverage**: Some
+CPUs might never be tested due to duplicates 3. **Inefficient
+verification**: Testing fewer unique CPUs than intended **The Fix:** The
+change from: ```c if (n < 0) { ``` to: ```c if (n < 0 || n >=
+num_online_cpus()) { ``` Now correctly handles the case where
+`verify_n_cpus >= num_online_cpus()` by bypassing random selection and
+testing ALL online CPUs instead. **Backport Suitability Criteria:** 1.
+**Important Bug Fix**: ✅ Fixes incorrect CPU verification that could
+miss clocksource synchronization issues 2. **Small and Contained**: ✅
+Single line change with clear, minimal scope 3. **No Side Effects**: ✅
+Only affects the CPU selection logic, doesn't change fundamental
+behavior 4. **No Architectural Changes**: ✅ Simple conditional logic fix
+5. **Critical Subsystem**: ✅ Clocksource watchdog is crucial for system
+timing reliability 6. **Minimal Regression Risk**: ✅ The fix makes the
+verification more thorough, not less **Similar Commit Patterns:** This
+matches the pattern of similar commits marked "YES" like commit #2 and
+#3, which were small, focused fixes to clocksource verification logic
+that improved reliability without introducing risks. **Real-World
+Impact:** The commit message specifically mentions testing on a 4-CPU
+laptop where the bug caused CPU verification to skip CPUs even with
+`verify_n_cpus=8`, demonstrating this is a real issue affecting actual
+systems. This is exactly the type of targeted bug fix that stable trees
+are designed to include - it fixes incorrect behavior, has minimal risk,
+and improves system reliability.
 
- sound/soc/sdw_utils/soc_sdw_rt_amp.c | 2 +-
+ kernel/time/clocksource.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/sdw_utils/soc_sdw_rt_amp.c b/sound/soc/sdw_utils/soc_sdw_rt_amp.c
-index 0538c252ba69b..83c2368170cb5 100644
---- a/sound/soc/sdw_utils/soc_sdw_rt_amp.c
-+++ b/sound/soc/sdw_utils/soc_sdw_rt_amp.c
-@@ -190,7 +190,7 @@ int asoc_sdw_rt_amp_spk_rtd_init(struct snd_soc_pcm_runtime *rtd, struct snd_soc
- 	const struct snd_soc_dapm_route *rt_amp_map;
- 	char codec_name[CODEC_NAME_SIZE];
- 	struct snd_soc_dai *codec_dai;
--	int ret;
-+	int ret = -EINVAL;
- 	int i;
+diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
+index bb48498ebb5a8..6a8bc7da90626 100644
+--- a/kernel/time/clocksource.c
++++ b/kernel/time/clocksource.c
+@@ -310,7 +310,7 @@ static void clocksource_verify_choose_cpus(void)
+ {
+ 	int cpu, i, n = verify_n_cpus;
  
- 	rt_amp_map = get_codec_name_and_route(dai, codec_name);
+-	if (n < 0) {
++	if (n < 0 || n >= num_online_cpus()) {
+ 		/* Check all of the CPUs. */
+ 		cpumask_copy(&cpus_chosen, cpu_online_mask);
+ 		cpumask_clear_cpu(smp_processor_id(), &cpus_chosen);
 -- 
 2.39.5
 
