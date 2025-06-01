@@ -1,44 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5FD324358;
-	Sun,  1 Jun 2025 23:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73007324361;
+	Sun,  1 Jun 2025 23:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821324; cv=none; b=nnlb1F1qwS18uMYcJQWBgp/n8Eq/jqwIynyGnFpAQd+kcecN3miBnIV5HBkXUmZpm0itLkvN4dWdm99Wq7Npd78N7Hn8gE4X6EJmtwworkApVhILVp9NyNuF0fHgg4+jD8iQ3FS92Touo4hQDtUc2YI5cUAm/TN8xUwY30TYmbA=
+	t=1748821329; cv=none; b=SSvxcip4rDwoCP8MP2FMwX5KHOZwYjmVuL0+9QK45H69Vng2AuXIYm0PY6aloOdBFkuum4qFJ2R+ByKJDRmFQEbRt6ZgAiR+ceJhqYuy7LXz4K3IuCSkmEG8ilOiQMDVZPvFx5irAw4pVHgb6Uf+tzIcgut8rb7J4KzvXUwaoPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821324; c=relaxed/simple;
-	bh=BO1+3C+R+/M+WlBSSbc4hL+5/qbHIUg7GDCTmTQa0io=;
+	s=arc-20240116; t=1748821329; c=relaxed/simple;
+	bh=zUfq0zFpOPmCH2FwqFhbmCTHG6iP26/GpUSnxPwZZkY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Wsmwj9V1rHQAS+SpMwc2Vme1wklcbRoAMvO42jqOkHJjl0uXaRPkE/E+inCbj3j3PbCZ7088Mmc+yspGC628w00ed1kFHMI0tvfnI++VmHo+mVG84aZ0vvnpahHoiMfeg3S2NPcm6TjF/o1TyAWefo4qMcQyQMD0IIuEgYYt8T4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HNGw6FwN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fk6lnk00k4OmOJybE9aiUW1E1piugwRt9RwqNCfSebTsOxQJe2enzi6rokntcm6K7G8iskgxOtJrQkfRMNbxbc/LAnPJwvdgAY5bIJcb3k2/HA8dlk8xfuYkgNIXTVohUXFlZg/+iVsuVb9TCOMpTGFr3tIYd5YfHQyo3J2eJzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uTCZ/Yxl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HNGw6FwN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04120C4CEF1;
-	Sun,  1 Jun 2025 23:42:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uTCZ/Yxl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6A9C4CEEE;
+	Sun,  1 Jun 2025 23:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821324;
-	bh=BO1+3C+R+/M+WlBSSbc4hL+5/qbHIUg7GDCTmTQa0io=;
+	s=k20201202; t=1748821329;
+	bh=zUfq0zFpOPmCH2FwqFhbmCTHG6iP26/GpUSnxPwZZkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HNGw6FwND2rO4DfPVwqaWd7mML+IARM/AgvGqq5XNahXZhsBWzoLeWH6/D3uGJpCJ
-	 DPMAmZkqykgsa9lUDeFFeJWaIlne2K9seINMuYZN/rw32RW3rjaFSsRuYUxZKaXOrL
-	 zTvlkbmRdRhO/odd8jDEIDScpZPA+9MRoK1hIuTOaPV+ZvQgy97ifJzathYJ00+zb5
-	 +5ZZ8EAUU/2AL6TvOLyHv1zgPX6dZb7DAeddtPFIEt7z6QF9nlG383IG9jIQWchN9P
-	 zmXXnh6bpHBD2kihfzksvrss7JeWp4GWNX+nqN2CQf2sX1xkl9/1b4RaxHrH5JruF/
-	 9G+DzcuwQ217Q==
+	b=uTCZ/Yxlpvp+v7qtPgq9puOp08PrF5Bo6WiH8wwvGmMxFfChXQS3pXaMVdXN1sNaH
+	 kNh/FoF18dR2iTll9eu/FssHWQjM8IV+UW195P/jEXAWcLV88Y9zxnKcRheQZPxHil
+	 DUueniU/BVTV9lisHvpwJzbUJudBsNCpZTXpoetUr10Lv8WqOfCKZfCYMZHD9UDJ4/
+	 KWlSuLl+6jiTKqLczAOFMoanxvrMstUE8pNSspldeW+Pt2NyQsS2O0NUiemLu7m8dh
+	 BuuB8OVCeWZdADdUdV962ToyZCtsewLZ8VaBaWKSEQzX4BSq3QV2AnqGGcX8uYhOSC
+	 kNhb05DITJgzQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peng Fan <peng.fan@nxp.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+Cc: Erick Shepherd <erick.shepherd@ni.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	brgl@bgdev.pl,
-	linux-gpio@vger.kernel.org,
+	avri.altman@wdc.com,
+	keita.aihara@sony.com,
+	dsimic@manjaro.org,
+	jonathan@raspberrypi.com,
+	wsa+renesas@sang-engineering.com,
+	victor.shih@genesyslogic.com.tw,
+	cw9316.lee@samsung.com,
+	linux-mmc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.1 49/58] gpio: xgene-sb: Make irq_chip immutable
-Date: Sun,  1 Jun 2025 19:40:02 -0400
-Message-Id: <20250601234012.3516352-49-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.1 50/58] mmc: Add quirk to disable DDR50 tuning
+Date: Sun,  1 Jun 2025 19:40:03 -0400
+Message-Id: <20250601234012.3516352-50-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601234012.3516352-1-sashal@kernel.org>
 References: <20250601234012.3516352-1-sashal@kernel.org>
@@ -51,118 +57,176 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.140
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Erick Shepherd <erick.shepherd@ni.com>
 
-[ Upstream commit 580b3264cb252cae00fa62d58443af09c25f7d61 ]
+[ Upstream commit 9510b38dc0ba358c93cbf5ee7c28820afb85937b ]
 
-Kernel warns about mutable irq_chips:
-"not an immutable chip, please consider fixing!"
+Adds the MMC_QUIRK_NO_UHS_DDR50_TUNING quirk and updates
+mmc_execute_tuning() to return 0 if that quirk is set. This fixes an
+issue on certain Swissbit SD cards that do not support DDR50 tuning
+where tuning requests caused I/O errors to be thrown.
 
-Constify xgene_gpio_sb_irq_chip, flag the irq_chip as IRQCHIP_IMMUTABLE,
-add the new helper functions, and call the appropriate gpiolib functions.
-
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20250509-gpio-v1-7-639377c98288@nxp.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Erick Shepherd <erick.shepherd@ni.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20250331221337.1414534-1-erick.shepherd@ni.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Based on my analysis of the commit and the kernel context, here is my
-determination: **YES** This commit should be backported to stable kernel
-trees. Here's my extensive analysis: ## Analysis of the Commit ### 1.
-**Purpose and Nature of the Change** The commit addresses a kernel
-warning about mutable irq_chips by converting the
-`xgene_gpio_sb_irq_chip` to be immutable. This is a **bug fix** that
-eliminates runtime warnings, not a new feature or architectural change.
-### 2. **Code Changes Analysis** The changes are minimal and follow an
-established pattern: **Key Changes:** - **Made struct const**: `static
-struct irq_chip` → `static const struct irq_chip` - **Added
-IRQCHIP_IMMUTABLE flag**: Prevents runtime modification of the irq_chip
-- **Added resource helpers**: `GPIOCHIP_IRQ_RESOURCE_HELPERS` macro -
-**Replaced direct parent calls with wrapper functions**: -
-`irq_chip_mask_parent` → `xgene_gpio_sb_irq_mask` (which calls
-`gpiochip_disable_irq` then `irq_chip_mask_parent`) -
-`irq_chip_unmask_parent` → `xgene_gpio_sb_irq_unmask` (which calls
-`gpiochip_enable_irq` then `irq_chip_unmask_parent`) ### 3. **Comparison
-with Similar Commits** This commit follows **exactly the same pattern**
-as the similar commits marked "YES" for backporting: - **gpio: vf610:
-make irq_chip immutable** (Status: YES) - **gpio: 104-idio-16: Make
-irq_chip immutable** (Status: YES) The changes are nearly identical in
-structure and purpose to these approved backports. ### 4. **Risk
-Assessment** **Very Low Risk:** - **Contained change**: Only affects the
-xgene-sb GPIO driver - **Follows established pattern**: The
-IRQCHIP_IMMUTABLE pattern has been widely adopted across GPIO drivers
-since kernel v5.19 - **No functional behavior change**: The GPIO
-operations work exactly the same way - **Well-tested pattern**: Multiple
-GPIO drivers have successfully adopted this pattern ### 5. **Backport
-Criteria Evaluation** ✅ **Fixes a bug**: Eliminates kernel warning about
-mutable irq_chips ✅ **Small and contained**: Only 20 lines changed in a
-single driver ✅ **No side effects**: Change is purely about chip
-mutability, not functionality ✅ **No architectural changes**: Uses
-existing infrastructure introduced in v5.19 ✅ **Follows stable rules**:
-Important bugfix with minimal regression risk ✅ **Critical subsystem
-consideration**: GPIO is used widely, but change is driver-specific ###
-6. **Historical Context** The IRQCHIP_IMMUTABLE pattern and supporting
-infrastructure were introduced in linux-kernel v5.19** (commit
-36b78aae4bfe). This commit uses the same established APIs
-(`gpiochip_enable_irq`, `gpiochip_disable_irq`,
-`GPIOCHIP_IRQ_RESOURCE_HELPERS`) that have been stable since then. ###
-7. **Warning Elimination** The commit specifically addresses the kernel
-warning "not an immutable chip, please consider fixing!" which can be
-disruptive in production environments. Eliminating such warnings
-improves system stability and reduces noise in kernel logs. ###
-Conclusion This is a straightforward bugfix that follows a well-
-established, low-risk pattern adopted by numerous GPIO drivers. It
-eliminates kernel warnings without changing functional behavior, making
-it an ideal candidate for stable tree backporting.
+**YES** This commit should be backported to stable kernel trees based on
+the following detailed analysis: ## Critical Hardware Compatibility Fix
+The commit addresses a specific and serious hardware compatibility issue
+where certain Swissbit SD cards (series S46-u, manufactured 01/2019)
+throw I/O errors during DDR50 tuning requests, particularly on Bay Trail
+host controllers. This represents a real-world deployed hardware issue
+that causes system instability. ## Code Analysis - Low Risk, High Impact
+**1. Minimal and Targeted Changes:** - Adds a single quirk bit
+(`MMC_QUIRK_NO_UHS_DDR50_TUNING`) in `include/linux/mmc/card.h` -
+Introduces a simple helper function `mmc_card_no_uhs_ddr50_tuning()` in
+`drivers/mmc/core/card.h` - Adds one specific quirk entry for the
+problematic Swissbit cards in `drivers/mmc/core/quirks.h` - Modifies the
+tuning logic in `drivers/mmc/core/sd.c` to respect the new quirk **2.
+Functional Impact Analysis:** The key change is in the
+`mmc_sd_use_tuning()` function where DDR50 tuning can now be disabled:
+```c case MMC_TIMING_UHS_DDR50: return
+!mmc_card_no_uhs_ddr50_tuning(card); ``` This change ensures that: -
+DDR50 mode still functions normally - Only the tuning optimization is
+disabled - Cards fall back to fixed sampling clock (still functional) -
+No loss of core functionality, only slight performance optimization loss
+**3. Risk Assessment:** - **Very Low Risk**: The quirk only disables
+tuning optimization, not DDR50 functionality itself - **Highly
+Targeted**: Affects only very specific cards (Swissbit 0016G,
+manufactured 2019/01) - **Maintains Compatibility**: Cards remain fully
+functional in DDR50 mode without tuning - **No Regression Potential**:
+Other cards are completely unaffected ## Alignment with Stable Backport
+Criteria **1. Important Bugfix**: Resolves I/O errors and system
+instability on deployed hardware **2. Minimal Risk**: Only disables
+optimization feature, maintains full functionality **3. Small and
+Contained**: Changes are isolated to the MMC quirk system **4. No
+Architectural Changes**: Uses existing quirk infrastructure **5. Clear
+User Impact**: Fixes real-world hardware compatibility issues ##
+Historical Pattern Consistency This commit follows the same pattern as
+other successful stable backports in the MMC subsystem (like Similar
+Commit #2 and #5 marked "YES"), which address specific hardware quirks
+with minimal, targeted fixes that resolve compatibility issues without
+introducing new functionality or architectural changes. The commit
+represents exactly the type of hardware compatibility fix that stable
+kernel trees are designed to accommodate - resolving real issues on
+deployed hardware with minimal risk and maximal benefit.
 
- drivers/gpio/gpio-xgene-sb.c | 26 +++++++++++++++++++++++---
- 1 file changed, 23 insertions(+), 3 deletions(-)
+ drivers/mmc/core/card.h   |  6 ++++++
+ drivers/mmc/core/quirks.h | 10 ++++++++++
+ drivers/mmc/core/sd.c     | 32 ++++++++++++++++++++++++--------
+ include/linux/mmc/card.h  |  1 +
+ 4 files changed, 41 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpio/gpio-xgene-sb.c b/drivers/gpio/gpio-xgene-sb.c
-index a809609ee9570..6b799c17902c9 100644
---- a/drivers/gpio/gpio-xgene-sb.c
-+++ b/drivers/gpio/gpio-xgene-sb.c
-@@ -102,12 +102,32 @@ static int xgene_gpio_sb_irq_set_type(struct irq_data *d, unsigned int type)
- 		return irq_chip_set_type_parent(d, IRQ_TYPE_LEVEL_HIGH);
+diff --git a/drivers/mmc/core/card.h b/drivers/mmc/core/card.h
+index 8476754b1b170..fe0b2fa3bb89d 100644
+--- a/drivers/mmc/core/card.h
++++ b/drivers/mmc/core/card.h
+@@ -86,6 +86,7 @@ struct mmc_fixup {
+ #define CID_MANFID_MICRON       0x13
+ #define CID_MANFID_SAMSUNG      0x15
+ #define CID_MANFID_APACER       0x27
++#define CID_MANFID_SWISSBIT     0x5D
+ #define CID_MANFID_KINGSTON     0x70
+ #define CID_MANFID_HYNIX	0x90
+ #define CID_MANFID_KINGSTON_SD	0x9F
+@@ -291,4 +292,9 @@ static inline int mmc_card_broken_sd_poweroff_notify(const struct mmc_card *c)
+ 	return c->quirks & MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY;
  }
  
--static struct irq_chip xgene_gpio_sb_irq_chip = {
-+static void xgene_gpio_sb_irq_mask(struct irq_data *d)
++static inline int mmc_card_no_uhs_ddr50_tuning(const struct mmc_card *c)
 +{
-+	struct xgene_gpio_sb *priv = irq_data_get_irq_chip_data(d);
-+
-+	irq_chip_mask_parent(d);
-+
-+	gpiochip_disable_irq(&priv->gc, d->hwirq);
++	return c->quirks & MMC_QUIRK_NO_UHS_DDR50_TUNING;
 +}
 +
-+static void xgene_gpio_sb_irq_unmask(struct irq_data *d)
-+{
-+	struct xgene_gpio_sb *priv = irq_data_get_irq_chip_data(d);
+ #endif
+diff --git a/drivers/mmc/core/quirks.h b/drivers/mmc/core/quirks.h
+index 12c90b567ce38..d05f220fdeee3 100644
+--- a/drivers/mmc/core/quirks.h
++++ b/drivers/mmc/core/quirks.h
+@@ -34,6 +34,16 @@ static const struct mmc_fixup __maybe_unused mmc_sd_fixups[] = {
+ 		   MMC_QUIRK_BROKEN_SD_CACHE | MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY,
+ 		   EXT_CSD_REV_ANY),
+ 
++	/*
++	 * Swissbit series S46-u cards throw I/O errors during tuning requests
++	 * after the initial tuning request expectedly times out. This has
++	 * only been observed on cards manufactured on 01/2019 that are using
++	 * Bay Trail host controllers.
++	 */
++	_FIXUP_EXT("0016G", CID_MANFID_SWISSBIT, 0x5342, 2019, 1,
++		   0, -1ull, SDIO_ANY_ID, SDIO_ANY_ID, add_quirk_sd,
++		   MMC_QUIRK_NO_UHS_DDR50_TUNING, EXT_CSD_REV_ANY),
 +
-+	gpiochip_enable_irq(&priv->gc, d->hwirq);
-+
-+	irq_chip_unmask_parent(d);
-+}
-+
-+static const struct irq_chip xgene_gpio_sb_irq_chip = {
- 	.name           = "sbgpio",
- 	.irq_eoi	= irq_chip_eoi_parent,
--	.irq_mask       = irq_chip_mask_parent,
--	.irq_unmask     = irq_chip_unmask_parent,
-+	.irq_mask       = xgene_gpio_sb_irq_mask,
-+	.irq_unmask     = xgene_gpio_sb_irq_unmask,
- 	.irq_set_type   = xgene_gpio_sb_irq_set_type,
-+	.flags = IRQCHIP_IMMUTABLE,
-+	GPIOCHIP_IRQ_RESOURCE_HELPERS,
+ 	END_FIXUP
  };
  
- static int xgene_gpio_sb_to_irq(struct gpio_chip *gc, u32 gpio)
+diff --git a/drivers/mmc/core/sd.c b/drivers/mmc/core/sd.c
+index 819af50ae175c..557c4ee1e2770 100644
+--- a/drivers/mmc/core/sd.c
++++ b/drivers/mmc/core/sd.c
+@@ -618,6 +618,29 @@ static int sd_set_current_limit(struct mmc_card *card, u8 *status)
+ 	return 0;
+ }
+ 
++/*
++ * Determine if the card should tune or not.
++ */
++static bool mmc_sd_use_tuning(struct mmc_card *card)
++{
++	/*
++	 * SPI mode doesn't define CMD19 and tuning is only valid for SDR50 and
++	 * SDR104 mode SD-cards. Note that tuning is mandatory for SDR104.
++	 */
++	if (mmc_host_is_spi(card->host))
++		return false;
++
++	switch (card->host->ios.timing) {
++	case MMC_TIMING_UHS_SDR50:
++	case MMC_TIMING_UHS_SDR104:
++		return true;
++	case MMC_TIMING_UHS_DDR50:
++		return !mmc_card_no_uhs_ddr50_tuning(card);
++	}
++
++	return false;
++}
++
+ /*
+  * UHS-I specific initialization procedure
+  */
+@@ -661,14 +684,7 @@ static int mmc_sd_init_uhs_card(struct mmc_card *card)
+ 	if (err)
+ 		goto out;
+ 
+-	/*
+-	 * SPI mode doesn't define CMD19 and tuning is only valid for SDR50 and
+-	 * SDR104 mode SD-cards. Note that tuning is mandatory for SDR104.
+-	 */
+-	if (!mmc_host_is_spi(card->host) &&
+-		(card->host->ios.timing == MMC_TIMING_UHS_SDR50 ||
+-		 card->host->ios.timing == MMC_TIMING_UHS_DDR50 ||
+-		 card->host->ios.timing == MMC_TIMING_UHS_SDR104)) {
++	if (mmc_sd_use_tuning(card)) {
+ 		err = mmc_execute_tuning(card);
+ 
+ 		/*
+diff --git a/include/linux/mmc/card.h b/include/linux/mmc/card.h
+index afa575e362a47..7c6da19fff9f0 100644
+--- a/include/linux/mmc/card.h
++++ b/include/linux/mmc/card.h
+@@ -297,6 +297,7 @@ struct mmc_card {
+ #define MMC_QUIRK_BROKEN_SD_CACHE	(1<<15)	/* Disable broken SD cache support */
+ #define MMC_QUIRK_BROKEN_CACHE_FLUSH	(1<<16)	/* Don't flush cache until the write has occurred */
+ #define MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY	(1<<17) /* Disable broken SD poweroff notify support */
++#define MMC_QUIRK_NO_UHS_DDR50_TUNING	(1<<18) /* Disable DDR50 tuning */
+ 
+ 	bool			written_flag;	/* Indicates eMMC has been written since power on */
+ 	bool			reenable_cmdq;	/* Re-enable Command Queue */
 -- 
 2.39.5
 
