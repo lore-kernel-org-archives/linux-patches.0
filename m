@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159BF299B2D;
-	Sun,  1 Jun 2025 23:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4565270557;
+	Sun,  1 Jun 2025 23:39:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821170; cv=none; b=n9UD3ea7qKTJmhcsaebBdYFLf/WpRP7HlEULcz+6icyHrlbEMO9FijMHxNmUXGKoo0e48O3VlQGiwJk6u4f8rGMu3NuZOWNKGvlWgGUYQugHj0FsOAf0BxekUvzCEunanLM2yYS6i2C9WHY8fE5ChaV5WDFGEl87HH1HwXAcypA=
+	t=1748821172; cv=none; b=CsiVfyGj6t6O3kPZVEuYsMvTcuwg68XAOBGqWLI2LEYWqNDPukHBHEHbrxx6V7Q8ucMyxpvuEvYfH3fQ6LhT3m5ho7fs1C04bbnyZWV5mv8k8m021f/kKyQe7IaYqXJAy39rCl6koMCk4IBmv2RrtI7Dp6P0SAoXfmk3D5FmmIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821170; c=relaxed/simple;
-	bh=yY2QiiKQ0YNTBP+D1ov4NyY2s6Q7aaOk1qqCp6J7Whk=;
+	s=arc-20240116; t=1748821172; c=relaxed/simple;
+	bh=zTPcpGbcq5SyvY1+6KvqL+siGPDSBDEUD08VzkymeTs=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=EoXKkaLs4vrVzllo9IhptzJnujRj/XeWaO/P09yyN2cBbHFQFG1+Gs39Im9aHtAwcvI4n2p1PeyYsGWR1RwWM7tqu/cog4ID5q0R1FZr8AgchbzSxC+yRHnz4gsI2mDXLzFINAtcT6yVZmkOUvM2E0uKcIV2BposOw5gT5F8c9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=klkgVwaL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GiX4kxFjuDV5x8YrT9T+hzx7FZJfv8vbQtMay957LxPr/4dOv0gb5QWhOveYKzoyehbeZ/Zgz8Uc/HpTTQysQQJmBejF849Ay5h8UD2vzvGPRxTvSZqRjgKErONd+WJNJL6GoPPRKNb9OMMmr9Z02ui8iqwZdl50FixxbW37Y8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AiV6oEC3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="klkgVwaL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5E05C4CEF2;
-	Sun,  1 Jun 2025 23:39:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AiV6oEC3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D5BC4CEEE;
+	Sun,  1 Jun 2025 23:39:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821170;
-	bh=yY2QiiKQ0YNTBP+D1ov4NyY2s6Q7aaOk1qqCp6J7Whk=;
+	s=k20201202; t=1748821171;
+	bh=zTPcpGbcq5SyvY1+6KvqL+siGPDSBDEUD08VzkymeTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=klkgVwaLwEi8BCncuCtR19DvIs7qj9VKgmEmhIDw0fn3OLbylN44PFX2ppbzxzuLD
-	 RrfjrIPWEGPqDIsnqPj6hD+hEQKsilejZZ7IKbMIB+7EEgJoNzLC2Wg/i/MVjVzPns
-	 Ow63ht3D33+Z0UkDGQFGghn0+I9QPXQtN8g/0acv4iJoLIaUCMt8MFv8IOCmb8y2Qs
-	 AGApOFXUak1ShBUVChQFqi49cAXGpk0EtMnxd5tJH0ksMfbrWcfmA57KgUFPFO1p+q
-	 rUgmNlT1VwfRTdT9R6AvVVBS8bOrPYV9OMeRqXs+9TKBngfGWLMeL4ewZu3KbDD5tp
-	 hUYo9vTyyYOKw==
+	b=AiV6oEC3Pz0tvn/oHFGZnWU4y+CgHpKh1o26Yol1re4w65OcHE5+LWhrzS1HBypDS
+	 kR2nHrYnQ/v+3/O4hpAglWPZkAnjfxlzKYPjnMU104wHf5RMKrZmN+e9RTZ5JR0Uvk
+	 rZ5ykybVBpl23jTA1KY/W6/ZvsxOxcNizjdFiGKvcZ9i1nSRA+5sZzMBFOEDT6ywNk
+	 GhN05gLxyMyfVJRknzex4YcRVcMevzJ1R1nlTBYW63rUS6tWThY1EVzz1+V8qSf56N
+	 KDEMSsAqlFC6T17unPLeZWu4qvrqLjXDb1jM7TYNm264VEgB7LFEM3kkQUXLIu7RPK
+	 1Sc29j2AMSNMg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nas Chung <nas.chung@chipsnmedia.com>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+Cc: Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	quic_vgarodia@quicinc.com,
-	quic_dikshita@quicinc.com,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
+	rafael@kernel.org,
+	linux-acpi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 44/66] media: qcom: venus: Fix uninitialized variable warning
-Date: Sun,  1 Jun 2025 19:37:21 -0400
-Message-Id: <20250601233744.3514795-44-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 45/66] ACPI: bus: Bail out if acpi_kobj registration fails
+Date: Sun,  1 Jun 2025 19:37:22 -0400
+Message-Id: <20250601233744.3514795-45-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233744.3514795-1-sashal@kernel.org>
 References: <20250601233744.3514795-1-sashal@kernel.org>
@@ -56,75 +52,69 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.92
 Content-Transfer-Encoding: 8bit
 
-From: Nas Chung <nas.chung@chipsnmedia.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 8e172e38a623ce284baf2514f963b29e4d47c62e ]
+[ Upstream commit 94a370fc8def6038dbc02199db9584b0b3690f1a ]
 
-Avoid uninitialized variable when both V4L2_TYPE_IS_OUTPUT() and
-V4L2_TYPE_IS_CAPTURE() return false.
+The ACPI sysfs code will fail to initialize if acpi_kobj is NULL,
+together with some ACPI drivers.
 
-Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Follow the other firmware subsystems and bail out if the kobject
+cannot be registered.
+
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20250518185111.3560-2-W_Armin@gmx.de
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees.
-**Analysis:** This commit fixes a legitimate uninitialized variable bug
-in the `find_format_by_index()` function in
-`drivers/media/platform/qcom/venus/vdec.c`. Here's why it meets the
-criteria for stable backporting: 1. **Bug Fix Nature**: The commit
-addresses a clear code defect where the `valid` variable could be used
-uninitialized. In the original code at line 157, `bool valid;` is
-declared but not initialized. The logic then uses an `if-else if`
-construct: - `if (V4L2_TYPE_IS_OUTPUT(type))` - sets `valid` - `else if
-(V4L2_TYPE_IS_CAPTURE(type))` - sets `valid` - But if neither condition
-is true, `valid` remains uninitialized 2. **Potential Impact**: Based on
-the V4L2 macro definitions, `V4L2_TYPE_IS_CAPTURE(type)` is defined as
-`(!V4L2_TYPE_IS_OUTPUT(type))`, which means these should be mutually
-exclusive and cover all cases. However, the bug exists because the
-original code used `else if` instead of just `else`, creating a
-theoretical path where neither executes. 3. **Minimal Risk Fix**: The
-fix is extremely simple and safe - changing `bool valid;` to `bool valid
-= false;` and replacing `else if` with `else`. This ensures the variable
-is always initialized and the logic covers all possible cases. 4.
-**Consistency with Similar Commits**: This fix is very similar to
-"Similar Commit #1" which was marked as "Backport Status: YES". That
-commit also fixed an uninitialized variable in the venus driver with a
-simple initialization. The pattern and impact are nearly identical. 5.
-**No Side Effects**: The change is purely defensive programming - it
-doesn't alter the intended behavior but prevents undefined behavior in
-edge cases. 6. **Compiler/Static Analysis Issue**: This type of
-uninitialized variable warning is commonly flagged by static analysis
-tools and newer compiler versions, indicating it's a legitimate code
-quality issue that should be fixed. The commit follows stable tree rules
-perfectly: it's a small, contained bugfix with minimal regression risk
-that addresses a potential runtime issue in the venus media driver.
+**YES** This commit should be backported to stable kernel trees. Here's
+the detailed analysis: **Bug Fix Nature**: The commit fixes a real bug
+where ACPI initialization continues silently even when `acpi_kobj`
+registration fails. This creates an inconsistent system state where ACPI
+sysfs functionality and some drivers that depend on `acpi_kobj` will
+fail later without clear indication of the root cause. **Code Change
+Analysis**: - Changes `pr_debug()` to `pr_err()` for better visibility
+of the failure - Returns `-ENOMEM` immediately when
+`kobject_create_and_add()` fails instead of continuing - The existing
+`kobject_put(acpi_kobj)` cleanup in the error path after
+`acpi_bus_init()` is already present **Comparison with Similar
+Commits**: This follows the exact pattern of Similar Commit #1 (Status:
+YES) which added `kobject_put()` cleanup. Both commits address resource
+management issues in the same function (`acpi_init`) and represent
+important bugfixes with minimal risk. **Risk Assessment**: - Very low
+risk - only affects the error path when kobject creation fails - Early
+failure is better than silent failure leading to confusing symptoms
+later - Change is contained to a single function with clear error
+handling - Consistent with how other firmware subsystems handle kobject
+registration failures **Stable Tree Criteria Met**: - Fixes important
+bug affecting system reliability - Minimal and contained change - No
+architectural modifications - Clear improvement in error handling and
+debugging The commit addresses a legitimate reliability issue where ACPI
+would continue initialization with a NULL `acpi_kobj`, leading to
+failures in dependent subsystems that would be harder to diagnose than
+an early, clear failure.
 
- drivers/media/platform/qcom/venus/vdec.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/bus.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 884ee6e9d4bd1..0cf95bfff86ac 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -154,14 +154,14 @@ find_format_by_index(struct venus_inst *inst, unsigned int index, u32 type)
- 		return NULL;
+diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
+index a4aa53b7e2bb3..645464f02363f 100644
+--- a/drivers/acpi/bus.c
++++ b/drivers/acpi/bus.c
+@@ -1396,8 +1396,10 @@ static int __init acpi_init(void)
+ 	}
  
- 	for (i = 0; i < size; i++) {
--		bool valid;
-+		bool valid = false;
+ 	acpi_kobj = kobject_create_and_add("acpi", firmware_kobj);
+-	if (!acpi_kobj)
+-		pr_debug("%s: kset create error\n", __func__);
++	if (!acpi_kobj) {
++		pr_err("Failed to register kobject\n");
++		return -ENOMEM;
++	}
  
- 		if (fmt[i].type != type)
- 			continue;
- 
- 		if (V4L2_TYPE_IS_OUTPUT(type)) {
- 			valid = venus_helper_check_codec(inst, fmt[i].pixfmt);
--		} else if (V4L2_TYPE_IS_CAPTURE(type)) {
-+		} else {
- 			valid = venus_helper_check_format(inst, fmt[i].pixfmt);
- 
- 			if (fmt[i].pixfmt == V4L2_PIX_FMT_QC10C &&
+ 	init_prmt();
+ 	acpi_init_pcc();
 -- 
 2.39.5
 
