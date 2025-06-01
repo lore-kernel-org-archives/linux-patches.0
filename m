@@ -1,54 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DABA28D8EB;
-	Sun,  1 Jun 2025 23:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8718325A32E;
+	Sun,  1 Jun 2025 23:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820667; cv=none; b=YQFAnhGlWgTv4q4oawbDzrR49sNa4L6BV8i2GEYaJzArJ7M/8gstkSXoEM3I3sUoq/ZCjBxyesgsxBgooUp545Bn3RvNcYdzvO7WQUPYa8sGks0VbQnkDXdrdpn2qO9R3AaNp/wMsxnqjWNfqs5gmZ68vI3d0IlLW4FGO6ZPVq4=
+	t=1748820668; cv=none; b=O0bB1FCHdKiy1ETop+tPIC9OlxHK2bViUPwETAeCQ3PkKO3fYlxab5kiUv3y4fL9Cl4iK647uoNgb6HN7gihZREDkVwZWZ01S7CWdpQtBXb5vXe7h5je0DY/bssYPzT/H/RwRsXKqYStbSkcFG1lCp6yBg2Pql7Sza59JEIh25Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820667; c=relaxed/simple;
-	bh=bVFiZ3IiD4YCGjXygXKGdngXYEm6Wz/oGHOfnFMhduE=;
+	s=arc-20240116; t=1748820668; c=relaxed/simple;
+	bh=Q8l/fe5PM4ijY7tnjNXpJKsvoz4JNmJbVTLSE0B/nv8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=h6fLA9qDJZagxq54nutdSQSrMueLO6LbolH2YyhfC/d+F3EIsBld8yF+97BHMxOBWAnZl+z6iIBlyuJMd8w5NLboCTtkD9DhCH1zMxu0fGFgOhEjtyJxHKEiSeniXflic6vS6D4kE5jdpPlf4SOHQ6iKWtVbT67zA1Y+HqsYwgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ITCdXMcj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=blNIg1nQkrINxXTB2kd7O/aTU95MjdjyUwRtCzk1p0J6kYPcEmhZiddemQ/eobm/W9dnikiEmGrxEHIGPgWXLZ9QVpqqT5SClFi8cqcJbzr5T2eIuKozD1gTNAV2qJRjc9fAvZYz4TnPfR3ZTl0xnMjya1fF4zuHfgHZAkx/Gzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=luHiMnVs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ITCdXMcj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13CE9C4CEE7;
-	Sun,  1 Jun 2025 23:31:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="luHiMnVs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66CEEC4CEF1;
+	Sun,  1 Jun 2025 23:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820667;
-	bh=bVFiZ3IiD4YCGjXygXKGdngXYEm6Wz/oGHOfnFMhduE=;
+	s=k20201202; t=1748820668;
+	bh=Q8l/fe5PM4ijY7tnjNXpJKsvoz4JNmJbVTLSE0B/nv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ITCdXMcjmL1dtnnOSTsPxKCKvQo7dpvwYCkD7Boru5J8AN/R3Aoh7bzLhGx1FbUex
-	 qNcAuEiv6HwxPTlsiHKSdkFuNm0firusrLuxqTg5yolWnFzbGJ0n04Uwn6cHGGXxj1
-	 BKKB//VurEEK3ivMA+0eVjdP6MYQd6GhX0xtnrorAFFHqCUyeEsCKlMwG4cSENtDGt
-	 xFOUitNsHuoWxYnvFOAsIvnajRZ7Vq7TyAeHqyHeGjhZXn4gYvWPU6e6s0GXax9jiU
-	 jZpFQQYEVp8/LQIZzJJjrGS1CkA5ZoA4Y55ZbChMPu1d/vxw3/yvbeKbjM+DpwMt4Q
-	 OcOf4qZ83aGng==
+	b=luHiMnVsjCO3EDu2J6qsSg6lapXqMovZtKZXLHcen71EbriIOMT/GUT0eg7Anc0gi
+	 0Rm+KRojHG8+MTTm5oUN8RZxGu0KvmAKh1Ilg+SQ6wVDROptPZSiWMdkfXCWIenD6h
+	 IInavp6jIbUjujWhZzVEwaBVONkw1vW41qreKiSULEYbA/IhU+NKLPV6uvlAMccjiD
+	 eUCv4eZ7Z3dV3Sy4f4xAwJ8BsDem6RQOHVMhsWZE4FGjJq/J7J/JrpfK7g/VY1Dg1H
+	 ukvzcKUVd8h0p4gfO8za6K/2mtRlu9sp2TIcghHnZIXhi+5oEWyBO3Cy5fLoOBOsDC
+	 6UU7jl6vDsjqA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Fangzhi Zuo <Jerry.Zuo@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Tarang Raval <tarang.raval@siliconsignals.io>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	harry.wentland@amd.com,
-	sunpeng.li@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	Wayne.Lin@amd.com,
-	ray.wu@amd.com,
-	rodrigo.siqueira@amd.com,
-	mwen@igalia.com,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.14 034/102] drm/amd/display: Do Not Consider DSC if Valid Config Not Found
-Date: Sun,  1 Jun 2025 19:28:26 -0400
-Message-Id: <20250601232937.3510379-34-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.14 035/102] media: i2c: imx334: Fix runtime PM handling in remove function
+Date: Sun,  1 Jun 2025 19:28:27 -0400
+Message-Id: <20250601232937.3510379-35-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601232937.3510379-1-sashal@kernel.org>
 References: <20250601232937.3510379-1-sashal@kernel.org>
@@ -64,115 +54,97 @@ X-stable-base: Linux 6.14.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fangzhi Zuo <Jerry.Zuo@amd.com>
+From: Tarang Raval <tarang.raval@siliconsignals.io>
 
-[ Upstream commit 146a4429b5674b7520a96aea34233949731c6086 ]
+[ Upstream commit b493cd3c03641f9bbaa9787e43ca92163cb50051 ]
 
-[why]
-In the mode validation, mst dsc is considered for bw calculation after
-common dsc config is determined. Currently it considered common dsc config
-is found if max and min target bpp are non zero which is not accurate. Invalid
-max and min target bpp values would not get max_kbps and min_kbps calculated,
-leading to falsefully pass a mode that does not have valid dsc parameters
-available.
+pm_runtime_suspended() only checks the current runtime PM status and does
+not modify it, making it ineffective in this context. This could result in
+improper power management if the device remains active when removed.
 
-[how]
-Use the return value of decide_dsc_bandwidth_range() to determine whether valid
-dsc common config is found or not. Prune out modes that do not have valid common
-dsc config determined.
+This patch fixes the issue by introducing a check with
+pm_runtime_status_suspended() to determine if the device is already
+suspended. If it is not, it calls imx334_power_off() to power down the
+device and then uses pm_runtime_set_suspended() to correctly update the
+runtime PM status to suspended.
 
-Reviewed-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Tarang Raval <tarang.raval@siliconsignals.io>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Analysis of the Bug **1. Nature of the Issue**
-This commit fixes a clear logic bug in the DSC (Display Stream
-Compression) mode validation for MST (Multi-Stream Transport) displays.
-The problem is in the `is_dsc_common_config_possible()` function in
-`drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c`. **2. The
-Bug Details** The current implementation has a flawed detection
-mechanism for valid DSC configurations: ```c // OLD (buggy) code:
-dc_dsc_compute_bandwidth_range(..., bw_range); return
-bw_range->max_target_bpp_x16 && bw_range->min_target_bpp_x16; ``` The
-bug is that it only checks if `max_target_bpp_x16` and
-`min_target_bpp_x16` are non-zero, but these values might be set even
-when the DSC configuration is invalid. The function
-`dc_dsc_compute_bandwidth_range()` returns a boolean indicating whether
-a valid DSC configuration was actually found, but this return value was
-being ignored. **3. The Fix** The fix correctly uses the return value
-from `dc_dsc_compute_bandwidth_range()`: ```c // NEW (fixed) code: bool
-is_dsc_possible; is_dsc_possible = dc_dsc_compute_bandwidth_range(...,
-bw_range); return is_dsc_possible; ``` ## Impact Analysis **1. User-
-Visible Impact** - **Before**: The driver could incorrectly approve
-display modes that don't have valid DSC parameters, leading to display
-failures or poor visual quality - **After**: Only modes with valid DSC
-configurations are approved, preventing display issues **2. Risk
-Assessment** - **Risk of Regression**: Very low - the change makes the
-validation more restrictive, only rejecting modes that shouldn't have
-been approved - **Scope**: Limited to AMD display driver DSC MST
-functionality - **Size**: Very small, contained change (3 lines of code)
-## Comparison with Similar Commits All the provided similar commits were
-marked as "Backport Status: NO" because they were: 1. Feature additions
-(enabling new DSC functionality) 2. Policy improvements (changing
-compression ratios) 3. New algorithm implementations (fair share
-algorithms) 4. API extensions (adding DSC support to PBN calculations)
-This commit is fundamentally different - it's a **pure bug fix** that
-corrects faulty logic without adding new features. ## Stable Tree
-Suitability This commit meets all stable tree criteria: ✅ **Fixes
-important bugs**: Yes - prevents display mode validation failures ✅
-**Small and contained**: Yes - only 3 lines changed in one function ✅
-**No architectural changes**: Yes - uses existing API correctly ✅
-**Minimal regression risk**: Yes - makes validation more conservative ✅
-**Clear side effects**: Yes - only rejects invalid modes that were
-incorrectly approved ✅ **Affects critical subsystem**: Yes - display
-functionality is critical for users ## Technical Verification From
-examining the kernel code, I confirmed that
-`dc_dsc_compute_bandwidth_range()` performs comprehensive validation
-including: 1. Intersection of DSC capabilities between source and sink
-2. DSC configuration setup with timing constraints 3. Bandwidth range
-calculation with `decide_dsc_bandwidth_range()` The old code ignored
-these validation results and only checked if some bandwidth values were
-set, which could happen even with invalid configurations. This is a
-textbook stable tree candidate: a small, low-risk fix for a clear logic
-error that affects user-visible functionality.
+**YES** This commit should **definitely** be backported to stable kernel
+trees. Here's my extensive analysis: ## Bug Analysis **The Core Issue**:
+Line 1435 in the current `imx334_remove()` function contains a critical
+bug: ```c pm_runtime_suspended(&client->dev); // WRONG - this is a
+boolean query function ``` This should be: ```c
+pm_runtime_set_suspended(&client->dev); // CORRECT - this sets the PM
+state ``` ## Evidence from Code Analysis 1. **Function Signature
+Mismatch**: - `pm_runtime_suspended()` returns `bool` and only
+**queries** the current state - `pm_runtime_set_suspended()` returns
+`void` and **modifies** the runtime PM state 2. **Comparison with
+Similar Drivers**: Every other IMX sensor driver in the kernel uses the
+correct pattern: - **imx290.c**:
+`pm_runtime_set_suspended(imx290->dev);` - **imx258.c**:
+`pm_runtime_set_suspended(&client->dev);` - **imx412.c**:
+`pm_runtime_set_suspended(&client->dev);` - **imx274.c**:
+`pm_runtime_set_suspended(&client->dev);` - **imx415.c**:
+`pm_runtime_set_suspended(&client->dev);` 3. **Missing Power
+Management**: The current imx334 driver fails to ensure the device is
+powered off during removal, unlike the established pattern: ```c if
+(!pm_runtime_status_suspended(&client->dev)) {
+imx334_power_off(&client->dev); pm_runtime_set_suspended(&client->dev);
+} ``` ## Impact Assessment **Why This Is Critical for Stable
+Backporting**: 1. **Resource Leaks**: If the device is powered on during
+removal, the clock (`imx334->inclk`) and GPIO resources may not be
+properly released, leading to resource leaks. 2. **Runtime PM State
+Corruption**: The kernel's runtime PM subsystem maintains internal state
+that becomes inconsistent when `pm_runtime_suspended()` is called
+instead of `pm_runtime_set_suspended()`. 3. **Driver Reload Issues**: If
+the driver is unloaded and reloaded, the inconsistent PM state can cause
+subsequent power management operations to fail. 4. **System Power
+Management**: Improper PM cleanup can affect system-wide power
+management, potentially preventing proper suspend/resume cycles. ##
+Stable Tree Suitability Criteria ✅ **Fixes a clear bug**: Yes - wrong
+function call causing runtime PM state corruption ✅ **Small and
+contained**: Yes - 3-line change in one function ✅ **Minimal regression
+risk**: Yes - follows established patterns from other drivers ✅
+**Important bugfix**: Yes - affects device cleanup and system stability
+✅ **No architectural changes**: Yes - simple correction to existing code
+✅ **Follows similar pattern**: Yes - matches Similar Commit #2 which was
+marked "YES" ## Comparison with Similar Commits This commit closely
+matches **Similar Commit #2** (CCS driver runtime PM fix) which was
+marked for backporting because it: - Fixed runtime PM status handling in
+remove function - Had minimal risk and clear benefit - Followed
+established patterns The commit is much more suitable than **Similar
+Commits #1, #3, #4, #5** which were marked "NO" because they involved: -
+Code cleanup/refactoring (#1) - Redundant code removal (#3) - Complex
+error handling changes (#4) - Major feature additions (#5) ## Conclusion
+This is a textbook example of a stable tree candidate: it fixes a clear,
+impactful bug with minimal code change and follows well-established
+patterns. The fix prevents resource leaks and runtime PM state
+corruption that can affect system stability.
 
- .../amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/media/i2c/imx334.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-index c3759a1c32cec..91041383336da 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -1736,16 +1736,17 @@ static bool is_dsc_common_config_possible(struct dc_stream_state *stream,
- 					  struct dc_dsc_bw_range *bw_range)
- {
- 	struct dc_dsc_policy dsc_policy = {0};
-+	bool is_dsc_possible;
+diff --git a/drivers/media/i2c/imx334.c b/drivers/media/i2c/imx334.c
+index b51721c01e1d6..63d812a41542f 100644
+--- a/drivers/media/i2c/imx334.c
++++ b/drivers/media/i2c/imx334.c
+@@ -1435,7 +1435,10 @@ static void imx334_remove(struct i2c_client *client)
+ 	v4l2_ctrl_handler_free(sd->ctrl_handler);
  
- 	dc_dsc_get_policy_for_timing(&stream->timing, 0, &dsc_policy, dc_link_get_highest_encoding_format(stream->link));
--	dc_dsc_compute_bandwidth_range(stream->sink->ctx->dc->res_pool->dscs[0],
--				       stream->sink->ctx->dc->debug.dsc_min_slice_height_override,
--				       dsc_policy.min_target_bpp * 16,
--				       dsc_policy.max_target_bpp * 16,
--				       &stream->sink->dsc_caps.dsc_dec_caps,
--				       &stream->timing, dc_link_get_highest_encoding_format(stream->link), bw_range);
--
--	return bw_range->max_target_bpp_x16 && bw_range->min_target_bpp_x16;
-+	is_dsc_possible = dc_dsc_compute_bandwidth_range(stream->sink->ctx->dc->res_pool->dscs[0],
-+							 stream->sink->ctx->dc->debug.dsc_min_slice_height_override,
-+							 dsc_policy.min_target_bpp * 16,
-+							 dsc_policy.max_target_bpp * 16,
-+							 &stream->sink->dsc_caps.dsc_dec_caps,
-+							 &stream->timing, dc_link_get_highest_encoding_format(stream->link), bw_range);
-+
-+	return is_dsc_possible;
+ 	pm_runtime_disable(&client->dev);
+-	pm_runtime_suspended(&client->dev);
++	if (!pm_runtime_status_suspended(&client->dev)) {
++		imx334_power_off(&client->dev);
++		pm_runtime_set_suspended(&client->dev);
++	}
+ 
+ 	mutex_destroy(&imx334->mutex);
  }
- #endif
- 
 -- 
 2.39.5
 
