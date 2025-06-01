@@ -1,180 +1,351 @@
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2049.outbound.protection.outlook.com [40.107.223.49])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2D01A23A2;
-	Fri, 30 May 2025 18:40:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748630403; cv=fail; b=CgoGGwlTfeNpz4HOBhizXjs4/kJTRzVL0L+iIisqqWYSGzKIJ+a+5VBHmGqPzyGDa4zEnzjukAKbigFXmVtysj3PQvfH3w0VRsfhW1/UrlpxMIdJBPColfeU4/cA9tQ8d0rIPT6jtvfW3Qe+aWJnMGv0ItRqO1VWP7CDoALZI48=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748630403; c=relaxed/simple;
-	bh=+CEGfQJo8VBRECLBC0tLp6ZDBuJ4mXYqEJo3/M5lNQc=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jqVcFw8wyc4jZ6WYlWtx82xMPaeOuP1NigZHT85M3v09/S77XfrjkrFRQDJ7eohV7v27PYGe2ndedX+duTfWXPaVdHtp+wrX8GkbgS3vYQm1GWgaMYFPejF05z42JSkOWxAO8FUJ9dLeym1tMYDWISI/yDqPNTt33FM8w0MpYxM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=sfZFBf/F; arc=fail smtp.client-ip=40.107.223.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF9743147;
+	Sun,  1 Jun 2025 23:24:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1748820280; cv=none; b=W8b5rWjGEGRLQiLH0RLYxyUVW/9O5yQhhTEeELM62ZOzu3h8OQRY5K5mbtBwkAPCjwweWZaNTttZW7BmNEEz2g3z99iRLdyZYRy5GBQBo6wnIkAkgPfeCeYC/x18q6KB+yeg0674p6uyrg8m5zZ23iiX9dANbBPCAu5X8R7G10Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1748820280; c=relaxed/simple;
+	bh=ZSdio0Ukr8vuJr3/BWpi4evSqcmNC4ZLkOb1C2Yfi6s=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=dssgGmcY5odq0hrf8uYBaaRF9kl4gfo2kroKF0eyfVyJfyE+Ffz7bnyGf8mnelawIJJgwwnZxXfPMZkODKPvZLJdN9rzYgjfKig02o8V7YgM+qzogV1N67Y9OFHSwJjicvNuAhBfII31JoZl9texRq8VZa0asVIeOi7zSXmn+zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JAQRqGAl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="sfZFBf/F"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=X8x9wGDGNf32axXp6Jn9UYdnl3kMdlnf9dF9KGmYtCYIiaL+sPBiyPx/n/1CysfjPDs22FDAvRWv23Vyi459r9u0OBm4b/YxKz+0dBz3Uf8Q3gO8mCp3krF6rb5BZntte2PxGEwMOzyzO1GffmoOFHO4c3GRaX0d/juo9HtCOzyynsjW0+1dOOaMJLl/PfwDZoJxr5JNFulmg/WY+6ORord5Rth4lqeJzvvXqb1wJSHNyU2n/f3F8O55ZBohtzM58JjTm2zgiayi8XoIx7lpMSsk+YExOXiN2tJjudq+gsB8KZulJFy3f1you9p+2eXERfIhmBcrPwxFle5BegugiQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RC91iIjMR6NZvF/+Y9VfUIFksUq2Nol8NfyWrKoy23g=;
- b=BQyqmb1Q+OYt/j4MThiaT1JoAn2uB96Wangjsn6+C4lkPfUp7vDzqIYgHPLCheNQrhPhy5nZtLFilm2iYWgLZWgUKMW7SDqespgyTyMWPMz3KaUfYrF0IE59EP0xAPR/2JgCoNX942EqLnpy3lXSilmiF/UF1/3bPanB0Ue3T0Jmvn0omh+xkUhuC8jHKxP6zUCCKJBBSDew46U2axmFyT/X9sn5SgUfWJSaik1o2SYF2cs6IE9v3yNf1PFggWnrcbp0QR0FUnjylf7+U+Tkrb5W7R6q03hSZKmuV+SAPnW066hRL4Y3Uc1VfB0OUcYJbKr33z4ChPmsl7Ro1IA6kA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=amd.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RC91iIjMR6NZvF/+Y9VfUIFksUq2Nol8NfyWrKoy23g=;
- b=sfZFBf/FhKW1vhchnVW7i1MIKmNQ3L1QQ8ndFWsq36Ie5XFn/IZEp1sX4jkZCCQ5CoGtUM7rCWEmhgQqqOmpwNibKOXkC/oUFigaFzy5YwbUk2rkxHQAFDyc65nnLuDBsqVCXVZeGleJwG/UpbHwnZNpzJXQxJh0pyyd3Yxsr9og8Dxc1mHrvgRW0U4lM3P80ROc8xq1gEXD37Vbu26gDq8JBLl0dIYRJnr86vMOewOF8GCpc7E1au455HTMgxI2MzbO3VFTrnRMM6bbGV/h5TxedyjLMiuUSN2fj0l+LMwjnYMkxQW1dWQb3vXt0d7SV1mWJM+ub6FJL3eU0DqANw==
-Received: from PH8P223CA0017.NAMP223.PROD.OUTLOOK.COM (2603:10b6:510:2db::9)
- by PH7PR12MB5735.namprd12.prod.outlook.com (2603:10b6:510:1e2::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.32; Fri, 30 May
- 2025 18:39:55 +0000
-Received: from SN1PEPF0002BA4E.namprd03.prod.outlook.com
- (2603:10b6:510:2db:cafe::d8) by PH8P223CA0017.outlook.office365.com
- (2603:10b6:510:2db::9) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8792.21 via Frontend Transport; Fri,
- 30 May 2025 18:39:55 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- SN1PEPF0002BA4E.mail.protection.outlook.com (10.167.242.71) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8792.29 via Frontend Transport; Fri, 30 May 2025 18:39:55 +0000
-Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 30 May
- 2025 11:39:34 -0700
-Received: from drhqmail202.nvidia.com (10.126.190.181) by
- drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Fri, 30 May 2025 11:39:34 -0700
-Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com
- (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Fri, 30 May 2025 11:39:32 -0700
-Date: Fri, 30 May 2025 11:39:31 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: <kevin.tian@intel.com>, <corbet@lwn.net>, <will@kernel.org>,
-	<bagasdotme@gmail.com>, <robin.murphy@arm.com>, <joro@8bytes.org>,
-	<thierry.reding@gmail.com>, <vdumpa@nvidia.com>, <jonathanh@nvidia.com>,
-	<shuah@kernel.org>, <jsnitsel@redhat.com>, <nathan@kernel.org>,
-	<peterz@infradead.org>, <yi.l.liu@intel.com>, <mshavit@google.com>,
-	<praan@google.com>, <zhangzekun11@huawei.com>, <iommu@lists.linux.dev>,
-	<linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-tegra@vger.kernel.org>,
-	<linux-kselftest@vger.kernel.org>, <patches@lists.linux.dev>,
-	<mochs@nvidia.com>, <alok.a.tiwari@oracle.com>, <vasant.hegde@amd.com>,
-	<dwmw2@infradead.org>, <baolu.lu@linux.intel.com>
-Subject: Re: [PATCH v5 14/29] iommufd/viommu: Add IOMMUFD_CMD_HW_QUEUE_ALLOC
- ioctl
-Message-ID: <aDn7Y+3s+YD7qDlh@Asurada-Nvidia>
-References: <cover.1747537752.git.nicolinc@nvidia.com>
- <5c509f092ba61d4c0852ba57b530888ffb864ccb.1747537752.git.nicolinc@nvidia.com>
- <20250530161455.GE233377@nvidia.com>
- <aDntEDywhsgMoZwc@Asurada-Nvidia>
- <20250530174037.GR233377@nvidia.com>
- <aDn3hueUhGKWFIkn@Asurada-Nvidia>
- <20250530182519.GV233377@nvidia.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JAQRqGAl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 821DEC4CEE7;
+	Sun,  1 Jun 2025 23:24:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748820279;
+	bh=ZSdio0Ukr8vuJr3/BWpi4evSqcmNC4ZLkOb1C2Yfi6s=;
+	h=From:To:Cc:Subject:Date:From;
+	b=JAQRqGAltaumkx03CVWJoZ3Eav5xS+pYDB2lOuf2MpA1U7ay5E2yf0N66WEAeefKY
+	 198g6bDL43OCDINV0puPwRjfkI9kDVTfAEbShxn1HTApUgqSmygKFGaWahIq6qGAh6
+	 MOFKQcWQk/Ldts1z5Bb1bLAiEDizspLjQF/3vSnYPbsxgobU2RdTvZ9OR0XnKws9hF
+	 ddq6L1cBvR1DHNO926aphDFnxO7OqMP2yXAhuKl4OWLmKk1jMqTGoKwFQ6w06jKypu
+	 ejZReZJdekrpPfg4R4V4iLjW8CrJOdBuF3CimDIYOAmzZB5y+ZkPqkXA8K4uLY8AZa
+	 dK/li6JnTTwoQ==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Charlene Liu <Charlene.Liu@amd.com>,
+	Hansen Dsouza <hansen.dsouza@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	harry.wentland@amd.com,
+	sunpeng.li@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	Hansen.Dsouza@amd.com,
+	Ahmed.Ahmed@amd.com,
+	hamzamahfooz@linux.microsoft.com,
+	aurabindo.pillai@amd.com,
+	Ovidiu.Bunea@amd.com,
+	yi-lchen@amd.com,
+	Nicholas.Susanto@amd.com,
+	nicholas.kazlauskas@amd.com,
+	rodrigo.siqueira@amd.com,
+	wenjing.liu@amd.com,
+	yihan.zhu@amd.com,
+	tjakobi@math.uni-bielefeld.de,
+	alex.hung@amd.com,
+	michael.strauss@amd.com,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 001/110] drm/amd/display: disable DPP RCG before DPP CLK enable
+Date: Sun,  1 Jun 2025 19:22:43 -0400
+Message-Id: <20250601232435.3507697-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20250530182519.GV233377@nvidia.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF0002BA4E:EE_|PH7PR12MB5735:EE_
-X-MS-Office365-Filtering-Correlation-Id: 986f4635-9a84-4005-325b-08dd9fa95f77
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|36860700013|7416014|376014|82310400026;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?+5yU/KyfhwKXc6kaUCQ01mWcPGPmOmpfAnX0VP2F/J6PZjhzTtgrh1TB8H+C?=
- =?us-ascii?Q?IbuKaGqcmJT/qabThAPt1DSpJCsfuP3n0XHihyUJZn8Mh28LWEaGgZ785ryT?=
- =?us-ascii?Q?Ocbnz/fxT+Eho6IWwJ/6F0SNzJWeWxbqI/iheit3Ow9mX8VzLzAHXzpek0A3?=
- =?us-ascii?Q?XuTgwR1U1ap7rLqtIZ2xVBd2hfsjKxGuAt2qzrFVBenkBek8HCTxUCqMjgg+?=
- =?us-ascii?Q?ckFRfzfuDZibxMLSoePUwgY6/sA1aFGrnAy0AHAMoFYmDsEJ47q75WBayr/P?=
- =?us-ascii?Q?IiM3sE8aTkuR8rpihTAHBoPwr6xcUWdGiMOOzgEphLY+xeDjcyde3xLLb6AP?=
- =?us-ascii?Q?2RFl4D0ZDLz1Y8KHI06fB9hv3ljP7ickdOjuUNnv0DA2etswbg/uGoiDy2z8?=
- =?us-ascii?Q?8Gw82rMUNIxncKxj9AFX21i3V8iURooQ6dHQGUMnXhAka1VG/a+PyPMW7bEB?=
- =?us-ascii?Q?4umnsqV1SCKL6XTTDcvtdLZTiae0/d7EZ3ZvGMf87nJSgmzf4XrRImthxjxK?=
- =?us-ascii?Q?qa8tAppp/FzF9CbdGyjxyh301ykxodwHWaEgkCTMLIGq9bmA8BKquv8DgQll?=
- =?us-ascii?Q?ribr+ri2k88uqbEEbZ1zEW1LDORW33Up5I3icauEWgEEbz9O96GPdlgfeWq8?=
- =?us-ascii?Q?kMRTp+4JCmWUhK+KUK5nnTQ4TaWYt7efQUCdy1fwDcsFTFgTuehC9Bf82rvs?=
- =?us-ascii?Q?V1E1zjosZAbSfQWbKpTZEUjF1QQgc/u5c7gGTMesC7w89oQo2oQnIobU49B4?=
- =?us-ascii?Q?Ji2TkxYxDpzk6gDA8Wap+2N65WQMMVKP3sXgvI+dZJYtTl2LB4q9WOSPcCTx?=
- =?us-ascii?Q?eSqptZGxlUWKfIcLRU+WLFFbe2g+YNazAORjhIVI/spAIYapHtpZ1E74fhR+?=
- =?us-ascii?Q?keAIvlBeaf11SK5vBusITpF1QGVOMCs5dkycUAKk289c6BpxZwZHZdr/fAmi?=
- =?us-ascii?Q?CJ5vdp0KkZQiULNBV1WauCzdmKD5B3vICxdHHlgnvd0cDkI4b1tQtkS1qw67?=
- =?us-ascii?Q?A+lCSXizwEk7TCextKTGjyK19iuQvpJQOavscEWc2XyXcle4x6Avg04huk+7?=
- =?us-ascii?Q?JVWMlo4zBPLCTvsTsGrgpBnF5AC7o03WXnfGXGS/HgiHwmPrTMGS9nXaCVNC?=
- =?us-ascii?Q?gATyGwowFZQc+8y29bvqPBLgDab1yB8Gz/kmHFPQU4OvC4j6TG4aKXL3BA1P?=
- =?us-ascii?Q?FIALe8DRYGeJReqwO+KkskOEzGzdHCfXfMxS8xAqtERa4GGZwRU4tgFyqaCQ?=
- =?us-ascii?Q?efwrJFADP6BGJF4fSC4qbD8eUpGHZF7F+0rtnz7qSRJJz7P7iL2IlWYkVTP5?=
- =?us-ascii?Q?Q5HnYW4tOnF8UtvkJl2uXacai4mhjico+PkaKy6gpvwkyyacmdGteUimoriI?=
- =?us-ascii?Q?2MRooWhgBshcdrRQo4Rv3LmhuvWCcB25KGriu/RgKEh4axHaZYOf071T/62A?=
- =?us-ascii?Q?DKo85BZefuulFh2z+7u9M8CDdcPlpNpyn6XqtFT5+2d61cHoccvsynjQcfV5?=
- =?us-ascii?Q?VgbRL180lNbqF1gy+biJemac43gLuL9kPW/L?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(36860700013)(7416014)(376014)(82310400026);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 May 2025 18:39:55.4955
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 986f4635-9a84-4005-325b-08dd9fa95f77
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SN1PEPF0002BA4E.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5735
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.15
+Content-Transfer-Encoding: 8bit
 
-On Fri, May 30, 2025 at 03:25:19PM -0300, Jason Gunthorpe wrote:
-> On Fri, May 30, 2025 at 11:23:02AM -0700, Nicolin Chen wrote:
-> > On Fri, May 30, 2025 at 02:40:37PM -0300, Jason Gunthorpe wrote:
-> > > On Fri, May 30, 2025 at 10:38:24AM -0700, Nicolin Chen wrote:
-> > > > On Fri, May 30, 2025 at 01:14:55PM -0300, Jason Gunthorpe wrote:
-> > > > > On Sat, May 17, 2025 at 08:21:31PM -0700, Nicolin Chen wrote:
-> > > > > > +	offset =
-> > > > > > +		cmd->nesting_parent_iova - PAGE_ALIGN(cmd->nesting_parent_iova);
-> > > > > > +	max_npages = DIV_ROUND_UP(offset + cmd->length, PAGE_SIZE);
-> > > > > 
-> > > > > This should probably be capped to PAGE_SIZE/sizeof(void *), return
-> > > > > EINVAL if not
-> > > > 
-> > > > Hmm, mind elaborating where this PAGE_SIZE/sizeof comes from?
-> > > 
-> > > We can usually allocate up to a PAGE_SIZE without too much
-> > > trouble. Beyond that it gets more likely to fail.
-> > 
-> > If PAGE_SIZE=4096, the upper limit for max_npages is 512, i.e. the
-> > max size of a guest queue is 2MB? It seems to be too small, as the
-> > VMM can use a larger huge page size to back the guest queue?
-> 
-> May need to make a new API that returns a bio_vec or something else
-> more efficient then :\
+From: Charlene Liu <Charlene.Liu@amd.com>
 
-Hmm, that sounds like a rabbit hole :-\
+[ Upstream commit 1bcd679209420305a86833bc357d50021909edaf ]
 
-Let me leave a FIXME at this max_npages calculation instead..
+[why]
+DPP CLK enable needs to disable DPPCLK RCG first.
+The DPPCLK_en in dccg should always be enabled when the corresponding
+pipe is enabled.
 
-Thanks
-Nicolin
+Reviewed-by: Hansen Dsouza <hansen.dsouza@amd.com>
+Signed-off-by: Charlene Liu <Charlene.Liu@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+
+Based on my analysis of both the commit message and code changes, my
+answer is: **YES** This commit should be backported to stable kernel
+trees for the following reasons: ## Critical Hardware Sequencing Fix The
+commit addresses a fundamental hardware sequencing requirement where DPP
+(Display Pipes and Planes) Root Clock Gating (RCG) must be disabled
+before enabling the DPP clock. This is a critical timing constraint
+that, if violated, can cause severe system issues. ## Specific Code
+Evidence 1. **In `dccg35_update_dpp_dto()`**, the fix adds a crucial
+sequencing step: ```c + dccg35_set_dppclk_rcg(dccg, dpp_inst, false);
+REG_SET_2(DPPCLK_DTO_PARAM[dpp_inst], 0, DPPCLK0_DTO_PHASE, phase,
+DPPCLK0_DTO_MODULO, modulo); dcn35_set_dppclk_enable(dccg, dpp_inst,
+true); ``` This ensures RCG is disabled (false) before enabling the DPP
+clock. 2. **In `dcn35_enable_plane()`**, explicit clock control is
+added: ```c + /*make sure DPPCLK is on*/ +
+dccg->funcs->dccg_root_gate_disable_control(dccg, dpp->inst, true); +
+dpp->funcs->dpp_dppclk_control(dpp, false, true); ``` 3. **Removal of
+problematic init code** in `dcn35_init_hw()`: ```c - if
+(res_pool->dccg->funcs->dccg_root_gate_disable_control) { - for (i = 0;
+i < res_pool->pipe_count; i++) -
+res_pool->dccg->funcs->dccg_root_gate_disable_control(res_pool->dccg, i,
+0); - } ``` ## Similarity to Previous Critical Fixes This commit follows
+the pattern of Similar Commit #1, which also addressed clock gating
+sequencing issues that could cause system hangs. The commit message
+explicitly states this is needed because "DPP CLK enable needs to
+disable DPPCLK RCG first." ## Impact and Risk Assessment - **Bug
+Fixed**: Incorrect clock sequencing that can cause system instability -
+**Scope**: Limited to DCN35 display hardware (recent AMD GPUs) -
+**Complexity**: Small, focused changes with clear purpose - **Risk**:
+Low risk of regression - adds proper sequencing without major
+architectural changes This fix meets all criteria for stable
+backporting: - Fixes a real bug affecting users (system stability) -
+Small and contained changes - No new features or architectural changes -
+Addresses hardware constraints that cannot be worked around The commit
+should be backported to all stable kernels that include DCN35 display
+support to ensure proper display functionality and system stability for
+users with affected AMD GPUs.
+
+ .../amd/display/dc/dccg/dcn35/dcn35_dccg.c    | 38 ++++++++++++-------
+ .../amd/display/dc/hwss/dcn35/dcn35_hwseq.c   | 21 ++++++----
+ 2 files changed, 38 insertions(+), 21 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/dccg/dcn35/dcn35_dccg.c b/drivers/gpu/drm/amd/display/dc/dccg/dcn35/dcn35_dccg.c
+index b363f5360818d..ad910065f463f 100644
+--- a/drivers/gpu/drm/amd/display/dc/dccg/dcn35/dcn35_dccg.c
++++ b/drivers/gpu/drm/amd/display/dc/dccg/dcn35/dcn35_dccg.c
+@@ -391,6 +391,7 @@ static void dccg35_set_dppclk_rcg(struct dccg *dccg,
+ 
+ 	struct dcn_dccg *dccg_dcn = TO_DCN_DCCG(dccg);
+ 
++
+ 	if (!dccg->ctx->dc->debug.root_clock_optimization.bits.dpp && enable)
+ 		return;
+ 
+@@ -411,6 +412,8 @@ static void dccg35_set_dppclk_rcg(struct dccg *dccg,
+ 	BREAK_TO_DEBUGGER();
+ 		break;
+ 	}
++	//DC_LOG_DEBUG("%s: inst(%d) DPPCLK rcg_disable: %d\n", __func__, inst, enable ? 0 : 1);
++
+ }
+ 
+ static void dccg35_set_dpstreamclk_rcg(
+@@ -1112,30 +1115,24 @@ static void dcn35_set_dppclk_enable(struct dccg *dccg,
+ {
+ 	struct dcn_dccg *dccg_dcn = TO_DCN_DCCG(dccg);
+ 
++
+ 	switch (dpp_inst) {
+ 	case 0:
+ 		REG_UPDATE(DPPCLK_CTRL, DPPCLK0_EN, enable);
+-		if (dccg->ctx->dc->debug.root_clock_optimization.bits.dpp)
+-			REG_UPDATE(DCCG_GATE_DISABLE_CNTL6, DPPCLK0_ROOT_GATE_DISABLE, enable);
+ 		break;
+ 	case 1:
+ 		REG_UPDATE(DPPCLK_CTRL, DPPCLK1_EN, enable);
+-		if (dccg->ctx->dc->debug.root_clock_optimization.bits.dpp)
+-			REG_UPDATE(DCCG_GATE_DISABLE_CNTL6, DPPCLK1_ROOT_GATE_DISABLE, enable);
+ 		break;
+ 	case 2:
+ 		REG_UPDATE(DPPCLK_CTRL, DPPCLK2_EN, enable);
+-		if (dccg->ctx->dc->debug.root_clock_optimization.bits.dpp)
+-			REG_UPDATE(DCCG_GATE_DISABLE_CNTL6, DPPCLK2_ROOT_GATE_DISABLE, enable);
+ 		break;
+ 	case 3:
+ 		REG_UPDATE(DPPCLK_CTRL, DPPCLK3_EN, enable);
+-		if (dccg->ctx->dc->debug.root_clock_optimization.bits.dpp)
+-			REG_UPDATE(DCCG_GATE_DISABLE_CNTL6, DPPCLK3_ROOT_GATE_DISABLE, enable);
+ 		break;
+ 	default:
+ 		break;
+ 	}
++	//DC_LOG_DEBUG("%s: dpp_inst(%d) DPPCLK_EN = %d\n", __func__, dpp_inst, enable);
+ 
+ }
+ 
+@@ -1163,14 +1160,18 @@ static void dccg35_update_dpp_dto(struct dccg *dccg, int dpp_inst,
+ 			ASSERT(false);
+ 			phase = 0xff;
+ 		}
++		dccg35_set_dppclk_rcg(dccg, dpp_inst, false);
+ 
+ 		REG_SET_2(DPPCLK_DTO_PARAM[dpp_inst], 0,
+ 				DPPCLK0_DTO_PHASE, phase,
+ 				DPPCLK0_DTO_MODULO, modulo);
+ 
+ 		dcn35_set_dppclk_enable(dccg, dpp_inst, true);
+-	} else
++	} else {
+ 		dcn35_set_dppclk_enable(dccg, dpp_inst, false);
++		/*we have this in hwss: disable_plane*/
++		//dccg35_set_dppclk_rcg(dccg, dpp_inst, true);
++	}
+ 	dccg->pipe_dppclk_khz[dpp_inst] = req_dppclk;
+ }
+ 
+@@ -1182,6 +1183,7 @@ static void dccg35_set_dppclk_root_clock_gating(struct dccg *dccg,
+ 	if (!dccg->ctx->dc->debug.root_clock_optimization.bits.dpp)
+ 		return;
+ 
++
+ 	switch (dpp_inst) {
+ 	case 0:
+ 		REG_UPDATE(DCCG_GATE_DISABLE_CNTL6, DPPCLK0_ROOT_GATE_DISABLE, enable);
+@@ -1198,6 +1200,8 @@ static void dccg35_set_dppclk_root_clock_gating(struct dccg *dccg,
+ 	default:
+ 		break;
+ 	}
++	//DC_LOG_DEBUG("%s: dpp_inst(%d) rcg: %d\n", __func__, dpp_inst, enable);
++
+ }
+ 
+ static void dccg35_get_pixel_rate_div(
+@@ -1521,28 +1525,30 @@ static void dccg35_set_physymclk_root_clock_gating(
+ 	switch (phy_inst) {
+ 	case 0:
+ 		REG_UPDATE(DCCG_GATE_DISABLE_CNTL2,
+-				PHYASYMCLK_ROOT_GATE_DISABLE, enable ? 1 : 0);
++				PHYASYMCLK_ROOT_GATE_DISABLE, enable ? 0 : 1);
+ 		break;
+ 	case 1:
+ 		REG_UPDATE(DCCG_GATE_DISABLE_CNTL2,
+-				PHYBSYMCLK_ROOT_GATE_DISABLE, enable ? 1 : 0);
++				PHYBSYMCLK_ROOT_GATE_DISABLE, enable ? 0 : 1);
+ 		break;
+ 	case 2:
+ 		REG_UPDATE(DCCG_GATE_DISABLE_CNTL2,
+-				PHYCSYMCLK_ROOT_GATE_DISABLE, enable ? 1 : 0);
++				PHYCSYMCLK_ROOT_GATE_DISABLE, enable ? 0 : 1);
+ 		break;
+ 	case 3:
+ 		REG_UPDATE(DCCG_GATE_DISABLE_CNTL2,
+-				PHYDSYMCLK_ROOT_GATE_DISABLE, enable ? 1 : 0);
++				PHYDSYMCLK_ROOT_GATE_DISABLE, enable ? 0 : 1);
+ 		break;
+ 	case 4:
+ 		REG_UPDATE(DCCG_GATE_DISABLE_CNTL2,
+-				PHYESYMCLK_ROOT_GATE_DISABLE, enable ? 1 : 0);
++				PHYESYMCLK_ROOT_GATE_DISABLE, enable ? 0 : 1);
+ 		break;
+ 	default:
+ 		BREAK_TO_DEBUGGER();
+ 		return;
+ 	}
++	//DC_LOG_DEBUG("%s: dpp_inst(%d) PHYESYMCLK_ROOT_GATE_DISABLE:\n", __func__, phy_inst, enable ? 0 : 1);
++
+ }
+ 
+ static void dccg35_set_physymclk(
+@@ -1643,6 +1649,8 @@ static void dccg35_dpp_root_clock_control(
+ 		return;
+ 
+ 	if (clock_on) {
++		dccg35_set_dppclk_rcg(dccg, dpp_inst, false);
++
+ 		/* turn off the DTO and leave phase/modulo at max */
+ 		dcn35_set_dppclk_enable(dccg, dpp_inst, 1);
+ 		REG_SET_2(DPPCLK_DTO_PARAM[dpp_inst], 0,
+@@ -1654,6 +1662,8 @@ static void dccg35_dpp_root_clock_control(
+ 		REG_SET_2(DPPCLK_DTO_PARAM[dpp_inst], 0,
+ 			  DPPCLK0_DTO_PHASE, 0,
+ 			  DPPCLK0_DTO_MODULO, 1);
++		/*we have this in hwss: disable_plane*/
++		//dccg35_set_dppclk_rcg(dccg, dpp_inst, true);
+ 	}
+ 
+ 	dccg->dpp_clock_gated[dpp_inst] = !clock_on;
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
+index 922b8d71cf1aa..63077c1fad859 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
+@@ -241,11 +241,6 @@ void dcn35_init_hw(struct dc *dc)
+ 			dc->res_pool->hubbub->funcs->allow_self_refresh_control(dc->res_pool->hubbub,
+ 					!dc->res_pool->hubbub->ctx->dc->debug.disable_stutter);
+ 	}
+-	if (res_pool->dccg->funcs->dccg_root_gate_disable_control) {
+-		for (i = 0; i < res_pool->pipe_count; i++)
+-			res_pool->dccg->funcs->dccg_root_gate_disable_control(res_pool->dccg, i, 0);
+-	}
+-
+ 	for (i = 0; i < res_pool->audio_count; i++) {
+ 		struct audio *audio = res_pool->audios[i];
+ 
+@@ -901,12 +896,18 @@ void dcn35_init_pipes(struct dc *dc, struct dc_state *context)
+ void dcn35_enable_plane(struct dc *dc, struct pipe_ctx *pipe_ctx,
+ 			       struct dc_state *context)
+ {
++	struct dpp *dpp = pipe_ctx->plane_res.dpp;
++	struct dccg *dccg = dc->res_pool->dccg;
++
++
+ 	/* enable DCFCLK current DCHUB */
+ 	pipe_ctx->plane_res.hubp->funcs->hubp_clk_cntl(pipe_ctx->plane_res.hubp, true);
+ 
+ 	/* initialize HUBP on power up */
+ 	pipe_ctx->plane_res.hubp->funcs->hubp_init(pipe_ctx->plane_res.hubp);
+-
++	/*make sure DPPCLK is on*/
++	dccg->funcs->dccg_root_gate_disable_control(dccg, dpp->inst, true);
++	dpp->funcs->dpp_dppclk_control(dpp, false, true);
+ 	/* make sure OPP_PIPE_CLOCK_EN = 1 */
+ 	pipe_ctx->stream_res.opp->funcs->opp_pipe_clock_control(
+ 			pipe_ctx->stream_res.opp,
+@@ -923,6 +924,7 @@ void dcn35_enable_plane(struct dc *dc, struct pipe_ctx *pipe_ctx,
+ 		// Program system aperture settings
+ 		pipe_ctx->plane_res.hubp->funcs->hubp_set_vm_system_aperture_settings(pipe_ctx->plane_res.hubp, &apt);
+ 	}
++	//DC_LOG_DEBUG("%s: dpp_inst(%d) =\n", __func__, dpp->inst);
+ 
+ 	if (!pipe_ctx->top_pipe
+ 		&& pipe_ctx->plane_state
+@@ -938,6 +940,8 @@ void dcn35_plane_atomic_disable(struct dc *dc, struct pipe_ctx *pipe_ctx)
+ {
+ 	struct hubp *hubp = pipe_ctx->plane_res.hubp;
+ 	struct dpp *dpp = pipe_ctx->plane_res.dpp;
++	struct dccg *dccg = dc->res_pool->dccg;
++
+ 
+ 	dc->hwss.wait_for_mpcc_disconnect(dc, dc->res_pool, pipe_ctx);
+ 
+@@ -955,7 +959,8 @@ void dcn35_plane_atomic_disable(struct dc *dc, struct pipe_ctx *pipe_ctx)
+ 	hubp->funcs->hubp_clk_cntl(hubp, false);
+ 
+ 	dpp->funcs->dpp_dppclk_control(dpp, false, false);
+-/*to do, need to support both case*/
++	dccg->funcs->dccg_root_gate_disable_control(dccg, dpp->inst, false);
++
+ 	hubp->power_gated = true;
+ 
+ 	hubp->funcs->hubp_reset(hubp);
+@@ -967,6 +972,8 @@ void dcn35_plane_atomic_disable(struct dc *dc, struct pipe_ctx *pipe_ctx)
+ 	pipe_ctx->top_pipe = NULL;
+ 	pipe_ctx->bottom_pipe = NULL;
+ 	pipe_ctx->plane_state = NULL;
++	//DC_LOG_DEBUG("%s: dpp_inst(%d)=\n", __func__, dpp->inst);
++
+ }
+ 
+ void dcn35_disable_plane(struct dc *dc, struct dc_state *state, struct pipe_ctx *pipe_ctx)
+-- 
+2.39.5
+
