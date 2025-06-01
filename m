@@ -1,50 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B64E32BD2B;
-	Sun,  1 Jun 2025 23:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E897632C5DC;
+	Sun,  1 Jun 2025 23:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821398; cv=none; b=bwI/ngqmao4JEh7Ut3rTI5FLXwI48HcCdtzIqF+X9YSluBoHpfd2I6kre6rRzflK1U6KkBGx2H9Xppeye0GtgY51aZ6SxOE/LC1/u5+I6ReugmCKYrp5sZS2AVP5u3Bg6MwtetDbV//XjlNnjtorHyhfg6YarJnHmNJVenpqNxA=
+	t=1748821402; cv=none; b=JWzDf/LsMWXf7bmLzNnt14lRwVHxHBHkbh4OIfo8399n8Pbl9ho+ZiWRNAhqzSyevmRafO2WVrvCXAlLnhue14kTvRWObj1t8pt1z4NLZd/+rmkMeK52w59Rj42ZnKkzqo3gBk7yHO3051xsAs9fgN2JlNhsrfwsrpV0XXyG4IY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821398; c=relaxed/simple;
-	bh=DVpmgn1fVhk+NvNjaEsBDEx87MbROwhQqa9gsg6cy5U=;
+	s=arc-20240116; t=1748821402; c=relaxed/simple;
+	bh=1MZ+X5WlJMw1Dufeg/ufxOzndkDSWkemW2qQfJ049j4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bAuXtTM+M71iLPlMMFFIiLGeSoBR2ptSPQjJc1VA3UoJThKAKuppNniOSc39/qwfvewt6ZhHIUd6tjij+tIQtRB1IeZsWsNtXyq08k290EtU/LxdzFrJGn/MaBuhjc5kAP+pJvjqPNL7nAtZp47qIP2+fdiXUShrMX3sPD8N2ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I2aa3lns; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=u2R7NI+t5oEtS2J9Y/09MXGd+lYInwNZYR8ICoFzDuq7Olk73w60hhSyMSuhpim3e6vRibFXLKWUNkphVujCVjAQGzEDkWbSuGAVLfpaUubrvOHOaRO3CLJ/xLzZyAmupmshTKG/0DZwmfXKoVq1L87cj80YH2zg+te6RHl0NwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ea8HJUM6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I2aa3lns"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EFFEC4CEF2;
-	Sun,  1 Jun 2025 23:43:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ea8HJUM6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EC2AC4CEE7;
+	Sun,  1 Jun 2025 23:43:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821395;
-	bh=DVpmgn1fVhk+NvNjaEsBDEx87MbROwhQqa9gsg6cy5U=;
+	s=k20201202; t=1748821400;
+	bh=1MZ+X5WlJMw1Dufeg/ufxOzndkDSWkemW2qQfJ049j4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I2aa3lnsTItkwFpkLxqqImL3ZDId1yX1oa95huv66Blcl8332X3Cc7R2iiWCWjm3j
-	 rCV1QEGiffSbj5k/rW+iZ/iOkLLmjm/njU+TqIVoLag0k/HUT9I1BDMS/DjysMJRHV
-	 rdP6JWVlCYdk/xCPC6/06CVoVorSmf/U5Jz1u5YergMeuCtoS1A84K+STD9JfDdhLX
-	 zjMkZBRLL1UFQpQz6rcnlDJAV3+mVrB5HO7SGpi/ti/ZirHWmYZ3X8JSlOGKyjx0lV
-	 iQ+vlUUAP5K7GB19BfYb7dVOHRQUFrf7LbMwr1FESAHQ2mE00HV0CW4abtEYVmVbN9
-	 7yPwzo1VJIsrA==
+	b=ea8HJUM6PYdfoffb3FtU3U0Q4IokGeELImSzDZGogYlzndCdM2/9XVqQ5LBRfpdlh
+	 XyZDhKFsouwmkqXODY7162/BruZGOwAI5e+dXvw2AmcH7r6hRpFWog/jR+CdnpsUR8
+	 lx0m8ZNoG/6rVq6wTLuN/jJE0Vz4iRMDBStvn1kyYU5GTCAA9jZjRxnT3AwucIo4PH
+	 7PHKmEKNjDfTRAvDDNAPZqBxM0CgCAnyu5tpzo7MRkEZn+a5e3t68CaO+DOp1ip3KJ
+	 btv5kwiSdrxutpjW9uTaRyCnGUehaB99ReM8swdfet2/lRQwplh2+WG7sVYKNcRUWf
+	 qgb2uQHy0sCvA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Long Li <leo.lilong@huawei.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+Cc: Alex Deucher <alexander.deucher@amd.com>,
+	Rodrigo Siqueira <siqueira@igalia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	trondmy@kernel.org,
-	anna@kernel.org,
-	jlayton@kernel.org,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	linux-nfs@vger.kernel.org,
-	netdev@vger.kernel.org,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	sunil.khatri@amd.com,
+	boyuan.zhang@amd.com,
+	lijo.lazar@amd.com,
+	Prike.Liang@amd.com,
+	kevinyang.wang@amd.com,
+	mario.limonciello@amd.com,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 22/43] sunrpc: fix race in cache cleanup causing stale nextcheck time
-Date: Sun,  1 Jun 2025 19:42:02 -0400
-Message-Id: <20250601234224.3517599-22-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 24/43] drm/amdgpu/gfx8: fix CSIB handling
+Date: Sun,  1 Jun 2025 19:42:04 -0400
+Message-Id: <20250601234224.3517599-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601234224.3517599-1-sashal@kernel.org>
 References: <20250601234224.3517599-1-sashal@kernel.org>
@@ -60,133 +62,69 @@ X-stable-base: Linux 5.15.184
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Long Li <leo.lilong@huawei.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 2298abcbe11e9b553d03c0f1d084da786f7eff88 ]
+[ Upstream commit c8b8d7a4f1c5cdfbd61d75302fb3e3cdefb1a7ab ]
 
-When cache cleanup runs concurrently with cache entry removal, a race
-condition can occur that leads to incorrect nextcheck times. This can
-delay cache cleanup for the cache_detail by up to 1800 seconds:
+We shouldn't return after the last section.
+We need to update the rest of the CSIB.
 
-1. cache_clean() sets nextcheck to current time plus 1800 seconds
-2. While scanning a non-empty bucket, concurrent cache entry removal can
-   empty that bucket
-3. cache_clean() finds no cache entries in the now-empty bucket to update
-   the nextcheck time
-4. This maybe delays the next scan of the cache_detail by up to 1800
-   seconds even when it should be scanned earlier based on remaining
-   entries
-
-Fix this by moving the hash_lock acquisition earlier in cache_clean().
-This ensures bucket emptiness checks and nextcheck updates happen
-atomically, preventing the race between cleanup and entry removal.
-
-Signed-off-by: Long Li <leo.lilong@huawei.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now let me analyze this commit in detail based on what I've learned:
-**ANALYSIS:** **YES** - This commit should be backported to stable
-kernel trees. ## Detailed Analysis: ### 1. **Bug Impact Assessment**
-This commit fixes a **race condition** that can cause cache cleanup
-delays of up to **1800 seconds (30 minutes)**. This is a significant
-performance regression that affects the SUNRPC cache subsystem's ability
-to clean expired entries in a timely manner. ### 2. **Root Cause
-Analysis** The race condition occurs in the `cache_clean()` function
-between these steps: - **Line 461**: `current_detail->nextcheck =
-seconds_since_boot()+30*60;` (sets nextcheck to current time + 1800
-seconds) - **Lines 466-469**: The code searches for non-empty buckets
-**without holding hash_lock** - **Lines 479-496**: The code then
-acquires `hash_lock` and processes entries, updating nextcheck based on
-entry expiry times **The race window**: Between lines 466-469 and 479,
-concurrent cache operations (like `sunrpc_cache_unhash()`) can remove
-entries from buckets, making them empty. When `cache_clean()` later
-acquires the hash_lock, it finds empty buckets and cannot update the
-nextcheck time appropriately. ### 3. **Code Change Analysis** The fix is
-**minimal and surgical**: ```c // BEFORE: hash_lock acquired late (line
-479) if (current_detail && current_index < current_detail->hash_size) {
-// ... variable declarations ... spin_lock(&current_detail->hash_lock);
-// TOO LATE! // AFTER: hash_lock acquired early (before bucket search)
-spin_lock(&current_detail->hash_lock); while (current_index <
-current_detail->hash_size &&
-hlist_empty(&current_detail->hash_table[current_index]))
-current_index++; ``` This ensures that: 1. **Atomicity**: Bucket
-emptiness checks and nextcheck updates happen atomically 2. **Race
-prevention**: No concurrent entry removal can happen during bucket
-scanning 3. **Correctness**: nextcheck times are updated based on the
-actual state of buckets at scan time ### 4. **Risk Assessment** **Low
-Risk**: - **Scope**: Changes only affect the locking order in
-`cache_clean()` - **Backwards compatibility**: No API changes - **Side
-effects**: Minimal - just holds the lock slightly longer, which is safe
-- **Testing**: The change preserves existing logic while fixing the race
-### 5. **Stable Tree Criteria Compliance** ✅ **Fixes important bug**:
-30-minute cache cleanup delays significantly impact performance ✅
-**Small and contained**: Only 12 lines changed in a single function ✅
-**No architectural changes**: Just reorders lock acquisition ✅ **Minimal
-regression risk**: The change is conservative and preserves existing
-behavior ✅ **Clear side effects**: Only improves correctness, no
-negative impacts ### 6. **Comparison with Similar Commits** Looking at
-the historical examples: - **Similar to Commit #3 (YES)**: Fixes a race
-condition with minimal code changes and clear correctness improvement -
-**Unlike Commits #1,#2,#4,#5 (NO)**: Those were either reverted,
-cosmetic, or changed behavior significantly ### 7. **Critical System
-Impact** SUNRPC cache is used by: - **NFS client/server operations** -
-**RPC authentication caching** - **Various network filesystem
-operations** A 30-minute delay in cache cleanup can cause: - Memory
-bloat from stale entries - Performance degradation - Potential service
-disruptions **Conclusion**: This is a clear bug fix with minimal risk
-that addresses a significant performance issue in a critical kernel
-subsystem. It meets all criteria for stable tree backporting.
+**YES** This commit should be backported to stable kernel trees.
+**Extensive Analysis:** **1. Critical Bug Nature:** The code changes fix
+a serious logic error in the CSIB (Clear State Indirect Buffer) handling
+for AMD GFX8 hardware. The bug occurs in `gfx_v8_0_get_csb_buffer()`
+where there's an early `return` statement in the `else` branch at line
+1252: ```c if (sect->id == SECT_CONTEXT) { // Handle SECT_CONTEXT
+sections... } else { return; // BUG: Early exit prevents rest of buffer
+setup! } ``` **2. Impact and Severity:** This bug has significant
+functional impact because: - The function is responsible for setting up
+the Clear State Buffer, which is critical for GPU state initialization -
+When encountering any section that isn't `SECT_CONTEXT` (such as
+`SECT_CLEAR`, `SECT_CTRLCONST`, or `SECT_NONE` as defined in
+`clearstate_defs.h`), the function exits early - This prevents the
+essential final buffer setup steps from executing: - PA_SC_RASTER_CONFIG
+register setup (lines 1257-1261) - PACKET3_PREAMBLE_END_CLEAR_STATE
+packet (lines 1263-1264) - PACKET3_CLEAR_STATE packet (lines 1266-1267)
+**3. Real-World Consequences:** An incomplete CSB buffer can lead to: -
+GPU initialization failures - Rendering corruption - System instability
+- Potential hangs during graphics operations **4. Code Quality
+Assessment:** - **Small and contained:** The fix removes only 2 lines of
+problematic code - **No architectural changes:** Pure bug fix with no
+design modifications - **Clear intent:** The commit message explicitly
+states the problem and solution - **Low regression risk:** Removing an
+early return cannot introduce new failures **5. Comparison with
+Historical Examples:** This commit aligns perfectly with the "Backport
+Status: YES" example (#4) which also fixed a critical handling issue in
+AMD GPU code. Like that commit, this: - Fixes a clear functional bug -
+Has immediate user impact - Is small and low-risk - Affects critical GPU
+subsystem functionality **6. Stable Tree Compliance:** ✓ Fixes important
+user-affecting bug ✓ Small, contained change ✓ No new features
+introduced ✓ Critical hardware subsystem affected ✓ Clear regression
+prevention The fix ensures that all necessary GPU state initialization
+packets are properly written to the buffer, which is essential for
+correct hardware operation on GFX8 hardware generations.
 
- net/sunrpc/cache.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/net/sunrpc/cache.c b/net/sunrpc/cache.c
-index e8448e9e03d59..715f7d080f7a2 100644
---- a/net/sunrpc/cache.c
-+++ b/net/sunrpc/cache.c
-@@ -451,24 +451,21 @@ static int cache_clean(void)
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
+index e0302c23e9a7e..4f54b0cf51336 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
+@@ -1277,8 +1277,6 @@ static void gfx_v8_0_get_csb_buffer(struct amdgpu_device *adev,
+ 						PACKET3_SET_CONTEXT_REG_START);
+ 				for (i = 0; i < ext->reg_count; i++)
+ 					buffer[count++] = cpu_to_le32(ext->extent[i]);
+-			} else {
+-				return;
+ 			}
  		}
  	}
- 
-+	spin_lock(&current_detail->hash_lock);
-+
- 	/* find a non-empty bucket in the table */
--	while (current_detail &&
--	       current_index < current_detail->hash_size &&
-+	while (current_index < current_detail->hash_size &&
- 	       hlist_empty(&current_detail->hash_table[current_index]))
- 		current_index++;
- 
- 	/* find a cleanable entry in the bucket and clean it, or set to next bucket */
--
--	if (current_detail && current_index < current_detail->hash_size) {
-+	if (current_index < current_detail->hash_size) {
- 		struct cache_head *ch = NULL;
- 		struct cache_detail *d;
- 		struct hlist_head *head;
- 		struct hlist_node *tmp;
- 
--		spin_lock(&current_detail->hash_lock);
--
- 		/* Ok, now to clean this strand */
--
- 		head = &current_detail->hash_table[current_index];
- 		hlist_for_each_entry_safe(ch, tmp, head, cache_list) {
- 			if (current_detail->nextcheck > ch->expiry_time)
-@@ -489,8 +486,10 @@ static int cache_clean(void)
- 		spin_unlock(&cache_list_lock);
- 		if (ch)
- 			sunrpc_end_cache_remove_entry(ch, d);
--	} else
-+	} else {
-+		spin_unlock(&current_detail->hash_lock);
- 		spin_unlock(&cache_list_lock);
-+	}
- 
- 	return rv;
- }
 -- 
 2.39.5
 
