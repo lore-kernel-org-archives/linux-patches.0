@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB6531EB30;
-	Sun,  1 Jun 2025 23:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E8931FBE0;
+	Sun,  1 Jun 2025 23:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748821283; cv=none; b=u76ZiXNDOb/BL3LjrhVK6fA397nSHkm2V7S1p2+bbRDAM6Q4wX9OWtiW8OSuO3yI1OX2lXLkMXG1KglZ+wwPKh+L0q3Nto5lBorSW9ju50N7hVuUanG/L9fMwhtD/xBnwjK1B6j3ijx3gVuLYarS18ugEKSqvSSk3FTFHzYTXlw=
+	t=1748821286; cv=none; b=EybSZGtkWePzKP6TK3snxn0WSqIzkzEL2Cwn4h6uFTPbvpUgk5LSCw4C2OzAnp6B0qzEwl24nqnpQ9V8maF0GEbBtL7vf94B8xDC8thEBztOu1d/F4tbnP/Cp51ekObJq1kNtojPQu/lY07veeq/dEOeQnPzXuRyWpXaa6Eaa9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748821283; c=relaxed/simple;
-	bh=qeVze8P6XEXfyMXMdn43Gd4I2IPl51CRhvEZ4apRctY=;
+	s=arc-20240116; t=1748821286; c=relaxed/simple;
+	bh=XKEhkhXN4q19A16IE1qpJ8kxbk/q8UIOcm/B/Sr8+gg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dr1yZ404dpCVqfQsHmKy1c7iadCV1LczqqsvLE1SaYbWd5+O1I+s4B630I9/syvYDFnDOr1aQlPTAQN9uYACybWK1WOmzMxQ7TFSJjb+DxwOpfV+txgPBiaSRyFtpgXK+4+ne+QWV2gvHs+LYIPUFDYgGK+W6qO0USSAfQ0AFPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DCW9Ggbz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sJ8X873B4pQknEB2CYM/gpUIw7uwACHzIrKAYeY/Rm6KouQ3LTCywxi2e70FQGRaFV61ABYV1c4l+ht7kue2UNwv57pdVYHzIcIEUS9HFo72hUEbDu3UmAmJEZH/XEzuD/8ueyaBw3p8guvblb8q3kJ8ZkW0+bj8m5lyi5XTP9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z6W5sJFm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DCW9Ggbz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4523CC4CEE7;
-	Sun,  1 Jun 2025 23:41:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z6W5sJFm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73C26C4CEEE;
+	Sun,  1 Jun 2025 23:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748821283;
-	bh=qeVze8P6XEXfyMXMdn43Gd4I2IPl51CRhvEZ4apRctY=;
+	s=k20201202; t=1748821286;
+	bh=XKEhkhXN4q19A16IE1qpJ8kxbk/q8UIOcm/B/Sr8+gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DCW9GgbzatHdB2npOXnoWlW4uV5/i6bBvJDC9X6rvJIQpGeLE72EeYtw3mmUPLg1/
-	 pt4F3osF8w6sZEG3k8wUAfvMdM6og3OpniOB4wKOW3IhWvxkPamE6TJyefWNFlRw+x
-	 //YHZP84t5WDNWgYGZ3kpiTi8637rai1jm5cxG8qZ3VKmZ8RIlgCPuyNZTmDlDp6XK
-	 kUeJRiSRyoQ+aExQvbPHb3fA6u/ci+0buKAHmUYLSYsr/OfcuyBd9h7cYdK8kTh1/6
-	 wSCNUM3g17CniuW3ABoK4eYue07NnTrgxWW8oiUujR5Njm1rpHHHR7hQOsj2XzY8/h
-	 7UzzL2drUBLtw==
+	b=Z6W5sJFmrbY489gNYRbGdodRl85l3FyaW2ez+WYZqZdKHCacQCqMQaN4N7b2FrZJq
+	 sHZFPfQAWOIxmzRB+WXsKoIWgf33nn9iSVp6DT61SykvwBXg05xYqg7SeoSXmcEMjX
+	 BhuugJpmcaIJW9fFfUpGMFt6QV8CbailFEhmzyGSUIAY6/bBDQFQ1gHDWTqnneQEBo
+	 2OG/gKPwc92gFt5eZXRqFbVVs6Ie4uBxHbaeYjKOGAnooaajarJHN0iRbX8JJJpSDG
+	 sGvVJ5/7km6/Jd7LRfzFjIwdgTw1Wvayj8S9JNx0uUQV+mFX+q45bZ8DINK54eJjkb
+	 OCWCaL5xHKmTQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
@@ -36,16 +36,16 @@ Cc: Alex Deucher <alexander.deucher@amd.com>,
 	airlied@gmail.com,
 	simona@ffwll.ch,
 	sunil.khatri@amd.com,
-	boyuan.zhang@amd.com,
-	Prike.Liang@amd.com,
+	vitaly.prosyak@amd.com,
+	srinivasan.shanmugam@amd.com,
+	Jiadong.Zhu@amd.com,
 	kevinyang.wang@amd.com,
-	mario.limonciello@amd.com,
 	amd-gfx@lists.freedesktop.org,
 	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.1 29/58] drm/amdgpu/gfx8: fix CSIB handling
-Date: Sun,  1 Jun 2025 19:39:42 -0400
-Message-Id: <20250601234012.3516352-29-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.1 30/58] drm/amdgpu/gfx9: fix CSIB handling
+Date: Sun,  1 Jun 2025 19:39:43 -0400
+Message-Id: <20250601234012.3516352-30-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601234012.3516352-1-sashal@kernel.org>
 References: <20250601234012.3516352-1-sashal@kernel.org>
@@ -63,7 +63,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit c8b8d7a4f1c5cdfbd61d75302fb3e3cdefb1a7ab ]
+[ Upstream commit a4a4c0ae6742ec7d6bf1548d2c6828de440814a0 ]
 
 We shouldn't return after the last section.
 We need to update the rest of the CSIB.
@@ -73,49 +73,62 @@ Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees.
-**Extensive Analysis:** **1. Critical Bug Nature:** The code changes fix
-a serious logic error in the CSIB (Clear State Indirect Buffer) handling
-for AMD GFX8 hardware. The bug occurs in `gfx_v8_0_get_csb_buffer()`
-where there's an early `return` statement in the `else` branch at line
-1252: ```c if (sect->id == SECT_CONTEXT) { // Handle SECT_CONTEXT
-sections... } else { return; // BUG: Early exit prevents rest of buffer
-setup! } ``` **2. Impact and Severity:** This bug has significant
-functional impact because: - The function is responsible for setting up
-the Clear State Buffer, which is critical for GPU state initialization -
-When encountering any section that isn't `SECT_CONTEXT` (such as
-`SECT_CLEAR`, `SECT_CTRLCONST`, or `SECT_NONE` as defined in
-`clearstate_defs.h`), the function exits early - This prevents the
-essential final buffer setup steps from executing: - PA_SC_RASTER_CONFIG
-register setup (lines 1257-1261) - PACKET3_PREAMBLE_END_CLEAR_STATE
-packet (lines 1263-1264) - PACKET3_CLEAR_STATE packet (lines 1266-1267)
-**3. Real-World Consequences:** An incomplete CSB buffer can lead to: -
-GPU initialization failures - Rendering corruption - System instability
-- Potential hangs during graphics operations **4. Code Quality
-Assessment:** - **Small and contained:** The fix removes only 2 lines of
-problematic code - **No architectural changes:** Pure bug fix with no
-design modifications - **Clear intent:** The commit message explicitly
-states the problem and solution - **Low regression risk:** Removing an
-early return cannot introduce new failures **5. Comparison with
-Historical Examples:** This commit aligns perfectly with the "Backport
-Status: YES" example (#4) which also fixed a critical handling issue in
-AMD GPU code. Like that commit, this: - Fixes a clear functional bug -
-Has immediate user impact - Is small and low-risk - Affects critical GPU
-subsystem functionality **6. Stable Tree Compliance:** ✓ Fixes important
-user-affecting bug ✓ Small, contained change ✓ No new features
-introduced ✓ Critical hardware subsystem affected ✓ Clear regression
-prevention The fix ensures that all necessary GPU state initialization
-packets are properly written to the buffer, which is essential for
-correct hardware operation on GFX8 hardware generations.
+Now I'll analyze the specific code changes and provide my backport
+recommendation: **YES** This commit should be backported to stable
+kernel trees. Here's my detailed analysis: ## Code Analysis The commit
+fixes a logic bug in the `gfx_v9_0_get_csb_buffer()` function that
+builds GPU command buffers for AMD GFX9 hardware. Looking at the code
+change: **Before:** ```c if (sect->id == SECT_CONTEXT) { buffer[count++]
+= cpu_to_le32(PACKET3(PACKET3_SET_CONTEXT_REG, ext->reg_count));
+buffer[count++] = cpu_to_le32(ext->reg_index -
+PACKET3_SET_CONTEXT_REG_START); for (i = 0; i < ext->reg_count; i++)
+buffer[count++] = cpu_to_le32(ext->extent[i]); } else { return; // ←
+BUGGY early return } ``` **After:** ```c if (sect->id == SECT_CONTEXT) {
+buffer[count++] = cpu_to_le32(PACKET3(PACKET3_SET_CONTEXT_REG,
+ext->reg_count)); buffer[count++] = cpu_to_le32(ext->reg_index -
+PACKET3_SET_CONTEXT_REG_START); for (i = 0; i < ext->reg_count; i++)
+buffer[count++] = cpu_to_le32(ext->extent[i]); } // ← Early return
+removed, execution continues ``` ## Why This Should Be Backported ### 1.
+**Fixes a Clear Logic Bug** The early return prevents the function from
+completing its work. After the loop, the function needs to write
+critical termination packets: ```c buffer[count++] =
+cpu_to_le32(PACKET3(PACKET3_PREAMBLE_CNTL, 0)); buffer[count++] =
+cpu_to_le32(PACKET3_PREAMBLE_END_CLEAR_STATE); buffer[count++] =
+cpu_to_le32(PACKET3(PACKET3_CLEAR_STATE, 0)); buffer[count++] =
+cpu_to_le32(0); ``` ### 2. **Meets Stable Tree Criteria** - **Small and
+contained**: Simple one-line removal with clear intent - **Low
+regression risk**: Removing early return allows proper completion -
+**Important bug fix**: Prevents GPU command buffer corruption - **No
+architectural changes**: Pure bug fix without new features ### 3.
+**Comparison with Historical Examples** Looking at the provided
+historical commits, this fix is similar to commit #3 (marked YES) which
+also fixed preamble handling. Both commits: - Fix logic bugs in AMD GPU
+driver - Have minimal code changes - Address proper command/state
+handling - Are critical for correct driver operation ### 4. **Stability
+Impact** While currently masked because all existing clear state data
+only uses `SECT_CONTEXT` sections, this bug creates: - **Buffer
+corruption risk**: Incomplete command buffers sent to GPU - **Forward
+compatibility issues**: Future hardware might use other section types -
+**Inconsistent state**: Size calculation function has same bug pattern
+### 5. **Hardware Criticality** This affects the GFX9 generation which
+includes widely deployed GPUs like: - Vega series (RX Vega 56/64) -
+Raven Ridge APUs (Ryzen 2000G/3000G series) - Renoir APUs (Ryzen 4000
+series) ### 6. **Clear Commit Message** The commit message explicitly
+states "We need to update the rest of the CSIB" - indicating this fixes
+incomplete processing, exactly what stable backports target.
+**Conclusion**: This is a textbook stable backport candidate - a small,
+contained fix for a clear logic bug in a critical GPU initialization
+path that could lead to hardware instability. The risk/reward ratio
+strongly favors backporting.
 
- drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c | 2 --
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c | 2 --
  1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
-index 71ef25425c7f6..a51970e82861a 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
-@@ -1263,8 +1263,6 @@ static void gfx_v8_0_get_csb_buffer(struct amdgpu_device *adev,
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+index 3cec6a145a5c8..c574db4e8cbf3 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -1534,8 +1534,6 @@ static void gfx_v9_0_get_csb_buffer(struct amdgpu_device *adev,
  						PACKET3_SET_CONTEXT_REG_START);
  				for (i = 0; i < ext->reg_count; i++)
  					buffer[count++] = cpu_to_le32(ext->extent[i]);
