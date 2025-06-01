@@ -1,45 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56E72D29BB;
-	Sun,  1 Jun 2025 23:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C02F2D3208;
+	Sun,  1 Jun 2025 23:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820935; cv=none; b=jZ/1V/hG0CpdLlbQ4OMMqX0ebLltgjBglGoAs5pUorgzuWgbFEbiQUlliiEG9Dql9AKTqynxvt09+4xHFX5vcwDybkbsgpoFwtiUYFvCaobfHqzbQlJL7eBEf0XhVoltFi5VFnB/MwGCjs1L6TSLCFcwZC5X9g2w7N6gxIzjBxE=
+	t=1748820938; cv=none; b=mcDbdmW8oXGBmP4+xd8E58JtX3idFmcKkjqgZOWVVi+L+NWmfoCytl/leIb0UMDxu5L7qV5enLv2tsfvrLn2xXeymGh7f1hFXMuA/8QsZEH1x7pavyzFrliy968ZpGpyqQZOUiV2Hqq29WywdauE1GGQDfHZzbxWsnEUzoG4UkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748820935; c=relaxed/simple;
-	bh=22Yw7l1zjuG6e3LYVUjSlKeekk/oOjmXOfC3KDoOFsc=;
+	s=arc-20240116; t=1748820938; c=relaxed/simple;
+	bh=rs6zMvVHLN8bc5zfPCbkA0UUwGf378gzYnayt6OwLYg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JzW36lwflm8dmhTq4ncK+BUPAMsTd8lYVWse5gmWEI0HiB/pQWEtc75yza2u9pkhwM735pdAfXm9Whi31KY99NUBAxT9xtOHIg9pvqI/a4SCRhMSfnypl1xlY4rsKYjjUFHiAA2YaEeFrInwYmHLaGNQDBcRirFsCLzcuakOptM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uxdf4JCi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PKGu2GY9CFSLqb6+E3RN+z81WKRJ22Y/mVXK3w0NUF8dhi8tVv5CF4PxQpwiGpj2jYK7HuLTaa/pCSoMzTpzl+hbBkobwCHs/VtjLElNboXz4OLeAHf+MNfxvJO5Nkspung2zARTIdQeYAMmvkLlwILwFz/G3FPpU4zGJfOU6t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nXSjp2ss; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uxdf4JCi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A56CC4CEF1;
-	Sun,  1 Jun 2025 23:35:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nXSjp2ss"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF704C4CEE7;
+	Sun,  1 Jun 2025 23:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820935;
-	bh=22Yw7l1zjuG6e3LYVUjSlKeekk/oOjmXOfC3KDoOFsc=;
+	s=k20201202; t=1748820937;
+	bh=rs6zMvVHLN8bc5zfPCbkA0UUwGf378gzYnayt6OwLYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uxdf4JCiFWyU8ygu/UG98s9ehXPLou+NA6tZEhTmLx2Cfj8qmERK5EVWiRhRU7G47
-	 BoCliTvKU70nqSh9EkZ3CqzLoS8sIQs05goNTI90XOz0aKU9tF9HMOBaTiRb19ch2D
-	 GodsqOVkrLrfiWZpI1ys5uuAAdNlbcd9Lqfp7FTgKqAiHH1B8U9sjBKnFE7kMYi6Gv
-	 JbLqf3JhsEQGq4Kd5o10z3IcOsTHAY6N85ya+KjLDocw1BoCajk0XA7EPplPf+MXJQ
-	 lZmEHOrk+z4MpyHOIivbG4X/trwFBMBDQNfJMZF2liWdOjULG8noKfaHwtBroqYvP0
-	 KWlajOT009Fsw==
+	b=nXSjp2ss3YUP2IVwz1n+nqhtJ5w9sPtnGyMjyreXvb3sNISgSOgi0pjM+50ud7Bk/
+	 8QORnsCUFXZaWZTNOlpU8kh8WUnEAtE2JDz/ImVGBu67TcbTJIerpuNa1yHY/w3h1R
+	 kzxPWjdBg8L/denjzE1gPgVK/bqQWOMy5u053yc8M20EvmoG6yViJVFlLpukUAEA63
+	 BLb7tZnNXRhyqVx3e7VEUZNS+w/ODb4ROP/BkxgONccoxyJ1R/9tmIHFO9hkhOo7MY
+	 cl4GM43itxK3tiv3Pp7YbY6nwF7RFF5VPXPilc9OAZRoROE9pKfmAidtOZ8Vi3pzF0
+	 Y9uiuPqnpcsQg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nas Chung <nas.chung@chipsnmedia.com>,
-	Michael Tretter <m.tretter@pengutronix.de>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+Cc: Charlene Liu <Charlene.Liu@amd.com>,
+	Ovidiu Bunea <ovidiu.bunea@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
+	austin.zheng@amd.com,
+	jun.lei@amd.com,
+	harry.wentland@amd.com,
+	sunpeng.li@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 37/93] media: uapi: v4l: Change V4L2_TYPE_IS_CAPTURE condition
-Date: Sun,  1 Jun 2025 19:33:04 -0400
-Message-Id: <20250601233402.3512823-37-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 38/93] drm/amd/display: fix zero value for APU watermark_c
+Date: Sun,  1 Jun 2025 19:33:05 -0400
+Message-Id: <20250601233402.3512823-38-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601233402.3512823-1-sashal@kernel.org>
 References: <20250601233402.3512823-1-sashal@kernel.org>
@@ -52,104 +60,91 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.31
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nas Chung <nas.chung@chipsnmedia.com>
+From: Charlene Liu <Charlene.Liu@amd.com>
 
-[ Upstream commit ad2698efce37e910dcf3c3914263e6cb3e86f8cd ]
+[ Upstream commit d5a7fdc88a2d64242d959942cbd0e1499ebb9806 ]
 
-Explicitly compare a buffer type only with valid buffer types,
-to avoid matching a buffer type outside of the valid buffer type set.
+[why]
+the guard of is_apu not in sync, caused no watermark_c output.
 
-Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
-Reviewed-by: Michael Tretter <m.tretter@pengutronix.de>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Reviewed-by: Ovidiu Bunea <ovidiu.bunea@amd.com>
+Signed-off-by: Charlene Liu <Charlene.Liu@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees based on
-the following analysis: ## Code Change Analysis The commit fixes a
-logical flaw in the `V4L2_TYPE_IS_CAPTURE` macro in
-`include/uapi/linux/videodev2.h`. **Before the patch:** ```c #define
-V4L2_TYPE_IS_CAPTURE(type) (!V4L2_TYPE_IS_OUTPUT(type)) ``` **After the
-patch:** ```c #define V4L2_TYPE_IS_VALID(type) \ ((type) >=
-V4L2_BUF_TYPE_VIDEO_CAPTURE && (type) <= V4L2_BUF_TYPE_META_OUTPUT)
-#define V4L2_TYPE_IS_CAPTURE(type) \ (V4L2_TYPE_IS_VALID(type) &&
-!V4L2_TYPE_IS_OUTPUT(type)) ``` ## The Bug and Its Impact The original
-implementation has a critical flaw: **invalid buffer type values
-incorrectly return true for `V4L2_TYPE_IS_CAPTURE`**. Here's why: 1. For
-invalid buffer types (e.g., 0, 15, 100, 0x80), `V4L2_TYPE_IS_OUTPUT()`
-returns false 2. The negation `!V4L2_TYPE_IS_OUTPUT()` makes these
-invalid types appear as "capture" types 3. This can lead to incorrect
-code paths being taken in media drivers throughout the kernel ## Why
-This Should Be Backported 1. **Affects User-Facing API**: This is a UAPI
-header that defines kernel-userspace interface behavior. Incorrect
-behavior here can affect any V4L2 application. 2. **Potential
-Security/Stability Risk**: The bug could lead to: - Wrong buffer
-handling paths in media drivers - Potential out-of-bounds access or
-incorrect memory management - Driver state corruption when invalid
-buffer types are misclassified 3. **Small, Contained Fix**: The change
-is minimal and contained to macro definitions with clear semantics. It
-only adds proper validation without changing valid type behavior. 4.
-**No Regression Risk**: The fix only affects the handling of invalid
-buffer types, making them correctly return false instead of incorrectly
-returning true. Valid buffer types retain their existing behavior. 5.
-**Wide Impact**: Looking at the kernel tree, `V4L2_TYPE_IS_CAPTURE` is
-used extensively in media drivers: -
-`/drivers/media/v4l2-core/v4l2-mem2mem.c` - Multiple platform-specific
-drivers (Samsung, Mediatek, Verisilicon, etc.) - Any incorrect behavior
-propagates to all these drivers 6. **Consistent with Historical
-Pattern**: Looking at similar commits like commit 4b837c6d7ee7 ("media:
-v4l: uAPI: V4L2_BUF_TYPE_META_OUTPUT is an output buffer type"), UAPI
-fixes for buffer type handling have been backported before. ## Backport
-Criteria Met - ✅ **Fixes important bugs**: Corrects fundamental macro
-logic affecting buffer type validation - ✅ **Minimal risk**: Only adds
-validation, doesn't change existing valid behavior - ✅ **Small and
-contained**: Changes only macro definitions in header file - ✅ **No
-architectural changes**: Pure bug fix without feature additions - ✅
-**Affects critical subsystem**: Media/V4L2 is widely used across many
-device drivers The fix ensures that only valid buffer types (1-14) can
-be classified as capture types, preventing potential mishandling of
-invalid values throughout the media subsystem.
+**YES** This commit should be backported to stable kernel trees. Here's
+my extensive analysis: ## Bug Analysis The commit fixes a critical bug
+in AMD display driver's watermark handling for APU (Accelerated
+Processing Unit) systems. The issue is in the
+`dml2_validate_and_build_resource` function where watermark_c was being
+incorrectly populated for APU systems. ## Problem Description **Before
+the fix:** ```c memcpy(&context->bw_ctx.bw.dcn.watermarks.c,
+&dml2->v20.g6_temp_read_watermark_set,
+sizeof(context->bw_ctx.bw.dcn.watermarks.c)); ``` **After the fix:**
+```c if (context->streams[0]->sink->link->dc->caps.is_apu)
+dml2_extract_watermark_set(&context->bw_ctx.bw.dcn.watermarks.c,
+&dml2->v20.dml_core_ctx); else
+memcpy(&context->bw_ctx.bw.dcn.watermarks.c,
+&dml2->v20.g6_temp_read_watermark_set,
+sizeof(context->bw_ctx.bw.dcn.watermarks.c)); ``` ## Why This is a Good
+Backport Candidate 1. **Clear Bug Fix**: The commit message explicitly
+states "the guard of is_apu not in sync, caused no watermark_c output" -
+this indicates a bug where APU systems were getting incorrect (likely
+zero) watermark values. 2. **Consistent Pattern**: Looking at the same
+file (line 546, 561, 569), there are already multiple `is_apu` checks
+that differentiate behavior between APU and discrete GPU systems. The
+original code at line 666 was inconsistent with this pattern. 3. **Small
+and Contained**: The fix is minimal - just adding a conditional check
+around an existing operation. It doesn't introduce new functionality or
+architectural changes. 4. **Critical Subsystem**: Display watermarks are
+critical for preventing display artifacts, screen corruption, underflow
+issues, and power management problems. Incorrect watermarks can cause
+visible display problems for users. 5. **APU-Specific Impact**: APUs
+(integrated GPU+CPU) are very common in laptops and budget systems. A
+watermark bug affecting these systems would impact a large user base. 6.
+**Comparison with Similar Commits**: Looking at the similar commits
+provided: - Commits #2 and #4 with "YES" status fix watermark values to
+prevent "flickering and OTC underflow" - This commit follows the same
+pattern of fixing watermark-related display issues ## Risk Assessment
+**Low Risk:** - The change only affects APU systems (`is_apu` check) -
+For non-APU systems, behavior remains exactly the same - The fix aligns
+the watermark_c handling with how watermarks a, b, and d are already
+handled - Uses existing, well-tested `dml2_extract_watermark_set()`
+function instead of raw memcpy ## Context from Kernel Investigation The
+git blame shows the original problematic code was introduced in commit
+7966f319c66d9 (July 2023) when DML2 was first introduced. This suggests
+the bug has existed since DML2 was added, affecting APU users for
+potentially over a year. The fix ensures APU systems get proper
+watermark calculations via `dml2_extract_watermark_set()` instead of
+using potentially incorrect temporary values from
+`g6_temp_read_watermark_set`. **Conclusion**: This is a clear, low-risk
+bug fix that addresses display functionality issues on a common class of
+hardware (APUs) and follows stable tree criteria perfectly.
 
- include/uapi/linux/videodev2.h | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
-index 9cf6e80a6e459..52c4e5d232166 100644
---- a/include/uapi/linux/videodev2.h
-+++ b/include/uapi/linux/videodev2.h
-@@ -153,10 +153,18 @@ enum v4l2_buf_type {
- 	V4L2_BUF_TYPE_SDR_OUTPUT           = 12,
- 	V4L2_BUF_TYPE_META_CAPTURE         = 13,
- 	V4L2_BUF_TYPE_META_OUTPUT	   = 14,
-+	/*
-+	 * Note: V4L2_TYPE_IS_VALID and V4L2_TYPE_IS_OUTPUT must
-+	 * be updated if a new type is added.
-+	 */
- 	/* Deprecated, do not use */
- 	V4L2_BUF_TYPE_PRIVATE              = 0x80,
- };
- 
-+#define V4L2_TYPE_IS_VALID(type)		 \
-+	((type) >= V4L2_BUF_TYPE_VIDEO_CAPTURE &&\
-+	 (type) <= V4L2_BUF_TYPE_META_OUTPUT)
-+
- #define V4L2_TYPE_IS_MULTIPLANAR(type)			\
- 	((type) == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE	\
- 	 || (type) == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
-@@ -170,7 +178,8 @@ enum v4l2_buf_type {
- 	 || (type) == V4L2_BUF_TYPE_SDR_OUTPUT			\
- 	 || (type) == V4L2_BUF_TYPE_META_OUTPUT)
- 
--#define V4L2_TYPE_IS_CAPTURE(type) (!V4L2_TYPE_IS_OUTPUT(type))
-+#define V4L2_TYPE_IS_CAPTURE(type)	\
-+	(V4L2_TYPE_IS_VALID(type) && !V4L2_TYPE_IS_OUTPUT(type))
- 
- enum v4l2_tuner_type {
- 	V4L2_TUNER_RADIO	     = 1,
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c b/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
+index 03812f862b3d6..5732f1b5acab8 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
+@@ -665,7 +665,10 @@ static bool dml2_validate_and_build_resource(const struct dc *in_dc, struct dc_s
+ 		dml2_copy_clocks_to_dc_state(&out_clks, context);
+ 		dml2_extract_watermark_set(&context->bw_ctx.bw.dcn.watermarks.a, &dml2->v20.dml_core_ctx);
+ 		dml2_extract_watermark_set(&context->bw_ctx.bw.dcn.watermarks.b, &dml2->v20.dml_core_ctx);
+-		memcpy(&context->bw_ctx.bw.dcn.watermarks.c, &dml2->v20.g6_temp_read_watermark_set, sizeof(context->bw_ctx.bw.dcn.watermarks.c));
++		if (context->streams[0]->sink->link->dc->caps.is_apu)
++			dml2_extract_watermark_set(&context->bw_ctx.bw.dcn.watermarks.c, &dml2->v20.dml_core_ctx);
++		else
++			memcpy(&context->bw_ctx.bw.dcn.watermarks.c, &dml2->v20.g6_temp_read_watermark_set, sizeof(context->bw_ctx.bw.dcn.watermarks.c));
+ 		dml2_extract_watermark_set(&context->bw_ctx.bw.dcn.watermarks.d, &dml2->v20.dml_core_ctx);
+ 		dml2_extract_writeback_wm(context, &dml2->v20.dml_core_ctx);
+ 		//copy for deciding zstate use
 -- 
 2.39.5
 
