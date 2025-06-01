@@ -1,49 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56CB272E63;
-	Sun,  1 Jun 2025 23:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933302741A0;
+	Sun,  1 Jun 2025 23:28:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748820499; cv=none; b=skF/hisOdEJJ4Qkaho2wxxAYOcPlNJLDOhUktwCkyVsxC340kfqYOgRu+nSbGMeJV7LzO8ehndwcg4RMu8isGI0zuu+ChEvZQCvQiuUt6IjAEr7narn2XbgSNEhyHiovIIpZayXwzTomrA2v9OzXSze/Z1DXC2G1clpAUUU5oj4=
+	t=1748820499; cv=none; b=VboTyEnp8hh2lcOrQrtPNeCjTe7+7gQodeLO8dV2CF1nYdzp/+GEkrJWg/DMQ1x8ZeB8+3xG3zyqbjaMSISms1uF5XaNICDJjHEc1e+YFxAjO9hQA3awQZo3QXLBuvxlCUjSdaVGCPONmXAYwbXtPDNI8/H66kdosNFXGadkbKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1748820499; c=relaxed/simple;
-	bh=zu3m5Srkc9jh8dAzxMrFXkdW7FEaom6aY+vqpPWbA4U=;
+	bh=BWNJhM0B0GwzMuWy0DnZNuBNkJMk5bCJMu8giMnnk8I=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TCNLgTL61SCHfnqCJ0SHnNAWjLrF4V/+0+/OWytsQtaznN3FHPJHQ5fmle4Fer8bQ4+y6SHSlG/q9KFR0P2YvWbfwPOMg243btWCqP41yuyV3x8LFyQ4GvPl0nBxUbK/DwEEVDu7qDiiXDmnSsEiN8f+rs7E6l5QL1zC0J1JgWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jglMpM3K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tVKEpl+iqqjC4WPGan85qjkTlsyXpWmXaxIPdpUmeKGC2lmPgYE/2Dak9vVH0xTKNOdW+KLGAHtQ02kCvHzD1oyekRUVqeC1Pr7IT9hmL2+tGo8HVwGPP078NZthtVdABnVxXESl/fyR/oDDe+xyM3/Zin2B29/FjAarhhCzBU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GXXO5zzJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jglMpM3K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9367C4CEF1;
-	Sun,  1 Jun 2025 23:28:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GXXO5zzJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B4EC4CEEE;
+	Sun,  1 Jun 2025 23:28:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820497;
-	bh=zu3m5Srkc9jh8dAzxMrFXkdW7FEaom6aY+vqpPWbA4U=;
+	s=k20201202; t=1748820499;
+	bh=BWNJhM0B0GwzMuWy0DnZNuBNkJMk5bCJMu8giMnnk8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jglMpM3KcY063a4dfv120rU77YNlOfbjiE9Sa2dSAD8VN9R3exOVtJL0lu2fJH/M/
-	 YBZ9YztQIsIEJqjXKYqcX/OESLEhZPAHIl7EzyW6E+yby3xK1hnjpI2EOQrCI66BPS
-	 goidiVe8T9QiO+49aepFF1KUDMKhnAUEbnz1j01C9UnYaLB/2ltYn+hDBAe+oDkKgi
-	 KAfZG0no4k+5oK140600Oyg9Afbp96FOwdOtxjfh3itcmR4hHhoQtcjvBsZ2my7IJ+
-	 rAcNrrBsdXVJK44CxpT9JGEogu4bikiqB1PzWN1skS1nbciUlfPEFaz3cVWL20bohL
-	 ZF7PEJK2wdHTA==
+	b=GXXO5zzJ0H0UZDe8chdiLCsP2Pq2H3qb0HJPiMo3tQPRM/4K6subAf5TBQSVoaZsx
+	 RCtCvbXjAPYTb1MN8Q3uUUz3LJs0dUlRq43MrZ+7OhpMhrIkGKM8w9bWF0mQFkPVE3
+	 052frskr4/KQdzAjIBdeLKbpgTHVAh6QpcyX8uwiRc962eBZWlRbHCL1mW9p/ybw46
+	 Hca8twEuFrQbBVz8L4BN76pSvY98NJ7tLWIhFR9SP4+MHWmG/oswDNyKLqMgjohbmg
+	 xSn6hhn/jYnlTfva06TY9+CW4FVIBPpaB0CM2pKK8cuuUhheXC850YIrKex61kqUqs
+	 m2+LFxH5QdpeA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+Cc: Andy Yan <andy.yan@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>,
-	niklas.soderlund@ragnatech.se,
-	mchehab@kernel.org,
-	geert+renesas@glider.be,
-	magnus.damm@gmail.com,
-	linux-media@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
+	hjc@rock-chips.com,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 074/110] media: rcar-vin: Fix stride setting for RAW8 formats
-Date: Sun,  1 Jun 2025 19:23:56 -0400
-Message-Id: <20250601232435.3507697-74-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 075/110] drm/rockchip: vop2: Make overlay layer select register configuration take effect by vsync
+Date: Sun,  1 Jun 2025 19:23:57 -0400
+Message-Id: <20250601232435.3507697-75-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250601232435.3507697-1-sashal@kernel.org>
 References: <20250601232435.3507697-1-sashal@kernel.org>
@@ -53,117 +54,103 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit e7376745ad5c8548e31d9ea58adfb5a847e017a4 ]
+[ Upstream commit c5996e4ab109c8bb5541453b20647eaaf9350f41 ]
 
-Earlier versions of the datasheet where unclear about the stride setting
-for RAW8 capture formats. Later datasheets clarifies that the stride
-only process in this mode for non-image data. For image data the full
-stride shall be used. Compare section "RAW: 8 Bits and Embedded 8-Bit
-Non-Image Data, User Defined 8-bit Data" vs "RAW: 8 Bits".
+Because the layer/window enable/disable is take effect by vsync, if the
+overlay configuration of these layers does not follow vsync and
+takes effect immediately instead, when multiple layers are dynamically
+enable/disable, inconsistent display contents may be seen on the screen.
 
-Remove the special case from pixel formats that carry image data and
-treat it as any other image format.
-
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Link: https://lore.kernel.org/r/20250402183302.140055-1-niklas.soderlund+renesas@ragnatech.se
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20250318062024.4555-1-andyshrk@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my extensive analysis: ## Nature of the Fix This commit fixes a
-**hardware configuration bug** in the R-Car VIN (Video Input) driver for
-Renesas SoCs. The commit message clearly states that earlier datasheets
-were unclear about stride settings for RAW8 formats, and updated
-datasheets clarified that the special stride/2 handling should only
-apply to "non-image data," not regular image data. ## Code Analysis The
-change removes problematic special-case logic from
-`drivers/media/platform/renesas/rcar-vin/rcar-dma.c:662-696`: **Removed
-Code (Lines 683-696):** ```c /bin /bin.usr-is-merged /boot /dev /etc
-/home /init /lib /lib.usr-is-merged /lib64 /lost+found /media /mnt /opt
-/proc /root /run /sbin /sbin.usr-is-merged /snap /srv /sys /tmp /usr
-/var For RAW8 format bpp is 1, but the hardware process RAW8
-amd_display_timing_generator_analysis.md amdgpu_csb_analysis.md
-cgroup_rstat_analysis.sh cgroup_rstat_analysis_guide.md
-expected_findings_summary.md kernel_analysis_commands.sh
-sta2x11_removal_analysis.md format in 2 pixel unit hence configure
-VNIS_REG as stride / 2. */ switch (vin->format.pixelformat) { case
-V4L2_PIX_FMT_SBGGR8: case V4L2_PIX_FMT_SGBRG8: case V4L2_PIX_FMT_SGRBG8:
-case V4L2_PIX_FMT_SRGGB8: case V4L2_PIX_FMT_GREY: stride /= 2; break;
-default: break; } ``` This removal is **safe and necessary** because: 1.
-**Corrects Hardware Behavior**: The original code was based on incorrect
-understanding of hardware requirements from unclear documentation 2.
-**Minimal Risk**: Only affects the VNIS_REG register setting for
-specific RAW8 pixel formats 3. **Contained Scope**: Limited to R-Car VIN
-driver RAW8 image capture functionality ## Backport Criteria Assessment
-✅ **Fixes Important Bug**: RAW8 format capture was incorrectly
-configured, likely causing image corruption or capture failures ✅
-**Small and Contained**: 16-line removal in a single function, no
-architectural changes ✅ **Clear Documentation**: Well-documented
-reasoning based on updated hardware specifications ✅ **Low Regression
-Risk**: The change aligns stride calculation with other pixel formats
-and corrected hardware documentation ✅ **Affects User-Visible
-Functionality**: Users capturing RAW8 camera data would experience
-incorrect behavior ## Historical Context From the git history, I found
-that the problematic `stride /= 2` logic was introduced in commit
-`8c3e0f67df6c9` ("media: rcar-vin: Extend RAW8 support to all RGB
-layouts") in 2020. The original comment stated "hardware process RAW8
-format in 2 pixel unit hence configure VNIS_REG as stride / 2" - but
-this was based on unclear documentation that has since been clarified.
-## Comparison with Similar Commits The provided historical examples show
-that similar R-Car VIN media driver fixes were **NOT** backported, but
-those were primarily: - Feature additions (extending RAW8 support to
-more layouts) - New format support (RAW10 addition) - Non-critical fixes
-(stride reporting corrections) This commit is fundamentally different as
-it **fixes incorrect hardware configuration** that would cause
-functional problems for existing users. ## Risk Assessment **Very Low
-Risk**: - Only removes incorrect special-case handling - Makes RAW8
-formats behave consistently with other formats - Based on authoritative
-hardware documentation clarification - No new code paths or complex
-logic introduced This fix is precisely the type that stable trees are
-intended for: fixing incorrect behavior that affects existing
-functionality with minimal risk of introducing regressions.
+Based on my analysis of the commit and the kernel repository context,
+here is my assessment: **YES** This commit should be backported to
+stable kernel trees for the following extensive reasons: ## Code
+Analysis The commit addresses a critical timing synchronization issue in
+the Rockchip VOP2 display controller. The changes are: 1. **Register Bit
+Field Changes**: The commit modifies
+`RK3568_OVL_CTRL__LAYERSEL_REGDONE_IMD` and introduces
+`RK3568_OVL_CTRL__LAYERSEL_REGDONE_SEL` in the header file, indicating a
+switch from immediate register updates to vsync-synchronized updates. 2.
+**Timing Control Logic**: In `rk3568_vop2_setup_layer_mixer()`, the code
+changes from: ```c ovl_ctrl |= RK3568_OVL_CTRL__LAYERSEL_REGDONE_IMD; //
+Immediate mode ``` to: ```c ovl_ctrl &=
+~RK3568_OVL_CTRL__LAYERSEL_REGDONE_IMD; // Remove immediate mode
+ovl_ctrl |= FIELD_PREP(RK3568_OVL_CTRL__LAYERSEL_REGDONE_SEL, vp->id);
+// Per-VP vsync sync ``` ## Why This Should Be Backported ### 1. **Fixes
+User-Visible Display Corruption** The commit message explicitly states
+it fixes "inconsistent display contents" when multiple layers are
+dynamically enabled/disabled. This is a user-visible bug that affects
+display quality and stability. ### 2. **Critical Display Functionality**
+The overlay layer selection controls fundamental display pipeline
+routing in VOP2. From examining similar commits, I found this subsystem
+has had multiple recent layer-related fixes, indicating active issues in
+this area that affect real users. ### 3. **Low Risk, High Impact
+Change** - **Low Risk**: The change only modifies timing
+synchronization, not display logic - **High Impact**: Affects any
+Rockchip RK3568/RK3588 system using multiple display layers -
+**Contained Scope**: Limited to VOP2 overlay timing control ### 4.
+**Follows Stable Tree Criteria** - **Important bugfix**: Fixes visible
+display artifacts - **Small and contained**: Only changes register
+timing configuration - **No architectural changes**: Maintains existing
+display logic - **Clear side effects**: Improves display consistency
+during layer transitions ### 5. **Hardware Synchronization Issue** The
+commit addresses a fundamental hardware synchronization problem where
+layer enable/disable operations take effect at vsync, but overlay
+configuration was taking effect immediately. This mismatch creates race
+conditions causing display corruption during dynamic layer changes. ###
+6. **Broad User Impact** Systems commonly affected include: - Video
+players with overlay graphics - Compositing window managers - Embedded
+displays with multiple UI layers - Any application dynamically managing
+display layers The fix ensures that overlay layer selection changes are
+properly synchronized with display refresh cycles, eliminating
+intermediate corrupted states that users can see during layer
+transitions. This is exactly the type of important, low-risk display fix
+that stable trees should include.
 
- .../media/platform/renesas/rcar-vin/rcar-dma.c   | 16 ----------------
- 1 file changed, 16 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.h | 1 +
+ drivers/gpu/drm/rockchip/rockchip_vop2_reg.c | 5 ++++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/renesas/rcar-vin/rcar-dma.c b/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
-index 8de8712404409..edb06730bc7c0 100644
---- a/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
-+++ b/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
-@@ -679,22 +679,6 @@ void rvin_crop_scale_comp(struct rvin_dev *vin)
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
+index 680bedbb770e6..fc3ecb9fcd957 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
+@@ -710,6 +710,7 @@ enum dst_factor_mode {
  
- 	fmt = rvin_format_from_pixel(vin, vin->format.pixelformat);
- 	stride = vin->format.bytesperline / fmt->bpp;
--
--	/* For RAW8 format bpp is 1, but the hardware process RAW8
--	 * format in 2 pixel unit hence configure VNIS_REG as stride / 2.
--	 */
--	switch (vin->format.pixelformat) {
--	case V4L2_PIX_FMT_SBGGR8:
--	case V4L2_PIX_FMT_SGBRG8:
--	case V4L2_PIX_FMT_SGRBG8:
--	case V4L2_PIX_FMT_SRGGB8:
--	case V4L2_PIX_FMT_GREY:
--		stride /= 2;
--		break;
--	default:
--		break;
--	}
--
- 	rvin_write(vin, stride, VNIS_REG);
- }
+ #define VOP2_COLOR_KEY_MASK				BIT(31)
  
++#define RK3568_OVL_CTRL__LAYERSEL_REGDONE_SEL		GENMASK(31, 30)
+ #define RK3568_OVL_CTRL__LAYERSEL_REGDONE_IMD		BIT(28)
+ #define RK3568_OVL_CTRL__YUV_MODE(vp)			BIT(vp)
+ 
+diff --git a/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c b/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
+index 0a2840cbe8e22..32c4ed6857395 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
++++ b/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
+@@ -2070,7 +2070,10 @@ static void rk3568_vop2_setup_layer_mixer(struct vop2_video_port *vp)
+ 	struct rockchip_crtc_state *vcstate = to_rockchip_crtc_state(vp->crtc.state);
+ 
+ 	ovl_ctrl = vop2_readl(vop2, RK3568_OVL_CTRL);
+-	ovl_ctrl |= RK3568_OVL_CTRL__LAYERSEL_REGDONE_IMD;
++	ovl_ctrl &= ~RK3568_OVL_CTRL__LAYERSEL_REGDONE_IMD;
++	ovl_ctrl &= ~RK3568_OVL_CTRL__LAYERSEL_REGDONE_SEL;
++	ovl_ctrl |= FIELD_PREP(RK3568_OVL_CTRL__LAYERSEL_REGDONE_SEL, vp->id);
++
+ 	if (vcstate->yuv_overlay)
+ 		ovl_ctrl |= RK3568_OVL_CTRL__YUV_MODE(vp->id);
+ 	else
 -- 
 2.39.5
 
